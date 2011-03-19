@@ -72,7 +72,11 @@ DWORD WINAPI VprThread(LPVOID lpParam)
 	try
 	{
 		if (settings.mult_thr > 0)  ///
+		{
+#if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
 			hpr = CreateThread(NULL,0,VprThread,(LPVOID)pApp,0,NULL);
+#endif
+		}
 		pApp->Run( settings.ogre_dialog || lpCmdLine[0]!=0 );  //Release change-
 	}
 	catch (Ogre::Exception& e)
@@ -85,7 +89,11 @@ DWORD WINAPI VprThread(LPVOID lpParam)
 	}
 
 	if (settings.mult_thr > 0)  ///
+	{
+#if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
 		TerminateThread(hpr, 1);
+#endif
+	}
 	info_output << "Exiting" << std::endl;
 	delete pApp;
 	delete pGame;
