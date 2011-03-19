@@ -1,0 +1,184 @@
+#include "stdafx.h"
+#include "OgreApp.h"
+#include "../road/Road.h"
+
+
+//  ctor
+//----------------------------------------------------------------------------------------------------------------------
+App::App()  //  gui wigdets--
+	:mToolTip(0), mToolTipTxt(0)
+	,valAnisotropy(0), valViewDist(0), valTerDetail(0), valTerDist(0), valRoadDist(0)  //detail graphics
+	,valTrees(0), valGrass(0), valTreesDist(0), valGrassDist(0)  //paged
+	,valShaders(0), valShadowType(0), valShadowCount(0), valShadowSize(0), valShadowDist(0)  //shadow
+	,brImg(0), wndTabs(0)  // brush
+	,valSizeMinmap(0), valCamSpeed(0), valCamInert(0)  // settings
+	,valTerUpd(0), valSizeRoadP(0), valMiniUpd(0)
+	,cmbSky(0), cmbRain1(0),cmbRain2(0), valRain1Rate(0),valRain2Rate(0)  // sun
+	,valSunPitch(0),valSunYaw(0), valFogStart(0),valFogEnd(0)
+	,edLiAmb(0),edLiDiff(0),edLiSpec(0), edFogClr(0), chkFog(0)
+	,cmbTexDiff(0),cmbTexNorm(0), imgTexDiff(0)  // terrain
+	,valTerLAll(0),tabsHmap(0),tabsTerLayers(0), idTerLay(0),bTerLay(1)
+	,chkTerLay(0),chkTexNormAuto(0), bTexNormAuto(1)
+	,valTerTriSize(0),edTerTriSize(0), edTerLScale(0),valTerLScale(0)
+	,edLDust(0),edLDustS(0), edLMud(0),edLSmoke(0), edLTrlClr(0)  //ter particles
+	,cmbParDust(0),cmbParMud(0),cmbParSmoke(0)
+	,cmbSurfType(0),edSuBumpWave(0),edSuBumpAmp(0),edSuRollDrag(0),edSuFrict(0),edSuFrict2(0)  //ter surfaces
+	,edGrassDens(0),edTreesDens(0), edGrPage(0),edGrDist(0), edTrPage(0),edTrDist(0)  // vegetation
+	,edGrMinX(0),edGrMaxX(0), edGrMinY(0),edGrMaxY(0)
+	,edGrSwayDistr(0), edGrSwayLen(0), edGrSwaySpd(0), edTrRdDist(0), edTrImpDist(0)
+	,cmbPgLay(0), chkPgLay(0), tabsPgLayers(0), idPgLay(0)  //paged layers
+	,imgPaged(0), valLTrAll(0)
+	,valLTrDens(0),valLTrRdDist(0), valLTrMinSc(0),valLTrMaxSc(0), valLTrWindFx(0),valLTrWindFy(0)
+	,edRdTcMul(0),edRdLenDim(0),edRdWidthSteps(0),edRdHeightOfs(0)  // road
+	,edRdSkirtLen(0),edRdSkirtH(0), edRdMergeLen(0),edRdLodPLen(0)
+	,edRdColN(0),edRdColR(0), edRdPwsM(0),edRdPlsM(0)
+	,imgPrv(0),imgMini(0),imgTer(0), valTrk(0), trkDesc(0),trkName(0)  // track
+
+	,mTerrainGroup(0), mTerrainPaging(0), mPageManager(0), mTerrainGlobals(0)
+	,bTerUpd(0), pSet(0), curBr(0)
+	,ndDot(0), asp(4.f/3.f)
+	,ndCar(0),entCar(0),ndStBox(0),entStBox(0)
+	,grass(0), trees(0), sun(0)
+	,eTrkEvent(TE_None), bNewHmap(0), bTrGrUpd(0)
+{
+	pathTrk = "data/tracks/";  pathTrkPrv = pathTrk + "_previews/";  resTrk = "";
+
+	mBrSize[0] = 24.f;		mBrSize[1] = 24.f;
+	mBrIntens[0] = 10.f;	mBrIntens[1] = 20.f;
+	mBrPow[0] = 2.f;		mBrPow[1] = 2.f;
+	mBrushData = new float[BrushMaxSize*BrushMaxSize];
+	sBrushTest[0]=0;   updBrush();
+
+	for (int i=0; i<BR_TXT; ++i)  brTxt[i]=0;
+	for (int i=0; i<RD_TXT; ++i)  rdTxt[i]=0;
+	for (int i=0; i<RDS_TXT; ++i)  rdTxtSt[i]=0;
+	
+	for (int i=0; i < StTrk; ++i)  stTrk[i] = 0;
+	for (int i=0; i < 4; ++i)  {  cmbRoadMtr[i]=0;  cmbPipeMtr[i]=0;  }
+}
+
+App::~App()
+{
+	delete[] mBrushData;
+	delete road;
+	if (mTerrainPaging)
+	{
+		OGRE_DELETE mTerrainPaging;
+		OGRE_DELETE mPageManager;
+	}else
+		OGRE_DELETE mTerrainGroup;
+
+	OGRE_DELETE mTerrainGlobals;
+}
+
+void App::destroyScene()
+{
+	BaseApp::destroyScene();
+
+	if (grass) {  delete grass->getPageLoader();  delete grass;  grass=0;   }
+	if (trees) {  delete trees->getPageLoader();  delete trees;  trees=0;   }
+
+	delete[] sc.td.hfData;
+}
+	
+
+//  util
+//---------------------------------------------------------------------------------------------------------------
+ManualObject* App::Create2D(const String& mat, Real s, bool dyn)
+{
+	ManualObject* m = mSceneMgr->createManualObject();
+	m->setDynamic(dyn);
+	m->setUseIdentityProjection(true);
+	m->setUseIdentityView(true);
+	m->setCastShadows(false);
+
+	m->estimateVertexCount(4);
+	m->begin(mat, RenderOperation::OT_TRIANGLE_FAN);
+
+	m->position(-s,-s*asp, 0);  m->textureCoord(0, 1);
+	m->position( s,-s*asp, 0);  m->textureCoord(1, 1);
+	m->position( s, s*asp, 0);  m->textureCoord(1, 0);
+	m->position(-s, s*asp, 0);  m->textureCoord(0, 0);
+	m->end();
+ 
+	AxisAlignedBox aabInf;	aabInf.setInfinite();
+	m->setBoundingBox(aabInf);  // always visible
+	m->setRenderQueueGroup(RENDER_QUEUE_OVERLAY - 1);
+	return m;
+}
+
+
+//  vdr util, get tracks
+//----------------------------------------------------------------------------------------------------------------------
+bool App::GetFolderIndex(string dirpath, std::list <string>& dirlist, std::string extension)
+{
+#ifndef _WIN32
+	DIR *dp;
+	struct dirent *ep;
+	dp = opendir(dirpath.c_str());
+	if (dp != NULL)
+	{
+		while ( ( ep = readdir( dp ) ) )
+		{
+			//puts (ep->d_name);
+			string newname = ep->d_name;
+			if (newname[0] != '.')
+			{
+				dirlist.push_back(newname);
+			}
+		}
+		(void) closedir(dp);
+	}
+	else
+		return false;
+#else
+	HANDLE	  hList;
+	TCHAR	  szDir[MAX_PATH+1];
+	WIN32_FIND_DATA FileData;
+
+	// Get the proper directory path
+	sprintf(szDir, "%s\\*", dirpath.c_str ());
+
+	// Get the first file
+	hList = FindFirstFile(szDir, &FileData);
+	if (hList == INVALID_HANDLE_VALUE)
+	{ 
+		//no files found.  that's OK
+	}
+	else
+	{
+		// Traverse through the directory structure
+		while (FindNextFile(hList, &FileData))
+		{
+			// Check the object is a directory or not
+			if (FileData.dwFileAttributes & FILE_ATTRIBUTE_HIDDEN)
+			{} else
+			{
+				if (FileData.cFileName[0] != '.')
+				{
+					dirlist.push_back (FileData.cFileName);
+				}
+			}
+		}
+	}
+
+	FindClose(hList);
+#endif
+	
+	//remove non-matcthing extensions
+	if (!extension.empty())
+	{
+		std::list <std::list <string>::iterator> todel;
+		for (std::list <string>::iterator i = dirlist.begin(); i != dirlist.end(); ++i)
+		{
+			if (i->find(extension) != i->length()-extension.length())
+				todel.push_back(i);
+		}
+		
+		for (std::list <std::list <string>::iterator>::iterator i = todel.begin(); i != todel.end(); ++i)
+			dirlist.erase(*i);
+	}
+	
+	dirlist.sort();
+	return true;
+}

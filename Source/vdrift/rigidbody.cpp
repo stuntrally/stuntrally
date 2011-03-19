@@ -1,0 +1,32 @@
+#include "stdafx.h"
+
+#include "rigidbody.h"
+#include "unittest.h"
+
+//#include <iostream>
+using std::cout;
+using std::endl;
+
+QT_TEST(rigidbody_test)
+{
+	RIGIDBODY <float> body;
+	MATHVECTOR <float, 3> initpos;
+	QUATERNION <float> quat;
+	initpos.Set(0,0,10);
+	body.SetPosition(initpos);
+	quat.Rotate(-3.141593*0.5, 1, 0, 0);
+	body.SetOrientation(quat);
+
+	MATHVECTOR <float, 3> localcoords;
+	localcoords.Set(0,0,1);
+	MATHVECTOR <float, 3> expected;
+	expected.Set(0,1,10);
+	MATHVECTOR <float, 3> pos = body.TransformLocalToWorld(localcoords);
+	QT_CHECK_CLOSE(pos[0], expected[0], 0.0001);
+	QT_CHECK_CLOSE(pos[1], expected[1], 0.0001);
+	QT_CHECK_CLOSE(pos[2], expected[2], 0.0001);
+	
+	QT_CHECK_CLOSE(body.TransformWorldToLocal(pos)[0], localcoords[0], 0.0001);
+	QT_CHECK_CLOSE(body.TransformWorldToLocal(pos)[1], localcoords[1], 0.0001);
+	QT_CHECK_CLOSE(body.TransformWorldToLocal(pos)[2], localcoords[2], 0.0001);
+}
