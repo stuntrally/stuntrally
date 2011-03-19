@@ -7,7 +7,9 @@
 #include "../vdrift/pathmanager.h"
 #include "../vdrift/settings.h"
 
+#include <OgrePlatform.h>
 
+#if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
 DWORD WINAPI VprThread(LPVOID lpParam)
 { 
 	App* pA = (App*)lpParam;
@@ -15,8 +17,8 @@ DWORD WINAPI VprThread(LPVOID lpParam)
 		pA->UpdThr();
     return 0;
 }
+#endif
 
-#include <OgrePlatform.h>
 #if OGRE_PLATFORM  == OGRE_PLATFORM_WIN32
 	int APIENTRY WinMain(HINSTANCE hInst, HINSTANCE hPrev, LPTSTR lpCmdLine, int nCmdShow)
 #else
