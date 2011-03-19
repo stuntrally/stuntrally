@@ -347,11 +347,11 @@ public:
 	T GetRollingResistance(const T velocity, const T normal_force, const T rolling_resistance_factor) const
 	{
 		// surface influence on rolling resistance
-		T rolling_resistance = info.rolling_resistance_linear * rolling_resistance_factor;
+		T rolling_resistance = rolling_resistance_linear * rolling_resistance_factor;
 		
 		// heat due to tire deformation increases rolling resistance
 		// approximate by quadratic function
-		rolling_resistance += velocity * velocity * info.rolling_resistance_quadratic;
+		rolling_resistance += velocity * velocity * rolling_resistance_quadratic;
 		
 		// rolling resistance magnitude
 		T resistance = -normal_force * rolling_resistance;

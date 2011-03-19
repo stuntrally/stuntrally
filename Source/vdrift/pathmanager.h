@@ -1,6 +1,10 @@
 #ifndef _PATHMANAGER_H
 #define _PATHMANAGER_H
 
+#ifdef unix
+#include <dirent.h>
+#endif
+
 class PATHMANAGER
 {
 	private:

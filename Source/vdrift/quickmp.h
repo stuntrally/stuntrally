@@ -329,7 +329,7 @@ namespace qmp_internal
 	//#include <pthread.h>
 
 	// Required to get number of processors using get_nprocs_conf.
-	//#include <sys/sysinfo.h>
+	#include <sys/sysinfo.h>
 #else
 	#error This development environment does not support pthreads or windows threads
 #endif
