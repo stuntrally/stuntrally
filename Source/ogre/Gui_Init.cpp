@@ -19,7 +19,7 @@ void App::InitGui()
 	mGUI->load("core_skin.xml");
 
 	//  load Options layout
-	VectorWidgetPtr& rootV = LayoutManager::getInstance().load("Options.layout");
+	VectorWidgetPtr rootV = LayoutManager::getInstance().load("Options.layout");
 	mLayout = rootV.at(0);
 
 	mWndOpts = mLayout->findWidget("OptionsWnd");
