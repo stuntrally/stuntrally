@@ -33,7 +33,7 @@ using namespace joeserialize;
 
 class TEST_VERTEX
 {
-	friend class ::Serializer;
+	friend class joeserialize::Serializer;
 	public:
 		TEST_VERTEX() : x(0), y(0), z(0) {}
 		TEST_VERTEX(float nx, float ny, float nz) : x(nx),y(ny),z(nz) {}
@@ -62,7 +62,7 @@ ostream& operator <<(ostream &os,const TEST_VERTEX &v)
 //example complex class
 class TEST_PLAYER
 {
-	friend class ::Serializer;
+	friend class joeserialize::Serializer;
 	//private:
 	public: //the test needs access to these; otherwise they'd be private
 		TEST_VERTEX position;
@@ -115,7 +115,7 @@ class TEST_PLAYER
 			}
 		}
 
-		bool Serialize(Serializer & s)
+		bool Serialize(joeserialize::Serializer & s)
 		{
 			_SERIALIZE_(s,position);
 			_SERIALIZE_(s,animframe);
@@ -137,7 +137,7 @@ class TEST_PLAYER
 
 QT_TEST(TextSerializer_test)
 {
-	stringstream serializestream;
+	std::stringstream serializestream;
 	{
 		TEST_PLAYER player1(true);
 		TextOutputSerializer out(serializestream);
@@ -231,7 +231,7 @@ QT_TEST(TextSerializer_test)
 
 QT_TEST(BinarySerializer_test)
 {
-	stringstream serializestream;
+	std::stringstream serializestream;
 	{
 		TEST_PLAYER player1(true);
 		BinaryOutputSerializer out(serializestream);
@@ -531,7 +531,7 @@ QT_TEST(serialization_test_bin_compatibility)
 
 class TEST_WHEEL
 {
-	friend class ::Serializer;
+	friend class joeserialize::Serializer;
 	public:
 		TEST_VERTEX pos;
 		float staticdata;
@@ -547,7 +547,7 @@ class TEST_WHEEL
 
 class TEST_CAR
 {
-	friend class ::Serializer;
+	friend class joeserialize::Serializer;
 	public:
 		std::vector <TEST_WHEEL> wheels;
 		TEST_CAR() : wheels(4) {}
@@ -564,9 +564,9 @@ QT_TEST(serialization_vector_bugs_test)
 	TEST_CAR car;
 	car.wheels[0].staticdata = 1337;
 	
-	stringstream serializestream;
+	std::stringstream serializestream;
 	{
-		stringstream firststream;
+		std::stringstream firststream;
 		BinaryOutputSerializer out1(firststream);
 		QT_CHECK(car.Serialize(out1));
 		
@@ -580,7 +580,7 @@ QT_TEST(serialization_vector_bugs_test)
 		QT_CHECK_EQUAL(car.wheels[0].staticdata,1337);
 	}
 	
-	stringstream stream2(serializestream.str());
+	std::stringstream stream2(serializestream.str());
 
 	{
 		BinaryInputSerializer in1(serializestream);
