@@ -171,7 +171,7 @@ RenderOperation::OperationType DynamicLines::getOperationType() const
 }
 
 //---------------------------------------------------
-void DynamicLines::addLine(Vector3 &vectStart, Vector3 &vectEnd, ColourValue &colStart, ColourValue &colEnd)
+void DynamicLines::addLine(const Vector3 &vectStart, const Vector3 &vectEnd, const ColourValue &colStart, const ColourValue &colEnd)
 {
 	mPoints.push_back(vectStart);
 	mPoints.push_back(vectEnd);
@@ -180,7 +180,7 @@ void DynamicLines::addLine(Vector3 &vectStart, Vector3 &vectEnd, ColourValue &co
 	mDirty = true;
 }
 
-void DynamicLines::addLine(Vector3 &vectStart, Vector3 &vectEnd, ColourValue &col)
+void DynamicLines::addLine(const Vector3 &vectStart, const Vector3 &vectEnd, const ColourValue &col)
 {
 	mPoints.push_back(vectStart);
 	mPoints.push_back(vectEnd);
