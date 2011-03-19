@@ -23,6 +23,7 @@
 using namespace std;
 
 ///  win
+#include <OgrePlatform.h>
 #if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
 	#define WINVER 0x0510
 	#define _WIN32_WINNT 0x0510
