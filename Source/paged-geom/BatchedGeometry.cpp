@@ -258,22 +258,16 @@ BatchedGeometry::SubBatchIterator BatchedGeometry::getSubBatchIterator() const
 {
 	return BatchedGeometry::SubBatchIterator((SubBatchMap&)subBatchMap);
 }
-
+#if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
 String BatchedGeometry::getFormatString(SubEntity *ent)
 {
 	const int BufSize = 1024;
 	static char buf[BufSize];
 
 
-#if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
 	int countWritten = _snprintf_s( buf, BufSize, "%s|%d",
 				ent->getMaterialName().c_str(), 
 				ent->getSubMesh()->indexData->indexBuffer->getType());
-#else
-	int countWritten = snprintf_s( buf, BufSize, "%s|%d",
-				ent->getMaterialName().c_str(),
-				ent->getSubMesh()->indexData->indexBuffer->getType());
-#endif
 
 	const VertexDeclaration::VertexElementList &elemList = ent->getSubMesh()->vertexData->vertexDeclaration->getElements();
 	VertexDeclaration::VertexElementList::const_iterator i;
@@ -286,8 +280,8 @@ String BatchedGeometry::getFormatString(SubEntity *ent)
    }
    return buf;
 }
-
-/*  old - slow
+#else
+/*  old - slow */
 String BatchedGeometry::getFormatString(SubEntity *ent)
 {
 	StringUtil::StrStreamType str;
@@ -306,7 +300,8 @@ String BatchedGeometry::getFormatString(SubEntity *ent)
 	}
 
 	return str.str();
-}/**/
+}
+#endif
 
 void BatchedGeometry::build()
 {
