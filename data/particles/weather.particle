@@ -1,0 +1,145 @@
+//  Rain  ---------
+particle_system RainFine
+{
+	material			RainDrop
+	quota				10000
+	particle_width		0.03
+	particle_height		0.16
+
+	cull_each		false
+    sorted			false
+
+	//billboard_type	point
+	billboard_type		oriented_self
+	//renderer			billboard
+
+	emitter Cylinder
+	{
+		angle	0
+		position	0 10 0
+		direction	-0.2 -1 0.3
+		width	16
+		height	16
+		depth	12  //h
+
+		colour				0.8 0.8 0.8  0.5
+		colour_range_start	0.8 0.8 0.8  0.6
+		colour_range_end	0.8 0.8 0.8  0.4
+
+		emission_rate	200
+		velocity_min	7.6
+		velocity_max	8.2
+		time_to_live_min	0.5
+		time_to_live_max	0.7
+	}
+
+	affector DirectionRandomiser
+	{
+		randomness	13
+	}
+}
+
+
+//  Rain  =========
+particle_system RainHeavy
+{
+	material			RainDrop
+	quota				20000
+	particle_width		0.16
+	particle_height		0.86
+
+	cull_each		false
+    sorted			false
+
+	//billboard_type	point
+	billboard_type		oriented_self
+	//renderer			billboard
+
+	emitter Cylinder
+	{
+		angle	0
+		position	0 16 0
+		direction	-0.2 -1 0.3
+		width	22
+		height	22
+		depth	12  //h
+
+		colour				0.7 0.7 0.7  0.2
+		colour_range_start	0.7 0.7 0.7  0.3
+		colour_range_end	0.7 0.7 0.7  0.1
+
+		emission_rate	200
+		velocity_min	9.6
+		velocity_max	11.4
+		time_to_live_min	0.3
+		time_to_live_max	0.5
+	}
+
+	affector DirectionRandomiser
+	{
+		randomness	9
+	}
+}
+
+
+//  Snow  * * * * *
+particle_system Snow
+{
+	material			SnowFlake
+	quota				18000
+	particle_width		0.09
+	particle_height		0.09
+
+	cull_each		false
+    sorted			false
+
+	billboard_type		point
+	//renderer			billboard
+    //sorted			true
+
+	emitter Box
+	{
+		angle	0
+		position	0 0 0
+		direction	0 -1 0
+		width	18
+		height	18
+		depth	12  //h
+
+		colour				1 1 1  0.6
+		colour_range_start	1 1 1  0.7
+		colour_range_end	1 1 1  0.5
+
+		emission_rate	20
+		velocity_min	4.1
+		velocity_max	5.2
+		time_to_live_min	1.5
+		time_to_live_max	2
+	}
+
+	affector Rotator
+	{
+		rotation_range_start 0
+		rotation_range_end 220
+		rotation_speed_range_start -20
+		rotation_speed_range_end 20
+	}
+	//affector LinearForce
+	//{
+	//	force_vector	0 -9.8 0
+	//	force_application	add
+	//}
+
+	affector DirectionRandomiser
+	{
+		randomness	13
+	}
+
+	//affector ColourFader
+	//{
+	//	red		-0.018
+	//	green	-0.021
+	//	blue	-0.027
+	//	alpha	-0.140
+	//}
+}
