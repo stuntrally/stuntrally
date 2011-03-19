@@ -3,7 +3,7 @@
 
 #include <OgrePlatform.h>
 
-#if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
+#if OGRE_PLATFORM != OGRE_PLATFORM_WIN32
 #include <sys/time.h>
 #endif
 

@@ -5914,7 +5914,11 @@
 				Name="Gui"
 				>
 				<File
-					RelativePath=".\Source\ogre\Gui.cpp"
+					RelativePath=".\Source\ogre\Gui_Events.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\Source\ogre\Gui_Init.cpp"
 					>
 				</File>
 				<File
