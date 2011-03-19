@@ -3,7 +3,7 @@
 
 #include <OgrePlatform.h>
 
-#if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
+#if OGRE_PLATFORM != OGRE_PLATFORM_WIN32
 #include <sys/time.h>
 #endif
 
@@ -14,7 +14,7 @@ class QTimer
 #if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
 		LARGE_INTEGER CC;
 #else
-		timespec ts;
+		timeval tv;
 #endif
 
 	public:
