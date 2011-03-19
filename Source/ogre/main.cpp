@@ -77,11 +77,14 @@ DWORD WINAPI VprThread(LPVOID lpParam)
 		{
 #if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
 			hpr = CreateThread(NULL,0,VprThread,(LPVOID)pApp,0,NULL);
-			pApp->Run( settings.ogre_dialog || lpCmdLine[0]!=0 );  //Release change-
-#else
-			pApp->Run( settings.ogre_dialog);
 #endif
 		}
+#if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
+		pApp->Run( settings.ogre_dialog || lpCmdLine[0]!=0 );  //Release change-
+#else
+		pApp->Run( settings.ogre_dialog);
+#endif
+
 	}
 	catch (Ogre::Exception& e)
 	{

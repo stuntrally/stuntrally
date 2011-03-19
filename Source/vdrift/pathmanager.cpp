@@ -4,7 +4,9 @@
 //#include "definitions.h"
 
 #define SETTINGS_DIR ".vdrift"
-#define DATA_DIR "/usr/local/share/games/vdrift/data"
+
+//#define DATA_DIR "/usr/local/share/games/vdrift/data"
+#define DATA_DIR "data"
 
 
 void PATHMANAGER::Init(std::ostream & info_output, std::ostream & error_output)
