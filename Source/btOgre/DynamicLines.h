@@ -56,8 +56,8 @@ public:
    DynamicLines(OperationType opType = Ogre::RenderOperation::OT_LINE_STRIP);
    virtual ~DynamicLines();
 
-   void addLine(Vector3 &vectStart, Vector3 &vectEnd, ColourValue &colStart, ColourValue &colEnd);
-   void addLine(Vector3 &vectStart, Vector3 &vectEnd, ColourValue &col);
+   void addLine(const Vector3 &vectStart, const Vector3 &vectEnd, const ColourValue &colStart, const ColourValue &colEnd);
+   void addLine(const Vector3 &vectStart, const Vector3 &vectEnd, const ColourValue &col);
    void clear();
    void update();  //  Call this to update the hardware buffer after making changes.  
 
