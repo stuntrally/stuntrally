@@ -136,7 +136,7 @@ protected:
 
 	//  tooltips
 	WidgetPtr mToolTip;  EditPtr mToolTipTxt;
-	void setToolTips(EnumeratorWidgetPtr& widgets);
+	void setToolTips(EnumeratorWidgetPtr widgets);
 	void notifyToolTip(Widget* sender, const ToolTipInfo& info);
 	void boundedMove(Widget *moving, const IntPoint & point);
 
