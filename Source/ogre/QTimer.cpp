@@ -6,15 +6,18 @@
 
 QTimer::QTimer()
 {
+
 	iv = 0.;	iv1 = 0.5;
-	
+#if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
 	LARGE_INTEGER FQ;
 	if (QueryPerformanceFrequency( &FQ ))
 		fq = double( FQ.QuadPart );
+#endif
 }
 
 bool QTimer::update()
 {
+#if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
 	QueryPerformanceCounter( &CC );
 	cc = double( CC.QuadPart );
 	t = cc / fq;
@@ -35,5 +38,6 @@ bool QTimer::update()
 		iFR = 0.;
 		st1 = t;
 	}
+#endif
 	return true;
 }
