@@ -108,6 +108,7 @@ bool BaseApp::configure()
 {
 	bool ok = false, notFound = false;
 	
+#if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
 	WIN32_FIND_DATAA  fd;
 	HANDLE h = FindFirstFileA( "_ogreset.cfg", &fd );
 	if (h == INVALID_HANDLE_VALUE)
@@ -119,10 +120,20 @@ bool BaseApp::configure()
 		ok = mRoot->showConfigDialog();
 	else
 		ok = mRoot->restoreConfig();
-	
+#else
+	if (mRoot->restoreConfig() ||  mRoot->showConfigDialog())
+	{
+		ok = true;
+	}
+	else
+		ok=false;
+#endif
+
     if (ok)
     {	mWindow = mRoot->initialise( true, "Stunt Rally" );
-		return true;	}
+		return true;
+    }
+
 
 	return false;
 }
