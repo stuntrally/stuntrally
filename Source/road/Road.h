@@ -2,6 +2,7 @@
 #define _SplineRoad_h_
 
 #include "SplineBase.h"
+#include "btBulletCollisionCommon.h"
 
 #define  LODs  4
 #define  MTRs  4
@@ -92,7 +93,7 @@ private:
 #endif
 	std::vector<Vector3>* at_pos;
 	//  add triangle, with index check
-	__forceinline void addTri(int f1, int f2, int f3, int i);
+	inline void addTri(int f1, int f2, int f3, int i);
 	int at_size, at_ilBt;  // pars for fi
 
 	//  markers
