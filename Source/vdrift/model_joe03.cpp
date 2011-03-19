@@ -346,10 +346,10 @@ void MODEL_JOE03::ReadData ( FILE * m_FilePointer, JOEPACK * pack, JOEObject & O
 	
 	typedef size_t size_type;
 	
-	vector <VERT_ENTRY> vert_master ((size_type)(Object.frames[frame].num_verts));
+	std::vector <VERT_ENTRY> vert_master ((size_type)(Object.frames[frame].num_verts));
 	vert_master.reserve(Object.frames[frame].num_verts*2);
 	
-	vector <int> v_faces((size_type)(Object.info.num_faces*3));
+	std::vector <int> v_faces((size_type)(Object.info.num_faces*3));
 	
 	for (int i = 0; i < Object.info.num_faces; i++)
 	{
@@ -413,9 +413,9 @@ void MODEL_JOE03::ReadData ( FILE * m_FilePointer, JOEPACK * pack, JOEObject & O
 			<< " tex coords, now it has " << newvertnum << " combo verts (combo indices)" << std::endl;*/
 	
 	//now, fill up the vertices, normals, and texcoords
-	vector <float> v_vertices((size_type)(newvertnum*3));
-	vector <float> v_texcoords((size_type)(newvertnum*2));
-	vector <float> v_normals((size_type)(newvertnum*3));
+	std::vector <float> v_vertices((size_type)(newvertnum*3));
+	std::vector <float> v_texcoords((size_type)(newvertnum*2));
+	std::vector <float> v_normals((size_type)(newvertnum*3));
 	for (int i = 0; i < newvertnum; ++i)
 	{
 		if (vert_master[i].original_index >= 0)
