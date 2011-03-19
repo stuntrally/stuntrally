@@ -24,7 +24,7 @@ void CARDYNAMICS::updateAction(btCollisionWorld * collisionWorld, btScalar dt)
 
 	SynchronizeChassis();  // update velocity
 
-	#if 0
+	#if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
 	if (GetAsyncKeyState(VK_F1))
 	{
 		///***  reset pos  ---------------------------------------------------------------------------------
