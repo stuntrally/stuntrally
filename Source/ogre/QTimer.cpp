@@ -38,6 +38,10 @@ bool QTimer::update()
 		iFR = 0.;
 		st1 = t;
 	}
+#else
+	timespec old_time = ts;
+	clock_gettime(CLOCK_MONOTONIC, &ts); // CLOCK_MONOTIC: Starts at 0 when system is booted up, useful for relative time.
+	dt = ts.tv_sec - old_time.tv_sec;
 #endif
 	return true;
 }
