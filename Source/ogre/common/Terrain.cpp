@@ -80,7 +80,7 @@ void App::configureTerrainDefaults(Light* l)
 	mTerrainGlobals->setLightMapDirection(l->getDerivedDirection());
 	mTerrainGlobals->setCompositeMapAmbient(mSceneMgr->getAmbientLight());
 	mTerrainGlobals->setCompositeMapDiffuse(l->getDiffuseColour());  }
-	mTerrainGlobals->setShadowVal(0.6f);  //+ new, for compositeMap shadow
+	//mTerrainGlobals->setShadowVal(0.6f);  //+ new, for compositeMap shadow
 
 	mTerrainGlobals->setCompositeMapSize(1024);  // par,..
 	mTerrainGlobals->setCompositeMapDistance(pSet->terdist);  //100

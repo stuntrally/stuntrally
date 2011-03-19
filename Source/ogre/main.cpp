@@ -57,7 +57,9 @@ DWORD WINAPI VprThread(LPVOID lpParam)
 	// primary logging ostreams
 	std::ostream info_output(&infolog);
 	std::ostream error_output(&errorlog);/**/
+#if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
 	HANDLE hpr;
+#endif
 
     ///  game  ------------------------------
     GAME* pGame = new GAME(info_output, error_output, &settings);
@@ -75,9 +77,11 @@ DWORD WINAPI VprThread(LPVOID lpParam)
 		{
 #if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
 			hpr = CreateThread(NULL,0,VprThread,(LPVOID)pApp,0,NULL);
+			pApp->Run( settings.ogre_dialog || lpCmdLine[0]!=0 );  //Release change-
+#else
+			pApp->Run( settings.ogre_dialog);
 #endif
 		}
-		pApp->Run( settings.ogre_dialog || lpCmdLine[0]!=0 );  //Release change-
 	}
 	catch (Ogre::Exception& e)
 	{
