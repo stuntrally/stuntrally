@@ -27,7 +27,9 @@ void App::UpdThr()
 
 			if (!ret)
 				mShutDown = true;
+#if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
 			Sleep(0);  // par
+#endif
 		}
 		/*else
 		{	//  2nd test --
