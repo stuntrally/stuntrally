@@ -35,13 +35,6 @@ void BaseApp::createFrameListener()
 	windowHndStr << windowHnd;
 	pl.insert(std::make_pair(std::string("WINDOW"), windowHndStr.str()));
 
-// Allow moving cursor out of the window on linux
-#if defined OIS_LINUX_PLATFORM
-pl.insert(std::make_pair(std::string("x11_mouse_grab"), std::string("false")));
-pl.insert(std::make_pair(std::string("x11_mouse_hide"), std::string("false")));
-pl.insert(std::make_pair(std::string("x11_keyboard_grab"), std::string("false")));
-#endif
-
 	mInputManager = OIS::InputManager::createInputSystem( pl );
 
 	mKeyboard = static_cast<OIS::Keyboard*>(mInputManager->createInputObject( OIS::OISKeyboard, true ));
