@@ -11,14 +11,14 @@
 ///  ctor bullet world
 ///----------------------------------------------------------------------------
 COLLISION_WORLD::COLLISION_WORLD() :
-	collisiondispatcher(&collisionconfig), 
+	collisiondispatcher(&collisionconfig),
 	collisionbroadphase(btVector3(-5000, -5000, -5000), btVector3(5000, 5000, 5000)),
 	world(&collisiondispatcher, &collisionbroadphase, &constraintsolver, &collisionconfig),
 	track(NULL), trackObject(NULL), trackMesh(NULL),
 	fixedTimestep(0.01f), maxSubsteps(7)  // default, set from settings
 {
 	world.setGravity(btVector3(0.0, 0.0, -9.81)); ///~
-	world.getSolverInfo().m_numIterations = 36;  //-
+	//world.getSolverInfo().m_numIterations = 36;  //-
 	//world.getSolverInfo().m_erp = 0.3;
 	//world.getSolverInfo().m_erp2 = 0.2;
 	world.getSolverInfo().m_restitution = 0.0f;
@@ -57,7 +57,7 @@ btRigidBody * COLLISION_WORLD::AddRigidBody(const btRigidBody::btRigidBodyConstr
 {
 	btRigidBody * body = new btRigidBody(info);
 	btCollisionShape * shape = body->getCollisionShape();
-	body->setActivationState(DISABLE_DEACTIVATION);
+	//body->setActivationState(DISABLE_DEACTIVATION);  //!-for chassis only
 	world.addRigidBody(body);
 	shapes.push_back(shape);
 	return body;

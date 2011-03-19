@@ -94,6 +94,9 @@ void BaseApp::destroyScene()
 //-------------------------------------------------------------------------------------
 void BaseApp::Run( bool showDialolg )
 {
+	ShowCursor(0);
+	SetCursor(0);
+
 	mShowDialog = showDialolg;
 	if (!setup())
 		return;

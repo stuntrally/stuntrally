@@ -456,7 +456,7 @@ void App::editRoad(EditPtr ed)
 	else if (n=="RdSkirtLen")	road->skLen = r;	else if (n=="RdSkirtH")		road->skH = r;
 	else if (n=="RdMergeLen")	road->setMrgLen = r;
 	else if (n=="RdLodPLen")	road->lposLen = r;
-	road->RebuildRoad(true);  //on Enter-
+	//road->RebuildRoad(true);  //on Enter-
 }
 
 
@@ -507,7 +507,7 @@ void App::slSizeMinmap(SL)
 void App::chkMinimap(WP wp)
 {	ChkEv(trackmap);
 	UpdMiniVis();
-	if (ndDot)  ndDot->setVisible(pSet->trackmap);
+	if (ndPos)  ndPos->setVisible(pSet->trackmap);
 }
 
 

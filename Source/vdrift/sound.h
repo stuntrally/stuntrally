@@ -1,15 +1,15 @@
 #ifndef _SOUND_H
 
-//#include <iostream>
-//#include <string>
-//#include <list>
-//#include <map>
-//#include <fstream>
+#include <iostream>
+#include <string>
+#include <list>
+#include <map>
+#include <fstream>
 
 #include "quaternion.h"
 #include "mathvector.h"
 
-//#include <SDL/SDL.h>
+#include <SDL/SDL.h>
 
 class SOUNDINFO
 {

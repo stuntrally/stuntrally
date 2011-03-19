@@ -257,11 +257,11 @@ void App::CreateMinimap()
 	ndMap->scale(fHudSize, fHudSize*asp, 1);
 	ndMap->attachObject(m);
 	
-	//  car dot
-	m = Create2D("hud/CarDot", 0.2f);  // dot size
-	ndDot = ndMap->createChildSceneNode();
-	ndDot ->scale(fHudSize*asp, fHudSize, 1);
-	ndDot->attachObject(m);
+	//  car pos dot
+	mpos = Create2D("hud/CarPos", 0.2f, true);  // dot size
+	ndPos = ndMap->createChildSceneNode();
+	ndPos->scale(fHudSize*asp, fHudSize, 1);
+	ndPos->attachObject(mpos);
 	ndMap->setVisible(pSet->trackmap);
 }
 

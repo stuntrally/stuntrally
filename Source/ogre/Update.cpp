@@ -31,11 +31,9 @@ void App::UpdThr()
 		}
 		/*else
 		{	//  2nd test --
-			//  trees
 			if (road) {  //--
 				if (grass)  grass->update();
-				if (trees)  trees->update();
-				if (bushes)  bushes->update();  }
+				if (trees)  trees->update();  }
 			Sleep(0);  // par
 		}/**/
 	}
@@ -45,6 +43,18 @@ void App::UpdThr()
 
 bool App::frameStart(Real time)
 {
+	//  keys dn/up - trklist, carlist
+	#define isKey(a)  mKeyboard->isKeyDown(OIS::KC_##a)
+	static float dirU = 0.f,dirD = 0.f;
+	if (isFocGui)
+	{	if (isKey(UP)  ||isKey(NUMPAD8))	dirD += time;  else
+		if (isKey(DOWN)||isKey(NUMPAD2))	dirU += time;  else
+		{	dirU = 0.f;  dirD = 0.f;  }
+		int d = ctrl ? 4 : 1;
+		if (dirU > 0.0f) {  carListNext( d);  trkListNext( d);  dirU = -0.12f;  }
+		if (dirD > 0.0f) {  carListNext(-d);  trkListNext(-d);  dirD = -0.12f;  }
+	}
+
 	if (!pGame)
 		return false;
 	pGame->pause = isFocGui;
@@ -107,7 +117,7 @@ bool App::frameEnd(Real time)
 //-------------------------------------------------------------------------------------------------------
 void App::UpdWhTerMtr(CAR* pCar)
 {
-	if (!pCar)  return;
+	if (!pCar || !ndWh[0])  return;
 	if (!terrain || !blendMtr)	// vdr trk
 	{
 		for (int i=0; i<4; ++i)  // for particles/trails only
@@ -253,8 +263,8 @@ void App::updatePoses(float time)
 	// on minimap  pos x,y = -1..1
 	float xp =(-newPos[2] - minX)*scX*2-1,
 		  yp =-(newPos[0] - minY)*scY*2+1;
-	if (ndDot)
-		ndDot->setPosition(xp,yp,0);
+	if (ndPos)
+		ndPos->setPosition(xp,yp,0);
 	
 	
 	//  wheels

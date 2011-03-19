@@ -3,10 +3,10 @@
 #ifndef _PARALLEL_TASK_H_
 #define _PARALLEL_TASK_H_
 
-//#include <SDL/SDL.h>
-//#include <SDL/SDL_thread.h>
-//#include <cassert>
-//#include <iostream>
+#include <SDL/SDL.h>
+#include <SDL/SDL_thread.h>
+#include <cassert>
+#include <iostream>
 
 //#define VERBOSE
 

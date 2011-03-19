@@ -21,10 +21,12 @@ class CAR
 friend class PERFORMANCE_TESTING;
 friend class joeserialize::Serializer;
 public:
+	class App* pApp;
 	CAR();
 	~CAR();
 	
-	bool Load( class SETTINGS* settings,
+	bool Load(class App* pApp1,
+		class SETTINGS* settings,
 		CONFIGFILE & carconf,
 		const std::string & carpath,
 		const std::string & driverpath,

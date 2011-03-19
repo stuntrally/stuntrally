@@ -15,7 +15,7 @@ bool isnan(double number) {return (number != number);}
 #endif
 
 CAR::CAR() :
-  pSettings(0),
+  pSettings(0), pApp(0),
   last_steer(0),
   debug_wheel_draw(false),
   sector(-1)
@@ -36,7 +36,8 @@ CAR::CAR() :
 CAR::~CAR()
 {	}
 
-bool CAR::Load( SETTINGS* settings,
+bool CAR::Load(class App* pApp1,
+	SETTINGS* settings,
 	CONFIGFILE & carconf,
 	const std::string & carpath,
 	const std::string & driverpath,
@@ -52,6 +53,7 @@ bool CAR::Load( SETTINGS* settings,
   	std::ostream & info_output,
   	std::ostream & error_output )
 {
+	pApp = pApp1;
 	pSettings = settings;
 	cartype = carname;
 	std::stringstream nullout;
@@ -115,7 +117,7 @@ bool CAR::Load( SETTINGS* settings,
 		position = initial_position;
 		orientation = initial_orientation;
 		
-		dynamics.Init(world, bodymodel, wheelmodelfront, wheelmodelrear, position, orientation);
+		dynamics.Init(pApp, world, bodymodel, wheelmodelfront, wheelmodelrear, position, orientation);
 
 		dynamics.SetABS(defaultabs);
 		dynamics.SetTCS(defaulttcs);
@@ -406,48 +408,6 @@ void CAR::SetPosition(const MATHVECTOR <float, 3> & new_position)
 
 void CAR::CopyPhysicsResultsIntoDisplay()
 {
-	/*if (!bodynode) return;
-
-	MATHVECTOR <float, 3> vec;
-	vec = dynamics.GetPosition();
-	bodynode->GetTransform().SetTranslation(vec);
-
-	vec = dynamics.GetCenterOfMassPosition();
-	roadnoise.SetPosition(vec[0],vec[1],vec[2]);
-	crashsound.SetPosition(vec[0],vec[1],vec[2]);
-
-	QUATERNION <float> quat;
-	quat = dynamics.GetOrientation();
-	bodynode->GetTransform().SetRotation(quat);
-
-	for (int i = 0; i < 4; i++)
-	{
-		vec = dynamics.GetWheelPosition(WHEEL_POSITION(i));
-		wheelnode[WHEEL_POSITION(i)]->GetTransform().SetTranslation(vec);
-		tirebump[i].SetPosition(vec[0],vec[1],vec[2]);
-		QUATERNION <float> wheelquat;
-		wheelquat = dynamics.GetWheelOrientation(WHEEL_POSITION(i));
-		wheelnode[WHEEL_POSITION(i)]->GetTransform().SetRotation(wheelquat);
-
-		if (floatingnode[i])
-		{
-			floatingnode[i]->GetTransform().SetTranslation(vec);
-			QUATERNION <float> floatquat;
-			floatquat = dynamics.GetUprightOrientation(WHEEL_POSITION(i));
-			floatingnode[i]->GetTransform().SetRotation(floatquat);
-		}
-
-		//update debug wheel drawing
-		if (debug_wheel_draw)
-		{
-			for (int n = 0; n < 10; n++)
-			{
-				vec = dynamics.GetWheelPosition(WHEEL_POSITION(i), n/9.0);
-				debugwheelnode[i*10+n]->GetTransform().SetTranslation(vec);
-				debugwheelnode[i*10+n]->GetTransform().SetRotation(wheelquat);
-			}
-		}
-	}*/
 }
 
 void CAR::UpdateCameras(float dt)
@@ -469,7 +429,7 @@ void CAR::UpdateCameras(float dt)
 void CAR::Update(double dt)
 {
 	dynamics.Update();
-	CopyPhysicsResultsIntoDisplay();
+	//CopyPhysicsResultsIntoDisplay();
 	UpdateCameras(dt);
 	UpdateSounds(dt);
 }
@@ -482,20 +442,12 @@ void CAR::GetSoundList(std::list <SOUNDSOURCE *> & outputlist)
 		outputlist.push_back(&i->second);
 	}
 
-	for (int i = 0; i < 4; i++)
-		outputlist.push_back(&tiresqueal[i]);
-
-	for (int i = 0; i < 4; i++)
-		outputlist.push_back(&grasssound[i]);
-
-	for (int i = 0; i < 4; i++)
-		outputlist.push_back(&gravelsound[i]);
-
-	for (int i = 0; i < 4; i++)
-		outputlist.push_back(&tirebump[i]);
+	for (int i = 0; i < 4; i++)	outputlist.push_back(&tiresqueal[i]);
+	for (int i = 0; i < 4; i++)	outputlist.push_back(&grasssound[i]);
+	for (int i = 0; i < 4; i++)	outputlist.push_back(&gravelsound[i]);
+	for (int i = 0; i < 4; i++)	outputlist.push_back(&tirebump[i]);
 
 	outputlist.push_back(&crashsound);
-
 	outputlist.push_back(&roadnoise);
 }
 
@@ -535,10 +487,8 @@ void CAR::HandleInputs(const std::vector <float> & inputs, float dt)
 
 	//do shifting
 	int gear_change = 0;
-	if (inputs[CARINPUT::SHIFT_UP] == 1.0)
-		gear_change = 1;
-	if (inputs[CARINPUT::SHIFT_DOWN] == 1.0)
-		gear_change = -1;
+	if (inputs[CARINPUT::SHIFT_UP] == 1.0)		gear_change = 1;
+	if (inputs[CARINPUT::SHIFT_DOWN] == 1.0)	gear_change = -1;
 	int new_gear = cur_gear + gear_change;
 
 	if (inputs[CARINPUT::REVERSE])		new_gear = -1;
@@ -643,29 +593,34 @@ void CAR::UpdateSounds(float dt)
 		float pitchvariation = 0.4;
 
 		SOUNDSOURCE * thesound;
-		const TRACKSURFACE & surface = dynamics.GetWheelContact(WHEEL_POSITION(i)).GetSurface();
-		if (surface.type == TRACKSURFACE::ASPHALT)
+		const TRACKSURFACE * surface = dynamics.GetWheelContact(WHEEL_POSITION(i)).GetSurfacePtr();
+		if (!surface)
+		{
+			thesound = tiresqueal;
+			maxgain = 0.0;
+		}else
+		if (surface->type == TRACKSURFACE::ASPHALT)
 		{
 			thesound = tiresqueal;
 		}
-		else if (surface.type == TRACKSURFACE::GRASS)
+		else if (surface->type == TRACKSURFACE::GRASS)
 		{
 			thesound = grasssound;
 			maxgain = 0.7;
 			pitchvariation = 0.25;
 		}
-		else if (surface.type == TRACKSURFACE::GRAVEL)
+		else if (surface->type == TRACKSURFACE::GRAVEL)
 		{
 			thesound = gravelsound;
 			maxgain = 0.7;
 		}
-		else if (surface.type == TRACKSURFACE::CONCRETE)
+		else if (surface->type == TRACKSURFACE::CONCRETE)
 		{
 			thesound = tiresqueal;
 			maxgain = 0.6;
 			pitchvariation = 0.25;
 		}
-		else if (surface.type == TRACKSURFACE::SAND)
+		else if (surface->type == TRACKSURFACE::SAND)
 		{
 			thesound = grasssound;
 			maxgain = 0.5;  // quieter for sand
@@ -686,17 +641,13 @@ void CAR::UpdateSounds(float dt)
 		groundvel = dynamics.GetWheelVelocity(WHEEL_POSITION(i));
 		thesound[i].SetGain(squeal*maxgain * pSettings->vol_tires);
 		float pitch = (groundvel.Magnitude()-5.0)*0.1;
-		if (pitch < 0)
-			pitch = 0;
-		if (pitch > 1)
-			pitch = 1;
+		if (pitch < 0)	pitch = 0;
+		if (pitch > 1)	pitch = 1;
 		pitch = 1.0 - pitch;
 		pitch *= pitchvariation;
 		pitch = pitch + (1.0-pitchvariation);
-		if (pitch < 0.1)
-			pitch = 0.1;
-		if (pitch > 4.0)
-			pitch = 4.0;
+		if (pitch < 0.1)	pitch = 0.1;
+		if (pitch > 4.0)	pitch = 4.0;
 		thesound[i].SetPitch(pitch);
 	}
 
@@ -775,8 +726,9 @@ float CAR::GetFeedback()
 
 float CAR::GetTireSquealAmount(WHEEL_POSITION i, float* slide, float* s1, float* s2) const
 {
-	const TRACKSURFACE & surface = dynamics.GetWheelContact(WHEEL_POSITION(i)).GetSurface();
-	if (surface.type == TRACKSURFACE::NONE)
+	const TRACKSURFACE* surface = dynamics.GetWheelContact(WHEEL_POSITION(i)).GetSurfacePtr();
+	if (!surface)  return 0;
+	if (surface->type == TRACKSURFACE::NONE)
 		return 0;
 		
 	float d = dynamics.GetWheelContact(WHEEL_POSITION(i)).GetDepth() - 2*GetTireRadius(WHEEL_POSITION(i));

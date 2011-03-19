@@ -66,16 +66,16 @@ void App::Rnd2TexSetup()
 	}
 
 	//  pos dot on minimap  . . . . . . . .
-	if (!ndDot)  {
-		ManualObject* m = Create2D("hud/CarDot", 0.2f);  // dot size
-		m->setVisibilityFlags(2);
-		m->setRenderQueueGroup(RENDER_QUEUE_OVERLAY+1);
-		ndDot = mSceneMgr->getRootSceneNode()->createChildSceneNode(
+	if (!ndPos)  {
+		mpos = Create2D("hud/CarPos", 0.2f, true);  // dot size
+		mpos->setVisibilityFlags(2);
+		mpos->setRenderQueueGroup(RENDER_QUEUE_OVERLAY+1);
+		ndPos = mSceneMgr->getRootSceneNode()->createChildSceneNode(
 			Vector3(xm1+(xm2-xm1)/2, ym1+(ym2-ym1)/2, 0));
 		float fHudSize = 0.04f;
-		ndDot->scale(fHudSize, fHudSize, 1);
-		ndDot->attachObject(m);  }
-	if (ndDot)   ndDot->setVisible(pSet->trackmap);
+		ndPos->scale(fHudSize, fHudSize, 1);
+		ndPos->attachObject(mpos);  }
+	if (ndPos)   ndPos->setVisible(pSet->trackmap);
 	UpdMiniVis();
 }
 
@@ -106,7 +106,7 @@ void App::SaveGrassDens()
 
 	//  rotate, filter
 	//  smooth _par -- in road, gui ?
-	const int f=10;  float ff = 2.f / ((f*2+1)*(f*2+1)) / 255.f;
+	const int f=6;  float ff = 2.f / ((f*2+1)*(f*2+1)) / 255.f;
 	register int v,y,x,i,j,a,b,d;
 
 	for (y = f; y < h-f; ++y) {  a = y*w +f;

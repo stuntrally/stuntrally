@@ -1,10 +1,10 @@
 #ifndef _MODEL_H
 #define _MODEL_H
 
-//#include <string>
-//#include <iostream>
-//#include <cassert>
-//#include <sstream>
+#include <string>
+#include <iostream>
+#include <cassert>
+#include <sstream>
 
 #include "vertexarray.h"
 #include "mathvector.h"
@@ -12,7 +12,6 @@
 #include "joeserialize.h"
 #include "macros.h"
 
-template <typename T> class MATRIX4;
 
 ///loading data into the mesh vertexarray is implemented by derived classes
 class MODEL
@@ -46,16 +45,23 @@ private:
 	void ClearListID();
 	void ClearMetrics() {generatedmetrics = false;}
 	
-//protected:
-public:
+protected:
 	///to be filled by the derived classes
+public:
 	VERTEXARRAY mesh;
 
-public:
 	MODEL() : generatedlistid(false),generatedmetrics(false),radius(0),radiusxz(0) {}
+	MODEL(const std::string & filepath, std::ostream & error_output) :
+		generatedlistid(false),generatedmetrics(false),radius(0),radiusxz(0) 
+	{
+		if (filepath.size() > 4 && filepath.substr(filepath.size()-4) == ".ova")
+			ReadFromFile(filepath, error_output, false);
+		else
+			Load(filepath, error_output, false);
+	}
 	virtual ~MODEL() {Clear();}
 	
-	virtual bool Load(const std::string & strFileName, std::ostream & error_output) {return false;}
+	virtual bool Load(const std::string & strFileName, std::ostream & error_output, bool genlist) {return false;}
 	virtual bool CanSave() const {return false;}  ///< returns true if the model format is capable of saving to a file
 	virtual bool Save(const std::string & strFileName, std::ostream & error_output) const {return false;} ///< optional capability
 	
@@ -74,7 +80,7 @@ public:
 	const std::string GetDiffuseTexture() const {return diffuse_texture;}
 	const std::string GetNormalTexture() const {return normal_texture;}
 	
-	void GenerateListID(std::ostream & error_output);
+	//void GenerateListID(std::ostream & error_output);
 	void GenerateMeshMetrics();
 	void ClearMeshData() {mesh.Clear();}
 	
@@ -92,15 +98,20 @@ public:
 	void Clear() {ClearMeshData();ClearListID();ClearMetrics();}
 	
 	const VERTEXARRAY & GetVertexArray() const {return mesh;}
-	void SetVertexArray(const VERTEXARRAY & newmesh) {Clear(); mesh = newmesh;}
+	void SetVertexArray(const VERTEXARRAY & newmesh);
+	void BuildFromVertexArray(const VERTEXARRAY & newmesh, std::ostream & error_output);
 	
 	bool Loaded() {return (mesh.GetNumFaces() > 0);}
 
-	void Transform(const MATRIX4 <float> & m) {mesh.Transform(m); GenerateMeshMetrics();}
+	void Translate(float x, float y, float z);
+
+	void Rotate(float a, float x, float y, float z);
+	
+	void Scale(float x, float y, float z);
 	
 	AABB <float> GetAABB() const
 	{
-		assert(generatedmetrics);
+//		assert(generatedmetrics);
 		AABB <float> output;
 		output.SetFromCorners(bboxmin, bboxmax);
 		return output;

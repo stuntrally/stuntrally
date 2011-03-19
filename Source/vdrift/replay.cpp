@@ -57,7 +57,7 @@ bool REPLAY::LoadHeader(std::istream & instream, std::ostream & error_output)
 	
 	if (!(stream_version == version_info))
 	{
-		error_output << "Stream version " << stream_version.format_version << "/" << stream_version.inputs_supported << " does not match expected version " << version_info.format_version << "/" << version_info.inputs_supported << endl;
+		error_output << "Stream version " << stream_version.format_version << "/" << stream_version.inputs_supported << " does not match expected version " << version_info.format_version << "/" << version_info.inputs_supported << std::endl;
 		return false;
 	}
 	
@@ -77,7 +77,7 @@ void REPLAY::GetReadyToRecord()
 	inputbuffer.resize(CARINPUT::GAME_ONLY_INPUTS_START_HERE, 0);
 }
 
-void REPLAY::StartRecording(const std::string & newcartype, const std::string & newcarpaint, const std::string & carfilename, const std::string & trackname, ostream & error_log)
+void REPLAY::StartRecording(const std::string & newcartype, const std::string & newcarpaint, const std::string & carfilename, const std::string & trackname, std::ostream & error_log)
 {
 	track = trackname;
 	cartype = newcartype;
@@ -85,12 +85,12 @@ void REPLAY::StartRecording(const std::string & newcartype, const std::string & 
 	
 	GetReadyToRecord();
 	
-	ifstream carfilestream(carfilename.c_str());
+	std::ifstream carfilestream(carfilename.c_str());
 	if (!carfilestream)
-		error_log << "Unable to open car file to put into replay: " << carfilename << endl;
+		error_log << "Unable to open car file to put into replay: " << carfilename << std::endl;
 	while (carfilestream)
 	{
-		string newline;
+		std::string newline;
 		std::getline(carfilestream, newline);
 		carfile.append(newline);
 		carfile.push_back('\n');
@@ -114,10 +114,10 @@ bool REPLAY::StartPlaying(const std::string & replayfilename, std::ostream & err
 	GetReadyToPlay();
 	
 	//open the file
-	ifstream replaystream(replayfilename.c_str(), ifstream::binary);
+	std::ifstream replaystream(replayfilename.c_str(), std::ifstream::binary);
 	if (!replaystream)
 	{
-		error_output << "Error loading replay file: " << replayfilename << endl;
+		error_output << "Error loading replay file: " << replayfilename << std::endl;
 		return false;
 	}
 	
@@ -139,7 +139,7 @@ void REPLAY::StopRecording(const std::string & replayfilename)
 	
 	if (!replayfilename.empty())
 	{
-		ofstream f(replayfilename.c_str());
+		std::ofstream f(replayfilename.c_str());
 		if (f)
 		{
 			SaveHeader(f);
@@ -186,7 +186,7 @@ void REPLAY::RecordFrame(const std::vector <float> & inputs, CAR & car)
 	int framespersecond = 1.0/version_info.framerate;
 	if (frame % framespersecond == 0) //once per second
 	{
-		stringstream statestream;
+		std::stringstream statestream;
 		joeserialize::BinaryOutputSerializer serialize_output(statestream);
 		car.Serialize(serialize_output);
 		stateframes.push_back(STATEFRAME(frame));
@@ -253,7 +253,7 @@ void REPLAY::ProcessPlayStateFrame(const STATEFRAME & frame, CAR & car)
 	
 	//process binary car state
 	//cout << "Playing state frame..." << endl;
-	stringstream statestream(frame.GetBinaryStateData());
+	std::stringstream statestream(frame.GetBinaryStateData());
 	//cout << "Frame size: " << frame.GetBinaryStateData().length() << endl;
 	joeserialize::BinaryInputSerializer serialize_input(statestream);
 	car.Serialize(serialize_input);

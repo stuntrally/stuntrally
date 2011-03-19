@@ -172,7 +172,8 @@ bool GAME::ParseArguments(std::list <std::string> & args)
 	}
 	arghelp["-profile PROFILENAME"] = "Store settings, controls, and records under a separate profile.";
 	
-	if (argmap.find("-profiling") != argmap.end() || argmap.find("-benchmark") != argmap.end())
+	///+
+	//if (argmap.find("-profiling") != argmap.end() || argmap.find("-benchmark") != argmap.end())
 	{
 		PROFILER.init(20);
 		profilingmode = true;
@@ -283,8 +284,8 @@ bool GAME::OneLoop()
 	bool ret = !eventsystem.GetQuit() && (!benchmode || replay.GetPlaying());
 	if (ret)
 	{
-		/*if (profilingmode && frame % 10 == 0)
-			profiling_text.Revise(PROFILER.getAvgSummary(quickprof::MICROSECONDS));*/
+		if (profilingmode && frame % 20 == 0)
+			strProfInfo = PROFILER.getAvgSummary(quickprof::MILLISECONDS);
 
 		qtim.update();
 		double dt = qtim.dt;
@@ -363,7 +364,7 @@ void GAME::AdvanceGameLogic()
 			sound.Pause(true);
 
 			//this next line is required so that the game will see the unpause key
-			carcontrols_local.second.ProcessInput(
+			carcontrols_local.second.ProcessInput(pOgreGame,
 				settings->joytype, eventsystem, carcontrols_local.first->GetLastSteer(), TickPeriod(),
 				settings->joy200, carcontrols_local.first->GetSpeed(), settings->speed_sensitivity,
 				/*graphics.GetW(), graphics.GetH(),*/1280.f, 960.f,
@@ -381,21 +382,21 @@ void GAME::AdvanceGameLogic()
 				if (sound.Enabled())
 					sound.Pause(false);
 				
-				PROFILER.beginBlock("ai");
+				//PROFILER.beginBlock("ai");
 				//ai.Visualize(rootnode);
 				ai.update(TickPeriod(), &track, cars);
-				PROFILER.endBlock("ai");
+				//PROFILER.endBlock("ai");
 				
 				PROFILER.beginBlock("physics");
 				collision.Update(TickPeriod());
 				PROFILER.endBlock("physics");
 				
-				PROFILER.beginBlock("car-update");
+				PROFILER.beginBlock("car");
 				for (std::list <CAR>::iterator i = cars.begin(); i != cars.end(); ++i)
 				{
 					UpdateCar(*i, TickPeriod());
 				}
-				PROFILER.endBlock("car-update");
+				PROFILER.endBlock("car");
 				
 				//PROFILER.beginBlock("timer");
 				UpdateTimer();
@@ -539,7 +540,7 @@ void GAME::UpdateCarInputs(CAR & car)
 	    }
 	    else
             //carinputs = carcontrols_local.second.GetInputs();
-            carinputs = carcontrols_local.second.ProcessInput(
+            carinputs = carcontrols_local.second.ProcessInput(pOgreGame,
 				settings->joytype, eventsystem, car.GetLastSteer(), TickPeriod(),
 	            settings->joy200, car.GetSpeed(), settings->speed_sensitivity,
 		        /*graphics.GetW(), graphics.GetH(),*/1280.f,960.f,
@@ -559,7 +560,15 @@ void GAME::UpdateCarInputs(CAR & car)
  //       carinputs[CARINPUT::CLUTCH] = 1.0;
 	//}
 
+    // mult_thr __ ??
+#if 0
+    std::vector <float> carinputs2(CARINPUT::INVALID, 0.0f);
+    for (int i=0; i < carinputs.size(); ++i)
+		carinputs2.push_back(i < 3 ? 1.f : carinputs[i]);
+	car.HandleInputs(carinputs2, TickPeriod());
+#else
 	car.HandleInputs(carinputs, TickPeriod());
+#endif
 
 	if (carcontrols_local.first == &car)
 	{
@@ -571,7 +580,7 @@ void GAME::UpdateCarInputs(CAR & car)
 		if (replay.GetPlaying())
 		{
 			//this next line allows game inputs to be processed
-			carcontrols_local.second.ProcessInput(
+			carcontrols_local.second.ProcessInput(pOgreGame,
 				settings->joytype, eventsystem, car.GetLastSteer(), TickPeriod(),
 				settings->joy200, car.GetSpeed(), settings->speed_sensitivity,
 				/*graphics.GetW(), graphics.GetH(),*/1280.f,960.f,
@@ -809,7 +818,7 @@ bool GAME::LoadCar(const std::string & carname, const MATHVECTOR <float, 3> & st
 
 	cars.push_back(CAR());
 
-	if (!cars.back().Load( settings, 
+	if (!cars.back().Load(pOgreGame, settings, 
 		carconf, pathmanager.GetCarPath(),
 		pathmanager.GetDriverPath()+"/driver2",
 		carname,

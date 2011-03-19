@@ -98,14 +98,14 @@ void App::NewGame()
 		CreateTrack();
 		CreateMinimap();
 		//CreateRacingLine();  //?-
-		//CreateRoadBezier();
+		//CreateRoadBezier();  //-
 	}
 	if (ter)	//  Terrain
 	{
 		CreateBltTerrain();
-		CreateProps();
-		CreateRoad();  // ~
-		CreateTrees();  /// ^
+		//CreateProps();  //-
+		CreateRoad();
+		CreateTrees();
 	}
 
 	UpdGuiRdStats(road, sc, pGame->timer.GetBestLap(pSet->trackreverse));  // current

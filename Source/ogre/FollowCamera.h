@@ -12,10 +12,12 @@ enum CamTypes
 	CAM_Follow = 0,	//  0 Follow - car rotY & pos from behind car, smooth
 	CAM_Free,		//  1 Free   - free rot, pos from car
 	CAM_Arena,		//  2 Arena  - free pos & rot, fly
-	CAM_Car			//  3 Car    - car pos & rot, full
+	CAM_Car,		//  3 Car    - car pos & rot, full
+	CAM_ExtAng,		//  4 Extended, angles - car rotY & pos, smooth
+	CAM_ALL
 };
 
-const char CAM_Str[4][10] = {"Follow", "Free", "Arena", "Car"};
+const char CAM_Str[CAM_ALL][10] = {"Follow", "Free", "Arena", "Car", "ExtAng" };
 
 
 class CameraAngle

@@ -28,6 +28,11 @@ public:
 		return depth;
 	}
 	
+	const TRACKSURFACE * GetSurfacePtr() const
+	{
+		return surface;
+	}
+
 	const TRACKSURFACE & GetSurface() const
 	{
 		return *surface;

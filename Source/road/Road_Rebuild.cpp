@@ -83,7 +83,7 @@ void SplineRoad::RebuildRoadInt()
 		vector<int> vbSegMrg;  // bool 0 if seg merged, 1 if new
 		vector<Real> vSegTc, vSegLen;
 		vector<Vector3> vwSeg;
-		vector<vector<int>> viwLS;  //  width steps per length point, for each seg
+		vector<vector <int> > viwLS;  //  width steps per length point, for each seg
 		vector<int> viwEq;			// 1 if equal width steps at whole length, in seg
 
 		Real sumLenMrg = 0.f, ltc = 0.f;  int mrgGrp = 0;  //#  stats
@@ -117,8 +117,9 @@ void SplineRoad::RebuildRoadInt()
 
 			//-  Merge length
 			sumLenMrg += len;
-			//  pipe segs and transitions not merged
-			if (sp > 0.f || sp1 > 0.f || sp0 > 0.f)
+			//  merge road and pipe segs, don't merge transitions
+			LogR(toStr(sp0) + "  " + toStr(sp) + "  " + toStr(sp1));
+			if (sp != sp1 || sp != sp0)
 			{	sumLenMrg = 0.f;  ++mrgGrp;  rdPipe += len; //#
 				vbSegMrg.push_back(1);
 			}
@@ -678,7 +679,7 @@ void SplineRoad::RebuildRoadInt()
 				#ifndef ROAD_EDITOR  // in Game
 				if (lod == 0)
 				{
-					btTriangleMesh* trimesh = new btTriangleMesh();
+					btTriangleMesh* trimesh = new btTriangleMesh();  vbtTriMesh.push_back(trimesh);
 					#define vToBlt(v)  btVector3(v.x, -v.z, v.y)
 					#define addTriB(a,b,c)  trimesh->addTriangle(vToBlt(a), vToBlt(b), vToBlt(c));
 
@@ -698,7 +699,7 @@ void SplineRoad::RebuildRoadInt()
 					
 					//  Wall  ]
 					if (wall)
-					{	trimesh = new btTriangleMesh();
+					{	trimesh = new btTriangleMesh();  vbtTriMesh.push_back(trimesh);
 						
 						for (int i = 0; i < iLmrgW-1; ++i)  // length
 						{	int iiW = i* (iwW+1);
@@ -716,7 +717,6 @@ void SplineRoad::RebuildRoadInt()
 						infoW.m_restitution = 0.0;
 						infoW.m_friction = 0.1;  // 0 for wall
 						pGame->collision.AddRigidBody(infoW);
-						//pGame->collision.world.contactPairTest();  //--
 					}
 				}
 				#endif

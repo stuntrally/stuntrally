@@ -7,9 +7,9 @@
 #include "aabb.h"
 #include "aabb_space_partitioning.h"
 
-//#include "btBulletCollisionCommon.h"
-//#include "BulletCollision/Gimpact/btGImpactShape.h"
-//#include "BulletCollision/Gimpact/btGImpactCollisionAlgorithm.h"
+#include "btBulletCollisionCommon.h"
+#include "BulletCollision/Gimpact/btGImpactShape.h"
+#include "BulletCollision/Gimpact/btGImpactCollisionAlgorithm.h"
 
 
 namespace COLLISION_DETECTION

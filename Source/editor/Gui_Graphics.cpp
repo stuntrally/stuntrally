@@ -52,7 +52,7 @@ void App::slTerDetail(SL)
 //  ter dist
 void App::slTerDist(SL)
 {
-	Real v = 1000.f * powf(val/res, 2.f);  pSet->terdist = v;
+	Real v = 2000.f * powf(val/res, 2.f);  pSet->terdist = v;
 	if (mTerrainGlobals)
 		mTerrainGlobals->setCompositeMapDistance(v);
 	if (valTerDist){	Fmt(s, "%4.0f m", v);	valTerDist->setCaption(s);  }

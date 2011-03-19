@@ -11,11 +11,27 @@ bool App::frameRenderingQueued(const FrameEvent& evt)
 		return false;
 
 	//  pos on minimap *
-	if (ndDot)
+	if (ndPos)
 	{
 		Real x = (0.5 - mCamera->getPosition().z / sc.td.fTerWorldSize);
 		Real y = (0.5 + mCamera->getPosition().x / sc.td.fTerWorldSize);
-		ndDot->setPosition(xm1+(xm2-xm1)*x, ym1+(ym2-ym1)*y, 0);
+		ndPos->setPosition(xm1+(xm2-xm1)*x, ym1+(ym2-ym1)*y, 0);
+		///  hud rpm,vel  --------------------------------
+		float angrot = mCamera->getOrientation().getYaw().valueDegrees();
+		float psx = 0.9f * pSet->size_minimap, psy = psx*asp;  // *par len
+
+		const static float d2r = PI/180.f;
+		static float px[4],py[4];
+		for (int i=0; i<4; i++)
+		{
+			float ia = 135.f + float(i)*90.f;
+			float p = -(angrot + ia) * d2r;
+			px[i] = psx*cosf(p);  py[i] =-psy*sinf(p);
+		}
+		if (mpos)  {	mpos->beginUpdate(0);
+			mpos->position(px[0],py[0], 0);  mpos->textureCoord(0, 1);	mpos->position(px[1],py[1], 0);  mpos->textureCoord(1, 1);
+			mpos->position(px[2],py[2], 0);  mpos->textureCoord(1, 0);	mpos->position(px[3],py[3], 0);  mpos->textureCoord(0, 0);
+			mpos->end();  }
 	}
 	
 	//  status overlay
@@ -36,13 +52,9 @@ bool App::frameRenderingQueued(const FrameEvent& evt)
 	if (mStatsOn)
 	{
 		String ss="";
-		if (shift)  ss += "Shift ";
-		if (ctrl)  ss += "Ctrl ";
-		if (alt)  ss += "Alt ";
-
-		if (mbLeft)  ss += "LMB ";
-		if (mbRight)  ss += "RMB ";
-		if (mbMiddle)  ss += "MMB ";
+		if (shift)  ss += "Shift ";	if (mbLeft)  ss += "LMB ";
+		if (ctrl)  ss += "Ctrl ";	if (mbRight)  ss += "RMB ";
+		if (alt)  ss += "Alt ";		if (mbMiddle)  ss += "MMB ";
 
 		using namespace OIS;
 		for (int i=KC_DIVIDE; i > 0; --i)
@@ -62,9 +74,7 @@ bool App::frameRenderingQueued(const FrameEvent& evt)
 				else if (k == KC_NUMPAD7)  k = KC_HOME;		else if (k == KC_NUMPAD8)  k = KC_UP;
 				else if (k == KC_NUMPAD9)  k = KC_PGUP;
 					ss += mKeyboard->getAsString(k) + " ";
-				}
-			}
-		}
+		}	}	}
 		
 		static int mzd = 0;
 		if (mz != 0)  mzd = 30;
@@ -74,18 +84,17 @@ bool App::frameRenderingQueued(const FrameEvent& evt)
 	}
 
 
-	//  page dn/up - trklist
-	static float dir = 0.f;
-	static bool oldUp=0,oldDn=0;
-	if (isKey(PGUP)||isKey(NUMPAD9))
-		dir -= evt.timeSinceLastFrame;
-	if (isKey(PGDOWN)||isKey(NUMPAD3))
-		dir += evt.timeSinceLastFrame;
-	if (abs(dir) > 0.1f)
-	{
-		trkListNext(dir > 0.f ? 1 : -1);
-		dir = 0.f;
-	}/**/
+	//  keys dn/up - trklist
+	static float dirU = 0.f,dirD = 0.f;
+	if (bGuiFocus)
+	{	if (isKey(UP)  ||isKey(NUMPAD8))	dirD += evt.timeSinceLastFrame;  else
+		if (isKey(DOWN)||isKey(NUMPAD2))	dirU += evt.timeSinceLastFrame;  else
+		{	dirU = 0.f;  dirD = 0.f;  }
+		int d = ctrl ? 4 : 1;
+		if (dirU > 0.0f) {  trkListNext( d);  dirU = -0.12f;  }
+		if (dirD > 0.0f) {  trkListNext(-d);  dirD = -0.12f;  }
+	}
+
 	
 	///  Update Info texts  . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 
 	if (edMode == ED_Road && bEdit() && road)
@@ -139,8 +148,8 @@ bool App::frameRenderingQueued(const FrameEvent& evt)
 	///  Modify  . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  
 		//  road point
 		//----------------------------------------------------------------
-		Vector3 vx = mCamera->getRight();	   vx.y = 0;  // on xz
-		Vector3 vz = mCamera->getDirection();  vz.y = 0;
+		Vector3 vx = mCamera->getRight();	   vx.y = 0;  vx.normalise();  // on xz
+		Vector3 vz = mCamera->getDirection();  vz.y = 0;  vz.normalise();
 		Vector3 vy = Vector3::UNIT_Y;
 		if (isKey(LEFT)||isKey(NUMPAD4))  road->Move(-vx*q);	if (isKey(RIGHT)||isKey(NUMPAD6))	road->Move( vx*q);
 		if (isKey(UP)||isKey(NUMPAD8))	  road->Move( vz*q);	if (isKey(DOWN)||isKey(NUMPAD2))	road->Move(-vz*q);
@@ -211,7 +220,7 @@ bool App::frameRenderingQueued(const FrameEvent& evt)
 	static int dti = 5, ti = dti-1;  ++ti;
 	if (road && ti >= dti)
 	{	ti = 0;
-		road->UpdLodVis(pSet->road_dist);
+		road->UpdLodVis(pSet->road_dist, edMode == ED_PrvCam);
 	}/**/
 	return true;
 }
@@ -377,7 +386,8 @@ bool App::frameEnded(const FrameEvent& evt)
 	for (int i=0; i < i_cmdMousePress; ++i)
 	{	const CmdMouseBtn& b = cmdMousePress[i];
 		mGUI->injectMousePress(b.ms.X.abs, b.ms.Y.abs, MyGUI::MouseButton::Enum(b.btn));
-		ShowCursor(0);  }  //??-- cursor after alt-tab
+		SetCursor(0);
+		ShowCursor(0);  }  //?- cursor after alt-tab
 	i_cmdMousePress = 0;
 
 	for (int i=0; i < i_cmdMouseRel; ++i)
@@ -405,10 +415,10 @@ bool App::frameEnded(const FrameEvent& evt)
 		UpdTrees();
 	}
 	///  paged  * * *  ? frameStarted
-	if (road) {
-		if (grass)  grass->update();
-		if (trees)  trees->update();  }
-
+	if (road)
+	{	if (grass)  grass->update();
+		if (trees)  trees->update();
+	}
 	
 	///<>  Edit Ter
 	TerCircleUpd();

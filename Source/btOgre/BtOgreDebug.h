@@ -8,8 +8,8 @@
 #ifndef _BtOgreShapes_H_
 #define _BtOgreShapes_H_
 
-//#include "btBulletDynamicsCommon.h"
-//#include "DynamicLines.h"
+#include "btBulletDynamicsCommon.h"
+#include "DynamicLines.h"
 
 namespace BtOgre  {
 

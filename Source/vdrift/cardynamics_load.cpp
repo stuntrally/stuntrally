@@ -20,7 +20,7 @@ CARDYNAMICS::CARDYNAMICS() :
 	shift_time(0.2),
 	abs(false), tcs(false),
 	maxangle(45.0),
-	bTerrain(false)
+	bTerrain(false), pApp(0)
 {
 	for (int i=0; i<4; ++i)
 	{	bWhOnRoad[i]=0;
@@ -604,7 +604,7 @@ bool CARDYNAMICS::Load(CONFIGFILE & c, std::ostream & error_output)
 	return true;
 }
 
-void CARDYNAMICS::Init(
+void CARDYNAMICS::Init(class App* pApp1,
 	COLLISION_WORLD & world,
 	const MODEL & chassisModel,
 	const MODEL & wheelModelFront,
@@ -612,6 +612,7 @@ void CARDYNAMICS::Init(
 	const MATHVECTOR <T, 3> & position,
 	const QUATERNION <T> & orientation)
 {
+	pApp = pApp1;
 	this->world = &world;
 
 	MATHVECTOR <T, 3> zero(0, 0, 0);
@@ -719,6 +720,7 @@ void CARDYNAMICS::Init(
 	info.m_friction = 0.7;  /// 0.4~ 0.75
 	///  chasis^
 	chassis = world.AddRigidBody(info);
+	chassis->setActivationState(DISABLE_DEACTIVATION);
 	world.AddAction(this);
 #else
 	// init chassis

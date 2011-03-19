@@ -156,18 +156,18 @@ EVENTSYSTEM_SDL::BUTTON_STATE EVENTSYSTEM_SDL::GetKeyState(SDLKey id) const
 	return GetToggle <SDLKey> (keymap, id);
 }
 
-vector <int> EVENTSYSTEM_SDL::GetMousePosition() const
+std::vector <int> EVENTSYSTEM_SDL::GetMousePosition() const
 {
-	vector <int> o;
+	std::vector <int> o;
 	o.reserve(2);
 	o.push_back(mousex);
 	o.push_back(mousey);
 	return o;
 }
 
-vector <int> EVENTSYSTEM_SDL::GetMouseRelativeMotion() const
+std::vector <int> EVENTSYSTEM_SDL::GetMouseRelativeMotion() const
 {
-	vector <int> o;
+	std::vector <int> o;
 	o.reserve(2);
 	o.push_back(mousexrel);
 	o.push_back(mouseyrel);
@@ -271,11 +271,11 @@ QT_TEST(eventsystem_test)
 	//mouse motion stuff
 	{
 		e.TestStim(EVENTSYSTEM_SDL::STIM_INSERT_MOTION);
-		vector <int> mpos = e.GetMousePosition();
+		std::vector <int> mpos = e.GetMousePosition();
 		QT_CHECK_EQUAL(mpos.size(),2);
 		QT_CHECK_EQUAL(mpos[0],50);
 		QT_CHECK_EQUAL(mpos[1],55);
-		vector <int> mrel = e.GetMouseRelativeMotion();
+		std::vector <int> mrel = e.GetMouseRelativeMotion();
 		QT_CHECK_EQUAL(mrel.size(),2);
 		QT_CHECK_EQUAL(mrel[0],2);
 		QT_CHECK_EQUAL(mrel[1],1);
@@ -295,7 +295,7 @@ void EVENTSYSTEM_SDL::RecordFPS(const float fps)
 float EVENTSYSTEM_SDL::GetFPS() const
 {
 	float avg(0);
-	for (list <float>::const_iterator i = fps_memory.begin(); i != fps_memory.end(); i++)
+	for (std::list <float>::const_iterator i = fps_memory.begin(); i != fps_memory.end(); i++)
 	{
 		avg += *i;
 	}

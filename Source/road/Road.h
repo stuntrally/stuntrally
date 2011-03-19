@@ -47,7 +47,7 @@ public:
 		Destroy(), DestroyRoad(), DestroySeg(int id);
 
 	//  Update
-	void UpdLodVis(float fBias=1.f), SetForRnd(String sMtr),UnsetForRnd();
+	void UpdLodVis(float fBias=1.f, bool bFull=false), SetForRnd(String sMtr),UnsetForRnd();
 	void Pick(Camera* mCamera, Real mx, Real my, bool bAddH=false, bool bHide=false);
 	void ToggleMerge();
 
@@ -88,6 +88,7 @@ private:
 	std::vector<Ogre::uint16> idx;	// mesh indices
 #ifndef ROAD_EDITOR
 	std::vector<Vector3> posBt;  // for bullet trimesh
+	std::vector<btTriangleMesh*> vbtTriMesh;  // for delete
 #endif
 	std::vector<Vector3>* at_pos;
 	//  add triangle, with index check

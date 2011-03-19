@@ -338,12 +338,11 @@ bool Scene::SaveXml(String file)
 
 TerData::TerData()
 {
+	hfData = NULL;
 	Default();
 }
 void TerData::Default()
 {
-	hfData = NULL;
-
 	iVertsX = 512*2 +1;
 	fTriangleSize = 1.f;  // scale
 

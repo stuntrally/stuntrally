@@ -14,9 +14,10 @@ bool App::getEditRect(Vector3& pos, Rect& rcBrush, Rect& rcMap, int size,  int& 
 	int mapX = (pos.x + 0.5*tws)/tws*t, mapY = (-pos.z + 0.5*tws)/tws*t;
 	mapX = max(0,min(t-1, mapX)), mapY = max(0,min(t-1, mapY));
 
-	float hBr = (float)mBrSize[curBr] * 0.5f;
+	int brS = (int)mBrSize[curBr];
+	float hBr = brS * 0.5f;
 	rcMap = Rect(mapX-hBr, mapY-hBr, mapX+hBr, mapY+hBr);
-	rcBrush = Rect(0,0, mBrSize[curBr],mBrSize[curBr]);
+	rcBrush = Rect(0,0, brS,brS);
 	cx = 0;  cy = 0;
 
 	if (rcMap.left < 0)  // trim
@@ -41,10 +42,19 @@ bool App::getEditRect(Vector3& pos, Rect& rcBrush, Rect& rcMap, int size,  int& 
 		return false;  // no area
 	
 	/*sprintf(sBrushTest,
-		"map: %3d %3d  %3d %3d  pos %3d %3d\n"
-		"br: %3d %3d  %3d %3d  c: %3d %3d"
-		,rcMap.left, rcMap.top, rcMap.right, rcMap.bottom,  mapX, mapY
-		,rcBrush.left, rcBrush.top, rcBrush.right, rcBrush.bottom, cx, cy); /**/
+		" ---br rect--- \n"
+		"size: %3d %6.3f \n"
+		"pos %3d %3d  c: %3d %3d \n"
+		"rect:  %3d %3d  %3d %3d \n"
+		"map: %3d %3d  %3d %3d \n"
+		"br: %3d %3d  %3d %3d \n"
+		,brS, mBrSize[curBr]
+		,mapX, mapY, cx, cy
+		 ,rcMap.right-rcMap.left, rcMap.bottom-rcMap.top
+		 ,rcBrush.right-rcBrush.left, rcBrush.bottom-rcBrush.top
+		,rcMap.left, rcMap.top, rcMap.right, rcMap.bottom
+		,rcBrush.left, rcBrush.top, rcBrush.right, rcBrush.bottom);
+	Log(String(sBrushTest));/**/
 	return true;
 }
 
@@ -54,20 +64,19 @@ void App::updBrush()
 	if (mBrSize[curBr] < 1)  mBrSize[curBr] = 1;
 	if (mBrSize[curBr] > BrushMaxSize)  mBrSize[curBr] = BrushMaxSize;
 
-	int pos = 0, size = mBrSize[curBr];
-	float s = mBrSize[curBr] * 0.5f;
+	int size = (int)mBrSize[curBr], a = 0;
+	float s = size * 0.5f;
 
 	for (int y = 0; y < size; ++y)
-	{	pos = y * BrushMaxSize;
-		for (int x = 0; x < size; ++x)
+	{	a = y * BrushMaxSize;
+		for (int x = 0; x < size; ++x, ++a)
 		{	// -1..1
-			float fx = ((float)x - s)/s;  //*0.98f;  //|-
+			float fx = ((float)x - s)/s;
 			float fy = ((float)y - s)/s;
 			float d = max(0.f, 1.f - sqrt(fx*fx + fy*fy));
 			//float c = abs(d);
 			float c = sinf(d * PI*0.5f);
-			mBrushData[pos] = powf(c, mBrPow[curBr]);  //c*c;
-			++pos;
+			mBrushData[a] = powf(c, mBrPow[curBr]);
 	}	}
 }
 
@@ -93,6 +102,7 @@ void App::deform(Vector3 &pos, float dtime, float brMul)
 
 		for (int i = rcMap.left; i < rcMap.right; ++i)
 		{
+			///  pos float -> sin data compute here ...
 			fHmap[mapPos] += mBrushData[brPos] * its;
 			++mapPos;  ++brPos;
 		}

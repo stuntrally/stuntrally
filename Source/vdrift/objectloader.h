@@ -1,6 +1,7 @@
 #ifndef _OBJECTLOADER_H
 #define _OBJECTLOADER_H
 
+#include "joepack.h"
 #include "model_joe03.h"
 #include "track_object.h"
 #include "tracksurface.h"

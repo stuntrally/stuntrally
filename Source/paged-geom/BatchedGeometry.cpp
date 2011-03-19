@@ -260,6 +260,28 @@ BatchedGeometry::SubBatchIterator BatchedGeometry::getSubBatchIterator() const
 
 String BatchedGeometry::getFormatString(SubEntity *ent)
 {
+	const int BufSize = 1024;
+	static char buf[BufSize];
+
+	int countWritten = _snprintf_s( buf, BufSize, "%s|%d",
+				ent->getMaterialName().c_str(), 
+				ent->getSubMesh()->indexData->indexBuffer->getType());
+
+	const VertexDeclaration::VertexElementList &elemList = ent->getSubMesh()->vertexData->vertexDeclaration->getElements();
+	VertexDeclaration::VertexElementList::const_iterator i;
+	for (i = elemList.begin(); i != elemList.end(); ++i)
+	{
+		const VertexElement &element = *i;
+		countWritten += _snprintf_s( buf + countWritten, BufSize - countWritten, BufSize - countWritten,
+				"|%d|%d|%d",
+				element.getSource(), element.getSemantic(), element.getType());
+   }
+   return buf;
+}
+
+/*  old - slow
+String BatchedGeometry::getFormatString(SubEntity *ent)
+{
 	StringUtil::StrStreamType str;
 
 	str << ent->getMaterialName() << "|";
@@ -276,7 +298,7 @@ String BatchedGeometry::getFormatString(SubEntity *ent)
 	}
 
 	return str.str();
-}
+}/**/
 
 void BatchedGeometry::build()
 {

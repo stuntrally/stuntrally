@@ -76,45 +76,40 @@ void App::CreateHUD()
 		ndMap->scale(fHudSize, fHudSize*asp, 1);
 		ndMap->attachObject(m);
 		
-		//  car dot
-		m = Create2D("hud/CarDot", 0.2f);  // dot size  -par
-		m->setVisibilityFlags(2);
-		m->setRenderQueueGroup(RENDER_QUEUE_OVERLAY+1);
-		ndDot = ndMap->createChildSceneNode();
-		ndDot ->scale(fHudSize*asp, fHudSize, 1);
-		ndDot->attachObject(m);
+		//  car pos dot
+		mpos = Create2D("hud/CarPos", 0.2f, true);  // dot size  -par
+		mpos->setVisibilityFlags(2);
+		mpos->setRenderQueueGroup(RENDER_QUEUE_OVERLAY+1);
+		ndPos = ndMap->createChildSceneNode();
+		ndPos->scale(fHudSize*asp, fHudSize, 1);
+		ndPos->attachObject(mpos);
 		ndMap->setVisible(pSet->trackmap);
 	}
 
 	
 	//  backgr  gauges
-	ManualObject* mrpmB = Create2D("hud/rpm",1);
-	mrpmB->setVisibilityFlags(2);
+	ManualObject* mrpmB = Create2D("hud/rpm",1);	mrpmB->setVisibilityFlags(2);
 	mrpmB->setRenderQueueGroup(RENDER_QUEUE_OVERLAY);
 	nrpmB = mSceneMgr->getRootSceneNode()->createChildSceneNode();
 	nrpmB->attachObject(mrpmB);	nrpmB->setScale(0,0,0);  nrpmB->setVisible(false);
 
-	ManualObject* mvelBk = Create2D("hud/kmh",1);
-	mvelBk->setVisibilityFlags(2);
+	ManualObject* mvelBk = Create2D("hud/kmh",1);	mvelBk->setVisibilityFlags(2);
 	mvelBk->setRenderQueueGroup(RENDER_QUEUE_OVERLAY);
 	nvelBk = mSceneMgr->getRootSceneNode()->createChildSceneNode();
 	nvelBk->attachObject(mvelBk);	nvelBk->setScale(0,0,0);  mvelBk->setVisible(false);
 		
-	ManualObject* mvelBm = Create2D("hud/mph",1);
-	mvelBm->setVisibilityFlags(2);
+	ManualObject* mvelBm = Create2D("hud/mph",1);	mvelBm->setVisibilityFlags(2);
 	mvelBm->setRenderQueueGroup(RENDER_QUEUE_OVERLAY);
 	nvelBm = mSceneMgr->getRootSceneNode()->createChildSceneNode();
 	nvelBm->attachObject(mvelBm);	nvelBm->setScale(0,0,0);  mvelBm->setVisible(false);
 		
 	//  needles
-	mrpm = Create2D("hud/needle",1,true);
-	mrpm->setVisibilityFlags(2);
+	mrpm = Create2D("hud/needle",1,true);	mrpm->setVisibilityFlags(2);
 	mrpm->setRenderQueueGroup(RENDER_QUEUE_OVERLAY+2);
 	nrpm = mSceneMgr->getRootSceneNode()->createChildSceneNode();
 	nrpm->attachObject(mrpm);	nrpm->setScale(0,0,0);	nrpm->setVisible(false);
 	
-	mvel = Create2D("hud/needle",1,true);
-	mvel->setVisibilityFlags(2);
+	mvel = Create2D("hud/needle",1,true);	mvel->setVisibilityFlags(2);
 	mvel->setRenderQueueGroup(RENDER_QUEUE_OVERLAY+2);
 	nvel = mSceneMgr->getRootSceneNode()->createChildSceneNode();
 	nvel->attachObject(mvel);	nvel->setScale(0,0,0);	nvel->setVisible(false);
@@ -184,7 +179,7 @@ void App::UpdateHUD(CAR* pCar, float time)
 	if (bSizeHUD)
 	{	bSizeHUD = false;
 		SizeHUD(true);	}
-	if (!pCar)  return;
+	if (!pCar || !ndCar)  return;
 	
 	///  hud rpm,vel  --------------------------------
     float vel = pCar->GetSpeedometer() * (pSet->show_mph ? 2.23693629f : 3.6f);
@@ -192,34 +187,37 @@ void App::UpdateHUD(CAR* pCar, float time)
     float angrmp = pCar->GetEngineRPM()*rsc + rmin;
     float vsc = pSet->show_mph ? -180.f/100.f : -180.f/160.f, vmin = 0.f;  //vel
     float angvel = abs(vel)*vsc + vmin;
+    float angrot = ndCar->getOrientation().getYaw().valueDegrees();
+    float sx = 1.4f, sy = sx*asp;  // *par len
+    float psx = 2.1f * pSet->size_minimap, psy = psx*asp;  // *par len
 
-    float sx = 1.4, sy = sx*asp;  // *par len
-
-    float rx[4],ry[4], vx[4],vy[4];
+    const static float d2r = PI/180.f;
+    static float rx[4],ry[4], vx[4],vy[4], px[4],py[4];
     for (int i=0; i<4; i++)
     {
 		float ia = 45.f + float(i)*90.f;
-		float r = -(angrmp + ia) * PI/180.f;
-		float v = -(angvel + ia) * PI/180.f;
+		float r = -(angrmp + ia) * d2r;
+		float v = -(angvel + ia) * d2r;
+		float p = -(angrot + ia) * d2r;
 		rx[i] = sx*cosf(r);  ry[i] =-sy*sinf(r);
 		vx[i] = sx*cosf(v);  vy[i] =-sy*sinf(v);
+		px[i] = psx*cosf(p);  py[i] =-psy*sinf(p);
     }
     
-    if (mrpm)  {
-		mrpm->beginUpdate(0);
-		mrpm->position(rx[0],ry[0], 0);  mrpm->textureCoord(0, 1);
-		mrpm->position(rx[1],ry[1], 0);  mrpm->textureCoord(1, 1);
-		mrpm->position(rx[2],ry[2], 0);  mrpm->textureCoord(1, 0);
-		mrpm->position(rx[3],ry[3], 0);  mrpm->textureCoord(0, 0);
+    if (mrpm)  {	mrpm->beginUpdate(0);
+		mrpm->position(rx[0],ry[0], 0);  mrpm->textureCoord(0, 1);	mrpm->position(rx[1],ry[1], 0);  mrpm->textureCoord(1, 1);
+		mrpm->position(rx[2],ry[2], 0);  mrpm->textureCoord(1, 0);	mrpm->position(rx[3],ry[3], 0);  mrpm->textureCoord(0, 0);
 		mrpm->end();  }
 
-	if (mvel)  {
-		mvel->beginUpdate(0);
-		mvel->position(vx[0],vy[0], 0);  mvel->textureCoord(0, 1);
-		mvel->position(vx[1],vy[1], 0);  mvel->textureCoord(1, 1);
-		mvel->position(vx[2],vy[2], 0);  mvel->textureCoord(1, 0);
-		mvel->position(vx[3],vy[3], 0);  mvel->textureCoord(0, 0);
+	if (mvel)  {	mvel->beginUpdate(0);
+		mvel->position(vx[0],vy[0], 0);  mvel->textureCoord(0, 1);	mvel->position(vx[1],vy[1], 0);  mvel->textureCoord(1, 1);
+		mvel->position(vx[2],vy[2], 0);  mvel->textureCoord(1, 0);	mvel->position(vx[3],vy[3], 0);  mvel->textureCoord(0, 0);
 		mvel->end();  }
+		
+	if (mpos)  {	mpos->beginUpdate(0);
+		mpos->position(px[0],py[0], 0);  mpos->textureCoord(0, 1);	mpos->position(px[1],py[1], 0);  mpos->textureCoord(1, 1);
+		mpos->position(px[2],py[2], 0);  mpos->textureCoord(1, 0);	mpos->position(px[3],py[3], 0);  mpos->textureCoord(0, 0);
+		mpos->end();  }
 
 
 	//  gear, vel texts  -----------------------------
@@ -243,7 +241,7 @@ void App::UpdateHUD(CAR* pCar, float time)
 		//hudVel->setPosition(-0.1 + (w-1024.f)/1600.f*0.07/*0.11*/,-0.01);
 
 		float k = pCar->GetSpeedometer() * 3.6f * 0.0025f;	// vel clr
-		#define m01(x)  __min(1, __max(0, x))
+		#define m01(x)  min(1.0, max(0.0, (double) x))
 		hudVel->setColour(ColourValue(m01(k*2), m01(0.5+k*1.5-k*k*2.5), m01(1+k*0.8-k*k*3.5)));
 	}
 	
@@ -285,13 +283,19 @@ void App::UpdateHUD(CAR* pCar, float time)
 	//-----------------------------------------------------------------------------------------------
 
 	//  car debug text  --------
-	if (pSet->car_dbgtxt)
+	/*if (pSet->car_dbgtxt)
 	{
 		std::stringstream s1,s2,s3,s4;
 		pCar->DebugPrint(s1, true, false, false, false);  ovU[0]->setCaption(s1.str());
 		pCar->DebugPrint(s2, false, true, false, false);  ovU[1]->setCaption(s2.str());
 		pCar->DebugPrint(s3, false, false, true, false);  ovU[2]->setCaption(s3.str());
 		pCar->DebugPrint(s4, false, false, false, true);  ovU[3]->setCaption(s4.str());
+	}/**/
+
+	//  profiling times
+	if (pGame->profilingmode)
+	{
+		ovU[3]->setCaption(pGame->strProfInfo);
 	}
 
 	//  wheels slide, susp bars  --------

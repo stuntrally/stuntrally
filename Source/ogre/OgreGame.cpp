@@ -2,12 +2,13 @@
 #include "OgreGame.h"
 #include "../vdrift/game.h"
 #include "FollowCamera.h"
+#include "../road/Road.h"
 
 
 //  ctors  -----------------------------------------------
 App::App()
-	:pGame(0), pSet(0), ndCar(0), ndDot(0), ndMap(0), ndLine(0)
-	,nrpmB(0),nvelBk(0),nvelBm(0), nrpm(0),nvel(0), mrpm(0),mvel(0)
+	:pGame(0), pSet(0), ndCar(0), ndPos(0), ndMap(0), ndLine(0)
+	,nrpmB(0),nvelBk(0),nvelBm(0), nrpm(0),nvel(0), mrpm(0),mvel(0),mpos(0)
 	,hudGear(0),hudVel(0), hudAbs(0),hudTcs(0), hudTimes(0), hudCheck(0)
 	,ovGear(0),ovVel(0), ovAbsTcs(0), ovCarDbg(0),ovCarDbgTxt(0), ovCam(0), ovTimes(0)
 	// hud
@@ -17,7 +18,7 @@ App::App()
 	,mTerrainGlobals(0), mTerrainGroup(0), mPaging(false)
 	,mTerrainPaging(0), mPageManager(0)
 	// gui
-	,mToolTip(0), mToolTipTxt(0)
+	,mToolTip(0), mToolTipTxt(0), carList(0), trkList(0)
 	,valAnisotropy(0), valViewDist(0), valTerDetail(0), valTerDist(0), valRoadDist(0)  // detail
 	,valTrees(0), valGrass(0), valTreesDist(0), valGrassDist(0)  // paged
 	,valReflSkip(0), valReflSize(0), valReflFaces(0), valReflDist(0)  // refl
@@ -66,8 +67,27 @@ App::~App()
 
 void App::destroyScene()
 {
+	mToolTip = 0;  //?
     destroyReflectCams();
-	BaseApp::destroyScene();
+
+	//  destroy all
+	//mSceneMgr->destroyAllManualObjects();
+	//mSceneMgr->destroyAllEntities();
+	//mSceneMgr->destroyAllStaticGeometry();
+
+	////  par sys
+	//if (pr)  {  mSceneMgr->destroyParticleSystem(pr);   pr=0;  }
+	//if (pr2) {  mSceneMgr->destroyParticleSystem(pr2);  pr2=0;  }
+	//for (int w=0; w < 4; w++)  {
+	//	if (ps[w]) {  mSceneMgr->destroyParticleSystem(ps[w]);   ps[w]=0;  }
+	//	if (pm[w]) {  mSceneMgr->destroyParticleSystem(pm[w]);   pm[w]=0;  }
+	//	if (pd[w]) {  mSceneMgr->destroyParticleSystem(pd[w]);   pd[w]=0;  }  }
+
+	//terrain = 0;
+	//if (mTerrainGroup)
+	//	mTerrainGroup->removeAllTerrains();
+	if (road)
+	{	road->DestroyRoad();  delete road;  road = 0;  }
 
 	if (grass) {  delete grass->getPageLoader();  delete grass;  grass=0;   }
 	if (trees) {  delete trees->getPageLoader();  delete trees;  trees=0;   }
@@ -75,6 +95,9 @@ void App::destroyScene()
 	if (pGame)
 		pGame->End();
 	delete[] sc.td.hfData;
+	delete[] blendMtr;  blendMtr = 0;
+
+	BaseApp::destroyScene();
 }
 
 

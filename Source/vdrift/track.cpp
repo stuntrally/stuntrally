@@ -125,7 +125,7 @@ bool TRACK::LoadLapSequence(const std::string & trackpath, bool reverse)
 		for (int l = 0; l < lapmarkers; l++)
 		{
 			float lapraw[3];
-			stringstream lapname;
+			std::stringstream lapname;
 			lapname << "lap sequence " << l;
 			trackconfig.GetParam(lapname.str(), lapraw);
 			int roadid = lapraw[0];
@@ -134,12 +134,12 @@ bool TRACK::LoadLapSequence(const std::string & trackpath, bool reverse)
 			//info_output << "Looking for lap sequence: " << roadid << ", " << patchid << endl;
 
 			int curroad = 0;
-			for (list <ROADSTRIP>::iterator i = roads.begin(); i != roads.end(); ++i)
+			for (std::list <ROADSTRIP>::iterator i = roads.begin(); i != roads.end(); ++i)
 			{
 				if (curroad == roadid)
 				{
 					int curpatch = 0;
-					for (list <ROADPATCH>::const_iterator p = i->GetPatchList().begin(); p != i->GetPatchList().end(); ++p)
+					for (std::list <ROADPATCH>::const_iterator p = i->GetPatchList().begin(); p != i->GetPatchList().end(); ++p)
 					{
 						if (curpatch == patchid)
 						{
@@ -317,7 +317,7 @@ bool TRACK::LoadParameters(const std::string & trackpath)
 	//cout << vertical_tracking_skyboxes << endl;
 
 	int sp_num = 0;
-	stringstream sp_name;
+	std::stringstream sp_name;
 	sp_name << "start position " << sp_num;
 	float f3[3];
 	float f1;
@@ -371,7 +371,7 @@ bool TRACK::LoadSurfaces(const std::string & trackpath)
 	
 	usesurfaces = true;
 	
-	list <string> sectionlist;
+	std::list <std::string> sectionlist;
 	param.GetSectionList(sectionlist);
 		
 	TRACKSURFACE tempsurface;
@@ -380,7 +380,7 @@ bool TRACK::LoadSurfaces(const std::string & trackpath)
 	//tracksurfaces.resize(sectionlist.size());
 	tracksurfaces.clear();//
 	
-	for (list<string>::const_iterator section = sectionlist.begin(); section != sectionlist.end(); ++section)
+	for (std::list<std::string>::const_iterator section = sectionlist.begin(); section != sectionlist.end(); ++section)
 	{
 		tempsurface.name = *section;
 		

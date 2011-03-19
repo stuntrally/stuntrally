@@ -2,16 +2,16 @@
 
 #include "joeserialize.h"
 
-//#include <list>
-//#include <map>
-//#include <vector>
-//#include <iostream>
-//#include <string>
-//#include <sstream>
-//#include <fstream>
-//#include <cstring>
-//#include <cmath>
-//#include <cstdio>
+#include <list>
+#include <map>
+#include <vector>
+#include <iostream>
+#include <string>
+#include <sstream>
+#include <fstream>
+#include <cstring>
+#include <cmath>
+#include <cstdio>
 
 #include "unittest.h"
 
@@ -71,11 +71,11 @@ class TEST_PLAYER
 		string player_description;
 		bool alive;
 		bool aiming;
-		list <int> simplelist;
-		list <TEST_VERTEX> complexlist;
-		map <string, TEST_VERTEX> mymap;
-		vector <TEST_VERTEX> myvector;
-		vector <TEST_VERTEX> myvector2;
+		std::list <int> simplelist;
+		std::list <TEST_VERTEX> complexlist;
+		std::map <std::string, TEST_VERTEX> mymap;
+		std::vector <TEST_VERTEX> myvector;
+		std::vector <TEST_VERTEX> myvector2;
 		double curtime;
 		float x;
 		pair <string, int> somepair;
@@ -168,10 +168,10 @@ QT_TEST(TextSerializer_test)
 	QT_CHECK_EQUAL(player2.name,"Test player");
 
 	//create comparison values
-	list <int> local_simplelist;
+	std::list <int> local_simplelist;
 	local_simplelist.push_back(9);
 	local_simplelist.push_back(8);
-	list <TEST_VERTEX> local_complexlist;
+	std::list <TEST_VERTEX> local_complexlist;
 	local_complexlist.push_back(TEST_VERTEX(7,6,5));
 	local_complexlist.push_back(TEST_VERTEX(4,3,2));
 	local_complexlist.push_back(TEST_VERTEX(1,0,-1));
@@ -179,8 +179,8 @@ QT_TEST(TextSerializer_test)
 	QT_CHECK_EQUAL(player2.simplelist.size(),local_simplelist.size());
 
 	{
-		list <int>::iterator i;
-		list <int>::iterator n;
+		std::list <int>::iterator i;
+		std::list <int>::iterator n;
 		for (i = player2.simplelist.begin(),
 			 n = local_simplelist.begin();
 			 i != player2.simplelist.end() && n != local_simplelist.end(); i++,n++)
@@ -192,8 +192,8 @@ QT_TEST(TextSerializer_test)
 	QT_CHECK_EQUAL(player2.complexlist.size(),local_complexlist.size());
 
 	{
-		list <TEST_VERTEX>::iterator i;
-		list <TEST_VERTEX>::iterator n;
+		std::list <TEST_VERTEX>::iterator i;
+		std::list <TEST_VERTEX>::iterator n;
 		int count;
 		for (i = player2.complexlist.begin(),
 			 n = local_complexlist.begin(),
@@ -264,10 +264,10 @@ QT_TEST(BinarySerializer_test)
 	QT_CHECK_EQUAL(player2.name,"Test player");
 
 	//create comparison values
-	list <int> local_simplelist;
+	std::list <int> local_simplelist;
 	local_simplelist.push_back(9);
 	local_simplelist.push_back(8);
-	list <TEST_VERTEX> local_complexlist;
+	std::list <TEST_VERTEX> local_complexlist;
 	local_complexlist.push_back(TEST_VERTEX(7,6,5));
 	local_complexlist.push_back(TEST_VERTEX(4,3,2));
 	local_complexlist.push_back(TEST_VERTEX(1,0,-1));
@@ -275,8 +275,8 @@ QT_TEST(BinarySerializer_test)
 	QT_CHECK_EQUAL(player2.simplelist.size(),local_simplelist.size());
 
 	{
-		list <int>::iterator i;
-		list <int>::iterator n;
+		std::list <int>::iterator i;
+		std::list <int>::iterator n;
 		for (i = player2.simplelist.begin(),
 			 n = local_simplelist.begin();
 			 i != player2.simplelist.end() && n != local_simplelist.end(); i++,n++)
@@ -288,8 +288,8 @@ QT_TEST(BinarySerializer_test)
 	QT_CHECK_EQUAL(player2.complexlist.size(),local_complexlist.size());
 
 	{
-		list <TEST_VERTEX>::iterator i;
-		list <TEST_VERTEX>::iterator n;
+		std::list <TEST_VERTEX>::iterator i;
+		std::list <TEST_VERTEX>::iterator n;
 		int count;
 		for (i = player2.complexlist.begin(),
 			 n = local_complexlist.begin(),
@@ -385,10 +385,10 @@ QT_TEST(ReflectionSerializer_test)
 	QT_CHECK_EQUAL(player2.name,"Test player");
 
 	//create comparison values
-	list <int> local_simplelist;
+	std::list <int> local_simplelist;
 	local_simplelist.push_back(9);
 	local_simplelist.push_back(8);
-	list <TEST_VERTEX> local_complexlist;
+	std::list <TEST_VERTEX> local_complexlist;
 	local_complexlist.push_back(TEST_VERTEX(7,6,5));
 	local_complexlist.push_back(TEST_VERTEX(4,3,2));
 	local_complexlist.push_back(TEST_VERTEX(1,0,-1));
@@ -396,8 +396,8 @@ QT_TEST(ReflectionSerializer_test)
 	QT_CHECK_EQUAL ( player2.simplelist.size(),local_simplelist.size() );
 	
 	{
-		list <int>::iterator i;
-		list <int>::iterator n;
+		std::list <int>::iterator i;
+		std::list <int>::iterator n;
 		for ( i = player2.simplelist.begin(),
 		        n = local_simplelist.begin();
 		        i != player2.simplelist.end() && n != local_simplelist.end(); i++,n++ )
@@ -409,8 +409,8 @@ QT_TEST(ReflectionSerializer_test)
 	QT_CHECK_EQUAL ( player2.complexlist.size(),local_complexlist.size() );
 	
 	{
-		list <TEST_VERTEX>::iterator i;
-		list <TEST_VERTEX>::iterator n;
+		std::list <TEST_VERTEX>::iterator i;
+		std::list <TEST_VERTEX>::iterator n;
 		int count;
 		for ( i = player2.complexlist.begin(),
 		        n = local_complexlist.begin(),
@@ -468,10 +468,10 @@ QT_TEST(serialization_test_bin_compatibility)
 	QT_CHECK_EQUAL(player2.name,"Test player");
 
 	//create comparison values
-	list <int> local_simplelist;
+	std::list <int> local_simplelist;
 	local_simplelist.push_back(9);
 	local_simplelist.push_back(8);
-	list <TEST_VERTEX> local_complexlist;
+	std::list <TEST_VERTEX> local_complexlist;
 	local_complexlist.push_back(TEST_VERTEX(7,6,5));
 	local_complexlist.push_back(TEST_VERTEX(4,3,2));
 	local_complexlist.push_back(TEST_VERTEX(1,0,-1));
@@ -479,8 +479,8 @@ QT_TEST(serialization_test_bin_compatibility)
 	QT_CHECK_EQUAL(player2.simplelist.size(),local_simplelist.size());
 
 	{
-		list <int>::iterator i;
-		list <int>::iterator n;
+		std::list <int>::iterator i;
+		std::list <int>::iterator n;
 		for (i = player2.simplelist.begin(),
 			 n = local_simplelist.begin();
 			 i != player2.simplelist.end() && n != local_simplelist.end(); i++,n++)
@@ -492,8 +492,8 @@ QT_TEST(serialization_test_bin_compatibility)
 	QT_CHECK_EQUAL(player2.complexlist.size(),local_complexlist.size());
 
 	{
-		list <TEST_VERTEX>::iterator i;
-		list <TEST_VERTEX>::iterator n;
+		std::list <TEST_VERTEX>::iterator i;
+		std::list <TEST_VERTEX>::iterator n;
 		int count;
 		for (i = player2.complexlist.begin(),
 			 n = local_complexlist.begin(),

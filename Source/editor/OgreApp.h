@@ -30,7 +30,7 @@ public:
 	Scene sc;  /// scene.xml
 
 	TRACKSURFACE su[8];  void LoadSurf(const String& trk), SaveSurf(const String& trk);
-	Light* sun;  void UpdFog(), UpdSun();
+	Light* sun;  void UpdFog(bool bForce=false), UpdSun();
 
 	void UpdWndTitle(), SaveCam();
 	void LoadTrack(), SaveTrack(), UpdateTrack();
@@ -60,7 +60,7 @@ protected:
 
 
 	///  rnd to tex  minimap  * * * * * * * * *
-	SceneNode *ndDot;
+	SceneNode *ndPos;  ManualObject* mpos;
 	ManualObject* Create2D(const String& mat, Real s, bool dyn=false);
 	Real asp, xm1,ym1,xm2,ym2;
 	void Rnd2TexSetup(), UpdMiniVis();

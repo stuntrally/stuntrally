@@ -3,6 +3,8 @@
 
 #include "reseatable_reference.h"
 
+#include <SDL/SDL.h>
+
 class TEXTUREINFO
 {
 private:

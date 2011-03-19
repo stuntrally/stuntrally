@@ -49,7 +49,7 @@ void SplineRoad::ToggleMerge()
 
 ///  update road lods visibility
 //--------------------------------------------------------------------------------------------------------
-void SplineRoad::UpdLodVis(float fBias)
+void SplineRoad::UpdLodVis(float fBias, bool bFull)
 {
 	iVis = 0;  iTris = 0;
 	const Real fDist[LODs+1] = {-800/*!temp -120*/, 40, 80, 140, 1000};
@@ -58,7 +58,7 @@ void SplineRoad::UpdLodVis(float fBias)
 	for (size_t seg = 0; seg < vSegs.size(); ++seg)
 	{
 		#ifdef ROAD_EDITOR
-		bool bSel = (vSel.size() == 0 && seg == iChosen || vSel.find(seg) != vSel.end());
+		bool bSel = !bFull && ((vSel.size() == 0 && seg == iChosen || vSel.find(seg) != vSel.end()));
 		#endif
 		
 		RoadSeg& rs = vSegs[seg];
@@ -73,14 +73,14 @@ void SplineRoad::UpdLodVis(float fBias)
 		for (int i=0; i < LODs; ++i)
 		{
 			bool vis;
+			if (bFull)  vis = i==0;  else  // all in 1st lod for preview
 			vis = d >= fDist[i] * fBias && d < fDist[i+1] * fBias;  // normal
 			/*if (bMerge)  vis = rs.mrgLod == i;  // vis mrg test-
 			else  vis = i == 3;  /**/// check lod 0
 			
 			#ifdef ROAD_EDITOR
 			if (vis)
-			if (bSel)  rs.road[i].ent->setMaterialName(rs.sMtrRd + "_sel");
-			else	   rs.road[i].ent->setMaterialName(rs.sMtrRd);
+				rs.road[i].ent->setMaterialName(bSel ? rs.sMtrRd + "_sel" : rs.sMtrRd);
 			#endif
 			
 			rs.road[i].ent->setVisible(vis);

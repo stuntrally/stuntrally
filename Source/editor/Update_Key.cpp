@@ -37,6 +37,7 @@ void App::UpdVisGui()
 		mWndOpts->setVisible(bGuiFocus);
 	if (mGUI)  mGUI->setVisiblePointer(bGuiFocus || !bMoveCam);
 	if (road)  road->SetTerHitVis(bEdit());
+	if (!bGuiFocus && mToolTip)  mToolTip->setVisible(false);
 }
 
 void App::Status(String s, float r,float g,float b)
@@ -46,6 +47,47 @@ void App::Status(String s, float r,float g,float b)
 	ovSt->setMaterialName("hud/Times");
 	ovSt->show();
 	fStFade = 1.5f;
+}
+
+
+///  Preview Camera mode  - - - - - - - - - - - - - - - - - - - - - - - -
+void App::togPrvCam()
+{
+	static bool oldV = false;
+	if (edMode == ED_PrvCam)  // leave
+	{
+		edMode = edModeOld;
+		mViewport->setVisibilityMask(255);
+		rt[RTs].ndMini->setVisible(false);
+		ndCar->setVisible(true);
+
+		UpdFog();  // restore fog, veget
+		if (oldV)  {  bTrGrUpd = true;  oldV = false;  }
+		mTerrainGlobals->setMaxPixelError(pSet->terdetail);
+
+		sc.camPos = mCameraT->getPosition();
+		sc.camDir = mCameraT->getDirection();
+		mCameraT->setPosition( mCamPosOld);
+		mCameraT->setDirection(mCamDirOld);
+	}else  // enter
+	{
+		edModeOld = edMode;
+		edMode = ED_PrvCam;
+		bMoveCam = true;  UpdVisGui();
+		mViewport->setVisibilityMask(256);
+		rt[RTs].ndMini->setVisible(true);
+		ndCar->setVisible(false);
+
+		UpdFog(true);  // on fog, veget
+		if (!pSet->bTrees)  {  bTrGrUpd = true;  oldV = true;  }
+		mTerrainGlobals->setMaxPixelError(0.5f);  //hq ter
+
+		mCamPosOld = mCameraT->getPosition();
+		mCamDirOld = mCameraT->getDirection();
+		mCameraT->setPosition( sc.camPos);
+		mCameraT->setDirection(sc.camDir);
+	}
+	UpdEditWnds();
 }
 
 
@@ -60,7 +102,7 @@ void App::trkListNext(int rel)
 	listTrackChng(trkList,i);
 }
 
-bool App::KeyPress( const CmdKey &arg )
+bool App::KeyPress(const CmdKey &arg)
 {	
 	using namespace OIS;
 
@@ -82,7 +124,7 @@ bool App::KeyPress( const CmdKey &arg )
 	}
 
 
-	int num = mWndTabs->getItemCount();
+	int num = mWndOpts ? mWndTabs->getItemCount() : 0;
 
 	switch (arg.key)  //  global keys  ---------------------
 	{
@@ -212,7 +254,9 @@ bool App::KeyPress( const CmdKey &arg )
 	switch (arg.key)
 	{
 		case KC_TAB:	//  Camera / Edit mode
-		if (!bGuiFocus)  {
+		if (!bGuiFocus && !alt)  {
+			SetCursor(0);
+			ShowCursor(0);  //?- cursor after alt-tab
 			bMoveCam = !bMoveCam;  UpdVisGui();  }	break;
 
 		//  fog
@@ -241,36 +285,4 @@ bool App::KeyPress( const CmdKey &arg )
 		case KC_F7:  togPrvCam();  break;
 	}
 	return true;
-}
-
-
-///  Preview Camera mode  - - - - - - - - - - - - - - - - - - - - - - - -
-void App::togPrvCam()
-{
-	if (edMode == ED_PrvCam)  // leave
-	{
-		edMode = edModeOld;
-		mViewport->setVisibilityMask(255);
-		rt[RTs].ndMini->setVisible(false);
-		ndCar->setVisible(true);
-
-		sc.camPos = mCameraT->getPosition();
-		sc.camDir = mCameraT->getDirection();
-		mCameraT->setPosition( mCamPosOld);
-		mCameraT->setDirection(mCamDirOld);
-	}else  // enter
-	{
-		edModeOld = edMode;
-		edMode = ED_PrvCam;
-		bMoveCam = true;  UpdVisGui();
-		mViewport->setVisibilityMask(256);
-		rt[RTs].ndMini->setVisible(true);
-		ndCar->setVisible(false);
-
-		mCamPosOld = mCameraT->getPosition();
-		mCamDirOld = mCameraT->getDirection();
-		mCameraT->setPosition( sc.camPos);
-		mCameraT->setDirection(sc.camDir);
-	}
-	UpdEditWnds();
 }

@@ -21,7 +21,7 @@ class myclass
 bool starts_with_1(const std::string & s) {return (s[0] == '1');}
 };
 
-std::ostream & operator << (std::ostream &os, const vector <string> & v)
+std::ostream & operator << (std::ostream &os, const std::vector <string> & v)
 {
 	for (size_t i = 0; i < v.size()-1; i++)
 	{
@@ -33,13 +33,13 @@ std::ostream & operator << (std::ostream &os, const vector <string> & v)
 
 QT_TEST(calgo_test)
 {
-	vector <string> vec;
+	std::vector <string> vec;
 	vec.push_back("1234");
 	vec.push_back("4321");
 	vec.push_back("133");
 	QT_CHECK_EQUAL(&(*calgo::find(vec, "133")), &vec[2]);
 	
-	vector <string> vec2;
+	std::vector <string> vec2;
 	//vec2.resize(vec.size());
 	calgo::copy(vec, std::back_inserter(vec2));
 	QT_CHECK(vec == vec2);
@@ -47,22 +47,22 @@ QT_TEST(calgo_test)
 	TESTONLY::myclass myobject = calgo::for_each(vec, TESTONLY::myclass());
 	QT_CHECK_EQUAL(myobject.sum, 11);
 	
-	vector <string> vec3;
+	std::vector <string> vec3;
 	calgo::copy_if(vec, std::back_inserter(vec3), TESTONLY::starts_with_1);
 	QT_CHECK_EQUAL(vec3.size(), 2);
 	QT_CHECK_EQUAL(vec3[0], "1234");
 	QT_CHECK_EQUAL(vec3[1], "133");
 	
-	vector <int> vec4(vec.size());
+	std::vector <int> vec4(vec.size());
 	calgo::transform(vec, vec4.begin(), std::mem_fun_ref(&string::length));
 	QT_CHECK_EQUAL(vec4.size(), 3);
 	QT_CHECK_EQUAL(vec4[0], 4);
 	QT_CHECK_EQUAL(vec4[1], 4);
 	QT_CHECK_EQUAL(vec4[2], 3);
 	
-	vector <string> vec5;
-	vector <string> target;
-	vector <unsigned int> todel;
+	std::vector <string> vec5;
+	std::vector <string> target;
+	std::vector <unsigned int> todel;
 	
 	vec5.clear();
 	target.clear();

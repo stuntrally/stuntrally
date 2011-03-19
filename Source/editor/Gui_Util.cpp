@@ -9,6 +9,7 @@ using namespace MyGUI;
 
 void App::SetGuiFromXmls()
 {
+	if (!mWndOpts)  return;
 	// set slider value, upd text
 	HScrollPtr sl;  size_t v;
 

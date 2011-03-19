@@ -24,10 +24,18 @@ void App::CreateBltTerrain()
 	btVector3 scl(sc.td.fTriangleSize, sc.td.fTriangleSize, 1);
 	hfShape->setLocalScaling(scl);
 
-	btRigidBody::btRigidBodyConstructionInfo infoHm(0.f, 0, hfShape);
+	/*btRigidBody::btRigidBodyConstructionInfo infoHm(0.f, 0, hfShape);
 	infoHm.m_restitution = 0.5;  //
 	infoHm.m_friction = 0.9;  ///.. 0.9~
-	pGame->collision.AddRigidBody(infoHm);
+	pGame->collision.AddRigidBody(infoHm);/**/
+
+	btCollisionObject* col = new btCollisionObject();
+	col->setCollisionShape(hfShape);
+	//col->setWorldTransform(tr);
+	col->setFriction(0.9);
+	col->setRestitution(0.5);
+	pGame->collision.world.addCollisionObject(col);
+	pGame->collision.shapes.push_back(hfShape);/**/
 
 	
 	///  border planes []
@@ -265,8 +273,8 @@ void App::UpdParsTrails()
 {
 	for (int w=0; w < 4; w++)
 	{
-		if (whTrl[w]){  whTrl[w]->setVisible(pSet->trails);  /*grp = whTrl[w]->getRenderQueueGroup();*/  }
-		Ogre::uint8 grp = RENDER_QUEUE_9;  // after glass
+		Ogre::uint8 grp = RENDER_QUEUE_9;  //9=road  after glass
+		if (whTrl[w]){  whTrl[w]->setVisible(pSet->trails);  whTrl[w]->setRenderQueueGroup(grp);  }  grp += 2;
 		if (ps[w])	{	ps[w]->setVisible(pSet->particles);  ps[w]->setRenderQueueGroup(grp);  }  // vdr only && !sc.ter
 		if (pm[w])	{	pm[w]->setVisible(pSet->particles);  pm[w]->setRenderQueueGroup(grp);  }
 		if (pd[w])	{	pd[w]->setVisible(pSet->particles);  pd[w]->setRenderQueueGroup(grp);  }

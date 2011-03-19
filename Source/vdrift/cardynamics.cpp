@@ -8,6 +8,7 @@
 #include "collision_world.h"
 #include "tobullet.h"
 #include "model.h"
+#include "../ogre/OgreGame.h"
 
 typedef CARDYNAMICS::T T;
 
@@ -786,10 +787,11 @@ void CARDYNAMICS::UpdateBody(T dt, T drive_torque[])
 	ApplyAerodynamicsToBody(dt);
 	
 
+	//... move to inputs[
 	///***  manual car flip over  ---------------------------------------------------------------------------------
-	bool flipLeft = GetAsyncKeyState('Q');
-	bool flipRight= GetAsyncKeyState('W');
-	bool shift = GetAsyncKeyState(VK_SHIFT);
+	bool flipLeft = pApp->isKey(OIS::KC_Q);
+	bool flipRight= pApp->isKey(OIS::KC_W);
+	bool shift = pApp->isKey(OIS::KC_LSHIFT)||pApp->isKey(OIS::KC_RSHIFT);
 	int flip = (flipLeft ? -1 : 0) + (flipRight ? 1 : 0);
 	if (flip)
 	{
@@ -802,8 +804,8 @@ void CARDYNAMICS::UpdateBody(T dt, T drive_torque[])
 		ApplyTorque(v);
 	}
 	///***  boost
-	bool alt = GetAsyncKeyState(VK_MENU);
-	bool ctrl = GetAsyncKeyState(VK_CONTROL);
+	bool alt = pApp->isKey(OIS::KC_LMENU)||pApp->isKey(OIS::KC_RMENU);
+	bool ctrl = pApp->isKey(OIS::KC_LCONTROL)||pApp->isKey(OIS::KC_RCONTROL);
 	if (alt || ctrl)
 	{
 		T f = body.GetMass() * 16.f;

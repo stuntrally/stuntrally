@@ -53,7 +53,7 @@ void TIMER::Tick(float dt)
 
 	assert(elapsed_time >= 0);
 
-	for (vector <LAPINFO>::iterator i = car.begin(); i != car.end(); ++i)
+	for (std::vector <LAPINFO>::iterator i = car.begin(); i != car.end(); ++i)
 		i->Tick(elapsed_time);
 }
 
@@ -63,7 +63,7 @@ void TIMER::Lap(const unsigned int carid, const int prevsector, const int nextse
 
 	if (countit && carid == playercarindex)
 	{
-		stringstream secstr;
+		std::stringstream secstr;
 		secstr << "sector " << nextsector;
 		string lastcar;
 		/*if (trackrecords.GetParam("last.car", lastcar))

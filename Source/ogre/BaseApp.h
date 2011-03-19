@@ -50,8 +50,10 @@ protected:
 
 	///  input
 	OIS::InputManager* mInputManager;
+public:
 	OIS::Mouse* mMouse;  OIS::Keyboard* mKeyboard;
-
+	bool isKey(OIS::KeyCode k)  {  return mKeyboard->isKeyDown(k);  }
+protected:
 
 	///  ovelay
 	Overlay* mDebugOverlay, *mFpsOverlay;  // fps stats

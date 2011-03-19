@@ -1,9 +1,9 @@
 #ifndef _VERTEXARRAY_H
 #define _VERTEXARRAY_H
 
-//#include <vector>
-//#include <cassert>
-//#include <cstring>
+#include <vector>
+#include <cassert>
+#include <cstring>
 
 #include "joeserialize.h"
 #include "macros.h"

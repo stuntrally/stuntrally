@@ -1,11 +1,16 @@
 #pragma once
-#define WINVER 0x0501
-#define _WIN32_WINNT 0x0501
-#define _WIN32_WINDOWS 0x0410
-#define WIN32_LEAN_AND_MEAN
-//  win
-#include <windows.h>
-#include <strsafe.h>
+
+#include <OgrePlatform.h>
+#if OGRE_PLATFORM  == OGRE_PLATFORM_WIN32
+	#define WINVER 0x0501
+	#define _WIN32_WINNT 0x0501
+	#define _WIN32_WINDOWS 0x0410
+	#define WIN32_LEAN_AND_MEAN
+	//  win
+	#include <windows.h>
+	#include <strsafe.h>
+#endif
+
 #include "tinyxml.h"
 
 //  Ogre
@@ -25,7 +30,6 @@
 #include <OIS/OISInputManager.h>
 #include <OIS/OISKeyboard.h>
 #include <OIS/OISMouse.h>
-//#include <SdkCameraMan.h>
 
 #include <OgreTerrain.h>
 #include <OgreTerrainGroup.h>
@@ -41,7 +45,7 @@ using namespace Ogre;
 #define M_PI	3.141592654
 #endif 
 #define PI  Ogre::Math::PI 
-#define toStr(v)  Ogre::StringConverter::toString(v)
+#define toStr(v)   Ogre::StringConverter::toString(v)
 #define toStrC(v)  Ogre::StringConverter::toString(v).c_str()
 
 #define Log(s)  Ogre::LogManager::getSingleton().logMessage(s);

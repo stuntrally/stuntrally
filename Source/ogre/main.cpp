@@ -1,4 +1,5 @@
 #include "stdafx.h"
+//#include "vld.h" //+
 #include "../vdrift/game.h"
 #include "OgreGame.h"
 
@@ -15,9 +16,21 @@ DWORD WINAPI VprThread(LPVOID lpParam)
     return 0;
 }
 
-//int main(int argc, char* argv[])
-int APIENTRY WinMain(HINSTANCE hInst, HINSTANCE hPrev, LPTSTR lpCmdLine, int nCmdShow)
+#include <OgrePlatform.h>
+#if OGRE_PLATFORM  == OGRE_PLATFORM_WIN32
+	int APIENTRY WinMain(HINSTANCE hInst, HINSTANCE hPrev, LPTSTR lpCmdLine, int nCmdShow)
+#else
+	int main(int argc, char* argv[])
+#endif
 {	
+	//  Enable run-time memory check for debug builds
+	/*#if defined(DEBUG) | defined(_DEBUG)
+		_CrtSetDbgFlag( //_CRTDBG_CHECK_CRT_DF |
+			//_CRTDBG_CHECK_ALWAYS_DF | 
+			//_CRTDBG_CHECK_EVERY_1024_DF | 
+			_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF );
+	#endif/**/
+
 	//  Load Settings
 	PATHMANAGER paths;  std::stringstream dummy;
 	paths.Init(dummy, dummy);
@@ -46,7 +59,7 @@ int APIENTRY WinMain(HINSTANCE hInst, HINSTANCE hPrev, LPTSTR lpCmdLine, int nCm
 
     ///  game  ------------------------------
     GAME* pGame = new GAME(info_output, error_output, &settings);
-	std::list <string> args;//(argv, argv + argc);
+	std::list <std::string> args;//(argv, argv + argc);
 	pGame->Start(args);  //game.End();
 
 	App* pApp = new App();

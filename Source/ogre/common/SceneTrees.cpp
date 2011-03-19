@@ -4,6 +4,7 @@
 #else
 	#include "../OgreGame.h"
 	#include "../vdrift/settings.h"
+	#include "../vdrift/game.h"
 #endif
 #include "../../paged-geom/GrassLoader.h"
 #include "../../paged-geom/BatchPage.h"
@@ -119,9 +120,24 @@ void App::CreateTrees()
 			int cnt = fTrees * 6000 * pg.dens;
 			for (int i = 0; i < cnt; i++)
 			{
+			#if 1
 				yaw = getRndAngle();
 				pos.x = getTerPos();  pos.z = getTerPos();
+				Vector3 pos0 = pos;
+				Real scl = Math::RangeRandom(pg.minScale, pg.maxScale);
+			#else
+				yaw = Degree((i*45)%360);
+				pos.z = -100 +(i / 10) * 20;  pos.x = -100 +(i % 10) * 20;
+				Vector3 pos0 = pos;
+				Real scl = 1.f;
+			#endif
 				bool add = true;
+
+				//  ofs pos, rotY, scl
+				Vector2 vofs(1.2,-0.5), vo;  float yr = -yaw.valueRadians();
+				vo.x = vofs.x * cos(yr) - vofs.y * sin(yr);
+				vo.y = vofs.x * sin(yr) + vofs.y * cos(yr);
+				pos.x += vo.x * scl;  pos.z += vo.y * scl;
 				
 				//  check if on road
 				if (r > 0)
@@ -140,8 +156,29 @@ void App::CreateTrees()
 				
 				if (!add)  continue;
 
-				treeLoader->addTree(ent, pos, yaw,
-					Math::RangeRandom(pg.minScale, pg.maxScale));
+				treeLoader->addTree(ent, pos0, yaw, scl);
+					
+			#if 0
+			#ifndef ROAD_EDITOR  //  in Game
+				///  add to bullet world, ..gui opt	// lower fps  83 > 72
+				pos.y = terrain->getHeightAtWorldPosition(pos.x, 0, pos.z);
+				btVector3 pc(pos.x, -pos.z, pos.y + 1.4*scl);  // center
+				// offset xyz, mul by rotY mat, mul scale + ..
+				
+				btTransform tr;  tr.setIdentity();  tr.setOrigin(pc);
+
+				//btCollisionShape* shp = new btSphereShape(0.5f);
+				btCollisionShape* shp = new btCapsuleShapeZ(0.8f * scl, 2.f * scl);
+				//shp->setUserPointer((void*)7777);  // mark as ..
+
+				btCollisionObject* col = new btCollisionObject();
+				col->setCollisionShape(shp);	col->setWorldTransform(tr);
+				col->setFriction(0.2);			col->setRestitution(0.9);
+				col->setCollisionFlags(col->getCollisionFlags() | btCollisionObject::CF_STATIC_OBJECT | btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT);
+				pGame->collision.world.addCollisionObject(col);
+				pGame->collision.shapes.push_back(shp);/**/
+			#endif
+			#endif
 			}
 		}
 

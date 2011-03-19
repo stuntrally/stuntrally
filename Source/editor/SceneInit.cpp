@@ -214,7 +214,7 @@ void App::TerCircleUpd()
 {
 	if (!moTerC || !terrain || !road)  return;
 
-	bool edTer = bEdit() && (edMode == ED_Deform || edMode == ED_Smooth);
+	bool edTer = bEdit() && (edMode == ED_Deform || edMode == ED_Smooth) && road->bHitTer;
 	ndTerC->setVisible(edTer);
 	if (!edTer)  return;
 	

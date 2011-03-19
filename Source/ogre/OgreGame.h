@@ -26,7 +26,7 @@ public:
 	Vector3 newPos,vCarY;  Quaternion newRot;
 
 	Scene sc;  /// scene.xml
-	Light* sun;  void UpdFog(), UpdSun();
+	Light* sun;  void UpdFog(bool bForce=false), UpdSun();
 
 protected:
 	virtual void createScene();
@@ -64,8 +64,8 @@ protected:
 		fMiniX,fMiniY, scX,scY, ofsX,ofsY, minX,maxX, minY,maxY;  // minimap
 
 	SceneNode *nrpmB, *nvelBk,*nvelBm, *nrpm, *nvel;  // gauges
-	SceneNode *ndDot, *ndMap, *ndLine;  // car pos on minimap
-	ManualObject* mrpm, *mvel;
+	SceneNode *ndPos, *ndMap, *ndLine;  // car pos on minimap
+	ManualObject* mrpm, *mvel, *mpos;
 	ManualObject* Create2D(const String& mat, Real size, bool dyn = false);
 
 	OverlayElement* hudGear,*hudVel, *ovL[5],*ovR[5],*ovS[5],*ovU[5], *hudAbs,*hudTcs, *hudTimes,*hudCheck;
@@ -167,10 +167,11 @@ protected:
 	ButtonPtr chDbgT,chDbgB, chBlt,chFps, chTimes,chMinimp;
 
 	//  game
-	String sListCar, sListTrack;
+	String sListCar,sListTrack;  ListPtr carList,trkList;
 	void listCarChng(List* li, size_t pos),		btnChgCar(WP);
 	void listTrackChng(List* li, size_t pos),	btnChgTrack(WP);
-	void btnNewGame(WP), btnShadows(WP);
+	void btnNewGame(WP),btnNewGameStart(WP), btnShadows(WP);
+	void trkListNext(int rel), carListNext(int rel);
 
 	#define StTrk 12
 	StaticImagePtr imgCar,imgPrv,imgMini,imgTer;  EditPtr trkDesc;

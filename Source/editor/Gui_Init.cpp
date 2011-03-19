@@ -108,7 +108,7 @@ void App::InitGui()
 	//------------------------------------------------------------------------
 	//  detail
 	Slv(TerDetail,	powf(pSet->terdetail /20.f, 0.5f));
-	Slv(TerDist,	powf(pSet->terdist /1000.f, 0.5f));
+	Slv(TerDist,	powf(pSet->terdist /2000.f, 0.5f));
 	Slv(ViewDist,	powf((pSet->view_distance -50.f)/6950.f, 0.5f));
 	Slv(RoadDist,	powf(pSet->road_dist /4.f, 0.5f));
 

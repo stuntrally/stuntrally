@@ -14,7 +14,7 @@ void FollowCamera::update( Real time )
 	const Quaternion qo = Quaternion(Degree(180),Vector3(0,0,1)) * Quaternion(Degree(-90),Vector3(0,1,0));
 	Quaternion  orient = mGoalNode->getOrientation() * qo;
 	Vector3  ofs = orient * ca.mOffset,  goalLook = mGoalNode->getPosition() + ofs;
-
+	
     if (ca.mType == CAM_Car)	/* 3 Car - car pos & rot full */
     {
 		mCamera->setPosition( goalLook );
@@ -50,6 +50,25 @@ void FollowCamera::update( Real time )
 			orient.FromAngleAxis(orient.getYaw(), Vector3::UNIT_Y);
 			goalPos += orient * xyz;
 		}	break;
+		
+		case CAM_ExtAng:
+		{
+			///  new  ---
+			Quaternion  orient = mGoalNode->getOrientation() * Quaternion(Degree(90),Vector3(0,1,0));
+			Quaternion  ory;  ory.FromAngleAxis(orient.getYaw(), Vector3::UNIT_Y);
+			static Quaternion qq;
+
+			if (first)  {  qq = ory;  first = false;  }
+			else
+				qq = orient.Slerp(ca.mSpeed * time, qq, ory, true);
+
+			goalPos += qq * (xyz + ca.mOffset);
+			
+			mCamera->setPosition( goalPos );
+			mCamera->setOrientation( qq * Quaternion(Degree(-ca.mPitch),Vector3(1,0,0)) );
+			updInfo(time);
+			return;
+		}	break;
 	}
 
 	/* Move */
@@ -66,7 +85,7 @@ void FollowCamera::update( Real time )
 
 	/* Look */
     if (ca.mType == CAM_Arena)
-		goalLook = ca.mOffset +Vector3(x,-y,z);
+		goalLook = ca.mOffset + Vector3(x,-y,z);
     else
 	if (mGoalNode)
 		goalLook = mGoalNode->getPosition() + ofs;
@@ -88,7 +107,6 @@ void FollowCamera::Move( bool mbLeft, bool mbRight, bool mbMiddle, bool shift, R
 {
 	fMoveTime = 0;
 	bool arena = ca.mType == CAM_Arena;
-	//Real vmyH = Vector3(0, s*my * -0.01, 0)
 	Real myH = my * -0.01, mzH = mz/120.f;
 	mx *= 0.005;  my *= 0.005;
 
@@ -130,6 +148,22 @@ void FollowCamera::Move( bool mbLeft, bool mbRight, bool mbMiddle, bool shift, R
 		return;
 	}
 	//----------------------------------------------
+	if (ca.mType == CAM_ExtAng)
+	{
+		if (mbMiddle)
+		{	ca.mOffset.x = 0;  ca.mOffset.z = 0;  }
+		if (mbLeft)
+		{
+			ca.mPitch -= Radian(my);
+			ca.mDist  *= 1.0 - mx * 0.4;
+		}
+		if (mbRight)
+		if (shift)	ca.mOffset += Vector3(0, -my, 0);
+		else		ca.mOffset += Vector3(mx, 0, my);
+
+		ca.mDist  *= 1.0 - mzH * 0.1;
+		return;
+	}
 	if (ca.mType == CAM_Car)
 	{
 		if (mbMiddle)
@@ -144,7 +178,7 @@ void FollowCamera::Move( bool mbLeft, bool mbRight, bool mbMiddle, bool shift, R
 
 		ca.mOffset += Vector3(0, mzH * 0.004, 0);
 		return;
-	}/**/
+	}
 	//----------------------------------------------
 	if (mbMiddle)
 	{
@@ -175,7 +209,6 @@ void FollowCamera::Move( bool mbLeft, bool mbRight, bool mbMiddle, bool shift, R
 			ca.mDist = 1.5;
 	}
 	ca.mDist  *= 1.0 - mzH * 0.1;
-	//ca.mPitch += Radian(mzH * 2.f*M_PI/180.f);
 }
 
 
@@ -199,18 +232,23 @@ void FollowCamera::updInfo(Real time)
 	case CAM_Follow: sprintf(ss,
 		"Type: %d %s  Yaw:%5.1f Pitch:%5.1f  Dist:%5.1f  Height: %3.1f  Speed: %2.0f\n"
 		"LEFT: Pitch  shift: Rotate | RIGHT: Height  shift: Dist,H | Middle: reset Yaw  shift: Speed | Wheel: Dist"  // | S: save"
-		,ca.mType, CAM_Str[ca.mType], ca.mYaw.valueDegrees(), ca.mPitch.valueDegrees(), ca.mDist,
-		ca.mOffset.y, /*ca.mOffset.x, ca.mOffset.z,*/ ca.mSpeed);	break;
+		,ca.mType, CAM_Str[ca.mType], ca.mYaw.valueDegrees(), ca.mPitch.valueDegrees(), ca.mDist
+		,ca.mOffset.y, ca.mSpeed);	break;
 	case CAM_Free:   sprintf(ss,
 		"Type: %d %s  Yaw:%5.1f Pitch:%5.1f  Dist:%5.1f  Height: %3.1f  Speed: %2.0f\n"
 		"LEFT: Pitch  shift: Rotate | RIGHT: Height  shift: Dist,H | Middle: reset Height  shift: Speed | Wheel: Dist"
-		,ca.mType, CAM_Str[ca.mType], ca.mYaw.valueDegrees(), ca.mPitch.valueDegrees(), ca.mDist,
-		ca.mOffset.y, /*ca.mOffset.x, ca.mOffset.z,*/ ca.mSpeed);	break;
+		,ca.mType, CAM_Str[ca.mType], ca.mYaw.valueDegrees(), ca.mPitch.valueDegrees(), ca.mDist
+		,ca.mOffset.y, ca.mSpeed);	break;
+	case CAM_ExtAng:   sprintf(ss,
+		"Type: %d %s  Pitch:%5.1f  Dist:%5.1f  Height: %3.1f  Offset: %3.1f %3.1f  Speed: %3.1f\n"
+		"LEFT: Pitch, Dist | RIGHT: offset  shift: Height | Middle: reset offset  shift: Speed | Wheel: Dist"
+		,ca.mType, CAM_Str[ca.mType], ca.mPitch.valueDegrees(), ca.mDist
+		,ca.mOffset.y, ca.mOffset.x, ca.mOffset.z, ca.mSpeed);	break;
 	case CAM_Arena:  sprintf(ss,
 		"Type: %d %s  Yaw:%5.1f Pitch:%5.1f  Dist:%5.1f  Pos: %3.1f %3.1f %3.1f  Speed: %2.0f\n"
 		"LEFT: Rotate  shift: Pitch | RIGHT: move  shift: Height | Middle: move,H | Wheel: Pitch"
-		,ca.mType, CAM_Str[ca.mType], ca.mYaw.valueDegrees(), ca.mPitch.valueDegrees(), ca.mDist,
-		ca.mOffset.x, ca.mOffset.y, ca.mOffset.z, ca.mSpeed);	break;
+		,ca.mType, CAM_Str[ca.mType], ca.mYaw.valueDegrees(), ca.mPitch.valueDegrees(), ca.mDist
+		,ca.mOffset.x, ca.mOffset.y, ca.mOffset.z, ca.mSpeed);	break;
 	case CAM_Car:    sprintf(ss,
 		"Type: %d %s  Height: %3.1f  Offset: %3.1f %3.1f\n"
 		"LEFT: Height | RIGHT: offset | Middle: reset offsetX"
@@ -232,8 +270,7 @@ void FollowCamera::updAngle()
 	
     ca = *c;  // copy
 
-	if (ovName)
-		//ovName->setCaption(ca.mName);
+	if (ovName)  // ovName->setCaption(ca.mName);
 		ovName->setCaption( toStr(miCurrent+1) + "/" + toStr(miCount)
 			+ ((ca.mMain > 0) ? ". " : "  ") + ca.mName);
 	updInfo();

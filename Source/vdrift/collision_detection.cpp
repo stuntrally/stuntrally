@@ -57,11 +57,11 @@ void COLLISION_WORLD::CollideRay(const MATHVECTOR <float, 3> & position, const M
    
    if (settings.GetStaticCollide())
    {
-      list <COLLISION_OBJECT *> candidates;
+      std::list <COLLISION_OBJECT *> candidates;
       colspeedup.Query(AABB<float>::RAY(rpos, rdir, length), candidates);
       
       //cout << "collision candidates: " << candidates.size() << endl;
-      for (list <COLLISION_OBJECT *>::iterator i = candidates.begin(); i != candidates.end(); ++i)
+      for (std::list <COLLISION_OBJECT *>::iterator i = candidates.begin(); i != candidates.end(); ++i)
       {
          if (settings.CanCollide(**i))
          {
@@ -148,7 +148,7 @@ void COLLISION_WORLD::CollideObject(COLLISION_OBJECT & object, std::list <COLLIS
    //return;
    
    //determine collision candidates in a speedy way
-   list <COLLISION_OBJECT *> candidates;
+   std::list <COLLISION_OBJECT *> candidates;
    colspeedup.Query(object.GetBBOX(), candidates);
    
    btCollisionAlgorithm * algo(NULL);
@@ -157,7 +157,7 @@ void COLLISION_WORLD::CollideObject(COLLISION_OBJECT & object, std::list <COLLIS
    
    //std::cout << "Manifolds before: " << collisiondispatcher.getNumManifolds() << std::endl;
    
-   for (list <COLLISION_OBJECT *>::iterator i = candidates.begin(); i != candidates.end(); ++i)
+   for (std::list <COLLISION_OBJECT *>::iterator i = candidates.begin(); i != candidates.end(); ++i)
    {
       algo = collisiondispatcher->findAlgorithm(&object.GetBulletObject(), &((*i)->GetBulletObject()));
       
@@ -290,7 +290,7 @@ bool COLLISION_WORLD::PassesFilter(const COLLISION_SETTINGS & settings, void * c
 {
    bool exception = false;
    
-   for (list <void *>::const_iterator i = settings.GetExceptionObjectIDs().begin(); i != settings.GetExceptionObjectIDs().end(); ++i)
+   for (std::list <void *>::const_iterator i = settings.GetExceptionObjectIDs().begin(); i != settings.GetExceptionObjectIDs().end(); ++i)
    {
       exception = exception || (*i == checkme);
    }

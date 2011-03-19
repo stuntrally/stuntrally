@@ -1,19 +1,19 @@
 #ifndef _JOESERIALIZE_H
 #define _JOESERIALIZE_H
 
-//#include <list>
-//#include <deque>
-//#include <map>
-//#include <set>
-//#include <iostream>
-//#include <string>
-//#include <sstream>
-//#include <vector>
-//#include <iomanip>
+#include <list>
+#include <deque>
+#include <map>
+#include <set>
+#include <iostream>
+#include <string>
+#include <sstream>
+#include <vector>
+#include <iomanip>
 
 #ifdef USE_TR1
-//#include <tr1/unordered_map>
-//#include <tr1/unordered_set>
+#include <tr1/unordered_map>
+#include <tr1/unordered_set>
 #endif
 
 namespace joeserialize

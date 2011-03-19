@@ -21,7 +21,7 @@
 #include "ai.h"
 #include "quickmp.h"
 
-#include "..\Ogre\QTimer.h"
+#include "../ogre/QTimer.h"
 
 
 class GAME
@@ -30,7 +30,7 @@ class GAME
 public:
 	class App* pOgreGame;
 	float TickPeriod() const {return framerate;}
-	bool OneLoop();
+	bool OneLoop();  std::string strProfInfo;
 	QTimer qtim;
 	
 	bool ParseArguments(std::list <std::string> & args);

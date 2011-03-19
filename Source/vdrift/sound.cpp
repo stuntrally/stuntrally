@@ -4,27 +4,27 @@
 #include "unittest.h"
 #include "endian_utility.h"
 
-//#include <cstdio>
-//#include <cstring>
-//#include <cassert>
-//#include <cmath>
+#include <cstdio>
+#include <cstring>
+#include <cassert>
+#include <cmath>
 
-//#include <sstream>
+#include <sstream>
 using std::stringstream;
 
-//#include <list>
+#include <list>
 using std::list;
 
-//#include <iostream>
+#include <iostream>
 using std::endl;
 
-//#include <string>
+#include <string>
 using std::string;
 
 #ifdef __APPLE__
-//#include <Vorbis/vorbisfile.h>
+#include <Vorbis/vorbisfile.h>
 #else
-//#include <vorbis/vorbisfile.h>
+#include <vorbis/vorbisfile.h>
 #endif
 
 bool SOUNDBUFFER::LoadWAV(const string & filename, const SOUNDINFO & sound_device_info, std::ostream & error_output)
@@ -302,21 +302,21 @@ bool SOUND::Init(int buffersize, std::ostream & info_output, std::ostream & erro
 	if (obtained.format != desired.format)
 	{
 		//cout << "Warning: obtained audio format isn't the same as the desired format!" << endl;
-		error_output << "Obtained audio format isn't the same as the desired format, disabling sound." << endl;
+		error_output << "Obtained audio format isn't the same as the desired format, disabling sound." << std::endl;
 		DisableAllSound();
 		return false;
 	}
 
-	stringstream dout;
-	dout << "Obtained audio device:" << endl;
-	dout << "Frequency: " << frequency << endl;
-	dout << "Format: " << obtained.format << endl;
-	dout << "Bits per sample: " << bytespersample * 8 << endl;
-	dout << "Channels: " << channels << endl;
-	dout << "Silence: " << (int) obtained.silence << endl;
-	dout << "Samples: " << samples << endl;
-	dout << "Size: " << (int) obtained.size << endl;
-	info_output << "Sound initialization information:" << endl << dout.str();
+	std::stringstream dout;
+	dout << "Obtained audio device:" << std::endl;
+	dout << "Frequency: " << frequency << std::endl;
+	dout << "Format: " << obtained.format << std::endl;
+	dout << "Bits per sample: " << bytespersample * 8 << std::endl;
+	dout << "Channels: " << channels << std::endl;
+	dout << "Silence: " << (int) obtained.silence << std::endl;
+	dout << "Samples: " << samples << std::endl;
+	dout << "Size: " << (int) obtained.size << std::endl;
+	info_output << "Sound initialization information:" << std::endl << dout.str();
 	//cout << dout.str() << endl;
 	if (bytespersample != 2 || obtained.channels != desired.channels || obtained.freq != desired.freq)
 	{
@@ -359,8 +359,8 @@ void SOUND::Callback16bitstereo(void *myself, Uint8 *stream, int len)
 	assert(this == myself);
 	assert(initdone);
 
-	list <SOUNDSOURCE *> active_sourcelist;
-	list <SOUNDSOURCE *> inactive_sourcelist;
+	std::list <SOUNDSOURCE *> active_sourcelist;
+	std::list <SOUNDSOURCE *> inactive_sourcelist;
 	
 	LockSourceList();
 	
@@ -368,14 +368,14 @@ void SOUND::Callback16bitstereo(void *myself, Uint8 *stream, int len)
 	Compute3DEffects(active_sourcelist);//, cam.GetPosition().ScaleR(-1), cam.GetRotation());
 
 	//increment inactive sources
-	for (list <SOUNDSOURCE *>::iterator s = inactive_sourcelist.begin(); s != inactive_sourcelist.end(); s++)
+	for (std::list <SOUNDSOURCE *>::iterator s = inactive_sourcelist.begin(); s != inactive_sourcelist.end(); s++)
 	{
 		(*s)->IncrementWithPitch(len/4);
 	}
 
 	int* buffer1 = new int[len/4];
 	int* buffer2 = new int[len/4];
-	for (list <SOUNDSOURCE *>::iterator s = active_sourcelist.begin(); s != active_sourcelist.end(); s++)
+	for (std::list <SOUNDSOURCE *>::iterator s = active_sourcelist.begin(); s != active_sourcelist.end(); s++)
 	{
 		SOUNDSOURCE * src = *s;
 		src->SampleAndAdvanceWithPitch16bit(buffer1, buffer2, len/4);
@@ -582,8 +582,8 @@ void SOUND::CollectGarbage()
 	if (disable)
 		return;
 
-	list <SOUNDSOURCE *> todel;
-	for (list <SOUNDSOURCE *>::iterator i = sourcelist.begin(); i != sourcelist.end(); ++i)
+	std::list <SOUNDSOURCE *> todel;
+	for (std::list <SOUNDSOURCE *>::iterator i = sourcelist.begin(); i != sourcelist.end(); ++i)
 	{
 		if (!(*i)->Audible() && (*i)->GetAutoDelete())
 		{
@@ -591,7 +591,7 @@ void SOUND::CollectGarbage()
 		}
 	}
 
-	for (list <SOUNDSOURCE *>::iterator i = todel.begin(); i != todel.end(); ++i)
+	for (std::list <SOUNDSOURCE *>::iterator i = todel.begin(); i != todel.end(); ++i)
 	{
 		RemoveSource(*i);
 	}
@@ -599,12 +599,12 @@ void SOUND::CollectGarbage()
 	//cout << sourcelist.size() << endl;
 }
 
-void SOUND::DetermineActiveSources(list <SOUNDSOURCE *> & active_sourcelist, list <SOUNDSOURCE *> & inaudible_sourcelist) const
+void SOUND::DetermineActiveSources(std::list <SOUNDSOURCE *> & active_sourcelist, std::list <SOUNDSOURCE *> & inaudible_sourcelist) const
 {
 	active_sourcelist.clear();
 	inaudible_sourcelist.clear();
 	//int sourcenum = 0;
-	for (list <SOUNDSOURCE *>::const_iterator i = sourcelist.begin(); i != sourcelist.end(); ++i)
+	for (std::list <SOUNDSOURCE *>::const_iterator i = sourcelist.begin(); i != sourcelist.end(); ++i)
 	{
 		if ((*i)->Audible())
 		{
@@ -629,8 +629,8 @@ void SOUND::RemoveSource(SOUNDSOURCE * todel)
 
 	assert(todel);
 
-	list <SOUNDSOURCE *>::iterator delit = sourcelist.end();
-	for (list <SOUNDSOURCE *>::iterator i = sourcelist.begin(); i != sourcelist.end(); ++i)
+	std::list <SOUNDSOURCE *>::iterator delit = sourcelist.end();
+	for (std::list <SOUNDSOURCE *>::iterator i = sourcelist.begin(); i != sourcelist.end(); ++i)
 	{
 		if (*i == todel)
 			delit = i;
@@ -655,9 +655,9 @@ void SOUND::RemoveSource(SOUNDSOURCE * todel)
 	src.Play();
 }*/
 
-void SOUND::Compute3DEffects(list <SOUNDSOURCE *> & sources, const MATHVECTOR <float, 3> & listener_pos, const QUATERNION <float> & listener_rot) const
+void SOUND::Compute3DEffects(std::list <SOUNDSOURCE *> & sources, const MATHVECTOR <float, 3> & listener_pos, const QUATERNION <float> & listener_rot) const
 {
-	for (list <SOUNDSOURCE *>::iterator i = sources.begin(); i != sources.end(); ++i)
+	for (std::list <SOUNDSOURCE *>::iterator i = sources.begin(); i != sources.end(); ++i)
 	{
 		if ((*i)->Get3DEffects())
 		{
@@ -796,7 +796,7 @@ void SOUNDFILTER::Filter(int * chan1, int * chan2, const int len)
 SOUNDFILTER & SOUNDSOURCE::GetFilter(int num)
 {
 	int curnum = 0;
-	for (list <SOUNDFILTER>::iterator i = filters.begin(); i != filters.end(); ++i)
+	for (std::list <SOUNDFILTER>::iterator i = filters.begin(); i != filters.end(); ++i)
 	{
 		if (num == curnum)
 			return *i;

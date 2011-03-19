@@ -36,15 +36,15 @@ App::App()  //  gui wigdets--
 
 	,mTerrainGroup(0), mTerrainPaging(0), mPageManager(0), mTerrainGlobals(0)
 	,bTerUpd(0), pSet(0), curBr(0)
-	,ndDot(0), asp(4.f/3.f)
+	,ndPos(0), mpos(0), asp(4.f/3.f)
 	,ndCar(0),entCar(0),ndStBox(0),entStBox(0)
 	,grass(0), trees(0), sun(0)
 	,eTrkEvent(TE_None), bNewHmap(0), bTrGrUpd(0)
 {
 	pathTrk = "data/tracks/";  pathTrkPrv = pathTrk + "_previews/";  resTrk = "";
 
-	mBrSize[0] = 24.f;		mBrSize[1] = 24.f;
-	mBrIntens[0] = 10.f;	mBrIntens[1] = 20.f;
+	mBrSize[0] = 16.f;		mBrSize[1] = 24.f;
+	mBrIntens[0] = 20.f;	mBrIntens[1] = 20.f;
 	mBrPow[0] = 2.f;		mBrPow[1] = 2.f;
 	mBrushData = new float[BrushMaxSize*BrushMaxSize];
 	sBrushTest[0]=0;   updBrush();
@@ -73,12 +73,15 @@ App::~App()
 
 void App::destroyScene()
 {
-	BaseApp::destroyScene();
+	if (road)
+	{	road->DestroyRoad();  delete road;  road = 0;  }
 
 	if (grass) {  delete grass->getPageLoader();  delete grass;  grass=0;   }
 	if (trees) {  delete trees->getPageLoader();  delete trees;  trees=0;   }
 
 	delete[] sc.td.hfData;
+
+	BaseApp::destroyScene();
 }
 	
 

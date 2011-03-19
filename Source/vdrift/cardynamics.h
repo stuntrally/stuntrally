@@ -20,7 +20,7 @@
 #include "collision_contact.h"
 #include "cartelemetry.h"
 //#include "btBulletDynamicsCommon.h"
-#include "..\btOgre\btOgreDebug.h"
+#include "../btOgre/BtOgreDebug.h"
 
 class MODEL;
 class CONFIGFILE;
@@ -32,13 +32,14 @@ friend class PERFORMANCE_TESTING;
 friend class joeserialize::Serializer;
 public:
 	typedef double T;
+	class App* pApp;
 	
 	CARDYNAMICS();
 	~CARDYNAMICS();
 	
 	bool Load(CONFIGFILE & c, std::ostream & error_output);
 
-	void CARDYNAMICS::GetCollisionBox(
+	void GetCollisionBox(
 		const MODEL & chassisModel,
 		const MODEL & wheelModelFront,
 		const MODEL & wheelModelRear,
@@ -46,7 +47,7 @@ public:
 		btVector3 & size);
 	btCollisionShape * CreateCollisionShape(const btVector3 & center, const btVector3 & size);
 
-	void Init(
+	void Init(class App* pApp1,
 		COLLISION_WORLD & world,
 		const MODEL & chassisModel,
 		const MODEL & wheelModelFront,

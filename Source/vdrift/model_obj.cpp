@@ -4,22 +4,22 @@
 #include "unittest.h"
 #include "vertexarray.h"
 
-//#include <algorithm>
+#include <algorithm>
 
-//#include <fstream>
+#include <fstream>
 using std::ifstream;
 
-//#include <string>
+#include <string>
 using std::string;
 
-//#include <sstream>
+#include <sstream>
 using std::stringstream;
 
-//#include <iostream>
+#include <iostream>
 using std::ostream;
 using std::endl;
 
-//#include <vector>
+#include <vector>
 using std::vector;
 
 ///extract a formatted string from the output, ignoring comments
@@ -50,10 +50,10 @@ bool ExtractRepeating(std::vector <T> & output_vector, unsigned int repeats, std
 		return false;
 	for (unsigned int i = 0; i < repeats; i++)
 	{
-		string strformat = ReadFromStream(s);
+		std::string strformat = ReadFromStream(s);
 		if (strformat.empty())
 			return false;
-		stringstream reformat(strformat);
+		std::stringstream reformat(strformat);
 		T reformatted;
 		reformat >> reformatted;
 		output_vector.push_back(reformatted);
@@ -65,9 +65,9 @@ bool ExtractRepeating(std::vector <T> & output_vector, unsigned int repeats, std
 	return true;
 }
 
-bool ExtractTriFloat(vector <VERTEXARRAY::TRIFLOAT> & output_vector, const std::string & section, std::istream & s,  std::ostream & error_log, const std::string & filepath)
+bool ExtractTriFloat(std::vector <VERTEXARRAY::TRIFLOAT> & output_vector, const std::string & section, std::istream & s,  std::ostream & error_log, const std::string & filepath)
 {
-	vector <float> coords;
+	std::vector <float> coords;
 	if (!ExtractRepeating(coords, 3, s))
 	{
 		error_log << "Error reading " << section << " in " << filepath << endl;
@@ -77,9 +77,9 @@ bool ExtractTriFloat(vector <VERTEXARRAY::TRIFLOAT> & output_vector, const std::
 	return true;
 }
 
-bool ExtractTwoFloat(vector <VERTEXARRAY::TWOFLOAT> & output_vector, const std::string & section, std::istream & s,  std::ostream & error_log, const std::string & filepath)
+bool ExtractTwoFloat(std::vector <VERTEXARRAY::TWOFLOAT> & output_vector, const std::string & section, std::istream & s,  std::ostream & error_log, const std::string & filepath)
 {
-	vector <float> coords;
+	std::vector <float> coords;
 	if (!ExtractRepeating(coords, 2, s))
 	{
 		error_log << "Error reading " << section << " in " << filepath << endl;
@@ -89,17 +89,17 @@ bool ExtractTwoFloat(vector <VERTEXARRAY::TWOFLOAT> & output_vector, const std::
 	return true;
 }
 
-bool BuildVertex(VERTEXARRAY::VERTEXDATA & outputvert, vector <VERTEXARRAY::TRIFLOAT> & verts, vector <VERTEXARRAY::TRIFLOAT> & normals, vector <VERTEXARRAY::TWOFLOAT> & texcoords, const string & facestr)
+bool BuildVertex(VERTEXARRAY::VERTEXDATA & outputvert, std::vector <VERTEXARRAY::TRIFLOAT> & verts, std::vector <VERTEXARRAY::TRIFLOAT> & normals, std::vector <VERTEXARRAY::TWOFLOAT> & texcoords, const std::string & facestr)
 {
 	if (std::count(facestr.begin(), facestr.end(), '/') != 2)
 		return false;
 	
-	if (facestr.find("//") != string::npos)
+	if (facestr.find("//") != std::string::npos)
 		return false;
 	
-	string facestr2 = facestr;
+	std::string facestr2 = facestr;
 	std::replace(facestr2.begin(), facestr2.end(), '/', ' ');
-	stringstream s(facestr2);
+	std::stringstream s(facestr2);
 	int v(-1),t(-1),n(-1);
 	s >> v >> t >> n;
 	if (v <= 0 || t <= 0 || n <= 0)
@@ -112,19 +112,19 @@ bool BuildVertex(VERTEXARRAY::VERTEXDATA & outputvert, vector <VERTEXARRAY::TRIF
 	return true;
 }
 
-bool MODEL_OBJ::Load(const std::string & filepath, std::ostream & error_log)
+bool MODEL_OBJ::Load(const std::string & filepath, std::ostream & error_log, bool genlist)
 {
-	ifstream f(filepath.c_str());
+	std::ifstream f(filepath.c_str());
 	if (!f)
 	{
 		error_log << "Couldn't open object file: " << filepath << endl;
 		return false;
 	}
 	
-	vector <VERTEXARRAY::TRIFLOAT> verts;
-	vector <VERTEXARRAY::TRIFLOAT> normals;
-	vector <VERTEXARRAY::TWOFLOAT> texcoords;
-	vector <VERTEXARRAY::FACE> faces;
+	std::vector <VERTEXARRAY::TRIFLOAT> verts;
+	std::vector <VERTEXARRAY::TRIFLOAT> normals;
+	std::vector <VERTEXARRAY::TWOFLOAT> texcoords;
+	std::vector <VERTEXARRAY::FACE> faces;
 	
 	while (f)
 	{
@@ -145,7 +145,7 @@ bool MODEL_OBJ::Load(const std::string & filepath, std::ostream & error_log)
 		}
 		else if (id == "f")
 		{
-			vector <string> faceverts;
+			std::vector <string> faceverts;
 			if (!ExtractRepeating(faceverts, 3, f))
 			{
 				error_log << "Error reading faces in " << filepath << endl;
@@ -167,12 +167,13 @@ bool MODEL_OBJ::Load(const std::string & filepath, std::ostream & error_log)
 	
 	mesh.BuildFromFaces(faces);
 	GenerateMeshMetrics();
-	GenerateListID(error_log);
+	//if (genlist)
+		//GenerateListID(error_log);
 	
 	return true;
 }
 
-void WriteRange(std::ostream & s, const vector <float> & v, int startidx, int endidx)
+void WriteRange(std::ostream & s, const std::vector <float> & v, int startidx, int endidx)
 {
 	assert(startidx >= 0 && startidx < (int) v.size() && startidx < endidx && startidx != endidx);
 	assert(endidx <= (int) v.size());
@@ -184,7 +185,7 @@ void WriteRange(std::ostream & s, const vector <float> & v, int startidx, int en
 	}
 }
 
-void WriteVectorGroupings(std::ostream & s, const vector <float> & v, const std::string & id, int groupsize)
+void WriteVectorGroupings(std::ostream & s, const std::vector <float> & v, const std::string & id, int groupsize)
 {
 	assert(groupsize > 0);
 	for (int i = 0; i < (int)v.size()/groupsize; i++)
