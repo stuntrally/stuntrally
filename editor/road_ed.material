@@ -1,0 +1,130 @@
+import * from "general.material"
+
+
+//  editor spheres
+//------------------------------------------------------------
+material sphere_norm : ppx_diffuse
+{
+	set $ambientCol  "0.35 0.5 0.65"
+	set $diffuseCol  "0.25 0.35 0.43"
+	set $specularCol "0.05 0.15 0.25"
+	set $shininess "12"
+	set $depthBias "31"
+	//set $depthCheck "off"
+}
+
+material sphere_sel : ppx_diffuse
+{
+	set $ambientCol  "0.9 0.6 0.3"
+	set $diffuseCol  "0.4 0.2 0.0"
+	set $specularCol "0.3 0.2 0.1"
+	set $shininess "8"
+	set $depthBias "31"
+	//set $depthCheck "off"
+}
+
+material sphere_chosen : ppx_diffuse
+{
+	set $ambientCol  "0.5 0.45 1.2"
+	set $diffuseCol  "0.2 0.2 0.6"
+	set $specularCol "0.25 0.3 0.4"
+	set $shininess "12"
+	set $depthBias "31"
+	//set $depthCheck "off"
+}
+
+material sphere_rot : ppx_diffuse
+{
+	set $ambientCol  "0.7 0.3 0.3"
+	set $diffuseCol  "0.6 0.2 0.0"
+	set $specularCol "0.4 0.2 0.1"
+	set $shininess "12"
+	set $depthBias "3"
+	//set $depthCheck "off"
+}
+
+material sphere_hit : ppx_diffuse
+{
+	set $ambientCol  "0.4 0.8 0.2"
+	set $diffuseCol  "0.25 0.3 0.15"
+	set $specularCol "0.25 0.3 0.25"
+	set $shininess "8"
+	set $depthBias "3"
+}
+
+material sphere_check : ppx_glass
+{
+	set $ambientCol  "0.9 0.9 1.0"
+	set $diffuseCol  "0.1 0.1 0.2"
+	set $specularCol "0.1 0.1 0.1"
+	set $shininess "8"
+	set $depthBias "6"
+	set_texture_alias diffuseMap glass.png
+}
+
+
+//  terrain circle
+//------------------------------------------------------------
+material circle_deform : ppx_diffuse
+{
+	set $ambientCol  "0.3 0.8 0.1"
+	set $diffuseCol  "0.15 0.3 0.15"
+	set $specularCol "0.25 0.3 0.25"
+	set $shininess "32"
+	set $depthBias "3"
+	set_texture_alias diffuseMap ter_deform.png
+}
+
+material circle_smooth : ppx_diffuse
+{
+	set $ambientCol  "0.2 0.8 0.6"
+	set $diffuseCol  "0.15 0.2 0.15"
+	set $specularCol "0.15 0.3 0.25"
+	set $shininess "32"
+	set $depthBias "3"
+	set_texture_alias diffuseMap ter_smooth.png
+}
+
+
+//  road render to texture
+//------------------------------------------------------------
+
+material render_clr : ppx_render
+{
+	set $ambientCol  "0.0 0.0 0.0"
+	set $diffuseCol  "0.7 0.7 0.7"
+	set $depthBias "3"
+}
+
+material render_grass : ppx_render_gr
+{
+	set $depthBias "3"
+}
+
+material road_mini
+{
+	receive_shadows off
+	technique
+	{
+		pass
+		{
+			lighting off
+			texture_unit
+			{
+				texture RttTex
+			}
+		}
+	}
+}
+
+material mtSCBLIGHT
+{
+	receive_shadows off
+	technique
+	{
+		pass
+		{
+			lighting off
+		}
+	}
+}

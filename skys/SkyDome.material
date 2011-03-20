@@ -1,0 +1,86 @@
+material sky/white
+{
+	receive_shadows off
+	technique
+	{
+		pass
+		{
+			lighting off
+			depth_write off
+			depth_check off
+			fog_override true none
+
+			texture_unit
+			{
+				tex_address_mode mirror
+				texture sky_white.jpg
+			}
+		}
+	}
+}
+
+
+//  best
+//---------------------------------------
+material sky/light_blue
+{
+	receive_shadows off
+	technique
+	{
+		pass
+		{
+			lighting off
+			depth_write off
+			depth_check off
+			fog_override true none
+
+			texture_unit
+			{
+				tex_address_mode mirror
+				texture sky_lightblue.jpg
+			}
+		}
+	}
+}
+
+material sky/blue_clouds
+{
+	receive_shadows off
+	technique
+	{
+		pass
+		{
+			lighting off
+			depth_write off
+			depth_check off
+			fog_override true none
+
+			texture_unit
+			{
+				tex_address_mode mirror
+				texture sky_photo6.jpg
+			}
+		}
+	}
+}
+
+material sky/gray_clouds
+{
+	receive_shadows off
+	technique
+	{
+		pass
+		{
+			lighting off
+			depth_write off
+			depth_check off
+			fog_override true none
+
+			texture_unit
+			{
+				tex_address_mode mirror
+				texture sky_photo3.jpg
+			}
+		}
+	}
+}

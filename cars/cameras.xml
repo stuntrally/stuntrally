@@ -1,0 +1,44 @@
+<Cameras>
+	<!-- Types:  0 Follow (rotY)  1 Free (orient)  2 Arena (free pos&or)  3 Car-oriented  4 ExtAng (rotY)  -->
+	<!-- on="0" - off  on="2" - main -->
+
+	<Camera on="1" name="Car ground"	type="3"  offset="0  0.4 -1.6" />
+	<Camera on="2" name="Car bonnet"	type="3"  offset="0  0.5 -0.8" />
+
+	<Camera on="1" name="Car driver"	type="3"  offset="-0.4 0.5 0.1"  hideGlass="1" />
+	<Camera on="0" name="Car driver"	type="3"  offset="-0.4 0.86 0.3" />
+	<Camera on="0" name="Car roof"		type="3"  offset="0  1.1  0.0" />
+	<Camera on="0" name="Car top"		type="3"  offset="0  1.2  0.0" />
+	
+	<Camera on="1" name="Car left"		type="3"  offset="-1.5 0.35 2.6" />
+	<Camera on="1" name="Car back"		type="3"  offset="-1.6 0.6 5.4" />
+	<Camera on="1" name="Car right"		type="3"  offset=" 1.7 0.25 3.1" />
+
+	
+	<Camera on="2" name="Ext close"		type="4"  pitch="11"  dist="7.0" offset="0 1.1 0" speed="6" default="1" />
+	<Camera on="1" name="Ext near"		type="4"  pitch="15"  dist="8.5" offset="0 1.1 0" speed="9" />
+
+	<Camera on="2" name="Follow close"		type="0"  pitch="11"  dist="6.2" offset="0 1.1 0" speed="20" default="0" />
+	<Camera on="0" name="Follow near"		type="0"  pitch=" 7"  dist="7"   offset="0 1.2 0" speed="10" />
+	<Camera on="1" name="Follow view"		type="0"  pitch=" 9"  dist="8"   offset="0 1.6 0" speed="12" />
+	<Camera on="0" name="Follow view"		type="0"  pitch=" 5"  dist="8"   offset="0 1.6 0" speed="10" />
+	
+	<Camera on="0" name="Follow near"		type="0"  pitch="13"  dist="8"   offset="0 1.2 0" speed="20" />
+	<Camera on="2" name="Follow near slow"	type="0"  pitch="14"  dist="9"   offset="0 2 0"   speed="6" />
+	<Camera on="0" name="Follow slow"		type="0"  pitch="13"  dist="7"   offset="0 1.6 0" speed="5" />
+	<Camera on="0" name="Follow far"		type="0"  pitch="18"  dist="14"  offset="0 3 0"   speed="20" />
+	<Camera on="1" name="Follow far slow"	type="0"  pitch="20"  dist="18"  offset="0 4 0"   speed="3" />
+	
+	<Camera on="2" name="Free near"		type="1"  yaw="0"  pitch="18"  dist="12"  offset="0 -0.0 0"	speed="10" default="0" />
+	<Camera on="1" name="Free mid"		type="1"  yaw="0"  pitch="22"  dist="26"  offset="0 -0.5 0"	speed="10" />
+	<Camera on="0" name="Free far"		type="1"  yaw="0"  pitch="25"  dist="50"  offset="0 0 0"	speed="0" />
+
+	<Camera on="0" name="Arena right"	type="2"  yaw="220"  pitch="170" offset="0 80 0"	speed="15" />
+	<Camera on="0" name="Arena front"	type="2"  yaw="-90"  pitch="160" offset="-300 120 180" speed="15" />
+	<Camera on="1" name="Arena view"	type="2"  yaw="90"   pitch="160" offset="300 100 0" speed="25" default="0" />
+	<Camera on="0" name="Arena low"		type="2"  yaw="0.2"  pitch="170" offset="0 50 0"	speed="15" />
+	<Camera on="1" name="Arena Up low"	type="2"  yaw="0.1"  pitch="90"  offset="0 300 0"	speed="0" default="0" />
+	<Camera on="0" name="Arena Up"		type="2"  yaw="0.1"  pitch="90"  offset="0 500 0"	speed="0" />
+	<Camera on="0" name="Arena Up2"		type="2"  yaw="0.1"  pitch="90"  offset="0 1400 0"	speed="0" />
+
+</Cameras>

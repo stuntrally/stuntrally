@@ -1,0 +1,6 @@
+3S
+ 
+Model by Kevin Miller, Import and textures by Dick Maurer
+Car settings by Joe Venzon
+Car settings modded by Cotharyus. Only 1 3S version for now, so everything should be fairly obvious.
+

@@ -1,0 +1,410 @@
+# based on Revision 141+03+147+148: /vdrift-data/cars/360
+#
+# 360.car   (v. 360-06) 20080202 by cologne
+#
+# total weight	1544.00 kg at start
+# wheelbase:	2.63
+# weight distribution (front/rear)	 43% / 57% at start
+# centre of mass 0.03
+# centre of downforce 0.28
+#
+# length, width, height :: X(+front), Y(+left), Z(+up)
+#
+#-----------------------------------------
+#
+#	http://www.supercarsite.net/ferrari/360-modena/2000
+#
+# Length				4477 mm / 176.3 in
+# Width					1922 mm / 75.7 in
+# Height				1214 mm / 47.8 in
+# Wheelbase				2600 mm / 102.4 in
+# Weight				1390 kg / 3,064 lbs
+# Front Track  			F 1669 mm / 65.7 in
+# Rear Track			R 1617 mm / 63.7 in
+# 	Engine
+# Configuration 		3.6 Liter V8
+# Power 				298.3 kW / 400.0 bhp at 8500 rpm
+# Torque 				372.9 Nm / 275.1 ft lbs at 4750 rpm
+# Redline 				8500 rpm
+# 	Chassis & Body
+# Brake Type 			Vented Discs w/ Vacuum Assist & ABS
+# Brake Size 			F 330 mm / 13.0 in
+# 						R 330 mm / 13.0 in
+# Wheels 				F 45.7 x 19.1 cm / 18.0 x 7.5 in	=> 45.7/2 + 21.5 x 0.45 = 22.85 + 9.675 = 32.5
+# 						R 45.7 x 24.1 cm / 18.0 x 9.5 in	=> 45.7/2 + 27.5 x 0.40 = 22.85 + 11.0 = 33.85
+# Tyres 				F 215/45ZR-18
+# 						R 275/40ZR-18
+# 	Transmission
+# Gear Type 			6 Speed Manual
+# Final Drive 			4.44:1
+# 1st Gear Ratio 		3.29:1
+# 2nd Gear Ratio 		2.16:1
+# 3rd Gear Ratio 		1.61:1
+# 4th Gear Ratio 		1.27:1
+# 5th Gear Ratio 		1.03:1
+# 6th Gear Ratio 		0.85:1
+# 	Performance
+# Top Speed 			295.0 kph / 183.3 mph
+# 0 - 62 mph 			4.3 seconds
+# 0 - 100 mph 			10.2 seconds
+# 0 - ¼ mile 			12.6 seconds
+#
+#---------------------------------------
+#
+# http://www.ferrariworld.com/FWorld/fw/index.jsp
+#
+#	Weight distribution 43/57% front/rear
+#	Fuel capacity 95 liter
+#	Downforce by ground effect: 396 lbs at 180 mph
+#	Downforce by ground effect: 180 kg  at 290 km/h
+#
+#---------------------------------------
+
+drive = AWD
+version = 2
+
+[ steering ]
+max-angle = 21.0
+
+[ engine ]
+position = 0.0, -1.0, -0.35
+mass = 150.0
+max-power = 613000
+peak-engine-rpm = 8500
+rpm-limit = 9000.0
+inertia = 0.25
+start-rpm = 1000
+stall-rpm = 500
+fuel-consumption = 0.0001
+#
+#	P = M x n x 0.10472 
+#	HP = 0.7355 x P (KW)
+#
+torque-curve-00 = 1000, 511
+torque-curve-01 = 1500, 502
+torque-curve-02 = 2200, 497
+torque-curve-03 = 2700, 486
+torque-curve-04 = 3200, 477
+torque-curve-05 = 3850, 472
+torque-curve-06 = 4200, 462
+torque-curve-07 = 4800, 455
+torque-curve-08 = 5050, 473
+torque-curve-09 = 5200, 468
+torque-curve-10 = 5775, 461
+torque-curve-11 = 5850, 465
+torque-curve-12 = 6000, 465
+torque-curve-13 = 6800, 432
+torque-curve-14 = 7300, 432
+torque-curve-15 = 7700, 438
+torque-curve-16 = 8000, 435
+torque-curve-17 = 8600, 419
+torque-curve-18 = 9200, 389
+
+[ clutch ]
+sliding = 0.025
+radius = 0.15
+area = 1.0
+max-pressure = 4e5
+
+[ transmission ]
+gears = 6
+gear-ratio-r = -3.29
+gear-ratio-1 = 3.20
+gear-ratio-2 = 2.16
+gear-ratio-3 = 1.61
+gear-ratio-4 = 1.27
+gear-ratio-5 = 1.03
+gear-ratio-6 = 0.85
+shift-time=0.15
+
+[ differential ]
+final-drive = 4.44
+anti-slip =600.0
+anti-slip-torque = 0.01
+anti-slip-torque-deceleration-factor = 0
+
+[ fuel-tank ]
+position = 0.0, -1.50, -0.10
+capacity = 95.0
+volume = 80.0
+fuel-density = 0.8
+
+[ suspension-front ]
+spring-constant = 129865
+bounce = 10000.0
+rebound = 9000.0
+travel = 0.22
+max-compression-velocity = 10.0
+camber = -1.0
+caster = 6.12
+toe = 0.2
+anti-roll = 8000
+
+[ suspension-rear ]
+spring-constant = 124062
+bounce = 9000.0
+rebound = 8000.0
+## Federweg
+travel = 0.24
+max-compression-velocity = 10.0
+## Radsturz
+camber = -0.45
+## Nachlauf
+caster = 0.28
+## Vorspur?
+toe = 0.1
+## Stabilisator
+anti-roll = 10000
+
+[ tire-front ]
+radius = 0.32
+rolling-resistance = 1.3e-2, 6.5e-6
+rotational-inertia = 4.0
+#tread = 0.00873125
+tread = 0.0
+# rev 147
+# Lateral force
+a0=1.4
+a1=-0
+a2=3688
+a3=400
+a4=6.026
+a5=0.014
+a6=-0.359
+a7=1.0
+a8=-0.03
+a9=-0.00611
+a10=-0.0322
+a111=0
+a112=0
+a12=0
+a13=0
+# Longitudinal force
+b0=1.65
+b1=0
+b2=7690
+b3=23
+b4=229
+b5=0
+b6=0
+b7=0
+b8=-10
+b9=0
+b10=0
+b11=0
+b12=0
+# Aligning moment
+c0=2.07
+c1=-6.49
+c2=-21.9
+c3=-0.416
+c4=-21.3
+c5=0.0294
+c6=0.0
+c7=-1.2
+c8=5.23
+c9=-14.8
+c10=0.0
+c11=0.0
+c12=-0.00374
+c13=0.0389
+c14=0.0
+c15=0.0
+c16=0.639
+c17=1.69 
+
+
+[ tire-rear ]
+radius = 0.3335
+rolling-resistance = 1.3e-2, 6.5e-6
+rotational-inertia = 5.00
+#tread = 0.00873125
+tread = 0.0
+# rev 147
+# Lateral force
+a0=1.4
+a1=-0
+a2=3688
+a3=400
+a4=6.026
+a5=0.014
+a6=-0.359
+a7=1.0
+a8=-0.03
+a9=-0.00611
+a10=-0.0322
+a111=0
+a112=0
+a12=0
+a13=0
+# Longitudinal force
+b0=1.65
+b1=0
+b2=7690
+b3=23
+b4=229
+b5=0
+b6=0
+b7=0
+b8=-10
+b9=0
+b10=0
+b11=0
+b12=0
+# Aligning moment
+c0=2.07
+c1=-6.49
+c2=-21.9
+c3=-0.416
+c4=-21.3
+c5=0.0294
+c6=0.0
+c7=-1.2
+c8=5.23
+c9=-14.8
+c10=0.0
+c11=0.0
+c12=-0.00374
+c13=0.0389
+c14=0.0
+c15=0.0
+c16=0.639
+c17=1.69
+
+
+[ brakes-front ]
+friction = 0.7
+max-pressure = 4.0e7
+bias = 0.45
+radius = 0.335
+area = 0.000488
+
+[ brakes-rear ]
+friction = 0.7
+max-pressure = 4.0e7
+bias = 0.55
+radius = 0.330 # 330mm
+area = 0.000448 # 16mm x 28mm
+handbrake = 1.2
+
+
+[ driver ]
+position = -0.28, 0.12, -0.12
+mass = 90.0
+view-position = -0.28, 0.12, 0.42				# moved driver position
+hood-mounted-view-position = 0.0, 0.7, 0.5	# static driver position
+
+[ drag ]
+position = 0.0, 0.15, 0.00
+frontal-area = 2.03
+drag-coefficient = 0.29
+
+[ wing-front ]
+position = 0, 1.15, -0.3
+frontal-area = 0.0
+drag-coefficient = 0
+surface-area = 1.0
+lift-coefficient = -0.22
+efficiency = 1
+
+[ wing-rear ]
+position = 0, -1.50, -0.3
+frontal-area = 0.0
+drag-coefficient = 0
+surface-area = 1.0
+lift-coefficient = -0.20
+efficiency = 1
+
+#---------- F R O N T
+
+[ wheel-FR ]
+position = 0.8345, 1.12, -0.37			# track +-Y = 1669/2
+roll-height = 0.32
+mass = 30.0
+restitution = 0.1
+
+[ wheel-FL ]
+position = -0.8345, 1.12, -0.37
+roll-height = 0.32
+mass = 30.0
+restitution = 0.1
+
+[ suspension-FR ]
+position = 0.60, 1.12, -0.30
+hinge = -0.50, 0.90, -0.20
+
+[ suspension-FL ]
+position = -0.60, 1.12, -0.30
+hinge = 0.50, 0.90, -0.20
+
+
+#---------- R E A R
+
+[ wheel-RR ]
+position = 0.8085, -1.51, -0.38			# track +-Y = 1617/2
+roll-height = 0.33
+mass = 30.0
+restitution = 0.1
+
+[ wheel-RL ]
+position = -0.8085, -1.51, -0.38
+roll-height = 0.33
+mass = 30.0
+restitution = 0.1
+
+[ suspension-RR ]
+position = 0.70, -1.51, -0.30
+hinge = -1.00 , 0.0, -0.0
+
+[ suspension-RL ]
+position = -0.70, -1.51, -0.30
+hinge = 1.00 , -0.0, -0.0
+
+#---------- 
+
+
+# these are used to calculate the weight distribution and balance
+
+[ particle-00 ]	# Chassis Front
+mass = 130
+position = 0.0, 1.5, -0.55
+
+[ particle-01 ]	#	Cooler front
+mass = 100
+position = -0.0, 1.5, -0.65
+
+[ particle-02 ]	#	Chassis left
+mass = 160
+position = 0.75, 0, -0.50
+
+[ particle-03 ]	#	Chassis right
+mass = 160
+position = -0.75, 0, -0.50 
+
+[ particle-04 ]	#	Motor Env. left
+mass = 60
+position = 0.7, -1.10, -0.30
+
+[ particle-05 ]		# Motor Env. right
+mass = 60
+position = -0.7, -1.10, -0.30
+
+[ particle-06 ]		# Interieur
+mass = 120
+position = 0.00, 0.60, -0.50
+
+[ particle-07 ]		# Chassis top
+mass = 80
+position = 0.00, -0.30, -0.30
+
+[ particle-08 ]		# Joker
+mass = 60
+position = -0.00, 1.0, -0.60
+
+[ particle-09 ]		# gearbox
+mass = 50.0
+position = 0.00, -1.75, -0.65
+
+[ particle-10 ]		# Chassis rear
+mass = 80.0
+position = 0.00, -1.80, -0.35

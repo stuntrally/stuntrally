@@ -1,0 +1,23 @@
+num vertices, triangles, submeshes
+
+farn1	 120, 60
+farn2	 192, 96
+plant1	 188, 172
+plant2	 122, 104
+
+rock.05	 387, 768
+rock.07	 387, 768
+
+fir05	 1233, 1008, 2
+fir06	 1234, 1015, 2
+fir14	 1113,  908, 2
+palm	  732,  456, 1
+tree.07  1150,  554, 4!
+tree.09	 1041, 1106, 5!
+
+shroom1_1	116, 168
+shroom1_2	437, 624
+shroom1_3	999, 984
+shroom2_1	 89, 120
+shroom2_2	355, 408
+shroom2_3	653, 888
