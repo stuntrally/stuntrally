@@ -27,4 +27,5 @@ target_link_libraries(stuntrally ${SDL_LIBRARY} ${VorbisFile_LIBRARIES} ${OIS_LI
 # Editor
 #TODO: Fix editor for Linux
 add_executable(sr-editor ${EDITOR_SOURCES})
+set_target_properties(sr-editor PROPERTIES COMPILE_FLAGS "-DROAD_EDITOR")
 
