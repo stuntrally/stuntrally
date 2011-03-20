@@ -25,6 +25,7 @@ file(GLOB EDITOR_SOURCES editor/*.cpp
 			bullet/*/*.cpp
 			bullet/*/*/*.cpp
 			ogre/QTimer.cpp
+			ogre/common/*.cpp
 )
 
 # Executable
