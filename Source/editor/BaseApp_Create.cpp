@@ -2,7 +2,7 @@
 #include "BaseApp.h"
 #include "OgreApp.h" //
 
-
+#if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
 DWORD WINAPI TimThread(LPVOID lpParam)
 { 
 	BaseApp* pA = (BaseApp*)lpParam;
@@ -14,6 +14,7 @@ DWORD WINAPI TimThread(LPVOID lpParam)
 	}
     return 0;
 }
+#endif
 /**/
 
 
@@ -82,20 +83,26 @@ void BaseApp::createFrameListener()
 
 	///  timer thread - input, camera
 	/**/timer.iv = 0.001;  ///par 
+#if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
 	/**/hpr = CreateThread(NULL,0,TimThread,(LPVOID)this,0,NULL);
+#endif
 }
 
 void BaseApp::destroyScene()
 {
+#if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
 	//**/TerminateThread(hpr, 1);
+#endif
 }
 
 //  Run
 //-------------------------------------------------------------------------------------
 void BaseApp::Run( bool showDialolg )
 {
+#if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
 	ShowCursor(0);
 	SetCursor(0);
+#endif
 
 	mShowDialog = showDialolg;
 	if (!setup())
@@ -162,21 +169,31 @@ bool BaseApp::configure()
 {
 	bool ok = false, notFound = false;
 	
-	WIN32_FIND_DATAA  fd;
-	HANDLE h = FindFirstFileA( "_ogreset_ed.cfg", &fd );
-	if (h == INVALID_HANDLE_VALUE)
-		notFound = true;
-	else 
-		FindClose(h);
+#if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
+        WIN32_FIND_DATAA  fd;
+        HANDLE h = FindFirstFileA( "_ogreset_ed.cfg", &fd );
+        if (h == INVALID_HANDLE_VALUE)
+                notFound = true;
+        else
+                FindClose(h);
 
-	if (notFound || mShowDialog)
-		ok = mRoot->showConfigDialog();
-	else
-		ok = mRoot->restoreConfig();
-	
-	if (ok)
-	{	mWindow = mRoot->initialise( true, "SR Editor" );
-		return true;	}
+        if (notFound || mShowDialog)
+                ok = mRoot->showConfigDialog();
+        else
+                ok = mRoot->restoreConfig();
+#else
+        if (mRoot->restoreConfig() ||  mRoot->showConfigDialog())
+        {
+                ok = true;
+        }
+        else
+                ok=false;
+#endif
+
+    if (ok)
+    {   mWindow = mRoot->initialise( true, "SR Editor" );
+                return true;
+    }
 
 	return false;
 }
@@ -272,6 +289,9 @@ bool BaseApp::keyReleased( const OIS::KeyEvent &arg )
 //-------------------------------------------------------------------------------------
 bool BaseApp::mouseMoved( const OIS::MouseEvent &arg )
 {
+	#if OGRE_PLATFORM != OGRE_PLATFORM_WIN32
+	#define WHEEL_DELTA 120
+	#endif
 	mx += arg.state.X.rel;  my += arg.state.Y.rel;  mz += arg.state.Z.rel/WHEEL_DELTA;
 	if ((bGuiFocus || !bMoveCam) && mGUI && i_cmdMouseMove < cmd_Max)
 		cmdMouseMove[i_cmdMouseMove++] = CmdMouseMove(arg);
