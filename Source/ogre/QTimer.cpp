@@ -42,6 +42,6 @@ bool QTimer::update()
 	timeval old_time = tv;
 	gettimeofday(&tv, NULL);
 	dt = (tv.tv_sec - old_time.tv_sec) + (double) ((unsigned long)  (tv.tv_usec - old_time.tv_usec) / (double) 1000000);
-	#endif
+#endif
 	return true;
 }

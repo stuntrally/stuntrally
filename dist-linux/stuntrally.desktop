@@ -1,0 +1,11 @@
+[Desktop Entry]
+Name=Stunt Rally
+GenericName=Racing game
+Comment=3D racing game with stunt and rally elements
+Comment[de]=3D-Rennspiel mit Stunt-Elementen
+Exec=/usr/bin/stuntrally
+Icon=
+StartupNotify=false
+Terminal=false
+Type=Application
+Categories=Application;Game
