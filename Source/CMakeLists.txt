@@ -24,6 +24,7 @@ file(GLOB EDITOR_SOURCES editor/*.cpp
 			 paged-geom/*.cpp
 			bullet/*/*.cpp
 			bullet/*/*/*.cpp
+			ogre/QTimer.cpp
 )
 
 # Executable
