@@ -87,7 +87,7 @@ void App::NewGame()
 	if (ter)  // load scene
 		sc.LoadXml("data/tracks/" + pSet->track + "/scene.xml");
 	else
-		sc.Default();
+	{	sc.Default();  sc.td.hfData = NULL;  }
 
 	CreateCar();  // par rain
 	

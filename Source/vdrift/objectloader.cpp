@@ -171,9 +171,9 @@ std::pair <bool,bool> OBJECTLOADER::ContinueObjectLoad(	TRACK* track,
 
 	if (model_library.find(model_name) == model_library.end())
 	{
-		/*if (packload)
+		if (packload)
 		{
-			if (!model_library[model_name].Load(model_name, &pack, error_output))
+			if (!model_library[model_name].Load(model_name, error_output, true, &pack))
 			{
 				error_output << "Error loading model: " << objectpath + "/" + model_name << " from pack " << objectpath + "/objects.jpk" << std::endl;
 				return std::pair <bool, bool> (true, false); //fail the entire track loading
