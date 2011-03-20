@@ -386,8 +386,12 @@ bool App::frameEnded(const FrameEvent& evt)
 	for (int i=0; i < i_cmdMousePress; ++i)
 	{	const CmdMouseBtn& b = cmdMousePress[i];
 		mGUI->injectMousePress(b.ms.X.abs, b.ms.Y.abs, MyGUI::MouseButton::Enum(b.btn));
+#if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
 		SetCursor(0);
-		ShowCursor(0);  }  //?- cursor after alt-tab
+		ShowCursor(0); 
+// todo linux
+#endif
+ }  //?- cursor after alt-tab
 	i_cmdMousePress = 0;
 
 	for (int i=0; i < i_cmdMouseRel; ++i)
