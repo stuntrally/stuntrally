@@ -15,6 +15,8 @@ endif(NOT CMAKE_BUILD_TYPE)
 # Where to include additional CMake library finding scripts
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/")
 
+# We want the binaries to be easily accessible
+set(EXECUTABLE_OUTPUT_PATH ${CMAKE_BINARY_DIR})
 
 # Libraries
 
