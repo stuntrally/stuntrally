@@ -1,4 +1,7 @@
 build
 build32
 build64
-
+_ogreset.cfg
+_ogre.log
+_log.txt
+MyGUI.log
