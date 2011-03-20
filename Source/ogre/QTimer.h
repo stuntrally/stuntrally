@@ -14,7 +14,7 @@ class QTimer
 #if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
 		LARGE_INTEGER CC;
 #else
-		timeval tv;
+		timespec startTime;
 #endif
 
 	public:

@@ -12,6 +12,8 @@ QTimer::QTimer()
 	LARGE_INTEGER FQ;
 	if (QueryPerformanceFrequency( &FQ ))
 		fq = double( FQ.QuadPart );
+#else
+	clock_gettime(CLOCK_MONOTONIC, &startTime);
 #endif
 }
 
@@ -39,9 +41,11 @@ bool QTimer::update()
 		st1 = t;
 	}
 #else
-	timeval old_time = tv;
-	gettimeofday(&tv, NULL);
-	dt = (tv.tv_sec - old_time.tv_sec) + (double) ((unsigned long)  (tv.tv_usec - old_time.tv_usec) / (double) 1000000);
+	// FIXME: only supports dt calculation, nothing else
+	timespec newt;
+	clock_gettime(CLOCK_MONOTONIC, &newt);
+	dt = (newt.tv_sec - startTime.tv_sec) + (newt.tv_nsec - startTime.tv_nsec) / 1000000000.0;
+	startTime = newt;
 #endif
 	return true;
 }
