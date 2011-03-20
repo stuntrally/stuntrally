@@ -16,7 +16,10 @@ public:
 	class SplineRoad* road; //-
 
 	//AppThr appThr;
-	HANDLE hpr;  QTimer timer;
+#if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
+	HANDLE hpr;
+#endif
+	QTimer timer;
 	void OnTimer(double dTime);
 	bool mShutDown;
 protected:
