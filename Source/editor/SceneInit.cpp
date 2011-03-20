@@ -137,9 +137,12 @@ void App::UpdateTrackEv()
 
 void App::UpdWndTitle()
 {
+#if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
 	HWND hwnd = 0;  // update wnd title
 	mWindow->getCustomAttribute("WINDOW", (void*)&hwnd); 
 	SetWindowText(hwnd, (String("SR Editor  track: ") + pSet->track).c_str());
+#endif
+	// TODO: Window title for linux
 }
 
 
