@@ -255,8 +255,10 @@ bool App::KeyPress(const CmdKey &arg)
 	{
 		case KC_TAB:	//  Camera / Edit mode
 		if (!bGuiFocus && !alt)  {
+#if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
 			SetCursor(0);
 			ShowCursor(0);  //?- cursor after alt-tab
+#endif
 			bMoveCam = !bMoveCam;  UpdVisGui();  }	break;
 
 		//  fog
