@@ -202,11 +202,19 @@ bool BaseApp::configure()
 //-------------------------------------------------------------------------------------
 bool BaseApp::setup()
 {
-	#ifdef _DEBUG
-	mRoot = new Root("_plugins_d.cfg", "_ogreset_ed.cfg", "_ogre_ed.log");
-	#else
-	mRoot = new Root("_plugins.cfg", "_ogreset_ed.cfg", "_ogre_ed.log");
-	#endif
+#if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
+        #ifdef _DEBUG
+    mRoot = OGRE_NEW Root("_plugins_win_d.cfg", "_ogreset.cfg", "_ogre.log");
+    #else
+    mRoot = OGRE_NEW Root("_plugins_win.cfg", "_ogreset.cfg", "_ogre.log");
+    #endif
+#else
+        #ifdef _DEBUG
+        mRoot = OGRE_NEW Root("_plugins_nix_d.cfg", "_ogreset.cfg", "_ogre.log");
+        #else
+        mRoot = OGRE_NEW Root("_plugins_nix.cfg", "_ogreset.cfg", "_ogre.log");
+        #endif
+#endif
 	
 	setupResources();
 
