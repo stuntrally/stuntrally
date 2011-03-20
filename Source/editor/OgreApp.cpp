@@ -2,6 +2,11 @@
 #include "OgreApp.h"
 #include "../road/Road.h"
 
+#if OGRE_PLATFORM != OGRE_PLATFORM_WIN32
+// dir listing
+#include <dirent.h>
+#include <sys/types.h>
+#endif
 
 //  ctor
 //----------------------------------------------------------------------------------------------------------------------
