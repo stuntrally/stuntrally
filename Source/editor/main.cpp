@@ -19,7 +19,11 @@
 
 	try
 	{
+#if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
 		pApp->Run( settings.ogre_dialog || lpCmdLine[0]!=0 );
+#else
+		pApp->Run( settings.ogre_dialog );
+#endif
 	}
 	catch (Ogre::Exception& e)
 	{
