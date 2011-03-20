@@ -529,7 +529,7 @@ void App::UpdGuiRdStats(const SplineRoad* rd, const Scene& sc, float time)
 ///  Gui ToolTips
 //-----------------------------------------------------------------------------------------------------------
 
-void App::setToolTips(EnumeratorWidgetPtr& widgets)
+void App::setToolTips(EnumeratorWidgetPtr widgets)
 {
     while (widgets.next())
     {
