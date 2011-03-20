@@ -17,7 +17,14 @@ file(GLOB GAME_SOURCES
 	vdrift/*.cpp
 	)
 
-file(GLOB EDITOR_SOURCES editor/*.cpp)
+file(GLOB EDITOR_SOURCES editor/*.cpp
+			 vdrift/configfile.cpp
+			 road/*.cpp
+			 tinyxml/*.cpp			
+			 paged-geom/*.cpp
+			bullet/*/*.cpp
+			bullet/*/*/*.cpp
+)
 
 # Executable
 add_executable(stuntrally ${GAME_SOURCES})
