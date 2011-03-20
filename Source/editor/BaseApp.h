@@ -2,7 +2,7 @@
 #define _BaseApp_h_
 #include <OgreRenderTargetListener.h>
 #include "../ogre/QTimer.h"
-
+using namespace Ogre;
 
 class BaseApp :
 		public Ogre::FrameListener, public Ogre::WindowEventListener,
