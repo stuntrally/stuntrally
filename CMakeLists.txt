@@ -38,4 +38,4 @@ include_directories(${VorbisFile_INCLUDE_DIRS})
 
 
 # Subdirectories
-add_subdirectory(Source)
+add_subdirectory(source)
