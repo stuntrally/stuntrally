@@ -3,9 +3,11 @@ Name=Stunt Rally
 GenericName=Racing game
 Comment=3D racing game with stunt and rally elements
 Comment[de]=3D-Rennspiel mit Stunt-Elementen
-Exec=/usr/bin/stuntrally
+Comment[fi]=3D Rallipeli stunttielementein
+Exec=stuntrally
 Icon=
 StartupNotify=false
 Terminal=false
 Type=Application
-Categories=Application;Game
+Categories=Application;Game;SportsGame;
+
