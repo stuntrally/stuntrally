@@ -27,6 +27,9 @@ else()
 	endif()
 endif()
 mark_as_advanced(SHARE_INSTALL)
+#TODO: This would be more elegant and compiler independent to do through configure_file(),
+#      but that would breake other build systems for good.
+add_definitions(-DSHARED_DATA_DIR="${SHARE_INSTALL}")
 
 # Libraries
 
