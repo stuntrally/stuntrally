@@ -187,7 +187,7 @@ bool BaseApp::configure()
 	
 #if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
         WIN32_FIND_DATAA  fd;
-        HANDLE h = FindFirstFileA( "_ogreset_ed.cfg", &fd );
+        HANDLE h = FindFirstFileA( "config/ogreset_ed.cfg", &fd );
         if (h == INVALID_HANDLE_VALUE)
                 notFound = true;
         else
@@ -219,17 +219,17 @@ bool BaseApp::configure()
 bool BaseApp::setup()
 {
 #if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
-        #ifdef _DEBUG
-    mRoot = OGRE_NEW Root("_plugins_win_d.cfg", "_ogreset.cfg", "_ogre.log");
+    #ifdef _DEBUG
+    mRoot = OGRE_NEW Root("config/plugins_win_d.cfg", "config/ogreset.cfg", "ogre.log");
     #else
-    mRoot = OGRE_NEW Root("_plugins_win.cfg", "_ogreset.cfg", "_ogre.log");
+    mRoot = OGRE_NEW Root("config/plugins_win.cfg", "config/ogreset.cfg", "ogre.log");
     #endif
 #else
-        #ifdef _DEBUG
-        mRoot = OGRE_NEW Root("_plugins_nix_d.cfg", "_ogreset.cfg", "_ogre.log");
-        #else
-        mRoot = OGRE_NEW Root("_plugins_nix.cfg", "_ogreset.cfg", "_ogre.log");
-        #endif
+    #ifdef _DEBUG
+    mRoot = OGRE_NEW Root("config/plugins_nix_d.cfg", "config/ogreset.cfg", "ogre.log");
+    #else
+    mRoot = OGRE_NEW Root("config/plugins_nix.cfg", "config/ogreset.cfg", "ogre.log");
+    #endif
 #endif
 	
 	setupResources();
@@ -249,7 +249,7 @@ bool BaseApp::setup()
 	mPlatform = new MyGUI::OgrePlatform();
 	mPlatform->initialise(mWindow, mSceneMgr);
 	mGUI = new MyGUI::Gui();
-	mGUI->initialise(/*"core.xml", "_mygui.log"*/);
+	mGUI->initialise(/*"core.xml", "mygui.log"*/);
 
 	createFrameListener();
 	createScene();
@@ -263,7 +263,7 @@ void BaseApp::setupResources()
 {
 	// Load resource paths from config file
 	ConfigFile cf;
-	cf.load("_resources_ed.cfg");
+	cf.load("config/resources_ed.cfg");
 
 	// Go through all sections & settings in the file
 	ConfigFile::SectionIterator seci = cf.getSectionIterator();

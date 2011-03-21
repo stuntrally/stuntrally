@@ -42,12 +42,12 @@ class PATHMANAGER
 
 		std::string GetDataPath() const {				return data_directory;  }
 		//std::string GetTrackRecordsPath() const {		return settings_path  + "/records" + profile_suffix;  }
-		std::string GetSettingsFile() const {			return "_game.cfg";  }  //settings_path + "/VDrift.config"+profile_suffix;  }
-		std::string GetLogFile() const {				return "_log.txt";  }  //settings_path + "/log.txt";  }
+		std::string GetSettingsFile() const {			return "config/game.cfg";  }  //settings_path + "/VDrift.config"+profile_suffix;  }
+		std::string GetLogFile() const {				return "log.txt";  }  //settings_path + "/log.txt";  }
 		std::string GetTrackPath() const {				return data_directory + "/tracks";  }
 		std::string GetCarPath() const {				return data_directory + "/cars";  }
-		std::string GetCarControlsFile() const {		return "_controls.cfg";  }  //settings_path+"/controls.config"+profile_suffix;
-		std::string GetDefaultCarControlsFile() const {	return "_controls.cfg";  }//-
+		std::string GetCarControlsFile() const {		return "config/controls.cfg";  }  //settings_path+"/controls.config"+profile_suffix;
+		std::string GetDefaultCarControlsFile() const {	return "config/controls.cfg";  }//-
 		std::string GetGenericSoundPath() const {		return data_directory + "/sounds";  }
 		std::string GetDriverPath() const {				return data_directory + "/drivers";  }
 		std::string GetReplayPath() const {				return data_directory + "/replays";  }
