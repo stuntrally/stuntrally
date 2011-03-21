@@ -18,6 +18,16 @@ set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/")
 # We want the binaries to be easily accessible
 set(EXECUTABLE_OUTPUT_PATH ${CMAKE_BINARY_DIR})
 
+# Data installation path
+if(WIN32)
+	set(SHARE_INSTALL "data" CACHE STRING "Data file install path. Must be a relative path (from CMAKE_INSTALL_PREFIX), with no trailing slash.")
+else()
+	if(NOT SHARE_INSTALL)
+		set(SHARE_INSTALL "share/games/stuntrally" CACHE STRING "Data file install path. Must be a relative path (from CMAKE_INSTALL_PREFIX), with no trailing slash.")
+	endif()
+endif()
+mark_as_advanced(SHARE_INSTALL)
+
 # Libraries
 
 find_package(OGRE REQUIRED QUIET)
@@ -41,4 +51,10 @@ include_directories(${Boost_INCLUDE_DIRS})
 link_directories(${Boost_LIBRARY_DIRS})
 
 # Subdirectories
+
 add_subdirectory(source)
+if (EXISTS "${CMAKE_SOURCE_DIR}/data" AND IS_DIRECTORY "${CMAKE_SOURCE_DIR}/data")
+	add_subdirectory(data)
+else()
+	message("WARNING: Data not found, clone the data repo as a directory named data.")
+endif()
