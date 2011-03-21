@@ -2,6 +2,10 @@
 #include "BaseApp.h"
 #include "OgreApp.h" //
 
+#if OGRE_PLATFORM != OGRE_PLATFORM_WIN32
+#include "boost/thread.hpp"
+#endif
+
 #if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
 DWORD WINAPI TimThread(LPVOID lpParam)
 { 
@@ -13,6 +17,15 @@ DWORD WINAPI TimThread(LPVOID lpParam)
 		Sleep(pA->timer.iv * 1000.0);  //0-
 	}
     return 0;
+}
+#else
+void TimThread(BaseApp* pA)
+{
+	while (!pA->mShutDown)
+	{
+		if (pA->timer.update())
+			pA->OnTimer(pA->timer.dt);
+	}
 }
 #endif
 /**/
@@ -85,6 +98,8 @@ void BaseApp::createFrameListener()
 	/**/timer.iv = 0.001;  ///par 
 #if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
 	/**/hpr = CreateThread(NULL,0,TimThread,(LPVOID)this,0,NULL);
+#else
+	boost::thread t(TimThread, this);
 #endif
 }
 
