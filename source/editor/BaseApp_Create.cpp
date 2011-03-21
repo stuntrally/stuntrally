@@ -2,12 +2,11 @@
 #include "BaseApp.h"
 #include "OgreApp.h" //
 
-#if OGRE_PLATFORM != OGRE_PLATFORM_WIN32
 #include "boost/thread.hpp"
-#endif
 
-#if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
-DWORD WINAPI TimThread(LPVOID lpParam)
+/*
+ * old - win only
+ * DWORD WINAPI TimThread(LPVOID lpParam)
 { 
 	BaseApp* pA = (BaseApp*)lpParam;
 	while (!pA->mShutDown)
@@ -17,17 +16,21 @@ DWORD WINAPI TimThread(LPVOID lpParam)
 		Sleep(pA->timer.iv * 1000.0);  //0-
 	}
     return 0;
-}
-#else
+}*/
+
+/*
+ * boost
+ */
 void TimThread(BaseApp* pA)
 {
 	while (!pA->mShutDown)
 	{
 		if (pA->timer.update())
 			pA->OnTimer(pA->timer.dt);
+		boost::this_thread::sleep(boost::posix_time::seconds(pA->timer.iv));
 	}
 }
-#endif
+
 /**/
 
 
@@ -96,18 +99,16 @@ void BaseApp::createFrameListener()
 
 	///  timer thread - input, camera
 	/**/timer.iv = 0.001;  ///par 
-#if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
-	/**/hpr = CreateThread(NULL,0,TimThread,(LPVOID)this,0,NULL);
-#else
+	/*old win thread*///hpr = CreateThread(NULL,0,TimThread,(LPVOID)this,0,NULL);
 	boost::thread t(TimThread, this);
-#endif
+
 }
 
 void BaseApp::destroyScene()
 {
-#if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
-	//**/TerminateThread(hpr, 1);
-#endif
+/* old win thread
+ *	TerminateThread(hpr, 1);
+ */
 }
 
 //  Run
