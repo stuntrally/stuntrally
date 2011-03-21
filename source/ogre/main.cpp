@@ -9,7 +9,9 @@
 
 #include <OgrePlatform.h>
 
-#if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
+#include "boost/thread.hpp"
+
+/* old win threads ** #if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
 DWORD WINAPI VprThread(LPVOID lpParam)
 { 
 	App* pA = (App*)lpParam;
@@ -17,7 +19,12 @@ DWORD WINAPI VprThread(LPVOID lpParam)
 		pA->UpdThr();
     return 0;
 }
-#endif
+#endif*/
+void VprThread(App* pA)
+{
+	if (pA)
+		pA->UpdThr();
+}
 
 #if OGRE_PLATFORM  == OGRE_PLATFORM_WIN32
 	int APIENTRY WinMain(HINSTANCE hInst, HINSTANCE hPrev, LPTSTR lpCmdLine, int nCmdShow)
@@ -57,9 +64,9 @@ DWORD WINAPI VprThread(LPVOID lpParam)
 	// primary logging ostreams
 	std::ostream info_output(&infolog);
 	std::ostream error_output(&errorlog);/**/
-#if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
+/* old win threads ** #if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
 	HANDLE hpr;
-#endif
+#endif*/
 
     ///  game  ------------------------------
     GAME* pGame = new GAME(info_output, error_output, &settings);
@@ -75,9 +82,10 @@ DWORD WINAPI VprThread(LPVOID lpParam)
 	{
 		if (settings.mult_thr > 0)  ///
 		{
-#if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
+/* old win thread ** #if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
 			hpr = CreateThread(NULL,0,VprThread,(LPVOID)pApp,0,NULL);
-#endif
+#endif*/
+			boost::thread t(VprThread, pApp);
 		}
 #if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
 		pApp->Run( settings.ogre_dialog || lpCmdLine[0]!=0 );  //Release change-
@@ -97,9 +105,10 @@ DWORD WINAPI VprThread(LPVOID lpParam)
 
 	if (settings.mult_thr > 0)  ///
 	{
-#if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
+/* old win thread ** #if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
 		TerminateThread(hpr, 1);
-#endif
+#endif*/
+		
 	}
 	info_output << "Exiting" << std::endl;
 	delete pApp;
