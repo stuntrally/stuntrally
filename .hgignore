@@ -1,7 +1,9 @@
 build
 build32
 build64
-_ogreset.cfg
-_ogre.log
-_log.txt
+game.cfg
+editor.cfg
+ogreset.cfg
+ogre.log
+log.txt
 MyGUI.log
