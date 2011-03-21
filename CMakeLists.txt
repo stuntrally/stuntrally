@@ -20,7 +20,7 @@ set(EXECUTABLE_OUTPUT_PATH ${CMAKE_BINARY_DIR})
 
 # Data installation path
 if(WIN32)
-	set(SHARE_INSTALL "data" CACHE STRING "Data file install path. Must be a relative path (from CMAKE_INSTALL_PREFIX), with no trailing slash.")
+	set(SHARE_INSTALL "." CACHE STRING "Data file install path. Must be a relative path (from CMAKE_INSTALL_PREFIX), with no trailing slash.")
 else()
 	if(NOT SHARE_INSTALL)
 		set(SHARE_INSTALL "share/games/stuntrally" CACHE STRING "Data file install path. Must be a relative path (from CMAKE_INSTALL_PREFIX), with no trailing slash.")
@@ -56,6 +56,7 @@ link_directories(${Boost_LIBRARY_DIRS})
 # Subdirectories
 
 add_subdirectory(source)
+add_subdirectory(config)
 if (EXISTS "${CMAKE_SOURCE_DIR}/data" AND IS_DIRECTORY "${CMAKE_SOURCE_DIR}/data")
 	add_subdirectory(data)
 else()
