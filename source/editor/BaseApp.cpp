@@ -111,7 +111,7 @@ bool BaseApp::frameRenderingQueued(const FrameEvent& evt)
 
 	if (mShutDown)
 		return false;
-		
+
 	return true;
 }
 

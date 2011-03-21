@@ -33,12 +33,12 @@ add_executable(stuntrally ${GAME_SOURCES})
 
 # Link all needed libraries
 #TODO: MyGUI.OgrePlatform is not added by the find scripts
-target_link_libraries(stuntrally ${SDL_LIBRARY} ${VorbisFile_LIBRARIES} ${OIS_LIBRARIES} ${MYGUI_LIBRARIES} MyGUI.OgrePlatform ${Ogre_LIBRARIES} ${OGRE_Terrain_LIBRARIES} ${OGRE_Paging_LIBRARIES})
+target_link_libraries(stuntrally ${SDL_LIBRARY} ${VorbisFile_LIBRARIES} ${OIS_LIBRARIES} ${MYGUI_LIBRARIES} MyGUI.OgrePlatform ${Ogre_LIBRARIES} ${OGRE_Terrain_LIBRARIES} ${OGRE_Paging_LIBRARIES} ${Boost_LIBRARIES})
 
 # Editor
 #TODO: Fix editor for Linux
 if(BUILD_EDITOR)
 	add_executable(sr-editor ${EDITOR_SOURCES})
 	set_target_properties(sr-editor PROPERTIES COMPILE_FLAGS "-DROAD_EDITOR")
-	target_link_libraries(sr-editor ${SDL_LIBRARY} ${VorbisFile_LIBRARIES} ${OIS_LIBRARIES} ${MYGUI_LIBRARIES} MyGUI.OgrePlatform ${Ogre_LIBRARIES} ${OGRE_Terrain_LIBRARIES} ${OGRE_Paging_LIBRARIES})
+	target_link_libraries(sr-editor ${SDL_LIBRARY} ${VorbisFile_LIBRARIES} ${OIS_LIBRARIES} ${MYGUI_LIBRARIES} MyGUI.OgrePlatform ${Ogre_LIBRARIES} ${OGRE_Terrain_LIBRARIES} ${OGRE_Paging_LIBRARIES} ${Boost_LIBRARIES})
 endif()
