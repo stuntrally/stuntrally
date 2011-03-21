@@ -144,15 +144,15 @@ bool BaseApp::setup()
 {
 #if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
 	#ifdef _DEBUG
-    mRoot = OGRE_NEW Root("config/plugins_win_d.cfg", "config/ogreset.cfg", "ogre.log");
+    mRoot = OGRE_NEW Root("config/plugins_win_d.cfg", "ogreset.cfg", "ogre.log");
     #else
-    mRoot = OGRE_NEW Root("config/plugins_win.cfg", "config/ogreset.cfg", "ogre.log");
+    mRoot = OGRE_NEW Root("config/plugins_win.cfg", "ogreset.cfg", "ogre.log");
     #endif
 #else
 	#ifdef _DEBUG
-	mRoot = OGRE_NEW Root("config/plugins_nix_d.cfg", "config/ogreset.cfg", "ogre.log");
+	mRoot = OGRE_NEW Root("config/plugins_nix_d.cfg", "ogreset.cfg", "ogre.log");
 	#else
-	mRoot = OGRE_NEW Root("config/plugins_nix.cfg", "config/ogreset.cfg", "ogre.log");
+	mRoot = OGRE_NEW Root("config/plugins_nix.cfg", "ogreset.cfg", "ogre.log");
 	#endif
 #endif
 	Ogre::LogManager::getSingleton().setLogDetail(LL_BOREME);//

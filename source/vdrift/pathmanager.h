@@ -42,7 +42,7 @@ class PATHMANAGER
 
 		std::string GetDataPath() const {				return data_directory;  }
 		//std::string GetTrackRecordsPath() const {		return settings_path  + "/records" + profile_suffix;  }
-		std::string GetSettingsFile() const {			return "config/game.cfg";  }  //settings_path + "/VDrift.config"+profile_suffix;  }
+		std::string GetSettingsFile() const {			return "game.cfg";  }  //settings_path + "/VDrift.config"+profile_suffix;  }
 		std::string GetLogFile() const {				return "log.txt";  }  //settings_path + "/log.txt";  }
 		std::string GetTrackPath() const {				return data_directory + "/tracks";  }
 		std::string GetCarPath() const {				return data_directory + "/cars";  }

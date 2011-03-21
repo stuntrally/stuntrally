@@ -9,7 +9,7 @@
 #endif
 {
 	//  Load Settings
-	string setFile = "config/editor.cfg";
+	string setFile = "editor.cfg";
 	SETTINGS settings;
 	settings.Load(setFile);
 
