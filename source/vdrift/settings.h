@@ -53,6 +53,8 @@ public:
 	bool bloom, hdr;
 	int windowx, windowy;
 	bool fullscreen;
+	int fsaa;
+	bool vsync;
 
 //------------------------------------------
 	SETTINGS();

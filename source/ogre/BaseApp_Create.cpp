@@ -156,7 +156,7 @@ BaseApp::BaseApp() :
 }
 
 BaseApp::~BaseApp()
-{
+{	
 	if (mGUI)  {
 		mGUI->shutdown();	delete mGUI;	mGUI = 0;  }
 	if (mPlatform)  {
@@ -166,6 +166,15 @@ BaseApp::~BaseApp()
 
 	WindowEventUtilities::removeWindowEventListener(mWindow, this);
 	windowClosed(mWindow);
+	
+	
+	#if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
+		mRoot->unloadPlugin("RenderSystem_Direct3D9");
+	#else
+		mRoot->unloadPlugin("RenderSystem_GL");
+	#endif
+	
+	
 	OGRE_DELETE mRoot;
 }
 
@@ -175,7 +184,7 @@ bool BaseApp::configure()
 {
 	bool ok = false, notFound = false;
 	
-#if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
+/* old ** #if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
 	WIN32_FIND_DATAA  fd;
 	string p = PATHMANAGER::GetUserConfigDir() + string("/ogreset.cfg");
 	HANDLE h = FindFirstFileA( (LPCSTR)p.c_str(), &fd );
@@ -200,11 +209,40 @@ bool BaseApp::configure()
 	if (ok)
 	{	mWindow = mRoot->initialise( true, "Stunt Rally" );
 		return true;
+	}*/
+
+/* new - manual renderwindow */
+
+	try
+	{
+		mRoot->setRenderSystem(*mRoot->getAvailableRenderers().begin());
+	
+		mRoot->initialise(false);
+		
+		Ogre::NameValuePairList settings;
+		settings.insert(std::make_pair("title", "Stunt Rally"));
+		settings.insert(std::make_pair("FSAA", std::string(pSet->fsaa));
+		// ogre only understands the strings "true" or "false"
+		std::string vsync;
+		if (pSet->vsync)
+			vsync = "true";
+		else
+			vsync = "false";
+		settings.insert(std::make_pair("vsync", vsync);
+
+		mWindow = mRoot->createRenderWindow("Stunt Rally", pSet->windowx, pSet->windowy, pSet->fullscreen, &settings);
+		return true;
 	}
-
-	return false;
+	catch (Ogre::Exception& e)
+	{
+			#if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
+				MessageBoxA( NULL, e.getFullDescription().c_str(), "An exception has occured!", MB_OK | MB_ICONERROR | MB_TASKMODAL);
+			#else
+				std::cerr << "An exception has occured: " << e.getFullDescription().c_str() << std::endl;
+			#endif
+		return false;
+	}
 }
-
 //  Setup
 //-------------------------------------------------------------------------------------
 bool BaseApp::setup()

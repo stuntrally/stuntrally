@@ -65,6 +65,7 @@ void SETTINGS::Serialize(bool w, CONFIGFILE & c)
 	Param(c,w, "video.bloom", bloom); 		   Param(c,w, "video.hdr", hdr);
 	Param(c,w, "video.windowx", windowx);      Param(c,w, "video.windowy", windowy);
 	Param(c,w, "video.fullscreen", fullscreen);
+	Param(c,w, "video.fsaa", fsaa); 		   Param(c,w, "video.vsync", vsync);
 }
 
 SETTINGS::SETTINGS() :  ///  Defaults
@@ -98,5 +99,5 @@ SETTINGS::SETTINGS() :  ///  Defaults
 	//  sim
 	game_fq(100.f), blt_fq(60.f), blt_iter(7), mult_thr(0),  //low
 	// video
-	bloom(false), hdr(false), windowx(800), windowy(600), fullscreen(false)
+	bloom(false), hdr(false), windowx(800), windowy(600), fullscreen(false), fsaa(0), vsync(false);
 {}
