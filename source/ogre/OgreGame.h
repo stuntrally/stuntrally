@@ -20,7 +20,6 @@ public:
 	App();  virtual ~App();
 	
 	class GAME* pGame;  ///*
-	class SETTINGS* pSet;
 	void updatePoses(float time), newPoses();
 	void UpdThr();  bool bNew;
 	Vector3 newPos,vCarY;  Quaternion newRot;

@@ -37,6 +37,10 @@ void SETTINGS::Serialize(bool w, CONFIGFILE & c)
 	Param(c,w, "shadow.count",shadow_count);	Param(c,w, "shadow.type", shadow_type);
 	Param(c,w, "shadow.shaders", shaders);
 	
+	Param(c,w, "video.bloom", bloom); 		   Param(c,w, "video.hdr", hdr);
+	Param(c,w, "video.windowx", windowx);      Param(c,w, "video.windowy", windowy);
+	Param(c,w, "video.fullscreen", fullscreen);
+	
 	Param(c,w, "reflect.skip_frames", refl_skip);	Param(c,w, "reflect.faces_once", refl_faces);
 	Param(c,w, "reflect.map_size", refl_size);		Param(c,w, "reflect.dist", refl_dist);
 
@@ -92,5 +96,7 @@ SETTINGS::SETTINGS() :  ///  Defaults
 	skin("simple"), vol_master(1.f), vol_engine(1.f), vol_tires(1.f), vol_env(1.f),
 	autostart(0), ogre_dialog(1), escquit(0), bltDebug(0), bltLines(1),
 	//  sim
-	game_fq(100.f), blt_fq(60.f), blt_iter(7), mult_thr(0)  //low
+	game_fq(100.f), blt_fq(60.f), blt_iter(7), mult_thr(0),  //low
+	// video
+	fullscreen(false), windowx(800), windowy(600), bloom(false), hdr(false)
 {	}

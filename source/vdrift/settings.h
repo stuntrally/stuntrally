@@ -17,6 +17,12 @@ public:
 		show_cam, show_times, car_dbgbars, car_dbgtxt, ogre_dialog;
 	float size_gauges, size_minimap;
 
+	// video
+	// only bloom or hdr can be used
+	bool bloom, hdr;
+	int windowx, windowy;
+	bool fullscreen;
+
 	//  graphics
 	int anisotropy, shaders;  bool bFog;
 	float view_distance, terdetail,terdist, road_dist;

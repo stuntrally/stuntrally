@@ -1,6 +1,7 @@
 #ifndef _BaseApp_h_
 #define _BaseApp_h_
 #include "LoadingBar.h"
+#include "../vdrift/settings.h"
 using namespace Ogre;
 
 
@@ -11,6 +12,8 @@ class BaseApp :
 public:
 	BaseApp();	virtual ~BaseApp();
 	virtual void Run( bool showDialolg );
+	
+	class SETTINGS* pSet;
 
 	SceneNode* ndSky; //-
 	class FollowCamera* mFCam;  // cam+
@@ -26,7 +29,7 @@ protected:
 	virtual void createScene() = 0;
 	virtual void destroyScene();
 
-	void createCamera(), createFrameListener(), createViewports();
+	void createCamera(), createFrameListener(), createViewports(), createCompositor();
 	void setupResources(), createResourceListener(), loadResources();
 	void LoadingOn(), LoadingOff();
 
