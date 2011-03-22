@@ -36,6 +36,11 @@ void SETTINGS::Serialize(bool w, CONFIGFILE & c)
 	Param(c,w, "set.cam_speed", cam_speed);		Param(c,w, "set.cam_inert", cam_inert);
 	Param(c,w, "set.ter_skip", ter_skip);		Param(c,w, "set.road_sphr", road_sphr);
 	Param(c,w, "set.mini_skip", mini_skip);
+	
+	Param(c,w, "video.bloom", bloom); 		   Param(c,w, "video.hdr", hdr);
+	Param(c,w, "video.windowx", windowx);      Param(c,w, "video.windowy", windowy);
+	Param(c,w, "video.fullscreen", fullscreen);
+	Param(c,w, "video.fsaa", fsaa); 		   Param(c,w, "video.vsync", vsync);
 }
 
 SETTINGS::SETTINGS() :  ///  Defaults
@@ -54,5 +59,6 @@ SETTINGS::SETTINGS() :  ///  Defaults
 	cam_x(0), cam_y(50),cam_z(-120),  cam_dx(0), cam_dy(0), cam_dz(1),
 	bFog(0), bTrees(0),
 	cam_speed(1.f), cam_inert(1.f),
-	ter_skip(4), road_sphr(1.f), mini_skip(4)
+	ter_skip(4), road_sphr(1.f), mini_skip(4),
+	bloom(false), hdr(false), windowx(800), windowy(600), fullscreen(false), fsaa(0), vsync(false)
 {	}
