@@ -36,11 +36,7 @@ void SETTINGS::Serialize(bool w, CONFIGFILE & c)
 	Param(c,w, "shadow.dist", shadow_dist);		Param(c,w, "shadow.size", shadow_size);
 	Param(c,w, "shadow.count",shadow_count);	Param(c,w, "shadow.type", shadow_type);
 	Param(c,w, "shadow.shaders", shaders);
-	
-	Param(c,w, "video.bloom", bloom); 		   Param(c,w, "video.hdr", hdr);
-	Param(c,w, "video.windowx", windowx);      Param(c,w, "video.windowy", windowy);
-	Param(c,w, "video.fullscreen", fullscreen);
-	
+		
 	Param(c,w, "reflect.skip_frames", refl_skip);	Param(c,w, "reflect.faces_once", refl_faces);
 	Param(c,w, "reflect.map_size", refl_size);		Param(c,w, "reflect.dist", refl_dist);
 
@@ -65,6 +61,10 @@ void SETTINGS::Serialize(bool w, CONFIGFILE & c)
 	//c.bFltFull = true;
 	Param(c,w, "sim.game_fq", game_fq);	Param(c,w, "sim.mult_thr", mult_thr);
 	Param(c,w, "sim.blt_fq", blt_fq);	Param(c,w, "sim.blt_iter", blt_iter);
+	
+	Param(c,w, "video.bloom", bloom); 		   Param(c,w, "video.hdr", hdr);
+	Param(c,w, "video.windowx", windowx);      Param(c,w, "video.windowy", windowy);
+	Param(c,w, "video.fullscreen", fullscreen);
 }
 
 SETTINGS::SETTINGS() :  ///  Defaults
@@ -98,5 +98,5 @@ SETTINGS::SETTINGS() :  ///  Defaults
 	//  sim
 	game_fq(100.f), blt_fq(60.f), blt_iter(7), mult_thr(0),  //low
 	// video
-	fullscreen(false), windowx(800), windowy(600), bloom(false), hdr(false)
+	bloom(false), hdr(false), windowx(800), windowy(600), fullscreen(false)
 {}
