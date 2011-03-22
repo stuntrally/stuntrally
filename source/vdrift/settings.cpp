@@ -99,4 +99,4 @@ SETTINGS::SETTINGS() :  ///  Defaults
 	game_fq(100.f), blt_fq(60.f), blt_iter(7), mult_thr(0),  //low
 	// video
 	fullscreen(false), windowx(800), windowy(600), bloom(false), hdr(false)
-{	}
+{}

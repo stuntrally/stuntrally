@@ -133,6 +133,8 @@ void BaseApp::Run( bool showDialolg )
 	if (!setup())
 		return;
 
+	createCompositor();
+
 	mRoot->startRendering();
 
 	destroyScene();
@@ -244,7 +246,6 @@ bool BaseApp::setup()
 
 	createFrameListener();
 	createScene();//^before
-	createCompositor();
 
 	return true;
 };
