@@ -42,13 +42,14 @@ file(GLOB EDITOR_SOURCES editor/*.cpp
 # Game executable
 #TODO: MyGUI.OgrePlatform is not added by the find scripts
 add_executable(${GAME_EXE} ${GAME_SOURCES})
-target_link_libraries(${GAME_EXE} ${SDL_LIBRARY} ${VorbisFile_LIBRARIES} ${OIS_LIBRARIES} ${MYGUI_LIBRARIES} MyGUI.OgrePlatform ${Ogre_LIBRARIES} ${OGRE_Terrain_LIBRARIES} ${OGRE_Paging_LIBRARIES} ${Boost_LIBRARIES})
+target_link_libraries(${GAME_EXE} ${SDL_LIBRARY} ${VorbisFile_LIBRARIES} ${OIS_LIBRARIES} ${MYGUI_LIBRARIES} MyGUI.OgrePlatform ${OGRE_LIBRARIES} ${OGRE_Terrain_LIBRARIES} ${OGRE_Paging_LIBRARIES} ${Boost_LIBRARIES})
 install(TARGETS ${GAME_EXE} DESTINATION bin)
 
 # Editor
 if(BUILD_EDITOR)
 	add_executable(${EDITOR_EXE} ${EDITOR_SOURCES})
 	set_target_properties(${EDITOR_EXE} PROPERTIES COMPILE_FLAGS "-DROAD_EDITOR")
-	target_link_libraries(${EDITOR_EXE} ${SDL_LIBRARY} ${VorbisFile_LIBRARIES} ${OIS_LIBRARIES} ${MYGUI_LIBRARIES} MyGUI.OgrePlatform ${Ogre_LIBRARIES} ${OGRE_Terrain_LIBRARIES} ${OGRE_Paging_LIBRARIES} ${Boost_LIBRARIES})
+	target_link_libraries(${EDITOR_EXE} ${SDL_LIBRARY} ${VorbisFile_LIBRARIES} ${OIS_LIBRARIES} ${MYGUI_LIBRARIES} MyGUI.OgrePlatform ${OGRE_LIBRARIES} ${OGRE_Terrain_LIBRARIES} ${OGRE_Paging_LIBRARIES} ${Boost_LIBRARIES})
 	install(TARGETS ${EDITOR_EXE} DESTINATION bin)
 endif()
+
