@@ -110,7 +110,8 @@ bool BaseApp::configure()
 	
 #if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
 	WIN32_FIND_DATAA  fd;
-	HANDLE h = FindFirstFileA( PATHMANAGER::GetUserConfigDir() + "/ogreset.cfg", &fd );
+	string p = PATHMANAGER::GetUserConfigDir() + string("/ogreset.cfg");
+	HANDLE h = FindFirstFileA( (LPCSTR)p.c_str(), &fd );
 	if (h == INVALID_HANDLE_VALUE)
 		notFound = true;
 	else 
