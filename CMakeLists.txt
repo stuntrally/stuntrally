@@ -49,7 +49,7 @@ include_directories(${OIS_INCLUDE_DIRS})
 find_package(VorbisFile REQUIRED QUIET)
 include_directories(${VorbisFile_INCLUDE_DIRS})
 
-find_package(Boost COMPONENTS thread REQUIRED QUIET)
+find_package(Boost COMPONENTS thread filesystem REQUIRED QUIET)
 include_directories(${Boost_INCLUDE_DIRS})
 link_directories(${Boost_LIBRARY_DIRS})
 
