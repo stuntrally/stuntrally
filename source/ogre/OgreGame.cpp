@@ -48,7 +48,7 @@ App::App()
 }
 String App::TrkDir()
 {
-	return "data/tracks/" + pSet->track + "/";
+	return PATHMANAGER::GetTrackPath() + "/" + pSet->track + "/";
 }
 
 App::~App()

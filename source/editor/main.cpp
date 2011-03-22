@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "OgreApp.h"
-
+#include "../vdrift/pathmanager.h"
 
 #if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
 	INT WINAPI WinMain( HINSTANCE hInst, HINSTANCE, LPSTR lpCmdLine, INT )
@@ -9,7 +9,8 @@
 #endif
 {
 	//  Load Settings
-	string setFile = "editor.cfg";
+	PATHMANAGER::Init(std::cout, std::cerr);
+	string setFile = PATHMANAGER::GetUserConfigDir() + "/editor.cfg";
 	SETTINGS settings;
 	settings.Load(setFile);
 

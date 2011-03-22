@@ -167,10 +167,10 @@ void App::InitGui()
     {	carList->removeAllItems();  int ii = 0;  bool bFound = false;
 
 		std::list <std::string> li;
-		pGame->pathmanager.GetFolderIndex(pGame->pathmanager.GetCarPath(), li);
+		PATHMANAGER::GetFolderIndex(PATHMANAGER::GetCarPath(), li);
 		for (std::list <std::string>::iterator i = li.begin(); i != li.end(); ++i)
 		{
-			ifstream check((pGame->pathmanager.GetCarPath() + "/" + *i + "/about.txt").c_str());
+			ifstream check((PATHMANAGER::GetCarPath() + "/" + *i + "/about.txt").c_str());
 			if (check)  {
 				carList->addItem(*i);
 				if (*i == pSet->car) {  carList->setIndexSelected(ii);  bFound = true;  }
@@ -197,10 +197,10 @@ void App::InitGui()
 		int ii = 0, si = 0;  bool bFound = false;
 
 		std::list <std::string> li;
-		pGame->pathmanager.GetFolderIndex(pGame->pathmanager.GetTrackPath(), li);
+		PATHMANAGER::GetFolderIndex(PATHMANAGER::GetTrackPath(), li);
 		for (std::list <std::string>::iterator i = li.begin(); i != li.end(); ++i)
 		{
-			string s = pGame->pathmanager.GetTrackPath() + "/" + *i + "/track.txt";
+			string s = PATHMANAGER::GetTrackPath() + "/" + *i + "/track.txt";
 			ifstream check(s.c_str());
 			if (check)  {
 				//string displayname;  getline(check, displayname);
@@ -250,7 +250,7 @@ void App::InitGui()
 
 void App::ReadTrkStats()
 {
-	string sTrk = "data/tracks/";
+	string sTrk = PATHMANAGER::GetTrackPath() + "/";
 	String sRd = sTrk + sListTrack + "/road.xml";
 	String sSc = sTrk + sListTrack + "/scene.xml";
 

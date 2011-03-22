@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "OgreApp.h"
 #include "../road/Road.h"
+#include "../vdrift/pathmanager.h"
 
 #if OGRE_PLATFORM != OGRE_PLATFORM_WIN32
 // dir listing
@@ -46,7 +47,7 @@ App::App()  //  gui wigdets--
 	,grass(0), trees(0), sun(0)
 	,eTrkEvent(TE_None), bNewHmap(0), bTrGrUpd(0)
 {
-	pathTrk = "data/tracks/";  pathTrkPrv = pathTrk + "_previews/";  resTrk = "";
+	pathTrk = PATHMANAGER::GetTrackPath() + "/";  pathTrkPrv = pathTrk + "_previews/";  resTrk = "";
 
 	mBrSize[0] = 16.f;		mBrSize[1] = 24.f;
 	mBrIntens[0] = 20.f;	mBrIntens[1] = 20.f;

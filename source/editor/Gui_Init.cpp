@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "OgreApp.h"
+#include "../vdrift/pathmanager.h"
 //#include "../road/Road.h"
 using namespace MyGUI;
 
@@ -32,7 +33,6 @@ void App::InitGui()
 	mToolTip->setVisible(false);
 	mToolTipTxt = mToolTip->getChildAt(0)->castType<Edit>();
 
-
 	//  Brush wnd  assign controls  ----------------------
 	if (mWndBrush)
 	{	for (int i=0; i<BR_TXT; ++i)
@@ -46,7 +46,7 @@ void App::InitGui()
 	if (mWndRoadStats)  for (int i=0; i<RDS_TXT; ++i)
 		rdTxtSt[i] = (StaticTextPtr)mWndRoadStats->findWidget("rdStat"+toStr(i));
 
-	///  Options wnd
+	//  Options wnd
 	if (mWndOpts)
 	{	mWndOpts->setVisible(false);
 		int sx = mWindow->getWidth(), sy = mWindow->getHeight();
@@ -259,7 +259,7 @@ void App::InitGui()
 	Cmb(cmbTexNorm, "TexNormal", comboTexNorm);  cmbTexNorm->addItem("flat_n.png");
 
 	strlist li;
-	GetFolderIndex("data/terrain", li);
+	GetFolderIndex(PATHMANAGER::GetDataPath() + "/terrain", li);
 	for (strlist::iterator i = li.begin(); i != li.end(); ++i)
 		if (StringUtil::endsWith(*i,".txt"))
 			i = li.erase(i);
@@ -288,7 +288,7 @@ void App::InitGui()
 	//---------------------  TREES  ---------------------
 	Cmb(cmbPgLay, "LTrCombo", comboPgLay);
 	strlist lt;
-	GetFolderIndex("data/trees", lt);
+	GetFolderIndex(PATHMANAGER::GetDataPath() + "/trees", lt);
 	for (strlist::iterator i = lt.begin(); i != lt.end(); ++i)
 		if (StringUtil::endsWith(*i,".mesh"))  cmbPgLay->addItem(*i);
 

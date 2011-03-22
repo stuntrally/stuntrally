@@ -85,7 +85,7 @@ void App::NewGame()
 	sc.ter = ter;
 
 	if (ter)  // load scene
-		sc.LoadXml("data/tracks/" + pSet->track + "/scene.xml");
+		sc.LoadXml(PATHMANAGER::GetTrackPath() + "/" + pSet->track + "/scene.xml");
 	else
 	{	sc.Default();  sc.td.hfData = NULL;  }
 
@@ -121,7 +121,7 @@ void App::NewGame()
 bool App::IsTerTrack()
 {
 	//  track: vdrift / terrain
-	String sr = "data/tracks/" + pSet->track + "/road.xml";
+	String sr = PATHMANAGER::GetTrackPath() + "/" + pSet->track + "/road.xml";
 	ifstream fr(sr.c_str());
 	bool ter = fr.good(); //!fail()
 	if (ter)  fr.close();
@@ -142,7 +142,7 @@ void App::CreateRoad()
 	road = new SplineRoad(pGame);  // sphere.mesh
 	road->Setup("", 0.7,  terrain, mSceneMgr, mCamera);
 
-	String sr = "data/tracks/" + pSet->track + "/road.xml";
+	String sr = PATHMANAGER::GetTrackPath() + "/" + pSet->track + "/road.xml";
 	road->LoadFile(sr);
 
 	UpdPSSMMaterials();  ///+~-

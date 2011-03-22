@@ -31,20 +31,19 @@ void GAME::Start(std::list <string> & args)
 		info_output << "Unix-like" << endl;
 	#endif
 
-	pathmanager.Init(info_output, error_output);
-	//settings->Load(pathmanager.GetSettingsFile());
+	//settings->Load(PATHMANAGER::GetSettingsFile());
 	
 	eventsystem.Init(info_output);
 	
 	//load controls
-	info_output << "Loading car controls from: " << pathmanager.GetCarControlsFile() << endl;
-	if (!pathmanager.FileExists(pathmanager.GetCarControlsFile()))
+	info_output << "Loading car controls from: " << PATHMANAGER::GetCarControlsFile() << endl;
+	if (!PATHMANAGER::FileExists(PATHMANAGER::GetCarControlsFile()))
 	{
-		info_output << "Car control file " << pathmanager.GetCarControlsFile() << " doesn't exist; using defaults" << endl;
-		carcontrols_local.second.Load(pathmanager.GetDefaultCarControlsFile(), info_output, error_output);
-		//carcontrols_local.second.Save(pathmanager.GetCarControlsFile(), info_output, error_output);
+		info_output << "Car control file " << PATHMANAGER::GetCarControlsFile() << " doesn't exist; using defaults" << endl;
+		carcontrols_local.second.Load(PATHMANAGER::GetDefaultCarControlsFile(), info_output, error_output);
+		//carcontrols_local.second.Save(PATHMANAGER::GetCarControlsFile(), info_output, error_output);
 	}else
-		carcontrols_local.second.Load(pathmanager.GetCarControlsFile(), info_output, error_output);
+		carcontrols_local.second.Load(PATHMANAGER::GetCarControlsFile(), info_output, error_output);
 
 	InitializeSound(); //if sound initialization fails, that's okay, it'll disable itself
 
@@ -72,7 +71,7 @@ bool GAME::InitializeSound()
 {
 	if (sound.Init(2048, info_output, error_output))
 	{
-		generic_sounds.SetLibraryPath(pathmanager.GetGenericSoundPath());
+		generic_sounds.SetLibraryPath(PATHMANAGER::GetGenericSoundPath());
 		
 		if (!generic_sounds.Load("tire_squeal", sound.GetDeviceInfo(), error_output)) return false;
 		if (!generic_sounds.Load("grass", sound.GetDeviceInfo(), error_output)) return false;
@@ -159,16 +158,16 @@ bool GAME::ParseArguments(std::list <std::string> & args)
 
 	if (!argmap["-cartest"].empty())
 	{
-		pathmanager.Init(info_output, error_output);
+		PATHMANAGER::Init(info_output, error_output);
 		PERFORMANCE_TESTING perftest;
-		perftest.Test(pathmanager.GetCarPath(), argmap["-cartest"], info_output, error_output);
+		perftest.Test(PATHMANAGER::GetCarPath(), argmap["-cartest"], info_output, error_output);
 		continue_game = false;
 	}
 	arghelp["-cartest CAR"] = "Run car performance testing on given CAR.";
 	
 	if (!argmap["-profile"].empty())
 	{
-		pathmanager.SetProfile(argmap["-profile"]);
+		PATHMANAGER::SetProfile(argmap["-profile"]);
 	}
 	arghelp["-profile PROFILENAME"] = "Store settings, controls, and records under a separate profile.";
 	
@@ -244,7 +243,7 @@ void GAME::End()
 		sound.Pause(true); //stop the sound thread
 
 	///+
-	settings->Save(pathmanager.GetSettingsFile()); //save settings first incase later deinits cause crashes
+	settings->Save(PATHMANAGER::GetSettingsFile()); //save settings first incase later deinits cause crashes
 
 	collision.Clear();
 	track.Clear();
@@ -618,9 +617,9 @@ bool GAME::NewGame(bool playreplay, bool addopponents, int num_laps)
 		std::stringstream replayfilenamestream;
 
 		if(benchmode)
-			replayfilenamestream << pathmanager.GetReplayPath() << "/benchmark.vdr";
+			replayfilenamestream << PATHMANAGER::GetReplayPath() << "/benchmark.vdr";
 		else
-			replayfilenamestream << pathmanager.GetReplayPath() << "/" << settings->selected_replay << ".vdr";
+			replayfilenamestream << PATHMANAGER::GetReplayPath() << "/" << settings->selected_replay << ".vdr";
 
 		string replayfilename = replayfilenamestream.str();
 		info_output << "Loading replay file " << replayfilename << endl;
@@ -706,8 +705,8 @@ bool GAME::NewGame(bool playreplay, bool addopponents, int num_laps)
 	float pretime = 0.0f;
 	if (num_laps > 0)
         pretime = 3.0f;
-	//if (!timer.Load(pathmanager.GetTrackRecordsPath()+"/"+trackname+".txt", pretime, error_output))
-	if (!timer.Load(pathmanager.GetTrackPath()+"/"+trackname+"/records.txt", pretime, error_output))
+	//if (!timer.Load(PATHMANAGER::GetTrackRecordsPath()+"/"+trackname+".txt", pretime, error_output))
+	if (!timer.Load(PATHMANAGER::GetTrackPath()+"/"+trackname+"/records.txt", pretime, error_output))
 		return false;
 
 	//add cars to the timer system
@@ -729,7 +728,7 @@ bool GAME::NewGame(bool playreplay, bool addopponents, int num_laps)
 		assert(carcontrols_local.first);
 
 		replay.StartRecording(carcontrols_local.first->GetCarType(), settings->carpaint,
-			pathmanager.GetCarPath()+"/"+carcontrols_local.first->GetCarType()+"/"+carcontrols_local.first->GetCarType()+".car",
+			PATHMANAGER::GetCarPath()+"/"+carcontrols_local.first->GetCarType()+"/"+carcontrols_local.first->GetCarType()+".car",
 			settings->track, error_output);
 	}/**/
 
@@ -743,15 +742,15 @@ std::string GAME::GetReplayRecordingFilename()
 	for (int i = 1; i < 99; i++)
 	{
 		std::stringstream s;
-		s << pathmanager.GetReplayPath() << "/" << i << ".vdr";
-		if (!pathmanager.FileExists(s.str()))
+		s << PATHMANAGER::GetReplayPath() << "/" << i << ".vdr";
+		if (!PATHMANAGER::FileExists(s.str()))
 		{
 			replay_number = i;
 			break;
 		}
 	}
 	std::stringstream s;
-	s << pathmanager.GetReplayPath() << "/" << replay_number << ".vdr";
+	s << PATHMANAGER::GetReplayPath() << "/" << replay_number << ".vdr";
 	return s.str();
 }
 
@@ -806,7 +805,7 @@ bool GAME::LoadCar(const std::string & carname, const MATHVECTOR <float, 3> & st
 	CONFIGFILE carconf;
 	if (carfile.empty()) //if no file is passed in, then load it from disk
 	{
-		if ( !carconf.Load ( pathmanager.GetCarPath()+"/"+carname+"/"+carname+".car" ) )
+		if ( !carconf.Load ( PATHMANAGER::GetCarPath()+"/"+carname+"/"+carname+".car" ) )
 			return false;
 	}
 	else
@@ -819,8 +818,8 @@ bool GAME::LoadCar(const std::string & carname, const MATHVECTOR <float, 3> & st
 	cars.push_back(CAR());
 
 	if (!cars.back().Load(pOgreGame, settings, 
-		carconf, pathmanager.GetCarPath(),
-		pathmanager.GetDriverPath()+"/driver2",
+		carconf, PATHMANAGER::GetCarPath(),
+		PATHMANAGER::GetDriverPath()+"/driver2",
 		carname,
 		start_position, start_orientation,
 		collision,
@@ -861,7 +860,7 @@ bool GAME::LoadTrack(const std::string & trackname)
 
 	//load the track
 	if (!track.DeferredLoad(
-			pathmanager.GetTrackPath()+"/"+trackname,
+			PATHMANAGER::GetTrackPath()+"/"+trackname,
 			settings->trackreverse,
 			/**/0, "large", true,
 			false))
@@ -905,7 +904,7 @@ void GAME::PopulateReplayList(std::list <std::pair <std::string, std::string> > 
 	replaylist.clear();
 	int numreplays = 0;
 	std::list <std::string> replayfoldercontents;
-	if (pathmanager.GetFolderIndex(pathmanager.GetReplayPath(),replayfoldercontents))
+	if (PATHMANAGER::GetFolderIndex(PATHMANAGER::GetReplayPath(),replayfoldercontents))
 	{
 		for (std::list <std::string>::iterator i = replayfoldercontents.begin(); i != replayfoldercontents.end(); ++i)
 		{
@@ -931,7 +930,7 @@ void GAME::PopulateReplayList(std::list <std::pair <std::string, std::string> > 
 void GAME::PopulateCarPaintList(const std::string & carname, std::list <std::pair <std::string, std::string> > & carpaintlist)
 {
 	carpaintlist.clear();
-	string cartexfolder = pathmanager.GetCarPath()+"/"+carname+"/textures";
+	string cartexfolder = PATHMANAGER::GetCarPath()+"/"+carname+"/textures";
 	bool exists = true;
 	int paintnum = 0;
 	while (exists)
@@ -960,10 +959,10 @@ void GAME::PopulateValueLists(std::map<std::string, std::list <std::pair <std::s
 	{
 		std::list <pair<string,string> > tracklist;
 		std::list <string> trackfolderlist;
-		pathmanager.GetFolderIndex(pathmanager.GetTrackPath(),trackfolderlist);
+		PATHMANAGER::GetFolderIndex(PATHMANAGER::GetTrackPath(),trackfolderlist);
 		for (std::list <string>::iterator i = trackfolderlist.begin(); i != trackfolderlist.end(); ++i)
 		{
-			ifstream check((pathmanager.GetTrackPath() + "/" + *i + "/track.txt").c_str());
+			ifstream check((PATHMANAGER::GetTrackPath() + "/" + *i + "/track.txt").c_str());
 			if (check)
 			{
 				string displayname;
@@ -979,10 +978,10 @@ void GAME::PopulateValueLists(std::map<std::string, std::list <std::pair <std::s
 	{
 		std::list <pair<string,string> > carlist;
 		std::list <string> carfolderlist;
-		pathmanager.GetFolderIndex(pathmanager.GetCarPath(),carfolderlist);
+		PATHMANAGER::GetFolderIndex(PATHMANAGER::GetCarPath(),carfolderlist);
 		for (std::list <string>::iterator i = carfolderlist.begin(); i != carfolderlist.end(); ++i)
 		{
-			ifstream check((pathmanager.GetCarPath() + "/" + *i + "/about.txt").c_str());
+			ifstream check((PATHMANAGER::GetCarPath() + "/" + *i + "/about.txt").c_str());
 			if (check)
 			{
 				carlist.push_back(pair<string,string>(*i,*i));

@@ -1,8 +1,8 @@
 #include "stdafx.h"
 #include "BaseApp.h"
 #include "OgreApp.h" //
-
-#include "boost/thread.hpp"
+#include "../vdrift/pathmanager.h"
+#include <boost/thread.hpp>
 
 /*
  * old - win only
@@ -187,7 +187,7 @@ bool BaseApp::configure()
 	
 #if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
         WIN32_FIND_DATAA  fd;
-        HANDLE h = FindFirstFileA( "config/ogreset_ed.cfg", &fd );
+        HANDLE h = FindFirstFileA( PATHMANAGER::GetUserConfigDir() + "/ogreset_ed.cfg", &fd );
         if (h == INVALID_HANDLE_VALUE)
                 notFound = true;
         else
@@ -219,17 +219,17 @@ bool BaseApp::configure()
 bool BaseApp::setup()
 {
 #if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
-    #ifdef _DEBUG
-    mRoot = OGRE_NEW Root("config/plugins_win_d.cfg", "ogreset.cfg", "ogre.log");
-    #else
-    mRoot = OGRE_NEW Root("config/plugins_win.cfg", "ogreset.cfg", "ogre.log");
-    #endif
+	#ifdef _DEBUG
+	mRoot = OGRE_NEW Root(PATHMANAGER::GetGameConfigDir() + "/plugins_win_d.cfg", PATHMANAGER::GetUserConfigDir() + "/ogreset.cfg", PATHMANAGER::GetUserConfigDir() + "/ogre.log");
+	#else
+	mRoot = OGRE_NEW Root(PATHMANAGER::GetGameConfigDir() + "/plugins_win.cfg", PATHMANAGER::GetUserConfigDir() + "/ogreset.cfg", PATHMANAGER::GetUserConfigDir() + "/ogre.log");
+	#endif
 #else
-    #ifdef _DEBUG
-    mRoot = OGRE_NEW Root("config/plugins_nix_d.cfg", "ogreset.cfg", "ogre.log");
-    #else
-    mRoot = OGRE_NEW Root("config/plugins_nix.cfg", "ogreset.cfg", "ogre.log");
-    #endif
+	#ifdef _DEBUG
+	mRoot = OGRE_NEW Root(PATHMANAGER::GetGameConfigDir() + "/plugins_nix_d.cfg", PATHMANAGER::GetUserConfigDir() + "/ogreset.cfg", PATHMANAGER::GetUserConfigDir() + "/ogre.log");
+	#else
+	mRoot = OGRE_NEW Root(PATHMANAGER::GetGameConfigDir() + "/plugins_nix.cfg", PATHMANAGER::GetUserConfigDir() + "/ogreset.cfg", PATHMANAGER::GetUserConfigDir() + "/ogre.log");
+	#endif
 #endif
 	
 	setupResources();
@@ -263,7 +263,7 @@ void BaseApp::setupResources()
 {
 	// Load resource paths from config file
 	ConfigFile cf;
-	cf.load("config/resources_ed.cfg");
+	cf.load(PATHMANAGER::GetGameConfigDir() + "/resources_ed.cfg");
 
 	// Go through all sections & settings in the file
 	ConfigFile::SectionIterator seci = cf.getSectionIterator();
@@ -279,7 +279,7 @@ void BaseApp::setupResources()
 			typeName = i->first;
 			archName = i->second;
 			ResourceGroupManager::getSingleton().addResourceLocation(
-				archName, typeName, secName);
+				PATHMANAGER::GetDataPath() + "/" + archName, typeName, secName);
 		}
 	}
 }

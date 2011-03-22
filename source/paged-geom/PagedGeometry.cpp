@@ -64,7 +64,8 @@ PagedGeometry::PagedGeometry(Camera* cam, const Real pageSize, Ogre::RenderQueue
 	//Misc.
 	pageLoader = NULL;
 	geometryAllowedVisible = true;
-	tempdir="data/trees/impostors/"; // empty for current working directory
+	// FIXME: Use Cache dir
+	tempdir=""; // empty for current working directory
 	shadersEnabled = true; // enable shaders by default
 }
 

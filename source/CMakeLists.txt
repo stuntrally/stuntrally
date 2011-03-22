@@ -29,6 +29,7 @@ file(GLOB GAME_SOURCES
 
 file(GLOB EDITOR_SOURCES editor/*.cpp
 	vdrift/configfile.cpp
+	vdrift/pathmanager.cpp
 	road/*.cpp
 	tinyxml/*.cpp			
 	paged-geom/*.cpp

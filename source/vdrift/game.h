@@ -110,7 +110,6 @@ public:
 	SOUND sound;
 	SOUNDBUFFERLIBRARY generic_sounds;
 	SETTINGS* settings;
-	PATHMANAGER pathmanager;
 	TRACK track;
 
 	std::list <CAR> cars;

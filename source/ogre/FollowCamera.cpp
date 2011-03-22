@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "FollowCamera.h"
 #include "../tinyxml/tinyxml.h"
+#include "../vdrift/pathmanager.h"
 using namespace Ogre;
 
 
@@ -359,8 +360,8 @@ bool FollowCamera::loadCameras()
 	mCameraAngles.clear();
 
 	TiXmlDocument file;
-	if (file.LoadFile(/*pathSet+*/"data/cars/cameras.xml"))
-	{	
+	if (file.LoadFile((PATHMANAGER::GetCarPath() + "/cameras.xml").c_str()))
+	{
 		TiXmlElement* root = file.RootElement();
 		if (!root) {  /*mErrorDialog->show(String("Error loading Cameras !!"), false );  return false;*/  }
 		TiXmlElement* cam = root->FirstChildElement("Camera");

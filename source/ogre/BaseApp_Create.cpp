@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "BaseApp.h"
 #include "FollowCamera.h"
-
+#include "../vdrift/pathmanager.h"
 
 //  Camera
 //-------------------------------------------------------------------------------------
@@ -110,7 +110,7 @@ bool BaseApp::configure()
 	
 #if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
 	WIN32_FIND_DATAA  fd;
-	HANDLE h = FindFirstFileA( "config/ogreset.cfg", &fd );
+	HANDLE h = FindFirstFileA( PATHMANAGER::GetUserConfigDir() + "/ogreset.cfg", &fd );
 	if (h == INVALID_HANDLE_VALUE)
 		notFound = true;
 	else 
@@ -126,14 +126,13 @@ bool BaseApp::configure()
 		ok = true;
 	}
 	else
-		ok=false;
+		ok = false;
 #endif
 
-    if (ok)
-    {	mWindow = mRoot->initialise( true, "Stunt Rally" );
+	if (ok)
+	{	mWindow = mRoot->initialise( true, "Stunt Rally" );
 		return true;
-    }
-
+	}
 
 	return false;
 }
@@ -144,19 +143,19 @@ bool BaseApp::setup()
 {
 #if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
 	#ifdef _DEBUG
-    mRoot = OGRE_NEW Root("config/plugins_win_d.cfg", "ogreset.cfg", "ogre.log");
-    #else
-    mRoot = OGRE_NEW Root("config/plugins_win.cfg", "ogreset.cfg", "ogre.log");
-    #endif
+	mRoot = OGRE_NEW Root(PATHMANAGER::GetGameConfigDir() + "/plugins_win_d.cfg", PATHMANAGER::GetUserConfigDir() + "/ogreset.cfg", PATHMANAGER::GetUserConfigDir() + "/ogre.log");
+	#else
+	mRoot = OGRE_NEW Root(PATHMANAGER::GetGameConfigDir() + "/plugins_win.cfg", PATHMANAGER::GetUserConfigDir() + "/ogreset.cfg", PATHMANAGER::GetUserConfigDir() + "/ogre.log");
+	#endif
 #else
 	#ifdef _DEBUG
-	mRoot = OGRE_NEW Root("config/plugins_nix_d.cfg", "ogreset.cfg", "ogre.log");
+	mRoot = OGRE_NEW Root(PATHMANAGER::GetGameConfigDir() + "/plugins_nix_d.cfg", PATHMANAGER::GetUserConfigDir() + "/ogreset.cfg", PATHMANAGER::GetUserConfigDir() + "/ogre.log");
 	#else
-	mRoot = OGRE_NEW Root("config/plugins_nix.cfg", "ogreset.cfg", "ogre.log");
+	mRoot = OGRE_NEW Root(PATHMANAGER::GetGameConfigDir() + "/plugins_nix.cfg", PATHMANAGER::GetUserConfigDir() + "/ogreset.cfg", PATHMANAGER::GetUserConfigDir() + "/ogre.log");
 	#endif
 #endif
 	Ogre::LogManager::getSingleton().setLogDetail(LL_BOREME);//
-	
+
 	setupResources();
 
 	if (!configure())
@@ -171,7 +170,7 @@ bool BaseApp::setup()
 	createResourceListener();
 	loadResources();
 
-	//  gui
+	// Gui
 	mPlatform = new MyGUI::OgrePlatform();
 	mPlatform->initialise(mWindow, mSceneMgr);
 	mGUI = new MyGUI::Gui();
@@ -193,7 +192,7 @@ void BaseApp::setupResources()
 {
 	// Load resource paths from config file
 	ConfigFile cf;
-	cf.load("config/resources.cfg");
+	cf.load(PATHMANAGER::GetGameConfigDir() + "/resources.cfg");
 
 	// Go through all sections & settings in the file
 	ConfigFile::SectionIterator seci = cf.getSectionIterator();
@@ -209,7 +208,7 @@ void BaseApp::setupResources()
 			typeName = i->first;
 			archName = i->second;
 			ResourceGroupManager::getSingleton().addResourceLocation(
-				archName, typeName, secName);
+				PATHMANAGER::GetDataPath() + "/" + archName, typeName, secName);
 		}
 	}
 }

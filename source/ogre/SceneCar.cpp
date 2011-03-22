@@ -126,11 +126,11 @@ void App::CreateCar()
 {
 	// recreate, destroy node, ent ...
 	if (resCar != "")  mRoot->removeResourceLocation(resCar/*, "DynRes"/**/);
-		resCar = "data/cars/" + pSet->car + "/textures";
+		resCar = PATHMANAGER::GetCarPath() + "/" + pSet->car + "/textures";
 	if (resTrk != "")  mRoot->removeResourceLocation(resTrk);
 		resTrk = TrkDir() + "objects";
 	if (resDrv != "")  mRoot->removeResourceLocation(resDrv);
-		resDrv = "data/drivers/driver2/textures";
+		resDrv = "drivers/driver2/textures";
 		
 	if (pGame->cars.size() == 0)  return;
 

@@ -41,11 +41,11 @@ void VprThread(App* pA)
 	#endif/**/
 
 	//  Load Settings
-	PATHMANAGER paths;  std::stringstream dummy;
-	paths.Init(dummy, dummy);
-	string logfilename = paths.GetLogFile();
+	std::stringstream dummy;
+	PATHMANAGER::Init(dummy, dummy);
+	string logfilename = PATHMANAGER::GetLogFile();
 	SETTINGS settings;
-	settings.Load(paths.GetSettingsFile());
+	settings.Load(PATHMANAGER::GetSettingsFile());
 	
 	// open the log file
 	std::ofstream logfile(logfilename.c_str());
@@ -60,7 +60,7 @@ void VprThread(App* pA)
 	logging::splitterstreambuf errorsplitter(std::cerr, logfile);	std::ostream errorsplitterstream(&errorsplitter);
 	logging::logstreambuf infolog("INFO: ", infosplitterstream);	//logstreambuf infolog("INFO: ", logfile);
 	logging::logstreambuf errorlog("ERROR: ", errorsplitterstream);
-	
+
 	// primary logging ostreams
 	std::ostream info_output(&infolog);
 	std::ostream error_output(&errorlog);/**/
@@ -68,8 +68,11 @@ void VprThread(App* pA)
 	HANDLE hpr;
 #endif*/
 
-    ///  game  ------------------------------
-    GAME* pGame = new GAME(info_output, error_output, &settings);
+	// HACK: we initialize paths a second time now that we have the output streams
+	PATHMANAGER::Init(info_output, error_output);
+
+	///  game  ------------------------------
+	GAME* pGame = new GAME(info_output, error_output, &settings);
 	std::list <std::string> args;//(argv, argv + argc);
 	pGame->Start(args);  //game.End();
 
