@@ -99,5 +99,5 @@ SETTINGS::SETTINGS() :  ///  Defaults
 	//  sim
 	game_fq(100.f), blt_fq(60.f), blt_iter(7), mult_thr(0),  //low
 	// video
-	bloom(false), hdr(false), windowx(800), windowy(600), fullscreen(false), fsaa(0), vsync(false);
+	bloom(false), hdr(false), windowx(800), windowy(600), fullscreen(false), fsaa(0), vsync(false)
 {}
