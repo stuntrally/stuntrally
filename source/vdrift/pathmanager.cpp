@@ -28,10 +28,12 @@ namespace {
 /*static*/ std::string PATHMANAGER::game_config_dir;
 /*static*/ std::string PATHMANAGER::user_data_dir;
 /*static*/ std::string PATHMANAGER::game_data_dir;
+/*static*/ std::string PATHMANAGER::cache_dir;
 /*static*/ std::string PATHMANAGER::profile_suffix;
 
 void PATHMANAGER::Init(std::ostream & info_output, std::ostream & error_output)
 {
+	fs::path shortDir = "stuntrally";
 	// Figure out the user's home directory
 	{
 		home_dir = "";
@@ -84,9 +86,8 @@ void PATHMANAGER::Init(std::ostream & info_output, std::ostream & error_output)
 	#endif
 
 	// Create user's config dir
-	try {
-		fs::create_directory(user_config_dir);
-	} catch (...) {
+	try { fs::create_directory(user_config_dir); }
+	catch (...) {
 		std::cerr << "Could not create configuration directory " << user_config_dir << std::endl;
 	}
 
@@ -96,7 +97,6 @@ void PATHMANAGER::Init(std::ostream & info_output, std::ostream & error_output)
 	user_data_dir = user_config_dir;  // APPDATA/stuntrally
 	#else
 	{
-		fs::path shortDir = "stuntrally";
 		fs::path shareDir = SHARED_DATA_DIR;
 		char const* xdg_data_home = getenv("XDG_DATA_HOME");
 		user_data_dir = (xdg_data_home ? xdg_data_home / shortDir : fs::path(home_dir) / ".local" / shareDir).string();
@@ -108,7 +108,6 @@ void PATHMANAGER::Init(std::ostream & info_output, std::ostream & error_output)
 	if (datadir) {
 		game_data_dir = std::string(datadir);
 	} else {
-		fs::path shortDir = "stuntrally";
 		fs::path shareDir = SHARED_DATA_DIR;
 		typedef std::vector<fs::path> Paths;
 		Paths dirs;
@@ -143,11 +142,26 @@ void PATHMANAGER::Init(std::ostream & info_output, std::ostream & error_output)
 		}
 	}
 
+	// Find cache dir
+	#ifdef _WIN32
+	cache_dir = user_config_dir + "/cache";  // APPDATA/stuntrally/cache
+	#else
+	char const* xdg_cache_home = getenv("XDG_CACHE_HOME");
+	cache_dir = (xdg_cache_home ? xdg_cache_home / shortDir : fs::path(home_dir) / ".cache" / shortDir).string();
+	#endif
+
+	// Create cache dir
+	try { fs::create_directory(user_config_dir); }
+	catch (...) {
+		std::cerr << "Could not create cache directory " << cache_dir << std::endl;
+	}
+
 	// Print diagnostic info
 	info_output << "Home directory: " << home_dir << std::endl;
 	info_output << "User config directory: " << GetUserConfigDir() << std::endl;
 	info_output << "Config defaults directory: " << GetGameConfigDir() << std::endl;
 	info_output << "Data directory: " << GetDataPath() << std::endl;
+	info_output << "Cache directory: " << GetCacheDir() << std::endl;
 	info_output << "Log file: " << GetLogFile() << std::endl;
 }
 

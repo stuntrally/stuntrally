@@ -13,6 +13,7 @@ private:
 	static std::string game_config_dir;
 	static std::string user_data_dir;
 	static std::string game_data_dir;
+	static std::string cache_dir;
 	static std::string profile_suffix;
 
 public:
@@ -24,6 +25,7 @@ public:
 	static std::string GetGameConfigDir() {          return game_config_dir;  }
 	//static std::string GetTrackRecordsPath() const { return user_config_dir  + "/records" + profile_suffix;  }
 	static std::string GetSettingsFile() {           return user_config_dir + "/game.cfg"; }
+	static std::string GetCacheDir() {               return cache_dir; }
 	static std::string GetLogFile() {                return user_config_dir + "/log.txt"; }
 	static std::string GetTrackPath() {              return game_data_dir + "/tracks"; }
 	static std::string GetCarPath() {                return game_data_dir + "/cars"; }
