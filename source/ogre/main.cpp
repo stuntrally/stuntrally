@@ -44,8 +44,8 @@ void VprThread(App* pA)
 	std::stringstream dummy;
 	PATHMANAGER::Init(dummy, dummy);
 	string logfilename = PATHMANAGER::GetLogFile();
-	SETTINGS settings;
-	settings.Load(PATHMANAGER::GetSettingsFile());
+	SETTINGS* settings = new SETTINGS();
+	settings->Load(PATHMANAGER::GetSettingsFile());
 	
 	// open the log file
 	std::ofstream logfile(logfilename.c_str());
@@ -72,18 +72,18 @@ void VprThread(App* pA)
 	PATHMANAGER::Init(info_output, error_output);
 
 	///  game  ------------------------------
-	GAME* pGame = new GAME(info_output, error_output, &settings);
+	GAME* pGame = new GAME(info_output, error_output, settings);
 	std::list <std::string> args;//(argv, argv + argc);
 	pGame->Start(args);  //game.End();
 
 	App* pApp = new App();
-	pApp->pSet = &settings;
+	pApp->pSet = settings;
 	pApp->pGame = pGame;
 	pGame->pOgreGame = pApp;
 
 	try
 	{
-		if (settings.mult_thr > 0)  ///
+		if (settings->mult_thr > 0)  ///
 		{
 /* old win thread ** #if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
 			hpr = CreateThread(NULL,0,VprThread,(LPVOID)pApp,0,NULL);
@@ -91,9 +91,9 @@ void VprThread(App* pA)
 			boost::thread t(VprThread, pApp);
 		}
 #if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
-		pApp->Run( settings.ogre_dialog || lpCmdLine[0]!=0 );  //Release change-
+		pApp->Run( settings->ogre_dialog || lpCmdLine[0]!=0 );  //Release change-
 #else
-		pApp->Run( settings.ogre_dialog);
+		pApp->Run( settings->ogre_dialog);
 #endif
 
 	}
@@ -106,7 +106,7 @@ void VprThread(App* pA)
 		#endif
 	}
 
-	if (settings.mult_thr > 0)  ///
+	if (settings->mult_thr > 0)  ///
 	{
 /* old win thread ** #if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
 		TerminateThread(hpr, 1);
