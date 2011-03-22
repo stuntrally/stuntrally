@@ -41,7 +41,7 @@ App::App()  //  gui wigdets--
 	,imgPrv(0),imgMini(0),imgTer(0), valTrk(0), trkDesc(0),trkName(0)  // track
 
 	,mTerrainGroup(0), mTerrainPaging(0), mPageManager(0), mTerrainGlobals(0)
-	,bTerUpd(0), pSet(0), curBr(0)
+	,bTerUpd(0), curBr(0)
 	,ndPos(0), mpos(0), asp(4.f/3.f)
 	,ndCar(0),entCar(0),ndStBox(0),entStBox(0)
 	,grass(0), trees(0), sun(0)

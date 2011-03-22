@@ -2,6 +2,7 @@
 #define _BaseApp_h_
 #include <OgreRenderTargetListener.h>
 #include "../ogre/QTimer.h"
+#include "settings.h"
 using namespace Ogre;
 
 class BaseApp :
@@ -14,6 +15,8 @@ public:
 	virtual void Run( bool showDialolg );
 
 	class SplineRoad* road; //-
+	
+	SETTINGS* pSet;
 
 	//AppThr appThr;
 #if OGRE_PLATFORM == OGRE_PLATFORM_WIN32

@@ -26,7 +26,6 @@ class App : public BaseApp,
 public:
 	App();  virtual ~App();
 
-	SETTINGS* pSet;
 	Scene sc;  /// scene.xml
 
 	TRACKSURFACE su[8];  void LoadSurf(const String& trk), SaveSurf(const String& trk);
