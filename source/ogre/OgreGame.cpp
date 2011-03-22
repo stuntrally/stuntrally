@@ -7,7 +7,7 @@
 
 //  ctors  -----------------------------------------------
 App::App()
-	:pGame(0), pSet(0), ndCar(0), ndPos(0), ndMap(0), ndLine(0)
+	:pGame(0), ndCar(0), ndPos(0), ndMap(0), ndLine(0)
 	,nrpmB(0),nvelBk(0),nvelBm(0), nrpm(0),nvel(0), mrpm(0),mvel(0),mpos(0)
 	,hudGear(0),hudVel(0), hudAbs(0),hudTcs(0), hudTimes(0), hudCheck(0)
 	,ovGear(0),ovVel(0), ovAbsTcs(0), ovCarDbg(0),ovCarDbgTxt(0), ovCam(0), ovTimes(0)
