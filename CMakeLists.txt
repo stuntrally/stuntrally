@@ -39,6 +39,7 @@ link_directories(${OGRE_LIBRARY_DIRS})
 
 find_package(MyGUI REQUIRED QUIET)
 include_directories(${MYGUI_INCLUDE_DIRS})
+link_directories(${MYGUI_LIB_DIR})
 
 find_package(SDL REQUIRED QUIET)
 include_directories(${SDL_INCLUDE_DIR})
