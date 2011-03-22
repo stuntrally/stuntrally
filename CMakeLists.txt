@@ -1,10 +1,7 @@
 
 # Install data files
-file(GLOB DATADIRS "[^.]*")
-foreach(datadir ${DATADIRS})
-	if(IS_DIRECTORY ${datadir})
-		install(DIRECTORY ${datadir} DESTINATION ${SHARE_INSTALL})
-	endif()
+foreach(datadir  cars editor gui materials skys terrain trees fonts hud particles sounds)
+	install(DIRECTORY ${datadir} DESTINATION ${SHARE_INSTALL})
 endforeach()
 
 # Issue warning for missing tracks
