@@ -213,36 +213,29 @@ bool BaseApp::configure()
     }*/
 
 /* new - manual renderwindow */
+	mRoot->setRenderSystem(*mRoot->getAvailableRenderers().begin());
 
-	try
-	{
-		mRoot->setRenderSystem(*mRoot->getAvailableRenderers().begin());
+	mRoot->initialise(false);
 	
-		mRoot->initialise(false);
-		
-		Ogre::NameValuePairList settings;
-		settings.insert(std::make_pair("title", "SR Editor"));
-		settings.insert(std::make_pair("FSAA", Ogre::StringConverter::toString(pSet->fsaa)));
-		// ogre only understands the strings "true" or "false"
-		std::string vsync;
-		if (pSet->vsync)
-			vsync = "true";
-		else
-			vsync = "false";
-		settings.insert(std::make_pair("vsync", vsync));
+	Ogre::NameValuePairList settings;
+	settings.insert(std::make_pair("title", "SR Editor"));
+	settings.insert(std::make_pair("FSAA", Ogre::StringConverter::toString(pSet->fsaa)));
+	// ogre only understands the strings "true" or "false"
+	std::string vsync;
+	if (pSet->vsync)
+		vsync = "true";
+	else
+		vsync = "false";
+	settings.insert(std::make_pair("vsync", vsync));
 
-		mWindow = mRoot->createRenderWindow("SR Editor", pSet->windowx, pSet->windowy, pSet->fullscreen, &settings);
-		return true;
-	}
-	catch (Ogre::Exception& e)
-	{
-			#if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
-				MessageBoxA( NULL, e.getFullDescription().c_str(), "An exception has occured!", MB_OK | MB_ICONERROR | MB_TASKMODAL);
-			#else
-				std::cerr << "An exception has occured: " << e.getFullDescription().c_str() << std::endl;
-			#endif
-		return false;
-	}
+	mWindow = mRoot->createRenderWindow("SR Editor", pSet->windowx, pSet->windowy, pSet->fullscreen, &settings);
+	return true;
+		#if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
+			MessageBoxA( NULL, e.getFullDescription().c_str(), "An exception has occured!", MB_OK | MB_ICONERROR | MB_TASKMODAL);
+		#else
+			std::cerr << "An exception has occured: " << e.getFullDescription().c_str() << std::endl;
+		#endif
+	return false;
 }
 
 //  Setup
