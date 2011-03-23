@@ -1,0 +1,13 @@
+[Desktop Entry]
+Name=Stunt Rally track editor
+GenericName=Track editor
+Comment=Track editor for Stunt Rally
+Comment[de]=Stunt Rally Streckeneditor
+#Comment[fi]=3D Rallipeli stunttielementein
+Exec=sr-editor
+Icon=
+StartupNotify=false
+Terminal=false
+Type=Application
+Categories=Application;Game;SportsGame;
+
