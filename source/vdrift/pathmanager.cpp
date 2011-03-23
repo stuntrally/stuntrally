@@ -121,6 +121,8 @@ void PATHMANAGER::Init(std::ostream & info_output, std::ostream & error_output)
 		// Adding relative path for running from sources
 		dirs.push_back(execname().parent_path().parent_path() / "data");
 		dirs.push_back(execname().parent_path().parent_path());
+		dirs.push_back(execname().parent_path() / "data");
+		dirs.push_back(execname().parent_path());
 		#ifndef _WIN32
 		// Adding XDG_DATA_DIRS
 		{
