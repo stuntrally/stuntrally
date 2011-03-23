@@ -1,0 +1,63 @@
+compositor "Motion Blur"
+{
+    technique
+    {
+        // Temporary textures
+        texture scene target_width target_height PF_A8R8G8B8
+        texture sum target_width target_height PF_A8R8G8B8
+        texture temp target_width target_height PF_A8R8G8B8
+        
+        target scene
+        {
+            // Render output from previous compositor (or original scene)
+            input previous
+        }
+        target sum
+        {
+            // Render this target pass only initially, on the first frame that
+            // this effect was enabled. This makes sure the sum texture
+            // does not start with randomness.
+            only_initial on
+            
+            input previous
+        }
+        target temp
+        {
+            // Start with clear texture
+            input none
+            // Combine scene and sum texture
+            pass render_quad
+            {
+                // Renders a fullscreen quad with a material
+                material Ogre/Compositor/Combine
+                input 0 scene
+                input 1 sum
+		    identifier 1
+            }
+        }
+        target sum
+        {
+            // Start with clear texture
+            input none
+            // Copy temporary back to sum
+            pass render_quad
+            {
+                // Renders a fullscreen quad with a material
+                material Ogre/Compositor/Copyback
+                input 0 temp
+            }
+        }
+        target_output
+        {
+            // Start with clear output
+            input none
+            // Draw a fullscreen quad with the blur
+            pass render_quad
+            {
+                // Renders a fullscreen quad with a material
+                material Ogre/Compositor/MotionBlur
+                input 0 sum
+            }
+        }
+    }
+}
