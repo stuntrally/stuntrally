@@ -26,6 +26,8 @@ Permission is granted to anyone to use this software for any purpose, including 
 #include <OgreHardwarePixelBuffer.h>
 using namespace Ogre;
 
+#include "../vdrift/pathmanager.h"
+
 namespace Forests {
 
 //-------------------------------------------------------------------------------------
@@ -555,7 +557,8 @@ void ImpostorTexture::renderTextures(bool force)
 	sKey = String(key, sizeof(key));
 	#endif
 
-	String tempdir = this->group->geom->getTempdir();
+	//old: String tempdir = this->group->geom->getTempdir();
+	String tempdir = PATHMANAGER::GetCacheDir();
 	ResourceGroupManager::getSingleton().addResourceLocation(tempdir, "FileSystem", "BinFolder");
 	//T+   // sKey + '.' + StringConverter::toString(textureSize) + 
 	String fileNamePNG = sKey + ".png";
@@ -611,7 +614,7 @@ void ImpostorTexture::renderTextures(bool force)
 	
 #ifdef IMPOSTOR_FILE_SAVE
 		//Save RTT to file with respecting the temp dir
-		renderTarget->writeContentsToFile(tempdir + fileNamePNG);
+		renderTarget->writeContentsToFile(tempdir + "/" + fileNamePNG);
 
 		//Load the render into the appropriate texture view
 		texture = TextureManager::getSingleton().load(fileNamePNG, "BinFolder", TEX_TYPE_2D, MIP_UNLIMITED);

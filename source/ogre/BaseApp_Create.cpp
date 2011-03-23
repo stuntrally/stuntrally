@@ -319,7 +319,8 @@ void BaseApp::setupResources()
 {
 	// Load resource paths from config file
 	ConfigFile cf;
-	cf.load(PATHMANAGER::GetGameConfigDir() + "/resources.cfg");
+	string s = PATHMANAGER::GetGameConfigDir() + "/resources.cfg";
+	cf.load(s);
 
 	// Go through all sections & settings in the file
 	ConfigFile::SectionIterator seci = cf.getSectionIterator();

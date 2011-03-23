@@ -138,7 +138,8 @@ void PATHMANAGER::Init(std::ostream & info_output, std::ostream & error_output)
 			// Data dir
 			if (fs::exists(*p / "hud")) game_data_dir = p->string();
 			// Config dir
-			if (fs::exists(*p / "config")) game_config_dir = (*p / "config").string();
+			if (fs::exists(*p / "config"))
+				game_config_dir = (*p / "config").string();
 			// Check if both are found
 			if (!game_data_dir.empty() && !game_config_dir.empty()) break;
 		}
@@ -153,7 +154,7 @@ void PATHMANAGER::Init(std::ostream & info_output, std::ostream & error_output)
 	#endif
 
 	// Create cache dir
-	try { fs::create_directory(user_config_dir); }
+	try { fs::create_directory(cache_dir); }
 	catch (...) {
 		std::cerr << "Could not create cache directory " << cache_dir << std::endl;
 	}

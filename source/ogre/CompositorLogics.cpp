@@ -1,6 +1,6 @@
 // taken from OGRE compositor sample
 // only needed for HDR
-
+#include "stdafx.h"
 #include "CompositorLogics.h"
 
 #include "Ogre.h"

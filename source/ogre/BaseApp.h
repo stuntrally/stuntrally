@@ -2,7 +2,7 @@
 #define _BaseApp_h_
 #include "LoadingBar.h"
 #include "../vdrift/settings.h"
-#include <OIS.h>
+#include <OIS/OIS.h>
 #include <MyGUI.h>
 #include <MyGUI_OgrePlatform.h>
 using namespace Ogre;
