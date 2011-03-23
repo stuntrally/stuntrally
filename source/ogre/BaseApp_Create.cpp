@@ -67,7 +67,7 @@ void BaseApp::createCompositor()
 	{
 		// Set bloom settings (intensity, orig weight).
 		Ogre::MaterialPtr blurmat = Ogre::MaterialManager::getSingleton().getByName("Ogre/Compositor/BloomBlend2");
-		Ogre::GpuProgramParametersSharedPtr gpuparams = blurmat->getTechnique(0)->getPass(0)->getVertexProgramParameters();
+		Ogre::GpuProgramParametersSharedPtr gpuparams = blurmat->getTechnique(0)->getPass(0)->getFragmentProgramParameters();
 		gpuparams->setNamedConstant("OriginalImageWeight", pSet->bloomorig);
 		gpuparams->setNamedConstant("BlurWeight", pSet->bloomintensity);
 		
