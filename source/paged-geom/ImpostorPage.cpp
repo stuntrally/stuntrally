@@ -553,7 +553,7 @@ void ImpostorTexture::renderTextures(bool force)
 	for (i = 0; i < sizeof(key); ++i)
 		key[i] = (key[i] % 26) + 'A';
 	sKey = String(key, sizeof(key));
-	#endif					   `
+	#endif
 
 	String tempdir = this->group->geom->getTempdir();
 	ResourceGroupManager::getSingleton().addResourceLocation(tempdir, "FileSystem", "BinFolder");
