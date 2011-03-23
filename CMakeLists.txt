@@ -36,23 +36,33 @@ add_definitions(-DSHARED_DATA_DIR="${SHARE_INSTALL}")
 find_package(OGRE REQUIRED QUIET)
 include_directories(${OGRE_INCLUDE_DIRS} ${OGRE_Terrain_INCLUDE_DIRS} ${OGRE_Paging_INCLUDE_DIRS})
 link_directories(${OGRE_LIBRARY_DIRS})
+list(APPEND LIBS ${OGRE_LIBRARIES} ${OGRE_Terrain_LIBRARIES} ${OGRE_Paging_LIBRARIES})
 
 find_package(MyGUI REQUIRED QUIET)
 include_directories(${MYGUI_INCLUDE_DIRS})
 link_directories(${MYGUI_LIB_DIR})
-
-find_package(SDL REQUIRED QUIET)
-include_directories(${SDL_INCLUDE_DIR})
-
-find_package(OIS REQUIRED QUIET)
-include_directories(${OIS_INCLUDE_DIRS})
-
-find_package(VorbisFile REQUIRED QUIET)
-include_directories(${VorbisFile_INCLUDE_DIRS})
+list(APPEND LIBS ${MYGUI_LIBRARIES} MyGUI.OgrePlatform)
 
 find_package(Boost COMPONENTS thread filesystem REQUIRED QUIET)
 include_directories(${Boost_INCLUDE_DIRS})
 link_directories(${Boost_LIBRARY_DIRS})
+list(APPEND LIBS ${Boost_LIBRARIES})
+
+find_package(SDL REQUIRED QUIET)
+include_directories(${SDL_INCLUDE_DIR})
+list(APPEND LIBS ${SDL_LIBRARY})
+
+find_package(OIS REQUIRED QUIET)
+include_directories(${OIS_INCLUDE_DIRS})
+list(APPEND LIBS ${OIS_LIBRARIES})
+
+find_package(OGG REQUIRED QUIET)
+include_directories(${OGG_INCLUDE_DIRS})
+list(APPEND LIBS ${OGG_LIBRARIES})
+
+find_package(VorbisFile REQUIRED QUIET)
+include_directories(${VorbisFile_INCLUDE_DIRS})
+list(APPEND LIBS ${VorbisFile_LIBRARIES})
 
 # Subdirectories
 
