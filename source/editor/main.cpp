@@ -12,6 +12,10 @@
 	PATHMANAGER::Init(std::cout, std::cerr);
 	string setFile = PATHMANAGER::GetUserConfigDir() + "/editor.cfg";
 	SETTINGS settings;
+	if (!PATHMANAGER::FileExists(setFile)) {
+		settings.Load(PATHMANAGER::GetGameConfigDir() + "/editor-default.cfg");
+		settings.Save(setFile);
+	}
 	settings.Load(setFile);
 
 	App* pApp = new App();

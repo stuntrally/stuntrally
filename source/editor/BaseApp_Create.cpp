@@ -373,8 +373,6 @@ void BaseApp::windowResized(RenderWindow* rw)
 
 void BaseApp::windowClosed(RenderWindow* rw)
 {
-	// hack to fix the "config not saving"-bug
-	pSet->Save(PATHMANAGER::GetUserConfigDir() + "/editor.cfg");
 	if (rw == mWindow)
 	if (mInputManager)
 	{
