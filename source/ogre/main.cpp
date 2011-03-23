@@ -45,8 +45,12 @@ void VprThread(App* pA)
 	PATHMANAGER::Init(dummy, dummy);
 	string logfilename = PATHMANAGER::GetLogFile();
 	SETTINGS* settings = new SETTINGS();
+	if (!PATHMANAGER::FileExists(PATHMANAGER::GetSettingsFile())) {
+		settings->Load(PATHMANAGER::GetGameConfigDir() + "/game-default.cfg");
+		settings->Save(PATHMANAGER::GetSettingsFile());
+	}
 	settings->Load(PATHMANAGER::GetSettingsFile());
-	
+
 	// open the log file
 	std::ofstream logfile(logfilename.c_str());
 	if (!logfile)
