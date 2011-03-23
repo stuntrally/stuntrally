@@ -31,8 +31,6 @@ public:
 	float cam_speed, cam_inert, cam_x,cam_y,cam_z, cam_dx,cam_dy,cam_dz;
 	
 	// video
-	// only bloom or hdr can be used
-	bool bloom, hdr;
 	int windowx, windowy;
 	bool fullscreen;
 	int fsaa;

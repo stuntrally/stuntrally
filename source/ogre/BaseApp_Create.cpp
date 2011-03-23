@@ -65,6 +65,12 @@ void BaseApp::createCompositor()
 {
 	if (pSet->bloom)
 	{
+		// Set bloom settings (intensity, orig weight).
+		Ogre::MaterialPtr blurmat = Ogre::MaterialManager::getSingleton().getByName("Ogre/Compositor/BloomBlend2");
+		Ogre::GpuProgramParametersSharedPtr gpuparams = blurmat->getTechnique(0)->getPass(0)->getVertexProgramParameters();
+		gpuparams->setNamedConstant("OriginalImageWeight", pSet->bloomorig);
+		gpuparams->setNamedConstant("BlurWeight", pSet->bloomintensity);
+		
 		Ogre::CompositorManager::getSingleton().addCompositor(mViewport, "Bloom");
 		Ogre::CompositorManager::getSingleton().setCompositorEnabled(mViewport, "Bloom", true);
 	}
@@ -74,7 +80,12 @@ void BaseApp::createCompositor()
 		
 		Ogre::CompositorManager::getSingleton().addCompositor(mViewport, "HDR");
 		Ogre::CompositorManager::getSingleton().setCompositorEnabled(mViewport, "HDR", true);
-		; // TODO
+	}
+	
+	if (pSet->motionblur)
+	{
+		Ogre::CompositorManager::getSingleton().addCompositor(mViewport, "Motion Blur");
+		Ogre::CompositorManager::getSingleton().setCompositorEnabled(mViewport, "Motion Blur", true);
 	}
 }
 

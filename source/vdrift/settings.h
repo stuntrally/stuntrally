@@ -48,9 +48,12 @@ public:
 	float game_fq, blt_fq;  int blt_iter;
 	int mult_thr;
 	
-	// video
-	// only bloom or hdr can be used
+	// compositor
 	bool bloom, hdr;
+	float bloomintensity, bloomorig;
+	bool motionblur;
+	float motionblurintensity;
+	// video
 	int windowx, windowy;
 	bool fullscreen;
 	int fsaa;
