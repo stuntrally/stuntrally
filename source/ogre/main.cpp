@@ -116,5 +116,6 @@ void VprThread(App* pA)
 	info_output << "Exiting" << std::endl;
 	delete pApp;
 	delete pGame;
+	delete settings;
 	return 0;
 }
