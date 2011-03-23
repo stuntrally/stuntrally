@@ -66,6 +66,9 @@ FIND_LIBRARY(OGG_LIBRARIES_DEBUG
 
 SET(OGG_FOUND "NO")
 IF(OGG_LIBRARIES AND OGG_INCLUDE_DIRS)
-  SET(OGG_FOUND "YES")
-ENDIF(OGG_LIBRARIES AND OGG_INCLUDE_DIRS)
+	SET(OGG_FOUND "YES")
+	MARK_AS_ADVANCED(OGG_LIBRARIES OGG_LIBRARIES_DEBUG OGG_INCLUDE_DIRS)
+ELSEIF(OGG_FIND_REQUIRED)
+	MESSAGE(FATAL_ERROR "Required library OGG not found! Install the library (including dev packages) and try again. If the library is already installed, set the missing variables manually in cmake.")
+ENDIF()
 

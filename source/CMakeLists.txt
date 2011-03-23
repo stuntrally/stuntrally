@@ -40,7 +40,6 @@ file(GLOB EDITOR_SOURCES editor/*.cpp
 )
 
 # Game executable
-#TODO: MyGUI.OgrePlatform is not added by the find scripts
 add_executable(${GAME_EXE} ${GAME_SOURCES})
 target_link_libraries(${GAME_EXE} ${LIBS})
 install(TARGETS ${GAME_EXE} DESTINATION bin)

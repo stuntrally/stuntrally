@@ -332,7 +332,8 @@ endif()
 
 
 # look for Paging component
-findpkg_begin(OGRE_Paging)
+component_setvars(OGRE_Paging OGRE)
+findpkg_begin(OGRE_Paging OGRE)
 find_path(OGRE_Paging_INCLUDE_DIR NAMES OgrePaging.h HINTS ${OGRE_INCLUDE_DIRS} ${OGRE_PREFIX_SOURCE} PATH_SUFFIXES Paging OGRE/Paging Components/Paging/include)
 set(OGRE_Paging_LIBRARY_NAMES "OgrePaging${OGRE_LIB_SUFFIX}")
 get_debug_names(OGRE_Paging_LIBRARY_NAMES)
@@ -343,7 +344,8 @@ make_library_set(OGRE_Paging_LIBRARY)
 findpkg_finish(OGRE_Paging)
 
 # look for Terrain component
-findpkg_begin(OGRE_Terrain)
+component_setvars(OGRE_Terrain OGRE)
+findpkg_begin(OGRE_Terrain OGRE)
 find_path(OGRE_Terrain_INCLUDE_DIR NAMES OgreTerrain.h HINTS ${OGRE_INCLUDE_DIRS} ${OGRE_PREFIX_SOURCE} PATH_SUFFIXES Terrain OGRE/Terrain Components/Terrain/include)
 set(OGRE_Terrain_LIBRARY_NAMES "OgreTerrain${OGRE_LIB_SUFFIX}")
 get_debug_names(OGRE_Terrain_LIBRARY_NAMES)
@@ -353,6 +355,7 @@ make_library_set(OGRE_Terrain_LIBRARY)
 findpkg_finish(OGRE_Terrain)
 
 # look for Property component
+component_setvars(OGRE_Property OGRE)
 findpkg_begin(OGRE_Property)
 find_path(OGRE_Property_INCLUDE_DIR NAMES OgreProperty.h HINTS ${OGRE_INCLUDE_DIRS} ${OGRE_PREFIX_SOURCE} PATH_SUFFIXES Property OGRE/Property Components/Property/include)
 set(OGRE_Property_LIBRARY_NAMES "OgreProperty${OGRE_LIB_SUFFIX}")
@@ -363,7 +366,8 @@ make_library_set(OGRE_Property_LIBRARY)
 findpkg_finish(OGRE_Property)
 
 # look for RTShaderSystem component
-findpkg_begin(OGRE_RTShaderSystem)
+component_setvars(OGRE_RTShaderSystem OGRE)
+findpkg_begin(OGRE_RTShaderSystem OGRE)
 find_path(OGRE_RTShaderSystem_INCLUDE_DIR NAMES OgreRTShaderSystem.h HINTS ${OGRE_INCLUDE_DIRS} ${OGRE_PREFIX_SOURCE} PATH_SUFFIXES RTShaderSystem OGRE/RTShaderSystem Components/RTShaderSystem/include)
 set(OGRE_RTShaderSystem_LIBRARY_NAMES "OgreRTShaderSystem${OGRE_LIB_SUFFIX}")
 get_debug_names(OGRE_RTShaderSystem_LIBRARY_NAMES)

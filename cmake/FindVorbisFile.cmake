@@ -65,9 +65,11 @@ FIND_LIBRARY(VorbisFile_LIBRARIES_DEBUG
 	/opt
 )
 
-
-SET(VORBIS_FOUND "NO")
-IF(VORBIS_LIBRARIES AND VORBIS_INCLUDE_DIRS)
-	SET(VORBIS_FOUND "YES")
-ENDIF(VORBIS_LIBRARIES AND VORBIS_INCLUDE_DIRS)
+SET(VorbisFile_FOUND "NO")
+IF(VorbisFile_LIBRARIES AND VorbisFile_INCLUDE_DIRS)
+	SET(VorbisFile_FOUND "YES")
+	MARK_AS_ADVANCED(VorbisFile_LIBRARIES VorbisFile_LIBRARIES_DEBUG VorbisFile_INCLUDE_DIRS)
+ELSEIF(VorbisFile_FIND_REQUIRED)
+	MESSAGE(FATAL_ERROR "Required library VorbisFile not found! Install the library (including dev packages) and try again. If the library is already installed, set the missing variables manually in cmake.")
+ENDIF()
 

@@ -11,6 +11,12 @@
 # Provides some common functionality for the FindPackage modules
 ##################################################################
 
+# Sets the QUIET and REQUIRED flags for a sub library
+macro(component_setvars COMP PARENT)
+	set(${COMP}_FIND_QUIETLY ${PARENT}_FIND_QUIETLY)
+	set(${COMP}_FIND_REQUIRED ${PARENT}_FIND_REQUIRED)
+endmacro(component_setvars)
+
 # Begin processing of package
 macro(findpkg_begin PREFIX)
   if (NOT ${PREFIX}_FIND_QUIETLY)
@@ -20,7 +26,7 @@ endmacro(findpkg_begin)
 
 # Display a status message unless FIND_QUIETLY is set
 macro(pkg_message PREFIX)
-  if (NOT ${PREFIX}_FIND_QUIETLY)
+  if (NOT ${PREFIX}_FIND_QUIETLY AND NOT ${ARG1}_FIND_QUIETLY)
     message(STATUS ${ARGN})
   endif ()
 endmacro(pkg_message)
