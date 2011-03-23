@@ -64,6 +64,7 @@ void SETTINGS::Serialize(bool w, CONFIGFILE & c)
 	
 	Param(c,w, "video.bloom", bloom); 		Param(c,w, "video.bloomintensity", bloomintensity);
 	Param(c,w, "video.bloomorig", bloomorig);		   Param(c,w, "video.hdr", hdr);
+	Param(c,w, "video.motionblur", motionblur); 	Param(c,w, "video.motionblurintensity", motionblurintensity);
 	Param(c,w, "video.windowx", windowx);      Param(c,w, "video.windowy", windowy);
 	Param(c,w, "video.fullscreen", fullscreen);
 	Param(c,w, "video.fsaa", fsaa); 		   Param(c,w, "video.vsync", vsync);
