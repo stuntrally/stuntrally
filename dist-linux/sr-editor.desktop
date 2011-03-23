@@ -1,9 +1,9 @@
 [Desktop Entry]
-Name=Stunt Rally track editor
+Name=Stunt Rally Track Editor
 GenericName=Track editor
 Comment=Track editor for Stunt Rally
 Comment[de]=Stunt Rally Streckeneditor
-#Comment[fi]=3D Rallipeli stunttielementein
+Comment[fi]=Stunt Rally rataeditori
 Exec=sr-editor
 Icon=
 StartupNotify=false
