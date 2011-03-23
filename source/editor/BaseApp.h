@@ -25,6 +25,7 @@ public:
 	QTimer timer;
 	void OnTimer(double dTime);
 	bool mShutDown;
+	bool inputThreadRunning;
 protected:
 	bool mShowDialog;//, mShutDown;
 	bool setup(), configure();  void updateStats();

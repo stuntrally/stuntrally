@@ -23,7 +23,7 @@
  */
 void TimThread(BaseApp* pA)
 {
-	while (!pA->mShutDown)
+	while (pA->inputThreadRunning)
 	{
 		if (pA->timer.update())
 			pA->OnTimer(pA->timer.dt);
@@ -154,6 +154,7 @@ BaseApp::BaseApp()
 	,i_cmdMousePress(0), cmdMousePress(0)
 	,i_cmdMouseRel(0), cmdMouseRel(0)
 {
+	inputThreadRunning = true;
 	cmdKeyPress = new CmdKey[cmd_Max];
 	cmdKeyRel = new CmdKey[cmd_Max];
 	cmdMouseMove = new CmdMouseMove[cmd_Max];
@@ -373,6 +374,7 @@ void BaseApp::windowResized(RenderWindow* rw)
 
 void BaseApp::windowClosed(RenderWindow* rw)
 {
+	inputThreadRunning = false;
 	if (rw == mWindow)
 	if (mInputManager)
 	{
