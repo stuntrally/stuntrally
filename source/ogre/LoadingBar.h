@@ -1,5 +1,6 @@
 #ifndef _LoadBar_h_
 #define _LoadBar_h_
+#include <Ogre.h>
 using namespace Ogre;
 
 
