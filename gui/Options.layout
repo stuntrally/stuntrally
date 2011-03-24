@@ -697,7 +697,7 @@
 					<Property key="Text_TextColour" value="0.8 0.9 0.8"/>
 				</Widget>
 				<Widget type="StaticText" skin="StaticText" position="32 202 212 24">
-					<Property key="Widget_Caption" value="Alt or Ctrl - boost"/>
+					<Property key="Widget_Caption" value="Ctrl - boost"/>
 					<Property key="Text_TextColour" value="0.8 0.9 0.8"/>
 				</Widget>
 				<Widget type="StaticText" skin="StaticText" position="32 260 212 24">
