@@ -35,14 +35,6 @@ void BaseApp::createFrameListener()
 	mWindow->getCustomAttribute("WINDOW", &windowHnd);
 	windowHndStr << windowHnd;
 	pl.insert(std::make_pair(std::string("WINDOW"), windowHndStr.str()));
-	
-    #if defined OIS_LINUX_PLATFORM
-    //pl.insert(std::make_pair(std::string("x11_mouse_grab"), std::string("false")));
-    //pl.insert(std::make_pair(std::string("x11_mouse_hide"), std::string("false")));
-    // Disable keyboard grab on linux, which e.g. allows alt-tabbing out in fullscreen
-    pl.insert(std::make_pair(std::string("x11_keyboard_grab"), std::string("false")));
-    pl.insert(std::make_pair(std::string("XAutoRepeatOn"), std::string("true")));
-    #endif
     
 	mInputManager = OIS::InputManager::createInputSystem( pl );
 
