@@ -226,8 +226,13 @@
 					<Property key="d" value="1680x1050"/>
 				</Widget>
 				
-				<Widget type="Button" skin="CheckBox" position="300 50 112 24" name="FullScreen">
+				<Widget type="Button" skin="CheckBox" position="330 50 112 24" name="FullScreen">
 					<Property key="Widget_Caption" value="Fullscreen*"/>
+					<Property key="Text_TextColour" value="1 0.9 0"/>
+				</Widget>
+
+				<Widget type="Button" skin="CheckBox" position="460 50 112 24" name="VSync">
+					<Property key="Widget_Caption" value="VSync*"/>
 					<Property key="Text_TextColour" value="1 0.9 0"/>
 				</Widget>
 				
@@ -252,7 +257,7 @@
 				</Widget>
 				
 								
-				<Widget type="StaticText" skin="StaticText" position="48 155 100 24">
+				<Widget type="StaticText" skin="StaticText" position="68 155 100 24">
 					<Property key="Widget_Caption" value="Intensity"/>
 					<Property key="Text_TextColour" value="0.7 1 0.5"/>
 				</Widget>
@@ -262,11 +267,21 @@
 					<Property key="Scroll_MoveToClick" value="true"/>
 				</Widget>
 				
-				<Widget type="StaticText" skin="StaticText" position="48 190 100 24">
+				<Widget type="StaticText" skin="StaticText" position="68 190 100 24">
 					<Property key="Widget_Caption" value="Orig. image"/>
 					<Property key="Text_TextColour" value="0.7 1 0.5"/>
 				</Widget>
 				<Widget type="HScroll" skin="HScroll" position="248 190 320 18" name="BloomOrig">
+					<Property key="Scroll_MoveToClick" value="true"/>
+					<Property key="Scroll_Range" value="1000001"/>
+					<Property key="Scroll_MoveToClick" value="true"/>
+				</Widget>
+				
+				<Widget type="StaticText" skin="StaticText" position="68 295 100 24">
+					<Property key="Widget_Caption" value="Intensity"/>
+					<Property key="Text_TextColour" value="0.7 1 0.5"/>
+				</Widget>
+				<Widget type="HScroll" skin="HScroll" position="248 295 320 18" name="BlurIntens">
 					<Property key="Scroll_MoveToClick" value="true"/>
 					<Property key="Scroll_Range" value="1000001"/>
 					<Property key="Scroll_MoveToClick" value="true"/>
