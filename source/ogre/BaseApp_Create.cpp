@@ -82,9 +82,9 @@ void BaseApp::createCompositor()
 		Ogre::CompositorManager::getSingleton().setCompositorEnabled(mViewport, "HDR", true);
 	}
 	
-	if (pSet->motionblur)
-	{
-			Ogre::CompositorPtr comp3 = Ogre::CompositorManager::getSingleton().create(
+	//if (1 || pSet->motionblur)
+	//{
+		/*Ogre::CompositorPtr comp3 = Ogre::CompositorManager::getSingleton().create(
 			"Motion Blur", Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME
 		);
 		Ogre::CompositionTechnique *t = comp3->createTechnique();
@@ -151,10 +151,10 @@ void BaseApp::createCompositor()
 			pass->setMaterialName("Ogre/Compositor/MotionBlur");
 			pass->setInput(0, "sum");
 			}
-		}
+		}*/
 		Ogre::CompositorManager::getSingleton().addCompositor(mViewport, "Motion Blur");
 		Ogre::CompositorManager::getSingleton().setCompositorEnabled(mViewport, "Motion Blur", true);
-	}
+	//}
 }
 
 
