@@ -361,7 +361,7 @@ void App::slBlurIntens(SL)
 //setCompositorEnabled(mViewport, "HDR" | "Bloom" | "Motion Blur", true | false );
 void App::UpdBloomVals()
 {
-	if (!pSet->bloom)  return;
+	//if (!pSet->bloom)  return;
 	Ogre::CompositorManager::getSingleton().setCompositorEnabled(mViewport, "Bloom", false);
 
 	Ogre::MaterialPtr blurmat = Ogre::MaterialManager::getSingleton().getByName("Ogre/Compositor/BloomBlend2");
@@ -369,7 +369,7 @@ void App::UpdBloomVals()
 	gpuparams->setNamedConstant("OriginalImageWeight", pSet->bloomorig);
 	gpuparams->setNamedConstant("BlurWeight", pSet->bloomintensity);
 
-	Ogre::CompositorManager::getSingleton().setCompositorEnabled(mViewport, "Bloom", true);
+	Ogre::CompositorManager::getSingleton().setCompositorEnabled(mViewport, "Bloom", pSet->bloom);
 }
 
 
