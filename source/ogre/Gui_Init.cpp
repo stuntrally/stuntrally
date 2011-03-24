@@ -156,7 +156,22 @@ void App::InitGui()
 	Chk("AutoStart", chkAutoStart, autostart);
 	Chk("EscQuits", chkEscQuits, escquit);
 	Chk("BltLines", chkBltLines, bltLines);
+	
+	//  compositor, video
+	Chk("Bloom", chkVidBloom, bloom);
+	Chk("HDR", chkVidHDR, hdr);
+	Chk("MotionBlur", chkVidBlur, motionblur);
 
+	Slv(BloomInt,	pSet->bloomintensity);
+	Slv(BloomOrig,	pSet->bloomorig);
+	Slv(BlurIntens, pSet->motionblurintensity);
+	
+	Chk("FullScreen", chkVidFullscr, fullscreen);
+	Chk("VSync", chkVidVSync, vsync);
+
+	//Ogre::Root::getSingleton().getRenderSystem()->
+	//<Widget type="ComboBox" skin="ComboBox" position="150 50 136 24" name="Resolution">
+				
 	//button_ramp, speed_sens..
 
 	

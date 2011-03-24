@@ -153,13 +153,16 @@ protected:
 	SLV(SizeGaug);  SLV(SizeMinmap);  // view
 	SLV(VolMaster);  SLV(VolEngine);  SLV(VolTires);  SLV(VolEnv);
 	SLV(CarClrH);  SLV(CarClrS);  SLV(CarClrV);  // clr
+	SLV(BloomInt);  SLV(BloomOrig);  SLV(BlurIntens);  // video
 
 	//  checks
 	void chkFps(WP), chkGauges(WP),	chkMinimap(WP), chkRacingLine(WP),  // view
 		chkCamInfo(WP), chkTimes(WP), chkCarDbgBars(WP), chkCarDbgTxt(WP), chkBltDebug(WP),
 		chkReverse(WP), chkParticles(WP), chkTrails(WP),
 		chkAbs(WP), chkTcs(WP), chkGear(WP), chkRear(WP), chkClutch(WP),  // car
-		chkOgreDialog(WP), chkAutoStart(WP), chkEscQuits(WP), chkBltLines(WP);  // startup
+		chkOgreDialog(WP), chkAutoStart(WP), chkEscQuits(WP), chkBltLines(WP),  // startup
+		chkVidBloom(WP), chkVidHDR(WP), chkVidBlur(WP),  // video
+		chkVidFullscr(WP), chkVidVSync(WP), UpdBloomVals();
 
 	void comboTexFilter(SL);
 	ButtonPtr bRkmh, bRmph;  void radKmh(WP), radMph(WP), btnTrGrReset(WP);

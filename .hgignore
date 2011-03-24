@@ -1,6 +1,8 @@
 build
 build32
 build64
+Debug
+Release
 game.cfg
 editor.cfg
 ogreset.cfg

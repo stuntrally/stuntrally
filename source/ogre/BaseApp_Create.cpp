@@ -68,7 +68,6 @@ void BaseApp::createCompositor()
 		
 	Ogre::CompositorManager::getSingleton().addCompositor(mViewport, "HDR");
 
-	
 	// bloom
 	// Set bloom settings (intensity, orig weight).
 	Ogre::MaterialPtr blurmat = Ogre::MaterialManager::getSingleton().getByName("Ogre/Compositor/BloomBlend2");
@@ -82,19 +81,13 @@ void BaseApp::createCompositor()
 	Ogre::CompositorManager::getSingleton().addCompositor(mViewport, "Motion Blur");
 
 	if (pSet->bloom)
-	{
 		Ogre::CompositorManager::getSingleton().setCompositorEnabled(mViewport, "Bloom", true);
-	}
 
-	else if (pSet->hdr)
-	{
+	/*else */if (pSet->hdr)
 		Ogre::CompositorManager::getSingleton().setCompositorEnabled(mViewport, "HDR", true);
-	}
 	
 	if (pSet->motionblur)
-	{
 		Ogre::CompositorManager::getSingleton().setCompositorEnabled(mViewport, "Motion Blur", true);
-	}
 }
 
 

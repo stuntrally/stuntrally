@@ -48,16 +48,13 @@ public:
 	float game_fq, blt_fq;  int blt_iter;
 	int mult_thr;
 	
-	// compositor
-	bool bloom, hdr;
-	float bloomintensity, bloomorig;
-	bool motionblur;
-	float motionblurintensity;
-	// video
+	//  compositor
+	bool bloom, hdr, motionblur;
+	float bloomintensity, bloomorig, motionblurintensity;
+	//  video
 	int windowx, windowy;
-	bool fullscreen;
+	bool fullscreen, vsync;
 	int fsaa;
-	bool vsync;
 
 //------------------------------------------
 	SETTINGS();

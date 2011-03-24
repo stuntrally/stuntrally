@@ -499,10 +499,6 @@
 			Name="Set"
 			>
 			<File
-				RelativePath=".\_game.cfg"
-				>
-			</File>
-			<File
 				RelativePath=".\data\cars\cameras.xml"
 				>
 			</File>
@@ -512,6 +508,10 @@
 			</File>
 			<File
 				RelativePath=".\Source\vdrift\configfile.h"
+				>
+			</File>
+			<File
+				RelativePath="C:\Documents and Settings\ryhu25\Application Data\stuntrally\game.cfg"
 				>
 			</File>
 			<File
@@ -5913,6 +5913,14 @@
 			<Filter
 				Name="Gui"
 				>
+				<File
+					RelativePath=".\source\ogre\CompositorLogics.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\source\ogre\CompositorLogics.h"
+					>
+				</File>
 				<File
 					RelativePath=".\Source\ogre\Gui_Events.cpp"
 					>
