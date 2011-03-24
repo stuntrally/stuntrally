@@ -231,6 +231,11 @@
 					<Property key="Text_TextColour" value="1 0.9 0"/>
 				</Widget>
 				
+				<Widget type="Button" skin="CheckBox" position="450 50 112 24" name="VSync">
+					<Property key="Widget_Caption" value="VSync*"/>
+					<Property key="Text_TextColour" value="1 0.9 0"/>
+				</Widget>
+				
 				<Widget type="StaticText" skin="StaticText" position="32 85 136 24">
 					<Property key="Widget_Caption" value="Effects:"/>
 					<Property key="Text_TextColour" value="1 1 1"/>
@@ -267,6 +272,16 @@
 					<Property key="Text_TextColour" value="0.7 1 0.5"/>
 				</Widget>
 				<Widget type="HScroll" skin="HScroll" position="248 190 320 18" name="BloomOrig">
+					<Property key="Scroll_MoveToClick" value="true"/>
+					<Property key="Scroll_Range" value="1000001"/>
+					<Property key="Scroll_MoveToClick" value="true"/>
+				</Widget>
+
+				<Widget type="StaticText" skin="StaticText" position="48 285 100 24">
+					<Property key="Widget_Caption" value="Blur intens."/>
+					<Property key="Text_TextColour" value="0.7 1 0.5"/>
+				</Widget>
+				<Widget type="HScroll" skin="HScroll" position="248 285 320 18" name="BlurIntens">
 					<Property key="Scroll_MoveToClick" value="true"/>
 					<Property key="Scroll_Range" value="1000001"/>
 					<Property key="Scroll_MoveToClick" value="true"/>
@@ -772,7 +787,7 @@
 					<Property key="Text_TextColour" value="0.7 1 0.4"/>
 				</Widget>
 				<Widget type="StaticText" skin="StaticText" position="648 18 90 24">
-					<Property key="Widget_Caption" value="version 1.0"/>
+					<Property key="Widget_Caption" value="version 1.1"/>
 					<Property key="Text_TextColour" value="0.7 1 0.4"/>
 				</Widget>
 				<Widget type="StaticText" skin="StaticText" position="90 64 110 24">
