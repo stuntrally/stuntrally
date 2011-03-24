@@ -7,6 +7,8 @@
 #include "../btOgre/BtOgrePG.h"
 #include "../btOgre/BtOgreGP.h"
 
+#include "boost/thread.hpp"
+
 
 //  Create Scene
 //-------------------------------------------------------------------------------------
@@ -49,7 +51,16 @@ void App::createScene()
 void App::NewGame()
 {
 	bLoading = true;
+	LoadingOn();
+	
+	boost::thread t( boost::bind(&App::NewGameDoLoad, this) ); 
+		
+	//bLoading = false;
+	//LoadingOff();
+}
 
+void App::NewGameDoLoad()
+{
 	//  hide trails
 	for (int w=0; w<4; ++w)  if (whTrl[w])  {	wht[w] = 0.f;
 		whTrl[w]->setVisible(false);	whTrl[w]->setInitialColour(0, 0.5,0.5,0.5, 0);	}
@@ -113,8 +124,6 @@ void App::NewGame()
 	miReflectCntr = 5;  //.
 	mReflAll1st = true;
 	mFCam->first = true;  // no smooth
-	
-	bLoading = false;
 }
 
 //---------------------------------------------------------------------------------------------------------------
@@ -141,7 +150,7 @@ void App::CreateRoad()
 
 	road = new SplineRoad(pGame);  // sphere.mesh
 	road->Setup("", 0.7,  terrain, mSceneMgr, mCamera);
-
+	
 	String sr = PATHMANAGER::GetTrackPath() + "/" + pSet->track + "/road.xml";
 	road->LoadFile(sr);
 

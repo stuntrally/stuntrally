@@ -81,7 +81,7 @@ protected:
 	void CreateTerrain(bool bNewHmap=false, bool bTer=true), CreateBltTerrain();
 	void CreateTrees(), CreateRoad(), CreateProps();
 	void CreateSkyDome(String sMater, Vector3 scale);
-	void NewGame();  bool IsTerTrack();
+	void NewGame();  void NewGameDoLoad(); bool IsTerTrack();
 	bool bLoading;  String TrkDir();
 
 	bool FileExists(const std::string & filename)
