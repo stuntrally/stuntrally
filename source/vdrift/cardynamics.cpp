@@ -806,9 +806,10 @@ void CARDYNAMICS::UpdateBody(T dt, T drive_torque[])
 		ApplyTorque(v);
 	}
 	///***  boost
-	bool alt = pApp->isKey(OIS::KC_LMENU)||pApp->isKey(OIS::KC_RMENU);
+	//bool alt = pApp->isKey(OIS::KC_LMENU)||pApp->isKey(OIS::KC_RMENU);
 	bool ctrl = pApp->isKey(OIS::KC_LCONTROL)||pApp->isKey(OIS::KC_RCONTROL);
-	if (alt || ctrl)
+	//if (alt || ctrl)
+	if (ctrl)
 	{
 		T f = body.GetMass() * 16.f;
 		MATHVECTOR <T, 3> v(f,0,0), ofs(0,0,0);
