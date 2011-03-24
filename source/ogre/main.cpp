@@ -1,25 +1,14 @@
 #include "stdafx.h"
 //#include "vld.h" //+
-#include "../vdrift/game.h"
 #include "OgreGame.h"
-
+#include "../vdrift/game.h"
 #include "../vdrift/logging.h"
 #include "../vdrift/pathmanager.h"
 #include "../vdrift/settings.h"
 
 #include <OgrePlatform.h>
+#include <boost/thread.hpp>
 
-#include "boost/thread.hpp"
-
-/* old win threads ** #if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
-DWORD WINAPI VprThread(LPVOID lpParam)
-{ 
-	App* pA = (App*)lpParam;
-	if (pA)
-		pA->UpdThr();
-    return 0;
-}
-#endif*/
 void VprThread(App* pA)
 {
 	if (pA)
@@ -68,9 +57,6 @@ void VprThread(App* pA)
 	// primary logging ostreams
 	std::ostream info_output(&infolog);
 	std::ostream error_output(&errorlog);/**/
-/* old win threads ** #if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
-	HANDLE hpr;
-#endif*/
 
 	// HACK: we initialize paths a second time now that we have the output streams
 	PATHMANAGER::Init(info_output, error_output);
@@ -87,19 +73,14 @@ void VprThread(App* pA)
 
 	try
 	{
-		if (settings->mult_thr > 0)  ///
-		{
-/* old win thread ** #if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
-			hpr = CreateThread(NULL,0,VprThread,(LPVOID)pApp,0,NULL);
-#endif*/
+		if (settings->mult_thr > 0) {
 			boost::thread t(VprThread, pApp);
 		}
-#if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
+		#if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
 		pApp->Run( settings->ogre_dialog || lpCmdLine[0]!=0 );  //Release change-
-#else
+		#else
 		pApp->Run( settings->ogre_dialog);
-#endif
-
+		#endif
 	}
 	catch (Ogre::Exception& e)
 	{
@@ -110,13 +91,6 @@ void VprThread(App* pA)
 		#endif
 	}
 
-	if (settings->mult_thr > 0)  ///
-	{
-/* old win thread ** #if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
-		TerminateThread(hpr, 1);
-#endif*/
-		
-	}
 	info_output << "Exiting" << std::endl;
 	delete pApp;
 	delete pGame;
