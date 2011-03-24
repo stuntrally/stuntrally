@@ -51,11 +51,11 @@ void App::createScene()
 void App::NewGame()
 {
 	bLoading = true;
-	LoadingOn();
+	//LoadingOn();
 	
-	boost::thread t( boost::bind(&App::NewGameDoLoad, this) ); 
-		
-	//bLoading = false;
+	//boost::thread t( boost::bind(&App::NewGameDoLoad, this) ); 
+	NewGameDoLoad();
+	bLoading = false;
 	//LoadingOff();
 }
 
