@@ -79,7 +79,7 @@ void App::CreateHUD()
 		//  car pos dot
 		mpos = Create2D("hud/CarPos", 0.2f, true);  // dot size  -par
 		mpos->setVisibilityFlags(2);
-		mpos->setRenderQueueGroup(RENDER_QUEUE_OVERLAY+1);
+		mpos->setRenderQueueGroup(RENDER_QUEUE_OVERLAY);
 		ndPos = ndMap->createChildSceneNode();
 		ndPos->scale(fHudSize*asp, fHudSize, 1);
 		ndPos->attachObject(mpos);
@@ -105,12 +105,12 @@ void App::CreateHUD()
 		
 	//  needles
 	mrpm = Create2D("hud/needle",1,true);	mrpm->setVisibilityFlags(2);
-	mrpm->setRenderQueueGroup(RENDER_QUEUE_OVERLAY+2);
+	mrpm->setRenderQueueGroup(RENDER_QUEUE_OVERLAY);
 	nrpm = mSceneMgr->getRootSceneNode()->createChildSceneNode();
 	nrpm->attachObject(mrpm);	nrpm->setScale(0,0,0);	nrpm->setVisible(false);
 	
 	mvel = Create2D("hud/needle",1,true);	mvel->setVisibilityFlags(2);
-	mvel->setRenderQueueGroup(RENDER_QUEUE_OVERLAY+2);
+	mvel->setRenderQueueGroup(RENDER_QUEUE_OVERLAY);
 	nvel = mSceneMgr->getRootSceneNode()->createChildSceneNode();
 	nvel->attachObject(mvel);	nvel->setScale(0,0,0);	nvel->setVisible(false);
 

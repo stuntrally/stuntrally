@@ -35,7 +35,11 @@ void BaseApp::createFrameListener()
 	mWindow->getCustomAttribute("WINDOW", &windowHnd);
 	windowHndStr << windowHnd;
 	pl.insert(std::make_pair(std::string("WINDOW"), windowHndStr.str()));
-    
+	
+	#if defined OIS_LINUX_PLATFORM
+    pl.insert(std::make_pair(std::string("XAutoRepeatOn"), std::string("true")));
+    #endif
+
 	mInputManager = OIS::InputManager::createInputSystem( pl );
 
 	mKeyboard = static_cast<OIS::Keyboard*>(mInputManager->createInputObject( OIS::OISKeyboard, true ));
