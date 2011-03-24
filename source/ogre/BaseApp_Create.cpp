@@ -35,7 +35,15 @@ void BaseApp::createFrameListener()
 	mWindow->getCustomAttribute("WINDOW", &windowHnd);
 	windowHndStr << windowHnd;
 	pl.insert(std::make_pair(std::string("WINDOW"), windowHndStr.str()));
-
+	
+    #if defined OIS_LINUX_PLATFORM
+    //pl.insert(std::make_pair(std::string("x11_mouse_grab"), std::string("false")));
+    //pl.insert(std::make_pair(std::string("x11_mouse_hide"), std::string("false")));
+    // Disable keyboard grab on linux, which e.g. allows alt-tabbing out in fullscreen
+    pl.insert(std::make_pair(std::string("x11_keyboard_grab"), std::string("false")));
+    pl.insert(std::make_pair(std::string("XAutoRepeatOn"), std::string("true")));
+    #endif
+    
 	mInputManager = OIS::InputManager::createInputSystem( pl );
 
 	mKeyboard = static_cast<OIS::Keyboard*>(mInputManager->createInputObject( OIS::OISKeyboard, true ));
@@ -81,7 +89,6 @@ void BaseApp::createCompositor()
 		Ogre::CompositorPtr comp3 = Ogre::CompositorManager::getSingleton().create(
 			"Motion Blur", Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME
 		);
-	{
 		Ogre::CompositionTechnique *t = comp3->createTechnique();
 		{
 			Ogre::CompositionTechnique::TextureDefinition *def = t->createTextureDefinition("scene");
