@@ -177,7 +177,28 @@ void App::InitGui()
 	//button_ramp, speed_sens..
 
 	
-    ///  cars list
+	///  video resolutions combobox
+	ComboBoxPtr cbResolution = mGUI->findWidget<ComboBox>("Resolution");
+	// selection changed event
+	if (cbResolution)
+	{
+		 cbResolution->eventComboChangePosition = newDelegate(this, &App::comboResolution);
+		// populate video resolution list
+		const Ogre::StringVector& videoModes = Ogre::Root::getSingleton().getRenderSystem()->getConfigOptions()["Video Mode"].possibleValues;
+		for (int i=0; i<videoModes.size(); i++)
+		{
+			std::string mode = videoModes[i];
+			Ogre::StringUtil::trim(mode);
+			cbResolution->addItem(mode);
+		}
+		// set current mode
+		std::string modeString = Ogre::StringConverter::toString(mWindow->getWidth()) + " x " + Ogre::StringConverter::toString(mWindow->getHeight());
+		Ogre::StringUtil::trim(modeString);
+		cbResolution->setItemSelect(cbResolution->findItemIndexWith(modeString));
+	}
+	
+	
+	///  cars list
     //------------------------------------
     carList = (ListPtr)mLayout->findWidget("CarList");
     if (carList)

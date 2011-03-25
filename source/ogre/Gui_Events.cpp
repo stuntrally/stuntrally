@@ -339,12 +339,28 @@ void App::chkBltLines(WP wp){		ChkEv(bltLines);		}
 
 //  [Video]  . . . . . . . . . . . . . . . . . . . .    ---- ------ ----    . . . . . . . . . . . . . . . . . . . .
 
+void App::comboResolution(SL)
+{
+	std::string modeString = mGUI->findWidget<ComboBox>("Resolution")->getItem(val);
+	pSet->windowx = Ogre::StringConverter::parseInt(Ogre::StringUtil::split(modeString, "x")[0]);
+	pSet->windowy = Ogre::StringConverter::parseInt(Ogre::StringUtil::split(modeString, "x")[1]);
+	
+	mWindow->resize(pSet->windowx, pSet->windowy);
+	
+	if (pSet->fullscreen)
+		mWindow->setFullscreen(true, pSet->windowx, pSet->windowy);
+}
+
 void App::chkVidBloom(WP wp){		ChkEv(bloom);		Ogre::CompositorManager::getSingleton().setCompositorEnabled(mViewport, "Bloom", pSet->bloom);		}
 void App::chkVidHDR(WP wp){			ChkEv(hdr);			Ogre::CompositorManager::getSingleton().setCompositorEnabled(mViewport, "HDR", pSet->hdr);	}
 //void App::chkVidBlur(WP wp){		ChkEv(motionblur);	Ogre::CompositorManager::getSingleton().setCompositorEnabled(mViewport, "Motion Blur", pSet->motionblur);	}
 
-void App::chkVidFullscr(WP wp){		ChkEv(fullscreen);	}
-void App::chkVidVSync(WP wp){		ChkEv(vsync);	}
+void App::chkVidFullscr(WP wp){		ChkEv(fullscreen);	mWindow->setFullscreen(pSet->fullscreen, pSet->windowx, pSet->windowy); mWindow->resize(pSet->windowx, pSet->windowy); }
+void App::chkVidVSync(WP wp)
+{		
+	ChkEv(vsync); 
+	Ogre::Root::getSingleton().getRenderSystem()->setWaitForVerticalBlank(pSet->vsync);
+}
 
 void App::slBloomInt(SL)
 {

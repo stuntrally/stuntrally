@@ -165,6 +165,7 @@ protected:
 		chkVidFullscr(WP), chkVidVSync(WP), UpdBloomVals();
 
 	void comboTexFilter(SL);
+	void comboResolution(SL);
 	ButtonPtr bRkmh, bRmph;  void radKmh(WP), radMph(WP), btnTrGrReset(WP), btnQuit(WP);
 	ButtonPtr chDbgT,chDbgB, chBlt,chFps, chTimes,chMinimp, bnQuit;
 
