@@ -271,11 +271,6 @@
 					<Property key="Scroll_MoveToClick" value="true"/>
 				</Widget>
 				
-				<Widget type="StaticText" skin="StaticText" position="68 295 100 24">
-					<Property key="Widget_Caption" value="Intensity"/>
-					<Property key="Text_TextColour" value="0.7 1 0.5"/>
-				</Widget>
-				
 				<Widget type="StaticText" skin="StaticText" position="32 488 136 24">
 					<Property key="Widget_Caption" value="* need restart"/>
 					<Property key="Text_TextColour" value="0.7 1 0.5"/>
