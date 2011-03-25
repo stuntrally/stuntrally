@@ -214,7 +214,7 @@
 				<Property key="Widget_Caption" value="Video"/>
 				
 				<Widget type="StaticText" skin="StaticText" position="32 50 112 24">
-					<Property key="Widget_Caption" value="Resolution*"/>
+					<Property key="Widget_Caption" value="Resolution"/>
 					<Property key="Widget_Colour" value="0 0 0"/>
 					<Property key="Text_TextColour" value="0.3 0.9 0.9"/>
 				</Widget>
@@ -227,12 +227,12 @@
 				</Widget>
 				
 				<Widget type="Button" skin="CheckBox" position="330 50 112 24" name="FullScreen">
-					<Property key="Widget_Caption" value="Fullscreen*"/>
+					<Property key="Widget_Caption" value="Fullscreen"/>
 					<Property key="Text_TextColour" value="1 0.9 0"/>
 				</Widget>
 
 				<Widget type="Button" skin="CheckBox" position="460 50 112 24" name="VSync">
-					<Property key="Widget_Caption" value="VSync*"/>
+					<Property key="Widget_Caption" value="VSync"/>
 					<Property key="Text_TextColour" value="1 0.9 0"/>
 				</Widget>
 				
