@@ -162,11 +162,11 @@ void App::InitGui()
 	//  compositor, video
 	Chk("Bloom", chkVidBloom, bloom);
 	Chk("HDR", chkVidHDR, hdr);
-	Chk("MotionBlur", chkVidBlur, motionblur);
+	//Chk("MotionBlur", chkVidBlur, motionblur);
 
 	Slv(BloomInt,	pSet->bloomintensity);
 	Slv(BloomOrig,	pSet->bloomorig);
-	Slv(BlurIntens, pSet->motionblurintensity);
+	//Slv(BlurIntens, pSet->motionblurintensity);
 	
 	Chk("FullScreen", chkVidFullscr, fullscreen);
 	Chk("VSync", chkVidVSync, vsync);

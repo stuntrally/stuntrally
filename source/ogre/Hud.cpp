@@ -89,17 +89,17 @@ void App::CreateHUD()
 	
 	//  backgr  gauges
 	ManualObject* mrpmB = Create2D("hud/rpm",1);	mrpmB->setVisibilityFlags(2);
-	mrpmB->setRenderQueueGroup(RENDER_QUEUE_OVERLAY-1);
+	mrpmB->setRenderQueueGroup(RENDER_QUEUE_OVERLAY);
 	nrpmB = mSceneMgr->getRootSceneNode()->createChildSceneNode();
 	nrpmB->attachObject(mrpmB);	nrpmB->setScale(0,0,0);  nrpmB->setVisible(false);
 
 	ManualObject* mvelBk = Create2D("hud/kmh",1);	mvelBk->setVisibilityFlags(2);
-	mvelBk->setRenderQueueGroup(RENDER_QUEUE_OVERLAY-1);
+	mvelBk->setRenderQueueGroup(RENDER_QUEUE_OVERLAY);
 	nvelBk = mSceneMgr->getRootSceneNode()->createChildSceneNode();
 	nvelBk->attachObject(mvelBk);	nvelBk->setScale(0,0,0);  mvelBk->setVisible(false);
 		
 	ManualObject* mvelBm = Create2D("hud/mph",1);	mvelBm->setVisibilityFlags(2);
-	mvelBm->setRenderQueueGroup(RENDER_QUEUE_OVERLAY-1);
+	mvelBm->setRenderQueueGroup(RENDER_QUEUE_OVERLAY);
 	nvelBm = mSceneMgr->getRootSceneNode()->createChildSceneNode();
 	nvelBm->attachObject(mvelBm);	nvelBm->setScale(0,0,0);  mvelBm->setVisible(false);
 		

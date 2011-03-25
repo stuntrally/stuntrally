@@ -341,7 +341,7 @@ void App::chkBltLines(WP wp){		ChkEv(bltLines);		}
 
 void App::chkVidBloom(WP wp){		ChkEv(bloom);		Ogre::CompositorManager::getSingleton().setCompositorEnabled(mViewport, "Bloom", pSet->bloom);		}
 void App::chkVidHDR(WP wp){			ChkEv(hdr);			Ogre::CompositorManager::getSingleton().setCompositorEnabled(mViewport, "HDR", pSet->hdr);	}
-void App::chkVidBlur(WP wp){		ChkEv(motionblur);	Ogre::CompositorManager::getSingleton().setCompositorEnabled(mViewport, "Motion Blur", pSet->motionblur);	}
+//void App::chkVidBlur(WP wp){		ChkEv(motionblur);	Ogre::CompositorManager::getSingleton().setCompositorEnabled(mViewport, "Motion Blur", pSet->motionblur);	}
 
 void App::chkVidFullscr(WP wp){		ChkEv(fullscreen);	}
 void App::chkVidVSync(WP wp){		ChkEv(vsync);	}
@@ -358,12 +358,12 @@ void App::slBloomOrig(SL)
 	//if (valCarClrH){	Fmt(s, "%4.2f", v);	valCarClrH->setCaption(s);  }
 	UpdBloomVals();
 }
-void App::slBlurIntens(SL)
+/*void App::slBlurIntens(SL)
 {
 	Real v = val/res;  pSet->motionblurintensity = v;
 	//if (valCarClrH){	Fmt(s, "%4.2f", v);	valCarClrH->setCaption(s);  }
 	//UpdBloomVals();
-}
+}*/
 
 //setCompositorEnabled(mViewport, "HDR" | "Bloom" | "Motion Blur", true | false );
 void App::UpdBloomVals()
