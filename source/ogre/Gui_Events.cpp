@@ -279,6 +279,7 @@ void App::btnNewGame(WP)
 {
 	NewGame();  isFocGui = false;  // off gui
 	if (mWndOpts)  mWndOpts->setVisible(isFocGui);
+	if (bnQuit)  bnQuit->setVisible(isFocGui);
 	mGUI->setVisiblePointer(isFocGui);
 	mToolTip->setVisible(false);
 }
@@ -287,6 +288,12 @@ void App::btnNewGameStart(WP wp)
 	btnChgTrack(wp);
 	btnNewGame(wp);
 }
+
+void App::btnQuit(WP)
+{
+	mShutDown = true;
+}
+
 
 //  [View]  . . . . . . . . . . . . . . . . . . . .    ---- checks ----    . . . . . . . . . . . . . . . . . . . .
 
@@ -390,6 +397,7 @@ bool App::keyPressed( const OIS::KeyEvent &arg )
 	   	if (!alt)  {
 	   		isFocGui = !isFocGui;
 	   		if (mWndOpts)	mWndOpts->setVisible(isFocGui);
+			if (bnQuit)  bnQuit->setVisible(isFocGui);
 	   		if (mGUI)	mGUI->setVisiblePointer(isFocGui);
 	   		if (!isFocGui)  mToolTip->setVisible(false);
 	   	}	return true;

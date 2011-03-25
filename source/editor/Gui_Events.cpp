@@ -540,3 +540,8 @@ void App::btnSetCam(WP wp)
 	else if (s=="CamFront")	{	mCameraT->setPosition( xz,y0,0);  mCameraT->setDirection(-1,0,0);  }
 	else if (s=="CamBack")	{	mCameraT->setPosition(-xz,y0,0);  mCameraT->setDirection( 1,0,0);  }
 }
+
+void App::btnQuit(WP)
+{
+	mShutDown = true;
+}

@@ -33,8 +33,8 @@ void App::UpdEditWnds()
 }
 void App::UpdVisGui()
 {
-	if (mWndOpts)
-		mWndOpts->setVisible(bGuiFocus);
+	if (mWndOpts)  mWndOpts->setVisible(bGuiFocus);
+	if (bnQuit)  bnQuit->setVisible(bGuiFocus);
 	if (mGUI)  mGUI->setVisiblePointer(bGuiFocus || !bMoveCam);
 	if (road)  road->SetTerHitVis(bEdit());
 	if (!bGuiFocus && mToolTip)  mToolTip->setVisible(false);

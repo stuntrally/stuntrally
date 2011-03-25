@@ -153,6 +153,8 @@ void App::InitGui()
 	Chk("OgreDialog", chkOgreDialog, pSet->ogre_dialog);
 	Chk("AutoStart", chkAutoStart, pSet->autostart);
 	Chk("EscQuits", chkEscQuits, pSet->escquit);
+	bnQuit = mGUI->findWidget<Button>("Quit");
+	if (bnQuit)  {  bnQuit->eventMouseButtonClick = newDelegate(this, &App::btnQuit);  bnQuit->setVisible(false);  }
 	
 
 	///  [Sky]

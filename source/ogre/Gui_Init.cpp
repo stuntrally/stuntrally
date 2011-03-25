@@ -41,7 +41,7 @@ void App::InitGui()
 	mToolTip = Gui::getInstance().findWidget<Widget>("ToolTip");
 	mToolTip->setVisible(false);
 	mToolTipTxt = mToolTip->getChildAt(0)->castType<Edit>();
-
+	
 		
 	//  center mouse pos
 	int xm = mWindow->getWidth()/2, ym = mWindow->getHeight()/2;
@@ -120,6 +120,8 @@ void App::InitGui()
 		if (bchk)  {  bchk->eventMouseButtonClick = newDelegate(this, &App::event);  \
 			bchk->setStateCheck(pSet->var);  }
 
+	bnQuit = mGUI->findWidget<Button>("Quit");
+	if (bnQuit)  {  bnQuit->eventMouseButtonClick = newDelegate(this, &App::btnQuit);  bnQuit->setVisible(isFocGui);  }
 	Chk("ReverseOn", chkReverse, trackreverse);
 	Chk("ParticlesOn", chkParticles, particles);	Chk("TrailsOn", chkTrails, trails);
 

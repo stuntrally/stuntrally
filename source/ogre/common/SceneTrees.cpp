@@ -18,13 +18,30 @@
 //---------------------------------------------------------------------------------------------------------------
 
 Terrain* gTerrain = NULL;
+//bool gbLookAround = false;
 
 inline Real getTerrainHeight(const Real x, const Real z, void *userData)
 {
-	//Real ofsY = 0.f;
-	//if (userData)
-	//	ofsY = *((Real*)userData);
-	return gTerrain->getHeightAtWorldPosition(x, 0, z);// + ofsY;
+	return gTerrain->getHeightAtWorldPosition(x, 0, z);
+}
+inline Real getTerrainHeightAround(const Real x, const Real z, void *userData)
+{
+	float h = gTerrain->getHeightAtWorldPosition(x, 0, z);
+	
+	#if 0   // testing..
+	const float d = 0.3f;
+	for (int j=-2; j <= 2; ++j)
+	for (int i=-2; i <= 2; ++i)
+	if (i != 0 && j != 0)
+	{
+		float fx = i * d, fz = j * d;
+		float hh = gTerrain->getHeightAtWorldPosition(x + fx, 0, z + fz);
+		if (hh < h)  // if lower
+			h = hh;
+	}
+	#endif
+
+	return h;
 }
 
 #define getTerPos()		Math::RangeRandom(-0.5f, 0.5f) * sc.td.fTerWorldSize
@@ -99,7 +116,7 @@ void App::CreateTrees()
 
 		TreeLoader2D* treeLoader = new TreeLoader2D(trees, tbnd);
 		trees->setPageLoader(treeLoader);
-		treeLoader->setHeightFunction(getTerrainHeight);
+		treeLoader->setHeightFunction(getTerrainHeightAround /*,userdata*/);
 		treeLoader->setMaximumScale(4);//6
 		tws = sc.td.fTerWorldSize;
 		int r = imgRoadSize;
@@ -108,7 +125,6 @@ void App::CreateTrees()
 		for (size_t l=0; l < sc.pgLayers.size(); l++)
 		{
 			PagedLayer& pg = sc.pgLayersAll[sc.pgLayers[l]];
-			//-treeLoader->setHeightFunction(getTerrainHeight, &pg.ofsY);
 
 			Entity* ent = mSceneMgr->createEntity(pg.name);
 			ent->setVisibilityFlags(8);  ///vis+  disable in render targets

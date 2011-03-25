@@ -168,6 +168,7 @@ protected:
 	SLV(SizeMinmap);  SLV(CamSpeed);  SLV(CamInert);
 	SLV(TerUpd);  SLV(SizeRoadP);  SLV(MiniUpd);
 	void chkMinimap(WP), btnSetCam(WP);
+	ButtonPtr bnQuit;  void btnQuit(WP);
 	
 
 	//  [Sky]  ----
