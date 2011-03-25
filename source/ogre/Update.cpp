@@ -45,6 +45,8 @@ void App::UpdThr()
 
 bool App::frameStart(Real time)
 {
+	if (!bLoading)
+	{
 	//  keys dn/up - trklist, carlist
 	#define isKey(a)  mKeyboard->isKeyDown(OIS::KC_##a)
 	static float dirU = 0.f,dirD = 0.f;
@@ -69,7 +71,6 @@ bool App::frameStart(Real time)
 		ret = pGame->OneLoop();
 		if (!ret)  mShutDown = true;
 	}
-
 	updatePoses(time);  //pGame->framerate
 
 	updateReflection();  //*
@@ -108,6 +109,7 @@ bool App::frameStart(Real time)
 	UpdWhTerMtr(pCar);
 	
 	return ret;
+	}
 }
 bool App::frameEnd(Real time)
 {

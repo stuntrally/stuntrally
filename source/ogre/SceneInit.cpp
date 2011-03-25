@@ -50,13 +50,15 @@ void App::createScene()
 //---------------------------------------------------------------------------------------------------------------
 void App::NewGame()
 {
-	bLoading = true;
-	//LoadingOn();
+	/*bLoading = true;
+	LoadingOn();
 	
-	//boost::thread t( boost::bind(&App::NewGameDoLoad, this) ); 
+	boost::thread t( boost::bind(&App::NewGameDoLoad, this) ); 
+	//NewGameDoLoad();*/
+	
+	bLoading = true;
 	NewGameDoLoad();
 	bLoading = false;
-	//LoadingOff();
 }
 
 void App::NewGameDoLoad()
@@ -124,6 +126,9 @@ void App::NewGameDoLoad()
 	miReflectCntr = 5;  //.
 	mReflAll1st = true;
 	mFCam->first = true;  // no smooth
+	
+	//bLoading = false;
+	//LoadingOff();
 }
 
 //---------------------------------------------------------------------------------------------------------------

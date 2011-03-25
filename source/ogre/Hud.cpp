@@ -59,7 +59,7 @@ void App::CreateHUD()
 		ManualObject* m = Create2D("road_minimap_inv",1);
 		asp = float(mWindow->getWidth())/float(mWindow->getHeight());
 		m->setVisibilityFlags(2);
-		m->setRenderQueueGroup(RENDER_QUEUE_OVERLAY);
+		m->setRenderQueueGroup(RENDER_QUEUE_OVERLAY-1);
 		
 		///  change minimap image
 		MaterialPtr mm = MaterialManager::getSingleton().getByName("road_minimap_inv");
@@ -89,17 +89,17 @@ void App::CreateHUD()
 	
 	//  backgr  gauges
 	ManualObject* mrpmB = Create2D("hud/rpm",1);	mrpmB->setVisibilityFlags(2);
-	mrpmB->setRenderQueueGroup(RENDER_QUEUE_OVERLAY);
+	mrpmB->setRenderQueueGroup(RENDER_QUEUE_OVERLAY-1);
 	nrpmB = mSceneMgr->getRootSceneNode()->createChildSceneNode();
 	nrpmB->attachObject(mrpmB);	nrpmB->setScale(0,0,0);  nrpmB->setVisible(false);
 
 	ManualObject* mvelBk = Create2D("hud/kmh",1);	mvelBk->setVisibilityFlags(2);
-	mvelBk->setRenderQueueGroup(RENDER_QUEUE_OVERLAY);
+	mvelBk->setRenderQueueGroup(RENDER_QUEUE_OVERLAY-1);
 	nvelBk = mSceneMgr->getRootSceneNode()->createChildSceneNode();
 	nvelBk->attachObject(mvelBk);	nvelBk->setScale(0,0,0);  mvelBk->setVisible(false);
 		
 	ManualObject* mvelBm = Create2D("hud/mph",1);	mvelBm->setVisibilityFlags(2);
-	mvelBm->setRenderQueueGroup(RENDER_QUEUE_OVERLAY);
+	mvelBm->setRenderQueueGroup(RENDER_QUEUE_OVERLAY-1);
 	nvelBm = mSceneMgr->getRootSceneNode()->createChildSceneNode();
 	nvelBm->attachObject(mvelBm);	nvelBm->setScale(0,0,0);  mvelBm->setVisible(false);
 		
