@@ -829,4 +829,8 @@
 			<Property key="Widget_Caption" value="ToolTip Text"/>
 		</Widget>
 	</Widget>
+    <Widget type="Button" skin="Button" position_real="0.91 0.00 0.09 0.03" layer="Popup" name="Quit">
+        <Property key="Widget_Caption" value="Quit"/>
+        <Property key="Widget_Colour" value="1 0.4 0.4"/>
+    </Widget>
 </MyGUI>
