@@ -250,12 +250,6 @@
 					<Property key="Widget_Caption" value="HDR"/>
 					<Property key="Text_TextColour" value="1 0.9 0"/>
 				</Widget>
-				
-				<Widget type="Button" skin="CheckBox" position="40 260 112 24" name="MotionBlur">
-					<Property key="Widget_Caption" value="Motion Blur"/>
-					<Property key="Text_TextColour" value="1 0.9 0"/>
-				</Widget>
-				
 								
 				<Widget type="StaticText" skin="StaticText" position="68 155 100 24">
 					<Property key="Widget_Caption" value="Intensity"/>
@@ -280,11 +274,6 @@
 				<Widget type="StaticText" skin="StaticText" position="68 295 100 24">
 					<Property key="Widget_Caption" value="Intensity"/>
 					<Property key="Text_TextColour" value="0.7 1 0.5"/>
-				</Widget>
-				<Widget type="HScroll" skin="HScroll" position="248 295 320 18" name="BlurIntens">
-					<Property key="Scroll_MoveToClick" value="true"/>
-					<Property key="Scroll_Range" value="1000001"/>
-					<Property key="Scroll_MoveToClick" value="true"/>
 				</Widget>
 				
 				<Widget type="StaticText" skin="StaticText" position="32 488 136 24">
