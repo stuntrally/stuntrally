@@ -59,7 +59,7 @@ void App::CreateHUD()
 		ManualObject* m = Create2D("road_minimap_inv",1);
 		asp = float(mWindow->getWidth())/float(mWindow->getHeight());
 		m->setVisibilityFlags(2);
-		m->setRenderQueueGroup(RENDER_QUEUE_OVERLAY-1);
+		m->setRenderQueueGroup(RENDER_QUEUE_OVERLAY);
 		
 		///  change minimap image
 		MaterialPtr mm = MaterialManager::getSingleton().getByName("road_minimap_inv");
