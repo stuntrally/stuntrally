@@ -447,6 +447,13 @@ void BaseApp::windowResized(RenderWindow* rw)
 	const OIS::MouseState &ms = mMouse->getMouseState();
 	ms.width = width;
 	ms.height = height;
+	
+	// adjust camera asp. ratio
+	if (mCamera && mViewport)
+		mCamera->setAspectRatio( float(mWindow->getWidth()) / float(mWindow->getHeight()));
+		
+	// adjust hud
+	//SizeHUD();
 }
 
 void BaseApp::windowClosed(RenderWindow* rw)
