@@ -20,6 +20,7 @@ public:
 	static void Init(std::ostream & info_output, std::ostream & error_output);
 	static bool GetFolderIndex(std::string folderpath, std::list <std::string> & outputfolderlist, std::string extension=""); ///<optionally filter for the given extension
 
+	static std::string GetHomeDir() { return home_dir; }
 	static std::string GetDataPath() {               return game_data_dir; }
 	static std::string GetUserConfigDir() {          return user_config_dir;  }
 	static std::string GetGameConfigDir() {          return game_config_dir;  }

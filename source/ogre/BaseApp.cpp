@@ -2,6 +2,8 @@
 #include "BaseApp.h"
 #include "FollowCamera.h"
 
+#include "../vdrift/pathmanager.h"
+
 
 //  rendering
 //-------------------------------------------------------------------------------------
@@ -67,7 +69,7 @@ bool BaseApp::keyPressed( const OIS::KeyEvent &arg )
 		
 		//  Screen Shot  PtrScr -slow
 		case KC_SYSRQ:
-			mWindow->writeContentsToTimestampedFile("screens\\", ".jpg");	return false;
+			mWindow->writeContentsToTimestampedFile(PATHMANAGER::GetHomeDir() + "/", ".jpg");	return false;
 	}
 
 
