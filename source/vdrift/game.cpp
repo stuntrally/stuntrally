@@ -41,8 +41,8 @@ void GAME::Start(std::list <string> & args)
 	{
 		info_output << "Car control file " << PATHMANAGER::GetCarControlsFile() << " doesn't exist; using defaults" << endl;
 		carcontrols_local.second.Load(PATHMANAGER::GetDefaultCarControlsFile(), info_output, error_output);
-		//carcontrols_local.second.Save(PATHMANAGER::GetCarControlsFile(), info_output, error_output);
-	}else
+		carcontrols_local.second.Save(PATHMANAGER::GetCarControlsFile(), info_output, error_output);
+	} else
 		carcontrols_local.second.Load(PATHMANAGER::GetCarControlsFile(), info_output, error_output);
 
 	InitializeSound(); //if sound initialization fails, that's okay, it'll disable itself
