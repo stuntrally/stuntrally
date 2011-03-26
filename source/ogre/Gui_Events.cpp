@@ -341,28 +341,34 @@ void App::chkBltLines(WP wp){		ChkEv(bltLines);		}
 
 void App::comboResolution(SL)
 {
-	std::string modeString = mGUI->findWidget<ComboBox>("Resolution")->getItem(val);
-	pSet->windowx = Ogre::StringConverter::parseInt(Ogre::StringUtil::split(modeString, "x")[0]);
-	pSet->windowy = Ogre::StringConverter::parseInt(Ogre::StringUtil::split(modeString, "x")[1]);
-	
-	mWindow->resize(pSet->windowx, pSet->windowy);
-	
-	if (pSet->fullscreen)
-		mWindow->setFullscreen(true, pSet->windowx, pSet->windowy);
-	else
+	if (wp)
 	{
-	#ifdef _WIN32
-		int sx = GetSystemMetrics(SM_CXSCREEN), sy = GetSystemMetrics(SM_CYSCREEN);
-		int cx = max(0,(sx - pSet->windowx) / 2), cy = max(0,(sy - pSet->windowy) / 2);
-		mWindow->reposition(cx,cy);
-	#else
-		mWindow->reposition(0,0);  // center ?..
-	#endif
+		std::string modeString = mGUI->findWidget<ComboBox>("Resolution")->getItem(mGUI->findWidget<ComboBox>("Resolution")->getIndexSelected());
+		pSet->windowx = Ogre::StringConverter::parseInt(Ogre::StringUtil::split(modeString, "x")[0]);
+		pSet->windowy = Ogre::StringConverter::parseInt(Ogre::StringUtil::split(modeString, "x")[1]);
+		
+		mWindow->resize(pSet->windowx, pSet->windowy);
+		
+		if (pSet->fullscreen)
+			mWindow->setFullscreen(true, pSet->windowx, pSet->windowy);
+		else
+		{
+		#ifdef _WIN32
+			int sx = GetSystemMetrics(SM_CXSCREEN), sy = GetSystemMetrics(SM_CYSCREEN);
+			int cx = max(0,(sx - pSet->windowx) / 2), cy = max(0,(sy - pSet->windowy) / 2);
+			mWindow->reposition(cx,cy);
+		#else
+			mWindow->reposition(0,0);  // center ?..
+		#endif
+		}
 	}
 		
 	bSizeHUD = true;  // resize HUD
 	if (bnQuit)  // reposition Quit btn
-		bnQuit->setRealCoord(0.922,0,0.08,0.03);
+	{
+		//bnQuit->setRealCoord(0.922,0,0.08,0.03);
+		bnQuit->setCoord(pSet->windowx - 0.09*pSet->windowx, 0, 0.09*pSet->windowx, 0.03*pSet->windowy);
+	}
 }
 
 void App::chkVidBloom(WP wp){		ChkEv(bloom);		Ogre::CompositorManager::getSingleton().setCompositorEnabled(mViewport, "Bloom", pSet->bloom);		}

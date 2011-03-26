@@ -16,6 +16,8 @@ public:
 	BaseApp();	virtual ~BaseApp();
 	virtual void Run( bool showDialolg );
 	
+	bool bWindowResized;  bool bSizeHUD;
+	
 	class SETTINGS* pSet;
 
 	SceneNode* ndSky; //-

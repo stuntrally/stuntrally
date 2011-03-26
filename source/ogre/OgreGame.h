@@ -35,7 +35,7 @@ protected:
 	virtual bool frameEnd(Real time);
 	virtual bool keyPressed( const OIS::KeyEvent &arg );
 	//bool KeyPress(const OIS::KeyEvent &arg);
-	
+		
 	class BtOgre::DebugDrawer *dbgdraw;  /// blt dbg
 
 
@@ -70,7 +70,7 @@ protected:
 	OverlayElement* hudGear,*hudVel, *ovL[5],*ovR[5],*ovS[5],*ovU[5], *hudAbs,*hudTcs, *hudTimes,*hudCheck;
 	Overlay* ovGear,*ovVel, *ovAbsTcs,*ovCarDbg,*ovCarDbgTxt,  *ovCam, *ovTimes;
 
-	String GetTimeString(float time) const;  bool bSizeHUD;
+	String GetTimeString(float time) const;
 	void CreateHUD(), SizeHUD(bool full), ShowHUD(), UpdateHUD(class CAR* pCar, float time);
 
 
@@ -141,7 +141,7 @@ protected:
 
 	//  Gui events
 	typedef WidgetPtr WP;
-	#define SL  WP, size_t val
+	#define SL  WP wp, size_t val
 	#define SLV(name)  void sl##name(SL);  StaticTextPtr val##name;
 
 	//  sliders
