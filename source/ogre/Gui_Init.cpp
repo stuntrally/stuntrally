@@ -196,7 +196,7 @@ void App::InitGui()
 		// set current mode
 		std::string modeString = Ogre::StringConverter::toString(mWindow->getWidth()) + " x " + Ogre::StringConverter::toString(mWindow->getHeight());
 		Ogre::StringUtil::trim(modeString);
-		cbResolution->setItemSelect(cbResolution->findItemIndexWith(modeString));
+		cbResolution->setIndexSelected(cbResolution->findItemIndexWith(modeString));
 	}
 	
 	
