@@ -171,9 +171,6 @@ void App::InitGui()
 	Chk("FullScreen", chkVidFullscr, fullscreen);
 	Chk("VSync", chkVidVSync, vsync);
 
-	//Ogre::Root::getSingleton().getRenderSystem()->
-	//<Widget type="ComboBox" skin="ComboBox" position="150 50 136 24" name="Resolution">
-				
 	//button_ramp, speed_sens..
 
 	
@@ -182,7 +179,7 @@ void App::InitGui()
 	// selection changed event
 	if (cbResolution)
 	{
-		 cbResolution->eventComboChangePosition = newDelegate(this, &App::comboResolution);
+		cbResolution->eventComboChangePosition = newDelegate(this, &App::comboResolution);
 		// populate video resolution list
 		const Ogre::StringVector& videoModes = Ogre::Root::getSingleton().getRenderSystem()->getConfigOptions()["Video Mode"].possibleValues;
 		for (int i=0; i<videoModes.size(); i++)
@@ -190,6 +187,12 @@ void App::InitGui()
 			std::string mode = videoModes[i];
 			Ogre::StringUtil::trim(mode);
 			cbResolution->addItem(mode);
+
+			/*Ogre::StringVector vmopts = Ogre::StringUtil::split(mode, " x");
+			unsigned int w = Ogre::StringConverter::parseUnsignedInt(vmopts[0]);
+			unsigned int h = Ogre::StringConverter::parseUnsignedInt(vmopts[1]);
+			//cmb->addItem(*vidMode);
+			cmb->addItem(toStr(w) + " x " + toStr(h));/**/
 		}
 		// set current mode
 		std::string modeString = Ogre::StringConverter::toString(mWindow->getWidth()) + " x " + Ogre::StringConverter::toString(mWindow->getHeight());

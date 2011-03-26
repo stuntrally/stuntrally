@@ -2,7 +2,12 @@
 #define _SplineRoad_h_
 
 #include "SplineBase.h"
-#include "btBulletCollisionCommon.h"
+
+#if defined(_WIN32) && defined(ROAD_EDITOR)
+	// win doesnt need bullet somehow
+#else
+	#include "btBulletCollisionCommon.h"
+#endif
 
 #define  LODs  4
 #define  MTRs  4

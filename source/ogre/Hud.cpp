@@ -20,7 +20,7 @@ void App::SizeHUD(bool full)
 
 	if (full &&	nrpmB && nvelBk && nvelBm && nrpm &&nvel)
 	{
-		Vector3 sc(fHudScale,fHudScale,1);
+		Vector3 sc(fHudScale,fHudScale*asp,1);
 		nrpmB->setScale(sc);	nvelBk->setScale(sc);  nvelBm->setScale(sc);
 		nrpm->setScale(sc); 	nvel->setScale(sc);
 
@@ -45,6 +45,7 @@ void App::SizeHUD(bool full)
 void App::CreateHUD()
 {	
 	//  minimap from road img
+	asp = 1.f;
 	if (terrain)
 	{
 		ofsX=0; ofsY=0;
@@ -57,7 +58,7 @@ void App::CreateHUD()
 
 		asp = 1.f;  //_temp
 		ManualObject* m = Create2D("road_minimap_inv",1);
-		asp = float(mWindow->getWidth())/float(mWindow->getHeight());
+		//asp = float(mWindow->getWidth())/float(mWindow->getHeight());
 		m->setVisibilityFlags(2);
 		m->setRenderQueueGroup(RENDER_QUEUE_OVERLAY);
 		
@@ -144,7 +145,6 @@ void App::CreateHUD()
 
 	ShowHUD();  //_
 	bSizeHUD = true;
-	//SizeHUD(true);
 }
 
 

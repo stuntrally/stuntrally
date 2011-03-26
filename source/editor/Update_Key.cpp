@@ -145,7 +145,10 @@ bool App::KeyPress(const CmdKey &arg)
 		}	break;
 
 		case KC_ESCAPE: //  quit
-			if (pSet->escquit)	mShutDown = true;  return true;
+			if (pSet->escquit)
+			{	inputThreadRunning = false;
+				mShutDown = true;
+			}	return true;
 
 		case KC_F1:
 		case KC_GRAVE:	//  Gui mode Options

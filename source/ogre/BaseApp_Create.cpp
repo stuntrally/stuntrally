@@ -261,14 +261,8 @@ bool BaseApp::configure()
 	
 	Ogre::NameValuePairList settings;
 	settings.insert(std::make_pair("title", "Stunt Rally"));
-	settings.insert(std::make_pair("FSAA", Ogre::StringConverter::toString(pSet->fsaa)));
-	// ogre only understands the strings "true" or "false"
-	std::string vsync;
-	if (pSet->vsync)
-		vsync = "true";
-	else
-		vsync = "false";
-	settings.insert(std::make_pair("vsync", vsync));
+	settings.insert(std::make_pair("FSAA", toStr(pSet->fsaa)));
+	settings.insert(std::make_pair("vsync", pSet->vsync ? "true" : "false"));
 
 	mWindow = mRoot->createRenderWindow("Stunt Rally", pSet->windowx, pSet->windowy, pSet->fullscreen, &settings);
 	return true;

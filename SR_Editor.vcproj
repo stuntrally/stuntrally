@@ -207,6 +207,14 @@
 				>
 			</File>
 			<File
+				RelativePath=".\source\vdrift\pathmanager.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\source\vdrift\pathmanager.h"
+				>
+			</File>
+			<File
 				RelativePath=".\Source\ogre\QTimer.cpp"
 				>
 			</File>

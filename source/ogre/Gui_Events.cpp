@@ -349,6 +349,12 @@ void App::comboResolution(SL)
 	
 	if (pSet->fullscreen)
 		mWindow->setFullscreen(true, pSet->windowx, pSet->windowy);
+	else
+		mWindow->reposition(0,0);  // center ?..
+		
+	bSizeHUD = true;  // resize HUD
+	if (bnQuit)  // reposition Quit btn
+		bnQuit->setRealCoord(0.9,0,0.1,0.02);
 }
 
 void App::chkVidBloom(WP wp){		ChkEv(bloom);		Ogre::CompositorManager::getSingleton().setCompositorEnabled(mViewport, "Bloom", pSet->bloom);		}
@@ -381,7 +387,6 @@ void App::slBloomOrig(SL)
 	//UpdBloomVals();
 }*/
 
-//setCompositorEnabled(mViewport, "HDR" | "Bloom" | "Motion Blur", true | false );
 void App::UpdBloomVals()
 {
 	//if (!pSet->bloom)  return;
