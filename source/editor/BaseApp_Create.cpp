@@ -1,8 +1,8 @@
+#include <boost/thread.hpp>
 #include "stdafx.h"
 #include "BaseApp.h"
 #include "OgreApp.h" //
 #include "../vdrift/pathmanager.h"
-#include <boost/thread.hpp>
 
 /*
  * old - win only
