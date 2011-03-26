@@ -26,8 +26,10 @@ void TimThread(BaseApp* pA)
 	while (pA->inputThreadRunning)
 	{
 		if (pA->timer.update())
+		{
 			pA->OnTimer(pA->timer.dt);
-		boost::this_thread::sleep(boost::posix_time::seconds(pA->timer.iv));
+		}
+		boost::this_thread::sleep(boost::posix_time::milliseconds(pA->timer.iv*1000));
 	}
 }
 
@@ -98,7 +100,7 @@ void BaseApp::createFrameListener()
 	mRoot->addFrameListener(this);
 
 	///  timer thread - input, camera
-	/**/timer.iv = 0.001;  ///par 
+	/**/timer.iv = 0.005;  ///par 
 	/*old win thread*///hpr = CreateThread(NULL,0,TimThread,(LPVOID)this,0,NULL);
 	boost::thread t(TimThread, this);
 
