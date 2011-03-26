@@ -22,9 +22,10 @@ public:
 
 	static std::string GetHomeDir() { return home_dir; }
 	static std::string GetDataPath() {               return game_data_dir; }
+	static std::string GetUserDataDir() {           return user_data_dir; }
 	static std::string GetUserConfigDir() {          return user_config_dir;  }
 	static std::string GetGameConfigDir() {          return game_config_dir;  }
-	//static std::string GetTrackRecordsPath() const { return user_config_dir  + "/records" + profile_suffix;  }
+	static std::string GetTrackRecordsPath() {       return user_data_dir  + "/records";  }
 	static std::string GetSettingsFile() {           return user_config_dir + "/game.cfg"; }
 	static std::string GetCacheDir() {               return cache_dir; }
 	static std::string GetLogFile() {                return user_config_dir + "/log.txt"; }
@@ -43,6 +44,7 @@ public:
 		else return false;
 	}
 
+	static bool CreateDirectory(const std::string& path);
 
 	// FIXME: Do we intend to use profiles?
 	/// Only call this before Init()

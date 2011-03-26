@@ -84,15 +84,10 @@ void PATHMANAGER::Init(std::ostream & info_output, std::ostream & error_output)
 		}
 	}
 	#endif
-
 	// Create user's config dir
-	try { fs::create_directory(user_config_dir); }
-	catch (...) {
-		std::cerr << "Could not create configuration directory " << user_config_dir << std::endl;
-	}
+	CreateDirectory(user_config_dir);
 
 	// Find user's data dir (for additional data)
-	// Not used currently
 	#ifdef _WIN32
 	user_data_dir = user_config_dir;  // APPDATA/stuntrally
 	#else
@@ -102,6 +97,9 @@ void PATHMANAGER::Init(std::ostream & info_output, std::ostream & error_output)
 		user_data_dir = (xdg_data_home ? xdg_data_home / shortDir : fs::path(home_dir) / ".local" / shareDir).string();
 	}
 	#endif
+	// Create user's data and track record dir
+	CreateDirectory(user_data_dir);
+	CreateDirectory(user_data_dir + "/records");
 
 	// Find game data dir and defaults config dir
 	char *datadir = getenv("STUNTRALLY_DATA_ROOT");
@@ -152,20 +150,27 @@ void PATHMANAGER::Init(std::ostream & info_output, std::ostream & error_output)
 	char const* xdg_cache_home = getenv("XDG_CACHE_HOME");
 	cache_dir = (xdg_cache_home ? xdg_cache_home / shortDir : fs::path(home_dir) / ".cache" / shortDir).string();
 	#endif
-
 	// Create cache dir
-	try { fs::create_directory(cache_dir); }
-	catch (...) {
-		std::cerr << "Could not create cache directory " << cache_dir << std::endl;
-	}
+	CreateDirectory(cache_dir);
 
 	// Print diagnostic info
 	info_output << "Home directory: " << home_dir << std::endl;
-	info_output << "User config directory: " << GetUserConfigDir() << std::endl;
 	info_output << "Config defaults directory: " << GetGameConfigDir() << std::endl;
+	info_output << "User config directory: " << GetUserConfigDir() << std::endl;
 	info_output << "Data directory: " << GetDataPath() << std::endl;
+	info_output << "User data directory: " << GetUserDataDir() << std::endl;
 	info_output << "Cache directory: " << GetCacheDir() << std::endl;
 	info_output << "Log file: " << GetLogFile() << std::endl;
+}
+
+bool PATHMANAGER::CreateDirectory(const std::string& path)
+{
+	try { fs::create_directories(path); }
+	catch (...) {
+		std::cerr << "Could not create directory " << path << std::endl;
+		return false;
+	}
+	return true;
 }
 
 // TODO: This is probably far easier and more elegant to implement with boost::filesystem

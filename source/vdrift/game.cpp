@@ -705,8 +705,7 @@ bool GAME::NewGame(bool playreplay, bool addopponents, int num_laps)
 	float pretime = 0.0f;
 	if (num_laps > 0)
         pretime = 3.0f;
-	//if (!timer.Load(PATHMANAGER::GetTrackRecordsPath()+"/"+trackname+".txt", pretime, error_output))
-	if (!timer.Load(PATHMANAGER::GetTrackPath()+"/"+trackname+"/records.txt", pretime, error_output))
+	if (!timer.Load(PATHMANAGER::GetTrackRecordsPath()+"/"+trackname+".txt", pretime, error_output))
 		return false;
 
 	//add cars to the timer system

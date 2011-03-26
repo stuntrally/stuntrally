@@ -296,7 +296,7 @@ void App::ReadTrkStats()
 
 	SplineRoad rd(pGame);  rd.LoadFile(sRd,false);  // load
 	Scene sc;  sc.LoadXml(sSc);  // fails to defaults
-	TIMER tim;  tim.Load(sTrk + sListTrack + "/records.txt", 0.f, pGame->error_output);
+	TIMER tim;  tim.Load(PATHMANAGER::GetTrackRecordsPath()+"/"+sListTrack+".txt", 0.f, pGame->error_output);
 	tim.AddCar(sListCar);  tim.SetPlayerCarID(0);
 	UpdGuiRdStats(&rd,sc, tim.GetBestLap(pSet->trackreverse));
 }
