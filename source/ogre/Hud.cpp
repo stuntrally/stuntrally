@@ -20,8 +20,8 @@ void App::SizeHUD(bool full)
 
 	if (full &&	nrpmB && nvelBk && nvelBm && nrpm &&nvel)
 	{
-		Vector3 sc(fHudScale,fHudScale*asp,1);
-		nrpmB->setScale(sc);	nvelBk->setScale(sc);  nvelBm->setScale(sc);
+		Vector3 sca(fHudScale,fHudScale*asp,1), sc(fHudScale,fHudScale,1);
+		nrpmB->setScale(sca);	nvelBk->setScale(sca);  nvelBm->setScale(sca);
 		nrpm->setScale(sc); 	nvel->setScale(sc);
 
 		Vector3 vr(xcRpm,ycRpm,0), vv(xcVel,ycVel,0);
@@ -145,6 +145,7 @@ void App::CreateHUD()
 
 	ShowHUD();  //_
 	bSizeHUD = true;
+	//SizeHUD(true);
 }
 
 

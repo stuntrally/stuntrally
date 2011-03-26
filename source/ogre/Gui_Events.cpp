@@ -350,18 +350,28 @@ void App::comboResolution(SL)
 	if (pSet->fullscreen)
 		mWindow->setFullscreen(true, pSet->windowx, pSet->windowy);
 	else
+	{
+	#ifdef _WIN32
+		int sx = GetSystemMetrics(SM_CXSCREEN), sy = GetSystemMetrics(SM_CYSCREEN);
+		int cx = max(0,(sx - pSet->windowx) / 2), cy = max(0,(sy - pSet->windowy) / 2);
+		mWindow->reposition(cx,cy);
+	#else
 		mWindow->reposition(0,0);  // center ?..
+	#endif
+	}
 		
 	bSizeHUD = true;  // resize HUD
 	if (bnQuit)  // reposition Quit btn
-		bnQuit->setRealCoord(0.9,0,0.1,0.02);
+		bnQuit->setRealCoord(0.922,0,0.08,0.03);
 }
 
 void App::chkVidBloom(WP wp){		ChkEv(bloom);		Ogre::CompositorManager::getSingleton().setCompositorEnabled(mViewport, "Bloom", pSet->bloom);		}
 void App::chkVidHDR(WP wp){			ChkEv(hdr);			Ogre::CompositorManager::getSingleton().setCompositorEnabled(mViewport, "HDR", pSet->hdr);	}
 //void App::chkVidBlur(WP wp){		ChkEv(motionblur);	Ogre::CompositorManager::getSingleton().setCompositorEnabled(mViewport, "Motion Blur", pSet->motionblur);	}
 
-void App::chkVidFullscr(WP wp){		ChkEv(fullscreen);	mWindow->setFullscreen(pSet->fullscreen, pSet->windowx, pSet->windowy); mWindow->resize(pSet->windowx, pSet->windowy); }
+void App::chkVidFullscr(WP wp){		ChkEv(fullscreen);
+	mWindow->setFullscreen(pSet->fullscreen, pSet->windowx, pSet->windowy); mWindow->resize(pSet->windowx, pSet->windowy);
+}
 void App::chkVidVSync(WP wp)
 {		
 	ChkEv(vsync); 

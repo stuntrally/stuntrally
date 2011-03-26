@@ -186,13 +186,12 @@ void App::InitGui()
 		{
 			std::string mode = videoModes[i];
 			Ogre::StringUtil::trim(mode);
-			cbResolution->addItem(mode);
+			//cbResolution->addItem(mode);
 
-			/*Ogre::StringVector vmopts = Ogre::StringUtil::split(mode, " x");
+			Ogre::StringVector vmopts = Ogre::StringUtil::split(mode, " x");  // only resolution
 			unsigned int w = Ogre::StringConverter::parseUnsignedInt(vmopts[0]);
 			unsigned int h = Ogre::StringConverter::parseUnsignedInt(vmopts[1]);
-			//cmb->addItem(*vidMode);
-			cmb->addItem(toStr(w) + " x " + toStr(h));/**/
+			cbResolution->addItem(toStr(w) + " x " + toStr(h));
 		}
 		// set current mode
 		std::string modeString = Ogre::StringConverter::toString(mWindow->getWidth()) + " x " + Ogre::StringConverter::toString(mWindow->getHeight());
