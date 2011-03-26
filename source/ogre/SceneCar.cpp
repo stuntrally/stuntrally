@@ -9,7 +9,6 @@
 #include "../bullet/BulletCollision/CollisionShapes/btHeightfieldTerrainShape.h"
 
 
-
 //  Bullet Terrain
 //---------------------------------------------------------------------------------------------------------------
 
@@ -73,7 +72,7 @@ void App::CarChangeClr()
 		da = (uchar*)pba.data;  incRowA = pba.rowPitch;
 		inc1A = PixelUtil::getNumElemBytes(pba.format);
 	}
-	String svName = resCar + "/body_dyn.png";  // dynamic
+	String svName = PATHMANAGER::GetCacheDir() + "/body_dyn.png";  // dynamic
 	Image im;  try{
 		im.load("body00_red.png","General");  // original red diffuse
 	}catch(...){  return;  }
@@ -125,6 +124,7 @@ void App::CarChangeClr()
 void App::CreateCar()
 {
 	// recreate, destroy node, ent ...
+	mRoot->removeResourceLocation(PATHMANAGER::GetCacheDir());
 	if (resCar != "")  mRoot->removeResourceLocation(resCar/*, "DynRes"/**/);
 		resCar = PATHMANAGER::GetCarPath() + "/" + pSet->car + "/textures";
 	if (resTrk != "")  mRoot->removeResourceLocation(resTrk);
@@ -134,6 +134,7 @@ void App::CreateCar()
 		
 	if (pGame->cars.size() == 0)  return;
 
+	mRoot->addResourceLocation(PATHMANAGER::GetCacheDir(), "FileSystem");
 	mRoot->addResourceLocation(resCar, "FileSystem"/*, "DynRes"/**/);
 	mRoot->addResourceLocation(resTrk, "FileSystem");
 	mRoot->addResourceLocation(resDrv, "FileSystem");

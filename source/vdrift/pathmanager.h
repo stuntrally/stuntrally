@@ -22,7 +22,7 @@ public:
 
 	static std::string GetHomeDir() { return home_dir; }
 	static std::string GetDataPath() {               return game_data_dir; }
-	static std::string GetUserDataDir() {           return user_data_dir; }
+	static std::string GetUserDataDir() {            return user_data_dir; }
 	static std::string GetUserConfigDir() {          return user_config_dir;  }
 	static std::string GetGameConfigDir() {          return game_config_dir;  }
 	static std::string GetTrackRecordsPath() {       return user_data_dir  + "/records";  }
