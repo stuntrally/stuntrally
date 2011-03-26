@@ -233,7 +233,7 @@ void App::processMouse()  //! from Thread, cam vars only
 	double m_interval = timer.iv;
 	static double m_sumTime = 0.0;
 	m_sumTime += mDTime;  int num = 0;
-	while (m_sumTime > m_interval)
+	//while (m_sumTime > m_interval)
 	{
 		num++;
 		m_sumTime -= m_interval;
@@ -248,6 +248,7 @@ void App::processMouse()  //! from Thread, cam vars only
 			vInpC = Vector3(mx, my, 0)*sens;
 		vInp = Vector3(mx, my, 0)*sens;  mx = 0;  my = 0;
 		vNew += (vInp-vNew) * fSmooth;
+		//vNew = vInp;
 		
 		if (mbMiddle){	mTrans.z += vInpC.y * 1.6f;  }  //zoom
 		if (mbRight){	mTrans.x += vInpC.x;  mTrans.y -= vInpC.y;  }  //pan
@@ -268,8 +269,11 @@ void App::processMouse()  //! from Thread, cam vars only
 			Vector3 inMove = moveMul * fDT * (fMove * mTrans);
 
 			sYaw += (inYaw - sYaw) * fSmooth;
+			//sYaw = inYaw;
 			sPth += (inPth - sPth) * fSmooth;
+			//sPth = inPth;
 			sMove += (inMove - sMove) * fSmooth;
+			//sMove = inMove;
 
 			//if (abs(sYaw.valueRadians()) > 0.000001f)
 				mCameraT->yaw( sYaw );
@@ -279,7 +283,7 @@ void App::processMouse()  //! from Thread, cam vars only
 				mCameraT->moveRelative( sMove );
 		}
 	}
-	//-Log("dt: " + toStr((float)mDTime) + "  n.iv's: " + toStr(num));
+	//Log("dt: " + toStr((float)mDTime) + "  n.iv's: " + toStr(num));
 }
 
 void App::editMouse()
@@ -471,5 +475,6 @@ bool App::frameEnded(const FrameEvent& evt)
 					rt[i].rndTex->update();
 		}	ri++;
 	}
+	//Log(Ogre::StringConverter::toString(evt.timeSinceLastFrame));
 	return true;
 }
