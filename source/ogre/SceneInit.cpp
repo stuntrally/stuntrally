@@ -162,7 +162,7 @@ void App::NewGameDoLoad()
 	{
 		case LOADING_STATE_CLEANUP:
 			LoadCleanUp();
-			perc = 5;
+			perc = 3;
 			break;
 		case LOADING_STATE_GAME:
 			LoadGame();
@@ -170,11 +170,11 @@ void App::NewGameDoLoad()
 			break;
 		case LOADING_STATE_SCENE:
 			LoadScene();
-			perc = 30;
+			perc = 20;
 			break;
 		case LOADING_STATE_CAR:
 			LoadCar();
-			perc = 50;
+			perc = 45;
 			break;
 		case LOADING_STATE_TER:
 			LoadTerrain();
@@ -182,11 +182,11 @@ void App::NewGameDoLoad()
 			break;
 		case LOADING_STATE_TRACK:
 			LoadTrack();
-			perc = 80;
+			perc = 75;
 			break;
 		case LOADING_STATE_MISC:
 			LoadMisc();
-			perc = 100;
+			perc = 80;
 			break;
 	}
 
