@@ -47,9 +47,7 @@ void LoadingBar::start( RenderWindow* window, 		unsigned short numGroupsInit,
 		{
 			// no load screens found
 			// remove image
-			MaterialPtr mat = MaterialManager::getSingleton().getByName("Core/BackgroundMat", "Loading");
-			if (mat->getTechnique(0)->getPass(0)->getNumTextureUnitStates() > 0)
-				mat->getTechnique(0)->getPass(0)->removeTextureUnitState(0);
+			mLoadOverlay->remove2D(mLoadOverlay->getChild("Core/LoadPanel/Background"));
 			return;
 		}
 		// init random seed
@@ -61,11 +59,8 @@ void LoadingBar::start( RenderWindow* window, 		unsigned short numGroupsInit,
 		mat->getTechnique(0)->getPass(0)->getTextureUnitState(0)->setTextureName("loading" + Ogre::StringConverter::toString(imgNumber+1) + ".png");
 	}
 	else
-	{
-		// remove image
-		MaterialPtr mat = MaterialManager::getSingleton().getByName("Core/BackgroundMat", "Loading");
-		if (mat->getTechnique(0)->getPass(0)->getNumTextureUnitStates() > 0)
-			mat->getTechnique(0)->getPass(0)->removeTextureUnitState(0);
+	{			
+		mLoadOverlay->remove2D(mLoadOverlay->getChild("Core/LoadPanel/Background"));
 	}
 }
 
