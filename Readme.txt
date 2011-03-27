@@ -60,7 +60,7 @@ can be seen in Options tab [Input].
 Change cameras with C/X or PgDown/PgUp (with shift for main cameras only).
 Cameras can be adjusted in game, by mouse - move mouse to see actions.
 
-All settings and logs are saved user folder (check Wiki page [Paths]).
+All settings and logs are saved to user folder (check Wiki page [Paths]).
 If you have problems running, read Wiki page [Running].
 If it doesn't help, check [Issues] on project page (closed too).
 
@@ -97,11 +97,11 @@ OGRE + Dependencies, with plugins:
 MyGUI3.0
 	MyGUIEngine, MyGUI.OgrePlatform
 
--- and for VDrift:
+-- And for VDrift:
 SDL-1.2.14
 libvorbis-1.2.3, libogg-1.1.4
 
--- These are included in Source (and compile with project):
+-- These are included in Source (and compiled with project):
 PagedGeometry 1.1.0
 BtOgre
 Bullet 2.76
