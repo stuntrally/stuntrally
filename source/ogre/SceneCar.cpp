@@ -170,15 +170,14 @@ void App::CreateCar()
 		Entity* eCar = mSceneMgr->createEntity("Car", "body.mesh");
 		std::cout<<"created entity"<<std::endl;
 		eCar->setVisibilityFlags(2);  		std::cout<<"set visibility flags"<<std::endl;
-ncart->attachObject(eCar); 		std::cout<<"created node"<<std::endl;
-
+		ncart->attachObject(eCar); 		std::cout<<"created node"<<std::endl;
 	}else{
 		std::cout<<"vdrift car"<<std::endl;
 		ManualObject* mCar   = CreateModel(sMtr[Mtr_CarBody],	 &pCar->bodymodel.mesh);
-				std::cout<<"created manualobject"<<std::endl;
+		std::cout<<"created manualobject"<<std::endl;
 		if (mCar){    ncart->attachObject(mCar);  mCar->setVisibilityFlags(2);  }  // 2 not rendered in reflections
 	}
-			std::cout<<"Created car model"<<std::endl;
+		std::cout<<"Created car model"<<std::endl;
 	vPofs = Vector3(pCar->vInteriorOffset[0],pCar->vInteriorOffset[1],pCar->vInteriorOffset[2]);  //x+ back y+ down z+ right
 	ManualObject* mInter = CreateModel(sMtr[Mtr_CarInterior],&pCar->interiormodel.mesh);
 	vPofs = Vector3(0,0,0);
