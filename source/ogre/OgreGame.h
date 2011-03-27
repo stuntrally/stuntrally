@@ -27,17 +27,6 @@ public:
 	Scene sc;  /// scene.xml
 	Light* sun;  void UpdFog(bool bForce=false), UpdSun();
 
-	/*enum LoadingState
-	{
-		LOADING_STATE_CLEANUP,
-		LOADING_STATE_GAME,
-		LOADING_STATE_SCENE,
-		LOADING_STATE_CAR,
-		LOADING_STATE_TERRAIN,
-		LOADING_STATE_TRACK,
-		LOADING_STATE_MISC
-	};*/
-
 protected:
 	virtual void createScene();
 	virtual void destroyScene();

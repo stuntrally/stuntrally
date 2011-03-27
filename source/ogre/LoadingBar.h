@@ -1,6 +1,8 @@
 #ifndef _LoadBar_h_
 #define _LoadBar_h_
 #include <Ogre.h>
+// for random
+#include <time.h>
 using namespace Ogre;
 
 
@@ -26,122 +28,44 @@ public:
 	OverlayElement* mLoadingBarElement;
 	OverlayElement* mLoadingDescriptionElement;
 	OverlayElement* mLoadingCommentElement;
+	
+	bool bBackgroundImage;
 
 	Real mProgressBarMaxSize;
 
 	/** Show the loading bar and start listening.
 	*/
-	virtual void start( RenderWindow* window, 
-		unsigned short numGroupsInit = 1, 
+	void start( RenderWindow* window, 		unsigned short numGroupsInit = 1, 
 		unsigned short numGroupsLoad = 1, 
-		Real initProportion = 0.0f )
-	{
-		mWindow = window;
-		mNumGroupsInit = numGroupsInit;
-		mNumGroupsLoad = numGroupsLoad;
-		mInitProportion = initProportion;
-
-		ResourceGroupManager::getSingleton().initialiseResourceGroup("Loading");
-
-		OverlayManager& omgr = OverlayManager::getSingleton();
-		mLoadOverlay = (Overlay*)omgr.getByName("Core/LoadOverlay");
-		if (!mLoadOverlay)
-		{
-			OGRE_EXCEPT(Ogre::Exception::ERR_ITEM_NOT_FOUND, 
-				"Cannot find loading overlay", "ExampleLoadingBar::start");
-		}
-		mLoadOverlay->show();
-
-		// Save links to the bar and to the loading text, for updates as we go
-		mLoadingBarElement = omgr.getOverlayElement("Core/LoadPanel/Bar/Progress");
-		mLoadingCommentElement = omgr.getOverlayElement("Core/LoadPanel/Comment");
-		mLoadingDescriptionElement = omgr.getOverlayElement("Core/LoadPanel/Description");
-
-		OverlayElement* barContainer = omgr.getOverlayElement("Core/LoadPanel/Bar");
-		mProgressBarMaxSize = barContainer->getWidth();
-		mLoadingBarElement->setWidth(0);
-
-		// self is listener
-		ResourceGroupManager::getSingleton().addResourceGroupListener(this);
-	}
-
+		Real initProportion = 0.0f );
 
 	/** Hide the loading bar and stop listening. 
 	*/
-	virtual void finish()
-	{
-		// hide loading screen
-		mLoadOverlay->hide();
-
-		// Unregister listener
-		ResourceGroupManager::getSingleton().removeResourceGroupListener(this);
-	}
-
+	void finish();
 
 	// ResourceGroupListener callbacks
-	void resourceGroupScriptingStarted(const String& groupName, size_t scriptCount)
-	{
-		assert( mNumGroupsInit > 0 && "You were not going to init ");
-		// Lets assume script loading is 70%
-		mProgressBarInc = mProgressBarMaxSize * mInitProportion / (Real)scriptCount;
-		mProgressBarInc /= mNumGroupsInit;
-		//-mLoadingDescriptionElement->setCaption("Parsing scripts...");
-		mWindow->update();
-	}
+	void resourceGroupScriptingStarted(const String& groupName, size_t scriptCount);
 
-	void resourceGroupScriptingEnded(const String& groupName)
-	{
-	}
+	void resourceGroupScriptingEnded(const String& groupName);
 
-	void scriptParseStarted(const String& scriptName, bool& skipThisScript)
-	{
-		mLoadingCommentElement->setCaption(scriptName);
-		mWindow->update();
-	}
+	void scriptParseStarted(const String& scriptName, bool& skipThisScript);
 
-	void scriptParseEnded(const String& scriptName, bool skipped)
-	{
-		mLoadingBarElement->setWidth(mLoadingBarElement->getWidth() + mProgressBarInc);
-		mWindow->update();
-	}
-
+	void scriptParseEnded(const String& scriptName, bool skipped);
+	
 	//  resourceGroup
-	void resourceGroupLoadStarted(const String& groupName, size_t resourceCount)
-	{
-		assert( mNumGroupsLoad > 0 && "You were not going to load ");
-		mProgressBarInc = mProgressBarMaxSize * (1-mInitProportion) / (Real)resourceCount;
-		mProgressBarInc /= mNumGroupsLoad;
-		mLoadingDescriptionElement->setCaption("Loading resources...");
-		mWindow->update();
-	}
+	void resourceGroupLoadStarted(const String& groupName, size_t resourceCount);
 
-	void resourceGroupLoadEnded(const String& groupName)
-	{
-	}
+	void resourceGroupLoadEnded(const String& groupName);
 
 	//  resourceLoad
-	void resourceLoadStarted(const ResourcePtr& resource)
-	{
-		mLoadingCommentElement->setCaption(resource->getName());
-		mWindow->update();
-	}
+	void resourceLoadStarted(const ResourcePtr& resource);
 
-	void resourceLoadEnded()
-	{
-	}
+	void resourceLoadEnded();
 
 	//  worldGeometry
-	void worldGeometryStageStarted(const String& description)
-	{
-		mLoadingCommentElement->setCaption(description);
-		mWindow->update();
-	}
+	void worldGeometryStageStarted(const String& description);
 
-	void worldGeometryStageEnded()
-	{
-		mLoadingBarElement->setWidth(mLoadingBarElement->getWidth() + mProgressBarInc);
-		mWindow->update();
-	}
+	void worldGeometryStageEnded();
 
 };
 
