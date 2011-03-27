@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "OgreApp.h"
 #include "../road/Road.h"
+#include "../vdrift/pathmanager.h"
 
 
 //  Update  input, info
@@ -156,7 +157,7 @@ bool App::KeyPress(const CmdKey &arg)
 			bGuiFocus = !bGuiFocus;  UpdVisGui();  }  return true;
 
 		case KC_SYSRQ:
-			mWindow->writeContentsToTimestampedFile("screens\\", ".jpg");
+			mWindow->writeContentsToTimestampedFile(PATHMANAGER::GetScreenShotDir() + "/", ".jpg");
 			return true;
 
 		//  save, reload, update
