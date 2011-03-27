@@ -82,7 +82,7 @@ protected:
 	Overlay* ovGear,*ovVel, *ovAbsTcs,*ovCarDbg,*ovCarDbgTxt,  *ovCam, *ovTimes;
 
 	String GetTimeString(float time) const;
-	void CreateHUD(), SizeHUD(bool full), ShowHUD(), UpdateHUD(class CAR* pCar, float time);
+	void CreateHUD(), SizeHUD(bool full), ShowHUD(bool hideAll=false), UpdateHUD(class CAR* pCar, float time);
 
 
 	//  create  . . . . . . . . . . . . . . . . . . . . . . . . 

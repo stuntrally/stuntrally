@@ -149,27 +149,47 @@ void App::CreateHUD()
 }
 
 
-void App::ShowHUD()
+void App::ShowHUD(bool hideAll)
 {
-	bool show = pSet->show_gauges;
-	if (nrpmB)  nrpmB->setVisible(show);
-	if (nvelBk)	nvelBk->setVisible(show && !pSet->show_mph);
-	if (nvelBm)	nvelBm->setVisible(show && pSet->show_mph);
-	if (nrpm)	nrpm->setVisible(show);
-	if (nvel)	nvel->setVisible(show);
-	if (ovGear)	{  if (1||show)  ovGear->show();  else  ovGear->hide();  }
-	if (ovVel)	{  if (1||show)  ovVel->show();   else  ovVel->hide();   }
-	if (ovAbsTcs){ if (show)  ovAbsTcs->show();   else  ovAbsTcs->hide(); }
+	if (hideAll)
+	{
+		if (nrpmB)  nrpmB->setVisible(false);
+		if (nvelBk)	nvelBk->setVisible(false);
+		if (nvelBm)	nvelBm->setVisible(false);
+		if (nrpm)	nrpm->setVisible(false);
+		if (nvel)	nvel->setVisible(false);
+		if (ovGear)	{ ovGear->hide();  }
+		if (ovVel)	{ ovVel->hide();   }
+		if (ovAbsTcs){ ovAbsTcs->hide(); }
 
-	show = pSet->car_dbgbars;
-	if (ovCarDbg){  if (show)  ovCarDbg->show();  else  ovCarDbg->hide();   }
-	show = pSet->car_dbgtxt;
-	if (ovCarDbgTxt){  if (show)  ovCarDbgTxt->show();  else  ovCarDbgTxt->hide();   }
-	//for (int i=0; i<5; ++i)
-	//{	if (ovU[i])  if (show)  ovU[i]->show();  else  ovU[i]->hide();  }
+		if (ovCarDbg){ ovCarDbg->hide();   }
+		if (ovCarDbgTxt){ ovCarDbgTxt->hide();   }
 
-	if (ovCam)	{  if (pSet->show_cam)    ovCam->show();    else  ovCam->hide();     }
-	if (ovTimes){  if (pSet->show_times)  ovTimes->show();  else  ovTimes->hide();   }
+		if (ovCam)	{ ovCam->hide();     }
+		if (ovTimes){ ovTimes->hide();   }
+	}
+	else
+	{
+		bool show = pSet->show_gauges;
+		if (nrpmB)  nrpmB->setVisible(show);
+		if (nvelBk)	nvelBk->setVisible(show && !pSet->show_mph);
+		if (nvelBm)	nvelBm->setVisible(show && pSet->show_mph);
+		if (nrpm)	nrpm->setVisible(show);
+		if (nvel)	nvel->setVisible(show);
+		if (ovGear)	{  if (1||show)  ovGear->show();  else  ovGear->hide();  }
+		if (ovVel)	{  if (1||show)  ovVel->show();   else  ovVel->hide();   }
+		if (ovAbsTcs){ if (show)  ovAbsTcs->show();   else  ovAbsTcs->hide(); }
+
+		show = pSet->car_dbgbars;
+		if (ovCarDbg){  if (show)  ovCarDbg->show();  else  ovCarDbg->hide();   }
+		show = pSet->car_dbgtxt;
+		if (ovCarDbgTxt){  if (show)  ovCarDbgTxt->show();  else  ovCarDbgTxt->hide();   }
+		//for (int i=0; i<5; ++i)
+		//{	if (ovU[i])  if (show)  ovU[i]->show();  else  ovU[i]->hide();  }
+
+		if (ovCam)	{  if (pSet->show_cam)    ovCam->show();    else  ovCam->hide();     }
+		if (ovTimes){  if (pSet->show_times)  ovTimes->show();  else  ovTimes->hide();   }
+	}
 }
 
 

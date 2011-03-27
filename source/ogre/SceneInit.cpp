@@ -132,6 +132,8 @@ void App::LoadMisc()
 {
 	UpdGuiRdStats(road, sc, pGame->timer.GetBestLap(pSet->trackreverse));  // current
 	CreateHUD();
+	// immediately hide it
+	ShowHUD(true);
 	miReflectCntr = 5;  //.
 	mReflAll1st = true;
 	mFCam->first = true;  // no smooth	
@@ -145,10 +147,9 @@ void App::NewGameDoLoad()
 		// Loading finished.
 		bLoading = false;
 		LoadingOff();
+		ShowHUD();
 		return;
 	}
-	// Update label.
-	mLoadingBar.mLoadingCommentElement->setCaption( (*currentLoadingState).second );
 	// Do the next loading step.
 	unsigned int perc = 0;
 	switch ( (*currentLoadingState).first )
@@ -182,6 +183,10 @@ void App::NewGameDoLoad()
 			perc = 100;
 			break;
 	}
+
+	// Update label.
+	mLoadingBar.mLoadingCommentElement->setCaption( (*currentLoadingState).second );
+	
 	// Set %
 	mLoadingBar.mLoadingBarElement->setWidth( mLoadingBar.mProgressBarMaxSize * (perc/100.0) );
 
