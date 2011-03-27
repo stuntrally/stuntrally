@@ -45,6 +45,23 @@ App::App()
 
 	for (int i=0; i < 6; ++i)
 	{	mReflectCams[i] = 0;  mReflectRT[i] = 0;  }
+	
+	#define LOADING_STATE_CLEANUP 0
+	#define LOADING_STATE_GAME 1
+	#define LOADING_STATE_SCENE 2
+	#define LOADING_STATE_CAR 3
+	#define LOADING_STATE_TER 4
+	#define LOADING_STATE_TRACK 5
+	#define LOADING_STATE_MISC 6
+
+	// loading states
+	loadingStates.push_back(std::make_pair(LOADING_STATE_CLEANUP, "Cleaning up"));
+	loadingStates.push_back(std::make_pair(LOADING_STATE_GAME, "Loading game"));
+	loadingStates.push_back(std::make_pair(LOADING_STATE_SCENE, "Loading scene"));
+	loadingStates.push_back(std::make_pair(LOADING_STATE_CAR, "Loading car"));
+	loadingStates.push_back(std::make_pair(LOADING_STATE_TER, "Loading terrain"));
+	loadingStates.push_back(std::make_pair(LOADING_STATE_TRACK, "Loading track"));
+	loadingStates.push_back(std::make_pair(LOADING_STATE_MISC, "Finishing"));
 }
 String App::TrkDir()
 {

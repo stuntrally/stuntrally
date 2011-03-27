@@ -51,70 +51,75 @@ bool App::frameStart(Real time)
 		bWindowResized = false;
 	}
 	
-	if (!bLoading)
+	if (bLoading)
 	{
-	//  keys dn/up - trklist, carlist
-	#define isKey(a)  mKeyboard->isKeyDown(OIS::KC_##a)
-	static float dirU = 0.f,dirD = 0.f;
-	if (isFocGui)
-	{	if (isKey(UP)  ||isKey(NUMPAD8))	dirD += time;  else
-		if (isKey(DOWN)||isKey(NUMPAD2))	dirU += time;  else
-		{	dirU = 0.f;  dirD = 0.f;  }
-		int d = ctrl ? 4 : 1;
-		if (dirU > 0.0f) {  carListNext( d);  trkListNext( d);  dirU = -0.12f;  }
-		if (dirD > 0.0f) {  carListNext(-d);  trkListNext(-d);  dirD = -0.12f;  }
+		NewGameDoLoad();
+		return true;
 	}
-
-	if (!pGame)
-		return false;
-	pGame->pause = isFocGui;
-
-	///  step Game  **
-	//  single thread, sim on draw
-	bool ret = true;
-	if (pGame->settings->mult_thr != 1)
+	else 
 	{
-		ret = pGame->OneLoop();
-		if (!ret)  mShutDown = true;
-	}
-	updatePoses(time);  //pGame->framerate
-
-	updateReflection();  //*
-
-	//  trees
-	//if (pSet->mult_thr != 2)
-	if (road) {
-		if (grass)  grass->update();
-		if (trees)  trees->update();  }
-
-	//  road upd lods
-	if (road)
-	{
-		road->RebuildRoadInt();
-		if (roadUpCnt <= 0)
-		{
-			roadUpCnt = 20;  //par upd, time..
-			road->UpdLodVis(pSet->road_dist);
+		//  keys dn/up - trklist, carlist
+		#define isKey(a)  mKeyboard->isKeyDown(OIS::KC_##a)
+		static float dirU = 0.f,dirD = 0.f;
+		if (isFocGui)
+		{	if (isKey(UP)  ||isKey(NUMPAD8))	dirD += time;  else
+			if (isKey(DOWN)||isKey(NUMPAD2))	dirU += time;  else
+			{	dirU = 0.f;  dirD = 0.f;  }
+			int d = ctrl ? 4 : 1;
+			if (dirU > 0.0f) {  carListNext( d);  trkListNext( d);  dirU = -0.12f;  }
+			if (dirD > 0.0f) {  carListNext(-d);  trkListNext(-d);  dirD = -0.12f;  }
 		}
-		roadUpCnt--;
-	}
 
-	//**  bullet bebug draw
-	if (dbgdraw)  {
-		dbgdraw->setDebugMode(pSet->bltDebug ? /*255*/1: 0);
-		dbgdraw->step();  }
+		if (!pGame)
+			return false;
+		pGame->pause = isFocGui;
 
-	//  hud
-	if (pGame->cars.size() == 0)
+		///  step Game  **
+		//  single thread, sim on draw
+		bool ret = true;
+		if (pGame->settings->mult_thr != 1)
+		{
+			ret = pGame->OneLoop();
+			if (!ret)  mShutDown = true;
+		}
+		updatePoses(time);  //pGame->framerate
+
+		updateReflection();  //*
+
+		//  trees
+		//if (pSet->mult_thr != 2)
+		if (road) {
+			if (grass)  grass->update();
+			if (trees)  trees->update();  }
+
+		//  road upd lods
+		if (road)
+		{
+			road->RebuildRoadInt();
+			if (roadUpCnt <= 0)
+			{
+				roadUpCnt = 20;  //par upd, time..
+				road->UpdLodVis(pSet->road_dist);
+			}
+			roadUpCnt--;
+		}
+
+		//**  bullet bebug draw
+		if (dbgdraw)  {
+			dbgdraw->setDebugMode(pSet->bltDebug ? /*255*/1: 0);
+			dbgdraw->step();  }
+
+		//  hud
+		if (pGame->cars.size() == 0)
+			return ret;
+
+		CAR* pCar = &(*pGame->cars.begin());
+		UpdateHUD(pCar, time);
+
+		///  terrain mtr from blend maps
+		UpdWhTerMtr(pCar);
+		
 		return ret;
-
-	CAR* pCar = &(*pGame->cars.begin());
-	UpdateHUD(pCar, time);
-
-	///  terrain mtr from blend maps
-	UpdWhTerMtr(pCar);
-	
-	return ret;
 	}
 }
 bool App::frameEnd(Real time)

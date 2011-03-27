@@ -27,6 +27,17 @@ public:
 	Scene sc;  /// scene.xml
 	Light* sun;  void UpdFog(bool bForce=false), UpdSun();
 
+	/*enum LoadingState
+	{
+		LOADING_STATE_CLEANUP,
+		LOADING_STATE_GAME,
+		LOADING_STATE_SCENE,
+		LOADING_STATE_CAR,
+		LOADING_STATE_TERRAIN,
+		LOADING_STATE_TRACK,
+		LOADING_STATE_MISC
+	};*/
+
 protected:
 	virtual void createScene();
 	virtual void destroyScene();
@@ -82,7 +93,32 @@ protected:
 	void CreateTrees(), CreateRoad(), CreateProps();
 	void CreateSkyDome(String sMater, Vector3 scale);
 	void NewGame();  void NewGameDoLoad(); bool IsTerTrack();
-	bool bLoading;  String TrkDir();
+	String TrkDir();
+	
+	// Loading
+	bool bLoading;
+	void LoadCleanUp();
+	void LoadGame();
+	void LoadScene();
+	void LoadCar();
+	void LoadTerrain();
+	void LoadTrack();
+	void LoadMisc();
+	
+	#define LOADING_STATE_CLEANUP 0
+	#define LOADING_STATE_GAME 1
+	#define LOADING_STATE_SCENE 2
+	#define LOADING_STATE_CAR 3
+	#define LOADING_STATE_TER 4
+	#define LOADING_STATE_TRACK 5
+	#define LOADING_STATE_MISC 6
+	
+	// id, display name
+	// e.g.: 0, Cleaning up or 3, Loading scene
+	// initialised in App()
+	std::map<unsigned int, std::string> loadingStates;
+	// 1 behind map ( map.end() ): loading finished
+	std::map<unsigned int, std::string>::iterator currentLoadingState;
 
 	bool FileExists(const std::string & filename)
 	{

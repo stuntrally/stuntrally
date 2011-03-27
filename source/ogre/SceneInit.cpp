@@ -50,18 +50,13 @@ void App::createScene()
 //---------------------------------------------------------------------------------------------------------------
 void App::NewGame()
 {
-	/*bLoading = true;
-	LoadingOn();
-	
-	boost::thread t( boost::bind(&App::NewGameDoLoad, this) ); 
-	//NewGameDoLoad();*/
-	
 	bLoading = true;
-	NewGameDoLoad();
-	bLoading = false;
+	LoadingOn();
+	// Actual loading is done in frameStarted().
 }
 
-void App::NewGameDoLoad()
+/* Loading steps (in this order) */
+void App::LoadCleanUp()
 {
 	//  hide trails
 	for (int w=0; w<4; ++w)  if (whTrl[w])  {	wht[w] = 0.f;
@@ -88,24 +83,35 @@ void App::NewGameDoLoad()
 		mTerrainGroup->removeAllTerrains();
 	if (road)
 	{	road->DestroyRoad();  delete road;  road = 0;  }
-
-
-	///*
+}
+void App::LoadGame()
+{
 	pGame->NewGame();
 	bGetStPos = true;
 	
 	bool ter = IsTerTrack();
 	sc.ter = ter;
-
+}
+void App::LoadScene()
+{
+	bool ter = IsTerTrack();
 	if (ter)  // load scene
 		sc.LoadXml(PATHMANAGER::GetTrackPath() + "/" + pSet->track + "/scene.xml");
 	else
-	{	sc.Default();  sc.td.hfData = NULL;  }
-
+	{	sc.Default();  sc.td.hfData = NULL;  }	
+}
+void App::LoadCar()
+{
 	CreateCar();  // par rain
-	
+}
+void App::LoadTerrain()
+{
+	bool ter = IsTerTrack();
 	CreateTerrain(false,ter);  // common
-
+}
+void App::LoadTrack()
+{
+	bool ter = IsTerTrack();
 	if (!ter)	//  track
 	{
 		CreateTrack();
@@ -120,15 +126,54 @@ void App::NewGameDoLoad()
 		CreateRoad();
 		CreateTrees();
 	}
-
+}
+void App::LoadMisc()
+{
 	UpdGuiRdStats(road, sc, pGame->timer.GetBestLap(pSet->trackreverse));  // current
 	CreateHUD();
 	miReflectCntr = 5;  //.
 	mReflAll1st = true;
-	mFCam->first = true;  // no smooth
+	mFCam->first = true;  // no smooth	
+}
+
+void App::NewGameDoLoad()
+{	
+	if (currentLoadingState == loadingStates.end())
+	{
+		// Loading finished.
+		bLoading = false;
+		LoadingOff();
+		return;
+	}
+	// Update label.
 	
-	//bLoading = false;
-	//LoadingOff();
+	// Do the next loading step.
+	switch ( (*currentLoadingState).first )
+	{
+		case LOADING_STATE_CLEANUP:
+			LoadCleanUp();
+			break;
+		case LOADING_STATE_GAME:
+			LoadGame();
+			break;
+		case LOADING_STATE_SCENE:
+			LoadScene();
+			break;
+		case LOADING_STATE_CAR:
+			LoadCar();
+			break;
+		case LOADING_STATE_TER:
+			LoadTerrain();
+			break;
+		case LOADING_STATE_TRACK:
+			LoadTrack();
+			break;
+		case LOADING_STATE_MISC:
+			LoadMisc();
+			break;
+	}
+	// Go to next loading step.
+	currentLoadingState++;
 }
 
 //---------------------------------------------------------------------------------------------------------------
