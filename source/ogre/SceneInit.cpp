@@ -50,9 +50,10 @@ void App::createScene()
 //---------------------------------------------------------------------------------------------------------------
 void App::NewGame()
 {
+	// actual loading isn't done here
 	bLoading = true;
 	LoadingOn();
-	// Actual loading is done in frameStarted().
+	currentLoadingState = loadingStates.begin();
 }
 
 /* Loading steps (in this order) */
@@ -136,6 +137,7 @@ void App::LoadMisc()
 	mFCam->first = true;  // no smooth	
 }
 
+/* Actual loading procedure that gets called every frame during load. Performs a single loading step. */
 void App::NewGameDoLoad()
 {	
 	if (currentLoadingState == loadingStates.end())
@@ -146,32 +148,43 @@ void App::NewGameDoLoad()
 		return;
 	}
 	// Update label.
-	
+	mLoadingBar.mLoadingCommentElement->setCaption( (*currentLoadingState).second );
 	// Do the next loading step.
+	unsigned int perc = 0;
 	switch ( (*currentLoadingState).first )
 	{
 		case LOADING_STATE_CLEANUP:
 			LoadCleanUp();
+			perc = 5;
 			break;
 		case LOADING_STATE_GAME:
 			LoadGame();
+			perc = 10;
 			break;
 		case LOADING_STATE_SCENE:
 			LoadScene();
+			perc = 30;
 			break;
 		case LOADING_STATE_CAR:
 			LoadCar();
+			perc = 50;
 			break;
 		case LOADING_STATE_TER:
 			LoadTerrain();
+			perc = 70;
 			break;
 		case LOADING_STATE_TRACK:
 			LoadTrack();
+			perc = 80;
 			break;
 		case LOADING_STATE_MISC:
 			LoadMisc();
+			perc = 100;
 			break;
 	}
+	// Set %
+	mLoadingBar.mLoadingBarElement->setWidth( mLoadingBar.mProgressBarMaxSize * (perc/100.0) );
+
 	// Go to next loading step.
 	currentLoadingState++;
 }

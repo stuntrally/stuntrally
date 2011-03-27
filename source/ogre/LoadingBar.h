@@ -15,20 +15,19 @@ protected:
 	unsigned short mNumGroupsInit;
 	unsigned short mNumGroupsLoad;
 
-	Real mProgressBarMaxSize;
 	Real mProgressBarScriptSize;
 	Real mProgressBarInc;
-
-	OverlayElement* mLoadingBarElement;
-	OverlayElement* mLoadingDescriptionElement;
-	OverlayElement* mLoadingCommentElement;
-
 
 public:
 
 	LoadingBar() {}
 	virtual ~LoadingBar() {}
 
+	OverlayElement* mLoadingBarElement;
+	OverlayElement* mLoadingDescriptionElement;
+	OverlayElement* mLoadingCommentElement;
+
+	Real mProgressBarMaxSize;
 
 	/** Show the loading bar and start listening.
 	*/

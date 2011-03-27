@@ -29,7 +29,7 @@ App::App()
 	// game
 	,bNew(false), blendMtr(0), iBlendMaps(0)
     ,miReflectCntr(0), miReflectCam(0), mReflAll1st(1)
-	,dbgdraw(0),  bLoading(1), reflAct(0)
+	,dbgdraw(0),  bLoading(false), reflAct(0)
 	,grass(0), trees(0), road(0)
 	,pr(0),pr2(0), sun(0), 	vPofs(0,0,0)
 {
@@ -55,13 +55,13 @@ App::App()
 	#define LOADING_STATE_MISC 6
 
 	// loading states
-	loadingStates.push_back(std::make_pair(LOADING_STATE_CLEANUP, "Cleaning up"));
-	loadingStates.push_back(std::make_pair(LOADING_STATE_GAME, "Loading game"));
-	loadingStates.push_back(std::make_pair(LOADING_STATE_SCENE, "Loading scene"));
-	loadingStates.push_back(std::make_pair(LOADING_STATE_CAR, "Loading car"));
-	loadingStates.push_back(std::make_pair(LOADING_STATE_TER, "Loading terrain"));
-	loadingStates.push_back(std::make_pair(LOADING_STATE_TRACK, "Loading track"));
-	loadingStates.push_back(std::make_pair(LOADING_STATE_MISC, "Finishing"));
+	loadingStates.insert(std::make_pair(LOADING_STATE_CLEANUP, "Cleaning up"));
+	loadingStates.insert(std::make_pair(LOADING_STATE_GAME, "Loading game"));
+	loadingStates.insert(std::make_pair(LOADING_STATE_SCENE, "Loading scene"));
+	loadingStates.insert(std::make_pair(LOADING_STATE_CAR, "Loading car"));
+	loadingStates.insert(std::make_pair(LOADING_STATE_TER, "Loading terrain"));
+	loadingStates.insert(std::make_pair(LOADING_STATE_TRACK, "Loading track"));
+	loadingStates.insert(std::make_pair(LOADING_STATE_MISC, "Finishing"));
 }
 String App::TrkDir()
 {
