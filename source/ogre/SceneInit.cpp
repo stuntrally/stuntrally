@@ -55,6 +55,8 @@ void App::NewGame()
 	LoadingOn();
 	// hide HUD
 	ShowHUD(true);
+	// hide FPS
+	mFpsOverlay->hide();
 	currentLoadingState = loadingStates.begin();
 }
 
@@ -150,6 +152,8 @@ void App::NewGameDoLoad()
 		bLoading = false;
 		LoadingOff();
 		ShowHUD();
+		if (pSet->show_fps)
+			mFpsOverlay->show();
 		return;
 	}
 	// Do the next loading step.
