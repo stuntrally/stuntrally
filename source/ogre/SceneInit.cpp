@@ -53,6 +53,8 @@ void App::NewGame()
 	// actual loading isn't done here
 	bLoading = true;
 	LoadingOn();
+	// hide HUD
+	ShowHUD(true);
 	currentLoadingState = loadingStates.begin();
 }
 
