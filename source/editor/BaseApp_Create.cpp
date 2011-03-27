@@ -26,9 +26,7 @@ void TimThread(BaseApp* pA)
 	while (pA->inputThreadRunning)
 	{
 		if (pA->timer.update())
-		{
 			pA->OnTimer(pA->timer.dt);
-		}
 		boost::this_thread::sleep(boost::posix_time::milliseconds(pA->timer.iv*1000));
 	}
 }

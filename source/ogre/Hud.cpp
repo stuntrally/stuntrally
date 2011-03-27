@@ -53,14 +53,14 @@ void App::CreateHUD()
 		minX = -t;  minY = -t;  maxX = t;  maxY = t;
 
 		float fMapSizeX = maxX - minX, fMapSizeY = maxY - minY;  // map size
-		float size = max(fMapSizeX, fMapSizeY);
+		float size = max(fMapSizeX, fMapSizeY*asp);
 		scX = 1.f / size;  scY = 1.f / size;
 
 		asp = 1.f;  //_temp
 		ManualObject* m = Create2D("road_minimap_inv",1);
 		//asp = float(mWindow->getWidth())/float(mWindow->getHeight());
 		m->setVisibilityFlags(2);
-		m->setRenderQueueGroup(RENDER_QUEUE_OVERLAY);
+		m->setRenderQueueGroup(RENDER_QUEUE_OVERLAY-5);
 		
 		///  change minimap image
 		MaterialPtr mm = MaterialManager::getSingleton().getByName("road_minimap_inv");
@@ -82,7 +82,7 @@ void App::CreateHUD()
 		mpos->setVisibilityFlags(2);
 		mpos->setRenderQueueGroup(RENDER_QUEUE_OVERLAY);
 		ndPos = ndMap->createChildSceneNode();
-		ndPos->scale(fHudSize*asp, fHudSize, 1);
+		ndPos->scale(fHudSize, fHudSize, 1);
 		ndPos->attachObject(mpos);
 		ndMap->setVisible(pSet->trackmap);
 	}
@@ -90,17 +90,17 @@ void App::CreateHUD()
 	
 	//  backgr  gauges
 	ManualObject* mrpmB = Create2D("hud/rpm",1);	mrpmB->setVisibilityFlags(2);
-	mrpmB->setRenderQueueGroup(RENDER_QUEUE_OVERLAY);
+	mrpmB->setRenderQueueGroup(RENDER_QUEUE_OVERLAY-5);
 	nrpmB = mSceneMgr->getRootSceneNode()->createChildSceneNode();
 	nrpmB->attachObject(mrpmB);	nrpmB->setScale(0,0,0);  nrpmB->setVisible(false);
 
 	ManualObject* mvelBk = Create2D("hud/kmh",1);	mvelBk->setVisibilityFlags(2);
-	mvelBk->setRenderQueueGroup(RENDER_QUEUE_OVERLAY);
+	mvelBk->setRenderQueueGroup(RENDER_QUEUE_OVERLAY-5);
 	nvelBk = mSceneMgr->getRootSceneNode()->createChildSceneNode();
 	nvelBk->attachObject(mvelBk);	nvelBk->setScale(0,0,0);  mvelBk->setVisible(false);
 		
 	ManualObject* mvelBm = Create2D("hud/mph",1);	mvelBm->setVisibilityFlags(2);
-	mvelBm->setRenderQueueGroup(RENDER_QUEUE_OVERLAY);
+	mvelBm->setRenderQueueGroup(RENDER_QUEUE_OVERLAY-5);
 	nvelBm = mSceneMgr->getRootSceneNode()->createChildSceneNode();
 	nvelBm->attachObject(mvelBm);	nvelBm->setScale(0,0,0);  mvelBm->setVisible(false);
 		
@@ -190,7 +190,7 @@ void App::UpdateHUD(CAR* pCar, float time)
     float angvel = abs(vel)*vsc + vmin;
     float angrot = ndCar->getOrientation().getYaw().valueDegrees();
     float sx = 1.4f, sy = sx*asp;  // *par len
-    float psx = 2.1f * pSet->size_minimap, psy = psx*asp;  // *par len
+    float psx = 2.1f * pSet->size_minimap, psy = psx;  // *par len
 
     const static float d2r = PI/180.f;
     static float rx[4],ry[4], vx[4],vy[4], px[4],py[4];
