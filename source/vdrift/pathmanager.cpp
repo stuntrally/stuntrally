@@ -97,9 +97,10 @@ void PATHMANAGER::Init(std::ostream & info_output, std::ostream & error_output)
 		user_data_dir = (xdg_data_home ? xdg_data_home / shortDir : fs::path(home_dir) / ".local" / shareDir).string();
 	}
 	#endif
-	// Create user's data and track record dir
+	// Create user's data dir and its children
 	CreateDirectory(user_data_dir);
 	CreateDirectory(user_data_dir + "/records");
+	CreateDirectory(user_data_dir + "/screenshots");
 
 	// Find game data dir and defaults config dir
 	char *datadir = getenv("STUNTRALLY_DATA_ROOT");

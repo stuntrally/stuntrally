@@ -69,7 +69,7 @@ bool BaseApp::keyPressed( const OIS::KeyEvent &arg )
 		
 		//  Screen Shot  PtrScr -slow
 		case KC_SYSRQ:
-			mWindow->writeContentsToTimestampedFile(PATHMANAGER::GetHomeDir() + "/", ".png");	return false;
+			mWindow->writeContentsToTimestampedFile(PATHMANAGER::GetScreenShotDir() + "/", ".png");	return false;
 	}
 
 
