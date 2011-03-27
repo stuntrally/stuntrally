@@ -44,6 +44,9 @@ public:
 	string skin;	float vol_master, vol_engine, vol_tires, vol_env;
 	bool autostart, escquit;	bool bltDebug, bltLines;
 	
+	// loading
+	bool loadingbackground;
+	
 	//  sim freq (1/interval timestep)
 	float game_fq, blt_fq;  int blt_iter;
 	int mult_thr;
@@ -55,7 +58,7 @@ public:
 	int windowx, windowy;
 	bool fullscreen, vsync;
 	int fsaa;
-
+	
 //------------------------------------------
 	SETTINGS();
 

@@ -57,6 +57,7 @@ void SETTINGS::Serialize(bool w, CONFIGFILE & c)
 	Param(c,w, "misc.autostartgame", autostart);
 	Param(c,w, "misc.ogredialog", ogre_dialog);	Param(c,w, "misc.escquit", escquit);
 	Param(c,w, "misc.bulletDebug", bltDebug);	Param(c,w, "misc.bulletLines", bltLines);
+	Param(c,w, "misc.loadingbackground", loadingbackground);
 	
 	//c.bFltFull = true;
 	Param(c,w, "sim.game_fq", game_fq);	Param(c,w, "sim.mult_thr", mult_thr);
@@ -98,6 +99,8 @@ SETTINGS::SETTINGS() :  ///  Defaults
 	//  other
 	skin("simple"), vol_master(1.f), vol_engine(1.f), vol_tires(1.f), vol_env(1.f),
 	autostart(0), ogre_dialog(1), escquit(0), bltDebug(0), bltLines(1),
+	// loading
+	loadingbackground(true),
 	//  sim
 	game_fq(100.f), blt_fq(60.f), blt_iter(7), mult_thr(0),  //low
 	// video
