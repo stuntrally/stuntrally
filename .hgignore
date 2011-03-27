@@ -1,11 +1,15 @@
+syntax: glob
 build
 build32
 build64
-Debug
-Release
+Debug*
+Release*
 game.cfg
 editor.cfg
 ogreset.cfg
 ogre.log
 log.txt
 MyGUI.log
+*.dll
+screens
+bin
