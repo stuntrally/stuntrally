@@ -1,6 +1,6 @@
 
 # Install data files
-foreach(datadir  cars compositor editor fonts gui hud materials particles skys sounds terrain trees)
+foreach(datadir  cars compositor editor fonts gui hud loading materials particles skys sounds terrain trees)
 	install(DIRECTORY ${datadir} DESTINATION ${SHARE_INSTALL})
 endforeach()
 
