@@ -5886,6 +5886,10 @@
 					>
 				</File>
 				<File
+					RelativePath=".\source\ogre\LoadingBar.cpp"
+					>
+				</File>
+				<File
 					RelativePath=".\Source\ogre\LoadingBar.h"
 					>
 				</File>

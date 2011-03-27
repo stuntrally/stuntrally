@@ -1,3 +1,4 @@
+#include "stdafx.h"
 #include "LoadingBar.h"
 
 void LoadingBar::start( RenderWindow* window, 		unsigned short numGroupsInit, 
@@ -47,7 +48,9 @@ void LoadingBar::start( RenderWindow* window, 		unsigned short numGroupsInit,
 		{
 			// no load screens found
 			// remove image
-			mLoadOverlay->remove2D(mLoadOverlay->getChild("Core/LoadPanel/Background"));
+			OverlayContainer* cnt = mLoadOverlay->getChild("Core/LoadPanel/Background");
+			if (cnt)
+				mLoadOverlay->remove2D(cnt);
 			return;
 		}
 		// init random seed
