@@ -63,7 +63,9 @@ void LoadingBar::start( RenderWindow* window, 		unsigned short numGroupsInit,
 	}
 	else
 	{			
-		mLoadOverlay->remove2D(mLoadOverlay->getChild("Core/LoadPanel/Background"));
+			OverlayContainer* cnt = mLoadOverlay->getChild("Core/LoadPanel/Background");
+			if (cnt)
+				mLoadOverlay->remove2D(cnt);
 	}
 }
 
