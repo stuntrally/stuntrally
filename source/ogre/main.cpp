@@ -32,7 +32,7 @@ void VprThread(App* pA)
 	//  Load Settings
 	std::stringstream dummy;
 	PATHMANAGER::Init(dummy, dummy);
-	string logfilename = PATHMANAGER::GetLogFile();
+	string logfilename = PATHMANAGER::GetLogDir() + "/log.txt";
 	SETTINGS* settings = new SETTINGS();
 	if (!PATHMANAGER::FileExists(PATHMANAGER::GetSettingsFile())) {
 		settings->Load(PATHMANAGER::GetGameConfigDir() + "/game-default.cfg");

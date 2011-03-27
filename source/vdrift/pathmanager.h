@@ -20,7 +20,7 @@ public:
 	static void Init(std::ostream & info_output, std::ostream & error_output);
 	static bool GetFolderIndex(std::string folderpath, std::list <std::string> & outputfolderlist, std::string extension=""); ///<optionally filter for the given extension
 
-	static std::string GetHomeDir() { return home_dir; }
+	static std::string GetHomeDir() {                return home_dir; }
 	static std::string GetDataPath() {               return game_data_dir; }
 	static std::string GetUserDataDir() {            return user_data_dir; }
 	static std::string GetUserConfigDir() {          return user_config_dir;  }
@@ -28,7 +28,7 @@ public:
 	static std::string GetTrackRecordsPath() {       return user_data_dir  + "/records";  }
 	static std::string GetSettingsFile() {           return user_config_dir + "/game.cfg"; }
 	static std::string GetCacheDir() {               return cache_dir; }
-	static std::string GetLogFile() {                return user_config_dir + "/log.txt"; }
+	static std::string GetLogDir() {                 return user_config_dir; }
 	static std::string GetTrackPath() {              return game_data_dir + "/tracks"; }
 	static std::string GetCarPath() {                return game_data_dir + "/cars"; }
 	static std::string GetCarControlsFile() {        return user_config_dir + "/controls.cfg"; }

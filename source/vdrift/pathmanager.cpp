@@ -160,7 +160,7 @@ void PATHMANAGER::Init(std::ostream & info_output, std::ostream & error_output)
 	info_output << "Data directory: " << GetDataPath() << std::endl;
 	info_output << "User data directory: " << GetUserDataDir() << std::endl;
 	info_output << "Cache directory: " << GetCacheDir() << std::endl;
-	info_output << "Log file: " << GetLogFile() << std::endl;
+	info_output << "Log directory: " << GetLogDir() << std::endl;
 }
 
 bool PATHMANAGER::CreateDirectory(const std::string& path)
