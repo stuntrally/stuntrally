@@ -67,11 +67,10 @@ endforeach()
 
 add_subdirectory(source)
 add_subdirectory(config)
+add_subdirectory(dist)
 if(EXISTS "${CMAKE_SOURCE_DIR}/data" AND IS_DIRECTORY "${CMAKE_SOURCE_DIR}/data")
 	add_subdirectory(data)
 else()
 	message("WARNING: Data not found, clone the data repo as a directory named data.")
 endif()
-if(UNIX)
-	add_subdirectory(dist)
-endif()
+

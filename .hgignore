@@ -1,5 +1,5 @@
 syntax: glob
-build
+*build
 build32
 build64
 Debug*
