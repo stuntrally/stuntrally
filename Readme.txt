@@ -24,32 +24,33 @@
 
 Description
 
-This game is in it's medium stage, it features
-35 tracks in 6 sceneries and 7 drivable cars.
-The Track Editor is fully functional now.
+This game features 49 tracks in 6 sceneries and 7 drivable cars.
+The Track Editor allows modifying and creating tracks.
+Both game and editor run on Windows and Linux.
 
-It should run on any Windows system (checked on XP 32bit and 7 64bit).
-
-If you have problems running, check [issues] (closed too)
-on project page, there may be a solution already.
-
-The (recommended) minimum hardware is (at least):
+The recommended minimum hardware is:
 a CPU with 2 cores, and GPU: GeForce 9600 GT or Radeon HD 3870.
-But it's possible to run on older GPUs, the absolute minimum (ghastly) settings
-are in _game-min.cfg file, rename it to _game.cfg to use them.
+But it's possible to run on older, the absolute minimum (ghastly) settings
+are in game-min.cfg file, copy it to game.cfg to use them.
 
-Car simulation is done by VDrift, a great game by itself.
-Rendering is done by OGRE, trees/grass by PagedGeometry, Gui by MyGUI.
+----------------------------------------------------------------------------------
+
+About
+
+The game aims at a rally style of driving (like in Richard Burns Rally),
+with stunt elements, similar to the old game Stunts (from year 1990),
+or such playable games like GeneRally or Revolt.
+It also introduces road pipes, and provides a 3D spline generated road.
 
 ----------------------------------------------------------------------------------
 
 Running
 
-Run StuntRally.exe, choose Rendering SubSystem, and its options.
-Press [New Game] button to start driving (or change Track/Car first).
+Run StuntRally, choose Rendering SubSystem (or [Video] tab), and its options.
+You can change Track/Car with Up/Down keys and start with Enter.
 
 In the game archive, there are only 5 tracks included. So if you want
-all tracks, be sure to also download the "tracks pack" archive,
+all tracks, be sure to also download the "Tracks Pack" archives,
 and extract it in the same directory where you extracted game archive
 (always replace older files).
 
@@ -59,25 +60,18 @@ can be seen in Options tab [Input].
 Change cameras with C/X or PgDown/PgUp (with shift for main cameras only).
 Cameras can be adjusted in game, by mouse - move mouse to see actions.
 
-VDrift cars and tracks (version from 2009) can be used by copying them
-into data\cars or data\tracks folder.
+All settings and logs are saved user folder (check Wiki page [Paths]).
+If you have problems running, read Wiki page [Running].
+If it doesn't help, check [Issues] on project page (closed too).
 
 Editor
 
-In editor (SR_Editor.exe), F1 key shows/hides Options,
+In editor, F1 key shows/hides Options,
 switch to tab [Input/Help] to read what can be edited and how.
 Tab key switches between Camera/Edit mode.
 There isn't (and won't be) an undo function -
 hit F5 to reload last track state, and F4 to save it.
 After saving, track can be played in game (exports all data).
-
-Most graphics settings work immediately, those which don't are marked by *.
-VDrift tracks need Shadows: Old.
-All settings are saved in _game.cfg / _editor.cfg files in exe folder.
-To reset OGRE settings delete _ogreset.cfg file (_ogreset_ed.cfg for editor).
-
-If problems occur check _ogre.log and _log.log for errors. Compare them
-with those included in archive. (_ed in filename stands for editor).
 
 Have fun !
 
@@ -85,22 +79,23 @@ Have fun !
 
 Compiling
 
-To compile under Visual Studio 2008 use the vcproj/sln files from Source.7z archive.
-Check AdditionalIncludeDirectories from compiler and AdditionalDependencies
-in linker options for used libraries, there are my global paths (e:\) so you
-have to adjust them for your own ones.
+For newest sources and how to compile them check
+project's Wiki page [Compiling]. We are using CMake and C++.
+
+Car simulation is done by VDrift, a great game by itself.
+Rendering is done by OGRE, trees/grass by PagedGeometry, Gui by MyGUI.
 
 -- Currently these are used (and need to build before game):
 
 OGRE + Dependencies, with plugins:
-	RenderSystem_Direct3D9, RenderSystem_GL
-	OgreTerrain.lib OgrePaging.lib
+	RenderSystem_GL, RenderSystem_Direct3D9
+	OgreTerrain, OgrePaging
 	Plugin_ParticleFX
 	Plugin_CgProgramManager
 	OIS
 
 MyGUI3.0
-	MyGUIEngine.lib, MyGUI.OgrePlatform.lib
+	MyGUIEngine, MyGUI.OgrePlatform
 
 -- and for VDrift:
 SDL-1.2.14
@@ -112,30 +107,28 @@ BtOgre
 Bullet 2.76
 TinyXML
 
-OGRE can be installed from SDK (used 1.7.1).
+OGRE can be installed from SDK package (used 1.7.1).
 Maybe some can be too, but it's best to compile all.
-
 
 ----------------------------------------------------------------------------------
 
-About
-
-I'm aiming at a rally game with Richard Burns Rally style of driving
-(probably already done, not much changes here).
-With stunt elements, similar to the old game Stunts (from year 1990),
-or such playable game like GeneRally.
-
 Help is welcomed
 
-This game and editor are still a one man project, so:
-If you are a graphic artist, can create trees/plants,
-and textures for them (or for terrain) for free,
-or you know such free models/textures,
-let me know and email me at: cryham(at)gmail(dot)com,
+Currently we are 3 developers, we are looking for:
 
-If you're a programmer, know OGRE, shaders,
-or just know you'd done something better,
-know how to do it and have time for it, let me know.
+Track creators
+    If you manage to create an interesting Track (or car settings)
+    it could be released in future versions.
 
-If you manage to create an interesting track (or car settings),
-let me know, so it could be released in future versions.
+Graphic Artists
+    If you can create tree/plant models,
+    textures for them or for terrain, or you
+    know such free models/textures (there are some out there).
+
+Programmers
+    If you know C++, OGRE or shaders, and
+    could handle one (or some) of the project's [Issues], 
+    or want to do something better and know how to.
+
+If so, let us know by replying on Issue tracker,
+or email me at cryham(at)gmail(dot)com.
