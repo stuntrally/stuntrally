@@ -373,7 +373,7 @@ void App::comboResolution(SL)
 
 void App::chkVidBloom(WP wp){		ChkEv(bloom);		Ogre::CompositorManager::getSingleton().setCompositorEnabled(mViewport, "Bloom", pSet->bloom);		}
 void App::chkVidHDR(WP wp){			ChkEv(hdr);			Ogre::CompositorManager::getSingleton().setCompositorEnabled(mViewport, "HDR", pSet->hdr);	}
-//void App::chkVidBlur(WP wp){		ChkEv(motionblur);	Ogre::CompositorManager::getSingleton().setCompositorEnabled(mViewport, "Motion Blur", pSet->motionblur);	}
+void App::chkVidBlur(WP wp){		ChkEv(motionblur);	Ogre::CompositorManager::getSingleton().setCompositorEnabled(mViewport, "Motion Blur", pSet->motionblur);	}
 
 void App::chkVidFullscr(WP wp){		ChkEv(fullscreen);
 	mWindow->setFullscreen(pSet->fullscreen, pSet->windowx, pSet->windowy); mWindow->resize(pSet->windowx, pSet->windowy);
@@ -388,34 +388,20 @@ void App::slBloomInt(SL)
 {
 	Real v = val/res;  pSet->bloomintensity = v;
 	//if (valCarClrH){	Fmt(s, "%4.2f", v);	valCarClrH->setCaption(s);  }
-	UpdBloomVals();
+	refreshCompositor();
 }
 void App::slBloomOrig(SL)
 {
 	Real v = val/res;  pSet->bloomorig = v;
 	//if (valCarClrH){	Fmt(s, "%4.2f", v);	valCarClrH->setCaption(s);  }
-	UpdBloomVals();
+	refreshCompositor();
 }
-/*void App::slBlurIntens(SL)
+void App::slBlurIntens(SL)
 {
 	Real v = val/res;  pSet->motionblurintensity = v;
 	//if (valCarClrH){	Fmt(s, "%4.2f", v);	valCarClrH->setCaption(s);  }
-	//UpdBloomVals();
-}*/
-
-void App::UpdBloomVals()
-{
-	//if (!pSet->bloom)  return;
-	Ogre::CompositorManager::getSingleton().setCompositorEnabled(mViewport, "Bloom", false);
-
-	Ogre::MaterialPtr blurmat = Ogre::MaterialManager::getSingleton().getByName("Ogre/Compositor/BloomBlend2");
-	Ogre::GpuProgramParametersSharedPtr gpuparams = blurmat->getTechnique(0)->getPass(0)->getFragmentProgramParameters();
-	gpuparams->setNamedConstant("OriginalImageWeight", pSet->bloomorig);
-	gpuparams->setNamedConstant("BlurWeight", pSet->bloomintensity);
-
-	Ogre::CompositorManager::getSingleton().setCompositorEnabled(mViewport, "Bloom", pSet->bloom);
+	refreshCompositor();
 }
-
 
 //-----------------------------------------------------------------------------------------------------------
 //  Key pressed

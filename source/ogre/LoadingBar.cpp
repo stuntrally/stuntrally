@@ -39,7 +39,7 @@ void LoadingBar::start( RenderWindow* window, 		unsigned short numGroupsInit,
 		unsigned int i=1;
 		while (1)
 		{
-			if (ResourceGroupManager::getSingleton().resourceExists("Loading", "loading" + Ogre::StringConverter::toString(i) + ".png") )
+			if (ResourceGroupManager::getSingleton().resourceExists("Loading", "loading" + Ogre::StringConverter::toString(i) + ".jpg") )
 				i++;
 			else
 				break;
@@ -59,13 +59,13 @@ void LoadingBar::start( RenderWindow* window, 		unsigned short numGroupsInit,
 		imgNumber = rand() % (i-1);
 		// set the loading image
 		MaterialPtr mat = MaterialManager::getSingleton().getByName("Core/BackgroundMat", "Loading");
-		mat->getTechnique(0)->getPass(0)->getTextureUnitState(0)->setTextureName("loading" + Ogre::StringConverter::toString(imgNumber+1) + ".png");
+		mat->getTechnique(0)->getPass(0)->getTextureUnitState(0)->setTextureName("loading" + Ogre::StringConverter::toString(imgNumber+1) + ".jpg");
 	}
 	else
 	{			
-			OverlayContainer* cnt = mLoadOverlay->getChild("Core/LoadPanel/Background");
-			if (cnt)
-				mLoadOverlay->remove2D(cnt);
+		OverlayContainer* cnt = mLoadOverlay->getChild("Core/LoadPanel/Background");
+		if (cnt)
+			mLoadOverlay->remove2D(cnt);
 	}
 }
 
