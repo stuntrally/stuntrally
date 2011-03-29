@@ -5,7 +5,7 @@ Maintainer: Tapio Vierros <tapiovierros@gmail.com>
 Uploaders: Tapio Vierros <tapiovierros@gmail.com>
 Build-Depends: debhelper (>= 7),
  cmake (>= 2.6), pkg-config, quilt,
- libogre-dev, libmygui-dev, libois-dev,
+ libogre-dev (>= 1.7.0), libmygui-dev, libois-dev,
  libboost-thread-dev (>= 1.36), libboost-filesystem-dev (>= 1.36),
  libsdl-dev, libogg-dev, libvorbis-dev
 Standards-Version: 3.9.1
