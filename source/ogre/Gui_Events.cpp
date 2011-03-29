@@ -387,19 +387,19 @@ void App::chkVidVSync(WP wp)
 void App::slBloomInt(SL)
 {
 	Real v = val/res;  pSet->bloomintensity = v;
-	//if (valCarClrH){	Fmt(s, "%4.2f", v);	valCarClrH->setCaption(s);  }
+	if (valBloomInt){	Fmt(s, "%4.2f", v);	valBloomInt->setCaption(s);  }
 	refreshCompositor();
 }
 void App::slBloomOrig(SL)
 {
 	Real v = val/res;  pSet->bloomorig = v;
-	//if (valCarClrH){	Fmt(s, "%4.2f", v);	valCarClrH->setCaption(s);  }
+	if (valBloomOrig){	Fmt(s, "%4.2f", v);	valBloomOrig->setCaption(s);  }
 	refreshCompositor();
 }
 void App::slBlurIntens(SL)
 {
 	Real v = val/res;  pSet->motionblurintensity = v;
-	//if (valCarClrH){	Fmt(s, "%4.2f", v);	valCarClrH->setCaption(s);  }
+	if (valBlurIntens){	Fmt(s, "%4.2f", v);	valBlurIntens->setCaption(s);  }
 	refreshCompositor();
 }
 
