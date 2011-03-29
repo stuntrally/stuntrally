@@ -176,27 +176,39 @@ void App::InitGui()
 	
 	///  video resolutions combobox
 	ComboBoxPtr cbResolution = mGUI->findWidget<ComboBox>("Resolution");
+	ListPtr liRes = mGUI->findWidget<List>("ResList");
 	// selection changed event
-	if (cbResolution)
+	if (cbResolution && liRes)
 	{
 		cbResolution->eventComboChangePosition = newDelegate(this, &App::comboResolution);
 		// populate video resolution list
-		const Ogre::StringVector& videoModes = Ogre::Root::getSingleton().getRenderSystem()->getConfigOptions()["Video Mode"].possibleValues;
-		for (int i=0; i<videoModes.size(); i++)
+		const StringVector& videoModes = Root::getSingleton().getRenderSystem()->getConfigOptions()["Video Mode"].possibleValues;
+		int sel = -1;  string modeSel = "";
+		for (int i=0; i < videoModes.size(); i++)
 		{
 			std::string mode = videoModes[i];
-			Ogre::StringUtil::trim(mode);
-			//cbResolution->addItem(mode);
+			StringUtil::trim(mode);
+			if (StringUtil::match(mode, "*16-bit*"))  continue;  //skip ?DX
 
-			Ogre::StringVector vmopts = Ogre::StringUtil::split(mode, " x");  // only resolution
-			unsigned int w = Ogre::StringConverter::parseUnsignedInt(vmopts[0]);
-			unsigned int h = Ogre::StringConverter::parseUnsignedInt(vmopts[1]);
-			cbResolution->addItem(toStr(w) + " x " + toStr(h));
+			StringVector vmopts = StringUtil::split(mode, " x");  // only resolution
+			int w = StringConverter::parseUnsignedInt(vmopts[0]);
+			int h = StringConverter::parseUnsignedInt(vmopts[1]);
+			if (w >= 800 && h >= 600)  // min res
+			{
+				cbResolution->addItem(toStr(w) + " x " + toStr(h));
+				liRes->addItem(mode);
+				int ww = w - mWindow->getWidth(), hh = h - mWindow->getHeight();
+				if (abs(ww) < 30 && abs(hh) < 50)
+				{	sel = i;  modeSel = mode;  }
+			}
 		}
-		// set current mode
-		std::string modeString = Ogre::StringConverter::toString(mWindow->getWidth()) + " x " + Ogre::StringConverter::toString(mWindow->getHeight());
-		Ogre::StringUtil::trim(modeString);
-		cbResolution->setIndexSelected(cbResolution->findItemIndexWith(modeString));
+		// todo.. sort w,h asc.
+		//  sel current mode
+		if (sel > -1)
+		{
+			//cbResolution->setIndexSelected(sel);
+			liRes->setIndexSelected(liRes->findItemIndexWith(modeSel));
+		}
 	}
 	
 	
