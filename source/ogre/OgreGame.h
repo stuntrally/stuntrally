@@ -190,12 +190,11 @@ protected:
 		chkVidFullscr(WP), chkVidVSync(WP), UpdBloomVals();
 
 	void comboTexFilter(SL);
-	void comboResolution(SL);
-	ButtonPtr bRkmh, bRmph;  void radKmh(WP), radMph(WP), btnTrGrReset(WP), btnQuit(WP);
+	ButtonPtr bRkmh, bRmph;  void radKmh(WP), radMph(WP), btnTrGrReset(WP), btnQuit(WP), btnResChng(WP);
 	ButtonPtr chDbgT,chDbgB, chBlt,chFps, chTimes,chMinimp, bnQuit;
 
 	//  game
-	String sListCar,sListTrack;  ListPtr carList,trkList;
+	String sListCar,sListTrack;  ListPtr carList,trkList, resList;
 	void listCarChng(List* li, size_t pos),		btnChgCar(WP);
 	void listTrackChng(List* li, size_t pos),	btnChgTrack(WP);
 	void btnNewGame(WP),btnNewGameStart(WP), btnShadows(WP);

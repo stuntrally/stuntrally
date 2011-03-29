@@ -47,7 +47,8 @@ bool App::frameStart(Real time)
 {
 	if (bWindowResized)
 	{
-		comboResolution(NULL, 0);
+		//comboResolution(NULL, 0);
+		btnResChng(0);
 		bWindowResized = false;
 	}
 	

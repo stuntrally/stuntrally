@@ -175,29 +175,38 @@ void App::InitGui()
 
 	
 	///  video resolutions combobox
-	ComboBoxPtr cbResolution = mGUI->findWidget<ComboBox>("Resolution");
-	// selection changed event
-	if (cbResolution)
+    //------------------------------------
+	resList = mGUI->findWidget<List>("ResList");
+	if (resList)
 	{
-		cbResolution->eventComboChangePosition = newDelegate(this, &App::comboResolution);
-		// populate video resolution list
-		const Ogre::StringVector& videoModes = Ogre::Root::getSingleton().getRenderSystem()->getConfigOptions()["Video Mode"].possibleValues;
-		for (int i=0; i<videoModes.size(); i++)
+		//  fill video resolution list
+		const StringVector& videoModes = Root::getSingleton().getRenderSystem()->getConfigOptions()["Video Mode"].possibleValues;
+		String modeSel = "";
+		for (int i=0; i < videoModes.size(); i++)
 		{
-			std::string mode = videoModes[i];
-			Ogre::StringUtil::trim(mode);
-			//cbResolution->addItem(mode);
+			String mode = videoModes[i];
+			StringUtil::trim(mode);
+			if (StringUtil::match(mode, "*16-bit*"))  continue;  //skip ?DX
 
-			Ogre::StringVector vmopts = Ogre::StringUtil::split(mode, " x");  // only resolution
-			unsigned int w = Ogre::StringConverter::parseUnsignedInt(vmopts[0]);
-			unsigned int h = Ogre::StringConverter::parseUnsignedInt(vmopts[1]);
-			cbResolution->addItem(toStr(w) + " x " + toStr(h));
+			StringVector vmopts = StringUtil::split(mode, " x");  // only resolution
+			int w = StringConverter::parseUnsignedInt(vmopts[0]);
+			int h = StringConverter::parseUnsignedInt(vmopts[1]);
+			if (w >= 800 && h >= 600)  // min res
+			{
+				mode = toStr(w) + " x " + toStr(h);
+				resList->addItem(mode);
+				int ww = w - mWindow->getWidth(), hh = h - mWindow->getHeight();
+				if (abs(ww) < 30 && abs(hh) < 50)
+					modeSel = mode;
+			}
 		}
-		// set current mode
-		std::string modeString = Ogre::StringConverter::toString(mWindow->getWidth()) + " x " + Ogre::StringConverter::toString(mWindow->getHeight());
-		Ogre::StringUtil::trim(modeString);
-		cbResolution->setIndexSelected(cbResolution->findItemIndexWith(modeString));
+		// todo.. sort w,h asc.
+		//  sel current mode
+		if (modeSel != "")
+			resList->setIndexSelected(resList->findItemIndexWith(modeSel));
 	}
+	ButtonPtr btnRes = mGUI->findWidget<Button>("ResChange");
+	if (btnRes)  {  btnRes->eventMouseButtonClick = newDelegate(this, &App::btnResChng);  }
 	
 	
 	///  cars list

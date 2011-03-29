@@ -18,7 +18,7 @@ App::App()
 	,mTerrainGlobals(0), mTerrainGroup(0), mPaging(false)
 	,mTerrainPaging(0), mPageManager(0)
 	// gui
-	,mToolTip(0), mToolTipTxt(0), carList(0), trkList(0)
+	,mToolTip(0), mToolTipTxt(0), carList(0), trkList(0), resList(0)
 	,valAnisotropy(0), valViewDist(0), valTerDetail(0), valTerDist(0), valRoadDist(0)  // detail
 	,valTrees(0), valGrass(0), valTreesDist(0), valGrassDist(0)  // paged
 	,valReflSkip(0), valReflSize(0), valReflFaces(0), valReflDist(0)  // refl
