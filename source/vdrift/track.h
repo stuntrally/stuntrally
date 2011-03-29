@@ -1,6 +1,8 @@
 #ifndef _TRACK_H
 #define _TRACK_H
 
+#include <memory>
+
 #include "model_joe03.h"
 #include "texture.h"
 #include "joepack.h"
