@@ -1,0 +1,98 @@
+#!/usr/bin/make -f
+
+# Uncomment this to turn on verbose mode.
+#export DH_VERBOSE=1
+
+# This has to be exported to make some magic below work.
+export DH_OPTIONS
+
+BUILD_TREE=$(CURDIR)/build-tree
+
+patch:
+	$(MAKE) -f /usr/share/quilt/quilt.make patch
+
+configure: configure-stamp
+configure-stamp:
+	dh_testdir
+	$(MAKE) -f /usr/share/quilt/quilt.make patch
+	# Perform an out-of-tree build to keep a clean source tree
+	rm -rf $(BUILD_TREE)
+	mkdir $(BUILD_TREE)
+	cd $(BUILD_TREE); cmake .. \
+		-DCMAKE_VERBOSE_MAKEFILE:BOOL=ON \
+		-DCMAKE_INSTALL_PREFIX:STRING="/usr" \
+		-DCMAKE_C_FLAGS:STRING="$(CFLAGS)"
+	touch $@
+
+build: build-stamp
+build-stamp: configure-stamp 
+	dh_testdir
+	cd $(BUILD_TREE); $(MAKE)
+	touch $@
+
+clean:
+	dh_testdir
+	dh_testroot
+	rm -f build-stamp configure-stamp
+	if [ -d $(BUILD_TREE) ]; then cd $(BUILD_TREE); $(MAKE) clean; fi
+	rm -fr $(BUILD_TREE)
+	$(MAKE) -f /usr/share/quilt/quilt.make unpatch
+	dh_clean 
+
+install: build
+	dh_testdir
+	dh_testroot
+	dh_prep
+	dh_installdirs
+	cd $(BUILD_TREE); $(MAKE) install DESTDIR=$(CURDIR)/debian/stuntrally
+	cp dist/stuntrally.png $(CURDIR)/debian/stuntrally/usr/share/pixmaps/stuntrally.png
+	mv $(CURDIR)/debian/stuntrally/usr/bin $(CURDIR)/debian/stuntrally/usr/games
+
+	# Remove development stuff
+	rm -rf $(CURDIR)/debian/stuntrally/usr/include
+	rm -rf $(CURDIR)/debian/stuntrally/usr/lib/*.a
+
+	# Move data to its own package
+	mkdir -p $(CURDIR)/debian/stuntrally-data/usr/share/games/stuntrally
+	mv $(CURDIR)/debian/stuntrally/usr/share/games/stuntrally/* $(CURDIR)/debian/stuntrally-data/usr/share/games/stuntrally
+
+	# Move tracks to its own package
+	mkdir -p $(CURDIR)/debian/stuntrally-tracks/usr/share/games/stuntrally/tracks
+	mv $(CURDIR)/debian/stuntrally-data/usr/share/games/stuntrally/tracks/* $(CURDIR)/debian/stuntrally-tracks/usr/share/games/stuntrally/tracks
+	
+# Build architecture independant packages using the common target.
+binary-indep:
+	dh_testdir
+	dh_testroot
+	dh_install -i
+	dh_link -i
+	dh_compress -i
+	dh_fixperms -i
+	dh_makeshlibs -i
+	dh_installdeb -i
+	dh_gencontrol -i
+	dh_md5sums -i
+	dh_builddeb -i
+
+# Build architecture dependant packages using the common target.
+binary-arch: build install
+	dh_testdir
+	dh_testroot
+	dh_installchangelogs -a
+	dh_installdocs -a
+	dh_installmenu -a
+	dh_installman -a
+	dh_install -a
+	dh_icons -a
+	dh_link -a
+	dh_strip --dbg-package=stuntrally-dbg
+	dh_compress -a 
+	dh_fixperms -a
+	dh_makeshlibs -a
+	dh_installdeb -a
+	dh_gencontrol -a
+	dh_md5sums -a
+	dh_builddeb -a
+
+binary: binary-arch binary-indep
+.PHONY: build clean binary-indep binary-arch binary install configure
