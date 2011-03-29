@@ -175,18 +175,16 @@ void App::InitGui()
 
 	
 	///  video resolutions combobox
-	ComboBoxPtr cbResolution = mGUI->findWidget<ComboBox>("Resolution");
-	ListPtr liRes = mGUI->findWidget<List>("ResList");
-	// selection changed event
-	if (cbResolution && liRes)
+    //------------------------------------
+	resList = mGUI->findWidget<List>("ResList");
+	if (resList)
 	{
-		cbResolution->eventComboChangePosition = newDelegate(this, &App::comboResolution);
-		// populate video resolution list
+		//  fill video resolution list
 		const StringVector& videoModes = Root::getSingleton().getRenderSystem()->getConfigOptions()["Video Mode"].possibleValues;
-		int sel = -1;  string modeSel = "";
+		String modeSel = "";
 		for (int i=0; i < videoModes.size(); i++)
 		{
-			std::string mode = videoModes[i];
+			String mode = videoModes[i];
 			StringUtil::trim(mode);
 			if (StringUtil::match(mode, "*16-bit*"))  continue;  //skip ?DX
 
@@ -195,21 +193,20 @@ void App::InitGui()
 			int h = StringConverter::parseUnsignedInt(vmopts[1]);
 			if (w >= 800 && h >= 600)  // min res
 			{
-				cbResolution->addItem(toStr(w) + " x " + toStr(h));
-				liRes->addItem(mode);
+				mode = toStr(w) + " x " + toStr(h);
+				resList->addItem(mode);
 				int ww = w - mWindow->getWidth(), hh = h - mWindow->getHeight();
 				if (abs(ww) < 30 && abs(hh) < 50)
-				{	sel = i;  modeSel = mode;  }
+					modeSel = mode;
 			}
 		}
 		// todo.. sort w,h asc.
 		//  sel current mode
-		if (sel > -1)
-		{
-			//cbResolution->setIndexSelected(sel);
-			liRes->setIndexSelected(liRes->findItemIndexWith(modeSel));
-		}
+		if (modeSel != "")
+			resList->setIndexSelected(resList->findItemIndexWith(modeSel));
 	}
+	ButtonPtr btnRes = mGUI->findWidget<Button>("ResChange");
+	if (btnRes)  {  btnRes->eventMouseButtonClick = newDelegate(this, &App::btnResChng);  }
 	
 	
 	///  cars list

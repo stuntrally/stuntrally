@@ -339,28 +339,27 @@ void App::chkBltLines(WP wp){		ChkEv(bltLines);		}
 
 //  [Video]  . . . . . . . . . . . . . . . . . . . .    ---- ------ ----    . . . . . . . . . . . . . . . . . . . .
 
-void App::comboResolution(SL)
+void App::btnResChng(WP)
 {
-	if (wp)
+	if (!resList)  return;
+
+	String mode = resList->getItem(resList->getIndexSelected());
+	pSet->windowx = Ogre::StringConverter::parseInt(Ogre::StringUtil::split(mode, "x")[0]);
+	pSet->windowy = Ogre::StringConverter::parseInt(Ogre::StringUtil::split(mode, "x")[1]);
+	
+	mWindow->resize(pSet->windowx, pSet->windowy);
+	
+	if (pSet->fullscreen)
+		mWindow->setFullscreen(true, pSet->windowx, pSet->windowy);
+	else
 	{
-		std::string modeString = mGUI->findWidget<ComboBox>("Resolution")->getItem(mGUI->findWidget<ComboBox>("Resolution")->getIndexSelected());
-		pSet->windowx = Ogre::StringConverter::parseInt(Ogre::StringUtil::split(modeString, "x")[0]);
-		pSet->windowy = Ogre::StringConverter::parseInt(Ogre::StringUtil::split(modeString, "x")[1]);
-		
-		mWindow->resize(pSet->windowx, pSet->windowy);
-		
-		if (pSet->fullscreen)
-			mWindow->setFullscreen(true, pSet->windowx, pSet->windowy);
-		else
-		{
-		#ifdef _WIN32
-			int sx = GetSystemMetrics(SM_CXSCREEN), sy = GetSystemMetrics(SM_CYSCREEN);
-			int cx = max(0,(sx - pSet->windowx) / 2), cy = max(0,(sy - pSet->windowy) / 2);
-			mWindow->reposition(cx,cy);
-		#else
-			mWindow->reposition(0,0);  // center ?..
-		#endif
-		}
+	#ifdef _WIN32
+		int sx = GetSystemMetrics(SM_CXSCREEN), sy = GetSystemMetrics(SM_CYSCREEN);
+		int cx = max(0,(sx - pSet->windowx) / 2), cy = max(0,(sy - pSet->windowy) / 2);
+		mWindow->reposition(cx,cy);
+	#else
+		mWindow->reposition(0,0);  // center ?..
+	#endif
 	}
 		
 	bSizeHUD = true;  // resize HUD
