@@ -38,6 +38,31 @@
 	<Camera on="1" name="Arena view"	type="2"  yaw="90"   pitch="160" offset="300 100 0" speed="25" default="0" />
 	<Camera on="0" name="Arena low"		type="2"  yaw="0.2"  pitch="170" offset="0 50 0"	speed="15" />
 	<Camera on="1" name="Arena Up low"	type="2"  yaw="0.1"  pitch="90"  offset="0 300 0"	speed="0" default="0" />
+
+	<Camera on="1" name="Arena Up low2"	type="2"  yaw="0.1"  pitch="90.1"  offset="-60 100 -80"	speed="0" default="1" />
+
+	<Camera on="1" name="Arena T0"	type="2"  yaw="0.1"  pitch="90.1"  offset="-100 -9.9 -100"	speed="0" default="1" />
+	<Camera on="1" name="Arena T1"	type="2"  yaw="0.1"  pitch="90.1"  offset="-80 -9.9 -100"	speed="0" default="0" />
+	<Camera on="1" name="Arena T2"	type="2"  yaw="0.1"  pitch="90.1"  offset="-60 -9.9 -100"	speed="0" default="0" />
+	<Camera on="1" name="Arena T3"	type="2"  yaw="0.1"  pitch="90.1"  offset="-40 -9.9 -100"	speed="0" default="0" />
+	<Camera on="1" name="Arena T4"	type="2"  yaw="0.1"  pitch="90.1"  offset="-20 -9.9 -100"	speed="0" default="0" />
+	<Camera on="1" name="Arena T5"	type="2"  yaw="0.1"  pitch="90.1"  offset="  0 -9.9 -100"	speed="0" default="0" />
+	<Camera on="1" name="Arena T6"	type="2"  yaw="0.1"  pitch="90.1"  offset=" 20 -9.9 -100"	speed="0" default="0" />
+	<Camera on="1" name="Arena T7"	type="2"  yaw="0.1"  pitch="90.1"  offset=" 40 -9.9 -100"	speed="0" default="0" />
+	<Camera on="1" name="Arena T8"	type="2"  yaw="0.1"  pitch="90.1"  offset=" 60 -9.9 -100"	speed="0" default="0" />
+	<Camera on="1" name="Arena T9"	type="2"  yaw="0.1"  pitch="90.1"  offset=" 80 -9.9 -100"	speed="0" default="0" />
+
+	<Camera on="1" name="Arena T0."	type="2"  yaw="0.1"  pitch="90.1"  offset="-100 -9.9 -80"	speed="0" default="0" />
+	<Camera on="1" name="Arena T1."	type="2"  yaw="0.1"  pitch="90.1"  offset="-80 -9.9 -80"	speed="0" default="0" />
+	<Camera on="1" name="Arena T2."	type="2"  yaw="0.1"  pitch="90.1"  offset="-60 -9.9 -80"	speed="0" default="0" />
+	<Camera on="1" name="Arena T3."	type="2"  yaw="0.1"  pitch="90.1"  offset="-40 -9.9 -80"	speed="0" default="0" />
+	<Camera on="1" name="Arena T4."	type="2"  yaw="0.1"  pitch="90.1"  offset="-20 -9.9 -80"	speed="0" default="0" />
+	<Camera on="1" name="Arena T5."	type="2"  yaw="0.1"  pitch="90.1"  offset="  0 -9.9 -80"	speed="0" default="0" />
+	<Camera on="1" name="Arena T6."	type="2"  yaw="0.1"  pitch="90.1"  offset=" 20 -9.9 -80"	speed="0" default="0" />
+	<Camera on="1" name="Arena T7."	type="2"  yaw="0.1"  pitch="90.1"  offset=" 40 -9.9 -80"	speed="0" default="0" />
+	<Camera on="1" name="Arena T8."	type="2"  yaw="0.1"  pitch="90.1"  offset=" 60 -9.9 -80"	speed="0" default="0" />
+	<Camera on="1" name="Arena T9."	type="2"  yaw="0.1"  pitch="90.1"  offset=" 80 -9.9 -80"	speed="0" default="0" />
+
 	<Camera on="0" name="Arena Up"		type="2"  yaw="0.1"  pitch="90"  offset="0 500 0"	speed="0" />
 	<Camera on="0" name="Arena Up2"		type="2"  yaw="0.1"  pitch="90"  offset="0 1400 0"	speed="0" />
 
