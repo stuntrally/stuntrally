@@ -18,7 +18,7 @@ Description: rally game with stunt elements
  Rally game with Stunt elements, based on VDrift and OGRE.
 
 Package: stuntrally-data
-Architecture: any
+Architecture: all
 Depends: stuntrally (= ${binary:Version})
 Description: rally game with stunt elements - data
  Rally game with Stunt elements, based on VDrift and OGRE.
@@ -26,7 +26,7 @@ Description: rally game with stunt elements - data
  This package includes data files required by the game.
 
 Package: stuntrally-tracks
-Architecture: any
+Architecture: all
 Depends: stuntrally (= ${binary:Version})
 Description: rally game with stunt elements - tracks
  Rally game with Stunt elements, based on VDrift and OGRE.
