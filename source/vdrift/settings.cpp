@@ -100,7 +100,7 @@ SETTINGS::SETTINGS() :  ///  Defaults
 	skin("simple"), vol_master(1.f), vol_engine(1.f), vol_tires(1.f), vol_env(1.f),
 	autostart(0), ogre_dialog(1), escquit(0), bltDebug(0), bltLines(1),
 	// loading
-	loadingbackground(true),
+	loadingbackground(true), veget_collis(true),
 	//  sim
 	game_fq(100.f), blt_fq(60.f), blt_iter(7), mult_thr(0),  //low
 	// video

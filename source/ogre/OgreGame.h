@@ -187,7 +187,8 @@ protected:
 		chkAbs(WP), chkTcs(WP), chkGear(WP), chkRear(WP), chkClutch(WP),  // car
 		chkOgreDialog(WP), chkAutoStart(WP), chkEscQuits(WP), chkBltLines(WP),  // startup
 		chkVidBloom(WP), chkVidHDR(WP), chkVidBlur(WP),  // video
-		chkVidFullscr(WP), chkVidVSync(WP), UpdBloomVals();
+		chkVidFullscr(WP), chkVidVSync(WP), UpdBloomVals(),
+		chkLoadPics(WP), chkVegetCollis(WP);
 
 	void comboTexFilter(SL);
 	ButtonPtr bRkmh, bRmph;  void radKmh(WP), radMph(WP), btnTrGrReset(WP), btnQuit(WP), btnResChng(WP);
