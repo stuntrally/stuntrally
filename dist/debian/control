@@ -13,7 +13,9 @@ Homepage: http://code.google.com/p/vdrift-ogre/
 
 Package: stuntrally
 Architecture: any
-Depends: stuntrally-data, stuntrally-tracks, ${shlibs:Depends}, ${misc:Depends}
+Depends: stuntrally-data, stuntrally-tracks,
+ libfreeimage3, libzzip-0-13,
+ ${shlibs:Depends}, ${misc:Depends}
 Description: rally game with stunt elements
  Rally game with Stunt elements, based on VDrift and OGRE.
 
