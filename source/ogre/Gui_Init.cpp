@@ -142,6 +142,7 @@ void App::InitGui()
 	Chk("CarABS",  chkAbs, abs);		Chk("CarTCS", chkTcs, tcs);
 	Chk("CarGear", chkGear, autoshift);
 	Chk("CarRear", chkRear, autorear);	Chk("CarClutch", chkClutch, autoclutch);
+	Chk("VegetCollis", chkVegetCollis, veget_collis);
 
 	//  kmh/mph radio
 	bRkmh = mGUI->findWidget<Button>("kmh");
@@ -158,6 +159,7 @@ void App::InitGui()
 	Chk("AutoStart", chkAutoStart, autostart);
 	Chk("EscQuits", chkEscQuits, escquit);
 	Chk("BltLines", chkBltLines, bltLines);
+	Chk("ShowPictures", chkLoadPics, loadingbackground);
 	
 	//  compositor, video
 	Chk("Bloom", chkVidBloom, bloom);

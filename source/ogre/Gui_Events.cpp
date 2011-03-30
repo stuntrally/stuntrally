@@ -334,7 +334,11 @@ void App::radMph(WP wp){	bRkmh->setStateCheck(false);  bRmph->setStateCheck(true
 void App::chkOgreDialog(WP wp){		ChkEv(ogre_dialog);	}
 void App::chkAutoStart(WP wp){		ChkEv(autostart);	}
 void App::chkEscQuits(WP wp){		ChkEv(escquit);		}
-void App::chkBltLines(WP wp){		ChkEv(bltLines);		}
+void App::chkBltLines(WP wp){		ChkEv(bltLines);	}
+
+void App::chkLoadPics(WP wp){		ChkEv(loadingbackground);	}
+void App::chkVegetCollis(WP wp){	ChkEv(veget_collis);	}
+
 
 
 //  [Video]  . . . . . . . . . . . . . . . . . . . .    ---- ------ ----    . . . . . . . . . . . . . . . . . . . .
