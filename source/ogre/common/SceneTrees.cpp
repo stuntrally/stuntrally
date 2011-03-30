@@ -148,6 +148,7 @@ void App::CreateTrees()
 				
 			///  bullet shape params  todo: to xml...
 			//--------------------------------------------------
+			#ifndef ROAD_EDITOR  //  in Game
 			enum BLT_SHP {  BLT_None=0, BLT_Sphere, BLT_CapsZ, } eShp = BLT_Sphere;
 			btScalar frict = 0.2, restit = 0.9;
 			Vector3 ofs(0,0,0);  Real radius = 1.f, height = 1.f;
@@ -170,6 +171,7 @@ void App::CreateTrees()
 			else if (pg.name == "palm.mesh")	{	ofs = Vector3(0.0, 0.0, 1.4);  radius = 0.4;  height = 3.0;  eShp = BLT_CapsZ;  frict = 0.7;  }
 			//none: plant1 plant2 shroom1_1 shroom1_2 shroom1_3 shroom2_1 shroom2_2 shroom2_3
 			}
+			#endif
 			
 			//--------------------------------------------------
 
@@ -189,11 +191,13 @@ void App::CreateTrees()
 				Vector3 pos0 = pos;
 				bool add = true;
 
+			#ifndef ROAD_EDITOR  //  in Game
 				//  ofs pos, rotY, scl
 				Vector2 vo;  float yr = -yaw.valueRadians();
 				vo.x = ofs.x * cos(yr) - ofs.y * sin(yr);
 				vo.y = ofs.x * sin(yr) + ofs.y * cos(yr);
 				pos.x += vo.x * scl;  pos.z += vo.y * scl;
+			#endif
 				
 				//  check if on road
 				if (r > 0)
