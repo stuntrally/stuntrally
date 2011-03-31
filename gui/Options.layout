@@ -707,7 +707,7 @@
 						</Widget>
 						<Widget type="Button" skin="CheckBox" position="352 62 236 24" name="ShowPictures">
 							<Property key="Text_TextColour" value="0.8 0.9 1.0"/>
-							<Property key="Widget_Caption" value="Show pictures while loading"/>
+							<Property key="Widget_Caption" value="Show pictures while loading*"/>
 						</Widget>
 					</Widget>
 				</Widget>
@@ -812,45 +812,43 @@
 			</Widget>
 			<Widget type="TabItem" skin="" position="4 26 787 531">
 				<Property key="Widget_Caption" value="About"/>
-				<Widget type="StaticText" skin="StaticText" position="24 18 110 24">
-					<Property key="Widget_Caption" value="Stunt Rally"/>
-					<Property key="Text_TextColour" value="0.7 1 0.4"/>
-				</Widget>
-				<Widget type="StaticText" skin="StaticText" position="152 18 90 24">
+				<Widget type="StaticText" skin="StaticText" position="536 202 90 24">
 					<Property key="Widget_Caption" value="version 1.1"/>
-					<Property key="Text_TextColour" value="0.7 1 0.4"/>
+					<Property key="Text_TextColour" value="0.7 1 0.5"/>
 				</Widget>
-				<Widget type="StaticText" skin="StaticText" position="354 32 110 24">
+				<Widget type="StaticText" skin="StaticText" position="26 224 110 24">
 					<Property key="Widget_Caption" value="A game by"/>
-					<Property key="Text_TextColour" value="0.8 0.9 1"/>
+					<Property key="Text_TextColour" value="0.7 0.86 1"/>
 				</Widget>
-				<Widget type="StaticText" skin="StaticText" position="210 376 110 24">
+				<Widget type="StaticText" skin="StaticText" position="328 223 128 24">
+					<Property key="Widget_Caption" value="and contributors."/>
+					<Property key="Text_TextColour" value="0.7 0.86 1"/>
+				</Widget>
+				<Widget type="StaticText" skin="StaticText" position="210 392 110 24">
 					<Property key="Widget_Caption" value="based on"/>
 					<Property key="Text_TextColour" value="0.85 0.85 0.85"/>
 				</Widget>
-				<Widget type="StaticText" skin="StaticText" position="586 376 110 24">
+				<Widget type="StaticText" skin="StaticText" position="586 392 110 24">
 					<Property key="Widget_Caption" value="and using"/>
 					<Property key="Text_TextColour" value="0.8 1 0.8"/>
 				</Widget>
-				<Widget type="StaticImage" skin="StaticImage" position="274 64 256 256">
+				<Widget type="StaticImage" skin="StaticImage" position="90 192 256 256">
 					<Property key="Image_Texture" value="_ch-logo.png"/>
-					<UserString key="tip" value="code.google.com/p/vdrift-ogre/"/>
 				</Widget>
-				<Widget type="StaticImage" skin="StaticImage" position="14 402 466 110">
+				<Widget type="StaticImage" skin="StaticImage" position="6 410 458 110">
 					<Property key="Image_Texture" value="vdrift-logo.png"/>
 					<UserString key="tip" value="vdrift.net"/>
 				</Widget>
-				<Widget type="StaticImage" skin="StaticImage" position="512 416 256 128">
+				<Widget type="StaticImage" skin="StaticImage" position="528 424 256 128">
 					<Property key="Image_Texture" value="ogre-logo.png"/>
 					<UserString key="tip" value="www.ogre3d.org"/>
 				</Widget>
-				<Widget type="StaticText" skin="StaticText" position="352 271 128 24">
-					<Property key="Widget_Caption" value="and contributors."/>
-					<Property key="Text_TextColour" value="0.8 0.9 1"/>
-				</Widget>
-				<Widget type="StaticText" skin="StaticText" position="208 327 392 24">
+				<Widget type="StaticText" skin="StaticText" position="360 300 408 24">
 					<Property key="Widget_Caption" value="project&apos;s page:     http://code.google.com/p/vdrift-ogre/"/>
 					<Property key="Text_TextColour" value="0.7 0.86 1.0"/>
+				</Widget>
+				<Widget type="StaticImage" skin="StaticImage" position="20 7 752 188">
+					<Property key="Image_Texture" value="stuntrally-logo.png"/>
 				</Widget>
 			</Widget>
 		</Widget>
