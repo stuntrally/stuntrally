@@ -49,6 +49,7 @@ void SETTINGS::Serialize(bool w, CONFIGFILE & c)
 	Param(c,w, "control.autorear", autorear);
 	Param(c,w, "control.speed_sens", speed_sensitivity);	Param(c,w, "control.button_ramp", button_ramp);
 	Param(c,w, "control.abs", abs);				Param(c,w, "control.tcs", tcs);
+	Param(c,w, "control.veget_collis", veget_collis);
 	
 	Param(c,w, "misc.skin", skin);				Param(c,w, "misc.volume", vol_master);
 	Param(c,w, "misc.vol_engine", vol_engine);	Param(c,w, "misc.vol_tires", vol_tires);

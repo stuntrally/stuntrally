@@ -239,15 +239,15 @@ bool BaseApp::setup()
 {
 #if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
 	#ifdef _DEBUG
-	mRoot = OGRE_NEW Root(PATHMANAGER::GetGameConfigDir() + "/plugins_win_d.cfg", PATHMANAGER::GetUserConfigDir() + "/ogreset.cfg", PATHMANAGER::GetLogDir() + "/ogre.log");
+	mRoot = OGRE_NEW Root(PATHMANAGER::GetGameConfigDir() + "/plugins_win_d.cfg", PATHMANAGER::GetUserConfigDir() + "/ogreset.cfg", PATHMANAGER::GetLogDir() + "/ogre_ed.log");
 	#else
-	mRoot = OGRE_NEW Root(PATHMANAGER::GetGameConfigDir() + "/plugins_win.cfg", PATHMANAGER::GetUserConfigDir() + "/ogreset.cfg", PATHMANAGER::GetLogDir() + "/ogre.log");
+	mRoot = OGRE_NEW Root(PATHMANAGER::GetGameConfigDir() + "/plugins_win.cfg", PATHMANAGER::GetUserConfigDir() + "/ogreset.cfg", PATHMANAGER::GetLogDir() + "/ogre_ed.log");
 	#endif
 #else
 	#ifdef _DEBUG
-	mRoot = OGRE_NEW Root(PATHMANAGER::GetGameConfigDir() + "/plugins_nix_d.cfg", PATHMANAGER::GetUserConfigDir() + "/ogreset.cfg", PATHMANAGER::GetLogDir() + "/ogre.log");
+	mRoot = OGRE_NEW Root(PATHMANAGER::GetGameConfigDir() + "/plugins_nix_d.cfg", PATHMANAGER::GetUserConfigDir() + "/ogreset.cfg", PATHMANAGER::GetLogDir() + "/ogre_ed.log");
 	#else
-	mRoot = OGRE_NEW Root(PATHMANAGER::GetGameConfigDir() + "/plugins_nix.cfg", PATHMANAGER::GetUserConfigDir() + "/ogreset.cfg", PATHMANAGER::GetLogDir() + "/ogre.log");
+	mRoot = OGRE_NEW Root(PATHMANAGER::GetGameConfigDir() + "/plugins_nix.cfg", PATHMANAGER::GetUserConfigDir() + "/ogreset.cfg", PATHMANAGER::GetLogDir() + "/ogre_ed.log");
 	#endif
 #endif
 	
