@@ -19,12 +19,7 @@ void App::UpdThr()
 		if (pSet->mult_thr == 1 && !bLoading)
 		{
 			bool ret = pGame->OneLoop();
-
-			if (!pGame->pause && mFCam)
-				mFCam->update(pGame->framerate/**/);
-			if (ndSky)  ///o-
-				ndSky->setPosition(GetCamera()->getPosition());
-
+			newPoses();
 			if (!ret)
 				mShutDown = true;
 #if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
@@ -76,14 +71,24 @@ bool App::frameStart(Real time)
 		pGame->pause = isFocGui;
 
 		///  step Game  **
-		//  single thread, sim on draw
 		bool ret = true;
-		if (pGame->settings->mult_thr != 1)
+		if (pGame->settings->mult_thr == 0)
 		{
+			// single thread
 			ret = pGame->OneLoop();
 			if (!ret)  mShutDown = true;
+			newPoses();
 		}
-		updatePoses(time);  //pGame->framerate
+		else
+		{
+			//  2 threads
+			// OneLoop called in UpdThr()
+		}
+		updatePoses(pGame->framerate);  //pGame->framerate
+		if (!pGame->pause && mFCam)
+			mFCam->update(time/*framerate*//*-deltat*/);
+		if (ndSky)  ///o-
+			ndSky->setPosition(GetCamera()->getPosition());
 
 		updateReflection();  //*
 
