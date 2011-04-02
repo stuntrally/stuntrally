@@ -16,7 +16,7 @@ void App::UpdThr()
 	{
 		///  step Game  **
 		//  separate thread
-		if (pSet->mult_thr == 1)
+		if (pSet->mult_thr == 1 && !bLoading)
 		{
 			bool ret = pGame->OneLoop();
 
