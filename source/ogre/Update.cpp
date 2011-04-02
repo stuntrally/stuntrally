@@ -72,26 +72,23 @@ bool App::frameStart(Real time)
 
 		///  step Game  **
 		bool ret = true;
-		if (pGame->settings->mult_thr != 1)
+		if (pGame->settings->mult_thr == 0)
 		{
 			// single thread
 			ret = pGame->OneLoop();
 			if (!ret)  mShutDown = true;
-			//  single thread
+			newPoses();
 		}
 		else
 		{
 			//  2 threads
 			// OneLoop called in UpdThr()
 		}
-		//newPoses();
-		//updatePoses(/*framerate*/deltat);
+		updatePoses(pGame->framerate);  //pGame->framerate
 		if (!pGame->pause && mFCam)
 			mFCam->update(time/*framerate*//*-deltat*/);
 		if (ndSky)  ///o-
 			ndSky->setPosition(GetCamera()->getPosition());
-
-		updatePoses(pGame->framerate);  //pGame->framerate
 
 		updateReflection();  //*
 
