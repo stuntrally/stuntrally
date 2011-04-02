@@ -68,86 +68,94 @@ void BaseApp::createViewports()
 	mCamera->setAspectRatio( Real(mViewport->getActualWidth()) / Real(mViewport->getActualHeight()));
 }
 
+///  Compositor
+//-------------------------------------------------------------------------------------
 void BaseApp::refreshCompositor()
 {
-	Ogre::CompositorManager::getSingleton().setCompositorEnabled(mViewport, "Bloom", false);
-	Ogre::CompositorManager::getSingleton().setCompositorEnabled(mViewport, "HDR", false);
-	Ogre::CompositorManager::getSingleton().setCompositorEnabled(mViewport, "Motion Blur", false);
+	CompositorManager::getSingleton().setCompositorEnabled(mViewport, "Bloom", false);
+	CompositorManager::getSingleton().setCompositorEnabled(mViewport, "HDR", false);
+	CompositorManager::getSingleton().setCompositorEnabled(mViewport, "Motion Blur", false);
 	
 	// Set bloom settings (intensity, orig weight).
-	Ogre::MaterialPtr blurmat = Ogre::MaterialManager::getSingleton().getByName("Ogre/Compositor/BloomBlend2");
-	Ogre::GpuProgramParametersSharedPtr gpuparams = blurmat->getTechnique(0)->getPass(0)->getFragmentProgramParameters();
+	MaterialPtr blurmat = MaterialManager::getSingleton().getByName("Ogre/Compositor/BloomBlend2");
+	GpuProgramParametersSharedPtr gpuparams = blurmat->getTechnique(0)->getPass(0)->getFragmentProgramParameters();
 	gpuparams->setNamedConstant("OriginalImageWeight", pSet->bloomorig);
 	gpuparams->setNamedConstant("BlurWeight", pSet->bloomintensity);
 	
+	///  HDR params ..
+	//MaterialPtr hdrmat = MaterialManager::getSingleton().getByName("Ogre/Compositor/BloomBlend2");
+	//GpuProgramParametersSharedPtr gpuparams = hdrmat->getTechnique(0)->getPass(0)->getFragmentProgramParameters();
+	//gpuparams->setNamedConstant("Bloom", pSet->);
+
 	// Motion blur intens
-	blurmat = Ogre::MaterialManager::getSingleton().getByName("Ogre/Compositor/Combine");
+	blurmat = MaterialManager::getSingleton().getByName("Ogre/Compositor/Combine");
 	gpuparams = blurmat->getTechnique(0)->getPass(0)->getFragmentProgramParameters();
 	gpuparams->setNamedConstant("blur", pSet->motionblurintensity);
 		
 	if (pSet->bloom)
-		Ogre::CompositorManager::getSingleton().setCompositorEnabled(mViewport, "Bloom", true);
+		CompositorManager::getSingleton().setCompositorEnabled(mViewport, "Bloom", true);
 
 	if (pSet->hdr)
-		Ogre::CompositorManager::getSingleton().setCompositorEnabled(mViewport, "HDR", true);
+		CompositorManager::getSingleton().setCompositorEnabled(mViewport, "HDR", true);
 	
 	if (pSet->motionblur)
-		Ogre::CompositorManager::getSingleton().setCompositorEnabled(mViewport, "Motion Blur", true);
+		CompositorManager::getSingleton().setCompositorEnabled(mViewport, "Motion Blur", true);
 }
 
+//-------------------------------------------------------------------------------------
 void BaseApp::createCompositor()
 {
 	// hdr has to be first in the compositor queue
-	Ogre::CompositorManager::getSingleton().registerCompositorLogic("HDR", new HDRLogic);
+	CompositorManager::getSingleton().registerCompositorLogic("HDR", new HDRLogic);
 		
-	Ogre::CompositorManager::getSingleton().addCompositor(mViewport, "HDR");
+	CompositorManager::getSingleton().addCompositor(mViewport, "HDR");
 
 	// bloom
-	Ogre::CompositorManager::getSingleton().addCompositor(mViewport, "Bloom");
+	CompositorManager::getSingleton().addCompositor(mViewport, "Bloom");
 	
 	// motion blur
-	Ogre::CompositorPtr comp3 = Ogre::CompositorManager::getSingleton().create(
-		"Motion Blur", Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME
+	CompositorPtr comp3 = CompositorManager::getSingleton().create(
+		"Motion Blur", ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME
 	);
-	Ogre::CompositionTechnique *t = comp3->createTechnique();
+	CompositionTechnique *t = comp3->createTechnique();
 	{
-		Ogre::CompositionTechnique::TextureDefinition *def = t->createTextureDefinition("scene");
+		CompositionTechnique::TextureDefinition *def = t->createTextureDefinition("scene");
 		def->width = 0;
 		def->height = 0;
-		def->formatList.push_back(Ogre::PF_R8G8B8);
+		def->formatList.push_back(PF_R8G8B8);
 	}
 	{
-		Ogre::CompositionTechnique::TextureDefinition *def = t->createTextureDefinition("sum");
+		CompositionTechnique::TextureDefinition *def = t->createTextureDefinition("sum");
 		def->width = 0;
 		def->height = 0;
-		def->formatList.push_back(Ogre::PF_R8G8B8);
+		def->formatList.push_back(PF_R8G8B8);
 	}
 	{
-		Ogre::CompositionTechnique::TextureDefinition *def = t->createTextureDefinition("temp");
+		CompositionTechnique::TextureDefinition *def = t->createTextureDefinition("temp");
 		def->width = 0;
 		def->height = 0;
-		def->formatList.push_back(Ogre::PF_R8G8B8);
+		def->formatList.push_back(PF_R8G8B8);
 	}
 	/// Render scene
 	{
-		Ogre::CompositionTargetPass *tp = t->createTargetPass();
-		tp->setInputMode(Ogre::CompositionTargetPass::IM_PREVIOUS);
+		CompositionTargetPass *tp = t->createTargetPass();
+		tp->setInputMode(CompositionTargetPass::IM_PREVIOUS);
 		tp->setOutputName("scene");
 	}
 	/// Initialisation pass for sum texture
 	{
-		Ogre::CompositionTargetPass *tp = t->createTargetPass();
-		tp->setInputMode(Ogre::CompositionTargetPass::IM_PREVIOUS);
+		CompositionTargetPass *tp = t->createTargetPass();
+		tp->setInputMode(CompositionTargetPass::IM_PREVIOUS);
 		tp->setOutputName("sum");
 		tp->setOnlyInitial(true);
 	}
 	/// Do the motion blur
 	{
-		Ogre::CompositionTargetPass *tp = t->createTargetPass();
-		tp->setInputMode(Ogre::CompositionTargetPass::IM_NONE);
+		CompositionTargetPass *tp = t->createTargetPass();
+		tp->setInputMode(CompositionTargetPass::IM_NONE);
 		tp->setOutputName("temp");
-		{ Ogre::CompositionPass *pass = tp->createPass();
-		pass->setType(Ogre::CompositionPass::PT_RENDERQUAD);
+		{ CompositionPass *pass = tp->createPass();
+		pass->setType(CompositionPass::PT_RENDERQUAD);
 		pass->setMaterialName("Ogre/Compositor/Combine");
 		pass->setInput(0, "scene");
 		pass->setInput(1, "sum");
@@ -155,27 +163,27 @@ void BaseApp::createCompositor()
 	}
 	/// Copy back sum texture
 	{
-		Ogre::CompositionTargetPass *tp = t->createTargetPass();
-		tp->setInputMode(Ogre::CompositionTargetPass::IM_NONE);
+		CompositionTargetPass *tp = t->createTargetPass();
+		tp->setInputMode(CompositionTargetPass::IM_NONE);
 		tp->setOutputName("sum");
-		{ Ogre::CompositionPass *pass = tp->createPass();
-		pass->setType(Ogre::CompositionPass::PT_RENDERQUAD);
+		{ CompositionPass *pass = tp->createPass();
+		pass->setType(CompositionPass::PT_RENDERQUAD);
 		pass->setMaterialName("Ogre/Compositor/Copyback");
 		pass->setInput(0, "temp");
 		}
 	}
 	/// Display result
 	{
-		Ogre::CompositionTargetPass *tp = t->getOutputTargetPass();
-		tp->setInputMode(Ogre::CompositionTargetPass::IM_NONE);
-		{ Ogre::CompositionPass *pass = tp->createPass();
-		pass->setType(Ogre::CompositionPass::PT_RENDERQUAD);
+		CompositionTargetPass *tp = t->getOutputTargetPass();
+		tp->setInputMode(CompositionTargetPass::IM_NONE);
+		{ CompositionPass *pass = tp->createPass();
+		pass->setType(CompositionPass::PT_RENDERQUAD);
 		pass->setMaterialName("Ogre/Compositor/MotionBlur");
 		pass->setInput(0, "sum");
 		}
 	}
 
-	Ogre::CompositorManager::getSingleton().addCompositor(mViewport, "Motion Blur");
+	CompositorManager::getSingleton().addCompositor(mViewport, "Motion Blur");
 	
 	refreshCompositor();
 }
@@ -273,7 +281,7 @@ bool BaseApp::configure()
 
 	mRoot->initialise(false);
 	
-	Ogre::NameValuePairList settings;
+	NameValuePairList settings;
 	settings.insert(std::make_pair("title", "Stunt Rally"));
 	settings.insert(std::make_pair("FSAA", toStr(pSet->fsaa)));
 	settings.insert(std::make_pair("vsync", pSet->vsync ? "true" : "false"));
@@ -283,6 +291,7 @@ bool BaseApp::configure()
 	mLoadingBar.bBackgroundImage = pSet->loadingbackground;
 	return true;
 }
+
 //  Setup
 //-------------------------------------------------------------------------------------
 bool BaseApp::setup()

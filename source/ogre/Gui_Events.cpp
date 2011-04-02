@@ -348,8 +348,8 @@ void App::btnResChng(WP)
 	if (!resList)  return;
 
 	String mode = resList->getItem(resList->getIndexSelected());
-	pSet->windowx = Ogre::StringConverter::parseInt(Ogre::StringUtil::split(mode, "x")[0]);
-	pSet->windowy = Ogre::StringConverter::parseInt(Ogre::StringUtil::split(mode, "x")[1]);
+	pSet->windowx = StringConverter::parseInt(StringUtil::split(mode, "x")[0]);
+	pSet->windowy = StringConverter::parseInt(StringUtil::split(mode, "x")[1]);
 	
 	mWindow->resize(pSet->windowx, pSet->windowy);
 	
@@ -374,9 +374,9 @@ void App::btnResChng(WP)
 	}
 }
 
-void App::chkVidBloom(WP wp){		ChkEv(bloom);		Ogre::CompositorManager::getSingleton().setCompositorEnabled(mViewport, "Bloom", pSet->bloom);		}
-void App::chkVidHDR(WP wp){			ChkEv(hdr);			Ogre::CompositorManager::getSingleton().setCompositorEnabled(mViewport, "HDR", pSet->hdr);	}
-void App::chkVidBlur(WP wp){		ChkEv(motionblur);	Ogre::CompositorManager::getSingleton().setCompositorEnabled(mViewport, "Motion Blur", pSet->motionblur);	}
+void App::chkVidBloom(WP wp){		ChkEv(bloom);		CompositorManager::getSingleton().setCompositorEnabled(mViewport, "Bloom", pSet->bloom);		}
+void App::chkVidHDR(WP wp){			ChkEv(hdr);			CompositorManager::getSingleton().setCompositorEnabled(mViewport, "HDR", pSet->hdr);	}
+void App::chkVidBlur(WP wp){		ChkEv(motionblur);	CompositorManager::getSingleton().setCompositorEnabled(mViewport, "Motion Blur", pSet->motionblur);	}
 
 void App::chkVidFullscr(WP wp){		ChkEv(fullscreen);
 	mWindow->setFullscreen(pSet->fullscreen, pSet->windowx, pSet->windowy); mWindow->resize(pSet->windowx, pSet->windowy);
