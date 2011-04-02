@@ -86,6 +86,7 @@ for root, dirs, files in os.walk('.'):
 
 makensis.stdin.write(r'''  WriteRegStr HKLM "Software\${APP}" "" "$INSTDIR"
   WriteUninstaller "$INSTDIR\uninst.exe"
+  SetOutPath "$INSTDIR"
   SetShellVarContext all
   CreateDirectory "$SMPROGRAMS\${APP}"
   CreateShortcut "$SMPROGRAMS\${APP}\${APP}.lnk" "$INSTDIR\${APP}.exe"
