@@ -5,6 +5,7 @@ In this dir you can find various scripts, launchers and other helper files that 
 Below is a short description of them:
 
 * debian/*          - files needed for a debian package, see below "Debian packaging"
+* ppastats.py       - prints statistics about the Launchpad PPA
 * makeinstaller.py  - script for createing Windows installer, see below "Windows installer"
 * *.desktop         - menu launchers for Linux (freedesktop.org-compliant) systems
 * stuntrally.png    - application icon
