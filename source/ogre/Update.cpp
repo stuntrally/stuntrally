@@ -19,7 +19,12 @@ void App::UpdThr()
 		if (pSet->mult_thr == 1 && !bLoading)
 		{
 			bool ret = pGame->OneLoop();
-			newPoses();
+
+			if (!pGame->pause && mFCam)
+				mFCam->update(pGame->framerate/**/);
+			if (ndSky)  ///o-
+				ndSky->setPosition(GetCamera()->getPosition());
+
 			if (!ret)
 				mShutDown = true;
 #if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
@@ -71,24 +76,14 @@ bool App::frameStart(Real time)
 		pGame->pause = isFocGui;
 
 		///  step Game  **
+		//  single thread, sim on draw
 		bool ret = true;
-		if (pGame->settings->mult_thr == 0)
+		if (pGame->settings->mult_thr != 1)
 		{
-			// single thread
 			ret = pGame->OneLoop();
 			if (!ret)  mShutDown = true;
-			newPoses();
 		}
-		else
-		{
-			//  2 threads
-			// OneLoop called in UpdThr()
-		}
-		updatePoses(pGame->framerate);  //pGame->framerate
-		if (!pGame->pause && mFCam)
-			mFCam->update(time/*framerate*//*-deltat*/);
-		if (ndSky)  ///o-
-			ndSky->setPosition(GetCamera()->getPosition());
+		updatePoses(time);  //pGame->framerate
 
 		updateReflection();  //*
 
@@ -193,7 +188,7 @@ void App::newPoses()
 
 	newRot = q1;  vCarY = vcy;
 	bNew = true;
-
+	
 
 	///  sound listener  - - - - -
 	if (pGame->sound.Enabled())
@@ -399,4 +394,19 @@ void App::updatePoses(float time)
 			pe->setEmissionRate(sc.rain2Emit);
 		}
 	}
+
+
+	//  save data for replay
+	///-----------------------------------------------------------------------
+	#if 0
+	ReplayFrame fr;
+
+	fr.time = pGame->timer.GetPlayerTime();
+	fr.pos = newPos;
+	fr.rot = newRot;
+	for (int w=0; w < 4; w++)
+	{	fr.whPos[w] = ndWh[w]->getPosition();  fr.whRot[w] = ndWh[w]->getOrientation();  }
+
+	replay.AddFrame(fr);
+	#endif
 }

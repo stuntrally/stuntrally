@@ -160,34 +160,13 @@ void App::NewGameDoLoad()
 	unsigned int perc = 0;
 	switch ( (*currentLoadingState).first )
 	{
-		case LOADING_STATE_CLEANUP:
-			LoadCleanUp();
-			perc = 3;
-			break;
-		case LOADING_STATE_GAME:
-			LoadGame();
-			perc = 10;
-			break;
-		case LOADING_STATE_SCENE:
-			LoadScene();
-			perc = 20;
-			break;
-		case LOADING_STATE_CAR:
-			LoadCar();
-			perc = 45;
-			break;
-		case LOADING_STATE_TER:
-			LoadTerrain();
-			perc = 70;
-			break;
-		case LOADING_STATE_TRACK:
-			LoadTrack();
-			perc = 75;
-			break;
-		case LOADING_STATE_MISC:
-			LoadMisc();
-			perc = 80;
-			break;
+		case LS_CLEANUP:	LoadCleanUp();	perc = 3;	break;
+		case LS_GAME:		LoadGame();		perc = 10;	break;
+		case LS_SCENE:		LoadScene();	perc = 20;	break;
+		case LS_CAR:		LoadCar();		perc = 45;	break;
+		case LS_TER:		LoadTerrain();	perc = 70;	break;
+		case LS_TRACK:		LoadTrack();	perc = 75;	break;
+		case LS_MISC:		LoadMisc();		perc = 80;	break;
 	}
 
 	// Update label.

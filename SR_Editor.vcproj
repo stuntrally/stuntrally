@@ -2,9 +2,9 @@
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="9,00"
-	Name="SR_Editor"
+	Name="SR-Editor"
 	ProjectGUID="{A5CF81A7-BE81-471E-B546-F7CB2BF78A83}"
-	RootNamespace="SR_Editor"
+	RootNamespace="SR-Editor"
 	Keyword="Win32Proj"
 	TargetFrameworkVersion="196613"
 	>

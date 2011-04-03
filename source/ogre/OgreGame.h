@@ -5,6 +5,7 @@
 #include "../btOgre/BtOgreDebug.h"
 #include "../paged-geom/PagedGeometry.h"
 #include "common/SceneXml.h"
+//#include "ReplayGame.h"
 
 using namespace Ogre;
 using namespace MyGUI;
@@ -23,6 +24,8 @@ public:
 	void updatePoses(float time), newPoses();
 	void UpdThr();  bool bNew;
 	Vector3 newPos,vCarY;  Quaternion newRot;
+
+	//Replay replay;
 
 	Scene sc;  /// scene.xml
 	Light* sun;  void UpdFog(bool bForce=false), UpdSun();
@@ -86,21 +89,8 @@ protected:
 	
 	// Loading
 	bool bLoading;
-	void LoadCleanUp();
-	void LoadGame();
-	void LoadScene();
-	void LoadCar();
-	void LoadTerrain();
-	void LoadTrack();
-	void LoadMisc();
-	
-	#define LOADING_STATE_CLEANUP 0
-	#define LOADING_STATE_GAME 1
-	#define LOADING_STATE_SCENE 2
-	#define LOADING_STATE_CAR 3
-	#define LOADING_STATE_TER 4
-	#define LOADING_STATE_TRACK 5
-	#define LOADING_STATE_MISC 6
+	void LoadCleanUp(), LoadGame(), LoadScene(), LoadCar(), LoadTerrain(), LoadTrack(), LoadMisc();
+	enum ELoadState { LS_CLEANUP=0, LS_GAME, LS_SCENE, LS_CAR, LS_TER, LS_TRACK, LS_MISC, LS_ALL };
 	
 	// id, display name
 	// e.g.: 0, Cleaning up or 3, Loading scene
