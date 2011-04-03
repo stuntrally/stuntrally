@@ -12,10 +12,16 @@ Below is a short description of them:
 * Readme.txt        - this file
 
 
-Debian packaging
-----------------
+Debian/Ubuntu packaging
+-----------------------
 
-TODO: Debian packaging doesn't work yet.
+You need some Debian tools, at least packages dput and dpkg-dev.
+
+Get the "original" tarball from Launchpad, and extract it. Don't remove the archive. Copy the dist/debian directory to the extracted sources and edit debian/changelog to contain info about the new version. Version number and Ubuntu/Debian version are important. After that, build and upload the source package (from the extracted sources):
+
+  dpkg-buildpackage -sd -S
+  cd ..
+  dput ppa:stuntrally-team/stable stuntrally_VERSION_source.changes
 
 
 Windows installer
