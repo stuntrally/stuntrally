@@ -23,6 +23,7 @@ COLLISION_WORLD::COLLISION_WORLD() :
 	//world.getSolverInfo().m_erp2 = 0.2;
 	world.getSolverInfo().m_restitution = 0.0f;
 	//world.getDispatchInfo().m_enableSPU = true;
+	world.setForceUpdateAllAabbs(false);  //+
 }
 
 COLLISION_WORLD::~COLLISION_WORLD()
@@ -300,6 +301,11 @@ void COLLISION_WORLD::Update(float dt)
 	//const float fixedTimeStep = 1 / 60.0f;  ///~  320+  o:60.
 	//world.stepSimulation(dt, maxsubsteps, fixedTimeStep);
 	world.stepSimulation(dt, maxSubsteps, fixedTimestep);
+	/*static int cc = 0;  cc++;  ///+ bullet profiling info
+	if (cc > 60)
+	{	cc = 0;
+		CProfileManager::dumpAll();
+	}/**/
 }
 
 void COLLISION_WORLD::DebugPrint(std::ostream & out)

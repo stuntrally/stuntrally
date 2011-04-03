@@ -133,7 +133,7 @@ void App::CreateTrees()
 		treeLoader->setHeightFunction(getTerrainHeightAround /*,userdata*/);
 		treeLoader->setMaximumScale(4);//6
 		tws = sc.td.fTerWorldSize;
-		int r = imgRoadSize;
+		int r = imgRoadSize, cntr = 0;
 
 		//  layers
 		for (size_t l=0; l < sc.pgLayers.size(); l++)
@@ -217,6 +217,7 @@ void App::CreateTrees()
 				if (!add)  continue;
 
 				treeLoader->addTree(ent, pos0, yaw, scl);
+				cntr++;
 					
 				#ifndef ROAD_EDITOR  //  in Game
 				if (pSet->veget_collis && eShp != BLT_None)
@@ -235,17 +236,18 @@ void App::CreateTrees()
 					//shp->setUserPointer((void*)7777);  // mark as ..
 
 					btCollisionObject* col = new btCollisionObject();
+					col->setActivationState(DISABLE_SIMULATION);
 					col->setCollisionShape(shp);	col->setWorldTransform(tr);
 					col->setFriction(frict);		col->setRestitution(restit);
 					col->setCollisionFlags(col->getCollisionFlags() |
-						btCollisionObject::CF_STATIC_OBJECT | btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT/**/);
+						btCollisionObject::CF_STATIC_OBJECT /*| btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT/**/);
 					pGame->collision.world.addCollisionObject(col);
 					pGame->collision.shapes.push_back(shp);
 				}
 				#endif
 			}
 		}
-
+		Ogre::LogManager::getSingletonPtr()->logMessage(string("***** Vegetation objects count: ") + toStr(cntr));
 	}
 	//imgRoadSize = 0;
 }
