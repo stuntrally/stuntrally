@@ -5902,6 +5902,14 @@
 					>
 				</File>
 				<File
+					RelativePath=".\source\ogre\ReplayGame.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\source\ogre\ReplayGame.h"
+					>
+				</File>
+				<File
 					RelativePath=".\Source\ogre\SceneCar.cpp"
 					>
 				</File>

@@ -326,7 +326,19 @@ void GAME::Tick(float deltat)
 
 		AdvanceGameLogic();
 		/*__*/
+		if (pOgreGame)
+		{
+			pOgreGame->newPoses();
 
+			if (settings->mult_thr != 1)  // == 0
+			{	//  single thread
+				pOgreGame->updatePoses(/*framerate*/deltat);
+				if (!pause && pOgreGame->mFCam)
+				pOgreGame->mFCam->update(framerate/*-deltat*/);
+			if (pOgreGame->ndSky)  ///o-
+				pOgreGame->ndSky->setPosition(pOgreGame->GetCamera()->getPosition());
+			}
+		}
 		curticks++;
 	}
 }

@@ -252,7 +252,8 @@ public:
 			car[i].DebugPrint(out);
 		}
 	}
-	float GetPlayerTime() {assert(playercarindex<car.size());return car[playercarindex].GetTime();}
+	//float GetPlayerTime() {assert(playercarindex<car.size());return car[playercarindex].GetTime();}
+	double GetPlayerTime() {assert(playercarindex<car.size());return car[playercarindex].GetTime();}
 	float GetLastLap() {assert(playercarindex<car.size());return car[playercarindex].GetLastLap();}
 	float GetBestLap(bool bTrackReverse)
 	{
