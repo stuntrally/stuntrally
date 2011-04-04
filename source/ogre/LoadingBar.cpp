@@ -35,6 +35,12 @@ void LoadingBar::start( RenderWindow* window, 		unsigned short numGroupsInit,
 	
 	if (bBackgroundImage)
 	{
+		// add texture unit state, if not already exists
+		MaterialPtr mat = MaterialManager::getSingleton().getByName("Core/BackgroundMat", "Loading");
+		if (mat->getTechnique(0)->getPass(0)->getNumTextureUnitStates() == 0)
+		{
+			mat->getTechnique(0)->getPass(0)->createTextureUnitState();
+		}
 		// figure out how many background images we have.
 		unsigned int i=1;
 		while (1)
@@ -58,7 +64,6 @@ void LoadingBar::start( RenderWindow* window, 		unsigned short numGroupsInit,
 		unsigned int imgNumber;
 		imgNumber = rand() % (i-1);
 		// set the loading image
-		MaterialPtr mat = MaterialManager::getSingleton().getByName("Core/BackgroundMat", "Loading");
 		mat->getTechnique(0)->getPass(0)->getTextureUnitState(0)->setTextureName("loading" + Ogre::StringConverter::toString(imgNumber+1) + ".jpg");
 	}
 	else
