@@ -52,7 +52,7 @@ include_directories(${MYGUI_INCLUDE_DIRS})
 link_directories(${MYGUI_LIB_DIR})
 list(APPEND LIBS ${MYGUI_LIBRARIES} MyGUI.OgrePlatform) #TODO: MyGUI.OgrePlatform is not added by the find script
 
-find_package(Boost COMPONENTS thread filesystem REQUIRED QUIET)
+find_package(Boost COMPONENTS system thread filesystem REQUIRED QUIET)
 include_directories(${Boost_INCLUDE_DIRS})
 link_directories(${Boost_LIBRARY_DIRS})
 list(APPEND LIBS ${Boost_LIBRARIES})
