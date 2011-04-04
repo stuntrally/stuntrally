@@ -1,3 +1,4 @@
+
 struct VS_OUTPUT {
    float4 Pos: POSITION;
    float2 texCoord: TEXCOORD0;
@@ -16,4 +17,5 @@ VS_OUTPUT main(float4 Pos: POSITION){
 
    return Out;
 }
+
 

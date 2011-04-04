@@ -1,25 +1,19 @@
-//---------------------------------------------
-// Bloom
+sampler Blur1: register(s1);
+sampler RT: register(s0);
 
 
-float4 main(float2 texCoord: TEXCOORD0,
-		uniform sampler RT: register(s0),
-		uniform sampler Blur1: register(s1),
-		uniform float OriginalImageWeight,
-		uniform float BlurWeight
-		) : COLOR {
+float luminance(float3 c)
+{
+	return dot( c, float3(0.3, 0.59, 0.11) );
+}
 
-
+float4 main(float2 texCoord: TEXCOORD0) : COLOR {
 	float4 sharp = tex2D(RT,   texCoord);
 	float4 blur  = tex2D(Blur1, texCoord);
 
-	//return blur*0.5+sharp*0.5;
-	return blur*BlurWeight+sharp*OriginalImageWeight;
-	//return blur;
 
-	//return ( sharp + blur * 1.8 ) / 2;
 
-//	return (sharp*3/6 + (blur*4/6))*float4(1.5, 1.5, 1.5, 1);;
+	return ( sharp + blur * 1.8 ) / 2;
 
 //	float4 color	= lerp( sharp, blur, 0.4f );
 
