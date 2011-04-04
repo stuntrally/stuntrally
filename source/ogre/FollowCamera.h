@@ -38,6 +38,8 @@ class FollowCamera
 {
 public:
 	class Camera*  mCamera;
+	
+	TerrainGroup* mTerrain;
 
 	const class Node  *mGoalNode;
 	Vector3  mLook;
@@ -49,6 +51,7 @@ public:
 	~FollowCamera();
 
 	void  update(Real time);
+	void  moveAboveTerrain();
 	void  updInfo(Real time = 0);	Real fMoveTime;
 	void  Move( bool mbLeft, bool mbRight, bool mbMiddle, bool shift, Real mx, Real my, Real mz );
 

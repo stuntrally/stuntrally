@@ -141,6 +141,7 @@ void App::LoadMisc()
 	miReflectCntr = 5;  //.
 	mReflAll1st = true;
 	mFCam->first = true;  // no smooth	
+	mFCam->mTerrain = mTerrainGroup; // assign terrain to cam
 }
 
 /* Actual loading procedure that gets called every frame during load. Performs a single loading step. */

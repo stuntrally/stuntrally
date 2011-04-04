@@ -67,6 +67,7 @@ void FollowCamera::update( Real time )
 			
 			mCamera->setPosition( goalPos );
 			mCamera->setOrientation( qq * Quaternion(Degree(-ca.mPitch),Vector3(1,0,0)) );
+			moveAboveTerrain();
 			updInfo(time);
 			return;
 		}	break;
@@ -95,6 +96,9 @@ void FollowCamera::update( Real time )
 
 	addLook = (goalLook - mLook) * dtmul;//Rot;
 	mLook += addLook;
+	
+	moveAboveTerrain();
+	
 	mCamera->lookAt( mLook );
 	updInfo(time);
 }
@@ -212,7 +216,26 @@ void FollowCamera::Move( bool mbLeft, bool mbRight, bool mbMiddle, bool shift, R
 	ca.mDist  *= 1.0 - mzH * 0.1;
 }
 
-
+///   align with terrain
+//-----------------------------------------------------------------------------------------------------
+void FollowCamera::moveAboveTerrain()
+{
+	/*
+	 * Prevent the camera from going under the ground.
+	 * We do this by queueing the terrain height at the camera position
+	 * and if the camera is under it, we move the camera a little above the terrain. 
+	*/
+	if (mTerrain)
+	{
+		// minimum of 0.2 m distance to the ground
+		#define CAM_TER_MINOFFSET 0.2
+		Vector3 camPos = mCamera->getPosition();
+		float h = mTerrain->getHeightAtWorldPosition(camPos);
+		if (h+0.2 > camPos.y)
+			mCamera->setPosition(camPos.x, h+0.2, camPos.z);
+		#undef CAM_TER_MINOFFSET
+	}
+}
 
 ///  upd Info
 //-----------------------------------------------------------------------------------------------------
@@ -333,7 +356,7 @@ void FollowCamera::setCamera(int ang)
 
 FollowCamera::FollowCamera(Camera* cam) :
 	ovInfo(0),ovName(0), first(true),
-    mCamera(cam), mGoalNode(0),
+    mCamera(cam), mGoalNode(0), mTerrain(0),
     mLook(Vector3::ZERO)
 {  }
 
