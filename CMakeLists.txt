@@ -63,6 +63,10 @@ foreach(lib  OIS SDL OGG VorbisFile)    # Simple libraries added in a loop
 	list(APPEND LIBS ${${lib}_LIBRARIES})
 endforeach()
 
+if(UNIX)
+	list(APPEND LIBS "rt") # For clock_gettime()
+endif()
+
 # Subdirectories
 
 add_subdirectory(source)
