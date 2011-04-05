@@ -4,13 +4,22 @@ In this directory you can find various scripts, launchers and other helper files
 
 Below is a short description of them:
 
-* debian/*          - files needed for a debian package, see below "Debian/Ubuntu packaging"
-* ppastats.py       - prints statistics about the Launchpad PPA
-* makeinstaller.py  - script for creating Windows installer, see below "Windows installer"
-* *.desktop         - menu launchers for Linux (freedesktop.org-compliant) systems
-* stuntrally.png    - application icon
-* CMakeLists.txt    - CMake install targets for files here
-* Readme.txt        - this file
+* create-clean-sources.sh   - for aiding in creation of source packages from hg, see below "Clean sources"
+* debian/*                  - files needed for a debian package, see below "Debian/Ubuntu packaging"
+* ppastats.py               - prints statistics about the Launchpad PPA
+* makeinstaller.py          - script for creating Windows installer, see below "Windows installer"
+* *.desktop                 - menu launchers for Linux (freedesktop.org-compliant) systems
+* stuntrally.png            - application icon
+* CMakeLists.txt            - CMake install targets for files here
+* Readme.txt                - this file
+
+
+Clean sources
+-------------
+
+Since the development environment usually contains extra files like build directory, logs and work-in-progress material, it is not excatly a clean environment for creating distributable source packages. Add the presence of mercurial stuff and possibly fast evolving repo history, it is a tedious task to create source distributions.
+
+The script create-clean-sources.sh comes to rescue: it clones the repo to a temporary location, optionally checks out a specific tag (release), removes all clutter from mercurial and finally (optionally) puts it all into archive. This is also useful and used for the Ubuntu Launchpad uploading.
 
 
 Debian/Ubuntu packaging
