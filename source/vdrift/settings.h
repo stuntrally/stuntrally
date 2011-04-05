@@ -59,6 +59,8 @@ public:
 	int windowx, windowy;
 	bool fullscreen, vsync;
 	int fsaa;
+	string buffer;
+	string rendersystem;
 	
 //------------------------------------------
 	SETTINGS();

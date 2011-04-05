@@ -70,6 +70,8 @@ void SETTINGS::Serialize(bool w, CONFIGFILE & c)
 	Param(c,w, "video.windowx", windowx);      Param(c,w, "video.windowy", windowy);
 	Param(c,w, "video.fullscreen", fullscreen);
 	Param(c,w, "video.fsaa", fsaa); 		   Param(c,w, "video.vsync", vsync);
+	Param(c,w, "video.buffer", buffer);
+	Param(c,w, "video.rendersystem", rendersystem);
 }
 
 SETTINGS::SETTINGS() :  ///  Defaults
@@ -105,5 +107,5 @@ SETTINGS::SETTINGS() :  ///  Defaults
 	//  sim
 	game_fq(100.f), blt_fq(60.f), blt_iter(7), mult_thr(0),  //low
 	// video
-	bloom(false), bloomintensity(0.2), bloomorig(1.0), hdr(false), motionblur(false), motionblurintensity(0.3), windowx(800), windowy(600), fullscreen(false), fsaa(0), vsync(false)
+	bloom(false), bloomintensity(0.2), bloomorig(1.0), hdr(false), motionblur(false), motionblurintensity(0.3), windowx(800), windowy(600), fullscreen(false), fsaa(0), vsync(false), buffer("FBO"), rendersystem("OpenGL Rendering Subsystem")
 {}

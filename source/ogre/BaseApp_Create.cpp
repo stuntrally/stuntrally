@@ -276,9 +276,19 @@ bool BaseApp::configure()
 	}*/
 
 /* new - manual renderwindow */
+	
+	RenderSystem* rs;
+	if (rs = mRoot->getRenderSystemByName(pSet->rendersystem))
+	{
+		mRoot->setRenderSystem(rs);
+	}
+	else
+	{
+		Log("RenderSystem '" + pSet->rendersystem + "' is not available. Exiting.");
+		return false;
+	}
 
-	mRoot->setRenderSystem(*mRoot->getAvailableRenderers().begin());
-
+	mRoot->getRenderSystem()->setConfigOption("RTT Preferred Mode", pSet->buffer);
 	mRoot->initialise(false);
 	
 	NameValuePairList settings;
