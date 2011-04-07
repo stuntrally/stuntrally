@@ -231,9 +231,9 @@ bool BaseApp::setup()
 	#define D_SUFFIX ""
 #endif
 
-	if (pSet->rendersystem = "OpenGL Rendering Subsystem")
+	if (pSet->rendersystem == "OpenGL Rendering Subsystem")
 		mRoot->loadPlugin(PATHMANAGER::GetOgrePluginDir() + "/RenderSystem_GL" + D_SUFFIX);
-	else if (pSet->rendersystem = "DirectX9 Rendering Subsystem")
+	else if (pSet->rendersystem == "DirectX9 Rendering Subsystem")
 		mRoot->loadPlugin(PATHMANAGER::GetOgrePluginDir() + "/RenderSystem_Direct3D9" + D_SUFFIX);
 
 	mRoot->loadPlugin(PATHMANAGER::GetOgrePluginDir() + "/Plugin_ParticleFX" + D_SUFFIX);
