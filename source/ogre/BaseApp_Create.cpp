@@ -258,7 +258,8 @@ bool BaseApp::configure()
 		return false;
 	}
 
-	mRoot->getRenderSystem()->setConfigOption("RTT Preferred Mode", pSet->buffer);
+	if (pSet->rendersystem == "OpenGL Rendering Subsystem")  // not on dx
+		mRoot->getRenderSystem()->setConfigOption("RTT Preferred Mode", pSet->buffer);
 	mRoot->initialise(false);
 
 	NameValuePairList settings;
@@ -296,7 +297,7 @@ bool BaseApp::setup()
 
 	if (pSet->rendersystem == "OpenGL Rendering Subsystem")
 		mRoot->loadPlugin(PATHMANAGER::GetOgrePluginDir() + "/RenderSystem_GL" + D_SUFFIX);
-	else if (pSet->rendersystem == "DirectX9 Rendering Subsystem")
+	else if (pSet->rendersystem == "Direct3D9 Rendering Subsystem")
 		mRoot->loadPlugin(PATHMANAGER::GetOgrePluginDir() + "/RenderSystem_Direct3D9" + D_SUFFIX);
 
 	mRoot->loadPlugin(PATHMANAGER::GetOgrePluginDir() + "/Plugin_ParticleFX" + D_SUFFIX);
