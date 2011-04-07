@@ -247,6 +247,15 @@ bool BaseApp::configure()
 {
 	bool ok = false, notFound = false;
 
+	if (pSet->rendersystem == "DXIfAvailable")
+	{
+		#if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
+		pSet->rendersystem = "Direct3D9 Rendering Subsystem";
+		#else
+		pSet->rendersystem = "OpenGL Rendering Subsystem";
+		#endif
+	}
+	
 	RenderSystem* rs;
 	if (rs = mRoot->getRenderSystemByName(pSet->rendersystem))
 	{
