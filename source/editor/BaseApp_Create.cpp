@@ -272,10 +272,8 @@ bool BaseApp::setup()
 #endif
 
 // FIXME
-#define OGRE_PLUGIN_PATH 
+#define OGRE_PLUGIN_PATH "/usr/lib/OGRE"
 
-// if you get an error here, make sure that OGRE_PLUGIN_PATH is defined by the compiler
-// it has to point to the ogre plugin directory (e.g. /usr/lib/OGRE)
 #if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
 	mRoot->loadPlugin(std::string(OGRE_PLUGIN_PATH) + "/RenderSystem_Direct3D9" + D_SUFFIX);
 #endif

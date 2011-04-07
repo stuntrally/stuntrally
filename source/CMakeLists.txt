@@ -41,15 +41,12 @@ file(GLOB EDITOR_SOURCES
 
 # Game executable
 add_executable(${GAME_EXE} ${GAME_SOURCES})
-# Pass ogre plugin path to the compiler
-add_definitions(-DOGRE_PLUGIN_PATH="${OGRE_PLUGIN_DIR_REL}")
 target_link_libraries(${GAME_EXE} ${OURLIBS} ${LIBS})
 install(TARGETS ${GAME_EXE} DESTINATION bin)
 
 # Editor
 if(BUILD_EDITOR)
 	add_executable(${EDITOR_EXE} ${EDITOR_SOURCES})
-	add_definitions(-DOGRE_PLUGIN_PATH="${OGRE_PLUGIN_DIR_REL}")
 	set_target_properties(${EDITOR_EXE} PROPERTIES COMPILE_FLAGS "-DROAD_EDITOR")
 	target_link_libraries(${EDITOR_EXE} ${OURLIBS} ${LIBS})
 	install(TARGETS ${EDITOR_EXE} DESTINATION bin)

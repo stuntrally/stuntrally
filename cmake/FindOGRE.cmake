@@ -425,6 +425,7 @@ macro(ogre_find_plugin PLUGIN HEADER)
         set(OGRE_PLUGIN_SEARCH_PATH_REL 
           ${OGRE_LIBRARY_DIR_REL}/..
           ${OGRE_LIBRARY_DIR_REL}/../..
+	  ${OGRE_PREFIX}
 		  ${OGRE_BIN_SEARCH_PATH}
         )
         set(OGRE_PLUGIN_SEARCH_PATH_DBG
