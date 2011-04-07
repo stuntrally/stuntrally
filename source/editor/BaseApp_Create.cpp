@@ -228,7 +228,6 @@ bool BaseApp::configure()
 	mRoot->getRenderSystem()->setConfigOption("RTT Preferred Mode", pSet->buffer);
 	mRoot->initialise(false);
 
-	
 	Ogre::NameValuePairList settings;
 	settings.insert(std::make_pair("title", "SR Editor"));
 	settings.insert(std::make_pair("FSAA", Ogre::StringConverter::toString(pSet->fsaa)));
@@ -275,6 +274,8 @@ bool BaseApp::setup()
 	mRoot->loadPlugin(PATHMANAGER::GetOgrePluginDir() + "/RenderSystem_Direct3D9" + D_SUFFIX);
 #endif
 	mRoot->loadPlugin(PATHMANAGER::GetOgrePluginDir() + "/RenderSystem_GL" + D_SUFFIX);
+	mRoot->loadPlugin(PATHMANAGER::GetOgrePluginDir() + "/Plugin_ParticleFX" + D_SUFFIX);
+	mRoot->loadPlugin(PATHMANAGER::GetOgrePluginDir() + "/Plugin_CgProgramManager" + D_SUFFIX);
 
 	setupResources();
 
