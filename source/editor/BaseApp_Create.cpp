@@ -271,15 +271,11 @@ bool BaseApp::setup()
 	#define D_SUFFIX ""
 #endif
 
-// FIXME
-#define OGRE_PLUGIN_PATH "/usr/lib/OGRE"
-
 #if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
-	mRoot->loadPlugin(std::string(OGRE_PLUGIN_PATH) + "/RenderSystem_Direct3D9" + D_SUFFIX);
+	mRoot->loadPlugin(PATHMANAGER::GetOgrePluginDir() + "/RenderSystem_Direct3D9" + D_SUFFIX);
 #endif
-	mRoot->loadPlugin(std::string(OGRE_PLUGIN_PATH) + "/RenderSystem_GL" + D_SUFFIX);
+	mRoot->loadPlugin(PATHMANAGER::GetOgrePluginDir() + "/RenderSystem_GL" + D_SUFFIX);
 
-	
 	setupResources();
 
 	if (!configure())
