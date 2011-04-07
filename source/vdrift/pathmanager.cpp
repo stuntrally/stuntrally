@@ -10,8 +10,13 @@
 #include <shlobj.h>
 #endif
 
+// Should come from CMake
 #ifndef SHARED_DATA_DIR
 #define SHARED_DATA_DIR "data"
+#endif
+// Optionally comes from CMake
+#ifndef OGRE_PLUGIN_DIR
+#define OGRE_PLUGIN_DIR ""
 #endif
 
 // TODO: Create a PORTABLE_INSTALL flag that allows disabling the usage of system dirs
@@ -23,6 +28,7 @@ namespace {
 	fs::path execname();
 }
 
+/*static*/ std::string PATHMANAGER::ogre_plugin_dir;
 /*static*/ std::string PATHMANAGER::home_dir;
 /*static*/ std::string PATHMANAGER::user_config_dir;
 /*static*/ std::string PATHMANAGER::game_config_dir;
@@ -33,6 +39,46 @@ namespace {
 
 void PATHMANAGER::Init(std::ostream & info_output, std::ostream & error_output)
 {
+	typedef std::vector<fs::path> Paths;
+
+	// Set Ogre plugins dir
+	{
+		ogre_plugin_dir = "";
+		char *plugindir = getenv("OGRE_PLUGIN_DIR");
+		if (plugindir) {
+			ogre_plugin_dir = plugindir;
+		#ifndef _WIN32
+		} else if (fs::exists(fs::path(OGRE_PLUGIN_DIR) / "RenderSystem_GL.so")) {
+			ogre_plugin_dir = OGRE_PLUGIN_DIR;
+		#endif
+		} else {
+			#ifdef _WIN32
+			ogre_plugin_dir = ".";
+			#else
+			Paths dirs;
+			#if defined(__amd64__) || defined(__amd64) || defined(__x86_64__) || defined(_M_X64)
+			dirs.push_back("/usr/local/lib64");
+			dirs.push_back("/usr/lib64");
+			#else
+			dirs.push_back("/usr/local/lib32");
+			dirs.push_back("/usr/lib32");
+			#endif
+			dirs.push_back("/usr/local");
+			dirs.push_back("/usr/lib");
+			// Loop through the paths and pick the first one that contain a plugin
+			for (Paths::const_iterator p = dirs.begin(); p != dirs.end(); ++p) {
+				if (fs::exists(*p / "OGRE/RenderSystem_GL.so")) {
+					ogre_plugin_dir = (*p / "OGRE").string();
+					break;
+				} else if (fs::exists(*p / "ogre/RenderSystem_GL.so")) {
+					ogre_plugin_dir = (*p / "ogre").string();
+					break;
+				}
+			}
+			#endif
+		}
+	}
+
 	fs::path shortDir = "stuntrally";
 	// Figure out the user's home directory
 	{
@@ -108,7 +154,6 @@ void PATHMANAGER::Init(std::ostream & info_output, std::ostream & error_output)
 		game_data_dir = std::string(datadir);
 	} else {
 		fs::path shareDir = SHARED_DATA_DIR;
-		typedef std::vector<fs::path> Paths;
 		Paths dirs;
 
 		// Adding users data dir
@@ -155,6 +200,7 @@ void PATHMANAGER::Init(std::ostream & info_output, std::ostream & error_output)
 	CreateDirectory(cache_dir);
 
 	// Print diagnostic info
+	info_output << "Ogre plugin directory: " << ogre_plugin_dir << std::endl;
 	info_output << "Home directory: " << home_dir << std::endl;
 	info_output << "Config defaults directory: " << GetGameConfigDir() << std::endl;
 	info_output << "User config directory: " << GetUserConfigDir() << std::endl;
