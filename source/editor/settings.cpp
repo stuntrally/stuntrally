@@ -40,6 +40,8 @@ void SETTINGS::Serialize(bool w, CONFIGFILE & c)
 	Param(c,w, "video.windowx", windowx);      Param(c,w, "video.windowy", windowy);
 	Param(c,w, "video.fullscreen", fullscreen);
 	Param(c,w, "video.fsaa", fsaa); 		   Param(c,w, "video.vsync", vsync);
+	Param(c,w, "video.buffer", buffer);
+	Param(c,w, "video.rendersystem", rendersystem);
 }
 
 SETTINGS::SETTINGS() :  ///  Defaults
@@ -59,5 +61,5 @@ SETTINGS::SETTINGS() :  ///  Defaults
 	bFog(0), bTrees(0),
 	cam_speed(1.f), cam_inert(1.f),
 	ter_skip(4), road_sphr(1.f), mini_skip(4),
-	windowx(800), windowy(600), fullscreen(false), fsaa(0), vsync(false)
+	windowx(800), windowy(600), fullscreen(false), fsaa(0), vsync(false), buffer("FBO"), rendersystem("OpenGL Rendering Subsystem")
 {	}

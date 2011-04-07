@@ -234,9 +234,8 @@ BaseApp::~BaseApp()
 	
 	#if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
 		mRoot->unloadPlugin("RenderSystem_Direct3D9");
-	#else
-		mRoot->unloadPlugin("RenderSystem_GL");
 	#endif
+	mRoot->unloadPlugin("RenderSystem_GL");
 	
 	
 	OGRE_DELETE mRoot;
@@ -306,7 +305,7 @@ bool BaseApp::configure()
 //-------------------------------------------------------------------------------------
 bool BaseApp::setup()
 {
-#if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
+/* old - load plugins from file *** #if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
 	#ifdef _DEBUG
 	mRoot = OGRE_NEW Root(PATHMANAGER::GetGameConfigDir() + "/plugins_win_d.cfg", PATHMANAGER::GetUserConfigDir() + "/ogreset.cfg", PATHMANAGER::GetLogDir() + "/ogre.log");
 	#else
@@ -318,7 +317,27 @@ bool BaseApp::setup()
 	#else
 	mRoot = OGRE_NEW Root(PATHMANAGER::GetGameConfigDir() + "/plugins_nix.cfg", PATHMANAGER::GetUserConfigDir() + "/ogreset.cfg", PATHMANAGER::GetLogDir() + "/ogre.log");
 	#endif
+#endif*/
+
+// dynamic plugin loading
+	mRoot = OGRE_NEW Root("", PATHMANAGER::GetUserConfigDir() + "/ogreset.cfg", PATHMANAGER::GetLogDir() + "/ogre.log");
+
+#ifdef _DEBUG
+	#define D_SUFFIX "_d"
+#else
+	#define D_SUFFIX ""
 #endif
+
+// FIXME
+#define OGRE_PLUGIN_PATH 
+
+// if you get an error here, make sure that OGRE_PLUGIN_PATH is defined by the compiler
+// it has to point to the ogre plugin directory (e.g. /usr/lib/OGRE)
+#if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
+	mRoot->loadPlugin(OGRE_PLUGIN_PATH + "/RenderSystem_Direct3D9" + D_SUFFIX);
+#endif
+	mRoot->loadPlugin(OGRE_PLUGIN_PATH + "/RenderSystem_GL" + D_SUFFIX);
+
 	Ogre::LogManager::getSingleton().setLogDetail(LL_BOREME);//
 
 	setupResources();

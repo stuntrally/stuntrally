@@ -214,9 +214,20 @@ bool BaseApp::configure()
     }*/
 
 /* new - manual renderwindow */
-	mRoot->setRenderSystem(*mRoot->getAvailableRenderers().begin());
+	RenderSystem* rs;
+	if (rs = mRoot->getRenderSystemByName(pSet->rendersystem))
+	{
+		mRoot->setRenderSystem(rs);
+	}
+	else
+	{
+		Log("RenderSystem '" + pSet->rendersystem + "' is not available. Exiting.");
+		return false;
+	}
 
+	mRoot->getRenderSystem()->setConfigOption("RTT Preferred Mode", pSet->buffer);
 	mRoot->initialise(false);
+
 	
 	Ogre::NameValuePairList settings;
 	settings.insert(std::make_pair("title", "SR Editor"));
@@ -237,7 +248,7 @@ bool BaseApp::configure()
 //-------------------------------------------------------------------------------------
 bool BaseApp::setup()
 {
-#if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
+/* old - load plugins from file ** #if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
 	#ifdef _DEBUG
 	mRoot = OGRE_NEW Root(PATHMANAGER::GetGameConfigDir() + "/plugins_win_d.cfg", PATHMANAGER::GetUserConfigDir() + "/ogreset.cfg", PATHMANAGER::GetLogDir() + "/ogre_ed.log");
 	#else
@@ -249,7 +260,27 @@ bool BaseApp::setup()
 	#else
 	mRoot = OGRE_NEW Root(PATHMANAGER::GetGameConfigDir() + "/plugins_nix.cfg", PATHMANAGER::GetUserConfigDir() + "/ogreset.cfg", PATHMANAGER::GetLogDir() + "/ogre_ed.log");
 	#endif
+#endif*/
+
+// dynamic plugin loading
+	mRoot = OGRE_NEW Root("", PATHMANAGER::GetUserConfigDir() + "/ogreset.cfg", PATHMANAGER::GetLogDir() + "/ogre_ed.log");
+
+#ifdef _DEBUG
+	#define D_SUFFIX "_d"
+#else
+	#define D_SUFFIX ""
 #endif
+
+// FIXME
+#define OGRE_PLUGIN_PATH 
+
+// if you get an error here, make sure that OGRE_PLUGIN_PATH is defined by the compiler
+// it has to point to the ogre plugin directory (e.g. /usr/lib/OGRE)
+#if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
+	mRoot->loadPlugin(std::string(OGRE_PLUGIN_PATH) + "/RenderSystem_Direct3D9" + D_SUFFIX);
+#endif
+	mRoot->loadPlugin(std::string(OGRE_PLUGIN_PATH) + "/RenderSystem_GL" + D_SUFFIX);
+
 	
 	setupResources();
 

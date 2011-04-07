@@ -35,6 +35,8 @@ public:
 	bool fullscreen;
 	int fsaa;
 	bool vsync;
+	string buffer;
+	string rendersystem;
 	
 //------------------------------------------
 	SETTINGS();
