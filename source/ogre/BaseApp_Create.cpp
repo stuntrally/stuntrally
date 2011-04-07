@@ -246,15 +246,6 @@ BaseApp::~BaseApp()
 bool BaseApp::configure()
 {
 	bool ok = false, notFound = false;
-
-	if (pSet->rendersystem == "DXIfAvailable")
-	{
-		#if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
-		pSet->rendersystem = "Direct3D9 Rendering Subsystem";
-		#else
-		pSet->rendersystem = "OpenGL Rendering Subsystem";
-		#endif
-	}
 	
 	RenderSystem* rs;
 	if (rs = mRoot->getRenderSystemByName(pSet->rendersystem))
@@ -285,6 +276,15 @@ bool BaseApp::configure()
 //-------------------------------------------------------------------------------------
 bool BaseApp::setup()
 {
+	if (pSet->rendersystem == "DXIfAvailable")
+	{
+		#if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
+		pSet->rendersystem = "Direct3D9 Rendering Subsystem";
+		#else
+		pSet->rendersystem = "OpenGL Rendering Subsystem";
+		#endif
+	}
+	
 	// Dynamic plugin loading
 	mRoot = OGRE_NEW Root("", PATHMANAGER::GetUserConfigDir() + "/ogreset.cfg", PATHMANAGER::GetLogDir() + "/ogre.log");
 
@@ -294,10 +294,11 @@ bool BaseApp::setup()
 	#define D_SUFFIX ""
 #endif
 
-#if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
-	mRoot->loadPlugin(PATHMANAGER::GetOgrePluginDir() + "/RenderSystem_Direct3D9" + D_SUFFIX);
-#endif
-	mRoot->loadPlugin(PATHMANAGER::GetOgrePluginDir() + "/RenderSystem_GL" + D_SUFFIX);
+	if (pSet->rendersystem = "OpenGL Rendering Subsystem")
+		mRoot->loadPlugin(PATHMANAGER::GetOgrePluginDir() + "/RenderSystem_GL" + D_SUFFIX);
+	else if (pSet->rendersystem = "DirectX9 Rendering Subsystem")
+		mRoot->loadPlugin(PATHMANAGER::GetOgrePluginDir() + "/RenderSystem_Direct3D9" + D_SUFFIX);
+
 	mRoot->loadPlugin(PATHMANAGER::GetOgrePluginDir() + "/Plugin_ParticleFX" + D_SUFFIX);
 	mRoot->loadPlugin(PATHMANAGER::GetOgrePluginDir() + "/Plugin_CgProgramManager" + D_SUFFIX);
 
