@@ -185,35 +185,7 @@ BaseApp::~BaseApp()
 bool BaseApp::configure()
 {
 	bool ok = false, notFound = false;
-	
-/* old ** #if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
-        WIN32_FIND_DATAA  fd;
-		string p = PATHMANAGER::GetUserConfigDir() + string("/ogreset_ed.cfg");
-        HANDLE h = FindFirstFileA( (LPCSTR)p.c_str(), &fd );
-        if (h == INVALID_HANDLE_VALUE)
-                notFound = true;
-        else
-                FindClose(h);
 
-        if (notFound || mShowDialog)
-                ok = mRoot->showConfigDialog();
-        else
-                ok = mRoot->restoreConfig();
-#else
-        if (mRoot->restoreConfig() ||  mRoot->showConfigDialog())
-        {
-                ok = true;
-        }
-        else
-                ok=false;
-#endif
-
-    if (ok)
-    {   mWindow = mRoot->initialise( true, "SR Editor" );
-                return true;
-    }*/
-
-/* new - manual renderwindow */
 	RenderSystem* rs;
 	if (rs = mRoot->getRenderSystemByName(pSet->rendersystem))
 	{
@@ -247,21 +219,7 @@ bool BaseApp::configure()
 //-------------------------------------------------------------------------------------
 bool BaseApp::setup()
 {
-/* old - load plugins from file ** #if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
-	#ifdef _DEBUG
-	mRoot = OGRE_NEW Root(PATHMANAGER::GetGameConfigDir() + "/plugins_win_d.cfg", PATHMANAGER::GetUserConfigDir() + "/ogreset.cfg", PATHMANAGER::GetLogDir() + "/ogre_ed.log");
-	#else
-	mRoot = OGRE_NEW Root(PATHMANAGER::GetGameConfigDir() + "/plugins_win.cfg", PATHMANAGER::GetUserConfigDir() + "/ogreset.cfg", PATHMANAGER::GetLogDir() + "/ogre_ed.log");
-	#endif
-#else
-	#ifdef _DEBUG
-	mRoot = OGRE_NEW Root(PATHMANAGER::GetGameConfigDir() + "/plugins_nix_d.cfg", PATHMANAGER::GetUserConfigDir() + "/ogreset.cfg", PATHMANAGER::GetLogDir() + "/ogre_ed.log");
-	#else
-	mRoot = OGRE_NEW Root(PATHMANAGER::GetGameConfigDir() + "/plugins_nix.cfg", PATHMANAGER::GetUserConfigDir() + "/ogreset.cfg", PATHMANAGER::GetLogDir() + "/ogre_ed.log");
-	#endif
-#endif*/
-
-// dynamic plugin loading
+	// Dynamic plugin loading
 	mRoot = OGRE_NEW Root("", PATHMANAGER::GetUserConfigDir() + "/ogreset.cfg", PATHMANAGER::GetLogDir() + "/ogre_ed.log");
 
 #ifdef _DEBUG
