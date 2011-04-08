@@ -8,6 +8,7 @@ Below is a short description of them:
 * debian/*                  - files needed for a debian package, see below "Debian/Ubuntu packaging"
 * ppastats.py               - prints statistics about the Launchpad PPA
 * makeinstaller.py          - script for creating Windows installer, see below "Windows installer"
+* symlink-data.sh           - a utility script that will search for duplicate files and replace them with symlinks to the first file - call it with the directory as an argument
 * *.desktop                 - menu launchers for Linux (freedesktop.org-compliant) systems
 * stuntrally.png            - application icon
 * CMakeLists.txt            - CMake install targets for files here
