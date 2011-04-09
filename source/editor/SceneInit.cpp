@@ -26,6 +26,9 @@ void App::createScene()
 	InitGui();
 	TerCircleInit();
 
+	objs.LoadXml();
+	Log(string("**** Loaded Vegetation objects: ") + toStr(objs.colsMap.size()));
+
 	if (pSet->autostart)
 		LoadTrack();
 	else

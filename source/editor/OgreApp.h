@@ -5,6 +5,7 @@
 #include "../ogre/common/SceneXml.h"
 #include "../paged-geom/PagedGeometry.h"
 #include "settings.h"
+#include "../ogre/common/BltObjects.h"
 
 #include "../vdrift/mathvector.h"
 #include "../vdrift/quaternion.h"
@@ -27,6 +28,7 @@ public:
 	App();  virtual ~App();
 
 	Scene sc;  /// scene.xml
+	BltObjects objs;  // veget collision in bullet
 
 	TRACKSURFACE su[8];  void LoadSurf(const String& trk), SaveSurf(const String& trk);
 	Light* sun;  void UpdFog(bool bForce=false), UpdSun();

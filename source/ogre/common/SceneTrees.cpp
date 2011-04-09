@@ -11,6 +11,7 @@
 #include "../../paged-geom/WindBatchPage.h"
 #include "../../paged-geom/ImpostorPage.h"
 #include "../../paged-geom/TreeLoader2D.h"
+#include "BltObjects.h"
 
 
 //---------------------------------------------------------------------------------------------------------------

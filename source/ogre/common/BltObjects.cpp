@@ -29,7 +29,7 @@ bool BltObjects::LoadXml()
 	colsMap.clear();
 	colsMapFind = colsMap.end();
 	
-	string file = PATHMANAGER::GetTreesPath() + "/collisions.xml";
+	std::string file = PATHMANAGER::GetTreesPath() + "/collisions.xml";
 	TiXmlDocument doc;
 	if (!doc.LoadFile(file.c_str()))  return false;
 		
@@ -50,7 +50,7 @@ bool BltObjects::LoadXml()
 		while (n)
 		{
 			BltShape shp;
-			a = n->Attribute("type");  if (a)  {  string st = a;
+			a = n->Attribute("type");  if (a)  {  std::string st = a;
 			for (int t=0; t < BLT_ALL; ++t)
 				if (st == sBLTshape[t])  shp.type = (eBLTshape)t;  }
 
@@ -76,7 +76,7 @@ bool BltObjects::LoadXml()
 
 
 //  util  find col for mesh name
-const BltCollision* BltObjects::Find(string mesh)
+const BltCollision* BltObjects::Find(std::string mesh)
 {
 	colsMapFind = colsMap.find(mesh);
 	bool hasCol = colsMapFind != colsMap.end();

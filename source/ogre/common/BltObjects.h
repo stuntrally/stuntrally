@@ -5,7 +5,7 @@
 
 
 enum eBLTshape {  BLT_None=0, BLT_Sphere, BLT_CapsZ, BLT_ALL };
-static string sBLTshape[BLT_ALL] = {"", "sphere", "capsZ" };
+static std::string sBLTshape[BLT_ALL] = {"", "sphere", "capsZ" };
 
 
 struct BltShape
@@ -38,7 +38,7 @@ public:
 	std::map <std::string, BltCollision>::const_iterator colsMapFind;
 
 	bool LoadXml();
-	const BltCollision* Find(string mesh);
+	const BltCollision* Find(std::string mesh);
 };
 
 
