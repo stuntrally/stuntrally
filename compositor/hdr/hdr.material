@@ -261,6 +261,7 @@ material Ogre/Compositor/HDR/ToneMapping
 			}
 			fragment_program_ref Ogre/Compositor/HDR/finaltonemapping_fp
 			{
+				///  params...
 			}
 
 			// Scene 

@@ -226,7 +226,7 @@
 					<Widget type="TabItem" skin="" position="4 26 735 428">
 						<Property key="Widget_Caption" value="Video"/>
 						<Widget type="StaticText" skin="StaticText" position="32 18 112 24">
-							<Property key="Widget_Caption" value="Resolution"/>
+							<Property key="Widget_Caption" value="Resolution *"/>
 							<Property key="Widget_Colour" value="0 0 0"/>
 							<Property key="Text_TextColour" value="0.3 1 1"/>
 						</Widget>
@@ -235,7 +235,7 @@
 							<Property key="Text_TextColour" value="0.6 0.9 1"/>
 						</Widget>
 						<Widget type="Button" skin="CheckBox" position="460 50 112 24" name="VSync">
-							<Property key="Widget_Caption" value="VSync*"/>
+							<Property key="Widget_Caption" value="VSync *"/>
 							<Property key="Text_TextColour" value="0.5 0.9 1"/>
 						</Widget>
 						<Widget type="StaticText" skin="StaticText" position="32 488 136 24">
@@ -677,11 +677,11 @@
 							<Property key="Widget_Caption" value="Wireframe  F10"/>
 							<Property key="Text_TextColour" value="0.7 0.85 1.0"/>
 						</Widget>
-						<Widget type="Button" skin="CheckBox" position="40 190 200 24" name="BulletDebug">
+						<Widget type="Button" skin="CheckBox" position="40 158 200 24" name="BulletDebug">
 							<Property key="Widget_Caption" value="Bullet debug  shift-F10"/>
 							<Property key="Text_TextColour" value="0.7 0.85 1.0"/>
 						</Widget>
-						<Widget type="Button" skin="CheckBox" position="40 158 212 24" name="CarDbgTxt">
+						<Widget type="Button" skin="CheckBox" position="40 190 212 24" name="CarDbgTxt">
 							<Property key="Widget_Caption" value="Car debug text  shift-F9"/>
 							<Property key="Text_TextColour" value="0.7 0.85 1.0"/>
 						</Widget>
@@ -690,7 +690,7 @@
 							<Property key="Widget_Caption" value="Startup"/>
 						</Widget>
 						<Widget type="Button" skin="CheckBox" position="352 94 160 24" name="OgreDialog">
-							<Property key="Text_TextColour" value="0.7 0.8 0.9"/>
+							<Property key="Text_TextColour" value="0.5 0.6 0.7"/>
 							<Property key="Widget_Caption" value="show Ogre dialog"/>
 						</Widget>
 						<Widget type="Button" skin="CheckBox" position="352 126 160 24" name="AutoStart">

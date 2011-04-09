@@ -32,11 +32,12 @@ float4 encodeRGBE8(in float3 rgb)
 }
 
 
-static const float4 LUMINENCE_FACTOR  = float4(0.27f, 0.67f, 0.06f, 0.0f);
-static const float MIDDLE_GREY = 0.72f;
+static const float MIDDLE_GREY = 0.52f;  	///  params...
 static const float FUDGE = 0.001f;
 static const float L_WHITE = 1.5f;
-static const float4 BRIGHT_LIMITER = float4(0.6f, 0.6f, 0.6f, 0.0f);
+
+static const float4 LUMINENCE_FACTOR = float4(0.27f, 0.47f, 0.16f, 0.0f);
+static const float4 BRIGHT_LIMITER = float4(0.4f, 0.4f, 0.4f, 0.0f);
 
 
 /** Tone mapping function 

@@ -22,7 +22,9 @@ void main(void)
     vec4 bloom = texture2D(inBloom, uv);
 
 	// Add scene & bloom
-	gl_FragColor = vec4(toneMappedSceneCol.rgb + bloom.rgb, 1.0);
+	///  params...
+	gl_FragColor = vec4(toneMappedSceneCol.rgb*1.0 + toneMappedSceneCol.rgb*bloom.rgb*0.8 + 0.3*bloom.rgb, 1.0);
+	//gl_FragColor = vec4(toneMappedSceneCol.rgb + bloom.rgb, 1.0);
     
 }
 

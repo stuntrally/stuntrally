@@ -1,4 +1,4 @@
-const float MIDDLE_GREY = 0.72;
+const float MIDDLE_GREY = 0.52;  	///  params...
 const float FUDGE = 0.001;
 const float L_WHITE = 1.5;
 
