@@ -1,5 +1,5 @@
 #include "stdafx.h"
-//#include "vld.h" //+
+#include "vld.h" // mem leaks +
 #include "OgreGame.h"
 #include "../vdrift/game.h"
 #include "../vdrift/logging.h"
@@ -21,14 +21,6 @@ void VprThread(App* pA)
 	int main(int argc, char* argv[])
 #endif
 {	
-	//  Enable run-time memory check for debug builds
-	/*#if defined(DEBUG) | defined(_DEBUG)
-		_CrtSetDbgFlag( //_CRTDBG_CHECK_CRT_DF |
-			//_CRTDBG_CHECK_ALWAYS_DF | 
-			//_CRTDBG_CHECK_EVERY_1024_DF | 
-			_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF );
-	#endif/**/
-
 	//  Load Settings
 	std::stringstream dummy;
 	PATHMANAGER::Init(dummy, dummy);

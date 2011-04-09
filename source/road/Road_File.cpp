@@ -174,7 +174,7 @@ bool SplineRoad::LoadFile(String fname, bool build)
 		a = n->Attribute("colR");	if (a)  colR = s2r(a);
 		a = n->Attribute("wsPm");	if (a)  iwPmul = s2r(a);
 		a = n->Attribute("lsPm");	if (a)  ilPmul = s2r(a);
-		a = n->Attribute("stBox");	if (a)  vStBoxDim = StringConverter::parseVector3(a);
+		a = n->Attribute("stBox");	if (a)  vStBoxDim = s2v(a);
 		a = n->Attribute("iDir");	if (a)  iDir = s2i(a);
 	}
 	
@@ -195,7 +195,7 @@ bool SplineRoad::LoadFile(String fname, bool build)
 	n = root->FirstChildElement("P");	//  points
 	while (n)
 	{
-		a = n->Attribute("pos");	newP.pos = StringConverter::parseVector3(a);
+		a = n->Attribute("pos");	newP.pos = s2v(a);
 		a = n->Attribute("w");		newP.width = !a ? 6.f : s2r(a);
 
 		a = n->Attribute("a");		newP.aYaw = !a ? 0.f : s2r(a);

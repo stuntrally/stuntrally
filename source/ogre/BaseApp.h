@@ -17,6 +17,7 @@ public:
 	virtual void Run( bool showDialolg );
 	
 	bool bWindowResized;  bool bSizeHUD;
+	class HDRLogic* mHDRLogic;
 	
 	class SETTINGS* pSet;
 

@@ -37,6 +37,9 @@ void App::createScene()
 		pGame->collision.world.getDebugDrawer()->setDebugMode(
 			1 /*0xfe/*8+(1<<13)*/);
 	}
+	
+	objs.LoadXml();
+	Log(string("**** Loaded Vegetation objects: ") + toStr(objs.colsMap.size()));
 
 	createReflectCams();  ///*
 	
