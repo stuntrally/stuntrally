@@ -1,5 +1,7 @@
 #include "stdafx.h"
+#if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
 #include "vld.h" // mem leaks +
+#endif
 #include "OgreGame.h"
 #include "../vdrift/game.h"
 #include "../vdrift/logging.h"
@@ -15,7 +17,7 @@ void VprThread(App* pA)
 		pA->UpdThr();
 }
 
-#if OGRE_PLATFORM  == OGRE_PLATFORM_WIN32
+#if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
 	int APIENTRY WinMain(HINSTANCE hInst, HINSTANCE hPrev, LPTSTR lpCmdLine, int nCmdShow)
 #else
 	int main(int argc, char* argv[])
