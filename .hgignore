@@ -13,3 +13,5 @@ MyGUI.log
 *.dll
 screens
 bin
+StuntRally*.*
+SR?Editor.*
