@@ -298,7 +298,7 @@ void App::updatePoses(float time)
 		Quaternion q(rot[0],rot[1],rot[2],rot[3]);  //q = qr * q;//
 		Radian rad;  Vector3 axi;	q.ToAngleAxis(rad, axi);
 		Quaternion q1;  q1.FromAngleAxis(-rad, Vector3(axi.z, -axi.x, -axi.y));  q1 = q1 * qr;
-		ndWh[w]->setOrientation(q1);
+		ndWh[w]->setOrientation(q1 /* * Quaternion(Degree(90), Vector3(0,1,0))/*tweak*/);
 		
 		
 		///  Ray dbg  *----*

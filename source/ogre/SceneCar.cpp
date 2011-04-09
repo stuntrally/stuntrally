@@ -138,16 +138,13 @@ void App::CreateCar()
 	mRoot->addResourceLocation(resCar, "FileSystem"/*, "DynRes"/**/);
 	mRoot->addResourceLocation(resTrk, "FileSystem");
 	mRoot->addResourceLocation(resDrv, "FileSystem");
-			std::cout<<"added textures"<<std::endl;
 
 	ndCar = mSceneMgr->getRootSceneNode()->createChildSceneNode();
 	CAR* pCar = &(*pGame->cars.begin());
-			std::cout<<"Created node"<<std::endl;
 
 
 	//  --------  Follow Camera  --------
 	mFCam->mGoalNode = ndCar;
-		std::cout<<"Created camera"<<std::endl;
 
 	String s = pSet->shaders == 0 ? "_old" : "";
 	sMtr[Mtr_CarBody]		= "car_body"+s;
@@ -156,36 +153,51 @@ void App::CreateCar()
 	sMtr[Mtr_CarTireFront]	= "cartire_front"+s;
 	sMtr[Mtr_CarTireRear]	= "cartire_rear"+s;
 	sMtr[Mtr_Road]			= "road"+s;
-	
-	std::cout<<"Created mats"<<std::endl;
 
 
 	//  car Models:  body, interior, glass  -------
+	//vis flags:  2 not rendered in reflections  16 off by in-car camera
 	SceneNode* ncart = ndCar->createChildSceneNode();
-		std::cout<<"Created node"<<std::endl;
+		//ncart->setScale(0.5,0.5,0.5);  //test
+		//ncart->setOrientation(Quaternion(Degree(180), Vector3(1,0,0)));
+		//ncart->setPosition(0,-0.5,0);
+
+	//  body  ----------------------
+	vPofs = Vector3(0,0,0);
 
 	if (FileExists(resCar + "/body.mesh"))
 	{
-		std::cout<<".mesh car"<<std::endl;
 		Entity* eCar = mSceneMgr->createEntity("Car", "body.mesh");
-		std::cout<<"created entity"<<std::endl;
-		eCar->setVisibilityFlags(2);  		std::cout<<"set visibility flags"<<std::endl;
-		ncart->attachObject(eCar); 		std::cout<<"created node"<<std::endl;
+		//SceneNode* nc = ndCar->createChildSceneNode();
+		ncart->attachObject(eCar);  eCar->setVisibilityFlags(2);
 	}else{
-		std::cout<<"vdrift car"<<std::endl;
-		ManualObject* mCar   = CreateModel(sMtr[Mtr_CarBody],	 &pCar->bodymodel.mesh);
-		std::cout<<"created manualobject"<<std::endl;
-		if (mCar){    ncart->attachObject(mCar);  mCar->setVisibilityFlags(2);  }  // 2 not rendered in reflections
+		ManualObject* mCar = CreateModel(sMtr[Mtr_CarBody], &pCar->bodymodel.mesh);
+		if (mCar){	ncart->attachObject(mCar);  mCar->setVisibilityFlags(2);  }
 	}
-		std::cout<<"Created car model"<<std::endl;
-	vPofs = Vector3(pCar->vInteriorOffset[0],pCar->vInteriorOffset[1],pCar->vInteriorOffset[2]);  //x+ back y+ down z+ right
-	ManualObject* mInter = CreateModel(sMtr[Mtr_CarInterior],&pCar->interiormodel.mesh);
-	vPofs = Vector3(0,0,0);
-	ManualObject* mGlass = CreateModel(sMtr[Mtr_CarGlass],	 &pCar->glassmodel.mesh);
-	mGlass->setRenderQueueGroup(RENDER_QUEUE_8);
 
-	if (mInter){  ncart->attachObject(mInter);  mInter->setVisibilityFlags(2);  }
-	if (mGlass){  ncart->attachObject(mGlass);	mGlass->setVisibilityFlags(16);  }  // 16 off by in-car camera
+	//  interior  ----------------------
+	vPofs = Vector3(pCar->vInteriorOffset[0],pCar->vInteriorOffset[1],pCar->vInteriorOffset[2]);  //x+ back y+ down z+ right
+
+	if (FileExists(resCar + "/interior.mesh"))
+	{
+		Entity* eInter = mSceneMgr->createEntity("Car.interior", "interior.mesh");
+		ncart->attachObject(eInter);  eInter->setVisibilityFlags(2);
+	}else{
+		ManualObject* mInter = CreateModel(sMtr[Mtr_CarInterior],&pCar->interiormodel.mesh);
+		if (mInter){  ncart->attachObject(mInter);  mInter->setVisibilityFlags(2);  }
+	}
+	
+	//  glass  ----------------------
+	vPofs = Vector3(0,0,0);
+
+	if (FileExists(resCar + "/glass.mesh"))
+	{
+		Entity* eGlass = mSceneMgr->createEntity("Car.glass", "glass.mesh");
+		ncart->attachObject(eGlass);  eGlass->setRenderQueueGroup(RENDER_QUEUE_8);  eGlass->setVisibilityFlags(16);
+	}else{
+		ManualObject* mGlass = CreateModel(sMtr[Mtr_CarGlass], &pCar->glassmodel.mesh);
+		if (mGlass){  ncart->attachObject(mGlass);	mGlass->setRenderQueueGroup(RENDER_QUEUE_8);  mGlass->setVisibilityFlags(16);  }
+	}
 
 	/*ManualObject* mDriv  = CreateModel("car/driver",   &pCar->drivermodel.mesh);
 	if (mDriv)
@@ -200,16 +212,30 @@ void App::CreateCar()
 	Ogre::MeshSerializer* msr = new Ogre::MeshSerializer();
 	msr->exportMesh(mpCar.getPointer(), "car.mesh");/**/
 
+
+	//  wheels  ----------------------
 	for (int w=0; w < 4; w++)
 	{
-		ManualObject* mWh;
-		if (w < 2)	mWh = CreateModel(sMtr[Mtr_CarTireFront], &pCar->wheelmodelfront.mesh, true);
-		else		mWh = CreateModel(sMtr[Mtr_CarTireRear],  &pCar->wheelmodelrear.mesh, true);
-		std::cout<<"Created tire models"<<std::endl;
-		if (mWh)  {
-			mWh->setVisibilityFlags(2);
+		if (w < 2 && FileExists(resCar + "/wheel_front.mesh"))
+		{
+			Entity* eWh = mSceneMgr->createEntity("Wheel"+toStr(w), "wheel_front.mesh");
 			ndWh[w] = mSceneMgr->getRootSceneNode()->createChildSceneNode();
-			ndWh[w]->attachObject(mWh);  }
+			ndWh[w]->attachObject(eWh);
+		}else
+		if (FileExists(resCar + "/wheel_rear.mesh"))
+		{
+			Entity* eWh = mSceneMgr->createEntity("Wheel"+toStr(w), "wheel_rear.mesh");
+			ndWh[w] = mSceneMgr->getRootSceneNode()->createChildSceneNode();
+			ndWh[w]->attachObject(eWh);
+		}else{
+			ManualObject* mWh;
+			if (w < 2)	mWh = CreateModel(sMtr[Mtr_CarTireFront], &pCar->wheelmodelfront.mesh, true);
+			else		mWh = CreateModel(sMtr[Mtr_CarTireRear],  &pCar->wheelmodelrear.mesh, true);
+			if (mWh)  {
+				mWh->setVisibilityFlags(2);
+				ndWh[w] = mSceneMgr->getRootSceneNode()->createChildSceneNode();
+				ndWh[w]->attachObject(mWh);  }
+		}
 			
 		///  Ray info  *----*
 		/*Entity* entS,*entD;
@@ -223,6 +249,7 @@ void App::CreateCar()
 		ndRs[w]->attachObject(entS);  ndRs[w]->setScale(0.2f * Vector3::UNIT_SCALE);
 		ndRd[w]->attachObject(entD);  ndRd[w]->setScale(0.2f * Vector3::UNIT_SCALE);/**/
 	}
+
 
 	///  wheel emitters  ------------------------
 	for (int w=0; w < 4; w++)
