@@ -160,7 +160,7 @@ void App::CreateCar()
 	SceneNode* ncart = ndCar->createChildSceneNode();
 		//ncart->setScale(0.5,0.5,0.5);  //test
 		//ncart->setOrientation(Quaternion(Degree(180), Vector3(1,0,0)));
-		//ncart->setPosition(0,-0.5,0);
+		//ncart->setPosition(0,0.15,0);
 
 	//  body  ----------------------
 	vPofs = Vector3(0,0,0);
@@ -169,7 +169,6 @@ void App::CreateCar()
 	{
 		Entity* eCar = mSceneMgr->createEntity("Car", "body.mesh");
 		eCar->setMaterialName(sMtr[Mtr_CarBody]);
-		//SceneNode* nc = ndCar->createChildSceneNode();
 		ncart->attachObject(eCar);  eCar->setVisibilityFlags(2);
 	}else{
 		ManualObject* mCar = CreateModel(sMtr[Mtr_CarBody], &pCar->bodymodel.mesh);
@@ -196,7 +195,8 @@ void App::CreateCar()
 	{
 		Entity* eGlass = mSceneMgr->createEntity("Car.glass", "glass.mesh");
 		eGlass->setMaterialName(sMtr[Mtr_CarGlass]);
-		ncart->attachObject(eGlass);  eGlass->setRenderQueueGroup(RENDER_QUEUE_8);  eGlass->setVisibilityFlags(16);
+		eGlass->setRenderQueueGroup(RENDER_QUEUE_8);  eGlass->setVisibilityFlags(16);
+		ncart->attachObject(eGlass);
 	}else{
 		ManualObject* mGlass = CreateModel(sMtr[Mtr_CarGlass], &pCar->glassmodel.mesh);
 		if (mGlass){  ncart->attachObject(mGlass);	mGlass->setRenderQueueGroup(RENDER_QUEUE_8);  mGlass->setVisibilityFlags(16);  }
@@ -224,22 +224,21 @@ void App::CreateCar()
 			Entity* eWh = mSceneMgr->createEntity("Wheel"+toStr(w), "wheel_front.mesh");
 			eWh->setMaterialName(sMtr[Mtr_CarTireFront]);
 			ndWh[w] = mSceneMgr->getRootSceneNode()->createChildSceneNode();
-			ndWh[w]->attachObject(eWh);
+			ndWh[w]->attachObject(eWh);  eWh->setVisibilityFlags(2);
 		}else
 		if (FileExists(resCar + "/wheel_rear.mesh"))
 		{
 			Entity* eWh = mSceneMgr->createEntity("Wheel"+toStr(w), "wheel_rear.mesh");
 			eWh->setMaterialName(sMtr[Mtr_CarTireRear]);
 			ndWh[w] = mSceneMgr->getRootSceneNode()->createChildSceneNode();
-			ndWh[w]->attachObject(eWh);
+			ndWh[w]->attachObject(eWh);  eWh->setVisibilityFlags(2);
 		}else{
 			ManualObject* mWh;
 			if (w < 2)	mWh = CreateModel(sMtr[Mtr_CarTireFront], &pCar->wheelmodelfront.mesh, true);
 			else		mWh = CreateModel(sMtr[Mtr_CarTireRear],  &pCar->wheelmodelrear.mesh, true);
 			if (mWh)  {
-				mWh->setVisibilityFlags(2);
 				ndWh[w] = mSceneMgr->getRootSceneNode()->createChildSceneNode();
-				ndWh[w]->attachObject(mWh);  }
+				ndWh[w]->attachObject(mWh);  mWh->setVisibilityFlags(2);  }
 		}
 			
 		///  Ray info  *----*

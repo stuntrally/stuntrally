@@ -672,25 +672,30 @@ void CARDYNAMICS::Init(class App* pApp1,
 		btScalar h = size.getX()*0.4, r = size.getZ()*0.3, zh = 0.45;  //0.4 CT  0.5 3S -r*0.2;  h 1.33  r 0.4
 
 		///  spheres
+		btScalar h0 = 0.f;
+		if (coll_manual)  // define collision manually
+		{
+			r = coll_R;  h0 = coll_Hofs;
+		}
 		const int numSph = 14;  h *= 0.5f;  int i = 0;
 		btScalar rad[numSph];  btVector3 pos[numSph];
-		pos[i] = origin + btVector3( 1.8,-h,-zh);  rad[i] = r*0.6;  ++i;  // front
-		pos[i] = origin + btVector3( 1.8, h,-zh);  rad[i] = r*0.6;  ++i;
-		pos[i] = origin + btVector3( 0.9,-h,-zh);  rad[i] = r;  ++i;
-		pos[i] = origin + btVector3( 0.9, h,-zh);  rad[i] = r;  ++i;
+		pos[i] = origin + btVector3( 1.8,-h,h0 + -zh);  rad[i] = r*0.6;  ++i;  // front
+		pos[i] = origin + btVector3( 1.8, h,h0 + -zh);  rad[i] = r*0.6;  ++i;
+		pos[i] = origin + btVector3( 0.9,-h,h0 + -zh);  rad[i] = r;  ++i;
+		pos[i] = origin + btVector3( 0.9, h,h0 + -zh);  rad[i] = r;  ++i;
 		//pos[i] = origin + btVector3( 0.0,-h,-zh);  rad[i] = r;  ++i;  // center
 		//pos[i] = origin + btVector3( 0.0, h,-zh);  rad[i] = r;  ++i;
-		pos[i] = origin + btVector3(-0.9,-h,-zh);  rad[i] = r;  ++i;
-		pos[i] = origin + btVector3(-0.9, h,-zh);  rad[i] = r;  ++i;
-		pos[i] = origin + btVector3(-1.9,-h,-zh);  rad[i] = r*0.6;  ++i;  // rear
-		pos[i] = origin + btVector3(-1.9, h,-zh);  rad[i] = r*0.6;  ++i;
-		pos[i] = origin + btVector3( 0.4,-h*0.8,zh*0.2);  rad[i] = r*0.6;  ++i;  // top
-		pos[i] = origin + btVector3( 0.4, h*0.8,zh*0.2);  rad[i] = r*0.6;  ++i;
-		pos[i] = origin + btVector3(-0.3,-h*0.8,zh*0.4);  rad[i] = r*0.6;  ++i;
-		pos[i] = origin + btVector3(-0.3, h*0.8,zh*0.4);  rad[i] = r*0.6;  ++i;
-		pos[i] = origin + btVector3(-1.1,-h*0.8,zh*0.2);  rad[i] = r*0.6;  ++i;
-		pos[i] = origin + btVector3(-1.1, h*0.8,zh*0.2);  rad[i] = r*0.6;  ++i;
-		btMultiSphereShape* chassisShape = new btMultiSphereShape(pos, rad, numSph);
+		pos[i] = origin + btVector3(-0.9,-h,h0 + -zh);  rad[i] = r;  ++i;
+		pos[i] = origin + btVector3(-0.9, h,h0 + -zh);  rad[i] = r;  ++i;
+		pos[i] = origin + btVector3(-1.9,-h,h0 + -zh);  rad[i] = r*0.6;  ++i;  // rear
+		pos[i] = origin + btVector3(-1.9, h,h0 + -zh);  rad[i] = r*0.6;  ++i;
+		pos[i] = origin + btVector3( 0.4,-h*0.8,h0 + zh*0.2);  rad[i] = r*0.6;  ++i;  // top
+		pos[i] = origin + btVector3( 0.4, h*0.8,h0 + zh*0.2);  rad[i] = r*0.6;  ++i;
+		pos[i] = origin + btVector3(-0.3,-h*0.8,h0 + zh*0.4);  rad[i] = r*0.6;  ++i;
+		pos[i] = origin + btVector3(-0.3, h*0.8,h0 + zh*0.4);  rad[i] = r*0.6;  ++i;
+		pos[i] = origin + btVector3(-1.1,-h*0.8,h0 + zh*0.2);  rad[i] = r*0.6;  ++i;
+		pos[i] = origin + btVector3(-1.1, h*0.8,h0 + zh*0.2);  rad[i] = r*0.6;  ++i;/**/
+		btMultiSphereShape* chassisShape = new btMultiSphereShape(pos, rad, numSph/**/);
 
 	/*  tr.setOrigin(origin + btVector3( 1.8,0,-zh));	btCapsuleShape* c1 = new btCapsuleShape(r*0.6,h);	chassisShape->addChildShape(tr, c1);
 		tr.setOrigin(origin + btVector3(-0.9,0,-zh));	btCapsuleShape* c3 = new btCapsuleShape(r,h);	chassisShape->addChildShape(tr, c3);

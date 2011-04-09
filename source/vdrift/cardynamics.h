@@ -86,6 +86,10 @@ public:
 	MATHVECTOR <T, 3> GetVelocity() const;
 	MATHVECTOR <T, 3> GetEnginePosition() const;
 
+/// custom collision params
+	bool coll_manual;  // define collision manually
+	float coll_R, coll_Hofs;
+
 // driveline
 	// driveline input
 	void StartEngine();

@@ -106,6 +106,15 @@ bool CAR::Load(class App* pApp1,
 	carconf.GetParam("model_ofs.interior-x", vInteriorOffset[0]);
 	carconf.GetParam("model_ofs.interior-y", vInteriorOffset[1]);
 	carconf.GetParam("model_ofs.interior-z", vInteriorOffset[2]);
+
+	///-  custom car collision params
+	dynamics.coll_R = 0.3f;  dynamics.coll_Hofs = 0.f;
+	dynamics.coll_manual = false;  // normally auto
+	if (carconf.GetParam("collision.manual", dynamics.coll_manual))
+	{
+		carconf.GetParam("collision.radius", dynamics.coll_R);
+		carconf.GetParam("collision.offsetH", dynamics.coll_Hofs);
+	}
 	
 
 	// load cardynamics
