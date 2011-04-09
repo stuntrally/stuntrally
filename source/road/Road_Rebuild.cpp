@@ -619,12 +619,15 @@ void SplineRoad::RebuildRoadInt()
 				if (cols)
 				{
 					idx.clear();
+					at_pos = &posC;
 					for (int l=0; l < iLmrgC; ++l)
 					for (int w=0; w < iwC; ++w)
 					{
 						int f = w + l*(iwC+1)*2, f1 = f + iwC+1;
-						idx.push_back(f+0);  idx.push_back(f1+1);  idx.push_back(f+1);
-						idx.push_back(f+0);  idx.push_back(f1+0);  idx.push_back(f1+1);
+						//idx.push_back(f+0);  idx.push_back(f1+1);  idx.push_back(f+1);
+						//idx.push_back(f+0);  idx.push_back(f1+0);  idx.push_back(f1+1);
+						addTri(f+0, f1+1, f+1 ,1);
+						addTri(f+0, f1+0, f1+1,1);
 					}					
 					vSegs[seg].nTri[lod] += idx.size()/3;
 
@@ -692,9 +695,10 @@ void SplineRoad::RebuildRoadInt()
 					//  Road  ~
 					btCollisionShape* trimeshShape = new btBvhTriangleMeshShape(trimesh, true);
 					trimeshShape->setUserPointer((void*)7777);  // mark as road,  + mtrId..
+					
 					btRigidBody::btRigidBodyConstructionInfo infoT(0.f, 0, trimeshShape);
 					infoT.m_restitution = 0.0;
-					infoT.m_friction = 0.8;
+					infoT.m_friction = 0.8;  // 1 like terrain
 					pGame->collision.AddRigidBody(infoT);
 					
 					//  Wall  ]
@@ -713,6 +717,7 @@ void SplineRoad::RebuildRoadInt()
 						
 						btCollisionShape* trimeshShape = new btBvhTriangleMeshShape(trimesh, true);
 						trimeshShape->setUserPointer((void*)7777);  //-
+						
 						btRigidBody::btRigidBodyConstructionInfo infoW(0.f, 0, trimeshShape);
 						infoW.m_restitution = 0.0;
 						infoW.m_friction = 0.1;  // 0 for wall
