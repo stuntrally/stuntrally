@@ -55,7 +55,7 @@ gear-ratio-3 = 1.448
 gear-ratio-4 = 1.088 
 gear-ratio-5 = 0.780 
 gear-ratio-6 = 0.580 
-shift-delay = 0.05 
+shift-delay = 0.02
 
 [ differential ] 
 final-drive = 4.111 
@@ -247,45 +247,45 @@ efficiency = 0.95
 
 
 [ wheel-FR ] 
-position = 0.77, 1.23, -0.55
+position = 0.71, 1.43, -0.4
 roll-height = 0.32
 mass = 20 
 restitution = 0.1 
 
 [ suspension-FR ] 
 position = 0.66, 1.23, -0.15 
-hinge = -0.77, 0.25, -0.48
+hinge = -0.71, 0.25, -0.48
 
 [ wheel-FL ] 
-position = -0.76, 1.23, -0.55
+position = -0.71, 1.43, -0.4
 roll-height = 0.32 
 mass = 20 
 restitution = 0.1 
 
 [ suspension-FL ] 
 position = -0.66, 1.23, -0.15 
-hinge = 0.77, 0.25, -0.48
+hinge = 0.71, 0.25, -0.48
 
 
 [ wheel-RR ] 
-position = 0.77, -1.21, -0.55
+position = 0.71, -1.21, -0.4
 roll-height = 0.32
 mass = 20
 restitution = 0.1 
 
 [ suspension-RR ] 
 position = 0.65, -1.21, -0.13 
-hinge = -0.77, 0.21, -0.48
+hinge = -0.71, 0.21, -0.48
 
 [ wheel-RL ] 
-position = -0.77, -1.21, -0.55
+position = -0.71, -1.21, -0.4
 roll-height = 0.32
 mass = 20
 restitution = 0.1 
 
 [ suspension-RL ] 
 position = -0.65, -1.21, -0.13 
-hinge = 0.77, 0.21, -0.48
+hinge = 0.71, 0.21, -0.48
 
 
 # total weight 1235 kg
