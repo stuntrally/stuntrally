@@ -11,6 +11,7 @@
 #include "../../paged-geom/WindBatchPage.h"
 #include "../../paged-geom/ImpostorPage.h"
 #include "../../paged-geom/TreeLoader2D.h"
+#include "BltObjects.h"
 
 
 //---------------------------------------------------------------------------------------------------------------
@@ -132,12 +133,10 @@ void App::CreateTrees()
 			if (pg.windFx > 0.f)  {
 				trees->setCustomParam(ent->getName(), "windFactorX", pg.windFx);
 				trees->setCustomParam(ent->getName(), "windFactorY", pg.windFy);  }
-				
 
 			///  collision object
 			const BltCollision* col = objs.Find(pg.name);
 			Vector3 ofs(0,0,0);  if (col)  ofs = col->offset;  // mesh offset
-
 
 			//  num trees
 			int cnt = fTrees * 6000 * pg.dens;
