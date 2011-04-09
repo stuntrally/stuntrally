@@ -168,6 +168,7 @@ void App::CreateCar()
 	if (FileExists(resCar + "/body.mesh"))
 	{
 		Entity* eCar = mSceneMgr->createEntity("Car", "body.mesh");
+		eCar->setMaterialName(sMtr[Mtr_CarBody]);
 		//SceneNode* nc = ndCar->createChildSceneNode();
 		ncart->attachObject(eCar);  eCar->setVisibilityFlags(2);
 	}else{
@@ -181,6 +182,7 @@ void App::CreateCar()
 	if (FileExists(resCar + "/interior.mesh"))
 	{
 		Entity* eInter = mSceneMgr->createEntity("Car.interior", "interior.mesh");
+		eInter->setMaterialName(sMtr[Mtr_CarInterior]);
 		ncart->attachObject(eInter);  eInter->setVisibilityFlags(2);
 	}else{
 		ManualObject* mInter = CreateModel(sMtr[Mtr_CarInterior],&pCar->interiormodel.mesh);
@@ -193,6 +195,7 @@ void App::CreateCar()
 	if (FileExists(resCar + "/glass.mesh"))
 	{
 		Entity* eGlass = mSceneMgr->createEntity("Car.glass", "glass.mesh");
+		eGlass->setMaterialName(sMtr[Mtr_CarGlass]);
 		ncart->attachObject(eGlass);  eGlass->setRenderQueueGroup(RENDER_QUEUE_8);  eGlass->setVisibilityFlags(16);
 	}else{
 		ManualObject* mGlass = CreateModel(sMtr[Mtr_CarGlass], &pCar->glassmodel.mesh);
@@ -219,12 +222,14 @@ void App::CreateCar()
 		if (w < 2 && FileExists(resCar + "/wheel_front.mesh"))
 		{
 			Entity* eWh = mSceneMgr->createEntity("Wheel"+toStr(w), "wheel_front.mesh");
+			eWh->setMaterialName(sMtr[Mtr_CarTireFront]);
 			ndWh[w] = mSceneMgr->getRootSceneNode()->createChildSceneNode();
 			ndWh[w]->attachObject(eWh);
 		}else
 		if (FileExists(resCar + "/wheel_rear.mesh"))
 		{
 			Entity* eWh = mSceneMgr->createEntity("Wheel"+toStr(w), "wheel_rear.mesh");
+			eWh->setMaterialName(sMtr[Mtr_CarTireRear]);
 			ndWh[w] = mSceneMgr->getRootSceneNode()->createChildSceneNode();
 			ndWh[w]->attachObject(eWh);
 		}else{
