@@ -6,6 +6,11 @@ interior-x = -0.05
 interior-y = 0.13
 interior-z = 0
 
+[ collision ]
+manual = 1
+radius = 0.4
+offsetH = 0.3
+
 [ steering ] 
 max-angle = 33.19 
 
