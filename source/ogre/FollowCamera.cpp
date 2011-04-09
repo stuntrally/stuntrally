@@ -394,19 +394,19 @@ bool FollowCamera::loadCameras()
 		{
 			CameraAngle c;  const char* a = 0;
 			c.mName = cam->Attribute("name");
-			c.mType = (CamTypes)StringConverter::parseInt(cam->Attribute("type"));
+			c.mType = (CamTypes)s2i(cam->Attribute("type"));
 			c.mYaw = Degree(0);  c.mPitch = Degree(0);  c.mDist = 10;  c.mSpeed = 10;
 
-			a = cam->Attribute("default");	if (a)  if (StringConverter::parseInt(a)==1)  miCurrent = miCount;
-			a = cam->Attribute("on");		if (a)  c.mMain = StringConverter::parseInt(a)-1;
-			a = cam->Attribute("hideGlass");	if (a)  c.mHideGlass = StringConverter::parseInt(a);
+			a = cam->Attribute("default");	if (a)  if (s2i(a)==1)  miCurrent = miCount;
+			a = cam->Attribute("on");		if (a)  c.mMain = s2i(a)-1;
+			a = cam->Attribute("hideGlass");	if (a)  c.mHideGlass = s2i(a);
 
-			a = cam->Attribute("yaw");		if (a)  c.mYaw += Degree(StringConverter::parseReal(a));
-			a = cam->Attribute("pitch");	if (a)  c.mPitch = Degree(StringConverter::parseReal(a));
-			a = cam->Attribute("dist");		if (a)  c.mDist = StringConverter::parseReal(a);
-			a = cam->Attribute("offset");	if (a)  c.mOffset = StringConverter::parseVector3(a);
-			a = cam->Attribute("speed");	if (a)  c.mSpeed = StringConverter::parseReal(a);
-			a = cam->Attribute("spRot");	if (a)  c.mSpeedRot = StringConverter::parseReal(a);  else  c.mSpeedRot = c.mSpeed;
+			a = cam->Attribute("yaw");		if (a)  c.mYaw += Degree(s2r(a));
+			a = cam->Attribute("pitch");	if (a)  c.mPitch = Degree(s2r(a));
+			a = cam->Attribute("dist");		if (a)  c.mDist = s2r(a);
+			a = cam->Attribute("offset");	if (a)  c.mOffset = s2v(a);
+			a = cam->Attribute("speed");	if (a)  c.mSpeed = s2r(a);
+			a = cam->Attribute("spRot");	if (a)  c.mSpeedRot = s2r(a);  else  c.mSpeedRot = c.mSpeed;
 
 			if (c.mMain >= 0)  {
 				mCameraAngles.push_back(c);

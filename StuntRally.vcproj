@@ -5898,6 +5898,14 @@
 				Name="Scene"
 				>
 				<File
+					RelativePath=".\source\ogre\BltObjects.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\source\ogre\BltObjects.h"
+					>
+				</File>
+				<File
 					RelativePath=".\Source\ogre\Reflect.cpp"
 					>
 				</File>

@@ -106,7 +106,8 @@ void BaseApp::refreshCompositor()
 void BaseApp::createCompositor()
 {
 	// hdr has to be first in the compositor queue
-	CompositorManager::getSingleton().registerCompositorLogic("HDR", new HDRLogic);
+	mHDRLogic = new HDRLogic;
+	CompositorManager::getSingleton().registerCompositorLogic("HDR", mHDRLogic);
 		
 	CompositorManager::getSingleton().addCompositor(mViewport, "HDR");
 
@@ -207,7 +208,7 @@ void BaseApp::Run( bool showDialolg )
 //  ctor
 //-------------------------------------------------------------------------------------
 BaseApp::BaseApp() :
-	mRoot(0), mCamera(0), mSceneMgr(0), mWindow(0), mViewport(0),
+	mRoot(0), mCamera(0), mSceneMgr(0), mWindow(0), mViewport(0), mHDRLogic(0),
 	mShowDialog(1), mShutDown(false),
 	mInputManager(0), mMouse(0), mKeyboard(0),
 	alt(0), ctrl(0), shift(0), mFCam(0), roadUpCnt(0),
@@ -237,8 +238,9 @@ BaseApp::~BaseApp()
 	#endif
 	mRoot->unloadPlugin("RenderSystem_GL");
 	
-	
+
 	OGRE_DELETE mRoot;
+	delete mHDRLogic;  mHDRLogic = 0;
 }
 
 //  config

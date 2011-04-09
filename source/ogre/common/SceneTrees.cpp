@@ -29,7 +29,7 @@ inline Real getTerrainHeightAround(const Real x, const Real z, void *userData)
 	float h = gTerrain->getHeightAtWorldPosition(x, 0, z);
 	
 	#if 0   // testing..
-	const float d = 0.3f;
+	const float d = 0.4f;
 	for (int j=-2; j <= 2; ++j)
 	for (int i=-2; i <= 2; ++i)
 	if (i != 0 && j != 0)
@@ -47,20 +47,6 @@ inline Real getTerrainHeightAround(const Real x, const Real z, void *userData)
 #define getTerPos()		Math::RangeRandom(-0.5f, 0.5f) * sc.td.fTerWorldSize
 #define getRndAngle()	Degree(Math::RangeRandom(0, 360))
 
-/*
-struct BltShape
-{
-	int type;  // 0 sphere, 1 capsule
-	float radius, height;
-	Vector3 offset;  Quaternion rot;
-	float friction, restitution;
-};
-class BCollision
-{
-	vector<BltShape>
-};
-map<string,BCollision> ?
-/**/
 
 void App::CreateTrees()
 {
@@ -83,7 +69,8 @@ void App::CreateTrees()
 	using namespace Forests;
 	Real tws = sc.td.fTerWorldSize * 0.5f;
 	TBounds tbnd(-tws, -tws, tws, tws);
-	Vector3 pos = Vector3::ZERO;  Radian yaw;
+	//  pos0 - original  pos - with offset
+	Vector3 pos0 = Vector3::ZERO, pos = Vector3::ZERO;  Radian yaw;
 
 	bool bWind = 1;	 /// WIND
 
@@ -133,7 +120,7 @@ void App::CreateTrees()
 		treeLoader->setHeightFunction(getTerrainHeightAround /*,userdata*/);
 		treeLoader->setMaximumScale(4);//6
 		tws = sc.td.fTerWorldSize;
-		int r = imgRoadSize, cntr = 0;
+		int r = imgRoadSize, cntr = 0, cntshp = 0;
 
 		//  layers
 		for (size_t l=0; l < sc.pgLayers.size(); l++)
@@ -146,58 +133,34 @@ void App::CreateTrees()
 				trees->setCustomParam(ent->getName(), "windFactorX", pg.windFx);
 				trees->setCustomParam(ent->getName(), "windFactorY", pg.windFy);  }
 				
-			///  bullet shape params  todo: to xml...
-			//--------------------------------------------------
-			#ifndef ROAD_EDITOR  //  in Game
-			enum BLT_SHP {  BLT_None=0, BLT_Sphere, BLT_CapsZ, } eShp = BLT_Sphere;
-			btScalar frict = 0.2, restit = 0.9;
-			Vector3 ofs(0,0,0);  Real radius = 1.f, height = 1.f;
 
-			if (pSet->veget_collis)
-			{	 if (pg.name == "tree.07.mesh")	{	ofs = Vector3( 1.2, -0.7,  1.4);  radius = 1.1;  height = 2.0;  eShp = BLT_CapsZ;	}
-			else if (pg.name == "tree.09.mesh")	{	ofs = Vector3(-1.2, -0.35, 1.4);  radius = 1.3;  height = 2.0;  eShp = BLT_CapsZ;	}
-			else if (pg.name == "rock.05.mesh"
-				 ||  pg.name == "rock.05w.mesh"){	ofs = Vector3(0.0, 0.0, 0.2);  radius = 12.0;  eShp = BLT_Sphere;	}
-			else if (pg.name == "rock.07.mesh"
-				 ||  pg.name == "rock.07w.mesh"){	ofs = Vector3(0.0, 0.0, 0.2);  radius = 12.0;  eShp = BLT_Sphere;	}
-			else if (pg.name == "farn1.mesh")	{	ofs = Vector3(0,0,0);  radius = 1.4;  eShp = BLT_Sphere;  frict = 0.3;  }
-			else if (pg.name == "farn2.mesh")	{	ofs = Vector3(0,0,0);  radius = 1.6;  eShp = BLT_Sphere;  frict = 0.3;  }
-			else if (pg.name == "fir05.mesh"
-				 ||  pg.name == "fir05w.mesh")	{	ofs = Vector3(0,0,30);  radius = 4.1;  height = 69.0;  eShp = BLT_CapsZ;	}
-			else if (pg.name == "fir06.mesh"
-				 ||  pg.name == "fir06w.mesh")	{	ofs = Vector3(0,0,30);  radius = 4.1;  height = 69.0;  eShp = BLT_CapsZ;	}
-			else if (pg.name == "fir14.mesh"
-				 ||  pg.name == "fir14w.mesh")	{	ofs = Vector3(0,0,30);  radius = 4.1;  height = 69.0;  eShp = BLT_CapsZ;	}
-			else if (pg.name == "palm.mesh")	{	ofs = Vector3(0.0, 0.0, 1.4);  radius = 0.4;  height = 3.0;  eShp = BLT_CapsZ;  frict = 0.7;  }
-			//none: plant1 plant2 shroom1_1 shroom1_2 shroom1_3 shroom2_1 shroom2_2 shroom2_3
-			}
-			#endif
-			
-			//--------------------------------------------------
+			///  collision object
+			const BltCollision* col = objs.Find(pg.name);
+			Vector3 ofs(0,0,0);  if (col)  ofs = col->offset;  // mesh offset
+
 
 			//  num trees
 			int cnt = fTrees * 6000 * pg.dens;
 			for (int i = 0; i < cnt; i++)
 			{
-			#if 1
-				yaw = getRndAngle();
-				pos.x = getTerPos();  pos.z = getTerPos();
-				Real scl = Math::RangeRandom(pg.minScale, pg.maxScale);
-			#else  // test angle
-				yaw = Degree((i*45)%360);
-				pos.z = -100 +(i / 10) * 20;  pos.x = -100 +(i % 10) * 20;
-				Real scl = Math::RangeRandom(pg.minScale, pg.maxScale);
-			#endif
-				Vector3 pos0 = pos;
+				#if 0  ///  for new objects - test shapes
+					yaw = Degree((i*45)%360);  // grid
+					pos.z = -100 +(i / 10) * 20;  pos.x = -100 +(i % 10) * 20;
+					Real scl = Math::RangeRandom(pg.minScale, pg.maxScale);
+				#else
+					yaw = getRndAngle();
+					pos.x = getTerPos();  pos.z = getTerPos();
+					Real scl = Math::RangeRandom(pg.minScale, pg.maxScale);
+				#endif
+				pos0 = pos;  // store original place
 				bool add = true;
 
-			#ifndef ROAD_EDITOR  //  in Game
-				//  ofs pos, rotY, scl
+				//  offset mesh  pos, rotY, scl
 				Vector2 vo;  float yr = -yaw.valueRadians();
-				vo.x = ofs.x * cos(yr) - ofs.y * sin(yr);
-				vo.y = ofs.x * sin(yr) + ofs.y * cos(yr);
+				float cyr = cos(yr), syr = sin(yr);
+				vo.x = ofs.x * cyr - ofs.y * syr;  // ofs x,y for pos x,z
+				vo.y = ofs.x * syr + ofs.y * cyr;
 				pos.x += vo.x * scl;  pos.z += vo.y * scl;
-			#endif
 				
 				//  check if on road
 				if (r > 0)
@@ -219,35 +182,47 @@ void App::CreateTrees()
 				treeLoader->addTree(ent, pos0, yaw, scl);
 				cntr++;
 					
+				
+				///  add to bullet world
 				#ifndef ROAD_EDITOR  //  in Game
-				if (pSet->veget_collis && eShp != BLT_None)
+				if (pSet->veget_collis && col)
+				for (int c=0; c < col->shapes.size(); ++c)  // all shapes
 				{
-					///  add to bullet world  lower fps..  83 > 72
+					const BltShape* shp = &col->shapes[c];
+					Vector3 pos = pos0;  // restore original place
+					Vector3 ofs = shp->offset;
+					//  offset shape  pos, rotY, scl
+					Vector2 vo;  float yr = -yaw.valueRadians();
+					float cyr = cos(yr), syr = sin(yr);
+					vo.x = ofs.x * cyr - ofs.y * syr;
+					vo.y = ofs.x * syr + ofs.y * cyr;
+					pos.x += vo.x * scl;  pos.z += vo.y * scl;
+
 					//  apply pos offset xyz, rotY, mul by scale
 					pos.y = terrain->getHeightAtWorldPosition(pos.x, 0, pos.z);
 					btVector3 pc(pos.x, -pos.z, pos.y + ofs.z * scl);  // center
 					btTransform tr;  tr.setIdentity();  tr.setOrigin(pc);
 
-					btCollisionShape* shp = 0;
-					if (eShp == BLT_Sphere)
-						shp = new btSphereShape(radius * scl);
+					btCollisionShape* bshp = 0;
+					if (shp->type == BLT_CapsZ)
+						bshp = new btCapsuleShapeZ(shp->radius * scl, shp->height * scl);
 					else
-						shp = new btCapsuleShapeZ(radius * scl, height * scl);
-					//shp->setUserPointer((void*)7777);  // mark as ..
+						bshp = new btSphereShape(shp->radius * scl);
+					//shp->setUserPointer((void*)7777);  // mark as vegetation ..
 
-					btCollisionObject* col = new btCollisionObject();
-					col->setActivationState(DISABLE_SIMULATION);
-					col->setCollisionShape(shp);	col->setWorldTransform(tr);
-					col->setFriction(frict);		col->setRestitution(restit);
-					col->setCollisionFlags(col->getCollisionFlags() |
+					btCollisionObject* bco = new btCollisionObject();
+					bco->setActivationState(DISABLE_SIMULATION);
+					bco->setCollisionShape(bshp);	bco->setWorldTransform(tr);
+					bco->setFriction(shp->friction);	bco->setRestitution(shp->restitution);
+					bco->setCollisionFlags(bco->getCollisionFlags() |
 						btCollisionObject::CF_STATIC_OBJECT /*| btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT/**/);
-					pGame->collision.world.addCollisionObject(col);
-					pGame->collision.shapes.push_back(shp);
+					pGame->collision.world.addCollisionObject(bco);
+					pGame->collision.shapes.push_back(bshp);  cntshp++;
 				}
 				#endif
 			}
 		}
-		Ogre::LogManager::getSingletonPtr()->logMessage(string("***** Vegetation objects count: ") + toStr(cntr));
+		Log(string("***** Vegetation objects count: ") + toStr(cntr) + "  shapes: " + toStr(cntshp));
 	}
 	//imgRoadSize = 0;
 }

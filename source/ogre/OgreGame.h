@@ -5,6 +5,7 @@
 #include "../btOgre/BtOgreDebug.h"
 #include "../paged-geom/PagedGeometry.h"
 #include "common/SceneXml.h"
+#include "BltObjects.h"
 //#include "ReplayGame.h"
 
 using namespace Ogre;
@@ -28,6 +29,7 @@ public:
 	//Replay replay;
 
 	Scene sc;  /// scene.xml
+	BltObjects objs;  // veget collision in bullet
 	Light* sun;  void UpdFog(bool bForce=false), UpdSun();
 
 protected:
