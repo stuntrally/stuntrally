@@ -5898,14 +5898,6 @@
 				Name="Scene"
 				>
 				<File
-					RelativePath=".\source\ogre\BltObjects.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\source\ogre\BltObjects.h"
-					>
-				</File>
-				<File
 					RelativePath=".\Source\ogre\Reflect.cpp"
 					>
 				</File>
@@ -6045,6 +6037,14 @@
 			<Filter
 				Name="SceneCommon"
 				>
+				<File
+					RelativePath=".\source\ogre\common\BltObjects.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\source\ogre\common\BltObjects.h"
+					>
+				</File>
 				<File
 					RelativePath=".\Source\ogre\common\SceneTrees.cpp"
 					>
