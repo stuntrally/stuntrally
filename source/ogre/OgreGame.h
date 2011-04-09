@@ -5,7 +5,7 @@
 #include "../btOgre/BtOgreDebug.h"
 #include "../paged-geom/PagedGeometry.h"
 #include "common/SceneXml.h"
-#include "BltObjects.h"
+#include "common/BltObjects.h"
 //#include "ReplayGame.h"
 
 using namespace Ogre;
