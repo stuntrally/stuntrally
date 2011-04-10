@@ -355,7 +355,10 @@ void App::setToolTips(EnumeratorWidgetPtr widgets)
         WidgetPtr wp = widgets.current();
         bool tip = wp->isUserString("tip");
 		if (tip)  // if has tooltip string
-		{	wp->setNeedToolTip(true);
+		{	
+			// needed for translation
+			wp->setUserString("tip", LanguageManager::getInstance().replaceTags(wp->getUserString("tip")));
+			wp->setNeedToolTip(true);
 			wp->eventToolTip = newDelegate(this, &App::notifyToolTip);
 		}
 		//Log(wp->getName() + (tip ? "  *" : ""));
