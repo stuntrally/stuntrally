@@ -139,7 +139,7 @@ void BaseApp::updateStats()
 		//char s[20];
 		sprintf(s, "%5.1f", stats.lastFPS );	mOvrFps->setCaption( s );
 		sprintf(s, "%5.1fk", Real(stats.triangleCount)/1000.f );	mOvrTris->setCaption( s );
-		sprintf(s, "%3d", stats.batchCount );	mOvrBat->setCaption( s );
+		sprintf(s, "%3lu", stats.batchCount );	mOvrBat->setCaption( s );
 
 		mOvrDbg->setCaption( mFilText + "  " + mDebugText );
 	}

@@ -37,7 +37,7 @@ void BaseApp::updateStats()
 
 		sprintf(s, "%5.1f", stats.lastFPS );	ovFps->setCaption( s );
 		sprintf(s, "%5.1fk", Real(stats.triangleCount)/1000.f );	ovTri->setCaption( s );
-		sprintf(s, "%4d", stats.batchCount );	ovBat->setCaption( s );
+		sprintf(s, "%4lu", stats.batchCount );	ovBat->setCaption( s );
 	}
 }
 
