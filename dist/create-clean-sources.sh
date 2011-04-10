@@ -1,9 +1,9 @@
 #!/bin/bash -e
 # This script is meant for easily creating clean source packages.
 # It does the following:
-# * Fetches fresh sources from Mercurial
+# * Fetches fresh sources from Git
 # * Optionally can ignore data and tracks
-# * Removes all Mercurial stuff (.hg*)
+# * Removes all Git stuff (.git*)
 # * Optionally creates an archive
 #
 # TODO: Allow copying files from a local source
@@ -15,7 +15,7 @@ usage()
 	echo "Possible parameters (all optional):"
 	echo "  -h, --help             print this help"
 	echo "  -t, --tag TAGNAME      use the given TAGNAME"
-	echo "  -s, --source-only      don't download data"
+	echo "  -s, --source-only      don't download tracks"
 	echo "  -b, --bz2              create tar.bz2 archive"
 	echo "  -d, --dir WORKINGDIR   use given WORKINGDIR instead of random name in /tmp"
 }
@@ -32,7 +32,7 @@ until [ -z "$1" ]; do
 			TAG="$1"
 			;;
 		-s|--source-only)
-			NODATA=1
+			NOTRACKS=1
 			;;
 		-b|--bz2)
 			BZ2=1
@@ -52,14 +52,14 @@ done
 clone_cd_and_purge()
 {
 	echo "Cloning $2..."
-	hg clone "$1" "$2"
+	git clone "$1" "$2"
 	cd "$2"
 	if [ "$TAG" ]; then
 		echo "Changing to tag $TAG..."
-		hg update "$TAG"
+		git checkout "$TAG"
 	fi
-	echo "Deleting Mercurial stuff..."
-	rm -rf .hg* # Purge mercurial stuff
+	echo "Deleting Git stuff..."
+	rm -rf .git* # Purge mercurial stuff
 }
 
 # Working directory
@@ -80,19 +80,23 @@ cd "$TEMPDIR"
 
 # Fetch the sources
 (
-	clone_cd_and_purge https://vdrift-ogre.googlecode.com/hg/ stuntrally
+	clone_cd_and_purge git://github.com/stuntrally/stuntrally.git stuntrally
 
-	if [ ! "$NODATA" ]; then
+	if [ ! "$NOTRACKS" ]; then
 		(
-			clone_cd_and_purge https://data.vdrift-ogre.googlecode.com/hg/ data
-			clone_cd_and_purge https://tracks.vdrift-ogre.googlecode.com/hg/ tracks
+			cd data
+			clone_cd_and_purge git://github.com/stuntrally/tracks.git tracks
 		)
 	fi
 )
 
 # Create archive
 if [ "$BZ2" ]; then
-	ARCHIVENAME=stuntrally.tar.bz2
+	if [ "$TAG" ]; then
+		ARCHIVENAME="stuntrally-$TAG-sources.tar.bz2"
+	else
+		ARCHIVENAME="stuntrally-sources.tar.bz2"
+	fi
 	tar -cvjf "$ARCHIVENAME" stuntrally
 	echo "Created archive $TEMPDIR/$ARCHIVENAME"
 fi
