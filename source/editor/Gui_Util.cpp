@@ -628,17 +628,6 @@ void App::GetMaterials(String filename, String type)
 
 void App::Rename(String from, String to)
 {
-	/*#ifdef WIN32	
-	if (MoveFileA(from.c_str(), to.c_str()) == 0)
-	{
-		DWORD e = GetLastError()&0xFFFF;
-		Log("Can't Rename! GetLastError = " + toStr(e));
-		//p(s)"%s\nto:\n%s\nError: %d %s", old, name, e,
-		//	e==ERROR_SHARING_VIOLATION? "file is opened":
-		//if (e==ERROR_FILE_NOT_FOUND || e==ERROR_PATH_NOT_FOUND)  t->dis = 1;
-		//Info(s,"Can't rename file");
-	}
-	#endif*/
 	boost::filesystem::rename(from.c_str(), to.c_str());
 	
 }
@@ -653,33 +642,21 @@ bool App::TrackExists(String name)
 
 void App::Delete(String file)
 {
-	/*#ifdef WIN32
-	DeleteFileA(file.c_str());
-	#endif*/
 	boost::filesystem::remove(file.c_str());
 }
 
 void App::DeleteDir(String dir)
 {
-	/*#ifdef WIN32
-	RemoveDirectory(dir.c_str());
-	#endif*/
 	boost::filesystem::remove_all(dir.c_str());
 }
 
 void App::CreateDir(String dir)
 {
-	/*#ifdef WIN32
-	CreateDirectoryA(dir.c_str(),0);
-	#endif*/
 	boost::filesystem::create_directory(dir.c_str());
 }
 
 void App::Copy(String file, String to)
 {
-	/*#ifdef WIN32
-	CopyFileA(file.c_str(), to.c_str(), 0);
-	#endif*/
 	if (boost::filesystem::exists (to.c_str()))
 		boost::filesystem::remove(to.c_str());
 
