@@ -355,20 +355,24 @@ int SplineRoad::GetSelCnt()
 //  next
 void SplineRoad::PrevPoint()
 {
-	iChosen = (iChosen-1 + getNumPoints()) % getNumPoints();
+	if (getNumPoints() != 0)
+		iChosen = (iChosen-1 + getNumPoints()) % getNumPoints();
 }
 void SplineRoad::NextPoint()
 {
-	iChosen = (iChosen+1) % getNumPoints();
+	if (getNumPoints() != 0)
+		iChosen = (iChosen+1) % getNumPoints();
 }
 
 void SplineRoad::FirstPoint()
 {
-	iChosen = 0;
+	if (getNumPoints() != 0)
+		iChosen = 0;
 }
 void SplineRoad::LastPoint()
 {
-	iChosen = getNumPoints()-1;
+	if (getNumPoints() != 0)
+		iChosen = getNumPoints()-1;
 }
 
 
