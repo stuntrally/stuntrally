@@ -3,9 +3,9 @@
     Stunt Rally - game based on VDrift and OGRE, with Track Editor
     Copyright (C) 2010  Crystal Hammer
 
-	project:		http://code.google.com/p/vdrift-ogre/
-	screenshots:	http://picasaweb.google.com/CryHam/
-	videos:			http://www.youtube.com/user/TheCrystalHammer
+	project:        http://code.google.com/p/vdrift-ogre/
+	screenshots:    http://picasaweb.google.com/CryHam/
+	videos:         http://www.youtube.com/user/TheCrystalHammer
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
