@@ -28,7 +28,7 @@ void SplineRoad::RebuildRoadInt()
 	rebuild = false;
 
 	int segs = getNumPoints();
-	if (segs == 0)  return;
+	if (segs == 0 || segs == 1)  return;
 	using std::vector;  using std::min;  using std::max;
 
 	UpdRot(); //
