@@ -1,0 +1,73 @@
+
+material 3D-Diggers/firW1
+{
+	technique Default
+	{
+		pass Main
+		{
+			ambient 1.0 1.0 1.0 1
+			diffuse 0.6 0.6 0.6 1
+
+			alpha_rejection greater_equal 128
+
+			texture_unit
+			{
+				texture fir01w.png
+			}
+		}
+	}
+}
+
+material 3D-Diggers/firW2
+{
+	technique Default
+	{
+		pass Main
+		{
+			ambient 1.0 1.0 1.0 1
+			diffuse 0.6 0.6 0.6 1
+
+			texture_unit
+			{
+				texture fir02w.jpg
+			}
+		}
+	}
+}
+
+
+material 3D-Diggers/fir01
+{
+	technique Default
+	{
+		pass Main
+		{
+			ambient 1.0 1.0 1.0 1
+			diffuse 0.6 0.6 0.6 1
+
+			alpha_rejection greater_equal 128
+
+			texture_unit
+			{
+				texture fir01.png
+			}
+		}
+	}
+}
+
+material 3D-Diggers/fir02
+{
+	technique Default
+	{
+		pass Main
+		{
+			ambient 1.0 1.0 1.0 1
+			diffuse 0.6 0.6 0.6 1
+
+			texture_unit
+			{
+				texture fir02.jpg
+			}
+		}
+	}
+}

@@ -1,0 +1,248 @@
+Editor/FocusOverlay
+{
+	zorder 500
+	container BorderPanel(Editor/FocusPanel)
+	{
+		metrics_mode pixels
+		vert_align bottom
+		left  0
+		width 70
+		top	-25
+		height	 25
+		material Menu/FocusOvr
+
+		element TextArea(Editor/FocusText)
+		{
+			metrics_mode pixels
+			left 5
+			top 2
+			width 70
+			height 22
+			font_name Vrinda
+			char_height 21
+			//caption Cam
+			colour_top	0.7 0.8 1.0
+			colour_bottom 0.95 1.0 1.0
+		}
+				
+	}
+}
+
+Editor/StatusOverlay
+{
+	zorder 500
+	container BorderPanel(Editor/StatusPanel)
+	{
+		metrics_mode pixels
+		vert_align bottom
+		left  70
+		width 120
+		top	-25
+		height	 25
+		material hud/Times
+
+		element TextArea(Editor/StatusText)
+		{
+			metrics_mode pixels
+			left 20
+			top 2
+			width 70
+			height 22
+			font_name Vrinda
+			char_height 21
+			//caption 
+			colour_top	0.0 0.5 1.0
+			colour_bottom 1.0 1.0 1.0
+		}
+				
+	}
+}
+
+Editor/CameraOverlay
+{
+	zorder 500
+	container BorderPanel(Editor/CameraPanel)
+	{
+		metrics_mode pixels
+		vert_align bottom
+		left  70
+		width 180
+		top	-50
+		height	25
+		//material hud/info
+
+		element TextArea(Editor/Camera)
+		{
+			metrics_mode pixels
+			left 8
+			top 2
+			width 170
+			height 22
+			font_name Vrinda
+			char_height 21
+			caption Camera
+			colour_top	0.4 0.7 0.7
+			colour_bottom 0.9 1.0 1.0
+		}
+				
+	}
+
+	container BorderPanel(Editor/CameraInfoPanel)
+	{
+		metrics_mode pixels
+		vert_align bottom
+		left  250
+		width 750
+		top	-50
+		height	50
+		//material hud/info
+
+		element TextArea(Editor/CameraInfo)
+		{
+			metrics_mode pixels
+			left 15
+			top 2
+			width 620
+			height 24
+			font_name Vrinda
+			char_height 23
+			caption Camera Info
+			colour_top	0.4 0.7 0.5
+			colour_bottom 0.9 1.0 0.95
+		}
+				
+	}
+
+}
+
+Editor/FpsOverlay
+{
+	zorder 500
+	container BorderPanel(Editor/StatPanel)
+	{
+		metrics_mode pixels
+		vert_align top
+		left  0
+		top   0
+		width 190
+		height 25
+		material Core/StatsBlockCenter
+		//material Menu/FocusOvr
+
+		element TextArea(Editor/CurrFps)
+		{
+			metrics_mode pixels
+			left 10
+			top 6
+			width 90
+			height 20
+			font_name Console
+			char_height 18
+			caption Fps
+			colour_top	0.53 0.78 0.9
+			colour_bottom 0.96 0.98 1
+		}
+
+		element TextArea(Editor/NumTris)
+		{
+			metrics_mode pixels
+			left 75
+			top 7
+			width 90
+			height 20
+			font_name Console
+			char_height 17
+			caption Tri
+			colour_top	0.55 0.6 0.76
+			colour_bottom 0.86 0.9 0.96
+		}
+
+		element TextArea(Editor/NumBatches)
+		{
+			metrics_mode pixels
+			left 140
+			top 7
+			width 90
+			height 20
+			font_name Console
+			char_height 17
+			caption Bat
+			colour_top	0.31 0.52 0.63
+			colour_bottom 0.87 0.93 0.98
+		}
+
+		element TextArea(Editor/Pos)
+		{
+			metrics_mode pixels
+			left 208
+			top 4
+			width 90
+			height 22
+			font_name Vrinda
+			char_height 20
+			//caption Pos
+			colour_top	0.31 0.52 0.63
+			colour_bottom 0.87 0.93 0.98
+		}
+
+	
+	}
+}
+
+
+Editor/DebugOverlay
+{
+	zorder 500
+	container BorderPanel(Editor/DebugPanel)
+	{
+		metrics_mode pixels
+		vert_align bottom
+		left  300
+		width 500
+		top	-55
+		height	 55
+		material hud/info
+
+		element TextArea(Editor/DebugText)
+		{
+			metrics_mode pixels
+			left 50
+			top 5
+			width 600
+			height 53
+			font_name Vrinda
+			char_height 48
+			//caption Info
+			colour_top	0.7 0.7 0.8
+			colour_bottom 0.8 0.9 1.0
+		}
+		
+		element TextArea(Editor/DebugText2)
+		{
+			metrics_mode pixels
+			left 10
+			top 30
+			width 600
+			height 23
+			// 20 18
+			font_name Vrinda
+			char_height 22
+			//caption Info
+			colour_top	0.7 0.7 0.8
+			colour_bottom 0.8 0.9 1.0
+		}
+		
+		element TextArea(Editor/Info)
+		{
+			metrics_mode pixels
+			left 20
+			top 5
+			width 600
+			height 25
+			font_name Vrinda
+			char_height 24
+			colour_top	0.7 0.7 0.8
+			colour_bottom 0.8 0.9 1.0
+		}
+	}
+}

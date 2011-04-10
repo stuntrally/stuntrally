@@ -1,0 +1,872 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<MyGUI type="Layout">
+	<Widget type="Window" skin="WindowCS" position="584 232 800 600" align="Center" layer="Overlapped" name="OptionsWnd">
+		<Property key="Window_MinMax" value="500 500 1000 1000"/>
+		<Property key="Widget_Caption" value="Options"/>
+		<Property key="Widget_Alpha" value="0.3"/>
+		<Property key="Window_Snap" value="true"/>
+		<Widget type="Tab" skin="Tab" position="0 0 796 563" align="Stretch" layer="Back" name="TabWnd">
+			<Property key="Widget_InheritsAlpha" value="false"/>
+			<Property key="Tab_ButtonWidth" value="86"/>
+			<Property key="Widget_Colour" value="0.7 0.85 1"/>
+			<Property key="Tab_ButtonAutoWidth" value="true"/>
+			<Widget type="TabItem" skin="" position="4 26 787 531">
+				<Property key="Widget_Caption" value="Track"/>
+				<Widget type="List" skin="List" position="14 16 148 504" name="TrackList">
+					<UserString key="tip" value="Tracks list, click to select (and see info). Press Enter to drive on it. (or [Change track] and then [New Game])"/>
+				</Widget>
+				<Widget type="StaticText" skin="StaticText" position="176 448 200 24" name="TrackText">
+					<Property key="Widget_InheritsAlpha" value="true"/>
+					<Property key="Widget_Colour" value="0 0 0"/>
+					<Property key="Widget_Caption" value="Track"/>
+					<Property key="Text_TextColour" value="0.4 1.0 0.5"/>
+				</Widget>
+				<Widget type="Button" skin="Button" position="176 488 128 32" name="ChangeTrack">
+					<Property key="Widget_Caption" value="Change Track"/>
+					<Property key="Widget_Colour" value="0.7 1 0.85"/>
+					<Property key="Text_TextColour" value="0.6 1 0.8"/>
+					<UserString key="tip" value="Sets current track to that selected in list. Press [New Game] to start it after."/>
+				</Widget>
+				<Widget type="Button" skin="CheckBox" position="408 448 104 24" name="ReverseOn">
+					<Property key="Widget_Caption" value="Reverse"/>
+					<Property key="Widget_Colour" value="0.8 1 0.6"/>
+					<Property key="Text_TextColour" value="0.8 1 0.5"/>
+					<UserString key="tip" value="Reverse track direction."/>
+				</Widget>
+				<Widget type="Button" skin="Button" position="368 488 128 32" name="NewGame1">
+					<Property key="Widget_Caption" value="New Game"/>
+					<Property key="Widget_Colour" value="0.6 1.0 0.3"/>
+					<Property key="Text_TextColour" value="0.3 1 0.2"/>
+					<UserString key="tip" value="Start game on new track or Restart on current."/>
+				</Widget>
+				<Widget type="StaticImage" skin="StaticImage" position="176 16 336 336" name="TrackImg">
+					<UserString key="tip" value="In game screenshot for selected track."/>
+				</Widget>
+				<Widget type="StaticImage" skin="StaticImage" position="528 280 240 240" name="TrkTerImg">
+					<UserString key="tip" value="Minimap of selected track, view from top."/>
+				</Widget>
+				<Widget type="StaticImage" skin="StaticImage" position="528 280 240 240" name="TrackMap">
+					<UserString key="tip" value="Minimap of selected track, view from top."/>
+				</Widget>
+				<Widget type="StaticText" skin="StaticText" position="532 70 92 18" name="i1">
+					<Property key="Widget_Caption" value="Length"/>
+					<Property key="Text_TextColour" value="0.4 0.8 1.0"/>
+				</Widget>
+				<Widget type="StaticText" skin="StaticText" position="638 70 90 18" name="iv1">
+					<Property key="Widget_Caption" value="km"/>
+					<Property key="Text_TextColour" value="0.4 0.8 1.0"/>
+				</Widget>
+				<Widget type="StaticText" skin="StaticText" position="532 90 92 18" name="i2">
+					<Property key="Text_TextColour" value="0.4 0.8 1.0"/>
+					<Property key="Widget_Caption" value="Area"/>
+				</Widget>
+				<Widget type="StaticText" skin="StaticText" position="638 90 90 18" name="iv2">
+					<Property key="Widget_Caption" value="m"/>
+					<Property key="Text_TextColour" value="0.4 0.8 1.0"/>
+				</Widget>
+				<Widget type="StaticText" skin="StaticText" position="532 120 92 18" name="i3">
+					<Property key="Widget_Caption" value="Width avg."/>
+					<Property key="Text_TextColour" value="0.6 0.75 0.9"/>
+				</Widget>
+				<Widget type="StaticText" skin="StaticText" position="638 120 82 18" name="iv3">
+					<Property key="Widget_Caption" value="m"/>
+					<Property key="Text_TextColour" value="0.6 0.75 0.9"/>
+				</Widget>
+				<Widget type="StaticText" skin="StaticText" position="532 140 92 18" name="i4">
+					<Property key="Widget_Caption" value="Height diff."/>
+					<Property key="Text_TextColour" value="0.6 0.75 0.9"/>
+				</Widget>
+				<Widget type="StaticText" skin="StaticText" position="638 140 82 18" name="iv4">
+					<Property key="Widget_Caption" value="m"/>
+					<Property key="Text_TextColour" value="0.6 0.75 0.9"/>
+				</Widget>
+				<Widget type="StaticText" skin="StaticText" position="532 170 92 18" name="i5">
+					<Property key="Widget_Caption" value="In air"/>
+					<Property key="Text_TextColour" value="0.5 0.9 0.9"/>
+				</Widget>
+				<Widget type="StaticText" skin="StaticText" position="638 170 82 18" name="iv5">
+					<Property key="Widget_Caption" value="%"/>
+					<Property key="Text_TextColour" value="0.5 0.9 0.9"/>
+				</Widget>
+				<Widget type="StaticText" skin="StaticText" position="532 190 92 18" name="i6">
+					<Property key="Widget_Caption" value="Pipes"/>
+					<Property key="Text_TextColour" value="0.9 0.9 0.5"/>
+				</Widget>
+				<Widget type="StaticText" skin="StaticText" position="638 190 82 18" name="iv6">
+					<Property key="Widget_Caption" value="%"/>
+					<Property key="Text_TextColour" value="0.9 0.9 0.5"/>
+				</Widget>
+				<Widget type="StaticText" skin="StaticText" position="532 20 92 18" name="i7">
+					<Property key="Widget_Caption" value="Best time"/>
+					<Property key="Text_TextColour" value="0.7 0.86 1.0"/>
+				</Widget>
+				<Widget type="StaticText" skin="StaticText" position="638 20 90 18" name="iv7">
+					<Property key="Text_TextColour" value="0.7 0.86 1.0"/>
+				</Widget>
+				<Widget type="StaticText" skin="StaticText" position="532 40 92 18" name="i8">
+					<Property key="Widget_Caption" value="Avg. speed"/>
+					<Property key="Text_TextColour" value="0.7 0.86 1.0"/>
+				</Widget>
+				<Widget type="StaticText" skin="StaticText" position="638 40 90 18" name="iv8">
+					<Property key="Text_TextColour" value="0.7 0.86 1.0"/>
+				</Widget>
+				<Widget type="Edit" skin="WordWrap" position="176 367 336 75" name="TrackDesc">
+					<Property key="Edit_ReadOnly" value="true"/>
+					<Property key="Edit_MultiLine" value="true"/>
+					<Property key="Edit_WordWrap" value="true"/>
+					<Property key="Edit_VisibleHScroll" value="false"/>
+					<Property key="Edit_VisibleVScroll" value="true"/>
+					<Property key="Text_TextColour" value="0.6 1.0 0.8"/>
+					<Property key="Widget_Colour" value="0.4 1 0.7"/>
+					<UserString key="tip" value="Track description text."/>
+				</Widget>
+			</Widget>
+			<Widget type="TabItem" skin="" position="4 26 787 531">
+				<Property key="Widget_Caption" value="Car"/>
+				<Widget type="List" skin="List" position="14 16 148 504" name="CarList">
+					<UserString key="tip" value="Cars list, click to select (and see image). Press [Change car] and then [New Game] to drive with it."/>
+				</Widget>
+				<Widget type="StaticText" skin="StaticText" position="176 448 200 24" name="CarText">
+					<Property key="Widget_InheritsAlpha" value="true"/>
+					<Property key="Widget_Caption" value="Car"/>
+					<Property key="Widget_Colour" value="0 0 0"/>
+					<Property key="Text_TextColour" value="0.65 0.88 1.0"/>
+				</Widget>
+				<Widget type="Button" skin="Button" position="176 488 128 32" name="ChangeCar">
+					<Property key="Text_TextColour" value="0.4 0.8 1"/>
+					<Property key="Widget_Caption" value="Change Car"/>
+					<Property key="Widget_Colour" value="0.5 0.8 1"/>
+					<UserString key="tip" value="Change current car to that selected in list, press [New Game] to drive with it."/>
+				</Widget>
+				<Widget type="Button" skin="Button" position="312 488 128 32" name="NewGame2">
+					<Property key="Widget_Caption" value="New Game"/>
+					<Property key="Widget_Colour" value="0.6 1.0 0.3"/>
+					<Property key="Text_TextColour" value="0.3 1 0.2"/>
+					<UserString key="tip" value="Restart game (after car change)."/>
+				</Widget>
+				<Widget type="StaticImage" skin="StaticImage" position="448 200 320 320" name="CarImg"/>
+				<Widget type="HScroll" skin="HScroll" position="320 50 448 18" name="CarClrH">
+					<Property key="Scroll_Range" value="1000001"/>
+					<Property key="Scroll_MoveToClick" value="true"/>
+					<UserString key="tip" value="Change car color (hue)."/>
+				</Widget>
+				<Widget type="StaticText" skin="StaticText" position="270 50 42 24" name="CarClrHVal">
+					<Property key="Text_TextColour" value="0.8 0.9 1.0"/>
+				</Widget>
+				<Widget type="HScroll" skin="HScroll" position="320 80 448 18" name="CarClrS">
+					<Property key="Scroll_Range" value="1000001"/>
+					<Property key="Scroll_MoveToClick" value="true"/>
+					<UserString key="tip" value="Change car color saturation (white-black)."/>
+				</Widget>
+				<Widget type="StaticText" skin="StaticText" position="270 80 42 24" name="CarClrSVal">
+					<Property key="Text_TextColour" value="0.8 0.9 1.0"/>
+				</Widget>
+				<Widget type="HScroll" skin="HScroll" position="320 110 448 18" name="CarClrV">
+					<Property key="Scroll_Range" value="1000001"/>
+					<Property key="Scroll_MoveToClick" value="true"/>
+					<UserString key="tip" value="Change car color brightness (dark-light)."/>
+				</Widget>
+				<Widget type="StaticText" skin="StaticText" position="270 110 42 24" name="CarClrVVal">
+					<Property key="Text_TextColour" value="0.8 0.9 1.0"/>
+				</Widget>
+				<Widget type="StaticText" skin="StaticText" position="176 50 80 24">
+					<Property key="Widget_Caption" value="Color - Hue"/>
+					<Property key="Text_TextColour" value="0.5 0.8 1.0"/>
+				</Widget>
+				<Widget type="StaticText" skin="StaticText" position="176 80 80 24">
+					<Property key="Text_TextColour" value="0.7 0.8 0.9"/>
+					<Property key="Widget_Caption" value="Saturation"/>
+				</Widget>
+				<Widget type="StaticText" skin="StaticText" position="176 110 80 24">
+					<Property key="Text_TextColour" value="0.5 0.7 0.9"/>
+					<Property key="Widget_Caption" value="Brightness"/>
+				</Widget>
+				<Widget type="StaticImage" skin="StaticImage" position="336 30 512 10">
+					<Property key="Image_Texture" value="hue_bar.png"/>
+				</Widget>
+			</Widget>
+			<Widget type="TabItem" skin="" position="4 26 787 531">
+				<Property key="Widget_Caption" value="Setup"/>
+				<Widget type="Button" skin="CheckBox" position="32 80 216 24" name="CarABS">
+					<Property key="Widget_Caption" value="ABS (antilock brakes)"/>
+					<Property key="Text_TextColour" value="1 1 0.7"/>
+					<UserString key="tip" value="Prevents wheel lock when braking (default: off)."/>
+				</Widget>
+				<Widget type="Button" skin="CheckBox" position="32 120 216 24" name="CarTCS">
+					<Property key="Widget_Caption" value="TCS (traction control)"/>
+					<Property key="Text_TextColour" value="0.7 1 1"/>
+					<UserString key="tip" value="Prevents wheel spinning when accelerating (default: off)."/>
+				</Widget>
+				<Widget type="Button" skin="CheckBox" position="32 280 120 24" name="CarClutch">
+					<Property key="Widget_Caption" value="Auto clutch-"/>
+					<Property key="Text_TextColour" value="0.6 0.8 0.8"/>
+					<UserString key="tip" value="-Manual not implemented."/>
+				</Widget>
+				<Widget type="Button" skin="CheckBox" position="32 200 146 24" name="CarGear">
+					<Property key="Widget_Caption" value="Auto gearbox"/>
+					<Property key="Text_TextColour" value="0.8 0.9 1"/>
+					<UserString key="tip" value="Uncheck for manual gears changing."/>
+				</Widget>
+				<Widget type="Button" skin="CheckBox" position="32 240 146 24" name="CarRear">
+					<Property key="Widget_Caption" value="Auto Rear gear"/>
+					<Property key="Text_TextColour" value="0.7 0.8 0.9"/>
+					<UserString key="tip" value="Uncheck for manual Rear gear changing."/>
+				</Widget>
+				<Widget type="Button" skin="CheckBox" position="312 80 328 24" name="VegetCollis">
+					<Property key="Widget_Caption" value="Vegetation collision    *needs New Game"/>
+					<Property key="Text_TextColour" value="0.6 0.8 0.8"/>
+				</Widget>
+			</Widget>
+			<Widget type="TabItem" skin="" position="4 26 787 531" layer="Back">
+				<Property key="Widget_Caption" value="Screen"/>
+				<Widget type="Tab" skin="Tab" position="16 15 744 460">
+					<Property key="Tab_ButtonAutoWidth" value="false"/>
+					<Property key="Widget_Colour" value="0.73 0.88 1"/>
+					<Property key="Tab_ButtonWidth" value="100"/>
+					<Widget type="TabItem" skin="" position="4 26 735 428">
+						<Property key="Widget_Caption" value="Video"/>
+						<Widget type="StaticText" skin="StaticText" position="32 18 112 24">
+							<Property key="Widget_Caption" value="Resolution *"/>
+							<Property key="Widget_Colour" value="0 0 0"/>
+							<Property key="Text_TextColour" value="0.3 1 1"/>
+						</Widget>
+						<Widget type="Button" skin="CheckBox" position="330 50 112 24" name="FullScreen">
+							<Property key="Widget_Caption" value="Fullscreen"/>
+							<Property key="Text_TextColour" value="0.6 0.9 1"/>
+						</Widget>
+						<Widget type="Button" skin="CheckBox" position="460 50 112 24" name="VSync">
+							<Property key="Widget_Caption" value="VSync *"/>
+							<Property key="Text_TextColour" value="0.5 0.9 1"/>
+						</Widget>
+						<Widget type="StaticText" skin="StaticText" position="32 488 136 24">
+							<Property key="Widget_Caption" value="* need restart"/>
+							<Property key="Text_TextColour" value="0.7 1 0.5"/>
+						</Widget>
+						<Widget type="List" skin="List" position="32 54 144 354" name="ResList"/>
+						<Widget type="Button" skin="Button" position="188 58 92 24" name="ResChange">
+							<Property key="Widget_Caption" value="Change"/>
+							<Property key="Text_TextColour" value="0.7 1 1"/>
+							<Property key="Widget_Colour" value="0.6 1 1"/>
+						</Widget>
+					</Widget>
+					<Widget type="TabItem" skin="" position="4 26 735 428">
+						<Property key="Widget_Caption" value="Effects"/>
+						<Widget type="Button" skin="CheckBox" position="40 50 112 24" name="Bloom">
+							<Property key="Widget_Caption" value="Bloom"/>
+							<Property key="Text_TextColour" value="1 1 0.5"/>
+						</Widget>
+						<Widget type="StaticText" skin="StaticText" position="66 85 100 24">
+							<Property key="Widget_Caption" value="Intensity"/>
+							<Property key="Text_TextColour" value="1.0 0.9 0.0"/>
+						</Widget>
+						<Widget type="Button" skin="CheckBox" position="40 155 112 24" name="HDR">
+							<Property key="Widget_Caption" value="HDR"/>
+							<Property key="Text_TextColour" value="1 0.7 0"/>
+						</Widget>
+						<Widget type="Button" skin="CheckBox" position="40 195 112 24" name="MotionBlur">
+							<Property key="Widget_Caption" value="Motion Blur"/>
+							<Property key="Text_TextColour" value="0.6 1 0.3"/>
+						</Widget>
+						<Widget type="HScroll" skin="HScroll" position="248 230 320 18" name="BlurIntens">
+							<Property key="Scroll_MoveToClick" value="true"/>
+							<Property key="Scroll_Range" value="1000001"/>
+							<Property key="Scroll_MoveToClick" value="true"/>
+						</Widget>
+						<Widget type="StaticText" skin="StaticText" position="66 230 100 24">
+							<Property key="Widget_Caption" value="Intensity"/>
+							<Property key="Text_TextColour" value="0.7 1 0.4"/>
+						</Widget>
+						<Widget type="HScroll" skin="HScroll" position="248 85 320 18" name="BloomInt">
+							<Property key="Scroll_MoveToClick" value="true"/>
+							<Property key="Scroll_Range" value="1000001"/>
+							<Property key="Scroll_MoveToClick" value="true"/>
+						</Widget>
+						<Widget type="StaticText" skin="StaticText" position="66 115 120 24">
+							<Property key="Widget_Caption" value="Original image"/>
+							<Property key="Text_TextColour" value="1 1 0.5"/>
+						</Widget>
+						<Widget type="HScroll" skin="HScroll" position="248 115 320 18" name="BloomOrig">
+							<Property key="Scroll_MoveToClick" value="true"/>
+							<Property key="Scroll_Range" value="1000001"/>
+							<Property key="Scroll_MoveToClick" value="true"/>
+						</Widget>
+						<Widget type="StaticText" skin="StaticText" position="184 85 60 26" name="BloomIntVal">
+							<Property key="Text_TextColour" value="1.0 1 0.2"/>
+						</Widget>
+						<Widget type="StaticText" skin="StaticText" position="184 115 60 24" name="BloomOrigVal">
+							<Property key="Text_TextColour" value="1 1 0.5"/>
+						</Widget>
+						<Widget type="StaticText" skin="StaticText" position="184 230 60 24" name="BlurIntensVal">
+							<Property key="Text_TextColour" value="0.7 1 0.4"/>
+						</Widget>
+					</Widget>
+				</Widget>
+				<Widget type="StaticText" skin="StaticText" position="32 488 144 24">
+					<Property key="Widget_Caption" value="* need restart"/>
+					<Property key="Text_TextColour" value="0.5 0.9 1"/>
+				</Widget>
+			</Widget>
+			<Widget type="TabItem" skin="" position="4 26 787 531" layer="Back">
+				<Property key="Widget_Caption" value="Graphics"/>
+				<Widget type="StaticText" skin="StaticText" position="32 488 136 24">
+					<Property key="Widget_Caption" value="* need New Game"/>
+					<Property key="Text_TextColour" value="0.7 1 0.5"/>
+				</Widget>
+				<Widget type="Button" skin="Button" position="176 480 128 32" name="NewGame3">
+					<Property key="Widget_Caption" value="New Game"/>
+					<Property key="Widget_Colour" value="0.6 1.0 0.3"/>
+					<Property key="Text_TextColour" value="0.3 1 0.2"/>
+					<UserString key="tip" value="Restart game, to apply *changes."/>
+				</Widget>
+				<Widget type="Tab" skin="Tab" position="16 15 744 460">
+					<Property key="Tab_ButtonAutoWidth" value="true"/>
+					<Property key="Widget_Colour" value="0.73 0.88 1"/>
+					<Widget type="TabItem" skin="" position="4 26 735 428">
+						<Property key="Widget_Caption" value="Detail"/>
+						<Widget type="StaticText" skin="StaticText" position="32 50 112 24">
+							<Property key="Widget_Caption" value="Terrain error"/>
+							<Property key="Widget_Colour" value="0 0 0"/>
+							<Property key="Text_TextColour" value="0.3 0.9 0.9"/>
+						</Widget>
+						<Widget type="HScroll" skin="HScroll" position="248 50 320 18" name="TerDetail">
+							<Property key="Scroll_Range" value="1000001"/>
+							<Property key="Scroll_MoveToClick" value="true"/>
+						</Widget>
+						<Widget type="StaticText" skin="StaticText" position="32 80 128 24">
+							<Property key="Widget_Caption" value="Terrain HQ dist*"/>
+							<Property key="Widget_Colour" value="0 0 0"/>
+							<Property key="Text_TextColour" value="0.6 1 0.9"/>
+						</Widget>
+						<Widget type="HScroll" skin="HScroll" position="248 80 320 18" name="TerDist">
+							<Property key="Scroll_Range" value="1000001"/>
+							<Property key="Scroll_MoveToClick" value="true"/>
+						</Widget>
+						<Widget type="StaticText" skin="StaticText" position="32 110 112 24">
+							<Property key="Widget_Caption" value="View distance"/>
+							<Property key="Widget_Colour" value="0 0 0"/>
+							<Property key="Text_TextColour" value="0.5 1 0.8"/>
+						</Widget>
+						<Widget type="HScroll" skin="HScroll" position="248 110 320 18" name="ViewDist">
+							<Property key="Scroll_MoveToClick" value="true"/>
+							<Property key="Scroll_Range" value="1000001"/>
+							<Property key="Scroll_MoveToClick" value="true"/>
+						</Widget>
+						<Widget type="StaticText" skin="StaticText" position="180 50 60 24" name="TerDetailVal">
+							<Property key="Text_TextColour" value="0.3 0.9 0.9"/>
+						</Widget>
+						<Widget type="StaticText" skin="StaticText" position="180 80 60 24" name="TerDistVal">
+							<Property key="Text_TextColour" value="0.6 1 0.9"/>
+						</Widget>
+						<Widget type="StaticText" skin="StaticText" position="180 110 60 24" name="ViewDistVal">
+							<Property key="Text_TextColour" value="0.5 1 0.8"/>
+						</Widget>
+						<Widget type="StaticText" skin="StaticText" position="32 140 120 24">
+							<Property key="Widget_Caption" value="Road far quality"/>
+							<Property key="Widget_Colour" value="0 0 0"/>
+							<Property key="Text_TextColour" value="0.6 1.0 0.0"/>
+						</Widget>
+						<Widget type="HScroll" skin="HScroll" position="248 140 320 18" name="RoadDist">
+							<Property key="Scroll_Range" value="1000001"/>
+							<Property key="Scroll_MoveToClick" value="true"/>
+						</Widget>
+						<Widget type="StaticText" skin="StaticText" position="180 140 60 24" name="RoadDistVal">
+							<Property key="Text_TextColour" value="0.6 1.0 0.0"/>
+						</Widget>
+						<Widget type="ComboBox" skin="ComboBox" position="180 190 136 24" name="TexFiltering">
+							<Property key="Widget_Caption" value="Anisotropic"/>
+							<Property key="ComboBox_AddItem" value="Bilinear"/>
+							<Property key="ComboBox_AddItem" value="Trilinear"/>
+							<Property key="ComboBox_AddItem" value="Anisotropic"/>
+							<Property key="Edit_Static" value="true"/>
+							<Property key="Edit_ReadOnly" value="true"/>
+							<Property key="Text_TextColour" value="0.2 1 0.2"/>
+						</Widget>
+						<Widget type="StaticText" skin="StaticText" position="32 190 112 24">
+							<Property key="Widget_Caption" value="Textures"/>
+							<Property key="Widget_Colour" value="0 0 0"/>
+							<Property key="Widget_Alpha" value="1"/>
+							<Property key="Text_TextColour" value="0.2 1 0.2"/>
+						</Widget>
+						<Widget type="StaticText" skin="StaticText" position="32 220 112 24">
+							<Property key="Widget_Caption" value="Anisotropy"/>
+							<Property key="Widget_Colour" value="0 0 0"/>
+							<Property key="Text_TextColour" value="0.2 1 0.2"/>
+						</Widget>
+						<Widget type="HScroll" skin="HScroll" position="248 220 320 18" name="Anisotropy">
+							<Property key="Scroll_Range" value="17"/>
+							<Property key="Scroll_Position" value="0"/>
+							<Property key="Scroll_Page" value="1"/>
+							<Property key="Scroll_ViewPage" value="1"/>
+							<Property key="Scroll_MoveToClick" value="true"/>
+						</Widget>
+						<Widget type="StaticText" skin="StaticText" position="180 220 60 24" name="AnisotropyVal">
+							<Property key="Text_TextColour" value="0.2 1 0.2"/>
+						</Widget>
+					</Widget>
+					<Widget type="TabItem" skin="" position="4 26 735 428">
+						<Property key="Widget_Caption" value="Vegetation"/>
+						<Widget type="Button" skin="Button" position="580 50 68 24" name="TrGrReset">
+							<Property key="Widget_Caption" value="Reset"/>
+							<Property key="Widget_Colour" value="0.6 1.0 0.3"/>
+							<Property key="Text_TextColour" value="0.3 1 0.2"/>
+						</Widget>
+						<Widget type="StaticText" skin="StaticText" position="32 50 128 24">
+							<Property key="Widget_Caption" value="Trees multipler*"/>
+							<Property key="Widget_Colour" value="0 0 0"/>
+							<Property key="Text_TextColour" value="0.5 1 0.5"/>
+						</Widget>
+						<Widget type="StaticText" skin="StaticText" position="32 80 112 24">
+							<Property key="Widget_Caption" value="Distance mul*"/>
+							<Property key="Widget_Colour" value="0 0 0"/>
+							<Property key="Text_TextColour" value="0.5 0.8 0.5"/>
+						</Widget>
+						<Widget type="StaticText" skin="StaticText" position="32 110 112 24">
+							<Property key="Widget_Caption" value="Grass mul*"/>
+							<Property key="Widget_Colour" value="0 0 0"/>
+							<Property key="Text_TextColour" value="0.7 1 0.5"/>
+						</Widget>
+						<Widget type="StaticText" skin="StaticText" position="32 140 112 24">
+							<Property key="Widget_Caption" value="Distance mul*"/>
+							<Property key="Widget_Colour" value="0 0 0"/>
+							<Property key="Text_TextColour" value="0.7 0.8 0.5"/>
+						</Widget>
+						<Widget type="HScroll" skin="HScroll" position="248 50 320 18" name="Trees">
+							<Property key="Scroll_Range" value="1000001"/>
+							<Property key="Scroll_MoveToClick" value="true"/>
+						</Widget>
+						<Widget type="HScroll" skin="HScroll" position="248 80 320 18" name="TreesDist">
+							<Property key="Scroll_Range" value="1000001"/>
+							<Property key="Scroll_MoveToClick" value="true"/>
+						</Widget>
+						<Widget type="HScroll" skin="HScroll" position="248 110 320 18" name="Grass">
+							<Property key="Scroll_Range" value="1000001"/>
+							<Property key="Scroll_MoveToClick" value="true"/>
+						</Widget>
+						<Widget type="HScroll" skin="HScroll" position="248 140 320 18" name="GrassDist">
+							<Property key="Scroll_Range" value="1000001"/>
+							<Property key="Scroll_MoveToClick" value="true"/>
+						</Widget>
+						<Widget type="StaticText" skin="StaticText" position="180 50 60 24" name="TreesVal">
+							<Property key="Text_TextColour" value="0.5 1 0.5"/>
+						</Widget>
+						<Widget type="StaticText" skin="StaticText" position="180 80 60 24" name="TreesDistVal">
+							<Property key="Text_TextColour" value="0.5 0.8 0.5"/>
+						</Widget>
+						<Widget type="StaticText" skin="StaticText" position="180 110 60 24" name="GrassVal">
+							<Property key="Text_TextColour" value="0.7 1 0.5"/>
+						</Widget>
+						<Widget type="StaticText" skin="StaticText" position="180 140 60 24" name="GrassDistVal">
+							<Property key="Text_TextColour" value="0.7 0.8 0.5"/>
+						</Widget>
+					</Widget>
+					<Widget type="TabItem" skin="" position="4 26 735 428">
+						<Property key="Widget_Caption" value="Reflections"/>
+						<Widget type="StaticText" skin="StaticText" position="32 50 112 24">
+							<Property key="Widget_Caption" value="Frames skip"/>
+							<Property key="Widget_Colour" value="0 0 0"/>
+							<Property key="Text_TextColour" value="1 0.8 0.4"/>
+						</Widget>
+						<Widget type="HScroll" skin="HScroll" position="248 50 320 18" name="ReflSkip">
+							<Property key="Scroll_Range" value="1000001"/>
+							<Property key="Scroll_MoveToClick" value="true"/>
+						</Widget>
+						<Widget type="StaticText" skin="StaticText" position="32 80 112 24">
+							<Property key="Widget_Caption" value="Map size*"/>
+							<Property key="Widget_Colour" value="0 0 0"/>
+							<Property key="Text_TextColour" value="1 0.8 0.2"/>
+						</Widget>
+						<Widget type="HScroll" skin="HScroll" position="248 80 320 18" name="ReflSize">
+							<Property key="Scroll_Range" value="1000001"/>
+							<Property key="Scroll_MoveToClick" value="true"/>
+						</Widget>
+						<Widget type="StaticText" skin="StaticText" position="32 110 112 24">
+							<Property key="Widget_Caption" value="Faces at once"/>
+							<Property key="Widget_Colour" value="0 0 0"/>
+							<Property key="Text_TextColour" value="1.0 0.6 0.4"/>
+						</Widget>
+						<Widget type="HScroll" skin="HScroll" position="248 110 320 18" name="ReflFaces">
+							<Property key="Scroll_Range" value="7"/>
+							<Property key="Scroll_MoveToClick" value="true"/>
+						</Widget>
+						<Widget type="StaticText" skin="StaticText" position="32 140 112 24">
+							<Property key="Widget_Caption" value="Distance*"/>
+							<Property key="Widget_Colour" value="0 0 0"/>
+							<Property key="Text_TextColour" value="0.9 0.5 0.5"/>
+						</Widget>
+						<Widget type="HScroll" skin="HScroll" position="248 140 320 18" name="ReflDist">
+							<Property key="Scroll_Range" value="1000001"/>
+							<Property key="Scroll_MoveToClick" value="true"/>
+						</Widget>
+						<Widget type="StaticText" skin="StaticText" position="180 50 60 24" name="ReflSkipVal">
+							<Property key="Text_TextColour" value="1 0.8 0.4"/>
+						</Widget>
+						<Widget type="StaticText" skin="StaticText" position="180 80 60 24" name="ReflSizeVal">
+							<Property key="Text_TextColour" value="1 0.8 0.2"/>
+						</Widget>
+						<Widget type="StaticText" skin="StaticText" position="180 110 60 24" name="ReflFacesVal">
+							<Property key="Text_TextColour" value="1.0 0.6 0.4"/>
+						</Widget>
+						<Widget type="StaticText" skin="StaticText" position="180 140 60 24" name="ReflDistVal">
+							<Property key="Text_TextColour" value="0.9 0.5 0.5"/>
+						</Widget>
+					</Widget>
+					<Widget type="TabItem" skin="" position="4 26 735 428">
+						<Property key="Widget_Caption" value="Shadows"/>
+						<Widget type="Button" skin="Button" position="32 206 112 26" layer="Back" name="Apply">
+							<Property key="Widget_Caption" value="Apply Shadows"/>
+							<Property key="Widget_Colour" value="0.7 0.85 1.0"/>
+						</Widget>
+						<Widget type="StaticText" skin="StaticText" position="32 80 112 24">
+							<Property key="Widget_Caption" value="Shadows"/>
+							<Property key="Widget_Colour" value="0 0 0"/>
+							<Property key="Text_TextColour" value="0.5 0.8 1"/>
+						</Widget>
+						<Widget type="StaticText" skin="StaticText" position="32 110 112 24">
+							<Property key="Widget_Caption" value="Size"/>
+							<Property key="Widget_Colour" value="0 0 0"/>
+							<Property key="Text_TextColour" value="0.5 0.8 1"/>
+						</Widget>
+						<Widget type="StaticText" skin="StaticText" position="32 140 112 24">
+							<Property key="Widget_Caption" value="Count"/>
+							<Property key="Widget_Colour" value="0 0 0"/>
+							<Property key="Text_TextColour" value="0.75 0.85 1"/>
+						</Widget>
+						<Widget type="StaticText" skin="StaticText" position="32 170 112 24">
+							<Property key="Widget_Caption" value="Distance"/>
+							<Property key="Widget_Colour" value="0 0 0"/>
+							<Property key="Text_TextColour" value="0.7 0.8 0.9"/>
+						</Widget>
+						<Widget type="HScroll" skin="HScroll" position="248 80 320 16" name="ShadowType">
+							<Property key="Scroll_Range" value="4"/>
+							<Property key="Scroll_MoveToClick" value="true"/>
+						</Widget>
+						<Widget type="HScroll" skin="HScroll" position="248 110 320 18" name="ShadowSize">
+							<Property key="Scroll_Range" value="1000001"/>
+							<Property key="Scroll_MoveToClick" value="true"/>
+						</Widget>
+						<Widget type="HScroll" skin="HScroll" position="248 140 320 18" name="ShadowCount">
+							<Property key="Scroll_Range" value="1000001"/>
+							<Property key="Scroll_MoveToClick" value="true"/>
+						</Widget>
+						<Widget type="HScroll" skin="HScroll" position="248 170 320 18" name="ShadowDist">
+							<Property key="Scroll_Range" value="1000001"/>
+							<Property key="Scroll_MoveToClick" value="true"/>
+						</Widget>
+						<Widget type="StaticText" skin="StaticText" position="180 80 60 24" name="ShadowTypeVal">
+							<Property key="Text_TextColour" value="0.5 0.8 1"/>
+						</Widget>
+						<Widget type="StaticText" skin="StaticText" position="180 110 60 24" name="ShadowSizeVal">
+							<Property key="Text_TextColour" value="0.5 0.8 1"/>
+						</Widget>
+						<Widget type="StaticText" skin="StaticText" position="180 140 60 24" name="ShadowCountVal">
+							<Property key="Text_TextColour" value="0.75 0.85 1"/>
+						</Widget>
+						<Widget type="StaticText" skin="StaticText" position="180 170 60 24" name="ShadowDistVal">
+							<Property key="Text_TextColour" value="0.7 0.8 0.9"/>
+						</Widget>
+						<Widget type="StaticText" skin="StaticText" position="32 40 112 24">
+							<Property key="Widget_Colour" value="0 0 0"/>
+							<Property key="Widget_Caption" value="Shaders*"/>
+							<Property key="Text_TextColour" value="0.75 0.75 1.0"/>
+						</Widget>
+						<Widget type="HScroll" skin="HScroll" position="248 40 320 18" name="Shaders">
+							<Property key="Scroll_Range" value="2"/>
+							<Property key="Scroll_MoveToClick" value="true"/>
+						</Widget>
+						<Widget type="StaticText" skin="StaticText" position="180 40 60 24" name="ShadersVal">
+							<Property key="Text_TextColour" value="0.75 0.75 1.0"/>
+						</Widget>
+					</Widget>
+					<Widget type="TabItem" skin="" position="4 26 735 428">
+						<Property key="Widget_Caption" value="Particles"/>
+						<Widget type="HScroll" skin="HScroll" position="248 50 320 18" name="Particles">
+							<Property key="Scroll_Range" value="1000001"/>
+							<Property key="Scroll_MoveToClick" value="true"/>
+						</Widget>
+						<Widget type="HScroll" skin="HScroll" position="248 80 320 18" name="Trails">
+							<Property key="Scroll_Range" value="1000001"/>
+							<Property key="Scroll_MoveToClick" value="true"/>
+						</Widget>
+						<Widget type="Button" skin="CheckBox" position="30 50 96 24" name="ParticlesOn">
+							<Property key="Widget_Caption" value="Particles"/>
+							<Property key="Text_TextColour" value="1 0.9 0"/>
+						</Widget>
+						<Widget type="Button" skin="CheckBox" position="30 80 106 24" name="TrailsOn">
+							<Property key="Widget_Caption" value="Tire Trails*"/>
+							<Property key="Text_TextColour" value="1.0 0.8 0.6"/>
+						</Widget>
+						<Widget type="StaticText" skin="StaticText" position="180 50 60 24" name="ParticlesVal">
+							<Property key="Text_TextColour" value="1 0.9 0"/>
+						</Widget>
+						<Widget type="StaticText" skin="StaticText" position="180 80 60 24" name="TrailsVal">
+							<Property key="Text_TextColour" value="1.0 0.8 0.6"/>
+						</Widget>
+					</Widget>
+				</Widget>
+			</Widget>
+			<Widget type="TabItem" skin="" position="4 26 787 531">
+				<Property key="Widget_Caption" value="View"/>
+				<Widget type="Tab" skin="Tab" position="16 15 744 460">
+					<Property key="Tab_ButtonAutoWidth" value="false"/>
+					<Property key="Widget_Colour" value="0.73 0.88 1"/>
+					<Property key="Tab_ButtonWidth" value="100"/>
+					<Widget type="TabItem" skin="" position="4 26 735 428">
+						<Property key="Widget_Caption" value="HUD"/>
+						<Widget type="Button" skin="CheckBox" position="32 56 168 24" name="Digits">
+							<Property key="Widget_Caption" value="Digits (gear, speed)"/>
+							<Property key="Text_TextColour" value="0.7 0.8 0.9"/>
+						</Widget>
+						<Widget type="StaticText" skin="StaticText" position="224 58 104 26">
+							<Property key="Widget_Caption" value="Speed unit"/>
+							<Property key="Text_TextColour" value="0.8 0.9 1.0"/>
+						</Widget>
+						<Widget type="Button" skin="RadioBox" position="344 52 72 32" name="kmh">
+							<Property key="Widget_Caption" value="km/h"/>
+						</Widget>
+						<Widget type="Button" skin="RadioBox" position="424 52 72 32" name="mph">
+							<Property key="Widget_Caption" value="mph"/>
+						</Widget>
+						<Widget type="Button" skin="CheckBox" position="32 96 176 24" name="Gauges">
+							<Property key="Widget_Caption" value="Gauges (rpm, speed)"/>
+							<Property key="Text_TextColour" value="0.9 0.96 1.0"/>
+						</Widget>
+						<Widget type="Button" skin="CheckBox" position="32 136 144 24" name="Minimap">
+							<Property key="Widget_Caption" value="Minimap  F8"/>
+							<Property key="Text_TextColour" value="0.9 0.96 1.0"/>
+						</Widget>
+						<Widget type="Button" skin="CheckBox" position="32 176 144 24" name="Times">
+							<Property key="Widget_Caption" value="Times bar  F7"/>
+							<Property key="Text_TextColour" value="0.8 0.9 1.0"/>
+						</Widget>
+						<Widget type="Button" skin="CheckBox" position="32 216 168 24" name="CamInfo">
+							<Property key="Widget_Caption" value="Camera info"/>
+							<Property key="Text_TextColour" value="0.7 0.8 0.9"/>
+						</Widget>
+						<Widget type="HScroll" skin="HScroll" position="344 99 320 18" name="SizeGaug">
+							<Property key="Scroll_Range" value="1000001"/>
+							<Property key="Scroll_MoveToClick" value="true"/>
+						</Widget>
+						<Widget type="HScroll" skin="HScroll" position="344 139 320 18" name="SizeMinmap">
+							<Property key="Scroll_Range" value="1000001"/>
+							<Property key="Scroll_MoveToClick" value="true"/>
+						</Widget>
+						<Widget type="StaticText" skin="StaticText" position="272 98 60 24" name="SizeGaugVal"/>
+						<Widget type="StaticText" skin="StaticText" position="272 138 60 24" name="SizeMinmapVal"/>
+						<Widget type="StaticText" skin="StaticText" position="224 98 40 24">
+							<Property key="Widget_Caption" value="size"/>
+						</Widget>
+						<Widget type="StaticText" skin="StaticText" position="224 138 40 24">
+							<Property key="Widget_Caption" value="size"/>
+						</Widget>
+					</Widget>
+					<Widget type="TabItem" skin="" position="4 26 735 428">
+						<Property key="Widget_Caption" value="Other"/>
+						<Widget type="StaticText" skin="StaticText" position="40 30 128 24">
+							<Property key="Widget_Caption" value="Development"/>
+							<Property key="Text_TextColour" value="0.7 0.85 1.0"/>
+						</Widget>
+						<Widget type="Button" skin="CheckBox" position="40 62 248 24" name="Fps">
+							<Property key="Widget_Caption" value="Fps, Triangles, Batches  F11"/>
+							<Property key="Text_TextColour" value="0.8 0.9 1.0"/>
+						</Widget>
+						<Widget type="Button" skin="CheckBox" position="40 94 232 24" name="CarDbgBars">
+							<Property key="Widget_Caption" value="Car susp, long|,lat- slips  F9"/>
+							<Property key="Text_TextColour" value="0.7 0.9 1.0"/>
+						</Widget>
+						<Widget type="Button" skin="CheckBox" position="40 126 192 24" name="Wireframe">
+							<Property key="Widget_Caption" value="Wireframe  F10"/>
+							<Property key="Text_TextColour" value="0.7 0.85 1.0"/>
+						</Widget>
+						<Widget type="Button" skin="CheckBox" position="40 158 200 24" name="BulletDebug">
+							<Property key="Widget_Caption" value="Bullet debug  shift-F10"/>
+							<Property key="Text_TextColour" value="0.7 0.85 1.0"/>
+						</Widget>
+						<Widget type="Button" skin="CheckBox" position="40 190 212 24" name="CarDbgTxt">
+							<Property key="Widget_Caption" value="Car debug text  shift-F9"/>
+							<Property key="Text_TextColour" value="0.7 0.85 1.0"/>
+						</Widget>
+						<Widget type="StaticText" skin="StaticText" position="352 30 128 24">
+							<Property key="Text_TextColour" value="0.75 0.85 0.95"/>
+							<Property key="Widget_Caption" value="Startup"/>
+						</Widget>
+						<Widget type="Button" skin="CheckBox" position="352 94 160 24" name="OgreDialog">
+							<Property key="Text_TextColour" value="0.5 0.6 0.7"/>
+							<Property key="Widget_Caption" value="show Ogre dialog"/>
+						</Widget>
+						<Widget type="Button" skin="CheckBox" position="352 126 160 24" name="AutoStart">
+							<Property key="Text_TextColour" value="0.7 0.8 0.9"/>
+							<Property key="Widget_Caption" value="auto Load track"/>
+						</Widget>
+						<Widget type="Button" skin="CheckBox" position="352 158 160 24" name="EscQuits">
+							<Property key="Text_TextColour" value="0.7 0.8 0.9"/>
+							<Property key="Widget_Caption" value="Esc quits"/>
+						</Widget>
+						<Widget type="Button" skin="CheckBox" position="352 190 168 24" name="BltLines">
+							<Property key="Text_TextColour" value="0.7 0.8 0.9"/>
+							<Property key="Widget_Caption" value="bullet debug lines*"/>
+						</Widget>
+						<Widget type="Button" skin="CheckBox" position="352 62 236 24" name="ShowPictures">
+							<Property key="Text_TextColour" value="0.8 0.9 1.0"/>
+							<Property key="Widget_Caption" value="Show pictures while loading*"/>
+						</Widget>
+					</Widget>
+				</Widget>
+			</Widget>
+			<Widget type="TabItem" skin="" position="4 26 787 531">
+				<Property key="Widget_Caption" value="Input"/>
+				<Widget type="StaticText" skin="StaticText" position="32 80 212 24">
+					<Property key="Widget_Caption" value="Left,Right - steer"/>
+					<Property key="Text_TextColour" value="0.8 0.9 1.0"/>
+				</Widget>
+				<Widget type="StaticText" skin="StaticText" position="32 112 212 24">
+					<Property key="Widget_Caption" value="Up,Down - throttle, brake"/>
+					<Property key="Text_TextColour" value="0.8 0.9 1.0"/>
+				</Widget>
+				<Widget type="StaticText" skin="StaticText" position="32 170 212 24">
+					<Property key="Widget_Caption" value="Space - handbrake"/>
+					<Property key="Text_TextColour" value="0.8 0.9 0.8"/>
+				</Widget>
+				<Widget type="StaticText" skin="StaticText" position="32 202 212 24">
+					<Property key="Widget_Caption" value="Ctrl - boost"/>
+					<Property key="Text_TextColour" value="0.8 0.9 0.8"/>
+				</Widget>
+				<Widget type="StaticText" skin="StaticText" position="32 260 212 24">
+					<Property key="Widget_Caption" value="Q,W - roll car (when needed)"/>
+					<Property key="Text_TextColour" value="0.7 0.8 0.8"/>
+				</Widget>
+				<Widget type="StaticText" skin="StaticText" position="32 300 280 24">
+					<Property key="Widget_Caption" value="A,Z - gear up,down (manual gearbox)"/>
+					<Property key="Text_TextColour" value="0.7 0.8 0.8"/>
+				</Widget>
+				<Widget type="StaticText" skin="StaticText" position="364 170 232 24">
+					<Property key="Widget_Caption" value="F1 or Tab - Show/Hide Options"/>
+					<Property key="Text_TextColour" value="0.8 0.9 1.0"/>
+				</Widget>
+				<Widget type="StaticText" skin="StaticText" position="364 80 312 24">
+					<Property key="Widget_Caption" value="X,C or PgUp,PgDn - prev/next camera view"/>
+					<Property key="Text_TextColour" value="0.9 0.9 0.7"/>
+				</Widget>
+				<Widget type="StaticText" skin="StaticText" position="412 112 216 24">
+					<Property key="Text_TextColour" value="0.7 0.7 0.5"/>
+					<Property key="Widget_Caption" value="with shift - main cameras"/>
+				</Widget>
+				<Widget type="StaticText" skin="StaticText" position="364 202 232 24">
+					<Property key="Widget_Caption" value="F2,F3 - prev/next tab"/>
+					<Property key="Text_TextColour" value="0.6 0.8 1.0"/>
+				</Widget>
+				<Widget type="StaticText" skin="StaticText" position="364 260 224 24">
+					<Property key="Widget_Caption" value="F5 - restart game"/>
+					<Property key="Text_TextColour" value="0.6 0.8 1.0"/>
+				</Widget>
+			</Widget>
+			<Widget type="TabItem" skin="" position="4 26 787 531">
+				<Property key="Widget_Caption" value="Sound"/>
+				<Widget type="StaticText" skin="StaticText" position="32 60 96 30">
+					<Property key="Widget_Caption" value="Volume"/>
+					<Property key="Text_TextColour" value="0.9 0.96 1.0"/>
+				</Widget>
+				<Widget type="StaticText" skin="StaticText" position="32 100 96 30">
+					<Property key="Widget_Caption" value="Master"/>
+					<Property key="Text_TextColour" value="0.9 0.94 1.0"/>
+				</Widget>
+				<Widget type="StaticText" skin="StaticText" position="32 140 96 30">
+					<Property key="Widget_Caption" value="Engine"/>
+					<Property key="Text_TextColour" value="0.8 0.85 1.0"/>
+				</Widget>
+				<Widget type="StaticText" skin="StaticText" position="32 180 96 30">
+					<Property key="Widget_Caption" value="Tires"/>
+					<Property key="Text_TextColour" value="0.75 0.8 1.0"/>
+				</Widget>
+				<Widget type="StaticText" skin="StaticText" position="32 220 96 30">
+					<Property key="Widget_Caption" value="Environment"/>
+					<Property key="Text_TextColour" value="0.6 0.75 1.0"/>
+				</Widget>
+				<Widget type="HScroll" skin="HScroll" position="248 100 320 18" name="VolMaster">
+					<Property key="Scroll_MoveToClick" value="true"/>
+					<Property key="Scroll_Range" value="1000001"/>
+				</Widget>
+				<Widget type="HScroll" skin="HScroll" position="248 140 320 18" name="VolEngine">
+					<Property key="Scroll_MoveToClick" value="true"/>
+					<Property key="Scroll_Range" value="1000001"/>
+				</Widget>
+				<Widget type="HScroll" skin="HScroll" position="248 180 320 18" name="VolTires">
+					<Property key="Scroll_MoveToClick" value="true"/>
+					<Property key="Scroll_Range" value="1000001"/>
+				</Widget>
+				<Widget type="HScroll" skin="HScroll" position="248 220 320 18" name="VolEnv">
+					<Property key="Scroll_MoveToClick" value="true"/>
+					<Property key="Scroll_Range" value="1000001"/>
+				</Widget>
+				<Widget type="StaticText" skin="StaticText" position="180 100 60 24" name="VolMasterVal">
+					<Property key="Text_TextColour" value="0.9 0.94 1.0"/>
+				</Widget>
+				<Widget type="StaticText" skin="StaticText" position="180 140 60 24" name="VolEngineVal">
+					<Property key="Text_TextColour" value="0.8 0.85 1.0"/>
+				</Widget>
+				<Widget type="StaticText" skin="StaticText" position="180 180 60 24" name="VolTiresVal">
+					<Property key="Text_TextColour" value="0.75 0.8 1.0"/>
+				</Widget>
+				<Widget type="StaticText" skin="StaticText" position="180 220 60 24" name="VolEnvVal">
+					<Property key="Text_TextColour" value="0.6 0.75 1.0"/>
+				</Widget>
+			</Widget>
+			<Widget type="TabItem" skin="" position="4 26 787 531">
+				<Property key="Widget_Caption" value="About"/>
+				<Widget type="StaticText" skin="StaticText" position="536 202 90 24">
+					<Property key="Widget_Caption" value="version 1.1"/>
+					<Property key="Text_TextColour" value="0.7 1 0.5"/>
+				</Widget>
+				<Widget type="StaticText" skin="StaticText" position="26 224 110 24">
+					<Property key="Widget_Caption" value="A game by"/>
+					<Property key="Text_TextColour" value="0.7 0.86 1"/>
+				</Widget>
+				<Widget type="StaticText" skin="StaticText" position="328 223 128 24">
+					<Property key="Widget_Caption" value="and contributors."/>
+					<Property key="Text_TextColour" value="0.7 0.86 1"/>
+				</Widget>
+				<Widget type="StaticText" skin="StaticText" position="210 392 110 24">
+					<Property key="Widget_Caption" value="based on"/>
+					<Property key="Text_TextColour" value="0.85 0.85 0.85"/>
+				</Widget>
+				<Widget type="StaticText" skin="StaticText" position="586 392 110 24">
+					<Property key="Widget_Caption" value="and using"/>
+					<Property key="Text_TextColour" value="0.8 1 0.8"/>
+				</Widget>
+				<Widget type="StaticImage" skin="StaticImage" position="90 192 256 256">
+					<Property key="Image_Texture" value="_ch-logo.png"/>
+				</Widget>
+				<Widget type="StaticImage" skin="StaticImage" position="6 410 458 110">
+					<Property key="Image_Texture" value="vdrift-logo.png"/>
+					<UserString key="tip" value="vdrift.net"/>
+				</Widget>
+				<Widget type="StaticImage" skin="StaticImage" position="528 424 256 128">
+					<Property key="Image_Texture" value="ogre-logo.png"/>
+					<UserString key="tip" value="www.ogre3d.org"/>
+				</Widget>
+				<Widget type="StaticText" skin="StaticText" position="360 300 408 24">
+					<Property key="Widget_Caption" value="project&apos;s page:     http://code.google.com/p/vdrift-ogre/"/>
+					<Property key="Text_TextColour" value="0.7 0.86 1.0"/>
+				</Widget>
+				<Widget type="StaticImage" skin="StaticImage" position="20 7 752 188">
+					<Property key="Image_Texture" value="stuntrally-logo.png"/>
+				</Widget>
+			</Widget>
+		</Widget>
+	</Widget>
+	<Widget type="Widget" skin="Panel" position="200 400 224 56" layer="ToolTip" name="ToolTip">
+		<Property key="Widget_Alpha" value="0.8"/>
+		<Property key="Widget_Colour" value="0.3 0.5 0.9"/>
+		<Widget type="Edit" skin="WordWrapSimple" position="4 4 218 54" align="Stretch">
+			<Property key="Widget_InheritsAlpha" value="false"/>
+			<Property key="Text_TextColour" value="0.9 0.96 1.0"/>
+			<Property key="Edit_WordWrap" value="true"/>
+			<Property key="Edit_Static" value="true"/>
+			<Property key="Text_TextAlign" value="Left Top"/>
+			<Property key="Widget_Caption" value="ToolTip Text"/>
+		</Widget>
+	</Widget>
+	<Widget type="Button" skin="Button" position_real="0.909519 0 0.0899582 0.0289362" layer="Popup" name="Quit">
+		<Property key="Widget_Caption" value="Quit"/>
+		<Property key="Widget_Colour" value="1 0.4 0.4"/>
+	</Widget>
+</MyGUI>

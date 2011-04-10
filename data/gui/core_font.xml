@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<MyGUI type="Resource" version="1.1">
+
+	<Resource type="ResourceTrueTypeFont" name="font_Vera.17">
+		<Property key="Source" value="Vera.ttf"/>
+		<Property key="Size" value="20"/>
+		<Property key="Resolution" value="50"/>
+		<Property key="Antialias" value="false"/>
+		<Property key="SpaceWidth" value="4"/>
+		<Property key="TabWidth" value="8"/>
+		<Property key="CursorWidth" value="2"/>
+		<Property key="Distance" value="4"/>
+		<Property key="OffsetHeight" value="-1"/>
+		<Codes>
+			<Code range="33 126"/>
+		</Codes>
+	</Resource>
+
+	<Resource type="ResourceTrueTypeFont" name="font_Vera.14">
+		<Property key="Source" value="Vera.ttf"/>
+		<Property key="Size" value="18"/>
+		<Property key="Resolution" value="50"/>
+		<Property key="Antialias" value="false"/>
+		<Property key="SpaceWidth" value="4"/>
+		<Property key="TabWidth" value="8"/>
+		<Property key="CursorWidth" value="2"/>
+		<Property key="Distance" value="3"/>
+		<Property key="OffsetHeight" value="-1"/>
+		<Codes>
+			<Code range="33 126"/>
+		</Codes>
+	</Resource>
+	
+</MyGUI>
