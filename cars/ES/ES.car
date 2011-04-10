@@ -73,21 +73,21 @@ volume = 60
 fuel-density = 1.0 
 
 [ suspension-front ] 
-spring-constant = 83000
-bounce = 5000 
-rebound = 4500 
-travel = 0.27
+spring-constant = 103000
+bounce = 14000 
+rebound = 7500 
+travel = 0.2
 max-compression-velocity = 10.0 
 camber = -1.0 
-caster = 0.0 
+caster = 0.0
 toe = 0.5 
 anti-roll = 12000 
 
 [ suspension-rear ] 
-spring-constant = 80000
-bounce = 5000 
-rebound = 4500 
-travel = 0.27
+spring-constant = 100000
+bounce = 13000 
+rebound = 6000 
+travel = 0.2
 max-compression-velocity = 10.0 
 camber = -0.5 
 caster = 0.0 
@@ -258,7 +258,7 @@ mass = 20
 restitution = 0.1 
 
 [ suspension-FR ] 
-position = 0.66, 1.23, -0.15 
+position = 0.66, 1.23, -0.35 
 hinge = -0.71, 0.25, -0.48
 
 [ wheel-FL ] 
@@ -268,7 +268,7 @@ mass = 20
 restitution = 0.1 
 
 [ suspension-FL ] 
-position = -0.66, 1.23, -0.15 
+position = -0.66, 1.23, -0.35 
 hinge = 0.71, 0.25, -0.48
 
 
@@ -279,7 +279,7 @@ mass = 20
 restitution = 0.1 
 
 [ suspension-RR ] 
-position = 0.65, -1.21, -0.13 
+position = 0.65, -1.21, -0.33 
 hinge = -0.71, 0.21, -0.48
 
 [ wheel-RL ] 
@@ -289,7 +289,7 @@ mass = 20
 restitution = 0.1 
 
 [ suspension-RL ] 
-position = -0.65, -1.21, -0.13 
+position = -0.65, -1.21, -0.33 
 hinge = 0.71, 0.21, -0.48
 
 
