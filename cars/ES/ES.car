@@ -95,7 +95,7 @@ toe = -1.0
 anti-roll = 10000 
 
 [ tire-front ] 
-radius = 0.31595 
+radius = 0.307
 rolling-resistance = 1.3e-2, 6.5e-6 
 rotational-inertia = 10 
 tread = 0.0 
@@ -151,7 +151,7 @@ c17=1.69        #	Vertical shift at load = 0 (Nm)  C17c0=2.2
 #---------
 
 [ tire-rear ] 
-radius = 0.31595 
+radius = 0.307
 rolling-resistance = 1.3e-2, 6.5e-6 
 rotational-inertia = 10 
 tread = 0.0 
