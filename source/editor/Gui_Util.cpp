@@ -680,5 +680,8 @@ void App::Copy(String file, String to)
 	/*#ifdef WIN32
 	CopyFileA(file.c_str(), to.c_str(), 0);
 	#endif*/
+	if (boost::filesystem::exists (to.c_str()))
+		boost::filesystem::remove(to.c_str());
+
 	boost::filesystem::copy_file(file.c_str(), to.c_str());
 }
