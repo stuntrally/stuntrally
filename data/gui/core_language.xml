@@ -6,6 +6,12 @@
 		<Info name="English">
 			<Source>core_language_english_tag.xml</Source>
 		</Info>
+		<Info name="Finnish">
+			<Source>core_language_finnish_tag.xml</Source>
+		</Info>
+		<Info name="German">
+			<Source>core_language_german_tag.xml</Source>
+		</Info>
 	</Language>
 
 </MyGUI>
