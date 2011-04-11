@@ -80,3 +80,6 @@ using namespace std;
 #include "btBulletDynamicsCommon.h"
 #include <MyGUI.h>
 #include <MyGUI_OgrePlatform.h>
+
+/// translation
+#define _(s) MyGUI::LanguageManager::getInstance().replaceTags(s)

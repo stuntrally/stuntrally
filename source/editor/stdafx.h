@@ -57,3 +57,6 @@ using namespace Ogre;
 
 #include <MyGUI.h>
 #include <MyGUI_OgrePlatform.h>
+
+/// translation
+#define _(s) MyGUI::LanguageManager::getInstance().replaceTags(s)
