@@ -1,0 +1,1692 @@
+# How many models (trees, rocks, etc.) will be on track.
+msgid "TipTreeDens"
+msgstr ""
+
+# Camera speed
+msgid "CamSpeed"
+msgstr ""
+
+# Modify
+msgid "InputRoadModify"
+msgstr ""
+
+# Grass sway effect distribution (how random).
+msgid "TipGrassSwayDistr"
+msgstr ""
+
+# car will meet (next+ / prev-) point numbers
+msgid "InputStartMeet"
+msgstr ""
+
+# Uncheck for manual gears changing.
+msgid "TipAutoGearbox"
+msgstr ""
+
+# and using
+msgid "AndUsing"
+msgstr ""
+
+# Column Radius
+msgid "ColumnRadius"
+msgstr ""
+
+# km/h
+msgid "UnitKmh"
+msgstr ""
+
+# Density
+msgid "Density"
+msgstr ""
+
+# View distance
+msgid "ViewDist"
+msgstr ""
+
+# Trees   density
+msgid "TreeDens"
+msgstr ""
+
+# http://code.google.com/p/vdrift-ogre/
+msgid "PageURL"
+msgstr ""
+
+# Normal
+msgid "TerNormal"
+msgstr ""
+
+# Retry
+msgid "MyGUI_MessageBox_Retry"
+msgstr ""
+
+# 1.1
+msgid "GameVersion"
+msgstr ""
+
+# In game screenshot for selected track.
+msgid "TipTrackImg"
+msgstr ""
+
+# Each (mouse/key) move or value change with 
+msgid "InputValueChange"
+msgstr ""
+
+# -,=  - road/pipe material
+msgid "InputRoadMat"
+msgstr ""
+
+# Surface
+msgid "Surface"
+msgstr ""
+
+# F2,F3 - prev/next tab
+msgid "InputNextTab"
+msgstr ""
+
+# Space - handbrake
+msgid "InputBrake"
+msgstr ""
+
+# Preview camera window.
+msgid "TipPrevWind"
+msgstr ""
+
+# C - Paint Color
+msgid "InputPaintColor"
+msgstr ""
+
+# version
+msgid "Version"
+msgstr ""
+
+# Home - toggle on Terrain snap
+msgid "InputRoadOnTer"
+msgstr ""
+
+# Sun light diffuse (normal) color. R G B components 0 to 1 (eg. 0.9 0.9 0.9)
+msgid "TipSunDiffuse"
+msgstr ""
+
+# HUD
+msgid "HUD"
+msgstr ""
+
+# W,S  A,D  Q,E - move   Arrows - rotate
+msgid "InputCamControl"
+msgstr ""
+
+# Minimap of selected track, view from top.
+msgid "TipTrackMap"
+msgstr ""
+
+# Enable or disable this model.
+msgid "TipToggleModel"
+msgstr ""
+
+# F5 - Reload track
+msgid "InputReloadTrack"
+msgstr ""
+
+# Video
+msgid "Video"
+msgstr ""
+
+# Tire Particle type 3 (global for track).
+msgid "TipParType3"
+msgstr ""
+
+# Tire Particle type 2 (global for track).
+msgid "TipParType2"
+msgstr ""
+
+# Tire Particle type 1 (global for track).
+msgid "TipParType1"
+msgstr ""
+
+# Grass   density
+msgid "GrassDens"
+msgstr ""
+
+# Road parameters
+msgid "RoadParams"
+msgstr ""
+
+# Light
+msgid "Light"
+msgstr ""
+
+# dist. to road
+msgid "DistToRoad"
+msgstr ""
+
+# How dense/rare will the grass be on terrain.
+msgid "TipGrassDens"
+msgstr ""
+
+# Tracks list, click to select (and see info). Press Enter to drive on it. (or [Change track] and then [New Game])
+msgid "TipTrackList"
+msgstr ""
+
+# Back
+msgid "Back"
+msgstr ""
+
+# Diffuse texture preview image.
+msgid "TipDiffusePrev"
+msgstr ""
+
+# smoke
+msgid "smoke"
+msgstr ""
+
+# Change current car to that selected in list, press [New Game] to drive with it.
+msgid "TipChangeCar"
+msgstr ""
+
+# A - Paint Textures (layers)
+msgid "InputTerPaint"
+msgstr ""
+
+# Minimap of selected track, view from top.
+msgid "TipMinimapScrnEditor"
+msgstr ""
+
+# Pick (one)
+msgid "InputRoadPickOne"
+msgstr ""
+
+# Particle amounts
+msgid "ParAmount"
+msgstr ""
+
+# No
+msgid "MyGUI_MessageBox_No"
+msgstr ""
+
+# ctrl-Space - set new from picked
+msgid "InputRoadNew"
+msgstr ""
+
+# Top
+msgid "Top"
+msgstr ""
+
+# Terrain update skip
+msgid "TerUpdSkip"
+msgstr ""
+
+# Input
+msgid "Input"
+msgstr ""
+
+# Left,Right - steer
+msgid "InputSteer"
+msgstr ""
+
+# Terrain Layers
+msgid "TerLayers"
+msgstr ""
+
+# Set as copy source
+msgid "CopySource"
+msgstr ""
+
+# Terrain Heightmap
+msgid "TerHeightMap"
+msgstr ""
+
+# * need reload
+msgid "NeedReload"
+msgstr ""
+
+# Count
+msgid "Count"
+msgstr ""
+
+# km
+msgid "UnitKm"
+msgstr ""
+
+# based on
+msgid "BasedOn"
+msgstr ""
+
+# F2,F3 - prev,next Options tab
+msgid "InputNextOptTab"
+msgstr ""
+
+# ; &apos;    - checkpoint radius (chkR 0 - none)
+msgid "InputRoadChkRadius"
+msgstr ""
+
+# Dust particles size.
+msgid "TipDustSize"
+msgstr ""
+
+# alt-shift - at start   alt-ctrl - at end
+msgid "InputRoadInsAlt"
+msgstr ""
+
+# Abort
+msgid "MyGUI_MessageBox_Abort"
+msgstr ""
+
+# F1 or Tab - Show/Hide Options
+msgid "InputShowGUI"
+msgstr ""
+
+# View Start
+msgid "ViewStart"
+msgstr ""
+
+# Drag for wheels, bigger will make them slow down faster (eg. 140 for snow, 80 for grass).
+msgid "TipRollDrag"
+msgstr ""
+
+# Digits (gear, speed)
+msgid "Digits"
+msgstr ""
+
+# Turn on/off chosen texture layer.
+msgid "TipToggleLayer"
+msgstr ""
+
+# View Right
+msgid "ViewRight"
+msgstr ""
+
+# Wireframe
+msgid "Wireframe"
+msgstr ""
+
+# Change Track
+msgid "ChangeTrack"
+msgstr ""
+
+# Terrain size
+msgid "TerrainSize"
+msgstr ""
+
+# - change road width
+msgid "InputRoadWidth"
+msgstr ""
+
+# Auto Rear gear
+msgid "AutoRear"
+msgstr ""
+
+# Set camera to
+msgid "SetCamTo"
+msgstr ""
+
+# max
+msgid "max"
+msgstr ""
+
+# Sun direction - yaw angle.
+msgid "TipSunDirYaw"
+msgstr ""
+
+# X,C or PgUp,PgDn - prev/next camera view
+msgid "InputNextCam"
+msgstr ""
+
+# ABS (antilock brakes)
+msgid "ABS"
+msgstr ""
+
+# Length
+msgid "Length"
+msgstr ""
+
+# Cars list, click to select (and see image). Press [Change car] and then [New Game] to drive with it.
+msgid "TipCarsList"
+msgstr ""
+
+# Ignore
+msgid "MyGUI_MessageBox_Ignore"
+msgstr ""
+
+# Model
+msgid "Model"
+msgstr ""
+
+# Pipe L steps mul.
+msgid "PipeLStepsMul"
+msgstr ""
+
+# View
+msgid "View"
+msgstr ""
+
+# Distance from road to models (global, added to each models own value).
+msgid "TipModelRoadDist"
+msgstr ""
+
+# Up,Down - throttle, brake
+msgid "InputThrottle"
+msgstr ""
+
+# (after [Terrain,Vegetation] changes)
+msgid "InputAfterChanges"
+msgstr ""
+
+# Skirt Length
+msgid "SkirtLength"
+msgstr ""
+
+# Darken
+msgid "OrigImage"
+msgstr ""
+
+# alt - select all   ctrl - select none
+msgid "InputRoadSelAlt"
+msgstr ""
+
+# Backspace - add to or remove from selection
+msgid "InputRoadSel"
+msgstr ""
+
+# Weather
+msgid "Weather"
+msgstr ""
+
+# wind
+msgid "wind"
+msgstr ""
+
+# Whole road statistics.
+msgid "TipRoadStats"
+msgstr ""
+
+# F5 - restart game
+msgid "InputRestart"
+msgstr ""
+
+# max scale
+msgid "MaxScale"
+msgstr ""
+
+# Model maximal scale.
+msgid "TipModelMaxScale"
+msgstr ""
+
+# Terrain error
+msgid "TerrainError"
+msgstr ""
+
+# * need New Game
+msgid "NeedNewGame"
+msgstr ""
+
+# Effects
+msgid "Effects"
+msgstr ""
+
+# Width Steps
+msgid "WidthSteps"
+msgstr ""
+
+# Diffuse
+msgid "Diffuse"
+msgstr ""
+
+# Sound
+msgid "Sound"
+msgstr ""
+
+# Road points size
+msgid "RoadPointSize"
+msgstr ""
+
+# Car
+msgid "Car"
+msgstr ""
+
+# Sky material names (from SkyDome.material).
+msgid "TipSkyMats"
+msgstr ""
+
+# Master
+msgid "VolMaster"
+msgstr ""
+
+# ctrl-Ins - copy selection   ctrl-Del - delete sel.
+msgid "InputRoadCopySel"
+msgstr ""
+
+# Start game on new track or Restart on current.
+msgid "TipNewGame"
+msgstr ""
+
+# Pick selected track for copy source, used in [Tools] tab.
+msgid "TipCopySource"
+msgstr ""
+
+# Layer
+msgid "Layer"
+msgstr ""
+
+# Esc quits
+msgid "EscQuit"
+msgstr ""
+
+# Gauges (rpm, speed)
+msgid "Gauges"
+msgstr ""
+
+# Length dim.
+msgid "LengthDim"
+msgstr ""
+
+# Bloom
+msgid "Bloom"
+msgstr ""
+
+# Rename selected track with new name (change name first).
+msgid "TipRenameTrk"
+msgstr ""
+
+# Try
+msgid "MyGUI_MessageBox_Try"
+msgstr ""
+
+# Amplitude of additional bumps on surface (how high).
+msgid "TipBumpAmp"
+msgstr ""
+
+# Normal texture (Height in alpha).
+msgid "TipNormalTex"
+msgstr ""
+
+# Pipe materials
+msgid "PipeMaterials"
+msgstr ""
+
+# end
+msgid "End"
+msgstr ""
+
+# HDR
+msgid "HDR"
+msgstr ""
+
+# Prevents wheel lock when braking (default: off).
+msgid "TipABS"
+msgstr ""
+
+# Minimal grass patch height.
+msgid "TipGrassPatchHeightMin"
+msgstr ""
+
+# Terrain
+msgid "Terrain"
+msgstr ""
+
+# [,]  -  adjust start box height (bigger for pipes)
+msgid "InputStartHeight"
+msgstr ""
+
+# Sun direction - pitch angle.
+msgid "TipSunDirPitch"
+msgstr ""
+
+# project&apos;s page:
+msgid "ProjectPage"
+msgstr ""
+
+# Type
+msgid "Type"
+msgstr ""
+
+# Ctrl - boost
+msgid "InputBoost"
+msgstr ""
+
+# Engine
+msgid "Engine"
+msgstr ""
+
+# Restart game (after car change).
+msgid "TipNewGameCar"
+msgstr ""
+
+# [,]  (or shift-Wheel)  -  Force (intensity)
+msgid "InputWheelForce"
+msgstr ""
+
+# Maximal grass patch length.
+msgid "TipGrassPatchLengthMax"
+msgstr ""
+
+# Road point parameters.
+msgid "TipRoadParams"
+msgstr ""
+
+# Terrain triangle size in [meters] (recommended: 1 - 2, use more for big track area). Changed after Update (F8).
+msgid "TipTerTriSize"
+msgstr ""
+
+# In air
+msgid "TrackInAir"
+msgstr ""
+
+# Reverse track direction.
+msgid "TipReverse"
+msgstr ""
+
+# Options
+msgid "Options"
+msgstr ""
+
+# Delete
+msgid "Delete"
+msgstr ""
+
+# Rename
+msgid "Rename"
+msgstr ""
+
+# Models Page length (low will reload often, high will cause visible switching).
+msgid "TipModelPageLength"
+msgstr ""
+
+# Road far quality
+msgid "RoadQual"
+msgstr ""
+
+# length
+msgid "length"
+msgstr ""
+
+# Column N sides
+msgid "ColumnNSides"
+msgstr ""
+
+# Reflections
+msgid "Reflections"
+msgstr ""
+
+# exponent
+msgid "Exponent"
+msgstr ""
+
+# yaw
+msgid "Yaw"
+msgstr ""
+
+# Detail
+msgid "Detail"
+msgstr ""
+
+# Triangle size
+msgid "TriSize"
+msgstr ""
+
+# start
+msgid "Start"
+msgstr ""
+
+# shift-Ins - paste   shift-ctrl-Ins - reversed
+msgid "InputRoadShiftReverse"
+msgstr ""
+
+# min scale
+msgid "MinScale"
+msgstr ""
+
+# Merge length
+msgid "MergeLength"
+msgstr ""
+
+# - rotate pitch* / scale sel.
+msgid "InputRoadPitch"
+msgstr ""
+
+# Times bar
+msgid "TimesBar"
+msgstr ""
+
+# screenshot
+msgid "Screenshot"
+msgstr ""
+
+# Screen
+msgid "Screen"
+msgstr ""
+
+# most work also on selection
+msgid "InputRoadMostSel"
+msgstr ""
+
+# E - Height set
+msgid "InputTerHeight"
+msgstr ""
+
+# Q - edit car start pos
+msgid "InputStartPos"
+msgstr ""
+
+# Brush parameters
+msgid "InputBrushParams"
+msgstr ""
+
+# camera mode
+msgid "InputCameraMode"
+msgstr ""
+
+# Enabled
+msgid "Enabled"
+msgstr ""
+
+# Rolling Drag
+msgid "RollingDrag"
+msgstr ""
+
+# alt-F2,F3 - prev,next minimap type
+msgid "InputMinimapType"
+msgstr ""
+
+# Grass sway effect length (scale).
+msgid "TipGrassSwayLen"
+msgstr ""
+
+# Road
+msgid "Road"
+msgstr ""
+
+# distance
+msgid "distance"
+msgstr ""
+
+# auto Load track
+msgid "TrackAutoLoad"
+msgstr ""
+
+# dust size
+msgid "DustSize"
+msgstr ""
+
+# - move point
+msgid "InputRoadMove"
+msgstr ""
+
+# Disable fog when editing road from distance.
+msgid "TipDisableFog"
+msgstr ""
+
+# Friction
+msgid "Friction"
+msgstr ""
+
+# Ambient
+msgid "Ambient"
+msgstr ""
+
+# Map size
+msgid "MapSize"
+msgstr ""
+
+# when not on terrain
+msgid "InputRoadNotOnTer"
+msgstr ""
+
+# Apply Shadows
+msgid "ApplyShadows"
+msgstr ""
+
+# Fog end color. R G B components 0 to 1 (eg. 0.7 0.8 0.9)
+msgid "TipFogEndClr"
+msgstr ""
+
+# Vegetation collision    *needs New Game
+msgid "VegetCol"
+msgstr ""
+
+# Particles
+msgid "Particles"
+msgstr ""
+
+# Other
+msgid "Other"
+msgstr ""
+
+# with shift - main cameras
+msgid "InputMainCam"
+msgstr ""
+
+# PgUp,PgDn (or Wheel) - previous/next point
+msgid "InputRoadNext"
+msgstr ""
+
+# Development
+msgid "Development"
+msgstr ""
+
+# Ins - insert new (after picked, alt - before)
+msgid "InputRoadIns"
+msgstr ""
+
+# min
+msgid "min"
+msgstr ""
+
+# alt-MMB - reset rotation
+msgid "InputStartAltMMB"
+msgstr ""
+
+# [,]   - Pipe angle (no pipe when 0)
+msgid "InputRoadPipeAngle"
+msgstr ""
+
+# Graphics
+msgid "Graphics"
+msgstr ""
+
+# Car debug text 
+msgid "CarDebugText"
+msgstr ""
+
+# Mud particles intensity.
+msgid "TipMudInt"
+msgstr ""
+
+# mode
+msgid "Mode"
+msgstr ""
+
+# Scale all
+msgid "ScaleAll"
+msgstr ""
+
+# Faces at once
+msgid "FacesOnce"
+msgstr ""
+
+# F7 - enter/leave preview camera
+msgid "InputTogglePreview"
+msgstr ""
+
+# a game by
+msgid "GameBy"
+msgstr ""
+
+# Sun and Weather
+msgid "SunWeather"
+msgstr ""
+
+# In game screenshot for selected track.
+msgid "TipTrkScreenEditor"
+msgstr ""
+
+# Uncheck for manual Rear gear changing.
+msgid "TipAutoRear"
+msgstr ""
+
+# Tire trails color. R G B A components 0 to 1 (eg. 0.4 0.4 0.2 0.6)
+msgid "TipTrailClr"
+msgstr ""
+
+# alt-RMB (or 3,4)
+msgid "InputRoadAltMMB"
+msgstr ""
+
+# New (Duplicate)
+msgid "NewDup"
+msgstr ""
+
+# Height diff.
+msgid "TrackHeightDiff"
+msgstr ""
+
+# Road materials
+msgid "RoadMaterials"
+msgstr ""
+
+# Fullscreen
+msgid "Fullscreen"
+msgstr ""
+
+# bullet debug lines
+msgid "BulletLines"
+msgstr ""
+
+# Grass sway effect speed.
+msgid "TipGrassSwaySpd"
+msgstr ""
+
+# Sky
+msgid "Sky"
+msgstr ""
+
+# Disable for edit
+msgid "DisableEdit"
+msgstr ""
+
+# -Manual not implemented.
+msgid "TipAutoClutch"
+msgstr ""
+
+# Minimap update skip
+msgid "MinimapUpdSkip"
+msgstr ""
+
+# Additional distance to road.
+msgid "RoadDist2"
+msgstr ""
+
+# Trees multipler
+msgid "TreeMult"
+msgstr ""
+
+# Tex Coord mul.
+msgid "TexCoordMul"
+msgstr ""
+
+# Shadows
+msgid "Shadows"
+msgstr ""
+
+# Show pictures while loading
+msgid "ShowPictures"
+msgstr ""
+
+# Avg. speed
+msgid "TrackAvgSpeed"
+msgstr ""
+
+# A,Z - gear up,down (manual gearbox)
+msgid "InputShift"
+msgstr ""
+
+# Preview Camera
+msgid "PreviewCam"
+msgstr ""
+
+# Model minimal scale.
+msgid "TipModelMinScale"
+msgstr ""
+
+# leave (exit)
+msgid "Leave"
+msgstr ""
+
+# Models (meshes) for vegetation. Found in data/trees/.
+msgid "TipVegetModels"
+msgstr ""
+
+# Grass sway
+msgid "GrassSway"
+msgstr ""
+
+# Right
+msgid "Right"
+msgstr ""
+
+# LOD points dist.
+msgid "LODPointsDist"
+msgstr ""
+
+# Motion Blur
+msgid "MotionBlur"
+msgstr ""
+
+# Minimap, size
+msgid "MinimapAndSize"
+msgstr ""
+
+# Change car color (hue).
+msgid "TipChangeHue"
+msgstr ""
+
+# Dust particles intensity.
+msgid "TipDustInt"
+msgstr ""
+
+# Intensity
+msgid "Intensity"
+msgstr ""
+
+# Sun light ambient (constant) color. R G B components 0 to 1 (eg. 0.4 0.4 0.4)
+msgid "TipSunAmbient"
+msgstr ""
+
+# changed in [Track] tab
+msgid "ChngTrkTab"
+msgstr ""
+
+# Tire Trails
+msgid "TireTrails"
+msgstr ""
+
+# Minimal grass patch length.
+msgid "TipGrassPatchLengthMin"
+msgstr ""
+
+# intensity
+msgid "intensity"
+msgstr ""
+
+# Fog
+msgid "Fog"
+msgstr ""
+
+# Frames skip
+msgid "FrameSkip"
+msgstr ""
+
+# (for track screenshot)
+msgid "InputTrackScrn"
+msgstr ""
+
+# trail color
+msgid "trailColor"
+msgstr ""
+
+# m
+msgid "UnitM"
+msgstr ""
+
+# Edit Terrain mode
+msgid "EditTerrainMode"
+msgstr ""
+
+# Tire Particle type 3.
+msgid "TipTireParType3"
+msgstr ""
+
+# LMB (or Arrows)
+msgid "InputRoadLMB"
+msgstr ""
+
+# TCS (traction control)
+msgid "TCS"
+msgstr ""
+
+# * need restart
+msgid "NeedRestart"
+msgstr ""
+
+# mud
+msgid "mud"
+msgstr ""
+
+# Q,W - roll car (when needed)
+msgid "InputRoll"
+msgstr ""
+
+# Terrain brush window.
+msgid "TipTerWind"
+msgstr ""
+
+# Visibility distance for grass pages.
+msgid "TipGrassVisDist"
+msgstr ""
+
+# Visibility distance for model pages.
+msgid "TipModelVisDist"
+msgstr ""
+
+# RMB (or Num +,-)
+msgid "InputRoadRMB"
+msgstr ""
+
+# Anisotropy
+msgid "Anisotropy"
+msgstr ""
+
+# Tab - Camera / Edit mode toggle
+msgid "InputToggleCam"
+msgstr ""
+
+# alt-LMB - rotate  alt-RMB - pitch
+msgid "InputStartAltLMB"
+msgstr ""
+
+# Texture tiling length (less means more repeats).
+msgid "TipTexTiling"
+msgstr ""
+
+# Terrain HQ dist
+msgid "TerHQDist"
+msgstr ""
+
+# Area
+msgid "TrackArea"
+msgstr ""
+
+# Grass size
+msgid "GrassSize"
+msgstr ""
+
+# Track description text (click to edit).
+msgid "TipTrackDescEditor"
+msgstr ""
+
+# View Left
+msgid "ViewLeft"
+msgstr ""
+
+# View Front
+msgid "ViewFront"
+msgstr ""
+
+# Create a new track by duplicating the selected track and using new name (change name first).
+msgid "TipNewDup"
+msgstr ""
+
+# Road Stats
+msgid "RoadStats"
+msgstr ""
+
+# Sun dir.
+msgid "SunDir"
+msgstr ""
+
+# Resize
+msgid "ResizeTer"
+msgstr ""
+
+# Smoke particles intensity.
+msgid "TipSmokeInt"
+msgstr ""
+
+# Terrain brush
+msgid "TerrainBrush"
+msgstr ""
+
+# When checked, Normal texture is automatically set from Diffuse texture (+ _nh in filename).
+msgid "TipTexNormAuto"
+msgstr ""
+
+# Best time
+msgid "TrackBestTime"
+msgstr ""
+
+# MMB (or Num /,*)
+msgid "InputRoadMMB"
+msgstr ""
+
+# Textures
+msgid "Textures"
+msgstr ""
+
+# Terrain vertex count on one side (squares). Apply with buttons [New Flat] or [Resize].
+msgid "TipTerVertCount"
+msgstr ""
+
+# Heightmap size
+msgid "HeightmapSize"
+msgstr ""
+
+# LMB - rotate  RMB - move  MMB - zoom
+msgid "InputCamControl2"
+msgstr ""
+
+# Brightness
+msgid "ColBright"
+msgstr ""
+
+# Enter - save
+msgid "EnterSave"
+msgstr ""
+
+# Frequency of additional bumps on surface (distance between them).
+msgid "TipBumpFreq"
+msgstr ""
+
+# Del - delete picked
+msgid "InputRoadDel"
+msgstr ""
+
+# F8 - Update track
+msgid "InputUpdate"
+msgstr ""
+
+# F1 or ` - Gui mode (toggle Options)
+msgid "InputToggleGUIMode"
+msgstr ""
+
+# Fog end distance [meters].
+msgid "TipFogEndDist"
+msgstr ""
+
+# Road Point
+msgid "RoadPoint"
+msgstr ""
+
+# Maximal grass patch height.
+msgid "TipGrassPatchHeightMax"
+msgstr ""
+
+# Tires
+msgid "Tires"
+msgstr ""
+
+# Load Track
+msgid "LoadTrack"
+msgstr ""
+
+# Selected track name, used also for renaming track and as new track name.
+msgid "TipTrkNameEditor"
+msgstr ""
+
+# T - road stats window
+msgid "InputRoadStats"
+msgstr ""
+
+# VSync
+msgid "VSync"
+msgstr ""
+
+# Change car color brightness (dark-light).
+msgid "TipChangeBright"
+msgstr ""
+
+# Size
+msgid "Size"
+msgstr ""
+
+# Reset
+msgid "Reset"
+msgstr ""
+
+# shift - slow   ctrl - fast
+msgid "InputSlowFast"
+msgstr ""
+
+# Grass mul
+msgid "GrassMult"
+msgstr ""
+
+# Change Car
+msgid "ChangeCar"
+msgstr ""
+
+# S - Smooth  (LMB, -Noise RMB)
+msgid "InputTerSmooth"
+msgstr ""
+
+# Sun light specular (shiny) color. R G B components 0 to 1 (eg. 0.6 0.6 0.6)
+msgid "TipSunSpecular"
+msgstr ""
+
+# How often model will appear on track area.
+msgid "TipModelDens"
+msgstr ""
+
+# Main
+msgid "InputMain"
+msgstr ""
+
+# Vegetation model groups (recommended use 4-6), affects performance.
+msgid "TipVegetGroups"
+msgstr ""
+
+# New flat
+msgid "NewTerFlat"
+msgstr ""
+
+# Prevents wheel spinning when accelerating (default: off).
+msgid "TipTCS"
+msgstr ""
+
+# End - on/off column
+msgid "InputRoadColumn"
+msgstr ""
+
+# M - toggle road merge segs (for test)
+msgid "InputRoadMerge"
+msgstr ""
+
+# set1
+msgid "set1"
+msgstr ""
+
+# set2
+msgid "set2"
+msgstr ""
+
+# auto
+msgid "auto"
+msgstr ""
+
+# Wind influence on model, height scale.
+msgid "TipWindInflH"
+msgstr ""
+
+# Copy
+msgid "Copy"
+msgstr ""
+
+# LMB - move  RMB - height
+msgid "InputStartLMB"
+msgstr ""
+
+# Wind influence on model, length scale.
+msgid "TipWindInflL"
+msgstr ""
+
+# Camera inertia
+msgid "CamInertia"
+msgstr ""
+
+# Width avg.
+msgid "TrackWidthAvg"
+msgstr ""
+
+# About
+msgid "About"
+msgstr ""
+
+# auto Load track
+msgid "AutoLoad"
+msgstr ""
+
+# Distance
+msgid "Distance"
+msgstr ""
+
+# Grass Page length (low will reload often, high will cause visible switching).
+msgid "TipGrassPageLength"
+msgstr ""
+
+# Shaders
+msgid "Shaders"
+msgstr ""
+
+# dust
+msgid "dust"
+msgstr ""
+
+# Set 1 Rain/Snow type
+msgid "TipRainSnow1"
+msgstr ""
+
+# Set 2 Rain/Snow type
+msgid "TipRainSnow2"
+msgstr ""
+
+# D - Deform  (LMB up, RMB down)
+msgid "InputTerDeform"
+msgstr ""
+
+# Diffuse texture (Specular in alpha).
+msgid "TipDiffuseTex"
+msgstr ""
+
+# V - disable / enable vegetation
+msgid "InputToggleVeget"
+msgstr ""
+
+# Continue
+msgid "MyGUI_MessageBox_Continue"
+msgstr ""
+
+# Tools
+msgid "Tools"
+msgstr ""
+
+# Change car color saturation (white-black).
+msgid "TipChangeSat"
+msgstr ""
+
+# FrictionTread
+msgid "FrictionTread"
+msgstr ""
+
+# Tracks list, click to select (for Rename or Duplicate). Press [Change track] and then [Load track] to change current track in editor.
+msgid "TipTrkListEditor"
+msgstr ""
+
+# (ready to play in game)
+msgid "InputReadyToPlay"
+msgstr ""
+
+# Surface friction (eg. 1.0 asphalt, 0.7 gravel, 0.5 ice).
+msgid "TipSurfFrict"
+msgstr ""
+
+# Resulting area in meters (side length). Equals vertex count multipled by triangle size.
+msgid "TipTerSize"
+msgstr ""
+
+# speed
+msgid "speed"
+msgstr ""
+
+# - rotate yaw
+msgid "InputRoadYaw"
+msgstr ""
+
+# Front
+msgid "Front"
+msgstr ""
+
+# Not used.
+msgid "TipSurfFrict2"
+msgstr ""
+
+# Change
+msgid "Change"
+msgstr ""
+
+# Auto gearbox
+msgid "AutoGearbox"
+msgstr ""
+
+# Permanently delete selected track.
+msgid "TipDeleteTrk"
+msgstr ""
+
+# Delete Road
+msgid "DeleteRoad"
+msgstr ""
+
+# Setup
+msgid "Setup"
+msgstr ""
+
+# Pipes
+msgid "TrackPipes"
+msgstr ""
+
+# Specular
+msgid "Specular"
+msgstr ""
+
+# Height offset
+msgid "HeightOffset"
+msgstr ""
+
+# Amplitude
+msgid "Amplitude"
+msgstr ""
+
+# Fog start distance [meters].
+msgid "TipFogStartDist"
+msgstr ""
+
+# Stunt Rally - Track Editor - version
+msgid "SREditorVersion"
+msgstr ""
+
+# after picked, center at mouse
+msgid "InputRoadAfterPick"
+msgstr ""
+
+# Track description text.
+msgid "TipTrackDesc"
+msgstr ""
+
+# Source track
+msgid "SourceTrack"
+msgstr ""
+
+# impostors dist.
+msgid "ImpostorDist"
+msgstr ""
+
+# page
+msgid "page"
+msgstr ""
+
+# Quit
+msgid "Quit"
+msgstr ""
+
+# Minimap
+msgid "Minimap"
+msgstr ""
+
+# ; &apos;  (or alt-Wheel)  -  Power (shape)
+msgid "InputWheelPower"
+msgstr ""
+
+# Input/help
+msgid "InputHelp"
+msgstr ""
+
+# Sun
+msgid "Sun"
+msgstr ""
+
+# Speed unit
+msgid "SpeedUnit"
+msgstr ""
+
+# show Ogre dialog
+msgid "OgreDialog"
+msgstr ""
+
+# Editor
+msgid "Editor"
+msgstr ""
+
+# and contributors.
+msgid "AndContributors"
+msgstr ""
+
+# Select (many)
+msgid "InputRoadSelectMany"
+msgstr ""
+
+# scale
+msgid "scale"
+msgstr ""
+
+# Auto clutch-
+msgid "AutoClutch"
+msgstr ""
+
+# Color - Hue
+msgid "ColHue"
+msgstr ""
+
+# Load track (after change) or Reload current track.
+msgid "TipLoadTrkEditor"
+msgstr ""
+
+# alt-LMB (or 1,2)
+msgid "InputRoadAltLMB"
+msgstr ""
+
+# Model preview image.
+msgid "TipModelPrev"
+msgstr ""
+
+# R - Edit Road mode
+msgid "InputRoadEdit"
+msgstr ""
+
+# Restart game, to apply *changes.
+msgid "RestartApply"
+msgstr ""
+
+# Camera info
+msgid "CameraInfo"
+msgstr ""
+
+# New Game
+msgid "NewGame"
+msgstr ""
+
+# Car susp, long|,lat- slips
+msgid "CarDebug"
+msgstr ""
+
+# Space - pick one/none
+msgid "InputRoadPick"
+msgstr ""
+
+# B - rebuild road (after terrain change, etc.)
+msgid "InputRoadRebuild"
+msgstr ""
+
+# Environment
+msgid "Environment"
+msgstr ""
+
+# Sets current track to that selected in list, you need to load it after.
+msgid "TipChangeTrkEditor"
+msgstr ""
+
+# Cancel
+msgid "MyGUI_MessageBox_Cancel"
+msgstr ""
+
+# Create new, flat terrain.
+msgid "TipNewTer"
+msgstr ""
+
+# Vegetation
+msgid "Vegetation"
+msgstr ""
+
+# Used
+msgid "Used"
+msgstr ""
+
+# Far distance at which models will turn into 2d impostors.
+msgid "TipImpDist"
+msgstr ""
+
+# Minimap of selected track, view from top.
+msgid "TipTrkTerImg"
+msgstr ""
+
+# Trees to road dist.
+msgid "TreeRoadDist"
+msgstr ""
+
+# Pipe W steps mul.
+msgid "PipeWStepsMul"
+msgstr ""
+
+# Ok
+msgid "MyGUI_MessageBox_Ok"
+msgstr ""
+
+# Rain/Snow intensity (eg. 1000)
+msgid "TipRainSnowInt"
+msgstr ""
+
+# Length
+msgid "TrackLength"
+msgstr ""
+
+# Bump:  WaveLen
+msgid "BumpWavelen"
+msgstr ""
+
+# How far from road will the model appear.
+msgid "TipRoadDist"
+msgstr ""
+
+# Resize current terrain with new values.
+msgid "TipResizeTer"
+msgstr ""
+
+# Distance mul
+msgid "DistMult"
+msgstr ""
+
+# Resolution
+msgid "Resolution"
+msgstr ""
+
+# Left
+msgid "Left"
+msgstr ""
+
+# Space  -  change road direction (+ or -)
+msgid "InputStartDir"
+msgstr ""
+
+# Startup
+msgid "Startup"
+msgstr ""
+
+# distribution
+msgid "distribution"
+msgstr ""
+
+# Skirt Height
+msgid "SkirtHeight"
+msgstr ""
+
+# ,=  (or Wheel)  -  Size
+msgid "InputWheelSize"
+msgstr ""
+
+# Bullet debug
+msgid "BulletDebug"
+msgstr ""
+
+# - change height
+msgid "InputRoadHeight"
+msgstr ""
+
+# Sets current track to that selected in list. Press [New Game] to start it after.
+msgid "TipChangeTrack"
+msgstr ""
+
+# Saturation
+msgid "ColSat"
+msgstr ""
+
+# Track
+msgid "Track"
+msgstr ""
+
+# Scale multiplier
+msgid "ScaleMul"
+msgstr ""
+
+# Volume
+msgid "Volume"
+msgstr ""
+
+# Terrain texture layers (recommended 2-3, significantly affects Fps). *Auto blendmap supports max 4.
+msgid "TipTerLayers"
+msgstr ""
+
+# Type of surface, determines sound.
+msgid "TipSurfType"
+msgstr ""
+
+# Reverse
+msgid "Reverse"
+msgstr ""
+
+# F4 - Save track
+msgid "InputSaveTrack"
+msgstr ""
+
+# (one time undo)
+msgid "InputUndo"
+msgstr ""
+
+# Fps, Triangles, Batches
+msgid "FPS"
+msgstr ""
+
+# mph
+msgid "UnitMph"
+msgstr ""
+
+# ; &apos;  -  adjust start box width (for road width)
+msgid "InputStartWidth"
+msgstr ""
+
+# color
+msgid "Color"
+msgstr ""
+
+# pitch
+msgid "Pitch"
+msgstr ""
+
+# Yes
+msgid "MyGUI_MessageBox_Yes"
+msgstr ""
+

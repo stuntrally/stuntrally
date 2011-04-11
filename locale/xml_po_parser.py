@@ -38,6 +38,7 @@ if file1.endswith(".xml") and file2.endswith(".pot"):
 	# translations
 	result = ""
 	for mid, mstr in msgs.items():
+		result += "# " + mstr + "\n"
 		result += "msgid \"" + mid + "\"\n"
 		result += "msgstr \"\"\n"
 		result += "\n"
@@ -53,8 +54,6 @@ elif file1.endswith(".po") and file2.endswith(".xml"):
 	# read po
 	for line in f1:
 		if line.strip().startswith("\""):
-			# multi-line
-			# TODO
 			if last == "msgid":
 				msgid += line.strip().split("\"")[1].replace("\\n", "\n")
 			elif last == "msgstr":
