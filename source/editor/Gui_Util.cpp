@@ -631,8 +631,8 @@ void App::GetMaterials(String filename, String type)
 
 void App::Rename(String from, String to)
 {
-	boost::filesystem::rename(from.c_str(), to.c_str());
-	
+	if (boost::filesystem::exists(from.c_str()))
+		boost::filesystem::rename(from.c_str(), to.c_str());
 }
 
 bool App::TrackExists(String name)
