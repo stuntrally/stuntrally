@@ -337,7 +337,7 @@
 					<Property key="Text_TextColour" value="0.7 0.7 0.66"/>
 				</Widget>
 				<Widget type="StaticText" skin="StaticText" position="136 175 64 24">
-					<Property key="Widget_Caption" value="{Diffuse}"/>
+					<Property key="Widget_Caption" value="#{Diffuse}"/>
 					<Property key="Text_TextColour" value="0.9 0.9 0.8"/>
 				</Widget>
 				<Widget type="StaticText" skin="StaticText" position="136 207 64 24">
@@ -1135,7 +1135,7 @@
 					<Property key="Text_TextColour" value="0.5 0.7 0.9"/>
 				</Widget>
 				<Widget type="StaticText" skin="StaticText" position="36 368 128 24">
-					<Property key="Widget_Caption" value="#{Skirt Height}"/>
+					<Property key="Widget_Caption" value="#{SkirtHeight}"/>
 					<Property key="Text_TextColour" value="0.5 0.7 0.9"/>
 				</Widget>
 				<Widget type="StaticText" skin="StaticText" position="36 416 128 24">
@@ -1360,7 +1360,7 @@
 							<Property key="Text_TextColour" value="0.6 1.0 0.0"/>
 						</Widget>
 						<Widget type="ComboBox" skin="ComboBox" position="180 190 136 24" name="TexFiltering">
-							<Property key="Widget_Caption" value="#{Anisotropic}"/>
+							<Property key="Widget_Caption" value="Anisotropic"/>
 							<Property key="ComboBox_AddItem" value="Bilinear"/>
 							<Property key="ComboBox_AddItem" value="Trilinear"/>
 							<Property key="ComboBox_AddItem" value="Anisotropic"/>
