@@ -147,6 +147,8 @@ void PATHMANAGER::Init(std::ostream & info_output, std::ostream & error_output)
 	CreateDirectory(user_data_dir);
 	CreateDirectory(user_data_dir + "/records");
 	CreateDirectory(user_data_dir + "/screenshots");
+	CreateDirectory(user_data_dir + "/tracks");  // user tracks
+	CreateDirectory(user_data_dir + "/tracks/_previews");
 
 	// Find game data dir and defaults config dir
 	char *datadir = getenv("STUNTRALLY_DATA_ROOT");

@@ -10,7 +10,7 @@ public:
 ///  params
 //------------------------------------------
 	//  track
-	string track;
+	string track;  bool track_user;
 
 	//  show
 	bool show_fps, trackmap;  int num_mini;

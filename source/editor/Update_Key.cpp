@@ -116,7 +116,7 @@ bool App::KeyPress(const CmdKey &arg)
 			case KC_F7:  togPrvCam();  break;
 
 			case KC_RETURN:  // save screen
-				rt[RTs-1].rndTex->writeContentsToFile(pathTrkPrv + pSet->track + ".jpg");
+				rt[RTs-1].rndTex->writeContentsToFile(pathTrkPrv[1] + pSet->track + ".jpg");  //U
 				listTrackChng(trkList,0);  // upd gui img
 				Status("Preview saved", 1,1,0);
 				break;

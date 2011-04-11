@@ -84,7 +84,7 @@ void App::LoadTrackEv()
 	// load scene
 	sc.ter = true;
 	sc.LoadXml(TrkDir()+"scene.xml");
-	LoadSurf(pSet->track);
+	LoadSurf();
 	UpdWndTitle();
 
 	bNewHmap = false;/**/
@@ -146,6 +146,20 @@ void App::UpdWndTitle()
 	SetWindowText(hwnd, (String("SR Editor  track: ") + pSet->track).c_str());
 #endif
 	// TODO: Window title for linux
+	// overlay ?  not visible in fullscreen...
+}
+
+String App::TrkDir() {
+	int u = pSet->track_user ? 1 : 0;			return pathTrk[u] + pSet->track + "/";  }
+
+String App::PathListTrk(int user) {
+	int u = user == -1 ? bListTrackU : user;	return pathTrk[u] + sListTrack;
+}
+String App::PathListTrkPrv(int user){
+	int u = user == -1 ? bListTrackU : user;	return pathTrkPrv[u] + sListTrack;
+}
+String App::PathCopyTrk(int user){
+	int u = user == -1 ? bCopyTrackU : user;	return pathTrk[u] + sCopyTrack;
 }
 
 
@@ -158,6 +172,10 @@ void App::SaveTrack()
 }
 void App::SaveTrackEv()
 {	
+	//  track dir in user
+	CreateDir(TrkDir());
+	CreateDir(TrkDir() + "/objects");
+
 	if (terrain)
 	{	float *fHmap = terrain->getHeightData();
 		int size = sc.td.iVertsX * sc.td.iVertsY * sizeof(float);
@@ -172,10 +190,10 @@ void App::SaveTrackEv()
 		road->SaveFile(TrkDir()+"road.xml");
 
 	sc.SaveXml(TrkDir()+"scene.xml");
-	SaveSurf(pSet->track);
+	SaveSurf(TrkDir()+"surfaces.txt");
 
 	SaveGrassDens();
-	SaveStartPos();
+	SaveStartPos(TrkDir()+"track.txt");  //..load/save inside
 	Status("Saved", 1,0.6,0.2);
 }
 

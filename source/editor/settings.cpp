@@ -10,6 +10,7 @@ void SETTINGS::Serialize(bool w, CONFIGFILE & c)
 {
 	c.bFltFull = false;
 	Param(c,w, "game.track", track);
+	Param(c,w, "game.track_user", track_user);
 
 	Param(c,w, "display_show.fps", show_fps);
 	Param(c,w, "display_show.trackmap", trackmap);		Param(c,w, "display_size.minimap", size_minimap);
@@ -46,7 +47,7 @@ void SETTINGS::Serialize(bool w, CONFIGFILE & c)
 
 SETTINGS::SETTINGS() :  ///  Defaults
 	//  track
-	track("J1-T"),
+	track("J1-T"), track_user(false),
 	//  show
 	show_fps(1), trackmap(1), size_minimap(0.5), num_mini(0),
 	//  graphics
@@ -61,5 +62,6 @@ SETTINGS::SETTINGS() :  ///  Defaults
 	bFog(0), bTrees(0),
 	cam_speed(1.f), cam_inert(1.f),
 	ter_skip(4), road_sphr(1.f), mini_skip(4),
-	windowx(800), windowy(600), fullscreen(false), fsaa(0), vsync(false), buffer("FBO"), rendersystem("OpenGL Rendering Subsystem")
+	windowx(800), windowy(600), fullscreen(false), fsaa(0), vsync(false),
+	buffer("FBO"), rendersystem("OpenGL Rendering Subsystem")
 {	}

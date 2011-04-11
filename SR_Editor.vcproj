@@ -495,11 +495,11 @@
 			Name="SceneCommon"
 			>
 			<File
-				RelativePath=".\source\ogre\BltObjects.cpp"
+				RelativePath=".\source\ogre\common\BltObjects.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\source\ogre\BltObjects.h"
+				RelativePath=".\source\ogre\common\BltObjects.h"
 				>
 			</File>
 			<File

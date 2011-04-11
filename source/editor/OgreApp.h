@@ -30,7 +30,7 @@ public:
 	Scene sc;  /// scene.xml
 	BltObjects objs;  // veget collision in bullet
 
-	TRACKSURFACE su[8];  void LoadSurf(const String& trk), SaveSurf(const String& trk);
+	TRACKSURFACE su[8];  void LoadSurf(), SaveSurf(const String& trk);
 	Light* sun;  void UpdFog(bool bForce=false), UpdSun();
 
 	void UpdWndTitle(), SaveCam();
@@ -114,13 +114,11 @@ protected:
 	//  trees
 	class Forests::PagedGeometry *trees, *grass;
 
-
 	//  road  -in base
 	void SaveGrassDens();
-	inline String TrkDir() {  return pathTrk + pSet->track + "/";  }
 
 	//  car starts
-	bool LoadStartPos(),SaveStartPos();  void UpdStartPos();
+	bool LoadStartPos(),SaveStartPos(string path);  void UpdStartPos();
 	std::vector <MATHVECTOR <float, 3> > vStartPos;
 	std::vector <QUATERNION <float> >    vStartRot;
 	SceneNode* ndCar,*ndStBox;	Entity* entCar,*entStBox;
@@ -238,7 +236,6 @@ protected:
 	
 
 	//  [Tools]  ----
-	String sTrackCopy;
 	StaticTextPtr valTrkCpySel;
 	void btnTrkCopySel(WP);  bool ChkTrkCopy();
 	void btnCopySun(WP), btnCopyTerHmap(WP), btnCopyTerLayers(WP),
@@ -248,9 +245,18 @@ protected:
 
 
 	//  [Track]  ----
-	String pathTrk, pathTrkPrv;
+	String pathTrk[2], pathTrkPrv[2];    // 0 read only  1 //U user paths for save
+	string TrkDir();  // path to track dir (from pSet settings)
+
 	std::vector<String> vsTracks;
-	String sListTrack;  ListPtr trkList;  void TrackListUpd();
+	std::vector<bool> vbTracksUser;
+	
+	String sListTrack;  int bListTrackU;
+	String sCopyTrack;  int bCopyTrackU;  // for tools
+	String PathListTrk(int user=-1), PathListTrkPrv(int user=-1);
+	String PathCopyTrk(int user=-1);
+
+	ListPtr trkList;  void TrackListUpd();
 	void listTrackChng(List* li, size_t pos), btnChgTrack(WP),
 		btnTrackNew(WP),btnTrackRename(WP),btnTrackDel(WP),  // track
 		msgTrackDel(Message* sender, MessageBoxStyle result);

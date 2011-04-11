@@ -24,13 +24,13 @@ void App::SetGuiFromXmls()
 
 	//  [Sky]
 	//-----------------------------------------------
-	Cmb(cmbSky, sc.skyMtr );
+	Cmb(cmbSky, sc.skyMtr);
 	Slv(SunPitch, sc.ldPitch /90.f);
 	Slv(SunYaw,   (sc.ldYaw + 180.f)  /360.f);
 	Ed(LiAmb, sc.lAmb);  Ed(LiDiff, sc.lDiff);  Ed(LiSpec, sc.lSpec);
 	Ed(FogClr, sc.fogClr);
-	Slv(FogStart, powf(sc.fogStart /2000.f, 0.5f) );
-	Slv(FogEnd,   powf(sc.fogEnd   /2000.f, 0.5f) );
+	Slv(FogStart, powf(sc.fogStart /2000.f, 0.5f));
+	Slv(FogEnd,   powf(sc.fogEnd   /2000.f, 0.5f));
 
 	Cmb(cmbRain1, sc.rainName);		Slv(Rain1Rate, sc.rainEmit /6000.f);
 	Cmb(cmbRain2, sc.rain2Name);	Slv(Rain2Rate, sc.rain2Emit /6000.f);	
@@ -85,25 +85,40 @@ void App::TrackListUpd()
 	if (trkList)
 	{	trkList->removeAllItems();
 		int ii = 0, si = 0;  bool bFound = false;
-		vsTracks.clear();
+		vsTracks.clear();  vbTracksUser.clear();
 
-		strlist li;
-		GetFolderIndex(pathTrk, li);
+		strlist li,lu;
+		GetFolderIndex(pathTrk[0], li);
+		GetFolderIndex(pathTrk[1], lu);  //name duplicates
+		//  original
 		for (strlist::iterator i = li.begin(); i != li.end(); ++i)
 		{
-			vsTracks.push_back(*i);
-			string s = pathTrk + *i + "/scene.xml";
+			vsTracks.push_back(*i);  vbTracksUser.push_back(false);
+			string s = pathTrk[0] + *i + "/scene.xml";
 			ifstream check(s.c_str());
 			if (check)  {
-				trkList->addItem(*i);
-				if (*i == pSet->track)  {  si = ii;
+				trkList->addItem(*i, 0);
+				if (!pSet->track_user && *i == pSet->track)  {  si = ii;
 					trkList->setIndexSelected(si);
-					bFound = true;  }
+					bFound = true;  bListTrackU = 0;  }
+				ii++;  }
+		}
+		//  user
+		for (strlist::iterator i = lu.begin(); i != lu.end(); ++i)
+		{
+			vsTracks.push_back(*i);  vbTracksUser.push_back(true);
+			string s = pathTrk[1] + *i + "/scene.xml";
+			ifstream check(s.c_str());
+			if (check)  {
+				trkList->addItem("*" + (*i) + "*", 1);
+				if (pSet->track_user && *i == pSet->track)  {  si = ii;
+					trkList->setIndexSelected(si);
+					bFound = true;  bListTrackU = 1;  }
 				ii++;  }
 		}
 		//  not found last track, set 1st
 		if (!bFound)
-		{	pSet->track = *li.begin();  UpdWndTitle();  }
+		{	pSet->track = *li.begin();  pSet->track_user = 0;  UpdWndTitle();  }
 		trkList->beginToItemAt(max(0, si-11));  // center
 	}
 }
@@ -113,9 +128,15 @@ void App::listTrackChng(List* li, size_t pos)
 {
 	if (!li)  return;
 	size_t i = li->getIndexSelected();  if (i==ITEM_NONE)  return;
-	const UString& sl = li->getItemNameAt(i);	sListTrack = sl;
 	
-	//  won't refresh if same-...
+	const UString& sl = li->getItemNameAt(i);  String s = sl;
+	s = StringUtil::replaceAll(s, "*", "");
+	sListTrack = s;
+
+	int u = *li->getItemDataAt<int>(i,false);
+	bListTrackU = u;
+	
+	//  won't refresh if same-...  road dissapears if not found...
 	if (imgPrv)  imgPrv->setImageTexture(sListTrack+".jpg");
 	if (imgTer)  imgTer->setImageTexture(sListTrack+"_ter.jpg");
 	if (imgMini)  imgMini->setImageTexture(sListTrack+"_mini.png");
@@ -125,7 +146,8 @@ void App::listTrackChng(List* li, size_t pos)
 void App::btnChgTrack(WP)
 {
 	if (trkName)  trkName->setCaption(sListTrack.c_str());
-	pSet->track = sListTrack;  //UpdWndTitle();//? load
+	pSet->track = sListTrack;
+	pSet->track_user = bListTrackU;  //UpdWndTitle();//? load
 }
 
 void App::btnNewGame(WP)
@@ -147,20 +169,21 @@ const String csTrkFo[cnTrkFo] = {"/grass1.png", "/grassColor.png", "/grassDensit
 
 void App::btnTrkCopySel(WP)  // set copy source
 {
-	sTrackCopy = sListTrack;
-	if (valTrkCpySel)  valTrkCpySel->setCaption(sTrackCopy);
+	sCopyTrack = sListTrack;
+	bCopyTrackU = bListTrackU;
+	if (valTrkCpySel)  valTrkCpySel->setCaption(sCopyTrack);
 }
 
 bool App::ChkTrkCopy()
 {
-	if (sTrackCopy == "")  // none
+	if (sCopyTrack == "")  // none
 	{
 		Message::createMessageBox(
 			"Message", "Copy Track", "No source track selected.",
 			MessageBoxStyle::IconWarning | MessageBoxStyle::Ok);
 		return false;
 	}
-	if (sTrackCopy == pSet->track)
+	if (sCopyTrack == pSet->track && bCopyTrackU == pSet->track_user)
 	{
 		Message::createMessageBox(
 			"Message", "Copy Track", "Source track and current track are the same.",
@@ -175,7 +198,7 @@ void App::btnCopyTerHmap(WP)
 {
 	if (!ChkTrkCopy())  return;
 
-	String from = pathTrk + sTrackCopy,
+	String from = PathCopyTrk(),
 		name = TrkDir() + "heightmap-new.f32";
 	Copy(from + "/heightmap.f32", name);
 	
@@ -192,7 +215,7 @@ void App::btnCopyTerHmap(WP)
 void App::btnCopySun(WP)
 {
 	if (!ChkTrkCopy())  return;
-	String from = pathTrk + sTrackCopy;
+	String from = PathCopyTrk();
 	Scene sF;  sF.LoadXml(from + "/scene.xml");
 
 	sc.skyMtr = sF.skyMtr;  // sky
@@ -209,7 +232,7 @@ void App::btnCopySun(WP)
 void App::btnCopyTerLayers(WP)
 {
 	if (!ChkTrkCopy())  return;
-	String from = pathTrk + sTrackCopy;
+	String from = PathCopyTrk();
 	Scene sF;  sF.LoadXml(from + "/scene.xml");
 
 	for (int i=0; i < sc.td.ciNumLay; ++i)
@@ -230,7 +253,7 @@ void App::btnCopyTerLayers(WP)
 void App::btnCopyVeget(WP)
 {
 	if (!ChkTrkCopy())  return;
-	String from = pathTrk + sTrackCopy;
+	String from = PathCopyTrk();
 	Scene sF;  sF.LoadXml(from + "/scene.xml");
 
 	sc.densGrass = sF.densGrass;  sc.densTrees = sF.densTrees;
@@ -257,7 +280,7 @@ void App::btnCopyVeget(WP)
 void App::btnCopyRoad(WP)
 {
 	if (!ChkTrkCopy() || !road)  return;
-	String from = pathTrk + sTrackCopy;
+	String from = PathCopyTrk();
 	road->LoadFile(from + "/road.xml");
 
 	SetGuiFromXmls();	road->RebuildRoad(true);
@@ -268,7 +291,7 @@ void App::btnCopyRoad(WP)
 void App::btnCopyRoadPars(WP)
 {
 	if (!ChkTrkCopy() || !road)  return;
-	String from = pathTrk + sTrackCopy;
+	String from = PathCopyTrk();
 	SplineRoad rd;  rd.LoadFile(from + "/road.xml",false);
 
 	for (int i=0; i < MTRs; ++i)
@@ -340,32 +363,40 @@ void App::editScaleAllMul(EditPtr)
 //-----------------------------------------------------------------------------------------------------------
 
 ///  New (duplicate)
-void App::btnTrackNew(WP)
+void App::btnTrackNew(WP)  //- ..
 {
 	String name = trkName->getCaption();
+	name = StringUtil::replaceAll(name, "*", "");
 	if (TrackExists(name))  {	Message::createMessageBox(
 			"Message", "New Track", "Track " + name + " already exists.",
 			MessageBoxStyle::IconWarning | MessageBoxStyle::Ok);
 		return;  }
 
-	String st = pathTrk + sListTrack, sto = st + "/objects";  // from
-	String t = pathTrk + name, to = t + "/objects";  // to, new
+	String st = pathTrk[bListTrackU] + sListTrack, sto = st + "/objects";  // from
+	String t = pathTrk[1] + name, to = t + "/objects";  // to, new
 
 	CreateDir(t);  CreateDir(to);
 	for (int i=0; i < cnTrkFo; ++i)  Copy(sto + csTrkFo[i], to + csTrkFo[i]);
 	for (int i=0; i < cnTrkF; ++i)   Copy(st + csTrkF[i], t + csTrkF[i]);
 	//Copy(pathTrkPrv + sListTrack + ".jpg");  // no preview
-	Copy(pathTrkPrv + sListTrack + "_mini.png", pathTrkPrv + name + "_mini.png");
-	Copy(pathTrkPrv + sListTrack + "_ter.jpg", pathTrkPrv + name + "_ter.jpg");
+	Copy(pathTrkPrv[bListTrackU] + sListTrack + "_mini.png", pathTrkPrv[1] + name + "_mini.png");
+	Copy(pathTrkPrv[bListTrackU] + sListTrack + "_ter.jpg", pathTrkPrv[1] + name + "_ter.jpg");
 
-	sListTrack = name;  pSet->track = name;  UpdWndTitle();
+	sListTrack = name;  pSet->track = name;  pSet->track_user = 1;  UpdWndTitle();
 	TrackListUpd();
 }
 
 ///  Rename
-void App::btnTrackRename(WP)
+void App::btnTrackRename(WP)  // ?...
 {
 	String name = trkName->getCaption();
+
+	/*if (bListTrackU==0)  {  // could force when originals writable..
+		Message::createMessageBox(
+			"Message", "Rename Track", "Track " + name + " is original and can't be renamed.",
+			MessageBoxStyle::IconWarning | MessageBoxStyle::Ok);
+			return;  }/**/
+
 	if (name != sListTrack)
 	{	if (TrackExists(name))  {	Message::createMessageBox(
 				"Message", "Rename Track", "Track " + name + " already exists.",
@@ -373,13 +404,14 @@ void App::btnTrackRename(WP)
 			return;  }
 		
 		//  track dir
-		Rename(pathTrk + sListTrack, pathTrk + name);
+		Rename(pathTrk[bListTrackU] + sListTrack, pathTrk[/*1*/bListTrackU] + name);
 		//  preview shot, minimap
-		Rename(pathTrkPrv + sListTrack + ".jpg", pathTrkPrv + name + ".jpg");
-		Rename(pathTrkPrv + sListTrack + "_mini.png", pathTrkPrv + name + "_mini.png");
-		Rename(pathTrkPrv + sListTrack + "_ter.jpg", pathTrkPrv + name + "_ter.jpg");
+		String from = pathTrkPrv[bListTrackU] + sListTrack, to = pathTrkPrv[/*1*/bListTrackU] + name;
+		Rename(from + ".jpg", to + ".jpg");
+		Rename(from + "_mini.png", to + "_mini.png");
+		Rename(from + "_ter.jpg", to + "_ter.jpg");
 		
-		sListTrack = name;  pSet->track = sListTrack;  UpdWndTitle();
+		sListTrack = name;  pSet->track = sListTrack;  pSet->track_user = 1;/**/  UpdWndTitle();
 		TrackListUpd();  //listTrackChng(trkList,0);
 	}
 }
@@ -388,7 +420,7 @@ void App::btnTrackRename(WP)
 void App::btnTrackDel(WP)
 {
 	Message* message = Message::createMessageBox(
-		"Message", "Delete Track ?", sListTrack,
+		"Message", bListTrackU==0 ? "Delete original Track ?" : "Delete Track ?", sListTrack,
 		MessageBoxStyle::IconQuest | MessageBoxStyle::Yes | MessageBoxStyle::No);
 	message->eventMessageBoxResult = newDelegate(this, &App::msgTrackDel);
 	//message->setUserString("FileName", fileName);
@@ -397,14 +429,14 @@ void App::msgTrackDel(Message* sender, MessageBoxStyle result)
 {
 	if (result != MessageBoxStyle::Yes)
 		return;
-	String t = pathTrk + sListTrack, to = t + "/objects";
+	String t = pathTrk[bListTrackU] + sListTrack, to = t + "/objects";
 	for (int i=0; i < cnTrkFo; ++i)  Delete(to + csTrkFo[i]);
 	for (int i=0; i < cnTrkF; ++i)   Delete(t + csTrkF[i]);
 	for (int i=0; i < cnTrkFd; ++i)   Delete(t + csTrkFd[i]);
 	DeleteDir(to);  DeleteDir(t);
-	Delete(pathTrkPrv + sListTrack + ".jpg");
-	Delete(pathTrkPrv + sListTrack + "_mini.png");
-	Delete(pathTrkPrv + sListTrack + "_ter.jpg");
+	Delete(pathTrkPrv[bListTrackU] + sListTrack + ".jpg");
+	Delete(pathTrkPrv[bListTrackU] + sListTrack + "_mini.png");
+	Delete(pathTrkPrv[bListTrackU] + sListTrack + "_ter.jpg");
 
 	String st = pSet->track;
 	TrackListUpd();
@@ -418,9 +450,9 @@ void App::msgTrackDel(Message* sender, MessageBoxStyle result)
 //  Surfaces
 //-----------------------------------------------------------------------------------------------------------
 
-void App::LoadSurf(const String& trk)
+void App::LoadSurf()
 {
-	string path = pathTrk + trk + "/surfaces.txt";
+	string path = pathTrk[bListTrackU] + pSet->track + "/surfaces.txt";
 	CONFIGFILE cf;
 	if (!cf.Load(path))
 	{	Log("Can't find surfaces configfile: " + path);  return;  }
@@ -458,11 +490,9 @@ void App::LoadSurf(const String& trk)
 	}
 }
 
-void App::SaveSurf(const String& trk)
+void App::SaveSurf(const string& path)
 {
-	string path = pathTrk + trk + "/surfaces.txt";
 	CONFIGFILE cf;
-	
 	int u=0;
 	for (int i=0; i < 7; ++i)  // 6 ter layers + road in [6]
 	{
@@ -496,8 +526,8 @@ void App::SaveSurf(const String& trk)
 
 void App::ReadTrkStats()
 {
-	String sRd = pathTrk + sListTrack + "/road.xml";
-	String sSc = pathTrk + sListTrack + "/scene.xml";
+	String sRd = PathListTrk() + "/road.xml";
+	String sSc = PathListTrk() + "/scene.xml";
 
 	SplineRoad rd;  rd.LoadFile(sRd,false);  // load
 	Scene sc;  sc.LoadXml(sSc);  // fails to defaults
@@ -635,10 +665,10 @@ void App::Rename(String from, String to)
 		boost::filesystem::rename(from.c_str(), to.c_str());
 }
 
-bool App::TrackExists(String name)
+bool App::TrackExists(String name/*, bool user*/)
 {
 	for (size_t i=0; i < vsTracks.size(); ++i)
-		if (vsTracks[i] == name)
+		if (vsTracks[i] == name /*&& vbTracksUser[i] == 1/*user*/)
 			return true;
 	return false;
 }
@@ -660,7 +690,7 @@ void App::CreateDir(String dir)
 
 void App::Copy(String file, String to)
 {
-	if (boost::filesystem::exists (to.c_str()))
+	if (boost::filesystem::exists(to.c_str()))
 		boost::filesystem::remove(to.c_str());
 
 	if (boost::filesystem::exists(file.c_str()))

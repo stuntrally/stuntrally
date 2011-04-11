@@ -47,7 +47,8 @@ App::App()  //  gui wigdets--
 	,grass(0), trees(0), sun(0)
 	,eTrkEvent(TE_None), bNewHmap(0), bTrGrUpd(0)
 {
-	pathTrk = PATHMANAGER::GetTrackPath() + "/";  pathTrkPrv = pathTrk + "_previews/";  resTrk = "";
+	pathTrk[0] = PATHMANAGER::GetTrackPath() + "/";      pathTrkPrv[0] = pathTrk[0] + "_previews/";  resTrk = "";
+	pathTrk[1] = PATHMANAGER::GetTrackPathUser() + "/";  pathTrkPrv[1] = pathTrk[1] + "_previews/";
 
 	mBrSize[0] = 16.f;		mBrSize[1] = 24.f;
 	mBrIntens[0] = 20.f;	mBrIntens[1] = 20.f;
@@ -119,6 +120,11 @@ ManualObject* App::Create2D(const String& mat, Real s, bool dyn)
 
 //  vdr util, get tracks
 //----------------------------------------------------------------------------------------------------------------------
+bool string_compare(const std::string& s1, const std::string& s2)
+{
+	return strcmp(s1.c_str(), s2.c_str()) != 0;
+}
+
 bool App::GetFolderIndex(string dirpath, std::list <string>& dirlist, std::string extension)
 {
 #ifndef _WIN32
@@ -189,5 +195,6 @@ bool App::GetFolderIndex(string dirpath, std::list <string>& dirlist, std::strin
 	}
 	
 	dirlist.sort();
+	//dirlist.sort(dirlist.begin(), dirlist.end(), string_compare);  //?-
 	return true;
 }

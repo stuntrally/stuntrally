@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "BltObjects.h"
-#include "../vdrift/pathmanager.h"
+//#include "../vdrift/pathmanager.h"
+#include "../../vdrift/pathmanager.h"
 using namespace Ogre;
 
 

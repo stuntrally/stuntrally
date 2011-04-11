@@ -315,7 +315,9 @@ void App::InitGui()
 	///  [Track]
 	//------------------------------------------------------------------------
 	sListTrack = pSet->track;  //! set last
-	sTrackCopy = "";  //! none
+	bListTrackU = pSet->track_user;
+	sCopyTrack = "";  //! none
+	bCopyTrackU = 0;
 
 	//  list
 	trkList = (ListPtr)mWndOpts->findWidget("TrackList");

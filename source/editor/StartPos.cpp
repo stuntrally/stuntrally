@@ -38,9 +38,8 @@ bool App::LoadStartPos()
 	return true;
 }
 
-bool App::SaveStartPos()
+bool App::SaveStartPos(string path)
 {
-	string path = TrkDir()+"track.txt";
 	CONFIGFILE param;
 	if (!param.Load(path))
 		return false;
@@ -61,9 +60,7 @@ bool App::SaveStartPos()
 		param.SetParam("start orientation-xyz "+toStr(i), f3);
 		param.SetParam("start orientation-w "+toStr(i), f1);
 	}
-
 	return param.Write();
-	//return param.Write(true, TrkDir()+"track1.txt");  //test
 }
 
 
