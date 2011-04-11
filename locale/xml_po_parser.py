@@ -1,6 +1,25 @@
 #!/usr/bin/python
 
-import sys
+import sys, time
+
+header = "# SOME DESCRIPTIVE TITLE.\n\
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER\n\
+# This file is distributed under the same license as the PACKAGE package.\n\
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.\n\
+#\n\
+#, fuzzy\n\
+msgid \"\"\n\
+msgstr \"\"\n\
+\"Project-Id-Version: PACKAGE VERSION\"\n\
+\"Report-Msgid-Bugs-To: \"\n\
+\"POT-Creation-Date: " +  time.strftime("%Y-%m-%d %H:%M%z") + "\"\n\
+\"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\"\n\
+\"Last-Translator: FULL NAME <EMAIL@ADDRESS>\"\n\
+\"Language-Team: LANGUAGE <LL@li.org>\"\n\
+\"Language: \"\n\
+\"MIME-Version: 1.0\"\n\
+\"Content-Type: text/plain; charset=CHARSET\"\n\
+\"Content-Transfer-Encoding: 8bit\"\n"
 
 def usage():
 	print "Usage: " + sys.argv[0] + " someFile.xml someFile.pot"
@@ -30,13 +49,13 @@ if file1.endswith(".xml") and file2.endswith(".pot"):
 			msgstr = line.split(">")[1].split("<")[0]
 			msgs[msgid] = msgstr
 			
-	# write po
+	# write pot
 	
 	# header
 	# TODO
 	
 	# translations
-	result = ""
+	result = header + "\n"
 	for mid, mstr in msgs.items():
 		result += "# " + mstr + "\n"
 		result += "msgid \"" + mid + "\"\n"
