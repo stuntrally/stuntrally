@@ -133,6 +133,11 @@ void App::CreateCar()
 		resDrv = "drivers/driver2/textures";
 		
 	if (pGame->cars.size() == 0)  return;
+	
+	if (ndCar) mSceneMgr->destroySceneNode(ndCar);
+	if (mSceneMgr->hasEntity("Car")) mSceneMgr->destroyEntity("Car");
+	if (mSceneMgr->hasEntity("Car.interior")) mSceneMgr->destroyEntity("Car.interior");
+	if (mSceneMgr->hasEntity("Car.glass")) mSceneMgr->destroyEntity("Car.glass");
 
 	mRoot->addResourceLocation(PATHMANAGER::GetCacheDir(), "FileSystem");
 	mRoot->addResourceLocation(resCar, "FileSystem"/*, "DynRes"/**/);
