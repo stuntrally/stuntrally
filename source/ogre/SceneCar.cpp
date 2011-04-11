@@ -131,14 +131,19 @@ void App::CreateCar()
 		resTrk = TrkDir() + "objects";
 	if (resDrv != "")  mRoot->removeResourceLocation(resDrv);
 		resDrv = "drivers/driver2/textures";
-		
+				
 	if (pGame->cars.size() == 0)  return;
 	
 	if (ndCar) mSceneMgr->destroySceneNode(ndCar);
 	if (mSceneMgr->hasEntity("Car")) mSceneMgr->destroyEntity("Car");
 	if (mSceneMgr->hasEntity("Car.interior")) mSceneMgr->destroyEntity("Car.interior");
 	if (mSceneMgr->hasEntity("Car.glass")) mSceneMgr->destroyEntity("Car.glass");
-
+	
+	// remove body.mesh; might change with new car
+	MeshPtr mp = MeshManager::getSingleton().getByName("body.mesh");
+	if (!mp.isNull())
+		MeshManager::getSingleton().remove("body.mesh");
+	
 	mRoot->addResourceLocation(PATHMANAGER::GetCacheDir(), "FileSystem");
 	mRoot->addResourceLocation(resCar, "FileSystem"/*, "DynRes"/**/);
 	mRoot->addResourceLocation(resTrk, "FileSystem");
