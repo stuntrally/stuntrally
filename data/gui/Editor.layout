@@ -688,17 +688,17 @@
 				<Widget type="ComboBox" skin="ComboBox" position="232 392 96 24" name="CmbParDust">
 					<Property key="Widget_Colour" value="0.8 0.8 0.2"/>
 					<Property key="Text_TextColour" value="0.8 0.8 0.2"/>
-					<UserString key="tip" value="#{TipParType1}"/>
+					<UserString key="tip" value=""/>
 				</Widget>
 				<Widget type="ComboBox" skin="ComboBox" position="380 392 92 24" name="CmbParMud">
 					<Property key="Widget_Colour" value="0.8 0.7 0.2"/>
 					<Property key="Text_TextColour" value="0.8 0.7 0.2"/>
-					<UserString key="tip" value="#{TipParType2}"/>
+					<UserString key="tip" value=""/>
 				</Widget>
 				<Widget type="ComboBox" skin="ComboBox" position="540 392 88 24" name="CmbParSmoke">
 					<Property key="Widget_Colour" value="0.7 0.7 0.7"/>
 					<Property key="Text_TextColour" value="0.7 0.7 0.7"/>
-					<UserString key="tip" value="#{TipParType3}"/>
+					<UserString key="tip" value=""/>
 				</Widget>
 				<Widget type="Progress" skin="ProgressFill" position="32 167 560 25">
 					<Property key="Widget_Colour" value="0 0.9 0"/>
@@ -1255,7 +1255,7 @@
 					<Property key="Widget_Colour" value="0.2 0.8 0.5"/>
 				</Widget>
 				<Widget type="Button" skin="Button" position="404 88 160 32" name="CopyTerLayers">
-					<Property key="Widget_Caption" value="#{TerLayers]"/>
+					<Property key="Widget_Caption" value="#{TerLayers}"/>
 					<Property key="Widget_Colour" value="0 0.9 0"/>
 					<Property key="Text_TextColour" value="0 0.9 0"/>
 				</Widget>
