@@ -663,5 +663,6 @@ void App::Copy(String file, String to)
 	if (boost::filesystem::exists (to.c_str()))
 		boost::filesystem::remove(to.c_str());
 
-	boost::filesystem::copy_file(file.c_str(), to.c_str());
+	if (boost::filesystem::exists(file.c_str()))
+		boost::filesystem::copy_file(file.c_str(), to.c_str());
 }
