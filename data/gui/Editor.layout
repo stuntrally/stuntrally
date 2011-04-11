@@ -17,7 +17,7 @@
 		<Property key="Widget_Colour" value="0.7 0.85 1.0"/>
 		<Property key="Widget_Alpha" value="0.5"/>
 		<Property key="Window_Snap" value="true"/>
-		<UserString key="tip" value="Preview camera window."/>
+		<UserString key="tip" value="#{TipPrevWind}"/>
 		<Widget type="StaticText" skin="StaticText" position="4 0 120 20" name="cam0">
 			<Property key="Widget_InheritsAlpha" value="false"/>
 			<Property key="Widget_Caption" value="F7 - #{Leave}"/>
@@ -39,7 +39,7 @@
 		<Property key="Widget_Colour" value="0.3 0.36 0.4"/>
 		<Property key="Widget_Alpha" value="0.6"/>
 		<Property key="Window_Snap" value="true"/>
-		<UserString key="tip" value="Terrain brush window."/>
+		<UserString key="tip" value="#{TipTerWind}"/>
 		<Widget type="StaticText" skin="StaticText" position="4 0 120 20" name="brush0">
 			<Property key="Widget_InheritsAlpha" value="false"/>
 			<Property key="Text_TextColour" value="0.8 0.9 1.0"/>
@@ -67,7 +67,7 @@
 		<Property key="Widget_Alpha" value="0.6"/>
 		<Property key="Widget_Caption" value="#{RoadPoint}"/>
 		<Property key="Window_Snap" value="true"/>
-		<UserString key="tip" value="Road point parameters."/>
+		<UserString key="tip" value="#{TipRoadParams}"/>
 		<Widget type="StaticText" skin="StaticText" position="4 0 120 20" name="rdCur0">
 			<Property key="Widget_InheritsAlpha" value="false"/>
 			<Property key="Text_TextColour" value="0.7 1.0 0.5"/>
@@ -126,7 +126,7 @@
 		<Property key="Widget_Alpha" value="0.6"/>
 		<Property key="Widget_Caption" value="#{RoadStats}"/>
 		<Property key="Window_Snap" value="true"/>
-		<UserString key="tip" value="Whole road statistics."/>
+		<UserString key="tip" value="#{TipRoadStats}"/>
 		<Widget type="StaticText" skin="StaticText" position="4 0 120 20" name="rdStat0">
 			<Property key="Widget_InheritsAlpha" value="false"/>
 			<Property key="Text_TextColour" value="0.68 0.82 1.0"/>
@@ -178,7 +178,7 @@
 			<Widget type="TabItem" skin="" position="4 26 787 531">
 				<Property key="Widget_Caption" value="#{Track}"/>
 				<Widget type="List" skin="List" position="14 16 148 504" name="TrackList">
-					<UserString key="tip" value="Tracks list, click to select (for Rename or Duplicate). Press [Change track] and then [Load track] to change current track in editor."/>
+					<UserString key="tip" value="#{TipTrkListEditor}"/>
 				</Widget>
 				<Widget type="StaticText" skin="StaticText" position="176 448 56 24" name="TrackText">
 					<Property key="Widget_InheritsAlpha" value="true"/>
@@ -190,22 +190,22 @@
 					<Property key="Widget_Caption" value="#{ChangeTrack}"/>
 					<Property key="Widget_Colour" value="0.7 1 0.85"/>
 					<Property key="Text_TextColour" value="0.6 1 0.8"/>
-					<UserString key="tip" value="Sets current track to that selected in list, you need to load it after."/>
+					<UserString key="tip" value="#{TipChangeTrkEditor}"/>
 				</Widget>
 				<Widget type="Button" skin="Button" position="368 488 128 32" name="NewGame1">
 					<Property key="Widget_Caption" value="#{LoadTrack}"/>
 					<Property key="Widget_Colour" value="0.6 1.0 0.3"/>
 					<Property key="Text_TextColour" value="0.3 1 0.2"/>
-					<UserString key="tip" value="Load track (after change) or Reload current track."/>
+					<UserString key="tip" value="#{TipLoadTrkEditor}"/>
 				</Widget>
 				<Widget type="StaticImage" skin="StaticImage" position="176 16 336 336" name="TrackImg">
-					<UserString key="tip" value="In game screenshot for selected track."/>
+					<UserString key="tip" value="#{TipTrkScreenEditor}"/>
 				</Widget>
 				<Widget type="StaticImage" skin="StaticImage" position="528 232 240 240" name="TrkTerImg">
-					<UserString key="tip" value="Minimap of selected track, view from top."/>
+					<UserString key="tip" value="#{TipMinimapScrnEditor}"/>
 				</Widget>
 				<Widget type="StaticImage" skin="StaticImage" position="528 232 240 240" name="TrackMap">
-					<UserString key="tip" value="Minimap of selected track, view from top."/>
+					<UserString key="tip" value="#{TipMinimapScrnEditor}"/>
 				</Widget>
 				<Widget type="StaticText" skin="StaticText" position="532 70 92 18" name="i1">
 					<Property key="Widget_Caption" value="#{Length}"/>
@@ -263,37 +263,37 @@
 					<Property key="Edit_VisibleVScroll" value="true"/>
 					<Property key="Text_TextColour" value="0.6 1.0 0.8"/>
 					<Property key="Widget_Colour" value="0.4 1 0.7"/>
-					<UserString key="tip" value="Track description text (click to edit)."/>
+					<UserString key="tip" value="#{TipTrackDescEditor}"/>
 				</Widget>
 				<Widget type="Button" skin="Button" position="528 16 156 25" name="TrackCopySel">
 					<Property key="Widget_Caption" value="#{CopySource}"/>
 					<Property key="Widget_Colour" value="0.8 0.8 1.0"/>
 					<Property key="Text_TextColour" value="0.8 0.8 1.0"/>
-					<UserString key="tip" value="Pick selected track for copy source, used in [Tools] tab."/>
+					<UserString key="tip" value="#{TipCopySource}"/>
 				</Widget>
 				<Widget type="Button" skin="Button" position="528 495 136 25" name="TrackNew">
 					<Property key="Widget_Caption" value="#{NewDup}"/>
 					<Property key="Widget_Colour" value="0.8 1 0.5"/>
 					<Property key="Text_TextColour" value="0.8 1 0.5"/>
-					<UserString key="tip" value="Create a new track by duplicating the selected track and using new name (change name first)."/>
+					<UserString key="tip" value="#{TipNewDup}"/>
 				</Widget>
 				<Widget type="Button" skin="Button" position="416 447 80 24" name="TrackRename">
 					<Property key="Widget_Caption" value="#{Rename}"/>
 					<Property key="Widget_Colour" value="1 0.9 0.4"/>
 					<Property key="Text_TextColour" value="1 0.9 0.4"/>
-					<UserString key="tip" value="Rename selected track with new name (change name first)."/>
+					<UserString key="tip" value="#{TipRenameTrk}"/>
 				</Widget>
 				<Widget type="Edit" skin="Edit" position="240 447 160 24" name="TrackName">
 					<Property key="Widget_Colour" value="0.6 1 0.8"/>
 					<Property key="Text_TextColour" value="0.6 1 0.8"/>
 					<Property key="Edit_MaxTextLength" value="20"/>
-					<UserString key="tip" value="Selected track name, used also for renaming track and as new track name."/>
+					<UserString key="tip" value="#{TipTrkNameEditor}"/>
 				</Widget>
 				<Widget type="Button" skin="Button" position="704 495 64 24" name="TrackDelete">
 					<Property key="Widget_Caption" value="#{Delete}"/>
 					<Property key="Text_TextColour" value="1 0.6 0.3"/>
 					<Property key="Widget_Colour" value="1 0.6 0.3"/>
-					<UserString key="tip" value="Permanently delete selected track."/>
+					<UserString key="tip" value="#{TipDeleteTrk}"/>
 				</Widget>
 			</Widget>
 			<Widget type="TabItem" skin="" position="4 26 787 531">
@@ -306,7 +306,7 @@
 					<Property key="Widget_Colour" value="0.6 0.8 1"/>
 					<Property key="Text_TextColour" value="0.6 0.8 1"/>
 					<Property key="Edit_ReadOnly" value="true"/>
-					<UserString key="tip" value="Sky material names (from SkyDome.material)."/>
+					<UserString key="tip" value="#{TipSkyMats}"/>
 				</Widget>
 				<Widget type="StaticText" skin="StaticText" position="80 71 64 24">
 					<Property key="Widget_Caption" value="#{SunDir}"/>
@@ -316,13 +316,13 @@
 					<Property key="Scroll_MoveToClick" value="true"/>
 					<Property key="Scroll_Range" value="1000001"/>
 					<Property key="Widget_Colour" value="1 0.8 0.2"/>
-					<UserString key="tip" value="Sun direction - pitch angle."/>
+					<UserString key="tip" value="#{TipSunDirPitch}"/>
 				</Widget>
 				<Widget type="HScroll" skin="HScroll" position="280 95 320 16" name="SunYaw">
 					<Property key="Scroll_MoveToClick" value="true"/>
 					<Property key="Scroll_Range" value="1000001"/>
 					<Property key="Widget_Colour" value="1 1 0"/>
-					<UserString key="tip" value="Sun direction - yaw angle."/>
+					<UserString key="tip" value="#{TipSunDirYaw}"/>
 				</Widget>
 				<Widget type="StaticText" skin="StaticText" position="152 95 48 25">
 					<Property key="Widget_Caption" value="#{Yaw}"/>
@@ -347,17 +347,17 @@
 				<Widget type="Edit" skin="Edit" position="208 143 164 24" name="LiAmb">
 					<Property key="Widget_Colour" value="0.8 0.8 0.8"/>
 					<Property key="Text_TextColour" value="0.7 0.7 0.66"/>
-					<UserString key="tip" value="Sun light ambient (constant) color. R G B components 0 to 1 (eg. 0.4 0.4 0.4)"/>
+					<UserString key="tip" value="#{TipSunAmbient}"/>
 				</Widget>
 				<Widget type="Edit" skin="Edit" position="208 175 164 24" name="LiDiff">
 					<Property key="Widget_Colour" value="0.95 0.95 0.95"/>
 					<Property key="Text_TextColour" value="0.9 0.9 0.8"/>
-					<UserString key="tip" value="Sun light diffuse (normal) color. R G B components 0 to 1 (eg. 0.9 0.9 0.9)"/>
+					<UserString key="tip" value="#{TipSunDiffuse}"/>
 				</Widget>
 				<Widget type="Edit" skin="Edit" position="208 207 164 24" name="LiSpec">
 					<Property key="Widget_Colour" value="0.9 0.9 0.9"/>
 					<Property key="Text_TextColour" value="0.8 0.8 0.7"/>
-					<UserString key="tip" value="Sun light specular (shiny) color. R G B components 0 to 1 (eg. 0.6 0.6 0.6)"/>
+					<UserString key="tip" value="#{TipSunSpecular}"/>
 				</Widget>
 				<Widget type="StaticText" skin="StaticText" position="80 255 48 24">
 					<Property key="Widget_Caption" value="#{Fog}"/>
@@ -366,7 +366,7 @@
 				<Widget type="Edit" skin="Edit" position="208 255 164 24" name="FogClr">
 					<Property key="Text_TextColour" value="0.8 0.9 1"/>
 					<Property key="Widget_Colour" value="0.8 0.9 1"/>
-					<UserString key="tip" value="Fog end color. R G B components 0 to 1 (eg. 0.7 0.8 0.9)"/>
+					<UserString key="tip" value="#{TipFogEndClr}"/>
 				</Widget>
 				<Widget type="StaticText" skin="StaticText" position="152 255 48 24">
 					<Property key="Widget_Caption" value="#{Color}"/>
@@ -398,13 +398,13 @@
 					<Property key="Scroll_MoveToClick" value="true"/>
 					<Property key="Scroll_Range" value="1000001"/>
 					<Property key="Widget_Colour" value="0.7 0.85 1"/>
-					<UserString key="tip" value="Fog start distance [meters]."/>
+					<UserString key="tip" value="#{TipFogStartDist}"/>
 				</Widget>
 				<Widget type="HScroll" skin="HScroll" position="280 319 320 16" name="FogEnd">
 					<Property key="Scroll_MoveToClick" value="true"/>
 					<Property key="Scroll_Range" value="1000001"/>
 					<Property key="Widget_Colour" value="0.7 0.9 1"/>
-					<UserString key="tip" value="Fog end distance [meters]."/>
+					<UserString key="tip" value="#{TipFogEndDist}"/>
 				</Widget>
 				<Widget type="StaticText" skin="StaticText" position="208 295 64 24" name="FogStartVal">
 					<Property key="Text_TextColour" value="0.7 0.85 1"/>
@@ -421,7 +421,7 @@
 				<Widget type="Button" skin="CheckBox" position="436 255 172 24" name="FogDisable">
 					<Property key="Widget_Caption" value="#{DisableEdit} (G)"/>
 					<Property key="Text_TextColour" value="0.6 0.75 0.9"/>
-					<UserString key="tip" value="Disable fog when editing road from distance."/>
+					<UserString key="tip" value="#{TipDisableFog}"/>
 				</Widget>
 				<Widget type="StaticText" skin="StaticText" position="152 71 48 24">
 					<Property key="Widget_Caption" value="#{Pitch}"/>
@@ -431,13 +431,13 @@
 					<Property key="Widget_Colour" value="0.7 1 1"/>
 					<Property key="Text_TextColour" value="0.7 1 1"/>
 					<Property key="Edit_ReadOnly" value="true"/>
-					<UserString key="tip" value="Set 1 Rain/Snow type"/>
+					<UserString key="tip" value="#{TipRainSnow1}"/>
 				</Widget>
 				<Widget type="ComboBox" skin="ComboBox" position="208 439 184 24" name="Rain2Cmb">
 					<Property key="Widget_Colour" value="0.7 1 1"/>
 					<Property key="Text_TextColour" value="0.7 1 1"/>
 					<Property key="Edit_ReadOnly" value="true"/>
-					<UserString key="tip" value="Set 2 Rain/Snow type"/>
+					<UserString key="tip" value="#{TipRainSnow2}"/>
 				</Widget>
 				<Widget type="StaticText" skin="StaticText" position="80 375 72 24">
 					<Property key="Widget_Caption" value="#{Weather}"/>
@@ -450,7 +450,7 @@
 					<Property key="Scroll_Range" value="1000001"/>
 					<Property key="Scroll_MoveToClick" value="true"/>
 					<Property key="Widget_Colour" value="0.8 1 1"/>
-					<UserString key="tip" value="Rain/Snow intensity (eg. 1000)"/>
+					<UserString key="tip" value="#{TipRainSnowInt}"/>
 				</Widget>
 				<Widget type="StaticText" skin="StaticText" position="208 471 64 24" name="Rain2RateVal">
 					<Property key="Text_TextColour" value="0.8 1 1"/>
@@ -459,7 +459,7 @@
 					<Property key="Scroll_Range" value="1000001"/>
 					<Property key="Scroll_MoveToClick" value="true"/>
 					<Property key="Widget_Colour" value="0.8 1 1"/>
-					<UserString key="tip" value="Rain/Snow intensity (eg. 1000)"/>
+					<UserString key="tip" value="{TipRainSnowInt}"/>
 				</Widget>
 				<Widget type="StaticText" skin="StaticText" position="160 439 40 24">
 					<Property key="Widget_Caption" value="#{set2}"/>
@@ -500,7 +500,7 @@
 					<Property key="Scroll_Range" value="1000001"/>
 					<Property key="Scroll_MoveToClick" value="true"/>
 					<Property key="Widget_Colour" value="0.7 1 0.8"/>
-					<UserString key="tip" value="Terrain triangle size in [meters] (recommended: 1 - 2, use more for big track area). Changed after Update (F8)."/>
+					<UserString key="tip" value="#{TipTerTriSize}"/>
 				</Widget>
 				<Widget type="Edit" skin="Edit" position="168 71 80 24" name="edTerTriSize">
 					<Property key="Text_TextColour" value="0.7 1 0.8"/>
@@ -512,26 +512,26 @@
 				</Widget>
 				<Widget type="StaticText" skin="StaticText" position="168 108 96 24" name="TerTriSizeVal">
 					<Property key="Text_TextColour" value="0.8 1 0.9"/>
-					<UserString key="tip" value="Resulting area in meters (side length). Equals vertex count multipled by triangle size."/>
+					<UserString key="tip" value="#{TipTerSize}"/>
 				</Widget>
 				<Widget type="Button" skin="Button" position="304 103 104 32" name="TerrainNew">
 					<Property key="Widget_Colour" value="0.2 1 0.5"/>
 					<Property key="Widget_Caption" value="#{NewTerFlat}"/>
 					<Property key="Text_TextColour" value="0.7 1 0.8"/>
-					<UserString key="tip" value="Create new, flat terrain."/>
+					<UserString key="tip" value="#{TipNewTer}"/>
 				</Widget>
 				<Widget type="Button" skin="Button" position="432 103 104 32" name="TerrainResize">
 					<Property key="Widget_Colour" value="0.2 0.6 0.4"/>
 					<Property key="Widget_Caption" value="#{ResizeTer}"/>
 					<Property key="Text_TextColour" value="0.4 0.8 0.6"/>
 					<Property key="Widget_Visible" value="false"/>
-					<UserString key="tip" value="Resize current terrain with new values."/>
+					<UserString key="tip" value="#{TipResizeTer}"/>
 				</Widget>
 				<Widget type="Button" skin="CheckBox" position="480 207 96 24" name="TerLayOn">
 					<Property key="Widget_Caption" value="#{Enabled}"/>
 					<Property key="Text_TextColour" value="0.4 1 0.4"/>
 					<Property key="Widget_Colour" value="0.4 1 0.4"/>
-					<UserString key="tip" value="Turn on/off chosen texture layer."/>
+					<UserString key="tip" value="#{TipToggleLayer}"/>
 				</Widget>
 				<Widget type="StaticText" skin="StaticText" position="600 209 112 24" name="TerLayersAll">
 					<Property key="Widget_Caption" value="#{Used}: "/>
@@ -540,7 +540,7 @@
 				</Widget>
 				<Widget type="Tab" skin="Tab" position="32 168 560 24" name="TabTerLay">
 					<Property key="Widget_Colour" value="0.7 0.9 1"/>
-					<UserString key="tip" value="Terrain texture layers (recommended 2-3, significantly affects Fps). *Auto blendmap supports max 4."/>
+					<UserString key="tip" value="#{TipTerLayers}"/>
 					<Widget type="TabItem" skin="" position="4 26 551 -8">
 						<Property key="Widget_Caption" value="#{Layer} 1"/>
 					</Widget>
@@ -565,7 +565,7 @@
 				</Widget>
 				<Widget type="Tab" skin="Tab" position="160 38 340 20" name="TabHMapSize">
 					<Property key="Widget_Colour" value="0.7 0.9 1"/>
-					<UserString key="tip" value="Terrain vertex count on one side (squares). Apply with buttons [New Flat] or [Resize]."/>
+					<UserString key="tip" value="#{TipTerVertCount}"/>
 					<Widget type="TabItem" skin="" position="4 26 331 -12">
 						<Property key="Widget_Caption" value="64"/>
 					</Widget>
@@ -586,7 +586,7 @@
 					</Widget>
 				</Widget>
 				<Widget type="StaticImage" skin="StaticImage" position="40 207 128 128" name="TerImgDiff">
-					<UserString key="tip" value="Diffuse texture preview image."/>
+					<UserString key="tip" value="#{TipDiffusePrev}"/>
 				</Widget>
 				<Widget type="StaticText" skin="StaticText" position="192 209 64 24">
 					<Property key="Widget_Caption" value="#{Diffuse}"/>
@@ -596,7 +596,7 @@
 					<Property key="Widget_Colour" value="0.5 1 0.5"/>
 					<Property key="Text_TextColour" value="0.5 1 0.5"/>
 					<Property key="Edit_ReadOnly" value="true"/>
-					<UserString key="tip" value="Diffuse texture (Specular in alpha)."/>
+					<UserString key="tip" value="#{TipDiffuseTex}"/>
 				</Widget>
 				<Widget type="StaticText" skin="StaticText" position="192 242 64 24">
 					<Property key="Widget_Caption" value="#{TerNormal}"/>
@@ -606,13 +606,13 @@
 					<Property key="Widget_Colour" value="0.85 0.85 1"/>
 					<Property key="Text_TextColour" value="0.8 0.8 1"/>
 					<Property key="Edit_ReadOnly" value="true"/>
-					<UserString key="tip" value="Normal texture (Height in alpha)."/>
+					<UserString key="tip" value="#{TipNormalTex}"/>
 				</Widget>
 				<Widget type="Button" skin="CheckBox" position="480 240 72 24" name="TexNormAuto">
 					<Property key="Widget_Caption" value="#{auto}"/>
 					<Property key="Text_TextColour" value="0.7 0.7 1"/>
 					<Property key="Widget_Colour" value="0.7 0.7 1"/>
-					<UserString key="tip" value="When checked, Normal texture is automatically set from Diffuse texture (+ _nh in filename)."/>
+					<UserString key="tip" value="#{TipTexNormAuto}"/>
 				</Widget>
 				<Widget type="StaticText" skin="StaticText" position="192 280 48 24">
 					<Property key="Widget_Caption" value="#{scale}"/>
@@ -626,32 +626,32 @@
 					<Property key="Widget_Colour" value="0.6 1 0.6"/>
 					<Property key="Scroll_MoveToClick" value="true"/>
 					<Property key="Scroll_Range" value="1000001"/>
-					<UserString key="tip" value="Texture tiling length (less means more repeats)."/>
+					<UserString key="tip" value="#{TipTexTiling}"/>
 				</Widget>
 				<Widget type="Edit" skin="Edit" position="232 326 56 24" name="LDust">
 					<Property key="Widget_Colour" value="0.8 0.8 0.2"/>
 					<Property key="Text_TextColour" value="0.8 0.8 0.2"/>
-					<UserString key="tip" value="Dust particles intensity."/>
+					<UserString key="tip" value="#{TipDustInt}"/>
 				</Widget>
 				<Widget type="Edit" skin="Edit" position="264 356 72 24" name="LDustS">
 					<Property key="Widget_Colour" value="0.8 0.8 0.2"/>
 					<Property key="Text_TextColour" value="0.8 0.8 0.2"/>
-					<UserString key="tip" value="Dust particles size."/>
+					<UserString key="tip" value="#{TipDustSize}"/>
 				</Widget>
 				<Widget type="Edit" skin="Edit" position="344 326 56 24" name="LMud">
 					<Property key="Widget_Colour" value="0.8 0.7 0.2"/>
 					<Property key="Text_TextColour" value="0.8 0.7 0.2"/>
-					<UserString key="tip" value="Mud particles intensity."/>
+					<UserString key="tip" value="#{TipMudInt}"/>
 				</Widget>
 				<Widget type="Edit" skin="Edit" position="468 326 56 24" name="LSmoke">
 					<Property key="Widget_Colour" value="0.7 0.7 0.7"/>
 					<Property key="Text_TextColour" value="0.7 0.7 0.7"/>
-					<UserString key="tip" value="Smoke particles intensity."/>
+					<UserString key="tip" value="#{TipSmokeInt}"/>
 				</Widget>
 				<Widget type="Edit" skin="Edit" position="440 356 160 24" name="LTrlClr">
 					<Property key="Widget_Colour" value="0.6 0.8 0"/>
 					<Property key="Text_TextColour" value="0.6 0.8 0"/>
-					<UserString key="tip" value="Tire trails color. R G B A components 0 to 1 (eg. 0.4 0.4 0.2 0.6)"/>
+					<UserString key="tip" value="#{TipTrailClr}"/>
 				</Widget>
 				<Widget type="StaticText" skin="StaticText" position="192 328 40 24">
 					<Property key="Widget_Caption" value="#{dust}"/>
@@ -688,23 +688,23 @@
 				<Widget type="ComboBox" skin="ComboBox" position="232 392 96 24" name="CmbParDust">
 					<Property key="Widget_Colour" value="0.8 0.8 0.2"/>
 					<Property key="Text_TextColour" value="0.8 0.8 0.2"/>
-					<UserString key="tip" value="Tire Particle type 1 (global for track)."/>
+					<UserString key="tip" value="#{TipParType1}"/>
 				</Widget>
 				<Widget type="ComboBox" skin="ComboBox" position="380 392 92 24" name="CmbParMud">
 					<Property key="Widget_Colour" value="0.8 0.7 0.2"/>
 					<Property key="Text_TextColour" value="0.8 0.7 0.2"/>
-					<UserString key="tip" value="Tire Particle type 2 (global for track)."/>
+					<UserString key="tip" value="#{TipParType2}"/>
 				</Widget>
 				<Widget type="ComboBox" skin="ComboBox" position="540 392 88 24" name="CmbParSmoke">
 					<Property key="Widget_Colour" value="0.7 0.7 0.7"/>
 					<Property key="Text_TextColour" value="0.7 0.7 0.7"/>
-					<UserString key="tip" value="Tire Particle type 3 (global for track)."/>
+					<UserString key="tip" value="#{TipParType3}"/>
 				</Widget>
 				<Widget type="Progress" skin="ProgressFill" position="32 167 560 25">
 					<Property key="Widget_Colour" value="0 0.9 0"/>
 					<Property key="Widget_Alpha" value="0.3"/>
 					<Property key="Widget_Enabled" value="false"/>
-					<UserString key="tip" value="Tire Particle type 3."/>
+					<UserString key="tip" value="#{TipTireParType3}"/>
 				</Widget>
 				<Widget type="Progress" skin="ProgressFill" position="160 37 340 21">
 					<Property key="Widget_Colour" value="0.2 0.9 0.3"/>
@@ -726,33 +726,33 @@
 				<Widget type="Edit" skin="Edit" position="364 448 80 24" name="SuBumpWave">
 					<Property key="Text_TextColour" value="0.87 0.75 0.93"/>
 					<Property key="Widget_Colour" value="0.87 0.75 0.93"/>
-					<UserString key="tip" value="Frequency of additional bumps on surface (distance between them)."/>
+					<UserString key="tip" value="#{TipBumpFreq}"/>
 				</Widget>
 				<Widget type="Edit" skin="Edit" position="540 448 80 24" name="SuBumpAmp">
 					<Property key="Widget_Colour" value="0.9 0.7 1"/>
 					<Property key="Text_TextColour" value="0.9 0.7 1"/>
-					<UserString key="tip" value="Amplitude of additional bumps on surface (how high)."/>
+					<UserString key="tip" value="#{TipBumpAmp}"/>
 				</Widget>
 				<Widget type="ComboBox" skin="ComboBox" position="100 448 112 24" name="SurfType">
 					<Property key="Widget_Colour" value="1 0.7 0.7"/>
 					<Property key="Text_TextColour" value="1 0.7 0.7"/>
-					<UserString key="tip" value="Type of surface, determines sound."/>
+					<UserString key="tip" value="#{TipSurfType}"/>
 				</Widget>
 				<Widget type="Edit" skin="Edit" position="148 480 80 24" name="SuRollDrag">
 					<Property key="Widget_Colour" value="1 0.75 0.3"/>
 					<Property key="Text_TextColour" value="1 0.75 0.3"/>
-					<UserString key="tip" value="Drag for wheels, bigger will make them slow down faster (eg. 140 for snow, 80 for grass)."/>
+					<UserString key="tip" value="#{TipRollDrag}"/>
 				</Widget>
 				<Widget type="Edit" skin="Edit" position="316 480 80 24" name="SuFrict">
 					<Property key="Widget_Colour" value="1 0.6 0.2"/>
 					<Property key="Text_TextColour" value="1 0.6 0.2"/>
-					<UserString key="tip" value="Surface friction (eg. 1.0 asphalt, 0.7 gravel, 0.5 ice)."/>
+					<UserString key="tip" value="#{TipSurfFrict}"/>
 				</Widget>
 				<Widget type="Edit" skin="Edit" position="524 480 80 24" name="SuFrict2">
 					<Property key="Widget_Colour" value="1 0.4 0"/>
 					<Property key="Text_TextColour" value="1 0.4 0"/>
 					<Property key="Widget_Alpha" value="0.45"/>
-					<UserString key="tip" value="Not used."/>
+					<UserString key="tip" value="#{TipSurfFrict2}"/>
 				</Widget>
 				<Widget type="StaticText" skin="StaticText" position="44 450 44 24">
 					<Property key="Widget_Caption" value="#{Type}"/>
@@ -788,7 +788,7 @@
 				<Widget type="Edit" skin="Edit" position="152 37 64 24" name="GrassDens">
 					<Property key="Text_TextColour" value="0.6 1 0.4"/>
 					<Property key="Widget_Colour" value="0.6 1 0.4"/>
-					<UserString key="tip" value="How dense/rare will the grass be on terrain."/>
+					<UserString key="tip" value="#{TipGrassDens}"/>
 				</Widget>
 				<Widget type="StaticText" skin="StaticText" position="32 71 112 24">
 					<Property key="Widget_Caption" value="#{TreeDens}"/>
@@ -797,13 +797,13 @@
 				<Widget type="Edit" skin="Edit" position="152 69 64 24" name="TreesDens">
 					<Property key="Text_TextColour" value="0.9 0.9 0.6"/>
 					<Property key="Widget_Colour" value="0.9 0.9 0.6"/>
-					<UserString key="tip" value="How many models (trees, rocks, etc.) will be on track."/>
+					<UserString key="tip" value="#{TipTreeDens}"/>
 				</Widget>
 				<Widget type="Tab" skin="Tab" position="24 224 408 24" name="LTrNumTab">
 					<Property key="Widget_Colour" value="0.6 0.8 0.8"/>
 					<Property key="Widget_Visible" value="true"/>
 					<Property key="Tab_ButtonWidth" value="40"/>
-					<UserString key="tip" value="Vegetation model groups (recommended use 4-6), affects performance."/>
+					<UserString key="tip" value="#{TipVegetGroups}"/>
 					<Widget type="TabItem" skin="" position="4 26 399 -8">
 						<Property key="Widget_Caption" value="1"/>
 					</Widget>
@@ -852,7 +852,7 @@
 					<Property key="Widget_Colour" value="0.6 0.8 1"/>
 					<Property key="Text_TextColour" value="0.6 0.8 1"/>
 					<Property key="Edit_ReadOnly" value="true"/>
-					<UserString key="tip" value="Models (meshes) for vegetation. Found in data/trees/."/>
+					<UserString key="tip" value="#{TipVegetModels}"/>
 				</Widget>
 				<Widget type="StaticText" skin="StaticText" position="128 303 56 24" name="LTrDensVal">
 					<Property key="Text_TextColour" value="0.6 1 1"/>
@@ -861,13 +861,13 @@
 					<Property key="Scroll_Range" value="1000001"/>
 					<Property key="Scroll_MoveToClick" value="true"/>
 					<Property key="Widget_Colour" value="0.6 1 1"/>
-					<UserString key="tip" value="How often model will appear on track area."/>
+					<UserString key="tip" value="#{TipModelDens}"/>
 				</Widget>
 				<Widget type="Button" skin="CheckBox" position="328 271 104 24" name="LTrEnabled">
 					<Property key="Widget_Caption" value="#{Enabled}"/>
 					<Property key="Widget_Colour" value="0.6 0.8 1"/>
 					<Property key="Text_TextColour" value="0.6 0.8 1"/>
-					<UserString key="tip" value="Enable or disable this model."/>
+					<UserString key="tip" value="#{TipToggleModel}"/>
 				</Widget>
 				<Widget type="StaticText" skin="StaticText" position="448 274 144 24" name="LTrAll">
 					<Property key="Widget_Caption" value="#{Used}: "/>
@@ -882,7 +882,7 @@
 				<Widget type="StaticText" skin="StaticText" position="32 391 96 24">
 					<Property key="Widget_Caption" value="#{DistToRoad}"/>
 					<Property key="Text_TextColour" value="0.6 0.9 0.9"/>
-					<UserString key="tip" value="How far from road will the model appear."/>
+					<UserString key="tip" value="#{TipRoadDist}"/>
 				</Widget>
 				<Widget type="StaticText" skin="StaticText" position="128 391 56 24" name="LTrRdDistVal">
 					<Property key="Text_TextColour" value="0.6 0.9 0.9"/>
@@ -891,19 +891,19 @@
 					<Property key="Scroll_Range" value="1000001"/>
 					<Property key="Scroll_MoveToClick" value="true"/>
 					<Property key="Widget_Colour" value="0.6 0.8 0.8"/>
-					<UserString key="tip" value="Model minimal scale."/>
+					<UserString key="tip" value="#{TipModelMinScale}"/>
 				</Widget>
 				<Widget type="HScroll" skin="HScroll" position="200 359 360 16" name="LTrMaxSc">
 					<Property key="Scroll_Range" value="1000001"/>
 					<Property key="Scroll_MoveToClick" value="true"/>
 					<Property key="Widget_Colour" value="0.6 0.8 0.8"/>
-					<UserString key="tip" value="Model maximal scale."/>
+					<UserString key="tip" value="{TipModelMaxScale}"/>
 				</Widget>
 				<Widget type="HScroll" skin="HScroll" position="200 391 360 16" name="LTrRdDist">
 					<Property key="Scroll_Range" value="21"/>
 					<Property key="Scroll_MoveToClick" value="true"/>
 					<Property key="Widget_Colour" value="0.6 0.9 0.9"/>
-					<UserString key="tip" value="Additional distance to road."/>
+					<UserString key="tip" value="#{TipRoadDist2}"/>
 				</Widget>
 				<Widget type="StaticText" skin="StaticText" position="32 423 80 24">
 					<Property key="Widget_Caption" value="#{wind} Fx"/>
@@ -923,13 +923,13 @@
 					<Property key="Scroll_Range" value="1000001"/>
 					<Property key="Scroll_MoveToClick" value="true"/>
 					<Property key="Widget_Colour" value="0.5 0.7 0.7"/>
-					<UserString key="tip" value="Wind influence on model, length scale."/>
+					<UserString key="tip" value="#{TipWindInflL}"/>
 				</Widget>
 				<Widget type="HScroll" skin="HScroll" position="200 447 360 16" name="LTrWindFy">
 					<Property key="Scroll_Range" value="1000001"/>
 					<Property key="Scroll_MoveToClick" value="true"/>
 					<Property key="Widget_Colour" value="0.5 0.7 0.7"/>
-					<UserString key="tip" value="Wind influence on model, height scale."/>
+					<UserString key="tip" value="#{TipWindInflH}"/>
 				</Widget>
 				<Widget type="StaticText" skin="StaticText" position="248 40 40 24">
 					<Property key="Widget_Caption" value="#{page}"/>
@@ -962,22 +962,22 @@
 				<Widget type="Edit" skin="Edit" position="296 37 56 24" name="GrPage">
 					<Property key="Widget_Colour" value="0.6 0.9 0.3"/>
 					<Property key="Text_TextColour" value="0.6 0.9 0.3"/>
-					<UserString key="tip" value="Grass Page length (low will reload often, high will cause visible switching)."/>
+					<UserString key="tip" value="#{TipGrassPageLength}"/>
 				</Widget>
 				<Widget type="Edit" skin="Edit" position="296 69 56 24" name="TrPage">
 					<Property key="Widget_Colour" value="0.8 0.8 0.4"/>
 					<Property key="Text_TextColour" value="0.8 0.8 0.4"/>
-					<UserString key="tip" value="Models Page length (low will reload often, high will cause visible switching)."/>
+					<UserString key="tip" value="#{TipModelPageLength}"/>
 				</Widget>
 				<Widget type="Edit" skin="Edit" position="432 37 64 24" name="GrDist">
 					<Property key="Widget_Colour" value="0.6 0.9 0.3"/>
 					<Property key="Text_TextColour" value="0.6 0.9 0.3"/>
-					<UserString key="tip" value="Visibility distance for grass pages."/>
+					<UserString key="tip" value="#{TipGrassVisDist}"/>
 				</Widget>
 				<Widget type="Edit" skin="Edit" position="432 69 64 24" name="TrDist">
 					<Property key="Widget_Colour" value="0.8 0.8 0.4"/>
 					<Property key="Text_TextColour" value="0.8 0.8 0.4"/>
-					<UserString key="tip" value="Visibility distance for model pages."/>
+					<UserString key="tip" value="#{TipModelVisDist}"/>
 				</Widget>
 				<Widget type="StaticText" skin="StaticText" position="648 71 48 24">
 					<Property key="Widget_Caption" value="#{max} y"/>
@@ -986,22 +986,22 @@
 				<Widget type="Edit" skin="Edit" position="584 37 56 24" name="GrMinX">
 					<Property key="Text_TextColour" value="0.6 0.9 0.3"/>
 					<Property key="Widget_Colour" value="0.6 0.9 0.3"/>
-					<UserString key="tip" value="Minimal grass patch length."/>
+					<UserString key="tip" value="#{TipGrassPatchLengthMin}"/>
 				</Widget>
 				<Widget type="Edit" skin="Edit" position="696 37 56 24" name="GrMaxX">
 					<Property key="Widget_Colour" value="0.6 1 0.4"/>
 					<Property key="Text_TextColour" value="0.6 1 0.4"/>
-					<UserString key="tip" value="Maximal grass patch length."/>
+					<UserString key="tip" value="#{TipGrassPatchLengthMax}"/>
 				</Widget>
 				<Widget type="Edit" skin="Edit" position="584 69 56 24" name="GrMinY">
 					<Property key="Widget_Colour" value="0.6 0.9 0.3"/>
 					<Property key="Text_TextColour" value="0.6 0.9 0.3"/>
-					<UserString key="tip" value="Minimal grass patch height."/>
+					<UserString key="tip" value="#{TipGrassPatchHeightMin}"/>
 				</Widget>
 				<Widget type="Edit" skin="Edit" position="696 69 56 24" name="GrMaxY">
 					<Property key="Widget_Colour" value="0.6 1 0.4"/>
 					<Property key="Text_TextColour" value="0.6 1 0.4"/>
-					<UserString key="tip" value="Maximal grass patch height."/>
+					<UserString key="tip" value="#{TipGrassPatchHeightMax}"/>
 				</Widget>
 				<Widget type="StaticText" skin="StaticText" position="536 15 120 24">
 					<Property key="Widget_Caption" value="#{GrassSize]:"/>
@@ -1030,12 +1030,12 @@
 				<Widget type="Edit" skin="Edit" position="376 101 56 24" name="GrSwayLen">
 					<Property key="Text_TextColour" value="0.6 0.9 0.3"/>
 					<Property key="Widget_Colour" value="0.6 0.9 0.3"/>
-					<UserString key="tip" value="Grass sway effect length (scale)."/>
+					<UserString key="tip" value="#{TipGrassSwayLen}"/>
 				</Widget>
 				<Widget type="Edit" skin="Edit" position="520 101 56 24" name="GrSwaySpd">
 					<Property key="Widget_Colour" value="0.6 0.9 0.3"/>
 					<Property key="Text_TextColour" value="0.6 0.9 0.3"/>
-					<UserString key="tip" value="Grass sway effect speed."/>
+					<UserString key="tip" value="#{TipGrassSwaySpd}"/>
 				</Widget>
 				<Widget type="StaticText" skin="StaticText" position="32 103 96 24">
 					<Property key="Widget_Caption" value="#{GrassSway}:"/>
@@ -1044,17 +1044,17 @@
 				<Widget type="Edit" skin="Edit" position="232 101 56 24" name="GrSwayDistr">
 					<Property key="Text_TextColour" value="0.6 0.9 0.3"/>
 					<Property key="Widget_Colour" value="0.6 0.9 0.3"/>
-					<UserString key="tip" value="Grass sway effect distribution (how random)."/>
+					<UserString key="tip" value="#{TipGrassSwayDistr}"/>
 				</Widget>
 				<Widget type="Edit" skin="Edit" position="178 133 56 24" name="TrRdDist">
 					<Property key="Widget_Colour" value="0.9 0.9 0.4"/>
 					<Property key="Text_TextColour" value="0.9 0.9 0.4"/>
-					<UserString key="tip" value="Distance from road to models (global, added to each models own value)."/>
+					<UserString key="tip" value="#{TipModelRoadDist}"/>
 				</Widget>
 				<Widget type="Edit" skin="Edit" position="372 133 56 24" name="TrImpDist">
 					<Property key="Widget_Colour" value="0.8 0.8 0.4"/>
 					<Property key="Text_TextColour" value="0.8 0.8 0.4"/>
-					<UserString key="tip" value="Far distance at which models will turn into 2d impostors."/>
+					<UserString key="tip" value="#{TipImpDist}"/>
 				</Widget>
 				<Widget type="Progress" skin="ProgressFill" position="24 224 408 24">
 					<Property key="Widget_Alpha" value="0.3"/>
@@ -1065,7 +1065,7 @@
 					<Property key="Image_Tile" value="256 256"/>
 					<Property key="Image_Coord" value="0 256 256 512"/>
 					<Property key="Image_Index" value="0"/>
-					<UserString key="tip" value="Model preview image."/>
+					<UserString key="tip" value="#{TipModelPrev}"/>
 				</Widget>
 			</Widget>
 			<Widget type="TabItem" skin="" position="4 26 787 531">
