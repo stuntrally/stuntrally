@@ -74,22 +74,30 @@ elif file1.endswith(".po") and file2.endswith(".xml"):
 	# read po
 	for line in f1:
 		if line.strip().startswith("\""):
-			if last == "msgid":
+			if last == "msgctxt":
 				msgid += line.strip().split("\"")[1].replace("\\n", "\n")
 			elif last == "msgstr":
 				msgstr += line.strip().split("\"")[1].replace("\\n", "\n")
-		if line.strip().startswith("msgid"):
+		if line.strip().startswith("msgctxt"):
 			# add previous msgstr
 			if msgid != "":
 				msgs[msgid] = msgstr
 			
 			msgid = line.split("\"")[1].replace("\\n", "\n")
-			last = "msgid"
+			last = "msgctxt"
 		if line.strip().startswith("msgstr"):
 			msgstr =line.split("\"")[1].replace("\\n", "\n")
 			last = "msgstr"
+			
+	# write xml
+	result = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n\
+<MyGUI>\n"
 
-	print msgs
+	for mid, mstr in msgs.items():
+		result += "\t<Tag name=\"" + mid + "\">" + mstr + "</Tag>\n"
+		
+	result += "\n</MyGUI>"
+	f2.write(result)
 		
 else:
 	usage()
