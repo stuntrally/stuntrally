@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION"
 "Report-Msgid-Bugs-To: "
-"POT-Creation-Date: 2011-04-11 16:55+0200"
+"POT-Creation-Date: 2011-04-11 18:11+0200"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>"
 "Language-Team: LANGUAGE <LL@li.org>"
@@ -17,1695 +17,1695 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET"
 "Content-Transfer-Encoding: 8bit"
 
-# How many models (trees, rocks, etc.) will be on track.
-msgid "TipTreeDens"
+msgctxt "TipTreeDens"
+msgid "How many models (trees, rocks, etc.) will be on track."
 msgstr ""
 
-# Camera speed
-msgid "CamSpeed"
+msgctxt "CamSpeed"
+msgid "Camera speed"
 msgstr ""
 
-# Modify
-msgid "InputRoadModify"
+msgctxt "InputRoadModify"
+msgid "Modify"
 msgstr ""
 
-# Grass sway effect distribution (how random).
-msgid "TipGrassSwayDistr"
+msgctxt "TipGrassSwayDistr"
+msgid "Grass sway effect distribution (how random)."
 msgstr ""
 
-# car will meet (next+ / prev-) point numbers
-msgid "InputStartMeet"
+msgctxt "InputStartMeet"
+msgid "car will meet (next+ / prev-) point numbers"
 msgstr ""
 
-# Uncheck for manual gears changing.
-msgid "TipAutoGearbox"
+msgctxt "TipAutoGearbox"
+msgid "Uncheck for manual gears changing."
 msgstr ""
 
-# and using
-msgid "AndUsing"
+msgctxt "AndUsing"
+msgid "and using"
 msgstr ""
 
-# Column Radius
-msgid "ColumnRadius"
+msgctxt "ColumnRadius"
+msgid "Column Radius"
 msgstr ""
 
-# km/h
-msgid "UnitKmh"
+msgctxt "UnitKmh"
+msgid "km/h"
 msgstr ""
 
-# Density
+msgctxt "Density"
 msgid "Density"
 msgstr ""
 
-# View distance
-msgid "ViewDist"
+msgctxt "ViewDist"
+msgid "View distance"
 msgstr ""
 
-# Trees   density
-msgid "TreeDens"
+msgctxt "TreeDens"
+msgid "Trees   density"
 msgstr ""
 
-# http://code.google.com/p/vdrift-ogre/
-msgid "PageURL"
+msgctxt "PageURL"
+msgid "http://code.google.com/p/vdrift-ogre/"
 msgstr ""
 
-# Normal
-msgid "TerNormal"
+msgctxt "TerNormal"
+msgid "Normal"
 msgstr ""
 
-# Retry
-msgid "MyGUI_MessageBox_Retry"
+msgctxt "MyGUI_MessageBox_Retry"
+msgid "Retry"
 msgstr ""
 
-# 1.1
-msgid "GameVersion"
+msgctxt "GameVersion"
+msgid "1.1"
 msgstr ""
 
-# In game screenshot for selected track.
-msgid "TipTrackImg"
+msgctxt "TipTrackImg"
+msgid "In game screenshot for selected track."
 msgstr ""
 
-# Each (mouse/key) move or value change with 
-msgid "InputValueChange"
+msgctxt "InputValueChange"
+msgid "Each (mouse/key) move or value change with "
 msgstr ""
 
-# -,=  - road/pipe material
-msgid "InputRoadMat"
+msgctxt "InputRoadMat"
+msgid "-,=  - road/pipe material"
 msgstr ""
 
-# Surface
+msgctxt "Surface"
 msgid "Surface"
 msgstr ""
 
-# F2,F3 - prev/next tab
-msgid "InputNextTab"
+msgctxt "InputNextTab"
+msgid "F2,F3 - prev/next tab"
 msgstr ""
 
-# Space - handbrake
-msgid "InputBrake"
+msgctxt "InputBrake"
+msgid "Space - handbrake"
 msgstr ""
 
-# Preview camera window.
-msgid "TipPrevWind"
+msgctxt "TipPrevWind"
+msgid "Preview camera window."
 msgstr ""
 
-# C - Paint Color
-msgid "InputPaintColor"
+msgctxt "InputPaintColor"
+msgid "C - Paint Color"
 msgstr ""
 
-# version
-msgid "Version"
+msgctxt "Version"
+msgid "version"
 msgstr ""
 
-# Home - toggle on Terrain snap
-msgid "InputRoadOnTer"
+msgctxt "InputRoadOnTer"
+msgid "Home - toggle on Terrain snap"
 msgstr ""
 
-# Sun light diffuse (normal) color. R G B components 0 to 1 (eg. 0.9 0.9 0.9)
-msgid "TipSunDiffuse"
+msgctxt "TipSunDiffuse"
+msgid "Sun light diffuse (normal) color. R G B components 0 to 1 (eg. 0.9 0.9 0.9)"
 msgstr ""
 
-# HUD
+msgctxt "HUD"
 msgid "HUD"
 msgstr ""
 
-# W,S  A,D  Q,E - move   Arrows - rotate
-msgid "InputCamControl"
+msgctxt "InputCamControl"
+msgid "W,S  A,D  Q,E - move   Arrows - rotate"
 msgstr ""
 
-# Minimap of selected track, view from top.
-msgid "TipTrackMap"
+msgctxt "TipTrackMap"
+msgid "Minimap of selected track, view from top."
 msgstr ""
 
-# Enable or disable this model.
-msgid "TipToggleModel"
+msgctxt "TipToggleModel"
+msgid "Enable or disable this model."
 msgstr ""
 
-# F5 - Reload track
-msgid "InputReloadTrack"
+msgctxt "InputReloadTrack"
+msgid "F5 - Reload track"
 msgstr ""
 
-# Video
+msgctxt "Video"
 msgid "Video"
 msgstr ""
 
-# Tire Particle type 3 (global for track).
-msgid "TipParType3"
+msgctxt "TipParType3"
+msgid "Tire Particle type 3 (global for track)."
 msgstr ""
 
-# Tire Particle type 2 (global for track).
-msgid "TipParType2"
+msgctxt "TipParType2"
+msgid "Tire Particle type 2 (global for track)."
 msgstr ""
 
-# Tire Particle type 1 (global for track).
-msgid "TipParType1"
+msgctxt "TipParType1"
+msgid "Tire Particle type 1 (global for track)."
 msgstr ""
 
-# Grass   density
-msgid "GrassDens"
+msgctxt "GrassDens"
+msgid "Grass   density"
 msgstr ""
 
-# Road parameters
-msgid "RoadParams"
+msgctxt "RoadParams"
+msgid "Road parameters"
 msgstr ""
 
-# Light
+msgctxt "Light"
 msgid "Light"
 msgstr ""
 
-# dist. to road
-msgid "DistToRoad"
+msgctxt "DistToRoad"
+msgid "dist. to road"
 msgstr ""
 
-# How dense/rare will the grass be on terrain.
-msgid "TipGrassDens"
+msgctxt "TipGrassDens"
+msgid "How dense/rare will the grass be on terrain."
 msgstr ""
 
-# Tracks list, click to select (and see info). Press Enter to drive on it. (or [Change track] and then [New Game])
-msgid "TipTrackList"
+msgctxt "TipTrackList"
+msgid "Tracks list, click to select (and see info). Press Enter to drive on it. (or [Change track] and then [New Game])"
 msgstr ""
 
-# Back
+msgctxt "Back"
 msgid "Back"
 msgstr ""
 
-# Diffuse texture preview image.
-msgid "TipDiffusePrev"
+msgctxt "TipDiffusePrev"
+msgid "Diffuse texture preview image."
 msgstr ""
 
-# smoke
+msgctxt "smoke"
 msgid "smoke"
 msgstr ""
 
-# Change current car to that selected in list, press [New Game] to drive with it.
-msgid "TipChangeCar"
+msgctxt "TipChangeCar"
+msgid "Change current car to that selected in list, press [New Game] to drive with it."
 msgstr ""
 
-# A - Paint Textures (layers)
-msgid "InputTerPaint"
+msgctxt "InputTerPaint"
+msgid "A - Paint Textures (layers)"
 msgstr ""
 
-# Minimap of selected track, view from top.
-msgid "TipMinimapScrnEditor"
+msgctxt "TipMinimapScrnEditor"
+msgid "Minimap of selected track, view from top."
 msgstr ""
 
-# Pick (one)
-msgid "InputRoadPickOne"
+msgctxt "InputRoadPickOne"
+msgid "Pick (one)"
 msgstr ""
 
-# Particle amounts
-msgid "ParAmount"
+msgctxt "ParAmount"
+msgid "Particle amounts"
 msgstr ""
 
-# No
-msgid "MyGUI_MessageBox_No"
+msgctxt "MyGUI_MessageBox_No"
+msgid "No"
 msgstr ""
 
-# ctrl-Space - set new from picked
-msgid "InputRoadNew"
+msgctxt "InputRoadNew"
+msgid "ctrl-Space - set new from picked"
 msgstr ""
 
-# Top
+msgctxt "Top"
 msgid "Top"
 msgstr ""
 
-# Terrain update skip
-msgid "TerUpdSkip"
+msgctxt "TerUpdSkip"
+msgid "Terrain update skip"
 msgstr ""
 
-# Input
+msgctxt "Input"
 msgid "Input"
 msgstr ""
 
-# Left,Right - steer
-msgid "InputSteer"
+msgctxt "InputSteer"
+msgid "Left,Right - steer"
 msgstr ""
 
-# Terrain Layers
-msgid "TerLayers"
+msgctxt "TerLayers"
+msgid "Terrain Layers"
 msgstr ""
 
-# Set as copy source
-msgid "CopySource"
+msgctxt "CopySource"
+msgid "Set as copy source"
 msgstr ""
 
-# Terrain Heightmap
-msgid "TerHeightMap"
+msgctxt "TerHeightMap"
+msgid "Terrain Heightmap"
 msgstr ""
 
-# * need reload
-msgid "NeedReload"
+msgctxt "NeedReload"
+msgid "* need reload"
 msgstr ""
 
-# Count
+msgctxt "Count"
 msgid "Count"
 msgstr ""
 
-# km
-msgid "UnitKm"
+msgctxt "UnitKm"
+msgid "km"
 msgstr ""
 
-# based on
-msgid "BasedOn"
+msgctxt "BasedOn"
+msgid "based on"
 msgstr ""
 
-# F2,F3 - prev,next Options tab
-msgid "InputNextOptTab"
+msgctxt "InputNextOptTab"
+msgid "F2,F3 - prev,next Options tab"
 msgstr ""
 
-# ; &apos;    - checkpoint radius (chkR 0 - none)
-msgid "InputRoadChkRadius"
+msgctxt "InputRoadChkRadius"
+msgid "; &apos;    - checkpoint radius (chkR 0 - none)"
 msgstr ""
 
-# Dust particles size.
-msgid "TipDustSize"
+msgctxt "TipDustSize"
+msgid "Dust particles size."
 msgstr ""
 
-# alt-shift - at start   alt-ctrl - at end
-msgid "InputRoadInsAlt"
+msgctxt "InputRoadInsAlt"
+msgid "alt-shift - at start   alt-ctrl - at end"
 msgstr ""
 
-# Abort
-msgid "MyGUI_MessageBox_Abort"
+msgctxt "MyGUI_MessageBox_Abort"
+msgid "Abort"
 msgstr ""
 
-# F1 or Tab - Show/Hide Options
-msgid "InputShowGUI"
+msgctxt "InputShowGUI"
+msgid "F1 or Tab - Show/Hide Options"
 msgstr ""
 
-# View Start
-msgid "ViewStart"
+msgctxt "ViewStart"
+msgid "View Start"
 msgstr ""
 
-# Drag for wheels, bigger will make them slow down faster (eg. 140 for snow, 80 for grass).
-msgid "TipRollDrag"
+msgctxt "TipRollDrag"
+msgid "Drag for wheels, bigger will make them slow down faster (eg. 140 for snow, 80 for grass)."
 msgstr ""
 
-# Digits (gear, speed)
-msgid "Digits"
+msgctxt "Digits"
+msgid "Digits (gear, speed)"
 msgstr ""
 
-# Turn on/off chosen texture layer.
-msgid "TipToggleLayer"
+msgctxt "TipToggleLayer"
+msgid "Turn on/off chosen texture layer."
 msgstr ""
 
-# View Right
-msgid "ViewRight"
+msgctxt "ViewRight"
+msgid "View Right"
 msgstr ""
 
-# Wireframe
+msgctxt "Wireframe"
 msgid "Wireframe"
 msgstr ""
 
-# Change Track
-msgid "ChangeTrack"
+msgctxt "ChangeTrack"
+msgid "Change Track"
 msgstr ""
 
-# Terrain size
-msgid "TerrainSize"
+msgctxt "TerrainSize"
+msgid "Terrain size"
 msgstr ""
 
-# - change road width
-msgid "InputRoadWidth"
+msgctxt "InputRoadWidth"
+msgid "- change road width"
 msgstr ""
 
-# Auto Rear gear
-msgid "AutoRear"
+msgctxt "AutoRear"
+msgid "Auto Rear gear"
 msgstr ""
 
-# Set camera to
-msgid "SetCamTo"
+msgctxt "SetCamTo"
+msgid "Set camera to"
 msgstr ""
 
-# max
+msgctxt "max"
 msgid "max"
 msgstr ""
 
-# Sun direction - yaw angle.
-msgid "TipSunDirYaw"
+msgctxt "TipSunDirYaw"
+msgid "Sun direction - yaw angle."
 msgstr ""
 
-# X,C or PgUp,PgDn - prev/next camera view
-msgid "InputNextCam"
+msgctxt "InputNextCam"
+msgid "X,C or PgUp,PgDn - prev/next camera view"
 msgstr ""
 
-# ABS (antilock brakes)
-msgid "ABS"
+msgctxt "ABS"
+msgid "ABS (antilock brakes)"
 msgstr ""
 
-# Length
+msgctxt "Length"
 msgid "Length"
 msgstr ""
 
-# Cars list, click to select (and see image). Press [Change car] and then [New Game] to drive with it.
-msgid "TipCarsList"
+msgctxt "TipCarsList"
+msgid "Cars list, click to select (and see image). Press [Change car] and then [New Game] to drive with it."
 msgstr ""
 
-# Ignore
-msgid "MyGUI_MessageBox_Ignore"
+msgctxt "MyGUI_MessageBox_Ignore"
+msgid "Ignore"
 msgstr ""
 
-# Model
+msgctxt "Model"
 msgid "Model"
 msgstr ""
 
-# Pipe L steps mul.
-msgid "PipeLStepsMul"
+msgctxt "PipeLStepsMul"
+msgid "Pipe L steps mul."
 msgstr ""
 
-# View
+msgctxt "View"
 msgid "View"
 msgstr ""
 
-# Distance from road to models (global, added to each models own value).
-msgid "TipModelRoadDist"
+msgctxt "TipModelRoadDist"
+msgid "Distance from road to models (global, added to each models own value)."
 msgstr ""
 
-# Up,Down - throttle, brake
-msgid "InputThrottle"
+msgctxt "InputThrottle"
+msgid "Up,Down - throttle, brake"
 msgstr ""
 
-# (after [Terrain,Vegetation] changes)
-msgid "InputAfterChanges"
+msgctxt "InputAfterChanges"
+msgid "(after [Terrain,Vegetation] changes)"
 msgstr ""
 
-# Skirt Length
-msgid "SkirtLength"
+msgctxt "SkirtLength"
+msgid "Skirt Length"
 msgstr ""
 
-# Darken
-msgid "OrigImage"
+msgctxt "OrigImage"
+msgid "Darken"
 msgstr ""
 
-# alt - select all   ctrl - select none
-msgid "InputRoadSelAlt"
+msgctxt "InputRoadSelAlt"
+msgid "alt - select all   ctrl - select none"
 msgstr ""
 
-# Backspace - add to or remove from selection
-msgid "InputRoadSel"
+msgctxt "InputRoadSel"
+msgid "Backspace - add to or remove from selection"
 msgstr ""
 
-# Weather
+msgctxt "Weather"
 msgid "Weather"
 msgstr ""
 
-# wind
+msgctxt "wind"
 msgid "wind"
 msgstr ""
 
-# Whole road statistics.
-msgid "TipRoadStats"
+msgctxt "TipRoadStats"
+msgid "Whole road statistics."
 msgstr ""
 
-# F5 - restart game
-msgid "InputRestart"
+msgctxt "InputRestart"
+msgid "F5 - restart game"
 msgstr ""
 
-# max scale
-msgid "MaxScale"
+msgctxt "MaxScale"
+msgid "max scale"
 msgstr ""
 
-# Model maximal scale.
-msgid "TipModelMaxScale"
+msgctxt "TipModelMaxScale"
+msgid "Model maximal scale."
 msgstr ""
 
-# Terrain error
-msgid "TerrainError"
+msgctxt "TerrainError"
+msgid "Terrain error"
 msgstr ""
 
-# * need New Game
-msgid "NeedNewGame"
+msgctxt "NeedNewGame"
+msgid "* need New Game"
 msgstr ""
 
-# Effects
+msgctxt "Effects"
 msgid "Effects"
 msgstr ""
 
-# Width Steps
-msgid "WidthSteps"
+msgctxt "WidthSteps"
+msgid "Width Steps"
 msgstr ""
 
-# Diffuse
+msgctxt "Diffuse"
 msgid "Diffuse"
 msgstr ""
 
-# Sound
+msgctxt "Sound"
 msgid "Sound"
 msgstr ""
 
-# Road points size
-msgid "RoadPointSize"
+msgctxt "RoadPointSize"
+msgid "Road points size"
 msgstr ""
 
-# Car
+msgctxt "Car"
 msgid "Car"
 msgstr ""
 
-# Sky material names (from SkyDome.material).
-msgid "TipSkyMats"
+msgctxt "TipSkyMats"
+msgid "Sky material names (from SkyDome.material)."
 msgstr ""
 
-# Master
-msgid "VolMaster"
+msgctxt "VolMaster"
+msgid "Master"
 msgstr ""
 
-# ctrl-Ins - copy selection   ctrl-Del - delete sel.
-msgid "InputRoadCopySel"
+msgctxt "InputRoadCopySel"
+msgid "ctrl-Ins - copy selection   ctrl-Del - delete sel."
 msgstr ""
 
-# Start game on new track or Restart on current.
-msgid "TipNewGame"
+msgctxt "TipNewGame"
+msgid "Start game on new track or Restart on current."
 msgstr ""
 
-# Pick selected track for copy source, used in [Tools] tab.
-msgid "TipCopySource"
+msgctxt "TipCopySource"
+msgid "Pick selected track for copy source, used in [Tools] tab."
 msgstr ""
 
-# Layer
+msgctxt "Layer"
 msgid "Layer"
 msgstr ""
 
-# Esc quits
-msgid "EscQuit"
+msgctxt "EscQuit"
+msgid "Esc quits"
 msgstr ""
 
-# Gauges (rpm, speed)
-msgid "Gauges"
+msgctxt "Gauges"
+msgid "Gauges (rpm, speed)"
 msgstr ""
 
-# Length dim.
-msgid "LengthDim"
+msgctxt "LengthDim"
+msgid "Length dim."
 msgstr ""
 
-# Bloom
+msgctxt "Bloom"
 msgid "Bloom"
 msgstr ""
 
-# Rename selected track with new name (change name first).
-msgid "TipRenameTrk"
+msgctxt "TipRenameTrk"
+msgid "Rename selected track with new name (change name first)."
 msgstr ""
 
-# Try
-msgid "MyGUI_MessageBox_Try"
+msgctxt "MyGUI_MessageBox_Try"
+msgid "Try"
 msgstr ""
 
-# Amplitude of additional bumps on surface (how high).
-msgid "TipBumpAmp"
+msgctxt "TipBumpAmp"
+msgid "Amplitude of additional bumps on surface (how high)."
 msgstr ""
 
-# Normal texture (Height in alpha).
-msgid "TipNormalTex"
+msgctxt "TipNormalTex"
+msgid "Normal texture (Height in alpha)."
 msgstr ""
 
-# Pipe materials
-msgid "PipeMaterials"
+msgctxt "PipeMaterials"
+msgid "Pipe materials"
 msgstr ""
 
-# end
-msgid "End"
+msgctxt "End"
+msgid "end"
 msgstr ""
 
-# HDR
+msgctxt "HDR"
 msgid "HDR"
 msgstr ""
 
-# Prevents wheel lock when braking (default: off).
-msgid "TipABS"
+msgctxt "TipABS"
+msgid "Prevents wheel lock when braking (default: off)."
 msgstr ""
 
-# Minimal grass patch height.
-msgid "TipGrassPatchHeightMin"
+msgctxt "TipGrassPatchHeightMin"
+msgid "Minimal grass patch height."
 msgstr ""
 
-# Terrain
+msgctxt "Terrain"
 msgid "Terrain"
 msgstr ""
 
-# [,]  -  adjust start box height (bigger for pipes)
-msgid "InputStartHeight"
+msgctxt "InputStartHeight"
+msgid "[,]  -  adjust start box height (bigger for pipes)"
 msgstr ""
 
-# Sun direction - pitch angle.
-msgid "TipSunDirPitch"
+msgctxt "TipSunDirPitch"
+msgid "Sun direction - pitch angle."
 msgstr ""
 
-# project&apos;s page:
-msgid "ProjectPage"
+msgctxt "ProjectPage"
+msgid "project&apos;s page:"
 msgstr ""
 
-# Type
+msgctxt "Type"
 msgid "Type"
 msgstr ""
 
-# Ctrl - boost
-msgid "InputBoost"
+msgctxt "InputBoost"
+msgid "Ctrl - boost"
 msgstr ""
 
-# Engine
+msgctxt "Engine"
 msgid "Engine"
 msgstr ""
 
-# Restart game (after car change).
-msgid "TipNewGameCar"
+msgctxt "TipNewGameCar"
+msgid "Restart game (after car change)."
 msgstr ""
 
-# [,]  (or shift-Wheel)  -  Force (intensity)
-msgid "InputWheelForce"
+msgctxt "InputWheelForce"
+msgid "[,]  (or shift-Wheel)  -  Force (intensity)"
 msgstr ""
 
-# Maximal grass patch length.
-msgid "TipGrassPatchLengthMax"
+msgctxt "TipGrassPatchLengthMax"
+msgid "Maximal grass patch length."
 msgstr ""
 
-# Road point parameters.
-msgid "TipRoadParams"
+msgctxt "TipRoadParams"
+msgid "Road point parameters."
 msgstr ""
 
-# Terrain triangle size in [meters] (recommended: 1 - 2, use more for big track area). Changed after Update (F8).
-msgid "TipTerTriSize"
+msgctxt "TipTerTriSize"
+msgid "Terrain triangle size in [meters] (recommended: 1 - 2, use more for big track area). Changed after Update (F8)."
 msgstr ""
 
-# In air
-msgid "TrackInAir"
+msgctxt "TrackInAir"
+msgid "In air"
 msgstr ""
 
-# Reverse track direction.
-msgid "TipReverse"
+msgctxt "TipReverse"
+msgid "Reverse track direction."
 msgstr ""
 
-# Options
+msgctxt "Options"
 msgid "Options"
 msgstr ""
 
-# Delete
+msgctxt "Delete"
 msgid "Delete"
 msgstr ""
 
-# Rename
+msgctxt "Rename"
 msgid "Rename"
 msgstr ""
 
-# Models Page length (low will reload often, high will cause visible switching).
-msgid "TipModelPageLength"
+msgctxt "TipModelPageLength"
+msgid "Models Page length (low will reload often, high will cause visible switching)."
 msgstr ""
 
-# Road far quality
-msgid "RoadQual"
+msgctxt "RoadQual"
+msgid "Road far quality"
 msgstr ""
 
-# length
+msgctxt "length"
 msgid "length"
 msgstr ""
 
-# Column N sides
-msgid "ColumnNSides"
+msgctxt "ColumnNSides"
+msgid "Column N sides"
 msgstr ""
 
-# Reflections
+msgctxt "Reflections"
 msgid "Reflections"
 msgstr ""
 
-# exponent
-msgid "Exponent"
+msgctxt "Exponent"
+msgid "exponent"
 msgstr ""
 
-# yaw
-msgid "Yaw"
+msgctxt "Yaw"
+msgid "yaw"
 msgstr ""
 
-# Detail
+msgctxt "Detail"
 msgid "Detail"
 msgstr ""
 
-# Triangle size
-msgid "TriSize"
+msgctxt "TriSize"
+msgid "Triangle size"
 msgstr ""
 
-# start
-msgid "Start"
+msgctxt "Start"
+msgid "start"
 msgstr ""
 
-# shift-Ins - paste   shift-ctrl-Ins - reversed
-msgid "InputRoadShiftReverse"
+msgctxt "InputRoadShiftReverse"
+msgid "shift-Ins - paste   shift-ctrl-Ins - reversed"
 msgstr ""
 
-# min scale
-msgid "MinScale"
+msgctxt "MinScale"
+msgid "min scale"
 msgstr ""
 
-# Merge length
-msgid "MergeLength"
+msgctxt "MergeLength"
+msgid "Merge length"
 msgstr ""
 
-# - rotate pitch* / scale sel.
-msgid "InputRoadPitch"
+msgctxt "InputRoadPitch"
+msgid "- rotate pitch* / scale sel."
 msgstr ""
 
-# Times bar
-msgid "TimesBar"
+msgctxt "TimesBar"
+msgid "Times bar"
 msgstr ""
 
-# screenshot
-msgid "Screenshot"
+msgctxt "Screenshot"
+msgid "screenshot"
 msgstr ""
 
-# Screen
+msgctxt "Screen"
 msgid "Screen"
 msgstr ""
 
-# most work also on selection
-msgid "InputRoadMostSel"
+msgctxt "InputRoadMostSel"
+msgid "most work also on selection"
 msgstr ""
 
-# E - Height set
-msgid "InputTerHeight"
+msgctxt "InputTerHeight"
+msgid "E - Height set"
 msgstr ""
 
-# Q - edit car start pos
-msgid "InputStartPos"
+msgctxt "InputStartPos"
+msgid "Q - edit car start pos"
 msgstr ""
 
-# Brush parameters
-msgid "InputBrushParams"
+msgctxt "InputBrushParams"
+msgid "Brush parameters"
 msgstr ""
 
-# camera mode
-msgid "InputCameraMode"
+msgctxt "InputCameraMode"
+msgid "camera mode"
 msgstr ""
 
-# Enabled
+msgctxt "Enabled"
 msgid "Enabled"
 msgstr ""
 
-# Rolling Drag
-msgid "RollingDrag"
+msgctxt "RollingDrag"
+msgid "Rolling Drag"
 msgstr ""
 
-# alt-F2,F3 - prev,next minimap type
-msgid "InputMinimapType"
+msgctxt "InputMinimapType"
+msgid "alt-F2,F3 - prev,next minimap type"
 msgstr ""
 
-# Grass sway effect length (scale).
-msgid "TipGrassSwayLen"
+msgctxt "TipGrassSwayLen"
+msgid "Grass sway effect length (scale)."
 msgstr ""
 
-# Road
+msgctxt "Road"
 msgid "Road"
 msgstr ""
 
-# distance
+msgctxt "distance"
 msgid "distance"
 msgstr ""
 
-# auto Load track
-msgid "TrackAutoLoad"
+msgctxt "TrackAutoLoad"
+msgid "auto Load track"
 msgstr ""
 
-# dust size
-msgid "DustSize"
+msgctxt "DustSize"
+msgid "dust size"
 msgstr ""
 
-# - move point
-msgid "InputRoadMove"
+msgctxt "InputRoadMove"
+msgid "- move point"
 msgstr ""
 
-# Disable fog when editing road from distance.
-msgid "TipDisableFog"
+msgctxt "TipDisableFog"
+msgid "Disable fog when editing road from distance."
 msgstr ""
 
-# Friction
+msgctxt "Friction"
 msgid "Friction"
 msgstr ""
 
-# Ambient
+msgctxt "Ambient"
 msgid "Ambient"
 msgstr ""
 
-# Map size
-msgid "MapSize"
+msgctxt "MapSize"
+msgid "Map size"
 msgstr ""
 
-# when not on terrain
-msgid "InputRoadNotOnTer"
+msgctxt "InputRoadNotOnTer"
+msgid "when not on terrain"
 msgstr ""
 
-# Apply Shadows
-msgid "ApplyShadows"
+msgctxt "ApplyShadows"
+msgid "Apply Shadows"
 msgstr ""
 
-# Fog end color. R G B components 0 to 1 (eg. 0.7 0.8 0.9)
-msgid "TipFogEndClr"
+msgctxt "TipFogEndClr"
+msgid "Fog end color. R G B components 0 to 1 (eg. 0.7 0.8 0.9)"
 msgstr ""
 
-# Vegetation collision    *needs New Game
-msgid "VegetCol"
+msgctxt "VegetCol"
+msgid "Vegetation collision    *needs New Game"
 msgstr ""
 
-# Particles
+msgctxt "Particles"
 msgid "Particles"
 msgstr ""
 
-# Other
+msgctxt "Other"
 msgid "Other"
 msgstr ""
 
-# with shift - main cameras
-msgid "InputMainCam"
+msgctxt "InputMainCam"
+msgid "with shift - main cameras"
 msgstr ""
 
-# PgUp,PgDn (or Wheel) - previous/next point
-msgid "InputRoadNext"
+msgctxt "InputRoadNext"
+msgid "PgUp,PgDn (or Wheel) - previous/next point"
 msgstr ""
 
-# Development
+msgctxt "Development"
 msgid "Development"
 msgstr ""
 
-# Ins - insert new (after picked, alt - before)
-msgid "InputRoadIns"
+msgctxt "InputRoadIns"
+msgid "Ins - insert new (after picked, alt - before)"
 msgstr ""
 
-# min
+msgctxt "min"
 msgid "min"
 msgstr ""
 
-# alt-MMB - reset rotation
-msgid "InputStartAltMMB"
+msgctxt "InputStartAltMMB"
+msgid "alt-MMB - reset rotation"
 msgstr ""
 
-# [,]   - Pipe angle (no pipe when 0)
-msgid "InputRoadPipeAngle"
+msgctxt "InputRoadPipeAngle"
+msgid "[,]   - Pipe angle (no pipe when 0)"
 msgstr ""
 
-# Graphics
+msgctxt "Graphics"
 msgid "Graphics"
 msgstr ""
 
-# Car debug text 
-msgid "CarDebugText"
+msgctxt "CarDebugText"
+msgid "Car debug text "
 msgstr ""
 
-# Mud particles intensity.
-msgid "TipMudInt"
+msgctxt "TipMudInt"
+msgid "Mud particles intensity."
 msgstr ""
 
-# mode
-msgid "Mode"
+msgctxt "Mode"
+msgid "mode"
 msgstr ""
 
-# Scale all
-msgid "ScaleAll"
+msgctxt "ScaleAll"
+msgid "Scale all"
 msgstr ""
 
-# Faces at once
-msgid "FacesOnce"
+msgctxt "FacesOnce"
+msgid "Faces at once"
 msgstr ""
 
-# F7 - enter/leave preview camera
-msgid "InputTogglePreview"
+msgctxt "InputTogglePreview"
+msgid "F7 - enter/leave preview camera"
 msgstr ""
 
-# a game by
-msgid "GameBy"
+msgctxt "GameBy"
+msgid "a game by"
 msgstr ""
 
-# Sun and Weather
-msgid "SunWeather"
+msgctxt "SunWeather"
+msgid "Sun and Weather"
 msgstr ""
 
-# In game screenshot for selected track.
-msgid "TipTrkScreenEditor"
+msgctxt "TipTrkScreenEditor"
+msgid "In game screenshot for selected track."
 msgstr ""
 
-# Uncheck for manual Rear gear changing.
-msgid "TipAutoRear"
+msgctxt "TipAutoRear"
+msgid "Uncheck for manual Rear gear changing."
 msgstr ""
 
-# Tire trails color. R G B A components 0 to 1 (eg. 0.4 0.4 0.2 0.6)
-msgid "TipTrailClr"
+msgctxt "TipTrailClr"
+msgid "Tire trails color. R G B A components 0 to 1 (eg. 0.4 0.4 0.2 0.6)"
 msgstr ""
 
-# alt-RMB (or 3,4)
-msgid "InputRoadAltMMB"
+msgctxt "InputRoadAltMMB"
+msgid "alt-RMB (or 3,4)"
 msgstr ""
 
-# New (Duplicate)
-msgid "NewDup"
+msgctxt "NewDup"
+msgid "New (Duplicate)"
 msgstr ""
 
-# Height diff.
-msgid "TrackHeightDiff"
+msgctxt "TrackHeightDiff"
+msgid "Height diff."
 msgstr ""
 
-# Road materials
-msgid "RoadMaterials"
+msgctxt "RoadMaterials"
+msgid "Road materials"
 msgstr ""
 
-# Fullscreen
+msgctxt "Fullscreen"
 msgid "Fullscreen"
 msgstr ""
 
-# bullet debug lines
-msgid "BulletLines"
+msgctxt "BulletLines"
+msgid "bullet debug lines"
 msgstr ""
 
-# Grass sway effect speed.
-msgid "TipGrassSwaySpd"
+msgctxt "TipGrassSwaySpd"
+msgid "Grass sway effect speed."
 msgstr ""
 
-# Sky
+msgctxt "Sky"
 msgid "Sky"
 msgstr ""
 
-# Disable for edit
-msgid "DisableEdit"
+msgctxt "DisableEdit"
+msgid "Disable for edit"
 msgstr ""
 
-# -Manual not implemented.
-msgid "TipAutoClutch"
+msgctxt "TipAutoClutch"
+msgid "-Manual not implemented."
 msgstr ""
 
-# Minimap update skip
-msgid "MinimapUpdSkip"
+msgctxt "MinimapUpdSkip"
+msgid "Minimap update skip"
 msgstr ""
 
-# Additional distance to road.
-msgid "RoadDist2"
+msgctxt "RoadDist2"
+msgid "Additional distance to road."
 msgstr ""
 
-# Trees multipler
-msgid "TreeMult"
+msgctxt "TreeMult"
+msgid "Trees multipler"
 msgstr ""
 
-# Tex Coord mul.
-msgid "TexCoordMul"
+msgctxt "TexCoordMul"
+msgid "Tex Coord mul."
 msgstr ""
 
-# Shadows
+msgctxt "Shadows"
 msgid "Shadows"
 msgstr ""
 
-# Show pictures while loading
-msgid "ShowPictures"
+msgctxt "ShowPictures"
+msgid "Show pictures while loading"
 msgstr ""
 
-# Avg. speed
-msgid "TrackAvgSpeed"
+msgctxt "TrackAvgSpeed"
+msgid "Avg. speed"
 msgstr ""
 
-# A,Z - gear up,down (manual gearbox)
-msgid "InputShift"
+msgctxt "InputShift"
+msgid "A,Z - gear up,down (manual gearbox)"
 msgstr ""
 
-# Preview Camera
-msgid "PreviewCam"
+msgctxt "PreviewCam"
+msgid "Preview Camera"
 msgstr ""
 
-# Model minimal scale.
-msgid "TipModelMinScale"
+msgctxt "TipModelMinScale"
+msgid "Model minimal scale."
 msgstr ""
 
-# leave (exit)
-msgid "Leave"
+msgctxt "Leave"
+msgid "leave (exit)"
 msgstr ""
 
-# Models (meshes) for vegetation. Found in data/trees/.
-msgid "TipVegetModels"
+msgctxt "TipVegetModels"
+msgid "Models (meshes) for vegetation. Found in data/trees/."
 msgstr ""
 
-# Grass sway
-msgid "GrassSway"
+msgctxt "GrassSway"
+msgid "Grass sway"
 msgstr ""
 
-# Right
+msgctxt "Right"
 msgid "Right"
 msgstr ""
 
-# LOD points dist.
-msgid "LODPointsDist"
+msgctxt "LODPointsDist"
+msgid "LOD points dist."
 msgstr ""
 
-# Motion Blur
-msgid "MotionBlur"
+msgctxt "MotionBlur"
+msgid "Motion Blur"
 msgstr ""
 
-# Minimap, size
-msgid "MinimapAndSize"
+msgctxt "MinimapAndSize"
+msgid "Minimap, size"
 msgstr ""
 
-# Change car color (hue).
-msgid "TipChangeHue"
+msgctxt "TipChangeHue"
+msgid "Change car color (hue)."
 msgstr ""
 
-# Dust particles intensity.
-msgid "TipDustInt"
+msgctxt "TipDustInt"
+msgid "Dust particles intensity."
 msgstr ""
 
-# Intensity
+msgctxt "Intensity"
 msgid "Intensity"
 msgstr ""
 
-# Sun light ambient (constant) color. R G B components 0 to 1 (eg. 0.4 0.4 0.4)
-msgid "TipSunAmbient"
+msgctxt "TipSunAmbient"
+msgid "Sun light ambient (constant) color. R G B components 0 to 1 (eg. 0.4 0.4 0.4)"
 msgstr ""
 
-# changed in [Track] tab
-msgid "ChngTrkTab"
+msgctxt "ChngTrkTab"
+msgid "changed in [Track] tab"
 msgstr ""
 
-# Tire Trails
-msgid "TireTrails"
+msgctxt "TireTrails"
+msgid "Tire Trails"
 msgstr ""
 
-# Minimal grass patch length.
-msgid "TipGrassPatchLengthMin"
+msgctxt "TipGrassPatchLengthMin"
+msgid "Minimal grass patch length."
 msgstr ""
 
-# intensity
+msgctxt "intensity"
 msgid "intensity"
 msgstr ""
 
-# Fog
+msgctxt "Fog"
 msgid "Fog"
 msgstr ""
 
-# Frames skip
-msgid "FrameSkip"
+msgctxt "FrameSkip"
+msgid "Frames skip"
 msgstr ""
 
-# (for track screenshot)
-msgid "InputTrackScrn"
+msgctxt "InputTrackScrn"
+msgid "(for track screenshot)"
 msgstr ""
 
-# trail color
-msgid "trailColor"
+msgctxt "trailColor"
+msgid "trail color"
 msgstr ""
 
-# m
-msgid "UnitM"
+msgctxt "UnitM"
+msgid "m"
 msgstr ""
 
-# Edit Terrain mode
-msgid "EditTerrainMode"
+msgctxt "EditTerrainMode"
+msgid "Edit Terrain mode"
 msgstr ""
 
-# Tire Particle type 3.
-msgid "TipTireParType3"
+msgctxt "TipTireParType3"
+msgid "Tire Particle type 3."
 msgstr ""
 
-# LMB (or Arrows)
-msgid "InputRoadLMB"
+msgctxt "InputRoadLMB"
+msgid "LMB (or Arrows)"
 msgstr ""
 
-# TCS (traction control)
-msgid "TCS"
+msgctxt "TCS"
+msgid "TCS (traction control)"
 msgstr ""
 
-# * need restart
-msgid "NeedRestart"
+msgctxt "NeedRestart"
+msgid "* need restart"
 msgstr ""
 
-# mud
+msgctxt "mud"
 msgid "mud"
 msgstr ""
 
-# Q,W - roll car (when needed)
-msgid "InputRoll"
+msgctxt "InputRoll"
+msgid "Q,W - roll car (when needed)"
 msgstr ""
 
-# Terrain brush window.
-msgid "TipTerWind"
+msgctxt "TipTerWind"
+msgid "Terrain brush window."
 msgstr ""
 
-# Visibility distance for grass pages.
-msgid "TipGrassVisDist"
+msgctxt "TipGrassVisDist"
+msgid "Visibility distance for grass pages."
 msgstr ""
 
-# Visibility distance for model pages.
-msgid "TipModelVisDist"
+msgctxt "TipModelVisDist"
+msgid "Visibility distance for model pages."
 msgstr ""
 
-# RMB (or Num +,-)
-msgid "InputRoadRMB"
+msgctxt "InputRoadRMB"
+msgid "RMB (or Num +,-)"
 msgstr ""
 
-# Anisotropy
+msgctxt "Anisotropy"
 msgid "Anisotropy"
 msgstr ""
 
-# Tab - Camera / Edit mode toggle
-msgid "InputToggleCam"
+msgctxt "InputToggleCam"
+msgid "Tab - Camera / Edit mode toggle"
 msgstr ""
 
-# alt-LMB - rotate  alt-RMB - pitch
-msgid "InputStartAltLMB"
+msgctxt "InputStartAltLMB"
+msgid "alt-LMB - rotate  alt-RMB - pitch"
 msgstr ""
 
-# Texture tiling length (less means more repeats).
-msgid "TipTexTiling"
+msgctxt "TipTexTiling"
+msgid "Texture tiling length (less means more repeats)."
 msgstr ""
 
-# Terrain HQ dist
-msgid "TerHQDist"
+msgctxt "TerHQDist"
+msgid "Terrain HQ dist"
 msgstr ""
 
-# Area
-msgid "TrackArea"
+msgctxt "TrackArea"
+msgid "Area"
 msgstr ""
 
-# Grass size
-msgid "GrassSize"
+msgctxt "GrassSize"
+msgid "Grass size"
 msgstr ""
 
-# Track description text (click to edit).
-msgid "TipTrackDescEditor"
+msgctxt "TipTrackDescEditor"
+msgid "Track description text (click to edit)."
 msgstr ""
 
-# View Left
-msgid "ViewLeft"
+msgctxt "ViewLeft"
+msgid "View Left"
 msgstr ""
 
-# View Front
-msgid "ViewFront"
+msgctxt "ViewFront"
+msgid "View Front"
 msgstr ""
 
-# Create a new track by duplicating the selected track and using new name (change name first).
-msgid "TipNewDup"
+msgctxt "TipNewDup"
+msgid "Create a new track by duplicating the selected track and using new name (change name first)."
 msgstr ""
 
-# Road Stats
-msgid "RoadStats"
+msgctxt "RoadStats"
+msgid "Road Stats"
 msgstr ""
 
-# Sun dir.
-msgid "SunDir"
+msgctxt "SunDir"
+msgid "Sun dir."
 msgstr ""
 
-# Resize
-msgid "ResizeTer"
+msgctxt "ResizeTer"
+msgid "Resize"
 msgstr ""
 
-# Smoke particles intensity.
-msgid "TipSmokeInt"
+msgctxt "TipSmokeInt"
+msgid "Smoke particles intensity."
 msgstr ""
 
-# Terrain brush
-msgid "TerrainBrush"
+msgctxt "TerrainBrush"
+msgid "Terrain brush"
 msgstr ""
 
-# When checked, Normal texture is automatically set from Diffuse texture (+ _nh in filename).
-msgid "TipTexNormAuto"
+msgctxt "TipTexNormAuto"
+msgid "When checked, Normal texture is automatically set from Diffuse texture (+ _nh in filename)."
 msgstr ""
 
-# Best time
-msgid "TrackBestTime"
+msgctxt "TrackBestTime"
+msgid "Best time"
 msgstr ""
 
-# MMB (or Num /,*)
-msgid "InputRoadMMB"
+msgctxt "InputRoadMMB"
+msgid "MMB (or Num /,*)"
 msgstr ""
 
-# Textures
+msgctxt "Textures"
 msgid "Textures"
 msgstr ""
 
-# Terrain vertex count on one side (squares). Apply with buttons [New Flat] or [Resize].
-msgid "TipTerVertCount"
+msgctxt "TipTerVertCount"
+msgid "Terrain vertex count on one side (squares). Apply with buttons [New Flat] or [Resize]."
 msgstr ""
 
-# Heightmap size
-msgid "HeightmapSize"
+msgctxt "HeightmapSize"
+msgid "Heightmap size"
 msgstr ""
 
-# LMB - rotate  RMB - move  MMB - zoom
-msgid "InputCamControl2"
+msgctxt "InputCamControl2"
+msgid "LMB - rotate  RMB - move  MMB - zoom"
 msgstr ""
 
-# Brightness
-msgid "ColBright"
+msgctxt "ColBright"
+msgid "Brightness"
 msgstr ""
 
-# Enter - save
-msgid "EnterSave"
+msgctxt "EnterSave"
+msgid "Enter - save"
 msgstr ""
 
-# Frequency of additional bumps on surface (distance between them).
-msgid "TipBumpFreq"
+msgctxt "TipBumpFreq"
+msgid "Frequency of additional bumps on surface (distance between them)."
 msgstr ""
 
-# Del - delete picked
-msgid "InputRoadDel"
+msgctxt "InputRoadDel"
+msgid "Del - delete picked"
 msgstr ""
 
-# F8 - Update track
-msgid "InputUpdate"
+msgctxt "InputUpdate"
+msgid "F8 - Update track"
 msgstr ""
 
-# F1 or ` - Gui mode (toggle Options)
-msgid "InputToggleGUIMode"
+msgctxt "InputToggleGUIMode"
+msgid "F1 or ` - Gui mode (toggle Options)"
 msgstr ""
 
-# Fog end distance [meters].
-msgid "TipFogEndDist"
+msgctxt "TipFogEndDist"
+msgid "Fog end distance [meters]."
 msgstr ""
 
-# Road Point
-msgid "RoadPoint"
+msgctxt "RoadPoint"
+msgid "Road Point"
 msgstr ""
 
-# Maximal grass patch height.
-msgid "TipGrassPatchHeightMax"
+msgctxt "TipGrassPatchHeightMax"
+msgid "Maximal grass patch height."
 msgstr ""
 
-# Tires
+msgctxt "Tires"
 msgid "Tires"
 msgstr ""
 
-# Load Track
-msgid "LoadTrack"
+msgctxt "LoadTrack"
+msgid "Load Track"
 msgstr ""
 
-# Selected track name, used also for renaming track and as new track name.
-msgid "TipTrkNameEditor"
+msgctxt "TipTrkNameEditor"
+msgid "Selected track name, used also for renaming track and as new track name."
 msgstr ""
 
-# T - road stats window
-msgid "InputRoadStats"
+msgctxt "InputRoadStats"
+msgid "T - road stats window"
 msgstr ""
 
-# VSync
+msgctxt "VSync"
 msgid "VSync"
 msgstr ""
 
-# Change car color brightness (dark-light).
-msgid "TipChangeBright"
+msgctxt "TipChangeBright"
+msgid "Change car color brightness (dark-light)."
 msgstr ""
 
-# Size
+msgctxt "Size"
 msgid "Size"
 msgstr ""
 
-# Reset
+msgctxt "Reset"
 msgid "Reset"
 msgstr ""
 
-# shift - slow   ctrl - fast
-msgid "InputSlowFast"
+msgctxt "InputSlowFast"
+msgid "shift - slow   ctrl - fast"
 msgstr ""
 
-# Grass mul
-msgid "GrassMult"
+msgctxt "GrassMult"
+msgid "Grass mul"
 msgstr ""
 
-# Change Car
-msgid "ChangeCar"
+msgctxt "ChangeCar"
+msgid "Change Car"
 msgstr ""
 
-# S - Smooth  (LMB, -Noise RMB)
-msgid "InputTerSmooth"
+msgctxt "InputTerSmooth"
+msgid "S - Smooth  (LMB, -Noise RMB)"
 msgstr ""
 
-# Sun light specular (shiny) color. R G B components 0 to 1 (eg. 0.6 0.6 0.6)
-msgid "TipSunSpecular"
+msgctxt "TipSunSpecular"
+msgid "Sun light specular (shiny) color. R G B components 0 to 1 (eg. 0.6 0.6 0.6)"
 msgstr ""
 
-# How often model will appear on track area.
-msgid "TipModelDens"
+msgctxt "TipModelDens"
+msgid "How often model will appear on track area."
 msgstr ""
 
-# Main
-msgid "InputMain"
+msgctxt "InputMain"
+msgid "Main"
 msgstr ""
 
-# Vegetation model groups (recommended use 4-6), affects performance.
-msgid "TipVegetGroups"
+msgctxt "TipVegetGroups"
+msgid "Vegetation model groups (recommended use 4-6), affects performance."
 msgstr ""
 
-# New flat
-msgid "NewTerFlat"
+msgctxt "NewTerFlat"
+msgid "New flat"
 msgstr ""
 
-# Prevents wheel spinning when accelerating (default: off).
-msgid "TipTCS"
+msgctxt "TipTCS"
+msgid "Prevents wheel spinning when accelerating (default: off)."
 msgstr ""
 
-# End - on/off column
-msgid "InputRoadColumn"
+msgctxt "InputRoadColumn"
+msgid "End - on/off column"
 msgstr ""
 
-# M - toggle road merge segs (for test)
-msgid "InputRoadMerge"
+msgctxt "InputRoadMerge"
+msgid "M - toggle road merge segs (for test)"
 msgstr ""
 
-# set1
+msgctxt "set1"
 msgid "set1"
 msgstr ""
 
-# set2
+msgctxt "set2"
 msgid "set2"
 msgstr ""
 
-# auto
+msgctxt "auto"
 msgid "auto"
 msgstr ""
 
-# Wind influence on model, height scale.
-msgid "TipWindInflH"
+msgctxt "TipWindInflH"
+msgid "Wind influence on model, height scale."
 msgstr ""
 
-# Copy
+msgctxt "Copy"
 msgid "Copy"
 msgstr ""
 
-# LMB - move  RMB - height
-msgid "InputStartLMB"
+msgctxt "InputStartLMB"
+msgid "LMB - move  RMB - height"
 msgstr ""
 
-# Wind influence on model, length scale.
-msgid "TipWindInflL"
+msgctxt "TipWindInflL"
+msgid "Wind influence on model, length scale."
 msgstr ""
 
-# Camera inertia
-msgid "CamInertia"
+msgctxt "CamInertia"
+msgid "Camera inertia"
 msgstr ""
 
-# Width avg.
-msgid "TrackWidthAvg"
+msgctxt "TrackWidthAvg"
+msgid "Width avg."
 msgstr ""
 
-# About
+msgctxt "About"
 msgid "About"
 msgstr ""
 
-# auto Load track
-msgid "AutoLoad"
+msgctxt "AutoLoad"
+msgid "auto Load track"
 msgstr ""
 
-# Distance
+msgctxt "Distance"
 msgid "Distance"
 msgstr ""
 
-# Grass Page length (low will reload often, high will cause visible switching).
-msgid "TipGrassPageLength"
+msgctxt "TipGrassPageLength"
+msgid "Grass Page length (low will reload often, high will cause visible switching)."
 msgstr ""
 
-# Shaders
+msgctxt "Shaders"
 msgid "Shaders"
 msgstr ""
 
-# dust
+msgctxt "dust"
 msgid "dust"
 msgstr ""
 
-# Set 1 Rain/Snow type
-msgid "TipRainSnow1"
+msgctxt "TipRainSnow1"
+msgid "Set 1 Rain/Snow type"
 msgstr ""
 
-# Set 2 Rain/Snow type
-msgid "TipRainSnow2"
+msgctxt "TipRainSnow2"
+msgid "Set 2 Rain/Snow type"
 msgstr ""
 
-# D - Deform  (LMB up, RMB down)
-msgid "InputTerDeform"
+msgctxt "InputTerDeform"
+msgid "D - Deform  (LMB up, RMB down)"
 msgstr ""
 
-# Diffuse texture (Specular in alpha).
-msgid "TipDiffuseTex"
+msgctxt "TipDiffuseTex"
+msgid "Diffuse texture (Specular in alpha)."
 msgstr ""
 
-# V - disable / enable vegetation
-msgid "InputToggleVeget"
+msgctxt "InputToggleVeget"
+msgid "V - disable / enable vegetation"
 msgstr ""
 
-# Continue
-msgid "MyGUI_MessageBox_Continue"
+msgctxt "MyGUI_MessageBox_Continue"
+msgid "Continue"
 msgstr ""
 
-# Tools
+msgctxt "Tools"
 msgid "Tools"
 msgstr ""
 
-# Change car color saturation (white-black).
-msgid "TipChangeSat"
+msgctxt "TipChangeSat"
+msgid "Change car color saturation (white-black)."
 msgstr ""
 
-# FrictionTread
+msgctxt "FrictionTread"
 msgid "FrictionTread"
 msgstr ""
 
-# Tracks list, click to select (for Rename or Duplicate). Press [Change track] and then [Load track] to change current track in editor.
-msgid "TipTrkListEditor"
+msgctxt "TipTrkListEditor"
+msgid "Tracks list, click to select (for Rename or Duplicate). Press [Change track] and then [Load track] to change current track in editor."
 msgstr ""
 
-# (ready to play in game)
-msgid "InputReadyToPlay"
+msgctxt "InputReadyToPlay"
+msgid "(ready to play in game)"
 msgstr ""
 
-# Surface friction (eg. 1.0 asphalt, 0.7 gravel, 0.5 ice).
-msgid "TipSurfFrict"
+msgctxt "TipSurfFrict"
+msgid "Surface friction (eg. 1.0 asphalt, 0.7 gravel, 0.5 ice)."
 msgstr ""
 
-# Resulting area in meters (side length). Equals vertex count multipled by triangle size.
-msgid "TipTerSize"
+msgctxt "TipTerSize"
+msgid "Resulting area in meters (side length). Equals vertex count multipled by triangle size."
 msgstr ""
 
-# speed
+msgctxt "speed"
 msgid "speed"
 msgstr ""
 
-# - rotate yaw
-msgid "InputRoadYaw"
+msgctxt "InputRoadYaw"
+msgid "- rotate yaw"
 msgstr ""
 
-# Front
+msgctxt "Front"
 msgid "Front"
 msgstr ""
 
-# Not used.
-msgid "TipSurfFrict2"
+msgctxt "TipSurfFrict2"
+msgid "Not used."
 msgstr ""
 
-# Change
+msgctxt "Change"
 msgid "Change"
 msgstr ""
 
-# Auto gearbox
-msgid "AutoGearbox"
+msgctxt "AutoGearbox"
+msgid "Auto gearbox"
 msgstr ""
 
-# Permanently delete selected track.
-msgid "TipDeleteTrk"
+msgctxt "TipDeleteTrk"
+msgid "Permanently delete selected track."
 msgstr ""
 
-# Delete Road
-msgid "DeleteRoad"
+msgctxt "DeleteRoad"
+msgid "Delete Road"
 msgstr ""
 
-# Setup
+msgctxt "Setup"
 msgid "Setup"
 msgstr ""
 
-# Pipes
-msgid "TrackPipes"
+msgctxt "TrackPipes"
+msgid "Pipes"
 msgstr ""
 
-# Specular
+msgctxt "Specular"
 msgid "Specular"
 msgstr ""
 
-# Height offset
-msgid "HeightOffset"
+msgctxt "HeightOffset"
+msgid "Height offset"
 msgstr ""
 
-# Amplitude
+msgctxt "Amplitude"
 msgid "Amplitude"
 msgstr ""
 
-# Fog start distance [meters].
-msgid "TipFogStartDist"
+msgctxt "TipFogStartDist"
+msgid "Fog start distance [meters]."
 msgstr ""
 
-# Stunt Rally - Track Editor - version
-msgid "SREditorVersion"
+msgctxt "SREditorVersion"
+msgid "Stunt Rally - Track Editor - version"
 msgstr ""
 
-# after picked, center at mouse
-msgid "InputRoadAfterPick"
+msgctxt "InputRoadAfterPick"
+msgid "after picked, center at mouse"
 msgstr ""
 
-# Track description text.
-msgid "TipTrackDesc"
+msgctxt "TipTrackDesc"
+msgid "Track description text."
 msgstr ""
 
-# Source track
-msgid "SourceTrack"
+msgctxt "SourceTrack"
+msgid "Source track"
 msgstr ""
 
-# impostors dist.
-msgid "ImpostorDist"
+msgctxt "ImpostorDist"
+msgid "impostors dist."
 msgstr ""
 
-# page
+msgctxt "page"
 msgid "page"
 msgstr ""
 
-# Quit
+msgctxt "Quit"
 msgid "Quit"
 msgstr ""
 
-# Minimap
+msgctxt "Minimap"
 msgid "Minimap"
 msgstr ""
 
-# ; &apos;  (or alt-Wheel)  -  Power (shape)
-msgid "InputWheelPower"
+msgctxt "InputWheelPower"
+msgid "; &apos;  (or alt-Wheel)  -  Power (shape)"
 msgstr ""
 
-# Input/help
-msgid "InputHelp"
+msgctxt "InputHelp"
+msgid "Input/help"
 msgstr ""
 
-# Sun
+msgctxt "Sun"
 msgid "Sun"
 msgstr ""
 
-# Speed unit
-msgid "SpeedUnit"
+msgctxt "SpeedUnit"
+msgid "Speed unit"
 msgstr ""
 
-# show Ogre dialog
-msgid "OgreDialog"
+msgctxt "OgreDialog"
+msgid "show Ogre dialog"
 msgstr ""
 
-# Editor
+msgctxt "Editor"
 msgid "Editor"
 msgstr ""
 
-# and contributors.
-msgid "AndContributors"
+msgctxt "AndContributors"
+msgid "and contributors."
 msgstr ""
 
-# Select (many)
-msgid "InputRoadSelectMany"
+msgctxt "InputRoadSelectMany"
+msgid "Select (many)"
 msgstr ""
 
-# scale
+msgctxt "scale"
 msgid "scale"
 msgstr ""
 
-# Auto clutch-
-msgid "AutoClutch"
+msgctxt "AutoClutch"
+msgid "Auto clutch-"
 msgstr ""
 
-# Color - Hue
-msgid "ColHue"
+msgctxt "ColHue"
+msgid "Color - Hue"
 msgstr ""
 
-# Load track (after change) or Reload current track.
-msgid "TipLoadTrkEditor"
+msgctxt "TipLoadTrkEditor"
+msgid "Load track (after change) or Reload current track."
 msgstr ""
 
-# alt-LMB (or 1,2)
-msgid "InputRoadAltLMB"
+msgctxt "InputRoadAltLMB"
+msgid "alt-LMB (or 1,2)"
 msgstr ""
 
-# Model preview image.
-msgid "TipModelPrev"
+msgctxt "TipModelPrev"
+msgid "Model preview image."
 msgstr ""
 
-# R - Edit Road mode
-msgid "InputRoadEdit"
+msgctxt "InputRoadEdit"
+msgid "R - Edit Road mode"
 msgstr ""
 
-# Restart game, to apply *changes.
-msgid "RestartApply"
+msgctxt "RestartApply"
+msgid "Restart game, to apply *changes."
 msgstr ""
 
-# Camera info
-msgid "CameraInfo"
+msgctxt "CameraInfo"
+msgid "Camera info"
 msgstr ""
 
-# New Game
-msgid "NewGame"
+msgctxt "NewGame"
+msgid "New Game"
 msgstr ""
 
-# Car susp, long|,lat- slips
-msgid "CarDebug"
+msgctxt "CarDebug"
+msgid "Car susp, long|,lat- slips"
 msgstr ""
 
-# Space - pick one/none
-msgid "InputRoadPick"
+msgctxt "InputRoadPick"
+msgid "Space - pick one/none"
 msgstr ""
 
-# B - rebuild road (after terrain change, etc.)
-msgid "InputRoadRebuild"
+msgctxt "InputRoadRebuild"
+msgid "B - rebuild road (after terrain change, etc.)"
 msgstr ""
 
-# Environment
+msgctxt "Environment"
 msgid "Environment"
 msgstr ""
 
-# Sets current track to that selected in list, you need to load it after.
-msgid "TipChangeTrkEditor"
+msgctxt "TipChangeTrkEditor"
+msgid "Sets current track to that selected in list, you need to load it after."
 msgstr ""
 
-# Cancel
-msgid "MyGUI_MessageBox_Cancel"
+msgctxt "MyGUI_MessageBox_Cancel"
+msgid "Cancel"
 msgstr ""
 
-# Create new, flat terrain.
-msgid "TipNewTer"
+msgctxt "TipNewTer"
+msgid "Create new, flat terrain."
 msgstr ""
 
-# Vegetation
+msgctxt "Vegetation"
 msgid "Vegetation"
 msgstr ""
 
-# Used
+msgctxt "Used"
 msgid "Used"
 msgstr ""
 
-# Far distance at which models will turn into 2d impostors.
-msgid "TipImpDist"
+msgctxt "TipImpDist"
+msgid "Far distance at which models will turn into 2d impostors."
 msgstr ""
 
-# Minimap of selected track, view from top.
-msgid "TipTrkTerImg"
+msgctxt "TipTrkTerImg"
+msgid "Minimap of selected track, view from top."
 msgstr ""
 
-# Trees to road dist.
-msgid "TreeRoadDist"
+msgctxt "TreeRoadDist"
+msgid "Trees to road dist."
 msgstr ""
 
-# Pipe W steps mul.
-msgid "PipeWStepsMul"
+msgctxt "PipeWStepsMul"
+msgid "Pipe W steps mul."
 msgstr ""
 
-# Ok
-msgid "MyGUI_MessageBox_Ok"
+msgctxt "MyGUI_MessageBox_Ok"
+msgid "Ok"
 msgstr ""
 
-# Rain/Snow intensity (eg. 1000)
-msgid "TipRainSnowInt"
+msgctxt "TipRainSnowInt"
+msgid "Rain/Snow intensity (eg. 1000)"
 msgstr ""
 
-# Length
-msgid "TrackLength"
+msgctxt "TrackLength"
+msgid "Length"
 msgstr ""
 
-# Bump:  WaveLen
-msgid "BumpWavelen"
+msgctxt "BumpWavelen"
+msgid "Bump:  WaveLen"
 msgstr ""
 
-# How far from road will the model appear.
-msgid "TipRoadDist"
+msgctxt "TipRoadDist"
+msgid "How far from road will the model appear."
 msgstr ""
 
-# Resize current terrain with new values.
-msgid "TipResizeTer"
+msgctxt "TipResizeTer"
+msgid "Resize current terrain with new values."
 msgstr ""
 
-# Distance mul
-msgid "DistMult"
+msgctxt "DistMult"
+msgid "Distance mul"
 msgstr ""
 
-# Resolution
+msgctxt "Resolution"
 msgid "Resolution"
 msgstr ""
 
-# Left
+msgctxt "Left"
 msgid "Left"
 msgstr ""
 
-# Space  -  change road direction (+ or -)
-msgid "InputStartDir"
+msgctxt "InputStartDir"
+msgid "Space  -  change road direction (+ or -)"
 msgstr ""
 
-# Startup
+msgctxt "Startup"
 msgid "Startup"
 msgstr ""
 
-# distribution
+msgctxt "distribution"
 msgid "distribution"
 msgstr ""
 
-# Skirt Height
-msgid "SkirtHeight"
+msgctxt "SkirtHeight"
+msgid "Skirt Height"
 msgstr ""
 
-# ,=  (or Wheel)  -  Size
-msgid "InputWheelSize"
+msgctxt "InputWheelSize"
+msgid ",=  (or Wheel)  -  Size"
 msgstr ""
 
-# Bullet debug
-msgid "BulletDebug"
+msgctxt "BulletDebug"
+msgid "Bullet debug"
 msgstr ""
 
-# - change height
-msgid "InputRoadHeight"
+msgctxt "InputRoadHeight"
+msgid "- change height"
 msgstr ""
 
-# Sets current track to that selected in list. Press [New Game] to start it after.
-msgid "TipChangeTrack"
+msgctxt "TipChangeTrack"
+msgid "Sets current track to that selected in list. Press [New Game] to start it after."
 msgstr ""
 
-# Saturation
-msgid "ColSat"
+msgctxt "ColSat"
+msgid "Saturation"
 msgstr ""
 
-# Track
+msgctxt "Track"
 msgid "Track"
 msgstr ""
 
-# Scale multiplier
-msgid "ScaleMul"
+msgctxt "ScaleMul"
+msgid "Scale multiplier"
 msgstr ""
 
-# Volume
+msgctxt "Volume"
 msgid "Volume"
 msgstr ""
 
-# Terrain texture layers (recommended 2-3, significantly affects Fps). *Auto blendmap supports max 4.
-msgid "TipTerLayers"
+msgctxt "TipTerLayers"
+msgid "Terrain texture layers (recommended 2-3, significantly affects Fps). *Auto blendmap supports max 4."
 msgstr ""
 
-# Type of surface, determines sound.
-msgid "TipSurfType"
+msgctxt "TipSurfType"
+msgid "Type of surface, determines sound."
 msgstr ""
 
-# Reverse
+msgctxt "Reverse"
 msgid "Reverse"
 msgstr ""
 
-# F4 - Save track
-msgid "InputSaveTrack"
+msgctxt "InputSaveTrack"
+msgid "F4 - Save track"
 msgstr ""
 
-# (one time undo)
-msgid "InputUndo"
+msgctxt "InputUndo"
+msgid "(one time undo)"
 msgstr ""
 
-# Fps, Triangles, Batches
-msgid "FPS"
+msgctxt "FPS"
+msgid "Fps, Triangles, Batches"
 msgstr ""
 
-# mph
-msgid "UnitMph"
+msgctxt "UnitMph"
+msgid "mph"
 msgstr ""
 
-# ; &apos;  -  adjust start box width (for road width)
-msgid "InputStartWidth"
+msgctxt "InputStartWidth"
+msgid "; &apos;  -  adjust start box width (for road width)"
 msgstr ""
 
-# color
-msgid "Color"
+msgctxt "Color"
+msgid "color"
 msgstr ""
 
-# pitch
-msgid "Pitch"
+msgctxt "Pitch"
+msgid "pitch"
 msgstr ""
 
-# Yes
-msgid "MyGUI_MessageBox_Yes"
+msgctxt "MyGUI_MessageBox_Yes"
+msgid "Yes"
 msgstr ""
 

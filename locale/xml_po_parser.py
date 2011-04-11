@@ -57,8 +57,9 @@ if file1.endswith(".xml") and file2.endswith(".pot"):
 	# translations
 	result = header + "\n"
 	for mid, mstr in msgs.items():
-		result += "# " + mstr + "\n"
-		result += "msgid \"" + mid + "\"\n"
+		#result += "# " + mid + "\n"
+		result += "msgctxt \"" + mid + "\"\n"
+		result += "msgid \"" + mstr + "\"\n"
 		result += "msgstr \"\"\n"
 		result += "\n"
 		
