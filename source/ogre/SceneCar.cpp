@@ -178,7 +178,8 @@ void App::CreateCar()
 	if (FileExists(resCar + "/body.mesh"))
 	{
 		Entity* eCar = mSceneMgr->createEntity("Car", "body.mesh");
-		eCar->setMaterialName(sMtr[Mtr_CarBody]);
+		if (FileExists(resCar + "/body00_add.png") && FileExists(resCar + "/body00_red.png"))
+			eCar->setMaterialName(sMtr[Mtr_CarBody]);
 		ncart->attachObject(eCar);  eCar->setVisibilityFlags(2);
 	}else{
 		ManualObject* mCar = CreateModel(sMtr[Mtr_CarBody], &pCar->bodymodel.mesh);
