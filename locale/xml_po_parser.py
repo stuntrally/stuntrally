@@ -1,6 +1,8 @@
 #!/usr/bin/python
 
-import sys, time
+import sys, time, os
+
+fallback_file = "core_language_english_tag.xml"
 
 header = "# SOME DESCRIPTIVE TITLE.\n\
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER\n\
@@ -75,7 +77,8 @@ elif file1.endswith(".po") and file2.endswith(".xml"):
 	for line in f1:
 		if line.strip().startswith("\""):
 			if last == "msgctxt":
-				msgid += line.strip().split("\"")[1].replace("\\n", "\n")
+				#msgid += line.strip().split("\"")[1].replace("\\n", "\n")
+				pass
 			elif last == "msgstr":
 				msgstr += line.strip().split("\"")[1].replace("\\n", "\n")
 		if line.strip().startswith("msgctxt"):
@@ -93,8 +96,21 @@ elif file1.endswith(".po") and file2.endswith(".xml"):
 	result = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n\
 <MyGUI>\n"
 
+	# read english xml for fallback when untranslated
+	msgs_f = {}
+	f_f = open(os.path.join(os.path.dirname(file2), fallback_file))
+	for line in f_f:
+		if line.strip().startswith("<Tag name="):
+			msgid = line.split("=\"")[1].split("\"")[0]
+			msgstr = line.split(">")[1].split("<")[0]
+			msgs_f[msgid] = msgstr
+
 	for mid, mstr in msgs.items():
-		result += "\t<Tag name=\"" + mid + "\">" + mstr + "</Tag>\n"
+		if mstr.strip() != "":
+			result += "\t<Tag name=\"" + mid + "\">" + mstr + "</Tag>\n"
+		else:
+			# if untranslated, use english string
+			result += "\t<Tag name=\"" + mid + "\">" + msgs_f[mid] + "</Tag>\n"
 		
 	result += "\n</MyGUI>"
 	f2.write(result)
