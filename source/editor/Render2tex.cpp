@@ -61,7 +61,7 @@ void App::Rnd2TexSetup()
 		r.rcMini->setBoundingBox(big);
 		r.ndMini = mSceneMgr->getRootSceneNode()->createChildSceneNode("Minimap"+si);
 		r.ndMini->attachObject(r.rcMini);	r.rcMini->setCastShadows(false);
-		r.rcMini->setMaterial(sMtr);	r.rcMini->setRenderQueueGroup(RENDER_QUEUE_OVERLAY);
+		r.rcMini->setMaterial(sMtr);	r.rcMini->setRenderQueueGroup(RENDER_QUEUE_OVERLAY-1);
 		r.rcMini->setVisibilityFlags(i == RTs ? 256 : 2);
 	}
 
