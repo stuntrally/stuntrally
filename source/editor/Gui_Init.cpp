@@ -339,7 +339,7 @@ void App::InitGui()
 	listTrackChng(trkList,0);
 
 	//  btn change,  new, rename, delete
-	Btn("ChangeTrack",	btnChgTrack);
+	//Btn("ChangeTrack",	btnChgTrack);
 	Btn("TrackNew",		btnTrackNew);
 	Btn("TrackRename",	btnTrackRename);
 	Btn("TrackDelete",	btnTrackDel);

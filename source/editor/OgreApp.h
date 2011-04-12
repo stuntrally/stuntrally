@@ -257,7 +257,7 @@ protected:
 	String PathCopyTrk(int user=-1);
 
 	ListPtr trkList;  void TrackListUpd();
-	void listTrackChng(List* li, size_t pos), btnChgTrack(WP),
+	void listTrackChng(List* li, size_t pos), //btnChgTrack(WP),
 		btnTrackNew(WP),btnTrackRename(WP),btnTrackDel(WP),  // track
 		msgTrackDel(Message* sender, MessageBoxStyle result);
 	void btnNewGame(WP), btnShadows(WP);

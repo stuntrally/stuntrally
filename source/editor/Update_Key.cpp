@@ -176,6 +176,12 @@ bool App::KeyPress(const CmdKey &arg)
    			else if (bGuiFocus)  // next gui tab
    				mWndTabs->setIndexSelected( (mWndTabs->getIndexSelected() + 1) % num );
    			break;
+   			
+   		case KC_RETURN:  // load track
+			if (bGuiFocus)
+			if (mWndTabs->getIndexSelected() == 0)
+				btnNewGame(0);
+   			break;
 	}
 
 	if (bGuiFocus && mGUI)  //  GUI  ---------------------
