@@ -2,17 +2,19 @@
 #include <string>
 
 std::string getSystemLanguage() {
-	const std::string default_lang = "English";
-	
+	const std::string default_lang = "en";
+
 	char *loc = getenv("LC_ALL");
-	if (!loc) loc = getenv("LANG");
+	// FIXME: LANG disabled due to problems with MyGUI translation infra.
+	// You can still test translations byt setting LC_ALL env variable.
+	// E.g: $ LC_ALL=fi_FI ./stuntrally
+	//if (!loc) loc = getenv("LANG");
 	if (!loc) return default_lang;
 	// TODO: Windows?
 
 	std::string locstr(loc);
-	// Parse locale
-	if (locstr.find("fi_") != std::string::npos) return "Finnish";
-	else if (locstr.find("de_") != std::string::npos) return "German";
-
-	return default_lang;
+	// We parse here only the first part of two part codes (e.g.fi_FI).
+	// We can revisit this if we get regional translations.
+	locstr = locstr.substr(0, 2);
+	return locstr;
 }

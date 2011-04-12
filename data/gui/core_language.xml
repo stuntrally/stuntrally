@@ -2,14 +2,14 @@
 
 <MyGUI type="Language">
 
-	<Language default="English">
-		<Info name="English">
+	<Language default="en">
+		<Info name="en">
 			<Source>core_language_english_tag.xml</Source>
 		</Info>
-		<Info name="Finnish">
+		<Info name="fi">
 			<Source>core_language_finnish_tag.xml</Source>
 		</Info>
-		<Info name="German">
+		<Info name="de">
 			<Source>core_language_german_tag.xml</Source>
 		</Info>
 	</Language>
