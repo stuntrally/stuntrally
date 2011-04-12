@@ -57,7 +57,7 @@ include_directories(${Boost_INCLUDE_DIRS})
 link_directories(${Boost_LIBRARY_DIRS})
 list(APPEND LIBS ${Boost_LIBRARIES})
 
-foreach(lib  OIS SDL OGG VorbisFile)    # Simple libraries added in a loop
+foreach(lib  OIS SDL OGG VorbisFile ENet)    # Simple libraries added in a loop
 	find_package(${lib} REQUIRED QUIET)
 	include_directories(${${lib}_INCLUDE_DIRS})
 	list(APPEND LIBS ${${lib}_LIBRARIES})
