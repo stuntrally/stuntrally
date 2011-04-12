@@ -1,7 +1,7 @@
 # - Try to find enet
 # Once done this will define
 #
-#  ENet_FOUND - system has enet
+#  ENET_FOUND - system has enet
 #  ENet_INCLUDE_DIRS - the enet include directory
 #  ENet_LIBRARIES - the libraries needed to use enet
 #
@@ -36,14 +36,14 @@ FIND_LIBRARY(ENet_LIBRARY
 INCLUDE(FindPackageHandleStandardArgs)
 FIND_PACKAGE_HANDLE_STANDARD_ARGS(ENet DEFAULT_MSG ENet_LIBRARY ENet_INCLUDE_DIRS)
 
-IF (ENet_FOUND)
+IF (ENET_FOUND)
     IF(WIN32)
         SET(WINDOWS_ENET_DEPENDENCIES "ws2_32;winmm")
         SET(ENet_LIBRARIES ${ENet_LIBRARY} ${WINDOWS_ENET_DEPENDENCIES})
     ELSE(WIN32)
         SET(ENet_LIBRARIES ${ENet_LIBRARY})
     ENDIF(WIN32)
-ENDIF (ENet_FOUND)
+ENDIF (ENET_FOUND)
 
 MARK_AS_ADVANCED(ENet_LIBRARY ENet_LIBRARIES ENet_INCLUDE_DIRS)
 

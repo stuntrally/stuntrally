@@ -27,6 +27,7 @@ file(GLOB GAME_SOURCES
 	ogre/*.cpp
 	ogre/*/*.cpp
 	road/*.cpp
+	network/*.cpp
 )
 
 # Glob .cpp files needed for the editor

@@ -7,6 +7,7 @@
 #include "../vdrift/logging.h"
 #include "../vdrift/pathmanager.h"
 #include "../vdrift/settings.h"
+#include "../network/enet-wrapper.hpp"
 
 #include <OgrePlatform.h>
 #include <boost/thread.hpp>
@@ -22,7 +23,7 @@ void VprThread(App* pA)
 #else
 	int main(int argc, char* argv[])
 #endif
-{	
+{
 	//  Load Settings
 	std::stringstream dummy;
 	PATHMANAGER::Init(dummy, dummy);
@@ -34,7 +35,7 @@ void VprThread(App* pA)
 	}
 	settings->Load(PATHMANAGER::GetSettingsFile());
 
-	// open the log file
+	// Open the log file
 	std::ofstream logfile(logfilename.c_str());
 	if (!logfile)
 	{
@@ -42,18 +43,21 @@ void VprThread(App* pA)
 		return EXIT_FAILURE;
 	}
 	
-	// set up logging arrangement
+	// Set up logging arrangement
 	logging::splitterstreambuf infosplitter(std::cout, logfile);	std::ostream infosplitterstream(&infosplitter);
 	logging::splitterstreambuf errorsplitter(std::cerr, logfile);	std::ostream errorsplitterstream(&errorsplitter);
 	logging::logstreambuf infolog("INFO: ", infosplitterstream);	//logstreambuf infolog("INFO: ", logfile);
 	logging::logstreambuf errorlog("ERROR: ", errorsplitterstream);
 
-	// primary logging ostreams
+	// Primary logging ostreams
 	std::ostream info_output(&infolog);
 	std::ostream error_output(&errorlog);/**/
 
-	// HACK: we initialize paths a second time now that we have the output streams
+	// HACK: We initialize paths a second time now that we have the output streams
 	PATHMANAGER::Init(info_output, error_output);
+
+	// Networking
+	net::ENetContainer enet;
 
 	///  game  ------------------------------
 	GAME* pGame = new GAME(info_output, error_output, settings);

@@ -6,6 +6,8 @@
 
 namespace protocol {
 
+const unsigned DEFAULT_PORT = 4243;
+
 /**
  * This enum contains all possible message types.
  * It will be transmitted as char.
@@ -18,7 +20,7 @@ enum PacketType {
 	PEER_INFO,
 	TEXT_MESSAGE,
 	STATE_UPDATE
-}
+};
 
 
 /**
@@ -29,7 +31,7 @@ struct CarStatePackage {
 	float vx, vy, vz;
 	float rotx, roty, rotz; // FIXME: What's the best way to transmit orientation?
 
-	CarStatePackage(/* TODO: Parameters. */) {};
+	CarStatePackage(/* TODO: Parameters. */) {}
 };
 
 }

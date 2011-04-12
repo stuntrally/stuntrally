@@ -1,10 +1,11 @@
-#include "network.hpp"
+#include "enet-wrapper.hpp"
 #include "protocol.hpp"
 
+using namespace net;
 
-class P2PGameServer: public net::Server {
+class P2PGameServer: public NetworkListener {
 public:
-	P2PGameServer(): net::Server(*this)
+	P2PGameServer(): m_server(*this, protocol::DEFAULT_PORT)
 	{
 		//TODO
 	}
@@ -24,12 +25,14 @@ public:
 		//TODO
 	}
 
+private:
+	Server m_server;
 };
 
 
-class P2PGameClient: public net::Client {
+class P2PGameClient: public NetworkListener {
 public:
-	P2PGameClient(): net::Client(*this)
+	P2PGameClient(): m_client(*this)
 	{
 		//TODO
 	}
@@ -49,4 +52,6 @@ public:
 		//TODO
 	}
 
+private:
+	Client m_client;
 };

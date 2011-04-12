@@ -25,6 +25,8 @@
 
 namespace net {
 
+	const unsigned ENetChannels = 4;
+
 	/// Convert integer IPv4 address to dot-notation
 	inline std::string IPv4(unsigned i) {
 		std::ostringstream oss;
@@ -137,7 +139,7 @@ namespace net {
 			m_address.host = ENET_HOST_ANY;
 			m_address.port = port < 0 ? ENET_PORT_ANY : port;
 			// Create host at address, max_conns, unlimited up/down bandwith
-			m_host = enet_host_create(&m_address, max_connections, 0, 0);
+			m_host = enet_host_create(&m_address, max_connections, ENetChannels, 0, 0);
 			if (m_host == NULL)
 				throw std::runtime_error("An error occurred while trying to create an ENet host.");
 			// Start listener thread
@@ -154,14 +156,14 @@ namespace net {
 		/// Connect to the server
 		void connect(std::string host, int port) {
 			// Create an endpoint
-			m_host = enet_host_create(NULL, 2, 0, 0);
+			m_host = enet_host_create(NULL, 2, ENetChannels, 0, 0);
 			if (m_host == NULL)
 				throw std::runtime_error("An error occurred while trying to create an ENet host.");
 			// Set properties
 			enet_address_set_host(&m_address, host.c_str());
 			m_address.port = port;
 			// Initiate the connection, allocating the two channels 0 and 1.
-			m_peer = enet_host_connect(m_host, &m_address, 2);
+			m_peer = enet_host_connect(m_host, &m_address, 2, 0);
 			if (m_peer == NULL)
 				throw std::runtime_error("No available peers for initiating an ENet connection.");
 			// Wait up to 5 seconds for the connection attempt to succeed.
