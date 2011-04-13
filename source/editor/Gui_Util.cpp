@@ -84,8 +84,8 @@ void App::TrackListUpd()
 	//------------------------------------
 	if (trkList)
 	{	trkList->removeAllItems();
-		int ii = 0, si = 0;  bool bFound = false;
 		vsTracks.clear();  vbTracksUser.clear();
+		int ii = 0, si = 0;  bool bFound = false;
 
 		strlist li,lu;
 		GetFolderIndex(pathTrk[0], li);

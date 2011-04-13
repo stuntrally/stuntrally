@@ -157,14 +157,13 @@ String App::TrkDir() {
 	int u = pSet->track_user ? 1 : 0;			return pathTrk[u] + pSet->track + "/";  }
 
 String App::PathListTrk(int user) {
-	int u = user == -1 ? bListTrackU : user;	return pathTrk[u] + sListTrack;
-}
+	int u = user == -1 ? bListTrackU : user;	return pathTrk[u] + sListTrack;  }
+	
 String App::PathListTrkPrv(int user){
-	int u = user == -1 ? bListTrackU : user;	return pathTrkPrv[u] + sListTrack;
-}
+	int u = user == -1 ? bListTrackU : user;	return pathTrkPrv[u] + sListTrack;  }
+	
 String App::PathCopyTrk(int user){
-	int u = user == -1 ? bCopyTrackU : user;	return pathTrk[u] + sCopyTrack;
-}
+	int u = user == -1 ? bCopyTrackU : user;	return pathTrk[u] + sCopyTrack;  }
 
 
 ///  Save Terrain
