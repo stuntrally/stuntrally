@@ -11,7 +11,7 @@ void SETTINGS::Serialize(bool w, CONFIGFILE & c)
 	Param(c,w, "game.car", car);			Param(c,w, "game.car_hue", car_hue);
 	Param(c,w, "game.car_sat", car_sat);	Param(c,w, "game.car_val", car_val);
 	Param(c,w, "game.opp_car", car_ai);
-	Param(c,w, "game.track", track);
+	Param(c,w, "game.track", track);		Param(c,w, "game.track_user", track_user);
 
 	Param(c,w, "game2.ai_diff", ai_difficulty);		Param(c,w, "game2.record", recordreplay);
 	Param(c,w, "game2.replay_sel", selected_replay);
@@ -76,7 +76,7 @@ void SETTINGS::Serialize(bool w, CONFIGFILE & c)
 
 SETTINGS::SETTINGS() :  ///  Defaults
 	//  car, track
-	car("360"), car_ai("360"), track("Jungle-T"),
+	car("360"), car_ai("360"), track("Jungle-T"), track_user(false),
 	car_hue(0.f), car_sat(0.f), car_val(0.f),
 	//  show
 	show_fps(1), show_gauges(1), trackmap(1), racingline(1),
@@ -107,5 +107,8 @@ SETTINGS::SETTINGS() :  ///  Defaults
 	//  sim
 	game_fq(100.f), blt_fq(60.f), blt_iter(7), mult_thr(0),  //low
 	// video
-	bloom(false), bloomintensity(0.2), bloomorig(1.0), hdr(false), motionblur(false), motionblurintensity(0.3), windowx(800), windowy(600), fullscreen(false), fsaa(0), vsync(false), buffer("FBO"), rendersystem("OpenGL Rendering Subsystem")
+	bloom(false), bloomintensity(0.2), bloomorig(1.0), hdr(false),
+	motionblur(false), motionblurintensity(0.3),
+	windowx(800), windowy(600), fullscreen(false), fsaa(0), vsync(false),
+	buffer("FBO"), rendersystem("OpenGL Rendering Subsystem")
 {}

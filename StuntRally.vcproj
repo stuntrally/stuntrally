@@ -5946,6 +5946,10 @@
 					>
 				</File>
 				<File
+					RelativePath=".\source\ogre\Locale.h"
+					>
+				</File>
+				<File
 					RelativePath=".\Source\ogre\OgreGame.cpp"
 					>
 				</File>

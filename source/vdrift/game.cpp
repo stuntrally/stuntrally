@@ -859,10 +859,9 @@ bool GAME::LoadTrack(const std::string & trackname)
 
 	//load the track
 	if (!track.DeferredLoad(
-			PATHMANAGER::GetTrackPath()+"/"+trackname,
+			(settings->track_user ? PATHMANAGER::GetTrackPathUser() : PATHMANAGER::GetTrackPath()) + "/" + trackname,
 			settings->trackreverse,
-			/**/0, "large", true,
-			false))
+			/**/0, "large", true, false))
 	{
 		error_output << "Error loading track: " << trackname << endl;
 		return false;
