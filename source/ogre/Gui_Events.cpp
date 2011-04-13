@@ -261,17 +261,28 @@ void App::btnChgCar(WP)
 //  track
 void App::listTrackChng(List* li, size_t pos)
 {
+	if (!li)  return;
 	size_t i = li->getIndexSelected();  if (i==ITEM_NONE)  return;
-	const UString& sl = li->getItemNameAt(i);	sListTrack = sl;
+
+	const UString& sl = li->getItemNameAt(i);  String s = sl;
+	s = StringUtil::replaceAll(s, "*", "");
+	sListTrack = s;
+
+	int u = *li->getItemDataAt<int>(i,false);
+	bListTrackU = u;
 	
+	//  won't refresh if same-...  road dissapears if not found...
 	if (imgPrv)  imgPrv->setImageTexture(sListTrack+".jpg");
 	if (imgTer)  imgTer->setImageTexture(sListTrack+"_ter.jpg");
 	if (imgMini)  imgMini->setImageTexture(sListTrack+"_mini.png");
 	ReadTrkStats();
 }
+
 void App::btnChgTrack(WP)
 {
-	if (valTrk){  valTrk->setCaption("Track: " + sListTrack);	pSet->track = sListTrack;  }
+	pSet->track = sListTrack;
+	pSet->track_user = bListTrackU;
+	if (valTrk)  valTrk->setCaption("Track: " + sListTrack);
 }
 
 //  new game

@@ -21,6 +21,8 @@ void App::createScene()
 	MaterialManager::getSingleton().setDefaultTextureFiltering(TFO_ANISOTROPIC);
 	MaterialManager::getSingleton().setDefaultAnisotropy(pSet->anisotropy);
 
+	mRoot->addResourceLocation(pathTrk[1] + "_previews/", "FileSystem");  //prv user tracks
+
 	//  --------  Follow Camera  --------
 	mFCam = new FollowCamera(mCamera);  mFCam->loadCameras();
 	
@@ -104,7 +106,7 @@ void App::LoadScene()
 {
 	bool ter = IsTerTrack();
 	if (ter)  // load scene
-		sc.LoadXml(PATHMANAGER::GetTrackPath() + "/" + pSet->track + "/scene.xml");
+		sc.LoadXml(TrkDir()+"scene.xml");
 	else
 	{	sc.Default();  sc.td.hfData = NULL;  }	
 }
@@ -187,7 +189,7 @@ void App::NewGameDoLoad()
 bool App::IsTerTrack()
 {
 	//  track: vdrift / terrain
-	String sr = PATHMANAGER::GetTrackPath() + "/" + pSet->track + "/road.xml";
+	String sr = TrkDir()+"road.xml";
 	ifstream fr(sr.c_str());
 	bool ter = fr.good(); //!fail()
 	if (ter)  fr.close();
@@ -208,8 +210,8 @@ void App::CreateRoad()
 	road = new SplineRoad(pGame);  // sphere.mesh
 	road->Setup("", 0.7,  terrain, mSceneMgr, mCamera);
 	
-	String sr = PATHMANAGER::GetTrackPath() + "/" + pSet->track + "/road.xml";
-	road->LoadFile(sr);
+	String sr = TrkDir()+"road.xml";
+	road->LoadFile(TrkDir()+"road.xml");
 
 	UpdPSSMMaterials();  ///+~-
 }
