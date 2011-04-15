@@ -54,7 +54,7 @@ private:
 	Ogre::SceneNode* pMainNode;
 	
 	// VDrift car.
-	// For replay cars or remote cars, that don't 
+	// For e.g. replay cars that don't 
 	// need physics simulation, this can be null.
 	CAR* pCar;
 	
