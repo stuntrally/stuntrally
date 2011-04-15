@@ -24,6 +24,10 @@ public:
 	// CarReflection is also created.
 	void Create();
 	
+	// Only calls pReflect->Update();
+	// Call once per frame
+	void Update();
+	
 	// Car color
 	// After these values are changed, ChangeClr() should be called
 	float hue, sat, val;
