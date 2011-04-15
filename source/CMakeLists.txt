@@ -15,7 +15,7 @@ endif()
 include_directories(btOgre bullet ogre paged-geom road tinyxml vdrift)
 
 # Compile our libraries
-foreach(ourlib   tinyxml bullet paged-geom)
+foreach(ourlib   tinyxml bullet oisb paged-geom)
 	add_subdirectory(${ourlib})
 	list(APPEND OURLIBS ${ourlib})
 endforeach()
