@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
-#include "vld.h" // mem leaks +
+//#include "vld.h" // mem leaks +
 #endif
 #include "OgreGame.h"
 #include "../vdrift/game.h"

@@ -10,7 +10,7 @@ public:
 ///  params
 //------------------------------------------
 	//  car, track
-	string car,car_ai, track;
+	string car,car_ai, track;  bool track_user;
 
 	//  show
 	bool show_fps, show_gauges, trackmap, racingline,

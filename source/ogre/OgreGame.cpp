@@ -33,6 +33,9 @@ App::App()
 	,grass(0), trees(0), road(0)
 	,pr(0),pr2(0), sun(0), 	vPofs(0,0,0)
 {
+	pathTrk[0] = PATHMANAGER::GetTrackPath() + "/";
+	pathTrk[1] = PATHMANAGER::GetTrackPathUser() + "/";
+
 	resCar = "";  resTrk = "";  resDrv = "";
 	for (int w = 0; w < 4; ++w)
 	{	ps[w] = 0;  pm[w] = 0;  pd[w] = 0;
@@ -55,10 +58,12 @@ App::App()
 	loadingStates.insert(std::make_pair(LS_TRACK, "Loading track"));
 	loadingStates.insert(std::make_pair(LS_MISC, "Finishing"));
 }
-String App::TrkDir()
-{
-	return PATHMANAGER::GetTrackPath() + "/" + pSet->track + "/";
-}
+
+String App::TrkDir() {
+	int u = pSet->track_user ? 1 : 0;			return pathTrk[u] + pSet->track + "/";  }
+
+String App::PathListTrk(int user) {
+	int u = user == -1 ? bListTrackU : user;	return pathTrk[u] + sListTrack;  }
 
 App::~App()
 {
