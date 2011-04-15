@@ -13,7 +13,6 @@
 class ListenerFactoryLogic : public Ogre::CompositorLogic
 {
 public:
-	/** @copydoc CompositorLogic::compositorInstanceCreated */
 	virtual void compositorInstanceCreated(Ogre::CompositorInstance* newInstance) 
 	{
 		Ogre::CompositorInstance::Listener* listener = createListener(newInstance);
@@ -21,7 +20,6 @@ public:
 		mListeners[newInstance] = listener;
 	}
 	
-	/** @copydoc CompositorLogic::compositorInstanceDestroyed */
 	virtual void compositorInstanceDestroyed(Ogre::CompositorInstance* destroyedInstance)
 	{
 		delete mListeners[destroyedInstance];
@@ -37,28 +35,11 @@ private:
 
 };
 
-//The compositor logic for the heat vision compositor
-/*class HeatVisionLogic : public ListenerFactoryLogic
-{
-protected:
-	/** @copydoc ListenerFactoryLogic::createListener */
-	/*virtual Ogre::CompositorInstance::Listener* createListener(Ogre::CompositorInstance* instance);
-};*/
-
 //The compositor logic for the hdr compositor
 class HDRLogic : public ListenerFactoryLogic
 {
 protected:
-	/** @copydoc ListenerFactoryLogic::createListener */
 	virtual Ogre::CompositorInstance::Listener* createListener(Ogre::CompositorInstance* instance);
 };
-
-//The compositor logic for the gaussian blur compositor
-/*class GaussianBlurLogic : public ListenerFactoryLogic
-{
-protected:
-	/** @copydoc ListenerFactoryLogic::createListener */
-	/*virtual Ogre::CompositorInstance::Listener* createListener(Ogre::CompositorInstance* instance);
-};*/
 
 #endif
