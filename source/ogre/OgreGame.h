@@ -6,7 +6,7 @@
 #include "../paged-geom/PagedGeometry.h"
 #include "common/SceneXml.h"
 #include "common/BltObjects.h"
-//#include "ReplayGame.h"
+#include "ReplayGame.h"
 
 using namespace Ogre;
 using namespace MyGUI;
@@ -24,9 +24,14 @@ public:
 	class GAME* pGame;  ///*
 	void updatePoses(float time), newPoses();
 	void UpdThr();  bool bNew;
-	Vector3 newPos,vCarY;  Quaternion newRot;
 
-	//Replay replay;
+	///  new car display data
+	///  set in newPoses (from vdrift or replay play), used in updatePoses
+	Vector3 newPos,newCarY;  Quaternion newRot, qFixCar,qFixWh;
+	Vector3 newWhPos[4];  Quaternion newWhRot[4];  float newWhR[4];
+	float newWhVel[4], newWhSlide[4], newWhSqueal[4];  int newWhMtr[4];
+
+	Replay replay;  ReplayFrame fr;
 
 	Scene sc;  /// scene.xml
 	BltObjects objs;  // veget collision in bullet

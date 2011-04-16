@@ -64,14 +64,15 @@ void SETTINGS::Serialize(bool w, CONFIGFILE & c)
 	Param(c,w, "sim.game_fq", game_fq);	Param(c,w, "sim.mult_thr", mult_thr);
 	Param(c,w, "sim.blt_fq", blt_fq);	Param(c,w, "sim.blt_iter", blt_iter);
 	
-	Param(c,w, "video.bloom", bloom); 		Param(c,w, "video.bloomintensity", bloomintensity);
-	Param(c,w, "video.bloomorig", bloomorig);		   Param(c,w, "video.hdr", hdr);
-	Param(c,w, "video.motionblur", motionblur); 	Param(c,w, "video.motionblurintensity", motionblurintensity);
-	Param(c,w, "video.windowx", windowx);      Param(c,w, "video.windowy", windowy);
+	Param(c,w, "video.bloom", bloom);			Param(c,w, "video.bloomintensity", bloomintensity);
+	Param(c,w, "video.bloomorig", bloomorig);	Param(c,w, "video.hdr", hdr);
+	Param(c,w, "video.motionblur", motionblur);	Param(c,w, "video.motionblurintensity", motionblurintensity);
+	Param(c,w, "video.windowx", windowx);		Param(c,w, "video.windowy", windowy);
 	Param(c,w, "video.fullscreen", fullscreen);
-	Param(c,w, "video.fsaa", fsaa); 		   Param(c,w, "video.vsync", vsync);
-	Param(c,w, "video.buffer", buffer);
-	Param(c,w, "video.rendersystem", rendersystem);
+	Param(c,w, "video.fsaa", fsaa);				Param(c,w, "video.vsync", vsync);
+	Param(c,w, "video.buffer", buffer);			Param(c,w, "video.rendersystem", rendersystem);
+
+	Param(c,w, "replay.play", rpl_play);	Param(c,w, "replay.rec", rpl_rec);
 }
 
 SETTINGS::SETTINGS() :  ///  Defaults
@@ -106,9 +107,11 @@ SETTINGS::SETTINGS() :  ///  Defaults
 	loadingbackground(true), veget_collis(true),
 	//  sim
 	game_fq(100.f), blt_fq(60.f), blt_iter(7), mult_thr(0),  //low
-	// video
+	//  video
 	bloom(false), bloomintensity(0.2), bloomorig(1.0), hdr(false),
 	motionblur(false), motionblurintensity(0.3),
 	windowx(800), windowy(600), fullscreen(false), fsaa(0), vsync(false),
-	buffer("FBO"), rendersystem("OpenGL Rendering Subsystem")
+	buffer("FBO"), rendersystem("OpenGL Rendering Subsystem"),
+	//  replay
+	rpl_rec(1), rpl_play(0)
 {}

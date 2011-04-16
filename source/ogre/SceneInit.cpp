@@ -42,9 +42,22 @@ void App::createScene()
 	
 	objs.LoadXml();
 	Log(string("**** Loaded Vegetation objects: ") + toStr(objs.colsMap.size()));
+	Log(string("**** ReplayFrame size: ") + toStr(sizeof(ReplayFrame)));
 
 	createReflectCams();  ///*
 	
+	#define REC 1
+	pSet->rpl_play = 0; //1-REC;
+	pSet->rpl_rec  = 0; //REC;
+	
+	///  load replay
+	if (pSet->rpl_play)
+	{
+		string file = PATHMANAGER::GetReplayPath() + "/" + pSet->track + ".rpl";
+		replay.LoadFile(file);
+	}
+	/**/
+
 	if (pSet->autostart)
 		NewGame();
 }
@@ -96,7 +109,7 @@ void App::LoadCleanUp()
 }
 void App::LoadGame()
 {
-	pGame->NewGame();
+	pGame->NewGame();  // ? timer 0 after ?
 	bGetStPos = true;
 	
 	bool ter = IsTerTrack();
@@ -113,6 +126,16 @@ void App::LoadScene()
 void App::LoadCar()
 {
 	CreateCar();  // par rain
+	
+	//  init replay  once  ---------------------------------
+	float whR[4] = {0.3f,0.3f,0.3f,0.3f};
+	if (pGame->cars.size() > 0)
+	{
+		CAR* pCar = &(*pGame->cars.begin());
+		for (int w=0; w<4; ++w)
+			whR[w] = pCar->GetTireRadius(WHEEL_POSITION(w));
+	}
+	replay.InitHeader(pSet->track.c_str(), pSet->car.c_str(), whR);
 }
 void App::LoadTerrain()
 {

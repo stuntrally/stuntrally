@@ -111,10 +111,7 @@ bool App::frameStart(Real time)
 			dbgdraw->step();  }
 
 		//  hud
-		if (pGame->cars.size() == 0)
-			return ret;
-
-		CAR* pCar = &(*pGame->cars.begin());
+		CAR* pCar = pGame->cars.size() == 0 ? NULL : &(*pGame->cars.begin());
 		UpdateHUD(pCar, time);
 
 		///  terrain mtr from blend maps
@@ -164,40 +161,91 @@ void App::UpdWhTerMtr(CAR* pCar)
 }
 
 
-//  update
+//  update newPoses - get new car pos from game
 //---------------------------------------------------------------------------------------------------------------
 void App::newPoses()
 {
 	if (!pGame)  return;
 	if (pGame->cars.size() == 0)  return;
-
 	CAR* pCar = &(*pGame->cars.begin());
-	const MATHVECTOR <double,3> pos = pCar->dynamics.GetPosition();
-	const QUATERNION <double> rot = pCar->dynamics.GetOrientation();
+
+
+	//  local data  car,wheels
+	MATHVECTOR <float,3> pos, whPos[4];
+	QUATERNION <float> rot, whRot[4];  //?double
+
+
+	///-----------------------------------------------------------------------
+	//  play  get data from replay
+	///-----------------------------------------------------------------------
+	if (pSet->rpl_play)
+	{
+		//  time  from start
+		double rtime = pGame->timer.GetReplayTime();
+		bool ok = replay.GetFrame(rtime, &fr);
+		if (ok)
+		{	//  car
+			pos = fr.pos;  rot = fr.rot;
+			//  wheels
+			for (int w=0; w < 4; ++w)
+			{
+				whPos[w] = fr.whPos[w];  whRot[w] = fr.whRot[w];
+				newWhVel[w] = fr.whVel[w];
+				newWhSlide[w] = fr.slide[w];  newWhSqueal[w] = fr.squeal[w];
+				newWhR[w] = replay.header.whR[w];//
+				newWhMtr[w] = fr.whMtr[w];
+			}
+		}
+		else  //+ restart replay (repeat)
+			pGame->timer.Lap(0, 0,0, true, pSet->trackreverse);
+	}
+	else
+	//  get data from vdrift
+	//-----------------------------------------------------------------------
+	{
+		pos = pCar->dynamics.GetPosition();
+		rot = pCar->dynamics.GetOrientation();
+		
+		for (int w=0; w < 4; ++w)
+		{	WHEEL_POSITION wp = WHEEL_POSITION(w);
+			whPos[w] = pCar->dynamics.GetWheelPosition(wp);
+			whRot[w] = pCar->dynamics.GetWheelOrientation(wp);
+			//float wR = pCar->GetTireRadius(wp);
+			newWhVel[w] = pCar->dynamics.GetWheelVelocity(wp).Magnitude();
+			newWhSlide[w] = -1.f;  newWhSqueal[w] = pCar->GetTireSquealAmount(wp, &newWhSlide[w]);
+			newWhR[w] = pCar->GetTireRadius(wp);//
+			newWhMtr[w] = whTerMtr[w];
+		}
+	}
 	
+
+	//  transform axes, vdrift to ogre  car & wheels
+	//-----------------------------------------------------------------------
+
 	newPos = Vector3(pos[0],pos[2],-pos[1]);
-
-	Quaternion q(rot[0],rot[1],rot[2],rot[3]);
+	Quaternion q(rot[0],rot[1],rot[2],rot[3]), q1;
 	Radian rad;  Vector3 axi;  q.ToAngleAxis(rad, axi);
+	q1.FromAngleAxis(-rad,Vector3(axi.z,-axi.x,-axi.y));  newRot = q1 * qFixCar;
+	Vector3 vcx,vcz;  q1.ToAxes(vcx,newCarY,vcz);
 
-	Vector3 vrot(axi.z, -axi.x, -axi.y);
-		QUATERNION <double> fix;  fix.Rotate(PI, 0, 1, 0);
-		Quaternion qr;  qr.w = fix.w();  qr.x = fix.x();  qr.y = fix.y();  qr.z = fix.z();
-	Quaternion q1;  q1.FromAngleAxis(-rad, vrot);  q1 = q1 * qr;
-	Vector3 vcx,vcy,vcz;  q1.ToAxes(vcx,vcy,vcz);
-
-	newRot = q1;  vCarY = vcy;
+	for (int w=0; w < 4; w++)
+	{
+		newWhPos[w] = Vector3(whPos[w][0],whPos[w][2],-whPos[w][1]);
+		Quaternion q(whRot[w][0],whRot[w][1],whRot[w][2],whRot[w][3]), q1;
+		Radian rad;  Vector3 axi;  q.ToAngleAxis(rad, axi);
+		q1.FromAngleAxis(-rad,Vector3(axi.z,-axi.x,-axi.y));  newWhRot[w] = q1 * qFixWh;
+	}
 	bNew = true;
 	
 
 	///  sound listener  - - - - -
-	if (pGame->sound.Enabled())
+	if (pGame->sound.Enabled())  // todo: set from camera ..
 	{
 		pGame->sound.SetListener(
-			MATHVECTOR <float, 3> (pos[0], pos[1], pos[2]),
-			QUATERNION <float> (),
+			MATHVECTOR <float,3> (pos[0], pos[1], pos[2]),
+			QUATERNION <float>(),
 			//QUATERNION <float> (rot.x(), rot.y(), rot.z(), rot.w()),
-			MATHVECTOR <float, 3>());
+			MATHVECTOR <float,3>());
 	}
 	bool incar = true;  //..(active_camera->GetName() == "hood" || active_camera->GetName() == "incar");
 	{
@@ -206,10 +254,52 @@ void App::newPoses()
 		for (std::list <SOUNDSOURCE *>::iterator s = soundlist.begin(); s != soundlist.end(); s++)
 			(*s)->Set3DEffects(!incar);
 	}
+
+
+	///-----------------------------------------------------------------------
+	//  record  save data for replay
+	///-----------------------------------------------------------------------
+	if (pSet->rpl_rec)
+	{
+		static int ii = 0;
+		if (ii++ >= 0)	// 1 half game framerate
+		{	ii = 0;
+			ReplayFrame fr;
+			fr.time = pGame->timer.GetReplayTime();  //  time  from start
+			fr.pos = pos;  fr.rot = rot;  //  car
+			//  wheels
+			for (int w=0; w < 4; w++)
+			{	fr.whPos[w] = whPos[w];  fr.whRot[w] = whRot[w];
+
+				WHEEL_POSITION wp = WHEEL_POSITION(w);
+				const TRACKSURFACE* surface = pCar->dynamics.GetWheelContact(wp).GetSurfacePtr();
+				fr.surfType[w] = !surface ? TRACKSURFACE::NONE : surface->type;
+				//  squeal
+				fr.slide[w] = -1.f;  fr.squeal[w] = pCar->GetTireSquealAmount(wp, &fr.slide[w]);
+				fr.whVel[w] = pCar->dynamics.GetWheelVelocity(wp).Magnitude();
+				//  susp
+				fr.suspVel[w] = pCar->dynamics.GetSuspension(wp).GetVelocity();
+				fr.suspDisp[w] = pCar->dynamics.GetSuspension(wp).GetDisplacementPercent();
+				//replay.header.whR[w] = pCar->GetTireRadius(wp);//
+				fr.whMtr[w] = whTerMtr[w];
+			}
+			//  hud
+			fr.vel = pCar->GetSpeedometer();  fr.rpm = pCar->GetEngineRPM();
+			fr.gear = pCar->GetGear();  fr.clutch = pCar->GetClutch();
+			fr.throttle = pCar->dynamics.GetEngine().GetThrottle();
+			fr.steer = pCar->GetLastSteer();
+			//  eng snd
+			fr.posEngn = pCar->dynamics.GetEnginePosition();
+			fr.speed = pCar->GetSpeed();
+			fr.dynVel = pCar->dynamics.GetVelocity().Magnitude();
+			replay.AddFrame(fr);
+		}
+	}
+	///-----------------------------------------------------------------------
 	
 
-	///  chekpoints, lap start
-	///-----------------------------------------------------------------------
+	//  chekpoints, lap start
+	//-----------------------------------------------------------------------
 
 	if (bGetStPos)  // first pos is at start
 	{	bGetStPos = false;
@@ -261,21 +351,20 @@ void App::newPoses()
 	}	}
 }
 
+
+//  updatePoses - set car pos for Ogre meshes, update particles, trails
+//---------------------------------------------------------------------------------------------------------------
 void App::updatePoses(float time)
 {	
-	///  ---  set car pos & rot ---
-	if (!pGame)  return;
+	if (!pGame || !ndCar)  return;
 	if (pGame->cars.size() == 0)  return;
-	if (!ndCar)  return;
-
-	if (!bNew)  return;
+	if (!bNew)  return;  // new only
 	bNew = false;
 
+	//  car pos and rot
 	ndCar->setPosition(newPos);
 	ndCar->setOrientation(newRot);
 
-	CAR* pCar = &(*pGame->cars.begin());
-	
 	// on minimap  pos x,y = -1..1
 	float xp =(-newPos[2] - minX)*scX*2-1,
 		  yp =-(newPos[0] - minY)*scY*2+1;
@@ -286,33 +375,16 @@ void App::updatePoses(float time)
 	//  wheels
 	for (int w=0; w < 4; w++)
 	{
-		WHEEL_POSITION wp = WHEEL_POSITION(w);
-		MATHVECTOR <double, 3> pos = pCar->dynamics.GetWheelPosition(wp);
-		float wR = pCar->GetTireRadius(wp);
-		Vector3 vpos(pos[0],pos[2],-pos[1]);
-		ndWh[w]->setPosition(vpos);
-
-			QUATERNION <double> fix;  fix.Rotate(Math::HALF_PI, 0, 1, 0);
-			Quaternion qr;  qr.w = fix.w();  qr.x = fix.x();  qr.y = fix.y();  qr.z = fix.z();
-		QUATERNION <double> rot = pCar->dynamics.GetWheelOrientation(wp);
-		Quaternion q(rot[0],rot[1],rot[2],rot[3]);  //q = qr * q;//
-		Radian rad;  Vector3 axi;	q.ToAngleAxis(rad, axi);
-		Quaternion q1;  q1.FromAngleAxis(-rad, Vector3(axi.z, -axi.x, -axi.y));  q1 = q1 * qr;
-		ndWh[w]->setOrientation(q1 /* * Quaternion(Degree(90), Vector3(0,1,0))/*tweak*/);
+		float wR = newWhR[w];
+		ndWh[w]->setPosition(newWhPos[w]);
+		ndWh[w]->setOrientation(newWhRot[w]);
+		int whMtr = newWhMtr[w];  //whTerMtr[w];
 		
 		
-		///  Ray dbg  *----*
-		//MATHVECTOR <float, 3>& rs = pCar->dynamics.vRayStarts[w], &rd = pCar->dynamics.vRayDirs[w];
-		//if (ndRs[w])  ndRs[w]->setPosition(Vector3(rs[0],rs[2],-rs[1]));
-		//if (ndRd[w])  ndRd[w]->setPosition(Vector3(rd[0],rd[2],-rd[1]));
-		
-	
-
 		//  update particle emitters
 		//-----------------------------------------------------------------------------
-		MATHVECTOR <float,3> vwhVel = pCar->dynamics.GetWheelVelocity(wp);
-		float whVel = vwhVel.Magnitude() * 3.6f;  //kmh
-		float slide = -1.f, squeal = pCar->GetTireSquealAmount(wp, &slide);
+		float whVel = newWhVel[w] * 3.6f;  //kmh
+		float slide = newWhSlide[w], squeal = newWhSqueal[w];
 		float onGr = slide < 0.f ? 0.f : 1.f;
 
 		//  wheel temp
@@ -328,42 +400,43 @@ void App::updatePoses(float time)
 			 emitD = (min(140.f, whVel) / 3.5f + slide * 1.f ) * l;  }
 		Real sizeD = (0.3f + 1.1f * min(140.f, whVel) / 140.f) * (w < 2 ? 0.5f : 1.f);
 		//  ter mtr factors
-		int mtr = min((int)(whTerMtr[w]-1), (int)(sc.td.layers.size()-1));
-		TerLayer& lay = whTerMtr[w]==0 ? sc.td.layerRoad : sc.td.layersAll[sc.td.layers[mtr]];
+		int mtr = min((int)(whMtr-1), (int)(sc.td.layers.size()-1));
+		TerLayer& lay = whMtr==0 ? sc.td.layerRoad : sc.td.layersAll[sc.td.layers[mtr]];
 		emitD *= lay.dust;  emitM *= lay.mud;  sizeD *= lay.dustS;  emitS *= lay.smoke;
 
 		//  par emit
+		Vector3 vpos = newWhPos[w];
 		if (pSet->particles)
 		{
 			if (ps[w] && sc.td.layerRoad.smoke > 0.f/*&& !sc.ter*/)  // only at vdr road
 			{
 				ParticleEmitter* pe = ps[w]->getEmitter(0);
-				pe->setPosition(vpos + vCarY * wR*0.7f); // 0.218
+				pe->setPosition(vpos + newCarY * wR*0.7f); // 0.218
 				/**/ps[w]->getAffector(0)->setParameter("alpha", toStr(-0.4f - 0.07f/2.4f * whVel));
 				/**/pe->setTimeToLive( max(0.1, 2 - whVel/2.4f * 0.04) );  // fade,live
-				pe->setDirection(-vCarY);	pe->setEmissionRate(emitS);
+				pe->setDirection(-newCarY);	pe->setEmissionRate(emitS);
 			}
 			if (pm[w])	//  mud
 			{	ParticleEmitter* pe = pm[w]->getEmitter(0);
 				//pe->setDimensions(sizeM,sizeM);
-				pe->setPosition(vpos + vCarY * wR*0.7f); // 0.218
-				pe->setDirection(-vCarY);	pe->setEmissionRate(emitM);
+				pe->setPosition(vpos + newCarY * wR*0.7f); // 0.218
+				pe->setDirection(-newCarY);	pe->setEmissionRate(emitM);
 			}
 			if (pd[w])	//  dust
 			{	pd[w]->setDefaultDimensions(sizeD,sizeD);
 				ParticleEmitter* pe = pd[w]->getEmitter(0);
-				pe->setPosition(vpos + vCarY * wR*0.51f ); // 0.16
-				pe->setDirection(-vCarY);	pe->setEmissionRate(emitD);
+				pe->setPosition(vpos + newCarY * wR*0.51f ); // 0.16
+				pe->setDirection(-newCarY);	pe->setEmissionRate(emitD);
 			}
 		}
 
 		//  update trails h+
 		if (pSet->trails)  {
 			if (ndWhE[w])
-			{	Vector3 vp = vpos + vCarY * wR*0.72f;  // 0.22
-				if (terrain && whTerMtr[w]>0)
+			{	Vector3 vp = vpos + newCarY * wR*0.72f;  // 0.22
+				if (terrain && whMtr > 0)
 					vp.y = terrain->getHeightAtWorldPosition(vp) + 0.05f;
-					//if (/*whOnRoad[w]*/whTerMtr[w]>0 && road)  // on road, add ofs
+					//if (/*whOnRoad[w]*/whMtr > 0 && road)  // on road, add ofs
 					//	vp.y += road->fHeight;	}/**/
 				ndWhE[w]->setPosition(vp);
 			}
@@ -374,7 +447,7 @@ void App::updatePoses(float time)
 	}
 
 
-	//  par  rain
+	//  par  rain cam  . . . .
 	if (pSet->particles)
 	{	const Vector3& pos = mCamera->getPosition();
 			static Vector3 oldPos = Vector3::ZERO;
@@ -395,18 +468,4 @@ void App::updatePoses(float time)
 		}
 	}
 
-
-	//  save data for replay
-	///-----------------------------------------------------------------------
-	#if 0
-	ReplayFrame fr;
-
-	fr.time = pGame->timer.GetPlayerTime();
-	fr.pos = newPos;
-	fr.rot = newRot;
-	for (int w=0; w < 4; w++)
-	{	fr.whPos[w] = ndWh[w]->getPosition();  fr.whRot[w] = ndWh[w]->getOrientation();  }
-
-	replay.AddFrame(fr);
-	#endif
 }

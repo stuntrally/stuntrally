@@ -203,15 +203,21 @@ void App::UpdateHUD(CAR* pCar, float time)
 	if (bSizeHUD)
 	{	bSizeHUD = false;
 		SizeHUD(true);	}
-	if (!pCar || !ndCar)  return;
 	
 	///  hud rpm,vel  --------------------------------
-    float vel = pCar->GetSpeedometer() * (pSet->show_mph ? 2.23693629f : 3.6f);
+	if (pCar && !pSet->rpl_play)
+	{	fr.vel = pCar->GetSpeedometer();
+		fr.rpm = pCar->GetEngineRPM();
+		fr.gear = pCar->GetGear();
+		fr.clutch = pCar->GetClutch();
+		//fr.throttle = pCar->dynamics.GetEngine().GetThrottle();  // not on hud
+	}	
+    float vel = fr.vel * (pSet->show_mph ? 2.23693629f : 3.6f);
     const float rsc = -180.f/6000.f, rmin = 0.f;  //rmp
-    float angrmp = pCar->GetEngineRPM()*rsc + rmin;
+    float angrmp = fr.rpm*rsc + rmin;
     float vsc = pSet->show_mph ? -180.f/100.f : -180.f/160.f, vmin = 0.f;  //vel
     float angvel = abs(vel)*vsc + vmin;
-    float angrot = ndCar->getOrientation().getYaw().valueDegrees();
+    float angrot = ndCar ? ndCar->getOrientation().getYaw().valueDegrees() : 0.f;
     float sx = 1.4f, sy = sx*asp;  // *par len
     float psx = 2.1f * pSet->size_minimap, psy = psx;  // *par len
 
@@ -248,16 +254,14 @@ void App::UpdateHUD(CAR* pCar, float time)
 	if (hudGear && hudVel)
 	{
 		char cg[2],sv[8];  cg[1]=0;
-		int gear = pCar->GetGear();
-		float cl = pCar->GetClutch()/**/*0.8f + 0.2f;
-		if (gear == -1)
+		float cl = fr.clutch*0.8f + 0.2f;
+		if (fr.gear == -1)
 		{	cg[0]='R';  hudGear->setColour(ColourValue(0.3,1,1,cl));	}
-		else if (gear == 0)
+		else if (fr.gear == 0)
 		{	cg[0]='N';  hudGear->setColour(ColourValue(0.3,1,0.3,cl));	}
 		else
-		{	cg[0]='0'+gear;  hudGear->setColour(ColourValue(1,1-gear*0.1,0.2,cl));	}
+		{	cg[0]='0'+fr.gear;  hudGear->setColour(ColourValue(1,1-fr.gear*0.1,0.2,cl));	}
 
-		float vel = pCar->GetSpeedometer() * (pSet->show_mph ? 2.23693629f : 3.6f);
 		sprintf(sv, "%3.0f", abs(vel));
 		hudGear->setCaption(String(cg));
 		hudVel->setCaption(String(sv));  int w = mWindow->getWidth();
@@ -331,7 +335,7 @@ void App::UpdateHUD(CAR* pCar, float time)
 		for (int w=0; w < 4; ++w)
 		if (ovL[3-w] && ovR[3-w] && ovS[3-w])
 		{	
-			float slide = 0.f, sLong = 0.f, sLat = 0.f;
+			float slide = /*-1.f*/0.f, sLong = 0.f, sLat = 0.f;
 			float squeal = pCar->GetTireSquealAmount((WHEEL_POSITION)w, &slide, &sLong, &sLat);
 
 			//MATHVECTOR <float,3> vwhVel = pCar->dynamics.GetWheelVelocity((WHEEL_POSITION)w);

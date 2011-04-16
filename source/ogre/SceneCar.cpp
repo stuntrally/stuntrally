@@ -198,18 +198,6 @@ void App::CreateCar()
 				ndWh[w] = mSceneMgr->getRootSceneNode()->createChildSceneNode();
 				ndWh[w]->attachObject(mWh);  mWh->setVisibilityFlags(2);  }
 		}
-			
-		///  Ray info  *----*
-		/*Entity* entS,*entD;
-		entS = mSceneMgr->createEntity("RayS"+toStr(w), "sphere.mesh");
-		entS->setMaterialName("sphere_norm");  entS->setCastShadows(false);
-		entD = mSceneMgr->createEntity("RayD"+toStr(w), "sphere.mesh");
-		entD->setMaterialName("sphere_rot");  entD->setCastShadows(false);
-		
-		ndRs[w] = mSceneMgr->getRootSceneNode()->createChildSceneNode();
-		ndRd[w] = mSceneMgr->getRootSceneNode()->createChildSceneNode();
-		ndRs[w]->attachObject(entS);  ndRs[w]->setScale(0.2f * Vector3::UNIT_SCALE);
-		ndRd[w]->attachObject(entD);  ndRd[w]->setScale(0.2f * Vector3::UNIT_SCALE);/**/
 	}
 
 
