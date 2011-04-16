@@ -28,8 +28,8 @@ Replay::Replay()
 void Replay::InitHeader(const char* track, const char* car, float* whR_4)
 {
 	header.Default();
-	strcpy_s(header.track, sizeof(header.track)-1, track);
-	strcpy_s(header.car, sizeof(header.car)-1, car);
+	strcpy(header.track, track);
+	strcpy(header.car, car);
 	for (int w=0; w<4; ++w)  header.whR[w] = whR_4[w];
 }
 
