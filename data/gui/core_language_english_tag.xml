@@ -323,7 +323,7 @@
 	<Tag name="InputRoadColumn">End - on/off column</Tag>
 	<Tag name="InputRoadOnTer">Home - toggle on Terrain snap</Tag>
 	<Tag name="InputRoadPipeAngle">[,]   - pipe angle (no pipe when 0)</Tag>
-	<Tag name="InputRoadChkRadius">; &apos;    - checkpoint radius (chkR 0 - none)</Tag>
+	<Tag name="InputRoadChkRadius">K, L   - checkpoint radius (chkR 0 - none)</Tag>
 	<Tag name="InputRoadMostSel">most work also on selection</Tag>
 	<Tag name="InputRoadCopySel">ctrl-Ins - copy selection   ctrl-Del - delete sel.</Tag>
 	<Tag name="InputRoadShiftReverse">shift-Ins - paste   shift-ctrl-Ins - reversed</Tag>
