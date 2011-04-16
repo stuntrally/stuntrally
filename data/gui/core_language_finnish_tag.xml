@@ -64,7 +64,7 @@
 	<Tag name="InputRoadHeight">- change height</Tag>
 	<Tag name="TipSurfFrict">Surface friction (eg. 1.0 asphalt, 0.7 gravel, 0.5 ice).</Tag>
 	<Tag name="InputNextOptTab">F2,F3 - prev,next Options tab</Tag>
-	<Tag name="InputRoadChkRadius">; &apos;    - checkpoint radius (chkR 0 - none)</Tag>
+	<Tag name="InputRoadChkRadius">K, L   - checkpoint radius (chkR 0 - none)</Tag>
 	<Tag name="TipDustSize">Dust particles size.</Tag>
 	<Tag name="InputRoadInsAlt">alt-shift - at start   alt-ctrl - at end</Tag>
 	<Tag name="MyGUI_MessageBox_Abort">Keskeytä</Tag>
