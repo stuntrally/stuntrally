@@ -12,6 +12,16 @@ material roadAsphalt : ppx_shadow
 	set $depthBias "3"
 	set_texture_alias diffuseMap roadAsphalt.jpg
 }
+material roadAsphalt_ter : ppx_shadow_a
+{
+	set $ambientCol "0.57 0.57 0.57"
+	set $diffuseCol "0.62 0.62 0.62"
+	set $specularCol "0.23 0.23 0.22"
+	set $shininess "32"
+	set $depthBias "3"
+	set_texture_alias diffuseMap roadAsphalt.jpg
+	set_texture_alias normalMap volcano_7_nh1.png
+}
 
 material roadRdesert : ppx_shadow
 {
