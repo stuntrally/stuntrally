@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION"
 "Report-Msgid-Bugs-To: "
-"POT-Creation-Date: 2011-04-11 18:11+0200"
+"POT-Creation-Date: 2011-04-16 17:46+0200"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>"
 "Language-Team: LANGUAGE <LL@li.org>"
@@ -142,7 +142,7 @@ msgid "Enable or disable this model."
 msgstr ""
 
 msgctxt "InputReloadTrack"
-msgid "F5 - Reload track"
+msgid "F5 - reload track"
 msgstr ""
 
 msgctxt "Video"
@@ -274,7 +274,7 @@ msgid "F2,F3 - prev,next Options tab"
 msgstr ""
 
 msgctxt "InputRoadChkRadius"
-msgid "; &apos;    - checkpoint radius (chkR 0 - none)"
+msgid "K, L   - checkpoint radius (chkR 0 - none)"
 msgstr ""
 
 msgctxt "TipDustSize"
@@ -290,7 +290,7 @@ msgid "Abort"
 msgstr ""
 
 msgctxt "InputShowGUI"
-msgid "F1 or Tab - Show/Hide Options"
+msgid "F1 or Tab - show/hide Options"
 msgstr ""
 
 msgctxt "ViewStart"
@@ -386,7 +386,7 @@ msgid "Up,Down - throttle, brake"
 msgstr ""
 
 msgctxt "InputAfterChanges"
-msgid "(after [Terrain,Vegetation] changes)"
+msgid "(after Terrain/Vegetation changes)"
 msgstr ""
 
 msgctxt "SkirtLength"
@@ -690,7 +690,7 @@ msgid "Brush parameters"
 msgstr ""
 
 msgctxt "InputCameraMode"
-msgid "camera mode"
+msgid "Camera mode"
 msgstr ""
 
 msgctxt "Enabled"
@@ -702,7 +702,7 @@ msgid "Rolling Drag"
 msgstr ""
 
 msgctxt "InputMinimapType"
-msgid "alt-F2,F3 - prev,next minimap type"
+msgid "alt-F2,F3 - Prev,next minimap type"
 msgstr ""
 
 msgctxt "TipGrassSwayLen"
@@ -718,7 +718,7 @@ msgid "distance"
 msgstr ""
 
 msgctxt "TrackAutoLoad"
-msgid "auto Load track"
+msgid "Auto Load track"
 msgstr ""
 
 msgctxt "DustSize"
@@ -794,7 +794,7 @@ msgid "alt-MMB - reset rotation"
 msgstr ""
 
 msgctxt "InputRoadPipeAngle"
-msgid "[,]   - Pipe angle (no pipe when 0)"
+msgid "[,]   - pipe angle (no pipe when 0)"
 msgstr ""
 
 msgctxt "Graphics"
@@ -866,7 +866,7 @@ msgid "Fullscreen"
 msgstr ""
 
 msgctxt "BulletLines"
-msgid "bullet debug lines"
+msgid "Bullet debug lines"
 msgstr ""
 
 msgctxt "TipGrassSwaySpd"
@@ -926,7 +926,7 @@ msgid "Model minimal scale."
 msgstr ""
 
 msgctxt "Leave"
-msgid "leave (exit)"
+msgid "Leave (exit)"
 msgstr ""
 
 msgctxt "TipVegetModels"
@@ -1054,7 +1054,7 @@ msgid "Anisotropy"
 msgstr ""
 
 msgctxt "InputToggleCam"
-msgid "Tab - Camera / Edit mode toggle"
+msgid "Tab - camera / edit mode toggle"
 msgstr ""
 
 msgctxt "InputStartAltLMB"
@@ -1158,11 +1158,11 @@ msgid "Del - delete picked"
 msgstr ""
 
 msgctxt "InputUpdate"
-msgid "F8 - Update track"
+msgid "F8 - update track"
 msgstr ""
 
 msgctxt "InputToggleGUIMode"
-msgid "F1 or ` - Gui mode (toggle Options)"
+msgid "F1 or ` - GUI mode (toggle Options)"
 msgstr ""
 
 msgctxt "TipFogEndDist"
@@ -1266,7 +1266,7 @@ msgid "set2"
 msgstr ""
 
 msgctxt "auto"
-msgid "auto"
+msgid "Auto"
 msgstr ""
 
 msgctxt "TipWindInflH"
@@ -1298,7 +1298,7 @@ msgid "About"
 msgstr ""
 
 msgctxt "AutoLoad"
-msgid "auto Load track"
+msgid "Auto Load track"
 msgstr ""
 
 msgctxt "Distance"
@@ -1334,7 +1334,7 @@ msgid "Diffuse texture (Specular in alpha)."
 msgstr ""
 
 msgctxt "InputToggleVeget"
-msgid "V - disable / enable vegetation"
+msgid "V - Disable / enable vegetation"
 msgstr ""
 
 msgctxt "MyGUI_MessageBox_Continue"
@@ -1474,7 +1474,7 @@ msgid "Speed unit"
 msgstr ""
 
 msgctxt "OgreDialog"
-msgid "show Ogre dialog"
+msgid "Show Ogre dialog"
 msgstr ""
 
 msgctxt "Editor"
@@ -1490,7 +1490,7 @@ msgid "Select (many)"
 msgstr ""
 
 msgctxt "scale"
-msgid "scale"
+msgid "Scale"
 msgstr ""
 
 msgctxt "AutoClutch"
@@ -1514,7 +1514,7 @@ msgid "Model preview image."
 msgstr ""
 
 msgctxt "InputRoadEdit"
-msgid "R - Edit Road mode"
+msgid "R - edit road mode"
 msgstr ""
 
 msgctxt "RestartApply"
@@ -1678,7 +1678,7 @@ msgid "Reverse"
 msgstr ""
 
 msgctxt "InputSaveTrack"
-msgid "F4 - Save track"
+msgid "F4 - save track"
 msgstr ""
 
 msgctxt "InputUndo"
