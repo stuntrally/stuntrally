@@ -91,6 +91,8 @@ elif file1.endswith(".po") and file2.endswith(".xml"):
 		if line.strip().startswith("msgstr"):
 			msgstr =line.split("\"")[1].replace("\\n", "\n")
 			last = "msgstr"
+	# add last line
+	msgs[msgid] = msgstr
 			
 	# write xml
 	result = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n\

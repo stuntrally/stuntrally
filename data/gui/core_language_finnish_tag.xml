@@ -422,5 +422,6 @@
 	<Tag name="InputStartWidth">; &apos;  -  adjust start box width (for road width)</Tag>
 	<Tag name="Color">väri</Tag>
 	<Tag name="Pitch">pitch</Tag>
+	<Tag name="MyGUI_MessageBox_Yes">Kyllä</Tag>
 
 </MyGUI>
