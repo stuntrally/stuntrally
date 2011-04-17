@@ -186,12 +186,6 @@
 					<Property key="Widget_Caption" value="#{Track}"/>
 					<Property key="Text_TextColour" value="0.4 1.0 0.5"/>
 				</Widget>
-				<!--<Widget type="Button" skin="Button" position="176 488 128 32" name="ChangeTrack">
-					<Property key="Widget_Caption" value="#{ChangeTrack}"/>
-					<Property key="Widget_Colour" value="0.7 1 0.85"/>
-					<Property key="Text_TextColour" value="0.6 1 0.8"/>
-					<UserString key="tip" value="#{TipChangeTrkEditor}"/>
-				</Widget>-->
 				<Widget type="Button" skin="Button" position="368 488 128 32" name="NewGame1">
 					<Property key="Widget_Caption" value="#{LoadTrack}"/>
 					<Property key="Widget_Colour" value="0.6 1.0 0.3"/>
