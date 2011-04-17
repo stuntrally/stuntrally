@@ -13,13 +13,21 @@ const unsigned DEFAULT_PORT = 4243;
  * It will be transmitted as char.
  */
 enum PacketType {
-	HANDSHAKE,
+	HANDSHAKE = 0,
 	PING,
 	PONG,
 	REQUEST_PEER_INFO,
 	PEER_INFO,
 	TEXT_MESSAGE,
 	STATE_UPDATE
+};
+
+struct Packet {
+	PacketType type;
+	uint32_t length;
+	uint8_t* data;
+
+	Packet(PacketType t, uint32_t l, uint8_t* d): type(t), length(l), data(d) {}
 };
 
 

@@ -128,18 +128,18 @@ namespace net {
 			m_peers.push_back(peer);
 		}
 
-		/// Send a string
+		/// Send a string to everyone
 		//  TODO: Use separate channel for unordered/ordered packets
-		void send(const std::string& msg, int flag = 0) {
+		void broadcast(const std::string& msg, int flag = 0) {
 			ENetPacket* packet = enet_packet_create(msg.c_str(), msg.length(), flag);
 			boost::mutex::scoped_lock lock(m_mutex);
 			//if (m_peer) enet_peer_send(m_peer, 0, packet); // Send to peer through channel 0
 			enet_host_broadcast(m_host, 0, packet); // Send through channel 0 to all peers
 		}
 
-		/// Send a char
-		void send(const char& msg, int flag = 0) {
-			send(std::string(1, msg), flag);
+		/// Send a char to everyone
+		void broadcast(const char& msg, int flag = 0) {
+			broadcast(std::string(1, msg), flag);
 		}
 
 		void terminate() { m_quit = true; m_thread.join(); }

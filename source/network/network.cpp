@@ -11,6 +11,12 @@ void P2PGameClient::connect(std::string address, int port)
 	m_client.connect(address, port);
 }
 
+void P2PGameClient::broadcast(const std::string& msg)
+{
+	//protocol::Packet packet(protocol::TEXT_MESSAGE, msg.length(), msg.c_str());
+	m_client.broadcast(msg);
+}
+
 void P2PGameClient::connectionEvent(net::NetworkTraffic const& e)
 {
 	//TODO

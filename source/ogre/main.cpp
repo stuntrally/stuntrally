@@ -68,7 +68,10 @@ void VprThread(App* pA)
 			std::cout << "Connect was a no go" << std::endl;
 		}
 	}
-	while (true);
+	while (true) {
+		client.broadcast("Hello");
+		boost::this_thread::sleep(boost::posix_time::milliseconds(1000));
+	}
 
 	///  game  ------------------------------
 	GAME* pGame = new GAME(info_output, error_output, settings);
