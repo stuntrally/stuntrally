@@ -67,6 +67,9 @@ if(UNIX)
 	list(APPEND LIBS "rt") # For clock_gettime()
 endif()
 
+list(APPEND SERVER_LIBS ${ENet_LIBRARIES} ${Boost_LIBRARIES})
+
+
 # Subdirectories
 
 add_subdirectory(source)
