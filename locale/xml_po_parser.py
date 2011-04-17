@@ -108,11 +108,12 @@ elif file1.endswith(".po") and file2.endswith(".xml"):
 			msgs_f[msgid] = msgstr
 
 	for mid, mstr in msgs.items():
-		if mstr.strip() != "":
-			result += "\t<Tag name=\"" + mid + "\">" + mstr + "</Tag>\n"
-		else:
-			# if untranslated, use english string
-			result += "\t<Tag name=\"" + mid + "\">" + msgs_f[mid] + "</Tag>\n"
+		if mid in msgs_f:
+			if mstr.strip() != "":
+				result += "\t<Tag name=\"" + mid + "\">" + mstr + "</Tag>\n"
+			else:
+				# if untranslated, use english string
+				result += "\t<Tag name=\"" + mid + "\">" + msgs_f[mid] + "</Tag>\n"
 		
 	result += "\n</MyGUI>"
 	f2.write(result)
