@@ -304,7 +304,9 @@ public:
 	
 	bool GetIsDrifting(unsigned int index) const
 	{
-		assert(index<car.size());
+		//assert(index<car.size());
+		if (index < car.size())
+			return false;
 		return car[index].GetDriftScore().GetDrifting();
 	}
 	

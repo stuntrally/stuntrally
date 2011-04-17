@@ -290,7 +290,7 @@ void App::UpdateHUD(CAR* pCar, float time)
 	}
 	
 	//  times, score  --------
-	if (pSet->show_times)
+	if (pSet->show_times && pCar)
 	{
 		TIMER& tim = pGame->timer;	//car[playercarindex].
 		s[0]=0;
@@ -299,6 +299,7 @@ void App::UpdateHUD(CAR* pCar, float time)
 			sprintf(s, "score  %3.0f+%2.0f", tim.GetDriftScore(0), tim.GetThisDriftScore(0) );
 		else
 			sprintf(s, "score  %3.0f", tim.GetDriftScore(0) );
+			
 
 		hudTimes->setCaption(String(s) +
 			String("\nTime ") + GetTimeString(tim.GetPlayerTime())+
