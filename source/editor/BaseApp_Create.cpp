@@ -204,7 +204,8 @@ bool BaseApp::configure()
 		return false;
 	}
 
-	mRoot->getRenderSystem()->setConfigOption("RTT Preferred Mode", pSet->buffer);
+	if (pSet->rendersystem == "OpenGL Rendering Subsystem")  // not on dx
+		mRoot->getRenderSystem()->setConfigOption("RTT Preferred Mode", pSet->buffer);
 	mRoot->initialise(false);
 
 	NameValuePairList settings;
