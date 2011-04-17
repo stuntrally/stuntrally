@@ -13,6 +13,7 @@
 	<Tag name="GameVersion">1.1</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 	
+	<Tag name="Settings">Settings</Tag>
 	<Tag name="Options">Options</Tag>
 	<Tag name="ChangeTrack">Change Track</Tag>
 	<Tag name="Track">Track</Tag>

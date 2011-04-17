@@ -1821,7 +1821,7 @@
 				</Widget>
 			</Widget>
 			<Widget type="TabItem" skin="" position="4 26 787 531">
-				<Property key="Widget_Caption" value="Settings"/>
+				<Property key="Widget_Caption" value="#{Settings}"/>
 				<Widget type="StaticText" skin="StaticText" position="32 504 284 20">
 					<Property key="Widget_Caption" value="#{SREditorVersion} #{GameVersion}"/>
 					<Property key="Text_TextColour" value="0.8 0.9 0.7"/>
