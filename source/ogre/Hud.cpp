@@ -301,9 +301,9 @@ void App::UpdateHUD(CAR* pCar, float time)
 			sprintf(s, "score  %3.0f", tim.GetDriftScore(0) );
 			
 		hudTimes->setCaption(String(s) +
-			String("\nTime ") + GetTimeString(tim.GetPlayerTime())+
-			String("\nLast ") + GetTimeString(tim.GetLastLap())+
-			String("\nBest ") + GetTimeString(tim.GetBestLap(pSet->trackreverse)) );
+			String(TR("\n#{TBTime} ")) + GetTimeString(tim.GetPlayerTime())+
+			String(TR("\n#{TBLast} ")) + GetTimeString(tim.GetLastLap())+
+			String(TR("\n#{TBBest} ")) + GetTimeString(tim.GetBestLap(pSet->trackreverse)) );
 	}
 	
 	//-----------------------------------------------------------------------------------------------

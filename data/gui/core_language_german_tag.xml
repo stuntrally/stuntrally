@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <MyGUI>
+	<Tag name="TBTime">Zeit</Tag>
+	<Tag name="TBLast">Letzte</Tag>
+	<Tag name="TBBest">Beste</Tag>
 	<Tag name="TipTreeDens">Wie viele Modelle (Bäume, Steine, etc.) auf der Strecke sichtbar sind.</Tag>
 	<Tag name="CamSpeed">Kamerageschw.</Tag>
 	<Tag name="InputRoadModify">Bearbeiten</Tag>
