@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION"
 "Report-Msgid-Bugs-To: "
-"POT-Creation-Date: 2011-04-16 17:46+0200"
+"POT-Creation-Date: 2011-04-17 22:05+0200"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>"
 "Language-Team: LANGUAGE <LL@li.org>"
@@ -1354,7 +1354,7 @@ msgid "FrictionTread"
 msgstr ""
 
 msgctxt "TipTrkListEditor"
-msgid "Tracks list, click to select (for Rename or Duplicate). Press [Change track] and then [Load track] to change current track in editor."
+msgid "Tracks list, click to select (for Rename or Duplicate). Press [Load track] to change current track in editor."
 msgstr ""
 
 msgctxt "InputReadyToPlay"
@@ -1543,10 +1543,6 @@ msgstr ""
 
 msgctxt "Environment"
 msgid "Environment"
-msgstr ""
-
-msgctxt "TipChangeTrkEditor"
-msgid "Sets current track to that selected in list, you need to load it after."
 msgstr ""
 
 msgctxt "MyGUI_MessageBox_Cancel"
