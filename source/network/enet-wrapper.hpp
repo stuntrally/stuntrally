@@ -116,14 +116,15 @@ namespace net {
 			ENetAddress address;
 			enet_address_set_host(&address, host.c_str());
 			address.port = port;
+			// Lock
+			boost::mutex::scoped_lock lock(m_mutex);
 			// Initiate the connection
 			ENetPeer* peer = NULL;
-			peer = enet_host_connect(m_host, &m_address, ENetChannels, 0);
+			peer = enet_host_connect(m_host, &address, ENetChannels, 0);
 			if (peer == NULL)
 				throw std::runtime_error("No available peers for initiating an ENet connection.");
 			// Wait up to 5 seconds for the connection attempt to succeed.
 			ENetEvent event;
-			boost::mutex::scoped_lock lock(m_mutex);
 			if (enet_host_service(m_host, &event, 5000) > 0 && event.type == ENET_EVENT_TYPE_CONNECT) {
 				m_peers.push_back(peer);
 				std::cout << "Connection to " << host << ":" << port << " succeeded!" << std::endl;
