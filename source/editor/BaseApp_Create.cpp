@@ -3,6 +3,7 @@
 #include "BaseApp.h"
 #include "OgreApp.h" //
 #include "../vdrift/pathmanager.h"
+#include "../ogre/Locale.h"
 
 /*
  * old - win only
@@ -265,6 +266,7 @@ bool BaseApp::setup()
 	mPlatform->initialise(mWindow, mSceneMgr);
 	mGUI = new MyGUI::Gui();
 	mGUI->initialise("core.xml", PATHMANAGER::GetLogDir() + "/MyGUI.log");
+	LanguageManager::getInstance().setCurrentLanguage(getSystemLanguage());
 
 	createFrameListener();
 	createScene();

@@ -55,15 +55,6 @@ App::App()
 	qr.w = fix.w();  qr.x = fix.x();  qr.y = fix.y();  qr.z = fix.z();  qFixCar = qr;  }
 	QUATERNION <double> fix;  fix.Rotate(Math::HALF_PI, 0, 1, 0);
 	qr.w = fix.w();  qr.x = fix.x();  qr.y = fix.y();  qr.z = fix.z();  qFixWh = qr;
-
-	// loading states
-	loadingStates.insert(std::make_pair(LS_CLEANUP, "Cleaning up"));
-	loadingStates.insert(std::make_pair(LS_GAME, "Loading game"));
-	loadingStates.insert(std::make_pair(LS_SCENE, "Loading scene"));
-	loadingStates.insert(std::make_pair(LS_CAR, "Loading car"));
-	loadingStates.insert(std::make_pair(LS_TER, "Loading terrain"));
-	loadingStates.insert(std::make_pair(LS_TRACK, "Loading track"));
-	loadingStates.insert(std::make_pair(LS_MISC, "Finishing"));
 }
 
 String App::TrkDir() {
@@ -84,6 +75,17 @@ App::~App()
 	OGRE_DELETE mTerrainGlobals;
 
 	OGRE_DELETE dbgdraw;
+}
+void App::setTranslations()
+{	
+	// loading states
+	loadingStates.insert(std::make_pair(LS_CLEANUP, String(TR("#{LS_CLEANUP}"))));
+	loadingStates.insert(std::make_pair(LS_GAME, String(TR("#{LS_GAME}"))));
+	loadingStates.insert(std::make_pair(LS_SCENE, String(TR("#{LS_SCENE}"))));
+	loadingStates.insert(std::make_pair(LS_CAR, String(TR("#{LS_CAR}"))));
+	loadingStates.insert(std::make_pair(LS_TER, String(TR("#{LS_TER}"))));
+	loadingStates.insert(std::make_pair(LS_TRACK, String(TR("#{LS_TRACK}"))));
+	loadingStates.insert(std::make_pair(LS_MISC, String(TR("#{LS_MISC}"))));
 }
 
 void App::destroyScene()

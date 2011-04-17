@@ -3,7 +3,6 @@
 #include "../vdrift/game.h"
 #include "../road/Road.h"
 #include "OgreGame.h"
-#include "Locale.h"
 using namespace MyGUI;
 
 
@@ -17,7 +16,6 @@ void App::InitGui()
 	//  change skin
 	if (!mGUI)  return;
 	LanguageManager::getInstance().loadUserTags("core_theme_black_blue_tag.xml");
-	LanguageManager::getInstance().setCurrentLanguage(getSystemLanguage());
 	mGUI->load("core_skin.xml");
 
 	//  load Options layout

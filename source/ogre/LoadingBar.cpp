@@ -33,6 +33,9 @@ void LoadingBar::start( RenderWindow* window, 		unsigned short numGroupsInit,
 	// self is listener
 	ResourceGroupManager::getSingleton().addResourceGroupListener(this);
 	
+	// translation
+	mLoadingDescriptionElement->setCaption(String(TR("#{LoadingDesc}")));
+		
 	if (bBackgroundImage)
 	{
 		// add texture unit state, if not already exists
@@ -115,7 +118,6 @@ void LoadingBar::resourceGroupLoadStarted(const String& groupName, size_t resour
 	assert( mNumGroupsLoad > 0 && "You were not going to load ");
 	mProgressBarInc = mProgressBarMaxSize * (1-mInitProportion) / (Real)resourceCount;
 	mProgressBarInc /= mNumGroupsLoad;
-	mLoadingDescriptionElement->setCaption("Loading resources...");
 	mWindow->update();
 }
 

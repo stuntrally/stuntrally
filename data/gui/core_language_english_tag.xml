@@ -13,6 +13,15 @@
 	<Tag name="GameVersion">1.1</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 	
+	<Tag name="LoadingDesc">Loading, please wait...</Tag>
+	<Tag name="LS_CLEANUP">Cleaning up</Tag>
+	<Tag name="LS_GAME">Loading game</Tag>
+	<Tag name="LS_SCENE">Loading scene</Tag>
+	<Tag name="LS_CAR">Loading car</Tag>
+	<Tag name="LS_TER">Loading terrain</Tag>
+	<Tag name="LS_TRACK">Loading track</Tag>
+	<Tag name="LS_MISC">Finishing</Tag>
+	
 	<Tag name="TBTime">Time</Tag>
 	<Tag name="TBLast">Last</Tag>
 	<Tag name="TBBest">Best</Tag>

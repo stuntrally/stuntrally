@@ -3,6 +3,7 @@
 #include "FollowCamera.h"
 #include "../vdrift/pathmanager.h"
 #include "CompositorLogics.h"
+#include "Locale.h"
 
 //  Camera
 //-------------------------------------------------------------------------------------
@@ -319,14 +320,18 @@ bool BaseApp::setup()
 
 	TextureManager::getSingleton().setDefaultNumMipmaps(5);
 
-	createResourceListener();
-	loadResources();
-
 	// Gui
 	mPlatform = new MyGUI::OgrePlatform();
 	mPlatform->initialise(mWindow, mSceneMgr);
 	mGUI = new MyGUI::Gui();
 	mGUI->initialise("core.xml", PATHMANAGER::GetLogDir() + "/MyGUI.log");
+	MyGUI::LanguageManager::getInstance().setCurrentLanguage(getSystemLanguage());
+
+	// After having initialised mygui, we can set translated strings
+	setTranslations();
+
+	createResourceListener();
+	loadResources();
 
 	createFrameListener();
 	createScene();//^before
