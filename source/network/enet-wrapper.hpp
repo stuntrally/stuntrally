@@ -25,8 +25,14 @@
 
 namespace net {
 
-	const unsigned ENetChannels = 4;
+	const unsigned ENetChannels = 3; // 0 = Sequenced, 1 = Reliable, 2 = Unsequenced
 	const unsigned ENetMaxConnections = 16;
+
+	enum PacketFlags {
+		PACKET_SEQUENCED = 0,
+		PACKET_RELIABLE = 1,
+		PACKET_UNSEQUENCED = 2
+	};
 
 	/// Convert integer IPv4 address to dot-notation
 	inline std::string IPv4(unsigned i) {
@@ -63,29 +69,37 @@ namespace net {
 
 	/// Common networking stuff for both server and client
 	class NetworkObject: public boost::noncopyable {
-	  public:
+	public:
+
+		/**
+		 * Constructor.
+		 * @param listener class to receive network events
+		 * @param port the port for listening for new connections, defaults to any port
+		 * @param data optional application specific data to associate with the NetworkObject instance
+		 */
 		NetworkObject(NetworkListener& listener, int port = -1, void* data = NULL): m_quit(false), m_host(NULL), m_listener(listener), m_data(data)
 		{
 			m_address.host = ENET_HOST_ANY;
 			m_address.port = port < 0 ? ENET_PORT_ANY : port;
 			// Create host at address, max_conns, unlimited up/down bandwith
 			m_host = enet_host_create(&m_address, ENetMaxConnections, ENetChannels, 0, 0);
-			if (m_host == NULL)
-				throw std::runtime_error("An error occurred while trying to create an ENet host.");
+			if (!m_host) throw std::runtime_error("An error occurred while trying to create an ENet host.");
 			// Start listener thread
 			m_thread = boost::thread(boost::bind(&NetworkObject::listen, boost::ref(*this)));
 		}
 
+		/// Destructor.
 		~NetworkObject() {
 			terminate();
 			if (m_host) enet_host_destroy(m_host);
 			m_host = NULL;
 		}
 
+		/// Server thread, do not call directly
 		void listen() {
 			ENetEvent e;
 			while (!m_quit) {
-				{	// Lock mutex
+				{
 					boost::mutex::scoped_lock lock(m_mutex);
 					enet_host_service(m_host, &e, 5);
 				}
@@ -111,40 +125,42 @@ namespace net {
 			}
 		}
 
-		/// Connect to a peer
-		void connect(std::string host, int port) {
+		/**
+		 * Connect to a peer.
+		 * @param host the address to connect to
+		 * @param port the port to connect to
+		 * @param data application specific data that can be retrieved in events
+		 */
+		void connect(std::string host, int port, void* data = NULL) {
 			// Set properties
 			ENetAddress address;
 			enet_address_set_host(&address, host.c_str());
 			address.port = port;
-			// Lock
-			boost::mutex::scoped_lock lock(m_mutex);
 			// Initiate the connection
 			ENetPeer* peer = NULL;
+			boost::mutex::scoped_lock lock(m_mutex);
 			peer = enet_host_connect(m_host, &address, ENetChannels, 0);
-			if (peer == NULL)
-				throw std::runtime_error("No available peers for initiating an ENet connection.");
+			if (!peer) throw std::runtime_error("No available peers for initiating an ENet connection.");
+			peer->data = data;
 			// TODO: Handle peers in listen()
 			m_peers.push_back(peer);
 		}
 
 		/// Send a string to everyone
-		//  TODO: Use separate channel for unordered/ordered packets
-		void broadcast(const std::string& msg, int flag = 0) {
-			ENetPacket* packet = enet_packet_create(msg.c_str(), msg.length(), flag);
+		void broadcast(const std::string& msg, int flags = 0) {
+			ENetPacket* packet = enet_packet_create(msg.c_str(), msg.length(), flags);
+			// Pick channel for sending and broadcast to all peers
+			int channel = 0;
+			if (flags & PACKET_RELIABLE) channel = 1;
+			else if (flags & PACKET_UNSEQUENCED) channel = 2;
+			// Send
 			boost::mutex::scoped_lock lock(m_mutex);
-			//if (m_peer) enet_peer_send(m_peer, 0, packet); // Send to peer through channel 0
-			enet_host_broadcast(m_host, 0, packet); // Send through channel 0 to all peers
-		}
-
-		/// Send a char to everyone
-		void broadcast(const char& msg, int flag = 0) {
-			broadcast(std::string(1, msg), flag);
+			enet_host_broadcast(m_host, channel, packet);
 		}
 
 		void terminate() { m_quit = true; m_thread.join(); }
 
-	  protected:
+	private:
 		bool m_quit;
 		ENetAddress m_address;
 		ENetHost* m_host;
