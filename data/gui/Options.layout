@@ -295,7 +295,7 @@
                     </Widget>
                     <Widget type="TabItem" skin="" position="4 26 735 428">
                         <Property key="Widget_Caption" value="#{Effects}"/>
-                        <Widget type="Button" skin="CheckBox" position="40 50 152 24" name="Bloom">
+                        <Widget type="Button" skin="CheckBox" position="40 50 300 24" name="Bloom">
                             <Property key="Widget_Caption" value="#{Bloom}"/>
                             <Property key="Text_TextColour" value="1 1 0.5"/>
                         </Widget>
@@ -303,11 +303,11 @@
                             <Property key="Widget_Caption" value="#{Intensity}"/>
                             <Property key="Text_TextColour" value="1.0 0.9 0.0"/>
                         </Widget>
-                        <Widget type="Button" skin="CheckBox" position="40 155 152 24" name="HDR">
+                        <Widget type="Button" skin="CheckBox" position="40 155 300 24" name="HDR">
                             <Property key="Widget_Caption" value="#{HDR}"/>
                             <Property key="Text_TextColour" value="1 0.7 0"/>
                         </Widget>
-                        <Widget type="Button" skin="CheckBox" position="40 195 152 24" name="MotionBlur">
+                        <Widget type="Button" skin="CheckBox" position="40 195 300 24" name="MotionBlur">
                             <Property key="Widget_Caption" value="#{MotionBlur}"/>
                             <Property key="Text_TextColour" value="0.6 1 0.3"/>
                         </Widget>
@@ -556,7 +556,7 @@
                     </Widget>
                     <Widget type="TabItem" skin="" position="4 26 735 428">
                         <Property key="Widget_Caption" value="#{Shadows}"/>
-                        <Widget type="Button" skin="Button" position="32 206 112 26" layer="Back" name="Apply">
+                        <Widget type="Button" skin="Button" position="32 206 200 26" layer="Back" name="Apply">
                             <Property key="Widget_Caption" value="#{ApplyShadows}"/>
                             <Property key="Widget_Colour" value="0.7 0.85 1.0"/>
                         </Widget>
