@@ -90,7 +90,8 @@ namespace net {
 					enet_host_service(m_host, &e, 5);
 				}
 				switch (e.type) {
-					case ENET_EVENT_TYPE_NONE: break;
+					case ENET_EVENT_TYPE_NONE:
+						break;
 					case ENET_EVENT_TYPE_CONNECT: {
 						std::cout << "Connected " << IPv4(e.peer->address.host) << ":" << e.peer->address.port << std::endl;
 						m_listener.connectionEvent(NetworkTraffic(e.peer->incomingPeerID, e.peer->data));
@@ -123,15 +124,8 @@ namespace net {
 			peer = enet_host_connect(m_host, &address, ENetChannels, 0);
 			if (peer == NULL)
 				throw std::runtime_error("No available peers for initiating an ENet connection.");
-			// Wait up to 5 seconds for the connection attempt to succeed.
-			ENetEvent event;
-			if (enet_host_service(m_host, &event, 5000) > 0 && event.type == ENET_EVENT_TYPE_CONNECT) {
-				m_peers.push_back(peer);
-				std::cout << "Connection to " << host << ":" << port << " succeeded!" << std::endl;
-			} else { // Failure
-				enet_peer_reset(peer);
-				throw std::runtime_error(std::string("Connection to ") + host + " failed!");
-			}
+			// TODO: Handle peers in listen()
+			m_peers.push_back(peer);
 		}
 
 		/// Send a string
