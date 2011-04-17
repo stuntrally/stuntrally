@@ -167,7 +167,7 @@ private:
 				}
 
 				totaltime += time;
-				time = time_rpl = 0.0;
+				time = 0.0;
 				num_laps++;
 			}
 
@@ -179,12 +179,22 @@ private:
 					lastlap.GetTimeInSeconds() << ", best=" << bestlap.GetTimeInSeconds() <<
 					", lap=" << num_laps << std::endl;
 			}
+			
+			void RestartReplay()  // replay play restart
+			{
+				time = time_rpl = 0.0;
+			}			
 
-			double GetTimeReplay() const
+			void SetTimeReplay(double t)  // replay play
+			{
+				time = time_rpl = t;
+			}	
+			
+			double GetTimeReplay() const  // for replay
 			{
 				return time_rpl;
 			}
-
+			
 			double GetTime() const
 			{
 				return time;
@@ -258,8 +268,11 @@ public:
 			car[i].DebugPrint(out);
 		}
 	}
-	double GetPlayerTime() {assert(playercarindex<car.size());return car[playercarindex].GetTime();}
-	double GetReplayTime() {assert(playercarindex<car.size());return car[playercarindex].GetTime();}
+	double GetPlayerTime() {	assert(playercarindex<car.size());	return car[playercarindex].GetTime();	}
+	double GetReplayTime() {	assert(playercarindex<car.size());	return car[playercarindex].GetTimeReplay();  }  // replay
+	void SetReplayTime(double t){assert(playercarindex<car.size());	return car[playercarindex].SetTimeReplay(t);  }
+	void RestartReplay()   {	assert(playercarindex<car.size());	return car[playercarindex].RestartReplay();  }
+	
 	float GetLastLap() {assert(playercarindex<car.size());return car[playercarindex].GetLastLap();}
 	float GetBestLap(bool bTrackReverse)
 	{

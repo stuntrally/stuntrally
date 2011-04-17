@@ -208,9 +208,8 @@ void App::newPoses()
 				newWhR[w] = replay.header.whR[w];//
 				newWhMtr[w] = fr.whMtr[w];
 			}
-		}
-		else  //+ restart replay (repeat)
-			pGame->timer.Lap(0, 0,0, true, pSet->trackreverse);
+		}else	// restart replay (repeat)
+			pGame->timer.RestartReplay();
 	}
 	else
 	//  get data from vdrift
@@ -313,7 +312,11 @@ void App::newPoses()
 
 	//  chekpoints, lap start
 	//-----------------------------------------------------------------------
-	// dont check when replay play...
+	if (pSet->rpl_play)
+	{	// dont check when replay play...
+		bWrongChk = false;
+		return;
+	}
 
 	if (bGetStPos)  // first pos is at start
 	{	bGetStPos = false;
