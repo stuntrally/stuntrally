@@ -74,7 +74,7 @@ void Replay::SaveFile(std::string file)
     of.close();
 }
 
-//  add (record)
+//  add (Record)
 void Replay::AddFrame(const ReplayFrame& frame)
 {
 	frames.push_back(frame);
@@ -90,7 +90,7 @@ float Replay::GetTimeLength()
 		return 0.f;
 }
 
-///  get (play)  lin interpolation ...
+///  get (Play)
 //----------------------------------------------------------------
 bool Replay::GetFrame(double time, ReplayFrame* pFr)
 {

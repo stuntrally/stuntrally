@@ -321,9 +321,9 @@ void App::UpdateHUD(CAR* pCar, float time)
 	}/**/
 
 	//  profiling times
-	if (pGame->profilingmode)
+	if (pGame->profilingmode && ovU[3])
 	{
-		ovU[3]->setCaption(pGame->strProfInfo);
+		//ovU[3]->setCaption(pGame->strProfInfo);
 	}
 
 	//  wheels slide, susp bars  --------

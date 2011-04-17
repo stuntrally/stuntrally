@@ -290,6 +290,7 @@ void App::btnNewGame(WP)
 {
 	NewGame();  isFocGui = false;  // off gui
 	if (mWndOpts)  mWndOpts->setVisible(isFocGui);
+	if (mWndRpl)  mWndRpl->setVisible(pSet->rpl_play);//
 	if (bnQuit)  bnQuit->setVisible(isFocGui);
 	mGUI->setVisiblePointer(isFocGui);
 	mToolTip->setVisible(false);
@@ -434,6 +435,7 @@ bool App::keyPressed( const OIS::KeyEvent &arg )
 	   	if (!alt)  {
 	   		isFocGui = !isFocGui;
 	   		if (mWndOpts)	mWndOpts->setVisible(isFocGui);
+			if (mWndRpl)  mWndRpl->setVisible(pSet->rpl_play);//
 			if (bnQuit)  bnQuit->setVisible(isFocGui);
 	   		if (mGUI)	mGUI->setVisiblePointer(isFocGui);
 	   		if (!isFocGui)  mToolTip->setVisible(false);

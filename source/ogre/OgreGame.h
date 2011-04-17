@@ -193,7 +193,7 @@ protected:
 	ButtonPtr chDbgT,chDbgB, chBlt,chFps, chTimes,chMinimp, bnQuit;
 
 	//  game
-	ListPtr carList,trkList, resList;
+	ListPtr carList,trkList, resList, rplList;
 	void listCarChng(List* li, size_t pos),		btnChgCar(WP);
 	void listTrackChng(List* li, size_t pos),	btnChgTrack(WP);
 	void btnNewGame(WP),btnNewGameStart(WP), btnShadows(WP);

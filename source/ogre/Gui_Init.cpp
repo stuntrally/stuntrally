@@ -33,6 +33,9 @@ void App::InitGui()
 	mGUI->setVisiblePointer(isFocGui);
 	mWndTabs = (TabPtr)mLayout->findWidget("TabWnd");
 
+	mWndRpl = mGUI->findWidget<Window>("RplWnd",false);
+	if (mWndRpl)  mWndRpl->setVisible(false);//
+
 	//  tooltip
 	for (VectorWidgetPtr::iterator it = rootV.begin(); it != rootV.end(); ++it)
 	{
@@ -50,6 +53,7 @@ void App::InitGui()
 	MyGUI::InputManager::getInstance().injectMouseMove(xm, ym, 0);
 	OIS::MouseState &ms = const_cast<OIS::MouseState&>(mMouse->getMouseState());
 	ms.X.abs = xm;  ms.Y.abs = ym;
+
 
 	//  assign controls  ----------------------
 
@@ -176,6 +180,16 @@ void App::InitGui()
 	Chk("VSync", chkVidVSync, vsync);
 
 	//button_ramp, speed_sens..
+	
+
+	///*  Replay window  *
+    //------------------------------------------------------------------------
+	//Chk()
+	rplList = mGUI->findWidget<List>("RplList");
+	if (rplList)
+	{
+		//..
+	}
 
 	
 	///  video resolutions combobox
