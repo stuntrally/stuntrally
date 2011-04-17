@@ -46,9 +46,9 @@ void App::createScene()
 
 	createReflectCams();  ///*
 	
-	#define REC 1
-	pSet->rpl_play = 0; //1-REC;
-	pSet->rpl_rec  = 0; //REC;
+	//#define REC 1
+	//pSet->rpl_play = 0; //1-REC;
+	//pSet->rpl_rec  = 0; //REC;
 	
 	///  load replay
 	if (pSet->rpl_play)

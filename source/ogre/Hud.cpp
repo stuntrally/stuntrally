@@ -300,7 +300,6 @@ void App::UpdateHUD(CAR* pCar, float time)
 		else
 			sprintf(s, "score  %3.0f", tim.GetDriftScore(0) );
 			
-
 		hudTimes->setCaption(String(s) +
 			String("\nTime ") + GetTimeString(tim.GetPlayerTime())+
 			String("\nLast ") + GetTimeString(tim.GetLastLap())+

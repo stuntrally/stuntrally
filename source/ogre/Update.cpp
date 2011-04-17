@@ -20,10 +20,10 @@ void App::UpdThr()
 		{
 			bool ret = pGame->OneLoop();
 
-			if (!pGame->pause && mFCam)
-				mFCam->update(pGame->framerate/**/);
-			if (ndSky)  ///o-
-				ndSky->setPosition(GetCamera()->getPosition());
+			//if (!pGame->pause && mFCam)
+			//	mFCam->update(pGame->framerate/**/);
+			//if (ndSky)  ///o-
+			//	ndSky->setPosition(GetCamera()->getPosition());
 
 			if (!ret)
 				mShutDown = true;
@@ -78,12 +78,25 @@ bool App::frameStart(Real time)
 		///  step Game  **
 		//  single thread, sim on draw
 		bool ret = true;
-		if (pGame->settings->mult_thr != 1)
+		if (pSet->mult_thr != 1)
 		{
 			ret = pGame->OneLoop();
 			if (!ret)  mShutDown = true;
 		}
 		updatePoses(time);  //pGame->framerate
+
+		//  multi thread
+		if (pSet->mult_thr == 1)
+		{
+			static QTimer gtim;
+			gtim.update();
+			double dt = gtim.dt;
+
+			if (!pGame->pause && mFCam)
+				mFCam->update(/*dt/*time/**/pGame->framerate/**/);
+			if (ndSky)  ///o-
+				ndSky->setPosition(GetCamera()->getPosition());
+		}
 
 		updateReflection();  //*
 
@@ -300,6 +313,7 @@ void App::newPoses()
 
 	//  chekpoints, lap start
 	//-----------------------------------------------------------------------
+	// dont check when replay play...
 
 	if (bGetStPos)  // first pos is at start
 	{	bGetStPos = false;
@@ -352,12 +366,11 @@ void App::newPoses()
 }
 
 
-//  updatePoses - set car pos for Ogre meshes, update particles, trails
+//  updatePoses - set car pos for Ogre nodes, update particles, trails
 //---------------------------------------------------------------------------------------------------------------
 void App::updatePoses(float time)
 {	
-	if (!pGame || !ndCar)  return;
-	if (pGame->cars.size() == 0)  return;
+	if (!ndCar)  return;
 	if (!bNew)  return;  // new only
 	bNew = false;
 
@@ -365,7 +378,7 @@ void App::updatePoses(float time)
 	ndCar->setPosition(newPos);
 	ndCar->setOrientation(newRot);
 
-	// on minimap  pos x,y = -1..1
+	//  pos on minimap  x,y = -1..1
 	float xp =(-newPos[2] - minX)*scX*2-1,
 		  yp =-(newPos[0] - minY)*scY*2+1;
 	if (ndPos)
