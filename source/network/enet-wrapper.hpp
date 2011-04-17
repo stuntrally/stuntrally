@@ -8,7 +8,7 @@
  * QUICKGUIDE:
  *   1. Create ENetContainer library and keep it in scope
  *   2. Create a class inheriting NetworkListener and implement the functions
- *   3. Create a Server or Client object, giving it an instance of your NetworkListener
+ *   3. Create a NetworkObject, giving it an instance of your NetworkListener
  */
 
 #include <cstdlib>
@@ -26,6 +26,7 @@
 namespace net {
 
 	const unsigned ENetChannels = 4;
+	const unsigned ENetMaxConnections = 16;
 
 	/// Convert integer IPv4 address to dot-notation
 	inline std::string IPv4(unsigned i) {
@@ -54,16 +55,26 @@ namespace net {
 	/// Callback class prototype
 	class NetworkListener {
 	  public:
-		virtual void connection(NetworkTraffic const& e) {}
-		virtual void disconnect(NetworkTraffic const& e) {}
-		virtual void receive(NetworkTraffic const& e) {}
+		virtual void connectionEvent(NetworkTraffic const& e) {}
+		virtual void disconnectEvent(NetworkTraffic const& e) {}
+		virtual void receiveEvent(NetworkTraffic const& e) {}
 	};
 
 
 	/// Common networking stuff for both server and client
 	class NetworkObject: public boost::noncopyable {
 	  public:
-		NetworkObject(NetworkListener& listener, void* data = NULL): m_quit(false), m_id(), m_host(NULL), m_peer(NULL), m_listener(listener), m_data(data) { }
+		NetworkObject(NetworkListener& listener, int port = -1, void* data = NULL): m_quit(false), m_host(NULL), m_listener(listener), m_data(data)
+		{
+			m_address.host = ENET_HOST_ANY;
+			m_address.port = port < 0 ? ENET_PORT_ANY : port;
+			// Create host at address, max_conns, unlimited up/down bandwith
+			m_host = enet_host_create(&m_address, ENetMaxConnections, ENetChannels, 0, 0);
+			if (m_host == NULL)
+				throw std::runtime_error("An error occurred while trying to create an ENet host.");
+			// Start listener thread
+			m_thread = boost::thread(boost::bind(&NetworkObject::listen, boost::ref(*this)));
+		}
 
 		~NetworkObject() {
 			terminate();
@@ -71,7 +82,7 @@ namespace net {
 			m_host = NULL;
 		}
 
-		virtual void listen() {
+		void listen() {
 			ENetEvent e;
 			while (!m_quit) {
 				{	// Lock mutex
@@ -82,20 +93,43 @@ namespace net {
 					case ENET_EVENT_TYPE_NONE: break;
 					case ENET_EVENT_TYPE_CONNECT: {
 						std::cout << "Connected " << IPv4(e.peer->address.host) << ":" << e.peer->address.port << std::endl;
-						m_listener.connection(NetworkTraffic(e.peer->incomingPeerID, e.peer->data));
+						m_listener.connectionEvent(NetworkTraffic(e.peer->incomingPeerID, e.peer->data));
 						break;
 					} case ENET_EVENT_TYPE_DISCONNECT: {
 						std::cout << "Disconnected " << IPv4(e.peer->address.host) << ":" << e.peer->address.port << std::endl;
-						m_listener.disconnect(NetworkTraffic(e.peer->incomingPeerID, e.peer->data));
+						m_listener.disconnectEvent(NetworkTraffic(e.peer->incomingPeerID, e.peer->data));
 						e.peer->data = NULL;
 						break;
 					} case ENET_EVENT_TYPE_RECEIVE: {
-						m_listener.receive(NetworkTraffic(e.peer->incomingPeerID, e.peer->data, e.packet->data, e.packet->dataLength));
-						enet_packet_destroy (e.packet); // Clean-up
+						m_listener.receiveEvent(NetworkTraffic(e.peer->incomingPeerID, e.peer->data, e.packet->data, e.packet->dataLength));
+						enet_packet_destroy(e.packet); // Clean-up
 						break;
 					}
 				}
 				boost::this_thread::sleep(boost::posix_time::milliseconds(1));
+			}
+		}
+
+		/// Connect to a peer
+		void connect(std::string host, int port) {
+			// Set properties
+			ENetAddress address;
+			enet_address_set_host(&address, host.c_str());
+			address.port = port;
+			// Initiate the connection
+			ENetPeer* peer = NULL;
+			peer = enet_host_connect(m_host, &m_address, ENetChannels, 0);
+			if (peer == NULL)
+				throw std::runtime_error("No available peers for initiating an ENet connection.");
+			// Wait up to 5 seconds for the connection attempt to succeed.
+			ENetEvent event;
+			boost::mutex::scoped_lock lock(m_mutex);
+			if (enet_host_service(m_host, &event, 5000) > 0 && event.type == ENET_EVENT_TYPE_CONNECT) {
+				m_peers.push_back(peer);
+				std::cout << "Connection to " << host << ":" << port << " succeeded!" << std::endl;
+			} else { // Failure
+				enet_peer_reset(peer);
+				throw std::runtime_error(std::string("Connection to ") + host + " failed!");
 			}
 		}
 
@@ -104,8 +138,8 @@ namespace net {
 		void send(const std::string& msg, int flag = 0) {
 			ENetPacket* packet = enet_packet_create(msg.c_str(), msg.length(), flag);
 			boost::mutex::scoped_lock lock(m_mutex);
-			if (m_peer) enet_peer_send(m_peer, 0, packet); // Send to peer through channel 0
-			else enet_host_broadcast(m_host, 0, packet); // Send through channel 0 to all peers
+			//if (m_peer) enet_peer_send(m_peer, 0, packet); // Send to peer through channel 0
+			enet_host_broadcast(m_host, 0, packet); // Send through channel 0 to all peers
 		}
 
 		/// Send a char
@@ -115,69 +149,15 @@ namespace net {
 
 		void terminate() { m_quit = true; m_thread.join(); }
 
-		unsigned getId() const { return m_id; }
-
-		friend class Server;
-		friend class Client;
-
 	  protected:
 		bool m_quit;
-		unsigned m_id;
 		ENetAddress m_address;
 		ENetHost* m_host;
-		ENetPeer* m_peer;
+		typedef std::list<ENetPeer*> Peers;
+		Peers m_peers;
 		mutable boost::mutex m_mutex;
 		boost::thread m_thread;
 		NetworkListener& m_listener;
 		void* m_data;
 	};
-
-
-	class Server: public NetworkObject {
-	  public:
-		Server(NetworkListener& listener, int port = -1, void* data = NULL, unsigned max_connections = 16): NetworkObject(listener, data) {
-			m_address.host = ENET_HOST_ANY;
-			m_address.port = port < 0 ? ENET_PORT_ANY : port;
-			// Create host at address, max_conns, unlimited up/down bandwith
-			m_host = enet_host_create(&m_address, max_connections, ENetChannels, 0, 0);
-			if (m_host == NULL)
-				throw std::runtime_error("An error occurred while trying to create an ENet host.");
-			// Start listener thread
-			m_thread = boost::thread(boost::bind(&NetworkObject::listen, boost::ref(*this)));
-		}
-	};
-
-
-	class Client: public NetworkObject {
-	  public:
-		/// Construct new
-		Client(NetworkListener& listener, void* data = NULL): NetworkObject(listener, data) { }
-
-		/// Connect to the server
-		void connect(std::string host, int port) {
-			// Create an endpoint
-			m_host = enet_host_create(NULL, 2, ENetChannels, 0, 0);
-			if (m_host == NULL)
-				throw std::runtime_error("An error occurred while trying to create an ENet host.");
-			// Set properties
-			enet_address_set_host(&m_address, host.c_str());
-			m_address.port = port;
-			// Initiate the connection, allocating the two channels 0 and 1.
-			m_peer = enet_host_connect(m_host, &m_address, 2, 0);
-			if (m_peer == NULL)
-				throw std::runtime_error("No available peers for initiating an ENet connection.");
-			// Wait up to 5 seconds for the connection attempt to succeed.
-			ENetEvent event;
-			if (enet_host_service (m_host, &event, 5000) > 0 &&
-			  event.type == ENET_EVENT_TYPE_CONNECT) {
-				m_id = event.peer->outgoingPeerID; // Setup id
-				// Start listener thread
-				m_thread = boost::thread(boost::bind(&NetworkObject::listen, boost::ref(*this)));
-			} else { // Failure
-				enet_peer_reset(m_peer);
-				throw std::runtime_error(std::string("Connection to ") + host + " failed!");
-			}
-		}
-	};
-
 }

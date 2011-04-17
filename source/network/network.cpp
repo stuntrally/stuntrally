@@ -1,57 +1,30 @@
-#include "enet-wrapper.hpp"
-#include "protocol.hpp"
-
-using namespace net;
-
-class P2PGameServer: public NetworkListener {
-public:
-	P2PGameServer(): m_server(*this, protocol::DEFAULT_PORT)
-	{
-		//TODO
-	}
-
-	void connection(NetworkTraffic const& e)
-	{
-		//TODO
-	}
-
-	void disconnect(NetworkTraffic const& e)
-	{
-		//TODO
-	}
-
-	void receive(NetworkTraffic const& e)
-	{
-		//TODO
-	}
-
-private:
-	Server m_server;
-};
+#include "network.hpp"
 
 
-class P2PGameClient: public NetworkListener {
-public:
-	P2PGameClient(): m_client(*this)
-	{
-		//TODO
-	}
+P2PGameClient::P2PGameClient(int port): m_client(*this, port)
+{
+	//TODO
+}
 
-	void connection(NetworkTraffic const& e)
-	{
-		//TODO
-	}
+void P2PGameClient::connect(std::string address, int port)
+{
+	m_client.connect(address, port);
+}
 
-	void disconnect(NetworkTraffic const& e)
-	{
-		//TODO
-	}
+void P2PGameClient::connectionEvent(net::NetworkTraffic const& e)
+{
+	//TODO
+	std::cout << "Connection id=" << e.peer_id << std::endl;
+}
 
-	void receive(NetworkTraffic const& e)
-	{
-		//TODO
-	}
+void P2PGameClient::disconnectEvent(net::NetworkTraffic const& e)
+{
+	//TODO
+	std::cout << "Disconnected id=" << e.peer_id << std::endl;
+}
 
-private:
-	Client m_client;
-};
+void P2PGameClient::receiveEvent(net::NetworkTraffic const& e)
+{
+	//TODO
+	std::cout << "Traffic id=" << e.peer_id << ", content: " << std::string((char*)e.packet_data, e.packet_length) << std::endl;
+}

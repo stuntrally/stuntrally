@@ -7,7 +7,7 @@
 #include "../vdrift/logging.h"
 #include "../vdrift/pathmanager.h"
 #include "../vdrift/settings.h"
-#include "../network/enet-wrapper.hpp"
+#include "../network/network.hpp"
 
 #include <OgrePlatform.h>
 #include <boost/thread.hpp>
@@ -58,6 +58,17 @@ void VprThread(App* pA)
 
 	// Networking
 	net::ENetContainer enet;
+
+	// Temporary network test hack
+	P2PGameClient client(argc > 1 ? 5555 : 5556);
+	if (argc > 1) {
+		try {
+			client.connect("localhost", 5556);
+		} catch (...) {
+			std::cout << "Connect was a no go" << std::endl;
+		}
+	}
+	while (true);
 
 	///  game  ------------------------------
 	GAME* pGame = new GAME(info_output, error_output, settings);
