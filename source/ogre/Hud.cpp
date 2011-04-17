@@ -378,7 +378,7 @@ void App::UpdateHUD(CAR* pCar, float time)
 		int show = fChkTime > 0.f ? 1 : 0;
 		if (show)  fChkTime -= time;
 		if (show != showO)
-			hudCheck->setCaption(show ? "Wrong Checkpoint" : "");
+			hudCheck->setCaption(show ? String(TR("#{WrongChk}")) : "");
 		showO = show;
 	}
 
