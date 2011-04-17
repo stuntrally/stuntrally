@@ -186,6 +186,23 @@
                 </Widget>
             </Widget>
             <Widget type="TabItem" skin="" position="4 26 787 531">
+                <Property key="Widget_Caption" value="#{Multiplayer}"/>
+                <Widget type="List" skin="List" position="14 16 186 504" align="Relative" name="NetPlayerList"/>
+                <Widget type="Edit" skin="Edit" position="224 16 264 32" name="NetPlayerName">
+                    <Property key="Widget_Colour" value="0.8 0.9 1"/>
+                    <Property key="Widget_Caption" value="StuntMan"/>
+                </Widget>
+                <Widget type="Edit" skin="Edit" position="224 190 264 32" name="NetConnectIP">
+                    <Property key="Widget_Colour" value="0.8 0.9 1"/>
+                    <Property key="Widget_Caption" value="127.0.0.1"/>
+                </Widget>
+                <Widget type="Button" skin="Button" position="512 190 128 24" name="NetConnect">
+                    <Property key="Widget_Colour" value="1 0.4 0"/>
+                    <Property key="Widget_Caption" value="#{NetConnect}"/>
+                    <Property key="Text_TextColour" value="1 0.4 0.4"/>
+                </Widget>
+            </Widget>
+            <Widget type="TabItem" skin="" position="4 26 787 531">
                 <Property key="Widget_Caption" value="#{Setup}"/>
                 <Widget type="Button" skin="CheckBox" position="32 80 256 24" name="CarABS">
                     <Property key="Widget_Caption" value="#{ABS}"/>
