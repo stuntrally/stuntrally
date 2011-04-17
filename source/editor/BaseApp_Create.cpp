@@ -220,7 +220,7 @@ bool BaseApp::configure()
 //-------------------------------------------------------------------------------------
 bool BaseApp::setup()
 {
-	if (pSet->rendersystem == "DXIfAvailable")
+	if (pSet->rendersystem == "Default")
 	{
 		#if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
 		pSet->rendersystem = "Direct3D9 Rendering Subsystem";
