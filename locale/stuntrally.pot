@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION"
 "Report-Msgid-Bugs-To: "
-"POT-Creation-Date: 2011-04-17 23:11+0200"
+"POT-Creation-Date: 2011-04-18 00:07+0200"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>"
 "Language-Team: LANGUAGE <LL@li.org>"
@@ -39,6 +39,10 @@ msgstr ""
 
 msgctxt "TipAutoGearbox"
 msgid "Uncheck for manual gears changing."
+msgstr ""
+
+msgctxt "LS_MISC"
+msgid "Finishing"
 msgstr ""
 
 msgctxt "AndUsing"
@@ -73,8 +77,16 @@ msgctxt "TerNormal"
 msgid "Normal"
 msgstr ""
 
+msgctxt "LS_TRACK"
+msgid "Loading track"
+msgstr ""
+
 msgctxt "MyGUI_MessageBox_Retry"
 msgid "Retry"
+msgstr ""
+
+msgctxt "LS_SCENE"
+msgid "Loading scene"
 msgstr ""
 
 msgctxt "GameVersion"
@@ -95,6 +107,10 @@ msgstr ""
 
 msgctxt "Surface"
 msgid "Surface"
+msgstr ""
+
+msgctxt "MinimapUpdSkip"
+msgid "Minimap update skip"
 msgstr ""
 
 msgctxt "InputNextTab"
@@ -273,10 +289,6 @@ msgctxt "BasedOn"
 msgid "based on"
 msgstr ""
 
-msgctxt "CameraInfo"
-msgid "Camera info"
-msgstr ""
-
 msgctxt "InputNextOptTab"
 msgid "F2,F3 - prev,next Options tab"
 msgstr ""
@@ -421,8 +433,8 @@ msgctxt "wind"
 msgid "wind"
 msgstr ""
 
-msgctxt "TipRoadStats"
-msgid "Whole road statistics."
+msgctxt "LS_CAR"
+msgid "Loading car"
 msgstr ""
 
 msgctxt "InputRestart"
@@ -521,8 +533,8 @@ msgctxt "TipNormalTex"
 msgid "Normal texture (Height in alpha)."
 msgstr ""
 
-msgctxt "InputRoadCopySel"
-msgid "ctrl-Ins - copy selection   ctrl-Del - delete sel."
+msgctxt "PipeMaterials"
+msgid "Pipe materials"
 msgstr ""
 
 msgctxt "End"
@@ -881,6 +893,10 @@ msgctxt "Sky"
 msgid "Sky"
 msgstr ""
 
+msgctxt "TCS"
+msgid "TCS (traction control)"
+msgstr ""
+
 msgctxt "DisableEdit"
 msgid "Disable for edit"
 msgstr ""
@@ -889,12 +905,16 @@ msgctxt "TipAutoClutch"
 msgid "-Manual not implemented."
 msgstr ""
 
-msgctxt "MinimapUpdSkip"
-msgid "Minimap update skip"
+msgctxt "LS_TER"
+msgid "Loading terrain"
 msgstr ""
 
 msgctxt "RoadDist2"
 msgid "Additional distance to road."
+msgstr ""
+
+msgctxt "TipRoadStats"
+msgid "Whole road statistics."
 msgstr ""
 
 msgctxt "TreeMult"
@@ -1021,8 +1041,8 @@ msgctxt "InputRoadLMB"
 msgid "LMB (or Arrows)"
 msgstr ""
 
-msgctxt "TCS"
-msgid "TCS (traction control)"
+msgctxt "WrongChk"
+msgid "Wrong Checkpoint"
 msgstr ""
 
 msgctxt "NeedRestart"
@@ -1153,6 +1173,10 @@ msgctxt "ColBright"
 msgid "Brightness"
 msgstr ""
 
+msgctxt "LS_CLEANUP"
+msgid "Cleaning up"
+msgstr ""
+
 msgctxt "EnterSave"
 msgid "Enter - save"
 msgstr ""
@@ -1179,6 +1203,10 @@ msgstr ""
 
 msgctxt "RoadPoint"
 msgid "Road Point"
+msgstr ""
+
+msgctxt "LoadingDesc"
+msgid "Loading, please wait..."
 msgstr ""
 
 msgctxt "TipGrassPatchHeightMax"
@@ -1293,8 +1321,8 @@ msgctxt "TipWindInflL"
 msgid "Wind influence on model, length scale."
 msgstr ""
 
-msgctxt "CamInertia"
-msgid "Camera inertia"
+msgctxt "InputRoadCopySel"
+msgid "ctrl-Ins - copy selection   ctrl-Del - delete sel."
 msgstr ""
 
 msgctxt "TrackWidthAvg"
@@ -1367,6 +1395,10 @@ msgstr ""
 
 msgctxt "InputReadyToPlay"
 msgid "(ready to play in game)"
+msgstr ""
+
+msgctxt "CamInertia"
+msgid "Camera inertia"
 msgstr ""
 
 msgctxt "TipSurfFrict"
@@ -1533,8 +1565,8 @@ msgctxt "RestartApply"
 msgid "Restart game, to apply *changes."
 msgstr ""
 
-msgctxt "PipeMaterials"
-msgid "Pipe materials"
+msgctxt "CameraInfo"
+msgid "Camera info"
 msgstr ""
 
 msgctxt "NewGame"
@@ -1579,6 +1611,10 @@ msgstr ""
 
 msgctxt "TipTrkTerImg"
 msgid "Minimap of selected track, view from top."
+msgstr ""
+
+msgctxt "LS_GAME"
+msgid "Loading game"
 msgstr ""
 
 msgctxt "TreeRoadDist"
