@@ -255,7 +255,7 @@ void App::listCarChng(List* li, size_t pos)
 }
 void App::btnChgCar(WP)
 {
-	if (valCar){  valCar->setCaption("Car: " + sListCar);	pSet->car = sListCar;  }
+	if (valCar){  valCar->setCaption(TR("#{Car}: ") + sListCar);	pSet->car = sListCar;  }
 }
 
 //  track

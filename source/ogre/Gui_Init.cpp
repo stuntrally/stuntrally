@@ -250,7 +250,7 @@ void App::InitGui()
 
 	//  cars text, chg btn
     valCar = (StaticTextPtr)mLayout->findWidget("CarText");
-	valCar->setCaption("Car: " + pSet->car);  sListCar = pSet->car;
+	valCar->setCaption(TR("#{Car}: ") + pSet->car);  sListCar = pSet->car;
 
     ButtonPtr btnCar = (ButtonPtr)mLayout->findWidget("ChangeCar");
     if (btnCar)  btnCar->eventMouseButtonClick = newDelegate(this, &App::btnChgCar);
