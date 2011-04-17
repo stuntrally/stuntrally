@@ -11,9 +11,13 @@
 #include "../vdrift/settings.h"
 #include "common/SceneXml.h"
 
+enum eCarType {  CT_Local=0, CT_Replay, CT_Remote };
+
 class CarModel
 {
 public:
+	eCarType type;
+
 	// Constructor, doesn't really do anything other than assigning some members
 	CarModel(unsigned int index, const std::string name, Ogre::SceneManager* sceneMgr, SETTINGS* set, GAME* game, Scene* sc); 
 	

@@ -17,7 +17,7 @@ CarModel::CarModel(unsigned int index, const std::string name, Ogre::SceneManage
 	
 	///TODO create pCar
 	
-	pReflect = new CarReflection(pSet, iIndex);
+	pReflect = new CarReflection(pSet, pSceneMgr, iIndex);
 }
 CarModel::~CarModel(void)
 {
@@ -46,11 +46,12 @@ CarModel::~CarModel(void)
 }
 void CarModel::Update(void)
 {
+	pReflect->camPosition = pMainNode->getPosition();
 	pReflect->Update();
 }
 void CarModel::Create(void)
 {	
-	///TODO seperate (CreateMeshes, CreateCamera, ...)
+	///TODO seperate (CreateMeshes, CreateCamera, ...) [network cars don't need camera]
 	///TODO multiple cars
 	Ogre::Root::getSingletonPtr()->addResourceLocation(PATHMANAGER::GetCacheDir(), "FileSystem");
 	Ogre::Root::getSingletonPtr()->addResourceLocation(sDirname, "FileSystem"/*, "DynRes"/**/);
@@ -67,7 +68,6 @@ void CarModel::Create(void)
 	fCam->mGoalNode = pMainNode;
 	fCam->loadCameras();
 
-	///TODO
 	String s = pSet->shaders == 0 ? "_old" : "";
 	sMtr[Mtr_CarBody]		= "car_body"+s;
 	sMtr[Mtr_CarInterior]	= "car_interior"+s;
@@ -86,7 +86,7 @@ void CarModel::Create(void)
 	{
 		Entity* eCar = pSceneMgr->createEntity("Car", "body.mesh");
 		if (FileExists(sDirname + "/body00_add.png") && FileExists(sDirname + "/body00_red.png"))
-			///eCar->setMaterialName(sMtr[Mtr_CarBody]);
+			eCar->setMaterialName(sMtr[Mtr_CarBody]);
 		ncart->attachObject(eCar);  eCar->setVisibilityFlags(2);
 	}else{
 		ManualObject* mCar = CreateModel(sMtr[Mtr_CarBody], &pCar->bodymodel.mesh);
@@ -99,7 +99,7 @@ void CarModel::Create(void)
 	if (FileExists(sDirname + "/interior.mesh"))
 	{
 		Entity* eInter = pSceneMgr->createEntity("Car.interior", "interior.mesh");
-		///eInter->setMaterialName(sMtr[Mtr_CarInterior]);
+		eInter->setMaterialName(sMtr[Mtr_CarInterior]);
 		ncart->attachObject(eInter);  eInter->setVisibilityFlags(2);
 	}else{
 		ManualObject* mInter = CreateModel(sMtr[Mtr_CarInterior],&pCar->interiormodel.mesh);
