@@ -362,7 +362,7 @@
 	<Tag name="TipTerWind">Terrain brush window.</Tag>
 	<Tag name="TipRoadParams">Road point parameters.</Tag>
 	<Tag name="TipRoadStats">Whole road statistics.</Tag>
-	<Tag name="TipTrkListEditor">Tracks list, click to select (for Rename or Duplicate). Press [Change track] and then [Load track] to change current track in editor.</Tag>
+	<Tag name="TipTrkListEditor">Tracks list, click to select (for Rename or Duplicate). Press [Load track] to change current track in editor.</Tag>
 	<Tag name="TipChangeTrkEditor">Sets current track to that selected in list, you need to load it after.</Tag>
 	<Tag name="TipLoadTrkEditor">Load track (after change) or Reload current track.</Tag>
 	<Tag name="TipTrkScreenEditor">In game screenshot for selected track.</Tag>
