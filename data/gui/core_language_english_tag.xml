@@ -25,6 +25,7 @@
 	<Tag name="TBTime">Time</Tag>
 	<Tag name="TBLast">Last</Tag>
 	<Tag name="TBBest">Best</Tag>
+	<Tag name="TBScore">Score</Tag>
 	<Tag name="WrongChk">Wrong Checkpoint</Tag>
 	
 	<Tag name="Settings">Settings</Tag>

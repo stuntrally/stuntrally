@@ -296,9 +296,9 @@ void App::UpdateHUD(CAR* pCar, float time)
 		s[0]=0;
 		if (!road)  // no score on terrain
 		if (tim.GetIsDrifting(0))
-			sprintf(s, "score  %3.0f+%2.0f", tim.GetDriftScore(0), tim.GetThisDriftScore(0) );
+			sprintf(s, String(TR("#{TBScore}  %3.0f+%2.0f")).c_str(), tim.GetDriftScore(0), tim.GetThisDriftScore(0) );
 		else
-			sprintf(s, "score  %3.0f", tim.GetDriftScore(0) );
+			sprintf(s, String(TR("#{TBScore}  %3.0f")).c_str(), tim.GetDriftScore(0) );
 			
 		hudTimes->setCaption(String(s) +
 			String(TR("\n#{TBTime} ")) + GetTimeString(tim.GetPlayerTime())+
