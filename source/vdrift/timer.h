@@ -132,13 +132,14 @@ private:
 	class LAPINFO
 	{
 		private:
-			double time; //running time for this lap
-			LAPTIME lastlap; //last lap time for player & opponents
-			LAPTIME bestlap; //best lap time for player & opponents
-			double totaltime; //total time of a race for player & opponents
-			int num_laps; //current lap
+			double time_rpl;  // time from race start (for replay)
+			double time;      // running time for this lap
+			LAPTIME lastlap;  // last lap time for player & opponents
+			LAPTIME bestlap;  // best lap time for player & opponents
+			double totaltime; // total time of a race for player & opponents
+			int num_laps;     // current lap
 			std::string cartype;
-			double lapdistance; //total track distance driven this lap in meters
+			double lapdistance; // total track distance driven this lap in meters
 			DRIFTSCORE driftscore;
 
 		public:
@@ -146,7 +147,7 @@ private:
 
 			void Reset()
 			{
-				time = totaltime = 0.0;
+				time = totaltime = time_rpl = 0.0;
 				lastlap.Reset();
 				bestlap.Reset();
 				num_laps = 0;
@@ -154,7 +155,7 @@ private:
 
 			void Tick(float dt)
 			{
-				time += dt;
+				time += dt;  time_rpl += dt;
 			}
 
 			void Lap(bool countit)
@@ -166,7 +167,7 @@ private:
 				}
 
 				totaltime += time;
-				time = 0.0;
+				time = time_rpl = 0.0;
 				num_laps++;
 			}
 
@@ -177,6 +178,11 @@ private:
 				out << "car=" << cartype << ", t=" << totaltime << ", tlap=" << time << ", last=" <<
 					lastlap.GetTimeInSeconds() << ", best=" << bestlap.GetTimeInSeconds() <<
 					", lap=" << num_laps << std::endl;
+			}
+
+			double GetTimeReplay() const
+			{
+				return time_rpl;
 			}
 
 			double GetTime() const
@@ -252,8 +258,8 @@ public:
 			car[i].DebugPrint(out);
 		}
 	}
-	//float GetPlayerTime() {assert(playercarindex<car.size());return car[playercarindex].GetTime();}
 	double GetPlayerTime() {assert(playercarindex<car.size());return car[playercarindex].GetTime();}
+	double GetReplayTime() {assert(playercarindex<car.size());return car[playercarindex].GetTime();}
 	float GetLastLap() {assert(playercarindex<car.size());return car[playercarindex].GetLastLap();}
 	float GetBestLap(bool bTrackReverse)
 	{
@@ -298,7 +304,9 @@ public:
 	
 	bool GetIsDrifting(unsigned int index) const
 	{
-		assert(index<car.size());
+		//assert(index<car.size());
+		if (index < car.size())
+			return false;
 		return car[index].GetDriftScore().GetDrifting();
 	}
 	

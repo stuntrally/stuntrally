@@ -10,7 +10,7 @@ public:
 ///  params
 //------------------------------------------
 	//  car, track
-	string car,car_ai, track;
+	std::string car,car_ai, track;  bool track_user;
 
 	//  show
 	bool show_fps, show_gauges, trackmap, racingline,
@@ -26,10 +26,10 @@ public:
 	float particles_len, trails_len;
 
 	//  joy input
-	string joytype;  bool joy200;  bool joystick_calibrated;
+	std::string joytype;  bool joy200;  bool joystick_calibrated;
 	float speed_sensitivity;  bool hgateshifter;
 	float button_ramp;
-	string ff_device;  float ff_gain;  bool ff_invert;
+	std::string ff_device;  float ff_gain;  bool ff_invert;
 
 	//  car
 	bool abs, tcs, autoclutch, autoshift, autorear, show_mph;
@@ -41,7 +41,7 @@ public:
 	float ai_difficulty;
 
 	//  other
-	string skin;	float vol_master, vol_engine, vol_tires, vol_env;
+	std::string skin;	float vol_master, vol_engine, vol_tires, vol_env;
 	bool autostart, escquit;	bool bltDebug, bltLines;
 	
 	// loading
@@ -59,14 +59,17 @@ public:
 	int windowx, windowy;
 	bool fullscreen, vsync;
 	int fsaa;
-	string buffer;
-	string rendersystem;
+	std::string buffer;
+	std::string rendersystem;
+	
+	//  replay
+	bool rpl_rec, rpl_play;
 	
 //------------------------------------------
 	SETTINGS();
 
 	template <typename T>
-	bool Param(CONFIGFILE & conf, bool write, string pname, T & value)
+	bool Param(CONFIGFILE & conf, bool write, std::string pname, T & value)
 	{
 		if (write)
 		{	conf.SetParam(pname, value);
@@ -75,7 +78,7 @@ public:
 			return conf.GetParam(pname, value);
 	}
 	void Serialize(bool write, CONFIGFILE & config);
-	void Load(string sfile), Save(string sfile);
+	void Load(std::string sfile), Save(std::string sfile);
 };
 
 #endif

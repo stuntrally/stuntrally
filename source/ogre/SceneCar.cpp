@@ -3,59 +3,6 @@
 #include "../vdrift/game.h"
 #include "FollowCamera.h"
 
-#include "../btOgre/BtOgrePG.h"
-#include "../btOgre/BtOgreGP.h"
-//#include "BtOgreDebug.h"
-#include "../bullet/BulletCollision/CollisionShapes/btHeightfieldTerrainShape.h"
-
-
-//  Bullet Terrain
-//---------------------------------------------------------------------------------------------------------------
-
-void App::CreateBltTerrain()
-{
-	btHeightfieldTerrainShape* hfShape = new btHeightfieldTerrainShape(
-		sc.td.iVertsX, sc.td.iVertsY, sc.td.hfData, sc.td.fTriangleSize,
-		/*>?*/-100.f,100.f, 2, PHY_FLOAT,false);
-	
-	hfShape->setUseDiamondSubdivision(true);
-
-	btVector3 scl(sc.td.fTriangleSize, sc.td.fTriangleSize, 1);
-	hfShape->setLocalScaling(scl);
-
-	/*btRigidBody::btRigidBodyConstructionInfo infoHm(0.f, 0, hfShape);
-	infoHm.m_restitution = 0.5;  //
-	infoHm.m_friction = 0.9;  ///.. 0.9~
-	pGame->collision.AddRigidBody(infoHm);/**/
-
-	btCollisionObject* col = new btCollisionObject();
-	col->setCollisionShape(hfShape);
-	//col->setWorldTransform(tr);
-	col->setFriction(0.9);
-	col->setRestitution(0.5);
-	pGame->collision.world.addCollisionObject(col);
-	pGame->collision.shapes.push_back(hfShape);/**/
-
-	
-	///  border planes []
-	const float px[4] = {-1, 1, 0, 0};
-	const float py[4] = { 0, 0,-1, 1};
-	if (1)
-	for (int i=0; i < 4; i++)
-	{
-		btVector3 vpl(px[i], py[i], 0);
-		btCollisionShape* shp = new btStaticPlaneShape(vpl,0);
-		
-		btTransform tr;  tr.setIdentity();
-		tr.setOrigin(vpl * -0.5 * sc.td.fTerWorldSize);
-
-		btDefaultMotionState* ms = new btDefaultMotionState(tr);
-		btRigidBody::btRigidBodyConstructionInfo rbInfo(0.f,ms,shp);
-		pGame->collision.AddRigidBody(rbInfo);
-	}
-}
-
-
 ///  car body  color change  * * * *
 ///---------------------------------------------------------------------------------------------------------------
 void App::CarChangeClr()
@@ -251,18 +198,6 @@ void App::CreateCar()
 				ndWh[w] = mSceneMgr->getRootSceneNode()->createChildSceneNode();
 				ndWh[w]->attachObject(mWh);  mWh->setVisibilityFlags(2);  }
 		}
-			
-		///  Ray info  *----*
-		/*Entity* entS,*entD;
-		entS = mSceneMgr->createEntity("RayS"+toStr(w), "sphere.mesh");
-		entS->setMaterialName("sphere_norm");  entS->setCastShadows(false);
-		entD = mSceneMgr->createEntity("RayD"+toStr(w), "sphere.mesh");
-		entD->setMaterialName("sphere_rot");  entD->setCastShadows(false);
-		
-		ndRs[w] = mSceneMgr->getRootSceneNode()->createChildSceneNode();
-		ndRd[w] = mSceneMgr->getRootSceneNode()->createChildSceneNode();
-		ndRs[w]->attachObject(entS);  ndRs[w]->setScale(0.2f * Vector3::UNIT_SCALE);
-		ndRd[w]->attachObject(entD);  ndRd[w]->setScale(0.2f * Vector3::UNIT_SCALE);/**/
 	}
 
 

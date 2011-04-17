@@ -77,7 +77,7 @@ protected:
 	///  Gui
 	bool isFocGui;  // gui shown
 	MyGUI::Gui* mGUI;		MyGUI::OgrePlatform* mPlatform;
-	MyGUI::WidgetPtr mLayout, mWndOpts;  // options window
+	MyGUI::WidgetPtr mLayout, mWndOpts, mWndRpl;  // options window
 	MyGUI::TabPtr mWndTabs;
 };
 

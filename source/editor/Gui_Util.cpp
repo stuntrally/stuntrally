@@ -84,8 +84,8 @@ void App::TrackListUpd()
 	//------------------------------------
 	if (trkList)
 	{	trkList->removeAllItems();
-		int ii = 0, si = 0;  bool bFound = false;
 		vsTracks.clear();  vbTracksUser.clear();
+		int ii = 0, si = 0;  bool bFound = false;
 
 		strlist li,lu;
 		GetFolderIndex(pathTrk[0], li);
@@ -143,15 +143,18 @@ void App::listTrackChng(List* li, size_t pos)
 	ReadTrkStats();
 }
 
-void App::btnChgTrack(WP)
+/*void App::btnChgTrack(WP)
+{
+	//if (trkName)  trkName->setCaption(sListTrack.c_str());
+	//pSet->track = sListTrack;
+	//pSet->track_user = bListTrackU;  //UpdWndTitle();//? load
+}*/
+
+void App::btnNewGame(WP)
 {
 	if (trkName)  trkName->setCaption(sListTrack.c_str());
 	pSet->track = sListTrack;
 	pSet->track_user = bListTrackU;  //UpdWndTitle();//? load
-}
-
-void App::btnNewGame(WP)
-{
 	LoadTrack();
 }
 

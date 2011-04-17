@@ -33,6 +33,9 @@ App::App()
 	,grass(0), trees(0), road(0)
 	,pr(0),pr2(0), sun(0), 	vPofs(0,0,0)
 {
+	pathTrk[0] = PATHMANAGER::GetTrackPath() + "/";
+	pathTrk[1] = PATHMANAGER::GetTrackPathUser() + "/";
+
 	resCar = "";  resTrk = "";  resDrv = "";
 	for (int w = 0; w < 4; ++w)
 	{	ps[w] = 0;  pm[w] = 0;  pd[w] = 0;
@@ -46,6 +49,13 @@ App::App()
 	for (int i=0; i < 6; ++i)
 	{	mReflectCams[i] = 0;  mReflectRT[i] = 0;  }
 	
+	//  util for update rot
+	Quaternion qr;  {
+	QUATERNION <double> fix;  fix.Rotate(PI, 0, 1, 0);
+	qr.w = fix.w();  qr.x = fix.x();  qr.y = fix.y();  qr.z = fix.z();  qFixCar = qr;  }
+	QUATERNION <double> fix;  fix.Rotate(Math::HALF_PI, 0, 1, 0);
+	qr.w = fix.w();  qr.x = fix.x();  qr.y = fix.y();  qr.z = fix.z();  qFixWh = qr;
+
 	// loading states
 	loadingStates.insert(std::make_pair(LS_CLEANUP, "Cleaning up"));
 	loadingStates.insert(std::make_pair(LS_GAME, "Loading game"));
@@ -55,10 +65,12 @@ App::App()
 	loadingStates.insert(std::make_pair(LS_TRACK, "Loading track"));
 	loadingStates.insert(std::make_pair(LS_MISC, "Finishing"));
 }
-String App::TrkDir()
-{
-	return PATHMANAGER::GetTrackPath() + "/" + pSet->track + "/";
-}
+
+String App::TrkDir() {
+	int u = pSet->track_user ? 1 : 0;			return pathTrk[u] + pSet->track + "/";  }
+
+String App::PathListTrk(int user) {
+	int u = user == -1 ? bListTrackU : user;	return pathTrk[u] + sListTrack;  }
 
 App::~App()
 {
@@ -76,25 +88,18 @@ App::~App()
 
 void App::destroyScene()
 {
+	///  save replay
+	if (pSet->rpl_rec)
+	{
+		string file = PATHMANAGER::GetReplayPath() + "/" + pSet->track + ".rpl";
+		if (replay.GetTimeLength() > 4.f)
+			replay.SaveFile(file);
+	}
+	/**/
+
 	mToolTip = 0;  //?
     destroyReflectCams();
 
-	//  destroy all
-	//mSceneMgr->destroyAllManualObjects();
-	//mSceneMgr->destroyAllEntities();
-	//mSceneMgr->destroyAllStaticGeometry();
-
-	////  par sys
-	//if (pr)  {  mSceneMgr->destroyParticleSystem(pr);   pr=0;  }
-	//if (pr2) {  mSceneMgr->destroyParticleSystem(pr2);  pr2=0;  }
-	//for (int w=0; w < 4; w++)  {
-	//	if (ps[w]) {  mSceneMgr->destroyParticleSystem(ps[w]);   ps[w]=0;  }
-	//	if (pm[w]) {  mSceneMgr->destroyParticleSystem(pm[w]);   pm[w]=0;  }
-	//	if (pd[w]) {  mSceneMgr->destroyParticleSystem(pd[w]);   pd[w]=0;  }  }
-
-	//terrain = 0;
-	//if (mTerrainGroup)
-	//	mTerrainGroup->removeAllTerrains();
 	if (road)
 	{	road->DestroyRoad();  delete road;  road = 0;  }
 

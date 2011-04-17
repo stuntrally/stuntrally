@@ -12,6 +12,16 @@ material roadAsphalt : ppx_shadow
 	set $depthBias "3"
 	set_texture_alias diffuseMap roadAsphalt.jpg
 }
+material roadAsphalt_ter : ppx_shadow_a
+{
+	set $ambientCol "0.57 0.57 0.57"
+	set $diffuseCol "0.62 0.62 0.62"
+	set $specularCol "0.23 0.23 0.22"
+	set $shininess "32"
+	set $depthBias "3"
+	set_texture_alias diffuseMap roadAsphalt.jpg
+	set_texture_alias normalMap volcano_7_nh1.png
+}
 
 material roadRdesert : ppx_shadow
 {
@@ -174,6 +184,27 @@ material roadJungle : ppx_shadow
 	set $shininess "48"
 	set $depthBias "3"
 	set_texture_alias diffuseMap roadJungle.jpg
+}
+
+//  mud
+material roadMud_ter : ppx_shadow_a
+{
+	set $ambientCol "0.51 0.5 0.5"
+	set $diffuseCol "0.45 0.45 0.45"
+	set $specularCol "0.2 0.2 0.15"
+	set $shininess "32"
+	set $depthBias "3"
+	set_texture_alias diffuseMap roadMud.jpg
+	set_texture_alias normalMap ice_3_nh1.png
+}
+material roadMud : ppx_shadow
+{
+	set $ambientCol "0.5 0.5 0.5"
+	set $diffuseCol "0.5 0.5 0.5"
+	set $specularCol "0.3 0.3 0.25"
+	set $shininess "48"
+	set $depthBias "3"
+	set_texture_alias diffuseMap roadMud.jpg
 }
 
 

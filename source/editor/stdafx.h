@@ -59,4 +59,4 @@ using namespace Ogre;
 #include <MyGUI_OgrePlatform.h>
 
 /// translation
-#define _(s) MyGUI::LanguageManager::getInstance().replaceTags(s)
+#define TR(s) MyGUI::LanguageManager::getInstance().replaceTags(s)

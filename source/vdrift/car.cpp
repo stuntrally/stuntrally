@@ -8,6 +8,7 @@
 #include "tracksurface.h"
 #include "configfile.h"
 #include "settings.h"
+#include "../ogre/OgreGame.h"  //+ replay
 
 #ifdef _WIN32
 bool isnan(float number) {return (number != number);}
@@ -36,6 +37,8 @@ CAR::CAR() :
 CAR::~CAR()
 {	}
 
+
+//--------------------------------------------------------------------------------------------------------------------------
 bool CAR::Load(class App* pApp1,
 	SETTINGS* settings,
 	CONFIGFILE & carconf,
@@ -159,6 +162,8 @@ bool CAR::Load(class App* pApp1,
 	return true;
 }
 
+
+//--------------------------------------------------------------------------------------------------------------------------
 bool CAR::LoadSounds(
 	const std::string & carpath,
 	const std::string & carname,
@@ -385,6 +390,8 @@ bool CAR::LoadSounds(
 	return true;
 }
 
+
+//--------------------------------------------------------------------------------------------------------------------------
 bool CAR::LoadInto(const std::string & joefile, MODEL_JOE03 & output_model,	std::ostream & error_output)
 {
 	if (!output_model.Loaded())
@@ -439,7 +446,7 @@ void CAR::Update(double dt)
 {
 	dynamics.Update();
 	//CopyPhysicsResultsIntoDisplay();
-	UpdateCameras(dt);
+	//UpdateCameras(dt);  //-
 	UpdateSounds(dt);
 }
 
@@ -469,6 +476,8 @@ void CAR::GetEngineSoundList(std::list <SOUNDSOURCE *> & outputlist)
 	}
 }
 
+
+//--------------------------------------------------------------------------------------------------------------------------
 void CAR::HandleInputs(const std::vector <float> & inputs, float dt)
 {
 	assert(inputs.size() == CARINPUT::INVALID); //this looks weird, but it ensures that our inputs vector contains exactly one item per input
@@ -527,18 +536,64 @@ void CAR::HandleInputs(const std::vector <float> & inputs, float dt)
 		lookbehind = false;
 }
 
+
+//--------------------------------------------------------------------------------------------------------------------------
 void CAR::UpdateSounds(float dt)
 {
+	float rpm, throttle, speed, dynVel;
+	MATHVECTOR <float,3> engPos, whPos[4];  // engine, wheels pos
+	TRACKSURFACE::TYPE surfType[4];
+	float squeal[4],whVel[4], suspVel[4],suspDisp[4];
+	
+	///  replay play  ------------------------------------------
+	if (pApp->pSet->rpl_play)
+	{
+		rpm = pApp->fr.rpm;
+		throttle = pApp->fr.throttle;
+		engPos = pApp->fr.posEngn;  // _/could be from car pos,rot and engine offset--
+		speed = pApp->fr.speed;
+		dynVel = pApp->fr.dynVel;
+
+		for (int w=0; w<4; ++w)
+		{
+			whPos[w] = pApp->fr.whPos[w];
+			surfType[w] = (TRACKSURFACE::TYPE)pApp->fr.surfType[w];
+			//  squeal
+			squeal[w] = pApp->fr.squeal[w];
+			whVel[w] = pApp->fr.whVel[w];
+			//  susp
+			suspVel[w] = pApp->fr.suspVel[w];
+			suspDisp[w] = pApp->fr.suspDisp[w];
+		}
+	}
+	else  /// game  ------------------------------------------
+	{
+		rpm = GetEngineRPM();
+		throttle = dynamics.GetEngine().GetThrottle();
+		engPos = dynamics.GetEnginePosition();
+		speed = GetSpeed();
+		dynVel = dynamics.GetVelocity().Magnitude();
+
+		for (int w=0; w<4; ++w)
+		{
+			WHEEL_POSITION wp = WHEEL_POSITION(w);
+			whPos[w] = dynamics.GetWheelPosition(wp);
+
+			const TRACKSURFACE* surface = dynamics.GetWheelContact(wp).GetSurfacePtr();
+			surfType[w] = !surface ? TRACKSURFACE::NONE : surface->type;
+			//  squeal
+			squeal[w] = GetTireSquealAmount(wp);
+			whVel[w] = dynamics.GetWheelVelocity(wp).Magnitude();
+			//  susp
+			suspVel[w] = dynamics.GetSuspension(wp).GetVelocity();
+			suspDisp[w] = dynamics.GetSuspension(wp).GetDisplacementPercent();
+		}
+	}
+	///  ------------------------------------------
+
 	//update engine sounds
-	float rpm = GetEngineRPM();
-	float throttle = dynamics.GetEngine().GetThrottle();
-
-	const MATHVECTOR <double, 3> & engine_pos = dynamics.GetEnginePosition();
-
-	float total_gain = 0.0;
+	float total_gain = 0.0, loudest = 0.0;
 	std::list <std::pair <SOUNDSOURCE *, float> > gainlist;
-
-	float loudest = 0.0; //for debugging
 
 	for (std::list <std::pair <ENGINESOUNDINFO, SOUNDSOURCE> >::iterator i = enginesounds.begin(); i != enginesounds.end(); ++i)
 	{
@@ -547,13 +602,11 @@ void CAR::UpdateSounds(float dt)
 
 		float gain = 1.0;
 
-		if (rpm < info.minrpm)
-			gain = 0;
+		if (rpm < info.minrpm)	gain = 0;
 		else if (rpm < info.fullgainrpmstart && info.fullgainrpmstart > info.minrpm)
 			gain *= (rpm - info.minrpm)/(info.fullgainrpmstart-info.minrpm);
 
-		if (rpm > info.maxrpm)
-			gain = 0;
+		if (rpm > info.maxrpm)	gain = 0;
 		else if (rpm > info.fullgainrpmend && info.fullgainrpmend < info.maxrpm)
 			gain *= 1.0-(rpm - info.fullgainrpmend)/(info.maxrpm-info.fullgainrpmend);
 
@@ -565,14 +618,12 @@ void CAR::UpdateSounds(float dt)
 			gain *= (1.0-throttle);
 
 		total_gain += gain;
-		if (gain > loudest)
-			loudest = gain;
-		gainlist.push_back(std::pair <SOUNDSOURCE *, float> (&sound, gain));
+		if (gain > loudest)  loudest = gain;
+		gainlist.push_back(std::pair <SOUNDSOURCE*, float> (&sound, gain));
 
 		float pitch = rpm / info.naturalrpm;
 		sound.SetPitch(pitch);
-
-		sound.SetPosition(engine_pos[0], engine_pos[1], engine_pos[2]);
+		sound.SetPosition(engPos[0], engPos[1], engPos[2]);
 	}
 
 	//normalize gains engine
@@ -597,59 +648,21 @@ void CAR::UpdateSounds(float dt)
 		grasssound[i].SetGain(0.0);
 		tiresqueal[i].SetGain(0.0);
 
-		float squeal = GetTireSquealAmount(WHEEL_POSITION(i));
-		float maxgain = 0.6;
-		float pitchvariation = 0.4;
+		float maxgain = 0.6, pitchvariation = 0.4;
 
 		SOUNDSOURCE * thesound;
-		const TRACKSURFACE * surface = dynamics.GetWheelContact(WHEEL_POSITION(i)).GetSurfacePtr();
-		if (!surface)
+		switch (surfType[i])
 		{
-			thesound = tiresqueal;
-			maxgain = 0.0;
-		}else
-		if (surface->type == TRACKSURFACE::ASPHALT)
-		{
-			thesound = tiresqueal;
-		}
-		else if (surface->type == TRACKSURFACE::GRASS)
-		{
-			thesound = grasssound;
-			maxgain = 0.7;
-			pitchvariation = 0.25;
-		}
-		else if (surface->type == TRACKSURFACE::GRAVEL)
-		{
-			thesound = gravelsound;
-			maxgain = 0.7;
-		}
-		else if (surface->type == TRACKSURFACE::CONCRETE)
-		{
-			thesound = tiresqueal;
-			maxgain = 0.6;
-			pitchvariation = 0.25;
-		}
-		else if (surface->type == TRACKSURFACE::SAND)
-		{
-			thesound = grasssound;
-			maxgain = 0.5;  // quieter for sand
-			pitchvariation = 0.25;
-		}
-		else
-		{
-			thesound = tiresqueal;
-			maxgain = 0.0;
+		case TRACKSURFACE::NONE:		thesound = tiresqueal;	maxgain = 0.0;	break;
+		case TRACKSURFACE::ASPHALT:		thesound = tiresqueal;	break;
+		case TRACKSURFACE::GRASS:		thesound = grasssound;	maxgain = 0.7;	pitchvariation = 0.25;	break;
+		case TRACKSURFACE::GRAVEL:		thesound = gravelsound;	maxgain = 0.7;	break;
+		case TRACKSURFACE::CONCRETE:	thesound = tiresqueal;	maxgain = 0.6;	pitchvariation = 0.25;	break;
+		case TRACKSURFACE::SAND:		thesound = grasssound;	maxgain = 0.5;  pitchvariation = 0.25;	break;
+						default:		thesound = tiresqueal;	maxgain = 0.0;	break;
 		}
 
-		// set the sound position
-		MATHVECTOR <float, 3> vec;
-		vec = dynamics.GetWheelPosition(WHEEL_POSITION(i));
-		thesound[i].SetPosition(vec[0], vec[1], vec[2]);
-
-		MATHVECTOR <float, 3> groundvel;
-		groundvel = dynamics.GetWheelVelocity(WHEEL_POSITION(i));
-		thesound[i].SetGain(squeal*maxgain * pSettings->vol_tires);
-		float pitch = (groundvel.Magnitude()-5.0)*0.1;
+		float pitch = (whVel[i]-5.0)*0.1;
 		if (pitch < 0)	pitch = 0;
 		if (pitch > 1)	pitch = 1;
 		pitch = 1.0 - pitch;
@@ -657,54 +670,49 @@ void CAR::UpdateSounds(float dt)
 		pitch = pitch + (1.0-pitchvariation);
 		if (pitch < 0.1)	pitch = 0.1;
 		if (pitch > 4.0)	pitch = 4.0;
+
+		thesound[i].SetPosition(whPos[i][0], whPos[i][1], whPos[i][2]);
+		thesound[i].SetGain(squeal[i]*maxgain * pSettings->vol_tires);
 		thesound[i].SetPitch(pitch);
 	}
 
-	//update road noise sound
+	//update road noise sound -wind
 	{
-		MATHVECTOR <float, 3> vel;
-		vel = dynamics.GetVelocity();
-		float gain = vel.Magnitude();
+		float gain = dynVel;//dynamics.GetVelocity().Magnitude();
 		if (gain < 0)	gain = -gain;
-		gain *= 0.02;
-		gain *= gain;
+		gain *= 0.02;	gain *= gain;
 		if (gain > 1.0)	gain = 1.0;
 		roadnoise.SetGain(gain * pSettings->vol_env);
-		roadnoise.SetPosition(engine_pos[0], engine_pos[1], engine_pos[2]); //+
+		roadnoise.SetPosition(engPos[0], engPos[1], engPos[2]); //
 		//std::cout << gain << std::endl;
 	}
 
-	//update bump noise sound
+	//update susp bump sound
+	for (int i = 0; i < 4; i++)
 	{
-		for (int i = 0; i < 4; i++)
+		suspbump[i].Update(suspVel[i], suspDisp[i], dt);
+		if (suspbump[i].JustSettled())
 		{
-			suspensionbumpdetection[i].Update(dynamics.GetSuspension(WHEEL_POSITION(i)).GetVelocity(),
-											  dynamics.GetSuspension(WHEEL_POSITION(i)).GetDisplacementPercent(), dt);
-			if (suspensionbumpdetection[i].JustSettled())
+			float bumpsize = suspbump[i].GetTotalBumpSize();
+
+			const float breakevenms = 5.0;
+			float gain = bumpsize * speed / breakevenms;
+			if (gain > 1)	gain = 1;
+			if (gain < 0)	gain = 0;
+
+			if (gain > 0 && !tirebump[i].Audible())
 			{
-				float bumpsize = suspensionbumpdetection[i].GetTotalBumpSize();
-
-				const float breakevenms = 5.0;
-				float gain = bumpsize * GetSpeed() / breakevenms;
-				if (gain > 1)	gain = 1;
-				if (gain < 0)	gain = 0;
-
-				if (gain > 0 && !tirebump[i].Audible())
-				{
-					tirebump[i].SetGain(gain * pSettings->vol_env);
-					MATHVECTOR <float, 3> vec;
-					vec = dynamics.GetWheelPosition(WHEEL_POSITION(i)); //+
-					tirebump[i].SetPosition(vec[0], vec[1], vec[2]);
-					tirebump[i].Stop();
-					tirebump[i].Play();
-				}
+				tirebump[i].SetGain(gain * pSettings->vol_env);
+				tirebump[i].SetPosition(whPos[i][0], whPos[i][1], whPos[i][2]);
+				tirebump[i].Stop();
+				tirebump[i].Play();
 			}
 		}
 	}
 
 	//update crash sound
 	{
-		crashdetection.Update(GetSpeed(), dt);
+		crashdetection.Update(speed, dt);
 		float crashdecel = crashdetection.GetMaxDecel();
 		if (crashdecel > 0)
 		{
@@ -720,7 +728,7 @@ void CAR::UpdateSounds(float dt)
 			//if (!crashsound.Audible())
 			{
 				crashsound.SetGain(gain * pSettings->vol_env);
-				crashsound.SetPosition(engine_pos[0], engine_pos[1], engine_pos[2]); //+
+				crashsound.SetPosition(engPos[0], engPos[1], engPos[2]); //
 				crashsound.Stop();
 				crashsound.Play();
 			}
@@ -728,6 +736,8 @@ void CAR::UpdateSounds(float dt)
 	}
 }
 
+
+//--------------------------------------------------------------------------------------------------------------------------
 float CAR::GetFeedback()
 {
 	return dynamics.GetFeedback() / (mz_nominalmax * 0.025);

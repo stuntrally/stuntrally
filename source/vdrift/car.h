@@ -292,7 +292,7 @@ public:
 	
 	MODEL_JOE03 drivermodel;
 	
-	SUSPENSIONBUMPDETECTION suspensionbumpdetection[4];
+	SUSPENSIONBUMPDETECTION suspbump[4];
 	CRASHDETECTION crashdetection;
 
 	std::map <std::string, SOUNDBUFFER> soundbuffers;

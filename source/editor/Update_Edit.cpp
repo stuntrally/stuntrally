@@ -157,8 +157,8 @@ bool App::frameRenderingQueued(const FrameEvent& evt)
 		if (isKey(MULTIPLY))	road->AddWidth( q*0.4f);	if (isKey(DIVIDE))	road->AddWidth(-q*0.4f);
 		if (isKey(1))			road->AddAngle(-q*3);		if (isKey(3))		road->AddAngleYaw(-q*3);
 		if (isKey(2))			road->AddAngle( q*3);		if (isKey(4))		road->AddAngleYaw( q*3);
-		if (isKey(LBRACKET))	road->AddPipe(-q*0.2);	if (isKey(SEMICOLON ))	road->AddChkR(-q*0.2);  // chk
-		if (isKey(RBRACKET))	road->AddPipe( q*0.2);	if (isKey(APOSTROPHE))	road->AddChkR( q*0.2);
+		if (isKey(LBRACKET))	road->AddPipe(-q*0.2);	if (isKey(K ))	road->AddChkR(-q*0.2);  // chk
+		if (isKey(RBRACKET))	road->AddPipe( q*0.2);	if (isKey(L))	road->AddChkR( q*0.2);
 		if (mz > 0)			road->NextPoint();
 		else if (mz < 0)	road->PrevPoint();
 	}

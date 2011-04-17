@@ -43,7 +43,7 @@ public:
 	static std::string GetDefaultCarControlsFile() { return game_config_dir + "/controls-default.cfg"; }
 	static std::string GetGenericSoundPath() {       return game_data_dir + "/sounds"; }
 	static std::string GetDriverPath() {             return game_data_dir + "/drivers"; }
-	static std::string GetReplayPath() {             return game_data_dir + "/replays"; }
+	static std::string GetReplayPath() {             return user_data_dir + "/replays"; }
 
 	static bool FileExists(const std::string & filename)
 	{

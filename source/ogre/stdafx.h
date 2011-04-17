@@ -20,7 +20,6 @@
 #include <cmath>
 #include <algorithm>
 #include <time.h>
-using namespace std;
 
 ///  win
 #include <OgrePlatform.h>
@@ -34,7 +33,7 @@ using namespace std;
 #endif
 
 #include "tinyxml.h"
-#include <math.h>
+//#include <math.h>
 #ifndef M_PI
 #define M_PI	3.141592654
 #endif
@@ -75,11 +74,10 @@ using namespace std;
 #include <OgreTerrainQuadTreeNode.h>
 #include <OgreTerrainMaterialGeneratorA.h>
 #include <OgreTerrainPaging.h>
-//using namespace Ogre;
 
 #include "btBulletDynamicsCommon.h"
 #include <MyGUI.h>
 #include <MyGUI_OgrePlatform.h>
 
 /// translation
-#define _(s) MyGUI::LanguageManager::getInstance().replaceTags(s)
+#define TR(s) MyGUI::LanguageManager::getInstance().replaceTags(s)

@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "OgreApp.h"
 #include "../vdrift/pathmanager.h"
+#include "../ogre/Locale.h"
 //#include "../road/Road.h"
 using namespace MyGUI;
 
@@ -12,6 +13,8 @@ void App::InitGui()
 {
 	bGuiFocus = false/*true*/;  bMoveCam = true;  //*--
 	if (!mGUI)  return;
+	LanguageManager::getInstance().loadUserTags("core_theme_black_blue_tag.xml");
+	LanguageManager::getInstance().setCurrentLanguage(getSystemLanguage());
 
 	//  load layout - wnds
 	VectorWidgetPtr& rootV = LayoutManager::getInstance().load("Editor.layout");
@@ -336,7 +339,7 @@ void App::InitGui()
 	listTrackChng(trkList,0);
 
 	//  btn change,  new, rename, delete
-	Btn("ChangeTrack",	btnChgTrack);
+	//Btn("ChangeTrack",	btnChgTrack);
 	Btn("TrackNew",		btnTrackNew);
 	Btn("TrackRename",	btnTrackRename);
 	Btn("TrackDelete",	btnTrackDel);

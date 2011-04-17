@@ -21,6 +21,8 @@ void App::createScene()
 	MaterialManager::getSingleton().setDefaultTextureFiltering(TFO_ANISOTROPIC);
 	MaterialManager::getSingleton().setDefaultAnisotropy(pSet->anisotropy);
 
+	mRoot->addResourceLocation(pathTrk[1] + "_previews/", "FileSystem");  //prv user tracks
+
 	//  --------  Follow Camera  --------
 	mFCam = new FollowCamera(mCamera);  mFCam->loadCameras();
 	
@@ -40,9 +42,22 @@ void App::createScene()
 	
 	objs.LoadXml();
 	Log(string("**** Loaded Vegetation objects: ") + toStr(objs.colsMap.size()));
+	Log(string("**** ReplayFrame size: ") + toStr(sizeof(ReplayFrame)));
 
 	createReflectCams();  ///*
 	
+	//#define REC 1
+	//pSet->rpl_play = 0; //1-REC;
+	//pSet->rpl_rec  = 0; //REC;
+	
+	///  load replay
+	if (pSet->rpl_play)
+	{
+		string file = PATHMANAGER::GetReplayPath() + "/" + pSet->track + ".rpl";
+		replay.LoadFile(file);
+	}
+	/**/
+
 	if (pSet->autostart)
 		NewGame();
 }
@@ -94,7 +109,7 @@ void App::LoadCleanUp()
 }
 void App::LoadGame()
 {
-	pGame->NewGame();
+	pGame->NewGame();  // ? timer 0 after ?
 	bGetStPos = true;
 	
 	bool ter = IsTerTrack();
@@ -104,13 +119,23 @@ void App::LoadScene()
 {
 	bool ter = IsTerTrack();
 	if (ter)  // load scene
-		sc.LoadXml(PATHMANAGER::GetTrackPath() + "/" + pSet->track + "/scene.xml");
+		sc.LoadXml(TrkDir()+"scene.xml");
 	else
 	{	sc.Default();  sc.td.hfData = NULL;  }	
 }
 void App::LoadCar()
 {
 	CreateCar();  // par rain
+	
+	//  init replay  once  ---------------------------------
+	float whR[4] = {0.3f,0.3f,0.3f,0.3f};
+	if (pGame->cars.size() > 0)
+	{
+		CAR* pCar = &(*pGame->cars.begin());
+		for (int w=0; w<4; ++w)
+			whR[w] = pCar->GetTireRadius(WHEEL_POSITION(w));
+	}
+	replay.InitHeader(pSet->track.c_str(), pSet->car.c_str(), whR);
 }
 void App::LoadTerrain()
 {
@@ -187,7 +212,7 @@ void App::NewGameDoLoad()
 bool App::IsTerTrack()
 {
 	//  track: vdrift / terrain
-	String sr = PATHMANAGER::GetTrackPath() + "/" + pSet->track + "/road.xml";
+	String sr = TrkDir()+"road.xml";
 	ifstream fr(sr.c_str());
 	bool ter = fr.good(); //!fail()
 	if (ter)  fr.close();
@@ -208,8 +233,8 @@ void App::CreateRoad()
 	road = new SplineRoad(pGame);  // sphere.mesh
 	road->Setup("", 0.7,  terrain, mSceneMgr, mCamera);
 	
-	String sr = PATHMANAGER::GetTrackPath() + "/" + pSet->track + "/road.xml";
-	road->LoadFile(sr);
+	String sr = TrkDir()+"road.xml";
+	road->LoadFile(TrkDir()+"road.xml");
 
 	UpdPSSMMaterials();  ///+~-
 }

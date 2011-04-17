@@ -1,56 +1,74 @@
 #ifndef _Replay_h_
 #define _Replay_h_
 
-//#include "BaseApp.h"
-using namespace Ogre;
+#include "../vdrift/mathvector.h"
+#include "../vdrift/quaternion.h"
+
+const static int ciRplHdrSize = 1024;
+const static int cDefSize = 8*1024;
 
 
-/*  replay/ghost data  */
+//  replay/ghost data
+
 struct ReplayHeader
 {
 	char head[5];  //"SRrpl"
-	char track[80];	// track name  (user/original, hmap crc? diff-)
+	char track[64];	// track name  (user/original, hmap crc? diff-)
 	char car[32];	// car name  (.car file crc?, settings diff-)
 	int ver, frameSize;  // bin data format - sizeof(ReplayFrame)
-	//custom replay fps?
-	ReplayHeader();
+	float whR[4];  // car wheels radius
+	//  custom replay fps 60 ..
+	ReplayHeader();  void Default();
 };
 
-/*  bin data, for each frame */
+
+//  bin data, for each frame
 struct ReplayFrame
 {
-	double time;	// time from start
-	Vector3 pos, whPos[4];		// car pos
-	Quaternion rot, whRot[4];	// car rot
-	float rpm, vel;  int gear;  // for hud and sound
+	//  time  since game start
+	double time;
+	//  car & wheels
+	MATHVECTOR <float,3> pos, whPos[4];
+	QUATERNION <float> rot, whRot[4];
 
-/*	3-x4 gain wheels sounds
-	4-x4 particle emitters rate, slide */
+	//  hud
+	float rpm,vel, clutch;  int gear;  //char
+
+	//  sound, input
+	float throttle, steer;
+	MATHVECTOR <float,3> posEngn;  //snd engine pos --
+	float speed, dynVel;
+
+	//  wheel trails, particles, snd
+	char surfType[4], whMtr[4];  //TRACKSURFACE::TYPE
+	float squeal[4], slide[4], whVel[4];
+	float suspVel[4], suspDisp[4];
+
+	/// sizeof:  tm 8 car 12*5 wh 16*5 h 16 snd 16 12 whtr 8 16*5
+	/// = 280 Bytes per frame
+	//  280 * 160 fps = 44.8 kB/s
+	//  1min = 2,69 MB, 10 min = 26,9 MB
 };
+
 
 class Replay
 {
 public:
 	Replay();
 	
-	void LoadFile(string file), SaveFile(string file);
+	void LoadFile(std::string file), SaveFile(std::string file);
 
-	void AddFrame(const ReplayFrame& frame);
+	void AddFrame(const ReplayFrame& frame);  // record
+	bool GetFrame(double time, ReplayFrame* fr);  // play
 
-private:
+	float GetTimeLength();  // total time in seconds
+
+	void InitHeader(const char* track, const char* car, float* whR_4);
+
+//private:
 	ReplayHeader header;
+private:
 	std::vector<ReplayFrame> frames;
 };
 
-/*
-sum all
-= 18 * 4B = 72 bytes per frame
-> 72 * 160 fps = 11.5 kB/s
-> 1min = 691 kB, 10 min = 7 MB
-
- saved in Game fps loop
- custom replay fps ?
- save/load in memory, disk ok
-
-*/
 #endif

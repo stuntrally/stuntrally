@@ -22,6 +22,8 @@ void App::createScene()
 	MaterialManager::getSingleton().setDefaultTextureFiltering(TFO_ANISOTROPIC);
 	MaterialManager::getSingleton().setDefaultAnisotropy(pSet->anisotropy);
 
+	mRoot->addResourceLocation(pathTrkPrv[1], "FileSystem");  //prv user tracks
+
 	//  gui
 	InitGui();
 	TerCircleInit();
@@ -143,7 +145,9 @@ void App::UpdWndTitle()
 #if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
 	HWND hwnd = 0;  // update wnd title
 	mWindow->getCustomAttribute("WINDOW", (void*)&hwnd); 
-	SetWindowText(hwnd, (String("SR Editor  track: ") + pSet->track).c_str());
+	String s = String("SR Editor  track: ") + pSet->track;
+	if (pSet->track_user)  s += "  *user*";
+	SetWindowText(hwnd, s.c_str());
 #endif
 	// TODO: Window title for linux
 	// overlay ?  not visible in fullscreen...
@@ -153,14 +157,13 @@ String App::TrkDir() {
 	int u = pSet->track_user ? 1 : 0;			return pathTrk[u] + pSet->track + "/";  }
 
 String App::PathListTrk(int user) {
-	int u = user == -1 ? bListTrackU : user;	return pathTrk[u] + sListTrack;
-}
+	int u = user == -1 ? bListTrackU : user;	return pathTrk[u] + sListTrack;  }
+	
 String App::PathListTrkPrv(int user){
-	int u = user == -1 ? bListTrackU : user;	return pathTrkPrv[u] + sListTrack;
-}
+	int u = user == -1 ? bListTrackU : user;	return pathTrkPrv[u] + sListTrack;  }
+	
 String App::PathCopyTrk(int user){
-	int u = user == -1 ? bCopyTrackU : user;	return pathTrk[u] + sCopyTrack;
-}
+	int u = user == -1 ? bCopyTrackU : user;	return pathTrk[u] + sCopyTrack;  }
 
 
 ///  Save Terrain

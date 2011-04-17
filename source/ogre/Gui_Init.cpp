@@ -33,6 +33,9 @@ void App::InitGui()
 	mGUI->setVisiblePointer(isFocGui);
 	mWndTabs = (TabPtr)mLayout->findWidget("TabWnd");
 
+	mWndRpl = mGUI->findWidget<Window>("RplWnd",false);
+	if (mWndRpl)  mWndRpl->setVisible(false);//
+
 	//  tooltip
 	for (VectorWidgetPtr::iterator it = rootV.begin(); it != rootV.end(); ++it)
 	{
@@ -50,6 +53,7 @@ void App::InitGui()
 	MyGUI::InputManager::getInstance().injectMouseMove(xm, ym, 0);
 	OIS::MouseState &ms = const_cast<OIS::MouseState&>(mMouse->getMouseState());
 	ms.X.abs = xm;  ms.Y.abs = ym;
+
 
 	//  assign controls  ----------------------
 
@@ -176,6 +180,16 @@ void App::InitGui()
 	Chk("VSync", chkVidVSync, vsync);
 
 	//button_ramp, speed_sens..
+	
+
+	///*  Replay window  *
+    //------------------------------------------------------------------------
+	//Chk()
+	rplList = mGUI->findWidget<List>("RplList");
+	if (rplList)
+	{
+		//..
+	}
 
 	
 	///  video resolutions combobox
@@ -249,23 +263,38 @@ void App::InitGui()
     {	trkList->removeAllItems();
 		int ii = 0, si = 0;  bool bFound = false;
 
-		std::list <std::string> li;
-		PATHMANAGER::GetFolderIndex(PATHMANAGER::GetTrackPath(), li);
-		for (std::list <std::string>::iterator i = li.begin(); i != li.end(); ++i)
+		strlist li, lu;
+		PATHMANAGER::GetFolderIndex(pathTrk[0], li);
+		PATHMANAGER::GetFolderIndex(pathTrk[1], lu);
+		//  original
+		for (strlist::iterator i = li.begin(); i != li.end(); ++i)
 		{
-			string s = PATHMANAGER::GetTrackPath() + "/" + *i + "/track.txt";
+
+			string s = pathTrk[0] + *i + "/track.txt";
 			ifstream check(s.c_str());
 			if (check)  {
-				//string displayname;  getline(check, displayname);
-				trkList->addItem(*i);
-				if (*i == pSet->track)  {  si = ii;
+				trkList->addItem(*i, 0);
+				if (!pSet->track_user && *i == pSet->track)  {  si = ii;
 					trkList->setIndexSelected(si);
-					bFound = true;  }
+					bFound = true;  bListTrackU = 0;  }
+				ii++;  }
+		}
+		//  user
+		for (strlist::iterator i = lu.begin(); i != lu.end(); ++i)
+		{
+
+			string s = pathTrk[1] + *i + "/track.txt";
+			ifstream check(s.c_str());
+			if (check)  {
+				trkList->addItem("*" + (*i) + "*", 1);
+				if (pSet->track_user && *i == pSet->track)  {  si = ii;
+					trkList->setIndexSelected(si);
+					bFound = true;  bListTrackU = 1;  }
 				ii++;  }
 		}
 		//  not found last track, set 1st
 		if (!bFound)
-			pSet->track = *li.begin();
+		{	pSet->track = *li.begin();  pSet->track_user = 0;  }
 		trkList->beginToItemAt(max(0, si-11));  // center
 		trkList->eventListChangePosition = newDelegate(this, &App::listTrackChng);
 		//?trkList->eventMouseButtonDoubleClick = newDelegate(this, &App::btnNewGameStart);
@@ -303,9 +332,8 @@ void App::InitGui()
 
 void App::ReadTrkStats()
 {
-	string sTrk = PATHMANAGER::GetTrackPath() + "/";
-	String sRd = sTrk + sListTrack + "/road.xml";
-	String sSc = sTrk + sListTrack + "/scene.xml";
+	String sRd = PathListTrk() + "/road.xml";
+	String sSc = PathListTrk() + "/scene.xml";
 
 	SplineRoad rd(pGame);  rd.LoadFile(sRd,false);  // load
 	Scene sc;  sc.LoadXml(sSc);  // fails to defaults

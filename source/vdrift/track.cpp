@@ -68,14 +68,10 @@ bool TRACK::Load(
 
 	//load parameters
 	if (!LoadParameters(trackpath))
-	{
 		return false;
-	}
 	
 	if (!LoadSurfaces(trackpath))
-	{
 		info_output << "No surfaces file. Continuing with standard surfaces" << endl;
-	}
 
 	//load roads
 	if (!LoadRoads(trackpath, reverse))
@@ -86,14 +82,10 @@ bool TRACK::Load(
 
 	//load the lap sequence
 	if (!LoadLapSequence(trackpath, reverse))
-	{
 		return false;
-	}
 
 	if (!CreateRacingLines(/*&rootnode,* effects_texturepath, texsize*/))
-	{
 		return false;
-	}
 
 	//load objects
 	if (!LoadObjects(trackpath, /*rootnode,*/ anisotropy))
@@ -192,7 +184,6 @@ bool TRACK::DeferredLoad(
 	Clear();
 
 	texture_size = texsize;
-
 	info_output << "Loading track from path: " << trackpath << endl;
 
 	//load parameters
@@ -200,9 +191,7 @@ bool TRACK::DeferredLoad(
 		return false;
 
 	if (!LoadSurfaces(trackpath))
-	{
 		info_output << "No Surfaces File. Continuing with standard surfaces" << endl;
-	}
 	size_t num = tracksurfaces.size();
 	
 	//load roads
@@ -214,14 +203,10 @@ bool TRACK::DeferredLoad(
 
 	//load the lap sequence
 	if (!LoadLapSequence(trackpath, reverse))
-	{
 		return false;
-	}
 
 	if (!CreateRacingLines(/*&rootnode, effects_texturepath, texsize*/))
-	{
 		return false;
-	}
 
 	//load objects
 	if (!BeginObjectLoad(trackpath, /*rootnode,*/ anisotropy, dynamicshadowsenabled, doagressivecombining))

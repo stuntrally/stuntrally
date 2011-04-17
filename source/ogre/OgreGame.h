@@ -6,7 +6,7 @@
 #include "../paged-geom/PagedGeometry.h"
 #include "common/SceneXml.h"
 #include "common/BltObjects.h"
-//#include "ReplayGame.h"
+#include "ReplayGame.h"
 
 using namespace Ogre;
 using namespace MyGUI;
@@ -24,9 +24,14 @@ public:
 	class GAME* pGame;  ///*
 	void updatePoses(float time), newPoses();
 	void UpdThr();  bool bNew;
-	Vector3 newPos,vCarY;  Quaternion newRot;
 
-	//Replay replay;
+	///  new car display data
+	///  set in newPoses (from vdrift or replay play), used in updatePoses
+	Vector3 newPos,newCarY;  Quaternion newRot, qFixCar,qFixWh;
+	Vector3 newWhPos[4];  Quaternion newWhRot[4];  float newWhR[4];
+	float newWhVel[4], newWhSlide[4], newWhSqueal[4];  int newWhMtr[4];
+
+	Replay replay;  ReplayFrame fr;
 
 	Scene sc;  /// scene.xml
 	BltObjects objs;  // veget collision in bullet
@@ -87,7 +92,6 @@ protected:
 	void CreateTrees(), CreateRoad(), CreateProps();
 	void CreateSkyDome(String sMater, Vector3 scale);
 	void NewGame();  void NewGameDoLoad(); bool IsTerTrack();
-	String TrkDir();
 	
 	// Loading
 	bool bLoading;
@@ -158,8 +162,10 @@ protected:
 
 	//  Gui events
 	typedef WidgetPtr WP;
-	#define SL  WP wp, size_t val
+	typedef std::list <std::string> strlist;
+		//  slider event and its text field for value
 	#define SLV(name)  void sl##name(SL);  StaticTextPtr val##name;
+	#define SL  WP wp, size_t val	//  slider event args
 
 	//  sliders
 	SLV(Anisotropy);  SLV(ViewDist);  SLV(TerDetail);  SLV(TerDist);  SLV(RoadDist);  // detail
@@ -187,11 +193,15 @@ protected:
 	ButtonPtr chDbgT,chDbgB, chBlt,chFps, chTimes,chMinimp, bnQuit;
 
 	//  game
-	String sListCar,sListTrack;  ListPtr carList,trkList, resList;
+	ListPtr carList,trkList, resList, rplList;
 	void listCarChng(List* li, size_t pos),		btnChgCar(WP);
 	void listTrackChng(List* li, size_t pos),	btnChgTrack(WP);
 	void btnNewGame(WP),btnNewGameStart(WP), btnShadows(WP);
 	void trkListNext(int rel), carListNext(int rel);
+
+	String sListCar,sListTrack;  int bListTrackU;
+	String pathTrk[2];  String TrkDir();
+	String PathListTrk(int user=-1);//, PathListTrkPrv(int user=-1);
 
 	#define StTrk 12
 	StaticImagePtr imgCar,imgPrv,imgMini,imgTer;  EditPtr trkDesc;

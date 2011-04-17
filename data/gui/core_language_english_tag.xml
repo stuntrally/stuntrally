@@ -121,10 +121,10 @@
 	<Tag name="BulletDebug">Bullet debug</Tag>
 	<Tag name="CarDebugText">Car debug text </Tag>
 	<Tag name="Startup">Startup</Tag>
-	<Tag name="OgreDialog">show Ogre dialog</Tag>
-	<Tag name="AutoLoad">auto Load track</Tag>
+	<Tag name="OgreDialog">Show Ogre dialog</Tag>
+	<Tag name="AutoLoad">Auto Load track</Tag>
 	<Tag name="EscQuit">Esc quits</Tag>
-	<Tag name="BulletLines">bullet debug lines</Tag>
+	<Tag name="BulletLines">Bullet debug lines</Tag>
 	<Tag name="ShowPictures">Show pictures while loading</Tag>
 	
 	<Tag name="Input">Input</Tag>
@@ -134,7 +134,7 @@
 	<Tag name="InputBoost">Ctrl - boost</Tag>
 	<Tag name="InputRoll">Q,W - roll car (when needed)</Tag>
 	<Tag name="InputShift">A,Z - gear up,down (manual gearbox)</Tag>
-	<Tag name="InputShowGUI">F1 or Tab - Show/Hide Options</Tag>
+	<Tag name="InputShowGUI">F1 or Tab - show/hide Options</Tag>
 	<Tag name="InputNextCam">X,C or PgUp,PgDn - prev/next camera view</Tag>
 	<Tag name="InputMainCam">with shift - main cameras</Tag>
 	<Tag name="InputNextTab">F2,F3 - prev/next tab</Tag>
@@ -162,7 +162,7 @@
 	
 	
 	<Tag name="PreviewCam">Preview Camera</Tag>
-	<Tag name="Leave">leave (exit)</Tag>
+	<Tag name="Leave">Leave (exit)</Tag>
 	<Tag name="EnterSave">Enter - save</Tag>
 	<Tag name="Screenshot">screenshot</Tag>
 	<Tag name="TerrainBrush">Terrain brush</Tag>
@@ -206,8 +206,8 @@
 	<Tag name="Layer">Layer</Tag>
 	<Tag name="Road">Road</Tag>
 	<Tag name="TerNormal">Normal</Tag>
-	<Tag name="auto">auto</Tag>
-	<Tag name="scale">scale</Tag>
+	<Tag name="auto">Auto</Tag>
+	<Tag name="scale">Scale</Tag>
 	<Tag name="DustSize">dust size</Tag>
 	<Tag name="dust">dust</Tag>
 	<Tag name="mud">mud</Tag>
@@ -267,19 +267,19 @@
 	<Tag name="DeleteRoad">Delete Road</Tag>
 	<Tag name="NeedReload">* need reload</Tag>
 	<Tag name="InputHelp">Input/help</Tag>
-	<Tag name="InputToggleCam">Tab - Camera / Edit mode toggle</Tag>
-	<Tag name="InputToggleGUIMode">F1 or ` - Gui mode (toggle Options)</Tag>
+	<Tag name="InputToggleCam">Tab - camera / edit mode toggle</Tag>
+	<Tag name="InputToggleGUIMode">F1 or ` - GUI mode (toggle Options)</Tag>
 	<Tag name="InputNextOptTab">F2,F3 - prev,next Options tab</Tag>
-	<Tag name="InputSaveTrack">F4 - Save track</Tag>
+	<Tag name="InputSaveTrack">F4 - save track</Tag>
 	<Tag name="InputReadyToPlay">(ready to play in game)</Tag>
-	<Tag name="InputReloadTrack">F5 - Reload track</Tag>
+	<Tag name="InputReloadTrack">F5 - reload track</Tag>
 	<Tag name="InputUndo">(one time undo)</Tag>
-	<Tag name="InputUpdate">F8 - Update track</Tag>
-	<Tag name="InputAfterChanges">(after [Terrain,Vegetation] changes)</Tag>
+	<Tag name="InputUpdate">F8 - update track</Tag>
+	<Tag name="InputAfterChanges">(after Terrain/Vegetation changes)</Tag>
 	<Tag name="InputMain">Main</Tag>
 	<Tag name="InputTogglePreview">F7 - enter/leave preview camera</Tag>
 	<Tag name="InputTrackScrn">(for track screenshot)</Tag>
-	<Tag name="InputCameraMode">camera mode</Tag>
+	<Tag name="InputCameraMode">Camera mode</Tag>
 	<Tag name="InputCamControl">W,S  A,D  Q,E - move   Arrows - rotate</Tag>
 	<Tag name="InputCamControl2">LMB - rotate  RMB - move  MMB - zoom</Tag>
 	<Tag name="InputValueChange">Each (mouse/key) move or value change with </Tag>
@@ -290,13 +290,13 @@
 	<Tag name="InputTerHeight">E - Height set</Tag>
 	<Tag name="InputTerPaint">A - Paint Textures (layers)</Tag>
 	<Tag name="InputPaintColor">C - Paint Color</Tag>
-	<Tag name="InputToggleVeget">V - disable / enable vegetation</Tag>
+	<Tag name="InputToggleVeget">V - Disable / enable vegetation</Tag>
 	<Tag name="InputWheelSize">,=  (or Wheel)  -  Size</Tag>
 	<Tag name="InputWheelForce">[,]  (or shift-Wheel)  -  Force (intensity)</Tag>
 	<Tag name="InputWheelPower">; &apos;  (or alt-Wheel)  -  Power (shape)</Tag>
-	<Tag name="InputMinimapType">alt-F2,F3 - prev,next minimap type</Tag>
+	<Tag name="InputMinimapType">alt-F2,F3 - Prev,next minimap type</Tag>
 	<Tag name="InputBrushParams">Brush parameters</Tag>
-	<Tag name="InputRoadEdit">R - Edit Road mode</Tag>
+	<Tag name="InputRoadEdit">R - edit road mode</Tag>
 	<Tag name="InputRoadIns">Ins - insert new (after picked, alt - before)</Tag>
 	<Tag name="InputRoadInsAlt">alt-shift - at start   alt-ctrl - at end</Tag>
 	<Tag name="InputRoadNext">PgUp,PgDn (or Wheel) - previous/next point</Tag>
@@ -322,8 +322,8 @@
 	<Tag name="InputRoadMat">-,=  - road/pipe material</Tag>
 	<Tag name="InputRoadColumn">End - on/off column</Tag>
 	<Tag name="InputRoadOnTer">Home - toggle on Terrain snap</Tag>
-	<Tag name="InputRoadPipeAngle">[,]   - Pipe angle (no pipe when 0)</Tag>
-	<Tag name="InputRoadChkRadius">; &apos;    - checkpoint radius (chkR 0 - none)</Tag>
+	<Tag name="InputRoadPipeAngle">[,]   - pipe angle (no pipe when 0)</Tag>
+	<Tag name="InputRoadChkRadius">K, L   - checkpoint radius (chkR 0 - none)</Tag>
 	<Tag name="InputRoadMostSel">most work also on selection</Tag>
 	<Tag name="InputRoadCopySel">ctrl-Ins - copy selection   ctrl-Del - delete sel.</Tag>
 	<Tag name="InputRoadShiftReverse">shift-Ins - paste   shift-ctrl-Ins - reversed</Tag>
@@ -340,7 +340,7 @@
 	<Tag name="InputStartDir">Space  -  change road direction (+ or -)</Tag>
 	<Tag name="InputStartMeet">car will meet (next+ / prev-) point numbers</Tag>
 	<Tag name="SREditorVersion">Stunt Rally - Track Editor - version</Tag>
-	<Tag name="TrackAutoLoad">auto Load track</Tag>
+	<Tag name="TrackAutoLoad">Auto Load track</Tag>
 	<Tag name="MinimapAndSize">Minimap, size</Tag>
 	<Tag name="RoadPointSize">Road points size</Tag>
 	<Tag name="CamSpeed">Camera speed</Tag>

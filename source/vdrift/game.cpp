@@ -288,15 +288,11 @@ bool GAME::OneLoop()
 
 		qtim.update();
 		double dt = qtim.dt;
-		clocktime += dt;  //eventsystem.Get_dt();
+		clocktime += dt;
 
-		//eventsystem.BeginFrame();
+		Tick(dt);  // do CPU intensive stuff in parallel with the GPU
 
-		Tick(dt/*eventsystem.Get_dt()*/); //do CPU intensive stuff in parallel with the GPU
-
-		//FinishDraw(); //sync CPU and GPU (flip the page)
-		
-		//eventsystem.EndFrame();
+		//FinishDraw();  // sync CPU and GPU (flip the page)
 		
 		PROFILER.endCycle();
 		
@@ -859,10 +855,9 @@ bool GAME::LoadTrack(const std::string & trackname)
 
 	//load the track
 	if (!track.DeferredLoad(
-			PATHMANAGER::GetTrackPath()+"/"+trackname,
+			(settings->track_user ? PATHMANAGER::GetTrackPathUser() : PATHMANAGER::GetTrackPath()) + "/" + trackname,
 			settings->trackreverse,
-			/**/0, "large", true,
-			false))
+			/**/0, "large", true, false))
 	{
 		error_output << "Error loading track: " << trackname << endl;
 		return false;
