@@ -14,7 +14,7 @@ public:
 
 	//  show
 	bool show_fps, show_gauges, trackmap, racingline,
-		show_cam, show_times, car_dbgbars, car_dbgtxt, ogre_dialog;
+		show_cam, show_times, show_digits, car_dbgbars, car_dbgtxt, ogre_dialog;
 	float size_gauges, size_minimap;
 
 	//  graphics

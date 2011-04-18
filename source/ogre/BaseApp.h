@@ -16,6 +16,10 @@ public:
 	BaseApp();	virtual ~BaseApp();
 	virtual void Run( bool showDialolg );
 	
+	// translation
+	// can't have it in c'tor, because mygui is not initialized
+	virtual void setTranslations() = 0;
+	
 	bool bWindowResized;  bool bSizeHUD;
 	class HDRLogic* mHDRLogic;
 	

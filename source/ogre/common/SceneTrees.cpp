@@ -123,6 +123,9 @@ void App::CreateTrees()
 		tws = sc.td.fTerWorldSize;
 		int r = imgRoadSize, cntr = 0, cntshp = 0;
 
+		//  set random seed
+		srand(0);  /// todo: par in scene.xml and in editor gui...
+
 		//  layers
 		for (size_t l=0; l < sc.pgLayers.size(); l++)
 		{
@@ -138,8 +141,6 @@ void App::CreateTrees()
 			const BltCollision* col = objs.Find(pg.name);
 			Vector3 ofs(0,0,0);  if (col)  ofs = col->offset;  // mesh offset
 
-			//  set random seed
-			srand(0);  /// todo: par in scene.xml and in editor gui...
 			//  num trees
 			int cnt = fTrees * 6000 * pg.dens;
 			for (int i = 0; i < cnt; i++)

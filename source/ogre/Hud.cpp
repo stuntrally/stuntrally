@@ -180,8 +180,8 @@ void App::ShowHUD(bool hideAll)
 		if (ovGear)	{  if (1||show)  ovGear->show();  else  ovGear->hide();  }
 		if (ovVel)	{  if (1||show)  ovVel->show();   else  ovVel->hide();   }
 		if (ovAbsTcs){ if (show)  ovAbsTcs->show();   else  ovAbsTcs->hide(); }
-		if (hudGear) {if (show) hudGear->show(); else hudGear->hide(); }
-		if (hudVel) {if (show) hudVel->show(); else hudVel->hide(); }
+		if (hudGear) {if (pSet->show_digits) hudGear->show(); else hudGear->hide(); }
+		if (hudVel) {if (pSet->show_digits) hudVel->show(); else hudVel->hide(); }
 
 		show = pSet->car_dbgbars;
 		if (ovCarDbg){  if (show)  ovCarDbg->show();  else  ovCarDbg->hide();   }
@@ -296,14 +296,14 @@ void App::UpdateHUD(CAR* pCar, float time)
 		s[0]=0;
 		if (!road)  // no score on terrain
 		if (tim.GetIsDrifting(0))
-			sprintf(s, "score  %3.0f+%2.0f", tim.GetDriftScore(0), tim.GetThisDriftScore(0) );
+			sprintf(s, String(TR("#{TBScore}  %3.0f+%2.0f")).c_str(), tim.GetDriftScore(0), tim.GetThisDriftScore(0) );
 		else
-			sprintf(s, "score  %3.0f", tim.GetDriftScore(0) );
+			sprintf(s, String(TR("#{TBScore}  %3.0f")).c_str(), tim.GetDriftScore(0) );
 			
 		hudTimes->setCaption(String(s) +
-			String("\nTime ") + GetTimeString(tim.GetPlayerTime())+
-			String("\nLast ") + GetTimeString(tim.GetLastLap())+
-			String("\nBest ") + GetTimeString(tim.GetBestLap(pSet->trackreverse)) );
+			String(TR("\n#{TBTime} ")) + GetTimeString(tim.GetPlayerTime())+
+			String(TR("\n#{TBLast} ")) + GetTimeString(tim.GetLastLap())+
+			String(TR("\n#{TBBest} ")) + GetTimeString(tim.GetBestLap(pSet->trackreverse)) );
 	}
 	
 	//-----------------------------------------------------------------------------------------------
@@ -378,7 +378,7 @@ void App::UpdateHUD(CAR* pCar, float time)
 		int show = fChkTime > 0.f ? 1 : 0;
 		if (show)  fChkTime -= time;
 		if (show != showO)
-			hudCheck->setCaption(show ? "Wrong Checkpoint" : "");
+			hudCheck->setCaption(show ? String(TR("#{WrongChk}")) : "");
 		showO = show;
 	}
 

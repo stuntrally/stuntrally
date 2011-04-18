@@ -3,6 +3,7 @@
 #include "FollowCamera.h"
 #include "../vdrift/pathmanager.h"
 #include "CompositorLogics.h"
+#include "Locale.h"
 
 //  Camera
 //-------------------------------------------------------------------------------------
@@ -248,30 +249,36 @@ BaseApp::~BaseApp()
 //-------------------------------------------------------------------------------------
 bool BaseApp::configure()
 {
-	bool ok = false, notFound = false;
-	
-	RenderSystem* rs;
-	if (rs = mRoot->getRenderSystemByName(pSet->rendersystem))
+	if (pSet->ogre_dialog)
 	{
-		mRoot->setRenderSystem(rs);
+		if (!mRoot->showConfigDialog()) return false;
+		mWindow = mRoot->initialise(true, "Stunt Rally");
 	}
 	else
 	{
-		Log("RenderSystem '" + pSet->rendersystem + "' is not available. Exiting.");
-		return false;
+		RenderSystem* rs;
+		if (rs = mRoot->getRenderSystemByName(pSet->rendersystem))
+		{
+			mRoot->setRenderSystem(rs);
+		}
+		else
+		{
+			Log("RenderSystem '" + pSet->rendersystem + "' is not available. Exiting.");
+			return false;
+		}
+
+		if (pSet->rendersystem == "OpenGL Rendering Subsystem")  // not on dx
+			mRoot->getRenderSystem()->setConfigOption("RTT Preferred Mode", pSet->buffer);
+			
+		mRoot->initialise(false);
+
+		NameValuePairList settings;
+		settings.insert(std::make_pair("title", "Stunt Rally"));
+		settings.insert(std::make_pair("FSAA", toStr(pSet->fsaa)));
+		settings.insert(std::make_pair("vsync", pSet->vsync ? "true" : "false"));
+
+		mWindow = mRoot->createRenderWindow("Stunt Rally", pSet->windowx, pSet->windowy, pSet->fullscreen, &settings);
 	}
-
-	if (pSet->rendersystem == "OpenGL Rendering Subsystem")  // not on dx
-		mRoot->getRenderSystem()->setConfigOption("RTT Preferred Mode", pSet->buffer);
-	mRoot->initialise(false);
-
-	NameValuePairList settings;
-	settings.insert(std::make_pair("title", "Stunt Rally"));
-	settings.insert(std::make_pair("FSAA", toStr(pSet->fsaa)));
-	settings.insert(std::make_pair("vsync", pSet->vsync ? "true" : "false"));
-
-	mWindow = mRoot->createRenderWindow("Stunt Rally", pSet->windowx, pSet->windowy, pSet->fullscreen, &settings);
-
 	mLoadingBar.bBackgroundImage = pSet->loadingbackground;
 	return true;
 }
@@ -280,7 +287,7 @@ bool BaseApp::configure()
 //-------------------------------------------------------------------------------------
 bool BaseApp::setup()
 {
-	if (pSet->rendersystem == "DXIfAvailable")
+	if (pSet->rendersystem == "Default")
 	{
 		#if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
 		pSet->rendersystem = "Direct3D9 Rendering Subsystem";
@@ -298,10 +305,21 @@ bool BaseApp::setup()
 	#define D_SUFFIX ""
 #endif
 
-	if (pSet->rendersystem == "OpenGL Rendering Subsystem")
+	// when show ogre dialog is on, load both rendersystems so user can select
+	if (pSet->ogre_dialog)
+	{
 		mRoot->loadPlugin(PATHMANAGER::GetOgrePluginDir() + "/RenderSystem_GL" + D_SUFFIX);
-	else if (pSet->rendersystem == "Direct3D9 Rendering Subsystem")
+		#if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
 		mRoot->loadPlugin(PATHMANAGER::GetOgrePluginDir() + "/RenderSystem_Direct3D9" + D_SUFFIX);
+		#endif
+	}
+	else
+	{
+		if (pSet->rendersystem == "OpenGL Rendering Subsystem")
+			mRoot->loadPlugin(PATHMANAGER::GetOgrePluginDir() + "/RenderSystem_GL" + D_SUFFIX);
+		else if (pSet->rendersystem == "Direct3D9 Rendering Subsystem")
+			mRoot->loadPlugin(PATHMANAGER::GetOgrePluginDir() + "/RenderSystem_Direct3D9" + D_SUFFIX);
+	}
 
 	mRoot->loadPlugin(PATHMANAGER::GetOgrePluginDir() + "/Plugin_ParticleFX" + D_SUFFIX);
 	mRoot->loadPlugin(PATHMANAGER::GetOgrePluginDir() + "/Plugin_CgProgramManager" + D_SUFFIX);
@@ -319,14 +337,18 @@ bool BaseApp::setup()
 
 	TextureManager::getSingleton().setDefaultNumMipmaps(5);
 
-	createResourceListener();
-	loadResources();
-
 	// Gui
 	mPlatform = new MyGUI::OgrePlatform();
 	mPlatform->initialise(mWindow, mSceneMgr);
 	mGUI = new MyGUI::Gui();
 	mGUI->initialise("core.xml", PATHMANAGER::GetLogDir() + "/MyGUI.log");
+	MyGUI::LanguageManager::getInstance().setCurrentLanguage(getSystemLanguage());
+
+	// After having initialised mygui, we can set translated strings
+	setTranslations();
+
+	createResourceListener();
+	loadResources();
 
 	createFrameListener();
 	createScene();//^before

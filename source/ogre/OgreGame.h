@@ -24,6 +24,10 @@ public:
 	class GAME* pGame;  ///*
 	void updatePoses(float time), newPoses();
 	void UpdThr();  bool bNew;
+	
+	// translation
+	// can't have it in c'tor, because mygui is not initialized
+	void setTranslations();
 
 	///  new car display data
 	///  set in newPoses (from vdrift or replay play), used in updatePoses
@@ -47,7 +51,6 @@ protected:
 	//bool KeyPress(const OIS::KeyEvent &arg);
 		
 	class BtOgre::DebugDrawer *dbgdraw;  /// blt dbg
-
 
 	//  car  --------
 	SceneNode *ndCar, *ndWh[4], *ndWhE[4], *ndRs[4],*ndRd[4];  // car, wheels,emitters
@@ -186,7 +189,7 @@ protected:
 		chkOgreDialog(WP), chkAutoStart(WP), chkEscQuits(WP), chkBltLines(WP),  // startup
 		chkVidBloom(WP), chkVidHDR(WP), chkVidBlur(WP),  // video
 		chkVidFullscr(WP), chkVidVSync(WP), UpdBloomVals(),
-		chkLoadPics(WP), chkVegetCollis(WP);
+		chkLoadPics(WP), chkVegetCollis(WP), chkDigits(WP);
 
 	void comboTexFilter(SL);
 	ButtonPtr bRkmh, bRmph;  void radKmh(WP), radMph(WP), btnTrGrReset(WP), btnQuit(WP), btnResChng(WP);

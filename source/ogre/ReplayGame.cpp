@@ -11,7 +11,7 @@ ReplayHeader::ReplayHeader()
 }
 void ReplayHeader::Default()
 {
-	head[0] = 'S';  head[1] = 'R';  head[2] = 'r';  head[3] = 'p';  head[4] = 'l';
+	head[0] = 'S';  head[1] = 'R';  head[2] = '\\';  head[3] = '_';  head[4] = ' ';
 	ver = 1;
 	frameSize = sizeof(ReplayFrame);
 	memset(track, 0, sizeof(track));
@@ -77,7 +77,8 @@ void Replay::SaveFile(std::string file)
 //  add (Record)
 void Replay::AddFrame(const ReplayFrame& frame)
 {
-	frames.push_back(frame);
+	if (frame.time > GetTimeLength())  // dont add before last
+		frames.push_back(frame);
 }
 
 //  last frame time, sec

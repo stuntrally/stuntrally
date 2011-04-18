@@ -3,7 +3,6 @@
 #include "../vdrift/game.h"
 #include "../road/Road.h"
 #include "OgreGame.h"
-#include "Locale.h"
 using namespace MyGUI;
 
 
@@ -17,7 +16,6 @@ void App::InitGui()
 	//  change skin
 	if (!mGUI)  return;
 	LanguageManager::getInstance().loadUserTags("core_theme_black_blue_tag.xml");
-	LanguageManager::getInstance().setCurrentLanguage(getSystemLanguage());
 	mGUI->load("core_skin.xml");
 
 	//  load Options layout
@@ -149,6 +147,8 @@ void App::InitGui()
 	Chk("CarGear", chkGear, autoshift);
 	Chk("CarRear", chkRear, autorear);	Chk("CarClutch", chkClutch, autoclutch);
 	Chk("VegetCollis", chkVegetCollis, veget_collis);
+	
+	Chk("Digits", chkDigits, show_digits);
 
 	//  kmh/mph radio
 	bRkmh = mGUI->findWidget<Button>("kmh");
@@ -250,7 +250,7 @@ void App::InitGui()
 
 	//  cars text, chg btn
     valCar = (StaticTextPtr)mLayout->findWidget("CarText");
-	valCar->setCaption("Car: " + pSet->car);  sListCar = pSet->car;
+	valCar->setCaption(TR("#{Car}: ") + pSet->car);  sListCar = pSet->car;
 
     ButtonPtr btnCar = (ButtonPtr)mLayout->findWidget("ChangeCar");
     if (btnCar)  btnCar->eventMouseButtonClick = newDelegate(this, &App::btnChgCar);

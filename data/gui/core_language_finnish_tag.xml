@@ -333,7 +333,7 @@
 	<Tag name="Tools">Tools</Tag>
 	<Tag name="TipChangeSat">Change car color saturation (white-black).</Tag>
 	<Tag name="FrictionTread">FrictionTread</Tag>
-	<Tag name="TipTrkListEditor">Tracks list, click to select (for Rename or Duplicate). Press [Change track] and then [Load track] to change current track in editor.</Tag>
+	<Tag name="TipTrkListEditor">Tracks list, click to select (for Rename or Duplicate). Press [Load track] to change current track in editor.</Tag>
 	<Tag name="InputReadyToPlay">(ready to play in game)</Tag>
 	<Tag name="TipTerSize">Resulting area in meters (side length). Equals vertex count multipled by triangle size.</Tag>
 	<Tag name="speed">speed</Tag>
@@ -382,7 +382,6 @@
 	<Tag name="InputRoadPick">Space - pick one/none</Tag>
 	<Tag name="InputRoadRebuild">B - rebuild road (after terrain change, etc.)</Tag>
 	<Tag name="Environment">Environment</Tag>
-	<Tag name="TipChangeTrkEditor">Sets current track to that selected in list, you need to load it after.</Tag>
 	<Tag name="MyGUI_MessageBox_Cancel">Cancel</Tag>
 	<Tag name="TipNewTer">Create new, flat terrain.</Tag>
 	<Tag name="TipRoadParams">Road point parameters.</Tag>

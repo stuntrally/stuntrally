@@ -8,12 +8,13 @@
  */
 
 #include "../vdrift/settings.h"
+#include "OgreGame.h"
 
 class CarReflection
 {
 public:
 	// Constructor, creates texture and intializes the camera and render targets.
-	CarReflection(SETTINGS* set, unsigned int index);
+	CarReflection(SETTINGS* set, Ogre::SceneManager* sceneMgr, unsigned int index);
 	
 	// Destructor, will delete the texture, and cameras / render targets.
 	~CarReflection();
@@ -22,12 +23,18 @@ public:
 	// we have to update the render targets manually.
 	// This method should be called once every frame.
 	void Update();
+	
+	// Position of the cameras; will be set by CarModel::Update
+	Ogre::Vector3 camPosition;
 
 private:
+	// SceneManager to use, needed to create refl. cameras.
+	Ogre::SceneManager* pSceneMgr;
+	
 	// Pointer to the cubemap texture.
 	// if all cars use the same cube map, this is a pointer to the first texture.
-	Ogre::TexturePtr pTex;
-	
+	Ogre::TexturePtr cubetex;
+		
 	// RTT cameras.
 	// can be null, if static cube maps or only 1 cube map.
 	Ogre::Camera* pCams[6];
@@ -39,12 +46,19 @@ private:
 	// Used for frame skip
 	// When this is 0, render once and then set it to max again
 	unsigned int iCounter;
-
-	// TODO some members are missing here for cube map implementation
+	
+	// Index of current cam.
+	// Used for faces at once setting.
+	unsigned int iCam;
 
 	// index of the car this reflection belongs to.
 	// The cube map textures have an index too, so we need this to get the right texture / material.
 	unsigned int iIndex;
+	
+	// First frame? (i.e. was Update() never called before?
+	// This is needed so that on the first frame, regardless of frame skip / faces at once settings,
+	// the full cube map will be rendered.
+	bool bFirstFrame;
 
 	// Settings, needed to get the user settings for cube maps
 	SETTINGS* pSet;

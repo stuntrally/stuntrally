@@ -255,7 +255,7 @@ void App::listCarChng(List* li, size_t pos)
 }
 void App::btnChgCar(WP)
 {
-	if (valCar){  valCar->setCaption("Car: " + sListCar);	pSet->car = sListCar;  }
+	if (valCar){  valCar->setCaption(TR("#{Car}: ") + sListCar);	pSet->car = sListCar;  }
 }
 
 //  track
@@ -313,6 +313,8 @@ void App::btnQuit(WP)
 	pSet->var = !pSet->var;  if (wp) {  \
 	ButtonPtr chk = wp->castType<MyGUI::Button>(); \
     chk->setStateCheck(pSet->var);  }
+
+void App::chkDigits(WP wp){ 		ChkEv(show_digits); ShowHUD();   }
 
 void App::chkReverse(WP wp){		ChkEv(trackreverse);	ReadTrkStats();  }
 

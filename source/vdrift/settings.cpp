@@ -20,6 +20,7 @@ void SETTINGS::Serialize(bool w, CONFIGFILE & c)
 	Param(c,w, "display_show.fps", show_fps);		Param(c,w, "display_show.gauges", show_gauges);
 	Param(c,w, "display_show.trackmap", trackmap);	Param(c,w, "display_show.racingline", racingline);
 	Param(c,w, "display_show.caminfo", show_cam);	Param(c,w, "display_show.times", show_times);
+	Param(c,w, "display_show.show_digits", show_digits);
 	Param(c,w, "display_show.car_dbgtxt", car_dbgtxt);Param(c,w, "display_show.show_cardbg", car_dbgbars);
 	Param(c,w, "display_show.mph", show_mph);
 	Param(c,w, "display_size.gauges", size_gauges);	Param(c,w, "display_size.minimap", size_minimap);
@@ -81,7 +82,7 @@ SETTINGS::SETTINGS() :  ///  Defaults
 	car_hue(0.f), car_sat(0.f), car_val(0.f),
 	//  show
 	show_fps(1), show_gauges(1), trackmap(1), racingline(1),
-	show_cam(1), show_times(0), car_dbgtxt(0), car_dbgbars(0),
+	show_cam(1), show_times(0), show_digits(1), car_dbgtxt(0), car_dbgbars(0),
 	size_gauges(0.18), size_minimap(0.2),
 	//  graphics
 	anisotropy(4),	view_distance(1500), bFog(0),

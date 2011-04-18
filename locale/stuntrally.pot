@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION"
 "Report-Msgid-Bugs-To: "
-"POT-Creation-Date: 2011-04-16 17:46+0200"
+"POT-Creation-Date: 2011-04-18 13:32+0200"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>"
 "Language-Team: LANGUAGE <LL@li.org>"
@@ -41,6 +41,10 @@ msgctxt "TipAutoGearbox"
 msgid "Uncheck for manual gears changing."
 msgstr ""
 
+msgctxt "LS_MISC"
+msgid "Finishing"
+msgstr ""
+
 msgctxt "AndUsing"
 msgid "and using"
 msgstr ""
@@ -65,20 +69,20 @@ msgctxt "TreeDens"
 msgid "Trees   density"
 msgstr ""
 
-msgctxt "PageURL"
-msgid "http://code.google.com/p/vdrift-ogre/"
-msgstr ""
-
 msgctxt "TerNormal"
 msgid "Normal"
+msgstr ""
+
+msgctxt "LS_TRACK"
+msgid "Loading track"
 msgstr ""
 
 msgctxt "MyGUI_MessageBox_Retry"
 msgid "Retry"
 msgstr ""
 
-msgctxt "GameVersion"
-msgid "1.1"
+msgctxt "LS_SCENE"
+msgid "Loading scene"
 msgstr ""
 
 msgctxt "TipTrackImg"
@@ -95,6 +99,14 @@ msgstr ""
 
 msgctxt "Surface"
 msgid "Surface"
+msgstr ""
+
+msgctxt "TBScore"
+msgid "Score"
+msgstr ""
+
+msgctxt "MinimapUpdSkip"
+msgid "Minimap update skip"
 msgstr ""
 
 msgctxt "InputNextTab"
@@ -175,6 +187,10 @@ msgstr ""
 
 msgctxt "DistToRoad"
 msgid "dist. to road"
+msgstr ""
+
+msgctxt "TBLast"
+msgid "Last"
 msgstr ""
 
 msgctxt "TipGrassDens"
@@ -413,8 +429,8 @@ msgctxt "wind"
 msgid "wind"
 msgstr ""
 
-msgctxt "TipRoadStats"
-msgid "Whole road statistics."
+msgctxt "LS_CAR"
+msgid "Loading car"
 msgstr ""
 
 msgctxt "InputRestart"
@@ -467,10 +483,6 @@ msgstr ""
 
 msgctxt "VolMaster"
 msgid "Master"
-msgstr ""
-
-msgctxt "InputRoadCopySel"
-msgid "ctrl-Ins - copy selection   ctrl-Del - delete sel."
 msgstr ""
 
 msgctxt "TipNewGame"
@@ -621,8 +633,8 @@ msgctxt "ColumnNSides"
 msgid "Column N sides"
 msgstr ""
 
-msgctxt "Reflections"
-msgid "Reflections"
+msgctxt "Shaders"
+msgid "Shaders"
 msgstr ""
 
 msgctxt "Exponent"
@@ -877,6 +889,10 @@ msgctxt "Sky"
 msgid "Sky"
 msgstr ""
 
+msgctxt "TCS"
+msgid "TCS (traction control)"
+msgstr ""
+
 msgctxt "DisableEdit"
 msgid "Disable for edit"
 msgstr ""
@@ -885,12 +901,16 @@ msgctxt "TipAutoClutch"
 msgid "-Manual not implemented."
 msgstr ""
 
-msgctxt "MinimapUpdSkip"
-msgid "Minimap update skip"
+msgctxt "LS_TER"
+msgid "Loading terrain"
 msgstr ""
 
 msgctxt "RoadDist2"
 msgid "Additional distance to road."
+msgstr ""
+
+msgctxt "TipRoadStats"
+msgid "Whole road statistics."
 msgstr ""
 
 msgctxt "TreeMult"
@@ -1017,8 +1037,8 @@ msgctxt "InputRoadLMB"
 msgid "LMB (or Arrows)"
 msgstr ""
 
-msgctxt "TCS"
-msgid "TCS (traction control)"
+msgctxt "WrongChk"
+msgid "Wrong Checkpoint"
 msgstr ""
 
 msgctxt "NeedRestart"
@@ -1043,6 +1063,10 @@ msgstr ""
 
 msgctxt "TipModelVisDist"
 msgid "Visibility distance for model pages."
+msgstr ""
+
+msgctxt "Settings"
+msgid "Settings"
 msgstr ""
 
 msgctxt "InputRoadRMB"
@@ -1145,6 +1169,10 @@ msgctxt "ColBright"
 msgid "Brightness"
 msgstr ""
 
+msgctxt "LS_CLEANUP"
+msgid "Cleaning up"
+msgstr ""
+
 msgctxt "EnterSave"
 msgid "Enter - save"
 msgstr ""
@@ -1171,6 +1199,10 @@ msgstr ""
 
 msgctxt "RoadPoint"
 msgid "Road Point"
+msgstr ""
+
+msgctxt "LoadingDesc"
+msgid "Loading, please wait..."
 msgstr ""
 
 msgctxt "TipGrassPatchHeightMax"
@@ -1285,8 +1317,8 @@ msgctxt "TipWindInflL"
 msgid "Wind influence on model, length scale."
 msgstr ""
 
-msgctxt "CamInertia"
-msgid "Camera inertia"
+msgctxt "InputRoadCopySel"
+msgid "ctrl-Ins - copy selection   ctrl-Del - delete sel."
 msgstr ""
 
 msgctxt "TrackWidthAvg"
@@ -1309,8 +1341,8 @@ msgctxt "TipGrassPageLength"
 msgid "Grass Page length (low will reload often, high will cause visible switching)."
 msgstr ""
 
-msgctxt "Shaders"
-msgid "Shaders"
+msgctxt "Reflections"
+msgid "Reflections"
 msgstr ""
 
 msgctxt "dust"
@@ -1354,11 +1386,15 @@ msgid "FrictionTread"
 msgstr ""
 
 msgctxt "TipTrkListEditor"
-msgid "Tracks list, click to select (for Rename or Duplicate). Press [Change track] and then [Load track] to change current track in editor."
+msgid "Tracks list, click to select (for Rename or Duplicate). Press [Load track] to change current track in editor."
 msgstr ""
 
 msgctxt "InputReadyToPlay"
 msgid "(ready to play in game)"
+msgstr ""
+
+msgctxt "CamInertia"
+msgid "Camera inertia"
 msgstr ""
 
 msgctxt "TipSurfFrict"
@@ -1501,8 +1537,8 @@ msgctxt "ColHue"
 msgid "Color - Hue"
 msgstr ""
 
-msgctxt "TipLoadTrkEditor"
-msgid "Load track (after change) or Reload current track."
+msgctxt "TBTime"
+msgid "Time"
 msgstr ""
 
 msgctxt "InputRoadAltLMB"
@@ -1515,6 +1551,10 @@ msgstr ""
 
 msgctxt "InputRoadEdit"
 msgid "R - edit road mode"
+msgstr ""
+
+msgctxt "TBBest"
+msgid "Best"
 msgstr ""
 
 msgctxt "RestartApply"
@@ -1545,10 +1585,6 @@ msgctxt "Environment"
 msgid "Environment"
 msgstr ""
 
-msgctxt "TipChangeTrkEditor"
-msgid "Sets current track to that selected in list, you need to load it after."
-msgstr ""
-
 msgctxt "MyGUI_MessageBox_Cancel"
 msgid "Cancel"
 msgstr ""
@@ -1571,6 +1607,10 @@ msgstr ""
 
 msgctxt "TipTrkTerImg"
 msgid "Minimap of selected track, view from top."
+msgstr ""
+
+msgctxt "LS_GAME"
+msgid "Loading game"
 msgstr ""
 
 msgctxt "TreeRoadDist"
@@ -1707,5 +1747,9 @@ msgstr ""
 
 msgctxt "MyGUI_MessageBox_Yes"
 msgid "Yes"
+msgstr ""
+
+msgctxt "TipLoadTrkEditor"
+msgid "Load track (after change) or Reload current track."
 msgstr ""
 

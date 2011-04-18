@@ -13,6 +13,22 @@
 	<Tag name="GameVersion">1.1</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 	
+	<Tag name="LoadingDesc">Loading, please wait...</Tag>
+	<Tag name="LS_CLEANUP">Cleaning up</Tag>
+	<Tag name="LS_GAME">Loading game</Tag>
+	<Tag name="LS_SCENE">Loading scene</Tag>
+	<Tag name="LS_CAR">Loading car</Tag>
+	<Tag name="LS_TER">Loading terrain</Tag>
+	<Tag name="LS_TRACK">Loading track</Tag>
+	<Tag name="LS_MISC">Finishing</Tag>
+	
+	<Tag name="TBTime">Time</Tag>
+	<Tag name="TBLast">Last</Tag>
+	<Tag name="TBBest">Best</Tag>
+	<Tag name="TBScore">Score</Tag>
+	<Tag name="WrongChk">Wrong Checkpoint</Tag>
+	
+	<Tag name="Settings">Settings</Tag>
 	<Tag name="Options">Options</Tag>
 	<Tag name="ChangeTrack">Change Track</Tag>
 	<Tag name="Track">Track</Tag>
@@ -362,8 +378,7 @@
 	<Tag name="TipTerWind">Terrain brush window.</Tag>
 	<Tag name="TipRoadParams">Road point parameters.</Tag>
 	<Tag name="TipRoadStats">Whole road statistics.</Tag>
-	<Tag name="TipTrkListEditor">Tracks list, click to select (for Rename or Duplicate). Press [Change track] and then [Load track] to change current track in editor.</Tag>
-	<Tag name="TipChangeTrkEditor">Sets current track to that selected in list, you need to load it after.</Tag>
+	<Tag name="TipTrkListEditor">Tracks list, click to select (for Rename or Duplicate). Press [Load track] to change current track in editor.</Tag>
 	<Tag name="TipLoadTrkEditor">Load track (after change) or Reload current track.</Tag>
 	<Tag name="TipTrkScreenEditor">In game screenshot for selected track.</Tag>
 	<Tag name="TipMinimapScrnEditor">Minimap of selected track, view from top.</Tag>
