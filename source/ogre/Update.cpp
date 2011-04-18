@@ -132,6 +132,21 @@ bool App::frameStart(Real time)
 		// now in CarModel::Update
 		//UpdWhTerMtr(pCar);
 		
+		// stop rain/snow when paused
+		if (pr && pr2 && pGame)
+		{
+			if (pGame->pause)
+			{
+				 pr->setSpeedFactor(0.f);
+				 pr2->setSpeedFactor(0.f);
+			}
+			else
+			{
+				 pr->setSpeedFactor(1.f);
+				 pr2->setSpeedFactor(1.f);
+			}
+		}
+		
 		//  par  rain cam  . . . .
 		if (pSet->particles && time != 0)
 		{	const Vector3& pos = mCamera->getPosition();

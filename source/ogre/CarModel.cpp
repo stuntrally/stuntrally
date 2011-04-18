@@ -6,7 +6,7 @@
 #define FileExists(s) boost::filesystem::exists(s)
 
 CarModel::CarModel(unsigned int index, const std::string name, Ogre::SceneManager* sceneMgr, SETTINGS* set, GAME* game, Scene* s, Camera* cam) : 
-	hue(0), sat(0), val(0), fCam(0), pMainNode(0), pCar(0), terrain(0), resCar("")
+	hue(0), sat(0), val(0), fCam(0), pMainNode(0), pCar(0), terrain(0), resCar(""), mCamera(0)
 {
 	iIndex = index;
 	sDirname = name;
@@ -88,11 +88,25 @@ void CarModel::Update(PosInfo newPosInfo, float time)
 
 		///  emit rates +
 		Real emitS = 0.f, emitM = 0.f, emitD = 0.f;  //paused
-		///TODO if (!isFocGui)
+		if (!pGame->pause)
+		{
 			 Real sq = squeal* min(1.f, wht[w]), l = pSet->particles_len * onGr;
 			 emitS = sq * (whVel * 30) * l *0.3f;  //..
 			 emitM = slide < 1.4f ? 0.f :  (8.f * sq * min(5.f, slide) * l);
 			 emitD = (min(140.f, whVel) / 3.5f + slide * 1.f ) * l;  
+			 
+			 // resume
+			 pd[w]->setSpeedFactor(1.f);
+			 ps[w]->setSpeedFactor(1.f);
+			 pm[w]->setSpeedFactor(1.f);
+		}
+		else
+		{
+			 // stop par sys
+			 pd[w]->setSpeedFactor(0.f);
+			 ps[w]->setSpeedFactor(0.f);
+			 pm[w]->setSpeedFactor(0.f);
+		}
 		Real sizeD = (0.3f + 1.1f * min(140.f, whVel) / 140.f) * (w < 2 ? 0.5f : 1.f);
 		//  ter mtr factors
 		int mtr = min((int)(whMtr-1), (int)(sc->td.layers.size()-1));
