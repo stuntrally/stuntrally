@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <MyGUI>
+	<!--  MsgBox  -->
 	<Tag name="MyGUI_MessageBox_Ok">Ok</Tag>
 	<Tag name="MyGUI_MessageBox_Yes">Yes</Tag>
 	<Tag name="MyGUI_MessageBox_No">No</Tag>
@@ -10,9 +11,7 @@
 	<Tag name="MyGUI_MessageBox_Try">Try</Tag>
 	<Tag name="MyGUI_MessageBox_Continue">Continue</Tag>
 	
-	<Tag name="GameVersion">1.1</Tag>
-	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
-	
+	<!--  Loading tags  -->
 	<Tag name="LoadingDesc">Loading, please wait...</Tag>
 	<Tag name="LS_CLEANUP">Cleaning up</Tag>
 	<Tag name="LS_GAME">Loading game</Tag>
@@ -22,25 +21,39 @@
 	<Tag name="LS_TRACK">Loading track</Tag>
 	<Tag name="LS_MISC">Finishing</Tag>
 	
+	<!--  HUD  -->
 	<Tag name="TBTime">Time</Tag>
 	<Tag name="TBLast">Last</Tag>
 	<Tag name="TBBest">Best</Tag>
 	<Tag name="TBScore">Score</Tag>
 	<Tag name="WrongChk">Wrong Checkpoint</Tag>
-	
-	<Tag name="Settings">Settings</Tag>
+
 	<Tag name="Options">Options</Tag>
+	<Tag name="Settings">Settings</Tag>
+	<Tag name="Quit">Quit</Tag>
+	
+<!--  ............................................................................................................................  -->
+
+
+	<!--  Track  -->
 	<Tag name="ChangeTrack">Change Track</Tag>
 	<Tag name="Track">Track</Tag>
 	<Tag name="TipTrackList">Tracks list, click to select (and see info). Press Enter to drive on it. (or [Change track] and then [New Game])</Tag>
 	<Tag name="TipChangeTrack">Sets current track to that selected in list. Press [New Game] to start it after.</Tag>
+
 	<Tag name="Reverse">Reverse</Tag>
 	<Tag name="TipReverse">Reverse track direction.</Tag>
 	<Tag name="NewGame">New Game</Tag>
 	<Tag name="TipNewGame">Start game on new track or Restart on current.</Tag>
+
+	<Tag name="TipTrackDesc">Track description text.</Tag>
 	<Tag name="TipTrackImg">In game screenshot for selected track.</Tag>
 	<Tag name="TipTrkTerImg">Minimap of selected track, view from top.</Tag>
 	<Tag name="TipTrackMap">Minimap of selected track, view from top.</Tag>
+
+	<!--  Track stats  -->
+	<Tag name="TrackBestTime">Best time</Tag>
+	<Tag name="TrackAvgSpeed">Avg. speed</Tag>
 	<Tag name="TrackLength">Length</Tag>
 	<Tag name="UnitKm">km</Tag>
 	<Tag name="TrackArea">Area</Tag>
@@ -49,22 +62,24 @@
 	<Tag name="TrackHeightDiff">Height diff.</Tag>
 	<Tag name="TrackInAir">In air</Tag>
 	<Tag name="TrackPipes">Pipes</Tag>
-	<Tag name="TrackBestTime">Best time</Tag>
-	<Tag name="TrackAvgSpeed">Avg. speed</Tag>
-	<Tag name="TipTrackDesc">Track description text.</Tag>
 	
+
+	<!--  Car  -->
 	<Tag name="Car">Car</Tag>
 	<Tag name="TipCarsList">Cars list, click to select (and see image). Press [Change car] and then [New Game] to drive with it.</Tag>
 	<Tag name="ChangeCar">Change Car</Tag>
 	<Tag name="TipChangeCar">Change current car to that selected in list, press [New Game] to drive with it.</Tag>
 	<Tag name="TipNewGameCar">Restart game (after car change).</Tag>
-	<Tag name="TipChangeHue">Change car color (hue).</Tag>
-	<Tag name="TipChangeSat">Change car color saturation (white-black).</Tag>
-	<Tag name="TipChangeBright">Change car color brightness (dark-light).</Tag>
+
 	<Tag name="ColHue">Color - Hue</Tag>
 	<Tag name="ColSat">Saturation</Tag>
 	<Tag name="ColBright">Brightness</Tag>
+	<Tag name="TipChangeHue">Change car color (hue).</Tag>
+	<Tag name="TipChangeSat">Change car color saturation (white-black).</Tag>
+	<Tag name="TipChangeBright">Change car color brightness (dark-light).</Tag>
 	
+
+	<!--  Setup  -->
 	<Tag name="Setup">Setup</Tag>
 	<Tag name="ABS">ABS (antilock brakes)</Tag>
 	<Tag name="TipABS">Prevents wheel lock when braking (default: off).</Tag>
@@ -78,6 +93,18 @@
 	<Tag name="TipAutoRear">Uncheck for manual Rear gear changing.</Tag>
 	<Tag name="VegetCol">Vegetation collision    *needs New Game</Tag>
 		
+
+	<!--  Replay  -->
+	<Tag name="Replay">Replay</Tag>
+	<Tag name="RplDelete">Delete</Tag>
+	<Tag name="RplSave">Save</Tag>
+	<Tag name="RplAutoRec">Auto record replay</Tag>
+	<Tag name="RplGhost">Show ghost drive - best lap</Tag>
+	<Tag name="RplAll">All</Tag>
+	<Tag name="RplCur">Cur</Tag>
+
+
+	<!--  Screen  -->
 	<Tag name="Screen">Screen</Tag>
 	<Tag name="Video">Video</Tag>
 	<Tag name="Resolution">Resolution</Tag>
@@ -85,16 +112,20 @@
 	<Tag name="VSync">VSync</Tag>
 	<Tag name="NeedRestart">* need restart</Tag>
 	<Tag name="Change">Change</Tag>
+
 	<Tag name="Effects">Effects</Tag>
 	<Tag name="Bloom">Bloom</Tag>
 	<Tag name="Intensity">Intensity</Tag>
+	<Tag name="OrigImage">Darken</Tag>
 	<Tag name="HDR">HDR</Tag>
 	<Tag name="MotionBlur">Motion Blur</Tag>
-	<Tag name="OrigImage">Darken</Tag>
+
 	
+	<!--  Graphics  -->
 	<Tag name="Graphics">Graphics</Tag>
 	<Tag name="NeedNewGame">* need New Game</Tag>
 	<Tag name="RestartApply">Restart game, to apply *changes.</Tag>
+
 	<Tag name="Detail">Detail</Tag>
 	<Tag name="TerrainError">Terrain error</Tag>
 	<Tag name="TerHQDist">Terrain HQ dist</Tag>
@@ -102,23 +133,30 @@
 	<Tag name="RoadQual">Road far quality</Tag>
 	<Tag name="Textures">Textures</Tag>
 	<Tag name="Anisotropy">Anisotropy</Tag>
+
 	<Tag name="Vegetation">Vegetation</Tag>
 	<Tag name="TreeMult">Trees multipler</Tag>
 	<Tag name="DistMult">Distance mul</Tag>
 	<Tag name="GrassMult">Grass mul</Tag>
+	<Tag name="Reset">Reset</Tag>
+
 	<Tag name="Reflections">Reflections</Tag>
 	<Tag name="FrameSkip">Frames skip</Tag>
 	<Tag name="MapSize">Map size</Tag>
 	<Tag name="FacesOnce">Faces at once</Tag>
 	<Tag name="Distance">Distance</Tag>
+
 	<Tag name="Shadows">Shadows</Tag>
-	<Tag name="ApplyShadows">Apply Shadows</Tag>
+	<Tag name="Shaders">Shaders</Tag>
 	<Tag name="Size">Size</Tag>
 	<Tag name="Count">Count</Tag>
-	<Tag name="Shaders">Shaders</Tag>
+	<Tag name="ApplyShadows">Apply Shadows</Tag>
+
 	<Tag name="Particles">Particles</Tag>
 	<Tag name="TireTrails">Tire Trails</Tag>
 	
+	
+	<!--  View  -->
 	<Tag name="View">View</Tag>
 	<Tag name="HUD">HUD</Tag>
 	<Tag name="Digits">Digits (gear, speed)</Tag>
@@ -129,6 +167,7 @@
 	<Tag name="Minimap">Minimap</Tag>
 	<Tag name="TimesBar">Times bar</Tag>
 	<Tag name="CameraInfo">Camera info</Tag>
+
 	<Tag name="Other">Other</Tag>
 	<Tag name="Development">Development</Tag>
 	<Tag name="FPS">Fps, Triangles, Batches</Tag>
@@ -136,13 +175,16 @@
 	<Tag name="Wireframe">Wireframe</Tag>
 	<Tag name="BulletDebug">Bullet debug</Tag>
 	<Tag name="CarDebugText">Car debug text </Tag>
+
 	<Tag name="Startup">Startup</Tag>
 	<Tag name="OgreDialog">Show Ogre dialog</Tag>
 	<Tag name="AutoLoad">Auto Load track</Tag>
 	<Tag name="EscQuit">Esc quits</Tag>
 	<Tag name="BulletLines">Bullet debug lines</Tag>
 	<Tag name="ShowPictures">Show pictures while loading</Tag>
+
 	
+	<!--  Input  -->
 	<Tag name="Input">Input</Tag>
 	<Tag name="InputSteer">Left,Right - steer</Tag>
 	<Tag name="InputThrottle">Up,Down - throttle, brake</Tag>
@@ -150,40 +192,49 @@
 	<Tag name="InputBoost">Ctrl - boost</Tag>
 	<Tag name="InputRoll">Q,W - roll car (when needed)</Tag>
 	<Tag name="InputShift">A,Z - gear up,down (manual gearbox)</Tag>
+
 	<Tag name="InputShowGUI">F1 or Tab - show/hide Options</Tag>
 	<Tag name="InputNextCam">X,C or PgUp,PgDn - prev/next camera view</Tag>
 	<Tag name="InputMainCam">with shift - main cameras</Tag>
 	<Tag name="InputNextTab">F2,F3 - prev/next tab</Tag>
 	<Tag name="InputRestart">F5 - restart game</Tag>
 	
+
+	<!--  Sound  -->
 	<Tag name="Sound">Sound</Tag>
 	<Tag name="Volume">Volume</Tag>
 	<Tag name="VolMaster">Master</Tag>
 	<Tag name="Engine">Engine</Tag>
 	<Tag name="Tires">Tires</Tag>
 	<Tag name="Environment">Environment</Tag>
+
+
+	<!--  About  -->
 	<Tag name="About">About</Tag>
 	<Tag name="Version">version</Tag>
-	<Tag name="GameBy">a game by</Tag>
+	<Tag name="GameBy">A game by</Tag>
 	<Tag name="AndContributors">and contributors.</Tag>
 	<Tag name="BasedOn">based on</Tag>
 	<Tag name="AndUsing">and using</Tag>
 	<Tag name="ProjectPage">project&apos;s page:</Tag>
-	
-	<Tag name="Reset">Reset</Tag>
-	
-	<Tag name="Quit">Quit</Tag>
-	
+	<Tag name="GameVersion">1.1</Tag>
+	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
+		
 	
 	
-	
+<!--  ............................................................................................................................  -->
+<!--  Editor  -->
+<!--  ............................................................................................................................  -->
+
 	<Tag name="PreviewCam">Preview Camera</Tag>
 	<Tag name="Leave">Leave (exit)</Tag>
 	<Tag name="EnterSave">Enter - save</Tag>
 	<Tag name="Screenshot">screenshot</Tag>
+
 	<Tag name="TerrainBrush">Terrain brush</Tag>
 	<Tag name="RoadPoint">Road Point</Tag>
 	<Tag name="RoadStats">Road Stats</Tag>
+
 	<Tag name="Editor">Editor</Tag>
 	<Tag name="LoadTrack">Load Track</Tag>
 	<Tag name="Length">Length</Tag>
@@ -191,10 +242,13 @@
 	<Tag name="NewDup">New (Duplicate)</Tag>
 	<Tag name="Rename">Rename</Tag>
 	<Tag name="Delete">Delete</Tag>
+
+	<!--  Sun  -->
 	<Tag name="Sun">Sun</Tag>
 	<Tag name="Sky">Sky</Tag>
 	<Tag name="SunDir">Sun dir.</Tag>
 	<Tag name="Yaw">yaw</Tag>
+
 	<Tag name="Light">Light</Tag>
 	<Tag name="Ambient">Ambient</Tag>
 	<Tag name="Diffuse">Diffuse</Tag>
@@ -207,10 +261,14 @@
 	<Tag name="Exponent">exponent</Tag>
 	<Tag name="DisableEdit">Disable for edit</Tag>
 	<Tag name="Pitch">pitch</Tag>
+
 	<Tag name="Weather">Weather</Tag>
 	<Tag name="set1">set1</Tag>
 	<Tag name="set2">set2</Tag>
 	<Tag name="intensity">intensity</Tag>
+
+
+	<!--  Terrain  -->
 	<Tag name="Terrain">Terrain</Tag>
 	<Tag name="HeightmapSize">Heightmap size</Tag>
 	<Tag name="TriSize">Triangle size</Tag>

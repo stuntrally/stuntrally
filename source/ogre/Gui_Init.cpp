@@ -182,14 +182,30 @@ void App::InitGui()
 	//button_ramp, speed_sens..
 	
 
-	///*  Replay window  *
+	//  replay
+	//..
+	
+	///*  replay list  *
     //------------------------------------------------------------------------
-	//Chk()
 	rplList = mGUI->findWidget<List>("RplList");
 	if (rplList)
-	{
-		//..
-	}
+    {	rplList->removeAllItems();  int ii = 0;  bool bFound = false;
+
+		strlist li;
+		PATHMANAGER::GetFolderIndex(PATHMANAGER::GetReplayPath(), li, "rpl");
+		for (strlist::iterator i = li.begin(); i != li.end(); ++i)
+		if (StringUtil::endsWith(*i, ".rpl"))
+		{
+			String s = *i;
+			s = StringUtil::replaceAll(s,".rpl","");
+			//ifstream check((PATHMANAGER::GetReplayPath() + "/" + *i + "/about.txt").c_str());
+			//if (check)  {
+			rplList->addItem(s);
+			//if (*i == pSet->car) {  carList->setIndexSelected(ii);  bFound = true;  }
+			//ii++;  }
+		}
+		//rplList->eventListChangePosition = newDelegate(this, &App::listCarChng);
+    }
 
 	
 	///  video resolutions combobox
@@ -233,9 +249,9 @@ void App::InitGui()
     if (carList)
     {	carList->removeAllItems();  int ii = 0;  bool bFound = false;
 
-		std::list <std::string> li;
+		strlist li;
 		PATHMANAGER::GetFolderIndex(PATHMANAGER::GetCarPath(), li);
-		for (std::list <std::string>::iterator i = li.begin(); i != li.end(); ++i)
+		for (strlist::iterator i = li.begin(); i != li.end(); ++i)
 		{
 			ifstream check((PATHMANAGER::GetCarPath() + "/" + *i + "/about.txt").c_str());
 			if (check)  {
