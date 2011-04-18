@@ -4,6 +4,8 @@
  * It contains structures and serializations that are transmitted.
  */
 
+#include <stdint.h>
+
 namespace protocol {
 
 const unsigned DEFAULT_PORT = 4243;
@@ -19,7 +21,9 @@ enum PacketType {
 	REQUEST_PEER_INFO,
 	PEER_INFO,
 	TEXT_MESSAGE,
-	STATE_UPDATE
+	STATE_UPDATE,
+	REQUEST_GAME_LIST,
+	UPDATE_GAME_STATUS
 };
 
 struct Packet {
@@ -28,6 +32,14 @@ struct Packet {
 	uint8_t* data;
 
 	Packet(PacketType t, uint32_t l, uint8_t* d): type(t), length(l), data(d) {}
+};
+
+struct GameInfo {
+	uint32_t id;
+	std::string name;
+	std::string address;
+	uint8_t players;
+	std::string track;
 };
 
 
