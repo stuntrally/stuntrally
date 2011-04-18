@@ -1,4 +1,6 @@
 
+# Allow disabling game building
+option(BUILD_GAME      "Build the game binary."     ON)
 # Allow disabling editor building
 option(BUILD_EDITOR    "Build the track editor."    ON)
 
@@ -20,32 +22,34 @@ foreach(ourlib   tinyxml bullet oisb paged-geom)
 	list(APPEND OURLIBS ${ourlib})
 endforeach()
 
-# Glob .cpp files needed for the game
-file(GLOB GAME_SOURCES
-	vdrift/*.cpp
-	btOgre/*.cpp
-	ogre/*.cpp
-	ogre/*/*.cpp
-	road/*.cpp
-)
-
-# Glob .cpp files needed for the editor
-file(GLOB EDITOR_SOURCES
-	editor/*.cpp
-	vdrift/configfile.cpp
-	vdrift/pathmanager.cpp
-	ogre/QTimer.cpp
-	ogre/common/*.cpp
-	road/*.cpp
-)
-
 # Game executable
-add_executable(${GAME_EXE} ${GAME_SOURCES})
-target_link_libraries(${GAME_EXE} ${OURLIBS} ${LIBS})
-install(TARGETS ${GAME_EXE} DESTINATION bin)
+if(BUILD_GAME)
+	# Glob .cpp files needed for the game
+	file(GLOB GAME_SOURCES
+		vdrift/*.cpp
+		btOgre/*.cpp
+		ogre/*.cpp
+		ogre/*/*.cpp
+		road/*.cpp
+	)
+
+	add_executable(${GAME_EXE} ${GAME_SOURCES})
+	target_link_libraries(${GAME_EXE} ${OURLIBS} ${LIBS})
+	install(TARGETS ${GAME_EXE} DESTINATION bin)
+endif()
 
 # Editor
 if(BUILD_EDITOR)
+	# Glob .cpp files needed for the editor
+	file(GLOB EDITOR_SOURCES
+		editor/*.cpp
+		vdrift/configfile.cpp
+		vdrift/pathmanager.cpp
+		ogre/QTimer.cpp
+		ogre/common/*.cpp
+		road/*.cpp
+	)
+
 	add_executable(${EDITOR_EXE} ${EDITOR_SOURCES})
 	set_target_properties(${EDITOR_EXE} PROPERTIES COMPILE_FLAGS "-DROAD_EDITOR")
 	target_link_libraries(${EDITOR_EXE} ${OURLIBS} ${LIBS})
