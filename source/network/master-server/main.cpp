@@ -6,8 +6,6 @@
 
 #define VERSIONSTRING "0.1"
 
-typedef std::map<uint32_t, protocol::GameInfo> GameList;
-
 class GameListManager {
 public:
 
@@ -26,19 +24,19 @@ public:
 
 	/// Gets the games.
 	/// @return a packet containing the games in a serialized form
-	const GameList& getGames() const {
+	const protocol::GameList& getGames() const {
 		return m_games;
 	}
 
 	/// Removes outdated games from the list.
 	void purgeGames() {
-		for (GameList::iterator it = m_games.begin(); it != m_games.end(); ++it) {
+		for (protocol::GameList::iterator it = m_games.begin(); it != m_games.end(); ++it) {
 			// TODO: Implement
 		}
 	}
 
 private:
-	GameList m_games;
+	protocol::GameList m_games;
 	unsigned m_next_id;
 };
 
@@ -65,8 +63,9 @@ public:
 		if (e.packet_length <= 0 || !e.packet_data) return;
 		switch (e.packet_data[0]) {
 			case protocol::GAME_LIST: {
-				GameList games = m_glm.getGames();
-				for (GameList::const_iterator it = games.begin(); it != games.end(); ++it) {
+				std::cout << "Game list request received." << std::endl;
+				protocol::GameList games = m_glm.getGames();
+				for (protocol::GameList::const_iterator it = games.begin(); it != games.end(); ++it) {
 					m_client.send(e.peer_id, it->second, net::PACKET_RELIABLE);
 				}
 				break;
@@ -75,6 +74,7 @@ public:
 				// Get peer struct
 				ENetPeer* peer = m_client.getPeerPtr(e.peer_id);
 				if (!peer) return;
+				std::cout << "Game update received." << std::endl;
 				// Unserialize
 				protocol::GameInfo game = *reinterpret_cast<const protocol::GameInfo*>(e.packet_data);
 				// Fill in peer info

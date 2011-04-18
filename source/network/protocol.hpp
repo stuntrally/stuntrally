@@ -21,11 +21,11 @@ enum PacketType {
 	PONG,
 	REQUEST_PEER_INFO,
 	PEER_INFO,
-	TEXT_MESSAGE,
+	TEXT_MESSAGE,       // Text string that should be displayed somewhere
 	STATE_UPDATE,
-	GAME_LIST,
-	GAME_ACCEPTED,
-	GAME_STATUS
+	GAME_LIST,          // Client requests master server to list games
+	GAME_ACCEPTED,      // Master server sends response for newly accepted games
+	GAME_STATUS         // An available game (either client updates, or server reports)
 };
 
 struct Packet {
@@ -36,6 +36,10 @@ struct Packet {
 	Packet(PacketType t, uint32_t l, uint8_t* d): type(t), length(l), data(d) {}
 };
 
+
+/**
+ * Contains information about one game that is available for joining.
+ */
 struct GameInfo: public net::SimpleSerializer<GameInfo> {
 	uint8_t packet_type;
 	uint32_t id;        // Set by server
@@ -45,6 +49,8 @@ struct GameInfo: public net::SimpleSerializer<GameInfo> {
 	char name[32];      // Set by client
 	char track[32];     // Set by client
 };
+
+typedef std::map<uint32_t, protocol::GameInfo> GameList;
 
 
 /**
