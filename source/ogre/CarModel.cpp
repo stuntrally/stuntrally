@@ -302,10 +302,34 @@ void CarModel::Create(void)
 	ChangeClr();
 
 	//  reload car materials, omit car and road
-	///TODO
-	/*for (int i=1; i < Mtr_Road; ++i)
-		reloadMtrTex(sMtr[i]);*/
+	for (int i=1; i < NumMaterials; ++i)
+		ReloadTex(sMtr[i]);
 
+}
+void CarModel::ReloadTex(String mtrName)
+{
+	MaterialPtr mtr = (MaterialPtr)MaterialManager::getSingleton().getByName(mtrName);
+	if (!mtr.isNull())
+	{	Material::TechniqueIterator techIt = mtr->getTechniqueIterator();
+		while (techIt.hasMoreElements())
+		{	Technique* tech = techIt.getNext();
+			Technique::PassIterator passIt = tech->getPassIterator();
+			while (passIt.hasMoreElements())
+			{	Pass* pass = passIt.getNext();
+				Pass::TextureUnitStateIterator tusIt = pass->getTextureUnitStateIterator();
+				while (tusIt.hasMoreElements())
+				{	TextureUnitState* tus = tusIt.getNext();  String name = tus->getTextureName();
+					if (name != "ReflectionCube")
+					{
+						Ogre::LogManager::getSingletonPtr()->logMessage( "Tex Reload: " + name );
+						TexturePtr tex = (TexturePtr)Ogre::TextureManager::getSingleton().getByName( name );
+						if (!tex.isNull())
+						{							
+							tex->reload();
+						}
+					}
+				}
+	}	}	}	
 }
 void CarModel::ChangeClr(void)
 {
@@ -361,7 +385,7 @@ void CarModel::ChangeClr(void)
 		}	}
 	}
 	im.save(svName);
-	//reloadMtrTex(sMtr[Mtr_CarBody]);
+	ReloadTex(sMtr[Mtr_CarBody]);
 }
 void CarModel::UpdParsTrails()
 {

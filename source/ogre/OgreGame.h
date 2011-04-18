@@ -70,7 +70,8 @@ protected:
 		Mtr_Road,  NumMaterials  };
 	String sMtr[NumMaterials];
 	//void CarChangeClr(), 
-	void reloadMtrTex(String mtrName);
+	// static so CarModel can access it
+	static void reloadMtrTex(String mtrName);
 	
 	/*ParticleSystem* ps[4],*pm[4],*pd[4];  // smoke, mud, dust
 	RibbonTrail* whTrl[4];

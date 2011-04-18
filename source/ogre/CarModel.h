@@ -53,8 +53,8 @@ public:
 	// Apply new color
 	void ChangeClr();
 	
-	// Reload materials. Not sure if this will be needed.
-	void ReloadMats();
+	// Reload material textures.
+	void ReloadTex(String mtrName);
 	
 	// track surface for wheels
 	void UpdWhTerMtr();
