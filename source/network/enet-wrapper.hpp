@@ -117,9 +117,10 @@ namespace net {
 					enet_host_service(m_host, &e, 5);
 				}
 				switch (e.type) {
-					case ENET_EVENT_TYPE_NONE:
+					case ENET_EVENT_TYPE_NONE: {
 						break;
-					case ENET_EVENT_TYPE_CONNECT: {
+					} case ENET_EVENT_TYPE_CONNECT: {
+						m_peers[e.peer->incomingPeerID] = e.peer;
 						std::cout << "Connected " << IPv4(e.peer->address.host) << ":" << e.peer->address.port << std::endl;
 						m_listener.connectionEvent(NetworkTraffic(e.peer->incomingPeerID, e.peer->data));
 						break;
@@ -127,6 +128,7 @@ namespace net {
 						std::cout << "Disconnected " << IPv4(e.peer->address.host) << ":" << e.peer->address.port << std::endl;
 						m_listener.disconnectEvent(NetworkTraffic(e.peer->incomingPeerID, e.peer->data));
 						e.peer->data = NULL;
+						m_peers.erase(e.peer->incomingPeerID);
 						break;
 					} case ENET_EVENT_TYPE_RECEIVE: {
 						m_listener.receiveEvent(NetworkTraffic(e.peer->incomingPeerID, e.peer->data, e.packet->data, e.packet->dataLength));
@@ -155,8 +157,6 @@ namespace net {
 			peer = enet_host_connect(m_host, &address, ENetChannels, 0);
 			if (!peer) throw std::runtime_error("No available peers for initiating an ENet connection.");
 			peer->data = data;
-			// TODO: Handle peers in listen()
-			m_peers[peer->incomingPeerID] = peer;
 		}
 
 		/// Send a packet to everyone
