@@ -119,6 +119,10 @@ elif file1.endswith(".po") and file2.endswith(".xml"):
 				# if untranslated or not to be translated (ignore), use english string
 				result += "\t<Tag name=\"" + mid + "\">" + msgs_f[mid] + "</Tag>\n"
 		
+	# use english string for ignored
+	for ignored in ignore_tags:
+		result += "\t<Tag name=\"" + ignored + "\">" + msgs_f[ignored] + "</Tag>\n"
+		
 	result += "\n</MyGUI>"
 	f2.write(result)
 		
