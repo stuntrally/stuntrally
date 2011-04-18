@@ -437,14 +437,17 @@ bool App::keyPressed( const OIS::KeyEvent &arg )
 	   	if (!alt)  {
 	   		isFocGui = !isFocGui;
 	   		if (mWndOpts)	mWndOpts->setVisible(isFocGui);
-			if (mWndRpl)  mWndRpl->setVisible(pSet->rpl_play);//
 			if (bnQuit)  bnQuit->setVisible(isFocGui);
 	   		if (mGUI)	mGUI->setVisiblePointer(isFocGui);
 	   		if (!isFocGui)  mToolTip->setVisible(false);
 	   	}	return true;
 
-	   				   		
-		case KC_F9:		// car debug text/bars
+		case KC_F9:
+			if (!ctrl)	// replay controls
+			{	isFocGui = !isFocGui;
+	   			if (mGUI)	mGUI->setVisiblePointer(isFocGui);
+				if (mWndRpl)  mWndRpl->setVisible(pSet->rpl_play);//
+			}else		// car debug text/bars
 			if (shift)	{	WP wp = chDbgT;  ChkEv(car_dbgtxt);  ShowHUD();  }
 			else		{	WP wp = chDbgB;  ChkEv(car_dbgbars);   ShowHUD();  }
 			return true;

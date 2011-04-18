@@ -399,6 +399,11 @@ void App::setToolTips(EnumeratorWidgetPtr widgets)
 void App::notifyToolTip(Widget *sender, const ToolTipInfo &info)
 {
 	if (!mToolTip)  return;
+
+	if (!isFocGui)
+	{	mToolTip->setVisible(false);
+		return;  }
+
 	if (info.type == ToolTipInfo::Show)
 	{
 		mToolTip->setSize(320, 96);  // start size for wrap
