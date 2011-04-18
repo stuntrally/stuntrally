@@ -1,13 +1,12 @@
 #include "stdafx.h"
 #include "OgreGame.h"
 #include "../vdrift/game.h"
-#include "FollowCamera.h"
 #include "../road/Road.h"
 
 
 //  ctors  -----------------------------------------------
 App::App()
-	:pGame(0), ndCar(0), ndPos(0), ndMap(0), ndLine(0)
+	:pGame(0), ndPos(0), ndMap(0), ndLine(0)
 	,nrpmB(0),nvelBk(0),nvelBm(0), nrpm(0),nvel(0), mrpm(0),mvel(0),mpos(0)
 	,hudGear(0),hudVel(0), hudAbs(0),hudTcs(0), hudTimes(0), hudCheck(0)
 	,ovGear(0),ovVel(0), ovAbsTcs(0), ovCarDbg(0),ovCarDbgTxt(0), ovCam(0), ovTimes(0)
@@ -28,26 +27,18 @@ App::App()
 	,imgCar(0),imgPrv(0),imgMini(0),imgTer(0), valCar(0),valTrk(0),trkDesc(0)
 	// game
 	,bNew(false), blendMtr(0), iBlendMaps(0)
-    ,miReflectCntr(0), miReflectCam(0), mReflAll1st(1)
-	,dbgdraw(0),  bLoading(false), reflAct(0)
+	,dbgdraw(0)
 	,grass(0), trees(0), road(0)
-	,pr(0),pr2(0), sun(0), 	vPofs(0,0,0)
+	,pr(0),pr2(0), sun(0)
 {
 	pathTrk[0] = PATHMANAGER::GetTrackPath() + "/";
 	pathTrk[1] = PATHMANAGER::GetTrackPathUser() + "/";
 
 	resCar = "";  resTrk = "";  resDrv = "";
-	for (int w = 0; w < 4; ++w)
-	{	ps[w] = 0;  pm[w] = 0;  pd[w] = 0;
-		ndWh[w] = 0;  ndWhE[w] = 0; whTrl[w] = 0;
-		ndRs[w] = 0;  ndRd[w] = 0;
-		wht[w] = 0.f;  whTerMtr[w] = 0; }
+	
 	for (int i=0; i < 5; ++i)
 	{	ovL[i]=0;  ovR[i]=0;  ovS[i]=0;  ovU[i]=0;  }
 	for (int i=0; i < StTrk; ++i)  stTrk[i] = 0;
-
-	for (int i=0; i < 6; ++i)
-	{	mReflectCams[i] = 0;  mReflectRT[i] = 0;  }
 	
 	//  util for update rot
 	Quaternion qr;  {
@@ -100,7 +91,6 @@ void App::destroyScene()
 	/**/
 
 	mToolTip = 0;  //?
-    destroyReflectCams();
 
 	if (road)
 	{	road->DestroyRoad();  delete road;  road = 0;  }
@@ -114,61 +104,6 @@ void App::destroyScene()
 	delete[] blendMtr;  blendMtr = 0;
 
 	BaseApp::destroyScene();
-}
-
-
-//  utility
-//-------------------------------------------------------------------------------------
-ManualObject* App::CreateModel(const String& mat, VERTEXARRAY* a, bool flip, bool track)
-{
-	int verts = a->vertices.size();
-	if (verts == 0)  return NULL;
-	int tcs   = a->texcoords[0].size(); //-
-	int norms = a->normals.size();
-	int faces = a->faces.size();
-	// norms = verts, verts % 3 == 0
-
-	ManualObject* m = mSceneMgr->createManualObject();
-	m->begin(mat, RenderOperation::OT_TRIANGLE_LIST);
-
-	int t = 0;
-	if (track)
-	{	for (int v = 0; v < verts; v += 3)
-		{
-			m->position(a->vertices[v+0], a->vertices[v+2], -a->vertices[v+1]);
-			if (norms)
-			m->normal(	a->normals [v+0], a->normals [v+2], -a->normals [v+1]);
-			if (t < tcs)
-			{	m->textureCoord(a->texcoords[0][t], a->texcoords[0][t+1]);  t += 2;	}
-		}
-		for (int f = 0; f < faces; ++f)
-			m->index(a->faces[f]);
-	}else
-	if (flip)
-	{	for (int v = 0; v < verts; v += 3)
-		{
-			m->position(a->vertices[v], a->vertices[v+1], a->vertices[v+2]);
-			if (norms)
-			m->normal(  a->normals [v], a->normals [v+1], a->normals [v+2]);
-			if (t < tcs)
-			{	m->textureCoord(a->texcoords[0][t], a->texcoords[0][t+1]);  t += 2;	}
-		}
-		for (int f = 0; f < faces; f += 3)
-		{	m->index(a->faces[f+2]);  m->index(a->faces[f+1]);  m->index(a->faces[f]);	}
-	}else
-	{	for (int v = 0; v < verts; v += 3)
-		{
-			m->position(-a->vertices[v+1]+vPofs.x, -a->vertices[v+2]+vPofs.y, a->vertices[v]+vPofs.z);
-			if (norms)
-			m->normal(	-a->normals [v+1], -a->normals [v+2], a->normals [v]);
-			if (t < tcs)
-			{	m->textureCoord(a->texcoords[0][t], a->texcoords[0][t+1]);  t += 2;	}
-		}
-		for (int f = 0; f < faces; f += 3)
-		{	m->index(a->faces[f+2]);  m->index(a->faces[f+1]);  m->index(a->faces[f]);	}
-	}
-	m->end();
-	return m;
 }
 
 ManualObject* App::Create2D(const String& mat, Real s, bool dyn)

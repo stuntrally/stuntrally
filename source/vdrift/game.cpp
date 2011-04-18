@@ -329,8 +329,8 @@ void GAME::Tick(float deltat)
 			if (settings->mult_thr != 1)  // == 0
 			{	//  single thread
 				pOgreGame->updatePoses(/*framerate*/deltat);
-				if (!pause && pOgreGame->mFCam)
-				pOgreGame->mFCam->update(framerate/*-deltat*/);
+				if (!pause && pOgreGame->carM && pOgreGame->carM->fCam)
+				pOgreGame->carM->fCam->update(framerate/*-deltat*/);
 			if (pOgreGame->ndSky)  ///o-
 				pOgreGame->ndSky->setPosition(pOgreGame->GetCamera()->getPosition());
 			}

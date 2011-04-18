@@ -7,14 +7,13 @@
 #include "common/SceneXml.h"
 #include "common/BltObjects.h"
 #include "ReplayGame.h"
+#include "CarModel.h"
 
 using namespace Ogre;
 using namespace MyGUI;
 
 
-const int ciShadowNumSizes = 4;
-const int ciShadowSizesA[ciShadowNumSizes] = {512,1024,2048,4096};
-
+#include "CarReflection.h" //ciShadowSizesA, ciShadowNumSizes
 
 class App : public BaseApp //, public RenderTargetListener
 {
@@ -29,11 +28,19 @@ public:
 	// can't have it in c'tor, because mygui is not initialized
 	void setTranslations();
 
+	/// car ----------------
+	//CarModel* carM; //in BaseApp
+	/*
 	///  new car display data
 	///  set in newPoses (from vdrift or replay play), used in updatePoses
-	Vector3 newPos,newCarY;  Quaternion newRot, qFixCar,qFixWh;
-	Vector3 newWhPos[4];  Quaternion newWhRot[4];  float newWhR[4];
-	float newWhVel[4], newWhSlide[4], newWhSqueal[4];  int newWhMtr[4];
+	Vector3 newPos,newCarY;  
+	Vector3 newWhPos[4];  Quaternion newRot, newWhRot[4];  float newWhR[4];
+	float newWhVel[4], newWhSlide[4], newWhSqueal[4];  int newWhMtr[4];*/
+	///TODO multiple cars
+	PosInfo newPosInfo;
+	
+	// Utility
+	Quaternion qFixCar,qFixWh;
 
 	Replay replay;  ReplayFrame fr;
 
@@ -53,23 +60,24 @@ protected:
 	class BtOgre::DebugDrawer *dbgdraw;  /// blt dbg
 
 	//  car  --------
-	SceneNode *ndCar, *ndWh[4], *ndWhE[4], *ndRs[4],*ndRd[4];  // car, wheels,emitters
+	/*SceneNode *ndCar, *ndWh[4], *ndWhE[4], *ndRs[4],*ndRd[4];  // car, wheels,emitters
 	ManualObject* CreateModel(const String& mat, class VERTEXARRAY* a, bool flip=false, bool track=false);
-	Vector3 vPofs;
+	Vector3 vPofs;*/
 	//  mtr reload
 	enum eMaterials {
 		Mtr_CarBody, Mtr_CarInterior, Mtr_CarGlass,
 		Mtr_CarTireFront, Mtr_CarTireRear,
 		Mtr_Road,  NumMaterials  };
 	String sMtr[NumMaterials];
-	void CarChangeClr(), reloadMtrTex(String mtrName);
+	//void CarChangeClr(), 
+	void reloadMtrTex(String mtrName);
 	
-	ParticleSystem* ps[4],*pm[4],*pd[4],*pr,*pr2;  // smoke, mud, dust
+	/*ParticleSystem* ps[4],*pm[4],*pd[4];  // smoke, mud, dust
 	RibbonTrail* whTrl[4];
 	Real wht[4];  // spin time (approx tire temp.)
 	int whTerMtr[4];
-	void UpdParsTrails(), UpdWhTerMtr(class CAR* pCar);
-
+	void UpdParsTrails();*/ 
+	ParticleSystem *pr,*pr2;
 
 	//  2D, hud  ----
 	float asp,  xcRpm, ycRpm, xcVel, ycVel,
@@ -97,7 +105,6 @@ protected:
 	void NewGame();  void NewGameDoLoad(); bool IsTerTrack();
 	
 	// Loading
-	bool bLoading;
 	void LoadCleanUp(), LoadGame(), LoadScene(), LoadCar(), LoadTerrain(), LoadTrack(), LoadMisc();
 	enum ELoadState { LS_CLEANUP=0, LS_GAME, LS_SCENE, LS_CAR, LS_TER, LS_TRACK, LS_MISC, LS_ALL };
 	
@@ -140,18 +147,6 @@ protected:
 
 	//  trees
 	class Forests::PagedGeometry *trees, *grass;
-
-
-	///*  Reflections
-	void createReflectCams(),destroyReflectCams(), updateReflection();
-	//void preRenderTargetUpdate(const RenderTargetEvent &evt);
-	//void postRenderTargetUpdate(const RenderTargetEvent &evt);
-
-	TexturePtr cubetex;
-	Camera* mReflectCams[6];  RenderTarget* mReflectRT[6];
-	int miReflectCam, miReflectCntr;
-	bool reflAct, mReflAll1st;
-
 
 	///  Gui  ---------------------------------------------------------------------------
 	void InitGui();

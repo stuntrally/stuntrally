@@ -4,6 +4,9 @@
  * but also for e.g. particle emitters and color change. 
  */
  
+#ifndef _CarModel_H_
+#define _CarModel_H_
+ 
 #include "FollowCamera.h"
 #include "CarReflection.h"
 #include "../vdrift/car.h"
@@ -13,13 +16,22 @@
 
 enum eCarType {  CT_Local=0, CT_Replay, CT_Remote };
 
+// Stores all the needed information about car coming from vdrift
+struct PosInfo
+{
+	Vector3 newPos,newCarY;  
+	Vector3 newWhPos[4];  Quaternion newRot, newWhRot[4];  float newWhR[4];
+	float newWhVel[4], newWhSlide[4], newWhSqueal[4];  int newWhMtr[4];
+};
+
 class CarModel
 {
 public:
+	//--- not used
 	eCarType type;
 
 	// Constructor, doesn't really do anything other than assigning some members
-	CarModel(unsigned int index, const std::string name, Ogre::SceneManager* sceneMgr, SETTINGS* set, GAME* game, Scene* sc); 
+	CarModel(unsigned int index, const std::string name, Ogre::SceneManager* sceneMgr, SETTINGS* set, GAME* game, Scene* sc, Camera* cam); 
 	
 	// Destructor - will remove meshes & particle systems, 
 	// the VDrift car and the FollowCamera, delete pReflect
@@ -30,9 +42,9 @@ public:
 	// CarReflection is also created.
 	void Create();
 	
-	// Only calls pReflect->Update();
-	// Call once per frame
-	void Update();
+	// Call once per frame with new position info
+	// Also updates CarReflection
+	void Update(PosInfo newPosInfo, float time);
 	
 	// Car color
 	// After these values are changed, ChangeClr() should be called
@@ -44,17 +56,33 @@ public:
 	// Reload materials. Not sure if this will be needed.
 	void ReloadMats();
 	
+	// track surface for wheels
+	void UpdWhTerMtr();
+	
 	// Update trails
 	void UpdParsTrails();
 	
 	// Create ogre model from .joe
-	ManualObject* CreateModel(const String& mat, class VERTEXARRAY* a, bool flip=false, bool track=false);
+	// Static method so VDrift track (TrackVdr.cpp) can use this too
+	static ManualObject* CreateModel(SceneManager* sceneMgr, const String& mat, class VERTEXARRAY* a, Vector3 vPofs, bool flip=false, bool track=false);
 
 	// Follow camera for this car.
 	// This can be null (for remote [network] cars)
 	FollowCamera* fCam;
 	
+	// Main node.
+	// later, we will add sub-nodes for body, interior, glass and wheels.
+	Ogre::SceneNode* pMainNode;
+		
+	int whTerMtr[4];
+	// needed to set track surface
+	char* blendMtr; int blendMapSize;
+	
+	Terrain* terrain;
+	
 private:
+	Camera* mCamera;
+
 	// access to vdrift stuff
 	GAME* pGame;
 	
@@ -78,23 +106,18 @@ private:
 	ParticleSystem* ps[4],*pm[4],*pd[4],*pr,*pr2;  // smoke, mud, dust
 	RibbonTrail* whTrl[4];
 	Real wht[4];  // spin time (approx tire temp.)
-	int whTerMtr[4];
 	SceneNode *ndWh[4], *ndWhE[4], *ndRs[4],*ndRd[4];
 
 	// Dir name of car (e.g. ES or RS2)
 	std::string sDirname;
 	
+	// Path to car textures, e.g. /usr/share/stuntrally/data/cars/CT/textures
+	std::string resCar;
+	
 	// index for the car (e.g. when we have 2 cars, they have indices 0 and 1)
 	// needed for cloned materials & textures
 	unsigned int iIndex;
-	
-	// Offset for the current mesh
-	Ogre::Vector3 vPofs;
-	
-	// Main node.
-	// later, we will add sub-nodes for body, interior, glass and wheels.
-	Ogre::SceneNode* pMainNode;
-	
+			
 	// VDrift car.
 	// For e.g. replay cars that don't 
 	// need physics simulation, this can be null.
@@ -103,3 +126,5 @@ private:
 	// Our settings.
 	SETTINGS* pSet;
 };
+
+#endif

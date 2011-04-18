@@ -7,8 +7,15 @@
  * or no cube map at all (static map loaded from file)
  */
 
+#ifndef _CarReflection_H_
+#define _CarReflection_H_
+
 #include "../vdrift/settings.h"
-#include "OgreGame.h"
+#include "Ogre.h"
+using namespace Ogre;
+
+const int ciShadowNumSizes = 4;
+const int ciShadowSizesA[ciShadowNumSizes] = {512,1024,2048,4096};
 
 class CarReflection
 {
@@ -63,3 +70,5 @@ private:
 	// Settings, needed to get the user settings for cube maps
 	SETTINGS* pSet;
 };
+
+#endif

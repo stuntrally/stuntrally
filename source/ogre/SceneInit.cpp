@@ -24,7 +24,8 @@ void App::createScene()
 	mRoot->addResourceLocation(pathTrk[1] + "_previews/", "FileSystem");  //prv user tracks
 
 	//  --------  Follow Camera  --------
-	mFCam = new FollowCamera(mCamera);  mFCam->loadCameras();
+	// now in CarModel::Create
+	//mFCam = new FollowCamera(mCamera);  mFCam->loadCameras();
 	
 	if (!pSet->autostart)  isFocGui = true;
 	InitGui();
@@ -42,10 +43,7 @@ void App::createScene()
 	
 	objs.LoadXml();
 	Log(string("**** Loaded Vegetation objects: ") + toStr(objs.colsMap.size()));
-	Log(string("**** ReplayFrame size: ") + toStr(sizeof(ReplayFrame)));
-
-	createReflectCams();  ///*
-	
+	Log(string("**** ReplayFrame size: ") + toStr(sizeof(ReplayFrame)));	
 
 	///  load replay
 	if (pSet->rpl_play)
@@ -78,9 +76,16 @@ void App::NewGame()
 /* Loading steps (in this order) */
 void App::LoadCleanUp()
 {
+	// rem old track
+	if (resTrk != "")  Ogre::Root::getSingletonPtr()->removeResourceLocation(resTrk);
+	resTrk = TrkDir() + "objects";
+	
+	if (carM) delete carM;
+	
 	//  hide trails
-	for (int w=0; w<4; ++w)  if (whTrl[w])  {	wht[w] = 0.f;
-		whTrl[w]->setVisible(false);	whTrl[w]->setInitialColour(0, 0.5,0.5,0.5, 0);	}
+	///TODO
+	/*for (int w=0; w<4; ++w)  if (whTrl[w])  {	wht[w] = 0.f;
+		whTrl[w]->setVisible(false);	whTrl[w]->setInitialColour(0, 0.5,0.5,0.5, 0);	}*/
 	
 	if (grass) {  delete grass->getPageLoader();  delete grass;  grass=0;   }
 	if (trees) {  delete trees->getPageLoader();  delete trees;  trees=0;   }
@@ -90,13 +95,9 @@ void App::LoadCleanUp()
 	mSceneMgr->destroyAllEntities();
 	mSceneMgr->destroyAllStaticGeometry();
 
-	//  par sys
+	//  rain/snow
 	if (pr)  {  mSceneMgr->destroyParticleSystem(pr);   pr=0;  }
 	if (pr2) {  mSceneMgr->destroyParticleSystem(pr2);  pr2=0;  }
-	for (int w=0; w < 4; w++)  {
-		if (ps[w]) {  mSceneMgr->destroyParticleSystem(ps[w]);   ps[w]=0;  }
-		if (pm[w]) {  mSceneMgr->destroyParticleSystem(pm[w]);   pm[w]=0;  }
-		if (pd[w]) {  mSceneMgr->destroyParticleSystem(pd[w]);   pd[w]=0;  }  }
 
 	terrain = 0;
 	if (mTerrainGroup)
@@ -119,10 +120,25 @@ void App::LoadScene()
 		sc.LoadXml(TrkDir()+"scene.xml");
 	else
 	{	sc.Default();  sc.td.hfData = NULL;  }	
+	
+	//  rain  -----
+	if (!pr && sc.rainEmit > 0)  {
+		pr = mSceneMgr->createParticleSystem("Rain", sc.rainName);
+		mSceneMgr->getRootSceneNode()->createChildSceneNode()->attachObject(pr);
+		pr->setRenderQueueGroup(RENDER_QUEUE_9+5);
+		pr->getEmitter(0)->setEmissionRate(0);  }
+	//  rain2  =====
+	if (!pr2 && sc.rain2Emit > 0)  {
+		pr2 = mSceneMgr->createParticleSystem("Rain2", sc.rain2Name);
+		mSceneMgr->getRootSceneNode()->createChildSceneNode()->attachObject(pr2);
+		pr2->setRenderQueueGroup(RENDER_QUEUE_9+5);
+		pr2->getEmitter(0)->setEmissionRate(0);  }
 }
 void App::LoadCar()
 {
-	CreateCar();  // par rain
+	//CreateCar();
+	carM = new CarModel(0, sListCar, mSceneMgr, pSet, pGame, &sc, mCamera);
+	carM->Create();
 	
 	//  init replay  once  ---------------------------------
 	float whR[4] = {0.3f,0.3f,0.3f,0.3f};
@@ -138,9 +154,14 @@ void App::LoadTerrain()
 {
 	bool ter = IsTerTrack();
 	CreateTerrain(false,ter);  // common
+	carM->terrain = terrain;
+	carM->blendMtr = blendMtr;
+	carM->blendMapSize = blendMapSize;
 }
 void App::LoadTrack()
 {
+	mRoot->addResourceLocation(resTrk, "FileSystem");
+
 	bool ter = IsTerTrack();
 	if (!ter)	//  track
 	{
@@ -163,10 +184,11 @@ void App::LoadMisc()
 	CreateHUD();
 	// immediately hide it
 	ShowHUD(true);
-	miReflectCntr = 5;  //.
-	mReflAll1st = true;
-	mFCam->first = true;  // no smooth	
-	mFCam->mTerrain = mTerrainGroup; // assign terrain to cam
+	/*mFCam->first = true;  // no smooth	
+	mFCam->mTerrain = mTerrainGroup; // assign terrain to cam*/
+	///TODO multiple cars
+	carM->fCam->first = true;
+	carM->fCam->mTerrain = mTerrainGroup;
 }
 
 /* Actual loading procedure that gets called every frame during load. Performs a single loading step. */

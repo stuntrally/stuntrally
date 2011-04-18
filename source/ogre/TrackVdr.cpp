@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "OgreGame.h"
 #include "../vdrift/game.h"
-
+#include "CarModel.h" // for CreateModel()
 
 
 ///---------------------------------------------------------------------------------------------------------------
@@ -77,7 +77,7 @@ void App::CreateTrack()
 		//if (ownSky && msh.sky)
 		if (!msh.sky)
 		{
-		ManualObject* m = CreateModel(msh.material, msh.mesh, false, true);
+		ManualObject* m = CarModel::CreateModel(mSceneMgr, msh.material, msh.mesh, Vector3(0,0,0), false, true);
 		//if (!m)  continue;
 		if (msh.sky)
 			m->setCastShadows(false);

@@ -92,13 +92,14 @@ bool App::frameStart(Real time)
 			gtim.update();
 			double dt = gtim.dt;
 
-			if (!pGame->pause && mFCam)
-				mFCam->update(/*dt/*time/**/pGame->framerate/**/);
+			if (!pGame->pause && carM && carM->fCam)
+				carM->fCam->update(/*dt/*time/**/pGame->framerate/**/);
+			
 			if (ndSky)  ///o-
 				ndSky->setPosition(GetCamera()->getPosition());
 		}
 
-		updateReflection();  //*
+		//updateReflection();  //*
 
 		//  trees
 		//if (pSet->mult_thr != 2)
@@ -128,7 +129,29 @@ bool App::frameStart(Real time)
 		UpdateHUD(pCar, time);
 
 		///  terrain mtr from blend maps
-		UpdWhTerMtr(pCar);
+		// now in CarModel::Update
+		//UpdWhTerMtr(pCar);
+		
+		//  par  rain cam  . . . .
+		if (pSet->particles && time != 0)
+		{	const Vector3& pos = mCamera->getPosition();
+				static Vector3 oldPos = Vector3::ZERO;
+				Vector3 vel = (pos-oldPos)/time;  oldPos = pos;
+			Vector3 dir = mCamera->getDirection();//, up = mCamera->getUp();
+			Vector3 par = pos + dir * 12 + vel * 0.4;
+			if (pr && sc.rainEmit > 0)
+			{
+				ParticleEmitter* pe = pr->getEmitter(0);
+				pe->setPosition(par);
+				pe->setEmissionRate(sc.rainEmit);
+			}
+			if (pr2 && sc.rain2Emit > 0)
+			{
+				ParticleEmitter* pe = pr2->getEmitter(0);
+				pe->setPosition(par);	//pe->setDirection(-up);
+				pe->setEmissionRate(sc.rain2Emit);
+			}
+		}
 		
 		return ret;
 	}
@@ -136,41 +159,6 @@ bool App::frameStart(Real time)
 bool App::frameEnd(Real time)
 {
 	return true;
-}
-
-
-///  terrain mtr from blend maps
-//-------------------------------------------------------------------------------------------------------
-void App::UpdWhTerMtr(CAR* pCar)
-{
-	if (!pCar || !ndWh[0])  return;
-	if (!terrain || !blendMtr)	// vdr trk
-	{
-		for (int i=0; i<4; ++i)  // for particles/trails only
-			whTerMtr[i] = pCar->dynamics.bWhOnRoad[i] ? 0 : 1;
-		return;
-	}
-
-	int t = blendMapSize;
-	Real tws = sc.td.fTerWorldSize;
-
-	//  wheels
-	for (int i=0; i<4; ++i)
-	{
-		Vector3 w = ndWh[i]->getPosition();
-		int mx = (w.x + 0.5*tws)/tws*t, my = (w.z + 0.5*tws)/tws*t;
-		mx = max(0,min(t-1, mx)), my = max(0,min(t-1, my));
-		
-		int mtr = blendMtr[my*t + mx];
-		if (pCar->dynamics.bWhOnRoad[i])
-			mtr = 0;
-		whTerMtr[i] = mtr;
-
-		///  vdr set surface for wheel
-		TRACKSURFACE* tsu = &pGame->track.tracksurfaces[mtr];
-		pCar->dynamics.terSurf[i] = tsu;
-		pCar->dynamics.bTerrain = true;
-	}
 }
 
 
@@ -203,10 +191,10 @@ void App::newPoses()
 			for (int w=0; w < 4; ++w)
 			{
 				whPos[w] = fr.whPos[w];  whRot[w] = fr.whRot[w];
-				newWhVel[w] = fr.whVel[w];
-				newWhSlide[w] = fr.slide[w];  newWhSqueal[w] = fr.squeal[w];
-				newWhR[w] = replay.header.whR[w];//
-				newWhMtr[w] = fr.whMtr[w];
+				newPosInfo.newWhVel[w] = fr.whVel[w];
+				newPosInfo.newWhSlide[w] = fr.slide[w];  newPosInfo.newWhSqueal[w] = fr.squeal[w];
+				newPosInfo.newWhR[w] = replay.header.whR[w];//
+				newPosInfo.newWhMtr[w] = fr.whMtr[w];
 			}
 		}else	// restart replay (repeat)
 			pGame->timer.RestartReplay();
@@ -223,10 +211,10 @@ void App::newPoses()
 			whPos[w] = pCar->dynamics.GetWheelPosition(wp);
 			whRot[w] = pCar->dynamics.GetWheelOrientation(wp);
 			//float wR = pCar->GetTireRadius(wp);
-			newWhVel[w] = pCar->dynamics.GetWheelVelocity(wp).Magnitude();
-			newWhSlide[w] = -1.f;  newWhSqueal[w] = pCar->GetTireSquealAmount(wp, &newWhSlide[w]);
-			newWhR[w] = pCar->GetTireRadius(wp);//
-			newWhMtr[w] = whTerMtr[w];
+			newPosInfo.newWhVel[w] = pCar->dynamics.GetWheelVelocity(wp).Magnitude();
+			newPosInfo.newWhSlide[w] = -1.f;  newPosInfo.newWhSqueal[w] = pCar->GetTireSquealAmount(wp, &newPosInfo.newWhSlide[w]);
+			newPosInfo.newWhR[w] = pCar->GetTireRadius(wp);//
+			newPosInfo.newWhMtr[w] = carM->whTerMtr[w];
 		}
 	}
 	
@@ -234,18 +222,18 @@ void App::newPoses()
 	//  transform axes, vdrift to ogre  car & wheels
 	//-----------------------------------------------------------------------
 
-	newPos = Vector3(pos[0],pos[2],-pos[1]);
+	newPosInfo.newPos = Vector3(pos[0],pos[2],-pos[1]);
 	Quaternion q(rot[0],rot[1],rot[2],rot[3]), q1;
 	Radian rad;  Vector3 axi;  q.ToAngleAxis(rad, axi);
-	q1.FromAngleAxis(-rad,Vector3(axi.z,-axi.x,-axi.y));  newRot = q1 * qFixCar;
-	Vector3 vcx,vcz;  q1.ToAxes(vcx,newCarY,vcz);
+	q1.FromAngleAxis(-rad,Vector3(axi.z,-axi.x,-axi.y));  newPosInfo.newRot = q1 * qFixCar;
+	Vector3 vcx,vcz;  q1.ToAxes(vcx,newPosInfo.newCarY,vcz);
 
 	for (int w=0; w < 4; w++)
 	{
-		newWhPos[w] = Vector3(whPos[w][0],whPos[w][2],-whPos[w][1]);
+		newPosInfo.newWhPos[w] = Vector3(whPos[w][0],whPos[w][2],-whPos[w][1]);
 		Quaternion q(whRot[w][0],whRot[w][1],whRot[w][2],whRot[w][3]), q1;
 		Radian rad;  Vector3 axi;  q.ToAngleAxis(rad, axi);
-		q1.FromAngleAxis(-rad,Vector3(axi.z,-axi.x,-axi.y));  newWhRot[w] = q1 * qFixWh;
+		q1.FromAngleAxis(-rad,Vector3(axi.z,-axi.x,-axi.y));  newPosInfo.newWhRot[w] = q1 * qFixWh;
 	}
 	bNew = true;
 	
@@ -293,7 +281,7 @@ void App::newPoses()
 				fr.suspVel[w] = pCar->dynamics.GetSuspension(wp).GetVelocity();
 				fr.suspDisp[w] = pCar->dynamics.GetSuspension(wp).GetDisplacementPercent();
 				//replay.header.whR[w] = pCar->GetTireRadius(wp);//
-				fr.whMtr[w] = whTerMtr[w];
+				fr.whMtr[w] = carM->whTerMtr[w];
 			}
 			//  hud
 			fr.vel = pCar->GetSpeedometer();  fr.rpm = pCar->GetEngineRPM();
@@ -320,13 +308,13 @@ void App::newPoses()
 
 	if (bGetStPos)  // first pos is at start
 	{	bGetStPos = false;
-		matStPos.makeInverseTransform(newPos, Vector3::UNIT_SCALE, newRot);
+		matStPos.makeInverseTransform(newPosInfo.newPos, Vector3::UNIT_SCALE, newPosInfo.newRot);
 		iCurChk = -1;  iNextChk = -1;  iNumChks = 1;  // reset lap
 	}
 	if (road && !bGetStPos)
 	{
 		//  start/finish box dist
-		Vector4 carP(newPos.x,newPos.y,newPos.z,1);
+		Vector4 carP(newPosInfo.newPos.x,newPosInfo.newPos.y,newPosInfo.newPos.z,1);
 		vStDist = matStPos * carP;
 		bInSt = abs(vStDist.x) < road->vStBoxDim.x && 
 			abs(vStDist.y) < road->vStBoxDim.y && 
@@ -344,7 +332,7 @@ void App::newPoses()
 			for (int i=0; i < ncs; ++i)
 			{
 				const CheckSphere& cs = road->mChks[i];
-				Real d2 = newPos.squaredDistance(cs.pos);
+				Real d2 = newPosInfo.newPos.squaredDistance(cs.pos);
 				if (d2 < cs.r2)  // car in checkpoint
 				{
 					iInChk = i;
@@ -373,115 +361,13 @@ void App::newPoses()
 //---------------------------------------------------------------------------------------------------------------
 void App::updatePoses(float time)
 {	
-	if (!ndCar)  return;
-	if (!bNew)  return;  // new only
-	bNew = false;
-
-	//  car pos and rot
-	ndCar->setPosition(newPos);
-	ndCar->setOrientation(newRot);
-
+	///TODO multiple cars
+	if (!carM) return;
+	carM->Update(newPosInfo, time);
+	
 	//  pos on minimap  x,y = -1..1
-	float xp =(-newPos[2] - minX)*scX*2-1,
-		  yp =-(newPos[0] - minY)*scY*2+1;
+	float xp =(-newPosInfo.newPos[2] - minX)*scX*2-1,
+		  yp =-(newPosInfo.newPos[0] - minY)*scY*2+1;
 	if (ndPos)
 		ndPos->setPosition(xp,yp,0);
-	
-	
-	//  wheels
-	for (int w=0; w < 4; w++)
-	{
-		float wR = newWhR[w];
-		ndWh[w]->setPosition(newWhPos[w]);
-		ndWh[w]->setOrientation(newWhRot[w]);
-		int whMtr = newWhMtr[w];  //whTerMtr[w];
-		
-		
-		//  update particle emitters
-		//-----------------------------------------------------------------------------
-		float whVel = newWhVel[w] * 3.6f;  //kmh
-		float slide = newWhSlide[w], squeal = newWhSqueal[w];
-		float onGr = slide < 0.f ? 0.f : 1.f;
-
-		//  wheel temp
-		wht[w] += squeal * time * 7;
-		wht[w] -= time*6;  if (wht[w] < 0.f)  wht[w] = 0.f;
-
-		///  emit rates +
-		Real emitS = 0.f, emitM = 0.f, emitD = 0.f;  //paused
-		if (!isFocGui)
-		{	 Real sq = squeal* min(1.f, wht[w]), l = pSet->particles_len * onGr;
-			 emitS = sq * (whVel * 30) * l *0.3f;  //..
-			 emitM = slide < 1.4f ? 0.f :  (8.f * sq * min(5.f, slide) * l);
-			 emitD = (min(140.f, whVel) / 3.5f + slide * 1.f ) * l;  }
-		Real sizeD = (0.3f + 1.1f * min(140.f, whVel) / 140.f) * (w < 2 ? 0.5f : 1.f);
-		//  ter mtr factors
-		int mtr = min((int)(whMtr-1), (int)(sc.td.layers.size()-1));
-		TerLayer& lay = whMtr==0 ? sc.td.layerRoad : sc.td.layersAll[sc.td.layers[mtr]];
-		emitD *= lay.dust;  emitM *= lay.mud;  sizeD *= lay.dustS;  emitS *= lay.smoke;
-
-		//  par emit
-		Vector3 vpos = newWhPos[w];
-		if (pSet->particles)
-		{
-			if (ps[w] && sc.td.layerRoad.smoke > 0.f/*&& !sc.ter*/)  // only at vdr road
-			{
-				ParticleEmitter* pe = ps[w]->getEmitter(0);
-				pe->setPosition(vpos + newCarY * wR*0.7f); // 0.218
-				/**/ps[w]->getAffector(0)->setParameter("alpha", toStr(-0.4f - 0.07f/2.4f * whVel));
-				/**/pe->setTimeToLive( max(0.1, 2 - whVel/2.4f * 0.04) );  // fade,live
-				pe->setDirection(-newCarY);	pe->setEmissionRate(emitS);
-			}
-			if (pm[w])	//  mud
-			{	ParticleEmitter* pe = pm[w]->getEmitter(0);
-				//pe->setDimensions(sizeM,sizeM);
-				pe->setPosition(vpos + newCarY * wR*0.7f); // 0.218
-				pe->setDirection(-newCarY);	pe->setEmissionRate(emitM);
-			}
-			if (pd[w])	//  dust
-			{	pd[w]->setDefaultDimensions(sizeD,sizeD);
-				ParticleEmitter* pe = pd[w]->getEmitter(0);
-				pe->setPosition(vpos + newCarY * wR*0.51f ); // 0.16
-				pe->setDirection(-newCarY);	pe->setEmissionRate(emitD);
-			}
-		}
-
-		//  update trails h+
-		if (pSet->trails)  {
-			if (ndWhE[w])
-			{	Vector3 vp = vpos + newCarY * wR*0.72f;  // 0.22
-				if (terrain && whMtr > 0)
-					vp.y = terrain->getHeightAtWorldPosition(vp) + 0.05f;
-					//if (/*whOnRoad[w]*/whMtr > 0 && road)  // on road, add ofs
-					//	vp.y += road->fHeight;	}/**/
-				ndWhE[w]->setPosition(vp);
-			}
-			float al = 0.5f * /*squeal*/ min(1.f, 0.7f * wht[w]) * onGr;  // par+
-			if (whTrl[w])	whTrl[w]->setInitialColour(0,
-				lay.tclr.r,lay.tclr.g,lay.tclr.b, lay.tclr.a * al/**/);
-		}
-	}
-
-
-	//  par  rain cam  . . . .
-	if (pSet->particles)
-	{	const Vector3& pos = mCamera->getPosition();
-			static Vector3 oldPos = Vector3::ZERO;
-			Vector3 vel = (pos-oldPos)/time;  oldPos = pos;
-		Vector3 dir = mCamera->getDirection();//, up = mCamera->getUp();
-		Vector3 par = pos + dir * 12 + vel * 0.4;
-		if (pr && sc.rainEmit > 0)
-		{
-			ParticleEmitter* pe = pr->getEmitter(0);
-			pe->setPosition(par);
-			pe->setEmissionRate(sc.rainEmit);
-		}
-		if (pr2 && sc.rain2Emit > 0)
-		{
-			ParticleEmitter* pe = pr2->getEmitter(0);
-			pe->setPosition(par);	//pe->setDirection(-up);
-			pe->setEmissionRate(sc.rain2Emit);
-		}
-	}
-
 }

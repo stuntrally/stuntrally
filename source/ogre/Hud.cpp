@@ -217,7 +217,9 @@ void App::UpdateHUD(CAR* pCar, float time)
     float angrmp = fr.rpm*rsc + rmin;
     float vsc = pSet->show_mph ? -180.f/100.f : -180.f/160.f, vmin = 0.f;  //vel
     float angvel = abs(vel)*vsc + vmin;
-    float angrot = ndCar ? ndCar->getOrientation().getYaw().valueDegrees() : 0.f;
+    ///TODO multiple cars
+    if (!carM) return;
+    float angrot = carM->pMainNode ? carM->pMainNode->getOrientation().getYaw().valueDegrees() : 0.f;
     float sx = 1.4f, sy = sx*asp;  // *par len
     float psx = 2.1f * pSet->size_minimap, psy = psx;  // *par len
 
