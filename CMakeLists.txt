@@ -1,6 +1,13 @@
 project(StuntRally CXX C)
 cmake_minimum_required(VERSION 2.6)
 
+# Allow disabling game building
+option(BUILD_GAME             "Build the game binary."    ON)
+# Allow disabling editor building
+option(BUILD_EDITOR           "Build the track editor."   ON)
+# Allow disabling master server building
+option(BUILD_MASTER_SERVER    "Build the master server."  OFF)
+
 # Avoid source tree pollution
 if(CMAKE_SOURCE_DIR STREQUAL CMAKE_BINARY_DIR)
 	message(FATAL_ERROR "In-source builds are not permitted. Make a separate folder for building:\nmkdir build; cd build; cmake ..\nBefore that, remove the files already created:\nrm -rf CMakeCache.txt CMakeFiles")
@@ -40,33 +47,45 @@ mark_as_advanced(SHARE_INSTALL)
 #      but that would break other build systems for good.
 add_definitions(-DSHARED_DATA_DIR="${SHARE_INSTALL}")
 
+
 # Libraries
-
-find_package(OGRE REQUIRED QUIET)
-include_directories(${OGRE_INCLUDE_DIRS} ${OGRE_Terrain_INCLUDE_DIRS} ${OGRE_Paging_INCLUDE_DIRS})
-link_directories(${OGRE_LIBRARY_DIRS})
-list(APPEND LIBS ${OGRE_LIBRARIES} ${OGRE_Terrain_LIBRARIES} ${OGRE_Paging_LIBRARIES})
-
-find_package(MyGUI REQUIRED QUIET)
-include_directories(${MYGUI_INCLUDE_DIRS})
-link_directories(${MYGUI_LIB_DIR})
-list(APPEND LIBS ${MYGUI_LIBRARIES} MyGUI.OgrePlatform) #TODO: MyGUI.OgrePlatform is not added by the find script
 
 find_package(Boost COMPONENTS system thread filesystem REQUIRED QUIET)
 include_directories(${Boost_INCLUDE_DIRS})
 link_directories(${Boost_LIBRARY_DIRS})
 list(APPEND LIBS ${Boost_LIBRARIES})
 
-foreach(lib  OIS SDL OGG VorbisFile ENet)    # Simple libraries added in a loop
-	find_package(${lib} REQUIRED QUIET)
-	include_directories(${${lib}_INCLUDE_DIRS})
-	list(APPEND LIBS ${${lib}_LIBRARIES})
-endforeach()
+# We can significantly reduce deps if only building master server
+if(BUILD_GAME OR BUILD_EDITOR)
+	find_package(OGRE REQUIRED QUIET)
+	include_directories(${OGRE_INCLUDE_DIRS} ${OGRE_Terrain_INCLUDE_DIRS} ${OGRE_Paging_INCLUDE_DIRS})
+	link_directories(${OGRE_LIBRARY_DIRS})
+	list(APPEND LIBS ${OGRE_LIBRARIES} ${OGRE_Terrain_LIBRARIES} ${OGRE_Paging_LIBRARIES})
 
-if(UNIX)
-	list(APPEND LIBS "rt") # For clock_gettime()
+	find_package(MyGUI REQUIRED QUIET)
+	include_directories(${MYGUI_INCLUDE_DIRS})
+	link_directories(${MYGUI_LIB_DIR})
+	list(APPEND LIBS ${MYGUI_LIBRARIES} MyGUI.OgrePlatform) #TODO: MyGUI.OgrePlatform is not added by the find script
+
+	foreach(lib  OIS SDL OGG VorbisFile)    # Simple libraries added in a loop
+		find_package(${lib} REQUIRED QUIET)
+		include_directories(${${lib}_INCLUDE_DIRS})
+		list(APPEND LIBS ${${lib}_LIBRARIES})
+	endforeach()
+
+	if(UNIX)
+		list(APPEND LIBS "rt") # For clock_gettime()
+	endif()
 endif()
 
+# Editor doesn't need networking
+if(BUILD_GAME OR BUILD_MASTER_SERVER)
+	find_package(ENet REQUIRED QUIET)
+	include_directories(${ENet_INCLUDE_DIRS})
+	list(APPEND LIBS ${ENet_LIBRARIES})
+endif()
+
+# Server dependencies
 list(APPEND SERVER_LIBS ${ENet_LIBRARIES} ${Boost_LIBRARIES})
 
 

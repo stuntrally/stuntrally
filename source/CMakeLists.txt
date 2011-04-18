@@ -1,11 +1,4 @@
 
-# Allow disabling game building
-option(BUILD_GAME             "Build the game binary."    ON)
-# Allow disabling editor building
-option(BUILD_EDITOR           "Build the track editor."   ON)
-# Allow disabling master server building
-option(BUILD_MASTER_SERVER    "Build the master server."  OFF)
-
 # Linux prefers lower-case exe names
 if(WIN32 OR APPLE)
 	set(GAME_EXE StuntRally)
@@ -21,10 +14,12 @@ endif()
 include_directories(btOgre bullet ogre paged-geom road tinyxml vdrift)
 
 # Compile our libraries
-foreach(ourlib   tinyxml bullet oisb paged-geom)
-	add_subdirectory(${ourlib})
-	list(APPEND OURLIBS ${ourlib})
-endforeach()
+if (BUILD_GAME OR BUILD_EDITOR)
+	foreach(ourlib   tinyxml bullet oisb paged-geom)
+		add_subdirectory(${ourlib})
+		list(APPEND OURLIBS ${ourlib})
+	endforeach()
+endif()
 
 # Game executable
 if(BUILD_GAME)
