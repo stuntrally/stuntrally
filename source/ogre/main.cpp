@@ -56,10 +56,18 @@ void VprThread(App* pA)
 	// HACK: We initialize paths a second time now that we have the output streams
 	PATHMANAGER::Init(info_output, error_output);
 
-	// Networking
+	// Initialize networking
 	net::ENetContainer enet;
 
-	// Temporary network test hack
+	// FIXME: Temporary master server test hack
+	MasterClient mc;
+	mc.connect("localhost", 4444);
+	boost::this_thread::sleep(boost::posix_time::milliseconds(2000));
+	mc.updateGame("Test game", "M-001", 1);
+	boost::this_thread::sleep(boost::posix_time::milliseconds(1000));
+	mc.refreshList();
+
+	// FIXME: Temporary network test hack
 	P2PGameClient client(argc > 1 ? 5555 : 5556);
 	if (argc > 1) {
 		try {
