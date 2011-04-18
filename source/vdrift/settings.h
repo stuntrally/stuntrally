@@ -65,6 +65,11 @@ public:
 	//  replay
 	bool rpl_rec, rpl_play;
 	
+	// network
+	std::string nickname;
+	std::string master_server_address;
+	int master_server_port;
+
 //------------------------------------------
 	SETTINGS();
 

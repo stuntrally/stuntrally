@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "settings.h"
+#include "../network/protocol.hpp"
 
 
 void SETTINGS::Load(std::string sfile) {  CONFIGFILE c;  c.Load(sfile);  Serialize(false, c);  }
@@ -74,6 +75,10 @@ void SETTINGS::Serialize(bool w, CONFIGFILE & c)
 	Param(c,w, "video.buffer", buffer);			Param(c,w, "video.rendersystem", rendersystem);
 
 	Param(c,w, "replay.play", rpl_play);	Param(c,w, "replay.rec", rpl_rec);
+
+	Param(c,w, "network.nickname", nickname);
+	Param(c,w, "network.master_server_address", master_server_address);
+	Param(c,w, "network.master_server_port", master_server_port);
 }
 
 SETTINGS::SETTINGS() :  ///  Defaults
@@ -114,5 +119,9 @@ SETTINGS::SETTINGS() :  ///  Defaults
 	windowx(800), windowy(600), fullscreen(false), fsaa(0), vsync(false),
 	buffer("FBO"), rendersystem("OpenGL Rendering Subsystem"),
 	//  replay
-	rpl_rec(1), rpl_play(0)
+	rpl_rec(1), rpl_play(0),
+	// network
+	nickname("StuntMan"),
+	master_server_address("localhost"),
+	master_server_port(protocol::DEFAULT_PORT)
 {}
