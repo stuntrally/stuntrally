@@ -28,6 +28,8 @@ namespace net {
 	const unsigned ENetChannels = 3; // 0 = Sequenced, 1 = Reliable, 2 = Unsequenced
 	const unsigned ENetMaxConnections = 16;
 
+	typedef enet_uint16 peer_id_t;
+
 	enum PacketFlags {
 		PACKET_SEQUENCED = 0,
 		PACKET_RELIABLE = 1,
@@ -50,11 +52,13 @@ namespace net {
 
 	/// Network traffic container
 	struct NetworkTraffic {
-		NetworkTraffic(unsigned id = 0, void* dptr = NULL, enet_uint8* pckd = NULL, size_t pckl = 0):
+		NetworkTraffic(const enet_uint8* pckd = NULL, size_t pckl = 0):
+			peer_id(0), peer_data(NULL), packet_data(pckd), packet_length(pckl) {}
+		NetworkTraffic(peer_id_t id, void* dptr, const enet_uint8* pckd = NULL, size_t pckl = 0):
 			peer_id(id), peer_data(dptr), packet_data(pckd), packet_length(pckl) {}
-		unsigned peer_id;
+		peer_id_t peer_id;
 		void* peer_data;
-		enet_uint8* packet_data;
+		const enet_uint8* packet_data;
 		size_t packet_length;
 	};
 
@@ -143,12 +147,12 @@ namespace net {
 			if (!peer) throw std::runtime_error("No available peers for initiating an ENet connection.");
 			peer->data = data;
 			// TODO: Handle peers in listen()
-			m_peers.push_back(peer);
+			m_peers[peer->incomingPeerID] = peer;
 		}
 
-		/// Send a string to everyone
-		void broadcast(const std::string& msg, int flags = 0) {
-			ENetPacket* packet = enet_packet_create(msg.c_str(), msg.length(), flags);
+		/// Send a packet to everyone
+		void broadcast(const NetworkTraffic& msg, int flags = 0) {
+			ENetPacket* packet = enet_packet_create(msg.packet_data, msg.packet_length, flags);
 			// Pick channel for sending and broadcast to all peers
 			int channel = 0;
 			if (flags & PACKET_RELIABLE) channel = 1;
@@ -158,13 +162,45 @@ namespace net {
 			enet_host_broadcast(m_host, channel, packet);
 		}
 
+		/// Send a string to everyone
+		void broadcast(const std::string& msg, int flags = 0) {
+			NetworkTraffic traffic(reinterpret_cast<const enet_uint8*>(msg.c_str()), msg.length());
+			broadcast(traffic, flags);
+		}
+
+		/// Send a packet to a specific peer
+		void send(peer_id_t peer_id, const NetworkTraffic& msg, int flags = 0) {
+			ENetPeer* peer = getPeerPtr(peer_id);
+			if (!peer) return;
+			ENetPacket* packet = enet_packet_create(msg.packet_data, msg.packet_length, flags);
+			// Pick channel for sending and broadcast to all peers
+			int channel = 0;
+			if (flags & PACKET_RELIABLE) channel = 1;
+			else if (flags & PACKET_UNSEQUENCED) channel = 2;
+			// Send
+			boost::mutex::scoped_lock lock(m_mutex);
+			enet_peer_send(peer, channel, packet);
+		}
+
+		/// Send a string to a specific peer
+		void send(peer_id_t peer_id, const std::string& msg, int flags = 0) {
+			NetworkTraffic traffic(reinterpret_cast<const enet_uint8*>(msg.c_str()), msg.length());
+			send(peer_id, traffic, flags);
+		}
+
+		ENetPeer* getPeerPtr(peer_id_t peer_id) {
+			Peers::iterator it = m_peers.find(peer_id);
+			if (it != m_peers.end()) return it->second;
+			return NULL;
+		}
+
 		void terminate() { m_quit = true; m_thread.join(); }
 
 	private:
 		bool m_quit;
 		ENetAddress m_address;
 		ENetHost* m_host;
-		typedef std::list<ENetPeer*> Peers;
+		typedef std::map<peer_id_t, ENetPeer*> Peers;
 		Peers m_peers;
 		mutable boost::mutex m_mutex;
 		boost::thread m_thread;
