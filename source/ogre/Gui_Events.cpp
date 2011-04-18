@@ -314,6 +314,8 @@ void App::btnQuit(WP)
 	ButtonPtr chk = wp->castType<MyGUI::Button>(); \
     chk->setStateCheck(pSet->var);  }
 
+void App::chkDigits(WP wp){ 		ChkEv(show_digits); ShowHUD();   }
+
 void App::chkReverse(WP wp){		ChkEv(trackreverse);	ReadTrkStats();  }
 
 void App::chkParticles(WP wp){		ChkEv(particles);	UpdParsTrails();	}

@@ -189,7 +189,7 @@ protected:
 		chkOgreDialog(WP), chkAutoStart(WP), chkEscQuits(WP), chkBltLines(WP),  // startup
 		chkVidBloom(WP), chkVidHDR(WP), chkVidBlur(WP),  // video
 		chkVidFullscr(WP), chkVidVSync(WP), UpdBloomVals(),
-		chkLoadPics(WP), chkVegetCollis(WP);
+		chkLoadPics(WP), chkVegetCollis(WP), chkDigits(WP);
 
 	void comboTexFilter(SL);
 	ButtonPtr bRkmh, bRmph;  void radKmh(WP), radMph(WP), btnTrGrReset(WP), btnQuit(WP), btnResChng(WP);

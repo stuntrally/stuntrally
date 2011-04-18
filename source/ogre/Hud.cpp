@@ -180,8 +180,8 @@ void App::ShowHUD(bool hideAll)
 		if (ovGear)	{  if (1||show)  ovGear->show();  else  ovGear->hide();  }
 		if (ovVel)	{  if (1||show)  ovVel->show();   else  ovVel->hide();   }
 		if (ovAbsTcs){ if (show)  ovAbsTcs->show();   else  ovAbsTcs->hide(); }
-		if (hudGear) {if (show) hudGear->show(); else hudGear->hide(); }
-		if (hudVel) {if (show) hudVel->show(); else hudVel->hide(); }
+		if (hudGear) {if (pSet->show_digits) hudGear->show(); else hudGear->hide(); }
+		if (hudVel) {if (pSet->show_digits) hudVel->show(); else hudVel->hide(); }
 
 		show = pSet->car_dbgbars;
 		if (ovCarDbg){  if (show)  ovCarDbg->show();  else  ovCarDbg->hide();   }

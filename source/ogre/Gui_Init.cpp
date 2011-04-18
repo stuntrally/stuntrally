@@ -147,6 +147,8 @@ void App::InitGui()
 	Chk("CarGear", chkGear, autoshift);
 	Chk("CarRear", chkRear, autorear);	Chk("CarClutch", chkClutch, autoclutch);
 	Chk("VegetCollis", chkVegetCollis, veget_collis);
+	
+	Chk("Digits", chkDigits, show_digits);
 
 	//  kmh/mph radio
 	bRkmh = mGUI->findWidget<Button>("kmh");
