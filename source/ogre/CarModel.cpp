@@ -180,10 +180,10 @@ void CarModel::Create(void)
 	//  body  ----------------------
 	Ogre::Vector3 vPofs(0,0,0);
 
-	if (FileExists(sDirname + "/body.mesh"))
+	if (FileExists(resCar + "/body.mesh"))
 	{
 		Entity* eCar = pSceneMgr->createEntity("Car", "body.mesh");
-		if (FileExists(sDirname + "/body00_add.png") && FileExists(sDirname + "/body00_red.png"))
+		if (FileExists(resCar + "/body00_add.png") && FileExists(resCar + "/body00_red.png"))
 			eCar->setMaterialName(sMtr[Mtr_CarBody]);
 		ncart->attachObject(eCar);  eCar->setVisibilityFlags(2);
 	}else{
@@ -194,7 +194,7 @@ void CarModel::Create(void)
 	//  interior  ----------------------
 	vPofs = Vector3(pCar->vInteriorOffset[0],pCar->vInteriorOffset[1],pCar->vInteriorOffset[2]);  //x+ back y+ down z+ right
 
-	if (FileExists(sDirname + "/interior.mesh"))
+	if (FileExists(resCar + "/interior.mesh"))
 	{
 		Entity* eInter = pSceneMgr->createEntity("Car.interior", "interior.mesh");
 		eInter->setMaterialName(sMtr[Mtr_CarInterior]);
@@ -207,7 +207,7 @@ void CarModel::Create(void)
 	//  glass  ----------------------
 	vPofs = Vector3(0,0,0);
 
-	if (FileExists(sDirname + "/glass.mesh"))
+	if (FileExists(resCar + "/glass.mesh"))
 	{
 		Entity* eGlass = pSceneMgr->createEntity("Car.glass", "glass.mesh");
 		eGlass->setMaterialName(sMtr[Mtr_CarGlass]);
@@ -235,14 +235,14 @@ void CarModel::Create(void)
 	//  wheels  ----------------------
 	for (int w=0; w < 4; w++)
 	{
-		if (w < 2 && FileExists(sDirname + "/wheel_front.mesh"))
+		if (w < 2 && FileExists(resCar + "/wheel_front.mesh"))
 		{
 			Entity* eWh = pSceneMgr->createEntity("Wheel"+toStr(w), "wheel_front.mesh");
 			eWh->setMaterialName(sMtr[Mtr_CarTireFront]);
 			ndWh[w] = pSceneMgr->getRootSceneNode()->createChildSceneNode();
 			ndWh[w]->attachObject(eWh);  eWh->setVisibilityFlags(2);
 		}else
-		if (FileExists(sDirname + "/wheel_rear.mesh"))
+		if (FileExists(resCar + "/wheel_rear.mesh"))
 		{
 			Entity* eWh = pSceneMgr->createEntity("Wheel"+toStr(w), "wheel_rear.mesh");
 			eWh->setMaterialName(sMtr[Mtr_CarTireRear]);
