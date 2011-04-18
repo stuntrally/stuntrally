@@ -11,22 +11,26 @@ typedef std::map<uint32_t, protocol::GameInfo> GameList;
 class GameListManager {
 public:
 
-	/// Update or announce a game
+	/// Constructor.
+	GameListManager(): m_next_id(1) {}
+
+	/// Update or announce a game.
 	/// @param game the game's information
-	void updateGame(const protocol::GameInfo& game) {
+	void updateGame(protocol::GameInfo& game) {
+		if (game.id == 0) {
+			game.id = m_next_id;
+			++m_next_id;
+		}
 		m_games[game.id] = game;
 	}
 
-	/// Gets the games
+	/// Gets the games.
 	/// @return a packet containing the games in a serialized form
-	net::NetworkTraffic getGames() const {
-		for (GameList::const_iterator it = m_games.begin(); it != m_games.end(); ++it) {
-			// TODO: Implement
-		}
-		return net::NetworkTraffic();
+	const GameList& getGames() const {
+		return m_games;
 	}
 
-	/// Removes outdated games from the list
+	/// Removes outdated games from the list.
 	void purgeGames() {
 		for (GameList::iterator it = m_games.begin(); it != m_games.end(); ++it) {
 			// TODO: Implement
@@ -35,6 +39,7 @@ public:
 
 private:
 	GameList m_games;
+	unsigned m_next_id;
 };
 
 
@@ -59,14 +64,27 @@ public:
 	{
 		if (e.packet_length <= 0 || !e.packet_data) return;
 		switch (e.packet_data[0]) {
-			case protocol::REQUEST_GAME_LIST: {
-				m_client.send(e.peer_id, m_glm.getGames(), net::PACKET_RELIABLE);
+			case protocol::GAME_LIST: {
+				GameList games = m_glm.getGames();
+				for (GameList::const_iterator it = games.begin(); it != games.end(); ++it) {
+					m_client.send(e.peer_id, it->second, net::PACKET_RELIABLE);
+				}
 				break;
 			}
-			case protocol::UPDATE_GAME_STATUS: {
-				// FIXME
-				const protocol::GameInfo* game = reinterpret_cast<const protocol::GameInfo*>(e.packet_data);
-				m_glm.updateGame(*game);
+			case protocol::GAME_STATUS: {
+				// Get peer struct
+				ENetPeer* peer = m_client.getPeerPtr(e.peer_id);
+				if (!peer) return;
+				// Unserialize
+				protocol::GameInfo game = *reinterpret_cast<const protocol::GameInfo*>(e.packet_data);
+				// Fill in peer info
+				game.address = peer->address.host;
+				game.port = peer->address.port;
+				// Update game status
+				m_glm.updateGame(game);
+				// Send confirmation (and id in case of new game)
+				game.packet_type = protocol::GAME_ACCEPTED;
+				m_client.send(e.peer_id, game, net::PACKET_RELIABLE);
 				break;
 			}
 			default: {

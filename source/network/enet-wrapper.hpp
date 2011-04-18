@@ -62,6 +62,15 @@ namespace net {
 		size_t packet_length;
 	};
 
+	/// Inherit this to easily convert simple structs to NetworkTraffic
+	template <class T>
+	struct SimpleSerializer {
+		operator enet_uint8*() { return reinterpret_cast<enet_uint8*>(this); }
+		operator enet_uint8 const*() const { return reinterpret_cast<enet_uint8 const*>(this); }
+		operator NetworkTraffic() { return NetworkTraffic(reinterpret_cast<enet_uint8*>(this), sizeof(T)); }
+		operator const NetworkTraffic() const { return NetworkTraffic(reinterpret_cast<enet_uint8 const*>(this), sizeof(T)); }
+	};
+
 	/// Callback class prototype
 	class NetworkListener {
 	  public:

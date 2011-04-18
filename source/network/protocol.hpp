@@ -5,6 +5,7 @@
  */
 
 #include <stdint.h>
+#include "enet-wrapper.hpp"
 
 namespace protocol {
 
@@ -22,8 +23,9 @@ enum PacketType {
 	PEER_INFO,
 	TEXT_MESSAGE,
 	STATE_UPDATE,
-	REQUEST_GAME_LIST,
-	UPDATE_GAME_STATUS
+	GAME_LIST,
+	GAME_ACCEPTED,
+	GAME_STATUS
 };
 
 struct Packet {
@@ -34,12 +36,14 @@ struct Packet {
 	Packet(PacketType t, uint32_t l, uint8_t* d): type(t), length(l), data(d) {}
 };
 
-struct GameInfo {
-	uint32_t id;
-	std::string name;
-	std::string address;
-	uint8_t players;
-	std::string track;
+struct GameInfo: public net::SimpleSerializer<GameInfo> {
+	uint8_t packet_type;
+	uint32_t id;        // Set by server
+	uint32_t address;   // Set by server
+	uint16_t port;      // Set by server
+	uint8_t players;    // Set by client
+	char name[32];      // Set by client
+	char track[32];     // Set by client
 };
 
 
