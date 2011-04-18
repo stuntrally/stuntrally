@@ -441,17 +441,14 @@ void App::boundedMove(Widget* moving, const IntPoint& point)
 
 	const IntSize& size = moving->getSize();
 	
-	unsigned int vpw = mViewport->getWidth();
-	unsigned int vph = mViewport->getHeight();
+	unsigned int vpw = mWindow->getWidth();
+	unsigned int vph = mWindow->getHeight();
 	
-	
-	/*const IntSize& view_size = moving->getParentSize();
-	if ((p.left + size.width) > view_size.width)
-		p.left -= offset.left + offset.left + size.width;
-
-	if ((p.top + size.height) > view_size.height)
-		p.top -= offset.top + offset.top + size.height;
-	}/**/
+	if (p.left + size.width > vpw)
+		p.left = vpw - size.width;
+	if (p.top + size.height > vph)
+		p.top = vph - size.height;
+			
 	moving->setPosition(p);
 }
 

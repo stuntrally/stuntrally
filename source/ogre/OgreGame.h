@@ -30,13 +30,6 @@ public:
 
 	/// car ----------------
 	//CarModel* carM; //in BaseApp
-	/*
-	///  new car display data
-	///  set in newPoses (from vdrift or replay play), used in updatePoses
-	Vector3 newPos,newCarY;  
-	Vector3 newWhPos[4];  Quaternion newRot, newWhRot[4];  float newWhR[4];
-	float newWhVel[4], newWhSlide[4], newWhSqueal[4];  int newWhMtr[4];*/
-	///TODO multiple cars
 	PosInfo newPosInfo;
 	
 	// Utility
