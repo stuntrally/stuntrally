@@ -201,6 +201,28 @@ void CarModel::Create(void)
 		sMtr[i] = sMtr[i] + toStr(iIndex);
 		Log(" =============== New mat name: " + sMtr[i]);
 	}
+	// iterate through all materials and set body_dyn.png with correct index
+	for (int i=0; i < NumMaterials; i++)
+	{
+		MaterialPtr mtr = (MaterialPtr)MaterialManager::getSingleton().getByName(sMtr[i]);
+		if (!mtr.isNull())
+		{	Material::TechniqueIterator techIt = mtr->getTechniqueIterator();
+			while (techIt.hasMoreElements())
+			{	Technique* tech = techIt.getNext();
+				Technique::PassIterator passIt = tech->getPassIterator();
+				while (passIt.hasMoreElements())
+				{	Pass* pass = passIt.getNext();
+					Pass::TextureUnitStateIterator tusIt = pass->getTextureUnitStateIterator();
+					while (tusIt.hasMoreElements())
+					{	
+						TextureUnitState* tus = tusIt.getNext();
+						if (tus->getTextureName() == "body_dyn.png")
+							tus->setTextureName("body_dyn" + toStr(iIndex) + ".png");
+					}
+				}	
+			}
+		}	
+	}
 	
 	//  ----------------- Reflection ------------------------
 	pReflect = new CarReflection(pSet, pSceneMgr, iIndex);
@@ -381,7 +403,7 @@ void CarModel::ChangeClr(void)
 		da = (uchar*)pba.data;  incRowA = pba.rowPitch;
 		inc1A = PixelUtil::getNumElemBytes(pba.format);
 	}
-	String svName = PATHMANAGER::GetCacheDir() + "/body_dyn.png";  // dynamic
+	String svName = PATHMANAGER::GetCacheDir() + "/body_dyn" + toStr(iIndex) + ".png";  // dynamic
 	Image im;  try{
 		im.load("body00_red.png","General");  // original red diffuse
 	}catch(...){  return;  }
