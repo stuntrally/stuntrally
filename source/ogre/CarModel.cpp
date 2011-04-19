@@ -24,8 +24,6 @@ CarModel::CarModel(unsigned int index, const std::string name, Ogre::SceneManage
 	
 	///TODO create pCar
 	pCar = &(*pGame->cars.begin());
-	
-	pReflect = new CarReflection(pSet, pSceneMgr, iIndex);
 }
 CarModel::~CarModel(void)
 {
@@ -34,13 +32,18 @@ CarModel::~CarModel(void)
 	delete fCam; fCam = 0;
 	pSceneMgr->destroyCamera("CarCamera" + iIndex);
 	
+	// destroy cloned materials
+	for (int i=0; i<NumMaterials; i++)
+	{
+		Ogre::MaterialManager::getSingleton().remove(sMtr[i]);
+	}
+	
 	// Destroy par sys
 	for (int w=0; w < 4; w++)  {
 		if (ps[w]) {  pSceneMgr->destroyParticleSystem(ps[w]);   ps[w]=0;  }
 		if (pm[w]) {  pSceneMgr->destroyParticleSystem(pm[w]);   pm[w]=0;  }
 		if (pd[w]) {  pSceneMgr->destroyParticleSystem(pd[w]);   pd[w]=0;  }  }
 	
-	///TODO allow multiple cars
 	Ogre::Root::getSingletonPtr()->removeResourceLocation(PATHMANAGER::GetCacheDir());
 	Ogre::Root::getSingletonPtr()->removeResourceLocation(resCar);
 
@@ -164,6 +167,7 @@ void CarModel::Update(PosInfo newPosInfo, float time)
 }
 void CarModel::Create(void)
 {		
+	// ---------------------------- Resource locations -----------------------------------------
 	Ogre::Root::getSingletonPtr()->addResourceLocation(PATHMANAGER::GetCacheDir(), "FileSystem");
 	resCar = PATHMANAGER::GetCarPath() + "/" + sDirname + "/textures";
 	Ogre::Root::getSingletonPtr()->addResourceLocation(resCar, "FileSystem");
@@ -180,12 +184,31 @@ void CarModel::Create(void)
 		fCam->loadCameras();
 	}
 
+	// --------- Materials  -------------------
 	String s = pSet->shaders == 0 ? "_old" : "";
 	sMtr[Mtr_CarBody]		= "car_body"+s;
 	sMtr[Mtr_CarInterior]	= "car_interior"+s;
 	sMtr[Mtr_CarGlass]		= "car_glass"+s;
 	sMtr[Mtr_CarTireFront]	= "cartire_front"+s;
 	sMtr[Mtr_CarTireRear]	= "cartire_rear"+s;
+	// copy material to a new material with index
+	Ogre::MaterialPtr mat;
+	for (int i=0; i<NumMaterials; i++)
+	{
+		mat = Ogre::MaterialManager::getSingleton().getByName(sMtr[i]);
+		mat->clone(sMtr[i] + toStr(iIndex), false);
+		// new mat name
+		sMtr[i] = sMtr[i] + toStr(iIndex);
+		Log(" =============== New mat name: " + sMtr[i]);
+	}
+	
+	//  ----------------- Reflection ------------------------
+	pReflect = new CarReflection(pSet, pSceneMgr, iIndex);
+	for (int i=0; i<NumMaterials; i++)
+	{
+		pReflect->sMtr[i] = sMtr[i];
+	}
+	pReflect->Create();
 
 	//  car Models:  body, interior, glass  -------
 	//vis flags:  2 not rendered in reflections  16 off by in-car camera
@@ -333,7 +356,7 @@ void CarModel::ReloadTex(String mtrName)
 				Pass::TextureUnitStateIterator tusIt = pass->getTextureUnitStateIterator();
 				while (tusIt.hasMoreElements())
 				{	TextureUnitState* tus = tusIt.getNext();  String name = tus->getTextureName();
-					if (name != "ReflectionCube")
+					if (! (Ogre::StringUtil::startsWith(name, "ReflectionCube", false) || name == "ReflectionCube") )
 					{
 						Ogre::LogManager::getSingletonPtr()->logMessage( "Tex Reload: " + name );
 						TexturePtr tex = (TexturePtr)Ogre::TextureManager::getSingleton().getByName( name );
