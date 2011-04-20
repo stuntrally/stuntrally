@@ -27,10 +27,10 @@ class CarModel
 {
 public:
 	/// -------------------- Car Types ---------------------------
-	//				Control			Physics (VDrift car)	Camera
-	// CT_LOCAL: 	Local player	yes						yes
-	// CT_REPLAY:	Replay file		no						yes
-	// CT_REMOTE:	Network			yes						no
+	//              Control         Physics (VDrift car)    Camera
+	// CT_LOCAL:    Local player    yes	                    yes
+	// CT_REPLAY:   Replay file     no                      yes
+	// CT_REMOTE:   Network	        yes	                    no
 	enum eCarType {  CT_LOCAL=0, CT_REPLAY, CT_REMOTE };
 
 	//--- not used

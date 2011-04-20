@@ -193,9 +193,9 @@ void BaseApp::createCompositor()
 
 //  Run
 //-------------------------------------------------------------------------------------
-void BaseApp::Run( bool showDialolg )
+void BaseApp::Run( bool showDialog )
 {
-	mShowDialog = showDialolg;
+	mShowDialog = showDialog;
 	if (!setup())
 		return;
 

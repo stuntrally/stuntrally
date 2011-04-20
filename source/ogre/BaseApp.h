@@ -15,7 +15,7 @@ class BaseApp :
 {
 public:
 	BaseApp();	virtual ~BaseApp();
-	virtual void Run( bool showDialolg );
+	virtual void Run( bool showDialog );
 	
 	bool bLoading;
 	
