@@ -109,7 +109,7 @@ private:
 	CarReflection* pReflect;
 	
 	// Particle systems, trail.
-	ParticleSystem* ps[4],*pm[4],*pd[4],*pr,*pr2;  // smoke, mud, dust
+	ParticleSystem* ps[4],*pm[4],*pd[4];  // smoke, mud, dust
 	RibbonTrail* whTrl[4];
 	Real wht[4];  // spin time (approx tire temp.)
 	SceneNode *ndWh[4], *ndWhE[4], *ndRs[4],*ndRd[4];

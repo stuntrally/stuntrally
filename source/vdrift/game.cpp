@@ -328,11 +328,20 @@ void GAME::Tick(float deltat)
 
 			if (settings->mult_thr != 1)  // == 0
 			{	//  single thread
-				pOgreGame->updatePoses(/*framerate*/deltat);
-				if (!pause && pOgreGame->carM && pOgreGame->carM->fCam)
-				pOgreGame->carM->fCam->update(framerate/*-deltat*/);
-			if (pOgreGame->ndSky)  ///o-
-				pOgreGame->ndSky->setPosition(pOgreGame->GetCamera()->getPosition());
+				pOgreGame->updatePoses(deltat);
+				
+				/// update all cameras
+				if (!pause && pOgreGame->carModels.size() > 0)
+				{
+					for (std::list<CarModel*>::iterator it = pOgreGame->carModels.begin(); it != pOgreGame->carModels.end(); it++)
+					{
+						if ((*it)->fCam)
+							(*it)->fCam->update(framerate);
+					}
+				}
+				
+				if (pOgreGame->ndSky)  ///o-
+					pOgreGame->ndSky->setPosition(pOgreGame->GetCamera()->getPosition());
 			}
 		}
 		curticks++;
@@ -543,8 +552,9 @@ void GAME::UpdateCarInputs(CAR & car)
 	}
 	else
 	{
-	    carinputs = ai.GetInputs(&car);
-		assert(carinputs.size() == CARINPUT::INVALID);
+		/// TODO input for cars other than last car?
+	    //carinputs = ai.GetInputs(&car);
+		//assert(carinputs.size() == CARINPUT::INVALID);
 	}
 
 	//force brake and clutch during staging and once the race is over

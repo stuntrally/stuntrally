@@ -16,7 +16,7 @@ CarReflection::~CarReflection()
 	for (int face = 0; face < 6; face++)
 	{
 		try{
-			Camera* cam = pSceneMgr->getCamera("Reflect_" + toStr(face));
+			Camera* cam = pSceneMgr->getCamera("Reflect_" + toStr(iIndex) + "_" + toStr(face));
 			if (cam) {	pSceneMgr->destroyCamera(cam);
 				Log("destroy refl cam ok");  }
 		}catch(...) {
@@ -46,7 +46,7 @@ void CarReflection::Create()
 
 	for (int face = 0; face < 6; face++)
 	{
-		Camera* mCam = pSceneMgr->createCamera("Reflect_" + toStr(face));
+		Camera* mCam = pSceneMgr->createCamera("Reflect_" + toStr(iIndex) + "_" + toStr(face));
 		mCam->setAspectRatio(1.0f);  mCam->setFOVy(Degree(90));
 		mCam->setNearClipDistance(0.1);
 		//mCam->setFarClipDistance(pSet->refl_dist);  //sky-
