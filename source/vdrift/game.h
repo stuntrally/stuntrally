@@ -49,10 +49,19 @@ public:
 	void ProcessGUIInputs();
 	void ProcessGameInputs();
 
-	bool NewGame(bool playreplay=false, bool opponents=false, int num_laps=0);
+	//bool NewGame(bool playreplay=false, bool opponents=false, int num_laps=0);
+	
+	/// new game ========
+	// call in this order
+	bool NewGameDoCleanup();
+	bool NewGameDoLoadTrack();
+	/// ---create cars here
+	bool NewGameDoLoadMisc();
+	
+	
 	void LeaveGame();
 	bool LoadTrack(const std::string & trackname);
-	bool LoadCar(const std::string & carname, const MATHVECTOR <float, 3> & start_position, const QUATERNION <float> & start_orientation, bool islocal, bool isai, const std::string & carfile=""); ///< carfile is a string containing an entire .car file (e.g. XS.car) and is used instead of reading from disk.  this is optional
+	CAR* LoadCar(const std::string & carname, const MATHVECTOR <float, 3> & start_position, const QUATERNION <float> & start_orientation, bool islocal, bool isai, const std::string & carfile=""); ///< carfile is a string containing an entire .car file (e.g. XS.car) and is used instead of reading from disk.  this is optional
 
 	void PopulateValueLists(std::map<std::string, std::list <std::pair<std::string,std::string> > > & valuelists);
 	void PopulateReplayList(std::list <std::pair <std::string, std::string> > & replaylist);

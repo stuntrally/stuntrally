@@ -5,7 +5,7 @@
 #include "boost/filesystem.hpp"
 #define FileExists(s) boost::filesystem::exists(s)
 
-CarModel::CarModel(unsigned int index, const std::string name, Ogre::SceneManager* sceneMgr, SETTINGS* set, GAME* game, Scene* s, Camera* cam) : 
+CarModel::CarModel(unsigned int index, eCarType type, const std::string name, Ogre::SceneManager* sceneMgr, SETTINGS* set, GAME* game, Scene* s, Camera* cam) : 
 	hue(0), sat(0), val(0), fCam(0), pMainNode(0), pCar(0), terrain(0), resCar(""), mCamera(0)
 {
 	iIndex = index;
@@ -15,15 +15,16 @@ CarModel::CarModel(unsigned int index, const std::string name, Ogre::SceneManage
 	pGame = game;
 	sc = s;
 	mCamera = cam;
+	eType = type;
+	
+	pCar = pGame->LoadCar(sDirname, pGame->track.GetStart(0).first, pGame->track.GetStart(0).second, true, false);
+	if (!pCar) Log("Error loading car " + sDirname);
 	
 	for (int w = 0; w < 4; ++w)
 	{	ps[w] = 0;  pm[w] = 0;  pd[w] = 0;
 		ndWh[w] = 0;  ndWhE[w] = 0; whTrl[w] = 0;
 		ndRs[w] = 0;  ndRd[w] = 0;
 		wht[w] = 0.f;  whTerMtr[w] = 0; }
-	
-	///TODO create pCar
-	pCar = &(*pGame->cars.begin());
 }
 CarModel::~CarModel(void)
 {
@@ -166,15 +167,15 @@ void CarModel::Update(PosInfo newPosInfo, float time)
 	UpdWhTerMtr();
 }
 void CarModel::Create(void)
-{		
+{
+	if (!pCar) return;
+	
 	// ---------------------------- Resource locations -----------------------------------------
 	Ogre::Root::getSingletonPtr()->addResourceLocation(PATHMANAGER::GetCacheDir(), "FileSystem");
 	resCar = PATHMANAGER::GetCarPath() + "/" + sDirname + "/textures";
 	Ogre::Root::getSingletonPtr()->addResourceLocation(resCar, "FileSystem");
 	
 	pMainNode = pSceneMgr->getRootSceneNode()->createChildSceneNode();
-	pCar = &(*pGame->cars.begin());
-
 
 	//  --------  Follow Camera  --------
 	if (mCamera)

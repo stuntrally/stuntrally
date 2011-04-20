@@ -14,7 +14,6 @@
 #include "../vdrift/settings.h"
 #include "common/SceneXml.h"
 
-enum eCarType {  CT_Local=0, CT_Replay, CT_Remote };
 
 // Stores all the needed information about car coming from vdrift
 struct PosInfo
@@ -27,11 +26,18 @@ struct PosInfo
 class CarModel
 {
 public:
-	//--- not used
-	eCarType type;
+	/// -------------------- Car Types ---------------------------
+	//				Control			Physics (VDrift car)	Camera
+	// CT_LOCAL: 	Local player	yes						yes
+	// CT_REPLAY:	Replay file		no						yes
+	// CT_REMOTE:	Network			yes						no
+	enum eCarType {  CT_LOCAL=0, CT_REPLAY, CT_REMOTE };
 
-	// Constructor, doesn't really do anything other than assigning some members
-	CarModel(unsigned int index, const std::string name, Ogre::SceneManager* sceneMgr, SETTINGS* set, GAME* game, Scene* sc, Camera* cam); 
+	//--- not used
+	eCarType eType;
+
+	// Constructor, will assign members and create the vdrift car
+	CarModel(unsigned int index, eCarType type, const std::string name, Ogre::SceneManager* sceneMgr, SETTINGS* set, GAME* game, Scene* sc, Camera* cam); 
 	
 	// Destructor - will remove meshes & particle systems, 
 	// the VDrift car and the FollowCamera, delete pReflect

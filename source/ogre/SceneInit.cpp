@@ -107,7 +107,16 @@ void App::LoadCleanUp()
 }
 void App::LoadGame()
 {
-	pGame->NewGame();  // ? timer 0 after ?
+	//pGame->NewGame();  // ? timer 0 after ?
+	pGame->NewGameDoCleanup();
+	pGame->NewGameDoLoadTrack();
+	/// init car models
+	// will create vdrift cars
+	//---- only 1 car now
+	carM = new CarModel(0, CarModel::CT_LOCAL, sListCar, mSceneMgr, pSet, pGame, &sc, mCamera);
+	// Create() will be called later in LoadCar()
+	// this is just here because vdrift car has to be created first
+	pGame->NewGameDoLoadMisc();
 	bGetStPos = true;
 	
 	bool ter = IsTerTrack();
@@ -136,8 +145,7 @@ void App::LoadScene()
 }
 void App::LoadCar()
 {
-	//CreateCar();
-	carM = new CarModel(0, sListCar, mSceneMgr, pSet, pGame, &sc, mCamera);
+	/// 1 Car, local controlled
 	carM->Create();
 	
 	//  init replay  once  ---------------------------------
@@ -187,8 +195,11 @@ void App::LoadMisc()
 	/*mFCam->first = true;  // no smooth	
 	mFCam->mTerrain = mTerrainGroup; // assign terrain to cam*/
 	///TODO multiple cars
-	carM->fCam->first = true;
-	carM->fCam->mTerrain = mTerrainGroup;
+	if (carM && carM->fCam)
+	{	
+		carM->fCam->first = true;
+		carM->fCam->mTerrain = mTerrainGroup;
+	}
 }
 
 /* Actual loading procedure that gets called every frame during load. Performs a single loading step. */
