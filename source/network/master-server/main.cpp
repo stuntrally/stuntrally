@@ -3,10 +3,11 @@
 #include <map>
 #include "../enet-wrapper.hpp"
 #include "../protocol.hpp"
+#ifdef __linux
+#include <unistd.h> // for daemon()
+#endif
 
 #define VERSIONSTRING "0.1"
-
-//TODO: Demonization
 
 class GameListManager {
 public:
@@ -104,6 +105,7 @@ private:
 int main(int argc, char** argv) {
 	std::cout << "Stunt Rally Master Server - version " << VERSIONSTRING << std::endl;
 	int port = protocol::DEFAULT_PORT;
+	bool daemonize = false;
 
 	// Command line handling
 	for (int i = 1; i < argc; ++i) {
@@ -116,10 +118,17 @@ int main(int argc, char** argv) {
 				<< "Available parameters:" << std::endl
 				<< "  -v, --version               print version number and exit" << std::endl
 				<< "  -h, --help                  this help" << std::endl
+#ifdef __linux
+				<< "  -d, --daemon                run in backround (i.e. daemonize)" << std::endl
+#endif
 				<< "  -p, --port <portnumber>     listen given port for connections" << std::endl
 				<< "                              default: " << protocol::DEFAULT_PORT << std::endl
 				;
 			return 0;
+#ifdef __linux
+		} else if (arg == "--daemon" || arg == "-d") {
+			daemonize = true;
+#endif
 		} else if ((arg == "--port" || arg == "-p") && i < argc-1) {
 			port = atoi(argv[i+1]);
 			++i;
@@ -128,6 +137,16 @@ int main(int argc, char** argv) {
 			return -1;
 		}
 	}
+
+#ifdef __linux
+	// Daemonization
+	if (daemonize) {
+		if (daemon(1, 0)) { // keep working dir, close streams
+			std::cout << "Daemonization failed." << std::endl;
+			return EXIT_FAILURE;
+		}
+	}
+#endif
 
 	GameListManager games;
 	Server server(games, port);
@@ -138,5 +157,5 @@ int main(int argc, char** argv) {
 		games.purgeGames();
 	}
 
-	return 0;
+	return EXIT_SUCCESS;
 }
