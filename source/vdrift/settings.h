@@ -69,6 +69,7 @@ public:
 	std::string nickname;
 	std::string master_server_address;
 	int master_server_port;
+	int local_port;
 
 //------------------------------------------
 	SETTINGS();

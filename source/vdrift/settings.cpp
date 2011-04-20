@@ -79,6 +79,7 @@ void SETTINGS::Serialize(bool w, CONFIGFILE & c)
 	Param(c,w, "network.nickname", nickname);
 	Param(c,w, "network.master_server_address", master_server_address);
 	Param(c,w, "network.master_server_port", master_server_port);
+	Param(c,w, "network.local_port", local_port);
 }
 
 SETTINGS::SETTINGS() :  ///  Defaults
@@ -123,5 +124,6 @@ SETTINGS::SETTINGS() :  ///  Defaults
 	// network
 	nickname("StuntMan"),
 	master_server_address("localhost"),
-	master_server_port(protocol::DEFAULT_PORT)
+	master_server_port(protocol::DEFAULT_PORT),
+	local_port(protocol::DEFAULT_PORT)
 {}
