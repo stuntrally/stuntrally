@@ -552,8 +552,9 @@ void GAME::UpdateCarInputs(CAR & car)
 	}
 	else
 	{
-	    carinputs = ai.GetInputs(&car);
-		assert(carinputs.size() == CARINPUT::INVALID);
+		/// TODO input for cars other than last car?
+	    //carinputs = ai.GetInputs(&car);
+		//assert(carinputs.size() == CARINPUT::INVALID);
 	}
 
 	//force brake and clutch during staging and once the race is over
