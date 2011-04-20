@@ -30,7 +30,9 @@ public:
 
 	/// car ----------------
 	//CarModel* carM; //in BaseApp
-	PosInfo newPosInfo;
+	
+	// This list holds new positions info for every CarModel
+	std::list<PosInfo> newPosInfos;
 	
 	// Utility
 	Quaternion qFixCar,qFixWh;

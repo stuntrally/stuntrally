@@ -218,8 +218,7 @@ BaseApp::BaseApp() :
 	mWndOpts(0), mWndTabs(0), mWndRpl(0), bSizeHUD(true), bLoading(false),
 
 	mDebugOverlay(0), mFpsOverlay(0), mOvrFps(0), mOvrTris(0), mOvrBat(0), mOvrDbg(0),
-	mbShowCamPos(0), ndSky(0),	mbWireFrame(0), //*
-	carM(0)
+	mbShowCamPos(0), ndSky(0),	mbWireFrame(0) //*
 {
 }
 
@@ -442,9 +441,12 @@ bool BaseApp::mouseMoved( const OIS::MouseEvent &arg )
 		return true;  }
 
 	///  Follow Camera Controls
-	if (!bLoading && carM && carM->fCam)
-		carM->fCam->Move( mbLeft, mbRight, mbMiddle, shift,
-			arg.state.X.rel, arg.state.Y.rel, arg.state.Z.rel );
+	// -for all cars
+	for (std::list<CarModel*>::iterator it=carModels.begin(); it!=carModels.end(); it++)
+	{
+		if ((*it)->fCam)
+			(*it)->fCam->Move( mbLeft, mbRight, mbMiddle, shift, arg.state.X.rel, arg.state.Y.rel, arg.state.Z.rel );
+	}
 
 	return true;
 }

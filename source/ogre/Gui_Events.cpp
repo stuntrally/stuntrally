@@ -227,22 +227,31 @@ void App::slCarClrH(SL)
 {
 	Real v = val/res;  pSet->car_hue = v;
 	if (valCarClrH){	Fmt(s, "%4.2f", v);	valCarClrH->setCaption(s);  }
-	///TODO multiple cars
-	if (carM) carM->ChangeClr();
+	/// changes color for all cars
+	for (std::list<CarModel*>::iterator it=carModels.begin(); it!=carModels.end(); it++)
+	{
+		(*it)->ChangeClr();
+	}
 }
 void App::slCarClrS(SL)
 {
 	Real v = -1.f + 2.f * val/res;  pSet->car_sat = v;
 	if (valCarClrS){	Fmt(s, "%4.2f", v);	valCarClrS->setCaption(s);  }
-	///TODO multiple cars
-	if (carM) carM->ChangeClr();
+	/// changes color for all cars
+	for (std::list<CarModel*>::iterator it=carModels.begin(); it!=carModels.end(); it++)
+	{
+		(*it)->ChangeClr();
+	}
 }
 void App::slCarClrV(SL)
 {
 	Real v = -1.f + 2.f * val/res;  pSet->car_val = v;
 	if (valCarClrV){	Fmt(s, "%4.2f", v);	valCarClrV->setCaption(s);  }
-	///TODO multiple cars
-	if (carM) carM->ChangeClr();
+	/// changes color for all cars
+	for (std::list<CarModel*>::iterator it=carModels.begin(); it!=carModels.end(); it++)
+	{
+		(*it)->ChangeClr();
+	}
 }
 
 
@@ -321,8 +330,22 @@ void App::chkDigits(WP wp){ 		ChkEv(show_digits); ShowHUD();   }
 
 void App::chkReverse(WP wp){		ChkEv(trackreverse);	ReadTrkStats();  }
 
-void App::chkParticles(WP wp){		ChkEv(particles);	if (carM) carM->UpdParsTrails();	}
-void App::chkTrails(WP wp){			ChkEv(trails);		if (carM) carM->UpdParsTrails();	}
+void App::chkParticles(WP wp)
+{		
+	ChkEv(particles);
+	for (std::list<CarModel*>::iterator it=carModels.begin(); it!=carModels.end(); it++)
+	{
+		(*it)->UpdParsTrails();
+	}
+}
+void App::chkTrails(WP wp)
+{			
+	ChkEv(trails);		
+	for (std::list<CarModel*>::iterator it=carModels.begin(); it!=carModels.end(); it++)
+	{
+		(*it)->UpdParsTrails();
+	}
+}
 void App::chkFps(WP wp){			ChkEv(show_fps);	if (pSet->show_fps)  mFpsOverlay->show();  else  mFpsOverlay->hide();	}
 
 void App::chkGauges(WP wp){			ChkEv(show_gauges);	ShowHUD();	}

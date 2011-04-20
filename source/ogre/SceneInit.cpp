@@ -80,7 +80,13 @@ void App::LoadCleanUp()
 	if (resTrk != "")  Ogre::Root::getSingletonPtr()->removeResourceLocation(resTrk);
 	resTrk = TrkDir() + "objects";
 	
-	if (carM) delete carM;
+	// Delete all cars
+	for (std::list<CarModel*>::iterator it=carModels.begin(); it!=carModels.end(); it++)
+	{
+		delete (*it);
+	}
+	carModels.clear();
+	newPosInfos.clear();
 	
 	//  hide trails
 	///TODO
@@ -112,8 +118,8 @@ void App::LoadGame()
 	pGame->NewGameDoLoadTrack();
 	/// init car models
 	// will create vdrift cars
-	//---- only 1 car now
-	carM = new CarModel(0, CarModel::CT_LOCAL, sListCar, mSceneMgr, pSet, pGame, &sc, mCamera);
+	// ---only 1 car now
+	carModels.push_back( new CarModel(0, CarModel::CT_LOCAL, sListCar, mSceneMgr, pSet, pGame, &sc, mCamera) );
 	// Create() will be called later in LoadCar()
 	// this is just here because vdrift car has to be created first
 	pGame->NewGameDoLoadMisc();
@@ -145,8 +151,14 @@ void App::LoadScene()
 }
 void App::LoadCar()
 {
-	/// 1 Car, local controlled
-	carM->Create();
+	// Create all cars
+	for (std::list<CarModel*>::iterator it=carModels.begin(); it!=carModels.end(); it++)
+	{
+		(*it)->Create();
+		// Reserve an entry in newPosInfos
+		PosInfo carPosInfo;
+		newPosInfos.push_back(carPosInfo);
+	}
 	
 	//  init replay  once  ---------------------------------
 	float whR[4] = {0.3f,0.3f,0.3f,0.3f};
@@ -162,9 +174,14 @@ void App::LoadTerrain()
 {
 	bool ter = IsTerTrack();
 	CreateTerrain(false,ter);  // common
-	carM->terrain = terrain;
-	carM->blendMtr = blendMtr;
-	carM->blendMapSize = blendMapSize;
+	
+	// Assign stuff to cars
+	for (std::list<CarModel*>::iterator it=carModels.begin(); it!=carModels.end(); it++)
+	{
+		(*it)->terrain = terrain;
+		(*it)->blendMtr = blendMtr;
+		(*it)->blendMapSize = blendMapSize;
+	}
 }
 void App::LoadTrack()
 {
@@ -194,11 +211,15 @@ void App::LoadMisc()
 	ShowHUD(true);
 	/*mFCam->first = true;  // no smooth	
 	mFCam->mTerrain = mTerrainGroup; // assign terrain to cam*/
-	///TODO multiple cars
-	if (carM && carM->fCam)
-	{	
-		carM->fCam->first = true;
-		carM->fCam->mTerrain = mTerrainGroup;
+	
+	// Camera settings
+	for (std::list<CarModel*>::iterator it=carModels.begin(); it!=carModels.end(); it++)
+	{
+		if ((*it)->fCam)
+		{
+			(*it)->fCam->first = true;
+			(*it)->fCam->mTerrain = mTerrainGroup;
+		}
 	}
 }
 
