@@ -44,21 +44,14 @@ CarModel::~CarModel(void)
 		if (ps[w]) {  pSceneMgr->destroyParticleSystem(ps[w]);   ps[w]=0;  }
 		if (pm[w]) {  pSceneMgr->destroyParticleSystem(pm[w]);   pm[w]=0;  }
 		if (pd[w]) {  pSceneMgr->destroyParticleSystem(pd[w]);   pd[w]=0;  }  }
-	
-	Ogre::Root::getSingletonPtr()->removeResourceLocation(PATHMANAGER::GetCacheDir());
-	Ogre::Root::getSingletonPtr()->removeResourceLocation(resCar);
-
-		/*if (resDrv != "")  Ogre::Root::getSingletonPtr()->removeResourceLocation(resDrv);
-		resDrv = "drivers/driver2/textures";*/
-					
+						
 	if (pMainNode) pSceneMgr->destroySceneNode(pMainNode);
 	if (pSceneMgr->hasEntity("Car")) pSceneMgr->destroyEntity("Car");
 	if (pSceneMgr->hasEntity("Car.interior")) pSceneMgr->destroyEntity("Car.interior");
 	if (pSceneMgr->hasEntity("Car.glass")) pSceneMgr->destroyEntity("Car.glass");
 	
-	MeshPtr mp = MeshManager::getSingleton().getByName("body.mesh");
-	if (!mp.isNull())
-		MeshManager::getSingleton().remove("body.mesh");
+	// Destroy resource group, will also destroy all resources in it
+	Ogre::ResourceGroupManager::getSingleton().destroyResourceGroup("Car" + toStr(iIndex));
 }
 
 void CarModel::Update(PosInfo newPosInfo, float time)
@@ -171,9 +164,12 @@ void CarModel::Create(void)
 	if (!pCar) return;
 	
 	// ---------------------------- Resource locations -----------------------------------------
+	/// Add a resource group for this car.
+	/// This is needed because some textures / meshes have the same name
+	Ogre::ResourceGroupManager::getSingleton().createResourceGroup("Car" + toStr(iIndex));
 	Ogre::Root::getSingletonPtr()->addResourceLocation(PATHMANAGER::GetCacheDir(), "FileSystem");
 	resCar = PATHMANAGER::GetCarPath() + "/" + sDirname + "/textures";
-	Ogre::Root::getSingletonPtr()->addResourceLocation(resCar, "FileSystem");
+	Ogre::Root::getSingletonPtr()->addResourceLocation(resCar, "FileSystem", "Car" + toStr(iIndex));
 	
 	pMainNode = pSceneMgr->getRootSceneNode()->createChildSceneNode();
 
@@ -242,7 +238,7 @@ void CarModel::Create(void)
 
 	if (FileExists(resCar + "/body.mesh"))
 	{
-		Entity* eCar = pSceneMgr->createEntity("Car", "body.mesh");
+		Entity* eCar = pSceneMgr->createEntity("Car", "body.mesh", "Car" + toStr(iIndex));
 		if (FileExists(resCar + "/body00_add.png") && FileExists(resCar + "/body00_red.png"))
 			eCar->setMaterialName(sMtr[Mtr_CarBody]);
 		ncart->attachObject(eCar);  eCar->setVisibilityFlags(2);
@@ -256,7 +252,7 @@ void CarModel::Create(void)
 
 	if (FileExists(resCar + "/interior.mesh"))
 	{
-		Entity* eInter = pSceneMgr->createEntity("Car.interior", "interior.mesh");
+		Entity* eInter = pSceneMgr->createEntity("Car.interior", "interior.mesh", "Car" + toStr(iIndex));
 		eInter->setMaterialName(sMtr[Mtr_CarInterior]);
 		ncart->attachObject(eInter);  eInter->setVisibilityFlags(2);
 	}else{
@@ -269,7 +265,7 @@ void CarModel::Create(void)
 
 	if (FileExists(resCar + "/glass.mesh"))
 	{
-		Entity* eGlass = pSceneMgr->createEntity("Car.glass", "glass.mesh");
+		Entity* eGlass = pSceneMgr->createEntity("Car.glass", "glass.mesh", "Car" + toStr(iIndex));
 		eGlass->setMaterialName(sMtr[Mtr_CarGlass]);
 		eGlass->setRenderQueueGroup(RENDER_QUEUE_8);  eGlass->setVisibilityFlags(16);
 		ncart->attachObject(eGlass);
@@ -277,14 +273,6 @@ void CarModel::Create(void)
 		ManualObject* mGlass = CreateModel(pSceneMgr, sMtr[Mtr_CarGlass], &pCar->glassmodel.mesh, vPofs);
 		if (mGlass){  ncart->attachObject(mGlass);	mGlass->setRenderQueueGroup(RENDER_QUEUE_8);  mGlass->setVisibilityFlags(16);  }
 	}
-
-	/*ManualObject* mDriv  = CreateModel("car/driver",   &pCar->drivermodel.mesh);
-	if (mDriv)
-	{	//MATHVECTOR<float,3> pos = pCar->drivernode->GetTransform().GetTranslation();
-		//Vector3 tr(pos[1], pos[2], pos[0]);
-		SceneNode* ndriv = ncart->createChildSceneNode(tr);
-		ndriv->attachObject(mDriv);
-	}/**/
 	
 	///  save .mesh
 	/**  MeshPtr mpCar = mCar->convertToMesh("MeshCar");
@@ -297,14 +285,14 @@ void CarModel::Create(void)
 	{
 		if (w < 2 && FileExists(resCar + "/wheel_front.mesh"))
 		{
-			Entity* eWh = pSceneMgr->createEntity("Wheel"+toStr(w), "wheel_front.mesh");
+			Entity* eWh = pSceneMgr->createEntity("Wheel"+toStr(w), "wheel_front.mesh", "Car" + toStr(iIndex));
 			eWh->setMaterialName(sMtr[Mtr_CarTireFront]);
 			ndWh[w] = pSceneMgr->getRootSceneNode()->createChildSceneNode();
 			ndWh[w]->attachObject(eWh);  eWh->setVisibilityFlags(2);
 		}else
 		if (FileExists(resCar + "/wheel_rear.mesh"))
 		{
-			Entity* eWh = pSceneMgr->createEntity("Wheel"+toStr(w), "wheel_rear.mesh");
+			Entity* eWh = pSceneMgr->createEntity("Wheel"+toStr(w), "wheel_rear.mesh", "Car" + toStr(iIndex));
 			eWh->setMaterialName(sMtr[Mtr_CarTireRear]);
 			ndWh[w] = pSceneMgr->getRootSceneNode()->createChildSceneNode();
 			ndWh[w]->attachObject(eWh);  eWh->setVisibilityFlags(2);
@@ -323,15 +311,15 @@ void CarModel::Create(void)
 	for (int w=0; w < 4; w++)
 	{		
 		if (!ps[w])  {
-			ps[w] = pSceneMgr->createParticleSystem("Smoke"+toStr(w), sc->sParSmoke);
+			ps[w] = pSceneMgr->createParticleSystem("Smoke"+toStr(iIndex) + "_" +toStr(w), sc->sParSmoke);
 			pSceneMgr->getRootSceneNode()->createChildSceneNode()->attachObject(ps[w]);
 			ps[w]->getEmitter(0)->setEmissionRate(0);  }
 		if (!pm[w])  {
-			pm[w] = pSceneMgr->createParticleSystem("Mud"+toStr(w), sc->sParMud);
+			pm[w] = pSceneMgr->createParticleSystem("Mud"+toStr(iIndex) + "_"+toStr(w), sc->sParMud);
 			pSceneMgr->getRootSceneNode()->createChildSceneNode()->attachObject(pm[w]);
 			pm[w]->getEmitter(0)->setEmissionRate(0);  }
 		if (!pd[w])  {
-			pd[w] = pSceneMgr->createParticleSystem("Dust"+toStr(w), sc->sParDust);
+			pd[w] = pSceneMgr->createParticleSystem("Dust"+toStr(iIndex) + "_"+toStr(w), sc->sParDust);
 			pSceneMgr->getRootSceneNode()->createChildSceneNode()->attachObject(pd[w]);
 			pd[w]->getEmitter(0)->setEmissionRate(0);  }
 
@@ -396,7 +384,7 @@ void CarModel::ChangeClr(void)
 	///TODO allow multiple cars here, i.e. give mat/tex an index
 	bool add = 1;
 	Image ima;	try{
-		ima.load("body00_add.png","General");  // add, not colored
+		ima.load("body00_add.png", "Car" + toStr(iIndex));  // add, not colored
 	}catch(...){  add = 0;  }
 	uchar* da = 0;  size_t incRow,incRowA=0, inc1=0,inc1A=0;
 	if (add)
@@ -406,7 +394,7 @@ void CarModel::ChangeClr(void)
 	}
 	String svName = PATHMANAGER::GetCacheDir() + "/body_dyn" + toStr(iIndex) + ".png";  // dynamic
 	Image im;  try{
-		im.load("body00_red.png","General");  // original red diffuse
+		im.load("body00_red.png", "Car" + toStr(iIndex));  // original red diffuse
 	}catch(...){  return;  }
 	if (im.getWidth())
 	{
