@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION"
 "Report-Msgid-Bugs-To: "
-"POT-Creation-Date: 2011-04-18 13:32+0200"
+"POT-Creation-Date: 2011-04-20 18:38+0200"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>"
 "Language-Team: LANGUAGE <LL@li.org>"
@@ -59,6 +59,10 @@ msgstr ""
 
 msgctxt "Density"
 msgid "Density"
+msgstr ""
+
+msgctxt "TipLoadTrkEditor"
+msgid "Load track (after change) or Reload current track."
 msgstr ""
 
 msgctxt "ViewDist"
@@ -633,6 +637,10 @@ msgctxt "ColumnNSides"
 msgid "Column N sides"
 msgstr ""
 
+msgctxt "RplAutoRec"
+msgid "Auto record replay"
+msgstr ""
+
 msgctxt "Shaders"
 msgid "Shaders"
 msgstr ""
@@ -838,7 +846,7 @@ msgid "F7 - enter/leave preview camera"
 msgstr ""
 
 msgctxt "GameBy"
-msgid "a game by"
+msgid "A game by"
 msgstr ""
 
 msgctxt "SunWeather"
@@ -847,6 +855,10 @@ msgstr ""
 
 msgctxt "TipTrkScreenEditor"
 msgid "In game screenshot for selected track."
+msgstr ""
+
+msgctxt "RplDelete"
+msgid "Delete"
 msgstr ""
 
 msgctxt "TipAutoRear"
@@ -915,6 +927,10 @@ msgstr ""
 
 msgctxt "TreeMult"
 msgid "Trees multipler"
+msgstr ""
+
+msgctxt "RplCur"
+msgid "Cur"
 msgstr ""
 
 msgctxt "TexCoordMul"
@@ -1337,6 +1353,10 @@ msgctxt "Distance"
 msgid "Distance"
 msgstr ""
 
+msgctxt "RplGhost"
+msgid "Show ghost drive - best lap"
+msgstr ""
+
 msgctxt "TipGrassPageLength"
 msgid "Grass Page length (low will reload often, high will cause visible switching)."
 msgstr ""
@@ -1569,6 +1589,10 @@ msgctxt "NewGame"
 msgid "New Game"
 msgstr ""
 
+msgctxt "Replay"
+msgid "Replay"
+msgstr ""
+
 msgctxt "CarDebug"
 msgid "Car susp, long|,lat- slips"
 msgstr ""
@@ -1579,6 +1603,10 @@ msgstr ""
 
 msgctxt "InputRoadRebuild"
 msgid "B - rebuild road (after terrain change, etc.)"
+msgstr ""
+
+msgctxt "RplSave"
+msgid "Save"
 msgstr ""
 
 msgctxt "Environment"
@@ -1749,7 +1777,7 @@ msgctxt "MyGUI_MessageBox_Yes"
 msgid "Yes"
 msgstr ""
 
-msgctxt "TipLoadTrkEditor"
-msgid "Load track (after change) or Reload current track."
+msgctxt "RplAll"
+msgid "All"
 msgstr ""
 
