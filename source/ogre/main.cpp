@@ -61,7 +61,7 @@ void VprThread(App* pA)
 
 	// FIXME: Temporary master server test hack
 	MasterClient mc;
-	mc.connect("localhost", 4444);
+	mc.connect(settings->master_server_address, settings->master_server_port);
 	boost::this_thread::sleep(boost::posix_time::milliseconds(2000));
 	mc.updateGame("Test game", "M-001", 1);
 	boost::this_thread::sleep(boost::posix_time::milliseconds(1000));
