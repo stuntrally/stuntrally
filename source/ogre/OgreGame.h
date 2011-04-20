@@ -195,8 +195,17 @@ protected:
 	ButtonPtr bRkmh, bRmph;  void radKmh(WP), radMph(WP), btnTrGrReset(WP), btnQuit(WP), btnResChng(WP);
 	ButtonPtr chDbgT,chDbgB, chBlt,chFps, chTimes,chMinimp, bnQuit;
 
+	//  replay
+	StaticTextPtr valRplPerc, valRplCur, valRplLen,  valRplName, valRplInfo;
+	HScrollPtr slRplPos;  void slRplPosEv(SL);
+	EditPtr edRplName, edRplDesc;
+	void btnRplLoad(WP), btnRplSave(WP), btnRplDelete(WP),
+		chkRplAutoRec(WP),chkRplChkGhost(WP), btnRplCur(WP),btnRplAll(WP),
+		btnRplToStart(WP),btnRplToEnd(WP), btnRplBack(WP),btnRplForward(WP), btnRplPlay(WP);
+
+
 	//  game
-	ListPtr carList,trkList, resList, rplList;
+	ListPtr carList,trkList, resList, rplList;  void updReplaysList();
 	void listCarChng(List* li, size_t pos),		btnChgCar(WP);
 	void listTrackChng(List* li, size_t pos),	btnChgTrack(WP);
 	void btnNewGame(WP),btnNewGameStart(WP), btnShadows(WP);

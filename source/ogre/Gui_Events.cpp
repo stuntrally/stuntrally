@@ -420,6 +420,120 @@ void App::slBlurIntens(SL)
 	refreshCompositor();
 }
 
+
+///  [Replay]  . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+void App::slRplPosEv(SL)  // change play pos
+{
+	if (!pSet->rpl_play)  return;
+	Real v = val/res;  v = max(0.f, min(1.f, v));  v *= replay.GetTimeLength();
+	pGame->timer.SetReplayTime(v);  //RestartReplay();
+}
+
+void App::btnRplLoad(WP)  // Load
+{
+	//  from list
+	int i = rplList->getIndexSelected();
+	String name = rplList->getItemNameAt(i);
+	///  load
+	if (pSet->rpl_play)
+	{
+		string file = PATHMANAGER::GetReplayPath() + "/" + name + ".rpl";
+		if (!replay.LoadFile(file))
+		{}
+		else  // car, track change
+		{
+			string car = replay.header.car, trk = replay.header.track;
+			//  todo: car reload only - faster ...
+			if (car != pSet->car || trk != pSet->track)
+			{	// need new game
+				pSet->car = car;
+				pSet->track = trk;
+				btnNewGame(0);
+			}
+		}
+	}
+}
+
+void App::btnRplSave(WP)  // Save
+{
+	String edit = edRplName->getCaption();
+	String file = PATHMANAGER::GetReplayPath() + "/" + pSet->track + edit + ".rpl";
+	///  save
+	replay.SaveFile(file.c_str());
+	//if (! )  MsgBox..
+	updReplaysList();
+}
+
+void App::btnRplDelete(WP)  // Delete
+{
+}
+
+void App::chkRplAutoRec(WP wp){		ChkEv(rpl_rec);		}
+
+void App::chkRplChkGhost(WP wp){	ChkEv(rpl_play);	}
+
+
+void App::btnRplCur(WP)
+{
+}
+
+void App::btnRplAll(WP)
+{
+}
+
+//  replay controls
+
+void App::btnRplToStart(WP)
+{
+	pGame->timer.RestartReplay();
+}
+
+void App::btnRplToEnd(WP)
+{
+}
+
+void App::btnRplBack(WP)
+{
+}
+
+void App::btnRplForward(WP)
+{
+}
+
+void App::btnRplPlay(WP)  // play / pause
+{
+}
+
+//  text desc
+//valRplName
+//valRplInfo
+//edRplName
+//edRplDesc
+
+
+void App::updReplaysList()
+{
+	if (!rplList)  return;
+	rplList->removeAllItems();  int ii = 0;  bool bFound = false;
+
+	strlist li;
+	PATHMANAGER::GetFolderIndex(PATHMANAGER::GetReplayPath(), li, "rpl");
+	for (strlist::iterator i = li.begin(); i != li.end(); ++i)
+	if (StringUtil::endsWith(*i, ".rpl"))
+	{
+		String s = *i;
+		s = StringUtil::replaceAll(s,".rpl","");
+		//ifstream check((PATHMANAGER::GetReplayPath() + "/" + *i + "/about.txt").c_str());
+		//if (check)  {
+		rplList->addItem(s);
+		//if (*i == pSet->car) {  carList->setIndexSelected(ii);  bFound = true;  }
+		//ii++;  }
+	}
+	//rplList->eventListChangePosition = newDelegate(this, &App::listCarChng);
+}
+
+
 //-----------------------------------------------------------------------------------------------------------
 //  Key pressed
 //-----------------------------------------------------------------------------------------------------------
@@ -442,12 +556,13 @@ bool App::keyPressed( const OIS::KeyEvent &arg )
 	   		if (!isFocGui)  mToolTip->setVisible(false);
 	   	}	return true;
 
-		case KC_F9:
-			if (!ctrl)	// replay controls
-			{	isFocGui = !isFocGui;
-	   			if (mGUI)	mGUI->setVisiblePointer(isFocGui);
-				if (mWndRpl)  mWndRpl->setVisible(pSet->rpl_play);//
-			}else		// car debug text/bars
+		case KC_BACK:	// replay controls
+			//isFocGui = !isFocGui;
+   			//if (mGUI)	mGUI->setVisiblePointer(isFocGui);
+			if (mWndRpl)  mWndRpl->setVisible(!mWndRpl->isVisible()/*pSet->rpl_play*/);
+			return true;
+
+		case KC_F9:		// car debug text/bars
 			if (shift)	{	WP wp = chDbgT;  ChkEv(car_dbgtxt);  ShowHUD();  }
 			else		{	WP wp = chDbgB;  ChkEv(car_dbgbars);   ShowHUD();  }
 			return true;

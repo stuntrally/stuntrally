@@ -22,6 +22,7 @@ void App::InitGui()
 	VectorWidgetPtr rootV = LayoutManager::getInstance().load("Options.layout");
 	mLayout = rootV.at(0);
 
+	//  window
 	mWndOpts = mLayout->findWidget("OptionsWnd");
 	if (mWndOpts)  {
 		mWndOpts->setVisible(isFocGui);
@@ -34,7 +35,8 @@ void App::InitGui()
 	mWndRpl = mGUI->findWidget<Window>("RplWnd",false);
 	if (mWndRpl)  mWndRpl->setVisible(false);//
 
-	//  tooltip
+
+	//  tooltip  ------
 	for (VectorWidgetPtr::iterator it = rootV.begin(); it != rootV.end(); ++it)
 	{
 		setToolTips((*it)->getEnumerator());
@@ -53,11 +55,11 @@ void App::InitGui()
 	ms.X.abs = xm;  ms.Y.abs = ym;
 
 
-	//  assign controls  ----------------------
+	//  assign controls
 
 	///  Sliders
-    //------------------------------------
-	HScrollPtr sl;  ComboBoxPtr combo;  size_t v;
+    //------------------------------------------------------------------------
+	HScrollPtr sl;  ComboBoxPtr combo;  size_t v;  ButtonPtr btn;
 
 	// get slider, assign event, get valtext, set value from settings
 	#define Slv(name, vset)  \
@@ -65,6 +67,9 @@ void App::InitGui()
 		if (sl)  sl->eventScrollChangePosition = newDelegate(this, &App::sl##name);  \
 		val##name = (StaticTextPtr)(mLayout->findWidget(#name"Val"));  \
 		v = vset*res;  if (sl)  sl->setScrollPosition(v);	sl##name(sl, v);
+
+	#define Btn(name, event)   btn = mGUI->findWidget<Button>(name);  \
+		if (btn)  btn->eventMouseButtonClick = newDelegate(this, &App::event);
 
 	//  detail
 	Slv(TerDetail,	powf(pSet->terdetail /20.f, 0.5f));
@@ -103,9 +108,7 @@ void App::InitGui()
 	Slv(ShadowCount,(pSet->shadow_count-2) /2.f);
 	Slv(ShadowSize,	pSet->shadow_size /float(ciShadowNumSizes));
 	Slv(ShadowDist,	powf((pSet->shadow_dist -50.f)/4750.f, 0.5f));
-
-    ButtonPtr btn = (ButtonPtr)mLayout->findWidget("Apply");
-    if (btn)  btn->eventMouseButtonClick = newDelegate(this, &App::btnShadows);
+    Btn("Apply", btnShadows);
     
     //  sound
 	Slv(VolMaster,	pSet->vol_master/1.6f);	 Slv(VolEngine,	pSet->vol_engine/1.4f);
@@ -117,7 +120,7 @@ void App::InitGui()
 
 
 	///  Checkboxes
-    //------------------------------------
+    //------------------------------------------------------------------------
 	ButtonPtr bchk;
 	#define Chk(name, event, var)  \
 		bchk = mGUI->findWidget<Button>(name);  \
@@ -131,6 +134,8 @@ void App::InitGui()
 
 	Chk("Fps", chkFps, show_fps);	chFps = mGUI->findWidget<Button>("Fps");
 	if (pSet->show_fps)  mFpsOverlay->show();  else  mFpsOverlay->hide();
+
+	Chk("Digits", chkDigits, show_digits);
 	Chk("Gauges", chkGauges, show_gauges);  ShowHUD();//
 
 	Chk("Minimap", chkMinimap, trackmap);	chMinimp = mGUI->findWidget<Button>("Minimap");
@@ -148,8 +153,6 @@ void App::InitGui()
 	Chk("CarRear", chkRear, autorear);	Chk("CarClutch", chkClutch, autoclutch);
 	Chk("VegetCollis", chkVegetCollis, veget_collis);
 	
-	Chk("Digits", chkDigits, show_digits);
-
 	//  kmh/mph radio
 	bRkmh = mGUI->findWidget<Button>("kmh");
 	bRmph = mGUI->findWidget<Button>("mph");
@@ -157,8 +160,7 @@ void App::InitGui()
 		bRkmh->eventMouseButtonClick = newDelegate(this, &App::radKmh);
 		bRmph->eventMouseButtonClick = newDelegate(this, &App::radMph);  }
 
-	bchk = mGUI->findWidget<Button>("TrGrReset");
-	if (bchk)  bchk->eventMouseButtonClick = newDelegate(this, &App::btnTrGrReset);
+	Btn("TrGrReset", btnTrGrReset);
 
 	//  startup
 	Chk("OgreDialog", chkOgreDialog, ogre_dialog);
@@ -182,34 +184,36 @@ void App::InitGui()
 	//button_ramp, speed_sens..
 	
 
-	//  replay
-	//..
-	
-	///*  replay list  *
-    //------------------------------------------------------------------------
-	rplList = mGUI->findWidget<List>("RplList");
-	if (rplList)
-    {	rplList->removeAllItems();  int ii = 0;  bool bFound = false;
+	//  replays  ------------------------------------------------------------
+	Btn("RplLoad", btnRplLoad);  Btn("RplSave", btnRplSave);  Btn("RplDelete", btnRplDelete);
+	Chk("RplChkAutoRec", chkRplAutoRec, rpl_rec);
+	Chk("RplChkGhost", chkRplChkGhost, rpl_play);
+	Btn("RplBtnCur", btnRplCur)  Btn("RplBtnAll", btnRplAll);  // radio
+    if (mWndRpl)
+	{	//  replay controls
+		Btn("RplToStart", btnRplToStart);  Btn("RplToEnd", btnRplToEnd)
+		Btn("RplBack", btnRplBack);  Btn("RplForward", btnRplForward);  Btn("RplPlay", btnRplPlay);
 
-		strlist li;
-		PATHMANAGER::GetFolderIndex(PATHMANAGER::GetReplayPath(), li, "rpl");
-		for (strlist::iterator i = li.begin(); i != li.end(); ++i)
-		if (StringUtil::endsWith(*i, ".rpl"))
-		{
-			String s = *i;
-			s = StringUtil::replaceAll(s,".rpl","");
-			//ifstream check((PATHMANAGER::GetReplayPath() + "/" + *i + "/about.txt").c_str());
-			//if (check)  {
-			rplList->addItem(s);
-			//if (*i == pSet->car) {  carList->setIndexSelected(ii);  bFound = true;  }
-			//ii++;  }
-		}
-		//rplList->eventListChangePosition = newDelegate(this, &App::listCarChng);
-    }
+		//  info
+		slRplPos = (HScrollPtr)mWndRpl->findWidget("RplSlider");
+		if (slRplPos)  slRplPos->eventScrollChangePosition = newDelegate(this, &App::slRplPosEv);
+
+		valRplPerc = (StaticTextPtr)mWndRpl->findWidget("RplPercent");
+    	valRplCur = (StaticTextPtr)mWndRpl->findWidget("RplTimeCur");
+    	valRplLen = (StaticTextPtr)mWndRpl->findWidget("RplTimeLen");
+	}
+	//  text desc
+	valRplName = (StaticTextPtr)mWndRpl->findWidget("RplName");
+	valRplInfo = (StaticTextPtr)mWndRpl->findWidget("RplInfo");
+	edRplName = mGUI->findWidget<Edit>("RplNameEdit");
+	edRplDesc = mGUI->findWidget<Edit>("RplDesc");
+
+	rplList = mGUI->findWidget<List>("RplList");
+	updReplaysList();
 
 	
 	///  video resolutions combobox
-    //------------------------------------
+    //------------------------------------------------------------------------
 	resList = mGUI->findWidget<List>("ResList");
 	if (resList)
 	{
@@ -244,7 +248,7 @@ void App::InitGui()
 	
 	
 	///  cars list
-    //------------------------------------
+    //------------------------------------------------------------------------
     carList = (ListPtr)mLayout->findWidget("CarList");
     if (carList)
     {	carList->removeAllItems();  int ii = 0;  bool bFound = false;
@@ -273,7 +277,7 @@ void App::InitGui()
 
 
     ///  tracks list, text, chg btn
-    //------------------------------------
+    //------------------------------------------------------------------------
     trkList = (ListPtr)mLayout->findWidget("TrackList");
     if (trkList)
     {	trkList->removeAllItems();
@@ -315,6 +319,7 @@ void App::InitGui()
 		trkList->eventListChangePosition = newDelegate(this, &App::listTrackChng);
 		//?trkList->eventMouseButtonDoubleClick = newDelegate(this, &App::btnNewGameStart);
     }
+    //------------------------------------------------------------------------
 
 	//  track text, chg btn
     valTrk = (StaticTextPtr)mLayout->findWidget("TrackText");
