@@ -192,7 +192,6 @@ void App::newPoses()
 {
 	if (!pGame)  return;
 	if (pGame->cars.size() == 0)  return;
-	Log("NEW_POSES");
 	// Iterate through all car models and get new pos info
 	std::list<CAR>::iterator carIt = pGame->cars.begin();
 	std::list<CarModel*>::iterator carMIt = carModels.begin();
@@ -214,13 +213,11 @@ void App::newPoses()
 		///-----------------------------------------------------------------------
 		if (pSet->rpl_play)
 		{
-			Log("Rpl_PLAY");
 			//  time  from start
 			double rtime = pGame->timer.GetReplayTime();
 			bool ok = replay.GetFrame(rtime, &fr);
 			if (ok)
 			{	
-				Log("Rpl_OK");
 				//  car
 				pos = fr.pos;  rot = fr.rot;
 				//  wheels
@@ -233,9 +230,7 @@ void App::newPoses()
 					newPosInfo.newWhMtr[w] = fr.whMtr[w];
 				}
 			}else	// restart replay (repeat)
-			{
-				Log("Rpl_ERR");pGame->timer.RestartReplay();
-			}
+				pGame->timer.RestartReplay();
 		}
 		else
 		//  get data from vdrift
