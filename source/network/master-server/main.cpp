@@ -6,6 +6,8 @@
 
 #define VERSIONSTRING "0.1"
 
+//TODO: Demonization
+
 class GameListManager {
 public:
 
@@ -109,9 +111,14 @@ int main(int argc, char** argv) {
 		if (arg == "--version" || arg == "-v") {
 			return 0; // Already printed version
 		} else if (arg == "--help" || arg == "-h") {
-			std::cout << "Usage: " << argv[0] << " "
-			  << "[--version | -v] [--help | -h] [--port | -p <portnumber>]"
-			  << std::endl;
+			std::cout << std::endl << "Usage: " << argv[0] << " [PARAMETERS]" << std::endl
+				<< std::endl
+				<< "Available parameters:" << std::endl
+				<< "  -v, --version               print version number and exit" << std::endl
+				<< "  -h, --help                  this help" << std::endl
+				<< "  -p, --port <portnumber>     listen given port for connections" << std::endl
+				<< "                              default: " << protocol::DEFAULT_PORT << std::endl
+				;
 			return 0;
 		} else if ((arg == "--port" || arg == "-p") && i < argc-1) {
 			port = atoi(argv[i+1]);
