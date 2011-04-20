@@ -110,10 +110,10 @@ int main(int argc, char** argv) {
 			return 0; // Already printed version
 		} else if (arg == "--help" || arg == "-h") {
 			std::cout << "Usage: " << argv[0] << " "
-			  << "[--version | -v] [--help | -h] [--port <portnumber>]"
+			  << "[--version | -v] [--help | -h] [--port | -p <portnumber>]"
 			  << std::endl;
 			return 0;
-		} else if (arg == "--port" && i < argc-1) {
+		} else if ((arg == "--port" || arg == "-p") && i < argc-1) {
 			port = atoi(argv[i+1]);
 			++i;
 		} else {
