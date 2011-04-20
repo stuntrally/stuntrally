@@ -216,21 +216,20 @@ void App::newPoses()
 			//  time  from start
 			double rtime = pGame->timer.GetReplayTime();
 			bool ok = replay.GetFrame(rtime, &fr);
-			if (ok)
-			{	
-				//  car
-				pos = fr.pos;  rot = fr.rot;
-				//  wheels
-				for (int w=0; w < 4; ++w)
-				{
-					whPos[w] = fr.whPos[w];  whRot[w] = fr.whRot[w];
-					newPosInfo.newWhVel[w] = fr.whVel[w];
-					newPosInfo.newWhSlide[w] = fr.slide[w];  newPosInfo.newWhSqueal[w] = fr.squeal[w];
-					newPosInfo.newWhR[w] = replay.header.whR[w];//
-					newPosInfo.newWhMtr[w] = fr.whMtr[w];
-				}
-			}else	// restart replay (repeat)
-				pGame->timer.RestartReplay();
+			if (!ok)	pGame->timer.RestartReplay();
+			
+			//  car
+			pos = fr.pos;  rot = fr.rot;
+			//  wheels
+			for (int w=0; w < 4; ++w)
+			{
+				whPos[w] = fr.whPos[w];  whRot[w] = fr.whRot[w];
+				newPosInfo.newWhVel[w] = fr.whVel[w];
+				newPosInfo.newWhSlide[w] = fr.slide[w];  newPosInfo.newWhSqueal[w] = fr.squeal[w];
+				newPosInfo.newWhR[w] = replay.header.whR[w];//
+				newPosInfo.newWhMtr[w] = fr.whMtr[w];
+			}
+
 		}
 		else
 		//  get data from vdrift
