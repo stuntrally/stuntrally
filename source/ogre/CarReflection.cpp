@@ -7,6 +7,7 @@ CarReflection::CarReflection(SETTINGS* set, Ogre::SceneManager* sceneMgr, unsign
 	pSet = set;
 	iIndex = index;
 	pSceneMgr = sceneMgr;
+	iCounter = pSet->refl_skip;
 }
 CarReflection::~CarReflection()
 {
@@ -102,9 +103,9 @@ void CarReflection::Create()
 void CarReflection::Update()
 {
 	//  skip frames
-	if (--iCounter <= 0 || bFirstFrame)
+	if (++iCounter >= pSet->refl_skip || bFirstFrame)
 	{
-		iCounter = pSet->refl_skip;
+		iCounter = 0;
 		//  cube faces at once
 		int fc = bFirstFrame ? 6 : pSet->refl_faces;
 		for (int i=0; i < fc; ++i)
