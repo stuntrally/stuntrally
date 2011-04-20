@@ -245,7 +245,7 @@ void App::reloadMtrTex(String mtrName)
 				Pass::TextureUnitStateIterator tusIt = pass->getTextureUnitStateIterator();
 				while (tusIt.hasMoreElements())
 				{	TextureUnitState* tus = tusIt.getNext();  String name = tus->getTextureName();
-					if (name != "ReflectionCube")
+					if (! (Ogre::StringUtil::startsWith(name, "ReflectionCube", false) || name == "ReflectionCube") )
 					{
 						Ogre::LogManager::getSingletonPtr()->logMessage( "Tex Reload: " + name );
 						TexturePtr tex = (TexturePtr)Ogre::TextureManager::getSingleton().getByName( name );

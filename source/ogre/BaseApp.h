@@ -5,6 +5,7 @@
 #include <OIS/OIS.h>
 #include <MyGUI.h>
 #include <MyGUI_OgrePlatform.h>
+#include "CarModel.h"
 using namespace Ogre;
 
 
@@ -14,7 +15,12 @@ class BaseApp :
 {
 public:
 	BaseApp();	virtual ~BaseApp();
-	virtual void Run( bool showDialolg );
+	virtual void Run( bool showDialog );
+	
+	bool bLoading;
+	
+	// has to be in baseApp to switch camera on C press
+	CarModel* carM;
 	
 	// translation
 	// can't have it in c'tor, because mygui is not initialized
@@ -26,7 +32,6 @@ public:
 	class SETTINGS* pSet;
 
 	SceneNode* ndSky; //-
-	class FollowCamera* mFCam;  // cam+
 	int roadUpCnt;
 	Camera* GetCamera()  {  return mCamera;  }
 	LoadingBar mLoadingBar;

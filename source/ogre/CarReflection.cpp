@@ -7,19 +7,39 @@ CarReflection::CarReflection(SETTINGS* set, Ogre::SceneManager* sceneMgr, unsign
 	pSet = set;
 	iIndex = index;
 	pSceneMgr = sceneMgr;
-	
-	///TODO (optional) only one cubemap, no cubemaps (static) 
-	///TODO allow multiple cubemaps (texture index etc)
-	
-	//reflAct = false;//
+}
+CarReflection::~CarReflection()
+{
 	for (int i=0; i < 6; ++i)
 	{	pCams[i] = 0;  pRTs[i] = 0;  }
+	
+	for (int face = 0; face < 6; face++)
+	{
+		try{
+			Camera* cam = pSceneMgr->getCamera("Reflect_" + toStr(face));
+			if (cam) {	pSceneMgr->destroyCamera(cam);
+				Log("destroy refl cam ok");  }
+		}catch(...) {
+			Log("destroy refl cam err");  }
+	}
 
+	// destroy cube tex
+	Ogre::TextureManager::getSingleton().remove(cubetexName);
+}
+void CarReflection::Create()
+{
+	///TODO (optional) only one cubemap, no cubemaps (static) 
+	
+	cubetexName = "ReflectionCube" + toStr(iIndex);
+	// first cubemap: no index
+	if (cubetexName == "ReflectionCube0")
+		cubetexName = "ReflectionCube";
+	
 	Ogre::TextureManager* tm = Ogre::TextureManager::getSingletonPtr();
 	int size = ciShadowSizesA[pSet->refl_size];
 
 	//  create cube render texture
-	cubetex = tm->createManual("ReflectionCube",
+	cubetex = tm->createManual(cubetexName, 
 		ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME, TEX_TYPE_CUBE_MAP, 
 		size,size, 0/*mips*/, PF_R8G8B8, TU_RENDERTARGET);
 		Log("created rt cube");
@@ -54,30 +74,33 @@ CarReflection::CarReflection(SETTINGS* set, Ogre::SceneManager* sceneMgr, unsign
 		pCams[face] = mCam;
 		pRTs[face] = mRT;
 	}
-	//reflAct = true;
-}
-CarReflection::~CarReflection()
-{
-	for (int i=0; i < 6; ++i)
-	{	pCams[i] = 0;  pRTs[i] = 0;  }
 	
-	for (int face = 0; face < 6; face++)
+	// Iterate through our materials and add an index to ReflectionCube texture reference
+	for (int i=0; i < NumMaterials; i++)
 	{
-		try{
-			Camera* cam = pSceneMgr->getCamera("Reflect_" + toStr(face));
-			if (cam) {	pSceneMgr->destroyCamera(cam);
-				Log("destroy refl cam ok");  }
-		}catch(...) {
-			Log("destroy refl cam err");  }
+		MaterialPtr mtr = (MaterialPtr)MaterialManager::getSingleton().getByName(sMtr[i]);
+		if (!mtr.isNull())
+		{	Material::TechniqueIterator techIt = mtr->getTechniqueIterator();
+			while (techIt.hasMoreElements())
+			{	Technique* tech = techIt.getNext();
+				Technique::PassIterator passIt = tech->getPassIterator();
+				while (passIt.hasMoreElements())
+				{	Pass* pass = passIt.getNext();
+					Pass::TextureUnitStateIterator tusIt = pass->getTextureUnitStateIterator();
+					while (tusIt.hasMoreElements())
+					{	
+						TextureUnitState* tus = tusIt.getNext();
+						if (tus->getTextureName() == "ReflectionCube")
+							tus->setTextureName(cubetexName);
+					}
+				}	
+			}
+		}	
 	}
+
 }
 void CarReflection::Update()
 {
-	/*if (bLoading)  {  //Log("update - loading");
-		return;  }
-	if (!reflAct)  {  //Log("update - not active");
-		return;  }*/
-
 	//  skip frames
 	if (--iCounter <= 0 || bFirstFrame)
 	{
