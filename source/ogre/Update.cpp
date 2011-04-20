@@ -192,7 +192,7 @@ void App::newPoses()
 {
 	if (!pGame)  return;
 	if (pGame->cars.size() == 0)  return;
-	
+	Log("NEW_POSES");
 	// Iterate through all car models and get new pos info
 	std::list<CAR>::iterator carIt = pGame->cars.begin();
 	std::list<CarModel*>::iterator carMIt = carModels.begin();
@@ -214,11 +214,14 @@ void App::newPoses()
 		///-----------------------------------------------------------------------
 		if (pSet->rpl_play)
 		{
+			Log("Rpl_PLAY");
 			//  time  from start
 			double rtime = pGame->timer.GetReplayTime();
 			bool ok = replay.GetFrame(rtime, &fr);
 			if (ok)
-			{	//  car
+			{	
+				Log("Rpl_OK");
+				//  car
 				pos = fr.pos;  rot = fr.rot;
 				//  wheels
 				for (int w=0; w < 4; ++w)
@@ -230,7 +233,9 @@ void App::newPoses()
 					newPosInfo.newWhMtr[w] = fr.whMtr[w];
 				}
 			}else	// restart replay (repeat)
-				pGame->timer.RestartReplay();
+			{
+				Log("Rpl_ERR");pGame->timer.RestartReplay();
+			}
 		}
 		else
 		//  get data from vdrift
@@ -335,57 +340,58 @@ void App::newPoses()
 		if (pSet->rpl_play)
 		{	// dont check when replay play...
 			bWrongChk = false;
-			return;
 		}
-
-		if (bGetStPos)  // first pos is at start
-		{	bGetStPos = false;
-			matStPos.makeInverseTransform(newPosInfo.newPos, Vector3::UNIT_SCALE, newPosInfo.newRot);
-			iCurChk = -1;  iNextChk = -1;  iNumChks = 1;  // reset lap
-		}
-		if (road && !bGetStPos)
+		else
 		{
-			//  start/finish box dist
-			Vector4 carP(newPosInfo.newPos.x,newPosInfo.newPos.y,newPosInfo.newPos.z,1);
-			vStDist = matStPos * carP;
-			bInSt = abs(vStDist.x) < road->vStBoxDim.x && 
-				abs(vStDist.y) < road->vStBoxDim.y && 
-				abs(vStDist.z) < road->vStBoxDim.z;
-		
-			iInChk = -1;  bWrongChk = false;
-			int ncs = road->mChks.size();
-			if (ncs > 0)
+			if (bGetStPos)  // first pos is at start
+			{	bGetStPos = false;
+				matStPos.makeInverseTransform(newPosInfo.newPos, Vector3::UNIT_SCALE, newPosInfo.newRot);
+				iCurChk = -1;  iNextChk = -1;  iNumChks = 1;  // reset lap
+			}
+			if (road && !bGetStPos)
 			{
-				if (bInSt && iNumChks == ncs && iCurChk != -1)  // finish
+				//  start/finish box dist
+				Vector4 carP(newPosInfo.newPos.x,newPosInfo.newPos.y,newPosInfo.newPos.z,1);
+				vStDist = matStPos * carP;
+				bInSt = abs(vStDist.x) < road->vStBoxDim.x && 
+					abs(vStDist.y) < road->vStBoxDim.y && 
+					abs(vStDist.z) < road->vStBoxDim.z;
+			
+				iInChk = -1;  bWrongChk = false;
+				int ncs = road->mChks.size();
+				if (ncs > 0)
 				{
-					pGame->timer.Lap(0, 0,0, true, pSet->trackreverse);
-					iCurChk = -1;  iNumChks = 1;
-				}
-				for (int i=0; i < ncs; ++i)
-				{
-					const CheckSphere& cs = road->mChks[i];
-					Real d2 = newPosInfo.newPos.squaredDistance(cs.pos);
-					if (d2 < cs.r2)  // car in checkpoint
+					if (bInSt && iNumChks == ncs && iCurChk != -1)  // finish
 					{
-						iInChk = i;
-						if (iCurChk == -1)  // first, any
-						{	iCurChk = i;  iNumChks = 1;  }
-						else if (iNumChks < ncs)
-						{
-							int ii = (pSet->trackreverse ? -1 : 1) * road->iDir;
-							iNextChk = (iCurChk + ii + ncs) % ncs;
-								
-							//  any if first, or next
-							if (i == iNextChk)
-							{	iCurChk = i;  iNumChks++;  }
-							else
-							if (iInChk != iCurChk)
-								bWrongChk = true;
-						}
-						break;
+						pGame->timer.Lap(0, 0,0, true, pSet->trackreverse);
+						iCurChk = -1;  iNumChks = 1;
 					}
-				}
-			}	
+					for (int i=0; i < ncs; ++i)
+					{
+						const CheckSphere& cs = road->mChks[i];
+						Real d2 = newPosInfo.newPos.squaredDistance(cs.pos);
+						if (d2 < cs.r2)  // car in checkpoint
+						{
+							iInChk = i;
+							if (iCurChk == -1)  // first, any
+							{	iCurChk = i;  iNumChks = 1;  }
+							else if (iNumChks < ncs)
+							{
+								int ii = (pSet->trackreverse ? -1 : 1) * road->iDir;
+								iNextChk = (iCurChk + ii + ncs) % ncs;
+									
+								//  any if first, or next
+								if (i == iNextChk)
+								{	iCurChk = i;  iNumChks++;  }
+								else
+								if (iInChk != iCurChk)
+									bWrongChk = true;
+							}
+							break;
+						}
+					}
+				}	
+			}
 		}
 		(*newPosInfoIt) = newPosInfo;
 		
