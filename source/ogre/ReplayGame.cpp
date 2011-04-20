@@ -35,10 +35,10 @@ void Replay::InitHeader(const char* track, const char* car, float* whR_4)
 
 ///  Load
 //----------------------------------------------------------------
-void Replay::LoadFile(std::string file)
+bool Replay::LoadFile(std::string file)
 {
 	std::ifstream fi(file.c_str(), std::ios::binary | std::ios::in);
-	if (!fi)  return;
+	if (!fi)  return false;
 	//  header
 	char buf[ciRplHdrSize];  memset(buf,0,ciRplHdrSize);
 	fi.read(buf,ciRplHdrSize);
@@ -54,13 +54,15 @@ void Replay::LoadFile(std::string file)
 		//Log(toStr((float)fr.time) /*+ "  p " + toStr(fr.pos)*/);
 	}
     fi.close();
+    return true;
 }
 
 ///  Save
 //----------------------------------------------------------------
-void Replay::SaveFile(std::string file)
+bool Replay::SaveFile(std::string file)
 {
 	std::ofstream of(file.c_str(), std::ios::binary | std::ios::out);
+	if (!of)  return false;
 	//  header
 	char buf[ciRplHdrSize];  memset(buf,0,ciRplHdrSize);
 	memcpy(buf, &header, sizeof(ReplayHeader));
@@ -72,6 +74,7 @@ void Replay::SaveFile(std::string file)
 		of.write((char*)&frames[i], sizeof(ReplayFrame));
 
     of.close();
+    return true;
 }
 
 //  add (Record)

@@ -96,10 +96,14 @@
 
 	<!--  Replay  -->
 	<Tag name="Replay">Replay</Tag>
-	<Tag name="RplDelete">Delete</Tag>
+
+	<Tag name="RplLoad">Load</Tag>
 	<Tag name="RplSave">Save</Tag>
+	<Tag name="RplDelete">Delete</Tag>
+
 	<Tag name="RplAutoRec">Auto record replay</Tag>
 	<Tag name="RplGhost">Show ghost drive - best lap</Tag>
+
 	<Tag name="RplAll">All</Tag>
 	<Tag name="RplCur">Cur</Tag>
 

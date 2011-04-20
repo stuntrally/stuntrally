@@ -56,7 +56,7 @@ class Replay
 public:
 	Replay();
 	
-	void LoadFile(std::string file), SaveFile(std::string file);
+	bool LoadFile(std::string file), SaveFile(std::string file);
 
 	void AddFrame(const ReplayFrame& frame);  // record
 	bool GetFrame(double time, ReplayFrame* fr);  // play
