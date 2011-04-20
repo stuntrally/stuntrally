@@ -422,4 +422,20 @@ void App::updatePoses(float time)
 		carIt++;
 		newPosIt++;
 	}
+	
+	///  Replay info
+	if (pSet->rpl_play)
+	{
+		double pos = pGame->timer.GetPlayerTime();
+		float len = replay.GetTimeLength();
+		if (valRplPerc){  sprintf(s, "%4.1f %%", pos/len * 100.f);  valRplPerc->setCaption(s);  }
+		if (valRplCur){  valRplCur->setCaption( GetTimeString( pos ) );  }
+		if (valRplLen){  valRplLen->setCaption( GetTimeString( len ) );  }
+		
+		if (slRplPos)
+		{
+			#define res  1000000.f
+			int v = pos/len * res;  slRplPos->setScrollPosition(v);
+		}
+	}	
 }
