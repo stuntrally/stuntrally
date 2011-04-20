@@ -104,7 +104,11 @@ bool App::frameStart(Real time)
 				ndSky->setPosition(GetCamera()->getPosition());
 		}
 
-		//updateReflection();  //*
+		// Update all cube maps
+		for (std::list<CarModel*>::iterator it=carModels.begin(); it!=carModels.end(); it++)
+		{
+			(*it)->pReflect->Update();
+		}
 
 		//  trees
 		//if (pSet->mult_thr != 2)

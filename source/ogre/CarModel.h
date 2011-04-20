@@ -48,8 +48,7 @@ public:
 	// CarReflection is also created.
 	void Create();
 	
-	// Call once per frame with new position info
-	// Also updates CarReflection
+	// Call every vdrift substep with new position info
 	void Update(PosInfo newPosInfo, float time);
 	
 	// Car color
@@ -80,6 +79,9 @@ public:
 	// later, we will add sub-nodes for body, interior, glass and wheels.
 	Ogre::SceneNode* pMainNode;
 		
+	// Handles our cube map.
+	CarReflection* pReflect;
+		
 	int whTerMtr[4];
 	// needed to set track surface
 	char* blendMtr; int blendMapSize;
@@ -104,9 +106,6 @@ private:
 		Mtr_CarTireFront, Mtr_CarTireRear,
 		NumMaterials  };
 	std::string sMtr[NumMaterials];
-
-	// Handles our cube map.
-	CarReflection* pReflect;
 	
 	// Particle systems, trail.
 	ParticleSystem* ps[4],*pm[4],*pd[4];  // smoke, mud, dust

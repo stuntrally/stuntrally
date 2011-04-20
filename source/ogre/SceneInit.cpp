@@ -118,7 +118,6 @@ void App::LoadGame()
 	pGame->NewGameDoLoadTrack();
 	/// init car models
 	// will create vdrift cars
-	// ---only 1 car now
 	carModels.push_back( new CarModel(0, CarModel::CT_LOCAL, sListCar, mSceneMgr, pSet, pGame, &sc, mCamera) );
 	// Create() will be called later in LoadCar()
 	// this is just here because vdrift car has to be created first
