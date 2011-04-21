@@ -73,16 +73,6 @@ typedef std::map<std::string, protocol::PeerInfo> PeerMap;
 
 
 /**
- * Text message meant to be displayed for user, e.g. chat.
- */
-struct TextMessage: public net::SimpleSerializer<TextMessage> {
-	uint8_t packet_type;
-	uint32_t length;
-	uint8_t message[256]; //FIXME
-};
-
-
-/**
  * Contains the car state.
  */
 struct CarStatePackage {

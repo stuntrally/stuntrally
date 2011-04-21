@@ -19,10 +19,9 @@ void P2PGameClient::sendPeerInfo()
 	}
 }
 
-void P2PGameClient::broadcast(const std::string& msg)
+void P2PGameClient::sendMessage(const std::string& msg)
 {
-	//protocol::Packet packet(protocol::TEXT_MESSAGE, msg.length(), msg.c_str());
-	m_client.broadcast(msg);
+	m_client.broadcast(char(protocol::TEXT_MESSAGE) + msg);
 }
 
 void P2PGameClient::connectionEvent(net::NetworkTraffic const& e)
@@ -47,6 +46,11 @@ void P2PGameClient::receiveEvent(net::NetworkTraffic const& e)
 			// TODO: Check for local address
 			m_peers[boost::lexical_cast<std::string>(e.peer_id)] = pi;
 			std::cout << "Peer info received for " << pi.name << std::endl;
+			break;
+		}
+		case protocol::TEXT_MESSAGE: {
+			std::string msg((const char*)e.packet_data, e.packet_length);
+			std::cout << "Text message received: " << msg << std::endl;
 			break;
 		}
 		default: {

@@ -10,7 +10,7 @@ public:
 
 	void sendPeerInfo();
 
-	void broadcast(const std::string& msg);
+	void sendMessage(const std::string& msg);
 
 	/// Callback from networking
 	void connectionEvent(net::NetworkTraffic const& e);

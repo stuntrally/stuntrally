@@ -69,8 +69,8 @@ void VprThread(App* pA)
 		}
 	}
 	while (true) {
-		client.broadcast("Hello");
-		boost::this_thread::sleep(boost::posix_time::milliseconds(1000));
+		client.sendMessage("Hello");
+		boost::this_thread::sleep(boost::posix_time::milliseconds(2500));
 	}
 
 	///  game  ------------------------------
