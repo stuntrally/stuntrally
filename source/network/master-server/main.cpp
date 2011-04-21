@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 #include <map>
+#include <ctime>
 #include "../enet-wrapper.hpp"
 #include "../protocol.hpp"
 #ifdef __linux
@@ -8,6 +9,9 @@
 #endif
 
 #define VERSIONSTRING "0.2"
+
+#define ZOMBIE_TIMEOUT 5  // How many seconds without update until the game becomes zombie
+
 
 enum LogLevel {
 	ERROR   = 0,
@@ -25,39 +29,56 @@ std::ostream& out(LogLevel level) {
 }
 
 
+/// Class for managing the available games
 class GameListManager {
 public:
 
 	/// Constructor.
-	GameListManager(): m_next_id(1) {}
+	GameListManager(): m_mutex(), m_next_id(1) {}
 
 	/// Update or announce a game.
 	/// @param game the game's information
 	void updateGame(protocol::GameInfo& game) {
 		if (game.id == 0) {
+			// Assign ID
 			game.id = m_next_id;
 			++m_next_id;
 		}
+		// Update timestamp
+		game.timestamp = (uint32_t)std::time(NULL);
+		// Save
+		boost::mutex::scoped_lock lock(m_mutex);
 		m_games[game.id] = game;
 	}
 
 	/// Gets the games.
 	/// @return a packet containing the games in a serialized form
-	const protocol::GameList& getGames() const {
+	const protocol::GameList getGames() const {
 		return m_games;
 	}
 
 	/// Removes outdated games from the list.
 	void purgeGames() {
 		int removecount = 0;
-		for (protocol::GameList::iterator it = m_games.begin(); it != m_games.end(); ++it) {
-			// TODO: Implement
+		{
+			boost::mutex::scoped_lock lock(m_mutex);
+			protocol::GameList::iterator it = m_games.begin();
+			// Loop through the games
+			while (it != m_games.end()) {
+				// Check condition
+				if ((uint32_t)std::time(NULL) > it->second.timestamp + ZOMBIE_TIMEOUT) {
+					out(VERBOSE) << "Zombie game: \"" << it->second.name << "\"" << std::endl;
+					m_games.erase(it++);
+					++removecount;
+				} else ++it;
+			}
 		}
 		if (removecount > 0)
-			out(VERBOSE) << "Removed " << removecount << " games due to time out." << std::endl;
+			out(VERBOSE) << "Removed " << removecount << " game(s) due to time out." << std::endl;
 	}
 
 private:
+	mutable boost::mutex m_mutex;
 	protocol::GameList m_games;
 	unsigned m_next_id;
 };
@@ -118,7 +139,7 @@ public:
 
 private:
 	net::NetworkObject m_client;
-	GameListManager m_glm;
+	GameListManager& m_glm;
 };
 
 
@@ -175,11 +196,11 @@ int main(int argc, char** argv) {
 
 	try {
 		GameListManager games;
-		Server server(games, port);
+		Server server(games, port); // Launches a thread for listening the traffic
 
 		while (true) {
 			// Periodically remove zombie games
-			boost::this_thread::sleep(boost::posix_time::milliseconds(7000));
+			boost::this_thread::sleep(boost::posix_time::milliseconds(ZOMBIE_TIMEOUT * 1000));
 			games.purgeGames();
 		}
 	} catch (const std::exception& e) {
