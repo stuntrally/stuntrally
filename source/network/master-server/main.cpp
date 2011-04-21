@@ -21,9 +21,9 @@ enum LogLevel {
 
 /// Use this function as std::cout, giving it the message's log level as parameter
 std::ostream& out(LogLevel level) {
-	if (g_loglevel == ERROR) return std::cerr;
+	if (level == ERROR) return std::cerr;
 	if (g_loglevel >= level) return std::cout;
-	static std::ostringstream oss;
+	static std::ostringstream oss; // Sink for discarded messages
 	oss.clear();
 	return oss;
 }
@@ -160,6 +160,7 @@ int main(int argc, char** argv) {
 				<< "  -v, --version               print version number and exit" << std::endl
 				<< "  -h, --help                  this help" << std::endl
 				<< "  -V, --verbose               output more information, useful for testing" << std::endl
+				<< "  -q, --quiet                 output only errors" << std::endl
 #ifdef __linux
 				<< "  -d, --daemon                run in backround (i.e. daemonize)" << std::endl
 #endif
@@ -169,6 +170,8 @@ int main(int argc, char** argv) {
 			return 0;
 		} else if (arg == "--verbose" || arg == "-V") {
 			g_loglevel = VERBOSE;
+		} else if (arg == "--quiet" || arg == "-q") {
+			g_loglevel = ERROR;
 #ifdef __linux
 		} else if (arg == "--daemon" || arg == "-d") {
 			daemonize = true;
