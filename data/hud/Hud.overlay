@@ -65,7 +65,7 @@ Hud/AbsTcs
 		{
 			metrics_mode pixels
 			left 0
-			font_name Console
+			font_name Vera
 			char_height 24
 			caption ABS
 			//char_height 0.058
@@ -77,7 +77,7 @@ Hud/AbsTcs
 		{
 			metrics_mode pixels
 			left 50
-			font_name Console
+			font_name Vera
 			char_height 24
 			caption TCS
 			//char_height 0.058
@@ -109,7 +109,7 @@ Hud/Times
 			top 9
 			width 200
 			height 60
-			font_name Console
+			font_name Vera
 			char_height 24
 			caption Times
 			colour_top    0.7 0.8 0.9
@@ -123,7 +123,7 @@ Hud/Times
 			top 8
 			width 200
 			height 60
-			font_name Console
+			font_name Vera
 			char_height 24
 			//caption Check
 			colour_top    1.0 0.2 0.2
