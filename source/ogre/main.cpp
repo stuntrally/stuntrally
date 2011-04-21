@@ -59,14 +59,6 @@ void VprThread(App* pA)
 	// Initialize networking
 	net::ENetContainer enet;
 
-	// FIXME: Temporary master server test hack
-	MasterClient mc;
-	mc.connect(settings->master_server_address, settings->master_server_port);
-	boost::this_thread::sleep(boost::posix_time::milliseconds(2000));
-	mc.updateGame("Test game", "M-001", 1);
-	boost::this_thread::sleep(boost::posix_time::milliseconds(1000));
-	mc.refreshList();
-
 	// FIXME: Temporary network test hack
 	P2PGameClient client(argc > 1 ? 5555 : 5556);
 	if (argc > 1) {
