@@ -18,7 +18,7 @@ class SplitScreenManager : public Ogre::RenderTargetListener
 {
 public:
 	// Constructor, only assign members
-	SplitScreenManager(Ogre::SceneManager* sceneMgr, Ogre::SceneManager* guiSceneMgr, Ogre::RenderWindow* window);
+	SplitScreenManager(Ogre::SceneManager* sceneMgr, Ogre::RenderWindow* window);
 	
 	~SplitScreenManager();
 	
@@ -33,6 +33,10 @@ public:
 	// It will create new viewports and cameras and arrange them.
 	void Align();
 	
+	// Adjust viewport size / camera aspect ratio
+	// Should be called whenever the window size changes
+	void AdjustRatio();
+	
 	// Needed to update HUD on render target event
 	class App* pApp;
 	
@@ -40,11 +44,8 @@ public:
 	void postRenderTargetUpdate(const Ogre::RenderTargetEvent& evt);
 
 private:
-	// Scene manager for the 3d scene
+	// Scene manager to use
 	Ogre::SceneManager* mSceneMgr;
-
-	// Scene manager that is used for the gui viewport
-	Ogre::SceneManager* mGuiSceneMgr;
 	
 	// Render window to use
 	Ogre::RenderWindow* mWindow;
