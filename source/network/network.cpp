@@ -83,14 +83,17 @@ void MasterClient::receiveEvent(net::NetworkTraffic const& e)
 		case protocol::GAME_STATUS: {
 			protocol::GameInfo game = *reinterpret_cast<protocol::GameInfo const*>(e.packet_data);
 			std::cout << "Available game: " << game.name << std::endl;
+			break;
 		}
 		case protocol::GAME_ACCEPTED: {
 			protocol::GameInfo game = *reinterpret_cast<protocol::GameInfo const*>(e.packet_data);
 			m_gameId = game.id;
 			std::cout << "Game accepted with id " << m_gameId << std::endl;
+			break;
 		}
 		default: {
 			std::cout << "Unknown packet type received." << std::endl;
+			break;
 		}
 	}
 }
