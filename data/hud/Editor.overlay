@@ -18,7 +18,7 @@ Editor/FocusOverlay
 			top 2
 			width 70
 			height 22
-			font_name Vrinda
+			font_name Console
 			char_height 21
 			//caption Cam
 			colour_top	0.7 0.8 1.0
@@ -48,7 +48,7 @@ Editor/StatusOverlay
 			top 2
 			width 70
 			height 22
-			font_name Vrinda
+			font_name Console
 			char_height 21
 			//caption 
 			colour_top	0.0 0.5 1.0
@@ -78,7 +78,7 @@ Editor/CameraOverlay
 			top 2
 			width 170
 			height 22
-			font_name Vrinda
+			font_name Console
 			char_height 21
 			caption Camera
 			colour_top	0.4 0.7 0.7
@@ -104,7 +104,7 @@ Editor/CameraOverlay
 			top 2
 			width 620
 			height 24
-			font_name Vrinda
+			font_name Console
 			char_height 23
 			caption Camera Info
 			colour_top	0.4 0.7 0.5
@@ -178,7 +178,7 @@ Editor/FpsOverlay
 			top 4
 			width 90
 			height 22
-			font_name Vrinda
+			font_name Console
 			char_height 20
 			//caption Pos
 			colour_top	0.31 0.52 0.63
@@ -210,7 +210,7 @@ Editor/DebugOverlay
 			top 5
 			width 600
 			height 53
-			font_name Vrinda
+			font_name Console
 			char_height 48
 			//caption Info
 			colour_top	0.7 0.7 0.8
@@ -225,7 +225,7 @@ Editor/DebugOverlay
 			width 600
 			height 23
 			// 20 18
-			font_name Vrinda
+			font_name Console
 			char_height 22
 			//caption Info
 			colour_top	0.7 0.7 0.8
@@ -239,7 +239,7 @@ Editor/DebugOverlay
 			top 5
 			width 600
 			height 25
-			font_name Vrinda
+			font_name Console
 			char_height 24
 			colour_top	0.7 0.7 0.8
 			colour_bottom 0.8 0.9 1.0
