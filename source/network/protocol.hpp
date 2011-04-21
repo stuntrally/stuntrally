@@ -9,6 +9,7 @@
  */
 
 #include <stdint.h>
+#include <boost/lexical_cast.hpp>
 #include "enet-wrapper.hpp"
 
 namespace protocol {
@@ -63,9 +64,12 @@ struct PeerInfo: public net::SimpleSerializer<PeerInfo> {
 	uint16_t port;
 	char name[16];
 
+	std::string getId() const { return boost::lexical_cast<std::string>(address)+":"+boost::lexical_cast<std::string>(port); }
 	bool operator==(const PeerInfo& other) { return address == other.address && port == other.port; }
 	bool operator!=(const PeerInfo& other) { return !(*this == other); }
 };
+
+typedef std::map<std::string, protocol::PeerInfo> PeerMap;
 
 
 /**

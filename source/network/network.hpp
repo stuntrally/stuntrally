@@ -8,6 +8,8 @@ public:
 
 	void connect(const std::string& address, int port = protocol::DEFAULT_PORT);
 
+	void sendPeerInfo();
+
 	void broadcast(const std::string& msg);
 
 	/// Callback from networking
@@ -21,6 +23,7 @@ public:
 
 private:
 	net::NetworkObject m_client;
+	protocol::PeerMap m_peers;
 };
 
 
