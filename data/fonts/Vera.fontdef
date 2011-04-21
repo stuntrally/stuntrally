@@ -1,0 +1,9 @@
+
+Vera
+{
+	type 		truetype
+	source 		Vera.ttf
+	size 		51
+	resolution 	96
+	code_points 	1-250
+}
