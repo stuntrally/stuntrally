@@ -7,7 +7,23 @@
 #include <unistd.h> // for daemon()
 #endif
 
-#define VERSIONSTRING "0.1"
+#define VERSIONSTRING "0.2"
+
+enum LogLevel {
+	ERROR   = 0,
+	NORMAL  = 1,
+	VERBOSE = 2
+} g_loglevel = NORMAL;
+
+/// Use this function as std::cout, giving it the message's log level as parameter
+std::ostream& out(LogLevel level) {
+	if (g_loglevel == ERROR) return std::cerr;
+	if (g_loglevel >= level) return std::cout;
+	static std::ostringstream oss;
+	oss.clear();
+	return oss;
+}
+
 
 class GameListManager {
 public:
@@ -33,9 +49,12 @@ public:
 
 	/// Removes outdated games from the list.
 	void purgeGames() {
+		int removecount = 0;
 		for (protocol::GameList::iterator it = m_games.begin(); it != m_games.end(); ++it) {
 			// TODO: Implement
 		}
+		if (removecount > 0)
+			out(VERBOSE) << "Removed " << removecount << " games due to time out." << std::endl;
 	}
 
 private:
@@ -46,19 +65,20 @@ private:
 
 class Server: public net::NetworkListener {
 public:
-	Server(GameListManager& glm, int port = protocol::DEFAULT_PORT): m_client(*this, port), m_glm(glm)
+	Server(GameListManager& glm, int port = protocol::DEFAULT_PORT)
+		: m_client(*this, port), m_glm(glm)
 	{
-		std::cout << "Listening on port " << port << "..." << std::endl;
+		out(NORMAL) << "Listening on port " << port << "..." << std::endl;
 	}
 
 	void connectionEvent(net::NetworkTraffic const& e)
 	{
-		std::cout << "Connection id=" << e.peer_id << std::endl;
+		out(VERBOSE) << "Connection id=" << e.peer_id << std::endl;
 	}
 
 	void disconnectEvent(net::NetworkTraffic const& e)
 	{
-		std::cout << "Disconnected id=" << e.peer_id << std::endl;
+		out(VERBOSE) << "Disconnected id=" << e.peer_id << std::endl;
 	}
 
 	void receiveEvent(net::NetworkTraffic const& e)
@@ -66,7 +86,7 @@ public:
 		if (e.packet_length <= 0 || !e.packet_data) return;
 		switch (e.packet_data[0]) {
 			case protocol::GAME_LIST: {
-				std::cout << "Game list request received." << std::endl;
+				out(VERBOSE) << "Game list request received" << std::endl;
 				protocol::GameList games = m_glm.getGames();
 				for (protocol::GameList::const_iterator it = games.begin(); it != games.end(); ++it) {
 					m_client.send(e.peer_id, it->second, net::PACKET_RELIABLE);
@@ -77,9 +97,9 @@ public:
 				// Get peer struct
 				ENetPeer* peer = m_client.getPeerPtr(e.peer_id);
 				if (!peer) return;
-				std::cout << "Game update received." << std::endl;
 				// Unserialize
 				protocol::GameInfo game = *reinterpret_cast<const protocol::GameInfo*>(e.packet_data);
+				out(VERBOSE) << "Game update received for \"" << game.name << "\"" << std::endl;
 				// Fill in peer info
 				game.address = peer->address.host;
 				game.port = peer->address.port;
@@ -91,7 +111,7 @@ public:
 				break;
 			}
 			default: {
-				std::cout << "Unknown packet type received." << std::endl;
+				out(VERBOSE) << "Unknown packet type " << int(e.packet_data[0]) << " received" << std::endl;
 			}
 		}
 	}
@@ -118,6 +138,7 @@ int main(int argc, char** argv) {
 				<< "Available parameters:" << std::endl
 				<< "  -v, --version               print version number and exit" << std::endl
 				<< "  -h, --help                  this help" << std::endl
+				<< "  -V, --verbose               output more information, useful for testing" << std::endl
 #ifdef __linux
 				<< "  -d, --daemon                run in backround (i.e. daemonize)" << std::endl
 #endif
@@ -125,6 +146,8 @@ int main(int argc, char** argv) {
 				<< "                              default: " << protocol::DEFAULT_PORT << std::endl
 				;
 			return 0;
+		} else if (arg == "--verbose" || arg == "-V") {
+			g_loglevel = VERBOSE;
 #ifdef __linux
 		} else if (arg == "--daemon" || arg == "-d") {
 			daemonize = true;
@@ -133,7 +156,7 @@ int main(int argc, char** argv) {
 			port = atoi(argv[i+1]);
 			++i;
 		} else {
-			std::cout << "Invalid argument " << arg << std::endl;
+			out(ERROR) << "Invalid argument " << arg << std::endl;
 			return -1;
 		}
 	}
@@ -142,19 +165,26 @@ int main(int argc, char** argv) {
 	// Daemonization
 	if (daemonize) {
 		if (daemon(1, 0)) { // keep working dir, close streams
-			std::cout << "Daemonization failed." << std::endl;
+			out(ERROR) << "Daemonization failed" << std::endl;
 			return EXIT_FAILURE;
 		}
 	}
 #endif
 
-	GameListManager games;
-	Server server(games, port);
+	out(VERBOSE) << "Verbose mode" << std::endl;
 
-	while (true) {
-		// Periodically remove zombie games
-		boost::this_thread::sleep(boost::posix_time::milliseconds(7000));
-		games.purgeGames();
+	try {
+		GameListManager games;
+		Server server(games, port);
+
+		while (true) {
+			// Periodically remove zombie games
+			boost::this_thread::sleep(boost::posix_time::milliseconds(7000));
+			games.purgeGames();
+		}
+	} catch (const std::exception& e) {
+		out(ERROR) << e.what() << std::endl;
+		return EXIT_FAILURE;
 	}
 
 	return EXIT_SUCCESS;
