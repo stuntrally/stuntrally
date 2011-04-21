@@ -201,22 +201,7 @@ bool BaseApp::configure()
 
 		mWindow = mRoot->createRenderWindow("SR Editor", pSet->windowx, pSet->windowy, pSet->fullscreen, &settings);
 	}
-	// Create font
-	// create a font resource
-	FontPtr font = Ogre::FontManager::getSingleton().create("Vrinda","General");
-	// set as truetype
 
-	font->setParameter("type","truetype");
-	// set the .ttf file name
-	font->setParameter("source","Vrinda.ttf");
-	// set the size
-	font->setParameter("size","51");
-	// set the dpi
-	font->setParameter("resolution","96");
-	font->addCodePointRange(std::make_pair(0, 255));
-
-	// load the ttf
-	font->load();
 	return true;
 }
 
