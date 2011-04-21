@@ -278,6 +278,7 @@ bool BaseApp::configure()
 
 		mWindow = mRoot->createRenderWindow("Stunt Rally", pSet->windowx, pSet->windowy, pSet->fullscreen, &settings);
 	}
+	
 	mLoadingBar.bBackgroundImage = pSet->loadingbackground;
 	return true;
 }
