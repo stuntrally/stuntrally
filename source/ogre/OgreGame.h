@@ -42,6 +42,8 @@ public:
 	Scene sc;  /// scene.xml
 	BltObjects objs;  // veget collision in bullet
 	Light* sun;  void UpdFog(bool bForce=false), UpdSun();
+	
+	void UpdateHUD(class CAR* pCar, float time);
 
 protected:
 	virtual void createScene();
@@ -88,7 +90,7 @@ protected:
 	Overlay* ovGear,*ovVel, *ovAbsTcs,*ovCarDbg,*ovCarDbgTxt,  *ovCam, *ovTimes;
 
 	String GetTimeString(float time) const;
-	void CreateHUD(), SizeHUD(bool full), ShowHUD(bool hideAll=false), UpdateHUD(class CAR* pCar, float time);
+	void CreateHUD(), SizeHUD(bool full), ShowHUD(bool hideAll=false);
 
 
 	//  create  . . . . . . . . . . . . . . . . . . . . . . . . 

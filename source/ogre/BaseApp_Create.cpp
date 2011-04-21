@@ -105,7 +105,7 @@ void BaseApp::refreshCompositor()
 }
 
 //-------------------------------------------------------------------------------------
-void BaseApp::createCompositor()
+void BaseApp::recreateCompositor()
 {
 	// hdr has to be first in the compositor queue
 	mHDRLogic = new HDRLogic;
@@ -200,7 +200,7 @@ void BaseApp::Run( bool showDialog )
 	if (!setup())
 		return;
 
-	createCompositor();
+	recreateCompositor();
 
 	mRoot->startRendering();
 
@@ -358,7 +358,17 @@ bool BaseApp::setup()
 	mGUI = new MyGUI::Gui();
 	mGUI->initialise("core.xml", PATHMANAGER::GetLogDir() + "/MyGUI.log");
 	MyGUI::LanguageManager::getInstance().setCurrentLanguage(getSystemLanguage());
-
+	
+	// GUI Viewport
+	Ogre::SceneManager* guiSceneMgr = mRoot->createSceneManager(ST_GENERIC);
+	Ogre::Camera* guiCam = guiSceneMgr->createCamera("GuiCam1");
+	Ogre::Viewport* guiVp = mWindow->addViewport(guiCam, 100);
+	// transparent
+	guiVp->setBackgroundColour(Ogre::ColourValue(0.0, 0.0, 0.0, 0.0));
+	guiVp->setClearEveryFrame(true, FBT_DEPTH);
+	mPlatform->getRenderManagerPtr()->setSceneManager(guiSceneMgr);
+	mPlatform->getRenderManagerPtr()->setActiveViewport(1);
+	
 	// After having initialised mygui, we can set translated strings
 	setTranslations();
 

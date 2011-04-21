@@ -1,5 +1,7 @@
 #include "stdafx.h"
 #include "SplitScreenManager.h"
+#include "OgreGame.h"
+#include "CarModel.h"
 
 SplitScreenManager::SplitScreenManager(Ogre::SceneManager* sceneMgr, Ogre::SceneManager* guiSceneMgr, Ogre::RenderWindow* window)
 {
@@ -14,7 +16,10 @@ void SplitScreenManager::Align()
 {
 	// Cleanup old
 	// Viewports
-	mWindow->removeAllViewports();
+	for (std::list<Ogre::Viewport*>::iterator vpIt=mViewports.begin(); vpIt != mViewports.end(); vpIt++)
+	{
+		mWindow->removeViewport( (*vpIt)->getZOrder() );
+	}
 	mViewports.clear();
 	// Cameras
 	for (std::list<Ogre::Camera*>::iterator it=mCameras.begin(); it != mCameras.end(); it++)
@@ -36,8 +41,42 @@ void SplitScreenManager::Align()
 		// Create viewport
 		// use i as Z order
 		mViewports.push_back(mWindow->addViewport( *(--mCameras.end()), i));
+		
+		/// TODO dimensions
+	}
+}
+void SplitScreenManager::preRenderTargetUpdate(const Ogre::RenderTargetEvent& evt)
+{
+	// get number of viewport
+	int i=0;
+	std::list<Ogre::Viewport*>::iterator vpIt = mViewports.begin();
+	while (evt.source != (*vpIt)->getTarget() )
+	{
+		vpIt++;
+		i++;
+		if (vpIt == mViewports.end()) return;
+	}
+	// get car for this viewport
+	std::list<CarModel*>::iterator carIt = pApp->carModels.begin();
+	int j=0;
+	while (j <= i)
+	{
+		if ((*carIt)->eType == CarModel::CT_REMOTE)
+			j--;
+		else
+		{
+			if (j == i)
+				break;
+		}
+		j++;
+		carIt++;
+		if (carIt == pApp->carModels.end()) return;
 	}
 	
-	// Create gui viewport
-	/// TODO
+	// Update HUD for this car
+	if ((*carIt)->pCar)
+		pApp->UpdateHUD( (*carIt)->pCar, 1.0f / evt.source->getLastFPS() );
+}
+void SplitScreenManager::postRenderTargetUpdate(const Ogre::RenderTargetEvent& evt)
+{
 }
