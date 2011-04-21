@@ -437,4 +437,4 @@ void App::updatePoses(float time)
 			int v = pos/len * res;  slRplPos->setScrollPosition(v);
 		}
 	}	
-}
+	}
