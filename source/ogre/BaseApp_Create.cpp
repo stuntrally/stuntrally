@@ -4,6 +4,7 @@
 #include "../vdrift/pathmanager.h"
 #include "CompositorLogics.h"
 #include "Locale.h"
+#include "OgreFontManager.h"
 
 //  Camera
 //-------------------------------------------------------------------------------------
@@ -104,7 +105,7 @@ void BaseApp::refreshCompositor()
 }
 
 //-------------------------------------------------------------------------------------
-void BaseApp::createCompositor()
+void BaseApp::recreateCompositor()
 {
 	// hdr has to be first in the compositor queue
 	mHDRLogic = new HDRLogic;
@@ -193,13 +194,13 @@ void BaseApp::createCompositor()
 
 //  Run
 //-------------------------------------------------------------------------------------
-void BaseApp::Run( bool showDialolg )
+void BaseApp::Run( bool showDialog )
 {
-	mShowDialog = showDialolg;
+	mShowDialog = showDialog;
 	if (!setup())
 		return;
 
-	createCompositor();
+	recreateCompositor();
 
 	mRoot->startRendering();
 
@@ -212,10 +213,10 @@ BaseApp::BaseApp() :
 	mRoot(0), mCamera(0), mSceneMgr(0), mWindow(0), mViewport(0), mHDRLogic(0),
 	mShowDialog(1), mShutDown(false),
 	mInputManager(0), mMouse(0), mKeyboard(0),
-	alt(0), ctrl(0), shift(0), mFCam(0), roadUpCnt(0),
+	alt(0), ctrl(0), shift(0), roadUpCnt(0),
 	mbLeft(0), mbRight(0), mbMiddle(0), 
 	isFocGui(0), mGUI(0), mPlatform(0),
-	mWndOpts(0), mWndTabs(0), mWndRpl(0), bSizeHUD(true),
+	mWndOpts(0), mWndTabs(0), mWndRpl(0), bSizeHUD(true), bLoading(false),
 
 	mDebugOverlay(0), mFpsOverlay(0), mOvrFps(0), mOvrTris(0), mOvrBat(0), mOvrDbg(0),
 	mbShowCamPos(0), ndSky(0),	mbWireFrame(0) //*
@@ -228,8 +229,6 @@ BaseApp::~BaseApp()
 		mGUI->shutdown();	delete mGUI;	mGUI = 0;  }
 	if (mPlatform)  {
 		mPlatform->shutdown();	delete mPlatform;	mPlatform = 0;  }
-
-	delete mFCam;  mFCam = 0;
 
 	WindowEventUtilities::removeWindowEventListener(mWindow, this);
 	windowClosed(mWindow);
@@ -279,6 +278,7 @@ bool BaseApp::configure()
 
 		mWindow = mRoot->createRenderWindow("Stunt Rally", pSet->windowx, pSet->windowy, pSet->fullscreen, &settings);
 	}
+	
 	mLoadingBar.bBackgroundImage = pSet->loadingbackground;
 	return true;
 }
@@ -343,7 +343,17 @@ bool BaseApp::setup()
 	mGUI = new MyGUI::Gui();
 	mGUI->initialise("core.xml", PATHMANAGER::GetLogDir() + "/MyGUI.log");
 	MyGUI::LanguageManager::getInstance().setCurrentLanguage(getSystemLanguage());
-
+	
+	// GUI Viewport
+	Ogre::SceneManager* guiSceneMgr = mRoot->createSceneManager(ST_GENERIC);
+	Ogre::Camera* guiCam = guiSceneMgr->createCamera("GuiCam1");
+	Ogre::Viewport* guiVp = mWindow->addViewport(guiCam, 100);
+	// transparent
+	guiVp->setBackgroundColour(Ogre::ColourValue(0.0, 0.0, 0.0, 0.0));
+	guiVp->setClearEveryFrame(true, FBT_DEPTH);
+	mPlatform->getRenderManagerPtr()->setSceneManager(guiSceneMgr);
+	mPlatform->getRenderManagerPtr()->setActiveViewport(1);
+	
 	// After having initialised mygui, we can set translated strings
 	setTranslations();
 
@@ -443,9 +453,12 @@ bool BaseApp::mouseMoved( const OIS::MouseEvent &arg )
 		return true;  }
 
 	///  Follow Camera Controls
-	if (mFCam)
-		mFCam->Move( mbLeft, mbRight, mbMiddle, shift,
-			arg.state.X.rel, arg.state.Y.rel, arg.state.Z.rel );
+	// -for all cars
+	for (std::list<CarModel*>::iterator it=carModels.begin(); it!=carModels.end(); it++)
+	{
+		if ((*it)->fCam)
+			(*it)->fCam->Move( mbLeft, mbRight, mbMiddle, shift, arg.state.X.rel, arg.state.Y.rel, arg.state.Z.rel );
+	}
 
 	return true;
 }

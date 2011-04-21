@@ -5,6 +5,8 @@
 #include <OIS/OIS.h>
 #include <MyGUI.h>
 #include <MyGUI_OgrePlatform.h>
+#include "CarModel.h"
+#include "SplitScreenManager.h"
 using namespace Ogre;
 
 
@@ -14,11 +16,18 @@ class BaseApp :
 {
 public:
 	BaseApp();	virtual ~BaseApp();
-	virtual void Run( bool showDialolg );
+	virtual void Run( bool showDialog );
+	
+	bool bLoading;
+	
+	// has to be in baseApp to switch camera on C press
+	std::list<CarModel*> carModels;
 	
 	// translation
 	// can't have it in c'tor, because mygui is not initialized
 	virtual void setTranslations() = 0;
+	
+	SplitScreenManager* mSplitMgr;
 	
 	bool bWindowResized;  bool bSizeHUD;
 	class HDRLogic* mHDRLogic;
@@ -26,7 +35,6 @@ public:
 	class SETTINGS* pSet;
 
 	SceneNode* ndSky; //-
-	class FollowCamera* mFCam;  // cam+
 	int roadUpCnt;
 	Camera* GetCamera()  {  return mCamera;  }
 	LoadingBar mLoadingBar;
@@ -39,7 +47,7 @@ protected:
 	virtual void createScene() = 0;
 	virtual void destroyScene();
 
-	void createCamera(), createFrameListener(), createViewports(), createCompositor(), refreshCompositor();
+	void createCamera(), createFrameListener(), createViewports(), recreateCompositor(), refreshCompositor();
 	void setupResources(), createResourceListener(), loadResources();
 	void LoadingOn(), LoadingOff();
 

@@ -103,6 +103,7 @@ void LoadingBar::resourceGroupScriptingEnded(const String& groupName)
 void LoadingBar::scriptParseStarted(const String& scriptName, bool& skipThisScript)
 {
 	mLoadingCommentElement->setCaption(scriptName);
+	mLoadingDescriptionElement->setCaption(String(TR("#{LoadingDesc}")));
 	mWindow->update();
 }
 

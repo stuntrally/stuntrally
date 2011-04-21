@@ -5898,7 +5898,19 @@
 				Name="Scene"
 				>
 				<File
-					RelativePath=".\Source\ogre\Reflect.cpp"
+					RelativePath=".\source\ogre\CarModel.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\source\ogre\CarModel.h"
+					>
+				</File>
+				<File
+					RelativePath=".\source\ogre\CarReflection.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\source\ogre\CarReflection.h"
 					>
 				</File>
 				<File
@@ -5907,10 +5919,6 @@
 				</File>
 				<File
 					RelativePath=".\source\ogre\ReplayGame.h"
-					>
-				</File>
-				<File
-					RelativePath=".\Source\ogre\SceneCar.cpp"
 					>
 				</File>
 				<File

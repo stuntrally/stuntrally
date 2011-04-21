@@ -4,24 +4,8 @@
 #include "OgreApp.h" //
 #include "../vdrift/pathmanager.h"
 #include "../ogre/Locale.h"
+#include "OgreFontManager.h"
 
-/*
- * old - win only
- * DWORD WINAPI TimThread(LPVOID lpParam)
-{ 
-	BaseApp* pA = (BaseApp*)lpParam;
-	while (!pA->mShutDown)
-	{
-		if (pA->timer.update())
-			pA->OnTimer(pA->timer.dt);
-		Sleep(pA->timer.iv * 1000.0);  //0-
-	}
-    return 0;
-}*/
-
-/*
- * boost
- */
 void TimThread(BaseApp* pA)
 {
 	while (pA->inputThreadRunning)
@@ -107,28 +91,24 @@ void BaseApp::createFrameListener()
 
 	///  timer thread - input, camera
 	/**/timer.iv = 0.005;  ///par 
-	/*old win thread*///hpr = CreateThread(NULL,0,TimThread,(LPVOID)this,0,NULL);
 	boost::thread t(TimThread, this);
 
 }
 
 void BaseApp::destroyScene()
 {
-/* old win thread
- *	TerminateThread(hpr, 1);
- */
 }
 
 //  Run
 //-------------------------------------------------------------------------------------
-void BaseApp::Run( bool showDialolg )
+void BaseApp::Run( bool showDialog )
 {
 #if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
 	ShowCursor(0);
 	SetCursor(0);
 #endif
 
-	mShowDialog = showDialolg;
+	mShowDialog = showDialog;
 	if (!setup())
 		return;
 
@@ -221,6 +201,7 @@ bool BaseApp::configure()
 
 		mWindow = mRoot->createRenderWindow("SR Editor", pSet->windowx, pSet->windowy, pSet->fullscreen, &settings);
 	}
+
 	return true;
 }
 

@@ -7,17 +7,27 @@
  * or no cube map at all (static map loaded from file)
  */
 
+#ifndef _CarReflection_H_
+#define _CarReflection_H_
+
 #include "../vdrift/settings.h"
-#include "OgreGame.h"
+#include "Ogre.h"
+using namespace Ogre;
+
+const int ciShadowNumSizes = 4;
+const int ciShadowSizesA[ciShadowNumSizes] = {512,1024,2048,4096};
 
 class CarReflection
 {
 public:
-	// Constructor, creates texture and intializes the camera and render targets.
+	// Constructor, assign members.
 	CarReflection(SETTINGS* set, Ogre::SceneManager* sceneMgr, unsigned int index);
 	
 	// Destructor, will delete the texture, and cameras / render targets.
 	~CarReflection();
+	
+	// Creates texture and intializes the camera and render targets.
+	void Create();
 
 	// Since we support a "Skip frames" feature to increase performance,
 	// we have to update the render targets manually.
@@ -26,6 +36,14 @@ public:
 	
 	// Position of the cameras; will be set by CarModel::Update
 	Ogre::Vector3 camPosition;
+	
+	// Names of the materials, with index
+	// In c'tor we will iterate through these and replace occurrences of ReflectionCube with ReflectionCube<Index> e.g. ReflectionCube0
+	enum eMaterials {
+		Mtr_CarBody, Mtr_CarInterior, Mtr_CarGlass,
+		Mtr_CarTireFront, Mtr_CarTireRear,
+		NumMaterials  };
+	std::string sMtr[NumMaterials];
 
 private:
 	// SceneManager to use, needed to create refl. cameras.
@@ -34,6 +52,7 @@ private:
 	// Pointer to the cubemap texture.
 	// if all cars use the same cube map, this is a pointer to the first texture.
 	Ogre::TexturePtr cubetex;
+	std::string cubetexName;
 		
 	// RTT cameras.
 	// can be null, if static cube maps or only 1 cube map.
@@ -63,3 +82,5 @@ private:
 	// Settings, needed to get the user settings for cube maps
 	SETTINGS* pSet;
 };
+
+#endif

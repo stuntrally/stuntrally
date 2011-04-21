@@ -58,13 +58,13 @@ void GAME::Start(std::list <string> & args)
 		ff_update_time = 0;
 	#endif
 
-	if (benchmode)
+	/*if (benchmode)
 	{
 		if(!NewGame(true))
 		{
 			error_output << "Error loading benchmark" << endl;
 		}
-	}
+	}*/
 }
 
 bool GAME::InitializeSound()
@@ -328,11 +328,20 @@ void GAME::Tick(float deltat)
 
 			if (settings->mult_thr != 1)  // == 0
 			{	//  single thread
-				pOgreGame->updatePoses(/*framerate*/deltat);
-				if (!pause && pOgreGame->mFCam)
-				pOgreGame->mFCam->update(framerate/*-deltat*/);
-			if (pOgreGame->ndSky)  ///o-
-				pOgreGame->ndSky->setPosition(pOgreGame->GetCamera()->getPosition());
+				pOgreGame->updatePoses(deltat);
+				
+				/// update all cameras
+				if (!pause && pOgreGame->carModels.size() > 0)
+				{
+					for (std::list<CarModel*>::iterator it = pOgreGame->carModels.begin(); it != pOgreGame->carModels.end(); it++)
+					{
+						if ((*it)->fCam)
+							(*it)->fCam->update(framerate);
+					}
+				}
+				
+				if (pOgreGame->ndSky)  ///o-
+					pOgreGame->ndSky->setPosition(pOgreGame->GetCamera()->getPosition());
 			}
 		}
 		curticks++;
@@ -502,12 +511,12 @@ void GAME::UpdateTimer()
 ///check eventsystem state and make updates to the GUI
 void GAME::ProcessGUIInputs()
 {
-	if (eventsystem.GetKeyState(SDLK_ESCAPE).just_down &&
+	/*if (eventsystem.GetKeyState(SDLK_ESCAPE).just_down &&
 		!eventsystem.GetKeyState(SDLK_LSHIFT).down)
-		eventsystem.Quit();  ///*
+		eventsystem.Quit();*/  ///*
 
-	if (eventsystem.GetKeyState(SDLK_F9).just_down)  // restart
-		NewGame();
+	//if (eventsystem.GetKeyState(SDLK_F9).just_down)  // restart
+		//NewGame();
 	
 	//..
 }
@@ -543,8 +552,9 @@ void GAME::UpdateCarInputs(CAR & car)
 	}
 	else
 	{
-	    carinputs = ai.GetInputs(&car);
-		assert(carinputs.size() == CARINPUT::INVALID);
+		/// TODO input for cars other than last car?
+	    //carinputs = ai.GetInputs(&car);
+		//assert(carinputs.size() == CARINPUT::INVALID);
 	}
 
 	//force brake and clutch during staging and once the race is over
@@ -603,88 +613,30 @@ void GAME::UpdateCarInputs(CAR & car)
 	}
 }
 
-///start a new game.  LeaveGame() is called first thing, which should take care of clearing out all current data.
-bool GAME::NewGame(bool playreplay, bool addopponents, int num_laps)
+bool GAME::NewGameDoCleanup()
 {
 	LeaveGame(); //this should clear out all data
-
-	if (playreplay)
-	{
-		std::stringstream replayfilenamestream;
-
-		if(benchmode)
-			replayfilenamestream << PATHMANAGER::GetReplayPath() << "/benchmark.vdr";
-		else
-			replayfilenamestream << PATHMANAGER::GetReplayPath() << "/" << settings->selected_replay << ".vdr";
-
-		string replayfilename = replayfilenamestream.str();
-		info_output << "Loading replay file " << replayfilename << endl;
-		if (!replay.StartPlaying(replayfilename, error_output))
-			return false;
-	}
-
+	return true;
+}
+bool GAME::NewGameDoLoadTrack()
+{
 	//set the track name
 	string trackname;
-	if (playreplay)
-	{
-		trackname = replay.GetTrack();
-	}
-	else
-		trackname = settings->track;
 
-	if (!LoadTrack(trackname))
+	if (!LoadTrack(settings->track))
 	{
-		error_output << "Error during track loading: " << trackname << endl;
+		error_output << "Error during track loading: " << settings->track << endl;
 		//return false;
 	}/*-*/
+	return true;
+}
+bool GAME::NewGameDoLoadMisc()
+{
+    //race_laps = num_laps;
+    ///-----
+    race_laps = 0;
 
-	//set the car name
-	string carname;
-	if (playreplay)
-		carname = replay.GetCarType();
-	else
-		carname = settings->car;
-
-	//set the car paint
-	/*string carpaint("00");
-	if (playreplay)
-		carpaint = replay.GetCarPaint();
-	else
-		carpaint = settings->carpaint;
-	/**/
-
-	//load the local player's car
-	//cout << "About to load car..." << endl;
-	if (playreplay)
-	{
-		if (!LoadCar(carname, track.GetStart(0).first, track.GetStart(0).second, true, false, replay.GetCarFile()))
-			return false;
-	}else{
-		//cout << "Not playing replay..." << endl;
-		if (!LoadCar(carname, track.GetStart(0).first, track.GetStart(0).second, true, false))
-			return false;
-		//cout << "Loaded car successfully" << endl;
-	}
-	//cout << "After load car: " << carcontrols_local.first << endl;
-
-    race_laps = num_laps;
-
-	//load AI cars
-	/*if (addopponents)
-	{
-		int carcount = 1;
-		for (std::vector <std::pair<std::string, std::string> >::iterator i = opponents.begin(); i != opponents.end(); ++i)
-		{
-			//int startplace = std::min(carcount, track.GetNumStartPositions()-1);
-			int startplace = carcount;
-			if (!LoadCar(i->first, i->second, track.GetStart(startplace).first, track.GetStart(startplace).second, false, true))
-				return false;
-			ai.add_car(&cars.back(), settings->ai_difficulty);
-			carcount++;
-		}
-	}
-	else/**/
-		opponents.clear();
+	opponents.clear();
 
 	//send car sounds to the sound subsystem
 	for (std::list <CAR>::iterator i = cars.begin(); i != cars.end(); ++i)
@@ -699,9 +651,9 @@ bool GAME::NewGame(bool playreplay, bool addopponents, int num_laps)
 
 	//load the timer
 	float pretime = 0.0f;
-	if (num_laps > 0)
+	if (race_laps > 0)
         pretime = 3.0f;
-	if (!timer.Load(PATHMANAGER::GetTrackRecordsPath()+"/"+trackname+".txt", pretime, error_output))
+	if (!timer.Load(PATHMANAGER::GetTrackRecordsPath()+"/"+settings->track+".txt", pretime, error_output))
 		return false;
 
 	//add cars to the timer system
@@ -714,22 +666,8 @@ bool GAME::NewGame(bool playreplay, bool addopponents, int num_laps)
 		count++;
 	}
 
-	//if (settings->mousegrab)
-	//	eventsystem.SetMouseCursorVisibility(false);
-
-	//record a replay
-	/*if (settings->recordreplay && !playreplay)
-	{
-		assert(carcontrols_local.first);
-
-		replay.StartRecording(carcontrols_local.first->GetCarType(), settings->carpaint,
-			PATHMANAGER::GetCarPath()+"/"+carcontrols_local.first->GetCarType()+"/"+carcontrols_local.first->GetCarType()+".car",
-			settings->track, error_output);
-	}/**/
-
 	return true;
 }
-
 std::string GAME::GetReplayRecordingFilename()
 {
 	//determine replay filename
@@ -794,20 +732,20 @@ void GAME::LeaveGame()
 }
 
 ///add a car, optionally controlled by the local player
-bool GAME::LoadCar(const std::string & carname, const MATHVECTOR <float, 3> & start_position,
+CAR* GAME::LoadCar(const std::string & carname, const MATHVECTOR <float, 3> & start_position,
 		   const QUATERNION <float> & start_orientation, bool islocal, bool isai, const string & carfile)
 {
 	CONFIGFILE carconf;
 	if (carfile.empty()) //if no file is passed in, then load it from disk
 	{
 		if ( !carconf.Load ( PATHMANAGER::GetCarPath()+"/"+carname+"/"+carname+".car" ) )
-			return false;
+			return NULL;
 	}
 	else
 	{
 		std::stringstream carstream(carfile);
 		if ( !carconf.Load ( carstream ) )
-			return false;
+			return NULL;
 	}
 
 	cars.push_back(CAR());
@@ -827,7 +765,7 @@ bool GAME::LoadCar(const std::string & carname, const MATHVECTOR <float, 3> & st
 	{
 		error_output << "Error loading car: " << carname << endl;
 		cars.pop_back();
-		return false;
+		return NULL;
 	}
 	else
 	{
@@ -846,7 +784,7 @@ bool GAME::LoadCar(const std::string & carname, const MATHVECTOR <float, 3> & st
 		}
 	}
 	
-	return true;
+	return &cars.back();
 }
 
 bool GAME::LoadTrack(const std::string & trackname)

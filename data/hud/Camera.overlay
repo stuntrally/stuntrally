@@ -17,7 +17,7 @@ Car/CameraOverlay
 			top 0.002
 			width 0.09
 			height 0.021
-			font_name Vrinda
+			font_name Vera
 			char_height 0.02
 			caption Camera
 			colour_top    0.4 0.7 0.7
@@ -42,7 +42,7 @@ Car/CameraOverlay
 			top 0.0016
 			width 0.43
 			height 0.022
-			font_name Vrinda
+			font_name Vera
 			char_height 0.02
 			caption Camera Info
 			colour_top    0.4 0.7 0.5

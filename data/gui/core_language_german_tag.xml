@@ -1,14 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <MyGUI>
-	<Tag name="TBTime">Zeit</Tag>
-	<Tag name="TBLast">Letzte</Tag>
-	<Tag name="TBBest">Beste</Tag>
 	<Tag name="TipTreeDens">Wie viele Modelle (Bäume, Steine, etc.) auf der Strecke sichtbar sind.</Tag>
 	<Tag name="CamSpeed">Kamerageschw.</Tag>
 	<Tag name="InputRoadModify">Bearbeiten</Tag>
 	<Tag name="TipGrassSwayDistr">Grasschwingungsverteilung (wie zufällig)</Tag>
 	<Tag name="InputStartMeet">car will meet (next+ / prev-) point numbers</Tag>
 	<Tag name="TipAutoGearbox">Für manuelle Schaltung den Haken rausnehmen.</Tag>
+	<Tag name="LS_MISC">Abschließen</Tag>
 	<Tag name="AndUsing">benutzt</Tag>
 	<Tag name="ColumnRadius">Säulenradius</Tag>
 	<Tag name="UnitKmh">km/h</Tag>
@@ -17,12 +15,15 @@
 	<Tag name="Sky">Himmel</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 	<Tag name="TerNormal">Normale</Tag>
+	<Tag name="LS_TRACK">Lade Strecke</Tag>
 	<Tag name="NeedNewGame">* neues Spiel erforderlich</Tag>
 	<Tag name="GameVersion">1.1</Tag>
 	<Tag name="TipTrackImg">Bildschirmfoto der ausgewählten Strecke.</Tag>
 	<Tag name="InputValueChange">Jede Bewegung/Werteveränderung mit </Tag>
 	<Tag name="InputRoadMat">-,= - Straßen-/Röhrenmaterial</Tag>
 	<Tag name="Surface">Oberfläche</Tag>
+	<Tag name="TBScore">Punkte</Tag>
+	<Tag name="LS_TER">Lade Terrain</Tag>
 	<Tag name="InputNextTab">F2,F3 - vorheriger/nächster Tab</Tag>
 	<Tag name="InputBrake">Leer - Handbremse</Tag>
 	<Tag name="TipPrevWind">Vorschau-Kamerafenster.</Tag>
@@ -43,9 +44,10 @@
 	<Tag name="RoadParams">Straßeneigenschaften</Tag>
 	<Tag name="Light">Licht</Tag>
 	<Tag name="DistToRoad">Abstand zur Straße</Tag>
+	<Tag name="TBLast">Letzte</Tag>
 	<Tag name="TipRollDrag">Reifenwiderstand, größerer Wert bremst diese stärker ab (z.B. 140 für Schnee, 80 für Gras)</Tag>
 	<Tag name="TipTrackList">Streckenauswahl - klicken, um auswählen; Enter, um darauf zu fahren. (oder [Strecke wechseln] und dann [Neues Spiel])</Tag>
-	<Tag name="Back">Zurück</Tag>
+	<Tag name="Back">Hinten</Tag>
 	<Tag name="TipDiffusePrev">Vorschaubild der Textur.</Tag>
 	<Tag name="smoke">Rauch</Tag>
 	<Tag name="TipChangeCar">Aktives Auto wechseln, drücke [Neues Spiel] um ein neues Spiel mit dem aktiven Auto zu starten.</Tag>
@@ -65,18 +67,18 @@
 	<Tag name="Count">Anzahl</Tag>
 	<Tag name="UnitKm">km</Tag>
 	<Tag name="InputRoadHeight">- Größe ändern</Tag>
-	<Tag name="TipSurfFrict">Oberflächenreibung (z.B. 1.0 Asphalt, 0.7 Kies, 0.5 Eis)</Tag>
+	<Tag name="BasedOn">basiert auf</Tag>
 	<Tag name="InputNextOptTab">F2,F3 - vorheriger/nächster Tab</Tag>
 	<Tag name="InputRoadChkRadius">K, L - Wegpunkt-Radius</Tag>
 	<Tag name="TipDustSize">Staubpartikelgröße.</Tag>
 	<Tag name="InputRoadInsAlt">Alt-Shift - am Anfang Alt-Strg - am Ende</Tag>
 	<Tag name="MyGUI_MessageBox_Abort">Abbrechen</Tag>
 	<Tag name="Video">Bildschirm</Tag>
-	<Tag name="ViewStart">Startansicht</Tag>
+	<Tag name="ViewStart">Ans. Start</Tag>
 	<Tag name="TipGrassDens">Hohes oder niedrige Anzahl von Gras auf dem Boden.</Tag>
 	<Tag name="Shadows">Schatten</Tag>
 	<Tag name="TipToggleLayer">Ausgewählten Textur-Layer aktivieren / deaktivieren.</Tag>
-	<Tag name="ViewRight">Ansicht Rechts</Tag>
+	<Tag name="ViewRight">Ans. Rechts</Tag>
 	<Tag name="Wireframe">Drahtgitter</Tag>
 	<Tag name="ChangeTrack">Strecke wechseln</Tag>
 	<Tag name="Density">Dichte</Tag>
@@ -86,7 +88,7 @@
 	<Tag name="SetCamTo">Kamera setzen</Tag>
 	<Tag name="max">max</Tag>
 	<Tag name="TipTerTriSize">Triangle-Größe des Terrains (in Metern) - empfohlen: 1-2, größerer Wert für größere Fläche). Anwenden durch Aktualisierung (F8).</Tag>
-	<Tag name="InputNextCam">X, C oder BildAuf, BildAb - vorherige/nächste Kamera</Tag>
+	<Tag name="InputNextCam">X, C oder BildAuf, BildAb - Kamera vor/zurück</Tag>
 	<Tag name="ABS">ABS (Antiblockiersystem)</Tag>
 	<Tag name="TipCarsList">Autoauswahl, klicken um Vorschau zu sehen. [Auto wechseln] drücken und dann [Neues Spiel].</Tag>
 	<Tag name="MyGUI_MessageBox_Ignore">Ignorieren</Tag>
@@ -102,7 +104,7 @@
 	<Tag name="InputRoadSel">Backspace - zu Auswahl hinzufügen/entfernen</Tag>
 	<Tag name="Weather">Wetter</Tag>
 	<Tag name="wind">Wind</Tag>
-	<Tag name="TipRoadStats">Statistiken der Straße.</Tag>
+	<Tag name="LS_CAR">Lade Auto</Tag>
 	<Tag name="InputRestart">F5 - Spiel neu starten</Tag>
 	<Tag name="MaxScale">max. Skal.</Tag>
 	<Tag name="TipModelMaxScale">Maximale Skalierung des Modells.</Tag>
@@ -117,12 +119,11 @@
 	<Tag name="Car">Auto</Tag>
 	<Tag name="TipSkyMats">Namen der Sky-Materialien (aus SkyDome.material)</Tag>
 	<Tag name="VolMaster">Master</Tag>
-	<Tag name="InputRoadCopySel">Strg-Einfg - Ausw. kopieren Strg-Entf - Ausw. löschen</Tag>
 	<Tag name="TipNewGame">Ein Spiel auf neuer Strecke starten oder auf der aktuellen Strecke neu starten.</Tag>
 	<Tag name="TipCopySource">Strecke als Kopierquelle für den [Werkzeuge] Tab auswählen.</Tag>
 	<Tag name="Layer">Layer</Tag>
 	<Tag name="EscQuit">Beenden mit Esc</Tag>
-	<Tag name="Gauges">Anzeigen (RPM, Geschw.)</Tag>
+	<Tag name="Gauges">Geschw./RPM Anzeigen</Tag>
 	<Tag name="LengthDim">Längen dim.</Tag>
 	<Tag name="Bloom">Überstrahlung</Tag>
 	<Tag name="TipRenameTrk">Ausgewählte Strecke umbenennen (zuerst Namen ändern)</Tag>
@@ -158,7 +159,7 @@
 	<Tag name="ColumnNSides">Säulen N sides</Tag>
 	<Tag name="Shaders">Shader</Tag>
 	<Tag name="Exponent">Exponent</Tag>
-	<Tag name="Yaw">Gierung</Tag>
+	<Tag name="Yaw">gieren</Tag>
 	<Tag name="Detail">Detail</Tag>
 	<Tag name="TriSize">Triangle-Größe</Tag>
 	<Tag name="Start">Start</Tag>
@@ -203,7 +204,7 @@
 	<Tag name="CarDebugText">Auto Debug text </Tag>
 	<Tag name="TipMudInt">Intensität der Schlammpartikel.</Tag>
 	<Tag name="Mode">Modus</Tag>
-	<Tag name="ChangeCar">Auto ändern</Tag>
+	<Tag name="ChangeCar">Auto wechseln</Tag>
 	<Tag name="FacesOnce">Seiten auf einmal</Tag>
 	<Tag name="InputTogglePreview">F7 - Vorschaukamera</Tag>
 	<Tag name="GameBy">ein Spiel von</Tag>
@@ -218,15 +219,17 @@
 	<Tag name="RoadMaterials">Straßenmaterialien</Tag>
 	<Tag name="Fullscreen">Vollbild</Tag>
 	<Tag name="BulletLines">Bullet Debug Linien</Tag>
-	<Tag name="TipGrassSwaySpd">Grasschwingung Geschw.</Tag>
+	<Tag name="TipChangeSat">Sättigung ändern</Tag>
 	<Tag name="TreeDens">Baumdichte</Tag>
+	<Tag name="WrongChk">Falscher Wegpunkt</Tag>
 	<Tag name="DisableEdit">Beim edit. deaktiveren</Tag>
 	<Tag name="TipAutoClutch">-Manuell nicht implementiert.</Tag>
 	<Tag name="MinimapUpdSkip">Minikarten-Update überspr.</Tag>
 	<Tag name="RoadDist2">Zusätzliche Distanz zur Straße.</Tag>
+	<Tag name="TipRoadStats">Statistiken der Straße.</Tag>
 	<Tag name="InputTerPaint">A - Anstrichtextur (Layer)</Tag>
 	<Tag name="TexCoordMul">Tex Coord mul.</Tag>
-	<Tag name="Digits">Ziffern (Gang, Geschwindigkeit)</Tag>
+	<Tag name="Digits">Ziffern (Gang, Geschw.)</Tag>
 	<Tag name="ShowPictures">Bilder beim Laden anzeigen</Tag>
 	<Tag name="TrackAvgSpeed">Avg. Geschw.</Tag>
 	<Tag name="InputShift">A,Z - Gang hoch, runter</Tag>
@@ -242,7 +245,7 @@
 	<Tag name="InputRoadMove">- Punkt bewegen</Tag>
 	<Tag name="Intensity">Intensität</Tag>
 	<Tag name="TipSunAmbient">Sonnenlicht Umgebungsfarbe (konstant). R G B Komponenten von 0 bis 1 (z.B. 0.4 0.4 0.4)</Tag>
-	<Tag name="ChngTrkTab">zu Ändern im [Strecke] Tab</Tag>
+	<Tag name="ChngTrkTab">ausw. im Tab [Strecke]</Tag>
 	<Tag name="TireTrails">Reifenspuren</Tag>
 	<Tag name="TipGrassSwayLen">Grasschwingungslänge (Skal.)</Tag>
 	<Tag name="intensity">Intensität</Tag>
@@ -261,6 +264,7 @@
 	<Tag name="TipTerWind">Terrain Pinsel-Fenster</Tag>
 	<Tag name="TipGrassVisDist">Sichtbarkeitsdistanz für Gras-Pages</Tag>
 	<Tag name="TipModelVisDist">Sichtbarkeitsdistanz für Modell-Pages</Tag>
+	<Tag name="Settings">Optionen</Tag>
 	<Tag name="InputRoadRMB">RMB (oder Num+,-)</Tag>
 	<Tag name="Anisotropy">Anisotropie</Tag>
 	<Tag name="InputToggleCam">Tab - Kamera/Edit-modus umsch.</Tag>
@@ -286,6 +290,7 @@
 	<Tag name="HeightmapSize">Heightmap-Größe</Tag>
 	<Tag name="InputCamControl2">LMB - drehen RMB - bewegen MMB - zoom</Tag>
 	<Tag name="SkirtHeight">Skirt-Höhe</Tag>
+	<Tag name="LS_CLEANUP">Aufräumen</Tag>
 	<Tag name="EnterSave">Enter - speichern</Tag>
 	<Tag name="TipBumpFreq">Frequenz zusätzlicher Unebenheiten der Oberfläche (Distanz zwischen diesen)</Tag>
 	<Tag name="InputRoadDel">Entf - ausgew. löschen</Tag>
@@ -293,6 +298,7 @@
 	<Tag name="InputToggleGUIMode">F1 - Optionsfenster anzeigen</Tag>
 	<Tag name="TipFogEndDist">Ausklangdistanz des Nebels (Meter)</Tag>
 	<Tag name="RoadPoint">Straßenpunkt</Tag>
+	<Tag name="LoadingDesc">Ladevorgang läuft, bitte warten ...</Tag>
 	<Tag name="TipGrassPatchHeightMax">Maximale Höhe des Grasflecks.</Tag>
 	<Tag name="Tires">Reifen</Tag>
 	<Tag name="LoadTrack">Strecke laden</Tag>
@@ -319,7 +325,7 @@
 	<Tag name="Copy">Kopieren</Tag>
 	<Tag name="InputStartLMB">LMB - bewegen RMB - Höhe</Tag>
 	<Tag name="TipWindInflL">Einfluss des Winds auf das Modell, Längenskalierung.</Tag>
-	<Tag name="CamInertia">Kameraträgheit</Tag>
+	<Tag name="InputRoadCopySel">Strg-Einfg - Ausw. kopieren Strg-Entf - Ausw. löschen</Tag>
 	<Tag name="Distance">Distanz</Tag>
 	<Tag name="About">Über</Tag>
 	<Tag name="TrackPipes">Röhren</Tag>
@@ -334,10 +340,11 @@
 	<Tag name="InputToggleVeget">V - Vegetation an/aus</Tag>
 	<Tag name="MyGUI_MessageBox_Continue">Fortsetzen</Tag>
 	<Tag name="Tools">Werkzeuge</Tag>
-	<Tag name="TipChangeSat">Sättigung ändern</Tag>
+	<Tag name="TipGrassSwaySpd">Grasschwingung Geschw.</Tag>
 	<Tag name="FrictionTread">ReibungsProfil</Tag>
-	<Tag name="TipTrkListEditor">Tracks list, click to select (for Rename or Duplicate). Press [Load track] to change current track in editor.</Tag>
+	<Tag name="TipTrkListEditor">Streckenliste, Klicken zum Auswählen (zum Umbenennen oder Duplizieren). [Strecke Laden] drücken um die Strecke im Editor zu öffnen.</Tag>
 	<Tag name="InputReadyToPlay">(bereit zum Fahren)</Tag>
+	<Tag name="CamInertia">Kameraträgheit</Tag>
 	<Tag name="TipTerSize">Resultierende Seitenlänge in Metern. Entspricht der Vertexanzahl multipliziert mit Triangle-Größe.</Tag>
 	<Tag name="speed">Geschw.</Tag>
 	<Tag name="InputRoadYaw">- gieren</Tag>
@@ -364,18 +371,19 @@
 	<Tag name="InputWheelPower">; &apos;  (or alt-Wheel)  -  Power (shape)</Tag>
 	<Tag name="InputHelp">Hilfe</Tag>
 	<Tag name="Sun">Sonne</Tag>
-	<Tag name="SpeedUnit">Geschwindigkeitseinheit</Tag>
+	<Tag name="LS_SCENE">Lade Szene</Tag>
 	<Tag name="OgreDialog">Ogre-Dialog anzeigen</Tag>
 	<Tag name="Editor">Editor</Tag>
-	<Tag name="AndContributors">und Mitwirkende.</Tag>
+	<Tag name="AndContributors">und Mitwirkenden.</Tag>
 	<Tag name="InputRoadSelectMany">Auswahl (viele)</Tag>
 	<Tag name="scale">Skalieren</Tag>
-	<Tag name="AutoClutch">Auto Kupplung-</Tag>
-	<Tag name="ColHue">Farbe - Ton</Tag>
-	<Tag name="TipLoadTrkEditor">Andere Strecke laden oder aktuelle Strecke neu Laden.</Tag>
+	<Tag name="AutoClutch">Autom. Kupplung-</Tag>
+	<Tag name="ColHue">Farbton</Tag>
+	<Tag name="TBTime">Zeit</Tag>
 	<Tag name="InputRoadAltLMB">Alt-LMB (oder 1,2)</Tag>
 	<Tag name="TipModelPrev">Vorschaubild des Modells.</Tag>
 	<Tag name="InputRoadEdit">R - Straße editieren</Tag>
+	<Tag name="TBBest">Beste</Tag>
 	<Tag name="RestartApply">Spiel neustarten, um *Änderungen anzuwenden.</Tag>
 	<Tag name="InputUndo">(rückgängig)</Tag>
 	<Tag name="BumpWavelen">Bump: WaveLen</Tag>
@@ -388,10 +396,12 @@
 	<Tag name="MyGUI_MessageBox_Cancel">Abbruch</Tag>
 	<Tag name="TipNewTer">Neues, flaches Terrain erstellen.</Tag>
 	<Tag name="TipRoadParams">Parameter des Straßenpunkts</Tag>
+	<Tag name="SpeedUnit">Einheit</Tag>
 	<Tag name="ScaleAll">Alle skalieren</Tag>
 	<Tag name="TipImpDist">Distanz, bei der Modelle 2D werden.</Tag>
 	<Tag name="TipTrkTerImg">Minikarte der ausgewählten Strecke, Sicht von oben.</Tag>
-	<Tag name="TerHeightMap">Höhenkarte Boden</Tag>
+	<Tag name="LS_GAME">Lade Spiel</Tag>
+	<Tag name="TerHeightMap">Terrain-Heightmap</Tag>
 	<Tag name="PipeWStepsMul">Röhren W-Steps Mult.</Tag>
 	<Tag name="MyGUI_MessageBox_Ok">Ok</Tag>
 	<Tag name="TipRainSnowInt">Rain/Snow Intensität (z.B. 1000)</Tag>
@@ -418,12 +428,15 @@
 	<Tag name="TipSurfType">Typ der Oberfläche, bestimmt den Sound.</Tag>
 	<Tag name="Reverse">Rückwärts</Tag>
 	<Tag name="InputSaveTrack">F4 - Strecke speichern</Tag>
-	<Tag name="BasedOn">basierend auf</Tag>
+	<Tag name="TipSurfFrict">Oberflächenreibung (z.B. 1.0 Asphalt, 0.7 Kies, 0.5 Eis)</Tag>
 	<Tag name="FPS">Fps, Triangles, Batches</Tag>
 	<Tag name="UnitMph">mph</Tag>
 	<Tag name="InputStartWidth">; &apos;  -  adjust start box width (for road width)</Tag>
 	<Tag name="Color">Farbe</Tag>
 	<Tag name="Pitch">neigen</Tag>
 	<Tag name="MyGUI_MessageBox_Yes">Ja</Tag>
+	<Tag name="TipLoadTrkEditor">Andere Strecke laden oder aktuelle Strecke neu Laden.</Tag>
+	<Tag name="GameVersion">1.1</Tag>
+	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 
 </MyGUI>

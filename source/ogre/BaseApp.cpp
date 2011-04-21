@@ -86,18 +86,30 @@ bool BaseApp::keyPressed( const OIS::KeyEvent &arg )
 		case KC_PGDOWN: case KC_NUMPAD3:
 		case KC_C:		// Next
 			roadUpCnt = 0;
-			if (mFCam)  {  mFCam->Next(0, shift);
-				if (mFCam->ca.mHideGlass)  mViewport->setVisibilityMask(255-16);
-				else  mViewport->setVisibilityMask(255);
-			}	return false;
+			// for all cars
+			for (std::list<CarModel*>::iterator it=carModels.begin(); it!=carModels.end(); it++)
+			{
+				if ((*it)->fCam)
+				{
+					(*it)->fCam->Next(0, shift);
+					if ((*it)->fCam->ca.mHideGlass)  mViewport->setVisibilityMask(255-16);
+						else  mViewport->setVisibilityMask(255);
+				}
+			}
+			return false;
 
 		case KC_PGUP: case KC_NUMPAD9:
 		case KC_X:		// Prev
 			roadUpCnt = 0;
-			if (mFCam)  {  mFCam->Next(1, shift);
-				if (mFCam->ca.mHideGlass)  mViewport->setVisibilityMask(255-16);
-				else  mViewport->setVisibilityMask(255);
-			}	return false;
+			// for all cars
+			for (std::list<CarModel*>::iterator it=carModels.begin(); it!=carModels.end(); it++)
+			{
+				if ((*it)->fCam)
+					(*it)->fCam->Next(1, shift);
+					if ((*it)->fCam->ca.mHideGlass)  mViewport->setVisibilityMask(255-16);
+						else  mViewport->setVisibilityMask(255);
+			}	
+			return false;
 			
 		//case KC_S:		// Save S
 		//	if (pCar)	if (pCar->mFCam)
