@@ -88,6 +88,11 @@ public:
 	
 	Terrain* terrain;
 	
+	// VDrift car.
+	// For e.g. replay cars that don't 
+	// need physics simulation, this can be null.
+	CAR* pCar;
+	
 private:
 	Camera* mCamera;
 
@@ -122,11 +127,6 @@ private:
 	// index for the car (e.g. when we have 2 cars, they have indices 0 and 1)
 	// needed for cloned materials & textures
 	unsigned int iIndex;
-			
-	// VDrift car.
-	// For e.g. replay cars that don't 
-	// need physics simulation, this can be null.
-	CAR* pCar;
 	
 	// Our settings.
 	SETTINGS* pSet;
