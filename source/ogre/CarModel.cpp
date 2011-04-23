@@ -106,7 +106,7 @@ void CarModel::Update(PosInfo newPosInfo, float time)
 		}
 		Real sizeD = (0.3f + 1.1f * min(140.f, whVel) / 140.f) * (w < 2 ? 0.5f : 1.f);
 		//  ter mtr factors
-		int mtr = min((int)(whMtr-1), (int)(sc->td.layers.size()-1));
+		int mtr = max(0, min(whMtr-1, (int)(sc->td.layers.size()-1)));
 		TerLayer& lay = whMtr==0 ? sc->td.layerRoad : sc->td.layersAll[sc->td.layers[mtr]];
 		emitD *= lay.dust;  emitM *= lay.mud;  sizeD *= lay.dustS;  emitS *= lay.smoke;
 

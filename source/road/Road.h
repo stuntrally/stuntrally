@@ -111,7 +111,7 @@ private:
 	SceneNode *ndSel,*ndChosen,*ndRot,*ndHit,*ndChk, *lastNdSel,*lastNdChosen;
 	Entity* entSel,*entChs,*entRot,*entHit,*entChk;
 
-	std::deque<SplinePoint> mPc;  // copy points
+	static std::deque<SplinePoint> mPc;  // copy points
 
 //  vars  -----------
 	//  setup

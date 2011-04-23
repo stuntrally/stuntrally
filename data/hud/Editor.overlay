@@ -15,7 +15,7 @@ Editor/FocusOverlay
 		{
 			metrics_mode pixels
 			left 5
-			top 2
+			top 5
 			width 70
 			height 22
 			font_name Console
@@ -45,7 +45,7 @@ Editor/StatusOverlay
 		{
 			metrics_mode pixels
 			left 20
-			top 2
+			top 5
 			width 70
 			height 22
 			font_name Console

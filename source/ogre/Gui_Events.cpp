@@ -334,17 +334,13 @@ void App::chkParticles(WP wp)
 {		
 	ChkEv(particles);
 	for (std::list<CarModel*>::iterator it=carModels.begin(); it!=carModels.end(); it++)
-	{
 		(*it)->UpdParsTrails();
-	}
 }
 void App::chkTrails(WP wp)
 {			
 	ChkEv(trails);		
 	for (std::list<CarModel*>::iterator it=carModels.begin(); it!=carModels.end(); it++)
-	{
 		(*it)->UpdParsTrails();
-	}
 }
 void App::chkFps(WP wp){			ChkEv(show_fps);	if (pSet->show_fps)  mFpsOverlay->show();  else  mFpsOverlay->hide();	}
 
@@ -454,6 +450,7 @@ void App::slRplPosEv(SL)  // change play pos
 	if (!pSet->rpl_play)  return;
 	Real v = val/res;  v = max(0.f, min(1.f, v));  v *= replay.GetTimeLength();
 	pGame->timer.SetReplayTime(v);  //RestartReplay();
+	(*carModels.begin())->fCam->update(0.1f);
 }
 
 void App::btnRplLoad(WP)  // Load
@@ -462,7 +459,7 @@ void App::btnRplLoad(WP)  // Load
 	int i = rplList->getIndexSelected();
 	String name = rplList->getItemNameAt(i);
 	///  load
-	if (pSet->rpl_play)
+	//if (pSet->rpl_play)
 	{
 		string file = PATHMANAGER::GetReplayPath() + "/" + name + ".rpl";
 		if (!replay.LoadFile(file))
@@ -475,6 +472,9 @@ void App::btnRplLoad(WP)  // Load
 			{	// need new game
 				pSet->car = car;
 				pSet->track = trk;
+				pSet->rpl_play = 1;
+				//carModels.clear();
+				//NewGame();
 				btnNewGame(0);
 			}
 		}

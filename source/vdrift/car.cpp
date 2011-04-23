@@ -627,7 +627,7 @@ void CAR::UpdateSounds(float dt)
 	}
 
 	//normalize gains engine
-	assert(total_gain >= 0.0);
+	//assert(total_gain >= 0.0);
 	for (std::list <std::pair <SOUNDSOURCE *, float> >::iterator i = gainlist.begin(); i != gainlist.end(); ++i)
 	{
 		if (total_gain == 0.0)
