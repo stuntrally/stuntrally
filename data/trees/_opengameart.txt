@@ -1,0 +1,5 @@
+Model:		gum_tree.mesh
+Url:		http://www.opengameart.org/content/gum-tree
+Artist:		lattice (OpenGameArt.org user)
+License(s):	CC-BY 3.0
+Date:		04/11/2010
