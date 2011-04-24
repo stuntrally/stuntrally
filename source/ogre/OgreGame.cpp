@@ -140,7 +140,7 @@ String App::GetTimeString(float time) const
 	if (time != 0.0)
 	{
 		char tempchar[128];
-		sprintf(tempchar, "%d:%06.3f", min, secs);
+		sprintf(tempchar, "%d:%05.2f", min, secs);  //"%d:%06.3f"
 		return tempchar;
 	}
 	else

@@ -12,10 +12,13 @@ ReplayHeader::ReplayHeader()
 void ReplayHeader::Default()
 {
 	head[0] = 'S';  head[1] = 'R';  head[2] = '\\';  head[3] = '_';  head[4] = ' ';
+
+	memset(track, 0, sizeof(track));  track_user = 0;
+	memset(car, 0, sizeof(car));
+
 	ver = 1;
 	frameSize = sizeof(ReplayFrame);
-	memset(track, 0, sizeof(track));
-	memset(car, 0, sizeof(car));
+
 	for (int w=0; w<4; ++w)  whR[w] = 0.3f;
 }
 
@@ -25,12 +28,13 @@ Replay::Replay()
 }
 
 //  Init  once per game
-void Replay::InitHeader(const char* track, const char* car, float* whR_4)
+void Replay::InitHeader(const char* track, bool trk_user, const char* car, float* whR_4)
 {
 	header.Default();
-	strcpy(header.track, track);
+	strcpy(header.track, track);  header.track_user = trk_user ? 1 : 0;
 	strcpy(header.car, car);
 	for (int w=0; w<4; ++w)  header.whR[w] = whR_4[w];
+	//frames.clear();  frames.reserve(cDefSize);
 }
 
 ///  Load

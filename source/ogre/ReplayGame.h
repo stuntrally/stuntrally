@@ -12,17 +12,22 @@ const static int cDefSize = 8*1024;
 
 struct ReplayHeader
 {
-	char head[5];  //"SRrpl"
-	char track[64];	// track name  (user/original, hmap crc? diff-)
-	char car[32];	// car name  (.car file crc?, settings diff-)
+	char head[5];  // "SR\_ "
+
+	char track[63];   // track name  (hmap crc? diff-)
+	char track_user;  // user/original
+	char car[32];     // car name  (.car file crc?, settings diff-)
+
 	int ver, frameSize;  // bin data format - sizeof(ReplayFrame)
 	float whR[4];  // car wheels radius
+
 	//  custom replay fps 60 ..
 	ReplayHeader();  void Default();
 };
 
 
 //  bin data, for each frame
+
 struct ReplayFrame
 {
 	//  time  since game start
@@ -63,7 +68,7 @@ public:
 
 	float GetTimeLength();  // total time in seconds
 
-	void InitHeader(const char* track, const char* car, float* whR_4);
+	void InitHeader(const char* track, bool trk_user, const char* car, float* whR_4);
 
 //private:
 	ReplayHeader header;

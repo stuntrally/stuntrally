@@ -167,7 +167,7 @@ void App::LoadCar()
 		for (int w=0; w<4; ++w)
 			whR[w] = pCar->GetTireRadius(WHEEL_POSITION(w));
 	}
-	replay.InitHeader(pSet->track.c_str(), pSet->car.c_str(), whR);
+	replay.InitHeader(pSet->track.c_str(), pSet->track_user, pSet->car.c_str(), whR);
 }
 void App::LoadTerrain()
 {

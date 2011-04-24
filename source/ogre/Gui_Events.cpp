@@ -467,15 +467,15 @@ void App::btnRplLoad(WP)  // Load
 		else  // car, track change
 		{
 			string car = replay.header.car, trk = replay.header.track;
-			//  todo: car reload only - faster ...
-			if (car != pSet->car || trk != pSet->track)
-			{	// need new game
+			bool usr = replay.header.track_user == 1;
+
+			if (car != pSet->car || trk != pSet->track || usr != pSet->track_user)
+			{	//  need new game
 				pSet->car = car;
-				pSet->track = trk;
+				pSet->track = trk;  pSet->track_user = usr;
 				pSet->rpl_play = 1;
-				//carModels.clear();
-				//NewGame();
 				btnNewGame(0);
+				// todo: car reload only - faster ...
 			}
 		}
 	}
