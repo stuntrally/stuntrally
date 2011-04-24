@@ -927,11 +927,6 @@
 			<Property key="Scroll_MoveToClick" value="true"/>
 			<Property key="Scroll_Range" value="1000001"/>
 		</Widget>
-		<Widget type="StaticText" skin="StaticText" position="444 1 108 24" name="RplTimeLen">
-			<Property key="Widget_Alpha" value="1.0"/>
-			<Property key="Widget_InheritsAlpha" value="false"/>
-			<Property key="Text_TextColour" value="0.6 0.7 0.8"/>
-		</Widget>
 		<Widget type="Button" skin="Button" position="20 1 40 32" name="RplToStart">
 			<Property key="Widget_InheritsAlpha" value="false"/>
 			<Property key="Widget_Caption" value="|&lt;"/>
@@ -961,14 +956,23 @@
 			<Property key="Widget_Colour" value="0.6 0.8 1"/>
 			<Property key="Widget_Alpha" value="0.6"/>
 		</Widget>
-		<Widget type="StaticText" skin="StaticText" position="332 1 108 24" name="RplTimeCur">
+		<Widget type="StaticText" skin="StaticText" position="252 1 148 40" name="RplPercent">
+			<Property key="Widget_InheritsAlpha" value="false"/>
+			<Property key="Text_TextColour" value="0.8 0.8 1.0"/>
+			<Property key="Text_TextAlign" value="Center"/>
+            <Property key="Text_FontName" value="font_Vera.24"/>
+            <!--<Property key="Text_FontHeight" value="24"/>-->
+		</Widget>
+		<Widget type="StaticText" skin="StaticText" position="408 8 200 40" name="RplTimeCur">
 			<Property key="Widget_InheritsAlpha" value="false"/>
 			<Property key="Text_TextColour" value="0.6 0.8 1"/>
+            <Property key="Text_FontName" value="font_Vera.24"/>
 		</Widget>
-		<Widget type="StaticText" skin="StaticText" position="260 1 64 24" name="RplPercent">
+		<Widget type="StaticText" skin="StaticText" position="608 8 200 40" name="RplTimeLen">
+			<Property key="Widget_Alpha" value="1.0"/>
 			<Property key="Widget_InheritsAlpha" value="false"/>
-			<Property key="Text_TextColour" value="0.7 0.7 1.0"/>
-			<Property key="Text_TextAlign" value="Center"/>
+			<Property key="Text_TextColour" value="0.7 0.8 0.9"/>
+            <Property key="Text_FontName" value="font_Vera.24"/>
 		</Widget>
 	</Widget>
 </MyGUI>
