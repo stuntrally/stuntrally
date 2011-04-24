@@ -14,18 +14,11 @@
 //-------------------------------------------------------------------------------------
 void App::createScene()
 {
-	mCamera->setFarClipDistance(pSet->view_distance*1.1f);
-	mCamera->setNearClipDistance(0.2f);
-
 	//  tex fil
 	MaterialManager::getSingleton().setDefaultTextureFiltering(TFO_ANISOTROPIC);
 	MaterialManager::getSingleton().setDefaultAnisotropy(pSet->anisotropy);
 
 	mRoot->addResourceLocation(pathTrk[1] + "_previews/", "FileSystem");  //prv user tracks
-
-	//  --------  Follow Camera  --------
-	// now in CarModel::Create
-	//mFCam = new FollowCamera(mCamera);  mFCam->loadCameras();
 	
 	if (!pSet->autostart)  isFocGui = true;
 	InitGui();
@@ -118,9 +111,15 @@ void App::LoadGame()
 	pGame->NewGameDoLoadTrack();
 	/// init car models
 	// will create vdrift cars
-	carModels.push_back( new CarModel(0, CarModel::CT_LOCAL, sListCar, mSceneMgr, pSet, pGame, &sc, mCamera) );
-	// Create() will be called later in LoadCar()
+	// actual car loading will be done later in LoadCar()
 	// this is just here because vdrift car has to be created first
+	std::list<Camera*>::iterator camIt = mSplitMgr->mCameras.begin();
+	for (int i=0; i<pSet->local_players; i++)
+	{
+		carModels.push_back( new CarModel(i, CarModel::CT_LOCAL, sListCar, mSceneMgr, pSet, pGame, &sc, (*camIt) ) );
+		camIt++;
+	}
+	
 	pGame->NewGameDoLoadMisc();
 	bGetStPos = true;
 	
@@ -281,7 +280,9 @@ void App::CreateRoad()
 	{	road->DestroyRoad();  delete road;  road = 0;  }
 
 	road = new SplineRoad(pGame);  // sphere.mesh
-	road->Setup("", 0.7,  terrain, mSceneMgr, mCamera);
+	///TODO road only has correct LOD for camera 1
+	/// make separate road meshes for every camera???
+	road->Setup("", 0.7,  terrain, mSceneMgr, *mSplitMgr->mCameras.begin());
 	
 	String sr = TrkDir()+"road.xml";
 	road->LoadFile(TrkDir()+"road.xml");

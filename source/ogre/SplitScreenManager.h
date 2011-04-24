@@ -18,7 +18,7 @@ class SplitScreenManager : public Ogre::RenderTargetListener
 {
 public:
 	// Constructor, only assign members
-	SplitScreenManager(Ogre::SceneManager* sceneMgr, Ogre::RenderWindow* window);
+	SplitScreenManager(Ogre::SceneManager* sceneMgr, Ogre::RenderWindow* window, class SETTINGS* set);
 	
 	~SplitScreenManager();
 	
@@ -37,13 +37,21 @@ public:
 	// Should be called whenever the window size changes
 	void AdjustRatio();
 	
-	// Needed to update HUD on render target event
+	// Set background color for all viewports
+	void SetBackground(const Ogre::ColourValue& color);
+	
+	// Update the view distance for all cameras.
+	// This will be called when the view distance slider in gui is changed.
+	void UpdateCamDist();
+	
 	class App* pApp;
 	
 	void preRenderTargetUpdate(const Ogre::RenderTargetEvent& evt);
 	void postRenderTargetUpdate(const Ogre::RenderTargetEvent& evt);
 
 private:
+	class SETTINGS* pSet;
+
 	// Scene manager to use
 	Ogre::SceneManager* mSceneMgr;
 	

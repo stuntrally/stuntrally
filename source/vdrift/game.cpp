@@ -339,9 +339,6 @@ void GAME::Tick(float deltat)
 							(*it)->fCam->update(framerate);
 					}
 				}
-				
-				if (pOgreGame->ndSky)  ///o-
-					pOgreGame->ndSky->setPosition(pOgreGame->GetCamera()->getPosition());
 			}
 		}
 		curticks++;

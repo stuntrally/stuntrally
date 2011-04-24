@@ -39,6 +39,7 @@ public:
 	bool recordreplay;  int selected_replay;
 	bool trackreverse;	int number_of_laps;
 	float ai_difficulty;
+	int local_players;
 
 	//  other
 	std::string skin;	float vol_master, vol_engine, vol_tires, vol_env;

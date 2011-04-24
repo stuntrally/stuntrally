@@ -80,7 +80,11 @@ void App::CreateTrees()
 	
 	if (fGrass > 0.f)
 	{
+		#ifndef ROAD_EDITOR
+		grass = new PagedGeometry(mSplitMgr->mCameras.front(), sc.grPage);  //30
+		#else
 		grass = new PagedGeometry(mCamera, sc.grPage);  //30
+		#endif
 		grass->addDetailLevel<GrassPage>(sc.grDist * pSet->grass_dist);
 
 		GrassLoader *grassLoader = new Forests::GrassLoader(grass);
@@ -110,7 +114,11 @@ void App::CreateTrees()
 	if (fTrees > 0.f)
 	{
 		// fast: 100_ 80 j1T!,  400 400 good sav2f  200 220 both`-
-		trees = new PagedGeometry(mCamera, sc.trPage);  //trees->setInfinite();
+		#ifndef ROAD_EDITOR
+		trees = new PagedGeometry(mSplitMgr->mCameras.front(), sc.trPage);
+		#else
+		trees = new PagedGeometry(mCamera, sc.trPage);
+		#endif
 		if (bWind)
 			 trees->addDetailLevel<WindBatchPage>(sc.trDist * pSet->trees_dist, 0);
 		else trees->addDetailLevel<BatchPage>	 (sc.trDist * pSet->trees_dist, 0);

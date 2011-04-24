@@ -10,11 +10,6 @@
 //-------------------------------------------------------------------------------------
 void BaseApp::createCamera()
 {
-	mCamera = mSceneMgr->createCamera("PlayerCam");
-
-	mCamera->setPosition(Vector3(0,-100,0));
-	mCamera->lookAt(Vector3(0,-100,10));
-	//mCamera->setNearClipDistance(0.5f);
 }
 
 //  Frame
@@ -64,19 +59,20 @@ void BaseApp::createFrameListener()
 
 void BaseApp::createViewports()
 {
-	//  Create one viewport, entire window
-	mViewport = mWindow->addViewport(mCamera);
-	mViewport->setBackgroundColour(ColourValue(0.5,0.65,0.8));  //`
-	mCamera->setAspectRatio( Real(mViewport->getActualWidth()) / Real(mViewport->getActualHeight()));
+	mSplitMgr->mNumPlayers = pSet->local_players;
+	mSplitMgr->Align();
 }
 
 ///  Compositor
 //-------------------------------------------------------------------------------------
 void BaseApp::refreshCompositor()
 {
-	CompositorManager::getSingleton().setCompositorEnabled(mViewport, "Bloom", false);
-	CompositorManager::getSingleton().setCompositorEnabled(mViewport, "HDR", false);
-	CompositorManager::getSingleton().setCompositorEnabled(mViewport, "Motion Blur", false);
+	for (std::list<Viewport*>::iterator it=mSplitMgr->mViewports.begin(); it!=mSplitMgr->mViewports.end(); it++)
+	{
+		CompositorManager::getSingleton().setCompositorEnabled((*it), "Bloom", false);
+		CompositorManager::getSingleton().setCompositorEnabled((*it), "HDR", false);
+		CompositorManager::getSingleton().setCompositorEnabled((*it), "Motion Blur", false);
+	}
 	
 	// Set bloom settings (intensity, orig weight).
 	MaterialPtr blurmat = MaterialManager::getSingleton().getByName("Ogre/Compositor/BloomBlend2");
@@ -93,30 +89,24 @@ void BaseApp::refreshCompositor()
 	blurmat = MaterialManager::getSingleton().getByName("Ogre/Compositor/Combine");
 	gpuparams = blurmat->getTechnique(0)->getPass(0)->getFragmentProgramParameters();
 	gpuparams->setNamedConstant("blur", pSet->motionblurintensity);
-		
-	if (pSet->bloom)
-		CompositorManager::getSingleton().setCompositorEnabled(mViewport, "Bloom", true);
-
-	if (pSet->hdr)
-		CompositorManager::getSingleton().setCompositorEnabled(mViewport, "HDR", true);
 	
-	if (pSet->motionblur)
-		CompositorManager::getSingleton().setCompositorEnabled(mViewport, "Motion Blur", true);
+	for (std::list<Viewport*>::iterator it=mSplitMgr->mViewports.begin(); it!=mSplitMgr->mViewports.end(); it++)
+	{
+		CompositorManager::getSingleton().setCompositorEnabled((*it), "Bloom", pSet->bloom);
+		CompositorManager::getSingleton().setCompositorEnabled((*it), "HDR", pSet->hdr);
+		CompositorManager::getSingleton().setCompositorEnabled((*it), "Motion Blur", pSet->motionblur);
+	}
 }
 
 //-------------------------------------------------------------------------------------
 void BaseApp::recreateCompositor()
 {
 	// hdr has to be first in the compositor queue
+	if (mHDRLogic) delete mHDRLogic;
 	mHDRLogic = new HDRLogic;
 	CompositorManager::getSingleton().registerCompositorLogic("HDR", mHDRLogic);
-		
-	CompositorManager::getSingleton().addCompositor(mViewport, "HDR");
-
-	// bloom
-	CompositorManager::getSingleton().addCompositor(mViewport, "Bloom");
 	
-	// motion blur
+	// Motion blur has to be created in code
 	CompositorPtr comp3 = CompositorManager::getSingleton().create(
 		"Motion Blur", ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME
 	);
@@ -186,7 +176,12 @@ void BaseApp::recreateCompositor()
 		}
 	}
 
-	CompositorManager::getSingleton().addCompositor(mViewport, "Motion Blur");
+	for (std::list<Viewport*>::iterator it=mSplitMgr->mViewports.begin(); it!=mSplitMgr->mViewports.end(); it++)
+	{
+		CompositorManager::getSingleton().addCompositor((*it), "HDR");
+		CompositorManager::getSingleton().addCompositor((*it), "Bloom");
+		CompositorManager::getSingleton().addCompositor((*it), "Motion Blur");
+	}
 	
 	refreshCompositor();
 }
@@ -199,9 +194,7 @@ void BaseApp::Run( bool showDialog )
 	mShowDialog = showDialog;
 	if (!setup())
 		return;
-
-	recreateCompositor();
-
+	
 	mRoot->startRendering();
 
 	destroyScene();
@@ -210,7 +203,7 @@ void BaseApp::Run( bool showDialog )
 //  ctor
 //-------------------------------------------------------------------------------------
 BaseApp::BaseApp() :
-	mRoot(0), mCamera(0), mSceneMgr(0), mWindow(0), mViewport(0), mHDRLogic(0),
+	mRoot(0), mSceneMgr(0), mWindow(0), mHDRLogic(0),
 	mShowDialog(1), mShutDown(false),
 	mInputManager(0), mMouse(0), mKeyboard(0),
 	alt(0), ctrl(0), shift(0), roadUpCnt(0),
@@ -225,6 +218,8 @@ BaseApp::BaseApp() :
 
 BaseApp::~BaseApp()
 {	
+	delete mSplitMgr;
+	
 	if (mGUI)  {
 		mGUI->shutdown();	delete mGUI;	mGUI = 0;  }
 	if (mPlatform)  {
@@ -278,7 +273,6 @@ bool BaseApp::configure()
 
 		mWindow = mRoot->createRenderWindow("Stunt Rally", pSet->windowx, pSet->windowy, pSet->fullscreen, &settings);
 	}
-	
 	mLoadingBar.bBackgroundImage = pSet->loadingbackground;
 	return true;
 }
@@ -332,7 +326,16 @@ bool BaseApp::setup()
 		return false;
 
 	mSceneMgr = mRoot->createSceneManager(/*ST_GENERIC/**/ST_EXTERIOR_FAR/**/);
+	mSplitMgr = new SplitScreenManager(mSceneMgr, mWindow, pSet);
+
 	createCamera();
+	// GUI Viewport
+	Ogre::SceneManager* guiSceneMgr = mRoot->createSceneManager(ST_GENERIC);
+	Ogre::Camera* guiCam = guiSceneMgr->createCamera("GuiCam1");
+	Ogre::Viewport* guiVp = mWindow->addViewport(guiCam, 100);
+	// transparent
+	guiVp->setBackgroundColour(Ogre::ColourValue(0.0, 0.0, 0.0, 0.0));
+	guiVp->setClearEveryFrame(true, FBT_DEPTH);
 	createViewports();
 
 	TextureManager::getSingleton().setDefaultNumMipmaps(5);
@@ -344,15 +347,8 @@ bool BaseApp::setup()
 	mGUI->initialise("core.xml", PATHMANAGER::GetLogDir() + "/MyGUI.log");
 	MyGUI::LanguageManager::getInstance().setCurrentLanguage(getSystemLanguage());
 	
-	// GUI Viewport
-	Ogre::SceneManager* guiSceneMgr = mRoot->createSceneManager(ST_GENERIC);
-	Ogre::Camera* guiCam = guiSceneMgr->createCamera("GuiCam1");
-	Ogre::Viewport* guiVp = mWindow->addViewport(guiCam, 100);
-	// transparent
-	guiVp->setBackgroundColour(Ogre::ColourValue(0.0, 0.0, 0.0, 0.0));
-	guiVp->setClearEveryFrame(true, FBT_DEPTH);
 	mPlatform->getRenderManagerPtr()->setSceneManager(guiSceneMgr);
-	mPlatform->getRenderManagerPtr()->setActiveViewport(1);
+	mPlatform->getRenderManagerPtr()->setActiveViewport(mSplitMgr->mNumPlayers);
 	
 	// After having initialised mygui, we can set translated strings
 	setTranslations();
@@ -362,6 +358,8 @@ bool BaseApp::setup()
 
 	createFrameListener();
 	createScene();//^before
+	
+	recreateCompositor();
 
 	return true;
 };
@@ -414,7 +412,7 @@ void BaseApp::loadResources()
 //-------------------------------------------------------------------------------------
 void BaseApp::LoadingOn()
 {
-	mViewport->setBackgroundColour(ColourValue(0.15,0.165,0.18));
+	mSplitMgr->SetBackground(ColourValue(0.15,0.165,0.18));
 	mLoadingBar.start(mWindow, 1, 1, 1 );
 
 	// Turn off  rendering except overlays
@@ -425,7 +423,7 @@ void BaseApp::LoadingOn()
 void BaseApp::LoadingOff()
 {
 	// Turn On  full rendering
-	mViewport->setBackgroundColour(ColourValue(0.5,0.65,0.8));
+	mSplitMgr->SetBackground(ColourValue(0.5,0.65,0.8));
 	mSceneMgr->clearSpecialCaseRenderQueues();
 	mSceneMgr->setSpecialCaseRenderQueueMode(SceneManager::SCRQM_EXCLUDE);
 	mLoadingBar.finish();
@@ -498,14 +496,13 @@ void BaseApp::windowResized(RenderWindow* rw)
 	const OIS::MouseState &ms = mMouse->getMouseState();
 	ms.width = width;
 	ms.height = height;
-	
-	// adjust camera asp. ratio
-	if (mCamera && mViewport)
-		mCamera->setAspectRatio( float(mWindow->getWidth()) / float(mWindow->getHeight()));
-		
+			
 	// adjust hud
 	bSizeHUD = true;
 	bWindowResized = true;
+	
+	// Adjust viewports
+	mSplitMgr->AdjustRatio();
 	
 	// write new window size to settings
 	pSet->windowx = mWindow->getWidth();

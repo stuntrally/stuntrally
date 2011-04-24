@@ -12,6 +12,7 @@ void SETTINGS::Serialize(bool w, CONFIGFILE & c)
 	Param(c,w, "game.car_sat", car_sat);	Param(c,w, "game.car_val", car_val);
 	Param(c,w, "game.opp_car", car_ai);
 	Param(c,w, "game.track", track);		Param(c,w, "game.track_user", track_user);
+	Param(c,w, "game.local_players", local_players);
 
 	Param(c,w, "game2.ai_diff", ai_difficulty);		Param(c,w, "game2.record", recordreplay);
 	Param(c,w, "game2.replay_sel", selected_replay);
@@ -100,7 +101,7 @@ SETTINGS::SETTINGS() :  ///  Defaults
 	abs(1), tcs(1), autoclutch(1), autoshift(1), autorear(1), show_mph(0),
 	//  game
 	recordreplay(false), selected_replay(0),
-	trackreverse(false), number_of_laps(1), ai_difficulty(1),
+	trackreverse(false), number_of_laps(1), ai_difficulty(1), local_players(1),
 	//  other
 	skin("simple"), vol_master(1.f), vol_engine(1.f), vol_tires(1.f), vol_env(1.f),
 	autostart(0), ogre_dialog(1), escquit(0), bltDebug(0), bltLines(1),

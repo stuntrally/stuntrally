@@ -99,9 +99,6 @@ bool App::frameStart(Real time)
 				if ((*it)->fCam)
 					(*it)->fCam->update(pGame->framerate);
 			}
-			
-			if (ndSky)  ///o-
-				ndSky->setPosition(GetCamera()->getPosition());
 		}
 
 		// Update all cube maps
@@ -157,11 +154,12 @@ bool App::frameStart(Real time)
 		}
 		
 		//  par  rain cam  . . . .
+		///TODO per-camera rain
 		if (pSet->particles && time != 0)
-		{	const Vector3& pos = mCamera->getPosition();
+		{	const Vector3& pos = (*mSplitMgr->mCameras.begin())->getPosition();
 				static Vector3 oldPos = Vector3::ZERO;
 				Vector3 vel = (pos-oldPos)/time;  oldPos = pos;
-			Vector3 dir = mCamera->getDirection();//, up = mCamera->getUp();
+			Vector3 dir = (*mSplitMgr->mCameras.begin())->getDirection();//, up = mCamera->getUp();
 			Vector3 par = pos + dir * 12 + vel * 0.4;
 			if (pr && sc.rainEmit > 0)
 			{

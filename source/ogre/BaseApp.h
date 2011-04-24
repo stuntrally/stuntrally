@@ -33,10 +33,11 @@ public:
 	class HDRLogic* mHDRLogic;
 	
 	class SETTINGS* pSet;
+	
+	void recreateCompositor();
 
 	SceneNode* ndSky; //-
 	int roadUpCnt;
-	Camera* GetCamera()  {  return mCamera;  }
 	LoadingBar mLoadingBar;
 
 protected:
@@ -47,7 +48,7 @@ protected:
 	virtual void createScene() = 0;
 	virtual void destroyScene();
 
-	void createCamera(), createFrameListener(), createViewports(), recreateCompositor(), refreshCompositor();
+	void createCamera(), createFrameListener(), createViewports(), refreshCompositor();
 	void setupResources(), createResourceListener(), loadResources();
 	void LoadingOn(), LoadingOff();
 
@@ -67,7 +68,7 @@ protected:
 
 	///  Ogre
 	Root *mRoot;  SceneManager* mSceneMgr;
-	Camera* mCamera;  Viewport* mViewport;  RenderWindow* mWindow;
+	RenderWindow* mWindow;
 
 	///  input
 	OIS::InputManager* mInputManager;

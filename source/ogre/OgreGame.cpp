@@ -37,7 +37,7 @@ App::App()
 	pathTrk[1] = PATHMANAGER::GetTrackPathUser() + "/";
 
 	resCar = "";  resTrk = "";  resDrv = "";
-	
+		
 	for (int i=0; i < 5; ++i)
 	{	ovL[i]=0;  ovR[i]=0;  ovS[i]=0;  ovU[i]=0;  }
 	for (int i=0; i < StTrk; ++i)  stTrk[i] = 0;
@@ -79,6 +79,9 @@ void App::setTranslations()
 	loadingStates.insert(std::make_pair(LS_TER, String(TR("#{LS_TER}"))));
 	loadingStates.insert(std::make_pair(LS_TRACK, String(TR("#{LS_TRACK}"))));
 	loadingStates.insert(std::make_pair(LS_MISC, String(TR("#{LS_MISC}"))));
+	
+	// Kind of nasty to have it here, but this has to be called after configure()...
+	mSplitMgr->pApp = this;
 }
 
 void App::destroyScene()

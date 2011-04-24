@@ -62,8 +62,18 @@ bool BaseApp::keyPressed( const OIS::KeyEvent &arg )
 		case KC_F10:
 		if (!shift)
 		{	mbWireFrame = !mbWireFrame;
-			if(mbWireFrame)	mCamera->setPolygonMode(PM_WIREFRAME);
-			else			mCamera->setPolygonMode(PM_SOLID);
+			/// Set for all cameras
+			PolygonMode mode;
+			if(mbWireFrame)	mode = PM_WIREFRAME;
+			else			mode = PM_SOLID;
+			if (mSplitMgr)
+			{
+				for (std::list<Camera*>::iterator it=mSplitMgr->mCameras.begin(); it!=mSplitMgr->mCameras.end(); it++)
+				{
+					(*it)->setPolygonMode(mode);
+				}
+			}
+			
 			if (ndSky)	ndSky->setVisible(!mbWireFrame);  // hide sky
 		}	return false;
 		
@@ -79,6 +89,7 @@ bool BaseApp::keyPressed( const OIS::KeyEvent &arg )
 		return false;
 	}
 
+	int visMask = 255;
 
 	switch (arg.key)
 	{
@@ -92,9 +103,15 @@ bool BaseApp::keyPressed( const OIS::KeyEvent &arg )
 				if ((*it)->fCam)
 				{
 					(*it)->fCam->Next(0, shift);
-					if ((*it)->fCam->ca.mHideGlass)  mViewport->setVisibilityMask(255-16);
-						else  mViewport->setVisibilityMask(255);
+					if ((*it)->fCam->ca.mHideGlass)  visMask = 255-16;
+					else        visMask = 255;
+					
 				}
+			}
+			// Set visibility mask for all viewports
+			for (std::list<Viewport*>::iterator it=mSplitMgr->mViewports.begin(); it!=mSplitMgr->mViewports.end(); it++)
+			{
+				(*it)->setVisibilityMask(visMask);
 			}
 			return false;
 
@@ -105,10 +122,17 @@ bool BaseApp::keyPressed( const OIS::KeyEvent &arg )
 			for (std::list<CarModel*>::iterator it=carModels.begin(); it!=carModels.end(); it++)
 			{
 				if ((*it)->fCam)
+				{
 					(*it)->fCam->Next(1, shift);
-					if ((*it)->fCam->ca.mHideGlass)  mViewport->setVisibilityMask(255-16);
-						else  mViewport->setVisibilityMask(255);
-			}	
+					if ((*it)->fCam->ca.mHideGlass)  visMask = 255-16;
+					else        visMask = 255;
+				}
+			}
+			// Set visibility mask for all viewports
+			for (std::list<Viewport*>::iterator it=mSplitMgr->mViewports.begin(); it!=mSplitMgr->mViewports.end(); it++)
+			{
+				(*it)->setVisibilityMask(visMask);
+			}
 			return false;
 			
 		//case KC_S:		// Save S
@@ -137,14 +161,19 @@ bool BaseApp::keyPressed( const OIS::KeyEvent &arg )
 void BaseApp::updateStats()
 {
 	// Print camera pos, rot
+	
 	static char s[128];
-	if (mbShowCamPos)
+	// Only for 1 local player
+	if (mSplitMgr && mSplitMgr->mNumPlayers == 1)
 	{
-		const Vector3& pos = mCamera->getDerivedPosition();
-		const Quaternion& rot = mCamera->getDerivedOrientation();
-		sprintf(s, "Pos: %5.1f %5.1f %5.1f", //  Rot: %6.3f %6.3f %6.3f %6.3f",
-						pos.x, pos.y, pos.z,  rot.x, rot.y, rot.z, rot.w );
-		mDebugText = String( s );
+		if (mbShowCamPos)
+		{
+			const Vector3& pos = (*mSplitMgr->mCameras.begin())->getDerivedPosition();
+			const Quaternion& rot = (*mSplitMgr->mCameras.begin())->getDerivedOrientation();
+			sprintf(s, "Pos: %5.1f %5.1f %5.1f", //  Rot: %6.3f %6.3f %6.3f %6.3f",
+							pos.x, pos.y, pos.z,  rot.x, rot.y, rot.z, rot.w );
+			mDebugText = String( s );
+		}
 	}
 	try {
 		const RenderTarget::FrameStats& stats = mWindow->getStatistics();

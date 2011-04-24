@@ -203,7 +203,7 @@ void App::UpdateHUD(CAR* pCar, float time)
 	if (bSizeHUD)
 	{	bSizeHUD = false;
 		SizeHUD(true);	}
-	
+			
 	///  hud rpm,vel  --------------------------------
 	if (pCar && !pSet->rpl_play)
 	{	fr.vel = pCar->GetSpeedometer();
@@ -302,11 +302,12 @@ void App::UpdateHUD(CAR* pCar, float time)
 			sprintf(s, String(TR("#{TBScore}  %3.0f+%2.0f")).c_str(), tim.GetDriftScore(0), tim.GetThisDriftScore(0) );
 		else
 			sprintf(s, String(TR("#{TBScore}  %3.0f")).c_str(), tim.GetDriftScore(0) );
-			
-		hudTimes->setCaption(String(s) +
-			String(TR("\n#{TBTime} ")) + GetTimeString(tim.GetPlayerTime())+
-			String(TR("\n#{TBLast} ")) + GetTimeString(tim.GetLastLap())+
-			String(TR("\n#{TBBest} ")) + GetTimeString(tim.GetBestLap(pSet->trackreverse)) );
+		
+		if (hudTimes)
+			hudTimes->setCaption(String(s) +
+				String(TR("\n#{TBTime} ")) + GetTimeString(tim.GetPlayerTime())+
+				String(TR("\n#{TBLast} ")) + GetTimeString(tim.GetLastLap())+
+				String(TR("\n#{TBBest} ")) + GetTimeString(tim.GetBestLap(pSet->trackreverse)) );
 	}
 	
 	//-----------------------------------------------------------------------------------------------

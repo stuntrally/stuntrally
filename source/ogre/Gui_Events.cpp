@@ -34,7 +34,6 @@ void App::slAnisotropy(SL)
 void App::slViewDist(SL)
 {
 	Real v = 50.f + 6950.f * powf(val/res, 2.f);
-	mCamera->setFarClipDistance(v*1.1f);
 	Vector3 sc = v*Vector3::UNIT_SCALE;
 
 	SceneNode* nskb = mSceneMgr->getSkyBoxNode();
@@ -43,6 +42,8 @@ void App::slViewDist(SL)
 
 	pSet->view_distance = v;
 	if (valViewDist){	Fmt(s, "%4.1f km", v*0.001f);	valViewDist->setCaption(s);  }
+	// Set new far clip distance for all cams
+	mSplitMgr->UpdateCamDist();
 }
 
 //  ter detail
@@ -398,7 +399,7 @@ void App::btnResChng(WP)
 		int cx = max(0,(sx - pSet->windowx) / 2), cy = max(0,(sy - pSet->windowy) / 2);
 		mWindow->reposition(cx,cy);
 	#else
-		mWindow->reposition(0,0);  // center ?..
+		//mWindow->reposition(0,0);  // center ?..
 	#endif
 	}
 		
@@ -410,9 +411,21 @@ void App::btnResChng(WP)
 	}
 }
 
-void App::chkVidBloom(WP wp){		ChkEv(bloom);		CompositorManager::getSingleton().setCompositorEnabled(mViewport, "Bloom", pSet->bloom);		}
-void App::chkVidHDR(WP wp){			ChkEv(hdr);			CompositorManager::getSingleton().setCompositorEnabled(mViewport, "HDR", pSet->hdr);	}
-void App::chkVidBlur(WP wp){		ChkEv(motionblur);	CompositorManager::getSingleton().setCompositorEnabled(mViewport, "Motion Blur", pSet->motionblur);	}
+void App::chkVidBloom(WP wp)
+{		
+	ChkEv(bloom);		
+	refreshCompositor();		
+}
+void App::chkVidHDR(WP wp)
+{			
+	ChkEv(hdr);	
+	refreshCompositor();
+}
+void App::chkVidBlur(WP wp)
+{		
+	ChkEv(motionblur);
+	refreshCompositor();
+}
 
 void App::chkVidFullscr(WP wp){		ChkEv(fullscreen);
 	mWindow->setFullscreen(pSet->fullscreen, pSet->windowx, pSet->windowy); mWindow->resize(pSet->windowx, pSet->windowy);
