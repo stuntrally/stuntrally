@@ -31,7 +31,7 @@ public:
 	
 	// This method should always be called after mNumPlayers is changed.
 	// It will create new viewports and cameras and arrange them.
-	void Align();
+	void CleanUp(), Align();
 	
 	// Adjust viewport size / camera aspect ratio
 	// Should be called whenever the window size changes
@@ -44,11 +44,10 @@ public:
 	// This will be called when the view distance slider in gui is changed.
 	void UpdateCamDist();
 	
-	class App* pApp;
-	
 	void preViewportUpdate(const Ogre::RenderTargetViewportEvent& evt);
 	void postViewportUpdate(const Ogre::RenderTargetViewportEvent& evt);
 
+	class App* pApp;
 private:
 	class SETTINGS* pSet;
 

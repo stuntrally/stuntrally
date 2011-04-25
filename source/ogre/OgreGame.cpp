@@ -69,6 +69,7 @@ App::~App()
 
 	OGRE_DELETE dbgdraw;
 }
+
 void App::setTranslations()
 {	
 	// loading states

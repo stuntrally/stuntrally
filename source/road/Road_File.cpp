@@ -49,7 +49,7 @@ void SplineRoad::ToggleMerge()
 
 ///  update road lods visibility
 //--------------------------------------------------------------------------------------------------------
-void SplineRoad::UpdLodVis(float fBias, bool bFull)
+void SplineRoad::UpdLodVis(/*Camera* pCam,*/ float fBias, bool bFull)
 {
 	iVis = 0;  iTris = 0;
 	const Real fDist[LODs+1] = {-800/*!temp -120*/, 40, 80, 140, 1000};

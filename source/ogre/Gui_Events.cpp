@@ -585,6 +585,27 @@ bool App::keyPressed( const OIS::KeyEvent &arg )
 		if (pSet->escquit)  {
 			mShutDown = true;	return true;  }
 
+		#if 0
+		case KC_1:
+		if (mSplitMgr)
+		{	Ogre::Viewport* vp = *mSplitMgr->mViewports.begin();
+			vp->setAutoUpdated(shift);
+			vp->setVisibilityMask(shift ? 255 : 0);
+		}	return true;
+		case KC_2:
+		if (mSplitMgr)
+		{	Ogre::Viewport* vp = *(++mSplitMgr->mViewports.begin());
+			vp->setAutoUpdated(shift);
+			vp->setVisibilityMask(shift ? 255 : 0);
+		}	return true;
+		case KC_3:
+		if (mSplitMgr)
+		{	Ogre::Viewport* vp = *(--mSplitMgr->mViewports.end());
+			vp->setAutoUpdated(shift);
+			vp->setVisibilityMask(shift ? 255 : 0);
+		}	return true;
+		#endif
+	   	
 	   	case KC_F1:
 	   	case KC_TAB:	// on/off gui
 	   	if (!alt)  {

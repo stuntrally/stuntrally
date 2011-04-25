@@ -117,12 +117,17 @@ bool App::frameStart(Real time)
 		if (road)
 		{
 			road->RebuildRoadInt();
-			if (roadUpCnt <= 0)
+
+			//  more than 1 in pre viewport, each frame
+			if (pSet->local_players == 1)
 			{
-				roadUpCnt = 20;  //par upd, time..
-				road->UpdLodVis(pSet->road_dist);
+				if (roadUpCnt <= 0)
+				{
+					roadUpCnt = 15;  //par upd, time..
+					road->UpdLodVis(pSet->road_dist);
+				}
+				roadUpCnt--;/**/
 			}
-			roadUpCnt--;
 		}
 
 		//**  bullet bebug draw

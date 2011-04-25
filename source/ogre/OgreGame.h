@@ -125,7 +125,9 @@ protected:
 
 
 	//  road
+public:	
 	class SplineRoad* road;
+protected:
 	//  start pos, lap
 	bool bGetStPos;  Matrix4 matStPos;	Vector4 vStDist;
 	int iInChk, iCurChk, iNextChk, iNumChks;  // cur checkpoint -1 at start

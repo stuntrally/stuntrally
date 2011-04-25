@@ -62,17 +62,12 @@ bool BaseApp::keyPressed( const OIS::KeyEvent &arg )
 		case KC_F10:
 		if (!shift)
 		{	mbWireFrame = !mbWireFrame;
-			/// Set for all cameras
-			PolygonMode mode;
-			if(mbWireFrame)	mode = PM_WIREFRAME;
-			else			mode = PM_SOLID;
+			///  Set for all cameras
+			PolygonMode mode = mbWireFrame ? PM_WIREFRAME : PM_SOLID;
+
 			if (mSplitMgr)
-			{
-				for (std::list<Camera*>::iterator it=mSplitMgr->mCameras.begin(); it!=mSplitMgr->mCameras.end(); it++)
-				{
-					(*it)->setPolygonMode(mode);
-				}
-			}
+			for (std::list<Camera*>::iterator it=mSplitMgr->mCameras.begin(); it!=mSplitMgr->mCameras.end(); it++)
+				(*it)->setPolygonMode(mode);
 			
 			if (ndSky)	ndSky->setVisible(!mbWireFrame);  // hide sky
 		}	return false;
@@ -110,9 +105,7 @@ bool BaseApp::keyPressed( const OIS::KeyEvent &arg )
 			}
 			// Set visibility mask for all viewports
 			for (std::list<Viewport*>::iterator it=mSplitMgr->mViewports.begin(); it!=mSplitMgr->mViewports.end(); it++)
-			{
 				(*it)->setVisibilityMask(visMask);
-			}
 			return false;
 
 		case KC_PGUP: case KC_NUMPAD9:
@@ -130,9 +123,7 @@ bool BaseApp::keyPressed( const OIS::KeyEvent &arg )
 			}
 			// Set visibility mask for all viewports
 			for (std::list<Viewport*>::iterator it=mSplitMgr->mViewports.begin(); it!=mSplitMgr->mViewports.end(); it++)
-			{
 				(*it)->setVisibilityMask(visMask);
-			}
 			return false;
 			
 		//case KC_S:		// Save S

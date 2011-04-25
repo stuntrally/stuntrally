@@ -1,8 +1,11 @@
 #include "stdafx.h"
 #include "SplitScreenManager.h"
+
 #include "OgreGame.h"
 #include "CarModel.h"
 #include "../vdrift/settings.h"
+#include "../road/road.h"
+
 
 SplitScreenManager::SplitScreenManager(Ogre::SceneManager* sceneMgr, Ogre::RenderWindow* window, SETTINGS* set) :
 	pApp(0)
@@ -11,40 +14,27 @@ SplitScreenManager::SplitScreenManager(Ogre::SceneManager* sceneMgr, Ogre::Rende
 	mSceneMgr = sceneMgr;
 	pSet = set;
 }
+
 SplitScreenManager::~SplitScreenManager()
 {
-	// Cleanup
-	// Viewports
-	for (std::list<Ogre::Viewport*>::iterator vpIt=mViewports.begin(); vpIt != mViewports.end(); vpIt++)
-	{
-		(*vpIt)->getTarget()->removeListener(this);
-		mWindow->removeViewport( (*vpIt)->getZOrder() );
-	}
-	mViewports.clear();
-	// Cameras
-	for (std::list<Ogre::Camera*>::iterator it=mCameras.begin(); it != mCameras.end(); it++)
-	{
-		mSceneMgr->destroyCamera( (*it) );
-	}
-	mCameras.clear();
+	CleanUp();
 }
+
 void SplitScreenManager::SetBackground(const Ogre::ColourValue& value)
 {
 	for (std::list<Ogre::Viewport*>::iterator vpIt=mViewports.begin(); vpIt != mViewports.end(); vpIt++)
-	{
 		(*vpIt)->setBackgroundColour(value);
-	}
 }
+
 void SplitScreenManager::UpdateCamDist()
 {
 	for (std::list<Ogre::Camera*>::iterator it=mCameras.begin(); it != mCameras.end(); it++)
-	{
 		(*it)->setFarClipDistance(pSet->view_distance*1.1f);
-	}
 }
-void SplitScreenManager::Align()
+
+//  CleanUp
+void SplitScreenManager::CleanUp()
 {
-	// Cleanup old
 	// Viewports
 	for (std::list<Ogre::Viewport*>::iterator vpIt=mViewports.begin(); vpIt != mViewports.end(); vpIt++)
 	{
@@ -52,13 +42,21 @@ void SplitScreenManager::Align()
 		mWindow->removeViewport( (*vpIt)->getZOrder() );
 	}
 	mViewports.clear();
+
 	// Cameras
 	for (std::list<Ogre::Camera*>::iterator it=mCameras.begin(); it != mCameras.end(); it++)
 	{
-		mSceneMgr->destroyCamera( (*it) );
+		mSceneMgr->destroyCamera(*it);
 	}
 	mCameras.clear();
-		
+}
+
+
+///  Align
+//------------------------------------------------------------------------------------------------------------------
+void SplitScreenManager::Align()
+{
+	CleanUp();
 	/* 
 	 * Manually create the viewports based on numPlayers.
 	 * Of course, this could be implemented in a different way to also support 12674*10^4 viewports,
@@ -70,52 +68,37 @@ void SplitScreenManager::Align()
 		float dims[4];
 		
 		// handy macro for initializing the array
-		#define dim_(t,l,h,w) dims[0]=t;dims[1]=l;dims[2]=h;dims[3]=w
+		#define dim_(t,l,h,w)  dims[0]=t;  dims[1]=l;  dims[2]=h;  dims[3]=w
 		
 		if (mNumPlayers == 1)
 		{
-			// Only 1 player, full screen viewport
+			//  Only 1 player, full screen viewport
 			dim_(0.0, 0.0, 1.0, 1.0);
 		}
 		else if (mNumPlayers == 2)
 		{
-			// 2 players, use split_vertically setting
+			//  2 players, use split_vertically setting
 			if (!pSet->split_vertically)
-			{
-				if (i == 0) {
-					dim_(0.0, 0.0, 1.0, 0.5); }
-				else if (i == 1) {
-					dim_(0.0, 0.5, 1.0, 0.5); }
-			}
-			else
-			{
-				if (i == 0) {
-					dim_(0.0, 0.0, 0.5, 1.0); }
-				else if (i == 1) {
-					dim_(0.5, 0.0, 0.5, 1.0); }
-			}
+			{	if (i == 0)		{	dim_(0.0, 0.0, 1.0, 0.5);	}
+				else if (i == 1){	dim_(0.0, 0.5, 1.0, 0.5);	}
+			}else{
+				if (i == 0) {		dim_(0.0, 0.0, 0.5, 1.0);	}
+				else if (i == 1) {	dim_(0.5, 0.0, 0.5, 1.0);	}	}
 		}
 		else if (mNumPlayers == 3)
 		{
 			// 3 players, 2 viewports at top and 1 at bottom
-			if (i == 0) {
-				dim_(0.0, 0.0, 0.5, 0.5); }
-			else if (i == 1) {
-				dim_(0.5, 0.0, 0.5, 0.5); }
-			else if (i == 2) {
-				dim_(0.0, 0.5, 1.0, 0.5); }
+			if (i == 0)		{	dim_(0.0, 0.0, 0.5, 0.5);	}
+			else if (i == 1){	dim_(0.5, 0.0, 0.5, 0.5);	}
+			else if (i == 2){	dim_(0.0, 0.5, 1.0, 0.5);	}
 		}
 		else if (mNumPlayers == 4)
 		{
 			// 4 players, 2 viewports at top and 2 at bottom
-			if (i == 0) {
-				dim_(0.0, 0.0, 0.5, 0.5); }
-			else if (i == 1) {
-				dim_(0.5, 0.0, 0.5, 0.5); }
-			else if (i == 2) {
-				dim_(0.0, 0.5, 0.5, 0.5); }
-			else if (i == 3) {
-				dim_(0.5, 0.5, 0.5, 0.5); }
+			if (i == 0)		{	dim_(0.0, 0.0, 0.5, 0.5);	}
+			else if (i == 1){	dim_(0.5, 0.0, 0.5, 0.5);	}
+			else if (i == 2){	dim_(0.0, 0.5, 0.5, 0.5);	}
+			else if (i == 3){	dim_(0.5, 0.5, 0.5, 0.5);	}
 		}
 		else
 		{
@@ -124,14 +107,11 @@ void SplitScreenManager::Align()
 		}
 		#undef dim_
 
-		
 		// Create camera
 		mCameras.push_back(mSceneMgr->createCamera("PlayerCamera" + toStr(i)));
-		
-		mCameras.back()->setFarClipDistance(pSet->view_distance*1.1f);
 		mCameras.back()->setPosition(Vector3(0,-100,0));
 		mCameras.back()->lookAt(Vector3(0,-100,10));
-
+		mCameras.back()->setFarClipDistance(pSet->view_distance*1.1f);
 		mCameras.back()->setNearClipDistance(0.2f);
 		
 		// Create viewport
@@ -144,8 +124,10 @@ void SplitScreenManager::Align()
 	AdjustRatio();
 	
 	// Add compositing filters for the new viewports
-	if (pApp) pApp->recreateCompositor();
+	if (pApp)  pApp->recreateCompositor();
 }
+
+
 void SplitScreenManager::AdjustRatio()
 {
 	// Go through all viewports & cameras and adjust camera aspect ratio so that it fits to the viewport.
@@ -153,54 +135,68 @@ void SplitScreenManager::AdjustRatio()
 	for (std::list<Ogre::Viewport*>::iterator vpIt = mViewports.begin(); vpIt != mViewports.end(); vpIt++)
 	{
 		(*camIt)->setAspectRatio( float((*vpIt)->getActualWidth()) / float((*vpIt)->getActualHeight()) );
-		
 		camIt++;
 	}
 }
+
+
+///  pre viewport update
+//------------------------------------------------------------------------------------------------------------------
 void SplitScreenManager::preViewportUpdate(const Ogre::RenderTargetViewportEvent& evt)
 {
-	if (!pApp) return;
-	if (pApp->bLoading) return;
-	if (pApp->carModels.size() < 1)
-		return;
-	/// Update HUD
-	// get number of viewport
-	int i=0;
+	if (!pApp)  return;
+	if (pApp->bLoading)  return;
+	if (pApp->carModels.size() < 1)  return;
+
+	//  get number of viewport
 	std::list<Ogre::Viewport*>::iterator vpIt = mViewports.begin();
-	while (evt.source != (*vpIt) )
+	int i = 0;
+	while (evt.source != *vpIt)
 	{
-		vpIt++;
 		i++;
-		if (vpIt == mViewports.end()) return;
+		vpIt++;
+		if (vpIt == mViewports.end())  return;
 	}
-	// get car for this viewport
+
+	//  get car for this viewport
 	std::list<CarModel*>::iterator carIt = pApp->carModels.begin();
-	int j=0;
+	int j = 0;
 	while (j <= i)
 	{
 		if ((*carIt)->eType == CarModel::CT_REMOTE)
 			j--;
 		else
-		{
 			if (j == i)
 				break;
-		}
 		j++;
 		carIt++;
-		if (carIt == pApp->carModels.end()) return;
+		if (carIt == pApp->carModels.end())  return;
 	}
 	
-	// Update HUD for this car
-	if ((*carIt) && (*carIt)->pCar)
-		pApp->UpdateHUD( (*carIt)->pCar, 1.0f / evt.source->getTarget()->getLastFPS() );
-		
-	/// Size HUD
+	//  Size HUD
 	pApp->SizeHUD(true, evt.source);
-		
-	/// Set skybox pos to camera
+
+	//  Update HUD for this car
+	if (*carIt && (*carIt)->pCar)
+		pApp->UpdateHUD( (*carIt)->pCar, 1.0f / evt.source->getTarget()->getLastFPS() );
+
+
+	//  Set skybox pos to camera
 	if (pApp->ndSky)
 		pApp->ndSky->setPosition(evt.source->getCamera()->getPosition());
+		
+
+	//  road lod for each viewport
+	if (pApp->pSet->local_players > 1)
+	if (pApp->road)
+	{
+		pApp->road->mCamera = evt.source->getCamera();
+		pApp->road->UpdLodVis(pSet->road_dist);
+	}
 }
+
+
 void SplitScreenManager::postViewportUpdate(const Ogre::RenderTargetViewportEvent& evt)
 {
+
 }
