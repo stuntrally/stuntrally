@@ -177,9 +177,7 @@ void SplitScreenManager::preViewportUpdate(const Ogre::RenderTargetViewportEvent
 		carIt++;
 		if (carIt == pApp->carModels.end()) return;
 	}
-	
-	Log("Update vp i=" + toStr(i));
-	
+		
 	if (pApp->carModels.size() < 1)
 		return;
 	

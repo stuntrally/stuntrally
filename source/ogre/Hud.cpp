@@ -16,7 +16,6 @@ void App::SizeHUD(bool full, Viewport* vp)
 		asp = float(vp->getActualWidth())/float(vp->getActualHeight());
 	else
 		asp = float(mWindow->getWidth())/float(mWindow->getHeight());
-	Log("SizeHUD asp" + toStr(asp));
 	Real spx = fHudScale*1.1, spy = spx*asp;
 	xcRpm = -1 + spx;  ycRpm = -1 + spy;
 	xcVel =  1 - spx;  ycVel = -1 + spy;
