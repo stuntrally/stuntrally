@@ -299,7 +299,7 @@ void CARCONTROLMAP_LOCAL::Save(CONFIGFILE & controls_config, std::ostream & info
 	//controls_config.Write(true, controlfile);
 }
 
-const std::vector <float> & CARCONTROLMAP_LOCAL::ProcessInput(class App* pApp,
+const std::vector <float> & CARCONTROLMAP_LOCAL::ProcessInput(class App* pApp, int player,
 	const std::string & joytype, EVENTSYSTEM_SDL & eventsystem, float steerpos, float dt, bool joy_200, float carms, float speedsens, int screenw, int screenh, float button_ramp, bool hgateshifter)
 {
 	assert(inputs.size() == CARINPUT::INVALID); //this looks weird, but it ensures that our inputs vector contains exactly one item per input
@@ -374,6 +374,29 @@ const std::vector <float> & CARCONTROLMAP_LOCAL::ProcessInput(class App* pApp,
 			else if (i->type == CONTROL::KEY)
 			{
 				//cout << "type key" << endl;
+				using namespace OIS;
+
+				///  controls input map ...  todo: set in gui
+				///  [ player ][ control name ][ main/additional ]
+				player = min(3, max(0, player));
+				const static OIS::KeyCode inpMap[3][5][2] = {
+				{	{KC_NUMPAD8, KC_UP},
+					{KC_NUMPAD2, KC_DOWN},
+					{KC_NUMPAD6, KC_RIGHT},
+					{KC_NUMPAD4, KC_LEFT},
+					{KC_SPACE, KC_UNASSIGNED}	},
+				{	{KC_U, KC_UNASSIGNED},
+					{KC_M, KC_UNASSIGNED},
+					{KC_K, KC_UNASSIGNED},
+					{KC_H, KC_UNASSIGNED},
+					{KC_B, KC_UNASSIGNED}	},
+				{	{KC_R, KC_UNASSIGNED},
+					{KC_V, KC_UNASSIGNED},
+					{KC_G, KC_UNASSIGNED},
+					{KC_D, KC_UNASSIGNED},
+					{KC_F, KC_UNASSIGNED}	}	};
+					//bool grUp = pApp->isKey(OIS::KC_A);
+					//bool grDn = pApp->isKey(OIS::KC_Z);
 				
 				EVENTSYSTEM_SDL::BUTTON_STATE keystate = eventsystem.GetKeyState(SDLKey(i->keycode));
 				/// ------  temp input  .. why eventsystem doesn't work ?
@@ -386,13 +409,13 @@ const std::vector <float> & CARCONTROLMAP_LOCAL::ProcessInput(class App* pApp,
 				//if (n->first == CARINPUT::TCS_TOGGLE)	keystate.down = GetAsyncKeyState('2') != 0;
 
 				/// ------  OIS input
-				if (n->first == CARINPUT::THROTTLE	)	keystate.down = pApp->isKey(OIS::KC_NUMPAD8)||pApp->isKey(OIS::KC_UP);
-				if (n->first == CARINPUT::BRAKE		)	keystate.down = pApp->isKey(OIS::KC_NUMPAD2)||pApp->isKey(OIS::KC_DOWN);
-				if (n->first == CARINPUT::STEER_RIGHT)	keystate.down = pApp->isKey(OIS::KC_NUMPAD6)||pApp->isKey(OIS::KC_RIGHT);
-				if (n->first == CARINPUT::STEER_LEFT)	keystate.down = pApp->isKey(OIS::KC_NUMPAD4)||pApp->isKey(OIS::KC_LEFT);
-				if (n->first == CARINPUT::HANDBRAKE	)	keystate.down = pApp->isKey(OIS::KC_SPACE);
+	if (n->first == CARINPUT::THROTTLE)		keystate.down = pApp->isKey(inpMap[player][0][0])||pApp->isKey(inpMap[player][0][1]);
+	if (n->first == CARINPUT::BRAKE)		keystate.down = pApp->isKey(inpMap[player][1][0])||pApp->isKey(inpMap[player][1][1]);
+	if (n->first == CARINPUT::STEER_RIGHT)	keystate.down = pApp->isKey(inpMap[player][2][0])||pApp->isKey(inpMap[player][2][1]);
+	if (n->first == CARINPUT::STEER_LEFT)	keystate.down = pApp->isKey(inpMap[player][3][0])||pApp->isKey(inpMap[player][3][1]);
+	if (n->first == CARINPUT::HANDBRAKE)	keystate.down = pApp->isKey(inpMap[player][4][0]);
 				static bool grUpOld = false, grDnOld = false;
-				if (n->first == CARINPUT::SHIFT_UP  )	{
+				if (n->first == CARINPUT::SHIFT_UP)		{
 					bool grUp = pApp->isKey(OIS::KC_A);
 					keystate.just_down = grUp && !grUpOld;
 					keystate.just_up = !grUp && grUpOld;	grUpOld = grUp;  }

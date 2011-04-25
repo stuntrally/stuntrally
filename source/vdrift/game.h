@@ -16,7 +16,6 @@
 #include "track.h"
 
 #include "timer.h"
-#include "replay.h"
 #include "forcefeedback.h"
 #include "ai.h"
 #include "quickmp.h"
@@ -41,9 +40,9 @@ public:
 	void Tick(float dt);
 
 	void AdvanceGameLogic();
-	void UpdateCar(CAR & car, double dt);
+	void UpdateCar(CAR & car, int i, double dt);
 	void UpdateDriftScore(CAR & car, double dt);
-	void UpdateCarInputs(CAR & car);
+	void UpdateCarInputs(CAR & car, int i);
 	void UpdateTimer();
 
 	void ProcessGUIInputs();
@@ -51,11 +50,10 @@ public:
 
 	//bool NewGame(bool playreplay=false, bool opponents=false, int num_laps=0);
 	
-	/// new game ========
-	// call in this order
-	bool NewGameDoCleanup();
+	/// ---  new game  ========
+	bool NewGameDoCleanup();  // call in this order
 	bool NewGameDoLoadTrack();
-	/// ---create cars here
+	/// ---  create cars here
 	bool NewGameDoLoadMisc();
 	
 	
@@ -74,14 +72,6 @@ public:
 	void LoadingScreen(float progress, float max);
 	void ProcessNewSettings();
 	void UpdateForceFeedback(float dt);
-
-	std::string GetReplayRecordingFilename();
-	void ParallelUpdate(int carindex);
-
-	//void BeginDraw();
-	//void BeginStartingUp();
-	//void DoneStartingUp();
-	//bool LastStartWasSuccessful() const;
 
 //  vars
 
@@ -128,7 +118,6 @@ public:
 	COLLISION_WORLD collision;
 	
 	TIMER timer;
-	REPLAY replay;
 	AI ai;
 
 #ifdef ENABLE_FORCE_FEEDBACK

@@ -225,16 +225,14 @@ void FollowCamera::moveAboveTerrain()
 	 * We do this by queueing the terrain height at the camera position
 	 * and if the camera is under it, we move the camera a little above the terrain. 
 	*/
-	if (mTerrain)
-	{
-		// minimum of 0.2 m distance to the ground
-		#define CAM_TER_MINOFFSET 0.2
-		Vector3 camPos = mCamera->getPosition();
-		float h = mTerrain->getHeightAtWorldPosition(camPos);
-		if (h+0.2 > camPos.y)
-			mCamera->setPosition(camPos.x, h+0.2, camPos.z);
-		#undef CAM_TER_MINOFFSET
-	}
+	if (!mTerrain)  return;
+
+	const float fMinHOfs = 0.2f;  //  minimum of 0.2 m distance to the ground
+	Vector3 camPos = mCamera->getPosition();
+	float h = mTerrain->getHeightAtWorldPosition(camPos);
+	if (h != 0.f)
+	if (h + fMinHOfs > camPos.y)
+		mCamera->setPosition(camPos.x, h + fMinHOfs, camPos.z);
 }
 
 ///  upd Info

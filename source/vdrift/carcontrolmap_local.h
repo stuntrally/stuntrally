@@ -356,7 +356,7 @@ public:
 	void Save(CONFIGFILE & controlfile, std::ostream & info_output, std::ostream & error_output);
 	
 	///query the eventsystem for info, then return the resulting input array
-	const std::vector <float> & ProcessInput(class App* pApp,
+	const std::vector <float> & ProcessInput(class App* pApp, int player,
 		const std::string & joytype, EVENTSYSTEM_SDL & eventsystem, float steerpos, float dt, bool joy_200, float carms, float speedsens, int screenw, int screenh, float button_ramp, bool hgateshifter);
 	
 	float GetInput(CARINPUT::CARINPUT inputid) const {assert((unsigned int) inputid < inputs.size());return inputs[inputid];}
