@@ -30,8 +30,9 @@ public:
 	//              Control         Physics (VDrift car)    Camera
 	// CT_LOCAL:    Local player    yes	                    yes
 	// CT_REPLAY:   Replay file     no                      yes
+	// CT_GHOST:	Replay file		no						no
 	// CT_REMOTE:   Network	        yes	                    no
-	enum eCarType {  CT_LOCAL=0, CT_REPLAY, CT_REMOTE };
+	enum eCarType {  CT_LOCAL=0, CT_REPLAY, CT_GHOST, CT_REMOTE };
 
 	//--- not used
 	eCarType eType;
