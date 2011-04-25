@@ -1,5 +1,5 @@
-#include <boost/thread.hpp>
 #include "stdafx.h"
+#include <boost/thread.hpp>
 #include "BaseApp.h"
 #include "OgreApp.h" //
 #include "../vdrift/pathmanager.h"
