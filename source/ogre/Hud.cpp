@@ -222,7 +222,13 @@ void App::UpdateHUD(CAR* pCar, float time)
     /// TODO HUD only for first player controlled car
     /// We assume here that the first car in carModels is player controlled
     if (carModels.size() < 1) return;
-    float angrot = (*carModels.begin())->pMainNode ? (*carModels.begin())->pMainNode->getOrientation().getYaw().valueDegrees() : 0.f;
+    std::list<CarModel*>::iterator cit;
+    for (cit=carModels.begin(); cit!=carModels.end(); cit++)
+    {
+		if ( (*cit)->pCar == pCar)
+			break;
+	}
+    float angrot = (*cit)->pMainNode ? (*cit)->pMainNode->getOrientation().getYaw().valueDegrees() : 0.f;
     float sx = 1.4f, sy = sx*asp;  // *par len
     float psx = 2.1f * pSet->size_minimap, psy = psx;  // *par len
 

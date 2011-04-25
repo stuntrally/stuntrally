@@ -40,6 +40,7 @@ public:
 	bool trackreverse;	int number_of_laps;
 	float ai_difficulty;
 	int local_players;
+	bool split_vertically;
 
 	//  other
 	std::string skin;	float vol_master, vol_engine, vol_tires, vol_env;
