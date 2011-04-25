@@ -34,7 +34,6 @@ public:
 	// CT_REMOTE:   Network	        yes	                    no
 	enum eCarType {  CT_LOCAL=0, CT_REPLAY, CT_GHOST, CT_REMOTE };
 
-	//--- not used
 	eCarType eType;
 
 	// Constructor, will assign members and create the vdrift car

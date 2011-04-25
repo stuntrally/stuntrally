@@ -147,7 +147,7 @@ void SplitScreenManager::AdjustRatio()
 		camIt++;
 	}
 }
-void SplitScreenManager::preRenderTargetUpdate(const Ogre::RenderTargetEvent& evt)
+void SplitScreenManager::preViewportUpdate(const Ogre::RenderTargetViewportEvent& evt)
 {
 	if (!pApp) return;
 	if (pApp->bLoading) return;
@@ -155,7 +155,7 @@ void SplitScreenManager::preRenderTargetUpdate(const Ogre::RenderTargetEvent& ev
 	// get number of viewport
 	int i=0;
 	std::list<Ogre::Viewport*>::iterator vpIt = mViewports.begin();
-	while (evt.source != (*vpIt)->getTarget() )
+	while (evt.source != (*vpIt) )
 	{
 		vpIt++;
 		i++;
@@ -178,17 +178,22 @@ void SplitScreenManager::preRenderTargetUpdate(const Ogre::RenderTargetEvent& ev
 		if (carIt == pApp->carModels.end()) return;
 	}
 	
+	Log("Update vp i=" + toStr(i));
+	
 	if (pApp->carModels.size() < 1)
 		return;
 	
 	// Update HUD for this car
 	if ((*carIt) && (*carIt)->pCar)
-		pApp->UpdateHUD( (*carIt)->pCar, 1.0f / evt.source->getLastFPS() );
+		pApp->UpdateHUD( (*carIt)->pCar, 1.0f / evt.source->getTarget()->getLastFPS() );
+		
+	/// Size HUD
+	pApp->SizeHUD(true, evt.source);
 		
 	/// Set skybox pos to camera
 	if (pApp->ndSky)
-		pApp->ndSky->setPosition((*vpIt)->getCamera()->getPosition());
+		pApp->ndSky->setPosition(evt.source->getCamera()->getPosition());
 }
-void SplitScreenManager::postRenderTargetUpdate(const Ogre::RenderTargetEvent& evt)
+void SplitScreenManager::postViewportUpdate(const Ogre::RenderTargetViewportEvent& evt)
 {
 }

@@ -46,8 +46,8 @@ public:
 	
 	class App* pApp;
 	
-	void preRenderTargetUpdate(const Ogre::RenderTargetEvent& evt);
-	void postRenderTargetUpdate(const Ogre::RenderTargetEvent& evt);
+	void preViewportUpdate(const Ogre::RenderTargetViewportEvent& evt);
+	void postViewportUpdate(const Ogre::RenderTargetViewportEvent& evt);
 
 private:
 	class SETTINGS* pSet;

@@ -29,7 +29,7 @@ public:
 	void setTranslations();
 
 	/// car ----------------
-	//CarModel* carM; //in BaseApp
+	//std::list<CarModel*> carModels; //in BaseApp
 	
 	// This list holds new positions info for every CarModel
 	std::list<PosInfo> newPosInfos;
@@ -43,7 +43,7 @@ public:
 	BltObjects objs;  // veget collision in bullet
 	Light* sun;  void UpdFog(bool bForce=false), UpdSun();
 	
-	void UpdateHUD(class CAR* pCar, float time);
+	void UpdateHUD(class CAR* pCar, float time), SizeHUD(bool full, Viewport* vp=NULL);
 
 protected:
 	virtual void createScene();
@@ -52,29 +52,18 @@ protected:
 	virtual bool frameStart(Real time);
 	virtual bool frameEnd(Real time);
 	virtual bool keyPressed( const OIS::KeyEvent &arg );
-	//bool KeyPress(const OIS::KeyEvent &arg);
 		
 	class BtOgre::DebugDrawer *dbgdraw;  /// blt dbg
 
-	//  car  --------
-	/*SceneNode *ndCar, *ndWh[4], *ndWhE[4], *ndRs[4],*ndRd[4];  // car, wheels,emitters
-	ManualObject* CreateModel(const String& mat, class VERTEXARRAY* a, bool flip=false, bool track=false);
-	Vector3 vPofs;*/
 	//  mtr reload
 	enum eMaterials {
 		Mtr_CarBody, Mtr_CarInterior, Mtr_CarGlass,
 		Mtr_CarTireFront, Mtr_CarTireRear,
 		Mtr_Road,  NumMaterials  };
 	String sMtr[NumMaterials];
-	//void CarChangeClr(), 
-	// static so CarModel can access it
-	static void reloadMtrTex(String mtrName);
+	void reloadMtrTex(String mtrName);
 	
-	/*ParticleSystem* ps[4],*pm[4],*pd[4];  // smoke, mud, dust
-	RibbonTrail* whTrl[4];
-	Real wht[4];  // spin time (approx tire temp.)
-	int whTerMtr[4];
-	void UpdParsTrails();*/ 
+	// Rain, snow
 	ParticleSystem *pr,*pr2;
 
 	//  2D, hud  ----
@@ -90,7 +79,7 @@ protected:
 	Overlay* ovGear,*ovVel, *ovAbsTcs,*ovCarDbg,*ovCarDbgTxt,  *ovCam, *ovTimes;
 
 	String GetTimeString(float time) const;
-	void CreateHUD(), SizeHUD(bool full), ShowHUD(bool hideAll=false);
+	void CreateHUD(), ShowHUD(bool hideAll=false);
 
 
 	//  create  . . . . . . . . . . . . . . . . . . . . . . . . 
