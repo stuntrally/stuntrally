@@ -150,6 +150,7 @@ void SplitScreenManager::AdjustRatio()
 void SplitScreenManager::preRenderTargetUpdate(const Ogre::RenderTargetEvent& evt)
 {
 	if (!pApp) return;
+	if (pApp->bLoading) return;
 	/// Update HUD
 	// get number of viewport
 	int i=0;
