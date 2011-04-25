@@ -151,6 +151,8 @@ void SplitScreenManager::preViewportUpdate(const Ogre::RenderTargetViewportEvent
 {
 	if (!pApp) return;
 	if (pApp->bLoading) return;
+	if (pApp->carModels.size() < 1)
+		return;
 	/// Update HUD
 	// get number of viewport
 	int i=0;
@@ -177,9 +179,6 @@ void SplitScreenManager::preViewportUpdate(const Ogre::RenderTargetViewportEvent
 		carIt++;
 		if (carIt == pApp->carModels.end()) return;
 	}
-		
-	if (pApp->carModels.size() < 1)
-		return;
 	
 	// Update HUD for this car
 	if ((*carIt) && (*carIt)->pCar)
