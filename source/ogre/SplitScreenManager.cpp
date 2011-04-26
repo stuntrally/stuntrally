@@ -13,11 +13,15 @@ SplitScreenManager::SplitScreenManager(Ogre::SceneManager* sceneMgr, Ogre::Rende
 	mWindow = window;
 	mSceneMgr = sceneMgr;
 	pSet = set;
+	
+	// Add window listener
+	mWindow->addListener(this);
 }
 
 SplitScreenManager::~SplitScreenManager()
 {
 	CleanUp();
+	mWindow->removeListener(this);
 }
 
 void SplitScreenManager::SetBackground(const Ogre::ColourValue& value)
@@ -38,7 +42,6 @@ void SplitScreenManager::CleanUp()
 	// Viewports
 	for (std::list<Ogre::Viewport*>::iterator vpIt=mViewports.begin(); vpIt != mViewports.end(); vpIt++)
 	{
-		(*vpIt)->getTarget()->removeListener(this);
 		mWindow->removeViewport( (*vpIt)->getZOrder() );
 	}
 	mViewports.clear();
@@ -68,7 +71,7 @@ void SplitScreenManager::Align()
 		float dims[4];
 		
 		// handy macro for initializing the array
-		#define dim_(t,l,h,w)  dims[0]=t;  dims[1]=l;  dims[2]=h;  dims[3]=w
+		#define dim_(l,t,w,h)  dims[0]=l;  dims[1]=t;  dims[2]=w;  dims[3]=h
 		
 		if (mNumPlayers == 1)
 		{
@@ -117,10 +120,8 @@ void SplitScreenManager::Align()
 		// Create viewport
 		// use i+1 as Z order
 		mViewports.push_back(mWindow->addViewport( *(--mCameras.end()), i+1, dims[0], dims[1], dims[2], dims[3]));
-		// Add a render target listener for this viewport
-		mViewports.back()->getTarget()->addListener(this);
 	}
-	
+		
 	AdjustRatio();
 	
 	// Add compositing filters for the new viewports
