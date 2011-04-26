@@ -65,6 +65,8 @@ void App::CreateTrees()
 	imgRoadSize = imgRoad.getWidth();  // square[]
 	//imgRoad.save("grassDens.png");
 	//Log("grass img " + toStr(imgRoadSize));
+	for (int i=0; i<100; i++)
+		Log("ZOMG TREEESSS!!!!!!");
 
 
 	using namespace Forests;

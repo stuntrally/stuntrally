@@ -135,10 +135,6 @@ bool App::frameStart(Real time)
 			dbgdraw->setDebugMode(pSet->bltDebug ? /*255*/1: 0);
 			dbgdraw->step();  }
 
-		//  hud
-		CAR* pCar = pGame->cars.size() == 0 ? NULL : &(*pGame->cars.begin());
-		UpdateHUD(pCar, time);
-
 		///  terrain mtr from blend maps
 		// now in CarModel::Update
 		//UpdWhTerMtr(pCar);
@@ -155,28 +151,6 @@ bool App::frameStart(Real time)
 			{
 				 pr->setSpeedFactor(1.f);
 				 pr2->setSpeedFactor(1.f);
-			}
-		}
-		
-		//  par  rain cam  . . . .
-		///TODO per-camera rain
-		if (pSet->particles && time != 0)
-		{	const Vector3& pos = (*mSplitMgr->mCameras.begin())->getPosition();
-				static Vector3 oldPos = Vector3::ZERO;
-				Vector3 vel = (pos-oldPos)/time;  oldPos = pos;
-			Vector3 dir = (*mSplitMgr->mCameras.begin())->getDirection();//, up = mCamera->getUp();
-			Vector3 par = pos + dir * 12 + vel * 0.4;
-			if (pr && sc.rainEmit > 0)
-			{
-				ParticleEmitter* pe = pr->getEmitter(0);
-				pe->setPosition(par);
-				pe->setEmissionRate(sc.rainEmit);
-			}
-			if (pr2 && sc.rain2Emit > 0)
-			{
-				ParticleEmitter* pe = pr2->getEmitter(0);
-				pe->setPosition(par);	//pe->setDirection(-up);
-				pe->setEmissionRate(sc.rain2Emit);
 			}
 		}
 		

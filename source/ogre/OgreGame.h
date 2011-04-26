@@ -43,7 +43,13 @@ public:
 	BltObjects objs;  // veget collision in bullet
 	Light* sun;  void UpdFog(bool bForce=false), UpdSun();
 	
-	void UpdateHUD(class CAR* pCar, float time), SizeHUD(bool full, Viewport* vp=NULL);
+	// Rain, snow
+	ParticleSystem *pr,*pr2;
+	
+	//  trees
+	class Forests::PagedGeometry *trees, *grass;
+	
+	void UpdateHUD(class CAR* pCar, float time, Viewport* vp=NULL), SizeHUD(bool full, Viewport* vp=NULL);
 
 protected:
 	virtual void createScene();
@@ -62,9 +68,6 @@ protected:
 		Mtr_Road,  NumMaterials  };
 	String sMtr[NumMaterials];
 	void reloadMtrTex(String mtrName);
-	
-	// Rain, snow
-	ParticleSystem *pr,*pr2;
 
 	//  2D, hud  ----
 	float asp,  xcRpm, ycRpm, xcVel, ycVel,
@@ -132,10 +135,6 @@ protected:
 	bool bGetStPos;  Matrix4 matStPos;	Vector4 vStDist;
 	int iInChk, iCurChk, iNextChk, iNumChks;  // cur checkpoint -1 at start
 	bool bInSt, bWrongChk;
-
-
-	//  trees
-	class Forests::PagedGeometry *trees, *grass;
 
 	///  Gui  ---------------------------------------------------------------------------
 	void InitGui();

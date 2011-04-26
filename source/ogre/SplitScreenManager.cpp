@@ -8,7 +8,7 @@
 
 
 SplitScreenManager::SplitScreenManager(Ogre::SceneManager* sceneMgr, Ogre::RenderWindow* window, SETTINGS* set) :
-	pApp(0)
+	pApp(0), mGuiViewport(0), mGuiSceneMgr(0)
 {
 	mWindow = window;
 	mSceneMgr = sceneMgr;
@@ -118,10 +118,21 @@ void SplitScreenManager::Align()
 		mCameras.back()->setNearClipDistance(0.2f);
 		
 		// Create viewport
-		// use i+1 as Z order
-		mViewports.push_back(mWindow->addViewport( *(--mCameras.end()), i+1, dims[0], dims[1], dims[2], dims[3]));
+		// use i as Z order
+		mViewports.push_back(mWindow->addViewport( mCameras.back(), i, dims[0], dims[1], dims[2], dims[3]));
 	}
-		
+	
+	// Create gui viewport if not already existing
+	if (!mGuiViewport)
+	{
+		mGuiSceneMgr = Ogre::Root::getSingleton().createSceneManager(ST_GENERIC);
+		Ogre::Camera* guiCam = mGuiSceneMgr->createCamera("GuiCam1");
+		mGuiViewport = mWindow->addViewport(guiCam, 100);
+		// make transparent
+		mGuiViewport->setBackgroundColour(Ogre::ColourValue(0.0, 0.0, 0.0, 0.0));
+		mGuiViewport->setClearEveryFrame(true, FBT_DEPTH);
+	}
+	
 	AdjustRatio();
 	
 	// Add compositing filters for the new viewports
@@ -149,50 +160,83 @@ void SplitScreenManager::preViewportUpdate(const Ogre::RenderTargetViewportEvent
 	if (pApp->bLoading)  return;
 	if (pApp->carModels.size() < 1)  return;
 
-	//  get number of viewport
-	std::list<Ogre::Viewport*>::iterator vpIt = mViewports.begin();
-	int i = 0;
-	while (evt.source != *vpIt)
+	// What kind of viewport is being updated?
+	if (evt.source != mGuiViewport)
 	{
-		i++;
-		vpIt++;
-		if (vpIt == mViewports.end())  return;
-	}
+		// 3d scene viewport
+		//  get number of viewport
+		std::list<Ogre::Viewport*>::iterator vpIt = mViewports.begin();
+		int i = 0;
+		while (evt.source != *vpIt)
+		{
+			i++;
+			vpIt++;
+		}
 
-	//  get car for this viewport
-	std::list<CarModel*>::iterator carIt = pApp->carModels.begin();
-	int j = 0;
-	while (j <= i)
-	{
-		if ((*carIt)->eType == CarModel::CT_REMOTE)
-			j--;
-		else
-			if (j == i)
-				break;
-		j++;
-		carIt++;
-		if (carIt == pApp->carModels.end())  return;
-	}
-	
-	//  Size HUD
-	pApp->SizeHUD(true, evt.source);
-
-	//  Update HUD for this car
-	if (*carIt && (*carIt)->pCar)
-		pApp->UpdateHUD( (*carIt)->pCar, 1.0f / evt.source->getTarget()->getLastFPS() );
-
-
-	//  Set skybox pos to camera
-	if (pApp->ndSky)
-		pApp->ndSky->setPosition(evt.source->getCamera()->getPosition());
+		//  get car for this viewport
+		std::list<CarModel*>::iterator carIt = pApp->carModels.begin();
+		int j = 0;
+		while (j <= i)
+		{
+			if ((*carIt)->eType == CarModel::CT_REMOTE)
+				j--;
+			else
+				if (j == i)
+					break;
+			j++;
+			carIt++;
+		}
 		
+		//  Size HUD
+		pApp->SizeHUD(true, evt.source);
 
-	//  road lod for each viewport
-	if (pApp->pSet->local_players > 1)
-	if (pApp->road)
+		//  Update HUD for this car
+		if (*carIt && (*carIt)->pCar)
+			pApp->UpdateHUD( (*carIt)->pCar, 1.0f / mWindow->getLastFPS(), evt.source );
+
+
+		//  Set skybox pos to camera
+		if (pApp->ndSky)
+			pApp->ndSky->setPosition(evt.source->getCamera()->getPosition());
+			
+
+		//  road lod for each viewport
+		if (pApp->pSet->local_players > 1)
+		if (pApp->road)
+		{
+			pApp->road->mCamera = evt.source->getCamera();
+			pApp->road->UpdLodVis(pSet->road_dist);
+		}
+		
+		//  Update rain/snow - dependant on camera
+		if (pSet->particles)
+		{	
+			const Vector3& pos = evt.source->getCamera()->getPosition();
+			static Vector3 oldPos = Vector3::ZERO;
+			Vector3 vel = (pos-oldPos)/ (1.0f / mWindow->getLastFPS());  oldPos = pos;
+			Vector3 dir = evt.source->getCamera()->getDirection();//, up = mCamera->getUp();
+			Vector3 par = pos + dir * 12 + vel * 0.4;
+			if (pApp->pr && pApp->sc.rainEmit > 0)
+			{
+				ParticleEmitter* pe = pApp->pr->getEmitter(0);
+				pe->setPosition(par);
+				pe->setEmissionRate(pApp->sc.rainEmit);
+			}
+			if (pApp->pr2 && pApp->sc.rain2Emit > 0)
+			{
+				ParticleEmitter* pe = pApp->pr2->getEmitter(0);
+				pe->setPosition(par);	//pe->setDirection(-up);
+				pe->setEmissionRate(pApp->sc.rain2Emit);
+			}
+		}
+	}
+	else
 	{
-		pApp->road->mCamera = evt.source->getCamera();
-		pApp->road->UpdLodVis(pSet->road_dist);
+		// Gui viewport, overlay and mygui
+		//  hide stuff we don't want
+		pApp->UpdateHUD( pApp->carModels.front()->pCar, mWindow->getLastFPS() );
+
+		pApp->SizeHUD(false);
 	}
 }
 

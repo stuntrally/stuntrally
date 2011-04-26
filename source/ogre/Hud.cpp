@@ -200,11 +200,28 @@ void App::ShowHUD(bool hideAll)
 
 //  Update HUD
 ///---------------------------------------------------------------------------------------------------------------
-void App::UpdateHUD(CAR* pCar, float time)
+void App::UpdateHUD(CAR* pCar, float time, Viewport* vp)
 {
 	if (bSizeHUD)
 	{	bSizeHUD = false;
 		SizeHUD(true);	}
+		
+	// show/hide for render viewport / gui viewport
+	// first show everything
+	ShowHUD(false);
+	// now hide things we dont want
+	if (!vp)
+	{
+		/// for gui viewport ----------------------
+		if (hudGear) hudGear->hide();
+		if (hudVel) hudVel->hide();
+	}
+	else
+	{
+		/// for render viewport ---------
+		if (ovCam) ovCam->hide();
+		if (ovTimes) ovTimes->hide();	
+	}
 			
 	///  hud rpm,vel  --------------------------------
 	if (pCar && !pSet->rpl_play)
@@ -219,8 +236,6 @@ void App::UpdateHUD(CAR* pCar, float time)
     float angrmp = fr.rpm*rsc + rmin;
     float vsc = pSet->show_mph ? -180.f/100.f : -180.f/160.f, vmin = 0.f;  //vel
     float angvel = abs(vel)*vsc + vmin;
-    /// TODO HUD only for first player controlled car
-    /// We assume here that the first car in carModels is player controlled
     if (carModels.size() < 1) return;
     std::list<CarModel*>::iterator cit;
     for (cit=carModels.begin(); cit!=carModels.end(); cit++)
@@ -298,6 +313,9 @@ void App::UpdateHUD(CAR* pCar, float time)
 			hudTcs->setColour(ColourValue(0.7,0.9,1, pCar->GetTCSActive() ? 1 : 0.4));
 		}else
 			hudTcs->hide();
+
+		// hide on gui vp
+		if (!vp) { hudAbs->hide(); hudTcs->hide(); }
 	}
 	
 	//  times, score  --------
@@ -317,7 +335,7 @@ void App::UpdateHUD(CAR* pCar, float time)
 				String(TR("\n#{TBLast} ")) + GetTimeString(tim.GetLastLap())+
 				String(TR("\n#{TBBest} ")) + GetTimeString(tim.GetBestLap(pSet->trackreverse)) );
 	}
-	
+
 	//-----------------------------------------------------------------------------------------------
 	///  debug infos
 	//-----------------------------------------------------------------------------------------------

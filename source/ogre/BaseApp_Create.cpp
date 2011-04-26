@@ -329,14 +329,7 @@ bool BaseApp::setup()
 	mSplitMgr = new SplitScreenManager(mSceneMgr, mWindow, pSet);
 
 	createCamera();
-	// GUI Viewport
-	Ogre::SceneManager* guiSceneMgr = mRoot->createSceneManager(ST_GENERIC);
-	Ogre::Camera* guiCam = guiSceneMgr->createCamera("GuiCam1");
-	Ogre::Viewport* guiVp = mWindow->addViewport(guiCam, 100);
-	// transparent
-	guiVp->setBackgroundColour(Ogre::ColourValue(0.0, 0.0, 0.0, 0.0));
-	guiVp->setClearEveryFrame(true, FBT_DEPTH);
-	createViewports();
+	createViewports(); // calls mSplitMgr->Align();
 
 	TextureManager::getSingleton().setDefaultNumMipmaps(5);
 
@@ -347,7 +340,7 @@ bool BaseApp::setup()
 	mGUI->initialise("core.xml", PATHMANAGER::GetLogDir() + "/MyGUI.log");
 	MyGUI::LanguageManager::getInstance().setCurrentLanguage(getSystemLanguage());
 	
-	mPlatform->getRenderManagerPtr()->setSceneManager(guiSceneMgr);
+	mPlatform->getRenderManagerPtr()->setSceneManager(mSplitMgr->mGuiSceneMgr);
 	mPlatform->getRenderManagerPtr()->setActiveViewport(mSplitMgr->mNumPlayers);
 	
 	// After having initialised mygui, we can set translated strings
@@ -413,6 +406,7 @@ void BaseApp::loadResources()
 void BaseApp::LoadingOn()
 {
 	mSplitMgr->SetBackground(ColourValue(0.15,0.165,0.18));
+	mSplitMgr->mGuiViewport->setBackgroundColour(ColourValue(0.15,0.165,0.18,1.0));
 	mLoadingBar.start(mWindow, 1, 1, 1 );
 
 	// Turn off  rendering except overlays
@@ -424,6 +418,7 @@ void BaseApp::LoadingOff()
 {
 	// Turn On  full rendering
 	mSplitMgr->SetBackground(ColourValue(0.5,0.65,0.8));
+	mSplitMgr->mGuiViewport->setBackgroundColour(ColourValue(0.0,0.0,0.0,0.0));
 	mSceneMgr->clearSpecialCaseRenderQueues();
 	mSceneMgr->setSpecialCaseRenderQueueMode(SceneManager::SCRQM_EXCLUDE);
 	mLoadingBar.finish();
