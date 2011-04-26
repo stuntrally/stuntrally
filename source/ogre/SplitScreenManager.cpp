@@ -4,7 +4,7 @@
 #include "OgreGame.h"
 #include "CarModel.h"
 #include "../vdrift/settings.h"
-#include "../road/road.h"
+#include "../road/Road.h"
 
 
 SplitScreenManager::SplitScreenManager(Ogre::SceneManager* sceneMgr, Ogre::RenderWindow* window, SETTINGS* set) :
