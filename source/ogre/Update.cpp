@@ -3,6 +3,7 @@
 #include "../vdrift/game.h"
 #include "FollowCamera.h"
 #include "../road/Road.h"
+#include "../oisb/OISBSystem.h"
 
 
 
@@ -45,6 +46,9 @@ void App::UpdThr()
 
 bool App::frameStart(Real time)
 {
+	// update input
+	OISB::System::getSingleton().process(time);
+	
 	if (bWindowResized)
 	{
 		//comboResolution(NULL, 0);

@@ -5,6 +5,7 @@
 #include "CompositorLogics.h"
 #include "Locale.h"
 #include "OgreFontManager.h"
+#include "../oisb/OISBSystem.h"
 
 //  Camera
 //-------------------------------------------------------------------------------------
@@ -40,10 +41,12 @@ void BaseApp::createFrameListener()
     pl.insert(std::make_pair(std::string("XAutoRepeatOn"), std::string("true")));
     #endif
 
+	new OISB::System();
 	mInputManager = OIS::InputManager::createInputSystem( pl );
+	OISB::System::getSingleton().initialize(mInputManager);
 
-	mKeyboard = static_cast<OIS::Keyboard*>(mInputManager->createInputObject( OIS::OISKeyboard, true ));
-	mMouse = static_cast<OIS::Mouse*>(mInputManager->createInputObject( OIS::OISMouse, true ));
+	mKeyboard = OISB::System::getSingleton().getOISKeyboard();
+	mMouse = OISB::System::getSingleton().getOISMouse();
 
 	mMouse->setEventCallback(this);
 	mKeyboard->setEventCallback(this);
@@ -359,6 +362,7 @@ bool BaseApp::setup()
 
 void BaseApp::destroyScene()
 {
+	delete OISB::System::getSingletonPtr();
 }
 
 //  Resources
@@ -509,10 +513,6 @@ void BaseApp::windowClosed(RenderWindow* rw)
 	if (rw == mWindow)
 	if (mInputManager)
 	{
-		mInputManager->destroyInputObject( mMouse );
-		mInputManager->destroyInputObject( mKeyboard );
-
-		OIS::InputManager::destroyInputSystem(mInputManager);
-		mInputManager = 0;
+		OISB::System::getSingleton().finalize();
 	}
 }
