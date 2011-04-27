@@ -10,12 +10,12 @@
       <action type="Trigger" name="HandBrake">
          <bind>Keyboard/space</bind>
       </action>
-      <action type="Trigger" name="SteerRight">
-         <bind>Keyboard/Right</bind>
-      </action>
-      <action type="Trigger" name="SteerLeft">
-         <bind>Keyboard/Left</bind>
-      </action>
+      <action type="AnalogAxis" name="Steering" MinimumValue="-100" MaximumValue="100" EmulationReturnValue="0" EmulationSpeed="500" EmulationReturnSpeed="500">
+		  <binding>
+		      <bind role="increase">Keyboard/Right</bind>
+		      <bind role="decrease">Keyboard/Left</bind>
+		  </binding>
+	  </action>
       <action type="Trigger" name="ShiftUp">
          <bind>Keyboard/a</bind>
       </action>
@@ -43,12 +43,12 @@
       <action type="Trigger" name="HandBrake">
          <bind>Keyboard/x</bind>
       </action>
-      <action type="Trigger" name="SteerRight">
-         <bind>Keyboard/f</bind>
-      </action>
-      <action type="Trigger" name="SteerLeft">
-         <bind>Keyboard/s</bind>
-      </action>
+      <action type="AnalogAxis" name="Steering" MinimumValue="-100" MaximumValue="100" EmulationReturnValue="0" EmulationSpeed="500" EmulationReturnSpeed="500">
+		  <binding>
+		      <bind role="increase">Keyboard/f</bind>
+		      <bind role="decrease">Keyboard/s</bind>
+		  </binding>
+	  </action>
       <action type="Trigger" name="ShiftUp">
          <bind>Keyboard/a</bind>
       </action>
@@ -76,12 +76,12 @@
       <action type="Trigger" name="HandBrake">
          <bind>Keyboard/KP_Insert</bind>
       </action>
-      <action type="Trigger" name="SteerRight">
-         <bind>Keyboard/KP_Right</bind>
-      </action>
-      <action type="Trigger" name="SteerLeft">
-         <bind>Keyboard/KP_Left</bind>
-      </action>
+      <action type="AnalogAxis" name="Steering" MinimumValue="-100" MaximumValue="100" EmulationReturnValue="0" EmulationSpeed="500" EmulationReturnSpeed="500">
+		  <binding>
+		      <bind role="increase">Keyboard/KP_Right</bind>
+		      <bind role="decrease">Keyboard/KP_Left</bind>
+		  </binding>
+	  </action>
       <action type="Trigger" name="ShiftUp">
          <bind>Keyboard/a</bind>
       </action>
@@ -109,12 +109,12 @@
       <action type="Trigger" name="HandBrake">
          <bind>Keyboard/n</bind>
       </action>
-      <action type="Trigger" name="SteerRight">
-         <bind>Keyboard/k</bind>
-      </action>
-      <action type="Trigger" name="SteerLeft">
-         <bind>Keyboard/h</bind>
-      </action>
+      <action type="AnalogAxis" name="Steering" MinimumValue="-100" MaximumValue="100" EmulationReturnValue="0" EmulationSpeed="500" EmulationReturnSpeed="500">
+		  <binding>
+		      <bind role="increase">Keyboard/k</bind>
+		      <bind role="decrease">Keyboard/h</bind>
+		  </binding>
+	  </action>
       <action type="Trigger" name="ShiftUp">
          <bind>Keyboard/a</bind>
       </action>

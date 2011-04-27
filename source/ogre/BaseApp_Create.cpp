@@ -5,7 +5,7 @@
 #include "CompositorLogics.h"
 #include "Locale.h"
 #include "OgreFontManager.h"
-#include "../oisb/OISBSystem.h"
+#include "../oisb/OISB.h"
 
 //  Camera
 //-------------------------------------------------------------------------------------
@@ -44,6 +44,8 @@ void BaseApp::createFrameListener()
 	new OISB::System();
 	mInputManager = OIS::InputManager::createInputSystem( pl );
 	OISB::System::getSingleton().initialize(mInputManager);
+	Log("(INFO) Available OISB devices:");
+	OISB::System::getSingleton().dumpDevices();
 	#if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
 	OISB::System::getSingleton().loadActionSchemaFromXMLFile(PATHMANAGER::GetGameConfigDir() + "/binds-default-win.xml");
 	#else

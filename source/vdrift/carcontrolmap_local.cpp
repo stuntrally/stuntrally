@@ -4,6 +4,7 @@
 #include "../ogre/OgreGame.h"
 #include "../oisb/OISBSystem.h"
 #include "../oisb/OISBAction.h"
+#include "../oisb/OISBAnalogAxisAction.h"
 
 
 void CARCONTROLMAP_LOCAL::Load(const std::string & controlfile, std::ostream & info_output, std::ostream & error_output)
@@ -551,10 +552,28 @@ const std::vector <float> & CARCONTROLMAP_LOCAL::ProcessInput(class App* pApp, i
 	ProcessSteering(joytype, steerpos, dt, joy_200, carms*2.23693629, speedsens);
 	
 	/// TODO: make steering & throttle analog axis actions and allow joystick
+	#define analogAction(s) static_cast<OISB::AnalogAxisAction*>(OISB::System::getSingleton().lookupAction("Player" + toStr(player+1) + "/" + s))->getAbsoluteValue()/100.0f
 	inputs[CARINPUT::THROTTLE] = action("Throttle") ? 1.0f : 0.0f;
 	inputs[CARINPUT::BRAKE] = action("Brake") ? 1.0f : 0.0f;
-	inputs[CARINPUT::STEER_RIGHT] = action("SteerRight") ? 1.0f : 0.0f;
-	inputs[CARINPUT::STEER_LEFT] = action("SteerLeft") ? 1.0f : 0.0f;
+	
+	// steering
+	float steerLeft, steerRight;
+	const float value = analogAction("Steering");
+	if (value < 0)
+	{
+		steerLeft = value*-1; steerRight = 0;
+	}
+	else if (value > 0)
+	{
+		steerLeft = 0; steerRight = value;
+	}
+	else
+	{
+		steerLeft = 0; steerRight = 0;
+	}
+	inputs[CARINPUT::STEER_RIGHT] = steerRight;
+	inputs[CARINPUT::STEER_LEFT] = steerLeft;
+	
 	inputs[CARINPUT::HANDBRAKE] = action("HandBrake") ? 1.0f : 0.0f;
 	
 	// flip over

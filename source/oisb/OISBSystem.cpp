@@ -28,6 +28,7 @@ restrictions:
 #include "OISBActionSchema.h"
 #include "OISBAction.h"
 #include "OISBState.h"
+#include "OISBBinding.h"
 
 #include "OISException.h"
 #include "OISInputManager.h"
@@ -312,23 +313,28 @@ namespace OISB
 		}
 
 		// then process the child bindings
-        for (rapidxml::xml_node<> *child = actionNode->first_node("bind"); child; child = child->next_sibling())
+        for (rapidxml::xml_node<> *child = actionNode->first_node("binding"); child; child = child->next_sibling())
 			processActionBindingXML(child, tmpAction);
+			
+        for (rapidxml::xml_node<> *child = actionNode->first_node("bind"); child; child = child->next_sibling())
+			processActionBindXML(child, NULL, tmpAction);
 
 		return 0;
 	}
 
-	int System::processActionBindingXML(rapidxml::xml_node<>* bindNode, Action *action)
+	int System::processActionBindingXML(rapidxml::xml_node<>* bindingNode, Action *action)
 	{
-		if(!bindNode || !action) return 1;
+		if(!bindingNode || !action) return 1;
 
 		bool optional = false;
-		if(bindNode->first_attribute("optional"))
+		if(bindingNode->first_attribute("optional"))
 			optional = true;
 
 		try
 		{
-			action->bind(std::string(bindNode->value()));
+			OISB::Binding* binding = action->createBinding();
+			for (rapidxml::xml_node<> *child = bindingNode->first_node("bind"); child; child = child->next_sibling())
+				processActionBindXML(child, binding, action);
 		} catch(const OIS::Exception &ex)
 		{
 			// rethrow if this binding is not optional
@@ -337,6 +343,28 @@ namespace OISB
 		}
 		return 0;
 	}
+	
+	int System::processActionBindXML(rapidxml::xml_node<>* bindNode, Binding *binding, Action *action)
+	{
+		if(!bindNode || !action) return 1;
+	
+		std::string role = "";
+		if(bindNode->first_attribute("role"))
+			role = bindNode->first_attribute("role")->value();
+	
+		if (binding)
+		{
+			if (role != "")
+				binding->bind(bindNode->value(), role);
+			else
+				binding->bind(bindNode->value());
+		}
+		else
+			action->bind(bindNode->value());
+
+		return 0;
+	}
+
 
 
     ActionSchema* System::createActionSchema(const String& name, bool setAsDefault)

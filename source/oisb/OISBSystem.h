@@ -298,7 +298,8 @@ namespace OISB
 			// xml processing things, should be moved to separate class later on
 			int processSchemaXML(rapidxml::xml_node<>* schemaNode);
 			int processActionXML(rapidxml::xml_node<>* actionNode, ActionSchema* schema);
-			int processActionBindingXML(rapidxml::xml_node<>* bindNode, Action *action);
+			int processActionBindingXML(rapidxml::xml_node<>* bindingNode, Action *action);
+			int processActionBindXML(rapidxml::xml_node<>* bindNode, Binding *binding, Action *action);
 
 	};
 }
