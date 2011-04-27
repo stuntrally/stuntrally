@@ -379,15 +379,8 @@ const std::vector <float> & CARCONTROLMAP_LOCAL::ProcessInput(class App* pApp, i
 				using namespace OIS;
 				
 				EVENTSYSTEM_SDL::BUTTON_STATE keystate = eventsystem.GetKeyState(SDLKey(i->keycode));
-
-				/// TODO: make steering & throttle analog axis actions and allow joystick
-				#define action(s) OISB::System::getSingleton().lookupAction("Player" + toStr(player+1) + "/" + s)->isActive();
-				if (n->first == CARINPUT::THROTTLE) 	keystate.down = action("Throttle");
-				if (n->first == CARINPUT::BRAKE)		keystate.down = action("Brake");
-				if (n->first == CARINPUT::STEER_RIGHT)	keystate.down = action("SteerRight");
-				if (n->first == CARINPUT::STEER_LEFT)	keystate.down = action("SteerLeft");
-				if (n->first == CARINPUT::HANDBRAKE)	keystate.down = action("HandBrake");
-					
+				
+				#define action(s) OISB::System::getSingleton().lookupAction("Player" + toStr(player+1) + "/" + s)->isActive()
 				static bool grUpOld = false, grDnOld = false;
 				if (n->first == CARINPUT::SHIFT_UP)		{
 					bool grUp = action("ShiftUp");
@@ -397,7 +390,6 @@ const std::vector <float> & CARCONTROLMAP_LOCAL::ProcessInput(class App* pApp, i
 					bool grDn = action("ShiftDown");
 					keystate.just_down = grDn && !grDnOld;
 					keystate.just_up = !grDn && grDnOld;	grDnOld = grDn;  }
-				#undef action
 					
 				if (i->onetime)
 				{
@@ -558,6 +550,13 @@ const std::vector <float> & CARCONTROLMAP_LOCAL::ProcessInput(class App* pApp, i
 	//do steering processing
 	ProcessSteering(joytype, steerpos, dt, joy_200, carms*2.23693629, speedsens);
 	
+	/// TODO: make steering & throttle analog axis actions and allow joystick
+	inputs[CARINPUT::THROTTLE] = action("Throttle") ? 1.0f : 0.0f;
+	inputs[CARINPUT::BRAKE] = action("Brake") ? 1.0f : 0.0f;
+	inputs[CARINPUT::STEER_RIGHT] = action("SteerRight") ? 1.0f : 0.0f;
+	inputs[CARINPUT::STEER_LEFT] = action("SteerLeft") ? 1.0f : 0.0f;
+	inputs[CARINPUT::HANDBRAKE] = action("HandBrake") ? 1.0f : 0.0f;
+
 	return inputs;
 }
 

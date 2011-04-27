@@ -363,13 +363,6 @@ void GAME::AdvanceGameLogic()
 		if (pause && carcontrols_local.first)
 		{
 			sound.Pause(true);
-
-			//this next line is required so that the game will see the unpause key
-			carcontrols_local.second.ProcessInput(pOgreGame, 0,  ///<?
-				settings->joytype, eventsystem, carcontrols_local.first->GetLastSteer(), TickPeriod(),
-				settings->joy200, carcontrols_local.first->GetSpeed(), settings->speed_sensitivity,
-				/*graphics.GetW(), graphics.GetH(),*/1280.f, 960.f,
-				settings->button_ramp, settings->hgateshifter);
 		}
 		else
 		{
