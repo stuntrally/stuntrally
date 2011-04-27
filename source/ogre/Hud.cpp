@@ -12,17 +12,24 @@
 void App::SizeHUD(bool full, Viewport* vp)
 {
 	float fHudScale = pSet->size_gauges;
+	float modifier;
 	if (vp)
+	{
 		asp = float(vp->getActualWidth())/float(vp->getActualHeight());
+		modifier = asp / (float(mWindow->getWidth())/float(mWindow->getHeight()));
+	}
 	else
+	{
 		asp = float(mWindow->getWidth())/float(mWindow->getHeight());
+		modifier = 1;
+	}
 	Real spx = fHudScale*1.1, spy = spx*asp;
 	xcRpm = -1 + spx;  ycRpm = -1 + spy;
 	xcVel =  1 - spx;  ycVel = -1 + spy;
 
 	if (full &&	nrpmB && nvelBk && nvelBm && nrpm &&nvel)
 	{
-		Vector3 sca(fHudScale,fHudScale*asp,1), sc(fHudScale,fHudScale,1);
+		Vector3 sca(fHudScale,fHudScale*asp,1), sc(fHudScale,fHudScale*modifier,1);
 		nrpmB->setScale(sca);	nvelBk->setScale(sca);  nvelBm->setScale(sca);
 		nrpm->setScale(sc); 	nvel->setScale(sc);
 
