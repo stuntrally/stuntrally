@@ -22,6 +22,16 @@
       <action type="Trigger" name="ShiftDown">
          <bind>Keyboard/z</bind>
       </action>
+      <action type="Trigger" name="Boost">
+	     <bind>Keyboard/Control_L</bind>
+	     <bind>Keyboard/Control_R</bind>
+	  </action>
+	  <action type="Trigger" name="FlipLeft">
+		 <bind>Keyboard/q</bind>
+	  </action>
+	  <action type="Trigger" name="FlipRight">
+	     <bind>Keyboard/w</bind>
+	  </action>
    </schema>
    <schema name="Player2">
       <action type="Trigger" name="Throttle">
@@ -45,6 +55,16 @@
       <action type="Trigger" name="ShiftDown">
          <bind>Keyboard/z</bind>
       </action>
+      <action type="Trigger" name="Boost">
+	     <bind>Keyboard/Control_L</bind>
+	     <bind>Keyboard/Control_R</bind>
+	  </action>
+	  <action type="Trigger" name="FlipLeft">
+		 <bind>Keyboard/q</bind>
+	  </action>
+	  <action type="Trigger" name="FlipRight">
+	     <bind>Keyboard/w</bind>
+	  </action>
    </schema>
    <schema name="Player3">
       <action type="Trigger" name="Throttle">
@@ -68,6 +88,16 @@
       <action type="Trigger" name="ShiftDown">
          <bind>Keyboard/z</bind>
       </action>
+      <action type="Trigger" name="Boost">
+	     <bind>Keyboard/Control_L</bind>
+	     <bind>Keyboard/Control_R</bind>
+	  </action>
+	  <action type="Trigger" name="FlipLeft">
+		 <bind>Keyboard/q</bind>
+	  </action>
+	  <action type="Trigger" name="FlipRight">
+	     <bind>Keyboard/w</bind>
+	  </action>
    </schema>
    <schema name="Player4">
       <action type="Trigger" name="Throttle">
@@ -91,5 +121,15 @@
       <action type="Trigger" name="ShiftDown">
          <bind>Keyboard/z</bind>
       </action>
+      <action type="Trigger" name="Boost">
+	     <bind>Keyboard/Control_L</bind>
+	     <bind>Keyboard/Control_R</bind>
+	  </action>
+	  <action type="Trigger" name="FlipLeft">
+		 <bind>Keyboard/q</bind>
+	  </action>
+	  <action type="Trigger" name="FlipRight">
+	     <bind>Keyboard/w</bind>
+	  </action>
    </schema>
 </schemas>

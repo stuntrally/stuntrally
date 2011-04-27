@@ -165,6 +165,12 @@ public:
 	MATHVECTOR <T, 3> chassisPosition;
 	MATHVECTOR <T, 3> chassisCenterOfMass;
 	QUATERNION <T> chassisRotation;
+	
+	// manual flip over
+	bool doFlipRight;
+	bool doFlipLeft;
+	// rocket boost
+	bool doBoost;
 
 // driveline state
 	CARFUELTANK <T> fuel_tank;

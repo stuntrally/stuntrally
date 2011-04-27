@@ -44,6 +44,7 @@ void BaseApp::createFrameListener()
 	new OISB::System();
 	mInputManager = OIS::InputManager::createInputSystem( pl );
 	OISB::System::getSingleton().initialize(mInputManager);
+	Log(OISB::System::getSingleton().getOISKeyboard()->getAsString(OIS::KC_LCONTROL));
 	OISB::System::getSingleton().loadActionSchemaFromXMLFile(PATHMANAGER::GetGameConfigDir() + "/binds-default.xml");
 
 	mKeyboard = OISB::System::getSingleton().getOISKeyboard();

@@ -491,6 +491,11 @@ void CAR::HandleInputs(const std::vector <float> & inputs, float dt)
 	//set brakes
 	dynamics.SetBrake( !rear ? inputs[CARINPUT::BRAKE] : inputs[CARINPUT::THROTTLE]);
 	dynamics.SetHandBrake(inputs[CARINPUT::HANDBRAKE]);
+	
+	// boost, flip over
+	dynamics.doBoost = inputs[CARINPUT::BOOST];
+	dynamics.doFlipLeft = inputs[CARINPUT::FLIPLEFT];
+	dynamics.doFlipRight = inputs[CARINPUT::FLIPRIGHT];
 
 	//do steering
 	float steer_value = inputs[CARINPUT::STEER_RIGHT];

@@ -556,6 +556,11 @@ const std::vector <float> & CARCONTROLMAP_LOCAL::ProcessInput(class App* pApp, i
 	inputs[CARINPUT::STEER_RIGHT] = action("SteerRight") ? 1.0f : 0.0f;
 	inputs[CARINPUT::STEER_LEFT] = action("SteerLeft") ? 1.0f : 0.0f;
 	inputs[CARINPUT::HANDBRAKE] = action("HandBrake") ? 1.0f : 0.0f;
+	
+	// flip over
+	inputs[CARINPUT::FLIPLEFT] = action("FlipLeft");
+	inputs[CARINPUT::FLIPRIGHT] = action("FlipRight");
+	inputs[CARINPUT::BOOST] = action("Boost");
 
 	return inputs;
 }

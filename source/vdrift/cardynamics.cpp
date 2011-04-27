@@ -789,26 +789,22 @@ void CARDYNAMICS::UpdateBody(T dt, T drive_torque[])
 	ApplyAerodynamicsToBody(dt);
 	
 
-	//... move to inputs[
 	///***  manual car flip over  ---------------------------------------------------------------------------------
-	bool flipLeft = pApp->isKey(OIS::KC_Q);
-	bool flipRight= pApp->isKey(OIS::KC_W);
-	bool shift = pApp->isKey(OIS::KC_LSHIFT)||pApp->isKey(OIS::KC_RSHIFT);
+	bool flipLeft = doFlipLeft;
+	bool flipRight = doFlipRight;
 	int flip = (flipLeft ? -1 : 0) + (flipRight ? 1 : 0);
 	if (flip)
 	{
 		MATRIX3 <T> inertia = body.GetInertia();
 		btVector3 inrt(inertia[0], inertia[4], inertia[8]);
 		//  strength_
-		float t = (shift ? 32.f : 12.f)* flip * inrt[inrt.maxAxis()];
+		float t = 12.f * flip * inrt[inrt.maxAxis()];
 		MATHVECTOR <T, 3> v(t,0,0);
 		Orientation().RotateVector(v);
 		ApplyTorque(v);
 	}
 	///***  boost
-	//bool alt = pApp->isKey(OIS::KC_LMENU)||pApp->isKey(OIS::KC_RMENU);
-	bool ctrl = pApp->isKey(OIS::KC_LCONTROL)||pApp->isKey(OIS::KC_RCONTROL);
-	//if (alt || ctrl)
+	bool ctrl = doBoost;
 	if (ctrl)
 	{
 		T f = body.GetMass() * 16.f;
