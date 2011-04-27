@@ -40,8 +40,6 @@ void App::SizeHUD(bool full, Viewport* vp)
 
 	if (ndMap)
 	{
-		// minimap on gui viewport -> window instead of vp asp
-		asp = float(mWindow->getWidth())/float(mWindow->getHeight());
 		float fHudSize = pSet->size_minimap;
 		ndMap->setScale(fHudSize, fHudSize*asp, 1);
 
@@ -68,7 +66,7 @@ void App::CreateHUD()
 		scX = 1.f / size;  scY = 1.f / size;
 
 		asp = 1.f;  //_temp
-		ManualObject* m = Create2D("road_minimap_inv",mSplitMgr->mGuiSceneMgr, 1);
+		ManualObject* m = Create2D("road_minimap_inv",mSceneMgr, 1);
 		//asp = float(mWindow->getWidth())/float(mWindow->getHeight());
 		m->setVisibilityFlags(2);
 		m->setRenderQueueGroup(RENDER_QUEUE_OVERLAY-5);
@@ -84,12 +82,12 @@ void App::CreateHUD()
 		const float marg = 1.f + 0.05f;  // from border
 		fMiniX = 1 - fHudSize * marg, fMiniY = 1 - fHudSize*asp * marg;
 
-		ndMap = mSplitMgr->mGuiSceneMgr->getRootSceneNode()->createChildSceneNode(Vector3(fMiniX,fMiniY,0));
+		ndMap = mSceneMgr->getRootSceneNode()->createChildSceneNode(Vector3(fMiniX,fMiniY,0));
 		ndMap->scale(fHudSize, fHudSize*asp, 1);
 		ndMap->attachObject(m);
 		
 		//  car pos dot
-		mpos = Create2D("hud/CarPos", mSplitMgr->mGuiSceneMgr, 0.2f, true);  // dot size  -par
+		mpos = Create2D("hud/CarPos", mSceneMgr, 0.2f, true);  // dot size  -par
 		mpos->setVisibilityFlags(2);
 		mpos->setRenderQueueGroup(RENDER_QUEUE_OVERLAY);
 		ndPos = ndMap->createChildSceneNode();

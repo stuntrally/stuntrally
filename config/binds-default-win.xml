@@ -16,9 +16,6 @@
 		      <bind role="decrease">Keyboard/Left</bind>
 		  </binding>
 	  </action>
-      <action type="Trigger" name="SteerLeft">
-         <bind>Keyboard/Left</bind>
-      </action>
       <action type="Trigger" name="ShiftUp">
          <bind>Keyboard/A</bind>
       </action>
