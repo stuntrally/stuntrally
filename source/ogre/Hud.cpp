@@ -33,6 +33,8 @@ void App::SizeHUD(bool full, Viewport* vp)
 
 	if (ndMap)
 	{
+		// minimap on gui viewport -> window instead of vp asp
+		asp = float(mWindow->getWidth())/float(mWindow->getHeight());
 		float fHudSize = pSet->size_minimap;
 		ndMap->setScale(fHudSize, fHudSize*asp, 1);
 
@@ -59,7 +61,7 @@ void App::CreateHUD()
 		scX = 1.f / size;  scY = 1.f / size;
 
 		asp = 1.f;  //_temp
-		ManualObject* m = Create2D("road_minimap_inv",1);
+		ManualObject* m = Create2D("road_minimap_inv",mSplitMgr->mGuiSceneMgr, 1);
 		//asp = float(mWindow->getWidth())/float(mWindow->getHeight());
 		m->setVisibilityFlags(2);
 		m->setRenderQueueGroup(RENDER_QUEUE_OVERLAY-5);
@@ -75,12 +77,12 @@ void App::CreateHUD()
 		const float marg = 1.f + 0.05f;  // from border
 		fMiniX = 1 - fHudSize * marg, fMiniY = 1 - fHudSize*asp * marg;
 
-		ndMap = mSceneMgr->getRootSceneNode()->createChildSceneNode(Vector3(fMiniX,fMiniY,0));
+		ndMap = mSplitMgr->mGuiSceneMgr->getRootSceneNode()->createChildSceneNode(Vector3(fMiniX,fMiniY,0));
 		ndMap->scale(fHudSize, fHudSize*asp, 1);
 		ndMap->attachObject(m);
 		
 		//  car pos dot
-		mpos = Create2D("hud/CarPos", 0.2f, true);  // dot size  -par
+		mpos = Create2D("hud/CarPos", mSplitMgr->mGuiSceneMgr, 0.2f, true);  // dot size  -par
 		mpos->setVisibilityFlags(2);
 		mpos->setRenderQueueGroup(RENDER_QUEUE_OVERLAY);
 		ndPos = ndMap->createChildSceneNode();
@@ -91,28 +93,28 @@ void App::CreateHUD()
 
 	
 	//  backgr  gauges
-	ManualObject* mrpmB = Create2D("hud/rpm",1);	mrpmB->setVisibilityFlags(2);
+	ManualObject* mrpmB = Create2D("hud/rpm",mSceneMgr,1);	mrpmB->setVisibilityFlags(2);
 	mrpmB->setRenderQueueGroup(RENDER_QUEUE_OVERLAY-5);
 	nrpmB = mSceneMgr->getRootSceneNode()->createChildSceneNode();
 	nrpmB->attachObject(mrpmB);	nrpmB->setScale(0,0,0);  nrpmB->setVisible(false);
 
-	ManualObject* mvelBk = Create2D("hud/kmh",1);	mvelBk->setVisibilityFlags(2);
+	ManualObject* mvelBk = Create2D("hud/kmh",mSceneMgr,1);	mvelBk->setVisibilityFlags(2);
 	mvelBk->setRenderQueueGroup(RENDER_QUEUE_OVERLAY-5);
 	nvelBk = mSceneMgr->getRootSceneNode()->createChildSceneNode();
 	nvelBk->attachObject(mvelBk);	nvelBk->setScale(0,0,0);  mvelBk->setVisible(false);
 		
-	ManualObject* mvelBm = Create2D("hud/mph",1);	mvelBm->setVisibilityFlags(2);
+	ManualObject* mvelBm = Create2D("hud/mph",mSceneMgr,1);	mvelBm->setVisibilityFlags(2);
 	mvelBm->setRenderQueueGroup(RENDER_QUEUE_OVERLAY-5);
 	nvelBm = mSceneMgr->getRootSceneNode()->createChildSceneNode();
 	nvelBm->attachObject(mvelBm);	nvelBm->setScale(0,0,0);  mvelBm->setVisible(false);
 		
 	//  needles
-	mrpm = Create2D("hud/needle",1,true);	mrpm->setVisibilityFlags(2);
+	mrpm = Create2D("hud/needle",mSceneMgr,1,true);	mrpm->setVisibilityFlags(2);
 	mrpm->setRenderQueueGroup(RENDER_QUEUE_OVERLAY);
 	nrpm = mSceneMgr->getRootSceneNode()->createChildSceneNode();
 	nrpm->attachObject(mrpm);	nrpm->setScale(0,0,0);	nrpm->setVisible(false);
 	
-	mvel = Create2D("hud/needle",1,true);	mvel->setVisibilityFlags(2);
+	mvel = Create2D("hud/needle",mSceneMgr,1,true);	mvel->setVisibilityFlags(2);
 	mvel->setRenderQueueGroup(RENDER_QUEUE_OVERLAY);
 	nvel = mSceneMgr->getRootSceneNode()->createChildSceneNode();
 	nvel->attachObject(mvel);	nvel->setScale(0,0,0);	nvel->setVisible(false);
@@ -170,6 +172,7 @@ void App::ShowHUD(bool hideAll)
 
 		if (ovCam)	{ ovCam->hide();     }
 		if (ovTimes){ ovTimes->hide();   }
+		if (mFpsOverlay) { mFpsOverlay->hide(); }
 	}
 	else
 	{
@@ -194,6 +197,7 @@ void App::ShowHUD(bool hideAll)
 
 		if (ovCam)	{  if (pSet->show_cam)    ovCam->show();    else  ovCam->hide();     }
 		if (ovTimes){  if (pSet->show_times)  ovTimes->show();  else  ovTimes->hide();   }
+		if (mFpsOverlay) { if (pSet->show_fps) mFpsOverlay->show(); else mFpsOverlay->hide(); }
 	}
 }
 
@@ -221,6 +225,7 @@ void App::UpdateHUD(CAR* pCar, float time, Viewport* vp)
 		/// for render viewport ---------
 		if (ovCam) ovCam->hide();
 		if (ovTimes) ovTimes->hide();	
+		if (mFpsOverlay) mFpsOverlay->hide();
 	}
 			
 	///  hud rpm,vel  --------------------------------

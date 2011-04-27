@@ -112,9 +112,9 @@ void App::destroyScene()
 	BaseApp::destroyScene();
 }
 
-ManualObject* App::Create2D(const String& mat, Real s, bool dyn)
+ManualObject* App::Create2D(const String& mat, SceneManager* sceneMgr, Real s, bool dyn)
 {
-	ManualObject* m = mSceneMgr->createManualObject();
+	ManualObject* m = sceneMgr->createManualObject();
 	m->setDynamic(dyn);
 	m->setUseIdentityProjection(true);
 	m->setUseIdentityView(true);

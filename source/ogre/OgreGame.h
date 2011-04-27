@@ -76,7 +76,7 @@ protected:
 	SceneNode *nrpmB, *nvelBk,*nvelBm, *nrpm, *nvel;  // gauges
 	SceneNode *ndPos, *ndMap, *ndLine;  // car pos on minimap
 	ManualObject* mrpm, *mvel, *mpos;
-	ManualObject* Create2D(const String& mat, Real size, bool dyn = false);
+	ManualObject* Create2D(const String& mat, SceneManager* sceneMgr, Real size, bool dyn = false);
 
 	OverlayElement* hudGear,*hudVel, *ovL[5],*ovR[5],*ovS[5],*ovU[5], *hudAbs,*hudTcs, *hudTimes,*hudCheck;
 	Overlay* ovGear,*ovVel, *ovAbsTcs,*ovCarDbg,*ovCarDbgTxt,  *ovCam, *ovTimes;
