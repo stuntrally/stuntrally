@@ -6,18 +6,16 @@
 	<Tag name="TipGrassSwayDistr">Grasschwingungsverteilung (wie zufällig)</Tag>
 	<Tag name="InputStartMeet">car will meet (next+ / prev-) point numbers</Tag>
 	<Tag name="TipAutoGearbox">Für manuelle Schaltung den Haken rausnehmen.</Tag>
-	<Tag name="LS_MISC">Abschließen</Tag>
+	<Tag name="LS_MISC">Fertigstellen</Tag>
 	<Tag name="AndUsing">benutzt</Tag>
 	<Tag name="ColumnRadius">Säulenradius</Tag>
 	<Tag name="UnitKmh">km/h</Tag>
 	<Tag name="InputRoadPickOne">Auswählen (eins)</Tag>
 	<Tag name="ViewDist">Sichtweite</Tag>
 	<Tag name="Sky">Himmel</Tag>
-	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 	<Tag name="TerNormal">Normale</Tag>
 	<Tag name="LS_TRACK">Lade Strecke</Tag>
 	<Tag name="NeedNewGame">* neues Spiel erforderlich</Tag>
-	<Tag name="GameVersion">1.1</Tag>
 	<Tag name="TipTrackImg">Bildschirmfoto der ausgewählten Strecke.</Tag>
 	<Tag name="InputValueChange">Jede Bewegung/Werteveränderung mit </Tag>
 	<Tag name="InputRoadMat">-,= - Straßen-/Röhrenmaterial</Tag>
@@ -123,7 +121,7 @@
 	<Tag name="TipCopySource">Strecke als Kopierquelle für den [Werkzeuge] Tab auswählen.</Tag>
 	<Tag name="Layer">Layer</Tag>
 	<Tag name="EscQuit">Beenden mit Esc</Tag>
-	<Tag name="Gauges">Geschw./RPM Anzeigen</Tag>
+	<Tag name="Gauges">Tacho</Tag>
 	<Tag name="LengthDim">Längen dim.</Tag>
 	<Tag name="Bloom">Überstrahlung</Tag>
 	<Tag name="TipRenameTrk">Ausgewählte Strecke umbenennen (zuerst Namen ändern)</Tag>
@@ -157,6 +155,7 @@
 	<Tag name="RoadQual">Straßenqualität</Tag>
 	<Tag name="length">Länge</Tag>
 	<Tag name="ColumnNSides">Säulen N sides</Tag>
+	<Tag name="RplAutoRec">Automatisch aufnehmen</Tag>
 	<Tag name="Shaders">Shader</Tag>
 	<Tag name="Exponent">Exponent</Tag>
 	<Tag name="Yaw">gieren</Tag>
@@ -190,7 +189,7 @@
 	<Tag name="InputRoadNotOnTer">wenn nicht auf Terrain</Tag>
 	<Tag name="TipNewDup">Erstellen einer neuen Strecke durch Duplizieren der ausgewählten Strecke unter neuem Namen (erst Namen ändern)</Tag>
 	<Tag name="TipFogEndClr">Ausklangfarbe des Nebels. R G B Komponenten von 0 bis 1 (z.B. 0.7 0.8 0.9)</Tag>
-	<Tag name="VegetCol">Kollision mit Vegetation *neues Spiel erforderl.</Tag>
+	<Tag name="InputToggleVeget">V - Vegetation an/aus</Tag>
 	<Tag name="Particles">Partikel</Tag>
 	<Tag name="Other">Sonstige</Tag>
 	<Tag name="InputMainCam">mit Shift - Hauptkameras</Tag>
@@ -207,15 +206,16 @@
 	<Tag name="ChangeCar">Auto wechseln</Tag>
 	<Tag name="FacesOnce">Seiten auf einmal</Tag>
 	<Tag name="InputTogglePreview">F7 - Vorschaukamera</Tag>
-	<Tag name="GameBy">ein Spiel von</Tag>
+	<Tag name="GameBy">Ein Spiel von</Tag>
 	<Tag name="TrackWidthAvg">Breite avg.</Tag>
 	<Tag name="SunWeather">Sonne und Wetter</Tag>
 	<Tag name="TipTrkScreenEditor">Bildschirmfoto der ausgewählten Strecke.</Tag>
+	<Tag name="RplDelete">Löschen</Tag>
 	<Tag name="TipAutoRear">Für manuellen Rückwärtsgang Haken rausnehmen.</Tag>
 	<Tag name="TipTrailClr">Farbe der Reifenspuren. R G B A Komponenten von 0 bis 1 (z.B. 0.4 0.4 0.2 0.6)</Tag>
 	<Tag name="InputRoadAltMMB">Alt-RMB (oder 3,4)</Tag>
 	<Tag name="NewDup">Neu (Kopie)</Tag>
-	<Tag name="TrackHeightDiff">Höhenunterschied</Tag>
+	<Tag name="TrackHeightDiff">Höhendiff.</Tag>
 	<Tag name="RoadMaterials">Straßenmaterialien</Tag>
 	<Tag name="Fullscreen">Vollbild</Tag>
 	<Tag name="BulletLines">Bullet Debug Linien</Tag>
@@ -228,8 +228,9 @@
 	<Tag name="RoadDist2">Zusätzliche Distanz zur Straße.</Tag>
 	<Tag name="TipRoadStats">Statistiken der Straße.</Tag>
 	<Tag name="InputTerPaint">A - Anstrichtextur (Layer)</Tag>
+	<Tag name="RplCur">Aktuell</Tag>
 	<Tag name="TexCoordMul">Tex Coord mul.</Tag>
-	<Tag name="Digits">Ziffern (Gang, Geschw.)</Tag>
+	<Tag name="Digits">Ziffern</Tag>
 	<Tag name="ShowPictures">Bilder beim Laden anzeigen</Tag>
 	<Tag name="TrackAvgSpeed">Avg. Geschw.</Tag>
 	<Tag name="InputShift">A,Z - Gang hoch, runter</Tag>
@@ -298,7 +299,7 @@
 	<Tag name="InputToggleGUIMode">F1 - Optionsfenster anzeigen</Tag>
 	<Tag name="TipFogEndDist">Ausklangdistanz des Nebels (Meter)</Tag>
 	<Tag name="RoadPoint">Straßenpunkt</Tag>
-	<Tag name="LoadingDesc">Ladevorgang läuft, bitte warten ...</Tag>
+	<Tag name="LoadingDesc">Laden, bitte warten...</Tag>
 	<Tag name="TipGrassPatchHeightMax">Maximale Höhe des Grasflecks.</Tag>
 	<Tag name="Tires">Reifen</Tag>
 	<Tag name="LoadTrack">Strecke laden</Tag>
@@ -330,6 +331,7 @@
 	<Tag name="About">Über</Tag>
 	<Tag name="TrackPipes">Röhren</Tag>
 	<Tag name="AutoLoad">Strecke autom. Laden</Tag>
+	<Tag name="RplGhost">Geist anzeigen</Tag>
 	<Tag name="TipGrassPageLength">Page-Länge vom Gras (niedriger Wert verursacht häufiges neu Laden, hoher Wert macht die Übergänge sichtbar)</Tag>
 	<Tag name="Reflections">Spiegelungen</Tag>
 	<Tag name="dust">Staub</Tag>
@@ -337,7 +339,7 @@
 	<Tag name="TipRainSnow2">Typ Rain/Snow 2 setzen</Tag>
 	<Tag name="InputTerDeform">D - verformen (LMB hoch, RMB runter)</Tag>
 	<Tag name="min">min.</Tag>
-	<Tag name="InputToggleVeget">V - Vegetation an/aus</Tag>
+	<Tag name="VegetCol">Kollision mit Vegetation *neues Spiel erforderl.</Tag>
 	<Tag name="MyGUI_MessageBox_Continue">Fortsetzen</Tag>
 	<Tag name="Tools">Werkzeuge</Tag>
 	<Tag name="TipGrassSwaySpd">Grasschwingung Geschw.</Tag>
@@ -379,7 +381,7 @@
 	<Tag name="scale">Skalieren</Tag>
 	<Tag name="AutoClutch">Autom. Kupplung-</Tag>
 	<Tag name="ColHue">Farbton</Tag>
-	<Tag name="TBTime">Zeit</Tag>
+	<Tag name="TipLoadTrkEditor">Andere Strecke laden oder aktuelle Strecke neu Laden.</Tag>
 	<Tag name="InputRoadAltLMB">Alt-LMB (oder 1,2)</Tag>
 	<Tag name="TipModelPrev">Vorschaubild des Modells.</Tag>
 	<Tag name="InputRoadEdit">R - Straße editieren</Tag>
@@ -389,9 +391,11 @@
 	<Tag name="BumpWavelen">Bump: WaveLen</Tag>
 	<Tag name="CameraInfo">Kamerainfo</Tag>
 	<Tag name="NewGame">Neues Spiel</Tag>
+	<Tag name="Replay">Replay</Tag>
 	<Tag name="CarDebug">Car susp, long|,lat- slips</Tag>
 	<Tag name="InputRoadPick">Space - Auswahl</Tag>
 	<Tag name="InputRoadRebuild">B - Straße anpassen (nach Terrainänderung)</Tag>
+	<Tag name="RplSave">Speichern</Tag>
 	<Tag name="Environment">Umgebung</Tag>
 	<Tag name="MyGUI_MessageBox_Cancel">Abbruch</Tag>
 	<Tag name="TipNewTer">Neues, flaches Terrain erstellen.</Tag>
@@ -403,6 +407,7 @@
 	<Tag name="LS_GAME">Lade Spiel</Tag>
 	<Tag name="TerHeightMap">Terrain-Heightmap</Tag>
 	<Tag name="PipeWStepsMul">Röhren W-Steps Mult.</Tag>
+	<Tag name="TBTime">Zeit</Tag>
 	<Tag name="MyGUI_MessageBox_Ok">Ok</Tag>
 	<Tag name="TipRainSnowInt">Rain/Snow Intensität (z.B. 1000)</Tag>
 	<Tag name="TrackLength">Länge</Tag>
@@ -435,7 +440,7 @@
 	<Tag name="Color">Farbe</Tag>
 	<Tag name="Pitch">neigen</Tag>
 	<Tag name="MyGUI_MessageBox_Yes">Ja</Tag>
-	<Tag name="TipLoadTrkEditor">Andere Strecke laden oder aktuelle Strecke neu Laden.</Tag>
+	<Tag name="RplAll">Alle</Tag>
 	<Tag name="GameVersion">1.1</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 
