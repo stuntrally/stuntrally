@@ -241,14 +241,18 @@ void App::UpdateHUD(CAR* pCar, float time, Viewport* vp)
     float angrmp = fr.rpm*rsc + rmin;
     float vsc = pSet->show_mph ? -180.f/100.f : -180.f/160.f, vmin = 0.f;  //vel
     float angvel = abs(vel)*vsc + vmin;
-    if (carModels.size() < 1) return;
-    std::list<CarModel*>::iterator cit;
-    for (cit=carModels.begin(); cit!=carModels.end(); cit++)
+    float angrot;
+    if (pCar)
     {
-		if ( (*cit)->pCar == pCar)
-			break;
+		std::list<CarModel*>::iterator cit;
+		for (cit=carModels.begin(); cit!=carModels.end(); cit++)
+		{
+			if ( (*cit)->pCar == pCar)
+				break;
+		}
+		angrot = (*cit)->pMainNode ? (*cit)->pMainNode->getOrientation().getYaw().valueDegrees() : 0.f;
 	}
-    float angrot = (*cit)->pMainNode ? (*cit)->pMainNode->getOrientation().getYaw().valueDegrees() : 0.f;
+	else angrot=0;
     float sx = 1.4f, sy = sx*asp;  // *par len
     float psx = 2.1f * pSet->size_minimap, psy = psx;  // *par len
 
@@ -282,7 +286,7 @@ void App::UpdateHUD(CAR* pCar, float time, Viewport* vp)
 
 
 	//  gear, vel texts  -----------------------------
-	if (hudGear && hudVel)
+	if (hudGear && hudVel && pCar)
 	{
 		char cg[2],sv[8];  cg[1]=0;
 		float cl = fr.clutch*0.8f + 0.2f;
@@ -307,17 +311,20 @@ void App::UpdateHUD(CAR* pCar, float time, Viewport* vp)
 	//  abs, tcs on  --------
 	if (hudAbs && hudTcs)
 	{
-		if (pCar->GetABSEnabled())
-		{	hudAbs->show();
-			hudAbs->setColour(ColourValue(1,0.8,0.6, pCar->GetABSActive() ? 1 : 0.5));
-		}else
-			hudAbs->hide();
+		if (pCar)
+		{
+			if (pCar->GetABSEnabled())
+			{	hudAbs->show();
+				hudAbs->setColour(ColourValue(1,0.8,0.6, pCar->GetABSActive() ? 1 : 0.5));
+			}else
+				hudAbs->hide();
 
-		if (pCar->GetTCSEnabled())
-		{	hudTcs->show();
-			hudTcs->setColour(ColourValue(0.7,0.9,1, pCar->GetTCSActive() ? 1 : 0.4));
-		}else
-			hudTcs->hide();
+			if (pCar->GetTCSEnabled())
+			{	hudTcs->show();
+				hudTcs->setColour(ColourValue(0.7,0.9,1, pCar->GetTCSActive() ? 1 : 0.4));
+			}else
+				hudTcs->hide();
+		}
 
 		// hide on gui vp
 		if (!vp) { hudAbs->hide(); hudTcs->hide(); }
@@ -362,7 +369,7 @@ void App::UpdateHUD(CAR* pCar, float time, Viewport* vp)
 	}
 
 	//  wheels slide, susp bars  --------
-	if (pSet->car_dbgbars)
+	if (pSet->car_dbgbars && pCar)
 	{
 		const Real xp = 80, yp = -530, ln = 20, y4 = 104;
 		static char ss[256];
@@ -420,7 +427,7 @@ void App::UpdateHUD(CAR* pCar, float time, Viewport* vp)
 
 	//  tire params  --------
 	#if 0
-	if (ovU[0])
+	if (ovU[0] && pCar)
 	{
 		String ss = "";
 		ss += "--Lateral--\n";

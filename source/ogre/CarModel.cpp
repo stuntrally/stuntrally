@@ -170,6 +170,9 @@ void CarModel::Create(void)
 	resCar = PATHMANAGER::GetCarPath() + "/" + sDirname + "/textures";
 	Ogre::Root::getSingletonPtr()->addResourceLocation(resCar, "FileSystem", "Car" + toStr(iIndex));
 	
+	// Change color here - cache has to be created before loading model
+	ChangeClr();
+	
 	pMainNode = pSceneMgr->getRootSceneNode()->createChildSceneNode();
 
 	//  --------  Follow Camera  --------
@@ -348,8 +351,6 @@ void CarModel::Create(void)
 
 	UpdParsTrails();
 	
-	ChangeClr();
-
 	//  reload car materials, omit car and road
 	for (int i=1; i < NumMaterials; ++i)
 		ReloadTex(sMtr[i]);

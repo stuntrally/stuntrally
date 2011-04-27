@@ -44,6 +44,7 @@ void BaseApp::createFrameListener()
 	new OISB::System();
 	mInputManager = OIS::InputManager::createInputSystem( pl );
 	OISB::System::getSingleton().initialize(mInputManager);
+	OISB::System::getSingleton().loadActionSchemaFromXMLFile(PATHMANAGER::GetGameConfigDir() + "/binds-default.xml");
 
 	mKeyboard = OISB::System::getSingleton().getOISKeyboard();
 	mMouse = OISB::System::getSingleton().getOISMouse();
@@ -513,6 +514,5 @@ void BaseApp::windowClosed(RenderWindow* rw)
 	if (mInputManager)
 	{
 		OISB::System::getSingleton().finalize();
-		delete OISB::System::getSingletonPtr();
 	}
 }

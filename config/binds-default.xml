@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schemas>
+   <schema name="Player1">
+      <action type="Trigger" name="Throttle">
+         <bind>Keyboard/Up</bind>
+      </action>
+      <action type="Trigger" name="Brake">
+         <bind>Keyboard/Down</bind>
+      </action>
+      <action type="Trigger" name="HandBrake">
+         <bind>Keyboard/space</bind>
+      </action>
+      <action type="Trigger" name="SteerRight">
+         <bind>Keyboard/Right</bind>
+      </action>
+      <action type="Trigger" name="SteerLeft">
+         <bind>Keyboard/Left</bind>
+      </action>
+      <action type="Trigger" name="ShiftUp">
+         <bind>Keyboard/a</bind>
+      </action>
+      <action type="Trigger" name="ShiftDown">
+         <bind>Keyboard/z</bind>
+      </action>
+   </schema>
+   <schema name="Player2">
+      <action type="Trigger" name="Throttle">
+         <bind>Keyboard/w</bind>
+      </action>
+      <action type="Trigger" name="Brake">
+         <bind>Keyboard/Down</bind>
+      </action>
+      <action type="Trigger" name="HandBrake">
+         <bind>Keyboard/space</bind>
+      </action>
+      <action type="Trigger" name="SteerRight">
+         <bind>Keyboard/Right</bind>
+      </action>
+      <action type="Trigger" name="SteerLeft">
+         <bind>Keyboard/Left</bind>
+      </action>
+      <action type="Trigger" name="ShiftUp">
+         <bind>Keyboard/a</bind>
+      </action>
+      <action type="Trigger" name="ShiftDown">
+         <bind>Keyboard/z</bind>
+      </action>
+   </schema>
+   <schema name="Player3">
+      <action type="Trigger" name="Throttle">
+         <bind>Keyboard/KP_Up</bind>
+      </action>
+      <action type="Trigger" name="Brake">
+         <bind>Keyboard/Down</bind>
+      </action>
+      <action type="Trigger" name="HandBrake">
+         <bind>Keyboard/space</bind>
+      </action>
+      <action type="Trigger" name="SteerRight">
+         <bind>Keyboard/Right</bind>
+      </action>
+      <action type="Trigger" name="SteerLeft">
+         <bind>Keyboard/Left</bind>
+      </action>
+      <action type="Trigger" name="ShiftUp">
+         <bind>Keyboard/a</bind>
+      </action>
+      <action type="Trigger" name="ShiftDown">
+         <bind>Keyboard/z</bind>
+      </action>
+   </schema>
+   <schema name="Player4">
+      <action type="Trigger" name="Throttle">
+         <bind>Keyboard/u</bind>
+      </action>
+      <action type="Trigger" name="Brake">
+         <bind>Keyboard/Down</bind>
+      </action>
+      <action type="Trigger" name="HandBrake">
+         <bind>Keyboard/space</bind>
+      </action>
+      <action type="Trigger" name="SteerRight">
+         <bind>Keyboard/Right</bind>
+      </action>
+      <action type="Trigger" name="SteerLeft">
+         <bind>Keyboard/Left</bind>
+      </action>
+      <action type="Trigger" name="ShiftUp">
+         <bind>Keyboard/a</bind>
+      </action>
+      <action type="Trigger" name="ShiftDown">
+         <bind>Keyboard/z</bind>
+      </action>
+   </schema>
+</schemas>

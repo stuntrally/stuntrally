@@ -2,6 +2,8 @@
 
 #include "carcontrolmap_local.h"
 #include "../ogre/OgreGame.h"
+#include "../oisb/OISBSystem.h"
+#include "../oisb/OISBAction.h"
 
 
 void CARCONTROLMAP_LOCAL::Load(const std::string & controlfile, std::ostream & info_output, std::ostream & error_output)
@@ -375,54 +377,27 @@ const std::vector <float> & CARCONTROLMAP_LOCAL::ProcessInput(class App* pApp, i
 			{
 				//cout << "type key" << endl;
 				using namespace OIS;
-
-				///  controls input map ...  todo: set in gui
-				///  [ player ][ control name ][ main/additional ]
-				player = min(3, max(0, player));
-				const static OIS::KeyCode inpMap[3][5][2] = {
-				{	{KC_NUMPAD8, KC_UP},
-					{KC_NUMPAD2, KC_DOWN},
-					{KC_NUMPAD6, KC_RIGHT},
-					{KC_NUMPAD4, KC_LEFT},
-					{KC_SPACE, KC_UNASSIGNED}	},
-				{	{KC_U, KC_UNASSIGNED},
-					{KC_M, KC_UNASSIGNED},
-					{KC_K, KC_UNASSIGNED},
-					{KC_H, KC_UNASSIGNED},
-					{KC_B, KC_UNASSIGNED}	},
-				{	{KC_R, KC_UNASSIGNED},
-					{KC_V, KC_UNASSIGNED},
-					{KC_G, KC_UNASSIGNED},
-					{KC_D, KC_UNASSIGNED},
-					{KC_F, KC_UNASSIGNED}	}	};
-					//bool grUp = pApp->isKey(OIS::KC_A);
-					//bool grDn = pApp->isKey(OIS::KC_Z);
 				
 				EVENTSYSTEM_SDL::BUTTON_STATE keystate = eventsystem.GetKeyState(SDLKey(i->keycode));
-				/// ------  temp input  .. why eventsystem doesn't work ?
-				//if (n->first == CARINPUT::THROTTLE	)	keystate.down = eventsystem.GetKeyState(SDLK_UP).down;
-				//if (n->first == CARINPUT::BRAKE		)	keystate.down = eventsystem.GetKeyState(SDLK_DOWN).down;
-				
-				//if (n->first == CARINPUT::REVERSE)	keystate.down = GetAsyncKeyState('R');
-				//if (n->first == CARINPUT::FIRST_GEAR)	keystate.down = GetAsyncKeyState('E');
-				//if (n->first == CARINPUT::ABS_TOGGLE)	keystate.down = GetAsyncKeyState('1') != 0;
-				//if (n->first == CARINPUT::TCS_TOGGLE)	keystate.down = GetAsyncKeyState('2') != 0;
 
-				/// ------  OIS input
-	if (n->first == CARINPUT::THROTTLE)		keystate.down = pApp->isKey(inpMap[player][0][0])||pApp->isKey(inpMap[player][0][1]);
-	if (n->first == CARINPUT::BRAKE)		keystate.down = pApp->isKey(inpMap[player][1][0])||pApp->isKey(inpMap[player][1][1]);
-	if (n->first == CARINPUT::STEER_RIGHT)	keystate.down = pApp->isKey(inpMap[player][2][0])||pApp->isKey(inpMap[player][2][1]);
-	if (n->first == CARINPUT::STEER_LEFT)	keystate.down = pApp->isKey(inpMap[player][3][0])||pApp->isKey(inpMap[player][3][1]);
-	if (n->first == CARINPUT::HANDBRAKE)	keystate.down = pApp->isKey(inpMap[player][4][0]);
+				/// TODO: make steering & throttle analog axis actions and allow joystick
+				#define action(s) OISB::System::getSingleton().lookupAction("Player" + toStr(player+1) + "/" + s)->isActive();
+				if (n->first == CARINPUT::THROTTLE) 	keystate.down = action("Throttle");
+				if (n->first == CARINPUT::BRAKE)		keystate.down = action("Brake");
+				if (n->first == CARINPUT::STEER_RIGHT)	keystate.down = action("SteerRight");
+				if (n->first == CARINPUT::STEER_LEFT)	keystate.down = action("SteerLeft");
+				if (n->first == CARINPUT::HANDBRAKE)	keystate.down = action("HandBrake");
+					
 				static bool grUpOld = false, grDnOld = false;
 				if (n->first == CARINPUT::SHIFT_UP)		{
-					bool grUp = pApp->isKey(OIS::KC_A);
+					bool grUp = action("ShiftUp");
 					keystate.just_down = grUp && !grUpOld;
 					keystate.just_up = !grUp && grUpOld;	grUpOld = grUp;  }
 				if (n->first == CARINPUT::SHIFT_DOWN)	{
-					bool grDn = pApp->isKey(OIS::KC_Z);
+					bool grDn = action("ShiftDown");
 					keystate.just_down = grDn && !grDnOld;
 					keystate.just_up = !grDn && grDnOld;	grDnOld = grDn;  }
+				#undef action
 					
 				if (i->onetime)
 				{
