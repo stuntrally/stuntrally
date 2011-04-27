@@ -25,19 +25,19 @@
    </schema>
    <schema name="Player2">
       <action type="Trigger" name="Throttle">
-         <bind>Keyboard/w</bind>
+         <bind>Keyboard/e</bind>
       </action>
       <action type="Trigger" name="Brake">
-         <bind>Keyboard/Down</bind>
+         <bind>Keyboard/d</bind>
       </action>
       <action type="Trigger" name="HandBrake">
-         <bind>Keyboard/space</bind>
+         <bind>Keyboard/x</bind>
       </action>
       <action type="Trigger" name="SteerRight">
-         <bind>Keyboard/Right</bind>
+         <bind>Keyboard/f</bind>
       </action>
       <action type="Trigger" name="SteerLeft">
-         <bind>Keyboard/Left</bind>
+         <bind>Keyboard/s</bind>
       </action>
       <action type="Trigger" name="ShiftUp">
          <bind>Keyboard/a</bind>
@@ -51,16 +51,16 @@
          <bind>Keyboard/KP_Up</bind>
       </action>
       <action type="Trigger" name="Brake">
-         <bind>Keyboard/Down</bind>
+         <bind>Keyboard/KP_Down</bind>
       </action>
       <action type="Trigger" name="HandBrake">
-         <bind>Keyboard/space</bind>
+         <bind>Keyboard/KP_Insert</bind>
       </action>
       <action type="Trigger" name="SteerRight">
-         <bind>Keyboard/Right</bind>
+         <bind>Keyboard/KP_Right</bind>
       </action>
       <action type="Trigger" name="SteerLeft">
-         <bind>Keyboard/Left</bind>
+         <bind>Keyboard/KP_Left</bind>
       </action>
       <action type="Trigger" name="ShiftUp">
          <bind>Keyboard/a</bind>
@@ -74,16 +74,16 @@
          <bind>Keyboard/u</bind>
       </action>
       <action type="Trigger" name="Brake">
-         <bind>Keyboard/Down</bind>
+         <bind>Keyboard/j</bind>
       </action>
       <action type="Trigger" name="HandBrake">
-         <bind>Keyboard/space</bind>
+         <bind>Keyboard/n</bind>
       </action>
       <action type="Trigger" name="SteerRight">
-         <bind>Keyboard/Right</bind>
+         <bind>Keyboard/k</bind>
       </action>
       <action type="Trigger" name="SteerLeft">
-         <bind>Keyboard/Left</bind>
+         <bind>Keyboard/h</bind>
       </action>
       <action type="Trigger" name="ShiftUp">
          <bind>Keyboard/a</bind>
