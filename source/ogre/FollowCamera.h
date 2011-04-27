@@ -45,6 +45,9 @@ public:
 	Vector3  mLook;
 	CameraAngle  ca;
 	bool  first;
+	
+	// for ext cam
+	Quaternion qq;
 
 
 	FollowCamera(Camera* cam);

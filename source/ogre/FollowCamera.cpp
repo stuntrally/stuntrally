@@ -57,7 +57,6 @@ void FollowCamera::update( Real time )
 			///  new  ---
 			Quaternion  orient = mGoalNode->getOrientation() * Quaternion(Degree(90),Vector3(0,1,0));
 			Quaternion  ory;  ory.FromAngleAxis(orient.getYaw(), Vector3::UNIT_Y);
-			static Quaternion qq;
 
 			if (first)  {  qq = ory;  first = false;  }
 			else
