@@ -44,8 +44,11 @@ void BaseApp::createFrameListener()
 	new OISB::System();
 	mInputManager = OIS::InputManager::createInputSystem( pl );
 	OISB::System::getSingleton().initialize(mInputManager);
-	Log(OISB::System::getSingleton().getOISKeyboard()->getAsString(OIS::KC_LCONTROL));
-	OISB::System::getSingleton().loadActionSchemaFromXMLFile(PATHMANAGER::GetGameConfigDir() + "/binds-default.xml");
+	#if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
+	OISB::System::getSingleton().loadActionSchemaFromXMLFile(PATHMANAGER::GetGameConfigDir() + "/binds-default-win.xml");
+	#else
+	OISB::System::getSingleton().loadActionSchemaFromXMLFile(PATHMANAGER::GetGameConfigDir() + "/binds-default-nix.xml");
+	#endif
 
 	mKeyboard = OISB::System::getSingleton().getOISKeyboard();
 	mMouse = OISB::System::getSingleton().getOISMouse();
