@@ -362,7 +362,6 @@ bool BaseApp::setup()
 
 void BaseApp::destroyScene()
 {
-	delete OISB::System::getSingletonPtr();
 }
 
 //  Resources
@@ -514,5 +513,6 @@ void BaseApp::windowClosed(RenderWindow* rw)
 	if (mInputManager)
 	{
 		OISB::System::getSingleton().finalize();
+		delete OISB::System::getSingletonPtr();
 	}
 }
