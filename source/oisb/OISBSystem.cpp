@@ -321,6 +321,7 @@ namespace OISB
 		file.open(filename.c_str(), std::ios::trunc);
 		file << doc;
 		file.close();
+		return 0;
 	}
 
 	int System::loadActionSchemaFromXMLFile(const String& filename)
