@@ -91,7 +91,19 @@ namespace OISB
         if (mReturnEnabled && (!increase->isActive() && !decrease->isActive()))
         {
             // we have to do returning to the starting point there
-            if (mReturnValue > mTarget->getAbsoluteValue())
+            if (mReturnValue == mTarget->getAbsoluteValue())
+            {
+				// do nothing
+			}
+            else if (mReturnValue < mTarget->getAbsoluteValue() && mReturnValue + ((+1.0f) * mReturnDecreaseSpeed * delta) * mTarget->getSensitivity() > mTarget->getAbsoluteValue())
+            {
+				ret = mTarget->getAbsoluteValue() * -1.0f;
+			}
+            else if (mReturnValue > mTarget->getAbsoluteValue() && mReturnValue + ((+1.0f) * mReturnIncreaseSpeed * delta) * mTarget->getSensitivity() + mTarget->getAbsoluteValue() > mReturnValue)
+            {
+				ret = mTarget->getAbsoluteValue() * -1.0f;
+			}
+            else if (mReturnValue > mTarget->getAbsoluteValue())
             {
                 ret = ((+1.0f) * mReturnIncreaseSpeed * delta) * mTarget->getSensitivity();
             }
