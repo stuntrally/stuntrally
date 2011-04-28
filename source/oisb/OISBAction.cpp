@@ -179,7 +179,7 @@ namespace OISB
 		getParent()->destroyAction(this);
 	}
 
-    void Action::listProperties(PropertyList& list)
+    void Action::listProperties(PropertyList& list, bool self, bool child)
     {
         Bindable::listProperties(list);
 

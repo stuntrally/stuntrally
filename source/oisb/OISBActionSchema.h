@@ -35,6 +35,10 @@ namespace OISB
 	class _OISBExport ActionSchema
 	{
 		public:
+			typedef std::map<String, Action*> ActionMap;
+			/// stores actions inside this schema
+			ActionMap mActions;
+		
 			/**
 			 * @brief constructor
 			 * 
@@ -147,10 +151,6 @@ namespace OISB
 			const String mName;
 			/// if true, this action schema is enabled
 			bool mIsEnabled;
-			
-			typedef std::map<String, Action*> ActionMap;
-			/// stores actions inside this schema
-			ActionMap mActions;
 	};
 }
 

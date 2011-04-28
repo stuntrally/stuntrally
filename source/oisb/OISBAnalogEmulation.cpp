@@ -256,8 +256,9 @@ namespace OISB
         }
         else if (name == "EmulationSpeed")
         {
-            OIS_EXCEPT(OIS::E_InvalidParam, "'EmulationSpeed' is a convenience property that "
-                "sets both increase and decrease emulation speed variants, you can't get it's value!");
+            //OIS_EXCEPT(OIS::E_InvalidParam, "'EmulationSpeed' is a convenience property that "
+                //"sets both increase and decrease emulation speed variants, you can't get it's value!");
+            return "";
         }
 
         else if (name == "EmulationReturnEnabled")
@@ -278,8 +279,9 @@ namespace OISB
         }
         else if (name == "EmulationReturnSpeed")
         {
-            OIS_EXCEPT(OIS::E_InvalidParam, "'EmulationSpeed' is a convenience property that "
-                "sets both increase and decrease emulation speed variants, you can't get it's value!");
+            //OIS_EXCEPT(OIS::E_InvalidParam, "'EmulationSpeed' is a convenience property that "
+                //"sets both increase and decrease emulation speed variants, you can't get it's value!");
+            return "";
         }
         else
         {

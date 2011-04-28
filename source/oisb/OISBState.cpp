@@ -45,7 +45,8 @@ namespace OISB
 
     String State::getBindableName() const
     {
-        return "State: " + getFullName();
+        //return "State: " + getFullName();
+        return getFullName();
     }
 
     bool State::isActive() const

@@ -103,22 +103,24 @@ namespace OISB
         }
     }
 
-    void AnalogAxisAction::listProperties(PropertyList& list)
+    void AnalogAxisAction::listProperties(PropertyList& list, bool self, bool child)
     {
         Bindable::listProperties(list);
+        if (self)
+        {
+			list.push_back("UseAbsoluteValues");
 
-        list.push_back("UseAbsoluteValues");
+			list.push_back("AbsoluteValue");
+			list.push_back("RelativeValue");
 
-        list.push_back("AbsoluteValue");
-        list.push_back("RelativeValue");
+			list.push_back("MinimumValue");
+			list.push_back("MaximumValue");
+			list.push_back("Sensitivity");
 
-        list.push_back("MinimumValue");
-        list.push_back("MaximumValue");
-        list.push_back("Sensitivity");
+			list.push_back("AnalogEmulator");
+		}
 
-        list.push_back("AnalogEmulator");
-
-        if (mAnalogEmulator)
+        if (mAnalogEmulator && child)
         {
             // inherit the emulator properties
             mAnalogEmulator->listProperties(list);

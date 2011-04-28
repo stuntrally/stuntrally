@@ -6,6 +6,7 @@
 #include "Locale.h"
 #include "OgreFontManager.h"
 #include "../oisb/OISB.h"
+#include "boost/filesystem.hpp"
 
 //  Camera
 //-------------------------------------------------------------------------------------
@@ -44,11 +45,16 @@ void BaseApp::createFrameListener()
 	new OISB::System();
 	mInputManager = OIS::InputManager::createInputSystem( pl );
 	OISB::System::getSingleton().initialize(mInputManager);
-	#if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
-	OISB::System::getSingleton().loadActionSchemaFromXMLFile(PATHMANAGER::GetGameConfigDir() + "/binds-default-win.xml");
-	#else
-	OISB::System::getSingleton().loadActionSchemaFromXMLFile(PATHMANAGER::GetGameConfigDir() + "/binds-default-nix.xml");
-	#endif
+	if (boost::filesystem::exists(PATHMANAGER::GetUserConfigDir() + "/keys.xml"))
+		OISB::System::getSingleton().loadActionSchemaFromXMLFile(PATHMANAGER::GetUserConfigDir() + "/keys.xml");
+	else
+	{
+		#if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
+		OISB::System::getSingleton().loadActionSchemaFromXMLFile(PATHMANAGER::GetGameConfigDir() + "/binds-default-win.xml");
+		#else
+		OISB::System::getSingleton().loadActionSchemaFromXMLFile(PATHMANAGER::GetGameConfigDir() + "/binds-default-nix.xml");
+		#endif
+	}
 
 	mKeyboard = OISB::System::getSingleton().getOISKeyboard();
 	mMouse = OISB::System::getSingleton().getOISMouse();
@@ -61,9 +67,6 @@ void BaseApp::createFrameListener()
 
 	mRoot->addFrameListener(this);
 }
-
-//void BaseApp::destroyScene()
-//{  }
 
 void BaseApp::createViewports()
 {
@@ -517,6 +520,7 @@ void BaseApp::windowClosed(RenderWindow* rw)
 	if (rw == mWindow)
 	if (mInputManager)
 	{
+		OISB::System::getSingleton().saveActionSchemaToXMLFile(PATHMANAGER::GetUserConfigDir() + "/keys.xml");
 		OISB::System::getSingleton().finalize();
 	}
 }

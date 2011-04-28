@@ -100,7 +100,7 @@ namespace OISB
             }
 
             /// @copydoc PropertySet::listProperties
-            virtual void listProperties(PropertyList& list);
+            virtual void listProperties(PropertyList& list, bool self=true, bool child=true);
         
         protected:
             /// @copydoc PropertySet::impl_setProperty

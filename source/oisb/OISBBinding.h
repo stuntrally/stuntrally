@@ -168,6 +168,8 @@ namespace OISB
             void getBindables(const String& role, std::list<Bindable*>& target);
 
             typedef std::vector<std::pair<String, Bindable*> > BindableList;
+            /// stores bounds states/actions of this binding
+            BindableList mBindables;
 
             /// @brief returns bindables as a vector
             inline BindableList& getBindables()
@@ -196,9 +198,6 @@ namespace OISB
 			Action* mParent;
             /// true if this binding is active (means that it activated the parent action)
             bool mIsActive;
-
-            /// stores bounds states/actions of this binding
-            BindableList mBindables;
 	};
 }
 

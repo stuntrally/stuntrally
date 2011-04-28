@@ -28,6 +28,7 @@ restrictions:
 #include "OISBString.h"
 
 #include "rapidxml.hpp"
+#include "rapidxml_print.hpp"
 
 #include <cassert>
 
@@ -235,6 +236,11 @@ namespace OISB
 			 * @brief loads schemas and actions from an xml file
 			 */
 			int loadActionSchemaFromXMLFile(const String& filename);
+			
+			/**
+			 * @brief saves schemas and actions to an xml file
+			 */
+			int saveActionSchemaToXMLFile(const std::string& filename);
 
 			/**
              * @brief a method to ease debugging, dumps all actions schemas to stdout
@@ -300,7 +306,6 @@ namespace OISB
 			int processActionXML(rapidxml::xml_node<>* actionNode, ActionSchema* schema);
 			int processActionBindingXML(rapidxml::xml_node<>* bindingNode, Action *action);
 			int processActionBindXML(rapidxml::xml_node<>* bindNode, Binding *binding, Action *action);
-
 	};
 }
 
