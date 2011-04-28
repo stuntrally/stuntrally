@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <MyGUI>
+		<Tag name="InputKeyUnassigned">&lt;Unassigned&gt;</Tag>
+
 	<Tag name="TipTreeDens">Wie viele Modelle (Bäume, Steine, etc.) auf der Strecke sichtbar sind.</Tag>
 	<Tag name="CamSpeed">Kamerageschw.</Tag>
 	<Tag name="InputRoadModify">Bearbeiten</Tag>

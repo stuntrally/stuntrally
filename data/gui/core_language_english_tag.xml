@@ -194,6 +194,8 @@
 	<Tag name="InputKey1">Key 1</Tag>
 	<Tag name="InputKey2">Key 2</Tag>
 	<Tag name="InputNoJS">No joystick</Tag>
+	<Tag name="InputKeyUnassigned">&lt;Unassigned&gt;</Tag>
+	<Tag name="InputAssignKey">&lt;Press a key&gt;</Tag>
 	<Tag name="InputMapPlayer1">Player 1</Tag>
 	<Tag name="InputMapPlayer2">Player 2</Tag>
 	<Tag name="InputMapPlayer3">Player 3</Tag>
