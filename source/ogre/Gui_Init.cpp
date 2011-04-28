@@ -3,6 +3,7 @@
 #include "../vdrift/game.h"
 #include "../road/Road.h"
 #include "OgreGame.h"
+#include "../oisb/OISB.h"
 using namespace MyGUI;
 
 
@@ -211,6 +212,93 @@ void App::InitGui()
 	rplList = mGUI->findWidget<List>("RplList");
 	updReplaysList();
 
+	
+	///  input tab
+	//------------------------------------------------------------------------
+	MyGUI::TabPtr inputTab = mGUI->findWidget<Tab>("InputTab");
+	if (inputTab)
+	{
+		// insert a tab item for every schema
+		std::map<OISB::String, OISB::ActionSchema*> schemas = OISB::System::getSingleton().mActionSchemas;
+		for (std::map<OISB::String, OISB::ActionSchema*>::const_iterator it=schemas.begin(); it!=schemas.end(); it++)
+		{
+			MyGUI::TabItemPtr tabitem = inputTab->addItem( TR("#{InputMap" + (*it).first + "}") );
+			
+			///-scroll view.... doesnt work???
+			//MyGUI::ScrollViewPtr sv = tabitem->createWidget<ScrollView>("ScrollView", 0, 0, 700, 580, MyGUI::Align::Default, "scrollView_" + (*it).first );
+			
+			// headers
+			MyGUI::StaticTextPtr headkb = tabitem->createWidget<StaticText>("StaticText", 220, 10, 200, 24, MyGUI::Align::Default, "staticText_" + (*it).first );
+			headkb->setCaption(TR("#88AAFF#{InputKey1}"));
+			MyGUI::StaticTextPtr headkb2 = tabitem->createWidget<StaticText>("StaticText", 360, 10, 200, 24, MyGUI::Align::Default, "staticText_" + (*it).first );
+			headkb2->setCaption(TR("#88AAFF#{InputKey2}"));
+			
+			// actions
+			unsigned int i = 0;
+			for (std::map<OISB::String, OISB::Action*>::const_iterator ait=(*it).second->mActions.begin(); ait!=(*it).second->mActions.end(); ait++)
+			{
+				
+				// description label
+				MyGUI::StaticTextPtr desc = tabitem->createWidget<StaticText>("StaticText", 10, 34+24*i, 200, 24, MyGUI::Align::Default, "staticText_" + (*ait).first );
+				desc->setCaption( TR("#{InputMap" + (*ait).second->getName() + "}") );
+				
+				// macro to strip away the Keyboard/
+				#define stripk(s) Ogre::StringUtil::split(s, "/")[1]
+
+				// bound key(s)
+				if ( (*ait).second->getActionType() == OISB::AT_TRIGGER)
+				{
+					if ((*ait).second->mBindings.front()->getNumBindables() > 0)
+					{
+						// first key
+						MyGUI::StaticTextPtr key1 = tabitem->createWidget<StaticText>("StaticText", 220, 34+24*i, 130, 24, MyGUI::Align::Default, "staticText_key1_" + (*ait).first );
+						key1->setCaption( stripk((*ait).second->mBindings.front()->getBindable(0)->getBindableName()) );
+						// alternate key
+						if ((*ait).second->mBindings.front()->getNumBindables() > 1)
+						{
+							MyGUI::StaticTextPtr key2 = tabitem->createWidget<StaticText>("StaticText", 360, 34+24*i, 130, 24, MyGUI::Align::Default, "staticText_key2_" + (*ait).first );
+							key2->setCaption( stripk((*ait).second->mBindings.front()->getBindable(1)->getBindableName()) );
+						}
+					}
+				}
+				else if ( (*ait).second->getActionType() == OISB::AT_ANALOG_AXIS)
+				{
+					if ((*ait).second->mBindings.front()->getNumBindables() > 0)
+					{
+						// look for increase/decrease binds
+						OISB::Bindable* increase = NULL;
+						OISB::Bindable* decrease = NULL;
+						for (std::vector<std::pair<String, OISB::Bindable*> >::const_iterator bnit=(*ait).second->mBindings.front()->mBindables.begin(); bnit!=(*ait).second->mBindings.front()->mBindables.end(); bnit++)
+						{
+							if ((*bnit).first == "increase")
+								increase = (*bnit).second;
+							else if ((*bnit).first == "decrease")
+								decrease = (*bnit).second;
+						}
+						if (increase)
+						{
+							MyGUI::StaticTextPtr key1 = tabitem->createWidget<StaticText>("StaticText", 220, 34+24*i, 130, 24, MyGUI::Align::Default, "staticText_key1_" + (*ait).first );
+							key1->setCaption( stripk(increase->getBindableName()) );
+						}
+						if (decrease)
+						{
+							MyGUI::StaticTextPtr key2 = tabitem->createWidget<StaticText>("StaticText", 360, 34+24*i, 130, 24, MyGUI::Align::Default, "staticText_key2_" + (*ait).first );
+							key2->setCaption( stripk(decrease->getBindableName()) );
+						}
+					}
+				}
+				///-AT_SEQUENCE: not used
+				
+				i++;
+			}
+			// joystick selection menu
+			MyGUI::ComboBoxPtr joysticks = tabitem->createWidget<ComboBox>("ComboBox", 500, 10, 150, 24, MyGUI::Align::Default, "joystickSel_" + (*it).first );
+			joysticks->addItem(TR("#{InputNoJS}"));
+			joysticks->setIndexSelected(0);
+			///TODO populate joystick list
+		}
+	}
+	
 	
 	///  video resolutions combobox
     //------------------------------------------------------------------------

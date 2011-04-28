@@ -41,6 +41,8 @@ restrictions:
 #include "OISBSequenceAction.h"
 #include "OISBTriggerAction.h"
 
+#include "boost/filesystem.hpp"
+
 #include <strstream>
 #include <fstream>
 #include <iostream>
@@ -224,6 +226,8 @@ namespace OISB
     
     int System::saveActionSchemaToXMLFile(const String& filename)
     {
+		if (boost::filesystem::exists(filename))
+			boost::filesystem::remove(filename);
 		rapidxml::xml_document<> doc; 
 		// xml declaration
 		rapidxml::xml_node<>* decl = doc.allocate_node(node_declaration);

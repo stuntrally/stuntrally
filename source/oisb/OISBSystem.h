@@ -46,6 +46,10 @@ namespace OISB
             /// @brief destructor
 			~System();
 
+			typedef std::map<String, ActionSchema*> ActionSchemaMap;
+			/// stores all action schemas
+			ActionSchemaMap mActionSchemas;
+
             /**
              * @brief singleton retrieval method (reference)
              */
@@ -296,10 +300,6 @@ namespace OISB
 
             /// stores pointer to the default action schema
 			ActionSchema* mDefaultActionSchema;
-
-			typedef std::map<String, ActionSchema*> ActionSchemaMap;
-			/// stores all action schemas
-			ActionSchemaMap mActionSchemas;
 
 			// xml processing things, should be moved to separate class later on
 			int processSchemaXML(rapidxml::xml_node<>* schemaNode);

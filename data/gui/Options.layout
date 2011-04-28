@@ -763,49 +763,10 @@
 			</Widget>
 			<Widget type="TabItem" skin="" position="4 26 787 531">
 				<Property key="Widget_Caption" value="#{Input}"/>
-				<Widget type="StaticText" skin="StaticText" position="32 80 296 24">
-					<Property key="Widget_Caption" value="#{InputSteer}"/>
-					<Property key="Text_TextColour" value="0.8 0.9 1.0"/>
-				</Widget>
-				<Widget type="StaticText" skin="StaticText" position="32 112 296 24">
-					<Property key="Widget_Caption" value="#{InputThrottle}"/>
-					<Property key="Text_TextColour" value="0.8 0.9 1.0"/>
-				</Widget>
-				<Widget type="StaticText" skin="StaticText" position="32 170 296 24">
-					<Property key="Widget_Caption" value="#{InputBrake}"/>
-					<Property key="Text_TextColour" value="0.8 0.9 0.8"/>
-				</Widget>
-				<Widget type="StaticText" skin="StaticText" position="32 202 296 24">
-					<Property key="Widget_Caption" value="#{InputBoost}"/>
-					<Property key="Text_TextColour" value="0.8 0.9 0.8"/>
-				</Widget>
-				<Widget type="StaticText" skin="StaticText" position="32 260 296 24">
-					<Property key="Widget_Caption" value="#{InputRoll}"/>
-					<Property key="Text_TextColour" value="0.7 0.8 0.8"/>
-				</Widget>
-				<Widget type="StaticText" skin="StaticText" position="32 300 296 24">
-					<Property key="Widget_Caption" value="#{InputShift}"/>
-					<Property key="Text_TextColour" value="0.7 0.8 0.8"/>
-				</Widget>
-				<Widget type="StaticText" skin="StaticText" position="364 170 292 24">
-					<Property key="Widget_Caption" value="#{InputShowGUI}"/>
-					<Property key="Text_TextColour" value="0.8 0.9 1.0"/>
-				</Widget>
-				<Widget type="StaticText" skin="StaticText" position="364 80 324 24">
-					<Property key="Widget_Caption" value="#{InputNextCam}"/>
-					<Property key="Text_TextColour" value="0.9 0.9 0.7"/>
-				</Widget>
-				<Widget type="StaticText" skin="StaticText" position="412 112 268 24">
-					<Property key="Text_TextColour" value="0.7 0.7 0.5"/>
-					<Property key="Widget_Caption" value="#{InputMainCam}"/>
-				</Widget>
-				<Widget type="StaticText" skin="StaticText" position="364 202 292 24">
-					<Property key="Widget_Caption" value="#{InputNextTab}"/>
-					<Property key="Text_TextColour" value="0.6 0.8 1.0"/>
-				</Widget>
-				<Widget type="StaticText" skin="StaticText" position="364 260 292 24">
-					<Property key="Widget_Caption" value="#{InputRestart}"/>
-					<Property key="Text_TextColour" value="0.6 0.8 1.0"/>
+				<Widget type="Tab" skin="Tab" position="16 15 700 580" name="InputTab">
+					<Property key="Tab_ButtonAutoWidth" value="false"/>
+					<Property key="Widget_Colour" value="0.73 0.88 1"/>
+					<Property key="Tab_ButtonWidth" value="100"/>
 				</Widget>
 			</Widget>
 			<Widget type="TabItem" skin="" position="4 26 787 531">
