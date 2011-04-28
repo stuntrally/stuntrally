@@ -3,10 +3,8 @@
 	<schema name="General"/>
 	<schema name="Player1">
 		<action name="Boost" type="Trigger">
-			<binding>
-				<bind role="">Keyboard/Control_L</bind>
-				<bind role="">Keyboard/Control_R</bind>
-			</binding>
+			<bind role="">Keyboard/Control_L</bind>
+			<bind role="">Keyboard/Control_R</bind>
 		</action>
 		<action name="Brake" type="Trigger">
 			<binding>
