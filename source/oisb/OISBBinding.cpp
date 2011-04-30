@@ -52,8 +52,10 @@ namespace OISB
         {
             OIS_EXCEPT(OIS::E_Duplicate, String("Binding of action '" + mParent->getFullName() + "' already contains bindable '" + bindable->getBindableName() + "'").c_str());
         }
-
-        mBindables.push_back(std::make_pair(role, bindable));
+		else
+		{
+			mBindables.push_back(std::make_pair(role, bindable));
+		}
     }
 
     void Binding::bind(const String& bindable, const String& role)
@@ -70,6 +72,7 @@ namespace OISB
 
     void Binding::unbind(Bindable* bindable)
     {
+		if (!bindable) return;
         for (BindableList::iterator it = mBindables.begin(); it != mBindables.end(); ++it)
         {
             if (it->second == bindable)
@@ -106,7 +109,7 @@ namespace OISB
 
         return false;
     }
-
+    
     bool Binding::isBound(const String& role) const
     {
         for (BindableList::const_iterator it = mBindables.begin(); it != mBindables.end(); ++it)
