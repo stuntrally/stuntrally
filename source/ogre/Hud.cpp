@@ -178,6 +178,7 @@ void App::ShowHUD(bool hideAll)
 		if (ovCam)	{ ovCam->hide();     }
 		if (ovTimes){ ovTimes->hide();   }
 		if (mFpsOverlay) { mFpsOverlay->hide(); }
+		if (ndMap)  ndMap->setVisible(false/*pSet->trackmap*/);
 	}
 	else
 	{
@@ -203,6 +204,7 @@ void App::ShowHUD(bool hideAll)
 		if (ovCam)	{  if (pSet->show_cam)    ovCam->show();    else  ovCam->hide();     }
 		if (ovTimes){  if (pSet->show_times)  ovTimes->show();  else  ovTimes->hide();   }
 		if (mFpsOverlay) { if (pSet->show_fps) mFpsOverlay->show(); else mFpsOverlay->hide(); }
+		if (ndMap)  ndMap->setVisible(pSet->trackmap);
 	}
 }
 

@@ -30,7 +30,7 @@ void App::InitGui()
 		int sx = mWindow->getWidth(), sy = mWindow->getHeight();
 		IntSize w = mWndOpts->getSize();  // center
 		mWndOpts->setPosition((sx-w.width)*0.5f, (sy-w.height)*0.5f);  }
-	mGUI->setVisiblePointer(false/*isFocGuiOrRpl()*/);
+	mGUI->setVisiblePointer(isFocGui);
 	mWndTabs = (TabPtr)mLayout->findWidget("TabWnd");
 
 	mWndRpl = mGUI->findWidget<Window>("RplWnd",false);

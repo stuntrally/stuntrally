@@ -64,6 +64,9 @@ void App::NewGame()
 	ShowHUD(true);
 	// hide FPS
 	mFpsOverlay->hide();
+	if (mWndRpl)  mWndRpl->setVisible(false);
+	mGUI->setVisiblePointer(false);
+
 	currentLoadingState = loadingStates.begin();
 }
 
@@ -127,6 +130,7 @@ void App::LoadGame()
 	bool ter = IsTerTrack();
 	sc.ter = ter;
 }
+
 void App::LoadScene()
 {
 	bool ter = IsTerTrack();
