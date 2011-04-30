@@ -22,7 +22,7 @@ public:
 	
 	class GAME* pGame;  ///*
 	void updatePoses(float time), newPoses();
-	void UpdThr();  bool bNew;
+	void UpdThr();
 	
 	// translation
 	// can't have it in c'tor, because mygui is not initialized

@@ -160,7 +160,7 @@ void App::LoadCar()
 	{
 		(*it)->Create();
 		// Reserve an entry in newPosInfos
-		PosInfo carPosInfo;
+		PosInfo carPosInfo;  carPosInfo.bNew = false;  //-
 		newPosInfos.push_back(carPosInfo);
 	}
 	

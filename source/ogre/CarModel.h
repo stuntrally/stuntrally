@@ -18,9 +18,14 @@
 // Stores all the needed information about car coming from vdrift
 struct PosInfo
 {
-	Vector3 newPos,newCarY;  
-	Vector3 newWhPos[4];  Quaternion newRot, newWhRot[4];  float newWhR[4];
-	float newWhVel[4], newWhSlide[4], newWhSqueal[4];  int newWhMtr[4];
+	Vector3 pos, carY;
+	Vector3 whPos[4];  Quaternion rot, whRot[4];  float whR[4];
+	float whVel[4], whSlide[4], whSqueal[4];  int whMtr[4];
+	//  new posinfo available for Update
+	bool bNew;
+
+	PosInfo() : bNew(false), pos(0,0,0)  // not inited
+	{}
 };
 
 class CarModel
@@ -49,7 +54,7 @@ public:
 	void Create();
 	
 	// Call every vdrift substep with new position info
-	void Update(PosInfo newPosInfo, float time);
+	void Update(PosInfo& newPosInfo, float time);
 	
 	// Car color
 	// After these values are changed, ChangeClr() should be called

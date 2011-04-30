@@ -62,29 +62,29 @@ CarModel::~CarModel(void)
 }
 
 
-void CarModel::Update(PosInfo newPosInfo, float time)
+void CarModel::Update(PosInfo& posInfo, float time)
 {	
-	///????
-	/*if (!bNew)  return;  // new only
-	bNew = false;*/
+	if (!posInfo.bNew)  return;  // new only
+	posInfo.bNew = false;
+	
 	if (!pMainNode) return;
 	//  car pos and rot
-	pMainNode->setPosition(newPosInfo.newPos);
-	pMainNode->setOrientation(newPosInfo.newRot);	
+	pMainNode->setPosition(posInfo.pos);
+	pMainNode->setOrientation(posInfo.rot);
 	
 	//  wheels
 	for (int w=0; w < 4; w++)
 	{
-		float wR = newPosInfo.newWhR[w];
-		ndWh[w]->setPosition(newPosInfo.newWhPos[w]);
-		ndWh[w]->setOrientation(newPosInfo.newWhRot[w]);
-		int whMtr = newPosInfo.newWhMtr[w];  //whTerMtr[w];
+		float wR = posInfo.whR[w];
+		ndWh[w]->setPosition(posInfo.whPos[w]);
+		ndWh[w]->setOrientation(posInfo.whRot[w]);
+		int whMtr = posInfo.whMtr[w];  //whTerMtr[w];
 		
 		
 		//  update particle emitters
 		//-----------------------------------------------------------------------------
-		float whVel = newPosInfo.newWhVel[w] * 3.6f;  //kmh
-		float slide = newPosInfo.newWhSlide[w], squeal = newPosInfo.newWhSqueal[w];
+		float whVel = posInfo.whVel[w] * 3.6f;  //kmh
+		float slide = posInfo.whSlide[w], squeal = posInfo.whSqueal[w];
 		float onGr = slide < 0.f ? 0.f : 1.f;
 
 		//  wheel temp
@@ -113,35 +113,35 @@ void CarModel::Update(PosInfo newPosInfo, float time)
 		emitD *= lay.dust;  emitM *= lay.mud;  sizeD *= lay.dustS;  emitS *= lay.smoke;
 
 		//  par emit
-		Vector3 vpos = newPosInfo.newWhPos[w];
+		Vector3 vpos = posInfo.whPos[w];
 		if (pSet->particles)
 		{
 			if (ps[w] && sc->td.layerRoad.smoke > 0.f/*&& !sc->ter*/)  // only at vdr road
 			{
 				ParticleEmitter* pe = ps[w]->getEmitter(0);
-				pe->setPosition(vpos + newPosInfo.newCarY * wR*0.7f); // 0.218
+				pe->setPosition(vpos + posInfo.carY * wR*0.7f); // 0.218
 				/**/ps[w]->getAffector(0)->setParameter("alpha", toStr(-0.4f - 0.07f/2.4f * whVel));
 				/**/pe->setTimeToLive( max(0.1, 2 - whVel/2.4f * 0.04) );  // fade,live
-				pe->setDirection(-newPosInfo.newCarY);	pe->setEmissionRate(emitS);
+				pe->setDirection(-posInfo.carY);	pe->setEmissionRate(emitS);
 			}
 			if (pm[w])	//  mud
 			{	ParticleEmitter* pe = pm[w]->getEmitter(0);
 				//pe->setDimensions(sizeM,sizeM);
-				pe->setPosition(vpos + newPosInfo.newCarY * wR*0.7f); // 0.218
-				pe->setDirection(-newPosInfo.newCarY);	pe->setEmissionRate(emitM);
+				pe->setPosition(vpos + posInfo.carY * wR*0.7f); // 0.218
+				pe->setDirection(-posInfo.carY);	pe->setEmissionRate(emitM);
 			}
 			if (pd[w])	//  dust
 			{	pd[w]->setDefaultDimensions(sizeD,sizeD);
 				ParticleEmitter* pe = pd[w]->getEmitter(0);
-				pe->setPosition(vpos + newPosInfo.newCarY * wR*0.51f ); // 0.16
-				pe->setDirection(-newPosInfo.newCarY);	pe->setEmissionRate(emitD);
+				pe->setPosition(vpos + posInfo.carY * wR*0.51f ); // 0.16
+				pe->setDirection(-posInfo.carY);	pe->setEmissionRate(emitD);
 			}
 		}
 
 		//  update trails h+
 		if (pSet->trails)  {
 			if (ndWhE[w])
-			{	Vector3 vp = vpos + newPosInfo.newCarY * wR*0.72f;  // 0.22
+			{	Vector3 vp = vpos + posInfo.carY * wR*0.72f;  // 0.22
 				if (terrain && whMtr > 0)
 					vp.y = terrain->getHeightAtWorldPosition(vp) + 0.05f;
 					//if (/*whOnRoad[w]*/whMtr > 0 && road)  // on road, add ofs

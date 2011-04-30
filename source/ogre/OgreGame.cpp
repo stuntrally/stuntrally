@@ -28,7 +28,7 @@ App::App()
 	,valRplPerc(0), valRplCur(0), valRplLen(0), slRplPos(0), rplList(0)
 	,valRplName(0), valRplInfo(0), edRplName(0), edRplDesc(0)
 	// game
-	,bNew(false), blendMtr(0), iBlendMaps(0)
+	,blendMtr(0), iBlendMaps(0)
 	,dbgdraw(0)
 	,grass(0), trees(0), road(0)
 	,pr(0),pr2(0), sun(0)
