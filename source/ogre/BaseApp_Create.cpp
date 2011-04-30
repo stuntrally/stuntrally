@@ -524,5 +524,6 @@ void BaseApp::windowClosed(RenderWindow* rw)
 		OISB::System::getSingleton().saveActionSchemaToXMLFile(PATHMANAGER::GetUserConfigDir() + "/keys.xml");
 		OISB::System::getSingleton().finalize();
 		delete mOISBsys;  mOISBsys = 0;
+		mInputManager = 0;
 	}
 }
