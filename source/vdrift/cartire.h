@@ -106,6 +106,8 @@ public:
 			lbound--;
 			if (lbound < 0)
 				lbound = 0;
+			/**/lbound = std::min(lbound, (int)sigma_hat.size()-2);
+			/**/lbound = std::min(lbound, (int)alpha_hat.size()-2);
 			blend = (nf-HAT_LOAD*(lbound+1))/HAT_LOAD;
 			sh = sigma_hat[lbound]*(1.0-blend)+sigma_hat[lbound+1]*blend;
 			ah = alpha_hat[lbound]*(1.0-blend)+alpha_hat[lbound+1]*blend;

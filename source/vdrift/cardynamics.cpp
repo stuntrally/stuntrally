@@ -63,6 +63,11 @@ void CARDYNAMICS::Update()
 	MATHVECTOR <T, 3> com = center_of_mass;
 	chassisRotation.RotateVector(com);
 	chassisPosition = chassisCenterOfMass - com;
+	if (isnan(com[0]))
+	{
+		chassisPosition = MATHVECTOR <T,3>(0,0,0);
+		chassisRotation = QUATERNION <T>(0,0,0,0);
+	}
 }
 
 const MATHVECTOR <T, 3> & CARDYNAMICS::GetCenterOfMassPosition() const
@@ -305,7 +310,7 @@ void CARDYNAMICS::AlignWithGround()
 	}/**/  //--
 	
 	//MATHVECTOR <T, 3> trimmed_position = Position() + GetDownVector() * min_height;
-	SetPosition(Position()/*trimmed_position*/);
+	//SetPosition(Position()/*trimmed_position*/);
 }
 
 //TODO: adjustable ackermann-like parameters
