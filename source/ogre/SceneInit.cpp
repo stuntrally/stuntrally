@@ -73,6 +73,7 @@ void App::NewGame()
 /* Loading steps (in this order) */
 void App::LoadCleanUp()
 {
+	if (mGUI)	mGUI->setVisiblePointer(isFocGui);
 	// rem old track
 	if (resTrk != "")  Ogre::Root::getSingletonPtr()->removeResourceLocation(resTrk);
 	resTrk = TrkDir() + "objects";
