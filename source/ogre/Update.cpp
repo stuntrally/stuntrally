@@ -116,7 +116,7 @@ bool App::frameStart(Real time)
 		// Update all cube maps
 		for (std::list<CarModel*>::iterator it=carModels.begin(); it!=carModels.end(); it++)
 		{
-			(*it)->pReflect->Update();
+			if ( (*it)->pReflect) (*it)->pReflect->Update();
 		}
 
 		//  trees
