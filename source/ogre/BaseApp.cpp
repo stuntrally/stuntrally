@@ -95,6 +95,16 @@ bool BaseApp::keyPressed( const OIS::KeyEvent &arg )
 		if (bind1) binding->unbind(bind1);
 		if (bind2) binding->unbind(bind2);
 		
+		// for analog axis actions, make sure the binds have a role
+		if (action->getActionType() == OISB::AT_ANALOG_AXIS)
+		{
+			if (bind1_role == "" || bind2_role == "")
+			{
+				bind1_role = "increase";
+				bind2_role = "decrease";
+			}
+		}
+		
 		// rebind
 		if (index == "1")
 		{
@@ -115,16 +125,6 @@ bool BaseApp::keyPressed( const OIS::KeyEvent &arg )
 					binding->bind(bind1, bind1_role);
 				}
 			binding->bind("Keyboard/" + mKeyboard->getAsString(pressedKey), bind2_role);
-		}
-		
-		// for analog axis actions, make sure the binds have a role
-		if (action->getActionType() == OISB::AT_ANALOG_AXIS)
-		{
-			if (bind1_role == "" || bind2_role == "")
-			{
-				bind1_role = "increase";
-				bind2_role = "decrease";
-			}
 		}
 		
 		// macro to strip away the Keyboard/
