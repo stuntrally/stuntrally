@@ -167,8 +167,7 @@ public:
 	QUATERNION <T> chassisRotation;
 	
 	// manual flip over
-	float doFlipRight;
-	float doFlipLeft;
+	float doFlip;
 	// rocket boost
 	float doBoost;
 

@@ -553,26 +553,21 @@ const std::vector <float> & CARCONTROLMAP_LOCAL::ProcessInput(class App* pApp, i
 	//do steering processing
 	ProcessSteering(joytype, steerpos, dt, joy_200, carms*2.23693629, speedsens);
 	
-	/// TODO: make steering & throttle analog axis actions and allow joystick
+	/// TODO: allow joysticks
 	#define analogAction(s) static_cast<OISB::AnalogAxisAction*>(OISB::System::getSingleton().lookupAction("Player" + toStr(player+1) + "/" + s))->getAbsoluteValue()/100.0f
-	inputs[CARINPUT::THROTTLE] = analogAction("Throttle");  //action("Throttle") ? 1.0f : 0.0f;
-	inputs[CARINPUT::BRAKE] = analogAction("Brake");  //action("Brake") ? 1.0f : 0.0f;
+
+	inputs[CARINPUT::THROTTLE] = analogAction("Throttle");
+	inputs[CARINPUT::BRAKE] = analogAction("Brake");
 	
 	// steering
-	float steerLeft, steerRight;
 	const float value = analogAction("Steering");
-	if (value < 0)		{	steerLeft = -value;  steerRight = 0;	}
-	else if (value > 0)	{	steerLeft = 0;  steerRight = value;	}
-	else				{	steerLeft = 0;  steerRight = 0;	}
-	inputs[CARINPUT::STEER_RIGHT] = steerRight;
-	inputs[CARINPUT::STEER_LEFT] = steerLeft;
+	inputs[CARINPUT::STEER_RIGHT] = value > 0.f ? value : 0.f;
+	inputs[CARINPUT::STEER_LEFT]  = value < 0.f ? -value : 0.f;
 	
 	inputs[CARINPUT::HANDBRAKE] = analogAction("HandBrake");
 	inputs[CARINPUT::BOOST] = analogAction("Boost");
-	
 	// flip over
-	inputs[CARINPUT::FLIPLEFT] = analogAction("FlipLeft");
-	inputs[CARINPUT::FLIPRIGHT] = analogAction("FlipRight");
+	inputs[CARINPUT::FLIP] = analogAction("Flip");
 
 	return inputs;
 }

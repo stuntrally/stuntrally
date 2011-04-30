@@ -305,8 +305,7 @@ public:
 	{
 		carinput_stringmap["gas"] = CARINPUT::THROTTLE;
 		carinput_stringmap["boost"] = CARINPUT::BOOST;
-		carinput_stringmap["flipleft"] = CARINPUT::FLIPLEFT;
-		carinput_stringmap["flipright"] = CARINPUT::FLIPRIGHT;
+		carinput_stringmap["flip"] = CARINPUT::FLIP;
 		carinput_stringmap["brake"] = CARINPUT::BRAKE;
 		carinput_stringmap["handbrake"] = CARINPUT::HANDBRAKE;
 		carinput_stringmap["clutch"] = CARINPUT::CLUTCH;
