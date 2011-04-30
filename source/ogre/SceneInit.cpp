@@ -209,12 +209,11 @@ void App::LoadTrack()
 }
 void App::LoadMisc()
 {
-	UpdGuiRdStats(road, sc, pGame->timer.GetBestLap(pSet->trackreverse));  // current
+	if (pGame && pGame->cars.size() > 0)
+		UpdGuiRdStats(road, sc, pGame->timer.GetBestLap(pSet->trackreverse));  // current
 	CreateHUD();
 	// immediately hide it
 	ShowHUD(true);
-	/*mFCam->first = true;  // no smooth	
-	mFCam->mTerrain = mTerrainGroup; // assign terrain to cam*/
 	
 	// Camera settings
 	for (std::list<CarModel*>::iterator it=carModels.begin(); it!=carModels.end(); it++)
