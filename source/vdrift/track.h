@@ -134,6 +134,7 @@ private:
 	std::string texture_size;
 public:
 	std::map <std::string, MODEL_JOE03> model_library;
+	bool IsLoaded() {  return start_positions.size() > 0;  }
 private:
 	std::map <std::string, TEXTURE_GL> texture_library;
 	std::list <TRACK_OBJECT> objects;

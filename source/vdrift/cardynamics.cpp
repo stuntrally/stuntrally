@@ -790,10 +790,8 @@ void CARDYNAMICS::UpdateBody(T dt, T drive_torque[])
 	
 
 	///***  manual car flip over  ---------------------------------------------------------------------------------
-	bool flipLeft = doFlipLeft;
-	bool flipRight = doFlipRight;
-	int flip = (flipLeft ? -1 : 0) + (flipRight ? 1 : 0);
-	if (flip)
+	float flip = -doFlipLeft + doFlipRight;
+	if (flip > 0.01f || flip < -0.01f)
 	{
 		MATRIX3 <T> inertia = body.GetInertia();
 		btVector3 inrt(inertia[0], inertia[4], inertia[8]);
@@ -804,10 +802,9 @@ void CARDYNAMICS::UpdateBody(T dt, T drive_torque[])
 		ApplyTorque(v);
 	}
 	///***  boost
-	bool ctrl = doBoost;
-	if (ctrl)
+	if (doBoost > 0.01f)
 	{
-		T f = body.GetMass() * 16.f;
+		T f = body.GetMass() * 16.f * doBoost;  // power
 		MATHVECTOR <T, 3> v(f,0,0), ofs(0,0,0);
 		Orientation().RotateVector(v);
 		ApplyForce(v, ofs);

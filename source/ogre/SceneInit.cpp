@@ -40,7 +40,8 @@ void App::createScene()
 
 	///  load replay
 	if (pSet->rpl_play)
-	{
+		pSet->rpl_play = 0;
+	/*{
 		string file = PATHMANAGER::GetReplayPath() + "/" + pSet->track + ".rpl";
 		replay.LoadFile(file);
 	}
@@ -116,7 +117,7 @@ void App::LoadGame()
 	std::list<Camera*>::iterator camIt = mSplitMgr->mCameras.begin();
 	for (int i=0; i<pSet->local_players; i++)
 	{
-		carModels.push_back( new CarModel(i, CarModel::CT_LOCAL, sListCar, mSceneMgr, pSet, pGame, &sc, (*camIt) ) );
+		carModels.push_back( new CarModel(i, CarModel::CT_LOCAL, pSet->car/*sListCar*/, mSceneMgr, pSet, pGame, &sc, (*camIt) ) );
 		camIt++;
 	}
 	

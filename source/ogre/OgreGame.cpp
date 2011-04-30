@@ -87,8 +87,16 @@ void App::setTranslations()
 
 void App::destroyScene()
 {
-	///  save replay
-	if (pSet->rpl_rec)
+	// Delete all cars
+	for (std::list<CarModel*>::iterator it=carModels.begin(); it!=carModels.end(); it++)
+	{
+		delete (*it);
+	}
+	carModels.clear();
+	newPosInfos.clear();
+	
+	///  save replay - manual save, button
+	/*if (pSet->rpl_rec)
 	{
 		string file = PATHMANAGER::GetReplayPath() + "/" + pSet->track + ".rpl";
 		if (replay.GetTimeLength() > 4.f)
