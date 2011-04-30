@@ -679,28 +679,28 @@ namespace OISB
         removeListenerFromAllStates(listener);
     }
 
-    void System::dumpDevices()
+    void System::dumpDevices(std::ostream& os)
     {
-        std::cout << "Dumping all registered OISB devices: " << std::endl;
+        os << "Dumping all registered OISB devices: " << std::endl;
 
         for (DeviceMap::const_iterator it = mDevices.begin(); it != mDevices.end(); ++it)
         {
-            it->second->dump();
+            it->second->dump(os);
         }
 
-        std::cout << "End of dump!" << std::endl;
+        os << "End of dump!" << std::endl;
     }
 
-    void System::dumpActionSchemas()
+    void System::dumpActionSchemas(std::ostream& os)
     {
-        std::cout << "Dumping all registered OISB action schemas: " << std::endl;
+        os << "Dumping all registered OISB action schemas: " << std::endl;
 
         for (ActionSchemaMap::const_iterator it = mActionSchemas.begin(); it != mActionSchemas.end(); ++it)
         {
-            it->second->dump();
+            it->second->dump(os);
         }
 
-        std::cout << "End of dump!" << std::endl;
+        os << "End of dump!" << std::endl;
     }
 	
 	void System::addDevice(Device* device)

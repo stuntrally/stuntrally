@@ -93,7 +93,7 @@ void App::CreateHUD()
 		ndPos = ndMap->createChildSceneNode();
 		ndPos->scale(fHudSize, fHudSize, 1);
 		ndPos->attachObject(mpos);
-		ndMap->setVisible(pSet->trackmap);
+		ndMap->setVisible(false/*pSet->trackmap*/);
 	}
 
 	
@@ -293,13 +293,13 @@ void App::UpdateHUD(CAR* pCar, float time, Viewport* vp)
 	//  gear, vel texts  -----------------------------
 	if (hudGear && hudVel && pCar)
 	{
-		char cg[2],sv[8];  cg[1]=0;
+		char cg[132],sv[132];  cg[1]=0; sv[1]=0;
 		float cl = fr.clutch*0.8f + 0.2f;
 		if (fr.gear == -1)
 		{	cg[0]='R';  hudGear->setColour(ColourValue(0.3,1,1,cl));	}
 		else if (fr.gear == 0)
 		{	cg[0]='N';  hudGear->setColour(ColourValue(0.3,1,0.3,cl));	}
-		else
+		else if (fr.gear > 0 && fr.gear < 8)
 		{	cg[0]='0'+fr.gear;  hudGear->setColour(ColourValue(1,1-fr.gear*0.1,0.2,cl));	}
 
 		sprintf(sv, "%3.0f", abs(vel));
@@ -372,7 +372,7 @@ void App::UpdateHUD(CAR* pCar, float time, Viewport* vp)
 	{
 		//ovU[3]->setCaption(pGame->strProfInfo);
 	}
-
+	
 	//  wheels slide, susp bars  --------
 	if (pSet->car_dbgbars && pCar)
 	{

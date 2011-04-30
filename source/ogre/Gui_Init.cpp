@@ -30,7 +30,7 @@ void App::InitGui()
 		int sx = mWindow->getWidth(), sy = mWindow->getHeight();
 		IntSize w = mWndOpts->getSize();  // center
 		mWndOpts->setPosition((sx-w.width)*0.5f, (sy-w.height)*0.5f);  }
-	mGUI->setVisiblePointer(isFocGui);
+	mGUI->setVisiblePointer(false/*isFocGuiOrRpl()*/);
 	mWndTabs = (TabPtr)mLayout->findWidget("TabWnd");
 
 	mWndRpl = mGUI->findWidget<Window>("RplWnd",false);
@@ -210,11 +210,17 @@ void App::InitGui()
 	edRplDesc = mGUI->findWidget<Edit>("RplDesc");
 
 	rplList = mGUI->findWidget<List>("RplList");
+	if (rplList)  rplList->eventListChangePosition = newDelegate(this, &App::listRplChng);
 	updReplaysList();
 
 	
 	///  input tab
 	//------------------------------------------------------------------------
+	pGame->info_output << " --------------------------------------  Input devices  BEGIN" << std::endl;
+	//OISB::System::getSingleton().dumpActionSchemas(pGame->info_output);
+	OISB::System::getSingleton().dumpDevices(pGame->info_output);  // log.txt
+	pGame->info_output << " --------------------------------------  Input devices  END" << std::endl;
+
 	MyGUI::TabPtr inputTab = mGUI->findWidget<Tab>("InputTab");
 	if (inputTab)
 	{

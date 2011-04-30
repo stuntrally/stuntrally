@@ -47,7 +47,7 @@ void App::UpdThr()
 bool App::frameStart(Real time)
 {
 	// update input
-	OISB::System::getSingleton().process(time);
+	//OISB::System::getSingleton().process(time);  ///! not here .. in carcontrolmap
 	
 	if (bWindowResized)
 	{
@@ -74,6 +74,14 @@ bool App::frameStart(Real time)
 			if (dirU > 0.0f) {  carListNext( d);  trkListNext( d);  dirU = -0.12f;  }
 			if (dirD > 0.0f) {  carListNext(-d);  trkListNext(-d);  dirD = -0.12f;  }
 		}
+		
+		//bool oldFocRpl = isFocRpl;
+		if (pSet->rpl_play)
+		{
+			isFocRpl = isKey(LCONTROL)||isKey(RCONTROL);
+			mGUI->setVisiblePointer(isFocGuiOrRpl());
+		}
+
 
 		if (!pGame)
 			return false;
@@ -418,4 +426,4 @@ void App::updatePoses(float time)
 			int v = pos/len * res;  slRplPos->setScrollPosition(v);
 		}
 	}	
-	}
+}

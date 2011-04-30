@@ -3,8 +3,9 @@
 	<schema name="General"/>
 	<schema name="Player1">
 		<action name="Boost" type="Trigger">
-			<bind role="">Keyboard/Control_L</bind>
-			<bind role="">Keyboard/Control_R</bind>
+			<binding>
+				<bind role="">Keyboard/S</bind>
+			</binding>
 		</action>
 		<action name="Brake" type="Trigger">
 			<binding>
@@ -13,27 +14,27 @@
 		</action>
 		<action name="FlipLeft" type="Trigger">
 			<binding>
-				<bind role="">Keyboard/q</bind>
+				<bind role="">Keyboard/Q</bind>
 			</binding>
 		</action>
 		<action name="FlipRight" type="Trigger">
 			<binding>
-				<bind role="">Keyboard/w</bind>
+				<bind role="">Keyboard/W</bind>
 			</binding>
 		</action>
 		<action name="HandBrake" type="Trigger">
 			<binding>
-				<bind role="">Keyboard/space</bind>
+				<bind role="">Keyboard/Space</bind>
 			</binding>
 		</action>
 		<action name="ShiftDown" type="Trigger">
 			<binding>
-				<bind role="">Keyboard/z</bind>
+				<bind role="">Keyboard/Z</bind>
 			</binding>
 		</action>
 		<action name="ShiftUp" type="Trigger">
 			<binding>
-				<bind role="">Keyboard/a</bind>
+				<bind role="">Keyboard/A</bind>
 			</binding>
 		</action>
 		<action name="Steering" type="AnalogAxis" UseAbsoluteValues="0" MinimumValue="-100" MaximumValue="100" Sensitivity="1" AnalogEmulator="Linear" EmulationDecreaseSpeed="500" EmulationIncreaseSpeed="500" EmulationReturnEnabled="1" EmulationReturnValue="0" EmulationReturnDecreaseSpeed="500" EmulationReturnIncreaseSpeed="500">
@@ -51,49 +52,48 @@
 	<schema name="Player2">
 		<action name="Boost" type="Trigger">
 			<binding>
-				<bind role="">Keyboard/Control_L</bind>
-				<bind role="">Keyboard/Control_R</bind>
+				<bind role="">Keyboard/F</bind>
 			</binding>
 		</action>
 		<action name="Brake" type="Trigger">
 			<binding>
-				<bind role="">Keyboard/d</bind>
+				<bind role="">Keyboard/V</bind>
 			</binding>
 		</action>
 		<action name="FlipLeft" type="Trigger">
 			<binding>
-				<bind role="">Keyboard/q</bind>
+				<bind role="">Keyboard/Q</bind>
 			</binding>
 		</action>
 		<action name="FlipRight" type="Trigger">
 			<binding>
-				<bind role="">Keyboard/w</bind>
+				<bind role="">Keyboard/W</bind>
 			</binding>
 		</action>
 		<action name="HandBrake" type="Trigger">
 			<binding>
-				<bind role="">Keyboard/x</bind>
+				<bind role="">Keyboard/B</bind>
 			</binding>
 		</action>
 		<action name="ShiftDown" type="Trigger">
 			<binding>
-				<bind role="">Keyboard/z</bind>
+				<bind role="">Keyboard/Z</bind>
 			</binding>
 		</action>
 		<action name="ShiftUp" type="Trigger">
 			<binding>
-				<bind role="">Keyboard/a</bind>
+				<bind role="">Keyboard/A</bind>
 			</binding>
 		</action>
 		<action name="Steering" type="AnalogAxis" UseAbsoluteValues="0" MinimumValue="-100" MaximumValue="100" Sensitivity="1" AnalogEmulator="Linear" EmulationDecreaseSpeed="500" EmulationIncreaseSpeed="500" EmulationReturnEnabled="1" EmulationReturnValue="0" EmulationReturnDecreaseSpeed="500" EmulationReturnIncreaseSpeed="500">
 			<binding>
-				<bind role="increase">Keyboard/f</bind>
-				<bind role="decrease">Keyboard/s</bind>
+				<bind role="increase">Keyboard/D</bind>
+				<bind role="decrease">Keyboard/G</bind>
 			</binding>
 		</action>
 		<action name="Throttle" type="Trigger">
 			<binding>
-				<bind role="">Keyboard/e</bind>
+				<bind role="">Keyboard/R</bind>
 			</binding>
 		</action>
 	</schema>
@@ -111,87 +111,86 @@
 		</action>
 		<action name="FlipLeft" type="Trigger">
 			<binding>
-				<bind role="">Keyboard/q</bind>
+				<bind role="">Keyboard/Q</bind>
 			</binding>
 		</action>
 		<action name="FlipRight" type="Trigger">
 			<binding>
-				<bind role="">Keyboard/w</bind>
+				<bind role="">Keyboard/W</bind>
 			</binding>
 		</action>
 		<action name="HandBrake" type="Trigger">
 			<binding>
-				<bind role="">Keyboard/KP_Insert</bind>
+				<bind role="">Keyboard/P</bind>
 			</binding>
 		</action>
 		<action name="ShiftDown" type="Trigger">
 			<binding>
-				<bind role="">Keyboard/z</bind>
+				<bind role="">Keyboard/Z</bind>
 			</binding>
 		</action>
 		<action name="ShiftUp" type="Trigger">
 			<binding>
-				<bind role="">Keyboard/a</bind>
+				<bind role="">Keyboard/A</bind>
 			</binding>
 		</action>
 		<action name="Steering" type="AnalogAxis" UseAbsoluteValues="0" MinimumValue="-100" MaximumValue="100" Sensitivity="1" AnalogEmulator="Linear" EmulationDecreaseSpeed="500" EmulationIncreaseSpeed="500" EmulationReturnEnabled="1" EmulationReturnValue="0" EmulationReturnDecreaseSpeed="500" EmulationReturnIncreaseSpeed="500">
 			<binding>
-				<bind role="increase">Keyboard/KP_Right</bind>
-				<bind role="decrease">Keyboard/KP_Left</bind>
+				<bind role="increase">Keyboard/U</bind>
+				<bind role="decrease">Keyboard/I</bind>
 			</binding>
 		</action>
 		<action name="Throttle" type="Trigger">
 			<binding>
-				<bind role="">Keyboard/KP_Up</bind>
+				<bind role="">Keyboard/Y</bind>
 			</binding>
 		</action>
 	</schema>
 	<schema name="Player4">
 		<action name="Boost" type="Trigger">
 			<binding>
-				<bind role="">Keyboard/Control_L</bind>
-				<bind role="">Keyboard/Control_R</bind>
+				<bind role="">Keyboard/U</bind>
 			</binding>
 		</action>
 		<action name="Brake" type="Trigger">
 			<binding>
-				<bind role="">Keyboard/j</bind>
+				<bind role="">Keyboard/J</bind>
 			</binding>
 		</action>
 		<action name="FlipLeft" type="Trigger">
 			<binding>
-				<bind role="">Keyboard/q</bind>
+				<bind role="">Keyboard/Q</bind>
 			</binding>
 		</action>
 		<action name="FlipRight" type="Trigger">
 			<binding>
-				<bind role="">Keyboard/w</bind>
+				<bind role="">Keyboard/W</bind>
 			</binding>
 		</action>
 		<action name="HandBrake" type="Trigger">
 			<binding>
-				<bind role="">Keyboard/n</bind>
+				<bind role="">Keyboard/N</bind>
 			</binding>
 		</action>
 		<action name="ShiftDown" type="Trigger">
 			<binding>
-				<bind role="">Keyboard/z</bind>
+				<bind role="">Keyboard/Z</bind>
 			</binding>
 		</action>
 		<action name="ShiftUp" type="Trigger">
 			<binding>
-				<bind role="">Keyboard/a</bind>
+				<bind role="">Keyboard/A</bind>
 			</binding>
 		</action>
 		<action name="Steering" type="AnalogAxis" UseAbsoluteValues="0" MinimumValue="-100" MaximumValue="100" Sensitivity="1" AnalogEmulator="Linear" EmulationDecreaseSpeed="500" EmulationIncreaseSpeed="500" EmulationReturnEnabled="1" EmulationReturnValue="0" EmulationReturnDecreaseSpeed="500" EmulationReturnIncreaseSpeed="500">
 			<binding>
-				<bind role="increase">Keyboard/k</bind>
-				<bind role="decrease">Keyboard/h</bind>
+				<bind role="increase">Keyboard/K</bind>
+				<bind role="decrease">Keyboard/H</bind>
 			</binding>
 		</action>
 		<action name="Throttle" type="Trigger">
 			<binding>
-				<bind role="">Keyboard/u</bind>
+				<bind role="">Keyboard/U</bind>
 			</binding>
 		</action>
 	</schema>

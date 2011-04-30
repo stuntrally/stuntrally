@@ -249,12 +249,12 @@ namespace OISB
 			/**
              * @brief a method to ease debugging, dumps all actions schemas to stdout
              */
-            void dumpDevices();
+            void dumpDevices(std::ostream& os);
 
 			/**
 			 * @brief a method to ease debugging, dumps all actions schemas to stdout
 			 */
-			void dumpActionSchemas();
+			void dumpActionSchemas(std::ostream& os);
 
 		private:
             /// singleton implementation pointer

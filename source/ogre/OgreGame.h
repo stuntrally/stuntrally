@@ -189,6 +189,7 @@ protected:
 
 	//  game
 	ListPtr carList,trkList, resList, rplList;  void updReplaysList();
+	void listRplChng(List* li, size_t pos);
 	void listCarChng(List* li, size_t pos),		btnChgCar(WP);
 	void listTrackChng(List* li, size_t pos),	btnChgTrack(WP);
 	void btnNewGame(WP),btnNewGameStart(WP), btnShadows(WP);

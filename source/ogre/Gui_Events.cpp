@@ -305,7 +305,7 @@ void App::btnNewGame(WP)
 	if (mWndOpts)  mWndOpts->setVisible(isFocGui);
 	if (mWndRpl)  mWndRpl->setVisible(pSet->rpl_play);//
 	if (bnQuit)  bnQuit->setVisible(isFocGui);
-	mGUI->setVisiblePointer(isFocGui);
+	mGUI->setVisiblePointer(isFocGuiOrRpl());
 	mToolTip->setVisible(false);
 }
 void App::btnNewGameStart(WP wp)
@@ -508,6 +508,16 @@ void App::btnRplDelete(WP)  // Delete
 {
 }
 
+//  list change
+void App::listRplChng(List* li, size_t pos)
+{
+	//.. load header upd text desc ..
+	//size_t i = li->getIndexSelected();  if (i==ITEM_NONE)  return;
+	//const UString& sl = li->getItemNameAt(i);	sListCar = sl;
+	//if (imgCar)  imgCar->setImageTexture(sListCar+".jpg");
+}
+
+
 void App::chkRplAutoRec(WP wp){		ChkEv(rpl_rec);		}
 
 void App::chkRplChkGhost(WP wp){	ChkEv(rpl_play);	}
@@ -569,7 +579,6 @@ void App::updReplaysList()
 		//if (*i == pSet->car) {  carList->setIndexSelected(ii);  bFound = true;  }
 		//ii++;  }
 	}
-	//rplList->eventListChangePosition = newDelegate(this, &App::listCarChng);
 }
 
 
@@ -677,16 +686,6 @@ bool App::keyPressed( const OIS::KeyEvent &arg )
 	   			mWndTabs->setIndexSelected( (mWndTabs->getIndexSelected() + 1) % num );
 	   			return true;
 		}
-		/*if (arg.key == KC_F1 && arg.key <= KC_F6)
-		{	int n = arg.key - KC_F1;
-  			if (n < num)
-  			{	mWndTabs->setIndexSelected(n);
-  				isFocGui = true;  // on gui
-	   			if (mWndOpts)	mWndOpts->setVisible(isFocGui);
-	   			if (mGUI)	mGUI->setVisiblePointer(isFocGui);
-	   			return true;
-	   		}
-	   	}/**/
 	}
 
 	if (!BaseApp::keyPressed(arg))

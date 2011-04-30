@@ -21,7 +21,7 @@ void BaseApp::createFrameListener()
 	LogManager::getSingletonPtr()->logMessage("*** Initializing OIS ***");
 
 	OverlayManager& ovr = OverlayManager::getSingleton();
-	mFpsOverlay = ovr.getByName("Core/FpsOverlay");  mFpsOverlay->show();//
+	mFpsOverlay = ovr.getByName("Core/FpsOverlay");  //mFpsOverlay->show();//
 	mDebugOverlay = ovr.getByName("Core/DebugOverlay");  //mDebugOverlay->show();//*
 	mOvrFps = ovr.getOverlayElement("Core/CurrFps"),
 	mOvrTris= ovr.getOverlayElement("Core/NumTris"),
@@ -42,7 +42,7 @@ void BaseApp::createFrameListener()
     pl.insert(std::make_pair(std::string("XAutoRepeatOn"), std::string("true")));
     #endif
 
-	new OISB::System();
+	mOISBsys = new OISB::System();
 	mInputManager = OIS::InputManager::createInputSystem( pl );
 	OISB::System::getSingleton().initialize(mInputManager);
 	if (boost::filesystem::exists(PATHMANAGER::GetUserConfigDir() + "/keys.xml"))
@@ -216,7 +216,7 @@ void BaseApp::Run( bool showDialog )
 BaseApp::BaseApp() :
 	mRoot(0), mSceneMgr(0), mWindow(0), mHDRLogic(0),
 	mShowDialog(1), mShutDown(false),
-	mInputManager(0), mMouse(0), mKeyboard(0),
+	mInputManager(0), mMouse(0), mKeyboard(0), mOISBsys(0),
 	alt(0), ctrl(0), shift(0), roadUpCnt(0),
 	mbLeft(0), mbRight(0), mbMiddle(0), 
 	isFocGui(0), mGUI(0), mPlatform(0),
@@ -228,7 +228,7 @@ BaseApp::BaseApp() :
 }
 
 BaseApp::~BaseApp()
-{	
+{
 	delete mSplitMgr;
 	
 	if (mGUI)  {
@@ -304,11 +304,11 @@ bool BaseApp::setup()
 	// Dynamic plugin loading
 	mRoot = OGRE_NEW Root("", PATHMANAGER::GetUserConfigDir() + "/ogreset.cfg", PATHMANAGER::GetLogDir() + "/ogre.log");
 
-#ifdef _DEBUG
+	#ifdef _DEBUG
 	#define D_SUFFIX "_d"
-#else
+	#else
 	#define D_SUFFIX ""
-#endif
+	#endif
 
 	// when show ogre dialog is on, load both rendersystems so user can select
 	if (pSet->ogre_dialog)
@@ -349,6 +349,7 @@ bool BaseApp::setup()
 	mPlatform->initialise(mWindow, mSceneMgr);
 	mGUI = new MyGUI::Gui();
 	mGUI->initialise("core.xml", PATHMANAGER::GetLogDir() + "/MyGUI.log");
+	mGUI->setVisiblePointer(false);
 	MyGUI::LanguageManager::getInstance().setCurrentLanguage(getSystemLanguage());
 	
 	mPlatform->getRenderManagerPtr()->setSceneManager(mSplitMgr->mGuiSceneMgr);
@@ -452,7 +453,7 @@ bool BaseApp::keyReleased( const OIS::KeyEvent &arg )
 //-------------------------------------------------------------------------------------
 bool BaseApp::mouseMoved( const OIS::MouseEvent &arg )
 {
-	if (isFocGui && mGUI)  {
+	if (isFocGuiOrRpl() && mGUI)  {
 		mGUI->injectMouseMove(arg.state.X.abs, arg.state.Y.abs, arg.state.Z.abs);
 		return true;  }
 
@@ -470,7 +471,7 @@ bool BaseApp::mouseMoved( const OIS::MouseEvent &arg )
 using namespace OIS;
 bool BaseApp::mousePressed( const OIS::MouseEvent &arg, OIS::MouseButtonID id )
 {
-	if (isFocGui && mGUI)  {
+	if (isFocGuiOrRpl() && mGUI)  {
 		mGUI->injectMousePress(arg.state.X.abs, arg.state.Y.abs, MyGUI::MouseButton::Enum(id));
 		return true;  }
 
@@ -482,7 +483,7 @@ bool BaseApp::mousePressed( const OIS::MouseEvent &arg, OIS::MouseButtonID id )
 
 bool BaseApp::mouseReleased( const OIS::MouseEvent &arg, OIS::MouseButtonID id )
 {
-	if (isFocGui && mGUI)  {
+	if (isFocGuiOrRpl() && mGUI)  {
 		mGUI->injectMouseRelease(arg.state.X.abs, arg.state.Y.abs, MyGUI::MouseButton::Enum(id));
 		return true;  }
 
@@ -522,5 +523,6 @@ void BaseApp::windowClosed(RenderWindow* rw)
 	{
 		OISB::System::getSingleton().saveActionSchemaToXMLFile(PATHMANAGER::GetUserConfigDir() + "/keys.xml");
 		OISB::System::getSingleton().finalize();
+		delete mOISBsys;  mOISBsys = 0;
 	}
 }

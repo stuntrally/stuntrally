@@ -9,6 +9,8 @@
 #include "SplitScreenManager.h"
 using namespace Ogre;
 
+namespace OISB {  class System;  };
+
 
 class BaseApp :
 		public Ogre::FrameListener, public Ogre::WindowEventListener,
@@ -71,6 +73,7 @@ protected:
 	RenderWindow* mWindow;
 
 	///  input
+	OISB::System* mOISBsys;
 	OIS::InputManager* mInputManager;
 public:
 	OIS::Mouse* mMouse;  OIS::Keyboard* mKeyboard;
@@ -88,7 +91,8 @@ protected:
 
 
 	///  Gui
-	bool isFocGui;  // gui shown
+	bool isFocGuiOrRpl()  {  return isFocGui || isFocRpl;  }
+	bool isFocGui,isFocRpl;  // gui shown
 	MyGUI::Gui* mGUI;		MyGUI::OgrePlatform* mPlatform;
 	MyGUI::WidgetPtr mLayout, mWndOpts, mWndRpl;  // options window
 	MyGUI::TabPtr mWndTabs;

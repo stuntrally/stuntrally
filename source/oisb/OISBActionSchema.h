@@ -144,7 +144,7 @@ namespace OISB
 			/**
 			 * @brief a method to ease debugging, dumps this action schema into stdout
 			 */
-			void dump();
+			void dump(std::ostream& os);
 
 		private:
 			/// stores name / identifier
