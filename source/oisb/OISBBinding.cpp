@@ -38,6 +38,10 @@ namespace OISB
 	
 	Binding::~Binding()
 	{
+		for (BindableList::iterator it=mBindables.begin(); it!=mBindables.end(); it++)
+		{
+			delete (*it).second;
+		}
         mBindables.clear();
     }
 
