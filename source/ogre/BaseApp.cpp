@@ -1,9 +1,10 @@
 #include "stdafx.h"
 #include "BaseApp.h"
 #include "FollowCamera.h"
-#include "MyGUI_PointerManager.h"
 #include "../vdrift/pathmanager.h"
 #include "../oisb/OISB.h"
+#include "MyGUI_Prerequest.h"
+#include "MyGUI_PointerManager.h"
 
 
 //  rendering
@@ -64,56 +65,98 @@ bool BaseApp::keyPressed( const OIS::KeyEvent &arg )
 		// show mouse again
 		MyGUI::PointerManager::getInstance().setVisible(true);
 		
-		// get action and reassign bind
-		//std::string actionName = pressedKeySender->getProperty("actionName"));
-		//std::string schemaName = pressedKeySender->getProperty("schemaName"));
-		/*std::string actionName = "Throttle";
-		std::string schemaName = "Player1";
+		// get action/schema/index from widget name
+		std::string actionName = Ogre::StringUtil::split(pressedKeySender->getName(), "_")[1];
+		std::string schemaName = Ogre::StringUtil::split(pressedKeySender->getName(), "_")[2];
+		std::string index = Ogre::StringUtil::split(pressedKeySender->getName(), "_")[3];
 		
 		OISB::ActionSchema* schema = OISB::System::getSingleton().mActionSchemas[schemaName];
 		OISB::Action* action = schema->mActions[actionName];
 		OISB::Binding* binding = action->mBindings.front();
-		OISB::Bindable* oldbindable;
-		OISB::Bindable* bindable;*/
-		//if (pressedKeySender->getProperty("bindNum") == "1")
-		//{
-			/*if (binding->getNumBindables() > 0)
-			{
-				// del old
-				delete binding->mBindables.front().second;
-				binding->mBindables.clear();
-			}
-				
-			// bind
-			if (action->getActionType() == OISB::AT_ANALOG_AXIS)
-				binding->bind("Keyboard/" + mKeyboard->getAsString(pressedKey), "increase");
-			else
-				binding->bind("Keyboard/" + mKeyboard->getAsString(pressedKey), "");*/
-		//}
-		/*else if (pressedKeySender->getProperty("bindNum") == "2")
-		{
-			if (binding->getNumBindables() == 2)
-			{
-				// del old
-				delete binding->mBindables.back();
-				binding->mBindables.erase( (--mBindables.end()) );
-			}
-			else if (binding->getNumBindables() == 1)
-			{
-			}
-			else if (binding->getNumBindables() == 0)
-			{
-				// no keys assigned - should assign key 1 before key 2
-				return true;
-			}
-			
-			// bind
-			if (action->getActionType() == OISB::AT_ANALOG_AXIS)
-				binding->bind(new OISB::State(OISB::System::getSingleton().getOISKeyboard(), "Keyboard/" + mKeyboard->getAsString(pressedKey) ), "decrease");
-			else
-				binding->bind(new OISB::State(OISB::System::getSingleton().getOISKeyboard(), "Keyboard/" + mKeyboard->getAsString(pressedKey) ), "");
-		}*/
 		
+		// get old binds
+		OISB::Bindable* bind1 = NULL;
+		OISB::Bindable* bind2 = NULL;
+		std::string bind1_role = "";
+		std::string bind2_role = "";
+		if (binding->getNumBindables() == 1)
+		{
+			bind1 = binding->getBindable(0);
+			bind1_role = binding->getRole(bind1);
+		}
+		else if (binding->getNumBindables() == 2)
+		{
+			bind1 = binding->getBindable(0);
+			bind1_role = binding->getRole(bind1);
+			bind2 = binding->getBindable(1);
+			bind2_role = binding->getRole(bind2);
+		}
+		// delete all binds
+		if (bind1) binding->unbind(bind1);
+		if (bind2) binding->unbind(bind2);
+		
+		// rebind
+		if (index == "1")
+		{
+			binding->bind("Keyboard/" + mKeyboard->getAsString(pressedKey), bind1_role);
+			// only bind 2nd if keys are not the same (will throw exception)
+			if (bind2)
+				if ("Keyboard/" + mKeyboard->getAsString(pressedKey) != bind2->getBindableName())
+				{
+					binding->bind(bind2, bind2_role);	
+				}
+		}
+		else if (index == "2")
+		{
+			// only bind 1st if keys are not the same (will throw exception)
+			if (bind1)
+				if ("Keyboard/" + mKeyboard->getAsString(pressedKey) != bind1->getBindableName())
+				{
+					binding->bind(bind1, bind1_role);
+				}
+			binding->bind("Keyboard/" + mKeyboard->getAsString(pressedKey), bind2_role);
+		}
+		
+		// macro to strip away the Keyboard/
+		#define stripk(s) Ogre::StringUtil::split(s, "/")[1]
+		
+		// update button labels
+		MyGUI::ButtonPtr b1 = mGUI->findWidget<MyGUI::Button>("inputbutton_" + actionName + "_" + schemaName + "_" + "1");
+		MyGUI::ButtonPtr b2 = mGUI->findWidget<MyGUI::Button>("inputbutton_" + actionName + "_" + schemaName + "_" + "2");
+		if (binding->getNumBindables() == 0)
+		{
+			b1->setCaption( TR("#{InputKeyUnassigned}") ); 
+			b2->setCaption( TR("#{InputKeyUnassigned}") );
+		}
+		else if (binding->getNumBindables() == 1)
+		{
+			// increase first
+			if (binding->getRole(binding->getBindable(0)) == "decrease")
+			{
+				b2->setCaption( stripk(binding->getBindable(0)->getBindableName()) );
+				b1->setCaption( TR("#{InputKeyUnassigned}") );
+			}
+			else
+			{
+				b1->setCaption( stripk(binding->getBindable(0)->getBindableName()) );
+				b2->setCaption( TR("#{InputKeyUnassigned}") );
+			}
+		}
+		else if (binding->getNumBindables() == 2)
+		{
+			// increase first
+			if (binding->getRole(binding->getBindable(0)) == "increase")
+			{
+				b1->setCaption( stripk(binding->getBindable(0)->getBindableName()) );
+				b2->setCaption( stripk(binding->getBindable(1)->getBindableName()) );
+			}
+			else
+			{
+				b2->setCaption( stripk(binding->getBindable(0)->getBindableName()) );
+				b1->setCaption( stripk(binding->getBindable(1)->getBindableName()) );
+
+			}
+		}
 		return true;
 	}
 	

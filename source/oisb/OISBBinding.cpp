@@ -154,7 +154,18 @@ namespace OISB
 
         return static_cast<Action*>(ret);
     }
-
+    
+	String Binding::getRole(Bindable* bindable) const
+	{
+        for (BindableList::const_iterator it = mBindables.begin(); it != mBindables.end(); ++it)
+        {
+            if (it->second == bindable)
+            {
+                return it->first;
+            }
+        }
+	}
+	
     Bindable* Binding::getBindable(const String& role) const
     {
         for (BindableList::const_iterator it = mBindables.begin(); it != mBindables.end(); ++it)

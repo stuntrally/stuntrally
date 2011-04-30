@@ -135,6 +135,11 @@ namespace OISB
              * @note this will throw exception if bindable at given index is not a state!
              */
             State* getState(size_t idx) const;
+            
+            /**
+             * @brief retrieves role for given bindable
+             */
+            String getRole(Bindable* bindable) const;
 
             /**
              * @brief retrieves bound action at given index
