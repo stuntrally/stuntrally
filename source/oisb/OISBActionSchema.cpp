@@ -95,7 +95,9 @@ namespace OISB
             OIS_EXCEPT(OIS::E_General, String("Action '" + name + "'not found in ActionSchema '" + getName() + "'").c_str());
 		}
 		
+		OISB::Action* act = (*it).second;
 		mActions.erase(it);
+		delete act;
 	}
 	
 	void ActionSchema::destroyAction(Action* action)
