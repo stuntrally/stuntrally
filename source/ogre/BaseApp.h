@@ -78,6 +78,11 @@ protected:
 public:
 	OIS::Mouse* mMouse;  OIS::Keyboard* mKeyboard;
 	bool isKey(OIS::KeyCode k)  {  return mKeyboard->isKeyDown(k);  }
+	
+	// this is set to true when the user is asked to assign a new key
+	bool bAssignKey;
+	OIS::KeyCode pressedKey;
+	MyGUI::Widget* pressedKeySender;
 protected:
 
 	///  ovelay

@@ -243,7 +243,6 @@ void App::InitGui()
 			unsigned int i = 0;
 			for (std::map<OISB::String, OISB::Action*>::const_iterator ait=(*it).second->mActions.begin(); ait!=(*it).second->mActions.end(); ait++)
 			{
-				
 				// description label
 				MyGUI::StaticTextPtr desc = tabitem->createWidget<StaticText>("StaticText", 10, 34+24*i, 200, 24, MyGUI::Align::Default, "staticText_" + (*ait).first );
 				desc->setCaption( TR("#{InputMap" + (*ait).second->getName() + "}") );
@@ -260,14 +259,22 @@ void App::InitGui()
 					if (act->mBindings.front()->getNumBindables() > 0)
 					{
 						// first key
-						MyGUI::StaticTextPtr key1 = tabitem->createWidget<StaticText>("StaticText", 220, 34+24*i, 130, 24, MyGUI::Align::Default, "staticText_key1_" + (*ait).first );
+						MyGUI::ButtonPtr key1 = tabitem->createWidget<Button>("Button", 220, 34+24*i, 130, 24, MyGUI::Align::Default, "button_1key_" + (*ait).first );
 						key1->setCaption( stripk(act->mBindings.front()->getBindable(0)->getBindableName()) );
+						key1->setProperty("actionName", (*ait).first ); 
+						key1->setProperty("schemaName", (*it).first );
+						key1->setProperty("bindNum", "1");
+						key1->eventMouseButtonClick = MyGUI::newDelegate(this, &App::controlBtnClicked);
 						// alternate key
+						MyGUI::ButtonPtr key2 = tabitem->createWidget<Button>("Button", 360, 34+24*i, 130, 24, MyGUI::Align::Default, "button_2key_" + (*ait).first );
 						if (act->mBindings.front()->getNumBindables() > 1)
-						{
-							MyGUI::StaticTextPtr key2 = tabitem->createWidget<StaticText>("StaticText", 360, 34+24*i, 130, 24, MyGUI::Align::Default, "staticText_key2_" + (*ait).first );
 							key2->setCaption( stripk(act->mBindings.front()->getBindable(1)->getBindableName()) );
-						}
+						else
+							key2->setCaption( TR("#{InputKeyUnassigned}"));
+						key2->setProperty("actionName", (*ait).first ); 
+						key2->setProperty("schemaName", (*it).first );
+						key2->setProperty("bindNum", "2");
+						key2->eventMouseButtonClick = MyGUI::newDelegate(this, &App::controlBtnClicked);
 					}
 				}
 				else if (act->getActionType() == OISB::AT_ANALOG_AXIS)
@@ -285,13 +292,21 @@ void App::InitGui()
 						}
 						if (increase)
 						{
-							MyGUI::StaticTextPtr key1 = tabitem->createWidget<StaticText>("StaticText", 220, 34+24*i, 130, 24, MyGUI::Align::Default, "staticText_key1_" + (*ait).first );
+							MyGUI::ButtonPtr key1 = tabitem->createWidget<Button>("Button", 220, 34+24*i, 130, 24, MyGUI::Align::Default, "button_1key_" + (*ait).first );
 							key1->setCaption( stripk(increase->getBindableName()) );
+							/*key1->setProperty("actionName", (*ait).first ); 
+							key1->setProperty("schemaName", (*it).first );
+							key1->setProperty("bindNum", "1");*/
+							key1->eventMouseButtonClick = MyGUI::newDelegate(this, &App::controlBtnClicked);
 						}
 						if (decrease)
 						{
-							MyGUI::StaticTextPtr key2 = tabitem->createWidget<StaticText>("StaticText", 360, 34+24*i, 130, 24, MyGUI::Align::Default, "staticText_key2_" + (*ait).first );
+							MyGUI::ButtonPtr key2 = tabitem->createWidget<Button>("Button", 360, 34+24*i, 130, 24, MyGUI::Align::Default, "button_2key_" + (*ait).first );
 							key2->setCaption( stripk(decrease->getBindableName()) );
+							/*key2->setProperty("actionName", (*ait).first ); 
+							key2->setProperty("schemaName", (*it).first );
+							key2->setProperty("bindNum", "2");*/
+							key2->eventMouseButtonClick = MyGUI::newDelegate(this, &App::controlBtnClicked);
 						}
 					}
 				}

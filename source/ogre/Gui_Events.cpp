@@ -3,6 +3,7 @@
 #include "../vdrift/game.h"
 #include "../road/Road.h"
 #include "OgreGame.h"
+#include "MyGUI_PointerManager.h"
 using namespace MyGUI;
 
 #define res  1000000.f
@@ -10,6 +11,18 @@ using namespace MyGUI;
 
 ///  Gui Events
 //-----------------------------------------------------------------------------------------------------------
+
+//  [Input]
+
+void App::controlBtnClicked(Widget* sender)
+{
+	sender->setCaption( TR("#{InputAssignKey}"));
+	// activate key capture mode
+	bAssignKey = true;
+	pressedKeySender = sender;
+	// hide mouse
+	MyGUI::PointerManager::getInstance().setVisible(false);
+}
 
 //  [Graphics]
 

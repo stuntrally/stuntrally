@@ -1,8 +1,9 @@
 #include "stdafx.h"
 #include "BaseApp.h"
 #include "FollowCamera.h"
-
+#include "MyGUI_PointerManager.h"
 #include "../vdrift/pathmanager.h"
+#include "../oisb/OISB.h"
 
 
 //  rendering
@@ -54,6 +55,68 @@ bool BaseApp::frameEnded(const FrameEvent& evt)
 ///-------------------------------------------------------------------------------------
 bool BaseApp::keyPressed( const OIS::KeyEvent &arg )
 {
+	if (bAssignKey)
+	{
+		bAssignKey = false;
+		pressedKey = arg.key;
+		pressedKeySender->setCaption(mKeyboard->getAsString(pressedKey));
+		Log(mKeyboard->getAsString(pressedKey));
+		// show mouse again
+		MyGUI::PointerManager::getInstance().setVisible(true);
+		
+		// get action and reassign bind
+		//std::string actionName = pressedKeySender->getProperty("actionName"));
+		//std::string schemaName = pressedKeySender->getProperty("schemaName"));
+		/*std::string actionName = "Throttle";
+		std::string schemaName = "Player1";
+		
+		OISB::ActionSchema* schema = OISB::System::getSingleton().mActionSchemas[schemaName];
+		OISB::Action* action = schema->mActions[actionName];
+		OISB::Binding* binding = action->mBindings.front();
+		OISB::Bindable* oldbindable;
+		OISB::Bindable* bindable;*/
+		//if (pressedKeySender->getProperty("bindNum") == "1")
+		//{
+			/*if (binding->getNumBindables() > 0)
+			{
+				// del old
+				delete binding->mBindables.front().second;
+				binding->mBindables.clear();
+			}
+				
+			// bind
+			if (action->getActionType() == OISB::AT_ANALOG_AXIS)
+				binding->bind("Keyboard/" + mKeyboard->getAsString(pressedKey), "increase");
+			else
+				binding->bind("Keyboard/" + mKeyboard->getAsString(pressedKey), "");*/
+		//}
+		/*else if (pressedKeySender->getProperty("bindNum") == "2")
+		{
+			if (binding->getNumBindables() == 2)
+			{
+				// del old
+				delete binding->mBindables.back();
+				binding->mBindables.erase( (--mBindables.end()) );
+			}
+			else if (binding->getNumBindables() == 1)
+			{
+			}
+			else if (binding->getNumBindables() == 0)
+			{
+				// no keys assigned - should assign key 1 before key 2
+				return true;
+			}
+			
+			// bind
+			if (action->getActionType() == OISB::AT_ANALOG_AXIS)
+				binding->bind(new OISB::State(OISB::System::getSingleton().getOISKeyboard(), "Keyboard/" + mKeyboard->getAsString(pressedKey) ), "decrease");
+			else
+				binding->bind(new OISB::State(OISB::System::getSingleton().getOISKeyboard(), "Keyboard/" + mKeyboard->getAsString(pressedKey) ), "");
+		}*/
+		
+		return true;
+	}
+	
 	using namespace OIS;
 	if (!alt)
 	switch (arg.key)  // global

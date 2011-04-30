@@ -220,7 +220,7 @@ BaseApp::BaseApp() :
 	alt(0), ctrl(0), shift(0), roadUpCnt(0),
 	mbLeft(0), mbRight(0), mbMiddle(0), 
 	isFocGui(0), mGUI(0), mPlatform(0),
-	mWndOpts(0), mWndTabs(0), mWndRpl(0), bSizeHUD(true), bLoading(false),
+	mWndOpts(0), mWndTabs(0), mWndRpl(0), bSizeHUD(true), bLoading(false), bAssignKey(false), pressedKey(static_cast<OIS::KeyCode>(0) ),
 
 	mDebugOverlay(0), mFpsOverlay(0), mOvrFps(0), mOvrTris(0), mOvrBat(0), mOvrDbg(0),
 	mbShowCamPos(0), ndSky(0),	mbWireFrame(0) //*
@@ -442,6 +442,7 @@ void BaseApp::LoadingOff()
 //-------------------------------------------------------------------------------------
 bool BaseApp::keyReleased( const OIS::KeyEvent &arg )
 {
+	if (bAssignKey) return true;
 	if (isFocGui && mGUI)  {
 		mGUI->injectKeyRelease(MyGUI::KeyCode::Enum(arg.key));
 		return true;  }
@@ -453,6 +454,7 @@ bool BaseApp::keyReleased( const OIS::KeyEvent &arg )
 //-------------------------------------------------------------------------------------
 bool BaseApp::mouseMoved( const OIS::MouseEvent &arg )
 {
+	if (bAssignKey) return true;
 	if (isFocGuiOrRpl() && mGUI)  {
 		mGUI->injectMouseMove(arg.state.X.abs, arg.state.Y.abs, arg.state.Z.abs);
 		return true;  }
@@ -471,6 +473,7 @@ bool BaseApp::mouseMoved( const OIS::MouseEvent &arg )
 using namespace OIS;
 bool BaseApp::mousePressed( const OIS::MouseEvent &arg, OIS::MouseButtonID id )
 {
+	if (bAssignKey) return true;
 	if (isFocGuiOrRpl() && mGUI)  {
 		mGUI->injectMousePress(arg.state.X.abs, arg.state.Y.abs, MyGUI::MouseButton::Enum(id));
 		return true;  }
@@ -483,6 +486,7 @@ bool BaseApp::mousePressed( const OIS::MouseEvent &arg, OIS::MouseButtonID id )
 
 bool BaseApp::mouseReleased( const OIS::MouseEvent &arg, OIS::MouseButtonID id )
 {
+	if (bAssignKey) return true;
 	if (isFocGuiOrRpl() && mGUI)  {
 		mGUI->injectMouseRelease(arg.state.X.abs, arg.state.Y.abs, MyGUI::MouseButton::Enum(id));
 		return true;  }
