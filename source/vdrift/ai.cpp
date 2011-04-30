@@ -286,10 +286,10 @@ void AI::updateGasBrake(AI_Car *c, float dt, TRACK* track_p, const std::list <CA
 	float gas_value = 0.5;
 	const float speed_percent = 1.0;
 
-	if (c->car->GetEngineRPM() < c->car->GetEngineStallRPM())
+/*	if (c->car->GetEngineRPM() < c->car->GetEngineStallRPM())
 		c->inputs[CARINPUT::START_ENGINE] = 1.0;
 	else
-		c->inputs[CARINPUT::START_ENGINE] = 0.0;
+		c->inputs[CARINPUT::START_ENGINE] = 0.0;*/
 	
 	calcMu(c, track_p);
 

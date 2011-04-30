@@ -105,7 +105,7 @@ void PERFORMANCE_TESTING::TestMaxSpeed(std::ostream & info_output, std::ostream 
 	double dt = .004;
 	int i = 0;
 
-	std::vector <float> inputs(CARINPUT::INVALID, 0.0);
+	std::vector <float> inputs(CARINPUT::ALL, 0.0);
 
 	inputs[CARINPUT::THROTTLE] = 1.0;
 
@@ -205,7 +205,7 @@ void PERFORMANCE_TESTING::TestStoppingDistance(bool abs, std::ostream & info_out
 	double dt = .004;
 	int i = 0;
 
-	std::vector <float> inputs(CARINPUT::INVALID, 0.0);
+	std::vector <float> inputs(CARINPUT::ALL, 0.0);
 
 	inputs[CARINPUT::THROTTLE] = 1.0;
 
@@ -233,7 +233,7 @@ void PERFORMANCE_TESTING::TestStoppingDistance(bool abs, std::ostream & info_out
 		{
 			inputs[CARINPUT::THROTTLE] = 0.0;
 			inputs[CARINPUT::BRAKE] = 1.0;
-			inputs[CARINPUT::NEUTRAL] = 1.0;
+			//inputs[CARINPUT::NEUTRAL] = 1.0;
 		}
 
 		car.HandleInputs(inputs, dt);

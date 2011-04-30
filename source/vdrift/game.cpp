@@ -34,16 +34,6 @@ void GAME::Start(std::list <string> & args)
 	//settings->Load(PATHMANAGER::GetSettingsFile());
 	
 	eventsystem.Init(info_output);
-	
-	//load controls
-	info_output << "Loading car controls from: " << PATHMANAGER::GetCarControlsFile() << endl;
-	if (!PATHMANAGER::FileExists(PATHMANAGER::GetCarControlsFile()))
-	{
-		info_output << "Car control file " << PATHMANAGER::GetCarControlsFile() << " doesn't exist; using defaults" << endl;
-		carcontrols_local.second.Load(PATHMANAGER::GetDefaultCarControlsFile(), info_output, error_output);
-		carcontrols_local.second.Save(PATHMANAGER::GetCarControlsFile(), info_output, error_output);
-	} else
-		carcontrols_local.second.Load(PATHMANAGER::GetCarControlsFile(), info_output, error_output);
 
 	InitializeSound(); //if sound initialization fails, that's okay, it'll disable itself
 
@@ -255,26 +245,6 @@ void GAME::Test()
 
 	info_output << endl;
 }
-
-//void GAME::BeginDraw()
-//{
-	/*PROFILER.beginBlock("render");
-		//send scene information to the graphics subsystem
-	if (active_camera)
-	{
-		MATHVECTOR <float, 3> reflection_sample_location = active_camera->GetPosition();
-		if (carcontrols_local.first)
-			reflection_sample_location = carcontrols_local.first->GetCenterOfMassPosition();
-		
-		QUATERNION <float> camlook;
-		camlook.Rotate(3.141593*0.5,1,0,0);
-		camlook.Rotate(-3.141593*0.5,0,0,1);
-		QUATERNION <float> camorient = -(active_camera->GetOrientation()*camlook);
-		graphics.SetupScene(settings->GetFOV(), settings->GetViewDistance(), active_camera->GetPosition(), camorient, reflection_sample_location);
-	}
-	else
-		graphics.SetupScene(settings->GetFOV(), settings->GetViewDistance(), MATHVECTOR <float, 3> (), QUATERNION <float> (), MATHVECTOR <float, 3> ());
-*/
 
 
 ///the main game loop
@@ -520,16 +490,12 @@ void GAME::UpdateCar(CAR & car, int i, double dt)
 
 void GAME::UpdateCarInputs(CAR & car, int i)
 {
-    std::vector <float> carinputs(CARINPUT::INVALID, 0.0f);
+    std::vector <float> carinputs(CARINPUT::ALL, 0.0f);
 
     //if (carcontrols_local.first == &car)
 	{
         //carinputs = carcontrols_local.second.GetInputs();
-        carinputs = carcontrols_local.second.ProcessInput(pOgreGame, i,
-			settings->joytype, eventsystem, car.GetLastSteer(), TickPeriod(),
-            settings->joy200, car.GetSpeed(), settings->speed_sensitivity,
-	        /*graphics.GetW(), graphics.GetH(),*/1280.f,960.f,
-	        settings->button_ramp, settings->hgateshifter);
+        carinputs = carcontrols_local.second.ProcessInput(pOgreGame, i,	TickPeriod());
 	}
 	//else
 	{
@@ -556,29 +522,6 @@ void GAME::UpdateCarInputs(CAR & car, int i)
 	car.HandleInputs(carinputs, TickPeriod());
 #endif
 
-	if (carcontrols_local.first == &car)
-	{
-        //inputgraph.Update(carinputs);
-
-		/*std::stringstream debug_info1;
-		car.DebugPrint(debug_info1, true, false, false, false);
-
-		std::stringstream debug_info2;
-		car.DebugPrint(debug_info2, false, true, false, false);
-
-		std::stringstream debug_info3;
-		car.DebugPrint(debug_info3, false, false, true, false);
-
-		std::stringstream debug_info4;
-		car.DebugPrint(debug_info4, false, false, false, true);*/
-
-		/**/
-		//set cockpit sounds
-		
-		//hide glass if we're inside the car
-		//car.EnableGlass(!incar);
-		/**/
-	}
 }
 
 bool GAME::NewGameDoCleanup()
@@ -586,6 +529,7 @@ bool GAME::NewGameDoCleanup()
 	LeaveGame(); //this should clear out all data
 	return true;
 }
+
 bool GAME::NewGameDoLoadTrack()
 {
 	//set the track name
@@ -598,6 +542,7 @@ bool GAME::NewGameDoLoadTrack()
 	}/*-*/
 	return true;
 }
+
 bool GAME::NewGameDoLoadMisc()
 {
     //race_laps = num_laps;

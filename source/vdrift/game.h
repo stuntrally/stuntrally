@@ -102,7 +102,7 @@ public:
 	bool controlgrab_analog;
 	bool controlgrab_only_one;
 	std::pair <int,int> controlgrab_mouse_coords;
-	CARCONTROLMAP_LOCAL::CONTROL controlgrab_editcontrol;
+	//CARCONTROLMAP_LOCAL::CONTROL controlgrab_editcontrol;
 	std::vector <EVENTSYSTEM_SDL::JOYSTICK> controlgrab_joystick_state;
 
 	EVENTSYSTEM_SDL eventsystem;

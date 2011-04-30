@@ -15,7 +15,7 @@ struct AI_Car
 		longitude_mu(0.9), lateral_mu(0.9),last_patch(NULL), use_racingline(true),
 		difficulty(newdifficulty)
 		{
-			inputs.resize(CARINPUT::INVALID, 0.0);
+			inputs.resize(CARINPUT::ALL, 0.0);
 		}
 	CAR * car;
 	float shift_time;
