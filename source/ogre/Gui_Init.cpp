@@ -296,6 +296,12 @@ void App::InitGui()
 							key2->setCaption( stripk(decrease->getBindableName()) );
 							key2->eventMouseButtonClick = MyGUI::newDelegate(this, &App::controlBtnClicked);
 						}
+						else
+						{
+							MyGUI::ButtonPtr key2 = tabitem->createWidget<Button>("Button", 360, 34+24*i, 130, 24, MyGUI::Align::Default, "inputbutton_" + (*ait).first + "_" + (*it).first + "_2");
+							key2->setCaption( TR("#{InputKeyUnassigned}"));
+							key2->eventMouseButtonClick = MyGUI::newDelegate(this, &App::controlBtnClicked);
+						}
 					}
 				}
 				///-AT_SEQUENCE: not used

@@ -105,26 +105,54 @@ bool BaseApp::keyPressed( const OIS::KeyEvent &arg )
 			}
 		}
 		
-		// rebind
-		if (index == "1")
+		try
 		{
-			binding->bind("Keyboard/" + mKeyboard->getAsString(pressedKey), bind1_role);
-			// only bind 2nd if keys are not the same (will throw exception)
-			if (bind2)
-				if ("Keyboard/" + mKeyboard->getAsString(pressedKey) != bind2->getBindableName())
-				{
-					binding->bind(bind2, bind2_role);	
-				}
+			// rebind
+			if (index == "1")
+			{
+				binding->bind("Keyboard/" + mKeyboard->getAsString(pressedKey), bind1_role);
+				// only bind 2nd if keys are not the same (will throw exception)
+				if (bind2)
+					if ("Keyboard/" + mKeyboard->getAsString(pressedKey) != bind2->getBindableName())
+					{
+						binding->bind(bind2, bind2_role);	
+					}
+			}
+			else if (index == "2")
+			{
+				// only bind 1st if keys are not the same (will throw exception)
+				if (bind1)
+					if ("Keyboard/" + mKeyboard->getAsString(pressedKey) != bind1->getBindableName())
+					{
+						binding->bind(bind1, bind1_role);
+					}
+				binding->bind("Keyboard/" + mKeyboard->getAsString(pressedKey), bind2_role);
+			}
 		}
-		else if (index == "2")
+		catch (OIS::Exception) 
 		{
-			// only bind 1st if keys are not the same (will throw exception)
-			if (bind1)
-				if ("Keyboard/" + mKeyboard->getAsString(pressedKey) != bind1->getBindableName())
-				{
-					binding->bind(bind1, bind1_role);
-				}
-			binding->bind("Keyboard/" + mKeyboard->getAsString(pressedKey), bind2_role);
+			// invalid key?
+			// restore old
+			Log("WARNING: binding->bind failed, restoring old binds...");
+			
+			// this is nasty, but since some very weird stuff can happen here, we have to individually try/catch
+			try {
+				binding->unbind("Keyboard/" + mKeyboard->getAsString(pressedKey));
+			}
+			catch (OIS::Exception) {}
+			try {
+				if (bind1) binding->unbind(bind1);
+			}
+			catch (OIS::Exception) {}
+			try {
+				if (bind2) binding->unbind(bind2);
+			}
+			catch (OIS::Exception) {}
+			
+			if (bind1) binding->bind(bind1, bind1_role);
+			if (bind2) binding->bind(bind2, bind2_role);
+			
+			return true;
 		}
 		
 		// macro to strip away the Keyboard/
