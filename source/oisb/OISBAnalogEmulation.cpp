@@ -63,7 +63,7 @@ namespace OISB
 
     bool LinearAnalogEmulator::checkBinding(Binding* binding)
     {
-        return binding->getNumBindables() == 2;
+        return binding->getNumBindables() == 2 || binding->getNumBindables() == 1;
     }
             
     Real LinearAnalogEmulator::emulateRelative(Binding* binding, Real delta)
@@ -75,20 +75,20 @@ namespace OISB
 
         getBindables(binding, &decrease, &increase);
 
-        if (decrease->isActive())
+        if (decrease && decrease->isActive())
         {
             // decrease is pressed
                         
             ret = ((-1.0f) * mDecreaseSpeed * delta) * mTarget->getSensitivity();
         }
-        if (increase->isActive())
+        if (increase && increase->isActive())
         {
             // increase is pressed
                         
             ret = ((+1.0f) * mIncreaseSpeed * delta) * mTarget->getSensitivity();
         }
 
-        if (mReturnEnabled && (!increase->isActive() && !decrease->isActive()))
+        if (mReturnEnabled && ( (!increase || !increase->isActive()) && (!decrease || !decrease->isActive())))
         {
             // we have to do returning to the starting point there
             if (mReturnValue == mTarget->getAbsoluteValue())
@@ -126,7 +126,7 @@ namespace OISB
         getBindables(binding, &decrease, &increase);
 
         // both are pressed
-        if (decrease->isActive() && increase->isActive())
+        if ( (decrease && decrease->isActive()) && (increase && increase->isActive()) )
         {
             // bigger speed wins
             if (mDecreaseSpeed > mIncreaseSpeed)
@@ -142,11 +142,11 @@ namespace OISB
                 ret = (mTarget->getMinimumValue() + mTarget->getMaximumValue()) * 0.5f;
             }
         }
-        else if (decrease->isActive())
+        else if (decrease && decrease->isActive())
         {
             ret = mTarget->getMinimumValue();
         }
-        else if (increase->isActive())
+        else if (increase && increase->isActive())
         {
             ret = mTarget->getMaximumValue();
         }
@@ -308,19 +308,35 @@ namespace OISB
         *decrease = 0;
         *increase = 0;
 
-        // first check for roles
+        // have both?
         if (binding->isBound("decrease") &&
             binding->isBound("increase"))
         {
             *decrease = binding->getBindable("decrease");
             *increase = binding->getBindable("increase");
         }
-        // otherwise the first will decrease the value
-        // and the second (and last) will increase the value
-        else
-        {
-            *decrease = binding->getBindable(0);
-            *increase = binding->getBindable(1);
-        }
+        // have only increase?
+		else if (binding->isBound("decrease"))
+		{
+			*decrease = binding->getBindable("decrease");
+		}
+		// have only decrease?
+		else if (binding->isBound("increase"))
+		{
+			*increase = binding->getBindable("increase");
+		}
+		// have none, 1 bindable?
+		else if (binding->getNumBindables() == 1)
+		{
+			// increase
+			*increase = binding->getBindable(0);
+		}
+		// have none, 2 bindables?
+		else if (binding->getNumBindables() == 2)
+		{
+			// first increase, 2nd decrease
+			*increase = binding->getBindable(0);
+			*decrease = binding->getBindable(1);
+		}
     }
 }
