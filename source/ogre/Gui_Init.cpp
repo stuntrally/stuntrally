@@ -244,36 +244,38 @@ void App::InitGui()
 				
 				// macro to strip away the Keyboard/
 				#define stripk(s) Ogre::StringUtil::split(s, "/")[1]
+				
+				OISB::Action* act = (*ait).second;
 
 				// bound key(s)
-				if ( (*ait).second->getActionType() == OISB::AT_TRIGGER)
+				if (act->getActionType() == OISB::AT_TRIGGER)
 				{
-					if ((*ait).second->mBindings.front()->getNumBindables() > 0)
+					if (act->mBindings.size() > 0)
+					if (act->mBindings.front()->getNumBindables() > 0)
 					{
 						// first key
 						MyGUI::StaticTextPtr key1 = tabitem->createWidget<StaticText>("StaticText", 220, 34+24*i, 130, 24, MyGUI::Align::Default, "staticText_key1_" + (*ait).first );
-						key1->setCaption( stripk((*ait).second->mBindings.front()->getBindable(0)->getBindableName()) );
+						key1->setCaption( stripk(act->mBindings.front()->getBindable(0)->getBindableName()) );
 						// alternate key
-						if ((*ait).second->mBindings.front()->getNumBindables() > 1)
+						if (act->mBindings.front()->getNumBindables() > 1)
 						{
 							MyGUI::StaticTextPtr key2 = tabitem->createWidget<StaticText>("StaticText", 360, 34+24*i, 130, 24, MyGUI::Align::Default, "staticText_key2_" + (*ait).first );
-							key2->setCaption( stripk((*ait).second->mBindings.front()->getBindable(1)->getBindableName()) );
+							key2->setCaption( stripk(act->mBindings.front()->getBindable(1)->getBindableName()) );
 						}
 					}
 				}
-				else if ( (*ait).second->getActionType() == OISB::AT_ANALOG_AXIS)
+				else if (act->getActionType() == OISB::AT_ANALOG_AXIS)
 				{
-					if ((*ait).second->mBindings.front()->getNumBindables() > 0)
+					if (act->mBindings.size() > 0)
+					if (act->mBindings.front()->getNumBindables() > 0)
 					{
 						// look for increase/decrease binds
 						OISB::Bindable* increase = NULL;
 						OISB::Bindable* decrease = NULL;
-						for (std::vector<std::pair<String, OISB::Bindable*> >::const_iterator bnit=(*ait).second->mBindings.front()->mBindables.begin(); bnit!=(*ait).second->mBindings.front()->mBindables.end(); bnit++)
+						for (std::vector<std::pair<String, OISB::Bindable*> >::const_iterator bnit=act->mBindings.front()->mBindables.begin(); bnit!=act->mBindings.front()->mBindables.end(); bnit++)
 						{
-							if ((*bnit).first == "increase")
-								increase = (*bnit).second;
-							else if ((*bnit).first == "decrease")
-								decrease = (*bnit).second;
+							if ((*bnit).first == "increase")		increase = (*bnit).second;
+							else if ((*bnit).first == "decrease")	decrease = (*bnit).second;
 						}
 						if (increase)
 						{
