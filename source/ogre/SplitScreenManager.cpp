@@ -5,6 +5,7 @@
 #include "CarModel.h"
 #include "../vdrift/settings.h"
 #include "../road/Road.h"
+#include "MyGUI_PointerManager.h"
 
 
 SplitScreenManager::SplitScreenManager(Ogre::SceneManager* sceneMgr, Ogre::RenderWindow* window, SETTINGS* set) :
@@ -241,6 +242,9 @@ void SplitScreenManager::preViewportUpdate(const Ogre::RenderTargetViewportEvent
 		pApp->UpdateHUD( NULL, mWindow->getLastFPS() );
 
 		pApp->SizeHUD(false);
+		
+		// no mouse in key capture mode
+		if (pApp->bAssignKey) MyGUI::PointerManager::getInstance().setVisible(false);
 	}
 }
 
