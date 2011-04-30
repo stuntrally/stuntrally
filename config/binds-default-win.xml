@@ -2,20 +2,26 @@
 <schemas>
 	<schema name="General"/>
 	<schema name="Player1">
-		<action name="Boost" type="Trigger">
-			<bind role="">Keyboard/S</bind>
+		<action name="Boost" type="AnalogAxis" UseAbsoluteValues="0" MinimumValue="0" MaximumValue="100" Sensitivity="1" AnalogEmulator="Linear" EmulationDecreaseSpeed="500" EmulationIncreaseSpeed="500" EmulationReturnEnabled="1" EmulationReturnValue="0" EmulationReturnDecreaseSpeed="500" EmulationReturnIncreaseSpeed="500">
+			<binding>
+				<bind role="increase">Keyboard/Ctrl</bind>
+			</binding>
 		</action>
-		<action name="Brake" type="Trigger">
-			<bind role="">Keyboard/Down</bind>
+		<action name="Brake" type="AnalogAxis" UseAbsoluteValues="0" MinimumValue="0" MaximumValue="100" Sensitivity="1" AnalogEmulator="Linear" EmulationDecreaseSpeed="500" EmulationIncreaseSpeed="500" EmulationReturnEnabled="1" EmulationReturnValue="0" EmulationReturnDecreaseSpeed="500" EmulationReturnIncreaseSpeed="500">
+			<binding>
+				<bind role="increase">Keyboard/Down</bind>
+			</binding>
 		</action>
-		<action name="FlipLeft" type="Trigger">
-			<bind role="">Keyboard/Q</bind>
+		<action name="Flip" type="AnalogAxis" UseAbsoluteValues="0" MinimumValue="-100" MaximumValue="100" Sensitivity="1" AnalogEmulator="Linear" EmulationDecreaseSpeed="500" EmulationIncreaseSpeed="500" EmulationReturnEnabled="1" EmulationReturnValue="0" EmulationReturnDecreaseSpeed="500" EmulationReturnIncreaseSpeed="500">
+			<binding>
+				<bind role="increase">Keyboard/W</bind>
+				<bind role="decrease">Keyboard/Q</bind>
+			</binding>
 		</action>
-		<action name="FlipRight" type="Trigger">
-			<bind role="">Keyboard/W</bind>
-		</action>
-		<action name="HandBrake" type="Trigger">
-			<bind role="">Keyboard/Space</bind>
+		<action name="HandBrake" type="AnalogAxis" UseAbsoluteValues="0" MinimumValue="0" MaximumValue="100" Sensitivity="1" AnalogEmulator="Linear" EmulationDecreaseSpeed="500" EmulationIncreaseSpeed="500" EmulationReturnEnabled="1" EmulationReturnValue="0" EmulationReturnDecreaseSpeed="500" EmulationReturnIncreaseSpeed="500">
+			<binding>
+				<bind role="increase">Keyboard/Space</bind>
+			</binding>
 		</action>
 		<action name="ShiftDown" type="Trigger">
 			<bind role="">Keyboard/Z</bind>
@@ -23,31 +29,39 @@
 		<action name="ShiftUp" type="Trigger">
 			<bind role="">Keyboard/A</bind>
 		</action>
-		<action name="Steering" type="AnalogAxis" UseAbsoluteValues="0" MinimumValue="-100" MaximumValue="100" Sensitivity="1" AnalogEmulator="Linear" EmulationDecreaseSpeed="500" EmulationIncreaseSpeed="500" EmulationReturnEnabled="1" EmulationReturnValue="0" EmulationReturnDecreaseSpeed="500" EmulationReturnIncreaseSpeed="500">
+		<action name="Steering" type="AnalogAxis" UseAbsoluteValues="0" MinimumValue="-100" MaximumValue="100" Sensitivity="0.5" AnalogEmulator="Linear" EmulationDecreaseSpeed="500" EmulationIncreaseSpeed="500" EmulationReturnEnabled="1" EmulationReturnValue="0" EmulationReturnDecreaseSpeed="500" EmulationReturnIncreaseSpeed="500">
 			<binding>
 				<bind role="increase">Keyboard/Right</bind>
 				<bind role="decrease">Keyboard/Left</bind>
 			</binding>
 		</action>
-		<action name="Throttle" type="Trigger">
-			<bind role="">Keyboard/Up</bind>
+		<action name="Throttle" type="AnalogAxis" UseAbsoluteValues="0" MinimumValue="0" MaximumValue="100" Sensitivity="1" AnalogEmulator="Linear" EmulationDecreaseSpeed="500" EmulationIncreaseSpeed="500" EmulationReturnEnabled="1" EmulationReturnValue="0" EmulationReturnDecreaseSpeed="500" EmulationReturnIncreaseSpeed="500">
+			<binding>
+				<bind role="increase">Keyboard/Up</bind>
+			</binding>
 		</action>
 	</schema>
 	<schema name="Player2">
-		<action name="Boost" type="Trigger">
-			<bind role="">Keyboard/F</bind>
+		<action name="Boost" type="AnalogAxis" UseAbsoluteValues="0" MinimumValue="0" MaximumValue="100" Sensitivity="1" AnalogEmulator="Linear" EmulationDecreaseSpeed="500" EmulationIncreaseSpeed="500" EmulationReturnEnabled="1" EmulationReturnValue="0" EmulationReturnDecreaseSpeed="500" EmulationReturnIncreaseSpeed="500">
+			<binding>
+				<bind role="increase">Keyboard/F</bind>
+			</binding>
 		</action>
-		<action name="Brake" type="Trigger">
-			<bind role="">Keyboard/V</bind>
+		<action name="Brake" type="AnalogAxis" UseAbsoluteValues="0" MinimumValue="0" MaximumValue="100" Sensitivity="1" AnalogEmulator="Linear" EmulationDecreaseSpeed="500" EmulationIncreaseSpeed="500" EmulationReturnEnabled="1" EmulationReturnValue="0" EmulationReturnDecreaseSpeed="500" EmulationReturnIncreaseSpeed="500">
+			<binding>
+				<bind role="increase">Keyboard/V</bind>
+			</binding>
 		</action>
-		<action name="FlipLeft" type="Trigger">
-			<bind role="">Keyboard/Q</bind>
+		<action name="Flip" type="AnalogAxis" UseAbsoluteValues="0" MinimumValue="-100" MaximumValue="100" Sensitivity="1" AnalogEmulator="Linear" EmulationDecreaseSpeed="500" EmulationIncreaseSpeed="500" EmulationReturnEnabled="1" EmulationReturnValue="0" EmulationReturnDecreaseSpeed="500" EmulationReturnIncreaseSpeed="500">
+			<binding>
+				<bind role="increase">Keyboard/W</bind>
+				<bind role="decrease">Keyboard/Q</bind>
+			</binding>
 		</action>
-		<action name="FlipRight" type="Trigger">
-			<bind role="">Keyboard/W</bind>
-		</action>
-		<action name="HandBrake" type="Trigger">
-			<bind role="">Keyboard/B</bind>
+		<action name="HandBrake" type="AnalogAxis" UseAbsoluteValues="0" MinimumValue="0" MaximumValue="100" Sensitivity="1" AnalogEmulator="Linear" EmulationDecreaseSpeed="500" EmulationIncreaseSpeed="500" EmulationReturnEnabled="1" EmulationReturnValue="0" EmulationReturnDecreaseSpeed="500" EmulationReturnIncreaseSpeed="500">
+			<binding>
+				<bind role="increase">Keyboard/B</bind>
+			</binding>
 		</action>
 		<action name="ShiftDown" type="Trigger">
 			<bind role="">Keyboard/Z</bind>
@@ -57,29 +71,37 @@
 		</action>
 		<action name="Steering" type="AnalogAxis" UseAbsoluteValues="0" MinimumValue="-100" MaximumValue="100" Sensitivity="1" AnalogEmulator="Linear" EmulationDecreaseSpeed="500" EmulationIncreaseSpeed="500" EmulationReturnEnabled="1" EmulationReturnValue="0" EmulationReturnDecreaseSpeed="500" EmulationReturnIncreaseSpeed="500">
 			<binding>
-				<bind role="increase">Keyboard/D</bind>
-				<bind role="decrease">Keyboard/G</bind>
+				<bind role="increase">Keyboard/G</bind>
+				<bind role="decrease">Keyboard/D</bind>
 			</binding>
 		</action>
-		<action name="Throttle" type="Trigger">
-			<bind role="">Keyboard/R</bind>
+		<action name="Throttle" type="AnalogAxis" UseAbsoluteValues="0" MinimumValue="0" MaximumValue="100" Sensitivity="1" AnalogEmulator="Linear" EmulationDecreaseSpeed="500" EmulationIncreaseSpeed="500" EmulationReturnEnabled="1" EmulationReturnValue="0" EmulationReturnDecreaseSpeed="500" EmulationReturnIncreaseSpeed="500">
+			<binding>
+				<bind role="increase">Keyboard/R</bind>
+			</binding>
 		</action>
 	</schema>
 	<schema name="Player3">
-		<action name="Boost" type="Trigger">
-			<bind role="">Keyboard/J</bind>
+		<action name="Boost" type="AnalogAxis" UseAbsoluteValues="0" MinimumValue="0" MaximumValue="100" Sensitivity="1" AnalogEmulator="Linear" EmulationDecreaseSpeed="500" EmulationIncreaseSpeed="500" EmulationReturnEnabled="1" EmulationReturnValue="0" EmulationReturnDecreaseSpeed="500" EmulationReturnIncreaseSpeed="500">
+			<binding>
+				<bind role="increase">Keyboard/J</bind>
+			</binding>
 		</action>
-		<action name="Brake" type="Trigger">
-			<bind role="">Keyboard/M</bind>
+		<action name="Brake" type="AnalogAxis" UseAbsoluteValues="0" MinimumValue="0" MaximumValue="100" Sensitivity="1" AnalogEmulator="Linear" EmulationDecreaseSpeed="500" EmulationIncreaseSpeed="500" EmulationReturnEnabled="1" EmulationReturnValue="0" EmulationReturnDecreaseSpeed="500" EmulationReturnIncreaseSpeed="500">
+			<binding>
+				<bind role="increase">Keyboard/M</bind>
+			</binding>
 		</action>
-		<action name="FlipLeft" type="Trigger">
-			<bind role="">Keyboard/Q</bind>
+		<action name="Flip" type="AnalogAxis" UseAbsoluteValues="0" MinimumValue="-100" MaximumValue="100" Sensitivity="1" AnalogEmulator="Linear" EmulationDecreaseSpeed="500" EmulationIncreaseSpeed="500" EmulationReturnEnabled="1" EmulationReturnValue="0" EmulationReturnDecreaseSpeed="500" EmulationReturnIncreaseSpeed="500">
+			<binding>
+				<bind role="increase">Keyboard/W</bind>
+				<bind role="decrease">Keyboard/Q</bind>
+			</binding>
 		</action>
-		<action name="FlipRight" type="Trigger">
-			<bind role="">Keyboard/W</bind>
-		</action>
-		<action name="HandBrake" type="Trigger">
-			<bind role="">Keyboard/I</bind>
+		<action name="HandBrake" type="AnalogAxis" UseAbsoluteValues="0" MinimumValue="0" MaximumValue="100" Sensitivity="1" AnalogEmulator="Linear" EmulationDecreaseSpeed="500" EmulationIncreaseSpeed="500" EmulationReturnEnabled="1" EmulationReturnValue="0" EmulationReturnDecreaseSpeed="500" EmulationReturnIncreaseSpeed="500">
+			<binding>
+				<bind role="increase">Keyboard/I</bind>
+			</binding>
 		</action>
 		<action name="ShiftDown" type="Trigger">
 			<bind role="">Keyboard/Z</bind>
@@ -93,25 +115,33 @@
 				<bind role="decrease">Keyboard/K</bind>
 			</binding>
 		</action>
-		<action name="Throttle" type="Trigger">
-			<bind role="">Keyboard/U</bind>
+		<action name="Throttle" type="AnalogAxis" UseAbsoluteValues="0" MinimumValue="0" MaximumValue="100" Sensitivity="1" AnalogEmulator="Linear" EmulationDecreaseSpeed="500" EmulationIncreaseSpeed="500" EmulationReturnEnabled="1" EmulationReturnValue="0" EmulationReturnDecreaseSpeed="500" EmulationReturnIncreaseSpeed="500">
+			<binding>
+				<bind role="increase">Keyboard/U</bind>
+			</binding>
 		</action>
 	</schema>
 	<schema name="Player4">
-		<action name="Boost" type="Trigger">
-			<bind role="">Keyboard/A</bind>
+		<action name="Boost" type="AnalogAxis" UseAbsoluteValues="0" MinimumValue="0" MaximumValue="100" Sensitivity="1" AnalogEmulator="Linear" EmulationDecreaseSpeed="500" EmulationIncreaseSpeed="500" EmulationReturnEnabled="1" EmulationReturnValue="0" EmulationReturnDecreaseSpeed="500" EmulationReturnIncreaseSpeed="500">
+			<binding>
+				<bind role="increase">Keyboard/A</bind>
+			</binding>
 		</action>
-		<action name="Brake" type="Trigger">
-			<bind role="">Keyboard/Z</bind>
+		<action name="Brake" type="AnalogAxis" UseAbsoluteValues="0" MinimumValue="0" MaximumValue="100" Sensitivity="1" AnalogEmulator="Linear" EmulationDecreaseSpeed="500" EmulationIncreaseSpeed="500" EmulationReturnEnabled="1" EmulationReturnValue="0" EmulationReturnDecreaseSpeed="500" EmulationReturnIncreaseSpeed="500">
+			<binding>
+				<bind role="increase">Keyboard/Z</bind>
+			</binding>
 		</action>
-		<action name="FlipLeft" type="Trigger">
-			<bind role="">Keyboard/Q</bind>
+		<action name="Flip" type="AnalogAxis" UseAbsoluteValues="0" MinimumValue="-100" MaximumValue="100" Sensitivity="1" AnalogEmulator="Linear" EmulationDecreaseSpeed="500" EmulationIncreaseSpeed="500" EmulationReturnEnabled="1" EmulationReturnValue="0" EmulationReturnDecreaseSpeed="500" EmulationReturnIncreaseSpeed="500">
+			<binding>
+				<bind role="increase">Keyboard/W</bind>
+				<bind role="decrease">Keyboard/Q</bind>
+			</binding>
 		</action>
-		<action name="FlipRight" type="Trigger">
-			<bind role="">Keyboard/W</bind>
-		</action>
-		<action name="HandBrake" type="Trigger">
-			<bind role="">Keyboard/N</bind>
+		<action name="HandBrake" type="AnalogAxis" UseAbsoluteValues="0" MinimumValue="0" MaximumValue="100" Sensitivity="1" AnalogEmulator="Linear" EmulationDecreaseSpeed="500" EmulationIncreaseSpeed="500" EmulationReturnEnabled="1" EmulationReturnValue="0" EmulationReturnDecreaseSpeed="500" EmulationReturnIncreaseSpeed="500">
+			<binding>
+				<bind role="increase">Keyboard/N</bind>
+			</binding>
 		</action>
 		<action name="ShiftDown" type="Trigger">
 			<bind role="">Keyboard/Z</bind>
@@ -125,8 +155,10 @@
 				<bind role="decrease">Keyboard/P</bind>
 			</binding>
 		</action>
-		<action name="Throttle" type="Trigger">
-			<bind role="">Keyboard/L</bind>
+		<action name="Throttle" type="AnalogAxis" UseAbsoluteValues="0" MinimumValue="0" MaximumValue="100" Sensitivity="1" AnalogEmulator="Linear" EmulationDecreaseSpeed="500" EmulationIncreaseSpeed="500" EmulationReturnEnabled="1" EmulationReturnValue="0" EmulationReturnDecreaseSpeed="500" EmulationReturnIncreaseSpeed="500">
+			<binding>
+				<bind role="increase">Keyboard/L</bind>
+			</binding>
 		</action>
 	</schema>
 </schemas>
