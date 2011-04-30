@@ -117,6 +117,16 @@ bool BaseApp::keyPressed( const OIS::KeyEvent &arg )
 			binding->bind("Keyboard/" + mKeyboard->getAsString(pressedKey), bind2_role);
 		}
 		
+		// for analog axis actions, make sure the binds have a role
+		if (action->getActionType() == OISB::AT_ANALOG_AXIS)
+		{
+			if (bind1_role == "" || bind2_role == "")
+			{
+				bind1_role = "increase";
+				bind2_role = "decrease";
+			}
+		}
+		
 		// macro to strip away the Keyboard/
 		#define stripk(s) Ogre::StringUtil::split(s, "/")[1]
 		
