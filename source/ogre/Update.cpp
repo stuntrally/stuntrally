@@ -249,6 +249,7 @@ void App::newPoses()
 		q1.FromAngleAxis(-rad,Vector3(axi.z,-axi.x,-axi.y));  posInfo.rot = q1 * qFixCar;
 		Vector3 vcx,vcz;  q1.ToAxes(vcx,posInfo.carY,vcz);
 
+		if (!isnan(whPos[0][0]))
 		for (int w=0; w < 4; w++)
 		{
 			posInfo.whPos[w] = Vector3(whPos[w][0],whPos[w][2],-whPos[w][1]);

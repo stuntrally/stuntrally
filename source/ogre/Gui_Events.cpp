@@ -368,6 +368,7 @@ void App::chkCamInfo(WP wp){		ChkEv(show_cam);	ShowHUD();	}
 void App::chkCarDbgBars(WP wp){		ChkEv(car_dbgbars);	ShowHUD();	}
 void App::chkCarDbgTxt(WP wp){		ChkEv(car_dbgtxt);	ShowHUD();	}
 void App::chkBltDebug(WP wp){		ChkEv(bltDebug);	}
+void App::chkBltProfilerTxt(WP wp){	ChkEv(bltProfilerTxt);	}
 
 //  [Car]
 void App::chkAbs(WP wp){		ChkEv(abs);		if (pGame)  pGame->ProcessNewSettings();	}
@@ -501,6 +502,7 @@ void App::btnRplLoad(WP)  // Load
 				pSet->track = trk;  pSet->track_user = usr;
 				pSet->rpl_play = 1;
 				btnNewGame(0);
+				
 				// todo: car reload only - faster ...
 			}
 		}
@@ -528,6 +530,11 @@ void App::listRplChng(List* li, size_t pos)
 	//size_t i = li->getIndexSelected();  if (i==ITEM_NONE)  return;
 	//const UString& sl = li->getItemNameAt(i);	sListCar = sl;
 	//if (imgCar)  imgCar->setImageTexture(sListCar+".jpg");
+	//  text desc
+	//valRplName
+	//valRplInfo
+	//edRplName
+	//edRplDesc
 }
 
 
@@ -566,12 +573,6 @@ void App::btnRplForward(WP)
 void App::btnRplPlay(WP)  // play / pause
 {
 }
-
-//  text desc
-//valRplName
-//valRplInfo
-//edRplName
-//edRplDesc
 
 
 void App::updReplaysList()
@@ -656,10 +657,12 @@ bool App::keyPressed( const OIS::KeyEvent &arg )
 			return false;
 		}	break;
 
-		case KC_F10:	//  blt debug
+		case KC_F10:	//  blt debug, txt
 		if (shift)
-		{	WP wp = chBlt;  ChkEv(bltDebug);  return false;
-		}	break;
+		{	WP wp = chBltTxt;  ChkEv(bltProfilerTxt);  return false;  }
+		else if (ctrl)
+		{	WP wp = chBlt;  ChkEv(bltDebug);  return false;  }
+		break;
 
 
 		case KC_F7:		// Times

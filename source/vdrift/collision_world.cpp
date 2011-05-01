@@ -295,17 +295,27 @@ bool COLLISION_WORLD::CastRay(
 	return false;
 }
 
-void COLLISION_WORLD::Update(float dt)
+void COLLISION_WORLD::Update(float dt, bool profiling)
 {
 	//const int maxsubsteps = 7;  ///~  70  7*6+  o:7
 	//const float fixedTimeStep = 1 / 60.0f;  ///~  320+  o:60.
 	//world.stepSimulation(dt, maxsubsteps, fixedTimeStep);
+	//if (dt < 0.0001)  dt = 0.0001;
+	//if (dt > 0.04)  dt = 0.04;
+	
 	world.stepSimulation(dt, maxSubsteps, fixedTimestep);
-	/*static int cc = 0;  cc++;  ///+ bullet profiling info
-	if (cc > 60)
+
+	///+  bullet profiling info
+	static int cc = 0;  cc++;
+	if (cc > 40)
 	{	cc = 0;
-		CProfileManager::dumpAll();
-	}/**/
+		if (profiling)
+		{
+			std::stringstream os;
+			CProfileManager::dumpAll(os);
+			bltProfiling = os.str();
+		}
+	}
 }
 
 void COLLISION_WORLD::DebugPrint(std::ostream & out)

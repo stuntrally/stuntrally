@@ -352,7 +352,7 @@ void GAME::AdvanceGameLogic()
 				//PROFILER.endBlock("ai");
 				
 				PROFILER.beginBlock("physics");
-				collision.Update(TickPeriod());
+				collision.Update(TickPeriod(), settings->bltProfilerTxt);
 				PROFILER.endBlock("physics");
 				
 				PROFILER.beginBlock("car");

@@ -715,23 +715,27 @@
 							<Property key="Text_TextColour" value="0.7 0.85 1.0"/>
 						</Widget>
 						<Widget type="Button" skin="CheckBox" position="40 62 256 24" name="Fps">
-							<Property key="Widget_Caption" value="#{FPS} F11"/>
+							<Property key="Widget_Caption" value="#{FPS}  F11"/>
 							<Property key="Text_TextColour" value="0.8 0.9 1.0"/>
 						</Widget>
 						<Widget type="Button" skin="CheckBox" position="40 94 256 24" name="CarDbgBars">
-							<Property key="Widget_Caption" value="#{CarDebug} F9"/>
+							<Property key="Widget_Caption" value="#{CarDebug}  F9"/>
 							<Property key="Text_TextColour" value="0.7 0.9 1.0"/>
 						</Widget>
 						<Widget type="Button" skin="CheckBox" position="40 126 256 24" name="Wireframe">
-							<Property key="Widget_Caption" value="#{Wireframe} F10"/>
+							<Property key="Widget_Caption" value="#{Wireframe}  F10"/>
 							<Property key="Text_TextColour" value="0.7 0.85 1.0"/>
 						</Widget>
 						<Widget type="Button" skin="CheckBox" position="40 158 256 24" name="BulletDebug">
-							<Property key="Widget_Caption" value="#{BulletDebug} shift-F10"/>
+							<Property key="Widget_Caption" value="#{BulletDebug}  ctrl-F10"/>
 							<Property key="Text_TextColour" value="0.7 0.85 1.0"/>
 						</Widget>
-						<Widget type="Button" skin="CheckBox" position="40 190 256 24" name="CarDbgTxt">
-							<Property key="Widget_Caption" value="#{CarDebugText} shift-F9"/>
+						<Widget type="Button" skin="CheckBox" position="40 190 256 24" name="BulletProfilerTxt">
+							<Property key="Widget_Caption" value="#{BulletProfilerTxt}  shift-F10"/>
+							<Property key="Text_TextColour" value="0.7 0.85 1.0"/>
+						</Widget>
+						<Widget type="Button" skin="CheckBox" position="40 222 256 24" name="CarDbgTxt">
+							<Property key="Widget_Caption" value="#{CarDebugText}  shift-F9"/>
 							<Property key="Text_TextColour" value="0.7 0.85 1.0"/>
 						</Widget>
 						<Widget type="StaticText" skin="StaticText" position="352 30 216 24">

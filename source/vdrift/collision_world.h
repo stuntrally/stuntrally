@@ -39,7 +39,8 @@ public:
 		int* pOnRoad) const;
 	
 	// update world physics
-	void Update(float dt);
+	void Update(float dt, bool profiling);
+	std::string bltProfiling;  // blt debug times info
 	
 	void Draw();
 	void DebugPrint(std::ostream & out);

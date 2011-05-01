@@ -204,7 +204,7 @@ bool BaseApp::keyPressed( const OIS::KeyEvent &arg )
 	{
 		///  Wireframe F10
 		case KC_F10:
-		if (!shift)
+		if (!shift && !ctrl)
 		{	mbWireFrame = !mbWireFrame;
 			///  Set for all cameras
 			PolygonMode mode = mbWireFrame ? PM_WIREFRAME : PM_SOLID;
@@ -228,15 +228,14 @@ bool BaseApp::keyPressed( const OIS::KeyEvent &arg )
 		return false;
 	}
 
-	int visMask = 255;
-
 	switch (arg.key)
 	{
 		///  Camera
 		case KC_PGDOWN: case KC_NUMPAD3:
 		case KC_C:		// Next
+		{	int visMask = 255;
 			roadUpCnt = 0;
-			// for all cars
+			//  for all cars
 			for (std::list<CarModel*>::iterator it=carModels.begin(); it!=carModels.end(); it++)
 			{
 				if ((*it)->fCam)
@@ -244,18 +243,18 @@ bool BaseApp::keyPressed( const OIS::KeyEvent &arg )
 					(*it)->fCam->Next(0, shift);
 					if ((*it)->fCam->ca.mHideGlass)  visMask = 255-16;
 					else        visMask = 255;
-					
 				}
 			}
-			// Set visibility mask for all viewports
+			//  set visibility mask for all viewports
 			for (std::list<Viewport*>::iterator it=mSplitMgr->mViewports.begin(); it!=mSplitMgr->mViewports.end(); it++)
 				(*it)->setVisibilityMask(visMask);
-			return false;
+		}	return false;
 
 		case KC_PGUP: case KC_NUMPAD9:
 		case KC_X:		// Prev
+		{	int visMask = 255;
 			roadUpCnt = 0;
-			// for all cars
+			//  for all cars
 			for (std::list<CarModel*>::iterator it=carModels.begin(); it!=carModels.end(); it++)
 			{
 				if ((*it)->fCam)
@@ -265,10 +264,10 @@ bool BaseApp::keyPressed( const OIS::KeyEvent &arg )
 					else        visMask = 255;
 				}
 			}
-			// Set visibility mask for all viewports
+			//  set visibility mask for all viewports
 			for (std::list<Viewport*>::iterator it=mSplitMgr->mViewports.begin(); it!=mSplitMgr->mViewports.end(); it++)
 				(*it)->setVisibilityMask(visMask);
-			return false;
+		}	return false;
 			
 		//case KC_S:		// Save S
 		//	if (pCar)	if (pCar->mFCam)

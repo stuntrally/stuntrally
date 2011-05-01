@@ -147,6 +147,7 @@ void App::InitGui()
 	Chk("CarDbgBars", chkCarDbgBars, car_dbgbars);	chDbgB = mGUI->findWidget<Button>("CarDbgBars");
 	Chk("CarDbgTxt", chkCarDbgTxt, car_dbgtxt);		chDbgT = mGUI->findWidget<Button>("CarDbgTxt");
 	Chk("BulletDebug", chkBltDebug, bltDebug);	chBlt = mGUI->findWidget<Button>("BulletDebug");
+	Chk("BulletProfilerTxt", chkBltProfilerTxt, bltProfilerTxt);	chBltTxt = mGUI->findWidget<Button>("BulletDebug");
 	
 	//  abs, tcs
 	Chk("CarABS",  chkAbs, abs);		Chk("CarTCS", chkTcs, tcs);

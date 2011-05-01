@@ -44,7 +44,7 @@ public:
 
 	//  other
 	std::string skin;	float vol_master, vol_engine, vol_tires, vol_env;
-	bool autostart, escquit;	bool bltDebug, bltLines;
+	bool autostart, escquit;	bool bltDebug, bltLines, bltProfilerTxt;
 	
 	// loading
 	bool loadingbackground;

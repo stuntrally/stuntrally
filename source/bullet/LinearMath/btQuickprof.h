@@ -22,6 +22,7 @@
 #include "btScalar.h"
 #include "btAlignedAllocator.h"
 #include <new>
+#include <sstream>
 
 
 
@@ -329,9 +330,9 @@ public:
 	}
 	static	void						Release_Iterator( CProfileIterator * iterator ) { delete ( iterator); }
 
-	static void	dumpRecursive(CProfileIterator* profileIterator, int spacing);
+	static void	dumpRecursive(CProfileIterator* profileIterator, int spacing, std::stringstream& os);
 
-	static void	dumpAll();
+	static void	dumpAll(std::stringstream& os);
 
 private:
 	static	CProfileNode			Root;

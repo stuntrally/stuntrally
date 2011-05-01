@@ -18,7 +18,7 @@ CarModel::CarModel(unsigned int index, eCarType type, const std::string name,
 	offset.Set(5*iIndex,5*iIndex,0); // 5*sqrt(2) m distance between cars
 	/// TODO: some quaternion magic to align the cars along track start orientation
 	
-	MATHVECTOR<float, 3> pos;
+	MATHVECTOR<float, 3> pos(0,10,0);
 	QUATERNION<float> rot;
 	if (pGame->track.IsLoaded())  // replay issue
 	{
@@ -35,7 +35,7 @@ CarModel::CarModel(unsigned int index, eCarType type, const std::string name,
 		wht[w] = 0.f;  whTerMtr[w] = 0; }
 }
 
-CarModel::~CarModel(void)
+CarModel::~CarModel()
 {
 	delete pReflect;  pReflect = 0;
 	
@@ -409,7 +409,7 @@ void CarModel::UpdWhTerMtr()
 //  utils
 //-------------------------------------------------------------------------------------------------------
 
-void CarModel::ChangeClr(void)
+void CarModel::ChangeClr()
 {
 	///TODO allow multiple cars here, i.e. give mat/tex an index
 	bool add = 1;

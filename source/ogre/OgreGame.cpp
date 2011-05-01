@@ -23,7 +23,7 @@ App::App()
 	,valReflSkip(0), valReflSize(0), valReflFaces(0), valReflDist(0)  // refl
 	,valShaders(0), valShadowType(0), valShadowCount(0), valShadowSize(0), valShadowDist(0)  // shadow
 	,valSizeGaug(0), valSizeMinmap(0)  // view
-	,bRkmh(0),bRmph(0), chDbgT(0),chDbgB(0), chBlt(0),chFps(0), chTimes(0),chMinimp(0), bnQuit(0)
+	,bRkmh(0),bRmph(0), chDbgT(0),chDbgB(0), chBlt(0),chBltTxt(0), chFps(0), chTimes(0),chMinimp(0), bnQuit(0)
 	,imgCar(0),imgPrv(0),imgMini(0),imgTer(0), valCar(0),valTrk(0),trkDesc(0)
 	,valRplPerc(0), valRplCur(0), valRplLen(0), slRplPos(0), rplList(0)
 	,valRplName(0), valRplInfo(0), edRplName(0), edRplDesc(0)

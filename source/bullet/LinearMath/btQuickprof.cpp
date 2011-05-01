@@ -281,19 +281,21 @@ float CProfileManager::Get_Time_Since_Reset( void )
 
 #include <stdio.h>
 
-void	CProfileManager::dumpRecursive(CProfileIterator* profileIterator, int spacing)
+void	CProfileManager::dumpRecursive(CProfileIterator* profileIterator, int spacing, std::stringstream& os)
 {
+	static char s[256];
 	profileIterator->First();
 	if (profileIterator->Is_Done())
 		return;
 
 	float accumulated_time=0,parent_time = profileIterator->Is_Root() ? CProfileManager::Get_Time_Since_Reset() : profileIterator->Get_Current_Parent_Total_Time();
-	int i;
+	int i,j;
 	int frames_since_reset = CProfileManager::Get_Frame_Count_Since_Reset();
-	for (i=0;i<spacing;i++)	printf(".");
-	printf("----------------------------------\n");
-	for (i=0;i<spacing;i++)	printf(".");
-	printf("Profiling: %s (total running time: %.3f ms) ---\n",	profileIterator->Get_Current_Parent_Name(), parent_time );
+	for (i=0;i<spacing;i++)	os << ".";
+	os << "----------------------------------\n";
+	for (i=0;i<spacing;i++)	os << ".";
+	sprintf(s,"Profiling: %s (total running time: %.3f ms) ---\n",	profileIterator->Get_Current_Parent_Name(), parent_time );
+	os << s;
 	float totalTime = 0.f;
 
 	
@@ -305,37 +307,38 @@ void	CProfileManager::dumpRecursive(CProfileIterator* profileIterator, int spaci
 		float current_total_time = profileIterator->Get_Current_Total_Time();
 		accumulated_time += current_total_time;
 		float fraction = parent_time > SIMD_EPSILON ? (current_total_time / parent_time) * 100 : 0.f;
-		{
-			int i;	for (i=0;i<spacing;i++)	printf(".");
-		}
-		printf("%d -- %s (%.2f %%) :: %.3f ms / frame (%d calls)\n",i, profileIterator->Get_Current_Name(), fraction,(current_total_time / (double)frames_since_reset),profileIterator->Get_Current_Total_Calls());
+
+		for (j=0;j<spacing;j++)	os << ".";
+		sprintf(s,"%d -- %s (%.2f %%) :: %.3f ms / frame (%d calls)\n",i, profileIterator->Get_Current_Name(), fraction,(current_total_time / (double)frames_since_reset),profileIterator->Get_Current_Total_Calls());
+		os << s;
 		totalTime += current_total_time;
 		//recurse into children
 	}
 
 	if (parent_time < accumulated_time)
 	{
-		printf("what's wrong\n");
+		os << "what's wrong\n";
 	}
-	for (i=0;i<spacing;i++)	printf(".");
-	printf("%s (%.3f %%) :: %.3f ms\n", "Unaccounted:",parent_time > SIMD_EPSILON ? ((parent_time - accumulated_time) / parent_time) * 100 : 0.f, parent_time - accumulated_time);
+	for (i=0;i<spacing;i++)	os << ".";
+	sprintf(s,"%s (%.3f %%) :: %.3f ms\n", "Unaccounted:",parent_time > SIMD_EPSILON ? ((parent_time - accumulated_time) / parent_time) * 100 : 0.f, parent_time - accumulated_time);
+	os << s;
 	
 	for (i=0;i<numChildren;i++)
 	{
 		profileIterator->Enter_Child(i);
-		dumpRecursive(profileIterator,spacing+3);
+		dumpRecursive(profileIterator, spacing+3, os);
 		profileIterator->Enter_Parent();
 	}
 }
 
 
 
-void	CProfileManager::dumpAll()
+void	CProfileManager::dumpAll(std::stringstream& os)
 {
 	CProfileIterator* profileIterator = 0;
 	profileIterator = CProfileManager::Get_Iterator();
 
-	dumpRecursive(profileIterator,0);
+	dumpRecursive(profileIterator, 0, os);
 
 	CProfileManager::Release_Iterator(profileIterator);
 }

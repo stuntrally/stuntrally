@@ -178,6 +178,7 @@
 	<Tag name="CarDebug">Car susp, long|,lat- slips</Tag>
 	<Tag name="Wireframe">Wireframe</Tag>
 	<Tag name="BulletDebug">Bullet debug</Tag>
+	<Tag name="BulletProfilerTxt">Bullet Profiler Times</Tag>
 	<Tag name="CarDebugText">Car debug text </Tag>
 
 	<Tag name="Startup">Startup</Tag>
@@ -194,7 +195,8 @@
 	<Tag name="InputKey1">Key 1</Tag>
 	<Tag name="InputKey2">Key 2</Tag>
 	<Tag name="InputNoJS">No joystick</Tag>
-	<Tag name="InputKeyUnassigned">&lt;Unassigned&gt;</Tag>
+	<!--<Tag name="InputKeyUnassigned">&lt;Unassigned&gt;</Tag>-->
+	<Tag name="InputKeyUnassigned">-- None --</Tag>
 	<Tag name="InputAssignKey">&lt;Press a key&gt;</Tag>
 	<Tag name="InputMapPlayer1">Player 1</Tag>
 	<Tag name="InputMapPlayer2">Player 2</Tag>
@@ -203,8 +205,7 @@
 	<Tag name="InputMapGeneral">General</Tag>
 	<Tag name="InputMapThrottle">Throttle</Tag>
 	<Tag name="InputMapBrake">Brake</Tag>
-	<Tag name="InputMapFlipRight">Flip right</Tag>
-	<Tag name="InputMapFlipLeft">Flip left</Tag>
+	<Tag name="InputMapFlip">Flip</Tag>
 	<Tag name="InputMapBoost">Boost</Tag>
 	<Tag name="InputMapHandBrake">Handbrake</Tag>
 	<Tag name="InputMapSteering">Steering</Tag>

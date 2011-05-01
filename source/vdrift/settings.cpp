@@ -60,6 +60,7 @@ void SETTINGS::Serialize(bool w, CONFIGFILE & c)
 	Param(c,w, "misc.autostartgame", autostart);
 	Param(c,w, "misc.ogredialog", ogre_dialog);	Param(c,w, "misc.escquit", escquit);
 	Param(c,w, "misc.bulletDebug", bltDebug);	Param(c,w, "misc.bulletLines", bltLines);
+	Param(c,w, "misc.bulletProfilerTxt", bltProfilerTxt);
 	Param(c,w, "misc.loadingbackground", loadingbackground);
 	
 	//c.bFltFull = true;
@@ -104,7 +105,7 @@ SETTINGS::SETTINGS() :  ///  Defaults
 	trackreverse(false), number_of_laps(1), ai_difficulty(1), local_players(1), split_vertically(true),
 	//  other
 	skin("simple"), vol_master(1.f), vol_engine(1.f), vol_tires(1.f), vol_env(1.f),
-	autostart(0), ogre_dialog(1), escquit(0), bltDebug(0), bltLines(1),
+	autostart(0), ogre_dialog(1), escquit(0), bltDebug(0), bltLines(1),  bltProfilerTxt(0),
 	// loading
 	loadingbackground(true), veget_collis(true),
 	//  sim

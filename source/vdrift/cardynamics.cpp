@@ -67,6 +67,8 @@ void CARDYNAMICS::Update()
 	{
 		chassisPosition = MATHVECTOR <T,3>(0,0,0);
 		chassisRotation = QUATERNION <T>(0,0,0,0);
+		btTransform chassisTrans0;
+		chassis->getMotionState()->setWorldTransform(chassisTrans0);
 	}
 }
 
