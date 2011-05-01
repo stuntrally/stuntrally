@@ -277,9 +277,11 @@ namespace OISB
 			Mouse* mMouse;
             /// our wrap keyboard device
 			Keyboard* mKeyboard;
-            /// our wrap keyboard device
+            /// our wrap joystick device
+		public:
 			std::vector<JoyStick*> mJoysticks;
 
+		private:
 			/**
 			 * @brief adds input device
 			 * 

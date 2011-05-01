@@ -605,6 +605,12 @@ void App::InitInputGui()
 		MyGUI::ComboBoxPtr joysticks = tabitem->createWidget<ComboBox>("ComboBox", 540, 10, 150, 24, MyGUI::Align::Default, "joystickSel_" + (*it).first );
 		joysticks->addItem(TR("#{InputNoJS}"));
 		joysticks->setIndexSelected(0);
-		///TODO populate joystick list
+		for (std::vector<OISB::JoyStick*>::const_iterator it=OISB::System::getSingleton().mJoysticks.begin();
+				it!=OISB::System::getSingleton().mJoysticks.end();
+				it++)
+		{
+			joysticks->addItem( (*it)->getName() );
+		}
+				
 	}
 }
