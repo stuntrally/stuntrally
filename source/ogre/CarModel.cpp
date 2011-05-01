@@ -20,11 +20,9 @@ CarModel::CarModel(unsigned int index, eCarType type, const std::string name,
 	
 	MATHVECTOR<float, 3> pos(0,10,0);
 	QUATERNION<float> rot;
-	if (pGame->track.IsLoaded())  // replay issue
-	{
-		pos = pGame->track.GetStart(0).first;
-		rot = pGame->track.GetStart(0).second;
-	}
+	pos = pGame->track.GetStart(0).first;
+	rot = pGame->track.GetStart(0).second;
+
 	pCar = pGame->LoadCar(sDirname, pos + offset, rot, true, false);
 	if (!pCar) Log("Error loading car " + sDirname);
 	
