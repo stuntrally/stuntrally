@@ -167,6 +167,7 @@ namespace OISB
                 return it->first;
             }
         }
+        return "";
 	}
 	
     Bindable* Binding::getBindable(const String& role) const
