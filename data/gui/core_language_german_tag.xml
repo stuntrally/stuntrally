@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <MyGUI>
-		<Tag name="InputKeyUnassigned">&lt;Unassigned&gt;</Tag>
-
 	<Tag name="TipTreeDens">Wie viele Modelle (Bäume, Steine, etc.) auf der Strecke sichtbar sind.</Tag>
 	<Tag name="CamSpeed">Kamerageschw.</Tag>
 	<Tag name="InputRoadModify">Bearbeiten</Tag>
@@ -24,8 +22,6 @@
 	<Tag name="Surface">Oberfläche</Tag>
 	<Tag name="TBScore">Punkte</Tag>
 	<Tag name="LS_TER">Lade Terrain</Tag>
-	<Tag name="InputNextTab">F2,F3 - vorheriger/nächster Tab</Tag>
-	<Tag name="InputBrake">Leer - Handbremse</Tag>
 	<Tag name="TipPrevWind">Vorschau-Kamerafenster.</Tag>
 	<Tag name="InputPaintColor">C - Anstrichfarbe</Tag>
 	<Tag name="Version">Version</Tag>
@@ -36,7 +32,6 @@
 	<Tag name="TipTrackMap">Minikarte der ausgewählten Strecke, Sicht von oben.</Tag>
 	<Tag name="TipToggleModel">Modell aktivieren oder deaktivieren.</Tag>
 	<Tag name="InputReloadTrack">F5 - Neu laden</Tag>
-	<Tag name="InputShowGUI">F1, Tab - Menü anzeigen</Tag>
 	<Tag name="TipParType3">Reifenpartikel Typ 3 (ganze Strecke)</Tag>
 	<Tag name="TipParType2">Reifenpartikel Typ 2 (ganze Strecke)</Tag>
 	<Tag name="TipParType1">Reifenpartikel Typ 1 (ganze Strecke)</Tag>
@@ -59,7 +54,6 @@
 	<Tag name="Top">Oben</Tag>
 	<Tag name="TerUpdSkip">Terrain-Update überspr.</Tag>
 	<Tag name="Input">Eingabe</Tag>
-	<Tag name="InputSteer">Links,Rechts - lenken</Tag>
 	<Tag name="TerLayers">Terrain-Layer</Tag>
 	<Tag name="CopySource">Als Kopierquelle setzen</Tag>
 	<Tag name="TipDisableFog">Nebel zum Bearbeiten aus der Entfernung deaktivieren.</Tag>
@@ -88,7 +82,6 @@
 	<Tag name="SetCamTo">Kamera setzen</Tag>
 	<Tag name="max">max</Tag>
 	<Tag name="TipTerTriSize">Triangle-Größe des Terrains (in Metern) - empfohlen: 1-2, größerer Wert für größere Fläche). Anwenden durch Aktualisierung (F8).</Tag>
-	<Tag name="InputNextCam">X, C oder BildAuf, BildAb - Kamera vor/zurück</Tag>
 	<Tag name="ABS">ABS (Antiblockiersystem)</Tag>
 	<Tag name="TipCarsList">Autoauswahl, klicken um Vorschau zu sehen. [Auto wechseln] drücken und dann [Neues Spiel].</Tag>
 	<Tag name="MyGUI_MessageBox_Ignore">Ignorieren</Tag>
@@ -96,7 +89,6 @@
 	<Tag name="PipeLStepsMul">Röhren L-Steps Mult.</Tag>
 	<Tag name="View">Ansicht</Tag>
 	<Tag name="TipModelRoadDist">Abstand zwischen Straße und Modellen (global, wird zum individuellen Wert addiert)</Tag>
-	<Tag name="InputThrottle">Hoch, Runter - Gas, Bremsen</Tag>
 	<Tag name="InputAfterChanges">(nach Terrain/Vegetationsveränderung)</Tag>
 	<Tag name="MapSize">Map-Größe</Tag>
 	<Tag name="OrigImage">Abdunkeln</Tag>
@@ -105,7 +97,6 @@
 	<Tag name="Weather">Wetter</Tag>
 	<Tag name="wind">Wind</Tag>
 	<Tag name="LS_CAR">Lade Auto</Tag>
-	<Tag name="InputRestart">F5 - Spiel neu starten</Tag>
 	<Tag name="MaxScale">max. Skal.</Tag>
 	<Tag name="TipModelMaxScale">Maximale Skalierung des Modells.</Tag>
 	<Tag name="TerrainError">Terrainabweichung</Tag>
@@ -140,7 +131,6 @@
 	<Tag name="TipSunDirPitch">Richtung der Sonne - Neigung.</Tag>
 	<Tag name="ProjectPage">Projektseite:</Tag>
 	<Tag name="Type">Typ</Tag>
-	<Tag name="InputBoost">Strg - Boost</Tag>
 	<Tag name="Engine">Motor</Tag>
 	<Tag name="TipNewGameCar">Neu starten (nachdem neues Auto ausgewählt wurde)</Tag>
 	<Tag name="InputWheelForce">[,]  (or shift-Wheel)  -  Force (intensity)</Tag>
@@ -194,7 +184,6 @@
 	<Tag name="InputToggleVeget">V - Vegetation an/aus</Tag>
 	<Tag name="Particles">Partikel</Tag>
 	<Tag name="Other">Sonstige</Tag>
-	<Tag name="InputMainCam">mit Shift - Hauptkameras</Tag>
 	<Tag name="InputRoadNext">BildAuf, BildAb (oder Mausrad) - Punkt vor/zurück</Tag>
 	<Tag name="Development">Entwicklung</Tag>
 	<Tag name="InputRoadIns">Einfg - Punkt danach einfügen, mit Alt - davor</Tag>
@@ -235,7 +224,6 @@
 	<Tag name="Digits">Ziffern</Tag>
 	<Tag name="ShowPictures">Bilder beim Laden anzeigen</Tag>
 	<Tag name="TrackAvgSpeed">Avg. Geschw.</Tag>
-	<Tag name="InputShift">A,Z - Gang hoch, runter</Tag>
 	<Tag name="PreviewCam">Vorschaukamera</Tag>
 	<Tag name="TipModelMinScale">Minimale Skalierung des Modells.</Tag>
 	<Tag name="Leave">Verlassen</Tag>
@@ -263,7 +251,6 @@
 	<Tag name="TCS">TCS (Traction Control System)</Tag>
 	<Tag name="NeedRestart">* Neustart erforderl.</Tag>
 	<Tag name="mud">Schlamm</Tag>
-	<Tag name="InputRoll">Q, W - Auto drehen (falls nötig)</Tag>
 	<Tag name="TipTerWind">Terrain Pinsel-Fenster</Tag>
 	<Tag name="TipGrassVisDist">Sichtbarkeitsdistanz für Gras-Pages</Tag>
 	<Tag name="TipModelVisDist">Sichtbarkeitsdistanz für Modell-Pages</Tag>
