@@ -6,19 +6,23 @@
 
 class CARCONTROLMAP_LOCAL
 {
+private:
+	std::vector <float> inputs;  // indexed by CARINPUT values
+	std::vector <float> lastinputs;
+
 public:
 	CARCONTROLMAP_LOCAL()
+	{
+		//Reset();
+	}
+	
+	void Reset()
 	{
 		inputs.resize(CARINPUT::ALL, 0.f);
 		lastinputs.resize(CARINPUT::ALL, 0.f);
 	}
 	
-	// query the eventsystem for info, then return the resulting input array
 	const std::vector <float> & ProcessInput(class App* pApp, int player, float dt);
-	
-private:
-	std::vector <float> inputs;  // indexed by CARINPUT values
-	std::vector <float> lastinputs;
 };
 
 #endif

@@ -63,13 +63,6 @@ void CARDYNAMICS::Update()
 	MATHVECTOR <T, 3> com = center_of_mass;
 	chassisRotation.RotateVector(com);
 	chassisPosition = chassisCenterOfMass - com;
-	if (isnan(com[0]))
-	{
-		chassisPosition = MATHVECTOR <T,3>(0,0,0);
-		chassisRotation = QUATERNION <T>(0,0,0,0);
-		btTransform chassisTrans0;
-		chassis->getMotionState()->setWorldTransform(chassisTrans0);
-	}
 }
 
 const MATHVECTOR <T, 3> & CARDYNAMICS::GetCenterOfMassPosition() const
@@ -797,20 +790,24 @@ void CARDYNAMICS::UpdateBody(T dt, T drive_torque[])
 	
 
 	///***  manual car flip over  ---------------------------------------------------------------------------------
-	if (doFlip > 0.01f || doFlip < -0.01f)
+	bool flipLeft = doFlipLeft;
+	bool flipRight = doFlipRight;
+	int flip = (flipLeft ? -1 : 0) + (flipRight ? 1 : 0);
+	if (flip)
 	{
 		MATRIX3 <T> inertia = body.GetInertia();
 		btVector3 inrt(inertia[0], inertia[4], inertia[8]);
 		//  strength_
-		float t = 12.f * doFlip * inrt[inrt.maxAxis()];
+		float t = 12.f * flip * inrt[inrt.maxAxis()];
 		MATHVECTOR <T, 3> v(t,0,0);
 		Orientation().RotateVector(v);
 		ApplyTorque(v);
 	}
 	///***  boost
-	if (doBoost > 0.01f)
+	bool ctrl = doBoost;
+	if (ctrl)
 	{
-		T f = body.GetMass() * 16.f * doBoost;  // power
+		T f = body.GetMass() * 16.f;
 		MATHVECTOR <T, 3> v(f,0,0), ofs(0,0,0);
 		Orientation().RotateVector(v);
 		ApplyForce(v, ofs);

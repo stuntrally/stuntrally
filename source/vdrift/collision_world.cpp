@@ -300,9 +300,6 @@ void COLLISION_WORLD::Update(float dt, bool profiling)
 	//const int maxsubsteps = 7;  ///~  70  7*6+  o:7
 	//const float fixedTimeStep = 1 / 60.0f;  ///~  320+  o:60.
 	//world.stepSimulation(dt, maxsubsteps, fixedTimeStep);
-	//if (dt < 0.0001)  dt = 0.0001;
-	//if (dt > 0.04)  dt = 0.04;
-	
 	world.stepSimulation(dt, maxSubsteps, fixedTimestep);
 
 	///+  bullet profiling info

@@ -167,9 +167,10 @@ public:
 	QUATERNION <T> chassisRotation;
 	
 	// manual flip over
-	float doFlip;
+	bool doFlipRight;
+	bool doFlipLeft;
 	// rocket boost
-	float doBoost;
+	bool doBoost;
 
 // driveline state
 	CARFUELTANK <T> fuel_tank;

@@ -470,7 +470,8 @@ void CAR::HandleInputs(const std::vector <float> & inputs, float dt)
 	
 	// boost, flip over
 	dynamics.doBoost = inputs[CARINPUT::BOOST];
-	dynamics.doFlip = inputs[CARINPUT::FLIP];
+	dynamics.doFlipLeft = inputs[CARINPUT::FLIPLEFT];
+	dynamics.doFlipRight = inputs[CARINPUT::FLIPRIGHT];
 
 	//do steering
 	float steer_value = inputs[CARINPUT::STEER_RIGHT];

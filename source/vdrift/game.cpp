@@ -34,7 +34,9 @@ void GAME::Start(std::list <string> & args)
 	//settings->Load(PATHMANAGER::GetSettingsFile());
 	
 	eventsystem.Init(info_output);
-
+	
+	carcontrols_local.second.Reset();
+	
 	InitializeSound(); //if sound initialization fails, that's okay, it'll disable itself
 
 	//initialize GUI
@@ -495,7 +497,7 @@ void GAME::UpdateCarInputs(CAR & car, int i)
     //if (carcontrols_local.first == &car)
 	{
         //carinputs = carcontrols_local.second.GetInputs();
-        carinputs = carcontrols_local.second.ProcessInput(pOgreGame, i,	TickPeriod());
+        carinputs = carcontrols_local.second.ProcessInput(pOgreGame, i, TickPeriod());
 	}
 	//else
 	{
