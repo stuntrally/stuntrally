@@ -215,106 +215,7 @@ void App::InitGui()
 
 	
 	///  input tab
-	//------------------------------------------------------------------------
-	pGame->info_output << " --------------------------------------  Input devices  BEGIN" << std::endl;
-	//OISB::System::getSingleton().dumpActionSchemas(pGame->info_output);
-	OISB::System::getSingleton().dumpDevices(pGame->info_output);  // log.txt
-	pGame->info_output << " --------------------------------------  Input devices  END" << std::endl;
-
-	MyGUI::TabPtr inputTab = mGUI->findWidget<Tab>("InputTab");
-	if (inputTab)
-	{
-		// insert a tab item for every schema
-		std::map<OISB::String, OISB::ActionSchema*> schemas = OISB::System::getSingleton().mActionSchemas;
-		for (std::map<OISB::String, OISB::ActionSchema*>::const_iterator it=schemas.begin(); it!=schemas.end(); it++)
-		{
-			MyGUI::TabItemPtr tabitem = inputTab->addItem( TR("#{InputMap" + (*it).first + "}") );
-			
-			///-scroll view.... doesnt work???
-			//MyGUI::ScrollViewPtr sv = tabitem->createWidget<ScrollView>("ScrollView", 0, 0, 700, 580, MyGUI::Align::Default, "scrollView_" + (*it).first );
-			
-			// headers
-			MyGUI::StaticTextPtr headkb = tabitem->createWidget<StaticText>("StaticText", 220, 10, 200, 24, MyGUI::Align::Default, "staticText_" + (*it).first );
-			headkb->setCaption(TR("#88AAFF#{InputKey1}"));
-			MyGUI::StaticTextPtr headkb2 = tabitem->createWidget<StaticText>("StaticText", 360, 10, 200, 24, MyGUI::Align::Default, "staticText_" + (*it).first );
-			headkb2->setCaption(TR("#88AAFF#{InputKey2}"));
-			
-			// actions
-			unsigned int i = 0;
-			for (std::map<OISB::String, OISB::Action*>::const_iterator ait=(*it).second->mActions.begin(); ait!=(*it).second->mActions.end(); ait++)
-			{
-				// description label
-				MyGUI::StaticTextPtr desc = tabitem->createWidget<StaticText>("StaticText", 10, 34+24*i, 200, 24, MyGUI::Align::Default, "staticText_" + (*ait).first );
-				desc->setCaption( TR("#{InputMap" + (*ait).second->getName() + "}") );
-				
-				// macro to strip away the Keyboard/
-				#define stripk(s) Ogre::StringUtil::split(s, "/")[1]
-				
-				OISB::Action* act = (*ait).second;
-
-				// bound key(s)
-				if (act->getActionType() == OISB::AT_TRIGGER)
-				{
-					if (act->mBindings.size() > 0)
-					if (act->mBindings.front()->getNumBindables() > 0)
-					{
-						// first key
-						MyGUI::ButtonPtr key1 = tabitem->createWidget<Button>("Button", 220, 34+24*i, 130, 24, MyGUI::Align::Default, "inputbutton_" + (*ait).first + "_" + (*it).first + "_1" );
-						key1->setCaption( stripk(act->mBindings.front()->getBindable(0)->getBindableName()) );
-						key1->eventMouseButtonClick = MyGUI::newDelegate(this, &App::controlBtnClicked);
-						// alternate key
-						MyGUI::ButtonPtr key2 = tabitem->createWidget<Button>("Button", 360, 34+24*i, 130, 24, MyGUI::Align::Default, "inputbutton_" + (*ait).first + "_" + (*it).first + "_2");
-						if (act->mBindings.front()->getNumBindables() > 1)
-							key2->setCaption( stripk(act->mBindings.front()->getBindable(1)->getBindableName()) );
-						else
-							key2->setCaption( TR("#{InputKeyUnassigned}"));
-						key2->eventMouseButtonClick = MyGUI::newDelegate(this, &App::controlBtnClicked);
-					}
-				}
-				else if (act->getActionType() == OISB::AT_ANALOG_AXIS)
-				{
-					if (act->mBindings.size() > 0)
-					if (act->mBindings.front()->getNumBindables() > 0)
-					{
-						// look for increase/decrease binds
-						OISB::Bindable* increase = NULL;
-						OISB::Bindable* decrease = NULL;
-						for (std::vector<std::pair<String, OISB::Bindable*> >::const_iterator bnit=act->mBindings.front()->mBindables.begin(); bnit!=act->mBindings.front()->mBindables.end(); bnit++)
-						{
-							if ((*bnit).first == "increase")		increase = (*bnit).second;
-							else if ((*bnit).first == "decrease")	decrease = (*bnit).second;
-						}
-						if (increase)
-						{
-							MyGUI::ButtonPtr key1 = tabitem->createWidget<Button>("Button", 220, 34+24*i, 130, 24, MyGUI::Align::Default, "inputbutton_" + (*ait).first + "_" + (*it).first + "_1");
-							key1->setCaption( stripk(increase->getBindableName()) );
-							key1->eventMouseButtonClick = MyGUI::newDelegate(this, &App::controlBtnClicked);
-						}
-						if (decrease)
-						{
-							MyGUI::ButtonPtr key2 = tabitem->createWidget<Button>("Button", 360, 34+24*i, 130, 24, MyGUI::Align::Default, "inputbutton_" + (*ait).first + "_" + (*it).first + "_2");
-							key2->setCaption( stripk(decrease->getBindableName()) );
-							key2->eventMouseButtonClick = MyGUI::newDelegate(this, &App::controlBtnClicked);
-						}
-						else
-						{
-							MyGUI::ButtonPtr key2 = tabitem->createWidget<Button>("Button", 360, 34+24*i, 130, 24, MyGUI::Align::Default, "inputbutton_" + (*ait).first + "_" + (*it).first + "_2");
-							key2->setCaption( TR("#{InputKeyUnassigned}"));
-							key2->eventMouseButtonClick = MyGUI::newDelegate(this, &App::controlBtnClicked);
-						}
-					}
-				}
-				///-AT_SEQUENCE: not used
-				
-				i++;
-			}
-			// joystick selection menu
-			MyGUI::ComboBoxPtr joysticks = tabitem->createWidget<ComboBox>("ComboBox", 500, 10, 150, 24, MyGUI::Align::Default, "joystickSel_" + (*it).first );
-			joysticks->addItem(TR("#{InputNoJS}"));
-			joysticks->setIndexSelected(0);
-			///TODO populate joystick list
-		}
-	}
+	InitInputGui();
 	
 	
 	///  video resolutions combobox
@@ -580,4 +481,129 @@ void App::carListNext(int rel)
 	carList->setIndexSelected(i);
 	carList->beginToItemAt(max(0, i-11));  // center
 	listCarChng(carList,i);
+}
+
+
+///  input tab
+//----------------------------------------------------------------------------------------------------------------------------------
+void App::InitInputGui()
+{
+	//  Log all devices (and keys) to log.txt
+	pGame->info_output << " --------------------------------------  Input devices  BEGIN" << std::endl;
+	//OISB::System::getSingleton().dumpActionSchemas(pGame->info_output);
+	OISB::System::getSingleton().dumpDevices(pGame->info_output);
+	pGame->info_output << " --------------------------------------  Input devices  END" << std::endl;
+
+	MyGUI::TabPtr inputTab = mGUI->findWidget<Tab>("InputTab");
+	if (!inputTab)  return;
+
+	//  insert a tab item for every schema (4players,global)
+	std::map<OISB::String, OISB::ActionSchema*> schemas = OISB::System::getSingleton().mActionSchemas;
+	for (std::map<OISB::String, OISB::ActionSchema*>::const_iterator it = schemas.begin(); it != schemas.end(); it++)
+	{
+		MyGUI::TabItemPtr tabitem = inputTab->addItem( TR("#{InputMap" + (*it).first + "}") );
+		
+		//-scroll view.... doesnt work???
+		//MyGUI::ScrollViewPtr sv = tabitem->createWidget<ScrollView>("ScrollView", 0, 0, 700, 580, MyGUI::Align::Default, "scrollView_" + (*it).first );
+		
+		///  Headers
+		MyGUI::StaticTextPtr headkb = tabitem->createWidget<StaticText>(
+			"StaticText", 220, 10, 200, 24, MyGUI::Align::Default, "staticText_" + (*it).first );
+		headkb->setCaption(TR("#88AAFF#{InputKey1}"));
+		MyGUI::StaticTextPtr headkb2 = tabitem->createWidget<StaticText>(
+			"StaticText", 360, 10, 200, 24, MyGUI::Align::Default, "staticText_" + (*it).first );
+		headkb2->setCaption(TR("#88AAFF#{InputKey2}"));
+		
+		//  custom y pos of each row, to sort by function
+		int i = 0, y = 0;
+		std::map <std::string, int> yRow;
+		yRow["Throttle"] = y;	y+=2;
+		yRow["Brake"] = y;		y+=2;
+		yRow["Steering"] = y;	y+=2+1;
+		yRow["HandBrake"] = y;	y+=2;
+		yRow["Boost"] = y;		y+=2;
+		yRow["Flip"] = y;		y+=2+1;
+		yRow["ShiftDown"] = y;	y+=2;
+		yRow["ShiftUp"] = y;	y+=2;
+		
+		///  Actions
+		for (std::map<OISB::String, OISB::Action*>::const_iterator
+			ait = (*it).second->mActions.begin();
+			ait != (*it).second->mActions.end(); ait++,i++)
+		{
+			// macro to strip away the Keyboard/
+			#define stripk(s) Ogre::StringUtil::split(s, "/")[1]
+			
+			OISB::Action* act = (*ait).second;
+			const int sx = 130, sy = 24, x0 = 20, x1 = 180, x2 = 320;  // button size and columns positon
+
+			// description label
+			const String& name = (*ait).second->getName();
+			y = 40 + 26 * yRow[name] / 2;
+			MyGUI::StaticTextPtr desc = tabitem->createWidget<StaticText>("StaticText", x0, y, sx+70, sy, MyGUI::Align::Default, "staticText_" + (*ait).first );
+			desc->setCaption( TR("#{InputMap" + name + "}") );
+			
+			// bound key(s)
+			if (act->getActionType() == OISB::AT_TRIGGER)
+			{
+				if (act->mBindings.size() > 0 && act->mBindings.front()->getNumBindables() > 0)
+				{
+					// first key
+					MyGUI::ButtonPtr key1 = tabitem->createWidget<Button>("Button", x1, y, sx, sy, MyGUI::Align::Default, "inputbutton_" + (*ait).first + "_" + (*it).first + "_1" );
+					key1->setCaption( stripk(act->mBindings.front()->getBindable(0)->getBindableName()) );
+					key1->eventMouseButtonClick = MyGUI::newDelegate(this, &App::controlBtnClicked);
+					// alternate key
+					MyGUI::ButtonPtr key2 = tabitem->createWidget<Button>("Button", x2, y, sx, sy, MyGUI::Align::Default, "inputbutton_" + (*ait).first + "_" + (*it).first + "_2");
+					if (act->mBindings.front()->getNumBindables() > 1)
+						key2->setCaption( stripk(act->mBindings.front()->getBindable(1)->getBindableName()) );
+					else
+						key2->setCaption( TR("#{InputKeyUnassigned}"));
+					key2->eventMouseButtonClick = MyGUI::newDelegate(this, &App::controlBtnClicked);
+				}
+			}
+			else if (act->getActionType() == OISB::AT_ANALOG_AXIS)
+			{
+				if (act->mBindings.size() > 0 && act->mBindings.front()->getNumBindables() > 0)
+				{
+					// look for increase/decrease binds
+					OISB::Bindable* increase = NULL, *decrease = NULL;
+					for (std::vector<std::pair<String, OISB::Bindable*> >::const_iterator
+						bnit = act->mBindings.front()->mBindables.begin();
+						bnit != act->mBindings.front()->mBindables.end(); bnit++)
+					{
+						if ((*bnit).first == "increase")		increase = (*bnit).second;
+						else if ((*bnit).first == "decrease")	decrease = (*bnit).second;
+					}
+					if (increase)
+					{
+						MyGUI::ButtonPtr key1 = tabitem->createWidget<Button>("Button", x1, y, sx, sy, MyGUI::Align::Default,
+							"inputbutton_" + (*ait).first + "_" + (*it).first + "_1");
+						key1->setCaption( stripk(increase->getBindableName()) );
+						key1->eventMouseButtonClick = MyGUI::newDelegate(this, &App::controlBtnClicked);
+					}
+					if (decrease)
+					{
+						MyGUI::ButtonPtr key2 = tabitem->createWidget<Button>("Button", x2, y, sx, sy, MyGUI::Align::Default,
+							"inputbutton_" + (*ait).first + "_" + (*it).first + "_2");
+						key2->setCaption( stripk(decrease->getBindableName()) );
+						key2->eventMouseButtonClick = MyGUI::newDelegate(this, &App::controlBtnClicked);
+					}
+					else
+					{
+						MyGUI::ButtonPtr key2 = tabitem->createWidget<Button>("Button", x2, y, sx, sy, MyGUI::Align::Default,
+							"inputbutton_" + (*ait).first + "_" + (*it).first + "_2");
+						key2->setCaption( TR("#{InputKeyUnassigned}"));
+						key2->eventMouseButtonClick = MyGUI::newDelegate(this, &App::controlBtnClicked);
+					}
+				}
+			}
+			///-AT_SEQUENCE: not used
+		}
+		
+		// joystick selection menu
+		MyGUI::ComboBoxPtr joysticks = tabitem->createWidget<ComboBox>("ComboBox", 540, 10, 150, 24, MyGUI::Align::Default, "joystickSel_" + (*it).first );
+		joysticks->addItem(TR("#{InputNoJS}"));
+		joysticks->setIndexSelected(0);
+		///TODO populate joystick list
+	}
 }

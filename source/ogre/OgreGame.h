@@ -154,7 +154,7 @@ protected:
 	#define SL  WP wp, size_t val	//  slider event args
 	
 	// control button clicked
-	void controlBtnClicked(Widget* sender);
+	void controlBtnClicked(Widget* sender), InitInputGui();
 
 	//  sliders
 	SLV(Anisotropy);  SLV(ViewDist);  SLV(TerDetail);  SLV(TerDist);  SLV(RoadDist);  // detail
