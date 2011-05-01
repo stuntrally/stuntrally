@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION"
 "Report-Msgid-Bugs-To: "
-"POT-Creation-Date: 2011-04-27 14:58+0200"
+"POT-Creation-Date: 2011-05-01 16:39+0200"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>"
 "Language-Team: LANGUAGE <LL@li.org>"
@@ -21,12 +21,12 @@ msgctxt "TipTreeDens"
 msgid "How many models (trees, rocks, etc.) will be on track."
 msgstr ""
 
-msgctxt "CamSpeed"
-msgid "Camera speed"
+msgctxt "InputKeyUnassigned"
+msgid "-- None --"
 msgstr ""
 
-msgctxt "InputRoadModify"
-msgid "Modify"
+msgctxt "Density"
+msgid "Density"
 msgstr ""
 
 msgctxt "TipGrassSwayDistr"
@@ -53,12 +53,16 @@ msgctxt "ColumnRadius"
 msgid "Column Radius"
 msgstr ""
 
+msgctxt "CamSpeed"
+msgid "Camera speed"
+msgstr ""
+
 msgctxt "UnitKmh"
 msgid "km/h"
 msgstr ""
 
-msgctxt "Density"
-msgid "Density"
+msgctxt "InputRoadPickOne"
+msgid "Pick (one)"
 msgstr ""
 
 msgctxt "TipLoadTrkEditor"
@@ -113,14 +117,6 @@ msgctxt "MinimapUpdSkip"
 msgid "Minimap update skip"
 msgstr ""
 
-msgctxt "InputNextTab"
-msgid "F2,F3 - prev/next tab"
-msgstr ""
-
-msgctxt "InputBrake"
-msgid "Space - handbrake"
-msgstr ""
-
 msgctxt "TipPrevWind"
 msgid "Preview camera window."
 msgstr ""
@@ -161,8 +157,8 @@ msgctxt "InputReloadTrack"
 msgid "F5 - reload track"
 msgstr ""
 
-msgctxt "Video"
-msgid "Video"
+msgctxt "InputSchema"
+msgid "Schema"
 msgstr ""
 
 msgctxt "TipParType3"
@@ -229,10 +225,6 @@ msgctxt "TipMinimapScrnEditor"
 msgid "Minimap of selected track, view from top."
 msgstr ""
 
-msgctxt "InputRoadPickOne"
-msgid "Pick (one)"
-msgstr ""
-
 msgctxt "ParAmount"
 msgid "Particle amounts"
 msgstr ""
@@ -257,12 +249,12 @@ msgctxt "Input"
 msgid "Input"
 msgstr ""
 
-msgctxt "InputSteer"
-msgid "Left,Right - steer"
-msgstr ""
-
 msgctxt "TerLayers"
 msgid "Terrain Layers"
+msgstr ""
+
+msgctxt "InputNoJS"
+msgid "No joystick"
 msgstr ""
 
 msgctxt "CopySource"
@@ -277,16 +269,24 @@ msgctxt "NeedReload"
 msgid "* need reload"
 msgstr ""
 
+msgctxt "ViewRight"
+msgid "View Right"
+msgstr ""
+
 msgctxt "Count"
 msgid "Count"
 msgstr ""
 
-msgctxt "UnitKm"
-msgid "km"
+msgctxt "InputRoadHeight"
+msgid "- change height"
 msgstr ""
 
 msgctxt "BasedOn"
 msgid "based on"
+msgstr ""
+
+msgctxt "TipDustInt"
+msgid "Dust particles intensity."
 msgstr ""
 
 msgctxt "InputNextOptTab"
@@ -305,12 +305,16 @@ msgctxt "InputRoadInsAlt"
 msgid "alt-shift - at start   alt-ctrl - at end"
 msgstr ""
 
+msgctxt "InputMapBrake"
+msgid "Brake"
+msgstr ""
+
 msgctxt "MyGUI_MessageBox_Abort"
 msgid "Abort"
 msgstr ""
 
-msgctxt "InputShowGUI"
-msgid "F1 or Tab - show/hide Options"
+msgctxt "Video"
+msgid "Video"
 msgstr ""
 
 msgctxt "ViewStart"
@@ -329,8 +333,8 @@ msgctxt "TipToggleLayer"
 msgid "Turn on/off chosen texture layer."
 msgstr ""
 
-msgctxt "ViewRight"
-msgid "View Right"
+msgctxt "InputAssignKey"
+msgid "&lt;Press a key&gt;"
 msgstr ""
 
 msgctxt "Wireframe"
@@ -349,6 +353,10 @@ msgctxt "InputRoadWidth"
 msgid "- change road width"
 msgstr ""
 
+msgctxt "InputMapSteering"
+msgid "Steering"
+msgstr ""
+
 msgctxt "AutoRear"
 msgid "Auto Rear gear"
 msgstr ""
@@ -363,10 +371,6 @@ msgstr ""
 
 msgctxt "TipSunDirYaw"
 msgid "Sun direction - yaw angle."
-msgstr ""
-
-msgctxt "InputNextCam"
-msgid "X,C or PgUp,PgDn - prev/next camera view"
 msgstr ""
 
 msgctxt "ABS"
@@ -401,10 +405,6 @@ msgctxt "TipModelRoadDist"
 msgid "Distance from road to models (global, added to each models own value)."
 msgstr ""
 
-msgctxt "InputThrottle"
-msgid "Up,Down - throttle, brake"
-msgstr ""
-
 msgctxt "InputAfterChanges"
 msgid "(after Terrain/Vegetation changes)"
 msgstr ""
@@ -435,10 +435,6 @@ msgstr ""
 
 msgctxt "LS_CAR"
 msgid "Loading car"
-msgstr ""
-
-msgctxt "InputRestart"
-msgid "F5 - restart game"
 msgstr ""
 
 msgctxt "MaxScale"
@@ -513,8 +509,8 @@ msgctxt "LengthDim"
 msgid "Length dim."
 msgstr ""
 
-msgctxt "Bloom"
-msgid "Bloom"
+msgctxt "InputStartLMB"
+msgid "LMB - move  RMB - height"
 msgstr ""
 
 msgctxt "TipRenameTrk"
@@ -565,16 +561,16 @@ msgctxt "TipSunDirPitch"
 msgid "Sun direction - pitch angle."
 msgstr ""
 
+msgctxt "InputMapHandBrake"
+msgid "Handbrake"
+msgstr ""
+
 msgctxt "ProjectPage"
 msgid "project&apos;s page:"
 msgstr ""
 
 msgctxt "Type"
 msgid "Type"
-msgstr ""
-
-msgctxt "InputBoost"
-msgid "Ctrl - boost"
 msgstr ""
 
 msgctxt "Engine"
@@ -597,8 +593,8 @@ msgctxt "TipRoadParams"
 msgid "Road point parameters."
 msgstr ""
 
-msgctxt "TipTerTriSize"
-msgid "Terrain triangle size in [meters] (recommended: 1 - 2, use more for big track area). Changed after Update (F8)."
+msgctxt "InputMapFlip"
+msgid "Flip"
 msgstr ""
 
 msgctxt "TrackInAir"
@@ -753,8 +749,16 @@ msgctxt "TipDisableFog"
 msgid "Disable fog when editing road from distance."
 msgstr ""
 
-msgctxt "Friction"
-msgid "Friction"
+msgctxt "InputMapPlayer1"
+msgid "Player 1"
+msgstr ""
+
+msgctxt "InputMapPlayer2"
+msgid "Player 2"
+msgstr ""
+
+msgctxt "InputMapPlayer3"
+msgid "Player 3"
 msgstr ""
 
 msgctxt "Ambient"
@@ -789,12 +793,12 @@ msgctxt "Other"
 msgid "Other"
 msgstr ""
 
-msgctxt "InputMainCam"
-msgid "with shift - main cameras"
-msgstr ""
-
 msgctxt "InputRoadNext"
 msgid "PgUp,PgDn (or Wheel) - previous/next point"
+msgstr ""
+
+msgctxt "TipTerTriSize"
+msgid "Terrain triangle size in [meters] (recommended: 1 - 2, use more for big track area). Changed after Update (F8)."
 msgstr ""
 
 msgctxt "Development"
@@ -949,10 +953,6 @@ msgctxt "TrackAvgSpeed"
 msgid "Avg. speed"
 msgstr ""
 
-msgctxt "InputShift"
-msgid "A,Z - gear up,down (manual gearbox)"
-msgstr ""
-
 msgctxt "PreviewCam"
 msgid "Preview Camera"
 msgstr ""
@@ -993,8 +993,8 @@ msgctxt "TipChangeHue"
 msgid "Change car color (hue)."
 msgstr ""
 
-msgctxt "TipDustInt"
-msgid "Dust particles intensity."
+msgctxt "InputMapPlayer4"
+msgid "Player 4"
 msgstr ""
 
 msgctxt "Intensity"
@@ -1023,6 +1023,14 @@ msgstr ""
 
 msgctxt "Fog"
 msgid "Fog"
+msgstr ""
+
+msgctxt "BulletProfilerTxt"
+msgid "Bullet Profiler Times"
+msgstr ""
+
+msgctxt "Friction"
+msgid "Friction"
 msgstr ""
 
 msgctxt "FrameSkip"
@@ -1065,12 +1073,12 @@ msgctxt "mud"
 msgid "mud"
 msgstr ""
 
-msgctxt "InputRoll"
-msgid "Q,W - roll car (when needed)"
-msgstr ""
-
 msgctxt "TipTerWind"
 msgid "Terrain brush window."
+msgstr ""
+
+msgctxt "InputMapThrottle"
+msgid "Throttle"
 msgstr ""
 
 msgctxt "TipGrassVisDist"
@@ -1325,8 +1333,8 @@ msgctxt "Copy"
 msgid "Copy"
 msgstr ""
 
-msgctxt "InputStartLMB"
-msgid "LMB - move  RMB - height"
+msgctxt "Bloom"
+msgid "Bloom"
 msgstr ""
 
 msgctxt "TipWindInflL"
@@ -1477,6 +1485,10 @@ msgctxt "Amplitude"
 msgid "Amplitude"
 msgstr ""
 
+msgctxt "InputRoadModify"
+msgid "Modify"
+msgstr ""
+
 msgctxt "TipFogStartDist"
 msgid "Fog start distance [meters]."
 msgstr ""
@@ -1525,6 +1537,10 @@ msgctxt "Sun"
 msgid "Sun"
 msgstr ""
 
+msgctxt "InputMapShiftUp"
+msgid "Shift up"
+msgstr ""
+
 msgctxt "SpeedUnit"
 msgid "Speed unit"
 msgstr ""
@@ -1541,8 +1557,8 @@ msgctxt "AndContributors"
 msgid "and contributors."
 msgstr ""
 
-msgctxt "InputRoadSelectMany"
-msgid "Select (many)"
+msgctxt "ScaleMul"
+msgid "Scale multiplier"
 msgstr ""
 
 msgctxt "scale"
@@ -1579,6 +1595,10 @@ msgstr ""
 
 msgctxt "RestartApply"
 msgid "Restart game, to apply *changes."
+msgstr ""
+
+msgctxt "InputMapShiftDown"
+msgid "Shift down"
 msgstr ""
 
 msgctxt "CameraInfo"
@@ -1633,6 +1653,10 @@ msgctxt "TipImpDist"
 msgid "Far distance at which models will turn into 2d impostors."
 msgstr ""
 
+msgctxt "InputMapGeneral"
+msgid "General"
+msgstr ""
+
 msgctxt "TipTrkTerImg"
 msgid "Minimap of selected track, view from top."
 msgstr ""
@@ -1669,8 +1693,16 @@ msgctxt "BumpWavelen"
 msgid "Bump:  WaveLen"
 msgstr ""
 
+msgctxt "InputKey2"
+msgid "Key 2"
+msgstr ""
+
 msgctxt "TipRoadDist"
 msgid "How far from road will the model appear."
+msgstr ""
+
+msgctxt "InputKey1"
+msgid "Key 1"
 msgstr ""
 
 msgctxt "TipResizeTer"
@@ -1713,8 +1745,8 @@ msgctxt "BulletDebug"
 msgid "Bullet debug"
 msgstr ""
 
-msgctxt "InputRoadHeight"
-msgid "- change height"
+msgctxt "UnitKm"
+msgid "km"
 msgstr ""
 
 msgctxt "TipChangeTrack"
@@ -1729,8 +1761,8 @@ msgctxt "Track"
 msgid "Track"
 msgstr ""
 
-msgctxt "ScaleMul"
-msgid "Scale multiplier"
+msgctxt "InputRoadSelectMany"
+msgid "Select (many)"
 msgstr ""
 
 msgctxt "Volume"
@@ -1763,6 +1795,10 @@ msgstr ""
 
 msgctxt "UnitMph"
 msgid "mph"
+msgstr ""
+
+msgctxt "InputMapBoost"
+msgid "Boost"
 msgstr ""
 
 msgctxt "InputStartWidth"
