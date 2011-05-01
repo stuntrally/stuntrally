@@ -20,7 +20,8 @@ CARDYNAMICS::CARDYNAMICS() :
 	shift_time(0.2),
 	abs(false), tcs(false),
 	maxangle(45.0),
-	bTerrain(false), pApp(0)
+	bTerrain(false), pApp(0),
+	doBoost(0), doFlip(0)
 {
 	for (int i=0; i<4; ++i)
 	{	bWhOnRoad[i]=0;
