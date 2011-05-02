@@ -397,8 +397,9 @@ void App::chkVegetCollis(WP wp){	ChkEv(veget_collis);	}
 void App::btnResChng(WP)
 {
 	if (!resList)  return;
-
+	if (resList->getIndexSelected() == MyGUI::ITEM_NONE) return;
 	String mode = resList->getItem(resList->getIndexSelected());
+
 	pSet->windowx = StringConverter::parseInt(StringUtil::split(mode, "x")[0]);
 	pSet->windowy = StringConverter::parseInt(StringUtil::split(mode, "x")[1]);
 	
@@ -478,6 +479,7 @@ void App::btnRplLoad(WP)  // Load
 {
 	//  from list
 	int i = rplList->getIndexSelected();
+	if (i == MyGUI::ITEM_NONE) return;
 	String name = rplList->getItemNameAt(i);
 	///  load
 	//if (pSet->rpl_play)

@@ -275,7 +275,7 @@
 					<Widget type="TabItem" skin="" position="4 26 735 428">
 						<Property key="Widget_Caption" value="#{Video}"/>
 						<Widget type="StaticText" skin="StaticText" position="32 18 112 24">
-							<Property key="Widget_Caption" value="#{Resolution} *"/>
+							<Property key="Widget_Caption" value="#{Resolution}"/>
 							<Property key="Widget_Colour" value="0 0 0"/>
 							<Property key="Text_TextColour" value="0.3 1 1"/>
 						</Widget>
