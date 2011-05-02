@@ -428,6 +428,7 @@ void BaseApp::LoadingOn()
 {
 	mSplitMgr->SetBackground(ColourValue(0.15,0.165,0.18));
 	mSplitMgr->mGuiViewport->setBackgroundColour(ColourValue(0.15,0.165,0.18,1.0));
+	mSplitMgr->mGuiViewport->setClearEveryFrame(true);
 	mLoadingBar.start(mWindow, 1, 1, 1 );
 
 	// Turn off  rendering except overlays
@@ -440,6 +441,7 @@ void BaseApp::LoadingOff()
 	// Turn On  full rendering
 	mSplitMgr->SetBackground(ColourValue(0.5,0.65,0.8));
 	mSplitMgr->mGuiViewport->setBackgroundColour(ColourValue(0.0,0.0,0.0,0.0));
+	mSplitMgr->mGuiViewport->setClearEveryFrame(true, FBT_DEPTH);
 	mSceneMgr->clearSpecialCaseRenderQueues();
 	mSceneMgr->setSpecialCaseRenderQueueMode(SceneManager::SCRQM_EXCLUDE);
 	mLoadingBar.finish();
