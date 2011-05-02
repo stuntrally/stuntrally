@@ -2,6 +2,7 @@
 #define _FolowCamera_h_
 
 #include <Ogre.h>
+#include "../vdrift/collision_world.h"
 #include <vector>
 using namespace Ogre;
 using namespace std;
@@ -40,6 +41,12 @@ public:
 	class Camera*  mCamera;
 	
 	TerrainGroup* mTerrain;
+	COLLISION_WORLD* mWorld;
+	
+	// collision objs for raycast
+	btSphereShape* shape;
+	btDefaultMotionState* state;
+	btRigidBody* body;
 
 	const class Node  *mGoalNode;
 	Vector3  mLook;
@@ -54,7 +61,6 @@ public:
 	~FollowCamera();
 
 	void  update(Real time);
-	void  moveAboveTerrain();
 	void  updInfo(Real time = 0);	Real fMoveTime;
 	void  Move( bool mbLeft, bool mbRight, bool mbMiddle, bool shift, Real mx, Real my, Real mz );
 

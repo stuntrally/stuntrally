@@ -51,8 +51,12 @@ bool App::frameStart(Real time)
 	
 	if (bWindowResized)
 	{
-		//comboResolution(NULL, 0);
-		btnResChng(0);
+		if (bnQuit)  // reposition Quit btn
+		{
+			//bnQuit->setRealCoord(0.922,0,0.08,0.03);
+			bnQuit->setCoord(pSet->windowx - 0.09*pSet->windowx, 0, 0.09*pSet->windowx, 0.03*pSet->windowy);
+		}
+		bSizeHUD = true;
 		bWindowResized = false;
 	}
 	

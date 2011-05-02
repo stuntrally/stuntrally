@@ -113,82 +113,91 @@ void BaseApp::refreshCompositor()
 void BaseApp::recreateCompositor()
 {
 	// hdr has to be first in the compositor queue
-	if (mHDRLogic) delete mHDRLogic;
-	mHDRLogic = new HDRLogic;
-	CompositorManager::getSingleton().registerCompositorLogic("HDR", mHDRLogic);
+	if (!mHDRLogic) 
+	{
+		mHDRLogic = new HDRLogic;
+		CompositorManager::getSingleton().registerCompositorLogic("HDR", mHDRLogic);
+	}
 	
-	// Motion blur has to be created in code
-	CompositorPtr comp3 = CompositorManager::getSingleton().create(
-		"Motion Blur", ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME
-	);
-	CompositionTechnique *t = comp3->createTechnique();
+	if (CompositorManager::getSingleton().getByName("Motion Blur").isNull())
 	{
-		CompositionTechnique::TextureDefinition *def = t->createTextureDefinition("scene");
-		def->width = 0;
-		def->height = 0;
-		def->formatList.push_back(PF_R8G8B8);
-	}
-	{
-		CompositionTechnique::TextureDefinition *def = t->createTextureDefinition("sum");
-		def->width = 0;
-		def->height = 0;
-		def->formatList.push_back(PF_R8G8B8);
-	}
-	{
-		CompositionTechnique::TextureDefinition *def = t->createTextureDefinition("temp");
-		def->width = 0;
-		def->height = 0;
-		def->formatList.push_back(PF_R8G8B8);
-	}
-	/// Render scene
-	{
-		CompositionTargetPass *tp = t->createTargetPass();
-		tp->setInputMode(CompositionTargetPass::IM_PREVIOUS);
-		tp->setOutputName("scene");
-	}
-	/// Initialisation pass for sum texture
-	{
-		CompositionTargetPass *tp = t->createTargetPass();
-		tp->setInputMode(CompositionTargetPass::IM_PREVIOUS);
-		tp->setOutputName("sum");
-		tp->setOnlyInitial(true);
-	}
-	/// Do the motion blur
-	{
-		CompositionTargetPass *tp = t->createTargetPass();
-		tp->setInputMode(CompositionTargetPass::IM_NONE);
-		tp->setOutputName("temp");
-		{ CompositionPass *pass = tp->createPass();
-		pass->setType(CompositionPass::PT_RENDERQUAD);
-		pass->setMaterialName("Ogre/Compositor/Combine");
-		pass->setInput(0, "scene");
-		pass->setInput(1, "sum");
+		// Motion blur has to be created in code
+		CompositorPtr comp3 = CompositorManager::getSingleton().create(
+			"Motion Blur", ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME
+		);
+
+		CompositionTechnique *t = comp3->createTechnique();
+		{
+			CompositionTechnique::TextureDefinition *def = t->createTextureDefinition("scene");
+			def->width = 0;
+			def->height = 0;
+			def->formatList.push_back(PF_R8G8B8);
 		}
-	}
-	/// Copy back sum texture
-	{
-		CompositionTargetPass *tp = t->createTargetPass();
-		tp->setInputMode(CompositionTargetPass::IM_NONE);
-		tp->setOutputName("sum");
-		{ CompositionPass *pass = tp->createPass();
-		pass->setType(CompositionPass::PT_RENDERQUAD);
-		pass->setMaterialName("Ogre/Compositor/Copyback");
-		pass->setInput(0, "temp");
+		{
+			CompositionTechnique::TextureDefinition *def = t->createTextureDefinition("sum");
+			def->width = 0;
+			def->height = 0;
+			def->formatList.push_back(PF_R8G8B8);
 		}
-	}
-	/// Display result
-	{
-		CompositionTargetPass *tp = t->getOutputTargetPass();
-		tp->setInputMode(CompositionTargetPass::IM_NONE);
-		{ CompositionPass *pass = tp->createPass();
-		pass->setType(CompositionPass::PT_RENDERQUAD);
-		pass->setMaterialName("Ogre/Compositor/MotionBlur");
-		pass->setInput(0, "sum");
+		{
+			CompositionTechnique::TextureDefinition *def = t->createTextureDefinition("temp");
+			def->width = 0;
+			def->height = 0;
+			def->formatList.push_back(PF_R8G8B8);
+		}
+		/// Render scene
+		{
+			CompositionTargetPass *tp = t->createTargetPass();
+			tp->setInputMode(CompositionTargetPass::IM_PREVIOUS);
+			tp->setOutputName("scene");
+		}
+		/// Initialisation pass for sum texture
+		{
+			CompositionTargetPass *tp = t->createTargetPass();
+			tp->setInputMode(CompositionTargetPass::IM_PREVIOUS);
+			tp->setOutputName("sum");
+			tp->setOnlyInitial(true);
+		}
+		/// Do the motion blur
+		{
+			CompositionTargetPass *tp = t->createTargetPass();
+			tp->setInputMode(CompositionTargetPass::IM_NONE);
+			tp->setOutputName("temp");
+			{ CompositionPass *pass = tp->createPass();
+			pass->setType(CompositionPass::PT_RENDERQUAD);
+			pass->setMaterialName("Ogre/Compositor/Combine");
+			pass->setInput(0, "scene");
+			pass->setInput(1, "sum");
+			}
+		}
+		/// Copy back sum texture
+		{
+			CompositionTargetPass *tp = t->createTargetPass();
+			tp->setInputMode(CompositionTargetPass::IM_NONE);
+			tp->setOutputName("sum");
+			{ CompositionPass *pass = tp->createPass();
+			pass->setType(CompositionPass::PT_RENDERQUAD);
+			pass->setMaterialName("Ogre/Compositor/Copyback");
+			pass->setInput(0, "temp");
+			}
+		}
+		/// Display result
+		{
+			CompositionTargetPass *tp = t->getOutputTargetPass();
+			tp->setInputMode(CompositionTargetPass::IM_NONE);
+			{ CompositionPass *pass = tp->createPass();
+			pass->setType(CompositionPass::PT_RENDERQUAD);
+			pass->setMaterialName("Ogre/Compositor/MotionBlur");
+			pass->setInput(0, "sum");
+			}
 		}
 	}
 
 	for (std::list<Viewport*>::iterator it=mSplitMgr->mViewports.begin(); it!=mSplitMgr->mViewports.end(); it++)
 	{
+		// remove old comp. first
+		CompositorManager::getSingleton().removeCompositorChain( (*it ));
+		
 		CompositorManager::getSingleton().addCompositor((*it), "HDR");
 		CompositorManager::getSingleton().addCompositor((*it), "Bloom");
 		CompositorManager::getSingleton().addCompositor((*it), "Motion Blur");
@@ -513,7 +522,8 @@ void BaseApp::windowResized(RenderWindow* rw)
 	bWindowResized = true;
 	
 	// Adjust viewports
-	mSplitMgr->AdjustRatio();
+	//mSplitMgr->AdjustRatio();
+	mSplitMgr->Align();
 	
 	// write new window size to settings
 	pSet->windowx = mWindow->getWidth();

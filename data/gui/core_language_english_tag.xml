@@ -191,7 +191,6 @@
 	
 	<!--  Input  -->
 	<Tag name="Input">Input</Tag>
-	<Tag name="InputSchema">Schema</Tag>
 	<Tag name="InputKey1">Key 1</Tag>
 	<Tag name="InputKey2">Key 2</Tag>
 	<Tag name="InputNoJS">No joystick</Tag>

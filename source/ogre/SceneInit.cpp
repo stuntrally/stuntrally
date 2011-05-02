@@ -86,11 +86,6 @@ void App::LoadCleanUp()
 	carModels.clear();
 	newPosInfos.clear();
 	
-	//  hide trails
-	///TODO
-	/*for (int w=0; w<4; ++w)  if (whTrl[w])  {	wht[w] = 0.f;
-		whTrl[w]->setVisible(false);	whTrl[w]->setInitialColour(0, 0.5,0.5,0.5, 0);	}*/
-	
 	if (grass) {  delete grass->getPageLoader();  delete grass;  grass=0;   }
 	if (trees) {  delete trees->getPageLoader();  delete trees;  trees=0;   }
 
@@ -111,7 +106,6 @@ void App::LoadCleanUp()
 }
 void App::LoadGame()
 {
-	//pGame->NewGame();  // ? timer 0 after ?
 	pGame->NewGameDoCleanup();
 	pGame->NewGameDoLoadTrack();
 	/// init car models
@@ -153,6 +147,7 @@ void App::LoadScene()
 		pr2->setRenderQueueGroup(RENDER_QUEUE_9+5);
 		pr2->getEmitter(0)->setEmissionRate(0);  }
 }
+
 void App::LoadCar()
 {
 	// Create all cars
@@ -174,6 +169,7 @@ void App::LoadCar()
 	}
 	replay.InitHeader(pSet->track.c_str(), pSet->track_user, pSet->car.c_str(), whR);
 }
+
 void App::LoadTerrain()
 {
 	bool ter = IsTerTrack();
@@ -187,6 +183,7 @@ void App::LoadTerrain()
 		(*it)->blendMapSize = blendMapSize;
 	}
 }
+
 void App::LoadTrack()
 {
 	mRoot->addResourceLocation(resTrk, "FileSystem");
@@ -207,6 +204,7 @@ void App::LoadTrack()
 		CreateTrees();
 	}
 }
+
 void App::LoadMisc()
 {
 	if (pGame && pGame->cars.size() > 0)
@@ -222,6 +220,7 @@ void App::LoadMisc()
 		{
 			(*it)->fCam->first = true;
 			(*it)->fCam->mTerrain = mTerrainGroup;
+			(*it)->fCam->mWorld = &(pGame->collision);
 		}
 	}
 }
@@ -285,8 +284,6 @@ void App::CreateRoad()
 	{	road->DestroyRoad();  delete road;  road = 0;  }
 
 	road = new SplineRoad(pGame);  // sphere.mesh
-	///TODO road only has correct LOD for camera 1
-	/// make separate road meshes for every camera???
 	road->Setup("", 0.7,  terrain, mSceneMgr, *mSplitMgr->mCameras.begin());
 	
 	String sr = TrkDir()+"road.xml";

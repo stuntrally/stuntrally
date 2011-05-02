@@ -416,13 +416,7 @@ void App::btnResChng(WP)
 		//mWindow->reposition(0,0);  // center ?..
 	#endif
 	}
-		
-	bSizeHUD = true;  // resize HUD
-	if (bnQuit)  // reposition Quit btn
-	{
-		//bnQuit->setRealCoord(0.922,0,0.08,0.03);
-		bnQuit->setCoord(pSet->windowx - 0.09*pSet->windowx, 0, 0.09*pSet->windowx, 0.03*pSet->windowy);
-	}
+	bWindowResized = true;
 }
 
 void App::chkVidBloom(WP wp)
@@ -496,15 +490,10 @@ void App::btnRplLoad(WP)  // Load
 			string car = replay.header.car, trk = replay.header.track;
 			bool usr = replay.header.track_user == 1;
 
-			if (car != pSet->car || trk != pSet->track || usr != pSet->track_user)
-			{	//  need new game
-				pSet->car = car;
-				pSet->track = trk;  pSet->track_user = usr;
-				pSet->rpl_play = 1;
-				btnNewGame(0);
-				
-				// todo: car reload only - faster ...
-			}
+			pSet->car = car;
+			pSet->track = trk;  pSet->track_user = usr;
+			pSet->rpl_play = 1;
+			btnNewGame(0);
 		}
 	}
 }
