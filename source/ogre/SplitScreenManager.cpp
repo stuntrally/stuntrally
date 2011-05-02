@@ -129,9 +129,6 @@ void SplitScreenManager::Align()
 		mGuiSceneMgr = Ogre::Root::getSingleton().createSceneManager(ST_GENERIC);
 		Ogre::Camera* guiCam = mGuiSceneMgr->createCamera("GuiCam1");
 		mGuiViewport = mWindow->addViewport(guiCam, 100);
-		// make transparent
-		mGuiViewport->setBackgroundColour(Ogre::ColourValue(0.0, 0.0, 0.0, 0.0));
-		mGuiViewport->setClearEveryFrame(true, FBT_DEPTH);
 	}
 	
 	AdjustRatio();

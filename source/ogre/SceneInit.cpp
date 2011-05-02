@@ -236,6 +236,7 @@ void App::NewGameDoLoad()
 		ShowHUD();
 		if (pSet->show_fps)
 			mFpsOverlay->show();
+		mSplitMgr->mGuiViewport->setClearEveryFrame(true, FBT_DEPTH);
 		return;
 	}
 	// Do the next loading step.
