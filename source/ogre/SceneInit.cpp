@@ -111,6 +111,9 @@ void App::LoadGame()  // 2
 {
 	//  viewports
 	mSplitMgr->mNumPlayers = pSet->local_players;
+	//  no split screen in replay
+	if (bRplPlay)
+		mSplitMgr->mNumPlayers = 1;
 	mSplitMgr->Align();
 	mPlatform->getRenderManagerPtr()->setActiveViewport(mSplitMgr->mNumPlayers);
 	
@@ -121,7 +124,7 @@ void App::LoadGame()  // 2
 	// actual car loading will be done later in LoadCar()
 	// this is just here because vdrift car has to be created first
 	std::list<Camera*>::iterator camIt = mSplitMgr->mCameras.begin();
-	for (int i=0; i<pSet->local_players; i++)
+	for (int i=0; i<mSplitMgr->mNumPlayers; i++)
 	{
 		carModels.push_back( new CarModel(i, CarModel::CT_LOCAL, pSet->car/*sListCar*/, mSceneMgr, pSet, pGame, &sc, (*camIt), this ) );
 		camIt++;
