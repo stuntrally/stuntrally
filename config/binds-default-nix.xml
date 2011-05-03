@@ -111,8 +111,8 @@
 		</action>
 		<action name="Steering" type="AnalogAxis" UseAbsoluteValues="0" MinimumValue="-100" MaximumValue="100" Sensitivity="1" AnalogEmulator="Linear" EmulationDecreaseSpeed="500" EmulationIncreaseSpeed="500" EmulationReturnEnabled="1" EmulationReturnValue="0" EmulationReturnDecreaseSpeed="500" EmulationReturnIncreaseSpeed="500">
 			<binding>
-				<bind role="increase">Keyboard/h</bind>
-				<bind role="decrease">Keyboard/k</bind>
+				<bind role="increase">Keyboard/k</bind>
+				<bind role="decrease">Keyboard/h</bind>
 			</binding>
 		</action>
 		<action name="Throttle" type="AnalogAxis" UseAbsoluteValues="0" MinimumValue="0" MaximumValue="100" Sensitivity="1" AnalogEmulator="Linear" EmulationDecreaseSpeed="500" EmulationIncreaseSpeed="500" EmulationReturnEnabled="1" EmulationReturnValue="0" EmulationReturnDecreaseSpeed="500" EmulationReturnIncreaseSpeed="500">
@@ -151,8 +151,8 @@
 		</action>
 		<action name="Steering" type="AnalogAxis" UseAbsoluteValues="0" MinimumValue="-100" MaximumValue="100" Sensitivity="1" AnalogEmulator="Linear" EmulationDecreaseSpeed="500" EmulationIncreaseSpeed="500" EmulationReturnEnabled="1" EmulationReturnValue="0" EmulationReturnDecreaseSpeed="500" EmulationReturnIncreaseSpeed="500">
 			<binding>
-				<bind role="increase">Keyboard/o</bind>
-				<bind role="decrease">Keyboard/p</bind>
+				<bind role="increase">Keyboard/p</bind>
+				<bind role="decrease">Keyboard/o</bind>
 			</binding>
 		</action>
 		<action name="Throttle" type="AnalogAxis" UseAbsoluteValues="0" MinimumValue="0" MaximumValue="100" Sensitivity="1" AnalogEmulator="Linear" EmulationDecreaseSpeed="500" EmulationIncreaseSpeed="500" EmulationReturnEnabled="1" EmulationReturnValue="0" EmulationReturnDecreaseSpeed="500" EmulationReturnIncreaseSpeed="500">
