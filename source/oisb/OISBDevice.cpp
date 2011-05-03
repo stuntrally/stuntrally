@@ -97,16 +97,16 @@ namespace OISB
 		mStates.erase(it);
 	}
 
-	void Device::dump()
+	void Device::dump(std::ostream& os)
 	{
-	    std::cout << "** Device: '" << getName() << "'" << std::endl;
+	    os << "** Device: '" << getName() << "'" << std::endl;
 
 	    for (StateMap::const_iterator it = mStates.begin(); it != mStates.end(); ++it)
         {
 	        // TODO: dump state type too
-            std::cout << "** - State: " << it->second->getName() << std::endl;
+            os << "** - State: " << it->second->getName() << std::endl;
         }
 
-        std::cout << "** End of device '" << getName() << "'" << std::endl;
+        os << "** End of device '" << getName() << "'" << std::endl;
 	}
 }

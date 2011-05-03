@@ -13,19 +13,15 @@
 	<Tag name="InputRoadPickOne">Valitse (yksi)</Tag>
 	<Tag name="ViewDist">Piirtoetäisyys</Tag>
 	<Tag name="Sky">Sky</Tag>
-	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 	<Tag name="TerNormal">Normaali</Tag>
 	<Tag name="LS_TRACK">Loading track</Tag>
 	<Tag name="NeedNewGame">* peli tarvitsee aloittaa alusta</Tag>
-	<Tag name="GameVersion">1.1</Tag>
 	<Tag name="TipTrackImg">Kuvankaappaus pelitilanteesta valitulla radalla.</Tag>
 	<Tag name="InputValueChange">Each (mouse/key) move or value change with </Tag>
 	<Tag name="InputRoadMat">-,= - tie/putki materiaali</Tag>
 	<Tag name="Surface">Pinta-ala</Tag>
 	<Tag name="TBScore">Score</Tag>
 	<Tag name="LS_TER">Loading terrain</Tag>
-	<Tag name="InputNextTab">F2,F3 - prev/next tab</Tag>
-	<Tag name="InputBrake">Välilyönti - käsijarru</Tag>
 	<Tag name="TipPrevWind">Preview camera window.</Tag>
 	<Tag name="InputPaintColor">C - Paint Color</Tag>
 	<Tag name="Version">versio</Tag>
@@ -36,7 +32,6 @@
 	<Tag name="TipTrackMap">Minimap of selected track, view from top.</Tag>
 	<Tag name="TipToggleModel">Enable or disable this model.</Tag>
 	<Tag name="InputReloadTrack">F5 - lataa rata uudelleen</Tag>
-	<Tag name="InputShowGUI">F1 tai Tab - näytä valinnat</Tag>
 	<Tag name="TipParType3">Rengaspartikkelityyppi 3 (yleispätevä radalle)</Tag>
 	<Tag name="TipParType2">Rengaspartikkelityyppi 2 (yleispätevä radalle)</Tag>
 	<Tag name="TipParType1">Rengaspartikkelityyppi 1 (yleispätevä radalle)</Tag>
@@ -59,7 +54,6 @@
 	<Tag name="Top">Ylös</Tag>
 	<Tag name="TerUpdSkip">Terrain update skip</Tag>
 	<Tag name="Input">Syöttö</Tag>
-	<Tag name="InputSteer">Vasen,Oikea - ohjaa</Tag>
 	<Tag name="TerLayers">Maaston kerrokset</Tag>
 	<Tag name="CopySource">Aseta kopiointilähteeksi</Tag>
 	<Tag name="TipDisableFog">Disable fog when editing road from distance.</Tag>
@@ -88,7 +82,6 @@
 	<Tag name="SetCamTo">Set camera to</Tag>
 	<Tag name="max">max</Tag>
 	<Tag name="TipTerTriSize">Terrain triangle size in [meters] (recommended: 1 - 2, use more for big track area). Changed after Update (F8).</Tag>
-	<Tag name="InputNextCam">X,C or PgUp,PgDn - prev/next camera view</Tag>
 	<Tag name="ABS">ABS (lukkiutumattomat jarrut)</Tag>
 	<Tag name="TipCarsList">Cars list, click to select (and see image). Press [Change car] and then [New Game] to drive with it.</Tag>
 	<Tag name="MyGUI_MessageBox_Ignore">Ohita</Tag>
@@ -96,7 +89,6 @@
 	<Tag name="PipeLStepsMul">Pipe L steps mul.</Tag>
 	<Tag name="View">View</Tag>
 	<Tag name="TipModelRoadDist">Distance from road to models (global, added to each models own value).</Tag>
-	<Tag name="InputThrottle">Ylös,Alas - kaasupoljin, jarru</Tag>
 	<Tag name="InputAfterChanges">(maaston/kasvillisuuden muutoksien jälkeen)</Tag>
 	<Tag name="MapSize">Map size</Tag>
 	<Tag name="OrigImage">Tummenna</Tag>
@@ -105,7 +97,6 @@
 	<Tag name="Weather">Sää</Tag>
 	<Tag name="wind">tuuli</Tag>
 	<Tag name="LS_CAR">Loading car</Tag>
-	<Tag name="InputRestart">F5 - aloita peli alusta</Tag>
 	<Tag name="MaxScale">max scale</Tag>
 	<Tag name="TipModelMaxScale">Model maximal scale.</Tag>
 	<Tag name="TerrainError">Maaston virhe</Tag>
@@ -140,7 +131,6 @@
 	<Tag name="TipSunDirPitch">Sun direction - pitch angle.</Tag>
 	<Tag name="ProjectPage">project&apos;s page:</Tag>
 	<Tag name="Type">Type</Tag>
-	<Tag name="InputBoost">Ctrl - boost</Tag>
 	<Tag name="Engine">Moottori</Tag>
 	<Tag name="TipNewGameCar">Restart game (after car change).</Tag>
 	<Tag name="InputWheelForce">[,]  (or shift-Wheel)  -  Force (intensity)</Tag>
@@ -157,6 +147,7 @@
 	<Tag name="RoadQual">Tien laatu kaukana</Tag>
 	<Tag name="length">pituus</Tag>
 	<Tag name="ColumnNSides">Column N sides</Tag>
+	<Tag name="RplAutoRec">Auto record replay</Tag>
 	<Tag name="Shaders">Shaders</Tag>
 	<Tag name="Exponent">exponentti</Tag>
 	<Tag name="Yaw">yaw</Tag>
@@ -190,10 +181,9 @@
 	<Tag name="InputRoadNotOnTer">when not on terrain</Tag>
 	<Tag name="TipNewDup">Create a new track by duplicating the selected track and using new name (change name first).</Tag>
 	<Tag name="TipFogEndClr">Fog end color. R G B components 0 to 1 (eg. 0.7 0.8 0.9)</Tag>
-	<Tag name="VegetCol">Vegetation collision    *needs New Game</Tag>
+	<Tag name="InputToggleVeget">V - Disable / enable vegetation</Tag>
 	<Tag name="Particles">Particles</Tag>
 	<Tag name="Other">Other</Tag>
-	<Tag name="InputMainCam">with shift - main cameras</Tag>
 	<Tag name="InputRoadNext">PgUp,PgDn (or Wheel) - previous/next point</Tag>
 	<Tag name="Development">Development</Tag>
 	<Tag name="InputRoadIns">Ins - insert new (after picked, alt - before)</Tag>
@@ -207,10 +197,11 @@
 	<Tag name="ChangeCar">Change Car</Tag>
 	<Tag name="FacesOnce">Faces at once</Tag>
 	<Tag name="InputTogglePreview">F7 - enter/leave preview camera</Tag>
-	<Tag name="GameBy">a game by</Tag>
+	<Tag name="GameBy">A game by</Tag>
 	<Tag name="TrackWidthAvg">Width avg.</Tag>
 	<Tag name="SunWeather">Sun and Weather</Tag>
 	<Tag name="TipTrkScreenEditor">In game screenshot for selected track.</Tag>
+	<Tag name="RplDelete">Delete</Tag>
 	<Tag name="TipAutoRear">Uncheck for manual Rear gear changing.</Tag>
 	<Tag name="TipTrailClr">Tire trails color. R G B A components 0 to 1 (eg. 0.4 0.4 0.2 0.6)</Tag>
 	<Tag name="InputRoadAltMMB">alt-RMB (or 3,4)</Tag>
@@ -228,11 +219,11 @@
 	<Tag name="RoadDist2">Additional distance to road.</Tag>
 	<Tag name="TipRoadStats">Whole road statistics.</Tag>
 	<Tag name="InputTerPaint">A - Paint Textures (layers)</Tag>
+	<Tag name="RplCur">Cur</Tag>
 	<Tag name="TexCoordMul">Tex Coord mul.</Tag>
 	<Tag name="Digits">Numerot (vaihde, nopeus)</Tag>
 	<Tag name="ShowPictures">Show pictures while loading</Tag>
 	<Tag name="TrackAvgSpeed">Avg. speed</Tag>
-	<Tag name="InputShift">A,Z - gear up,down (manual gearbox)</Tag>
 	<Tag name="PreviewCam">Preview Camera</Tag>
 	<Tag name="TipModelMinScale">Model minimal scale.</Tag>
 	<Tag name="Leave">Leave (exit)</Tag>
@@ -260,7 +251,6 @@
 	<Tag name="TCS">TCS (traction control)</Tag>
 	<Tag name="NeedRestart">* need restart</Tag>
 	<Tag name="mud">mud</Tag>
-	<Tag name="InputRoll">Q,W - roll car (when needed)</Tag>
 	<Tag name="TipTerWind">Terrain brush window.</Tag>
 	<Tag name="TipGrassVisDist">Visibility distance for grass pages.</Tag>
 	<Tag name="TipModelVisDist">Visibility distance for model pages.</Tag>
@@ -330,6 +320,7 @@
 	<Tag name="About">About</Tag>
 	<Tag name="TrackPipes">Pipes</Tag>
 	<Tag name="AutoLoad">Auto Load track</Tag>
+	<Tag name="RplGhost">Show ghost drive - best lap</Tag>
 	<Tag name="TipGrassPageLength">Grass Page length (low will reload often, high will cause visible switching).</Tag>
 	<Tag name="Reflections">Heijastukset</Tag>
 	<Tag name="dust">dust</Tag>
@@ -337,7 +328,7 @@
 	<Tag name="TipRainSnow2">Set 2 Rain/Snow type</Tag>
 	<Tag name="InputTerDeform">D - Deform  (LMB up, RMB down)</Tag>
 	<Tag name="min">min</Tag>
-	<Tag name="InputToggleVeget">V - Disable / enable vegetation</Tag>
+	<Tag name="VegetCol">Vegetation collision    *needs New Game</Tag>
 	<Tag name="MyGUI_MessageBox_Continue">Continue</Tag>
 	<Tag name="Tools">Tools</Tag>
 	<Tag name="TipGrassSwaySpd">Grass sway effect speed.</Tag>
@@ -379,7 +370,7 @@
 	<Tag name="scale">Scale</Tag>
 	<Tag name="AutoClutch">Auto clutch-</Tag>
 	<Tag name="ColHue">Color - Hue</Tag>
-	<Tag name="TBTime">Time</Tag>
+	<Tag name="TipLoadTrkEditor">Load track (after change) or Reload current track.</Tag>
 	<Tag name="InputRoadAltLMB">alt-LMB (or 1,2)</Tag>
 	<Tag name="TipModelPrev">Model preview image.</Tag>
 	<Tag name="InputRoadEdit">R - edit road mode</Tag>
@@ -389,9 +380,11 @@
 	<Tag name="BumpWavelen">Bump:  WaveLen</Tag>
 	<Tag name="CameraInfo">Camera info</Tag>
 	<Tag name="NewGame">New Game</Tag>
+	<Tag name="Replay">Replay</Tag>
 	<Tag name="CarDebug">Car susp, long|,lat- slips</Tag>
 	<Tag name="InputRoadPick">Space - pick one/none</Tag>
 	<Tag name="InputRoadRebuild">B - rebuild road (after terrain change, etc.)</Tag>
+	<Tag name="RplSave">Save</Tag>
 	<Tag name="Environment">Environment</Tag>
 	<Tag name="MyGUI_MessageBox_Cancel">Cancel</Tag>
 	<Tag name="TipNewTer">Create new, flat terrain.</Tag>
@@ -403,6 +396,7 @@
 	<Tag name="LS_GAME">Loading game</Tag>
 	<Tag name="TerHeightMap">Maaston korkeuskartta</Tag>
 	<Tag name="PipeWStepsMul">Pipe W steps mul.</Tag>
+	<Tag name="TBTime">Time</Tag>
 	<Tag name="MyGUI_MessageBox_Ok">Ok</Tag>
 	<Tag name="TipRainSnowInt">Rain/Snow intensity (eg. 1000)</Tag>
 	<Tag name="TrackLength">Length</Tag>
@@ -435,7 +429,7 @@
 	<Tag name="Color">väri</Tag>
 	<Tag name="Pitch">pitch</Tag>
 	<Tag name="MyGUI_MessageBox_Yes">Kyllä</Tag>
-	<Tag name="TipLoadTrkEditor">Load track (after change) or Reload current track.</Tag>
+	<Tag name="RplAll">All</Tag>
 	<Tag name="GameVersion">1.1</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 

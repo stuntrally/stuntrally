@@ -9,6 +9,8 @@
 #include "SplitScreenManager.h"
 using namespace Ogre;
 
+namespace OISB {  class System;  };
+
 
 class BaseApp :
 		public Ogre::FrameListener, public Ogre::WindowEventListener,
@@ -33,10 +35,11 @@ public:
 	class HDRLogic* mHDRLogic;
 	
 	class SETTINGS* pSet;
+	
+	void recreateCompositor();
 
 	SceneNode* ndSky; //-
 	int roadUpCnt;
-	Camera* GetCamera()  {  return mCamera;  }
 	LoadingBar mLoadingBar;
 
 protected:
@@ -47,7 +50,7 @@ protected:
 	virtual void createScene() = 0;
 	virtual void destroyScene();
 
-	void createCamera(), createFrameListener(), createViewports(), recreateCompositor(), refreshCompositor();
+	void createCamera(), createFrameListener(), createViewports(), refreshCompositor();
 	void setupResources(), createResourceListener(), loadResources();
 	void LoadingOn(), LoadingOff();
 
@@ -67,13 +70,19 @@ protected:
 
 	///  Ogre
 	Root *mRoot;  SceneManager* mSceneMgr;
-	Camera* mCamera;  Viewport* mViewport;  RenderWindow* mWindow;
+	RenderWindow* mWindow;
 
 	///  input
+	OISB::System* mOISBsys;
 	OIS::InputManager* mInputManager;
 public:
 	OIS::Mouse* mMouse;  OIS::Keyboard* mKeyboard;
 	bool isKey(OIS::KeyCode k)  {  return mKeyboard->isKeyDown(k);  }
+	
+	// this is set to true when the user is asked to assign a new key
+	bool bAssignKey;
+	OIS::KeyCode pressedKey;
+	MyGUI::Widget* pressedKeySender;
 protected:
 
 	///  ovelay
@@ -87,7 +96,8 @@ protected:
 
 
 	///  Gui
-	bool isFocGui;  // gui shown
+	bool isFocGuiOrRpl()  {  return isFocGui || isFocRpl;  }
+	bool isFocGui,isFocRpl;  // gui shown
 	MyGUI::Gui* mGUI;		MyGUI::OgrePlatform* mPlatform;
 	MyGUI::WidgetPtr mLayout, mWndOpts, mWndRpl;  // options window
 	MyGUI::TabPtr mWndTabs;

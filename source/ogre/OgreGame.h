@@ -22,14 +22,14 @@ public:
 	
 	class GAME* pGame;  ///*
 	void updatePoses(float time), newPoses();
-	void UpdThr();  bool bNew;
+	void UpdThr();
 	
 	// translation
 	// can't have it in c'tor, because mygui is not initialized
 	void setTranslations();
 
 	/// car ----------------
-	//CarModel* carM; //in BaseApp
+	//std::list<CarModel*> carModels; //in BaseApp
 	
 	// This list holds new positions info for every CarModel
 	std::list<PosInfo> newPosInfos;
@@ -43,7 +43,13 @@ public:
 	BltObjects objs;  // veget collision in bullet
 	Light* sun;  void UpdFog(bool bForce=false), UpdSun();
 	
-	void UpdateHUD(class CAR* pCar, float time);
+	// Rain, snow
+	ParticleSystem *pr,*pr2;
+	
+	//  trees
+	class Forests::PagedGeometry *trees, *grass;
+	
+	void UpdateHUD(class CAR* pCar, float time, Viewport* vp=NULL), SizeHUD(bool full, Viewport* vp=NULL);
 
 protected:
 	virtual void createScene();
@@ -52,30 +58,16 @@ protected:
 	virtual bool frameStart(Real time);
 	virtual bool frameEnd(Real time);
 	virtual bool keyPressed( const OIS::KeyEvent &arg );
-	//bool KeyPress(const OIS::KeyEvent &arg);
 		
 	class BtOgre::DebugDrawer *dbgdraw;  /// blt dbg
 
-	//  car  --------
-	/*SceneNode *ndCar, *ndWh[4], *ndWhE[4], *ndRs[4],*ndRd[4];  // car, wheels,emitters
-	ManualObject* CreateModel(const String& mat, class VERTEXARRAY* a, bool flip=false, bool track=false);
-	Vector3 vPofs;*/
 	//  mtr reload
 	enum eMaterials {
 		Mtr_CarBody, Mtr_CarInterior, Mtr_CarGlass,
 		Mtr_CarTireFront, Mtr_CarTireRear,
 		Mtr_Road,  NumMaterials  };
 	String sMtr[NumMaterials];
-	//void CarChangeClr(), 
-	// static so CarModel can access it
-	static void reloadMtrTex(String mtrName);
-	
-	/*ParticleSystem* ps[4],*pm[4],*pd[4];  // smoke, mud, dust
-	RibbonTrail* whTrl[4];
-	Real wht[4];  // spin time (approx tire temp.)
-	int whTerMtr[4];
-	void UpdParsTrails();*/ 
-	ParticleSystem *pr,*pr2;
+	void reloadMtrTex(String mtrName);
 
 	//  2D, hud  ----
 	float asp,  xcRpm, ycRpm, xcVel, ycVel,
@@ -84,13 +76,13 @@ protected:
 	SceneNode *nrpmB, *nvelBk,*nvelBm, *nrpm, *nvel;  // gauges
 	SceneNode *ndPos, *ndMap, *ndLine;  // car pos on minimap
 	ManualObject* mrpm, *mvel, *mpos;
-	ManualObject* Create2D(const String& mat, Real size, bool dyn = false);
+	ManualObject* Create2D(const String& mat, SceneManager* sceneMgr, Real size, bool dyn = false);
 
 	OverlayElement* hudGear,*hudVel, *ovL[5],*ovR[5],*ovS[5],*ovU[5], *hudAbs,*hudTcs, *hudTimes,*hudCheck;
 	Overlay* ovGear,*ovVel, *ovAbsTcs,*ovCarDbg,*ovCarDbgTxt,  *ovCam, *ovTimes;
 
 	String GetTimeString(float time) const;
-	void CreateHUD(), SizeHUD(bool full), ShowHUD(bool hideAll=false);
+	void CreateHUD(), ShowHUD(bool hideAll=false);
 
 
 	//  create  . . . . . . . . . . . . . . . . . . . . . . . . 
@@ -113,12 +105,6 @@ protected:
 	// 1 behind map ( map.end() ): loading finished
 	std::map<unsigned int, std::string>::iterator currentLoadingState;
 
-	bool FileExists(const std::string & filename)
-	{
-		std::ifstream f(filename.c_str());
-		return f;
-	}
-	
 
 	///  terrain
 	Terrain* terrain;	TerrainGlobalOptions* mTerrainGlobals;
@@ -136,15 +122,13 @@ protected:
 
 
 	//  road
+public:	
 	class SplineRoad* road;
+protected:
 	//  start pos, lap
 	bool bGetStPos;  Matrix4 matStPos;	Vector4 vStDist;
 	int iInChk, iCurChk, iNextChk, iNumChks;  // cur checkpoint -1 at start
 	bool bInSt, bWrongChk;
-
-
-	//  trees
-	class Forests::PagedGeometry *trees, *grass;
 
 	///  Gui  ---------------------------------------------------------------------------
 	void InitGui();
@@ -162,6 +146,9 @@ protected:
 		//  slider event and its text field for value
 	#define SLV(name)  void sl##name(SL);  StaticTextPtr val##name;
 	#define SL  WP wp, size_t val	//  slider event args
+	
+	// control button clicked
+	void controlBtnClicked(Widget* sender), InitInputGui();
 
 	//  sliders
 	SLV(Anisotropy);  SLV(ViewDist);  SLV(TerDetail);  SLV(TerDist);  SLV(RoadDist);  // detail
@@ -176,7 +163,7 @@ protected:
 
 	//  checks
 	void chkFps(WP), chkGauges(WP),	chkMinimap(WP), chkRacingLine(WP),  // view
-		chkCamInfo(WP), chkTimes(WP), chkCarDbgBars(WP), chkCarDbgTxt(WP), chkBltDebug(WP),
+		chkCamInfo(WP), chkTimes(WP), chkCarDbgBars(WP), chkCarDbgTxt(WP), chkBltDebug(WP), chkBltProfilerTxt(WP),
 		chkReverse(WP), chkParticles(WP), chkTrails(WP),
 		chkAbs(WP), chkTcs(WP), chkGear(WP), chkRear(WP), chkClutch(WP),  // car
 		chkOgreDialog(WP), chkAutoStart(WP), chkEscQuits(WP), chkBltLines(WP),  // startup
@@ -186,19 +173,26 @@ protected:
 
 	void comboTexFilter(SL);
 	ButtonPtr bRkmh, bRmph;  void radKmh(WP), radMph(WP), btnTrGrReset(WP), btnQuit(WP), btnResChng(WP);
-	ButtonPtr chDbgT,chDbgB, chBlt,chFps, chTimes,chMinimp, bnQuit;
+	ButtonPtr chDbgT,chDbgB, chBlt,chBltTxt, chFps, chTimes,chMinimp, bnQuit;
 
-	//  replay
-	StaticTextPtr valRplPerc, valRplCur, valRplLen,  valRplName, valRplInfo;
+	///  replay
+	StaticTextPtr valRplPerc, valRplCur, valRplLen,
+		valRplName,valRplInfo,valRplName2,valRplInfo2;
 	HScrollPtr slRplPos;  void slRplPosEv(SL);
 	EditPtr edRplName, edRplDesc;
 	void btnRplLoad(WP), btnRplSave(WP), btnRplDelete(WP),
 		chkRplAutoRec(WP),chkRplChkGhost(WP), btnRplCur(WP),btnRplAll(WP),
-		btnRplToStart(WP),btnRplToEnd(WP), btnRplBack(WP),btnRplForward(WP), btnRplPlay(WP);
-
+		btnRplToStart(WP),btnRplToEnd(WP), btnRplBack(WP),btnRplForward(WP),
+		btnRplPlay(WP);
+		
+public:
+	bool bRplPlay,bRplPause;  //  game
+protected:
+	ButtonPtr btRplPl;  void UpdRplPlayBtn();
 
 	//  game
 	ListPtr carList,trkList, resList, rplList;  void updReplaysList();
+	void listRplChng(List* li, size_t pos);
 	void listCarChng(List* li, size_t pos),		btnChgCar(WP);
 	void listTrackChng(List* li, size_t pos),	btnChgTrack(WP);
 	void btnNewGame(WP),btnNewGameStart(WP), btnShadows(WP);

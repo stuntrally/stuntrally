@@ -233,6 +233,34 @@
 					<Property key="Widget_Caption" value="#{VegetCol}"/>
 					<Property key="Text_TextColour" value="0.6 0.8 0.8"/>
 				</Widget>
+				<Widget type="Button" skin="CheckBox" position="312 287 256 25" name="chkSplitVertically"/>
+				<Widget type="Button" skin="Button" position="312 239 80 33" name="btnPlayers1">
+					<Property key="Widget_Caption" value="1"/>
+					<Property key="Widget_Colour" value="0.4 0.8 1"/>
+				</Widget>
+				<Widget type="Button" skin="Button" position="408 239 80 33" name="btnPlayers2">
+					<Property key="Widget_Caption" value="2"/>
+					<Property key="Widget_Colour" value="0.4 1 0.4"/>
+				</Widget>
+				<Widget type="Button" skin="Button" position="504 239 80 33" name="btnPlayers3">
+					<Property key="Widget_Caption" value="3"/>
+					<Property key="Widget_Colour" value="1 0.8 0.4"/>
+				</Widget>
+				<Widget type="Button" skin="Button" position="600 239 80 33" name="btnPlayers4">
+					<Property key="Widget_Caption" value="4"/>
+					<Property key="Widget_Colour" value="1 0.5 0.5"/>
+				</Widget>
+				<Widget type="StaticText" skin="StaticText" position="312 199 176 24">
+					<Property key="Widget_Caption" value="Num local players:"/>
+					<Property key="Text_TextColour" value="0.7 0.9 1"/>
+				</Widget>
+				<Widget type="StaticText" skin="StaticText" position="496 199 64 24" name="NumLocPlayers"/>
+				<Widget type="StaticText" skin="StaticText" position="32 23 120 24">
+					<Property key="Widget_Caption" value="Car"/>
+				</Widget>
+				<Widget type="StaticText" skin="StaticText" position="312 23 136 24">
+					<Property key="Widget_Caption" value="Game"/>
+				</Widget>
 			</Widget>
 			<Widget type="TabItem" skin="" position="4 26 787 531">
 				<Property key="Widget_Caption" value="#{Replay}"/>
@@ -255,32 +283,43 @@
 					<Property key="Text_TextColour" value="0.6 0.8 1"/>
 					<Property key="Widget_Caption" value="#{RplAll}"/>
 				</Widget>
-				<Widget type="Button" skin="Button" position="512 238 128 32" name="RplSave">
+				<Widget type="Button" skin="Button" position="376 194 128 32" name="RplSave">
 					<Property key="Widget_Caption" value="#{RplSave}"/>
 					<Property key="Text_TextColour" value="0.8 1 1"/>
 					<Property key="Widget_Colour" value="0.4 0.8 1"/>
 				</Widget>
-				<Widget type="Button" skin="Button" position="224 186 128 32" name="RplLoad">
+				<Widget type="Button" skin="Button" position="224 194 128 32" name="RplLoad">
 					<Property key="Widget_Caption" value="#{RplLoad}"/>
 					<Property key="Text_TextColour" value="0.8 1 1"/>
 					<Property key="Widget_Colour" value="0.6 0.6 1"/>
 				</Widget>
-				<Widget type="Button" skin="Button" position="512 190 128 24" name="RplDelete">
+				<Widget type="Button" skin="Button" position="536 198 128 24" name="RplDelete">
 					<Property key="Widget_Colour" value="1 0.4 0"/>
 					<Property key="Widget_Caption" value="#{RplDelete}"/>
 					<Property key="Text_TextColour" value="1 0.4 0.4"/>
 				</Widget>
-				<Widget type="StaticText" skin="StaticText" position="224 24 224 24" align="Relative" name="RplName">
-					<Property key="Text_TextColour" value="0.9 0.8 1"/>
+				<Widget type="StaticText" skin="StaticText" position="224 24 184 24" align="Relative" name="RplName">
+					<Property key="Text_TextColour" value="0.84 0.8 1"/>
 				</Widget>
-				<Widget type="StaticText" skin="StaticText" position="224 56 456 40" align="Relative" name="RplInfo">
-					<Property key="Text_TextColour" value="0.9 1 1"/>
+				<Widget type="StaticText" skin="StaticText" position="224 48 184 44" align="Relative" name="RplInfo">
+					<Property key="Text_TextColour" value="0.9 0.9 1"/>
+				</Widget>
+				<Widget type="StaticText" skin="StaticText" position="416 24 216 24" align="Relative" name="RplName2">
+					<Property key="Text_TextColour" value="0.84 0.8 1"/>
+				</Widget>
+				<Widget type="StaticText" skin="StaticText" position="416 48 216 44" align="Relative" name="RplInfo2">
+					<Property key="Text_TextColour" value="0.9 0.9 1"/>
 				</Widget>
 				<Widget type="Edit" skin="WordWrap" position="224 104 456 57" align="Relative" name="RplDesc">
 					<Property key="Text_TextColour" value="0.8 0.8 1"/>
 				</Widget>
-				<Widget type="Edit" skin="Edit" position="224 238 264 32" name="RplNameEdit">
+				<Widget type="Edit" skin="Edit" position="224 238 280 32" name="RplNameEdit">
 					<Property key="Widget_Colour" value="0.8 0.9 1"/>
+				</Widget>
+				<Widget type="Button" skin="Button" position="536 238 128 30">
+					<Property key="Text_TextColour" value="1 0.8 0.4"/>
+					<Property key="Widget_Colour" value="1 0.8 0.4"/>
+					<Property key="Widget_Caption" value="#{RplRename}"/>
 				</Widget>
 			</Widget>
 			<Widget type="TabItem" skin="" position="4 26 787 531">
@@ -292,7 +331,7 @@
 					<Widget type="TabItem" skin="" position="4 26 735 428">
 						<Property key="Widget_Caption" value="#{Video}"/>
 						<Widget type="StaticText" skin="StaticText" position="32 18 112 24">
-							<Property key="Widget_Caption" value="#{Resolution} *"/>
+							<Property key="Widget_Caption" value="#{Resolution}"/>
 							<Property key="Widget_Colour" value="0 0 0"/>
 							<Property key="Text_TextColour" value="0.3 1 1"/>
 						</Widget>
@@ -732,23 +771,27 @@
 							<Property key="Text_TextColour" value="0.7 0.85 1.0"/>
 						</Widget>
 						<Widget type="Button" skin="CheckBox" position="40 62 256 24" name="Fps">
-							<Property key="Widget_Caption" value="#{FPS} F11"/>
+							<Property key="Widget_Caption" value="#{FPS}  F11"/>
 							<Property key="Text_TextColour" value="0.8 0.9 1.0"/>
 						</Widget>
 						<Widget type="Button" skin="CheckBox" position="40 94 256 24" name="CarDbgBars">
-							<Property key="Widget_Caption" value="#{CarDebug} F9"/>
+							<Property key="Widget_Caption" value="#{CarDebug}  F9"/>
 							<Property key="Text_TextColour" value="0.7 0.9 1.0"/>
 						</Widget>
 						<Widget type="Button" skin="CheckBox" position="40 126 256 24" name="Wireframe">
-							<Property key="Widget_Caption" value="#{Wireframe} F10"/>
+							<Property key="Widget_Caption" value="#{Wireframe}  F10"/>
 							<Property key="Text_TextColour" value="0.7 0.85 1.0"/>
 						</Widget>
 						<Widget type="Button" skin="CheckBox" position="40 158 256 24" name="BulletDebug">
-							<Property key="Widget_Caption" value="#{BulletDebug} shift-F10"/>
+							<Property key="Widget_Caption" value="#{BulletDebug}  ctrl-F10"/>
 							<Property key="Text_TextColour" value="0.7 0.85 1.0"/>
 						</Widget>
-						<Widget type="Button" skin="CheckBox" position="40 190 256 24" name="CarDbgTxt">
-							<Property key="Widget_Caption" value="#{CarDebugText} shift-F9"/>
+						<Widget type="Button" skin="CheckBox" position="40 190 256 24" name="BulletProfilerTxt">
+							<Property key="Widget_Caption" value="#{BulletProfilerTxt}  shift-F10"/>
+							<Property key="Text_TextColour" value="0.7 0.85 1.0"/>
+						</Widget>
+						<Widget type="Button" skin="CheckBox" position="40 222 256 24" name="CarDbgTxt">
+							<Property key="Widget_Caption" value="#{CarDebugText}  shift-F9"/>
 							<Property key="Text_TextColour" value="0.7 0.85 1.0"/>
 						</Widget>
 						<Widget type="StaticText" skin="StaticText" position="352 30 216 24">
@@ -780,49 +823,10 @@
 			</Widget>
 			<Widget type="TabItem" skin="" position="4 26 787 531">
 				<Property key="Widget_Caption" value="#{Input}"/>
-				<Widget type="StaticText" skin="StaticText" position="32 80 296 24">
-					<Property key="Widget_Caption" value="#{InputSteer}"/>
-					<Property key="Text_TextColour" value="0.8 0.9 1.0"/>
-				</Widget>
-				<Widget type="StaticText" skin="StaticText" position="32 112 296 24">
-					<Property key="Widget_Caption" value="#{InputThrottle}"/>
-					<Property key="Text_TextColour" value="0.8 0.9 1.0"/>
-				</Widget>
-				<Widget type="StaticText" skin="StaticText" position="32 170 296 24">
-					<Property key="Widget_Caption" value="#{InputBrake}"/>
-					<Property key="Text_TextColour" value="0.8 0.9 0.8"/>
-				</Widget>
-				<Widget type="StaticText" skin="StaticText" position="32 202 296 24">
-					<Property key="Widget_Caption" value="#{InputBoost}"/>
-					<Property key="Text_TextColour" value="0.8 0.9 0.8"/>
-				</Widget>
-				<Widget type="StaticText" skin="StaticText" position="32 260 296 24">
-					<Property key="Widget_Caption" value="#{InputRoll}"/>
-					<Property key="Text_TextColour" value="0.7 0.8 0.8"/>
-				</Widget>
-				<Widget type="StaticText" skin="StaticText" position="32 300 296 24">
-					<Property key="Widget_Caption" value="#{InputShift}"/>
-					<Property key="Text_TextColour" value="0.7 0.8 0.8"/>
-				</Widget>
-				<Widget type="StaticText" skin="StaticText" position="364 170 292 24">
-					<Property key="Widget_Caption" value="#{InputShowGUI}"/>
-					<Property key="Text_TextColour" value="0.8 0.9 1.0"/>
-				</Widget>
-				<Widget type="StaticText" skin="StaticText" position="364 80 324 24">
-					<Property key="Widget_Caption" value="#{InputNextCam}"/>
-					<Property key="Text_TextColour" value="0.9 0.9 0.7"/>
-				</Widget>
-				<Widget type="StaticText" skin="StaticText" position="412 112 268 24">
-					<Property key="Text_TextColour" value="0.7 0.7 0.5"/>
-					<Property key="Widget_Caption" value="#{InputMainCam}"/>
-				</Widget>
-				<Widget type="StaticText" skin="StaticText" position="364 202 292 24">
-					<Property key="Widget_Caption" value="#{InputNextTab}"/>
-					<Property key="Text_TextColour" value="0.6 0.8 1.0"/>
-				</Widget>
-				<Widget type="StaticText" skin="StaticText" position="364 260 292 24">
-					<Property key="Widget_Caption" value="#{InputRestart}"/>
-					<Property key="Text_TextColour" value="0.6 0.8 1.0"/>
+				<Widget type="Tab" skin="Tab" position="16 15 744 460" name="InputTab">
+					<Property key="Tab_ButtonAutoWidth" value="false"/>
+					<Property key="Widget_Colour" value="0.73 0.88 1"/>
+					<Property key="Tab_ButtonWidth" value="100"/>
 				</Widget>
 			</Widget>
 			<Widget type="TabItem" skin="" position="4 26 787 531">
@@ -937,17 +941,12 @@
 	</Widget>
 	<Widget type="Window" skin="WindowCS" position="224 -20 820 104" layer="Back" name="RplWnd">
 		<Property key="Widget_Alpha" value="0.3"/>
-		<Widget type="HScroll" skin="HScroll" position="4 41 800 20" name="RplSlider">
+		<Widget type="HScroll" skin="HScroll" position="4 41 800 20" align="Relative" name="RplSlider">
 			<Property key="Widget_Alpha" value="0.6"/>
 			<Property key="Widget_InheritsAlpha" value="false"/>
 			<Property key="Widget_Colour" value="0.8 0.9 1"/>
 			<Property key="Scroll_MoveToClick" value="true"/>
 			<Property key="Scroll_Range" value="1000001"/>
-		</Widget>
-		<Widget type="StaticText" skin="StaticText" position="444 1 108 24" name="RplTimeLen">
-			<Property key="Widget_Alpha" value="1.0"/>
-			<Property key="Widget_InheritsAlpha" value="false"/>
-			<Property key="Text_TextColour" value="0.6 0.7 0.8"/>
 		</Widget>
 		<Widget type="Button" skin="Button" position="20 1 40 32" name="RplToStart">
 			<Property key="Widget_InheritsAlpha" value="false"/>
@@ -963,7 +962,7 @@
 		</Widget>
 		<Widget type="Button" skin="Button" position="100 1 64 32" name="RplPlay">
 			<Property key="Widget_InheritsAlpha" value="false"/>
-			<Property key="Widget_Caption" value="|&gt;"/>
+			<Property key="Widget_Caption" value="||"/>
 			<Property key="Widget_Colour" value="0 1 1"/>
 		</Widget>
 		<Widget type="Button" skin="Button" position="164 1 40 32" name="RplForward">
@@ -978,14 +977,41 @@
 			<Property key="Widget_Colour" value="0.6 0.8 1"/>
 			<Property key="Widget_Alpha" value="0.6"/>
 		</Widget>
-		<Widget type="StaticText" skin="StaticText" position="332 1 108 24" name="RplTimeCur">
+		<Widget type="Widget" skin="PanelSmall" position="350 4 120 34">
 			<Property key="Widget_InheritsAlpha" value="false"/>
-			<Property key="Text_TextColour" value="0.6 0.8 1"/>
+			<Property key="Widget_Colour" value="0.9 0.92 1"/>
+			<Property key="Widget_Alpha" value="0.6"/>
+			<Widget type="StaticText" skin="StaticText" position="0 0 100 34" name="RplPercent">
+				<Property key="Widget_InheritsAlpha" value="false"/>
+				<Property key="Widget_Alpha" value="1"/>
+				<Property key="Text_TextColour" value="0.9 0.92 1.0"/>
+				<Property key="Text_TextAlign" value="Right"/>
+				<Property key="Text_FontName" value="font_Vera.24"/>
+			</Widget>
 		</Widget>
-		<Widget type="StaticText" skin="StaticText" position="260 1 64 24" name="RplPercent">
+		<Widget type="Widget" skin="PanelSmall" position="500 4 140 34">
 			<Property key="Widget_InheritsAlpha" value="false"/>
-			<Property key="Text_TextColour" value="0.7 0.7 1.0"/>
-			<Property key="Text_TextAlign" value="Center"/>
+			<Property key="Widget_Colour" value="0.9 0.96 1.0"/>
+			<Property key="Widget_Alpha" value="0.6"/>
+			<Widget type="StaticText" skin="StaticText" position="0 0 140 34" name="RplTimeCur">
+				<Property key="Widget_InheritsAlpha" value="false"/>
+				<Property key="Widget_Alpha" value="1"/>
+				<Property key="Text_TextColour" value="0.9 0.96 1.0"/>
+				<Property key="Text_TextAlign" value="Center"/>
+				<Property key="Text_FontName" value="font_Vera.24"/>
+			</Widget>
+		</Widget>
+		<Widget type="Widget" skin="PanelSmall" position="650 4 140 34">
+			<Property key="Widget_InheritsAlpha" value="false"/>
+			<Property key="Widget_Colour" value="0.8 0.9 1"/>
+			<Property key="Widget_Alpha" value="0.5"/>
+			<Widget type="StaticText" skin="StaticText" position="0 0 140 34" name="RplTimeLen">
+				<Property key="Widget_InheritsAlpha" value="false"/>
+				<Property key="Widget_Alpha" value="1"/>
+				<Property key="Text_TextColour" value="0.8 0.9 1"/>
+				<Property key="Text_TextAlign" value="Center"/>
+				<Property key="Text_FontName" value="font_Vera.24"/>
+			</Widget>
 		</Widget>
 	</Widget>
 </MyGUI>

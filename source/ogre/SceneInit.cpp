@@ -14,18 +14,11 @@
 //-------------------------------------------------------------------------------------
 void App::createScene()
 {
-	mCamera->setFarClipDistance(pSet->view_distance*1.1f);
-	mCamera->setNearClipDistance(0.2f);
-
 	//  tex fil
 	MaterialManager::getSingleton().setDefaultTextureFiltering(TFO_ANISOTROPIC);
 	MaterialManager::getSingleton().setDefaultAnisotropy(pSet->anisotropy);
 
 	mRoot->addResourceLocation(pathTrk[1] + "_previews/", "FileSystem");  //prv user tracks
-
-	//  --------  Follow Camera  --------
-	// now in CarModel::Create
-	//mFCam = new FollowCamera(mCamera);  mFCam->loadCameras();
 	
 	if (!pSet->autostart)  isFocGui = true;
 	InitGui();
@@ -45,13 +38,11 @@ void App::createScene()
 	Log(string("**** Loaded Vegetation objects: ") + toStr(objs.colsMap.size()));
 	Log(string("**** ReplayFrame size: ") + toStr(sizeof(ReplayFrame)));	
 
-	///  load replay
-	if (pSet->rpl_play)
-	{
+	#if 0  // test autoload replay
 		string file = PATHMANAGER::GetReplayPath() + "/" + pSet->track + ".rpl";
-		replay.LoadFile(file);
-	}
-	/**/
+		if (replay.LoadFile(file))
+			bRplPlay = 1;
+	#endif
 
 	if (pSet->autostart)
 		NewGame();
@@ -65,17 +56,23 @@ void App::NewGame()
 {
 	// actual loading isn't done here
 	bLoading = true;
+	bRplPlay = 0;
 	LoadingOn();
 	// hide HUD
 	ShowHUD(true);
 	// hide FPS
 	mFpsOverlay->hide();
+	if (mWndRpl)  mWndRpl->setVisible(false);
+	mGUI->setVisiblePointer(false);
+
 	currentLoadingState = loadingStates.begin();
 }
 
-/* Loading steps (in this order) */
-void App::LoadCleanUp()
+/* *  Loading steps (in this order)  * */
+
+void App::LoadCleanUp()  // 1 first
 {
+	if (mGUI)	mGUI->setVisiblePointer(isFocGui);
 	// rem old track
 	if (resTrk != "")  Ogre::Root::getSingletonPtr()->removeResourceLocation(resTrk);
 	resTrk = TrkDir() + "objects";
@@ -87,11 +84,6 @@ void App::LoadCleanUp()
 	}
 	carModels.clear();
 	newPosInfos.clear();
-	
-	//  hide trails
-	///TODO
-	/*for (int w=0; w<4; ++w)  if (whTrl[w])  {	wht[w] = 0.f;
-		whTrl[w]->setVisible(false);	whTrl[w]->setInitialColour(0, 0.5,0.5,0.5, 0);	}*/
 	
 	if (grass) {  delete grass->getPageLoader();  delete grass;  grass=0;   }
 	if (trees) {  delete trees->getPageLoader();  delete trees;  trees=0;   }
@@ -111,23 +103,30 @@ void App::LoadCleanUp()
 	if (road)
 	{	road->DestroyRoad();  delete road;  road = 0;  }
 }
-void App::LoadGame()
+
+void App::LoadGame()  // 2
 {
-	//pGame->NewGame();  // ? timer 0 after ?
 	pGame->NewGameDoCleanup();
 	pGame->NewGameDoLoadTrack();
 	/// init car models
 	// will create vdrift cars
-	carModels.push_back( new CarModel(0, CarModel::CT_LOCAL, sListCar, mSceneMgr, pSet, pGame, &sc, mCamera) );
-	// Create() will be called later in LoadCar()
+	// actual car loading will be done later in LoadCar()
 	// this is just here because vdrift car has to be created first
+	std::list<Camera*>::iterator camIt = mSplitMgr->mCameras.begin();
+	for (int i=0; i<pSet->local_players; i++)
+	{
+		carModels.push_back( new CarModel(i, CarModel::CT_LOCAL, pSet->car/*sListCar*/, mSceneMgr, pSet, pGame, &sc, (*camIt), this ) );
+		camIt++;
+	}
+	
 	pGame->NewGameDoLoadMisc();
 	bGetStPos = true;
 	
 	bool ter = IsTerTrack();
 	sc.ter = ter;
 }
-void App::LoadScene()
+
+void App::LoadScene()  // 3
 {
 	bool ter = IsTerTrack();
 	if (ter)  // load scene
@@ -148,14 +147,15 @@ void App::LoadScene()
 		pr2->setRenderQueueGroup(RENDER_QUEUE_9+5);
 		pr2->getEmitter(0)->setEmissionRate(0);  }
 }
-void App::LoadCar()
+
+void App::LoadCar()  // 4
 {
 	// Create all cars
 	for (std::list<CarModel*>::iterator it=carModels.begin(); it!=carModels.end(); it++)
 	{
 		(*it)->Create();
 		// Reserve an entry in newPosInfos
-		PosInfo carPosInfo;
+		PosInfo carPosInfo;  carPosInfo.bNew = false;  //-
 		newPosInfos.push_back(carPosInfo);
 	}
 	
@@ -167,9 +167,10 @@ void App::LoadCar()
 		for (int w=0; w<4; ++w)
 			whR[w] = pCar->GetTireRadius(WHEEL_POSITION(w));
 	}
-	replay.InitHeader(pSet->track.c_str(), pSet->car.c_str(), whR);
+	replay.InitHeader(pSet->track.c_str(), pSet->track_user, pSet->car.c_str(), whR);
 }
-void App::LoadTerrain()
+
+void App::LoadTerrain()  // 5
 {
 	bool ter = IsTerTrack();
 	CreateTerrain(false,ter);  // common
@@ -182,7 +183,8 @@ void App::LoadTerrain()
 		(*it)->blendMapSize = blendMapSize;
 	}
 }
-void App::LoadTrack()
+
+void App::LoadTrack()  // 6
 {
 	mRoot->addResourceLocation(resTrk, "FileSystem");
 
@@ -202,14 +204,15 @@ void App::LoadTrack()
 		CreateTrees();
 	}
 }
-void App::LoadMisc()
+
+void App::LoadMisc()  // 7 last
 {
-	UpdGuiRdStats(road, sc, pGame->timer.GetBestLap(pSet->trackreverse));  // current
+	if (pGame && pGame->cars.size() > 0)
+		UpdGuiRdStats(road, sc, pGame->timer.GetBestLap(pSet->trackreverse));  // current
+
 	CreateHUD();
 	// immediately hide it
 	ShowHUD(true);
-	/*mFCam->first = true;  // no smooth	
-	mFCam->mTerrain = mTerrainGroup; // assign terrain to cam*/
 	
 	// Camera settings
 	for (std::list<CarModel*>::iterator it=carModels.begin(); it!=carModels.end(); it++)
@@ -218,6 +221,7 @@ void App::LoadMisc()
 		{
 			(*it)->fCam->first = true;
 			(*it)->fCam->mTerrain = mTerrainGroup;
+			(*it)->fCam->mWorld = &(pGame->collision);
 		}
 	}
 }
@@ -233,6 +237,7 @@ void App::NewGameDoLoad()
 		ShowHUD();
 		if (pSet->show_fps)
 			mFpsOverlay->show();
+		mSplitMgr->mGuiViewport->setClearEveryFrame(true, FBT_DEPTH);
 		return;
 	}
 	// Do the next loading step.
@@ -281,7 +286,7 @@ void App::CreateRoad()
 	{	road->DestroyRoad();  delete road;  road = 0;  }
 
 	road = new SplineRoad(pGame);  // sphere.mesh
-	road->Setup("", 0.7,  terrain, mSceneMgr, mCamera);
+	road->Setup("", 0.7,  terrain, mSceneMgr, *mSplitMgr->mCameras.begin());
 	
 	String sr = TrkDir()+"road.xml";
 	road->LoadFile(TrkDir()+"road.xml");

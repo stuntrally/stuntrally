@@ -152,7 +152,7 @@ void App::CreateRacingLine()
 	m->end();
 	ndLine = mSceneMgr->getRootSceneNode()->createChildSceneNode();
 	ndLine->attachObject(m);
-	ndLine->setVisible(pSet->racingline);
+	//ndLine->setVisible(pSet->racingline);
 }
 		
 
@@ -259,7 +259,7 @@ void App::CreateMinimap()
 	
 	//  car pos dot
 	//asp = 1.f;  //?-
-	mpos = Create2D("hud/CarPos", 0.2f, true);  // dot size
+	mpos = Create2D("hud/CarPos", mSplitMgr->mGuiSceneMgr, 0.2f, true);  // dot size
 	ndPos = ndMap->createChildSceneNode();
 	ndPos->scale(fHudSize*asp, fHudSize, 1);
 	ndPos->attachObject(mpos);

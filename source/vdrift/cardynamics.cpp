@@ -305,7 +305,7 @@ void CARDYNAMICS::AlignWithGround()
 	}/**/  //--
 	
 	//MATHVECTOR <T, 3> trimmed_position = Position() + GetDownVector() * min_height;
-	SetPosition(Position()/*trimmed_position*/);
+	//SetPosition(Position()/*trimmed_position*/);
 }
 
 //TODO: adjustable ackermann-like parameters
@@ -789,29 +789,20 @@ void CARDYNAMICS::UpdateBody(T dt, T drive_torque[])
 	ApplyAerodynamicsToBody(dt);
 	
 
-	//... move to inputs[
 	///***  manual car flip over  ---------------------------------------------------------------------------------
-	bool flipLeft = pApp->isKey(OIS::KC_Q);
-	bool flipRight= pApp->isKey(OIS::KC_W);
-	bool shift = pApp->isKey(OIS::KC_LSHIFT)||pApp->isKey(OIS::KC_RSHIFT);
-	int flip = (flipLeft ? -1 : 0) + (flipRight ? 1 : 0);
-	if (flip)
+	if (doFlip > 0.01f || doFlip < -0.01f)
 	{
 		MATRIX3 <T> inertia = body.GetInertia();
 		btVector3 inrt(inertia[0], inertia[4], inertia[8]);
-		//  strength_
-		float t = (shift ? 32.f : 12.f)* flip * inrt[inrt.maxAxis()];
+		float t = inrt[inrt.maxAxis()] * doFlip * 12.f;  // strength
 		MATHVECTOR <T, 3> v(t,0,0);
 		Orientation().RotateVector(v);
 		ApplyTorque(v);
 	}
 	///***  boost
-	//bool alt = pApp->isKey(OIS::KC_LMENU)||pApp->isKey(OIS::KC_RMENU);
-	bool ctrl = pApp->isKey(OIS::KC_LCONTROL)||pApp->isKey(OIS::KC_RCONTROL);
-	//if (alt || ctrl)
-	if (ctrl)
+	if (doBoost > 0.01f)
 	{
-		T f = body.GetMass() * 16.f;
+		T f = body.GetMass() * doBoost * 16.f;  // power
 		MATHVECTOR <T, 3> v(f,0,0), ofs(0,0,0);
 		Orientation().RotateVector(v);
 		ApplyForce(v, ofs);

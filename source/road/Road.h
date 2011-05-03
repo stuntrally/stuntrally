@@ -53,7 +53,7 @@ public:
 		Destroy(), DestroyRoad(), DestroySeg(int id);
 
 	//  Update
-	void UpdLodVis(float fBias=1.f, bool bFull=false), SetForRnd(String sMtr),UnsetForRnd();
+	void UpdLodVis(/*Camera* pCam,*/ float fBias=1.f, bool bFull=false), SetForRnd(String sMtr),UnsetForRnd();
 	void Pick(Camera* mCamera, Real mx, Real my, bool bAddH=false, bool bHide=false);
 	void ToggleMerge();
 
@@ -111,13 +111,15 @@ private:
 	SceneNode *ndSel,*ndChosen,*ndRot,*ndHit,*ndChk, *lastNdSel,*lastNdChosen;
 	Entity* entSel,*entChs,*entRot,*entHit,*entChk;
 
-	std::deque<SplinePoint> mPc;  // copy points
+	static std::deque<SplinePoint> mPc;  // copy points
 
 //  vars  -----------
 	//  setup
 	SceneManager* mSceneMgr;
 	Terrain* mTerrain;	// for height snap
+public:
 	Camera* mCamera;
+private:
 
 	friend class App;
 	int iSelPoint, iChosen;  // -1 if none

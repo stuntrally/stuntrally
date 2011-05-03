@@ -249,6 +249,8 @@ void SplineRoad::SetTerHitVis(bool visible)
 ///  choose, selection
 //--------------------------------------------------------------------------------------
 
+std::deque<SplinePoint> SplineRoad::mPc;  // copy points
+
 bool SplineRoad::CopySel()
 {
 	if (vSel.size()==0)  return false;

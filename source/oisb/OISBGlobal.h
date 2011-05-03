@@ -62,7 +62,7 @@ restrictions:
 #               if defined(OISB_MINGW_COMPILER)
 #                   define _OISBExport
 #               else
-#				    define _OISBExport __declspec( dllimport )
+#				    define _OISBExport //__declspec( dllimport )
 #               endif
 #			endif
 #		endif

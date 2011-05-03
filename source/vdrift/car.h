@@ -334,10 +334,6 @@ public:
 	
 	void UpdateSounds(float dt);
 	
-	void UpdateCameras(float dt);
-		
-	void CopyPhysicsResultsIntoDisplay();
-	
 	bool LoadSounds(
 		const std::string & carpath,
 		const std::string & carname,

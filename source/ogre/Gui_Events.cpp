@@ -3,6 +3,8 @@
 #include "../vdrift/game.h"
 #include "../road/Road.h"
 #include "OgreGame.h"
+#include "MyGUI_PointerManager.h"
+#include <boost/filesystem.hpp>
 using namespace MyGUI;
 
 #define res  1000000.f
@@ -10,6 +12,18 @@ using namespace MyGUI;
 
 ///  Gui Events
 //-----------------------------------------------------------------------------------------------------------
+
+//  [Input]
+
+void App::controlBtnClicked(Widget* sender)
+{
+	sender->setCaption( TR("#{InputAssignKey}"));
+	// activate key capture mode
+	bAssignKey = true;
+	pressedKeySender = sender;
+	// hide mouse
+	MyGUI::PointerManager::getInstance().setVisible(false);
+}
 
 //  [Graphics]
 
@@ -34,7 +48,6 @@ void App::slAnisotropy(SL)
 void App::slViewDist(SL)
 {
 	Real v = 50.f + 6950.f * powf(val/res, 2.f);
-	mCamera->setFarClipDistance(v*1.1f);
 	Vector3 sc = v*Vector3::UNIT_SCALE;
 
 	SceneNode* nskb = mSceneMgr->getSkyBoxNode();
@@ -43,6 +56,8 @@ void App::slViewDist(SL)
 
 	pSet->view_distance = v;
 	if (valViewDist){	Fmt(s, "%4.1f km", v*0.001f);	valViewDist->setCaption(s);  }
+	// Set new far clip distance for all cams
+	mSplitMgr->UpdateCamDist();
 }
 
 //  ter detail
@@ -218,7 +233,7 @@ void App::slVolTires(SL)
 void App::slVolEnv(SL)
 {
 	Real v = 1.4f * val/res;	pSet->vol_env = v;
-	if (valVolEnv){  Fmt(s, "%4.2f", v);		valVolEnv->setCaption(s);  }
+	if (valVolEnv){  Fmt(s, "%4.2f", v);	valVolEnv->setCaption(s);  }
 }
 
 
@@ -227,31 +242,22 @@ void App::slCarClrH(SL)
 {
 	Real v = val/res;  pSet->car_hue = v;
 	if (valCarClrH){	Fmt(s, "%4.2f", v);	valCarClrH->setCaption(s);  }
-	/// changes color for all cars
 	for (std::list<CarModel*>::iterator it=carModels.begin(); it!=carModels.end(); it++)
-	{
 		(*it)->ChangeClr();
-	}
 }
 void App::slCarClrS(SL)
 {
 	Real v = -1.f + 2.f * val/res;  pSet->car_sat = v;
 	if (valCarClrS){	Fmt(s, "%4.2f", v);	valCarClrS->setCaption(s);  }
-	/// changes color for all cars
 	for (std::list<CarModel*>::iterator it=carModels.begin(); it!=carModels.end(); it++)
-	{
 		(*it)->ChangeClr();
-	}
 }
 void App::slCarClrV(SL)
 {
 	Real v = -1.f + 2.f * val/res;  pSet->car_val = v;
 	if (valCarClrV){	Fmt(s, "%4.2f", v);	valCarClrV->setCaption(s);  }
-	/// changes color for all cars
 	for (std::list<CarModel*>::iterator it=carModels.begin(); it!=carModels.end(); it++)
-	{
 		(*it)->ChangeClr();
-	}
 }
 
 
@@ -302,9 +308,9 @@ void App::btnNewGame(WP)
 {
 	NewGame();  isFocGui = false;  // off gui
 	if (mWndOpts)  mWndOpts->setVisible(isFocGui);
-	if (mWndRpl)  mWndRpl->setVisible(pSet->rpl_play);//
+	if (mWndRpl)  mWndRpl->setVisible(false);//
 	if (bnQuit)  bnQuit->setVisible(isFocGui);
-	mGUI->setVisiblePointer(isFocGui);
+	mGUI->setVisiblePointer(isFocGuiOrRpl());
 	mToolTip->setVisible(false);
 }
 void App::btnNewGameStart(WP wp)
@@ -334,17 +340,13 @@ void App::chkParticles(WP wp)
 {		
 	ChkEv(particles);
 	for (std::list<CarModel*>::iterator it=carModels.begin(); it!=carModels.end(); it++)
-	{
 		(*it)->UpdParsTrails();
-	}
 }
 void App::chkTrails(WP wp)
 {			
 	ChkEv(trails);		
 	for (std::list<CarModel*>::iterator it=carModels.begin(); it!=carModels.end(); it++)
-	{
 		(*it)->UpdParsTrails();
-	}
 }
 void App::chkFps(WP wp){			ChkEv(show_fps);	if (pSet->show_fps)  mFpsOverlay->show();  else  mFpsOverlay->hide();	}
 
@@ -358,6 +360,7 @@ void App::chkCamInfo(WP wp){		ChkEv(show_cam);	ShowHUD();	}
 void App::chkCarDbgBars(WP wp){		ChkEv(car_dbgbars);	ShowHUD();	}
 void App::chkCarDbgTxt(WP wp){		ChkEv(car_dbgtxt);	ShowHUD();	}
 void App::chkBltDebug(WP wp){		ChkEv(bltDebug);	}
+void App::chkBltProfilerTxt(WP wp){	ChkEv(bltProfilerTxt);	}
 
 //  [Car]
 void App::chkAbs(WP wp){		ChkEv(abs);		if (pGame)  pGame->ProcessNewSettings();	}
@@ -386,8 +389,9 @@ void App::chkVegetCollis(WP wp){	ChkEv(veget_collis);	}
 void App::btnResChng(WP)
 {
 	if (!resList)  return;
-
+	if (resList->getIndexSelected() == MyGUI::ITEM_NONE) return;
 	String mode = resList->getItem(resList->getIndexSelected());
+
 	pSet->windowx = StringConverter::parseInt(StringUtil::split(mode, "x")[0]);
 	pSet->windowy = StringConverter::parseInt(StringUtil::split(mode, "x")[1]);
 	
@@ -402,21 +406,27 @@ void App::btnResChng(WP)
 		int cx = max(0,(sx - pSet->windowx) / 2), cy = max(0,(sy - pSet->windowy) / 2);
 		mWindow->reposition(cx,cy);
 	#else
-		mWindow->reposition(0,0);  // center ?..
+		//mWindow->reposition(0,0);  // center ?..
 	#endif
 	}
-		
-	bSizeHUD = true;  // resize HUD
-	if (bnQuit)  // reposition Quit btn
-	{
-		//bnQuit->setRealCoord(0.922,0,0.08,0.03);
-		bnQuit->setCoord(pSet->windowx - 0.09*pSet->windowx, 0, 0.09*pSet->windowx, 0.03*pSet->windowy);
-	}
+	bWindowResized = true;
 }
 
-void App::chkVidBloom(WP wp){		ChkEv(bloom);		CompositorManager::getSingleton().setCompositorEnabled(mViewport, "Bloom", pSet->bloom);		}
-void App::chkVidHDR(WP wp){			ChkEv(hdr);			CompositorManager::getSingleton().setCompositorEnabled(mViewport, "HDR", pSet->hdr);	}
-void App::chkVidBlur(WP wp){		ChkEv(motionblur);	CompositorManager::getSingleton().setCompositorEnabled(mViewport, "Motion Blur", pSet->motionblur);	}
+void App::chkVidBloom(WP wp)
+{		
+	ChkEv(bloom);		
+	refreshCompositor();		
+}
+void App::chkVidHDR(WP wp)
+{			
+	ChkEv(hdr);	
+	refreshCompositor();
+}
+void App::chkVidBlur(WP wp)
+{		
+	ChkEv(motionblur);
+	refreshCompositor();
+}
 
 void App::chkVidFullscr(WP wp){		ChkEv(fullscreen);
 	mWindow->setFullscreen(pSet->fullscreen, pSet->windowx, pSet->windowy); mWindow->resize(pSet->windowx, pSet->windowy);
@@ -451,33 +461,42 @@ void App::slBlurIntens(SL)
 
 void App::slRplPosEv(SL)  // change play pos
 {
-	if (!pSet->rpl_play)  return;
-	Real v = val/res;  v = max(0.f, min(1.f, v));  v *= replay.GetTimeLength();
-	pGame->timer.SetReplayTime(v);  //RestartReplay();
+	if (!bRplPlay)  return;
+	double oldt = pGame->timer.GetReplayTime();
+	double v = val/res;  v = max(0.0, min(1.0, v));  v *= replay.GetTimeLength();
+	pGame->timer.SetReplayTime(v);
+
+	FollowCamera* fCam = (*carModels.begin())->fCam;
+	fCam->first = true;  // instant change
+	for (int i=0; i < 10; ++i)
+		fCam->update(abs(v-oldt)/10.f);  //..?
 }
 
 void App::btnRplLoad(WP)  // Load
 {
 	//  from list
 	int i = rplList->getIndexSelected();
+	if (i == MyGUI::ITEM_NONE)  return;
+
 	String name = rplList->getItemNameAt(i);
-	///  load
-	if (pSet->rpl_play)
+	string file = PATHMANAGER::GetReplayPath() + "/" + name + ".rpl";
+
+	if (!replay.LoadFile(file))
 	{
-		string file = PATHMANAGER::GetReplayPath() + "/" + name + ".rpl";
-		if (!replay.LoadFile(file))
-		{}
-		else  // car, track change
-		{
-			string car = replay.header.car, trk = replay.header.track;
-			//  todo: car reload only - faster ...
-			if (car != pSet->car || trk != pSet->track)
-			{	// need new game
-				pSet->car = car;
-				pSet->track = trk;
-				btnNewGame(0);
-			}
-		}
+		Message::createMessageBox(  // #{transl ..
+			"Message", "Load Replay", "Error: Can't load file.",
+			MessageBoxStyle::IconWarning | MessageBoxStyle::Ok);
+	}
+	else  // car, track change
+	{
+		string car = replay.header.car, trk = replay.header.track;
+		bool usr = replay.header.track_user == 1;
+
+		pSet->car = car;
+		pSet->track = trk;  pSet->track_user = usr;
+		//bRplPlay = 1;
+		btnNewGame(0);
+		bRplPlay = 1;
 	}
 }
 
@@ -486,8 +505,12 @@ void App::btnRplSave(WP)  // Save
 	String edit = edRplName->getCaption();
 	String file = PATHMANAGER::GetReplayPath() + "/" + pSet->track + edit + ".rpl";
 	///  save
-	replay.SaveFile(file.c_str());
-	//if (! )  MsgBox..
+	if (!replay.SaveFile(file.c_str()))
+	{
+		Message::createMessageBox(  // #{..
+			"Message", "Save Replay", "Error: Can't save file.",
+			MessageBoxStyle::IconWarning | MessageBoxStyle::Ok);
+	}
 	updReplaysList();
 }
 
@@ -495,9 +518,39 @@ void App::btnRplDelete(WP)  // Delete
 {
 }
 
+//  list change
+void App::listRplChng(List* li, size_t pos)
+{
+	size_t i = li->getIndexSelected();  if (i == ITEM_NONE)  return;
+	String name = li->getItemNameAt(i);
+	string file = PATHMANAGER::GetReplayPath() + "/" + name + ".rpl";
+	if (!valRplName)  return;  valRplName->setCaption(name);
+	if (!valRplInfo)  return;
+	
+	//  load replay header upd text descr
+	Replay rpl;
+	if (rpl.LoadFile(file,true))
+	{
+		String ss = String("Track: ") + rpl.header.track + (rpl.header.track_user ? "  *user*" : "");
+		valRplName->setCaption(ss);
+
+		ss = String("Car: ") + rpl.header.car + "\n" +
+			"Time: " + GetTimeString(rpl.GetTimeLength());
+		valRplInfo->setCaption(ss);
+
+		int size = boost::filesystem::file_size(file);
+		sprintf(s, "%5.2f", float(size)/1000000.f);
+		ss = String("File size:") + s + " MB\n" +
+			"Version: " + toStr(rpl.header.ver) + "     " + toStr(rpl.header.frameSize) + "B";
+		if (valRplInfo2)  valRplInfo2->setCaption(ss);
+	}
+	//edRplDesc  edRplName
+}
+
+
 void App::chkRplAutoRec(WP wp){		ChkEv(rpl_rec);		}
 
-void App::chkRplChkGhost(WP wp){	ChkEv(rpl_play);	}
+void App::chkRplChkGhost(WP wp){	/*ChkEv(rpl_play);*/	}
 
 
 void App::btnRplCur(WP)
@@ -529,13 +582,16 @@ void App::btnRplForward(WP)
 
 void App::btnRplPlay(WP)  // play / pause
 {
+	bRplPause = !bRplPause;
+	UpdRplPlayBtn();
 }
 
-//  text desc
-//valRplName
-//valRplInfo
-//edRplName
-//edRplDesc
+void App::UpdRplPlayBtn()
+{
+	String sign = bRplPause ? "|>" : "||";
+	if (btRplPl)
+		btRplPl->setCaption(sign);
+}
 
 
 void App::updReplaysList()
@@ -550,13 +606,8 @@ void App::updReplaysList()
 	{
 		String s = *i;
 		s = StringUtil::replaceAll(s,".rpl","");
-		//ifstream check((PATHMANAGER::GetReplayPath() + "/" + *i + "/about.txt").c_str());
-		//if (check)  {
 		rplList->addItem(s);
-		//if (*i == pSet->car) {  carList->setIndexSelected(ii);  bFound = true;  }
-		//ii++;  }
 	}
-	//rplList->eventListChangePosition = newDelegate(this, &App::listCarChng);
 }
 
 
@@ -572,21 +623,47 @@ bool App::keyPressed( const OIS::KeyEvent &arg )
 		if (pSet->escquit)  {
 			mShutDown = true;	return true;  }
 
+		#if 0
+		case KC_1:
+		if (mSplitMgr)
+		{	Ogre::Viewport* vp = *mSplitMgr->mViewports.begin();
+			vp->setAutoUpdated(shift);
+			vp->setVisibilityMask(shift ? 255 : 0);
+		}	return true;
+		case KC_2:
+		if (mSplitMgr)
+		{	Ogre::Viewport* vp = *(++mSplitMgr->mViewports.begin());
+			vp->setAutoUpdated(shift);
+			vp->setVisibilityMask(shift ? 255 : 0);
+		}	return true;
+		case KC_3:
+		if (mSplitMgr)
+		{	Ogre::Viewport* vp = *(--mSplitMgr->mViewports.end());
+			vp->setAutoUpdated(shift);
+			vp->setVisibilityMask(shift ? 255 : 0);
+		}	return true;
+		#endif
+	   	
 	   	case KC_F1:
 	   	case KC_TAB:	// on/off gui
 	   	if (!alt)  {
 	   		isFocGui = !isFocGui;
 	   		if (mWndOpts)	mWndOpts->setVisible(isFocGui);
 			if (bnQuit)  bnQuit->setVisible(isFocGui);
-	   		if (mGUI)	mGUI->setVisiblePointer(isFocGui);
+	   		if (mGUI)	mGUI->setVisiblePointer(isFocGuiOrRpl());
 	   		if (!isFocGui)  mToolTip->setVisible(false);
 	   	}	return true;
 
+
 		case KC_BACK:	// replay controls
-			//isFocGui = !isFocGui;
-   			//if (mGUI)	mGUI->setVisiblePointer(isFocGui);
-			if (mWndRpl)  mWndRpl->setVisible(!mWndRpl->isVisible()/*pSet->rpl_play*/);
+			if (mWndRpl)  mWndRpl->setVisible(!mWndRpl->isVisible());
 			return true;
+
+		case KC_P:		// replay play/pause
+			if (bRplPlay)
+			{	bRplPause = !bRplPause;  UpdRplPlayBtn();  }
+			return true;
+
 
 		case KC_F9:		// car debug text/bars
 			if (shift)	{	WP wp = chDbgT;  ChkEv(car_dbgtxt);  ShowHUD();  }
@@ -600,10 +677,12 @@ bool App::keyPressed( const OIS::KeyEvent &arg )
 			return false;
 		}	break;
 
-		case KC_F10:	//  blt debug
+		case KC_F10:	//  blt debug, txt
 		if (shift)
-		{	WP wp = chBlt;  ChkEv(bltDebug);  return false;
-		}	break;
+		{	WP wp = chBltTxt;  ChkEv(bltProfilerTxt);  return false;  }
+		else if (ctrl)
+		{	WP wp = chBlt;  ChkEv(bltDebug);  return false;  }
+		break;
 
 
 		case KC_F7:		// Times
@@ -613,6 +692,7 @@ bool App::keyPressed( const OIS::KeyEvent &arg )
 		case KC_F8:		// Minimap
 		{	WP wp = chMinimp;  ChkEv(trackmap);  if (ndMap)  ndMap->setVisible(pSet->trackmap);
 		}	return false;
+
 		
 		case KC_F5:		//  new game
 		//if (ctrl)
@@ -643,16 +723,6 @@ bool App::keyPressed( const OIS::KeyEvent &arg )
 	   			mWndTabs->setIndexSelected( (mWndTabs->getIndexSelected() + 1) % num );
 	   			return true;
 		}
-		/*if (arg.key == KC_F1 && arg.key <= KC_F6)
-		{	int n = arg.key - KC_F1;
-  			if (n < num)
-  			{	mWndTabs->setIndexSelected(n);
-  				isFocGui = true;  // on gui
-	   			if (mWndOpts)	mWndOpts->setVisible(isFocGui);
-	   			if (mGUI)	mGUI->setVisiblePointer(isFocGui);
-	   			return true;
-	   		}
-	   	}/**/
 	}
 
 	if (!BaseApp::keyPressed(arg))

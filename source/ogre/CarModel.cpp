@@ -1,23 +1,30 @@
 #include "stdafx.h"
 #include "CarModel.h"
 #include "../vdrift/pathmanager.h"
+#include "../vdrift/mathvector.h"
+#include "../ogre/OgreGame.h"
 
 #include "boost/filesystem.hpp"
-#define FileExists(s) boost::filesystem::exists(s)
+#define  FileExists(s)  boost::filesystem::exists(s)
 
-CarModel::CarModel(unsigned int index, eCarType type, const std::string name, Ogre::SceneManager* sceneMgr, SETTINGS* set, GAME* game, Scene* s, Camera* cam) : 
-	hue(0), sat(0), val(0), fCam(0), pMainNode(0), pCar(0), terrain(0), resCar(""), mCamera(0)
+
+CarModel::CarModel(unsigned int index, eCarType type, const std::string name,
+	Ogre::SceneManager* sceneMgr, SETTINGS* set, GAME* game, Scene* s, Camera* cam, App* app) :
+	hue(0), sat(0), val(0), fCam(0), pMainNode(0), pCar(0), terrain(0), resCar(""), mCamera(0), pReflect(0), pApp(app)
 {
-	iIndex = index;
-	sDirname = name;
-	pSceneMgr = sceneMgr;
-	pSet = set;
-	pGame = game;
-	sc = s;
-	mCamera = cam;
-	eType = type;
+	iIndex = index;  sDirname = name;  pSceneMgr = sceneMgr;
+	pSet = set;  pGame = game;  sc = s;  mCamera = cam;  eType = type;
 	
-	pCar = pGame->LoadCar(sDirname, pGame->track.GetStart(0).first, pGame->track.GetStart(0).second, true, false);
+	MATHVECTOR<float, 3> offset;
+	offset.Set(5*iIndex,5*iIndex,0); // 5*sqrt(2) m distance between cars
+	/// TODO: some quaternion magic to align the cars along track start orientation
+	
+	MATHVECTOR<float, 3> pos(0,10,0);
+	QUATERNION<float> rot;
+	pos = pGame->track.GetStart(0).first;
+	rot = pGame->track.GetStart(0).second;
+
+	pCar = pGame->LoadCar(sDirname, pos + offset, rot, true, false);
 	if (!pCar) Log("Error loading car " + sDirname);
 	
 	for (int w = 0; w < 4; ++w)
@@ -26,18 +33,17 @@ CarModel::CarModel(unsigned int index, eCarType type, const std::string name, Og
 		ndRs[w] = 0;  ndRd[w] = 0;
 		wht[w] = 0.f;  whTerMtr[w] = 0; }
 }
-CarModel::~CarModel(void)
+
+CarModel::~CarModel()
 {
-	delete pReflect; pReflect = 0;
+	delete pReflect;  pReflect = 0;
 	
-	delete fCam; fCam = 0;
+	delete fCam;  fCam = 0;
 	pSceneMgr->destroyCamera("CarCamera" + iIndex);
 	
 	// destroy cloned materials
 	for (int i=0; i<NumMaterials; i++)
-	{
 		Ogre::MaterialManager::getSingleton().remove(sMtr[i]);
-	}
 	
 	// Destroy par sys
 	for (int w=0; w < 4; w++)  {
@@ -54,29 +60,30 @@ CarModel::~CarModel(void)
 	Ogre::ResourceGroupManager::getSingleton().destroyResourceGroup("Car" + toStr(iIndex));
 }
 
-void CarModel::Update(PosInfo newPosInfo, float time)
+
+void CarModel::Update(PosInfo& posInfo, float time)
 {	
-	///????
-	/*if (!bNew)  return;  // new only
-	bNew = false;*/
+	if (!posInfo.bNew)  return;  // new only
+	posInfo.bNew = false;
+	
 	if (!pMainNode) return;
 	//  car pos and rot
-	pMainNode->setPosition(newPosInfo.newPos);
-	pMainNode->setOrientation(newPosInfo.newRot);	
+	pMainNode->setPosition(posInfo.pos);
+	pMainNode->setOrientation(posInfo.rot);
 	
 	//  wheels
 	for (int w=0; w < 4; w++)
 	{
-		float wR = newPosInfo.newWhR[w];
-		ndWh[w]->setPosition(newPosInfo.newWhPos[w]);
-		ndWh[w]->setOrientation(newPosInfo.newWhRot[w]);
-		int whMtr = newPosInfo.newWhMtr[w];  //whTerMtr[w];
+		float wR = posInfo.whR[w];
+		ndWh[w]->setPosition(posInfo.whPos[w]);
+		ndWh[w]->setOrientation(posInfo.whRot[w]);
+		int whMtr = posInfo.whMtr[w];  //whTerMtr[w];
 		
 		
 		//  update particle emitters
 		//-----------------------------------------------------------------------------
-		float whVel = newPosInfo.newWhVel[w] * 3.6f;  //kmh
-		float slide = newPosInfo.newWhSlide[w], squeal = newPosInfo.newWhSqueal[w];
+		float whVel = posInfo.whVel[w] * 3.6f;  //kmh
+		float slide = posInfo.whSlide[w], squeal = posInfo.whSqueal[w];
 		float onGr = slide < 0.f ? 0.f : 1.f;
 
 		//  wheel temp
@@ -91,55 +98,49 @@ void CarModel::Update(PosInfo newPosInfo, float time)
 			 emitS = sq * (whVel * 30) * l *0.3f;  //..
 			 emitM = slide < 1.4f ? 0.f :  (8.f * sq * min(5.f, slide) * l);
 			 emitD = (min(140.f, whVel) / 3.5f + slide * 1.f ) * l;  
-			 
-			 // resume
-			 pd[w]->setSpeedFactor(1.f);
-			 ps[w]->setSpeedFactor(1.f);
-			 pm[w]->setSpeedFactor(1.f);
-		}
-		else
-		{
-			 // stop par sys
-			 pd[w]->setSpeedFactor(0.f);
-			 ps[w]->setSpeedFactor(0.f);
-			 pm[w]->setSpeedFactor(0.f);
+			 //  resume
+			 pd[w]->setSpeedFactor(1.f);  ps[w]->setSpeedFactor(1.f);  pm[w]->setSpeedFactor(1.f);
+		}else{
+			 //  stop par sys
+			 pd[w]->setSpeedFactor(0.f);  ps[w]->setSpeedFactor(0.f);  pm[w]->setSpeedFactor(0.f);
 		}
 		Real sizeD = (0.3f + 1.1f * min(140.f, whVel) / 140.f) * (w < 2 ? 0.5f : 1.f);
+
 		//  ter mtr factors
-		int mtr = min((int)(whMtr-1), (int)(sc->td.layers.size()-1));
+		int mtr = max(0, min(whMtr-1, (int)(sc->td.layers.size()-1)));
 		TerLayer& lay = whMtr==0 ? sc->td.layerRoad : sc->td.layersAll[sc->td.layers[mtr]];
 		emitD *= lay.dust;  emitM *= lay.mud;  sizeD *= lay.dustS;  emitS *= lay.smoke;
 
 		//  par emit
-		Vector3 vpos = newPosInfo.newWhPos[w];
+		Vector3 vpos = posInfo.whPos[w];
 		if (pSet->particles)
 		{
 			if (ps[w] && sc->td.layerRoad.smoke > 0.f/*&& !sc->ter*/)  // only at vdr road
 			{
 				ParticleEmitter* pe = ps[w]->getEmitter(0);
-				pe->setPosition(vpos + newPosInfo.newCarY * wR*0.7f); // 0.218
+				pe->setPosition(vpos + posInfo.carY * wR*0.7f); // 0.218
 				/**/ps[w]->getAffector(0)->setParameter("alpha", toStr(-0.4f - 0.07f/2.4f * whVel));
 				/**/pe->setTimeToLive( max(0.1, 2 - whVel/2.4f * 0.04) );  // fade,live
-				pe->setDirection(-newPosInfo.newCarY);	pe->setEmissionRate(emitS);
+				pe->setDirection(-posInfo.carY);	pe->setEmissionRate(emitS);
 			}
 			if (pm[w])	//  mud
 			{	ParticleEmitter* pe = pm[w]->getEmitter(0);
 				//pe->setDimensions(sizeM,sizeM);
-				pe->setPosition(vpos + newPosInfo.newCarY * wR*0.7f); // 0.218
-				pe->setDirection(-newPosInfo.newCarY);	pe->setEmissionRate(emitM);
+				pe->setPosition(vpos + posInfo.carY * wR*0.7f); // 0.218
+				pe->setDirection(-posInfo.carY);	pe->setEmissionRate(emitM);
 			}
 			if (pd[w])	//  dust
 			{	pd[w]->setDefaultDimensions(sizeD,sizeD);
 				ParticleEmitter* pe = pd[w]->getEmitter(0);
-				pe->setPosition(vpos + newPosInfo.newCarY * wR*0.51f ); // 0.16
-				pe->setDirection(-newPosInfo.newCarY);	pe->setEmissionRate(emitD);
+				pe->setPosition(vpos + posInfo.carY * wR*0.51f ); // 0.16
+				pe->setDirection(-posInfo.carY);	pe->setEmissionRate(emitD);
 			}
 		}
 
 		//  update trails h+
 		if (pSet->trails)  {
 			if (ndWhE[w])
-			{	Vector3 vp = vpos + newPosInfo.newCarY * wR*0.72f;  // 0.22
+			{	Vector3 vp = vpos + posInfo.carY * wR*0.72f;  // 0.22
 				if (terrain && whMtr > 0)
 					vp.y = terrain->getHeightAtWorldPosition(vp) + 0.05f;
 					//if (/*whOnRoad[w]*/whMtr > 0 && road)  // on road, add ofs
@@ -158,7 +159,9 @@ void CarModel::Update(PosInfo newPosInfo, float time)
 	//blendmaps
 	UpdWhTerMtr();
 }
-void CarModel::Create(void)
+
+
+void CarModel::Create()
 {
 	if (!pCar) return;
 	
@@ -169,6 +172,9 @@ void CarModel::Create(void)
 	Ogre::Root::getSingletonPtr()->addResourceLocation(PATHMANAGER::GetCacheDir(), "FileSystem");
 	resCar = PATHMANAGER::GetCarPath() + "/" + sDirname + "/textures";
 	Ogre::Root::getSingletonPtr()->addResourceLocation(resCar, "FileSystem", "Car" + toStr(iIndex));
+	
+	// Change color here - cache has to be created before loading model
+	ChangeClr();
 	
 	pMainNode = pSceneMgr->getRootSceneNode()->createChildSceneNode();
 
@@ -216,11 +222,7 @@ void CarModel::Create(void)
 							tus->setTextureName("body_dyn" + toStr(iIndex) + ".png");
 						else if (!(StringUtil::startsWith(tus->getTextureName(), "ReflectionCube") || StringUtil::startsWith(tus->getTextureName(), "body_dyn") || tus->getTextureName() == "ReflectionCube"))
 							tus->setTextureName(sDirname + "_" + tus->getTextureName());
-					}
-				}	
-			}
-		}	
-	}
+	}	}	}	}	}
 	
 	//  ----------------- Reflection ------------------------
 	pReflect = new CarReflection(pSet, pSceneMgr, iIndex);
@@ -348,94 +350,13 @@ void CarModel::Create(void)
 
 	UpdParsTrails();
 	
-	ChangeClr();
-
 	//  reload car materials, omit car and road
-	for (int i=1; i < NumMaterials; ++i)
+	//int i0 = pApp->bRplPlay ? 0 : 1;
+	for (int i = 0; i < NumMaterials; ++i)
 		ReloadTex(sMtr[i]);
-
 }
-void CarModel::ReloadTex(String mtrName)
-{
-	MaterialPtr mtr = (MaterialPtr)MaterialManager::getSingleton().getByName(mtrName);
-	if (!mtr.isNull())
-	{	Material::TechniqueIterator techIt = mtr->getTechniqueIterator();
-		while (techIt.hasMoreElements())
-		{	Technique* tech = techIt.getNext();
-			Technique::PassIterator passIt = tech->getPassIterator();
-			while (passIt.hasMoreElements())
-			{	Pass* pass = passIt.getNext();
-				Pass::TextureUnitStateIterator tusIt = pass->getTextureUnitStateIterator();
-				while (tusIt.hasMoreElements())
-				{	TextureUnitState* tus = tusIt.getNext();  String name = tus->getTextureName();
-					if (! (Ogre::StringUtil::startsWith(name, "ReflectionCube", false) || name == "ReflectionCube") )
-					{
-						Ogre::LogManager::getSingletonPtr()->logMessage( "Tex Reload: " + name );
-						TexturePtr tex = (TexturePtr)Ogre::TextureManager::getSingleton().getByName( name );
-						if (!tex.isNull())
-						{							
-							tex->reload();
-						}
-					}
-				}
-	}	}	}	
-}
-void CarModel::ChangeClr(void)
-{
-	///TODO allow multiple cars here, i.e. give mat/tex an index
-	bool add = 1;
-	Image ima;	try{
-		ima.load(sDirname + "_body00_add.png", "Car" + toStr(iIndex));  // add, not colored
-	}catch(...){  add = 0;  }
-	uchar* da = 0;  size_t incRow,incRowA=0, inc1=0,inc1A=0;
-	if (add)
-	{	PixelBox pba = ima.getPixelBox();
-		da = (uchar*)pba.data;  incRowA = pba.rowPitch;
-		inc1A = PixelUtil::getNumElemBytes(pba.format);
-	}
-	String svName = PATHMANAGER::GetCacheDir() + "/body_dyn" + toStr(iIndex) + ".png";  // dynamic
-	Image im;  try{
-		im.load(sDirname + "_body00_red.png", "Car" + toStr(iIndex));  // original red diffuse
-	}catch(...){  return;  }
-	if (im.getWidth())
-	{
-		PixelBox pb = im.getPixelBox();
-		size_t xw = pb.getWidth(), yw = pb.getHeight();
 
-		uchar* d = (uchar*)pb.data;  incRow = pb.rowPitch;
-		inc1 = PixelUtil::getNumElemBytes(pb.format);
 
-		Ogre::LogManager::getSingleton().logMessage(
-			"img clr +++  w "+toStr(xw)+"  h "+toStr(yw)+"  pf "+toStr(pb.format)+"  iA "+toStr(inc1A));
-
-		size_t x,y,a,aa;
-		for (y = 0; y < yw; ++y)
-		{	a = y*incRow*inc1, aa = y*incRowA*inc1A;
-		for (x = 0; x < xw; ++x)
-		{
-			uchar r,g,b;
-			if (da && da[aa+3] > 60)  // adding area (not transparent)
-			{	r = da[aa];  g = da[aa+1];  b = da[aa+2];	}
-			else
-			{	r = d[a], g = d[a+1], b = d[a+2];  // get
-				ColourValue c(r/255.f,g/255.f,b/255.f);  //
-
-				Real h,s,v;  // hue shift
-				c.getHSB(&h,&s,&v);
-				h += pSet->car_hue;  if (h>1.f) h-=1.f;  // 0..1
-				s += pSet->car_sat;  // -1..1
-				v += pSet->car_val;
-				c.setHSB(h,s,v);
-
-				r = c.r*255;  g = c.g*255;  b = c.b*255;  // set
-			}
-			d[a] = r;  d[a+1] = g;  d[a+2] = b;	 // write back
-			a += inc1;  aa += inc1A;  // next pixel
-		}	}
-	}
-	im.save(svName);
-	ReloadTex(sMtr[Mtr_CarBody]);
-}
 void CarModel::UpdParsTrails()
 {
 	for (int w=0; w < 4; w++)
@@ -447,6 +368,8 @@ void CarModel::UpdParsTrails()
 		if (pd[w])	{	pd[w]->setVisible(pSet->particles);  pd[w]->setRenderQueueGroup(grp);  }
 	}
 }
+
+
 ///  terrain mtr from blend maps
 //-------------------------------------------------------------------------------------------------------
 void CarModel::UpdWhTerMtr()
@@ -480,6 +403,68 @@ void CarModel::UpdWhTerMtr()
 		pCar->dynamics.bTerrain = true;
 	}
 }
+
+
+//  utils
+//-------------------------------------------------------------------------------------------------------
+
+void CarModel::ChangeClr()
+{
+	///TODO allow multiple cars here, i.e. give mat/tex an index
+	bool add = 1;
+	Image ima;	try{
+		ima.load(sDirname + "_body00_add.png", "Car" + toStr(iIndex));  // add, not colored
+	}catch(...){  add = 0;  }
+	uchar* da = 0;  size_t incRow,incRowA=0, inc1=0,inc1A=0;
+	if (add)
+	{	PixelBox pba = ima.getPixelBox();
+		da = (uchar*)pba.data;  incRowA = pba.rowPitch;
+		inc1A = PixelUtil::getNumElemBytes(pba.format);
+	}
+	String svName = PATHMANAGER::GetCacheDir() + "/body_dyn" + toStr(iIndex) + ".png";  // dynamic
+	Image im;  try{
+		im.load(sDirname + "_body00_red.png", "Car" + toStr(iIndex));  // original red diffuse
+	}catch(...){  return;  }
+	if (im.getWidth())
+	{
+		PixelBox pb = im.getPixelBox();
+		size_t xw = pb.getWidth(), yw = pb.getHeight();
+
+		uchar* d = (uchar*)pb.data;  incRow = pb.rowPitch;
+		inc1 = PixelUtil::getNumElemBytes(pb.format);
+
+		//Ogre::LogManager::getSingleton().logMessage(
+			//"img clr +++  w "+toStr(xw)+"  h "+toStr(yw)+"  pf "+toStr(pb.format)+"  iA "+toStr(inc1A));
+
+		size_t x,y,a,aa;
+		for (y = 0; y < yw; ++y)
+		{	a = y*incRow*inc1, aa = y*incRowA*inc1A;
+		for (x = 0; x < xw; ++x)
+		{
+			uchar r,g,b;
+			if (da && da[aa+3] > 60)  // adding area (not transparent)
+			{	r = da[aa];  g = da[aa+1];  b = da[aa+2];	}
+			else
+			{	r = d[a], g = d[a+1], b = d[a+2];  // get
+				ColourValue c(r/255.f,g/255.f,b/255.f);  //
+
+				Real h,s,v;  // hue shift
+				c.getHSB(&h,&s,&v);
+				h += pSet->car_hue;  if (h>1.f) h-=1.f;  // 0..1
+				s += pSet->car_sat;  // -1..1
+				v += pSet->car_val;
+				c.setHSB(h,s,v);
+
+				r = c.r*255;  g = c.g*255;  b = c.b*255;  // set
+			}
+			d[a] = r;  d[a+1] = g;  d[a+2] = b;	 // write back
+			a += inc1;  aa += inc1A;  // next pixel
+		}	}
+	}
+	im.save(svName);
+	ReloadTex(sMtr[Mtr_CarBody]);
+}
+
 
 ManualObject* CarModel::CreateModel(SceneManager* sceneMgr, const String& mat, class VERTEXARRAY* a, Vector3 vPofs, bool flip, bool track)
 {
@@ -533,3 +518,29 @@ ManualObject* CarModel::CreateModel(SceneManager* sceneMgr, const String& mat, c
 	return m;
 }
 
+
+void CarModel::ReloadTex(String mtrName)
+{
+	MaterialPtr mtr = (MaterialPtr)MaterialManager::getSingleton().getByName(mtrName);
+	if (!mtr.isNull())
+	{	Material::TechniqueIterator techIt = mtr->getTechniqueIterator();
+		while (techIt.hasMoreElements())
+		{	Technique* tech = techIt.getNext();
+			Technique::PassIterator passIt = tech->getPassIterator();
+			while (passIt.hasMoreElements())
+			{	Pass* pass = passIt.getNext();
+				Pass::TextureUnitStateIterator tusIt = pass->getTextureUnitStateIterator();
+				while (tusIt.hasMoreElements())
+				{	TextureUnitState* tus = tusIt.getNext();  String name = tus->getTextureName();
+					if (! (Ogre::StringUtil::startsWith(name, "ReflectionCube", false) || name == "ReflectionCube") )
+					{
+						Ogre::LogManager::getSingletonPtr()->logMessage( "Tex Reload: " + name );
+						TexturePtr tex = (TexturePtr)Ogre::TextureManager::getSingleton().getByName( name );
+						if (!tex.isNull())
+						{							
+							tex->reload();
+						}
+					}
+				}
+	}	}	}	
+}

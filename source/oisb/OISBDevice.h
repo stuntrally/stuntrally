@@ -88,7 +88,7 @@ namespace OISB
 			/**
 			 * @brief a method to ease debugging, dumps all this device to stdout
 			 */
-			void dump();
+			void dump(std::ostream& os);
 
 		protected:
 			/**

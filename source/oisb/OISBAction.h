@@ -59,6 +59,10 @@ namespace OISB
 			 */
 			Action(ActionSchema* parent, const String& name);
 			
+			typedef std::vector<Binding*> BindingList;
+            /// alternative bindings of this action
+            BindingList mBindings;
+			
 			/**
 			 * @brief destructor
 			 */
@@ -161,7 +165,7 @@ namespace OISB
 			void destroyItself();
 
             /// @copydoc PropertySet::listProperties
-            virtual void listProperties(PropertyList& list);
+            virtual void listProperties(PropertyList& list, bool self=true, bool child=true);
         
         protected:
             /// @copydoc PropertySet::setProperty
@@ -187,10 +191,6 @@ namespace OISB
 			bool mIsActive;
             /// stores whether the active state has changed or not
             bool mChanged;
-
-            typedef std::vector<Binding*> BindingList;
-            /// alternative bindings of this action
-            BindingList mBindings;
 	};
 }
 

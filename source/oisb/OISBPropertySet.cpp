@@ -38,11 +38,12 @@ namespace OISB
     
     void PropertySet::impl_setProperty(const String& name, const String& value)
     {
-        OIS_EXCEPT(OIS::E_InvalidParam, String("Can't set property '" + name + "' to value '" + value + "', no such property exists in this object.").c_str()); 
+        OIS_EXCEPT(OIS::E_InvalidParam, String("Can't set property '" + name + "' to value '" + value + "', no such property exists in this object.").c_str());
     }
 
     String PropertySet::impl_getProperty(const String& name) const
     {
-        OIS_EXCEPT(OIS::E_InvalidParam, String("Can't get property '" + name + "', no such property exists in this object.").c_str()); 
+        //OIS_EXCEPT(OIS::E_InvalidParam, String("Can't get property '" + name + "', no such property exists in this object.").c_str()); 
+        return "";
     }
 }

@@ -2,6 +2,10 @@
 #include "FollowCamera.h"
 #include "../tinyxml/tinyxml.h"
 #include "../vdrift/pathmanager.h"
+#include "../vdrift/mathvector.h"
+#include "../vdrift/collision_contact.h"
+#include "../bullet/btBulletCollisionCommon.h"
+#include "../btOgre/BtOgreDebug.h"
 using namespace Ogre;
 
 
@@ -36,6 +40,7 @@ void FollowCamera::update( Real time )
 	z = cos( ca.mYaw.valueRadians() ) * xz;
 	Vector3 xyz(x,y,z);
 	
+	bool manualOrient = false;
 	switch (ca.mType)
 	{
 		case CAM_Arena:		/* 2 Arena - free pos & rot */
@@ -57,7 +62,6 @@ void FollowCamera::update( Real time )
 			///  new  ---
 			Quaternion  orient = mGoalNode->getOrientation() * Quaternion(Degree(90),Vector3(0,1,0));
 			Quaternion  ory;  ory.FromAngleAxis(orient.getYaw(), Vector3::UNIT_Y);
-			static Quaternion qq;
 
 			if (first)  {  qq = ory;  first = false;  }
 			else
@@ -67,39 +71,64 @@ void FollowCamera::update( Real time )
 			
 			mCamera->setPosition( goalPos );
 			mCamera->setOrientation( qq * Quaternion(Degree(-ca.mPitch),Vector3(1,0,0)) );
-			moveAboveTerrain();
-			updInfo(time);
-			return;
+			manualOrient = true;
 		}	break;
 	}
+	if (!manualOrient) {
+		/* Move */
+		float dtmul = ca.mSpeed == 0 ? 1.0f : ca.mSpeed * time;
+		//float dtmulRot = ca.mSpeedRot == 0 ? 1.0f : ca.mSpeedRot * time;
+		//if (ca.mSpeed == ca.mSpeedRot || 1)  dtmulRot = dtmul;
 
-	/* Move */
-	float dtmul = ca.mSpeed == 0 ? 1.0f : ca.mSpeed * time;
-	//float dtmulRot = ca.mSpeedRot == 0 ? 1.0f : ca.mSpeedRot * time;
-	//if (ca.mSpeed == ca.mSpeedRot || 1)  dtmulRot = dtmul;
+		if (first)	{	pos = goalPos;  }
 
-	if (first)	{	pos = goalPos;  }
+		addPos = (goalPos - pos).normalisedCopy() * (goalPos - pos).length() * dtmul;
+		if (addPos.squaredLength() > (goalPos - pos).squaredLength())  addPos = goalPos - pos;
+		pos += addPos;
+		mCamera->setPosition( pos + ofs );  //if (mypos.y<-3.5)  mypos.y=-3.5;
 
-	addPos = (goalPos - pos).normalisedCopy() * (goalPos - pos).length() * dtmul;
-	if (addPos.squaredLength() > (goalPos - pos).squaredLength())  addPos = goalPos - pos;
-	pos += addPos;
-	mCamera->setPosition( pos + ofs );  //if (mypos.y<-3.5)  mypos.y=-3.5;
+		/* Look */
+		if (ca.mType == CAM_Arena)
+			goalLook = ca.mOffset + Vector3(x,-y,z);
+		else
+		if (mGoalNode)
+			goalLook = mGoalNode->getPosition() + ofs;
 
-	/* Look */
-    if (ca.mType == CAM_Arena)
-		goalLook = ca.mOffset + Vector3(x,-y,z);
-    else
-	if (mGoalNode)
-		goalLook = mGoalNode->getPosition() + ofs;
+		if (first)	{	mLook = goalLook;  first = false;  }
 
-	if (first)	{	mLook = goalLook;  first = false;  }
+		addLook = (goalLook - mLook) * dtmul;//Rot;
+		mLook += addLook;
+	}
 
-	addLook = (goalLook - mLook) * dtmul;//Rot;
-	mLook += addLook;
+	/// cast ray from car to camera, to prevent objects blocking the camera's sight
+	#if 0
+	// update sphere pos
+	btVector3 carPos = BtOgre::Convert::toBullet(mGoalNode->getPosition());
+	state->setWorldTransform( btTransform(btQuaternion(0,0,0,1), carPos ));
 	
-	moveAboveTerrain();
+	// calculate origin & direction of the ray, convert to vdrift coordinates
+	MATHVECTOR<float,3> origin;
+	origin.Set( carPos.x(), carPos.y(), carPos.z() );
+	MATHVECTOR<float,3> direction;
+	btVector3 dir = BtOgre::Convert::toBullet(mCamera->getPosition()-mGoalNode->getPosition());
+	direction.Set(dir.x(), dir.y(), dir.z());
+	Real distance = (mCamera->getPosition()-mGoalNode->getPosition() ).length();
+	int pOnRoad;
 	
-	mCamera->lookAt( mLook );
+	// shoot our ray
+	COLLISION_CONTACT contact;
+	mWorld->CastRay( origin, direction, distance, body, contact, &pOnRoad );
+	
+	if (contact.col != NULL)
+	{
+		Log("Collision occured");
+		// collision occured - update cam pos
+		mCamera->setPosition( BtOgre::Convert::toOgre( btVector3(contact.GetPosition()[0], contact.GetPosition()[1], contact.GetPosition()[2]) ) );
+	}
+	#endif
+	
+	if (!manualOrient) mCamera->lookAt( mLook );
+	
 	updInfo(time);
 }
 
@@ -214,27 +243,6 @@ void FollowCamera::Move( bool mbLeft, bool mbRight, bool mbMiddle, bool shift, R
 			ca.mDist = 1.5;
 	}
 	ca.mDist  *= 1.0 - mzH * 0.1;
-}
-
-///   align with terrain
-//-----------------------------------------------------------------------------------------------------
-void FollowCamera::moveAboveTerrain()
-{
-	/*
-	 * Prevent the camera from going under the ground.
-	 * We do this by queueing the terrain height at the camera position
-	 * and if the camera is under it, we move the camera a little above the terrain. 
-	*/
-	if (mTerrain)
-	{
-		// minimum of 0.2 m distance to the ground
-		#define CAM_TER_MINOFFSET 0.2
-		Vector3 camPos = mCamera->getPosition();
-		float h = mTerrain->getHeightAtWorldPosition(camPos);
-		if (h+0.2 > camPos.y)
-			mCamera->setPosition(camPos.x, h+0.2, camPos.z);
-		#undef CAM_TER_MINOFFSET
-	}
 }
 
 ///  upd Info
@@ -357,17 +365,29 @@ void FollowCamera::setCamera(int ang)
 FollowCamera::FollowCamera(Camera* cam) :
 	ovInfo(0),ovName(0), first(true),
     mCamera(cam), mGoalNode(0), mTerrain(0),
-    mLook(Vector3::ZERO)
-{  }
+    mLook(Vector3::ZERO), shape(0), body(0), state(0)
+{ 
+	// create camera bullet col obj
+    shape = new btSphereShape(0.1); // 10cm radius
+    state = new btDefaultMotionState(btTransform(btQuaternion(0,0,0,1), btVector3(0,0,0) ));
+    btScalar mass = 1;
+    btVector3 inertia;
+    shape->calculateLocalInertia(mass, inertia);
+    body = new btRigidBody(mass, state, shape, inertia);
+}
 
 FollowCamera::~FollowCamera()
-{  }
+{
+
+}
 
 CameraAngle::CameraAngle() :
 	mType(CAM_Follow), mName("Follow Default"), mMain(0),
 	mDist(7), mSpeed(10), mSpeedRot(10),
 	mYaw(0), mPitch(7),  mOffset(0,1.2,0), mHideGlass(0)
-{  }
+{  
+
+}
 
 
 

@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
-//#include "vld.h" // mem leaks +
+//	#include "vld.h" // mem leaks +
 #endif
 #include "OgreGame.h"
 #include "../vdrift/game.h"
@@ -29,7 +29,8 @@ void VprThread(App* pA)
 	PATHMANAGER::Init(dummy, dummy);
 	string logfilename = PATHMANAGER::GetLogDir() + "/log.txt";
 	SETTINGS* settings = new SETTINGS();
-	if (!PATHMANAGER::FileExists(PATHMANAGER::GetSettingsFile())) {
+	if (!PATHMANAGER::FileExists(PATHMANAGER::GetSettingsFile()))
+	{
 		settings->Load(PATHMANAGER::GetGameConfigDir() + "/game-default.cfg");
 		settings->Save(PATHMANAGER::GetSettingsFile());
 	}
@@ -85,9 +86,9 @@ void VprThread(App* pA)
 
 	try
 	{
-		if (settings->mult_thr > 0) {
+		if (settings->mult_thr > 0)
 			boost::thread t(VprThread, pApp);
-		}
+
 		#if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
 		pApp->Run( settings->ogre_dialog || lpCmdLine[0]!=0 );  //Release change-
 		#else

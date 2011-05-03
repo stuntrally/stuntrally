@@ -28,6 +28,7 @@ restrictions:
 #include "OISBActionSchema.h"
 #include "OISBAction.h"
 #include "OISBState.h"
+#include "OISBBinding.h"
 
 #include "OISException.h"
 #include "OISInputManager.h"
@@ -36,8 +37,11 @@ restrictions:
 #include "OISJoyStick.h"
 
 #include "OISBAnalogAxisAction.h"
+#include "OISBAnalogEmulation.h"
 #include "OISBSequenceAction.h"
 #include "OISBTriggerAction.h"
+
+#include "boost/filesystem.hpp"
 
 #include <strstream>
 #include <fstream>
@@ -219,6 +223,133 @@ namespace OISB
         // nothing was found
         return 0;
     }
+    
+    int System::saveActionSchemaToXMLFile(const String& filename)
+    {
+		if (boost::filesystem::exists(filename))
+			boost::filesystem::remove(filename);
+		rapidxml::xml_document<> doc; 
+		// xml declaration
+		rapidxml::xml_node<>* decl = doc.allocate_node(node_declaration);
+		decl->append_attribute(doc.allocate_attribute("version", "1.0"));
+		decl->append_attribute(doc.allocate_attribute("encoding", "utf-8"));
+		doc.append_node(decl);
+		// root node
+		rapidxml::xml_node<>* root = doc.allocate_node(node_element, "schemas");
+		
+		std::vector<String> list;
+		std::string actString;
+
+		// schemas
+		for (ActionSchemaMap::const_iterator it=mActionSchemas.begin(); it!=mActionSchemas.end(); it++)
+		{
+			rapidxml::xml_node<>* schemaNode = doc.allocate_node(node_element, "schema");
+			schemaNode->append_attribute(doc.allocate_attribute("name", (*it).first.c_str()));
+			
+			// actions
+			for (std::map<String, Action*>::const_iterator ait=(*it).second->mActions.begin(); ait!=(*it).second->mActions.end(); ait++)
+			{
+				rapidxml::xml_node<>* actionNode = doc.allocate_node(node_element, "action");
+				actionNode->append_attribute(doc.allocate_attribute("name", (*ait).second->getName().c_str() ));
+				if ((*ait).second->getActionType() == AT_ANALOG_AXIS)
+					actionNode->append_attribute(doc.allocate_attribute("type", "AnalogAxis" ));
+				else if ((*ait).second->getActionType() == AT_TRIGGER)
+					actionNode->append_attribute(doc.allocate_attribute("type", "Trigger" ));
+				else if ((*ait).second->getActionType() == AT_SEQUENCE)
+					actionNode->append_attribute(doc.allocate_attribute("type", "Sequence" ));
+								
+				// retrieve all attributes
+				list.clear();
+				(*ait).second->listProperties(list, true, false);
+				for (std::vector<String>::const_iterator lit=list.begin(); lit!=list.end(); lit++)
+				{
+					if ((*lit) != "AbsoluteValue" && (*lit) != "RelativeValue" && (*lit) != "ParentActionSchemaName" && (*lit) != "ActionName" && (*lit) != "BindableType" && (*lit) != "Active" && (*lit) != "BindableName" && (*lit) != "Changed" && (*lit) != "EmulationSpeed") {
+						String value = (*ait).second->getProperty<String>( (*lit) );
+						char *att_name = doc.allocate_string(value.c_str()); 
+						char *att_att = doc.allocate_string((*lit).c_str());
+						actionNode->append_attribute(doc.allocate_attribute(att_att, att_name )); }
+				}
+				// analog emulator attributes
+				if ((*ait).second->getActionType() == AT_ANALOG_AXIS)
+				{
+					list.clear();
+					(*ait).second->listProperties(list, false, true);
+					for (std::vector<String>::const_iterator lit=list.begin(); lit!=list.end(); lit++)
+					{
+						// -workaround
+						if ((*lit) != "BindableType" && (*lit) != "Active" && (*lit) != "BindableName" && (*lit) != "Changed" && (*lit) != "EmulationSpeed") {
+						String value = static_cast<AnalogAxisAction*>((*ait).second)->getAnalogEmulator()->getProperty<String>( (*lit) );
+						char *att_name = doc.allocate_string(value.c_str()); 
+						char *att_att = doc.allocate_string((*lit).c_str());
+						if (value != "")
+							actionNode->append_attribute(doc.allocate_attribute(att_att, att_name)); 
+						}
+					}
+				}
+				
+				if ((*ait).second->getActionType() == AT_ANALOG_AXIS)
+				{
+					// bindings
+					for (std::vector<Binding*>::const_iterator bit=(*ait).second->mBindings.begin(); bit!=(*ait).second->mBindings.end(); bit++)
+					{
+						rapidxml::xml_node<>* bindingNode = doc.allocate_node(node_element, "binding");
+						
+						// binds
+						for (std::vector<std::pair<String, Bindable*> >::iterator bnit=(*bit)->mBindables.begin(); bnit!=(*bit)->mBindables.end(); bnit++)
+						{
+							rapidxml::xml_node<>* bindNode = doc.allocate_node(node_element, "bind");
+							
+							if ((*bnit).second)
+							{
+								char *att_att = doc.allocate_string((*bnit).first.c_str());
+								bindNode->append_attribute(doc.allocate_attribute("role", att_att)); 
+								char *att_name = doc.allocate_string((*bnit).second->getBindableName().c_str()); 
+								bindNode->value(att_name);
+							}
+			
+							bindingNode->append_node(bindNode);
+						}
+
+						actionNode->append_node(bindingNode);
+					}
+				}
+				else
+				{
+					// bindings
+					for (std::vector<Binding*>::const_iterator bit=(*ait).second->mBindings.begin(); bit!=(*ait).second->mBindings.end(); bit++)
+					{
+						rapidxml::xml_node<>* bindingNode = doc.allocate_node(node_element, "binding");
+						
+						// binds
+						for (std::vector<std::pair<String, Bindable*> >::iterator bnit=(*bit)->mBindables.begin(); bnit!=(*bit)->mBindables.end(); bnit++)
+						{
+							rapidxml::xml_node<>* bindNode = doc.allocate_node(node_element, "bind");
+							
+							if ((*bnit).second)
+							{
+								char *att_att = doc.allocate_string((*bnit).first.c_str());
+								bindNode->append_attribute(doc.allocate_attribute("role", att_att)); 
+								char *att_name = doc.allocate_string((*bnit).second->getBindableName().c_str()); 
+								bindNode->value(att_name);
+							}
+			
+							actionNode->append_node(bindNode);
+						}
+					}
+				}
+				
+				schemaNode->append_node(actionNode);
+			}
+			root->append_node(schemaNode);
+		}
+		doc.append_node(root);
+		
+		std::ofstream file;
+		file.open(filename.c_str(), std::ios::trunc);
+		file << doc;
+		file.close();
+		return 0;
+	}
 
 	int System::loadActionSchemaFromXMLFile(const String& filename)
 	{
@@ -312,23 +443,28 @@ namespace OISB
 		}
 
 		// then process the child bindings
-        for (rapidxml::xml_node<> *child = actionNode->first_node("bind"); child; child = child->next_sibling())
+        for (rapidxml::xml_node<> *child = actionNode->first_node("binding"); child; child = child->next_sibling())
 			processActionBindingXML(child, tmpAction);
+			
+        for (rapidxml::xml_node<> *child = actionNode->first_node("bind"); child; child = child->next_sibling())
+			processActionBindXML(child, NULL, tmpAction);
 
 		return 0;
 	}
 
-	int System::processActionBindingXML(rapidxml::xml_node<>* bindNode, Action *action)
+	int System::processActionBindingXML(rapidxml::xml_node<>* bindingNode, Action *action)
 	{
-		if(!bindNode || !action) return 1;
+		if(!bindingNode || !action) return 1;
 
 		bool optional = false;
-		if(bindNode->first_attribute("optional"))
+		if(bindingNode->first_attribute("optional"))
 			optional = true;
 
 		try
 		{
-			action->bind(std::string(bindNode->value()));
+			OISB::Binding* binding = action->createBinding();
+			for (rapidxml::xml_node<> *child = bindingNode->first_node("bind"); child; child = child->next_sibling())
+				processActionBindXML(child, binding, action);
 		} catch(const OIS::Exception &ex)
 		{
 			// rethrow if this binding is not optional
@@ -337,6 +473,28 @@ namespace OISB
 		}
 		return 0;
 	}
+	
+	int System::processActionBindXML(rapidxml::xml_node<>* bindNode, Binding *binding, Action *action)
+	{
+		if(!bindNode || !action) return 1;
+	
+		std::string role = "";
+		if(bindNode->first_attribute("role"))
+			role = bindNode->first_attribute("role")->value();
+	
+		if (binding)
+		{
+			if (role != "")
+				binding->bind(bindNode->value(), role);
+			else
+				binding->bind(bindNode->value());
+		}
+		else
+			action->bind(bindNode->value());
+
+		return 0;
+	}
+
 
 
     ActionSchema* System::createActionSchema(const String& name, bool setAsDefault)
@@ -521,28 +679,28 @@ namespace OISB
         removeListenerFromAllStates(listener);
     }
 
-    void System::dumpDevices()
+    void System::dumpDevices(std::ostream& os)
     {
-        std::cout << "Dumping all registered OISB devices: " << std::endl;
+        os << "Dumping all registered OISB devices: " << std::endl;
 
         for (DeviceMap::const_iterator it = mDevices.begin(); it != mDevices.end(); ++it)
         {
-            it->second->dump();
+            it->second->dump(os);
         }
 
-        std::cout << "End of dump!" << std::endl;
+        os << "End of dump!" << std::endl;
     }
 
-    void System::dumpActionSchemas()
+    void System::dumpActionSchemas(std::ostream& os)
     {
-        std::cout << "Dumping all registered OISB action schemas: " << std::endl;
+        os << "Dumping all registered OISB action schemas: " << std::endl;
 
         for (ActionSchemaMap::const_iterator it = mActionSchemas.begin(); it != mActionSchemas.end(); ++it)
         {
-            it->second->dump();
+            it->second->dump(os);
         }
 
-        std::cout << "End of dump!" << std::endl;
+        os << "End of dump!" << std::endl;
     }
 	
 	void System::addDevice(Device* device)

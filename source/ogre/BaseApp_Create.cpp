@@ -5,16 +5,13 @@
 #include "CompositorLogics.h"
 #include "Locale.h"
 #include "OgreFontManager.h"
+#include "../oisb/OISB.h"
+#include "boost/filesystem.hpp"
 
 //  Camera
 //-------------------------------------------------------------------------------------
 void BaseApp::createCamera()
 {
-	mCamera = mSceneMgr->createCamera("PlayerCam");
-
-	mCamera->setPosition(Vector3(0,-100,0));
-	mCamera->lookAt(Vector3(0,-100,10));
-	//mCamera->setNearClipDistance(0.5f);
 }
 
 //  Frame
@@ -24,7 +21,7 @@ void BaseApp::createFrameListener()
 	LogManager::getSingletonPtr()->logMessage("*** Initializing OIS ***");
 
 	OverlayManager& ovr = OverlayManager::getSingleton();
-	mFpsOverlay = ovr.getByName("Core/FpsOverlay");  mFpsOverlay->show();//
+	mFpsOverlay = ovr.getByName("Core/FpsOverlay");  //mFpsOverlay->show();//
 	mDebugOverlay = ovr.getByName("Core/DebugOverlay");  //mDebugOverlay->show();//*
 	mOvrFps = ovr.getOverlayElement("Core/CurrFps"),
 	mOvrTris= ovr.getOverlayElement("Core/NumTris"),
@@ -45,10 +42,22 @@ void BaseApp::createFrameListener()
     pl.insert(std::make_pair(std::string("XAutoRepeatOn"), std::string("true")));
     #endif
 
+	mOISBsys = new OISB::System();
 	mInputManager = OIS::InputManager::createInputSystem( pl );
+	OISB::System::getSingleton().initialize(mInputManager);
+	if (boost::filesystem::exists(PATHMANAGER::GetUserConfigDir() + "/keys.xml"))
+		OISB::System::getSingleton().loadActionSchemaFromXMLFile(PATHMANAGER::GetUserConfigDir() + "/keys.xml");
+	else
+	{
+		#if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
+		OISB::System::getSingleton().loadActionSchemaFromXMLFile(PATHMANAGER::GetGameConfigDir() + "/binds-default-win.xml");
+		#else
+		OISB::System::getSingleton().loadActionSchemaFromXMLFile(PATHMANAGER::GetGameConfigDir() + "/binds-default-nix.xml");
+		#endif
+	}
 
-	mKeyboard = static_cast<OIS::Keyboard*>(mInputManager->createInputObject( OIS::OISKeyboard, true ));
-	mMouse = static_cast<OIS::Mouse*>(mInputManager->createInputObject( OIS::OISMouse, true ));
+	mKeyboard = OISB::System::getSingleton().getOISKeyboard();
+	mMouse = OISB::System::getSingleton().getOISMouse();
 
 	mMouse->setEventCallback(this);
 	mKeyboard->setEventCallback(this);
@@ -59,24 +68,22 @@ void BaseApp::createFrameListener()
 	mRoot->addFrameListener(this);
 }
 
-//void BaseApp::destroyScene()
-//{  }
-
 void BaseApp::createViewports()
 {
-	//  Create one viewport, entire window
-	mViewport = mWindow->addViewport(mCamera);
-	mViewport->setBackgroundColour(ColourValue(0.5,0.65,0.8));  //`
-	mCamera->setAspectRatio( Real(mViewport->getActualWidth()) / Real(mViewport->getActualHeight()));
+	mSplitMgr->mNumPlayers = pSet->local_players;
+	mSplitMgr->Align();
 }
 
 ///  Compositor
 //-------------------------------------------------------------------------------------
 void BaseApp::refreshCompositor()
 {
-	CompositorManager::getSingleton().setCompositorEnabled(mViewport, "Bloom", false);
-	CompositorManager::getSingleton().setCompositorEnabled(mViewport, "HDR", false);
-	CompositorManager::getSingleton().setCompositorEnabled(mViewport, "Motion Blur", false);
+	for (std::list<Viewport*>::iterator it=mSplitMgr->mViewports.begin(); it!=mSplitMgr->mViewports.end(); it++)
+	{
+		CompositorManager::getSingleton().setCompositorEnabled((*it), "Bloom", false);
+		CompositorManager::getSingleton().setCompositorEnabled((*it), "HDR", false);
+		CompositorManager::getSingleton().setCompositorEnabled((*it), "Motion Blur", false);
+	}
 	
 	// Set bloom settings (intensity, orig weight).
 	MaterialPtr blurmat = MaterialManager::getSingleton().getByName("Ogre/Compositor/BloomBlend2");
@@ -93,100 +100,108 @@ void BaseApp::refreshCompositor()
 	blurmat = MaterialManager::getSingleton().getByName("Ogre/Compositor/Combine");
 	gpuparams = blurmat->getTechnique(0)->getPass(0)->getFragmentProgramParameters();
 	gpuparams->setNamedConstant("blur", pSet->motionblurintensity);
-		
-	if (pSet->bloom)
-		CompositorManager::getSingleton().setCompositorEnabled(mViewport, "Bloom", true);
-
-	if (pSet->hdr)
-		CompositorManager::getSingleton().setCompositorEnabled(mViewport, "HDR", true);
 	
-	if (pSet->motionblur)
-		CompositorManager::getSingleton().setCompositorEnabled(mViewport, "Motion Blur", true);
+	for (std::list<Viewport*>::iterator it=mSplitMgr->mViewports.begin(); it!=mSplitMgr->mViewports.end(); it++)
+	{
+		CompositorManager::getSingleton().setCompositorEnabled((*it), "Bloom", pSet->bloom);
+		CompositorManager::getSingleton().setCompositorEnabled((*it), "HDR", pSet->hdr);
+		CompositorManager::getSingleton().setCompositorEnabled((*it), "Motion Blur", pSet->motionblur);
+	}
 }
 
 //-------------------------------------------------------------------------------------
 void BaseApp::recreateCompositor()
 {
 	// hdr has to be first in the compositor queue
-	mHDRLogic = new HDRLogic;
-	CompositorManager::getSingleton().registerCompositorLogic("HDR", mHDRLogic);
-		
-	CompositorManager::getSingleton().addCompositor(mViewport, "HDR");
-
-	// bloom
-	CompositorManager::getSingleton().addCompositor(mViewport, "Bloom");
+	if (!mHDRLogic) 
+	{
+		mHDRLogic = new HDRLogic;
+		CompositorManager::getSingleton().registerCompositorLogic("HDR", mHDRLogic);
+	}
 	
-	// motion blur
-	CompositorPtr comp3 = CompositorManager::getSingleton().create(
-		"Motion Blur", ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME
-	);
-	CompositionTechnique *t = comp3->createTechnique();
+	if (CompositorManager::getSingleton().getByName("Motion Blur").isNull())
 	{
-		CompositionTechnique::TextureDefinition *def = t->createTextureDefinition("scene");
-		def->width = 0;
-		def->height = 0;
-		def->formatList.push_back(PF_R8G8B8);
-	}
-	{
-		CompositionTechnique::TextureDefinition *def = t->createTextureDefinition("sum");
-		def->width = 0;
-		def->height = 0;
-		def->formatList.push_back(PF_R8G8B8);
-	}
-	{
-		CompositionTechnique::TextureDefinition *def = t->createTextureDefinition("temp");
-		def->width = 0;
-		def->height = 0;
-		def->formatList.push_back(PF_R8G8B8);
-	}
-	/// Render scene
-	{
-		CompositionTargetPass *tp = t->createTargetPass();
-		tp->setInputMode(CompositionTargetPass::IM_PREVIOUS);
-		tp->setOutputName("scene");
-	}
-	/// Initialisation pass for sum texture
-	{
-		CompositionTargetPass *tp = t->createTargetPass();
-		tp->setInputMode(CompositionTargetPass::IM_PREVIOUS);
-		tp->setOutputName("sum");
-		tp->setOnlyInitial(true);
-	}
-	/// Do the motion blur
-	{
-		CompositionTargetPass *tp = t->createTargetPass();
-		tp->setInputMode(CompositionTargetPass::IM_NONE);
-		tp->setOutputName("temp");
-		{ CompositionPass *pass = tp->createPass();
-		pass->setType(CompositionPass::PT_RENDERQUAD);
-		pass->setMaterialName("Ogre/Compositor/Combine");
-		pass->setInput(0, "scene");
-		pass->setInput(1, "sum");
+		// Motion blur has to be created in code
+		CompositorPtr comp3 = CompositorManager::getSingleton().create(
+			"Motion Blur", ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME
+		);
+
+		CompositionTechnique *t = comp3->createTechnique();
+		{
+			CompositionTechnique::TextureDefinition *def = t->createTextureDefinition("scene");
+			def->width = 0;
+			def->height = 0;
+			def->formatList.push_back(PF_R8G8B8);
 		}
-	}
-	/// Copy back sum texture
-	{
-		CompositionTargetPass *tp = t->createTargetPass();
-		tp->setInputMode(CompositionTargetPass::IM_NONE);
-		tp->setOutputName("sum");
-		{ CompositionPass *pass = tp->createPass();
-		pass->setType(CompositionPass::PT_RENDERQUAD);
-		pass->setMaterialName("Ogre/Compositor/Copyback");
-		pass->setInput(0, "temp");
+		{
+			CompositionTechnique::TextureDefinition *def = t->createTextureDefinition("sum");
+			def->width = 0;
+			def->height = 0;
+			def->formatList.push_back(PF_R8G8B8);
 		}
-	}
-	/// Display result
-	{
-		CompositionTargetPass *tp = t->getOutputTargetPass();
-		tp->setInputMode(CompositionTargetPass::IM_NONE);
-		{ CompositionPass *pass = tp->createPass();
-		pass->setType(CompositionPass::PT_RENDERQUAD);
-		pass->setMaterialName("Ogre/Compositor/MotionBlur");
-		pass->setInput(0, "sum");
+		{
+			CompositionTechnique::TextureDefinition *def = t->createTextureDefinition("temp");
+			def->width = 0;
+			def->height = 0;
+			def->formatList.push_back(PF_R8G8B8);
+		}
+		/// Render scene
+		{
+			CompositionTargetPass *tp = t->createTargetPass();
+			tp->setInputMode(CompositionTargetPass::IM_PREVIOUS);
+			tp->setOutputName("scene");
+		}
+		/// Initialisation pass for sum texture
+		{
+			CompositionTargetPass *tp = t->createTargetPass();
+			tp->setInputMode(CompositionTargetPass::IM_PREVIOUS);
+			tp->setOutputName("sum");
+			tp->setOnlyInitial(true);
+		}
+		/// Do the motion blur
+		{
+			CompositionTargetPass *tp = t->createTargetPass();
+			tp->setInputMode(CompositionTargetPass::IM_NONE);
+			tp->setOutputName("temp");
+			{ CompositionPass *pass = tp->createPass();
+			pass->setType(CompositionPass::PT_RENDERQUAD);
+			pass->setMaterialName("Ogre/Compositor/Combine");
+			pass->setInput(0, "scene");
+			pass->setInput(1, "sum");
+			}
+		}
+		/// Copy back sum texture
+		{
+			CompositionTargetPass *tp = t->createTargetPass();
+			tp->setInputMode(CompositionTargetPass::IM_NONE);
+			tp->setOutputName("sum");
+			{ CompositionPass *pass = tp->createPass();
+			pass->setType(CompositionPass::PT_RENDERQUAD);
+			pass->setMaterialName("Ogre/Compositor/Copyback");
+			pass->setInput(0, "temp");
+			}
+		}
+		/// Display result
+		{
+			CompositionTargetPass *tp = t->getOutputTargetPass();
+			tp->setInputMode(CompositionTargetPass::IM_NONE);
+			{ CompositionPass *pass = tp->createPass();
+			pass->setType(CompositionPass::PT_RENDERQUAD);
+			pass->setMaterialName("Ogre/Compositor/MotionBlur");
+			pass->setInput(0, "sum");
+			}
 		}
 	}
 
-	CompositorManager::getSingleton().addCompositor(mViewport, "Motion Blur");
+	for (std::list<Viewport*>::iterator it=mSplitMgr->mViewports.begin(); it!=mSplitMgr->mViewports.end(); it++)
+	{
+		// remove old comp. first
+		CompositorManager::getSingleton().removeCompositorChain( (*it ));
+		
+		CompositorManager::getSingleton().addCompositor((*it), "HDR");
+		CompositorManager::getSingleton().addCompositor((*it), "Bloom");
+		CompositorManager::getSingleton().addCompositor((*it), "Motion Blur");
+	}
 	
 	refreshCompositor();
 }
@@ -199,9 +214,7 @@ void BaseApp::Run( bool showDialog )
 	mShowDialog = showDialog;
 	if (!setup())
 		return;
-
-	recreateCompositor();
-
+	
 	mRoot->startRendering();
 
 	destroyScene();
@@ -210,13 +223,13 @@ void BaseApp::Run( bool showDialog )
 //  ctor
 //-------------------------------------------------------------------------------------
 BaseApp::BaseApp() :
-	mRoot(0), mCamera(0), mSceneMgr(0), mWindow(0), mViewport(0), mHDRLogic(0),
+	mRoot(0), mSceneMgr(0), mWindow(0), mHDRLogic(0),
 	mShowDialog(1), mShutDown(false),
-	mInputManager(0), mMouse(0), mKeyboard(0),
+	mInputManager(0), mMouse(0), mKeyboard(0), mOISBsys(0),
 	alt(0), ctrl(0), shift(0), roadUpCnt(0),
 	mbLeft(0), mbRight(0), mbMiddle(0), 
-	isFocGui(0), mGUI(0), mPlatform(0),
-	mWndOpts(0), mWndTabs(0), mWndRpl(0), bSizeHUD(true), bLoading(false),
+	isFocGui(0),isFocRpl(0), mGUI(0), mPlatform(0),
+	mWndOpts(0), mWndTabs(0), mWndRpl(0), bSizeHUD(true), bLoading(false), bAssignKey(false), pressedKey(static_cast<OIS::KeyCode>(0) ),
 
 	mDebugOverlay(0), mFpsOverlay(0), mOvrFps(0), mOvrTris(0), mOvrBat(0), mOvrDbg(0),
 	mbShowCamPos(0), ndSky(0),	mbWireFrame(0) //*
@@ -224,7 +237,9 @@ BaseApp::BaseApp() :
 }
 
 BaseApp::~BaseApp()
-{	
+{
+	delete mSplitMgr;
+	
 	if (mGUI)  {
 		mGUI->shutdown();	delete mGUI;	mGUI = 0;  }
 	if (mPlatform)  {
@@ -278,7 +293,6 @@ bool BaseApp::configure()
 
 		mWindow = mRoot->createRenderWindow("Stunt Rally", pSet->windowx, pSet->windowy, pSet->fullscreen, &settings);
 	}
-	
 	mLoadingBar.bBackgroundImage = pSet->loadingbackground;
 	return true;
 }
@@ -299,11 +313,11 @@ bool BaseApp::setup()
 	// Dynamic plugin loading
 	mRoot = OGRE_NEW Root("", PATHMANAGER::GetUserConfigDir() + "/ogreset.cfg", PATHMANAGER::GetLogDir() + "/ogre.log");
 
-#ifdef _DEBUG
+	#ifdef _DEBUG
 	#define D_SUFFIX "_d"
-#else
+	#else
 	#define D_SUFFIX ""
-#endif
+	#endif
 
 	// when show ogre dialog is on, load both rendersystems so user can select
 	if (pSet->ogre_dialog)
@@ -332,8 +346,10 @@ bool BaseApp::setup()
 		return false;
 
 	mSceneMgr = mRoot->createSceneManager(/*ST_GENERIC/**/ST_EXTERIOR_FAR/**/);
+	mSplitMgr = new SplitScreenManager(mSceneMgr, mWindow, pSet);
+
 	createCamera();
-	createViewports();
+	createViewports(); // calls mSplitMgr->Align();
 
 	TextureManager::getSingleton().setDefaultNumMipmaps(5);
 
@@ -342,17 +358,11 @@ bool BaseApp::setup()
 	mPlatform->initialise(mWindow, mSceneMgr);
 	mGUI = new MyGUI::Gui();
 	mGUI->initialise("core.xml", PATHMANAGER::GetLogDir() + "/MyGUI.log");
+	mGUI->setVisiblePointer(false);
 	MyGUI::LanguageManager::getInstance().setCurrentLanguage(getSystemLanguage());
 	
-	// GUI Viewport
-	Ogre::SceneManager* guiSceneMgr = mRoot->createSceneManager(ST_GENERIC);
-	Ogre::Camera* guiCam = guiSceneMgr->createCamera("GuiCam1");
-	Ogre::Viewport* guiVp = mWindow->addViewport(guiCam, 100);
-	// transparent
-	guiVp->setBackgroundColour(Ogre::ColourValue(0.0, 0.0, 0.0, 0.0));
-	guiVp->setClearEveryFrame(true, FBT_DEPTH);
-	mPlatform->getRenderManagerPtr()->setSceneManager(guiSceneMgr);
-	mPlatform->getRenderManagerPtr()->setActiveViewport(1);
+	mPlatform->getRenderManagerPtr()->setSceneManager(mSplitMgr->mGuiSceneMgr);
+	mPlatform->getRenderManagerPtr()->setActiveViewport(mSplitMgr->mNumPlayers);
 	
 	// After having initialised mygui, we can set translated strings
 	setTranslations();
@@ -362,6 +372,8 @@ bool BaseApp::setup()
 
 	createFrameListener();
 	createScene();//^before
+	
+	recreateCompositor();
 
 	return true;
 };
@@ -414,7 +426,9 @@ void BaseApp::loadResources()
 //-------------------------------------------------------------------------------------
 void BaseApp::LoadingOn()
 {
-	mViewport->setBackgroundColour(ColourValue(0.15,0.165,0.18));
+	mSplitMgr->SetBackground(ColourValue(0.15,0.165,0.18));
+	mSplitMgr->mGuiViewport->setBackgroundColour(ColourValue(0.15,0.165,0.18,1.0));
+	mSplitMgr->mGuiViewport->setClearEveryFrame(true);
 	mLoadingBar.start(mWindow, 1, 1, 1 );
 
 	// Turn off  rendering except overlays
@@ -425,7 +439,8 @@ void BaseApp::LoadingOn()
 void BaseApp::LoadingOff()
 {
 	// Turn On  full rendering
-	mViewport->setBackgroundColour(ColourValue(0.5,0.65,0.8));
+	mSplitMgr->SetBackground(ColourValue(0.5,0.65,0.8));
+	mSplitMgr->mGuiViewport->setBackgroundColour(ColourValue(0.5,0.65,0.8));
 	mSceneMgr->clearSpecialCaseRenderQueues();
 	mSceneMgr->setSpecialCaseRenderQueueMode(SceneManager::SCRQM_EXCLUDE);
 	mLoadingBar.finish();
@@ -437,6 +452,7 @@ void BaseApp::LoadingOff()
 //-------------------------------------------------------------------------------------
 bool BaseApp::keyReleased( const OIS::KeyEvent &arg )
 {
+	if (bAssignKey) return true;
 	if (isFocGui && mGUI)  {
 		mGUI->injectKeyRelease(MyGUI::KeyCode::Enum(arg.key));
 		return true;  }
@@ -448,7 +464,8 @@ bool BaseApp::keyReleased( const OIS::KeyEvent &arg )
 //-------------------------------------------------------------------------------------
 bool BaseApp::mouseMoved( const OIS::MouseEvent &arg )
 {
-	if (isFocGui && mGUI)  {
+	if (bAssignKey) return true;
+	if (isFocGuiOrRpl() && mGUI)  {
 		mGUI->injectMouseMove(arg.state.X.abs, arg.state.Y.abs, arg.state.Z.abs);
 		return true;  }
 
@@ -466,7 +483,8 @@ bool BaseApp::mouseMoved( const OIS::MouseEvent &arg )
 using namespace OIS;
 bool BaseApp::mousePressed( const OIS::MouseEvent &arg, OIS::MouseButtonID id )
 {
-	if (isFocGui && mGUI)  {
+	if (bAssignKey) return true;
+	if (isFocGuiOrRpl() && mGUI)  {
 		mGUI->injectMousePress(arg.state.X.abs, arg.state.Y.abs, MyGUI::MouseButton::Enum(id));
 		return true;  }
 
@@ -478,7 +496,8 @@ bool BaseApp::mousePressed( const OIS::MouseEvent &arg, OIS::MouseButtonID id )
 
 bool BaseApp::mouseReleased( const OIS::MouseEvent &arg, OIS::MouseButtonID id )
 {
-	if (isFocGui && mGUI)  {
+	if (bAssignKey) return true;
+	if (isFocGuiOrRpl() && mGUI)  {
 		mGUI->injectMouseRelease(arg.state.X.abs, arg.state.Y.abs, MyGUI::MouseButton::Enum(id));
 		return true;  }
 
@@ -498,14 +517,14 @@ void BaseApp::windowResized(RenderWindow* rw)
 	const OIS::MouseState &ms = mMouse->getMouseState();
 	ms.width = width;
 	ms.height = height;
-	
-	// adjust camera asp. ratio
-	if (mCamera && mViewport)
-		mCamera->setAspectRatio( float(mWindow->getWidth()) / float(mWindow->getHeight()));
-		
+			
 	// adjust hud
 	bSizeHUD = true;
 	bWindowResized = true;
+	
+	// Adjust viewports
+	//mSplitMgr->AdjustRatio();
+	mSplitMgr->Align();
 	
 	// write new window size to settings
 	pSet->windowx = mWindow->getWidth();
@@ -517,10 +536,9 @@ void BaseApp::windowClosed(RenderWindow* rw)
 	if (rw == mWindow)
 	if (mInputManager)
 	{
-		mInputManager->destroyInputObject( mMouse );
-		mInputManager->destroyInputObject( mKeyboard );
-
-		OIS::InputManager::destroyInputSystem(mInputManager);
+		OISB::System::getSingleton().saveActionSchemaToXMLFile(PATHMANAGER::GetUserConfigDir() + "/keys.xml");
+		OISB::System::getSingleton().finalize();
+		delete mOISBsys;  mOISBsys = 0;
 		mInputManager = 0;
 	}
 }

@@ -418,35 +418,11 @@ void CAR::SetPosition(const MATHVECTOR <float, 3> & new_position)
 
 	QUATERNION <float> rot;
 	rot = dynamics.GetOrientation();
-
-	//cameras.Active()->Reset(newpos, rot);
-}
-
-void CAR::CopyPhysicsResultsIntoDisplay()
-{
-}
-
-void CAR::UpdateCameras(float dt)
-{
-	QUATERNION <float> rot;
-	rot = dynamics.GetOrientation();
-	MATHVECTOR <float, 3> pos = dynamics.GetPosition();
-	MATHVECTOR <float, 3> acc = dynamics.GetLastBodyForce() / dynamics.GetMass();
-
-	// reverse the camera direction
-	if (lookbehind)
-	{
-		rot.Rotate(3.141593, 0, 0, 1);
-	}
-
-	//cameras.Active()->Update(pos, rot, acc, dt);
 }
 
 void CAR::Update(double dt)
 {
 	dynamics.Update();
-	//CopyPhysicsResultsIntoDisplay();
-	//UpdateCameras(dt);  //-
 	UpdateSounds(dt);
 }
 
@@ -480,7 +456,7 @@ void CAR::GetEngineSoundList(std::list <SOUNDSOURCE *> & outputlist)
 //--------------------------------------------------------------------------------------------------------------------------
 void CAR::HandleInputs(const std::vector <float> & inputs, float dt)
 {
-	assert(inputs.size() == CARINPUT::INVALID); //this looks weird, but it ensures that our inputs vector contains exactly one item per input
+	assert(inputs.size() == CARINPUT::ALL); //-
 
 	//std::cout << "Throttle: " << inputs[CARINPUT::THROTTLE] << std::endl;
 	//std::cout << "Shift up: " << inputs[CARINPUT::SHIFT_UP] << std::endl;
@@ -491,6 +467,10 @@ void CAR::HandleInputs(const std::vector <float> & inputs, float dt)
 	//set brakes
 	dynamics.SetBrake( !rear ? inputs[CARINPUT::BRAKE] : inputs[CARINPUT::THROTTLE]);
 	dynamics.SetHandBrake(inputs[CARINPUT::HANDBRAKE]);
+	
+	// boost, flip over
+	dynamics.doBoost = inputs[CARINPUT::BOOST];
+	dynamics.doFlip = inputs[CARINPUT::FLIP];
 
 	//do steering
 	float steer_value = inputs[CARINPUT::STEER_RIGHT];
@@ -500,8 +480,8 @@ void CAR::HandleInputs(const std::vector <float> & inputs, float dt)
 	last_steer = steer_value;
 
     //start the engine if requested
-	if (inputs[CARINPUT::START_ENGINE])
-		dynamics.StartEngine();
+	//if (inputs[CARINPUT::START_ENGINE])
+	//	dynamics.StartEngine();
 
 	//do shifting
 	int gear_change = 0;
@@ -509,14 +489,8 @@ void CAR::HandleInputs(const std::vector <float> & inputs, float dt)
 	if (inputs[CARINPUT::SHIFT_DOWN] == 1.0)	gear_change = -1;
 	int new_gear = cur_gear + gear_change;
 
-	if (inputs[CARINPUT::REVERSE])		new_gear = -1;
-	if (inputs[CARINPUT::NEUTRAL])		new_gear = 0;
-	if (inputs[CARINPUT::FIRST_GEAR])	new_gear = 1;
-	if (inputs[CARINPUT::SECOND_GEAR])	new_gear = 2;
-	if (inputs[CARINPUT::THIRD_GEAR]) 	new_gear = 3;
-	if (inputs[CARINPUT::FOURTH_GEAR])	new_gear = 4;
-	if (inputs[CARINPUT::FIFTH_GEAR])	new_gear = 5;
-	if (inputs[CARINPUT::SIXTH_GEAR])	new_gear = 6;
+	/*if (inputs[CARINPUT::REVERSE])	new_gear = -1;
+	if (inputs[CARINPUT::FIRST_GEAR])	new_gear = 1;*/
 
 	float throttle = !rear ? inputs[CARINPUT::THROTTLE] : inputs[CARINPUT::BRAKE];
 	float clutch = 1 - inputs[CARINPUT::CLUTCH]; // 
@@ -526,14 +500,8 @@ void CAR::HandleInputs(const std::vector <float> & inputs, float dt)
 	dynamics.SetClutch(clutch);
 
 	//do driver aid toggles
-	if (inputs[CARINPUT::ABS_TOGGLE])	dynamics.SetABS(!dynamics.GetABSEnabled());
-	if (inputs[CARINPUT::TCS_TOGGLE])	dynamics.SetTCS(!dynamics.GetTCSEnabled());
-
-	// check for rear view button
-	if (inputs[CARINPUT::REAR_VIEW])
-		lookbehind = true;
-	else
-		lookbehind = false;
+	//if (inputs[CARINPUT::ABS_TOGGLE])	dynamics.SetABS(!dynamics.GetABSEnabled());
+	//if (inputs[CARINPUT::TCS_TOGGLE])	dynamics.SetTCS(!dynamics.GetTCSEnabled());
 }
 
 
@@ -546,7 +514,7 @@ void CAR::UpdateSounds(float dt)
 	float squeal[4],whVel[4], suspVel[4],suspDisp[4];
 	
 	///  replay play  ------------------------------------------
-	if (pApp->pSet->rpl_play)
+	if (pApp->bRplPlay)
 	{
 		rpm = pApp->fr.rpm;
 		throttle = pApp->fr.throttle;
@@ -627,7 +595,7 @@ void CAR::UpdateSounds(float dt)
 	}
 
 	//normalize gains engine
-	assert(total_gain >= 0.0);
+	//assert(total_gain >= 0.0);
 	for (std::list <std::pair <SOUNDSOURCE *, float> >::iterator i = gainlist.begin(); i != gainlist.end(); ++i)
 	{
 		if (total_gain == 0.0)

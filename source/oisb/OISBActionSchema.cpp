@@ -95,7 +95,9 @@ namespace OISB
             OIS_EXCEPT(OIS::E_General, String("Action '" + name + "'not found in ActionSchema '" + getName() + "'").c_str());
 		}
 		
+		OISB::Action* act = (*it).second;
 		mActions.erase(it);
+		delete act;
 	}
 	
 	void ActionSchema::destroyAction(Action* action)
@@ -146,16 +148,16 @@ namespace OISB
 		}
 	}
 
-	void ActionSchema::dump()
+	void ActionSchema::dump(std::ostream& os)
 	{
-	    std::cout << "** Action schema: '" << mName << "'" << std::endl;
+	    os << "** Action schema: '" << mName << "'" << std::endl;
 
 	    for (ActionMap::const_iterator it = mActions.begin(); it != mActions.end(); ++it)
         {
 	        // TODO: dump action type too
-            std::cout << "** - Action: " << it->second->getName() << std::endl;
+            os << "** - Action: " << it->second->getName() << std::endl;
         }
 
-	    std::cout << "** End of action schema '" << mName << "'" << std::endl;
+	    os << "** End of action schema '" << mName << "'" << std::endl;
 	}
 }

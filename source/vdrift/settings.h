@@ -10,10 +10,10 @@ public:
 ///  params
 //------------------------------------------
 	//  car, track
-	std::string car,car_ai, track;  bool track_user;
+	std::string car, track;  bool track_user;
 
 	//  show
-	bool show_fps, show_gauges, trackmap, racingline,
+	bool show_fps, show_gauges, trackmap,
 		show_cam, show_times, show_digits, car_dbgbars, car_dbgtxt, ogre_dialog;
 	float size_gauges, size_minimap;
 
@@ -25,26 +25,18 @@ public:
 	bool particles, trails;  float trees, grass, trees_dist, grass_dist;
 	float particles_len, trails_len;
 
-	//  joy input
-	std::string joytype;  bool joy200;  bool joystick_calibrated;
-	float speed_sensitivity;  bool hgateshifter;
-	float button_ramp;
-	std::string ff_device;  float ff_gain;  bool ff_invert;
-
 	//  car
 	bool abs, tcs, autoclutch, autoshift, autorear, show_mph;
 	float car_hue, car_sat, car_val;
 
 	//  game
-	bool recordreplay;  int selected_replay;
-	bool trackreverse;	int number_of_laps;
-	float ai_difficulty;
+	bool trackreverse;	//int number_of_laps;  float ai_difficulty;
+	int local_players;  bool split_vertically;
 
 	//  other
-	std::string skin;	float vol_master, vol_engine, vol_tires, vol_env;
-	bool autostart, escquit;	bool bltDebug, bltLines;
-	
-	// loading
+	float vol_master, vol_engine, vol_tires, vol_env;
+	bool autostart, escquit;
+	bool bltDebug, bltLines, bltProfilerTxt;
 	bool loadingbackground;
 	
 	//  sim freq (1/interval timestep)
@@ -63,7 +55,7 @@ public:
 	std::string rendersystem;
 	
 	//  replay
-	bool rpl_rec, rpl_play;
+	bool rpl_rec;//, rpl_play;
 	
 	// network
 	std::string nickname;

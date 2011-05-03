@@ -28,6 +28,7 @@ restrictions:
 #include "OISBString.h"
 
 #include "rapidxml.hpp"
+#include "rapidxml_print.hpp"
 
 #include <cassert>
 
@@ -44,6 +45,10 @@ namespace OISB
 
             /// @brief destructor
 			~System();
+
+			typedef std::map<String, ActionSchema*> ActionSchemaMap;
+			/// stores all action schemas
+			ActionSchemaMap mActionSchemas;
 
             /**
              * @brief singleton retrieval method (reference)
@@ -235,16 +240,21 @@ namespace OISB
 			 * @brief loads schemas and actions from an xml file
 			 */
 			int loadActionSchemaFromXMLFile(const String& filename);
+			
+			/**
+			 * @brief saves schemas and actions to an xml file
+			 */
+			int saveActionSchemaToXMLFile(const std::string& filename);
 
 			/**
              * @brief a method to ease debugging, dumps all actions schemas to stdout
              */
-            void dumpDevices();
+            void dumpDevices(std::ostream& os);
 
 			/**
 			 * @brief a method to ease debugging, dumps all actions schemas to stdout
 			 */
-			void dumpActionSchemas();
+			void dumpActionSchemas(std::ostream& os);
 
 		private:
             /// singleton implementation pointer
@@ -267,9 +277,11 @@ namespace OISB
 			Mouse* mMouse;
             /// our wrap keyboard device
 			Keyboard* mKeyboard;
-            /// our wrap keyboard device
+            /// our wrap joystick device
+		public:
 			std::vector<JoyStick*> mJoysticks;
 
+		private:
 			/**
 			 * @brief adds input device
 			 * 
@@ -291,15 +303,11 @@ namespace OISB
             /// stores pointer to the default action schema
 			ActionSchema* mDefaultActionSchema;
 
-			typedef std::map<String, ActionSchema*> ActionSchemaMap;
-			/// stores all action schemas
-			ActionSchemaMap mActionSchemas;
-
 			// xml processing things, should be moved to separate class later on
 			int processSchemaXML(rapidxml::xml_node<>* schemaNode);
 			int processActionXML(rapidxml::xml_node<>* actionNode, ActionSchema* schema);
-			int processActionBindingXML(rapidxml::xml_node<>* bindNode, Action *action);
-
+			int processActionBindingXML(rapidxml::xml_node<>* bindingNode, Action *action);
+			int processActionBindXML(rapidxml::xml_node<>* bindNode, Binding *binding, Action *action);
 	};
 }
 

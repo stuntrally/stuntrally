@@ -3,6 +3,7 @@
 #include "../vdrift/game.h"
 #include "FollowCamera.h"
 #include "../road/Road.h"
+#include "../oisb/OISBSystem.h"
 
 
 
@@ -47,8 +48,9 @@ bool App::frameStart(Real time)
 {
 	if (bWindowResized)
 	{
-		//comboResolution(NULL, 0);
-		btnResChng(0);
+		if (bnQuit)  // reposition Quit btn
+			bnQuit->setCoord(pSet->windowx - 0.09*pSet->windowx, 0, 0.09*pSet->windowx, 0.03*pSet->windowy);
+		bSizeHUD = true;
 		bWindowResized = false;
 	}
 	
@@ -70,12 +72,31 @@ bool App::frameStart(Real time)
 			if (dirU > 0.0f) {  carListNext( d);  trkListNext( d);  dirU = -0.12f;  }
 			if (dirD > 0.0f) {  carListNext(-d);  trkListNext(-d);  dirD = -0.12f;  }
 		}
+		
+		//bool oldFocRpl = isFocRpl;
+		if (bRplPlay)
+		{
+			isFocRpl = ctrl;
+			//mGUI->setVisiblePointer(isFocGuiOrRpl());  // in sizehud-
+
+			int ta = (isKey(LBRACKET) ? -2 : 0) + (isKey(RBRACKET) ? 2 : 0);
+			if (ta)
+			{	double tadd = ta;
+				tadd *= (shift ? 0.2 : 1) * (ctrl ? 4 : 1) * (alt ? 8 : 1);  // multiplers
+				if (!bRplPause)  tadd -= 1;  // play compensate
+				double t = pGame->timer.GetReplayTime(), len = replay.GetTimeLength();
+				t += tadd * time;  // add
+				if (t < 0.0)  t += len;  // cycle
+				if (t > len)  t -= len;
+				pGame->timer.SetReplayTime(t);
+			}
+		}
 
 		if (!pGame)
 			return false;
-		pGame->pause = isFocGui;
+		pGame->pause = bRplPlay ? (bRplPause || isFocGui) : isFocGui;
 
-		///  step Game  **
+		///  step Game  *******
 		//  single thread, sim on draw
 		bool ret = true;
 		if (pSet->mult_thr != 1)
@@ -99,15 +120,12 @@ bool App::frameStart(Real time)
 				if ((*it)->fCam)
 					(*it)->fCam->update(pGame->framerate);
 			}
-			
-			if (ndSky)  ///o-
-				ndSky->setPosition(GetCamera()->getPosition());
 		}
 
 		// Update all cube maps
 		for (std::list<CarModel*>::iterator it=carModels.begin(); it!=carModels.end(); it++)
 		{
-			(*it)->pReflect->Update();
+			if ( (*it)->pReflect) (*it)->pReflect->Update();
 		}
 
 		//  trees
@@ -120,22 +138,23 @@ bool App::frameStart(Real time)
 		if (road)
 		{
 			road->RebuildRoadInt();
-			if (roadUpCnt <= 0)
+
+			//  more than 1 in pre viewport, each frame
+			if (pSet->local_players == 1)
 			{
-				roadUpCnt = 20;  //par upd, time..
-				road->UpdLodVis(pSet->road_dist);
+				if (roadUpCnt <= 0)
+				{
+					roadUpCnt = 15;  //par upd, time..
+					road->UpdLodVis(pSet->road_dist);
+				}
+				roadUpCnt--;/**/
 			}
-			roadUpCnt--;
 		}
 
 		//**  bullet bebug draw
 		if (dbgdraw)  {
 			dbgdraw->setDebugMode(pSet->bltDebug ? /*255*/1: 0);
 			dbgdraw->step();  }
-
-		//  hud
-		CAR* pCar = pGame->cars.size() == 0 ? NULL : &(*pGame->cars.begin());
-		UpdateHUD(pCar, time);
 
 		///  terrain mtr from blend maps
 		// now in CarModel::Update
@@ -153,27 +172,6 @@ bool App::frameStart(Real time)
 			{
 				 pr->setSpeedFactor(1.f);
 				 pr2->setSpeedFactor(1.f);
-			}
-		}
-		
-		//  par  rain cam  . . . .
-		if (pSet->particles && time != 0)
-		{	const Vector3& pos = mCamera->getPosition();
-				static Vector3 oldPos = Vector3::ZERO;
-				Vector3 vel = (pos-oldPos)/time;  oldPos = pos;
-			Vector3 dir = mCamera->getDirection();//, up = mCamera->getUp();
-			Vector3 par = pos + dir * 12 + vel * 0.4;
-			if (pr && sc.rainEmit > 0)
-			{
-				ParticleEmitter* pe = pr->getEmitter(0);
-				pe->setPosition(par);
-				pe->setEmissionRate(sc.rainEmit);
-			}
-			if (pr2 && sc.rain2Emit > 0)
-			{
-				ParticleEmitter* pe = pr2->getEmitter(0);
-				pe->setPosition(par);	//pe->setDirection(-up);
-				pe->setEmissionRate(sc.rain2Emit);
 			}
 		}
 		
@@ -201,7 +199,7 @@ void App::newPoses()
 	{
 		CAR* pCar = &(*carIt);
 		CarModel* carM = *carMIt;
-		PosInfo newPosInfo;
+		PosInfo posInfo;
 		
 		//  local data  car,wheels
 		MATHVECTOR <float,3> pos, whPos[4];
@@ -211,7 +209,7 @@ void App::newPoses()
 		///-----------------------------------------------------------------------
 		//  play  get data from replay
 		///-----------------------------------------------------------------------
-		if (pSet->rpl_play)
+		if (bRplPlay)
 		{
 			//  time  from start
 			double rtime = pGame->timer.GetReplayTime();
@@ -224,10 +222,10 @@ void App::newPoses()
 			for (int w=0; w < 4; ++w)
 			{
 				whPos[w] = fr.whPos[w];  whRot[w] = fr.whRot[w];
-				newPosInfo.newWhVel[w] = fr.whVel[w];
-				newPosInfo.newWhSlide[w] = fr.slide[w];  newPosInfo.newWhSqueal[w] = fr.squeal[w];
-				newPosInfo.newWhR[w] = replay.header.whR[w];//
-				newPosInfo.newWhMtr[w] = fr.whMtr[w];
+				posInfo.whVel[w] = fr.whVel[w];
+				posInfo.whSlide[w] = fr.slide[w];  posInfo.whSqueal[w] = fr.squeal[w];
+				posInfo.whR[w] = replay.header.whR[w];//
+				posInfo.whMtr[w] = fr.whMtr[w];
 			}
 
 		}
@@ -243,10 +241,10 @@ void App::newPoses()
 				whPos[w] = pCar->dynamics.GetWheelPosition(wp);
 				whRot[w] = pCar->dynamics.GetWheelOrientation(wp);
 				//float wR = pCar->GetTireRadius(wp);
-				newPosInfo.newWhVel[w] = pCar->dynamics.GetWheelVelocity(wp).Magnitude();
-				newPosInfo.newWhSlide[w] = -1.f;  newPosInfo.newWhSqueal[w] = pCar->GetTireSquealAmount(wp, &newPosInfo.newWhSlide[w]);
-				newPosInfo.newWhR[w] = pCar->GetTireRadius(wp);//
-				newPosInfo.newWhMtr[w] = carM->whTerMtr[w];
+				posInfo.whVel[w] = pCar->dynamics.GetWheelVelocity(wp).Magnitude();
+				posInfo.whSlide[w] = -1.f;  posInfo.whSqueal[w] = pCar->GetTireSquealAmount(wp, &posInfo.whSlide[w]);
+				posInfo.whR[w] = pCar->GetTireRadius(wp);//
+				posInfo.whMtr[w] = carM->whTerMtr[w];
 			}
 		}
 		
@@ -254,20 +252,21 @@ void App::newPoses()
 		//  transform axes, vdrift to ogre  car & wheels
 		//-----------------------------------------------------------------------
 
-		newPosInfo.newPos = Vector3(pos[0],pos[2],-pos[1]);
+		posInfo.pos = Vector3(pos[0],pos[2],-pos[1]);
 		Quaternion q(rot[0],rot[1],rot[2],rot[3]), q1;
 		Radian rad;  Vector3 axi;  q.ToAngleAxis(rad, axi);
-		q1.FromAngleAxis(-rad,Vector3(axi.z,-axi.x,-axi.y));  newPosInfo.newRot = q1 * qFixCar;
-		Vector3 vcx,vcz;  q1.ToAxes(vcx,newPosInfo.newCarY,vcz);
+		q1.FromAngleAxis(-rad,Vector3(axi.z,-axi.x,-axi.y));  posInfo.rot = q1 * qFixCar;
+		Vector3 vcx,vcz;  q1.ToAxes(vcx,posInfo.carY,vcz);
 
+		if (!isnan(whPos[0][0]))
 		for (int w=0; w < 4; w++)
 		{
-			newPosInfo.newWhPos[w] = Vector3(whPos[w][0],whPos[w][2],-whPos[w][1]);
+			posInfo.whPos[w] = Vector3(whPos[w][0],whPos[w][2],-whPos[w][1]);
 			Quaternion q(whRot[w][0],whRot[w][1],whRot[w][2],whRot[w][3]), q1;
 			Radian rad;  Vector3 axi;  q.ToAngleAxis(rad, axi);
-			q1.FromAngleAxis(-rad,Vector3(axi.z,-axi.x,-axi.y));  newPosInfo.newWhRot[w] = q1 * qFixWh;
+			q1.FromAngleAxis(-rad,Vector3(axi.z,-axi.x,-axi.y));  posInfo.whRot[w] = q1 * qFixWh;
 		}
-		bNew = true;
+		posInfo.bNew = true;
 		
 
 		///  sound listener  - - - - -
@@ -331,7 +330,7 @@ void App::newPoses()
 
 		//  chekpoints, lap start
 		//-----------------------------------------------------------------------
-		if (pSet->rpl_play)
+		if (bRplPlay)
 		{	// dont check when replay play...
 			bWrongChk = false;
 		}
@@ -339,13 +338,13 @@ void App::newPoses()
 		{
 			if (bGetStPos)  // first pos is at start
 			{	bGetStPos = false;
-				matStPos.makeInverseTransform(newPosInfo.newPos, Vector3::UNIT_SCALE, newPosInfo.newRot);
+				matStPos.makeInverseTransform(posInfo.pos, Vector3::UNIT_SCALE, posInfo.rot);
 				iCurChk = -1;  iNextChk = -1;  iNumChks = 1;  // reset lap
 			}
 			if (road && !bGetStPos)
 			{
 				//  start/finish box dist
-				Vector4 carP(newPosInfo.newPos.x,newPosInfo.newPos.y,newPosInfo.newPos.z,1);
+				Vector4 carP(posInfo.pos.x,posInfo.pos.y,posInfo.pos.z,1);
 				vStDist = matStPos * carP;
 				bInSt = abs(vStDist.x) < road->vStBoxDim.x && 
 					abs(vStDist.y) < road->vStBoxDim.y && 
@@ -363,7 +362,7 @@ void App::newPoses()
 					for (int i=0; i < ncs; ++i)
 					{
 						const CheckSphere& cs = road->mChks[i];
-						Real d2 = newPosInfo.newPos.squaredDistance(cs.pos);
+						Real d2 = posInfo.pos.squaredDistance(cs.pos);
 						if (d2 < cs.r2)  // car in checkpoint
 						{
 							iInChk = i;
@@ -387,7 +386,7 @@ void App::newPoses()
 				}	
 			}
 		}
-		(*newPosInfoIt) = newPosInfo;
+		(*newPosInfoIt) = posInfo;
 		
 		carIt++;
 		carMIt++;
@@ -413,8 +412,8 @@ void App::updatePoses(float time)
 		
 		/// TODO multiple dots on minimap
 		//  pos on minimap  x,y = -1..1
-		float xp =(-newPosInfo.newPos[2] - minX)*scX*2-1,
-			  yp =-(newPosInfo.newPos[0] - minY)*scY*2+1;
+		float xp =(-newPosInfo.pos[2] - minX)*scX*2-1,
+			  yp =-(newPosInfo.pos[0] - minY)*scY*2+1;
 		if (ndPos)
 			ndPos->setPosition(xp,yp,0);
 			
@@ -423,7 +422,7 @@ void App::updatePoses(float time)
 	}
 	
 	///  Replay info
-	if (pSet->rpl_play && pGame->cars.size() > 0)
+	if (bRplPlay && pGame->cars.size() > 0)
 	{
 		double pos = pGame->timer.GetPlayerTime();
 		float len = replay.GetTimeLength();
@@ -437,4 +436,4 @@ void App::updatePoses(float time)
 			int v = pos/len * res;  slRplPos->setScrollPosition(v);
 		}
 	}	
-	}
+}

@@ -178,6 +178,7 @@
 	<Tag name="CarDebug">Car susp, long|,lat- slips</Tag>
 	<Tag name="Wireframe">Wireframe</Tag>
 	<Tag name="BulletDebug">Bullet debug</Tag>
+	<Tag name="BulletProfilerTxt">Bullet Profiler Times</Tag>
 	<Tag name="CarDebugText">Car debug text </Tag>
 
 	<Tag name="Startup">Startup</Tag>
@@ -190,19 +191,25 @@
 	
 	<!--  Input  -->
 	<Tag name="Input">Input</Tag>
-	<Tag name="InputSteer">Left,Right - steer</Tag>
-	<Tag name="InputThrottle">Up,Down - throttle, brake</Tag>
-	<Tag name="InputBrake">Space - handbrake</Tag>
-	<Tag name="InputBoost">Ctrl - boost</Tag>
-	<Tag name="InputRoll">Q,W - roll car (when needed)</Tag>
-	<Tag name="InputShift">A,Z - gear up,down (manual gearbox)</Tag>
-
-	<Tag name="InputShowGUI">F1 or Tab - show/hide Options</Tag>
-	<Tag name="InputNextCam">X,C or PgUp,PgDn - prev/next camera view</Tag>
-	<Tag name="InputMainCam">with shift - main cameras</Tag>
-	<Tag name="InputNextTab">F2,F3 - prev/next tab</Tag>
-	<Tag name="InputRestart">F5 - restart game</Tag>
-	
+	<Tag name="InputKey1">Key 1</Tag>
+	<Tag name="InputKey2">Key 2</Tag>
+	<Tag name="InputNoJS">No joystick</Tag>
+	<!--<Tag name="InputKeyUnassigned">&lt;Unassigned&gt;</Tag>-->
+	<Tag name="InputKeyUnassigned">-- None --</Tag>
+	<Tag name="InputAssignKey">&lt;Press a key&gt;</Tag>
+	<Tag name="InputMapPlayer1">Player 1</Tag>
+	<Tag name="InputMapPlayer2">Player 2</Tag>
+	<Tag name="InputMapPlayer3">Player 3</Tag>
+	<Tag name="InputMapPlayer4">Player 4</Tag>
+	<Tag name="InputMapGeneral">General</Tag>
+	<Tag name="InputMapThrottle">Throttle</Tag>
+	<Tag name="InputMapBrake">Brake</Tag>
+	<Tag name="InputMapFlip">Flip</Tag>
+	<Tag name="InputMapBoost">Boost</Tag>
+	<Tag name="InputMapHandBrake">Handbrake</Tag>
+	<Tag name="InputMapSteering">Steering</Tag>
+	<Tag name="InputMapShiftUp">Shift up</Tag>
+	<Tag name="InputMapShiftDown">Shift down</Tag>
 
 	<!--  Sound  -->
 	<Tag name="Sound">Sound</Tag>
