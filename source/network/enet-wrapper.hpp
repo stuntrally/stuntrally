@@ -23,6 +23,11 @@
 #include <boost/noncopyable.hpp>
 #include <enet/enet.h>
 
+// Version check
+#if ENET_VERSION < ENET_VERSION_CREATE(1,3,0)
+	#error ENet versions below 1.3.0 not supported
+#endif
+
 namespace net {
 
 	const unsigned ENetChannels = 3; // 0 = Sequenced, 1 = Reliable, 2 = Unsequenced
