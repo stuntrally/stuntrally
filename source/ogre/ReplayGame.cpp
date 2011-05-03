@@ -39,7 +39,7 @@ void Replay::InitHeader(const char* track, bool trk_user, const char* car, float
 
 ///  Load
 //----------------------------------------------------------------
-bool Replay::LoadFile(std::string file)
+bool Replay::LoadFile(std::string file, bool onlyHdr)
 {
 	std::ifstream fi(file.c_str(), std::ios::binary | std::ios::in);
 	if (!fi)  return false;
@@ -47,9 +47,23 @@ bool Replay::LoadFile(std::string file)
 	char buf[ciRplHdrSize];  memset(buf,0,ciRplHdrSize);
 	fi.read(buf,ciRplHdrSize);
 	memcpy(&header, buf, sizeof(ReplayHeader));
-	frames.clear();  frames.reserve(cDefSize);
+	
+	frames.clear();
+	//  only get last frame for time len info, ?save len in hdr..
+	if (onlyHdr)
+	{
+		fi.seekg(-header.frameSize, std::ios::end);
 
+		ReplayFrame fr;
+		fi.read((char*)&fr, header.frameSize/**/);
+		frames.push_back(fr);
+
+	    fi.close();
+	    return true;
+	}
+	
 	//  frames
+	frames.reserve(cDefSize);
 	while (!fi.eof())
 	{
 		ReplayFrame fr;

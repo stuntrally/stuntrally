@@ -885,7 +885,7 @@
 	</Widget>
 	<Widget type="Window" skin="WindowCS" position="224 -20 820 104" layer="Back" name="RplWnd">
 		<Property key="Widget_Alpha" value="0.3"/>
-		<Widget type="HScroll" skin="HScroll" position="4 41 800 20" name="RplSlider">
+		<Widget type="HScroll" skin="HScroll" position="4 41 800 20" align="Relative" name="RplSlider">
 			<Property key="Widget_Alpha" value="0.6"/>
 			<Property key="Widget_InheritsAlpha" value="false"/>
 			<Property key="Widget_Colour" value="0.8 0.9 1"/>
@@ -906,7 +906,7 @@
 		</Widget>
 		<Widget type="Button" skin="Button" position="100 1 64 32" name="RplPlay">
 			<Property key="Widget_InheritsAlpha" value="false"/>
-			<Property key="Widget_Caption" value="|&gt;"/>
+			<Property key="Widget_Caption" value="||"/>
 			<Property key="Widget_Colour" value="0 1 1"/>
 		</Widget>
 		<Widget type="Button" skin="Button" position="164 1 40 32" name="RplForward">

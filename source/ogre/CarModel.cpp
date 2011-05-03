@@ -350,9 +350,9 @@ void CarModel::Create()
 	UpdParsTrails();
 	
 	//  reload car materials, omit car and road
-	for (int i=1; i < NumMaterials; ++i)
+	int i0 = 1;  if (pSet->rpl_play)  i0 = 0;
+	for (int i=i0; i < NumMaterials; ++i)
 		ReloadTex(sMtr[i]);
-
 }
 
 

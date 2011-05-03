@@ -105,12 +105,6 @@ protected:
 	// 1 behind map ( map.end() ): loading finished
 	std::map<unsigned int, std::string>::iterator currentLoadingState;
 
-	bool FileExists(const std::string & filename)
-	{
-		std::ifstream f(filename.c_str());
-		return f;
-	}
-	
 
 	///  terrain
 	Terrain* terrain;	TerrainGlobalOptions* mTerrainGlobals;
@@ -181,13 +175,17 @@ protected:
 	ButtonPtr bRkmh, bRmph;  void radKmh(WP), radMph(WP), btnTrGrReset(WP), btnQuit(WP), btnResChng(WP);
 	ButtonPtr chDbgT,chDbgB, chBlt,chBltTxt, chFps, chTimes,chMinimp, bnQuit;
 
-	//  replay
+	///  replay
 	StaticTextPtr valRplPerc, valRplCur, valRplLen,  valRplName, valRplInfo;
 	HScrollPtr slRplPos;  void slRplPosEv(SL);
 	EditPtr edRplName, edRplDesc;
 	void btnRplLoad(WP), btnRplSave(WP), btnRplDelete(WP),
 		chkRplAutoRec(WP),chkRplChkGhost(WP), btnRplCur(WP),btnRplAll(WP),
-		btnRplToStart(WP),btnRplToEnd(WP), btnRplBack(WP),btnRplForward(WP), btnRplPlay(WP);
+		btnRplToStart(WP),btnRplToEnd(WP), btnRplBack(WP),btnRplForward(WP),
+		btnRplPlay(WP);
+		
+	bool bRplPlay,bRplPause;  //  game
+	ButtonPtr btRplPl;  void UpdRplPlayBtn();
 
 
 	//  game

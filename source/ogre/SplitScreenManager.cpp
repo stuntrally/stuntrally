@@ -241,7 +241,7 @@ void SplitScreenManager::preViewportUpdate(const Ogre::RenderTargetViewportEvent
 		pApp->SizeHUD(false);
 		
 		// no mouse in key capture mode
-		if (pApp->bAssignKey) MyGUI::PointerManager::getInstance().setVisible(false);
+		if (pApp->bAssignKey)  MyGUI::PointerManager::getInstance().setVisible(false);
 	}
 }
 

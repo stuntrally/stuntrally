@@ -38,14 +38,14 @@ void App::createScene()
 	Log(string("**** Loaded Vegetation objects: ") + toStr(objs.colsMap.size()));
 	Log(string("**** ReplayFrame size: ") + toStr(sizeof(ReplayFrame)));	
 
-	///  load replay
-	if (pSet->rpl_play)
+	if (pSet->rpl_play)  //-
 		pSet->rpl_play = 0;
-	/*{
+
+	#if 0  // test autoload replay
 		string file = PATHMANAGER::GetReplayPath() + "/" + pSet->track + ".rpl";
-		replay.LoadFile(file);
-	}
-	/**/
+		if (replay.LoadFile(file))
+			pSet->rpl_play = 1;
+	#endif
 
 	if (pSet->autostart)
 		NewGame();

@@ -13,13 +13,10 @@ void App::SizeHUD(bool full, Viewport* vp)
 {
 	float fHudScale = pSet->size_gauges;
 	float modifier;
-	if (vp)
-	{
-		asp = float(vp->getActualWidth())/float(vp->getActualHeight());
+	if (vp)  // todo split_vertically wrong ..
+	{	asp = float(vp->getActualWidth())/float(vp->getActualHeight());
 		modifier = asp / (float(mWindow->getWidth())/float(mWindow->getHeight()));
-	}
-	else
-	{
+	}else{
 		asp = float(mWindow->getWidth())/float(mWindow->getHeight());
 		modifier = 1;
 	}
@@ -180,6 +177,7 @@ void App::ShowHUD(bool hideAll)
 		if (mFpsOverlay) { mFpsOverlay->hide(); }
 		if (ndMap)  ndMap->setVisible(false);
 		if (mGUI)	mGUI->setVisiblePointer(false);
+		if (mWndRpl)  mWndRpl->setVisible(false);
 	}
 	else
 	{
@@ -207,6 +205,7 @@ void App::ShowHUD(bool hideAll)
 		if (mFpsOverlay) { if (pSet->show_fps) mFpsOverlay->show(); else mFpsOverlay->hide(); }
 		if (ndMap)  ndMap->setVisible(pSet->trackmap);
 		if (mGUI)	mGUI->setVisiblePointer(isFocGuiOrRpl());
+		if (mWndRpl && !bLoading)  mWndRpl->setVisible(pSet->rpl_play);  //
 	}
 }
 

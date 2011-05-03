@@ -76,16 +76,29 @@ bool App::frameStart(Real time)
 		//bool oldFocRpl = isFocRpl;
 		if (pSet->rpl_play)
 		{
-			isFocRpl = isKey(LCONTROL)||isKey(RCONTROL);
+			isFocRpl = ctrl;  //isKey(LCONTROL)||isKey(RCONTROL);
 			//mGUI->setVisiblePointer(isFocGuiOrRpl());  // in sizehud-
-		}
 
+			int ta = (isKey(LBRACKET) ? -2 : 0) + (isKey(RBRACKET) ? 2 : 0);
+			if (ta)
+			{	double tadd = ta;
+				tadd *= (shift ? 0.2 : 1) * (ctrl ? 4 : 1) * (alt ? 8 : 1);  // multiplers
+				if (!bRplPause)  tadd -= 1;  // play compensate
+				double t = pGame->timer.GetReplayTime(), len = replay.GetTimeLength();
+				t += tadd * time;  // add
+				if (t < 0.0)  t += len;  // cycle
+				if (t > len)  t -= len;
+				//t = max(0.0, min(len, t + tadd * time));  //speed
+				pGame->timer.SetReplayTime(t);
+			}
+			
+		}
 
 		if (!pGame)
 			return false;
-		pGame->pause = isFocGui;
+		pGame->pause = pSet->rpl_play ? (bRplPause || isFocGui) : isFocGui;
 
-		///  step Game  **
+		///  step Game  *******
 		//  single thread, sim on draw
 		bool ret = true;
 		if (pSet->mult_thr != 1)

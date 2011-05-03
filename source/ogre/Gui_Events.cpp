@@ -243,9 +243,7 @@ void App::slCarClrH(SL)
 	if (valCarClrH){	Fmt(s, "%4.2f", v);	valCarClrH->setCaption(s);  }
 	/// changes color for all cars
 	for (std::list<CarModel*>::iterator it=carModels.begin(); it!=carModels.end(); it++)
-	{
 		(*it)->ChangeClr();
-	}
 }
 void App::slCarClrS(SL)
 {
@@ -253,9 +251,7 @@ void App::slCarClrS(SL)
 	if (valCarClrS){	Fmt(s, "%4.2f", v);	valCarClrS->setCaption(s);  }
 	/// changes color for all cars
 	for (std::list<CarModel*>::iterator it=carModels.begin(); it!=carModels.end(); it++)
-	{
 		(*it)->ChangeClr();
-	}
 }
 void App::slCarClrV(SL)
 {
@@ -263,9 +259,7 @@ void App::slCarClrV(SL)
 	if (valCarClrV){	Fmt(s, "%4.2f", v);	valCarClrV->setCaption(s);  }
 	/// changes color for all cars
 	for (std::list<CarModel*>::iterator it=carModels.begin(); it!=carModels.end(); it++)
-	{
 		(*it)->ChangeClr();
-	}
 }
 
 
@@ -316,7 +310,7 @@ void App::btnNewGame(WP)
 {
 	NewGame();  isFocGui = false;  // off gui
 	if (mWndOpts)  mWndOpts->setVisible(isFocGui);
-	if (mWndRpl)  mWndRpl->setVisible(pSet->rpl_play);//
+	if (mWndRpl)  mWndRpl->setVisible(false);//
 	if (bnQuit)  bnQuit->setVisible(isFocGui);
 	mGUI->setVisiblePointer(isFocGuiOrRpl());
 	mToolTip->setVisible(false);
@@ -470,9 +464,15 @@ void App::slBlurIntens(SL)
 void App::slRplPosEv(SL)  // change play pos
 {
 	if (!pSet->rpl_play)  return;
-	Real v = val/res;  v = max(0.f, min(1.f, v));  v *= replay.GetTimeLength();
-	pGame->timer.SetReplayTime(v);  //RestartReplay();
-	(*carModels.begin())->fCam->update(0.1f);
+	double oldt = pGame->timer.GetReplayTime();
+	double v = val/res;  v = max(0.0, min(1.0, v));  v *= replay.GetTimeLength();
+	pGame->timer.SetReplayTime(v);
+
+	FollowCamera* fCam = (*carModels.begin())->fCam;
+	fCam->first = true;  // instant change
+
+	//for (int i=0; i < 10; ++i)
+		fCam->update(abs(v-oldt));  //..?
 }
 
 void App::btnRplLoad(WP)  // Load
@@ -480,23 +480,25 @@ void App::btnRplLoad(WP)  // Load
 	//  from list
 	int i = rplList->getIndexSelected();
 	if (i == MyGUI::ITEM_NONE)  return;
-	String name = rplList->getItemNameAt(i);
-	///  load
-	//if (pSet->rpl_play)
-	{
-		string file = PATHMANAGER::GetReplayPath() + "/" + name + ".rpl";
-		if (!replay.LoadFile(file))
-		{}
-		else  // car, track change
-		{
-			string car = replay.header.car, trk = replay.header.track;
-			bool usr = replay.header.track_user == 1;
 
-			pSet->car = car;
-			pSet->track = trk;  pSet->track_user = usr;
-			pSet->rpl_play = 1;
-			btnNewGame(0);
-		}
+	String name = rplList->getItemNameAt(i);
+	string file = PATHMANAGER::GetReplayPath() + "/" + name + ".rpl";
+
+	if (!replay.LoadFile(file))
+	{
+		Message::createMessageBox(  // #{transl ..
+			"Message", "Load Replay", "Error: Can't load file.",
+			MessageBoxStyle::IconWarning | MessageBoxStyle::Ok);
+	}
+	else  // car, track change
+	{
+		string car = replay.header.car, trk = replay.header.track;
+		bool usr = replay.header.track_user == 1;
+
+		pSet->car = car;
+		pSet->track = trk;  pSet->track_user = usr;
+		pSet->rpl_play = 1;
+		btnNewGame(0);
 	}
 }
 
@@ -505,8 +507,12 @@ void App::btnRplSave(WP)  // Save
 	String edit = edRplName->getCaption();
 	String file = PATHMANAGER::GetReplayPath() + "/" + pSet->track + edit + ".rpl";
 	///  save
-	replay.SaveFile(file.c_str());
-	//if (! )  MsgBox..
+	if (!replay.SaveFile(file.c_str()))
+	{
+		Message::createMessageBox(  // #{..
+			"Message", "Save Replay", "Error: Can't save file.",
+			MessageBoxStyle::IconWarning | MessageBoxStyle::Ok);
+	}
 	updReplaysList();
 }
 
@@ -517,9 +523,20 @@ void App::btnRplDelete(WP)  // Delete
 //  list change
 void App::listRplChng(List* li, size_t pos)
 {
-	//.. load header upd text desc ..
-	//size_t i = li->getIndexSelected();  if (i==ITEM_NONE)  return;
-	//const UString& sl = li->getItemNameAt(i);	sListCar = sl;
+	// load replay header upd text desc ..
+	size_t i = li->getIndexSelected();  if (i == ITEM_NONE)  return;
+	String name = li->getItemNameAt(i);
+	string file = PATHMANAGER::GetReplayPath() + "/" + name + ".rpl";
+	if (valRplName)  valRplName->setCaption(name);
+	if (!valRplInfo)  return;
+	
+	Replay rpl;
+	if (rpl.LoadFile(file,true))
+	{
+		String s = String("Track: ") + rpl.header.track + "  Car: " + rpl.header.track + "   Time: " + GetTimeString(rpl.GetTimeLength());
+		valRplInfo->setCaption(s);
+	}
+	//UpdRplPlayBtn();
 	//if (imgCar)  imgCar->setImageTexture(sListCar+".jpg");
 	//  text desc
 	//valRplName
@@ -563,6 +580,15 @@ void App::btnRplForward(WP)
 
 void App::btnRplPlay(WP)  // play / pause
 {
+	bRplPause = !bRplPause;
+	UpdRplPlayBtn();
+}
+
+void App::UpdRplPlayBtn()
+{
+	String sign = bRplPause ? "|>" : "||";
+	if (btRplPl)
+		btRplPl->setCaption(sign);
 }
 
 
@@ -630,11 +656,17 @@ bool App::keyPressed( const OIS::KeyEvent &arg )
 	   		if (!isFocGui)  mToolTip->setVisible(false);
 	   	}	return true;
 
+
 		case KC_BACK:	// replay controls
-			//isFocGui = !isFocGui;
    			//if (mGUI)	mGUI->setVisiblePointer(isFocGui);
 			if (mWndRpl)  mWndRpl->setVisible(!mWndRpl->isVisible()/*pSet->rpl_play*/);
 			return true;
+
+		case KC_P:		// replay play/pause
+			if (pSet->rpl_play)
+			{	bRplPause = !bRplPause;  UpdRplPlayBtn();  }
+			return true;
+
 
 		case KC_F9:		// car debug text/bars
 			if (shift)	{	WP wp = chDbgT;  ChkEv(car_dbgtxt);  ShowHUD();  }
@@ -663,6 +695,7 @@ bool App::keyPressed( const OIS::KeyEvent &arg )
 		case KC_F8:		// Minimap
 		{	WP wp = chMinimp;  ChkEv(trackmap);  if (ndMap)  ndMap->setVisible(pSet->trackmap);
 		}	return false;
+
 		
 		case KC_F5:		//  new game
 		//if (ctrl)

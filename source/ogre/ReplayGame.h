@@ -20,6 +20,8 @@ struct ReplayHeader
 
 	int ver, frameSize;  // bin data format - sizeof(ReplayFrame)
 	float whR[4];  // car wheels radius
+	// num players !..  TODO: many players...
+	// car color ?..
 
 	//  custom replay fps 60 ..
 	ReplayHeader();  void Default();
@@ -61,7 +63,8 @@ class Replay
 public:
 	Replay();
 	
-	bool LoadFile(std::string file), SaveFile(std::string file);
+	bool LoadFile(std::string file, bool onlyHdr=false);
+	bool SaveFile(std::string file);
 
 	void AddFrame(const ReplayFrame& frame);  // record
 	bool GetFrame(double time, ReplayFrame* fr);  // play

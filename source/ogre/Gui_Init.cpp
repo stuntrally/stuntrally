@@ -34,7 +34,7 @@ void App::InitGui()
 	mWndTabs = (TabPtr)mLayout->findWidget("TabWnd");
 
 	mWndRpl = mGUI->findWidget<Window>("RplWnd",false);
-	if (mWndRpl)  mWndRpl->setVisible(false);//
+	if (mWndRpl)  mWndRpl->setVisible(false);
 
 
 	//  tooltip  ------
@@ -194,7 +194,8 @@ void App::InitGui()
     if (mWndRpl)
 	{	//  replay controls
 		Btn("RplToStart", btnRplToStart);  Btn("RplToEnd", btnRplToEnd)
-		Btn("RplBack", btnRplBack);  Btn("RplForward", btnRplForward);  Btn("RplPlay", btnRplPlay);
+		Btn("RplBack", btnRplBack);  Btn("RplForward", btnRplForward);
+		Btn("RplPlay", btnRplPlay);  btRplPl = btn;
 
 		//  info
 		slRplPos = (HScrollPtr)mWndRpl->findWidget("RplSlider");
