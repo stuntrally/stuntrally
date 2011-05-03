@@ -46,16 +46,10 @@ void App::UpdThr()
 
 bool App::frameStart(Real time)
 {
-	// update input
-	//OISB::System::getSingleton().process(time);  ///! not here .. in carcontrolmap
-	
 	if (bWindowResized)
 	{
 		if (bnQuit)  // reposition Quit btn
-		{
-			//bnQuit->setRealCoord(0.922,0,0.08,0.03);
 			bnQuit->setCoord(pSet->windowx - 0.09*pSet->windowx, 0, 0.09*pSet->windowx, 0.03*pSet->windowy);
-		}
 		bSizeHUD = true;
 		bWindowResized = false;
 	}
@@ -83,7 +77,7 @@ bool App::frameStart(Real time)
 		if (pSet->rpl_play)
 		{
 			isFocRpl = isKey(LCONTROL)||isKey(RCONTROL);
-			mGUI->setVisiblePointer(isFocGuiOrRpl());
+			//mGUI->setVisiblePointer(isFocGuiOrRpl());  // in sizehud-
 		}
 
 

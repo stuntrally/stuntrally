@@ -228,7 +228,7 @@ BaseApp::BaseApp() :
 	mInputManager(0), mMouse(0), mKeyboard(0), mOISBsys(0),
 	alt(0), ctrl(0), shift(0), roadUpCnt(0),
 	mbLeft(0), mbRight(0), mbMiddle(0), 
-	isFocGui(0), mGUI(0), mPlatform(0),
+	isFocGui(0),isFocRpl(0), mGUI(0), mPlatform(0),
 	mWndOpts(0), mWndTabs(0), mWndRpl(0), bSizeHUD(true), bLoading(false), bAssignKey(false), pressedKey(static_cast<OIS::KeyCode>(0) ),
 
 	mDebugOverlay(0), mFpsOverlay(0), mOvrFps(0), mOvrTris(0), mOvrBat(0), mOvrDbg(0),

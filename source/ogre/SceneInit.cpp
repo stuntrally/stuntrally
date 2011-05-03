@@ -70,8 +70,9 @@ void App::NewGame()
 	currentLoadingState = loadingStates.begin();
 }
 
-/* Loading steps (in this order) */
-void App::LoadCleanUp()
+/* *  Loading steps (in this order)  * */
+
+void App::LoadCleanUp()  // 1 first
 {
 	if (mGUI)	mGUI->setVisiblePointer(isFocGui);
 	// rem old track
@@ -104,7 +105,8 @@ void App::LoadCleanUp()
 	if (road)
 	{	road->DestroyRoad();  delete road;  road = 0;  }
 }
-void App::LoadGame()
+
+void App::LoadGame()  // 2
 {
 	pGame->NewGameDoCleanup();
 	pGame->NewGameDoLoadTrack();
@@ -126,7 +128,7 @@ void App::LoadGame()
 	sc.ter = ter;
 }
 
-void App::LoadScene()
+void App::LoadScene()  // 3
 {
 	bool ter = IsTerTrack();
 	if (ter)  // load scene
@@ -148,7 +150,7 @@ void App::LoadScene()
 		pr2->getEmitter(0)->setEmissionRate(0);  }
 }
 
-void App::LoadCar()
+void App::LoadCar()  // 4
 {
 	// Create all cars
 	for (std::list<CarModel*>::iterator it=carModels.begin(); it!=carModels.end(); it++)
@@ -170,7 +172,7 @@ void App::LoadCar()
 	replay.InitHeader(pSet->track.c_str(), pSet->track_user, pSet->car.c_str(), whR);
 }
 
-void App::LoadTerrain()
+void App::LoadTerrain()  // 5
 {
 	bool ter = IsTerTrack();
 	CreateTerrain(false,ter);  // common
@@ -184,7 +186,7 @@ void App::LoadTerrain()
 	}
 }
 
-void App::LoadTrack()
+void App::LoadTrack()  // 6
 {
 	mRoot->addResourceLocation(resTrk, "FileSystem");
 
@@ -205,10 +207,11 @@ void App::LoadTrack()
 	}
 }
 
-void App::LoadMisc()
+void App::LoadMisc()  // 7 last
 {
 	if (pGame && pGame->cars.size() > 0)
 		UpdGuiRdStats(road, sc, pGame->timer.GetBestLap(pSet->trackreverse));  // current
+
 	CreateHUD();
 	// immediately hide it
 	ShowHUD(true);

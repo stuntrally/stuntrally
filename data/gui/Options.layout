@@ -921,23 +921,41 @@
 			<Property key="Widget_Colour" value="0.6 0.8 1"/>
 			<Property key="Widget_Alpha" value="0.6"/>
 		</Widget>
-		<Widget type="StaticText" skin="StaticText" position="252 1 148 40" name="RplPercent">
+		<Widget type="Widget" skin="PanelSmall" position="350 4 120 34">
 			<Property key="Widget_InheritsAlpha" value="false"/>
-			<Property key="Text_TextColour" value="0.8 0.8 1.0"/>
-			<Property key="Text_TextAlign" value="Center"/>
-            <Property key="Text_FontName" value="font_Vera.24"/>
-            <!--<Property key="Text_FontHeight" value="24"/>-->
+			<Property key="Widget_Colour" value="0.9 0.92 1"/>
+			<Property key="Widget_Alpha" value="0.6"/>
+			<Widget type="StaticText" skin="StaticText" position="0 0 100 34" name="RplPercent">
+				<Property key="Widget_InheritsAlpha" value="false"/>
+				<Property key="Widget_Alpha" value="1"/>
+				<Property key="Text_TextColour" value="0.9 0.92 1.0"/>
+				<Property key="Text_TextAlign" value="Right"/>
+				<Property key="Text_FontName" value="font_Vera.24"/>
+			</Widget>
 		</Widget>
-		<Widget type="StaticText" skin="StaticText" position="408 8 200 40" name="RplTimeCur">
+		<Widget type="Widget" skin="PanelSmall" position="500 4 140 34">
 			<Property key="Widget_InheritsAlpha" value="false"/>
-			<Property key="Text_TextColour" value="0.6 0.8 1"/>
-            <Property key="Text_FontName" value="font_Vera.24"/>
+			<Property key="Widget_Colour" value="0.9 0.96 1.0"/>
+			<Property key="Widget_Alpha" value="0.6"/>
+			<Widget type="StaticText" skin="StaticText" position="0 0 140 34" name="RplTimeCur">
+				<Property key="Widget_InheritsAlpha" value="false"/>
+				<Property key="Widget_Alpha" value="1"/>
+				<Property key="Text_TextColour" value="0.9 0.96 1.0"/>
+				<Property key="Text_TextAlign" value="Center"/>
+				<Property key="Text_FontName" value="font_Vera.24"/>
+			</Widget>
 		</Widget>
-		<Widget type="StaticText" skin="StaticText" position="608 8 200 40" name="RplTimeLen">
-			<Property key="Widget_Alpha" value="1.0"/>
+		<Widget type="Widget" skin="PanelSmall" position="650 4 140 34">
 			<Property key="Widget_InheritsAlpha" value="false"/>
-			<Property key="Text_TextColour" value="0.7 0.8 0.9"/>
-            <Property key="Text_FontName" value="font_Vera.24"/>
+			<Property key="Widget_Colour" value="0.8 0.9 1"/>
+			<Property key="Widget_Alpha" value="0.5"/>
+			<Widget type="StaticText" skin="StaticText" position="0 0 140 34" name="RplTimeLen">
+				<Property key="Widget_InheritsAlpha" value="false"/>
+				<Property key="Widget_Alpha" value="1"/>
+				<Property key="Text_TextColour" value="0.8 0.9 1"/>
+				<Property key="Text_TextAlign" value="Center"/>
+				<Property key="Text_FontName" value="font_Vera.24"/>
+			</Widget>
 		</Widget>
 	</Widget>
 </MyGUI>

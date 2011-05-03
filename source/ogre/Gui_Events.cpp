@@ -479,7 +479,7 @@ void App::btnRplLoad(WP)  // Load
 {
 	//  from list
 	int i = rplList->getIndexSelected();
-	if (i == MyGUI::ITEM_NONE) return;
+	if (i == MyGUI::ITEM_NONE)  return;
 	String name = rplList->getItemNameAt(i);
 	///  load
 	//if (pSet->rpl_play)
@@ -626,7 +626,7 @@ bool App::keyPressed( const OIS::KeyEvent &arg )
 	   		isFocGui = !isFocGui;
 	   		if (mWndOpts)	mWndOpts->setVisible(isFocGui);
 			if (bnQuit)  bnQuit->setVisible(isFocGui);
-	   		if (mGUI)	mGUI->setVisiblePointer(isFocGui);
+	   		if (mGUI)	mGUI->setVisiblePointer(isFocGuiOrRpl());
 	   		if (!isFocGui)  mToolTip->setVisible(false);
 	   	}	return true;
 

@@ -179,7 +179,7 @@ void App::ShowHUD(bool hideAll)
 		if (ovTimes){ ovTimes->hide();   }
 		if (mFpsOverlay) { mFpsOverlay->hide(); }
 		if (ndMap)  ndMap->setVisible(false);
-		if (mGUI)	mGUI->setVisiblePointer(isFocGui);
+		if (mGUI)	mGUI->setVisiblePointer(false);
 	}
 	else
 	{
@@ -206,7 +206,7 @@ void App::ShowHUD(bool hideAll)
 		if (ovTimes){  if (pSet->show_times)  ovTimes->show();  else  ovTimes->hide();   }
 		if (mFpsOverlay) { if (pSet->show_fps) mFpsOverlay->show(); else mFpsOverlay->hide(); }
 		if (ndMap)  ndMap->setVisible(pSet->trackmap);
-		if (mGUI)	mGUI->setVisiblePointer(isFocGui);
+		if (mGUI)	mGUI->setVisiblePointer(isFocGuiOrRpl());
 	}
 }
 
@@ -403,7 +403,7 @@ void App::UpdateHUD(CAR* pCar, float time, Viewport* vp)
 	{
 		const Real xp = 80, yp = -530, ln = 20, y4 = 104;
 		static char ss[256];
-		const static char swh[4][6] = {"F^L<","F^R>","RvL<","RvR>"};
+		//const static char swh[4][6] = {"F^L<","F^R>","RvL<","RvR>"};
 		for (int w=0; w < 4; ++w)
 		if (ovL[3-w] && ovR[3-w] && ovS[3-w])
 		{	
