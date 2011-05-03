@@ -74,7 +74,7 @@ bool App::frameStart(Real time)
 		}
 		
 		//bool oldFocRpl = isFocRpl;
-		if (pSet->rpl_play)
+		if (bRplPlay)
 		{
 			isFocRpl = ctrl;
 			//mGUI->setVisiblePointer(isFocGuiOrRpl());  // in sizehud-
@@ -94,7 +94,7 @@ bool App::frameStart(Real time)
 
 		if (!pGame)
 			return false;
-		pGame->pause = pSet->rpl_play ? (bRplPause || isFocGui) : isFocGui;
+		pGame->pause = bRplPlay ? (bRplPause || isFocGui) : isFocGui;
 
 		///  step Game  *******
 		//  single thread, sim on draw
@@ -209,7 +209,7 @@ void App::newPoses()
 		///-----------------------------------------------------------------------
 		//  play  get data from replay
 		///-----------------------------------------------------------------------
-		if (pSet->rpl_play)
+		if (bRplPlay)
 		{
 			//  time  from start
 			double rtime = pGame->timer.GetReplayTime();
@@ -330,7 +330,7 @@ void App::newPoses()
 
 		//  chekpoints, lap start
 		//-----------------------------------------------------------------------
-		if (pSet->rpl_play)
+		if (bRplPlay)
 		{	// dont check when replay play...
 			bWrongChk = false;
 		}
@@ -422,7 +422,7 @@ void App::updatePoses(float time)
 	}
 	
 	///  Replay info
-	if (pSet->rpl_play && pGame->cars.size() > 0)
+	if (bRplPlay && pGame->cars.size() > 0)
 	{
 		double pos = pGame->timer.GetPlayerTime();
 		float len = replay.GetTimeLength();

@@ -42,7 +42,7 @@ public:
 	eCarType eType;
 
 	// Constructor, will assign members and create the vdrift car
-	CarModel(unsigned int index, eCarType type, const std::string name, Ogre::SceneManager* sceneMgr, SETTINGS* set, GAME* game, Scene* sc, Camera* cam); 
+	CarModel(unsigned int index, eCarType type, const std::string name, Ogre::SceneManager* sceneMgr, SETTINGS* set, GAME* game, Scene* sc, Camera* cam, App* app);
 	
 	// Destructor - will remove meshes & particle systems, 
 	// the VDrift car and the FollowCamera, delete pReflect
@@ -135,6 +135,7 @@ private:
 	
 	// Our settings.
 	SETTINGS* pSet;
+	App* pApp;
 };
 
 #endif

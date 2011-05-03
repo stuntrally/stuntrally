@@ -205,7 +205,7 @@ void App::ShowHUD(bool hideAll)
 		if (mFpsOverlay) { if (pSet->show_fps) mFpsOverlay->show(); else mFpsOverlay->hide(); }
 		if (ndMap)  ndMap->setVisible(pSet->trackmap);
 		if (mGUI)	mGUI->setVisiblePointer(isFocGuiOrRpl());
-		if (mWndRpl && !bLoading)  mWndRpl->setVisible(pSet->rpl_play);  //
+		if (mWndRpl && !bLoading)  mWndRpl->setVisible(bRplPlay);  //
 	}
 }
 
@@ -237,7 +237,7 @@ void App::UpdateHUD(CAR* pCar, float time, Viewport* vp)
 	}
 			
 	///  hud rpm,vel  --------------------------------
-	if (pCar && !pSet->rpl_play)
+	if (pCar && !bRplPlay)
 	{	fr.vel = pCar->GetSpeedometer();
 		fr.rpm = pCar->GetEngineRPM();
 		fr.gear = pCar->GetGear();

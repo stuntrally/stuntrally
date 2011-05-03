@@ -189,7 +189,7 @@ void App::InitGui()
 	//  replays  ------------------------------------------------------------
 	Btn("RplLoad", btnRplLoad);  Btn("RplSave", btnRplSave);  Btn("RplDelete", btnRplDelete);
 	Chk("RplChkAutoRec", chkRplAutoRec, rpl_rec);
-	Chk("RplChkGhost", chkRplChkGhost, rpl_play);
+	//Chk("RplChkGhost", chkRplChkGhost, rpl_play);
 	Btn("RplBtnCur", btnRplCur)  Btn("RplBtnAll", btnRplAll);  // radio
     if (mWndRpl)
 	{	//  replay controls

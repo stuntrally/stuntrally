@@ -152,7 +152,7 @@ void App::CreateRacingLine()
 	m->end();
 	ndLine = mSceneMgr->getRootSceneNode()->createChildSceneNode();
 	ndLine->attachObject(m);
-	ndLine->setVisible(pSet->racingline);
+	//ndLine->setVisible(pSet->racingline);
 }
 		
 

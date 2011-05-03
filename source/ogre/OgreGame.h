@@ -185,9 +185,10 @@ protected:
 		btnRplToStart(WP),btnRplToEnd(WP), btnRplBack(WP),btnRplForward(WP),
 		btnRplPlay(WP);
 		
+public:
 	bool bRplPlay,bRplPause;  //  game
+protected:
 	ButtonPtr btRplPl;  void UpdRplPlayBtn();
-
 
 	//  game
 	ListPtr carList,trkList, resList, rplList;  void updReplaysList();

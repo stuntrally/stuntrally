@@ -45,7 +45,6 @@ public:
 	void UpdateCarInputs(CAR & car, int i);
 	void UpdateTimer();
 
-	void ProcessGUIInputs();
 	void ProcessGameInputs();
 
 	//bool NewGame(bool playreplay=false, bool opponents=false, int num_laps=0);
@@ -61,9 +60,7 @@ public:
 	bool LoadTrack(const std::string & trackname);
 	CAR* LoadCar(const std::string & carname, const MATHVECTOR <float, 3> & start_position, const QUATERNION <float> & start_orientation, bool islocal, bool isai, const std::string & carfile=""); ///< carfile is a string containing an entire .car file (e.g. XS.car) and is used instead of reading from disk.  this is optional
 
-	void PopulateValueLists(std::map<std::string, std::list <std::pair<std::string,std::string> > > & valuelists);
-	void PopulateReplayList(std::list <std::pair <std::string, std::string> > & replaylist);
-	void PopulateCarPaintList(const std::string & carname, std::list <std::pair <std::string, std::string> > & carpaintlist);
+	//void PopulateValueLists(std::map<std::string, std::list <std::pair<std::string,std::string> > > & valuelists);
 
 	enum OPTION_ACTION	{	SAVE, LOAD	};
 	void LoadSaveOptions(OPTION_ACTION action, std::map<std::string, std::string> & options);

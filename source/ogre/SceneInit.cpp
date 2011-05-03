@@ -38,13 +38,10 @@ void App::createScene()
 	Log(string("**** Loaded Vegetation objects: ") + toStr(objs.colsMap.size()));
 	Log(string("**** ReplayFrame size: ") + toStr(sizeof(ReplayFrame)));	
 
-	if (pSet->rpl_play)  //-
-		pSet->rpl_play = 0;
-
 	#if 0  // test autoload replay
 		string file = PATHMANAGER::GetReplayPath() + "/" + pSet->track + ".rpl";
 		if (replay.LoadFile(file))
-			pSet->rpl_play = 1;
+			bRplPlay = 1;
 	#endif
 
 	if (pSet->autostart)
@@ -59,6 +56,7 @@ void App::NewGame()
 {
 	// actual loading isn't done here
 	bLoading = true;
+	bRplPlay = 0;
 	LoadingOn();
 	// hide HUD
 	ShowHUD(true);
@@ -117,7 +115,7 @@ void App::LoadGame()  // 2
 	std::list<Camera*>::iterator camIt = mSplitMgr->mCameras.begin();
 	for (int i=0; i<pSet->local_players; i++)
 	{
-		carModels.push_back( new CarModel(i, CarModel::CT_LOCAL, pSet->car/*sListCar*/, mSceneMgr, pSet, pGame, &sc, (*camIt) ) );
+		carModels.push_back( new CarModel(i, CarModel::CT_LOCAL, pSet->car/*sListCar*/, mSceneMgr, pSet, pGame, &sc, (*camIt), this ) );
 		camIt++;
 	}
 	

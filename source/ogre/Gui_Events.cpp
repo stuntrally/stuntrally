@@ -233,7 +233,7 @@ void App::slVolTires(SL)
 void App::slVolEnv(SL)
 {
 	Real v = 1.4f * val/res;	pSet->vol_env = v;
-	if (valVolEnv){  Fmt(s, "%4.2f", v);		valVolEnv->setCaption(s);  }
+	if (valVolEnv){  Fmt(s, "%4.2f", v);	valVolEnv->setCaption(s);  }
 }
 
 
@@ -242,7 +242,6 @@ void App::slCarClrH(SL)
 {
 	Real v = val/res;  pSet->car_hue = v;
 	if (valCarClrH){	Fmt(s, "%4.2f", v);	valCarClrH->setCaption(s);  }
-	/// changes color for all cars
 	for (std::list<CarModel*>::iterator it=carModels.begin(); it!=carModels.end(); it++)
 		(*it)->ChangeClr();
 }
@@ -250,7 +249,6 @@ void App::slCarClrS(SL)
 {
 	Real v = -1.f + 2.f * val/res;  pSet->car_sat = v;
 	if (valCarClrS){	Fmt(s, "%4.2f", v);	valCarClrS->setCaption(s);  }
-	/// changes color for all cars
 	for (std::list<CarModel*>::iterator it=carModels.begin(); it!=carModels.end(); it++)
 		(*it)->ChangeClr();
 }
@@ -258,7 +256,6 @@ void App::slCarClrV(SL)
 {
 	Real v = -1.f + 2.f * val/res;  pSet->car_val = v;
 	if (valCarClrV){	Fmt(s, "%4.2f", v);	valCarClrV->setCaption(s);  }
-	/// changes color for all cars
 	for (std::list<CarModel*>::iterator it=carModels.begin(); it!=carModels.end(); it++)
 		(*it)->ChangeClr();
 }
@@ -464,16 +461,15 @@ void App::slBlurIntens(SL)
 
 void App::slRplPosEv(SL)  // change play pos
 {
-	if (!pSet->rpl_play)  return;
+	if (!bRplPlay)  return;
 	double oldt = pGame->timer.GetReplayTime();
 	double v = val/res;  v = max(0.0, min(1.0, v));  v *= replay.GetTimeLength();
 	pGame->timer.SetReplayTime(v);
 
 	FollowCamera* fCam = (*carModels.begin())->fCam;
 	fCam->first = true;  // instant change
-
-	//for (int i=0; i < 10; ++i)
-		fCam->update(abs(v-oldt));  //..?
+	for (int i=0; i < 10; ++i)
+		fCam->update(abs(v-oldt)/10.f);  //..?
 }
 
 void App::btnRplLoad(WP)  // Load
@@ -498,8 +494,9 @@ void App::btnRplLoad(WP)  // Load
 
 		pSet->car = car;
 		pSet->track = trk;  pSet->track_user = usr;
-		pSet->rpl_play = 1;
+		//bRplPlay = 1;
 		btnNewGame(0);
+		bRplPlay = 1;
 	}
 }
 
@@ -553,7 +550,7 @@ void App::listRplChng(List* li, size_t pos)
 
 void App::chkRplAutoRec(WP wp){		ChkEv(rpl_rec);		}
 
-void App::chkRplChkGhost(WP wp){	ChkEv(rpl_play);	}
+void App::chkRplChkGhost(WP wp){	/*ChkEv(rpl_play);*/	}
 
 
 void App::btnRplCur(WP)
@@ -609,11 +606,7 @@ void App::updReplaysList()
 	{
 		String s = *i;
 		s = StringUtil::replaceAll(s,".rpl","");
-		//ifstream check((PATHMANAGER::GetReplayPath() + "/" + *i + "/about.txt").c_str());
-		//if (check)  {
 		rplList->addItem(s);
-		//if (*i == pSet->car) {  carList->setIndexSelected(ii);  bFound = true;  }
-		//ii++;  }
 	}
 }
 
@@ -663,12 +656,11 @@ bool App::keyPressed( const OIS::KeyEvent &arg )
 
 
 		case KC_BACK:	// replay controls
-   			//if (mGUI)	mGUI->setVisiblePointer(isFocGui);
-			if (mWndRpl)  mWndRpl->setVisible(!mWndRpl->isVisible()/*pSet->rpl_play*/);
+			if (mWndRpl)  mWndRpl->setVisible(!mWndRpl->isVisible());
 			return true;
 
 		case KC_P:		// replay play/pause
-			if (pSet->rpl_play)
+			if (bRplPlay)
 			{	bRplPause = !bRplPause;  UpdRplPlayBtn();  }
 			return true;
 

@@ -2,14 +2,15 @@
 #include "CarModel.h"
 #include "../vdrift/pathmanager.h"
 #include "../vdrift/mathvector.h"
+#include "../ogre/ogregame.h"
 
 #include "boost/filesystem.hpp"
-#define FileExists(s) boost::filesystem::exists(s)
+#define  FileExists(s)  boost::filesystem::exists(s)
 
 
 CarModel::CarModel(unsigned int index, eCarType type, const std::string name,
-	Ogre::SceneManager* sceneMgr, SETTINGS* set, GAME* game, Scene* s, Camera* cam) :
-	hue(0), sat(0), val(0), fCam(0), pMainNode(0), pCar(0), terrain(0), resCar(""), mCamera(0), pReflect(0)
+	Ogre::SceneManager* sceneMgr, SETTINGS* set, GAME* game, Scene* s, Camera* cam, App* app) :
+	hue(0), sat(0), val(0), fCam(0), pMainNode(0), pCar(0), terrain(0), resCar(""), mCamera(0), pReflect(0), pApp(app)
 {
 	iIndex = index;  sDirname = name;  pSceneMgr = sceneMgr;
 	pSet = set;  pGame = game;  sc = s;  mCamera = cam;  eType = type;
@@ -350,8 +351,8 @@ void CarModel::Create()
 	UpdParsTrails();
 	
 	//  reload car materials, omit car and road
-	int i0 = 1;  if (pSet->rpl_play)  i0 = 0;
-	for (int i=i0; i < NumMaterials; ++i)
+	//int i0 = pApp->bRplPlay ? 0 : 1;
+	for (int i = 0; i < NumMaterials; ++i)
 		ReloadTex(sMtr[i]);
 }
 

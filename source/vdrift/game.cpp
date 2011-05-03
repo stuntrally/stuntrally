@@ -469,19 +469,6 @@ void GAME::UpdateTimer()
 	//timer.DebugPrint(info_output);
 }
 
-///check eventsystem state and make updates to the GUI
-void GAME::ProcessGUIInputs()
-{
-	/*if (eventsystem.GetKeyState(SDLK_ESCAPE).just_down &&
-		!eventsystem.GetKeyState(SDLK_LSHIFT).down)
-		eventsystem.Quit();*/  ///*
-
-	//if (eventsystem.GetKeyState(SDLK_F9).just_down)  // restart
-		//NewGame();
-	
-	//..
-}
-
 ///send inputs to the car, check for collisions, and so on
 void GAME::UpdateCar(CAR & car, int i, double dt)
 {
@@ -591,13 +578,7 @@ void GAME::LeaveGame()
 
 	carcontrols_local.first = NULL;
 
-	//gui.SetInGame(false);
 	track.Unload();
-	/*if (tracknode)
-	{
-		tracknode->Clear();
-		//graphics.ClearStaticDrawlistMap();
-	}**/
 	collision.Clear();
 
 	if (sound.Enabled())
@@ -607,9 +588,7 @@ void GAME::LeaveGame()
 			std::list <SOUNDSOURCE *> soundlist;
 			i->GetSoundList(soundlist);
 			for (std::list <SOUNDSOURCE *>::iterator s = soundlist.begin(); s != soundlist.end(); s++)
-			{
 				sound.RemoveSource(*s);
-			}
 		}
 	}
 	cars.clear();
@@ -713,113 +692,6 @@ bool GAME::LoadTrack(const std::string & trackname)
 bool SortStringPairBySecond (const pair<string,string> & first, const pair<string,string> & second)
 {
 	return first.second < second.second;
-}
-
-void GAME::PopulateReplayList(std::list <std::pair <std::string, std::string> > & replaylist)
-{
-	replaylist.clear();
-	int numreplays = 0;
-	std::list <std::string> replayfoldercontents;
-	if (PATHMANAGER::GetFolderIndex(PATHMANAGER::GetReplayPath(),replayfoldercontents))
-	{
-		for (std::list <std::string>::iterator i = replayfoldercontents.begin(); i != replayfoldercontents.end(); ++i)
-		{
-			if (*i != "benchmark.vdr" && i->find(".vdr") == i->length()-4)
-			{
-				std::stringstream rnumstr;
-				rnumstr << numreplays+1;
-				replaylist.push_back(pair<string,string>(rnumstr.str(),*i));
-				numreplays++;
-			}
-		}
-	}
-
-	if (numreplays == 0)
-	{
-		replaylist.push_back(pair<string,string>("0","None"));
-		settings->selected_replay = 0; //replay zero is a special value that the GAME class interprets as "None"
-	}
-	else
-		settings->selected_replay = 1;
-}
-
-void GAME::PopulateCarPaintList(const std::string & carname, std::list <std::pair <std::string, std::string> > & carpaintlist)
-{
-	carpaintlist.clear();
-	string cartexfolder = PATHMANAGER::GetCarPath()+"/"+carname+"/textures";
-	bool exists = true;
-	int paintnum = 0;
-	while (exists)
-	{
-		exists = false;
-
-		std::stringstream paintstr;
-		paintstr.width(2);  paintstr.fill('0');
-		paintstr << paintnum;
-
-		std::string cartexfile = cartexfolder+"/body"+paintstr.str()+".png";
-			//std::cout << cartexfile << std::endl;
-		ifstream check(cartexfile.c_str());
-		if (check)
-		{
-			exists = true;
-			carpaintlist.push_back(pair<string,string>(paintstr.str(),paintstr.str()));
-			paintnum++;
-		}
-	}
-}
-
-void GAME::PopulateValueLists(std::map<std::string, std::list <std::pair <std::string, std::string> > > & valuelists)
-{
-	//populate track list
-	{
-		std::list <pair<string,string> > tracklist;
-		std::list <string> trackfolderlist;
-		PATHMANAGER::GetFolderIndex(PATHMANAGER::GetTrackPath(),trackfolderlist);
-		for (std::list <string>::iterator i = trackfolderlist.begin(); i != trackfolderlist.end(); ++i)
-		{
-			ifstream check((PATHMANAGER::GetTrackPath() + "/" + *i + "/track.txt").c_str());
-			if (check)
-			{
-				string displayname;
-				getline(check, displayname);
-				tracklist.push_back(pair<string,string>(*i,displayname));
-			}
-		}
-		tracklist.sort(SortStringPairBySecond);
-		valuelists["tracks"] = tracklist;
-	}
-
-	//populate car list
-	{
-		std::list <pair<string,string> > carlist;
-		std::list <string> carfolderlist;
-		PATHMANAGER::GetFolderIndex(PATHMANAGER::GetCarPath(),carfolderlist);
-		for (std::list <string>::iterator i = carfolderlist.begin(); i != carfolderlist.end(); ++i)
-		{
-			ifstream check((PATHMANAGER::GetCarPath() + "/" + *i + "/about.txt").c_str());
-			if (check)
-			{
-				carlist.push_back(pair<string,string>(*i,*i));
-			}
-		}
-		valuelists["cars"] = carlist;
-	}
-
-	//populate car paints
-	/*{
-		PopulateCarPaintList(settings->car, valuelists["car_paints"]);
-		PopulateCarPaintList(settings->car_ai, valuelists["opponent_car_paints"]);
-	}/**/
-
-	//populate replays list
-	{
-		PopulateReplayList(valuelists["replays"]);
-	}
-
-	//populate other lists
-	valuelists["joy_indeces"].push_back(pair<string,string>("0","0"));
-	//valuelists["skins"].push_back(pair<string,string>("simple","simple"));
 }
 
 void GAME::LoadSaveOptions(OPTION_ACTION action, std::map<std::string, std::string> & options)

@@ -216,6 +216,34 @@
 					<Property key="Widget_Caption" value="#{VegetCol}"/>
 					<Property key="Text_TextColour" value="0.6 0.8 0.8"/>
 				</Widget>
+				<Widget type="Button" skin="CheckBox" position="312 287 256 25" name="chkSplitVertically"/>
+				<Widget type="Button" skin="Button" position="312 239 80 33" name="btnPlayers1">
+					<Property key="Widget_Caption" value="1"/>
+					<Property key="Widget_Colour" value="0.4 0.8 1"/>
+				</Widget>
+				<Widget type="Button" skin="Button" position="408 239 80 33" name="btnPlayers2">
+					<Property key="Widget_Caption" value="2"/>
+					<Property key="Widget_Colour" value="0.4 1 0.4"/>
+				</Widget>
+				<Widget type="Button" skin="Button" position="504 239 80 33" name="btnPlayers3">
+					<Property key="Widget_Caption" value="3"/>
+					<Property key="Widget_Colour" value="1 0.8 0.4"/>
+				</Widget>
+				<Widget type="Button" skin="Button" position="600 239 80 33" name="btnPlayers4">
+					<Property key="Widget_Caption" value="4"/>
+					<Property key="Widget_Colour" value="1 0.5 0.5"/>
+				</Widget>
+				<Widget type="StaticText" skin="StaticText" position="312 199 176 24">
+					<Property key="Widget_Caption" value="Num local players:"/>
+					<Property key="Text_TextColour" value="0.7 0.9 1"/>
+				</Widget>
+				<Widget type="StaticText" skin="StaticText" position="496 199 64 24" name="NumLocPlayers"/>
+				<Widget type="StaticText" skin="StaticText" position="32 23 120 24">
+					<Property key="Widget_Caption" value="Car"/>
+				</Widget>
+				<Widget type="StaticText" skin="StaticText" position="312 23 136 24">
+					<Property key="Widget_Caption" value="Game"/>
+				</Widget>
 			</Widget>
 			<Widget type="TabItem" skin="" position="4 26 787 531">
 				<Property key="Widget_Caption" value="#{Replay}"/>
@@ -238,17 +266,17 @@
 					<Property key="Text_TextColour" value="0.6 0.8 1"/>
 					<Property key="Widget_Caption" value="#{RplAll}"/>
 				</Widget>
-				<Widget type="Button" skin="Button" position="512 238 128 32" name="RplSave">
+				<Widget type="Button" skin="Button" position="376 194 128 32" name="RplSave">
 					<Property key="Widget_Caption" value="#{RplSave}"/>
 					<Property key="Text_TextColour" value="0.8 1 1"/>
 					<Property key="Widget_Colour" value="0.4 0.8 1"/>
 				</Widget>
-				<Widget type="Button" skin="Button" position="224 186 128 32" name="RplLoad">
+				<Widget type="Button" skin="Button" position="224 194 128 32" name="RplLoad">
 					<Property key="Widget_Caption" value="#{RplLoad}"/>
 					<Property key="Text_TextColour" value="0.8 1 1"/>
 					<Property key="Widget_Colour" value="0.6 0.6 1"/>
 				</Widget>
-				<Widget type="Button" skin="Button" position="512 190 128 24" name="RplDelete">
+				<Widget type="Button" skin="Button" position="536 198 128 24" name="RplDelete">
 					<Property key="Widget_Colour" value="1 0.4 0"/>
 					<Property key="Widget_Caption" value="#{RplDelete}"/>
 					<Property key="Text_TextColour" value="1 0.4 0.4"/>
@@ -268,10 +296,10 @@
 				<Widget type="Edit" skin="WordWrap" position="224 104 456 57" align="Relative" name="RplDesc">
 					<Property key="Text_TextColour" value="0.8 0.8 1"/>
 				</Widget>
-				<Widget type="Edit" skin="Edit" position="224 238 264 32" name="RplNameEdit">
+				<Widget type="Edit" skin="Edit" position="224 238 280 32" name="RplNameEdit">
 					<Property key="Widget_Colour" value="0.8 0.9 1"/>
 				</Widget>
-				<Widget type="Button" skin="Button" position="512 287 128 24">
+				<Widget type="Button" skin="Button" position="536 238 128 30">
 					<Property key="Text_TextColour" value="1 0.8 0.4"/>
 					<Property key="Widget_Colour" value="1 0.8 0.4"/>
 					<Property key="Widget_Caption" value="#{RplRename}"/>

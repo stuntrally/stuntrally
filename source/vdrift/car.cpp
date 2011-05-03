@@ -514,7 +514,7 @@ void CAR::UpdateSounds(float dt)
 	float squeal[4],whVel[4], suspVel[4],suspDisp[4];
 	
 	///  replay play  ------------------------------------------
-	if (pApp->pSet->rpl_play)
+	if (pApp->bRplPlay)
 	{
 		rpm = pApp->fr.rpm;
 		throttle = pApp->fr.throttle;
