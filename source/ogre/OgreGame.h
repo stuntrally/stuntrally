@@ -176,7 +176,8 @@ protected:
 	ButtonPtr chDbgT,chDbgB, chBlt,chBltTxt, chFps, chTimes,chMinimp, bnQuit;
 
 	///  replay
-	StaticTextPtr valRplPerc, valRplCur, valRplLen,  valRplName, valRplInfo;
+	StaticTextPtr valRplPerc, valRplCur, valRplLen,
+		valRplName,valRplInfo,valRplName2,valRplInfo2;
 	HScrollPtr slRplPos;  void slRplPosEv(SL);
 	EditPtr edRplName, edRplDesc;
 	void btnRplLoad(WP), btnRplSave(WP), btnRplDelete(WP),

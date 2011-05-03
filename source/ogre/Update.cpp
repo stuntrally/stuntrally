@@ -76,7 +76,7 @@ bool App::frameStart(Real time)
 		//bool oldFocRpl = isFocRpl;
 		if (pSet->rpl_play)
 		{
-			isFocRpl = ctrl;  //isKey(LCONTROL)||isKey(RCONTROL);
+			isFocRpl = ctrl;
 			//mGUI->setVisiblePointer(isFocGuiOrRpl());  // in sizehud-
 
 			int ta = (isKey(LBRACKET) ? -2 : 0) + (isKey(RBRACKET) ? 2 : 0);
@@ -88,10 +88,8 @@ bool App::frameStart(Real time)
 				t += tadd * time;  // add
 				if (t < 0.0)  t += len;  // cycle
 				if (t > len)  t -= len;
-				//t = max(0.0, min(len, t + tadd * time));  //speed
 				pGame->timer.SetReplayTime(t);
 			}
-			
 		}
 
 		if (!pGame)
