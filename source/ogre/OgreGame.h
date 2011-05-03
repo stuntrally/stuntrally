@@ -186,7 +186,7 @@ protected:
 		btnRplPlay(WP);
 		
 public:
-	bool bRplPlay,bRplPause;  //  game
+	bool bRplPlay,bRplPause, bRplRec;  //  game
 protected:
 	ButtonPtr btRplPl;  void UpdRplPlayBtn();
 

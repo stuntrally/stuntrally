@@ -37,12 +37,14 @@ void App::createScene()
 	objs.LoadXml();
 	Log(string("**** Loaded Vegetation objects: ") + toStr(objs.colsMap.size()));
 	Log(string("**** ReplayFrame size: ") + toStr(sizeof(ReplayFrame)));	
+	Log(string("**** ReplayHeader size: ") + toStr(sizeof(ReplayHeader)));	
 
 	#if 0  // test autoload replay
 		string file = PATHMANAGER::GetReplayPath() + "/" + pSet->track + ".rpl";
 		if (replay.LoadFile(file))
 			bRplPlay = 1;
 	#endif
+	bRplRec = pSet->rpl_rec;  // startup setting
 
 	if (pSet->autostart)
 		NewGame();
@@ -57,6 +59,7 @@ void App::NewGame()
 	// actual loading isn't done here
 	bLoading = true;
 	bRplPlay = 0;
+	pSet->rpl_rec = bRplRec;  // changed only at new game
 	LoadingOn();
 	// hide HUD
 	ShowHUD(true);
@@ -159,15 +162,16 @@ void App::LoadCar()  // 4
 		newPosInfos.push_back(carPosInfo);
 	}
 	
-	//  init replay  once  ---------------------------------
-	float whR[4] = {0.3f,0.3f,0.3f,0.3f};
-	if (pGame->cars.size() > 0)
+	///  Init Replay  once  =================----------------
+	replay.InitHeader(pSet->track.c_str(), pSet->track_user, pSet->car.c_str(), !bRplPlay);
+	replay.header.numPlayers = pSet->local_players;
+	
+	int c = 0;  // copy wheels R
+	for (std::list <CAR>::const_iterator it = pGame->cars.begin(); it != pGame->cars.end(); it++,c++)
 	{
-		CAR* pCar = &(*pGame->cars.begin());
 		for (int w=0; w<4; ++w)
-			whR[w] = pCar->GetTireRadius(WHEEL_POSITION(w));
-	}
-	replay.InitHeader(pSet->track.c_str(), pSet->track_user, pSet->car.c_str(), whR);
+			replay.header.whR[c][w] = (*it).GetTireRadius(WHEEL_POSITION(w));
+	}	// cars names..
 }
 
 void App::LoadTerrain()  // 5

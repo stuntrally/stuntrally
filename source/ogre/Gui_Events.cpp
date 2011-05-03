@@ -503,7 +503,7 @@ void App::btnRplLoad(WP)  // Load
 void App::btnRplSave(WP)  // Save
 {
 	String edit = edRplName->getCaption();
-	String file = PATHMANAGER::GetReplayPath() + "/" + pSet->track + edit + ".rpl";
+	String file = PATHMANAGER::GetReplayPath() + "/" + pSet->track + "_" + edit + ".rpl";
 	///  save
 	if (!replay.SaveFile(file.c_str()))
 	{
@@ -548,7 +548,13 @@ void App::listRplChng(List* li, size_t pos)
 }
 
 
-void App::chkRplAutoRec(WP wp){		ChkEv(rpl_rec);		}
+void App::chkRplAutoRec(WP wp)		//ChkEv(rpl_rec);		}
+{
+	bRplRec = !bRplRec;  // changes take effect next game start
+	if (!wp)  return;
+	ButtonPtr chk = wp->castType<MyGUI::Button>();
+    chk->setStateCheck(bRplRec);
+}
 
 void App::chkRplChkGhost(WP wp){	/*ChkEv(rpl_play);*/	}
 
@@ -656,8 +662,10 @@ bool App::keyPressed( const OIS::KeyEvent &arg )
 
 
 		case KC_BACK:	// replay controls
-			if (mWndRpl)  mWndRpl->setVisible(!mWndRpl->isVisible());
-			return true;
+			if (mWndRpl && !isFocGui)
+			{	mWndRpl->setVisible(!mWndRpl->isVisible());
+				return true;  }
+			break;
 
 		case KC_P:		// replay play/pause
 			if (bRplPlay)
