@@ -1,19 +1,26 @@
 #include "network.hpp"
 
 
-P2PGameClient::P2PGameClient(int port): m_client(*this, port)
+P2PGameClient::P2PGameClient(int port): m_client(*this, port), m_state(DISCONNECTED), m_mutex()
 {
 	//TODO
+}
+
+P2PGameClient::~P2PGameClient()
+{
+	// Shuts down possibly running threads
+	m_state = DISCONNECTED;
 }
 
 void P2PGameClient::connect(const std::string& address, int port)
 {
 	m_client.connect(address, port);
+	startLobby();
 }
-
 
 void P2PGameClient::sendPeerInfo()
 {
+	boost::mutex::scoped_lock lock(m_mutex);
 	for (protocol::PeerMap::const_iterator it = m_peers.begin(); it != m_peers.end(); ++it) {
 		m_client.broadcast(it->second, net::PACKET_RELIABLE);
 	}
@@ -24,9 +31,35 @@ void P2PGameClient::sendMessage(const std::string& msg)
 	m_client.broadcast(char(protocol::TEXT_MESSAGE) + msg);
 }
 
+void P2PGameClient::startLobby()
+{
+	if (m_state == LOBBY) return;
+	else m_state = LOBBY;
+	if (!m_peerInfoSenderThread.joinable())
+		m_peerInfoSenderThread = boost::thread(boost::bind(&P2PGameClient::peerInfoSenderThread, boost::ref(*this)));
+}
+
+void P2PGameClient::startGame()
+{
+	m_state = GAME;
+}
+
+void P2PGameClient::peerInfoSenderThread() {
+	std::cout << "Started peerInfoSenderThread" << std::endl;
+	while (m_state == LOBBY) {
+		boost::this_thread::sleep(boost::posix_time::milliseconds(2000));
+		sendPeerInfo();
+	}
+}
+
 void P2PGameClient::connectionEvent(net::NetworkTraffic const& e)
 {
 	std::cout << "Connection id=" << e.peer_id << std::endl;
+	if (m_state == LOBBY) {
+		// FIXME
+		protocol::PeerInfo pi; pi.packet_type = protocol::PEER_INFO;
+		m_peers[boost::lexical_cast<std::string>(e.peer_id)] = pi;
+	}
 	// We'll send the peer info periodically, so no need to do it here
 }
 
@@ -42,8 +75,10 @@ void P2PGameClient::receiveEvent(net::NetworkTraffic const& e)
 	if (e.packet_length <= 0 || !e.packet_data) return;
 	switch (e.packet_data[0]) {
 		case protocol::PEER_INFO: {
+			if (m_state != LOBBY) break;
 			protocol::PeerInfo pi = *reinterpret_cast<protocol::PeerInfo const*>(e.packet_data);
 			// TODO: Check for local address
+			boost::mutex::scoped_lock lock(m_mutex);
 			m_peers[boost::lexical_cast<std::string>(e.peer_id)] = pi;
 			std::cout << "Peer info received for " << pi.name << std::endl;
 			break;

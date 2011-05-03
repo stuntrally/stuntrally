@@ -69,6 +69,7 @@ void VprThread(App* pA)
 			std::cout << "Connect was a no go" << std::endl;
 		}
 	}
+	client.startLobby();
 	while (true) {
 		client.sendMessage("Hello");
 		boost::this_thread::sleep(boost::posix_time::milliseconds(2500));
