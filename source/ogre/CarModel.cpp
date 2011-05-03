@@ -2,7 +2,7 @@
 #include "CarModel.h"
 #include "../vdrift/pathmanager.h"
 #include "../vdrift/mathvector.h"
-//#include "../ogre/ogregame.h"
+//#include "../ogre/OgreGame.h"
 
 #include "boost/filesystem.hpp"
 #define  FileExists(s)  boost::filesystem::exists(s)
