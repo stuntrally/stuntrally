@@ -523,26 +523,20 @@ void App::btnRplDelete(WP)  // Delete
 //  list change
 void App::listRplChng(List* li, size_t pos)
 {
-	// load replay header upd text desc ..
 	size_t i = li->getIndexSelected();  if (i == ITEM_NONE)  return;
 	String name = li->getItemNameAt(i);
 	string file = PATHMANAGER::GetReplayPath() + "/" + name + ".rpl";
 	if (valRplName)  valRplName->setCaption(name);
 	if (!valRplInfo)  return;
 	
+	// load replay header upd text descr
 	Replay rpl;
 	if (rpl.LoadFile(file,true))
 	{
-		String s = String("Track: ") + rpl.header.track + "  Car: " + rpl.header.track + "   Time: " + GetTimeString(rpl.GetTimeLength());
+		String s = String("Car: ") + rpl.header.car + " \t  Track: " + rpl.header.track + "\nTime: " + GetTimeString(rpl.GetTimeLength());
 		valRplInfo->setCaption(s);
 	}
-	//UpdRplPlayBtn();
-	//if (imgCar)  imgCar->setImageTexture(sListCar+".jpg");
-	//  text desc
-	//valRplName
-	//valRplInfo
-	//edRplName
-	//edRplDesc
+	//edRplDesc  edRplName
 }
 
 

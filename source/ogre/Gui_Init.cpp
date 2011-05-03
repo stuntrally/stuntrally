@@ -206,8 +206,8 @@ void App::InitGui()
     	valRplLen = (StaticTextPtr)mWndRpl->findWidget("RplTimeLen");
 	}
 	//  text desc
-	valRplName = (StaticTextPtr)mWndRpl->findWidget("RplName");
-	valRplInfo = (StaticTextPtr)mWndRpl->findWidget("RplInfo");
+	valRplName = mGUI->findWidget<StaticText>("RplName");
+	valRplInfo = mGUI->findWidget<StaticText>("RplInfo");
 	edRplName = mGUI->findWidget<Edit>("RplNameEdit");
 	edRplDesc = mGUI->findWidget<Edit>("RplDesc");
 
