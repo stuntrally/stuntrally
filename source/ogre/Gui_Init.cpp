@@ -214,6 +214,12 @@ void App::InitGui()
 	rplList = mGUI->findWidget<List>("RplList");
 	if (rplList)  rplList->eventListChangePosition = newDelegate(this, &App::listRplChng);
 	updReplaysList();
+	
+	Btn("btnPlayers1", btnNumPlayers);
+	Btn("btnPlayers2", btnNumPlayers);
+	Btn("btnPlayers3", btnNumPlayers);
+	Btn("btnPlayers4", btnNumPlayers);
+	Chk("chkSplitVertically", chkSplitVert, split_vertically);
 
 	
 	///  input tab

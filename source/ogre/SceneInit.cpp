@@ -109,6 +109,11 @@ void App::LoadCleanUp()  // 1 first
 
 void App::LoadGame()  // 2
 {
+	//  viewports
+	mSplitMgr->mNumPlayers = pSet->local_players;
+	mSplitMgr->Align();
+	mPlatform->getRenderManagerPtr()->setActiveViewport(mSplitMgr->mNumPlayers);
+	
 	pGame->NewGameDoCleanup();
 	pGame->NewGameDoLoadTrack();
 	/// init car models
