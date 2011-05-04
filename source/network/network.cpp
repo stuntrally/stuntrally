@@ -61,7 +61,7 @@ void P2PGameClient::connectionEvent(net::NetworkTraffic const& e)
 	std::cout << "Connection address=" << e.peer_address << "   id=" << e.peer_id << std::endl;
 	if (m_state == LOBBY) {
 		boost::mutex::scoped_lock lock(m_mutex);
-		PeerInfo& pi = m_peers[e.peer_id];
+		PeerInfo& pi = m_peers[e.peer_address];
 		pi.address = e.peer_address;
 		pi.connected = true;
 	}
@@ -72,7 +72,7 @@ void P2PGameClient::disconnectEvent(net::NetworkTraffic const& e)
 {
 	std::cout << "Disconnected address=" << e.peer_address << "   id=" << e.peer_id << std::endl;
 	boost::mutex::scoped_lock lock(m_mutex);
-	m_peers.erase(e.peer_id);
+	m_peers.erase(e.peer_address);
 }
 
 void P2PGameClient::receiveEvent(net::NetworkTraffic const& e)
@@ -84,9 +84,9 @@ void P2PGameClient::receiveEvent(net::NetworkTraffic const& e)
 			if (m_state != LOBBY) break;
 			protocol::PeerAddressPacket pap = *reinterpret_cast<protocol::PeerAddressPacket const*>(e.packet_data);
 			std::cout << "Peer info received for " << pap.address << std::endl;
-			// TODO: Check for local address
+			// TODO: Exclude local address
 			boost::mutex::scoped_lock lock(m_mutex);
-			m_peers[e.peer_id].address = pap.address;
+			m_peers[pap.address].address = pap.address;
 			break;
 		}
 		case protocol::TEXT_MESSAGE: {
@@ -99,7 +99,7 @@ void P2PGameClient::receiveEvent(net::NetworkTraffic const& e)
 				std::string nick((const char*)e.packet_data + 1, e.packet_length - 1);
 				std::cout << "Nick received: " << nick << std::endl;
 				boost::mutex::scoped_lock lock(m_mutex);
-				m_peers[e.peer_id].name = nick;
+				m_peers[e.peer_address].name = nick;
 			}
 			break;
 		}

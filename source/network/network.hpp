@@ -20,7 +20,7 @@ struct PeerInfo {
 	PeerInfo(net::Address addr = net::Address()): address(addr), name("Unknown"), connected(false) {}
 };
 
-typedef std::map<net::peer_id_t, PeerInfo> PeerMap;
+typedef std::map<std::string, PeerInfo> PeerMap;
 
 
 /**
