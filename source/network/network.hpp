@@ -15,9 +15,9 @@
 struct PeerInfo {
 	net::Address address;
 	std::string name;
-	bool connected;
+	enum ConnectionState { DISCONNECTED = 0, CONNECTING = 1, CONNECTED = 2 } connection;
 
-	PeerInfo(net::Address addr = net::Address()): address(addr), name(), connected(false) {}
+	PeerInfo(net::Address addr = net::Address()): address(addr), name(), connection(DISCONNECTED) {}
 };
 
 typedef std::map<std::string, PeerInfo> PeerMap;

@@ -52,8 +52,9 @@ void P2PGameClient::startGame()
 	while (it != m_peers.end()) {
 		PeerInfo pi = it->second;
 		// Check condition
-		if (!pi.connected || pi.name.empty()) m_peers.erase(it++);
-		else ++it;
+		if (pi.connection != PeerInfo::CONNECTED || pi.name.empty()) {
+			m_peers.erase(it++);
+		} else ++it;
 	}
 }
 
@@ -63,10 +64,11 @@ void P2PGameClient::peerInfoSenderThread() {
 		// Check if we should try connecting to someone
 		{
 			boost::mutex::scoped_lock lock(m_mutex);
-			for (PeerMap::const_iterator it = m_peers.begin(); it != m_peers.end(); ++it) {
-				PeerInfo pi = it->second;
-				if (!pi.connected) {
+			for (PeerMap::iterator it = m_peers.begin(); it != m_peers.end(); ++it) {
+				PeerInfo& pi = it->second;
+				if (pi.connection == PeerInfo::DISCONNECTED) {
 					std::cout << "Connecting to " << pi.address << std::endl;
+					pi.connection = PeerInfo::CONNECTING;
 					m_client.connect(pi.address);
 				}
 			}
@@ -85,7 +87,7 @@ void P2PGameClient::connectionEvent(net::NetworkTraffic const& e)
 		boost::mutex::scoped_lock lock(m_mutex);
 		PeerInfo& pi = m_peers[e.peer_address];
 		pi.address = e.peer_address;
-		pi.connected = true;
+		pi.connection = PeerInfo::CONNECTED;
 	}
 	// We'll send the peer info periodically, so no need to do it here
 }
@@ -94,7 +96,7 @@ void P2PGameClient::disconnectEvent(net::NetworkTraffic const& e)
 {
 	std::cout << "Disconnected address=" << e.peer_address << "   id=" << e.peer_id << std::endl;
 	boost::mutex::scoped_lock lock(m_mutex);
-	m_peers.erase(e.peer_address);
+	m_peers[e.peer_address].connection = PeerInfo::DISCONNECTED;
 }
 
 void P2PGameClient::receiveEvent(net::NetworkTraffic const& e)
@@ -117,7 +119,6 @@ void P2PGameClient::receiveEvent(net::NetworkTraffic const& e)
 		case protocol::NICK: {
 			if (e.packet_length > 1) {
 				std::string nick((const char*)e.packet_data + 1, e.packet_length - 1);
-				std::cout << "Nick received: " << nick << std::endl;
 				boost::mutex::scoped_lock lock(m_mutex);
 				m_peers[e.peer_address].name = nick;
 			}
