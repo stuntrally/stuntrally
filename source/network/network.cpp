@@ -13,8 +13,8 @@ P2PGameClient::~P2PGameClient()
 
 void P2PGameClient::connect(const std::string& address, int port)
 {
-	m_client.connect(address, port);
 	startLobby();
+	m_client.connect(address, port);
 }
 
 void P2PGameClient::sendPeerInfo()
@@ -65,7 +65,7 @@ void P2PGameClient::peerInfoSenderThread() {
 			boost::mutex::scoped_lock lock(m_mutex);
 			for (PeerMap::const_iterator it = m_peers.begin(); it != m_peers.end(); ++it) {
 				PeerInfo pi = it->second;
-				if (!pi.connected && !pi.name.empty()) {
+				if (!pi.connected) {
 					std::cout << "Connecting to " << pi.address << std::endl;
 					m_client.connect(pi.address);
 				}
