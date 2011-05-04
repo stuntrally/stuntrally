@@ -72,7 +72,7 @@ public:
 	/// Updates the hosted game state to master server
 	void updateGame(const std::string& name, const std::string& track, int players);
 
-	/// Requests new game listing, doesn't wait for it to arrive
+	/// Clears cache, requests new game listing, doesn't wait for it to arrive
 	void refreshList();
 
 	/// Returns cached list of games
@@ -88,6 +88,7 @@ public:
 	void receiveEvent(net::NetworkTraffic const& e);
 
 private:
+	mutable boost::mutex m_mutex;
 	net::NetworkObject m_client;
 	protocol::GameList m_games;
 	int m_gameId;

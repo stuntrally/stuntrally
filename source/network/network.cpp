@@ -103,7 +103,7 @@ void P2PGameClient::receiveEvent(net::NetworkTraffic const& e)
 
 
 
-MasterClient::MasterClient(): m_client(*this), m_gameId(0)
+MasterClient::MasterClient(): m_mutex(), m_client(*this), m_gameId(0)
 {
 }
 
@@ -114,6 +114,10 @@ void MasterClient::connect(const std::string& address, int port)
 
 void MasterClient::refreshList()
 {
+	{
+		boost::mutex::scoped_lock lock(m_mutex);
+		m_games.clear();
+	}
 	protocol::GameInfo game;
 	game.packet_type = protocol::GAME_LIST;
 	m_client.broadcast(game, net::PACKET_RELIABLE);
@@ -148,6 +152,8 @@ void MasterClient::receiveEvent(net::NetworkTraffic const& e)
 		case protocol::GAME_STATUS: {
 			protocol::GameInfo game = *reinterpret_cast<protocol::GameInfo const*>(e.packet_data);
 			std::cout << "Available game: " << game.name << std::endl;
+			boost::mutex::scoped_lock lock(m_mutex);
+			m_games[game.id] = game;
 			break;
 		}
 		case protocol::GAME_ACCEPTED: {
@@ -157,7 +163,7 @@ void MasterClient::receiveEvent(net::NetworkTraffic const& e)
 			break;
 		}
 		default: {
-			std::cout << "Unknown packet type received" << std::endl;
+			std::cout << "Unknown packet type received (MasterClient)" << std::endl;
 			break;
 		}
 	}
