@@ -27,6 +27,7 @@
 #include <boost/thread.hpp>
 #include <boost/noncopyable.hpp>
 #include <boost/lexical_cast.hpp>
+#include <boost/cstdint.hpp>
 #include <enet/enet.h>
 
 // Version check

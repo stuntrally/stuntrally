@@ -10,7 +10,6 @@
  *   - Serialization is basically a naïve memcpy, so use only primitive types
  */
 
-#include <stdint.h>
 #include <boost/lexical_cast.hpp>
 #include "enet-wrapper.hpp"
 
