@@ -60,11 +60,10 @@ void P2PGameClient::connectionEvent(net::NetworkTraffic const& e)
 {
 	std::cout << "Connection address=" << e.peer_address << "   id=" << e.peer_id << std::endl;
 	if (m_state == LOBBY) {
-		// TODO: Send him my nick
-		PeerInfo pi(e.peer_address);
-		pi.connected = true;
 		boost::mutex::scoped_lock lock(m_mutex);
-		m_peers[e.peer_id] = pi;
+		PeerInfo& pi = m_peers[e.peer_id];
+		pi.address = e.peer_address;
+		pi.connected = true;
 	}
 	// We'll send the peer info periodically, so no need to do it here
 }
