@@ -21,6 +21,7 @@
 #include <boost/bind.hpp>
 #include <boost/thread.hpp>
 #include <boost/noncopyable.hpp>
+#include <boost/lexical_cast.hpp>
 #include <enet/enet.h>
 
 // Version check
@@ -42,7 +43,7 @@ namespace net {
 	};
 
 	/// Convert integer IPv4 address to dot-notation
-	inline std::string IPv4(unsigned i) {
+	inline std::string IPv4(uint32_t i) {
 		std::ostringstream oss;
 		oss << (i & 0xFF) << "." << ((i >> 8) & 0xFF) << "." << ((i >> 16) & 0xFF) << "." << ((i >> 24) & 0xFF);
 		return oss.str();
@@ -54,14 +55,34 @@ namespace net {
 		~ENetContainer() { enet_deinitialize(); }
 	};
 
+	/// Internet address struct
+	struct Address {
+		uint32_t host; ///< IPv4 address
+		uint16_t port; ///< Port number
+
+		Address(const ENetPeer* peer = NULL) {
+			if (peer) { host = peer->address.host; port = peer->address.port; }
+			else { host = 0; port = 0; }
+		}
+
+		operator std::string() const { return IPv4(host)+":"+boost::lexical_cast<std::string>(port); }
+		bool operator==(const Address& other) { return host == other.host && port == other.port; }
+		bool operator!=(const Address& other) { return !(*this == other); }
+		operator bool() { return port > 0; }
+	};
+
+	inline std::ostream& operator<< (std::ostream& out, const Address& addr) {
+		out << static_cast<std::string>(addr); return out;
+	}
 
 	/// Network traffic container
 	struct NetworkTraffic {
 		NetworkTraffic(const enet_uint8* pckd = NULL, size_t pckl = 0):
-			peer_id(0), peer_data(NULL), packet_data(pckd), packet_length(pckl) {}
-		NetworkTraffic(peer_id_t id, void* dptr, const enet_uint8* pckd = NULL, size_t pckl = 0):
-			peer_id(id), peer_data(dptr), packet_data(pckd), packet_length(pckl) {}
+			peer_id(0), peer_address(), peer_data(NULL), packet_data(pckd), packet_length(pckl) {}
+		NetworkTraffic(ENetPeer* peer, void* dptr, const enet_uint8* pckd = NULL, size_t pckl = 0):
+			peer_id(peer->incomingPeerID), peer_address(peer), peer_data(dptr), packet_data(pckd), packet_length(pckl) {}
 		peer_id_t peer_id;
+		Address peer_address;
 		void* peer_data;
 		const enet_uint8* packet_data;
 		size_t packet_length;
@@ -127,16 +148,16 @@ namespace net {
 					} case ENET_EVENT_TYPE_CONNECT: {
 						m_peers[e.peer->incomingPeerID] = e.peer;
 						std::cout << "Connected " << IPv4(e.peer->address.host) << ":" << e.peer->address.port << std::endl;
-						m_listener.connectionEvent(NetworkTraffic(e.peer->incomingPeerID, e.peer->data));
+						m_listener.connectionEvent(NetworkTraffic(e.peer, e.peer->data));
 						break;
 					} case ENET_EVENT_TYPE_DISCONNECT: {
 						std::cout << "Disconnected " << IPv4(e.peer->address.host) << ":" << e.peer->address.port << std::endl;
-						m_listener.disconnectEvent(NetworkTraffic(e.peer->incomingPeerID, e.peer->data));
+						m_listener.disconnectEvent(NetworkTraffic(e.peer, e.peer->data));
 						e.peer->data = NULL;
 						m_peers.erase(e.peer->incomingPeerID);
 						break;
 					} case ENET_EVENT_TYPE_RECEIVE: {
-						m_listener.receiveEvent(NetworkTraffic(e.peer->incomingPeerID, e.peer->data, e.packet->data, e.packet->dataLength));
+						m_listener.receiveEvent(NetworkTraffic(e.peer, e.peer->data, e.packet->data, e.packet->dataLength));
 						enet_packet_destroy(e.packet); // Clean-up
 						break;
 					}

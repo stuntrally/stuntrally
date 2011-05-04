@@ -54,24 +54,28 @@ void P2PGameClient::peerInfoSenderThread() {
 
 void P2PGameClient::connectionEvent(net::NetworkTraffic const& e)
 {
-	std::cout << "Connection id=" << e.peer_id << std::endl;
+	std::cout << "Connection address=" << e.peer_address << " id=" << e.peer_id << std::endl;
 	if (m_state == LOBBY) {
-		// FIXME
-		protocol::PeerInfo pi; pi.packet_type = protocol::PEER_INFO;
-		m_peers[boost::lexical_cast<std::string>(e.peer_id)] = pi;
+		protocol::PeerInfo pi;
+		pi.packet_type = protocol::PEER_INFO;
+		pi.address = e.peer_address;
+		char name[] = "Unknown\0";
+		memcpy(pi.name, name, strlen(name)+1); // FIXME: This memcpy stuff is really hairy
+		boost::mutex::scoped_lock lock(m_mutex);
+		m_peers[e.peer_id] = pi;
 	}
 	// We'll send the peer info periodically, so no need to do it here
 }
 
 void P2PGameClient::disconnectEvent(net::NetworkTraffic const& e)
 {
-	std::cout << "Disconnected id=" << e.peer_id << std::endl;
-	m_peers.erase(boost::lexical_cast<std::string>(e.peer_id));
+	std::cout << "Disconnected address=" << e.peer_address << " id=" << e.peer_id << std::endl;
+	m_peers.erase(e.peer_id);
 }
 
 void P2PGameClient::receiveEvent(net::NetworkTraffic const& e)
 {
-	std::cout << "Traffic from id=" << e.peer_id << std::endl;
+	std::cout << "Traffic from=" << e.peer_address << " id=" << e.peer_id << std::endl;
 	if (e.packet_length <= 0 || !e.packet_data) return;
 	switch (e.packet_data[0]) {
 		case protocol::PEER_INFO: {
@@ -79,7 +83,7 @@ void P2PGameClient::receiveEvent(net::NetworkTraffic const& e)
 			protocol::PeerInfo pi = *reinterpret_cast<protocol::PeerInfo const*>(e.packet_data);
 			// TODO: Check for local address
 			boost::mutex::scoped_lock lock(m_mutex);
-			m_peers[boost::lexical_cast<std::string>(e.peer_id)] = pi;
+			m_peers[e.peer_id] = pi;
 			std::cout << "Peer info received for " << pi.name << std::endl;
 			break;
 		}
@@ -100,7 +104,6 @@ void P2PGameClient::receiveEvent(net::NetworkTraffic const& e)
 
 MasterClient::MasterClient(): m_client(*this), m_gameId(0)
 {
-	//TODO
 }
 
 void MasterClient::connect(const std::string& address, int port)
@@ -120,6 +123,7 @@ void MasterClient::updateGame(const std::string& name, const std::string& track,
 	protocol::GameInfo game;
 	game.packet_type = protocol::GAME_STATUS;
 	game.id = m_gameId;
+	// FIXME: This memcpy stuff is really hairy
 	memcpy(game.name, name.c_str(), 32);
 	memcpy(game.track, track.c_str(), 32);
 	game.players = players;

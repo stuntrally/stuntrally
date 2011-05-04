@@ -60,16 +60,15 @@ typedef std::map<uint32_t, protocol::GameInfo> GameList;
  */
 struct PeerInfo: public net::SimpleSerializer<PeerInfo> {
 	uint8_t packet_type;
-	uint32_t address;
-	uint16_t port;
+	net::Address address;
 	char name[16];
 
-	std::string getId() const { return boost::lexical_cast<std::string>(address)+":"+boost::lexical_cast<std::string>(port); }
-	bool operator==(const PeerInfo& other) { return address == other.address && port == other.port; }
+	std::string getId() const { return boost::lexical_cast<std::string>(address.host)+":"+boost::lexical_cast<std::string>(address.port); }
+	bool operator==(const PeerInfo& other) { return address == other.address; }
 	bool operator!=(const PeerInfo& other) { return !(*this == other); }
 };
 
-typedef std::map<std::string, protocol::PeerInfo> PeerMap;
+typedef std::map<net::peer_id_t, protocol::PeerInfo> PeerMap;
 
 
 /**
