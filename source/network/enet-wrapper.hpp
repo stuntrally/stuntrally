@@ -218,6 +218,24 @@ namespace net {
 			peer->data = data;
 		}
 
+		/**
+		 * Connect to a peer.
+		 * @param addr the address to connect to
+		 * @param data application specific data that can be retrieved in events
+		 */
+		void connect(Address addr, void* data = NULL) {
+			// Set properties
+			ENetAddress address;
+			address.host = addr.host;
+			address.port = addr.port;
+			// Initiate the connection
+			ENetPeer* peer = NULL;
+			boost::mutex::scoped_lock lock(m_mutex);
+			peer = enet_host_connect(m_host, &address, ENetChannels, 0);
+			if (!peer) throw std::runtime_error("No available peers for initiating an ENet connection.");
+			peer->data = data;
+		}
+
 		/// Send a packet to everyone
 		void broadcast(const NetworkTraffic& msg, int flags = 0) {
 			ENetPacket* packet = enet_packet_create(msg.packet_data, msg.packet_length, flags);

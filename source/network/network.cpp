@@ -46,12 +46,34 @@ void P2PGameClient::startLobby()
 void P2PGameClient::startGame()
 {
 	m_state = GAME;
+	// Clean up all zombie peers
+	boost::mutex::scoped_lock lock(m_mutex);
+	PeerMap::iterator it = m_peers.begin();
+	while (it != m_peers.end()) {
+		PeerInfo pi = it->second;
+		// Check condition
+		if (!pi.connected || pi.name.empty()) m_peers.erase(it++);
+		else ++it;
+	}
 }
 
 void P2PGameClient::peerInfoSenderThread() {
 	std::cout << "Started peerInfoSenderThread" << std::endl;
 	while (m_state == LOBBY) {
+		// Check if we should try connecting to someone
+		{
+			boost::mutex::scoped_lock lock(m_mutex);
+			for (PeerMap::const_iterator it = m_peers.begin(); it != m_peers.end(); ++it) {
+				PeerInfo pi = it->second;
+				if (!pi.connected && !pi.name.empty()) {
+					std::cout << "Connecting to " << pi.address << std::endl;
+					m_client.connect(pi.address);
+				}
+			}
+		}
+		// Wait some
 		boost::this_thread::sleep(boost::posix_time::milliseconds(2000));
+		// Broadcast info
 		sendPeerInfo();
 	}
 }
@@ -77,14 +99,12 @@ void P2PGameClient::disconnectEvent(net::NetworkTraffic const& e)
 
 void P2PGameClient::receiveEvent(net::NetworkTraffic const& e)
 {
-	std::cout << "Traffic from address=" << e.peer_address << "   id=" << e.peer_id << std::endl;
 	if (e.packet_length <= 0 || !e.packet_data) return;
 	switch (e.packet_data[0]) {
 		case protocol::PEER_INFO: {
 			if (m_state != LOBBY) break;
 			protocol::PeerAddressPacket pap = *reinterpret_cast<protocol::PeerAddressPacket const*>(e.packet_data);
 			std::cout << "Peer info received for " << pap.address << std::endl;
-			// TODO: Exclude local address
 			boost::mutex::scoped_lock lock(m_mutex);
 			m_peers[pap.address].address = pap.address;
 			break;
