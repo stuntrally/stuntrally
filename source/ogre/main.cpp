@@ -62,6 +62,8 @@ void VprThread(App* pA)
 
 	// FIXME: Temporary network test hack
 	P2PGameClient client(argc > 1 ? 5555 : 5556);
+	std::cout << "Starting a ~15s lobby period" << std::endl;
+	client.startLobby();
 	if (argc > 1) {
 		try {
 			client.connect("localhost", 5556);
@@ -69,11 +71,14 @@ void VprThread(App* pA)
 			std::cout << "Connect was a no go" << std::endl;
 		}
 	}
-	client.startLobby();
-	while (true) {
-		client.sendMessage("Hello");
-		boost::this_thread::sleep(boost::posix_time::milliseconds(2500));
-	}
+	boost::this_thread::sleep(boost::posix_time::milliseconds(15000));
+	client.startGame();
+	std::cout << "Lobby closed, peer count is " << client.getPeerCount() << std::endl;
+	std::cout << "Sending a test message to all" << std::endl;
+	client.sendMessage("Hello!");
+	boost::this_thread::sleep(boost::posix_time::milliseconds(8000));
+	std::cout << "Test ended" << std::endl;
+	return 0;
 
 	///  game  ------------------------------
 	GAME* pGame = new GAME(info_output, error_output, settings);

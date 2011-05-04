@@ -54,7 +54,7 @@ void P2PGameClient::peerInfoSenderThread() {
 
 void P2PGameClient::connectionEvent(net::NetworkTraffic const& e)
 {
-	std::cout << "Connection address=" << e.peer_address << " i  d=" << e.peer_id << std::endl;
+	std::cout << "Connection address=" << e.peer_address << "   id=" << e.peer_id << std::endl;
 	if (m_state == LOBBY) {
 		protocol::PeerInfo pi;
 		pi.packet_type = protocol::PEER_INFO;
