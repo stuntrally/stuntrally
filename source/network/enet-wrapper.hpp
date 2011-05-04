@@ -1,9 +1,14 @@
 #pragma once
 
 /**
+ * @file
  * Networking library wrapping ENet.
+ *
+ * The aim is to hide ENet behind an object-oriented, threaded API
+ * that could theoretically be implemented with another networking
+ * library without changes to the user's code.
  * 
- * Requires linking agains ENet and boost_thread libraries.
+ * Requires linking agains ENet 1.3.x and boost_thread libraries.
  * 
  * QUICKGUIDE:
  *   1. Create ENetContainer library and keep it in scope
@@ -49,7 +54,13 @@ namespace net {
 		return oss.str();
 	}
 
-	/// RAII Wrapper for the library
+	/**
+	 * RAII Wrapper for the library
+	 *
+	 * Create an instance when you want to initialize networking and
+	 * keep it in scope during the time you need it. Deinit is automatic
+	 * upon destruction.
+	 */
 	struct ENetContainer {
 		ENetContainer() { enet_initialize(); }
 		~ENetContainer() { enet_deinitialize(); }
@@ -81,11 +92,11 @@ namespace net {
 			peer_id(0), peer_address(), peer_data(NULL), packet_data(pckd), packet_length(pckl) {}
 		NetworkTraffic(ENetPeer* peer, void* dptr, const enet_uint8* pckd = NULL, size_t pckl = 0):
 			peer_id(peer->incomingPeerID), peer_address(peer), peer_data(dptr), packet_data(pckd), packet_length(pckl) {}
-		peer_id_t peer_id;
-		Address peer_address;
-		void* peer_data;
-		const enet_uint8* packet_data;
-		size_t packet_length;
+		peer_id_t peer_id; ///< Peer ID assigned by the library
+		Address peer_address; ///< Address from which the peer connected
+		void* peer_data; ///< User data associated with the peer that sent the traffic
+		const enet_uint8* packet_data; ///< The actual packet data (empty for connect/disconnect events)
+		size_t packet_length; ///< Length of the packet data in bytes
 	};
 
 	/// Inherit this to easily convert simple structs to NetworkTraffic
@@ -97,16 +108,38 @@ namespace net {
 		operator const NetworkTraffic() const { return NetworkTraffic(reinterpret_cast<enet_uint8 const*>(this), sizeof(T)); }
 	};
 
-	/// Callback class prototype
+	/**
+	 * @brief Callback class prototype
+	 *
+	 * Inherit this class and implement the functions to get network events.
+	 * The events are sent from another thread, but there will not be two
+	 * simultaneous events.
+	 */
 	class NetworkListener {
-	  public:
+	public:
+		/// Someone connected
+		/// @param e the traffic associated with the event
 		virtual void connectionEvent(NetworkTraffic const& e) {}
+		/// Someone disconnected
+		/// @param e the traffic associated with the event
 		virtual void disconnectEvent(NetworkTraffic const& e) {}
+		/// Someone sent some data
+		/// @param e the traffic associated with the event
 		virtual void receiveEvent(NetworkTraffic const& e) {}
 	};
 
 
-	/// Common networking stuff for both server and client
+	/**
+	 * Networking class capable of acting as client or server
+	 *
+	 * This is the main object that provides an object-oriented API
+	 * for the underlying low-level networking implementation.
+	 *
+	 * A thread is used so that the networking events are asynchronous.
+	 * There is no need for user to poll - use NetworkListener class instead.
+	 *
+	 * Connections are automatically terminated upon destruction of the instance.
+	 */
 	class NetworkObject: public boost::noncopyable {
 	public:
 
@@ -229,6 +262,7 @@ namespace net {
 			return NULL;
 		}
 
+		/// Terminate the network thread. Automatically called upon destruction.
 		void terminate() { m_quit = true; m_thread.join(); }
 
 	private:

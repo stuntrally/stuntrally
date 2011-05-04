@@ -1,7 +1,19 @@
+#pragma once
+
+/**
+ * @file
+ * This file contains the game specific networking client classes.
+ */
+
 #include "enet-wrapper.hpp"
 #include "protocol.hpp"
 
-
+/**
+ * @brief High-level networking implentation using p2p.
+ *
+ * This class is responsible for forming a peer-to-peer network,
+ * maintaining it and handling high-level messaging between the peers.
+ */
 class P2PGameClient: public net::NetworkListener {
 public:
 	P2PGameClient(int port = protocol::DEFAULT_PORT);
@@ -44,6 +56,12 @@ private:
 };
 
 
+/**
+ * @brief Client for connecting to the master server.
+ *
+ * This class handles the messaging with the master server
+ * (which is responsible for announcing games).
+ */
 class MasterClient: public net::NetworkListener {
 public:
 	MasterClient();
@@ -54,7 +72,7 @@ public:
 	/// Updates the hosted game state to master server
 	void updateGame(const std::string& name, const std::string& track, int players);
 
-	/// Requests new game listing
+	/// Requests new game listing, doesn't wait for it to arrive
 	void refreshList();
 
 	/// Returns cached list of games

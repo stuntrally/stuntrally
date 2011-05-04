@@ -1,5 +1,7 @@
 #pragma once
+
 /**
+ * @file
  * This file describes the protocol that is used for network communication.
  * It contains structures and serializations that are transmitted.
  *
@@ -17,7 +19,7 @@ namespace protocol {
 const unsigned DEFAULT_PORT = 4243;
 
 /**
- * This enum contains all possible message types.
+ * @brief Contains all possible message types.
  * It will be transmitted as 8-bit unsigned int.
  */
 enum PacketType {
@@ -35,7 +37,7 @@ enum PacketType {
 
 
 /**
- * Contains information about one game that is available for joining.
+ * @brief Contains information about one game that is available for joining.
  */
 struct GameInfo: public net::SimpleSerializer<GameInfo> {
 	uint8_t packet_type;
@@ -55,7 +57,7 @@ typedef std::map<uint32_t, protocol::GameInfo> GameList;
 
 
 /**
- * Contains peer/player information.
+ * @brief Contains peer/player information.
  * These structs are passed around to create the complete network topography.
  */
 struct PeerInfo: public net::SimpleSerializer<PeerInfo> {
