@@ -38,6 +38,9 @@ public:
 	/// Thread that periodically proadcasts peer info, don't call directly
 	void peerInfoSenderThread();
 
+	/// How many peers are connected
+	size_t getPeerCount() { return m_peers.size(); }
+
 	/// Callback from networking
 	void connectionEvent(net::NetworkTraffic const& e);
 
