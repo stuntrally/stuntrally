@@ -205,7 +205,7 @@ namespace net {
 		 * @param port the port to connect to
 		 * @param data application specific data that can be retrieved in events
 		 */
-		void connect(std::string host, int port, void* data = NULL) {
+		void connect(const std::string& host, int port, void* data = NULL) {
 			// Set properties
 			ENetAddress address;
 			enet_address_set_host(&address, host.c_str());
@@ -223,7 +223,7 @@ namespace net {
 		 * @param addr the address to connect to
 		 * @param data application specific data that can be retrieved in events
 		 */
-		void connect(Address addr, void* data = NULL) {
+		void connect(const Address& addr, void* data = NULL) {
 			// Set properties
 			ENetAddress address;
 			address.host = addr.host;
