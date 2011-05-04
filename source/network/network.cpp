@@ -19,6 +19,10 @@ void P2PGameClient::connect(const std::string& address, int port)
 
 void P2PGameClient::sendPeerInfo()
 {
+	// Send my nickname
+	// TODO: Better place to do this?
+	m_client.broadcast(char(protocol::NICK) + m_name);
+	// Peer address info sending
 	boost::mutex::scoped_lock lock(m_mutex);
 	for (PeerMap::const_iterator it = m_peers.begin(); it != m_peers.end(); ++it) {
 		protocol::PeerAddressPacket pap(it->second.address);
@@ -80,15 +84,24 @@ void P2PGameClient::receiveEvent(net::NetworkTraffic const& e)
 		case protocol::PEER_INFO: {
 			if (m_state != LOBBY) break;
 			protocol::PeerAddressPacket pap = *reinterpret_cast<protocol::PeerAddressPacket const*>(e.packet_data);
+			std::cout << "Peer info received for " << pap.address << std::endl;
 			// TODO: Check for local address
 			boost::mutex::scoped_lock lock(m_mutex);
 			m_peers[e.peer_id].address = pap.address;
-			std::cout << "Peer info received for " << pap.address << std::endl;
 			break;
 		}
 		case protocol::TEXT_MESSAGE: {
 			std::string msg((const char*)e.packet_data, e.packet_length);
 			std::cout << "Text message received: " << msg << std::endl;
+			break;
+		}
+		case protocol::NICK: {
+			if (e.packet_length > 1) {
+				std::string nick((const char*)e.packet_data + 1, e.packet_length - 1);
+				std::cout << "Nick received: " << nick << std::endl;
+				boost::mutex::scoped_lock lock(m_mutex);
+				m_peers[e.peer_id].name = nick;
+			}
 			break;
 		}
 		default: {

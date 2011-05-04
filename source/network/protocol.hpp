@@ -29,6 +29,7 @@ enum PacketType {
 	REQUEST_PEER_INFO,
 	PEER_INFO,
 	TEXT_MESSAGE,       // Text string that should be displayed somewhere
+	NICK,               // Nickname of the sender
 	STATE_UPDATE,
 	GAME_LIST,          // Client requests master server to list games
 	GAME_ACCEPTED,      // Master server sends response for newly accepted games
