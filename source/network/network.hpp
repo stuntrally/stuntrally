@@ -61,6 +61,10 @@ private:
  *
  * This class handles the messaging with the master server
  * (which is responsible for announcing games).
+ *
+ * The main function is to get info on available games.
+ * It is up to the application to request refresh, and
+ * the list may also fill gradually, not completely at once.
  */
 class MasterClient: public net::NetworkListener {
 public:

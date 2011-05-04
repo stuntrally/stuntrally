@@ -6,6 +6,8 @@ Introduction
 
 This document describes the architecture of Stunt Rally's networking features. It shall not go deep into implementation details, but rather stay on a higher level. The purpose is to educate other developers, list some general goals and stuff.
 
+Usage notes and more detailed and lower-level information can be found by reading the comments in the header files.
+
 
 High-level architecture
 -----------------------
@@ -16,7 +18,7 @@ The first part is implemented in enet-wrapper.hpp, and the SR stuff in network.*
 
 The networking itself works in peer-to-peer fashion, so there is no server. Each peer must be connected to each other. Initially, a new peer needs to only know the address of one other - all addresses known to any one peer are continuosly synced to everyone else during the joining period.
 
-Each peer is authoritative about its own car. Later on we can introduce anti-cheat features where a peer is disqualified if other peers estimation about the car's position is too much off.
+Each peer is authoritative about its own car. Later on we can introduce anti-cheat features where a peer is disqualified if other peers' estimation about the car's position is too much off.
 
 
 Anti-lag
