@@ -57,20 +57,18 @@ typedef std::map<uint32_t, protocol::GameInfo> GameList;
 
 
 /**
- * @brief Contains peer/player information.
+ * @brief Contains the address of a peer to connect.
  * These structs are passed around to create the complete network topography.
  */
-struct PeerInfo: public net::SimpleSerializer<PeerInfo> {
+struct PeerAddressPacket: public net::SimpleSerializer<PeerAddressPacket> {
 	uint8_t packet_type;
 	net::Address address;
-	char name[16];
 
-	std::string getId() const { return boost::lexical_cast<std::string>(address.host)+":"+boost::lexical_cast<std::string>(address.port); }
-	bool operator==(const PeerInfo& other) { return address == other.address; }
-	bool operator!=(const PeerInfo& other) { return !(*this == other); }
+	PeerAddressPacket(net::Address addr = net::Address()): packet_type(PEER_INFO), address(addr) {}
+
+	bool operator==(const PeerAddressPacket& other) { return address == other.address; }
+	bool operator!=(const PeerAddressPacket& other) { return !(*this == other); }
 };
-
-typedef std::map<net::peer_id_t, protocol::PeerInfo> PeerMap;
 
 
 /**

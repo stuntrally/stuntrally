@@ -1,9 +1,8 @@
 #include "network.hpp"
 
 
-P2PGameClient::P2PGameClient(int port): m_client(*this, port), m_state(DISCONNECTED), m_mutex()
+P2PGameClient::P2PGameClient(const std::string& nickname, int port): m_client(*this, port), m_state(DISCONNECTED), m_mutex(), m_name(nickname)
 {
-	//TODO
 }
 
 P2PGameClient::~P2PGameClient()
@@ -21,8 +20,9 @@ void P2PGameClient::connect(const std::string& address, int port)
 void P2PGameClient::sendPeerInfo()
 {
 	boost::mutex::scoped_lock lock(m_mutex);
-	for (protocol::PeerMap::const_iterator it = m_peers.begin(); it != m_peers.end(); ++it) {
-		m_client.broadcast(it->second, net::PACKET_RELIABLE);
+	for (PeerMap::const_iterator it = m_peers.begin(); it != m_peers.end(); ++it) {
+		protocol::PeerAddressPacket pap(it->second.address);
+		m_client.broadcast(pap, net::PACKET_RELIABLE);
 	}
 }
 
@@ -56,11 +56,9 @@ void P2PGameClient::connectionEvent(net::NetworkTraffic const& e)
 {
 	std::cout << "Connection address=" << e.peer_address << "   id=" << e.peer_id << std::endl;
 	if (m_state == LOBBY) {
-		protocol::PeerInfo pi;
-		pi.packet_type = protocol::PEER_INFO;
-		pi.address = e.peer_address;
-		char name[] = "Unknown\0";
-		memcpy(pi.name, name, strlen(name)+1); // FIXME: This memcpy stuff is really hairy
+		// TODO: Send him my nick
+		PeerInfo pi(e.peer_address);
+		pi.connected = true;
 		boost::mutex::scoped_lock lock(m_mutex);
 		m_peers[e.peer_id] = pi;
 	}
@@ -81,11 +79,11 @@ void P2PGameClient::receiveEvent(net::NetworkTraffic const& e)
 	switch (e.packet_data[0]) {
 		case protocol::PEER_INFO: {
 			if (m_state != LOBBY) break;
-			protocol::PeerInfo pi = *reinterpret_cast<protocol::PeerInfo const*>(e.packet_data);
+			protocol::PeerAddressPacket pap = *reinterpret_cast<protocol::PeerAddressPacket const*>(e.packet_data);
 			// TODO: Check for local address
 			boost::mutex::scoped_lock lock(m_mutex);
-			m_peers[e.peer_id] = pi;
-			std::cout << "Peer info received for " << pi.name << std::endl;
+			m_peers[e.peer_id].address = pap.address;
+			std::cout << "Peer info received for " << pap.address << std::endl;
 			break;
 		}
 		case protocol::TEXT_MESSAGE: {

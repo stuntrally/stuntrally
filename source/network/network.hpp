@@ -8,6 +8,21 @@
 #include "enet-wrapper.hpp"
 #include "protocol.hpp"
 
+
+/**
+ * @brief Application specific peer information.
+ */
+struct PeerInfo {
+	net::Address address;
+	std::string name;
+	bool connected;
+
+	PeerInfo(net::Address addr = net::Address()): address(addr), name("Unknown"), connected(false) {}
+};
+
+typedef std::map<net::peer_id_t, PeerInfo> PeerMap;
+
+
 /**
  * @brief High-level networking implentation using p2p.
  *
@@ -16,7 +31,7 @@
  */
 class P2PGameClient: public net::NetworkListener {
 public:
-	P2PGameClient(int port = protocol::DEFAULT_PORT);
+	P2PGameClient(const std::string& nickname, int port = protocol::DEFAULT_PORT);
 
 	~P2PGameClient();
 
@@ -52,10 +67,11 @@ public:
 
 private:
 	net::NetworkObject m_client;
-	protocol::PeerMap m_peers;
+	PeerMap m_peers;
 	enum State { DISCONNECTED, LOBBY, GAME } m_state;
 	boost::thread m_peerInfoSenderThread;
 	mutable boost::mutex m_mutex;
+	const std::string& m_name;
 };
 
 

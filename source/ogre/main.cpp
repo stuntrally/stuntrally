@@ -61,7 +61,7 @@ void VprThread(App* pA)
 	net::ENetContainer enet;
 
 	// FIXME: Temporary network test hack
-	P2PGameClient client(argc > 1 ? 5555 : 5556);
+	P2PGameClient client(settings->nickname, argc > 1 ? 5555 : 5556);
 	std::cout << "Starting a ~15s lobby period" << std::endl;
 	client.startLobby();
 	if (argc > 1) {
