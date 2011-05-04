@@ -54,7 +54,7 @@ void P2PGameClient::peerInfoSenderThread() {
 
 void P2PGameClient::connectionEvent(net::NetworkTraffic const& e)
 {
-	std::cout << "Connection address=" << e.peer_address << " id=" << e.peer_id << std::endl;
+	std::cout << "Connection address=" << e.peer_address << " i  d=" << e.peer_id << std::endl;
 	if (m_state == LOBBY) {
 		protocol::PeerInfo pi;
 		pi.packet_type = protocol::PEER_INFO;
@@ -69,13 +69,14 @@ void P2PGameClient::connectionEvent(net::NetworkTraffic const& e)
 
 void P2PGameClient::disconnectEvent(net::NetworkTraffic const& e)
 {
-	std::cout << "Disconnected address=" << e.peer_address << " id=" << e.peer_id << std::endl;
+	std::cout << "Disconnected address=" << e.peer_address << "   id=" << e.peer_id << std::endl;
+	boost::mutex::scoped_lock lock(m_mutex);
 	m_peers.erase(e.peer_id);
 }
 
 void P2PGameClient::receiveEvent(net::NetworkTraffic const& e)
 {
-	std::cout << "Traffic from=" << e.peer_address << " id=" << e.peer_id << std::endl;
+	std::cout << "Traffic from address=" << e.peer_address << "   id=" << e.peer_id << std::endl;
 	if (e.packet_length <= 0 || !e.packet_data) return;
 	switch (e.packet_data[0]) {
 		case protocol::PEER_INFO: {
