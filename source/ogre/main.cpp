@@ -63,12 +63,18 @@ void VprThread(App* pA)
 
 
 	// FIXME: Temporary network test hack
-	P2PGameClient client(settings->nickname, argc > 1 ? 5555 : 5556);
+	int port = protocol::DEFAULT_PORT;
+	if (argc > 1) port = atoi(argv[1]);
+
+	std::string nick(getenv("NICK"));
+	P2PGameClient client(nick, port);
+
+	//P2PGameClient client(settings->nickname, port);
 	std::cout << "Starting a ~15s lobby period" << std::endl;
 	client.startLobby();
 	if (argc > 1) {
 		try {
-			client.connect("localhost", 5556);
+			client.connect("localhost", protocol::DEFAULT_PORT);
 		} catch (...) {
 			std::cout << "Connect was a no go" << std::endl;
 		}
