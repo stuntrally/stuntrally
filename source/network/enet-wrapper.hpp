@@ -187,11 +187,9 @@ namespace net {
 						break;
 					} case ENET_EVENT_TYPE_CONNECT: {
 						m_peers[e.peer->incomingPeerID] = e.peer;
-						std::cout << "Connected " << IPv4(e.peer->address.host) << ":" << e.peer->address.port << std::endl;
 						m_listener.connectionEvent(NetworkTraffic(e.peer, e.peer->data));
 						break;
 					} case ENET_EVENT_TYPE_DISCONNECT: {
-						std::cout << "Disconnected " << IPv4(e.peer->address.host) << ":" << e.peer->address.port << std::endl;
 						m_listener.disconnectEvent(NetworkTraffic(e.peer, e.peer->data));
 						e.peer->data = NULL;
 						m_peers.erase(e.peer->incomingPeerID);

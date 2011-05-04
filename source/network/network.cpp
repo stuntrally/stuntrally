@@ -59,7 +59,6 @@ void P2PGameClient::startGame()
 }
 
 void P2PGameClient::peerInfoSenderThread() {
-	std::cout << "Started peerInfoSenderThread" << std::endl;
 	while (m_state == LOBBY) {
 		// Check if we should try connecting to someone
 		{
