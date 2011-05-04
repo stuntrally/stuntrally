@@ -56,6 +56,9 @@ public:
 	/// How many peers are connected
 	size_t getPeerCount() { return m_peers.size(); }
 
+	/// Get copy of peer infos
+	PeerMap getPeers() { return m_peers; }
+
 	/// Callback from networking
 	void connectionEvent(net::NetworkTraffic const& e);
 

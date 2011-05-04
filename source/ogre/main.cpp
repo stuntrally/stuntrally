@@ -60,6 +60,8 @@ void VprThread(App* pA)
 	// Initialize networking
 	net::ENetContainer enet;
 
+
+
 	// FIXME: Temporary network test hack
 	P2PGameClient client(settings->nickname, argc > 1 ? 5555 : 5556);
 	std::cout << "Starting a ~15s lobby period" << std::endl;
@@ -74,11 +76,19 @@ void VprThread(App* pA)
 	boost::this_thread::sleep(boost::posix_time::milliseconds(15000));
 	client.startGame();
 	std::cout << "Lobby closed, peer count is " << client.getPeerCount() << std::endl;
+	std::cout << "Peer names: ";
+	PeerMap peers = client.getPeers();
+	for (PeerMap::iterator it = peers.begin(); it != peers.end(); ++it)
+		std::cout << it->second.name << "; ";
+	std::cout << std::endl;
 	std::cout << "Sending a test message to all" << std::endl;
 	client.sendMessage("Hello!");
 	boost::this_thread::sleep(boost::posix_time::milliseconds(8000));
 	std::cout << "Test ended" << std::endl;
 	return 0;
+
+
+
 
 	///  game  ------------------------------
 	GAME* pGame = new GAME(info_output, error_output, settings);
