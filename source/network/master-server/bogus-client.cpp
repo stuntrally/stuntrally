@@ -2,7 +2,7 @@
 #include <string>
 #include <map>
 #include "../enet-wrapper.hpp"
-#include "../network.hpp"
+#include "../masterclient.hpp"
 #include "../protocol.hpp"
 
 
