@@ -1,3 +1,4 @@
+cmake_minimum_required(VERSION 2.8)
 
 # Install data files
 foreach(datadir  cars compositor editor fonts gui hud loading materials particles skies sounds terrain trees)

@@ -1,3 +1,4 @@
+cmake_minimum_required(VERSION 2.8)
 
 # Allow disabling game building
 option(BUILD_GAME      "Build the game binary."     ON)
