@@ -26,13 +26,13 @@ void P2PGameClient::sendPeerInfo()
 	boost::mutex::scoped_lock lock(m_mutex);
 	for (PeerMap::const_iterator it = m_peers.begin(); it != m_peers.end(); ++it) {
 		protocol::PeerAddressPacket pap(it->second.address);
-		m_client.broadcast(pap, net::PACKET_RELIABLE);
+		m_client.broadcast(pap);
 	}
 }
 
 void P2PGameClient::sendMessage(const std::string& msg)
 {
-	m_client.broadcast(char(protocol::TEXT_MESSAGE) + msg);
+	m_client.broadcast(char(protocol::TEXT_MESSAGE) + msg, net::PACKET_RELIABLE);
 }
 
 void P2PGameClient::startLobby()
