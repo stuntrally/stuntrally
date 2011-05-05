@@ -215,6 +215,55 @@ void App::InitGui()
 	if (rplList)  rplList->eventListChangePosition = newDelegate(this, &App::listRplChng);
 	updReplaysList();
 
+
+	///  Multiplayer  ------------------------------------------------------------
+	MultiListPtr ml = mGUI->findWidget<MultiList>("MListServers");
+	if (ml)  {
+		ml->addColumn("Game name", 200);
+		ml->addColumn("Track", 160);
+		ml->addColumn("Players", 100);
+		ml->addColumn("Password", 80);
+		ml->addColumn("Ping", 100);
+		//  add some data
+		ml->addItem("Awesome");  ml->setSubItemNameAt(1, ml->getItemCount()-1, "TestC4-ow");
+			ml->setSubItemNameAt(2, ml->getItemCount()-1, "1/2");
+			ml->setSubItemNameAt(3, ml->getItemCount()-1, "No");
+			ml->setSubItemNameAt(4, ml->getItemCount()-1, "70");
+		ml->addItem("Nice");
+	}
+    /*Btn("btnNetRefresh", btnNetRefresh);
+    Btn("btnNetJoin", btnNetJoin);
+    "valNetGames"
+
+    "valNetChat"
+    Btn("btnNetReady"
+    Btn("btnNetLeave"
+    /**/
+
+	ml = mGUI->findWidget<MultiList>("MListPlayers");
+	if (ml)  {
+		ml->addColumn("Player", 140);
+		ml->addColumn("Car", 70);
+		ml->addColumn("Ping", 80);
+		ml->addColumn("Ready", 70);
+		//  add some data
+		ml->addItem("Eddy");  ml->setSubItemNameAt(1, ml->getItemCount()-1, "ES");
+			ml->setSubItemNameAt(2, ml->getItemCount()-1, "70");
+			ml->setSubItemNameAt(3, ml->getItemCount()-1, "Yes");
+	}
+    /*"listNetChat"
+    "editNetChatMsg"
+    Btn("btnNetSendMsg"
+    "imgNetTrack"
+    "valNetTrack"
+    "editNetTrackInfo"
+	/**/
+
+	/*"edNetNick"
+	"edNetServerIP"
+	"edNetServerPort"
+	"edNetLocalPort"
+	/**/
 	
 	///  input tab
 	InitInputGui();
