@@ -65,34 +65,34 @@ void VprThread(App* pA)
 	// FIXME: Temporary network test hack
 	int port = protocol::DEFAULT_PORT;
 	if (argc > 1) port = atoi(argv[1]);
+	char* nick = getenv("NICK");
+	if (nick) {
+		P2PGameClient client(nick, port);
 
-	std::string nick(getenv("NICK"));
-	P2PGameClient client(nick, port);
-
-	//P2PGameClient client(settings->nickname, port);
-	std::cout << "Starting a ~15s lobby period" << std::endl;
-	client.startLobby();
-	if (argc > 1) {
-		try {
-			client.connect("localhost", protocol::DEFAULT_PORT);
-		} catch (...) {
-			std::cout << "Connect was a no go" << std::endl;
+		//P2PGameClient client(settings->nickname, port);
+		std::cout << "Starting a ~15s lobby period" << std::endl;
+		client.startLobby();
+		if (argc > 1) {
+			try {
+				client.connect("localhost", protocol::DEFAULT_PORT);
+			} catch (...) {
+				std::cout << "Connect was a no go" << std::endl;
+			}
 		}
+		boost::this_thread::sleep(boost::posix_time::milliseconds(15000));
+		client.startGame();
+		std::cout << "Lobby closed, peer count is " << client.getPeerCount() << std::endl;
+		std::cout << "Peer names: ";
+		PeerMap peers = client.getPeers();
+		for (PeerMap::iterator it = peers.begin(); it != peers.end(); ++it)
+			std::cout << it->second.name << "; ";
+		std::cout << std::endl;
+		std::cout << "Sending a test message to all" << std::endl;
+		client.sendMessage("Hello!");
+		boost::this_thread::sleep(boost::posix_time::milliseconds(8000));
+		std::cout << "Test ended" << std::endl;
+		return 0;
 	}
-	boost::this_thread::sleep(boost::posix_time::milliseconds(15000));
-	client.startGame();
-	std::cout << "Lobby closed, peer count is " << client.getPeerCount() << std::endl;
-	std::cout << "Peer names: ";
-	PeerMap peers = client.getPeers();
-	for (PeerMap::iterator it = peers.begin(); it != peers.end(); ++it)
-		std::cout << it->second.name << "; ";
-	std::cout << std::endl;
-	std::cout << "Sending a test message to all" << std::endl;
-	client.sendMessage("Hello!");
-	boost::this_thread::sleep(boost::posix_time::milliseconds(8000));
-	std::cout << "Test ended" << std::endl;
-	return 0;
-
 
 
 
