@@ -29,6 +29,13 @@
 #include <boost/lexical_cast.hpp>
 #include <enet/enet.h>
 
+#ifndef uint32_t
+#include <boost/cstdint.hpp>
+using boost::uint32_t;
+using boost::uint16_t;
+using boost::uint8_t;
+#endif
+
 // Version check
 #if ENET_VERSION < ENET_VERSION_CREATE(1,3,0)
 	#error ENet versions below 1.3.0 not supported
@@ -180,11 +187,9 @@ namespace net {
 						break;
 					} case ENET_EVENT_TYPE_CONNECT: {
 						m_peers[e.peer->incomingPeerID] = e.peer;
-						std::cout << "Connected " << IPv4(e.peer->address.host) << ":" << e.peer->address.port << std::endl;
 						m_listener.connectionEvent(NetworkTraffic(e.peer, e.peer->data));
 						break;
 					} case ENET_EVENT_TYPE_DISCONNECT: {
-						std::cout << "Disconnected " << IPv4(e.peer->address.host) << ":" << e.peer->address.port << std::endl;
 						m_listener.disconnectEvent(NetworkTraffic(e.peer, e.peer->data));
 						e.peer->data = NULL;
 						m_peers.erase(e.peer->incomingPeerID);

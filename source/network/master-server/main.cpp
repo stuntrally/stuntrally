@@ -10,7 +10,7 @@
 
 #define VERSIONSTRING "0.2"
 
-#define ZOMBIE_TIMEOUT 5  // How many seconds without update until the game becomes zombie
+#define ZOMBIE_TIMEOUT 5  // How many seconds without update until a game becomes zombie
 
 
 enum LogLevel {
@@ -94,12 +94,12 @@ public:
 
 	void connectionEvent(net::NetworkTraffic const& e)
 	{
-		out(VERBOSE) << "Connection id=" << e.peer_id << std::endl;
+		out(VERBOSE) << "Connection id=" << e.peer_id << " " << e.peer_address << std::endl;
 	}
 
 	void disconnectEvent(net::NetworkTraffic const& e)
 	{
-		out(VERBOSE) << "Disconnected id=" << e.peer_id << std::endl;
+		out(VERBOSE) << "Disconnected id=" << e.peer_id << " " << e.peer_address << std::endl;
 	}
 
 	void receiveEvent(net::NetworkTraffic const& e)

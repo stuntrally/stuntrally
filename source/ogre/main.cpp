@@ -7,7 +7,7 @@
 #include "../vdrift/logging.h"
 #include "../vdrift/pathmanager.h"
 #include "../vdrift/settings.h"
-#include "../network/network.hpp"
+#include "../network/gameclient.hpp"
 
 #include <OgrePlatform.h>
 #include <boost/thread.hpp>
