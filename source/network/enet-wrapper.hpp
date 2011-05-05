@@ -29,11 +29,10 @@
 #include <boost/lexical_cast.hpp>
 #include <enet/enet.h>
 
-#ifndef uint32_t
-#include <boost/cstdint.hpp>
-using boost::uint32_t;
-using boost::uint16_t;
-using boost::uint8_t;
+#ifdef _WIN32
+#include <SDL.h> // FIXME: for uint*_t
+#else
+#include <stdint.h>
 #endif
 
 // Version check
