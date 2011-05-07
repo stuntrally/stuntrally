@@ -13,7 +13,115 @@ using namespace MyGUI;
 ///  Gui Events
 //-----------------------------------------------------------------------------------------------------------
 
+
+//  [Multiplayer]
+//---------------------------------------------------------------------
+
+void App::NetUpdServers()
+{
+	if (!listServers)  return;
+	
+	//  add games to list
+	listServers->removeAllItems();
+	for (int i=0; i < rand()%5+2/*count*/; ++i)
+	{
+		listServers->addItem("Awesome" + toStr(i));  int l = listServers->getItemCount()-1;
+		listServers->setSubItemNameAt(1, l, "TestC4-ow");
+		listServers->setSubItemNameAt(2, l, "1/2");
+		listServers->setSubItemNameAt(3, l, "No");
+		listServers->setSubItemNameAt(4, l, toStr(rand()%200+10));
+	}
+}
+
+void App::NetUpdPlayers()
+{
+	if (!listPlayers)  return;
+
+	//  add players to list
+	listPlayers->removeAllItems();
+	for (int i=0; i < rand()%3+1/*count*/; ++i)
+	{
+		listPlayers->addItem("Eddy" + toStr(i));  int l = listPlayers->getItemCount()-1;
+		listPlayers->setSubItemNameAt(1, l, "ES");
+		listPlayers->setSubItemNameAt(2, l, toStr(rand()%200+10));
+		listPlayers->setSubItemNameAt(3, l, "Yes");
+	}
+}
+
+void App::evBtnNetRefresh(WP)
+{
+	//.. get games list from server
+	String s = btnNetRefresh->getCaption();
+	btnNetRefresh->setCaption("Getting..");
+
+	NetUpdServers();
+
+	btnNetRefresh->setCaption(s);
+}
+
+void App::evBtnNetJoin(WP)
+{
+	//  join selected game
+	if (!listServers)  return;
+
+	size_t i = listServers->getIndexSelected();  if (i==ITEM_NONE)  return;
+	
+	Message::createMessageBox(  // #{transl ..
+		"Message", "Join game", "Game name: " + listServers->getItemNameAt(i),
+		MessageBoxStyle::IconInfo | MessageBoxStyle::Ok);
+	
+	//.. get players list for current game
+	NetUpdPlayers();
+	
+	//  update track info
+	if (valNetTrack)
+		valNetTrack->setCaption("Track: " + sListTrack);
+	if (imgNetTrack)
+		imgNetTrack->setImageTexture(sListTrack+".jpg");
+	if (edNetTrackInfo)
+		edNetTrackInfo->setCaption("eiuru shaf adlkj tqer agjkdfh lgeir gieroh gsdkdhrti");
+}
+
+
+void App::evBtnNetReady(WP)
+{
+	//  ready for game,  waiting for other players
+	btnNetReady->setCaption("Waiting..");
+}
+
+void App::evBtnNetLeave(WP)
+{
+	//  leave current game
+	//String s = btnNetLeave->getCaption();
+	btnNetLeave->setCaption("Leaving..");
+	//btnNetLeave->setCaption(s);
+}
+
+	// info texts
+	//valNetGames
+	//valNetChat
+
+void App::evBtnNetSendMsg(WP)
+{
+	if (!edNetChatMsg || !listNetChat || !edNetNick)  return;
+
+	String nick = edNetNick->getCaption();
+	String msg = edNetChatMsg->getCaption();
+
+	listNetChat->addItem(nick + ": " + msg);
+	//btnNetSendMsg
+}
+    
+//  settings ..
+/*	edNetNick->getCaption()
+	edNetServerIP
+	edNetServerPort
+	edNetLocalPort
+/**/
+
+
 //  [Input]
+//---------------------------------------------------------------------
 
 void App::controlBtnClicked(Widget* sender)
 {
@@ -25,7 +133,9 @@ void App::controlBtnClicked(Widget* sender)
 	MyGUI::PointerManager::getInstance().setVisible(false);
 }
 
+
 //  [Graphics]
+//---------------------------------------------------------------------
 
 //  textures
 void App::comboTexFilter(SL)
@@ -656,8 +766,10 @@ bool App::keyPressed( const OIS::KeyEvent &arg )
 
 
 		case KC_BACK:	// replay controls
-			if (mWndRpl)  mWndRpl->setVisible(!mWndRpl->isVisible());
-			return true;
+			if (mWndRpl && !isFocGui)
+			{	mWndRpl->setVisible(!mWndRpl->isVisible());
+				return true;  }
+			break;
 
 		case KC_P:		// replay play/pause
 			if (bRplPlay)

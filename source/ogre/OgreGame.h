@@ -207,6 +207,20 @@ protected:
 	StaticTextPtr valCar, valTrk, stTrk[StTrk];
 
 	char s[512];
+
+	///  multiplayer
+	MultiListPtr listServers, listPlayers;
+	void NetUpdServers(), NetUpdPlayers();
+    ListPtr listNetChat;
+
+    ButtonPtr btnNetRefresh,btnNetJoin;  void evBtnNetRefresh(WP),evBtnNetJoin(WP);
+	ButtonPtr btnNetReady,btnNetLeave;  void evBtnNetReady(WP),evBtnNetLeave(WP);
+
+    StaticImagePtr imgNetTrack;
+    StaticTextPtr valNetGames, valNetChat, valNetTrack;
+    ButtonPtr btnNetSendMsg;  void evBtnNetSendMsg(WP);
+    EditPtr edNetChatMsg,edNetTrackInfo,
+		edNetNick, edNetServerIP, edNetServerPort, edNetLocalPort;
 };
 
 #endif

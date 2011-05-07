@@ -29,10 +29,15 @@ App::App()
 	,valRplName(0),valRplInfo(0),valRplName2(0),valRplInfo2(0), edRplName(0), edRplDesc(0)
 	,bRplPlay(0), bRplPause(0)
 	// game
-	,blendMtr(0), iBlendMaps(0)
-	,dbgdraw(0)
+	,blendMtr(0), iBlendMaps(0), dbgdraw(0)
 	,grass(0), trees(0), road(0)
 	,pr(0),pr2(0), sun(0)
+	// gui multiplayer
+	,listServers(0),listPlayers(0), listNetChat(0), imgNetTrack(0)
+    ,btnNetRefresh(0),btnNetJoin(0), btnNetReady(0),btnNetLeave(0), btnNetSendMsg(0)
+    ,valNetGames(0), valNetChat(0), valNetTrack(0)
+    ,edNetChatMsg(0), edNetTrackInfo(0)
+    ,edNetNick(0), edNetServerIP(0), edNetServerPort(0), edNetLocalPort(0)
 {
 	pathTrk[0] = PATHMANAGER::GetTrackPath() + "/";
 	pathTrk[1] = PATHMANAGER::GetTrackPathUser() + "/";

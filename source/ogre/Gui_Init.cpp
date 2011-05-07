@@ -216,56 +216,52 @@ void App::InitGui()
 	updReplaysList();
 
 
-	///  Multiplayer  ------------------------------------------------------------
-	MultiListPtr ml = mGUI->findWidget<MultiList>("MListServers");
-	if (ml)  {
-		ml->addColumn("Game name", 200);
-		ml->addColumn("Track", 160);
-		ml->addColumn("Players", 100);
-		ml->addColumn("Password", 80);
-		ml->addColumn("Ping", 100);
-		//  add some data
-		ml->addItem("Awesome");  ml->setSubItemNameAt(1, ml->getItemCount()-1, "TestC4-ow");
-			ml->setSubItemNameAt(2, ml->getItemCount()-1, "1/2");
-			ml->setSubItemNameAt(3, ml->getItemCount()-1, "No");
-			ml->setSubItemNameAt(4, ml->getItemCount()-1, "70");
-		ml->addItem("Nice");
+	///  Multiplayer
+    //------------------------------------------------------------------------
+    //  server, games
+	listServers = mGUI->findWidget<MultiList>("MListServers");
+	if (listServers)
+	{	listServers->addColumn("Game name", 200);
+		listServers->addColumn("Track", 160);
+		listServers->addColumn("Players", 100);
+		listServers->addColumn("Password", 80);
+		listServers->addColumn("Ping", 100);
 	}
-    /*Btn("btnNetRefresh", btnNetRefresh);
-    Btn("btnNetJoin", btnNetJoin);
-    "valNetGames"
+    Btn("btnNetRefresh", evBtnNetRefresh);  btnNetRefresh = btn;
+    Btn("btnNetJoin", evBtnNetJoin);  btnNetJoin = btn;
 
-    "valNetChat"
-    Btn("btnNetReady"
-    Btn("btnNetLeave"
-    /**/
-
-	ml = mGUI->findWidget<MultiList>("MListPlayers");
-	if (ml)  {
-		ml->addColumn("Player", 140);
-		ml->addColumn("Car", 70);
-		ml->addColumn("Ping", 80);
-		ml->addColumn("Ready", 70);
-		//  add some data
-		ml->addItem("Eddy");  ml->setSubItemNameAt(1, ml->getItemCount()-1, "ES");
-			ml->setSubItemNameAt(2, ml->getItemCount()-1, "70");
-			ml->setSubItemNameAt(3, ml->getItemCount()-1, "Yes");
+	//  game, players
+	listPlayers = mGUI->findWidget<MultiList>("MListPlayers");
+	if (listPlayers)
+	{	listPlayers->addColumn("Player", 140);
+		listPlayers->addColumn("Car", 70);
+		listPlayers->addColumn("Ping", 80);
+		listPlayers->addColumn("Ready", 70);
 	}
-    /*"listNetChat"
-    "editNetChatMsg"
-    Btn("btnNetSendMsg"
-    "imgNetTrack"
-    "valNetTrack"
-    "editNetTrackInfo"
-	/**/
+    valNetGames = mGUI->findWidget<StaticText>("valNetGames");
+    valNetChat = mGUI->findWidget<StaticText>("valNetChat");
 
-	/*"edNetNick"
-	"edNetServerIP"
-	"edNetServerPort"
-	"edNetLocalPort"
-	/**/
+    Btn("btnNetReady", evBtnNetReady);  btnNetReady = btn;
+    Btn("btnNetLeave", evBtnNetLeave);	btnNetLeave = btn;
+
+    //  chat
+    listNetChat = mGUI->findWidget<List>("listNetChat");
+    edNetChatMsg = mGUI->findWidget<Edit>("edNetChatMsg");
+    Btn("btnNetSendMsg", evBtnNetSendMsg);  btnNetSendMsg = btn;
+    
+    //  track
+    imgNetTrack = mGUI->findWidget<StaticImage>("imgNetTrack");
+    valNetTrack = mGUI->findWidget<StaticText>("valNetTrack");
+    edNetTrackInfo = mGUI->findWidget<Edit>("edNetTrackInfo");
+
+	//  settings
+	edNetNick = mGUI->findWidget<Edit>("edNetNick");
+	edNetServerIP = mGUI->findWidget<Edit>("edNetServerIP");
+	edNetServerPort = mGUI->findWidget<Edit>("edNetServerPort");
+	edNetLocalPort = mGUI->findWidget<Edit>("edNetLocalPort");
+
 	
-	///  input tab
+	///  input tab  -------
 	InitInputGui();
 	
 	

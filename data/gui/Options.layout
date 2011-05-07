@@ -229,7 +229,7 @@
 						<Widget type="List" skin="List" position="20 270 400 136" name="listNetChat">
 							<Property key="Widget_Colour" value="0.6 0.8 1"/>
 						</Widget>
-						<Widget type="Edit" skin="Edit" position="20 422 268 24" name="editNetChatMsg">
+						<Widget type="Edit" skin="Edit" position="20 422 268 24" name="edNetChatMsg">
 							<Property key="Widget_Colour" value="0.6 0.8 1"/>
 						</Widget>
 						<Widget type="Button" skin="Button" position="300 418 120 32" name="btnNetSendMsg">
@@ -241,7 +241,7 @@
 							<Property key="Widget_Caption" value="Track:"/>
 							<Property key="Text_TextColour" value="0.4 1.0 0.5"/>
 						</Widget>
-						<Widget type="Edit" skin="WordWrap" position="452 326 256 104" name="editNetTrackInfo">
+						<Widget type="Edit" skin="WordWrap" position="452 326 256 104" name="edNetTrackInfo">
 							<Property key="Widget_Caption" value="Track info text"/>
 							<Property key="Text_TextColour" value="0.6 1.0 0.8"/>
 						</Widget>

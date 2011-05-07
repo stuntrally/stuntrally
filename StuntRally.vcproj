@@ -418,16 +418,8 @@
 					>
 				</File>
 				<File
-					RelativePath=".\source\network\network.cpp"
+					RelativePath=".\source\network\gameclient.cpp"
 					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							UsePrecompiledHeader="0"
-						/>
-					</FileConfiguration>
 					<FileConfiguration
 						Name="Release|Win32"
 						>
@@ -436,8 +428,16 @@
 							UsePrecompiledHeader="0"
 						/>
 					</FileConfiguration>
+				</File>
+				<File
+					RelativePath=".\source\network\gameclient.hpp"
+					>
+				</File>
+				<File
+					RelativePath=".\source\network\masterclient.cpp"
+					>
 					<FileConfiguration
-						Name="ReleaseDbg|Win32"
+						Name="Release|Win32"
 						>
 						<Tool
 							Name="VCCLCompilerTool"
@@ -446,7 +446,7 @@
 					</FileConfiguration>
 				</File>
 				<File
-					RelativePath=".\source\network\network.hpp"
+					RelativePath=".\source\network\masterclient.hpp"
 					>
 				</File>
 				<File
