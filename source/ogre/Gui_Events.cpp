@@ -112,12 +112,27 @@ void App::evBtnNetSendMsg(WP)
 	//btnNetSendMsg
 }
     
-//  settings ..
-/*	edNetNick->getCaption()
-	edNetServerIP
-	edNetServerPort
-	edNetLocalPort
-/**/
+//  net settings
+
+void App::evEdNetNick(EditPtr ed)
+{
+	pSet->nickname = ed->getCaption();
+}
+
+void App::evEdNetServerIP(EditPtr ed)
+{
+	pSet->master_server_address = ed->getCaption();
+}
+
+void App::evEdNetServerPort(EditPtr ed)
+{
+	pSet->master_server_port = s2i(ed->getCaption());
+}
+
+void App::evEdNetLocalPort(EditPtr ed)
+{
+	pSet->local_port = s2i(ed->getCaption());
+}
 
 
 //  [Input]

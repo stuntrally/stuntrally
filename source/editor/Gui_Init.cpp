@@ -91,7 +91,7 @@ void App::InitGui()
 
 	#define Edt(edit, name, event)  \
 		edit = (EditPtr)mWndOpts->findWidget(name);  \
-		if (edit)  edit->eventEditTextChange = newDelegate(this, &App::event);		
+		if (edit)  edit->eventEditTextChange = newDelegate(this, &App::event);
 
 	#define Ed(name, evt)  Edt(ed##name, #name, evt)
 		

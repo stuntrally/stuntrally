@@ -259,8 +259,16 @@ void App::InitGui()
 	edNetServerIP = mGUI->findWidget<Edit>("edNetServerIP");
 	edNetServerPort = mGUI->findWidget<Edit>("edNetServerPort");
 	edNetLocalPort = mGUI->findWidget<Edit>("edNetLocalPort");
+	if (edNetNick)		{	edNetNick->setCaption(pSet->nickname);						
+		edNetNick->eventEditTextChange = newDelegate(this, &App::evEdNetNick);	}
+	if (edNetServerIP)	{	edNetServerIP->setCaption(pSet->master_server_address);
+		edNetServerIP->eventEditTextChange = newDelegate(this, &App::evEdNetServerIP);	}
+	if (edNetServerPort){	edNetServerPort->setCaption(toStr(pSet->master_server_port));
+		edNetServerPort->eventEditTextChange = newDelegate(this, &App::evEdNetServerPort);	}
+	if (edNetLocalPort)	{	edNetLocalPort->setCaption(toStr(pSet->local_port));
+		edNetLocalPort->eventEditTextChange = newDelegate(this, &App::evEdNetLocalPort);	}
 
-	
+
 	///  input tab  -------
 	InitInputGui();
 	

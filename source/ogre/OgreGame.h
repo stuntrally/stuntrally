@@ -221,6 +221,7 @@ protected:
     ButtonPtr btnNetSendMsg;  void evBtnNetSendMsg(WP);
     EditPtr edNetChatMsg,edNetTrackInfo,
 		edNetNick, edNetServerIP, edNetServerPort, edNetLocalPort;
+	void evEdNetNick(EditPtr),evEdNetServerIP(EditPtr),evEdNetServerPort(EditPtr),evEdNetLocalPort(EditPtr);
 };
 
 #endif
