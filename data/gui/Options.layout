@@ -251,10 +251,10 @@
 							<Property key="Widget_Caption" value="Nickname"/>
 						</Widget>
 						<Widget type="StaticText" skin="StaticText" position="20 62 144 24">
-							<Property key="Widget_Caption" value="Server IP"/>
+							<Property key="Widget_Caption" value="Master Server IP"/>
 						</Widget>
 						<Widget type="StaticText" skin="StaticText" position="20 94 144 24">
-							<Property key="Widget_Caption" value="Server Port"/>
+							<Property key="Widget_Caption" value="Master Server Port"/>
 						</Widget>
 						<Widget type="StaticText" skin="StaticText" position="20 126 144 24">
 							<Property key="Widget_Caption" value="Local Port"/>
