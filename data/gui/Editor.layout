@@ -1387,7 +1387,7 @@
 					<Widget type="TabItem" skin="" position="4 26 735 425">
 						<Property key="Widget_Caption" value="#{Vegetation}"/>
 						<Widget type="Button" skin="Button" position="580 50 68 24" name="TrGrReset">
-							<Property key="Widget_Caption" value="Reset"/>
+							<Property key="Widget_Caption" value="#{Reset}"/>
 							<Property key="Widget_Colour" value="0.6 1.0 0.3"/>
 							<Property key="Text_TextColour" value="0.3 1 0.2"/>
 						</Widget>
@@ -1515,7 +1515,7 @@
 					<Property key="Widget_Colour" value="0.73 0.88 1"/>
 					<Property key="Tab_ButtonWidth" value="160"/>
 					<Widget type="TabItem" skin="" position="4 26 711 447">
-						<Property key="Widget_Caption" value="Main"/>
+						<Property key="Widget_Caption" value="#{Main}"/>
 						<Widget type="StaticText" skin="StaticText" position="32 44 256 20">
 							<Property key="Text_TextColour" value="0.9 0.96 1.0"/>
 							<Property key="Widget_Caption" value="#{InputToggleCam}"/>
@@ -1784,7 +1784,7 @@
 						</Widget>
 					</Widget>
 					<Widget type="TabItem" skin="" position="4 26 711 447">
-						<Property key="Widget_Caption" value="Start"/>
+						<Property key="Widget_Caption" value="#{Start}"/>
 						<Widget type="StaticText" skin="StaticText" position="96 14 212 20">
 							<Property key="Text_TextColour" value="0.7 0.7 1.0"/>
 							<Property key="Widget_Caption" value="#{InputStartPos}"/>
