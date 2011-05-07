@@ -79,6 +79,10 @@
 	<Tag name="TipChangeBright">Change car color brightness (dark-light).</Tag>
 	
 
+	<!--  Multiplayer  -->
+	<Tag name="Multiplayer">Multiplayer</Tag>
+
+
 	<!--  Setup  -->
 	<Tag name="Setup">Setup</Tag>
 	<Tag name="ABS">ABS (antilock brakes)</Tag>

@@ -11,7 +11,7 @@
 			<Property key="Widget_Colour" value="0.7 0.85 1"/>
 			<Property key="Tab_ButtonAutoWidth" value="true"/>
 			<Widget type="TabItem" skin="" position="4 26 787 531">
-				<Property key="Widget_Caption" value="##{Track}"/>
+				<Property key="Widget_Caption" value="#{Track}"/>
 				<Widget type="List" skin="List" position="14 15 148 504" align="Relative" name="TrackList">
 					<UserString key="tip" value="#{TipTrackList}"/>
 				</Widget>
