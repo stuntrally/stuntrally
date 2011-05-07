@@ -37,16 +37,32 @@ int main(int argc, char** argv) {
 	}
 
 	MasterClient mc;
-	std::cout << "Connecting..." << std::endl;
+	std::cout << "> Connecting..." << std::endl;
 	mc.connect(host, port);
 	boost::this_thread::sleep(boost::posix_time::milliseconds(2000));
 
-	std::cout << "Creating a test game" << std::endl;
+	std::cout << "> Creating a test game" << std::endl;
 	mc.updateGame("Test game", "M-001", 1);
+	boost::this_thread::sleep(boost::posix_time::milliseconds(1500));
+
+	std::cout << "> Request new list" << std::endl;
+	mc.refreshList();
 	boost::this_thread::sleep(boost::posix_time::milliseconds(2000));
 
-	std::cout << "Request new list" << std::endl;
+	std::cout << "> Update the game" << std::endl;
+	mc.updateGame("Test game", "J-002", 2);
+	boost::this_thread::sleep(boost::posix_time::milliseconds(3000));
+
+	std::cout << "> Request another new list (should contain a game)" << std::endl;
 	mc.refreshList();
+	boost::this_thread::sleep(boost::posix_time::milliseconds(2000));
+
+	std::cout << "> Wait for the game to expire" << std::endl;
+	boost::this_thread::sleep(boost::posix_time::milliseconds(10000));
+
+	std::cout << "> Request yet another new list (should be empty)" << std::endl;
+	mc.refreshList();
+
 
 	while (true) {
 
