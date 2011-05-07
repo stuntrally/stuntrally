@@ -1,7 +1,7 @@
 #include "masterclient.hpp"
 
 
-MasterClient::MasterClient(): m_mutex(), m_client(*this), m_gameId(0)
+MasterClient::MasterClient(MasterClientCallback* callback): m_callback(callback), m_mutex(), m_client(*this), m_gameId(0)
 {
 }
 
@@ -19,6 +19,7 @@ void MasterClient::refreshList()
 	protocol::GameInfo game;
 	game.packet_type = protocol::GAME_LIST;
 	m_client.broadcast(game, net::PACKET_RELIABLE);
+	if (m_callback) m_callback->listChanged(m_games);
 }
 
 void MasterClient::updateGame(const std::string& name, const std::string& track, int players)
@@ -54,6 +55,7 @@ void MasterClient::receiveEvent(net::NetworkTraffic const& e)
 			std::cout << "Available game: " << game.name << std::endl;
 			boost::mutex::scoped_lock lock(m_mutex);
 			m_games[game.id] = game;
+			if (m_callback) m_callback->listChanged(m_games);
 			break;
 		}
 		case protocol::GAME_ACCEPTED: {

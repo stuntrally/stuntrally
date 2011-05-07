@@ -9,6 +9,19 @@
 
 
 /**
+ * @brief Callback class for MasterClient events.
+ *
+ * Inherit and implement this to get events about arriving game
+ * info. Pass the implementation instance to the MasterClient.
+ */
+struct MasterClientCallback {
+	/// Called when the list has changed
+	/// @param list how the complete list looks now after the change
+	virtual void listChanged(protocol::GameList list) {};
+};
+
+
+/**
  * @brief Client for connecting to the master server.
  *
  * This class handles the messaging with the master server
@@ -17,10 +30,12 @@
  * The main function is to get info on available games.
  * It is up to the application to request refresh, and
  * the list may also fill gradually, not completely at once.
+ *
+ * To get events, give it a MasterClientCallback instance.
  */
 class MasterClient: public net::NetworkListener {
 public:
-	MasterClient();
+	MasterClient(MasterClientCallback* callback = NULL);
 
 	/// Connects to the master server
 	void connect(const std::string& address, int port = protocol::DEFAULT_PORT);
@@ -44,6 +59,7 @@ public:
 	void receiveEvent(net::NetworkTraffic const& e);
 
 private:
+	MasterClientCallback* m_callback;
 	mutable boost::mutex m_mutex;
 	net::NetworkObject m_client;
 	protocol::GameList m_games;
