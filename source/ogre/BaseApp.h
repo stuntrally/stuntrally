@@ -2,11 +2,15 @@
 #define _BaseApp_h_
 #include "LoadingBar.h"
 #include "../vdrift/settings.h"
+#include <boost/scoped_ptr.hpp>
 #include <OIS/OIS.h>
 #include <MyGUI.h>
 #include <MyGUI_OgrePlatform.h>
 #include "CarModel.h"
 #include "SplitScreenManager.h"
+#include "../network/masterclient.hpp"
+#include "../network/gameclient.hpp"
+
 using namespace Ogre;
 
 namespace OISB {  class System;  };
@@ -17,7 +21,8 @@ class BaseApp :
 		public OIS::KeyListener, public OIS::MouseListener
 {
 public:
-	BaseApp();	virtual ~BaseApp();
+	BaseApp();
+	virtual ~BaseApp();
 	virtual void Run( bool showDialog );
 	
 	bool bLoading;
@@ -101,6 +106,10 @@ protected:
 	MyGUI::Gui* mGUI;		MyGUI::OgrePlatform* mPlatform;
 	MyGUI::WidgetPtr mLayout, mWndOpts, mWndRpl;  // options window
 	MyGUI::TabPtr mWndTabs;
+
+	///  networking
+	boost::scoped_ptr<MasterClient> mMasterClient;
+	boost::scoped_ptr<P2PGameClient> mClient;
 };
 
 #endif

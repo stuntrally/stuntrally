@@ -232,7 +232,9 @@ BaseApp::BaseApp() :
 	mWndOpts(0), mWndTabs(0), mWndRpl(0), bSizeHUD(true), bLoading(false), bAssignKey(false), pressedKey(static_cast<OIS::KeyCode>(0) ),
 
 	mDebugOverlay(0), mFpsOverlay(0), mOvrFps(0), mOvrTris(0), mOvrBat(0), mOvrDbg(0),
-	mbShowCamPos(0), ndSky(0),	mbWireFrame(0) //*
+	mbShowCamPos(0), ndSky(0), mbWireFrame(0),
+
+	mMasterClient(new MasterClient(/*TODO: Implement callback class*/)), mClient()
 {
 }
 
