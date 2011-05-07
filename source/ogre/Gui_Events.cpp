@@ -19,21 +19,6 @@ using namespace MyGUI;
 //---------------------------------------------------------------------
 
 
-void App::NetUpdPlayers()
-{
-	if (!listPlayers)  return;
-
-	//  add players to list
-	listPlayers->removeAllItems();
-	for (int i=0; i < rand()%3+1/*count*/; ++i)
-	{
-		listPlayers->addItem("Eddy" + toStr(i));  int l = listPlayers->getItemCount()-1;
-		listPlayers->setSubItemNameAt(1, l, "ES");
-		listPlayers->setSubItemNameAt(2, l, toStr(rand()%200+10));
-		listPlayers->setSubItemNameAt(3, l, "Yes");
-	}
-}
-
 void App::evBtnNetRefresh(WP)
 {
 	mMasterClient.reset(new MasterClient(gameInfoListener.get()));
@@ -44,16 +29,22 @@ void App::evBtnNetRefresh(WP)
 void App::evBtnNetJoin(WP)
 {
 	//  join selected game
-	if (!listServers)  return;
+	if (!listServers || !pSet) return;
 
-	size_t i = listServers->getIndexSelected();  if (i==ITEM_NONE)  return;
-	
-	Message::createMessageBox(  // #{transl ..
-		"Message", "Join game", "Game name: " + listServers->getItemNameAt(i),
-		MessageBoxStyle::IconInfo | MessageBoxStyle::Ok);
+	size_t i = listServers->getIndexSelected();
+	if (i == ITEM_NONE) return;
+
+	mClient.reset(new P2PGameClient(pSet->nickname, pSet->local_port));
+	std::string host = "localhost"; // FIXME: listServers->getSubItemName...
+	int port = 4243; // FIXME: listServers->getSubItemName...
+	mClient->connect(host, port);
+
+	//Message::createMessageBox(  // #{transl ..
+	//	"Message", "Join game", "Game name: " + listServers->getItemNameAt(i),
+	//	MessageBoxStyle::IconInfo | MessageBoxStyle::Ok);
 	
 	//.. get players list for current game
-	NetUpdPlayers();
+	//NetUpdPlayers();
 	
 	//  update track info
 	if (valNetTrack)
@@ -61,7 +52,7 @@ void App::evBtnNetJoin(WP)
 	if (imgNetTrack)
 		imgNetTrack->setImageTexture(sListTrack+".jpg");
 	if (edNetTrackInfo)
-		edNetTrackInfo->setCaption("eiuru shaf adlkj tqer agjkdfh lgeir gieroh gsdkdhrti");
+		edNetTrackInfo->setCaption("Lorem ipsum");
 }
 
 
@@ -77,6 +68,7 @@ void App::evBtnNetLeave(WP)
 	//String s = btnNetLeave->getCaption();
 	btnNetLeave->setCaption("Leaving..");
 	//btnNetLeave->setCaption(s);
+	mClient.reset();
 }
 
 	// info texts
@@ -85,13 +77,15 @@ void App::evBtnNetLeave(WP)
 
 void App::evBtnNetSendMsg(WP)
 {
-	if (!edNetChatMsg || !listNetChat || !edNetNick)  return;
+	if (!mClient || !edNetChatMsg || !listNetChat || !edNetNick)  return;
 
 	String nick = edNetNick->getCaption();
 	String msg = edNetChatMsg->getCaption();
+	String text = nick + ": " + msg;
 
-	listNetChat->addItem(nick + ": " + msg);
-	//btnNetSendMsg
+	mClient->sendMessage(text);
+	listNetChat->addItem(text);
+	edNetChatMsg->setCaption("");
 }
     
 //  net settings

@@ -220,7 +220,6 @@ protected:
 
 	///  multiplayer
 	MultiListPtr listServers, listPlayers;
-	void NetUpdPlayers();
 	ListPtr listNetChat;
 	boost::scoped_ptr<GameInfoListener> gameInfoListener;
 

@@ -21,6 +21,8 @@ void GameInfoListener::listChanged(protocol::GameList list) {
 		int l = mList->getItemCount()-1;
 		mList->setSubItemNameAt(1, l, std::string(it->second.track));
 		mList->setSubItemNameAt(2, l, boost::lexical_cast<std::string>((int)it->second.players));
+		mList->setSubItemNameAt(3, l, net::IPv4(it->second.address));
+		mList->setSubItemNameAt(4, l, boost::lexical_cast<std::string>((int)it->second.port));
 	}
 }
 
@@ -236,7 +238,9 @@ void App::InitGui()
 	if (listServers)
 	{	listServers->addColumn("Game name", 200);
 		listServers->addColumn("Track", 160);
-		listServers->addColumn("Players", 100);
+		listServers->addColumn("Players", 80);
+		listServers->addColumn("Host", 120);
+		listServers->addColumn("Port", 100);
 	}
 	gameInfoListener.reset(new GameInfoListener(listServers));
 	Btn("btnNetRefresh", evBtnNetRefresh);  btnNetRefresh = btn;
