@@ -12,6 +12,19 @@ using namespace MyGUI;
 #define res  1000000.f
 #define Fmt  sprintf
 
+
+void GameInfoListener::listChanged(protocol::GameList list) {
+	if (!mList) return;
+	mList->removeAllItems();
+	for (protocol::GameList::const_iterator it = list.begin(); it != list.end(); ++it) {
+		mList->addItem(it->second.name);
+		int l = mList->getItemCount()-1;
+		mList->setSubItemNameAt(1, l, std::string(it->second.track));
+		mList->setSubItemNameAt(2, l, boost::lexical_cast<std::string>((int)it->second.players));
+	}
+}
+
+
 void App::InitGui()
 {
 	//  change skin
@@ -224,11 +237,10 @@ void App::InitGui()
 	{	listServers->addColumn("Game name", 200);
 		listServers->addColumn("Track", 160);
 		listServers->addColumn("Players", 100);
-		listServers->addColumn("Password", 80);
-		listServers->addColumn("Ping", 100);
 	}
-    Btn("btnNetRefresh", evBtnNetRefresh);  btnNetRefresh = btn;
-    Btn("btnNetJoin", evBtnNetJoin);  btnNetJoin = btn;
+	gameInfoListener.reset(new GameInfoListener(listServers));
+	Btn("btnNetRefresh", evBtnNetRefresh);  btnNetRefresh = btn;
+	Btn("btnNetJoin", evBtnNetJoin);  btnNetJoin = btn;
 
 	//  game, players
 	listPlayers = mGUI->findWidget<MultiList>("MListPlayers");

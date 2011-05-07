@@ -10,6 +10,7 @@ using namespace MyGUI;
 #define res  1000000.f
 #define Fmt  sprintf
 
+
 ///  Gui Events
 //-----------------------------------------------------------------------------------------------------------
 
@@ -17,21 +18,6 @@ using namespace MyGUI;
 //  [Multiplayer]
 //---------------------------------------------------------------------
 
-void App::NetUpdServers()
-{
-	if (!listServers)  return;
-	
-	//  add games to list
-	listServers->removeAllItems();
-	for (int i=0; i < rand()%5+2/*count*/; ++i)
-	{
-		listServers->addItem("Awesome" + toStr(i));  int l = listServers->getItemCount()-1;
-		listServers->setSubItemNameAt(1, l, "TestC4-ow");
-		listServers->setSubItemNameAt(2, l, "1/2");
-		listServers->setSubItemNameAt(3, l, "No");
-		listServers->setSubItemNameAt(4, l, toStr(rand()%200+10));
-	}
-}
 
 void App::NetUpdPlayers()
 {
@@ -50,13 +36,12 @@ void App::NetUpdPlayers()
 
 void App::evBtnNetRefresh(WP)
 {
-	//.. get games list from server
-	String s = btnNetRefresh->getCaption();
-	btnNetRefresh->setCaption("Getting..");
-
-	NetUpdServers();
-
-	btnNetRefresh->setCaption(s);
+	mMasterClient.reset(new MasterClient(gameInfoListener.get()));
+	mMasterClient->connect(pSet->master_server_address, pSet->master_server_port);
+	// FIXME: Hack, should not block here, MasterClient should queue
+	//        the request until connection is established
+	boost::this_thread::sleep(boost::posix_time::milliseconds(2000));
+	mMasterClient->refreshList();
 }
 
 void App::evBtnNetJoin(WP)
