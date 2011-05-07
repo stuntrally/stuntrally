@@ -10,7 +10,8 @@
 
 #define VERSIONSTRING "0.2"
 
-#define ZOMBIE_TIMEOUT 5  // How many seconds without update until a game becomes zombie
+#define DEFAULT_ZOMBIE_TIMEOUT 5
+unsigned g_zombietimeout = DEFAULT_ZOMBIE_TIMEOUT;  // How many seconds without update until a game becomes zombie
 
 
 enum LogLevel {
@@ -66,7 +67,7 @@ public:
 			// Loop through the games
 			while (it != m_games.end()) {
 				// Check condition
-				if ((uint32_t)std::time(NULL) > it->second.timestamp + ZOMBIE_TIMEOUT) {
+				if ((uint32_t)std::time(NULL) > it->second.timestamp + g_zombietimeout) {
 					out(VERBOSE) << "Zombie game: \"" << it->second.name << "\"" << std::endl;
 					m_games.erase(it++);
 					++removecount;
@@ -164,6 +165,8 @@ int main(int argc, char** argv) {
 #ifdef __linux
 				<< "  -d, --daemon                run in backround (i.e. daemonize)" << std::endl
 #endif
+				<< "  -t, --timeout <seconds>     seconds without update and the game becomes zombie" << std::endl
+				<< "                              default: " << DEFAULT_ZOMBIE_TIMEOUT << std::endl
 				<< "  -p, --port <portnumber>     listen given port for connections" << std::endl
 				<< "                              default: " << protocol::DEFAULT_PORT << std::endl
 				;
@@ -178,6 +181,9 @@ int main(int argc, char** argv) {
 #endif
 		} else if ((arg == "--port" || arg == "-p") && i < argc-1) {
 			port = atoi(argv[i+1]);
+			++i;
+		} else if ((arg == "--timeout" || arg == "-t") && i < argc-1) {
+			g_zombietimeout = atoi(argv[i+1]);
 			++i;
 		} else {
 			out(ERROR) << "Invalid argument " << arg << std::endl;
@@ -203,7 +209,7 @@ int main(int argc, char** argv) {
 
 		while (true) {
 			// Periodically remove zombie games
-			boost::this_thread::sleep(boost::posix_time::milliseconds(ZOMBIE_TIMEOUT * 1000));
+			boost::this_thread::sleep(boost::posix_time::milliseconds(g_zombietimeout * 1000));
 			games.purgeGames();
 		}
 	} catch (const std::exception& e) {
