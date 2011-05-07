@@ -38,10 +38,7 @@ void App::evBtnNetRefresh(WP)
 {
 	mMasterClient.reset(new MasterClient(gameInfoListener.get()));
 	mMasterClient->connect(pSet->master_server_address, pSet->master_server_port);
-	// FIXME: Hack, should not block here, MasterClient should queue
-	//        the request until connection is established
-	boost::this_thread::sleep(boost::posix_time::milliseconds(2000));
-	mMasterClient->refreshList();
+	// The actual refresh will be requested automatically when the connection is made
 }
 
 void App::evBtnNetJoin(WP)
