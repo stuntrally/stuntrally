@@ -15,6 +15,16 @@ using namespace MyGUI;
 
 #include "CarReflection.h" //ciShadowSizesA, ciShadowNumSizes
 
+
+/// Callback for updating serverlist
+struct GameInfoListener: public MasterClientCallback {
+	GameInfoListener(MultiListPtr list): MasterClientCallback(), mList(list) {}
+	void listChanged(protocol::GameList list);
+private:
+	MultiListPtr mList;
+};
+
+
 class App : public BaseApp //, public RenderTargetListener
 {
 public:
@@ -210,16 +220,17 @@ protected:
 
 	///  multiplayer
 	MultiListPtr listServers, listPlayers;
-	void NetUpdServers(), NetUpdPlayers();
-    ListPtr listNetChat;
+	void NetUpdPlayers();
+	ListPtr listNetChat;
+	boost::scoped_ptr<GameInfoListener> gameInfoListener;
 
-    ButtonPtr btnNetRefresh,btnNetJoin;  void evBtnNetRefresh(WP),evBtnNetJoin(WP);
+	ButtonPtr btnNetRefresh,btnNetJoin;  void evBtnNetRefresh(WP),evBtnNetJoin(WP);
 	ButtonPtr btnNetReady,btnNetLeave;  void evBtnNetReady(WP),evBtnNetLeave(WP);
 
-    StaticImagePtr imgNetTrack;
-    StaticTextPtr valNetGames, valNetChat, valNetTrack;
-    ButtonPtr btnNetSendMsg;  void evBtnNetSendMsg(WP);
-    EditPtr edNetChatMsg,edNetTrackInfo,
+	StaticImagePtr imgNetTrack;
+	StaticTextPtr valNetGames, valNetChat, valNetTrack;
+	ButtonPtr btnNetSendMsg;  void evBtnNetSendMsg(WP);
+	EditPtr edNetChatMsg,edNetTrackInfo,
 		edNetNick, edNetServerIP, edNetServerPort, edNetLocalPort;
 };
 
