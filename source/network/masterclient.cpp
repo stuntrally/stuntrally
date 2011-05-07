@@ -36,6 +36,8 @@ void MasterClient::updateGame(const std::string& name, const std::string& track,
 void MasterClient::connectionEvent(net::NetworkTraffic const& e)
 {
 	std::cout << "Connection to master server established" << std::endl;
+	// Send refresh request automatically after connection is established
+	refreshList();
 }
 
 void MasterClient::disconnectEvent(net::NetworkTraffic const& e)
