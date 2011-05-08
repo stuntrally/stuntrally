@@ -32,6 +32,7 @@ if(BUILD_GAME)
 		ogre/*/*.cpp
 		road/*.cpp
 		network/*.cpp
+		network/*.hpp # For some IDE project files
 	)
 
 	add_executable(${GAME_EXE} ${GAME_SOURCES})
