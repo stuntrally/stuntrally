@@ -19,17 +19,21 @@ using namespace MyGUI;
 
 void App::peerConnected(PeerInfo peer)
 {
-
+	if (!listNetChat) return;
+	listNetChat->addItem("Connected: " + peer.name);
 }
 
 void App::peerDisconnected(PeerInfo peer)
 {
-
+	if (!listNetChat) return;
+	listNetChat->addItem("Disconnected: " + peer.name);
 }
 
 void App::peerMessage(PeerInfo peer, std::string msg)
 {
+	if (!listNetChat) return;
 
+	listNetChat->addItem(peer.name + ": " + msg);
 }
 
 
