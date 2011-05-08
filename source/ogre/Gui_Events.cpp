@@ -34,18 +34,17 @@ void App::evBtnNetJoin(WP)
 	size_t i = listServers->getIndexSelected();
 	if (i == ITEM_NONE) return;
 
-	mClient.reset(new P2PGameClient(pSet->nickname, pSet->local_port));
-	std::string host = "localhost"; // FIXME: listServers->getSubItemName...
-	int port = 4243; // FIXME: listServers->getSubItemName...
-	mClient->connect(host, port);
+	try {
+		std::string host = "localhost"; // FIXME: listServers->getSubItemName...
+		int port = 4243; // FIXME: listServers->getSubItemName...
+		mClient.reset(new P2PGameClient(pSet->nickname, pSet->local_port));
+		mClient->connect(host, port);
+	} catch (...) {
+		Message::createMessageBox(  // #{transl ..
+			"Message", "Network Error", "Failed to initialize networking.",
+			MessageBoxStyle::IconError | MessageBoxStyle::Ok);
+	}
 
-	//Message::createMessageBox(  // #{transl ..
-	//	"Message", "Join game", "Game name: " + listServers->getItemNameAt(i),
-	//	MessageBoxStyle::IconInfo | MessageBoxStyle::Ok);
-	
-	//.. get players list for current game
-	//NetUpdPlayers();
-	
 	//  update track info
 	if (valNetTrack)
 		valNetTrack->setCaption("Track: " + sListTrack);
