@@ -35,8 +35,8 @@ void App::evBtnNetJoin(WP)
 	if (i == ITEM_NONE) return;
 
 	try {
-		std::string host = "localhost"; // FIXME: listServers->getSubItemName...
-		int port = 4243; // FIXME: listServers->getSubItemName...
+		std::string host = listServers->getSubItemNameAt(3, i);
+		int port = boost::lexical_cast<int>(listServers->getSubItemNameAt(4, i));
 		mClient.reset(new P2PGameClient(pSet->nickname, pSet->local_port));
 		mClient->connect(host, port);
 	} catch (...) {
