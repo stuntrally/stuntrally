@@ -1,3 +1,4 @@
+cmake_minimum_required(VERSION 2.8)
 
 # Linux prefers lower-case exe names
 if(WIN32 OR APPLE)

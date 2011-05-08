@@ -14,7 +14,6 @@ using namespace MyGUI;
 ///  Gui Events
 //-----------------------------------------------------------------------------------------------------------
 
-
 //  [Multiplayer]
 //---------------------------------------------------------------------
 
@@ -109,6 +108,11 @@ void App::evEdNetLocalPort(EditPtr ed)
 	pSet->local_port = s2i(ed->getCaption());
 }
 
+#define ChkEv(var)  \
+	pSet->var = !pSet->var;  if (wp) {  \
+	ButtonPtr chk = wp->castType<MyGUI::Button>(); \
+	chk->setStateCheck(pSet->var);  }
+
 
 //  [Input]
 //---------------------------------------------------------------------
@@ -123,6 +127,30 @@ void App::controlBtnClicked(Widget* sender)
 	MyGUI::PointerManager::getInstance().setVisible(false);
 }
 
+//  [Setup]
+//    [Car]
+void App::chkAbs(WP wp){		ChkEv(abs);		if (pGame)  pGame->ProcessNewSettings();	}
+void App::chkTcs(WP wp){		ChkEv(tcs);		if (pGame)  pGame->ProcessNewSettings();	}
+
+void App::chkGear(WP wp){		ChkEv(autoshift);	if (pGame)  pGame->ProcessNewSettings();	}
+void App::chkRear(WP wp){		ChkEv(autorear);	if (pGame)  pGame->ProcessNewSettings();	}
+void App::chkClutch(WP wp){		ChkEv(autoclutch);	if (pGame)  pGame->ProcessNewSettings();	}
+//    [Game]
+void App::chkVegetCollis(WP wp){	ChkEv(veget_collis);	}
+void App::btnNumPlayers(WP wp)
+{
+	if      (wp->getName() == "btnPlayers1") pSet->local_players = 1;
+	else if (wp->getName() == "btnPlayers2") pSet->local_players = 2;
+	else if (wp->getName() == "btnPlayers3") pSet->local_players = 3;
+	else if (wp->getName() == "btnPlayers4") pSet->local_players = 4;
+}
+void App::chkSplitVert(WP wp)
+{
+	ChkEv(split_vertically); 
+}
+
+
+// game
 
 //  [Graphics]
 //---------------------------------------------------------------------
@@ -427,11 +455,6 @@ void App::btnQuit(WP)
 
 //  [View]  . . . . . . . . . . . . . . . . . . . .    ---- checks ----    . . . . . . . . . . . . . . . . . . . .
 
-#define ChkEv(var)  \
-	pSet->var = !pSet->var;  if (wp) {  \
-	ButtonPtr chk = wp->castType<MyGUI::Button>(); \
-    chk->setStateCheck(pSet->var);  }
-
 void App::chkDigits(WP wp){ 		ChkEv(show_digits); ShowHUD();   }
 
 void App::chkReverse(WP wp){		ChkEv(trackreverse);	ReadTrkStats();  }
@@ -462,14 +485,6 @@ void App::chkCarDbgTxt(WP wp){		ChkEv(car_dbgtxt);	ShowHUD();	}
 void App::chkBltDebug(WP wp){		ChkEv(bltDebug);	}
 void App::chkBltProfilerTxt(WP wp){	ChkEv(bltProfilerTxt);	}
 
-//  [Car]
-void App::chkAbs(WP wp){		ChkEv(abs);		if (pGame)  pGame->ProcessNewSettings();	}
-void App::chkTcs(WP wp){		ChkEv(tcs);		if (pGame)  pGame->ProcessNewSettings();	}
-
-void App::chkGear(WP wp){		ChkEv(autoshift);	if (pGame)  pGame->ProcessNewSettings();	}
-void App::chkRear(WP wp){		ChkEv(autorear);	if (pGame)  pGame->ProcessNewSettings();	}
-void App::chkClutch(WP wp){		ChkEv(autoclutch);	if (pGame)  pGame->ProcessNewSettings();	}
-
 void App::radKmh(WP wp){	bRkmh->setStateCheck(true);  bRmph->setStateCheck(false);  pSet->show_mph = false;  ShowHUD();  }
 void App::radMph(WP wp){	bRkmh->setStateCheck(false);  bRmph->setStateCheck(true);  pSet->show_mph = true;   ShowHUD();  }
 
@@ -480,8 +495,6 @@ void App::chkEscQuits(WP wp){		ChkEv(escquit);		}
 void App::chkBltLines(WP wp){		ChkEv(bltLines);	}
 
 void App::chkLoadPics(WP wp){		ChkEv(loadingbackground);	}
-void App::chkVegetCollis(WP wp){	ChkEv(veget_collis);	}
-
 
 
 //  [Video]  . . . . . . . . . . . . . . . . . . . .    ---- ------ ----    . . . . . . . . . . . . . . . . . . . .
@@ -603,7 +616,7 @@ void App::btnRplLoad(WP)  // Load
 void App::btnRplSave(WP)  // Save
 {
 	String edit = edRplName->getCaption();
-	String file = PATHMANAGER::GetReplayPath() + "/" + pSet->track + edit + ".rpl";
+	String file = PATHMANAGER::GetReplayPath() + "/" + pSet->track + "_" + edit + ".rpl";
 	///  save
 	if (!replay.SaveFile(file.c_str()))
 	{
@@ -648,7 +661,13 @@ void App::listRplChng(List* li, size_t pos)
 }
 
 
-void App::chkRplAutoRec(WP wp){		ChkEv(rpl_rec);		}
+void App::chkRplAutoRec(WP wp)		//ChkEv(rpl_rec);		}
+{
+	bRplRec = !bRplRec;  // changes take effect next game start
+	if (!wp)  return;
+	ButtonPtr chk = wp->castType<MyGUI::Button>();
+    chk->setStateCheck(bRplRec);
+}
 
 void App::chkRplChkGhost(WP wp){	/*ChkEv(rpl_play);*/	}
 

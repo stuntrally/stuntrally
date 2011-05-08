@@ -9,6 +9,7 @@ CarReflection::CarReflection(SETTINGS* set, Ogre::SceneManager* sceneMgr, unsign
 	pSceneMgr = sceneMgr;
 	iCounter = pSet->refl_skip;
 }
+
 CarReflection::~CarReflection()
 {
 	for (int i=0; i < 6; ++i)
@@ -27,6 +28,7 @@ CarReflection::~CarReflection()
 	// destroy cube tex
 	Ogre::TextureManager::getSingleton().remove(cubetexName);
 }
+
 void CarReflection::Create()
 {
 	///TODO (optional) only one cubemap, no cubemaps (static) 
@@ -100,6 +102,7 @@ void CarReflection::Create()
 	}
 
 }
+
 void CarReflection::Update()
 {
 	//  skip frames

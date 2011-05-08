@@ -203,14 +203,14 @@ void SplitScreenManager::preViewportUpdate(const Ogre::RenderTargetViewportEvent
 			
 
 		//  road lod for each viewport
-		if (pApp->pSet->local_players > 1)
+		if (mNumPlayers > 1)
 		if (pApp->road)
 		{
 			pApp->road->mCamera = evt.source->getCamera();
 			pApp->road->UpdLodVis(pSet->road_dist);
 		}
 		
-		//  Update rain/snow - dependant on camera
+		//  Update rain/snow - depends on camera
 		if (pSet->particles)
 		{	
 			const Vector3& pos = evt.source->getCamera()->getPosition();

@@ -19,11 +19,14 @@ struct ReplayHeader
 	char car[32];     // car name  (.car file crc?, settings diff-)
 
 	int ver, frameSize;  // bin data format - sizeof(ReplayFrame)
-	float whR[4];  // car wheels radius
-	// num players !..  TODO: many players...
-	// car color ?..
+	float whR[4][4];  // cars wheels radius
+	
+	int numPlayers;    // TODO: many players...
+	float hue[4],sat[4],val[4];  // cars colors
+	char cars[32][3];  // car names (when numPlayers > 1)
+	char descr[128];   // description - user text
 
-	//  custom replay fps 60 ..
+	// TODO: custom replay fps 60, interpolation..
 	ReplayHeader();  void Default();
 };
 
@@ -66,16 +69,18 @@ public:
 	bool LoadFile(std::string file, bool onlyHdr=false);
 	bool SaveFile(std::string file);
 
-	void AddFrame(const ReplayFrame& frame);  // record
+	void AddFrame(const ReplayFrame& frame);    // record
 	bool GetFrame(double time, ReplayFrame* fr);  // play
 
 	float GetTimeLength();  // total time in seconds
+	int GetNumFrames()  {  return frames.size();  }
 
-	void InitHeader(const char* track, bool trk_user, const char* car, float* whR_4);
+	//  inits only basic header data, fill the rest after
+	void InitHeader(const char* track, bool trk_user, const char* car, bool bClear);
 
-//private:
 	ReplayHeader header;
 private:
+	//std::vector< std::vector<ReplayFrame> > frames;  // cars..
 	std::vector<ReplayFrame> frames;
 };
 

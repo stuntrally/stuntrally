@@ -194,9 +194,11 @@ protected:
 		chkRplAutoRec(WP),chkRplChkGhost(WP), btnRplCur(WP),btnRplAll(WP),
 		btnRplToStart(WP),btnRplToEnd(WP), btnRplBack(WP),btnRplForward(WP),
 		btnRplPlay(WP);
+	
+	void btnNumPlayers(WP); void chkSplitVert(WP);
 		
 public:
-	bool bRplPlay,bRplPause;  //  game
+	bool bRplPlay,bRplPause, bRplRec;  //  game
 protected:
 	ButtonPtr btRplPl;  void UpdRplPlayBtn();
 

@@ -224,7 +224,7 @@ void App::newPoses()
 				whPos[w] = fr.whPos[w];  whRot[w] = fr.whRot[w];
 				posInfo.whVel[w] = fr.whVel[w];
 				posInfo.whSlide[w] = fr.slide[w];  posInfo.whSqueal[w] = fr.squeal[w];
-				posInfo.whR[w] = replay.header.whR[w];//
+				posInfo.whR[w] = replay.header.whR[0][w];//
 				posInfo.whMtr[w] = fr.whMtr[w];
 			}
 
@@ -323,8 +323,17 @@ void App::newPoses()
 				fr.speed = pCar->GetSpeed();
 				fr.dynVel = pCar->dynamics.GetVelocity().Magnitude();
 				replay.AddFrame(fr);
+				
+				if (valRplName2)  // recorded info
+				{
+					int size = replay.GetNumFrames() * sizeof(ReplayFrame);
+					sprintf(s, "%5.2f", float(size)/1000000.f);
+					String ss = String("Recorded   time: ") + GetTimeString(replay.GetTimeLength()) + "   size: " + s + " MB";
+					valRplName2->setCaption(ss);
+				}
 			}
 		}
+		if (bRplPlay && valRplName2)  valRplName2->setCaption("");
 		///-----------------------------------------------------------------------
 		
 
