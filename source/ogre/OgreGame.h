@@ -25,7 +25,7 @@ private:
 };
 
 
-class App : public BaseApp //, public RenderTargetListener
+class App : public BaseApp, public GameClientCallback //, public RenderTargetListener
 {
 public:
 	App();  virtual ~App();
@@ -221,6 +221,12 @@ protected:
 	char s[512];
 
 	///  multiplayer
+
+	void peerConnected(PeerInfo peer);
+	void peerDisconnected(PeerInfo peer);
+	void peerMessage(PeerInfo peer, std::string msg);
+
+
 	MultiListPtr listServers, listPlayers;
 	ListPtr listNetChat;
 	boost::scoped_ptr<GameInfoListener> gameInfoListener;

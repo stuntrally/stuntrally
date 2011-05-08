@@ -1,7 +1,8 @@
 #include "gameclient.hpp"
 
 
-P2PGameClient::P2PGameClient(const std::string& nickname, int port): m_client(*this, port), m_state(DISCONNECTED), m_mutex(), m_name(nickname)
+P2PGameClient::P2PGameClient(const std::string& nickname, GameClientCallback* callback, int port)
+	: m_callback(callback), m_client(*this, port), m_state(DISCONNECTED), m_mutex(), m_name(nickname)
 {
 }
 
@@ -34,6 +35,11 @@ void P2PGameClient::sendPeerInfo()
 void P2PGameClient::sendMessage(const std::string& msg)
 {
 	m_client.broadcast(char(protocol::TEXT_MESSAGE) + msg, net::PACKET_RELIABLE);
+	if (m_callback) {
+		PeerInfo pi;
+		pi.name = m_name;
+		m_callback->peerMessage(pi, msg);
+	}
 }
 
 void P2PGameClient::startLobby()
@@ -89,6 +95,7 @@ void P2PGameClient::connectionEvent(net::NetworkTraffic const& e)
 		PeerInfo& pi = m_peers[e.peer_address];
 		pi.address = e.peer_address;
 		pi.connection = PeerInfo::CONNECTED;
+		// No connection callback here, because nick is not yet set
 	}
 	// We'll send the peer info periodically, so no need to do it here
 }
@@ -96,8 +103,14 @@ void P2PGameClient::connectionEvent(net::NetworkTraffic const& e)
 void P2PGameClient::disconnectEvent(net::NetworkTraffic const& e)
 {
 	std::cout << "Disconnected address=" << e.peer_address << "   id=" << e.peer_id << std::endl;
-	boost::mutex::scoped_lock lock(m_mutex);
-	m_peers[e.peer_address].connection = PeerInfo::DISCONNECTED;
+	PeerInfo picopy;
+	{
+		boost::mutex::scoped_lock lock(m_mutex);
+		m_peers[e.peer_address].connection = PeerInfo::DISCONNECTED;
+		picopy = m_peers[e.peer_address];
+	}
+	// Callback
+	if (m_callback) m_callback->peerDisconnected(picopy);
 }
 
 void P2PGameClient::receiveEvent(net::NetworkTraffic const& e)
@@ -115,13 +128,27 @@ void P2PGameClient::receiveEvent(net::NetworkTraffic const& e)
 		case protocol::TEXT_MESSAGE: {
 			std::string msg((const char*)e.packet_data, e.packet_length);
 			std::cout << "Text message received: " << msg << std::endl;
+			if (m_callback) {
+				boost::mutex::scoped_lock lock(m_mutex);
+				PeerInfo pi = m_peers[e.peer_address];
+				lock.unlock();
+				m_callback->peerMessage(pi, msg);
+			}
 			break;
 		}
 		case protocol::NICK: {
 			if (e.packet_length > 1) {
 				std::string nick((const char*)e.packet_data + 1, e.packet_length - 1);
 				boost::mutex::scoped_lock lock(m_mutex);
-				m_peers[e.peer_address].name = nick;
+				PeerInfo& pi = m_peers[e.peer_address];
+				bool isNew = pi.name.empty();
+				pi.name = nick;
+				// Callback
+				if (isNew && m_callback) {
+					PeerInfo picopy = pi;
+					lock.unlock();
+					m_callback->peerConnected(picopy);
+				}
 			}
 			break;
 		}

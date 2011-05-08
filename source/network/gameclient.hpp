@@ -24,6 +24,28 @@ typedef std::map<std::string, PeerInfo> PeerMap;
 
 
 /**
+ * @brief Callback class for P2PGameClient events.
+ *
+ * Inherit and implement this to get events about arriving peer
+ * info. Pass the implementation instance to the P2PGameClient.
+ */
+struct GameClientCallback {
+	/// Called when there is a new connection
+	/// @param peer the new peer
+	virtual void peerConnected(PeerInfo peer) {};
+
+	/// Called when a peer disconnects
+	/// @param peer the disconnected peer
+	virtual void peerDisconnected(PeerInfo peer) {};
+
+	/// Called when a text message arrives
+	/// @param peer the new peer
+	/// @param msg the message body
+	virtual void peerMessage(PeerInfo peer, std::string msg) {};
+};
+
+
+/**
  * @brief High-level networking implentation using p2p.
  *
  * This class is responsible for forming a peer-to-peer network,
@@ -31,7 +53,7 @@ typedef std::map<std::string, PeerInfo> PeerMap;
  */
 class P2PGameClient: public net::NetworkListener {
 public:
-	P2PGameClient(const std::string& nickname, int port = protocol::DEFAULT_PORT);
+	P2PGameClient(const std::string& nickname, GameClientCallback* callback = NULL, int port = protocol::DEFAULT_PORT);
 
 	~P2PGameClient();
 
@@ -69,6 +91,7 @@ public:
 	void receiveEvent(net::NetworkTraffic const& e);
 
 private:
+	GameClientCallback* m_callback;
 	net::NetworkObject m_client;
 	PeerMap m_peers;
 	enum State { DISCONNECTED, LOBBY, GAME } m_state;

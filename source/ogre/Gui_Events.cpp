@@ -17,6 +17,21 @@ using namespace MyGUI;
 //  [Multiplayer]
 //---------------------------------------------------------------------
 
+void App::peerConnected(PeerInfo peer)
+{
+
+}
+
+void App::peerDisconnected(PeerInfo peer)
+{
+
+}
+
+void App::peerMessage(PeerInfo peer, std::string msg)
+{
+
+}
+
 
 void App::evBtnNetRefresh(WP)
 {
@@ -36,7 +51,7 @@ void App::evBtnNetJoin(WP)
 	try {
 		std::string host = listServers->getSubItemNameAt(3, i);
 		int port = boost::lexical_cast<int>(listServers->getSubItemNameAt(4, i));
-		mClient.reset(new P2PGameClient(pSet->nickname, pSet->local_port));
+		mClient.reset(new P2PGameClient(pSet->nickname, this, pSet->local_port));
 		mClient->connect(host, port);
 	} catch (...) {
 		Message::createMessageBox(  // #{transl ..
@@ -68,7 +83,7 @@ void App::evBtnNetLeave(WP)
 		mClient.reset();
 	} else {
 		mLobbyState = HOSTING;
-		if (pSet) mClient.reset(new P2PGameClient(pSet->nickname, pSet->local_port));
+		if (pSet) mClient.reset(new P2PGameClient(pSet->nickname, this, pSet->local_port));
 		if (!mMasterClient) {
 			mMasterClient.reset(new MasterClient(gameInfoListener.get()));
 			mMasterClient->connect(pSet->master_server_address, pSet->master_server_port);
@@ -84,14 +99,10 @@ void App::evBtnNetLeave(WP)
 
 void App::evBtnNetSendMsg(WP)
 {
-	if (!mClient || !edNetChatMsg || !listNetChat || !edNetNick)  return;
+	if (!mClient || !edNetChatMsg)  return;
+	if (edNetChatMsg->getCaption().empty()) return;
 
-	String nick = edNetNick->getCaption();
-	String msg = edNetChatMsg->getCaption();
-	String text = nick + ": " + msg;
-
-	mClient->sendMessage(text);
-	listNetChat->addItem(text);
+	mClient->sendMessage(edNetChatMsg->getCaption());
 	edNetChatMsg->setCaption("");
 }
     

@@ -27,6 +27,7 @@ void GameInfoListener::listChanged(protocol::GameList list) {
 }
 
 
+
 void App::InitGui()
 {
 	//  change skin
