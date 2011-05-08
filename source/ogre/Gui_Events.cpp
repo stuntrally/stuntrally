@@ -806,9 +806,10 @@ bool App::keyPressed( const OIS::KeyEvent &arg )
 			break;
 
 		case KC_P:		// replay play/pause
-			if (bRplPlay)
-			{	bRplPause = !bRplPause;  UpdRplPlayBtn();  }
-			return true;
+			if (bRplPlay && !isFocGui)
+			{	bRplPause = !bRplPause;  UpdRplPlayBtn();
+				return true;  }
+			break;
 
 
 		case KC_F9:		// car debug text/bars
