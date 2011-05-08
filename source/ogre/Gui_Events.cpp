@@ -5,6 +5,7 @@
 #include "OgreGame.h"
 #include "MyGUI_PointerManager.h"
 #include <boost/filesystem.hpp>
+#include "../oisb/OISB.h"
 using namespace MyGUI;
 
 #define res  1000000.f
@@ -638,6 +639,26 @@ void App::updReplaysList()
 bool App::keyPressed( const OIS::KeyEvent &arg )
 {
 	using namespace OIS;
+	
+	///  dynamic keys, oisb
+	#define action(s) OISB::System::getSingleton().lookupAction(std::string("General/") + std::string(s))->isActive()
+
+	// on/off gui
+	if (action("ShowOptions") && !alt)
+	{
+		isFocGui = !isFocGui;
+		if (mWndOpts)	mWndOpts->setVisible(isFocGui);
+		if (bnQuit)  bnQuit->setVisible(isFocGui);
+		if (mGUI)	mGUI->setVisiblePointer(isFocGuiOrRpl());
+		if (!isFocGui)  mToolTip->setVisible(false);
+		return true;
+	}
+	//  new game
+	if (action("RestartGame"))
+	{
+		NewGame(); return false;
+	}
+
 	switch (arg.key)
 	{
 		case KC_ESCAPE:		// quit
@@ -664,17 +685,6 @@ bool App::keyPressed( const OIS::KeyEvent &arg )
 			vp->setVisibilityMask(shift ? 255 : 0);
 		}	return true;
 		#endif
-	   	
-	   	case KC_F1:
-	   	case KC_TAB:	// on/off gui
-	   	if (!alt)  {
-	   		isFocGui = !isFocGui;
-	   		if (mWndOpts)	mWndOpts->setVisible(isFocGui);
-			if (bnQuit)  bnQuit->setVisible(isFocGui);
-	   		if (mGUI)	mGUI->setVisiblePointer(isFocGuiOrRpl());
-	   		if (!isFocGui)  mToolTip->setVisible(false);
-	   	}	return true;
-
 
 		case KC_BACK:	// replay controls
 			if (mWndRpl && !isFocGui)
@@ -715,12 +725,6 @@ bool App::keyPressed( const OIS::KeyEvent &arg )
 		case KC_F8:		// Minimap
 		{	WP wp = chMinimp;  ChkEv(trackmap);  if (ndMap)  ndMap->setVisible(pSet->trackmap);
 		}	return false;
-
-		
-		case KC_F5:		//  new game
-		//if (ctrl)
-		{	NewGame();  return false;
-		}	break;
 		
 		case KC_RETURN:	//  chng trk + new game  after pg up/dn
 		if (isFocGui)

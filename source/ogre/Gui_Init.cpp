@@ -525,6 +525,7 @@ void App::InitInputGui()
 		//  custom y pos of each row, to sort by function
 		int i = 0, y = 0;
 		std::map <std::string, int> yRow;
+		// player
 		yRow["Throttle"] = y;	y+=2;
 		yRow["Brake"] = y;		y+=2;
 		yRow["Steering"] = y;	y+=2+1;
@@ -533,6 +534,12 @@ void App::InitInputGui()
 		yRow["Flip"] = y;		y+=2+1;
 		yRow["ShiftDown"] = y;	y+=2;
 		yRow["ShiftUp"] = y;	y+=2;
+		// general
+		y = 0;
+		yRow["ShowOptions"] = y; y+=2+1;
+		yRow["PrevTab"] = y;     y+=2;
+		yRow["NextTab"] = y;     y+=2+1;
+		yRow["RestartGame"] = y; y+=2;
 		
 		///  Actions
 		for (std::map<OISB::String, OISB::Action*>::const_iterator
@@ -566,6 +573,18 @@ void App::InitInputGui()
 						key2->setCaption( stripk(act->mBindings.front()->getBindable(1)->getBindableName()) );
 					else
 						key2->setCaption( TR("#{InputKeyUnassigned}"));
+					key2->eventMouseButtonClick = MyGUI::newDelegate(this, &App::controlBtnClicked);
+				}
+				else
+				{
+					// no binds yet
+					// first key
+					MyGUI::ButtonPtr key1 = tabitem->createWidget<Button>("Button", x1, y, sx, sy, MyGUI::Align::Default, "inputbutton_" + (*ait).first + "_" + (*it).first + "_1" );
+					key1->setCaption( TR("#{InputKeyUnassigned}") );
+					key1->eventMouseButtonClick = MyGUI::newDelegate(this, &App::controlBtnClicked);
+					// 2nd key
+					MyGUI::ButtonPtr key2 = tabitem->createWidget<Button>("Button", x2, y, sx, sy, MyGUI::Align::Default, "inputbutton_" + (*ait).first + "_" + (*it).first + "_2");
+					key2->setCaption( TR("#{InputKeyUnassigned}"));
 					key2->eventMouseButtonClick = MyGUI::newDelegate(this, &App::controlBtnClicked);
 				}
 			}
@@ -603,6 +622,20 @@ void App::InitInputGui()
 						key2->setCaption( TR("#{InputKeyUnassigned}"));
 						key2->eventMouseButtonClick = MyGUI::newDelegate(this, &App::controlBtnClicked);
 					}
+				}
+				else
+				{
+					// no binds yet
+					// first key
+					MyGUI::ButtonPtr key1 = tabitem->createWidget<Button>("Button", x1, y, sx, sy, MyGUI::Align::Default,
+						"inputbutton_" + (*ait).first + "_" + (*it).first + "_1");
+					key1->setCaption( TR("#{InputKeyUnassigned}") );
+					key1->eventMouseButtonClick = MyGUI::newDelegate(this, &App::controlBtnClicked);
+					// 2nd key
+					MyGUI::ButtonPtr key2 = tabitem->createWidget<Button>("Button", x2, y, sx, sy, MyGUI::Align::Default,
+						"inputbutton_" + (*ait).first + "_" + (*it).first + "_2");
+					key2->setCaption( TR("#{InputKeyUnassigned}"));
+					key2->eventMouseButtonClick = MyGUI::newDelegate(this, &App::controlBtnClicked);
 				}
 			}
 			///-AT_SEQUENCE: not used

@@ -61,7 +61,6 @@ bool BaseApp::keyPressed( const OIS::KeyEvent &arg )
 		bAssignKey = false;
 		pressedKey = arg.key;
 		pressedKeySender->setCaption(mKeyboard->getAsString(pressedKey));
-		Log(mKeyboard->getAsString(pressedKey));
 		// show mouse again
 		MyGUI::PointerManager::getInstance().setVisible(true);
 		
@@ -72,6 +71,8 @@ bool BaseApp::keyPressed( const OIS::KeyEvent &arg )
 		
 		OISB::ActionSchema* schema = OISB::System::getSingleton().mActionSchemas[schemaName];
 		OISB::Action* action = schema->mActions[actionName];
+		if (action->mBindings.size() == 0)
+			action->createBinding();
 		OISB::Binding* binding = action->mBindings.front();
 		
 		// get old binds

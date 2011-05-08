@@ -1,6 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <schemas>
-	<schema name="General"/>
+	<schema name="General">
+		<action name="ShowOptions" type="Trigger">
+		</action>
+		<action name="PrevTab" type="Trigger">
+		</action>
+		<action name="NextTab" type="Trigger">
+		</action>
+		<action name="RestartGame" type="Trigger">
+		</action>
+	</schema>
 	<schema name="Player1">
 		<action name="Boost" type="AnalogAxis" UseAbsoluteValues="0" MinimumValue="0" MaximumValue="100" Sensitivity="1" AnalogEmulator="Linear" EmulationDecreaseSpeed="500" EmulationIncreaseSpeed="500" EmulationReturnEnabled="1" EmulationReturnValue="0" EmulationReturnDecreaseSpeed="500" EmulationReturnIncreaseSpeed="500">
 			<binding>

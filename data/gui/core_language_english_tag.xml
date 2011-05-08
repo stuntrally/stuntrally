@@ -210,6 +210,11 @@
 	<Tag name="InputMapSteering">Steering</Tag>
 	<Tag name="InputMapShiftUp">Shift up</Tag>
 	<Tag name="InputMapShiftDown">Shift down</Tag>
+	<Tag name="InputMapShowOptions">Show options</Tag>
+	<Tag name="InputMapPrevTab">Previous tab</Tag>
+	<Tag name="InputMapNextTab">Next tab</Tag>
+	<Tag name="InputMapRestartGame">New game</Tag>
+	
 
 	<!--  Sound  -->
 	<Tag name="Sound">Sound</Tag>
