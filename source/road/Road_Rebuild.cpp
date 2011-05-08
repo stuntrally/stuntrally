@@ -117,9 +117,12 @@ void SplineRoad::RebuildRoadInt()
 
 			//-  Merge length
 			sumLenMrg += len;
+			// mtr hidden changes
+			bool hid = mP[seg].idMtr < 0, hid1 = mP[seg1].idMtr < 0, hid0 = mP[seg0].idMtr < 0;
+
 			//  merge road and pipe segs, don't merge transitions
 			LogR(toStr(sp0) + "  " + toStr(sp) + "  " + toStr(sp1));
-			if (sp != sp1 || sp != sp0)
+			if (sp != sp1 || sp != sp0  ||  hid != hid1 || hid || hid0)
 			{	sumLenMrg = 0.f;  ++mrgGrp;  rdPipe += len; //#
 				vbSegMrg.push_back(1);
 			}
@@ -285,6 +288,7 @@ void SplineRoad::RebuildRoadInt()
 			//  Length  vertices
 			//------------------------------------------------------------------------------------
 			//LogR( " __len");
+			if (mP[seg].idMtr >= 0)  // -1 hides segment
 			for (int i = -1; i <= il+1; ++i)  // length +1  +2-gap
 			{
 				++iLmrg;
@@ -555,7 +559,7 @@ void SplineRoad::RebuildRoadInt()
 				MeshPtr mesh = MeshManager::getSingleton().createManual(sMesh,"General");
 				SubMesh* sm = mesh->createSubMesh();
 				
-				int id = mP[seg].idMtr;
+				int id = max(0,mP[seg].idMtr);
 				if (isPipe(seg))
 					rs.sMtrRd = sMtrPipe[id];
 				else

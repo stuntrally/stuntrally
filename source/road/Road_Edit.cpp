@@ -478,8 +478,8 @@ void SplineRoad::ChgMtrId(int relId)
 		bSelChng = true;
 		return;  }
 	if (iChosen == -1)  {  // one
-		newP.idMtr = std::max(0, std::min(MTRs-1, newP.idMtr + relId));  return;  }
-	mP[iChosen].idMtr  = std::max(0, std::min(MTRs-1, mP[iChosen].idMtr + relId));
+		newP.idMtr = std::max(-1, std::min(MTRs-1, newP.idMtr + relId));  return;  }
+	mP[iChosen].idMtr  = std::max(-1, std::min(MTRs-1, mP[iChosen].idMtr + relId));
 	Move(Vector3::ZERO);  //RebuildRoad();
 }
 
@@ -495,5 +495,7 @@ const String& SplineRoad::getMtrStr(int seg)
 	if (seg < 0)  // new
 		return newP.pipe == 0.f ? sMtrRoad[newP.idMtr] : sMtrPipe[newP.idMtr];
 	int i = mP[seg].idMtr;
+	static String sHid = "Hidden";
+	if (i < 0)  return sHid;
 	return !isPipe(seg) ? sMtrRoad[i] : sMtrPipe[i];
 }
