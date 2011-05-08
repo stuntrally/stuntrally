@@ -43,7 +43,7 @@ struct GameInfo: public net::SimpleSerializer<GameInfo> {
 	uint8_t packet_type;
 	uint32_t id;        // Set by server
 	uint32_t address;   // Set by server
-	uint16_t port;      // Set by server
+	uint16_t port;      // Set by client
 	uint32_t timestamp; // Set by server
 	uint8_t players;    // Set by client
 	char name[32];      // Set by client

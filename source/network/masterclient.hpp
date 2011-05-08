@@ -43,13 +43,13 @@ public:
 	void connect(const std::string& address, int port = protocol::DEFAULT_PORT);
 
 	/// Updates the hosted game state to master server, starts updater thread if necessary
-	void updateGame(const std::string& name, const std::string& track, int players);
+	void updateGame(const std::string& name, const std::string& track, int players, int port);
 
 	/// Clears cache, requests new game listing, doesn't wait for it to arrive
 	void refreshList();
 
 	/// Returns cached list of games
-	protocol::GameList getList() const { return m_games; };
+	protocol::GameList getList() const { return m_games; }
 
 	/// Terminates the updater
 	void terminate();

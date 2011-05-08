@@ -73,7 +73,7 @@ void App::evBtnNetLeave(WP)
 			mMasterClient.reset(new MasterClient(gameInfoListener.get()));
 			mMasterClient->connect(pSet->master_server_address, pSet->master_server_port);
 		}
-		mMasterClient->updateGame("Placeholder game name", sListTrack, 1);
+		mMasterClient->updateGame("Placeholder game name", sListTrack, 1, pSet->local_port);
 	}
 	btnNetLeave->setCaption(getCreateGameButtonCaption());
 }

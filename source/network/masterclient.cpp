@@ -29,7 +29,7 @@ void MasterClient::refreshList()
 	if (m_callback) m_callback->listChanged(m_games);
 }
 
-void MasterClient::updateGame(const std::string& name, const std::string& track, int players)
+void MasterClient::updateGame(const std::string& name, const std::string& track, int players, int port)
 {
 	{
 		boost::mutex::scoped_lock lock(m_mutex);
@@ -37,6 +37,7 @@ void MasterClient::updateGame(const std::string& name, const std::string& track,
 		memcpy(m_game.name, name.c_str(), 32);
 		memcpy(m_game.track, track.c_str(), 32);
 		m_game.players = players;
+		m_game.port = port;
 		m_sendUpdates = true;
 	}
 	// Start updater thread if it is not already running

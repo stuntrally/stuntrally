@@ -42,7 +42,7 @@ int main(int argc, char** argv) {
 	boost::this_thread::sleep(boost::posix_time::milliseconds(2000));
 
 	std::cout << "> Creating a test game" << std::endl;
-	mc.updateGame("Test game", "M-001", 1);
+	mc.updateGame("Test game", "M-001", 1, 1234);
 	boost::this_thread::sleep(boost::posix_time::milliseconds(1500));
 
 	std::cout << "> Request new list" << std::endl;
@@ -50,7 +50,7 @@ int main(int argc, char** argv) {
 	boost::this_thread::sleep(boost::posix_time::milliseconds(2000));
 
 	std::cout << "> Update the game" << std::endl;
-	mc.updateGame("Test game", "J-002", 2);
+	mc.updateGame("Test game", "J-002", 2, 1234);
 	boost::this_thread::sleep(boost::posix_time::milliseconds(3000));
 
 	std::cout << "> Request another new list (should contain a game)" << std::endl;

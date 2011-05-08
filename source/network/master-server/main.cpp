@@ -122,9 +122,8 @@ public:
 				// Unserialize
 				protocol::GameInfo game = *reinterpret_cast<const protocol::GameInfo*>(e.packet_data);
 				out(VERBOSE) << "Game update received for \"" << game.name << "\"" << std::endl;
-				// Fill in peer info
+				// Fill in peer address
 				game.address = peer->address.host;
-				game.port = peer->address.port;
 				// Update game status
 				m_glm.updateGame(game);
 				// Send confirmation (and id in case of new game)
