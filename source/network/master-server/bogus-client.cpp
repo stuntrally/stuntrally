@@ -57,7 +57,8 @@ int main(int argc, char** argv) {
 	mc.refreshList();
 	boost::this_thread::sleep(boost::posix_time::milliseconds(2000));
 
-	std::cout << "> Wait for the game to expire" << std::endl;
+	std::cout << "> Shutdown updater, wait for the game to expire" << std::endl;
+	mc.terminate();
 	boost::this_thread::sleep(boost::posix_time::milliseconds(10000));
 
 	std::cout << "> Request yet another new list (should be empty)" << std::endl;

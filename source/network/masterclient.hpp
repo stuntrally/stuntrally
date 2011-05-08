@@ -51,6 +51,9 @@ public:
 	/// Returns cached list of games
 	protocol::GameList getList() const { return m_games; };
 
+	/// Terminates the updater
+	void terminate();
+
 	/// Thread that periodically broadcasts game info, don't call directly
 	void gameInfoSenderThread();
 

@@ -9,9 +9,7 @@ MasterClient::MasterClient(MasterClientCallback* callback, int updateInterval)
 
 MasterClient::~MasterClient()
 {
-	// Shuts down possibly running thread
-	m_sendUpdates = false;
-	m_gameInfoSenderThread.join();
+	terminate();
 }
 
 void MasterClient::connect(const std::string& address, int port)
@@ -46,7 +44,15 @@ void MasterClient::updateGame(const std::string& name, const std::string& track,
 		m_gameInfoSenderThread = boost::thread(boost::bind(&MasterClient::gameInfoSenderThread, boost::ref(*this)));
 }
 
-void MasterClient::gameInfoSenderThread() {
+void MasterClient::terminate()
+{
+	// Shuts down possibly running thread
+	m_sendUpdates = false;
+	m_gameInfoSenderThread.join();
+}
+
+void MasterClient::gameInfoSenderThread()
+{
 	while (m_sendUpdates) {
 		{
 			// Broadcast info
