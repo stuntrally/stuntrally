@@ -25,7 +25,7 @@ void App::peerConnected(PeerInfo peer)
 
 void App::peerDisconnected(PeerInfo peer)
 {
-	if (!listNetChat) return;
+	if (!listNetChat || peer.name.empty()) return;
 	listNetChat->addItem("Disconnected: " + peer.name);
 }
 
@@ -88,6 +88,7 @@ void App::evBtnNetLeave(WP)
 	} else {
 		mLobbyState = HOSTING;
 		if (pSet) mClient.reset(new P2PGameClient(pSet->nickname, this, pSet->local_port));
+		mClient->startLobby();
 		if (!mMasterClient) {
 			mMasterClient.reset(new MasterClient(gameInfoListener.get()));
 			mMasterClient->connect(pSet->master_server_address, pSet->master_server_port);
