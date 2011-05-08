@@ -9,6 +9,7 @@ P2PGameClient::~P2PGameClient()
 {
 	// Shuts down possibly running threads
 	m_state = DISCONNECTED;
+	m_peerInfoSenderThread.join();
 }
 
 void P2PGameClient::connect(const std::string& address, int port)
@@ -73,6 +74,7 @@ void P2PGameClient::peerInfoSenderThread() {
 			}
 		}
 		// Wait some
+		// FIXME: Use Conditions to get rid of the wait time in case of destruction
 		boost::this_thread::sleep(boost::posix_time::milliseconds(2000));
 		// Broadcast info
 		sendPeerInfo();

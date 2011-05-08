@@ -57,14 +57,14 @@ void App::evBtnNetJoin(WP)
 void App::evBtnNetReady(WP)
 {
 	//  ready for game,  waiting for other players
-	btnNetReady->setCaption("Waiting..");
+	btnNetReady->setCaption("Waiting...");
 }
 
 void App::evBtnNetLeave(WP)
 {
 	//  leave current game
 	//String s = btnNetLeave->getCaption();
-	btnNetLeave->setCaption("Leaving..");
+	btnNetLeave->setCaption("Create game");
 	//btnNetLeave->setCaption(s);
 	mClient.reset();
 }

@@ -1,8 +1,17 @@
 #include "masterclient.hpp"
 
 
-MasterClient::MasterClient(MasterClientCallback* callback): m_callback(callback), m_mutex(), m_client(*this), m_gameId(0)
+MasterClient::MasterClient(MasterClientCallback* callback, int updateInterval)
+	: m_callback(callback), m_mutex(), m_client(*this), m_game(), m_updateInterval(updateInterval), m_sendUpdates()
 {
+	m_game.packet_type = protocol::GAME_STATUS;
+}
+
+MasterClient::~MasterClient()
+{
+	// Shuts down possibly running thread
+	m_sendUpdates = false;
+	m_gameInfoSenderThread.join();
 }
 
 void MasterClient::connect(const std::string& address, int port)
@@ -24,14 +33,30 @@ void MasterClient::refreshList()
 
 void MasterClient::updateGame(const std::string& name, const std::string& track, int players)
 {
-	protocol::GameInfo game;
-	game.packet_type = protocol::GAME_STATUS;
-	game.id = m_gameId;
-	// FIXME: This memcpy stuff is really hairy
-	memcpy(game.name, name.c_str(), 32);
-	memcpy(game.track, track.c_str(), 32);
-	game.players = players;
-	m_client.broadcast(game, net::PACKET_RELIABLE);
+	{
+		boost::mutex::scoped_lock lock(m_mutex);
+		// FIXME: This memcpy stuff is really hairy
+		memcpy(m_game.name, name.c_str(), 32);
+		memcpy(m_game.track, track.c_str(), 32);
+		m_game.players = players;
+		m_sendUpdates = true;
+	}
+	// Start updater thread if it is not already running
+	if (!m_gameInfoSenderThread.joinable())
+		m_gameInfoSenderThread = boost::thread(boost::bind(&MasterClient::gameInfoSenderThread, boost::ref(*this)));
+}
+
+void MasterClient::gameInfoSenderThread() {
+	while (m_sendUpdates) {
+		{
+			// Broadcast info
+			boost::mutex::scoped_lock lock(m_mutex);
+			m_client.broadcast(m_game, net::PACKET_RELIABLE);
+		}
+		// Wait some
+		// FIXME: Use Conditions to get rid of the wait time in case of destruction
+		boost::this_thread::sleep(boost::posix_time::milliseconds(m_updateInterval));
+	}
 }
 
 void MasterClient::connectionEvent(net::NetworkTraffic const& e)
@@ -60,8 +85,8 @@ void MasterClient::receiveEvent(net::NetworkTraffic const& e)
 		}
 		case protocol::GAME_ACCEPTED: {
 			protocol::GameInfo game = *reinterpret_cast<protocol::GameInfo const*>(e.packet_data);
-			m_gameId = game.id;
-			std::cout << "Game accepted with id " << m_gameId << std::endl;
+			m_game.id = game.id;
+			std::cout << "Game accepted with id " << m_game.id << std::endl;
 			break;
 		}
 		default: {

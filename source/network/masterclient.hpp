@@ -35,12 +35,14 @@ struct MasterClientCallback {
  */
 class MasterClient: public net::NetworkListener {
 public:
-	MasterClient(MasterClientCallback* callback = NULL);
+	MasterClient(MasterClientCallback* callback = NULL, int updateInterval = 2500);
+
+	~MasterClient();
 
 	/// Connects to the master server
 	void connect(const std::string& address, int port = protocol::DEFAULT_PORT);
 
-	/// Updates the hosted game state to master server
+	/// Updates the hosted game state to master server, starts updater thread if necessary
 	void updateGame(const std::string& name, const std::string& track, int players);
 
 	/// Clears cache, requests new game listing, doesn't wait for it to arrive
@@ -48,6 +50,9 @@ public:
 
 	/// Returns cached list of games
 	protocol::GameList getList() const { return m_games; };
+
+	/// Thread that periodically broadcasts game info, don't call directly
+	void gameInfoSenderThread();
 
 	/// Callback from networking
 	void connectionEvent(net::NetworkTraffic const& e);
@@ -60,8 +65,11 @@ public:
 
 private:
 	MasterClientCallback* m_callback;
+	boost::thread m_gameInfoSenderThread;
 	mutable boost::mutex m_mutex;
 	net::NetworkObject m_client;
 	protocol::GameList m_games;
-	int m_gameId;
+	protocol::GameInfo m_game;
+	int m_updateInterval;
+	bool m_sendUpdates;
 };

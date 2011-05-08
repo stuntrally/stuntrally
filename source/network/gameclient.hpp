@@ -50,7 +50,7 @@ public:
 	/// Shuts down the network forming phase
 	void startGame();
 
-	/// Thread that periodically proadcasts peer info, don't call directly
+	/// Thread that periodically broadcasts peer info, don't call directly
 	void peerInfoSenderThread();
 
 	/// How many peers are connected

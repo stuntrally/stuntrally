@@ -51,6 +51,7 @@ struct GameInfo: public net::SimpleSerializer<GameInfo> {
 
 	bool operator==(const GameInfo& other) { return id == other.id; }
 	bool operator!=(const GameInfo& other) { return !(*this == other); }
+	operator bool() { return id > 0; }
 };
 
 typedef std::map<uint32_t, protocol::GameInfo> GameList;
