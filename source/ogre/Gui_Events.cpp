@@ -63,10 +63,19 @@ void App::evBtnNetReady(WP)
 void App::evBtnNetLeave(WP)
 {
 	//  leave current game
-	//String s = btnNetLeave->getCaption();
-	btnNetLeave->setCaption("Create game");
-	//btnNetLeave->setCaption(s);
-	mClient.reset();
+	if (mLobbyState != DISCONNECTED) {
+		mLobbyState = DISCONNECTED;
+		mClient.reset();
+	} else {
+		mLobbyState = HOSTING;
+		if (pSet) mClient.reset(new P2PGameClient(pSet->nickname, pSet->local_port));
+		if (!mMasterClient) {
+			mMasterClient.reset(new MasterClient(gameInfoListener.get()));
+			mMasterClient->connect(pSet->master_server_address, pSet->master_server_port);
+		}
+		mMasterClient->updateGame("Placeholder game name", sListTrack, 1);
+	}
+	btnNetLeave->setCaption(getCreateGameButtonCaption());
 }
 
 	// info texts

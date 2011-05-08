@@ -110,6 +110,7 @@ protected:
 	///  networking
 	boost::scoped_ptr<MasterClient> mMasterClient;
 	boost::scoped_ptr<P2PGameClient> mClient;
+	enum LobbyState { DISCONNECTED, HOSTING, JOINED } mLobbyState;
 };
 
 #endif

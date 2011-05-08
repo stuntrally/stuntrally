@@ -225,6 +225,7 @@ protected:
 	ListPtr listNetChat;
 	boost::scoped_ptr<GameInfoListener> gameInfoListener;
 
+	String getCreateGameButtonCaption() const;
 	ButtonPtr btnNetRefresh,btnNetJoin;  void evBtnNetRefresh(WP),evBtnNetJoin(WP);
 	ButtonPtr btnNetReady,btnNetLeave;  void evBtnNetReady(WP),evBtnNetLeave(WP);
 

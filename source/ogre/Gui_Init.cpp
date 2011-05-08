@@ -265,6 +265,7 @@ void App::InitGui()
 
     Btn("btnNetReady", evBtnNetReady);  btnNetReady = btn;
     Btn("btnNetLeave", evBtnNetLeave);	btnNetLeave = btn;
+    btnNetLeave->setCaption(getCreateGameButtonCaption());
 
     //  chat
     listNetChat = mGUI->findWidget<List>("listNetChat");
@@ -689,4 +690,21 @@ void App::InitInputGui()
 		}
 				
 	}
+}
+
+
+
+/// Misc
+
+String App::getCreateGameButtonCaption() const
+{
+	// FIXME: i18n
+	switch (mLobbyState) {
+	case DISCONNECTED:
+		return "Create game";
+	case HOSTING:
+	case JOINED:
+		return "Leave game";
+	}
+	return "This should not display";
 }
