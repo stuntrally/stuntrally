@@ -28,6 +28,13 @@ struct PeerInfo {
 		return *this;
 	}
 
+	/* Not currently used, so disabled to avoid accidents
+	bool operator==(const protocol::PlayerInfoPacket& pip) {
+		return name == std::string(pip.name) && car == std::string(pip.car) && peers == pip.peers && ready == pip.ready;
+	}
+	bool operator!=(const protocol::PlayerInfoPacket& pip) { return !(*this == pip); }
+	*/
+
 	operator protocol::PlayerInfoPacket() {
 		protocol::PlayerInfoPacket pip;
 		// FIXME: Yack, memcpy
@@ -56,6 +63,10 @@ struct GameClientCallback {
 	/// Called when a peer disconnects
 	/// @param peer the disconnected peer
 	virtual void peerDisconnected(PeerInfo peer) {};
+
+	/// Called when a player info is received
+	/// @param peer the updated peer
+	virtual void peerInfo(PeerInfo peer) {};
 
 	/// Called when a text message arrives
 	/// @param peer the new peer
