@@ -536,6 +536,8 @@ void App::InitInputGui()
 			{
 				joysticks->addItem( (*jit)->getName() );
 			}
+			/// test
+			joysticks->addItem("MyFunnyJoystick001");
 		}
 		
 		///  ------ custom action sorting ----------------
@@ -662,7 +664,9 @@ void App::UpdateJsButtons()
 			
 			// find selected oisb joystick for this tab (to get num axis & buttons)
 			MyGUI::ComboBoxPtr jsMenu = mGUI->findWidget<ComboBox>("joystickSel_" + (*it).first);
-			std::string jsName = jsMenu->getItemNameAt( jsMenu->getIndexSelected() );
+			std::string jsName;
+			if (jsMenu->getIndexSelected() != MyGUI::ITEM_NONE)
+				jsName = jsMenu->getItemNameAt( jsMenu->getIndexSelected() );
 			OISB::JoyStick* js = NULL;
 			for (std::vector<OISB::JoyStick*>::const_iterator jit = mOISBsys->mJoysticks.begin();
 					jit != mOISBsys->mJoysticks.end();
