@@ -15,10 +15,28 @@
 struct PeerInfo {
 	net::Address address; ///< Address
 	std::string name; ///< Nickname
-	enum ConnectionState { DISCONNECTED = 0, CONNECTING = 1, CONNECTED = 2 } connection; ///< Connection state
+	std::string car; ///< Car
+	short peers; ///< Amount of peers connected
+	bool ready; ///< Ready state
 	unsigned ping; ///< Average packet round-trip time
+	enum ConnectionState { DISCONNECTED = 0, CONNECTING = 1, CONNECTED = 2 } connection; ///< Connection state
 
-	PeerInfo(net::Address addr = net::Address()): address(addr), name(), connection(DISCONNECTED), ping(0) {}
+	PeerInfo(net::Address addr = net::Address()): address(addr), name(), car(), ready(), ping(0), connection(DISCONNECTED) {}
+
+	PeerInfo& operator=(const protocol::PlayerInfoPacket& pip) {
+		name = std::string(pip.name); car = std::string(pip.car); peers = pip.peers; ready = pip.ready;
+		return *this;
+	}
+
+	operator protocol::PlayerInfoPacket() {
+		protocol::PlayerInfoPacket pip;
+		// FIXME: Yack, memcpy
+		memcpy(pip.name, name.c_str(), 16);
+		memcpy(pip.car, car.c_str(), 10);
+		pip.peers = peers;
+		pip.ready = ready;
+		return pip;
+	}
 };
 
 typedef std::map<std::string, PeerInfo> PeerMap;
@@ -54,12 +72,21 @@ struct GameClientCallback {
  */
 class P2PGameClient: public net::NetworkListener {
 public:
-	P2PGameClient(const std::string& nickname, GameClientCallback* callback = NULL, int port = protocol::DEFAULT_PORT);
+	P2PGameClient(GameClientCallback* callback = NULL, int port = protocol::DEFAULT_PORT);
 
 	~P2PGameClient();
 
 	/// Connects to a peer
 	void connect(const std::string& address, int port = protocol::DEFAULT_PORT);
+
+	/// Updates the player info
+	void updatePlayerInfo(const std::string& name, const std::string& car);
+
+	/// Toggles the ready switch
+	void toggleReady();
+
+	/// Returns the ready state
+	bool isReady() const;
 
 	/// Broadcasts all known peer infos to every one connected
 	void sendPeerInfo();
@@ -98,5 +125,5 @@ private:
 	enum State { DISCONNECTED, LOBBY, GAME } m_state;
 	boost::thread m_peerInfoSenderThread;
 	mutable boost::mutex m_mutex;
-	const std::string& m_name;
+	PeerInfo m_playerInfo;
 };

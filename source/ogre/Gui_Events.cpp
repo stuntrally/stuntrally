@@ -17,6 +17,15 @@ using namespace MyGUI;
 //  [Multiplayer]
 //---------------------------------------------------------------------
 
+namespace {
+	std::string yesno(bool cond) {
+		// TODO: I18n
+		if (cond) return "Yes";
+		else return "No";
+	}
+}
+
+
 void App::rebuildPlayerList()
 {
 	if (!listPlayers || !mClient) return;
@@ -24,17 +33,19 @@ void App::rebuildPlayerList()
 	// Add self
 	listPlayers->addItem(pSet->nickname);
 	listPlayers->setSubItemNameAt(1, 0, sListCar); // Car
-	listPlayers->setSubItemNameAt(2, 0, "0"); // Ping
-	listPlayers->setSubItemNameAt(3, 0, "Nope"); // FIXME: Ready state
+	listPlayers->setSubItemNameAt(2, 0, boost::lexical_cast<std::string>(mClient->getPeerCount())); // Peers
+	listPlayers->setSubItemNameAt(3, 0, "0"); // Ping
+	listPlayers->setSubItemNameAt(4, 0, yesno(mClient->isReady())); // Ready state
 	const PeerMap peers = mClient->getPeers();
 	for (PeerMap::const_iterator it = peers.begin(); it != peers.end(); ++it) {
 		if (it->second.name.empty() || it->second.connection == PeerInfo::DISCONNECTED)
 			continue;
 		listPlayers->addItem(it->second.name);
 		int l = listPlayers->getItemCount()-1;
-		listPlayers->setSubItemNameAt(1, l, "ASD"); // FIXME
-		listPlayers->setSubItemNameAt(2, l, boost::lexical_cast<std::string>(it->second.ping));
-		listPlayers->setSubItemNameAt(3, l, "Nope"); // FIXME
+		listPlayers->setSubItemNameAt(1, l, it->second.car);
+		listPlayers->setSubItemNameAt(2, l, boost::lexical_cast<std::string>(it->second.peers));
+		listPlayers->setSubItemNameAt(3, l, boost::lexical_cast<std::string>(it->second.ping));
+		listPlayers->setSubItemNameAt(4, l, yesno(it->second.ready));
 	}
 }
 
@@ -78,8 +89,9 @@ void App::evBtnNetJoin(WP)
 	try {
 		std::string host = listServers->getSubItemNameAt(3, i);
 		int port = boost::lexical_cast<int>(listServers->getSubItemNameAt(4, i));
-		mClient.reset(new P2PGameClient(pSet->nickname, this, pSet->local_port));
-		mClient->connect(host, port);
+		mClient.reset(new P2PGameClient(this, pSet->local_port));
+		mClient->updatePlayerInfo(pSet->nickname, sListCar);
+		mClient->connect(host, port); // Lobby phase started automatically
 	} catch (...) {
 		Message::createMessageBox(  // #{transl ..
 			"Message", "Network Error", "Failed to initialize networking.",
@@ -105,8 +117,15 @@ void App::evBtnNetCreate(WP)
 
 void App::evBtnNetReady(WP)
 {
-	//  ready for game,  waiting for other players
-	btnNetReady->setCaption("Waiting...");
+	if (!mClient) return;
+
+	mClient->toggleReady();
+	if (mClient->isReady())
+		btnNetReady->setCaption("Waiting...");
+	else
+		btnNetReady->setCaption("Ready");
+
+	rebuildPlayerList();
 }
 
 void App::evBtnNetLeave(WP)
@@ -117,13 +136,15 @@ void App::evBtnNetLeave(WP)
 		mClient.reset();
 	} else {
 		mLobbyState = HOSTING;
-		if (pSet) mClient.reset(new P2PGameClient(pSet->nickname, this, pSet->local_port));
+		if (pSet) mClient.reset(new P2PGameClient(this, pSet->local_port));
+		mClient->updatePlayerInfo(pSet->nickname, sListCar);
 		mClient->startLobby();
 		if (!mMasterClient) {
 			mMasterClient.reset(new MasterClient(gameInfoListener.get()));
 			mMasterClient->connect(pSet->master_server_address, pSet->master_server_port);
 		}
 		mMasterClient->updateGame("Placeholder game name", sListTrack, 1, pSet->local_port);
+		rebuildPlayerList();
 	}
 	btnNetLeave->setCaption(getCreateGameButtonCaption());
 }
@@ -144,12 +165,13 @@ void App::evBtnNetSendMsg(WP)
 	mClient->sendMessage(edNetChatMsg->getCaption());
 	edNetChatMsg->setCaption("");
 }
-    
+
 //  net settings
 
 void App::evEdNetNick(EditPtr ed)
 {
 	pSet->nickname = ed->getCaption();
+	if (mClient) mClient->updatePlayerInfo(pSet->nickname, sListCar);
 }
 
 void App::evEdNetServerIP(EditPtr ed)
@@ -455,8 +477,9 @@ void App::listCarChng(List* li, size_t pos)
 {
 	size_t i = li->getIndexSelected();  if (i==ITEM_NONE)  return;
 	const UString& sl = li->getItemNameAt(i);	sListCar = sl;
-	
+
 	if (imgCar)  imgCar->setImageTexture(sListCar+".jpg");
+	if (mClient) mClient->updatePlayerInfo(pSet->nickname, sListCar);
 }
 void App::btnChgCar(WP)
 {

@@ -269,9 +269,10 @@ void App::InitGui()
 	listPlayers = mGUI->findWidget<MultiList>("MListPlayers");
 	if (listPlayers)
 	{	listPlayers->addColumn("Player", 140);
-		listPlayers->addColumn("Car", 70);
-		listPlayers->addColumn("Ping", 80);
-		listPlayers->addColumn("Ready", 70);
+		listPlayers->addColumn("Car", 60);
+		listPlayers->addColumn("Peers", 60);
+		listPlayers->addColumn("Ping", 60);
+		listPlayers->addColumn("Ready", 60);
 	}
 	Btn("btnNetReady", evBtnNetReady);  btnNetReady = btn;
 	Btn("btnNetLeave", evBtnNetLeave);	btnNetLeave = btn;

@@ -220,7 +220,6 @@ protected:
 
 	char s[512];
 
-
 	///  multiplayer
 
 	void rebuildPlayerList();
