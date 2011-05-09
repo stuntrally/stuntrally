@@ -630,14 +630,14 @@ void App::InitInputGui()
 					MyGUI::ComboBoxPtr button = tabitem->createWidget<ComboBox>("ComboBox", x3, y, sx, sy, MyGUI::Align::Default, "jsButtonSel_" + (*ait).first );
 					button->addItem(TR("#{InputKeyNoAxis}"));
 					button->setIndexSelected(0);
-					button->eventComboChangePosition = newDelegate(this, &App::joystickBindChanged);
+					button->eventComboChangePosition = MyGUI::newDelegate(this, &App::joystickBindChanged);
 				}
 				else if (act->getActionType() == OISB::AT_ANALOG_AXIS)
 				{
 					MyGUI::ComboBoxPtr axis = tabitem->createWidget<ComboBox>("ComboBox", x3, y, sx, sy, MyGUI::Align::Default, "jsAxisSel_" + (*ait).first );
 					axis->addItem(TR("#{InputKeyNoAxis}"));
 					axis->setIndexSelected(0);
-					axis->eventComboChangePosition = newDelegate(this, &App::joystickBindChanged);
+					axis->eventComboChangePosition = MyGUI::newDelegate(this, &App::joystickBindChanged);
 				}
 			}
 		}
