@@ -224,6 +224,7 @@
 							<Property key="Text_TextColour" value="0.6 0.9 1"/>
 						</Widget>
 						<Widget type="Edit" skin="Edit" position="164 22 268 24" name="edNetGameName">
+							<Property key="Widget_Caption" value="Stunt Rally Race"/>
 							<Property key="Widget_Colour" value="0.6 0.8 1"/>
 							<Property key="Text_TextColour" value="0.6 0.8 1"/>
 						</Widget>
