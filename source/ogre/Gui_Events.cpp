@@ -33,8 +33,9 @@ void App::rebuildPlayerList()
 	// Add self
 	listPlayers->addItem(pSet->nickname);
 	listPlayers->setSubItemNameAt(1, 0, sListCar); // Car
-	listPlayers->setSubItemNameAt(2, 0, "0"); // Ping
-	listPlayers->setSubItemNameAt(3, 0, yesno(mClient->isReady())); // Ready state
+	listPlayers->setSubItemNameAt(2, 0, boost::lexical_cast<std::string>(mClient->getPeerCount())); // Peers
+	listPlayers->setSubItemNameAt(3, 0, "0"); // Ping
+	listPlayers->setSubItemNameAt(4, 0, yesno(mClient->isReady())); // Ready state
 	const PeerMap peers = mClient->getPeers();
 	for (PeerMap::const_iterator it = peers.begin(); it != peers.end(); ++it) {
 		if (it->second.name.empty() || it->second.connection == PeerInfo::DISCONNECTED)
@@ -42,8 +43,9 @@ void App::rebuildPlayerList()
 		listPlayers->addItem(it->second.name);
 		int l = listPlayers->getItemCount()-1;
 		listPlayers->setSubItemNameAt(1, l, it->second.car);
-		listPlayers->setSubItemNameAt(2, l, boost::lexical_cast<std::string>(it->second.ping));
-		listPlayers->setSubItemNameAt(3, l, yesno(it->second.ready));
+		listPlayers->setSubItemNameAt(2, l, boost::lexical_cast<std::string>(it->second.peers));
+		listPlayers->setSubItemNameAt(3, l, boost::lexical_cast<std::string>(it->second.ping));
+		listPlayers->setSubItemNameAt(4, l, yesno(it->second.ready));
 	}
 }
 
