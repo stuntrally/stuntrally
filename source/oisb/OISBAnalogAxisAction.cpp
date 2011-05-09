@@ -288,6 +288,9 @@ namespace OISB
                         "approve of the binding as well!)").c_str());
                 }
 
+				if (binding->mBindables.size() < 1)
+					continue;
+					
                 State* st = binding->getState(0);
                 if (st->getStateType() != ST_ANALOG_AXIS)
                 {
