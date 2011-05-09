@@ -13,11 +13,12 @@
  * @brief Application specific peer information.
  */
 struct PeerInfo {
-	net::Address address;
-	std::string name;
-	enum ConnectionState { DISCONNECTED = 0, CONNECTING = 1, CONNECTED = 2 } connection;
+	net::Address address; ///< Address
+	std::string name; ///< Nickname
+	enum ConnectionState { DISCONNECTED = 0, CONNECTING = 1, CONNECTED = 2 } connection; ///< Connection state
+	unsigned ping; ///< Average packet round-trip time
 
-	PeerInfo(net::Address addr = net::Address()): address(addr), name(), connection(DISCONNECTED) {}
+	PeerInfo(net::Address addr = net::Address()): address(addr), name(), connection(DISCONNECTED), ping(0) {}
 };
 
 typedef std::map<std::string, PeerInfo> PeerMap;

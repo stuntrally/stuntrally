@@ -95,14 +95,15 @@ namespace net {
 	/// Network traffic container
 	struct NetworkTraffic {
 		NetworkTraffic(const enet_uint8* pckd = NULL, size_t pckl = 0):
-			peer_id(0), peer_address(), peer_data(NULL), packet_data(pckd), packet_length(pckl) {}
+			peer_id(0), peer_address(), peer_data(NULL), packet_data(pckd), packet_length(pckl), ping(0) {}
 		NetworkTraffic(ENetPeer* peer, void* dptr, const enet_uint8* pckd = NULL, size_t pckl = 0):
-			peer_id(peer->incomingPeerID), peer_address(peer), peer_data(dptr), packet_data(pckd), packet_length(pckl) {}
+			peer_id(peer->incomingPeerID), peer_address(peer), peer_data(dptr), packet_data(pckd), packet_length(pckl), ping(peer->roundTripTime) {}
 		peer_id_t peer_id; ///< Peer ID assigned by the library
 		Address peer_address; ///< Address from which the peer connected
 		void* peer_data; ///< User data associated with the peer that sent the traffic
 		const enet_uint8* packet_data; ///< The actual packet data (empty for connect/disconnect events)
 		size_t packet_length; ///< Length of the packet data in bytes
+		unsigned ping; ///< Average round-trip time to the peer
 	};
 
 	/// Inherit this to easily convert simple structs to NetworkTraffic

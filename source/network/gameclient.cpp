@@ -95,6 +95,7 @@ void P2PGameClient::connectionEvent(net::NetworkTraffic const& e)
 		PeerInfo& pi = m_peers[e.peer_address];
 		pi.address = e.peer_address;
 		pi.connection = PeerInfo::CONNECTED;
+		pi.ping = e.ping;
 		// No connection callback here, because nick is not yet set
 	}
 	// We'll send the peer info periodically, so no need to do it here
@@ -109,7 +110,7 @@ void P2PGameClient::disconnectEvent(net::NetworkTraffic const& e)
 		m_peers[e.peer_address].connection = PeerInfo::DISCONNECTED;
 		picopy = m_peers[e.peer_address];
 	}
-	// Callback
+	// Callback (mutex unlocked to avoid dead-locks)
 	if (m_callback) m_callback->peerDisconnected(picopy);
 }
 
@@ -123,6 +124,7 @@ void P2PGameClient::receiveEvent(net::NetworkTraffic const& e)
 			std::cout << "Peer info received for " << pap.address << std::endl;
 			boost::mutex::scoped_lock lock(m_mutex);
 			m_peers[pap.address].address = pap.address;
+			m_peers[e.peer_address].ping = e.ping;
 			break;
 		}
 		case protocol::TEXT_MESSAGE: {
@@ -130,9 +132,11 @@ void P2PGameClient::receiveEvent(net::NetworkTraffic const& e)
 			std::cout << "Text message received: " << msg << std::endl;
 			if (m_callback) {
 				boost::mutex::scoped_lock lock(m_mutex);
-				PeerInfo pi = m_peers[e.peer_address];
-				lock.unlock();
-				m_callback->peerMessage(pi, msg);
+				PeerInfo& pi = m_peers[e.peer_address];
+				pi.ping = e.ping;
+				PeerInfo picopy = pi;
+				lock.unlock(); // Mutex unlocked in callback to avoid dead-locks
+				m_callback->peerMessage(picopy, msg);
 			}
 			break;
 		}
@@ -143,10 +147,11 @@ void P2PGameClient::receiveEvent(net::NetworkTraffic const& e)
 				PeerInfo& pi = m_peers[e.peer_address];
 				bool isNew = pi.name.empty();
 				pi.name = nick;
+				pi.ping = e.ping;
 				// Callback
 				if (isNew && m_callback) {
 					PeerInfo picopy = pi;
-					lock.unlock();
+					lock.unlock(); // Mutex unlocked in callback to avoid dead-locks
 					m_callback->peerConnected(picopy);
 				}
 			}
