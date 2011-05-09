@@ -51,7 +51,8 @@ namespace OISB
 		private:
             /// OIS' implementation JoyStick
 			OIS::JoyStick* mJoyStick;
-
+		
+		public:
 			std::vector<AnalogAxisState*> axis;
 			std::vector<DigitalState*>    buttons;
 	};

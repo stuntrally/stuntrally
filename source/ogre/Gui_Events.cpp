@@ -29,6 +29,10 @@ void App::controlBtnClicked(Widget* sender)
 	// hide mouse
 	MyGUI::PointerManager::getInstance().setVisible(false);
 }
+void App::joystickBindChanged(Widget* sender)
+{
+	///TODO
+}
 
 //  [Setup]
 //    [Car]

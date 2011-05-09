@@ -522,6 +522,22 @@ void App::InitInputGui()
 			"StaticText", 360, 10, 200, 24, MyGUI::Align::Default, "staticText_" + (*it).first );
 		headkb2->setCaption(TR("#88AAFF#{InputKey2}"));
 		
+		/// joystick selection menu
+		// only on player tabs
+		bool playerTab = Ogre::StringUtil::startsWith( (*it).first, "player");
+		if ( playerTab )
+		{
+			MyGUI::ComboBoxPtr joysticks = tabitem->createWidget<ComboBox>("ComboBox", 540, 10, 150, 24, MyGUI::Align::Default, "joystickSel_" + (*it).first );
+			joysticks->addItem(TR("#{InputNoJS}"));
+			joysticks->setIndexSelected(0);
+			for (std::vector<OISB::JoyStick*>::const_iterator jit=OISB::System::getSingleton().mJoysticks.begin();
+					jit!=OISB::System::getSingleton().mJoysticks.end();
+					jit++)
+			{
+				joysticks->addItem( (*jit)->getName() );
+			}
+		}
+		
 		///  ------ custom action sorting ----------------
 		int i = 0, y = 0;
 		std::map <std::string, int> yRow;
@@ -540,14 +556,6 @@ void App::InitInputGui()
 		yRow["PrevTab"] = y;     y+=2;
 		yRow["NextTab"] = y;     y+=2+1;
 		yRow["RestartGame"] = y; y+=2;
-		
-		// get selected joystick for this action schema
-		// only on player tab
-		const bool playerTab = Ogre::StringUtil::startsWith( (*it).first, "player");
-		if (playerTab)
-		{
-			/// TODO
-		}
 		
 		///  Actions
 		for (std::map<OISB::String, OISB::Action*>::const_iterator
@@ -622,28 +630,60 @@ void App::InitInputGui()
 					MyGUI::ComboBoxPtr button = tabitem->createWidget<ComboBox>("ComboBox", x3, y, sx, sy, MyGUI::Align::Default, "jsButtonSel_" + (*ait).first );
 					button->addItem(TR("#{InputKeyNoAxis}"));
 					button->setIndexSelected(0);
+					button->eventComboChangePosition = newDelegate(this, &App::joystickBindChanged);
 				}
 				else if (act->getActionType() == OISB::AT_ANALOG_AXIS)
 				{
 					MyGUI::ComboBoxPtr axis = tabitem->createWidget<ComboBox>("ComboBox", x3, y, sx, sy, MyGUI::Align::Default, "jsAxisSel_" + (*ait).first );
 					axis->addItem(TR("#{InputKeyNoAxis}"));
 					axis->setIndexSelected(0);
+					axis->eventComboChangePosition = newDelegate(this, &App::joystickBindChanged);
 				}
 			}
 		}
-		
-		/// joystick selection menu
-		// only on player tabs
-		if ( playerTab )
+	}
+	
+	UpdateJsButtons(); // initial
+}
+
+void App::UpdateJsButtons()
+{
+	// go through all action schemas & actions, and fill the combo boxes for JS axis / buttons
+	std::map<OISB::String, OISB::ActionSchema*> schemas = OISB::System::getSingleton().mActionSchemas;
+	for (std::map<OISB::String, OISB::ActionSchema*>::const_iterator it = schemas.begin(); it != schemas.end(); it++)
+	{
+		for (std::map<OISB::String, OISB::Action*>::const_iterator
+			ait = (*it).second->mActions.begin();
+			ait != (*it).second->mActions.end(); ait++)
 		{
-			MyGUI::ComboBoxPtr joysticks = tabitem->createWidget<ComboBox>("ComboBox", 540, 10, 150, 24, MyGUI::Align::Default, "joystickSel_" + (*it).first );
-			joysticks->addItem(TR("#{InputNoJS}"));
-			joysticks->setIndexSelected(0);
-			for (std::vector<OISB::JoyStick*>::const_iterator jit=OISB::System::getSingleton().mJoysticks.begin();
-					jit!=OISB::System::getSingleton().mJoysticks.end();
+			OISB::Action* act = (*ait).second;
+			
+			// find selected oisb joystick for this tab (to get num axis & buttons)
+			MyGUI::ComboBoxPtr jsMenu = mGUI->findWidget<ComboBox>("joystickSel_" + (*it).first);
+			std::string jsName = jsMenu->getItemNameAt( jsMenu->getIndexSelected() );
+			OISB::JoyStick* js = NULL;
+			for (std::vector<OISB::JoyStick*>::const_iterator jit = mOISBsys->mJoysticks.begin();
+					jit != mOISBsys->mJoysticks.end();
 					jit++)
+				if ( (*jit)->getName() == jsName ) js = (*jit);
+
+
+			// fill combo boxes
+			if (act->getActionType() == OISB::AT_TRIGGER)
 			{
-				joysticks->addItem( (*jit)->getName() );
+				MyGUI::ComboBoxPtr button = mGUI->findWidget<ComboBox>("jsButtonSel_" + (*ait).first);
+				button->deleteAllItems(); // temporary
+				for (std::vector<OISB::DigitalState*>::const_iterator it = js->buttons.begin();
+						it != js->buttons.end(); it++)
+					button->addItem( stripk((*it)->getBindableName()) );
+			}
+			else if (act->getActionType() == OISB::AT_ANALOG_AXIS)
+			{
+				MyGUI::ComboBoxPtr axis = mGUI->findWidget<ComboBox>("jsAxisSel_" + (*ait).first);
+				axis->deleteAllItems(); // temporary
+				for (std::vector<OISB::AnalogAxisState*>::const_iterator it = js->axis.begin();
+						it != js->axis.end(); it++)
+					axis->addItem( stripk((*it)->getBindableName()) );
 			}
 		}
 	}
