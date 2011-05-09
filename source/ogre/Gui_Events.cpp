@@ -36,6 +36,7 @@ void App::rebuildPlayerList()
 	listPlayers->setSubItemNameAt(2, 0, boost::lexical_cast<std::string>(mClient->getPeerCount())); // Peers
 	listPlayers->setSubItemNameAt(3, 0, "0"); // Ping
 	listPlayers->setSubItemNameAt(4, 0, yesno(mClient->isReady())); // Ready state
+	// Add others
 	const PeerMap peers = mClient->getPeers();
 	for (PeerMap::const_iterator it = peers.begin(); it != peers.end(); ++it) {
 		if (it->second.name.empty() || it->second.connection == PeerInfo::DISCONNECTED)
@@ -112,8 +113,27 @@ void App::evBtnNetJoin(WP)
 void App::evBtnNetCreate(WP)
 {
 	//  create game ..
+	if (mLobbyState == DISCONNECTED) {
+		mLobbyState = HOSTING;
+		if (pSet) mClient.reset(new P2PGameClient(this, pSet->local_port));
+		mClient->updatePlayerInfo(pSet->nickname, sListCar);
+		mClient->startLobby();
+		if (!mMasterClient) {
+			mMasterClient.reset(new MasterClient(gameInfoListener.get()));
+			mMasterClient->connect(pSet->master_server_address, pSet->master_server_port);
+		}
+		mMasterClient->updateGame("Placeholder game name", sListTrack, 1, pSet->local_port);
+		rebuildPlayerList();
+	}
 }
 
+void App::evBtnNetLeave(WP)
+{
+	//  leave current game
+	mLobbyState = DISCONNECTED;
+	mClient.reset();
+	mMasterClient.reset();
+}
 void App::evBtnNetDirect(WP)
 {
 	// direct connect ..
@@ -133,26 +153,6 @@ void App::evBtnNetReady(WP)
 	rebuildPlayerList();
 }
 
-void App::evBtnNetLeave(WP)
-{
-	//  leave current game
-	if (mLobbyState != DISCONNECTED) {
-		mLobbyState = DISCONNECTED;
-		mClient.reset();
-	} else {
-		mLobbyState = HOSTING;
-		if (pSet) mClient.reset(new P2PGameClient(this, pSet->local_port));
-		mClient->updatePlayerInfo(pSet->nickname, sListCar);
-		mClient->startLobby();
-		if (!mMasterClient) {
-			mMasterClient.reset(new MasterClient(gameInfoListener.get()));
-			mMasterClient->connect(pSet->master_server_address, pSet->master_server_port);
-		}
-		mMasterClient->updateGame("Placeholder game name", sListTrack, 1, pSet->local_port);
-		rebuildPlayerList();
-	}
-	btnNetLeave->setCaption(getCreateGameButtonCaption());
-}
 
 	// info texts
 	//valNetGames
