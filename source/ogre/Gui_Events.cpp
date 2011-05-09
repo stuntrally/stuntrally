@@ -20,7 +20,7 @@ using namespace MyGUI;
 
 //  [Input]
 
-void App::controlBtnClicked(Widget* sender, size_t val)
+void App::controlBtnClicked(Widget* sender)
 {
 	sender->setCaption( TR("#{InputAssignKey}"));
 	// activate key capture mode
@@ -29,7 +29,7 @@ void App::controlBtnClicked(Widget* sender, size_t val)
 	// hide mouse
 	MyGUI::PointerManager::getInstance().setVisible(false);
 }
-void App::joystickBindChanged(Widget* sender)
+void App::joystickBindChanged(Widget* sender, size_t val)
 {
 	///TODO
 }
