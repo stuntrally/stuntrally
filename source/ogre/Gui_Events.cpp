@@ -33,6 +33,10 @@ void App::joystickBindChanged(Widget* sender, size_t val)
 {
 	///TODO
 }
+void App::joystickSelectionChanged(Widget* sender, size_t val)
+{
+	UpdateJsButtons();
+}
 
 //  [Setup]
 //    [Car]

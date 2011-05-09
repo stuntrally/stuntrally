@@ -150,6 +150,7 @@ protected:
 	// input tab
 	void controlBtnClicked(Widget* sender), InitInputGui(), UpdateJsButtons();
 	void joystickBindChanged(Widget* sender,size_t val);
+	void joystickSelectionChanged(Widget* sender,size_t val);
 
 	//  sliders
 	SLV(Anisotropy);  SLV(ViewDist);  SLV(TerDetail);  SLV(TerDist);  SLV(RoadDist);  // detail
