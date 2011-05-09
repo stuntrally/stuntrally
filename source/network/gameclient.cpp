@@ -118,7 +118,7 @@ void P2PGameClient::receiveEvent(net::NetworkTraffic const& e)
 {
 	if (e.packet_length <= 0 || !e.packet_data) return;
 	switch (e.packet_data[0]) {
-		case protocol::PEER_INFO: {
+		case protocol::PEER_ADDRESS: {
 			if (m_state != LOBBY) break;
 			protocol::PeerAddressPacket pap = *reinterpret_cast<protocol::PeerAddressPacket const*>(e.packet_data);
 			boost::mutex::scoped_lock lock(m_mutex);

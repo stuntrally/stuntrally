@@ -15,10 +15,27 @@
 struct PeerInfo {
 	net::Address address; ///< Address
 	std::string name; ///< Nickname
-	enum ConnectionState { DISCONNECTED = 0, CONNECTING = 1, CONNECTED = 2 } connection; ///< Connection state
+	std::string car; ///< Car
+	short peers; ///< Amount of peers connected
+	bool ready; ///< Ready state
 	unsigned ping; ///< Average packet round-trip time
+	enum ConnectionState { DISCONNECTED = 0, CONNECTING = 1, CONNECTED = 2 } connection; ///< Connection state
 
-	PeerInfo(net::Address addr = net::Address()): address(addr), name(), connection(DISCONNECTED), ping(0) {}
+	PeerInfo(net::Address addr = net::Address()): address(addr), name(), car(), ready(), ping(0), connection(DISCONNECTED) {}
+
+	PeerInfo& operator=(const protocol::PlayerInfoPacket& pip) {
+		name = pip.name; car = pip.car; ready = pip.ready;
+		return *this;
+	}
+
+	operator protocol::PlayerInfoPacket() {
+		protocol::PlayerInfoPacket pip;
+		// FIXME: Yack, memcpy
+		memcpy(pip.name, name.c_str(), 16);
+		memcpy(pip.car, car.c_str(), 10);
+		pip.peers = peers;
+		pip.ready = ready;
+	}
 };
 
 typedef std::map<std::string, PeerInfo> PeerMap;

@@ -26,7 +26,8 @@ enum PacketType {
 	PING,
 	PONG,
 	REQUEST_PEER_INFO,
-	PEER_INFO,
+	PEER_ADDRESS,
+	PLAYER_INFO,
 	TEXT_MESSAGE,       // Text string that should be displayed somewhere
 	NICK,               // Nickname of the sender
 	STATE_UPDATE,
@@ -65,10 +66,26 @@ struct PeerAddressPacket: public net::SimpleSerializer<PeerAddressPacket> {
 	uint8_t packet_type;
 	net::Address address;
 
-	PeerAddressPacket(net::Address addr = net::Address()): packet_type(PEER_INFO), address(addr) {}
+	PeerAddressPacket(net::Address addr = net::Address()): packet_type(PEER_ADDRESS), address(addr) {}
 
 	bool operator==(const PeerAddressPacket& other) { return address == other.address; }
 	bool operator!=(const PeerAddressPacket& other) { return !(*this == other); }
+};
+
+
+/**
+ * @brief Contains player info.
+ * These structs are passed around to update player information.
+ */
+struct PlayerInfoPacket: public net::SimpleSerializer<PlayerInfoPacket> {
+	uint8_t packet_type;
+	char name[16];
+	char car[10];
+	uint8_t peers;
+	uint8_t ready;
+
+	PlayerInfoPacket(): packet_type(PLAYER_INFO), ready(), peers() {}
+
 };
 
 
