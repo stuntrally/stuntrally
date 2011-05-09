@@ -627,14 +627,15 @@ void App::InitInputGui()
 			{
 				if (act->getActionType() == OISB::AT_TRIGGER)
 				{
-					MyGUI::ComboBoxPtr button = tabitem->createWidget<ComboBox>("ComboBox", x3, y, sx, sy, MyGUI::Align::Default, "jsButtonSel_" + (*ait).first );
-					button->addItem(TR("#{InputKeyNoAxis}"));
+					MyGUI::ComboBoxPtr button = tabitem->createWidget<ComboBox>("ComboBox", x3, y, sx, sy, MyGUI::Align::Default, "jsButtonSel_" + (*ait).first + "_" + (*it).first );
+					button->addItem(TR("#{InputKeyNoButton}"));
 					button->setIndexSelected(0);
 					button->eventComboChangePosition = MyGUI::newDelegate(this, &App::joystickBindChanged);
 				}
 				else if (act->getActionType() == OISB::AT_ANALOG_AXIS)
 				{
-					MyGUI::ComboBoxPtr axis = tabitem->createWidget<ComboBox>("ComboBox", x3, y, sx, sy, MyGUI::Align::Default, "jsAxisSel_" + (*ait).first );
+					Log(Ogre::String("jsAxisSel_") + Ogre::String((*ait).first) + "_" + (*it).first)
+					MyGUI::ComboBoxPtr axis = tabitem->createWidget<ComboBox>("ComboBox", x3, y, sx, sy, MyGUI::Align::Default, "jsAxisSel_" + (*ait).first + "_" + (*it).first );
 					axis->addItem(TR("#{InputKeyNoAxis}"));
 					axis->setIndexSelected(0);
 					axis->eventComboChangePosition = MyGUI::newDelegate(this, &App::joystickBindChanged);
@@ -652,6 +653,8 @@ void App::UpdateJsButtons()
 	std::map<OISB::String, OISB::ActionSchema*> schemas = OISB::System::getSingleton().mActionSchemas;
 	for (std::map<OISB::String, OISB::ActionSchema*>::const_iterator it = schemas.begin(); it != schemas.end(); it++)
 	{
+		if (!Ogre::StringUtil::startsWith( (*it).first, "player")) continue; // joystick only on player tabs
+		
 		for (std::map<OISB::String, OISB::Action*>::const_iterator
 			ait = (*it).second->mActions.begin();
 			ait != (*it).second->mActions.end(); ait++)
@@ -666,20 +669,24 @@ void App::UpdateJsButtons()
 					jit != mOISBsys->mJoysticks.end();
 					jit++)
 				if ( (*jit)->getName() == jsName ) js = (*jit);
-
+			if (!js) continue;
 
 			// fill combo boxes
 			if (act->getActionType() == OISB::AT_TRIGGER)
 			{
-				MyGUI::ComboBoxPtr button = mGUI->findWidget<ComboBox>("jsButtonSel_" + (*ait).first);
+				Log(Ogre::String("jsButtonSel_") + Ogre::String((*ait).first) + "_" + (*it).first)
+				MyGUI::ComboBoxPtr button = mGUI->findWidget<ComboBox>("jsButtonSel_" + (*ait).first + "_" + (*it).first);
 				button->deleteAllItems(); // temporary
 				for (std::vector<OISB::DigitalState*>::const_iterator it = js->buttons.begin();
 						it != js->buttons.end(); it++)
+				{
 					button->addItem( stripk((*it)->getBindableName()) );
+				}
 			}
 			else if (act->getActionType() == OISB::AT_ANALOG_AXIS)
 			{
-				MyGUI::ComboBoxPtr axis = mGUI->findWidget<ComboBox>("jsAxisSel_" + (*ait).first);
+				Log(Ogre::String("jsAxisSel_") + Ogre::String((*ait).first) + "_" + (*it).first)
+				MyGUI::ComboBoxPtr axis = mGUI->findWidget<ComboBox>("jsAxisSel_" + (*ait).first + "_" + (*it).first);
 				axis->deleteAllItems(); // temporary
 				for (std::vector<OISB::AnalogAxisState*>::const_iterator it = js->axis.begin();
 						it != js->axis.end(); it++)
