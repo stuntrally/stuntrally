@@ -204,16 +204,16 @@
 							<Property key="Widget_Caption" value="Get/refresh list"/>
 							<Property key="Widget_Colour" value="0.6 1 0.2"/>
 						</Widget>
-						<Widget type="Button" skin="Button" position="196 406 164 40" name="btnNetJoin">
+						<Widget type="Button" skin="Button" position="374 406 164 40" name="btnNetJoin">
 							<Property key="Widget_Caption" value="Join game"/>
 							<Property key="Widget_Colour" value="1 1 0.2"/>
 						</Widget>
-						<Widget type="Button" skin="Button" position="380 406 164 40" name="btnNetCreate">
+						<Widget type="Button" skin="Button" position="552 406 164 40" name="btnNetCreate">
 							<Property key="Widget_Caption" value="Create game"/>
 							<Property key="Widget_Colour" value="0.6 1 1"/>
 						</Widget>
-						<Widget type="Button" skin="Button" position="556 406 164 40" name="btnNetDirect">
-							<Property key="Widget_Colour" value="0.8 0.8 1"/>
+						<Widget type="Button" skin="Button" position="198 406 164 40" name="btnNetDirect">
+							<Property key="Widget_Colour" value="1 0.8 0.5"/>
 							<Property key="Widget_Caption" value="Direct connect"/>
 						</Widget>
 					</Widget>
