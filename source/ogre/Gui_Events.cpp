@@ -17,16 +17,39 @@ using namespace MyGUI;
 //  [Multiplayer]
 //---------------------------------------------------------------------
 
+void App::rebuildPlayerList()
+{
+	if (!listPlayers || !mClient) return;
+	listPlayers->removeAllItems();
+	// Add self
+	listPlayers->addItem(pSet->nickname);
+	listPlayers->setSubItemNameAt(1, 0, sListCar); // Car
+	listPlayers->setSubItemNameAt(2, 0, "0"); // Ping
+	listPlayers->setSubItemNameAt(3, 0, "Nope"); // FIXME: Ready state
+	const PeerMap peers = mClient->getPeers();
+	for (PeerMap::const_iterator it = peers.begin(); it != peers.end(); ++it) {
+		if (it->second.name.empty() || it->second.connection == PeerInfo::DISCONNECTED)
+			continue;
+		listPlayers->addItem(it->second.name);
+		int l = listPlayers->getItemCount()-1;
+		listPlayers->setSubItemNameAt(1, l, "ASD"); // FIXME
+		listPlayers->setSubItemNameAt(2, l, boost::lexical_cast<std::string>(it->second.ping));
+		listPlayers->setSubItemNameAt(3, l, "Nope"); // FIXME
+	}
+}
+
 void App::peerConnected(PeerInfo peer)
 {
 	if (!listNetChat) return;
 	listNetChat->addItem("Connected: " + peer.name);
+	rebuildPlayerList();
 }
 
 void App::peerDisconnected(PeerInfo peer)
 {
 	if (!listNetChat || peer.name.empty()) return;
 	listNetChat->addItem("Disconnected: " + peer.name);
+	rebuildPlayerList();
 }
 
 void App::peerMessage(PeerInfo peer, std::string msg)
@@ -34,6 +57,7 @@ void App::peerMessage(PeerInfo peer, std::string msg)
 	if (!listNetChat) return;
 
 	listNetChat->addItem(peer.name + ": " + msg);
+	rebuildPlayerList(); // For ping updates in the list
 }
 
 
@@ -70,6 +94,8 @@ void App::evBtnNetJoin(WP)
 		imgNetTrack->setImageTexture(sListTrack+".jpg");
 	if (edNetTrackInfo)
 		edNetTrackInfo->setCaption("Lorem ipsum");
+
+	rebuildPlayerList();
 }
 
 

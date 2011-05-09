@@ -222,6 +222,7 @@ protected:
 
 	///  multiplayer
 
+	void rebuildPlayerList();
 	void peerConnected(PeerInfo peer);
 	void peerDisconnected(PeerInfo peer);
 	void peerMessage(PeerInfo peer, std::string msg);
