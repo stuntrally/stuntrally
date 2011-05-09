@@ -121,7 +121,6 @@ void P2PGameClient::receiveEvent(net::NetworkTraffic const& e)
 		case protocol::PEER_INFO: {
 			if (m_state != LOBBY) break;
 			protocol::PeerAddressPacket pap = *reinterpret_cast<protocol::PeerAddressPacket const*>(e.packet_data);
-			std::cout << "Peer info received for " << pap.address << std::endl;
 			boost::mutex::scoped_lock lock(m_mutex);
 			m_peers[pap.address].address = pap.address;
 			m_peers[e.peer_address].ping = e.ping;

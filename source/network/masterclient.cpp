@@ -84,7 +84,6 @@ void MasterClient::receiveEvent(net::NetworkTraffic const& e)
 	switch (e.packet_data[0]) {
 		case protocol::GAME_STATUS: {
 			protocol::GameInfo game = *reinterpret_cast<protocol::GameInfo const*>(e.packet_data);
-			std::cout << "Available game: " << game.name << std::endl;
 			boost::mutex::scoped_lock lock(m_mutex);
 			m_games[game.id] = game;
 			if (m_callback) m_callback->listChanged(m_games);
@@ -93,7 +92,6 @@ void MasterClient::receiveEvent(net::NetworkTraffic const& e)
 		case protocol::GAME_ACCEPTED: {
 			protocol::GameInfo game = *reinterpret_cast<protocol::GameInfo const*>(e.packet_data);
 			m_game.id = game.id;
-			std::cout << "Game accepted with id " << m_game.id << std::endl;
 			break;
 		}
 		default: {
