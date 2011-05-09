@@ -225,6 +225,7 @@ protected:
 	void rebuildPlayerList();
 	void peerConnected(PeerInfo peer);
 	void peerDisconnected(PeerInfo peer);
+	void peerInfo(PeerInfo peer);
 	void peerMessage(PeerInfo peer, std::string msg);
 
 	TabPtr tabsNet;  //void tabNet(TabPtr tab, size_t id);
