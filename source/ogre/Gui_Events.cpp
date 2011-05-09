@@ -5,6 +5,7 @@
 #include "OgreGame.h"
 #include "MyGUI_PointerManager.h"
 #include <boost/filesystem.hpp>
+#include "../oisb/OISB.h"
 using namespace MyGUI;
 
 #define res  1000000.f
@@ -31,7 +32,18 @@ void App::controlBtnClicked(Widget* sender)
 }
 void App::joystickBindChanged(Widget* sender, size_t val)
 {
-	///TODO
+	// get action/schema this bind belongs too
+	std::string actionName = Ogre::StringUtil::split(sender->getName(), "_")[1];
+	std::string schemaName = Ogre::StringUtil::split(sender->getName(), "_")[2];
+	
+	Log(actionName);
+	Log(schemaName);
+	
+	OISB::ActionSchema* schema = OISB::System::getSingleton().mActionSchemas[schemaName];
+	OISB::Action* action = schema->mActions[actionName];
+	if (action->mBindings.size() == 0)
+		action->createBinding();
+	OISB::Binding* binding = action->mBindings.front();
 }
 void App::joystickSelectionChanged(Widget* sender, size_t val)
 {
