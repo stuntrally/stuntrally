@@ -64,6 +64,12 @@ void App::peerDisconnected(PeerInfo peer)
 	rebuildPlayerList();
 }
 
+void App::peerInfo(PeerInfo peer)
+{
+	(void)peer;
+	rebuildPlayerList();
+}
+
 void App::peerMessage(PeerInfo peer, std::string msg)
 {
 	if (!edNetChat) return;

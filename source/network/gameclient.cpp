@@ -166,15 +166,17 @@ void P2PGameClient::receiveEvent(net::NetworkTraffic const& e)
 			protocol::PlayerInfoPacket pip = *reinterpret_cast<protocol::PlayerInfoPacket const*>(e.packet_data);
 			boost::mutex::scoped_lock lock(m_mutex);
 			PeerInfo& pi = m_peers[e.peer_address];
-			std::cout << "PIP: " << pip.name << pip.car << std::endl;
 			bool isNew = pi.name.empty();
 			pi = pip;
 			pi.ping = e.ping;
 			// Callback
-			if (isNew && m_callback) {
+			if (m_callback) {
 				PeerInfo picopy = pi;
 				lock.unlock(); // Mutex unlocked in callback to avoid dead-locks
-				m_callback->peerConnected(picopy);
+				// First info means completed connection
+				if (isNew) m_callback->peerConnected(picopy);
+				// Callback regardless if the info changed in order to give ping updates
+				else m_callback->peerInfo(picopy);
 			}
 			break;
 		}
