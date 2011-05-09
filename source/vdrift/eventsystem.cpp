@@ -18,20 +18,7 @@ using std::endl;
 //#include <cassert>
 
 void EVENTSYSTEM_SDL::Init(std::ostream & info_output)
-{
-	info_output << SDL_NumJoysticks() << " joystick";
-	if (SDL_NumJoysticks() != 1)
-		info_output << "s";
-	info_output << " found";
-	if (SDL_NumJoysticks() > 0)
-		info_output << ":" << endl;
-	else
-		info_output << "." << endl;
-	for (int i=0; i < SDL_NumJoysticks(); i++ ) 
-	{
-		info_output << "    " << i << ". " << SDL_JoystickName(i) << endl;
-	}
-	
+{	
 	SDL_JoystickEventState(SDL_ENABLE);
 	
 	int j;
