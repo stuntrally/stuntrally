@@ -157,8 +157,10 @@ protected:
 	#define SLV(name)  void sl##name(SL);  StaticTextPtr val##name;
 	#define SL  WP wp, size_t val	//  slider event args
 	
-	// control button clicked
-	void controlBtnClicked(Widget* sender), InitInputGui();
+	// input tab
+	void controlBtnClicked(Widget* sender), InitInputGui(), UpdateJsButtons();
+	void joystickBindChanged(Widget* sender,size_t val);
+	void joystickSelectionChanged(Widget* sender,size_t val);
 
 	//  sliders
 	SLV(Anisotropy);  SLV(ViewDist);  SLV(TerDetail);  SLV(TerDist);  SLV(RoadDist);  // detail

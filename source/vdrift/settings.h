@@ -54,6 +54,9 @@ public:
 	std::string buffer;
 	std::string rendersystem;
 	
+	// input
+	bool x11_capture_mouse;
+	
 	//  replay
 	bool rpl_rec;//, rpl_play;
 	

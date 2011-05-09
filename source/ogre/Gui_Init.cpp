@@ -598,7 +598,7 @@ void App::InitInputGui()
 		//-scroll view.... doesnt work???
 		//MyGUI::ScrollViewPtr sv = tabitem->createWidget<ScrollView>("ScrollView", 0, 0, 700, 580, MyGUI::Align::Default, "scrollView_" + (*it).first );
 		
-		///  Headers
+		///  Headers (Key 1, Key 2)
 		MyGUI::StaticTextPtr headkb = tabitem->createWidget<StaticText>(
 			"StaticText", 220, 10, 200, 24, MyGUI::Align::Default, "staticText_" + (*it).first );
 		headkb->setCaption(TR("#88AAFF#{InputKey1}"));
@@ -606,7 +606,25 @@ void App::InitInputGui()
 			"StaticText", 360, 10, 200, 24, MyGUI::Align::Default, "staticText_" + (*it).first );
 		headkb2->setCaption(TR("#88AAFF#{InputKey2}"));
 		
-		//  custom y pos of each row, to sort by function
+		/// joystick selection menu
+		// only on player tabs
+		bool playerTab = Ogre::StringUtil::startsWith( (*it).first, "player");
+		if ( playerTab )
+		{
+			MyGUI::ComboBoxPtr joysticks = tabitem->createWidget<ComboBox>("ComboBox", 540, 10, 150, 24, MyGUI::Align::Default, "joystickSel_" + (*it).first );
+			joysticks->addItem(TR("#{InputNoJS}"));
+			joysticks->setIndexSelected(0);
+			for (std::vector<OISB::JoyStick*>::const_iterator jit=OISB::System::getSingleton().mJoysticks.begin();
+					jit!=OISB::System::getSingleton().mJoysticks.end();
+					jit++)
+			{
+				joysticks->addItem( (*jit)->getName() );
+			}
+			/// test
+			joysticks->addItem("MyFunnyJoystick001");
+		}
+		
+		///  ------ custom action sorting ----------------
 		int i = 0, y = 0;
 		std::map <std::string, int> yRow;
 		// player
@@ -631,16 +649,22 @@ void App::InitInputGui()
 			ait != (*it).second->mActions.end(); ait++,i++)
 		{
 			// macro to strip away the Keyboard/
-			#define stripk(s) Ogre::StringUtil::split(s, "/")[1]
+			#define stripk(s) Ogre::StringUtil::split(s, "/").size() > 1 ? Ogre::StringUtil::split(s, "/")[1] : s // only strip if the '/' is there
 			
 			OISB::Action* act = (*ait).second;
-			const int sx = 130, sy = 24, x0 = 20, x1 = 180, x2 = 320;  // button size and columns positon
+			const int sx = 130, sy = 24, x0 = 20, x1 = 180, x2 = 320, x3 = 540;  // button size and columns positon
 
 			// description label
 			const String& name = (*ait).second->getName();
 			y = 40 + 26 * yRow[name] / 2;
 			MyGUI::StaticTextPtr desc = tabitem->createWidget<StaticText>("StaticText", x0, y, sx+70, sy, MyGUI::Align::Default, "staticText_" + (*ait).first );
 			desc->setCaption( TR("#{InputMap" + name + "}") );
+		
+			/// keyboard binds
+			//  get information about binds from OISB and set variables how the rebind buttons should be created
+			// declare vars
+			std::string key1_label = TR("#{InputKeyUnassigned}");
+			std::string key2_label = TR("#{InputKeyUnassigned}");
 			
 			// bound key(s)
 			if (act->getActionType() == OISB::AT_TRIGGER)
@@ -648,28 +672,10 @@ void App::InitInputGui()
 				if (act->mBindings.size() > 0 && act->mBindings.front()->getNumBindables() > 0)
 				{
 					// first key
-					MyGUI::ButtonPtr key1 = tabitem->createWidget<Button>("Button", x1, y, sx, sy, MyGUI::Align::Default, "inputbutton_" + (*ait).first + "_" + (*it).first + "_1" );
-					key1->setCaption( stripk(act->mBindings.front()->getBindable(0)->getBindableName()) );
-					key1->eventMouseButtonClick = MyGUI::newDelegate(this, &App::controlBtnClicked);
+					key1_label = act->mBindings.front()->getBindable(0)->getBindableName();
 					// alternate key
-					MyGUI::ButtonPtr key2 = tabitem->createWidget<Button>("Button", x2, y, sx, sy, MyGUI::Align::Default, "inputbutton_" + (*ait).first + "_" + (*it).first + "_2");
 					if (act->mBindings.front()->getNumBindables() > 1)
-						key2->setCaption( stripk(act->mBindings.front()->getBindable(1)->getBindableName()) );
-					else
-						key2->setCaption( TR("#{InputKeyUnassigned}"));
-					key2->eventMouseButtonClick = MyGUI::newDelegate(this, &App::controlBtnClicked);
-				}
-				else
-				{
-					// no binds yet
-					// first key
-					MyGUI::ButtonPtr key1 = tabitem->createWidget<Button>("Button", x1, y, sx, sy, MyGUI::Align::Default, "inputbutton_" + (*ait).first + "_" + (*it).first + "_1" );
-					key1->setCaption( TR("#{InputKeyUnassigned}") );
-					key1->eventMouseButtonClick = MyGUI::newDelegate(this, &App::controlBtnClicked);
-					// 2nd key
-					MyGUI::ButtonPtr key2 = tabitem->createWidget<Button>("Button", x2, y, sx, sy, MyGUI::Align::Default, "inputbutton_" + (*ait).first + "_" + (*it).first + "_2");
-					key2->setCaption( TR("#{InputKeyUnassigned}"));
-					key2->eventMouseButtonClick = MyGUI::newDelegate(this, &App::controlBtnClicked);
+						key2_label = act->mBindings.front()->getBindable(1)->getBindableName();
 				}
 			}
 			else if (act->getActionType() == OISB::AT_ANALOG_AXIS)
@@ -686,56 +692,117 @@ void App::InitInputGui()
 						else if ((*bnit).first == "decrease")	decrease = (*bnit).second;
 					}
 					if (increase)
-					{
-						MyGUI::ButtonPtr key1 = tabitem->createWidget<Button>("Button", x1, y, sx, sy, MyGUI::Align::Default,
-							"inputbutton_" + (*ait).first + "_" + (*it).first + "_1");
-						key1->setCaption( stripk(increase->getBindableName()) );
-						key1->eventMouseButtonClick = MyGUI::newDelegate(this, &App::controlBtnClicked);
-					}
+						key1_label = increase->getBindableName();
 					if (decrease)
-					{
-						MyGUI::ButtonPtr key2 = tabitem->createWidget<Button>("Button", x2, y, sx, sy, MyGUI::Align::Default,
-							"inputbutton_" + (*ait).first + "_" + (*it).first + "_2");
-						key2->setCaption( stripk(decrease->getBindableName()) );
-						key2->eventMouseButtonClick = MyGUI::newDelegate(this, &App::controlBtnClicked);
-					}
-					else
-					{
-						MyGUI::ButtonPtr key2 = tabitem->createWidget<Button>("Button", x2, y, sx, sy, MyGUI::Align::Default,
-							"inputbutton_" + (*ait).first + "_" + (*it).first + "_2");
-						key2->setCaption( TR("#{InputKeyUnassigned}"));
-						key2->eventMouseButtonClick = MyGUI::newDelegate(this, &App::controlBtnClicked);
-					}
+						key2_label = decrease->getBindableName();
+				}
+			}
+				
+			// --------- create buttons -------------
+			MyGUI::ButtonPtr key1 = tabitem->createWidget<Button>("Button", x1, y, sx, sy, MyGUI::Align::Default, "inputbutton_" + (*ait).first + "_" + (*it).first + "_1");
+			key1->setCaption( stripk(key1_label) );
+			key1->eventMouseButtonClick = MyGUI::newDelegate(this, &App::controlBtnClicked);
+			MyGUI::ButtonPtr key2 = tabitem->createWidget<Button>("Button", x2, y, sx, sy, MyGUI::Align::Default, "inputbutton_" + (*ait).first + "_" + (*it).first + "_2");
+			key2->setCaption( stripk(key2_label) );
+			key2->eventMouseButtonClick = MyGUI::newDelegate(this, &App::controlBtnClicked);
+
+
+			/// joystick binds
+			// only on player tab
+			if (playerTab)
+			{
+				if (act->getActionType() == OISB::AT_TRIGGER)
+				{
+					MyGUI::ComboBoxPtr button = tabitem->createWidget<ComboBox>("ComboBox", x3, y, sx, sy, MyGUI::Align::Default, "jsButtonSel_" + (*ait).first + "_" + (*it).first );
+					button->addItem(TR("#{InputKeyNoButton}"));
+					button->setIndexSelected(0);
+					button->eventComboChangePosition = MyGUI::newDelegate(this, &App::joystickBindChanged);
+				}
+				else if (act->getActionType() == OISB::AT_ANALOG_AXIS)
+				{
+					MyGUI::ComboBoxPtr axis = tabitem->createWidget<ComboBox>("ComboBox", x3, y, sx, sy, MyGUI::Align::Default, "jsAxisSel_" + (*ait).first + "_" + (*it).first );
+					axis->addItem(TR("#{InputKeyNoAxis}"));
+					axis->setIndexSelected(0);
+					axis->eventComboChangePosition = MyGUI::newDelegate(this, &App::joystickBindChanged);
+				}
+			}
+		}
+	}
+	
+	UpdateJsButtons(); // initial
+}
+
+void App::UpdateJsButtons()
+{
+	// go through all action schemas & actions, and fill the combo boxes for JS axis / buttons
+	std::map<OISB::String, OISB::ActionSchema*> schemas = OISB::System::getSingleton().mActionSchemas;
+	for (std::map<OISB::String, OISB::ActionSchema*>::const_iterator it = schemas.begin(); it != schemas.end(); it++)
+	{
+		if (!Ogre::StringUtil::startsWith( (*it).first, "player")) continue; // joystick only on player tabs
+		
+		for (std::map<OISB::String, OISB::Action*>::const_iterator
+			ait = (*it).second->mActions.begin();
+			ait != (*it).second->mActions.end(); ait++)
+		{
+			OISB::Action* act = (*ait).second;
+			
+			// find selected oisb joystick for this tab (to get num axis & buttons)
+			MyGUI::ComboBoxPtr jsMenu = mGUI->findWidget<ComboBox>("joystickSel_" + (*it).first);
+			std::string jsName;
+			if (jsMenu->getIndexSelected() != MyGUI::ITEM_NONE)
+				jsName = jsMenu->getItemNameAt( jsMenu->getIndexSelected() );
+			OISB::JoyStick* js = NULL;
+			for (std::vector<OISB::JoyStick*>::const_iterator jit = mOISBsys->mJoysticks.begin();
+					jit != mOISBsys->mJoysticks.end();
+					jit++)
+				if ( (*jit)->getName() == jsName ) js = (*jit);
+
+			// fill combo boxes
+			if (act->getActionType() == OISB::AT_TRIGGER)
+			{
+				MyGUI::ComboBoxPtr button = mGUI->findWidget<ComboBox>("jsButtonSel_" + (*ait).first + "_" + (*it).first);
+				
+				// ------------- before deleting all old, save selected and restore selection after -----------------
+				std::string selectedButton = "";
+				if (button->getIndexSelected() != MyGUI::ITEM_NONE) selectedButton = button->getItemNameAt(button->getIndexSelected());
+				button->removeAllItems();
+				if (selectedButton != "" && button->findItemIndexWith(selectedButton) != MyGUI::ITEM_NONE)
+					button->setIndexSelected( button->findItemIndexWith(selectedButton) );
+				
+				if (js) {
+					for (std::vector<OISB::DigitalState*>::const_iterator it = js->buttons.begin();
+							it != js->buttons.end(); it++)
+						button->addItem( stripk((*it)->getBindableName()) );
 				}
 				else
 				{
-					// no binds yet
-					// first key
-					MyGUI::ButtonPtr key1 = tabitem->createWidget<Button>("Button", x1, y, sx, sy, MyGUI::Align::Default,
-						"inputbutton_" + (*ait).first + "_" + (*it).first + "_1");
-					key1->setCaption( TR("#{InputKeyUnassigned}") );
-					key1->eventMouseButtonClick = MyGUI::newDelegate(this, &App::controlBtnClicked);
-					// 2nd key
-					MyGUI::ButtonPtr key2 = tabitem->createWidget<Button>("Button", x2, y, sx, sy, MyGUI::Align::Default,
-						"inputbutton_" + (*ait).first + "_" + (*it).first + "_2");
-					key2->setCaption( TR("#{InputKeyUnassigned}"));
-					key2->eventMouseButtonClick = MyGUI::newDelegate(this, &App::controlBtnClicked);
+					button->addItem( TR("#{InputKeyNoButton}") );
+					button->setIndexSelected(0);
 				}
 			}
-			///-AT_SEQUENCE: not used
-		}
-		
-		// joystick selection menu
-		MyGUI::ComboBoxPtr joysticks = tabitem->createWidget<ComboBox>("ComboBox", 540, 10, 150, 24, MyGUI::Align::Default, "joystickSel_" + (*it).first );
-		joysticks->addItem(TR("#{InputNoJS}"));
-		joysticks->setIndexSelected(0);
-		for (std::vector<OISB::JoyStick*>::const_iterator it=OISB::System::getSingleton().mJoysticks.begin();
-				it!=OISB::System::getSingleton().mJoysticks.end();
-				it++)
-		{
-			joysticks->addItem( (*it)->getName() );
-		}
+			else if (act->getActionType() == OISB::AT_ANALOG_AXIS)
+			{
+				MyGUI::ComboBoxPtr axis = mGUI->findWidget<ComboBox>("jsAxisSel_" + (*ait).first + "_" + (*it).first);
 				
+				// ------------- before deleting all old, save selected and restore selection after -----------------
+				std::string selectedAxis = "";
+				if (axis->getIndexSelected() != MyGUI::ITEM_NONE) selectedAxis = axis->getItemNameAt(axis->getIndexSelected());
+				axis->removeAllItems();
+				if (selectedAxis != "" && axis->findItemIndexWith(selectedAxis) != MyGUI::ITEM_NONE)
+					axis->setIndexSelected( axis->findItemIndexWith(selectedAxis) );
+					
+				if (js) {
+					for (std::vector<OISB::AnalogAxisState*>::const_iterator it = js->axis.begin();
+							it != js->axis.end(); it++)
+						axis->addItem( stripk((*it)->getBindableName()) );
+				}
+				else
+				{
+					axis->addItem( TR("#{InputKeyNoAxis}") );
+					axis->setIndexSelected(0);
+				}
+			}
+		}
 	}
 }
 
