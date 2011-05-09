@@ -220,6 +220,7 @@ protected:
 
 	char s[512];
 
+
 	///  multiplayer
 
 	void rebuildPlayerList();
@@ -227,19 +228,21 @@ protected:
 	void peerDisconnected(PeerInfo peer);
 	void peerMessage(PeerInfo peer, std::string msg);
 
-
+	TabPtr tabsNet;  //void tabNet(TabPtr tab, size_t id);
 	MultiListPtr listServers, listPlayers;
-	ListPtr listNetChat;
+	EditPtr edNetChat;
 	boost::scoped_ptr<GameInfoListener> gameInfoListener;
 
 	String getCreateGameButtonCaption() const;
-	ButtonPtr btnNetRefresh,btnNetJoin;  void evBtnNetRefresh(WP),evBtnNetJoin(WP);
-	ButtonPtr btnNetReady,btnNetLeave;  void evBtnNetReady(WP),evBtnNetLeave(WP);
+	ButtonPtr btnNetRefresh,btnNetJoin,btnNetCreate;
+	ButtonPtr btnNetReady,btnNetLeave;
+	void evBtnNetRefresh(WP),evBtnNetJoin(WP),evBtnNetCreate(WP);
+	void evBtnNetReady(WP),evBtnNetLeave(WP);
 
 	StaticImagePtr imgNetTrack;
-	StaticTextPtr valNetGames, valNetChat, valNetTrack;
+	StaticTextPtr valNetGames, valNetGameName, valNetChat, valNetTrack;
 	ButtonPtr btnNetSendMsg;  void evBtnNetSendMsg(WP);
-	EditPtr edNetChatMsg,edNetTrackInfo,
+	EditPtr edNetGameName, edNetChatMsg, edNetTrackInfo,
 		edNetNick, edNetServerIP, edNetServerPort, edNetLocalPort;
 	void evEdNetNick(EditPtr),evEdNetServerIP(EditPtr),evEdNetServerPort(EditPtr),evEdNetLocalPort(EditPtr);
 };

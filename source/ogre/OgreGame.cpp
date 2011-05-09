@@ -33,10 +33,10 @@ App::App()
 	,grass(0), trees(0), road(0)
 	,pr(0),pr2(0), sun(0)
 	// gui multiplayer
-	,listServers(0),listPlayers(0), listNetChat(0), imgNetTrack(0)
-    ,btnNetRefresh(0),btnNetJoin(0), btnNetReady(0),btnNetLeave(0), btnNetSendMsg(0)
-    ,valNetGames(0), valNetChat(0), valNetTrack(0)
-    ,edNetChatMsg(0), edNetTrackInfo(0)
+	,tabsNet(0), listServers(0),listPlayers(0), edNetChat(0), imgNetTrack(0)
+    ,btnNetRefresh(0),btnNetJoin(0),btnNetCreate(0), btnNetReady(0),btnNetLeave(0), btnNetSendMsg(0)
+    ,valNetGames(0), valNetGameName(0), valNetChat(0), valNetTrack(0)
+    ,edNetGameName(0), edNetChatMsg(0), edNetTrackInfo(0)
     ,edNetNick(0), edNetServerIP(0), edNetServerPort(0), edNetLocalPort(0)
 {
 	pathTrk[0] = PATHMANAGER::GetTrackPath() + "/";

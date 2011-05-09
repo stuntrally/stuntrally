@@ -240,7 +240,15 @@ void App::InitGui()
 
 	///  Multiplayer
     //------------------------------------------------------------------------
+    mWndTabs->setIndexSelected(2);  //- auto switch at start
+	tabsNet = mGUI->findWidget<Tab>("tabsNet");
+		//TabItem* t1 = tabsNet->getItemAt(0);
+		//t1->setEnabled(0);
+	//int num = tabsNet ? tabsNet->getItemCount() : 0;
+	//tabsNet->setIndexSelected( (tabsNet->getIndexSelected() - 1 + num) % num );
+	
     //  server, games
+    valNetGames = mGUI->findWidget<StaticText>("valNetGames");
 	listServers = mGUI->findWidget<MultiList>("MListServers");
 	if (listServers)
 	{	listServers->addColumn("Game name", 200);
@@ -252,8 +260,12 @@ void App::InitGui()
 	gameInfoListener.reset(new GameInfoListener(listServers));
 	Btn("btnNetRefresh", evBtnNetRefresh);  btnNetRefresh = btn;
 	Btn("btnNetJoin", evBtnNetJoin);  btnNetJoin = btn;
+	Btn("btnNetCreate", evBtnNetCreate);  btnNetCreate = btn;
 
 	//  game, players
+	valNetGameName = mGUI->findWidget<StaticText>("valNetGameName");
+	edNetGameName = mGUI->findWidget<Edit>("edNetGameName");
+	
 	listPlayers = mGUI->findWidget<MultiList>("MListPlayers");
 	if (listPlayers)
 	{	listPlayers->addColumn("Player", 140);
@@ -261,16 +273,14 @@ void App::InitGui()
 		listPlayers->addColumn("Ping", 80);
 		listPlayers->addColumn("Ready", 70);
 	}
-    valNetGames = mGUI->findWidget<StaticText>("valNetGames");
-    valNetChat = mGUI->findWidget<StaticText>("valNetChat");
-
-    Btn("btnNetReady", evBtnNetReady);  btnNetReady = btn;
-    Btn("btnNetLeave", evBtnNetLeave);	btnNetLeave = btn;
-    btnNetLeave->setCaption(getCreateGameButtonCaption());
+	Btn("btnNetReady", evBtnNetReady);  btnNetReady = btn;
+	Btn("btnNetLeave", evBtnNetLeave);	btnNetLeave = btn;
+	btnNetLeave->setCaption(getCreateGameButtonCaption());
 
     //  chat
-    listNetChat = mGUI->findWidget<List>("listNetChat");
-    edNetChatMsg = mGUI->findWidget<Edit>("edNetChatMsg");
+    valNetChat = mGUI->findWidget<StaticText>("valNetChat");
+    edNetChat = mGUI->findWidget<Edit>("edNetChat");  // chat area
+    edNetChatMsg = mGUI->findWidget<Edit>("edNetChatMsg");  // user text
     Btn("btnNetSendMsg", evBtnNetSendMsg);  btnNetSendMsg = btn;
     
     //  track

@@ -40,23 +40,22 @@ void App::rebuildPlayerList()
 
 void App::peerConnected(PeerInfo peer)
 {
-	if (!listNetChat) return;
-	listNetChat->addItem("Connected: " + peer.name);
+	if (!edNetChat) return;
+	edNetChat->setCaption(edNetChat->getCaption()+"Connected: " + peer.name + "\n");
 	rebuildPlayerList();
 }
 
 void App::peerDisconnected(PeerInfo peer)
 {
-	if (!listNetChat || peer.name.empty()) return;
-	listNetChat->addItem("Disconnected: " + peer.name);
+	if (!edNetChat || peer.name.empty()) return;
+	edNetChat->setCaption(edNetChat->getCaption()+"Disconnected: " + peer.name + "\n");
 	rebuildPlayerList();
 }
 
 void App::peerMessage(PeerInfo peer, std::string msg)
 {
-	if (!listNetChat) return;
-
-	listNetChat->addItem(peer.name + ": " + msg);
+	if (!edNetChat) return;
+	edNetChat->setCaption(edNetChat->getCaption()+peer.name + ": " + msg + "\n");
 	rebuildPlayerList(); // For ping updates in the list
 }
 
@@ -98,6 +97,11 @@ void App::evBtnNetJoin(WP)
 	rebuildPlayerList();
 }
 
+void App::evBtnNetCreate(WP)
+{
+	//  create game ..
+}
+
 
 void App::evBtnNetReady(WP)
 {
@@ -130,6 +134,10 @@ void App::evBtnNetLeave(WP)
 
 void App::evBtnNetSendMsg(WP)
 {
+	/*  test  *
+	if (!edNetChat) return;
+	edNetChat->setCaption(edNetChat->getCaption()+ pSet->nickname + ": " + edNetChatMsg->getCaption() + "\n");
+	/**/
 	if (!mClient || !edNetChatMsg)  return;
 	if (edNetChatMsg->getCaption().empty()) return;
 
@@ -874,13 +882,18 @@ bool App::keyPressed( const OIS::KeyEvent &arg )
 		
 		case KC_RETURN:	//  chng trk + new game  after pg up/dn
 		if (isFocGui)
-		if (mWndTabs->getIndexSelected() == 0)
-		{	btnChgTrack(0);
-			btnNewGame(0);
-		}else if (mWndTabs->getIndexSelected() == 1)
-		{	btnChgCar(0);
-			btnNewGame(0);
-		}
+		{	size_t tab = mWndTabs->getIndexSelected();
+			switch (tab)
+			{
+			case 0:
+				btnChgTrack(0);
+				btnNewGame(0);  break;
+			case 1:
+				btnChgCar(0);
+				btnNewGame(0);  break;
+			case 2:
+				evBtnNetSendMsg(0);  break;
+		}	}
 		return false;
 	}
 

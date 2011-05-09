@@ -187,7 +187,7 @@
 			</Widget>
 			<Widget type="TabItem" skin="" position="4 26 787 531">
 				<Property key="Widget_Caption" value="#{Multiplayer}"/>
-				<Widget type="Tab" skin="Tab" position="16 15 744 497">
+				<Widget type="Tab" skin="Tab" position="16 15 744 497" name="tabsNet">
 					<Property key="Tab_ButtonAutoWidth" value="false"/>
 					<Property key="Widget_Colour" value="0.73 0.88 1"/>
 					<Property key="Tab_ButtonWidth" value="100"/>
@@ -196,57 +196,79 @@
 						<Widget type="MultiList" skin="MultiList" position="12 54 708 338" name="MListServers">
 							<Property key="Widget_Colour" value="0.6 1 0.6"/>
 						</Widget>
-						<Widget type="Button" skin="Button" position="164 406 180 40" name="btnNetRefresh">
-							<Property key="Widget_Caption" value="Get/refresh list"/>
-							<Property key="Widget_Colour" value="0.6 1 0.2"/>
-						</Widget>
-						<Widget type="Button" skin="Button" position="388 406 180 40" name="btnNetJoin">
-							<Property key="Widget_Caption" value="Join game"/>
-							<Property key="Widget_Colour" value="1 1 0.2"/>
-						</Widget>
 						<Widget type="StaticText" skin="StaticText" position="12 14 224 24" name="valNetGames">
 							<Property key="Widget_Caption" value="Available games"/>
 							<Property key="Text_TextColour" value="1 1 0.3"/>
 						</Widget>
+						<Widget type="Button" skin="Button" position="52 406 180 40" name="btnNetRefresh">
+							<Property key="Widget_Caption" value="Get/refresh list"/>
+							<Property key="Widget_Colour" value="0.6 1 0.2"/>
+						</Widget>
+						<Widget type="Button" skin="Button" position="276 406 180 40" name="btnNetJoin">
+							<Property key="Widget_Caption" value="Join game"/>
+							<Property key="Widget_Colour" value="1 1 0.2"/>
+						</Widget>
+						<Widget type="Button" skin="Button" position="500 406 180 40" name="btnNetCreate">
+							<Property key="Widget_Caption" value="Create game"/>
+							<Property key="Widget_Colour" value="0.6 1 1"/>
+						</Widget>
 					</Widget>
 					<Widget type="TabItem" skin="" position="4 26 735 465">
 						<Property key="Widget_Caption" value="Game"/>
-						<Widget type="StaticText" skin="StaticText" position="22 238 228 24" name="valNetChat">
-							<Property key="Widget_Caption" value="Chat"/>
+						<Widget type="StaticText" skin="StaticText" position="20 22 136 24" name="valNetGameName">
+							<Property key="Widget_Caption" value="Game Name:"/>
+							<Property key="Text_TextColour" value="0.6 0.9 1"/>
+						</Widget>
+						<Widget type="Edit" skin="Edit" position="164 22 256 24" name="edNetGameName">
+							<Property key="Widget_Colour" value="0.6 0.8 1"/>
 							<Property key="Text_TextColour" value="0.6 0.8 1"/>
 						</Widget>
-						<Widget type="Button" skin="Button" position="20 182 144 32" name="btnNetReady">
+						<Widget type="Button" skin="Button" position="596 426 124 32" name="btnNetReady">
 							<Property key="Widget_Caption" value="Ready"/>
 							<Property key="Widget_Colour" value="0.6 1 .0.6"/>
 						</Widget>
-						<Widget type="Button" skin="Button" position="188 182 208 32" name="btnNetLeave">
-							<Property key="Widget_Caption" value="Leave this game"/>
+						<Widget type="Button" skin="Button" position="452 426 124 32" name="btnNetLeave">
+							<Property key="Widget_Caption" value="Leave game"/>
 							<Property key="Widget_Colour" value="1. 0.6 0.3"/>
 						</Widget>
-						<Widget type="MultiList" skin="MultiList" position="20 14 400 154" name="MListPlayers">
+						<Widget type="MultiList" skin="MultiList" position="20 56 400 146" name="MListPlayers">
 							<Property key="Widget_Colour" value="0.4 1 0.4"/>
 						</Widget>
-						<Widget type="List" skin="List" position="20 270 400 136" name="listNetChat">
+						<Widget type="StaticText" skin="StaticText" position="22 214 210 24" name="valNetChat">
+							<Property key="Widget_Caption" value="Chat"/>
+							<Property key="Text_TextColour" value="0.6 0.8 1"/>
+						</Widget>
+						<Widget type="Widget" skin="Panel" position="20 236 422 182">
+							<Property key="Widget_Colour" value="0.8 0.96 1"/>
+							<Property key="Widget_Alpha" value="0.8"/>
+							<Widget type="Edit" skin="WordWrap" position="1 1 420 180" name="edNetChat">
+								<Property key="Edit_WordWrap" value="true"/>
+								<Property key="Edit_VisibleVScroll" value="true"/>
+								<Property key="Text_TextColour" value="0.9 0.96 1"/>
+								<Property key="Edit_ReadOnly" value="true"/>
+								<Property key="Edit_MultiLine" value="true"/>
+                                <Property key="Edit_MaxTextLength" value="120000"/>
+							</Widget>
+						</Widget>
+						<Widget type="Edit" skin="Edit" position="20 430 292 24" name="edNetChatMsg">
 							<Property key="Widget_Colour" value="0.6 0.8 1"/>
 						</Widget>
-						<Widget type="Edit" skin="Edit" position="20 422 268 24" name="edNetChatMsg">
-							<Property key="Widget_Colour" value="0.6 0.8 1"/>
-						</Widget>
-						<Widget type="Button" skin="Button" position="300 418 120 32" name="btnNetSendMsg">
+						<Widget type="Button" skin="Button" position="316 426 120 32" name="btnNetSendMsg">
 							<Property key="Widget_Caption" value="Send"/>
 							<Property key="Widget_Colour" value="0.6 0.9 1"/>
 						</Widget>
 						<Widget type="StaticImage" skin="StaticImage" position="452 54 256 256" name="imgNetTrack"/>
-						<Widget type="StaticText" skin="StaticText" position="452 14 136 24" name="valNetTrack">
+						<Widget type="StaticText" skin="StaticText" position="452 22 260 24" name="valNetTrack">
 							<Property key="Widget_Caption" value="Track:"/>
 							<Property key="Text_TextColour" value="0.4 1.0 0.5"/>
 						</Widget>
-						<Widget type="Edit" skin="WordWrap" position="452 326 256 104" name="edNetTrackInfo">
+						<Widget type="Edit" skin="WordWrap" position="452 318 256 104" name="edNetTrackInfo">
 							<Property key="Widget_Caption" value="Track info text"/>
 							<Property key="Text_TextColour" value="0.6 1.0 0.8"/>
 						</Widget>
 					</Widget>
 					<Widget type="TabItem" skin="" position="4 26 735 465">
+						<Property key="Widget_Caption" value="Settings"/>
 						<Widget type="StaticText" skin="StaticText" position="20 24 128 24">
 							<Property key="Widget_Caption" value="Nickname"/>
 						</Widget>
@@ -260,7 +282,6 @@
 							<Property key="Widget_Caption" value="Local Port"/>
 						</Widget>
 						<Widget type="StaticText" skin="StaticText" position="20 158 144 24"/>
-						<Property key="Widget_Caption" value="Settings"/>
 						<Widget type="Edit" skin="Edit" position="180 24 136 24" name="edNetNick">
 							<Property key="Widget_Colour" value="0.7 0.9 1"/>
 							<Property key="Widget_Caption" value="StuntMan"/>
@@ -275,11 +296,6 @@
 						<Widget type="Edit" skin="Edit" position="180 126 136 24" name="edNetLocalPort">
 							<Property key="Widget_Colour" value="0.7 0.8 1"/>
 						</Widget>
-						<!--<Widget type="Button" skin="Button" position="24 198 128 24" name="btnNetConnect">
-							<Property key="Widget_Colour" value="0 0.8 1"/>
-							<Property key="Widget_Caption" value="#{NetConnect}"/>
-							<Property key="Text_TextColour" value="1 0.4 0.4"/>
-						</Widget>-->
 					</Widget>
 				</Widget>
 			</Widget>
@@ -1107,3 +1123,9 @@
 		</Widget>
 	</Widget>
 </MyGUI>
+
+
+
+
+
+
