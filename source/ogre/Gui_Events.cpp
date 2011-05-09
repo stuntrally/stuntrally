@@ -24,6 +24,10 @@ namespace {
 		if (cond) return "Yes";
 		else return "No";
 	}
+
+	void inline raiseError(const std::string& what, const std::string& title = TR("Error")) {
+		Message::createMessageBox("Message", title, what, MessageBoxStyle::IconError | MessageBoxStyle::Ok);
+	}
 }
 
 
@@ -102,14 +106,14 @@ void App::evBtnNetJoin(WP)
 
 	try {
 		std::string host = listServers->getSubItemNameAt(3, i);
-		int port = boost::lexical_cast<int>(listServers->getSubItemNameAt(4, i));
+		std::string port = listServers->getSubItemNameAt(4, i);
 		mClient.reset(new P2PGameClient(this, pSet->local_port));
 		mClient->updatePlayerInfo(pSet->nickname, sListCar);
-		mClient->connect(host, port); // Lobby phase started automatically
+		mClient->connect(host, boost::lexical_cast<int>(port)); // Lobby phase started automatically
+		edNetChat->setCaption(TR("Connecting to ") + host + ":" + port + "\n");
 	} catch (...) {
-		Message::createMessageBox(  // #{transl ..
-			"Message", "Network Error", "Failed to initialize networking.",
-			MessageBoxStyle::IconError | MessageBoxStyle::Ok);
+		raiseError(TR("Failed to initialize networking."), TR("Network Error"));
+		return;
 	}
 
 	//  update track info
@@ -128,10 +132,15 @@ void App::evBtnNetCreate(WP)
 {
 	//  create game ..
 	if (mLobbyState == DISCONNECTED) {
+		try {
+			if (pSet) mClient.reset(new P2PGameClient(this, pSet->local_port));
+			mClient->updatePlayerInfo(pSet->nickname, sListCar);
+			mClient->startLobby();
+		} catch (...) {
+			raiseError(TR("Failed to initialize networking."), TR("Network Error"));
+			return;
+		}
 		mLobbyState = HOSTING;
-		if (pSet) mClient.reset(new P2PGameClient(this, pSet->local_port));
-		mClient->updatePlayerInfo(pSet->nickname, sListCar);
-		mClient->startLobby();
 		if (!mMasterClient) {
 			mMasterClient.reset(new MasterClient(gameInfoListener.get()));
 			mMasterClient->connect(pSet->master_server_address, pSet->master_server_port);
