@@ -261,10 +261,13 @@ void App::InitGui()
 	Btn("btnNetRefresh", evBtnNetRefresh);  btnNetRefresh = btn;
 	Btn("btnNetJoin", evBtnNetJoin);  btnNetJoin = btn;
 	Btn("btnNetCreate", evBtnNetCreate);  btnNetCreate = btn;
+	Btn("btnNetDirect", evBtnNetDirect);  btnNetDirect = btn;
 
 	//  game, players
 	valNetGameName = mGUI->findWidget<StaticText>("valNetGameName");
 	edNetGameName = mGUI->findWidget<Edit>("edNetGameName");
+	if (edNetGameName)
+		edNetGameName->eventEditTextChange = newDelegate(this, &App::evEdNetGameName);
 	
 	listPlayers = mGUI->findWidget<MultiList>("MListPlayers");
 	if (listPlayers)
@@ -276,13 +279,12 @@ void App::InitGui()
 	}
 	Btn("btnNetReady", evBtnNetReady);  btnNetReady = btn;
 	Btn("btnNetLeave", evBtnNetLeave);	btnNetLeave = btn;
-	btnNetLeave->setCaption(getCreateGameButtonCaption());
+	//btnNetLeave->setCaption(getCreateGameButtonCaption());
 
     //  chat
     valNetChat = mGUI->findWidget<StaticText>("valNetChat");
     edNetChat = mGUI->findWidget<Edit>("edNetChat");  // chat area
     edNetChatMsg = mGUI->findWidget<Edit>("edNetChatMsg");  // user text
-    Btn("btnNetSendMsg", evBtnNetSendMsg);  btnNetSendMsg = btn;
     
     //  track
     imgNetTrack = mGUI->findWidget<StaticImage>("imgNetTrack");

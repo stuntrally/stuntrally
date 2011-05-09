@@ -114,6 +114,11 @@ void App::evBtnNetCreate(WP)
 	//  create game ..
 }
 
+void App::evBtnNetDirect(WP)
+{
+	// direct connect ..
+}
+
 
 void App::evBtnNetReady(WP)
 {
@@ -153,9 +158,9 @@ void App::evBtnNetLeave(WP)
 	//valNetGames
 	//valNetChat
 
-void App::evBtnNetSendMsg(WP)
+void App::chatSendMsg()
 {
-	/*  test  *
+	/*  test  */
 	if (!edNetChat) return;
 	edNetChat->setCaption(edNetChat->getCaption()+ pSet->nickname + ": " + edNetChatMsg->getCaption() + "\n");
 	/**/
@@ -164,6 +169,12 @@ void App::evBtnNetSendMsg(WP)
 
 	mClient->sendMessage(edNetChatMsg->getCaption());
 	edNetChatMsg->setCaption("");
+}
+
+void App::evEdNetGameName(EditPtr ed)
+{
+	// game name text changed
+	//ed->getCaption();
 }
 
 //  net settings
@@ -915,7 +926,7 @@ bool App::keyPressed( const OIS::KeyEvent &arg )
 				btnChgCar(0);
 				btnNewGame(0);  break;
 			case 2:
-				evBtnNetSendMsg(0);  break;
+				chatSendMsg();  break;
 		}	}
 		return false;
 	}

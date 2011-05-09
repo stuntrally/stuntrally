@@ -229,21 +229,23 @@ protected:
 
 	TabPtr tabsNet;  //void tabNet(TabPtr tab, size_t id);
 	MultiListPtr listServers, listPlayers;
-	EditPtr edNetChat;
+	EditPtr edNetChat;  // chat area
 	boost::scoped_ptr<GameInfoListener> gameInfoListener;
 
 	String getCreateGameButtonCaption() const;
-	ButtonPtr btnNetRefresh,btnNetJoin,btnNetCreate;
+	ButtonPtr btnNetRefresh,btnNetJoin,btnNetCreate,btnNetDirect;
 	ButtonPtr btnNetReady,btnNetLeave;
-	void evBtnNetRefresh(WP),evBtnNetJoin(WP),evBtnNetCreate(WP);
+	void evBtnNetRefresh(WP),evBtnNetJoin(WP),evBtnNetCreate(WP),evBtnNetDirect(WP);
 	void evBtnNetReady(WP),evBtnNetLeave(WP);
 
 	StaticImagePtr imgNetTrack;
 	StaticTextPtr valNetGames, valNetGameName, valNetChat, valNetTrack;
-	ButtonPtr btnNetSendMsg;  void evBtnNetSendMsg(WP);
+	ButtonPtr btnNetSendMsg;  void chatSendMsg();
 	EditPtr edNetGameName, edNetChatMsg, edNetTrackInfo,
 		edNetNick, edNetServerIP, edNetServerPort, edNetLocalPort;
-	void evEdNetNick(EditPtr),evEdNetServerIP(EditPtr),evEdNetServerPort(EditPtr),evEdNetLocalPort(EditPtr);
+	void evEdNetGameName(EditPtr),
+		evEdNetNick(EditPtr),evEdNetServerIP(EditPtr),
+		evEdNetServerPort(EditPtr),evEdNetLocalPort(EditPtr);
 };
 
 #endif
