@@ -297,6 +297,10 @@
 						<Widget type="Edit" skin="Edit" position="180 126 136 24" name="edNetLocalPort">
 							<Property key="Widget_Colour" value="0.7 0.8 1"/>
 						</Widget>
+						<Widget type="StaticText" skin="StaticText" position="20 190 600 48">
+							<Property key="Widget_Caption" value="Router port forwarding configuration might be required\nin order to allow peers to connect to the local port."/>
+							<Property key="Text_TextColour" value="0.6 0.2 0.2"/>
+						</Widget>
 					</Widget>
 				</Widget>
 			</Widget>
