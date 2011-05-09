@@ -55,6 +55,9 @@ void App::peerConnected(PeerInfo peer)
 	if (!edNetChat) return;
 	edNetChat->setCaption(edNetChat->getCaption()+"Connected: " + peer.name + "\n");
 	rebuildPlayerList();
+	// Master server player count update
+	if (mLobbyState == HOSTING && mMasterClient && mClient && edNetGameName)
+		mMasterClient->updateGame(edNetGameName->getCaption(), sListTrack, mClient->getPeerCount()+1, pSet->local_port);
 }
 
 void App::peerDisconnected(PeerInfo peer)
@@ -62,6 +65,9 @@ void App::peerDisconnected(PeerInfo peer)
 	if (!edNetChat || peer.name.empty()) return;
 	edNetChat->setCaption(edNetChat->getCaption()+"Disconnected: " + peer.name + "\n");
 	rebuildPlayerList();
+	// Master server player count update
+	if (mLobbyState == HOSTING && mMasterClient && mClient && edNetGameName)
+		mMasterClient->updateGame(edNetGameName->getCaption(), sListTrack, mClient->getPeerCount()+1, pSet->local_port);
 }
 
 void App::peerInfo(PeerInfo peer)
@@ -128,7 +134,7 @@ void App::evBtnNetCreate(WP)
 			mMasterClient.reset(new MasterClient(gameInfoListener.get()));
 			mMasterClient->connect(pSet->master_server_address, pSet->master_server_port);
 		}
-		mMasterClient->updateGame("Placeholder game name", sListTrack, 1, pSet->local_port);
+		mMasterClient->updateGame(edNetGameName->getCaption(), sListTrack, mClient->getPeerCount()+1, pSet->local_port);
 		rebuildPlayerList();
 	}
 }
@@ -140,11 +146,12 @@ void App::evBtnNetLeave(WP)
 	mClient.reset();
 	mMasterClient.reset();
 }
+
 void App::evBtnNetDirect(WP)
 {
 	// direct connect ..
+	// TODO
 }
-
 
 void App::evBtnNetReady(WP)
 {
@@ -180,7 +187,8 @@ void App::chatSendMsg()
 void App::evEdNetGameName(EditPtr ed)
 {
 	// game name text changed
-	//ed->getCaption();
+	if (mLobbyState != HOSTING || !mMasterClient || !mClient) return;
+	mMasterClient->updateGame(ed->getCaption(), sListTrack, mClient->getPeerCount()+1, pSet->local_port);
 }
 
 //  net settings
@@ -513,9 +521,13 @@ void App::listTrackChng(List* li, size_t pos)
 	s = StringUtil::replaceAll(s, "*", "");
 	sListTrack = s;
 
+	// Master server update
+	if (mLobbyState == HOSTING && mMasterClient && mClient && edNetGameName)
+		mMasterClient->updateGame(edNetGameName->getCaption(), sListTrack, mClient->getPeerCount()+1, pSet->local_port);
+
 	int u = *li->getItemDataAt<int>(i,false);
 	bListTrackU = u;
-	
+
 	//  won't refresh if same-...  road dissapears if not found...
 	if (imgPrv)  imgPrv->setImageTexture(sListTrack+".jpg");
 	if (imgTer)  imgTer->setImageTexture(sListTrack+"_ter.jpg");
