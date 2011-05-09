@@ -63,6 +63,8 @@ void SETTINGS::Serialize(bool w, CONFIGFILE & c)
 	Param(c,w, "video.fsaa", fsaa);				Param(c,w, "video.vsync", vsync);
 	Param(c,w, "video.buffer", buffer);			Param(c,w, "video.rendersystem", rendersystem);
 
+	Param(c,w, "input.x11_capture_mouse", x11_capture_mouse);
+
 	/*Param(c,w, "replay.play", rpl_play);*/	Param(c,w, "replay.rec", rpl_rec);
 }
 
@@ -97,6 +99,8 @@ SETTINGS::SETTINGS() :  ///  Defaults
 	motionblur(false), motionblurintensity(0.3),
 	windowx(800), windowy(600), fullscreen(false), fsaa(0), vsync(false),
 	buffer("FBO"), rendersystem("OpenGL Rendering Subsystem"),
+	//  input
+	x11_capture_mouse(true),
 	//  replay
 	rpl_rec(1)//, rpl_play(0)
 {}
