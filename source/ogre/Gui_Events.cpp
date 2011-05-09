@@ -20,7 +20,7 @@ using namespace MyGUI;
 
 //  [Input]
 
-void App::controlBtnClicked(Widget* sender)
+void App::controlBtnClicked(Widget* sender, size_t val)
 {
 	sender->setCaption( TR("#{InputAssignKey}"));
 	// activate key capture mode
