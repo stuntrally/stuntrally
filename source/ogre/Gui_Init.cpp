@@ -668,7 +668,6 @@ void App::UpdateJsButtons()
 					jit != mOISBsys->mJoysticks.end();
 					jit++)
 				if ( (*jit)->getName() == jsName ) js = (*jit);
-			if (!js) continue;
 
 			// fill combo boxes
 			if (act->getActionType() == OISB::AT_TRIGGER)
@@ -678,13 +677,20 @@ void App::UpdateJsButtons()
 				// ------------- before deleting all old, save selected and restore selection after -----------------
 				std::string selectedButton = "";
 				if (button->getIndexSelected() != MyGUI::ITEM_NONE) selectedButton = button->getItemNameAt(button->getIndexSelected());
-				button->deleteAllItems();
+				button->removeAllItems();
 				if (selectedButton != "" && button->findItemIndexWith(selectedButton) != MyGUI::ITEM_NONE)
 					button->setIndexSelected( button->findItemIndexWith(selectedButton) );
 				
-				for (std::vector<OISB::DigitalState*>::const_iterator it = js->buttons.begin();
-						it != js->buttons.end(); it++)
-					button->addItem( stripk((*it)->getBindableName()) );
+				if (js) {
+					for (std::vector<OISB::DigitalState*>::const_iterator it = js->buttons.begin();
+							it != js->buttons.end(); it++)
+						button->addItem( stripk((*it)->getBindableName()) );
+				}
+				else
+				{
+					button->addItem( TR("#{InputKeyNoButton}") );
+					button->setIndexSelected(0);
+				}
 			}
 			else if (act->getActionType() == OISB::AT_ANALOG_AXIS)
 			{
@@ -693,13 +699,20 @@ void App::UpdateJsButtons()
 				// ------------- before deleting all old, save selected and restore selection after -----------------
 				std::string selectedAxis = "";
 				if (axis->getIndexSelected() != MyGUI::ITEM_NONE) selectedAxis = axis->getItemNameAt(axis->getIndexSelected());
-				axis->deleteAllItems();
+				axis->removeAllItems();
 				if (selectedAxis != "" && axis->findItemIndexWith(selectedAxis) != MyGUI::ITEM_NONE)
 					axis->setIndexSelected( axis->findItemIndexWith(selectedAxis) );
 					
-				for (std::vector<OISB::AnalogAxisState*>::const_iterator it = js->axis.begin();
-						it != js->axis.end(); it++)
-					axis->addItem( stripk((*it)->getBindableName()) );
+				if (js) {
+					for (std::vector<OISB::AnalogAxisState*>::const_iterator it = js->axis.begin();
+							it != js->axis.end(); it++)
+						axis->addItem( stripk((*it)->getBindableName()) );
+				}
+				else
+				{
+					axis->addItem( TR("#{InputKeyNoAxis}") );
+					axis->setIndexSelected(0);
+				}
 			}
 		}
 	}
