@@ -121,6 +121,7 @@ void App::evBtnNetJoin(WP)
 		edNetTrackInfo->setCaption("Lorem ipsum");
 
 	rebuildPlayerList();
+	tabsNet->setIndexSelected(1);
 }
 
 void App::evBtnNetCreate(WP)
@@ -137,6 +138,7 @@ void App::evBtnNetCreate(WP)
 		}
 		mMasterClient->updateGame(edNetGameName->getCaption(), sListTrack, mClient->getPeerCount()+1, pSet->local_port);
 		rebuildPlayerList();
+		tabsNet->setIndexSelected(1);
 	}
 }
 
@@ -146,12 +148,14 @@ void App::evBtnNetLeave(WP)
 	mLobbyState = DISCONNECTED;
 	mClient.reset();
 	mMasterClient.reset();
+	tabsNet->setIndexSelected(0);
 }
 
 void App::evBtnNetDirect(WP)
 {
 	// direct connect ..
 	// TODO
+	//tabsNet->setIndexSelected(1);
 }
 
 void App::evBtnNetReady(WP)

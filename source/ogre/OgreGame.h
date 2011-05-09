@@ -187,7 +187,7 @@ protected:
 	ButtonPtr bRkmh, bRmph;  void radKmh(WP), radMph(WP), btnTrGrReset(WP), btnQuit(WP), btnResChng(WP);
 	ButtonPtr chDbgT,chDbgB, chBlt,chBltTxt, chFps, chTimes,chMinimp, bnQuit;
 
-	///  replay
+	//  replay
 	StaticTextPtr valRplPerc, valRplCur, valRplLen,
 		valRplName,valRplInfo,valRplName2,valRplInfo2;
 	HScrollPtr slRplPos;  void slRplPosEv(SL);
@@ -222,7 +222,7 @@ protected:
 
 	char s[512];
 
-	///  multiplayer
+	//  multiplayer
 
 	void rebuildPlayerList();
 	void peerConnected(PeerInfo peer);
