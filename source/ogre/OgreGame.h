@@ -227,7 +227,6 @@ protected:
 	void peerDisconnected(PeerInfo peer);
 	void peerMessage(PeerInfo peer, std::string msg);
 
-
 	MultiListPtr listServers, listPlayers;
 	ListPtr listNetChat;
 	boost::scoped_ptr<GameInfoListener> gameInfoListener;

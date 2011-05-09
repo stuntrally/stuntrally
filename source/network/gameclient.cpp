@@ -1,8 +1,8 @@
 #include "gameclient.hpp"
 
 
-P2PGameClient::P2PGameClient(const std::string& nickname, GameClientCallback* callback, int port)
-	: m_callback(callback), m_client(*this, port), m_state(DISCONNECTED), m_mutex(), m_name(nickname)
+P2PGameClient::P2PGameClient(GameClientCallback* callback, int port)
+	: m_callback(callback), m_client(*this, port), m_state(DISCONNECTED), m_mutex(), m_playerInfo()
 {
 }
 
@@ -19,13 +19,33 @@ void P2PGameClient::connect(const std::string& address, int port)
 	m_client.connect(address, port);
 }
 
+void P2PGameClient::updatePlayerInfo(const std::string& name, const std::string& car)
+{
+	boost::mutex::scoped_lock lock(m_mutex);
+	m_playerInfo.name = name;
+	m_playerInfo.car = car;
+}
+
+void P2PGameClient::toggleReady()
+{
+	boost::mutex::scoped_lock lock(m_mutex);
+	m_playerInfo.ready = !m_playerInfo.ready;
+}
+
+
+bool P2PGameClient::isReady() const
+{
+	return m_playerInfo.ready;
+}
+
+
 void P2PGameClient::sendPeerInfo()
 {
-	// Send my nickname
-	// TODO: Better place to do this?
-	m_client.broadcast(char(protocol::NICK) + m_name);
-	// Peer address info sending
 	boost::mutex::scoped_lock lock(m_mutex);
+	// Send the player info
+	protocol::PlayerInfoPacket pip = (protocol::PlayerInfoPacket)m_playerInfo;
+	m_client.broadcast(pip);
+	// Peer address info sending
 	for (PeerMap::const_iterator it = m_peers.begin(); it != m_peers.end(); ++it) {
 		protocol::PeerAddressPacket pap(it->second.address);
 		m_client.broadcast(pap);
@@ -37,7 +57,7 @@ void P2PGameClient::sendMessage(const std::string& msg)
 	m_client.broadcast(char(protocol::TEXT_MESSAGE) + msg, net::PACKET_RELIABLE);
 	if (m_callback) {
 		PeerInfo pi;
-		pi.name = m_name;
+		pi.name = m_playerInfo.name;
 		m_callback->peerMessage(pi, msg);
 	}
 }
@@ -96,7 +116,8 @@ void P2PGameClient::connectionEvent(net::NetworkTraffic const& e)
 		pi.address = e.peer_address;
 		pi.connection = PeerInfo::CONNECTED;
 		pi.ping = e.ping;
-		// No connection callback here, because nick is not yet set
+		m_playerInfo.peers = m_peers.size();
+		// No connection callback here, because player info is not yet received
 	}
 	// We'll send the peer info periodically, so no need to do it here
 }
@@ -107,8 +128,10 @@ void P2PGameClient::disconnectEvent(net::NetworkTraffic const& e)
 	PeerInfo picopy;
 	{
 		boost::mutex::scoped_lock lock(m_mutex);
+		// TODO: Maybe just delete it?
 		m_peers[e.peer_address].connection = PeerInfo::DISCONNECTED;
 		picopy = m_peers[e.peer_address];
+		m_playerInfo.peers = m_peers.size();
 	}
 	// Callback (mutex unlocked to avoid dead-locks)
 	if (m_callback) m_callback->peerDisconnected(picopy);
@@ -139,20 +162,19 @@ void P2PGameClient::receiveEvent(net::NetworkTraffic const& e)
 			}
 			break;
 		}
-		case protocol::NICK: {
-			if (e.packet_length > 1) {
-				std::string nick((const char*)e.packet_data + 1, e.packet_length - 1);
-				boost::mutex::scoped_lock lock(m_mutex);
-				PeerInfo& pi = m_peers[e.peer_address];
-				bool isNew = pi.name.empty();
-				pi.name = nick;
-				pi.ping = e.ping;
-				// Callback
-				if (isNew && m_callback) {
-					PeerInfo picopy = pi;
-					lock.unlock(); // Mutex unlocked in callback to avoid dead-locks
-					m_callback->peerConnected(picopy);
-				}
+		case protocol::PLAYER_INFO: {
+			protocol::PlayerInfoPacket pip = *reinterpret_cast<protocol::PlayerInfoPacket const*>(e.packet_data);
+			boost::mutex::scoped_lock lock(m_mutex);
+			PeerInfo& pi = m_peers[e.peer_address];
+			std::cout << "PIP: " << pip.name << pip.car << std::endl;
+			bool isNew = pi.name.empty();
+			pi = pip;
+			pi.ping = e.ping;
+			// Callback
+			if (isNew && m_callback) {
+				PeerInfo picopy = pi;
+				lock.unlock(); // Mutex unlocked in callback to avoid dead-locks
+				m_callback->peerConnected(picopy);
 			}
 			break;
 		}

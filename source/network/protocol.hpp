@@ -17,6 +17,7 @@ namespace protocol {
 
 const unsigned DEFAULT_PORT = 4243;
 
+
 /**
  * @brief Contains all possible message types.
  * It will be transmitted as 8-bit unsigned int.
@@ -25,11 +26,9 @@ enum PacketType {
 	HANDSHAKE = 0,
 	PING,
 	PONG,
-	REQUEST_PEER_INFO,
-	PEER_ADDRESS,
-	PLAYER_INFO,
+	PEER_ADDRESS,       // Packet for peer discovery
+	PLAYER_INFO,        // Player attributes of the sender
 	TEXT_MESSAGE,       // Text string that should be displayed somewhere
-	NICK,               // Nickname of the sender
 	STATE_UPDATE,
 	GAME_LIST,          // Client requests master server to list games
 	GAME_ACCEPTED,      // Master server sends response for newly accepted games
@@ -85,7 +84,6 @@ struct PlayerInfoPacket: public net::SimpleSerializer<PlayerInfoPacket> {
 	uint8_t ready;
 
 	PlayerInfoPacket(): packet_type(PLAYER_INFO), ready(), peers() {}
-
 };
 
 
