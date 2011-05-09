@@ -638,7 +638,7 @@ void App::btnResChng(WP)
 {
 	if (!resList)  return;
 	if (resList->getIndexSelected() == MyGUI::ITEM_NONE) return;
-	String mode = resList->getItem(resList->getIndexSelected());
+	String mode = resList->getItemNameAt(resList->getIndexSelected());
 
 	pSet->windowx = StringConverter::parseInt(StringUtil::split(mode, "x")[0]);
 	pSet->windowy = StringConverter::parseInt(StringUtil::split(mode, "x")[1]);
