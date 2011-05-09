@@ -232,7 +232,6 @@ protected:
 	EditPtr edNetChat;
 	boost::scoped_ptr<GameInfoListener> gameInfoListener;
 
-	String getCreateGameButtonCaption() const;
 	ButtonPtr btnNetRefresh,btnNetJoin,btnNetCreate;
 	ButtonPtr btnNetReady,btnNetLeave;
 	void evBtnNetRefresh(WP),evBtnNetJoin(WP),evBtnNetCreate(WP);
