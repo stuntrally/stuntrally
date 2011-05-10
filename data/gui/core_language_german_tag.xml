@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <MyGUI>
+	<Tag name="Multiplayer">Multiplayer</Tag>
 	<!--  Server -->
 	<Tag name="NetServer">Server</Tag>
 	<Tag name="NetGamesAvail">Available games</Tag>
@@ -20,7 +21,7 @@
 	<Tag name="NetMasterIp">Master Server IP</Tag>
 	<Tag name="NetMasterPort">Master Server Port</Tag>
 	<Tag name="NetLocalPort">Local Port</Tag>
-	<Tag name="NetRouterTip">Router port forwarding configuration might be required\nin order to allow peers to connect to the local port.</Tag>
+	<Tag name="NetRouterTip">Router port forwarding configuration might be required in order to allow peers to connect to the local port.</Tag>
 	<Tag name="TipTreeDens">Wie viele Modelle (Bäume, Steine, etc.) auf der Strecke sichtbar sind.</Tag>
 	<Tag name="CamSpeed">Kamerageschw.</Tag>
 	<Tag name="Density">Dichte</Tag>

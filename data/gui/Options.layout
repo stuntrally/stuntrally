@@ -297,9 +297,15 @@
 						<Widget type="Edit" skin="Edit" position="180 126 136 24" name="edNetLocalPort">
 							<Property key="Widget_Colour" value="0.7 0.8 1"/>
 						</Widget>
-						<Widget type="StaticText" skin="StaticText" position="20 190 600 48">
-							<Property key="Widget_Caption" value="#{NetRouterTip}"/>
+						<!-- wordwrap hack -->
+						<Widget type="Edit" skin="WordWrap" position="20 190 300 96" name="RouterTip">
+							<Property key="Edit_ReadOnly" value="true"/>
+							<Property key="Edit_MultiLine" value="true"/>
+							<Property key="Edit_WordWrap" value="true"/>
+							<Property key="Edit_VisibleHScroll" value="false"/>
+							<Property key="Edit_VisibleVScroll" value="true"/>
 							<Property key="Text_TextColour" value="1.0 0.3 0.3"/>
+							<Property key="Widget_Caption" value="#{NetRouterTip}"/>
 						</Widget>
 					</Widget>
 				</Widget>
