@@ -299,7 +299,7 @@
 						</Widget>
 						<Widget type="StaticText" skin="StaticText" position="20 190 600 48">
 							<Property key="Widget_Caption" value="Router port forwarding configuration might be required\nin order to allow peers to connect to the local port."/>
-							<Property key="Text_TextColour" value="0.6 0.2 0.2"/>
+							<Property key="Text_TextColour" value="1.0 0.3 0.3"/>
 						</Widget>
 					</Widget>
 				</Widget>
