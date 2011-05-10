@@ -192,35 +192,39 @@
 					<Property key="Widget_Colour" value="0.73 0.88 1"/>
 					<Property key="Tab_ButtonWidth" value="100"/>
 					<Widget type="TabItem" skin="" position="4 26 735 465">
-						<Property key="Widget_Caption" value="Server"/>
+						<Property key="Widget_Caption" value="#{NetServer}"/>
 						<Widget type="MultiList" skin="MultiList" position="20 54 696 338" name="MListServers">
 							<Property key="Widget_Colour" value="0.6 1 0.6"/>
 						</Widget>
 						<Widget type="StaticText" skin="StaticText" position="20 22 224 24" name="valNetGames">
-							<Property key="Widget_Caption" value="Available games"/>
+							<Property key="Widget_Caption" value="#{NetGamesAvail}"/>
 							<Property key="Text_TextColour" value="1 1 0.3"/>
 						</Widget>
 						<Widget type="Button" skin="Button" position="20 406 164 40" name="btnNetRefresh">
-							<Property key="Widget_Caption" value="Get/refresh list"/>
+							<Property key="Widget_Caption" value="#{NetRefreshList}"/>
 							<Property key="Widget_Colour" value="0.6 1 0.2"/>
 						</Widget>
 						<Widget type="Button" skin="Button" position="374 406 164 40" name="btnNetJoin">
-							<Property key="Widget_Caption" value="Join game"/>
+							<Property key="Widget_Caption" value="#{NetJoinGame}"/>
 							<Property key="Widget_Colour" value="1 1 0.2"/>
 						</Widget>
 						<Widget type="Button" skin="Button" position="552 406 164 40" name="btnNetCreate">
-							<Property key="Widget_Caption" value="Create game"/>
+							<Property key="Widget_Caption" value="#{NetCreateGame}"/>
 							<Property key="Widget_Colour" value="0.6 1 1"/>
 						</Widget>
 						<Widget type="Button" skin="Button" position="198 406 164 40" name="btnNetDirect">
 							<Property key="Widget_Colour" value="1 0.8 0.5"/>
-							<Property key="Widget_Caption" value="Direct connect"/>
+							<Property key="Widget_Caption" value="#{NetDirectConnect}"/>
+						</Widget>
+						<Widget type="Widget" skin="Panel" position="0 0 800 500" layer="Popup" name="panelNetServer">
+							<Property key="Widget_Colour" value="0.8 0.96 1"/>
+							<Property key="Widget_Alpha" value="0.8"/>
 						</Widget>
 					</Widget>
 					<Widget type="TabItem" skin="" position="4 26 735 465">
-						<Property key="Widget_Caption" value="Game"/>
+						<Property key="Widget_Caption" value="#{NetGame}"/>
 						<Widget type="StaticText" skin="StaticText" position="20 22 136 24" name="valNetGameName">
-							<Property key="Widget_Caption" value="Game Name:"/>
+							<Property key="Widget_Caption" value="#{NetGameName}:"/>
 							<Property key="Text_TextColour" value="0.6 0.9 1"/>
 						</Widget>
 						<Widget type="Edit" skin="Edit" position="164 22 268 24" name="edNetGameName">
@@ -229,18 +233,18 @@
 							<Property key="Text_TextColour" value="0.6 0.8 1"/>
 						</Widget>
 						<Widget type="Button" skin="Button" position="596 426 124 32" name="btnNetReady">
-							<Property key="Widget_Caption" value="Ready"/>
+							<Property key="Widget_Caption" value="#{NetReady}"/>
 							<Property key="Widget_Colour" value="0.6 1 .0.6"/>
 						</Widget>
 						<Widget type="Button" skin="Button" position="452 426 124 32" name="btnNetLeave">
-							<Property key="Widget_Caption" value="Leave game"/>
+							<Property key="Widget_Caption" value="#{NetLeaveGame}"/>
 							<Property key="Widget_Colour" value="1. 0.6 0.3"/>
 						</Widget>
 						<Widget type="MultiList" skin="MultiList" position="20 56 412 146" name="MListPlayers">
 							<Property key="Widget_Colour" value="0.4 1 0.4"/>
 						</Widget>
 						<Widget type="StaticText" skin="StaticText" position="22 214 210 24" name="valNetChat">
-							<Property key="Widget_Caption" value="Chat"/>
+							<Property key="Widget_Caption" value="#{NetChat}"/>
 							<Property key="Text_TextColour" value="0.6 0.8 1"/>
 						</Widget>
 						<Widget type="Widget" skin="Panel" position="20 236 412 182">
@@ -260,27 +264,31 @@
 						</Widget>
 						<Widget type="StaticImage" skin="StaticImage" position="452 54 256 256" name="imgNetTrack"/>
 						<Widget type="StaticText" skin="StaticText" position="452 22 260 24" name="valNetTrack">
-							<Property key="Widget_Caption" value="Track:"/>
+							<Property key="Widget_Caption" value="#{Track}:"/>
 							<Property key="Text_TextColour" value="0.4 1.0 0.5"/>
 						</Widget>
 						<Widget type="Edit" skin="WordWrap" position="452 318 256 104" name="edNetTrackInfo">
 							<Property key="Widget_Caption" value="Track info text"/>
 							<Property key="Text_TextColour" value="0.6 1.0 0.8"/>
 						</Widget>
+						<Widget type="Widget" skin="Panel" position="0 0 800 500" layer="Popup" name="panelNetGame">
+							<Property key="Widget_Colour" value="0.8 0.96 1"/>
+							<Property key="Widget_Alpha" value="0.8"/>
+						</Widget>
 					</Widget>
 					<Widget type="TabItem" skin="" position="4 26 735 465">
-						<Property key="Widget_Caption" value="Settings"/>
+						<Property key="Widget_Caption" value="#{NetSettings}"/>
 						<Widget type="StaticText" skin="StaticText" position="20 24 128 24">
-							<Property key="Widget_Caption" value="Nickname"/>
+							<Property key="Widget_Caption" value="#{NetNickname}"/>
 						</Widget>
 						<Widget type="StaticText" skin="StaticText" position="20 62 144 24">
-							<Property key="Widget_Caption" value="Master Server IP"/>
+							<Property key="Widget_Caption" value="#{NetMasterIp}"/>
 						</Widget>
 						<Widget type="StaticText" skin="StaticText" position="20 94 144 24">
-							<Property key="Widget_Caption" value="Master Server Port"/>
+							<Property key="Widget_Caption" value="#{NetMasterPort}"/>
 						</Widget>
 						<Widget type="StaticText" skin="StaticText" position="20 126 144 24">
-							<Property key="Widget_Caption" value="Local Port"/>
+							<Property key="Widget_Caption" value="#{NetLocalPort}"/>
 						</Widget>
 						<Widget type="StaticText" skin="StaticText" position="20 158 144 24"/>
 						<Widget type="Edit" skin="Edit" position="180 24 136 24" name="edNetNick">
@@ -297,9 +305,15 @@
 						<Widget type="Edit" skin="Edit" position="180 126 136 24" name="edNetLocalPort">
 							<Property key="Widget_Colour" value="0.7 0.8 1"/>
 						</Widget>
-						<Widget type="StaticText" skin="StaticText" position="20 190 600 48">
-							<Property key="Widget_Caption" value="Router port forwarding configuration might be required\nin order to allow peers to connect to the local port."/>
-							<Property key="Text_TextColour" value="1.0 0.3 0.3"/>
+						<!-- wordwrap hack -->
+						<Widget type="Edit" skin="WordWrap" position="20 190 300 96" name="RouterTip">
+							<Property key="Edit_ReadOnly" value="true"/>
+							<Property key="Edit_MultiLine" value="true"/>
+							<Property key="Edit_WordWrap" value="true"/>
+							<Property key="Edit_VisibleHScroll" value="false"/>
+							<Property key="Edit_VisibleVScroll" value="true"/>
+							<Property key="Text_TextColour" value="0.7 0.6 0.5"/>
+							<Property key="Widget_Caption" value="#{NetRouterTip}"/>
 						</Widget>
 					</Widget>
 				</Widget>

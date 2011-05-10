@@ -1,5 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <MyGUI>
+	<Tag name="Multiplayer">Multiplayer</Tag>
+	<!--  Server -->
+	<Tag name="NetServer">Server</Tag>
+	<Tag name="NetGamesAvail">Available games</Tag>
+	<Tag name="NetRefreshList">Get/refresh list</Tag>
+	<Tag name="NetJoinGame">Join game</Tag>
+	<Tag name="NetCreateGame">Create game</Tag>
+	<Tag name="NetDirectConnect">Direct connect</Tag>
+	<!-- Game -->
+	<Tag name="NetGame">Game</Tag>
+	<Tag name="NetGameName">Game Name</Tag>
+	<Tag name="NetReady">Ready</Tag>
+	<Tag name="NetWaiting">Waiting...</Tag>
+	<Tag name="NetLeaveGame">Leave game</Tag>
+	<Tag name="NetChat">Chat</Tag>
+	<!-- Settings -->
+	<Tag name="NetSettings">Settings</Tag>
+	<Tag name="NetNickname">Nickname</Tag>
+	<Tag name="NetMasterIp">Master Server IP</Tag>
+	<Tag name="NetMasterPort">Master Server Port</Tag>
+	<Tag name="NetLocalPort">Local Port</Tag>
+	<Tag name="NetRouterTip">Router port forwarding configuration might be required in order to allow peers to connect to the local port.</Tag>
 	<Tag name="TipTreeDens">Objektien (puut, kivet, jne.) määrä.</Tag>
 	<Tag name="CamSpeed">Kameran nopeus</Tag>
 	<Tag name="Density">Tiheys</Tag>
@@ -110,7 +132,7 @@
 	<Tag name="InputStartDir">Space  -  change road direction (+ or -)</Tag>
 	<Tag name="Effects">Tehosteet</Tag>
 	<Tag name="WidthSteps">Width Steps</Tag>
-	<Tag name="Diffuse">Diffuse</Tag>
+	<Tag name="InputKeyNoAxis">No axis</Tag>
 	<Tag name="Sound">Äänet</Tag>
 	<Tag name="RoadPointSize">Tien pisteiden koko</Tag>
 	<Tag name="Car">Auto</Tag>
@@ -155,7 +177,7 @@
 	<Tag name="length">pituus</Tag>
 	<Tag name="ColumnNSides">Column N sides</Tag>
 	<Tag name="RplAutoRec">Auto record replay</Tag>
-	<Tag name="Shaders">Shaders</Tag>
+	<Tag name="Reflections">Heijastukset</Tag>
 	<Tag name="Exponent">exponentti</Tag>
 	<Tag name="Yaw">yaw</Tag>
 	<Tag name="Detail">Detail</Tag>
@@ -234,6 +256,7 @@
 	<Tag name="TipRoadStats">Whole road statistics.</Tag>
 	<Tag name="InputTerPaint">A - Paint Textures (layers)</Tag>
 	<Tag name="RplCur">Cur</Tag>
+	<Tag name="InputKeyNoButton">No button</Tag>
 	<Tag name="TexCoordMul">Tex Coord mul.</Tag>
 	<Tag name="Digits">Numerot (vaihde, nopeus)</Tag>
 	<Tag name="ShowPictures">Show pictures while loading</Tag>
@@ -307,6 +330,7 @@
 	<Tag name="RoadPoint">Road Point</Tag>
 	<Tag name="LoadingDesc">Loading, please wait...</Tag>
 	<Tag name="TipGrassPatchHeightMax">Maximal grass patch height.</Tag>
+	<Tag name="Diffuse">Diffuse</Tag>
 	<Tag name="Tires">Tires</Tag>
 	<Tag name="GrassSize">Grass size</Tag>
 	<Tag name="TipTrkNameEditor">Selected track name, used also for renaming track and as new track name.</Tag>
@@ -338,7 +362,7 @@
 	<Tag name="AutoLoad">Auto Load track</Tag>
 	<Tag name="RplGhost">Show ghost drive - best lap</Tag>
 	<Tag name="TipGrassPageLength">Grass Page length (low will reload often, high will cause visible switching).</Tag>
-	<Tag name="Reflections">Heijastukset</Tag>
+	<Tag name="Shaders">Shaders</Tag>
 	<Tag name="dust">dust</Tag>
 	<Tag name="TipRainSnow1">Set 1 Rain/Snow type</Tag>
 	<Tag name="TipRainSnow2">Set 2 Rain/Snow type</Tag>

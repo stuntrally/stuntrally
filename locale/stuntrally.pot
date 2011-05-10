@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION"
 "Report-Msgid-Bugs-To: "
-"POT-Creation-Date: 2011-05-09 21:01+0200"
+"POT-Creation-Date: 2011-05-10 20:14+0200"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>"
 "Language-Team: LANGUAGE <LL@li.org>"
@@ -105,8 +105,8 @@ msgctxt "InputValueChange"
 msgid "Each (mouse/key) move or value change with "
 msgstr ""
 
-msgctxt "InputRoadMat"
-msgid "-,=  - road/pipe material"
+msgctxt "Terrain"
+msgid "Terrain"
 msgstr ""
 
 msgctxt "Surface"
@@ -181,6 +181,10 @@ msgctxt "RoadParams"
 msgid "Road parameters"
 msgstr ""
 
+msgctxt "NetDirectConnect"
+msgid "Direct connect"
+msgstr ""
+
 msgctxt "Light"
 msgid "Light"
 msgstr ""
@@ -249,12 +253,16 @@ msgctxt "Input"
 msgid "Input"
 msgstr ""
 
-msgctxt "TerLayers"
-msgid "Terrain Layers"
+msgctxt "NetReady"
+msgid "Ready"
 msgstr ""
 
 msgctxt "InputNoJS"
 msgid "No joystick"
+msgstr ""
+
+msgctxt "NetMasterPort"
+msgid "Master Server Port"
 msgstr ""
 
 msgctxt "CopySource"
@@ -277,12 +285,20 @@ msgctxt "Count"
 msgid "Count"
 msgstr ""
 
+msgctxt "UnitKm"
+msgid "km"
+msgstr ""
+
 msgctxt "InputRoadHeight"
 msgid "- change height"
 msgstr ""
 
 msgctxt "BasedOn"
 msgid "based on"
+msgstr ""
+
+msgctxt "NetLeaveGame"
+msgid "Leave game"
 msgstr ""
 
 msgctxt "TipDustInt"
@@ -347,6 +363,10 @@ msgstr ""
 
 msgctxt "TerrainSize"
 msgid "Terrain size"
+msgstr ""
+
+msgctxt "NetServer"
+msgid "Server"
 msgstr ""
 
 msgctxt "InputRoadWidth"
@@ -445,6 +465,14 @@ msgctxt "MaxScale"
 msgid "max scale"
 msgstr ""
 
+msgctxt "NetNickname"
+msgid "Nickname"
+msgstr ""
+
+msgctxt "NetSettings"
+msgid "Settings"
+msgstr ""
+
 msgctxt "TipModelMaxScale"
 msgid "Model maximal scale."
 msgstr ""
@@ -455,6 +483,10 @@ msgstr ""
 
 msgctxt "NeedNewGame"
 msgid "* need New Game"
+msgstr ""
+
+msgctxt "InputRoadRebuild"
+msgid "B - rebuild road (after terrain change, etc.)"
 msgstr ""
 
 msgctxt "Effects"
@@ -499,6 +531,10 @@ msgstr ""
 
 msgctxt "Layer"
 msgid "Layer"
+msgstr ""
+
+msgctxt "NetLocalPort"
+msgid "Local Port"
 msgstr ""
 
 msgctxt "EscQuit"
@@ -553,8 +589,8 @@ msgctxt "TipGrassPatchHeightMin"
 msgid "Minimal grass patch height."
 msgstr ""
 
-msgctxt "Terrain"
-msgid "Terrain"
+msgctxt "InputRoadMat"
+msgid "-,=  - road/pipe material"
 msgstr ""
 
 msgctxt "InputStartHeight"
@@ -595,6 +631,10 @@ msgstr ""
 
 msgctxt "TipRoadParams"
 msgid "Road point parameters."
+msgstr ""
+
+msgctxt "NetRefreshList"
+msgid "Get/refresh list"
 msgstr ""
 
 msgctxt "InputMapFlip"
@@ -749,8 +789,8 @@ msgctxt "DustSize"
 msgid "dust size"
 msgstr ""
 
-msgctxt "InputRoadMove"
-msgid "- move point"
+msgctxt "InputMapPlayer4"
+msgid "Player 4"
 msgstr ""
 
 msgctxt "TipDisableFog"
@@ -787,6 +827,10 @@ msgstr ""
 
 msgctxt "TipFogEndClr"
 msgid "Fog end color. R G B components 0 to 1 (eg. 0.7 0.8 0.9)"
+msgstr ""
+
+msgctxt "Multiplayer"
+msgid "Multiplayer"
 msgstr ""
 
 msgctxt "VegetCol"
@@ -917,8 +961,8 @@ msgctxt "Sky"
 msgid "Sky"
 msgstr ""
 
-msgctxt "TCS"
-msgid "TCS (traction control)"
+msgctxt "WrongChk"
+msgid "Wrong Checkpoint"
 msgstr ""
 
 msgctxt "DisableEdit"
@@ -949,6 +993,10 @@ msgctxt "RplCur"
 msgid "Cur"
 msgstr ""
 
+msgctxt "TipTerSize"
+msgid "Resulting area in meters (side length). Equals vertex count multipled by triangle size."
+msgstr ""
+
 msgctxt "InputKeyNoButton"
 msgid "No button"
 msgstr ""
@@ -965,8 +1013,8 @@ msgctxt "ShowPictures"
 msgid "Show pictures while loading"
 msgstr ""
 
-msgctxt "TrackAvgSpeed"
-msgid "Avg. speed"
+msgctxt "InputRoadPick"
+msgid "Space - pick one/none"
 msgstr ""
 
 msgctxt "PreviewCam"
@@ -1009,12 +1057,16 @@ msgctxt "TipChangeHue"
 msgid "Change car color (hue)."
 msgstr ""
 
-msgctxt "InputMapPlayer4"
-msgid "Player 4"
+msgctxt "InputRoadMove"
+msgid "- move point"
 msgstr ""
 
 msgctxt "Intensity"
 msgid "Intensity"
+msgstr ""
+
+msgctxt "NetGameName"
+msgid "Game Name"
 msgstr ""
 
 msgctxt "TipSunAmbient"
@@ -1077,8 +1129,8 @@ msgctxt "InputRoadLMB"
 msgid "LMB (or Arrows)"
 msgstr ""
 
-msgctxt "WrongChk"
-msgid "Wrong Checkpoint"
+msgctxt "TCS"
+msgid "TCS (traction control)"
 msgstr ""
 
 msgctxt "NeedRestart"
@@ -1141,8 +1193,8 @@ msgctxt "GrassSize"
 msgid "Grass size"
 msgstr ""
 
-msgctxt "TipTrackDescEditor"
-msgid "Track description text (click to edit)."
+msgctxt "NetGamesAvail"
+msgid "Available games"
 msgstr ""
 
 msgctxt "ViewLeft"
@@ -1151,6 +1203,14 @@ msgstr ""
 
 msgctxt "ViewFront"
 msgid "View Front"
+msgstr ""
+
+msgctxt "TrackAvgSpeed"
+msgid "Avg. speed"
+msgstr ""
+
+msgctxt "Yes"
+msgid "Yes"
 msgstr ""
 
 msgctxt "TipNewDup"
@@ -1277,6 +1337,10 @@ msgctxt "TipChangeBright"
 msgid "Change car color brightness (dark-light)."
 msgstr ""
 
+msgctxt "TipTrackDescEditor"
+msgid "Track description text (click to edit)."
+msgstr ""
+
 msgctxt "Size"
 msgid "Size"
 msgstr ""
@@ -1295,10 +1359,6 @@ msgstr ""
 
 msgctxt "ChangeCar"
 msgid "Change Car"
-msgstr ""
-
-msgctxt "InputTerSmooth"
-msgid "S - Smooth  (LMB, -Noise RMB)"
 msgstr ""
 
 msgctxt "TipSunSpecular"
@@ -1425,6 +1485,10 @@ msgctxt "Tools"
 msgid "Tools"
 msgstr ""
 
+msgctxt "NetCreateGame"
+msgid "Create game"
+msgstr ""
+
 msgctxt "TipChangeSat"
 msgid "Change car color saturation (white-black)."
 msgstr ""
@@ -1449,8 +1513,8 @@ msgctxt "TipSurfFrict"
 msgid "Surface friction (eg. 1.0 asphalt, 0.7 gravel, 0.5 ice)."
 msgstr ""
 
-msgctxt "TipTerSize"
-msgid "Resulting area in meters (side length). Equals vertex count multipled by triangle size."
+msgctxt "NetGame"
+msgid "Game"
 msgstr ""
 
 msgctxt "speed"
@@ -1463,6 +1527,10 @@ msgstr ""
 
 msgctxt "Front"
 msgid "Front"
+msgstr ""
+
+msgctxt "NetMasterIp"
+msgid "Master Server IP"
 msgstr ""
 
 msgctxt "TipSurfFrict2"
@@ -1601,6 +1669,10 @@ msgctxt "InputRoadAltLMB"
 msgid "alt-LMB (or 1,2)"
 msgstr ""
 
+msgctxt "TerLayers"
+msgid "Terrain Layers"
+msgstr ""
+
 msgctxt "TipModelPrev"
 msgid "Model preview image."
 msgstr ""
@@ -1617,12 +1689,16 @@ msgctxt "RestartApply"
 msgid "Restart game, to apply *changes."
 msgstr ""
 
-msgctxt "InputMapShiftDown"
-msgid "Shift down"
+msgctxt "InputUndo"
+msgid "(one time undo)"
 msgstr ""
 
 msgctxt "CameraInfo"
 msgid "Camera info"
+msgstr ""
+
+msgctxt "NetRouterTip"
+msgid "Router port forwarding configuration might be required\nin order to allow peers to connect to the local port."
 msgstr ""
 
 msgctxt "NewGame"
@@ -1637,12 +1713,8 @@ msgctxt "CarDebug"
 msgid "Car susp, long|,lat- slips"
 msgstr ""
 
-msgctxt "InputRoadPick"
-msgid "Space - pick one/none"
-msgstr ""
-
-msgctxt "InputRoadRebuild"
-msgid "B - rebuild road (after terrain change, etc.)"
+msgctxt "No"
+msgid "No"
 msgstr ""
 
 msgctxt "RplSave"
@@ -1733,6 +1805,10 @@ msgctxt "DistMult"
 msgid "Distance mul"
 msgstr ""
 
+msgctxt "Error"
+msgid "Error"
+msgstr ""
+
 msgctxt "Resolution"
 msgid "Resolution"
 msgstr ""
@@ -1765,8 +1841,8 @@ msgctxt "BulletDebug"
 msgid "Bullet debug"
 msgstr ""
 
-msgctxt "UnitKm"
-msgid "km"
+msgctxt "InputTerSmooth"
+msgid "S - Smooth  (LMB, -Noise RMB)"
 msgstr ""
 
 msgctxt "TipChangeTrack"
@@ -1797,6 +1873,10 @@ msgctxt "TipSurfType"
 msgid "Type of surface, determines sound."
 msgstr ""
 
+msgctxt "NetWaiting"
+msgid "Waiting..."
+msgstr ""
+
 msgctxt "Reverse"
 msgid "Reverse"
 msgstr ""
@@ -1805,12 +1885,16 @@ msgctxt "InputSaveTrack"
 msgid "F4 - save track"
 msgstr ""
 
-msgctxt "InputUndo"
-msgid "(one time undo)"
+msgctxt "InputMapShiftDown"
+msgid "Shift down"
 msgstr ""
 
 msgctxt "FPS"
 msgid "Fps, Triangles, Batches"
+msgstr ""
+
+msgctxt "NetJoinGame"
+msgid "Join game"
 msgstr ""
 
 msgctxt "UnitMph"
@@ -1819,6 +1903,10 @@ msgstr ""
 
 msgctxt "InputMapBoost"
 msgid "Boost"
+msgstr ""
+
+msgctxt "NetChat"
+msgid "Chat"
 msgstr ""
 
 msgctxt "InputStartWidth"

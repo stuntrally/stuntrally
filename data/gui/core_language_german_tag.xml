@@ -1,5 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <MyGUI>
+	<Tag name="Multiplayer">Multiplayer</Tag>
+	<!--  Server -->
+	<Tag name="NetServer">Server</Tag>
+	<Tag name="NetGamesAvail">Available games</Tag>
+	<Tag name="NetRefreshList">Get/refresh list</Tag>
+	<Tag name="NetJoinGame">Join game</Tag>
+	<Tag name="NetCreateGame">Create game</Tag>
+	<Tag name="NetDirectConnect">Direct connect</Tag>
+	<!-- Game -->
+	<Tag name="NetGame">Game</Tag>
+	<Tag name="NetGameName">Game Name</Tag>
+	<Tag name="NetReady">Ready</Tag>
+	<Tag name="NetWaiting">Waiting...</Tag>
+	<Tag name="NetLeaveGame">Leave game</Tag>
+	<Tag name="NetChat">Chat</Tag>
+	<!-- Settings -->
+	<Tag name="NetSettings">Settings</Tag>
+	<Tag name="NetNickname">Nickname</Tag>
+	<Tag name="NetMasterIp">Master Server IP</Tag>
+	<Tag name="NetMasterPort">Master Server Port</Tag>
+	<Tag name="NetLocalPort">Local Port</Tag>
+	<Tag name="NetRouterTip">Router port forwarding configuration might be required in order to allow peers to connect to the local port.</Tag>
 	<Tag name="TipTreeDens">Wie viele Modelle (Bäume, Steine, etc.) auf der Strecke sichtbar sind.</Tag>
 	<Tag name="CamSpeed">Kamerageschw.</Tag>
 	<Tag name="Density">Dichte</Tag>
@@ -110,7 +132,7 @@
 	<Tag name="InputStartDir">Space - Straßenrichtung (+ oder -)</Tag>
 	<Tag name="Effects">Effekte</Tag>
 	<Tag name="WidthSteps">Breiten-Steps</Tag>
-	<Tag name="Diffuse">Diffuse</Tag>
+	<Tag name="InputKeyNoAxis">No axis</Tag>
 	<Tag name="Sound">Sound</Tag>
 	<Tag name="RoadPointSize">Größe Straßenpunkte</Tag>
 	<Tag name="Car">Auto</Tag>
@@ -155,7 +177,7 @@
 	<Tag name="length">Länge</Tag>
 	<Tag name="ColumnNSides">Säulen N sides</Tag>
 	<Tag name="RplAutoRec">Automatisch aufnehmen</Tag>
-	<Tag name="Shaders">Shader</Tag>
+	<Tag name="Reflections">Spiegelungen</Tag>
 	<Tag name="Exponent">Exponent</Tag>
 	<Tag name="Yaw">gieren</Tag>
 	<Tag name="Detail">Detail</Tag>
@@ -173,7 +195,7 @@
 	<Tag name="InputStartPos">Q - Startposition ändern</Tag>
 	<Tag name="InputBrushParams">Pinseleigenschaften</Tag>
 	<Tag name="UnitKm">km</Tag>
-	<Tag name="InputMapShowOptions">Show options</Tag>
+	<Tag name="InputMapShowOptions">Optionen zeigen</Tag>
 	<Tag name="InputCameraMode">Kameramodus</Tag>
 	<Tag name="Enabled">Aktiviert</Tag>
 	<Tag name="InputMapPlayer4">Spieler 4</Tag>
@@ -203,13 +225,13 @@
 	<Tag name="min">min.</Tag>
 	<Tag name="TreeRoadDist">Abstand Bäume - Straße</Tag>
 	<Tag name="InputRoadPipeAngle">[,]   - pipe angle (no pipe when 0)</Tag>
-	<Tag name="InputMapRestartGame">New game</Tag>
+	<Tag name="InputMapRestartGame">Neues Spiel</Tag>
 	<Tag name="Graphics">Grafik</Tag>
 	<Tag name="CarDebugText">Auto Debug text </Tag>
 	<Tag name="TipMudInt">Intensität der Schlammpartikel.</Tag>
 	<Tag name="Mode">Modus</Tag>
 	<Tag name="ChangeCar">Auto wechseln</Tag>
-	<Tag name="InputMapPrevTab">Previous tab</Tag>
+	<Tag name="InputMapPrevTab">Vorheriger Tab</Tag>
 	<Tag name="InputTogglePreview">F7 - Vorschaukamera</Tag>
 	<Tag name="GameBy">Ein Spiel von</Tag>
 	<Tag name="TrackWidthAvg">Breite avg.</Tag>
@@ -234,6 +256,7 @@
 	<Tag name="TipRoadStats">Statistiken der Straße.</Tag>
 	<Tag name="InputTerPaint">A - Anstrichtextur (Layer)</Tag>
 	<Tag name="RplCur">Aktuell</Tag>
+	<Tag name="InputKeyNoButton">No button</Tag>
 	<Tag name="TexCoordMul">Tex Coord mul.</Tag>
 	<Tag name="Digits">Ziffern</Tag>
 	<Tag name="ShowPictures">Bilder beim Laden anzeigen</Tag>
@@ -256,7 +279,7 @@
 	<Tag name="intensity">Intensität</Tag>
 	<Tag name="Fog">Nebel</Tag>
 	<Tag name="BulletProfilerTxt">Bullet Profileranzeige</Tag>
-	<Tag name="InputMapNextTab">Next tab</Tag>
+	<Tag name="InputMapNextTab">Nächster Tab</Tag>
 	<Tag name="FrameSkip">FrameSkip</Tag>
 	<Tag name="InputTrackScrn">(für Bildschirmfoto)</Tag>
 	<Tag name="trailColor">Spurenfarbe</Tag>
@@ -307,6 +330,7 @@
 	<Tag name="RoadPoint">Straßenpunkt</Tag>
 	<Tag name="LoadingDesc">Laden, bitte warten...</Tag>
 	<Tag name="TipGrassPatchHeightMax">Maximale Höhe des Grasflecks.</Tag>
+	<Tag name="Diffuse">Diffuse</Tag>
 	<Tag name="Tires">Reifen</Tag>
 	<Tag name="GrassSize">Größe des Gras</Tag>
 	<Tag name="TipTrkNameEditor">Name der ausgewählten Strecke, wird auch zum Umbenennen und als neuer Streckenname benutzt.</Tag>
@@ -338,7 +362,7 @@
 	<Tag name="AutoLoad">Strecke autom. Laden</Tag>
 	<Tag name="RplGhost">Geist anzeigen</Tag>
 	<Tag name="TipGrassPageLength">Page-Länge vom Gras (niedriger Wert verursacht häufiges neu Laden, hoher Wert macht die Übergänge sichtbar)</Tag>
-	<Tag name="Reflections">Spiegelungen</Tag>
+	<Tag name="Shaders">Shader</Tag>
 	<Tag name="dust">Staub</Tag>
 	<Tag name="TipRainSnow1">Typ Rain/Snow 1 setzen</Tag>
 	<Tag name="TipRainSnow2">Typ Rain/Snow 2 setzen</Tag>

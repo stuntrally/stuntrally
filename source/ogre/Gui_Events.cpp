@@ -20,12 +20,11 @@ using namespace MyGUI;
 
 namespace {
 	std::string yesno(bool cond) {
-		// TODO: I18n
-		if (cond) return "Yes";
-		else return "No";
+		if (cond) return TR("#{Yes}");
+		else return "#{No}";
 	}
 
-	void inline raiseError(const std::string& what, const std::string& title = TR("Error")) {
+	void inline raiseError(const std::string& what, const std::string& title = TR("#{Error}")) {
 		Message::createMessageBox("Message", title, what, MessageBoxStyle::IconError | MessageBoxStyle::Ok);
 	}
 }
@@ -193,9 +192,9 @@ void App::evBtnNetReady(WP)
 
 	mClient->toggleReady();
 	if (mClient->isReady())
-		btnNetReady->setCaption("Waiting...");
+		btnNetReady->setCaption( TR("#{NetWaiting}") );
 	else
-		btnNetReady->setCaption("Ready");
+		btnNetReady->setCaption( TR("#{NetReady") );
 
 	rebuildPlayerList();
 }
@@ -207,7 +206,7 @@ void App::evBtnNetReady(WP)
 
 void App::chatSendMsg()
 {
-	/*  test  */
+	/*  test  *
 	if (!edNetChat) return;
 	edNetChat->setCaption(edNetChat->getCaption()+ pSet->nickname + ": " + edNetChatMsg->getCaption() + "\n");
 	/**/
