@@ -28,6 +28,8 @@ restrictions:
 
 #include "OISException.h"
 
+#include <boost/algorithm/string/predicate.hpp> // String starts_with
+
 #include <cassert>
 
 namespace OISB
@@ -62,12 +64,17 @@ namespace OISB
     {
         Bindable* b = System::getSingleton().lookupBindable(bindable);
 
-        if (!b)
-        {
-            OIS_EXCEPT(OIS::E_General, String("Lookup of bindable '" + bindable + "' failed").c_str());
-        }
+        if (b)
+			bind(b, role);
+		else
+		{
+			// dummy bind...
+			if (boost::starts_with(bindable, "Dummy"))
+				bind(NULL, bindable);
+			else
+				OIS_EXCEPT(OIS::E_General, String("Lookup of bindable '" + bindable + "' failed").c_str());
+		}
 
-        bind(b, role);
     }
 
     void Binding::unbind(Bindable* bindable)

@@ -306,6 +306,12 @@ namespace OISB
 								char *att_name = doc.allocate_string((*bnit).second->getBindableName().c_str()); 
 								bindNode->value(att_name);
 							}
+							else
+							{
+								// dummy bindable
+								char *att_name = doc.allocate_string((*bnit).first.c_str()); 
+								bindNode->value(att_name);
+							}
 			
 							bindingNode->append_node(bindNode);
 						}
@@ -332,7 +338,13 @@ namespace OISB
 								char *att_name = doc.allocate_string((*bnit).second->getBindableName().c_str()); 
 								bindNode->value(att_name);
 							}
-			
+							else
+							{
+								// dummy bindable
+								char *att_name = doc.allocate_string((*bnit).first.c_str()); 
+								bindNode->value(att_name);
+							}
+							
 							actionNode->append_node(bindNode);
 						}
 					}
