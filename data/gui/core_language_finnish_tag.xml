@@ -110,7 +110,7 @@
 	<Tag name="InputStartDir">Space  -  change road direction (+ or -)</Tag>
 	<Tag name="Effects">Tehosteet</Tag>
 	<Tag name="WidthSteps">Width Steps</Tag>
-	<Tag name="Diffuse">Diffuse</Tag>
+	<Tag name="InputKeyNoAxis">No axis</Tag>
 	<Tag name="Sound">Äänet</Tag>
 	<Tag name="RoadPointSize">Tien pisteiden koko</Tag>
 	<Tag name="Car">Auto</Tag>
@@ -155,7 +155,7 @@
 	<Tag name="length">pituus</Tag>
 	<Tag name="ColumnNSides">Column N sides</Tag>
 	<Tag name="RplAutoRec">Auto record replay</Tag>
-	<Tag name="Shaders">Shaders</Tag>
+	<Tag name="Reflections">Heijastukset</Tag>
 	<Tag name="Exponent">exponentti</Tag>
 	<Tag name="Yaw">yaw</Tag>
 	<Tag name="Detail">Detail</Tag>
@@ -234,6 +234,7 @@
 	<Tag name="TipRoadStats">Whole road statistics.</Tag>
 	<Tag name="InputTerPaint">A - Paint Textures (layers)</Tag>
 	<Tag name="RplCur">Cur</Tag>
+	<Tag name="InputKeyNoButton">No button</Tag>
 	<Tag name="TexCoordMul">Tex Coord mul.</Tag>
 	<Tag name="Digits">Numerot (vaihde, nopeus)</Tag>
 	<Tag name="ShowPictures">Show pictures while loading</Tag>
@@ -307,6 +308,7 @@
 	<Tag name="RoadPoint">Road Point</Tag>
 	<Tag name="LoadingDesc">Loading, please wait...</Tag>
 	<Tag name="TipGrassPatchHeightMax">Maximal grass patch height.</Tag>
+	<Tag name="Diffuse">Diffuse</Tag>
 	<Tag name="Tires">Tires</Tag>
 	<Tag name="GrassSize">Grass size</Tag>
 	<Tag name="TipTrkNameEditor">Selected track name, used also for renaming track and as new track name.</Tag>
@@ -338,7 +340,7 @@
 	<Tag name="AutoLoad">Auto Load track</Tag>
 	<Tag name="RplGhost">Show ghost drive - best lap</Tag>
 	<Tag name="TipGrassPageLength">Grass Page length (low will reload often, high will cause visible switching).</Tag>
-	<Tag name="Reflections">Heijastukset</Tag>
+	<Tag name="Shaders">Shaders</Tag>
 	<Tag name="dust">dust</Tag>
 	<Tag name="TipRainSnow1">Set 1 Rain/Snow type</Tag>
 	<Tag name="TipRainSnow2">Set 2 Rain/Snow type</Tag>
