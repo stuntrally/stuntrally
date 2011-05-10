@@ -261,6 +261,7 @@ namespace OISB
         for (BindingList::const_iterator it = mBindings.begin(); it != mBindings.end(); ++it)
         {
             Binding* binding = *it;
+            if (binding->getNumBindables() == 0 || binding->mBindables.front().second == NULL) continue; // dummy bind
 
             const Real mOldRelativeValue = mRelativeValue;
 
