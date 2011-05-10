@@ -86,7 +86,28 @@
 
 	<!--  Multiplayer  -->
 	<Tag name="Multiplayer">Multiplayer</Tag>
-
+	
+	<!--  Server -->
+	<Tag name="NetServer">Server</Tag>
+	<Tag name="NetGamesAvail">Available games</Tag>
+	<Tag name="NetRefreshList">Get/refresh list</Tag>
+	<Tag name="NetJoinGame">Join game</Tag>
+	<Tag name="NetCreateGame">Create game</Tag>
+	<Tag name="NetDirectConnect">Direct connect</Tag>
+	<!-- Game -->
+	<Tag name="NetGame">Game</Tag>
+	<Tag name="NetGameName">Game Name</Tag>
+	<Tag name="NetReady">Ready</Tag>
+	<Tag name="NetWaiting">Waiting...</Tag>
+	<Tag name="NetLeaveGame">Leave game</Tag>
+	<Tag name="NetChat">Chat</Tag>
+	<!-- Settings -->
+	<Tag name="NetSettings">Settings</Tag>
+	<Tag name="NetNickname">Nickname</Tag>
+	<Tag name="NetMasterIp">Master Server IP</Tag>
+	<Tag name="NetMasterPort">Master Server Port</Tag>
+	<Tag name="NetLocalPort">Local Port</Tag>
+	<Tag name="NetRouterTip">Router port forwarding configuration might be required in order to allow peers to connect to the local port.</Tag>
 
 	<!--  Setup  -->
 	<Tag name="Setup">Setup</Tag>
