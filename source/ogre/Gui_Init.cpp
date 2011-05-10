@@ -537,6 +537,7 @@ void App::InitInputGui()
 				joysticks->addItem( (*jit)->getName() );
 			}
 			joysticks->addItem("Dummy Joystick");	/// test
+			joysticks->setEditReadOnly(true);
 			joysticks->eventComboChangePosition = MyGUI::newDelegate(this, &App::joystickSelectionChanged);
 		}
 		
@@ -632,6 +633,7 @@ void App::InitInputGui()
 					MyGUI::ComboBoxPtr button = tabitem->createWidget<ComboBox>("ComboBox", x3, y, sx, sy, MyGUI::Align::Default, "jsButtonSel_" + (*ait).first + "_" + (*it).first );
 					button->addItem(TR("#{InputKeyNoButton}"));
 					button->setIndexSelected(0);
+					button->setEditReadOnly(true);
 					button->eventComboChangePosition = MyGUI::newDelegate(this, &App::joystickBindChanged);
 				}
 				else if (act->getActionType() == OISB::AT_ANALOG_AXIS)
@@ -639,6 +641,7 @@ void App::InitInputGui()
 					MyGUI::ComboBoxPtr axis = tabitem->createWidget<ComboBox>("ComboBox", x3, y, sx, sy, MyGUI::Align::Default, "jsAxisSel_" + (*ait).first + "_" + (*it).first );
 					axis->addItem(TR("#{InputKeyNoAxis}"));
 					axis->setIndexSelected(0);
+					axis->setEditReadOnly(true);
 					axis->eventComboChangePosition = MyGUI::newDelegate(this, &App::joystickBindChanged);
 				}
 			}

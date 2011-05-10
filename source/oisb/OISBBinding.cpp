@@ -79,7 +79,6 @@ namespace OISB
 
     void Binding::unbind(Bindable* bindable)
     {
-		if (!bindable) return;
         for (BindableList::iterator it = mBindables.begin(); it != mBindables.end(); ++it)
         {
             if (it->second == bindable)

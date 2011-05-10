@@ -41,9 +41,45 @@ void App::joystickBindChanged(Widget* sender, size_t val)
 	
 	OISB::ActionSchema* schema = OISB::System::getSingleton().mActionSchemas[schemaName];
 	OISB::Action* action = schema->mActions[actionName];
-	if (action->mBindings.size() == 0)
-		action->createBinding();
-	OISB::Binding* binding = action->mBindings.front();
+	if (action->mBindings.size() == 0) return;
+	if (action->mBindings.size() == 1) action->createBinding();
+	OISB::Binding* binding = action->mBindings[1];
+	
+	// get selected joystick
+	// find selected oisb joystick for this tab (to get num axis & buttons)
+	MyGUI::ComboBoxPtr jsMenu = mGUI->findWidget<ComboBox>("joystickSel_" + schemaName);
+	std::string jsName;
+	if (jsMenu->getIndexSelected() != MyGUI::ITEM_NONE)
+		jsName = jsMenu->getItemNameAt( jsMenu->getIndexSelected() );
+	else 
+	{
+		Log("Couldnt get selected joystick"); return;
+	}
+	Log(jsName);
+		
+	// get selected axis or button
+	MyGUI::ComboBoxPtr box = static_cast<MyGUI::ComboBoxPtr> (sender);
+	if (box->getItemCount() < box->getIndexSelected() || box->getIndexSelected() == MyGUI::ITEM_NONE)
+	{
+		Log("Invalid item value"); return;
+	}
+	std::string bindName = box->getItemNameAt(box->getIndexSelected());
+	Log(bindName);
+	
+	// unbind old
+	for (int i=0; i<binding->getNumBindables(); i++)
+	{
+		binding->unbind(binding->getBindable(i));
+	}
+	
+	// bind new
+	try {
+		binding->bind(jsName + "/" + bindName); 
+	}
+	catch (OIS::Exception) {
+		Log("Failed to bind '" + jsName + "/" + bindName + "'");
+	}
+
 }
 void App::joystickSelectionChanged(Widget* sender, size_t val)
 {
