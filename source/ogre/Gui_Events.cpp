@@ -84,6 +84,25 @@ void App::joystickBindChanged(Widget* sender, size_t val)
 void App::joystickSelectionChanged(Widget* sender, size_t val)
 {
 	UpdateJsButtons();
+	
+	// ----------------  update all binds with the new joystick  -----------------------------------------
+	std::string actionSchemaName = Ogre::StringUtil::split(sender->getName(), "_")[1];
+	
+	OISB::ActionSchema* schema = mOISBsys->mActionSchemas[actionSchemaName];
+		
+	for (std::map<OISB::String, OISB::Action*>::const_iterator
+		ait = schema->mActions.begin();
+		ait != schema->mActions.end(); ait++)
+	{
+		MyGUI::WidgetPtr box;
+		if ((*ait).second->getActionType() == OISB::AT_TRIGGER)
+			box = mGUI->findWidget<Widget>("jsButtonSel_" + (*ait).first + "_" + actionSchemaName);
+		else if ((*ait).second->getActionType() == OISB::AT_ANALOG_AXIS)
+			box = mGUI->findWidget<Widget>("jsAxisSel_" + (*ait).first + "_" + actionSchemaName);
+			
+		joystickBindChanged(box, 0);
+	}
+	
 }
 
 //  [Setup]
