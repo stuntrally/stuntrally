@@ -536,8 +536,8 @@ void App::InitInputGui()
 			{
 				joysticks->addItem( (*jit)->getName() );
 			}
-			/// test
-			joysticks->addItem("MyFunnyJoystick001");
+			joysticks->addItem("Dummy Joystick");	/// test
+			joysticks->eventComboChangePosition = MyGUI::newDelegate(this, &App::joystickSelectionChanged);
 		}
 		
 		///  ------ custom action sorting ----------------

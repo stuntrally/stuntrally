@@ -166,8 +166,7 @@ void CarModel::Create()
 	if (!pCar) return;
 	
 	// ---------------------------- Resource locations -----------------------------------------
-	/// Add a resource group for this car.
-	/// This is needed because some textures / meshes have the same name
+	/// Add a resource group for this car
 	Ogre::ResourceGroupManager::getSingleton().createResourceGroup("Car" + toStr(iIndex));
 	Ogre::Root::getSingletonPtr()->addResourceLocation(PATHMANAGER::GetCacheDir(), "FileSystem");
 	resCar = PATHMANAGER::GetCarPath() + "/" + sDirname + "/textures";
