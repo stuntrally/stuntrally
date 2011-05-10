@@ -21,7 +21,7 @@ struct PeerInfo {
 	unsigned ping; ///< Average packet round-trip time
 	enum ConnectionState { DISCONNECTED = 0, CONNECTING = 1, CONNECTED = 2 } connection; ///< Connection state
 
-	PeerInfo(net::Address addr = net::Address()): address(addr), name(), car(), ready(), ping(0), connection(DISCONNECTED) {}
+	PeerInfo(net::Address addr = net::Address()): address(addr), name(), car(), peers(), ready(), ping(0), connection(DISCONNECTED) {}
 
 	PeerInfo& operator=(const protocol::PlayerInfoPacket& pip) {
 		name = std::string(pip.name); car = std::string(pip.car); peers = pip.peers; ready = pip.ready;
@@ -120,7 +120,7 @@ public:
 	void peerInfoSenderThread();
 
 	/// How many peers are connected
-	size_t getPeerCount() { return m_peers.size(); }
+	size_t getPeerCount() const;
 
 	/// Get copy of peer infos
 	PeerMap getPeers() { return m_peers; }
@@ -135,6 +135,8 @@ public:
 	void receiveEvent(net::NetworkTraffic const& e);
 
 private:
+	void recountPeers();
+
 	GameClientCallback* m_callback;
 	net::NetworkObject m_client;
 	PeerMap m_peers;
