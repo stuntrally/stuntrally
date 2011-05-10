@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION"
 "Report-Msgid-Bugs-To: "
-"POT-Creation-Date: 2011-05-09 21:01+0200"
+"POT-Creation-Date: 2011-05-10 16:03+0200"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>"
 "Language-Team: LANGUAGE <LL@li.org>"
@@ -105,8 +105,8 @@ msgctxt "InputValueChange"
 msgid "Each (mouse/key) move or value change with "
 msgstr ""
 
-msgctxt "InputRoadMat"
-msgid "-,=  - road/pipe material"
+msgctxt "Terrain"
+msgid "Terrain"
 msgstr ""
 
 msgctxt "Surface"
@@ -553,8 +553,8 @@ msgctxt "TipGrassPatchHeightMin"
 msgid "Minimal grass patch height."
 msgstr ""
 
-msgctxt "Terrain"
-msgid "Terrain"
+msgctxt "InputRoadMat"
+msgid "-,=  - road/pipe material"
 msgstr ""
 
 msgctxt "InputStartHeight"
@@ -839,6 +839,10 @@ msgstr ""
 
 msgctxt "CarDebugText"
 msgid "Car debug text "
+msgstr ""
+
+msgctxt "RplSize"
+msgid "size"
 msgstr ""
 
 msgctxt "TipMudInt"
@@ -1149,8 +1153,8 @@ msgctxt "ViewLeft"
 msgid "View Left"
 msgstr ""
 
-msgctxt "ViewFront"
-msgid "View Front"
+msgctxt "UnitMB"
+msgid "MB"
 msgstr ""
 
 msgctxt "TipNewDup"
@@ -1211,6 +1215,10 @@ msgstr ""
 
 msgctxt "LS_CLEANUP"
 msgid "Cleaning up"
+msgstr ""
+
+msgctxt "RplRename"
+msgid "Rename"
 msgstr ""
 
 msgctxt "EnterSave"
@@ -1295,6 +1303,14 @@ msgstr ""
 
 msgctxt "ChangeCar"
 msgid "Change Car"
+msgstr ""
+
+msgctxt "ViewFront"
+msgid "View Front"
+msgstr ""
+
+msgctxt "RplRecTime"
+msgid "Recorded   time"
 msgstr ""
 
 msgctxt "InputTerSmooth"

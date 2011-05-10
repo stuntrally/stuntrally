@@ -328,7 +328,7 @@ void App::newPoses()
 				{
 					int size = replay.GetNumFrames() * sizeof(ReplayFrame);
 					sprintf(s, "%5.2f", float(size)/1000000.f);
-					String ss = String("Recorded   time: ") + GetTimeString(replay.GetTimeLength()) + "   size: " + s + " MB";
+					String ss = String( TR("#{RplRecTime}: ")) + GetTimeString(replay.GetTimeLength()) + TR("   #{RplSize}: ") + s + TR(" #{UnitMB}");
 					valRplName2->setCaption(ss);
 				}
 			}
