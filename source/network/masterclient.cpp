@@ -26,6 +26,7 @@ void MasterClient::refreshList()
 	protocol::GameInfo game;
 	game.packet_type = protocol::GAME_LIST;
 	m_client.broadcast(game, net::PACKET_RELIABLE);
+	// Callback for cleared list in order to show the user something happened
 	if (m_callback) m_callback->listChanged(m_games);
 }
 
@@ -83,6 +84,7 @@ void MasterClient::receiveEvent(net::NetworkTraffic const& e)
 	if (e.packet_length <= 0 || !e.packet_data) return;
 	switch (e.packet_data[0]) {
 		case protocol::GAME_STATUS: {
+			// Update a game in the list
 			protocol::GameInfo game = *reinterpret_cast<protocol::GameInfo const*>(e.packet_data);
 			boost::mutex::scoped_lock lock(m_mutex);
 			m_games[game.id] = game;
@@ -90,6 +92,7 @@ void MasterClient::receiveEvent(net::NetworkTraffic const& e)
 			break;
 		}
 		case protocol::GAME_ACCEPTED: {
+			// Confirmation of accepted game and its id
 			protocol::GameInfo game = *reinterpret_cast<protocol::GameInfo const*>(e.packet_data);
 			m_game.id = game.id;
 			break;

@@ -31,7 +31,10 @@ struct MasterClientCallback {
  * It is up to the application to request refresh, and
  * the list may also fill gradually, not completely at once.
  *
- * To get events, give it a MasterClientCallback instance.
+ * To get events, give it a MasterClientCallback instance pointer.
+ * Note that the events are received from a separate thread.
+ *
+ * This class is thread-safe.
  */
 class MasterClient: public net::NetworkListener {
 public:

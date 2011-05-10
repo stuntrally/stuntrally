@@ -80,6 +80,11 @@ struct GameClientCallback {
  *
  * This class is responsible for forming a peer-to-peer network,
  * maintaining it and handling high-level messaging between the peers.
+ *
+ * To get events, give it a GameClientCallback instance pointer.
+ * Note that the events are received from a separate thread.
+ *
+ * This class is thread-safe.
  */
 class P2PGameClient: public net::NetworkListener {
 public:

@@ -146,6 +146,8 @@ namespace net {
 	 * There is no need for user to poll - use NetworkListener class instead.
 	 *
 	 * Connections are automatically terminated upon destruction of the instance.
+	 *
+	 * This class is thread-safe.
 	 */
 	class NetworkObject: public boost::noncopyable {
 	public:

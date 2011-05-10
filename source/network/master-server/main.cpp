@@ -13,6 +13,7 @@
 #define DEFAULT_ZOMBIE_TIMEOUT 5
 unsigned g_zombietimeout = DEFAULT_ZOMBIE_TIMEOUT;  // How many seconds without update until a game becomes zombie
 
+// TODO: syslog support for daemon
 
 enum LogLevel {
 	ERROR   = 0,
@@ -85,6 +86,7 @@ private:
 };
 
 
+/// Network listener for handling the traffic
 class Server: public net::NetworkListener {
 public:
 	Server(GameListManager& glm, int port = protocol::DEFAULT_PORT)
@@ -110,6 +112,7 @@ public:
 			case protocol::GAME_LIST: {
 				out(VERBOSE) << "Game list request received" << std::endl;
 				protocol::GameList games = m_glm.getGames();
+				// Send an info packet for each game
 				for (protocol::GameList::const_iterator it = games.begin(); it != games.end(); ++it) {
 					m_client.send(e.peer_id, it->second, net::PACKET_RELIABLE);
 				}
@@ -143,6 +146,7 @@ private:
 };
 
 
+/// Program entry point
 int main(int argc, char** argv) {
 	std::cout << "Stunt Rally Master Server - version " << VERSIONSTRING << std::endl;
 	int port = protocol::DEFAULT_PORT;
