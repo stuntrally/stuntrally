@@ -44,6 +44,7 @@ void App::joystickBindChanged(Widget* sender, size_t val)
 	if (action->mBindings.size() == 0) return;
 	if (action->mBindings.size() == 1) action->createBinding();
 	OISB::Binding* binding = action->mBindings[1];
+	binding->mOptional = true;
 	
 	// get selected joystick
 	// find selected oisb joystick for this tab (to get num axis & buttons)

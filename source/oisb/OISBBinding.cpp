@@ -35,7 +35,7 @@ restrictions:
 namespace OISB
 {
 	Binding::Binding(Action* parent):
-		mParent(parent)
+		mParent(parent), mOptional(false)
 	{}
 	
 	Binding::~Binding()
@@ -69,7 +69,7 @@ namespace OISB
 		else
 		{
 			// dummy bind...
-			if (boost::starts_with(bindable, "Dummy"))
+			if (mOptional)
 				bind(NULL, bindable);
 			else
 				OIS_EXCEPT(OIS::E_General, String("Lookup of bindable '" + bindable + "' failed").c_str());
