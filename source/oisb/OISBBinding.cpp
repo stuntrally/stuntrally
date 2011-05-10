@@ -231,7 +231,7 @@ namespace OISB
         {
             Bindable* bindable = it->second;
             
-            if (bindable->isActive())
+            if (bindable && bindable->isActive())
             {
                 return true;
             }
@@ -246,7 +246,7 @@ namespace OISB
         {
             Bindable* bindable = it->second;
             
-            if (!bindable->isActive())
+            if (!bindable || !bindable->isActive())
             {
                 return false;
             }

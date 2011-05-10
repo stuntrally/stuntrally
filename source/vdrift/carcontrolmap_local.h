@@ -9,10 +9,14 @@ class CARCONTROLMAP_LOCAL
 private:
 	std::vector <float> inputs;  // indexed by CARINPUT values
 	std::vector <float> lastinputs;
+	
+	// shift
+	bool grUpOld[4], grDnOld[4];
 
 public:
 	CARCONTROLMAP_LOCAL()
 	{
+		for (int i=0; i<4; i++) {grUpOld[i] = false; grDnOld[i] = false;}
 		//Reset();
 	}
 	

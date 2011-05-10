@@ -17,7 +17,6 @@ const std::vector <float> & CARCONTROLMAP_LOCAL::ProcessInput(class App* pApp, i
 
 	lastinputs = inputs;
 
-	/// TODO: allow joysticks, gamepad
 	#define action(s) OISB::System::getSingleton().lookupAction("Player" + toStr(player+1) + "/" + s)->isActive()
 	#define analogAction(s) static_cast<OISB::AnalogAxisAction*>(OISB::System::getSingleton().lookupAction("Player" + toStr(player+1) + "/" + s))->getAbsoluteValue()/100.0f
 
@@ -28,6 +27,15 @@ const std::vector <float> & CARCONTROLMAP_LOCAL::ProcessInput(class App* pApp, i
 	const float value = analogAction("Steering");
 	inputs[CARINPUT::STEER_RIGHT] = value > 0.f ? value : 0.f;
 	inputs[CARINPUT::STEER_LEFT]  = value < 0.f ? -value : 0.f;
+	
+	// shift
+	bool grUp = action("ShiftUp");
+	inputs[CARINPUT::SHIFT_UP] = grUp && !grUpOld[player];
+	grUpOld[player] = grUp;
+	bool grDn = action("ShiftDown");
+	inputs[CARINPUT::SHIFT_DOWN] = grDn && !grDnOld[player];
+	grDnOld[player] = grDn;
+
 	
 	inputs[CARINPUT::HANDBRAKE] = analogAction("HandBrake");
 	inputs[CARINPUT::BOOST] = analogAction("Boost");
