@@ -172,9 +172,9 @@ void App::evBtnNetReady(WP)
 
 	mClient->toggleReady();
 	if (mClient->isReady())
-		btnNetReady->setCaption("Waiting...");
+		btnNetReady->setCaption( TR("#{NetWaiting}") );
 	else
-		btnNetReady->setCaption("Ready");
+		btnNetReady->setCaption( TR("#{NetReady") );
 
 	rebuildPlayerList();
 }
