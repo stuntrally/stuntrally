@@ -27,7 +27,7 @@ void MasterClient::refreshList()
 	game.packet_type = protocol::GAME_LIST;
 	m_client.broadcast(game, net::PACKET_RELIABLE);
 	// Callback for cleared list in order to show the user something happened
-	if (m_callback) m_callback->listChanged(m_games);
+	if (m_callback) m_callback->gameListChanged(m_games);
 }
 
 void MasterClient::updateGame(const std::string& name, const std::string& track, int players, int port)
@@ -88,7 +88,7 @@ void MasterClient::receiveEvent(net::NetworkTraffic const& e)
 			protocol::GameInfo game = *reinterpret_cast<protocol::GameInfo const*>(e.packet_data);
 			boost::mutex::scoped_lock lock(m_mutex);
 			m_games[game.id] = game;
-			if (m_callback) m_callback->listChanged(m_games);
+			if (m_callback) m_callback->gameListChanged(m_games);
 			break;
 		}
 		case protocol::GAME_ACCEPTED: {

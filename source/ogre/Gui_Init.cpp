@@ -13,21 +13,6 @@ using namespace MyGUI;
 #define Fmt  sprintf
 
 
-void GameInfoListener::listChanged(protocol::GameList list) {
-	if (!mList) return;
-	mList->removeAllItems();
-	for (protocol::GameList::const_iterator it = list.begin(); it != list.end(); ++it) {
-		mList->addItem(it->second.name);
-		int l = mList->getItemCount()-1;
-		mList->setSubItemNameAt(1, l, std::string(it->second.track));
-		mList->setSubItemNameAt(2, l, boost::lexical_cast<std::string>((int)it->second.players));
-		mList->setSubItemNameAt(3, l, net::IPv4(it->second.address));
-		mList->setSubItemNameAt(4, l, boost::lexical_cast<std::string>((int)it->second.port));
-	}
-}
-
-
-
 void App::InitGui()
 {
 	//  change skin
@@ -257,7 +242,6 @@ void App::InitGui()
 		listServers->addColumn("Host", 120);
 		listServers->addColumn("Port", 100);
 	}
-	gameInfoListener.reset(new GameInfoListener(listServers));
 	Btn("btnNetRefresh", evBtnNetRefresh);  btnNetRefresh = btn;
 	Btn("btnNetJoin", evBtnNetJoin);  btnNetJoin = btn;
 	Btn("btnNetCreate", evBtnNetCreate);  btnNetCreate = btn;

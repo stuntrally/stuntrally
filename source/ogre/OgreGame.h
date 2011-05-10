@@ -16,16 +16,7 @@ using namespace MyGUI;
 #include "CarReflection.h" //ciShadowSizesA, ciShadowNumSizes
 
 
-/// Callback for updating serverlist
-struct GameInfoListener: public MasterClientCallback {
-	GameInfoListener(MultiListPtr list): MasterClientCallback(), mList(list) {}
-	void listChanged(protocol::GameList list);
-private:
-	MultiListPtr mList;
-};
-
-
-class App : public BaseApp, public GameClientCallback //, public RenderTargetListener
+class App : public BaseApp, public GameClientCallback, public MasterClientCallback //, public RenderTargetListener
 {
 public:
 	App();  virtual ~App();
@@ -224,7 +215,9 @@ protected:
 
 	//  multiplayer
 
+	void rebuildGameList();
 	void rebuildPlayerList();
+	void gameListChanged(protocol::GameList list);
 	void peerConnected(PeerInfo peer);
 	void peerDisconnected(PeerInfo peer);
 	void peerInfo(PeerInfo peer);
@@ -233,7 +226,6 @@ protected:
 	TabPtr tabsNet;  //void tabNet(TabPtr tab, size_t id);
 	MultiListPtr listServers, listPlayers;
 	EditPtr edNetChat;  // chat area
-	boost::scoped_ptr<GameInfoListener> gameInfoListener;
 
 	String getCreateGameButtonCaption() const;
 	ButtonPtr btnNetRefresh,btnNetJoin,btnNetCreate,btnNetDirect;

@@ -31,6 +31,20 @@ namespace {
 }
 
 
+void App::rebuildGameList() {
+	if (!listServers || !mMasterClient) return;
+	protocol::GameList list = mMasterClient->getList();
+	listServers->removeAllItems();
+	for (protocol::GameList::const_iterator it = list.begin(); it != list.end(); ++it) {
+		listServers->addItem(it->second.name);
+		int l = listServers->getItemCount()-1;
+		listServers->setSubItemNameAt(1, l, std::string(it->second.track));
+		listServers->setSubItemNameAt(2, l, boost::lexical_cast<std::string>((int)it->second.players));
+		listServers->setSubItemNameAt(3, l, net::IPv4(it->second.address));
+		listServers->setSubItemNameAt(4, l, boost::lexical_cast<std::string>((int)it->second.port));
+	}
+}
+
 void App::rebuildPlayerList()
 {
 	if (!listPlayers || !mClient) return;
@@ -53,6 +67,12 @@ void App::rebuildPlayerList()
 		listPlayers->setSubItemNameAt(3, l, boost::lexical_cast<std::string>(it->second.ping));
 		listPlayers->setSubItemNameAt(4, l, yesno(it->second.ready));
 	}
+}
+
+void App::gameListChanged(protocol::GameList list)
+{
+	(void)list;
+	rebuildGameList();
 }
 
 void App::peerConnected(PeerInfo peer)
@@ -91,7 +111,7 @@ void App::peerMessage(PeerInfo peer, std::string msg)
 
 void App::evBtnNetRefresh(WP)
 {
-	mMasterClient.reset(new MasterClient(gameInfoListener.get()));
+	mMasterClient.reset(new MasterClient(this));
 	mMasterClient->connect(pSet->master_server_address, pSet->master_server_port);
 	// The actual refresh will be requested automatically when the connection is made
 }
@@ -142,7 +162,7 @@ void App::evBtnNetCreate(WP)
 		}
 		mLobbyState = HOSTING;
 		if (!mMasterClient) {
-			mMasterClient.reset(new MasterClient(gameInfoListener.get()));
+			mMasterClient.reset(new MasterClient(this));
 			mMasterClient->connect(pSet->master_server_address, pSet->master_server_port);
 		}
 		mMasterClient->updateGame(edNetGameName->getCaption(), sListTrack, mClient->getPeerCount()+1, pSet->local_port);
