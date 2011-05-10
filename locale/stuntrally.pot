@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION"
 "Report-Msgid-Bugs-To: "
-"POT-Creation-Date: 2011-05-09 21:01+0200"
+"POT-Creation-Date: 2011-05-10 20:02+0200"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>"
 "Language-Team: LANGUAGE <LL@li.org>"
@@ -105,8 +105,8 @@ msgctxt "InputValueChange"
 msgid "Each (mouse/key) move or value change with "
 msgstr ""
 
-msgctxt "InputRoadMat"
-msgid "-,=  - road/pipe material"
+msgctxt "Terrain"
+msgid "Terrain"
 msgstr ""
 
 msgctxt "Surface"
@@ -457,6 +457,10 @@ msgctxt "NeedNewGame"
 msgid "* need New Game"
 msgstr ""
 
+msgctxt "InputRoadRebuild"
+msgid "B - rebuild road (after terrain change, etc.)"
+msgstr ""
+
 msgctxt "Effects"
 msgid "Effects"
 msgstr ""
@@ -553,8 +557,8 @@ msgctxt "TipGrassPatchHeightMin"
 msgid "Minimal grass patch height."
 msgstr ""
 
-msgctxt "Terrain"
-msgid "Terrain"
+msgctxt "InputRoadMat"
+msgid "-,=  - road/pipe material"
 msgstr ""
 
 msgctxt "InputStartHeight"
@@ -787,6 +791,10 @@ msgstr ""
 
 msgctxt "TipFogEndClr"
 msgid "Fog end color. R G B components 0 to 1 (eg. 0.7 0.8 0.9)"
+msgstr ""
+
+msgctxt "Multiplayer"
+msgid "Multiplayer"
 msgstr ""
 
 msgctxt "VegetCol"
@@ -1151,6 +1159,10 @@ msgstr ""
 
 msgctxt "ViewFront"
 msgid "View Front"
+msgstr ""
+
+msgctxt "Yes"
+msgid "Yes"
 msgstr ""
 
 msgctxt "TipNewDup"
@@ -1641,8 +1653,8 @@ msgctxt "InputRoadPick"
 msgid "Space - pick one/none"
 msgstr ""
 
-msgctxt "InputRoadRebuild"
-msgid "B - rebuild road (after terrain change, etc.)"
+msgctxt "No"
+msgid "No"
 msgstr ""
 
 msgctxt "RplSave"
@@ -1731,6 +1743,10 @@ msgstr ""
 
 msgctxt "DistMult"
 msgid "Distance mul"
+msgstr ""
+
+msgctxt "Error"
+msgid "Error"
 msgstr ""
 
 msgctxt "Resolution"
