@@ -145,6 +145,8 @@ void App::evBtnNetJoin(WP)
 
 	rebuildPlayerList();
 	tabsNet->setIndexSelected(1);
+	panelNetServer->setVisible(true);
+	panelNetGame->setVisible(false);
 }
 
 void App::evBtnNetCreate(WP)
@@ -167,6 +169,8 @@ void App::evBtnNetCreate(WP)
 		mMasterClient->updateGame(edNetGameName->getCaption(), sListTrack, mClient->getPeerCount()+1, pSet->local_port);
 		rebuildPlayerList();
 		tabsNet->setIndexSelected(1);
+		panelNetServer->setVisible(true);
+		panelNetGame->setVisible(false);
 	}
 }
 
@@ -177,6 +181,8 @@ void App::evBtnNetLeave(WP)
 	mClient.reset();
 	mMasterClient.reset();
 	tabsNet->setIndexSelected(0);
+	panelNetServer->setVisible(false);
+	panelNetGame->setVisible(true);
 }
 
 void App::evBtnNetDirect(WP)
