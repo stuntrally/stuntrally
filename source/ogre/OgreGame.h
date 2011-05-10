@@ -231,6 +231,7 @@ protected:
 	void peerMessage(PeerInfo peer, std::string msg);
 
 	TabPtr tabsNet;  //void tabNet(TabPtr tab, size_t id);
+	WidgetPtr panelNetServer,panelNetGame;
 	MultiListPtr listServers, listPlayers;
 	EditPtr edNetChat;  // chat area
 	boost::scoped_ptr<GameInfoListener> gameInfoListener;

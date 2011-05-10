@@ -187,7 +187,7 @@ void App::evBtnNetReady(WP)
 
 void App::chatSendMsg()
 {
-	/*  test  */
+	/*  test  *
 	if (!edNetChat) return;
 	edNetChat->setCaption(edNetChat->getCaption()+ pSet->nickname + ": " + edNetChatMsg->getCaption() + "\n");
 	/**/

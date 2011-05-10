@@ -216,6 +216,10 @@
 							<Property key="Widget_Colour" value="1 0.8 0.5"/>
 							<Property key="Widget_Caption" value="Direct connect"/>
 						</Widget>
+						<Widget type="Widget" skin="Panel" position="0 0 800 500" layer="Popup" name="panelNetServer">
+							<Property key="Widget_Colour" value="0.8 0.96 1"/>
+							<Property key="Widget_Alpha" value="0.8"/>
+						</Widget>
 					</Widget>
 					<Widget type="TabItem" skin="" position="4 26 735 465">
 						<Property key="Widget_Caption" value="Game"/>
@@ -267,6 +271,10 @@
 							<Property key="Widget_Caption" value="Track info text"/>
 							<Property key="Text_TextColour" value="0.6 1.0 0.8"/>
 						</Widget>
+						<Widget type="Widget" skin="Panel" position="0 0 800 500" layer="Popup" name="panelNetGame">
+							<Property key="Widget_Colour" value="0.8 0.96 1"/>
+							<Property key="Widget_Alpha" value="0.8"/>
+						</Widget>
 					</Widget>
 					<Widget type="TabItem" skin="" position="4 26 735 465">
 						<Property key="Widget_Caption" value="Settings"/>
@@ -299,7 +307,7 @@
 						</Widget>
 						<Widget type="StaticText" skin="StaticText" position="20 190 600 48">
 							<Property key="Widget_Caption" value="Router port forwarding configuration might be required\nin order to allow peers to connect to the local port."/>
-							<Property key="Text_TextColour" value="0.6 0.2 0.2"/>
+							<Property key="Text_TextColour" value="0.7 0.6 0.5"/>
 						</Widget>
 					</Widget>
 				</Widget>

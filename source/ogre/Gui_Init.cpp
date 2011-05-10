@@ -279,7 +279,12 @@ void App::InitGui()
 	}
 	Btn("btnNetReady", evBtnNetReady);  btnNetReady = btn;
 	Btn("btnNetLeave", evBtnNetLeave);	btnNetLeave = btn;
-	//btnNetLeave->setCaption(getCreateGameButtonCaption());
+
+	//  panels to hide tabs
+	panelNetServer = mGUI->findWidget<Widget>("panelNetServer");
+	panelNetGame = mGUI->findWidget<Widget>("panelNetGame");
+	panelNetServer->setVisible(false);
+	panelNetGame->setVisible(true);
 
     //  chat
     valNetChat = mGUI->findWidget<StaticText>("valNetChat");
