@@ -195,6 +195,7 @@ void App::evBtnNetDirect(WP)
 {
 	// direct connect ..
 	// TODO
+	raiseError("Direct connecting is not yet supported.\nSorry about that.");
 	//tabsNet->setIndexSelected(1);
 }
 
