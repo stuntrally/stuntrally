@@ -172,8 +172,14 @@ namespace net {
 		/// Destructor.
 		~NetworkObject() {
 			terminate();
-			if (m_host) enet_host_destroy(m_host);
-			m_host = NULL;
+			// Gracefully disconnect all peers
+			boost::mutex::scoped_lock lock(m_mutex);
+			if (m_host) {
+				for (size_t i = 0; i < m_host->peerCount; ++i)
+					enet_peer_disconnect(&m_host->peers[i], 0);
+				enet_host_destroy(m_host);
+				m_host = NULL;
+			}
 		}
 
 		/// Server thread, do not call directly
