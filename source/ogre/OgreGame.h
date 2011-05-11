@@ -228,7 +228,6 @@ protected:
 	MultiListPtr listServers, listPlayers;
 	EditPtr edNetChat;  // chat area
 
-	String getCreateGameButtonCaption() const;
 	ButtonPtr btnNetRefresh,btnNetJoin,btnNetCreate,btnNetDirect;
 	ButtonPtr btnNetReady,btnNetLeave;
 	void evBtnNetRefresh(WP),evBtnNetJoin(WP),evBtnNetCreate(WP),evBtnNetDirect(WP);
