@@ -12,7 +12,7 @@ P2PGameClient::~P2PGameClient()
 	// Shuts down possibly running threads
 	m_state = DISCONNECTED;
 	m_cond.notify_all();
-	m_peerInfoSenderThread.join();
+	m_senderThread.join();
 }
 
 void P2PGameClient::connect(const std::string& address, int port)
@@ -68,8 +68,8 @@ void P2PGameClient::startLobby()
 {
 	if (m_state == LOBBY) return;
 	else m_state = LOBBY;
-	if (!m_peerInfoSenderThread.joinable())
-		m_peerInfoSenderThread = boost::thread(boost::bind(&P2PGameClient::peerInfoSenderThread, boost::ref(*this)));
+	if (!m_senderThread.joinable())
+		m_senderThread = boost::thread(boost::bind(&P2PGameClient::senderThread, boost::ref(*this)));
 }
 
 void P2PGameClient::startGame()
@@ -87,12 +87,13 @@ void P2PGameClient::startGame()
 	}
 }
 
-void P2PGameClient::peerInfoSenderThread() {
-	while (m_state == LOBBY) {
-		// Broadcast info
-		sendPeerInfo();
-		// Check if we should try connecting to someone
+void P2PGameClient::senderThread() {
+	while (m_state != DISCONNECTED) {
+		if (m_state == LOBBY)
 		{
+			// Broadcast peer info
+			sendPeerInfo();
+			// Check if we should try connecting to someone
 			boost::mutex::scoped_lock lock(m_mutex);
 			for (PeerMap::iterator it = m_peers.begin(); it != m_peers.end(); ++it) {
 				PeerInfo& pi = it->second;
@@ -104,6 +105,14 @@ void P2PGameClient::peerInfoSenderThread() {
 			}
 			// Wait some
 			m_cond.timed_wait(lock, now() + 2.0);
+		}
+		else if (m_state == GAME)
+		{
+			// Broadcast car info
+			boost::mutex::scoped_lock lock(m_mutex);
+			// TODO
+			// Wait some
+			m_cond.timed_wait(lock, now() + 0.050); // 20 FPS
 		}
 	}
 }

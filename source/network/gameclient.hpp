@@ -117,8 +117,8 @@ public:
 	/// Shuts down the network forming phase
 	void startGame();
 
-	/// Thread that periodically broadcasts peer info, don't call directly
-	void peerInfoSenderThread();
+	/// Thread that periodically broadcasts peer and game state info, don't call directly
+	void senderThread();
 
 	/// How many peers are connected
 	size_t getPeerCount() const;
@@ -142,7 +142,7 @@ private:
 	net::NetworkObject m_client;
 	PeerMap m_peers;
 	enum State { DISCONNECTED, LOBBY, GAME } m_state;
-	boost::thread m_peerInfoSenderThread;
+	boost::thread m_senderThread;
 	mutable boost::mutex m_mutex;
 	boost::condition m_cond;
 	PeerInfo m_playerInfo;
