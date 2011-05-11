@@ -21,7 +21,7 @@ using namespace MyGUI;
 namespace {
 	std::string yesno(bool cond) {
 		if (cond) return TR("#{Yes}");
-		else return "#{No}";
+		else return TR("#{No}");
 	}
 
 	void inline raiseError(const std::string& what, const std::string& title = TR("#{Error}")) {
@@ -184,6 +184,8 @@ void App::evBtnNetCreate(WP)
 		tabsNet->setIndexSelected(1);
 		panelNetServer->setVisible(true);
 		panelNetGame->setVisible(false);
+		boost::mutex::scoped_lock lock(netGuiMutex);
+		sChatBuffer = TR("Listening on port ")  + boost::lexical_cast<std::string>(pSet->local_port) + "...\n";
 	}
 }
 

@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <MyGUI>
+	<!-- General -->
+	<Tag name="Yes">Yes</Tag>
+	<Tag name="No">No</Tag>
+	<Tag name="Error">Error</Tag>
 	<Tag name="Multiplayer">Multiplayer</Tag>
 	<!--  Server -->
 	<Tag name="NetServer">Server</Tag>
