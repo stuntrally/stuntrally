@@ -137,7 +137,7 @@ void App::evBtnNetJoin(WP)
 		boost::mutex::scoped_lock lock(netGuiMutex);
 		sChatBuffer = TR("Connecting to ") + host + ":" + port + "\n";
 	} catch (...) {
-		raiseError(TR("Failed to initialize networking."), TR("Network Error"));
+		raiseError(TR("Failed to initialize networking.\nTry different local port and make sure your firewall is properly configured."), TR("Network Error"));
 		return;
 	}
 
@@ -164,7 +164,7 @@ void App::evBtnNetCreate(WP)
 			mClient->updatePlayerInfo(pSet->nickname, sListCar);
 			mClient->startLobby();
 		} catch (...) {
-			raiseError(TR("Failed to initialize networking."), TR("Network Error"));
+			raiseError(TR("Failed to initialize networking.\nTry different local port and make sure your firewall is properly configured."), TR("Network Error"));
 			return;
 		}
 		mLobbyState = HOSTING;
