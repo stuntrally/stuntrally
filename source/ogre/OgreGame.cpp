@@ -33,6 +33,7 @@ App::App()
 	,grass(0), trees(0), road(0)
 	,pr(0),pr2(0), sun(0)
 	// gui multiplayer
+	,netGuiMutex(), sChatBuffer(), bRebuildPlayerList(), bRebuildGameList()
 	,tabsNet(0), panelNetServer(0), panelNetGame(0)
 	,listServers(0), listPlayers(0), edNetChat(0), imgNetTrack(0)
     ,btnNetRefresh(0), btnNetJoin(0), btnNetCreate(0), btnNetDirect(0)

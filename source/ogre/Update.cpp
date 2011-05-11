@@ -73,6 +73,16 @@ bool App::frameStart(Real time)
 			if (dirD > 0.0f) {  carListNext(-d);  trkListNext(-d);  dirD = -0.12f;  }
 		}
 		
+		// Gui updates from networking
+		// We do them here so that they are handled in the main thread as MyGUI is not thread-safe
+		if (isFocGui)
+		{
+			boost::mutex::scoped_lock lock(netGuiMutex);
+			if (bRebuildGameList) { rebuildGameList(); bRebuildGameList = false; }
+			if (bRebuildPlayerList) { rebuildPlayerList(); bRebuildPlayerList = false; }
+			if (sChatBuffer != edNetChat->getCaption()) edNetChat->setCaption(sChatBuffer);
+		}
+
 		//bool oldFocRpl = isFocRpl;
 		if (bRplPlay)
 		{

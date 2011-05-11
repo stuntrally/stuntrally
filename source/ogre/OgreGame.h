@@ -223,10 +223,15 @@ protected:
 	void peerInfo(PeerInfo peer);
 	void peerMessage(PeerInfo peer, std::string msg);
 
+	mutable boost::mutex netGuiMutex;
+	MyGUI::UString sChatBuffer;
+	bool bRebuildPlayerList;
+	bool bRebuildGameList;
+
 	TabPtr tabsNet;  //void tabNet(TabPtr tab, size_t id);
 	WidgetPtr panelNetServer,panelNetGame;
 	MultiListPtr listServers, listPlayers;
-	EditPtr edNetChat;  // chat area
+	EditPtr edNetChat;  // chat area, set text through sChatBuffer
 
 	ButtonPtr btnNetRefresh,btnNetJoin,btnNetCreate,btnNetDirect;
 	ButtonPtr btnNetReady,btnNetLeave;

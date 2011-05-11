@@ -71,40 +71,45 @@ void App::rebuildPlayerList()
 void App::gameListChanged(protocol::GameList list)
 {
 	(void)list;
-	rebuildGameList();
+	boost::mutex::scoped_lock lock(netGuiMutex);
+	bRebuildGameList = true;
 }
 
 void App::peerConnected(PeerInfo peer)
 {
-	if (!edNetChat) return;
-	edNetChat->setCaption(edNetChat->getCaption()+"Connected: " + peer.name + "\n");
-	rebuildPlayerList();
 	// Master server player count update
 	if (mLobbyState == HOSTING && mMasterClient && mClient && edNetGameName)
 		mMasterClient->updateGame(edNetGameName->getCaption(), sListTrack, mClient->getPeerCount()+1, pSet->local_port);
+	// Schedule Gui updates
+	boost::mutex::scoped_lock lock(netGuiMutex);
+	sChatBuffer = sChatBuffer + "Connected: " + peer.name + "\n";
+	bRebuildPlayerList = true;
 }
 
 void App::peerDisconnected(PeerInfo peer)
 {
-	if (!edNetChat || peer.name.empty()) return;
-	edNetChat->setCaption(edNetChat->getCaption()+"Disconnected: " + peer.name + "\n");
-	rebuildPlayerList();
+	if (peer.name.empty()) return;
 	// Master server player count update
 	if (mLobbyState == HOSTING && mMasterClient && mClient && edNetGameName)
 		mMasterClient->updateGame(edNetGameName->getCaption(), sListTrack, mClient->getPeerCount()+1, pSet->local_port);
+	// Schedule Gui updates
+	boost::mutex::scoped_lock lock(netGuiMutex);
+	sChatBuffer = sChatBuffer + "Disconnected: " + peer.name + "\n";
+	bRebuildPlayerList = true;
 }
 
 void App::peerInfo(PeerInfo peer)
 {
 	(void)peer;
-	rebuildPlayerList();
+	boost::mutex::scoped_lock lock(netGuiMutex);
+	bRebuildPlayerList = true;
 }
 
 void App::peerMessage(PeerInfo peer, std::string msg)
 {
-	if (!edNetChat) return;
-	edNetChat->setCaption(edNetChat->getCaption()+peer.name + ": " + msg + "\n");
-	rebuildPlayerList(); // For ping updates in the list
+	boost::mutex::scoped_lock lock(netGuiMutex);
+	sChatBuffer = sChatBuffer + peer.name + ": " + msg + "\n";
+	bRebuildPlayerList = true; // For ping updates in the list
 }
 
 
@@ -129,7 +134,8 @@ void App::evBtnNetJoin(WP)
 		mClient.reset(new P2PGameClient(this, pSet->local_port));
 		mClient->updatePlayerInfo(pSet->nickname, sListCar);
 		mClient->connect(host, boost::lexical_cast<int>(port)); // Lobby phase started automatically
-		edNetChat->setCaption(TR("Connecting to ") + host + ":" + port + "\n");
+		boost::mutex::scoped_lock lock(netGuiMutex);
+		sChatBuffer = TR("Connecting to ") + host + ":" + port + "\n";
 	} catch (...) {
 		raiseError(TR("Failed to initialize networking."), TR("Network Error"));
 		return;
