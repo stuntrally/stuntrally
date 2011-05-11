@@ -40,20 +40,6 @@ bool P2PGameClient::isReady() const
 	return m_playerInfo.ready;
 }
 
-
-void P2PGameClient::sendPeerInfo()
-{
-	boost::mutex::scoped_lock lock(m_mutex);
-	// Send the player info
-	protocol::PlayerInfoPacket pip = (protocol::PlayerInfoPacket)m_playerInfo;
-	m_client.broadcast(pip);
-	// Peer address info sending
-	for (PeerMap::const_iterator it = m_peers.begin(); it != m_peers.end(); ++it) {
-		protocol::PeerAddressPacket pap(it->second.address);
-		m_client.broadcast(pap);
-	}
-}
-
 void P2PGameClient::sendMessage(const std::string& msg)
 {
 	m_client.broadcast(char(protocol::TEXT_MESSAGE) + msg, net::PACKET_RELIABLE);
@@ -88,20 +74,25 @@ void P2PGameClient::startGame()
 }
 
 void P2PGameClient::senderThread() {
-	while (m_state != DISCONNECTED) {
+	do {
+		boost::mutex::scoped_lock lock(m_mutex);
 		if (m_state == LOBBY)
 		{
-			// Broadcast peer info
-			sendPeerInfo();
-			// Check if we should try connecting to someone
-			boost::mutex::scoped_lock lock(m_mutex);
+			// Boradcast local player's info
+			protocol::PlayerInfoPacket pip = (protocol::PlayerInfoPacket)m_playerInfo;
+			m_client.broadcast(pip);
+			// Loop all peers
 			for (PeerMap::iterator it = m_peers.begin(); it != m_peers.end(); ++it) {
 				PeerInfo& pi = it->second;
+				// Check if we should try connecting to the peer
 				if (pi.connection == PeerInfo::DISCONNECTED) {
 					std::cout << "Connecting to " << pi.address << std::endl;
 					pi.connection = PeerInfo::CONNECTING;
 					m_client.connect(pi.address);
 				}
+				// Broadcast peer's info
+				protocol::PeerAddressPacket pap(it->second.address);
+				m_client.broadcast(pap);
 			}
 			// Wait some
 			m_cond.timed_wait(lock, now() + 2.0);
@@ -109,12 +100,12 @@ void P2PGameClient::senderThread() {
 		else if (m_state == GAME)
 		{
 			// Broadcast car info
-			boost::mutex::scoped_lock lock(m_mutex);
 			// TODO
 			// Wait some
 			m_cond.timed_wait(lock, now() + 0.050); // 20 FPS
 		}
-	}
+		if (m_state == DISCONNECTED) break;
+	} while (true);
 }
 
 size_t P2PGameClient::getPeerCount() const

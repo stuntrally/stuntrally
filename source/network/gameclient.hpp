@@ -105,9 +105,6 @@ public:
 	/// Returns the ready state
 	bool isReady() const;
 
-	/// Broadcasts all known peer infos to every one connected
-	void sendPeerInfo();
-
 	/// Broadcasts a chat message to all peers
 	void sendMessage(const std::string& msg);
 
