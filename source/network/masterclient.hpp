@@ -4,9 +4,9 @@
  * Communication with the master server.
  */
 
+#include <boost/thread/condition.hpp>
 #include "enet-wrapper.hpp"
 #include "protocol.hpp"
-
 
 /**
  * @brief Callback class for MasterClient events.
@@ -73,6 +73,7 @@ private:
 	MasterClientCallback* m_callback;
 	boost::thread m_gameInfoSenderThread;
 	mutable boost::mutex m_mutex;
+	boost::condition m_cond;
 	net::NetworkObject m_client;
 	protocol::GameList m_games;
 	protocol::GameInfo m_game;

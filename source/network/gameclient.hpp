@@ -5,6 +5,7 @@
  * This file contains the game specific networking client classes.
  */
 
+#include <boost/thread/condition.hpp>
 #include "enet-wrapper.hpp"
 #include "protocol.hpp"
 
@@ -143,5 +144,6 @@ private:
 	enum State { DISCONNECTED, LOBBY, GAME } m_state;
 	boost::thread m_peerInfoSenderThread;
 	mutable boost::mutex m_mutex;
+	boost::condition m_cond;
 	PeerInfo m_playerInfo;
 };

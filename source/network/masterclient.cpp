@@ -1,8 +1,9 @@
 #include "masterclient.hpp"
+#include "xtime.hpp"
 
 
 MasterClient::MasterClient(MasterClientCallback* callback, int updateInterval)
-	: m_callback(callback), m_mutex(), m_client(*this), m_game(), m_updateInterval(updateInterval), m_sendUpdates()
+	: m_callback(callback), m_mutex(), m_cond(), m_client(*this), m_game(), m_updateInterval(updateInterval), m_sendUpdates()
 {
 	m_game.packet_type = protocol::GAME_STATUS;
 }
@@ -50,20 +51,18 @@ void MasterClient::terminate()
 {
 	// Shuts down possibly running thread
 	m_sendUpdates = false;
+	m_cond.notify_all();
 	m_gameInfoSenderThread.join();
 }
 
 void MasterClient::gameInfoSenderThread()
 {
 	while (m_sendUpdates) {
-		{
-			// Broadcast info
-			boost::mutex::scoped_lock lock(m_mutex);
-			m_client.broadcast(m_game, net::PACKET_RELIABLE);
-		}
+		// Broadcast info
+		boost::mutex::scoped_lock lock(m_mutex);
+		m_client.broadcast(m_game, net::PACKET_RELIABLE);
 		// Wait some
-		// FIXME: Use Conditions to get rid of the wait time in case of destruction
-		boost::this_thread::sleep(boost::posix_time::milliseconds(m_updateInterval));
+		m_cond.timed_wait(lock, now() + (m_updateInterval / 1000.0));
 	}
 }
 

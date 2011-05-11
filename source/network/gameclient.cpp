@@ -1,8 +1,9 @@
 #include "gameclient.hpp"
+#include "xtime.hpp"
 
 
 P2PGameClient::P2PGameClient(GameClientCallback* callback, int port)
-	: m_callback(callback), m_client(*this, port), m_state(DISCONNECTED), m_mutex(), m_playerInfo()
+	: m_callback(callback), m_client(*this, port), m_state(DISCONNECTED), m_mutex(), m_cond(), m_playerInfo()
 {
 }
 
@@ -10,6 +11,7 @@ P2PGameClient::~P2PGameClient()
 {
 	// Shuts down possibly running threads
 	m_state = DISCONNECTED;
+	m_cond.notify_all();
 	m_peerInfoSenderThread.join();
 }
 
@@ -87,6 +89,8 @@ void P2PGameClient::startGame()
 
 void P2PGameClient::peerInfoSenderThread() {
 	while (m_state == LOBBY) {
+		// Broadcast info
+		sendPeerInfo();
 		// Check if we should try connecting to someone
 		{
 			boost::mutex::scoped_lock lock(m_mutex);
@@ -98,12 +102,9 @@ void P2PGameClient::peerInfoSenderThread() {
 					m_client.connect(pi.address);
 				}
 			}
+			// Wait some
+			m_cond.timed_wait(lock, now() + 2.0);
 		}
-		// Wait some
-		// FIXME: Use Conditions to get rid of the wait time in case of destruction
-		boost::this_thread::sleep(boost::posix_time::milliseconds(2000));
-		// Broadcast info
-		sendPeerInfo();
 	}
 }
 
