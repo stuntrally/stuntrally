@@ -68,6 +68,11 @@ void App::rebuildPlayerList()
 	}
 }
 
+void App::setNetGuiHosting(bool enabled)
+{
+	edNetGameName->setEnabled(enabled);
+}
+
 void App::gameListChanged(protocol::GameList list)
 {
 	(void)list;
@@ -150,6 +155,7 @@ void App::evBtnNetJoin(WP)
 		edNetTrackInfo->setCaption("Lorem ipsum");
 
 	rebuildPlayerList();
+	setNetGuiHosting(false);
 	tabsNet->setIndexSelected(1);
 	panelNetServer->setVisible(true);
 	panelNetGame->setVisible(false);
@@ -174,6 +180,7 @@ void App::evBtnNetCreate(WP)
 		}
 		mMasterClient->updateGame(edNetGameName->getCaption(), sListTrack, mClient->getPeerCount()+1, pSet->local_port);
 		rebuildPlayerList();
+		setNetGuiHosting(true);
 		tabsNet->setIndexSelected(1);
 		panelNetServer->setVisible(true);
 		panelNetGame->setVisible(false);
@@ -186,6 +193,7 @@ void App::evBtnNetLeave(WP)
 	mLobbyState = DISCONNECTED;
 	mClient.reset();
 	mMasterClient.reset();
+	setNetGuiHosting(false);
 	tabsNet->setIndexSelected(0);
 	panelNetServer->setVisible(false);
 	panelNetGame->setVisible(true);

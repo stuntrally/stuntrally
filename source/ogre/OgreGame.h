@@ -217,6 +217,7 @@ protected:
 
 	void rebuildGameList();
 	void rebuildPlayerList();
+	void setNetGuiHosting(bool enabled);
 	void gameListChanged(protocol::GameList list);
 	void peerConnected(PeerInfo peer);
 	void peerDisconnected(PeerInfo peer);
