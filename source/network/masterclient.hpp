@@ -46,7 +46,7 @@ public:
 	void connect(const std::string& address, int port = protocol::DEFAULT_PORT);
 
 	/// Updates the hosted game state to master server, starts updater thread if necessary
-	void updateGame(const std::string& name, const std::string& track, int players, int port);
+	void updateGame(const std::string& name, const std::string& track, int players, int port, std::string password = "");
 
 	/// Clears cache, requests new game listing, doesn't wait for it to arrive
 	void refreshList();
@@ -77,6 +77,7 @@ private:
 	net::NetworkObject m_client;
 	protocol::GameList m_games;
 	protocol::GameInfo m_game;
+	std::string m_password;
 	int m_updateInterval;
 	bool m_sendUpdates;
 };

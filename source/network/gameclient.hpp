@@ -17,6 +17,7 @@ struct PeerInfo {
 	net::Address address; ///< Address
 	std::string name; ///< Nickname
 	std::string car; ///< Car
+	std::string password; ///< Password for connecting
 	short peers; ///< Amount of peers connected
 	bool ready; ///< Ready state
 	unsigned ping; ///< Average packet round-trip time
@@ -25,7 +26,8 @@ struct PeerInfo {
 	PeerInfo(net::Address addr = net::Address()): address(addr), name(), car(), peers(), ready(), ping(0), connection(DISCONNECTED) {}
 
 	PeerInfo& operator=(const protocol::PlayerInfoPacket& pip) {
-		name = std::string(pip.name); car = std::string(pip.car); peers = pip.peers; ready = pip.ready;
+		name = std::string(pip.name); car = std::string(pip.car); password = std::string(pip.password);
+		peers = pip.peers; ready = pip.ready;
 		return *this;
 	}
 
@@ -41,6 +43,7 @@ struct PeerInfo {
 		// FIXME: Yack, memcpy
 		memcpy(pip.name, name.c_str(), 16);
 		memcpy(pip.car, car.c_str(), 10);
+		memcpy(pip.password, password.c_str(), 16);
 		pip.peers = peers;
 		pip.ready = ready;
 		return pip;
@@ -94,7 +97,7 @@ public:
 	~P2PGameClient();
 
 	/// Connects to a peer
-	void connect(const std::string& address, int port = protocol::DEFAULT_PORT);
+	void connect(const std::string& address, int port = protocol::DEFAULT_PORT, std::string password = "");
 
 	/// Updates the player info
 	void updatePlayerInfo(const std::string& name, const std::string& car);

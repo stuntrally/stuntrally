@@ -15,8 +15,12 @@ P2PGameClient::~P2PGameClient()
 	m_senderThread.join();
 }
 
-void P2PGameClient::connect(const std::string& address, int port)
+void P2PGameClient::connect(const std::string& address, int port, std::string password)
 {
+	{
+		boost::mutex::scoped_lock lock(m_mutex);
+		m_playerInfo.password = password;
+	}
 	startLobby();
 	m_client.connect(address, port);
 }
@@ -33,7 +37,6 @@ void P2PGameClient::toggleReady()
 	boost::mutex::scoped_lock lock(m_mutex);
 	m_playerInfo.ready = !m_playerInfo.ready;
 }
-
 
 bool P2PGameClient::isReady() const
 {
@@ -188,7 +191,13 @@ void P2PGameClient::receiveEvent(net::NetworkTraffic const& e)
 			// Callback
 			if (m_callback) {
 				PeerInfo picopy = pi;
-				if (isNew) recountPeers();
+				if (isNew) {
+					// TODO: Check for password and disconnect if fail
+					// If it's done here, we need to figure out a way to not send peer inf
+					// During the time between connection and this message
+
+					recountPeers();
+				}
 				lock.unlock(); // Mutex unlocked in callback to avoid dead-locks
 				// First info means completed connection
 				if (isNew) m_callback->peerConnected(picopy);

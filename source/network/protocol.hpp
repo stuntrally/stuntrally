@@ -46,6 +46,7 @@ struct GameInfo: public net::SimpleSerializer<GameInfo> {
 	uint16_t port;      // Set by client
 	uint32_t timestamp; // Set by server
 	uint8_t players;    // Set by client
+	uint8_t locked;     // Set by client
 	char name[32];      // Set by client
 	char track[32];     // Set by client
 
@@ -80,6 +81,7 @@ struct PlayerInfoPacket: public net::SimpleSerializer<PlayerInfoPacket> {
 	uint8_t packet_type;
 	char name[16];
 	char car[10];
+	char password[16];
 	uint8_t peers;
 	uint8_t ready;
 

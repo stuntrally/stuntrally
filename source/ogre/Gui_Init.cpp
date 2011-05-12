@@ -237,10 +237,11 @@ void App::InitGui()
 	listServers = mGUI->findWidget<MultiList>("MListServers");
 	if (listServers)
 	{	listServers->addColumn("Game name", 200);
-		listServers->addColumn("Track", 160);
+		listServers->addColumn("Track", 140);
 		listServers->addColumn("Players", 80);
-		listServers->addColumn("Host", 120);
-		listServers->addColumn("Port", 100);
+		listServers->addColumn("Password", 80);
+		listServers->addColumn("Host", 110);
+		listServers->addColumn("Port", 80);
 	}
 	Btn("btnNetRefresh", evBtnNetRefresh);  btnNetRefresh = btn;
 	Btn("btnNetJoin", evBtnNetJoin);  btnNetJoin = btn;
