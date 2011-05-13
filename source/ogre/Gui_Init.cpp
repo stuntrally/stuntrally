@@ -587,13 +587,7 @@ void App::InitInputGui()
 			if (act->getActionType() == OISB::AT_TRIGGER)
 			{
 				if (act->mBindings.size() > 0 && act->mBindings.front()->getNumBindables() > 0)
-				{
-					// first key
 					key1_label = act->mBindings.front()->getBindable(0)->getBindableName();
-					// alternate key
-					if (act->mBindings.front()->getNumBindables() > 1)
-						key2_label = act->mBindings.front()->getBindable(1)->getBindableName();
-				}
 			}
 			else if (act->getActionType() == OISB::AT_ANALOG_AXIS)
 			{
@@ -616,12 +610,19 @@ void App::InitInputGui()
 			}
 				
 			// --------- create buttons -------------
+			bool button2 = false;
+			if (  act->getActionType() == OISB::AT_ANALOG_AXIS && !( act->getProperty<int> ("MinimumValue") == 0 )) button2 = true;
+
 			MyGUI::ButtonPtr key1 = tabitem->createWidget<Button>("Button", x1, y, sx, sy, MyGUI::Align::Default, "inputbutton_" + (*ait).first + "_" + (*it).first + "_1");
 			key1->setCaption( stripk(key1_label) );
 			key1->eventMouseButtonClick = MyGUI::newDelegate(this, &App::controlBtnClicked);
-			MyGUI::ButtonPtr key2 = tabitem->createWidget<Button>("Button", x2, y, sx, sy, MyGUI::Align::Default, "inputbutton_" + (*ait).first + "_" + (*it).first + "_2");
-			key2->setCaption( stripk(key2_label) );
-			key2->eventMouseButtonClick = MyGUI::newDelegate(this, &App::controlBtnClicked);
+			
+			if (button2)
+			{
+				MyGUI::ButtonPtr key2 = tabitem->createWidget<Button>("Button", x2, y, sx, sy, MyGUI::Align::Default, "inputbutton_" + (*ait).first + "_" + (*it).first + "_2");
+				key2->setCaption( stripk(key2_label) );
+				key2->eventMouseButtonClick = MyGUI::newDelegate(this, &App::controlBtnClicked);
+			}
 
 
 			/// joystick binds
