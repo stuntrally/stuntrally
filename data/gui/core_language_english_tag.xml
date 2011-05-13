@@ -108,8 +108,12 @@
 	<Tag name="RplAll">All</Tag>
 	<Tag name="RplCur">Cur</Tag>
 	
+	<Tag name="RplTime">Time</Tag>
+	<Tag name="RplVersion">Version</Tag>
+	
 	<Tag name="UnitMB">MB</Tag>
 	<Tag name="RplSize">size</Tag>
+	<Tag name="RplFileSize">File size</Tag>
 	<Tag name="RplRecTime">Recorded   time</Tag>
 
 

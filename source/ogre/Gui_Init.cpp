@@ -338,7 +338,7 @@ void App::InitGui()
 	//  track text, chg btn
     valTrk = (StaticTextPtr)mLayout->findWidget("TrackText");
     if (valTrk)
-		valTrk->setCaption("Track: " + pSet->track);  sListTrack = pSet->track;
+		valTrk->setCaption(TR("#{Track}: " + pSet->track));  sListTrack = pSet->track;
 	trkDesc = (EditPtr)mLayout->findWidget("TrackDesc");
 
 	//  track stats

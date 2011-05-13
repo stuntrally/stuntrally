@@ -108,9 +108,9 @@
 	<Tag name="TerrainError">Terrainabweichung</Tag>
 	<Tag name="MyGUI_MessageBox_Retry">Wiederholen</Tag>
 	<Tag name="InputStartDir">Space - Straßenrichtung (+ oder -)</Tag>
-	<Tag name="Effects">Effekte</Tag>
+	<Tag name="InputRoadDel">Entf - ausgew. löschen</Tag>
 	<Tag name="WidthSteps">Breiten-Steps</Tag>
-	<Tag name="InputKeyNoAxis">No axis</Tag>
+	<Tag name="InputKeyNoAxis">Keine Achse</Tag>
 	<Tag name="Sound">Sound</Tag>
 	<Tag name="RoadPointSize">Größe Straßenpunkte</Tag>
 	<Tag name="Car">Auto</Tag>
@@ -206,13 +206,13 @@
 	<Tag name="InputMapRestartGame">Neues Spiel</Tag>
 	<Tag name="Graphics">Grafik</Tag>
 	<Tag name="CarDebugText">Auto Debug text </Tag>
+	<Tag name="RplSize">Größe</Tag>
 	<Tag name="TipMudInt">Intensität der Schlammpartikel.</Tag>
 	<Tag name="Mode">Modus</Tag>
 	<Tag name="ChangeCar">Auto wechseln</Tag>
 	<Tag name="InputMapPrevTab">Vorheriger Tab</Tag>
 	<Tag name="InputTogglePreview">F7 - Vorschaukamera</Tag>
 	<Tag name="GameBy">Ein Spiel von</Tag>
-	<Tag name="TrackWidthAvg">Breite avg.</Tag>
 	<Tag name="SunWeather">Sonne und Wetter</Tag>
 	<Tag name="TipTrkScreenEditor">Bildschirmfoto der ausgewählten Strecke.</Tag>
 	<Tag name="RplDelete">Löschen</Tag>
@@ -234,7 +234,7 @@
 	<Tag name="TipRoadStats">Statistiken der Straße.</Tag>
 	<Tag name="InputTerPaint">A - Anstrichtextur (Layer)</Tag>
 	<Tag name="RplCur">Aktuell</Tag>
-	<Tag name="InputKeyNoButton">No button</Tag>
+	<Tag name="InputKeyNoButton">Kein Knopf</Tag>
 	<Tag name="TexCoordMul">Tex Coord mul.</Tag>
 	<Tag name="Digits">Ziffern</Tag>
 	<Tag name="ShowPictures">Bilder beim Laden anzeigen</Tag>
@@ -283,7 +283,7 @@
 	<Tag name="FacesOnce">Seiten auf einmal</Tag>
 	<Tag name="TipTrackDescEditor">Streckenbeschreibung (Klicken zum Editieren).</Tag>
 	<Tag name="ViewLeft">Ans. Links</Tag>
-	<Tag name="ViewFront">Ans. Vorne</Tag>
+	<Tag name="UnitMB">MB</Tag>
 	<Tag name="ApplyShadows">Schatten anwenden</Tag>
 	<Tag name="RoadStats">Straßen Statist.</Tag>
 	<Tag name="SunDir">Sonnenrichtung</Tag>
@@ -299,9 +299,10 @@
 	<Tag name="InputCamControl2">LMB - drehen RMB - bewegen MMB - zoom</Tag>
 	<Tag name="SkirtHeight">Skirt-Höhe</Tag>
 	<Tag name="LS_CLEANUP">Aufräumen</Tag>
+	<Tag name="RplRename">Umbenennen</Tag>
 	<Tag name="EnterSave">Enter - speichern</Tag>
 	<Tag name="TipBumpFreq">Frequenz zusätzlicher Unebenheiten der Oberfläche (Distanz zwischen diesen)</Tag>
-	<Tag name="InputRoadDel">Entf - ausgew. löschen</Tag>
+	<Tag name="Effects">Effekte</Tag>
 	<Tag name="InputUpdate">F8 - Aktualisieren</Tag>
 	<Tag name="InputToggleGUIMode">F1 - Optionsfenster anzeigen</Tag>
 	<Tag name="TipFogEndDist">Ausklangdistanz des Nebels (Meter)</Tag>
@@ -319,6 +320,8 @@
 	<Tag name="AutoGearbox">Autom. Schaltung</Tag>
 	<Tag name="InputSlowFast">Shift - langs. Strg - schnell</Tag>
 	<Tag name="GrassMult">Grasmult.</Tag>
+	<Tag name="ViewFront">Ans. Vorne</Tag>
+	<Tag name="RplRecTime">Aufgenommen</Tag>
 	<Tag name="TipChangeTrack">Ändert die aktuelle Strecke. Danach [Neues Spiel] drücken um darauf zu Fahren.</Tag>
 	<Tag name="TipModelDens">Wie oft das Modell auf der Strecke erscheint.</Tag>
 	<Tag name="InputMain">Allgemein</Tag>
@@ -335,9 +338,10 @@
 	<Tag name="Bloom">Überstrahlung</Tag>
 	<Tag name="TipWindInflL">Einfluss des Winds auf das Modell, Längenskalierung.</Tag>
 	<Tag name="InputRoadCopySel">Strg-Einfg - Ausw. kopieren Strg-Entf - Ausw. löschen</Tag>
-	<Tag name="Distance">Distanz</Tag>
+	<Tag name="TrackWidthAvg">Breite avg.</Tag>
 	<Tag name="About">Über</Tag>
 	<Tag name="AutoLoad">Strecke autom. Laden</Tag>
+	<Tag name="Distance">Distanz</Tag>
 	<Tag name="RplGhost">Geist anzeigen</Tag>
 	<Tag name="TipGrassPageLength">Page-Länge vom Gras (niedriger Wert verursacht häufiges neu Laden, hoher Wert macht die Übergänge sichtbar)</Tag>
 	<Tag name="Shaders">Shader</Tag>

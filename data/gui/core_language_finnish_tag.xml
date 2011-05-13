@@ -108,7 +108,7 @@
 	<Tag name="TerrainError">Maaston virhe</Tag>
 	<Tag name="MyGUI_MessageBox_Retry">Yritä uudelleen</Tag>
 	<Tag name="InputStartDir">Space  -  change road direction (+ or -)</Tag>
-	<Tag name="Effects">Tehosteet</Tag>
+	<Tag name="InputRoadDel">Del - delete picked</Tag>
 	<Tag name="WidthSteps">Width Steps</Tag>
 	<Tag name="InputKeyNoAxis">No axis</Tag>
 	<Tag name="Sound">Äänet</Tag>
@@ -206,13 +206,13 @@
 	<Tag name="InputMapRestartGame">New game</Tag>
 	<Tag name="Graphics">Graphics</Tag>
 	<Tag name="CarDebugText">Car debug text </Tag>
+	<Tag name="RplSize">size</Tag>
 	<Tag name="TipMudInt">Mud particles intensity.</Tag>
 	<Tag name="Mode">mode</Tag>
 	<Tag name="ChangeCar">Change Car</Tag>
 	<Tag name="InputMapPrevTab">Previous tab</Tag>
 	<Tag name="InputTogglePreview">F7 - enter/leave preview camera</Tag>
 	<Tag name="GameBy">A game by</Tag>
-	<Tag name="TrackWidthAvg">Width avg.</Tag>
 	<Tag name="SunWeather">Sun and Weather</Tag>
 	<Tag name="TipTrkScreenEditor">In game screenshot for selected track.</Tag>
 	<Tag name="RplDelete">Delete</Tag>
@@ -283,7 +283,7 @@
 	<Tag name="FacesOnce">Faces at once</Tag>
 	<Tag name="TipTrackDescEditor">Track description text (click to edit).</Tag>
 	<Tag name="ViewLeft">View Left</Tag>
-	<Tag name="ViewFront">View Front</Tag>
+	<Tag name="UnitMB">MB</Tag>
 	<Tag name="ApplyShadows">Apply Shadows</Tag>
 	<Tag name="RoadStats">Road Stats</Tag>
 	<Tag name="SunDir">Sun dir.</Tag>
@@ -299,9 +299,10 @@
 	<Tag name="InputCamControl2">LMB - rotate  RMB - move  MMB - zoom</Tag>
 	<Tag name="SkirtHeight">Skirt Height</Tag>
 	<Tag name="LS_CLEANUP">Cleaning up</Tag>
+	<Tag name="RplRename">Rename</Tag>
 	<Tag name="EnterSave">Enter - save</Tag>
 	<Tag name="TipBumpFreq">Frequency of additional bumps on surface (distance between them).</Tag>
-	<Tag name="InputRoadDel">Del - delete picked</Tag>
+	<Tag name="Effects">Tehosteet</Tag>
 	<Tag name="InputUpdate">F8 - update track</Tag>
 	<Tag name="InputToggleGUIMode">F1 or ` - GUI mode (toggle Options)</Tag>
 	<Tag name="TipFogEndDist">Fog end distance [meters].</Tag>
@@ -319,6 +320,8 @@
 	<Tag name="AutoGearbox">Auto gearbox</Tag>
 	<Tag name="InputSlowFast">shift - slow   ctrl - fast</Tag>
 	<Tag name="GrassMult">Grass mul</Tag>
+	<Tag name="ViewFront">View Front</Tag>
+	<Tag name="RplRecTime">Recorded   time</Tag>
 	<Tag name="TipChangeTrack">Sets current track to that selected in list. Press [New Game] to start it after.</Tag>
 	<Tag name="TipModelDens">How often model will appear on track area.</Tag>
 	<Tag name="InputMain">Main</Tag>
@@ -335,9 +338,10 @@
 	<Tag name="Bloom">Bloom-tehoste</Tag>
 	<Tag name="TipWindInflL">Wind influence on model, length scale.</Tag>
 	<Tag name="InputRoadCopySel">ctrl-Ins - copy selection   ctrl-Del - delete sel.</Tag>
-	<Tag name="Distance">Distance</Tag>
+	<Tag name="TrackWidthAvg">Width avg.</Tag>
 	<Tag name="About">About</Tag>
 	<Tag name="AutoLoad">Auto Load track</Tag>
+	<Tag name="Distance">Distance</Tag>
 	<Tag name="RplGhost">Show ghost drive - best lap</Tag>
 	<Tag name="TipGrassPageLength">Grass Page length (low will reload often, high will cause visible switching).</Tag>
 	<Tag name="Shaders">Shaders</Tag>

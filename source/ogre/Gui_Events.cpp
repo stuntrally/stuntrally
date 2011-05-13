@@ -406,7 +406,7 @@ void App::btnChgTrack(WP)
 {
 	pSet->track = sListTrack;
 	pSet->track_user = bListTrackU;
-	if (valTrk)  valTrk->setCaption("Track: " + sListTrack);
+	if (valTrk)  valTrk->setCaption(TR("#{Track: ") + sListTrack);
 }
 
 //  new game
@@ -622,17 +622,17 @@ void App::listRplChng(List* li, size_t pos)
 	Replay rpl;
 	if (rpl.LoadFile(file,true))
 	{
-		String ss = String("Track: ") + rpl.header.track + (rpl.header.track_user ? "  *user*" : "");
+		String ss = String(TR("#{Track}: ")) + rpl.header.track + (rpl.header.track_user ? "  *user*" : "");
 		valRplName->setCaption(ss);
 
-		ss = String("Car: ") + rpl.header.car + "\n" +
-			"Time: " + GetTimeString(rpl.GetTimeLength());
+		ss = String(TR("#{Car}: ")) + rpl.header.car + "\n" +
+			TR("#{RplTime}: ") + GetTimeString(rpl.GetTimeLength());
 		valRplInfo->setCaption(ss);
 
 		int size = boost::filesystem::file_size(file);
 		sprintf(s, "%5.2f", float(size)/1000000.f);
-		ss = String("File size:") + s + " MB\n" +
-			"Version: " + toStr(rpl.header.ver) + "     " + toStr(rpl.header.frameSize) + "B";
+		ss = String(TR("#{RplFileSize}:")) + s + TR(" #{UnitMB}\n") +
+			TR("#{RplVersion}: ") + toStr(rpl.header.ver) + "     " + toStr(rpl.header.frameSize) + "B";
 		if (valRplInfo2)  valRplInfo2->setCaption(ss);
 	}
 	//edRplDesc  edRplName
