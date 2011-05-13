@@ -224,12 +224,12 @@ void App::UpdateHUD(CAR* pCar, float time, Viewport* vp)
 		/// for gui viewport ----------------------
 		if (hudGear) hudGear->hide();
 		if (hudVel) hudVel->hide();
+		if (ovTimes) ovTimes->hide();
 	}
 	else
 	{
 		/// for render viewport ---------
 		if (ovCam) ovCam->hide();
-		if (ovTimes) ovTimes->hide();	
 		if (mFpsOverlay) mFpsOverlay->hide();
 	}
 			
