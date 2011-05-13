@@ -168,25 +168,25 @@ bool BaseApp::keyPressed( const OIS::KeyEvent &arg )
 		#define stripk(s) Ogre::StringUtil::split(s, "/")[1]
 		
 		// update button labels
-		MyGUI::ButtonPtr b1 = mGUI->findWidget<MyGUI::Button>("inputbutton_" + actionName + "_" + schemaName + "_" + "1");
-		MyGUI::ButtonPtr b2 = mGUI->findWidget<MyGUI::Button>("inputbutton_" + actionName + "_" + schemaName + "_" + "2");
+		MyGUI::ButtonPtr b1 = mGUI->findWidget<MyGUI::Button>("inputbutton_" + actionName + "_" + schemaName + "_" + "1", "", false);
+		MyGUI::ButtonPtr b2 = mGUI->findWidget<MyGUI::Button>("inputbutton_" + actionName + "_" + schemaName + "_" + "2", "", false);
 		if (binding->getNumBindables() == 0)
 		{
-			b1->setCaption( TR("#{InputKeyUnassigned}") ); 
-			b2->setCaption( TR("#{InputKeyUnassigned}") );
+			if (b1) b1->setCaption( TR("#{InputKeyUnassigned}") ); 
+			if (b2) b2->setCaption( TR("#{InputKeyUnassigned}") );
 		}
 		else if (binding->getNumBindables() == 1)
 		{
 			// increase first
 			if (binding->getRole(binding->getBindable(0)) == "decrease")
 			{
-				b2->setCaption( stripk(binding->getBindable(0)->getBindableName()) );
-				b1->setCaption( TR("#{InputKeyUnassigned}") );
+				if (b1) b2->setCaption( stripk(binding->getBindable(0)->getBindableName()) );
+				if (b2) b1->setCaption( TR("#{InputKeyUnassigned}") );
 			}
 			else
 			{
-				b1->setCaption( stripk(binding->getBindable(0)->getBindableName()) );
-				b2->setCaption( TR("#{InputKeyUnassigned}") );
+				if (b1) b1->setCaption( stripk(binding->getBindable(0)->getBindableName()) );
+				if (b2) b2->setCaption( TR("#{InputKeyUnassigned}") );
 			}
 		}
 		else if (binding->getNumBindables() == 2)
@@ -194,13 +194,13 @@ bool BaseApp::keyPressed( const OIS::KeyEvent &arg )
 			// increase first
 			if (binding->getRole(binding->getBindable(0)) == "increase")
 			{
-				b1->setCaption( stripk(binding->getBindable(0)->getBindableName()) );
-				b2->setCaption( stripk(binding->getBindable(1)->getBindableName()) );
+				if (b1) b1->setCaption( stripk(binding->getBindable(0)->getBindableName()) );
+				if (b2) b2->setCaption( stripk(binding->getBindable(1)->getBindableName()) );
 			}
 			else
 			{
-				b2->setCaption( stripk(binding->getBindable(0)->getBindableName()) );
-				b1->setCaption( stripk(binding->getBindable(1)->getBindableName()) );
+				if (b2) b2->setCaption( stripk(binding->getBindable(0)->getBindableName()) );
+				if (b1) b1->setCaption( stripk(binding->getBindable(1)->getBindableName()) );
 
 			}
 		}

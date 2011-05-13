@@ -714,113 +714,115 @@ void App::updReplaysList()
 bool App::keyPressed( const OIS::KeyEvent &arg )
 {
 	using namespace OIS;
-	switch (arg.key)
-	{
-		case KC_ESCAPE:		// quit
-		if (pSet->escquit)  {
-			mShutDown = true;	return true;  }
+	if (!bAssignKey) {
+		switch (arg.key)
+		{
+			case KC_ESCAPE:		// quit
+			if (pSet->escquit)  {
+				mShutDown = true;	return true;  }
 
-		#if 0
-		case KC_1:
-		if (mSplitMgr)
-		{	Ogre::Viewport* vp = *mSplitMgr->mViewports.begin();
-			vp->setAutoUpdated(shift);
-			vp->setVisibilityMask(shift ? 255 : 0);
-		}	return true;
-		case KC_2:
-		if (mSplitMgr)
-		{	Ogre::Viewport* vp = *(++mSplitMgr->mViewports.begin());
-			vp->setAutoUpdated(shift);
-			vp->setVisibilityMask(shift ? 255 : 0);
-		}	return true;
-		case KC_3:
-		if (mSplitMgr)
-		{	Ogre::Viewport* vp = *(--mSplitMgr->mViewports.end());
-			vp->setAutoUpdated(shift);
-			vp->setVisibilityMask(shift ? 255 : 0);
-		}	return true;
-		#endif
-	   	
-	   	case KC_F1:
-	   	case KC_TAB:	// on/off gui
-	   	if (!alt)  {
-	   		isFocGui = !isFocGui;
-	   		if (mWndOpts)	mWndOpts->setVisible(isFocGui);
-			if (bnQuit)  bnQuit->setVisible(isFocGui);
-	   		if (mGUI)	mGUI->setVisiblePointer(isFocGuiOrRpl());
-	   		if (!isFocGui)  mToolTip->setVisible(false);
-	   	}	return true;
+			#if 0
+			case KC_1:
+			if (mSplitMgr)
+			{	Ogre::Viewport* vp = *mSplitMgr->mViewports.begin();
+				vp->setAutoUpdated(shift);
+				vp->setVisibilityMask(shift ? 255 : 0);
+			}	return true;
+			case KC_2:
+			if (mSplitMgr)
+			{	Ogre::Viewport* vp = *(++mSplitMgr->mViewports.begin());
+				vp->setAutoUpdated(shift);
+				vp->setVisibilityMask(shift ? 255 : 0);
+			}	return true;
+			case KC_3:
+			if (mSplitMgr)
+			{	Ogre::Viewport* vp = *(--mSplitMgr->mViewports.end());
+				vp->setAutoUpdated(shift);
+				vp->setVisibilityMask(shift ? 255 : 0);
+			}	return true;
+			#endif
+			
+			case KC_F1:
+			case KC_TAB:	// on/off gui
+			if (!alt)  {
+				isFocGui = !isFocGui;
+				if (mWndOpts)	mWndOpts->setVisible(isFocGui);
+				if (bnQuit)  bnQuit->setVisible(isFocGui);
+				if (mGUI)	mGUI->setVisiblePointer(isFocGuiOrRpl());
+				if (!isFocGui)  mToolTip->setVisible(false);
+			}	return true;
 
 
-		case KC_BACK:	// replay controls
-			if (mWndRpl && !isFocGui)
-			{	mWndRpl->setVisible(!mWndRpl->isVisible());
-				return true;  }
+			case KC_BACK:	// replay controls
+				if (mWndRpl && !isFocGui)
+				{	mWndRpl->setVisible(!mWndRpl->isVisible());
+					return true;  }
+				break;
+
+			case KC_P:		// replay play/pause
+				if (bRplPlay)
+				{	bRplPause = !bRplPause;  UpdRplPlayBtn();  }
+				return true;
+
+
+			case KC_F9:		// car debug text/bars
+				if (shift)	{	WP wp = chDbgT;  ChkEv(car_dbgtxt);  ShowHUD();  }
+				else		{	WP wp = chDbgB;  ChkEv(car_dbgbars);   ShowHUD();  }
+				return true;
+
+			case KC_F11:	//  fps
+			if (!shift)
+			{	WP wp = chFps;  ChkEv(show_fps); 
+				if (pSet->show_fps)  mFpsOverlay->show();  else  mFpsOverlay->hide();
+				return false;
+			}	break;
+
+			case KC_F10:	//  blt debug, txt
+			if (shift)
+			{	WP wp = chBltTxt;  ChkEv(bltProfilerTxt);  return false;  }
+			else if (ctrl)
+			{	WP wp = chBlt;  ChkEv(bltDebug);  return false;  }
 			break;
 
-		case KC_P:		// replay play/pause
-			if (bRplPlay)
-			{	bRplPause = !bRplPause;  UpdRplPlayBtn();  }
-			return true;
 
+			case KC_F7:		// Times
+			{	WP wp = chTimes;  ChkEv(show_times);  ShowHUD();  }
+				return false;
+				
+			case KC_F8:		// Minimap
+			{	WP wp = chMinimp;  ChkEv(trackmap);  if (ndMap)  ndMap->setVisible(pSet->trackmap);
+			}	return false;
 
-		case KC_F9:		// car debug text/bars
-			if (shift)	{	WP wp = chDbgT;  ChkEv(car_dbgtxt);  ShowHUD();  }
-			else		{	WP wp = chDbgB;  ChkEv(car_dbgbars);   ShowHUD();  }
-			return true;
-
-		case KC_F11:	//  fps
-		if (!shift)
-		{	WP wp = chFps;  ChkEv(show_fps); 
-			if (pSet->show_fps)  mFpsOverlay->show();  else  mFpsOverlay->hide();
-			return false;
-		}	break;
-
-		case KC_F10:	//  blt debug, txt
-		if (shift)
-		{	WP wp = chBltTxt;  ChkEv(bltProfilerTxt);  return false;  }
-		else if (ctrl)
-		{	WP wp = chBlt;  ChkEv(bltDebug);  return false;  }
-		break;
-
-
-		case KC_F7:		// Times
-		{	WP wp = chTimes;  ChkEv(show_times);  ShowHUD();  }
-			return false;
 			
-		case KC_F8:		// Minimap
-		{	WP wp = chMinimp;  ChkEv(trackmap);  if (ndMap)  ndMap->setVisible(pSet->trackmap);
-		}	return false;
-
-		
-		case KC_F5:		//  new game
-		//if (ctrl)
-		{	NewGame();  return false;
-		}	break;
-		
-		case KC_RETURN:	//  chng trk + new game  after pg up/dn
-		if (isFocGui)
-		if (mWndTabs->getIndexSelected() == 0)
-		{	btnChgTrack(0);
-			btnNewGame(0);
-		}else if (mWndTabs->getIndexSelected() == 1)
-		{	btnChgCar(0);
-			btnNewGame(0);
+			case KC_F5:		//  new game
+			//if (ctrl)
+			{	NewGame();  return false;
+			}	break;
+			
+			case KC_RETURN:	//  chng trk + new game  after pg up/dn
+			if (isFocGui)
+			if (mWndTabs->getIndexSelected() == 0)
+			{	btnChgTrack(0);
+				btnNewGame(0);
+			}else if (mWndTabs->getIndexSelected() == 1)
+			{	btnChgCar(0);
+				btnNewGame(0);
+			}
+			return false;
 		}
-		return false;
-	}
 
-	//  change gui tabs
-	if (mWndTabs)
-	{	int num = mWndTabs->getItemCount();
-		if (isFocGui)  switch (arg.key)
-		{
-	   		case KC_F2:  // prev tab
-	   			mWndTabs->setIndexSelected( (mWndTabs->getIndexSelected() - 1 + num) % num );
-	   			return true;
-	   		case KC_F3:  // next tab
-	   			mWndTabs->setIndexSelected( (mWndTabs->getIndexSelected() + 1) % num );
-	   			return true;
+		//  change gui tabs
+		if (mWndTabs)
+		{	int num = mWndTabs->getItemCount();
+			if (isFocGui)  switch (arg.key)
+			{
+				case KC_F2:  // prev tab
+					mWndTabs->setIndexSelected( (mWndTabs->getIndexSelected() - 1 + num) % num );
+					return true;
+				case KC_F3:  // next tab
+					mWndTabs->setIndexSelected( (mWndTabs->getIndexSelected() + 1) % num );
+					return true;
+			}
 		}
 	}
 
