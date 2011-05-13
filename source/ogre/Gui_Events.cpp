@@ -713,6 +713,42 @@ void App::updReplaysList()
 //-----------------------------------------------------------------------------------------------------------
 bool App::keyPressed( const OIS::KeyEvent &arg )
 {
+	// update all keystates
+	OISB::System::getSingleton().process(0);
+	
+	#define action(s) mOISBsys->lookupAction(std::string("General/")+std::string(s))->isActive()
+
+	//  change gui tabs
+	if (mWndTabs)
+	{	int num = mWndTabs->getItemCount();
+		if (isFocGui)  
+		{
+			if (action("PrevTab")) {
+				mWndTabs->setIndexSelected( (mWndTabs->getIndexSelected() - 1 + num) % num ); return true;
+			}
+			else if (action("NextTab")) {
+				mWndTabs->setIndexSelected( (mWndTabs->getIndexSelected() + 1) % num ); return true;
+			}
+	}	}
+	
+	//  on/off gui
+	if (action("ShowOptions"))
+	{
+		if (!alt)  {
+			isFocGui = !isFocGui;
+			if (mWndOpts)	mWndOpts->setVisible(isFocGui);
+			if (bnQuit)  bnQuit->setVisible(isFocGui);
+			if (mGUI)	mGUI->setVisiblePointer(isFocGuiOrRpl());
+			if (!isFocGui)  mToolTip->setVisible(false);
+		}	return true;
+	}
+	
+	//  new game
+	if (action("RestartGame"))
+	{
+		NewGame();  return false;
+	}
+	
 	using namespace OIS;
 	if (!bAssignKey) {
 		switch (arg.key)
@@ -720,6 +756,16 @@ bool App::keyPressed( const OIS::KeyEvent &arg )
 			case KC_ESCAPE:		// quit
 			if (pSet->escquit)  {
 				mShutDown = true;	return true;  }
+				
+			//case KC_F1:
+			//case KC_TAB:	// on/off gui
+			if (!alt)  {
+				isFocGui = !isFocGui;
+				if (mWndOpts)	mWndOpts->setVisible(isFocGui);
+				if (bnQuit)  bnQuit->setVisible(isFocGui);
+				if (mGUI)	mGUI->setVisiblePointer(isFocGuiOrRpl());
+				if (!isFocGui)  mToolTip->setVisible(false);
+			}	return true;
 
 			#if 0
 			case KC_1:
@@ -741,16 +787,6 @@ bool App::keyPressed( const OIS::KeyEvent &arg )
 				vp->setVisibilityMask(shift ? 255 : 0);
 			}	return true;
 			#endif
-			
-			case KC_F1:
-			case KC_TAB:	// on/off gui
-			if (!alt)  {
-				isFocGui = !isFocGui;
-				if (mWndOpts)	mWndOpts->setVisible(isFocGui);
-				if (bnQuit)  bnQuit->setVisible(isFocGui);
-				if (mGUI)	mGUI->setVisiblePointer(isFocGuiOrRpl());
-				if (!isFocGui)  mToolTip->setVisible(false);
-			}	return true;
 
 
 			case KC_BACK:	// replay controls
@@ -792,12 +828,6 @@ bool App::keyPressed( const OIS::KeyEvent &arg )
 			case KC_F8:		// Minimap
 			{	WP wp = chMinimp;  ChkEv(trackmap);  if (ndMap)  ndMap->setVisible(pSet->trackmap);
 			}	return false;
-
-			
-			case KC_F5:		//  new game
-			//if (ctrl)
-			{	NewGame();  return false;
-			}	break;
 			
 			case KC_RETURN:	//  chng trk + new game  after pg up/dn
 			if (isFocGui)
@@ -809,20 +839,6 @@ bool App::keyPressed( const OIS::KeyEvent &arg )
 				btnNewGame(0);
 			}
 			return false;
-		}
-
-		//  change gui tabs
-		if (mWndTabs)
-		{	int num = mWndTabs->getItemCount();
-			if (isFocGui)  switch (arg.key)
-			{
-				case KC_F2:  // prev tab
-					mWndTabs->setIndexSelected( (mWndTabs->getIndexSelected() - 1 + num) % num );
-					return true;
-				case KC_F3:  // next tab
-					mWndTabs->setIndexSelected( (mWndTabs->getIndexSelected() + 1) % num );
-					return true;
-			}
 		}
 	}
 

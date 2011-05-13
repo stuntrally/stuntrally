@@ -11,10 +11,6 @@ const std::vector <float> & CARCONTROLMAP_LOCAL::ProcessInput(class App* pApp, i
 {
 	assert(inputs.size() == CARINPUT::ALL);
 
-	// update input - only once
-	if (player == 0)
-		OISB::System::getSingleton().process(dt);
-
 	lastinputs = inputs;
 
 	#define action(s) OISB::System::getSingleton().lookupAction("Player" + toStr(player+1) + "/" + s)->isActive()

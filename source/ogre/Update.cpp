@@ -3,9 +3,6 @@
 #include "../vdrift/game.h"
 #include "FollowCamera.h"
 #include "../road/Road.h"
-#include "../oisb/OISBSystem.h"
-
-
 
 //---------------------------------------------------------------------------------------------------------------
 //  Frame Start
@@ -45,7 +42,7 @@ void App::UpdThr()
 //---------------------------------------------------------------------------------------------------------------
 
 bool App::frameStart(Real time)
-{
+{	
 	if (bWindowResized)
 	{
 		if (bnQuit)  // reposition Quit btn

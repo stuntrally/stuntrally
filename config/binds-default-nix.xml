@@ -3,7 +3,6 @@
 	<schema name="General">
 		<action name="ShowOptions" type="Trigger">
 			<bind role="">Keyboard/F1</bind>
-			<bind role="">Keyboard/Tab</bind>
 		</action>
 		<action name="PrevTab" type="Trigger">
 			<bind role="">Keyboard/F2</bind>
