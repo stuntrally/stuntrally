@@ -98,6 +98,16 @@ bool BaseApp::keyPressed( const OIS::KeyEvent &arg )
 			bind2 = binding->getBindable(1);
 			bind2_role = binding->getRole(bind2);
 		}
+		
+		// cancel: delete canceled bind
+		if (cancel)
+		{
+			if (index == "1" && bind1) binding->unbind(bind1);
+			if (index == "2" && bind2) binding->unbind(bind2);
+			if (index == "1") bind1 = NULL;
+			if (index == "2") bind2 = NULL;
+		}
+			
 		// delete all binds
 		if (!cancel) {
 			if (bind1) binding->unbind(bind1);

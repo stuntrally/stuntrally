@@ -718,30 +718,32 @@ bool App::keyPressed( const OIS::KeyEvent &arg )
 	
 	#define action(s) mOISBsys->lookupAction(std::string("General/")+std::string(s))->isActive()
 
-	//  change gui tabs
-	if (mWndTabs)
-	{	int num = mWndTabs->getItemCount();
-		if (isFocGui)  
+	if (!bAssignKey) {
+		//  change gui tabs
+		if (mWndTabs)
+		{	int num = mWndTabs->getItemCount();
+			if (isFocGui)  
+			{
+				if (action("PrevTab")) {
+					mWndTabs->setIndexSelected( (mWndTabs->getIndexSelected() - 1 + num) % num ); return true;
+				}
+				else if (action("NextTab")) {
+					mWndTabs->setIndexSelected( (mWndTabs->getIndexSelected() + 1) % num ); return true;
+				}
+		}	}
+		
+		//  on/off gui
+		if (action("ShowOptions"))
 		{
-			if (action("PrevTab")) {
-				mWndTabs->setIndexSelected( (mWndTabs->getIndexSelected() - 1 + num) % num ); return true;
-			}
-			else if (action("NextTab")) {
-				mWndTabs->setIndexSelected( (mWndTabs->getIndexSelected() + 1) % num ); return true;
-			}
-	}	}
-	
-	//  on/off gui
-	if (action("ShowOptions"))
-	{
-		if (!alt)  {
-			isFocGui = !isFocGui;
-			if (mWndOpts)	mWndOpts->setVisible(isFocGui);
-			if (bnQuit)  bnQuit->setVisible(isFocGui);
-			if (mGUI)	mGUI->setVisiblePointer(isFocGuiOrRpl());
-			if (!isFocGui)  mToolTip->setVisible(false);
-		}	return true;
-	}
+			if (!alt)  {
+				isFocGui = !isFocGui;
+				if (mWndOpts)	mWndOpts->setVisible(isFocGui);
+				if (bnQuit)  bnQuit->setVisible(isFocGui);
+				if (mGUI)	mGUI->setVisiblePointer(isFocGuiOrRpl());
+				if (!isFocGui)  mToolTip->setVisible(false);
+			}	return true;
+		}
+	}	
 	
 	//  new game
 	if (action("RestartGame"))
