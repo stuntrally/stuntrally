@@ -91,10 +91,17 @@ void SplitScreenManager::Align()
 		}
 		else if (mNumPlayers == 3)
 		{
-			// 3 players, 2 viewports at top and 1 at bottom
-			if (i == 0)		{	dim_(0.0, 0.0, 0.5, 0.5);	}
-			else if (i == 1){	dim_(0.5, 0.0, 0.5, 0.5);	}
-			else if (i == 2){	dim_(0.0, 0.5, 1.0, 0.5);	}
+			// 3 players, use split_vertically setting
+			if (!pSet->split_vertically)
+			{
+				if (i == 0)		{	dim_(0.0, 0.0, 0.5, 0.5);	}
+				else if (i == 1){	dim_(0.5, 0.0, 0.5, 0.5);	}
+				else if (i == 2){	dim_(0.0, 0.5, 1.0, 0.5);	}
+			}else{
+				if (i == 0)		{	dim_(0.0, 0.0, 0.5, 1.0);	}
+				else if (i == 1){	dim_(0.5, 0.0, 0.5, 0.5);	}
+				else if (i == 2){	dim_(0.5, 0.5, 0.5, 0.5);	}
+			}
 		}
 		else if (mNumPlayers == 4)
 		{
