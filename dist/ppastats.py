@@ -20,6 +20,8 @@ def printDLCount(distarch):
 
 print "Package\tVersion\tDownloads" #"\tDaily DLs"
 print
+printDLCount("natty/i386")
+printDLCount("natty/amd64")
 printDLCount("maverick/i386")
 printDLCount("maverick/amd64")
 printDLCount("lucid/i386")

@@ -293,6 +293,10 @@ namespace OISB
 					for (std::vector<Binding*>::const_iterator bit=(*ait).second->mBindings.begin(); bit!=(*ait).second->mBindings.end(); bit++)
 					{
 						rapidxml::xml_node<>* bindingNode = doc.allocate_node(node_element, "binding");
+						if ((*bit)->mOptional) {
+							char *att_optional = doc.allocate_string( (*bit)->mOptional ? "1" : "0" );
+							bindingNode->append_attribute( doc.allocate_attribute("optional", att_optional) );
+						}
 						
 						// binds
 						for (std::vector<std::pair<String, Bindable*> >::iterator bnit=(*bit)->mBindables.begin(); bnit!=(*bit)->mBindables.end(); bnit++)
@@ -304,6 +308,12 @@ namespace OISB
 								char *att_att = doc.allocate_string((*bnit).first.c_str());
 								bindNode->append_attribute(doc.allocate_attribute("role", att_att)); 
 								char *att_name = doc.allocate_string((*bnit).second->getBindableName().c_str()); 
+								bindNode->value(att_name);
+							}
+							else
+							{
+								// dummy bindable
+								char *att_name = doc.allocate_string((*bnit).first.c_str()); 
 								bindNode->value(att_name);
 							}
 			
@@ -319,6 +329,10 @@ namespace OISB
 					for (std::vector<Binding*>::const_iterator bit=(*ait).second->mBindings.begin(); bit!=(*ait).second->mBindings.end(); bit++)
 					{
 						rapidxml::xml_node<>* bindingNode = doc.allocate_node(node_element, "binding");
+						if ((*bit)->mOptional) {
+							char *att_optional = doc.allocate_string( (*bit)->mOptional ? "1" : "0" );
+							bindingNode->append_attribute( doc.allocate_attribute("optional", att_optional) );
+						}
 						
 						// binds
 						for (std::vector<std::pair<String, Bindable*> >::iterator bnit=(*bit)->mBindables.begin(); bnit!=(*bit)->mBindables.end(); bnit++)
@@ -332,9 +346,15 @@ namespace OISB
 								char *att_name = doc.allocate_string((*bnit).second->getBindableName().c_str()); 
 								bindNode->value(att_name);
 							}
-			
-							actionNode->append_node(bindNode);
+							else
+							{
+								// dummy bindable
+								char *att_name = doc.allocate_string((*bnit).first.c_str()); 
+								bindNode->value(att_name);
+							}
+							bindingNode->append_node(bindNode);
 						}
+						actionNode->append_node(bindingNode);
 					}
 				}
 				
@@ -455,22 +475,11 @@ namespace OISB
 	int System::processActionBindingXML(rapidxml::xml_node<>* bindingNode, Action *action)
 	{
 		if(!bindingNode || !action) return 1;
-
-		bool optional = false;
-		if(bindingNode->first_attribute("optional"))
-			optional = true;
-
-		try
-		{
-			OISB::Binding* binding = action->createBinding();
-			for (rapidxml::xml_node<> *child = bindingNode->first_node("bind"); child; child = child->next_sibling())
-				processActionBindXML(child, binding, action);
-		} catch(const OIS::Exception &ex)
-		{
-			// rethrow if this binding is not optional
-			if(!optional)
-				throw(ex);
-		}
+		OISB::Binding* binding = action->createBinding();
+		binding->mOptional = bindingNode->first_attribute("optional");
+		for (rapidxml::xml_node<> *child = bindingNode->first_node("bind"); child; child = child->next_sibling())
+			processActionBindXML(child, binding, action);
+				
 		return 0;
 	}
 	

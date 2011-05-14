@@ -60,6 +60,12 @@ bool BaseApp::keyPressed( const OIS::KeyEvent &arg )
 	{
 		bAssignKey = false;
 		pressedKey = arg.key;
+		
+		// cancel on backspace or escape
+		bool cancel = false;
+		if (pressedKey == OIS::KC_BACK || pressedKey == OIS::KC_ESCAPE)
+			cancel = true;
+		
 		pressedKeySender->setCaption(mKeyboard->getAsString(pressedKey));
 		// show mouse again
 		MyGUI::PointerManager::getInstance().setVisible(true);
@@ -92,93 +98,105 @@ bool BaseApp::keyPressed( const OIS::KeyEvent &arg )
 			bind2 = binding->getBindable(1);
 			bind2_role = binding->getRole(bind2);
 		}
+		
+		// cancel: delete canceled bind
+		if (cancel)
+		{
+			if (index == "1" && bind1) binding->unbind(bind1);
+			if (index == "2" && bind2) binding->unbind(bind2);
+			if (index == "1") bind1 = NULL;
+			if (index == "2") bind2 = NULL;
+		}
+			
 		// delete all binds
-		if (bind1) binding->unbind(bind1);
-		if (bind2) binding->unbind(bind2);
+		if (!cancel) {
+			if (bind1) binding->unbind(bind1);
+			if (bind2) binding->unbind(bind2);
 		
-		// for analog axis actions, make sure the binds have a role
-		if (action->getActionType() == OISB::AT_ANALOG_AXIS)
-		{
-			if (bind1_role == "" || bind2_role == "")
+			// for analog axis actions, make sure the binds have a role
+			if (action->getActionType() == OISB::AT_ANALOG_AXIS)
 			{
-				bind1_role = "increase";
-				bind2_role = "decrease";
+				if (bind1_role == "" || bind2_role == "")
+				{
+					bind1_role = "increase";
+					bind2_role = "decrease";
+				}
 			}
-		}
-		
-		try
-		{
-			// rebind
-			if (index == "1")
+			
+			try
 			{
-				binding->bind("Keyboard/" + mKeyboard->getAsString(pressedKey), bind1_role);
-				// only bind 2nd if keys are not the same (will throw exception)
-				if (bind2)
-					if ("Keyboard/" + mKeyboard->getAsString(pressedKey) != bind2->getBindableName())
-					{
-						binding->bind(bind2, bind2_role);	
-					}
+				// rebind
+				if (index == "1")
+				{
+					binding->bind("Keyboard/" + mKeyboard->getAsString(pressedKey), bind1_role);
+					// only bind 2nd if keys are not the same (will throw exception)
+					if (bind2)
+						if ("Keyboard/" + mKeyboard->getAsString(pressedKey) != bind2->getBindableName())
+						{
+							binding->bind(bind2, bind2_role);	
+						}
+				}
+				else if (index == "2")
+				{
+					// only bind 1st if keys are not the same (will throw exception)
+					if (bind1)
+						if ("Keyboard/" + mKeyboard->getAsString(pressedKey) != bind1->getBindableName())
+						{
+							binding->bind(bind1, bind1_role);
+						}
+					binding->bind("Keyboard/" + mKeyboard->getAsString(pressedKey), bind2_role);
+				}
 			}
-			else if (index == "2")
+			catch (OIS::Exception) 
 			{
-				// only bind 1st if keys are not the same (will throw exception)
-				if (bind1)
-					if ("Keyboard/" + mKeyboard->getAsString(pressedKey) != bind1->getBindableName())
-					{
-						binding->bind(bind1, bind1_role);
-					}
-				binding->bind("Keyboard/" + mKeyboard->getAsString(pressedKey), bind2_role);
+				// invalid key?
+				// restore old
+				Log("WARNING: binding->bind failed, restoring old binds...");
+				
+				// this is nasty, but since some very weird stuff can happen here, we have to individually try/catch
+				try {
+					binding->unbind("Keyboard/" + mKeyboard->getAsString(pressedKey));
+				}
+				catch (OIS::Exception) {}
+				try {
+					if (bind1) binding->unbind(bind1);
+				}
+				catch (OIS::Exception) {}
+				try {
+					if (bind2) binding->unbind(bind2);
+				}
+				catch (OIS::Exception) {}
+				
+				if (bind1) binding->bind(bind1, bind1_role);
+				if (bind2) binding->bind(bind2, bind2_role);
+				
+				return true;
 			}
-		}
-		catch (OIS::Exception) 
-		{
-			// invalid key?
-			// restore old
-			Log("WARNING: binding->bind failed, restoring old binds...");
-			
-			// this is nasty, but since some very weird stuff can happen here, we have to individually try/catch
-			try {
-				binding->unbind("Keyboard/" + mKeyboard->getAsString(pressedKey));
-			}
-			catch (OIS::Exception) {}
-			try {
-				if (bind1) binding->unbind(bind1);
-			}
-			catch (OIS::Exception) {}
-			try {
-				if (bind2) binding->unbind(bind2);
-			}
-			catch (OIS::Exception) {}
-			
-			if (bind1) binding->bind(bind1, bind1_role);
-			if (bind2) binding->bind(bind2, bind2_role);
-			
-			return true;
 		}
 		
 		// macro to strip away the Keyboard/
 		#define stripk(s) Ogre::StringUtil::split(s, "/")[1]
 		
 		// update button labels
-		MyGUI::ButtonPtr b1 = mGUI->findWidget<MyGUI::Button>("inputbutton_" + actionName + "_" + schemaName + "_" + "1");
-		MyGUI::ButtonPtr b2 = mGUI->findWidget<MyGUI::Button>("inputbutton_" + actionName + "_" + schemaName + "_" + "2");
+		MyGUI::ButtonPtr b1 = mGUI->findWidget<MyGUI::Button>("inputbutton_" + actionName + "_" + schemaName + "_" + "1", "", false);
+		MyGUI::ButtonPtr b2 = mGUI->findWidget<MyGUI::Button>("inputbutton_" + actionName + "_" + schemaName + "_" + "2", "", false);
 		if (binding->getNumBindables() == 0)
 		{
-			b1->setCaption( TR("#{InputKeyUnassigned}") ); 
-			b2->setCaption( TR("#{InputKeyUnassigned}") );
+			if (b1) b1->setCaption( TR("#{InputKeyUnassigned}") ); 
+			if (b2) b2->setCaption( TR("#{InputKeyUnassigned}") );
 		}
 		else if (binding->getNumBindables() == 1)
 		{
 			// increase first
 			if (binding->getRole(binding->getBindable(0)) == "decrease")
 			{
-				b2->setCaption( stripk(binding->getBindable(0)->getBindableName()) );
-				b1->setCaption( TR("#{InputKeyUnassigned}") );
+				if (b1) b2->setCaption( stripk(binding->getBindable(0)->getBindableName()) );
+				if (b2) b1->setCaption( TR("#{InputKeyUnassigned}") );
 			}
 			else
 			{
-				b1->setCaption( stripk(binding->getBindable(0)->getBindableName()) );
-				b2->setCaption( TR("#{InputKeyUnassigned}") );
+				if (b1) b1->setCaption( stripk(binding->getBindable(0)->getBindableName()) );
+				if (b2) b2->setCaption( TR("#{InputKeyUnassigned}") );
 			}
 		}
 		else if (binding->getNumBindables() == 2)
@@ -186,13 +204,13 @@ bool BaseApp::keyPressed( const OIS::KeyEvent &arg )
 			// increase first
 			if (binding->getRole(binding->getBindable(0)) == "increase")
 			{
-				b1->setCaption( stripk(binding->getBindable(0)->getBindableName()) );
-				b2->setCaption( stripk(binding->getBindable(1)->getBindableName()) );
+				if (b1) b1->setCaption( stripk(binding->getBindable(0)->getBindableName()) );
+				if (b2) b2->setCaption( stripk(binding->getBindable(1)->getBindableName()) );
 			}
 			else
 			{
-				b2->setCaption( stripk(binding->getBindable(0)->getBindableName()) );
-				b1->setCaption( stripk(binding->getBindable(1)->getBindableName()) );
+				if (b2) b2->setCaption( stripk(binding->getBindable(0)->getBindableName()) );
+				if (b1) b1->setCaption( stripk(binding->getBindable(1)->getBindableName()) );
 
 			}
 		}

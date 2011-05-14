@@ -28,12 +28,14 @@ restrictions:
 
 #include "OISException.h"
 
+#include <boost/algorithm/string/predicate.hpp> // String starts_with
+
 #include <cassert>
 
 namespace OISB
 {
 	Binding::Binding(Action* parent):
-		mParent(parent)
+		mParent(parent), mOptional(false)
 	{}
 	
 	Binding::~Binding()
@@ -62,17 +64,21 @@ namespace OISB
     {
         Bindable* b = System::getSingleton().lookupBindable(bindable);
 
-        if (!b)
-        {
-            OIS_EXCEPT(OIS::E_General, String("Lookup of bindable '" + bindable + "' failed").c_str());
-        }
+        if (b)
+			bind(b, role);
+		else
+		{
+			// dummy bind...
+			if (mOptional)
+				bind(NULL, bindable);
+			else
+				OIS_EXCEPT(OIS::E_General, String("Lookup of bindable '" + bindable + "' failed").c_str());
+		}
 
-        bind(b, role);
     }
 
     void Binding::unbind(Bindable* bindable)
     {
-		if (!bindable) return;
         for (BindableList::iterator it = mBindables.begin(); it != mBindables.end(); ++it)
         {
             if (it->second == bindable)
@@ -220,11 +226,12 @@ namespace OISB
 
     bool Binding::isAnyBindableActive() const
     {
+		if (mBindables.size() == 0) return false;
         for (BindableList::const_iterator it = mBindables.begin(); it != mBindables.end(); ++it)
         {
             Bindable* bindable = it->second;
             
-            if (bindable->isActive())
+            if (bindable && bindable->isActive())
             {
                 return true;
             }
@@ -235,11 +242,12 @@ namespace OISB
 
     bool Binding::areAllBindablesActive() const
     {
+		if (mBindables.size() == 0) return false;
         for (BindableList::const_iterator it = mBindables.begin(); it != mBindables.end(); ++it)
         {
             Bindable* bindable = it->second;
             
-            if (!bindable->isActive())
+            if (!bindable || !bindable->isActive())
             {
                 return false;
             }

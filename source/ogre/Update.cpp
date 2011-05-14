@@ -3,9 +3,6 @@
 #include "../vdrift/game.h"
 #include "FollowCamera.h"
 #include "../road/Road.h"
-#include "../oisb/OISBSystem.h"
-
-
 
 //---------------------------------------------------------------------------------------------------------------
 //  Frame Start
@@ -45,7 +42,7 @@ void App::UpdThr()
 //---------------------------------------------------------------------------------------------------------------
 
 bool App::frameStart(Real time)
-{
+{	
 	if (bWindowResized)
 	{
 		if (bnQuit)  // reposition Quit btn
@@ -338,7 +335,7 @@ void App::newPoses()
 				{
 					int size = replay.GetNumFrames() * sizeof(ReplayFrame);
 					sprintf(s, "%5.2f", float(size)/1000000.f);
-					String ss = String("Recorded   time: ") + GetTimeString(replay.GetTimeLength()) + "   size: " + s + " MB";
+					String ss = String( TR("#{RplRecTime}: ")) + GetTimeString(replay.GetTimeLength()) + TR("   #{RplSize}: ") + s + TR(" #{UnitMB}");
 					valRplName2->setCaption(ss);
 				}
 			}

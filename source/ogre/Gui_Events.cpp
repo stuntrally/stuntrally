@@ -300,13 +300,69 @@ void App::joystickBindChanged(Widget* sender, size_t val)
 	
 	OISB::ActionSchema* schema = OISB::System::getSingleton().mActionSchemas[schemaName];
 	OISB::Action* action = schema->mActions[actionName];
-	if (action->mBindings.size() == 0)
-		action->createBinding();
-	OISB::Binding* binding = action->mBindings.front();
+	if (action->mBindings.size() == 0) return;
+	if (action->mBindings.size() == 1) action->createBinding();
+	OISB::Binding* binding = action->mBindings[1];
+	binding->mOptional = true;
+	
+	// get selected joystick
+	// find selected oisb joystick for this tab (to get num axis & buttons)
+	MyGUI::ComboBoxPtr jsMenu = mGUI->findWidget<ComboBox>("joystickSel_" + schemaName);
+	std::string jsName;
+	if (jsMenu->getIndexSelected() != MyGUI::ITEM_NONE)
+		jsName = jsMenu->getItemNameAt( jsMenu->getIndexSelected() );
+	else 
+	{
+		Log("Couldnt get selected joystick"); return;
+	}
+	Log(jsName);
+		
+	// get selected axis or button
+	MyGUI::ComboBoxPtr box = static_cast<MyGUI::ComboBoxPtr> (sender);
+	if (box->getItemCount() < box->getIndexSelected() || box->getIndexSelected() == MyGUI::ITEM_NONE)
+	{
+		Log("Invalid item value"); return;
+	}
+	std::string bindName = box->getItemNameAt(box->getIndexSelected());
+	Log(bindName);
+	
+	// unbind old
+	for (int i=0; i<binding->getNumBindables(); i++)
+	{
+		binding->unbind(binding->getBindable(i));
+	}
+	
+	// bind new
+	try {
+		binding->bind(jsName + "/" + bindName); 
+	}
+	catch (OIS::Exception) {
+		Log("Failed to bind '" + jsName + "/" + bindName + "'");
+	}
+
 }
 void App::joystickSelectionChanged(Widget* sender, size_t val)
 {
 	UpdateJsButtons();
+	
+	// ----------------  update all binds with the new joystick  -----------------------------------------
+	std::string actionSchemaName = Ogre::StringUtil::split(sender->getName(), "_")[1];
+	
+	OISB::ActionSchema* schema = mOISBsys->mActionSchemas[actionSchemaName];
+		
+	for (std::map<OISB::String, OISB::Action*>::const_iterator
+		ait = schema->mActions.begin();
+		ait != schema->mActions.end(); ait++)
+	{
+		MyGUI::WidgetPtr box;
+		if ((*ait).second->getActionType() == OISB::AT_TRIGGER)
+			box = mGUI->findWidget<Widget>("jsButtonSel_" + (*ait).first + "_" + actionSchemaName);
+		else if ((*ait).second->getActionType() == OISB::AT_ANALOG_AXIS)
+			box = mGUI->findWidget<Widget>("jsAxisSel_" + (*ait).first + "_" + actionSchemaName);
+			
+		joystickBindChanged(box, 0);
+	}
+	
 }
 
 //  [Setup]
@@ -615,7 +671,7 @@ void App::btnChgTrack(WP)
 {
 	pSet->track = sListTrack;
 	pSet->track_user = bListTrackU;
-	if (valTrk)  valTrk->setCaption("Track: " + sListTrack);
+	if (valTrk)  valTrk->setCaption(TR("#{Track}: ") + sListTrack);
 }
 
 //  new game
@@ -831,17 +887,17 @@ void App::listRplChng(List* li, size_t pos)
 	Replay rpl;
 	if (rpl.LoadFile(file,true))
 	{
-		String ss = String("Track: ") + rpl.header.track + (rpl.header.track_user ? "  *user*" : "");
+		String ss = String(TR("#{Track}: ")) + rpl.header.track + (rpl.header.track_user ? "  *user*" : "");
 		valRplName->setCaption(ss);
 
-		ss = String("Car: ") + rpl.header.car + "\n" +
-			"Time: " + GetTimeString(rpl.GetTimeLength());
+		ss = String(TR("#{Car}: ")) + rpl.header.car + "\n" +
+			TR("#{RplTime}: ") + GetTimeString(rpl.GetTimeLength());
 		valRplInfo->setCaption(ss);
 
 		int size = boost::filesystem::file_size(file);
 		sprintf(s, "%5.2f", float(size)/1000000.f);
-		ss = String("File size:") + s + " MB\n" +
-			"Version: " + toStr(rpl.header.ver) + "     " + toStr(rpl.header.frameSize) + "B";
+		ss = String(TR("#{RplFileSize}:")) + s + TR(" #{UnitMB}\n") +
+			TR("#{RplVersion}: ") + toStr(rpl.header.ver) + "     " + toStr(rpl.header.frameSize) + "B";
 		if (valRplInfo2)  valRplInfo2->setCaption(ss);
 	}
 	//edRplDesc  edRplName
@@ -922,120 +978,157 @@ void App::updReplaysList()
 //-----------------------------------------------------------------------------------------------------------
 bool App::keyPressed( const OIS::KeyEvent &arg )
 {
-	using namespace OIS;
-	switch (arg.key)
-	{
-		case KC_ESCAPE:		// quit
-		if (pSet->escquit)  {
-			mShutDown = true;	return true;  }
+	// update all keystates
+	OISB::System::getSingleton().process(0);
+	
+	#define action(s) mOISBsys->lookupAction(std::string("General/")+std::string(s))->isActive()
 
-		#if 0
-		case KC_1:
-		if (mSplitMgr)
-		{	Ogre::Viewport* vp = *mSplitMgr->mViewports.begin();
-			vp->setAutoUpdated(shift);
-			vp->setVisibilityMask(shift ? 255 : 0);
-		}	return true;
-		case KC_2:
-		if (mSplitMgr)
-		{	Ogre::Viewport* vp = *(++mSplitMgr->mViewports.begin());
-			vp->setAutoUpdated(shift);
-			vp->setVisibilityMask(shift ? 255 : 0);
-		}	return true;
-		case KC_3:
-		if (mSplitMgr)
-		{	Ogre::Viewport* vp = *(--mSplitMgr->mViewports.end());
-			vp->setAutoUpdated(shift);
-			vp->setVisibilityMask(shift ? 255 : 0);
-		}	return true;
-		#endif
-	   	
-	   	case KC_F1:
-	   	case KC_TAB:	// on/off gui
-	   	if (!alt)  {
-	   		isFocGui = !isFocGui;
-	   		if (mWndOpts)	mWndOpts->setVisible(isFocGui);
-			if (bnQuit)  bnQuit->setVisible(isFocGui);
-	   		if (mGUI)	mGUI->setVisiblePointer(isFocGuiOrRpl());
-	   		if (!isFocGui)  mToolTip->setVisible(false);
-	   	}	return true;
-
-
-		case KC_BACK:	// replay controls
-			if (mWndRpl && !isFocGui)
-			{	mWndRpl->setVisible(!mWndRpl->isVisible());
-				return true;  }
-			break;
-
-		case KC_P:		// replay play/pause
-			if (bRplPlay && !isFocGui)
-			{	bRplPause = !bRplPause;  UpdRplPlayBtn();
-				return true;  }
-			break;
-
-
-		case KC_F9:		// car debug text/bars
-			if (shift)	{	WP wp = chDbgT;  ChkEv(car_dbgtxt);  ShowHUD();  }
-			else		{	WP wp = chDbgB;  ChkEv(car_dbgbars);   ShowHUD();  }
-			return true;
-
-		case KC_F11:	//  fps
-		if (!shift)
-		{	WP wp = chFps;  ChkEv(show_fps); 
-			if (pSet->show_fps)  mFpsOverlay->show();  else  mFpsOverlay->hide();
-			return false;
-		}	break;
-
-		case KC_F10:	//  blt debug, txt
-		if (shift)
-		{	WP wp = chBltTxt;  ChkEv(bltProfilerTxt);  return false;  }
-		else if (ctrl)
-		{	WP wp = chBlt;  ChkEv(bltDebug);  return false;  }
-		break;
-
-
-		case KC_F7:		// Times
-		{	WP wp = chTimes;  ChkEv(show_times);  ShowHUD();  }
-			return false;
-			
-		case KC_F8:		// Minimap
-		{	WP wp = chMinimp;  ChkEv(trackmap);  if (ndMap)  ndMap->setVisible(pSet->trackmap);
-		}	return false;
-
-		
-		case KC_F5:		//  new game
-		//if (ctrl)
-		{	NewGame();  return false;
-		}	break;
-		
-		case KC_RETURN:	//  chng trk + new game  after pg up/dn
-		if (isFocGui)
-		{	size_t tab = mWndTabs->getIndexSelected();
-			switch (tab)
+	if (!bAssignKey) {
+		//  change gui tabs
+		if (mWndTabs)
+		{	int num = mWndTabs->getItemCount();
+			if (isFocGui)  
 			{
-			case 0:
-				btnChgTrack(0);
-				btnNewGame(0);  break;
-			case 1:
-				btnChgCar(0);
-				btnNewGame(0);  break;
-			case 2:
-				chatSendMsg();  break;
+				if (action("PrevTab")) {
+					mWndTabs->setIndexSelected( (mWndTabs->getIndexSelected() - 1 + num) % num ); return true;
+				}
+				else if (action("NextTab")) {
+					mWndTabs->setIndexSelected( (mWndTabs->getIndexSelected() + 1) % num ); return true;
+				}
 		}	}
-		return false;
-	}
-
-	//  change gui tabs
-	if (mWndTabs)
-	{	int num = mWndTabs->getItemCount();
-		if (isFocGui)  switch (arg.key)
+		
+		//  on/off gui
+		if (action("ShowOptions"))
 		{
-	   		case KC_F2:  // prev tab
-	   			mWndTabs->setIndexSelected( (mWndTabs->getIndexSelected() - 1 + num) % num );
-	   			return true;
-	   		case KC_F3:  // next tab
-	   			mWndTabs->setIndexSelected( (mWndTabs->getIndexSelected() + 1) % num );
-	   			return true;
+			if (!alt)  {
+				isFocGui = !isFocGui;
+				if (mWndOpts)	mWndOpts->setVisible(isFocGui);
+				if (bnQuit)  bnQuit->setVisible(isFocGui);
+				if (mGUI)	mGUI->setVisiblePointer(isFocGuiOrRpl());
+				if (!isFocGui)  mToolTip->setVisible(false);
+			}	return true;
+		}
+	}	
+	
+	//  new game
+	if (action("RestartGame"))
+	{
+		NewGame();  return false;
+	}
+	
+	using namespace OIS;
+	if (!bAssignKey) {
+		switch (arg.key)
+		{
+			case KC_ESCAPE:		// quit
+			if (pSet->escquit)  {
+				mShutDown = true;	return true;  }
+				
+			//case KC_F1:
+			//case KC_TAB:	// on/off gui
+			if (!alt)  {
+				isFocGui = !isFocGui;
+				if (mWndOpts)	mWndOpts->setVisible(isFocGui);
+				if (bnQuit)  bnQuit->setVisible(isFocGui);
+				if (mGUI)	mGUI->setVisiblePointer(isFocGuiOrRpl());
+				if (!isFocGui)  mToolTip->setVisible(false);
+			}	return true;
+
+			#if 0
+			case KC_1:
+			if (mSplitMgr)
+			{	Ogre::Viewport* vp = *mSplitMgr->mViewports.begin();
+				vp->setAutoUpdated(shift);
+				vp->setVisibilityMask(shift ? 255 : 0);
+			}	return true;
+			case KC_2:
+			if (mSplitMgr)
+			{	Ogre::Viewport* vp = *(++mSplitMgr->mViewports.begin());
+				vp->setAutoUpdated(shift);
+				vp->setVisibilityMask(shift ? 255 : 0);
+			}	return true;
+			case KC_3:
+			if (mSplitMgr)
+			{	Ogre::Viewport* vp = *(--mSplitMgr->mViewports.end());
+				vp->setAutoUpdated(shift);
+				vp->setVisibilityMask(shift ? 255 : 0);
+			}	return true;
+			#endif
+
+
+			case KC_BACK:	// replay controls
+				if (mWndRpl && !isFocGui)
+				{	mWndRpl->setVisible(!mWndRpl->isVisible());
+					return true;  }
+				break;
+
+			case KC_P:		// replay play/pause
+				if (bRplPlay)
+				{	bRplPause = !bRplPause;  UpdRplPlayBtn();  }
+				return true;
+
+
+			case KC_F9:		// car debug text/bars
+				if (shift)	{	WP wp = chDbgT;  ChkEv(car_dbgtxt);  ShowHUD();  }
+				else		{	WP wp = chDbgB;  ChkEv(car_dbgbars);   ShowHUD();  }
+				return true;
+
+			case KC_F11:	//  fps
+			if (!shift)
+			{	WP wp = chFps;  ChkEv(show_fps); 
+				if (pSet->show_fps)  mFpsOverlay->show();  else  mFpsOverlay->hide();
+				return false;
+			}	break;
+
+			case KC_F10:	//  blt debug, txt
+			if (shift)
+			{	WP wp = chBltTxt;  ChkEv(bltProfilerTxt);  return false;  }
+			else if (ctrl)
+			{	WP wp = chBlt;  ChkEv(bltDebug);  return false;  }
+			break;
+
+			case KC_F7:		// Times
+			{	WP wp = chTimes;  ChkEv(show_times);  ShowHUD();  }
+				return false;
+				
+			case KC_F8:		// Minimap
+			{	WP wp = chMinimp;  ChkEv(trackmap);  if (ndMap)  ndMap->setVisible(pSet->trackmap);
+			}	return false;
+			
+			case KC_F5:		//  new game
+			//if (ctrl)
+			{	NewGame();  return false;
+			}	break;
+			
+			case KC_RETURN:	//  chng trk + new game  after pg up/dn
+			if (isFocGui)
+			{	size_t tab = mWndTabs->getIndexSelected();
+				switch (tab)
+				{
+				case 0:
+					btnChgTrack(0);
+					btnNewGame(0);  break;
+				case 1:
+					btnChgCar(0);
+					btnNewGame(0);  break;
+				case 2:
+					chatSendMsg();  break;
+			}	}
+			return false;
+		}
+
+		//  change gui tabs
+		if (mWndTabs)
+		{	int num = mWndTabs->getItemCount();
+			if (isFocGui)  switch (arg.key)
+			{
+				case KC_F2:  // prev tab
+					mWndTabs->setIndexSelected( (mWndTabs->getIndexSelected() - 1 + num) % num );
+					return true;
+				case KC_F3:  // next tab
+					mWndTabs->setIndexSelected( (mWndTabs->getIndexSelected() + 1) % num );
+					return true;
+			}
 		}
 	}
 

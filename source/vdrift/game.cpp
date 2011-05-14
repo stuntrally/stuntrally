@@ -14,6 +14,7 @@
 #include "tracksurface.h"
 #include "../ogre/OgreGame.h"
 #include "../ogre/FollowCamera.h"
+#include "../oisb/OISBSystem.h"
 
 
 ///start the game with the given arguments
@@ -261,6 +262,8 @@ bool GAME::OneLoop()
 		qtim.update();
 		double dt = qtim.dt;
 		clocktime += dt;
+		
+		OISB::System::getSingleton().process(dt);
 
 		Tick(dt);  // do CPU intensive stuff in parallel with the GPU
 

@@ -412,7 +412,7 @@ void App::InitGui()
 	//  track text, chg btn
     valTrk = (StaticTextPtr)mLayout->findWidget("TrackText");
     if (valTrk)
-		valTrk->setCaption("Track: " + pSet->track);  sListTrack = pSet->track;
+		valTrk->setCaption(TR("#{Track}: " + pSet->track));  sListTrack = pSet->track;
 	trkDesc = (EditPtr)mLayout->findWidget("TrackDesc");
 
 	//  track stats
@@ -610,8 +610,9 @@ void App::InitInputGui()
 			{
 				joysticks->addItem( (*jit)->getName() );
 			}
-			/// test
-			joysticks->addItem("MyFunnyJoystick001");
+			joysticks->addItem("Dummy Joystick");	/// test
+			joysticks->setEditReadOnly(true);
+			joysticks->eventComboChangePosition = MyGUI::newDelegate(this, &App::joystickSelectionChanged);
 		}
 		
 		///  ------ custom action sorting ----------------
@@ -660,13 +661,7 @@ void App::InitInputGui()
 			if (act->getActionType() == OISB::AT_TRIGGER)
 			{
 				if (act->mBindings.size() > 0 && act->mBindings.front()->getNumBindables() > 0)
-				{
-					// first key
 					key1_label = act->mBindings.front()->getBindable(0)->getBindableName();
-					// alternate key
-					if (act->mBindings.front()->getNumBindables() > 1)
-						key2_label = act->mBindings.front()->getBindable(1)->getBindableName();
-				}
 			}
 			else if (act->getActionType() == OISB::AT_ANALOG_AXIS)
 			{
@@ -689,12 +684,19 @@ void App::InitInputGui()
 			}
 				
 			// --------- create buttons -------------
+			bool button2 = false;
+			if (  act->getActionType() == OISB::AT_ANALOG_AXIS && !( act->getProperty<int> ("MinimumValue") == 0 )) button2 = true;
+
 			MyGUI::ButtonPtr key1 = tabitem->createWidget<Button>("Button", x1, y, sx, sy, MyGUI::Align::Default, "inputbutton_" + (*ait).first + "_" + (*it).first + "_1");
 			key1->setCaption( stripk(key1_label) );
 			key1->eventMouseButtonClick = MyGUI::newDelegate(this, &App::controlBtnClicked);
-			MyGUI::ButtonPtr key2 = tabitem->createWidget<Button>("Button", x2, y, sx, sy, MyGUI::Align::Default, "inputbutton_" + (*ait).first + "_" + (*it).first + "_2");
-			key2->setCaption( stripk(key2_label) );
-			key2->eventMouseButtonClick = MyGUI::newDelegate(this, &App::controlBtnClicked);
+			
+			if (button2)
+			{
+				MyGUI::ButtonPtr key2 = tabitem->createWidget<Button>("Button", x2, y, sx, sy, MyGUI::Align::Default, "inputbutton_" + (*ait).first + "_" + (*it).first + "_2");
+				key2->setCaption( stripk(key2_label) );
+				key2->eventMouseButtonClick = MyGUI::newDelegate(this, &App::controlBtnClicked);
+			}
 
 
 			/// joystick binds
@@ -706,6 +708,7 @@ void App::InitInputGui()
 					MyGUI::ComboBoxPtr button = tabitem->createWidget<ComboBox>("ComboBox", x3, y, sx, sy, MyGUI::Align::Default, "jsButtonSel_" + (*ait).first + "_" + (*it).first );
 					button->addItem(TR("#{InputKeyNoButton}"));
 					button->setIndexSelected(0);
+					button->setEditReadOnly(true);
 					button->eventComboChangePosition = MyGUI::newDelegate(this, &App::joystickBindChanged);
 				}
 				else if (act->getActionType() == OISB::AT_ANALOG_AXIS)
@@ -713,6 +716,7 @@ void App::InitInputGui()
 					MyGUI::ComboBoxPtr axis = tabitem->createWidget<ComboBox>("ComboBox", x3, y, sx, sy, MyGUI::Align::Default, "jsAxisSel_" + (*ait).first + "_" + (*it).first );
 					axis->addItem(TR("#{InputKeyNoAxis}"));
 					axis->setIndexSelected(0);
+					axis->setEditReadOnly(true);
 					axis->eventComboChangePosition = MyGUI::newDelegate(this, &App::joystickBindChanged);
 				}
 			}
@@ -736,6 +740,9 @@ void App::UpdateJsButtons()
 		{
 			OISB::Action* act = (*ait).second;
 			
+			OISB::Binding* bnd2 = NULL;
+			if (act->mBindings.size() >= 2) bnd2 = act->mBindings[1];
+			
 			// find selected oisb joystick for this tab (to get num axis & buttons)
 			MyGUI::ComboBoxPtr jsMenu = mGUI->findWidget<ComboBox>("joystickSel_" + (*it).first);
 			std::string jsName;
@@ -751,45 +758,64 @@ void App::UpdateJsButtons()
 			if (act->getActionType() == OISB::AT_TRIGGER)
 			{
 				MyGUI::ComboBoxPtr button = mGUI->findWidget<ComboBox>("jsButtonSel_" + (*ait).first + "_" + (*it).first);
-				
-				// ------------- before deleting all old, save selected and restore selection after -----------------
-				std::string selectedButton = "";
-				if (button->getIndexSelected() != MyGUI::ITEM_NONE) selectedButton = button->getItemNameAt(button->getIndexSelected());
 				button->removeAllItems();
-				if (selectedButton != "" && button->findItemIndexWith(selectedButton) != MyGUI::ITEM_NONE)
-					button->setIndexSelected( button->findItemIndexWith(selectedButton) );
-				
 				if (js) {
 					for (std::vector<OISB::DigitalState*>::const_iterator it = js->buttons.begin();
 							it != js->buttons.end(); it++)
 						button->addItem( stripk((*it)->getBindableName()) );
 				}
 				else
-				{
 					button->addItem( TR("#{InputKeyNoButton}") );
-					button->setIndexSelected(0);
+					
+				button->setIndexSelected(0);
+					
+				// select correct axis/button (from user keybinds)
+				if (bnd2 && bnd2->mBindables.size() > 0) {
+					size_t result;
+					if (bnd2->getBindable(0) == NULL)
+					{
+						result = button->findItemIndexWith( stripk(bnd2->getRole(NULL)) );
+						if (result != MyGUI::ITEM_NONE)
+							button->setIndexSelected( result );
+					}
+					else
+					{
+						result = button->findItemIndexWith( stripk(bnd2->getBindable(0)->getBindableName()) );
+						if (result != MyGUI::ITEM_NONE)
+							button->setIndexSelected( result );
+					}
 				}
 			}
 			else if (act->getActionType() == OISB::AT_ANALOG_AXIS)
 			{
 				MyGUI::ComboBoxPtr axis = mGUI->findWidget<ComboBox>("jsAxisSel_" + (*ait).first + "_" + (*it).first);
-				
-				// ------------- before deleting all old, save selected and restore selection after -----------------
-				std::string selectedAxis = "";
-				if (axis->getIndexSelected() != MyGUI::ITEM_NONE) selectedAxis = axis->getItemNameAt(axis->getIndexSelected());
 				axis->removeAllItems();
-				if (selectedAxis != "" && axis->findItemIndexWith(selectedAxis) != MyGUI::ITEM_NONE)
-					axis->setIndexSelected( axis->findItemIndexWith(selectedAxis) );
-					
 				if (js) {
 					for (std::vector<OISB::AnalogAxisState*>::const_iterator it = js->axis.begin();
 							it != js->axis.end(); it++)
 						axis->addItem( stripk((*it)->getBindableName()) );
 				}
 				else
-				{
 					axis->addItem( TR("#{InputKeyNoAxis}") );
-					axis->setIndexSelected(0);
+					
+				axis->setIndexSelected(0);
+
+				
+				// select correct axis/button (from user keybinds)
+				if (bnd2 && bnd2->mBindables.size() > 0) {
+					size_t result;
+					if (bnd2->getBindable(0) == NULL)
+					{
+						result = axis->findItemIndexWith( stripk(bnd2->getRole(NULL)) );
+						if (result != MyGUI::ITEM_NONE)
+							axis->setIndexSelected( result );
+					}
+					else
+					{
+						result = axis->findItemIndexWith( stripk(bnd2->getBindable(0)->getBindableName()) );
+						if (result != MyGUI::ITEM_NONE)
+							axis->setIndexSelected( result );
+					}
 				}
 			}
 		}

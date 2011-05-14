@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION"
 "Report-Msgid-Bugs-To: "
-"POT-Creation-Date: 2011-05-10 20:14+0200"
+"POT-Creation-Date: 2011-05-13 23:17+0200"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>"
 "Language-Team: LANGUAGE <LL@li.org>"
@@ -649,6 +649,10 @@ msgctxt "TipReverse"
 msgid "Reverse track direction."
 msgstr ""
 
+msgctxt "RplVersion"
+msgid "Version"
+msgstr ""
+
 msgctxt "Options"
 msgid "Options"
 msgstr ""
@@ -883,6 +887,10 @@ msgstr ""
 
 msgctxt "CarDebugText"
 msgid "Car debug text "
+msgstr ""
+
+msgctxt "RplSize"
+msgid "size"
 msgstr ""
 
 msgctxt "TipMudInt"
@@ -1201,8 +1209,12 @@ msgctxt "ViewLeft"
 msgid "View Left"
 msgstr ""
 
-msgctxt "ViewFront"
-msgid "View Front"
+msgctxt "UnitMB"
+msgid "MB"
+msgstr ""
+
+msgctxt "RplTime"
+msgid "Time"
 msgstr ""
 
 msgctxt "TrackAvgSpeed"
@@ -1271,6 +1283,10 @@ msgstr ""
 
 msgctxt "LS_CLEANUP"
 msgid "Cleaning up"
+msgstr ""
+
+msgctxt "RplRename"
+msgid "Rename"
 msgstr ""
 
 msgctxt "EnterSave"
@@ -1361,6 +1377,21 @@ msgctxt "ChangeCar"
 msgid "Change Car"
 msgstr ""
 
+<<<<<<< HEAD
+=======
+msgctxt "ViewFront"
+msgid "View Front"
+msgstr ""
+
+msgctxt "RplRecTime"
+msgid "Recorded   time"
+msgstr ""
+
+msgctxt "InputTerSmooth"
+msgid "S - Smooth  (LMB, -Noise RMB)"
+msgstr ""
+
+>>>>>>> master
 msgctxt "TipSunSpecular"
 msgid "Sun light specular (shiny) color. R G B components 0 to 1 (eg. 0.6 0.6 0.6)"
 msgstr ""
@@ -1591,6 +1622,10 @@ msgstr ""
 
 msgctxt "TipTrackDesc"
 msgid "Track description text."
+msgstr ""
+
+msgctxt "RplFileSize"
+msgid "File size"
 msgstr ""
 
 msgctxt "SourceTrack"

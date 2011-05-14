@@ -197,6 +197,8 @@ namespace OISB
              * @brief checks whether all bindables are active
              */
             bool areAllBindablesActive() const;
+            
+            bool mOptional;
 			
 		private:
 			/// stores parent action
