@@ -406,7 +406,7 @@ void App::btnChgTrack(WP)
 {
 	pSet->track = sListTrack;
 	pSet->track_user = bListTrackU;
-	if (valTrk)  valTrk->setCaption(TR("#{Track: ") + sListTrack);
+	if (valTrk)  valTrk->setCaption(TR("#{Track}: ") + sListTrack);
 }
 
 //  new game
