@@ -224,6 +224,7 @@ protected:
 	void peerInfo(PeerInfo peer);
 	void peerMessage(PeerInfo peer, std::string msg);
 	void peerState(PeerInfo peer, uint8_t state);
+	void join(std::string host, std::string port);
 
 	mutable boost::mutex netGuiMutex;
 	MyGUI::UString sChatBuffer;

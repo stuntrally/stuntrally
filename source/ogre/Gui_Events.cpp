@@ -137,24 +137,9 @@ void App::peerState(PeerInfo peer, uint8_t state)
 	if (state == protocol::START_GAME) bStartGame = true;
 }
 
-void App::evBtnNetRefresh(WP)
+void App::join(std::string host, std::string port)
 {
-	mMasterClient.reset(new MasterClient(this));
-	mMasterClient->connect(pSet->master_server_address, pSet->master_server_port);
-	// The actual refresh will be requested automatically when the connection is made
-}
-
-void App::evBtnNetJoin(WP)
-{
-	//  join selected game
-	if (!listServers || !pSet) return;
-
-	size_t i = listServers->getIndexSelected();
-	if (i == ITEM_NONE) return;
-
 	try {
-		std::string host = listServers->getSubItemNameAt(4, i);
-		std::string port = listServers->getSubItemNameAt(5, i);
 		mClient.reset(new P2PGameClient(this, pSet->local_port));
 		mClient->updatePlayerInfo(pSet->nickname, sListCar);
 		mClient->connect(host, boost::lexical_cast<int>(port)); // Lobby phase started automatically
@@ -178,6 +163,27 @@ void App::evBtnNetJoin(WP)
 	tabsNet->setIndexSelected(1);
 	panelNetServer->setVisible(true);
 	panelNetGame->setVisible(false);
+
+}
+
+void App::evBtnNetRefresh(WP)
+{
+	mMasterClient.reset(new MasterClient(this));
+	mMasterClient->connect(pSet->master_server_address, pSet->master_server_port);
+	// The actual refresh will be requested automatically when the connection is made
+}
+
+void App::evBtnNetJoin(WP)
+{
+	//  join selected game
+	if (!listServers || !pSet) return;
+
+	size_t i = listServers->getIndexSelected();
+	if (i == ITEM_NONE) return;
+
+	std::string host = listServers->getSubItemNameAt(4, i);
+	std::string port = listServers->getSubItemNameAt(5, i);
+	join(host, port);
 }
 
 void App::evBtnNetCreate(WP)
@@ -223,9 +229,10 @@ void App::evBtnNetLeave(WP)
 void App::evBtnNetDirect(WP)
 {
 	// direct connect ..
-	// TODO
+	// TODO: Need to get host and port from user somehow
 	raiseError("Direct connecting is not yet supported.\nSorry about that.");
-	//tabsNet->setIndexSelected(1);
+	return;
+	//join(host, port);
 }
 
 void App::evBtnNetReady(WP)
