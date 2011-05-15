@@ -61,19 +61,25 @@ void P2PGameClient::startLobby()
 		m_senderThread = boost::thread(boost::bind(&P2PGameClient::senderThread, boost::ref(*this)));
 }
 
-void P2PGameClient::startGame()
+void P2PGameClient::startGame(bool broadcast)
 {
+	if (m_state == GAME) return;
 	m_state = GAME;
-	// Clean up all zombie peers
-	boost::mutex::scoped_lock lock(m_mutex);
-	PeerMap::iterator it = m_peers.begin();
-	while (it != m_peers.end()) {
-		PeerInfo pi = it->second;
-		// Check condition
-		if (pi.connection != PeerInfo::CONNECTED || pi.name.empty()) {
-			m_peers.erase(it++);
-		} else ++it;
+	{
+		// Clean up all zombie peers
+		boost::mutex::scoped_lock lock(m_mutex);
+		PeerMap::iterator it = m_peers.begin();
+		while (it != m_peers.end()) {
+			PeerInfo pi = it->second;
+			// Check condition
+			if (pi.connection != PeerInfo::CONNECTED || pi.name.empty()) {
+				m_peers.erase(it++);
+			} else ++it;
+		}
 	}
+	// Send notification
+	if (broadcast)
+		m_client.broadcast(char(protocol::START_GAME) + std::string(" "), net::PACKET_RELIABLE);
 }
 
 void P2PGameClient::senderThread() {
@@ -203,6 +209,18 @@ void P2PGameClient::receiveEvent(net::NetworkTraffic const& e)
 				if (isNew) m_callback->peerConnected(picopy);
 				// Callback regardless if the info changed in order to give ping updates
 				else m_callback->peerInfo(picopy);
+			}
+			break;
+		}
+		case protocol::START_GAME: {
+			startGame(false);
+			if (m_callback) {
+				boost::mutex::scoped_lock lock(m_mutex);
+				PeerInfo& pi = m_peers[e.peer_address];
+				pi.ping = e.ping;
+				PeerInfo picopy = pi;
+				lock.unlock(); // Mutex unlocked in callback to avoid dead-locks
+				m_callback->peerState(picopy, e.packet_data[0]);
 			}
 			break;
 		}

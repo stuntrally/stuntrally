@@ -223,11 +223,13 @@ protected:
 	void peerDisconnected(PeerInfo peer);
 	void peerInfo(PeerInfo peer);
 	void peerMessage(PeerInfo peer, std::string msg);
+	void peerState(PeerInfo peer, uint8_t state);
 
 	mutable boost::mutex netGuiMutex;
 	MyGUI::UString sChatBuffer;
 	bool bRebuildPlayerList;
 	bool bRebuildGameList;
+	bool bStartGame;
 
 	TabPtr tabsNet;  //void tabNet(TabPtr tab, size_t id);
 	WidgetPtr panelNetServer,panelNetGame;

@@ -32,7 +32,8 @@ enum PacketType {
 	STATE_UPDATE,
 	GAME_LIST,          // Client requests master server to list games
 	GAME_ACCEPTED,      // Master server sends response for newly accepted games
-	GAME_STATUS         // An available game (either client updates, or server reports)
+	GAME_STATUS,        // An available game (either client updates, or server reports)
+	START_GAME
 };
 
 

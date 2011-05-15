@@ -130,6 +130,12 @@ void App::peerMessage(PeerInfo peer, std::string msg)
 	bRebuildPlayerList = true; // For ping updates in the list
 }
 
+void App::peerState(PeerInfo peer, uint8_t state)
+{
+	(void)peer;
+	boost::mutex::scoped_lock lock(netGuiMutex);
+	if (state == protocol::START_GAME) bStartGame = true;
+}
 
 void App::evBtnNetRefresh(WP)
 {
@@ -229,9 +235,8 @@ void App::evBtnNetReady(WP)
 	mClient->toggleReady();
 	if (mClient->isReady()) {
 		if (mLobbyState == HOSTING) {
-			// TODO: Probably some more stuff here...
-			mClient->startGame();
-			NewGame();
+			boost::mutex::scoped_lock lock(netGuiMutex);
+			bStartGame = true;
 		} else btnNetReady->setCaption( TR("#{NetWaiting}") );
 	} else
 		btnNetReady->setCaption( TR("#{NetReady}") );

@@ -78,6 +78,12 @@ bool App::frameStart(Real time)
 			if (bRebuildGameList) { rebuildGameList(); bRebuildGameList = false; }
 			if (bRebuildPlayerList) { rebuildPlayerList(); bRebuildPlayerList = false; }
 			if (sChatBuffer != edNetChat->getCaption()) edNetChat->setCaption(sChatBuffer);
+			if (bStartGame) {
+				// TODO: Probably some more stuff here...
+				mClient->startGame();
+				btnNewGameStart(NULL);
+				bStartGame = false;
+			}
 		}
 
 		//bool oldFocRpl = isFocRpl;

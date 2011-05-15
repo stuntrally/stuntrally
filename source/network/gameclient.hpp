@@ -76,6 +76,11 @@ struct GameClientCallback {
 	/// @param peer the new peer
 	/// @param msg the message body
 	virtual void peerMessage(PeerInfo peer, std::string msg) {};
+
+	/// Called when a state change arrives
+	/// @param peer the sender peer
+	/// @param state the state code
+	virtual void peerState(PeerInfo peer, uint8_t state) {};
 };
 
 
@@ -115,7 +120,8 @@ public:
 	void startLobby();
 
 	/// Shuts down the network forming phase
-	void startGame();
+	/// @param broadcast set to true if the state change should be broadcasted to peers
+	void startGame(bool broadcast = true);
 
 	/// Thread that periodically broadcasts peer and game state info, don't call directly
 	void senderThread();
