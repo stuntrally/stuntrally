@@ -135,8 +135,8 @@ void App::evBtnNetJoin(WP)
 	if (i == ITEM_NONE) return;
 
 	try {
-		std::string host = listServers->getSubItemNameAt(3, i);
-		std::string port = listServers->getSubItemNameAt(4, i);
+		std::string host = listServers->getSubItemNameAt(4, i);
+		std::string port = listServers->getSubItemNameAt(5, i);
 		mClient.reset(new P2PGameClient(this, pSet->local_port));
 		mClient->updatePlayerInfo(pSet->nickname, sListCar);
 		mClient->connect(host, boost::lexical_cast<int>(port)); // Lobby phase started automatically
