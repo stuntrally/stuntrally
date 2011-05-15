@@ -15,6 +15,7 @@
 	<!-- Game -->
 	<Tag name="NetGame">Game</Tag>
 	<Tag name="NetGameName">Game Name</Tag>
+	<Tag name="NetStart">Start</Tag>
 	<Tag name="NetReady">Ready</Tag>
 	<Tag name="NetWaiting">Waiting...</Tag>
 	<Tag name="NetLeaveGame">Leave game</Tag>

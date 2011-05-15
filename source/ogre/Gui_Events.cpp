@@ -50,16 +50,21 @@ void App::rebuildPlayerList()
 	if (!listPlayers || !mClient) return;
 	listPlayers->removeAllItems();
 	// Add self
+	unsigned peerCount = mClient->getPeerCount();
 	listPlayers->addItem(pSet->nickname);
 	listPlayers->setSubItemNameAt(1, 0, sListCar); // Car
-	listPlayers->setSubItemNameAt(2, 0, boost::lexical_cast<std::string>(mClient->getPeerCount())); // Peers
+	listPlayers->setSubItemNameAt(2, 0, boost::lexical_cast<std::string>(peerCount)); // Peers
 	listPlayers->setSubItemNameAt(3, 0, "0"); // Ping
 	listPlayers->setSubItemNameAt(4, 0, yesno(mClient->isReady())); // Ready state
 	// Add others
+	bool allReady = true;
 	const PeerMap peers = mClient->getPeers();
 	for (PeerMap::const_iterator it = peers.begin(); it != peers.end(); ++it) {
 		if (it->second.name.empty() || it->second.connection == PeerInfo::DISCONNECTED)
 			continue;
+		// Determine if everyone is ready and connected
+		if (it->second.peers != peerCount || !it->second.ready) allReady = false;
+		// Add list item
 		listPlayers->addItem(it->second.name);
 		int l = listPlayers->getItemCount()-1;
 		listPlayers->setSubItemNameAt(1, l, it->second.car);
@@ -67,11 +72,18 @@ void App::rebuildPlayerList()
 		listPlayers->setSubItemNameAt(3, l, boost::lexical_cast<std::string>(it->second.ping));
 		listPlayers->setSubItemNameAt(4, l, yesno(it->second.ready));
 	}
+	// Allow host to start the game
+	if (mLobbyState == HOSTING) {
+		if (allReady) btnNetReady->setEnabled(true);
+		else btnNetReady->setEnabled(false);
+	}
 }
 
 void App::setNetGuiHosting(bool enabled)
 {
 	edNetGameName->setEnabled(enabled);
+	btnNetReady->setEnabled(!enabled);
+	btnNetReady->setCaption(enabled ? TR("#{NetStart}") : TR("#{NetReady}"));
 }
 
 void App::gameListChanged(protocol::GameList list)
@@ -215,10 +227,14 @@ void App::evBtnNetReady(WP)
 	if (!mClient) return;
 
 	mClient->toggleReady();
-	if (mClient->isReady())
-		btnNetReady->setCaption( TR("#{NetWaiting}") );
-	else
-		btnNetReady->setCaption( TR("#{NetReady") );
+	if (mClient->isReady()) {
+		if (mLobbyState == HOSTING) {
+			// TODO: Probably some more stuff here...
+			mClient->startGame();
+			NewGame();
+		} else btnNetReady->setCaption( TR("#{NetWaiting}") );
+	} else
+		btnNetReady->setCaption( TR("#{NetReady}") );
 
 	rebuildPlayerList();
 }
