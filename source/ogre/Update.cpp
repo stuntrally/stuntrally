@@ -286,7 +286,7 @@ void App::newPoses()
 		///-----------------------------------------------------------------------
 		//  record  save data for replay
 		///-----------------------------------------------------------------------
-		if (pSet->rpl_rec)
+		if (pSet->rpl_rec && !pGame->pause)
 		{
 			static int ii = 0;
 			if (ii++ >= 0)	// 1 half game framerate
