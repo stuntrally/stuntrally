@@ -362,8 +362,18 @@ bool BaseApp::setup()
 	mGUI = new MyGUI::Gui();
 	mGUI->initialise("core.xml", PATHMANAGER::GetLogDir() + "/MyGUI.log");
 	mGUI->setVisiblePointer(false);
-	MyGUI::LanguageManager::getInstance().setCurrentLanguage(getSystemLanguage());
 	
+	// ------------------------- lang ------------------------
+	if (pSet->language == "") // autodetect
+		pSet->language = getSystemLanguage();
+	
+	// valid?
+	if (!boost::filesystem::exists(PATHMANAGER::GetDataPath() + "/gui/core_language_" + pSet->language + "_tag.xml"))
+		pSet->language = "en";
+		
+	MyGUI::LanguageManager::getInstance().setCurrentLanguage(pSet->language);
+	// -------------------------------------------------------
+		
 	mPlatform->getRenderManagerPtr()->setSceneManager(mSplitMgr->mGuiSceneMgr);
 	mPlatform->getRenderManagerPtr()->setActiveViewport(mSplitMgr->mNumPlayers);
 	

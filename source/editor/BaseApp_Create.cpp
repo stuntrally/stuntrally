@@ -1,10 +1,10 @@
 #include "stdafx.h"
 #include <boost/thread.hpp>
+#include <boost/filesystem.hpp>
 #include "BaseApp.h"
 #include "OgreApp.h" //
 #include "../vdrift/pathmanager.h"
 #include "../ogre/Locale.h"
-#include "OgreFontManager.h"
 
 void TimThread(BaseApp* pA)
 {
@@ -264,7 +264,18 @@ bool BaseApp::setup()
 	mPlatform->initialise(mWindow, mSceneMgr);
 	mGUI = new MyGUI::Gui();
 	mGUI->initialise("core.xml", PATHMANAGER::GetLogDir() + "/MyGUI.log");
-	LanguageManager::getInstance().setCurrentLanguage(getSystemLanguage());
+	
+	
+	// ------------------------- lang ------------------------
+	if (pSet->language == "") // autodetect
+		pSet->language = getSystemLanguage();
+	
+	// valid?
+	if (!boost::filesystem::exists(PATHMANAGER::GetDataPath() + "/gui/core_language_" + pSet->language + "_tag.xml"))
+		pSet->language = "en";
+		
+	MyGUI::LanguageManager::getInstance().setCurrentLanguage(pSet->language);
+	// -------------------------------------------------------
 
 	createFrameListener();
 	createScene();

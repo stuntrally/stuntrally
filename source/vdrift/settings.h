@@ -32,6 +32,7 @@ public:
 	//  game
 	bool trackreverse;	//int number_of_laps;  float ai_difficulty;
 	int local_players;  bool split_vertically;
+	std::string language;
 
 	//  other
 	float vol_master, vol_engine, vol_tires, vol_env;

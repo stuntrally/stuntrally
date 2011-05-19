@@ -24,6 +24,7 @@ public:
 
 	//  startup
 	bool autostart, escquit, ogre_dialog;
+	std::string language;
 
 	//  settings
 	bool bFog, bTrees;

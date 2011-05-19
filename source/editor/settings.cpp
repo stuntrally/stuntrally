@@ -11,6 +11,7 @@ void SETTINGS::Serialize(bool w, CONFIGFILE & c)
 	c.bFltFull = false;
 	Param(c,w, "game.track", track);
 	Param(c,w, "game.track_user", track_user);
+	Param(c,w, "game.language", language);
 
 	Param(c,w, "display_show.fps", show_fps);
 	Param(c,w, "display_show.trackmap", trackmap);		Param(c,w, "display_size.minimap", size_minimap);
@@ -56,7 +57,7 @@ SETTINGS::SETTINGS() :  ///  Defaults
 	shadow_dist(2000), shadow_size(2), shadow_count(3), shadow_type(2),  /*<+*/
 	shaders(1),  trees(1.f), grass(1.f), trees_dist(1.f), grass_dist(1.f),
 	//  startup
-	autostart(0), ogre_dialog(1), escquit(0),
+	autostart(0), ogre_dialog(1), escquit(0), language(""),
 	//  settings
 	cam_x(0), cam_y(50),cam_z(-120),  cam_dx(0), cam_dy(0), cam_dz(1),
 	bFog(0), bTrees(0),
