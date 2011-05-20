@@ -175,7 +175,7 @@ bool BaseApp::configure()
 	if (pSet->ogre_dialog)
 	{
 		if (!mRoot->showConfigDialog()) return false;
-		mWindow = mRoot->initialise(true, "Stunt Rally");
+		mWindow = mRoot->initialise(true, "SR Editor");
 	}
 	else
 	{
