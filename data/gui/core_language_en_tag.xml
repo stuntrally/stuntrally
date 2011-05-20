@@ -538,5 +538,5 @@
 	<Tag name="TipGrassSwayDistr">Grass sway effect distribution (how random).</Tag>
 	<Tag name="TipModelRoadDist">Distance from road to models (global, added to each models own value).</Tag>
 	<Tag name="TipImpDist">Far distance at which models will turn into 2d impostors.</Tag>
-	<Tag name="TipModelPrev">Model preview image.</Tag>>
+	<Tag name="TipModelPrev">Model preview image.</Tag>
 </MyGUI>
