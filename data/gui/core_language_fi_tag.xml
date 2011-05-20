@@ -147,6 +147,7 @@
 	<Tag name="TrackInAir">Ilmassa</Tag>
 	<Tag name="Used">Used</Tag>
 	<Tag name="TipMinimapScrnEditor">Minimap of selected track, view from top.</Tag>
+	<Tag name="RplVersion">Version</Tag>
 	<Tag name="Options">Valinnat</Tag>
 	<Tag name="Delete">Poista</Tag>
 	<Tag name="Rename">Nimeä uudelleen</Tag>
@@ -284,6 +285,7 @@
 	<Tag name="TipTrackDescEditor">Track description text (click to edit).</Tag>
 	<Tag name="ViewLeft">View Left</Tag>
 	<Tag name="UnitMB">MB</Tag>
+	<Tag name="RplTime">Time</Tag>
 	<Tag name="ApplyShadows">Apply Shadows</Tag>
 	<Tag name="RoadStats">Road Stats</Tag>
 	<Tag name="SunDir">Sun dir.</Tag>
@@ -378,6 +380,7 @@
 	<Tag name="SREditorVersion">Stunt Rally - Track Editor - version</Tag>
 	<Tag name="InputRoadAfterPick">after picked, center at mouse</Tag>
 	<Tag name="TipTrackDesc">Track description text.</Tag>
+	<Tag name="RplFileSize">File size</Tag>
 	<Tag name="SourceTrack">Source track</Tag>
 	<Tag name="ImpostorDist">impostors dist.</Tag>
 	<Tag name="page">page</Tag>

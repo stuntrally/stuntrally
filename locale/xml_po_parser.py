@@ -2,7 +2,7 @@
 
 import sys, time, os
 
-fallback_file = "core_language_english_tag.xml"
+fallback_file = "core_language_en_tag.xml"
 
 header = "# SOME DESCRIPTIVE TITLE.\n\
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER\n\
