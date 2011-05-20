@@ -1515,7 +1515,7 @@
 					<Property key="Widget_Colour" value="0.73 0.88 1"/>
 					<Property key="Tab_ButtonWidth" value="160"/>
 					<Widget type="TabItem" skin="" position="4 26 711 447">
-						<Property key="Widget_Caption" value="#{Main}"/>
+						<Property key="Widget_Caption" value="#{InputMain}"/>
 						<Widget type="StaticText" skin="StaticText" position="32 44 256 20">
 							<Property key="Text_TextColour" value="0.9 0.96 1.0"/>
 							<Property key="Widget_Caption" value="#{InputToggleCam}"/>
