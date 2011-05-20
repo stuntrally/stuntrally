@@ -27,9 +27,6 @@ public:
 	// translation
 	// can't have it in c'tor, because mygui is not initialized
 	void setTranslations();
-
-	/// car ----------------
-	//std::list<CarModel*> carModels; //in BaseApp
 	
 	// This list holds new positions info for every CarModel
 	std::list<PosInfo> newPosInfos;
@@ -172,6 +169,10 @@ protected:
 		chkVidBloom(WP), chkVidHDR(WP), chkVidBlur(WP),  // video
 		chkVidFullscr(WP), chkVidVSync(WP), UpdBloomVals(),
 		chkLoadPics(WP), chkVegetCollis(WP), chkDigits(WP);
+
+	// language
+	void comboLanguage(SL);
+	std::map<std::string, std::string> supportedLanguages; // <short name, display name>
 
 	void comboTexFilter(SL);
 	ButtonPtr bRkmh, bRmph;  void radKmh(WP), radMph(WP), btnTrGrReset(WP), btnQuit(WP), btnResChng(WP);

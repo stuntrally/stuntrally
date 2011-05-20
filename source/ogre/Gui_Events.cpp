@@ -466,6 +466,17 @@ void App::chkBltProfilerTxt(WP wp){	ChkEv(bltProfilerTxt);	}
 void App::radKmh(WP wp){	bRkmh->setStateCheck(true);  bRmph->setStateCheck(false);  pSet->show_mph = false;  ShowHUD();  }
 void App::radMph(WP wp){	bRkmh->setStateCheck(false);  bRmph->setStateCheck(true);  pSet->show_mph = true;   ShowHUD();  }
 
+void App::comboLanguage(SL)
+{
+	if (val == MyGUI::ITEM_NONE) return;
+	
+	std::string sel = static_cast<MyGUI::ComboBoxPtr>(wp)->getItemNameAt(val);
+	
+	if (sel == "German") pSet->language = "de";
+	else if (sel == "English") pSet->language = "en";
+	else if (sel == "Finnish") pSet->language = "fi";
+}
+
 //  Startup
 void App::chkOgreDialog(WP wp){		ChkEv(ogre_dialog);	}
 void App::chkAutoStart(WP wp){		ChkEv(autostart);	}

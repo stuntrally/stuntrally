@@ -81,6 +81,20 @@ void App::InitGui()
 	//  textures
 	combo = (ComboBoxPtr)mLayout->findWidget("TexFiltering");
 	if (combo)  combo->eventComboChangePosition = newDelegate(this, &App::comboTexFilter);
+	
+	// language combo
+	supportedLanguages["en"] = "English";
+	supportedLanguages["de"] = /*"German"*/ "Deutsch";
+	supportedLanguages["fi"] = /*"Finnish"*/ "Suomi";
+	combo = NULL; combo = (ComboBoxPtr)mLayout->findWidget("Lang");
+	if (combo) combo->eventComboChangePosition = newDelegate(this, &App::comboLanguage);
+	for (std::map<std::string, std::string>::const_iterator it=supportedLanguages.begin();
+			it!=supportedLanguages.end(); it++)
+	{
+			combo->addItem( it->second );
+			if (it->first == pSet->language) combo->setIndexSelected(combo->getItemCount()-1);
+	}
+	
 	Slv(Anisotropy,	pSet->anisotropy /res);
 	Slv(Shaders,	pSet->shaders /res);
 	
@@ -118,7 +132,6 @@ void App::InitGui()
 	// car color
 	Slv(CarClrH, pSet->car_hue);
 	Slv(CarClrS, (pSet->car_sat +1)*0.5f);  Slv(CarClrV, (pSet->car_val +1)*0.5f);
-
 
 	///  Checkboxes
     //------------------------------------------------------------------------
