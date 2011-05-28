@@ -745,15 +745,7 @@ bool App::keyPressed( const OIS::KeyEvent &arg )
 		
 		//  on/off gui
 		if (action("ShowOptions"))
-		{
-			if (!alt)  {
-				isFocGui = !isFocGui;
-				if (mWndOpts)	mWndOpts->setVisible(isFocGui);
-				if (bnQuit)  bnQuit->setVisible(isFocGui);
-				if (mGUI)	mGUI->setVisiblePointer(isFocGuiOrRpl());
-				if (!isFocGui)  mToolTip->setVisible(false);
-			}	return true;
-		}
+			toggleGui();
 	}	
 	
 	//  new game
@@ -769,16 +761,8 @@ bool App::keyPressed( const OIS::KeyEvent &arg )
 			case KC_ESCAPE:		// quit
 			if (pSet->escquit)  {
 				mShutDown = true;	return true;  }
-				
-			//case KC_F1:
-			//case KC_TAB:	// on/off gui
-			if (!alt)  {
-				isFocGui = !isFocGui;
-				if (mWndOpts)	mWndOpts->setVisible(isFocGui);
-				if (bnQuit)  bnQuit->setVisible(isFocGui);
-				if (mGUI)	mGUI->setVisiblePointer(isFocGuiOrRpl());
-				if (!isFocGui)  mToolTip->setVisible(false);
-			}	return true;
+			toggleGui();
+			return true;
 
 			#if 0
 			case KC_1:
@@ -809,10 +793,11 @@ bool App::keyPressed( const OIS::KeyEvent &arg )
 				break;
 
 			case KC_P:		// replay play/pause
-				if (bRplPlay)
-				{	bRplPause = !bRplPause;  UpdRplPlayBtn();  }
-				return true;
-
+				if (bRplPlay && !isFocGui)
+				{	bRplPause = !bRplPause;  UpdRplPlayBtn();
+					return true;  }
+				break;
+				
 
 			case KC_F9:		// car debug text/bars
 				if (shift)	{	WP wp = chDbgT;  ChkEv(car_dbgtxt);  ShowHUD();  }
@@ -842,14 +827,18 @@ bool App::keyPressed( const OIS::KeyEvent &arg )
 			{	WP wp = chMinimp;  ChkEv(trackmap);  if (ndMap)  ndMap->setVisible(pSet->trackmap);
 			}	return false;
 			
+			
 			case KC_RETURN:	//  chng trk + new game  after pg up/dn
 			if (isFocGui)
-			if (mWndTabs->getIndexSelected() == 0)
+			if (mWndTabs->getIndexSelected() == 0)  // track
 			{	btnChgTrack(0);
 				btnNewGame(0);
-			}else if (mWndTabs->getIndexSelected() == 1)
+			}else if (mWndTabs->getIndexSelected() == 1)  // car
 			{	btnChgCar(0);
 				btnNewGame(0);
+			}else if (mWndTabs->getIndexSelected() == 3)  // replay
+			{
+				btnRplPlay(0);
 			}
 			return false;
 		}
@@ -859,4 +848,14 @@ bool App::keyPressed( const OIS::KeyEvent &arg )
 		return true;
 
 	return true;
+}
+
+void App::toggleGui()
+{
+	if (alt)  return;
+	isFocGui = !isFocGui;
+	if (mWndOpts)	mWndOpts->setVisible(isFocGui);
+	if (bnQuit)  bnQuit->setVisible(isFocGui);
+	if (mGUI)	mGUI->setVisiblePointer(isFocGuiOrRpl());
+	if (!isFocGui)  mToolTip->setVisible(false);
 }

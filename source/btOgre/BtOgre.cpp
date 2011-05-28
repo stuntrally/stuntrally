@@ -130,7 +130,8 @@ namespace BtOgre {
 				if (i == mBoneIndex->end())
 				{
 					l = new Vector3Array;
-					mBoneIndex->insert(BoneKeyIndex(currBone, l));
+					unsigned short cb = currBone;
+					mBoneIndex->insert(BoneKeyIndex(cb, l));
 				}else 
 					l = i->second;
 

@@ -132,18 +132,15 @@ bool BaseApp::keyPressed( const OIS::KeyEvent &arg )
 					// only bind 2nd if keys are not the same (will throw exception)
 					if (bind2)
 						if ("Keyboard/" + mKeyboard->getAsString(pressedKey) != bind2->getBindableName())
-						{
 							binding->bind(bind2, bind2_role);	
-						}
 				}
 				else if (index == "2")
 				{
 					// only bind 1st if keys are not the same (will throw exception)
 					if (bind1)
 						if ("Keyboard/" + mKeyboard->getAsString(pressedKey) != bind1->getBindableName())
-						{
 							binding->bind(bind1, bind1_role);
-						}
+
 					binding->bind("Keyboard/" + mKeyboard->getAsString(pressedKey), bind2_role);
 				}
 			}
@@ -192,9 +189,7 @@ bool BaseApp::keyPressed( const OIS::KeyEvent &arg )
 			{
 				if (b1) b2->setCaption( stripk(binding->getBindable(0)->getBindableName()) );
 				if (b2) b1->setCaption( TR("#{InputKeyUnassigned}") );
-			}
-			else
-			{
+			}else{
 				if (b1) b1->setCaption( stripk(binding->getBindable(0)->getBindableName()) );
 				if (b2) b2->setCaption( TR("#{InputKeyUnassigned}") );
 			}
@@ -206,12 +201,9 @@ bool BaseApp::keyPressed( const OIS::KeyEvent &arg )
 			{
 				if (b1) b1->setCaption( stripk(binding->getBindable(0)->getBindableName()) );
 				if (b2) b2->setCaption( stripk(binding->getBindable(1)->getBindableName()) );
-			}
-			else
-			{
+			}else{
 				if (b2) b2->setCaption( stripk(binding->getBindable(0)->getBindableName()) );
 				if (b1) b1->setCaption( stripk(binding->getBindable(1)->getBindableName()) );
-
 			}
 		}
 		return true;
@@ -294,15 +286,15 @@ bool BaseApp::keyPressed( const OIS::KeyEvent &arg )
 		//	return false;
 
 	
-	//  Camera pos info
-	case KC_O:
-	{	mbShowCamPos = !mbShowCamPos;
-		if (!mbShowCamPos)	mDebugText = "";
-	}	return false;
+		//  Camera pos info
+		/*case KC_O:
+		{	mbShowCamPos = !mbShowCamPos;
+			if (!mbShowCamPos)	mDebugText = "";
+		}	return false;/**/
 
-	
-	//case KC_F5:
-	//	TextureManager::getSingleton().reloadAll();	break;
+		
+		//case KC_F5:
+		//	TextureManager::getSingleton().reloadAll();	break;
 	}
 
 	return true;
@@ -319,14 +311,14 @@ void BaseApp::updateStats()
 	// Only for 1 local player
 	if (mSplitMgr && mSplitMgr->mNumPlayers == 1)
 	{
-		if (mbShowCamPos)
+		/*if (mbShowCamPos)
 		{
 			const Vector3& pos = (*mSplitMgr->mCameras.begin())->getDerivedPosition();
 			const Quaternion& rot = (*mSplitMgr->mCameras.begin())->getDerivedOrientation();
 			sprintf(s, "Pos: %5.1f %5.1f %5.1f", //  Rot: %6.3f %6.3f %6.3f %6.3f",
 							pos.x, pos.y, pos.z,  rot.x, rot.y, rot.z, rot.w );
 			mDebugText = String( s );
-		}
+		}/**/
 	}
 	try {
 		const RenderTarget::FrameStats& stats = mWindow->getStatistics();

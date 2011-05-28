@@ -128,7 +128,7 @@ protected:
 	bool bInSt, bWrongChk;
 
 	///  Gui  ---------------------------------------------------------------------------
-	void InitGui();
+	void InitGui(), toggleGui();
 	void UpdGuiRdStats(const SplineRoad* rd, const Scene& sc, float time), ReadTrkStats();
 
 	//  tooltips
