@@ -119,6 +119,7 @@ private:
 	
 	// Particle systems, trail.
 	ParticleSystem* ps[4],*pm[4],*pd[4];  // smoke, mud, dust
+	ParticleSystem* pb[2];  // boost
 	RibbonTrail* whTrl[4];
 	Real wht[4];  // spin time (approx tire temp.)
 	SceneNode *ndWh[4], *ndWhE[4], *ndRs[4],*ndRd[4];

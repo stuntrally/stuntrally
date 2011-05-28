@@ -33,6 +33,8 @@ CarModel::CarModel(unsigned int index, eCarType type, const std::string name,
 		ndWh[w] = 0;  ndWhE[w] = 0; whTrl[w] = 0;
 		ndRs[w] = 0;  ndRd[w] = 0;
 		wht[w] = 0.f;  whTerMtr[w] = 0; }
+	for (int i=0; i < 2; i++)
+		pb[i] = 0;
 }
 
 CarModel::~CarModel()
@@ -51,6 +53,8 @@ CarModel::~CarModel()
 		if (ps[w]) {  pSceneMgr->destroyParticleSystem(ps[w]);   ps[w]=0;  }
 		if (pm[w]) {  pSceneMgr->destroyParticleSystem(pm[w]);   pm[w]=0;  }
 		if (pd[w]) {  pSceneMgr->destroyParticleSystem(pd[w]);   pd[w]=0;  }  }
+	for (int i=0; i < 2; i++)
+		if (pb[i]) {  pSceneMgr->destroyParticleSystem(pb[i]);   pb[i]=0;  }
 						
 	if (pMainNode) pSceneMgr->destroySceneNode(pMainNode);
 	if (pSceneMgr->hasEntity("Car")) pSceneMgr->destroyEntity("Car");
@@ -72,17 +76,36 @@ void CarModel::Update(PosInfo& posInfo, float time)
 	pMainNode->setPosition(posInfo.pos);
 	pMainNode->setOrientation(posInfo.rot);
 	
+
+	//  update particle emitters
+	//-----------------------------------------------------------------------------
+
+	//  boost
+	#if 0  // emission needs to be independent of car vel !..
+	if (pSet->particles)
+	for (int i=0; i < 2; i++)
+	if (pb[i])
+	{
+		float emitB = pCar->dynamics.doBoost * 20.f;  // par
+		//pCar->GetSpeed();
+		//posInfo.pos = Vector3(pos[0],pos[2],-pos[1]);
+		//SceneNode* nb = pMainNode->createChildSceneNode(Vector3(1.8,0.1,1));
+		btVector3 v = pCar->dynamics.chassis->getVelocityInLocalPoint(btVector3(0.0,0,0));
+		Vector3 d(v.getX(),v.getZ(),-v.getY());
+		ParticleEmitter* pe = pb[i]->getEmitter(0);
+		pe->setEmissionRate(emitB);
+		pe->setDirection(d);
+	}
+	#endif
+	
 	//  wheels
 	for (int w=0; w < 4; w++)
 	{
 		float wR = posInfo.whR[w];
 		ndWh[w]->setPosition(posInfo.whPos[w]);
 		ndWh[w]->setOrientation(posInfo.whRot[w]);
+
 		int whMtr = posInfo.whMtr[w];  //whTerMtr[w];
-		
-		
-		//  update particle emitters
-		//-----------------------------------------------------------------------------
 		float whVel = posInfo.whVel[w] * 3.6f;  //kmh
 		float slide = posInfo.whSlide[w], squeal = posInfo.whSqueal[w];
 		float onGr = slide < 0.f ? 0.f : 1.f;
@@ -93,6 +116,7 @@ void CarModel::Update(PosInfo& posInfo, float time)
 
 		///  emit rates +
 		Real emitS = 0.f, emitM = 0.f, emitD = 0.f;  //paused
+
 		if (!pGame->pause)
 		{
 			 Real sq = squeal* min(1.f, wht[w]), l = pSet->particles_len * onGr;
@@ -310,19 +334,31 @@ void CarModel::Create()
 	}
 
 
+	///  boost emitters  ------------------------
+	for (int i=0; i < 2; i++)
+	{
+		String si = toStr(iIndex) + "_" +toStr(i);
+		if (!pb[i])  {
+			pb[i] = pSceneMgr->createParticleSystem("Boost"+si, "Boost");
+			SceneNode* nb = pMainNode->createChildSceneNode(Vector3(1.8, 0.1, 1));
+			nb->attachObject(pb[i]);
+			pb[i]->getEmitter(0)->setEmissionRate(0);  }
+	}
+
 	///  wheel emitters  ------------------------
 	for (int w=0; w < 4; w++)
-	{		
+	{
+		String siw = toStr(iIndex) + "_" +toStr(w);
 		if (!ps[w])  {
-			ps[w] = pSceneMgr->createParticleSystem("Smoke"+toStr(iIndex) + "_" +toStr(w), sc->sParSmoke);
+			ps[w] = pSceneMgr->createParticleSystem("Smoke"+siw, sc->sParSmoke);
 			pSceneMgr->getRootSceneNode()->createChildSceneNode()->attachObject(ps[w]);
 			ps[w]->getEmitter(0)->setEmissionRate(0);  }
 		if (!pm[w])  {
-			pm[w] = pSceneMgr->createParticleSystem("Mud"+toStr(iIndex) + "_"+toStr(w), sc->sParMud);
+			pm[w] = pSceneMgr->createParticleSystem("Mud"+siw, sc->sParMud);
 			pSceneMgr->getRootSceneNode()->createChildSceneNode()->attachObject(pm[w]);
 			pm[w]->getEmitter(0)->setEmissionRate(0);  }
 		if (!pd[w])  {
-			pd[w] = pSceneMgr->createParticleSystem("Dust"+toStr(iIndex) + "_"+toStr(w), sc->sParDust);
+			pd[w] = pSceneMgr->createParticleSystem("Dust"+siw, sc->sParDust);
 			pSceneMgr->getRootSceneNode()->createChildSceneNode()->attachObject(pd[w]);
 			pd[w]->getEmitter(0)->setEmissionRate(0);  }
 
@@ -362,6 +398,8 @@ void CarModel::UpdParsTrails()
 	for (int w=0; w < 4; w++)
 	{
 		Ogre::uint8 grp = RENDER_QUEUE_9;  //9=road  after glass
+		if (w < 2 &&
+			pb[w])	{	pb[w]->setVisible(pSet->particles);  pb[w]->setRenderQueueGroup(grp);  }
 		if (whTrl[w]){  whTrl[w]->setVisible(pSet->trails);  whTrl[w]->setRenderQueueGroup(grp);  }  grp += 2;
 		if (ps[w])	{	ps[w]->setVisible(pSet->particles);  ps[w]->setRenderQueueGroup(grp);  }  // vdr only && !sc.ter
 		if (pm[w])	{	pm[w]->setVisible(pSet->particles);  pm[w]->setRenderQueueGroup(grp);  }

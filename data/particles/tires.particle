@@ -300,4 +300,52 @@ particle_system Smoke
 }
 
 
+//  Boost  -------------------------------------------------
+
+particle_system Boost
+{
+    material        	Boost
+    particle_width  	0.2
+    particle_height 	0.2
+    cull_each       	false
+    quota           	1000
+    billboard_type  	point
+    //sorted			true
+
+    // Area emitter  Point
+    emitter Box
+    {
+		width 0.04
+		height 0.04
+		depth 0.04
+	    angle 1
+	    position 0 0 0
+	    direction 1 0 0
+
+	    emission_rate 100
+		time_to_live 0.4
+	    velocity_min 1.10
+	    velocity_max 1.20
+
+        colour 0.2 0.4 0.7 0.1
+        //colour_range_start  0.8 0.8 0.8
+        //colour_range_end  1 1 1
+    }
+
+    // Fader
+    affector ColourFader
+    {
+        red -0.91
+        green -0.915
+        blue -0.92
+        alpha -19.6
+    }
+
+    affector Scaler
+    {
+   	    rate -0.20
+    }
+}
+
+
 //  Grass, Sparks ...
