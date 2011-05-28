@@ -1,13 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <schemas>
 	<schema name="General">
-		<action name="ShowOptions" type="Trigger">
-		</action>
-		<action name="PrevTab" type="Trigger">
+		<action name="NextCamera" type="Trigger">
+			<binding>
+				<bind role="">Keyboard/C</bind>
+			</binding>
 		</action>
 		<action name="NextTab" type="Trigger">
+			<binding>
+				<bind role="">Keyboard/F3</bind>
+			</binding>
+		</action>
+		<action name="PrevCamera" type="Trigger">
+			<binding>
+				<bind role="">Keyboard/X</bind>
+			</binding>
+		</action>
+		<action name="PrevTab" type="Trigger">
+			<binding>
+				<bind role="">Keyboard/F2</bind>
+			</binding>
 		</action>
 		<action name="RestartGame" type="Trigger">
+			<binding>
+				<bind role="">Keyboard/F5</bind>
+			</binding>
+		</action>
+		<action name="ShowOptions" type="Trigger">
+			<binding>
+				<bind role="">Keyboard/Tab</bind>
+			</binding>
 		</action>
 	</schema>
 	<schema name="Player1">

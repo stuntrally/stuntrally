@@ -571,7 +571,9 @@ void App::InitInputGui()
 		yRow["ShowOptions"] = y; y+=2+1;
 		yRow["PrevTab"] = y;     y+=2;
 		yRow["NextTab"] = y;     y+=2+1;
-		yRow["RestartGame"] = y; y+=2;
+		yRow["RestartGame"] = y; y+=2+1;
+		yRow["PrevCamera"] = y;  y+=2;
+		yRow["NextCamera"] = y;  y+=2;
 		
 		///  Actions
 		for (std::map<OISB::String, OISB::Action*>::const_iterator
@@ -661,9 +663,9 @@ void App::InitInputGui()
 			}
 		}
 	}
-	
 	UpdateJsButtons(); // initial
 }
+
 
 void App::UpdateJsButtons()
 {
@@ -687,6 +689,7 @@ void App::UpdateJsButtons()
 			std::string jsName;
 			if (jsMenu->getIndexSelected() != MyGUI::ITEM_NONE)
 				jsName = jsMenu->getItemNameAt( jsMenu->getIndexSelected() );
+			
 			OISB::JoyStick* js = NULL;
 			for (std::vector<OISB::JoyStick*>::const_iterator jit = mOISBsys->mJoysticks.begin();
 					jit != mOISBsys->mJoysticks.end();
@@ -702,8 +705,7 @@ void App::UpdateJsButtons()
 					for (std::vector<OISB::DigitalState*>::const_iterator it = js->buttons.begin();
 							it != js->buttons.end(); it++)
 						button->addItem( stripk((*it)->getBindableName()) );
-				}
-				else
+				}else
 					button->addItem( TR("#{InputKeyNoButton}") );
 					
 				button->setIndexSelected(0);
@@ -716,9 +718,7 @@ void App::UpdateJsButtons()
 						result = button->findItemIndexWith( stripk(bnd2->getRole(NULL)) );
 						if (result != MyGUI::ITEM_NONE)
 							button->setIndexSelected( result );
-					}
-					else
-					{
+					}else{
 						result = button->findItemIndexWith( stripk(bnd2->getBindable(0)->getBindableName()) );
 						if (result != MyGUI::ITEM_NONE)
 							button->setIndexSelected( result );
@@ -733,8 +733,7 @@ void App::UpdateJsButtons()
 					for (std::vector<OISB::AnalogAxisState*>::const_iterator it = js->axis.begin();
 							it != js->axis.end(); it++)
 						axis->addItem( stripk((*it)->getBindableName()) );
-				}
-				else
+				}else
 					axis->addItem( TR("#{InputKeyNoAxis}") );
 					
 				axis->setIndexSelected(0);
@@ -748,9 +747,7 @@ void App::UpdateJsButtons()
 						result = axis->findItemIndexWith( stripk(bnd2->getRole(NULL)) );
 						if (result != MyGUI::ITEM_NONE)
 							axis->setIndexSelected( result );
-					}
-					else
-					{
+					}else{
 						result = axis->findItemIndexWith( stripk(bnd2->getBindable(0)->getBindableName()) );
 						if (result != MyGUI::ITEM_NONE)
 							axis->setIndexSelected( result );

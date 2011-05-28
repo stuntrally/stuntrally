@@ -729,7 +729,8 @@ bool App::keyPressed( const OIS::KeyEvent &arg )
 	
 	#define action(s) mOISBsys->lookupAction(std::string("General/")+std::string(s))->isActive()
 
-	if (!bAssignKey) {
+	if (!bAssignKey)
+	{
 		//  change gui tabs
 		if (mWndTabs)
 		{	int num = mWndTabs->getItemCount();
@@ -743,45 +744,74 @@ bool App::keyPressed( const OIS::KeyEvent &arg )
 				}
 		}	}
 		
-		//  on/off gui
+		//  gui on/off
 		if (action("ShowOptions"))
-			toggleGui();
-	}	
+		{	toggleGui();  return false;  }
 	
-	//  new game
-	if (action("RestartGame"))
-	{
-		NewGame();  return false;
+		//  new game
+		if (action("RestartGame"))
+		{	NewGame();  return false;	}
+
+
+		///  Cameras  ---------------------------------
+		int iChgCam = 0;
+		if (action("NextCamera"))  // Next
+			iChgCam = 1;
+		if (action("PrevCamera"))  // Prev
+			iChgCam = -1;
+		
+		if (iChgCam)
+		{
+			if (ctrl)
+				//  change current camera car index
+				iCurCam = (iCurCam + iChgCam +pSet->local_players) % pSet->local_players;
+			else
+			{	int visMask = 255, i = 0;
+				roadUpCnt = 0;
+
+				for (std::list<CarModel*>::iterator it=carModels.begin(); it!=carModels.end(); it++, i++)
+				if (i == iCurCam)
+				{
+					if ((*it)->fCam)
+					{	(*it)->fCam->Next(iChgCam < 0, shift);
+						if ((*it)->fCam->ca.mHideGlass)  visMask = 255-16;
+						else        visMask = 255;
+					}
+				}
+				for (std::list<Viewport*>::iterator it=mSplitMgr->mViewports.begin(); it!=mSplitMgr->mViewports.end(); it++)
+					(*it)->setVisibilityMask(visMask);
+			}
+			return false;
+		}
 	}
 	
 	using namespace OIS;
-	if (!bAssignKey) {
+	if (!bAssignKey)
+	{
 		switch (arg.key)
 		{
-			case KC_ESCAPE:		// quit
-			if (pSet->escquit)  {
-				mShutDown = true;	return true;  }
-			toggleGui();
-			return true;
+			case KC_ESCAPE:
+				if (pSet->escquit)
+					mShutDown = true;	// quit
+				else
+					toggleGui();		// gui on/off
+				return true;
 
 			#if 0
 			case KC_1:
 			if (mSplitMgr)
 			{	Ogre::Viewport* vp = *mSplitMgr->mViewports.begin();
-				vp->setAutoUpdated(shift);
-				vp->setVisibilityMask(shift ? 255 : 0);
+				vp->setAutoUpdated(shift);	vp->setVisibilityMask(shift ? 255 : 0);
 			}	return true;
 			case KC_2:
 			if (mSplitMgr)
 			{	Ogre::Viewport* vp = *(++mSplitMgr->mViewports.begin());
-				vp->setAutoUpdated(shift);
-				vp->setVisibilityMask(shift ? 255 : 0);
+				vp->setAutoUpdated(shift);	vp->setVisibilityMask(shift ? 255 : 0);
 			}	return true;
 			case KC_3:
 			if (mSplitMgr)
 			{	Ogre::Viewport* vp = *(--mSplitMgr->mViewports.end());
-				vp->setAutoUpdated(shift);
-				vp->setVisibilityMask(shift ? 255 : 0);
+				vp->setAutoUpdated(shift);	vp->setVisibilityMask(shift ? 255 : 0);
 			}	return true;
 			#endif
 
@@ -844,11 +874,13 @@ bool App::keyPressed( const OIS::KeyEvent &arg )
 		}
 	}
 
+	
 	if (!BaseApp::keyPressed(arg))
 		return true;
 
 	return true;
 }
+
 
 void App::toggleGui()
 {

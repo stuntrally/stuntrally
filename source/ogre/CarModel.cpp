@@ -18,11 +18,12 @@ CarModel::CarModel(unsigned int index, eCarType type, const std::string name,
 	MATHVECTOR<float, 3> offset;
 	offset.Set(5*iIndex,5*iIndex,0); // 5*sqrt(2) m distance between cars
 	/// TODO: some quaternion magic to align the cars along track start orientation
+	// 4 car positions from 1, step width,length ...
 	
 	MATHVECTOR<float, 3> pos(0,10,0);
 	QUATERNION<float> rot;
-	pos = pGame->track.GetStart(0).first;
-	rot = pGame->track.GetStart(0).second;
+	pos = pGame->track.GetStart(0/*iIndex*/).first;
+	rot = pGame->track.GetStart(0/*iIndex*/).second;
 
 	pCar = pGame->LoadCar(sDirname, pos + offset, rot, true, false);
 	if (!pCar) Log("Error loading car " + sDirname);

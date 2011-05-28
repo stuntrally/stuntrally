@@ -93,6 +93,7 @@ protected:
 	bool mbLeft, mbRight, mbMiddle;  // mouse buttons
 	String  mDebugText, mFilText;	// info texts
 	bool mbWireFrame, mbShowCamPos;  // on/off
+	int iCurCam;
 
 
 	///  Gui

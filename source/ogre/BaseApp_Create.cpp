@@ -235,7 +235,8 @@ BaseApp::BaseApp() :
 	mWndOpts(0), mWndTabs(0), mWndRpl(0), bSizeHUD(true), bLoading(false), bAssignKey(false), pressedKey(static_cast<OIS::KeyCode>(0) ),
 
 	mDebugOverlay(0), mFpsOverlay(0), mOvrFps(0), mOvrTris(0), mOvrBat(0), mOvrDbg(0),
-	mbShowCamPos(0), ndSky(0),	mbWireFrame(0) //*
+	mbShowCamPos(0), ndSky(0),	mbWireFrame(0), //*
+	iCurCam(0)
 {
 }
 
@@ -484,7 +485,9 @@ bool BaseApp::mouseMoved( const OIS::MouseEvent &arg )
 
 	///  Follow Camera Controls
 	// -for all cars
-	for (std::list<CarModel*>::iterator it=carModels.begin(); it!=carModels.end(); it++)
+	int i = 0;
+	for (std::list<CarModel*>::iterator it=carModels.begin(); it!=carModels.end(); it++, i++)
+	if (i == iCurCam)
 	{
 		if ((*it)->fCam)
 			(*it)->fCam->Move( mbLeft, mbRight, mbMiddle, shift, arg.state.X.rel, arg.state.Y.rel, arg.state.Z.rel );
