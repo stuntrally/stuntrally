@@ -118,10 +118,10 @@ void App::chkClutch(WP wp){		ChkEv(autoclutch);	if (pGame)  pGame->ProcessNewSet
 void App::chkVegetCollis(WP wp){	ChkEv(veget_collis);	}
 void App::btnNumPlayers(WP wp)
 {
-	if      (wp->getName() == "btnPlayers1") pSet->local_players = 1;
-	else if (wp->getName() == "btnPlayers2") pSet->local_players = 2;
-	else if (wp->getName() == "btnPlayers3") pSet->local_players = 3;
-	else if (wp->getName() == "btnPlayers4") pSet->local_players = 4;
+	if      (wp->getName() == "btnPlayers1")  pSet->local_players = 1;
+	else if (wp->getName() == "btnPlayers2")  pSet->local_players = 2;
+	else if (wp->getName() == "btnPlayers3")  pSet->local_players = 3;
+	else if (wp->getName() == "btnPlayers4")  pSet->local_players = 4;
 }
 void App::chkSplitVert(WP wp)
 {
@@ -607,6 +607,13 @@ void App::btnRplSave(WP)  // Save
 	String edit = edRplName->getCaption();
 	String file = PATHMANAGER::GetReplayPath() + "/" + pSet->track + "_" + edit + ".rpl";
 	///  save
+	if (boost::filesystem::exists(file.c_str()))
+	{
+		Message::createMessageBox(  // #{..
+			"Message", "Save Replay", "File already exists.",
+			MessageBoxStyle::IconWarning | MessageBoxStyle::Ok);
+		return;
+	}
 	if (!replay.SaveFile(file.c_str()))
 	{
 		Message::createMessageBox(  // #{..
@@ -614,10 +621,6 @@ void App::btnRplSave(WP)  // Save
 			MessageBoxStyle::IconWarning | MessageBoxStyle::Ok);
 	}
 	updReplaysList();
-}
-
-void App::btnRplDelete(WP)  // Delete
-{
 }
 
 //  list change
@@ -636,8 +639,12 @@ void App::listRplChng(List* li, size_t pos)
 		String ss = String(TR("#{Track}: ")) + rpl.header.track + (rpl.header.track_user ? "  *user*" : "");
 		valRplName->setCaption(ss);
 
-		ss = String(TR("#{Car}: ")) + rpl.header.car + "\n" +
-			TR("#{RplTime}: ") + GetTimeString(rpl.GetTimeLength());
+		ss = String(TR("#{Car}: ")) + rpl.header.car +
+			(rpl.header.numPlayers == 1 ? "" : "       Players: " + toStr(rpl.header.numPlayers)) +
+			//(rpl.header.cars[0][0] != 0 ? " , " + rpl.header.cars[0] : "") +
+			//(rpl.header.cars[0][1] != 0 ? " , " + rpl.header.cars[1] : "") +
+			//(rpl.header.cars[0][2] != 0 ? " , " + rpl.header.cars[2] : "") +
+			"\n" + TR("#{RplTime}: ") + GetTimeString(rpl.GetTimeLength());
 		valRplInfo->setCaption(ss);
 
 		int size = boost::filesystem::file_size(file);
@@ -650,7 +657,7 @@ void App::listRplChng(List* li, size_t pos)
 }
 
 
-void App::chkRplAutoRec(WP wp)		//ChkEv(rpl_rec);		}
+void App::chkRplAutoRec(WP wp)
 {
 	bRplRec = !bRplRec;  // changes take effect next game start
 	if (!wp)  return;
@@ -658,7 +665,10 @@ void App::chkRplAutoRec(WP wp)		//ChkEv(rpl_rec);		}
     chk->setStateCheck(bRplRec);
 }
 
-void App::chkRplChkGhost(WP wp){	/*ChkEv(rpl_play);*/	}
+void App::chkRplChkGhost(WP wp)
+{
+	//ChkEv(rpl_play);
+}
 
 
 void App::btnRplCur(WP)
@@ -716,6 +726,38 @@ void App::updReplaysList()
 		s = StringUtil::replaceAll(s,".rpl","");
 		rplList->addItem(s);
 	}
+}
+
+
+//  Delete
+void App::btnRplDelete(WP)
+{
+	size_t i = rplList->getIndexSelected();  if (i == ITEM_NONE)  return;
+	String name = rplList->getItemNameAt(i);
+	Message* message = Message::createMessageBox(
+		"Message", "Delete Replay ?", name,
+		MessageBoxStyle::IconQuest | MessageBoxStyle::Yes | MessageBoxStyle::No);
+	message->eventMessageBoxResult = newDelegate(this, &App::msgRplDelete);
+	//message->setUserString("FileName", fileName);
+}
+void App::msgRplDelete(Message* sender, MessageBoxStyle result)
+{
+	if (result != MessageBoxStyle::Yes)
+		return;
+	size_t i = rplList->getIndexSelected();  if (i == ITEM_NONE)  return;
+	String name = rplList->getItemNameAt(i);
+	
+	string file = PATHMANAGER::GetReplayPath() +"/"+ name + ".rpl";
+	if (boost::filesystem::exists(file))
+		boost::filesystem::remove(file);
+	updReplaysList();
+}
+
+//  Rename
+void App::btnRplRename(WP)
+{
+	//if (boost::filesystem::exists(from.c_str()))
+	//	boost::filesystem::rename(from.c_str(), to.c_str());
 }
 
 

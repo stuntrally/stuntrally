@@ -113,7 +113,7 @@ void App::LoadGame()  // 2
 	mSplitMgr->mNumPlayers = pSet->local_players;
 	//  no split screen in replay
 	if (bRplPlay)
-		mSplitMgr->mNumPlayers = 1;
+		mSplitMgr->mNumPlayers = /*1*/replay.header.numPlayers;
 	mSplitMgr->Align();
 	mPlatform->getRenderManagerPtr()->setActiveViewport(mSplitMgr->mNumPlayers);
 	
@@ -124,7 +124,7 @@ void App::LoadGame()  // 2
 	// actual car loading will be done later in LoadCar()
 	// this is just here because vdrift car has to be created first
 	std::list<Camera*>::iterator camIt = mSplitMgr->mCameras.begin();
-	for (int i=0; i<mSplitMgr->mNumPlayers; i++)
+	for (int i=0; i < mSplitMgr->mNumPlayers; i++)
 	{
 		carModels.push_back( new CarModel(i, CarModel::CT_LOCAL, pSet->car/*sListCar*/, mSceneMgr, pSet, pGame, &sc, (*camIt), this ) );
 		camIt++;
@@ -173,6 +173,11 @@ void App::LoadCar()  // 4
 	///  Init Replay  once  =================----------------
 	replay.InitHeader(pSet->track.c_str(), pSet->track_user, pSet->car.c_str(), !bRplPlay);
 	replay.header.numPlayers = pSet->local_players;
+	if (pSet->local_players > 1)  // other car names
+	//for (int p=1; p <
+	{
+		//strcpy(replay.header.cars[0], pSet->car.c_str());
+	}
 	
 	int c = 0;  // copy wheels R
 	for (std::list <CAR>::const_iterator it = pGame->cars.begin(); it != pGame->cars.end(); it++,c++)

@@ -284,6 +284,11 @@
 					<Property key="Widget_Caption" value="#{RplDelete}"/>
 					<Property key="Text_TextColour" value="1 0.4 0.4"/>
 				</Widget>
+				<Widget type="Button" skin="Button" position="424 308 128 32" name="RplRename">
+					<Property key="Text_TextColour" value="1 0.8 0.4"/>
+					<Property key="Widget_Colour" value="1 0.8 0.4"/>
+					<Property key="Widget_Caption" value="#{RplRename}"/>
+				</Widget>
 				<Widget type="StaticText" skin="StaticText" position="224 24 184 24" align="Relative" name="RplName">
 					<Property key="Text_TextColour" value="0.84 0.8 1"/>
 				</Widget>
@@ -309,11 +314,6 @@
 				</Widget>
 				<Widget type="Edit" skin="Edit" position="224 270 280 32" name="RplNameEdit">
 					<Property key="Widget_Colour" value="0.8 0.9 1"/>
-				</Widget>
-				<Widget type="Button" skin="Button" position="424 308 128 32">
-					<Property key="Text_TextColour" value="1 0.8 0.4"/>
-					<Property key="Widget_Colour" value="1 0.8 0.4"/>
-					<Property key="Widget_Caption" value="#{RplRename}"/>
 				</Widget>
 			</Widget>
 			<Widget type="TabItem" skin="" position="4 26 787 531">

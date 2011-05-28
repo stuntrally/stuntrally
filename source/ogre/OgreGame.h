@@ -183,10 +183,11 @@ protected:
 		valRplName,valRplInfo,valRplName2,valRplInfo2;
 	HScrollPtr slRplPos;  void slRplPosEv(SL);
 	EditPtr edRplName, edRplDesc;
-	void btnRplLoad(WP), btnRplSave(WP), btnRplDelete(WP),
+	void btnRplLoad(WP), btnRplSave(WP), btnRplDelete(WP), btnRplRename(WP),
 		chkRplAutoRec(WP),chkRplChkGhost(WP), btnRplCur(WP),btnRplAll(WP),
 		btnRplToStart(WP),btnRplToEnd(WP), btnRplBack(WP),btnRplForward(WP),
 		btnRplPlay(WP);
+	void msgRplDelete(Message*, MessageBoxStyle);
 	
 	void btnNumPlayers(WP); void chkSplitVert(WP);
 		

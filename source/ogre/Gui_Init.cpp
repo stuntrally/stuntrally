@@ -200,7 +200,8 @@ void App::InitGui()
 	
 
 	//  replays  ------------------------------------------------------------
-	Btn("RplLoad", btnRplLoad);  Btn("RplSave", btnRplSave);  Btn("RplDelete", btnRplDelete);
+	Btn("RplLoad", btnRplLoad);  Btn("RplSave", btnRplSave);
+	Btn("RplDelete", btnRplDelete);  Btn("RplRename", btnRplRename);
 	Chk("RplChkAutoRec", chkRplAutoRec, rpl_rec);
 	//Chk("RplChkGhost", chkRplChkGhost, rpl_play);
 	Btn("RplBtnCur", btnRplCur)  Btn("RplBtnAll", btnRplAll);  // radio
@@ -555,17 +556,17 @@ void App::InitInputGui()
 		}
 		
 		///  ------ custom action sorting ----------------
-		int i = 0, y = 0;
+		int i = 0, y = 0, ya = 26 / 2;
 		std::map <std::string, int> yRow;
 		// player
 		yRow["Throttle"] = y;	y+=2;
 		yRow["Brake"] = y;		y+=2;
-		yRow["Steering"] = y;	y+=2+1;
+		yRow["Steering"] = y;	y+=2+1 +2;
 		yRow["HandBrake"] = y;	y+=2;
 		yRow["Boost"] = y;		y+=2;
-		yRow["Flip"] = y;		y+=2+1;
-		yRow["ShiftDown"] = y;	y+=2;
+		yRow["Flip"] = y;		y+=2+1 +2;
 		yRow["ShiftUp"] = y;	y+=2;
+		yRow["ShiftDown"] = y;	y+=2;
 		// general
 		y = 0;
 		yRow["ShowOptions"] = y; y+=2+1;
@@ -573,7 +574,7 @@ void App::InitInputGui()
 		yRow["NextTab"] = y;     y+=2+1;
 		yRow["RestartGame"] = y; y+=2+1;
 		yRow["PrevCamera"] = y;  y+=2;
-		yRow["NextCamera"] = y;  y+=2;
+		yRow["NextCamera"] = y;  y+=2+1;
 		
 		///  Actions
 		for (std::map<OISB::String, OISB::Action*>::const_iterator
@@ -588,7 +589,7 @@ void App::InitInputGui()
 
 			// description label
 			const String& name = (*ait).second->getName();
-			y = 40 + 26 * yRow[name] / 2;
+			y = 40 + ya * yRow[name];
 			MyGUI::StaticTextPtr desc = tabitem->createWidget<StaticText>("StaticText", x0, y, sx+70, sy, MyGUI::Align::Default, "staticText_" + (*ait).first );
 			desc->setCaption( TR("#{InputMap" + name + "}") );
 		
@@ -628,17 +629,15 @@ void App::InitInputGui()
 			bool button2 = false;
 			if (  act->getActionType() == OISB::AT_ANALOG_AXIS && !( act->getProperty<int> ("MinimumValue") == 0 )) button2 = true;
 
-			MyGUI::ButtonPtr key1 = tabitem->createWidget<Button>("Button", x1, y, sx, sy, MyGUI::Align::Default, "inputbutton_" + (*ait).first + "_" + (*it).first + "_1");
+			MyGUI::ButtonPtr key1 = tabitem->createWidget<Button>("Button", /*button2 ? x2 :*/ x1, button2 ? (y + ya*2) : y, sx, sy, MyGUI::Align::Default, "inputbutton_" + (*ait).first + "_" + (*it).first + "_1");
 			key1->setCaption( stripk(key1_label) );
 			key1->eventMouseButtonClick = MyGUI::newDelegate(this, &App::controlBtnClicked);
 			
 			if (button2)
-			{
-				MyGUI::ButtonPtr key2 = tabitem->createWidget<Button>("Button", x2, y, sx, sy, MyGUI::Align::Default, "inputbutton_" + (*ait).first + "_" + (*it).first + "_2");
+			{	MyGUI::ButtonPtr key2 = tabitem->createWidget<Button>("Button", x1, y, sx, sy, MyGUI::Align::Default, "inputbutton_" + (*ait).first + "_" + (*it).first + "_2");
 				key2->setCaption( stripk(key2_label) );
 				key2->eventMouseButtonClick = MyGUI::newDelegate(this, &App::controlBtnClicked);
 			}
-
 
 			/// joystick binds
 			// only on player tab

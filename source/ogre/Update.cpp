@@ -59,11 +59,11 @@ bool App::frameStart(Real time)
 	else 
 	{
 		//  keys dn/up - trklist, carlist
-		#define isKey(a)  mKeyboard->isKeyDown(OIS::KC_##a)
+		#define isKey(a)  mKeyboard->isKeyDown(OIS::##a)
 		static float dirU = 0.f,dirD = 0.f;
 		if (isFocGui)
-		{	if (isKey(UP)  ||isKey(NUMPAD8))	dirD += time;  else
-			if (isKey(DOWN)||isKey(NUMPAD2))	dirU += time;  else
+		{	if (isKey(KC_UP)  ||isKey(KC_NUMPAD8))	dirD += time;  else
+			if (isKey(KC_DOWN)||isKey(KC_NUMPAD2))	dirU += time;  else
 			{	dirU = 0.f;  dirD = 0.f;  }
 			int d = ctrl ? 4 : 1;
 			if (dirU > 0.0f) {  carListNext( d);  trkListNext( d);  dirU = -0.12f;  }
@@ -76,7 +76,7 @@ bool App::frameStart(Real time)
 			isFocRpl = ctrl;
 			//mGUI->setVisiblePointer(isFocGuiOrRpl());  // in sizehud-
 
-			int ta = (isKey(LBRACKET) ? -2 : 0) + (isKey(RBRACKET) ? 2 : 0);
+			int ta = (isKey(KC_LBRACKET) ? -2 : 0) + (isKey(KC_RBRACKET) ? 2 : 0);
 			if (ta)
 			{	double tadd = ta;
 				tadd *= (shift ? 0.2 : 1) * (ctrl ? 4 : 1) * (alt ? 8 : 1);  // multiplers
@@ -92,6 +92,7 @@ bool App::frameStart(Real time)
 		if (!pGame)
 			return false;
 		pGame->pause = bRplPlay ? (bRplPause || isFocGui) : isFocGui;
+
 
 		///  step Game  *******
 		//  single thread, sim on draw
@@ -113,10 +114,8 @@ bool App::frameStart(Real time)
 			
 			// Update cameras for all cars
 			for (std::list<CarModel*>::iterator it=carModels.begin(); it!=carModels.end(); it++)
-			{
 				if ((*it)->fCam)
 					(*it)->fCam->update(pGame->framerate);
-			}
 		}
 
 		// Update all cube maps
@@ -187,12 +186,15 @@ void App::newPoses()
 {
 	if (!pGame)  return;
 	if (pGame->cars.size() == 0)  return;
+	double rplTime = pGame->timer.GetReplayTime();
+
 	// Iterate through all car models and get new pos info
+	int iCarNum = 0;
 	std::list<CAR>::iterator carIt = pGame->cars.begin();
 	std::list<CarModel*>::iterator carMIt = carModels.begin();
 	std::list<PosInfo>::iterator newPosInfoIt = newPosInfos.begin();
 	///TODO -how to handle CarModels that don't have a vdrift car?
-	while (carMIt != carModels.end() )
+	while (carMIt != carModels.end())
 	{
 		CAR* pCar = &(*carIt);
 		CarModel* carM = *carMIt;
@@ -209,8 +211,7 @@ void App::newPoses()
 		if (bRplPlay)
 		{
 			//  time  from start
-			double rtime = pGame->timer.GetReplayTime();
-			bool ok = replay.GetFrame(rtime, &fr);
+			bool ok = replay.GetFrame(rplTime, &fr, iCarNum);
 			if (!ok)	pGame->timer.RestartReplay();
 			
 			//  car
@@ -288,11 +289,11 @@ void App::newPoses()
 		///-----------------------------------------------------------------------
 		if (pSet->rpl_rec && !pGame->pause)
 		{
-			static int ii = 0;
-			if (ii++ >= 0)	// 1 half game framerate
-			{	ii = 0;
+			//static int ii = 0;
+			//if (ii++ >= 0)	// 1 half game framerate
+			{	//ii = 0;
 				ReplayFrame fr;
-				fr.time = pGame->timer.GetReplayTime();  //  time  from start
+				fr.time = rplTime;  //  time  from start
 				fr.pos = pos;  fr.rot = rot;  //  car
 				//  wheels
 				for (int w=0; w < 4; w++)
@@ -319,7 +320,7 @@ void App::newPoses()
 				fr.posEngn = pCar->dynamics.GetEnginePosition();
 				fr.speed = pCar->GetSpeed();
 				fr.dynVel = pCar->dynamics.GetVelocity().Magnitude();
-				replay.AddFrame(fr);
+				replay.AddFrame(fr, iCarNum);
 				
 				if (valRplName2)  // recorded info
 				{
@@ -394,9 +395,7 @@ void App::newPoses()
 		}
 		(*newPosInfoIt) = posInfo;
 		
-		carIt++;
-		carMIt++;
-		newPosInfoIt++;
+		carIt++;  carMIt++;  newPosInfoIt++;  iCarNum++;
 	}
 }
 
@@ -433,9 +432,9 @@ void App::updatePoses(float time)
 		double pos = pGame->timer.GetPlayerTime();
 		float len = replay.GetTimeLength();
 		if (valRplPerc){  sprintf(s, "%4.1f %%", pos/len * 100.f);  valRplPerc->setCaption(s);  }
-		if (valRplCur){  valRplCur->setCaption( GetTimeString( pos ) );  }
-		if (valRplLen){  valRplLen->setCaption( GetTimeString( len ) );  }
-		
+		if (valRplCur)  valRplCur->setCaption(GetTimeString(pos));
+		if (valRplLen)  valRplLen->setCaption(GetTimeString(len));
+
 		if (slRplPos)
 		{
 			#define res  1000000.f
