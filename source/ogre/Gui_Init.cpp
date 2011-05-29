@@ -82,17 +82,18 @@ void App::InitGui()
 	combo = (ComboBoxPtr)mLayout->findWidget("TexFiltering");
 	if (combo)  combo->eventComboChangePosition = newDelegate(this, &App::comboTexFilter);
 	
-	// language combo
+	//  language combo
 	supportedLanguages["en"] = "English";
-	supportedLanguages["de"] = /*"German"*/ "Deutsch";
-	supportedLanguages["fi"] = /*"Finnish"*/ "Suomi";
+	supportedLanguages["de"] = "Deutsch";  //German
+	supportedLanguages["fi"] = "Suomi";  //Finnish
 	combo = NULL; combo = (ComboBoxPtr)mLayout->findWidget("Lang");
 	if (combo) combo->eventComboChangePosition = newDelegate(this, &App::comboLanguage);
-	for (std::map<std::string, std::string>::const_iterator it=supportedLanguages.begin();
-			it!=supportedLanguages.end(); it++)
+	for (std::map<std::string, std::string>::const_iterator it = supportedLanguages.begin();
+		it != supportedLanguages.end(); it++)
 	{
-			combo->addItem( it->second );
-			if (it->first == pSet->language) combo->setIndexSelected(combo->getItemCount()-1);
+		combo->addItem(it->second);
+		if (it->first == pSet->language)
+			combo->setIndexSelected(combo->getItemCount()-1);
 	}
 	
 	Slv(Anisotropy,	pSet->anisotropy /res);

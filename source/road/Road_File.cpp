@@ -324,6 +324,6 @@ bool SplineRoad::SaveFile(String fname)
 		root.InsertEndChild(p);
 	}
 	
-	xml.InsertEndChild(root);  xml.SaveFile(fname.c_str());
-	return true;
+	xml.InsertEndChild(root);
+	return xml.SaveFile(fname.c_str());
 }

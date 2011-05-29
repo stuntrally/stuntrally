@@ -30,7 +30,7 @@ public:
 	Scene sc;  /// scene.xml
 	BltObjects objs;  // veget collision in bullet
 
-	TRACKSURFACE su[8];  void LoadSurf(), SaveSurf(const String& trk);
+	TRACKSURFACE su[8];  bool LoadSurf(), SaveSurf(const String& trk);
 	Light* sun;  void UpdFog(bool bForce=false), UpdSun();
 
 	void UpdWndTitle(), SaveCam();
@@ -269,8 +269,9 @@ protected:
 
 
 	//  system, utils
-	void Rename(String from, String to), Delete(String file), DeleteDir(String dir),
-		CreateDir(String dir), Copy(String file, String to);
+	String strFSerrors;
+	bool Rename(String from, String to), Delete(String file), DeleteDir(String dir),
+		 CreateDir(String dir), Copy(String file, String to);
 	bool TrackExists(String name);  // util
 
 	std::vector<String> vsMaterials;

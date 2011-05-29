@@ -170,6 +170,12 @@ String App::PathCopyTrk(int user){
 //---------------------------------------------------------------------------------------------------------------
 void App::SaveTrack()
 {
+	if (!pSet->track_user)  // could force when in writable location..
+	{	Message::createMessageBox(
+			"Message", "Save Track", "Can't save original track. Duplicate it first.",
+			MessageBoxStyle::IconWarning | MessageBoxStyle::Ok);
+		return;
+	}	
 	eTrkEvent = TE_Save;
 	Status("Saving...", 1,0.4,0.1);
 }
@@ -178,6 +184,7 @@ void App::SaveTrackEv()
 	//  track dir in user
 	CreateDir(TrkDir());
 	CreateDir(TrkDir() + "/objects");
+	//  check if succeded ...
 
 	if (terrain)
 	{	float *fHmap = terrain->getHeightData();
