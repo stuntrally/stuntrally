@@ -468,13 +468,16 @@ void App::radMph(WP wp){	bRkmh->setStateCheck(false);  bRmph->setStateCheck(true
 
 void App::comboLanguage(SL)
 {
-	if (val == MyGUI::ITEM_NONE) return;
+	if (val == MyGUI::ITEM_NONE)  return;
+	MyGUI::ComboBoxPtr cmb = static_cast<MyGUI::ComboBoxPtr>(wp);
+	std::string sel = cmb->getItemNameAt(val);
 	
-	std::string sel = static_cast<MyGUI::ComboBoxPtr>(wp)->getItemNameAt(val);
-	
-	if (sel == "German") pSet->language = "de";
-	else if (sel == "English") pSet->language = "en";
-	else if (sel == "Finnish") pSet->language = "fi";
+	for (std::map<std::string, std::string>::const_iterator it = supportedLanguages.begin();
+		it != supportedLanguages.end(); it++)
+	{
+		if (it->second == sel)
+			pSet->language = it->first;
+	}
 }
 
 //  Startup
