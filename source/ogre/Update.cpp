@@ -59,7 +59,7 @@ bool App::frameStart(Real time)
 	else 
 	{
 		//  keys dn/up - trklist, carlist
-		#define isKey(a)  mKeyboard->isKeyDown(OIS::##a)
+		#define isKey(a)  mKeyboard->isKeyDown(OIS::a)
 		static float dirU = 0.f,dirD = 0.f;
 		if (isFocGui)
 		{	if (isKey(KC_UP)  ||isKey(KC_NUMPAD8))	dirD += time;  else
