@@ -1,9 +1,8 @@
-#include "stdafx.h"
 
 #include "random.h"
 
 //#include <iostream>
-//#include <cassert>
+#include <cassert>
 
 unsigned int randtab[2048] = {
     0xb6cefe9c,0x4ebb177b,0x60b81955,0xcda3b481,0x05d9444e,0x043f4287,

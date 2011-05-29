@@ -11,7 +11,7 @@ Permission is granted to anyone to use this software for any purpose, including 
 //BatchPage.cpp
 //BatchPage is an extension to PagedGeometry which displays entities as static geometry.
 //-------------------------------------------------------------------------------------
-#include "stdafx.h"
+//#include "Defines.h"
 #include "BatchPage.h"
 #include "BatchedGeometry.h"
 

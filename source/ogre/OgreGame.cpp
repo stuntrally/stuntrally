@@ -1,7 +1,9 @@
-#include "stdafx.h"
+#include "Defines.h"
 #include "OgreGame.h"
 #include "../vdrift/game.h"
 #include "../road/Road.h"
+#include "SplitScreenManager.h"
+#include "../paged-geom/PagedGeometry.h"
 
 
 //  ctors  -----------------------------------------------
@@ -45,9 +47,9 @@ App::App()
 	
 	//  util for update rot
 	Quaternion qr;  {
-	QUATERNION <double> fix;  fix.Rotate(PI, 0, 1, 0);
+	QUATERNION <double> fix;  fix.Rotate(PI_d, 0, 1, 0);
 	qr.w = fix.w();  qr.x = fix.x();  qr.y = fix.y();  qr.z = fix.z();  qFixCar = qr;  }
-	QUATERNION <double> fix;  fix.Rotate(Math::HALF_PI, 0, 1, 0);
+	QUATERNION <double> fix;  fix.Rotate(PI_d/2, 0, 1, 0);
 	qr.w = fix.w();  qr.x = fix.x();  qr.y = fix.y();  qr.z = fix.z();  qFixWh = qr;
 }
 

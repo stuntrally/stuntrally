@@ -1,4 +1,3 @@
-#include "stdafx.h"
 
 #include "track_object.h"
 #include "assert.h"

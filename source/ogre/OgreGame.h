@@ -2,18 +2,25 @@
 #define _OgreGame_h_
 
 #include "BaseApp.h"
-#include "../btOgre/BtOgreDebug.h"
-#include "../paged-geom/PagedGeometry.h"
 #include "common/SceneXml.h"
 #include "common/BltObjects.h"
+
 #include "ReplayGame.h"
 #include "CarModel.h"
+#include "CarReflection.h"
 
-using namespace Ogre;
-using namespace MyGUI;
+#include <Ogre.h>
+#include <OgreTerrain.h>
+#include <OgreTerrainGroup.h>
+#include <OgreTerrainPaging.h>
+#include <OgrePageManager.h>
+
+#include <MyGUI.h>
 
 
-#include "CarReflection.h" //ciShadowSizesA, ciShadowNumSizes
+namespace Forests {  class PagedGeometry;  }
+namespace BtOgre  {  class DebugDrawer;  }
+
 
 class App : public BaseApp //, public RenderTargetListener
 {
@@ -38,13 +45,13 @@ public:
 
 	Scene sc;  /// scene.xml
 	BltObjects objs;  // veget collision in bullet
-	Light* sun;  void UpdFog(bool bForce=false), UpdSun();
+	class Light* sun;  void UpdFog(bool bForce=false), UpdSun();
 	
 	// Rain, snow
 	ParticleSystem *pr,*pr2;
 	
 	//  trees
-	class Forests::PagedGeometry *trees, *grass;
+	Forests::PagedGeometry *trees, *grass;
 	
 	void UpdateHUD(class CAR* pCar, float time, Viewport* vp=NULL), SizeHUD(bool full, Viewport* vp=NULL);
 
@@ -56,34 +63,34 @@ protected:
 	virtual bool frameEnd(Real time);
 	virtual bool keyPressed( const OIS::KeyEvent &arg );
 		
-	class BtOgre::DebugDrawer *dbgdraw;  /// blt dbg
+	BtOgre::DebugDrawer *dbgdraw;  /// blt dbg
 
 	//  mtr reload
 	enum eMaterials {
 		Mtr_CarBody, Mtr_CarInterior, Mtr_CarGlass,
 		Mtr_CarTireFront, Mtr_CarTireRear,
 		Mtr_Road,  NumMaterials  };
-	String sMtr[NumMaterials];
+	Ogre::String sMtr[NumMaterials];
 	void reloadMtrTex(String mtrName);
 
 	//  2D, hud  ----
 	float asp,  xcRpm, ycRpm, xcVel, ycVel,
 		fMiniX,fMiniY, scX,scY, ofsX,ofsY, minX,maxX, minY,maxY;  // minimap
 
-	SceneNode *nrpmB, *nvelBk,*nvelBm, *nrpm, *nvel;  // gauges
-	SceneNode *ndPos, *ndMap, *ndLine;  // car pos on minimap
-	ManualObject* mrpm, *mvel, *mpos;
-	ManualObject* Create2D(const String& mat, SceneManager* sceneMgr, Real size, bool dyn = false);
+	Ogre::SceneNode *nrpmB, *nvelBk,*nvelBm, *nrpm, *nvel;  // gauges
+	Ogre::SceneNode *ndPos, *ndMap, *ndLine;  // car pos on minimap
+	Ogre::ManualObject* mrpm, *mvel, *mpos;
+	Ogre::ManualObject* Create2D(const String& mat, SceneManager* sceneMgr, Real size, bool dyn = false);
 
-	OverlayElement* hudGear,*hudVel, *ovL[5],*ovR[5],*ovS[5],*ovU[5], *hudAbs,*hudTcs, *hudTimes,*hudCheck;
-	Overlay* ovGear,*ovVel, *ovAbsTcs,*ovCarDbg,*ovCarDbgTxt,  *ovCam, *ovTimes;
+	Ogre::OverlayElement* hudGear,*hudVel, *ovL[5],*ovR[5],*ovS[5],*ovU[5], *hudAbs,*hudTcs, *hudTimes,*hudCheck;
+	Ogre::Overlay* ovGear,*ovVel, *ovAbsTcs,*ovCarDbg,*ovCarDbgTxt,  *ovCam, *ovTimes;
 
-	String GetTimeString(float time) const;
+	Ogre::String GetTimeString(float time) const;
 	void CreateHUD(), ShowHUD(bool hideAll=false);
 
 
 	//  create  . . . . . . . . . . . . . . . . . . . . . . . . 
-	String resCar, resTrk, resDrv;
+	Ogre::String resCar, resTrk, resDrv;
 	void CreateCar();
 	void CreateTrack(), CreateRacingLine(), CreateMinimap(), CreateRoadBezier();
 	void CreateTerrain(bool bNewHmap=false, bool bTer=true), CreateBltTerrain();
@@ -104,18 +111,18 @@ protected:
 
 
 	///  terrain
-	Terrain* terrain;	TerrainGlobalOptions* mTerrainGlobals;
-	TerrainGroup* mTerrainGroup;  bool mPaging;
-	TerrainPaging* mTerrainPaging;	PageManager* mPageManager;
+	Ogre::Terrain* terrain;  Ogre::TerrainGlobalOptions* mTerrainGlobals;
+	Ogre::TerrainGroup* mTerrainGroup;  bool mPaging;
+	Ogre::TerrainPaging* mTerrainPaging;  Ogre::PageManager* mPageManager;
 	//Vector3 getNormalAtWorldPosition(Terrain* terrain, Real x, Real z, Real s);
 
 	int iBlendMaps, blendMapSize;	//  mtr from ter  . . . 
 	char* blendMtr;  // mtr [blendMapSize x blendMapSize]
 	void initBlendMaps(Terrain* terrain);
-	void configureTerrainDefaults(Light* l);
+	void configureTerrainDefaults(class Light* l);
 		
 	void changeShadows(), UpdPSSMMaterials(), setMtrSplits(String sMtrName);
-	Vector4 splitPoints;  ShadowCameraSetupPtr mPSSMSetup;
+	Ogre::Vector4 splitPoints;  Ogre::ShadowCameraSetupPtr mPSSMSetup;
 
 
 	//  road
@@ -132,22 +139,22 @@ protected:
 	void UpdGuiRdStats(const SplineRoad* rd, const Scene& sc, float time), ReadTrkStats();
 
 	//  tooltips
-	WidgetPtr mToolTip;  EditPtr mToolTipTxt;
-	void setToolTips(EnumeratorWidgetPtr widgets);
-	void notifyToolTip(Widget* sender, const ToolTipInfo& info);
-	void boundedMove(Widget *moving, const IntPoint & point);
+	MyGUI::WidgetPtr mToolTip;  MyGUI::EditPtr mToolTipTxt;
+	void setToolTips(MyGUI::EnumeratorWidgetPtr widgets);
+	void notifyToolTip(MyGUI::Widget* sender, const MyGUI::ToolTipInfo& info);
+	void boundedMove(MyGUI::Widget *moving, const MyGUI::IntPoint & point);
 
 	//  Gui events
-	typedef WidgetPtr WP;
+	typedef MyGUI::WidgetPtr WP;
 	typedef std::list <std::string> strlist;
 		//  slider event and its text field for value
-	#define SLV(name)  void sl##name(SL);  StaticTextPtr val##name;
+	#define SLV(name)  void sl##name(SL);  MyGUI::StaticTextPtr val##name;
 	#define SL  WP wp, size_t val	//  slider event args
 	
 	// input tab
-	void controlBtnClicked(Widget* sender), InitInputGui(), UpdateJsButtons();
-	void joystickBindChanged(Widget* sender,size_t val);
-	void joystickSelectionChanged(Widget* sender,size_t val);
+	void controlBtnClicked(WP), InitInputGui(), UpdateJsButtons();
+	void joystickBindChanged(WP, size_t val);
+	void joystickSelectionChanged(WP, size_t val);
 
 	//  sliders
 	SLV(Anisotropy);  SLV(ViewDist);  SLV(TerDetail);  SLV(TerDist);  SLV(RoadDist);  // detail
@@ -175,42 +182,42 @@ protected:
 	std::map<std::string, std::string> supportedLanguages; // <short name, display name>
 
 	void comboTexFilter(SL);
-	ButtonPtr bRkmh, bRmph;  void radKmh(WP), radMph(WP), btnTrGrReset(WP), btnQuit(WP), btnResChng(WP);
-	ButtonPtr chDbgT,chDbgB, chBlt,chBltTxt, chFps, chTimes,chMinimp, bnQuit;
+	MyGUI::ButtonPtr bRkmh, bRmph;  void radKmh(WP), radMph(WP), btnTrGrReset(WP), btnQuit(WP), btnResChng(WP);
+	MyGUI::ButtonPtr chDbgT,chDbgB, chBlt,chBltTxt, chFps, chTimes,chMinimp, bnQuit;
 
 	///  replay
-	StaticTextPtr valRplPerc, valRplCur, valRplLen,
+	MyGUI::StaticTextPtr valRplPerc, valRplCur, valRplLen,
 		valRplName,valRplInfo,valRplName2,valRplInfo2;
-	HScrollPtr slRplPos;  void slRplPosEv(SL);
-	EditPtr edRplName, edRplDesc;
+	MyGUI::HScrollPtr slRplPos;  void slRplPosEv(SL);
+	MyGUI::EditPtr edRplName, edRplDesc;
 	void btnRplLoad(WP), btnRplSave(WP), btnRplDelete(WP), btnRplRename(WP),
 		chkRplAutoRec(WP),chkRplChkGhost(WP), btnRplCur(WP),btnRplAll(WP),
 		btnRplToStart(WP),btnRplToEnd(WP), btnRplBack(WP),btnRplForward(WP),
 		btnRplPlay(WP);
-	void msgRplDelete(Message*, MessageBoxStyle);
+	void msgRplDelete(MyGUI::Message*, MyGUI::MessageBoxStyle);
 	
 	void btnNumPlayers(WP); void chkSplitVert(WP);
 		
 public:
 	bool bRplPlay,bRplPause, bRplRec;  //  game
 protected:
-	ButtonPtr btRplPl;  void UpdRplPlayBtn();
+	MyGUI::ButtonPtr btRplPl;  void UpdRplPlayBtn();
 
 	//  game
-	ListPtr carList,trkList, resList, rplList;  void updReplaysList();
-	void listRplChng(List* li, size_t pos);
-	void listCarChng(List* li, size_t pos),		btnChgCar(WP);
-	void listTrackChng(List* li, size_t pos),	btnChgTrack(WP);
+	MyGUI::ListPtr carList,trkList, resList, rplList;  void updReplaysList();
+	void listRplChng(MyGUI::List* li, size_t pos);
+	void listCarChng(MyGUI::List* li, size_t pos),		btnChgCar(WP);
+	void listTrackChng(MyGUI::List* li, size_t pos),	btnChgTrack(WP);
 	void btnNewGame(WP),btnNewGameStart(WP), btnShadows(WP);
 	void trkListNext(int rel), carListNext(int rel);
 
-	String sListCar,sListTrack;  int bListTrackU;
-	String pathTrk[2];  String TrkDir();
-	String PathListTrk(int user=-1);//, PathListTrkPrv(int user=-1);
+	Ogre::String sListCar,sListTrack;  int bListTrackU;
+	Ogre::String pathTrk[2];  Ogre::String TrkDir();
+	Ogre::String PathListTrk(int user=-1);//, PathListTrkPrv(int user=-1);
 
 	#define StTrk 12
-	StaticImagePtr imgCar,imgPrv,imgMini,imgTer;  EditPtr trkDesc;
-	StaticTextPtr valCar, valTrk, stTrk[StTrk];
+	MyGUI::StaticImagePtr imgCar,imgPrv,imgMini,imgTer;  MyGUI::EditPtr trkDesc;
+	MyGUI::StaticTextPtr valCar, valTrk, stTrk[StTrk];
 
 	char s[512];
 };

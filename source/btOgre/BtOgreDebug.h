@@ -11,6 +11,11 @@
 #include "btBulletDynamicsCommon.h"
 #include "DynamicLines.h"
 
+#include <OgreVector3.h>
+
+namespace Ogre {  class SceneNode;  }
+
+
 namespace BtOgre  {
 
 

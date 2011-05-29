@@ -1,4 +1,3 @@
-#include "stdafx.h"
 
 #include "mathplane.h"
 #include "unittest.h"

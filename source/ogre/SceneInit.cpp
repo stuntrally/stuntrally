@@ -1,13 +1,15 @@
-#include "stdafx.h"
+#include "Defines.h"
 #include "OgreGame.h"
 #include "../vdrift/game.h"
 #include "FollowCamera.h"
 #include "../road/Road.h"
+#include "SplitScreenManager.h"
 
 #include "../btOgre/BtOgrePG.h"
 #include "../btOgre/BtOgreGP.h"
 
 #include "boost/thread.hpp"
+#include "../paged-geom/PagedGeometry.h"
 
 
 //  Create Scene
@@ -35,9 +37,9 @@ void App::createScene()
 	}
 	
 	objs.LoadXml();
-	Log(string("**** Loaded Vegetation objects: ") + toStr(objs.colsMap.size()));
-	Log(string("**** ReplayFrame size: ") + toStr(sizeof(ReplayFrame)));	
-	Log(string("**** ReplayHeader size: ") + toStr(sizeof(ReplayHeader)));	
+	LogO(String("**** Loaded Vegetation objects: ") + toStr(objs.colsMap.size()));
+	LogO(String("**** ReplayFrame size: ") + toStr(sizeof(ReplayFrame)));	
+	LogO(String("**** ReplayHeader size: ") + toStr(sizeof(ReplayHeader)));	
 
 	#if 0  // test autoload replay
 		string file = PATHMANAGER::GetReplayPath() + "/" + pSet->track + ".rpl";
@@ -285,7 +287,7 @@ bool App::IsTerTrack()
 {
 	//  track: vdrift / terrain
 	String sr = TrkDir()+"road.xml";
-	ifstream fr(sr.c_str());
+	std::ifstream fr(sr.c_str());
 	bool ter = fr.good(); //!fail()
 	if (ter)  fr.close();
 	return ter;

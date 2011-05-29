@@ -1,4 +1,4 @@
-#include "stdafx.h"
+#include "Defines.h"
 #include "CarReflection.h"
 
 CarReflection::CarReflection(SETTINGS* set, Ogre::SceneManager* sceneMgr, unsigned int index) :
@@ -20,9 +20,9 @@ CarReflection::~CarReflection()
 		try{
 			Camera* cam = pSceneMgr->getCamera("Reflect_" + toStr(iIndex) + "_" + toStr(face));
 			if (cam) {	pSceneMgr->destroyCamera(cam);
-				Log("destroy refl cam ok");  }
+				LogO("destroy refl cam ok");  }
 		}catch(...) {
-			Log("destroy refl cam err");  }
+			LogO("destroy refl cam err");  }
 	}
 
 	// destroy cube tex
@@ -45,7 +45,7 @@ void CarReflection::Create()
 	cubetex = tm->createManual(cubetexName, 
 		ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME, TEX_TYPE_CUBE_MAP, 
 		size,size, 0/*mips*/, PF_R8G8B8, TU_RENDERTARGET);
-		Log("created rt cube");
+		LogO("created rt cube");
 
 	for (int face = 0; face < 6; face++)
 	{
@@ -55,7 +55,7 @@ void CarReflection::Create()
 		//mCam->setFarClipDistance(pSet->refl_dist);  //sky-
 
 		RenderTarget* mRT = cubetex->getBuffer(face)->getRenderTarget();
-		Log( "rt face Name: " + mRT->getName() );
+		LogO( "rt face Name: " + mRT->getName() );
 		mRT->removeAllViewports();
 		Viewport* vp = mRT->addViewport(mCam);
 		vp->setOverlaysEnabled(false);
@@ -119,9 +119,9 @@ void CarReflection::Update()
 			RenderTarget* rt = pRTs[iCam];
 
 			if (cam) cam->setPosition ( camPosition );
-				else  Log("upd cam 0");
+				else  LogO("upd cam 0");
 			if (rt)  rt->update();
-				else  Log("upd rt 0");
+				else  LogO("upd rt 0");
 		}
 	}
 	bFirstFrame = false;

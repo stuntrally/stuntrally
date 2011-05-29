@@ -1,4 +1,3 @@
-#include "stdafx.h"
 
 #include "parallel_task.h"
 

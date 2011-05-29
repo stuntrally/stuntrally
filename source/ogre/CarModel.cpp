@@ -1,15 +1,25 @@
-#include "stdafx.h"
+#include "Defines.h"
 #include "CarModel.h"
 #include "../vdrift/pathmanager.h"
 #include "../vdrift/mathvector.h"
+#include "../vdrift/track.h"
+#include "../vdrift/game.h"
 //#include "../ogre/OgreGame.h"
+#include "SplitScreenManager.h"
+#include "common/SceneXml.h"
+#include "FollowCamera.h"
+#include "CarReflection.h"
 
 #include "boost/filesystem.hpp"
 #define  FileExists(s)  boost::filesystem::exists(s)
 
+#include <OgreTerrain.h>
+
+using namespace Ogre;
+
 
 CarModel::CarModel(unsigned int index, eCarType type, const std::string name,
-	Ogre::SceneManager* sceneMgr, SETTINGS* set, GAME* game, Scene* s, Camera* cam, App* app) :
+	Ogre::SceneManager* sceneMgr, SETTINGS* set, GAME* game, Scene* s, Ogre::Camera* cam, App* app) :
 	hue(0), sat(0), val(0), fCam(0), pMainNode(0), pCar(0), terrain(0), resCar(""), mCamera(0), pReflect(0), pApp(app)
 {
 	iIndex = index;  sDirname = name;  pSceneMgr = sceneMgr;
@@ -26,7 +36,7 @@ CarModel::CarModel(unsigned int index, eCarType type, const std::string name,
 	rot = pGame->track.GetStart(0/*iIndex*/).second;
 
 	pCar = pGame->LoadCar(sDirname, pos + offset, rot, true, false);
-	if (!pCar) Log("Error loading car " + sDirname);
+	if (!pCar) LogO("Error loading car " + sDirname);
 	
 	for (int w = 0; w < 4; ++w)
 	{	ps[w] = 0;  pm[w] = 0;  pd[w] = 0;
@@ -111,20 +121,20 @@ void CarModel::Update(PosInfo& posInfo, float time)
 
 		if (!pGame->pause)
 		{
-			 Real sq = squeal* min(1.f, wht[w]), l = pSet->particles_len * onGr;
+			 Real sq = squeal* std::min(1.f, wht[w]), l = pSet->particles_len * onGr;
 			 emitS = sq * (whVel * 30) * l *0.3f;  //..
-			 emitM = slide < 1.4f ? 0.f :  (8.f * sq * min(5.f, slide) * l);
-			 emitD = (min(140.f, whVel) / 3.5f + slide * 1.f ) * l;  
+			 emitM = slide < 1.4f ? 0.f :  (8.f * sq * std::min(5.f, slide) * l);
+			 emitD = (std::min(140.f, whVel) / 3.5f + slide * 1.f ) * l;  
 			 //  resume
 			 pd[w]->setSpeedFactor(1.f);  ps[w]->setSpeedFactor(1.f);  pm[w]->setSpeedFactor(1.f);
 		}else{
 			 //  stop par sys
 			 pd[w]->setSpeedFactor(0.f);  ps[w]->setSpeedFactor(0.f);  pm[w]->setSpeedFactor(0.f);
 		}
-		Real sizeD = (0.3f + 1.1f * min(140.f, whVel) / 140.f) * (w < 2 ? 0.5f : 1.f);
+		Real sizeD = (0.3f + 1.1f * std::min(140.f, whVel) / 140.f) * (w < 2 ? 0.5f : 1.f);
 
 		//  ter mtr factors
-		int mtr = max(0, min(whMtr-1, (int)(sc->td.layers.size()-1)));
+		int mtr = std::max(0, std::min(whMtr-1, (int)(sc->td.layers.size()-1)));
 		TerLayer& lay = whMtr==0 ? sc->td.layerRoad : sc->td.layersAll[sc->td.layers[mtr]];
 		emitD *= lay.dust;  emitM *= lay.mud;  sizeD *= lay.dustS;  emitS *= lay.smoke;
 
@@ -137,7 +147,7 @@ void CarModel::Update(PosInfo& posInfo, float time)
 				ParticleEmitter* pe = ps[w]->getEmitter(0);
 				pe->setPosition(vpos + posInfo.carY * wR*0.7f); // 0.218
 				/**/ps[w]->getAffector(0)->setParameter("alpha", toStr(-0.4f - 0.07f/2.4f * whVel));
-				/**/pe->setTimeToLive( max(0.1, 2 - whVel/2.4f * 0.04) );  // fade,live
+				/**/pe->setTimeToLive( std::max(0.1, 2 - whVel/2.4f * 0.04) );  // fade,live
 				pe->setDirection(-posInfo.carY);	pe->setEmissionRate(emitS);
 			}
 			if (pm[w])	//  mud
@@ -164,7 +174,7 @@ void CarModel::Update(PosInfo& posInfo, float time)
 					//	vp.y += road->fHeight;	}/**/
 				ndWhE[w]->setPosition(vp);
 			}
-			float al = 0.5f * /*squeal*/ min(1.f, 0.7f * wht[w]) * onGr;  // par+
+			float al = 0.5f * /*squeal*/ std::min(1.f, 0.7f * wht[w]) * onGr;  // par+
 			if (whTrl[w])	whTrl[w]->setInitialColour(0,
 				lay.tclr.r,lay.tclr.g,lay.tclr.b, lay.tclr.a * al/**/);
 		}
@@ -217,7 +227,7 @@ void CarModel::Create()
 		mat->clone(sMtr[i] + toStr(iIndex), false);
 		// new mat name
 		sMtr[i] = sMtr[i] + toStr(iIndex);
-		Log(" =============== New mat name: " + sMtr[i]);
+		LogO(" =============== New mat name: " + sMtr[i]);
 	}
 	// iterate through all materials and set body_dyn.png with correct index, add car prefix to other textures
 	for (int i=0; i < NumMaterials; i++)
@@ -338,7 +348,7 @@ void CarModel::Create()
 			//pCar->dynamics.chassis->getsi
 			Vector3 bsize = (bodyBox.getMaximum() - bodyBox.getMinimum())*0.5,
 				bcenter = bodyBox.getMaximum() + bodyBox.getMinimum();
-			Log("Car body bbox :  size " + toStr(bsize) + ",  center " + toStr(bcenter));
+			LogO("Car body bbox :  size " + toStr(bsize) + ",  center " + toStr(bcenter));
 			SceneNode* nb = pMainNode->createChildSceneNode(bcenter+
 				Vector3(bsize.x * 0.97, bsize.y * 0.65, bsize.z * 0.65 * (i==0 ? 1 : -1) ));
 				//Vector3(1.9 /*back*/, 0.1 /*up*/, 0.6 * (i==0 ? 1 : -1)/*sides*/ ));
@@ -429,7 +439,7 @@ void CarModel::UpdWhTerMtr()
 	{
 		Vector3 w = ndWh[i]->getPosition();
 		int mx = (w.x + 0.5*tws)/tws*t, my = (w.z + 0.5*tws)/tws*t;
-		mx = max(0,min(t-1, mx)), my = max(0,min(t-1, my));
+		mx = std::max(0,std::min(t-1, mx)), my = std::max(0,std::min(t-1, my));
 
 		int mtr = blendMtr[my*t + mx];
 		if (pCar->dynamics.bWhOnRoad[i])

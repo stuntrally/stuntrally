@@ -1,10 +1,10 @@
 #ifndef _BUCKETED_HASHMAP_H
 #define _BUCKETED_HASHMAP_H
 
-////#include <vector>
-////#include <map>
-////#include <cassert>
-////#include <string>
+#include <vector>
+#include <map>
+#include <cassert>
+#include <string>
 
 namespace HASH_NAMESPACE
 {

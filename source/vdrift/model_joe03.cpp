@@ -1,4 +1,3 @@
-#include "stdafx.h"
 
 #include "model_joe03.h"
 #include "joepack.h"

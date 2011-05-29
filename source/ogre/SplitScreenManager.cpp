@@ -1,4 +1,4 @@
-#include "stdafx.h"
+#include "Defines.h"
 #include "SplitScreenManager.h"
 
 #include "OgreGame.h"
@@ -113,7 +113,7 @@ void SplitScreenManager::Align()
 		}
 		else
 		{
-			Log("FATAL ERROR: Unsupported number of viewports: " + toStr(mNumPlayers));
+			LogO("FATAL ERROR: Unsupported number of viewports: " + toStr(mNumPlayers));
 			return;
 		}
 		#undef dim_

@@ -1,4 +1,3 @@
-#include "stdafx.h"
 
 #include "model_obj.h"
 #include "unittest.h"

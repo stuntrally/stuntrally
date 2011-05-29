@@ -1,4 +1,3 @@
-#include "stdafx.h"
 
 #include "containeralgorithm.h"
 #include "unittest.h"

@@ -1,4 +1,3 @@
-#include "stdafx.h"
 
 #include "rotationalframe.h"
 #include "unittest.h"

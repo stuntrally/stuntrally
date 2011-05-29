@@ -4,6 +4,10 @@
 #include "reseatable_reference.h"
 
 #include <SDL/SDL.h>
+#include <string>
+#include <map>
+//#include <ostream>
+#include <fstream>
 
 class TEXTUREINFO
 {

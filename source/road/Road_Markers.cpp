@@ -1,5 +1,11 @@
-#include "stdafx.h"
+//#include "Defines.h"
 #include "Road.h"
+
+#include <OgreSceneManager.h>
+#include <OgreTerrain.h>
+#include <OgreSceneNode.h>
+#include <OgreEntity.h>
+using namespace Ogre;
 
 
 //  Setup

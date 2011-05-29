@@ -1,7 +1,8 @@
-#include "stdafx.h"
+#include "Defines.h"
 #include "OgreApp.h"
 //#include <OgreHardwarePixelBuffer.h>
 #include "../road/Road.h"
+using namespace Ogre;
 
 
 //  Setup render 2 texture (road maps)
@@ -118,7 +119,7 @@ void App::SaveGrassDens()
 		for (i = -f; i <= f; ++i, ++d)
 			v += (rd[d] >> 16) & 0xFF;  }
 
-		v = max(0, (int)(255.f * (1.f - v * ff) ));  // avg, inv, clamp
+		v = std::max(0, (int)(255.f * (1.f - v * ff) ));  // avg, inv, clamp
 		
 		gd[a] = 0xFF000000 + 0x010101 * v;  // write
 	}	}

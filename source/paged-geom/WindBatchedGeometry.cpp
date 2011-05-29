@@ -12,7 +12,7 @@ Permission is granted to anyone to use this software for any purpose, including 
 //A "lightweight" version of Ogre::StaticGeometry, which gives you a little more control
 //over the batch materials, etc.
 //-------------------------------------------------------------------------------------
-#include "stdafx.h"
+//#include "Defines.h"
 #include "WindBatchedGeometry.h"
 #include "PagedGeometry.h"
 

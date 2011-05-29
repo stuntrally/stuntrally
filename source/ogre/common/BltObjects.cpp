@@ -1,8 +1,9 @@
-#include "stdafx.h"
+//#include "Defines.h"
 #include "BltObjects.h"
-//#include "../vdrift/pathmanager.h"
 #include "../../vdrift/pathmanager.h"
-using namespace Ogre;
+#include "tinyxml.h"
+#include "../Defines.h"
+//using namespace Ogre;
 
 
 BltShape::BltShape()

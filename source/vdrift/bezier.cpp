@@ -1,9 +1,8 @@
-#include "stdafx.h"
 
 #include "bezier.h"
 #include "unittest.h"
 
-//#include <cmath>
+#include <cmath>
 
 std::ostream & operator << (std::ostream &os, const BEZIER & b)
 {

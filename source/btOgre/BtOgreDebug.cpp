@@ -5,9 +5,22 @@
  *		 Author:  Nikhilesh (nikki)
  * =====================================================================================*/
 
-#include "stdafx.h"
 #include "DynamicLines.h"
 #include "BtOgreDebug.h"
+
+#include <math.h>
+
+#include <OgreSceneNode.h>
+#include <OgreResourceGroupManager.h>
+#include <OgreMaterial.h>
+#include <OgreMaterialManager.h>
+#include <OgreColourValue.h>
+#include <OgreLogManager.h>
+
+#ifndef M_PI
+#define M_PI       3.14159265358979323846
+#endif
+
 
 namespace BtOgre  {
 
@@ -52,14 +65,14 @@ void DebugDrawer::step()
 //  draw line
 void DebugDrawer::drawLine(const btVector3& from, const btVector3& to, const btVector3& color)
 {
-	ColourValue clr(color.getX(),color.getY(),color.getZ(),1);
+	Ogre::ColourValue clr(color.getX(),color.getY(),color.getZ(),1);
 	mLineDrawer->addLine(Convert::toOgre(from), Convert::toOgre(to), clr);
 }
 
 void DebugDrawer::drawContactPoint(const btVector3& PointOnB, const btVector3& normalOnB,
 	btScalar distance, int lifeTime, const btVector3& color)
 {
-	ColourValue clr(color.getX(),color.getY(),color.getZ(),1);
+	Ogre::ColourValue clr(color.getX(),color.getY(),color.getZ(),1);
 	mLineDrawer->addLine(Convert::toOgre(PointOnB),
 		Convert::toOgre(PointOnB) + (Convert::toOgre(normalOnB) * distance * 20), clr);
 }

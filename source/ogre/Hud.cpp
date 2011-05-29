@@ -1,4 +1,4 @@
-#include "stdafx.h"
+#include "Defines.h"
 #include "OgreGame.h"
 #include "../vdrift/game.h"
 #include "../road/Road.h"
@@ -56,7 +56,7 @@ void App::CreateHUD()
 		minX = -t;  minY = -t;  maxX = t;  maxY = t;
 
 		float fMapSizeX = maxX - minX, fMapSizeY = maxY - minY;  // map size
-		float size = max(fMapSizeX, fMapSizeY*asp);
+		float size = std::max(fMapSizeX, fMapSizeY*asp);
 		scX = 1.f / size;  scY = 1.f / size;
 
 		asp = 1.f;  //_temp
@@ -261,7 +261,7 @@ void App::UpdateHUD(CAR* pCar, float time, Viewport* vp)
     float sx = 1.4f, sy = sx*asp;  // *par len
     float psx = 2.1f * pSet->size_minimap, psy = psx;  // *par len
 
-    const static float d2r = PI/180.f;
+    const static float d2r = PI_d/180.f;
     static float rx[4],ry[4], vx[4],vy[4], px[4],py[4];
     for (int i=0; i<4; i++)
     {
@@ -309,7 +309,7 @@ void App::UpdateHUD(CAR* pCar, float time, Viewport* vp)
 		//hudVel->setPosition(-0.1 + (w-1024.f)/1600.f*0.07/*0.11*/,-0.01);
 
 		float k = pCar->GetSpeedometer() * 3.6f * 0.0025f;	// vel clr
-		#define m01(x)  min(1.0, max(0.0, (double) x))
+		#define m01(x)  std::min(1.0, std::max(0.0, (double) x))
 		hudVel->setColour(ColourValue(m01(k*2), m01(0.5+k*1.5-k*k*2.5), m01(1+k*0.8-k*k*3.5)));
 	}
 	
@@ -509,7 +509,7 @@ void App::UpdateHUD(CAR* pCar, float time, Viewport* vp)
 		{
 			int mtr = whTerMtr[i];
 			TRACKSURFACE* tsu = pCar->dynamics.terSurf[mtr];
-			mtr = max(0, min( (int)(sc.td.layers.size())-1, mtr-1));
+			mtr = std::max(0, std::min( (int)(sc.td.layers.size())-1, mtr-1));
 			TerLayer& lay = mtr == 0 ? sc.td.layerRoad : sc.td.layersAll[sc.td.layers[mtr]];
 
 			sprintf(s_,  //"c %6.2f  "

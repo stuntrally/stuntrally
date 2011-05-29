@@ -12,6 +12,9 @@
 //#include "btBulletDynamicsCommon.h"
 #include "BtOgreDebug.h"
 
+namespace Ogre {  class SceneNode;  };
+
+
 namespace BtOgre {
 
 
@@ -31,32 +34,14 @@ class RigidBodyState : public btMotionState
 			: mNode(node), mTransform(transform), mCenterOfMassOffset(offset)
 		{	}
 
-		RigidBodyState(Ogre::SceneNode *node)
-			: mNode(node),
-			  mTransform(((node != NULL) ? BtOgre::Convert::toBullet(node->getOrientation()) : btQuaternion(0,0,0,1)), 
-						 ((node != NULL) ? BtOgre::Convert::toBullet(node->getPosition())	: btVector3(0,0,0))),
-			  mCenterOfMassOffset(btTransform::getIdentity())
-		{	}
+		RigidBodyState(Ogre::SceneNode *node);
 
 		virtual void getWorldTransform(btTransform &ret) const 
 		{
 			ret = mCenterOfMassOffset.inverse() * mTransform;
 		}
 
-		virtual void setWorldTransform(const btTransform &in) 
-		{
-			if (mNode == NULL)
-				return;
-
-			mTransform = in;
-			btTransform transform = in * mCenterOfMassOffset;
-
-			btQuaternion rot = transform.getRotation();
-			btVector3 pos = transform.getOrigin();
-			mNode->setOrientation(rot.w(), rot.x(), rot.y(), rot.z());
-			//mNode->setPosition(pos.x(), pos.y(), pos.z());
-			mNode->setPosition(pos.x(), pos.z(), -pos.y());  ///!
-		}
+		virtual void setWorldTransform(const btTransform &in);
 
 		void setNode(Ogre::SceneNode *node) 
 		{

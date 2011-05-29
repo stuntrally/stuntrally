@@ -7,19 +7,20 @@
 #ifndef _CarModel_H_
 #define _CarModel_H_
  
-#include "FollowCamera.h"
-#include "CarReflection.h"
-#include "../vdrift/car.h"
-#include "../vdrift/game.h"
-#include "../vdrift/settings.h"
-#include "common/SceneXml.h"
+#include <OgreVector3.h>
+#include <OgreQuaternion.h>
+
+class SETTINGS;  class GAME;  class CAR;  class Scene;  class App;  class FollowCamera;  class CarReflection;
+
+namespace Ogre {  class SceneNode;  class Terrain;  class Camera;  class SceneManager;
+	class ParticleSystem;  class RibbonTrail;  class ManualObject;  }
 
 
 // Stores all the needed information about car coming from vdrift
 struct PosInfo
 {
-	Vector3 pos, carY;
-	Vector3 whPos[4];  Quaternion rot, whRot[4];  float whR[4];
+	Ogre::Vector3 pos, carY;
+	Ogre::Vector3 whPos[4];  Ogre::Quaternion rot, whRot[4];  float whR[4];
 	float whVel[4], whSlide[4], whSqueal[4];  int whMtr[4];
 	//  new posinfo available for Update
 	bool bNew;
@@ -42,7 +43,8 @@ public:
 	eCarType eType;
 
 	// Constructor, will assign members and create the vdrift car
-	CarModel(unsigned int index, eCarType type, const std::string name, Ogre::SceneManager* sceneMgr, SETTINGS* set, GAME* game, Scene* sc, Camera* cam, App* app);
+	CarModel( unsigned int index, eCarType type, const std::string name,
+		Ogre::SceneManager* sceneMgr, SETTINGS* set, GAME* game, Scene* sc, Ogre::Camera* cam, App* app);
 	
 	// Destructor - will remove meshes & particle systems, 
 	// the VDrift car and the FollowCamera, delete pReflect
@@ -64,7 +66,7 @@ public:
 	void ChangeClr();
 	
 	// Reload material textures.
-	void ReloadTex(String mtrName);
+	void ReloadTex(Ogre::String mtrName);
 	
 	// track surface for wheels
 	void UpdWhTerMtr();
@@ -74,7 +76,8 @@ public:
 	
 	// Create ogre model from .joe
 	// Static method so VDrift track (TrackVdr.cpp) can use this too
-	static ManualObject* CreateModel(SceneManager* sceneMgr, const String& mat, class VERTEXARRAY* a, Vector3 vPofs, bool flip=false, bool track=false);
+	static Ogre::ManualObject* CreateModel( Ogre::SceneManager* sceneMgr, const Ogre::String& mat,
+		class VERTEXARRAY* a, Ogre::Vector3 vPofs, bool flip=false, bool track=false);
 
 	// Follow camera for this car.
 	// This can be null (for remote [network] cars)
@@ -91,7 +94,7 @@ public:
 	// needed to set track surface
 	char* blendMtr; int blendMapSize;
 	
-	Terrain* terrain;
+	Ogre::Terrain* terrain;
 	
 	// VDrift car.
 	// For e.g. replay cars that don't 
@@ -99,7 +102,7 @@ public:
 	CAR* pCar;
 	
 private:
-	Camera* mCamera;
+	Ogre::Camera* mCamera;
 
 	// access to vdrift stuff
 	GAME* pGame;
@@ -118,11 +121,11 @@ private:
 	std::string sMtr[NumMaterials];
 	
 	// Particle systems, trail.
-	ParticleSystem* ps[4],*pm[4],*pd[4];  // smoke, mud, dust
-	ParticleSystem* pb[2];  // boost
-	RibbonTrail* whTrl[4];
-	Real wht[4];  // spin time (approx tire temp.)
-	SceneNode *ndWh[4], *ndWhE[4], *ndRs[4],*ndRd[4];
+	Ogre::ParticleSystem* ps[4],*pm[4],*pd[4];  // smoke, mud, dust
+	Ogre::ParticleSystem* pb[2];  // boost
+	Ogre::RibbonTrail* whTrl[4];
+	Ogre::Real wht[4];  // spin time (approx tire temp.)
+	Ogre::SceneNode *ndWh[4], *ndWhE[4], *ndRs[4],*ndRd[4];
 
 	// Dir name of car (e.g. ES or RS2)
 	std::string sDirname;

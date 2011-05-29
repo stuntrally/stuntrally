@@ -1,7 +1,11 @@
 #ifndef _BulletCollision_h_
 #define _BulletCollision_h_
 
-#include <OgreVector3.h>  // for Vector3
+#include <vector>
+#include <string>
+#include <map>
+
+#include <OgreVector3.h>
 
 
 enum eBLTshape {  BLT_None=0, BLT_Sphere, BLT_CapsZ, BLT_ALL };

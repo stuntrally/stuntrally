@@ -1,14 +1,19 @@
-#include "stdafx.h"
+#include "../ogre/Defines.h"
 #include "Road.h"
 #ifndef ROAD_EDITOR
 #include "../vdrift/game.h"
 #endif
 
 #ifdef ROAD_EDITOR
-#define LogR(a)  //Log(String("~ Road  ") + a);
+#define LogR(a)  //LogO(String("~ Road  ") + a);
 #else
 #define LogR(a)
 #endif
+
+#include <OgreTerrain.h>
+#include <OgreMeshManager.h>
+#include <OgreEntity.h>
+using namespace Ogre;
 
 
 ///  Rebuild
@@ -150,7 +155,7 @@ void SplineRoad::RebuildRoadInt()
 			///  width <dir>   ---
 			if (mP[seg].onTer && mP[seg1].onTer)  //  perpendicular on xz
 			{	vw = Vector3(vl.z, 0, -vl.x);  vw.normalise(); 
-				//mP[seg].angle = atan2(vl.z, -vl.x)*180.f/PI+90.f;  // set yaw..
+				//mP[seg].angle = atan2(vl.z, -vl.x)*180.f/PI_d+90.f;  // set yaw..
 			}else
 				vw = GetRot(ay,ar);  // from angles
 				
@@ -365,7 +370,7 @@ void SplineRoad::RebuildRoadInt()
 							vP.y = yTer + fHeight * ((w==0 || w==iw) ? 0.15f : 1.f);
 					}else
 					{	///  pipe (_)
-						Real oo = (tcw - 0.5)/0.5 * PI * pipe;
+						Real oo = (tcw - 0.5)/0.5 * PI_d * pipe;
 						vP = vL0 + vw  * 0.5 * sinf(oo) +
 								 + vn * (0.5 - 0.5 * cosf(oo)) * wiMul;
 						vN = vn * cosf(oo) + vwn * sinf(oo);
@@ -439,8 +444,8 @@ void SplineRoad::RebuildRoadInt()
 				for (int w=0; w <= iwC; ++w)  // width +1
 				{
 					Real ht = (h==0) ? 0.f : vL0.y - mTerrain->getHeightAtWorldPosition(vL0);
-					Real a = Real(w)/iwC *2*PI,
-						x = r*cosf(a+PI/4.f), y = -r*sinf(a+PI/4.f);
+					Real a = Real(w)/iwC *2*PI_d,
+						x = r*cosf(a+PI_d/4.f), y = -r*sinf(a+PI_d/4.f);
 
 					Vector3 vlXZ(vl.x,0,vl.z);	Real fl = 1.f/max(0.01f, vlXZ.length());
 					Vector3 vP = vL0 + fl * vl * x + vwn * y;

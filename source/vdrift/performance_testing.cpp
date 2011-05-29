@@ -1,4 +1,3 @@
-#include "stdafx.h"
 
 #include "performance_testing.h"
 #include "configfile.h"

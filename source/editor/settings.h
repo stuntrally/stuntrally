@@ -2,7 +2,7 @@
 #define _Settings_h_
 
 #include "../vdrift/configfile.h"
-using namespace std;
+
 
 class SETTINGS
 {
@@ -10,7 +10,7 @@ public:
 ///  params
 //------------------------------------------
 	//  track
-	string track;  bool track_user;
+	std::string track;  bool track_user;
 
 	//  show
 	bool show_fps, trackmap;  int num_mini;
@@ -36,14 +36,14 @@ public:
 	bool fullscreen;
 	int fsaa;
 	bool vsync;
-	string buffer;
-	string rendersystem;
+	std::string buffer;
+	std::string rendersystem;
 	
 //------------------------------------------
 	SETTINGS();
 
 	template <typename T>
-	bool Param(CONFIGFILE & conf, bool write, string pname, T & value)
+	bool Param(CONFIGFILE & conf, bool write, std::string pname, T & value)
 	{
 		if (write)
 		{	conf.SetParam(pname, value);
@@ -52,7 +52,7 @@ public:
 			return conf.GetParam(pname, value);
 	}
 	void Serialize(bool write, CONFIGFILE & config);
-	void Load(string sfile), Save(string sfile);
+	void Load(std::string sfile), Save(std::string sfile);
 };
 
 #endif

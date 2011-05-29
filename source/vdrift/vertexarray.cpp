@@ -1,4 +1,3 @@
-#include "stdafx.h"
 
 #include "vertexarray.h"
 #include "unittest.h"

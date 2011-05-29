@@ -1,4 +1,3 @@
-#include "stdafx.h"
 
 #include "linearinterp.h"
 #include "unittest.h"

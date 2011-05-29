@@ -12,7 +12,7 @@ Permission is granted to anyone to use this software for any purpose, including 
 //ImpostorPage.cpp
 //ImposterPage is an extension to PagedGeometry which displays entities as imposters.
 //-------------------------------------------------------------------------------------
-#include "stdafx.h"
+//#include "Defines.h"
 #include "ImpostorPage.h"
 #include "StaticBillboardSet.h"
 
@@ -597,6 +597,7 @@ void ImpostorTexture::renderTextures(bool force)
 			for (int i = 0; i < IMPOSTOR_YAW_ANGLES; ++i)
 			{
 				Radian yaw = Degree((360.0f * i) * xDivFactor); //0, 45, 90, 135, 180, 225, 270, 315
+				#define toStr(v)   Ogre::StringConverter::toString(v)
 				Ogre::LogManager::getSingleton().logMessage("Tree: " + toStr(yaw) + "  " + toStr(pitch));
 					
 				//Position camera

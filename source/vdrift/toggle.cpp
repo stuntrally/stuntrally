@@ -1,4 +1,3 @@
-#include "stdafx.h"
 
 #include "toggle.h"
 #include "unittest.h"

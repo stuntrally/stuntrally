@@ -1,9 +1,26 @@
 #ifndef _BaseApp_h_
 #define _BaseApp_h_
-#include <OgreRenderTargetListener.h>
+
 #include "../ogre/QTimer.h"
 #include "settings.h"
-using namespace Ogre;
+
+/*#include <OgreVector3.h>
+#include <OgreString.h>
+
+#include <OgreOverlay.h>
+#include <OgreOverlayElement.h>
+
+#include <OgreRenderTargetListener.h>
+#include <OgreFrameListener.h>
+#include <OgreWindowEventUtilities.h>*/
+#include <Ogre.h>
+
+#include <OISKeyboard.h>
+#include <OISMouse.h>
+
+#include <MyGUI.h>
+#include <MyGUI_OgrePlatform.h>
+
 
 class BaseApp :
 		public Ogre::FrameListener, public Ogre::WindowEventListener,
@@ -36,12 +53,12 @@ protected:
 
 	void createCamera(), createFrameListener();
 	void setupResources(), createResourceListener(), loadResources();
-	SceneNode* ndSky; //-
+	Ogre::SceneNode* ndSky; //-
 
 	///  frame events
-	virtual bool frameStarted(const FrameEvent& evt);
-	virtual bool frameRenderingQueued(const FrameEvent& evt);
-	virtual bool frameEnded(const FrameEvent& evt);
+	virtual bool frameStarted(const Ogre::FrameEvent& evt);
+	virtual bool frameRenderingQueued(const Ogre::FrameEvent& evt);
+	virtual bool frameEnded(const Ogre::FrameEvent& evt);
 	virtual void processMouse() { }
 	
 	///  input events
@@ -52,11 +69,10 @@ protected:
 	bool mouseMoved(const OIS::MouseEvent &arg);
 	bool mousePressed(const OIS::MouseEvent &arg, OIS::MouseButtonID id);
 	bool mouseReleased(const OIS::MouseEvent &arg, OIS::MouseButtonID id);
-	void windowResized(RenderWindow* rw), windowClosed(RenderWindow* rw);
+	void windowResized(Ogre::RenderWindow* rw), windowClosed(Ogre::RenderWindow* rw);
 
 	///  input event queues  for gui  ------------------------------------
 	struct CmdKey {  public:
-		//OIS::KeyEvent key;
 		OIS::KeyCode key;
 		unsigned int text;  bool gui;
 		CmdKey() : key(OIS::KC_UNASSIGNED), text(0) {  }
@@ -74,18 +90,16 @@ protected:
 	};
 	#define cmd_Max 1024
 	//std::deque<CmdKey> cmdKeyPress, cmdKeyRel;
-	//std::deque<CmdMouseMove> cmdMouseMove;
-	//std::deque<CmdMouseBtn> cmdMousePress, cmdMouseRel;
 	CmdKey* cmdKeyPress, *cmdKeyRel;  int i_cmdKeyPress, i_cmdKeyRel;
 	CmdMouseMove* cmdMouseMove;  int i_cmdMouseMove;
 	CmdMouseBtn* cmdMousePress, *cmdMouseRel;  int i_cmdMousePress, i_cmdMouseRel;
 
 
 	///  Ogre
-	Root *mRoot;  SceneManager* mSceneMgr;
-	Viewport* mViewport;  RenderWindow* mWindow;
-	Camera* mCamera, *mCameraT;
-	Vector3 /*mCamPosPrv,mCamDirPrv,*/mCamPosOld,mCamDirOld;
+	Ogre::Root *mRoot;  Ogre::SceneManager* mSceneMgr;
+	Ogre::Viewport* mViewport;  Ogre::RenderWindow* mWindow;
+	Ogre::Camera* mCamera, *mCameraT;
+	Ogre::Vector3 mCamPosOld,mCamDirOld;
 	
 	///  input
 	OIS::InputManager* mInputManager;
@@ -93,21 +107,21 @@ protected:
 
 
 	///  ovelay
-	Overlay* mDebugOverlay;
-	OverlayElement* ovFps, *ovTri, *ovBat,  *ovSt,
-		*ovPos, *ovDbg, *ovInfo, *ovStat, *ovFocus, *ovFocBck;  Real fStFade;
+	Ogre::Overlay* mDebugOverlay;
+	Ogre::OverlayElement* ovFps, *ovTri, *ovBat,  *ovSt,
+		*ovPos, *ovDbg, *ovInfo, *ovStat, *ovFocus, *ovFocBck;  Ogre::Real fStFade;
 
 	bool alt, ctrl, shift;  // key modifiers
 	bool mbLeft, mbRight, mbMiddle;  // mouse buttons
-	String  mDebugText, mFilText;	// info texts
+	Ogre::String  mDebugText, mFilText;	// info texts
 	bool mbWireFrame, mShowCamPos, mStatsOn;
 	char s[512];
 
 
 	///  camera upd
 	bool bMoveCam;	int mx,my,mz;  double mDTime;
-	Real mRotX, mRotY,  mRotKX, mRotKY,  moveMul, rotMul;
-	Vector3 mTrans;
+	Ogre::Real mRotX, mRotY,  mRotKX, mRotKY,  moveMul, rotMul;
+	Ogre::Vector3 mTrans;
 	enum ED_MODE {  ED_Deform=0, ED_Smooth, /*ED_Paint,*/ ED_Road, ED_Start, ED_PrvCam, ED_ALL  }
 		edMode,edModeOld;
 

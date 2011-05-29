@@ -1,6 +1,7 @@
-#include "stdafx.h"
+#include "Defines.h"
 #include "BaseApp.h"
 #include "../road/Road.h"
+using namespace Ogre;
 
 
 ///  Fps stats
@@ -81,12 +82,12 @@ void BaseApp::OnTimer(double dtime)
 		if(key(RIGHT)||key(NUMPAD6))  mRotKX -= 1;
 		if(key(LEFT) ||key(NUMPAD4))  mRotKX += 1;
 	}
- 	using namespace OIS;
+ 	//using namespace OIS;
 
 	   // key modifiers
-	  alt = mKeyboard->isModifierDown(Keyboard::Alt),
-	 ctrl = mKeyboard->isModifierDown(Keyboard::Ctrl),
-	shift = mKeyboard->isModifierDown(Keyboard::Shift);
+	  alt = mKeyboard->isModifierDown(OIS::Keyboard::Alt),
+	 ctrl = mKeyboard->isModifierDown(OIS::Keyboard::Ctrl),
+	shift = mKeyboard->isModifierDown(OIS::Keyboard::Shift);
 	
 	 // speed multiplers
 	moveMul = 1;  rotMul = 1;
@@ -121,39 +122,3 @@ bool BaseApp::frameEnded(const FrameEvent& evt)
 	//updateStats();
 	return true;
 }
-
-
-///-------------------------------------------------------------------------------------
-//  Key press
-///-------------------------------------------------------------------------------------
-#if 0
-bool BaseApp::keyPressed( const OIS::KeyEvent &arg )
-{
- 	using namespace OIS;
-	switch (arg.key)
-	{	
-		//  Show Stats  I
-   		case KC_I:
-		{	mStatsOn = !mStatsOn;	
-			if (mStatsOn)  mDebugOverlay->show();  else  mDebugOverlay->hide();
-		}	return false;
-
-		//  Wire Frame  F10, F
-		case KC_F10:  case KC_F:
-		{	mbWireFrame = !mbWireFrame;
-			mCamera->setPolygonMode(mbWireFrame ? PM_WIREFRAME : PM_SOLID);
-			if (ndSky)	ndSky->setVisible(!mbWireFrame);  // hide sky
-		}	return false;
-
-		//  Camera pos info  P
-		/*case KC_P:
-		{	mShowCamPos = !mShowCamPos;
-			if (!mShowCamPos)	mDebugText = "";
-		}	return true;/**/
-
-		//case KC_F5:
-		//	TextureManager::getSingleton().reloadAll();	return true;
-	}
-	return false;
-}
-#endif

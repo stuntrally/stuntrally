@@ -1,4 +1,3 @@
-#include "stdafx.h"
 
 #include "rigidbody.h"
 #include "unittest.h"

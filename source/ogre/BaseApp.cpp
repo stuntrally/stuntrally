@@ -1,15 +1,20 @@
-#include "stdafx.h"
+#include "Defines.h"
 #include "BaseApp.h"
 #include "FollowCamera.h"
 #include "../vdrift/pathmanager.h"
-#include "../oisb/OISB.h"
+#include "SplitScreenManager.h"
+
 #include "MyGUI_Prerequest.h"
 #include "MyGUI_PointerManager.h"
+
+#include <OIS/OIS.h>
+#include "../oisb/OISB.h"
+using namespace Ogre;
 
 
 //  rendering
 //-------------------------------------------------------------------------------------
-bool BaseApp::frameRenderingQueued(const FrameEvent& evt)
+bool BaseApp::frameRenderingQueued(const Ogre::FrameEvent& evt)
 {
 	if (mWindow->isClosed())
 		return false;
@@ -21,11 +26,10 @@ bool BaseApp::frameRenderingQueued(const FrameEvent& evt)
 	mKeyboard->capture();
 	mMouse->capture();
 
-	using namespace OIS;
 	   // key modifiers
-	  alt = mKeyboard->isModifierDown(Keyboard::Alt),
-	 ctrl = mKeyboard->isModifierDown(Keyboard::Ctrl),
-	shift = mKeyboard->isModifierDown(Keyboard::Shift);
+	  alt = mKeyboard->isModifierDown(OIS::Keyboard::Alt),
+	 ctrl = mKeyboard->isModifierDown(OIS::Keyboard::Ctrl),
+	shift = mKeyboard->isModifierDown(OIS::Keyboard::Shift);
 
 	updateStats();
 	
@@ -40,7 +44,7 @@ bool BaseApp::frameRenderingQueued(const FrameEvent& evt)
 	return true;
 }
 
-bool BaseApp::frameEnded(const FrameEvent& evt)
+bool BaseApp::frameEnded(const Ogre::FrameEvent& evt)
 {
 	// dt-
 	Real time = evt.timeSinceLastFrame;
@@ -148,7 +152,7 @@ bool BaseApp::keyPressed( const OIS::KeyEvent &arg )
 			{
 				// invalid key?
 				// restore old
-				Log("WARNING: binding->bind failed, restoring old binds...");
+				LogO("WARNING: binding->bind failed, restoring old binds...");
 				
 				// this is nasty, but since some very weird stuff can happen here, we have to individually try/catch
 				try {

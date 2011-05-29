@@ -1,4 +1,3 @@
-#include "stdafx.h"
 
 #include "eventsystem.h"
 #include "unittest.h"

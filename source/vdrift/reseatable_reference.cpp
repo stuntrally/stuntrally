@@ -1,4 +1,3 @@
-#include "stdafx.h"
 
 #include "reseatable_reference.h"
 #include "unittest.h"

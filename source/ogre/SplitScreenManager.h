@@ -1,7 +1,12 @@
 #ifndef _SplitScreenManager_h_
 #define _SplitScreenManager_h_
 
-#include "Ogre.h"
+//#include "Ogre.h"
+#include <OgreRenderTargetListener.h>
+#include <OgreColourValue.h>
+#include <list>
+
+namespace Ogre {  class SceneNode;  class Root;  class SceneManager;  class RenderWindow;  class Viewport;  }
 
 /*
  * SplitScreenManager can be used to split up the screen into several areas.
@@ -19,7 +24,6 @@ class SplitScreenManager : public Ogre::RenderTargetListener
 public:
 	// Constructor, only assign members
 	SplitScreenManager(Ogre::SceneManager* sceneMgr, Ogre::RenderWindow* window, class SETTINGS* set);
-	
 	~SplitScreenManager();
 	
 	// Number of viewports / cameras

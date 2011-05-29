@@ -1,10 +1,18 @@
-#include "stdafx.h"
+#include "Defines.h"
+
 #include <boost/thread.hpp>
 #include <boost/filesystem.hpp>
+
 #include "BaseApp.h"
 #include "OgreApp.h" //
+
 #include "../vdrift/pathmanager.h"
 #include "../ogre/Locale.h"
+
+#include <OgreConfigFile.h>
+#include <OISInputManager.h>
+using namespace Ogre;
+
 
 void TimThread(BaseApp* pA)
 {
@@ -186,7 +194,7 @@ bool BaseApp::configure()
 		}
 		else
 		{
-			Log("RenderSystem '" + pSet->rendersystem + "' is not available. Exiting.");
+			LogO("RenderSystem '" + pSet->rendersystem + "' is not available. Exiting.");
 			return false;
 		}
 

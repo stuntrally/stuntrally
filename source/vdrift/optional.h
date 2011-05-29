@@ -1,7 +1,7 @@
 #ifndef _OPTIONAL_H
 #define _OPTIONAL_H
 
-//#include <cassert>
+#include <cassert>
 
 template <typename T>
 class optional

@@ -1,11 +1,9 @@
 #ifndef _FolowCamera_h_
 #define _FolowCamera_h_
 
-#include <Ogre.h>
-#include "../vdrift/collision_world.h"
+#include <OgreVector3.h>
+#include <OgreQuaternion.h>
 #include <vector>
-using namespace Ogre;
-using namespace std;
 
 
 enum CamTypes
@@ -24,45 +22,48 @@ const char CAM_Str[CAM_ALL][10] = {"Follow", "Free", "Arena", "Car", "ExtAng" };
 class CameraAngle
 {
 public:
-	CamTypes  mType;  String  mName;
-	Real  mDist, mSpeed, mSpeedRot;
-	Radian  mYaw, mPitch;
-	Vector3 mOffset;
+	CamTypes  mType;  Ogre::String  mName;
+	Ogre::Real  mDist, mSpeed, mSpeedRot;
+	Ogre::Radian  mYaw, mPitch;
+	Ogre::Vector3 mOffset;
 	int mMain, mHideGlass;
 
 	CameraAngle();
 };
 
 
+namespace Ogre {  class TerrainGroup;  class Camera;  class OverlayElement;  class SceneNode;  }
+
 
 class FollowCamera
 {
 public:
-	class Camera*  mCamera;
+	Ogre::Camera* mCamera;
 	
-	TerrainGroup* mTerrain;
-	COLLISION_WORLD* mWorld;
+	Ogre::TerrainGroup* mTerrain;
+	class COLLISION_WORLD* mWorld;
 	
 	// collision objs for raycast
-	btSphereShape* shape;
-	btDefaultMotionState* state;
-	btRigidBody* body;
+	class btSphereShape* shape;
+	class btDefaultMotionState* state;
+	class btRigidBody* body;
 
-	const class Node  *mGoalNode;
-	Vector3  mLook;
+	const Ogre::SceneNode* mGoalNode;
+	Ogre::Vector3  mLook;
 	CameraAngle  ca;
 	bool  first;
 	
 	// for ext cam
-	Quaternion qq;
+	Ogre::Quaternion qq;
 
 
-	FollowCamera(Camera* cam);
+	FollowCamera(Ogre::Camera* cam);
 	~FollowCamera();
 
-	void  update(Real time);
-	void  updInfo(Real time = 0);	Real fMoveTime;
-	void  Move( bool mbLeft, bool mbRight, bool mbMiddle, bool shift, Real mx, Real my, Real mz );
+	void  update(Ogre::Real time);
+	void  updInfo(Ogre::Real time = 0);
+	void  Move( bool mbLeft, bool mbRight, bool mbMiddle, bool shift, Ogre::Real mx, Ogre::Real my, Ogre::Real mz );
+	Ogre::Real fMoveTime;
 
 
 	//  Camera Angles
@@ -74,7 +75,7 @@ public:
 	void  Next(bool bPrev = false, bool bMainOnly = false);
 	void  setCamera(int ang);
 	
-	OverlayElement  *ovInfo,*ovName;
+	Ogre::OverlayElement  *ovInfo,*ovName;
 };
 
 #endif

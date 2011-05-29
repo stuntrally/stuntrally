@@ -146,11 +146,10 @@
 				InlineFunctionExpansion="2"
 				FavorSizeOrSpeed="1"
 				AdditionalIncludeDirectories="Source\bullet;&quot;e:\v\SDL-1.2.14\include&quot;;&quot;e:\v\libvorbis-1.2.3\include&quot;;&quot;e:\v\libogg-1.1.4\include&quot;"
-				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;"
+				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_USE_MATH_DEFINES;"
 				StringPooling="true"
 				RuntimeLibrary="2"
 				EnableEnhancedInstructionSet="1"
-				UsePrecompiledHeader="2"
 				PrecompiledHeaderFile=".\Release/StuntRally.pch"
 				AssemblerListingLocation=""
 				ObjectFile=".\Release/"
@@ -328,46 +327,6 @@
 			</File>
 			<File
 				RelativePath=".\Source\vdrift\sound.h"
-				>
-			</File>
-			<File
-				RelativePath=".\Source\ogre\stdafx.cpp"
-				>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="1"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="1"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="ReleaseDbg|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="1"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="RelWithDbg|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="1"
-					/>
-				</FileConfiguration>
-			</File>
-			<File
-				RelativePath=".\Source\ogre\stdafx.h"
 				>
 			</File>
 			<Filter

@@ -1,16 +1,10 @@
 #ifndef _Dynamic_Lines_H_
 #define _Dynamic_Lines_H_
 
-//#include "OgreSimpleRenderable.h"
-//#include "OgreCamera.h"
-//#include "OgreHardwareBufferManager.h"
-//#include "OgreMaterialManager.h"
-//#include "OgreTechnique.h"
-//#include "OgrePass.h"
-//#include "OgreLogManager.h"
-#include <vector>
+#include <OgreRenderOperation.h>
+#include <OgreSimpleRenderable.h>
 
-using namespace Ogre;
+#include <vector>
 
 
 //----------------------------------------------------------------------------------------------
@@ -41,28 +35,22 @@ protected:
 class DynamicLines : public DynamicRenderable
 {
    int iBufferSize;
-   typedef Ogre::Vector3 Vector3;
-   typedef Ogre::Quaternion Quaternion;
-   typedef Ogre::Camera Camera;
-   typedef Ogre::Real Real;
-   typedef Ogre::RenderOperation::OperationType OperationType;
-
 private:
-   std::vector<Vector3> mPoints;
-   std::vector<ColourValue> mColors;
+   std::vector<Ogre::Vector3> mPoints;
+   std::vector<Ogre::ColourValue> mColors;
    bool mDirty;
 
 public:
-   DynamicLines(OperationType opType = Ogre::RenderOperation::OT_LINE_STRIP);
+   DynamicLines(Ogre::RenderOperation::OperationType opType = Ogre::RenderOperation::OT_LINE_STRIP);
    virtual ~DynamicLines();
 
-   void addLine(const Vector3 &vectStart, const Vector3 &vectEnd, const ColourValue &colStart, const ColourValue &colEnd);
-   void addLine(const Vector3 &vectStart, const Vector3 &vectEnd, const ColourValue &col);
+   void addLine(const Ogre::Vector3 &vectStart, const Ogre::Vector3 &vectEnd, const Ogre::ColourValue &colStart, const Ogre::ColourValue &colEnd);
+   void addLine(const Ogre::Vector3 &vectStart, const Ogre::Vector3 &vectEnd, const Ogre::ColourValue &col);
    void clear();
    void update();  //  Call this to update the hardware buffer after making changes.  
 
-   void setOperationType(OperationType opType);
-   OperationType getOperationType() const;
+   void setOperationType(Ogre::RenderOperation::OperationType opType);
+   Ogre::RenderOperation::OperationType getOperationType() const;
 
 protected:
    virtual void createVertexDeclaration();

@@ -12,6 +12,16 @@
 //#include "btBulletDynamicsCommon.h"
 #include "BtOgreDebug.h"
 
+#include <OgreCommon.h>
+#include <OgreVector3.h>
+#include <OgreMatrix4.h>
+#include <OgreMesh.h>
+#include <vector>
+
+
+namespace Ogre {  class Entity;  class SceneNode;  class Renderable;  class VertexData;  }
+
+
 namespace BtOgre {
 
 

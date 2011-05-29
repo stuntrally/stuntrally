@@ -1,13 +1,14 @@
-#include "stdafx.h"
+#include "Defines.h"
 #include "OgreApp.h"
 #include "../road/Road.h"
+using namespace Ogre;
 
 
 bool App::LoadStartPos()
 {
 	vStartPos.clear();  // clear
 	vStartRot.clear();
-	string path = TrkDir()+"track.txt";
+	std::string path = TrkDir()+"track.txt";
 	CONFIGFILE param;
 	if (!param.Load(path))
 		return false;
@@ -38,7 +39,7 @@ bool App::LoadStartPos()
 	return true;
 }
 
-bool App::SaveStartPos(string path)
+bool App::SaveStartPos(std::string path)
 {
 	CONFIGFILE param;
 	if (!param.Load(path))
@@ -94,7 +95,7 @@ void App::UpdStartPos()
 	Radian rad;  Vector3 axi;  q.ToAngleAxis(rad, axi);
 
 	Vector3 vrot(axi.z, -axi.x, -axi.y);
-		QUATERNION <double> fix;  fix.Rotate(PI, 0, 1, 0);
+		QUATERNION <double> fix;  fix.Rotate(PI_d, 0, 1, 0);
 		Quaternion qr;  qr.w = fix.w();  qr.x = fix.x();  qr.y = fix.y();  qr.z = fix.z();
 	Quaternion q1;  q1.FromAngleAxis(-rad, vrot);  q1 = q1 * qr;
 	//Vector3 vcx,vcy,vcz;  q1.ToAxes(vcx,vcy,vcz);
@@ -104,4 +105,4 @@ void App::UpdStartPos()
 	if (road)
 	ndStBox->setScale(Vector3(1,road->vStBoxDim.y,road->vStBoxDim.z));
 	ndStBox->setVisible(edMode == ED_Start && bEdit());
- }
+}

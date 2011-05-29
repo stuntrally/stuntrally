@@ -1,10 +1,10 @@
-#include "stdafx.h"
-
+#include "../ogre/Defines.h"
 #include "carcontrolmap_local.h"
 #include "../ogre/OgreGame.h"
 #include "../oisb/OISBSystem.h"
 #include "../oisb/OISBAction.h"
 #include "../oisb/OISBAnalogAxisAction.h"
+#include "../oisb/OISBAnalogAxisState.h"
 
 
 const std::vector <float> & CARCONTROLMAP_LOCAL::ProcessInput(class App* pApp, int player, float dt)

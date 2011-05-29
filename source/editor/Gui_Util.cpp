@@ -1,7 +1,8 @@
-#include "stdafx.h"
+#include "Defines.h"
 #include "OgreApp.h"
 #include "../road/Road.h"
 using namespace MyGUI;
+using namespace Ogre;
 
 #include <boost/filesystem.hpp>
 
@@ -94,8 +95,8 @@ void App::TrackListUpd()
 		for (strlist::iterator i = li.begin(); i != li.end(); ++i)
 		{
 			vsTracks.push_back(*i);  vbTracksUser.push_back(false);
-			string s = pathTrk[0] + *i + "/scene.xml";
-			ifstream check(s.c_str());
+			std::string s = pathTrk[0] + *i + "/scene.xml";
+			std::ifstream check(s.c_str());
 			if (check)  {
 				trkList->addItem(*i, 0);
 				if (!pSet->track_user && *i == pSet->track)  {  si = ii;
@@ -107,8 +108,8 @@ void App::TrackListUpd()
 		for (strlist::iterator i = lu.begin(); i != lu.end(); ++i)
 		{
 			vsTracks.push_back(*i);  vbTracksUser.push_back(true);
-			string s = pathTrk[1] + *i + "/scene.xml";
-			ifstream check(s.c_str());
+			std::string s = pathTrk[1] + *i + "/scene.xml";
+			std::ifstream check(s.c_str());
 			if (check)  {
 				trkList->addItem("*" + (*i) + "*", 1);
 				if (pSet->track_user && *i == pSet->track)  {  si = ii;
@@ -119,7 +120,7 @@ void App::TrackListUpd()
 		//  not found last track, set 1st
 		if (!bFound)
 		{	pSet->track = *li.begin();  pSet->track_user = 0;  UpdWndTitle();  }
-		trkList->beginToItemAt(max(0, si-11));  // center
+		trkList->beginToItemAt(std::max(0, si-11));  // center
 	}
 }
 
@@ -165,7 +166,7 @@ void App::btnNewGame(WP)
 
 //  track files
 const int cnTrkF = 5, cnTrkFd = 2, cnTrkFo = 3;
-const String csTrkFo[cnTrkFo] = {"/grass1.png", "/grassColor.png", "/grassDensity.png"},
+const Ogre::String csTrkFo[cnTrkFo] = {"/grass1.png", "/grassColor.png", "/grassDensity.png"},
 	csTrkF[cnTrkF] = {"/heightmap.f32", "/road.xml", "/scene.xml", "/surfaces.txt", "/track.txt"},  // copy, new
 	csTrkFd[cnTrkFd] = {"/heightmap-new.f32", "/records.txt"};  // del
 
@@ -329,7 +330,7 @@ void App::btnDeleteRoad(WP)
 void App::btnScaleAll(WP)
 {
 	if (!edScaleAllMul || !road)  return;
-	Real sf = max(0.1f, s2r(edScaleAllMul->getCaption()) );  // scale mul
+	Real sf = std::max(0.1f, s2r(edScaleAllMul->getCaption()) );  // scale mul
 	
 	//  road
 	for (int i=0; i < road->getNumPoints(); ++i)
@@ -455,10 +456,10 @@ void App::msgTrackDel(Message* sender, MessageBoxStyle result)
 
 bool App::LoadSurf()
 {
-	string path = pathTrk[bListTrackU] + pSet->track + "/surfaces.txt";
+	std::string path = pathTrk[bListTrackU] + pSet->track + "/surfaces.txt";
 	CONFIGFILE cf;
 	if (!cf.Load(path))
-	{	Log("Can't find surfaces configfile: " + path);  return false;  }
+	{	LogO("Can't find surfaces configfile: " + path);  return false;  }
 	
 	strlist sl;
 	cf.GetSectionList(sl);
@@ -494,7 +495,7 @@ bool App::LoadSurf()
 	return true;
 }
 
-bool App::SaveSurf(const string& path)
+bool App::SaveSurf(const std::string& path)
 {
 	CONFIGFILE cf;
 	int u=0;
@@ -511,7 +512,7 @@ bool App::SaveSurf(const string& path)
 			else  if (i==6){  s[0] = 'A';  s[1]=0;  }  // used
 				  else  {  s[0] = u+'B';  s[1]=0;  u++;  }  // used
 
-			const TRACKSURFACE& surf = su[i];  string ss = s;
+			const TRACKSURFACE& surf = su[i];  std::string ss = s;
 			cf.SetParam(ss + ".ID", surf.type);
 			cf.SetParam(ss + ".BumpWaveLength", surf.bumpWaveLength);
 			cf.SetParam(ss + ".BumpAmplitude", surf.bumpAmplitude);
@@ -577,7 +578,7 @@ void App::setToolTips(EnumeratorWidgetPtr widgets)
 			wp->setNeedToolTip(true);
 			wp->eventToolTip = newDelegate(this, &App::notifyToolTip);
 		}
-		//Log(wp->getName() + (tip ? "  *" : ""));
+		//LogO(wp->getName() + (tip ? "  *" : ""));
         setToolTips(wp->getEnumerator());
     }
 }
@@ -633,7 +634,7 @@ void App::GetMaterials(String filename, String type)
  
 				if (StringUtil::startsWith(line, type/*"material"*/))
 				{
-					//Log(line);
+					//LogO(line);
 					Ogre::vector<String>::type vec = StringUtil::split(line," \t:");
 					bool skipFirst = true;
 					for (Ogre::vector<String>::type::iterator it = vec.begin(); it < vec.end(); ++it)
@@ -646,7 +647,7 @@ void App::GetMaterials(String filename, String type)
 						StringUtil::trim(match);
 						if (!match.empty())
 						{
-							//Log(match);
+							//LogO(match);
 							vsMaterials.push_back(match);						
 							break;
 						}
@@ -656,7 +657,7 @@ void App::GetMaterials(String filename, String type)
 		{
 			StringUtil::StrStreamType msg;
 			msg << "Exception: FILE: " << __FILE__ << " LINE: " << __LINE__ << " DESC: " << e.getFullDescription() << std::endl;
-			Log(msg.str());
+			LogO(msg.str());
 	}	}
 	stream->close();
 }
@@ -684,7 +685,7 @@ bool App::Rename(String from, String to)
 	{
 		String s = "Error: Renaming file " + from + " to " + to + " failed ! \n" + ex.what();
 		strFSerrors += "\n" + s;
-		Log(s);
+		LogO(s);
 		return false;
 	}
 	return true;
@@ -699,7 +700,7 @@ bool App::Delete(String file)
 	{
 		String s = "Error: Deleting file " + file + " failed ! \n" + ex.what();
 		strFSerrors += "\n" + s;
-		Log(s);
+		LogO(s);
 		return false;
 	}
 	return true;
@@ -714,7 +715,7 @@ bool App::DeleteDir(String dir)
 	{
 		String s = "Error: Deleting directory " + dir + " failed ! \n" + ex.what();
 		strFSerrors += "\n" + s;
-		Log(s);
+		LogO(s);
 		return false;
 	}
 	return true;
@@ -729,7 +730,7 @@ bool App::CreateDir(String dir)
 	{
 		String s = "Error: Creating directory " + dir + " failed ! \n" + ex.what();
 		strFSerrors += "\n" + s;
-		Log(s);
+		LogO(s);
 		return false;
 	}
 	return true;
@@ -748,7 +749,7 @@ bool App::Copy(String file, String to)
 	{
 		String s = "Error: Copying file " + file + " to " + to + " failed ! \n" + ex.what();
 		strFSerrors += "\n" + s;
-		Log(s);
+		LogO(s);
 		return false;
 	}
 	return true;

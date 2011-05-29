@@ -1,8 +1,9 @@
-#include "stdafx.h"
+#include "Defines.h"
 #include "OgreApp.h"
 #include "../vdrift/pathmanager.h"
 //#include "../road/Road.h"
 using namespace MyGUI;
+using namespace Ogre;
 
 
 ///  Gui Init
@@ -244,7 +245,7 @@ void App::InitGui()
 
 	GetMaterials("SkyDome.material");
 	for (size_t i=0; i < vsMaterials.size(); ++i)  {
-		String s = vsMaterials[i];  cmbSky->addItem(s);  //Log(s);
+		String s = vsMaterials[i];  cmbSky->addItem(s);  //LogO(s);
 	}
 	//---------------------  WEATHER  ---------------------
 	Cmb(cmbRain1, "Rain1Cmb", comboRain1);  cmbRain1->addItem("");

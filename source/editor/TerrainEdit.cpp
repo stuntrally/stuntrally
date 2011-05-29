@@ -1,6 +1,7 @@
-#include "stdafx.h"
+#include "Defines.h"
 #include "OgreApp.h"
 //#include "../vdrift/settings.h"
+using namespace Ogre;
 
 
 ///  get edit rect
@@ -12,7 +13,7 @@ bool App::getEditRect(Vector3& pos, Rect& rcBrush, Rect& rcMap, int size,  int& 
 
 	//  world float to map int
 	int mapX = (pos.x + 0.5*tws)/tws*t, mapY = (-pos.z + 0.5*tws)/tws*t;
-	mapX = max(0,min(t-1, mapX)), mapY = max(0,min(t-1, mapY));
+	mapX = std::max(0,std::min(t-1, mapX)), mapY = std::max(0,std::min(t-1, mapY));
 
 	int brS = (int)mBrSize[curBr];
 	float hBr = brS * 0.5f;
@@ -54,7 +55,7 @@ bool App::getEditRect(Vector3& pos, Rect& rcBrush, Rect& rcMap, int size,  int& 
 		 ,rcBrush.right-rcBrush.left, rcBrush.bottom-rcBrush.top
 		,rcMap.left, rcMap.top, rcMap.right, rcMap.bottom
 		,rcBrush.left, rcBrush.top, rcBrush.right, rcBrush.bottom);
-	Log(String(sBrushTest));/**/
+	LogO(String(sBrushTest));/**/
 	return true;
 }
 
@@ -73,9 +74,9 @@ void App::updBrush()
 		{	// -1..1
 			float fx = ((float)x - s)/s;
 			float fy = ((float)y - s)/s;
-			float d = max(0.f, 1.f - sqrt(fx*fx + fy*fy));
+			float d = std::max(0.f, 1.f - sqrt(fx*fx + fy*fy));
 			//float c = abs(d);
-			float c = sinf(d * PI*0.5f);
+			float c = sinf(d * PI_d*0.5f);
 			mBrushData[a] = powf(c, mBrPow[curBr]);
 	}	}
 }
@@ -98,7 +99,7 @@ void App::deform(Vector3 &pos, float dtime, float brMul)
 	{
 		mapPos = j * sc.td.iTerSize + rcMap.left;
 		brPos = jj * BrushMaxSize + cx;
-		//brPos = max(0, min(BrushMaxSize*BrushMaxSize-1, brPos ));
+		//brPos = std::max(0, std::min(BrushMaxSize*BrushMaxSize-1, brPos ));
 
 		for (int i = rcMap.left; i < rcMap.right; ++i)
 		{

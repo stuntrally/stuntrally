@@ -1,5 +1,12 @@
-#include "stdafx.h"
+#include "../ogre/Defines.h"
 #include "Road.h"
+
+#include <OgreLogManager.h>
+#include <OgreSubMesh.h>
+#include <OgreSceneManager.h>
+#include <OgreMeshManager.h>
+#include <OgreEntity.h>
+using namespace Ogre;
 
 
 //  Create Mesh
@@ -11,7 +18,7 @@ void SplineRoad::CreateMesh(SubMesh* mesh, AxisAlignedBox& aabox,
 {
 	size_t i, si = pos.size();
 	if (si == 0)  {
-		Log("Error!!  CreateMesh 0 verts !");
+		LogO("Error!!  CreateMesh 0 verts !");
 		return;  }
 	mesh->useSharedVertices = false;
 	mesh->vertexData = new VertexData();
@@ -115,7 +122,7 @@ void SplineRoad::Destroy()  // full
 
 void SplineRoad::DestroySeg(int id)
 {
-	//Log("DestroySeg" + toStr(id));
+	//LogO("DestroySeg" + toStr(id));
 	RoadSeg& rs = vSegs[id];
 	if (rs.empty)  return;
 //try
@@ -154,9 +161,9 @@ void SplineRoad::DestroySeg(int id)
 	}
 //}catch(...)
 //{
-//	Log("Error!! DestroySeg");
+//	LogO("Error!! DestroySeg");
 //}
-	//Log("Destroyed.");
+	//LogO("Destroyed.");
 	rs.empty = true;
 	rs.lpos.clear();
 }

@@ -3,8 +3,11 @@
 
 //wrap a bunch of the standard library algorithms to work on whole containers
 
-//#include <algorithm>
-//#include <functional>
+#include <algorithm>
+#include <functional>
+#include <vector>
+#include <map>
+#include <cassert>
 
 namespace calgo
 {

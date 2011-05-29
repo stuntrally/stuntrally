@@ -1,4 +1,3 @@
-#include "stdafx.h"
 #include "ReplayGame.h"
 //#include "../vdrift/settings.h"
 
@@ -91,7 +90,7 @@ bool Replay::LoadFile(std::string file, bool onlyHdr)
 			fi.read((char*)&fr, header.frameSize/**/);
 			frames[p].push_back(fr);
 		}
-		//Log(toStr((float)fr.time) /*+ "  p " + toStr(fr.pos)*/);
+		//LogO(toStr((float)fr.time) /*+ "  p " + toStr(fr.pos)*/);
 	}
     fi.close();
     return true;

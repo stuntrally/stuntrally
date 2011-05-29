@@ -1,21 +1,13 @@
-#include "stdafx.h"
-
 #include "joepack.h"
 
-//#include <string>
 using std::string;
-
-//#include <map>
 using std::map;
-
-//#include <fstream>
 using std::ios_base;
-
-//#include <cassert>
+#include <cassert>
 
 #include "endian_utility.h"
-
 #include "unittest.h"
+
 
 bool JOEPACK::LoadPack(const string & fn)
 {

@@ -1,15 +1,23 @@
-#include "stdafx.h"
+#include "Defines.h"
 #include "../vdrift/pathmanager.h"
 #include "../vdrift/game.h"
 #include "../road/Road.h"
 #include "OgreGame.h"
-#include "MyGUI_PointerManager.h"
-#include <boost/filesystem.hpp>
+#include "FollowCamera.h"
+#include "SplitScreenManager.h"
+
+#include <MyGUI_PointerManager.h>
+#include <OIS/OIS.h>
 #include "../oisb/OISB.h"
+#include <boost/filesystem.hpp>
+
+using namespace std;
+using namespace Ogre;
 using namespace MyGUI;
 
 #define res  1000000.f
 #define Fmt  sprintf
+
 
 ///  Gui Events
 //-----------------------------------------------------------------------------------------------------------
@@ -36,8 +44,8 @@ void App::joystickBindChanged(Widget* sender, size_t val)
 	std::string actionName = Ogre::StringUtil::split(sender->getName(), "_")[1];
 	std::string schemaName = Ogre::StringUtil::split(sender->getName(), "_")[2];
 	
-	Log(actionName);
-	Log(schemaName);
+	LogO(actionName);
+	LogO(schemaName);
 	
 	OISB::ActionSchema* schema = OISB::System::getSingleton().mActionSchemas[schemaName];
 	OISB::Action* action = schema->mActions[actionName];
@@ -54,18 +62,18 @@ void App::joystickBindChanged(Widget* sender, size_t val)
 		jsName = jsMenu->getItemNameAt( jsMenu->getIndexSelected() );
 	else 
 	{
-		Log("Couldnt get selected joystick"); return;
+		LogO("Couldnt get selected joystick"); return;
 	}
-	Log(jsName);
+	LogO(jsName);
 		
 	// get selected axis or button
 	MyGUI::ComboBoxPtr box = static_cast<MyGUI::ComboBoxPtr> (sender);
 	if (box->getItemCount() < box->getIndexSelected() || box->getIndexSelected() == MyGUI::ITEM_NONE)
 	{
-		Log("Invalid item value"); return;
+		LogO("Invalid item value"); return;
 	}
 	std::string bindName = box->getItemNameAt(box->getIndexSelected());
-	Log(bindName);
+	LogO(bindName);
 	
 	// unbind old
 	for (int i=0; i<binding->getNumBindables(); i++)
@@ -78,7 +86,7 @@ void App::joystickBindChanged(Widget* sender, size_t val)
 		binding->bind(jsName + "/" + bindName); 
 	}
 	catch (OIS::Exception) {
-		Log("Failed to bind '" + jsName + "/" + bindName + "'");
+		LogO("Failed to bind '" + jsName + "/" + bindName + "'");
 	}
 
 }
@@ -264,7 +272,7 @@ void App::slReflSkip(SL)
 }
 void App::slReflSize(SL)
 {
-	int v = max( 0.0f, min((float) ciShadowNumSizes-1, ciShadowNumSizes * val/res));	pSet->refl_size = v;
+	int v = std::max( 0.0f, std::min((float) ciShadowNumSizes-1, ciShadowNumSizes * val/res));	pSet->refl_size = v;
 	if (valReflSize)  valReflSize->setCaption(toStr(ciShadowSizesA[v]));
 }
 void App::slReflFaces(SL)
@@ -309,7 +317,7 @@ void App::slShadowCount(SL)
 
 void App::slShadowSize(SL)
 {
-	int v = max( 0.0f, min((float) ciShadowNumSizes-1, ciShadowNumSizes * val/res));	pSet->shadow_size = v;
+	int v = std::max( 0.0f, std::min((float) ciShadowNumSizes-1, ciShadowNumSizes * val/res));	pSet->shadow_size = v;
 	if (valShadowSize)  valShadowSize->setCaption(toStr(ciShadowSizesA[v]));
 }
 
@@ -508,7 +516,7 @@ void App::btnResChng(WP)
 	{
 	#ifdef _WIN32
 		int sx = GetSystemMetrics(SM_CXSCREEN), sy = GetSystemMetrics(SM_CYSCREEN);
-		int cx = max(0,(sx - pSet->windowx) / 2), cy = max(0,(sy - pSet->windowy) / 2);
+		int cx = std::max(0,(sx - pSet->windowx) / 2), cy = std::max(0,(sy - pSet->windowy) / 2);
 		mWindow->reposition(cx,cy);
 	#else
 		//mWindow->reposition(0,0);  // center ?..
@@ -568,7 +576,7 @@ void App::slRplPosEv(SL)  // change play pos
 {
 	if (!bRplPlay)  return;
 	double oldt = pGame->timer.GetReplayTime();
-	double v = val/res;  v = max(0.0, min(1.0, v));  v *= replay.GetTimeLength();
+	double v = val/res;  v = std::max(0.0, std::min(1.0, v));  v *= replay.GetTimeLength();
 	pGame->timer.SetReplayTime(v);
 
 	FollowCamera* fCam = (*carModels.begin())->fCam;

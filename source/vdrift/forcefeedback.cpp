@@ -1,4 +1,3 @@
-#include "stdafx.h"
 
 #ifdef ENABLE_FORCE_FEEDBACK
 

@@ -1,12 +1,26 @@
-#include "stdafx.h"
+#include "Defines.h"
 #include "BaseApp.h"
 #include "FollowCamera.h"
 #include "../vdrift/pathmanager.h"
+#include "../vdrift/settings.h"
+
 #include "CompositorLogics.h"
 #include "Locale.h"
-#include "OgreFontManager.h"
+#include "SplitScreenManager.h"
+#include "CarModel.h"
+//#include "SplitScreenManager.h"
+
+#include <OgreFontManager.h>
+#include <OgreLogManager.h>
+//#include <OgreOverlay.h>
+#include <OgreOverlayManager.h>
+
+#include <OIS/OIS.h>
 #include "../oisb/OISB.h"
 #include "boost/filesystem.hpp"
+
+using namespace Ogre;
+
 
 //  Camera
 //-------------------------------------------------------------------------------------
@@ -18,9 +32,9 @@ void BaseApp::createCamera()
 //-------------------------------------------------------------------------------------
 void BaseApp::createFrameListener()
 {
-	LogManager::getSingletonPtr()->logMessage("*** Initializing OIS ***");
+	Ogre::LogManager::getSingletonPtr()->logMessage("*** Initializing OIS ***");
 
-	OverlayManager& ovr = OverlayManager::getSingleton();
+	Ogre::OverlayManager& ovr = OverlayManager::getSingleton();
 	mFpsOverlay = ovr.getByName("Core/FpsOverlay");  //mFpsOverlay->show();//
 	mDebugOverlay = ovr.getByName("Core/DebugOverlay");  //mDebugOverlay->show();//*
 	mOvrFps = ovr.getOverlayElement("Core/CurrFps"),
@@ -271,20 +285,15 @@ bool BaseApp::configure()
 	{
 		if (!mRoot->showConfigDialog()) return false;
 		mWindow = mRoot->initialise(true, "Stunt Rally");
-	}
-	else
-	{
+	}else{
 		RenderSystem* rs;
 		if (rs = mRoot->getRenderSystemByName(pSet->rendersystem))
 		{
 			mRoot->setRenderSystem(rs);
-		}
-		else
-		{
-			Log("RenderSystem '" + pSet->rendersystem + "' is not available. Exiting.");
+		}else{
+			LogO("RenderSystem '" + pSet->rendersystem + "' is not available. Exiting.");
 			return false;
 		}
-
 		if (pSet->rendersystem == "OpenGL Rendering Subsystem")  // not on dx
 			mRoot->getRenderSystem()->setConfigOption("RTT Preferred Mode", pSet->buffer);
 			
@@ -402,7 +411,7 @@ void BaseApp::setupResources()
 {
 	// Load resource paths from config file
 	ConfigFile cf;
-	string s = PATHMANAGER::GetGameConfigDir() + "/resources.cfg";
+	std::string s = PATHMANAGER::GetGameConfigDir() + "/resources.cfg";
 	cf.load(s);
 
 	// Go through all sections & settings in the file

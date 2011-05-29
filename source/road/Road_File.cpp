@@ -1,5 +1,11 @@
-#include "stdafx.h"
+#include "../ogre/Defines.h"
 #include "Road.h"
+#include "tinyxml.h"
+
+#include <OgreCamera.h>
+#include <OgreMaterialManager.h>
+#include <OgreEntity.h>
+using namespace Ogre;
 
 
 //  ctor
@@ -220,7 +226,7 @@ bool SplineRoad::LoadFile(String fname, bool build)
 	/*const int q = 8;
 	for (int i=0; i < q*3; ++i)
 	{
-		Real a = Real(i%q)/q *PI*2.f, ri = Real(i)/q;
+		Real a = Real(i%q)/q *PI_d*2.f, ri = Real(i)/q;
 		Vector3 pos(cosf(a), 0.f, -sinf(a));
 		pos *= 12.f + ri*5.f;  // r
 		pos.z -= 30.f;

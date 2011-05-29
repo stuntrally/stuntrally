@@ -1,4 +1,4 @@
-#include "stdafx.h"
+//#include "Defines.h"
 #include "QTimer.h"
 
 

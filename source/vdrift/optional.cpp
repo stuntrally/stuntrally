@@ -1,4 +1,3 @@
-#include "stdafx.h"
 
 #include "optional.h"
 #include "unittest.h"

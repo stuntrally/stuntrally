@@ -1,9 +1,9 @@
 #ifndef _JOEPACK_H
 #define _JOEPACK_H
 
-//#include <string>
-//#include <map>
-//#include <fstream>
+#include <string>
+#include <map>
+#include <fstream>
 
 class JOEPACK_FADATA
 {

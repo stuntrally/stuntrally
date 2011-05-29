@@ -33,10 +33,10 @@
 #ifndef QUICK_TEST_H
 #define QUICK_TEST_H
 
-//#include <string>
-//#include <sstream>
-//#include <vector>
-//#include <iostream>
+#include <string>
+#include <sstream>
+#include <vector>
+#include <iostream>
 
 // -----------------------------------------------------------------------
 // Design Notes

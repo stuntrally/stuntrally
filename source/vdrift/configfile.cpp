@@ -1,11 +1,13 @@
-#include "stdafx.h"
+//#include "Defines.h"
 
 #include "configfile.h"
 #include "containeralgorithm.h"
 #include "unittest.h"
 
-//#include <sstream>
+#include <fstream>
+#include <sstream>
 using namespace std;
+
 
 CONFIGFILE::CONFIGFILE()
 {

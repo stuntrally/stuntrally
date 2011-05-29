@@ -1,4 +1,4 @@
-#include "stdafx.h"
+#include "Defines.h"
 #include "../vdrift/pathmanager.h"
 #include "../vdrift/game.h"
 #include "../road/Road.h"
@@ -286,7 +286,7 @@ void App::InitGui()
 		PATHMANAGER::GetFolderIndex(PATHMANAGER::GetCarPath(), li);
 		for (strlist::iterator i = li.begin(); i != li.end(); ++i)
 		{
-			ifstream check((PATHMANAGER::GetCarPath() + "/" + *i + "/about.txt").c_str());
+			std::ifstream check((PATHMANAGER::GetCarPath() + "/" + *i + "/about.txt").c_str());
 			if (check)  {
 				carList->addItem(*i);
 				if (*i == pSet->car) {  carList->setIndexSelected(ii);  bFound = true;  }
@@ -318,9 +318,8 @@ void App::InitGui()
 		//  original
 		for (strlist::iterator i = li.begin(); i != li.end(); ++i)
 		{
-
-			string s = pathTrk[0] + *i + "/track.txt";
-			ifstream check(s.c_str());
+			std::string s = pathTrk[0] + *i + "/track.txt";
+			std::ifstream check(s.c_str());
 			if (check)  {
 				trkList->addItem(*i, 0);
 				if (!pSet->track_user && *i == pSet->track)  {  si = ii;
@@ -331,9 +330,8 @@ void App::InitGui()
 		//  user
 		for (strlist::iterator i = lu.begin(); i != lu.end(); ++i)
 		{
-
-			string s = pathTrk[1] + *i + "/track.txt";
-			ifstream check(s.c_str());
+			std::string s = pathTrk[1] + *i + "/track.txt";
+			std::ifstream check(s.c_str());
 			if (check)  {
 				trkList->addItem("*" + (*i) + "*", 1);
 				if (pSet->track_user && *i == pSet->track)  {  si = ii;
@@ -344,7 +342,7 @@ void App::InitGui()
 		//  not found last track, set 1st
 		if (!bFound)
 		{	pSet->track = *li.begin();  pSet->track_user = 0;  }
-		trkList->beginToItemAt(max(0, si-11));  // center
+		trkList->beginToItemAt(std::max(0, si-11));  // center
 		trkList->eventListChangePosition = newDelegate(this, &App::listTrackChng);
 		//?trkList->eventMouseButtonDoubleClick = newDelegate(this, &App::btnNewGameStart);
     }
@@ -441,7 +439,7 @@ void App::setToolTips(EnumeratorWidgetPtr widgets)
 			wp->setNeedToolTip(true);
 			wp->eventToolTip = newDelegate(this, &App::notifyToolTip);
 		}
-		//Log(wp->getName() + (tip ? "  *" : ""));
+		//LogO(wp->getName() + (tip ? "  *" : ""));
         setToolTips(wp->getEnumerator());
     }
 }
@@ -491,18 +489,18 @@ void App::boundedMove(Widget* moving, const IntPoint& point)
 void App::trkListNext(int rel)
 {
 	if (!(isFocGui && mWndTabs->getIndexSelected() == 0))  return;
-	int i = max(0, min((int)trkList->getItemCount()-1, (int)trkList->getIndexSelected()+rel ));
+	int i = std::max(0, std::min((int)trkList->getItemCount()-1, (int)trkList->getIndexSelected()+rel ));
 	trkList->setIndexSelected(i);
-	trkList->beginToItemAt(max(0, i-11));  // center
+	trkList->beginToItemAt(std::max(0, i-11));  // center
 	listTrackChng(trkList,i);
 }
 
 void App::carListNext(int rel)
 {
 	if (!(isFocGui && mWndTabs->getIndexSelected() == 1))  return;
-	int i = max(0, min((int)carList->getItemCount()-1, (int)carList->getIndexSelected()+rel ));
+	int i = std::max(0, std::min((int)carList->getItemCount()-1, (int)carList->getIndexSelected()+rel ));
 	carList->setIndexSelected(i);
-	carList->beginToItemAt(max(0, i-11));  // center
+	carList->beginToItemAt(std::max(0, i-11));  // center
 	listCarChng(carList,i);
 }
 

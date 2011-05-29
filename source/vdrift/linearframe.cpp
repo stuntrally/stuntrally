@@ -1,4 +1,3 @@
-#include "stdafx.h"
 
 #include "linearframe.h"
 #include "unittest.h"

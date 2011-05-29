@@ -3,11 +3,13 @@
 
 #include <SDL/SDL.h>
 #include "toggle.h"
-//#include <vector>
-//#include <map>
-//#include <list>
-//#include <iostream>
-//#include <cassert>
+
+#include <vector>
+#include <map>
+#include <list>
+#include <iostream>
+#include <cassert>
+
 
 class EVENTSYSTEM_SDL
 {
