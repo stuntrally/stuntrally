@@ -11,6 +11,7 @@
 #include "../oisb/OISB.h"
 #include <boost/filesystem.hpp>
 
+#include <OgreTerrain.h>
 using namespace std;
 using namespace Ogre;
 using namespace MyGUI;

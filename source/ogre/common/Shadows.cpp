@@ -11,6 +11,7 @@
 	#include "../SplitScreenManager.h"
 #endif
 #include <OgreTerrainMaterialGeneratorA.h>
+#include <OgreTerrain.h>
 using namespace Ogre;
 
 

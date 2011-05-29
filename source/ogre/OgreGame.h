@@ -9,15 +9,10 @@
 #include "CarModel.h"
 #include "CarReflection.h"
 
-#include <Ogre.h>
-#include <OgreTerrain.h>
-#include <OgreTerrainGroup.h>
-#include <OgreTerrainPaging.h>
-#include <OgrePageManager.h>
+#include <MyGUI.h>  //-
 
-#include <MyGUI.h>
-
-
+namespace Ogre {  class SceneNode;  class Root;  class SceneManager;  class RenderWindow;
+	class Terrain;  class TerrainGlobalOptions;  class TerrainGroup;  class TerrainPaging;  class PageManager;  }
 namespace Forests {  class PagedGeometry;  }
 namespace BtOgre  {  class DebugDrawer;  }
 

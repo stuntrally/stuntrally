@@ -9,6 +9,9 @@
 
 #include <OIS/OIS.h>
 #include "../oisb/OISB.h"
+
+#include <MyGUI.h>
+#include <MyGUI_OgrePlatform.h>
 using namespace Ogre;
 
 

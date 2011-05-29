@@ -14,6 +14,8 @@
 	//#include "BtOgreDebug.h"
 	#include "../bullet/BulletCollision/CollisionShapes/btHeightfieldTerrainShape.h"
 #endif
+#include <OgreTerrain.h>
+#include <OgreTerrainGroup.h>
 using namespace Ogre;
 
 //  fill Blend maps

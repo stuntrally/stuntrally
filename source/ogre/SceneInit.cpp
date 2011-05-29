@@ -11,6 +11,9 @@
 #include "boost/thread.hpp"
 #include "../paged-geom/PagedGeometry.h"
 
+#include <MyGUI_OgrePlatform.h>
+#include <OgreTerrainGroup.h>
+
 
 //  Create Scene
 //-------------------------------------------------------------------------------------

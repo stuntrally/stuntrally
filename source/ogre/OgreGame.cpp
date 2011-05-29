@@ -5,6 +5,8 @@
 #include "SplitScreenManager.h"
 #include "../paged-geom/PagedGeometry.h"
 
+#include <OgreTerrain.h>
+#include <OgreTerrainGroup.h>
 
 //  ctors  -----------------------------------------------
 App::App()

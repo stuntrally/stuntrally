@@ -10,8 +10,10 @@
 #include <OISKeyboard.h>
 #include <OISMouse.h>
 
-#include <MyGUI.h>
-#include <MyGUI_OgrePlatform.h>
+//#include <MyGUI.h>
+//#include <MyGUI_OgrePlatform.h>
+#include <MyGUI_Prerequest.h>
+namespace MyGUI {  class OgrePlatform;  };
 
 //#include "CarModel.h"
 //#include "SplitScreenManager.h"
