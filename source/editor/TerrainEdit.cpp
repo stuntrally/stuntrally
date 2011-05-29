@@ -75,7 +75,7 @@ void App::updBrush()
 		{	// -1..1
 			float fx = ((float)x - s)/s;
 			float fy = ((float)y - s)/s;
-			float d = std::max(0.f, 1.f - sqrt(fx*fx + fy*fy));
+			float d = std::max(0.f, 1.f - float(sqrt(fx*fx + fy*fy)));
 			//float c = abs(d);
 			float c = sinf(d * PI_d*0.5f);
 			mBrushData[a] = powf(c, mBrPow[curBr]);

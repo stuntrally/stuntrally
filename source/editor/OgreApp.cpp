@@ -12,6 +12,8 @@
 #endif
 using namespace Ogre;
 
+#include <string>
+
 
 //  ctor
 //----------------------------------------------------------------------------------------------------------------------
@@ -141,7 +143,7 @@ bool App::GetFolderIndex(std::string dirpath, std::list <std::string>& dirlist, 
 		while ( ( ep = readdir( dp ) ) )
 		{
 			//puts (ep->d_name);
-			string newname = ep->d_name;
+			std::string newname = ep->d_name;
 			if (newname[0] != '.')
 			{
 				dirlist.push_back(newname);
