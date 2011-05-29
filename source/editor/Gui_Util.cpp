@@ -186,7 +186,7 @@ bool App::ChkTrkCopy()
 			MessageBoxStyle::IconWarning | MessageBoxStyle::Ok);
 		return false;
 	}
-	if (sCopyTrack == pSet->track && bCopyTrackU == pSet->track_user)
+	if (sCopyTrack == pSet->track && bCopyTrackU == (pSet->track_user ? 1 : 0))
 	{
 		Message::createMessageBox(
 			"Message", "Copy Track", "Source track and current track are the same.",
@@ -605,8 +605,8 @@ void App::boundedMove(Widget* moving, const IntPoint& point)
 
 	const IntSize& size = moving->getSize();
 	
-	unsigned int vpw = mWindow->getWidth();
-	unsigned int vph = mWindow->getHeight();
+	int vpw = mWindow->getWidth();
+	int vph = mWindow->getHeight();
 	
 	if (p.left + size.width > vpw)
 		p.left = vpw - size.width;
@@ -664,12 +664,7 @@ void App::GetMaterials(String filename, String type)
 
 ///  system file, dir
 //-----------------------------------------------------------------------------------------------------------
-
-void App::Rename(String from, String to)
-{
-	if (boost::filesystem::exists(from.c_str()))
-		boost::filesystem::rename(from.c_str(), to.c_str());
-}
+namespace bfs = boost::filesystem;
 
 bool App::TrackExists(String name/*, bool user*/)
 {
@@ -679,26 +674,82 @@ bool App::TrackExists(String name/*, bool user*/)
 	return false;
 }
 
-void App::Delete(String file)
+bool App::Rename(String from, String to)
 {
-	boost::filesystem::remove(file.c_str());
+	try
+	{	if (bfs::exists(from.c_str()))
+			bfs::rename(from.c_str(), to.c_str());
+	}
+	catch (const bfs::filesystem_error & ex)
+	{
+		String s = "Error: Renaming file " + from + " to " + to + " failed ! \n" + ex.what();
+		strFSerrors += "\n" + s;
+		Log(s);
+		return false;
+	}
+	return true;
 }
 
-void App::DeleteDir(String dir)
+bool App::Delete(String file)
 {
-	boost::filesystem::remove_all(dir.c_str());
+	try
+	{	bfs::remove(file.c_str());
+	}
+	catch (const bfs::filesystem_error & ex)
+	{
+		String s = "Error: Deleting file " + file + " failed ! \n" + ex.what();
+		strFSerrors += "\n" + s;
+		Log(s);
+		return false;
+	}
+	return true;
 }
 
-void App::CreateDir(String dir)
+bool App::DeleteDir(String dir)
 {
-	boost::filesystem::create_directory(dir.c_str());
+	try
+	{	bfs::remove_all(dir.c_str());
+	}
+	catch (const bfs::filesystem_error & ex)
+	{
+		String s = "Error: Deleting directory " + dir + " failed ! \n" + ex.what();
+		strFSerrors += "\n" + s;
+		Log(s);
+		return false;
+	}
+	return true;
 }
 
-void App::Copy(String file, String to)
+bool App::CreateDir(String dir)
 {
-	if (boost::filesystem::exists(to.c_str()))
-		boost::filesystem::remove(to.c_str());
+	try
+	{	bfs::create_directory(dir.c_str());
+	}
+	catch (const bfs::filesystem_error & ex)
+	{
+		String s = "Error: Creating directory " + dir + " failed ! \n" + ex.what();
+		strFSerrors += "\n" + s;
+		Log(s);
+		return false;
+	}
+	return true;
+}
 
-	if (boost::filesystem::exists(file.c_str()))
-		boost::filesystem::copy_file(file.c_str(), to.c_str());
+bool App::Copy(String file, String to)
+{
+	try
+	{	if (bfs::exists(to.c_str()))
+			bfs::remove(to.c_str());
+
+		if (bfs::exists(file.c_str()))
+			bfs::copy_file(file.c_str(), to.c_str());
+	}
+	catch (const bfs::filesystem_error & ex)
+	{
+		String s = "Error: Copying file " + file + " to " + to + " failed ! \n" + ex.what();
+		strFSerrors += "\n" + s;
+		Log(s);
+		return false;
+	}
+	return true;
 }

@@ -49,6 +49,7 @@ App::App()  //  gui wigdets--
 {
 	pathTrk[0] = PATHMANAGER::GetTrackPath() + "/";      pathTrkPrv[0] = pathTrk[0] + "_previews/";  resTrk = "";
 	pathTrk[1] = PATHMANAGER::GetTrackPathUser() + "/";  pathTrkPrv[1] = pathTrk[1] + "_previews/";
+	strFSerrors = "";
 
 	mBrSize[0] = 16.f;		mBrSize[1] = 24.f;
 	mBrIntens[0] = 20.f;	mBrIntens[1] = 20.f;

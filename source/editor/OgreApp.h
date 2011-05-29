@@ -269,8 +269,9 @@ protected:
 
 
 	//  system, utils
-	void Rename(String from, String to), Delete(String file), DeleteDir(String dir),
-		CreateDir(String dir), Copy(String file, String to);
+	String strFSerrors;
+	bool Rename(String from, String to), Delete(String file), DeleteDir(String dir),
+		 CreateDir(String dir), Copy(String file, String to);
 	bool TrackExists(String name);  // util
 
 	std::vector<String> vsMaterials;
