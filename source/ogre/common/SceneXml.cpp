@@ -329,8 +329,8 @@ bool Scene::SaveXml(String file)
 	root.InsertEndChild(cam);
 
 
-	xml.InsertEndChild(root);  xml.SaveFile(file.c_str());
-	return true;
+	xml.InsertEndChild(root);
+	return xml.SaveFile(file.c_str());
 }
 
 //--------------------------------------------------------------------------------------------------------------------------------------

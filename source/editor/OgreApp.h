@@ -30,7 +30,7 @@ public:
 	Scene sc;  /// scene.xml
 	BltObjects objs;  // veget collision in bullet
 
-	TRACKSURFACE su[8];  void LoadSurf(), SaveSurf(const String& trk);
+	TRACKSURFACE su[8];  bool LoadSurf(), SaveSurf(const String& trk);
 	Light* sun;  void UpdFog(bool bForce=false), UpdSun();
 
 	void UpdWndTitle(), SaveCam();

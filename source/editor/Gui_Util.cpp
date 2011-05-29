@@ -453,12 +453,12 @@ void App::msgTrackDel(Message* sender, MessageBoxStyle result)
 //  Surfaces
 //-----------------------------------------------------------------------------------------------------------
 
-void App::LoadSurf()
+bool App::LoadSurf()
 {
 	string path = pathTrk[bListTrackU] + pSet->track + "/surfaces.txt";
 	CONFIGFILE cf;
 	if (!cf.Load(path))
-	{	Log("Can't find surfaces configfile: " + path);  return;  }
+	{	Log("Can't find surfaces configfile: " + path);  return false;  }
 	
 	strlist sl;
 	cf.GetSectionList(sl);
@@ -491,9 +491,10 @@ void App::LoadSurf()
 			else  su[l] = surf;
 		}
 	}
+	return true;
 }
 
-void App::SaveSurf(const string& path)
+bool App::SaveSurf(const string& path)
 {
 	CONFIGFILE cf;
 	int u=0;
@@ -520,7 +521,7 @@ void App::SaveSurf(const string& path)
 			cf.SetParam(ss + ".RollingDrag", surf.rollingDrag);
 		}
 	}
-	cf.Write(true, path);
+	return cf.Write(true, path);
 }
 
 
