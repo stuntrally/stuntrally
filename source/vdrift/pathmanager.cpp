@@ -8,6 +8,7 @@
 #include <fstream>
 #include <list>
 #include <cassert>
+#include <sstream>
 
 #ifdef _WIN32
 #include <windows.h>
