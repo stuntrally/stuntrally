@@ -1,3 +1,4 @@
+#include "pch.h"
 #include "Defines.h"
 #include "settings.h"
 #include "../vdrift/tracksurface.h"

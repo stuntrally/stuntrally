@@ -1,4 +1,4 @@
-
+#include "pch.h"
 #include "coordinatesystems.h"
 
 void COORDINATESYSTEMS::ConvertCarCoordinateSystemV2toV1(float & x, float & y, float & z)

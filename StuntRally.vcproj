@@ -50,9 +50,10 @@
 				AdditionalOptions="/Zm1000 /MP"
 				Optimization="0"
 				AdditionalIncludeDirectories="Source\bullet;&quot;e:\v\SDL-1.2.14\include&quot;;&quot;e:\v\libvorbis-1.2.3\include&quot;;&quot;e:\v\libogg-1.1.4\include&quot;"
-				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;DEBUG"
+				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;DEBUG;_USE_MATH_DEFINES;"
 				RuntimeLibrary="3"
 				UsePrecompiledHeader="2"
+				PrecompiledHeaderThrough="pch.h"
 				PrecompiledHeaderFile=".\Debug/StuntRally.pch"
 				AssemblerListingLocation=".\Debug/"
 				ObjectFile=".\Debug/"
@@ -150,6 +151,8 @@
 				StringPooling="true"
 				RuntimeLibrary="2"
 				EnableEnhancedInstructionSet="1"
+				UsePrecompiledHeader="2"
+				PrecompiledHeaderThrough="pch.h"
 				PrecompiledHeaderFile=".\Release/StuntRally.pch"
 				AssemblerListingLocation=""
 				ObjectFile=".\Release/"
@@ -240,11 +243,12 @@
 				AdditionalOptions="/Zm1000 /MP"
 				Optimization="0"
 				AdditionalIncludeDirectories="Source\bullet;&quot;e:\v\SDL-1.2.14\include&quot;;&quot;e:\v\libvorbis-1.2.3\include&quot;;&quot;e:\v\libogg-1.1.4\include&quot;"
-				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;"
+				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_USE_MATH_DEFINES;"
 				StringPooling="true"
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="true"
 				UsePrecompiledHeader="2"
+				PrecompiledHeaderThrough="pch.h"
 				PrecompiledHeaderFile=".\ReleaseDbg/StuntRally.pch"
 				AssemblerListingLocation=""
 				ObjectFile=".\ReleaseDbg/"
@@ -319,6 +323,38 @@
 			</File>
 			<File
 				RelativePath=".\Source\ogre\main.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\source\ogre\pch.cpp"
+				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="1"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="1"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="ReleaseDbg|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="1"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath=".\source\ogre\pch.h"
 				>
 			</File>
 			<File

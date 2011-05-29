@@ -1,3 +1,4 @@
+#include "pch.h"
 #include "Defines.h"
 #include "../vdrift/pathmanager.h"
 #include "../vdrift/game.h"

@@ -1,4 +1,4 @@
-
+#include "pch.h"
 #include "bezier.h"
 #include "unittest.h"
 

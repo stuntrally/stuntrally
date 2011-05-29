@@ -1,4 +1,4 @@
-
+#include "pch.h"
 #include "vertexarray.h"
 #include "unittest.h"
 #include "mathvector.h"

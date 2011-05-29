@@ -1,3 +1,4 @@
+#include "pch.h"
 /*	   Filename:  BtOgreDebug.h
  *	Description:  Contains the Ogre Mesh to Bullet Shape converters.
  *		Version:  1.1  (1.0 modified by CrystalH)

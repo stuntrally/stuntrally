@@ -1,3 +1,4 @@
+#include "pch.h"
 #include "DynamicLines.h"
 #include <Ogre.h>
 #include <cassert>

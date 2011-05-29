@@ -1,4 +1,4 @@
-
+#include "pch.h"
 #include "crashdetection.h"
 
 #include "assert.h"

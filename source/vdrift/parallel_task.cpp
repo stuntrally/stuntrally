@@ -1,4 +1,4 @@
-
+#include "pch.h"
 #include "parallel_task.h"
 
 int PARALLEL_TASK::Dispatch(void * data)

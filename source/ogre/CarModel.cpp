@@ -1,3 +1,4 @@
+#include "pch.h"
 #include "Defines.h"
 #include "CarModel.h"
 #include "../vdrift/pathmanager.h"

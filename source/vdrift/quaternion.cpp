@@ -1,4 +1,4 @@
-
+#include "pch.h"
 #include "quaternion.h"
 #include "unittest.h"
 

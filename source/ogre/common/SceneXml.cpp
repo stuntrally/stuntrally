@@ -1,7 +1,7 @@
-//#include "Defines.h"
+#include "pch.h"
+#include "../Defines.h"
 #include "SceneXml.h"
 #include "tinyxml.h"
-#include "../Defines.h"
 
 using namespace Ogre;
 

@@ -1,3 +1,4 @@
+#include "pch.h"
 #include "game.h"
 #include "unittest.h"
 #include "joepack.h"

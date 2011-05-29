@@ -1,4 +1,4 @@
-
+#include "pch.h"
 #include "aabb_space_partitioning.h"
 #include "unittest.h"
 

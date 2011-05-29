@@ -1,3 +1,4 @@
+#include "pch.h"
 #include "Defines.h"
 #include "LoadingBar.h"
 #include <MyGUI.h>

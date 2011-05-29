@@ -1,8 +1,8 @@
-//#include "Defines.h"
+#include "pch.h"
+#include "../Defines.h"
 #include "BltObjects.h"
 #include "../../vdrift/pathmanager.h"
 #include "tinyxml.h"
-#include "../Defines.h"
 //using namespace Ogre;
 
 

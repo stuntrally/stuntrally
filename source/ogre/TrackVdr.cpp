@@ -1,3 +1,4 @@
+#include "pch.h"
 #include "OgreGame.h"
 #include "../vdrift/game.h"
 #include "CarModel.h" // for CreateModel()

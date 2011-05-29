@@ -1,3 +1,4 @@
+#include "pch.h"
 /*		   Filename:	BtOgre.cpp
  *		Description:	Bullet to Ogre implementation.
  *			Version:	1.1  (1.0 modified by CrystalH)

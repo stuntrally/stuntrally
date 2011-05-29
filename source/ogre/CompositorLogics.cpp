@@ -1,3 +1,4 @@
+#include "pch.h"
 // taken from OGRE compositor sample
 // only needed for HDR
 #include "CompositorLogics.h"

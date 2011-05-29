@@ -1,4 +1,4 @@
-//#include "Defines.h"
+#include "pch.h"
 #include "../Defines.h"
 #ifdef ROAD_EDITOR
 	#include "../../editor/OgreApp.h"

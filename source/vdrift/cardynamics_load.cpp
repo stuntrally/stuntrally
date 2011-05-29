@@ -1,4 +1,4 @@
-
+#include "pch.h"
 #include "cardynamics.h"
 
 #include "configfile.h"

@@ -1,8 +1,9 @@
+#include "pch.h"
 #include "../ogre/Defines.h"
 #include "SplineBase.h"
-using namespace Ogre;
 #include <OgreVector4.h>
 #include <OgreLogManager.h>
+using namespace Ogre;
 
 
 SplineBase::SplineBase() :

@@ -1,4 +1,4 @@
-
+#include "pch.h"
 #include "linearframe.h"
 #include "unittest.h"
 

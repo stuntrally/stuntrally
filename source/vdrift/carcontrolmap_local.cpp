@@ -1,3 +1,4 @@
+#include "pch.h"
 #include "../ogre/Defines.h"
 #include "carcontrolmap_local.h"
 #include "../ogre/OgreGame.h"
