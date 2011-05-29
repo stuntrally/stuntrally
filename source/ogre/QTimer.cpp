@@ -1,5 +1,5 @@
 #include "pch.h"
-//#include "Defines.h"
+#include "Defines.h"
 #include "QTimer.h"
 
 
