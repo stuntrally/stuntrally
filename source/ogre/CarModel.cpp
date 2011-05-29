@@ -81,22 +81,14 @@ void CarModel::Update(PosInfo& posInfo, float time)
 	//-----------------------------------------------------------------------------
 
 	//  boost
-	#if 0  // emission needs to be independent of car vel !..
 	if (pSet->particles)
 	for (int i=0; i < 2; i++)
 	if (pb[i])
 	{
-		float emitB = pCar->dynamics.doBoost * 20.f;  // par
-		//pCar->GetSpeed();
-		//posInfo.pos = Vector3(pos[0],pos[2],-pos[1]);
-		//SceneNode* nb = pMainNode->createChildSceneNode(Vector3(1.8,0.1,1));
-		btVector3 v = pCar->dynamics.chassis->getVelocityInLocalPoint(btVector3(0.0,0,0));
-		Vector3 d(v.getX(),v.getZ(),-v.getY());
+		float emitB = pCar->dynamics.doBoost * 40.f;  // par
 		ParticleEmitter* pe = pb[i]->getEmitter(0);
 		pe->setEmissionRate(emitB);
-		pe->setDirection(d);
 	}
-	#endif
 	
 	//  wheels
 	for (int w=0; w < 4; w++)
@@ -262,15 +254,18 @@ void CarModel::Create()
 	
 	//  body  ----------------------
 	Ogre::Vector3 vPofs(0,0,0);
+	AxisAlignedBox bodyBox;
 
 	if (FileExists(resCar + "/" + sDirname + "_" + "body.mesh"))
 	{
 		Entity* eCar = pSceneMgr->createEntity("Car"+ toStr(iIndex), sDirname + "_" + "body.mesh", "Car" + toStr(iIndex));
 		if (FileExists(resCar + "/" + sDirname + "_" + "body00_add.png") && FileExists(resCar + "/" + sDirname + "_" + "body00_red.png"))
 			eCar->setMaterialName(sMtr[Mtr_CarBody]);
+		bodyBox = eCar->getBoundingBox();
 		ncart->attachObject(eCar);  eCar->setVisibilityFlags(2);
 	}else{
 		ManualObject* mCar = CreateModel(pSceneMgr, sMtr[Mtr_CarBody], &pCar->bodymodel.mesh, vPofs);
+		bodyBox = mCar->getBoundingBox();
 		if (mCar){	ncart->attachObject(mCar);  mCar->setVisibilityFlags(2);  }
 	}
 
@@ -340,7 +335,13 @@ void CarModel::Create()
 		String si = toStr(iIndex) + "_" +toStr(i);
 		if (!pb[i])  {
 			pb[i] = pSceneMgr->createParticleSystem("Boost"+si, "Boost");
-			SceneNode* nb = pMainNode->createChildSceneNode(Vector3(1.8, 0.1, 1));
+			//pCar->dynamics.chassis->getsi
+			Vector3 bsize = (bodyBox.getMaximum() - bodyBox.getMinimum())*0.5,
+				bcenter = bodyBox.getMaximum() + bodyBox.getMinimum();
+			Log("Car body bbox :  size " + toStr(bsize) + ",  center " + toStr(bcenter));
+			SceneNode* nb = pMainNode->createChildSceneNode(bcenter+
+				Vector3(bsize.x * 0.97, bsize.y * 0.65, bsize.z * 0.65 * (i==0 ? 1 : -1) ));
+				//Vector3(1.9 /*back*/, 0.1 /*up*/, 0.6 * (i==0 ? 1 : -1)/*sides*/ ));
 			nb->attachObject(pb[i]);
 			pb[i]->getEmitter(0)->setEmissionRate(0);  }
 	}
