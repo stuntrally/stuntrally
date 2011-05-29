@@ -3,7 +3,7 @@
 	<schema name="General">
 		<action name="NextCamera" type="Trigger">
 			<binding>
-				<bind role="">Keyboard/C</bind>
+				<bind role="">Keyboard/c</bind>
 			</binding>
 		</action>
 		<action name="NextTab" type="Trigger">
@@ -13,7 +13,7 @@
 		</action>
 		<action name="PrevCamera" type="Trigger">
 			<binding>
-				<bind role="">Keyboard/X</bind>
+				<bind role="">Keyboard/x</bind>
 			</binding>
 		</action>
 		<action name="PrevTab" type="Trigger">
