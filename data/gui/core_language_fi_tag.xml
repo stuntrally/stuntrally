@@ -353,6 +353,7 @@
 	<Tag name="InputTerDeform">D - Deform  (LMB up, RMB down)</Tag>
 	<Tag name="TipDiffuseTex">Diffuse texture (Specular in alpha).</Tag>
 	<Tag name="VegetCol">Vegetation collision    *needs New Game</Tag>
+	<Tag name="CarCollis">Cars collision</Tag>
 	<Tag name="MyGUI_MessageBox_Continue">Continue</Tag>
 	<Tag name="Tools">Tools</Tag>
 	<Tag name="TipGrassSwaySpd">Grass sway effect speed.</Tag>

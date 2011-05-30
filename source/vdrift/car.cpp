@@ -15,7 +15,7 @@ bool isnan(double number) {return (number != number);}
 #endif
 
 CAR::CAR() :
-  pSettings(0), pApp(0),
+  pSet(0), pApp(0),
   last_steer(0),
   debug_wheel_draw(false),
   sector(-1)
@@ -56,7 +56,7 @@ bool CAR::Load(class App* pApp1,
   	std::ostream & error_output )
 {
 	pApp = pApp1;
-	pSettings = settings;
+	pSet = settings;
 	cartype = carname;
 	std::stringstream nullout;
 
@@ -128,7 +128,7 @@ bool CAR::Load(class App* pApp1,
 		position = initial_position;
 		orientation = initial_orientation;
 		
-		dynamics.Init(pApp, world, bodymodel, wheelmodelfront, wheelmodelrear, position, orientation);
+		dynamics.Init(pSet, world, bodymodel, wheelmodelfront, wheelmodelrear, position, orientation);
 
 		dynamics.SetABS(defaultabs);
 		dynamics.SetTCS(defaulttcs);
@@ -600,9 +600,9 @@ void CAR::UpdateSounds(float dt)
 		if (total_gain == 0.0)
 			i->first->SetGain(0.0);
 		else if (enginesounds.size() == 1 && enginesounds.back().first.power == ENGINESOUNDINFO::BOTH)
-			i->first->SetGain(i->second * pSettings->vol_engine);
+			i->first->SetGain(i->second * pSet->vol_engine);
 		else
-			i->first->SetGain(i->second/total_gain * pSettings->vol_engine);
+			i->first->SetGain(i->second/total_gain * pSet->vol_engine);
 
 		//if (i->second == loudest) std::cout << i->first->GetSoundBuffer().GetName() << ": " << i->second << std::endl;
 	}
@@ -639,7 +639,7 @@ void CAR::UpdateSounds(float dt)
 		if (pitch > 4.0)	pitch = 4.0;
 
 		thesound[i].SetPosition(whPos[i][0], whPos[i][1], whPos[i][2]);
-		thesound[i].SetGain(squeal[i]*maxgain * pSettings->vol_tires);
+		thesound[i].SetGain(squeal[i]*maxgain * pSet->vol_tires);
 		thesound[i].SetPitch(pitch);
 	}
 
@@ -649,7 +649,7 @@ void CAR::UpdateSounds(float dt)
 		if (gain < 0)	gain = -gain;
 		gain *= 0.02;	gain *= gain;
 		if (gain > 1.0)	gain = 1.0;
-		roadnoise.SetGain(gain * pSettings->vol_env);
+		roadnoise.SetGain(gain * pSet->vol_env);
 		roadnoise.SetPosition(engPos[0], engPos[1], engPos[2]); //
 		//std::cout << gain << std::endl;
 	}
@@ -669,7 +669,7 @@ void CAR::UpdateSounds(float dt)
 
 			if (gain > 0 && !tirebump[i].Audible())
 			{
-				tirebump[i].SetGain(gain * pSettings->vol_env);
+				tirebump[i].SetGain(gain * pSet->vol_env);
 				tirebump[i].SetPosition(whPos[i][0], whPos[i][1], whPos[i][2]);
 				tirebump[i].Stop();
 				tirebump[i].Play();
@@ -694,7 +694,7 @@ void CAR::UpdateSounds(float dt)
 
 			//if (!crashsound.Audible())
 			{
-				crashsound.SetGain(gain * pSettings->vol_env);
+				crashsound.SetGain(gain * pSet->vol_env);
 				crashsound.SetPosition(engPos[0], engPos[1], engPos[2]); //
 				crashsound.Stop();
 				crashsound.Play();

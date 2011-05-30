@@ -43,6 +43,7 @@ void SETTINGS::Serialize(bool w, CONFIGFILE & c)
 	Param(c,w, "control.autorear", autorear);
 	Param(c,w, "control.abs", abs);				Param(c,w, "control.tcs", tcs);
 	Param(c,w, "control.veget_collis", veget_collis);
+	Param(c,w, "control.car_collis", car_collis);
 	
 	Param(c,w, "misc.volume", vol_master);		Param(c,w, "misc.vol_engine", vol_engine);
 	Param(c,w, "misc.vol_tires", vol_tires);	Param(c,w, "misc.vol_env", vol_env);
@@ -94,7 +95,8 @@ SETTINGS::SETTINGS() :  ///  Defaults
 	autostart(0), ogre_dialog(1), escquit(0), bltDebug(0), bltLines(1),  bltProfilerTxt(0),
 	loadingbackground(true),
 	//  sim
-	game_fq(100.f), blt_fq(60.f), blt_iter(7), mult_thr(0), veget_collis(true),
+	game_fq(100.f), blt_fq(60.f), blt_iter(7), mult_thr(0),
+	veget_collis(true), car_collis(false),
 	//  video
 	bloom(false), bloomintensity(0.2), bloomorig(1.0), hdr(false),
 	motionblur(false), motionblurintensity(0.3),

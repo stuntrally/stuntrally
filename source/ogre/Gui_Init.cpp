@@ -168,7 +168,14 @@ void App::InitGui()
 	Chk("CarABS",  chkAbs, abs);		Chk("CarTCS", chkTcs, tcs);
 	Chk("CarGear", chkGear, autoshift);
 	Chk("CarRear", chkRear, autorear);	Chk("CarClutch", chkClutch, autoclutch);
+	//  game
 	Chk("VegetCollis", chkVegetCollis, veget_collis);
+	Chk("CarCollis", chkCarCollis, car_collis);
+	Btn("btnPlayers1", btnNumPlayers);	Btn("btnPlayers2", btnNumPlayers);
+	Btn("btnPlayers3", btnNumPlayers);	Btn("btnPlayers4", btnNumPlayers);
+	Chk("chkSplitVertically", chkSplitVert, split_vertically);
+	valLocPlayers = mGUI->findWidget<StaticText>("valLocPlayers");
+	if (valLocPlayers)  valLocPlayers->setCaption(toStr(pSet->local_players));
 	
 	//  kmh/mph radio
 	bRkmh = mGUI->findWidget<Button>("kmh");
@@ -231,12 +238,6 @@ void App::InitGui()
 	if (rplList)  rplList->eventListChangePosition = newDelegate(this, &App::listRplChng);
 	updReplaysList();
 	
-	Btn("btnPlayers1", btnNumPlayers);
-	Btn("btnPlayers2", btnNumPlayers);
-	Btn("btnPlayers3", btnNumPlayers);
-	Btn("btnPlayers4", btnNumPlayers);
-	Chk("chkSplitVertically", chkSplitVert, split_vertically);
-
 	
 	///  input tab
 	InitInputGui();

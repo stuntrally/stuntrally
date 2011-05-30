@@ -353,6 +353,7 @@
 	<Tag name="InputTerDeform">D - verformen (LMB hoch, RMB runter)</Tag>
 	<Tag name="TipDiffuseTex">Diffusetextur (Specular in Alphakanal).</Tag>
 	<Tag name="VegetCol">Kollision mit Vegetation *neues Spiel erforderl.</Tag>
+	<Tag name="CarCollis">Cars collision</Tag>
 	<Tag name="MyGUI_MessageBox_Continue">Fortsetzen</Tag>
 	<Tag name="Tools">Werkzeuge</Tag>
 	<Tag name="TipGrassSwaySpd">Grasschwingung Geschw.</Tag>

@@ -126,12 +126,15 @@ void App::chkRear(WP wp){		ChkEv(autorear);	if (pGame)  pGame->ProcessNewSetting
 void App::chkClutch(WP wp){		ChkEv(autoclutch);	if (pGame)  pGame->ProcessNewSettings();	}
 //    [Game]
 void App::chkVegetCollis(WP wp){	ChkEv(veget_collis);	}
+void App::chkCarCollis(WP wp){		ChkEv(car_collis);		}
+
 void App::btnNumPlayers(WP wp)
 {
 	if      (wp->getName() == "btnPlayers1")  pSet->local_players = 1;
 	else if (wp->getName() == "btnPlayers2")  pSet->local_players = 2;
 	else if (wp->getName() == "btnPlayers3")  pSet->local_players = 3;
 	else if (wp->getName() == "btnPlayers4")  pSet->local_players = 4;
+	if (valLocPlayers)  valLocPlayers->setCaption(toStr(pSet->local_players));
 }
 void App::chkSplitVert(WP wp)
 {

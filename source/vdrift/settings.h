@@ -43,7 +43,7 @@ public:
 	//  sim freq (1/interval timestep)
 	float game_fq, blt_fq;  int blt_iter;
 	int mult_thr;
-	bool veget_collis;
+	bool veget_collis, car_collis;
 	
 	//  compositor
 	bool bloom, hdr, motionblur;

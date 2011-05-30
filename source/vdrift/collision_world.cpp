@@ -53,12 +53,16 @@ btCollisionObject * COLLISION_WORLD::AddCollisionObject(const MODEL & model)
 	return col;
 }
 
-btRigidBody * COLLISION_WORLD::AddRigidBody(const btRigidBody::btRigidBodyConstructionInfo & info)
+btRigidBody * COLLISION_WORLD::AddRigidBody(const btRigidBody::btRigidBodyConstructionInfo & info,
+	bool car, bool bCarsCollis)
 {
 	btRigidBody * body = new btRigidBody(info);
 	btCollisionShape * shape = body->getCollisionShape();
 	//body->setActivationState(DISABLE_DEACTIVATION);  //!-for chassis only
-	world.addRigidBody(body);
+	//body->setCollisionFlags
+	#define  COL_CAR  (1<<2)
+	if (car)  world.addRigidBody(body, COL_CAR, 255 - (!bCarsCollis ? COL_CAR : 0));  // group, mask
+	else	  world.addRigidBody(body);
 	shapes.push_back(shape);
 	return body;
 }

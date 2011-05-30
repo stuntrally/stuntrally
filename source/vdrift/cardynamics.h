@@ -32,7 +32,7 @@ friend class PERFORMANCE_TESTING;
 friend class joeserialize::Serializer;
 public:
 	typedef double T;
-	class App* pApp;
+	class SETTINGS* pSet;
 	
 	CARDYNAMICS();
 	~CARDYNAMICS();
@@ -47,7 +47,7 @@ public:
 		btVector3 & size);
 	btCollisionShape * CreateCollisionShape(const btVector3 & center, const btVector3 & size);
 
-	void Init(class App* pApp1,
+	void Init(class SETTINGS* pSet1,
 		COLLISION_WORLD & world,
 		const MODEL & chassisModel,
 		const MODEL & wheelModelFront,

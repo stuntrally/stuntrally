@@ -91,7 +91,8 @@
 	<Tag name="TipAutoGearbox">Uncheck for manual gears changing.</Tag>
 	<Tag name="AutoRear">Auto Rear gear</Tag>
 	<Tag name="TipAutoRear">Uncheck for manual Rear gear changing.</Tag>
-	<Tag name="VegetCol">Vegetation collision    *needs New Game</Tag>
+	<Tag name="VegetCol">Vegetation collision</Tag>
+	<Tag name="CarCollis">Cars collision</Tag>
 		
 
 	<!--  Replay  -->

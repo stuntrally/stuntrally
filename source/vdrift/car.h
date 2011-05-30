@@ -318,7 +318,7 @@ public:
 	bool debug_wheel_draw;
 
 	std::string cartype;
-	class SETTINGS* pSettings;  // for sound vol
+	class SETTINGS* pSet;  // for sound vol
 	int sector; //the last lap timing sector that the car hit
 	const BEZIER * curpatch[4]; //the last bezier patch that each wheel hit
 	

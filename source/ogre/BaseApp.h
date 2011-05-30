@@ -1,8 +1,7 @@
 #ifndef _BaseApp_h_
 #define _BaseApp_h_
 
-#include "LoadingBar.h"
-//#include "../vdrift/settings.h"
+#include "LoadingBar.h"  //!-
 
 #include <OgreVector3.h>
 
@@ -14,9 +13,6 @@
 //#include <MyGUI_OgrePlatform.h>
 #include <MyGUI_Prerequest.h>
 namespace MyGUI {  class OgrePlatform;  };
-
-//#include "CarModel.h"
-//#include "SplitScreenManager.h"
 
 #include <OgreFrameListener.h>
 #include <OgreWindowEventUtilities.h>

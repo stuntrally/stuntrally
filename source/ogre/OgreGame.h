@@ -163,14 +163,14 @@ protected:
 	SLV(BloomInt);  SLV(BloomOrig);  SLV(BlurIntens);  // video
 
 	//  checks
-	void chkFps(WP), chkGauges(WP),	chkMinimap(WP), chkRacingLine(WP),  // view
+	void chkFps(WP), chkGauges(WP),	chkDigits(WP), chkMinimap(WP), chkRacingLine(WP),  // view
 		chkCamInfo(WP), chkTimes(WP), chkCarDbgBars(WP), chkCarDbgTxt(WP), chkBltDebug(WP), chkBltProfilerTxt(WP),
 		chkReverse(WP), chkParticles(WP), chkTrails(WP),
 		chkAbs(WP), chkTcs(WP), chkGear(WP), chkRear(WP), chkClutch(WP),  // car
 		chkOgreDialog(WP), chkAutoStart(WP), chkEscQuits(WP), chkBltLines(WP),  // startup
 		chkVidBloom(WP), chkVidHDR(WP), chkVidBlur(WP),  // video
 		chkVidFullscr(WP), chkVidVSync(WP), UpdBloomVals(),
-		chkLoadPics(WP), chkVegetCollis(WP), chkDigits(WP);
+		chkLoadPics(WP), chkVegetCollis(WP), chkCarCollis(WP);
 
 	// language
 	void comboLanguage(SL);
@@ -191,7 +191,8 @@ protected:
 		btnRplPlay(WP);
 	void msgRplDelete(MyGUI::Message*, MyGUI::MessageBoxStyle);
 	
-	void btnNumPlayers(WP); void chkSplitVert(WP);
+	void btnNumPlayers(WP);  void chkSplitVert(WP);
+	MyGUI::StaticTextPtr valLocPlayers;
 		
 public:
 	bool bRplPlay,bRplPause, bRplRec;  //  game

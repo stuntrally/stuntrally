@@ -802,7 +802,11 @@ msgid "Fog end color. R G B components 0 to 1 (eg. 0.7 0.8 0.9)"
 msgstr ""
 
 msgctxt "VegetCol"
-msgid "Vegetation collision    *needs New Game"
+msgid "Vegetation collision"
+msgstr ""
+
+msgctxt "CarCollis"
+msgid "Cars collision"
 msgstr ""
 
 msgctxt "Particles"

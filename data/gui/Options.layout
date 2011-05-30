@@ -216,6 +216,10 @@
 					<Property key="Widget_Caption" value="#{VegetCol}"/>
 					<Property key="Text_TextColour" value="0.6 0.8 0.8"/>
 				</Widget>
+				<Widget type="Button" skin="CheckBox" position="312 120 440 24" name="CarCollis">
+					<Property key="Widget_Caption" value="#{CarCollis}"/>
+					<Property key="Text_TextColour" value="0.6 0.8 0.8"/>
+				</Widget>
 				<Widget type="Button" skin="CheckBox" position="312 287 256 25" name="chkSplitVertically">
 					<Property key="Widget_Caption" value="Split vertically"/>
 					<Property key="Text_TextColour" value="0.8 0.9 1.0"/>
@@ -240,13 +244,17 @@
 					<Property key="Widget_Caption" value="Num local players:"/>
 					<Property key="Text_TextColour" value="0.7 0.9 1"/>
 				</Widget>
-				<Widget type="StaticText" skin="StaticText" position="496 199 64 24" name="NumLocPlayers"/>
+				<Widget type="StaticText" skin="StaticText" position="496 199 64 24" name="valLocPlayers"/>
 				<Widget type="StaticText" skin="StaticText" position="32 23 120 24">
 					<Property key="Widget_Caption" value="Car"/>
 				</Widget>
 				<Widget type="StaticText" skin="StaticText" position="312 23 136 24">
 					<Property key="Widget_Caption" value="Game"/>
 				</Widget>
+				<!--<Widget type="StaticText" skin="StaticText" position="32 488 136 24">
+					<Property key="Widget_Caption" value="#{NeedNewGame}"/>
+					<Property key="Text_TextColour" value="0.5 0.7 1"/>
+				</Widget>-->
 			</Widget>
 			<Widget type="TabItem" skin="" position="4 26 787 531">
 				<Property key="Widget_Caption" value="#{Replay}"/>
