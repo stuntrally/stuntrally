@@ -42,9 +42,9 @@ void App::initBlendMaps(Ogre::Terrain* terrain)
 		float fx = f*x, fy = f*y;	//  val,val1:  0 0 - [0]   1 0  - [1]   0 1 - [2]
 		const Real p = (b > 4) ? 3.f : ( (b > 3) ? 2.f : 1.f ), q = 1.f;
 		Real val =			 pow(0.5f + 0.5f*sinf(24.f* fx)*cosf(24.f* fy), p);
-		Real val1 = std::max(0.0, pow(0.5f + 0.5f*cosf(18.f* fy)*sinf(18.f* fx), p) - val);
-		Real val2 = std::max(0.0, pow(0.5f + 0.5f*cosf(22.f* fy)*sinf(21.f* fx), q) - val-val1);
-		Real val3 = std::max(0.0, pow(0.5f + 0.5f*cosf(19.f*fy)*sinf(20.f*fx), q) - val-val1-val2);
+		Real val1 = std::max(0.f, (float)pow(0.5f + 0.5f*cosf(18.f* fy)*sinf(18.f* fx), p) - val);
+		Real val2 = std::max(0.f, (float)pow(0.5f + 0.5f*cosf(22.f* fy)*sinf(21.f* fx), q) - val-val1);
+		Real val3 = std::max(0.f, (float)pow(0.5f + 0.5f*cosf(19.f* fy)*sinf(20.f* fx), q) - val-val1-val2);
 
 		char mtr = 1;
 		if (b > 1)  {  *(pB[0])++ = val;   if (val > 0.5f)  mtr = 2;  }
