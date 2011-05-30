@@ -3,7 +3,7 @@
 #include "OgreGame.h"
 #include "../vdrift/game.h"
 #include "../road/Road.h"
-
+using namespace Ogre;
 
 
 ///---------------------------------------------------------------------------------------------------------------

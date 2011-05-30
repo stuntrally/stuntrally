@@ -6,6 +6,7 @@
 #include "OgreGame.h"
 #include "../oisb/OISB.h"
 using namespace MyGUI;
+using namespace Ogre;
 
 
 ///  Gui Init

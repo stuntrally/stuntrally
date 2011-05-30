@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "Defines.h"
 #include "OgreGame.h"
+#include "LoadingBar.h"
 #include "../vdrift/game.h"
 #include "FollowCamera.h"
 #include "../road/Road.h"
@@ -14,6 +15,7 @@
 
 #include <MyGUI_OgrePlatform.h>
 #include <OgreTerrainGroup.h>
+using namespace Ogre;
 
 
 //  Create Scene
@@ -277,10 +279,10 @@ void App::NewGameDoLoad()
 	}
 
 	// Update label.
-	mLoadingBar.mLoadingCommentElement->setCaption( (*currentLoadingState).second );
+	mLoadingBar->mLoadingCommentElement->setCaption( (*currentLoadingState).second );
 	
 	// Set %
-	mLoadingBar.mLoadingBarElement->setWidth( mLoadingBar.mProgressBarMaxSize * (perc/100.0) );
+	mLoadingBar->mLoadingBarElement->setWidth( mLoadingBar->mProgressBarMaxSize * (perc/100.0) );
 
 	// Go to next loading step.
 	currentLoadingState++;

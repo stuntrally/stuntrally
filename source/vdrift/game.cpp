@@ -613,7 +613,7 @@ CAR* GAME::LoadCar(const string & carname, const MATHVECTOR <float, 3> & start_p
 		if ( !carconf.Load ( PATHMANAGER::GetCarPath()+"/"+carname+"/"+carname+".car" ) )
 			return NULL;
 	}else{
-		stringstream carstream(carfile);
+		std::stringstream carstream(carfile);
 		if ( !carconf.Load ( carstream ) )
 			return NULL;
 	}

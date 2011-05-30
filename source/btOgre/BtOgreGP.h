@@ -25,7 +25,7 @@ namespace Ogre {  class Entity;  class SceneNode;  class Renderable;  class Vert
 namespace BtOgre {
 
 
-typedef std::map<unsigned char, Vector3Array*> BoneIndex;
+typedef std::map<unsigned short, Vector3Array*> BoneIndex;
 typedef std::pair<unsigned short, Vector3Array*> BoneKeyIndex;
 
 

@@ -1,11 +1,10 @@
 #ifndef _SplitScreenManager_h_
 #define _SplitScreenManager_h_
 
-//#include "Ogre.h"
 #include <OgreRenderTargetListener.h>
-#include <OgreColourValue.h>
 #include <list>
 
+class SETTINGS;
 namespace Ogre {  class SceneNode;  class Root;  class SceneManager;  class RenderWindow;  class Viewport;  }
 
 /*
@@ -23,7 +22,7 @@ class SplitScreenManager : public Ogre::RenderTargetListener
 {
 public:
 	// Constructor, only assign members
-	SplitScreenManager(Ogre::SceneManager* sceneMgr, Ogre::RenderWindow* window, class SETTINGS* set);
+	SplitScreenManager(Ogre::SceneManager* sceneMgr, Ogre::RenderWindow* window, SETTINGS* set);
 	~SplitScreenManager();
 	
 	// Number of viewports / cameras
@@ -60,7 +59,7 @@ public:
 
 	class App* pApp;
 private:
-	class SETTINGS* pSet;
+	SETTINGS* pSet;
 
 	// Scene manager to use
 	Ogre::SceneManager* mSceneMgr;

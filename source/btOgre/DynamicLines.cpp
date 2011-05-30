@@ -1,6 +1,8 @@
 #include "pch.h"
 #include "DynamicLines.h"
-#include <Ogre.h>
+
+#include <OgreHardwareVertexBuffer.h>
+
 #include <cassert>
 #include <cmath>
 

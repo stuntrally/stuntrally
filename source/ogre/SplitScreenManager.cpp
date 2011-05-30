@@ -7,6 +7,7 @@
 #include "../vdrift/settings.h"
 #include "../road/Road.h"
 #include "MyGUI_PointerManager.h"
+using namespace Ogre;
 
 
 SplitScreenManager::SplitScreenManager(Ogre::SceneManager* sceneMgr, Ogre::RenderWindow* window, SETTINGS* set) :

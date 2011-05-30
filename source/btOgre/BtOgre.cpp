@@ -162,8 +162,7 @@ void RigidBodyState::setWorldTransform(const btTransform &in)
 				if (i == mBoneIndex->end())
 				{
 					l = new Vector3Array;
-					unsigned short cb = currBone;
-					mBoneIndex->insert(BoneKeyIndex(cb, l));
+					mBoneIndex->insert(BoneKeyIndex(currBone, l));
 				}else 
 					l = i->second;
 

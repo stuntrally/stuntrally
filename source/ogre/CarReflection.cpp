@@ -1,8 +1,11 @@
 #include "pch.h"
 #include "Defines.h"
 #include "CarReflection.h"
+#include "../vdrift/settings.h"
+using namespace Ogre;
 
-CarReflection::CarReflection(SETTINGS* set, Ogre::SceneManager* sceneMgr, unsigned int index) :
+
+CarReflection::CarReflection(SETTINGS* set, SceneManager* sceneMgr, unsigned int index) :
 	bFirstFrame(true), iCam(0), iCounter(0)
 {
 	pSet = set;
@@ -27,7 +30,7 @@ CarReflection::~CarReflection()
 	}
 
 	// destroy cube tex
-	Ogre::TextureManager::getSingleton().remove(cubetexName);
+	TextureManager::getSingleton().remove(cubetexName);
 }
 
 void CarReflection::Create()
@@ -39,7 +42,7 @@ void CarReflection::Create()
 	if (cubetexName == "ReflectionCube0")
 		cubetexName = "ReflectionCube";
 	
-	Ogre::TextureManager* tm = Ogre::TextureManager::getSingletonPtr();
+	TextureManager* tm = TextureManager::getSingletonPtr();
 	int size = ciShadowSizesA[pSet->refl_size];
 
 	//  create cube render texture

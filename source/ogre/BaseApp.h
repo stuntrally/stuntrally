@@ -1,22 +1,15 @@
 #ifndef _BaseApp_h_
 #define _BaseApp_h_
 
-#include "LoadingBar.h"  //!-
-
 #include <OgreVector3.h>
-
-//#include <OIS/OIS.h>
-#include <OISKeyboard.h>
-#include <OISMouse.h>
-
-//#include <MyGUI.h>
-//#include <MyGUI_OgrePlatform.h>
-#include <MyGUI_Prerequest.h>
-namespace MyGUI {  class OgrePlatform;  };
-
 #include <OgreFrameListener.h>
 #include <OgreWindowEventUtilities.h>
 
+#include <OISKeyboard.h>
+#include <OISMouse.h>
+
+#include <MyGUI_Prerequest.h>
+namespace MyGUI{  class OgrePlatform;  };
 
 namespace Ogre {  class SceneNode;  class Root;  class SceneManager;  class RenderWindow;  }
 namespace OIS  {  class InputManager;  class Mouse;  class Keyboard;  }
@@ -51,7 +44,7 @@ public:
 
 	Ogre::SceneNode* ndSky; //-
 	int roadUpCnt;
-	LoadingBar mLoadingBar;
+	class LoadingBar* mLoadingBar;
 
 protected:
 	bool mShowDialog, mShutDown;

@@ -2,7 +2,6 @@
 #define _Settings_h_
 
 #include "configfile.h"
-//using namespace std;
 
 class SETTINGS
 {

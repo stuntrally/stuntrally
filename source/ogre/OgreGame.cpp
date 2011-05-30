@@ -8,6 +8,8 @@
 
 #include <OgreTerrain.h>
 #include <OgreTerrainGroup.h>
+using namespace Ogre;
+
 
 //  ctors  -----------------------------------------------
 App::App()

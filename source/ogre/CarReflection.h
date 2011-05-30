@@ -10,12 +10,17 @@
 #ifndef _CarReflection_H_
 #define _CarReflection_H_
 
-#include "../vdrift/settings.h"
-#include "Ogre.h"
-using namespace Ogre;
+#include <OgreVector3.h>
+#include <OgreString.h>
+
+
+class SETTINGS;
+namespace Ogre {  class Camera;  class SceneManager;  class TexturePtr;  }
+
 
 const int ciShadowNumSizes = 4;
 const int ciShadowSizesA[ciShadowNumSizes] = {512,1024,2048,4096};
+
 
 class CarReflection
 {
@@ -43,7 +48,7 @@ public:
 		Mtr_CarBody, Mtr_CarInterior, Mtr_CarGlass,
 		Mtr_CarTireFront, Mtr_CarTireRear,
 		NumMaterials  };
-	std::string sMtr[NumMaterials];
+	Ogre::String sMtr[NumMaterials];
 
 private:
 	// SceneManager to use, needed to create refl. cameras.
@@ -52,7 +57,7 @@ private:
 	// Pointer to the cubemap texture.
 	// if all cars use the same cube map, this is a pointer to the first texture.
 	Ogre::TexturePtr cubetex;
-	std::string cubetexName;
+	Ogre::String cubetexName;
 		
 	// RTT cameras.
 	// can be null, if static cube maps or only 1 cube map.

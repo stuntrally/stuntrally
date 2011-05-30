@@ -9,9 +9,9 @@
 #include "CarModel.h"
 #include "CarReflection.h"
 
-#include <MyGUI.h>  //-
+#include <MyGUI.h>
 
-namespace Ogre {  class SceneNode;  class Root;  class SceneManager;  class RenderWindow;
+namespace Ogre {  class SceneNode;  class Root;  class SceneManager;  class RenderWindow;  class Viewport;  class Light;
 	class Terrain;  class TerrainGlobalOptions;  class TerrainGroup;  class TerrainPaging;  class PageManager;  }
 namespace Forests {  class PagedGeometry;  }
 namespace BtOgre  {  class DebugDrawer;  }
@@ -34,28 +34,28 @@ public:
 	std::list<PosInfo> newPosInfos;
 	
 	// Utility
-	Quaternion qFixCar,qFixWh;
+	Ogre::Quaternion qFixCar,qFixWh;
 
 	Replay replay;  ReplayFrame fr;
 
 	Scene sc;  /// scene.xml
 	BltObjects objs;  // veget collision in bullet
-	class Light* sun;  void UpdFog(bool bForce=false), UpdSun();
+	Ogre::Light* sun;  void UpdFog(bool bForce=false), UpdSun();
 	
 	// Rain, snow
-	ParticleSystem *pr,*pr2;
+	Ogre::ParticleSystem *pr,*pr2;
 	
 	//  trees
 	Forests::PagedGeometry *trees, *grass;
 	
-	void UpdateHUD(class CAR* pCar, float time, Viewport* vp=NULL), SizeHUD(bool full, Viewport* vp=NULL);
+	void UpdateHUD(class CAR* pCar, float time, Ogre::Viewport* vp=NULL), SizeHUD(bool full, Ogre::Viewport* vp=NULL);
 
 protected:
 	virtual void createScene();
 	virtual void destroyScene();
 
-	virtual bool frameStart(Real time);
-	virtual bool frameEnd(Real time);
+	virtual bool frameStart(Ogre::Real time);
+	virtual bool frameEnd(Ogre::Real time);
 	virtual bool keyPressed( const OIS::KeyEvent &arg );
 		
 	BtOgre::DebugDrawer *dbgdraw;  /// blt dbg
@@ -66,7 +66,7 @@ protected:
 		Mtr_CarTireFront, Mtr_CarTireRear,
 		Mtr_Road,  NumMaterials  };
 	Ogre::String sMtr[NumMaterials];
-	void reloadMtrTex(String mtrName);
+	void reloadMtrTex(Ogre::String mtrName);
 
 	//  2D, hud  ----
 	float asp,  xcRpm, ycRpm, xcVel, ycVel,
@@ -75,7 +75,7 @@ protected:
 	Ogre::SceneNode *nrpmB, *nvelBk,*nvelBm, *nrpm, *nvel;  // gauges
 	Ogre::SceneNode *ndPos, *ndMap, *ndLine;  // car pos on minimap
 	Ogre::ManualObject* mrpm, *mvel, *mpos;
-	Ogre::ManualObject* Create2D(const String& mat, SceneManager* sceneMgr, Real size, bool dyn = false);
+	Ogre::ManualObject* Create2D(const Ogre::String& mat, Ogre::SceneManager* sceneMgr, Ogre::Real size, bool dyn = false);
 
 	Ogre::OverlayElement* hudGear,*hudVel, *ovL[5],*ovR[5],*ovS[5],*ovU[5], *hudAbs,*hudTcs, *hudTimes,*hudCheck;
 	Ogre::Overlay* ovGear,*ovVel, *ovAbsTcs,*ovCarDbg,*ovCarDbgTxt,  *ovCam, *ovTimes;
@@ -90,7 +90,7 @@ protected:
 	void CreateTrack(), CreateRacingLine(), CreateMinimap(), CreateRoadBezier();
 	void CreateTerrain(bool bNewHmap=false, bool bTer=true), CreateBltTerrain();
 	void CreateTrees(), CreateRoad(), CreateProps();
-	void CreateSkyDome(String sMater, Vector3 scale);
+	void CreateSkyDome(Ogre::String sMater, Ogre::Vector3 scale);
 	void NewGame();  void NewGameDoLoad(); bool IsTerTrack();
 	
 	// Loading
@@ -113,10 +113,10 @@ protected:
 
 	int iBlendMaps, blendMapSize;	//  mtr from ter  . . . 
 	char* blendMtr;  // mtr [blendMapSize x blendMapSize]
-	void initBlendMaps(Terrain* terrain);
-	void configureTerrainDefaults(class Light* l);
+	void initBlendMaps(Ogre::Terrain* terrain);
+	void configureTerrainDefaults(Ogre::Light* l);
 		
-	void changeShadows(), UpdPSSMMaterials(), setMtrSplits(String sMtrName);
+	void changeShadows(), UpdPSSMMaterials(), setMtrSplits(Ogre::String sMtrName);
 	Ogre::Vector4 splitPoints;  Ogre::ShadowCameraSetupPtr mPSSMSetup;
 
 
@@ -125,7 +125,7 @@ public:
 	class SplineRoad* road;
 protected:
 	//  start pos, lap
-	bool bGetStPos;  Matrix4 matStPos;	Vector4 vStDist;
+	bool bGetStPos;  Ogre::Matrix4 matStPos;  Ogre::Vector4 vStDist;
 	int iInChk, iCurChk, iNextChk, iNumChks;  // cur checkpoint -1 at start
 	bool bInSt, bWrongChk;
 

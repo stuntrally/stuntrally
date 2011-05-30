@@ -5,6 +5,7 @@
 #include "../road/Road.h"
 #include "../vdrift/game.h"
 #include "../paged-geom/PagedGeometry.h"
+using namespace Ogre;
 
 
 //---------------------------------------------------------------------------------------------------------------

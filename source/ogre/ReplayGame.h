@@ -80,7 +80,6 @@ public:
 
 	ReplayHeader header;
 private:
-	//std::vector< std::vector<ReplayFrame> > frames;  // cars..
 	std::vector<ReplayFrame> frames[4];
 };
 

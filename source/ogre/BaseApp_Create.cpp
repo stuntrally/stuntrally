@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "Defines.h"
 #include "BaseApp.h"
+#include "LoadingBar.h"
 #include "FollowCamera.h"
 #include "../vdrift/pathmanager.h"
 #include "../vdrift/settings.h"
@@ -9,11 +10,9 @@
 #include "Locale.h"
 #include "SplitScreenManager.h"
 #include "CarModel.h"
-//#include "SplitScreenManager.h"
 
 #include <OgreFontManager.h>
 #include <OgreLogManager.h>
-//#include <OgreOverlay.h>
 #include <OgreOverlayManager.h>
 
 #include <OIS/OIS.h>
@@ -256,10 +255,12 @@ BaseApp::BaseApp() :
 	mbShowCamPos(0), ndSky(0),	mbWireFrame(0), //*
 	iCurCam(0)
 {
+	mLoadingBar = new LoadingBar();
 }
 
 BaseApp::~BaseApp()
 {
+	delete mLoadingBar;
 	delete mSplitMgr;
 	
 	if (mGUI)  {
@@ -310,7 +311,7 @@ bool BaseApp::configure()
 
 		mWindow = mRoot->createRenderWindow("Stunt Rally", pSet->windowx, pSet->windowy, pSet->fullscreen, &settings);
 	}
-	mLoadingBar.bBackgroundImage = pSet->loadingbackground;
+	mLoadingBar->bBackgroundImage = pSet->loadingbackground;
 	return true;
 }
 
@@ -456,7 +457,7 @@ void BaseApp::LoadingOn()
 	mSplitMgr->SetBackground(ColourValue(0.15,0.165,0.18));
 	mSplitMgr->mGuiViewport->setBackgroundColour(ColourValue(0.15,0.165,0.18,1.0));
 	mSplitMgr->mGuiViewport->setClearEveryFrame(true);
-	mLoadingBar.start(mWindow, 1, 1, 1 );
+	mLoadingBar->start(mWindow, 1, 1, 1 );
 
 	// Turn off  rendering except overlays
 	mSceneMgr->clearSpecialCaseRenderQueues();
@@ -470,7 +471,7 @@ void BaseApp::LoadingOff()
 	mSplitMgr->mGuiViewport->setBackgroundColour(ColourValue(0.5,0.65,0.8));
 	mSceneMgr->clearSpecialCaseRenderQueues();
 	mSceneMgr->setSpecialCaseRenderQueueMode(SceneManager::SCRQM_EXCLUDE);
-	mLoadingBar.finish();
+	mLoadingBar->finish();
 }
 
 

@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "Defines.h"
 #include "LoadingBar.h"
-#include <MyGUI.h>
+#include <time.h>  // for random
 using namespace Ogre;
 
 

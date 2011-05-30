@@ -3,6 +3,7 @@
 #include "../vdrift/game.h"
 #include "CarModel.h" // for CreateModel()
 #include "SplitScreenManager.h"  //-
+using namespace Ogre;
 
 
 ///---------------------------------------------------------------------------------------------------------------

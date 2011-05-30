@@ -1,9 +1,12 @@
 #ifndef _LoadBar_h_
 #define _LoadBar_h_
 
-#include <Ogre.h>
-#include <time.h>  // for random
+#include <OgreString.h>
+#include <OgreResource.h>
 #include <OgreResourceGroupManager.h>
+//#include <OgreOverlayElement.h>
+
+namespace Ogre {  class Overlay;  class OverlayElement;  class RenderWindow;  }
 
 
 class LoadingBar : public Ogre::ResourceGroupListener
