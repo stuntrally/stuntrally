@@ -12,10 +12,11 @@
 
 #include <OgreVector3.h>
 #include <OgreString.h>
+#include <OgreTexture.h>
 
 
 class SETTINGS;
-namespace Ogre {  class Camera;  class SceneManager;  class TexturePtr;  }
+namespace Ogre {  class Camera;  class SceneManager;  }
 
 
 const int ciShadowNumSizes = 4;

@@ -10,6 +10,7 @@
 #include "CarReflection.h"
 
 #include <MyGUI.h>
+#include <OgreShadowCameraSetup.h>
 
 namespace Ogre {  class SceneNode;  class Root;  class SceneManager;  class RenderWindow;  class Viewport;  class Light;
 	class Terrain;  class TerrainGlobalOptions;  class TerrainGroup;  class TerrainPaging;  class PageManager;  }
