@@ -12,7 +12,11 @@
 #include "../oisb/OISB.h"
 #include <boost/filesystem.hpp>
 
+#include <OgreRoot.h>
 #include <OgreTerrain.h>
+#include <OgreMaterialManager.h>
+#include <OgreOverlay.h>
+#include <OgreRenderWindow.h>
 using namespace std;
 using namespace Ogre;
 using namespace MyGUI;

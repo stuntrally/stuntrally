@@ -5,6 +5,10 @@
 #include "../road/Road.h"
 #include "OgreGame.h"
 #include "../oisb/OISB.h"
+
+#include <OgreRoot.h>
+#include <OgreRenderWindow.h>
+#include <OgreOverlay.h>
 using namespace MyGUI;
 using namespace Ogre;
 

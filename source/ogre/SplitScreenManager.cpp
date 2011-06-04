@@ -7,6 +7,15 @@
 #include "../vdrift/settings.h"
 #include "../road/Road.h"
 #include "MyGUI_PointerManager.h"
+
+#include <OgreRoot.h>
+#include <OgreViewport.h>
+#include <OgreCamera.h>
+#include <OgreRenderWindow.h>
+#include <OgreSceneManager.h>
+#include <OgreLogManager.h>
+#include <OgreParticleSystem.h>
+#include <OgreParticleEmitter.h>
 using namespace Ogre;
 
 

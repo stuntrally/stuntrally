@@ -5,6 +5,8 @@
 #include "../road/Road.h"
 #include "../vdrift/game.h"
 #include "../paged-geom/PagedGeometry.h"
+
+#include <OgreParticleSystem.h>
 using namespace Ogre;
 
 

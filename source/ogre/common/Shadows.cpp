@@ -12,6 +12,9 @@
 #endif
 #include <OgreTerrainMaterialGeneratorA.h>
 #include <OgreTerrain.h>
+#include <OgreShadowCameraSetupLiSPSM.h>
+#include <OgreShadowCameraSetupPSSM.h>
+#include <OgreMaterialManager.h>
 using namespace Ogre;
 
 

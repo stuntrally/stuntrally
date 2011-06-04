@@ -2,6 +2,12 @@
 #include "Defines.h"
 #include "CarReflection.h"
 #include "../vdrift/settings.h"
+
+#include <OgreSceneManager.h>
+#include <OgreLogManager.h>
+#include <OgreTextureManager.h>
+#include <OgreMaterialManager.h>
+#include <OgreHardwarePixelBuffer.h>
 using namespace Ogre;
 
 

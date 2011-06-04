@@ -14,7 +14,15 @@
 #include "boost/filesystem.hpp"
 #define  FileExists(s)  boost::filesystem::exists(s)
 
+#include <OgreRoot.h>
 #include <OgreTerrain.h>
+#include <OgreEntity.h>
+#include <OgreManualObject.h>
+#include <OgreMaterialManager.h>
+#include <OgreParticleSystem.h>
+#include <OgreParticleEmitter.h>
+#include <OgreParticleAffector.h>
+#include <OgreRibbonTrail.h>
 
 using namespace Ogre;
 

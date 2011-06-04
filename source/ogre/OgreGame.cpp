@@ -8,6 +8,7 @@
 
 #include <OgreTerrain.h>
 #include <OgreTerrainGroup.h>
+#include <OgreManualObject.h>
 using namespace Ogre;
 
 

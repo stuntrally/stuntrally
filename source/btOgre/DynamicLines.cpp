@@ -2,6 +2,8 @@
 #include "DynamicLines.h"
 
 #include <OgreHardwareVertexBuffer.h>
+#include <OgreHardwareBufferManager.h>
+#include <OgreCamera.h>
 
 #include <cassert>
 #include <cmath>

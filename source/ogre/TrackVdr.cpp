@@ -3,6 +3,15 @@
 #include "../vdrift/game.h"
 #include "CarModel.h" // for CreateModel()
 #include "SplitScreenManager.h"  //-
+
+#include <OgreMaterialManager.h>
+#include <OgreTechnique.h>
+#include <OgrePass.h>
+#include <OgreManualObject.h>
+#include <OgreSceneManager.h>
+#include <OgreSceneNode.h>
+#include <OgreStaticGeometry.h>
+#include <OgreRenderWindow.h>
 using namespace Ogre;
 
 

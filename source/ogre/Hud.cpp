@@ -3,6 +3,17 @@
 #include "OgreGame.h"
 #include "../vdrift/game.h"
 #include "../road/Road.h"
+
+#include <OgreRenderWindow.h>
+#include <OgreSceneNode.h>
+#include <OgreMaterialManager.h>
+#include <OgreManualObject.h>
+#include <OgrePass.h>
+#include <OgreTechnique.h>
+#include <OgreManualObject.h>
+#include <OgreSceneManager.h>
+#include <OgreOverlayManager.h>
+#include <OgreOverlayElement.h>
 using namespace Ogre;
 
 
