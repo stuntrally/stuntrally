@@ -1,5 +1,4 @@
-#include "stdafx.h"
-
+#include "pch.h"
 #include "sound.h"
 #include "unittest.h"
 #include "endian_utility.h"

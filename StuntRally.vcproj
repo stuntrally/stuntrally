@@ -50,9 +50,10 @@
 				AdditionalOptions="/Zm1000 /MP"
 				Optimization="0"
 				AdditionalIncludeDirectories="Source\bullet;&quot;e:\v\SDL-1.2.14\include&quot;;&quot;e:\v\libvorbis-1.2.3\include&quot;;&quot;e:\v\libogg-1.1.4\include&quot;"
-				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;DEBUG;"
+				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;DEBUG;_USE_MATH_DEFINES;"
 				RuntimeLibrary="3"
 				UsePrecompiledHeader="2"
+				PrecompiledHeaderThrough="pch.h"
 				PrecompiledHeaderFile=".\Debug/StuntRally.pch"
 				AssemblerListingLocation=".\Debug/"
 				ObjectFile=".\Debug/"
@@ -146,11 +147,12 @@
 				InlineFunctionExpansion="2"
 				FavorSizeOrSpeed="1"
 				AdditionalIncludeDirectories="Source\bullet;&quot;e:\v\SDL-1.2.14\include&quot;;&quot;e:\v\libvorbis-1.2.3\include&quot;;&quot;e:\v\libogg-1.1.4\include&quot;"
-				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;ENET_DLL;"
+				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;ENET_DLL;_USE_MATH_DEFINES;"
 				StringPooling="true"
 				RuntimeLibrary="2"
 				EnableEnhancedInstructionSet="1"
 				UsePrecompiledHeader="2"
+				PrecompiledHeaderThrough="pch.h"
 				PrecompiledHeaderFile=".\Release/StuntRally.pch"
 				AssemblerListingLocation=""
 				ObjectFile=".\Release/"
@@ -241,11 +243,12 @@
 				AdditionalOptions="/Zm1000 /MP"
 				Optimization="0"
 				AdditionalIncludeDirectories="Source\bullet;&quot;e:\v\SDL-1.2.14\include&quot;;&quot;e:\v\libvorbis-1.2.3\include&quot;;&quot;e:\v\libogg-1.1.4\include&quot;"
-				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;"
+				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_USE_MATH_DEFINES;"
 				StringPooling="true"
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="true"
 				UsePrecompiledHeader="2"
+				PrecompiledHeaderThrough="pch.h"
 				PrecompiledHeaderFile=".\ReleaseDbg/StuntRally.pch"
 				AssemblerListingLocation=""
 				ObjectFile=".\ReleaseDbg/"
@@ -323,15 +326,7 @@
 				>
 			</File>
 			<File
-				RelativePath=".\Source\vdrift\sound.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\Source\vdrift\sound.h"
-				>
-			</File>
-			<File
-				RelativePath=".\Source\ogre\stdafx.cpp"
+				RelativePath=".\source\ogre\pch.cpp"
 				>
 				<FileConfiguration
 					Name="Debug|Win32"
@@ -357,17 +352,17 @@
 						UsePrecompiledHeader="1"
 					/>
 				</FileConfiguration>
-				<FileConfiguration
-					Name="RelWithDbg|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="1"
-					/>
-				</FileConfiguration>
 			</File>
 			<File
-				RelativePath=".\Source\ogre\stdafx.h"
+				RelativePath=".\source\ogre\pch.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Source\vdrift\sound.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Source\vdrift\sound.h"
 				>
 			</File>
 			<Filter

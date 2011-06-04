@@ -1,3 +1,4 @@
+#include "pch.h"
 /*-------------------------------------------------------------------------------------
 Copyright (c) 2006 John Judnich
 
@@ -13,7 +14,7 @@ Permission is granted to anyone to use this software for any purpose, including 
 //functions by taking advantage of the static nature of billboards (note: StaticBillboardSet
 //does not allow billboards to be moved or deleted individually in real-time)
 //-------------------------------------------------------------------------------------
-#include "stdafx.h"
+//#include "Defines.h"
 #include "StaticBillboardSet.h"
 
 #include <OgreRoot.h>

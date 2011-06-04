@@ -20,7 +20,8 @@ public:
 	
 	btCollisionObject * AddCollisionObject(const MODEL & model);
 	
-	btRigidBody * AddRigidBody(const btRigidBody::btRigidBodyConstructionInfo & info);
+	btRigidBody * AddRigidBody(const btRigidBody::btRigidBodyConstructionInfo & info,
+		bool car = false, bool bCarsCollis = false);
 
 	void AddAction(btActionInterface * action);
 

@@ -45,9 +45,10 @@
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
 				UsePrecompiledHeader="2"
+				PrecompiledHeaderThrough="pch.h"
 				WarningLevel="3"
 				DebugInformationFormat="4"
-				DisableSpecificWarnings="4995;4996;"
+				DisableSpecificWarnings="4996;"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -119,13 +120,14 @@
 				EnableIntrinsicFunctions="true"
 				WholeProgramOptimization="false"
 				AdditionalIncludeDirectories=""
-				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;ROAD_EDITOR;"
+				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;ROAD_EDITOR;NOMINMAX;"
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="true"
 				UsePrecompiledHeader="2"
+				PrecompiledHeaderThrough="pch.h"
 				WarningLevel="3"
 				DebugInformationFormat="0"
-				DisableSpecificWarnings="4995;4996;4800;"
+				DisableSpecificWarnings="4995;4996;"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -203,6 +205,10 @@
 			Name="main"
 			>
 			<File
+				RelativePath=".\source\editor\Defines.h"
+				>
+			</File>
+			<File
 				RelativePath=".\Source\Editor\main.cpp"
 				>
 			</File>
@@ -215,15 +221,7 @@
 				>
 			</File>
 			<File
-				RelativePath=".\Source\ogre\QTimer.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\Source\ogre\QTimer.h"
-				>
-			</File>
-			<File
-				RelativePath=".\Source\Editor\stdafx.cpp"
+				RelativePath=".\source\ogre\pch.cpp"
 				>
 				<FileConfiguration
 					Name="Debug|Win32"
@@ -243,7 +241,15 @@
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath=".\Source\Editor\stdafx.h"
+				RelativePath=".\source\ogre\pch.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Source\ogre\QTimer.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Source\ogre\QTimer.h"
 				>
 			</File>
 			<Filter
@@ -500,6 +506,10 @@
 			</File>
 			<File
 				RelativePath=".\source\ogre\common\BltObjects.h"
+				>
+			</File>
+			<File
+				RelativePath=".\source\ogre\common\Defines.h"
 				>
 			</File>
 			<File

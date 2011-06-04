@@ -1,4 +1,5 @@
-#include "stdafx.h"
+#include "pch.h"
+#include "../Defines.h"
 #include "../../road/Road.h"
 #ifdef ROAD_EDITOR
 	#include "../../editor/OgreApp.h"
@@ -7,16 +8,21 @@
 	#include "../OgreGame.h"
 	#include "../vdrift/game.h"
 	#include "../vdrift/settings.h"
+
 	#include "../btOgre/BtOgrePG.h"
 	#include "../btOgre/BtOgreGP.h"
 	//#include "BtOgreDebug.h"
 	#include "../bullet/BulletCollision/CollisionShapes/btHeightfieldTerrainShape.h"
 #endif
-
+#include <OgreRoot.h>
+#include <OgreTerrain.h>
+#include <OgreTerrainGroup.h>
+#include <OgreManualObject.h>
+using namespace Ogre;
 
 //  fill Blend maps
 //--------------------------------------------------------------------------------------------------------------------------
-void App::initBlendMaps(Terrain* terrain)
+void App::initBlendMaps(Ogre::Terrain* terrain)
 {
 	int b = sc.td.layers.size(), i;
 	float* pB[6];	TerrainLayerBlendMap* bMap[6];
@@ -38,9 +44,9 @@ void App::initBlendMaps(Terrain* terrain)
 		float fx = f*x, fy = f*y;	//  val,val1:  0 0 - [0]   1 0  - [1]   0 1 - [2]
 		const Real p = (b > 4) ? 3.f : ( (b > 3) ? 2.f : 1.f ), q = 1.f;
 		Real val =			 pow(0.5f + 0.5f*sinf(24.f* fx)*cosf(24.f* fy), p);
-		Real val1 = max(0.f, pow(0.5f + 0.5f*cosf(18.f* fy)*sinf(18.f* fx), p) - val);
-		Real val2 = max(0.f, pow(0.5f + 0.5f*cosf(22.f* fy)*sinf(21.f* fx), q) - val-val1);
-		Real val3 = max(0.f, pow(0.5f + 0.5f*cosf(19.f*fy)*sinf(20.f*fx), q) - val-val1-val2);
+		Real val1 = std::max(0.f, (float)pow(0.5f + 0.5f*cosf(18.f* fy)*sinf(18.f* fx), p) - val);
+		Real val2 = std::max(0.f, (float)pow(0.5f + 0.5f*cosf(22.f* fy)*sinf(21.f* fx), q) - val-val1);
+		Real val3 = std::max(0.f, (float)pow(0.5f + 0.5f*cosf(19.f* fy)*sinf(20.f* fx), q) - val-val1-val2);
 
 		char mtr = 1;
 		if (b > 1)  {  *(pB[0])++ = val;   if (val > 0.5f)  mtr = 2;  }
@@ -98,7 +104,7 @@ void App::configureTerrainDefaults(Light* l)
 	di.terrainSize = sc.td.iTerSize; // square []-
 	di.worldSize = sc.td.fTerWorldSize;  //di.inputScale = td.Hmax;
 	di.minBatchSize = 33; //17;   //17 o: 33   3 5 9 17 33 65 129
-	di.maxBatchSize = min(65, sc.td.iTerSize); //65;  //65 size of one tile in vertices
+	di.maxBatchSize = std::min(65, sc.td.iTerSize); //65;  //65 size of one tile in vertices
 	//const uint16 numPages = 4;  // 2^n
 	//const uint16 numLods = 4;  // 1..8
 	//di.maxBatchSize = (TERRAIN_SIZE-1) / numPages +1;
@@ -154,16 +160,16 @@ void App::CreateTerrain(bool bNewHmap, bool bTer)
 			}
 			if (1)	// save f32 HMap
 			{
-				ofstream of;
-				of.open(name.c_str(), ios_base::binary);
+				std::ofstream of;
+				of.open(name.c_str(), std::ios_base::binary);
 				of.write((const char*)&sc.td.hfData[0], siz);
 				of.close();
 			}
 		}
 		else	//  load from f32 HMap +
 		{
-			ifstream fi;
-			fi.open(name.c_str(), ios_base::binary);
+			std::ifstream fi;
+			fi.open(name.c_str(), std::ios_base::binary);
 			fi.read((char*)&sc.td.hfData[0], siz);
 			fi.close();
 		}
@@ -263,7 +269,7 @@ void App::CreateSkyDome(String sMater, Vector3 sc)
 	int ia = 32*2, ib = 24,iB = 24 +1/*below_*/, i=0;
 	//int ia = 4, ib = 4, i=0;
 	//  angles, max
-	float a,b;  const float B = PI/2.f, A = 2.f*PI;
+	float a,b;  const float B = PI_d/2.f, A = 2.f*PI_d;
 	float bb = B/ib, aa = A/ia;  // add
 	ia += 1;
 

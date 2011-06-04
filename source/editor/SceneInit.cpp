@@ -1,6 +1,9 @@
-#include "stdafx.h"
+#include "pch.h"
+#include "Defines.h"
 #include "OgreApp.h"
 #include "../road/Road.h"
+#include "../paged-geom/PagedGeometry.h"
+using namespace Ogre;
 
 
 //  Create Scene
@@ -29,7 +32,7 @@ void App::createScene()
 	TerCircleInit();
 
 	objs.LoadXml();
-	Log(string("**** Loaded Vegetation objects: ") + toStr(objs.colsMap.size()));
+	LogO(String("**** Loaded Vegetation objects: ") + toStr(objs.colsMap.size()));
 
 	if (pSet->autostart)
 		LoadTrack();
@@ -170,6 +173,12 @@ String App::PathCopyTrk(int user){
 //---------------------------------------------------------------------------------------------------------------
 void App::SaveTrack()
 {
+	if (!pSet->track_user)  // could force when in writable location..
+	{	MyGUI::Message::createMessageBox(
+			"Message", "Save Track", "Can't save original track. Duplicate it first.",
+			MyGUI::MessageBoxStyle::IconWarning | MyGUI::MessageBoxStyle::Ok);
+		return;
+	}	
 	eTrkEvent = TE_Save;
 	Status("Saving...", 1,0.4,0.1);
 }
@@ -178,14 +187,15 @@ void App::SaveTrackEv()
 	//  track dir in user
 	CreateDir(TrkDir());
 	CreateDir(TrkDir() + "/objects");
+	//  check if succeded ...
 
 	if (terrain)
 	{	float *fHmap = terrain->getHeightData();
 		int size = sc.td.iVertsX * sc.td.iVertsY * sizeof(float);
 
 		String file = TrkDir()+"heightmap.f32";
-		ofstream of;
-		of.open(file.c_str(), ios_base::binary);
+		std::ofstream of;
+		of.open(file.c_str(), std::ios_base::binary);
 		of.write((const char*)fHmap, size);
 		of.close();
 	}
@@ -204,7 +214,7 @@ void App::SaveTrackEv()
 ///  Ter Circle mesh   o
 //-------------------------------------------------------------------------------------
 const int divs = 90;
-const Real aAdd = 2 * 2*PI / divs, dTc = 2.f/(divs+1) *4;
+const Real aAdd = 2 * 2*PI_d / divs, dTc = 2.f/(divs+1) *4;
 static Real fTcos[divs+4], fTsin[divs+4];
 
 

@@ -1,4 +1,4 @@
-#include "stdafx.h"
+#include "pch.h"
 #include "settings.h"
 #include "../network/protocol.hpp"
 
@@ -14,6 +14,7 @@ void SETTINGS::Serialize(bool w, CONFIGFILE & c)
 	Param(c,w, "game.track", track);		Param(c,w, "game.track_user", track_user);
 	Param(c,w, "game.local_players", local_players);     Param(c,w, "game.split_vertically", split_vertically);
 	Param(c,w, "game.trk_reverse", trackreverse);
+	Param(c,w, "game.language", language);
 
 	Param(c,w, "display_show.fps", show_fps);		Param(c,w, "display_show.gauges", show_gauges);
 	Param(c,w, "display_show.trackmap", trackmap);
@@ -43,6 +44,7 @@ void SETTINGS::Serialize(bool w, CONFIGFILE & c)
 	Param(c,w, "control.autorear", autorear);
 	Param(c,w, "control.abs", abs);				Param(c,w, "control.tcs", tcs);
 	Param(c,w, "control.veget_collis", veget_collis);
+	Param(c,w, "control.car_collis", car_collis);
 	
 	Param(c,w, "misc.volume", vol_master);		Param(c,w, "misc.vol_engine", vol_engine);
 	Param(c,w, "misc.vol_tires", vol_tires);	Param(c,w, "misc.vol_env", vol_env);
@@ -93,13 +95,14 @@ SETTINGS::SETTINGS() :  ///  Defaults
 	//  car
 	abs(1), tcs(1), autoclutch(1), autoshift(1), autorear(1), show_mph(0),
 	//  game
-	trackreverse(false), local_players(1), split_vertically(true),
+	trackreverse(false), local_players(1), split_vertically(true), language(""), // "" = autodetect lang
 	//  other
 	vol_master(1.f), vol_engine(1.f), vol_tires(1.f), vol_env(1.f),
 	autostart(0), ogre_dialog(1), escquit(0), bltDebug(0), bltLines(1),  bltProfilerTxt(0),
 	loadingbackground(true),
 	//  sim
-	game_fq(100.f), blt_fq(60.f), blt_iter(7), mult_thr(0), veget_collis(true),
+	game_fq(100.f), blt_fq(60.f), blt_iter(7), mult_thr(0),
+	veget_collis(true), car_collis(false),
 	//  video
 	bloom(false), bloomintensity(0.2), bloomorig(1.0), hdr(false),
 	motionblur(false), motionblurintensity(0.3),

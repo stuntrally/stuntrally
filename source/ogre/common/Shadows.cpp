@@ -1,4 +1,5 @@
-#include "stdafx.h"
+#include "pch.h"
+#include "../Defines.h"
 #ifdef ROAD_EDITOR
 	#include "../../editor/OgreApp.h"
 	#include "../../editor/settings.h"
@@ -7,7 +8,14 @@
 	#include "../OgreGame.h"
 	#include "../vdrift/settings.h"
 	#include "../road/Road.h"
+	#include "../SplitScreenManager.h"
 #endif
+#include <OgreTerrainMaterialGeneratorA.h>
+#include <OgreTerrain.h>
+#include <OgreShadowCameraSetupLiSPSM.h>
+#include <OgreShadowCameraSetupPSSM.h>
+#include <OgreMaterialManager.h>
+using namespace Ogre;
 
 
 ///  Shadows config
@@ -119,7 +127,7 @@ void App::setMtrSplits(String sMtrName)
 		String selName = sMtrName + "_sel";
 		MaterialPtr selMtr = MaterialManager::getSingleton().getByName(selName);
 		if (selMtr.isNull())  {  // once
-			Log("new sel mtr: " +selName);
+			LogO("new sel mtr: " +selName);
 			MaterialPtr sel = mat->clone(selName);
 			Technique* tech = sel->getTechnique(0);  Pass* p = tech->createPass();
 			p->setSceneBlending(SBT_ADD);  p->setDepthBias(13.f);//

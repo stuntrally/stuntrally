@@ -1,3 +1,4 @@
+#include "pch.h"
 /*-------------------------------------------------------------------------------------
 Copyright (c) 2006 John Judnich
 
@@ -11,7 +12,7 @@ Permission is granted to anyone to use this software for any purpose, including 
 //PagedGeometry.h
 //Main source file for the PagedGeometry engine.
 //-------------------------------------------------------------------------------------
-#include "stdafx.h"
+//#include "Defines.h"
 #include "PagedGeometry.h"
 #include "StaticBillboardSet.h"
 
@@ -20,7 +21,7 @@ Permission is granted to anyone to use this software for any purpose, including 
 #include <OgreCamera.h>
 #include <OgreVector3.h>
 using namespace Ogre;
-using namespace std;
+//using namespace std;
 
 namespace Forests {
 
@@ -369,24 +370,24 @@ void PagedGeometry::_addDetailLevel(GeometryPageManager *mgr, Real maxRange, Rea
 	managerList.push_back(mgr);
 }
 
-void  PagedGeometry::setCustomParam(string entity, string paramName, float paramValue)
+void  PagedGeometry::setCustomParam(std::string entity, std::string paramName, float paramValue)
 {
 	setCustomParam(entity + "." + paramName, paramValue);
 }
 
-void  PagedGeometry::setCustomParam(string paramName, float paramValue)
+void  PagedGeometry::setCustomParam(std::string paramName, float paramValue)
 {
 	customParam[paramName] = paramValue;
 }
 
-float PagedGeometry::getCustomParam(string entity, string paramName, float defaultParamValue) const
+float PagedGeometry::getCustomParam(std::string entity, std::string paramName, float defaultParamValue) const
 {
 	return getCustomParam(entity + "." + paramName, defaultParamValue);
 }
 
-float PagedGeometry::getCustomParam(string paramName, float defaultParamValue) const
+float PagedGeometry::getCustomParam(std::string paramName, float defaultParamValue) const
 {
-	std::map<string, float>::const_iterator it;
+	std::map<std::string, float>::const_iterator it;
 	it = customParam.find(paramName);
 	if (it != customParam.end()) {
 		float x = it->second;

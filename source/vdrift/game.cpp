@@ -1,11 +1,11 @@
-#include "stdafx.h"
-
+#include "pch.h"
 #include "game.h"
 #include "unittest.h"
 #include "joepack.h"
 #include "matrix4.h"
 #include "configfile.h"
 #include "cardefs.h"
+#include <math.h>
 
 #include "numprocessors.h"
 #include "parallel_task.h"
@@ -15,6 +15,10 @@
 #include "../ogre/OgreGame.h"
 #include "../ogre/FollowCamera.h"
 #include "../oisb/OISBSystem.h"
+
+using std::string;
+using std::endl;
+using std::pair;
 
 
 ///start the game with the given arguments
@@ -41,7 +45,7 @@ void GAME::Start(std::list <string> & args)
 	InitializeSound(); //if sound initialization fails, that's okay, it'll disable itself
 
 	//initialize GUI
-	std::map<std::string, std::string> optionmap;
+	std::map<string, string> optionmap;
 	LoadSaveOptions(LOAD, optionmap);
 	//if (settings->mousegrab)  eventsystem.SetMouseCursorVisibility(true);
 
@@ -108,7 +112,7 @@ std::vector <string> Tokenize(const string & input, const string & tokens)
 	return out;
 }
 
-bool GAME::ParseArguments(std::list <std::string> & args)
+bool GAME::ParseArguments(std::list <string> & args)
 {
 	bool continue_game(true);
 	
@@ -456,8 +460,8 @@ void GAME::UpdateTimer()
 				dist_from_back = relative_pos.dot(forwardvec.Normalize());
 
 			timer.UpdateDistance(carid, curpatch->GetDistFromStart() + dist_from_back);
-			//std::cout << curpatch->GetDistFromStart() << ", " << dist_from_back << std::endl;
-			//std::cout << curpatch->GetDistFromStart() + dist_from_back << std::endl;
+			//std::cout << curpatch->GetDistFromStart() << ", " << dist_from_back << endl;
+			//std::cout << curpatch->GetDistFromStart() + dist_from_back << endl;
         }
 
 		/*info_output << "sector=" << i->GetSector() << ", next=" << track.GetLapSequence(nextsector) << ", ";
@@ -465,7 +469,7 @@ void GAME::UpdateTimer()
 		{
 			info_output << w << "=" << i->GetCurPatch(w) << ", ";
 		}
-		info_output << std::endl;*/
+		info_output << endl;*/
 	}
 
 	timer.Tick(TickPeriod());
@@ -600,7 +604,7 @@ void GAME::LeaveGame()
 }
 
 ///add a car, optionally controlled by the local player
-CAR* GAME::LoadCar(const std::string & carname, const MATHVECTOR <float, 3> & start_position,
+CAR* GAME::LoadCar(const string & carname, const MATHVECTOR <float, 3> & start_position,
 		   const QUATERNION <float> & start_orientation, bool islocal, bool isai, const string & carfile)
 {
 	CONFIGFILE carconf;
@@ -653,7 +657,7 @@ CAR* GAME::LoadCar(const std::string & carname, const MATHVECTOR <float, 3> & st
 	return &cars.back();
 }
 
-bool GAME::LoadTrack(const std::string & trackname)
+bool GAME::LoadTrack(const string & trackname)
 {
 	LoadingScreen(0.0,1.0);
 
@@ -697,7 +701,7 @@ bool SortStringPairBySecond (const pair<string,string> & first, const pair<strin
 	return first.second < second.second;
 }
 
-void GAME::LoadSaveOptions(OPTION_ACTION action, std::map<std::string, std::string> & options)
+void GAME::LoadSaveOptions(OPTION_ACTION action, std::map<string, string> & options)
 {
 	if (action == LOAD) //load from the settings class to the options map
 	{

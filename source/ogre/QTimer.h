@@ -5,6 +5,8 @@
 
 #if OGRE_PLATFORM != OGRE_PLATFORM_WIN32
 #include <sys/time.h>
+#else
+#include <windows.h>
 #endif
 
 class QTimer

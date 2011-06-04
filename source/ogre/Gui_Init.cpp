@@ -1,10 +1,16 @@
-#include "stdafx.h"
+#include "pch.h"
+#include "Defines.h"
 #include "../vdrift/pathmanager.h"
 #include "../vdrift/game.h"
 #include "../road/Road.h"
 #include "OgreGame.h"
 #include "../oisb/OISB.h"
+
+#include <OgreRoot.h>
+#include <OgreRenderWindow.h>
+#include <OgreOverlay.h>
 using namespace MyGUI;
+using namespace Ogre;
 
 
 ///  Gui Init
@@ -82,6 +88,21 @@ void App::InitGui()
 	//  textures
 	combo = (ComboBoxPtr)mLayout->findWidget("TexFiltering");
 	if (combo)  combo->eventComboChangePosition = newDelegate(this, &App::comboTexFilter);
+	
+	//  language combo
+	supportedLanguages["en"] = "English";
+	supportedLanguages["de"] = "Deutsch";  //German
+	supportedLanguages["fi"] = "Suomi";  //Finnish
+	combo = NULL; combo = (ComboBoxPtr)mLayout->findWidget("Lang");
+	if (combo) combo->eventComboChangePosition = newDelegate(this, &App::comboLanguage);
+	for (std::map<std::string, std::string>::const_iterator it = supportedLanguages.begin();
+		it != supportedLanguages.end(); it++)
+	{
+		combo->addItem(it->second);
+		if (it->first == pSet->language)
+			combo->setIndexSelected(combo->getItemCount()-1);
+	}
+	
 	Slv(Anisotropy,	pSet->anisotropy /res);
 	Slv(Shaders,	pSet->shaders /res);
 	
@@ -120,7 +141,6 @@ void App::InitGui()
 	Slv(CarClrH, pSet->car_hue);
 	Slv(CarClrS, (pSet->car_sat +1)*0.5f);  Slv(CarClrV, (pSet->car_val +1)*0.5f);
 
-
 	///  Checkboxes
     //------------------------------------------------------------------------
 	ButtonPtr bchk;
@@ -154,7 +174,14 @@ void App::InitGui()
 	Chk("CarABS",  chkAbs, abs);		Chk("CarTCS", chkTcs, tcs);
 	Chk("CarGear", chkGear, autoshift);
 	Chk("CarRear", chkRear, autorear);	Chk("CarClutch", chkClutch, autoclutch);
+	//  game
 	Chk("VegetCollis", chkVegetCollis, veget_collis);
+	Chk("CarCollis", chkCarCollis, car_collis);
+	Btn("btnPlayers1", btnNumPlayers);	Btn("btnPlayers2", btnNumPlayers);
+	Btn("btnPlayers3", btnNumPlayers);	Btn("btnPlayers4", btnNumPlayers);
+	Chk("chkSplitVertically", chkSplitVert, split_vertically);
+	valLocPlayers = mGUI->findWidget<StaticText>("valLocPlayers");
+	if (valLocPlayers)  valLocPlayers->setCaption(toStr(pSet->local_players));
 	
 	//  kmh/mph radio
 	bRkmh = mGUI->findWidget<Button>("kmh");
@@ -188,7 +215,8 @@ void App::InitGui()
 	
 
 	//  replays  ------------------------------------------------------------
-	Btn("RplLoad", btnRplLoad);  Btn("RplSave", btnRplSave);  Btn("RplDelete", btnRplDelete);
+	Btn("RplLoad", btnRplLoad);  Btn("RplSave", btnRplSave);
+	Btn("RplDelete", btnRplDelete);  Btn("RplRename", btnRplRename);
 	Chk("RplChkAutoRec", chkRplAutoRec, rpl_rec);
 	//Chk("RplChkGhost", chkRplChkGhost, rpl_play);
 	Btn("RplBtnCur", btnRplCur)  Btn("RplBtnAll", btnRplAll);  // radio
@@ -221,7 +249,6 @@ void App::InitGui()
 	Btn("btnPlayers3", btnNumPlayers);
 	Btn("btnPlayers4", btnNumPlayers);
 	Chk("chkSplitVertically", chkSplitVert, split_vertically);
-
 
 	///  Multiplayer
     //------------------------------------------------------------------------
@@ -340,12 +367,11 @@ void App::InitGui()
     carList = (ListPtr)mLayout->findWidget("CarList");
     if (carList)
     {	carList->removeAllItems();  int ii = 0;  bool bFound = false;
-
 		strlist li;
 		PATHMANAGER::GetFolderIndex(PATHMANAGER::GetCarPath(), li);
 		for (strlist::iterator i = li.begin(); i != li.end(); ++i)
 		{
-			ifstream check((PATHMANAGER::GetCarPath() + "/" + *i + "/about.txt").c_str());
+			std::ifstream check((PATHMANAGER::GetCarPath() + "/" + *i + "/about.txt").c_str());
 			if (check)  {
 				carList->addItem(*i);
 				if (*i == pSet->car) {  carList->setIndexSelected(ii);  bFound = true;  }
@@ -377,9 +403,8 @@ void App::InitGui()
 		//  original
 		for (strlist::iterator i = li.begin(); i != li.end(); ++i)
 		{
-
-			string s = pathTrk[0] + *i + "/track.txt";
-			ifstream check(s.c_str());
+			std::string s = pathTrk[0] + *i + "/track.txt";
+			std::ifstream check(s.c_str());
 			if (check)  {
 				trkList->addItem(*i, 0);
 				if (!pSet->track_user && *i == pSet->track)  {  si = ii;
@@ -390,9 +415,8 @@ void App::InitGui()
 		//  user
 		for (strlist::iterator i = lu.begin(); i != lu.end(); ++i)
 		{
-
-			string s = pathTrk[1] + *i + "/track.txt";
-			ifstream check(s.c_str());
+			std::string s = pathTrk[1] + *i + "/track.txt";
+			std::ifstream check(s.c_str());
 			if (check)  {
 				trkList->addItem("*" + (*i) + "*", 1);
 				if (pSet->track_user && *i == pSet->track)  {  si = ii;
@@ -403,7 +427,7 @@ void App::InitGui()
 		//  not found last track, set 1st
 		if (!bFound)
 		{	pSet->track = *li.begin();  pSet->track_user = 0;  }
-		trkList->beginToItemAt(max(0, si-11));  // center
+		trkList->beginToItemAt(std::max(0, si-11));  // center
 		trkList->eventListChangePosition = newDelegate(this, &App::listTrackChng);
 		//?trkList->eventMouseButtonDoubleClick = newDelegate(this, &App::btnNewGameStart);
     }
@@ -500,7 +524,7 @@ void App::setToolTips(EnumeratorWidgetPtr widgets)
 			wp->setNeedToolTip(true);
 			wp->eventToolTip = newDelegate(this, &App::notifyToolTip);
 		}
-		//Log(wp->getName() + (tip ? "  *" : ""));
+		//LogO(wp->getName() + (tip ? "  *" : ""));
         setToolTips(wp->getEnumerator());
     }
 }
@@ -550,18 +574,18 @@ void App::boundedMove(Widget* moving, const IntPoint& point)
 void App::trkListNext(int rel)
 {
 	if (!(isFocGui && mWndTabs->getIndexSelected() == 0))  return;
-	int i = max(0, min((int)trkList->getItemCount()-1, (int)trkList->getIndexSelected()+rel ));
+	int i = std::max(0, std::min((int)trkList->getItemCount()-1, (int)trkList->getIndexSelected()+rel ));
 	trkList->setIndexSelected(i);
-	trkList->beginToItemAt(max(0, i-11));  // center
+	trkList->beginToItemAt(std::max(0, i-11));  // center
 	listTrackChng(trkList,i);
 }
 
 void App::carListNext(int rel)
 {
 	if (!(isFocGui && mWndTabs->getIndexSelected() == 1))  return;
-	int i = max(0, min((int)carList->getItemCount()-1, (int)carList->getIndexSelected()+rel ));
+	int i = std::max(0, std::min((int)carList->getItemCount()-1, (int)carList->getIndexSelected()+rel ));
 	carList->setIndexSelected(i);
-	carList->beginToItemAt(max(0, i-11));  // center
+	carList->beginToItemAt(std::max(0, i-11));  // center
 	listCarChng(carList,i);
 }
 
@@ -616,23 +640,25 @@ void App::InitInputGui()
 		}
 		
 		///  ------ custom action sorting ----------------
-		int i = 0, y = 0;
+		int i = 0, y = 0, ya = 26 / 2;
 		std::map <std::string, int> yRow;
 		// player
 		yRow["Throttle"] = y;	y+=2;
 		yRow["Brake"] = y;		y+=2;
-		yRow["Steering"] = y;	y+=2+1;
+		yRow["Steering"] = y;	y+=2+1 +2;
 		yRow["HandBrake"] = y;	y+=2;
 		yRow["Boost"] = y;		y+=2;
-		yRow["Flip"] = y;		y+=2+1;
-		yRow["ShiftDown"] = y;	y+=2;
+		yRow["Flip"] = y;		y+=2+1 +2;
 		yRow["ShiftUp"] = y;	y+=2;
+		yRow["ShiftDown"] = y;	y+=2;
 		// general
 		y = 0;
 		yRow["ShowOptions"] = y; y+=2+1;
 		yRow["PrevTab"] = y;     y+=2;
 		yRow["NextTab"] = y;     y+=2+1;
-		yRow["RestartGame"] = y; y+=2;
+		yRow["RestartGame"] = y; y+=2+1;
+		yRow["PrevCamera"] = y;  y+=2;
+		yRow["NextCamera"] = y;  y+=2+1;
 		
 		///  Actions
 		for (std::map<OISB::String, OISB::Action*>::const_iterator
@@ -647,7 +673,7 @@ void App::InitInputGui()
 
 			// description label
 			const String& name = (*ait).second->getName();
-			y = 40 + 26 * yRow[name] / 2;
+			y = 40 + ya * yRow[name];
 			MyGUI::StaticTextPtr desc = tabitem->createWidget<StaticText>("StaticText", x0, y, sx+70, sy, MyGUI::Align::Default, "staticText_" + (*ait).first );
 			desc->setCaption( TR("#{InputMap" + name + "}") );
 		
@@ -687,17 +713,15 @@ void App::InitInputGui()
 			bool button2 = false;
 			if (  act->getActionType() == OISB::AT_ANALOG_AXIS && !( act->getProperty<int> ("MinimumValue") == 0 )) button2 = true;
 
-			MyGUI::ButtonPtr key1 = tabitem->createWidget<Button>("Button", x1, y, sx, sy, MyGUI::Align::Default, "inputbutton_" + (*ait).first + "_" + (*it).first + "_1");
+			MyGUI::ButtonPtr key1 = tabitem->createWidget<Button>("Button", /*button2 ? x2 :*/ x1, button2 ? (y + ya*2) : y, sx, sy, MyGUI::Align::Default, "inputbutton_" + (*ait).first + "_" + (*it).first + "_1");
 			key1->setCaption( stripk(key1_label) );
 			key1->eventMouseButtonClick = MyGUI::newDelegate(this, &App::controlBtnClicked);
 			
 			if (button2)
-			{
-				MyGUI::ButtonPtr key2 = tabitem->createWidget<Button>("Button", x2, y, sx, sy, MyGUI::Align::Default, "inputbutton_" + (*ait).first + "_" + (*it).first + "_2");
+			{	MyGUI::ButtonPtr key2 = tabitem->createWidget<Button>("Button", x1, y, sx, sy, MyGUI::Align::Default, "inputbutton_" + (*ait).first + "_" + (*it).first + "_2");
 				key2->setCaption( stripk(key2_label) );
 				key2->eventMouseButtonClick = MyGUI::newDelegate(this, &App::controlBtnClicked);
 			}
-
 
 			/// joystick binds
 			// only on player tab
@@ -722,9 +746,9 @@ void App::InitInputGui()
 			}
 		}
 	}
-	
 	UpdateJsButtons(); // initial
 }
+
 
 void App::UpdateJsButtons()
 {
@@ -748,6 +772,7 @@ void App::UpdateJsButtons()
 			std::string jsName;
 			if (jsMenu->getIndexSelected() != MyGUI::ITEM_NONE)
 				jsName = jsMenu->getItemNameAt( jsMenu->getIndexSelected() );
+			
 			OISB::JoyStick* js = NULL;
 			for (std::vector<OISB::JoyStick*>::const_iterator jit = mOISBsys->mJoysticks.begin();
 					jit != mOISBsys->mJoysticks.end();
@@ -763,8 +788,7 @@ void App::UpdateJsButtons()
 					for (std::vector<OISB::DigitalState*>::const_iterator it = js->buttons.begin();
 							it != js->buttons.end(); it++)
 						button->addItem( stripk((*it)->getBindableName()) );
-				}
-				else
+				}else
 					button->addItem( TR("#{InputKeyNoButton}") );
 					
 				button->setIndexSelected(0);
@@ -777,9 +801,7 @@ void App::UpdateJsButtons()
 						result = button->findItemIndexWith( stripk(bnd2->getRole(NULL)) );
 						if (result != MyGUI::ITEM_NONE)
 							button->setIndexSelected( result );
-					}
-					else
-					{
+					}else{
 						result = button->findItemIndexWith( stripk(bnd2->getBindable(0)->getBindableName()) );
 						if (result != MyGUI::ITEM_NONE)
 							button->setIndexSelected( result );
@@ -794,8 +816,7 @@ void App::UpdateJsButtons()
 					for (std::vector<OISB::AnalogAxisState*>::const_iterator it = js->axis.begin();
 							it != js->axis.end(); it++)
 						axis->addItem( stripk((*it)->getBindableName()) );
-				}
-				else
+				}else
 					axis->addItem( TR("#{InputKeyNoAxis}") );
 					
 				axis->setIndexSelected(0);
@@ -809,9 +830,7 @@ void App::UpdateJsButtons()
 						result = axis->findItemIndexWith( stripk(bnd2->getRole(NULL)) );
 						if (result != MyGUI::ITEM_NONE)
 							axis->setIndexSelected( result );
-					}
-					else
-					{
+					}else{
 						result = axis->findItemIndexWith( stripk(bnd2->getBindable(0)->getBindableName()) );
 						if (result != MyGUI::ITEM_NONE)
 							axis->setIndexSelected( result );

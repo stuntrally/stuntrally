@@ -1,7 +1,15 @@
-#include "stdafx.h"
+#include "pch.h"
+#include "Defines.h"
 #include "OgreGame.h"
 #include "../vdrift/game.h"
 #include "../road/Road.h"
+#include "SplitScreenManager.h"
+#include "../paged-geom/PagedGeometry.h"
+
+#include <OgreTerrain.h>
+#include <OgreTerrainGroup.h>
+#include <OgreManualObject.h>
+using namespace Ogre;
 
 
 //  ctors  -----------------------------------------------
@@ -24,7 +32,7 @@ App::App()
 	,valShaders(0), valShadowType(0), valShadowCount(0), valShadowSize(0), valShadowDist(0)  // shadow
 	,valSizeGaug(0), valSizeMinmap(0)  // view
 	,bRkmh(0),bRmph(0), chDbgT(0),chDbgB(0), chBlt(0),chBltTxt(0), chFps(0), chTimes(0),chMinimp(0), bnQuit(0)
-	,imgCar(0),imgPrv(0),imgMini(0),imgTer(0), valCar(0),valTrk(0),trkDesc(0)
+	,imgCar(0),imgPrv(0),imgMini(0),imgTer(0), valCar(0),valTrk(0),trkDesc(0), valLocPlayers(0)
 	,valRplPerc(0), valRplCur(0), valRplLen(0), slRplPos(0), rplList(0)
 	,valRplName(0),valRplInfo(0),valRplName2(0),valRplInfo2(0), edRplName(0), edRplDesc(0)
 	,bRplPlay(0), bRplPause(0), bRplRec(0)
@@ -53,9 +61,9 @@ App::App()
 	
 	//  util for update rot
 	Quaternion qr;  {
-	QUATERNION <double> fix;  fix.Rotate(PI, 0, 1, 0);
+	QUATERNION <double> fix;  fix.Rotate(PI_d, 0, 1, 0);
 	qr.w = fix.w();  qr.x = fix.x();  qr.y = fix.y();  qr.z = fix.z();  qFixCar = qr;  }
-	QUATERNION <double> fix;  fix.Rotate(Math::HALF_PI, 0, 1, 0);
+	QUATERNION <double> fix;  fix.Rotate(PI_d/2, 0, 1, 0);
 	qr.w = fix.w();  qr.x = fix.x();  qr.y = fix.y();  qr.z = fix.z();  qFixWh = qr;
 }
 

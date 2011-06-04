@@ -1,3 +1,4 @@
+#include "pch.h"
 /*-------------------------------------------------------------------------------------
 Copyright (c) 2006 John Judnich
 
@@ -11,7 +12,7 @@ Permission is granted to anyone to use this software for any purpose, including 
 //WindBatchPage.cpp
 //WindBatchPage is an extension to PagedGeometry which displays entities as static geometry but that is affected by wind.
 //-------------------------------------------------------------------------------------
-#include "stdafx.h"
+//#include "Defines.h"
 #include "WindBatchPage.h"
 #include "WindBatchedGeometry.h"
 

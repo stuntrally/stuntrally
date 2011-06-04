@@ -2,7 +2,7 @@
 
 import sys, time, os
 
-fallback_file = "core_language_english_tag.xml"
+fallback_file = "core_language_en_tag.xml"
 
 header = "# SOME DESCRIPTIVE TITLE.\n\
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER\n\
@@ -58,10 +58,9 @@ if file1.endswith(".xml") and file2.endswith(".pot"):
 	# write pot
 	
 	# header
-	# TODO
+	result = header + "\n"
 	
 	# translations
-	result = header + "\n"
 	for mid, mstr in msgs.items():
 		#result += "# " + mid + "\n"
 		result += "msgctxt \"" + mid + "\"\n"
@@ -118,6 +117,11 @@ elif file1.endswith(".po") and file2.endswith(".xml"):
 			else:
 				# if untranslated or not to be translated (ignore), use english string
 				result += "\t<Tag name=\"" + mid + "\">" + msgs_f[mid] + "</Tag>\n"
+				
+	# put all stuff that is not in .po yet, but is in template, in it's english version
+	for mid, mstr in msgs_f.items():
+		if not mid in msgs and mid not in ignore_tags:
+				result += "\t<Tag name=\"" + mid + "\">" + mstr + "</Tag>\n"
 		
 	# use english string for ignored
 	for ignored in ignore_tags:

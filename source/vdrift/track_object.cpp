@@ -1,5 +1,4 @@
-#include "stdafx.h"
-
+#include "pch.h"
 #include "track_object.h"
 #include "assert.h"
 

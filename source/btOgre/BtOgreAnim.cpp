@@ -1,13 +1,19 @@
+#include "pch.h"
 /*		   Filename:	BtOgreAnim.cpp
  *		Description:	Bullet to Ogre implementation.
  *			Version:	1.1  (1.0 modified by CrystalH)
  *			Created:	27/12/2008 01:47:56 PM
  *			 Author:	Nikhilesh (nikki)
  * =============================================================================================*/
-#include "stdafx.h"
 #include "BtOgrePG.h"
 #include "BtOgreGP.h"
 #include "BtOgreDebug.h"
+
+#include <OgreSceneNode.h>
+#include <OgreEntity.h>
+#include <OgreMesh.h>
+#include <OgreSubMesh.h>
+#include <OgreSubEntity.h>
 
 using namespace Ogre;
 

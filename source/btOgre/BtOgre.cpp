@@ -1,17 +1,49 @@
+#include "pch.h"
 /*		   Filename:	BtOgre.cpp
  *		Description:	Bullet to Ogre implementation.
  *			Version:	1.1  (1.0 modified by CrystalH)
  *			Created:	27/12/2008 01:47:56 PM
  *			 Author:	Nikhilesh (nikki)
  * =============================================================================================*/
-#include "stdafx.h"
 #include "BtOgrePG.h"
 #include "BtOgreGP.h"
 #include "BtOgreDebug.h"
 
+#include <OgreSceneNode.h>
+#include <OgreEntity.h>
+#include <OgreSubMesh.h>
+#include <OgreSubEntity.h>
+#include <OgreLogManager.h>
+
 using namespace Ogre;
 
 namespace BtOgre {
+
+
+//=============================================================================================
+
+RigidBodyState::RigidBodyState(Ogre::SceneNode *node)
+	: mNode(node),
+	  mTransform(((node != NULL) ? BtOgre::Convert::toBullet(node->getOrientation()) : btQuaternion(0,0,0,1)), 
+				 ((node != NULL) ? BtOgre::Convert::toBullet(node->getPosition())	: btVector3(0,0,0))),
+	  mCenterOfMassOffset(btTransform::getIdentity())
+{	}
+
+
+void RigidBodyState::setWorldTransform(const btTransform &in) 
+{
+	if (mNode == NULL)
+		return;
+
+	mTransform = in;
+	btTransform transform = in * mCenterOfMassOffset;
+
+	btQuaternion rot = transform.getRotation();
+	btVector3 pos = transform.getOrigin();
+	mNode->setOrientation(rot.w(), rot.x(), rot.y(), rot.z());
+	//mNode->setPosition(pos.x(), pos.y(), pos.z());
+	mNode->setPosition(pos.x(), pos.z(), -pos.y());  ///!
+}
 
 
 //  BtOgre::VertexIndexToShape

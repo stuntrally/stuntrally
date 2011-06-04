@@ -1,5 +1,10 @@
-#include "stdafx.h"
+#include "pch.h"
+#include "../ogre/Defines.h"
 #include "Road.h"
+
+#include <OgreCamera.h>
+#include <OgreTerrain.h>
+using namespace Ogre;
 
 
 ///  Pick marker
@@ -115,7 +120,7 @@ void SplineRoad::RotateSel(Real relA)
 	for (std::set<int>::const_iterator it = vSel.begin(); it != vSel.end(); ++it)
 	{
 		Vector3 pos = getPos(*it);
-		Real a = relA*PI/180.f, oldX = pos.x - pos0.x, oldY = pos.z - pos0.z;
+		Real a = relA*PI_d/180.f, oldX = pos.x - pos0.x, oldY = pos.z - pos0.z;
 		Real newX = cos(a) * oldX - sin(a) * oldY;
 		Real newY = sin(a) * oldX + cos(a) * oldY;
 		Vector3 npos = Vector3(newX + pos0.x, pos.y, newY + pos0.z);
@@ -233,7 +238,7 @@ Vector3 SplineRoad::GetLenDir(int seg, Real l, Real la)
 //  rot
 Vector3 SplineRoad::GetRot(Real aYaw, Real aRoll)
 {
-	Real ay = aYaw * PI/180.f, ar = aRoll * PI/180.f;
+	Real ay = aYaw * PI_d/180.f, ar = aRoll * PI_d/180.f;
 	Real cb = cosf(ar);
 	return Vector3( cosf(ay)*cb, sinf(ar), -sinf(ay)*cb );
 }

@@ -3,11 +3,11 @@
 
 #include "pairsort.h"
 
-//#include <ostream>
-//#include <vector>
-//#include <map>
-//#include <algorithm>
-//#include <cassert>
+#include <ostream>
+#include <vector>
+#include <map>
+#include <algorithm>
+#include <cassert>
 
 
 template <typename T>

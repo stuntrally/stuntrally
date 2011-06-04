@@ -1,8 +1,12 @@
-#include "stdafx.h"
+#include "pch.h"
 #include "DynamicLines.h"
-//#include <Ogre.h>
-//#include <cassert>
-//#include <cmath>
+
+#include <OgreHardwareVertexBuffer.h>
+#include <OgreHardwareBufferManager.h>
+#include <OgreCamera.h>
+
+#include <cassert>
+#include <cmath>
 
 using namespace Ogre;
 
@@ -142,7 +146,7 @@ Real DynamicRenderable::getSquaredViewDepth(const Camera* cam) const
 //  DynamicRenderable
 //=============================================================================================
 
-DynamicLines::DynamicLines(OperationType opType)
+DynamicLines::DynamicLines(RenderOperation::OperationType opType)
 {
 	initialize(opType, false);
 	mDirty = true;
@@ -160,7 +164,7 @@ DynamicLines::~DynamicLines()
 {
 }
 
-void DynamicLines::setOperationType(OperationType opType)
+void DynamicLines::setOperationType(RenderOperation::OperationType opType)
 {
 	mRenderOp.operationType = opType;
 }

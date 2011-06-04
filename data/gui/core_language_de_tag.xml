@@ -170,6 +170,7 @@
 	<Tag name="TrackInAir">Luft</Tag>
 	<Tag name="Used">Benutzt</Tag>
 	<Tag name="TipMinimapScrnEditor">Minikarte der ausgewählten Strecke, Sicht von oben.</Tag>
+	<Tag name="RplVersion">Version</Tag>
 	<Tag name="Options">Optionen</Tag>
 	<Tag name="Delete">Entfernen</Tag>
 	<Tag name="Rename">Umbenennen</Tag>
@@ -307,6 +308,7 @@
 	<Tag name="TipTrackDescEditor">Streckenbeschreibung (Klicken zum Editieren).</Tag>
 	<Tag name="ViewLeft">Ans. Links</Tag>
 	<Tag name="UnitMB">MB</Tag>
+	<Tag name="RplTime">Time</Tag>
 	<Tag name="ApplyShadows">Schatten anwenden</Tag>
 	<Tag name="RoadStats">Straßen Statist.</Tag>
 	<Tag name="SunDir">Sonnenrichtung</Tag>
@@ -374,6 +376,7 @@
 	<Tag name="InputTerDeform">D - verformen (LMB hoch, RMB runter)</Tag>
 	<Tag name="TipDiffuseTex">Diffusetextur (Specular in Alphakanal).</Tag>
 	<Tag name="VegetCol">Kollision mit Vegetation *neues Spiel erforderl.</Tag>
+	<Tag name="CarCollis">Cars collision</Tag>
 	<Tag name="MyGUI_MessageBox_Continue">Fortsetzen</Tag>
 	<Tag name="Tools">Werkzeuge</Tag>
 	<Tag name="TipGrassSwaySpd">Grasschwingung Geschw.</Tag>
@@ -401,6 +404,7 @@
 	<Tag name="SREditorVersion">Stunt Rally - Streckeneditor - Version</Tag>
 	<Tag name="InputRoadAfterPick">nach ausgew., zentr. bei Maus</Tag>
 	<Tag name="TipTrackDesc">Beschreibung der Strecke.</Tag>
+	<Tag name="RplFileSize">File size</Tag>
 	<Tag name="SourceTrack">Bezugsquelle</Tag>
 	<Tag name="ImpostorDist">Impostor Dist.</Tag>
 	<Tag name="page">Page</Tag>
@@ -483,7 +487,9 @@
 	<Tag name="Pitch">neigen</Tag>
 	<Tag name="MyGUI_MessageBox_Yes">Ja</Tag>
 	<Tag name="RplAll">Alle</Tag>
-	<Tag name="GameVersion">1.1</Tag>
+	<Tag name="InputMapPrevCamera">Previous Camera</Tag>
+	<Tag name="InputMapNextCamera">Next Camera</Tag>
+	<Tag name="GameVersion">1.2</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 
 </MyGUI>

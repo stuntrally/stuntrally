@@ -1,7 +1,7 @@
 #ifndef _TOGGLE_H
 #define _TOGGLE_H
 
-//#include <ostream>
+#include <ostream>
 
 class TOGGLE
 {

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION"
 "Report-Msgid-Bugs-To: "
-"POT-Creation-Date: 2011-05-13 23:17+0200"
+"POT-Creation-Date: 2011-06-04 16:07+0300"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>"
 "Language-Team: LANGUAGE <LL@li.org>"
@@ -321,6 +321,10 @@ msgctxt "InputRoadInsAlt"
 msgid "alt-shift - at start   alt-ctrl - at end"
 msgstr ""
 
+msgctxt "InputMapPrevCamera"
+msgid "Previous Camera"
+msgstr ""
+
 msgctxt "InputMapBrake"
 msgid "Brake"
 msgstr ""
@@ -399,10 +403,6 @@ msgstr ""
 
 msgctxt "ABS"
 msgid "ABS (antilock brakes)"
-msgstr ""
-
-msgctxt "Length"
-msgid "Length"
 msgstr ""
 
 msgctxt "TipCarsList"
@@ -617,6 +617,10 @@ msgctxt "Engine"
 msgid "Engine"
 msgstr ""
 
+msgctxt "MergeLength"
+msgid "Merge length"
+msgstr ""
+
 msgctxt "TipNewGameCar"
 msgid "Restart game (after car change)."
 msgstr ""
@@ -717,8 +721,8 @@ msgctxt "MinScale"
 msgid "min scale"
 msgstr ""
 
-msgctxt "MergeLength"
-msgid "Merge length"
+msgctxt "NetStart"
+msgid "Start"
 msgstr ""
 
 msgctxt "InputRoadPitch"
@@ -838,7 +842,7 @@ msgid "Multiplayer"
 msgstr ""
 
 msgctxt "VegetCol"
-msgid "Vegetation collision    *needs New Game"
+msgid "Vegetation collision"
 msgstr ""
 
 msgctxt "Particles"
@@ -883,6 +887,10 @@ msgstr ""
 
 msgctxt "Graphics"
 msgid "Graphics"
+msgstr ""
+
+msgctxt "InputMapNextCamera"
+msgid "Next Camera"
 msgstr ""
 
 msgctxt "CarDebugText"
@@ -1009,6 +1017,10 @@ msgctxt "InputKeyNoButton"
 msgid "No button"
 msgstr ""
 
+msgctxt "InputToggleVeget"
+msgid "V - Disable / enable vegetation"
+msgstr ""
+
 msgctxt "TexCoordMul"
 msgid "Tex Coord mul."
 msgstr ""
@@ -1021,8 +1033,8 @@ msgctxt "ShowPictures"
 msgid "Show pictures while loading"
 msgstr ""
 
-msgctxt "InputRoadPick"
-msgid "Space - pick one/none"
+msgctxt "TrackAvgSpeed"
+msgid "Avg. speed"
 msgstr ""
 
 msgctxt "PreviewCam"
@@ -1217,10 +1229,6 @@ msgctxt "RplTime"
 msgid "Time"
 msgstr ""
 
-msgctxt "TrackAvgSpeed"
-msgid "Avg. speed"
-msgstr ""
-
 msgctxt "Yes"
 msgid "Yes"
 msgstr ""
@@ -1377,8 +1385,6 @@ msgctxt "ChangeCar"
 msgid "Change Car"
 msgstr ""
 
-<<<<<<< HEAD
-=======
 msgctxt "ViewFront"
 msgid "View Front"
 msgstr ""
@@ -1387,11 +1393,6 @@ msgctxt "RplRecTime"
 msgid "Recorded   time"
 msgstr ""
 
-msgctxt "InputTerSmooth"
-msgid "S - Smooth  (LMB, -Noise RMB)"
-msgstr ""
-
->>>>>>> master
 msgctxt "TipSunSpecular"
 msgid "Sun light specular (shiny) color. R G B components 0 to 1 (eg. 0.6 0.6 0.6)"
 msgstr ""
@@ -1504,8 +1505,8 @@ msgctxt "TipDiffuseTex"
 msgid "Diffuse texture (Specular in alpha)."
 msgstr ""
 
-msgctxt "InputToggleVeget"
-msgid "V - Disable / enable vegetation"
+msgctxt "Length"
+msgid "Length"
 msgstr ""
 
 msgctxt "MyGUI_MessageBox_Continue"
@@ -1728,12 +1729,16 @@ msgctxt "InputUndo"
 msgid "(one time undo)"
 msgstr ""
 
+msgctxt "CarCollis"
+msgid "Cars collision"
+msgstr ""
+
 msgctxt "CameraInfo"
 msgid "Camera info"
 msgstr ""
 
 msgctxt "NetRouterTip"
-msgid "Router port forwarding configuration might be required\nin order to allow peers to connect to the local port."
+msgid "Router port forwarding configuration might be required in order to allow peers to connect to the local port."
 msgstr ""
 
 msgctxt "NewGame"
@@ -1746,6 +1751,10 @@ msgstr ""
 
 msgctxt "CarDebug"
 msgid "Car susp, long|,lat- slips"
+msgstr ""
+
+msgctxt "InputRoadPick"
+msgid "Space - pick one/none"
 msgstr ""
 
 msgctxt "No"

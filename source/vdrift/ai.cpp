@@ -1,5 +1,4 @@
-#include "stdafx.h"
-
+#include "pch.h"
 #include "ai.h"
 #include "car.h"
 #include "bezier.h"
@@ -9,6 +8,9 @@
 #include "optional.h"
 #include "unittest.h"
 
+//#ifndef
+#define M_PI  3.14159265358979323846
+//#endif
 
 #define GRAVITY 9.8
 

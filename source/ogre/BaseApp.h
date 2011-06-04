@@ -1,18 +1,21 @@
 #ifndef _BaseApp_h_
 #define _BaseApp_h_
-#include "LoadingBar.h"
-#include "../vdrift/settings.h"
-#include <boost/scoped_ptr.hpp>
-#include <OIS/OIS.h>
-#include <MyGUI.h>
-#include <MyGUI_OgrePlatform.h>
-#include "CarModel.h"
-#include "SplitScreenManager.h"
+
+#include <OgreVector3.h>
+#include <OgreFrameListener.h>
+#include <OgreWindowEventUtilities.h>
+
+#include <OISKeyboard.h>
+#include <OISMouse.h>
+
+#include <MyGUI_Prerequest.h>
+
 #include "../network/masterclient.hpp"
 #include "../network/gameclient.hpp"
 
-using namespace Ogre;
-
+namespace MyGUI{  class OgrePlatform;  };
+namespace Ogre {  class SceneNode;  class Root;  class SceneManager;  class RenderWindow;  }
+namespace OIS  {  class InputManager;  class Mouse;  class Keyboard;  }
 namespace OISB {  class System;  };
 
 
@@ -28,13 +31,13 @@ public:
 	bool bLoading;
 	
 	// has to be in baseApp to switch camera on C press
-	std::list<CarModel*> carModels;
+	std::list<class CarModel*> carModels;
 	
 	// translation
 	// can't have it in c'tor, because mygui is not initialized
 	virtual void setTranslations() = 0;
 	
-	SplitScreenManager* mSplitMgr;
+	class SplitScreenManager* mSplitMgr;
 	
 	bool bWindowResized;  bool bSizeHUD;
 	class HDRLogic* mHDRLogic;
@@ -43,9 +46,9 @@ public:
 	
 	void recreateCompositor();
 
-	SceneNode* ndSky; //-
+	Ogre::SceneNode* ndSky; //-
 	int roadUpCnt;
-	LoadingBar mLoadingBar;
+	class LoadingBar* mLoadingBar;
 
 protected:
 	bool mShowDialog, mShutDown;
@@ -60,22 +63,22 @@ protected:
 	void LoadingOn(), LoadingOff();
 
 	///  frame events
-	bool frameRenderingQueued(const FrameEvent& evt);
-	bool frameEnded(const FrameEvent& evt);
-	virtual bool frameStart(Real time) = 0;
-	virtual bool frameEnd(Real time) = 0;
+	bool frameRenderingQueued(const Ogre::FrameEvent& evt);
+	bool frameEnded(const Ogre::FrameEvent& evt);
+	virtual bool frameStart(Ogre::Real time) = 0;
+	virtual bool frameEnd(Ogre::Real time) = 0;
 	
 	///  input events
 	virtual bool keyPressed(const OIS::KeyEvent &arg);  bool keyReleased(const OIS::KeyEvent &arg);
 	bool mouseMoved(const OIS::MouseEvent &arg);
 	bool mousePressed(const OIS::MouseEvent &arg, OIS::MouseButtonID id);
 	bool mouseReleased(const OIS::MouseEvent &arg, OIS::MouseButtonID id);
-	void windowResized(RenderWindow* rw), windowClosed(RenderWindow* rw);
+	void windowResized(Ogre::RenderWindow* rw), windowClosed(Ogre::RenderWindow* rw);
 
 
 	///  Ogre
-	Root *mRoot;  SceneManager* mSceneMgr;
-	RenderWindow* mWindow;
+	Ogre::Root *mRoot;  Ogre::SceneManager* mSceneMgr;
+	Ogre::RenderWindow* mWindow;
 
 	///  input
 	OISB::System* mOISBsys;
@@ -91,14 +94,14 @@ public:
 protected:
 
 	///  ovelay
-	Overlay* mDebugOverlay, *mFpsOverlay;  // fps stats
-	OverlayElement* mOvrFps, *mOvrTris, *mOvrBat, *mOvrDbg;
+	Ogre::Overlay* mDebugOverlay, *mFpsOverlay;  // fps stats
+	Ogre::OverlayElement* mOvrFps, *mOvrTris, *mOvrBat, *mOvrDbg;
 
 	bool alt, ctrl, shift;  // key modifiers
 	bool mbLeft, mbRight, mbMiddle;  // mouse buttons
-	String  mDebugText, mFilText;	// info texts
+	Ogre::String  mDebugText, mFilText;	// info texts
 	bool mbWireFrame, mbShowCamPos;  // on/off
-
+	int iCurCam;
 
 	///  Gui
 	bool isFocGuiOrRpl()  {  return isFocGui || isFocRpl;  }

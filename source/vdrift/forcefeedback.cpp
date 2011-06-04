@@ -1,4 +1,4 @@
-#include "stdafx.h"
+#include "pch.h"
 
 #ifdef ENABLE_FORCE_FEEDBACK
 

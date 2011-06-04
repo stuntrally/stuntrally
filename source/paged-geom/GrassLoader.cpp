@@ -1,3 +1,4 @@
+#include "pch.h"
 /*-------------------------------------------------------------------------------------
 Copyright (c) 2006 John Judnich
 
@@ -7,7 +8,7 @@ Permission is granted to anyone to use this software for any purpose, including 
 	2. Altered source versions must be plainly marked as such, and must not be misrepresented as being the original software.
 	3. This notice may not be removed or altered from any source distribution.
 -------------------------------------------------------------------------------------*/
-#include "stdafx.h"
+//#include "Defines.h"
 #include "GrassLoader.h"
 #include "PagedGeometry.h"
 #include "PropertyMaps.h"
@@ -36,6 +37,9 @@ Permission is granted to anyone to use this software for any purpose, including 
 #include "OgreHighLevelGpuProgram.h"
 #include "OgreHighLevelGpuProgramManager.h"
 using namespace Ogre;
+#ifndef M_PI
+#define M_PI       3.14159265358979323846
+#endif
 
 #include <limits> //for numeric_limits
 
@@ -53,7 +57,7 @@ GrassLoader::GrassLoader(PagedGeometry *geom)
 	heightFunction = NULL;
 	heightFunctionUserData = NULL;
 
-	windDir = Vector3::UNIT_X;
+	windDir = Ogre::Vector3::UNIT_X;
 	densityFactor = 1.0f;
 	renderQueue = geom->getRenderQueue();
 
@@ -77,7 +81,7 @@ GrassLoader::~GrassLoader()
 	}
 }
 
-GrassLayer *GrassLoader::addLayer(const String &material)
+GrassLayer *GrassLoader::addLayer(const Ogre::String &material)
 {
 	GrassLayer *layer = new GrassLayer(geom, this);
 	layer->setMaterialName(material);
@@ -107,7 +111,7 @@ void GrassLoader::frameUpdate()
 
 		layer->_updateShaders();
 
-		GpuProgramParametersSharedPtr params = layer->material->getTechnique(0)->getPass(0)->getVertexProgramParameters();
+		Ogre::GpuProgramParametersSharedPtr params = layer->material->getTechnique(0)->getPass(0)->getVertexProgramParameters();
 		if (layer->animate){
 			//Increment animation frame
 			layer->waveCount += ellapsed * (layer->animSpeed * M_PI);

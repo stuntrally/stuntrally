@@ -1,4 +1,4 @@
-#include "stdafx.h"
+#include "pch.h"
 #include "ReplayGame.h"
 //#include "../vdrift/settings.h"
 
@@ -33,7 +33,7 @@ void ReplayHeader::Default()
 
 Replay::Replay()
 {
-	frames.reserve(cDefSize);  //
+	frames[0].reserve(cDefSize);  //
 }
 
 //  Init  once per game
@@ -43,7 +43,10 @@ void Replay::InitHeader(const char* track, bool trk_user, const char* car, bool 
 	strcpy(header.track, track);  header.track_user = trk_user ? 1 : 0;
 	strcpy(header.car, car);
 	if (bClear)
-	{	frames.clear();  frames.reserve(cDefSize);	}
+	for (int p=0; p < 4; ++p)
+		frames[p].clear();
+	for (int p=0; p < header.numPlayers; ++p)
+		frames[p].reserve(cDefSize);
 }
 
 ///  Load
@@ -52,33 +55,43 @@ bool Replay::LoadFile(std::string file, bool onlyHdr)
 {
 	std::ifstream fi(file.c_str(), std::ios::binary | std::ios::in);
 	if (!fi)  return false;
+	
 	//  header
 	char buf[ciRplHdrSize];  memset(buf,0,ciRplHdrSize);
 	fi.read(buf,ciRplHdrSize);
 	memcpy(&header, buf, sizeof(ReplayHeader));
+	header.numPlayers = std::max(1, std::min(4, header.numPlayers));  // range 1..4
 	
-	frames.clear();
+	//  clear
+	for (int p=0; p < 4; ++p)
+		frames[p].clear();
+	
 	//  only get last frame for time len info, ?save len in hdr..
 	if (onlyHdr)
 	{
-		fi.seekg(-header.frameSize, std::ios::end);
+		fi.seekg(-header.frameSize * header.numPlayers, std::ios::end);
 
-		ReplayFrame fr;
-		fi.read((char*)&fr, header.frameSize/**/);
-		frames.push_back(fr);
-
+		for (int p=0; p < header.numPlayers; ++p)
+		{
+			ReplayFrame fr;
+			fi.read((char*)&fr, header.frameSize);
+			frames[p].push_back(fr);
+		}
 	    fi.close();
 	    return true;
 	}
 	
 	//  frames
-	frames.reserve(cDefSize);
+	frames[0].reserve(cDefSize);  //?
 	while (!fi.eof())
 	{
-		ReplayFrame fr;
-		fi.read((char*)&fr, header.frameSize/**/);
-		frames.push_back(fr);
-		//Log(toStr((float)fr.time) /*+ "  p " + toStr(fr.pos)*/);
+		for (int p=0; p < header.numPlayers; ++p)
+		{
+			ReplayFrame fr;
+			fi.read((char*)&fr, header.frameSize/**/);
+			frames[p].push_back(fr);
+		}
+		//LogO(toStr((float)fr.time) /*+ "  p " + toStr(fr.pos)*/);
 	}
     fi.close();
     return true;
@@ -96,38 +109,40 @@ bool Replay::SaveFile(std::string file)
 	of.write(buf,ciRplHdrSize);
 
 	//  frames
-	int s = frames.size();
+	int s = frames[0].size();
+
 	for (int i=0; i < s; ++i)
-		of.write((char*)&frames[i], sizeof(ReplayFrame));
+	for (int p=0; p < header.numPlayers; ++p)
+		of.write((char*)&frames[p][i], sizeof(ReplayFrame));
 
     of.close();
     return true;
 }
 
 //  add (Record)
-void Replay::AddFrame(const ReplayFrame& frame)
+void Replay::AddFrame(const ReplayFrame& frame, int carNum)
 {
-	if (frame.time > GetTimeLength())  // dont add before last
-		frames.push_back(frame);
+	if (frame.time > GetTimeLength(carNum))  // dont add before last
+		frames[carNum].push_back(frame);
 }
 
 //  last frame time, sec
-float Replay::GetTimeLength()
+float Replay::GetTimeLength(int carNum)
 {
-	int s = frames.size();
+	int s = frames[carNum].size();
 	if (s > 0)
-		return frames[s-1].time;
+		return frames[carNum][s-1].time;
 	else
 		return 0.f;
 }
 
 ///  get (Play)
 //----------------------------------------------------------------
-bool Replay::GetFrame(double time, ReplayFrame* pFr)
+bool Replay::GetFrame(double time, ReplayFrame* pFr, int carNum)
 {
 	static int ic = 0;  // last index for current frame
 
-	int s = frames.size();
+	int s = frames[carNum].size();
 	if (ic > s-1)  ic = s-1;  // new size
 	if (s < 2)  return false;  // empty
 
@@ -135,9 +150,9 @@ bool Replay::GetFrame(double time, ReplayFrame* pFr)
 	//if (ic+2 == s)  return false;  // end
 
 	//  search up
-	while (ic+1 < s-1 && frames[ic+1].time <= time)  ++ic;
+	while (ic+1 < s-1 && frames[carNum][ic+1].time <= time)  ++ic;
 	//  search down
-	while (ic > 0     && frames[ic].time > time)  --ic;
+	while (ic > 0     && frames[carNum][ic].time > time)  --ic;
 
 	/*for (i=0; i < s-1; ++i)  // easiest, bad--
 		if (frames[i+1].time > time)
@@ -146,7 +161,7 @@ bool Replay::GetFrame(double time, ReplayFrame* pFr)
 	///  simple, no interpolation
 	#if 1
 	if (pFr)
-		*pFr = frames[ic];
+		*pFr = frames[carNum][ic];
 	#else
 	//  linear interp ..
 	if (pFr)
@@ -171,7 +186,7 @@ bool Replay::GetFrame(double time, ReplayFrame* pFr)
 	#endif
 
 	//  last time  check if ended
-	if (time <= frames[s-1].time)
+	if (time <= frames[carNum][s-1].time)
 		return true;
 	else
 		return false;

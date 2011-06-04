@@ -1,7 +1,18 @@
-#include "stdafx.h"
+#include "pch.h"
 #include "OgreGame.h"
 #include "../vdrift/game.h"
 #include "CarModel.h" // for CreateModel()
+#include "SplitScreenManager.h"  //-
+
+#include <OgreMaterialManager.h>
+#include <OgreTechnique.h>
+#include <OgrePass.h>
+#include <OgreManualObject.h>
+#include <OgreSceneManager.h>
+#include <OgreSceneNode.h>
+#include <OgreStaticGeometry.h>
+#include <OgreRenderWindow.h>
+using namespace Ogre;
 
 
 ///---------------------------------------------------------------------------------------------------------------
@@ -188,7 +199,7 @@ void App::CreateMinimap()
 	}
 
 	float fMapSizeX = maxX - minX, fMapSizeY = maxY - minY;  // map size
-	float size = max(fMapSizeX, fMapSizeY);
+	float size = std::max(fMapSizeX, fMapSizeY);
 	scX = 1.f / size;  scY = 1.f / size;
 	//scX = 1.f / fMapSizeX;  scY = 1.f / fMapSizeY;
 	//Vector3 vLi(1,20,1);  vLi.normalise();  //par shade
@@ -225,7 +236,7 @@ void App::CreateMinimap()
 				m->position(pos);
 				m->normal(norm);/**/
 
-				Real c = min(1.f,max(0.3f, 1.f - 2.4f * powf( abs(norm.y)
+				Real c = std::min(1.f, std::max(0.3f, 1.f - 2.4f * powf( abs(norm.y)
 					/*norm.absDotProduct(vLi)*/, 0.7f) ));
 				m->colour(ColourValue(c,c,c,1));
 

@@ -1,4 +1,5 @@
-#include "stdafx.h"
+#include "pch.h"
+#include "Defines.h"
 #include "FollowCamera.h"
 #include "../tinyxml/tinyxml.h"
 #include "../vdrift/pathmanager.h"
@@ -6,6 +7,11 @@
 #include "../vdrift/collision_contact.h"
 #include "../bullet/btBulletCollisionCommon.h"
 #include "../btOgre/BtOgreDebug.h"
+
+#include <OgreCamera.h>
+#include <OgreSceneNode.h>
+#include <OgreOverlayElement.h>
+#include <OgreOverlayManager.h>
 using namespace Ogre;
 
 
@@ -121,7 +127,7 @@ void FollowCamera::update( Real time )
 	
 	if (contact.col != NULL)
 	{
-		Log("Collision occured");
+		LogO("Collision occured");
 		// collision occured - update cam pos
 		mCamera->setPosition( BtOgre::Convert::toOgre( btVector3(contact.GetPosition()[0], contact.GetPosition()[1], contact.GetPosition()[2]) ) );
 	}
@@ -178,7 +184,7 @@ void FollowCamera::Move( bool mbLeft, bool mbRight, bool mbMiddle, bool shift, R
 				ca.mYaw -= Radian(s*mx);
 		}
 		//  wheel
-		ca.mPitch  += Radian(mzH * 3.f*PI/180.f);
+		ca.mPitch  += Radian(mzH * 3.f*PI_d/180.f);
 		return;
 	}
 	//----------------------------------------------

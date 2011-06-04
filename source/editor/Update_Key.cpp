@@ -1,8 +1,9 @@
-#include "stdafx.h"
+#include "pch.h"
+#include "Defines.h"
 #include "OgreApp.h"
 #include "../road/Road.h"
 #include "../vdrift/pathmanager.h"
-
+using namespace Ogre;
 
 //  Update  input, info
 //---------------------------------------------------------------------------------------------------------------
@@ -12,15 +13,15 @@ void App::UpdEditWnds()
 	if (mWndBrush){
 		if (edMode == ED_Deform)
 		{	mWndBrush->setCaption("Terrain Deform");  
-			mWndBrush->setColour(Colour(0.5f, 0.9f, 0.3f));
+			mWndBrush->setColour(MyGUI::Colour(0.5f, 0.9f, 0.3f));
 			mWndBrush->setVisible(true);  }
 		else if (edMode == ED_Smooth)
 		{	mWndBrush->setCaption("Terrain Smooth");
-			mWndBrush->setColour(Colour(0.3f, 0.8f, 0.8f));
+			mWndBrush->setColour(MyGUI::Colour(0.3f, 0.8f, 0.8f));
 			mWndBrush->setVisible(true);  }
 		else if (edMode == ED_Start)
 		{	mWndBrush->setCaption("Car Start pos");
-			mWndBrush->setColour(Colour(0.7f, 0.7f, 1.0f));
+			mWndBrush->setColour(MyGUI::Colour(0.7f, 0.7f, 1.0f));
 			mWndBrush->setVisible(true);  }
 		else
 			mWndBrush->setVisible(false);
@@ -97,9 +98,9 @@ void App::togPrvCam()
 void App::trkListNext(int rel)
 {
 	if (!(bGuiFocus && mWndTabs->getIndexSelected() == 0))  return;
-	int i = max(0, min((int)trkList->getItemCount()-1, (int)trkList->getIndexSelected()+rel ));
+	int i = std::max(0, std::min((int)trkList->getItemCount()-1, (int)trkList->getIndexSelected()+rel ));
 	trkList->setIndexSelected(i);
-	trkList->beginToItemAt(max(0, i-11));  // center
+	trkList->beginToItemAt(std::max(0, i-11));  // center
 	listTrackChng(trkList,i);
 }
 
@@ -186,11 +187,11 @@ bool App::KeyPress(const CmdKey &arg)
 
 	if (bGuiFocus && mGUI)  //  GUI  ---------------------
 	{
-		Char text = arg.text;
+		MyGUI::Char text = arg.text;
 		if (shift)	// shift-letters,numbers dont work ??
 		{
 			const static int num = 21;
-			const static Char chT[num][2] = {
+			const static MyGUI::Char chT[num][2] = {
 				{'0',')'},{'1','!'},{'2','@'},{'3','#'},{'4','$'},{'5','%'},{'6','^'},{'7','&'},{'8','*'},{'9','('},
 				{'`','~'},{'-','_'},{'=','+'},{'[','{'},{']','}'},{'\\','|'},{';',':'},{'\'','\"'},{',','<'},{'.','>'},{'/','?'}};
 			if (text >= 'a' && text <= 'z')

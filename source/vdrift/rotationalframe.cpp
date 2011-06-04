@@ -1,5 +1,4 @@
-#include "stdafx.h"
-
+#include "pch.h"
 #include "rotationalframe.h"
 #include "unittest.h"
 

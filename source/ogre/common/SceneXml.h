@@ -1,16 +1,18 @@
 #ifndef _SceneXml_h_
 #define _SceneXml_h_
 
-using namespace Ogre;
+#include <OgreCommon.h>
+#include <OgreVector3.h>
+#include <OgreColourValue.h>
 
 
 struct TerLayer		// terrain texture layer
 {
 	bool on;
 	float tiling;
-	String texFile, texNorm;  // textures
+	Ogre::String texFile, texNorm;  // textures
 	float dust, mud, dustS, smoke;
-	ColourValue tclr;
+	Ogre::ColourValue tclr;
 
 	TerLayer();
 };
@@ -45,9 +47,9 @@ class PagedLayer	// vegetation layer
 {
 public:
 	bool on;
-	String name;  Real dens;
-	Real windFx, windFy;  int addTrRdDist;
-	Real minScale, maxScale, ofsY;
+	Ogre::String name;  Ogre::Real dens;
+	Ogre::Real windFx, windFy;  int addTrRdDist;
+	Ogre::Real minScale, maxScale, ofsY;
 	
 	PagedLayer();
 };
@@ -57,17 +59,17 @@ class Scene		///  Scene
 {
 public:
 	//  sky
-	String skyMtr;
-	int  rainEmit,rain2Emit;  String rainName,rain2Name;
+	Ogre::String skyMtr;
+	int  rainEmit,rain2Emit;  Ogre::String rainName,rain2Name;
 	//  fog
-	FogMode fogMode;  Vector3 fogClr;
-	Real  fogExp, fogStart, fogEnd;
+	Ogre::FogMode fogMode;  Ogre::Vector3 fogClr;
+	Ogre::Real  fogExp, fogStart, fogEnd;
 	//  light
-	Real ldPitch, ldYaw;  // dir angles
-	Vector3 lDir;  Vector3 lAmb,lDiff,lSpec;
+	Ogre::Real ldPitch, ldYaw;  // dir angles
+	Ogre::Vector3 lDir, lAmb,lDiff,lSpec;
 
 	//  particles
-	String  sParDust, sParMud, sParSmoke;
+	Ogre::String  sParDust, sParMud, sParSmoke;
 	
 	//  terrain
 	bool ter;  // 1 own, has terrain, 0 vdrift track
@@ -80,23 +82,23 @@ public:
 	void UpdPgLayers();
 	
 	//  paged
-	Real densTrees, densGrass;
+	Ogre::Real densTrees, densGrass;
 
 	//  grass  -todo layers..
-	Real grPage, grDist;  // vis
-	Real grMinSx,grMinSy, grMaxSx,grMaxSy;  // sizes
-	Real grSwayDistr, grSwayLen, grSwaySpeed;  // sway
+	Ogre::Real grPage, grDist;  // vis
+	Ogre::Real grMinSx,grMinSy, grMaxSx,grMaxSy;  // sizes
+	Ogre::Real grSwayDistr, grSwayLen, grSwaySpeed;  // sway
 
 	//  trees
-	Real trPage, trDist, trDistImp;  // vis
+	Ogre::Real trPage, trDist, trDistImp;  // vis
 	int  trRdDist;  // dist from road to trees
 	
 	//  preview cam
-	Vector3 camPos,camDir;
+	Ogre::Vector3 camPos,camDir;
 		
 	//  methods
 	Scene();  void Default();
-	bool LoadXml(String file), SaveXml(String file);
+	bool LoadXml(Ogre::String file), SaveXml(Ogre::String file);
 };
 
 #endif

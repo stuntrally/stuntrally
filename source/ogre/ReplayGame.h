@@ -69,19 +69,18 @@ public:
 	bool LoadFile(std::string file, bool onlyHdr=false);
 	bool SaveFile(std::string file);
 
-	void AddFrame(const ReplayFrame& frame);    // record
-	bool GetFrame(double time, ReplayFrame* fr);  // play
+	void AddFrame(const ReplayFrame& frame, int carNum);    // record
+	bool GetFrame(double time, ReplayFrame* fr, int carNum);  // play
 
-	float GetTimeLength();  // total time in seconds
-	int GetNumFrames()  {  return frames.size();  }
+	float GetTimeLength(int carNum=0);  // total time in seconds
+	int GetNumFrames()  {  return frames[0].size();  }
 
 	//  inits only basic header data, fill the rest after
 	void InitHeader(const char* track, bool trk_user, const char* car, bool bClear);
 
 	ReplayHeader header;
 private:
-	//std::vector< std::vector<ReplayFrame> > frames;  // cars..
-	std::vector<ReplayFrame> frames;
+	std::vector<ReplayFrame> frames[4];
 };
 
 #endif

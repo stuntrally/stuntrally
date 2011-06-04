@@ -1,5 +1,9 @@
-#include "stdafx.h"
+#include "pch.h"
+#include "../Defines.h"
 #include "SceneXml.h"
+#include "tinyxml.h"
+
+using namespace Ogre;
 
 
 Scene::Scene()
@@ -95,8 +99,8 @@ bool Scene::LoadXml(String file)
 		a = eLi->Attribute("yaw");			if (a)  ldYaw = s2r(a);
 		a = eLi->Attribute("dir");			if (a)  {  lDir = s2v(a);
 			Vector3 d(lDir.normalisedCopy());  // old _
-			ldPitch = -asin(d.y) * 180.f/PI;
-			ldYaw = (atan2(d.z, d.x) + PI/2.0) * 180.f/PI;  if (ldYaw > 180.f)  ldYaw -= 360.f;  }
+			ldPitch = -asin(d.y) * 180.f/PI_d;
+			ldYaw = (atan2(d.z, d.x) + PI_d/2.0) * 180.f/PI_d;  if (ldYaw > 180.f)  ldYaw -= 360.f;  }
 		a = eLi->Attribute("ambient");		if (a)  lAmb = s2v(a);
 		a = eLi->Attribute("diffuse");		if (a)  lDiff = s2v(a);
 		a = eLi->Attribute("specular");		if (a)  lSpec = s2v(a);
@@ -329,8 +333,8 @@ bool Scene::SaveXml(String file)
 	root.InsertEndChild(cam);
 
 
-	xml.InsertEndChild(root);  xml.SaveFile(file.c_str());
-	return true;
+	xml.InsertEndChild(root);
+	return xml.SaveFile(file.c_str());
 }
 
 //--------------------------------------------------------------------------------------------------------------------------------------

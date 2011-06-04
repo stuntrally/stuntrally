@@ -1,8 +1,8 @@
 #ifndef _RESEATABLE_REFERENCE_H
 #define _RESEATABLE_REFERENCE_H
 
-//#include <cassert>
-//#include <cstdlib>
+#include <cassert>
+#include <cstdlib>
 
 template <typename T>
 class reseatable_reference

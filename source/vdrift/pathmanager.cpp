@@ -1,9 +1,14 @@
+#include "pch.h"
 /// Big portions of this file are borrowed and adapted from Performous under GPL (http://performous.org)
 
-#include "stdafx.h"
 
 #include "pathmanager.h"
 #include <boost/filesystem.hpp>
+#include <string>
+#include <fstream>
+#include <list>
+#include <cassert>
+#include <sstream>
 
 #ifdef _WIN32
 #include <windows.h>
@@ -19,7 +24,9 @@
 #define OGRE_PLUGIN_DIR ""
 #endif
 
+
 // TODO: Create a PORTABLE_INSTALL flag that allows disabling the usage of system dirs
+
 
 // Define this useful alias for the overlong namespace name
 namespace fs = boost::filesystem;
@@ -27,6 +34,7 @@ namespace fs = boost::filesystem;
 namespace {
 	fs::path execname();
 }
+
 
 /*static*/ std::string PATHMANAGER::ogre_plugin_dir;
 /*static*/ std::string PATHMANAGER::home_dir;
@@ -36,6 +44,7 @@ namespace {
 /*static*/ std::string PATHMANAGER::game_data_dir;
 /*static*/ std::string PATHMANAGER::cache_dir;
 /*static*/ std::string PATHMANAGER::profile_suffix;
+
 
 void PATHMANAGER::Init(std::ostream & info_output, std::ostream & error_output)
 {
@@ -131,7 +140,7 @@ void PATHMANAGER::Init(std::ostream & info_output, std::ostream & error_output)
 	}
 	#endif
 	// Create user's config dir
-	CreateDirectory(user_config_dir);
+	CreateDir(user_config_dir, error_output);
 
 	// Find user's data dir (for additional data)
 	#ifdef _WIN32
@@ -144,12 +153,12 @@ void PATHMANAGER::Init(std::ostream & info_output, std::ostream & error_output)
 	}
 	#endif
 	// Create user's data dir and its children
-	CreateDirectory(user_data_dir);
-	CreateDirectory(user_data_dir + "/records");
-	CreateDirectory(user_data_dir + "/screenshots");
-	CreateDirectory(user_data_dir + "/tracks");  // user tracks
-	CreateDirectory(user_data_dir + "/tracks/_previews");
-	CreateDirectory(user_data_dir + "/replays");
+	CreateDir(user_data_dir, error_output);
+	CreateDir(user_data_dir + "/records", error_output);
+	CreateDir(user_data_dir + "/screenshots", error_output);
+	CreateDir(user_data_dir + "/tracks", error_output);  // user tracks
+	CreateDir(user_data_dir + "/tracks/_previews", error_output);
+	CreateDir(user_data_dir + "/replays", error_output);
 
 	// Find game data dir and defaults config dir
 	char *datadir = getenv("STUNTRALLY_DATA_ROOT");
@@ -200,7 +209,7 @@ void PATHMANAGER::Init(std::ostream & info_output, std::ostream & error_output)
 	cache_dir = (xdg_cache_home ? xdg_cache_home / shortDir : fs::path(home_dir) / ".cache" / shortDir).string();
 	#endif
 	// Create cache dir
-	CreateDirectory(cache_dir);
+	CreateDir(cache_dir, error_output);
 
 	// Print diagnostic info
 	info_output << "Ogre plugin directory: " << ogre_plugin_dir << std::endl;
@@ -213,15 +222,30 @@ void PATHMANAGER::Init(std::ostream & info_output, std::ostream & error_output)
 	info_output << "Log directory: " << GetLogDir() << std::endl;
 }
 
-bool PATHMANAGER::CreateDirectory(const std::string& path)
+bool PATHMANAGER::FileExists(const std::string & filename)
 {
-	try { fs::create_directories(path); }
-	catch (...) {
-		std::cerr << "Could not create directory " << path << std::endl;
+	std::ifstream test(filename.c_str());
+	if (test)  return true;
+	else  return false;
+}
+
+bool PATHMANAGER::CreateDir(const std::string& path, std::ostream & error_output)
+{
+	try	{	fs::create_directories(path);	}
+	catch (...)
+	{
+		error_output << "Could not create directory " << path << std::endl;
 		return false;
 	}
 	return true;
 }
+
+void PATHMANAGER::SetProfile(const std::string& value)
+{
+	assert(game_data_dir.empty()); // Assert that Init() hasn't been called yet
+	profile_suffix = "." + value;
+}
+
 
 // TODO: This is probably far easier and more elegant to implement with boost::filesystem
 bool PATHMANAGER::GetFolderIndex(std::string folderpath, std::list <std::string> & outputfolderlist, std::string extension)

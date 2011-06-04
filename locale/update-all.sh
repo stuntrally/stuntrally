@@ -1,15 +1,23 @@
 #!/bin/bash
 
 echo "Generating new template..."
-./xml_po_parser.py ../data/gui/core_language_english_tag.xml ./stuntrally.pot
+./xml_po_parser.py ../data/gui/core_language_en_tag.xml ./stuntrally.pot
 
 echo "Fetching new translations..."
-cd ./translations-export/locale
+
+if [ ! -d ./translations-export ]; then
+	mkdir ./translations-export
+	cd ./translations-export
+	bzr branch lp:~stuntrally-team/stuntrally/pofiles
+	cd ..
+fi
+
+cd ./translations-export/pofiles
 bzr pull
 cd ../..
 
 echo "Generating languages..."
-./xml_po_parser.py ./translations-export/locale/de.po ../data/gui/core_language_german_tag.xml
-./xml_po_parser.py ./translations-export/locale/fi.po ../data/gui/core_language_finnish_tag.xml
+./xml_po_parser.py ./translations-export/pofiles/locale/de.po ../data/gui/core_language_de_tag.xml
+./xml_po_parser.py ./translations-export/pofiles/locale/fi.po ../data/gui/core_language_fi_tag.xml
 
 echo "Done"

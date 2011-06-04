@@ -1,12 +1,29 @@
-#include "stdafx.h"
+#include "pch.h"
+#include "Defines.h"
 #include "BaseApp.h"
+#include "LoadingBar.h"
 #include "FollowCamera.h"
 #include "../vdrift/pathmanager.h"
+#include "../vdrift/settings.h"
+
 #include "CompositorLogics.h"
 #include "Locale.h"
-#include "OgreFontManager.h"
+#include "SplitScreenManager.h"
+#include "CarModel.h"
+
+#include <OgreFontManager.h>
+#include <OgreLogManager.h>
+#include <OgreOverlayManager.h>
+
+#include <OIS/OIS.h>
 #include "../oisb/OISB.h"
 #include "boost/filesystem.hpp"
+
+#include <MyGUI.h>
+#include <MyGUI_OgrePlatform.h>
+
+using namespace Ogre;
+
 
 //  Camera
 //-------------------------------------------------------------------------------------
@@ -18,9 +35,9 @@ void BaseApp::createCamera()
 //-------------------------------------------------------------------------------------
 void BaseApp::createFrameListener()
 {
-	LogManager::getSingletonPtr()->logMessage("*** Initializing OIS ***");
+	Ogre::LogManager::getSingletonPtr()->logMessage("*** Initializing OIS ***");
 
-	OverlayManager& ovr = OverlayManager::getSingleton();
+	Ogre::OverlayManager& ovr = OverlayManager::getSingleton();
 	mFpsOverlay = ovr.getByName("Core/FpsOverlay");  //mFpsOverlay->show();//
 	mDebugOverlay = ovr.getByName("Core/DebugOverlay");  //mDebugOverlay->show();//*
 	mOvrFps = ovr.getOverlayElement("Core/CurrFps"),
@@ -233,16 +250,16 @@ BaseApp::BaseApp() :
 	mbLeft(0), mbRight(0), mbMiddle(0), 
 	isFocGui(0),isFocRpl(0), mGUI(0), mPlatform(0),
 	mWndOpts(0), mWndTabs(0), mWndRpl(0), bSizeHUD(true), bLoading(false), bAssignKey(false), pressedKey(static_cast<OIS::KeyCode>(0) ),
-
 	mDebugOverlay(0), mFpsOverlay(0), mOvrFps(0), mOvrTris(0), mOvrBat(0), mOvrDbg(0),
-	mbShowCamPos(0), ndSky(0), mbWireFrame(0),
-
+	mbShowCamPos(0), ndSky(0), mbWireFrame(0), iCurCam(0),
 	mMasterClient(), mClient(), mLobbyState(DISCONNECTED)
 {
+	mLoadingBar = new LoadingBar();
 }
 
 BaseApp::~BaseApp()
 {
+	delete mLoadingBar;
 	delete mSplitMgr;
 	
 	if (mGUI)  {
@@ -272,20 +289,15 @@ bool BaseApp::configure()
 	{
 		if (!mRoot->showConfigDialog()) return false;
 		mWindow = mRoot->initialise(true, "Stunt Rally");
-	}
-	else
-	{
+	}else{
 		RenderSystem* rs;
 		if (rs = mRoot->getRenderSystemByName(pSet->rendersystem))
 		{
 			mRoot->setRenderSystem(rs);
-		}
-		else
-		{
-			Log("RenderSystem '" + pSet->rendersystem + "' is not available. Exiting.");
+		}else{
+			LogO("RenderSystem '" + pSet->rendersystem + "' is not available. Exiting.");
 			return false;
 		}
-
 		if (pSet->rendersystem == "OpenGL Rendering Subsystem")  // not on dx
 			mRoot->getRenderSystem()->setConfigOption("RTT Preferred Mode", pSet->buffer);
 			
@@ -298,7 +310,7 @@ bool BaseApp::configure()
 
 		mWindow = mRoot->createRenderWindow("Stunt Rally", pSet->windowx, pSet->windowy, pSet->fullscreen, &settings);
 	}
-	mLoadingBar.bBackgroundImage = pSet->loadingbackground;
+	mLoadingBar->bBackgroundImage = pSet->loadingbackground;
 	return true;
 }
 
@@ -364,8 +376,18 @@ bool BaseApp::setup()
 	mGUI = new MyGUI::Gui();
 	mGUI->initialise("core.xml", PATHMANAGER::GetLogDir() + "/MyGUI.log");
 	mGUI->setVisiblePointer(false);
-	MyGUI::LanguageManager::getInstance().setCurrentLanguage(getSystemLanguage());
 	
+	// ------------------------- lang ------------------------
+	if (pSet->language == "") // autodetect
+		pSet->language = getSystemLanguage();
+	
+	// valid?
+	if (!boost::filesystem::exists(PATHMANAGER::GetDataPath() + "/gui/core_language_" + pSet->language + "_tag.xml"))
+		pSet->language = "en";
+		
+	MyGUI::LanguageManager::getInstance().setCurrentLanguage(pSet->language);
+	// -------------------------------------------------------
+		
 	mPlatform->getRenderManagerPtr()->setSceneManager(mSplitMgr->mGuiSceneMgr);
 	mPlatform->getRenderManagerPtr()->setActiveViewport(mSplitMgr->mNumPlayers);
 	
@@ -393,7 +415,7 @@ void BaseApp::setupResources()
 {
 	// Load resource paths from config file
 	ConfigFile cf;
-	string s = PATHMANAGER::GetGameConfigDir() + "/resources.cfg";
+	std::string s = PATHMANAGER::GetGameConfigDir() + "/resources.cfg";
 	cf.load(s);
 
 	// Go through all sections & settings in the file
@@ -434,7 +456,7 @@ void BaseApp::LoadingOn()
 	mSplitMgr->SetBackground(ColourValue(0.15,0.165,0.18));
 	mSplitMgr->mGuiViewport->setBackgroundColour(ColourValue(0.15,0.165,0.18,1.0));
 	mSplitMgr->mGuiViewport->setClearEveryFrame(true);
-	mLoadingBar.start(mWindow, 1, 1, 1 );
+	mLoadingBar->start(mWindow, 1, 1, 1 );
 
 	// Turn off  rendering except overlays
 	mSceneMgr->clearSpecialCaseRenderQueues();
@@ -448,7 +470,7 @@ void BaseApp::LoadingOff()
 	mSplitMgr->mGuiViewport->setBackgroundColour(ColourValue(0.5,0.65,0.8));
 	mSceneMgr->clearSpecialCaseRenderQueues();
 	mSceneMgr->setSpecialCaseRenderQueueMode(SceneManager::SCRQM_EXCLUDE);
-	mLoadingBar.finish();
+	mLoadingBar->finish();
 }
 
 
@@ -476,7 +498,9 @@ bool BaseApp::mouseMoved( const OIS::MouseEvent &arg )
 
 	///  Follow Camera Controls
 	// -for all cars
-	for (std::list<CarModel*>::iterator it=carModels.begin(); it!=carModels.end(); it++)
+	int i = 0;
+	for (std::list<CarModel*>::iterator it=carModels.begin(); it!=carModels.end(); it++, i++)
+	if (i == iCurCam)
 	{
 		if ((*it)->fCam)
 			(*it)->fCam->Move( mbLeft, mbRight, mbMiddle, shift, arg.state.X.rel, arg.state.Y.rel, arg.state.Z.rel );

@@ -1,5 +1,4 @@
-#include "stdafx.h"
-
+#include "pch.h"
 #include "collision_detection.h"
 #include "unittest.h"
 
@@ -536,5 +535,3 @@ QT_TEST(collision_test)
       QT_CHECK_EQUAL(settings.GetGroup(),2);
    }
 }
-//and of course, youhave to remove #include <stl/_auto_ptr.h> from the stdafx.h
-//and the stlportxxx.lib library link reference.

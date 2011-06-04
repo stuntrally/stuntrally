@@ -2,6 +2,7 @@ data/tracks
 *build
 build32
 build64
+build-*
 Debug*
 Release*
 game.cfg
@@ -16,3 +17,4 @@ bin
 StuntRally*.*
 SR?Editor*.*
 CMakeLists.txt.user
+locale/translations-export

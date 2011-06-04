@@ -1,25 +1,25 @@
 #ifndef _SplineBase_h_
 #define _SplineBase_h_
 
-using namespace Ogre;
+#include <OgreVector3.h>
 
 
 class SplinePoint
 {
 public:
-	Vector3 pos, tan;  // position, tangent (computed)
-	Real width, wtan;  // road width
+	Ogre::Vector3 pos, tan;  // position, tangent (computed)
+	Ogre::Real width, wtan;  // road width
 
-	Real aYaw,aRoll, tYaw,tRoll;   // yaw,pitch angles+tan
-	Real aY,aR;   // yaw,pitch after prepass+
+	Ogre::Real aYaw,aRoll, tYaw,tRoll;   // yaw,pitch angles+tan
+	Ogre::Real aY,aR;   // yaw,pitch after prepass+
 
 	bool onTer;   // sticked on terrain
 	int  cols;    // on/off columns
 
-	Real pipe;    // pipe width
+	Ogre::Real pipe;    // pipe width
 	int idMtr;    // material id road/pipe
 	
-	Real chkR;    // checkpoint sphere radius (0-none)
+	Ogre::Real chkR;    // checkpoint sphere radius (0-none)
 
 	SplinePoint();
 	void SetDefault();
@@ -29,8 +29,8 @@ public:
 class CheckSphere
 {
 public:
-	Vector3 pos;
-	Real r,r2;  // radius, r*r
+	Ogre::Vector3 pos;
+	Ogre::Real r,r2;  // radius, r*r
 };
 
 
@@ -42,22 +42,22 @@ public:
 
 
 	void clear();
-	void addPoint(const Vector3& p);
+	void addPoint(const Ogre::Vector3& p);
 	int getNumPoints() const;
 
-	const Vector3& getPos(int index) const;
-	void setPos(int index, const Vector3& value);
+	const Ogre::Vector3& getPos(int index) const;
+	void setPos(int index, const Ogre::Vector3& value);
 
 
 	//  get value over the whole spline
-	Vector3 interpolate(Real t) const;
+	Ogre::Vector3 interpolate(Ogre::Real t) const;
 	//  get value at a single segment of the spline
-	Vector3 interpolate(int id, Real t) const;
+	Ogre::Vector3 interpolate(int id, Ogre::Real t) const;
 
 	//  interp 1dim vars
-	Real interpWidth(int id, Real t) const;
-	Real interpAYaw(int id, Real t) const;
-	Real interpARoll(int id, Real t) const;
+	Ogre::Real interpWidth(int id, Ogre::Real t) const;
+	Ogre::Real interpAYaw(int id, Ogre::Real t) const;
+	Ogre::Real interpARoll(int id, Ogre::Real t) const;
 	
 	void recalcTangents(), preAngle(int i);
 	void setAutoCalculate(bool autoCalc);

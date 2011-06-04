@@ -1,5 +1,4 @@
-#include "stdafx.h"
-
+#include "pch.h"
 #include "roadpatch.h"
 
 bool ROADPATCH::Collide(

@@ -1,3 +1,4 @@
+#include "pch.h"
 /*-------------------------------------------------------------------------------------
 Copyright (c) 2006 John Judnich
 
@@ -7,7 +8,7 @@ Permission is granted to anyone to use this software for any purpose, including 
 2. Altered source versions must be plainly marked as such, and must not be misrepresented as being the original software.
 3. This notice may not be removed or altered from any source distribution.
 -------------------------------------------------------------------------------------*/
-#include "stdafx.h"
+//#include "Defines.h"
 #include "PropertyMaps.h"
 #include "PagedGeometry.h"
 

@@ -1,5 +1,9 @@
-#include "stdafx.h"
+#include "pch.h"
+#include "../ogre/Defines.h"
 #include "SplineBase.h"
+#include <OgreVector4.h>
+#include <OgreLogManager.h>
+using namespace Ogre;
 
 
 SplineBase::SplineBase() :
@@ -93,16 +97,16 @@ Real SplineBase::interpARoll(int id, Real t) const
 
 void SplineBase::preAngle(int i)
 {
-	//Log("pre + " + toStr(i));
+	//LogO("pre + " + toStr(i));
 	int i1 = (i+1) % mP.size();
 	//  more than 180 swirl - wrong at start/end
 	const Real asw = 180;
 	Real ay = mP[i].aYaw, ay1 = mP[i1].aYaw, ay21 = ay1-ay;
 	//Real ar = mP[i].aRoll,ar1 = mP[i1].aRoll,ar21 = ar1-ar;
-	while (ay21 > asw) {  Log(">a1.yw21: "+toStr(ay21)+"  ay2: "+toStr(ay1)+"  ay1: "+toStr(ay));  ay21 -= 2*asw;  ay1 -= 2*asw;  }
-	while (ay21 <-asw) {  Log("<a2.yw21: "+toStr(ay21)+"  ay2: "+toStr(ay1)+"  ay1: "+toStr(ay));  ay21 += 2*asw;  ay1 += 2*asw;  }
-	//while (ar21 > asw) {  Log(">a3.rl21: "+toStr(ar21)+"  ar2: "+toStr(ar1)+"  ar1: "+toStr(ar));  ar21 -= 2*asw;  ar1 -= 2*asw;  }
-	//while (ar21 <-asw) {  Log("<a4.rl21: "+toStr(ar21)+"  ar2: "+toStr(ar1)+"  ar1: "+toStr(ar));  ar21 += 2*asw;  ar1 += 2*asw;  }
+	while (ay21 > asw) {  LogO(">a1.yw21: "+toStr(ay21)+"  ay2: "+toStr(ay1)+"  ay1: "+toStr(ay));  ay21 -= 2*asw;  ay1 -= 2*asw;  }
+	while (ay21 <-asw) {  LogO("<a2.yw21: "+toStr(ay21)+"  ay2: "+toStr(ay1)+"  ay1: "+toStr(ay));  ay21 += 2*asw;  ay1 += 2*asw;  }
+	//while (ar21 > asw) {  LogO(">a3.rl21: "+toStr(ar21)+"  ar2: "+toStr(ar1)+"  ar1: "+toStr(ar));  ar21 -= 2*asw;  ar1 -= 2*asw;  }
+	//while (ar21 <-asw) {  LogO("<a4.rl21: "+toStr(ar21)+"  ar2: "+toStr(ar1)+"  ar1: "+toStr(ar));  ar21 += 2*asw;  ar1 += 2*asw;  }
 	mP[i].aY = ay;  mP[i1].aY = ay1;
 	//mP[i].aR = ar;  mP[i1].aR = ar1;
 }

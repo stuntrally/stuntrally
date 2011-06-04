@@ -1,5 +1,4 @@
-#include "stdafx.h"
-
+#include "pch.h"
 #include "mathplane.h"
 #include "unittest.h"
 

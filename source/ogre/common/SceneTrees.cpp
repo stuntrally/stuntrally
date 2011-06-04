@@ -1,10 +1,12 @@
-#include "stdafx.h"
+#include "pch.h"
+#include "../Defines.h"
 #ifdef ROAD_EDITOR
 	#include "../../editor/OgreApp.h"
 #else
 	#include "../OgreGame.h"
 	#include "../vdrift/settings.h"
 	#include "../vdrift/game.h"
+	#include "../ogre/SplitScreenManager.h"
 #endif
 #include "../../paged-geom/GrassLoader.h"
 #include "../../paged-geom/BatchPage.h"
@@ -12,6 +14,9 @@
 #include "../../paged-geom/ImpostorPage.h"
 #include "../../paged-geom/TreeLoader2D.h"
 #include "BltObjects.h"
+
+#include <OgreTerrain.h>
+using namespace Ogre;
 
 
 //---------------------------------------------------------------------------------------------------------------
@@ -64,7 +69,7 @@ void App::CreateTrees()
 	Image imgRoad;  imgRoad.load("grassDensity.png","General");
 	imgRoadSize = imgRoad.getWidth();  // square[]
 	//imgRoad.save("grassDens.png");
-	//Log("grass img " + toStr(imgRoadSize));
+	//LogO("grass img " + toStr(imgRoadSize));
 
 	using namespace Forests;
 	Real tws = sc.td.fTerWorldSize * 0.5f;
@@ -74,7 +79,7 @@ void App::CreateTrees()
 
 	bool bWind = 1;	 /// WIND
 
-	Real fGrass = pSet->grass * sc.densGrass * 3.0f;  // min(pSet->grass, 
+	Real fGrass = pSet->grass * sc.densGrass * 3.0f;  // std::min(pSet->grass, 
 	Real fTrees = pSet->trees * sc.densTrees;
 	
 	if (fGrass > 0.f)
@@ -181,8 +186,8 @@ void App::CreateTrees()
 					for (int jj = -c; jj <= c; ++jj)
 					for (int ii = -c; ii <= c; ++ii)
 						if (imgRoad.getColourAt(
-							max(0,min(r-1, mx+ii)),
-							max(0,min(r-1, my+jj)), 0).g < 0.95f)
+							std::max(0,std::min(r-1, mx+ii)),
+							std::max(0,std::min(r-1, my+jj)), 0).g < 0.95f)
 								add = false;
 				}
 				
@@ -231,7 +236,7 @@ void App::CreateTrees()
 				#endif
 			}
 		}
-		Log(string("***** Vegetation objects count: ") + toStr(cntr) + "  shapes: " + toStr(cntshp));
+		LogO(String("***** Vegetation objects count: ") + toStr(cntr) + "  shapes: " + toStr(cntshp));
 	}
 	//imgRoadSize = 0;
 }

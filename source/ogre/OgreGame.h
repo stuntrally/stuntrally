@@ -2,18 +2,21 @@
 #define _OgreGame_h_
 
 #include "BaseApp.h"
-#include "../btOgre/BtOgreDebug.h"
-#include "../paged-geom/PagedGeometry.h"
 #include "common/SceneXml.h"
 #include "common/BltObjects.h"
+
 #include "ReplayGame.h"
 #include "CarModel.h"
+#include "CarReflection.h"
 
-using namespace Ogre;
-using namespace MyGUI;
+#include <MyGUI.h>
+#include <OgreShadowCameraSetup.h>
 
+namespace Ogre {  class SceneNode;  class Root;  class SceneManager;  class RenderWindow;  class Viewport;  class Light;
+	class Terrain;  class TerrainGlobalOptions;  class TerrainGroup;  class TerrainPaging;  class PageManager;  }
+namespace Forests {  class PagedGeometry;  }
+namespace BtOgre  {  class DebugDrawer;  }
 
-#include "CarReflection.h" //ciShadowSizesA, ciShadowNumSizes
 
 
 class App : public BaseApp, public GameClientCallback, public MasterClientCallback //, public RenderTargetListener
@@ -28,71 +31,68 @@ public:
 	// translation
 	// can't have it in c'tor, because mygui is not initialized
 	void setTranslations();
-
-	/// car ----------------
-	//std::list<CarModel*> carModels; //in BaseApp
 	
 	// This list holds new positions info for every CarModel
 	std::list<PosInfo> newPosInfos;
 	
 	// Utility
-	Quaternion qFixCar,qFixWh;
+	Ogre::Quaternion qFixCar,qFixWh;
 
 	Replay replay;  ReplayFrame fr;
 
 	Scene sc;  /// scene.xml
 	BltObjects objs;  // veget collision in bullet
-	Light* sun;  void UpdFog(bool bForce=false), UpdSun();
+	Ogre::Light* sun;  void UpdFog(bool bForce=false), UpdSun();
 	
 	// Rain, snow
-	ParticleSystem *pr,*pr2;
+	Ogre::ParticleSystem *pr,*pr2;
 	
 	//  trees
-	class Forests::PagedGeometry *trees, *grass;
+	Forests::PagedGeometry *trees, *grass;
 	
-	void UpdateHUD(class CAR* pCar, float time, Viewport* vp=NULL), SizeHUD(bool full, Viewport* vp=NULL);
+	void UpdateHUD(class CAR* pCar, float time, Ogre::Viewport* vp=NULL), SizeHUD(bool full, Ogre::Viewport* vp=NULL);
 
 protected:
 	virtual void createScene();
 	virtual void destroyScene();
 
-	virtual bool frameStart(Real time);
-	virtual bool frameEnd(Real time);
+	virtual bool frameStart(Ogre::Real time);
+	virtual bool frameEnd(Ogre::Real time);
 	virtual bool keyPressed( const OIS::KeyEvent &arg );
 		
-	class BtOgre::DebugDrawer *dbgdraw;  /// blt dbg
+	BtOgre::DebugDrawer *dbgdraw;  /// blt dbg
 
 	//  mtr reload
 	enum eMaterials {
 		Mtr_CarBody, Mtr_CarInterior, Mtr_CarGlass,
 		Mtr_CarTireFront, Mtr_CarTireRear,
 		Mtr_Road,  NumMaterials  };
-	String sMtr[NumMaterials];
-	void reloadMtrTex(String mtrName);
+	Ogre::String sMtr[NumMaterials];
+	void reloadMtrTex(Ogre::String mtrName);
 
 	//  2D, hud  ----
 	float asp,  xcRpm, ycRpm, xcVel, ycVel,
 		fMiniX,fMiniY, scX,scY, ofsX,ofsY, minX,maxX, minY,maxY;  // minimap
 
-	SceneNode *nrpmB, *nvelBk,*nvelBm, *nrpm, *nvel;  // gauges
-	SceneNode *ndPos, *ndMap, *ndLine;  // car pos on minimap
-	ManualObject* mrpm, *mvel, *mpos;
-	ManualObject* Create2D(const String& mat, SceneManager* sceneMgr, Real size, bool dyn = false);
+	Ogre::SceneNode *nrpmB, *nvelBk,*nvelBm, *nrpm, *nvel;  // gauges
+	Ogre::SceneNode *ndPos, *ndMap, *ndLine;  // car pos on minimap
+	Ogre::ManualObject* mrpm, *mvel, *mpos;
+	Ogre::ManualObject* Create2D(const Ogre::String& mat, Ogre::SceneManager* sceneMgr, Ogre::Real size, bool dyn = false);
 
-	OverlayElement* hudGear,*hudVel, *ovL[5],*ovR[5],*ovS[5],*ovU[5], *hudAbs,*hudTcs, *hudTimes,*hudCheck;
-	Overlay* ovGear,*ovVel, *ovAbsTcs,*ovCarDbg,*ovCarDbgTxt,  *ovCam, *ovTimes;
+	Ogre::OverlayElement* hudGear,*hudVel, *ovL[5],*ovR[5],*ovS[5],*ovU[5], *hudAbs,*hudTcs, *hudTimes,*hudCheck;
+	Ogre::Overlay* ovGear,*ovVel, *ovAbsTcs,*ovCarDbg,*ovCarDbgTxt,  *ovCam, *ovTimes;
 
-	String GetTimeString(float time) const;
+	Ogre::String GetTimeString(float time) const;
 	void CreateHUD(), ShowHUD(bool hideAll=false);
 
 
 	//  create  . . . . . . . . . . . . . . . . . . . . . . . . 
-	String resCar, resTrk, resDrv;
+	Ogre::String resCar, resTrk, resDrv;
 	void CreateCar();
 	void CreateTrack(), CreateRacingLine(), CreateMinimap(), CreateRoadBezier();
 	void CreateTerrain(bool bNewHmap=false, bool bTer=true), CreateBltTerrain();
 	void CreateTrees(), CreateRoad(), CreateProps();
-	void CreateSkyDome(String sMater, Vector3 scale);
+	void CreateSkyDome(Ogre::String sMater, Ogre::Vector3 scale);
 	void NewGame();  void NewGameDoLoad(); bool IsTerTrack();
 	
 	// Loading
@@ -108,18 +108,18 @@ protected:
 
 
 	///  terrain
-	Terrain* terrain;	TerrainGlobalOptions* mTerrainGlobals;
-	TerrainGroup* mTerrainGroup;  bool mPaging;
-	TerrainPaging* mTerrainPaging;	PageManager* mPageManager;
+	Ogre::Terrain* terrain;  Ogre::TerrainGlobalOptions* mTerrainGlobals;
+	Ogre::TerrainGroup* mTerrainGroup;  bool mPaging;
+	Ogre::TerrainPaging* mTerrainPaging;  Ogre::PageManager* mPageManager;
 	//Vector3 getNormalAtWorldPosition(Terrain* terrain, Real x, Real z, Real s);
 
 	int iBlendMaps, blendMapSize;	//  mtr from ter  . . . 
 	char* blendMtr;  // mtr [blendMapSize x blendMapSize]
-	void initBlendMaps(Terrain* terrain);
-	void configureTerrainDefaults(Light* l);
+	void initBlendMaps(Ogre::Terrain* terrain);
+	void configureTerrainDefaults(Ogre::Light* l);
 		
-	void changeShadows(), UpdPSSMMaterials(), setMtrSplits(String sMtrName);
-	Vector4 splitPoints;  ShadowCameraSetupPtr mPSSMSetup;
+	void changeShadows(), UpdPSSMMaterials(), setMtrSplits(Ogre::String sMtrName);
+	Ogre::Vector4 splitPoints;  Ogre::ShadowCameraSetupPtr mPSSMSetup;
 
 
 	//  road
@@ -127,31 +127,31 @@ public:
 	class SplineRoad* road;
 protected:
 	//  start pos, lap
-	bool bGetStPos;  Matrix4 matStPos;	Vector4 vStDist;
+	bool bGetStPos;  Ogre::Matrix4 matStPos;  Ogre::Vector4 vStDist;
 	int iInChk, iCurChk, iNextChk, iNumChks;  // cur checkpoint -1 at start
 	bool bInSt, bWrongChk;
 
 	///  Gui  ---------------------------------------------------------------------------
-	void InitGui();
+	void InitGui(), toggleGui();
 	void UpdGuiRdStats(const SplineRoad* rd, const Scene& sc, float time), ReadTrkStats();
 
 	//  tooltips
-	WidgetPtr mToolTip;  EditPtr mToolTipTxt;
-	void setToolTips(EnumeratorWidgetPtr widgets);
-	void notifyToolTip(Widget* sender, const ToolTipInfo& info);
-	void boundedMove(Widget *moving, const IntPoint & point);
+	MyGUI::WidgetPtr mToolTip;  MyGUI::EditPtr mToolTipTxt;
+	void setToolTips(MyGUI::EnumeratorWidgetPtr widgets);
+	void notifyToolTip(MyGUI::Widget* sender, const MyGUI::ToolTipInfo& info);
+	void boundedMove(MyGUI::Widget *moving, const MyGUI::IntPoint & point);
 
 	//  Gui events
-	typedef WidgetPtr WP;
+	typedef MyGUI::WidgetPtr WP;
 	typedef std::list <std::string> strlist;
 		//  slider event and its text field for value
-	#define SLV(name)  void sl##name(SL);  StaticTextPtr val##name;
+	#define SLV(name)  void sl##name(SL);  MyGUI::StaticTextPtr val##name;
 	#define SL  WP wp, size_t val	//  slider event args
 	
 	// input tab
-	void controlBtnClicked(Widget* sender), InitInputGui(), UpdateJsButtons();
-	void joystickBindChanged(Widget* sender,size_t val);
-	void joystickSelectionChanged(Widget* sender,size_t val);
+	void controlBtnClicked(WP), InitInputGui(), UpdateJsButtons();
+	void joystickBindChanged(WP, size_t val);
+	void joystickSelectionChanged(WP, size_t val);
 
 	//  sliders
 	SLV(Anisotropy);  SLV(ViewDist);  SLV(TerDetail);  SLV(TerDist);  SLV(RoadDist);  // detail
@@ -165,51 +165,57 @@ protected:
 	SLV(BloomInt);  SLV(BloomOrig);  SLV(BlurIntens);  // video
 
 	//  checks
-	void chkFps(WP), chkGauges(WP),	chkMinimap(WP), chkRacingLine(WP),  // view
+	void chkFps(WP), chkGauges(WP),	chkDigits(WP), chkMinimap(WP), chkRacingLine(WP),  // view
 		chkCamInfo(WP), chkTimes(WP), chkCarDbgBars(WP), chkCarDbgTxt(WP), chkBltDebug(WP), chkBltProfilerTxt(WP),
 		chkReverse(WP), chkParticles(WP), chkTrails(WP),
 		chkAbs(WP), chkTcs(WP), chkGear(WP), chkRear(WP), chkClutch(WP),  // car
 		chkOgreDialog(WP), chkAutoStart(WP), chkEscQuits(WP), chkBltLines(WP),  // startup
 		chkVidBloom(WP), chkVidHDR(WP), chkVidBlur(WP),  // video
 		chkVidFullscr(WP), chkVidVSync(WP), UpdBloomVals(),
-		chkLoadPics(WP), chkVegetCollis(WP), chkDigits(WP);
+		chkLoadPics(WP), chkVegetCollis(WP), chkCarCollis(WP);
+
+	// language
+	void comboLanguage(SL);
+	std::map<std::string, std::string> supportedLanguages; // <short name, display name>
 
 	void comboTexFilter(SL);
-	ButtonPtr bRkmh, bRmph;  void radKmh(WP), radMph(WP), btnTrGrReset(WP), btnQuit(WP), btnResChng(WP);
-	ButtonPtr chDbgT,chDbgB, chBlt,chBltTxt, chFps, chTimes,chMinimp, bnQuit;
+	MyGUI::ButtonPtr bRkmh, bRmph;  void radKmh(WP), radMph(WP), btnTrGrReset(WP), btnQuit(WP), btnResChng(WP);
+	MyGUI::ButtonPtr chDbgT,chDbgB, chBlt,chBltTxt, chFps, chTimes,chMinimp, bnQuit;
 
 	//  replay
-	StaticTextPtr valRplPerc, valRplCur, valRplLen,
+	MyGUI::StaticTextPtr valRplPerc, valRplCur, valRplLen,
 		valRplName,valRplInfo,valRplName2,valRplInfo2;
-	HScrollPtr slRplPos;  void slRplPosEv(SL);
-	EditPtr edRplName, edRplDesc;
-	void btnRplLoad(WP), btnRplSave(WP), btnRplDelete(WP),
+	MyGUI::HScrollPtr slRplPos;  void slRplPosEv(SL);
+	MyGUI::EditPtr edRplName, edRplDesc;
+	void btnRplLoad(WP), btnRplSave(WP), btnRplDelete(WP), btnRplRename(WP),
 		chkRplAutoRec(WP),chkRplChkGhost(WP), btnRplCur(WP),btnRplAll(WP),
 		btnRplToStart(WP),btnRplToEnd(WP), btnRplBack(WP),btnRplForward(WP),
 		btnRplPlay(WP);
+	void msgRplDelete(MyGUI::Message*, MyGUI::MessageBoxStyle);
 	
-	void btnNumPlayers(WP); void chkSplitVert(WP);
-		
+	void btnNumPlayers(WP);  void chkSplitVert(WP);
+	MyGUI::StaticTextPtr valLocPlayers;
+
 public:
 	bool bRplPlay,bRplPause, bRplRec;  //  game
 protected:
-	ButtonPtr btRplPl;  void UpdRplPlayBtn();
+	MyGUI::ButtonPtr btRplPl;  void UpdRplPlayBtn();
 
 	//  game
-	ListPtr carList,trkList, resList, rplList;  void updReplaysList();
-	void listRplChng(List* li, size_t pos);
-	void listCarChng(List* li, size_t pos),		btnChgCar(WP);
-	void listTrackChng(List* li, size_t pos),	btnChgTrack(WP);
+	MyGUI::ListPtr carList,trkList, resList, rplList;  void updReplaysList();
+	void listRplChng(MyGUI::List* li, size_t pos);
+	void listCarChng(MyGUI::List* li, size_t pos),		btnChgCar(WP);
+	void listTrackChng(MyGUI::List* li, size_t pos),	btnChgTrack(WP);
 	void btnNewGame(WP),btnNewGameStart(WP), btnShadows(WP);
 	void trkListNext(int rel), carListNext(int rel);
 
-	String sListCar,sListTrack;  int bListTrackU;
-	String pathTrk[2];  String TrkDir();
-	String PathListTrk(int user=-1);//, PathListTrkPrv(int user=-1);
+	Ogre::String sListCar,sListTrack;  int bListTrackU;
+	Ogre::String pathTrk[2];  Ogre::String TrkDir();
+	Ogre::String PathListTrk(int user=-1);//, PathListTrkPrv(int user=-1);
 
 	#define StTrk 12
-	StaticImagePtr imgCar,imgPrv,imgMini,imgTer;  EditPtr trkDesc;
-	StaticTextPtr valCar, valTrk, stTrk[StTrk];
+	MyGUI::StaticImagePtr imgCar,imgPrv,imgMini,imgTer;  MyGUI::EditPtr trkDesc;
+	MyGUI::StaticTextPtr valCar, valTrk, stTrk[StTrk];
 
 	char s[512];
 
@@ -232,24 +238,24 @@ protected:
 	bool bRebuildGameList;
 	bool bStartGame;
 
-	TabPtr tabsNet;  //void tabNet(TabPtr tab, size_t id);
-	WidgetPtr panelNetServer,panelNetGame;
-	MultiListPtr listServers, listPlayers;
-	EditPtr edNetChat;  // chat area, set text through sChatBuffer
+	MyGUI::TabPtr tabsNet;  //void tabNet(TabPtr tab, size_t id);
+	MyGUI::WidgetPtr panelNetServer,panelNetGame;
+	MyGUI::MultiListPtr listServers, listPlayers;
+	MyGUI::EditPtr edNetChat;  // chat area, set text through sChatBuffer
 
-	ButtonPtr btnNetRefresh,btnNetJoin,btnNetCreate,btnNetDirect;
-	ButtonPtr btnNetReady,btnNetLeave;
+	MyGUI::ButtonPtr btnNetRefresh,btnNetJoin,btnNetCreate,btnNetDirect;
+	MyGUI::ButtonPtr btnNetReady,btnNetLeave;
 	void evBtnNetRefresh(WP),evBtnNetJoin(WP),evBtnNetCreate(WP),evBtnNetDirect(WP);
 	void evBtnNetReady(WP),evBtnNetLeave(WP);
 
-	StaticImagePtr imgNetTrack;
-	StaticTextPtr valNetGames, valNetGameName, valNetChat, valNetTrack;
-	ButtonPtr btnNetSendMsg;  void chatSendMsg();
-	EditPtr edNetGameName, edNetChatMsg, edNetTrackInfo,
+	MyGUI::StaticImagePtr imgNetTrack;
+	MyGUI::StaticTextPtr valNetGames, valNetGameName, valNetChat, valNetTrack;
+	MyGUI::ButtonPtr btnNetSendMsg;  void chatSendMsg();
+	MyGUI::EditPtr edNetGameName, edNetChatMsg, edNetTrackInfo,
 		edNetNick, edNetServerIP, edNetServerPort, edNetLocalPort;
-	void evEdNetGameName(EditPtr),
-		evEdNetNick(EditPtr),evEdNetServerIP(EditPtr),
-		evEdNetServerPort(EditPtr),evEdNetLocalPort(EditPtr);
+	void evEdNetGameName(MyGUI::EditPtr),
+		evEdNetNick(MyGUI::EditPtr),evEdNetServerIP(MyGUI::EditPtr),
+		evEdNetServerPort(MyGUI::EditPtr),evEdNetLocalPort(MyGUI::EditPtr);
 };
 
 #endif

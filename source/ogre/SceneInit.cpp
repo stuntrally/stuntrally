@@ -1,13 +1,21 @@
-#include "stdafx.h"
+#include "pch.h"
+#include "Defines.h"
 #include "OgreGame.h"
+#include "LoadingBar.h"
 #include "../vdrift/game.h"
 #include "FollowCamera.h"
 #include "../road/Road.h"
+#include "SplitScreenManager.h"
 
 #include "../btOgre/BtOgrePG.h"
 #include "../btOgre/BtOgreGP.h"
 
 #include "boost/thread.hpp"
+#include "../paged-geom/PagedGeometry.h"
+
+#include <MyGUI_OgrePlatform.h>
+#include <OgreTerrainGroup.h>
+using namespace Ogre;
 
 
 //  Create Scene
@@ -35,9 +43,9 @@ void App::createScene()
 	}
 	
 	objs.LoadXml();
-	Log(string("**** Loaded Vegetation objects: ") + toStr(objs.colsMap.size()));
-	Log(string("**** ReplayFrame size: ") + toStr(sizeof(ReplayFrame)));	
-	Log(string("**** ReplayHeader size: ") + toStr(sizeof(ReplayHeader)));	
+	LogO(String("**** Loaded Vegetation objects: ") + toStr(objs.colsMap.size()));
+	LogO(String("**** ReplayFrame size: ") + toStr(sizeof(ReplayFrame)));	
+	LogO(String("**** ReplayHeader size: ") + toStr(sizeof(ReplayHeader)));	
 
 	#if 0  // test autoload replay
 		string file = PATHMANAGER::GetReplayPath() + "/" + pSet->track + ".rpl";
@@ -113,7 +121,7 @@ void App::LoadGame()  // 2
 	mSplitMgr->mNumPlayers = pSet->local_players;
 	//  no split screen in replay
 	if (bRplPlay)
-		mSplitMgr->mNumPlayers = 1;
+		mSplitMgr->mNumPlayers = /*1*/replay.header.numPlayers;
 	mSplitMgr->Align();
 	mPlatform->getRenderManagerPtr()->setActiveViewport(mSplitMgr->mNumPlayers);
 	
@@ -124,7 +132,7 @@ void App::LoadGame()  // 2
 	// actual car loading will be done later in LoadCar()
 	// this is just here because vdrift car has to be created first
 	std::list<Camera*>::iterator camIt = mSplitMgr->mCameras.begin();
-	for (int i=0; i<mSplitMgr->mNumPlayers; i++)
+	for (int i=0; i < mSplitMgr->mNumPlayers; i++)
 	{
 		carModels.push_back( new CarModel(i, CarModel::CT_LOCAL, pSet->car/*sListCar*/, mSceneMgr, pSet, pGame, &sc, (*camIt), this ) );
 		camIt++;
@@ -173,6 +181,11 @@ void App::LoadCar()  // 4
 	///  Init Replay  once  =================----------------
 	replay.InitHeader(pSet->track.c_str(), pSet->track_user, pSet->car.c_str(), !bRplPlay);
 	replay.header.numPlayers = pSet->local_players;
+	if (pSet->local_players > 1)  // other car names
+	//for (int p=1; p <
+	{
+		//strcpy(replay.header.cars[0], pSet->car.c_str());
+	}
 	
 	int c = 0;  // copy wheels R
 	for (std::list <CAR>::const_iterator it = pGame->cars.begin(); it != pGame->cars.end(); it++,c++)
@@ -266,10 +279,10 @@ void App::NewGameDoLoad()
 	}
 
 	// Update label.
-	mLoadingBar.mLoadingCommentElement->setCaption( (*currentLoadingState).second );
+	mLoadingBar->mLoadingCommentElement->setCaption( (*currentLoadingState).second );
 	
 	// Set %
-	mLoadingBar.mLoadingBarElement->setWidth( mLoadingBar.mProgressBarMaxSize * (perc/100.0) );
+	mLoadingBar->mLoadingBarElement->setWidth( mLoadingBar->mProgressBarMaxSize * (perc/100.0) );
 
 	// Go to next loading step.
 	currentLoadingState++;
@@ -280,7 +293,7 @@ bool App::IsTerTrack()
 {
 	//  track: vdrift / terrain
 	String sr = TrkDir()+"road.xml";
-	ifstream fr(sr.c_str());
+	std::ifstream fr(sr.c_str());
 	bool ter = fr.good(); //!fail()
 	if (ter)  fr.close();
 	return ter;

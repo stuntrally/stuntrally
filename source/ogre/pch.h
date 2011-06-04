@@ -1,4 +1,9 @@
-#pragma once
+#ifndef __PCH_H__
+#define __PCH_H__
+
+//  this is the precompiled header file for VS, only for Windows build
+#ifdef WIN32
+// include file for project specific include files that are used frequently, but are changed infrequently
 
 ///  std
 #include <vector>
@@ -33,16 +38,10 @@
 #endif
 
 #include "tinyxml.h"
-//#include <math.h>
-#ifndef M_PI
-#define M_PI	3.141592654
-#endif
-
-///  SDL, Sound
-#include <SDL.h>
-#include <vorbis/vorbisfile.h>
+#include <math.h>
 
 ///  Ogre
+#include <Ogre.h>
 #include <OgreCamera.h>
 #include <OgreEntity.h>
 #include <OgreLogManager.h>
@@ -52,17 +51,6 @@
 #include <OgreRenderWindow.h>
 #include <OgreConfigFile.h>
 #include <OgreWindowEventUtilities.h>
-
-#define PI  Ogre::Math::PI
-#define toStr(v)  Ogre::StringConverter::toString(v)
-#define toStrC(v)  Ogre::StringConverter::toString(v).c_str()
-
-#define Log(s)  Ogre::LogManager::getSingleton().logMessage(s);
-
-#define s2r(s)  StringConverter::parseReal(s)
-#define s2i(s)  StringConverter::parseInt(s)
-#define s2c(s)  StringConverter::parseColourValue(s)
-#define s2v(s)  StringConverter::parseVector3(s)
 
 #include <OIS/OISEvents.h>
 #include <OIS/OISInputManager.h>
@@ -75,9 +63,8 @@
 #include <OgreTerrainMaterialGeneratorA.h>
 #include <OgreTerrainPaging.h>
 
-#include "btBulletDynamicsCommon.h"
 #include <MyGUI.h>
 #include <MyGUI_OgrePlatform.h>
 
-/// translation
-#define TR(s) MyGUI::LanguageManager::getInstance().replaceTags(s)
+#endif
+#endif

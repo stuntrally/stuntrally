@@ -1,10 +1,19 @@
-#include "stdafx.h"
+#include "pch.h"
+#include "Defines.h"
+
 #include <boost/thread.hpp>
+#include <boost/filesystem.hpp>
+
 #include "BaseApp.h"
 #include "OgreApp.h" //
+
 #include "../vdrift/pathmanager.h"
 #include "../ogre/Locale.h"
-#include "OgreFontManager.h"
+
+#include <OgreConfigFile.h>
+#include <OISInputManager.h>
+using namespace Ogre;
+
 
 void TimThread(BaseApp* pA)
 {
@@ -175,7 +184,7 @@ bool BaseApp::configure()
 	if (pSet->ogre_dialog)
 	{
 		if (!mRoot->showConfigDialog()) return false;
-		mWindow = mRoot->initialise(true, "Stunt Rally");
+		mWindow = mRoot->initialise(true, "SR Editor");
 	}
 	else
 	{
@@ -186,7 +195,7 @@ bool BaseApp::configure()
 		}
 		else
 		{
-			Log("RenderSystem '" + pSet->rendersystem + "' is not available. Exiting.");
+			LogO("RenderSystem '" + pSet->rendersystem + "' is not available. Exiting.");
 			return false;
 		}
 
@@ -264,7 +273,18 @@ bool BaseApp::setup()
 	mPlatform->initialise(mWindow, mSceneMgr);
 	mGUI = new MyGUI::Gui();
 	mGUI->initialise("core.xml", PATHMANAGER::GetLogDir() + "/MyGUI.log");
-	LanguageManager::getInstance().setCurrentLanguage(getSystemLanguage());
+	
+	
+	// ------------------------- lang ------------------------
+	if (pSet->language == "") // autodetect
+		pSet->language = getSystemLanguage();
+	
+	// valid?
+	if (!boost::filesystem::exists(PATHMANAGER::GetDataPath() + "/gui/core_language_" + pSet->language + "_tag.xml"))
+		pSet->language = "en";
+		
+	MyGUI::LanguageManager::getInstance().setCurrentLanguage(pSet->language);
+	// -------------------------------------------------------
 
 	createFrameListener();
 	createScene();

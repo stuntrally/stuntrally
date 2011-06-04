@@ -1,13 +1,19 @@
-#include "stdafx.h"
+#include "pch.h"
+#include "Defines.h"
 #include "OgreApp.h"
 #include "../road/Road.h"
 #include "../vdrift/pathmanager.h"
+#include "../paged-geom/PagedGeometry.h"
 
 #if OGRE_PLATFORM != OGRE_PLATFORM_WIN32
 // dir listing
 #include <dirent.h>
 #include <sys/types.h>
 #endif
+using namespace Ogre;
+
+#include <string>
+
 
 //  ctor
 //----------------------------------------------------------------------------------------------------------------------
@@ -49,6 +55,7 @@ App::App()  //  gui wigdets--
 {
 	pathTrk[0] = PATHMANAGER::GetTrackPath() + "/";      pathTrkPrv[0] = pathTrk[0] + "_previews/";  resTrk = "";
 	pathTrk[1] = PATHMANAGER::GetTrackPathUser() + "/";  pathTrkPrv[1] = pathTrk[1] + "_previews/";
+	strFSerrors = "";
 
 	mBrSize[0] = 16.f;		mBrSize[1] = 24.f;
 	mBrIntens[0] = 20.f;	mBrIntens[1] = 20.f;
@@ -125,7 +132,7 @@ bool string_compare(const std::string& s1, const std::string& s2)
 	return strcmp(s1.c_str(), s2.c_str()) != 0;
 }
 
-bool App::GetFolderIndex(string dirpath, std::list <string>& dirlist, std::string extension)
+bool App::GetFolderIndex(std::string dirpath, std::list <std::string>& dirlist, std::string extension)
 {
 #ifndef _WIN32
 	DIR *dp;
@@ -136,7 +143,7 @@ bool App::GetFolderIndex(string dirpath, std::list <string>& dirlist, std::strin
 		while ( ( ep = readdir( dp ) ) )
 		{
 			//puts (ep->d_name);
-			string newname = ep->d_name;
+			std::string newname = ep->d_name;
 			if (newname[0] != '.')
 			{
 				dirlist.push_back(newname);
@@ -183,14 +190,14 @@ bool App::GetFolderIndex(string dirpath, std::list <string>& dirlist, std::strin
 	//remove non-matcthing extensions
 	if (!extension.empty())
 	{
-		std::list <std::list <string>::iterator> todel;
-		for (std::list <string>::iterator i = dirlist.begin(); i != dirlist.end(); ++i)
+		std::list <std::list <std::string>::iterator> todel;
+		for (std::list <std::string>::iterator i = dirlist.begin(); i != dirlist.end(); ++i)
 		{
 			if (i->find(extension) != i->length()-extension.length())
 				todel.push_back(i);
 		}
 		
-		for (std::list <std::list <string>::iterator>::iterator i = todel.begin(); i != todel.end(); ++i)
+		for (std::list <std::list <std::string>::iterator>::iterator i = todel.begin(); i != todel.end(); ++i)
 			dirlist.erase(*i);
 	}
 	

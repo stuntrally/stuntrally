@@ -1,7 +1,9 @@
-#include "stdafx.h"
+#include "pch.h"
+#include "Defines.h"
 #include "OgreApp.h"
 #include "../road/Road.h"
 using namespace MyGUI;
+using namespace Ogre;
 
 #include <boost/filesystem.hpp>
 
@@ -94,8 +96,8 @@ void App::TrackListUpd()
 		for (strlist::iterator i = li.begin(); i != li.end(); ++i)
 		{
 			vsTracks.push_back(*i);  vbTracksUser.push_back(false);
-			string s = pathTrk[0] + *i + "/scene.xml";
-			ifstream check(s.c_str());
+			std::string s = pathTrk[0] + *i + "/scene.xml";
+			std::ifstream check(s.c_str());
 			if (check)  {
 				trkList->addItem(*i, 0);
 				if (!pSet->track_user && *i == pSet->track)  {  si = ii;
@@ -107,8 +109,8 @@ void App::TrackListUpd()
 		for (strlist::iterator i = lu.begin(); i != lu.end(); ++i)
 		{
 			vsTracks.push_back(*i);  vbTracksUser.push_back(true);
-			string s = pathTrk[1] + *i + "/scene.xml";
-			ifstream check(s.c_str());
+			std::string s = pathTrk[1] + *i + "/scene.xml";
+			std::ifstream check(s.c_str());
 			if (check)  {
 				trkList->addItem("*" + (*i) + "*", 1);
 				if (pSet->track_user && *i == pSet->track)  {  si = ii;
@@ -119,7 +121,7 @@ void App::TrackListUpd()
 		//  not found last track, set 1st
 		if (!bFound)
 		{	pSet->track = *li.begin();  pSet->track_user = 0;  UpdWndTitle();  }
-		trkList->beginToItemAt(max(0, si-11));  // center
+		trkList->beginToItemAt(std::max(0, si-11));  // center
 	}
 }
 
@@ -165,7 +167,7 @@ void App::btnNewGame(WP)
 
 //  track files
 const int cnTrkF = 5, cnTrkFd = 2, cnTrkFo = 3;
-const String csTrkFo[cnTrkFo] = {"/grass1.png", "/grassColor.png", "/grassDensity.png"},
+const Ogre::String csTrkFo[cnTrkFo] = {"/grass1.png", "/grassColor.png", "/grassDensity.png"},
 	csTrkF[cnTrkF] = {"/heightmap.f32", "/road.xml", "/scene.xml", "/surfaces.txt", "/track.txt"},  // copy, new
 	csTrkFd[cnTrkFd] = {"/heightmap-new.f32", "/records.txt"};  // del
 
@@ -186,7 +188,7 @@ bool App::ChkTrkCopy()
 			MessageBoxStyle::IconWarning | MessageBoxStyle::Ok);
 		return false;
 	}
-	if (sCopyTrack == pSet->track && bCopyTrackU == pSet->track_user)
+	if (sCopyTrack == pSet->track && bCopyTrackU == (pSet->track_user ? 1 : 0))
 	{
 		Message::createMessageBox(
 			"Message", "Copy Track", "Source track and current track are the same.",
@@ -329,7 +331,7 @@ void App::btnDeleteRoad(WP)
 void App::btnScaleAll(WP)
 {
 	if (!edScaleAllMul || !road)  return;
-	Real sf = max(0.1f, s2r(edScaleAllMul->getCaption()) );  // scale mul
+	Real sf = std::max(0.1f, s2r(edScaleAllMul->getCaption()) );  // scale mul
 	
 	//  road
 	for (int i=0; i < road->getNumPoints(); ++i)
@@ -453,12 +455,12 @@ void App::msgTrackDel(Message* sender, MessageBoxStyle result)
 //  Surfaces
 //-----------------------------------------------------------------------------------------------------------
 
-void App::LoadSurf()
+bool App::LoadSurf()
 {
-	string path = pathTrk[bListTrackU] + pSet->track + "/surfaces.txt";
+	std::string path = pathTrk[bListTrackU] + pSet->track + "/surfaces.txt";
 	CONFIGFILE cf;
 	if (!cf.Load(path))
-	{	Log("Can't find surfaces configfile: " + path);  return;  }
+	{	LogO("Can't find surfaces configfile: " + path);  return false;  }
 	
 	strlist sl;
 	cf.GetSectionList(sl);
@@ -491,9 +493,10 @@ void App::LoadSurf()
 			else  su[l] = surf;
 		}
 	}
+	return true;
 }
 
-void App::SaveSurf(const string& path)
+bool App::SaveSurf(const std::string& path)
 {
 	CONFIGFILE cf;
 	int u=0;
@@ -510,7 +513,7 @@ void App::SaveSurf(const string& path)
 			else  if (i==6){  s[0] = 'A';  s[1]=0;  }  // used
 				  else  {  s[0] = u+'B';  s[1]=0;  u++;  }  // used
 
-			const TRACKSURFACE& surf = su[i];  string ss = s;
+			const TRACKSURFACE& surf = su[i];  std::string ss = s;
 			cf.SetParam(ss + ".ID", surf.type);
 			cf.SetParam(ss + ".BumpWaveLength", surf.bumpWaveLength);
 			cf.SetParam(ss + ".BumpAmplitude", surf.bumpAmplitude);
@@ -520,7 +523,7 @@ void App::SaveSurf(const string& path)
 			cf.SetParam(ss + ".RollingDrag", surf.rollingDrag);
 		}
 	}
-	cf.Write(true, path);
+	return cf.Write(true, path);
 }
 
 
@@ -576,7 +579,7 @@ void App::setToolTips(EnumeratorWidgetPtr widgets)
 			wp->setNeedToolTip(true);
 			wp->eventToolTip = newDelegate(this, &App::notifyToolTip);
 		}
-		//Log(wp->getName() + (tip ? "  *" : ""));
+		//LogO(wp->getName() + (tip ? "  *" : ""));
         setToolTips(wp->getEnumerator());
     }
 }
@@ -603,13 +606,15 @@ void App::boundedMove(Widget* moving, const IntPoint& point)
 	IntPoint p = point + offset;
 
 	const IntSize& size = moving->getSize();
-	/*const IntSize& view_size = moving->getParentSize();
-	if ((p.left + size.width) > view_size.width)
-		p.left -= offset.left + offset.left + size.width;
-
-	if ((p.top + size.height) > view_size.height)
-		p.top -= offset.top + offset.top + size.height;
-	}/**/
+	
+	int vpw = mWindow->getWidth();
+	int vph = mWindow->getHeight();
+	
+	if (p.left + size.width > vpw)
+		p.left = vpw - size.width;
+	if (p.top + size.height > vph)
+		p.top = vph - size.height;
+			
 	moving->setPosition(p);
 }
 
@@ -630,7 +635,7 @@ void App::GetMaterials(String filename, String type)
  
 				if (StringUtil::startsWith(line, type/*"material"*/))
 				{
-					//Log(line);
+					//LogO(line);
 					Ogre::vector<String>::type vec = StringUtil::split(line," \t:");
 					bool skipFirst = true;
 					for (Ogre::vector<String>::type::iterator it = vec.begin(); it < vec.end(); ++it)
@@ -643,7 +648,7 @@ void App::GetMaterials(String filename, String type)
 						StringUtil::trim(match);
 						if (!match.empty())
 						{
-							//Log(match);
+							//LogO(match);
 							vsMaterials.push_back(match);						
 							break;
 						}
@@ -653,7 +658,7 @@ void App::GetMaterials(String filename, String type)
 		{
 			StringUtil::StrStreamType msg;
 			msg << "Exception: FILE: " << __FILE__ << " LINE: " << __LINE__ << " DESC: " << e.getFullDescription() << std::endl;
-			Log(msg.str());
+			LogO(msg.str());
 	}	}
 	stream->close();
 }
@@ -661,12 +666,7 @@ void App::GetMaterials(String filename, String type)
 
 ///  system file, dir
 //-----------------------------------------------------------------------------------------------------------
-
-void App::Rename(String from, String to)
-{
-	if (boost::filesystem::exists(from.c_str()))
-		boost::filesystem::rename(from.c_str(), to.c_str());
-}
+namespace bfs = boost::filesystem;
 
 bool App::TrackExists(String name/*, bool user*/)
 {
@@ -676,26 +676,82 @@ bool App::TrackExists(String name/*, bool user*/)
 	return false;
 }
 
-void App::Delete(String file)
+bool App::Rename(String from, String to)
 {
-	boost::filesystem::remove(file.c_str());
+	try
+	{	if (bfs::exists(from.c_str()))
+			bfs::rename(from.c_str(), to.c_str());
+	}
+	catch (const bfs::filesystem_error & ex)
+	{
+		String s = "Error: Renaming file " + from + " to " + to + " failed ! \n" + ex.what();
+		strFSerrors += "\n" + s;
+		LogO(s);
+		return false;
+	}
+	return true;
 }
 
-void App::DeleteDir(String dir)
+bool App::Delete(String file)
 {
-	boost::filesystem::remove_all(dir.c_str());
+	try
+	{	bfs::remove(file.c_str());
+	}
+	catch (const bfs::filesystem_error & ex)
+	{
+		String s = "Error: Deleting file " + file + " failed ! \n" + ex.what();
+		strFSerrors += "\n" + s;
+		LogO(s);
+		return false;
+	}
+	return true;
 }
 
-void App::CreateDir(String dir)
+bool App::DeleteDir(String dir)
 {
-	boost::filesystem::create_directory(dir.c_str());
+	try
+	{	bfs::remove_all(dir.c_str());
+	}
+	catch (const bfs::filesystem_error & ex)
+	{
+		String s = "Error: Deleting directory " + dir + " failed ! \n" + ex.what();
+		strFSerrors += "\n" + s;
+		LogO(s);
+		return false;
+	}
+	return true;
 }
 
-void App::Copy(String file, String to)
+bool App::CreateDir(String dir)
 {
-	if (boost::filesystem::exists(to.c_str()))
-		boost::filesystem::remove(to.c_str());
+	try
+	{	bfs::create_directory(dir.c_str());
+	}
+	catch (const bfs::filesystem_error & ex)
+	{
+		String s = "Error: Creating directory " + dir + " failed ! \n" + ex.what();
+		strFSerrors += "\n" + s;
+		LogO(s);
+		return false;
+	}
+	return true;
+}
 
-	if (boost::filesystem::exists(file.c_str()))
-		boost::filesystem::copy_file(file.c_str(), to.c_str());
+bool App::Copy(String file, String to)
+{
+	try
+	{	if (bfs::exists(to.c_str()))
+			bfs::remove(to.c_str());
+
+		if (bfs::exists(file.c_str()))
+			bfs::copy_file(file.c_str(), to.c_str());
+	}
+	catch (const bfs::filesystem_error & ex)
+	{
+		String s = "Error: Copying file " + file + " to " + to + " failed ! \n" + ex.what();
+		strFSerrors += "\n" + s;
+		LogO(s);
+		return false;
+	}
+	return true;
 }

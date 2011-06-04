@@ -1,10 +1,10 @@
 #ifndef _RANDOM_H
 #define _RANDOM_H
 
-//#include <stdio.h>
+#include <stdio.h>
 
-//#include <stdlib.h>
-//#include <time.h>
+#include <stdlib.h>
+#include <time.h>
 
 class DETERMINISTICRANDOM
 {

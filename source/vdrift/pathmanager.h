@@ -4,6 +4,9 @@
 #ifdef unix
 #include <dirent.h>
 #endif
+#include <string>
+#include <list>
+
 
 class PATHMANAGER
 {
@@ -45,23 +48,13 @@ public:
 	static std::string GetDriverPath() {             return game_data_dir + "/drivers"; }
 	static std::string GetReplayPath() {             return user_data_dir + "/replays"; }
 
-	static bool FileExists(const std::string & filename)
-	{
-		std::ifstream test(filename.c_str());
-		if (test) return true;
-		else return false;
-	}
+	static bool FileExists(const std::string & filename);
 
-	static bool CreateDirectory(const std::string& path);
+	static bool CreateDir(const std::string& path, std::ostream & error_output);
 
 	// FIXME: Do we intend to use profiles?
 	/// Only call this before Init()
-	static void SetProfile(const std::string& value)
-	{
-		assert(game_data_dir.empty()); // Assert that Init() hasn't been called yet
-		profile_suffix = "." + value;
-	}
-
+	static void SetProfile(const std::string& value);
 };
 
 #endif

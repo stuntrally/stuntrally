@@ -1,15 +1,24 @@
-#include "stdafx.h"
+#include "pch.h"
+#include "Defines.h"
 #include "BaseApp.h"
 #include "FollowCamera.h"
 #include "../vdrift/pathmanager.h"
-#include "../oisb/OISB.h"
+#include "SplitScreenManager.h"
+
 #include "MyGUI_Prerequest.h"
 #include "MyGUI_PointerManager.h"
+
+#include <OIS/OIS.h>
+#include "../oisb/OISB.h"
+
+#include <MyGUI.h>
+#include <MyGUI_OgrePlatform.h>
+using namespace Ogre;
 
 
 //  rendering
 //-------------------------------------------------------------------------------------
-bool BaseApp::frameRenderingQueued(const FrameEvent& evt)
+bool BaseApp::frameRenderingQueued(const Ogre::FrameEvent& evt)
 {
 	if (mWindow->isClosed())
 		return false;
@@ -21,11 +30,10 @@ bool BaseApp::frameRenderingQueued(const FrameEvent& evt)
 	mKeyboard->capture();
 	mMouse->capture();
 
-	using namespace OIS;
 	   // key modifiers
-	  alt = mKeyboard->isModifierDown(Keyboard::Alt),
-	 ctrl = mKeyboard->isModifierDown(Keyboard::Ctrl),
-	shift = mKeyboard->isModifierDown(Keyboard::Shift);
+	  alt = mKeyboard->isModifierDown(OIS::Keyboard::Alt),
+	 ctrl = mKeyboard->isModifierDown(OIS::Keyboard::Ctrl),
+	shift = mKeyboard->isModifierDown(OIS::Keyboard::Shift);
 
 	updateStats();
 	
@@ -40,7 +48,7 @@ bool BaseApp::frameRenderingQueued(const FrameEvent& evt)
 	return true;
 }
 
-bool BaseApp::frameEnded(const FrameEvent& evt)
+bool BaseApp::frameEnded(const Ogre::FrameEvent& evt)
 {
 	// dt-
 	Real time = evt.timeSinceLastFrame;
@@ -132,18 +140,15 @@ bool BaseApp::keyPressed( const OIS::KeyEvent &arg )
 					// only bind 2nd if keys are not the same (will throw exception)
 					if (bind2)
 						if ("Keyboard/" + mKeyboard->getAsString(pressedKey) != bind2->getBindableName())
-						{
 							binding->bind(bind2, bind2_role);	
-						}
 				}
 				else if (index == "2")
 				{
 					// only bind 1st if keys are not the same (will throw exception)
 					if (bind1)
 						if ("Keyboard/" + mKeyboard->getAsString(pressedKey) != bind1->getBindableName())
-						{
 							binding->bind(bind1, bind1_role);
-						}
+
 					binding->bind("Keyboard/" + mKeyboard->getAsString(pressedKey), bind2_role);
 				}
 			}
@@ -151,7 +156,7 @@ bool BaseApp::keyPressed( const OIS::KeyEvent &arg )
 			{
 				// invalid key?
 				// restore old
-				Log("WARNING: binding->bind failed, restoring old binds...");
+				LogO("WARNING: binding->bind failed, restoring old binds...");
 				
 				// this is nasty, but since some very weird stuff can happen here, we have to individually try/catch
 				try {
@@ -192,9 +197,7 @@ bool BaseApp::keyPressed( const OIS::KeyEvent &arg )
 			{
 				if (b1) b2->setCaption( stripk(binding->getBindable(0)->getBindableName()) );
 				if (b2) b1->setCaption( TR("#{InputKeyUnassigned}") );
-			}
-			else
-			{
+			}else{
 				if (b1) b1->setCaption( stripk(binding->getBindable(0)->getBindableName()) );
 				if (b2) b2->setCaption( TR("#{InputKeyUnassigned}") );
 			}
@@ -206,12 +209,9 @@ bool BaseApp::keyPressed( const OIS::KeyEvent &arg )
 			{
 				if (b1) b1->setCaption( stripk(binding->getBindable(0)->getBindableName()) );
 				if (b2) b2->setCaption( stripk(binding->getBindable(1)->getBindableName()) );
-			}
-			else
-			{
+			}else{
 				if (b2) b2->setCaption( stripk(binding->getBindable(0)->getBindableName()) );
 				if (b1) b1->setCaption( stripk(binding->getBindable(1)->getBindableName()) );
-
 			}
 		}
 		return true;
@@ -249,60 +249,21 @@ bool BaseApp::keyPressed( const OIS::KeyEvent &arg )
 
 	switch (arg.key)
 	{
-		///  Camera
-		case KC_PGDOWN: case KC_NUMPAD3:
-		case KC_C:		// Next
-		{	int visMask = 255;
-			roadUpCnt = 0;
-			//  for all cars
-			for (std::list<CarModel*>::iterator it=carModels.begin(); it!=carModels.end(); it++)
-			{
-				if ((*it)->fCam)
-				{
-					(*it)->fCam->Next(0, shift);
-					if ((*it)->fCam->ca.mHideGlass)  visMask = 255-16;
-					else        visMask = 255;
-				}
-			}
-			//  set visibility mask for all viewports
-			for (std::list<Viewport*>::iterator it=mSplitMgr->mViewports.begin(); it!=mSplitMgr->mViewports.end(); it++)
-				(*it)->setVisibilityMask(visMask);
-		}	return false;
-
-		case KC_PGUP: case KC_NUMPAD9:
-		case KC_X:		// Prev
-		{	int visMask = 255;
-			roadUpCnt = 0;
-			//  for all cars
-			for (std::list<CarModel*>::iterator it=carModels.begin(); it!=carModels.end(); it++)
-			{
-				if ((*it)->fCam)
-				{
-					(*it)->fCam->Next(1, shift);
-					if ((*it)->fCam->ca.mHideGlass)  visMask = 255-16;
-					else        visMask = 255;
-				}
-			}
-			//  set visibility mask for all viewports
-			for (std::list<Viewport*>::iterator it=mSplitMgr->mViewports.begin(); it!=mSplitMgr->mViewports.end(); it++)
-				(*it)->setVisibilityMask(visMask);
-		}	return false;
-			
 		//case KC_S:		// Save S
 		//	if (pCar)	if (pCar->mFCam)
 		//	pCar->mFCam->saveCamera();
 		//	return false;
 
 	
-	//  Camera pos info
-	case KC_O:
-	{	mbShowCamPos = !mbShowCamPos;
-		if (!mbShowCamPos)	mDebugText = "";
-	}	return false;
+		//  Camera pos info
+		/*case KC_O:
+		{	mbShowCamPos = !mbShowCamPos;
+			if (!mbShowCamPos)	mDebugText = "";
+		}	return false;/**/
 
-	
-	//case KC_F5:
-	//	TextureManager::getSingleton().reloadAll();	break;
+		
+		//case KC_F5:
+		//	TextureManager::getSingleton().reloadAll();	break;
 	}
 
 	return true;
@@ -319,14 +280,14 @@ void BaseApp::updateStats()
 	// Only for 1 local player
 	if (mSplitMgr && mSplitMgr->mNumPlayers == 1)
 	{
-		if (mbShowCamPos)
+		/*if (mbShowCamPos)
 		{
 			const Vector3& pos = (*mSplitMgr->mCameras.begin())->getDerivedPosition();
 			const Quaternion& rot = (*mSplitMgr->mCameras.begin())->getDerivedOrientation();
 			sprintf(s, "Pos: %5.1f %5.1f %5.1f", //  Rot: %6.3f %6.3f %6.3f %6.3f",
 							pos.x, pos.y, pos.z,  rot.x, rot.y, rot.z, rot.w );
 			mDebugText = String( s );
-		}
+		}/**/
 	}
 	try {
 		const RenderTarget::FrameStats& stats = mWindow->getStatistics();

@@ -1,5 +1,4 @@
-#include "stdafx.h"
-
+#include "pch.h"
 #include "model_obj.h"
 #include "unittest.h"
 #include "vertexarray.h"

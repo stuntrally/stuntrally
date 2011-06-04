@@ -4,6 +4,10 @@
 #include "cardefs.h"
 #include "reseatable_reference.h"
 
+#include <vector>
+#include <list>
+#include <map>
+
 class CAR;
 class BEZIER;
 class TRACK;

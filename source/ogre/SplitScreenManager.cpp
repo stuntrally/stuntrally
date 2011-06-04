@@ -1,4 +1,5 @@
-#include "stdafx.h"
+#include "pch.h"
+#include "Defines.h"
 #include "SplitScreenManager.h"
 
 #include "OgreGame.h"
@@ -6,6 +7,16 @@
 #include "../vdrift/settings.h"
 #include "../road/Road.h"
 #include "MyGUI_PointerManager.h"
+
+#include <OgreRoot.h>
+#include <OgreViewport.h>
+#include <OgreCamera.h>
+#include <OgreRenderWindow.h>
+#include <OgreSceneManager.h>
+#include <OgreLogManager.h>
+#include <OgreParticleSystem.h>
+#include <OgreParticleEmitter.h>
+using namespace Ogre;
 
 
 SplitScreenManager::SplitScreenManager(Ogre::SceneManager* sceneMgr, Ogre::RenderWindow* window, SETTINGS* set) :
@@ -113,7 +124,7 @@ void SplitScreenManager::Align()
 		}
 		else
 		{
-			Log("FATAL ERROR: Unsupported number of viewports: " + toStr(mNumPlayers));
+			LogO("FATAL ERROR: Unsupported number of viewports: " + toStr(mNumPlayers));
 			return;
 		}
 		#undef dim_

@@ -1,7 +1,11 @@
-#include "stdafx.h"
+#include "pch.h"
+#include "Defines.h"
 #include "OgreApp.h"
 #include "../road/Road.h"
+#include <fstream>
+
 using namespace MyGUI;
+using namespace Ogre;
 
 
 ///  Gui Events
@@ -150,11 +154,11 @@ void App::tabTerLayer(TabPtr wp, size_t id)
 
 void App::editTerTriSize(EditPtr ed)
 {
-	Real r = max(0.1f, s2r(ed->getCaption()) );
+	Real r = std::max(0.1f, s2r(ed->getCaption()) );
 	sc.td.fTriangleSize = r;  sc.td.UpdVals();
 
 	HScrollPtr sl = (HScrollPtr)mWndOpts->findWidget("TerTriSize");  // set slider
-	size_t v = min(1.f, powf((r -0.1f)/5.9f, 0.5f) )*res;
+	size_t v = std::min(1.f, powf((r -0.1f)/5.9f, 0.5f) )*res;
 	if (sl)  sl->setScrollPosition(v);
 	// result val text
 	const char* str = tabsHmap->getItemSelected()->getCaption().asUTF8_c_str();  int size = atoi(str);
@@ -195,8 +199,8 @@ void App::btnTerrainNew(WP)
 		for (int i=0; i < sc.td.iVertsX; ++i,++a)
 			hfData[a] = 0.f;  //sc.td.getHeight(i,j);
 	}
-	ofstream of;
-	of.open(name.c_str(), ios_base::binary);
+	std::ofstream of;
+	of.open(name.c_str(), std::ios_base::binary);
 	of.write((const char*)&hfData[0], siz);
 	of.close();
 
@@ -256,11 +260,11 @@ void App::comboTexNorm(ComboBoxPtr cmb, size_t val)
 
 void App::editTerLScale(EditPtr ed)
 {
-	Real r = max(0.01f, s2r(ed->getCaption()) );
+	Real r = std::max(0.01f, s2r(ed->getCaption()) );
 	if (bTerLay)  sc.td.layersAll[idTerLay].tiling = r;
 
 	HScrollPtr sl = (HScrollPtr)mWndOpts->findWidget("TerLScale");  // set slider
-	size_t v = min(1.f,max(0.f, powf((r - 2.0f)/9.0f, 1.f/1.5f) ))*res;
+	size_t v = std::min(1.f,std::max(0.f, powf((r - 2.0f)/9.0f, 1.f/1.5f) ))*res;
 	if (sl)  sl->setScrollPosition(v);
 }
 // |
@@ -449,7 +453,7 @@ void App::editRoad(EditPtr ed)
 	Real r = s2r(ed->getCaption());
 	String n = ed->getName();
 
-		 if (n=="RdTcMul")		road->tcMul = r;	else if (n=="RdColN")	road->colN = max(3.f, r);
+		 if (n=="RdTcMul")		road->tcMul = r;	else if (n=="RdColN")	road->colN = std::max(3.f, r);
 	else if (n=="RdLenDim")		road->lenDiv0 = r;	else if (n=="RdColR")	road->colR = r;
 	else if (n=="RdWidthSteps")	road->iw0 = r;		else if (n=="RdPwsM")	road->iwPmul = r;
 	else if (n=="RdHeightOfs")	road->fHeight = r;	else if (n=="RdPlsM")	road->ilPmul = r;
@@ -523,7 +527,7 @@ void App::SaveCam()
 void App::btnSetCam(WP wp)
 {
 	String s = wp->getName();
-	Real y0 = 20, xz = sc.td.fTerWorldSize*0.5f, r = 45.f * 0.5f*PI/180.f, yt = xz / Math::Tan(r);
+	Real y0 = 20, xz = sc.td.fTerWorldSize*0.5f, r = 45.f * 0.5f*PI_d/180.f, yt = xz / Math::Tan(r);
 
 		 if (s=="CamView1")	{	mCameraT->setPosition(xz*0.8,60,0);  mCameraT->setDirection(-1,-0.3,0);  }
 	else if (s=="CamView2")	{	mCameraT->setPosition(xz*0.6,80,xz*0.6);  mCameraT->setDirection(-1,-0.5,-1);  }

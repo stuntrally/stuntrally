@@ -1,7 +1,9 @@
-#include "stdafx.h"
+#include "pch.h"
+#include "Defines.h"
 #include "OgreApp.h"
 #include "../road/Road.h"
 using namespace MyGUI;
+using namespace Ogre;
 
 
 ///  Gui Events

@@ -2,6 +2,7 @@
 #define _CARCONTROLMAP_LOCAL_H
 
 #include "cardefs.h"
+#include <vector>
 
 
 class CARCONTROLMAP_LOCAL

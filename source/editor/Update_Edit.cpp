@@ -1,6 +1,9 @@
-#include "stdafx.h"
+#include "pch.h"
+#include "Defines.h"
 #include "OgreApp.h"
 #include "../road/Road.h"
+#include "../paged-geom/PagedGeometry.h"
+using namespace Ogre;
 
 
 //  Update  input, info
@@ -20,7 +23,7 @@ bool App::frameRenderingQueued(const FrameEvent& evt)
 		float angrot = mCamera->getOrientation().getYaw().valueDegrees();
 		float psx = 0.9f * pSet->size_minimap, psy = psx*asp;  // *par len
 
-		const static float d2r = PI/180.f;
+		const static float d2r = PI_d/180.f;
 		static float px[4],py[4];
 		for (int i=0; i<4; i++)
 		{
@@ -37,7 +40,7 @@ bool App::frameRenderingQueued(const FrameEvent& evt)
 	//  status overlay
 	if (fStFade > 0.f)
 	{	fStFade -= evt.timeSinceLastFrame;
-		//Real a = min(1.0f, fStFade*0.9f);
+		//Real a = std::min(1.0f, fStFade*0.9f);
 		//ColourValue cv(0.0,0.5,a, a );
 		//ovStat->setColour(cv);	ovSt->setColour(cv);
 		if (fStFade <= 0.f)
@@ -124,7 +127,7 @@ bool App::frameRenderingQueued(const FrameEvent& evt)
 		//if (rdTxt[9]){  Fmt(s, "sel: %d", road->vSel.size());   rdTxt[9]->setCaption(s);  }
 
 		if (rdTxt[11]){  rdTxt[11]->setCaption(bCur ? "Cur" : "New");
-			rdTxt[11]->setTextColour(bCur ? Colour(0.85,0.75,1) : Colour(0.3,1,0.1));  }
+			rdTxt[11]->setTextColour(bCur ? MyGUI::Colour(0.85,0.75,1) : MyGUI::Colour(0.3,1,0.1));  }
 		if (rdTxt[12]){  rdTxt[12]->setCaption(road->bMerge ? "Mrg":"");	}
 
 		//  road stats  --------------------------------
@@ -283,7 +286,7 @@ void App::processMouse()  //! from Thread, cam vars only
 				mCameraT->moveRelative( sMove );
 		}
 	}
-	//Log("dt: " + toStr((float)mDTime) + "  n.iv's: " + toStr(num));
+	//LogO("dt: " + toStr((float)mDTime) + "  n.iv's: " + toStr(num));
 }
 
 void App::editMouse()
@@ -407,7 +410,7 @@ bool App::frameEnded(const FrameEvent& evt)
 	//  road pick
 	if (road)
 	{
-		const IntPoint& mp = MyGUI::InputManager::getInstance().getMousePosition();
+		const MyGUI::IntPoint& mp = MyGUI::InputManager::getInstance().getMousePosition();
 		Real mx = mp.left, my = mp.top;
 		road->Pick(mCamera, mx/mWindow->getWidth(), my/mWindow->getHeight(),
 			edMode == ED_Road,  !(edMode == ED_Road && bEdit()));
@@ -475,6 +478,6 @@ bool App::frameEnded(const FrameEvent& evt)
 					rt[i].rndTex->update();
 		}	ri++;
 	}
-	//Log(Ogre::StringConverter::toString(evt.timeSinceLastFrame));
+	//LogO(toStr(evt.timeSinceLastFrame));
 	return true;
 }

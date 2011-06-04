@@ -1,3 +1,4 @@
+#include "pch.h"
 /*-------------------------------------------------------------------------------------
 Copyright (c) 2006 John Judnich
 
@@ -7,7 +8,7 @@ Permission is granted to anyone to use this software for any purpose, including 
 2. Altered source versions must be plainly marked as such, and must not be misrepresented as being the original software.
 3. This notice may not be removed or altered from any source distribution.
 -------------------------------------------------------------------------------------*/
-#include "stdafx.h"
+//#include "Defines.h"
 #include "TreeLoader3D.h"
 #include "PagedGeometry.h"
 #include "PropertyMaps.h"
@@ -29,14 +30,14 @@ TreeLoader3D::TreeLoader3D(PagedGeometry *geom, const TBounds &bounds)
 	//Make sure the bounds are aligned with PagedGeometry's grid, so the TreeLoader's grid tiles will have a 1:1 relationship
 	actualBounds = bounds;
 	gridBounds = bounds;
-	gridBounds.left = pageSize * Math::Floor((gridBounds.left - geom->getBounds().left) / pageSize) + geom->getBounds().left;
-	gridBounds.top = pageSize * Math::Floor((gridBounds.top - geom->getBounds().top) / pageSize) + geom->getBounds().top;
-	gridBounds.right = pageSize * Math::Ceil((gridBounds.right - geom->getBounds().left) / pageSize) + geom->getBounds().left;
-	gridBounds.bottom = pageSize * Math::Ceil((gridBounds.bottom - geom->getBounds().top) / pageSize) + geom->getBounds().top;
+	gridBounds.left = pageSize * Ogre::Math::Floor((gridBounds.left - geom->getBounds().left) / pageSize) + geom->getBounds().left;
+	gridBounds.top = pageSize * Ogre::Math::Floor((gridBounds.top - geom->getBounds().top) / pageSize) + geom->getBounds().top;
+	gridBounds.right = pageSize * Ogre::Math::Ceil((gridBounds.right - geom->getBounds().left) / pageSize) + geom->getBounds().left;
+	gridBounds.bottom = pageSize * Ogre::Math::Ceil((gridBounds.bottom - geom->getBounds().top) / pageSize) + geom->getBounds().top;
 
 	//Calculate page grid size
-	pageGridX = Math::Ceil(gridBounds.width() / pageSize) + 1;
-	pageGridZ = Math::Ceil(gridBounds.height() / pageSize) + 1;
+	pageGridX = Ogre::Math::Ceil(gridBounds.width() / pageSize) + 1;
+	pageGridZ = Ogre::Math::Ceil(gridBounds.height() / pageSize) + 1;
 
 	//Reset color map
 	colorMap = NULL;
@@ -57,7 +58,7 @@ TreeLoader3D::~TreeLoader3D()
 	pageGridList.clear();
 }
 
-void TreeLoader3D::addTree(Entity *entity, const Ogre::Vector3 &position, Degree yaw, Real scale, void* userData)
+void TreeLoader3D::addTree(Entity *entity, const Ogre::Vector3 &position, Ogre::Degree yaw, Ogre::Real scale, void* userData)
 {
 	//First convert the coordinate to PagedGeometry's local system
 	#ifdef PAGEDGEOMETRY_ALTERNATE_COORDSYSTEM
@@ -68,7 +69,7 @@ void TreeLoader3D::addTree(Entity *entity, const Ogre::Vector3 &position, Degree
 
 	//Check that the tree is within bounds (DEBUG)
 	#ifdef _DEBUG
-	const Real smallVal = 0.01f;
+	const Ogre::Real smallVal = 0.01f;
 	if (pos.x < actualBounds.left-smallVal || pos.x > actualBounds.right+smallVal || pos.z < actualBounds.top-smallVal || pos.z > actualBounds.bottom+smallVal)
 		OGRE_EXCEPT(Exception::ERR_INVALIDPARAMS, "Tree position is out of bounds", "TreeLoader::addTree()");
 	if (scale < minimumScale || scale > maximumScale)
@@ -103,8 +104,8 @@ void TreeLoader3D::addTree(Entity *entity, const Ogre::Vector3 &position, Degree
 	}
 
 	//Calculate the gridbounds-relative position of the tree
-	Real xrel = pos.x - gridBounds.left;
-	Real zrel = pos.z - gridBounds.top;
+	Ogre::Real xrel = pos.x - gridBounds.left;
+	Ogre::Real zrel = pos.z - gridBounds.top;
 
 	//Get the appropriate grid element based on the new tree's position
 	int pageX = Math::Floor(xrel / pageSize);

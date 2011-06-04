@@ -1,15 +1,34 @@
-#include "stdafx.h"
+#include "pch.h"
+#include "Defines.h"
 #include "CarModel.h"
 #include "../vdrift/pathmanager.h"
 #include "../vdrift/mathvector.h"
+#include "../vdrift/track.h"
+#include "../vdrift/game.h"
 //#include "../ogre/OgreGame.h"
+#include "SplitScreenManager.h"
+#include "common/SceneXml.h"
+#include "FollowCamera.h"
+#include "CarReflection.h"
 
 #include "boost/filesystem.hpp"
 #define  FileExists(s)  boost::filesystem::exists(s)
 
+#include <OgreRoot.h>
+#include <OgreTerrain.h>
+#include <OgreEntity.h>
+#include <OgreManualObject.h>
+#include <OgreMaterialManager.h>
+#include <OgreParticleSystem.h>
+#include <OgreParticleEmitter.h>
+#include <OgreParticleAffector.h>
+#include <OgreRibbonTrail.h>
+
+using namespace Ogre;
+
 
 CarModel::CarModel(unsigned int index, eCarType type, const std::string name,
-	Ogre::SceneManager* sceneMgr, SETTINGS* set, GAME* game, Scene* s, Camera* cam, App* app) :
+	Ogre::SceneManager* sceneMgr, SETTINGS* set, GAME* game, Scene* s, Ogre::Camera* cam, App* app) :
 	hue(0), sat(0), val(0), fCam(0), pMainNode(0), pCar(0), terrain(0), resCar(""), mCamera(0), pReflect(0), pApp(app)
 {
 	iIndex = index;  sDirname = name;  pSceneMgr = sceneMgr;
@@ -18,20 +37,23 @@ CarModel::CarModel(unsigned int index, eCarType type, const std::string name,
 	MATHVECTOR<float, 3> offset;
 	offset.Set(5*iIndex,5*iIndex,0); // 5*sqrt(2) m distance between cars
 	/// TODO: some quaternion magic to align the cars along track start orientation
+	// 4 car positions from 1, step width,length ...
 	
 	MATHVECTOR<float, 3> pos(0,10,0);
 	QUATERNION<float> rot;
-	pos = pGame->track.GetStart(0).first;
-	rot = pGame->track.GetStart(0).second;
+	pos = pGame->track.GetStart(0/*iIndex*/).first;
+	rot = pGame->track.GetStart(0/*iIndex*/).second;
 
 	pCar = pGame->LoadCar(sDirname, pos + offset, rot, true, false);
-	if (!pCar) Log("Error loading car " + sDirname);
+	if (!pCar) LogO("Error loading car " + sDirname);
 	
 	for (int w = 0; w < 4; ++w)
 	{	ps[w] = 0;  pm[w] = 0;  pd[w] = 0;
 		ndWh[w] = 0;  ndWhE[w] = 0; whTrl[w] = 0;
 		ndRs[w] = 0;  ndRd[w] = 0;
 		wht[w] = 0.f;  whTerMtr[w] = 0; }
+	for (int i=0; i < 2; i++)
+		pb[i] = 0;
 }
 
 CarModel::~CarModel()
@@ -50,6 +72,8 @@ CarModel::~CarModel()
 		if (ps[w]) {  pSceneMgr->destroyParticleSystem(ps[w]);   ps[w]=0;  }
 		if (pm[w]) {  pSceneMgr->destroyParticleSystem(pm[w]);   pm[w]=0;  }
 		if (pd[w]) {  pSceneMgr->destroyParticleSystem(pd[w]);   pd[w]=0;  }  }
+	for (int i=0; i < 2; i++)
+		if (pb[i]) {  pSceneMgr->destroyParticleSystem(pb[i]);   pb[i]=0;  }
 						
 	if (pMainNode) pSceneMgr->destroySceneNode(pMainNode);
 	if (pSceneMgr->hasEntity("Car")) pSceneMgr->destroyEntity("Car");
@@ -71,17 +95,28 @@ void CarModel::Update(PosInfo& posInfo, float time)
 	pMainNode->setPosition(posInfo.pos);
 	pMainNode->setOrientation(posInfo.rot);
 	
+
+	//  update particle emitters
+	//-----------------------------------------------------------------------------
+
+	//  boost
+	if (pSet->particles)
+	for (int i=0; i < 2; i++)
+	if (pb[i])
+	{
+		float emitB = pCar->dynamics.doBoost * 40.f;  // par
+		ParticleEmitter* pe = pb[i]->getEmitter(0);
+		pe->setEmissionRate(emitB);
+	}
+	
 	//  wheels
 	for (int w=0; w < 4; w++)
 	{
 		float wR = posInfo.whR[w];
 		ndWh[w]->setPosition(posInfo.whPos[w]);
 		ndWh[w]->setOrientation(posInfo.whRot[w]);
+
 		int whMtr = posInfo.whMtr[w];  //whTerMtr[w];
-		
-		
-		//  update particle emitters
-		//-----------------------------------------------------------------------------
 		float whVel = posInfo.whVel[w] * 3.6f;  //kmh
 		float slide = posInfo.whSlide[w], squeal = posInfo.whSqueal[w];
 		float onGr = slide < 0.f ? 0.f : 1.f;
@@ -92,22 +127,23 @@ void CarModel::Update(PosInfo& posInfo, float time)
 
 		///  emit rates +
 		Real emitS = 0.f, emitM = 0.f, emitD = 0.f;  //paused
+
 		if (!pGame->pause)
 		{
-			 Real sq = squeal* min(1.f, wht[w]), l = pSet->particles_len * onGr;
+			 Real sq = squeal* std::min(1.f, wht[w]), l = pSet->particles_len * onGr;
 			 emitS = sq * (whVel * 30) * l *0.3f;  //..
-			 emitM = slide < 1.4f ? 0.f :  (8.f * sq * min(5.f, slide) * l);
-			 emitD = (min(140.f, whVel) / 3.5f + slide * 1.f ) * l;  
+			 emitM = slide < 1.4f ? 0.f :  (8.f * sq * std::min(5.f, slide) * l);
+			 emitD = (std::min(140.f, whVel) / 3.5f + slide * 1.f ) * l;  
 			 //  resume
 			 pd[w]->setSpeedFactor(1.f);  ps[w]->setSpeedFactor(1.f);  pm[w]->setSpeedFactor(1.f);
 		}else{
 			 //  stop par sys
 			 pd[w]->setSpeedFactor(0.f);  ps[w]->setSpeedFactor(0.f);  pm[w]->setSpeedFactor(0.f);
 		}
-		Real sizeD = (0.3f + 1.1f * min(140.f, whVel) / 140.f) * (w < 2 ? 0.5f : 1.f);
+		Real sizeD = (0.3f + 1.1f * std::min(140.f, whVel) / 140.f) * (w < 2 ? 0.5f : 1.f);
 
 		//  ter mtr factors
-		int mtr = max(0, min(whMtr-1, (int)(sc->td.layers.size()-1)));
+		int mtr = std::max(0, std::min(whMtr-1, (int)(sc->td.layers.size()-1)));
 		TerLayer& lay = whMtr==0 ? sc->td.layerRoad : sc->td.layersAll[sc->td.layers[mtr]];
 		emitD *= lay.dust;  emitM *= lay.mud;  sizeD *= lay.dustS;  emitS *= lay.smoke;
 
@@ -120,7 +156,7 @@ void CarModel::Update(PosInfo& posInfo, float time)
 				ParticleEmitter* pe = ps[w]->getEmitter(0);
 				pe->setPosition(vpos + posInfo.carY * wR*0.7f); // 0.218
 				/**/ps[w]->getAffector(0)->setParameter("alpha", toStr(-0.4f - 0.07f/2.4f * whVel));
-				/**/pe->setTimeToLive( max(0.1, 2 - whVel/2.4f * 0.04) );  // fade,live
+				/**/pe->setTimeToLive( std::max(0.1, 2 - whVel/2.4f * 0.04) );  // fade,live
 				pe->setDirection(-posInfo.carY);	pe->setEmissionRate(emitS);
 			}
 			if (pm[w])	//  mud
@@ -147,7 +183,7 @@ void CarModel::Update(PosInfo& posInfo, float time)
 					//	vp.y += road->fHeight;	}/**/
 				ndWhE[w]->setPosition(vp);
 			}
-			float al = 0.5f * /*squeal*/ min(1.f, 0.7f * wht[w]) * onGr;  // par+
+			float al = 0.5f * /*squeal*/ std::min(1.f, 0.7f * wht[w]) * onGr;  // par+
 			if (whTrl[w])	whTrl[w]->setInitialColour(0,
 				lay.tclr.r,lay.tclr.g,lay.tclr.b, lay.tclr.a * al/**/);
 		}
@@ -200,7 +236,7 @@ void CarModel::Create()
 		mat->clone(sMtr[i] + toStr(iIndex), false);
 		// new mat name
 		sMtr[i] = sMtr[i] + toStr(iIndex);
-		Log(" =============== New mat name: " + sMtr[i]);
+		LogO(" =============== New mat name: " + sMtr[i]);
 	}
 	// iterate through all materials and set body_dyn.png with correct index, add car prefix to other textures
 	for (int i=0; i < NumMaterials; i++)
@@ -237,15 +273,18 @@ void CarModel::Create()
 	
 	//  body  ----------------------
 	Ogre::Vector3 vPofs(0,0,0);
+	AxisAlignedBox bodyBox;
 
 	if (FileExists(resCar + "/" + sDirname + "_" + "body.mesh"))
 	{
 		Entity* eCar = pSceneMgr->createEntity("Car"+ toStr(iIndex), sDirname + "_" + "body.mesh", "Car" + toStr(iIndex));
 		if (FileExists(resCar + "/" + sDirname + "_" + "body00_add.png") && FileExists(resCar + "/" + sDirname + "_" + "body00_red.png"))
 			eCar->setMaterialName(sMtr[Mtr_CarBody]);
+		bodyBox = eCar->getBoundingBox();
 		ncart->attachObject(eCar);  eCar->setVisibilityFlags(2);
 	}else{
 		ManualObject* mCar = CreateModel(pSceneMgr, sMtr[Mtr_CarBody], &pCar->bodymodel.mesh, vPofs);
+		bodyBox = mCar->getBoundingBox();
 		if (mCar){	ncart->attachObject(mCar);  mCar->setVisibilityFlags(2);  }
 	}
 
@@ -309,19 +348,37 @@ void CarModel::Create()
 	}
 
 
+	///  boost emitters  ------------------------
+	for (int i=0; i < 2; i++)
+	{
+		String si = toStr(iIndex) + "_" +toStr(i);
+		if (!pb[i])  {
+			pb[i] = pSceneMgr->createParticleSystem("Boost"+si, "Boost");
+			//pCar->dynamics.chassis->getsi
+			Vector3 bsize = (bodyBox.getMaximum() - bodyBox.getMinimum())*0.5,
+				bcenter = bodyBox.getMaximum() + bodyBox.getMinimum();
+			LogO("Car body bbox :  size " + toStr(bsize) + ",  center " + toStr(bcenter));
+			SceneNode* nb = pMainNode->createChildSceneNode(bcenter+
+				Vector3(bsize.x * 0.97, bsize.y * 0.65, bsize.z * 0.65 * (i==0 ? 1 : -1) ));
+				//Vector3(1.9 /*back*/, 0.1 /*up*/, 0.6 * (i==0 ? 1 : -1)/*sides*/ ));
+			nb->attachObject(pb[i]);
+			pb[i]->getEmitter(0)->setEmissionRate(0);  }
+	}
+
 	///  wheel emitters  ------------------------
 	for (int w=0; w < 4; w++)
-	{		
+	{
+		String siw = toStr(iIndex) + "_" +toStr(w);
 		if (!ps[w])  {
-			ps[w] = pSceneMgr->createParticleSystem("Smoke"+toStr(iIndex) + "_" +toStr(w), sc->sParSmoke);
+			ps[w] = pSceneMgr->createParticleSystem("Smoke"+siw, sc->sParSmoke);
 			pSceneMgr->getRootSceneNode()->createChildSceneNode()->attachObject(ps[w]);
 			ps[w]->getEmitter(0)->setEmissionRate(0);  }
 		if (!pm[w])  {
-			pm[w] = pSceneMgr->createParticleSystem("Mud"+toStr(iIndex) + "_"+toStr(w), sc->sParMud);
+			pm[w] = pSceneMgr->createParticleSystem("Mud"+siw, sc->sParMud);
 			pSceneMgr->getRootSceneNode()->createChildSceneNode()->attachObject(pm[w]);
 			pm[w]->getEmitter(0)->setEmissionRate(0);  }
 		if (!pd[w])  {
-			pd[w] = pSceneMgr->createParticleSystem("Dust"+toStr(iIndex) + "_"+toStr(w), sc->sParDust);
+			pd[w] = pSceneMgr->createParticleSystem("Dust"+siw, sc->sParDust);
 			pSceneMgr->getRootSceneNode()->createChildSceneNode()->attachObject(pd[w]);
 			pd[w]->getEmitter(0)->setEmissionRate(0);  }
 
@@ -361,6 +418,8 @@ void CarModel::UpdParsTrails()
 	for (int w=0; w < 4; w++)
 	{
 		Ogre::uint8 grp = RENDER_QUEUE_9;  //9=road  after glass
+		if (w < 2 &&
+			pb[w])	{	pb[w]->setVisible(pSet->particles);  pb[w]->setRenderQueueGroup(grp);  }
 		if (whTrl[w]){  whTrl[w]->setVisible(pSet->trails);  whTrl[w]->setRenderQueueGroup(grp);  }  grp += 2;
 		if (ps[w])	{	ps[w]->setVisible(pSet->particles);  ps[w]->setRenderQueueGroup(grp);  }  // vdr only && !sc.ter
 		if (pm[w])	{	pm[w]->setVisible(pSet->particles);  pm[w]->setRenderQueueGroup(grp);  }
@@ -389,7 +448,7 @@ void CarModel::UpdWhTerMtr()
 	{
 		Vector3 w = ndWh[i]->getPosition();
 		int mx = (w.x + 0.5*tws)/tws*t, my = (w.z + 0.5*tws)/tws*t;
-		mx = max(0,min(t-1, mx)), my = max(0,min(t-1, my));
+		mx = std::max(0,std::min(t-1, mx)), my = std::max(0,std::min(t-1, my));
 
 		int mtr = blendMtr[my*t + mx];
 		if (pCar->dynamics.bWhOnRoad[i])

@@ -1,4 +1,4 @@
-#include "stdafx.h"
+#include "pch.h"
 #if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
 //	#include "vld.h" // mem leaks +
 #endif
@@ -9,8 +9,14 @@
 #include "../vdrift/settings.h"
 #include "../network/enet-wrapper.hpp"
 
+#include <string>
+#include <sstream>
+#include <list>
+#include <ostream>
+
 #include <OgrePlatform.h>
 #include <boost/thread.hpp>
+
 
 void VprThread(App* pA)
 {
@@ -27,7 +33,7 @@ void VprThread(App* pA)
 	//  Load Settings
 	std::stringstream dummy;
 	PATHMANAGER::Init(dummy, dummy);
-	string logfilename = PATHMANAGER::GetLogDir() + "/log.txt";
+	std::string logfilename = PATHMANAGER::GetLogDir() + "/log.txt";
 	SETTINGS* settings = new SETTINGS();
 	if (!PATHMANAGER::FileExists(PATHMANAGER::GetSettingsFile()))
 	{

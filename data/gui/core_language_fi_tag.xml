@@ -174,6 +174,7 @@
 	<Tag name="TrackInAir">Ilmassa</Tag>
 	<Tag name="Used">Used</Tag>
 	<Tag name="TipMinimapScrnEditor">Minimap of selected track, view from top.</Tag>
+	<Tag name="RplVersion">Version</Tag>
 	<Tag name="Options">Valinnat</Tag>
 	<Tag name="Delete">Poista</Tag>
 	<Tag name="Rename">Nimeä uudelleen</Tag>
@@ -311,6 +312,7 @@
 	<Tag name="TipTrackDescEditor">Track description text (click to edit).</Tag>
 	<Tag name="ViewLeft">View Left</Tag>
 	<Tag name="UnitMB">MB</Tag>
+	<Tag name="RplTime">Time</Tag>
 	<Tag name="ApplyShadows">Apply Shadows</Tag>
 	<Tag name="RoadStats">Road Stats</Tag>
 	<Tag name="SunDir">Sun dir.</Tag>
@@ -378,6 +380,7 @@
 	<Tag name="InputTerDeform">D - Deform  (LMB up, RMB down)</Tag>
 	<Tag name="TipDiffuseTex">Diffuse texture (Specular in alpha).</Tag>
 	<Tag name="VegetCol">Vegetation collision    *needs New Game</Tag>
+	<Tag name="CarCollis">Cars collision</Tag>
 	<Tag name="MyGUI_MessageBox_Continue">Continue</Tag>
 	<Tag name="Tools">Tools</Tag>
 	<Tag name="TipGrassSwaySpd">Grass sway effect speed.</Tag>
@@ -405,6 +408,7 @@
 	<Tag name="SREditorVersion">Stunt Rally - Track Editor - version</Tag>
 	<Tag name="InputRoadAfterPick">after picked, center at mouse</Tag>
 	<Tag name="TipTrackDesc">Track description text.</Tag>
+	<Tag name="RplFileSize">File size</Tag>
 	<Tag name="SourceTrack">Source track</Tag>
 	<Tag name="ImpostorDist">impostors dist.</Tag>
 	<Tag name="page">page</Tag>
@@ -487,7 +491,9 @@
 	<Tag name="Pitch">pitch</Tag>
 	<Tag name="MyGUI_MessageBox_Yes">Kyllä</Tag>
 	<Tag name="RplAll">All</Tag>
-	<Tag name="GameVersion">1.1</Tag>
+	<Tag name="InputMapPrevCamera">Previous Camera</Tag>
+	<Tag name="InputMapNextCamera">Next Camera</Tag>
+	<Tag name="GameVersion">1.2</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 
 </MyGUI>

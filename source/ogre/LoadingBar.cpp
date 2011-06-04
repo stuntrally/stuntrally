@@ -1,5 +1,16 @@
-#include "stdafx.h"
+#include "pch.h"
+#include "Defines.h"
 #include "LoadingBar.h"
+#include <time.h>  // for random
+
+#include <OgreRenderWindow.h>
+#include <OgreOverlayElement.h>
+#include <OgreOverlayManager.h>
+#include <OgreTechnique.h>
+#include <OgreMaterialManager.h>
+#include <MyGUI.h>
+using namespace Ogre;
+
 
 void LoadingBar::start( RenderWindow* window, 		unsigned short numGroupsInit, 
 	unsigned short numGroupsLoad, 

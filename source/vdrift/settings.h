@@ -2,7 +2,6 @@
 #define _Settings_h_
 
 #include "configfile.h"
-using namespace std;
 
 class SETTINGS
 {
@@ -32,6 +31,7 @@ public:
 	//  game
 	bool trackreverse;	//int number_of_laps;  float ai_difficulty;
 	int local_players;  bool split_vertically;
+	std::string language;
 
 	//  other
 	float vol_master, vol_engine, vol_tires, vol_env;
@@ -42,7 +42,7 @@ public:
 	//  sim freq (1/interval timestep)
 	float game_fq, blt_fq;  int blt_iter;
 	int mult_thr;
-	bool veget_collis;
+	bool veget_collis, car_collis;
 	
 	//  compositor
 	bool bloom, hdr, motionblur;

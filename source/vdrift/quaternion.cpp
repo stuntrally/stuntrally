@@ -1,5 +1,4 @@
-#include "stdafx.h"
-
+#include "pch.h"
 #include "quaternion.h"
 #include "unittest.h"
 

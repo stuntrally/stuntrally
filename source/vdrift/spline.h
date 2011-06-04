@@ -6,6 +6,7 @@
 //#include <ostream>
 //#include <vector>
 //#include <map>
+#include <algorithm>
 
 template <typename T>
 class SPLINE

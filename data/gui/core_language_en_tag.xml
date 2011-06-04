@@ -122,7 +122,8 @@
 	<Tag name="TipAutoGearbox">Uncheck for manual gears changing.</Tag>
 	<Tag name="AutoRear">Auto Rear gear</Tag>
 	<Tag name="TipAutoRear">Uncheck for manual Rear gear changing.</Tag>
-	<Tag name="VegetCol">Vegetation collision    *needs New Game</Tag>
+	<Tag name="VegetCol">Vegetation collision</Tag>
+	<Tag name="CarCollis">Cars collision</Tag>
 		
 
 	<!--  Replay  -->
@@ -239,11 +240,13 @@
 	<!--<Tag name="InputKeyUnassigned">&lt;Unassigned&gt;</Tag>-->
 	<Tag name="InputKeyUnassigned">-- None --</Tag>
 	<Tag name="InputAssignKey">&lt;Press a key&gt;</Tag>
+
 	<Tag name="InputMapPlayer1">Player 1</Tag>
 	<Tag name="InputMapPlayer2">Player 2</Tag>
 	<Tag name="InputMapPlayer3">Player 3</Tag>
 	<Tag name="InputMapPlayer4">Player 4</Tag>
 	<Tag name="InputMapGeneral">General</Tag>
+
 	<Tag name="InputMapThrottle">Throttle</Tag>
 	<Tag name="InputMapBrake">Brake</Tag>
 	<Tag name="InputMapFlip">Flip</Tag>
@@ -252,11 +255,15 @@
 	<Tag name="InputMapSteering">Steering</Tag>
 	<Tag name="InputMapShiftUp">Shift up</Tag>
 	<Tag name="InputMapShiftDown">Shift down</Tag>
+
 	<Tag name="InputMapShowOptions">Show options</Tag>
 	<Tag name="InputMapPrevTab">Previous tab</Tag>
 	<Tag name="InputMapNextTab">Next tab</Tag>
 	<Tag name="InputMapRestartGame">New game</Tag>
-	
+
+	<Tag name="InputMapPrevCamera">Previous Camera</Tag>
+	<Tag name="InputMapNextCamera">Next Camera</Tag>
+
 
 	<!--  Sound  -->
 	<Tag name="Sound">Sound</Tag>
@@ -275,7 +282,7 @@
 	<Tag name="BasedOn">based on</Tag>
 	<Tag name="AndUsing">and using</Tag>
 	<Tag name="ProjectPage">project&apos;s page:</Tag>
-	<Tag name="GameVersion">1.1</Tag>
+	<Tag name="GameVersion">1.2</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 		
 	
@@ -569,5 +576,5 @@
 	<Tag name="TipGrassSwayDistr">Grass sway effect distribution (how random).</Tag>
 	<Tag name="TipModelRoadDist">Distance from road to models (global, added to each models own value).</Tag>
 	<Tag name="TipImpDist">Far distance at which models will turn into 2d impostors.</Tag>
-	<Tag name="TipModelPrev">Model preview image.</Tag>>
+	<Tag name="TipModelPrev">Model preview image.</Tag>
 </MyGUI>
