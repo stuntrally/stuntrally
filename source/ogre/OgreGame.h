@@ -37,7 +37,9 @@ public:
 	// Utility
 	Ogre::Quaternion qFixCar,qFixWh;
 
-	Replay replay;  ReplayFrame fr;
+	//  replay - full, user saves
+	//  ghost - saved when best lap,  ghplay - ghost ride replay, loaded if was on disk
+	Replay replay, ghost, ghplay;  ReplayFrame fr;
 
 	Scene sc;  /// scene.xml
 	BltObjects objs;  // veget collision in bullet

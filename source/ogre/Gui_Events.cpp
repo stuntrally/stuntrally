@@ -856,7 +856,7 @@ bool App::keyPressed( const OIS::KeyEvent &arg )
 
 
 			case KC_BACK:	// replay controls
-				if (mWndRpl)
+				if (mWndRpl && !isFocGui)
 				{	//mWndRpl->setVisible(!mWndRpl->isVisible());
 					bRplWnd = !bRplWnd;  // ^set in sizehud
 					return true;  }

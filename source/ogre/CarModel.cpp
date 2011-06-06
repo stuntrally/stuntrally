@@ -104,7 +104,7 @@ void CarModel::Update(PosInfo& posInfo, float time)
 	for (int i=0; i < 2; i++)
 	if (pb[i])
 	{
-		float emitB = pCar->dynamics.doBoost * 40.f;  // par
+		float emitB = posInfo.fboost * 40.f;  // par
 		ParticleEmitter* pe = pb[i]->getEmitter(0);
 		pe->setEmissionRate(emitB);
 	}

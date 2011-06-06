@@ -53,6 +53,8 @@ struct ReplayFrame
 	char surfType[4], whMtr[4];  //TRACKSURFACE::TYPE
 	float squeal[4], slide[4], whVel[4];
 	float suspVel[4], suspDisp[4];
+	
+	float fboost;  // input, particles
 
 	/// sizeof:  tm 8 car 12*5 wh 16*5 h 16 snd 16 12 whtr 8 16*5
 	/// = 280 Bytes per frame

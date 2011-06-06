@@ -230,8 +230,8 @@ void App::newPoses()
 				posInfo.whSlide[w] = fr.slide[w];  posInfo.whSqueal[w] = fr.squeal[w];
 				posInfo.whR[w] = replay.header.whR[0][w];//
 				posInfo.whMtr[w] = fr.whMtr[w];
+				posInfo.fboost = fr.fboost;
 			}
-
 		}
 		else
 		//  get data from vdrift
@@ -249,6 +249,7 @@ void App::newPoses()
 				posInfo.whSlide[w] = -1.f;  posInfo.whSqueal[w] = pCar->GetTireSquealAmount(wp, &posInfo.whSlide[w]);
 				posInfo.whR[w] = pCar->GetTireRadius(wp);//
 				posInfo.whMtr[w] = carM->whTerMtr[w];
+				posInfo.fboost = pCar->dynamics.doBoost;
 			}
 		}
 		
@@ -322,11 +323,13 @@ void App::newPoses()
 				fr.gear = pCar->GetGear();  fr.clutch = pCar->GetClutch();
 				fr.throttle = pCar->dynamics.GetEngine().GetThrottle();
 				fr.steer = pCar->GetLastSteer();
+				fr.fboost = pCar->dynamics.doBoost;
 				//  eng snd
 				fr.posEngn = pCar->dynamics.GetEnginePosition();
 				fr.speed = pCar->GetSpeed();
 				fr.dynVel = pCar->dynamics.GetVelocity().Magnitude();
 				replay.AddFrame(fr, iCarNum);
+				//ghost.AddFrame(fr, iCarNum);  //0 ...
 				
 				if (valRplName2)  // recorded info
 				{
