@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION"
 "Report-Msgid-Bugs-To: "
-"POT-Creation-Date: 2011-05-29 15:00+0200"
+"POT-Creation-Date: 2011-06-06 22:19+0300"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>"
 "Language-Team: LANGUAGE <LL@li.org>"
@@ -761,8 +761,8 @@ msgctxt "DustSize"
 msgid "dust size"
 msgstr ""
 
-msgctxt "InputRoadMove"
-msgid "- move point"
+msgctxt "InputMapPlayer4"
+msgid "Player 4"
 msgstr ""
 
 msgctxt "TipDisableFog"
@@ -803,10 +803,6 @@ msgstr ""
 
 msgctxt "VegetCol"
 msgid "Vegetation collision"
-msgstr ""
-
-msgctxt "CarCollis"
-msgid "Cars collision"
 msgstr ""
 
 msgctxt "Particles"
@@ -1033,8 +1029,8 @@ msgctxt "TipChangeHue"
 msgid "Change car color (hue)."
 msgstr ""
 
-msgctxt "InputMapPlayer4"
-msgid "Player 4"
+msgctxt "InputRoadMove"
+msgid "- move point"
 msgstr ""
 
 msgctxt "Intensity"
@@ -1659,6 +1655,10 @@ msgstr ""
 
 msgctxt "InputMapShiftDown"
 msgid "Shift down"
+msgstr ""
+
+msgctxt "CarCollis"
+msgid "Cars collision"
 msgstr ""
 
 msgctxt "CameraInfo"

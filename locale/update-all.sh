@@ -1,23 +1,26 @@
-#!/bin/bash
+#!/bin/bash -e
 
 echo "Generating new template..."
 ./xml_po_parser.py ../data/gui/core_language_en_tag.xml ./stuntrally.pot
 
 echo "Fetching new translations..."
-
-if [ ! -d ./translations-export ]; then
-	mkdir ./translations-export
-	cd ./translations-export
-	bzr branch lp:~stuntrally-team/stuntrally/pofiles
-	cd ..
-fi
-
-cd ./translations-export/pofiles
-bzr pull
-cd ../..
+(
+	# Clone the LP translation branch if it doesn't exist,
+	# update otherwise
+	if [ ! -d ./translations-export ]; then
+		mkdir ./translations-export
+		cd ./translations-export
+		bzr branch lp:~stuntrally-team/stuntrally/pofiles
+	else
+		cd ./translations-export/pofiles
+		bzr pull
+	fi
+)
 
 echo "Generating languages..."
-./xml_po_parser.py ./translations-export/pofiles/locale/de.po ../data/gui/core_language_de_tag.xml
-./xml_po_parser.py ./translations-export/pofiles/locale/fi.po ../data/gui/core_language_fi_tag.xml
+LOCALES="de fi ro"
+for loc in $LOCALES; do
+	./xml_po_parser.py ./translations-export/pofiles/locale/${loc}.po ../data/gui/core_language_${loc}_tag.xml
+done
 
-echo "Done"
+echo "Done."
