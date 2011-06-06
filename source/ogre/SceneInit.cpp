@@ -65,15 +65,17 @@ void App::createScene()
 void App::NewGame()
 {
 	// actual loading isn't done here
+	isFocGui = true;
+	toggleGui();  // hide gui
+
 	bLoading = true;
 	bRplPlay = 0;
 	pSet->rpl_rec = bRplRec;  // changed only at new game
-	LoadingOn();
-	// hide HUD
-	ShowHUD(true);
-	// hide FPS
-	mFpsOverlay->hide();
 	if (mWndRpl)  mWndRpl->setVisible(false);
+
+	LoadingOn();
+	ShowHUD(true);  // hide HUD
+	mFpsOverlay->hide();  // hide FPS
 	mGUI->setVisiblePointer(false);
 
 	currentLoadingState = loadingStates.begin();

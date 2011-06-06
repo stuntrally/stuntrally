@@ -196,7 +196,7 @@ protected:
 	MyGUI::StaticTextPtr valLocPlayers;
 		
 public:
-	bool bRplPlay,bRplPause, bRplRec;  //  game
+	bool bRplPlay,bRplPause, bRplRec, bRplWnd;  //  game
 protected:
 	MyGUI::ButtonPtr btRplPl;  void UpdRplPlayBtn();
 

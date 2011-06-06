@@ -794,17 +794,11 @@ bool App::keyPressed( const OIS::KeyEvent &arg )
 	if (!bAssignKey)
 	{
 		//  change gui tabs
-		if (mWndTabs)
+		if (mWndTabs && isFocGui)
 		{	int num = mWndTabs->getItemCount();
-			if (isFocGui)  
-			{
-				if (action("PrevTab")) {
-					mWndTabs->setIndexSelected( (mWndTabs->getIndexSelected() - 1 + num) % num ); return true;
-				}
-				else if (action("NextTab")) {
-					mWndTabs->setIndexSelected( (mWndTabs->getIndexSelected() + 1) % num ); return true;
-				}
-		}	}
+			if (action("PrevTab")) {		mWndTabs->setIndexSelected( (mWndTabs->getIndexSelected() - 1 + num) % num ); return true;	}
+			else if (action("NextTab")) {	mWndTabs->setIndexSelected( (mWndTabs->getIndexSelected() + 1) % num );	      return true;	}
+		}
 		
 		//  gui on/off
 		if (action("ShowOptions"))
@@ -816,35 +810,36 @@ bool App::keyPressed( const OIS::KeyEvent &arg )
 
 
 		///  Cameras  ---------------------------------
-		int iChgCam = 0;
-		if (action("NextCamera"))  // Next
-			iChgCam = 1;
-		if (action("PrevCamera"))  // Prev
-			iChgCam = -1;
-		
-		if (iChgCam)
+		if (!isFocGui)
 		{
-			if (ctrl)
-				//  change current camera car index
-				iCurCam = (iCurCam + iChgCam +pSet->local_players) % pSet->local_players;
-			else
-			{	int visMask = 255, i = 0;
-				roadUpCnt = 0;
+			int iChgCam = 0;
+			if (action("NextCamera"))  // Next
+				iChgCam = 1;
+			if (action("PrevCamera"))  // Prev
+				iChgCam = -1;
+			if (iChgCam)
+			{
+				if (ctrl)
+					//  change current camera car index
+					iCurCam = (iCurCam + iChgCam +pSet->local_players) % pSet->local_players;
+				else
+				{	int visMask = 255, i = 0;
+					roadUpCnt = 0;
 
-				for (std::list<CarModel*>::iterator it=carModels.begin(); it!=carModels.end(); it++, i++)
-				if (i == iCurCam)
-				{
-					if ((*it)->fCam)
-					{	(*it)->fCam->Next(iChgCam < 0, shift);
-						if ((*it)->fCam->ca.mHideGlass)  visMask = 255-16;
-						else        visMask = 255;
+					for (std::list<CarModel*>::iterator it=carModels.begin(); it!=carModels.end(); it++, i++)
+					if (i == iCurCam)
+					{
+						if ((*it)->fCam)
+						{	(*it)->fCam->Next(iChgCam < 0, shift);
+							if ((*it)->fCam->ca.mHideGlass)  visMask = 255-16;
+							else        visMask = 255;
+						}
 					}
+					for (std::list<Viewport*>::iterator it=mSplitMgr->mViewports.begin(); it!=mSplitMgr->mViewports.end(); it++)
+						(*it)->setVisibilityMask(visMask);
 				}
-				for (std::list<Viewport*>::iterator it=mSplitMgr->mViewports.begin(); it!=mSplitMgr->mViewports.end(); it++)
-					(*it)->setVisibilityMask(visMask);
-			}
-			return false;
-		}
+				return false;
+		}	}
 	}
 	
 	using namespace OIS;
@@ -859,28 +854,11 @@ bool App::keyPressed( const OIS::KeyEvent &arg )
 					toggleGui();		// gui on/off
 				return true;
 
-			#if 0
-			case KC_1:
-			if (mSplitMgr)
-			{	Ogre::Viewport* vp = *mSplitMgr->mViewports.begin();
-				vp->setAutoUpdated(shift);	vp->setVisibilityMask(shift ? 255 : 0);
-			}	return true;
-			case KC_2:
-			if (mSplitMgr)
-			{	Ogre::Viewport* vp = *(++mSplitMgr->mViewports.begin());
-				vp->setAutoUpdated(shift);	vp->setVisibilityMask(shift ? 255 : 0);
-			}	return true;
-			case KC_3:
-			if (mSplitMgr)
-			{	Ogre::Viewport* vp = *(--mSplitMgr->mViewports.end());
-				vp->setAutoUpdated(shift);	vp->setVisibilityMask(shift ? 255 : 0);
-			}	return true;
-			#endif
-
 
 			case KC_BACK:	// replay controls
-				if (mWndRpl && !isFocGui)
-				{	mWndRpl->setVisible(!mWndRpl->isVisible());
+				if (mWndRpl)
+				{	//mWndRpl->setVisible(!mWndRpl->isVisible());
+					bRplWnd = !bRplWnd;  // ^set in sizehud
 					return true;  }
 				break;
 
