@@ -216,9 +216,18 @@ void App::InitGui()
 	//  replays  ------------------------------------------------------------
 	Btn("RplLoad", btnRplLoad);  Btn("RplSave", btnRplSave);
 	Btn("RplDelete", btnRplDelete);  Btn("RplRename", btnRplRename);
+	//  settings
 	Chk("RplChkAutoRec", chkRplAutoRec, rpl_rec);
-	//Chk("RplChkGhost", chkRplChkGhost, rpl_play);
-	Btn("RplBtnCur", btnRplCur)  Btn("RplBtnAll", btnRplAll);  // radio
+	Chk("RplChkGhost", chkRplChkGhost, rpl_ghost);
+	Chk("RplChkBestOnly", chkRplChkGhost, rpl_bestonly);
+	//  radios
+	Btn("RplBtnAll", btnRplAll);  rbRplAll = btn;
+	Btn("RplBtnCur", btnRplCur);  rbRplCur = btn;
+	Btn("RplBtnGhosts", btnRplGhosts);  rbRplGhosts = btn;  btn = 0;
+	switch (pSet->rpl_listview)  // load from set
+	{	case 0: btn = rbRplAll;  break;  case 1: btn = rbRplCur;  break;  case 2: btn = rbRplGhosts;  break;  }
+	if (btn)  btn->setStateCheck(true);
+	
     if (mWndRpl)
 	{	//  replay controls
 		Btn("RplToStart", btnRplToStart);  Btn("RplToEnd", btnRplToEnd)

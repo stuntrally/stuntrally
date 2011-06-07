@@ -92,11 +92,9 @@ void App::LoadCleanUp()  // 1 first
 	
 	// Delete all cars
 	for (std::list<CarModel*>::iterator it=carModels.begin(); it!=carModels.end(); it++)
-	{
 		delete (*it);
-	}
-	carModels.clear();
-	newPosInfos.clear();
+
+	carModels.clear();  newPosInfos.clear();
 	
 	if (grass) {  delete grass->getPageLoader();  delete grass;  grass=0;   }
 	if (trees) {  delete trees->getPageLoader();  delete trees;  trees=0;   }
@@ -127,15 +125,24 @@ void App::LoadGame()  // 2
 	pGame->NewGameDoCleanup();
 	pGame->NewGameDoLoadTrack();
 	/// init car models
-	// will create vdrift cars
-	// actual car loading will be done later in LoadCar()
+	// will create vdrift cars, actual car loading will be done later in LoadCar()
 	// this is just here because vdrift car has to be created first
 	std::list<Camera*>::iterator camIt = mSplitMgr->mCameras.begin();
-	for (int i=0; i < mSplitMgr->mNumPlayers; i++,camIt++)
-		carModels.push_back( new CarModel(i, CarModel::CT_LOCAL, pSet->car/*sListCar*/, mSceneMgr, pSet, pGame, &sc, (*camIt), this ) );
+	int i;
+	for (i=0; i < mSplitMgr->mNumPlayers; i++,camIt++)
+		carModels.push_back( new CarModel(i, CarModel::CT_LOCAL, pSet->car, mSceneMgr, pSet, pGame, &sc, (*camIt), this ) );
+
+	/// ghost car  load if exists
+	ghplay.Clear();
+	if (!bRplPlay	// load ghost play if exists
+		&& pSet->rpl_ghost)
+	{
+		if (ghplay.LoadFile(GetGhostFile()))
+			carModels.push_back( new CarModel(i, CarModel::CT_GHOST, pSet->car, mSceneMgr, pSet, pGame, &sc, 0, this ) );
+	}
 	
 	pGame->NewGameDoLoadMisc();
-	bGetStPos = true;
+	//bGetStPos = true;
 	
 	bool ter = IsTerTrack();
 	sc.ter = ter;
@@ -174,21 +181,23 @@ void App::LoadCar()  // 4
 		newPosInfos.push_back(carPosInfo);
 	}
 	
-	///  Init Replay  once  =================----------------
+	///  Init Replay  once
+	///=================----------------
 	replay.InitHeader(pSet->track.c_str(), pSet->track_user, pSet->car.c_str(), !bRplPlay);
 	replay.header.numPlayers = pSet->local_players;
-	if (pSet->local_players > 1)  // other car names
+	ghost.InitHeader(pSet->track.c_str(), pSet->track_user, pSet->car.c_str(), !bRplPlay);
+	ghost.header.numPlayers = 1;  // ghost always 1 car
+
+	//if (pSet->local_players > 1)  // save other car names
 	//for (int p=1; p <
-	{
 		//strcpy(replay.header.cars[0], pSet->car.c_str());
-	}
 	
 	int c = 0;  // copy wheels R
 	for (std::list <CAR>::const_iterator it = pGame->cars.begin(); it != pGame->cars.end(); it++,c++)
 	{
 		for (int w=0; w<4; ++w)
 			replay.header.whR[c][w] = (*it).GetTireRadius(WHEEL_POSITION(w));
-	}	// cars names..
+	}	// car names..
 }
 
 void App::LoadTerrain()  // 5
@@ -237,14 +246,11 @@ void App::LoadMisc()  // 7 last
 	
 	// Camera settings
 	for (std::list<CarModel*>::iterator it=carModels.begin(); it!=carModels.end(); it++)
-	{
 		if ((*it)->fCam)
-		{
-			(*it)->fCam->first = true;
+		{	(*it)->fCam->first = true;
 			(*it)->fCam->mTerrain = mTerrainGroup;
 			(*it)->fCam->mWorld = &(pGame->collision);
 		}
-	}
 }
 
 /* Actual loading procedure that gets called every frame during load. Performs a single loading step. */

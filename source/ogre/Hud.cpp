@@ -93,7 +93,7 @@ void App::CreateHUD()
 		ndMap->attachObject(m);
 		
 		//  car pos dot
-		mpos = Create2D("hud/CarPos", mSceneMgr, 0.2f, true);  // dot size  -par
+		mpos = Create2D("hud/CarPos", mSceneMgr, 0.4f, true);  // dot size  -par
 		mpos->setVisibilityFlags(2);
 		mpos->setRenderQueueGroup(RENDER_QUEUE_OVERLAY);
 		ndPos = ndMap->createChildSceneNode();
@@ -167,35 +167,25 @@ void App::CreateHUD()
 void App::ShowHUD(bool hideAll)
 {
 	if (hideAll)
-	{
-		if (nrpmB)  nrpmB->setVisible(false);
-		if (nvelBk)	nvelBk->setVisible(false);
-		if (nvelBm)	nvelBm->setVisible(false);
-		if (nrpm)	nrpm->setVisible(false);
-		if (nvel)	nvel->setVisible(false);
-		if (ovGear)	{ ovGear->hide();  }
-		if (ovVel)	{ ovVel->hide();   }
-		if (ovAbsTcs){ ovAbsTcs->hide(); }
-		if (hudGear){ hudGear->hide(); }
-		if (hudVel) { hudVel->hide(); }
-		if (ovCarDbg){ ovCarDbg->hide();   }
-		if (ovCarDbgTxt){ ovCarDbgTxt->hide();   }
+	{	if (nrpmB)  nrpmB->setVisible(false);
+		if (nvelBk)	nvelBk->setVisible(false);	if (nvelBm)	nvelBm->setVisible(false);
+		if (nrpm)	nrpm->setVisible(false);	if (nvel)	nvel->setVisible(false);
+		if (ovGear)	  ovGear->hide();		if (ovVel)	  ovVel->hide();
+		if (ovAbsTcs) ovAbsTcs->hide();
+		if (hudGear)  hudGear->hide();		if (hudVel)   hudVel->hide();
+		if (ovCarDbg)  ovCarDbg->hide();	if (ovCarDbgTxt)  ovCarDbgTxt->hide();
 
-		if (ovCam)	{ ovCam->hide();     }
-		if (ovTimes){ ovTimes->hide();   }
+		if (ovCam)	 ovCam->hide();		if (ovTimes) ovTimes->hide();
 		if (mFpsOverlay) { mFpsOverlay->hide(); }
 		if (ndMap)  ndMap->setVisible(false);
 		if (mGUI)	mGUI->setVisiblePointer(false);
 		if (mWndRpl)  mWndRpl->setVisible(false);
-	}
-	else
-	{
+	}else{
 		bool show = pSet->show_gauges;
 		if (nrpmB)  nrpmB->setVisible(show);
 		if (nvelBk)	nvelBk->setVisible(show && !pSet->show_mph);
 		if (nvelBm)	nvelBm->setVisible(show && pSet->show_mph);
-		if (nrpm)	nrpm->setVisible(show);
-		if (nvel)	nvel->setVisible(show);
+		if (nrpm)	nrpm->setVisible(show);		if (nvel)	nvel->setVisible(show);
 		if (ovGear)	{  if (1||show)  ovGear->show();  else  ovGear->hide();  }
 		if (ovVel)	{  if (1||show)  ovVel->show();   else  ovVel->hide();   }
 		if (ovAbsTcs){ if (show)  ovAbsTcs->show();   else  ovAbsTcs->hide(); }
@@ -384,6 +374,19 @@ void App::UpdateHUD(CAR* pCar, float time, Viewport* vp)
 		{	ovU[0]->setCaption(""); ovU[1]->setCaption(""); ovU[2]->setCaption(""); ovU[3]->setCaption("");		}
 	}
 	oldCarTxt = pSet->car_dbgtxt;
+	
+
+	///  ghost, checks  ----------
+	if (ovU[0])
+	{
+		CarModel* c = (carModels.size() == 0) ? 0 : *carModels.begin();
+		String s = String("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n")+
+			"                      ghost:  "  + GetTimeString(ghost.GetTimeLength()) + "  "  + toStr(ghost.GetNumFrames()) + "\n" +
+			"                      ghplay: " + GetTimeString(ghplay.GetTimeLength()) + "  " + toStr(ghplay.GetNumFrames()) + "\n" +
+			"                      bInSt:" + (c->bInSt ? "1":"0") + " iCur:" + toStr(c->iCurChk) + " iIn:" + toStr(c->iInChk) + " iNext:" + toStr(c->iNextChk) + " iNumChks:" + toStr(c->iNumChks);
+		ovU[0]->setCaption(s);
+	}
+	
 
 	//  profiling times -
 	if (pGame && pGame->profilingmode && ovU[3])
@@ -455,7 +458,8 @@ void App::UpdateHUD(CAR* pCar, float time, Viewport* vp)
 		hudCheck->setCaption(s);/**/
 
 		static int showO = -1;  static float fChkTime = 0.f;
-		if (bWrongChk)  fChkTime = 2.f;  //par sec
+		if (carModels.size() > 0 && (*carModels.begin())->bWrongChk)  // for each carModel...
+		/*if (bWrongChk)*/  fChkTime = 2.f;  //par sec
 		int show = fChkTime > 0.f ? 1 : 0;
 		if (show)  fChkTime -= time;
 		if (show != showO)

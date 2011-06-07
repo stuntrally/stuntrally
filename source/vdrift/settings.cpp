@@ -67,12 +67,13 @@ void SETTINGS::Serialize(bool w, CONFIGFILE & c)
 
 	Param(c,w, "input.x11_capture_mouse", x11_capture_mouse);
 
-	/*Param(c,w, "replay.play", rpl_play);*/	Param(c,w, "replay.rec", rpl_rec);
+	Param(c,w, "replay.rec", rpl_rec);				Param(c,w, "replay.ghost", rpl_ghost);
+	Param(c,w, "replay.bestonly", rpl_bestonly);	Param(c,w, "replay.listview", rpl_listview);
 }
 
 SETTINGS::SETTINGS() :  ///  Defaults
 	//  car, track
-	car("360"), track("Jungle-T"), track_user(false),
+	car("3S"), track("J1-T"), track_user(false),
 	car_hue(0.f), car_sat(0.f), car_val(0.f),
 	//  show
 	show_fps(1), show_gauges(1), trackmap(1),
@@ -105,5 +106,5 @@ SETTINGS::SETTINGS() :  ///  Defaults
 	//  input
 	x11_capture_mouse(true),
 	//  replay
-	rpl_rec(1)//, rpl_play(0)
+	rpl_rec(1), rpl_ghost(1), rpl_bestonly(1), rpl_listview(0)
 {}

@@ -267,15 +267,24 @@
 					<Property key="Text_TextColour" value="0.6 0.8 1"/>
 					<Property key="Widget_Caption" value="#{RplGhost}"/>
 				</Widget>
-				<Widget type="Button" skin="RadioBox" position="224 471 72 24" name="RplBtnCur">
+				<Widget type="Button" skin="CheckBox" position="464 375 272 25" name="RplChkBestOnly">
+					<Property key="Text_TextColour" value="0.6 0.8 1"/>
+					<Property key="Widget_Caption" value="#{RplBestOnly}"/>
+				</Widget>
+				<Widget type="Button" skin="RadioBox" position="224 471 100 24" name="RplBtnAll">
+					<Property key="Widget_Colour" value="0.6 0.8 1"/>
+					<Property key="Text_TextColour" value="0.6 0.8 1"/>
+					<Property key="Widget_Caption" value="#{RplAll}"/>
+				</Widget>
+				<Widget type="Button" skin="RadioBox" position="324 471 100 24" name="RplBtnCur">
 					<Property key="Widget_Colour" value="0.6 0.8 1"/>
 					<Property key="Text_TextColour" value="0.6 0.8 1"/>
 					<Property key="Widget_Caption" value="#{RplCur}"/>
 				</Widget>
-				<Widget type="Button" skin="RadioBox" position="312 471 72 24" name="RplBtnAll">
+				<Widget type="Button" skin="RadioBox" position="424 471 160 24" name="RplBtnGhosts">
 					<Property key="Widget_Colour" value="0.6 0.8 1"/>
 					<Property key="Text_TextColour" value="0.6 0.8 1"/>
-					<Property key="Widget_Caption" value="#{RplAll}"/>
+					<Property key="Widget_Caption" value="#{RplGhosts}"/>
 				</Widget>
 				<Widget type="Button" skin="Button" position="224 308 152 32" name="RplSave">
 					<Property key="Widget_Caption" value="#{RplSave}"/>

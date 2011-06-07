@@ -40,6 +40,7 @@ public:
 	//  replay - full, user saves
 	//  ghost - saved when best lap,  ghplay - ghost ride replay, loaded if was on disk
 	Replay replay, ghost, ghplay;  ReplayFrame fr;
+	const Ogre::String& GetGhostFile();
 
 	Scene sc;  /// scene.xml
 	BltObjects objs;  // veget collision in bullet
@@ -127,11 +128,6 @@ protected:
 public:	
 	class SplineRoad* road;
 protected:
-	//  start pos, lap
-	bool bGetStPos;  Ogre::Matrix4 matStPos;  Ogre::Vector4 vStDist;
-	int iInChk, iCurChk, iNextChk, iNumChks;  // cur checkpoint -1 at start
-	bool bInSt, bWrongChk;
-
 	///  Gui  ---------------------------------------------------------------------------
 	void InitGui(), toggleGui();
 	void UpdGuiRdStats(const SplineRoad* rd, const Scene& sc, float time), ReadTrkStats();
@@ -188,10 +184,12 @@ protected:
 		valRplName,valRplInfo,valRplName2,valRplInfo2;
 	MyGUI::HScrollPtr slRplPos;  void slRplPosEv(SL);
 	MyGUI::EditPtr edRplName, edRplDesc;
-	void btnRplLoad(WP), btnRplSave(WP), btnRplDelete(WP), btnRplRename(WP),
-		chkRplAutoRec(WP),chkRplChkGhost(WP), btnRplCur(WP),btnRplAll(WP),
-		btnRplToStart(WP),btnRplToEnd(WP), btnRplBack(WP),btnRplForward(WP),
-		btnRplPlay(WP);
+	void btnRplLoad(WP), btnRplSave(WP), btnRplDelete(WP), btnRplRename(WP),  // btn
+		chkRplAutoRec(WP),chkRplChkGhost(WP),chkRplChkBestOnly(WP),  // settings
+		btnRplToStart(WP),btnRplToEnd(WP), btnRplBack(WP),btnRplForward(WP), btnRplPlay(WP),  // controls
+		btnRplCur(WP),btnRplAll(WP),btnRplGhosts(WP);  // radio
+	MyGUI::ButtonPtr rbRplCur, rbRplAll, rbRplGhosts;
+		
 	void msgRplDelete(MyGUI::Message*, MyGUI::MessageBoxStyle);
 	
 	void btnNumPlayers(WP);  void chkSplitVert(WP);

@@ -48,17 +48,15 @@ public:
 	bool bloom, hdr, motionblur;
 	float bloomintensity, bloomorig, motionblurintensity;
 	//  video
-	int windowx, windowy;
+	int windowx, windowy, fsaa;
 	bool fullscreen, vsync;
-	int fsaa;
-	std::string buffer;
-	std::string rendersystem;
+	std::string buffer, rendersystem;
 	
-	// input
+	//  input
 	bool x11_capture_mouse;
 	
 	//  replay
-	bool rpl_rec;//, rpl_play;
+	bool rpl_rec, rpl_ghost, rpl_bestonly;  int rpl_listview;
 	
 //------------------------------------------
 	SETTINGS();

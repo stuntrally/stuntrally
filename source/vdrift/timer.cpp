@@ -56,9 +56,11 @@ void TIMER::Tick(float dt)
 		i->Tick(elapsed_time);
 }
 
-void TIMER::Lap(const unsigned int carid, const int prevsector, const int nextsector, const bool countit, bool bTrackReverse)
+bool TIMER::Lap(const unsigned int carid, const int prevsector, const int nextsector, const bool countit, bool bTrackReverse)
 {
-	assert(carid < car.size());
+	//assert(carid < car.size());
+	if (carid >= car.size())  return false;  //-
+	bool newbest = false;  // new lap best time
 
 	if (countit && carid == playercarindex)
 	{
@@ -77,8 +79,11 @@ void TIMER::Lap(const unsigned int carid, const int prevsector, const int nextse
 		bool haveprevbest = trackrecords.GetParam(
 				car[carid].GetCarType() + (bTrackReverse ? "_rev" : "") + "." + secstr.str(), prevbest);
 		if (car[carid].GetTime() < prevbest || !haveprevbest)
+		{
 			trackrecords.SetParam(
 				car[carid].GetCarType() + (bTrackReverse ? "_rev" : "") + "." + secstr.str(), (float) car[carid].GetTime());
+			newbest = true;
+		}
 	}
 
 	if (nextsector == 0)
@@ -87,6 +92,7 @@ void TIMER::Lap(const unsigned int carid, const int prevsector, const int nextse
 		if (loaded)
 			trackrecords.Write(true, trackrecordsfile);
 	}
+	return newbest;
 }
 
 class PLACE

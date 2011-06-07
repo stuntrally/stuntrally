@@ -270,7 +270,7 @@ void App::CreateMinimap()
 	
 	//  car pos dot
 	//asp = 1.f;  //?-
-	mpos = Create2D("hud/CarPos", mSplitMgr->mGuiSceneMgr, 0.2f, true);  // dot size
+	mpos = Create2D("hud/CarPos", mSplitMgr->mGuiSceneMgr, 0.4f, true);  // dot size
 	ndPos = ndMap->createChildSceneNode();
 	ndPos->scale(fHudSize*asp, fHudSize, 1);
 	ndPos->attachObject(mpos);

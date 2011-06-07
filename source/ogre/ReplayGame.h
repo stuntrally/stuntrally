@@ -74,11 +74,13 @@ public:
 	void AddFrame(const ReplayFrame& frame, int carNum);    // record
 	bool GetFrame(double time, ReplayFrame* fr, int carNum);  // play
 
-	float GetTimeLength(int carNum=0);  // total time in seconds
-	int GetNumFrames()  {  return frames[0].size();  }
+	const float GetTimeLength(int carNum=0) const;  // total time in seconds
+	const int GetNumFrames() const {  return frames[0].size();  }
 
 	//  inits only basic header data, fill the rest after
 	void InitHeader(const char* track, bool trk_user, const char* car, bool bClear);
+	void Clear();
+	void CopyFrom(const Replay& rpl);
 
 	ReplayHeader header;
 private:

@@ -10,6 +10,7 @@
 #include "common/SceneXml.h"
 #include "FollowCamera.h"
 #include "CarReflection.h"
+#include "../road/Road.h"
 
 #include "boost/filesystem.hpp"
 #define  FileExists(s)  boost::filesystem::exists(s)
@@ -33,12 +34,15 @@ CarModel::CarModel(unsigned int index, eCarType type, const std::string name,
 {
 	iIndex = index;  sDirname = name;  pSceneMgr = sceneMgr;
 	pSet = set;  pGame = game;  sc = s;  mCamera = cam;  eType = type;
+	bGetStPos = true;
 	
 	MATHVECTOR<float, 3> offset;
 	offset.Set(5*iIndex,5*iIndex,0); // 5*sqrt(2) m distance between cars
 	/// TODO: some quaternion magic to align the cars along track start orientation
 	// 4 car positions from 1, step width,length ...
 	
+	//if (type != CT_GHOST)  //.. create without pCar
+	{
 	MATHVECTOR<float, 3> pos(0,10,0);
 	QUATERNION<float> rot;
 	pos = pGame->track.GetStart(0/*iIndex*/).first;
@@ -46,6 +50,7 @@ CarModel::CarModel(unsigned int index, eCarType type, const std::string name,
 
 	pCar = pGame->LoadCar(sDirname, pos + offset, rot, true, false);
 	if (!pCar) LogO("Error loading car " + sDirname);
+	}
 	
 	for (int w = 0; w < 4; ++w)
 	{	ps[w] = 0;  pm[w] = 0;  pd[w] = 0;
@@ -61,7 +66,7 @@ CarModel::~CarModel()
 	delete pReflect;  pReflect = 0;
 	
 	delete fCam;  fCam = 0;
-	pSceneMgr->destroyCamera("CarCamera" + iIndex);
+	pSceneMgr->destroyCamera("CarCamera" + toStr(iIndex));
 	
 	// destroy cloned materials
 	for (int i=0; i<NumMaterials; i++)
@@ -602,3 +607,4 @@ void CarModel::ReloadTex(String mtrName)
 				}
 	}	}	}	
 }
+

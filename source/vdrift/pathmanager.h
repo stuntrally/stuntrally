@@ -47,6 +47,7 @@ public:
 	static std::string GetGenericSoundPath() {       return game_data_dir + "/sounds"; }
 	static std::string GetDriverPath() {             return game_data_dir + "/drivers"; }
 	static std::string GetReplayPath() {             return user_data_dir + "/replays"; }
+	static std::string GetGhostsPath() {             return user_data_dir + "/ghosts"; }
 
 	static bool FileExists(const std::string & filename);
 

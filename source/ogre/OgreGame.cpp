@@ -35,6 +35,7 @@ App::App()
 	,imgCar(0),imgPrv(0),imgMini(0),imgTer(0), valCar(0),valTrk(0),trkDesc(0), valLocPlayers(0)
 	,valRplPerc(0), valRplCur(0), valRplLen(0), slRplPos(0), rplList(0)
 	,valRplName(0),valRplInfo(0),valRplName2(0),valRplInfo2(0), edRplName(0), edRplDesc(0)
+	,rbRplCur(0), rbRplAll(0), rbRplGhosts(0)
 	,bRplPlay(0), bRplPause(0), bRplRec(0), bRplWnd(1)
 	// game
 	,blendMtr(0), iBlendMaps(0)
@@ -98,21 +99,11 @@ void App::destroyScene()
 {
 	// Delete all cars
 	for (std::list<CarModel*>::iterator it=carModels.begin(); it!=carModels.end(); it++)
-	{
 		delete (*it);
-	}
+
 	carModels.clear();
 	newPosInfos.clear();
 	
-	///  save replay - manual save, button
-	/*if (pSet->rpl_rec)
-	{
-		string file = PATHMANAGER::GetReplayPath() + "/" + pSet->track + ".rpl";
-		if (replay.GetTimeLength() > 4.f)
-			replay.SaveFile(file);
-	}
-	/**/
-
 	mToolTip = 0;  //?
 
 	if (road)
@@ -160,10 +151,19 @@ String App::GetTimeString(float time) const
 
 	if (time != 0.0)
 	{
-		char tempchar[128];
-		sprintf(tempchar, "%d:%05.2f", min, secs);  //"%d:%06.3f"
-		return tempchar;
-	}
-	else
+		char ss[128];
+		sprintf(ss, "%d:%05.2f", min, secs);  //"%d:%06.3f"
+		return ss;
+	}else
 		return "-:--.---";
+}
+
+//  ghost filename
+const String& App::GetGhostFile()
+{
+	static String file;
+	file = PATHMANAGER::GetGhostsPath() + "/"
+		+ pSet->track + (pSet->track_user ? "_u" : "") + (pSet->trackreverse ? "_r" : "")
+		+ "_" + pSet->car + ".rpl";
+	return file;
 }

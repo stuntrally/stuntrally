@@ -600,12 +600,12 @@ void App::btnRplLoad(WP)  // Load
 	int i = rplList->getIndexSelected();
 	if (i == MyGUI::ITEM_NONE)  return;
 
-	String name = rplList->getItemNameAt(i);
+	String name = rplList->getItemNameAt(i);		//if (pSet->rpl_listview == 2) ...
 	string file = PATHMANAGER::GetReplayPath() + "/" + name + ".rpl";
 
 	if (!replay.LoadFile(file))
 	{
-		Message::createMessageBox(  // #{transl ..
+		Message::createMessageBox(  // #{.. translate
 			"Message", "Load Replay", "Error: Can't load file.",
 			MessageBoxStyle::IconWarning | MessageBoxStyle::Ok);
 	}
@@ -624,7 +624,7 @@ void App::btnRplLoad(WP)  // Load
 
 void App::btnRplSave(WP)  // Save
 {
-	String edit = edRplName->getCaption();
+	String edit = edRplName->getCaption();						//if (pSet->rpl_listview == 2) ...
 	String file = PATHMANAGER::GetReplayPath() + "/" + pSet->track + "_" + edit + ".rpl";
 	///  save
 	if (boost::filesystem::exists(file.c_str()))
@@ -648,7 +648,7 @@ void App::listRplChng(List* li, size_t pos)
 {
 	size_t i = li->getIndexSelected();  if (i == ITEM_NONE)  return;
 	String name = li->getItemNameAt(i);
-	string file = PATHMANAGER::GetReplayPath() + "/" + name + ".rpl";
+	string file = PATHMANAGER::GetReplayPath() + "/" + name + ".rpl";  //if (pSet->rpl_listview == 2) ...
 	if (!valRplName)  return;  valRplName->setCaption(name);
 	if (!valRplInfo)  return;
 	
@@ -677,6 +677,8 @@ void App::listRplChng(List* li, size_t pos)
 }
 
 
+//  replay settings
+
 void App::chkRplAutoRec(WP wp)
 {
 	bRplRec = !bRplRec;  // changes take effect next game start
@@ -687,17 +689,35 @@ void App::chkRplAutoRec(WP wp)
 
 void App::chkRplChkGhost(WP wp)
 {
-	//ChkEv(rpl_play);
+	ChkEv(rpl_ghost);
 }
 
-
-void App::btnRplCur(WP)
+void App::chkRplChkBestOnly(WP wp)
 {
+	ChkEv(rpl_bestonly);
 }
+
+
+//  replays list filtering
 
 void App::btnRplAll(WP)
 {
+	rbRplCur->setStateCheck(false);  rbRplAll->setStateCheck(true);  rbRplGhosts->setStateCheck(false);
+	pSet->rpl_listview = 0;  updReplaysList();
 }
+
+void App::btnRplCur(WP)
+{
+	rbRplCur->setStateCheck(true);  rbRplAll->setStateCheck(false);  rbRplGhosts->setStateCheck(false);
+	pSet->rpl_listview = 1;  updReplaysList();
+}
+
+void App::btnRplGhosts(WP)
+{
+	rbRplCur->setStateCheck(false);  rbRplAll->setStateCheck(false);  rbRplGhosts->setStateCheck(true);
+	pSet->rpl_listview = 2;  updReplaysList();
+}
+
 
 //  replay controls
 
@@ -710,7 +730,7 @@ void App::btnRplToEnd(WP)
 {
 }
 
-void App::btnRplBack(WP)
+void App::btnRplBack(WP)  //- ...
 {
 }
 
@@ -738,13 +758,19 @@ void App::updReplaysList()
 	rplList->removeAllItems();  int ii = 0;  bool bFound = false;
 
 	strlist li;
-	PATHMANAGER::GetFolderIndex(PATHMANAGER::GetReplayPath(), li, "rpl");
+	if (pSet->rpl_listview == 2)
+		PATHMANAGER::GetFolderIndex(PATHMANAGER::GetGhostsPath(), li, "rpl");
+	else
+		PATHMANAGER::GetFolderIndex(PATHMANAGER::GetReplayPath(), li, "rpl");
+	
 	for (strlist::iterator i = li.begin(); i != li.end(); ++i)
 	if (StringUtil::endsWith(*i, ".rpl"))
 	{
-		String s = *i;
-		s = StringUtil::replaceAll(s,".rpl","");
-		rplList->addItem(s);
+		String s = *i;  s = StringUtil::replaceAll(s,".rpl","");
+		if (pSet->rpl_listview != 1)
+			rplList->addItem(s);
+		else if (StringUtil::startsWith(s,pSet->track))  //..
+			rplList->addItem(s);
 	}
 }
 
@@ -767,7 +793,7 @@ void App::msgRplDelete(Message* sender, MessageBoxStyle result)
 	size_t i = rplList->getIndexSelected();  if (i == ITEM_NONE)  return;
 	String name = rplList->getItemNameAt(i);
 	
-	string file = PATHMANAGER::GetReplayPath() +"/"+ name + ".rpl";
+	string file = PATHMANAGER::GetReplayPath() +"/"+ name + ".rpl";  //if (pSet->rpl_listview == 2) ...
 	if (boost::filesystem::exists(file))
 		boost::filesystem::remove(file);
 	updReplaysList();
