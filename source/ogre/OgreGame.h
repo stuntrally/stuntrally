@@ -201,12 +201,13 @@ protected:
 	MyGUI::ButtonPtr btRplPl;  void UpdRplPlayBtn();
 
 	//  game
+	void btnNewGame(WP),btnNewGameStart(WP), btnShadows(WP);
 	MyGUI::ListPtr carList,trkList, resList, rplList;  void updReplaysList();
 	void listRplChng(MyGUI::List* li, size_t pos);
 	void listCarChng(MyGUI::List* li, size_t pos),		btnChgCar(WP);
 	void listTrackChng(MyGUI::List* li, size_t pos),	btnChgTrack(WP);
-	void btnNewGame(WP),btnNewGameStart(WP), btnShadows(WP);
-	void trkListNext(int rel), carListNext(int rel);
+	int LNext(MyGUI::ListPtr lp, int rel);  // util next in list
+	void trkLNext(int rel), carLNext(int rel), rplLNext(int rel);
 
 	Ogre::String sListCar,sListTrack;  int bListTrackU;
 	Ogre::String pathTrk[2];  Ogre::String TrkDir();

@@ -219,7 +219,7 @@ void App::InitGui()
 	//  settings
 	Chk("RplChkAutoRec", chkRplAutoRec, rpl_rec);
 	Chk("RplChkGhost", chkRplChkGhost, rpl_ghost);
-	Chk("RplChkBestOnly", chkRplChkGhost, rpl_bestonly);
+	Chk("RplChkBestOnly", chkRplChkBestOnly, rpl_bestonly);
 	//  radios
 	Btn("RplBtnAll", btnRplAll);  rbRplAll = btn;
 	Btn("RplBtnCur", btnRplCur);  rbRplCur = btn;
@@ -501,24 +501,26 @@ void App::boundedMove(Widget* moving, const IntPoint& point)
 }
 
 
-//  next/prev track in list
-void App::trkListNext(int rel)
+//  next/prev in list by key
+int App::LNext(MyGUI::ListPtr lp, int rel)
 {
-	if (!(isFocGui && mWndTabs->getIndexSelected() == 0))  return;
-	int i = std::max(0, std::min((int)trkList->getItemCount()-1, (int)trkList->getIndexSelected()+rel ));
-	trkList->setIndexSelected(i);
-	trkList->beginToItemAt(std::max(0, i-11));  // center
-	listTrackChng(trkList,i);
+	int i = std::max(0, std::min((int)lp->getItemCount()-1, (int)lp->getIndexSelected()+rel ));
+	lp->setIndexSelected(i);
+	lp->beginToItemAt(std::max(0, i-11));  // center
+	return i;
 }
 
-void App::carListNext(int rel)
-{
+void App::trkLNext(int rel)	{
+	if (!(isFocGui && mWndTabs->getIndexSelected() == 0))  return;
+	listTrackChng(trkList,LNext(trkList, rel));  }
+
+void App::carLNext(int rel)	{
 	if (!(isFocGui && mWndTabs->getIndexSelected() == 1))  return;
-	int i = std::max(0, std::min((int)carList->getItemCount()-1, (int)carList->getIndexSelected()+rel ));
-	carList->setIndexSelected(i);
-	carList->beginToItemAt(std::max(0, i-11));  // center
-	listCarChng(carList,i);
-}
+	listCarChng(carList,  LNext(carList, rel));  }
+
+void App::rplLNext(int rel)	{
+	if (!(isFocGui && mWndTabs->getIndexSelected() == 3))  return;
+	listRplChng(rplList,  LNext(rplList, rel));  }
 
 
 ///  input tab

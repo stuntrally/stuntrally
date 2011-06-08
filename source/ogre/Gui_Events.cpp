@@ -458,6 +458,7 @@ void App::chkParticles(WP wp)
 {		
 	ChkEv(particles);
 	for (std::list<CarModel*>::iterator it=carModels.begin(); it!=carModels.end(); it++)
+	//? if ((*it)->eType != CarModel::CT_GHOST)
 		(*it)->UpdParsTrails();
 }
 void App::chkTrails(WP wp)
@@ -600,8 +601,8 @@ void App::btnRplLoad(WP)  // Load
 	int i = rplList->getIndexSelected();
 	if (i == MyGUI::ITEM_NONE)  return;
 
-	String name = rplList->getItemNameAt(i);		//if (pSet->rpl_listview == 2) ...
-	string file = PATHMANAGER::GetReplayPath() + "/" + name + ".rpl";
+	String name = rplList->getItemNameAt(i);
+	string file = (pSet->rpl_listview == 2 ? PATHMANAGER::GetGhostsPath() : PATHMANAGER::GetReplayPath()) + "/" + name + ".rpl";
 
 	if (!replay.LoadFile(file))
 	{
@@ -624,7 +625,7 @@ void App::btnRplLoad(WP)  // Load
 
 void App::btnRplSave(WP)  // Save
 {
-	String edit = edRplName->getCaption();						//if (pSet->rpl_listview == 2) ...
+	String edit = edRplName->getCaption();
 	String file = PATHMANAGER::GetReplayPath() + "/" + pSet->track + "_" + edit + ".rpl";
 	///  save
 	if (boost::filesystem::exists(file.c_str()))
@@ -648,7 +649,7 @@ void App::listRplChng(List* li, size_t pos)
 {
 	size_t i = li->getIndexSelected();  if (i == ITEM_NONE)  return;
 	String name = li->getItemNameAt(i);
-	string file = PATHMANAGER::GetReplayPath() + "/" + name + ".rpl";  //if (pSet->rpl_listview == 2) ...
+	string file = (pSet->rpl_listview == 2 ? PATHMANAGER::GetGhostsPath() : PATHMANAGER::GetReplayPath()) + "/" + name + ".rpl";
 	if (!valRplName)  return;  valRplName->setCaption(name);
 	if (!valRplInfo)  return;
 	
@@ -758,18 +759,13 @@ void App::updReplaysList()
 	rplList->removeAllItems();  int ii = 0;  bool bFound = false;
 
 	strlist li;
-	if (pSet->rpl_listview == 2)
-		PATHMANAGER::GetFolderIndex(PATHMANAGER::GetGhostsPath(), li, "rpl");
-	else
-		PATHMANAGER::GetFolderIndex(PATHMANAGER::GetReplayPath(), li, "rpl");
+	PATHMANAGER::GetFolderIndex((pSet->rpl_listview == 2 ? PATHMANAGER::GetGhostsPath() : PATHMANAGER::GetReplayPath()), li, "rpl");
 	
 	for (strlist::iterator i = li.begin(); i != li.end(); ++i)
 	if (StringUtil::endsWith(*i, ".rpl"))
 	{
 		String s = *i;  s = StringUtil::replaceAll(s,".rpl","");
-		if (pSet->rpl_listview != 1)
-			rplList->addItem(s);
-		else if (StringUtil::startsWith(s,pSet->track))  //..
+		if (pSet->rpl_listview != 1 || StringUtil::startsWith(s,pSet->track, false))
 			rplList->addItem(s);
 	}
 }
@@ -781,7 +777,7 @@ void App::btnRplDelete(WP)
 	size_t i = rplList->getIndexSelected();  if (i == ITEM_NONE)  return;
 	String name = rplList->getItemNameAt(i);
 	Message* message = Message::createMessageBox(
-		"Message", "Delete Replay ?", name,
+		"Message", "Delete Replay ?", name,  // #{..
 		MessageBoxStyle::IconQuest | MessageBoxStyle::Yes | MessageBoxStyle::No);
 	message->eventMessageBoxResult = newDelegate(this, &App::msgRplDelete);
 	//message->setUserString("FileName", fileName);
@@ -793,7 +789,7 @@ void App::msgRplDelete(Message* sender, MessageBoxStyle result)
 	size_t i = rplList->getIndexSelected();  if (i == ITEM_NONE)  return;
 	String name = rplList->getItemNameAt(i);
 	
-	string file = PATHMANAGER::GetReplayPath() +"/"+ name + ".rpl";  //if (pSet->rpl_listview == 2) ...
+	string file = (pSet->rpl_listview == 2 ? PATHMANAGER::GetGhostsPath() : PATHMANAGER::GetReplayPath()) +"/"+ name + ".rpl";
 	if (boost::filesystem::exists(file))
 		boost::filesystem::remove(file);
 	updReplaysList();
@@ -815,7 +811,7 @@ bool App::keyPressed( const OIS::KeyEvent &arg )
 	// update all keystates
 	OISB::System::getSingleton().process(0);
 	
-	#define action(s) mOISBsys->lookupAction(std::string("General/")+std::string(s))->isActive()
+	#define action(s)  mOISBsys->lookupAction("General/"s)->isActive()
 
 	if (!bAssignKey)
 	{
@@ -924,19 +920,13 @@ bool App::keyPressed( const OIS::KeyEvent &arg )
 			}	return false;
 			
 			
-			case KC_RETURN:	//  chng trk + new game  after pg up/dn
+			case KC_RETURN:	//  chng trk + new game  after up/dn
 			if (isFocGui)
-			if (mWndTabs->getIndexSelected() == 0)  // track
-			{	btnChgTrack(0);
-				btnNewGame(0);
-			}else if (mWndTabs->getIndexSelected() == 1)  // car
-			{	btnChgCar(0);
-				btnNewGame(0);
-			}else if (mWndTabs->getIndexSelected() == 3)  // replay
-			{
-				btnRplPlay(0);
-			}
-			return false;
+			switch (mWndTabs->getIndexSelected())
+			{	case 0:  btnChgTrack(0);  btnNewGame(0);  break;
+				case 1:  btnChgCar(0);  btnNewGame(0);  break;
+				case 3:  btnRplLoad(0);  break;
+			}	return false;
 		}
 	}
 

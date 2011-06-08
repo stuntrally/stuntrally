@@ -72,16 +72,14 @@ bool App::frameStart(Real time)
 			if (isKey(KC_DOWN)||isKey(KC_NUMPAD2))	dirU += time;  else
 			{	dirU = 0.f;  dirD = 0.f;  }
 			int d = ctrl ? 4 : 1;
-			if (dirU > 0.0f) {  carListNext( d);  trkListNext( d);  dirU = -0.12f;  }
-			if (dirD > 0.0f) {  carListNext(-d);  trkListNext(-d);  dirD = -0.12f;  }
+			if (dirU > 0.0f) {  carLNext( d);  trkLNext( d);  rplLNext( d);  dirU = -0.12f;  }
+			if (dirD > 0.0f) {  carLNext(-d);  trkLNext(-d);  rplLNext(-d);  dirD = -0.12f;  }
 		}
 		
-		//bool oldFocRpl = isFocRpl;
+		//  replay forward,backward keys
 		if (bRplPlay)
 		{
 			isFocRpl = ctrl;
-			//mGUI->setVisiblePointer(isFocGuiOrRpl());  // in sizehud-
-
 			int ta = (isKey(KC_LBRACKET) ? -2 : 0) + (isKey(KC_RBRACKET) ? 2 : 0);
 			if (ta)
 			{	double tadd = ta;
@@ -124,12 +122,10 @@ bool App::frameStart(Real time)
 					(*it)->fCam->update(pGame->framerate);
 		}
 
-		// Update all cube maps
+		//  update all cube maps
 		for (std::list<CarModel*>::iterator it=carModels.begin(); it!=carModels.end(); it++)
-		if ((*it)->eType != CarModel::CT_GHOST)
-		{
-			if ((*it)->pReflect)  (*it)->pReflect->Update();
-		}
+		if ((*it)->eType != CarModel::CT_GHOST && (*it)->pReflect)
+			(*it)->pReflect->Update();
 
 		//  trees
 		//if (pSet->mult_thr != 2)
@@ -198,14 +194,12 @@ void App::newPoses()
 
 	// Iterate through all car models and get new pos info
 	int iCarNum = 0;
-	std::list<CAR>::iterator carIt = pGame->cars.begin();
 	std::list<CarModel*>::iterator carMIt = carModels.begin();
 	std::list<PosInfo>::iterator newPosIt = newPosInfos.begin();
-	///TODO -how to handle CarModels that don't have a vdrift car?
 	while (carMIt != carModels.end())
 	{
-		CAR* pCar = &(*carIt);
 		CarModel* carM = *carMIt;
+		CAR* pCar = carM->pCar;
 		PosInfo posInfo;
 		
 		//  local data  car,wheels
@@ -237,7 +231,7 @@ void App::newPoses()
 		{
 			//  time  from start
 			bool ok = replay.GetFrame(rplTime, &fr, iCarNum);
-			if (!ok)	pGame->timer.RestartReplay();
+				if (!ok)	pGame->timer.RestartReplay();
 			
 			//  car
 			pos = fr.pos;  rot = fr.rot;
@@ -294,20 +288,23 @@ void App::newPoses()
 		
 
 		///  sound listener  - - - - -
-		if (pGame->sound.Enabled())  // todo: set from camera ..
+		if (carM->eType != CarModel::CT_GHOST)
 		{
-			pGame->sound.SetListener(
-				MATHVECTOR <float,3> (pos[0], pos[1], pos[2]),
-				QUATERNION <float>(),
-				//QUATERNION <float> (rot.x(), rot.y(), rot.z(), rot.w()),
-				MATHVECTOR <float,3>());
-		}
-		bool incar = true;  //..(active_camera->GetName() == "hood" || active_camera->GetName() == "incar");
-		{
-			std::list <SOUNDSOURCE *> soundlist;
-			pCar->GetEngineSoundList(soundlist);
-			for (std::list <SOUNDSOURCE *>::iterator s = soundlist.begin(); s != soundlist.end(); s++)
-				(*s)->Set3DEffects(!incar);
+			if (pGame->sound.Enabled())  // todo: set from camera, for each player? ..
+			{
+				pGame->sound.SetListener(
+					MATHVECTOR <float,3> (pos[0], pos[1], pos[2]),
+					QUATERNION <float>(),
+					//QUATERNION <float> (rot.x(), rot.y(), rot.z(), rot.w()),
+					MATHVECTOR <float,3>());
+			}
+			bool incar = true;
+			{
+				std::list <SOUNDSOURCE *> soundlist;
+				pCar->GetEngineSoundList(soundlist);
+				for (std::list <SOUNDSOURCE *>::iterator s = soundlist.begin(); s != soundlist.end(); s++)
+					(*s)->Set3DEffects(!incar);
+			}
 		}
 
 		///-----------------------------------------------------------------------
@@ -372,7 +369,7 @@ void App::newPoses()
 		//-----------------------------------------------------------------------
 		if (bRplPlay || carM->eType == CarModel::CT_GHOST)   // dont check when replay play...
 			carM->bWrongChk = false;
-		else if (iCarNum == 0)  /// TODO .. only works for 1st car-
+		else //if (iCarNum == 0)  // only works for 1st car?
 		{
 			if (carM->bGetStPos)  // first pos is at start
 			{	carM->bGetStPos = false;
@@ -393,10 +390,8 @@ void App::newPoses()
 				if (ncs > 0)
 				{	if (carM->bInSt && carM->iNumChks == ncs && carM->iCurChk != -1)  // finish
 					{
-						bool best = pGame->timer.Lap(1, 0,0, true, pSet->trackreverse);  //? ghost-
-							best = pGame->timer.Lap(0, 0,0, true, pSet->trackreverse);  //pGame->cartimerids[pCar] ?
-						///if (best)  /// new best lap, save ghost  + gui chk
-						if (!pSet->rpl_bestonly || best)
+						bool best = pGame->timer.Lap(0, 0,0, true, pSet->trackreverse);  //pGame->cartimerids[pCar] ?
+						if (!pSet->rpl_bestonly || best)  ///  new best lap, save ghost
 						{
 							ghost.SaveFile(GetGhostFile());
 							ghplay.CopyFrom(ghost);
@@ -431,7 +426,7 @@ void App::newPoses()
 		}	}
 		
 		(*newPosIt) = posInfo;
-		carIt++;  carMIt++;  newPosIt++;  iCarNum++;  // next
+		carMIt++;  newPosIt++;  iCarNum++;  // next
 	}
 }
 
@@ -441,6 +436,7 @@ void App::newPoses()
 void App::updatePoses(float time)
 {	
 	// Update all carmodels with their newPosInfo
+	int i=0;
 	std::list<CarModel*>::iterator carIt = carModels.begin();
 	std::list<PosInfo>::iterator newPosIt = newPosInfos.begin();
 	while (carIt != carModels.end())
@@ -449,16 +445,23 @@ void App::updatePoses(float time)
 		if (!carM)  return;
 		PosInfo newPosInfo = *newPosIt;
 		
+		//  hide ghost when empty
+		bool bGhost = carM->eType == CarModel::CT_GHOST;
+		if (bGhost)
+			carM->setVisible((ghplay.GetNumFrames() > 0) && pSet->rpl_ghost);
+		
 		carM->Update(newPosInfo, time);
 		
 		/// TODO multiple dots on minimap
 		//  pos on minimap  x,y = -1..1
+		if (i==0 && !bGhost)
+		{
 		float xp =(-newPosInfo.pos[2] - minX)*scX*2-1,
 			  yp =-(newPosInfo.pos[0] - minY)*scY*2+1;
 		if (ndPos)
 			ndPos->setPosition(xp,yp,0);
-			
-		carIt++;  newPosIt++;
+		}	
+		carIt++;  newPosIt++;  i++;
 	}
 	
 	///  Replay info

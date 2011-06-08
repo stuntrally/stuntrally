@@ -134,16 +134,16 @@ void App::LoadGame()  // 2
 
 	/// ghost car  load if exists
 	ghplay.Clear();
-	if (!bRplPlay	// load ghost play if exists
-		&& pSet->rpl_ghost)
+	if (!bRplPlay && pSet->rpl_ghost)  // load ghost play if exists
 	{
-		if (ghplay.LoadFile(GetGhostFile()))
-			carModels.push_back( new CarModel(i, CarModel::CT_GHOST, pSet->car, mSceneMgr, pSet, pGame, &sc, 0, this ) );
+		/*if (*/ghplay.LoadFile(GetGhostFile());
+		//  always because ghplay can appear during play after best lap
+		CarModel* c = new CarModel(i, CarModel::CT_GHOST, pSet->car, mSceneMgr, pSet, pGame, &sc, 0, this );
+		c->pCar = (*carModels.begin())->pCar;  // based on 1st car
+		carModels.push_back(c);
 	}
 	
 	pGame->NewGameDoLoadMisc();
-	//bGetStPos = true;
-	
 	bool ter = IsTerTrack();
 	sc.ter = ter;
 }

@@ -68,7 +68,7 @@ public:
 	void UpdWhTerMtr();
 	
 	//  Update trails
-	void UpdParsTrails();
+	void UpdParsTrails(bool visible=true);
 	
 	//  Create ogre model from .joe, Static method so VDrift track (TrackVdr.cpp) can use this too
 	static Ogre::ManualObject* CreateModel( Ogre::SceneManager* sceneMgr, const Ogre::String& mat,
@@ -80,6 +80,8 @@ public:
 	
 	//  Main node. later, we will add sub-nodes for body, interior, glass and wheels.
 	Ogre::SceneNode* pMainNode;
+	
+	void setVisible(bool visible);  // hide/show
 		
 	//  Handles our cube map.
 	CarReflection* pReflect;
@@ -119,12 +121,12 @@ private:
 		NumMaterials  };
 	std::string sMtr[NumMaterials];
 	
-	//  Particle systems, trail.
+	//  Particle systems, trail
 	Ogre::ParticleSystem* ps[4],*pm[4],*pd[4];  // smoke, mud, dust
 	Ogre::ParticleSystem* pb[2];  // boost
 	Ogre::RibbonTrail* whTrl[4];
 	Ogre::Real wht[4];  // spin time (approx tire temp.)
-	Ogre::SceneNode *ndWh[4], *ndWhE[4], *ndRs[4],*ndRd[4];
+	Ogre::SceneNode *ndWh[4], *ndWhE[4];
 
 	//  Dir name of car (e.g. ES or RS2)
 	std::string sDirname;

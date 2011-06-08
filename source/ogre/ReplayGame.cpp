@@ -16,7 +16,7 @@ void ReplayHeader::Default()
 	memset(track, 0, sizeof(track));  track_user = 0;
 	memset(car, 0, sizeof(car));
 
-	ver = 2;
+	ver = 3;
 	frameSize = sizeof(ReplayFrame);
 	numPlayers = 1;
 

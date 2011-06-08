@@ -41,21 +41,20 @@ CarModel::CarModel(unsigned int index, eCarType type, const std::string name,
 	/// TODO: some quaternion magic to align the cars along track start orientation
 	// 4 car positions from 1, step width,length ...
 	
-	//if (type != CT_GHOST)  //.. create without pCar
+	if (type != CT_GHOST)  // ghost has pCar, dont create
 	{
-	MATHVECTOR<float, 3> pos(0,10,0);
-	QUATERNION<float> rot;
-	pos = pGame->track.GetStart(0/*iIndex*/).first;
-	rot = pGame->track.GetStart(0/*iIndex*/).second;
+		MATHVECTOR<float, 3> pos(0,10,0);
+		QUATERNION<float> rot;
+		pos = pGame->track.GetStart(0/*iIndex*/).first;
+		rot = pGame->track.GetStart(0/*iIndex*/).second;
 
-	pCar = pGame->LoadCar(sDirname, pos + offset, rot, true, false);
-	if (!pCar) LogO("Error loading car " + sDirname);
+		pCar = pGame->LoadCar(sDirname, pos + offset, rot, true, false);
+		if (!pCar)  LogO("Error creating car " + sDirname);
 	}
 	
 	for (int w = 0; w < 4; ++w)
 	{	ps[w] = 0;  pm[w] = 0;  pd[w] = 0;
 		ndWh[w] = 0;  ndWhE[w] = 0; whTrl[w] = 0;
-		ndRs[w] = 0;  ndRd[w] = 0;
 		wht[w] = 0.f;  whTerMtr[w] = 0; }
 	for (int i=0; i < 2; i++)
 		pb[i] = 0;
@@ -89,6 +88,14 @@ CarModel::~CarModel()
 	Ogre::ResourceGroupManager::getSingleton().destroyResourceGroup("Car" + toStr(iIndex));
 }
 
+void CarModel::setVisible(bool vis)
+{
+	//if (pMainNode->getVisible() == vis)  return;  //opt..
+	pMainNode->setVisible(vis);
+	for (int w=0; w < 4; ++w)
+		ndWh[w]->setVisible(vis);
+	UpdParsTrails(vis);
+}
 
 void CarModel::Update(PosInfo& posInfo, float time)
 {	
@@ -197,16 +204,19 @@ void CarModel::Update(PosInfo& posInfo, float time)
 	// Reflection
 	pReflect->camPosition = pMainNode->getPosition();
 	
-	//blendmaps
+	// blendmaps
 	UpdWhTerMtr();
 }
 
 
+//-------------------------------------------------------------------------------------------------------
+//  Create
+//-------------------------------------------------------------------------------------------------------
 void CarModel::Create()
 {
 	if (!pCar) return;
 	
-	// ---------------------------- Resource locations -----------------------------------------
+	//  Resource locations -----------------------------------------
 	/// Add a resource group for this car
 	Ogre::ResourceGroupManager::getSingleton().createResourceGroup("Car" + toStr(iIndex));
 	Ogre::Root::getSingletonPtr()->addResourceLocation(PATHMANAGER::GetCacheDir(), "FileSystem");
@@ -228,11 +238,9 @@ void CarModel::Create()
 
 	// --------- Materials  -------------------
 	String s = pSet->shaders == 0 ? "_old" : "";
-	sMtr[Mtr_CarBody]		= "car_body"+s;
-	sMtr[Mtr_CarInterior]	= "car_interior"+s;
+	sMtr[Mtr_CarBody]		= "car_body"+s;			sMtr[Mtr_CarTireFront]	= "cartire_front"+s;
+	sMtr[Mtr_CarInterior]	= "car_interior"+s;		sMtr[Mtr_CarTireRear]	= "cartire_rear"+s;
 	sMtr[Mtr_CarGlass]		= "car_glass"+s;
-	sMtr[Mtr_CarTireFront]	= "cartire_front"+s;
-	sMtr[Mtr_CarTireRear]	= "cartire_rear"+s;
 	// copy material to a new material with index
 	Ogre::MaterialPtr mat;
 	for (int i=0; i<NumMaterials; i++)
@@ -267,9 +275,8 @@ void CarModel::Create()
 	//  ----------------- Reflection ------------------------
 	pReflect = new CarReflection(pSet, pSceneMgr, iIndex);
 	for (int i=0; i<NumMaterials; i++)
-	{
 		pReflect->sMtr[i] = sMtr[i];
-	}
+
 	pReflect->Create();
 
 	//  car Models:  body, interior, glass  -------
@@ -359,7 +366,6 @@ void CarModel::Create()
 		String si = toStr(iIndex) + "_" +toStr(i);
 		if (!pb[i])  {
 			pb[i] = pSceneMgr->createParticleSystem("Boost"+si, "Boost");
-			//pCar->dynamics.chassis->getsi
 			Vector3 bsize = (bodyBox.getMaximum() - bodyBox.getMinimum())*0.5,
 				bcenter = bodyBox.getMaximum() + bodyBox.getMinimum();
 			LogO("Car body bbox :  size " + toStr(bsize) + ",  center " + toStr(bcenter));
@@ -418,17 +424,18 @@ void CarModel::Create()
 }
 
 
-void CarModel::UpdParsTrails()
+void CarModel::UpdParsTrails(bool visible)
 {
+	bool vis = visible && pSet->particles;
 	for (int w=0; w < 4; w++)
 	{
 		Ogre::uint8 grp = RENDER_QUEUE_9;  //9=road  after glass
 		if (w < 2 &&
-			pb[w])	{	pb[w]->setVisible(pSet->particles);  pb[w]->setRenderQueueGroup(grp);  }
-		if (whTrl[w]){  whTrl[w]->setVisible(pSet->trails);  whTrl[w]->setRenderQueueGroup(grp);  }  grp += 2;
-		if (ps[w])	{	ps[w]->setVisible(pSet->particles);  ps[w]->setRenderQueueGroup(grp);  }  // vdr only && !sc.ter
-		if (pm[w])	{	pm[w]->setVisible(pSet->particles);  pm[w]->setRenderQueueGroup(grp);  }
-		if (pd[w])	{	pd[w]->setVisible(pSet->particles);  pd[w]->setRenderQueueGroup(grp);  }
+			pb[w])	{	pb[w]->setVisible(vis);  pb[w]->setRenderQueueGroup(grp);  }
+		if (whTrl[w]){  whTrl[w]->setVisible(visible && pSet->trails);  whTrl[w]->setRenderQueueGroup(grp);  }  grp += 2;
+		if (ps[w])	{	ps[w]->setVisible(vis);  ps[w]->setRenderQueueGroup(grp);  }  // vdr only && !sc.ter
+		if (pm[w])	{	pm[w]->setVisible(vis);  pm[w]->setRenderQueueGroup(grp);  }
+		if (pd[w])	{	pd[w]->setVisible(vis);  pd[w]->setRenderQueueGroup(grp);  }
 	}
 }
 
@@ -468,6 +475,7 @@ void CarModel::UpdWhTerMtr()
 }
 
 
+//-------------------------------------------------------------------------------------------------------
 //  utils
 //-------------------------------------------------------------------------------------------------------
 

@@ -272,7 +272,7 @@ void App::CreateMinimap()
 	//asp = 1.f;  //?-
 	mpos = Create2D("hud/CarPos", mSplitMgr->mGuiSceneMgr, 0.4f, true);  // dot size
 	ndPos = ndMap->createChildSceneNode();
-	ndPos->scale(fHudSize*asp, fHudSize, 1);
+	ndPos->scale(fHudSize*asp*2, fHudSize*2, 1);
 	ndPos->attachObject(mpos);
 	ndMap->setVisible(pSet->trackmap);
 }

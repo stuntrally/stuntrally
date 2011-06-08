@@ -97,7 +97,7 @@ void App::CreateHUD()
 		mpos->setVisibilityFlags(2);
 		mpos->setRenderQueueGroup(RENDER_QUEUE_OVERLAY);
 		ndPos = ndMap->createChildSceneNode();
-		ndPos->scale(fHudSize, fHudSize, 1);
+		ndPos->scale(fHudSize*2, fHudSize*2, 1);
 		ndPos->attachObject(mpos);
 		ndMap->setVisible(false/*pSet->trackmap*/);
 	}
@@ -376,8 +376,8 @@ void App::UpdateHUD(CAR* pCar, float time, Viewport* vp)
 	oldCarTxt = pSet->car_dbgtxt;
 	
 
-	///  ghost, checks  ----------
-	if (ovU[0])
+	///  ghost, checkpoints  ----------
+	/*if (ovU[0])
 	{
 		CarModel* c = (carModels.size() == 0) ? 0 : *carModels.begin();
 		String s = String("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n")+
@@ -385,7 +385,7 @@ void App::UpdateHUD(CAR* pCar, float time, Viewport* vp)
 			"                      ghplay: " + GetTimeString(ghplay.GetTimeLength()) + "  " + toStr(ghplay.GetNumFrames()) + "\n" +
 			"                      bInSt:" + (c->bInSt ? "1":"0") + " iCur:" + toStr(c->iCurChk) + " iIn:" + toStr(c->iInChk) + " iNext:" + toStr(c->iNextChk) + " iNumChks:" + toStr(c->iNumChks);
 		ovU[0]->setCaption(s);
-	}
+	}/**/
 	
 
 	//  profiling times -
@@ -395,6 +395,7 @@ void App::UpdateHUD(CAR* pCar, float time, Viewport* vp)
 		//if (newPosInfos.size() > 0)
 		//ovU[3]->setCaption("carm: " + toStr(carModels.size()) + " newp: " + toStr((*newPosInfos.begin()).pos));
 	}/**/
+
 
 	//  bullet profiling text  --------
 	static bool oldBltTxt = false;

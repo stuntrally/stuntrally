@@ -105,9 +105,11 @@
 
 	<Tag name="RplAutoRec">Auto record replay</Tag>
 	<Tag name="RplGhost">Show ghost drive - best lap</Tag>
+	<Tag name="RplBestOnly">Save ghost only for best time</Tag>
 
 	<Tag name="RplAll">All</Tag>
 	<Tag name="RplCur">Cur</Tag>
+	<Tag name="RplGhosts">Ghosts</Tag>
 	
 	<Tag name="RplTime">Time</Tag>
 	<Tag name="RplVersion">Version</Tag>
