@@ -57,9 +57,12 @@ clone_cd_and_purge()
 	if [ "$TAG" ]; then
 		echo "Changing to tag $TAG..."
 		git checkout "$TAG"
+	else
+		echo "Writing commit id to file..."
+		echo `git log | head -1 | cut --delimiter=" " -f 2` > gitcommit
 	fi
 	echo "Deleting Git stuff..."
-	rm -rf .git* # Purge mercurial stuff
+	rm -rf .git* # Purge version control stuff
 }
 
 # Working directory
