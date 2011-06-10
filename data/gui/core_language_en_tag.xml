@@ -93,6 +93,9 @@
 	<Tag name="TipAutoRear">Uncheck for manual Rear gear changing.</Tag>
 	<Tag name="VegetCol">Vegetation collision</Tag>
 	<Tag name="CarCollis">Cars collision</Tag>
+	<Tag name="NumLocalPlayers">Number of local players</Tag>
+	<Tag name="SplitVertically">Split Vertically</Tag>
+	<Tag name="Game">Game</Tag>
 		
 
 	<!--  Replay  -->

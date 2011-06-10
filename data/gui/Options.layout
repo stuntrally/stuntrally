@@ -221,7 +221,7 @@
 					<Property key="Text_TextColour" value="0.6 0.8 0.8"/>
 				</Widget>
 				<Widget type="Button" skin="CheckBox" position="312 287 256 25" name="chkSplitVertically">
-					<Property key="Widget_Caption" value="Split vertically"/>
+					<Property key="Widget_Caption" value="#{SplitVertically}"/>
 					<Property key="Text_TextColour" value="0.8 0.9 1.0"/>
 				</Widget>
 				<Widget type="Button" skin="Button" position="312 239 80 33" name="btnPlayers1">
@@ -241,15 +241,15 @@
 					<Property key="Widget_Colour" value="1 0.5 0.5"/>
 				</Widget>
 				<Widget type="StaticText" skin="StaticText" position="312 199 176 24">
-					<Property key="Widget_Caption" value="Num local players:"/>
+					<Property key="Widget_Caption" value="#{NumLocalPlayers}"/>
 					<Property key="Text_TextColour" value="0.7 0.9 1"/>
 				</Widget>
 				<Widget type="StaticText" skin="StaticText" position="496 199 64 24" name="valLocPlayers"/>
 				<Widget type="StaticText" skin="StaticText" position="32 23 120 24">
-					<Property key="Widget_Caption" value="Car"/>
+					<Property key="Widget_Caption" value="#{Car}"/>
 				</Widget>
 				<Widget type="StaticText" skin="StaticText" position="312 23 136 24">
-					<Property key="Widget_Caption" value="Game"/>
+					<Property key="Widget_Caption" value="#{Game}"/>
 				</Widget>
 				<!--<Widget type="StaticText" skin="StaticText" position="32 488 136 24">
 					<Property key="Widget_Caption" value="#{NeedNewGame}"/>
@@ -259,15 +259,15 @@
 			<Widget type="TabItem" skin="" position="4 26 787 531">
 				<Property key="Widget_Caption" value="#{Replay}"/>
 				<Widget type="List" skin="List" position="14 16 186 504" name="RplList"/>
-				<Widget type="Button" skin="CheckBox" position="224 375 272 32" name="RplChkAutoRec">
+				<Widget type="Button" skin="CheckBox" position="224 375 272 24" name="RplChkAutoRec">
 					<Property key="Widget_Caption" value="#{RplAutoRec}"/>
 					<Property key="Text_TextColour" value="0.6 0.8 1"/>
 				</Widget>
-				<Widget type="Button" skin="CheckBox" position="224 415 272 25" name="RplChkGhost">
+				<Widget type="Button" skin="CheckBox" position="224 415 272 24" name="RplChkGhost">
 					<Property key="Text_TextColour" value="0.6 0.8 1"/>
 					<Property key="Widget_Caption" value="#{RplGhost}"/>
 				</Widget>
-				<Widget type="Button" skin="CheckBox" position="464 375 272 25" name="RplChkBestOnly">
+				<Widget type="Button" skin="CheckBox" position="464 375 272 24" name="RplChkBestOnly">
 					<Property key="Text_TextColour" value="0.6 0.8 1"/>
 					<Property key="Widget_Caption" value="#{RplBestOnly}"/>
 				</Widget>
