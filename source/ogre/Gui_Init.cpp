@@ -92,6 +92,8 @@ void App::InitGui()
 	supportedLanguages["en"] = "English";
 	supportedLanguages["de"] = "Deutsch";  //German
 	supportedLanguages["fi"] = "Suomi";  //Finnish
+	supportedLanguages["ru"] = "Romanian";
+	supportedLanguages["pl"] = "Polski";
 	combo = NULL; combo = (ComboBoxPtr)mLayout->findWidget("Lang");
 	if (combo) combo->eventComboChangePosition = newDelegate(this, &App::comboLanguage);
 	for (std::map<std::string, std::string>::const_iterator it = supportedLanguages.begin();

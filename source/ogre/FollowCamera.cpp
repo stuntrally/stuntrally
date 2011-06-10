@@ -80,8 +80,8 @@ void FollowCamera::update( Real time )
 			manualOrient = true;
 		}	break;
 	}
-	if (!manualOrient) {
-		/* Move */
+	if (!manualOrient)
+	{	/* Move */
 		float dtmul = ca.mSpeed == 0 ? 1.0f : ca.mSpeed * time;
 		//float dtmulRot = ca.mSpeedRot == 0 ? 1.0f : ca.mSpeedRot * time;
 		//if (ca.mSpeed == ca.mSpeedRot || 1)  dtmulRot = dtmul;
@@ -133,8 +133,9 @@ void FollowCamera::update( Real time )
 	}
 	#endif
 	
-	if (!manualOrient) mCamera->lookAt( mLook );
-	
+	moveAboveTerrain();
+	if (!manualOrient)
+		mCamera->lookAt( mLook );
 	updInfo(time);
 }
 
@@ -251,6 +252,23 @@ void FollowCamera::Move( bool mbLeft, bool mbRight, bool mbMiddle, bool shift, R
 	ca.mDist  *= 1.0 - mzH * 0.1;
 }
 
+
+//  prevent camera from going under ground.
+//-----------------------------------------------------------------------------------------------------
+void FollowCamera::moveAboveTerrain()
+{
+	if (!mTerrain)  return;
+
+	//  minimum distance above ground
+	#define CAM_TER_MINOFFSET 0.2
+	Vector3 camPos = mCamera->getPosition();
+	float h = mTerrain->getHeightAtWorldPosition(camPos);
+	if (h+0.2 > camPos.y)
+		mCamera->setPosition(camPos.x, h+0.2, camPos.z);
+	#undef CAM_TER_MINOFFSET
+}
+
+
 ///  upd Info
 //-----------------------------------------------------------------------------------------------------
 void FollowCamera::updInfo(Real time)
@@ -267,7 +285,7 @@ void FollowCamera::updInfo(Real time)
     static char ss[256];
     switch (ca.mType)
     {
-	case CAM_Follow: sprintf(ss,
+	case CAM_Follow: sprintf(ss,	// #{.. translate ...
 		"Type: %d %s  Yaw:%5.1f Pitch:%5.1f  Dist:%5.1f  Height: %3.1f  Speed: %2.0f\n"
 		"LEFT: Pitch  shift: Rotate | RIGHT: Height  shift: Dist,H | Middle: reset Yaw  shift: Speed | Wheel: Dist"  // | S: save"
 		,ca.mType, CAM_Str[ca.mType], ca.mYaw.valueDegrees(), ca.mPitch.valueDegrees(), ca.mDist

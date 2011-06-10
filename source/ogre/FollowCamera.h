@@ -12,7 +12,7 @@ enum CamTypes
 	CAM_Free,		//  1 Free   - free rot, pos from car
 	CAM_Arena,		//  2 Arena  - free pos & rot, fly
 	CAM_Car,		//  3 Car    - car pos & rot, full
-	CAM_ExtAng,		//  4 Extended, angles - car rotY & pos, smooth
+	CAM_ExtAng,		//  4 Extended, angles - car rotY & pos, smooth, const distance
 	CAM_ALL
 };
 
@@ -49,9 +49,9 @@ public:
 	class btRigidBody* body;
 
 	const Ogre::SceneNode* mGoalNode;
-	Ogre::Vector3  mLook;
-	CameraAngle  ca;
-	bool  first;
+	Ogre::Vector3 mLook;
+	CameraAngle ca;
+	bool first;
 	
 	// for ext cam
 	Ogre::Quaternion qq;
@@ -60,22 +60,21 @@ public:
 	FollowCamera(Ogre::Camera* cam);
 	~FollowCamera();
 
-	void  update(Ogre::Real time);
-	void  updInfo(Ogre::Real time = 0);
-	void  Move( bool mbLeft, bool mbRight, bool mbMiddle, bool shift, Ogre::Real mx, Ogre::Real my, Ogre::Real mz );
+	void update(Ogre::Real time), updInfo(Ogre::Real time = 0);
+	void Move( bool mbLeft, bool mbRight, bool mbMiddle, bool shift, Ogre::Real mx, Ogre::Real my, Ogre::Real mz );
 	Ogre::Real fMoveTime;
 
 
 	//  Camera Angles
-	int  miCount, miCurrent;
-	std::vector<CameraAngle>  mCameraAngles;
+	int miCount, miCurrent;
+	std::vector<CameraAngle> mCameraAngles;
 
-	bool  loadCameras();  void saveCamera();
-	void  updAngle(),  incCur(int dir);
-	void  Next(bool bPrev = false, bool bMainOnly = false);
-	void  setCamera(int ang);
+	bool loadCameras();  void saveCamera();
+	void updAngle(), incCur(int dir);
+	void Next(bool bPrev = false, bool bMainOnly = false);
+	void setCamera(int ang), moveAboveTerrain();
 	
-	Ogre::OverlayElement  *ovInfo,*ovName;
+	Ogre::OverlayElement *ovInfo,*ovName;
 };
 
 #endif
