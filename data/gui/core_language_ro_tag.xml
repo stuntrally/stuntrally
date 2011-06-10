@@ -103,7 +103,7 @@
 	<Tag name="InputRoadSel">Backspace - adaugă sau elimină din selecţie</Tag>
 	<Tag name="Weather">Vremea</Tag>
 	<Tag name="wind">Vânt</Tag>
-	<Tag name="LS_CAR">Se încarcă mașina</Tag>
+	<Tag name="TipRoadStats">Statistici tot drumul</Tag>
 	<Tag name="MaxScale">scala maximă</Tag>
 	<Tag name="TipModelMaxScale">Scală maximă model.</Tag>
 	<Tag name="TerrainError">Eroare teren</Tag>
@@ -185,7 +185,7 @@
 	<Tag name="distance">distanță</Tag>
 	<Tag name="TrackAutoLoad">Încarcă automat traseul</Tag>
 	<Tag name="DustSize">Mărime praf</Tag>
-	<Tag name="InputRoadMove">- mișcă punctul</Tag>
+	<Tag name="TipVegetModels">Models (meshes) for vegetation. Found in data/trees/.</Tag>
 	<Tag name="InputMapPlayer1">Player 1</Tag>
 	<Tag name="InputMapPlayer2">Player 2</Tag>
 	<Tag name="InputMapPlayer3">Player 3</Tag>
@@ -211,7 +211,7 @@
 	<Tag name="RplSize">size</Tag>
 	<Tag name="TipMudInt">Intensitate particule noroi</Tag>
 	<Tag name="Mode">mod</Tag>
-	<Tag name="ChangeCar">Change Car</Tag>
+	<Tag name="ScaleAll">Scalează tot</Tag>
 	<Tag name="InputMapPrevTab">Previous tab</Tag>
 	<Tag name="InputTogglePreview">F7 - enter/leave preview camera</Tag>
 	<Tag name="GameBy">A game by</Tag>
@@ -233,7 +233,7 @@
 	<Tag name="TipAutoClutch">-Manual neimplementat.</Tag>
 	<Tag name="MinimapUpdSkip">Ignoră actualizarea mini-hărții</Tag>
 	<Tag name="RoadDist2">Distanță suplimentară către drum</Tag>
-	<Tag name="TipRoadStats">Statistici tot drumul</Tag>
+	<Tag name="LS_CAR">Se încarcă mașina</Tag>
 	<Tag name="InputTerPaint">A - Colorează texturile (straturi)</Tag>
 	<Tag name="RplCur">Cur</Tag>
 	<Tag name="InputKeyNoButton">No button</Tag>
@@ -250,7 +250,7 @@
 	<Tag name="MotionBlur">Estompare în mișcare</Tag>
 	<Tag name="MinimapAndSize">Minimap, size</Tag>
 	<Tag name="TipChangeHue">Schimbă culoarea mașinii</Tag>
-	<Tag name="TipVegetModels">Models (meshes) for vegetation. Found in data/trees/.</Tag>
+	<Tag name="InputRoadMove">- mișcă punctul</Tag>
 	<Tag name="Intensity">Intensitate</Tag>
 	<Tag name="TipSunAmbient">Sun light ambient (constant) color. R G B components 0 to 1 (eg. 0.4 0.4 0.4)</Tag>
 	<Tag name="ChngTrkTab">changed in [Track] tab</Tag>
@@ -421,7 +421,7 @@
 	<Tag name="TipNewTer">Create new, flat terrain.</Tag>
 	<Tag name="TipRoadParams">Parametri punct drum</Tag>
 	<Tag name="SpeedUnit">Speed unit</Tag>
-	<Tag name="ScaleAll">Scalează tot</Tag>
+	<Tag name="ChangeCar">Change Car</Tag>
 	<Tag name="TipImpDist">Far distance at which models will turn into 2d impostors.</Tag>
 	<Tag name="InputMapGeneral">General</Tag>
 	<Tag name="TipTrkTerImg">Minimap of selected track, view from top.</Tag>
@@ -466,6 +466,11 @@
 	<Tag name="Pitch">gudron</Tag>
 	<Tag name="MyGUI_MessageBox_Yes">Da</Tag>
 	<Tag name="RplAll">All</Tag>
+	<Tag name="Game">Game</Tag>
+	<Tag name="NumLocalPlayers">Number of local players</Tag>
+	<Tag name="SplitVertically">Split Vertically</Tag>
+	<Tag name="RplGhosts">Ghosts</Tag>
+	<Tag name="RplBestOnly">Save ghost only for best time</Tag>
 	<Tag name="GameVersion">1.2</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 

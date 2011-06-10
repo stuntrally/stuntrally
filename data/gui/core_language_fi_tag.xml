@@ -103,7 +103,7 @@
 	<Tag name="InputRoadSel">Askelpalautin - lisää tai poista valinnasta</Tag>
 	<Tag name="Weather">Sää</Tag>
 	<Tag name="wind">tuuli</Tag>
-	<Tag name="LS_CAR">Latadaan autoa</Tag>
+	<Tag name="TipRoadStats">Whole road statistics.</Tag>
 	<Tag name="MaxScale">maksimi skaalaus</Tag>
 	<Tag name="TipModelMaxScale">Model maximal scale.</Tag>
 	<Tag name="TerrainError">Maaston virhe</Tag>
@@ -185,7 +185,7 @@
 	<Tag name="distance">etäisyys</Tag>
 	<Tag name="TrackAutoLoad">Auto Load track</Tag>
 	<Tag name="DustSize">pölyn koko</Tag>
-	<Tag name="InputRoadMove">- liikuta pistettä</Tag>
+	<Tag name="TipVegetModels">Models (meshes) for vegetation. Found in data/trees/.</Tag>
 	<Tag name="InputMapPlayer1">Pelaaja 1</Tag>
 	<Tag name="InputMapPlayer2">Pelaaja 2</Tag>
 	<Tag name="InputMapPlayer3">Pelaaja 3</Tag>
@@ -211,7 +211,7 @@
 	<Tag name="RplSize">koko</Tag>
 	<Tag name="TipMudInt">Mud particles intensity.</Tag>
 	<Tag name="Mode">tila</Tag>
-	<Tag name="ChangeCar">Change Car</Tag>
+	<Tag name="ScaleAll">Scale all</Tag>
 	<Tag name="InputMapPrevTab">Edellinen välilehti</Tag>
 	<Tag name="InputTogglePreview">F7 - enter/leave preview camera</Tag>
 	<Tag name="GameBy">A game by</Tag>
@@ -233,7 +233,7 @@
 	<Tag name="TipAutoClutch">-Manual not implemented.</Tag>
 	<Tag name="MinimapUpdSkip">Minimap update skip</Tag>
 	<Tag name="RoadDist2">Additional distance to road.</Tag>
-	<Tag name="TipRoadStats">Whole road statistics.</Tag>
+	<Tag name="LS_CAR">Latadaan autoa</Tag>
 	<Tag name="InputTerPaint">A - Paint Textures (layers)</Tag>
 	<Tag name="RplCur">Cur</Tag>
 	<Tag name="InputKeyNoButton">Ei painiketta</Tag>
@@ -250,7 +250,7 @@
 	<Tag name="MotionBlur">Liikesumennus</Tag>
 	<Tag name="MinimapAndSize">Minimap, size</Tag>
 	<Tag name="TipChangeHue">Change car color (hue).</Tag>
-	<Tag name="TipVegetModels">Models (meshes) for vegetation. Found in data/trees/.</Tag>
+	<Tag name="InputRoadMove">- liikuta pistettä</Tag>
 	<Tag name="Intensity">Voimakkuus</Tag>
 	<Tag name="TipSunAmbient">Sun light ambient (constant) color. R G B components 0 to 1 (eg. 0.4 0.4 0.4)</Tag>
 	<Tag name="ChngTrkTab">changed in [Track] tab</Tag>
@@ -421,7 +421,7 @@
 	<Tag name="TipNewTer">Create new, flat terrain.</Tag>
 	<Tag name="TipRoadParams">Tien pisteen parametrit.</Tag>
 	<Tag name="SpeedUnit">Speed unit</Tag>
-	<Tag name="ScaleAll">Scale all</Tag>
+	<Tag name="ChangeCar">Change Car</Tag>
 	<Tag name="TipImpDist">Far distance at which models will turn into 2d impostors.</Tag>
 	<Tag name="InputMapGeneral">General</Tag>
 	<Tag name="TipTrkTerImg">Minimap of selected track, view from top.</Tag>
@@ -466,6 +466,11 @@
 	<Tag name="Pitch">pitch</Tag>
 	<Tag name="MyGUI_MessageBox_Yes">Kyllä</Tag>
 	<Tag name="RplAll">All</Tag>
+	<Tag name="Game">Game</Tag>
+	<Tag name="NumLocalPlayers">Number of local players</Tag>
+	<Tag name="SplitVertically">Split Vertically</Tag>
+	<Tag name="RplGhosts">Ghosts</Tag>
+	<Tag name="RplBestOnly">Save ghost only for best time</Tag>
 	<Tag name="GameVersion">1.2</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 
