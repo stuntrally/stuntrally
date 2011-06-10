@@ -47,7 +47,7 @@ void App::InitGui()
 	for (VectorWidgetPtr::iterator it = rootV.begin(); it != rootV.end(); ++it)
 	{
 		setToolTips((*it)->getEnumerator());
-		const std::string& name = (*it)->getName();
+		//const std::string& name = (*it)->getName();
 		//if (name == "OptionsWnd")  mWndOpts = *it;
 	}
 	mToolTip = Gui::getInstance().findWidget<Widget>("ToolTip");
@@ -447,6 +447,7 @@ void App::setToolTips(EnumeratorWidgetPtr widgets)
     while (widgets.next())
     {
         WidgetPtr wp = widgets.current();
+		wp->setAlign(Align::Relative);
         bool tip = wp->isUserString("tip");
 		if (tip)  // if has tooltip string
 		{	

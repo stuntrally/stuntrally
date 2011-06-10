@@ -12,105 +12,105 @@
 			<Property key="Tab_ButtonAutoWidth" value="true"/>
 			<Widget type="TabItem" skin="" position="4 26 787 531">
 				<Property key="Widget_Caption" value="#{Track}"/>
-				<Widget type="List" skin="List" position="14 15 148 504" align="Relative" name="TrackList">
+				<Widget type="List" skin="List" position="14 15 148 504" name="TrackList">
 					<UserString key="tip" value="#{TipTrackList}"/>
 				</Widget>
-				<Widget type="StaticText" skin="StaticText" position="176 448 200 24" align="Relative" name="TrackText">
+				<Widget type="StaticText" skin="StaticText" position="176 448 200 24" name="TrackText">
 					<Property key="Widget_InheritsAlpha" value="true"/>
 					<Property key="Widget_Colour" value="0 0 0"/>
 					<Property key="Widget_Caption" value="#{Track}"/>
 					<Property key="Text_TextColour" value="0.4 1.0 0.5"/>
 				</Widget>
-				<Widget type="Button" skin="Button" position="176 488 127 32" align="Relative" name="ChangeTrack">
+				<Widget type="Button" skin="Button" position="176 488 127 32" name="ChangeTrack">
 					<Property key="Widget_Caption" value="#{ChangeTrack}"/>
 					<Property key="Widget_Colour" value="0.7 1 0.85"/>
 					<Property key="Text_TextColour" value="0.6 1 0.8"/>
 					<UserString key="tip" value="#{TipChangeTrack}"/>
 				</Widget>
-				<Widget type="Button" skin="CheckBox" position="400 448 120 24" align="Relative" name="ReverseOn">
+				<Widget type="Button" skin="CheckBox" position="400 448 120 24" name="ReverseOn">
 					<Property key="Widget_Caption" value="#{Reverse}"/>
 					<Property key="Widget_Colour" value="0.8 1 0.6"/>
 					<Property key="Text_TextColour" value="0.8 1 0.5"/>
 					<UserString key="tip" value="#{TipReverse}"/>
 				</Widget>
-				<Widget type="Button" skin="Button" position="368 488 127 32" align="Relative" name="NewGame1">
+				<Widget type="Button" skin="Button" position="368 488 127 32" name="NewGame1">
 					<Property key="Widget_Caption" value="#{NewGame}"/>
 					<Property key="Widget_Colour" value="0.6 1.0 0.3"/>
 					<Property key="Text_TextColour" value="0.3 1 0.2"/>
 					<UserString key="tip" value="#{TipNewGame}"/>
 				</Widget>
-				<Widget type="StaticImage" skin="StaticImage" position="174 15 336 334" align="Relative" name="TrackImg">
+				<Widget type="StaticImage" skin="StaticImage" position="174 15 336 334" name="TrackImg">
 					<UserString key="tip" value="#{TipTrackImg}"/>
 				</Widget>
-				<Widget type="StaticImage" skin="StaticImage" position="528 280 240 240" align="Relative" name="TrkTerImg">
+				<Widget type="StaticImage" skin="StaticImage" position="528 280 240 240" name="TrkTerImg">
 					<UserString key="tip" value="#{TipTrkTerImg}"/>
 				</Widget>
-				<Widget type="StaticImage" skin="StaticImage" position="527 280 240 238" align="Relative" name="TrackMap">
+				<Widget type="StaticImage" skin="StaticImage" position="527 280 240 238" name="TrackMap">
 					<UserString key="tip" value="#{TipTrackMap}"/>
 				</Widget>
-				<Widget type="StaticText" skin="StaticText" position="532 70 100 18" align="Relative" name="i1">
+				<Widget type="StaticText" skin="StaticText" position="532 70 100 18" name="i1">
 					<Property key="Widget_Caption" value="#{TrackLength}"/>
 					<Property key="Text_TextColour" value="0.4 0.8 1.0"/>
 				</Widget>
-				<Widget type="StaticText" skin="StaticText" position="638 70 90 18" align="Relative" name="iv1">
+				<Widget type="StaticText" skin="StaticText" position="638 70 90 18" name="iv1">
 					<Property key="Widget_Caption" value="#{UnitKm}"/>
 					<Property key="Text_TextColour" value="0.4 0.8 1.0"/>
 				</Widget>
-				<Widget type="StaticText" skin="StaticText" position="532 90 100 18" align="Relative" name="i2">
+				<Widget type="StaticText" skin="StaticText" position="532 90 100 18" name="i2">
 					<Property key="Text_TextColour" value="0.4 0.8 1.0"/>
 					<Property key="Widget_Caption" value="#{TrackArea}"/>
 				</Widget>
-				<Widget type="StaticText" skin="StaticText" position="638 90 90 18" align="Relative" name="iv2">
+				<Widget type="StaticText" skin="StaticText" position="638 90 90 18" name="iv2">
 					<Property key="Widget_Caption" value="#{UnitM}"/>
 					<Property key="Text_TextColour" value="0.4 0.8 1.0"/>
 				</Widget>
-				<Widget type="StaticText" skin="StaticText" position="532 120 100 18" align="Relative" name="i3">
+				<Widget type="StaticText" skin="StaticText" position="532 120 100 18" name="i3">
 					<Property key="Widget_Caption" value="#{TrackWidthAvg}"/>
 					<Property key="Text_TextColour" value="0.6 0.75 0.9"/>
 				</Widget>
-				<Widget type="StaticText" skin="StaticText" position="638 120 82 18" align="Relative" name="iv3">
+				<Widget type="StaticText" skin="StaticText" position="638 120 82 18" name="iv3">
 					<Property key="Widget_Caption" value="#{UnitM}"/>
 					<Property key="Text_TextColour" value="0.6 0.75 0.9"/>
 				</Widget>
-				<Widget type="StaticText" skin="StaticText" position="532 140 100 18" align="Relative" name="i4">
+				<Widget type="StaticText" skin="StaticText" position="532 140 100 18" name="i4">
 					<Property key="Widget_Caption" value="#{TrackHeightDiff}"/>
 					<Property key="Text_TextColour" value="0.6 0.75 0.9"/>
 				</Widget>
-				<Widget type="StaticText" skin="StaticText" position="638 140 82 18" align="Relative" name="iv4">
+				<Widget type="StaticText" skin="StaticText" position="638 140 82 18" name="iv4">
 					<Property key="Widget_Caption" value="#{UnitM}"/>
 					<Property key="Text_TextColour" value="0.6 0.75 0.9"/>
 				</Widget>
-				<Widget type="StaticText" skin="StaticText" position="532 170 100 18" align="Relative" name="i5">
+				<Widget type="StaticText" skin="StaticText" position="532 170 100 18" name="i5">
 					<Property key="Widget_Caption" value="#{TrackInAir}"/>
 					<Property key="Text_TextColour" value="0.5 0.9 0.9"/>
 				</Widget>
-				<Widget type="StaticText" skin="StaticText" position="638 170 82 18" align="Relative" name="iv5">
+				<Widget type="StaticText" skin="StaticText" position="638 170 82 18" name="iv5">
 					<Property key="Widget_Caption" value="%"/>
 					<Property key="Text_TextColour" value="0.5 0.9 0.9"/>
 				</Widget>
-				<Widget type="StaticText" skin="StaticText" position="532 190 100 18" align="Relative" name="i6">
+				<Widget type="StaticText" skin="StaticText" position="532 190 100 18" name="i6">
 					<Property key="Widget_Caption" value="#{TrackPipes}"/>
 					<Property key="Text_TextColour" value="0.9 0.9 0.5"/>
 				</Widget>
-				<Widget type="StaticText" skin="StaticText" position="638 190 82 18" align="Relative" name="iv6">
+				<Widget type="StaticText" skin="StaticText" position="638 190 82 18" name="iv6">
 					<Property key="Widget_Caption" value="%"/>
 					<Property key="Text_TextColour" value="0.9 0.9 0.5"/>
 				</Widget>
-				<Widget type="StaticText" skin="StaticText" position="532 20 100 18" align="Relative" name="i7">
+				<Widget type="StaticText" skin="StaticText" position="532 20 100 18" name="i7">
 					<Property key="Widget_Caption" value="#{TrackBestTime}"/>
 					<Property key="Text_TextColour" value="0.7 0.86 1.0"/>
 				</Widget>
-				<Widget type="StaticText" skin="StaticText" position="638 20 90 18" align="Relative" name="iv7">
+				<Widget type="StaticText" skin="StaticText" position="638 20 90 18" name="iv7">
 					<Property key="Text_TextColour" value="0.7 0.86 1.0"/>
 				</Widget>
-				<Widget type="StaticText" skin="StaticText" position="532 40 100 18" align="Relative" name="i8">
+				<Widget type="StaticText" skin="StaticText" position="532 40 100 18" name="i8">
 					<Property key="Widget_Caption" value="#{TrackAvgSpeed}"/>
 					<Property key="Text_TextColour" value="0.7 0.86 1.0"/>
 				</Widget>
-				<Widget type="StaticText" skin="StaticText" position="638 40 90 18" align="Relative" name="iv8">
+				<Widget type="StaticText" skin="StaticText" position="638 40 90 18" name="iv8">
 					<Property key="Text_TextColour" value="0.7 0.86 1.0"/>
 				</Widget>
-				<Widget type="Edit" skin="WordWrap" position="176 367 336 75" align="Relative" name="TrackDesc">
+				<Widget type="Edit" skin="WordWrap" position="176 367 336 75" name="TrackDesc">
 					<Property key="Edit_ReadOnly" value="true"/>
 					<Property key="Edit_MultiLine" value="true"/>
 					<Property key="Edit_WordWrap" value="true"/>
@@ -123,65 +123,65 @@
 			</Widget>
 			<Widget type="TabItem" skin="" position="4 26 787 531">
 				<Property key="Widget_Caption" value="#{Car}"/>
-				<Widget type="List" skin="List" position="14 16 148 504" align="Relative" name="CarList">
+				<Widget type="List" skin="List" position="14 16 148 504" name="CarList">
 					<UserString key="tip" value="#{TipCarsList}"/>
 				</Widget>
-				<Widget type="StaticText" skin="StaticText" position="176 448 200 24" align="Relative" name="CarText">
+				<Widget type="StaticText" skin="StaticText" position="176 448 200 24" name="CarText">
 					<Property key="Widget_InheritsAlpha" value="true"/>
 					<Property key="Widget_Caption" value="#{Car}"/>
 					<Property key="Widget_Colour" value="0 0 0"/>
 					<Property key="Text_TextColour" value="0.65 0.88 1.0"/>
 				</Widget>
-				<Widget type="Button" skin="Button" position="176 488 127 32" align="Relative" name="ChangeCar">
+				<Widget type="Button" skin="Button" position="176 488 127 32" name="ChangeCar">
 					<Property key="Text_TextColour" value="0.4 0.8 1"/>
 					<Property key="Widget_Caption" value="#{ChangeCar}"/>
 					<Property key="Widget_Colour" value="0.5 0.8 1"/>
 					<UserString key="tip" value="#{TipChangeCar}"/>
 				</Widget>
-				<Widget type="Button" skin="Button" position="312 488 127 32" align="Relative" name="NewGame2">
+				<Widget type="Button" skin="Button" position="312 488 127 32" name="NewGame2">
 					<Property key="Widget_Caption" value="#{NewGame}"/>
 					<Property key="Widget_Colour" value="0.6 1.0 0.3"/>
 					<Property key="Text_TextColour" value="0.3 1 0.2"/>
 					<UserString key="tip" value="#{TipNewGameCar}"/>
 				</Widget>
-				<Widget type="StaticImage" skin="StaticImage" position="448 200 320 320" align="Relative" name="CarImg"/>
-				<Widget type="HScroll" skin="HScroll" position="320 50 448 18" align="Relative" name="CarClrH">
+				<Widget type="StaticImage" skin="StaticImage" position="448 200 320 320" name="CarImg"/>
+				<Widget type="HScroll" skin="HScroll" position="320 50 448 18" name="CarClrH">
 					<Property key="Scroll_Range" value="1000001"/>
 					<Property key="Scroll_MoveToClick" value="true"/>
 					<UserString key="tip" value="#{TipChangeHue}"/>
 				</Widget>
-				<Widget type="StaticText" skin="StaticText" position="270 50 42 24" align="Relative" name="CarClrHVal">
+				<Widget type="StaticText" skin="StaticText" position="270 50 42 24" name="CarClrHVal">
 					<Property key="Text_TextColour" value="0.8 0.9 1.0"/>
 				</Widget>
-				<Widget type="HScroll" skin="HScroll" position="320 80 448 18" align="Relative" name="CarClrS">
+				<Widget type="HScroll" skin="HScroll" position="320 80 448 18" name="CarClrS">
 					<Property key="Scroll_Range" value="1000001"/>
 					<Property key="Scroll_MoveToClick" value="true"/>
 					<UserString key="tip" value="#{TipChangeSat}"/>
 				</Widget>
-				<Widget type="StaticText" skin="StaticText" position="270 80 42 24" align="Relative" name="CarClrSVal">
+				<Widget type="StaticText" skin="StaticText" position="270 80 42 24" name="CarClrSVal">
 					<Property key="Text_TextColour" value="0.8 0.9 1.0"/>
 				</Widget>
-				<Widget type="HScroll" skin="HScroll" position="320 110 448 18" align="Relative" name="CarClrV">
+				<Widget type="HScroll" skin="HScroll" position="320 110 448 18" name="CarClrV">
 					<Property key="Scroll_Range" value="1000001"/>
 					<Property key="Scroll_MoveToClick" value="true"/>
 					<UserString key="tip" value="#{TipChangeBright}"/>
 				</Widget>
-				<Widget type="StaticText" skin="StaticText" position="270 110 42 24" align="Relative" name="CarClrVVal">
+				<Widget type="StaticText" skin="StaticText" position="270 110 42 24" name="CarClrVVal">
 					<Property key="Text_TextColour" value="0.8 0.9 1.0"/>
 				</Widget>
-				<Widget type="StaticText" skin="StaticText" position="176 50 88 24" align="Relative">
+				<Widget type="StaticText" skin="StaticText" position="176 50 88 24">
 					<Property key="Widget_Caption" value="#{ColHue}"/>
 					<Property key="Text_TextColour" value="0.5 0.8 1.0"/>
 				</Widget>
-				<Widget type="StaticText" skin="StaticText" position="176 80 88 24" align="Relative">
+				<Widget type="StaticText" skin="StaticText" position="176 80 88 24">
 					<Property key="Text_TextColour" value="0.7 0.8 0.9"/>
 					<Property key="Widget_Caption" value="#{ColSat}"/>
 				</Widget>
-				<Widget type="StaticText" skin="StaticText" position="176 110 88 24" align="Relative">
+				<Widget type="StaticText" skin="StaticText" position="176 110 88 24">
 					<Property key="Text_TextColour" value="0.5 0.7 0.9"/>
 					<Property key="Widget_Caption" value="#{ColBright}"/>
 				</Widget>
-				<Widget type="StaticImage" skin="StaticImage" position="336 30 511 10" align="Relative">
+				<Widget type="StaticImage" skin="StaticImage" position="336 30 511 10">
 					<Property key="Image_Texture" value="hue_bar.png"/>
 				</Widget>
 			</Widget>
@@ -258,7 +258,7 @@
 			</Widget>
 			<Widget type="TabItem" skin="" position="4 26 787 531">
 				<Property key="Widget_Caption" value="#{Replay}"/>
-				<Widget type="List" skin="List" position="14 16 186 504" align="Relative" name="RplList"/>
+				<Widget type="List" skin="List" position="14 16 186 504" name="RplList"/>
 				<Widget type="Button" skin="CheckBox" position="224 375 272 32" name="RplChkAutoRec">
 					<Property key="Widget_Caption" value="#{RplAutoRec}"/>
 					<Property key="Text_TextColour" value="0.6 0.8 1"/>
@@ -306,22 +306,22 @@
 					<Property key="Widget_Colour" value="1 0.8 0.4"/>
 					<Property key="Widget_Caption" value="#{RplRename}"/>
 				</Widget>
-				<Widget type="StaticText" skin="StaticText" position="224 24 184 24" align="Relative" name="RplName">
+				<Widget type="StaticText" skin="StaticText" position="224 24 184 24" name="RplName">
 					<Property key="Text_TextColour" value="0.84 0.8 1"/>
 				</Widget>
-				<Widget type="StaticText" skin="StaticText" position="224 48 184 44" align="Relative" name="RplInfo">
+				<Widget type="StaticText" skin="StaticText" position="224 48 184 44" name="RplInfo">
 					<Property key="Text_TextColour" value="0.9 0.9 1"/>
 				</Widget>
-				<Widget type="StaticText" skin="StaticText" position="416 48 216 44" align="Relative" name="RplInfo2">
+				<Widget type="StaticText" skin="StaticText" position="416 48 216 44" name="RplInfo2">
 					<Property key="Text_TextColour" value="0.76 0.76 0.82"/>
 				</Widget>
-				<Widget type="StaticText" skin="StaticText" position="224 240 416 24" align="Relative" name="RplName2">
+				<Widget type="StaticText" skin="StaticText" position="224 240 416 24" name="RplName2">
 					<Property key="Text_TextColour" value="1 0.8 0.6"/>
 				</Widget>
-				<Widget type="Widget" skin="Panel" position="224 104 456 57" align="Relative">
+				<Widget type="Widget" skin="Panel" position="224 104 456 57">
 					<Property key="Widget_Alpha" value="0.8"/>
 					<Property key="Widget_Colour" value="0.8 0.8 1.0"/>
-					<Widget type="Edit" skin="WordWrap" position="4 4 456 56" align="Relative" name="RplDesc">
+					<Widget type="Edit" skin="WordWrap" position="4 4 456 56" name="RplDesc">
 						<Property key="Widget_InheritsAlpha" value="false"/>
 						<Property key="Edit_WordWrap" value="true"/>
 						<Property key="Text_TextAlign" value="Left Top"/>
@@ -962,7 +962,7 @@
 	</Widget>
 	<Widget type="Window" skin="WindowCS" position="224 -20 820 104" layer="Back" name="RplWnd">
 		<Property key="Widget_Alpha" value="0.3"/>
-		<Widget type="HScroll" skin="HScroll" position="4 41 800 20" align="Relative" name="RplSlider">
+		<Widget type="HScroll" skin="HScroll" position="4 41 800 20" name="RplSlider">
 			<Property key="Widget_Alpha" value="0.6"/>
 			<Property key="Widget_InheritsAlpha" value="false"/>
 			<Property key="Widget_Colour" value="0.8 0.9 1"/>

@@ -571,6 +571,7 @@ void App::setToolTips(EnumeratorWidgetPtr widgets)
     while (widgets.next())
     {
         WidgetPtr wp = widgets.current();
+		wp->setAlign(Align::Relative);
         bool tip = wp->isUserString("tip");
 		if (tip)  // if has tooltip string
 		{	

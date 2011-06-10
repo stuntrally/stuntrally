@@ -165,7 +165,7 @@
 		</Widget>
 	</Widget>
 	<Widget type="Window" skin="WindowCS" position="556 287 800 600" align="Center" layer="Overlapped" name="OptionsWnd">
-		<Property key="Window_MinMax" value="500 500 1000 1000"/>
+		<Property key="Window_MinMax" value="500 400 2560 1600"/>
 		<Property key="Widget_Caption" value="#{Editor}"/>
 		<Property key="Widget_Alpha" value="0.3"/>
 		<Property key="Window_Snap" value="true"/>
