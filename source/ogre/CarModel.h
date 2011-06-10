@@ -9,6 +9,8 @@
  
 #include <OgreVector3.h>
 #include <OgreQuaternion.h>
+#include <OgreVector4.h>
+#include <OgreMatrix4.h>
 
 class SETTINGS;  class GAME;  class CAR;  class Scene;  class App;  class FollowCamera;  class CarReflection;
 
