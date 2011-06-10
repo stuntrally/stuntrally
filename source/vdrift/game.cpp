@@ -310,8 +310,7 @@ void GAME::Tick(float deltat)
 				pOgreGame->updatePoses(deltat);
 				
 				/// update all cameras
-				if (/*!pause &&*/ pOgreGame->carModels.size() > 0)
-					//^  replay can be paused
+				if (pOgreGame->carModels.size() > 0 && (!pause || pOgreGame->bRplPlay))  // replay can be paused and needs cam upd
 					for (std::list<CarModel*>::iterator it = pOgreGame->carModels.begin(); it != pOgreGame->carModels.end(); it++)
 						if ((*it)->fCam)
 							(*it)->fCam->update(framerate);

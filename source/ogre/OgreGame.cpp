@@ -14,8 +14,8 @@ using namespace Ogre;
 
 //  ctors  -----------------------------------------------
 App::App()
-	:pGame(0), ndPos(0), ndMap(0), ndLine(0)
-	,nrpmB(0),nvelBk(0),nvelBm(0), nrpm(0),nvel(0), mrpm(0),mvel(0),mpos(0)
+	:pGame(0), ndMap(0), ndLine(0)
+	,nrpmB(0),nvelBk(0),nvelBm(0), nrpm(0),nvel(0), mrpm(0),mvel(0)
 	,hudGear(0),hudVel(0), hudAbs(0),hudTcs(0), hudTimes(0), hudCheck(0)
 	,ovGear(0),ovVel(0), ovAbsTcs(0), ovCarDbg(0),ovCarDbgTxt(0), ovCam(0), ovTimes(0)
 	// hud
@@ -45,9 +45,9 @@ App::App()
 {
 	pathTrk[0] = PATHMANAGER::GetTrackPath() + "/";
 	pathTrk[1] = PATHMANAGER::GetTrackPathUser() + "/";
-
 	resCar = "";  resTrk = "";  resDrv = "";
 		
+	for (int i=0; i<5; ++i)  {  ndPos[i]=0;  mpos[i]=0;  }
 	for (int i=0; i < 5; ++i)
 	{	ovL[i]=0;  ovR[i]=0;  ovS[i]=0;  ovU[i]=0;  }
 	for (int i=0; i < StTrk; ++i)  stTrk[i] = 0;

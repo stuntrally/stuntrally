@@ -183,7 +183,7 @@ bool App::frameEnd(Real time)
 }
 
 
-//  update newPoses - get new car pos from game
+//  newPoses - Get new car pos from game
 //---------------------------------------------------------------------------------------------------------------
 void App::newPoses()
 {
@@ -201,6 +201,7 @@ void App::newPoses()
 		CarModel* carM = *carMIt;
 		CAR* pCar = carM->pCar;
 		PosInfo posInfo;
+		bool bGhost = carM->eType == CarModel::CT_GHOST;
 		
 		//  local data  car,wheels
 		MATHVECTOR <float,3> pos, whPos[4];
@@ -210,7 +211,7 @@ void App::newPoses()
 		///-----------------------------------------------------------------------
 		//  play  get data from replay
 		///-----------------------------------------------------------------------
-		if (carM->eType == CarModel::CT_GHOST)
+		if (bGhost)
 		{
 			ReplayFrame fr;
 			bool ok = ghplay.GetFrame(lapTime, &fr, 0);
@@ -288,7 +289,7 @@ void App::newPoses()
 		
 
 		///  sound listener  - - - - -
-		if (carM->eType != CarModel::CT_GHOST)
+		if (!bGhost)
 		{
 			if (pGame->sound.Enabled())  // todo: set from camera, for each player? ..
 			{
@@ -310,7 +311,7 @@ void App::newPoses()
 		///-----------------------------------------------------------------------
 		//  record  save data for replay
 		///-----------------------------------------------------------------------
-		if (pSet->rpl_rec && !pGame->pause)
+		if (pSet->rpl_rec && !pGame->pause && !bGhost)
 		{
 			//static int ii = 0;
 			//if (ii++ >= 0)	// 1 half game framerate
@@ -367,7 +368,7 @@ void App::newPoses()
 
 		//  chekpoints, lap start
 		//-----------------------------------------------------------------------
-		if (bRplPlay || carM->eType == CarModel::CT_GHOST)   // dont check when replay play...
+		if (bRplPlay || bGhost)   // dont check when replay play
 			carM->bWrongChk = false;
 		else //if (iCarNum == 0)  // only works for 1st car?
 		{
@@ -431,11 +432,11 @@ void App::newPoses()
 }
 
 
-//  updatePoses - set car pos for Ogre nodes, update particles, trails
+//  updatePoses - Set car pos for Ogre nodes, update particles, trails
 //---------------------------------------------------------------------------------------------------------------
 void App::updatePoses(float time)
 {	
-	// Update all carmodels with their newPosInfo
+	//  Update all carmodels with their newPosInfo
 	int i=0;
 	std::list<CarModel*>::iterator carIt = carModels.begin();
 	std::list<PosInfo>::iterator newPosIt = newPosInfos.begin();
@@ -452,15 +453,13 @@ void App::updatePoses(float time)
 		
 		carM->Update(newPosInfo, time);
 		
-		/// TODO multiple dots on minimap
 		//  pos on minimap  x,y = -1..1
-		if (i==0 && !bGhost)
-		{
-		float xp =(-newPosInfo.pos[2] - minX)*scX*2-1,
-			  yp =-(newPosInfo.pos[0] - minY)*scY*2+1;
-		if (ndPos)
-			ndPos->setPosition(xp,yp,0);
-		}	
+		if (!bGhost)
+		{	float xp =(-newPosInfo.pos[2] - minX)*scX*2-1,
+				  yp =-(newPosInfo.pos[0] - minY)*scY*2+1;
+			if (ndPos[i])
+				ndPos[i]->setPosition(xp,yp,0);
+		}
 		carIt++;  newPosIt++;  i++;
 	}
 	

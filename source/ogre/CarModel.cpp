@@ -148,9 +148,11 @@ void CarModel::Update(PosInfo& posInfo, float time)
 			 emitD = (std::min(140.f, whVel) / 3.5f + slide * 1.f ) * l;  
 			 //  resume
 			 pd[w]->setSpeedFactor(1.f);  ps[w]->setSpeedFactor(1.f);  pm[w]->setSpeedFactor(1.f);
+			 if (w < 2)  pb[w]->setSpeedFactor(1.f);
 		}else{
 			 //  stop par sys
 			 pd[w]->setSpeedFactor(0.f);  ps[w]->setSpeedFactor(0.f);  pm[w]->setSpeedFactor(0.f);
+			 if (w < 2)  pb[w]->setSpeedFactor(0.f);
 		}
 		Real sizeD = (0.3f + 1.1f * std::min(140.f, whVel) / 140.f) * (w < 2 ? 0.5f : 1.f);
 

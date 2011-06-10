@@ -615,9 +615,7 @@ void App::btnRplLoad(WP)  // Load
 		string car = replay.header.car, trk = replay.header.track;
 		bool usr = replay.header.track_user == 1;
 
-		pSet->car = car;
-		pSet->track = trk;  pSet->track_user = usr;
-		//bRplPlay = 1;
+		pSet->car = car;  pSet->track = trk;  pSet->track_user = usr;
 		btnNewGame(0);
 		bRplPlay = 1;
 	}

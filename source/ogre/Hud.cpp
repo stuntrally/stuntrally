@@ -74,8 +74,7 @@ void App::CreateHUD()
 		asp = 1.f;  //_temp
 		ManualObject* m = Create2D("road_minimap_inv",mSceneMgr, 1);
 		//asp = float(mWindow->getWidth())/float(mWindow->getHeight());
-		m->setVisibilityFlags(2);
-		m->setRenderQueueGroup(RENDER_QUEUE_OVERLAY-5);
+		m->setVisibilityFlags(2);  m->setRenderQueueGroup(RENDER_QUEUE_OVERLAY-5);
 		
 		///  change minimap image
 		MaterialPtr mm = MaterialManager::getSingleton().getByName("road_minimap_inv");
@@ -93,12 +92,12 @@ void App::CreateHUD()
 		ndMap->attachObject(m);
 		
 		//  car pos dot
-		mpos = Create2D("hud/CarPos", mSceneMgr, 0.4f, true);  // dot size  -par
-		mpos->setVisibilityFlags(2);
-		mpos->setRenderQueueGroup(RENDER_QUEUE_OVERLAY);
-		ndPos = ndMap->createChildSceneNode();
-		ndPos->scale(fHudSize*2, fHudSize*2, 1);
-		ndPos->attachObject(mpos);
+		for (int i=0; i < pSet->local_players; ++i)
+		{	mpos[i] = Create2D("hud/CarPos", mSceneMgr, 0.4f, true);
+			mpos[i]->setVisibilityFlags(2);  mpos[i]->setRenderQueueGroup(RENDER_QUEUE_OVERLAY);
+			ndPos[i] = ndMap->createChildSceneNode();
+			ndPos[i]->scale(fHudSize*2, fHudSize*2, 1);
+			ndPos[i]->attachObject(mpos[i]);  /*ndPos[i]->setVisible(false);  */}
 		ndMap->setVisible(false/*pSet->trackmap*/);
 	}
 
@@ -227,9 +226,7 @@ void App::UpdateHUD(CAR* pCar, float time, Viewport* vp)
 		if (hudGear) hudGear->hide();
 		if (hudVel) hudVel->hide();
 		if (ovTimes) ovTimes->hide();
-	}
-	else
-	{
+	}else{
 		/// for render viewport ---------
 		if (ovCam) ovCam->hide();
 		if (mFpsOverlay) mFpsOverlay->hide();
@@ -248,18 +245,14 @@ void App::UpdateHUD(CAR* pCar, float time, Viewport* vp)
     float angrmp = fr.rpm*rsc + rmin;
     float vsc = pSet->show_mph ? -180.f/100.f : -180.f/160.f, vmin = 0.f;  //vel
     float angvel = abs(vel)*vsc + vmin;
-    float angrot;
+    float angrot=0.f;  int i=0;
     if (pCar)
-    {
-		std::list<CarModel*>::iterator cit;
-		for (cit=carModels.begin(); cit!=carModels.end(); cit++)
-		{
-			if ( (*cit)->pCar == pCar)
+    {	std::list<CarModel*>::iterator cit;
+		for (cit=carModels.begin(); cit!=carModels.end(); cit++,i++)
+			if ((*cit)->pCar == pCar)
 				break;
-		}
-		angrot = (*cit)->pMainNode ? (*cit)->pMainNode->getOrientation().getYaw().valueDegrees() : 0.f;
+		if ((*cit)->pMainNode)  angrot = (*cit)->pMainNode->getOrientation().getYaw().valueDegrees();
 	}
-	else angrot=0;
     float sx = 1.4f, sy = sx*asp;  // *par len
     float psx = 2.1f * pSet->size_minimap, psy = psx;  // *par len
 
@@ -286,10 +279,10 @@ void App::UpdateHUD(CAR* pCar, float time, Viewport* vp)
 		mvel->position(vx[2],vy[2], 0);  mvel->textureCoord(1, 0);	mvel->position(vx[3],vy[3], 0);  mvel->textureCoord(0, 0);
 		mvel->end();  }
 		
-	if (mpos)  {	mpos->beginUpdate(0);
-		mpos->position(px[0],py[0], 0);  mpos->textureCoord(0, 1);	mpos->position(px[1],py[1], 0);  mpos->textureCoord(1, 1);
-		mpos->position(px[2],py[2], 0);  mpos->textureCoord(1, 0);	mpos->position(px[3],py[3], 0);  mpos->textureCoord(0, 0);
-		mpos->end();  }
+	if (mpos[i])  {  mpos[i]->beginUpdate(0);
+		mpos[i]->position(px[0],py[0], 0);  mpos[i]->textureCoord(0, 1);	mpos[i]->position(px[1],py[1], 0);  mpos[i]->textureCoord(1, 1);
+		mpos[i]->position(px[2],py[2], 0);  mpos[i]->textureCoord(1, 0);	mpos[i]->position(px[3],py[3], 0);  mpos[i]->textureCoord(0, 0);
+		mpos[i]->end();  }
 
 
 	//  gear, vel texts  -----------------------------
