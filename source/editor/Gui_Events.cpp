@@ -549,3 +549,23 @@ void App::btnQuit(WP)
 {
 	mShutDown = true;
 }
+
+void App::comboLanguage(SL)
+{
+	if (val == MyGUI::ITEM_NONE)  return;
+	MyGUI::ComboBoxPtr cmb = static_cast<MyGUI::ComboBoxPtr>(wp);
+	std::string sel = cmb->getItemNameAt(val);
+	
+	for (std::map<std::string, std::string>::const_iterator it = supportedLanguages.begin();
+		it != supportedLanguages.end(); it++)
+	{
+		if (it->second == sel)
+			pSet->language = it->first;
+	}
+	MyGUI::LanguageManager::getInstance().setCurrentLanguage(pSet->language);
+
+	//  reinit gui
+	bGuiReinit = true;
+	
+	//setTranslations();
+}

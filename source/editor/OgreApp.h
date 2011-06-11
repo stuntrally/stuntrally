@@ -56,6 +56,7 @@ protected:
 	virtual void createScene();
 	virtual void destroyScene();
 
+	virtual bool frameStarted(const Ogre::FrameEvent& evt);
 	virtual bool frameRenderingQueued(const Ogre::FrameEvent& evt);
 	virtual bool frameEnded(const Ogre::FrameEvent& evt);
 
@@ -290,6 +291,13 @@ protected:
 
 	std::vector<Ogre::String> vsMaterials;
 	void GetMaterials(Ogre::String filename, Ogre::String type="material");
+
+
+	// language
+	void comboLanguage(SL);
+	std::map<std::string, std::string> supportedLanguages; // <short name, display name>
+	bool bGuiReinit;
+	MyGUI::VectorWidgetPtr vwGui;
 };
 
 #endif

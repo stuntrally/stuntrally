@@ -12,13 +12,12 @@ using namespace Ogre;
 
 void App::InitGui()
 {
-	bGuiFocus = false/*true*/;  bMoveCam = true;  //*--
 	if (!mGUI)  return;
 	LanguageManager::getInstance().loadUserTags("core_theme_black_blue_tag.xml");
 
 	//  load layout - wnds
-	VectorWidgetPtr& rootV = LayoutManager::getInstance().load("Editor.layout");
-	for (VectorWidgetPtr::iterator it = rootV.begin(); it != rootV.end(); ++it)
+	vwGui = LayoutManager::getInstance().load("Editor.layout");
+	for (VectorWidgetPtr::iterator it = vwGui.begin(); it != vwGui.end(); ++it)
 	{
 		setToolTips((*it)->getEnumerator());
 		const std::string& name = (*it)->getName();
@@ -57,6 +56,17 @@ void App::InitGui()
 		mWndOpts->setPosition((sx-w.width)*0.5f, (sy-w.height)*0.5f);
 		mWndTabs = (TabPtr)mWndOpts->findWidget("TabWnd");
 		//mWndTabs->setIndexSelected(3);  //def*--
+
+		//  resize Options wnd
+		const int yN = 7;
+		const Real yw[yN] = {400, 600, 720, 768, 960, 1024, 1200};
+		const Real yf[yN] = {0.0, 0.0, 0.05, 0.1, 0.2, 0.3,  0.3};
+		Real xm = 0.f, ym = 0.f;  // margin
+		for (int i=0; i < yN; ++i)
+			if (pSet->windowy >= yw[i]-10)  ym = yf[i];
+		Real yo = (1.f - ym)*pSet->windowy, xo = 4.f/3.f * yo;  // opt wnd size in pix
+		ym = (pSet->windowy - yo)*0.5f;  xm = (pSet->windowx - xo)*0.5f;
+		mWndOpts->setCoord(xm, ym, xo, yo);
 	}
 
 	//  center mouse pos
@@ -240,6 +250,23 @@ void App::InitGui()
 
 	///  Fill Combo boxes  . . . . . . .
 	//------------------------------------------------------------------------------------------------------------
+
+	//  language combo  ___________________
+	supportedLanguages.clear();
+	supportedLanguages["en"] = "English";
+	supportedLanguages["de"] = "Deutsch";  //German
+	supportedLanguages["fi"] = "Suomi";  //Finnish
+	supportedLanguages["ro"] = "Româna";  //Romanian
+	supportedLanguages["pl"] = "Polski";  //Polish
+	combo = NULL;  combo = mGUI->findWidget<ComboBox>("Lang");
+	if (combo)  combo->eventComboChangePosition = newDelegate(this, &App::comboLanguage);
+	for (std::map<std::string, std::string>::const_iterator it = supportedLanguages.begin();
+		it != supportedLanguages.end(); it++)
+	{
+		combo->addItem(it->second);
+		if (it->first == pSet->language)
+			combo->setIndexSelected(combo->getItemCount()-1);
+	}
 	
 	//---------------------  SKYS  ---------------------
 	Cmb(cmbSky, "SkyCombo", comboSky);
@@ -336,6 +363,9 @@ void App::InitGui()
 	imgPrv = (StaticImagePtr)mWndOpts->findWidget("TrackImg");
 	imgTer = (StaticImagePtr)mWndOpts->findWidget("TrkTerImg");
 	imgMini = (StaticImagePtr)mWndOpts->findWidget("TrackMap");
+	//  stats text
+	for (int i=0; i < StTrk; ++i)
+		stTrk[i] = (StaticTextPtr)mWndOpts->findWidget("iv"+toStr(i+1));
 	listTrackChng(trkList,0);
 
 	//  btn change,  new, rename, delete
@@ -347,8 +377,4 @@ void App::InitGui()
     //  load = new game
     for (int i=1; i<=3; ++i)
     {	Btn("NewGame"+toStr(i), btnNewGame);  }
-	
-	//  stats text
-	for (int i=0; i < StTrk; ++i)
-		stTrk[i] = (StaticTextPtr)mWndOpts->findWidget("iv"+toStr(i+1));
 }

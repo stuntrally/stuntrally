@@ -88,14 +88,14 @@ void App::InitGui()
 	combo = (ComboBoxPtr)mLayout->findWidget("TexFiltering");
 	if (combo)  combo->eventComboChangePosition = newDelegate(this, &App::comboTexFilter);
 	
-	//  language combo
+	//  language combo  ___________________
 	supportedLanguages["en"] = "English";
 	supportedLanguages["de"] = "Deutsch";  //German
 	supportedLanguages["fi"] = "Suomi";  //Finnish
 	supportedLanguages["ro"] = "Româna";  //Romanian
 	supportedLanguages["pl"] = "Polski";  //Polish
-	combo = NULL; combo = (ComboBoxPtr)mLayout->findWidget("Lang");
-	if (combo) combo->eventComboChangePosition = newDelegate(this, &App::comboLanguage);
+	combo = NULL;  combo = (ComboBoxPtr)mLayout->findWidget("Lang");
+	if (combo)  combo->eventComboChangePosition = newDelegate(this, &App::comboLanguage);
 	for (std::map<std::string, std::string>::const_iterator it = supportedLanguages.begin();
 		it != supportedLanguages.end(); it++)
 	{
