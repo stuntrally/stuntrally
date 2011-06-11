@@ -468,6 +468,8 @@
 	<Tag name="RplAll">All</Tag>
 	<Tag name="Game">Game</Tag>
 	<Tag name="CamInfoStrings">Type,Yaw,Pitch,Dist,Height,Speed,Offset,LEFT,RIGHT,Middle,Wheel,shift,Rotate,reset,move,H,Pos</Tag>
+	<Tag name="InputCameraTxt2">with ctrl - switch current car when many</Tag>
+	<Tag name="InputCameraTxt1">with shift - main cameras only</Tag>
 	<Tag name="NumLocalPlayers">Number of local players</Tag>
 	<Tag name="SplitVertically">Split Vertically</Tag>
 	<Tag name="RplGhosts">Ghosts</Tag>
