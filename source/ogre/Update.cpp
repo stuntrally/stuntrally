@@ -49,11 +49,12 @@ void App::UpdThr()
 
 bool App::frameStart(Real time)
 {	
-	if (bGuiReinit)
+	if (bGuiReinit)  // after language change from combo
 	{	bGuiReinit = false;
 		mGUI->destroyWidgets(vwGui);
 		InitGui();
 		bWindowResized = true;
+		mWndTabs->setIndexSelected(6);  // switch back to view tab
 	}
 
 	if (bWindowResized)

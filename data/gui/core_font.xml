@@ -2,23 +2,38 @@
 
 <MyGUI type="Resource" version="1.1">
 
+	<!-- Main Gui Font -->
 	<Resource type="ResourceTrueTypeFont" name="font_Vera.17">
-		<Property key="Source" value="Vera.ttf"/>
-		<Property key="Size" value="20"/>
+		<Property key="Source" value="DejaVuLGCSans.ttf"/>
+		<Property key="Size" value="22"/>
 		<Property key="Resolution" value="50"/>
 		<Property key="Antialias" value="false"/>
 		<Property key="SpaceWidth" value="4"/>
 		<Property key="TabWidth" value="8"/>
 		<Property key="CursorWidth" value="2"/>
 		<Property key="Distance" value="4"/>
-		<Property key="OffsetHeight" value="-1"/>
+		<Property key="OffsetHeight" value="0"/>
 		<Codes>
 			<Code range="33 255"/>
+			<!-- polish ^211,243 -->
+			<Code range="260 263"/>
+			<Code range="280 281"/>
+			<Code range="321 324"/>
+			<Code range="346 347"/>
+			<Code range="377 380"/>
+			<!-- romanian -->
+			<Code range="536 539"/>
+			<Code range="258 259"/>
+			<Code range="194"/>
+			<Code range="226"/>
+			<Code range="206"/>
+			<Code range="238"/>
 		</Codes>
 	</Resource>
 
+	<!-- Replay, bigger digits -->
 	<Resource type="ResourceTrueTypeFont" name="font_Vera.24">
-		<Property key="Source" value="Vera.ttf"/>
+		<Property key="Source" value="DejaVuLGCSans.ttf"/>
 		<Property key="Size" value="32"/>
 		<Property key="Resolution" value="50"/>
 		<Property key="Antialias" value="false"/>
