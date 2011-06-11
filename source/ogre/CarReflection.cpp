@@ -129,8 +129,6 @@ void CarReflection::Update()
 	//  skip frames
 	if (++iCounter >= pSet->refl_skip || bFirstFrame)
 	{
-		#include <iostream>
-		std::cout<<"RT Update; index: " << iIndex<<std::endl;
 		iCounter = 0;
 		//  cube faces at once
 		int fc = bFirstFrame ? 6 : pSet->refl_faces;
