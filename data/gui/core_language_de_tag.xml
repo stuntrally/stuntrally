@@ -70,7 +70,7 @@
 	<Tag name="InputRoadChkRadius">K, L - Wegpunkt-Radius</Tag>
 	<Tag name="TipDustSize">Staubpartikelgröße.</Tag>
 	<Tag name="InputRoadInsAlt">Alt-Shift - am Anfang Alt-Strg - am Ende</Tag>
-	<Tag name="InputMapPrevCamera">Previous Camera</Tag>
+	<Tag name="InputMapPrevCamera">Vorherige Kamera</Tag>
 	<Tag name="InputMapBrake">Bremsen</Tag>
 	<Tag name="MyGUI_MessageBox_Abort">Abbrechen</Tag>
 	<Tag name="Video">Bildschirm</Tag>
@@ -206,7 +206,7 @@
 	<Tag name="InputRoadPipeAngle">[,]   - pipe angle (no pipe when 0)</Tag>
 	<Tag name="InputMapRestartGame">Neues Spiel</Tag>
 	<Tag name="Graphics">Grafik</Tag>
-	<Tag name="InputMapNextCamera">Next Camera</Tag>
+	<Tag name="InputMapNextCamera">Nächste Kamera</Tag>
 	<Tag name="CarDebugText">Auto Debug text </Tag>
 	<Tag name="RplSize">Größe</Tag>
 	<Tag name="TipMudInt">Intensität der Schlammpartikel.</Tag>
@@ -286,7 +286,7 @@
 	<Tag name="TipTrackDescEditor">Streckenbeschreibung (Klicken zum Editieren).</Tag>
 	<Tag name="ViewLeft">Ans. Links</Tag>
 	<Tag name="UnitMB">MB</Tag>
-	<Tag name="RplTime">Time</Tag>
+	<Tag name="RplTime">Zeit</Tag>
 	<Tag name="ApplyShadows">Schatten anwenden</Tag>
 	<Tag name="RoadStats">Straßen Statist.</Tag>
 	<Tag name="SunDir">Sonnenrichtung</Tag>
@@ -354,7 +354,7 @@
 	<Tag name="TipRainSnow2">Typ Rain/Snow 2 setzen</Tag>
 	<Tag name="InputTerDeform">D - verformen (LMB hoch, RMB runter)</Tag>
 	<Tag name="TipDiffuseTex">Diffusetextur (Specular in Alphakanal).</Tag>
-	<Tag name="VegetCol">Vegetation collision</Tag>
+	<Tag name="VegetCol">Vegetation Kollision</Tag>
 	<Tag name="MyGUI_MessageBox_Continue">Fortsetzen</Tag>
 	<Tag name="Tools">Werkzeuge</Tag>
 	<Tag name="TipGrassSwaySpd">Grasschwingung Geschw.</Tag>
@@ -467,6 +467,7 @@
 	<Tag name="MyGUI_MessageBox_Yes">Ja</Tag>
 	<Tag name="RplAll">Alle</Tag>
 	<Tag name="Game">Game</Tag>
+	<Tag name="CamInfoStrings">Type,Yaw,Pitch,Dist,Height,Speed,Offset,LEFT,RIGHT,Middle,Wheel,shift,Rotate,reset,move,H,Pos</Tag>
 	<Tag name="NumLocalPlayers">Number of local players</Tag>
 	<Tag name="SplitVertically">Split Vertically</Tag>
 	<Tag name="RplGhosts">Ghosts</Tag>

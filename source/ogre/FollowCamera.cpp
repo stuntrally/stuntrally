@@ -12,6 +12,9 @@
 #include <OgreSceneNode.h>
 #include <OgreOverlayElement.h>
 #include <OgreOverlayManager.h>
+#include <OgreTerrainGroup.h>
+
+#include <MyGUI.h>
 using namespace Ogre;
 
 
