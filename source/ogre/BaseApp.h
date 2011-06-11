@@ -9,6 +9,7 @@
 #include <OISMouse.h>
 
 #include <MyGUI_Prerequest.h>
+#include <MyGUI_Widget.h>
 namespace MyGUI{  class OgrePlatform;  };
 
 namespace Ogre {  class SceneNode;  class Root;  class SceneManager;  class RenderWindow;  }
