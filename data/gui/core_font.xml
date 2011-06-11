@@ -13,7 +13,7 @@
 		<Property key="Distance" value="4"/>
 		<Property key="OffsetHeight" value="-1"/>
 		<Codes>
-			<Code range="1 255"/>
+			<Code range="33 255"/>
 		</Codes>
 	</Resource>
 
