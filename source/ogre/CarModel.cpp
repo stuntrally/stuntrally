@@ -274,12 +274,8 @@ void CarModel::Create()
 							tus->setTextureName(sDirname + "_" + tus->getTextureName());
 	}	}	}	}	}
 	
-	//  ----------------- Reflection ------------------------
-	pReflect = new CarReflection(pSet, pSceneMgr, iIndex);
-	for (int i=0; i<NumMaterials; i++)
-		pReflect->sMtr[i] = sMtr[i];
-
-	pReflect->Create();
+	// reflection
+	CreateReflection();
 
 	//  car Models:  body, interior, glass  -------
 	//vis flags:  2 not rendered in reflections  16 off by in-car camera
@@ -425,6 +421,16 @@ void CarModel::Create()
 		ReloadTex(sMtr[i]);
 }
 
+//  ----------------- Reflection ------------------------
+void CarModel::CreateReflection()
+{
+	pReflect = new CarReflection(pSet, pSceneMgr, iIndex);
+	for (int i=0; i<NumMaterials; i++)
+		pReflect->sMtr[i] = sMtr[i];
+
+	pReflect->Create();
+}
+
 
 void CarModel::UpdParsTrails(bool visible)
 {
@@ -483,7 +489,6 @@ void CarModel::UpdWhTerMtr()
 
 void CarModel::ChangeClr()
 {
-	///TODO allow multiple cars here, i.e. give mat/tex an index
 	bool add = 1;
 	Image ima;	try{
 		ima.load(sDirname + "_body00_add.png", "Car" + toStr(iIndex));  // add, not colored

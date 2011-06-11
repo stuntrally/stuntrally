@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION"
 "Report-Msgid-Bugs-To: "
-"POT-Creation-Date: 2011-06-11 13:02+0200"
+"POT-Creation-Date: 2011-06-11 19:52+0200"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>"
 "Language-Team: LANGUAGE <LL@li.org>"
@@ -31,6 +31,10 @@ msgstr ""
 
 msgctxt "TipDustSize"
 msgid "Dust particles size."
+msgstr ""
+
+msgctxt "InputMapShowOptions"
+msgid "Show options"
 msgstr ""
 
 msgctxt "TipGrassSwayDistr"
@@ -77,8 +81,8 @@ msgctxt "ViewDist"
 msgid "View distance"
 msgstr ""
 
-msgctxt "TreeDens"
-msgid "Trees   density"
+msgctxt "Sky"
+msgid "Sky"
 msgstr ""
 
 msgctxt "TerNormal"
@@ -373,6 +377,10 @@ msgctxt "AutoRear"
 msgid "Auto Rear gear"
 msgstr ""
 
+msgctxt "ReflMode_single"
+msgid "Single"
+msgstr ""
+
 msgctxt "Friction"
 msgid "Friction"
 msgstr ""
@@ -499,6 +507,10 @@ msgstr ""
 
 msgctxt "TipNewGame"
 msgid "Start game on new track or Restart on current."
+msgstr ""
+
+msgctxt "ReflMode"
+msgid "Mode"
 msgstr ""
 
 msgctxt "TipCopySource"
@@ -729,8 +741,8 @@ msgctxt "InputBrushParams"
 msgid "Brush parameters"
 msgstr ""
 
-msgctxt "InputMapShowOptions"
-msgid "Show options"
+msgctxt "InputMapNextCamera"
+msgid "Next Camera"
 msgstr ""
 
 msgctxt "InputCameraMode"
@@ -865,8 +877,8 @@ msgctxt "Graphics"
 msgid "Graphics"
 msgstr ""
 
-msgctxt "InputMapNextCamera"
-msgid "Next Camera"
+msgctxt "ReflMode_static"
+msgid "Static"
 msgstr ""
 
 msgctxt "CarDebugText"
@@ -949,8 +961,8 @@ msgctxt "TipGrassSwaySpd"
 msgid "Grass sway effect speed."
 msgstr ""
 
-msgctxt "Sky"
-msgid "Sky"
+msgctxt "TreeDens"
+msgid "Trees   density"
 msgstr ""
 
 msgctxt "TCS"
@@ -1551,6 +1563,10 @@ msgstr ""
 
 msgctxt "Setup"
 msgid "Setup"
+msgstr ""
+
+msgctxt "ReflMode_full"
+msgid "Full"
 msgstr ""
 
 msgctxt "TrackPipes"

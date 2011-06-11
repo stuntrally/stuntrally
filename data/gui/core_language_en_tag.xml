@@ -165,6 +165,10 @@
 	<Tag name="MapSize">Map size</Tag>
 	<Tag name="FacesOnce">Faces at once</Tag>
 	<Tag name="Distance">Distance</Tag>
+	<Tag name="ReflMode">Mode</Tag>
+	<Tag name="ReflMode_static">Static</Tag>
+	<Tag name="ReflMode_single">Single</Tag>
+	<Tag name="ReflMode_full">Full</Tag>
 
 	<Tag name="Shadows">Shadows</Tag>
 	<Tag name="Shaders">Shaders</Tag>

@@ -126,6 +126,7 @@ void App::InitGui()
 	Slv(ReflSize,	pSet->refl_size /res);
 	Slv(ReflFaces,	pSet->refl_faces /res);
 	Slv(ReflDist,	powf((pSet->refl_dist -20.f)/1480.f, 0.5f));
+	Slv(ReflMode,   3);
 
 	//  shadows
 	Slv(ShadowType,	pSet->shadow_type /res);
