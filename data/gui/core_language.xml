@@ -15,6 +15,9 @@
 		<Info name="ro">
 			<Source>core_language_ro_tag.xml</Source>
 		</Info>
+		<Info name="pl">
+			<Source>core_language_pl_tag.xml</Source>
+		</Info>
 	</Language>
 
 </MyGUI>
