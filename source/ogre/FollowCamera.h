@@ -3,6 +3,7 @@
 
 #include <OgreVector3.h>
 #include <OgreQuaternion.h>
+#include <OgreString.h>
 #include <vector>
 
 
@@ -38,27 +39,26 @@ namespace Ogre {  class TerrainGroup;  class Camera;  class OverlayElement;  cla
 class FollowCamera
 {
 public:
+	FollowCamera(Ogre::Camera* cam);
+	~FollowCamera();
+
+	//  ogre
 	Ogre::Camera* mCamera;
-	
 	Ogre::TerrainGroup* mTerrain;
+
+	const Ogre::SceneNode* mGoalNode;
+	Ogre::Vector3 mLook;
+	Ogre::Quaternion qq;  // for ext cam
+
+	#if 0  // bullet
 	class COLLISION_WORLD* mWorld;
 	
 	// collision objs for raycast
 	class btSphereShape* shape;
 	class btDefaultMotionState* state;
 	class btRigidBody* body;
-
-	const Ogre::SceneNode* mGoalNode;
-	Ogre::Vector3 mLook;
-	CameraAngle ca;
-	bool first;
+	#endif
 	
-	// for ext cam
-	Ogre::Quaternion qq;
-
-
-	FollowCamera(Ogre::Camera* cam);
-	~FollowCamera();
 
 	void update(Ogre::Real time), updInfo(Ogre::Real time = 0);
 	void Move( bool mbLeft, bool mbRight, bool mbMiddle, bool shift, Ogre::Real mx, Ogre::Real my, Ogre::Real mz );
@@ -66,6 +66,7 @@ public:
 
 
 	//  Camera Angles
+	CameraAngle ca;  bool first;
 	int miCount, miCurrent;
 	std::vector<CameraAngle> mCameraAngles;
 
@@ -74,6 +75,9 @@ public:
 	void Next(bool bPrev = false, bool bMainOnly = false);
 	void setCamera(int ang), moveAboveTerrain();
 	
+	//  info text formats
+	Ogre::String sFmt_Follow, sFmt_Free, sFmt_ExtAng, sFmt_Arena, sFmt_Car;
+	void updFmtTxt();
 	Ogre::OverlayElement *ovInfo,*ovName;
 };
 

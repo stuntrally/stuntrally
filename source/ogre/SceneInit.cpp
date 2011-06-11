@@ -249,7 +249,9 @@ void App::LoadMisc()  // 7 last
 		if ((*it)->fCam)
 		{	(*it)->fCam->first = true;
 			(*it)->fCam->mTerrain = mTerrainGroup;
+			#if 0
 			(*it)->fCam->mWorld = &(pGame->collision);
+			#endif
 		}
 }
 
