@@ -613,6 +613,15 @@
 							<Property key="Scroll_Range" value="1000001"/>
 							<Property key="Scroll_MoveToClick" value="true"/>
 						</Widget>
+						<Widget type="HScroll" skin="HScroll" position="248 170 320 18" name="ReflMode">
+							<Property key="Scroll_Range" value="3"/>
+							<Property key="Scroll_MoveToClick" value="true"/>
+						</Widget>
+						<Widget type="StaticText" skin="StaticText" position="32 170 144 24">
+							<Property key="Widget_Caption" value="#{ReflMode}"/>
+							<Property key="Widget_Colour" value="0 0 0"/>
+							<Property key="Text_TextColour" value="1.0 0.6 0.4"/>
+						</Widget>
 						<Widget type="StaticText" skin="StaticText" position="180 50 60 24" name="ReflSkipVal">
 							<Property key="Text_TextColour" value="1 0.8 0.4"/>
 						</Widget>
@@ -623,6 +632,9 @@
 							<Property key="Text_TextColour" value="1.0 0.6 0.4"/>
 						</Widget>
 						<Widget type="StaticText" skin="StaticText" position="180 140 60 24" name="ReflDistVal">
+							<Property key="Text_TextColour" value="0.9 0.5 0.5"/>
+						</Widget>
+						<Widget type="StaticText" skin="StaticText" position="180 170 60 24" name="ReflModeVal">
 							<Property key="Text_TextColour" value="0.9 0.5 0.5"/>
 						</Widget>
 					</Widget>

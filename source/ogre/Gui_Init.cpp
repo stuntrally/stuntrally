@@ -126,6 +126,10 @@ void App::InitGui()
 	Slv(ReflSize,	pSet->refl_size /res);
 	Slv(ReflFaces,	pSet->refl_faces /res);
 	Slv(ReflDist,	powf((pSet->refl_dist -20.f)/1480.f, 0.5f));
+	int value; if (pSet->refl_mode == "static") value = 0;
+	else if (pSet->refl_mode == "single") value = 1;
+	else if (pSet->refl_mode == "full") value = 2;
+	Slv(ReflMode,   value /res);
 
 	//  shadows
 	Slv(ShadowType,	pSet->shadow_type /res);

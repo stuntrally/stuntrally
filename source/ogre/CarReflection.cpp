@@ -35,57 +35,63 @@ CarReflection::~CarReflection()
 			LogO("destroy refl cam err");  }
 	}
 
-	// destroy cube tex
-	TextureManager::getSingleton().remove(cubetexName);
+	// destroy cube tex - only if created by ourself
+	if ( !(pSet->refl_mode == "single" && iIndex != 0) )
+		TextureManager::getSingleton().remove(cubetexName);
 }
 
 void CarReflection::Create()
 {
-	///TODO (optional) only one cubemap, no cubemaps (static) 
-	
-	cubetexName = "ReflectionCube" + toStr(iIndex);
-	// first cubemap: no index
-	if (cubetexName == "ReflectionCube0")
-		cubetexName = "ReflectionCube";
+	if (pSet->refl_mode == "single") cubetexName = "ReflectionCube"; // single: use 1st cubemap
+	else if (pSet->refl_mode == "full")
+	{
+		cubetexName = "ReflectionCube" + toStr(iIndex);
+		// first cubemap: no index
+		if (cubetexName == "ReflectionCube0")
+			cubetexName = "ReflectionCube";
+	}
 	
 	TextureManager* tm = TextureManager::getSingletonPtr();
 	int size = ciShadowSizesA[pSet->refl_size];
 
 	//  create cube render texture
-	cubetex = tm->createManual(cubetexName, 
-		ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME, TEX_TYPE_CUBE_MAP, 
-		size,size, 0/*mips*/, PF_R8G8B8, TU_RENDERTARGET);
-		LogO("created rt cube");
-
-	for (int face = 0; face < 6; face++)
+	if (! (pSet->refl_mode == "single" && iIndex != 0) )
 	{
-		Camera* mCam = pSceneMgr->createCamera("Reflect_" + toStr(iIndex) + "_" + toStr(face));
-		mCam->setAspectRatio(1.0f);  mCam->setFOVy(Degree(90));
-		mCam->setNearClipDistance(0.1);
-		//mCam->setFarClipDistance(pSet->refl_dist);  //sky-
+		cubetex = tm->createManual(cubetexName, 
+			ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME, TEX_TYPE_CUBE_MAP, 
+			size,size, 0/*mips*/, PF_R8G8B8, TU_RENDERTARGET);
+			LogO("created rt cube");
 
-		RenderTarget* mRT = cubetex->getBuffer(face)->getRenderTarget();
-		LogO( "rt face Name: " + mRT->getName() );
-		mRT->removeAllViewports();
-		Viewport* vp = mRT->addViewport(mCam);
-		vp->setOverlaysEnabled(false);
-		vp->setVisibilityMask(1+4+8);  // hide 2: hud, car,glass,tires
-		mRT->setAutoUpdated(false);
-		//mRT->addListener(this);  //-
-		mCam->setPosition(Vector3::ZERO);
-
-		Vector3 lookAt(0,0,0), up(0,0,0), right(0,0,0);  switch(face)
+		for (int face = 0; face < 6; face++)
 		{
-			case 0:  lookAt.x =-1;  up.y = 1;  right.z = 1;  break;  // +X
-			case 1:  lookAt.x = 1;  up.y = 1;  right.z =-1;  break;	 // -X
-			case 2:  lookAt.y =-1;  up.z = 1;  right.x = 1;  break;	 // +Y
-			case 3:  lookAt.y = 1;  up.z =-1;  right.x = 1;  break;	 // -Y
-			case 4:  lookAt.z = 1;  up.y = 1;  right.x =-1;  break;	 // +Z
-			case 5:  lookAt.z =-1;  up.y = 1;  right.x =-1;  break;	 // -Z
-        }
-		Quaternion orient( right, up, lookAt );  mCam->setOrientation( orient );
-		pCams[face] = mCam;
-		pRTs[face] = mRT;
+			Camera* mCam = pSceneMgr->createCamera("Reflect_" + toStr(iIndex) + "_" + toStr(face));
+			mCam->setAspectRatio(1.0f);  mCam->setFOVy(Degree(90));
+			mCam->setNearClipDistance(0.1);
+			//mCam->setFarClipDistance(pSet->refl_dist);  //sky-
+
+			RenderTarget* mRT = cubetex->getBuffer(face)->getRenderTarget();
+			LogO( "rt face Name: " + mRT->getName() );
+			mRT->removeAllViewports();
+			Viewport* vp = mRT->addViewport(mCam);
+			vp->setOverlaysEnabled(false);
+			vp->setVisibilityMask(1+4+8);  // hide 2: hud, car,glass,tires
+			mRT->setAutoUpdated(false);
+			//mRT->addListener(this);  //-
+			mCam->setPosition(Vector3::ZERO);
+
+			Vector3 lookAt(0,0,0), up(0,0,0), right(0,0,0);  switch(face)
+			{
+				case 0:  lookAt.x =-1;  up.y = 1;  right.z = 1;  break;  // +X
+				case 1:  lookAt.x = 1;  up.y = 1;  right.z =-1;  break;	 // -X
+				case 2:  lookAt.y =-1;  up.z = 1;  right.x = 1;  break;	 // +Y
+				case 3:  lookAt.y = 1;  up.z =-1;  right.x = 1;  break;	 // -Y
+				case 4:  lookAt.z = 1;  up.y = 1;  right.x =-1;  break;	 // +Z
+				case 5:  lookAt.z =-1;  up.y = 1;  right.x =-1;  break;	 // -Z
+			}
+			Quaternion orient( right, up, lookAt );  mCam->setOrientation( orient );
+			pCams[face] = mCam;
+			pRTs[face] = mRT;
+		}
 	}
 	
 	// Iterate through our materials and add an index to ReflectionCube texture reference
@@ -115,6 +121,11 @@ void CarReflection::Create()
 
 void CarReflection::Update()
 {
+	// update only if we created
+	if ( pSet->refl_mode == "single" && iIndex != 0 ) return;
+	// static: only 1st frame
+	if ( pSet->refl_mode == "static" && bFirstFrame == false ) return;
+	
 	//  skip frames
 	if (++iCounter >= pSet->refl_skip || bFirstFrame)
 	{

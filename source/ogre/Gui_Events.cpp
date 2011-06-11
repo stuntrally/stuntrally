@@ -294,6 +294,33 @@ void App::slReflDist(SL)
 	float v = 20.f + 1480.f * powf(val/res, 2.f);	pSet->refl_dist = v;
 	if (valReflDist){	Fmt(s, "%4.0f m", v);	valReflDist->setCaption(s);  }
 }
+void App::slReflMode(SL)
+{
+	std::string old = pSet->refl_mode;
+	
+	if (val == 0) pSet->refl_mode = "static";
+	if (val == 1) pSet->refl_mode = "single";
+	if (val == 2) pSet->refl_mode = "full";
+	
+	if (pSet->refl_mode != old)
+		recreateReflections();
+		
+	if (valReflMode)
+	{
+		valReflMode->setCaption( TR("#{ReflMode_" + pSet->refl_mode + "}") );
+		if (pSet->refl_mode == "static")  valReflMode->setTextColour(MyGUI::Colour(0.0, 1.0, 0.0)); 
+		else if (pSet->refl_mode == "single")  valReflMode->setTextColour(MyGUI::Colour(1.0, 0.5, 0.0));
+		else if (pSet->refl_mode == "full")  valReflMode->setTextColour(MyGUI::Colour(1.0, 0.0, 0.0));
+	}
+}
+void App::recreateReflections()
+{
+	for (std::list<CarModel*>::iterator it = carModels.begin(); it!=carModels.end(); it++)
+	{	
+		delete (*it)->pReflect;
+		(*it)->CreateReflection();
+	}
+}
 
 
 void App::slShaders(SL)

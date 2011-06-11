@@ -21,6 +21,7 @@ public:
 	float view_distance, terdetail,terdist, road_dist;
 	float shadow_dist;  int shadow_size, shadow_count, shadow_type;
 	int refl_skip, refl_faces, refl_size;  float refl_dist;
+	std::string refl_mode; // static, single, full [explanation: see CarReflection.h] 
 	bool particles, trails;  float trees, grass, trees_dist, grass_dist;
 	float particles_len, trails_len;
 

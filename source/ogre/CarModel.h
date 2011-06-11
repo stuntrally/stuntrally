@@ -53,8 +53,9 @@ public:
 	
 	//  Create our car, based on name, color, index.
 	//  This will put the meshes together and create the particle systems.
-	//  CarReflection is also created.
+	//  CreateReflection() is also called.
 	void Create();
+	void CreateReflection();
 	
 	//  Call every vdrift substep with new position info
 	void Update(PosInfo& newPosInfo, float time);
