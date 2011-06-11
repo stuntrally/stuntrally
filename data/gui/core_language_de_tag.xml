@@ -103,7 +103,7 @@
 	<Tag name="InputRoadSel">Backspace - zu Auswahl hinzufügen/entfernen</Tag>
 	<Tag name="Weather">Wetter</Tag>
 	<Tag name="wind">Wind</Tag>
-	<Tag name="LS_CAR">Lade Auto</Tag>
+	<Tag name="TipRoadStats">Statistiken der Straße.</Tag>
 	<Tag name="MaxScale">max. Skal.</Tag>
 	<Tag name="TipModelMaxScale">Maximale Skalierung des Modells.</Tag>
 	<Tag name="TerrainError">Terrainabweichung</Tag>
@@ -185,7 +185,7 @@
 	<Tag name="distance">Distanz</Tag>
 	<Tag name="TrackAutoLoad">Spiel autom. Laden</Tag>
 	<Tag name="DustSize">Staubgröße</Tag>
-	<Tag name="InputRoadMove">- Punkt bewegen</Tag>
+	<Tag name="TipVegetModels">Modelle für die Vegetation. Zu finden in data/trees/.</Tag>
 	<Tag name="InputMapPlayer1">Spieler 1</Tag>
 	<Tag name="InputMapPlayer2">Spieler 2</Tag>
 	<Tag name="InputMapPlayer3">Spieler 3</Tag>
@@ -211,7 +211,7 @@
 	<Tag name="RplSize">Größe</Tag>
 	<Tag name="TipMudInt">Intensität der Schlammpartikel.</Tag>
 	<Tag name="Mode">Modus</Tag>
-	<Tag name="ChangeCar">Auto wechseln</Tag>
+	<Tag name="ScaleAll">Alle skalieren</Tag>
 	<Tag name="InputMapPrevTab">Vorheriger Tab</Tag>
 	<Tag name="InputTogglePreview">F7 - Vorschaukamera</Tag>
 	<Tag name="GameBy">Ein Spiel von</Tag>
@@ -233,7 +233,7 @@
 	<Tag name="TipAutoClutch">-Manuell nicht implementiert.</Tag>
 	<Tag name="MinimapUpdSkip">Minikarten-Update überspr.</Tag>
 	<Tag name="RoadDist2">Zusätzliche Distanz zur Straße.</Tag>
-	<Tag name="TipRoadStats">Statistiken der Straße.</Tag>
+	<Tag name="LS_CAR">Lade Auto</Tag>
 	<Tag name="InputTerPaint">A - Anstrichtextur (Layer)</Tag>
 	<Tag name="RplCur">Aktuell</Tag>
 	<Tag name="InputKeyNoButton">Kein Knopf</Tag>
@@ -250,7 +250,7 @@
 	<Tag name="MotionBlur">Bewegungsunschärfe</Tag>
 	<Tag name="MinimapAndSize">Minimap, Größe</Tag>
 	<Tag name="TipChangeHue">Farbe ändern (Farbton)</Tag>
-	<Tag name="TipVegetModels">Modelle für die Vegetation. Zu finden in data/trees/.</Tag>
+	<Tag name="InputRoadMove">- Punkt bewegen</Tag>
 	<Tag name="Intensity">Intensität</Tag>
 	<Tag name="TipSunAmbient">Sonnenlicht Umgebungsfarbe (konstant). R G B Komponenten von 0 bis 1 (z.B. 0.4 0.4 0.4)</Tag>
 	<Tag name="ChngTrkTab">ausw. im Tab [Strecke]</Tag>
@@ -421,7 +421,7 @@
 	<Tag name="TipNewTer">Neues, flaches Terrain erstellen.</Tag>
 	<Tag name="TipRoadParams">Parameter des Straßenpunkts</Tag>
 	<Tag name="SpeedUnit">Einheit</Tag>
-	<Tag name="ScaleAll">Alle skalieren</Tag>
+	<Tag name="ChangeCar">Auto wechseln</Tag>
 	<Tag name="TipImpDist">Distanz, bei der Modelle 2D werden.</Tag>
 	<Tag name="InputMapGeneral">Allgemein</Tag>
 	<Tag name="TipTrkTerImg">Minikarte der ausgewählten Strecke, Sicht von oben.</Tag>
@@ -466,6 +466,11 @@
 	<Tag name="Pitch">neigen</Tag>
 	<Tag name="MyGUI_MessageBox_Yes">Ja</Tag>
 	<Tag name="RplAll">Alle</Tag>
+	<Tag name="Game">Game</Tag>
+	<Tag name="NumLocalPlayers">Number of local players</Tag>
+	<Tag name="SplitVertically">Split Vertically</Tag>
+	<Tag name="RplGhosts">Ghosts</Tag>
+	<Tag name="RplBestOnly">Save ghost only for best time</Tag>
 	<Tag name="GameVersion">1.2</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 

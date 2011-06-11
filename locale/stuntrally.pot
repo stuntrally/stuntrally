@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION"
 "Report-Msgid-Bugs-To: "
-"POT-Creation-Date: 2011-06-06 22:19+0300"
+"POT-Creation-Date: 2011-06-10 22:30+0200"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>"
 "Language-Team: LANGUAGE <LL@li.org>"
@@ -159,6 +159,10 @@ msgstr ""
 
 msgctxt "InputReloadTrack"
 msgid "F5 - reload track"
+msgstr ""
+
+msgctxt "Game"
+msgid "Game"
 msgstr ""
 
 msgctxt "TipParType3"
@@ -387,10 +391,6 @@ msgstr ""
 
 msgctxt "ABS"
 msgid "ABS (antilock brakes)"
-msgstr ""
-
-msgctxt "Length"
-msgid "Length"
 msgstr ""
 
 msgctxt "TipCarsList"
@@ -665,6 +665,10 @@ msgctxt "Yaw"
 msgid "yaw"
 msgstr ""
 
+msgctxt "TipGrassPageLength"
+msgid "Grass Page length (low will reload often, high will cause visible switching)."
+msgstr ""
+
 msgctxt "Detail"
 msgid "Detail"
 msgstr ""
@@ -801,8 +805,8 @@ msgctxt "TipFogEndClr"
 msgid "Fog end color. R G B components 0 to 1 (eg. 0.7 0.8 0.9)"
 msgstr ""
 
-msgctxt "VegetCol"
-msgid "Vegetation collision"
+msgctxt "InputToggleVeget"
+msgid "V - Disable / enable vegetation"
 msgstr ""
 
 msgctxt "Particles"
@@ -1125,6 +1129,10 @@ msgctxt "TipModelVisDist"
 msgid "Visibility distance for model pages."
 msgstr ""
 
+msgctxt "NumLocalPlayers"
+msgid "Number of local players"
+msgstr ""
+
 msgctxt "Settings"
 msgid "Settings"
 msgstr ""
@@ -1417,8 +1425,8 @@ msgctxt "RplGhost"
 msgid "Show ghost drive - best lap"
 msgstr ""
 
-msgctxt "TipGrassPageLength"
-msgid "Grass Page length (low will reload often, high will cause visible switching)."
+msgctxt "SplitVertically"
+msgid "Split Vertically"
 msgstr ""
 
 msgctxt "Reflections"
@@ -1445,8 +1453,8 @@ msgctxt "TipDiffuseTex"
 msgid "Diffuse texture (Specular in alpha)."
 msgstr ""
 
-msgctxt "InputToggleVeget"
-msgid "V - Disable / enable vegetation"
+msgctxt "Length"
+msgid "Length"
 msgstr ""
 
 msgctxt "MyGUI_MessageBox_Continue"
@@ -1493,8 +1501,20 @@ msgctxt "InputRoadYaw"
 msgid "- rotate yaw"
 msgstr ""
 
+msgctxt "RplGhosts"
+msgid "Ghosts"
+msgstr ""
+
+msgctxt "RplBestOnly"
+msgid "Save ghost only for best time"
+msgstr ""
+
 msgctxt "Front"
 msgid "Front"
+msgstr ""
+
+msgctxt "VegetCol"
+msgid "Vegetation collision"
 msgstr ""
 
 msgctxt "TipSurfFrict2"
