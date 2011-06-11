@@ -496,6 +496,10 @@ void App::comboLanguage(SL)
 		if (it->second == sel)
 			pSet->language = it->first;
 	}
+	MyGUI::LanguageManager::getInstance().setCurrentLanguage(pSet->language);
+
+	//  reinit gui
+	bGuiReinit = true;
 }
 
 //  Startup

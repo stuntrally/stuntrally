@@ -36,7 +36,7 @@ App::App()
 	,valRplPerc(0), valRplCur(0), valRplLen(0), slRplPos(0), rplList(0)
 	,valRplName(0),valRplInfo(0),valRplName2(0),valRplInfo2(0), edRplName(0), edRplDesc(0)
 	,rbRplCur(0), rbRplAll(0), rbRplGhosts(0)
-	,bRplPlay(0), bRplPause(0), bRplRec(0), bRplWnd(1)
+	,bRplPlay(0), bRplPause(0), bRplRec(0), bRplWnd(1), bGuiReinit(0)
 	// game
 	,blendMtr(0), iBlendMaps(0)
 	,dbgdraw(0)

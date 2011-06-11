@@ -174,6 +174,7 @@ protected:
 	// language
 	void comboLanguage(SL);
 	std::map<std::string, std::string> supportedLanguages; // <short name, display name>
+	bool bGuiReinit;
 
 	void comboTexFilter(SL);
 	MyGUI::ButtonPtr bRkmh, bRmph;  void radKmh(WP), radMph(WP), btnTrGrReset(WP), btnQuit(WP), btnResChng(WP);

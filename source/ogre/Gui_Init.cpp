@@ -26,8 +26,8 @@ void App::InitGui()
 	mGUI->load("core_skin.xml");
 
 	//  load Options layout
-	VectorWidgetPtr rootV = LayoutManager::getInstance().load("Options.layout");
-	mLayout = rootV.at(0);
+	vwGui = LayoutManager::getInstance().load("Options.layout");
+	mLayout = vwGui.at(0);
 
 	//  window
 	mWndOpts = mLayout->findWidget("OptionsWnd");
@@ -44,7 +44,7 @@ void App::InitGui()
 
 
 	//  tooltip  ------
-	for (VectorWidgetPtr::iterator it = rootV.begin(); it != rootV.end(); ++it)
+	for (VectorWidgetPtr::iterator it = vwGui.begin(); it != vwGui.end(); ++it)
 	{
 		setToolTips((*it)->getEnumerator());
 		//const std::string& name = (*it)->getName();

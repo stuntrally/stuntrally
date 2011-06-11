@@ -105,6 +105,7 @@ protected:
 	MyGUI::Gui* mGUI;		MyGUI::OgrePlatform* mPlatform;
 	MyGUI::WidgetPtr mLayout, mWndOpts, mWndRpl;  // options window
 	MyGUI::TabPtr mWndTabs;
+	MyGUI::VectorWidgetPtr vwGui;
 };
 
 #endif

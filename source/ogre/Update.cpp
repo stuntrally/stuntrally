@@ -49,6 +49,13 @@ void App::UpdThr()
 
 bool App::frameStart(Real time)
 {	
+	if (bGuiReinit)
+	{	bGuiReinit = false;
+		mGUI->destroyWidgets(vwGui);
+		InitGui();
+		bWindowResized = true;
+	}
+
 	if (bWindowResized)
 	{	bWindowResized = false;
 
@@ -70,7 +77,7 @@ bool App::frameStart(Real time)
 			bnQuit->setCoord(pSet->windowx - 0.09*pSet->windowx, 0, 0.09*pSet->windowx, 0.03*pSet->windowy);
 		bSizeHUD = true;
 	}
-	
+		
 	if (bLoading)
 	{
 		NewGameDoLoad();
