@@ -546,27 +546,26 @@ void App::InitInputGui()
 		MyGUI::TabItemPtr tabitem = inputTab->addItem( TR("#{InputMap" + (*it).first + "}") );
 		
 		//-scroll view.... doesnt work???
-		//MyGUI::ScrollViewPtr sv = tabitem->createWidget<ScrollView>("ScrollView", 0, 0, 700, 580, MyGUI::Align::Default, "scrollView_" + (*it).first );
+		//MyGUI::ScrollViewPtr sv = tabitem->createWidget<ScrollView>("ScrollView", 0, 0, 700, 580, MyGUI::Align::Relative, "scrollView_" + (*it).first );
 		
 		///  Headers (Key 1, Key 2)
 		MyGUI::StaticTextPtr headkb = tabitem->createWidget<StaticText>(
-			"StaticText", 220, 10, 200, 24, MyGUI::Align::Default, "staticText_" + (*it).first );
+			"StaticText", 220, 10, 200, 24, MyGUI::Align::Relative, "staticText_" + (*it).first );
 		headkb->setCaption(TR("#88AAFF#{InputKey1}"));
 		MyGUI::StaticTextPtr headkb2 = tabitem->createWidget<StaticText>(
-			"StaticText", 360, 10, 200, 24, MyGUI::Align::Default, "staticText_" + (*it).first );
+			"StaticText", 360, 10, 200, 24, MyGUI::Align::Relative, "staticText_" + (*it).first );
 		headkb2->setCaption(TR("#88AAFF#{InputKey2}"));
-		
+				
 		/// joystick selection menu
 		// only on player tabs
 		bool playerTab = Ogre::StringUtil::startsWith( (*it).first, "player");
-		if ( playerTab )
+		if (playerTab)
 		{
-			MyGUI::ComboBoxPtr joysticks = tabitem->createWidget<ComboBox>("ComboBox", 540, 10, 150, 24, MyGUI::Align::Default, "joystickSel_" + (*it).first );
+			MyGUI::ComboBoxPtr joysticks = tabitem->createWidget<ComboBox>("ComboBox", 540, 10, 150, 24, MyGUI::Align::Relative, "joystickSel_" + (*it).first );
 			joysticks->addItem(TR("#{InputNoJS}"));
 			joysticks->setIndexSelected(0);
 			for (std::vector<OISB::JoyStick*>::const_iterator jit=OISB::System::getSingleton().mJoysticks.begin();
-					jit!=OISB::System::getSingleton().mJoysticks.end();
-					jit++)
+				jit!=OISB::System::getSingleton().mJoysticks.end();	jit++)
 			{
 				joysticks->addItem( (*jit)->getName() );
 			}
@@ -576,7 +575,7 @@ void App::InitInputGui()
 		}
 		
 		///  ------ custom action sorting ----------------
-		int i = 0, y = 0, ya = 26 / 2;
+		int i = 0, y = 0, ya = 26 / 2, yc1=0, yc2=0;
 		std::map <std::string, int> yRow;
 		// player
 		yRow["Throttle"] = y;	y+=2;
@@ -592,9 +591,16 @@ void App::InitInputGui()
 		yRow["ShowOptions"] = y; y+=2+1;
 		yRow["PrevTab"] = y;     y+=2;
 		yRow["NextTab"] = y;     y+=2+1;
-		yRow["RestartGame"] = y; y+=2+1;
-		yRow["PrevCamera"] = y;  y+=2;
+		yRow["RestartGame"] = y; y+=2+1;  yc1 = 40 + ya * y;
+		yRow["PrevCamera"] = y;  y+=2;    yc2 = 40 + ya * y;
 		yRow["NextCamera"] = y;  y+=2+1;
+
+		//  camera infos
+		if (!playerTab)
+		{	MyGUI::StaticTextPtr txt;
+			txt = tabitem->createWidget<StaticText>("StaticText", 460, yc1, 280, 24, MyGUI::Align::Relative);  txt->setCaption(TR("#{InputCameraTxt1}"));
+			txt = tabitem->createWidget<StaticText>("StaticText", 460, yc2, 280, 24, MyGUI::Align::Relative);  txt->setCaption(TR("#{InputCameraTxt2}"));
+		}
 		
 		///  Actions
 		for (std::map<OISB::String, OISB::Action*>::const_iterator
@@ -609,8 +615,9 @@ void App::InitInputGui()
 
 			// description label
 			const String& name = (*ait).second->getName();
-			y = 40 + ya * yRow[name];
-			MyGUI::StaticTextPtr desc = tabitem->createWidget<StaticText>("StaticText", x0, y, sx+70, sy, MyGUI::Align::Default, "staticText_" + (*ait).first );
+			y = 40 + ya * yRow[name];  /// y
+			MyGUI::StaticTextPtr desc = tabitem->createWidget<StaticText>("StaticText", x0, y, sx+70, sy,
+				MyGUI::Align::Relative, "staticText_" + (*ait).first );
 			desc->setCaption( TR("#{InputMap" + name + "}") );
 		
 			/// keyboard binds
@@ -649,12 +656,14 @@ void App::InitInputGui()
 			bool button2 = false;
 			if (  act->getActionType() == OISB::AT_ANALOG_AXIS && !( act->getProperty<int> ("MinimumValue") == 0 )) button2 = true;
 
-			MyGUI::ButtonPtr key1 = tabitem->createWidget<Button>("Button", /*button2 ? x2 :*/ x1, button2 ? (y + ya*2) : y, sx, sy, MyGUI::Align::Default, "inputbutton_" + (*ait).first + "_" + (*it).first + "_1");
+			MyGUI::ButtonPtr key1 = tabitem->createWidget<Button>("Button", /*button2 ? x2 :*/ x1, button2 ? (y + ya*2) : y, sx, sy,
+				MyGUI::Align::Relative, "inputbutton_" + (*ait).first + "_" + (*it).first + "_1");
 			key1->setCaption( stripk(key1_label) );
 			key1->eventMouseButtonClick = MyGUI::newDelegate(this, &App::controlBtnClicked);
 			
 			if (button2)
-			{	MyGUI::ButtonPtr key2 = tabitem->createWidget<Button>("Button", x1, y, sx, sy, MyGUI::Align::Default, "inputbutton_" + (*ait).first + "_" + (*it).first + "_2");
+			{	MyGUI::ButtonPtr key2 = tabitem->createWidget<Button>("Button", x1, y, sx, sy,
+					MyGUI::Align::Relative, "inputbutton_" + (*ait).first + "_" + (*it).first + "_2");
 				key2->setCaption( stripk(key2_label) );
 				key2->eventMouseButtonClick = MyGUI::newDelegate(this, &App::controlBtnClicked);
 			}
@@ -665,18 +674,18 @@ void App::InitInputGui()
 			{
 				if (act->getActionType() == OISB::AT_TRIGGER)
 				{
-					MyGUI::ComboBoxPtr button = tabitem->createWidget<ComboBox>("ComboBox", x3, y, sx, sy, MyGUI::Align::Default, "jsButtonSel_" + (*ait).first + "_" + (*it).first );
+					MyGUI::ComboBoxPtr button = tabitem->createWidget<ComboBox>("ComboBox", x3, y, sx, sy,
+						MyGUI::Align::Relative, "jsButtonSel_" + (*ait).first + "_" + (*it).first );
 					button->addItem(TR("#{InputKeyNoButton}"));
-					button->setIndexSelected(0);
-					button->setEditReadOnly(true);
+					button->setIndexSelected(0);  button->setEditReadOnly(true);
 					button->eventComboChangePosition = MyGUI::newDelegate(this, &App::joystickBindChanged);
 				}
 				else if (act->getActionType() == OISB::AT_ANALOG_AXIS)
 				{
-					MyGUI::ComboBoxPtr axis = tabitem->createWidget<ComboBox>("ComboBox", x3, y, sx, sy, MyGUI::Align::Default, "jsAxisSel_" + (*ait).first + "_" + (*it).first );
+					MyGUI::ComboBoxPtr axis = tabitem->createWidget<ComboBox>("ComboBox", x3, y, sx, sy,
+						MyGUI::Align::Relative, "jsAxisSel_" + (*ait).first + "_" + (*it).first );
 					axis->addItem(TR("#{InputKeyNoAxis}"));
-					axis->setIndexSelected(0);
-					axis->setEditReadOnly(true);
+					axis->setIndexSelected(0);  axis->setEditReadOnly(true);
 					axis->eventComboChangePosition = MyGUI::newDelegate(this, &App::joystickBindChanged);
 				}
 			}
