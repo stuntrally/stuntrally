@@ -500,6 +500,8 @@ void App::comboLanguage(SL)
 
 	//  reinit gui
 	bGuiReinit = true;
+	
+	setTranslations();
 }
 
 //  Startup

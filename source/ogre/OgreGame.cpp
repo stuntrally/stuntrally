@@ -83,6 +83,7 @@ App::~App()
 void App::setTranslations()
 {	
 	// loading states
+	loadingStates.clear();
 	loadingStates.insert(std::make_pair(LS_CLEANUP, String(TR("#{LS_CLEANUP}"))));
 	loadingStates.insert(std::make_pair(LS_GAME, String(TR("#{LS_GAME}"))));
 	loadingStates.insert(std::make_pair(LS_SCENE, String(TR("#{LS_SCENE}"))));
@@ -91,7 +92,7 @@ void App::setTranslations()
 	loadingStates.insert(std::make_pair(LS_TRACK, String(TR("#{LS_TRACK}"))));
 	loadingStates.insert(std::make_pair(LS_MISC, String(TR("#{LS_MISC}"))));
 	
-	// Kind of nasty to have it here, but this has to be called after configure()...
+	// Kind of nasty to have it here, but this has to be done after configure()...
 	mSplitMgr->pApp = this;
 }
 
