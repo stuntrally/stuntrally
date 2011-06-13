@@ -21,6 +21,7 @@ public:
 	float view_distance, terdetail,terdist, road_dist;
 	float shadow_dist;  int shadow_size, shadow_count, shadow_type;
 	int refl_skip, refl_faces, refl_size;  float refl_dist;
+	std::string refl_mode; // static, single, full [explanation: see CarReflection.h] 
 	bool particles, trails;  float trees, grass, trees_dist, grass_dist;
 	float particles_len, trails_len;
 
@@ -48,17 +49,15 @@ public:
 	bool bloom, hdr, motionblur;
 	float bloomintensity, bloomorig, motionblurintensity;
 	//  video
-	int windowx, windowy;
+	int windowx, windowy, fsaa;
 	bool fullscreen, vsync;
-	int fsaa;
-	std::string buffer;
-	std::string rendersystem;
+	std::string buffer, rendersystem;
 	
-	// input
+	//  input
 	bool x11_capture_mouse;
 	
 	//  replay
-	bool rpl_rec;//, rpl_play;
+	bool rpl_rec, rpl_ghost, rpl_bestonly;  int rpl_listview;
 	
 	// network
 	std::string nickname;

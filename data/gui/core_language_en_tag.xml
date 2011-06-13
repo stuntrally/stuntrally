@@ -32,6 +32,7 @@
 	<Tag name="TBBest">Best</Tag>
 	<Tag name="TBScore">Score</Tag>
 	<Tag name="WrongChk">Wrong Checkpoint</Tag>
+	<Tag name="CamInfoStrings">Type,Yaw,Pitch,Dist,Height,Speed,Offset,LEFT,RIGHT,Middle,Wheel,shift,Rotate,reset,move,H,Pos</Tag>
 
 	<Tag name="Options">Options</Tag>
 	<Tag name="Settings">Settings</Tag>
@@ -124,6 +125,9 @@
 	<Tag name="TipAutoRear">Uncheck for manual Rear gear changing.</Tag>
 	<Tag name="VegetCol">Vegetation collision</Tag>
 	<Tag name="CarCollis">Cars collision</Tag>
+	<Tag name="NumLocalPlayers">Number of local players</Tag>
+	<Tag name="SplitVertically">Split Vertically</Tag>
+	<Tag name="Game">Game</Tag>
 		
 
 	<!--  Replay  -->
@@ -136,9 +140,11 @@
 
 	<Tag name="RplAutoRec">Auto record replay</Tag>
 	<Tag name="RplGhost">Show ghost drive - best lap</Tag>
+	<Tag name="RplBestOnly">Save ghost only for best time</Tag>
 
 	<Tag name="RplAll">All</Tag>
 	<Tag name="RplCur">Cur</Tag>
+	<Tag name="RplGhosts">Ghosts</Tag>
 	
 	<Tag name="RplTime">Time</Tag>
 	<Tag name="RplVersion">Version</Tag>
@@ -190,6 +196,10 @@
 	<Tag name="MapSize">Map size</Tag>
 	<Tag name="FacesOnce">Faces at once</Tag>
 	<Tag name="Distance">Distance</Tag>
+	<Tag name="ReflMode">Mode</Tag>
+	<Tag name="ReflMode_static">Static</Tag>
+	<Tag name="ReflMode_single">Single</Tag>
+	<Tag name="ReflMode_full">Full</Tag>
 
 	<Tag name="Shadows">Shadows</Tag>
 	<Tag name="Shaders">Shaders</Tag>
@@ -263,6 +273,8 @@
 
 	<Tag name="InputMapPrevCamera">Previous Camera</Tag>
 	<Tag name="InputMapNextCamera">Next Camera</Tag>
+	<Tag name="InputCameraTxt1">with shift - main cameras only</Tag>
+	<Tag name="InputCameraTxt2">with ctrl - switch current car when many</Tag>
 
 
 	<!--  Sound  -->
@@ -405,6 +417,7 @@
 	<Tag name="ScaleAll">Scale all</Tag>
 	<Tag name="DeleteRoad">Delete Road</Tag>
 	<Tag name="NeedReload">* need reload</Tag>
+
 	<Tag name="InputHelp">Input/help</Tag>
 	<Tag name="InputToggleCam">Tab - camera / edit mode toggle</Tag>
 	<Tag name="InputToggleGUIMode">F1 or ` - GUI mode (toggle Options)</Tag>
@@ -478,6 +491,7 @@
 	<Tag name="InputStartWidth">; &apos;  -  adjust start box width (for road width)</Tag>
 	<Tag name="InputStartDir">Space  -  change road direction (+ or -)</Tag>
 	<Tag name="InputStartMeet">car will meet (next+ / prev-) point numbers</Tag>
+
 	<Tag name="SREditorVersion">Stunt Rally - Track Editor - version</Tag>
 	<Tag name="TrackAutoLoad">Auto Load track</Tag>
 	<Tag name="MinimapAndSize">Minimap, size</Tag>
@@ -497,6 +511,11 @@
 	<Tag name="ViewRight">View Right</Tag>
 	<Tag name="ViewStart">View Start</Tag>
 	
+
+<!--  ............................................................................................................................  -->
+<!--  Tips  -->
+<!--  ............................................................................................................................  -->
+
 	<Tag name="TipPrevWind">Preview camera window.</Tag>
 	<Tag name="TipTerWind">Terrain brush window.</Tag>
 	<Tag name="TipRoadParams">Road point parameters.</Tag>

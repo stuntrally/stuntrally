@@ -9,6 +9,8 @@
 #include <OISMouse.h>
 
 #include <MyGUI_Prerequest.h>
+#include <MyGUI_Widget.h>
+namespace MyGUI{  class OgrePlatform;  };
 
 #include "../network/masterclient.hpp"
 #include "../network/gameclient.hpp"
@@ -109,6 +111,7 @@ protected:
 	MyGUI::Gui* mGUI;		MyGUI::OgrePlatform* mPlatform;
 	MyGUI::WidgetPtr mLayout, mWndOpts, mWndRpl;  // options window
 	MyGUI::TabPtr mWndTabs;
+	MyGUI::VectorWidgetPtr vwGui;
 
 	///  networking
 	boost::scoped_ptr<MasterClient> mMasterClient;

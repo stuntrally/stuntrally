@@ -479,5 +479,31 @@ bool App::frameEnded(const FrameEvent& evt)
 		}	ri++;
 	}
 	//LogO(toStr(evt.timeSinceLastFrame));
+
+	return true;
+}
+
+
+bool App::frameStarted(const Ogre::FrameEvent& evt)
+{
+	if (bGuiReinit)  // after language change from combo
+	{	bGuiReinit = false;
+		mGUI->destroyWidgets(vwGui);
+		InitGui();
+		SetGuiFromXmls();
+		//bWindowResized = true;
+		mWndTabs->setIndexSelected(8);  // switch back to view tab
+	//}
+
+	//if (bWindowResized)
+	//{	bWindowResized = false;
+
+		//  reposition Quit btn
+		if (bnQuit)
+			bnQuit->setCoord(pSet->windowx - 0.09*pSet->windowx, 0, 0.09*pSet->windowx, 0.03*pSet->windowy);
+		//bSizeHUD = true;
+		
+		LoadTrack();  // shouldnt be needed but ...
+	}
 	return true;
 }

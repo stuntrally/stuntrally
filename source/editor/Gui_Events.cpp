@@ -469,7 +469,7 @@ void App::editRoad(EditPtr ed)
 void App::slMiniUpd(SL)
 {
 	pSet->mini_skip = val;
-	if (valMiniUpd){	Fmt(s, "%zu", val);	valMiniUpd->setCaption(s);  }
+	if (valMiniUpd){	Fmt(s, "%d", val);	valMiniUpd->setCaption(s);  }
 }
 
 void App::slSizeRoadP(SL)
@@ -495,7 +495,7 @@ void App::slCamSpeed(SL)
 void App::slTerUpd(SL)
 {
 	pSet->ter_skip = val;
-	if (valTerUpd){	Fmt(s, "%zu", val);	valTerUpd->setCaption(s);  }
+	if (valTerUpd){	Fmt(s, "%d", val);	valTerUpd->setCaption(s);  }
 }
 
 void App::slSizeMinmap(SL)
@@ -548,4 +548,24 @@ void App::btnSetCam(WP wp)
 void App::btnQuit(WP)
 {
 	mShutDown = true;
+}
+
+void App::comboLanguage(SL)
+{
+	if (val == MyGUI::ITEM_NONE)  return;
+	MyGUI::ComboBoxPtr cmb = static_cast<MyGUI::ComboBoxPtr>(wp);
+	std::string sel = cmb->getItemNameAt(val);
+	
+	for (std::map<std::string, std::string>::const_iterator it = supportedLanguages.begin();
+		it != supportedLanguages.end(); it++)
+	{
+		if (it->second == sel)
+			pSet->language = it->first;
+	}
+	MyGUI::LanguageManager::getInstance().setCurrentLanguage(pSet->language);
+
+	//  reinit gui
+	bGuiReinit = true;
+	
+	//setTranslations();
 }

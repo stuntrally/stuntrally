@@ -49,14 +49,36 @@ void App::UpdThr()
 
 bool App::frameStart(Real time)
 {	
+	if (bGuiReinit)  // after language change from combo
+	{	bGuiReinit = false;
+		mGUI->destroyWidgets(vwGui);
+		InitGui();
+		bWindowResized = true;
+		mWndTabs->setIndexSelected(6);  // switch back to view tab
+	}
+
 	if (bWindowResized)
-	{
-		if (bnQuit)  // reposition Quit btn
+	{	bWindowResized = false;
+
+		//  resize Options wnd
+		const int yN = 7;
+		const Real yw[yN] = {400, 600, 720, 768, 960, 1024, 1200};
+		const Real yf[yN] = {0.0, 0.0, 0.05, 0.1, 0.2, 0.3,  0.3};
+		Real xm = 0.f, ym = 0.f;  // margin
+		for (int i=0; i < yN; ++i)
+			if (pSet->windowy >= yw[i]-10)  ym = yf[i];
+		Real yo = (1.f - ym)*pSet->windowy, xo = 4.f/3.f * yo;  // opt wnd size in pix
+		ym = (pSet->windowy - yo)*0.5f;  xm = (pSet->windowx - xo)*0.5f;
+		
+		if (mWndOpts)
+			mWndOpts->setCoord(xm, ym, xo, yo);
+
+		//  reposition Quit btn
+		if (bnQuit)
 			bnQuit->setCoord(pSet->windowx - 0.09*pSet->windowx, 0, 0.09*pSet->windowx, 0.03*pSet->windowy);
 		bSizeHUD = true;
-		bWindowResized = false;
 	}
-	
+		
 	if (bLoading)
 	{
 		NewGameDoLoad();
@@ -72,8 +94,8 @@ bool App::frameStart(Real time)
 			if (isKey(KC_DOWN)||isKey(KC_NUMPAD2))	dirU += time;  else
 			{	dirU = 0.f;  dirD = 0.f;  }
 			int d = ctrl ? 4 : 1;
-			if (dirU > 0.0f) {  carListNext( d);  trkListNext( d);  dirU = -0.12f;  }
-			if (dirD > 0.0f) {  carListNext(-d);  trkListNext(-d);  dirD = -0.12f;  }
+			if (dirU > 0.0f) {  carLNext( d);  trkLNext( d);  rplLNext( d);  dirU = -0.12f;  }
+			if (dirD > 0.0f) {  carLNext(-d);  trkLNext(-d);  rplLNext(-d);  dirD = -0.12f;  }
 		}
 		
 		// Gui updates from networking
@@ -93,11 +115,11 @@ bool App::frameStart(Real time)
 		}
 
 		//bool oldFocRpl = isFocRpl;
+
+		//  replay forward,backward keys
 		if (bRplPlay)
 		{
 			isFocRpl = ctrl;
-			//mGUI->setVisiblePointer(isFocGuiOrRpl());  // in sizehud-
-
 			int ta = (isKey(KC_LBRACKET) ? -2 : 0) + (isKey(KC_RBRACKET) ? 2 : 0);
 			if (ta)
 			{	double tadd = ta;
@@ -140,11 +162,10 @@ bool App::frameStart(Real time)
 					(*it)->fCam->update(pGame->framerate);
 		}
 
-		// Update all cube maps
+		//  update all cube maps
 		for (std::list<CarModel*>::iterator it=carModels.begin(); it!=carModels.end(); it++)
-		{
-			if ( (*it)->pReflect) (*it)->pReflect->Update();
-		}
+		if ((*it)->eType != CarModel::CT_GHOST && (*it)->pReflect)
+			(*it)->pReflect->Update();
 
 		//  trees
 		//if (pSet->mult_thr != 2)
@@ -202,25 +223,25 @@ bool App::frameEnd(Real time)
 }
 
 
-//  update newPoses - get new car pos from game
+//  newPoses - Get new car pos from game
 //---------------------------------------------------------------------------------------------------------------
 void App::newPoses()
 {
 	if (!pGame)  return;
 	if (pGame->cars.size() == 0)  return;
 	double rplTime = pGame->timer.GetReplayTime();
+	double lapTime = pGame->timer.GetPlayerTime();
 
 	// Iterate through all car models and get new pos info
 	int iCarNum = 0;
-	std::list<CAR>::iterator carIt = pGame->cars.begin();
 	std::list<CarModel*>::iterator carMIt = carModels.begin();
-	std::list<PosInfo>::iterator newPosInfoIt = newPosInfos.begin();
-	///TODO -how to handle CarModels that don't have a vdrift car?
+	std::list<PosInfo>::iterator newPosIt = newPosInfos.begin();
 	while (carMIt != carModels.end())
 	{
-		CAR* pCar = &(*carIt);
 		CarModel* carM = *carMIt;
+		CAR* pCar = carM->pCar;
 		PosInfo posInfo;
+		bool bGhost = carM->eType == CarModel::CT_GHOST;
 		
 		//  local data  car,wheels
 		MATHVECTOR <float,3> pos, whPos[4];
@@ -230,11 +251,28 @@ void App::newPoses()
 		///-----------------------------------------------------------------------
 		//  play  get data from replay
 		///-----------------------------------------------------------------------
-		if (bRplPlay)
+		if (bGhost)
+		{
+			ReplayFrame fr;
+			bool ok = ghplay.GetFrame(lapTime, &fr, 0);
+			//  car
+			pos = fr.pos;  rot = fr.rot;
+			//  wheels
+			for (int w=0; w < 4; ++w)
+			{
+				whPos[w] = fr.whPos[w];  whRot[w] = fr.whRot[w];
+				posInfo.whVel[w] = fr.whVel[w];
+				posInfo.whSlide[w] = fr.slide[w];  posInfo.whSqueal[w] = fr.squeal[w];
+				posInfo.whR[w] = replay.header.whR[0][w];//
+				posInfo.whMtr[w] = fr.whMtr[w];
+				posInfo.fboost = fr.fboost;
+			}
+		}
+		else if (bRplPlay)
 		{
 			//  time  from start
 			bool ok = replay.GetFrame(rplTime, &fr, iCarNum);
-			if (!ok)	pGame->timer.RestartReplay();
+				if (!ok)	pGame->timer.RestartReplay();
 			
 			//  car
 			pos = fr.pos;  rot = fr.rot;
@@ -246,8 +284,8 @@ void App::newPoses()
 				posInfo.whSlide[w] = fr.slide[w];  posInfo.whSqueal[w] = fr.squeal[w];
 				posInfo.whR[w] = replay.header.whR[0][w];//
 				posInfo.whMtr[w] = fr.whMtr[w];
+				posInfo.fboost = fr.fboost;
 			}
-
 		}
 		else
 		//  get data from vdrift
@@ -265,6 +303,7 @@ void App::newPoses()
 				posInfo.whSlide[w] = -1.f;  posInfo.whSqueal[w] = pCar->GetTireSquealAmount(wp, &posInfo.whSlide[w]);
 				posInfo.whR[w] = pCar->GetTireRadius(wp);//
 				posInfo.whMtr[w] = carM->whTerMtr[w];
+				posInfo.fboost = pCar->dynamics.doBoost;
 			}
 		}
 		
@@ -290,26 +329,29 @@ void App::newPoses()
 		
 
 		///  sound listener  - - - - -
-		if (pGame->sound.Enabled())  // todo: set from camera ..
+		if (!bGhost)
 		{
-			pGame->sound.SetListener(
-				MATHVECTOR <float,3> (pos[0], pos[1], pos[2]),
-				QUATERNION <float>(),
-				//QUATERNION <float> (rot.x(), rot.y(), rot.z(), rot.w()),
-				MATHVECTOR <float,3>());
-		}
-		bool incar = true;  //..(active_camera->GetName() == "hood" || active_camera->GetName() == "incar");
-		{
-			std::list <SOUNDSOURCE *> soundlist;
-			pCar->GetEngineSoundList(soundlist);
-			for (std::list <SOUNDSOURCE *>::iterator s = soundlist.begin(); s != soundlist.end(); s++)
-				(*s)->Set3DEffects(!incar);
+			if (pGame->sound.Enabled())  // todo: set from camera, for each player? ..
+			{
+				pGame->sound.SetListener(
+					MATHVECTOR <float,3> (pos[0], pos[1], pos[2]),
+					QUATERNION <float>(),
+					//QUATERNION <float> (rot.x(), rot.y(), rot.z(), rot.w()),
+					MATHVECTOR <float,3>());
+			}
+			bool incar = true;
+			{
+				std::list <SOUNDSOURCE *> soundlist;
+				pCar->GetEngineSoundList(soundlist);
+				for (std::list <SOUNDSOURCE *>::iterator s = soundlist.begin(); s != soundlist.end(); s++)
+					(*s)->Set3DEffects(!incar);
+			}
 		}
 
 		///-----------------------------------------------------------------------
 		//  record  save data for replay
 		///-----------------------------------------------------------------------
-		if (pSet->rpl_rec && !pGame->pause)
+		if (pSet->rpl_rec && !pGame->pause && !bGhost)
 		{
 			//static int ii = 0;
 			//if (ii++ >= 0)	// 1 half game framerate
@@ -338,11 +380,18 @@ void App::newPoses()
 				fr.gear = pCar->GetGear();  fr.clutch = pCar->GetClutch();
 				fr.throttle = pCar->dynamics.GetEngine().GetThrottle();
 				fr.steer = pCar->GetLastSteer();
+				fr.fboost = pCar->dynamics.doBoost;
 				//  eng snd
 				fr.posEngn = pCar->dynamics.GetEnginePosition();
 				fr.speed = pCar->GetSpeed();
 				fr.dynVel = pCar->dynamics.GetVelocity().Magnitude();
-				replay.AddFrame(fr, iCarNum);
+				
+				replay.AddFrame(fr, iCarNum);  // rec replay
+				if (iCarNum==0)  /// rec ghost lap
+				{
+					fr.time = lapTime;
+					ghost.AddFrame(fr, 0);
+				}
 				
 				if (valRplName2)  // recorded info
 				{
@@ -359,34 +408,37 @@ void App::newPoses()
 
 		//  chekpoints, lap start
 		//-----------------------------------------------------------------------
-		if (bRplPlay)
-		{	// dont check when replay play...
-			bWrongChk = false;
-		}
-		else
+		if (bRplPlay || bGhost)   // dont check when replay play
+			carM->bWrongChk = false;
+		else //if (iCarNum == 0)  // only works for 1st car?
 		{
-			if (bGetStPos)  // first pos is at start
-			{	bGetStPos = false;
-				matStPos.makeInverseTransform(posInfo.pos, Vector3::UNIT_SCALE, posInfo.rot);
-				iCurChk = -1;  iNextChk = -1;  iNumChks = 1;  // reset lap
+			if (carM->bGetStPos)  // first pos is at start
+			{	carM->bGetStPos = false;
+				carM->matStPos.makeInverseTransform(posInfo.pos, Vector3::UNIT_SCALE, posInfo.rot);
+				carM->iCurChk = -1;  carM->iNextChk = -1;  carM->iNumChks = 1;  // reset lap
 			}
-			if (road && !bGetStPos)
+			if (road && !carM->bGetStPos)
 			{
 				//  start/finish box dist
 				Vector4 carP(posInfo.pos.x,posInfo.pos.y,posInfo.pos.z,1);
-				vStDist = matStPos * carP;
-				bInSt = abs(vStDist.x) < road->vStBoxDim.x && 
-					abs(vStDist.y) < road->vStBoxDim.y && 
-					abs(vStDist.z) < road->vStBoxDim.z;
+				carM->vStDist = carM->matStPos * carP;
+				carM->bInSt = abs(carM->vStDist.x) < road->vStBoxDim.x && 
+					abs(carM->vStDist.y) < road->vStBoxDim.y && 
+					abs(carM->vStDist.z) < road->vStBoxDim.z;
 			
-				iInChk = -1;  bWrongChk = false;
+				carM->iInChk = -1;  carM->bWrongChk = false;
 				int ncs = road->mChks.size();
 				if (ncs > 0)
-				{
-					if (bInSt && iNumChks == ncs && iCurChk != -1)  // finish
+				{	if (carM->bInSt && carM->iNumChks == ncs && carM->iCurChk != -1)  // finish
 					{
-						pGame->timer.Lap(0, 0,0, true, pSet->trackreverse);
-						iCurChk = -1;  iNumChks = 1;
+						bool best = pGame->timer.Lap(0, 0,0, true, pSet->trackreverse);  //pGame->cartimerids[pCar] ?
+						if (!pSet->rpl_bestonly || best)  ///  new best lap, save ghost
+						{
+							ghost.SaveFile(GetGhostFile());
+							ghplay.CopyFrom(ghost);
+						}
+						ghost.Clear();
+						carM->iCurChk = -1;  carM->iNumChks = 1;
 					}
 					for (int i=0; i < ncs; ++i)
 					{
@@ -394,58 +446,61 @@ void App::newPoses()
 						Real d2 = posInfo.pos.squaredDistance(cs.pos);
 						if (d2 < cs.r2)  // car in checkpoint
 						{
-							iInChk = i;
-							if (iCurChk == -1)  // first, any
-							{	iCurChk = i;  iNumChks = 1;  }
-							else if (iNumChks < ncs)
+							carM->iInChk = i;
+							if (carM->iCurChk == -1)  // first, any
+							{	carM->iCurChk = i;  carM->iNumChks = 1;  }
+							else if (carM->iNumChks < ncs)
 							{
 								int ii = (pSet->trackreverse ? -1 : 1) * road->iDir;
-								iNextChk = (iCurChk + ii + ncs) % ncs;
+								carM->iNextChk = (carM->iCurChk + ii + ncs) % ncs;
 									
 								//  any if first, or next
-								if (i == iNextChk)
-								{	iCurChk = i;  iNumChks++;  }
+								if (i == carM->iNextChk)
+								{	carM->iCurChk = i;  carM->iNumChks++;  }
 								else
-								if (iInChk != iCurChk)
-									bWrongChk = true;
+								if (carM->iInChk != carM->iCurChk)
+									carM->bWrongChk = true;
 							}
 							break;
 						}
-					}
-				}	
-			}
-		}
-		(*newPosInfoIt) = posInfo;
+				}	}
+		}	}
 		
-		carIt++;  carMIt++;  newPosInfoIt++;  iCarNum++;
+		(*newPosIt) = posInfo;
+		carMIt++;  newPosIt++;  iCarNum++;  // next
 	}
 }
 
 
-//  updatePoses - set car pos for Ogre nodes, update particles, trails
+//  updatePoses - Set car pos for Ogre nodes, update particles, trails
 //---------------------------------------------------------------------------------------------------------------
 void App::updatePoses(float time)
 {	
-	// Update all carmodels with their newPosInfo
+	//  Update all carmodels with their newPosInfo
+	int i=0;
 	std::list<CarModel*>::iterator carIt = carModels.begin();
 	std::list<PosInfo>::iterator newPosIt = newPosInfos.begin();
 	while (carIt != carModels.end())
 	{
 		CarModel* carM = *carIt;
-		if (!carM) return;
+		if (!carM)  return;
 		PosInfo newPosInfo = *newPosIt;
+		
+		//  hide ghost when empty
+		bool bGhost = carM->eType == CarModel::CT_GHOST;
+		if (bGhost)
+			carM->setVisible((ghplay.GetNumFrames() > 0) && pSet->rpl_ghost);
 		
 		carM->Update(newPosInfo, time);
 		
-		/// TODO multiple dots on minimap
 		//  pos on minimap  x,y = -1..1
-		float xp =(-newPosInfo.pos[2] - minX)*scX*2-1,
-			  yp =-(newPosInfo.pos[0] - minY)*scY*2+1;
-		if (ndPos)
-			ndPos->setPosition(xp,yp,0);
-			
-		carIt++;
-		newPosIt++;
+		if (!bGhost)
+		{	float xp =(-newPosInfo.pos[2] - minX)*scX*2-1,
+				  yp =-(newPosInfo.pos[0] - minY)*scY*2+1;
+			if (ndPos[i])
+				ndPos[i]->setPosition(xp,yp,0);
+		}
+		carIt++;  newPosIt++;  i++;
 	}
 	
 	///  Replay info

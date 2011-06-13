@@ -27,8 +27,8 @@ void App::InitGui()
 	mGUI->load("core_skin.xml");
 
 	//  load Options layout
-	VectorWidgetPtr rootV = LayoutManager::getInstance().load("Options.layout");
-	mLayout = rootV.at(0);
+	vwGui = LayoutManager::getInstance().load("Options.layout");
+	mLayout = vwGui.at(0);
 
 	//  window
 	mWndOpts = mLayout->findWidget("OptionsWnd");
@@ -45,10 +45,10 @@ void App::InitGui()
 
 
 	//  tooltip  ------
-	for (VectorWidgetPtr::iterator it = rootV.begin(); it != rootV.end(); ++it)
+	for (VectorWidgetPtr::iterator it = vwGui.begin(); it != vwGui.end(); ++it)
 	{
 		setToolTips((*it)->getEnumerator());
-		const std::string& name = (*it)->getName();
+		//const std::string& name = (*it)->getName();
 		//if (name == "OptionsWnd")  mWndOpts = *it;
 	}
 	mToolTip = Gui::getInstance().findWidget<Widget>("ToolTip");
@@ -89,12 +89,14 @@ void App::InitGui()
 	combo = (ComboBoxPtr)mLayout->findWidget("TexFiltering");
 	if (combo)  combo->eventComboChangePosition = newDelegate(this, &App::comboTexFilter);
 	
-	//  language combo
+	//  language combo  ___________________
 	supportedLanguages["en"] = "English";
 	supportedLanguages["de"] = "Deutsch";  //German
 	supportedLanguages["fi"] = "Suomi";  //Finnish
-	combo = NULL; combo = (ComboBoxPtr)mLayout->findWidget("Lang");
-	if (combo) combo->eventComboChangePosition = newDelegate(this, &App::comboLanguage);
+	supportedLanguages["ro"] = "Româna";  //Romanian
+	supportedLanguages["pl"] = "Polski";  //Polish
+	combo = NULL;  combo = (ComboBoxPtr)mLayout->findWidget("Lang");
+	if (combo)  combo->eventComboChangePosition = newDelegate(this, &App::comboLanguage);
 	for (std::map<std::string, std::string>::const_iterator it = supportedLanguages.begin();
 		it != supportedLanguages.end(); it++)
 	{
@@ -125,6 +127,10 @@ void App::InitGui()
 	Slv(ReflSize,	pSet->refl_size /res);
 	Slv(ReflFaces,	pSet->refl_faces /res);
 	Slv(ReflDist,	powf((pSet->refl_dist -20.f)/1480.f, 0.5f));
+	int value; if (pSet->refl_mode == "static") value = 0;
+	else if (pSet->refl_mode == "single") value = 1;
+	else if (pSet->refl_mode == "full") value = 2;
+	Slv(ReflMode,   value /res);
 
 	//  shadows
 	Slv(ShadowType,	pSet->shadow_type /res);
@@ -217,9 +223,18 @@ void App::InitGui()
 	//  replays  ------------------------------------------------------------
 	Btn("RplLoad", btnRplLoad);  Btn("RplSave", btnRplSave);
 	Btn("RplDelete", btnRplDelete);  Btn("RplRename", btnRplRename);
+	//  settings
 	Chk("RplChkAutoRec", chkRplAutoRec, rpl_rec);
-	//Chk("RplChkGhost", chkRplChkGhost, rpl_play);
-	Btn("RplBtnCur", btnRplCur)  Btn("RplBtnAll", btnRplAll);  // radio
+	Chk("RplChkGhost", chkRplChkGhost, rpl_ghost);
+	Chk("RplChkBestOnly", chkRplChkBestOnly, rpl_bestonly);
+	//  radios
+	Btn("RplBtnAll", btnRplAll);  rbRplAll = btn;
+	Btn("RplBtnCur", btnRplCur);  rbRplCur = btn;
+	Btn("RplBtnGhosts", btnRplGhosts);  rbRplGhosts = btn;  btn = 0;
+	switch (pSet->rpl_listview)  // load from set
+	{	case 0: btn = rbRplAll;  break;  case 1: btn = rbRplCur;  break;  case 2: btn = rbRplGhosts;  break;  }
+	if (btn)  btn->setStateCheck(true);
+	
     if (mWndRpl)
 	{	//  replay controls
 		Btn("RplToStart", btnRplToStart);  Btn("RplToEnd", btnRplToEnd)
@@ -516,6 +531,7 @@ void App::setToolTips(EnumeratorWidgetPtr widgets)
     while (widgets.next())
     {
         WidgetPtr wp = widgets.current();
+		wp->setAlign(Align::Relative);
         bool tip = wp->isUserString("tip");
 		if (tip)  // if has tooltip string
 		{	
@@ -570,24 +586,26 @@ void App::boundedMove(Widget* moving, const IntPoint& point)
 }
 
 
-//  next/prev track in list
-void App::trkListNext(int rel)
+//  next/prev in list by key
+int App::LNext(MyGUI::ListPtr lp, int rel)
 {
-	if (!(isFocGui && mWndTabs->getIndexSelected() == 0))  return;
-	int i = std::max(0, std::min((int)trkList->getItemCount()-1, (int)trkList->getIndexSelected()+rel ));
-	trkList->setIndexSelected(i);
-	trkList->beginToItemAt(std::max(0, i-11));  // center
-	listTrackChng(trkList,i);
+	int i = std::max(0, std::min((int)lp->getItemCount()-1, (int)lp->getIndexSelected()+rel ));
+	lp->setIndexSelected(i);
+	lp->beginToItemAt(std::max(0, i-11));  // center
+	return i;
 }
 
-void App::carListNext(int rel)
-{
+void App::trkLNext(int rel)	{
+	if (!(isFocGui && mWndTabs->getIndexSelected() == 0))  return;
+	listTrackChng(trkList,LNext(trkList, rel));  }
+
+void App::carLNext(int rel)	{
 	if (!(isFocGui && mWndTabs->getIndexSelected() == 1))  return;
-	int i = std::max(0, std::min((int)carList->getItemCount()-1, (int)carList->getIndexSelected()+rel ));
-	carList->setIndexSelected(i);
-	carList->beginToItemAt(std::max(0, i-11));  // center
-	listCarChng(carList,i);
-}
+	listCarChng(carList,  LNext(carList, rel));  }
+
+void App::rplLNext(int rel)	{
+	if (!(isFocGui && mWndTabs->getIndexSelected() == 3))  return;
+	listRplChng(rplList,  LNext(rplList, rel));  }
 
 
 ///  input tab
@@ -610,27 +628,26 @@ void App::InitInputGui()
 		MyGUI::TabItemPtr tabitem = inputTab->addItem( TR("#{InputMap" + (*it).first + "}") );
 		
 		//-scroll view.... doesnt work???
-		//MyGUI::ScrollViewPtr sv = tabitem->createWidget<ScrollView>("ScrollView", 0, 0, 700, 580, MyGUI::Align::Default, "scrollView_" + (*it).first );
+		//MyGUI::ScrollViewPtr sv = tabitem->createWidget<ScrollView>("ScrollView", 0, 0, 700, 580, MyGUI::Align::Relative, "scrollView_" + (*it).first );
 		
 		///  Headers (Key 1, Key 2)
 		MyGUI::StaticTextPtr headkb = tabitem->createWidget<StaticText>(
-			"StaticText", 220, 10, 200, 24, MyGUI::Align::Default, "staticText_" + (*it).first );
+			"StaticText", 220, 10, 200, 24, MyGUI::Align::Relative, "staticText_" + (*it).first );
 		headkb->setCaption(TR("#88AAFF#{InputKey1}"));
 		MyGUI::StaticTextPtr headkb2 = tabitem->createWidget<StaticText>(
-			"StaticText", 360, 10, 200, 24, MyGUI::Align::Default, "staticText_" + (*it).first );
+			"StaticText", 360, 10, 200, 24, MyGUI::Align::Relative, "staticText_" + (*it).first );
 		headkb2->setCaption(TR("#88AAFF#{InputKey2}"));
-		
+				
 		/// joystick selection menu
 		// only on player tabs
 		bool playerTab = Ogre::StringUtil::startsWith( (*it).first, "player");
-		if ( playerTab )
+		if (playerTab)
 		{
-			MyGUI::ComboBoxPtr joysticks = tabitem->createWidget<ComboBox>("ComboBox", 540, 10, 150, 24, MyGUI::Align::Default, "joystickSel_" + (*it).first );
+			MyGUI::ComboBoxPtr joysticks = tabitem->createWidget<ComboBox>("ComboBox", 540, 10, 150, 24, MyGUI::Align::Relative, "joystickSel_" + (*it).first );
 			joysticks->addItem(TR("#{InputNoJS}"));
 			joysticks->setIndexSelected(0);
 			for (std::vector<OISB::JoyStick*>::const_iterator jit=OISB::System::getSingleton().mJoysticks.begin();
-					jit!=OISB::System::getSingleton().mJoysticks.end();
-					jit++)
+				jit!=OISB::System::getSingleton().mJoysticks.end();	jit++)
 			{
 				joysticks->addItem( (*jit)->getName() );
 			}
@@ -640,7 +657,7 @@ void App::InitInputGui()
 		}
 		
 		///  ------ custom action sorting ----------------
-		int i = 0, y = 0, ya = 26 / 2;
+		int i = 0, y = 0, ya = 26 / 2, yc1=0, yc2=0;
 		std::map <std::string, int> yRow;
 		// player
 		yRow["Throttle"] = y;	y+=2;
@@ -656,9 +673,16 @@ void App::InitInputGui()
 		yRow["ShowOptions"] = y; y+=2+1;
 		yRow["PrevTab"] = y;     y+=2;
 		yRow["NextTab"] = y;     y+=2+1;
-		yRow["RestartGame"] = y; y+=2+1;
-		yRow["PrevCamera"] = y;  y+=2;
+		yRow["RestartGame"] = y; y+=2+1;  yc1 = 40 + ya * y;
+		yRow["PrevCamera"] = y;  y+=2;    yc2 = 40 + ya * y;
 		yRow["NextCamera"] = y;  y+=2+1;
+
+		//  camera infos
+		if (!playerTab)
+		{	MyGUI::StaticTextPtr txt;
+			txt = tabitem->createWidget<StaticText>("StaticText", 460, yc1, 280, 24, MyGUI::Align::Relative);  txt->setCaption(TR("#{InputCameraTxt1}"));
+			txt = tabitem->createWidget<StaticText>("StaticText", 460, yc2, 280, 24, MyGUI::Align::Relative);  txt->setCaption(TR("#{InputCameraTxt2}"));
+		}
 		
 		///  Actions
 		for (std::map<OISB::String, OISB::Action*>::const_iterator
@@ -673,8 +697,9 @@ void App::InitInputGui()
 
 			// description label
 			const String& name = (*ait).second->getName();
-			y = 40 + ya * yRow[name];
-			MyGUI::StaticTextPtr desc = tabitem->createWidget<StaticText>("StaticText", x0, y, sx+70, sy, MyGUI::Align::Default, "staticText_" + (*ait).first );
+			y = 40 + ya * yRow[name];  /// y
+			MyGUI::StaticTextPtr desc = tabitem->createWidget<StaticText>("StaticText", x0, y, sx+70, sy,
+				MyGUI::Align::Relative, "staticText_" + (*ait).first );
 			desc->setCaption( TR("#{InputMap" + name + "}") );
 		
 			/// keyboard binds
@@ -713,12 +738,14 @@ void App::InitInputGui()
 			bool button2 = false;
 			if (  act->getActionType() == OISB::AT_ANALOG_AXIS && !( act->getProperty<int> ("MinimumValue") == 0 )) button2 = true;
 
-			MyGUI::ButtonPtr key1 = tabitem->createWidget<Button>("Button", /*button2 ? x2 :*/ x1, button2 ? (y + ya*2) : y, sx, sy, MyGUI::Align::Default, "inputbutton_" + (*ait).first + "_" + (*it).first + "_1");
+			MyGUI::ButtonPtr key1 = tabitem->createWidget<Button>("Button", /*button2 ? x2 :*/ x1, button2 ? (y + ya*2) : y, sx, sy,
+				MyGUI::Align::Relative, "inputbutton_" + (*ait).first + "_" + (*it).first + "_1");
 			key1->setCaption( stripk(key1_label) );
 			key1->eventMouseButtonClick = MyGUI::newDelegate(this, &App::controlBtnClicked);
 			
 			if (button2)
-			{	MyGUI::ButtonPtr key2 = tabitem->createWidget<Button>("Button", x1, y, sx, sy, MyGUI::Align::Default, "inputbutton_" + (*ait).first + "_" + (*it).first + "_2");
+			{	MyGUI::ButtonPtr key2 = tabitem->createWidget<Button>("Button", x1, y, sx, sy,
+					MyGUI::Align::Relative, "inputbutton_" + (*ait).first + "_" + (*it).first + "_2");
 				key2->setCaption( stripk(key2_label) );
 				key2->eventMouseButtonClick = MyGUI::newDelegate(this, &App::controlBtnClicked);
 			}
@@ -729,18 +756,18 @@ void App::InitInputGui()
 			{
 				if (act->getActionType() == OISB::AT_TRIGGER)
 				{
-					MyGUI::ComboBoxPtr button = tabitem->createWidget<ComboBox>("ComboBox", x3, y, sx, sy, MyGUI::Align::Default, "jsButtonSel_" + (*ait).first + "_" + (*it).first );
+					MyGUI::ComboBoxPtr button = tabitem->createWidget<ComboBox>("ComboBox", x3, y, sx, sy,
+						MyGUI::Align::Relative, "jsButtonSel_" + (*ait).first + "_" + (*it).first );
 					button->addItem(TR("#{InputKeyNoButton}"));
-					button->setIndexSelected(0);
-					button->setEditReadOnly(true);
+					button->setIndexSelected(0);  button->setEditReadOnly(true);
 					button->eventComboChangePosition = MyGUI::newDelegate(this, &App::joystickBindChanged);
 				}
 				else if (act->getActionType() == OISB::AT_ANALOG_AXIS)
 				{
-					MyGUI::ComboBoxPtr axis = tabitem->createWidget<ComboBox>("ComboBox", x3, y, sx, sy, MyGUI::Align::Default, "jsAxisSel_" + (*ait).first + "_" + (*it).first );
+					MyGUI::ComboBoxPtr axis = tabitem->createWidget<ComboBox>("ComboBox", x3, y, sx, sy,
+						MyGUI::Align::Relative, "jsAxisSel_" + (*ait).first + "_" + (*it).first );
 					axis->addItem(TR("#{InputKeyNoAxis}"));
-					axis->setIndexSelected(0);
-					axis->setEditReadOnly(true);
+					axis->setIndexSelected(0);  axis->setEditReadOnly(true);
 					axis->eventComboChangePosition = MyGUI::newDelegate(this, &App::joystickBindChanged);
 				}
 			}

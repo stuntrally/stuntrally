@@ -16,7 +16,7 @@ void ReplayHeader::Default()
 	memset(track, 0, sizeof(track));  track_user = 0;
 	memset(car, 0, sizeof(car));
 
-	ver = 2;
+	ver = 3;
 	frameSize = sizeof(ReplayFrame);
 	numPlayers = 1;
 
@@ -43,6 +43,10 @@ void Replay::InitHeader(const char* track, bool trk_user, const char* car, bool 
 	strcpy(header.track, track);  header.track_user = trk_user ? 1 : 0;
 	strcpy(header.car, car);
 	if (bClear)
+		Clear();
+}
+void Replay::Clear()
+{
 	for (int p=0; p < 4; ++p)
 		frames[p].clear();
 	for (int p=0; p < header.numPlayers; ++p)
@@ -126,8 +130,16 @@ void Replay::AddFrame(const ReplayFrame& frame, int carNum)
 		frames[carNum].push_back(frame);
 }
 
+//  CopyFrom
+void Replay::CopyFrom(const Replay& rpl)
+{
+	Clear();
+	for (int i=0; i < rpl.GetNumFrames(); ++i)
+		frames[0].push_back(rpl.frames[0][i]);
+}
+
 //  last frame time, sec
-float Replay::GetTimeLength(int carNum)
+const float Replay::GetTimeLength(int carNum) const
 {
 	int s = frames[carNum].size();
 	if (s > 0)

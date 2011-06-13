@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION"
 "Report-Msgid-Bugs-To: "
-"POT-Creation-Date: 2011-06-04 16:07+0300"
+"POT-Creation-Date: 2011-06-13 19:30+0300"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>"
 "Language-Team: LANGUAGE <LL@li.org>"
@@ -31,6 +31,10 @@ msgstr ""
 
 msgctxt "TipDustSize"
 msgid "Dust particles size."
+msgstr ""
+
+msgctxt "InputMapShowOptions"
+msgid "Show options"
 msgstr ""
 
 msgctxt "TipGrassSwayDistr"
@@ -77,8 +81,8 @@ msgctxt "ViewDist"
 msgid "View distance"
 msgstr ""
 
-msgctxt "TreeDens"
-msgid "Trees   density"
+msgctxt "Sky"
+msgid "Sky"
 msgstr ""
 
 msgctxt "TerNormal"
@@ -159,6 +163,10 @@ msgstr ""
 
 msgctxt "InputReloadTrack"
 msgid "F5 - reload track"
+msgstr ""
+
+msgctxt "Game"
+msgid "Game"
 msgstr ""
 
 msgctxt "TipParType3"
@@ -385,6 +393,10 @@ msgctxt "AutoRear"
 msgid "Auto Rear gear"
 msgstr ""
 
+msgctxt "ReflMode_single"
+msgid "Single"
+msgstr ""
+
 msgctxt "Friction"
 msgid "Friction"
 msgstr ""
@@ -525,6 +537,10 @@ msgctxt "TipNewGame"
 msgid "Start game on new track or Restart on current."
 msgstr ""
 
+msgctxt "ReflMode"
+msgid "Mode"
+msgstr ""
+
 msgctxt "TipCopySource"
 msgid "Pick selected track for copy source, used in [Tools] tab."
 msgstr ""
@@ -571,6 +587,10 @@ msgstr ""
 
 msgctxt "PipeMaterials"
 msgid "Pipe materials"
+msgstr ""
+
+msgctxt "CamInfoStrings"
+msgid "Type,Yaw,Pitch,Dist,Height,Speed,Offset,LEFT,RIGHT,Middle,Wheel,shift,Rotate,reset,move,H,Pos"
 msgstr ""
 
 msgctxt "End"
@@ -701,6 +721,10 @@ msgctxt "Yaw"
 msgid "yaw"
 msgstr ""
 
+msgctxt "TipGrassPageLength"
+msgid "Grass Page length (low will reload often, high will cause visible switching)."
+msgstr ""
+
 msgctxt "Detail"
 msgid "Detail"
 msgstr ""
@@ -757,8 +781,8 @@ msgctxt "InputBrushParams"
 msgid "Brush parameters"
 msgstr ""
 
-msgctxt "InputMapShowOptions"
-msgid "Show options"
+msgctxt "InputMapNextCamera"
+msgid "Next Camera"
 msgstr ""
 
 msgctxt "InputCameraMode"
@@ -821,6 +845,10 @@ msgctxt "Ambient"
 msgid "Ambient"
 msgstr ""
 
+msgctxt "InputCameraTxt2"
+msgid "with ctrl - switch current car when many"
+msgstr ""
+
 msgctxt "MapSize"
 msgid "Map size"
 msgstr ""
@@ -837,8 +865,8 @@ msgctxt "TipFogEndClr"
 msgid "Fog end color. R G B components 0 to 1 (eg. 0.7 0.8 0.9)"
 msgstr ""
 
-msgctxt "Multiplayer"
-msgid "Multiplayer"
+msgctxt "InputCameraTxt1"
+msgid "with shift - main cameras only"
 msgstr ""
 
 msgctxt "VegetCol"
@@ -889,8 +917,8 @@ msgctxt "Graphics"
 msgid "Graphics"
 msgstr ""
 
-msgctxt "InputMapNextCamera"
-msgid "Next Camera"
+msgctxt "ReflMode_static"
+msgid "Static"
 msgstr ""
 
 msgctxt "CarDebugText"
@@ -973,8 +1001,8 @@ msgctxt "TipGrassSwaySpd"
 msgid "Grass sway effect speed."
 msgstr ""
 
-msgctxt "Sky"
-msgid "Sky"
+msgctxt "TreeDens"
+msgid "Trees   density"
 msgstr ""
 
 msgctxt "WrongChk"
@@ -1177,6 +1205,10 @@ msgctxt "TipModelVisDist"
 msgid "Visibility distance for model pages."
 msgstr ""
 
+msgctxt "NumLocalPlayers"
+msgid "Number of local players"
+msgstr ""
+
 msgctxt "Settings"
 msgid "Settings"
 msgstr ""
@@ -1307,6 +1339,10 @@ msgstr ""
 
 msgctxt "InputRoadDel"
 msgid "Del - delete picked"
+msgstr ""
+
+msgctxt "Multiplayer"
+msgid "Multiplayer"
 msgstr ""
 
 msgctxt "InputUpdate"
@@ -1477,8 +1513,8 @@ msgctxt "RplGhost"
 msgid "Show ghost drive - best lap"
 msgstr ""
 
-msgctxt "TipGrassPageLength"
-msgid "Grass Page length (low will reload often, high will cause visible switching)."
+msgctxt "SplitVertically"
+msgid "Split Vertically"
 msgstr ""
 
 msgctxt "Reflections"
@@ -1557,6 +1593,14 @@ msgctxt "InputRoadYaw"
 msgid "- rotate yaw"
 msgstr ""
 
+msgctxt "RplGhosts"
+msgid "Ghosts"
+msgstr ""
+
+msgctxt "RplBestOnly"
+msgid "Save ghost only for best time"
+msgstr ""
+
 msgctxt "Front"
 msgid "Front"
 msgstr ""
@@ -1587,6 +1631,10 @@ msgstr ""
 
 msgctxt "Setup"
 msgid "Setup"
+msgstr ""
+
+msgctxt "ReflMode_full"
+msgid "Full"
 msgstr ""
 
 msgctxt "TrackPipes"

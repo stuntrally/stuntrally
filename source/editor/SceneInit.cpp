@@ -28,6 +28,7 @@ void App::createScene()
 	mRoot->addResourceLocation(pathTrkPrv[1], "FileSystem");  //prv user tracks
 
 	//  gui
+	bGuiFocus = false/*true*/;  bMoveCam = true;  //*--
 	InitGui();
 	TerCircleInit();
 

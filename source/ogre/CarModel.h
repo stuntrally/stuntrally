@@ -9,6 +9,8 @@
  
 #include <OgreVector3.h>
 #include <OgreQuaternion.h>
+#include <OgreVector4.h>
+#include <OgreMatrix4.h>
 
 class SETTINGS;  class GAME;  class CAR;  class Scene;  class App;  class FollowCamera;  class CarReflection;
 
@@ -21,7 +23,7 @@ struct PosInfo
 {
 	Ogre::Vector3 pos, carY;
 	Ogre::Vector3 whPos[4];  Ogre::Quaternion rot, whRot[4];  float whR[4];
-	float whVel[4], whSlide[4], whSqueal[4];  int whMtr[4];
+	float whVel[4], whSlide[4], whSqueal[4];  int whMtr[4];  float fboost;
 	//  new posinfo available for Update
 	bool bNew;
 
@@ -39,105 +41,107 @@ public:
 	// CT_GHOST:	Replay file		no						no
 	// CT_REMOTE:   Network	        yes	                    no
 	enum eCarType {  CT_LOCAL=0, CT_REPLAY, CT_GHOST, CT_REMOTE };
-
 	eCarType eType;
 
-	// Constructor, will assign members and create the vdrift car
+	//  Constructor, will assign members and create the vdrift car
 	CarModel( unsigned int index, eCarType type, const std::string name,
 		Ogre::SceneManager* sceneMgr, SETTINGS* set, GAME* game, Scene* sc, Ogre::Camera* cam, App* app);
 	
-	// Destructor - will remove meshes & particle systems, 
-	// the VDrift car and the FollowCamera, delete pReflect
+	//  Destructor - will remove meshes & particle systems, 
+	//  the VDrift car and the FollowCamera, delete pReflect
 	~CarModel();
 	
-	// Create our car, based on name, color, index.
-	// This will put the meshes together and create the particle systems.
-	// CarReflection is also created.
+	//  Create our car, based on name, color, index.
+	//  This will put the meshes together and create the particle systems.
+	//  CreateReflection() is also called.
 	void Create();
+	void CreateReflection();
 	
-	// Call every vdrift substep with new position info
+	//  Call every vdrift substep with new position info
 	void Update(PosInfo& newPosInfo, float time);
 	
-	// Car color
-	// After these values are changed, ChangeClr() should be called
+	//  Car color, After these values are changed, ChangeClr() should be called
 	float hue, sat, val;
+	void ChangeClr();  //  Apply new color
 	
-	// Apply new color
-	void ChangeClr();
-	
-	// Reload material textures.
+	//  Reload material textures.
 	void ReloadTex(Ogre::String mtrName);
 	
-	// track surface for wheels
+	//  track surface for wheels
 	void UpdWhTerMtr();
 	
-	// Update trails
-	void UpdParsTrails();
+	//  Update trails
+	void UpdParsTrails(bool visible=true);
 	
-	// Create ogre model from .joe
-	// Static method so VDrift track (TrackVdr.cpp) can use this too
+	//  Create ogre model from .joe, Static method so VDrift track (TrackVdr.cpp) can use this too
 	static Ogre::ManualObject* CreateModel( Ogre::SceneManager* sceneMgr, const Ogre::String& mat,
 		class VERTEXARRAY* a, Ogre::Vector3 vPofs, bool flip=false, bool track=false);
 
-	// Follow camera for this car.
-	// This can be null (for remote [network] cars)
+	//  Follow camera for this car.
+	//  This can be null (for remote [network] cars)
 	FollowCamera* fCam;
 	
-	// Main node.
-	// later, we will add sub-nodes for body, interior, glass and wheels.
+	//  Main node. later, we will add sub-nodes for body, interior, glass and wheels.
 	Ogre::SceneNode* pMainNode;
+	
+	void setVisible(bool visible);  // hide/show
 		
-	// Handles our cube map.
+	//  Handles our cube map.
 	CarReflection* pReflect;
 		
 	int whTerMtr[4];
-	// needed to set track surface
+	//  needed to set track surface
 	char* blendMtr; int blendMapSize;
 	
 	Ogre::Terrain* terrain;
 	
-	// VDrift car.
-	// For e.g. replay cars that don't 
-	// need physics simulation, this can be null.
+	//  VDrift car.  For e.g. replay cars that don't 
+	//  need physics simulation, this can be null.
 	CAR* pCar;
+
+	//  start pos, lap  chekpoint vars
+	bool bGetStPos;  Ogre::Matrix4 matStPos;  Ogre::Vector4 vStDist;
+	int iInChk, iCurChk, iNextChk, iNumChks;  // cur checkpoint -1 at start
+	bool bInSt, bWrongChk;
+	//bool Checkpoint(const PosInfo& posInfo, class SplineRoad* road);  // update
 	
 private:
 	Ogre::Camera* mCamera;
 
-	// access to vdrift stuff
+	//  access to vdrift stuff
 	GAME* pGame;
 	
-	// Scene, needed to get particle settings
+	//  Scene, needed to get particle settings
 	Scene* sc;
 
-	// SceneManager to use
+	//  SceneManager to use
 	Ogre::SceneManager* pSceneMgr;
 
-	// Material names, will be initialized in Create()
+	//  Material names, will be initialized in Create()
 	enum eMaterials {
 		Mtr_CarBody, Mtr_CarInterior, Mtr_CarGlass,
 		Mtr_CarTireFront, Mtr_CarTireRear,
 		NumMaterials  };
 	std::string sMtr[NumMaterials];
 	
-	// Particle systems, trail.
+	//  Particle systems, trail
 	Ogre::ParticleSystem* ps[4],*pm[4],*pd[4];  // smoke, mud, dust
 	Ogre::ParticleSystem* pb[2];  // boost
 	Ogre::RibbonTrail* whTrl[4];
 	Ogre::Real wht[4];  // spin time (approx tire temp.)
-	Ogre::SceneNode *ndWh[4], *ndWhE[4], *ndRs[4],*ndRd[4];
+	Ogre::SceneNode *ndWh[4], *ndWhE[4];
 
-	// Dir name of car (e.g. ES or RS2)
+	//  Dir name of car (e.g. ES or RS2)
 	std::string sDirname;
 	
-	// Path to car textures, e.g. /usr/share/stuntrally/data/cars/CT/textures
+	//  Path to car textures, e.g. /usr/share/stuntrally/data/cars/CT/textures
 	std::string resCar;
 	
-	// index for the car (e.g. when we have 2 cars, they have indices 0 and 1)
-	// needed for cloned materials & textures
+	//  index for the car (e.g. when we have 2 cars, they have indices 0 and 1)
+	//  needed for cloned materials & textures
 	unsigned int iIndex;
 	
-	// Our settings.
+	//  Our settings.
 	SETTINGS* pSet;
 	App* pApp;
 };

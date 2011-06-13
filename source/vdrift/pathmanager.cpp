@@ -36,14 +36,11 @@ namespace {
 }
 
 
-/*static*/ std::string PATHMANAGER::ogre_plugin_dir;
-/*static*/ std::string PATHMANAGER::home_dir;
-/*static*/ std::string PATHMANAGER::user_config_dir;
-/*static*/ std::string PATHMANAGER::game_config_dir;
-/*static*/ std::string PATHMANAGER::user_data_dir;
-/*static*/ std::string PATHMANAGER::game_data_dir;
-/*static*/ std::string PATHMANAGER::cache_dir;
-/*static*/ std::string PATHMANAGER::profile_suffix;
+//  static vars
+std::string PATHMANAGER::ogre_plugin_dir, PATHMANAGER::home_dir,
+	PATHMANAGER::user_config_dir, PATHMANAGER::game_config_dir,
+	PATHMANAGER::user_data_dir, PATHMANAGER::game_data_dir,
+	PATHMANAGER::cache_dir, PATHMANAGER::profile_suffix;
 
 
 void PATHMANAGER::Init(std::ostream & info_output, std::ostream & error_output)
@@ -154,18 +151,19 @@ void PATHMANAGER::Init(std::ostream & info_output, std::ostream & error_output)
 	#endif
 	// Create user's data dir and its children
 	CreateDir(user_data_dir, error_output);
-	CreateDir(user_data_dir + "/records", error_output);
-	CreateDir(user_data_dir + "/screenshots", error_output);
-	CreateDir(user_data_dir + "/tracks", error_output);  // user tracks
-	CreateDir(user_data_dir + "/tracks/_previews", error_output);
-	CreateDir(user_data_dir + "/replays", error_output);
+	CreateDir(GetTrackRecordsPath(), error_output);
+	CreateDir(GetScreenShotDir(), error_output);
+	CreateDir(GetTrackPathUser(), error_output);  // user tracks
+	CreateDir(GetTrackPathUser()+"/_previews", error_output);
+	CreateDir(GetReplayPath(), error_output);
+	CreateDir(GetGhostsPath(), error_output);
 
 	// Find game data dir and defaults config dir
 	char *datadir = getenv("STUNTRALLY_DATA_ROOT");
-	if (datadir) {
+	if (datadir)
 		game_data_dir = std::string(datadir);
-	} else {
-		fs::path shareDir = SHARED_DATA_DIR;
+	else
+	{	fs::path shareDir = SHARED_DATA_DIR;
 		Paths dirs;
 
 		// Adding users data dir

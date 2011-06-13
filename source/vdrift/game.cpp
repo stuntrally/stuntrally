@@ -310,14 +310,10 @@ void GAME::Tick(float deltat)
 				pOgreGame->updatePoses(deltat);
 				
 				/// update all cameras
-				if (/*!pause &&*/ pOgreGame->carModels.size() > 0)
-				{	//^  replay can be paused
+				if (pOgreGame->carModels.size() > 0 && (!pause || pOgreGame->bRplPlay))  // replay can be paused and needs cam upd
 					for (std::list<CarModel*>::iterator it = pOgreGame->carModels.begin(); it != pOgreGame->carModels.end(); it++)
-					{
 						if ((*it)->fCam)
 							(*it)->fCam->update(framerate);
-					}
-				}
 			}
 		}
 		curticks++;
@@ -327,59 +323,39 @@ void GAME::Tick(float deltat)
 ///increment game logic by one frame
 void GAME::AdvanceGameLogic()
 {
-	//PROFILER.beginBlock("input-processing");
-	
-	eventsystem.ProcessEvents();
-
-	//ProcessGUIInputs();
-
-	ProcessGameInputs();
-	
-	//PROFILER.endBlock("input-processing");
+	eventsystem.ProcessEvents(); //-
 
 	if (track.Loaded())
 	{
 		if (pause && carcontrols_local.first)
-		{
 			sound.Pause(true);
-		}
 		else
 		{
-			/*if (gui.Active()) //keep the game paused when the gui is up
-			{
-				if (sound.Enabled())
-					sound.Pause(true); //stop sounds when the gui is up
-			}
-			else*/
-			{
-				if (sound.Enabled())
-					sound.Pause(false);
-				
-				//PROFILER.beginBlock("ai");
-				//ai.Visualize(rootnode);
-				ai.update(TickPeriod(), &track, cars);
-				//PROFILER.endBlock("ai");
-				
-				PROFILER.beginBlock("physics");
-				collision.Update(TickPeriod(), settings->bltProfilerTxt);
-				PROFILER.endBlock("physics");
-				
-				PROFILER.beginBlock("car");
-				int i = 0;
-				for (std::list <CAR>::iterator it = cars.begin(); it != cars.end(); ++it, ++i)
-					UpdateCar(*it, i, TickPeriod());
-				PROFILER.endBlock("car");
-				
-				//PROFILER.beginBlock("timer");
-				UpdateTimer();
-				//PROFILER.endBlock("timer");
-			}
+			if (sound.Enabled())
+				sound.Pause(false);
+			
+			//PROFILER.beginBlock("ai");
+			//ai.Visualize(rootnode);
+			ai.update(TickPeriod(), &track, cars); //-
+			//PROFILER.endBlock("ai");
+			
+			PROFILER.beginBlock("physics");
+			collision.Update(TickPeriod(), settings->bltProfilerTxt);
+			PROFILER.endBlock("physics");
+			
+			PROFILER.beginBlock("car");
+			int i = 0;
+			for (std::list <CAR>::iterator it = cars.begin(); it != cars.end(); ++it, ++i)
+				UpdateCar(*it, i, TickPeriod());
+			PROFILER.endBlock("car");
+			
+			//PROFILER.beginBlock("timer");
+			UpdateTimer();
+			//PROFILER.endBlock("timer");
 		}
 	}
 
-	//PROFILER.beginBlock("force-feedback");
-	UpdateForceFeedback(TickPeriod());
-	//PROFILER.endBlock("force-feedback");
+	//UpdateForceFeedback(TickPeriod());
 }
 
 ///process inputs used only for higher level game functions
@@ -488,25 +464,7 @@ void GAME::UpdateCarInputs(CAR & car, int i)
 {
     std::vector <float> carinputs(CARINPUT::ALL, 0.0f);
 
-    //if (carcontrols_local.first == &car)
-	{
-        //carinputs = carcontrols_local.second.GetInputs();
-        carinputs = carcontrols_local.second.ProcessInput(pOgreGame, i, TickPeriod());
-	}
-	//else
-	{
-		/// TODO input for cars other than last car?
-	    //carinputs = ai.GetInputs(&car);
-		//assert(carinputs.size() == CARINPUT::INVALID);
-	}
-
-	//force brake and clutch during staging and once the race is over
-	///...-
-	//if (timer.Staging() || ((int)timer.GetCurrentLap(cartimerids[&car]) > race_laps && race_laps > 0))
-	//{
- //       carinputs[CARINPUT::BRAKE] = 1.0;
- //       carinputs[CARINPUT::CLUTCH] = 1.0;
-	//}
+    carinputs = carcontrols_local.second.ProcessInput(pOgreGame, i, TickPeriod());
 
     // mult_thr __ ??
 #if 0
@@ -528,14 +486,9 @@ bool GAME::NewGameDoCleanup()
 
 bool GAME::NewGameDoLoadTrack()
 {
-	//set the track name
-	string trackname;
-
 	if (!LoadTrack(settings->track))
-	{
 		error_output << "Error during track loading: " << settings->track << endl;
-		//return false;
-	}/*-*/
+
 	return true;
 }
 
@@ -553,9 +506,7 @@ bool GAME::NewGameDoLoadMisc()
 		std::list <SOUNDSOURCE *> soundlist;
 		i->GetSoundList(soundlist);
 		for (std::list <SOUNDSOURCE *>::iterator s = soundlist.begin(); s != soundlist.end(); ++s)
-		{
 			sound.AddSource(**s);
-		}
 	}
 
 	//load the timer

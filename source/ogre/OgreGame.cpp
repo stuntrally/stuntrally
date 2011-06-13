@@ -14,8 +14,8 @@ using namespace Ogre;
 
 //  ctors  -----------------------------------------------
 App::App()
-	:pGame(0), ndPos(0), ndMap(0), ndLine(0)
-	,nrpmB(0),nvelBk(0),nvelBm(0), nrpm(0),nvel(0), mrpm(0),mvel(0),mpos(0)
+	:pGame(0), ndMap(0), ndLine(0)
+	,nrpmB(0),nvelBk(0),nvelBm(0), nrpm(0),nvel(0), mrpm(0),mvel(0)
 	,hudGear(0),hudVel(0), hudAbs(0),hudTcs(0), hudTimes(0), hudCheck(0)
 	,ovGear(0),ovVel(0), ovAbsTcs(0), ovCarDbg(0),ovCarDbgTxt(0), ovCam(0), ovTimes(0)
 	// hud
@@ -35,7 +35,8 @@ App::App()
 	,imgCar(0),imgPrv(0),imgMini(0),imgTer(0), valCar(0),valTrk(0),trkDesc(0), valLocPlayers(0)
 	,valRplPerc(0), valRplCur(0), valRplLen(0), slRplPos(0), rplList(0)
 	,valRplName(0),valRplInfo(0),valRplName2(0),valRplInfo2(0), edRplName(0), edRplDesc(0)
-	,bRplPlay(0), bRplPause(0), bRplRec(0)
+	,rbRplCur(0), rbRplAll(0), rbRplGhosts(0)
+	,bRplPlay(0), bRplPause(0), bRplRec(0), bRplWnd(1), bGuiReinit(0)
 	// game
 	,blendMtr(0), iBlendMaps(0), dbgdraw(0)
 	,grass(0), trees(0), road(0)
@@ -52,9 +53,9 @@ App::App()
 {
 	pathTrk[0] = PATHMANAGER::GetTrackPath() + "/";
 	pathTrk[1] = PATHMANAGER::GetTrackPathUser() + "/";
-
 	resCar = "";  resTrk = "";  resDrv = "";
 		
+	for (int i=0; i<5; ++i)  {  ndPos[i]=0;  mpos[i]=0;  }
 	for (int i=0; i < 5; ++i)
 	{	ovL[i]=0;  ovR[i]=0;  ovS[i]=0;  ovU[i]=0;  }
 	for (int i=0; i < StTrk; ++i)  stTrk[i] = 0;
@@ -90,6 +91,7 @@ App::~App()
 void App::setTranslations()
 {	
 	// loading states
+	loadingStates.clear();
 	loadingStates.insert(std::make_pair(LS_CLEANUP, String(TR("#{LS_CLEANUP}"))));
 	loadingStates.insert(std::make_pair(LS_GAME, String(TR("#{LS_GAME}"))));
 	loadingStates.insert(std::make_pair(LS_SCENE, String(TR("#{LS_SCENE}"))));
@@ -98,7 +100,7 @@ void App::setTranslations()
 	loadingStates.insert(std::make_pair(LS_TRACK, String(TR("#{LS_TRACK}"))));
 	loadingStates.insert(std::make_pair(LS_MISC, String(TR("#{LS_MISC}"))));
 	
-	// Kind of nasty to have it here, but this has to be called after configure()...
+	// Kind of nasty to have it here, but this has to be done after configure()...
 	mSplitMgr->pApp = this;
 }
 
@@ -106,21 +108,11 @@ void App::destroyScene()
 {
 	// Delete all cars
 	for (std::list<CarModel*>::iterator it=carModels.begin(); it!=carModels.end(); it++)
-	{
 		delete (*it);
-	}
+
 	carModels.clear();
 	newPosInfos.clear();
 	
-	///  save replay - manual save, button
-	/*if (pSet->rpl_rec)
-	{
-		string file = PATHMANAGER::GetReplayPath() + "/" + pSet->track + ".rpl";
-		if (replay.GetTimeLength() > 4.f)
-			replay.SaveFile(file);
-	}
-	/**/
-
 	mToolTip = 0;  //?
 
 	if (road)
@@ -168,10 +160,19 @@ String App::GetTimeString(float time) const
 
 	if (time != 0.0)
 	{
-		char tempchar[128];
-		sprintf(tempchar, "%d:%05.2f", min, secs);  //"%d:%06.3f"
-		return tempchar;
-	}
-	else
+		char ss[128];
+		sprintf(ss, "%d:%05.2f", min, secs);  //"%d:%06.3f"
+		return ss;
+	}else
 		return "-:--.---";
+}
+
+//  ghost filename
+const String& App::GetGhostFile()
+{
+	static String file;
+	file = PATHMANAGER::GetGhostsPath() + "/"
+		+ pSet->track + (pSet->track_user ? "_u" : "") + (pSet->trackreverse ? "_r" : "")
+		+ "_" + pSet->car + ".rpl";
+	return file;
 }

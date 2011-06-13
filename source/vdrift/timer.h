@@ -254,7 +254,7 @@ public:
 	void Unload();
 	bool Staging() const {return (pretime > 0);}
 	void Tick(float dt);
-	void Lap(const unsigned int carid, const int prevsector, const int nextsector, const bool countit, bool bTrackReverse);
+	bool Lap(const unsigned int carid, const int prevsector, const int nextsector, const bool countit, bool bTrackReverse);
 	void UpdateDistance(const unsigned int carid, const double newdistance)
 	{
 	    assert(carid < car.size());

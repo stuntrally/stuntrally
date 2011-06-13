@@ -38,7 +38,10 @@ public:
 	// Utility
 	Ogre::Quaternion qFixCar,qFixWh;
 
-	Replay replay;  ReplayFrame fr;
+	//  replay - full, user saves
+	//  ghost - saved when best lap,  ghplay - ghost ride replay, loaded if was on disk
+	Replay replay, ghost, ghplay;  ReplayFrame fr;
+	const Ogre::String& GetGhostFile();
 
 	Scene sc;  /// scene.xml
 	BltObjects objs;  // veget collision in bullet
@@ -75,8 +78,8 @@ protected:
 		fMiniX,fMiniY, scX,scY, ofsX,ofsY, minX,maxX, minY,maxY;  // minimap
 
 	Ogre::SceneNode *nrpmB, *nvelBk,*nvelBm, *nrpm, *nvel;  // gauges
-	Ogre::SceneNode *ndPos, *ndMap, *ndLine;  // car pos on minimap
-	Ogre::ManualObject* mrpm, *mvel, *mpos;
+	Ogre::SceneNode *ndPos[5], *ndMap, *ndLine;  // car pos on minimap
+	Ogre::ManualObject* mrpm, *mvel, *mpos[5];
 	Ogre::ManualObject* Create2D(const Ogre::String& mat, Ogre::SceneManager* sceneMgr, Ogre::Real size, bool dyn = false);
 
 	Ogre::OverlayElement* hudGear,*hudVel, *ovL[5],*ovR[5],*ovS[5],*ovU[5], *hudAbs,*hudTcs, *hudTimes,*hudCheck;
@@ -126,11 +129,6 @@ protected:
 public:	
 	class SplineRoad* road;
 protected:
-	//  start pos, lap
-	bool bGetStPos;  Ogre::Matrix4 matStPos;  Ogre::Vector4 vStDist;
-	int iInChk, iCurChk, iNextChk, iNumChks;  // cur checkpoint -1 at start
-	bool bInSt, bWrongChk;
-
 	///  Gui  ---------------------------------------------------------------------------
 	void InitGui(), toggleGui();
 	void UpdGuiRdStats(const SplineRoad* rd, const Scene& sc, float time), ReadTrkStats();
@@ -157,12 +155,14 @@ protected:
 	SLV(Anisotropy);  SLV(ViewDist);  SLV(TerDetail);  SLV(TerDist);  SLV(RoadDist);  // detail
 	SLV(Particles);  SLV(Trails);
 	SLV(Trees);  SLV(Grass);  SLV(TreesDist);  SLV(GrassDist);  // paged
-	SLV(ReflSkip);  SLV(ReflSize);  SLV(ReflFaces);  SLV(ReflDist);  // refl
+	SLV(ReflSkip);  SLV(ReflSize);  SLV(ReflFaces);  SLV(ReflDist);  SLV(ReflMode); // refl
 	SLV(Shaders);  SLV(ShadowType);  SLV(ShadowCount);  SLV(ShadowSize);  SLV(ShadowDist);  // shadow
 	SLV(SizeGaug);  SLV(SizeMinmap);  // view
 	SLV(VolMaster);  SLV(VolEngine);  SLV(VolTires);  SLV(VolEnv);
 	SLV(CarClrH);  SLV(CarClrS);  SLV(CarClrV);  // clr
 	SLV(BloomInt);  SLV(BloomOrig);  SLV(BlurIntens);  // video
+	
+	void recreateReflections(); // call after refl_mode changed
 
 	//  checks
 	void chkFps(WP), chkGauges(WP),	chkDigits(WP), chkMinimap(WP), chkRacingLine(WP),  // view
@@ -177,6 +177,7 @@ protected:
 	// language
 	void comboLanguage(SL);
 	std::map<std::string, std::string> supportedLanguages; // <short name, display name>
+	bool bGuiReinit;
 
 	void comboTexFilter(SL);
 	MyGUI::ButtonPtr bRkmh, bRmph;  void radKmh(WP), radMph(WP), btnTrGrReset(WP), btnQuit(WP), btnResChng(WP);
@@ -187,27 +188,30 @@ protected:
 		valRplName,valRplInfo,valRplName2,valRplInfo2;
 	MyGUI::HScrollPtr slRplPos;  void slRplPosEv(SL);
 	MyGUI::EditPtr edRplName, edRplDesc;
-	void btnRplLoad(WP), btnRplSave(WP), btnRplDelete(WP), btnRplRename(WP),
-		chkRplAutoRec(WP),chkRplChkGhost(WP), btnRplCur(WP),btnRplAll(WP),
-		btnRplToStart(WP),btnRplToEnd(WP), btnRplBack(WP),btnRplForward(WP),
-		btnRplPlay(WP);
+	void btnRplLoad(WP), btnRplSave(WP), btnRplDelete(WP), btnRplRename(WP),  // btn
+		chkRplAutoRec(WP),chkRplChkGhost(WP),chkRplChkBestOnly(WP),  // settings
+		btnRplToStart(WP),btnRplToEnd(WP), btnRplBack(WP),btnRplForward(WP), btnRplPlay(WP),  // controls
+		btnRplCur(WP),btnRplAll(WP),btnRplGhosts(WP);  // radio
+	MyGUI::ButtonPtr rbRplCur, rbRplAll, rbRplGhosts;
+		
 	void msgRplDelete(MyGUI::Message*, MyGUI::MessageBoxStyle);
 	
 	void btnNumPlayers(WP);  void chkSplitVert(WP);
 	MyGUI::StaticTextPtr valLocPlayers;
 
 public:
-	bool bRplPlay,bRplPause, bRplRec;  //  game
+	bool bRplPlay,bRplPause, bRplRec, bRplWnd;  //  game
 protected:
 	MyGUI::ButtonPtr btRplPl;  void UpdRplPlayBtn();
 
 	//  game
+	void btnNewGame(WP),btnNewGameStart(WP), btnShadows(WP);
 	MyGUI::ListPtr carList,trkList, resList, rplList;  void updReplaysList();
 	void listRplChng(MyGUI::List* li, size_t pos);
 	void listCarChng(MyGUI::List* li, size_t pos),		btnChgCar(WP);
 	void listTrackChng(MyGUI::List* li, size_t pos),	btnChgTrack(WP);
-	void btnNewGame(WP),btnNewGameStart(WP), btnShadows(WP);
-	void trkListNext(int rel), carListNext(int rel);
+	int LNext(MyGUI::ListPtr lp, int rel);  // util next in list
+	void trkLNext(int rel), carLNext(int rel), rplLNext(int rel);
 
 	Ogre::String sListCar,sListTrack;  int bListTrackU;
 	Ogre::String pathTrk[2];  Ogre::String TrkDir();

@@ -3,6 +3,7 @@
 
 #include <OgreVector3.h>
 #include <OgreQuaternion.h>
+#include <OgreString.h>
 #include <vector>
 
 
@@ -12,7 +13,7 @@ enum CamTypes
 	CAM_Free,		//  1 Free   - free rot, pos from car
 	CAM_Arena,		//  2 Arena  - free pos & rot, fly
 	CAM_Car,		//  3 Car    - car pos & rot, full
-	CAM_ExtAng,		//  4 Extended, angles - car rotY & pos, smooth
+	CAM_ExtAng,		//  4 Extended, angles - car rotY & pos, smooth, const distance
 	CAM_ALL
 };
 
@@ -38,44 +39,46 @@ namespace Ogre {  class TerrainGroup;  class Camera;  class OverlayElement;  cla
 class FollowCamera
 {
 public:
+	FollowCamera(Ogre::Camera* cam);
+	~FollowCamera();
+
+	//  ogre
 	Ogre::Camera* mCamera;
-	
 	Ogre::TerrainGroup* mTerrain;
+
+	const Ogre::SceneNode* mGoalNode;
+	Ogre::Vector3 mLook;
+	Ogre::Quaternion qq;  // for ext cam
+
+	#if 0  // bullet
 	class COLLISION_WORLD* mWorld;
 	
 	// collision objs for raycast
 	class btSphereShape* shape;
 	class btDefaultMotionState* state;
 	class btRigidBody* body;
-
-	const Ogre::SceneNode* mGoalNode;
-	Ogre::Vector3  mLook;
-	CameraAngle  ca;
-	bool  first;
+	#endif
 	
-	// for ext cam
-	Ogre::Quaternion qq;
 
-
-	FollowCamera(Ogre::Camera* cam);
-	~FollowCamera();
-
-	void  update(Ogre::Real time);
-	void  updInfo(Ogre::Real time = 0);
-	void  Move( bool mbLeft, bool mbRight, bool mbMiddle, bool shift, Ogre::Real mx, Ogre::Real my, Ogre::Real mz );
+	void update(Ogre::Real time), updInfo(Ogre::Real time = 0);
+	void Move( bool mbLeft, bool mbRight, bool mbMiddle, bool shift, Ogre::Real mx, Ogre::Real my, Ogre::Real mz );
 	Ogre::Real fMoveTime;
 
 
 	//  Camera Angles
-	int  miCount, miCurrent;
-	std::vector<CameraAngle>  mCameraAngles;
+	CameraAngle ca;  bool first;
+	int miCount, miCurrent;
+	std::vector<CameraAngle> mCameraAngles;
 
-	bool  loadCameras();  void saveCamera();
-	void  updAngle(),  incCur(int dir);
-	void  Next(bool bPrev = false, bool bMainOnly = false);
-	void  setCamera(int ang);
+	bool loadCameras();  void saveCamera();
+	void updAngle(), incCur(int dir);
+	void Next(bool bPrev = false, bool bMainOnly = false);
+	void setCamera(int ang), moveAboveTerrain();
 	
-	Ogre::OverlayElement  *ovInfo,*ovName;
+	//  info text formats
+	Ogre::String sFmt_Follow, sFmt_Free, sFmt_ExtAng, sFmt_Arena, sFmt_Car;
+	void updFmtTxt();
+	Ogre::OverlayElement *ovInfo,*ovName;
 };
 
 #endif

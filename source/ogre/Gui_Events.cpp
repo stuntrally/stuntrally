@@ -581,6 +581,33 @@ void App::slReflDist(SL)
 	float v = 20.f + 1480.f * powf(val/res, 2.f);	pSet->refl_dist = v;
 	if (valReflDist){	Fmt(s, "%4.0f m", v);	valReflDist->setCaption(s);  }
 }
+void App::slReflMode(SL)
+{
+	std::string old = pSet->refl_mode;
+	
+	if (val == 0) pSet->refl_mode = "static";
+	if (val == 1) pSet->refl_mode = "single";
+	if (val == 2) pSet->refl_mode = "full";
+	
+	if (pSet->refl_mode != old)
+		recreateReflections();
+		
+	if (valReflMode)
+	{
+		valReflMode->setCaption( TR("#{ReflMode_" + pSet->refl_mode + "}") );
+		if (pSet->refl_mode == "static")  valReflMode->setTextColour(MyGUI::Colour(0.0, 1.0, 0.0)); 
+		else if (pSet->refl_mode == "single")  valReflMode->setTextColour(MyGUI::Colour(1.0, 0.5, 0.0));
+		else if (pSet->refl_mode == "full")  valReflMode->setTextColour(MyGUI::Colour(1.0, 0.0, 0.0));
+	}
+}
+void App::recreateReflections()
+{
+	for (std::list<CarModel*>::iterator it = carModels.begin(); it!=carModels.end(); it++)
+	{	
+		delete (*it)->pReflect;
+		(*it)->CreateReflection();
+	}
+}
 
 
 void App::slShaders(SL)
@@ -750,6 +777,7 @@ void App::chkParticles(WP wp)
 {		
 	ChkEv(particles);
 	for (std::list<CarModel*>::iterator it=carModels.begin(); it!=carModels.end(); it++)
+	//? if ((*it)->eType != CarModel::CT_GHOST)
 		(*it)->UpdParsTrails();
 }
 void App::chkTrails(WP wp)
@@ -787,6 +815,12 @@ void App::comboLanguage(SL)
 		if (it->second == sel)
 			pSet->language = it->first;
 	}
+	MyGUI::LanguageManager::getInstance().setCurrentLanguage(pSet->language);
+
+	//  reinit gui
+	bGuiReinit = true;
+	
+	setTranslations();
 }
 
 //  Startup
@@ -893,11 +927,11 @@ void App::btnRplLoad(WP)  // Load
 	if (i == MyGUI::ITEM_NONE)  return;
 
 	String name = rplList->getItemNameAt(i);
-	string file = PATHMANAGER::GetReplayPath() + "/" + name + ".rpl";
+	string file = (pSet->rpl_listview == 2 ? PATHMANAGER::GetGhostsPath() : PATHMANAGER::GetReplayPath()) + "/" + name + ".rpl";
 
 	if (!replay.LoadFile(file))
 	{
-		Message::createMessageBox(  // #{transl ..
+		Message::createMessageBox(  // #{.. translate
 			"Message", "Load Replay", "Error: Can't load file.",
 			MessageBoxStyle::IconWarning | MessageBoxStyle::Ok);
 	}
@@ -906,9 +940,7 @@ void App::btnRplLoad(WP)  // Load
 		string car = replay.header.car, trk = replay.header.track;
 		bool usr = replay.header.track_user == 1;
 
-		pSet->car = car;
-		pSet->track = trk;  pSet->track_user = usr;
-		//bRplPlay = 1;
+		pSet->car = car;  pSet->track = trk;  pSet->track_user = usr;
 		btnNewGame(0);
 		bRplPlay = 1;
 	}
@@ -940,7 +972,7 @@ void App::listRplChng(List* li, size_t pos)
 {
 	size_t i = li->getIndexSelected();  if (i == ITEM_NONE)  return;
 	String name = li->getItemNameAt(i);
-	string file = PATHMANAGER::GetReplayPath() + "/" + name + ".rpl";
+	string file = (pSet->rpl_listview == 2 ? PATHMANAGER::GetGhostsPath() : PATHMANAGER::GetReplayPath()) + "/" + name + ".rpl";
 	if (!valRplName)  return;  valRplName->setCaption(name);
 	if (!valRplInfo)  return;
 	
@@ -969,6 +1001,8 @@ void App::listRplChng(List* li, size_t pos)
 }
 
 
+//  replay settings
+
 void App::chkRplAutoRec(WP wp)
 {
 	bRplRec = !bRplRec;  // changes take effect next game start
@@ -979,17 +1013,35 @@ void App::chkRplAutoRec(WP wp)
 
 void App::chkRplChkGhost(WP wp)
 {
-	//ChkEv(rpl_play);
+	ChkEv(rpl_ghost);
 }
 
-
-void App::btnRplCur(WP)
+void App::chkRplChkBestOnly(WP wp)
 {
+	ChkEv(rpl_bestonly);
 }
+
+
+//  replays list filtering
 
 void App::btnRplAll(WP)
 {
+	rbRplCur->setStateCheck(false);  rbRplAll->setStateCheck(true);  rbRplGhosts->setStateCheck(false);
+	pSet->rpl_listview = 0;  updReplaysList();
 }
+
+void App::btnRplCur(WP)
+{
+	rbRplCur->setStateCheck(true);  rbRplAll->setStateCheck(false);  rbRplGhosts->setStateCheck(false);
+	pSet->rpl_listview = 1;  updReplaysList();
+}
+
+void App::btnRplGhosts(WP)
+{
+	rbRplCur->setStateCheck(false);  rbRplAll->setStateCheck(false);  rbRplGhosts->setStateCheck(true);
+	pSet->rpl_listview = 2;  updReplaysList();
+}
+
 
 //  replay controls
 
@@ -1002,7 +1054,7 @@ void App::btnRplToEnd(WP)
 {
 }
 
-void App::btnRplBack(WP)
+void App::btnRplBack(WP)  //- ...
 {
 }
 
@@ -1030,13 +1082,14 @@ void App::updReplaysList()
 	rplList->removeAllItems();  int ii = 0;  bool bFound = false;
 
 	strlist li;
-	PATHMANAGER::GetFolderIndex(PATHMANAGER::GetReplayPath(), li, "rpl");
+	PATHMANAGER::GetFolderIndex((pSet->rpl_listview == 2 ? PATHMANAGER::GetGhostsPath() : PATHMANAGER::GetReplayPath()), li, "rpl");
+	
 	for (strlist::iterator i = li.begin(); i != li.end(); ++i)
 	if (StringUtil::endsWith(*i, ".rpl"))
 	{
-		String s = *i;
-		s = StringUtil::replaceAll(s,".rpl","");
-		rplList->addItem(s);
+		String s = *i;  s = StringUtil::replaceAll(s,".rpl","");
+		if (pSet->rpl_listview != 1 || StringUtil::startsWith(s,pSet->track, false))
+			rplList->addItem(s);
 	}
 }
 
@@ -1047,7 +1100,7 @@ void App::btnRplDelete(WP)
 	size_t i = rplList->getIndexSelected();  if (i == ITEM_NONE)  return;
 	String name = rplList->getItemNameAt(i);
 	Message* message = Message::createMessageBox(
-		"Message", "Delete Replay ?", name,
+		"Message", "Delete Replay ?", name,  // #{..
 		MessageBoxStyle::IconQuest | MessageBoxStyle::Yes | MessageBoxStyle::No);
 	message->eventMessageBoxResult = newDelegate(this, &App::msgRplDelete);
 	//message->setUserString("FileName", fileName);
@@ -1059,7 +1112,7 @@ void App::msgRplDelete(Message* sender, MessageBoxStyle result)
 	size_t i = rplList->getIndexSelected();  if (i == ITEM_NONE)  return;
 	String name = rplList->getItemNameAt(i);
 	
-	string file = PATHMANAGER::GetReplayPath() +"/"+ name + ".rpl";
+	string file = (pSet->rpl_listview == 2 ? PATHMANAGER::GetGhostsPath() : PATHMANAGER::GetReplayPath()) +"/"+ name + ".rpl";
 	if (boost::filesystem::exists(file))
 		boost::filesystem::remove(file);
 	updReplaysList();
@@ -1081,22 +1134,16 @@ bool App::keyPressed( const OIS::KeyEvent &arg )
 	// update all keystates
 	OISB::System::getSingleton().process(0);
 	
-	#define action(s) mOISBsys->lookupAction(std::string("General/")+std::string(s))->isActive()
+	#define action(s)  mOISBsys->lookupAction("General/"s)->isActive()
 
 	if (!bAssignKey)
 	{
 		//  change gui tabs
-		if (mWndTabs)
+		if (mWndTabs && isFocGui)
 		{	int num = mWndTabs->getItemCount();
-			if (isFocGui)  
-			{
-				if (action("PrevTab")) {
-					mWndTabs->setIndexSelected( (mWndTabs->getIndexSelected() - 1 + num) % num ); return true;
-				}
-				else if (action("NextTab")) {
-					mWndTabs->setIndexSelected( (mWndTabs->getIndexSelected() + 1) % num ); return true;
-				}
-		}	}
+			if (action("PrevTab")) {		mWndTabs->setIndexSelected( (mWndTabs->getIndexSelected() - 1 + num) % num ); return true;	}
+			else if (action("NextTab")) {	mWndTabs->setIndexSelected( (mWndTabs->getIndexSelected() + 1) % num );	      return true;	}
+		}
 		
 		//  gui on/off
 		if (action("ShowOptions"))
@@ -1108,35 +1155,36 @@ bool App::keyPressed( const OIS::KeyEvent &arg )
 
 
 		///  Cameras  ---------------------------------
-		int iChgCam = 0;
-		if (action("NextCamera"))  // Next
-			iChgCam = 1;
-		if (action("PrevCamera"))  // Prev
-			iChgCam = -1;
-		
-		if (iChgCam)
+		if (!isFocGui)
 		{
-			if (ctrl)
-				//  change current camera car index
-				iCurCam = (iCurCam + iChgCam +pSet->local_players) % pSet->local_players;
-			else
-			{	int visMask = 255, i = 0;
-				roadUpCnt = 0;
+			int iChgCam = 0;
+			if (action("NextCamera"))  // Next
+				iChgCam = 1;
+			if (action("PrevCamera"))  // Prev
+				iChgCam = -1;
+			if (iChgCam)
+			{
+				if (ctrl)
+					//  change current camera car index
+					iCurCam = (iCurCam + iChgCam +pSet->local_players) % pSet->local_players;
+				else
+				{	int visMask = 255, i = 0;
+					roadUpCnt = 0;
 
-				for (std::list<CarModel*>::iterator it=carModels.begin(); it!=carModels.end(); it++, i++)
-				if (i == iCurCam)
-				{
-					if ((*it)->fCam)
-					{	(*it)->fCam->Next(iChgCam < 0, shift);
-						if ((*it)->fCam->ca.mHideGlass)  visMask = 255-16;
-						else        visMask = 255;
+					for (std::list<CarModel*>::iterator it=carModels.begin(); it!=carModels.end(); it++, i++)
+					if (i == iCurCam)
+					{
+						if ((*it)->fCam)
+						{	(*it)->fCam->Next(iChgCam < 0, shift);
+							if ((*it)->fCam->ca.mHideGlass)  visMask = 255-16;
+							else        visMask = 255;
+						}
 					}
+					for (std::list<Viewport*>::iterator it=mSplitMgr->mViewports.begin(); it!=mSplitMgr->mViewports.end(); it++)
+						(*it)->setVisibilityMask(visMask);
 				}
-				for (std::list<Viewport*>::iterator it=mSplitMgr->mViewports.begin(); it!=mSplitMgr->mViewports.end(); it++)
-					(*it)->setVisibilityMask(visMask);
-			}
-			return false;
-		}
+				return false;
+		}	}
 	}
 	
 	using namespace OIS;
@@ -1151,28 +1199,11 @@ bool App::keyPressed( const OIS::KeyEvent &arg )
 					toggleGui();		// gui on/off
 				return true;
 
-			#if 0
-			case KC_1:
-			if (mSplitMgr)
-			{	Ogre::Viewport* vp = *mSplitMgr->mViewports.begin();
-				vp->setAutoUpdated(shift);	vp->setVisibilityMask(shift ? 255 : 0);
-			}	return true;
-			case KC_2:
-			if (mSplitMgr)
-			{	Ogre::Viewport* vp = *(++mSplitMgr->mViewports.begin());
-				vp->setAutoUpdated(shift);	vp->setVisibilityMask(shift ? 255 : 0);
-			}	return true;
-			case KC_3:
-			if (mSplitMgr)
-			{	Ogre::Viewport* vp = *(--mSplitMgr->mViewports.end());
-				vp->setAutoUpdated(shift);	vp->setVisibilityMask(shift ? 255 : 0);
-			}	return true;
-			#endif
-
 
 			case KC_BACK:	// replay controls
 				if (mWndRpl && !isFocGui)
-				{	mWndRpl->setVisible(!mWndRpl->isVisible());
+				{	//mWndRpl->setVisible(!mWndRpl->isVisible());
+					bRplWnd = !bRplWnd;  // ^set in sizehud
 					return true;  }
 				break;
 
@@ -1215,7 +1246,7 @@ bool App::keyPressed( const OIS::KeyEvent &arg )
 			{	NewGame();  return false;
 			}	break;
 			
-			case KC_RETURN:	//  chng trk + new game  after pg up/dn
+			case KC_RETURN:	//  chng trk + new game  after up/dn
 			if (isFocGui)
 			{	size_t tab = mWndTabs->getIndexSelected();
 				switch (tab)
@@ -1229,7 +1260,7 @@ bool App::keyPressed( const OIS::KeyEvent &arg )
 				case 2:
 					chatSendMsg();  break;
 				case 3:
-					btnRplPlay(0);  break;
+					btnRplLoad(0);  break;
 			}	}
 			return false;
 		}

@@ -12,6 +12,9 @@
 #include <OgreSceneNode.h>
 #include <OgreOverlayElement.h>
 #include <OgreOverlayManager.h>
+#include <OgreTerrainGroup.h>
+
+#include <MyGUI.h>
 using namespace Ogre;
 
 
@@ -80,8 +83,8 @@ void FollowCamera::update( Real time )
 			manualOrient = true;
 		}	break;
 	}
-	if (!manualOrient) {
-		/* Move */
+	if (!manualOrient)
+	{	/* Move */
 		float dtmul = ca.mSpeed == 0 ? 1.0f : ca.mSpeed * time;
 		//float dtmulRot = ca.mSpeedRot == 0 ? 1.0f : ca.mSpeedRot * time;
 		//if (ca.mSpeed == ca.mSpeedRot || 1)  dtmulRot = dtmul;
@@ -133,8 +136,9 @@ void FollowCamera::update( Real time )
 	}
 	#endif
 	
-	if (!manualOrient) mCamera->lookAt( mLook );
-	
+	moveAboveTerrain();
+	if (!manualOrient)
+		mCamera->lookAt( mLook );
 	updInfo(time);
 }
 
@@ -251,6 +255,22 @@ void FollowCamera::Move( bool mbLeft, bool mbRight, bool mbMiddle, bool shift, R
 	ca.mDist  *= 1.0 - mzH * 0.1;
 }
 
+
+//  prevent camera from going under ground.
+//-----------------------------------------------------------------------------------------------------
+void FollowCamera::moveAboveTerrain()
+{
+	if (!mTerrain)  return;
+
+	const static Real terOfs = 0.2f;  //  minimum distance above ground
+	Vector3 camPos = mCamera->getPosition();
+	float h = mTerrain->getHeightAtWorldPosition(camPos);
+	if (h != 0.f)  // out of terrain
+	if (h + terOfs > camPos.y)
+		mCamera->setPosition(camPos.x, h + terOfs, camPos.z);
+}
+
+
 ///  upd Info
 //-----------------------------------------------------------------------------------------------------
 void FollowCamera::updInfo(Real time)
@@ -258,38 +278,26 @@ void FollowCamera::updInfo(Real time)
 	if (!ovInfo)  return;
 
 	if (fMoveTime >= 1.0)	// hide after 1sec
-	{
-		ovInfo->setCaption("");
-		return;
-	}else
+	{	ovInfo->setCaption("");  return;  }
+	else
 		fMoveTime += time;
 	
-    static char ss[256];
+    static char ss[512];
     switch (ca.mType)
     {
-	case CAM_Follow: sprintf(ss,
-		"Type: %d %s  Yaw:%5.1f Pitch:%5.1f  Dist:%5.1f  Height: %3.1f  Speed: %2.0f\n"
-		"LEFT: Pitch  shift: Rotate | RIGHT: Height  shift: Dist,H | Middle: reset Yaw  shift: Speed | Wheel: Dist"  // | S: save"
+	case CAM_Follow: sprintf(ss, sFmt_Follow.c_str()
 		,ca.mType, CAM_Str[ca.mType], ca.mYaw.valueDegrees(), ca.mPitch.valueDegrees(), ca.mDist
 		,ca.mOffset.y, ca.mSpeed);	break;
-	case CAM_Free:   sprintf(ss,
-		"Type: %d %s  Yaw:%5.1f Pitch:%5.1f  Dist:%5.1f  Height: %3.1f  Speed: %2.0f\n"
-		"LEFT: Pitch  shift: Rotate | RIGHT: Height  shift: Dist,H | Middle: reset Height  shift: Speed | Wheel: Dist"
+	case CAM_Free:   sprintf(ss, sFmt_Free.c_str()
 		,ca.mType, CAM_Str[ca.mType], ca.mYaw.valueDegrees(), ca.mPitch.valueDegrees(), ca.mDist
 		,ca.mOffset.y, ca.mSpeed);	break;
-	case CAM_ExtAng:   sprintf(ss,
-		"Type: %d %s  Pitch:%5.1f  Dist:%5.1f  Height: %3.1f  Offset: %3.1f %3.1f  Speed: %3.1f\n"
-		"LEFT: Pitch, Dist | RIGHT: offset  shift: Height | Middle: reset offset  shift: Speed | Wheel: Dist"
+	case CAM_ExtAng:   sprintf(ss, sFmt_ExtAng.c_str()
 		,ca.mType, CAM_Str[ca.mType], ca.mPitch.valueDegrees(), ca.mDist
 		,ca.mOffset.y, ca.mOffset.x, ca.mOffset.z, ca.mSpeed);	break;
-	case CAM_Arena:  sprintf(ss,
-		"Type: %d %s  Yaw:%5.1f Pitch:%5.1f  Dist:%5.1f  Pos: %3.1f %3.1f %3.1f  Speed: %2.0f\n"
-		"LEFT: Rotate  shift: Pitch | RIGHT: move  shift: Height | Middle: move,H | Wheel: Pitch"
+	case CAM_Arena:  sprintf(ss, sFmt_Arena.c_str()
 		,ca.mType, CAM_Str[ca.mType], ca.mYaw.valueDegrees(), ca.mPitch.valueDegrees(), ca.mDist
 		,ca.mOffset.x, ca.mOffset.y, ca.mOffset.z, ca.mSpeed);	break;
-	case CAM_Car:    sprintf(ss,
-		"Type: %d %s  Height: %3.1f  Offset: %3.1f %3.1f\n"
-		"LEFT: Height | RIGHT: offset | Middle: reset offsetX"
+	case CAM_Car:    sprintf(ss, sFmt_Car.c_str()
 		,ca.mType, CAM_Str[ca.mType], ca.mOffset.y, ca.mOffset.x, ca.mOffset.z);	break;
 	}
 	ovInfo->setCaption(ss);
@@ -371,15 +379,20 @@ void FollowCamera::setCamera(int ang)
 FollowCamera::FollowCamera(Camera* cam) :
 	ovInfo(0),ovName(0), first(true),
     mCamera(cam), mGoalNode(0), mTerrain(0),
-    mLook(Vector3::ZERO), shape(0), body(0), state(0)
+    mLook(Vector3::ZERO)
+    #if 0
+    ,shape(0), body(0), state(0)
+    #endif
 { 
+	#if 0
 	// create camera bullet col obj
     shape = new btSphereShape(0.1); // 10cm radius
     state = new btDefaultMotionState(btTransform(btQuaternion(0,0,0,1), btVector3(0,0,0) ));
     btScalar mass = 1;
     btVector3 inertia;
     shape->calculateLocalInertia(mass, inertia);
-    body = new btRigidBody(mass, state, shape, inertia);
+    body = new btRigidBody(mass, state, shape, inertia);  // _\ delete !...
+	#endif
 }
 
 FollowCamera::~FollowCamera()
@@ -452,5 +465,45 @@ bool FollowCamera::loadCameras()
 	}
 
 	updAngle();
+	updFmtTxt();
 	return true;
+}
+
+
+//  update format texts, from translations
+//-----------------------------------------------------------------------------------------------------
+void FollowCamera::updFmtTxt()
+{
+	String sTR = TR("#{CamInfoStrings}");
+	vector<String>::type vs = StringUtil::split(sTR,",");
+	
+	if (vs.size() != 16)
+	{	LogO("==== Error in camera info translate string. Need 16 strings, have "+toStr(vs.size())+", using default English. " + sTR);
+		sTR="Type,Yaw,Pitch,Dist,Height,Speed,Offset,LEFT,RIGHT,Middle,Wheel,shift,Rotate,reset,move,H,Pos";
+		vs = StringUtil::split(sTR,",");  }
+
+	String sType  =vs[0],
+		sYaw   =vs[1],  sPitch =vs[2],  sDist  =vs[3],  sHeight=vs[4],  sSpeed =vs[5],  sOffset=vs[6],
+		sLEFT  =vs[7],  sRIGHT =vs[8],  sMiddle=vs[9],  sWheel =vs[10], sshift =vs[11],
+		sRotate=vs[12], sreset =vs[13], smove  =vs[14], sH     =vs[15], sPos   =vs[16];
+
+	sFmt_Follow =
+		sType+": %d %s  "+sYaw+":%5.1f "+sPitch+":%5.1f  "+sDist+":%5.1f  "+sHeight+": %3.1f  "+sSpeed+": %2.0f\n"+
+		sLEFT+": "+sPitch+"  "+sshift+": "+sRotate+" | "+sRIGHT+": "+sHeight+"  "+sshift+": "+sDist+","+sH+" | "+
+		sMiddle+": "+sreset+" "+sYaw+"  "+sshift+": "+sSpeed+" | "+sWheel+": "+sDist;  // | S: save"
+	sFmt_Free =
+		sType+": %d %s  "+sYaw+":%5.1f "+sPitch+":%5.1f  "+sDist+":%5.1f  "+sHeight+": %3.1f  "+sSpeed+": %2.0f\n"+
+		sLEFT+": "+sPitch+"  "+sshift+": "+sRotate+" | "+sRIGHT+": "+sHeight+"  "+sshift+": "+sDist+","+sH+" | "+
+		sMiddle+": "+sreset+" "+sHeight+"  "+sshift+": "+sSpeed+" | "+sWheel+": "+sDist;
+	sFmt_ExtAng =
+		sType+": %d %s  "+sPitch+":%5.1f  "+sDist+":%5.1f  "+sHeight+": %3.1f  "+sOffset+": %3.1f %3.1f  "+sSpeed+": %3.1f\n"+
+		sLEFT+": "+sPitch+", "+sDist+" | "+sRIGHT+": "+sOffset+"  "+sshift+": "+sHeight+" | "+
+		sMiddle+": "+sreset+" "+sOffset+"  "+sshift+": "+sSpeed+" | "+sWheel+": "+sDist;
+	sFmt_Arena =
+		sType+": %d %s  "+sYaw+":%5.1f "+sPitch+":%5.1f  "+sDist+":%5.1f  "+sPos+": %3.1f %3.1f %3.1f  "+sSpeed+": %2.0f\n"+
+		sLEFT+": "+sRotate+"  "+sshift+": "+sPitch+" | "+sRIGHT+": "+smove+"  "+sshift+": "+sHeight+" | "+
+		sMiddle+": "+smove+","+sH+" | "+sWheel+": "+sPitch;
+	sFmt_Car =
+		sType+": %d %s  "+sHeight+": %3.1f  "+sOffset+": %3.1f %3.1f\n"+
+		sLEFT+": "+sHeight+" | "+sRIGHT+": "+sOffset+" | "+sMiddle+": "+sreset+" "+sOffset+"X";
 }

@@ -221,16 +221,8 @@
 				>
 			</File>
 			<File
-				RelativePath=".\source\ogre\pch.cpp"
+				RelativePath=".\source\editor\pch.cpp"
 				>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="1"
-					/>
-				</FileConfiguration>
 				<FileConfiguration
 					Name="Release|Win32"
 					>
@@ -241,7 +233,7 @@
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath=".\source\ogre\pch.h"
+				RelativePath=".\source\editor\pch.h"
 				>
 			</File>
 			<File

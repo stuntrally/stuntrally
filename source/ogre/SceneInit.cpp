@@ -65,15 +65,17 @@ void App::createScene()
 void App::NewGame()
 {
 	// actual loading isn't done here
+	isFocGui = true;
+	toggleGui();  // hide gui
+
 	bLoading = true;
 	bRplPlay = 0;
 	pSet->rpl_rec = bRplRec;  // changed only at new game
-	LoadingOn();
-	// hide HUD
-	ShowHUD(true);
-	// hide FPS
-	mFpsOverlay->hide();
 	if (mWndRpl)  mWndRpl->setVisible(false);
+
+	LoadingOn();
+	ShowHUD(true);  // hide HUD
+	mFpsOverlay->hide();  // hide FPS
 	mGUI->setVisiblePointer(false);
 
 	currentLoadingState = loadingStates.begin();
@@ -90,11 +92,9 @@ void App::LoadCleanUp()  // 1 first
 	
 	// Delete all cars
 	for (std::list<CarModel*>::iterator it=carModels.begin(); it!=carModels.end(); it++)
-	{
 		delete (*it);
-	}
-	carModels.clear();
-	newPosInfos.clear();
+
+	carModels.clear();  newPosInfos.clear();
 	
 	if (grass) {  delete grass->getPageLoader();  delete grass;  grass=0;   }
 	if (trees) {  delete trees->getPageLoader();  delete trees;  trees=0;   }
@@ -118,29 +118,32 @@ void App::LoadCleanUp()  // 1 first
 void App::LoadGame()  // 2
 {
 	//  viewports
-	mSplitMgr->mNumPlayers = pSet->local_players;
-	//  no split screen in replay
-	if (bRplPlay)
-		mSplitMgr->mNumPlayers = /*1*/replay.header.numPlayers;
+	mSplitMgr->mNumPlayers = bRplPlay ? replay.header.numPlayers : pSet->local_players;  // set num players
 	mSplitMgr->Align();
 	mPlatform->getRenderManagerPtr()->setActiveViewport(mSplitMgr->mNumPlayers);
 	
 	pGame->NewGameDoCleanup();
 	pGame->NewGameDoLoadTrack();
 	/// init car models
-	// will create vdrift cars
-	// actual car loading will be done later in LoadCar()
+	// will create vdrift cars, actual car loading will be done later in LoadCar()
 	// this is just here because vdrift car has to be created first
 	std::list<Camera*>::iterator camIt = mSplitMgr->mCameras.begin();
-	for (int i=0; i < mSplitMgr->mNumPlayers; i++)
+	int i;
+	for (i=0; i < mSplitMgr->mNumPlayers; i++,camIt++)
+		carModels.push_back( new CarModel(i, CarModel::CT_LOCAL, pSet->car, mSceneMgr, pSet, pGame, &sc, (*camIt), this ) );
+
+	/// ghost car  load if exists
+	ghplay.Clear();
+	if (!bRplPlay && pSet->rpl_ghost)  // load ghost play if exists
 	{
-		carModels.push_back( new CarModel(i, CarModel::CT_LOCAL, pSet->car/*sListCar*/, mSceneMgr, pSet, pGame, &sc, (*camIt), this ) );
-		camIt++;
+		/*if (*/ghplay.LoadFile(GetGhostFile());
+		//  always because ghplay can appear during play after best lap
+		CarModel* c = new CarModel(i, CarModel::CT_GHOST, pSet->car, mSceneMgr, pSet, pGame, &sc, 0, this );
+		c->pCar = (*carModels.begin())->pCar;  // based on 1st car
+		carModels.push_back(c);
 	}
 	
 	pGame->NewGameDoLoadMisc();
-	bGetStPos = true;
-	
 	bool ter = IsTerTrack();
 	sc.ter = ter;
 }
@@ -178,21 +181,23 @@ void App::LoadCar()  // 4
 		newPosInfos.push_back(carPosInfo);
 	}
 	
-	///  Init Replay  once  =================----------------
+	///  Init Replay  once
+	///=================----------------
 	replay.InitHeader(pSet->track.c_str(), pSet->track_user, pSet->car.c_str(), !bRplPlay);
 	replay.header.numPlayers = pSet->local_players;
-	if (pSet->local_players > 1)  // other car names
+	ghost.InitHeader(pSet->track.c_str(), pSet->track_user, pSet->car.c_str(), !bRplPlay);
+	ghost.header.numPlayers = 1;  // ghost always 1 car
+
+	//if (pSet->local_players > 1)  // save other car names
 	//for (int p=1; p <
-	{
 		//strcpy(replay.header.cars[0], pSet->car.c_str());
-	}
 	
 	int c = 0;  // copy wheels R
 	for (std::list <CAR>::const_iterator it = pGame->cars.begin(); it != pGame->cars.end(); it++,c++)
 	{
 		for (int w=0; w<4; ++w)
 			replay.header.whR[c][w] = (*it).GetTireRadius(WHEEL_POSITION(w));
-	}	// cars names..
+	}	// car names..
 }
 
 void App::LoadTerrain()  // 5
@@ -241,14 +246,13 @@ void App::LoadMisc()  // 7 last
 	
 	// Camera settings
 	for (std::list<CarModel*>::iterator it=carModels.begin(); it!=carModels.end(); it++)
-	{
 		if ((*it)->fCam)
-		{
-			(*it)->fCam->first = true;
+		{	(*it)->fCam->first = true;
 			(*it)->fCam->mTerrain = mTerrainGroup;
+			#if 0
 			(*it)->fCam->mWorld = &(pGame->collision);
+			#endif
 		}
-	}
 }
 
 /* Actual loading procedure that gets called every frame during load. Performs a single loading step. */

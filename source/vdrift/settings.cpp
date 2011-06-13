@@ -39,6 +39,7 @@ void SETTINGS::Serialize(bool w, CONFIGFILE & c)
 		
 	Param(c,w, "reflect.skip_frames", refl_skip);	Param(c,w, "reflect.faces_once", refl_faces);
 	Param(c,w, "reflect.map_size", refl_size);		Param(c,w, "reflect.dist", refl_dist);
+	Param(c,w, "reflect.mode", refl_mode);
 
 	Param(c,w, "control.autoclutch", autoclutch);	Param(c,w, "control.autotrans", autoshift);
 	Param(c,w, "control.autorear", autorear);
@@ -68,17 +69,18 @@ void SETTINGS::Serialize(bool w, CONFIGFILE & c)
 
 	Param(c,w, "input.x11_capture_mouse", x11_capture_mouse);
 
-	/*Param(c,w, "replay.play", rpl_play);*/	Param(c,w, "replay.rec", rpl_rec);
-
 	Param(c,w, "network.nickname", nickname);
 	Param(c,w, "network.master_server_address", master_server_address);
 	Param(c,w, "network.master_server_port", master_server_port);
 	Param(c,w, "network.local_port", local_port);
+
+	Param(c,w, "replay.rec", rpl_rec);				Param(c,w, "replay.ghost", rpl_ghost);
+	Param(c,w, "replay.bestonly", rpl_bestonly);	Param(c,w, "replay.listview", rpl_listview);
 }
 
 SETTINGS::SETTINGS() :  ///  Defaults
 	//  car, track
-	car("360"), track("Jungle-T"), track_user(false),
+	car("3S"), track("J1-T"), track_user(false),
 	car_hue(0.f), car_sat(0.f), car_val(0.f),
 	//  show
 	show_fps(1), show_gauges(1), trackmap(1),
@@ -89,7 +91,7 @@ SETTINGS::SETTINGS() :  ///  Defaults
 	terdetail(2), terdist(100), road_dist(1.0),
 	particles(true), trails(true),
 	shadow_dist(3000), shadow_size(2), shadow_count(3), shadow_type(1),
-	refl_skip(10), refl_faces(1), refl_size(0), refl_dist(500.f),
+	refl_skip(10), refl_faces(1), refl_size(0), refl_dist(500.f), refl_mode("single"),
 	shaders(0),  trees(1.f), grass(1.f), trees_dist(1.f), grass_dist(1.f),
 	particles_len(1.f), trails_len(1.f),
 	//  car
@@ -111,10 +113,14 @@ SETTINGS::SETTINGS() :  ///  Defaults
 	//  input
 	x11_capture_mouse(true),
 	//  replay
+<<<<<<< HEAD
 	rpl_rec(1), //rpl_play(0),
 	// network
 	nickname("StuntMan"),
 	master_server_address("localhost"),
 	master_server_port(protocol::DEFAULT_PORT),
 	local_port(protocol::DEFAULT_PORT)
+=======
+	rpl_rec(1), rpl_ghost(1), rpl_bestonly(1), rpl_listview(0)
+>>>>>>> master
 {}
