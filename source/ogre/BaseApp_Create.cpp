@@ -7,7 +7,7 @@
 #include "../vdrift/settings.h"
 
 #include "CompositorLogics.h"
-#include "Locale.h"
+#include "Localization.h"
 #include "SplitScreenManager.h"
 #include "CarModel.h"
 
