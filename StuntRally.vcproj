@@ -5941,7 +5941,7 @@
 					>
 				</File>
 				<File
-					RelativePath=".\source\ogre\Locale.h"
+					RelativePath=".\source\ogre\Localization.h"
 					>
 				</File>
 				<File
