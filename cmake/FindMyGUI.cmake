@@ -11,28 +11,73 @@
 # Redistribution and use is allowed according to the terms of the BSD license.
 # For details see the accompanying COPYING-CMAKE-SCRIPTS file.
 CMAKE_POLICY(PUSH)
+include(FindPkgMacros)
 
-IF (MYGUI_LIBRARIES AND MYGUI_INCLUDE_DIRS)
-    SET(MYGUI_FIND_QUIETLY TRUE)
-ENDIF (MYGUI_LIBRARIES AND MYGUI_INCLUDE_DIRS)
+# IF (MYGUI_LIBRARIES AND MYGUI_INCLUDE_DIRS)
+    # SET(MYGUI_FIND_QUIETLY TRUE)
+# ENDIF (MYGUI_LIBRARIES AND MYGUI_INCLUDE_DIRS)
 
 IF (WIN32) #Windows
     MESSAGE(STATUS "Looking for MyGUI")
-    SET(OGRESDK $ENV{OGRE_HOME})
-    SET(OGRESOURCE $ENV{OGRE_SRC})
-    IF (OGRESDK)
+	SET(MYGUISDK $ENV{MYGUI_HOME})
+    IF (MYGUISDK)
+		findpkg_begin ( "MYGUI" )
         MESSAGE(STATUS "Using MyGUI in OGRE SDK")
-        STRING(REGEX REPLACE "[\\]" "/" OGRESDK "${OGRESDK}" )
-        SET(MYGUI_INCLUDE_DIRS ${OGRESDK}/include/MYGUI)
-        SET(MYGUI_LIB_DIR ${OGRESDK}/lib)
-        SET(MYGUI_LIBRARIES debug MyGUIEngine_d optimized MyGUIEngine)
-    ENDIF (OGRESDK)
+		STRING(REGEX REPLACE "[\\]" "/" MYGUISDK "${MYGUISDK}" )
+
+		find_path ( MYGUI_INCLUDE_DIRS
+		  MyGUI.h 
+		  "${MYGUISDK}/MyGUIEngine/include"
+		  NO_DEFAULT_PATH )
+		  
+		find_path ( MYGUI_PLATFORM_INCLUDE_DIRS
+		  MyGUI_OgrePlatform.h
+		  "${MYGUISDK}/Platforms/Ogre/OgrePlatform/include"
+		  NO_DEFAULT_PATH )		  
+
+		SET ( MYGUI_LIB_DIR ${MYGUISDK}/*/lib )
+		
+		find_library ( MYGUI_LIBRARIES_REL NAMES
+		MyGUIEngine.lib 
+		MyGUI.OgrePlatform.lib
+		HINTS
+		${MYGUI_LIB_DIR}
+		PATH_SUFFIXES "" release relwithdebinfo minsizerel )
+
+		find_library ( MYGUI_LIBRARIES_DBG NAMES
+		MyGUIEngine_d.lib 
+		MyGUI.OgrePlatform_d.lib
+		HINTS
+		${MYGUI_LIB_DIR}
+		PATH_SUFFIXES "" debug )
+
+		find_library ( MYGUI_PLATFORM_LIBRARIES_REL NAMES
+		MyGUI.OgrePlatform.lib
+		HINTS
+		${MYGUI_LIB_DIR}
+		PATH_SUFFIXES "" release relwithdebinfo minsizerel )
+
+		find_library ( MYGUI_PLATFORM_LIBRARIES_DBG NAMES
+		MyGUI.OgrePlatform_d.lib
+		HINTS
+		${MYGUI_LIB_DIR}
+		PATH_SUFFIXES "" debug )
+		
+		make_library_set ( MYGUI_LIBRARIES )
+		make_library_set ( MYGUI_PLATFORM_LIBRARIES )
+		
+		MESSAGE ("${MYGUI_LIBRARIES}")
+		MESSAGE ("${MYGUI_PLATFORM_LIBRARIES}")
+
+		findpkg_finish ( "MYGUI" )
+
+    ENDIF (MYGUISDK)
     IF (OGRESOURCE)
         MESSAGE(STATUS "Using MyGUI in OGRE dependencies")
         STRING(REGEX REPLACE "[\\]" "/" OGRESDK "${OGRESOURCE}" )
         SET(MYGUI_INCLUDE_DIRS ${OGRESOURCE}/OgreMain/include/MYGUI)
         SET(MYGUI_LIB_DIR ${OGRESOURCE}/lib)
-        SET(MYGUI_LIBRARIES debug MyGUIEngine_d optimized MyGUIEngine)
+        SET(MYGUI_LIBRARIES debug Debug/MyGUIEngine_d optimized Release/MyGUIEngine)
     ENDIF (OGRESOURCE)
 ELSE (WIN32) #Unix
     CMAKE_MINIMUM_REQUIRED(VERSION 2.4.7 FATAL_ERROR)
@@ -54,9 +99,11 @@ ENDIF (WIN32)
 #Do some preparation
 SEPARATE_ARGUMENTS(MYGUI_INCLUDE_DIRS)
 SEPARATE_ARGUMENTS(MYGUI_LIBRARIES)
+SEPARATE_ARGUMENTS(MYGUI_PLATFORM_LIBRARIES)
 
 SET(MYGUI_INCLUDE_DIRS ${MYGUI_INCLUDE_DIRS} CACHE PATH "")
 SET(MYGUI_LIBRARIES ${MYGUI_LIBRARIES} CACHE STRING "")
+SET(MYGUI_LIBRARIES ${MYGUI_PLATFORM_LIBRARIES} CACHE STRING "")
 SET(MYGUI_LIB_DIR ${MYGUI_LIB_DIR} CACHE PATH "")
 
 IF (MYGUI_INCLUDE_DIRS AND MYGUI_LIBRARIES)
