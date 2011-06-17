@@ -4,6 +4,8 @@
 
 #include <cmath>
 
+#define M_PI  3.14159265358979323846
+
 std::ostream & operator << (std::ostream &os, const BEZIER & b)
 {
 	os << "====" << std::endl;

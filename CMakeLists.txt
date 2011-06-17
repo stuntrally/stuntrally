@@ -49,7 +49,9 @@ add_definitions(-DSHARED_DATA_DIR="${SHARE_INSTALL}")
 
 
 # Libraries
-
+if(WIN32)
+	set(Boost_USE_STATIC_LIBS   ON)
+endif(WIN32)
 find_package(Boost COMPONENTS system thread filesystem REQUIRED QUIET)
 include_directories(${Boost_INCLUDE_DIRS})
 link_directories(${Boost_LIBRARY_DIRS})

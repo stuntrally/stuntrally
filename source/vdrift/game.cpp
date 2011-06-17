@@ -16,6 +16,8 @@
 #include "../ogre/FollowCamera.h"
 #include "../oisb/OISBSystem.h"
 
+#define M_PI  3.14159265358979323846
+
 using std::string;
 using std::endl;
 using std::pair;
