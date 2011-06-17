@@ -64,8 +64,13 @@ if(BUILD_GAME OR BUILD_EDITOR)
 
 	find_package(MyGUI REQUIRED QUIET)
 	include_directories(${MYGUI_INCLUDE_DIRS})
+	include_directories(${MYGUI_PLATFORM_INCLUDE_DIRS})
 	link_directories(${MYGUI_LIB_DIR})
-	list(APPEND LIBS ${MYGUI_LIBRARIES} MyGUI.OgrePlatform) #TODO: MyGUI.OgrePlatform is not added by the find script
+	IF(MSVC)
+		list(APPEND LIBS ${MYGUI_LIBRARIES} ${MYGUI_PLATFORM_LIBRARIES})
+	ELSE(MSVC)
+		list(APPEND LIBS ${MYGUI_LIBRARIES} MyGUI.OgrePlatform) #TODO: MyGUI.OgrePlatform is not added by the find script
+	ENDIF(MSVC)
 
 	foreach(lib  OIS SDL OGG VorbisFile)    # Simple libraries added in a loop
 		find_package(${lib} REQUIRED QUIET)

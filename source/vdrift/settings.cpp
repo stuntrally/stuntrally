@@ -112,15 +112,11 @@ SETTINGS::SETTINGS() :  ///  Defaults
 	buffer("FBO"), rendersystem("OpenGL Rendering Subsystem"),
 	//  input
 	x11_capture_mouse(true),
-	//  replay
-<<<<<<< HEAD
-	rpl_rec(1), //rpl_play(0),
-	// network
+	//  network
 	nickname("StuntMan"),
 	master_server_address("localhost"),
 	master_server_port(protocol::DEFAULT_PORT),
-	local_port(protocol::DEFAULT_PORT)
-=======
+	local_port(protocol::DEFAULT_PORT),
+	//  replay
 	rpl_rec(1), rpl_ghost(1), rpl_bestonly(1), rpl_listview(0)
->>>>>>> master
 {}

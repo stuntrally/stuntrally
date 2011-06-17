@@ -8,7 +8,7 @@
 #include "OgreApp.h" //
 
 #include "../vdrift/pathmanager.h"
-#include "../ogre/Locale.h"
+#include "../ogre/Localization.h"
 
 #include <OgreConfigFile.h>
 #include <OISInputManager.h>

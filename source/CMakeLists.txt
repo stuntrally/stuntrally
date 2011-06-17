@@ -34,8 +34,11 @@ if(BUILD_GAME)
 		network/*.cpp
 		network/*.hpp # For some IDE project files
 	)
-
-	add_executable(${GAME_EXE} ${GAME_SOURCES})
+	if (MSVC)
+		add_executable(${GAME_EXE} WIN32 ${GAME_SOURCES})
+	else (MSVC)
+		add_executable(${GAME_EXE} ${GAME_SOURCES})
+	endif(MSVC)
 	target_link_libraries(${GAME_EXE} ${OURLIBS} ${LIBS})
 	install(TARGETS ${GAME_EXE} DESTINATION bin)
 endif()
@@ -68,4 +71,38 @@ if(BUILD_MASTER_SERVER)
 	add_executable(bogus-client network/master-server/bogus-client.cpp network/masterclient.cpp)
 	target_link_libraries(bogus-client ${SERVER_LIBS})
 endif()
+
+
+if (MSVC)
+	file(GLOB GAME_SOURCES
+		btOgre/*.cpp
+		bullet/*.cpp
+		editor/*.cpp
+		ogre/*.cpp
+		ogre/common/*.cpp
+		oisb/*.cpp
+		paged-geom/*.cpp
+		road/*.cpp
+		vdrift/*.cpp
+	)
+
+    foreach( src_file ${GAME_SOURCES} )
+        set_source_files_properties(
+            ${src_file}
+            PROPERTIES
+            COMPILE_FLAGS "/Yupch.h"
+            )	
+	endforeach( src_file ${GAME_SOURCES} )
+	
+    set_source_files_properties(editor/pch.cpp
+        PROPERTIES
+        COMPILE_FLAGS "/Ycpch.h"
+        )
+		
+    set_source_files_properties(ogre/pch.cpp
+        PROPERTIES
+        COMPILE_FLAGS "/Ycpch.h"
+        )
+
+endif (MSVC)
 
