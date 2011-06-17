@@ -35,7 +35,7 @@ FIND_LIBRARY(VorbisFile_LIBRARIES
 	$ENV{VORBISDIR}
 	$ENV{VORBIS_PATH}
     $ENV{CSP_DEVPACK}
-	PATH_SUFFIXES win32/VorbisFile_Dynamic_Release
+	PATH_SUFFIXES win32/VorbisFile_Dynamic_Release lib
 	PATHS
 	~/Library/Frameworks
 	/Library/Frameworks
@@ -53,7 +53,7 @@ FIND_LIBRARY(VorbisFile_LIBRARIES_DEBUG
 	$ENV{VORBISDIR}
     $ENV{CSP_DEVPACK}
 	$ENV{VORBIS_PATH}
-	PATH_SUFFIXES win32/VorbisFile_Dynamic_Debug
+	PATH_SUFFIXES win32/VorbisFile_Dynamic_Debug lib
 	PATHS
 	~/Library/Frameworks
 	/Library/Frameworks

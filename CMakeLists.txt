@@ -49,8 +49,13 @@ list(APPEND LIBS ${OGRE_LIBRARIES} ${OGRE_Terrain_LIBRARIES} ${OGRE_Paging_LIBRA
 
 find_package(MyGUI REQUIRED QUIET)
 include_directories(${MYGUI_INCLUDE_DIRS})
+include_directories(${MYGUI_PLATFORM_INCLUDE_DIRS})
 link_directories(${MYGUI_LIB_DIR})
-list(APPEND LIBS ${MYGUI_LIBRARIES} MyGUI.OgrePlatform) #TODO: MyGUI.OgrePlatform is not added by the find script
+IF(MSVC)
+	list(APPEND LIBS ${MYGUI_LIBRARIES} ${MYGUI_PLATFORM_LIBRARIES})
+ELSE(MSVC)
+	list(APPEND LIBS ${MYGUI_LIBRARIES} MyGUI.OgrePlatform) #TODO: MyGUI.OgrePlatform is not added by the find script
+ENDIF(MSVC)
 
 find_package(Boost COMPONENTS system thread filesystem REQUIRED QUIET)
 include_directories(${Boost_INCLUDE_DIRS})
