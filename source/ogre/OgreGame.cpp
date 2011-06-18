@@ -168,3 +168,26 @@ const String& App::GetGhostFile()
 		+ "_" + pSet->car + ".rpl";
 	return file;
 }
+
+/// joy events
+bool App::povMoved( const OIS::JoyStickEvent &e, int pov )
+{
+}
+bool App::axisMoved( const OIS::JoyStickEvent &e, int axis )
+{
+	for (int i=1; i<5; i++)
+		mGUI->findWidget<MyGUI::StaticText>("axisOutput_Player" + toStr(i))->setCaption("Moved axis: " + toStr(axis));
+}
+bool App::sliderMoved( const OIS::JoyStickEvent &e, int sliderID )
+{
+}
+bool App::buttonPressed( const OIS::JoyStickEvent &e, int button )
+{
+	for (int i=1; i<5; i++)
+		mGUI->findWidget<MyGUI::StaticText>("buttonOutput_Player" + toStr(i))->setCaption("Pressed button: " + toStr(button));
+}
+bool App::buttonReleased( const OIS::JoyStickEvent &e, int button )
+{
+	for (int i=1; i<5; i++)
+		mGUI->findWidget<MyGUI::StaticText>("buttonOutput_Player" + toStr(i))->setCaption("Released button: " + toStr(button));
+}

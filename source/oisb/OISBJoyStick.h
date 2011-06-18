@@ -47,6 +47,10 @@ namespace OISB
 
 			virtual void process(Real delta);
 
+			OIS::JoyStick* getOISJoyStick()
+			{
+				return mJoyStick;
+			}
 
 		private:
             /// OIS' implementation JoyStick

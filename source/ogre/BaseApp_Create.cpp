@@ -81,6 +81,13 @@ void BaseApp::createFrameListener()
 
 	mMouse->setEventCallback(this);
 	mKeyboard->setEventCallback(this);
+	
+	// add listener for all joysticks
+	for (std::vector<OISB::JoyStick*>::iterator it=mOISBsys->mJoysticks.begin();
+		it!=mOISBsys->mJoysticks.end(); it++)
+	{
+		(*it)->getOISJoyStick()->setEventCallback(this);
+	}
 
 	windowResized(mWindow);
 	WindowEventUtilities::addWindowEventListener(mWindow, this);

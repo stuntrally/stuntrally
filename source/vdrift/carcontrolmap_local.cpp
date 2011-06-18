@@ -21,6 +21,7 @@ const std::vector <float> & CARCONTROLMAP_LOCAL::ProcessInput(class App* pApp, i
 	inputs[CARINPUT::THROTTLE] = analogAction("Throttle");
 	inputs[CARINPUT::BRAKE] = analogAction("Brake");
 	
+	
 	// steering
 	const float value = analogAction("Steering");
 	inputs[CARINPUT::STEER_RIGHT] = value > 0.f ? value : 0.f;
@@ -43,9 +44,9 @@ const std::vector <float> & CARCONTROLMAP_LOCAL::ProcessInput(class App* pApp, i
 		inputs[CARINPUT::FLIP] = analogAction("Flip");
 	else
 	{
-		inputs[CARINPUT::FLIP] = action("Flip_Left") == true ? -1.0 : 0.0;
+		inputs[CARINPUT::FLIP] = action("FlipLeft") == true ? -1.0 : 0.0;
 		if (inputs[CARINPUT::FLIP] == 0.0)
-			inputs[CARINPUT::FLIP] = action("Flip_Right") == true ? 1.0 : 0.0;
+			inputs[CARINPUT::FLIP] = action("FlipRight") == true ? 1.0 : 0.0;
 	}
 
 	return inputs;
