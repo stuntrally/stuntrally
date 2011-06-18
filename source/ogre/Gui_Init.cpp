@@ -582,9 +582,9 @@ void App::InitInputGui()
 		if (playerTab)
 		{
 			MyGUI::StaticTextPtr label1 = tabitem->createWidget<StaticText>("StaticText", 300, 350, 300, 24, MyGUI::Align::Relative, "axisOutput_" + (*it).first);
-			label1->setCaption("Move an axis to see its number");
+			label1->setCaption( TR("#{InputMoveAxisTip}") );
 			MyGUI::StaticTextPtr label2 = tabitem->createWidget<StaticText>("StaticText", 300, 380, 300, 24, MyGUI::Align::Relative, "buttonOutput_" + (*it).first);
-			label2->setCaption("Press a button to see its number");
+			label2->setCaption( TR("#{InputPressButtonTip}") );
 		}
 		
 		///  ------ custom action sorting ----------------
