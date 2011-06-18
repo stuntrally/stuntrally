@@ -80,6 +80,11 @@ namespace OISB
             /// @copydoc Bindable::hasChanged
             virtual bool hasChanged() const;
 			
+			virtual bool isAnalog() const
+			{
+				return false;
+			}
+			
             /**
              * @brief gets the parent action schema
              */

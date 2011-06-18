@@ -587,7 +587,9 @@ void App::InitInputGui()
 		yRow["Steering"] = y;	y+=2+1 +2;
 		yRow["HandBrake"] = y;	y+=2;
 		yRow["Boost"] = y;		y+=2;
-		yRow["Flip"] = y;		y+=2+1 +2;
+		yRow["Flip"] = y;
+		yRow["Flip_Right"] = y; y+=2;
+		yRow["Flip_Left"] = y;	y+=2 +1;
 		yRow["ShiftUp"] = y;	y+=2;
 		yRow["ShiftDown"] = y;	y+=2;
 		// general

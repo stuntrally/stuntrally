@@ -16,6 +16,7 @@ const std::vector <float> & CARCONTROLMAP_LOCAL::ProcessInput(class App* pApp, i
 
 	#define action(s) OISB::System::getSingleton().lookupAction("Player" + toStr(player+1) + "/" + s)->isActive()
 	#define analogAction(s) static_cast<OISB::AnalogAxisAction*>(OISB::System::getSingleton().lookupAction("Player" + toStr(player+1) + "/" + s))->getAbsoluteValue()/100.0f
+	#define isAnalog(s) OISB::System::getSingleton().lookupAction("Player" + toStr(player+1) + "/" + s)->isAnalog()
 
 	inputs[CARINPUT::THROTTLE] = analogAction("Throttle");
 	inputs[CARINPUT::BRAKE] = analogAction("Brake");
@@ -32,11 +33,20 @@ const std::vector <float> & CARCONTROLMAP_LOCAL::ProcessInput(class App* pApp, i
 	bool grDn = action("ShiftDown");
 	inputs[CARINPUT::SHIFT_DOWN] = grDn && !grDnOld[player];
 	grDnOld[player] = grDn;
-
 	
 	inputs[CARINPUT::HANDBRAKE] = analogAction("HandBrake");
-	inputs[CARINPUT::BOOST] = analogAction("Boost");
-	inputs[CARINPUT::FLIP] = analogAction("Flip");
+	if (isAnalog("Boost"))
+		inputs[CARINPUT::BOOST] = analogAction("Boost");
+	else
+		inputs[CARINPUT::BOOST] = (action("Boost") == true) ? 1.0 : 0.0;
+	if (isAnalog("Flip"))
+		inputs[CARINPUT::FLIP] = analogAction("Flip");
+	else
+	{
+		inputs[CARINPUT::FLIP] = action("Flip_Left") == true ? -1.0 : 0.0;
+		if (inputs[CARINPUT::FLIP] == 0.0)
+			inputs[CARINPUT::FLIP] = action("Flip_Right") == true ? 1.0 : 0.0;
+	}
 
 	return inputs;
 }

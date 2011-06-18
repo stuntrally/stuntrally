@@ -54,6 +54,11 @@ namespace OISB
             /// @copydoc Action::getActionType
             virtual ActionType getActionType() const;
             
+            virtual bool isAnalog() const
+            {
+				return true;
+			}
+            
             void setUseAbsoluteValues(bool use);
 
             inline bool getUseAbsoluteValues() const
