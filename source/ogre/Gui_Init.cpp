@@ -747,12 +747,13 @@ void App::UpdateJsButtons()
 			{
 				MyGUI::ComboBoxPtr button = mGUI->findWidget<ComboBox>("jsButtonSel_" + (*ait).first + "_" + (*it).first);
 				button->removeAllItems();
+				button->addItem( TR("#{InputKeyNoButton}") );
 				if (js) {
 					for (std::vector<OISB::DigitalState*>::const_iterator it = js->buttons.begin();
 							it != js->buttons.end(); it++)
 						button->addItem( stripk((*it)->getBindableName()) );
-				}else
-					button->addItem( TR("#{InputKeyNoButton}") );
+				}
+					
 					
 				button->setIndexSelected(0);
 					
@@ -775,12 +776,13 @@ void App::UpdateJsButtons()
 			{
 				MyGUI::ComboBoxPtr axis = mGUI->findWidget<ComboBox>("jsAxisSel_" + (*ait).first + "_" + (*it).first);
 				axis->removeAllItems();
+				axis->addItem( TR("#{InputKeyNoAxis}") );
 				if (js) {
 					for (std::vector<OISB::AnalogAxisState*>::const_iterator it = js->axis.begin();
 							it != js->axis.end(); it++)
 						axis->addItem( stripk((*it)->getBindableName()) );
-				}else
-					axis->addItem( TR("#{InputKeyNoAxis}") );
+				}
+					
 					
 				axis->setIndexSelected(0);
 
