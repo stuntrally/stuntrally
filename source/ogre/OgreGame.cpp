@@ -172,22 +172,27 @@ const String& App::GetGhostFile()
 /// joy events
 bool App::povMoved( const OIS::JoyStickEvent &e, int pov )
 {
+	return true;
 }
 bool App::axisMoved( const OIS::JoyStickEvent &e, int axis )
 {
 	for (int i=1; i<5; i++)
 		mGUI->findWidget<MyGUI::StaticText>("axisOutput_Player" + toStr(i))->setCaption("Moved axis: " + toStr(axis));
+	return true;
 }
 bool App::sliderMoved( const OIS::JoyStickEvent &e, int sliderID )
 {
+	return true;
 }
 bool App::buttonPressed( const OIS::JoyStickEvent &e, int button )
 {
 	for (int i=1; i<5; i++)
 		mGUI->findWidget<MyGUI::StaticText>("buttonOutput_Player" + toStr(i))->setCaption("Pressed button: " + toStr(button));
+	return true;
 }
 bool App::buttonReleased( const OIS::JoyStickEvent &e, int button )
 {
 	for (int i=1; i<5; i++)
 		mGUI->findWidget<MyGUI::StaticText>("buttonOutput_Player" + toStr(i))->setCaption("Released button: " + toStr(button));
+	return true;
 }
