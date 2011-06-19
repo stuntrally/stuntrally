@@ -297,7 +297,7 @@ void App::UpdateHUD(CAR* pCar, float time, Viewport* vp)
 		else if (fr.gear > 0 && fr.gear < 8)
 		{	cg[0]='0'+fr.gear;  hudGear->setColour(ColourValue(1,1-fr.gear*0.1,0.2,cl));	}
 
-		sprintf(sv, "%3.0f", abs(vel));
+		sprintf(sv, "%3.0f", std::abs(vel));
 		hudGear->setCaption(String(cg));
 		hudVel->setCaption(String(sv));  int w = mWindow->getWidth();
 		hudVel->setPosition(-0.055 + w/1600.f*0.045,-0.01);
