@@ -266,8 +266,25 @@ void CarModel::Create()
 				{	Pass* pass = passIt.getNext();
 					Pass::TextureUnitStateIterator tusIt = pass->getTextureUnitStateIterator();
 					while (tusIt.hasMoreElements())
-					{	
+					{
 						TextureUnitState* tus = tusIt.getNext();
+						// interior normal map
+						if (i == Mtr_CarInterior 
+							&& FileExists(resCar + "/" + sDirname + "_interior_normal.png") 
+							&& tus->getTextureName() == "flat_n.png")
+						{
+							tus->setTextureName(sDirname + "_interior_normal.png");
+							continue;
+						}
+						// tire normal map
+						if ( (i == Mtr_CarTireFront || i == Mtr_CarTireRear) 
+							&& FileExists(resCar + "/" + sDirname + "_wheel_normal.png") 
+							&& tus->getTextureName() == "flat_n.png")
+						{
+							tus->setTextureName(sDirname + "_wheel_normal.png");
+							continue;
+						}
+						
 						if (tus->getTextureName() == "body_dyn.png")
 							tus->setTextureName("body_dyn" + toStr(iIndex) + ".png");
 						else if (!(StringUtil::startsWith(tus->getTextureName(), "ReflectionCube") || StringUtil::startsWith(tus->getTextureName(), "body_dyn") || tus->getTextureName() == "ReflectionCube"))
