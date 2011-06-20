@@ -251,7 +251,7 @@ efficiency = 0.95
 
 
 [ wheel-FR ]
-position = 0.71, 1.197, -0.381
+position = 0.71, 1.197, -0.441
 roll-height = 0.302
 mass = 30.0
 restitution = 0.1
@@ -261,7 +261,7 @@ position = 0.60, 1.28, -0.07
 hinge = -0.71, 0.55, -0.0
 
 [ wheel-FL ]
-position = -0.71, 1.197, -0.381
+position = -0.71, 1.197, -0.441
 roll-height = 0.302
 mass = 30.0
 restitution = 0.1
@@ -272,7 +272,7 @@ hinge = 0.71, 0.55, 0.0
 
 
 [ wheel-RR ]
-position = 0.71, -1.438, -0.381
+position = 0.71, -1.438, -0.441
 roll-height = 0.302
 mass = 30.0
 restitution = 0.1
@@ -282,7 +282,7 @@ position = 0.60, -1.31, -0.07
 hinge = -0.25, -1.94, 0.0
 
 [ wheel-RL ]
-position = -0.71, -1.438, -0.381
+position = -0.71, -1.438, -0.441
 roll-height = 0.302
 mass = 30.0
 restitution = 0.1
