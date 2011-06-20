@@ -8,7 +8,7 @@
 #include <unistd.h> // for daemon()
 #endif
 
-#define VERSIONSTRING "0.2"
+#define VERSIONSTRING "0.3"
 
 #define DEFAULT_ZOMBIE_TIMEOUT 5
 unsigned g_zombietimeout = DEFAULT_ZOMBIE_TIMEOUT;  // How many seconds without update until a game becomes zombie
