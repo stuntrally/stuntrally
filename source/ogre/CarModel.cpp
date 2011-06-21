@@ -268,21 +268,32 @@ void CarModel::Create()
 					while (tusIt.hasMoreElements())
 					{
 						TextureUnitState* tus = tusIt.getNext();
-						// interior normal map
-						if (i == Mtr_CarInterior 
-							&& FileExists(resCar + "/" + sDirname + "_interior_normal.png") 
-							&& tus->getTextureName() == "flat_n.png")
+						// normal maps
+						if (tus->getTextureName() == "flat_n.png")
 						{
-							tus->setTextureName(sDirname + "_interior_normal.png");
-							continue;
-						}
-						// tire normal map
-						if ( (i == Mtr_CarTireFront || i == Mtr_CarTireRear) 
-							&& FileExists(resCar + "/" + sDirname + "_wheel_normal.png") 
-							&& tus->getTextureName() == "flat_n.png")
-						{
-							tus->setTextureName(sDirname + "_wheel_normal.png");
-							continue;
+							// interior normal map
+							if (i == Mtr_CarInterior 
+								&& FileExists(resCar + "/" + sDirname + "_interior_normal.png") 
+								&& tus->getTextureName() == "flat_n.png")
+							{
+								tus->setTextureName(sDirname + "_interior_normal.png");
+								continue;
+							}
+							// glass normal map
+							if (i == Mtr_CarGlass && FileExists(resCar + "/" + sDirname + "_glass_normal.png")
+								&& tus->getTextureName() == "flat_n.png")
+							{
+								tus->setTextureName(sDirname + "_glass_normal.png");
+								continue;
+							}
+							// tire normal map
+							if ( (i == Mtr_CarTireFront || i == Mtr_CarTireRear) 
+								&& FileExists(resCar + "/" + sDirname + "_wheel_normal.png") 
+								&& tus->getTextureName() == "flat_n.png")
+							{
+								tus->setTextureName(sDirname + "_wheel_normal.png");
+								continue;
+							}
 						}
 						// only 1 tire mesh?
 						if ( (i == Mtr_CarTireFront || i == Mtr_CarTireRear) 
