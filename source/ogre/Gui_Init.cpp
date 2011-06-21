@@ -656,6 +656,15 @@ void App::InitInputGui()
 			joysticks->eventComboChangePosition = MyGUI::newDelegate(this, &App::joystickSelectionChanged);
 		}
 		
+		// playertab: add labels that print the last pressed joystick button / last moved axis
+		if (playerTab)
+		{
+			MyGUI::StaticTextPtr label1 = tabitem->createWidget<StaticText>("StaticText", 300, 350, 300, 24, MyGUI::Align::Relative, "axisOutput_" + (*it).first);
+			label1->setCaption( TR("#{InputMoveAxisTip}") );
+			MyGUI::StaticTextPtr label2 = tabitem->createWidget<StaticText>("StaticText", 300, 380, 300, 24, MyGUI::Align::Relative, "buttonOutput_" + (*it).first);
+			label2->setCaption( TR("#{InputPressButtonTip}") );
+		}
+		
 		///  ------ custom action sorting ----------------
 		int i = 0, y = 0, ya = 26 / 2, yc1=0, yc2=0;
 		std::map <std::string, int> yRow;
@@ -665,7 +674,9 @@ void App::InitInputGui()
 		yRow["Steering"] = y;	y+=2+1 +2;
 		yRow["HandBrake"] = y;	y+=2;
 		yRow["Boost"] = y;		y+=2;
-		yRow["Flip"] = y;		y+=2+1 +2;
+		yRow["Flip"] = y;
+		yRow["FlipRight"] = y; y+=2;
+		yRow["FlipLeft"] = y;	y+=2 +1;
 		yRow["ShiftUp"] = y;	y+=2;
 		yRow["ShiftDown"] = y;	y+=2;
 		// general
@@ -693,6 +704,7 @@ void App::InitInputGui()
 			#define stripk(s) Ogre::StringUtil::split(s, "/").size() > 1 ? Ogre::StringUtil::split(s, "/")[1] : s // only strip if the '/' is there
 			
 			OISB::Action* act = (*ait).second;
+			if (act->isAnalog() == false && act->getName() == "Flip") continue;
 			const int sx = 130, sy = 24, x0 = 20, x1 = 180, x2 = 320, x3 = 540;  // button size and columns positon
 
 			// description label
@@ -791,6 +803,8 @@ void App::UpdateJsButtons()
 		{
 			OISB::Action* act = (*ait).second;
 			
+			if (act->getName() == "Flip" && act->isAnalog() == false) continue;
+			
 			OISB::Binding* bnd2 = NULL;
 			if (act->mBindings.size() >= 2) bnd2 = act->mBindings[1];
 			
@@ -811,12 +825,13 @@ void App::UpdateJsButtons()
 			{
 				MyGUI::ComboBoxPtr button = mGUI->findWidget<ComboBox>("jsButtonSel_" + (*ait).first + "_" + (*it).first);
 				button->removeAllItems();
+				button->addItem( TR("#{InputKeyNoButton}") );
 				if (js) {
 					for (std::vector<OISB::DigitalState*>::const_iterator it = js->buttons.begin();
 							it != js->buttons.end(); it++)
 						button->addItem( stripk((*it)->getBindableName()) );
-				}else
-					button->addItem( TR("#{InputKeyNoButton}") );
+				}
+					
 					
 				button->setIndexSelected(0);
 					
@@ -839,12 +854,13 @@ void App::UpdateJsButtons()
 			{
 				MyGUI::ComboBoxPtr axis = mGUI->findWidget<ComboBox>("jsAxisSel_" + (*ait).first + "_" + (*it).first);
 				axis->removeAllItems();
+				axis->addItem( TR("#{InputKeyNoAxis}") );
 				if (js) {
 					for (std::vector<OISB::AnalogAxisState*>::const_iterator it = js->axis.begin();
 							it != js->axis.end(); it++)
 						axis->addItem( stripk((*it)->getBindableName()) );
-				}else
-					axis->addItem( TR("#{InputKeyNoAxis}") );
+				}
+					
 					
 				axis->setIndexSelected(0);
 

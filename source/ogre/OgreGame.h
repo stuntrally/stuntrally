@@ -125,6 +125,13 @@ protected:
 	Ogre::Vector4 splitPoints;  Ogre::ShadowCameraSetupPtr mPSSMSetup;
 
 
+	/// joy events
+    virtual bool povMoved( const OIS::JoyStickEvent &e, int pov );
+	virtual bool axisMoved( const OIS::JoyStickEvent &e, int axis );
+    virtual bool sliderMoved( const OIS::JoyStickEvent &e, int sliderID );
+    virtual bool buttonPressed( const OIS::JoyStickEvent &e, int button );
+    virtual bool buttonReleased( const OIS::JoyStickEvent &e, int button );
+
 	//  road
 public:	
 	class SplineRoad* road;

@@ -250,6 +250,8 @@
 	<!--<Tag name="InputKeyUnassigned">&lt;Unassigned&gt;</Tag>-->
 	<Tag name="InputKeyUnassigned">-- None --</Tag>
 	<Tag name="InputAssignKey">&lt;Press a key&gt;</Tag>
+	<Tag name="InputMoveAxisTip">Move an axis to see its number</Tag>
+	<Tag name="InputPressButtonTip">Press a button to see its number</Tag>
 
 	<Tag name="InputMapPlayer1">Player 1</Tag>
 	<Tag name="InputMapPlayer2">Player 2</Tag>
@@ -260,6 +262,8 @@
 	<Tag name="InputMapThrottle">Throttle</Tag>
 	<Tag name="InputMapBrake">Brake</Tag>
 	<Tag name="InputMapFlip">Flip</Tag>
+	<Tag name="InputMapFlipRight">Flip right</Tag>
+	<Tag name="InputMapFlipLeft">Flip left</Tag>
 	<Tag name="InputMapBoost">Boost</Tag>
 	<Tag name="InputMapHandBrake">Handbrake</Tag>
 	<Tag name="InputMapSteering">Steering</Tag>

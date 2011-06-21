@@ -41,7 +41,7 @@
 	<Tag name="UnitKmh">km/h</Tag>
 	<Tag name="InputRoadPickOne">Valitse (yksi)</Tag>
 	<Tag name="ViewDist">Piirtoetäisyys</Tag>
-	<Tag name="Sky">Taivas</Tag>
+	<Tag name="TreeDens">Puutiheys</Tag>
 	<Tag name="TerNormal">Normaali</Tag>
 	<Tag name="LS_TRACK">Loading track</Tag>
 	<Tag name="NeedNewGame">* peli tarvitsee aloittaa alusta</Tag>
@@ -61,6 +61,7 @@
 	<Tag name="TipTrackMap">Minimap of selected track, view from top.</Tag>
 	<Tag name="TipToggleModel">Enable or disable this model.</Tag>
 	<Tag name="InputReloadTrack">F5 - lataa rata uudelleen</Tag>
+	<Tag name="Game">Game</Tag>
 	<Tag name="TipParType3">Rengaspartikkelityyppi 3 (yleispätevä radalle)</Tag>
 	<Tag name="TipParType2">Rengaspartikkelityyppi 2 (yleispätevä radalle)</Tag>
 	<Tag name="TipParType1">Rengaspartikkelityyppi 1 (yleispätevä radalle)</Tag>
@@ -92,6 +93,7 @@
 	<Tag name="Count">Lukumäärä</Tag>
 	<Tag name="UnitKm">km</Tag>
 	<Tag name="InputUndo">(one time undo)</Tag>
+	<Tag name="SplitVertically">Split Vertically</Tag>
 	<Tag name="BasedOn">pohjautuen</Tag>
 	<Tag name="InputNextOptTab">F2,F3 - prev,next Options tab</Tag>
 	<Tag name="InputRoadChkRadius">K, L   - checkpoint radius (chkR 0 - none)</Tag>
@@ -112,6 +114,7 @@
 	<Tag name="InputRoadWidth">- vaihda tien leveyttä</Tag>
 	<Tag name="Replay">Replay</Tag>
 	<Tag name="AutoRear">Auto Rear gear</Tag>
+	<Tag name="ReflMode_single">Single</Tag>
 	<Tag name="Friction">Kitka</Tag>
 	<Tag name="SetCamTo">Set camera to</Tag>
 	<Tag name="max">maksimi</Tag>
@@ -145,6 +148,7 @@
 	<Tag name="TipSkyMats">Sky material names (from SkyDome.material).</Tag>
 	<Tag name="VolMaster">Pääkanava</Tag>
 	<Tag name="TipNewGame">Start game on new track or Restart on current.</Tag>
+	<Tag name="ReflMode">Mode</Tag>
 	<Tag name="TipCopySource">Pick selected track for copy source, used in [Tools] tab.</Tag>
 	<Tag name="Layer">Taso</Tag>
 	<Tag name="EscQuit">Esc lopettaa</Tag>
@@ -156,6 +160,7 @@
 	<Tag name="TipBumpAmp">Amplitude of additional bumps on surface (how high).</Tag>
 	<Tag name="TipNormalTex">Normaalitekstuuri (korkeus alpha-kanavassa).</Tag>
 	<Tag name="PipeMaterials">Putkimateriaalit</Tag>
+	<Tag name="CamInfoStrings">Type,Yaw,Pitch,Dist,Height,Speed,Offset,LEFT,RIGHT,Middle,Wheel,shift,Rotate,reset,move,H,Pos</Tag>
 	<Tag name="End">loppu</Tag>
 	<Tag name="HDR">HDR-tehoste</Tag>
 	<Tag name="TipABS">Estää jarrujen lukkiutumisen (oletus: pois)</Tag>
@@ -201,7 +206,7 @@
 	<Tag name="InputTerHeight">E - Aseta korkeus</Tag>
 	<Tag name="InputStartPos">Q - muokkaa auton aloituspistettä</Tag>
 	<Tag name="InputBrushParams">Siveltimen parametrit</Tag>
-	<Tag name="InputMapShowOptions">Näytä valinnat</Tag>
+	<Tag name="ReflMode_static">Static</Tag>
 	<Tag name="InputCameraMode">Kameramoodi</Tag>
 	<Tag name="Enabled">Käytössä</Tag>
 	<Tag name="InputMapPlayer4">Pelaaja 4</Tag>
@@ -217,11 +222,13 @@
 	<Tag name="InputMapPlayer2">Pelaaja 2</Tag>
 	<Tag name="InputMapPlayer3">Pelaaja 3</Tag>
 	<Tag name="Ambient">Ambient</Tag>
+	<Tag name="BulletProfilerTxt">Bullet Profiler Times</Tag>
 	<Tag name="SkirtLength">Skirt Length</Tag>
 	<Tag name="InputRoadNotOnTer">when not on terrain</Tag>
 	<Tag name="TipNewDup">Create a new track by duplicating the selected track and using new name (change name first).</Tag>
 	<Tag name="TipFogEndClr">Fog end color. R G B components 0 to 1 (eg. 0.7 0.8 0.9)</Tag>
-	<Tag name="InputToggleVeget">V - Disable / enable vegetation</Tag>
+	<Tag name="InputCameraTxt1">with shift - main cameras only</Tag>
+	<Tag name="VegetCol">Kasvillisuuden törmäystunnistus</Tag>
 	<Tag name="Particles">Hiukkaset</Tag>
 	<Tag name="Other">Muu</Tag>
 	<Tag name="TrackPipes">Pipes</Tag>
@@ -233,7 +240,7 @@
 	<Tag name="InputRoadPipeAngle">[,]   - pipe angle (no pipe when 0)</Tag>
 	<Tag name="InputMapRestartGame">Uusi peli</Tag>
 	<Tag name="Graphics">Grafiikat</Tag>
-	<Tag name="InputMapNextCamera">Seuraava kamera</Tag>
+	<Tag name="InputMapShowOptions">Näytä valinnat</Tag>
 	<Tag name="CarDebugText">Car debug text </Tag>
 	<Tag name="RplSize">koko</Tag>
 	<Tag name="TipMudInt">Mud particles intensity.</Tag>
@@ -254,7 +261,7 @@
 	<Tag name="Fullscreen">Kokoruutu</Tag>
 	<Tag name="BulletLines">Bullet debug lines</Tag>
 	<Tag name="TipChangeSat">Change car color saturation (white-black).</Tag>
-	<Tag name="TreeDens">Puutiheys</Tag>
+	<Tag name="Sky">Taivas</Tag>
 	<Tag name="WrongChk">Väärä tarkistuspiste</Tag>
 	<Tag name="DisableEdit">Disable for edit</Tag>
 	<Tag name="TipAutoClutch">-Manual not implemented.</Tag>
@@ -285,7 +292,7 @@
 	<Tag name="TipGrassSwayLen">Grass sway effect length (scale).</Tag>
 	<Tag name="intensity">voimakkuus</Tag>
 	<Tag name="Fog">Sumu</Tag>
-	<Tag name="BulletProfilerTxt">Bullet Profiler Times</Tag>
+	<Tag name="InputCameraTxt2">with ctrl - switch current car when many</Tag>
 	<Tag name="InputMapNextTab">Seuraava välilehti</Tag>
 	<Tag name="FrameSkip">Frames skip</Tag>
 	<Tag name="InputTrackScrn">(for track screenshot)</Tag>
@@ -301,6 +308,7 @@
 	<Tag name="InputMapThrottle">Kiihdytys</Tag>
 	<Tag name="TipGrassVisDist">Visibility distance for grass pages.</Tag>
 	<Tag name="TipModelVisDist">Visibility distance for model pages.</Tag>
+	<Tag name="NumLocalPlayers">Number of local players</Tag>
 	<Tag name="Settings">Asetukset</Tag>
 	<Tag name="InputRoadRMB">RMB (or Num +,-)</Tag>
 	<Tag name="Anisotropy">Anisotropy</Tag>
@@ -381,18 +389,21 @@
 	<Tag name="TipRainSnow2">Set 2 Rain/Snow type</Tag>
 	<Tag name="InputTerDeform">D - Deform  (LMB up, RMB down)</Tag>
 	<Tag name="TipDiffuseTex">Diffuse texture (Specular in alpha).</Tag>
-	<Tag name="VegetCol">Kasvillisuuden törmäystunnistus</Tag>
+	<Tag name="InputToggleVeget">V - Disable / enable vegetation</Tag>
 	<Tag name="MyGUI_MessageBox_Continue">Continue</Tag>
 	<Tag name="Tools">Tools</Tag>
 	<Tag name="TipGrassSwaySpd">Grass sway effect speed.</Tag>
 	<Tag name="FrictionTread">FrictionTread</Tag>
 	<Tag name="TipTrkListEditor">Tracks list, click to select (for Rename or Duplicate). Press [Load track] to change current track in editor.</Tag>
+	<Tag name="InputMapNextCamera">Seuraava kamera</Tag>
 	<Tag name="InputReadyToPlay">(ready to play in game)</Tag>
 	<Tag name="CamInertia">Camera inertia</Tag>
 	<Tag name="TipTerSize">Resulting area in meters (side length). Equals vertex count multipled by triangle size.</Tag>
 	<Tag name="speed">speed</Tag>
 	<Tag name="TipTrackList">Ratalista, klikkaa valitaksesi (ja nähdäksesi tietoja). Paina Enter ajaaksesi (tai [Vaihda rataa] ja sitten [Uusi peli]).</Tag>
 	<Tag name="InputRoadYaw">- rotate yaw</Tag>
+	<Tag name="RplGhosts">Ghosts</Tag>
+	<Tag name="RplBestOnly">Save ghost only for best time</Tag>
 	<Tag name="Front">Front</Tag>
 	<Tag name="TipSurfFrict2">Not used.</Tag>
 	<Tag name="Change">Change</Tag>
@@ -400,6 +411,7 @@
 	<Tag name="TipDeleteTrk">Permanently delete selected track.</Tag>
 	<Tag name="DeleteRoad">Delete Road</Tag>
 	<Tag name="Setup">Setup</Tag>
+	<Tag name="ReflMode_full">Full</Tag>
 	<Tag name="Length">Pituus</Tag>
 	<Tag name="Specular">Specular</Tag>
 	<Tag name="HeightOffset">Height offset</Tag>
@@ -493,18 +505,10 @@
 	<Tag name="Pitch">pitch</Tag>
 	<Tag name="MyGUI_MessageBox_Yes">Kyllä</Tag>
 	<Tag name="RplAll">All</Tag>
-	<Tag name="Game">Game</Tag>
-	<Tag name="ReflMode_single">Single</Tag>
-	<Tag name="ReflMode">Mode</Tag>
-	<Tag name="CamInfoStrings">Type,Yaw,Pitch,Dist,Height,Speed,Offset,LEFT,RIGHT,Middle,Wheel,shift,Rotate,reset,move,H,Pos</Tag>
-	<Tag name="InputCameraTxt2">with ctrl - switch current car when many</Tag>
-	<Tag name="InputCameraTxt1">with shift - main cameras only</Tag>
-	<Tag name="ReflMode_static">Static</Tag>
-	<Tag name="NumLocalPlayers">Number of local players</Tag>
-	<Tag name="SplitVertically">Split Vertically</Tag>
-	<Tag name="RplGhosts">Ghosts</Tag>
-	<Tag name="RplBestOnly">Save ghost only for best time</Tag>
-	<Tag name="ReflMode_full">Full</Tag>
+	<Tag name="InputPressButtonTip">Press a button to see its number</Tag>
+	<Tag name="InputMoveAxisTip">Move an axis to see its number</Tag>
+	<Tag name="InputMapFlipRight">Flip right</Tag>
+	<Tag name="InputMapFlipLeft">Flip left</Tag>
 	<Tag name="GameVersion">1.2</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 

@@ -32,7 +32,9 @@ namespace OISB
 {
     AnalogEmulator::AnalogEmulator():
         mTarget(0)
-    {}
+    {
+		isEnabled = true;
+	}
 
     AnalogEmulator::~AnalogEmulator()
     {}
@@ -68,6 +70,7 @@ namespace OISB
             
     Real LinearAnalogEmulator::emulateRelative(Binding* binding, Real delta)
     {
+		if (!isEnabled) return 0.0f;
         Real ret = 0.0f;
 
         Bindable* decrease;
@@ -118,6 +121,7 @@ namespace OISB
 
     Real LinearAnalogEmulator::emulateAbsolute(Binding* binding, Real delta)
     {
+		if (!isEnabled) return 0.0f;
         Real ret = 0.0f;
 
         Bindable* decrease;

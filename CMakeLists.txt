@@ -48,7 +48,9 @@ mark_as_advanced(SHARE_INSTALL)
 add_definitions(-DSHARED_DATA_DIR="${SHARE_INSTALL}")
 
 
+
 # Libraries
+
 if(WIN32)
 	set(Boost_USE_STATIC_LIBS   ON)
 endif(WIN32)

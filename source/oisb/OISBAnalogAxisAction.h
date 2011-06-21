@@ -46,6 +46,8 @@ namespace OISB
 			 */
 			AnalogAxisAction(ActionSchema* parent, const String& name);
 			
+			bool emulationEnabled;
+			
 			/**
 			 * @brief destructor
 			 */
@@ -53,6 +55,11 @@ namespace OISB
 
             /// @copydoc Action::getActionType
             virtual ActionType getActionType() const;
+            
+            virtual bool isAnalog() const
+            {
+				return true;
+			}
             
             void setUseAbsoluteValues(bool use);
 

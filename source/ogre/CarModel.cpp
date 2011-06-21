@@ -266,8 +266,44 @@ void CarModel::Create()
 				{	Pass* pass = passIt.getNext();
 					Pass::TextureUnitStateIterator tusIt = pass->getTextureUnitStateIterator();
 					while (tusIt.hasMoreElements())
-					{	
+					{
 						TextureUnitState* tus = tusIt.getNext();
+						// normal maps
+						if (tus->getTextureName() == "flat_n.png")
+						{
+							// interior normal map
+							if (i == Mtr_CarInterior 
+								&& FileExists(resCar + "/" + sDirname + "_interior_normal.png") 
+								&& tus->getTextureName() == "flat_n.png")
+							{
+								tus->setTextureName(sDirname + "_interior_normal.png");
+								continue;
+							}
+							// glass normal map
+							if (i == Mtr_CarGlass && FileExists(resCar + "/" + sDirname + "_glass_normal.png")
+								&& tus->getTextureName() == "flat_n.png")
+							{
+								tus->setTextureName(sDirname + "_glass_normal.png");
+								continue;
+							}
+							// tire normal map
+							if ( (i == Mtr_CarTireFront || i == Mtr_CarTireRear) 
+								&& FileExists(resCar + "/" + sDirname + "_wheel_normal.png") 
+								&& tus->getTextureName() == "flat_n.png")
+							{
+								tus->setTextureName(sDirname + "_wheel_normal.png");
+								continue;
+							}
+						}
+						// only 1 tire mesh?
+						if ( (i == Mtr_CarTireFront || i == Mtr_CarTireRear) 
+							&& FileExists(resCar + "/" + sDirname + "_wheel.mesh") 
+							&& (tus->getTextureName() == "wheel_front.png" || tus->getTextureName() == "wheel_rear.png") )
+						{
+							// set same texture for both
+							tus->setTextureName("wheel.png");
+						}
+						
 						if (tus->getTextureName() == "body_dyn.png")
 							tus->setTextureName("body_dyn" + toStr(iIndex) + ".png");
 						else if (!(StringUtil::startsWith(tus->getTextureName(), "ReflectionCube") || StringUtil::startsWith(tus->getTextureName(), "body_dyn") || tus->getTextureName() == "ReflectionCube"))
@@ -334,26 +370,37 @@ void CarModel::Create()
 	//  wheels  ----------------------
 	for (int w=0; w < 4; w++)
 	{
-		if (w < 2 && FileExists(resCar + "/" + sDirname + "_" + "wheel_front.mesh"))
+		// only 1 mesh for both?
+		if (FileExists(resCar + "/" + sDirname + "_wheel.mesh"))
 		{
-			Entity* eWh = pSceneMgr->createEntity("Wheel"+ toStr(iIndex) + "_" +toStr(w), sDirname + "_" + "wheel_front.mesh", "Car" + toStr(iIndex));
+			Entity* eWh = pSceneMgr->createEntity("Wheel"+ toStr(iIndex) + "_" +toStr(w), sDirname + "_wheel.mesh", "Car" + toStr(iIndex));
 			eWh->setMaterialName(sMtr[Mtr_CarTireFront]);
 			ndWh[w] = pSceneMgr->getRootSceneNode()->createChildSceneNode();
 			ndWh[w]->attachObject(eWh);  eWh->setVisibilityFlags(2);
-		}else
-		if (FileExists(resCar + "/" + sDirname + "_" + "wheel_rear.mesh"))
+		}
+		else
 		{
-			Entity* eWh = pSceneMgr->createEntity("Wheel"+ toStr(iIndex) + "_" +toStr(w), sDirname + "_" + "wheel_rear.mesh", "Car" + toStr(iIndex));
-			eWh->setMaterialName(sMtr[Mtr_CarTireRear]);
-			ndWh[w] = pSceneMgr->getRootSceneNode()->createChildSceneNode();
-			ndWh[w]->attachObject(eWh);  eWh->setVisibilityFlags(2);
-		}else{
-			ManualObject* mWh;
-			if (w < 2)	mWh = CreateModel(pSceneMgr, sMtr[Mtr_CarTireFront], &pCar->wheelmodelfront.mesh, vPofs, true);
-			else		mWh = CreateModel(pSceneMgr, sMtr[Mtr_CarTireRear],  &pCar->wheelmodelrear.mesh, vPofs, true);
-			if (mWh)  {
+			if (w < 2 && FileExists(resCar + "/" + sDirname + "_wheel_front.mesh"))
+			{
+				Entity* eWh = pSceneMgr->createEntity("Wheel"+ toStr(iIndex) + "_" +toStr(w), sDirname + "_" + "wheel_front.mesh", "Car" + toStr(iIndex));
+				eWh->setMaterialName(sMtr[Mtr_CarTireFront]);
 				ndWh[w] = pSceneMgr->getRootSceneNode()->createChildSceneNode();
-				ndWh[w]->attachObject(mWh);  mWh->setVisibilityFlags(2);  }
+				ndWh[w]->attachObject(eWh);  eWh->setVisibilityFlags(2);
+			}else
+			if (FileExists(resCar + "/" + sDirname + "_" + "wheel_rear.mesh"))
+			{
+				Entity* eWh = pSceneMgr->createEntity("Wheel"+ toStr(iIndex) + "_" +toStr(w), sDirname + "_" + "wheel_rear.mesh", "Car" + toStr(iIndex));
+				eWh->setMaterialName(sMtr[Mtr_CarTireRear]);
+				ndWh[w] = pSceneMgr->getRootSceneNode()->createChildSceneNode();
+				ndWh[w]->attachObject(eWh);  eWh->setVisibilityFlags(2);
+			}else{
+				ManualObject* mWh;
+				if (w < 2)	mWh = CreateModel(pSceneMgr, sMtr[Mtr_CarTireFront], &pCar->wheelmodelfront.mesh, vPofs, true);
+				else		mWh = CreateModel(pSceneMgr, sMtr[Mtr_CarTireRear],  &pCar->wheelmodelrear.mesh, vPofs, true);
+				if (mWh)  {
+					ndWh[w] = pSceneMgr->getRootSceneNode()->createChildSceneNode();
+					ndWh[w]->attachObject(mWh);  mWh->setVisibilityFlags(2);  }
+			}
 		}
 	}
 

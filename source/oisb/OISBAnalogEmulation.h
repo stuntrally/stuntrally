@@ -57,6 +57,8 @@ namespace OISB
                 return mTarget;
             }
 
+			bool isEnabled;
+
             /**
              * @brief checks whether this emulator will be able to emulate using given binding
              */

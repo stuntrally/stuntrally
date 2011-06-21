@@ -48,7 +48,8 @@ namespace OISB
         mMaximumValue(1.0f),
         mSensitivity(1.0f),
 
-        mAnalogEmulator(0)
+        mAnalogEmulator(0),
+        emulationEnabled(1)
 	{
         setAnalogEmulator(new LinearAnalogEmulator());
     }
@@ -118,6 +119,7 @@ namespace OISB
 			list.push_back("Sensitivity");
 
 			list.push_back("AnalogEmulator");
+			list.push_back("EmulationEnabled");
 		}
 
         if (mAnalogEmulator && child)
@@ -133,7 +135,11 @@ namespace OISB
         {
             setUseAbsoluteValues(fromString<bool>(value));
         }
-
+		else if (name == "EmulationEnabled")
+		{
+			mAnalogEmulator->isEnabled = fromString<bool>(value);
+			emulationEnabled = fromString<bool>(value);
+		}
         else if (name == "AbsoluteValue")
         {
             OIS_EXCEPT(OIS::E_InvalidParam, "'AbsoluteValue' is a read only, you can't set it!");
@@ -165,6 +171,7 @@ namespace OISB
             if (value == "Linear")
             {
                 setAnalogEmulator(new LinearAnalogEmulator());
+                mAnalogEmulator->isEnabled = emulationEnabled;
             }
             else
             {
@@ -199,7 +206,11 @@ namespace OISB
         {
             return toString(getUseAbsoluteValues());
         }
-
+		else if (name == "EmulationEnabled")
+		{
+			if (!mAnalogEmulator) return toString(emulationEnabled);
+			return toString(mAnalogEmulator->isEnabled);
+		}
         else if (name == "AbsoluteValue")
         {
             return toString(getAbsoluteValue());

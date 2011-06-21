@@ -37,7 +37,7 @@
 	<Tag name="UnitKmh">km/h</Tag>
 	<Tag name="InputRoadPickOne">Auswählen (eins)</Tag>
 	<Tag name="ViewDist">Sichtweite</Tag>
-	<Tag name="Sky">Himmel</Tag>
+	<Tag name="TreeDens">Baumdichte</Tag>
 	<Tag name="TerNormal">Normale</Tag>
 	<Tag name="LS_TRACK">Lade Strecke</Tag>
 	<Tag name="NeedNewGame">* neues Spiel erforderlich</Tag>
@@ -57,6 +57,7 @@
 	<Tag name="TipTrackMap">Minikarte der ausgewählten Strecke, Sicht von oben.</Tag>
 	<Tag name="TipToggleModel">Modell aktivieren oder deaktivieren.</Tag>
 	<Tag name="InputReloadTrack">F5 - Neu laden</Tag>
+	<Tag name="Game">Spiel</Tag>
 	<Tag name="TipParType3">Reifenpartikel Typ 3 (ganze Strecke)</Tag>
 	<Tag name="TipParType2">Reifenpartikel Typ 2 (ganze Strecke)</Tag>
 	<Tag name="TipParType1">Reifenpartikel Typ 1 (ganze Strecke)</Tag>
@@ -88,6 +89,7 @@
 	<Tag name="Count">Anzahl</Tag>
 	<Tag name="UnitKm">km</Tag>
 	<Tag name="InputUndo">(rückgängig)</Tag>
+	<Tag name="SplitVertically">Senkrecht teilen</Tag>
 	<Tag name="BasedOn">basiert auf</Tag>
 	<Tag name="InputNextOptTab">F2,F3 - vorheriger/nächster Tab</Tag>
 	<Tag name="InputRoadChkRadius">K, L - Wegpunkt-Radius</Tag>
@@ -108,6 +110,7 @@
 	<Tag name="InputRoadWidth">- Straßenbreite</Tag>
 	<Tag name="Replay">Replay</Tag>
 	<Tag name="AutoRear">Autom. Rückwärtsgang</Tag>
+	<Tag name="ReflMode_single">Single</Tag>
 	<Tag name="Friction">Reibung</Tag>
 	<Tag name="SetCamTo">Kamera setzen</Tag>
 	<Tag name="max">max</Tag>
@@ -141,6 +144,7 @@
 	<Tag name="TipSkyMats">Namen der Sky-Materialien (aus SkyDome.material)</Tag>
 	<Tag name="VolMaster">Master</Tag>
 	<Tag name="TipNewGame">Ein Spiel auf neuer Strecke starten oder auf der aktuellen Strecke neu starten.</Tag>
+	<Tag name="ReflMode">Mode</Tag>
 	<Tag name="TipCopySource">Strecke als Kopierquelle für den [Werkzeuge] Tab auswählen.</Tag>
 	<Tag name="Layer">Layer</Tag>
 	<Tag name="EscQuit">Beenden mit Esc</Tag>
@@ -152,6 +156,7 @@
 	<Tag name="TipBumpAmp">Amplitude (Höhe) zusätzlicher Unebenheiten der Oberfläche</Tag>
 	<Tag name="TipNormalTex">Normaltextur (Höhe im Alphakanal)</Tag>
 	<Tag name="PipeMaterials">Röhrenmaterialien</Tag>
+	<Tag name="CamInfoStrings">Type,Yaw,Pitch,Dist,Height,Speed,Offset,LEFT,RIGHT,Middle,Wheel,shift,Rotate,reset,move,H,Pos</Tag>
 	<Tag name="End">Ende</Tag>
 	<Tag name="HDR">HDR</Tag>
 	<Tag name="TipABS">Verhindert das Blockieren der Reifen beim Bremsen (Standard: aus)</Tag>
@@ -197,7 +202,7 @@
 	<Tag name="InputTerHeight">E - Höhe setzen</Tag>
 	<Tag name="InputStartPos">Q - Startposition ändern</Tag>
 	<Tag name="InputBrushParams">Pinseleigenschaften</Tag>
-	<Tag name="InputMapShowOptions">Optionen zeigen</Tag>
+	<Tag name="ReflMode_static">Static</Tag>
 	<Tag name="InputCameraMode">Kameramodus</Tag>
 	<Tag name="Enabled">Aktiviert</Tag>
 	<Tag name="InputMapPlayer4">Spieler 4</Tag>
@@ -213,11 +218,13 @@
 	<Tag name="InputMapPlayer2">Spieler 2</Tag>
 	<Tag name="InputMapPlayer3">Spieler 3</Tag>
 	<Tag name="Ambient">Umgebung</Tag>
+	<Tag name="BulletProfilerTxt">Bullet Profileranzeige</Tag>
 	<Tag name="SkirtLength">Skirt-Länge</Tag>
 	<Tag name="InputRoadNotOnTer">wenn nicht auf Terrain</Tag>
 	<Tag name="TipNewDup">Erstellen einer neuen Strecke durch Duplizieren der ausgewählten Strecke unter neuem Namen (erst Namen ändern)</Tag>
 	<Tag name="TipFogEndClr">Ausklangfarbe des Nebels. R G B Komponenten von 0 bis 1 (z.B. 0.7 0.8 0.9)</Tag>
-	<Tag name="InputToggleVeget">V - Vegetation an/aus</Tag>
+	<Tag name="InputCameraTxt1">Mit Shift - Nur Hauptkameras</Tag>
+	<Tag name="VegetCol">Vegetation Kollision</Tag>
 	<Tag name="Particles">Partikel</Tag>
 	<Tag name="Other">Sonstige</Tag>
 	<Tag name="TrackPipes">Röhren</Tag>
@@ -229,7 +236,7 @@
 	<Tag name="InputRoadPipeAngle">[,]   - pipe angle (no pipe when 0)</Tag>
 	<Tag name="InputMapRestartGame">Neues Spiel</Tag>
 	<Tag name="Graphics">Grafik</Tag>
-	<Tag name="InputMapNextCamera">Nächste Kamera</Tag>
+	<Tag name="InputMapShowOptions">Optionen zeigen</Tag>
 	<Tag name="CarDebugText">Auto Debug text </Tag>
 	<Tag name="RplSize">Größe</Tag>
 	<Tag name="TipMudInt">Intensität der Schlammpartikel.</Tag>
@@ -250,7 +257,7 @@
 	<Tag name="Fullscreen">Vollbild</Tag>
 	<Tag name="BulletLines">Bullet Debug Linien</Tag>
 	<Tag name="TipChangeSat">Sättigung ändern</Tag>
-	<Tag name="TreeDens">Baumdichte</Tag>
+	<Tag name="Sky">Himmel</Tag>
 	<Tag name="WrongChk">Falscher Wegpunkt</Tag>
 	<Tag name="DisableEdit">Beim edit. deaktiveren</Tag>
 	<Tag name="TipAutoClutch">-Manuell nicht implementiert.</Tag>
@@ -281,7 +288,7 @@
 	<Tag name="TipGrassSwayLen">Grasschwingungslänge (Skal.)</Tag>
 	<Tag name="intensity">Intensität</Tag>
 	<Tag name="Fog">Nebel</Tag>
-	<Tag name="BulletProfilerTxt">Bullet Profileranzeige</Tag>
+	<Tag name="InputCameraTxt2">Mit Strg - Auto für Kameraänderung wechseln</Tag>
 	<Tag name="InputMapNextTab">Nächster Tab</Tag>
 	<Tag name="FrameSkip">FrameSkip</Tag>
 	<Tag name="InputTrackScrn">(für Bildschirmfoto)</Tag>
@@ -297,6 +304,7 @@
 	<Tag name="InputMapThrottle">Gas</Tag>
 	<Tag name="TipGrassVisDist">Sichtbarkeitsdistanz für Gras-Pages</Tag>
 	<Tag name="TipModelVisDist">Sichtbarkeitsdistanz für Modell-Pages</Tag>
+	<Tag name="NumLocalPlayers">Anzahl Spieler</Tag>
 	<Tag name="Settings">Optionen</Tag>
 	<Tag name="InputRoadRMB">RMB (oder Num+,-)</Tag>
 	<Tag name="Anisotropy">Anisotropie</Tag>
@@ -377,18 +385,21 @@
 	<Tag name="TipRainSnow2">Typ Rain/Snow 2 setzen</Tag>
 	<Tag name="InputTerDeform">D - verformen (LMB hoch, RMB runter)</Tag>
 	<Tag name="TipDiffuseTex">Diffusetextur (Specular in Alphakanal).</Tag>
-	<Tag name="VegetCol">Vegetation Kollision</Tag>
+	<Tag name="InputToggleVeget">V - Vegetation an/aus</Tag>
 	<Tag name="MyGUI_MessageBox_Continue">Fortsetzen</Tag>
 	<Tag name="Tools">Werkzeuge</Tag>
 	<Tag name="TipGrassSwaySpd">Grasschwingung Geschw.</Tag>
 	<Tag name="FrictionTread">ReibungsProfil</Tag>
 	<Tag name="TipTrkListEditor">Streckenliste, Klicken zum Auswählen (zum Umbenennen oder Duplizieren). [Strecke Laden] drücken um die Strecke im Editor zu öffnen.</Tag>
+	<Tag name="InputMapNextCamera">Nächste Kamera</Tag>
 	<Tag name="InputReadyToPlay">(bereit zum Fahren)</Tag>
 	<Tag name="CamInertia">Kameraträgheit</Tag>
 	<Tag name="TipTerSize">Resultierende Seitenlänge in Metern. Entspricht der Vertexanzahl multipliziert mit Triangle-Größe.</Tag>
 	<Tag name="speed">Geschw.</Tag>
 	<Tag name="TipTrackList">Streckenauswahl - klicken, um auswählen; Enter, um darauf zu fahren. (oder [Strecke wechseln] und dann [Neues Spiel])</Tag>
 	<Tag name="InputRoadYaw">- gieren</Tag>
+	<Tag name="RplGhosts">Geister</Tag>
+	<Tag name="RplBestOnly">Geist nur für beste Zeit speichern</Tag>
 	<Tag name="Front">Vorne</Tag>
 	<Tag name="TipSurfFrict2">Nicht benutzt.</Tag>
 	<Tag name="Change">Ändern</Tag>
@@ -396,6 +407,7 @@
 	<Tag name="TipDeleteTrk">Ausgewählte Strecke permanent löschen.</Tag>
 	<Tag name="DeleteRoad">Straße löschen</Tag>
 	<Tag name="Setup">Setup</Tag>
+	<Tag name="ReflMode_full">Full</Tag>
 	<Tag name="Length">Länge</Tag>
 	<Tag name="Specular">Specular</Tag>
 	<Tag name="HeightOffset">Höhen-Offset</Tag>
@@ -405,7 +417,7 @@
 	<Tag name="SREditorVersion">Stunt Rally - Streckeneditor - Version</Tag>
 	<Tag name="InputRoadAfterPick">nach ausgew., zentr. bei Maus</Tag>
 	<Tag name="TipTrackDesc">Beschreibung der Strecke.</Tag>
-	<Tag name="RplFileSize">File size</Tag>
+	<Tag name="RplFileSize">Dateigröße</Tag>
 	<Tag name="SourceTrack">Bezugsquelle</Tag>
 	<Tag name="ImpostorDist">Impostor Dist.</Tag>
 	<Tag name="page">Page</Tag>
@@ -431,7 +443,7 @@
 	<Tag name="RestartApply">Spiel neustarten, um *Änderungen anzuwenden.</Tag>
 	<Tag name="InputMapShiftDown">Runterschalten</Tag>
 	<Tag name="BumpWavelen">Bump: WaveLen</Tag>
-	<Tag name="CarCollis">Cars collision</Tag>
+	<Tag name="CarCollis">Autokollision</Tag>
 	<Tag name="CameraInfo">Kamerainfo</Tag>
 	<Tag name="NewGame">Neues Spiel</Tag>
 	<Tag name="InputMapSteering">Lenkung</Tag>
@@ -489,18 +501,10 @@
 	<Tag name="Pitch">neigen</Tag>
 	<Tag name="MyGUI_MessageBox_Yes">Ja</Tag>
 	<Tag name="RplAll">Alle</Tag>
-	<Tag name="Game">Game</Tag>
-	<Tag name="ReflMode_single">Single</Tag>
-	<Tag name="ReflMode">Mode</Tag>
-	<Tag name="CamInfoStrings">Type,Yaw,Pitch,Dist,Height,Speed,Offset,LEFT,RIGHT,Middle,Wheel,shift,Rotate,reset,move,H,Pos</Tag>
-	<Tag name="InputCameraTxt2">with ctrl - switch current car when many</Tag>
-	<Tag name="InputCameraTxt1">with shift - main cameras only</Tag>
-	<Tag name="ReflMode_static">Static</Tag>
-	<Tag name="NumLocalPlayers">Number of local players</Tag>
-	<Tag name="SplitVertically">Split Vertically</Tag>
-	<Tag name="RplGhosts">Ghosts</Tag>
-	<Tag name="RplBestOnly">Save ghost only for best time</Tag>
-	<Tag name="ReflMode_full">Full</Tag>
+	<Tag name="InputPressButtonTip">Press a button to see its number</Tag>
+	<Tag name="InputMoveAxisTip">Move an axis to see its number</Tag>
+	<Tag name="InputMapFlipRight">Flip right</Tag>
+	<Tag name="InputMapFlipLeft">Flip left</Tag>
 	<Tag name="GameVersion">1.2</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 
