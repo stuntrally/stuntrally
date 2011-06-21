@@ -98,6 +98,8 @@ struct GameClientCallback {
  */
 class P2PGameClient: public net::NetworkListener {
 public:
+	enum State { DISCONNECTED, LOBBY, GAME };
+
 	P2PGameClient(GameClientCallback* callback = NULL, int port = protocol::DEFAULT_PORT);
 
 	~P2PGameClient();
@@ -133,6 +135,8 @@ public:
 	/// Get copy of peer infos
 	PeerMap getPeers() const { return m_peers; }
 
+	State getState() const { return m_state; }
+
 	/// Return the latest unhandled car states and clear them
 	protocol::CarStates getReceivedCarStates();
 
@@ -152,7 +156,7 @@ private:
 	net::NetworkObject m_client;
 	PeerMap m_peers;
 	protocol::CarStates m_receivedCarStates;
-	enum State { DISCONNECTED, LOBBY, GAME } m_state;
+	State m_state;
 	boost::thread m_senderThread;
 	mutable boost::mutex m_mutex;
 	boost::condition m_cond;
