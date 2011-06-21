@@ -29,7 +29,7 @@ enum PacketType {
 	PEER_ADDRESS,       // Packet for peer discovery
 	PLAYER_INFO,        // Player attributes of the sender
 	TEXT_MESSAGE,       // Text string that should be displayed somewhere
-	STATE_UPDATE,
+	CAR_UPDATE,         // Car state update
 	GAME_LIST,          // Client requests master server to list games
 	GAME_ACCEPTED,      // Master server sends response for newly accepted games
 	GAME_STATUS,        // An available game (either client updates, or server reports)
@@ -91,14 +91,17 @@ struct PlayerInfoPacket: public net::SimpleSerializer<PlayerInfoPacket> {
 
 
 /**
- * Contains the car state.
+ * @brief Contains the car state.
+ * These structs are passed around to update car position etc.
  */
-struct CarStatePackage {
+struct CarStatePackage: public net::SimpleSerializer<CarStatePackage> {
 	float x, y, z; // FIXME: Should we use some vector types?
 	float vx, vy, vz;
 	float rotx, roty, rotz; // FIXME: What's the best way to transmit orientation?
 
 	CarStatePackage(/* TODO: Parameters. */) {}
 };
+
+typedef std::map<uint8_t, CarStatePackage> CarStates;
 
 }

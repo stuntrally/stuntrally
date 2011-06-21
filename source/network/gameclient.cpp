@@ -66,15 +66,20 @@ void P2PGameClient::startGame(bool broadcast)
 	if (m_state == GAME) return;
 	m_state = GAME;
 	{
-		// Clean up all zombie peers
+		// Clean up all zombie peers and assign id numbers
 		boost::mutex::scoped_lock lock(m_mutex);
+		int id = 0;
 		PeerMap::iterator it = m_peers.begin();
 		while (it != m_peers.end()) {
-			PeerInfo pi = it->second;
+			PeerInfo& pi = it->second;
 			// Check condition
 			if (pi.connection != PeerInfo::CONNECTED || pi.name.empty()) {
 				m_peers.erase(it++);
-			} else ++it;
+			} else {
+				pi.id = id;
+				++id;
+				++it;
+			}
 		}
 	}
 	// Send notification
@@ -115,6 +120,14 @@ void P2PGameClient::senderThread() {
 		}
 		if (m_state == DISCONNECTED) break;
 	} while (true);
+}
+
+protocol::CarStates P2PGameClient::getReceivedCarStates()
+{
+	boost::mutex::scoped_lock lock(m_mutex);
+	protocol::CarStates states = m_receivedCarStates;
+	m_receivedCarStates.clear();
+	return states;
 }
 
 size_t P2PGameClient::getPeerCount() const
@@ -222,6 +235,16 @@ void P2PGameClient::receiveEvent(net::NetworkTraffic const& e)
 				lock.unlock(); // Mutex unlocked in callback to avoid dead-locks
 				m_callback->peerState(picopy, e.packet_data[0]);
 			}
+			break;
+		}
+		case protocol::CAR_UPDATE: {
+			if (m_state != GAME) break;
+			protocol::CarStatePackage csp = *reinterpret_cast<protocol::CarStatePackage const*>(e.packet_data);
+			boost::mutex::scoped_lock lock(m_mutex);
+			PeerInfo& pi = m_peers[e.peer_address];
+			pi.ping = e.ping;
+			if (pi.id < 0) break;
+			m_receivedCarStates[pi.id] = csp;
 			break;
 		}
 		default: {

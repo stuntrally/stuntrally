@@ -14,6 +14,7 @@
  * @brief Application specific peer information.
  */
 struct PeerInfo {
+	int8_t id; ///< ID number, used with car state updates
 	net::Address address; ///< Address
 	std::string name; ///< Nickname
 	std::string car; ///< Car
@@ -23,7 +24,7 @@ struct PeerInfo {
 	unsigned ping; ///< Average packet round-trip time
 	enum ConnectionState { DISCONNECTED = 0, CONNECTING = 1, CONNECTED = 2 } connection; ///< Connection state
 
-	PeerInfo(net::Address addr = net::Address()): address(addr), name(), car(), peers(), ready(), ping(0), connection(DISCONNECTED) {}
+	PeerInfo(net::Address addr = net::Address()): id(-1), address(addr), name(), car(), peers(), ready(), ping(0), connection(DISCONNECTED) {}
 
 	PeerInfo& operator=(const protocol::PlayerInfoPacket& pip) {
 		name = std::string(pip.name); car = std::string(pip.car); password = std::string(pip.password);
@@ -130,7 +131,10 @@ public:
 	size_t getPeerCount() const;
 
 	/// Get copy of peer infos
-	PeerMap getPeers() { return m_peers; }
+	PeerMap getPeers() const { return m_peers; }
+
+	/// Return the latest unhandled car states and clear them
+	protocol::CarStates getReceivedCarStates();
 
 	/// Callback from networking
 	void connectionEvent(net::NetworkTraffic const& e);
@@ -147,6 +151,7 @@ private:
 	GameClientCallback* m_callback;
 	net::NetworkObject m_client;
 	PeerMap m_peers;
+	protocol::CarStates m_receivedCarStates;
 	enum State { DISCONNECTED, LOBBY, GAME } m_state;
 	boost::thread m_senderThread;
 	mutable boost::mutex m_mutex;
