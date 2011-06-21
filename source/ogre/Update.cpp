@@ -139,6 +139,17 @@ bool App::frameStart(Real time)
 
 
 		///  step Game  *******
+
+		//  check for new car states in networked game
+		// FIXME: Check for proper condition here
+		if (mClient && mClient->getState() == P2PGameClient::GAME && !isFocGui && !pGame->pause) {
+			protocol::CarStates states = mClient->getReceivedCarStates();
+			for (protocol::CarStates::const_iterator it = states.begin(); it != states.end(); ++it) {
+				int8_t id = it->first; // Car number
+				// TODO: Update cars
+			}
+		}
+
 		//  single thread, sim on draw
 		bool ret = true;
 		if (pSet->mult_thr != 1)
