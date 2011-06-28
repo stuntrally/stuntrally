@@ -97,7 +97,7 @@ void BaseApp::createFrameListener()
 
 void BaseApp::createViewports()
 {
-	mSplitMgr->mNumPlayers = pSet->local_players;
+	mSplitMgr->mNumViewports = pSet->local_players;
 	mSplitMgr->Align();
 }
 
@@ -397,7 +397,7 @@ bool BaseApp::setup()
 	// -------------------------------------------------------
 		
 	mPlatform->getRenderManagerPtr()->setSceneManager(mSplitMgr->mGuiSceneMgr);
-	mPlatform->getRenderManagerPtr()->setActiveViewport(mSplitMgr->mNumPlayers);
+	mPlatform->getRenderManagerPtr()->setActiveViewport(mSplitMgr->mNumViewports);
 	
 	// After having initialised mygui, we can set translated strings
 	setTranslations();

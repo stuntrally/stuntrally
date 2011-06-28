@@ -278,7 +278,7 @@ void BaseApp::updateStats()
 	
 	static char s[128];
 	// Only for 1 local player
-	if (mSplitMgr && mSplitMgr->mNumPlayers == 1)
+	if (mSplitMgr && mSplitMgr->mNumViewports == 1)
 	{
 		/*if (mbShowCamPos)
 		{

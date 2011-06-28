@@ -26,7 +26,7 @@ public:
 	~SplitScreenManager();
 	
 	// Number of viewports / cameras
-	unsigned int mNumPlayers;
+	unsigned int mNumViewports;
 	
 	// Lists for player viewports & cameras
 	std::list<Ogre::Viewport*> mViewports;

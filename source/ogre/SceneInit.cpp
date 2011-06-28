@@ -118,9 +118,9 @@ void App::LoadCleanUp()  // 1 first
 void App::LoadGame()  // 2
 {
 	//  viewports
-	mSplitMgr->mNumPlayers = bRplPlay ? replay.header.numPlayers : pSet->local_players;  // set num players
+	mSplitMgr->mNumViewports = bRplPlay ? replay.header.numPlayers : pSet->local_players;  // set num players
 	mSplitMgr->Align();
-	mPlatform->getRenderManagerPtr()->setActiveViewport(mSplitMgr->mNumPlayers);
+	mPlatform->getRenderManagerPtr()->setActiveViewport(mSplitMgr->mNumViewports);
 	
 	pGame->NewGameDoCleanup();
 	pGame->NewGameDoLoadTrack();
@@ -129,7 +129,7 @@ void App::LoadGame()  // 2
 	// this is just here because vdrift car has to be created first
 	std::list<Camera*>::iterator camIt = mSplitMgr->mCameras.begin();
 	int i;
-	for (i=0; i < mSplitMgr->mNumPlayers; i++,camIt++)
+	for (i=0; i < mSplitMgr->mNumViewports; i++,camIt++)
 		carModels.push_back( new CarModel(i, CarModel::CT_LOCAL, pSet->car, mSceneMgr, pSet, pGame, &sc, (*camIt), this ) );
 
 	/// ghost car  load if exists
