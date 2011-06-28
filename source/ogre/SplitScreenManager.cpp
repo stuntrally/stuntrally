@@ -77,7 +77,7 @@ void SplitScreenManager::Align()
 	 * Of course, this could be implemented in a different way to also support 12674*10^4 viewports,
 	 * but since we only need 1-4 we do it this way.
 	 */
-	for (int i=0; i<mNumPlayers; i++)
+	for (int i=0; i<mNumViewports; i++)
 	{
 		// Set dimensions for the viewports
 		float dims[4];
@@ -85,12 +85,12 @@ void SplitScreenManager::Align()
 		// handy macro for initializing the array
 		#define dim_(l,t,w,h)  dims[0]=l;  dims[1]=t;  dims[2]=w;  dims[3]=h
 		
-		if (mNumPlayers == 1)
+		if (mNumViewports == 1)
 		{
 			//  Only 1 player, full screen viewport
 			dim_(0.0, 0.0, 1.0, 1.0);
 		}
-		else if (mNumPlayers == 2)
+		else if (mNumViewports == 2)
 		{
 			//  2 players, use split_vertically setting
 			if (!pSet->split_vertically)
@@ -100,7 +100,7 @@ void SplitScreenManager::Align()
 				if (i == 0) {		dim_(0.0, 0.0, 0.5, 1.0);	}
 				else if (i == 1) {	dim_(0.5, 0.0, 0.5, 1.0);	}	}
 		}
-		else if (mNumPlayers == 3)
+		else if (mNumViewports == 3)
 		{
 			// 3 players, use split_vertically setting
 			if (!pSet->split_vertically)
@@ -114,7 +114,7 @@ void SplitScreenManager::Align()
 				else if (i == 2){	dim_(0.5, 0.5, 0.5, 0.5);	}
 			}
 		}
-		else if (mNumPlayers == 4)
+		else if (mNumViewports == 4)
 		{
 			// 4 players, 2 viewports at top and 2 at bottom
 			if (i == 0)		{	dim_(0.0, 0.0, 0.5, 0.5);	}
@@ -124,7 +124,7 @@ void SplitScreenManager::Align()
 		}
 		else
 		{
-			LogO("FATAL ERROR: Unsupported number of viewports: " + toStr(mNumPlayers));
+			LogO("FATAL ERROR: Unsupported number of viewports: " + toStr(mNumViewports));
 			return;
 		}
 		#undef dim_
@@ -221,7 +221,7 @@ void SplitScreenManager::preViewportUpdate(const Ogre::RenderTargetViewportEvent
 			
 
 		//  road lod for each viewport
-		if (mNumPlayers > 1)
+		if (mNumViewports > 1)
 		if (pApp->road)
 		{
 			pApp->road->mCamera = evt.source->getCamera();

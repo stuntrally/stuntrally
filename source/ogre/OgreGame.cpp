@@ -8,6 +8,8 @@
 
 #include <OgreTerrain.h>
 #include <OgreTerrainGroup.h>
+#include <OgreTerrainPaging.h>
+#include <OgrePageManager.h>
 #include <OgreManualObject.h>
 using namespace Ogre;
 
@@ -77,12 +79,12 @@ String App::PathListTrk(int user) {
 App::~App()
 {
 	delete road;
-	if (mTerrainPaging)
-	{
+	if (mTerrainPaging) {
 		OGRE_DELETE mTerrainPaging;
 		OGRE_DELETE mPageManager;
-	}else
+	} else {
 		OGRE_DELETE mTerrainGroup;
+	}
 	OGRE_DELETE mTerrainGlobals;
 
 	OGRE_DELETE dbgdraw;
