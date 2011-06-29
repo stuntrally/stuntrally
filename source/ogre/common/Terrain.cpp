@@ -217,7 +217,7 @@ void App::CreateBltTerrain()
 {
 	btHeightfieldTerrainShape* hfShape = new btHeightfieldTerrainShape(
 		sc.td.iVertsX, sc.td.iVertsY, sc.td.hfData, sc.td.fTriangleSize,
-		/*>?*/-100.f,100.f, 2, PHY_FLOAT,false);
+		/*>?*/-200.f,200.f, 2, PHY_FLOAT,false);
 	
 	hfShape->setUseDiamondSubdivision(true);
 

@@ -998,7 +998,7 @@
 					<UserString key="tip" value="#{TipGrassPatchHeightMax}"/>
 				</Widget>
 				<Widget type="StaticText" skin="StaticText" position="536 15 120 24">
-					<Property key="Widget_Caption" value="#{GrassSize]:"/>
+					<Property key="Widget_Caption" value="#{GrassSize}:"/>
 					<Property key="Text_TextColour" value="0.6 1 0.4"/>
 				</Widget>
 				<Widget type="StaticText" skin="StaticText" position="136 103 88 24">

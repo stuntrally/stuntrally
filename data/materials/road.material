@@ -33,6 +33,28 @@ material roadRdesert : ppx_shadow
 	set_texture_alias diffuseMap roadRdesert.jpg
 }
 
+//  greece
+material roadGDesert_ter : ppx_shadow_a
+{
+	set $ambientCol "0.52 0.57 0.47"
+	set $diffuseCol "0.53 0.55 0.52"
+	set $specularCol "0.23 0.23 0.22"
+	set $shininess "32"
+	set $depthBias "3"
+	set_texture_alias diffuseMap roadDesert.jpg
+	//set_texture_alias normalMap volcano_7_nh1.png
+}
+material roadGDesert : ppx_shadow_a
+{
+	set $ambientCol "0.52 0.57 0.47"
+	set $diffuseCol "0.53 0.55 0.52"
+	set $specularCol "0.23 0.23 0.22"
+	set $shininess "32"
+	set $depthBias "3"
+	set_texture_alias diffuseMap roadDesert.jpg
+	//set_texture_alias normalMap volcano_7_nh1.png
+}
+
 //  sand
 material roadSand_ter : ppx_shadow_a
 {
