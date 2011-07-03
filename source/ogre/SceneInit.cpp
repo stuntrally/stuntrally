@@ -128,9 +128,14 @@ void App::LoadGame()  // 2
 	// will create vdrift cars, actual car loading will be done later in LoadCar()
 	// this is just here because vdrift car has to be created first
 	std::list<Camera*>::iterator camIt = mSplitMgr->mCameras.begin();
+	int numCars = (mClient ? mClient->getPeerCount() : mSplitMgr->mNumViewports);
 	int i;
-	for (i=0; i < mSplitMgr->mNumViewports; i++,camIt++)
-		carModels.push_back( new CarModel(i, CarModel::CT_LOCAL, pSet->car, mSceneMgr, pSet, pGame, &sc, (*camIt), this ) );
+	for (i = 0; i < numCars; i++,camIt++) {
+		CarModel::eCarType et = CarModel::CT_LOCAL;
+		if (i >= mSplitMgr->mNumViewports && mClient) et = CarModel::CT_REMOTE;
+		// TODO: Handle car and settings stuff for remote players
+		carModels.push_back( new CarModel(i, et, pSet->car, mSceneMgr, pSet, pGame, &sc, (*camIt), this ) );
+	}
 
 	/// ghost car  load if exists
 	ghplay.Clear();
