@@ -92,7 +92,7 @@ void P2PGameClient::senderThread() {
 		boost::mutex::scoped_lock lock(m_mutex);
 		if (m_state == LOBBY)
 		{
-			// Boradcast local player's info
+			// Boradcast local player's meta info
 			protocol::PlayerInfoPacket pip = (protocol::PlayerInfoPacket)m_playerInfo;
 			m_client.broadcast(pip);
 			// Loop all peers
@@ -113,13 +113,19 @@ void P2PGameClient::senderThread() {
 		}
 		else if (m_state == GAME)
 		{
-			// Broadcast car info
-			// TODO
+			// Broadcast car state
+			m_client.broadcast(m_carState);
 			// Wait some
 			m_cond.timed_wait(lock, now() + 0.050); // 20 FPS
 		}
 		if (m_state == DISCONNECTED) break;
 	} while (true);
+}
+
+void P2PGameClient::setLocalCarState(protocol::CarStatePackage const& cs)
+{
+	boost::mutex::scoped_lock lock(m_mutex);
+	m_carState = cs;
 }
 
 protocol::CarStates P2PGameClient::getReceivedCarStates()

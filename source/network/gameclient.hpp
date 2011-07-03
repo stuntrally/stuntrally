@@ -135,7 +135,11 @@ public:
 	/// Get copy of peer infos
 	PeerMap getPeers() const { return m_peers; }
 
+	/// Return client state
 	State getState() const { return m_state; }
+
+	/// Update the local car state
+	void setLocalCarState(protocol::CarStatePackage const& cs);
 
 	/// Return the latest unhandled car states and clear them
 	protocol::CarStates getReceivedCarStates();
@@ -161,4 +165,5 @@ private:
 	mutable boost::mutex m_mutex;
 	boost::condition m_cond;
 	PeerInfo m_playerInfo;
+	protocol::CarStatePackage m_carState;
 };

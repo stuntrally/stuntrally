@@ -140,9 +140,16 @@ bool App::frameStart(Real time)
 
 		///  step Game  *******
 
-		//  check for new car states in networked game
-		// FIXME: Check for proper condition here
-		if (mClient && mClient->getState() == P2PGameClient::GAME && !isFocGui && !pGame->pause) {
+		// FIXME: Is this proper condition?
+		bool doNetworking = (mClient && mClient->getState() == P2PGameClient::GAME && !isFocGui && !pGame->pause);
+		
+		//  handle networking stuff
+		if (doNetworking) {
+			//  update the local car's state to the client
+			protocol::CarStatePackage cs;
+			// TODO: Fill CarStatePackage
+			mClient->setLocalCarState(cs);
+			// check for new car states
 			protocol::CarStates states = mClient->getReceivedCarStates();
 			for (protocol::CarStates::const_iterator it = states.begin(); it != states.end(); ++it) {
 				int8_t id = it->first; // Car number
