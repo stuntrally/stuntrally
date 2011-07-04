@@ -413,14 +413,21 @@ void App::newPoses()
 				if (ncs > 0)
 				{	if (carM->bInSt && carM->iNumChks == ncs && carM->iCurChk != -1)  // finish
 					{
-						bool best = pGame->timer.Lap(0, 0,0, true, pSet->trackreverse);  //pGame->cartimerids[pCar] ?
+						bool best = pGame->timer.Lap(iCarNum, 0,0, true, pSet->trackreverse);  //pGame->cartimerids[pCar] ?
+
 						if (!pSet->rpl_bestonly || best)  ///  new best lap, save ghost
+						if (iCarNum==0)  // for many, only 1st-
 						{
 							ghost.SaveFile(GetGhostFile());
 							ghplay.CopyFrom(ghost);
 						}
 						ghost.Clear();
+						
 						carM->iCurChk = -1;  carM->iNumChks = 1;
+
+						///  winner  for local players > 1
+						if (carIdWin == -1 && pGame->timer.GetCurrentLap(iCarNum) >= pSet->num_laps)
+							carIdWin = iCarNum;
 					}
 					for (int i=0; i < ncs; ++i)
 					{
@@ -447,7 +454,7 @@ void App::newPoses()
 						}
 				}	}
 		}	}
-		
+
 		(*newPosIt) = posInfo;
 		carMIt++;  newPosIt++;  iCarNum++;  // next
 	}

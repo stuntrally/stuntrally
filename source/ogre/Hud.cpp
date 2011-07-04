@@ -210,7 +210,7 @@ void App::ShowHUD(bool hideAll)
 
 //  Update HUD
 ///---------------------------------------------------------------------------------------------------------------
-void App::UpdateHUD(CAR* pCar, float time, Viewport* vp)
+void App::UpdateHUD(int carId, CarModel* pCarM, CAR* pCar, float time, Viewport* vp)
 {
 	if (bSizeHUD)
 	{	bSizeHUD = false;
@@ -246,13 +246,19 @@ void App::UpdateHUD(CAR* pCar, float time, Viewport* vp)
     float vsc = pSet->show_mph ? -180.f/100.f : -180.f/160.f, vmin = 0.f;  //vel
     float angvel = abs(vel)*vsc + vmin;
     float angrot=0.f;  int i=0;
+
     if (pCar)
-    {	std::list<CarModel*>::iterator cit;
-		for (cit=carModels.begin(); cit!=carModels.end(); cit++,i++)
-			if ((*cit)->pCar == pCar)
-				break;
-		if ((*cit)->pMainNode)  angrot = (*cit)->pMainNode->getOrientation().getYaw().valueDegrees();
-	}
+    {
+		QUATERNION <double> rot = pCar->dynamics.GetOrientation();
+		Quaternion q(rot[0],rot[1],rot[2],rot[3]), q1,q2;
+		Radian rad;  Vector3 axi;  q.ToAngleAxis(rad, axi);
+		q1.FromAngleAxis(-rad,Vector3(axi.z,-axi.x,-axi.y));  q2 = q1 * qFixCar;
+		angrot = q2.getYaw().valueDegrees();
+		//Vector3 vcx,vcz;  q1.ToAxes(vcx,posInfo.carY,vcz);
+    }
+	//if (pCarM && pCarM->pMainNode)
+	//	angrot = pCarM->pMainNode->getOrientation().getYaw().valueDegrees();
+
     float sx = 1.4f, sy = sx*asp;  // *par len
     float psx = 2.1f * pSet->size_minimap, psy = psx;  // *par len
 
@@ -334,13 +340,21 @@ void App::UpdateHUD(CAR* pCar, float time, Viewport* vp)
 	if (pSet->show_times && pCar)
 	{
 		TIMER& tim = pGame->timer;	//car[playercarindex].
+		tim.SetPlayerCarID(carId);
 		s[0]=0;
-		if (!road)  // no score on terrain
-		if (tim.GetIsDrifting(0))
-			sprintf(s, String(TR("#{TBScore}  %3.0f+%2.0f")).c_str(), tim.GetDriftScore(0), tim.GetThisDriftScore(0) );
-		else
-			sprintf(s, String(TR("#{TBScore}  %3.0f")).c_str(), tim.GetDriftScore(0) );
-		
+
+		if (pSet->local_players > 1)  // lap num for many
+		{	if (carId == carIdWin)
+				sprintf(s, String(TR("---- #{TBWinner} ----")).c_str() );
+			else
+				sprintf(s, String(TR("#{TBLap}  %d/%d")).c_str(), tim.GetCurrentLap(carId)+1, pSet->num_laps );
+		}else
+		{	if (!road)  // score on vdr track
+			if (tim.GetIsDrifting(0))
+				sprintf(s, String(TR("#{TBScore}  %3.0f+%2.0f")).c_str(), tim.GetDriftScore(0), tim.GetThisDriftScore(0) );
+			else
+				sprintf(s, String(TR("#{TBScore}  %3.0f")).c_str(), tim.GetDriftScore(0) );
+		}		
 		if (hudTimes)
 			hudTimes->setCaption(String(s) +
 				String(TR("\n#{TBTime} ")) + GetTimeString(tim.GetPlayerTime())+
@@ -370,13 +384,12 @@ void App::UpdateHUD(CAR* pCar, float time, Viewport* vp)
 	
 
 	///  ghost, checkpoints  ----------
-	/*if (ovU[0])
+	/*if (ovU[0] && pCarM)
 	{
-		CarModel* c = (carModels.size() == 0) ? 0 : *carModels.begin();
-		String s = String("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n")+
+		String s = String("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n")+  //"wr:" + (pCarM->bWrongChk?"W":".") + 
 			"                      ghost:  "  + GetTimeString(ghost.GetTimeLength()) + "  "  + toStr(ghost.GetNumFrames()) + "\n" +
 			"                      ghplay: " + GetTimeString(ghplay.GetTimeLength()) + "  " + toStr(ghplay.GetNumFrames()) + "\n" +
-			"                      bInSt:" + (c->bInSt ? "1":"0") + " iCur:" + toStr(c->iCurChk) + " iIn:" + toStr(c->iInChk) + " iNext:" + toStr(c->iNextChk) + " iNumChks:" + toStr(c->iNumChks);
+			"                      bInSt:" + (pCarM->bInSt ? "1":"0") + " iCur:" + toStr(pCarM->iCurChk) + " iIn:" + toStr(pCarM->iInChk) + " iNext:" + toStr(pCarM->iNextChk) + " iNumChks:" + toStr(pCarM->iNumChks);
 		ovU[0]->setCaption(s);
 	}/**/
 	
@@ -443,22 +456,20 @@ void App::UpdateHUD(CAR* pCar, float time, Viewport* vp)
 
 
 	//  checkpoint warning  --------
-	if (road && hudCheck)
+	if (road && hudCheck && pCarM)
 	{	/* chks info *
-		sprintf(s, "st %d in%2d cur%2d nxt %d  num %d / all %d  %s" //"st-d %6.2f %6.2f %6.2f"
-			,bInSt ? 1:0, iInChk, iCurChk, iNextChk,  iNumChks, road->mChks.size()
-			,bWrongChk ? "Wrong Checkpoint" : ""
-			);//,vStDist.x, vStDist.y, vStDist.z);
+		sprintf(s, "st %d in%2d cur%2d nxt %d  num %d / all %d  T= %4.2f  %s" //"st-d %6.2f %6.2f %6.2f"
+			,pCarM->bInSt ? 1:0, pCarM->iInChk, pCarM->iCurChk, pCarM->iNextChk,  pCarM->iNumChks, road->mChks.size()
+			,pCarM->fChkTime,  pCarM->bWrongChk ? "Wrong Checkpoint" : "");  //,vStDist.x, vStDist.y, vStDist.z);
 		hudCheck->setCaption(s);/**/
 
-		static int showO = -1;  static float fChkTime = 0.f;
-		if (carModels.size() > 0 && (*carModels.begin())->bWrongChk)  // for each carModel...
-		/*if (bWrongChk)*/  fChkTime = 2.f;  //par sec
-		int show = fChkTime > 0.f ? 1 : 0;
-		if (show)  fChkTime -= time;
-		if (show != showO)
+		if (pCarM->bWrongChk)
+			pCarM->fChkTime = 2.f;  //par sec
+		int show = pCarM->fChkTime > 0.f ? 1 : 0;
+		if (show)  pCarM->fChkTime -= time;
+		//if (show != pCarM->iChkWrong)  //-
 			hudCheck->setCaption(show ? String(TR("#{WrongChk}")) : "");
-		showO = show;
+		pCarM->iChkWrong = show;
 	}
 
 

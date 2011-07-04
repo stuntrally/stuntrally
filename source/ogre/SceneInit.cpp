@@ -69,6 +69,8 @@ void App::NewGame()
 	toggleGui();  // hide gui
 
 	bLoading = true;
+	carIdWin = -1;
+
 	bRplPlay = 0;
 	pSet->rpl_rec = bRplRec;  // changed only at new game
 	if (mWndRpl)  mWndRpl->setVisible(false);

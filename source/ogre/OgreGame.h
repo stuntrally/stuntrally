@@ -52,7 +52,8 @@ public:
 	//  trees
 	Forests::PagedGeometry *trees, *grass;
 	
-	void UpdateHUD(class CAR* pCar, float time, Ogre::Viewport* vp=NULL), SizeHUD(bool full, Ogre::Viewport* vp=NULL);
+	void UpdateHUD(int carId, class CarModel* pCarM, class CAR* pCar,
+		float time, Ogre::Viewport* vp=NULL), SizeHUD(bool full, Ogre::Viewport* vp=NULL);
 
 protected:
 	virtual void createScene();
@@ -101,9 +102,8 @@ protected:
 	void LoadCleanUp(), LoadGame(), LoadScene(), LoadCar(), LoadTerrain(), LoadTrack(), LoadMisc();
 	enum ELoadState { LS_CLEANUP=0, LS_GAME, LS_SCENE, LS_CAR, LS_TER, LS_TRACK, LS_MISC, LS_ALL };
 	
-	// id, display name
+	// id, display name, initialised in App()
 	// e.g.: 0, Cleaning up or 3, Loading scene
-	// initialised in App()
 	std::map<unsigned int, std::string> loadingStates;
 	// 1 behind map ( map.end() ): loading finished
 	std::map<unsigned int, std::string>::iterator currentLoadingState;
@@ -180,7 +180,7 @@ protected:
 		chkVidFullscr(WP), chkVidVSync(WP), UpdBloomVals(),
 		chkLoadPics(WP), chkVegetCollis(WP), chkCarCollis(WP);
 
-	// language
+	//  language
 	void comboLanguage(SL);
 	std::map<std::string, std::string> supportedLanguages; // <short name, display name>
 	bool bGuiReinit;
@@ -207,6 +207,7 @@ protected:
 		
 public:
 	bool bRplPlay,bRplPause, bRplRec, bRplWnd;  //  game
+	int carIdWin;
 protected:
 	MyGUI::ButtonPtr btRplPl;  void UpdRplPlayBtn();
 

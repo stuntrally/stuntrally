@@ -189,6 +189,7 @@ void SplitScreenManager::preViewportUpdate(const Ogre::RenderTargetViewportEvent
 		}
 
 		//  get car for this viewport
+		int carId = 0;
 		std::list<CarModel*>::iterator carIt = pApp->carModels.begin();
 		if (pApp->carModels.size() > 0)
 		{
@@ -203,6 +204,7 @@ void SplitScreenManager::preViewportUpdate(const Ogre::RenderTargetViewportEvent
 				j++;
 				carIt++;
 			}
+			carId = j;
 		}
 			
 		//  Size HUD
@@ -210,9 +212,9 @@ void SplitScreenManager::preViewportUpdate(const Ogre::RenderTargetViewportEvent
 
 		//  Update HUD for this car
 		if (pApp->carModels.size() > 0 && *carIt && (*carIt)->pCar)
-			pApp->UpdateHUD( (*carIt)->pCar, 1.0f / mWindow->getLastFPS(), evt.source );
+			pApp->UpdateHUD( carId, *carIt, (*carIt)->pCar, 1.0f / mWindow->getLastFPS(), evt.source );
 		else
-			pApp->UpdateHUD( NULL, 1.0f / mWindow->getLastFPS(), evt.source );
+			pApp->UpdateHUD( carId, NULL, NULL, 1.0f / mWindow->getLastFPS(), evt.source );
 
 
 		//  Set skybox pos to camera
@@ -254,7 +256,7 @@ void SplitScreenManager::preViewportUpdate(const Ogre::RenderTargetViewportEvent
 	{
 		// Gui viewport, overlay and mygui
 		//  hide stuff we don't want
-		pApp->UpdateHUD( NULL, mWindow->getLastFPS() );
+		pApp->UpdateHUD( 0, NULL, NULL, mWindow->getLastFPS() );
 
 		pApp->SizeHUD(false);
 		

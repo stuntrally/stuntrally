@@ -241,16 +241,16 @@ private:
 	CONFIGFILE trackrecords; //the track records configfile
 	std::string trackrecordsfile; //the filename for the track records
 	float pretime; //amount of time left in staging
-	unsigned int playercarindex; //the index for the player's car; defaults to zero
+	unsigned int carId; //the index for the player's car; defaults to zero
 
 public:
-	TIMER() : loaded(false),pretime(0.0),playercarindex(0) {}
+	TIMER() : loaded(false),pretime(0.0),carId(0) {}
 	~TIMER() {Unload();}
 
 	bool Load(const std::string & trackrecordspath, float stagingtime, std::ostream & error_output);
 	///add a car of the given type and return the integer identifier that the track system will use
 	int AddCar(const std::string & cartype) {  car.push_back(LAPINFO(cartype));  return car.size()-1;  }
-	void SetPlayerCarID(int newid) {playercarindex = newid;}
+	void SetPlayerCarID(int newid) {carId = newid;}
 	void Unload();
 	bool Staging() const {return (pretime > 0);}
 	void Tick(float dt);
@@ -268,19 +268,19 @@ public:
 			car[i].DebugPrint(out);
 		}
 	}
-	double GetPlayerTime() {	assert(playercarindex<car.size());	return car[playercarindex].GetTime();	}
-	double GetReplayTime() {	assert(playercarindex<car.size());	return car[playercarindex].GetTimeReplay();  }  // replay
-	void SetReplayTime(double t){assert(playercarindex<car.size());	return car[playercarindex].SetTimeReplay(t);  }
-	void RestartReplay()   {	assert(playercarindex<car.size());	return car[playercarindex].RestartReplay();  }
+	double GetPlayerTime() {	assert(carId<car.size());	return car[carId].GetTime();	}
+	double GetReplayTime() {	assert(carId<car.size());	return car[carId].GetTimeReplay();  }  // replay
+	void SetReplayTime(double t){assert(carId<car.size());	return car[carId].SetTimeReplay(t);  }
+	void RestartReplay()   {	assert(carId<car.size());	return car[carId].RestartReplay();  }
 	
-	float GetLastLap() {assert(playercarindex<car.size());return car[playercarindex].GetLastLap();}
+	float GetLastLap() {assert(carId<car.size());return car[carId].GetLastLap();}
 	float GetBestLap(bool bTrackReverse)
 	{
-		assert(playercarindex<car.size());
-		float curbestlap = car[playercarindex].GetBestLap();
+		assert(carId<car.size());
+		float curbestlap = car[carId].GetBestLap();
 		float prevbest(0);
 		bool haveprevbest = trackrecords.GetParam(
-			car[playercarindex].GetCarType() + (bTrackReverse ? "_rev" : "") + ".sector 0", prevbest);
+			car[carId].GetCarType() + (bTrackReverse ? "_rev" : "") + ".sector 0", prevbest);
 		if (haveprevbest)
 		{
 			if (curbestlap == 0)
@@ -294,14 +294,14 @@ public:
 		else
 			return curbestlap;
 	}
-	int GetPlayerCurrentLap() {return GetCurrentLap(playercarindex);}
+	int GetPlayerCurrentLap() {return GetCurrentLap(carId);}
 	int GetCurrentLap(unsigned int index) {assert(index<car.size());return car[index].GetCurrentLap();}
 	float GetStagingTimeLeft() const {return pretime;}
 
 	///return the place (first element) out of total (second element)
 	std::pair <int, int> GetCarPlace(int index);
 
-	std::pair <int, int> GetPlayerPlace() {return GetCarPlace(playercarindex);}
+	std::pair <int, int> GetPlayerPlace() {return GetCarPlace(carId);}
 	
 	float GetDriftScore(unsigned int index) const
 	{

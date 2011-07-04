@@ -62,7 +62,7 @@ bool TIMER::Lap(const unsigned int carid, const int prevsector, const int nextse
 	if (carid >= car.size())  return false;  //-
 	bool newbest = false;  // new lap best time
 
-	if (countit && carid == playercarindex)
+	if (countit && carid == carId)
 	{
 		std::stringstream secstr;
 		secstr << "sector " << nextsector;

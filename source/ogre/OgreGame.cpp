@@ -40,10 +40,9 @@ App::App()
 	,rbRplCur(0), rbRplAll(0), rbRplGhosts(0)
 	,bRplPlay(0), bRplPause(0), bRplRec(0), bRplWnd(1), bGuiReinit(0)
 	// game
-	,blendMtr(0), iBlendMaps(0)
-	,dbgdraw(0)
+	,blendMtr(0), iBlendMaps(0), dbgdraw(0)
 	,grass(0), trees(0), road(0)
-	,pr(0),pr2(0), sun(0)
+	,pr(0),pr2(0), sun(0), carIdWin(-1)
 {
 	pathTrk[0] = PATHMANAGER::GetTrackPath() + "/";
 	pathTrk[1] = PATHMANAGER::GetTrackPathUser() + "/";

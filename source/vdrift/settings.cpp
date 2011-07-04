@@ -11,8 +11,8 @@ void SETTINGS::Serialize(bool w, CONFIGFILE & c)
 	Param(c,w, "game.car", car);			Param(c,w, "game.car_hue", car_hue);
 	Param(c,w, "game.car_sat", car_sat);	Param(c,w, "game.car_val", car_val);
 	Param(c,w, "game.track", track);		Param(c,w, "game.track_user", track_user);
-	Param(c,w, "game.local_players", local_players);     Param(c,w, "game.split_vertically", split_vertically);
-	Param(c,w, "game.trk_reverse", trackreverse);
+	Param(c,w, "game.local_players", local_players);	Param(c,w, "game.split_vertically", split_vertically);
+	Param(c,w, "game.trk_reverse", trackreverse);		Param(c,w, "game.num_laps", num_laps);
 	Param(c,w, "game.language", language);
 
 	Param(c,w, "display_show.fps", show_fps);		Param(c,w, "display_show.gauges", show_gauges);
@@ -91,7 +91,8 @@ SETTINGS::SETTINGS() :  ///  Defaults
 	//  car
 	abs(1), tcs(1), autoclutch(1), autoshift(1), autorear(1), show_mph(0),
 	//  game
-	trackreverse(false), local_players(1), split_vertically(true), language(""), // "" = autodetect lang
+	trackreverse(false), local_players(1), num_laps(2),
+	split_vertically(true), language(""), // "" = autodetect lang
 	//  other
 	vol_master(1.f), vol_engine(1.f), vol_tires(1.f), vol_env(1.f),
 	autostart(0), ogre_dialog(1), escquit(0), bltDebug(0), bltLines(1),  bltProfilerTxt(0),

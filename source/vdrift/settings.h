@@ -30,9 +30,8 @@ public:
 	float car_hue, car_sat, car_val;
 
 	//  game
-	bool trackreverse;	//int number_of_laps;  float ai_difficulty;
-	int local_players;  bool split_vertically;
-	std::string language;
+	bool trackreverse;	int local_players, num_laps;
+	bool split_vertically;  std::string language;
 
 	//  other
 	float vol_master, vol_engine, vol_tires, vol_env;
