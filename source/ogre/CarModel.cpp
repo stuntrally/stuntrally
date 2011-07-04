@@ -67,6 +67,10 @@ CarModel::~CarModel()
 	delete fCam;  fCam = 0;
 	pSceneMgr->destroyCamera("CarCamera" + toStr(iIndex));
 	
+	//  hide trails
+	for (int w=0; w<4; ++w)  if (whTrl[w])  {	wht[w] = 0.f;
+		whTrl[w]->setVisible(false);	whTrl[w]->setInitialColour(0, 0.5,0.5,0.5, 0);	}
+
 	// destroy cloned materials
 	for (int i=0; i<NumMaterials; i++)
 		Ogre::MaterialManager::getSingleton().remove(sMtr[i]);

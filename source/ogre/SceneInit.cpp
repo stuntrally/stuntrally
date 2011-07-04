@@ -99,10 +99,18 @@ void App::LoadCleanUp()  // 1 first
 	if (grass) {  delete grass->getPageLoader();  delete grass;  grass=0;   }
 	if (trees) {  delete trees->getPageLoader();  delete trees;  trees=0;   }
 
-	//  destroy all
+	//  destroy all  TODO ...
+	///!  remove this crap and destroy everything with* manually  destroyCar, destroyScene
+	///!  check if scene (track), car, color changed, omit creating the same if not
+	//mSceneMgr->getRootSceneNode()->removeAndDestroyAllChildren();  // destroy all scenenodes
 	mSceneMgr->destroyAllManualObjects();
 	mSceneMgr->destroyAllEntities();
 	mSceneMgr->destroyAllStaticGeometry();
+		//mSceneMgr->destroyAllBillboardSets();
+		//mSceneMgr->destroyAllBillboardChains();
+		mSceneMgr->destroyAllParticleSystems();
+		mSceneMgr->destroyAllRibbonTrails();
+   		MeshManager::getSingleton().removeAll();  // destroy all meshes
 
 	//  rain/snow
 	if (pr)  {  mSceneMgr->destroyParticleSystem(pr);   pr=0;  }
