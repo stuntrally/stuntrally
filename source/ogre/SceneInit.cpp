@@ -110,7 +110,7 @@ void App::LoadCleanUp()  // 1 first
 	mSceneMgr->destroyAllStaticGeometry();
 		//mSceneMgr->destroyAllBillboardSets();
 		//mSceneMgr->destroyAllBillboardChains();
-		mSceneMgr->destroyAllParticleSystems();
+		//mSceneMgr->destroyAllParticleSystems();
 		mSceneMgr->destroyAllRibbonTrails();
    		MeshManager::getSingleton().removeAll();  // destroy all meshes
 

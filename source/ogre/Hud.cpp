@@ -96,7 +96,7 @@ void App::CreateHUD()
 		{	mpos[i] = Create2D("hud/CarPos", mSceneMgr, 0.4f, true);
 			mpos[i]->setVisibilityFlags(2);  mpos[i]->setRenderQueueGroup(RENDER_QUEUE_OVERLAY);
 			ndPos[i] = ndMap->createChildSceneNode();
-			ndPos[i]->scale(fHudSize*2, fHudSize*2, 1);
+			ndPos[i]->scale(fHudSize*1.5f, fHudSize*1.5f, 1);
 			ndPos[i]->attachObject(mpos[i]);  /*ndPos[i]->setVisible(false);  */}
 		ndMap->setVisible(false/*pSet->trackmap*/);
 	}
@@ -119,12 +119,12 @@ void App::CreateHUD()
 	nvelBm->attachObject(mvelBm);	nvelBm->setScale(0,0,0);  mvelBm->setVisible(false);
 		
 	//  needles
-	mrpm = Create2D("hud/needle",mSceneMgr,1,true);	mrpm->setVisibilityFlags(2);
+	mrpm = Create2D("hud/needle",mSceneMgr,1,true);  mrpm->setVisibilityFlags(2);
 	mrpm->setRenderQueueGroup(RENDER_QUEUE_OVERLAY);
 	nrpm = mSceneMgr->getRootSceneNode()->createChildSceneNode();
 	nrpm->attachObject(mrpm);	nrpm->setScale(0,0,0);	nrpm->setVisible(false);
 	
-	mvel = Create2D("hud/needle",mSceneMgr,1,true);	mvel->setVisibilityFlags(2);
+	mvel = Create2D("hud/needle",mSceneMgr,1,true);  mvel->setVisibilityFlags(2);
 	mvel->setRenderQueueGroup(RENDER_QUEUE_OVERLAY);
 	nvel = mSceneMgr->getRootSceneNode()->createChildSceneNode();
 	nvel->attachObject(mvel);	nvel->setScale(0,0,0);	nvel->setVisible(false);
@@ -247,18 +247,10 @@ void App::UpdateHUD(int carId, CarModel* pCarM, CAR* pCar, float time, Viewport*
     float angvel = abs(vel)*vsc + vmin;
     float angrot=0.f;  int i=0;
 
-    if (pCar)
-    {
-		QUATERNION <double> rot = pCar->dynamics.GetOrientation();
-		Quaternion q(rot[0],rot[1],rot[2],rot[3]), q1,q2;
-		Radian rad;  Vector3 axi;  q.ToAngleAxis(rad, axi);
-		q1.FromAngleAxis(-rad,Vector3(axi.z,-axi.x,-axi.y));  q2 = q1 * qFixCar;
-		angrot = q2.getYaw().valueDegrees();
-		//Vector3 vcx,vcz;  q1.ToAxes(vcx,posInfo.carY,vcz);
-    }
-	//if (pCarM && pCarM->pMainNode)
-	//	angrot = pCarM->pMainNode->getOrientation().getYaw().valueDegrees();
-
+	if (pCarM && pCarM->pMainNode)
+	{	Quaternion q = pCarM->pMainNode->getOrientation() * Quaternion(Degree(90),Vector3(0,1,0));
+		angrot = q.getYaw().valueDegrees() + 90.f;
+	}
     float sx = 1.4f, sy = sx*asp;  // *par len
     float psx = 2.1f * pSet->size_minimap, psy = psx;  // *par len
 
@@ -274,20 +266,19 @@ void App::UpdateHUD(int carId, CarModel* pCarM, CAR* pCar, float time, Viewport*
 		vx[i] = sx*cosf(v);  vy[i] =-sy*sinf(v);
 		px[i] = psx*cosf(p);  py[i] =-psy*sinf(p);
     }
+    const static Real tc[4][2] = {{0,1}, {1,1}, {1,0}, {0,0}};
     
     if (mrpm)  {	mrpm->beginUpdate(0);
-		mrpm->position(rx[0],ry[0], 0);  mrpm->textureCoord(0, 1);	mrpm->position(rx[1],ry[1], 0);  mrpm->textureCoord(1, 1);
-		mrpm->position(rx[2],ry[2], 0);  mrpm->textureCoord(1, 0);	mrpm->position(rx[3],ry[3], 0);  mrpm->textureCoord(0, 0);
+		for (int p=0;p<4;++p)  {  mrpm->position(rx[p],ry[p], 0);  mrpm->textureCoord(tc[p][0], tc[p][1]);  }
 		mrpm->end();  }
 
 	if (mvel)  {	mvel->beginUpdate(0);
-		mvel->position(vx[0],vy[0], 0);  mvel->textureCoord(0, 1);	mvel->position(vx[1],vy[1], 0);  mvel->textureCoord(1, 1);
-		mvel->position(vx[2],vy[2], 0);  mvel->textureCoord(1, 0);	mvel->position(vx[3],vy[3], 0);  mvel->textureCoord(0, 0);
+		for (int p=0;p<4;++p)  {  mvel->position(vx[p],vy[p], 0);  mvel->textureCoord(tc[p][0], tc[p][1]);  }
 		mvel->end();  }
 		
+	i = carId;
 	if (mpos[i])  {  mpos[i]->beginUpdate(0);
-		mpos[i]->position(px[0],py[0], 0);  mpos[i]->textureCoord(0, 1);	mpos[i]->position(px[1],py[1], 0);  mpos[i]->textureCoord(1, 1);
-		mpos[i]->position(px[2],py[2], 0);  mpos[i]->textureCoord(1, 0);	mpos[i]->position(px[3],py[3], 0);  mpos[i]->textureCoord(0, 0);
+		for (int p=0;p<4;++p)  {  mpos[i]->position(px[p],py[p], 0);  mpos[i]->textureCoord(tc[p][0], tc[p][1]);  }
 		mpos[i]->end();  }
 
 
