@@ -137,7 +137,7 @@ public:
 protected:
 	///  Gui  ---------------------------------------------------------------------------
 	void InitGui(), toggleGui();
-	void UpdGuiRdStats(const SplineRoad* rd, const Scene& sc, float time), ReadTrkStats();
+	void UpdGuiRdStats(const SplineRoad* rd, const Scene& sc, float time), ReadTrkStats(), UpdCarClrSld();
 
 	//  tooltips
 	MyGUI::WidgetPtr mToolTip;  MyGUI::EditPtr mToolTipTxt;
@@ -167,6 +167,7 @@ protected:
 	SLV(VolMaster);  SLV(VolEngine);  SLV(VolTires);  SLV(VolEnv);
 	SLV(CarClrH);  SLV(CarClrS);  SLV(CarClrV);  // clr
 	SLV(BloomInt);  SLV(BloomOrig);  SLV(BlurIntens);  // video
+	SLV(NumLaps);  // setup
 	
 	void recreateReflections(); // call after refl_mode changed
 
@@ -185,7 +186,7 @@ protected:
 	std::map<std::string, std::string> supportedLanguages; // <short name, display name>
 	bool bGuiReinit;
 
-	void comboTexFilter(SL);
+	void comboTexFilter(SL), imgBtnCarClr(WP), btnCarClrRandom(WP);
 	MyGUI::ButtonPtr bRkmh, bRmph;  void radKmh(WP), radMph(WP), btnTrGrReset(WP), btnQuit(WP), btnResChng(WP);
 	MyGUI::ButtonPtr chDbgT,chDbgB, chBlt,chBltTxt, chFps, chTimes,chMinimp, bnQuit;
 

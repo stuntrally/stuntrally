@@ -80,26 +80,31 @@
 	<Tag name="TipChangeHue">Change car color (hue).</Tag>
 	<Tag name="TipChangeSat">Change car color saturation (white-black).</Tag>
 	<Tag name="TipChangeBright">Change car color brightness (dark-light).</Tag>
-	
+	<Tag name="CarClrRandom">Random</Tag>
 
 	<!--  Setup  -->
+	<Tag name="Game">Game</Tag>
 	<Tag name="Setup">Setup</Tag>
+
 	<Tag name="ABS">ABS (antilock brakes)</Tag>
 	<Tag name="TipABS">Prevents wheel lock when braking (default: off).</Tag>
 	<Tag name="TCS">TCS (traction control)</Tag>
 	<Tag name="TipTCS">Prevents wheel spinning when accelerating (default: off).</Tag>
+
 	<Tag name="AutoClutch">Auto clutch-</Tag>
 	<Tag name="TipAutoClutch">-Manual not implemented.</Tag>
 	<Tag name="AutoGearbox">Auto gearbox</Tag>
 	<Tag name="TipAutoGearbox">Uncheck for manual gears changing.</Tag>
 	<Tag name="AutoRear">Auto Rear gear</Tag>
 	<Tag name="TipAutoRear">Uncheck for manual Rear gear changing.</Tag>
+
 	<Tag name="VegetCol">Vegetation collision</Tag>
 	<Tag name="CarCollis">Cars collision</Tag>
+
 	<Tag name="NumLocalPlayers">Number of local players</Tag>
 	<Tag name="SplitVertically">Split Vertically</Tag>
-	<Tag name="Game">Game</Tag>
-		
+	<Tag name="NumLaps">Number of laps</Tag>
+			
 
 	<!--  Replay  -->
 	<Tag name="Replay">Replay</Tag>

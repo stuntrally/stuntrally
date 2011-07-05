@@ -143,8 +143,7 @@ void App::InitGui()
 	Slv(VolTires,	pSet->vol_tires/1.4f); 	 Slv(VolEnv,	pSet->vol_env/1.4f);
 	
 	// car color
-	Slv(CarClrH, pSet->car_hue);
-	Slv(CarClrS, (pSet->car_sat +1)*0.5f);  Slv(CarClrV, (pSet->car_val +1)*0.5f);
+	UpdCarClrSld();
 
 	///  Checkboxes
     //------------------------------------------------------------------------
@@ -257,6 +256,23 @@ void App::InitGui()
 	rplList = mGUI->findWidget<List>("RplList");
 	if (rplList)  rplList->eventListChangePosition = newDelegate(this, &App::listRplChng);
 	updReplaysList();
+
+	//  car color buttons . . . . .
+	Real hsv[10][3] = {
+		{0.43,-0.1,-0.2},	{0.90, 0.1, 0.1},	{0.00, 0.0,-0.1},	{0.28,-0.35,-0.66},	{0.75, 0.1,-0.1},
+		{0.47, 0.1,-0.1},	{0.5,-0.15,0.16},	{0.86, 0.4,-0.0},	{0.8,-0.8,-0.18},	{0.7, 0.1,-0.15}};
+	for (int i=0; i<10; i++)
+	{
+		StaticImagePtr img = (StaticImagePtr)mLayout->findWidget("carClr"+toStr(i));
+		Real h = hsv[i][0], s = hsv[i][1], v = hsv[i][2];
+		ColourValue c;  c.setHSB(1.f-h, (s+1.f)*0.5f, (v+1.f)*0.8f/**/);
+		img->setColour(Colour(c.r,c.g,c.b));
+		img->eventMouseButtonClick = newDelegate(this, &App::imgBtnCarClr);
+		img->setUserString("s", toStr(s));  img->setUserString("h", toStr(h));
+		img->setUserString("v", toStr(v));
+	}
+	Btn("CarClrRandom", btnCarClrRandom);
+	Slv(NumLaps, (pSet->num_laps - 1) / 20.f);
 	
 	
 	///  input tab
@@ -442,6 +458,13 @@ void App::UpdGuiRdStats(const SplineRoad* rd, const Scene& sc, float time)
 	}
 	if (trkDesc)  // desc
 		trkDesc->setCaption(rd->sTxtDesc.c_str());
+}
+
+void App::UpdCarClrSld()
+{
+	HScrollPtr sl;  size_t v;
+	Slv(CarClrH, pSet->car_hue);
+	Slv(CarClrS, (pSet->car_sat +1)*0.5f);  Slv(CarClrV, (pSet->car_val +1)*0.5f);
 }
 
 

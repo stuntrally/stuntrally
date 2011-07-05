@@ -145,8 +145,12 @@ void App::chkSplitVert(WP wp)
 	ChkEv(split_vertically); 
 }
 
+void App::slNumLaps(SL)
+{
+	int v = 20.f * val/res + 1;  pSet->num_laps = v;
+	if (valNumLaps){  Fmt(s, "%d", v);	valNumLaps->setCaption(s);  }
+}
 
-// game
 
 //  [Graphics]
 
@@ -406,6 +410,26 @@ void App::slCarClrV(SL)
 {
 	Real v = -1.f + 2.f * val/res;  pSet->car_val = v;
 	if (valCarClrV){	Fmt(s, "%4.2f", v);	valCarClrV->setCaption(s);  }
+	for (std::list<CarModel*>::iterator it=carModels.begin(); it!=carModels.end(); it++)
+		(*it)->ChangeClr();
+}
+
+void App::imgBtnCarClr(WP img)
+{
+	pSet->car_hue = s2r(img->getUserString("h"));
+	pSet->car_sat = s2r(img->getUserString("s"));
+	pSet->car_val = s2r(img->getUserString("v"));
+	UpdCarClrSld();
+	for (std::list<CarModel*>::iterator it=carModels.begin(); it!=carModels.end(); it++)
+		(*it)->ChangeClr();
+}
+
+void App::btnCarClrRandom(WP)
+{
+	pSet->car_hue = Math::UnitRandom();
+	pSet->car_sat = Math::RangeRandom(-0.5f, 0.5f);
+	pSet->car_val = Math::RangeRandom(-0.5f, 0.5f);
+	UpdCarClrSld();
 	for (std::list<CarModel*>::iterator it=carModels.begin(); it!=carModels.end(); it++)
 		(*it)->ChangeClr();
 }
