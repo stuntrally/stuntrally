@@ -93,7 +93,7 @@ void App::LoadCleanUp()  // 1 first
 	resTrk = TrkDir() + "objects";
 	
 	// Delete all cars
-	for (std::list<CarModel*>::iterator it=carModels.begin(); it!=carModels.end(); it++)
+	for (std::vector<CarModel*>::iterator it=carModels.begin(); it!=carModels.end(); it++)
 		delete (*it);
 
 	carModels.clear();  newPosInfos.clear();
@@ -140,7 +140,7 @@ void App::LoadGame()  // 2
 	std::list<Camera*>::iterator camIt = mSplitMgr->mCameras.begin();
 	int i;
 	for (i=0; i < mSplitMgr->mNumViewports; i++,camIt++)
-		carModels.push_back( new CarModel(i, CarModel::CT_LOCAL, pSet->car, mSceneMgr, pSet, pGame, &sc, (*camIt), this ) );
+		carModels.push_back( new CarModel(i, CarModel::CT_LOCAL, pSet->car[i], mSceneMgr, pSet, pGame, &sc, (*camIt), this ) );
 
 	/// ghost car  load if exists
 	ghplay.Clear();
@@ -148,7 +148,7 @@ void App::LoadGame()  // 2
 	{
 		/*if (*/ghplay.LoadFile(GetGhostFile());
 		//  always because ghplay can appear during play after best lap
-		CarModel* c = new CarModel(i, CarModel::CT_GHOST, pSet->car, mSceneMgr, pSet, pGame, &sc, 0, this );
+		CarModel* c = new CarModel(i, CarModel::CT_GHOST, pSet->car[0], mSceneMgr, pSet, pGame, &sc, 0, this );
 		c->pCar = (*carModels.begin())->pCar;  // based on 1st car
 		carModels.push_back(c);
 	}
@@ -183,9 +183,10 @@ void App::LoadScene()  // 3
 void App::LoadCar()  // 4
 {
 	// Create all cars
-	for (std::list<CarModel*>::iterator it=carModels.begin(); it!=carModels.end(); it++)
+	int i=0;
+	for (std::vector<CarModel*>::iterator it=carModels.begin(); it!=carModels.end(); it++)
 	{
-		(*it)->Create();
+		(*it)->Create(i);  ++i;
 		// Reserve an entry in newPosInfos
 		PosInfo carPosInfo;  carPosInfo.bNew = false;  //-
 		newPosInfos.push_back(carPosInfo);
@@ -193,9 +194,9 @@ void App::LoadCar()  // 4
 	
 	///  Init Replay  once
 	///=================----------------
-	replay.InitHeader(pSet->track.c_str(), pSet->track_user, pSet->car.c_str(), !bRplPlay);
+	replay.InitHeader(pSet->track.c_str(), pSet->track_user, pSet->car[0].c_str(), !bRplPlay);
 	replay.header.numPlayers = pSet->local_players;
-	ghost.InitHeader(pSet->track.c_str(), pSet->track_user, pSet->car.c_str(), !bRplPlay);
+	ghost.InitHeader(pSet->track.c_str(), pSet->track_user, pSet->car[0].c_str(), !bRplPlay);
 	ghost.header.numPlayers = 1;  // ghost always 1 car
 
 	//if (pSet->local_players > 1)  // save other car names
@@ -216,7 +217,7 @@ void App::LoadTerrain()  // 5
 	CreateTerrain(false,ter);  // common
 	
 	// Assign stuff to cars
-	for (std::list<CarModel*>::iterator it=carModels.begin(); it!=carModels.end(); it++)
+	for (std::vector<CarModel*>::iterator it=carModels.begin(); it!=carModels.end(); it++)
 	{
 		(*it)->terrain = terrain;
 		(*it)->blendMtr = blendMtr;
@@ -255,7 +256,7 @@ void App::LoadMisc()  // 7 last
 	ShowHUD(true);
 	
 	// Camera settings
-	for (std::list<CarModel*>::iterator it=carModels.begin(); it!=carModels.end(); it++)
+	for (std::vector<CarModel*>::iterator it=carModels.begin(); it!=carModels.end(); it++)
 		if ((*it)->fCam)
 		{	(*it)->fCam->first = true;
 			(*it)->fCam->mTerrain = mTerrainGroup;

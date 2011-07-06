@@ -218,7 +218,7 @@ void CarModel::Update(PosInfo& posInfo, float time)
 //-------------------------------------------------------------------------------------------------------
 //  Create
 //-------------------------------------------------------------------------------------------------------
-void CarModel::Create()
+void CarModel::Create(int car)
 {
 	if (!pCar) return;
 	
@@ -230,7 +230,7 @@ void CarModel::Create()
 	Ogre::Root::getSingletonPtr()->addResourceLocation(resCar, "FileSystem", "Car" + toStr(iIndex));
 	
 	// Change color here - cache has to be created before loading model
-	ChangeClr();
+	ChangeClr(car);
 	
 	pMainNode = pSceneMgr->getRootSceneNode()->createChildSceneNode();
 
@@ -538,7 +538,7 @@ void CarModel::UpdWhTerMtr()
 //  utils
 //-------------------------------------------------------------------------------------------------------
 
-void CarModel::ChangeClr()
+void CarModel::ChangeClr(int car)
 {
 	bool add = 1;
 	Image ima;	try{
@@ -579,9 +579,9 @@ void CarModel::ChangeClr()
 
 				Real h,s,v;  // hue shift
 				c.getHSB(&h,&s,&v);
-				h += pSet->car_hue;  if (h>1.f) h-=1.f;  // 0..1
-				s += pSet->car_sat;  // -1..1
-				v += pSet->car_val;
+				h += pSet->car_hue[car];  if (h>1.f) h-=1.f;  // 0..1
+				s += pSet->car_sat[car];  // -1..1
+				v += pSet->car_val[car];
 				c.setHSB(h,s,v);
 
 				r = c.r*255;  g = c.g*255;  b = c.b*255;  // set

@@ -54,7 +54,7 @@ public:
 	//  Create our car, based on name, color, index.
 	//  This will put the meshes together and create the particle systems.
 	//  CreateReflection() is also called.
-	void Create();
+	void Create(int car);
 	void CreateReflection();
 	
 	//  Call every vdrift substep with new position info
@@ -62,7 +62,7 @@ public:
 	
 	//  Car color, After these values are changed, ChangeClr() should be called
 	float hue, sat, val;
-	void ChangeClr();  //  Apply new color
+	void ChangeClr(int car);  //  Apply new color
 	
 	//  Reload material textures.
 	void ReloadTex(Ogre::String mtrName);

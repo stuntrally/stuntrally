@@ -274,6 +274,9 @@ void App::InitGui()
 	Btn("CarClrRandom", btnCarClrRandom);
 	Slv(NumLaps, (pSet->num_laps - 1) / 20.f);
 	
+	TabPtr tPlr = (TabPtr)mLayout->findWidget("tabPlayer");
+	if (tPlr)  tPlr->eventTabChangeSelect = newDelegate(this, &App::tabPlayer);
+	
 	
 	///  input tab
 	InitInputGui();
@@ -327,17 +330,17 @@ void App::InitGui()
 			std::ifstream check((PATHMANAGER::GetCarPath() + "/" + *i + "/about.txt").c_str());
 			if (check)  {
 				carList->addItem(*i);
-				if (*i == pSet->car) {  carList->setIndexSelected(ii);  bFound = true;  }
+				if (*i == pSet->car[0]) {  carList->setIndexSelected(ii);  bFound = true;  }
 				ii++;  }
 		}
 		if (!bFound)
-			pSet->car = *li.begin();
+			pSet->car[0] = *li.begin();
 		carList->eventListChangePosition = newDelegate(this, &App::listCarChng);
     }
 
 	//  cars text, chg btn
     valCar = (StaticTextPtr)mLayout->findWidget("CarText");
-	valCar->setCaption(TR("#{Car}: ") + pSet->car);  sListCar = pSet->car;
+	valCar->setCaption(TR("#{Car}: ") + pSet->car[0]);  sListCar = pSet->car[0];
 
     ButtonPtr btnCar = (ButtonPtr)mLayout->findWidget("ChangeCar");
     if (btnCar)  btnCar->eventMouseButtonClick = newDelegate(this, &App::btnChgCar);
@@ -460,11 +463,13 @@ void App::UpdGuiRdStats(const SplineRoad* rd, const Scene& sc, float time)
 		trkDesc->setCaption(rd->sTxtDesc.c_str());
 }
 
-void App::UpdCarClrSld()
+void App::UpdCarClrSld(bool upd)
 {
 	HScrollPtr sl;  size_t v;
-	Slv(CarClrH, pSet->car_hue);
-	Slv(CarClrS, (pSet->car_sat +1)*0.5f);  Slv(CarClrV, (pSet->car_val +1)*0.5f);
+	bUpdCarClr = false;
+	Slv(CarClrH, pSet->car_hue[iCurCar]);
+	Slv(CarClrS, (pSet->car_sat[iCurCar] +1)*0.5f);  if (upd)  bUpdCarClr = true;
+	Slv(CarClrV, (pSet->car_val[iCurCar] +1)*0.5f);  bUpdCarClr = true;
 }
 
 

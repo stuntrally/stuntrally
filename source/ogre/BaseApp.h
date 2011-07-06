@@ -29,7 +29,7 @@ public:
 	bool bLoading;
 	
 	// has to be in baseApp to switch camera on C press
-	std::list<class CarModel*> carModels;
+	std::vector<class CarModel*> carModels;
 	
 	// translation
 	// can't have it in c'tor, because mygui is not initialized

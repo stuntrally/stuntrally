@@ -184,34 +184,34 @@
 				<Widget type="StaticImage" skin="StaticImage" position="336 54 511 10">
 					<Property key="Image_Texture" value="hue_bar.png"/>
 				</Widget>
-				<Widget type="StaticImage" skin="StaticImage" position="176 199 40 40" name="carClr0">
+				<Widget type="StaticImage" skin="StaticImage" position="176 200 40 40" name="carClr0">
 					<Property key="Image_Texture" value="white.png"/>
 				</Widget>
-				<Widget type="StaticImage" skin="StaticImage" position="224 199 40 40" name="carClr1">
+				<Widget type="StaticImage" skin="StaticImage" position="224 200 40 40" name="carClr1">
 					<Property key="Image_Texture" value="white.png"/>
 				</Widget>
-				<Widget type="StaticImage" skin="StaticImage" position="272 199 40 40" name="carClr2">
+				<Widget type="StaticImage" skin="StaticImage" position="272 200 40 40" name="carClr2">
 					<Property key="Image_Texture" value="white.png"/>
 				</Widget>
-				<Widget type="StaticImage" skin="StaticImage" position="320 199 40 41" name="carClr3">
+				<Widget type="StaticImage" skin="StaticImage" position="320 200 40 41" name="carClr3">
 					<Property key="Image_Texture" value="white.png"/>
 				</Widget>
-				<Widget type="StaticImage" skin="StaticImage" position="368 199 40 40" name="carClr4">
+				<Widget type="StaticImage" skin="StaticImage" position="368 200 40 40" name="carClr4">
 					<Property key="Image_Texture" value="white.png"/>
 				</Widget>
-				<Widget type="StaticImage" skin="StaticImage" position="176 247 40 40" name="carClr5">
+				<Widget type="StaticImage" skin="StaticImage" position="176 248 40 40" name="carClr5">
 					<Property key="Image_Texture" value="white.png"/>
 				</Widget>
-				<Widget type="StaticImage" skin="StaticImage" position="224 247 40 40" name="carClr6">
+				<Widget type="StaticImage" skin="StaticImage" position="224 248 40 40" name="carClr6">
 					<Property key="Image_Texture" value="white.png"/>
 				</Widget>
-				<Widget type="StaticImage" skin="StaticImage" position="272 247 40 40" name="carClr7">
+				<Widget type="StaticImage" skin="StaticImage" position="272 248 40 40" name="carClr7">
 					<Property key="Image_Texture" value="white.png"/>
 				</Widget>
-				<Widget type="StaticImage" skin="StaticImage" position="320 247 40 40" name="carClr8">
+				<Widget type="StaticImage" skin="StaticImage" position="320 248 40 40" name="carClr8">
 					<Property key="Image_Texture" value="white.png"/>
 				</Widget>
-				<Widget type="StaticImage" skin="StaticImage" position="368 247 40 40" name="carClr9">
+				<Widget type="StaticImage" skin="StaticImage" position="368 248 40 40" name="carClr9">
 					<Property key="Image_Texture" value="white.png"/>
 				</Widget>
 				<Widget type="Button" skin="Button" position="176 303 136 32" name="CarClrRandom">
@@ -219,7 +219,7 @@
 					<Property key="Widget_Colour" value="1 0.8 0.5"/>
 					<Property key="Text_TextColour" value="1 0.7 0.6"/>
 				</Widget>
-				<Widget type="Tab" skin="Tab" position="176 16 568 24">
+				<Widget type="Tab" skin="Tab" position="176 16 568 20" name="tabPlayer">
 					<Widget type="TabItem" skin="" position="4 26 559 -8">
 						<Property key="Widget_Caption" value="#{InputMapPlayer1}"/>
 					</Widget>

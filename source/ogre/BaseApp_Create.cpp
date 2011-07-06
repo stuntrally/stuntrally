@@ -507,7 +507,7 @@ bool BaseApp::mouseMoved( const OIS::MouseEvent &arg )
 	///  Follow Camera Controls
 	// -for all cars
 	int i = 0;
-	for (std::list<CarModel*>::iterator it=carModels.begin(); it!=carModels.end(); it++, i++)
+	for (std::vector<CarModel*>::iterator it=carModels.begin(); it!=carModels.end(); it++, i++)
 	if (i == iCurCam)
 	{
 		if ((*it)->fCam)

@@ -264,6 +264,7 @@ void App::CreateSkyDome(String sMater, Vector3 sc)
 	ManualObject* m = mSceneMgr->createManualObject();
 	//m->setUseIdentityView(true);
 	m->begin(sMater, RenderOperation::OT_TRIANGLE_LIST);
+	// ^ +"_s" for small textures todo ...
 
 	//  divisions- quality
 	int ia = 32*2, ib = 24,iB = 24 +1/*below_*/, i=0;

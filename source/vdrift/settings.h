@@ -9,7 +9,7 @@ public:
 ///  params
 //------------------------------------------
 	//  car, track
-	std::string car, track;  bool track_user;
+	std::string car[4], track;  bool track_user;
 
 	//  show
 	bool show_fps, show_gauges, trackmap,
@@ -27,7 +27,7 @@ public:
 
 	//  car
 	bool abs, tcs, autoclutch, autoshift, autorear, show_mph;
-	float car_hue, car_sat, car_val;
+	float car_hue[4], car_sat[4], car_val[4];
 
 	//  game
 	bool trackreverse;	int local_players, num_laps;

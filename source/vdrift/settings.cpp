@@ -8,8 +8,10 @@ void SETTINGS::Save(std::string sfile) {  CONFIGFILE c;  c.Load(sfile);  Seriali
 void SETTINGS::Serialize(bool w, CONFIGFILE & c)
 {
 	c.bFltFull = false;
-	Param(c,w, "game.car", car);			Param(c,w, "game.car_hue", car_hue);
-	Param(c,w, "game.car_sat", car_sat);	Param(c,w, "game.car_val", car_val);
+	for (int i=0; i < 4; ++i)
+	{	std::string s = "game.car";  s += char('1'+i);
+		Param(c,w, s, car[i]);				Param(c,w, s+"_hue", car_hue[i]);
+		Param(c,w, s+"_sat", car_sat[i]);	Param(c,w, s+"_val", car_val[i]);  }
 	Param(c,w, "game.track", track);		Param(c,w, "game.track_user", track_user);
 	Param(c,w, "game.local_players", local_players);	Param(c,w, "game.split_vertically", split_vertically);
 	Param(c,w, "game.trk_reverse", trackreverse);		Param(c,w, "game.num_laps", num_laps);
@@ -74,8 +76,8 @@ void SETTINGS::Serialize(bool w, CONFIGFILE & c)
 
 SETTINGS::SETTINGS() :  ///  Defaults
 	//  car, track
-	car("3S"), track("J1-T"), track_user(false),
-	car_hue(0.f), car_sat(0.f), car_val(0.f),
+	track("J1-T"), track_user(false),
+	//car("3S"), car_hue(0.f), car_sat(0.f), car_val(0.f),
 	//  show
 	show_fps(1), show_gauges(1), trackmap(1),
 	show_cam(1), show_times(0), show_digits(1), car_dbgtxt(0), car_dbgbars(0),
@@ -109,4 +111,7 @@ SETTINGS::SETTINGS() :  ///  Defaults
 	x11_capture_mouse(true),
 	//  replay
 	rpl_rec(1), rpl_ghost(1), rpl_bestonly(1), rpl_listview(0)
-{}
+{
+	for (int i=0; i < 4; ++i)
+	{	car[i] = "ES";  car_hue[i] = 0.f;  car_sat[i] = 0.f;  car_val[i] = 0.f;  }
+}

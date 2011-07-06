@@ -151,6 +151,56 @@ void App::slNumLaps(SL)
 	if (valNumLaps){  Fmt(s, "%d", v);	valNumLaps->setCaption(s);  }
 }
 
+void App::tabPlayer(TabPtr wp, size_t id)
+{
+	iCurCar = id;
+	//  update gui for this car (color h,s,v, name, img)
+	size_t i = carList->findItemIndexWith(pSet->car[iCurCar]);
+	if (i != ITEM_NONE)
+	{	carList->setIndexSelected(i);
+		listCarChng(carList, i);
+	}
+	UpdCarClrSld(false);  // no car color change
+}
+
+//  car color
+void App::slCarClrH(SL)
+{
+	Real v = val/res;  pSet->car_hue[iCurCar] = v;  //[]
+	if (valCarClrH){	Fmt(s, "%4.2f", v);	valCarClrH->setCaption(s);  }
+	if (iCurCar < carModels.size() && bUpdCarClr)
+		carModels[iCurCar]->ChangeClr(iCurCar);
+}
+void App::slCarClrS(SL)
+{
+	Real v = -1.f + 2.f * val/res;  pSet->car_sat[iCurCar] = v;
+	if (valCarClrS){	Fmt(s, "%4.2f", v);	valCarClrS->setCaption(s);  }
+	if (iCurCar < carModels.size() && bUpdCarClr)
+		carModels[iCurCar]->ChangeClr(iCurCar);
+}
+void App::slCarClrV(SL)
+{
+	Real v = -1.f + 2.f * val/res;  pSet->car_val[iCurCar] = v;
+	if (valCarClrV){	Fmt(s, "%4.2f", v);	valCarClrV->setCaption(s);  }
+	if (iCurCar < carModels.size() && bUpdCarClr)
+		carModels[iCurCar]->ChangeClr(iCurCar);
+}
+
+void App::imgBtnCarClr(WP img)
+{
+	pSet->car_hue[iCurCar] = s2r(img->getUserString("h"));
+	pSet->car_sat[iCurCar] = s2r(img->getUserString("s"));
+	pSet->car_val[iCurCar] = s2r(img->getUserString("v"));
+	UpdCarClrSld();
+}
+void App::btnCarClrRandom(WP)
+{
+	pSet->car_hue[iCurCar] = Math::UnitRandom();
+	pSet->car_sat[iCurCar] = Math::RangeRandom(-0.5f, 0.5f);
+	pSet->car_val[iCurCar] = Math::RangeRandom(-0.5f, 0.5f);
+	UpdCarClrSld();
+}
+
 
 //  [Graphics]
 
@@ -319,7 +369,7 @@ void App::slReflMode(SL)
 }
 void App::recreateReflections()
 {
-	for (std::list<CarModel*>::iterator it = carModels.begin(); it!=carModels.end(); it++)
+	for (std::vector<CarModel*>::iterator it = carModels.begin(); it!=carModels.end(); it++)
 	{	
 		delete (*it)->pReflect;
 		(*it)->CreateReflection();
@@ -391,50 +441,6 @@ void App::slVolEnv(SL)
 }
 
 
-//  car color
-void App::slCarClrH(SL)
-{
-	Real v = val/res;  pSet->car_hue = v;
-	if (valCarClrH){	Fmt(s, "%4.2f", v);	valCarClrH->setCaption(s);  }
-	for (std::list<CarModel*>::iterator it=carModels.begin(); it!=carModels.end(); it++)
-		(*it)->ChangeClr();
-}
-void App::slCarClrS(SL)
-{
-	Real v = -1.f + 2.f * val/res;  pSet->car_sat = v;
-	if (valCarClrS){	Fmt(s, "%4.2f", v);	valCarClrS->setCaption(s);  }
-	for (std::list<CarModel*>::iterator it=carModels.begin(); it!=carModels.end(); it++)
-		(*it)->ChangeClr();
-}
-void App::slCarClrV(SL)
-{
-	Real v = -1.f + 2.f * val/res;  pSet->car_val = v;
-	if (valCarClrV){	Fmt(s, "%4.2f", v);	valCarClrV->setCaption(s);  }
-	for (std::list<CarModel*>::iterator it=carModels.begin(); it!=carModels.end(); it++)
-		(*it)->ChangeClr();
-}
-
-void App::imgBtnCarClr(WP img)
-{
-	pSet->car_hue = s2r(img->getUserString("h"));
-	pSet->car_sat = s2r(img->getUserString("s"));
-	pSet->car_val = s2r(img->getUserString("v"));
-	UpdCarClrSld();
-	for (std::list<CarModel*>::iterator it=carModels.begin(); it!=carModels.end(); it++)
-		(*it)->ChangeClr();
-}
-
-void App::btnCarClrRandom(WP)
-{
-	pSet->car_hue = Math::UnitRandom();
-	pSet->car_sat = Math::RangeRandom(-0.5f, 0.5f);
-	pSet->car_val = Math::RangeRandom(-0.5f, 0.5f);
-	UpdCarClrSld();
-	for (std::list<CarModel*>::iterator it=carModels.begin(); it!=carModels.end(); it++)
-		(*it)->ChangeClr();
-}
-
-
 //  [Game] 	. . . . . . . . . . . . . . . . . . . .    --- lists ----    . . . . . . . . . . . . . . . . . . . .
 
 //  car
@@ -447,7 +453,7 @@ void App::listCarChng(List* li, size_t pos)
 }
 void App::btnChgCar(WP)
 {
-	if (valCar){  valCar->setCaption(TR("#{Car}: ") + sListCar);	pSet->car = sListCar;  }
+	if (valCar){  valCar->setCaption(TR("#{Car}: ") + sListCar);	pSet->car[iCurCar] = sListCar;  }
 }
 
 //  track
@@ -508,14 +514,14 @@ void App::chkReverse(WP wp){		ChkEv(trackreverse);	ReadTrkStats();  }
 void App::chkParticles(WP wp)
 {		
 	ChkEv(particles);
-	for (std::list<CarModel*>::iterator it=carModels.begin(); it!=carModels.end(); it++)
+	for (std::vector<CarModel*>::iterator it=carModels.begin(); it!=carModels.end(); it++)
 	//? if ((*it)->eType != CarModel::CT_GHOST)
 		(*it)->UpdParsTrails();
 }
 void App::chkTrails(WP wp)
 {			
 	ChkEv(trails);		
-	for (std::list<CarModel*>::iterator it=carModels.begin(); it!=carModels.end(); it++)
+	for (std::vector<CarModel*>::iterator it=carModels.begin(); it!=carModels.end(); it++)
 		(*it)->UpdParsTrails();
 }
 void App::chkFps(WP wp){			ChkEv(show_fps);	if (pSet->show_fps)  mFpsOverlay->show();  else  mFpsOverlay->hide();	}
@@ -672,7 +678,7 @@ void App::btnRplLoad(WP)  // Load
 		string car = replay.header.car, trk = replay.header.track;
 		bool usr = replay.header.track_user == 1;
 
-		pSet->car = car;  pSet->track = trk;  pSet->track_user = usr;
+		pSet->car[0] = car;  pSet->track = trk;  pSet->track_user = usr;
 		btnNewGame(0);
 		bRplPlay = 1;
 	}
@@ -864,7 +870,7 @@ void App::btnRplRename(WP)
 bool App::keyPressed( const OIS::KeyEvent &arg )
 {
 	// update all keystates
-	OISB::System::getSingleton().process(0);
+	OISB::System::getSingleton().process(0.001/*?0*/);
 	
 	#define action(s)  mOISBsys->lookupAction("General/"s)->isActive()
 
@@ -903,7 +909,7 @@ bool App::keyPressed( const OIS::KeyEvent &arg )
 				{	int visMask = 255, i = 0;
 					roadUpCnt = 0;
 
-					for (std::list<CarModel*>::iterator it=carModels.begin(); it!=carModels.end(); it++, i++)
+					for (std::vector<CarModel*>::iterator it=carModels.begin(); it!=carModels.end(); it++, i++)
 					if (i == iCurCam)
 					{
 						if ((*it)->fCam)

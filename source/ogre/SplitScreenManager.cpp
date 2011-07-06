@@ -190,7 +190,7 @@ void SplitScreenManager::preViewportUpdate(const Ogre::RenderTargetViewportEvent
 
 		//  get car for this viewport
 		int carId = 0;
-		std::list<CarModel*>::iterator carIt = pApp->carModels.begin();
+		std::vector<CarModel*>::iterator carIt = pApp->carModels.begin();
 		if (pApp->carModels.size() > 0)
 		{
 			int j = 0;

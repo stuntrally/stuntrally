@@ -137,7 +137,8 @@ public:
 protected:
 	///  Gui  ---------------------------------------------------------------------------
 	void InitGui(), toggleGui();
-	void UpdGuiRdStats(const SplineRoad* rd, const Scene& sc, float time), ReadTrkStats(), UpdCarClrSld();
+	void UpdGuiRdStats(const SplineRoad* rd, const Scene& sc, float time), ReadTrkStats();
+	void UpdCarClrSld(bool upd=true);  bool bUpdCarClr;
 
 	//  tooltips
 	MyGUI::WidgetPtr mToolTip;  MyGUI::EditPtr mToolTipTxt;
@@ -156,6 +157,7 @@ protected:
 	void controlBtnClicked(WP), InitInputGui(), UpdateJsButtons();
 	void joystickBindChanged(WP, size_t val);
 	void joystickSelectionChanged(WP, size_t val);
+	void recreateReflections(); // call after refl_mode changed
 
 	//  sliders
 	SLV(Anisotropy);  SLV(ViewDist);  SLV(TerDetail);  SLV(TerDist);  SLV(RoadDist);  // detail
@@ -169,8 +171,6 @@ protected:
 	SLV(BloomInt);  SLV(BloomOrig);  SLV(BlurIntens);  // video
 	SLV(NumLaps);  // setup
 	
-	void recreateReflections(); // call after refl_mode changed
-
 	//  checks
 	void chkFps(WP), chkGauges(WP),	chkDigits(WP), chkMinimap(WP), chkRacingLine(WP),  // view
 		chkCamInfo(WP), chkTimes(WP), chkCarDbgBars(WP), chkCarDbgTxt(WP), chkBltDebug(WP), chkBltProfilerTxt(WP),
@@ -208,7 +208,7 @@ protected:
 		
 public:
 	bool bRplPlay,bRplPause, bRplRec, bRplWnd;  //  game
-	int carIdWin;
+	int carIdWin, iCurCar;
 protected:
 	MyGUI::ButtonPtr btRplPl;  void UpdRplPlayBtn();
 
@@ -220,6 +220,7 @@ protected:
 	void listTrackChng(MyGUI::List* li, size_t pos),	btnChgTrack(WP);
 	int LNext(MyGUI::ListPtr lp, int rel);  // util next in list
 	void trkLNext(int rel), carLNext(int rel), rplLNext(int rel);
+	void tabPlayer(MyGUI::TabPtr wp, size_t id);
 
 	Ogre::String sListCar,sListTrack;  int bListTrackU;
 	Ogre::String pathTrk[2];  Ogre::String TrkDir();

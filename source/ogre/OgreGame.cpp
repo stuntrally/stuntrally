@@ -27,7 +27,7 @@ App::App()
 	,mTerrainGlobals(0), mTerrainGroup(0), mPaging(false)
 	,mTerrainPaging(0), mPageManager(0)
 	// gui
-	,mToolTip(0), mToolTipTxt(0), carList(0), trkList(0), resList(0)
+	,mToolTip(0), mToolTipTxt(0), carList(0), trkList(0), resList(0), btRplPl(0)
 	,valAnisotropy(0), valViewDist(0), valTerDetail(0), valTerDist(0), valRoadDist(0)  // detail
 	,valTrees(0), valGrass(0), valTreesDist(0), valGrassDist(0)  // paged
 	,valReflSkip(0), valReflSize(0), valReflFaces(0), valReflDist(0)  // refl
@@ -42,7 +42,7 @@ App::App()
 	// game
 	,blendMtr(0), iBlendMaps(0), dbgdraw(0)
 	,grass(0), trees(0), road(0)
-	,pr(0),pr2(0), sun(0), carIdWin(-1)
+	,pr(0),pr2(0), sun(0), carIdWin(-1), iCurCar(0), bUpdCarClr(1)
 {
 	pathTrk[0] = PATHMANAGER::GetTrackPath() + "/";
 	pathTrk[1] = PATHMANAGER::GetTrackPathUser() + "/";
@@ -100,7 +100,7 @@ void App::setTranslations()
 void App::destroyScene()
 {
 	// Delete all cars
-	for (std::list<CarModel*>::iterator it=carModels.begin(); it!=carModels.end(); it++)
+	for (std::vector<CarModel*>::iterator it=carModels.begin(); it!=carModels.end(); it++)
 		delete (*it);
 
 	carModels.clear();
@@ -166,7 +166,7 @@ const String& App::GetGhostFile()
 	static String file;
 	file = PATHMANAGER::GetGhostsPath() + "/"
 		+ pSet->track + (pSet->track_user ? "_u" : "") + (pSet->trackreverse ? "_r" : "")
-		+ "_" + pSet->car + ".rpl";
+		+ "_" + pSet->car[0] + ".rpl";
 	return file;
 }
 

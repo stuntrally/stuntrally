@@ -139,13 +139,13 @@ bool App::frameStart(Real time)
 			double dt = gtim.dt;
 			
 			// Update cameras for all cars
-			for (std::list<CarModel*>::iterator it=carModels.begin(); it!=carModels.end(); it++)
+			for (std::vector<CarModel*>::iterator it=carModels.begin(); it!=carModels.end(); it++)
 				if ((*it)->fCam)
 					(*it)->fCam->update(pGame->framerate);
 		}
 
 		//  update all cube maps
-		for (std::list<CarModel*>::iterator it=carModels.begin(); it!=carModels.end(); it++)
+		for (std::vector<CarModel*>::iterator it=carModels.begin(); it!=carModels.end(); it++)
 		if ((*it)->eType != CarModel::CT_GHOST && (*it)->pReflect)
 			(*it)->pReflect->Update();
 
@@ -216,7 +216,7 @@ void App::newPoses()
 
 	// Iterate through all car models and get new pos info
 	int iCarNum = 0;
-	std::list<CarModel*>::iterator carMIt = carModels.begin();
+	std::vector<CarModel*>::iterator carMIt = carModels.begin();
 	std::list<PosInfo>::iterator newPosIt = newPosInfos.begin();
 	while (carMIt != carModels.end())
 	{
@@ -467,7 +467,7 @@ void App::updatePoses(float time)
 {	
 	//  Update all carmodels with their newPosInfo
 	int i=0;
-	std::list<CarModel*>::iterator carIt = carModels.begin();
+	std::vector<CarModel*>::iterator carIt = carModels.begin();
 	std::list<PosInfo>::iterator newPosIt = newPosInfos.begin();
 	while (carIt != carModels.end())
 	{
