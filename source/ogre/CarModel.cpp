@@ -30,7 +30,7 @@ using namespace Ogre;
 
 CarModel::CarModel(unsigned int index, eCarType type, const std::string name,
 	Ogre::SceneManager* sceneMgr, SETTINGS* set, GAME* game, Scene* s, Ogre::Camera* cam, App* app) :
-	hue(0), sat(0), val(0), fCam(0), pMainNode(0), pCar(0), terrain(0), resCar(""), mCamera(0), pReflect(0), pApp(app)
+	fCam(0), pMainNode(0), pCar(0), terrain(0), resCar(""), mCamera(0), pReflect(0), pApp(app), color(1,0,0)
 {
 	iIndex = index;  sDirname = name;  pSceneMgr = sceneMgr;
 	pSet = set;  pGame = game;  sc = s;  mCamera = cam;  eType = type;
@@ -541,6 +541,9 @@ void CarModel::UpdWhTerMtr()
 void CarModel::ChangeClr(int car)
 {
 	bool add = 1;
+	float c_h = pSet->car_hue[car], c_s = pSet->car_sat[car], c_v = pSet->car_val[car];
+	color.setHSB(1-c_h,c_s*0.25+0.75,1/*c_v*2+0.7*/);  //set, mini pos clr
+
 	Image ima;	try{
 		ima.load(sDirname + "_body00_add.png", "Car" + toStr(iIndex));  // add, not colored
 	}catch(...){  add = 0;  }
@@ -579,9 +582,8 @@ void CarModel::ChangeClr(int car)
 
 				Real h,s,v;  // hue shift
 				c.getHSB(&h,&s,&v);
-				h += pSet->car_hue[car];  if (h>1.f) h-=1.f;  // 0..1
-				s += pSet->car_sat[car];  // -1..1
-				v += pSet->car_val[car];
+				h += c_h;  if (h>1.f) h-=1.f;  // 0..1
+				s += c_s;  v += c_v;  // -1..1
 				c.setHSB(h,s,v);
 
 				r = c.r*255;  g = c.g*255;  b = c.b*255;  // set

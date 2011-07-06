@@ -8,6 +8,7 @@ material Mud
 			lighting off
 			depth_write off
 			scene_blend alpha_blend
+			diffuse vertexcolour
 			alpha_rejection greater 64
 			//transparent_sorting on
 

@@ -166,7 +166,7 @@ void App::tabPlayer(TabPtr wp, size_t id)
 //  car color
 void App::slCarClrH(SL)
 {
-	Real v = val/res;  pSet->car_hue[iCurCar] = v;  //[]
+	Real v = val/res;  pSet->car_hue[iCurCar] = v;
 	if (valCarClrH){	Fmt(s, "%4.2f", v);	valCarClrH->setCaption(s);  }
 	if (iCurCar < carModels.size() && bUpdCarClr)
 		carModels[iCurCar]->ChangeClr(iCurCar);

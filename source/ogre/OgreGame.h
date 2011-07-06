@@ -80,7 +80,8 @@ protected:
 	Ogre::SceneNode *nrpmB, *nvelBk,*nvelBm, *nrpm, *nvel;  // gauges
 	Ogre::SceneNode *ndPos[5], *ndMap, *ndLine;  // car pos on minimap
 	Ogre::ManualObject* mrpm, *mvel, *mpos[5];
-	Ogre::ManualObject* Create2D(const Ogre::String& mat, Ogre::SceneManager* sceneMgr, Ogre::Real size, bool dyn = false);
+	Ogre::ManualObject* Create2D(const Ogre::String& mat, Ogre::SceneManager* sceneMgr,
+		Ogre::Real size, bool dyn = false, bool clr = false);
 
 	Ogre::OverlayElement* hudGear,*hudVel, *ovL[5],*ovR[5],*ovS[5],*ovU[5], *hudAbs,*hudTcs, *hudTimes,*hudCheck;
 	Ogre::Overlay* ovGear,*ovVel, *ovAbsTcs,*ovCarDbg,*ovCarDbgTxt,  *ovCam, *ovTimes;

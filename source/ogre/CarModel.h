@@ -61,7 +61,7 @@ public:
 	void Update(PosInfo& newPosInfo, float time);
 	
 	//  Car color, After these values are changed, ChangeClr() should be called
-	float hue, sat, val;
+	Ogre::ColourValue color;  // for minimap pos tri color  //float hue, sat, val;
 	void ChangeClr(int car);  //  Apply new color
 	
 	//  Reload material textures.

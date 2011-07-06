@@ -93,7 +93,7 @@ void App::CreateHUD()
 		
 		//  car pos dot
 		for (int i=0; i < pSet->local_players; ++i)
-		{	mpos[i] = Create2D("hud/CarPos", mSceneMgr, 0.4f, true);
+		{	mpos[i] = Create2D("hud/CarPos", mSceneMgr, 0.4f, true, true);
 			mpos[i]->setVisibilityFlags(2);  mpos[i]->setRenderQueueGroup(RENDER_QUEUE_OVERLAY);
 			ndPos[i] = ndMap->createChildSceneNode();
 			ndPos[i]->scale(fHudSize*1.5f, fHudSize*1.5f, 1);
@@ -278,7 +278,8 @@ void App::UpdateHUD(int carId, CarModel* pCarM, CAR* pCar, float time, Viewport*
 		
 	i = carId;
 	if (mpos[i])  {  mpos[i]->beginUpdate(0);
-		for (int p=0;p<4;++p)  {  mpos[i]->position(px[p],py[p], 0);  mpos[i]->textureCoord(tc[p][0], tc[p][1]);  }
+		for (int p=0;p<4;++p)  {  mpos[i]->position(px[p],py[p], 0);  mpos[i]->textureCoord(tc[p][0], tc[p][1]);
+			if (pCarM)  mpos[i]->colour(pCarM->color);  }
 		mpos[i]->end();  }
 
 

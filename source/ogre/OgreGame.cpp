@@ -122,7 +122,7 @@ void App::destroyScene()
 	BaseApp::destroyScene();
 }
 
-ManualObject* App::Create2D(const String& mat, SceneManager* sceneMgr, Real s, bool dyn)
+ManualObject* App::Create2D(const String& mat, SceneManager* sceneMgr, Real s, bool dyn, bool clr)
 {
 	ManualObject* m = sceneMgr->createManualObject();
 	m->setDynamic(dyn);
@@ -133,10 +133,10 @@ ManualObject* App::Create2D(const String& mat, SceneManager* sceneMgr, Real s, b
 	m->estimateVertexCount(4);
 	m->begin(mat, RenderOperation::OT_TRIANGLE_FAN);
 
-	m->position(-s,-s*asp, 0);  m->textureCoord(0, 1);
-	m->position( s,-s*asp, 0);  m->textureCoord(1, 1);
-	m->position( s, s*asp, 0);  m->textureCoord(1, 0);
-	m->position(-s, s*asp, 0);  m->textureCoord(0, 0);
+	m->position(-s,-s*asp, 0);  m->textureCoord(0, 1);  if (clr)  m->colour(0,1,0);
+	m->position( s,-s*asp, 0);  m->textureCoord(1, 1);  if (clr)  m->colour(0,1,0);
+	m->position( s, s*asp, 0);  m->textureCoord(1, 0);  if (clr)  m->colour(0,1,0);
+	m->position(-s, s*asp, 0);  m->textureCoord(0, 0);  if (clr)  m->colour(0,1,0);
 	m->end();
  
 	AxisAlignedBox aabInf;	aabInf.setInfinite();
