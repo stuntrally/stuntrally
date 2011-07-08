@@ -196,19 +196,22 @@ void App::LoadCar()  // 4
 	///=================----------------
 	replay.InitHeader(pSet->track.c_str(), pSet->track_user, pSet->car[0].c_str(), !bRplPlay);
 	replay.header.numPlayers = pSet->local_players;
+	replay.header.hue[0] = pSet->car_hue[0];  replay.header.sat[0] = pSet->car_sat[0];  replay.header.val[0] = pSet->car_val[0];
+
 	ghost.InitHeader(pSet->track.c_str(), pSet->track_user, pSet->car[0].c_str(), !bRplPlay);
 	ghost.header.numPlayers = 1;  // ghost always 1 car
+	ghost.header.hue[0] = pSet->car_hue[0];  ghost.header.sat[0] = pSet->car_sat[0];  ghost.header.val[0] = pSet->car_val[0];
 
 	//if (pSet->local_players > 1)  // save other car names
-	//for (int p=1; p <
-		//strcpy(replay.header.cars[0], pSet->car.c_str());
+	for (int p=1; p < pSet->local_players; ++p)
+	{	strcpy(replay.header.cars[p-1], pSet->car[p].c_str());
+		replay.header.hue[p] = pSet->car_hue[p];  replay.header.sat[p] = pSet->car_sat[p];
+		replay.header.val[p] = pSet->car_val[p];  }
 	
 	int c = 0;  // copy wheels R
 	for (std::list <CAR>::const_iterator it = pGame->cars.begin(); it != pGame->cars.end(); it++,c++)
-	{
 		for (int w=0; w<4; ++w)
 			replay.header.whR[c][w] = (*it).GetTireRadius(WHEEL_POSITION(w));
-	}	// car names..
 }
 
 void App::LoadTerrain()  // 5

@@ -679,6 +679,11 @@ void App::btnRplLoad(WP)  // Load
 		bool usr = replay.header.track_user == 1;
 
 		pSet->car[0] = car;  pSet->track = trk;  pSet->track_user = usr;
+		pSet->car_hue[0] = replay.header.hue[0];  pSet->car_sat[0] = replay.header.sat[0];  pSet->car_val[0] = replay.header.val[0];
+		for (int p=1; p < replay.header.numPlayers; ++p)
+		{	pSet->car[p] = replay.header.cars[p-1];
+			pSet->car_hue[p] = replay.header.hue[p];  pSet->car_sat[p] = replay.header.sat[p];  pSet->car_val[p] = replay.header.val[p];
+		}
 		btnNewGame(0);
 		bRplPlay = 1;
 	}
@@ -721,7 +726,7 @@ void App::listRplChng(List* li, size_t pos)
 		String ss = String(TR("#{Track}: ")) + rpl.header.track + (rpl.header.track_user ? "  *user*" : "");
 		valRplName->setCaption(ss);
 
-		ss = String(TR("#{Car}: ")) + rpl.header.car +
+		ss = String(TR("#{Car}: ")) + rpl.header.car +  // #{..
 			(rpl.header.numPlayers == 1 ? "" : "       Players: " + toStr(rpl.header.numPlayers)) +
 			//(rpl.header.cars[0][0] != 0 ? " , " + rpl.header.cars[0] : "") +
 			//(rpl.header.cars[0][1] != 0 ? " , " + rpl.header.cars[1] : "") +

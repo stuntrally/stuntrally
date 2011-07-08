@@ -7,7 +7,7 @@
 #include <ostream>
 
 class JOEPACK;
-class JOEObject;
+struct JOEObject;
 
 // This class handles all of the loading code
 class MODEL_JOE03 : public MODEL

@@ -245,7 +245,7 @@ void App::newPoses()
 				whPos[w] = fr.whPos[w];  whRot[w] = fr.whRot[w];
 				posInfo.whVel[w] = fr.whVel[w];
 				posInfo.whSlide[w] = fr.slide[w];  posInfo.whSqueal[w] = fr.squeal[w];
-				posInfo.whR[w] = replay.header.whR[0][w];//
+				posInfo.whR[w] = replay.header.whR[iCarNum][w];//
 				posInfo.whMtr[w] = fr.whMtr[w];
 				posInfo.fboost = fr.fboost;
 			}
@@ -264,7 +264,7 @@ void App::newPoses()
 				whPos[w] = fr.whPos[w];  whRot[w] = fr.whRot[w];
 				posInfo.whVel[w] = fr.whVel[w];
 				posInfo.whSlide[w] = fr.slide[w];  posInfo.whSqueal[w] = fr.squeal[w];
-				posInfo.whR[w] = replay.header.whR[0][w];//
+				posInfo.whR[w] = replay.header.whR[iCarNum][w];//
 				posInfo.whMtr[w] = fr.whMtr[w];
 				posInfo.fboost = fr.fboost;
 			}

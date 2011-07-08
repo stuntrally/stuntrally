@@ -276,11 +276,11 @@ void App::UpdateHUD(int carId, CarModel* pCarM, CAR* pCar, float time, Viewport*
 		for (int p=0;p<4;++p)  {  mvel->position(vx[p],vy[p], 0);  mvel->textureCoord(tc[p][0], tc[p][1]);  }
 		mvel->end();  }
 		
-	i = carId;
-	if (mpos[i])  {  mpos[i]->beginUpdate(0);
-		for (int p=0;p<4;++p)  {  mpos[i]->position(px[p],py[p], 0);  mpos[i]->textureCoord(tc[p][0], tc[p][1]);
-			if (pCarM)  mpos[i]->colour(pCarM->color);  }
-		mpos[i]->end();  }
+	int c = carId;
+	if (mpos[c])  {  mpos[c]->beginUpdate(0);
+		for (int p=0;p<4;++p)  {  mpos[c]->position(px[p],py[p], 0);  mpos[c]->textureCoord(tc[p][0], tc[p][1]);
+			if (pCarM)  mpos[c]->colour(pCarM->color);  }
+		mpos[c]->end();  }
 
 
 	//  gear, vel texts  -----------------------------
