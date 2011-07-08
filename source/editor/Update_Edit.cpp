@@ -486,6 +486,8 @@ bool App::frameEnded(const FrameEvent& evt)
 
 bool App::frameStarted(const Ogre::FrameEvent& evt)
 {
+	BaseApp::frameStarted(evt);
+	
 	if (bGuiReinit)  // after language change from combo
 	{	bGuiReinit = false;
 		mGUI->destroyWidgets(vwGui);

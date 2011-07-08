@@ -10,10 +10,12 @@ using namespace Ogre;
 void BaseApp::updateStats()
 {
 	//  Focus  * * *
-	static int fcOld = -1;
+	static int fcOld = -2;
 	int fc = bGuiFocus ? 2 : bMoveCam ? 0 : 1;
 	if (ovFocus && fc != fcOld)
-	{	fcOld = fc;
+	{	if (fcOld < 0)  ++fcOld;
+		else  fcOld = fc;
+		
 		const char* sFoc[3] = {"Cam", " Edit", "  Gui"};
 		ColourValue cFoc[3] = {ColourValue(0.7,0.85,1.0), ColourValue(0.7,1.0,0.5), ColourValue(1.0,1.0,0.4)};
 		const char* mFoc[3] = {"Cam", "Edit", "Gui"};
