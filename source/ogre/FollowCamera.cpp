@@ -43,11 +43,11 @@ void FollowCamera::update( Real time )
 	goalPos = mGoalNode->getPosition();
 	
 	Real x,y,z,xz;   // get the Y offset and the XZ plane offset from Pitch
-	y = sin( ca.mPitch.valueRadians() ) * ca.mDist;
-	xz= cos( ca.mPitch.valueRadians() ) * ca.mDist;  // get the x any z values from Yaw
+	y = sin( ca.mPitch.valueRadians() );
+	xz= cos( ca.mPitch.valueRadians() );  // get the x any z values from Yaw
 	x = sin( ca.mYaw.valueRadians() ) * xz;
 	z = cos( ca.mYaw.valueRadians() ) * xz;
-	Vector3 xyz(x,y,z);
+	Vector3 xyz(x,y,z);  xyz *= ca.mDist;
 	
 	bool manualOrient = false;
 	switch (ca.mType)
@@ -69,11 +69,9 @@ void FollowCamera::update( Real time )
 		case CAM_ExtAng:    /* 4 Extended Angle - car in center, angle smooth */
 		{	Quaternion  orient = mGoalNode->getOrientation() * Quaternion(Degree(90),Vector3(0,1,0));
 			Quaternion  ory;  ory.FromAngleAxis(orient.getYaw(), Vector3::UNIT_Y);
-			//ca.mYaw += Radian(0.01f);
 
 			if (first)  {  qq = ory;  first = false;  }
-			else
-				qq = orient.Slerp(ca.mSpeed * time, qq, ory, true);
+			else  qq = orient.Slerp(ca.mSpeed * time, qq, ory, true);
 
 			Quaternion  qy = Quaternion(ca.mYaw,Vector3(0,1,0));
 			goalPos += qq * (xyz + ca.mOffset);
@@ -83,8 +81,9 @@ void FollowCamera::update( Real time )
 			manualOrient = true;
 		}	break;
 	}
-	if (!manualOrient)
-	{	/* Move */
+
+	if (!manualOrient)  // if !CAM_ExtAng
+	{	/*  Move  */
 		float dtmul = ca.mSpeed == 0 ? 1.0f : ca.mSpeed * time;
 		//float dtmulRot = ca.mSpeedRot == 0 ? 1.0f : ca.mSpeedRot * time;
 		//if (ca.mSpeed == ca.mSpeedRot || 1)  dtmulRot = dtmul;
@@ -96,21 +95,29 @@ void FollowCamera::update( Real time )
 		pos += addPos;
 		mCamera->setPosition( pos + ofs );  //if (mypos.y<-3.5)  mypos.y=-3.5;
 
-		/* Look */
-		if (ca.mType == CAM_Arena)
-			goalLook = ca.mOffset + Vector3(x,-y,z);
+		/*  Look  */
+		if (ca.mType ==  CAM_Arena)
+		{
+			mCamera->setOrientation(Quaternion::IDENTITY);
+			mCamera->pitch(ca.mPitch);  mCamera->yaw(ca.mYaw);
+			manualOrient = true;
+		}
 		else
-		if (mGoalNode)
-			goalLook = mGoalNode->getPosition() + ofs;
+		{	//if (ca.mType == CAM_Arena)
+			//	goalLook = ca.mOffset + Vector3(x,-y,z);
+			//else
+			if (mGoalNode)
+				goalLook = mGoalNode->getPosition() + ofs;
 
-		if (first)	{	mLook = goalLook;  first = false;  }
+			if (first)	{	mLook = goalLook;  first = false;  }
 
-		addLook = (goalLook - mLook) * dtmul;//Rot;
-		mLook += addLook;
+			addLook = (goalLook - mLook) * dtmul;//Rot;
+			mLook += addLook;
+		}
 	}
 
 	/// cast ray from car to camera, to prevent objects blocking the camera's sight
-	#if 0
+    #ifdef CAM_BLT
 	// update sphere pos
 	btVector3 carPos = BtOgre::Convert::toBullet(mGoalNode->getPosition());
 	state->setWorldTransform( btTransform(btQuaternion(0,0,0,1), carPos ));
@@ -348,32 +355,23 @@ void FollowCamera::Next(bool bPrev, bool bMainOnly)
 	int dir = bPrev ? -1 : 1;
 	if (!bMainOnly)  // all
 	{
-		incCur(dir);
-		updAngle();
-		return;
+		incCur(dir);  updAngle();  return;
 	}else
-	{
-		int cnt = 0, old = miCurrent;
+	{	int cnt = 0, old = miCurrent;
 		while (cnt < miCount)
 		{
-			cnt++;
-			incCur(dir);
+			cnt++;  incCur(dir);
 			CameraAngle* c = &mCameraAngles[miCurrent];
 			if (c->mMain > 0)
-			{
-				updAngle();
-				return;
-			}
+			{	updAngle();  return;  }
 		}
 		miCurrent = old;
 	}
 }
 
-
 void FollowCamera::setCamera(int ang)
 {
-	miCurrent = ang;
-	updAngle();
+	miCurrent = ang;  updAngle();
 }
 
 
@@ -383,11 +381,11 @@ FollowCamera::FollowCamera(Camera* cam) :
 	ovInfo(0),ovName(0), first(true),
     mCamera(cam), mGoalNode(0), mTerrain(0),
     mLook(Vector3::ZERO)
-    #if 0
+    #ifdef CAM_BLT
     ,shape(0), body(0), state(0)
     #endif
 { 
-	#if 0
+    #ifdef CAM_BLT
 	// create camera bullet col obj
     shape = new btSphereShape(0.1); // 10cm radius
     state = new btDefaultMotionState(btTransform(btQuaternion(0,0,0,1), btVector3(0,0,0) ));
@@ -399,17 +397,13 @@ FollowCamera::FollowCamera(Camera* cam) :
 }
 
 FollowCamera::~FollowCamera()
-{
-
-}
+{	}
 
 CameraAngle::CameraAngle() :
 	mType(CAM_Follow), mName("Follow Default"), mMain(0),
 	mDist(7), mSpeed(10), mSpeedRot(10),
 	mYaw(0), mPitch(7),  mOffset(0,1.2,0), mHideGlass(0)
-{  
-
-}
+{	}
 
 
 
@@ -451,8 +445,7 @@ bool FollowCamera::loadCameras()
 			a = cam->Attribute("spRot");	if (a)  c.mSpeedRot = s2r(a);  else  c.mSpeedRot = c.mSpeed;
 
 			if (c.mMain >= 0)  {
-				mCameraAngles.push_back(c);
-				miCount++;  }
+				mCameraAngles.push_back(c);  miCount++;  }
 			cam = cam->NextSiblingElement("Camera");
 		}
 	}
@@ -467,8 +460,7 @@ bool FollowCamera::loadCameras()
 		miCount++;
 	}
 
-	updAngle();
-	updFmtTxt();
+	updAngle();  updFmtTxt();
 	return true;
 }
 

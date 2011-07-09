@@ -35,6 +35,8 @@ public:
 
 namespace Ogre {  class TerrainGroup;  class Camera;  class OverlayElement;  class SceneNode;  }
 
+//#define CAM_BLT
+
 
 class FollowCamera
 {
@@ -50,7 +52,7 @@ public:
 	Ogre::Vector3 mLook;
 	Ogre::Quaternion qq;  // for ext cam
 
-	#if 0  // bullet
+    #ifdef CAM_BLT  // bullet
 	class COLLISION_WORLD* mWorld;
 	
 	// collision objs for raycast
