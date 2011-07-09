@@ -321,7 +321,7 @@ void App::editMouse()
 	if (bEdit() && edMode == ED_Start /*&&
 		vStartPos.size() >= 4 && vStartRot.size() >= 4*/)
 	{
-		const Real fMove(5.0f), fRot(0.4f);  //par speed
+		const Real fMove(0.5f), fRot(0.05f);  //par speed
 		const int n = 0;  // 1st entry - all same / edit 4..
 		if (!alt)
 		{

@@ -94,7 +94,7 @@ void BaseApp::OnTimer(double dtime)
 	
 	 // speed multiplers
 	moveMul = 1;  rotMul = 1;
-	if(shift){	moveMul *= 0.2;	 rotMul *= 0.5;	}  // 16 8, 4 3, 0.5 0.5
+	if(shift){	moveMul *= 0.2;	 rotMul *= 0.4;	}  // 16 8, 4 3, 0.5 0.5
 	if(ctrl){	moveMul *= 4;	 rotMul *= 2.0;	}
 	//if(alt)  {	moveMul *= 0.5;	 rotMul *= 0.5;	}
 	//const Real s = (shift ? 0.05 : ctrl ? 4.0 :1.0) 
