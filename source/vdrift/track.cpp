@@ -600,11 +600,11 @@ optional <const BEZIER *> ROADSTRIP::FindBezierAtOffset(const BEZIER * bezier, i
 std::pair <MATHVECTOR <float, 3>, QUATERNION <float> > TRACK::GetStart(unsigned int index)
 {
 	assert(!start_positions.empty());
-	unsigned int laststart = start_positions.size()-1;
+	unsigned int laststart = 0;  // force auto gen  // start_positions.size()-1;
 	if (index > laststart)
 	{
 		std::pair <MATHVECTOR <float, 3>, QUATERNION <float> > sp = start_positions[laststart];
-		MATHVECTOR <float, 3> backward(6,0,0);
+		MATHVECTOR <float, 3> backward(-6,0,0);
 		backward = backward * (index-laststart);
 		sp.second.RotateVector(backward);
 		sp.first = sp.first + backward;

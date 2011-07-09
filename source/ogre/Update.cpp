@@ -31,9 +31,9 @@ void App::UpdThr()
 
 			if (!ret)
 				mShutDown = true;
-#if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
+		#if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
 			Sleep(0);  // par
-#endif
+		#endif
 		}
 		/*else
 		{	//  2nd test --
@@ -390,7 +390,7 @@ void App::newPoses()
 
 		//  chekpoints, lap start
 		//-----------------------------------------------------------------------
-		if (bRplPlay || bGhost)   // dont check when replay play
+		if (bRplPlay || bGhost || !sc.ter)   // dont check when replay play
 			carM->bWrongChk = false;
 		else
 		{

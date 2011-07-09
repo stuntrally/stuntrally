@@ -36,19 +36,17 @@ CarModel::CarModel(unsigned int index, eCarType type, const std::string name,
 	pSet = set;  pGame = game;  sc = s;  mCamera = cam;  eType = type;
 	bGetStPos = true;  fChkTime = 0.f;  iChkWrong = -1;  iWonPlace = 0;
 	
-	MATHVECTOR<float, 3> offset;
-	offset.Set(5*iIndex,5*iIndex,0); // 5*sqrt(2) m distance between cars
-	/// TODO: some quaternion magic to align the cars along track start orientation
-	// 4 car positions from 1, step width,length ...
-	
 	if (type != CT_GHOST)  // ghost has pCar, dont create
 	{
+		int i = set->car_collis ? iIndex : 0;  //  offset car start pos when cars collide
 		MATHVECTOR<float, 3> pos(0,10,0);
 		QUATERNION<float> rot;
-		pos = pGame->track.GetStart(0/*iIndex*/).first;
-		rot = pGame->track.GetStart(0/*iIndex*/).second;
+		pos = pGame->track.GetStart(i).first;
+		rot = pGame->track.GetStart(i).second;
 
-		pCar = pGame->LoadCar(sDirname, pos + offset, rot, true, false);
+		//  offset car start pos when cars collide
+		MATHVECTOR<float, 3> offset(0,0,0);
+		pCar = pGame->LoadCar(sDirname, pos, rot, true, false);
 		if (!pCar)  LogO("Error creating car " + sDirname);
 	}
 	
