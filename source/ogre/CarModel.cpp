@@ -34,7 +34,7 @@ CarModel::CarModel(unsigned int index, eCarType type, const std::string name,
 {
 	iIndex = index;  sDirname = name;  pSceneMgr = sceneMgr;
 	pSet = set;  pGame = game;  sc = s;  mCamera = cam;  eType = type;
-	bGetStPos = true;  fChkTime = 0.f;  iChkWrong = -1;
+	bGetStPos = true;  fChkTime = 0.f;  iChkWrong = -1;  iWonPlace = 0;
 	
 	MATHVECTOR<float, 3> offset;
 	offset.Set(5*iIndex,5*iIndex,0); // 5*sqrt(2) m distance between cars

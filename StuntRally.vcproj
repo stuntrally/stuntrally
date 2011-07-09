@@ -157,7 +157,7 @@
 				AssemblerListingLocation=""
 				ObjectFile=".\Release/"
 				ProgramDataBaseFileName=".\Release/"
-				WarningLevel="1"
+				WarningLevel="2"
 				SuppressStartupBanner="true"
 				CallingConvention="0"
 				DisableSpecificWarnings="4103;"

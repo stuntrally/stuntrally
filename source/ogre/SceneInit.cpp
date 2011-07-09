@@ -69,7 +69,7 @@ void App::NewGame()
 	toggleGui();  // hide gui
 
 	bLoading = true;
-	carIdWin = -1;
+	carIdWin = 1;
 
 	bRplPlay = 0;
 	pSet->rpl_rec = bRplRec;  // changed only at new game
@@ -97,7 +97,7 @@ void App::LoadCleanUp()  // 1 first
 		delete (*it);
 
 	carModels.clear();  newPosInfos.clear();
-	
+
 	if (grass) {  delete grass->getPageLoader();  delete grass;  grass=0;   }
 	if (trees) {  delete trees->getPageLoader();  delete trees;  trees=0;   }
 

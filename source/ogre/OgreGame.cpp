@@ -18,8 +18,8 @@ using namespace Ogre;
 App::App()
 	:pGame(0), ndMap(0), ndLine(0)
 	,nrpmB(0),nvelBk(0),nvelBm(0), nrpm(0),nvel(0), mrpm(0),mvel(0)
-	,hudGear(0),hudVel(0), hudAbs(0),hudTcs(0), hudTimes(0), hudCheck(0)
-	,ovGear(0),ovVel(0), ovAbsTcs(0), ovCarDbg(0),ovCarDbgTxt(0), ovCam(0), ovTimes(0)
+	,hudGear(0),hudVel(0), hudAbs(0),hudTcs(0), hudTimes(0), hudWarnChk(0),hudWonPlace(0)
+	,ovGear(0),ovVel(0), ovAbsTcs(0), ovCarDbg(0),ovCarDbgTxt(0), ovCam(0), ovTimes(0), ovWarnWin(0)
 	// hud
 	,asp(1),  xcRpm(0), ycRpm(0), xcVel(0), ycVel(0)
 	,fMiniX(0),fMiniY(0), scX(1),scY(1), ofsX(0),ofsY(0), minX(0),maxX(0), minY(0),maxY(0)
@@ -47,11 +47,11 @@ App::App()
 	pathTrk[0] = PATHMANAGER::GetTrackPath() + "/";
 	pathTrk[1] = PATHMANAGER::GetTrackPathUser() + "/";
 	resCar = "";  resTrk = "";  resDrv = "";
-		
-	for (int i=0; i<5; ++i)  {  ndPos[i]=0;  mpos[i]=0;  }
-	for (int i=0; i < 5; ++i)
+	int i;
+	for (i=0; i < 5; ++i)  {  ndPos[i]=0;  mpos[i]=0;  }
+	for (i=0; i < 5; ++i)
 	{	ovL[i]=0;  ovR[i]=0;  ovS[i]=0;  ovU[i]=0;  }
-	for (int i=0; i < StTrk; ++i)  stTrk[i] = 0;
+	for (i=0; i < StTrk; ++i)  stTrk[i] = 0;
 	
 	//  util for update rot
 	Quaternion qr;  {

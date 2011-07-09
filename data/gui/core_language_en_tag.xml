@@ -28,7 +28,7 @@
 	<Tag name="TBScore">Score</Tag>
 	<Tag name="WrongChk">Wrong Checkpoint</Tag>
 	<Tag name="TBLap">Lap</Tag>
-	<Tag name="TBWinner">Winner</Tag>
+	<Tag name="TBPlace">Place</Tag>
 	<Tag name="CamInfoStrings">Type,Yaw,Pitch,Dist,Height,Speed,Offset,LEFT,RIGHT,Middle,Wheel,shift,Rotate,reset,move,H,Pos</Tag>
 
 	<Tag name="Options">Options</Tag>

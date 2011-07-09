@@ -588,9 +588,9 @@ void App::setToolTips(EnumeratorWidgetPtr widgets)
 void App::notifyToolTip(Widget *sender, const ToolTipInfo &info)
 {
 	if (info.type == ToolTipInfo::Show)
-	{
-		mToolTip->setSize(320, 96);  // start size for wrap
-		mToolTipTxt->setCaption(sender->getUserString("tip"));
+	{	// TODO: isnt resizing properly ..
+		mToolTip->setSize(400, 54);  // start size for wrap
+		mToolTipTxt->setCaption(TR(sender->getUserString("tip")));
 		const IntSize &textsize = mToolTipTxt->getTextSize();
 		mToolTip->setSize(textsize.width +  6, textsize.height + 6);
 		mToolTip->setVisible(true);

@@ -215,12 +215,12 @@ void App::newPoses()
 	double lapTime = pGame->timer.GetPlayerTime();
 
 	// Iterate through all car models and get new pos info
-	int iCarNum = 0;
+	int iCarNum = 0;  CarModel* carM0 = 0;
 	std::vector<CarModel*>::iterator carMIt = carModels.begin();
 	std::list<PosInfo>::iterator newPosIt = newPosInfos.begin();
 	while (carMIt != carModels.end())
 	{
-		CarModel* carM = *carMIt;
+		CarModel* carM = *carMIt;  if (iCarNum==0)  carM0 = carM;
 		CAR* pCar = carM->pCar;
 		PosInfo posInfo;
 		bool bGhost = carM->eType == CarModel::CT_GHOST;
@@ -392,7 +392,7 @@ void App::newPoses()
 		//-----------------------------------------------------------------------
 		if (bRplPlay || bGhost)   // dont check when replay play
 			carM->bWrongChk = false;
-		else //if (iCarNum == 0)  // only works for 1st car?
+		else
 		{
 			if (carM->bGetStPos)  // first pos is at start
 			{	carM->bGetStPos = false;
@@ -403,7 +403,7 @@ void App::newPoses()
 			{
 				//  start/finish box dist
 				Vector4 carP(posInfo.pos.x,posInfo.pos.y,posInfo.pos.z,1);
-				carM->vStDist = carM->matStPos * carP;
+				carM->vStDist = carM0->matStPos * carP;  // start pos from 1st car always
 				carM->bInSt = abs(carM->vStDist.x) < road->vStBoxDim.x && 
 					abs(carM->vStDist.y) < road->vStBoxDim.y && 
 					abs(carM->vStDist.z) < road->vStBoxDim.z;
@@ -425,9 +425,9 @@ void App::newPoses()
 						
 						carM->iCurChk = -1;  carM->iNumChks = 1;
 
-						///  winner  for local players > 1
-						if (carIdWin == -1 && pGame->timer.GetCurrentLap(iCarNum) >= pSet->num_laps)
-							carIdWin = iCarNum;
+						///  winner places  for local players > 1
+						if (carM->iWonPlace == 0 && pGame->timer.GetCurrentLap(iCarNum) >= pSet->num_laps)
+							carM->iWonPlace = carIdWin++;
 					}
 					for (int i=0; i < ncs; ++i)
 					{

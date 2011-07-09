@@ -146,7 +146,11 @@ void App::CreateHUD()
 
 	ovTimes = ovr.getByName("Hud/Times");
 	hudTimes = ovr.getOverlayElement("Hud/TimesText");
-	hudCheck = ovr.getOverlayElement("Hud/TimesCheck");
+
+	ovWarnWin = ovr.getByName("Hud/WarnAndWin");
+	hudWarnChk = ovr.getOverlayElement("Hud/Warning");
+	hudWarnChk->setCaption(String(TR("#{WrongChk}")));
+	hudWonPlace = ovr.getOverlayElement("Hud/WonPlace");
 
 	//  dbg lines
 	ovCarDbgTxt = ovr.getByName("Car/StatsTxt");  //ovCarDbgTxt->show();
@@ -175,7 +179,8 @@ void App::ShowHUD(bool hideAll)
 		if (ovCarDbg)  ovCarDbg->hide();	if (ovCarDbgTxt)  ovCarDbgTxt->hide();
 
 		if (ovCam)	 ovCam->hide();		if (ovTimes) ovTimes->hide();
-		if (mFpsOverlay) { mFpsOverlay->hide(); }
+		if (ovWarnWin)  ovWarnWin->hide();
+		if (mFpsOverlay)  mFpsOverlay->hide();
 		if (ndMap)  ndMap->setVisible(false);
 		if (mGUI)	mGUI->setVisiblePointer(false);
 		if (mWndRpl)  mWndRpl->setVisible(false);
@@ -200,6 +205,7 @@ void App::ShowHUD(bool hideAll)
 
 		if (ovCam)	{  if (pSet->show_cam)    ovCam->show();    else  ovCam->hide();     }
 		if (ovTimes){  if (pSet->show_times)  ovTimes->show();  else  ovTimes->hide();   }
+		if (ovWarnWin){  if (pSet->show_times)  ovWarnWin->show();  else  ovWarnWin->hide();  }
 		if (mFpsOverlay) { if (pSet->show_fps) mFpsOverlay->show(); else mFpsOverlay->hide(); }
 		if (ndMap)  ndMap->setVisible(pSet->trackmap);
 		if (mGUI)	mGUI->setVisiblePointer(isFocGuiOrRpl());
@@ -223,13 +229,14 @@ void App::UpdateHUD(int carId, CarModel* pCarM, CAR* pCar, float time, Viewport*
 	if (!vp)
 	{
 		/// for gui viewport ----------------------
-		if (hudGear) hudGear->hide();
-		if (hudVel) hudVel->hide();
-		if (ovTimes) ovTimes->hide();
+		if (hudGear)  hudGear->hide();
+		if (hudVel)  hudVel->hide();
+		if (ovTimes)  ovTimes->hide();
+		if (ovWarnWin)  ovWarnWin->hide();
 	}else{
 		/// for render viewport ---------
-		if (ovCam) ovCam->hide();
-		if (mFpsOverlay) mFpsOverlay->hide();
+		if (ovCam)  ovCam->hide();
+		if (mFpsOverlay)  mFpsOverlay->hide();
 	}
 			
 	///  hud rpm,vel  --------------------------------
@@ -334,12 +341,20 @@ void App::UpdateHUD(int carId, CarModel* pCarM, CAR* pCar, float time, Viewport*
 		TIMER& tim = pGame->timer;	//car[playercarindex].
 		tim.SetPlayerCarID(carId);
 		s[0]=0;
-
+		
+		if (pCarM->bWrongChk || pSet->local_players > 1 && pCarM->iWonPlace > 0)
+			ovWarnWin->show();  else  ovWarnWin->hide();  //ov
+			
 		if (pSet->local_players > 1)  // lap num for many
-		{	if (carId == carIdWin)
-				sprintf(s, String(TR("---- #{TBWinner} ----")).c_str() );
-			else
-				sprintf(s, String(TR("#{TBLap}  %d/%d")).c_str(), tim.GetCurrentLap(carId)+1, pSet->num_laps );
+		{
+			if (pCarM->iWonPlace > 0 && hudWonPlace)
+			{	sprintf(s, String(TR("---  %d #{TBPlace}  ---")).c_str(), pCarM->iWonPlace );
+				hudWonPlace->setCaption(s);
+				const static ColourValue clrPlace[4] = {
+					ColourValue(0.4,1,0.2), ColourValue(1,1,0.3), ColourValue(1,0.7,0.2), ColourValue(1,0.5,0.2) };
+				hudWonPlace->setColour(clrPlace[pCarM->iWonPlace-1]);
+			}
+			sprintf(s, String(TR("#{TBLap}  %d/%d")).c_str(), tim.GetCurrentLap(carId)+1, pSet->num_laps );
 		}else
 		{	if (!road)  // score on vdr track
 			if (tim.GetIsDrifting(0))
@@ -448,9 +463,9 @@ void App::UpdateHUD(int carId, CarModel* pCarM, CAR* pCar, float time, Viewport*
 
 
 	//  checkpoint warning  --------
-	if (road && hudCheck && pCarM)
+	if (road && hudWarnChk && pCarM)
 	{	/* chks info *
-		sprintf(s, "st %d in%2d cur%2d nxt %d  num %d / all %d  T= %4.2f  %s" //"st-d %6.2f %6.2f %6.2f"
+		sprintf(s, "           st %d in%2d cur%2d nxt %d  num %d / all %d  T= %4.2f  %s" //"st-d %6.2f %6.2f %6.2f"
 			,pCarM->bInSt ? 1:0, pCarM->iInChk, pCarM->iCurChk, pCarM->iNextChk,  pCarM->iNumChks, road->mChks.size()
 			,pCarM->fChkTime,  pCarM->bWrongChk ? "Wrong Checkpoint" : "");  //,vStDist.x, vStDist.y, vStDist.z);
 		hudCheck->setCaption(s);/**/
@@ -460,7 +475,7 @@ void App::UpdateHUD(int carId, CarModel* pCarM, CAR* pCar, float time, Viewport*
 		int show = pCarM->fChkTime > 0.f ? 1 : 0;
 		if (show)  pCarM->fChkTime -= time;
 		//if (show != pCarM->iChkWrong)  //-
-			hudCheck->setCaption(show ? String(TR("#{WrongChk}")) : "");
+			if (show)  hudWarnChk->show();  else  hudWarnChk->hide();
 		pCarM->iChkWrong = show;
 	}
 
