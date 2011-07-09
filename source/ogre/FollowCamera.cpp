@@ -25,7 +25,7 @@ void FollowCamera::update( Real time )
 {
 	if (!mGoalNode)  return;
 
-	const Quaternion qo = Quaternion(Degree(180),Vector3(0,0,1)) * Quaternion(Degree(-90),Vector3(0,1,0));
+	const static Quaternion  qo = Quaternion(Degree(180),Vector3(0,0,1)) * Quaternion(Degree(-90),Vector3(0,1,0));
 	Quaternion  orient = mGoalNode->getOrientation() * qo;
 	Vector3  ofs = orient * ca.mOffset,  goalLook = mGoalNode->getPosition() + ofs;
 	
@@ -66,20 +66,20 @@ void FollowCamera::update( Real time )
 			goalPos += orient * xyz;
 		}	break;
 		
-		case CAM_ExtAng:
-		{
-			///  new  ---
-			Quaternion  orient = mGoalNode->getOrientation() * Quaternion(Degree(90),Vector3(0,1,0));
+		case CAM_ExtAng:    /* 4 Extended Angle - car in center, angle smooth */
+		{	Quaternion  orient = mGoalNode->getOrientation() * Quaternion(Degree(90),Vector3(0,1,0));
 			Quaternion  ory;  ory.FromAngleAxis(orient.getYaw(), Vector3::UNIT_Y);
+			//ca.mYaw += Radian(0.01f);
 
 			if (first)  {  qq = ory;  first = false;  }
 			else
 				qq = orient.Slerp(ca.mSpeed * time, qq, ory, true);
 
+			Quaternion  qy = Quaternion(ca.mYaw,Vector3(0,1,0));
 			goalPos += qq * (xyz + ca.mOffset);
 			
 			mCamera->setPosition( goalPos );
-			mCamera->setOrientation( qq * Quaternion(Degree(-ca.mPitch),Vector3(1,0,0)) );
+			mCamera->setOrientation( qq * qy * Quaternion(Degree(-ca.mPitch),Vector3(1,0,0)) );
 			manualOrient = true;
 		}	break;
 	}
@@ -195,15 +195,18 @@ void FollowCamera::Move( bool mbLeft, bool mbRight, bool mbMiddle, bool shift, R
 	if (ca.mType == CAM_ExtAng)
 	{
 		if (mbMiddle)
-		{	ca.mOffset.x = 0;  ca.mOffset.z = 0;  }
+		{	ca.mOffset.x = 0;  ca.mOffset.z = 0;  ca.mYaw = 0.f;  }
 		if (mbLeft)
 		{
 			ca.mPitch -= Radian(my);
-			ca.mDist  *= 1.0 - mx * 0.4;
+			if (shift)
+				ca.mYaw += Radian(mx);
+			else
+				ca.mDist  *= 1.0 - mx * 0.4;
 		}
 		if (mbRight)
-		if (shift)	ca.mOffset += Vector3(0, -my, 0);
-		else		ca.mOffset += Vector3(mx, 0, my);
+		if (shift)	ca.mOffset += Vector3(mx, 0, my);
+		else		ca.mOffset += Vector3(0, -my, 0);
 
 		ca.mDist  *= 1.0 - mzH * 0.1;
 		return;
@@ -489,19 +492,19 @@ void FollowCamera::updFmtTxt()
 
 	sFmt_Follow =
 		sType+": %d %s  "+sYaw+":%5.1f "+sPitch+":%5.1f  "+sDist+":%5.1f  "+sHeight+": %3.1f  "+sSpeed+": %2.0f\n"+
-		sLEFT+": "+sPitch+"  "+sshift+": "+sRotate+" | "+sRIGHT+": "+sHeight+"  "+sshift+": "+sDist+","+sH+" | "+
+		sLEFT+": "+sPitch+"  "+sshift+": "+sRotate+" | "+sRIGHT+": "+sHeight+"  "+sshift+": "+sDist+","+sH+"\n"+
 		sMiddle+": "+sreset+" "+sYaw+"  "+sshift+": "+sSpeed+" | "+sWheel+": "+sDist;  // | S: save"
 	sFmt_Free =
 		sType+": %d %s  "+sYaw+":%5.1f "+sPitch+":%5.1f  "+sDist+":%5.1f  "+sHeight+": %3.1f  "+sSpeed+": %2.0f\n"+
-		sLEFT+": "+sPitch+"  "+sshift+": "+sRotate+" | "+sRIGHT+": "+sHeight+"  "+sshift+": "+sDist+","+sH+" | "+
+		sLEFT+": "+sPitch+"  "+sshift+": "+sRotate+" | "+sRIGHT+": "+sHeight+"  "+sshift+": "+sDist+","+sH+"\n"+
 		sMiddle+": "+sreset+" "+sHeight+"  "+sshift+": "+sSpeed+" | "+sWheel+": "+sDist;
 	sFmt_ExtAng =
 		sType+": %d %s  "+sPitch+":%5.1f  "+sDist+":%5.1f  "+sHeight+": %3.1f  "+sOffset+": %3.1f %3.1f  "+sSpeed+": %3.1f\n"+
-		sLEFT+": "+sPitch+", "+sDist+" | "+sRIGHT+": "+sOffset+"  "+sshift+": "+sHeight+" | "+
+		sLEFT+": "+sPitch+", "+sDist+"  "+sshift+": "+sRotate+" | "+sRIGHT+": "+sHeight+"  "+sshift+": "+sOffset+"\n"+
 		sMiddle+": "+sreset+" "+sOffset+"  "+sshift+": "+sSpeed+" | "+sWheel+": "+sDist;
 	sFmt_Arena =
 		sType+": %d %s  "+sYaw+":%5.1f "+sPitch+":%5.1f  "+sDist+":%5.1f  "+sPos+": %3.1f %3.1f %3.1f  "+sSpeed+": %2.0f\n"+
-		sLEFT+": "+sRotate+"  "+sshift+": "+sPitch+" | "+sRIGHT+": "+smove+"  "+sshift+": "+sHeight+" | "+
+		sLEFT+": "+sRotate+"  "+sshift+": "+sPitch+" | "+sRIGHT+": "+smove+"  "+sshift+": "+sHeight+"\n"+
 		sMiddle+": "+smove+","+sH+" | "+sWheel+": "+sPitch;
 	sFmt_Car =
 		sType+": %d %s  "+sHeight+": %3.1f  "+sOffset+": %3.1f %3.1f\n"+
