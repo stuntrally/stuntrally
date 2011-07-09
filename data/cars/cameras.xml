@@ -43,7 +43,7 @@
     <!--<Camera on="1" name="Arena T1"          type="2"  yaw="-1"  pitch="91" offset="-100 30 -100"   speed="0" default="1" />
         <Camera on="1" name="Arena T6"          type="2"  yaw="-1"  pitch="91" offset="60 20 -100"     speed="0" default="1" />-->
 
-        <Camera on="1" name="Arena Up low"      type="2"  yaw="0"  pitch="-90"  offset="0 300 0"       speed="0" default="1" />
+        <Camera on="1" name="Arena Up low"      type="2"  yaw="0"  pitch="-90"  offset="0 300 0"       speed="0" default="0" />
         <Camera on="0" name="Arena Up"          type="2"  yaw="0"  pitch="-90"  offset="0 500 0"       speed="0" />
         <Camera on="0" name="Arena Up2"         type="2"  yaw="0"  pitch="-90"  offset="0 1400 0"      speed="0" />
 

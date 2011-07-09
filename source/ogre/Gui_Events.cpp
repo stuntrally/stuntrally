@@ -919,7 +919,7 @@ bool App::keyPressed( const OIS::KeyEvent &arg )
 					{
 						if ((*it)->fCam)
 						{	(*it)->fCam->Next(iChgCam < 0, shift);
-							if ((*it)->fCam->ca.mHideGlass)  visMask = 255-16;
+							if ((*it)->fCam->ca->mHideGlass)  visMask = 255-16;
 							else        visMask = 255;
 						}
 					}

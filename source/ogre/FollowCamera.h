@@ -49,7 +49,7 @@ public:
 	Ogre::TerrainGroup* mTerrain;
 
 	const Ogre::SceneNode* mGoalNode;
-	Ogre::Vector3 mLook;
+	Ogre::Vector3 mLook,  mPosNodeOld;  Ogre::Real mVel;
 	Ogre::Quaternion qq;  // for ext cam
 
     #ifdef CAM_BLT  // bullet
@@ -68,11 +68,11 @@ public:
 
 
 	//  Camera Angles
-	CameraAngle ca;  bool first;
+	CameraAngle* ca;  bool first;
 	int miCount, miCurrent;
-	std::vector<CameraAngle> mCameraAngles;
+	std::vector<CameraAngle*> mCameraAngles;
 
-	bool loadCameras();  void saveCamera();
+	bool loadCameras();  void saveCamera(), Destroy();
 	void updAngle(), incCur(int dir);
 	void Next(bool bPrev = false, bool bMainOnly = false);
 	void setCamera(int ang), moveAboveTerrain();
