@@ -223,7 +223,6 @@
 	<Tag name="InputNoJS">No joystick</Tag>
 	<Tag name="InputKeyNoButton">No button</Tag>
 	<Tag name="InputKeyNoAxis">No axis</Tag>
-	<!--<Tag name="InputKeyUnassigned">&lt;Unassigned&gt;</Tag>-->
 	<Tag name="InputKeyUnassigned">-- None --</Tag>
 	<Tag name="InputAssignKey">&lt;Press a key&gt;</Tag>
 	<Tag name="InputMoveAxisTip">Move an axis to see its number</Tag>
@@ -255,6 +254,11 @@
 	<Tag name="InputMapNextCamera">Next Camera</Tag>
 	<Tag name="InputCameraTxt1">with shift - main cameras only</Tag>
 	<Tag name="InputCameraTxt2">with ctrl - switch current car when many</Tag>
+
+	<Tag name="InputRplCtrl0">Replay:</Tag>
+	<Tag name="InputRplCtrl1">Backspace - show/hide controls (hold ctrl to use mouse)</Tag>
+	<Tag name="InputRplCtrl2">P - pause/unpause replay</Tag>
+	<Tag name="InputRplCtrl3">[ , ] - wind backwards/forwards (shift - slow, ctrl,alt - fast)</Tag>
 
 
 	<!--  Sound  -->

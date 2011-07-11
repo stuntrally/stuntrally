@@ -200,9 +200,13 @@ protected:
 	MyGUI::EditPtr edRplName, edRplDesc;
 	void btnRplLoad(WP), btnRplSave(WP), btnRplDelete(WP), btnRplRename(WP),  // btn
 		chkRplAutoRec(WP),chkRplChkGhost(WP),chkRplChkBestOnly(WP),  // settings
-		btnRplToStart(WP),btnRplToEnd(WP), btnRplBack(WP),btnRplForward(WP), btnRplPlay(WP),  // controls
+		btnRplToStart(WP),btnRplToEnd(WP), btnRplPlay(WP),  // controls
 		btnRplCur(WP),btnRplAll(WP),btnRplGhosts(WP);  // radio
 	MyGUI::ButtonPtr rbRplCur, rbRplAll, rbRplGhosts;
+
+	void btnRplBackDn(WP,int,int,MyGUI::MouseButton),btnRplBackUp(WP,int,int,MyGUI::MouseButton);
+	void btnRplFwdDn(WP,int,int,MyGUI::MouseButton),btnRplFwdUp(WP,int,int,MyGUI::MouseButton);
+	bool bRplBack,bRplFwd;
 		
 	void msgRplDelete(MyGUI::Message*, MyGUI::MessageBoxStyle);
 	

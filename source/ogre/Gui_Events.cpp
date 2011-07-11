@@ -797,13 +797,10 @@ void App::btnRplToEnd(WP)
 {
 }
 
-void App::btnRplBack(WP)  //- ...
-{
-}
-
-void App::btnRplForward(WP)
-{
-}
+void App::btnRplBackDn(WP, int, int, MouseButton){	bRplBack = true;  }
+void App::btnRplBackUp(WP, int, int, MouseButton){	bRplBack = false;  }
+void App::btnRplFwdDn(WP, int, int, MouseButton){	bRplFwd = true;  }
+void App::btnRplFwdUp(WP, int, int, MouseButton){	bRplFwd = false;  }
 
 void App::btnRplPlay(WP)  // play / pause
 {

@@ -102,10 +102,11 @@ bool App::frameStart(Real time)
 		if (bRplPlay)
 		{
 			isFocRpl = ctrl;
-			int ta = (isKey(KC_LBRACKET) ? -2 : 0) + (isKey(KC_RBRACKET) ? 2 : 0);
+			bool le = isKey(KC_LBRACKET), ri = isKey(KC_RBRACKET), ctrlN = ctrl && (le || ri);
+			int ta = ((le || bRplBack) ? -2 : 0) + ((ri || bRplFwd) ? 2 : 0);
 			if (ta)
 			{	double tadd = ta;
-				tadd *= (shift ? 0.2 : 1) * (ctrl ? 4 : 1) * (alt ? 8 : 1);  // multiplers
+				tadd *= (shift ? 0.2 : 1) * (ctrlN ? 4 : 1) * (alt ? 8 : 1);  // multiplers
 				if (!bRplPause)  tadd -= 1;  // play compensate
 				double t = pGame->timer.GetReplayTime(), len = replay.GetTimeLength();
 				t += tadd * time;  // add

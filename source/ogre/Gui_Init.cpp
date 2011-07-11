@@ -90,8 +90,8 @@ void App::InitGui()
 	
 	//  language combo  ___________________
 	supportedLanguages["en"] = "English";
-	supportedLanguages["de"] = "Deutsch";  //German
-	supportedLanguages["fi"] = "Suomi";  //Finnish
+	supportedLanguages["de"] = "Deutsch"; //German
+	supportedLanguages["fi"] = "Suomi";   //Finnish
 	supportedLanguages["ro"] = "Româna";  //Romanian
 	supportedLanguages["pl"] = "Polski";  //Polish
 	combo = NULL;  combo = (ComboBoxPtr)mLayout->findWidget("Lang");
@@ -236,9 +236,10 @@ void App::InitGui()
     if (mWndRpl)
 	{	//  replay controls
 		Btn("RplToStart", btnRplToStart);  Btn("RplToEnd", btnRplToEnd)
-		Btn("RplBack", btnRplBack);  Btn("RplForward", btnRplForward);
 		Btn("RplPlay", btnRplPlay);  btRplPl = btn;
-
+		btn = (ButtonPtr)mWndRpl->findWidget("RplBack");	if (btn)  {		btn->eventMouseButtonPressed = newDelegate(this, &App::btnRplBackDn);  btn->eventMouseButtonReleased = newDelegate(this, &App::btnRplBackUp);  }
+		btn = (ButtonPtr)mWndRpl->findWidget("RplForward");  if (btn)  {	btn->eventMouseButtonPressed = newDelegate(this, &App::btnRplFwdDn);  btn->eventMouseButtonReleased = newDelegate(this, &App::btnRplFwdUp);  }
+		
 		//  info
 		slRplPos = (HScrollPtr)mWndRpl->findWidget("RplSlider");
 		if (slRplPos)  slRplPos->eventScrollChangePosition = newDelegate(this, &App::slRplPosEv);
@@ -616,7 +617,7 @@ void App::InitInputGui()
 		}
 		
 		///  ------ custom action sorting ----------------
-		int i = 0, y = 0, ya = 26 / 2, yc1=0, yc2=0;
+		int i = 0, y = 0, ya = 26 / 2, yc1=0,yc2=0,yc3=0;
 		std::map <std::string, int> yRow;
 		// player
 		yRow["Throttle"] = y;	y+=2;
@@ -636,13 +637,18 @@ void App::InitInputGui()
 		yRow["NextTab"] = y;     y+=2+1;
 		yRow["RestartGame"] = y; y+=2+1;  yc1 = 40 + ya * y;
 		yRow["PrevCamera"] = y;  y+=2;    yc2 = 40 + ya * y;
-		yRow["NextCamera"] = y;  y+=2+1;
+		yRow["NextCamera"] = y;  y+=2+1;  yc3 = 40 + ya * y;
 
 		//  camera infos
 		if (!playerTab)
 		{	MyGUI::StaticTextPtr txt;
-			txt = tabitem->createWidget<StaticText>("StaticText", 460, yc1, 280, 24, MyGUI::Align::Relative);  txt->setCaption(TR("#{InputCameraTxt1}"));
-			txt = tabitem->createWidget<StaticText>("StaticText", 460, yc2, 280, 24, MyGUI::Align::Relative);  txt->setCaption(TR("#{InputCameraTxt2}"));
+			txt = tabitem->createWidget<StaticText>("StaticText", 460, yc1, 280, 24, MyGUI::Align::Relative);  txt->setCaption(TR("#C0D8F0#{InputCameraTxt1}"));
+			txt = tabitem->createWidget<StaticText>("StaticText", 460, yc2, 280, 24, MyGUI::Align::Relative);  txt->setCaption(TR("#C0D8F0#{InputCameraTxt2}"));
+			//  replay controls info text
+			txt = tabitem->createWidget<StaticText>("StaticText", 20, yc3+1*ya, 500, 24, MyGUI::Align::Relative);  txt->setCaption(TR("#A0D8FF#{InputRplCtrl0}"));
+			txt = tabitem->createWidget<StaticText>("StaticText", 40, yc3+3*ya, 500, 24, MyGUI::Align::Relative);  txt->setCaption(TR("#90C0FF#{InputRplCtrl1}"));
+			txt = tabitem->createWidget<StaticText>("StaticText", 40, yc3+5*ya, 500, 24, MyGUI::Align::Relative);  txt->setCaption(TR("#90C0FF#{InputRplCtrl2}"));
+			txt = tabitem->createWidget<StaticText>("StaticText", 40, yc3+7*ya, 500, 24, MyGUI::Align::Relative);  txt->setCaption(TR("#90C0FF#{InputRplCtrl3}"));
 		}
 		
 		///  Actions
@@ -650,14 +656,14 @@ void App::InitInputGui()
 			ait = (*it).second->mActions.begin();
 			ait != (*it).second->mActions.end(); ait++,i++)
 		{
-			// macro to strip away the Keyboard/
+			//  macro to strip away the Keyboard/
 			#define stripk(s) Ogre::StringUtil::split(s, "/").size() > 1 ? Ogre::StringUtil::split(s, "/")[1] : s // only strip if the '/' is there
 			
 			OISB::Action* act = (*ait).second;
 			if (act->isAnalog() == false && act->getName() == "Flip") continue;
 			const int sx = 130, sy = 24, x0 = 20, x1 = 180, x2 = 320, x3 = 540;  // button size and columns positon
 
-			// description label
+			//  description label
 			const String& name = (*ait).second->getName();
 			y = 40 + ya * yRow[name];  /// y
 			MyGUI::StaticTextPtr desc = tabitem->createWidget<StaticText>("StaticText", x0, y, sx+70, sy,
@@ -666,7 +672,6 @@ void App::InitInputGui()
 		
 			/// keyboard binds
 			//  get information about binds from OISB and set variables how the rebind buttons should be created
-			// declare vars
 			std::string key1_label = TR("#{InputKeyUnassigned}");
 			std::string key2_label = TR("#{InputKeyUnassigned}");
 			
@@ -689,10 +694,8 @@ void App::InitInputGui()
 						if ((*bnit).first == "increase")		increase = (*bnit).second;
 						else if ((*bnit).first == "decrease")	decrease = (*bnit).second;
 					}
-					if (increase)
-						key1_label = increase->getBindableName();
-					if (decrease)
-						key2_label = decrease->getBindableName();
+					if (increase)  key1_label = increase->getBindableName();
+					if (decrease)  key2_label = decrease->getBindableName();
 				}
 			}
 				
@@ -713,7 +716,7 @@ void App::InitInputGui()
 			}
 
 			/// joystick binds
-			// only on player tab
+			//  only on player tab
 			if (playerTab)
 			{
 				if (act->getActionType() == OISB::AT_TRIGGER)

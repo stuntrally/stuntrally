@@ -247,6 +247,7 @@ bool BaseApp::keyPressed( const OIS::KeyEvent &arg )
 		return false;
 	}
 
+	#if 0
 	switch (arg.key)
 	{
 		//case KC_S:		// Save S
@@ -265,6 +266,7 @@ bool BaseApp::keyPressed( const OIS::KeyEvent &arg )
 		//case KC_F5:
 		//	TextureManager::getSingleton().reloadAll();	break;
 	}
+	#endif
 
 	return true;
 }
