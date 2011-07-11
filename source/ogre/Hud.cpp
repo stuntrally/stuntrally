@@ -349,7 +349,7 @@ void App::UpdateHUD(int carId, CarModel* pCarM, CAR* pCar, float time, Viewport*
 		{
 			if (pCarM->iWonPlace > 0 && hudWonPlace)
 			{	sprintf(s, String(TR("---  %d #{TBPlace}  ---")).c_str(), pCarM->iWonPlace );
-				hudWonPlace->setCaption(s);
+				hudWonPlace->setCaption(s);  hudWonPlace->show();
 				const static ColourValue clrPlace[4] = {
 					ColourValue(0.4,1,0.2), ColourValue(1,1,0.3), ColourValue(1,0.7,0.2), ColourValue(1,0.5,0.2) };
 				hudWonPlace->setColour(clrPlace[pCarM->iWonPlace-1]);
@@ -475,7 +475,9 @@ void App::UpdateHUD(int carId, CarModel* pCarM, CAR* pCar, float time, Viewport*
 		int show = pCarM->fChkTime > 0.f ? 1 : 0;
 		if (show)  pCarM->fChkTime -= time;
 		//if (show != pCarM->iChkWrong)  //-
-			if (show)  hudWarnChk->show();  else  hudWarnChk->hide();
+		bool place = pSet->local_players > 1, won = pCarM->iWonPlace > 0;
+			if (show)  {  hudWarnChk->show();  if (place && !won)  hudWonPlace->hide();  }
+			else  {       hudWarnChk->hide();  if (place && won)  hudWonPlace->show();  }
 		pCarM->iChkWrong = show;
 	}
 
