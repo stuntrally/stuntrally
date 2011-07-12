@@ -505,11 +505,12 @@ void App::notifyToolTip(Widget *sender, const ToolTipInfo &info)
 		return;  }
 
 	if (info.type == ToolTipInfo::Show)
-	{
+	{	// TODO: isnt resizing properly ..
 		mToolTip->setSize(320, 96);  // start size for wrap
-		mToolTipTxt->setCaption(sender->getUserString("tip"));
+		String s = TR(sender->getUserString("tip"));
+		mToolTipTxt->setCaption(s);
 		const IntSize &textsize = mToolTipTxt->getTextSize();
-		mToolTip->setSize(textsize.width +  6, textsize.height + 6);
+		mToolTip->setSize(textsize.width*1.5, textsize.height*1.5);
 		mToolTip->setVisible(true);
 		boundedMove(mToolTip, info.point);
 	}

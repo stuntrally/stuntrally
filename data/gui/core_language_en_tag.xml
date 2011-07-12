@@ -563,7 +563,7 @@
 	<Tag name="TipRoadDist">How far from road will the model appear.</Tag>
 	<Tag name="TipModelMinScale">Model minimal scale.</Tag>
 	<Tag name="TipModelMaxScale">Model maximal scale.</Tag>
-	<Tag name="RoadDist2">Additional distance to road.</Tag>
+	<Tag name="TipRoadDist2">Additional distance to road.</Tag>
 	<Tag name="TipWindInflL">Wind influence on model, length scale.</Tag>
 	<Tag name="TipWindInflH">Wind influence on model, height scale.</Tag>
 	<Tag name="TipGrassPageLength">Grass Page length (low will reload often, high will cause visible switching).</Tag>
