@@ -87,7 +87,8 @@
 	<Tag name="InputRoadWidth">- zmień szerokość drogi</Tag>
 	<Tag name="Replay">Powtórka</Tag>
 	<Tag name="AutoRear">Automatyczny wsteczny</Tag>
-	<Tag name="ReflMode_single">Single</Tag>
+	<Tag name="ReflMode_single">Pojedyncze</Tag>
+	<Tag name="MapSize">Wielkość mapy</Tag>
 	<Tag name="Friction">Tarcie</Tag>
 	<Tag name="SetCamTo">Ustaw kamerę na</Tag>
 	<Tag name="max">maks</Tag>
@@ -98,15 +99,15 @@
 	<Tag name="Model">Model</Tag>
 	<Tag name="PipeLStepsMul">Kroków długości dla rur</Tag>
 	<Tag name="View">Widok</Tag>
-	<Tag name="TipModelRoadDist">Dystans od drogi do modeli (globalny, dodawany do wartości każdego modelu).</Tag>
+	<Tag name="TriSize">Rozmiar trójkąta</Tag>
 	<Tag name="InputAfterChanges">(po zmianie Terenu/Wegetacji)</Tag>
-	<Tag name="MapSize">Wielkość mapy</Tag>
+	<Tag name="InputMapFlipRight">Odwróć w prawo</Tag>
 	<Tag name="OrigImage">Ściemnienie</Tag>
 	<Tag name="InputRoadSelAlt">alt - wybierz wszystkie  ctrl - żaden</Tag>
 	<Tag name="InputRoadSel">Backspace - dodaj lub usuń z selekcji</Tag>
 	<Tag name="Weather">Pogoda</Tag>
 	<Tag name="wind">wiatr</Tag>
-	<Tag name="TipRoadStats">Statystyki całej drogi.</Tag>
+	<Tag name="LS_CAR">Wczytuję auto</Tag>
 	<Tag name="MaxScale">maks. skala</Tag>
 	<Tag name="TipModelMaxScale">Maksymalna skala modelu.</Tag>
 	<Tag name="TerrainError">Bład terenu</Tag>
@@ -121,7 +122,7 @@
 	<Tag name="TipSkyMats">Nazwa materiału nieba (z SkyDome.material).</Tag>
 	<Tag name="VolMaster">Główny</Tag>
 	<Tag name="TipNewGame">Zacznij grę na nowej trasie lub od nowa na obecnej.</Tag>
-	<Tag name="ReflMode">Mode</Tag>
+	<Tag name="ReflMode">Tryb</Tag>
 	<Tag name="TipCopySource">Wybierz trasę jako źródło skąd kopiować, używane w zakładce [Narzędzia].</Tag>
 	<Tag name="Layer">Warstwa</Tag>
 	<Tag name="EscQuit">Esc wychodzi</Tag>
@@ -145,6 +146,7 @@
 	<Tag name="ProjectPage">Strona projektu</Tag>
 	<Tag name="Type">Typ</Tag>
 	<Tag name="Engine">Silnik</Tag>
+	<Tag name="InputPressButtonTip">Naciśnij przycisk by zobaczyć</Tag>
 	<Tag name="TipNewGameCar">Startuj od nowa (po zmianie auta).</Tag>
 	<Tag name="InputWheelForce">[,] (lub shift-kółko) - Siła (intensywność)</Tag>
 	<Tag name="TipGrassPatchLengthMax">Maksymalna wysokość trawy.</Tag>
@@ -166,7 +168,7 @@
 	<Tag name="Exponent">wykładnik</Tag>
 	<Tag name="Yaw">obrót</Tag>
 	<Tag name="Detail">Szczegóły</Tag>
-	<Tag name="TriSize">Rozmiar trójkąta</Tag>
+	<Tag name="InputMoveAxisTip">Porusz w osi by zobaczyć</Tag>
 	<Tag name="Start">początek</Tag>
 	<Tag name="InputRoadShiftReverse">shift-Ins - wstaw shift-ctrl-Ins - odwrotnie</Tag>
 	<Tag name="MinScale">min. skala</Tag>
@@ -178,8 +180,9 @@
 	<Tag name="InputRoadMostSel">większość również dla selekcji</Tag>
 	<Tag name="InputTerHeight">E - ustaw wysokość</Tag>
 	<Tag name="InputStartPos">Q - edytuj start auta</Tag>
+	<Tag name="TipModelRoadDist">Dystans od drogi do modeli (globalny, dodawany do wartości każdego modelu).</Tag>
 	<Tag name="InputBrushParams">Parametry pędzla</Tag>
-	<Tag name="ReflMode_static">Static</Tag>
+	<Tag name="ReflMode_static">Statyczne</Tag>
 	<Tag name="InputCameraMode">Tryb kamery</Tag>
 	<Tag name="Enabled">Włączony</Tag>
 	<Tag name="InputMapPlayer4">Gracz 4</Tag>
@@ -218,7 +221,7 @@
 	<Tag name="RplSize">rozmiar</Tag>
 	<Tag name="TipMudInt">Intensywność cząstek błota.</Tag>
 	<Tag name="Mode">tryb</Tag>
-	<Tag name="ScaleAll">Skaluj wszystko</Tag>
+	<Tag name="ChangeCar">Zmień auto</Tag>
 	<Tag name="InputMapPrevTab">Poprzednia zakładka</Tag>
 	<Tag name="InputTogglePreview">F7 - wejdź/wyjdź z kamery podglądu</Tag>
 	<Tag name="GameBy">Gra przez</Tag>
@@ -240,7 +243,7 @@
 	<Tag name="TipAutoClutch">-ręczna nie zaimplementowana.</Tag>
 	<Tag name="MinimapUpdSkip">Pominięć odśw. minimapy</Tag>
 	<Tag name="RoadDist2">Dodatkowa odległość do drogi</Tag>
-	<Tag name="LS_CAR">Wczytuję auto</Tag>
+	<Tag name="TipRoadStats">Statystyki całej drogi.</Tag>
 	<Tag name="InputTerPaint">A - maluj tekstury (warstwy)</Tag>
 	<Tag name="RplCur">Obecne</Tag>
 	<Tag name="InputKeyNoButton">Bez przycisku</Tag>
@@ -384,7 +387,7 @@
 	<Tag name="TipDeleteTrk">Trwale usuń trasę.</Tag>
 	<Tag name="DeleteRoad">Usuń drogę</Tag>
 	<Tag name="Setup">Ustawienia</Tag>
-	<Tag name="ReflMode_full">Full</Tag>
+	<Tag name="ReflMode_full">Pełne</Tag>
 	<Tag name="Length">Długość</Tag>
 	<Tag name="Specular">Specular</Tag>
 	<Tag name="HeightOffset">Przesunięcie wysokości</Tag>
@@ -423,6 +426,7 @@
 	<Tag name="CarCollis">Kolizja aut</Tag>
 	<Tag name="CameraInfo">Info kamery</Tag>
 	<Tag name="NewGame">Nowa Gra</Tag>
+	<Tag name="InputMapFlipLeft">Odwróć w lewo</Tag>
 	<Tag name="InputMapSteering">Sterowanie</Tag>
 	<Tag name="CarDebug">Paski zawieszenia, poślizgu | -</Tag>
 	<Tag name="InputRoadPick">Space - wybierz/żaden</Tag>
@@ -433,7 +437,7 @@
 	<Tag name="TipNewTer">Stwórz nowy, płaski teren.</Tag>
 	<Tag name="TipRoadParams">Parametry punktów drogi.</Tag>
 	<Tag name="SpeedUnit">Jednostka</Tag>
-	<Tag name="ChangeCar">Zmień auto</Tag>
+	<Tag name="ScaleAll">Skaluj wszystko</Tag>
 	<Tag name="TipImpDist">Daleka odległość, od której modele widać jako 2D atrapy.</Tag>
 	<Tag name="InputMapGeneral">Ogólne</Tag>
 	<Tag name="TipTrkTerImg">Minimapa wybranej trasy (widok z góry).</Tag>
@@ -478,10 +482,14 @@
 	<Tag name="Pitch">nachylenie</Tag>
 	<Tag name="MyGUI_MessageBox_Yes">Tak</Tag>
 	<Tag name="RplAll">Wszystkie</Tag>
-	<Tag name="InputPressButtonTip">Press a button to see its number</Tag>
-	<Tag name="InputMoveAxisTip">Move an axis to see its number</Tag>
-	<Tag name="InputMapFlipRight">Flip right</Tag>
-	<Tag name="InputMapFlipLeft">Flip left</Tag>
+	<Tag name="TBPlace">Place</Tag>
+	<Tag name="NumLaps">Number of laps</Tag>
+	<Tag name="InputRplCtrl1">Backspace - show/hide controls (hold ctrl to use mouse)</Tag>
+	<Tag name="CarClrRandom">Random</Tag>
+	<Tag name="InputRplCtrl2">P - pause/unpause replay</Tag>
+	<Tag name="InputRplCtrl3">[ , ] - wind backwards/forwards (shift - slow, ctrl,alt - fast)</Tag>
+	<Tag name="InputRplCtrl0">Replay:</Tag>
+	<Tag name="TBLap">Lap</Tag>
 	<Tag name="GameVersion">1.2</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 

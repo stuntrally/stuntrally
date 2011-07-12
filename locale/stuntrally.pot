@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION"
 "Report-Msgid-Bugs-To: "
-"POT-Creation-Date: 2011-06-18 14:55+0200"
+"POT-Creation-Date: 2011-07-12 19:25+0300"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>"
 "Language-Team: LANGUAGE <LL@li.org>"
@@ -197,6 +197,10 @@ msgctxt "DistToRoad"
 msgid "dist. to road"
 msgstr ""
 
+msgctxt "TBPlace"
+msgid "Place"
+msgstr ""
+
 msgctxt "TBLast"
 msgid "Last"
 msgstr ""
@@ -205,8 +209,8 @@ msgctxt "TipGrassDens"
 msgid "How dense/rare will the grass be on terrain."
 msgstr ""
 
-msgctxt "TipTrackList"
-msgid "Tracks list, click to select (and see info). Press Enter to drive on it. (or [Change track] and then [New Game])"
+msgctxt "LoadTrack"
+msgid "Load Track"
 msgstr ""
 
 msgctxt "Back"
@@ -375,6 +379,10 @@ msgstr ""
 
 msgctxt "AutoRear"
 msgid "Auto Rear gear"
+msgstr ""
+
+msgctxt "NumLaps"
+msgid "Number of laps"
 msgstr ""
 
 msgctxt "ReflMode_single"
@@ -749,6 +757,10 @@ msgctxt "TipModelRoadDist"
 msgid "Distance from road to models (global, added to each models own value)."
 msgstr ""
 
+msgctxt "InputRplCtrl1"
+msgid "Backspace - show/hide controls (hold ctrl to use mouse)"
+msgstr ""
+
 msgctxt "InputBrushParams"
 msgid "Brush parameters"
 msgstr ""
@@ -841,8 +853,8 @@ msgctxt "InputCameraTxt1"
 msgid "with shift - main cameras only"
 msgstr ""
 
-msgctxt "InputToggleVeget"
-msgid "V - Disable / enable vegetation"
+msgctxt "VegetCol"
+msgid "Vegetation collision"
 msgstr ""
 
 msgctxt "Particles"
@@ -891,6 +903,10 @@ msgstr ""
 
 msgctxt "ReflMode_static"
 msgid "Static"
+msgstr ""
+
+msgctxt "CarClrRandom"
+msgid "Random"
 msgstr ""
 
 msgctxt "CarDebugText"
@@ -1013,6 +1029,10 @@ msgctxt "InputKeyNoButton"
 msgid "No button"
 msgstr ""
 
+msgctxt "InputToggleVeget"
+msgid "V - Disable / enable vegetation"
+msgstr ""
+
 msgctxt "TexCoordMul"
 msgid "Tex Coord mul."
 msgstr ""
@@ -1085,6 +1105,18 @@ msgctxt "ChngTrkTab"
 msgid "changed in [Track] tab"
 msgstr ""
 
+msgctxt "InputRplCtrl2"
+msgid "P - pause/unpause replay"
+msgstr ""
+
+msgctxt "InputRplCtrl3"
+msgid "[ , ] - wind backwards/forwards (shift - slow, ctrl,alt - fast)"
+msgstr ""
+
+msgctxt "InputRplCtrl0"
+msgid "Replay:"
+msgstr ""
+
 msgctxt "TireTrails"
 msgid "Tire Trails"
 msgstr ""
@@ -1155,6 +1187,10 @@ msgstr ""
 
 msgctxt "InputMapThrottle"
 msgid "Throttle"
+msgstr ""
+
+msgctxt "TBLap"
+msgid "Lap"
 msgstr ""
 
 msgctxt "TipGrassVisDist"
@@ -1329,8 +1365,8 @@ msgctxt "Tires"
 msgid "Tires"
 msgstr ""
 
-msgctxt "LoadTrack"
-msgid "Load Track"
+msgctxt "TipTrackList"
+msgid "Tracks list, click to select (and see info). Press Enter to drive on it. (or [Change track] and then [New Game])"
 msgstr ""
 
 msgctxt "TipTrkNameEditor"
@@ -1547,10 +1583,6 @@ msgstr ""
 
 msgctxt "Front"
 msgid "Front"
-msgstr ""
-
-msgctxt "VegetCol"
-msgid "Vegetation collision"
 msgstr ""
 
 msgctxt "TipSurfFrict2"
