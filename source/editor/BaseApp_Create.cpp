@@ -277,7 +277,8 @@ bool BaseApp::setup()
 	
 	// ------------------------- lang ------------------------
 	if (pSet->language == "") // autodetect
-		pSet->language = getSystemLanguage();
+	{	pSet->language = getSystemLanguage();
+		setlocale(LC_NUMERIC, "C");  }  //needed?		
 	
 	// valid?
 	if (!boost::filesystem::exists(PATHMANAGER::GetDataPath() + "/gui/core_language_" + pSet->language + "_tag.xml"))

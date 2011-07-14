@@ -42,8 +42,8 @@ public:
 	static std::string GetTrackPathUser() {          return user_data_dir + "/tracks"; }
 	static std::string GetCarPath() {                return game_data_dir + "/cars"; }
 
-	static std::string GetCarControlsFile() {        return user_config_dir + "/controls.cfg"; }
-	static std::string GetDefaultCarControlsFile() { return game_config_dir + "/controls-default.cfg"; }
+	//static std::string GetCarControlsFile() {        return user_config_dir + "/controls.cfg"; }
+	//static std::string GetDefaultCarControlsFile() { return game_config_dir + "/controls-default.cfg"; }
 	static std::string GetGenericSoundPath() {       return game_data_dir + "/sounds"; }
 	static std::string GetDriverPath() {             return game_data_dir + "/drivers"; }
 	static std::string GetReplayPath() {             return user_data_dir + "/replays"; }

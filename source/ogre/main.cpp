@@ -15,6 +15,7 @@
 
 #include <OgrePlatform.h>
 #include <boost/thread.hpp>
+#include <locale.h>
 
 
 void VprThread(App* pA)
@@ -29,6 +30,8 @@ void VprThread(App* pA)
 	int main(int argc, char* argv[])
 #endif
 {	
+	setlocale(LC_NUMERIC, "C");
+	
 	//  Load Settings
 	std::stringstream dummy;
 	PATHMANAGER::Init(dummy, dummy);

@@ -2,6 +2,7 @@
 #include "Defines.h"
 #include "OgreApp.h"
 #include "../vdrift/pathmanager.h"
+#include <locale.h>
 
 
 #if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
@@ -10,6 +11,8 @@
 	int main(int argc, char *argv[])
 #endif
 {
+	setlocale(LC_NUMERIC, "C");
+
 	//  Load Settings
 	PATHMANAGER::Init(std::cout, std::cerr);
 	std::string setFile = PATHMANAGER::GetUserConfigDir() + "/editor.cfg";
