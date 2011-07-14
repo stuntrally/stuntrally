@@ -3,11 +3,17 @@
 
 #include "configfile.h"
 
+
+#define SET_VER  120  // 1.2
+
+
 class SETTINGS
 {
 public:
 ///  params
 //------------------------------------------
+	int version;  // file version
+
 	//  car, track
 	std::string car[4], track;  bool track_user;
 

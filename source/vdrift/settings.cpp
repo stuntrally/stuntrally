@@ -2,8 +2,16 @@
 #include "settings.h"
 
 
-void SETTINGS::Load(std::string sfile) {  CONFIGFILE c;  c.Load(sfile);  Serialize(false, c);  }
-void SETTINGS::Save(std::string sfile) {  CONFIGFILE c;  c.Load(sfile);  Serialize(true, c);  c.Write();  }
+void SETTINGS::Load(std::string sfile)
+{
+	CONFIGFILE c;  c.Load(sfile);
+	Serialize(false, c);
+}
+void SETTINGS::Save(std::string sfile)
+{
+	CONFIGFILE c;  c.Load(sfile);  version = SET_VER;
+	Serialize(true, c);  c.Write();
+}
 
 void SETTINGS::Serialize(bool w, CONFIGFILE & c)
 {
@@ -50,6 +58,7 @@ void SETTINGS::Serialize(bool w, CONFIGFILE & c)
 	
 	Param(c,w, "misc.volume", vol_master);		Param(c,w, "misc.vol_engine", vol_engine);
 	Param(c,w, "misc.vol_tires", vol_tires);	Param(c,w, "misc.vol_env", vol_env);
+	Param(c,w, "misc.version", version);
 
 	Param(c,w, "misc.autostartgame", autostart);
 	Param(c,w, "misc.ogredialog", ogre_dialog);	Param(c,w, "misc.escquit", escquit);
@@ -75,9 +84,9 @@ void SETTINGS::Serialize(bool w, CONFIGFILE & c)
 }
 
 SETTINGS::SETTINGS() :  ///  Defaults
+	version(100),  // old
 	//  car, track
 	track("J1-T"), track_user(false),
-	//car("3S"), car_hue(0.f), car_sat(0.f), car_val(0.f),
 	//  show
 	show_fps(1), show_gauges(1), trackmap(1),
 	show_cam(1), show_times(0), show_digits(1), car_dbgtxt(0), car_dbgbars(0),
@@ -113,5 +122,5 @@ SETTINGS::SETTINGS() :  ///  Defaults
 	rpl_rec(1), rpl_ghost(1), rpl_bestonly(1), rpl_listview(0)
 {
 	for (int i=0; i < 4; ++i)
-	{	car[i] = "ES";  car_hue[i] = 0.f;  car_sat[i] = 0.f;  car_val[i] = 0.f;  }
+	{	car[i] = "ES";  car_hue[i] = 0.2f*i;  car_sat[i] = 0.f;  car_val[i] = 0.f;  }
 }
