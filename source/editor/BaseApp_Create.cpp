@@ -185,22 +185,18 @@ bool BaseApp::configure()
 	{
 		if (!mRoot->showConfigDialog()) return false;
 		mWindow = mRoot->initialise(true, "SR Editor");
-	}
-	else
-	{
+	}else{
 		RenderSystem* rs;
 		if (rs = mRoot->getRenderSystemByName(pSet->rendersystem))
 		{
 			mRoot->setRenderSystem(rs);
-		}
-		else
-		{
+		}else{
 			LogO("RenderSystem '" + pSet->rendersystem + "' is not available. Exiting.");
 			return false;
 		}
-
 		if (pSet->rendersystem == "OpenGL Rendering Subsystem")  // not on dx
 			mRoot->getRenderSystem()->setConfigOption("RTT Preferred Mode", pSet->buffer);
+
 		mRoot->initialise(false);
 
 		NameValuePairList settings;
@@ -228,13 +224,13 @@ bool BaseApp::setup()
 	}
 	
 	// Dynamic plugin loading
-	mRoot = OGRE_NEW Root("", PATHMANAGER::GetUserConfigDir() + "/ogreset.cfg", PATHMANAGER::GetLogDir() + "/ogre_ed.log");
+	mRoot = OGRE_NEW Root("", PATHMANAGER::GetUserConfigDir() + "/ogreset_ed.cfg", PATHMANAGER::GetLogDir() + "/ogre_ed.log");
 
-#ifdef _DEBUG
-	#define D_SUFFIX "_d"
-#else
-	#define D_SUFFIX ""
-#endif
+	#ifdef _DEBUG
+		#define D_SUFFIX "_d"
+	#else
+		#define D_SUFFIX ""
+	#endif
 
 	// when show ogre dialog is on, load both rendersystems so user can select
 	if (pSet->ogre_dialog)
@@ -268,7 +264,7 @@ bool BaseApp::setup()
 	createResourceListener();
 	loadResources();
 
-	//  gui
+	//  Gui
 	mPlatform = new MyGUI::OgrePlatform();
 	mPlatform->initialise(mWindow, mSceneMgr, "General", PATHMANAGER::GetLogDir() + "/MyGUI_p.log");
 	mGUI = new MyGUI::Gui();
