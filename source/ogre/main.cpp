@@ -20,10 +20,10 @@
 
 
 //  load settings from default file
-void LoadDefaultSet(SETTINGS* settings)
+void LoadDefaultSet(SETTINGS* settings, std::string setFile)
 {
 	settings->Load(PATHMANAGER::GetGameConfigDir() + "/game-default.cfg");
-	settings->Save(PATHMANAGER::GetSettingsFile());
+	settings->Save(setFile);
 	//  delete old keys.xml too
 	if (boost::filesystem::exists(PATHMANAGER::GetUserConfigDir() + "/keys.xml"))
 		boost::filesystem::remove(PATHMANAGER::GetUserConfigDir() + "/keys.xml");
@@ -73,18 +73,19 @@ void VprThread(App* pA)
 	///  Load Settings
 	//----------------------------------------------------------------
 	SETTINGS* settings = new SETTINGS();
+	std::string setFile = PATHMANAGER::GetSettingsFile();
 	
-	if (!PATHMANAGER::FileExists(PATHMANAGER::GetSettingsFile()))
+	if (!PATHMANAGER::FileExists(setFile))
 	{
 		info_output << "Settings not found - loading defaults." << std::endl;
-		LoadDefaultSet(settings);
+		LoadDefaultSet(settings,setFile);
 	}
-	settings->Load(PATHMANAGER::GetSettingsFile());  // LOAD
+	settings->Load(setFile);  // LOAD
 	if (settings->version != SET_VER)  // loaded older, use default
 	{
 		info_output << "Settings found, but older version - loading defaults." << std::endl;
-		LoadDefaultSet(settings);
-		settings->Load(PATHMANAGER::GetSettingsFile());  // LOAD
+		LoadDefaultSet(settings,setFile);
+		settings->Load(setFile);  // LOAD
 	}
 	
 	// HACK: we initialize paths a second time now that we have the output streams

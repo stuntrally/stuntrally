@@ -4,11 +4,16 @@
 #include "../vdrift/configfile.h"
 
 
+#define SET_VER  1200  // 1.2
+
+
 class SETTINGS
 {
 public:
 ///  params
 //------------------------------------------
+	int version;  // file version
+
 	//  track
 	std::string track;  bool track_user;
 

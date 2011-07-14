@@ -58,9 +58,8 @@ void SETTINGS::Serialize(bool w, CONFIGFILE & c)
 	
 	Param(c,w, "misc.volume", vol_master);		Param(c,w, "misc.vol_engine", vol_engine);
 	Param(c,w, "misc.vol_tires", vol_tires);	Param(c,w, "misc.vol_env", vol_env);
-	Param(c,w, "misc.version", version);
 
-	Param(c,w, "misc.autostartgame", autostart);
+	Param(c,w, "misc.version", version);		Param(c,w, "misc.autostartgame", autostart);
 	Param(c,w, "misc.ogredialog", ogre_dialog);	Param(c,w, "misc.escquit", escquit);
 	Param(c,w, "misc.bulletDebug", bltDebug);	Param(c,w, "misc.bulletLines", bltLines);
 	Param(c,w, "misc.bulletProfilerTxt", bltProfilerTxt);

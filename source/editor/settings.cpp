@@ -4,8 +4,16 @@
 #include "../vdrift/tracksurface.h"
 
 
-void SETTINGS::Load(std::string sfile) {  CONFIGFILE c;  c.Load(sfile);  Serialize(false, c);  }
-void SETTINGS::Save(std::string sfile) {  CONFIGFILE c;  c.Load(sfile);  Serialize(true, c);  c.Write();  }
+void SETTINGS::Load(std::string sfile)
+{
+	CONFIGFILE c;  c.Load(sfile);
+	Serialize(false, c);
+}
+void SETTINGS::Save(std::string sfile)
+{
+	CONFIGFILE c;  c.Load(sfile);  version = SET_VER;
+	Serialize(true, c);  c.Write();
+}
 
 void SETTINGS::Serialize(bool w, CONFIGFILE & c)
 {
@@ -29,7 +37,7 @@ void SETTINGS::Serialize(bool w, CONFIGFILE & c)
 	Param(c,w, "shadow.count",shadow_count);	Param(c,w, "shadow.type", shadow_type);
 	Param(c,w, "shadow.shaders", shaders);
 
-	Param(c,w, "misc.autostart", autostart);
+	Param(c,w, "misc.version", version);		Param(c,w, "misc.autostart", autostart);
 	Param(c,w, "misc.ogredialog", ogre_dialog);	Param(c,w, "misc.escquit", escquit);
 	
 	Param(c,w, "set_cam.px",cam_x);  Param(c,w, "set_cam.py",cam_y);  Param(c,w, "set_cam.pz",cam_z);
@@ -48,6 +56,7 @@ void SETTINGS::Serialize(bool w, CONFIGFILE & c)
 }
 
 SETTINGS::SETTINGS() :  ///  Defaults
+	version(100),  // old
 	//  track
 	track("J1-T"), track_user(false),
 	//  show
