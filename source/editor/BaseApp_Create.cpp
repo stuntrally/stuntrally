@@ -113,8 +113,9 @@ void BaseApp::destroyScene()
 void BaseApp::Run( bool showDialog )
 {
 #if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
-	ShowCursor(0);
-	SetCursor(0);
+	if (!pSet->ogre_dialog)
+	{	ShowCursor(0);
+		SetCursor(0);	}
 #endif
 
 	mShowDialog = showDialog;

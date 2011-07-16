@@ -208,6 +208,7 @@ namespace OISB
         }
 
         LogExc(OIS::E_General, String("Binding of action '" + mParent->getFullName() + "' doesn't contain any bindable of role '" + role + "'").c_str());
+		return 0;
     }
 
     State* Binding::getState(const String& role) const
