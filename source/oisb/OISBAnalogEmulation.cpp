@@ -314,21 +314,21 @@ namespace OISB
         *increase = 0;
 
         // have both?
-        if (binding->isBound("decrease") &&
-            binding->isBound("increase"))
+        if (binding->isBound("dec") &&
+            binding->isBound("inc"))
         {
-            *decrease = binding->getBindable("decrease");
-            *increase = binding->getBindable("increase");
+            *decrease = binding->getBindable("dec");
+            *increase = binding->getBindable("inc");
         }
         // have only increase?
-		else if (binding->isBound("decrease"))
+		else if (binding->isBound("dec"))
 		{
-			*decrease = binding->getBindable("decrease");
+			*decrease = binding->getBindable("dec");
 		}
 		// have only decrease?
-		else if (binding->isBound("increase"))
+		else if (binding->isBound("inc"))
 		{
-			*increase = binding->getBindable("increase");
+			*increase = binding->getBindable("inc");
 		}
 		// have none, 1 bindable?
 		else if (binding->getNumBindables() == 1)
