@@ -208,49 +208,49 @@ namespace OISB
     {
         AnalogEmulator::listProperties(list);
 
-        list.push_back("EmulationDecreaseSpeed");
-        list.push_back("EmulationIncreaseSpeed");
-        list.push_back("EmulationSpeed");
+        list.push_back("DecSpeed");
+        list.push_back("IncSpeed");
+        list.push_back("Speed");
 
-        list.push_back("EmulationReturnEnabled");
-        list.push_back("EmulationReturnValue");
-        list.push_back("EmulationReturnDecreaseSpeed");
-        list.push_back("EmulationReturnIncreaseSpeed");
-        list.push_back("EmulationReturnSpeed");
+        list.push_back("ReturnEnabled");
+        list.push_back("ReturnValue");
+        list.push_back("ReturnDecSpeed");
+        list.push_back("ReturnIncSpeed");
+        list.push_back("ReturnSpeed");
     }
 
     void LinearAnalogEmulator::impl_setProperty(const String& name, const String& value)
     {
-        if (name == "EmulationDecreaseSpeed")
+        if (name == "DecSpeed")
         {
             setDecreaseSpeed(fromString<Real>(value));
         }
-        else if (name == "EmulationIncreaseSpeed")
+        else if (name == "IncSpeed")
         {
             setIncreaseSpeed(fromString<Real>(value));
         }
-        else if (name == "EmulationSpeed")
+        else if (name == "Speed")
         {
             setSpeed(fromString<Real>(value));
         }
 
-        else if (name == "EmulationReturnEnabled")
+        else if (name == "ReturnEnabled")
         {
             setReturnEnabled(fromString<bool>(value));
         }
-        else if (name == "EmulationReturnValue")
+        else if (name == "ReturnValue")
         {
             setReturnValue(fromString<Real>(value));
         }
-        else if (name == "EmulationReturnDecreaseSpeed")
+        else if (name == "ReturnDecSpeed")
         {
             setReturnDecreaseSpeed(fromString<Real>(value));
         }
-        else if (name == "EmulationReturnIncreaseSpeed")
+        else if (name == "ReturnIncSpeed")
         {
             setReturnIncreaseSpeed(fromString<Real>(value));
         }
-        else if (name == "EmulationReturnSpeed")
+        else if (name == "ReturnSpeed")
         {
             setReturnSpeed(fromString<Real>(value));
         }
@@ -263,38 +263,38 @@ namespace OISB
 
     String LinearAnalogEmulator::impl_getProperty(const String& name) const
     {
-        if (name == "EmulationDecreaseSpeed")
+        if (name == "DecSpeed")
         {
             return toString(getDecreaseSpeed());
         }
-        else if (name == "EmulationIncreaseSpeed")
+        else if (name == "IncSpeed")
         {
             return toString(getIncreaseSpeed());
         }
-        else if (name == "EmulationSpeed")
+        else if (name == "Speed")
         {
             //OIS_EXCEPT(OIS::E_InvalidParam, "'EmulationSpeed' is a convenience property that "
                 //"sets both increase and decrease emulation speed variants, you can't get it's value!");
             return "";
         }
 
-        else if (name == "EmulationReturnEnabled")
+        else if (name == "ReturnEnabled")
         {
             return toString(isReturnEnabled());
         }
-        else if (name == "EmulationReturnValue")
+        else if (name == "ReturnValue")
         {
             return toString(getReturnValue());
         }
-        else if (name == "EmulationReturnDecreaseSpeed")
+        else if (name == "ReturnDecSpeed")
         {
             return toString(getReturnDecreaseSpeed());
         }
-        else if (name == "EmulationReturnIncreaseSpeed")
+        else if (name == "ReturnIncSpeed")
         {
             return toString(getReturnIncreaseSpeed());
         }
-        else if (name == "EmulationReturnSpeed")
+        else if (name == "ReturnSpeed")
         {
             //OIS_EXCEPT(OIS::E_InvalidParam, "'EmulationSpeed' is a convenience property that "
                 //"sets both increase and decrease emulation speed variants, you can't get it's value!");

@@ -114,8 +114,8 @@ namespace OISB
 			list.push_back("AbsoluteValue");
 			list.push_back("RelativeValue");
 
-			list.push_back("MinimumValue");
-			list.push_back("MaximumValue");
+			list.push_back("MinValue");
+			list.push_back("MaxValue");
 			list.push_back("Sensitivity");
 
 			list.push_back("AnalogEmulator");
@@ -149,11 +149,11 @@ namespace OISB
             OIS_EXCEPT(OIS::E_InvalidParam, "'AbsoluteValue' is a read only, you can't set it!");
         }
 
-        else if (name == "MinimumValue")
+        else if (name == "MinValue")
         {
             setMinimumValue(fromString<Real>(value));
         }
-        else if (name == "MaximumValue")
+        else if (name == "MaxValue")
         {
             setMaximumValue(fromString<Real>(value));
         }
@@ -220,11 +220,11 @@ namespace OISB
             return toString(getRelativeValue());
         }
 
-        else if (name == "MinimumValue")
+        else if (name == "MinValue")
         {
             return toString(getMinimumValue());
         }
-        else if (name == "MaximumValue")
+        else if (name == "MaxValue")
         {
             return toString(getMaximumValue());
         }
