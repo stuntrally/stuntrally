@@ -28,6 +28,7 @@ restrictions:
 
 #include "OISException.h"
 
+
 namespace OISB
 {
     AnalogEmulator::AnalogEmulator():
@@ -78,20 +79,20 @@ namespace OISB
 
         getBindables(binding, &decrease, &increase);
 
-        if (decrease && decrease->isActive())
+        if (decrease && decrease != (Bindable*)1 && decrease->isActive())
         {
             // decrease is pressed
                         
             ret = ((-1.0f) * mDecreaseSpeed * delta) * mTarget->getSensitivity();
         }
-        if (increase && increase->isActive())
+        if (increase && increase != (Bindable*)1 && increase->isActive())
         {
             // increase is pressed
                         
             ret = ((+1.0f) * mIncreaseSpeed * delta) * mTarget->getSensitivity();
         }
 
-        if (mReturnEnabled && ( (!increase || !increase->isActive()) && (!decrease || !decrease->isActive())))
+        if (mReturnEnabled && ( (!increase || increase == (Bindable*)1 || !increase->isActive()) && (!decrease || decrease == (Bindable*)1 || !decrease->isActive())))
         {
             // we have to do returning to the starting point there
             if (mReturnValue == mTarget->getAbsoluteValue())

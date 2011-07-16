@@ -50,6 +50,7 @@ restrictions:
 
 using namespace rapidxml;
 
+
 namespace OISB
 {
     // static member singleton pointer
@@ -307,7 +308,8 @@ namespace OISB
 							{
 								char *att_att = doc.allocate_string((*bnit).first.c_str());
 								bindNode->append_attribute(doc.allocate_attribute("role", att_att)); 
-								char *att_name = doc.allocate_string((*bnit).second->getBindableName().c_str()); 
+								char *att_name = doc.allocate_string(
+									(*bnit).second == (Bindable*)1 ? "None" : (*bnit).second->getBindableName().c_str()); 
 								bindNode->value(att_name);
 							}
 							else
@@ -343,7 +345,8 @@ namespace OISB
 							{
 								char *att_att = doc.allocate_string((*bnit).first.c_str());
 								bindNode->append_attribute(doc.allocate_attribute("role", att_att)); 
-								char *att_name = doc.allocate_string((*bnit).second->getBindableName().c_str()); 
+								char *att_name = doc.allocate_string(
+									(*bnit).second == (Bindable*)1 ? "None" : (*bnit).second->getBindableName().c_str()); 
 								bindNode->value(att_name);
 							}
 							else

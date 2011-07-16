@@ -679,12 +679,12 @@ void App::InitInputGui()
 			// bound key(s)
 			if (act->getActionType() == OISB::AT_TRIGGER)
 			{
-				if (act->mBindings.size() > 0 && act->mBindings.front()->getNumBindables() > 0)
+				if (act->mBindings.size() > 0 && act->mBindings.front()->getNumBindables() > 0 && act->mBindings.front()->getBindable(0) && act->mBindings.front()->getBindable(0) != (OISB::Bindable*)1)
 					key1_label = act->mBindings.front()->getBindable(0)->getBindableName();
 			}
 			else if (act->getActionType() == OISB::AT_ANALOG_AXIS)
 			{
-				if (act->mBindings.size() > 0 && act->mBindings.front()->getNumBindables() > 0)
+				if (act->mBindings.size() > 0 && act->mBindings.front()->getNumBindables() > 0 && act->mBindings.front()->getBindable(0) && act->mBindings.front()->getBindable(0) != (OISB::Bindable*)1)
 				{
 					// look for increase/decrease binds
 					OISB::Bindable* increase = NULL, *decrease = NULL;
@@ -706,13 +706,13 @@ void App::InitInputGui()
 
 			MyGUI::ButtonPtr key1 = tabitem->createWidget<Button>("Button", /*button2 ? x2 :*/ x1, button2 ? (y + ya*2) : y, sx, sy,
 				MyGUI::Align::Relative, "inputbutton_" + (*ait).first + "_" + (*it).first + "_1");
-			key1->setCaption( stripk(key1_label) );
+			key1->setCaption( StrFromKey(key1_label) );
 			key1->eventMouseButtonClick = MyGUI::newDelegate(this, &App::controlBtnClicked);
 			
 			if (button2)
 			{	MyGUI::ButtonPtr key2 = tabitem->createWidget<Button>("Button", x1, y, sx, sy,
 					MyGUI::Align::Relative, "inputbutton_" + (*ait).first + "_" + (*it).first + "_2");
-				key2->setCaption( stripk(key2_label) );
+				key2->setCaption( StrFromKey(key2_label) );
 				key2->eventMouseButtonClick = MyGUI::newDelegate(this, &App::controlBtnClicked);
 			}
 
@@ -783,9 +783,8 @@ void App::UpdateJsButtons()
 				if (js) {
 					for (std::vector<OISB::DigitalState*>::const_iterator it = js->buttons.begin();
 							it != js->buttons.end(); it++)
-						button->addItem( stripk((*it)->getBindableName()) );
-				}
-					
+						button->addItem( StrFromKey((*it)->getBindableName()) );
+				}					
 					
 				button->setIndexSelected(0);
 					
@@ -815,9 +814,7 @@ void App::UpdateJsButtons()
 						axis->addItem( stripk((*it)->getBindableName()) );
 				}
 					
-					
 				axis->setIndexSelected(0);
-
 				
 				// select correct axis/button (from user keybinds)
 				if (bnd2 && bnd2->mBindables.size() > 0) {
@@ -831,9 +828,7 @@ void App::UpdateJsButtons()
 						result = axis->findItemIndexWith( stripk(bnd2->getBindable(0)->getBindableName()) );
 						if (result != MyGUI::ITEM_NONE)
 							axis->setIndexSelected( result );
-					}
-				}
+				}	}
 			}
-		}
-	}
+	}	}
 }

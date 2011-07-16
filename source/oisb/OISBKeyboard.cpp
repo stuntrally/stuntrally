@@ -28,6 +28,7 @@ restrictions:
 
 #include <sstream>
 
+
 namespace OISB
 {
 	Keyboard::Keyboard(OIS::Keyboard* keyboard):
@@ -35,11 +36,12 @@ namespace OISB
 	{
 		for (unsigned int i = 0; i < 256; ++i)
 		{
-			String name = mKeyboard->getAsString(static_cast<OIS::KeyCode>(i));
+			std::stringstream s;
+			s << i;		// just the key code as number, don't get string it is a localized name !
+
+			String name = s.str();  //mKeyboard->getAsString(static_cast<OIS::KeyCode>(i));
 			if (name == "")
-			{
 				name = "Unknown";
-			}
 
             if (!hasState(name))
 			{

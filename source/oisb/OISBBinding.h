@@ -82,7 +82,7 @@ namespace OISB
              * @param bindable The Bindable (Action/State) to bind
              * @param role role of the new bindable (optional), usage depends on Action
              */
-			void bind(Bindable* bindable, const String& role = "");
+			void bind(Bindable* bindable, const String& role = "", const String& role2 = "");
 
             /**
              * @brief binds another bindable to this binding

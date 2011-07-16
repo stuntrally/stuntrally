@@ -68,13 +68,7 @@ void BaseApp::createFrameListener()
 	if (boost::filesystem::exists(PATHMANAGER::GetUserConfigDir() + "/keys.xml"))
 		OISB::System::getSingleton().loadActionSchemaFromXMLFile(PATHMANAGER::GetUserConfigDir() + "/keys.xml");
 	else
-	{
-		#if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
-		OISB::System::getSingleton().loadActionSchemaFromXMLFile(PATHMANAGER::GetGameConfigDir() + "/binds-default-win.xml");
-		#else
-		OISB::System::getSingleton().loadActionSchemaFromXMLFile(PATHMANAGER::GetGameConfigDir() + "/binds-default-nix.xml");
-		#endif
-	}
+		OISB::System::getSingleton().loadActionSchemaFromXMLFile(PATHMANAGER::GetGameConfigDir() + "/keys-default.xml");
 
 	mKeyboard = OISB::System::getSingleton().getOISKeyboard();
 	mMouse = OISB::System::getSingleton().getOISMouse();
@@ -378,7 +372,7 @@ bool BaseApp::setup()
 
 	TextureManager::getSingleton().setDefaultNumMipmaps(5);
 
-	// Gui
+	//  Gui
 	mPlatform = new MyGUI::OgrePlatform();
 	mPlatform->initialise(mWindow, mSceneMgr, "General", PATHMANAGER::GetLogDir() + "/MyGUI_p.log");
 	mGUI = new MyGUI::Gui();
@@ -388,7 +382,7 @@ bool BaseApp::setup()
 	// ------------------------- lang ------------------------
 	if (pSet->language == "") // autodetect
 	{	pSet->language = getSystemLanguage();
-		setlocale(LC_NUMERIC, "C");  }  //needed?
+		setlocale(LC_NUMERIC, "C");  }
 	
 	// valid?
 	if (!boost::filesystem::exists(PATHMANAGER::GetDataPath() + "/gui/core_language_" + pSet->language + "_tag.xml"))

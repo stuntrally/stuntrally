@@ -36,17 +36,18 @@ public:
 	virtual void setTranslations() = 0;
 	
 	class SplitScreenManager* mSplitMgr;
-	
-	bool bWindowResized;  bool bSizeHUD;
 	class HDRLogic* mHDRLogic;
+	void recreateCompositor();
 	
 	class SETTINGS* pSet;
 	
-	void recreateCompositor();
-
-	Ogre::SceneNode* ndSky; //-
+	//  wnd, hud, upl
+	bool bWindowResized;  bool bSizeHUD;
 	int roadUpCnt;
 	class LoadingBar* mLoadingBar;
+	Ogre::SceneNode* ndSky;  //-
+
+	Ogre::String BaseApp::StrFromKey(const Ogre::String& skey);  // util for input
 
 protected:
 	bool mShowDialog, mShutDown;
