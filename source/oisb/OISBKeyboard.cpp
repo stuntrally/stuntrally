@@ -36,12 +36,9 @@ namespace OISB
 	{
 		for (unsigned int i = 0; i < 256; ++i)
 		{
-			std::stringstream s;
-			s << i;		// just the key code as number, don't get string it is a localized name !
-
-			String name = s.str();  //mKeyboard->getAsString(static_cast<OIS::KeyCode>(i));
-			if (name == "")
-				name = "Unknown";
+			//  just the key code as number, don't get string it is a localized name !
+			std::stringstream s;  s << i;
+			String name = s.str();
 
             if (!hasState(name))
 			{
@@ -52,12 +49,9 @@ namespace OISB
 			}
             else
 			{
-                std::stringstream s;
+                std::stringstream s;  s << i;
+				name += " (" + s.str() + ")";
 
-                s << i;
-                String i_str = s.str();
-
-				name += " (" + i_str + ")";
 				mKeys[i] = new DigitalState(this, name);
 				addState(mKeys[i]);
 			}

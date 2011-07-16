@@ -62,7 +62,7 @@ bool BaseApp::frameEnded(const Ogre::FrameEvent& evt)
 //  get key name  /macro to strip away the Keyboard/
 String BaseApp::StrFromKey(const String& skey)
 {
-	Ogre::vector<String>::type ss = Ogre::StringUtil::split(skey, "/");
+	Ogre::vector<String>::type ss = StringUtil::split(skey, "/");
 	if (ss.size() != 2)
 		return String(TR("#{InputKeyUnassigned}"));
 	
@@ -89,9 +89,8 @@ bool BaseApp::keyPressed( const OIS::KeyEvent &arg )
 		MyGUI::PointerManager::getInstance().setVisible(true);
 		
 		//  get action/schema/index from widget name
-		std::string actionName = Ogre::StringUtil::split(pressedKeySender->getName(), "_")[1];
-		std::string schemaName = Ogre::StringUtil::split(pressedKeySender->getName(), "_")[2];
-		std::string index = Ogre::StringUtil::split(pressedKeySender->getName(), "_")[3];
+		Ogre::vector<String>::type ss = StringUtil::split(pressedKeySender->getName(), "_");
+		std::string actionName = ss[1], schemaName = ss[2], index = ss[3];
 		
 		OISB::ActionSchema* schema = OISB::System::getSingleton().mActionSchemas[schemaName];
 		OISB::Action* action = schema->mActions[actionName];
@@ -99,105 +98,38 @@ bool BaseApp::keyPressed( const OIS::KeyEvent &arg )
 			action->createBinding();
 		OISB::Binding* binding = action->mBindings.front();
 		
-		//  get old binds
-		OISB::Bindable* bind1 = NULL, *bind2 = NULL;
-		std::string bind1_role = "", bind2_role = "";
-		
+		//  save keys
+		String decKey = "", incKey = "";
 		size_t num = binding->getNumBindables();
-		if (num == 1)
+		for (int i = 0; i < num; ++i)
 		{
-			bind1 = binding->getBindable(0);  bind1_role = binding->getRole(bind1);
+			OISB::Bindable* bind = binding->getBindable(i);
+			String name = bind->getBindableName();
+			String role = binding->getRole(bind);
+			//if (StringUtil::startsWith(n,"Keyboard"));
+			if (role == "dec")  decKey = name;
+			if (role == "inc")  incKey = name;
 		}
-		else if (num == 2)
-		{
-			bind1 = binding->getBindable(0);  bind1_role = binding->getRole(bind1);
-			bind2 = binding->getBindable(1);  bind2_role = binding->getRole(bind2);
-		}
-		
-		//  cancel: delete canceled bind
-		if (cancel)
-		{
-			if (index == "1" && bind1)  binding->unbind(bind1);  if (index == "1")  bind1 = NULL;
-			if (index == "2" && bind2)  binding->unbind(bind2);	 if (index == "2")  bind2 = NULL;
-		}
-			
-		//  delete all binds
-		if (!cancel)
-		{
-			if (bind1)  binding->unbind(bind1);
-			if (bind2)  binding->unbind(bind2);
-		
-			//  for analog axis actions, make sure the binds have a role
-			if (action->getActionType() == OISB::AT_ANALOG_AXIS)
-			{
-				if (bind1_role == "" || bind2_role == "")
-				{
-					bind1_role = "inc";
-					bind2_role = "dec";
-				}
-			}
-			
-			try
-			{	//  rebind
-				if (index == "1")
-				{
-					binding->bind("Keyboard/" + toStr(pressedKey), bind1_role);
-					
-					//  only bind 2nd if keys are not the same (will throw exception)
-					if (bind2 && bind2 != (OISB::Bindable*)1)
-						if ("Keyboard/" + toStr(pressedKey) != bind2->getBindableName())
-							binding->bind(bind2, bind2_role);
-				}
-				else if (index == "2")
-				{
-					//  only bind 1st if keys are not the same (will throw exception)
-					if (bind1 && bind1 != (OISB::Bindable*)1)
-						if ("Keyboard/" + toStr(pressedKey) != bind1->getBindableName())
-							binding->bind(bind1, bind1_role);
+		//  clear, unbind
+		for (int i = num-1; i >= 0; --i)
+			binding->unbind(binding->getBindable(i));
 
-					binding->bind("Keyboard/" + toStr(pressedKey), bind2_role);
-				}
-			}
-			catch (OIS::Exception) 
-			{
-				// invalid key? - restore old
-				LogO("WARNING: binding->bind failed, restoring old binds...");
-				
-				// this is nasty, but since some very weird stuff can happen here, we have to individually try/catch
-				try {	binding->unbind("Keyboard/" + toStr(pressedKey));	}	catch (OIS::Exception) {}
-				try {	if (bind1)  binding->unbind(bind1);					}	catch (OIS::Exception) {}
-				try {	if (bind2)  binding->unbind(bind2);					}	catch (OIS::Exception) {}
-				
-				if (bind1)  binding->bind(bind1, bind1_role);
-				if (bind2)  binding->bind(bind2, bind2_role);
-				
-				return true;
-			}
-		}
+		//  change
+		String skey = cancel ? "" : "Keyboard/" + toStr(pressedKey);
+			 if (index == "1")  incKey = skey;  // lower btn - inc
+		else if (index == "2")  decKey = skey;  // upper btn - dec
+
+		//  update, bind
+		if (incKey != "")	binding->bind(incKey, "inc");
+		if (decKey != "")	binding->bind(decKey, "dec");
+		
 				
 		//  update button labels  . . . . . . . 
 		MyGUI::ButtonPtr b1 = mGUI->findWidget<MyGUI::Button>("inputbutton_" + actionName + "_" + schemaName + "_" + "1", "", false);
 		MyGUI::ButtonPtr b2 = mGUI->findWidget<MyGUI::Button>("inputbutton_" + actionName + "_" + schemaName + "_" + "2", "", false);
-		num = binding->getNumBindables();  String se = TR("#{InputKeyUnassigned}"), sb1 = se, sb2 = se;
-
-		bool bdec = false;
-		if (num > 0 /*&& binding->getBindable(0) != (OISB::Bindable*)1*/)
-			bdec = binding->getRole(binding->getBindable(0)) == "dec";
-
-		if (num == 1)
-		{
-			String s1 = binding->getBindable(0) == (OISB::Bindable*)1 ? se : StrFromKey(binding->getBindable(0)->getBindableName());
-			if (!bdec)  sb1 = s1;  else  sb2 = s1;
-		}
-		else if (num == 2)
-		{
-			String s1 =	binding->getBindable(0) == (OISB::Bindable*)1 ? se : StrFromKey(binding->getBindable(0)->getBindableName());
-			String s2 = binding->getBindable(1) == (OISB::Bindable*)1 ? se : StrFromKey(binding->getBindable(1)->getBindableName());
-			sb1 = bdec ? s1 : s2;
-			sb2 = bdec ? s2 : s1;
-		}
-		if (b1)  b1->setCaption(sb1); 
-		if (b2)  b2->setCaption(sb2);
+		if (b1)  b1->setCaption(StrFromKey(incKey));
+		if (b2)  b2->setCaption(StrFromKey(decKey));
+		
 		return true;
 	}
 	
