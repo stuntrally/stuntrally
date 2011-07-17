@@ -48,6 +48,8 @@ public:
 	Ogre::SceneNode* ndSky;  //-
 
 	Ogre::String BaseApp::StrFromKey(const Ogre::String& skey);  // util for input
+	std::map<OIS::KeyCode, Ogre::String> kcMap;  // key names in english
+	void InitKeyNamesMap();
 
 protected:
 	bool mShowDialog, mShutDown;

@@ -24,6 +24,9 @@
 
 using namespace Ogre;
 
+//#define LogDbg(s)
+#define LogDbg(s)  LogO(s)
+
 
 //  Camera
 //-------------------------------------------------------------------------------------
@@ -35,7 +38,7 @@ void BaseApp::createCamera()
 //-------------------------------------------------------------------------------------
 void BaseApp::createFrameListener()
 {
-	Ogre::LogManager::getSingletonPtr()->logMessage("*** Initializing OIS ***");
+	LogO("*** Initializing OIS ***");
 
 	Ogre::OverlayManager& ovr = OverlayManager::getSingleton();
 	mFpsOverlay = ovr.getByName("Core/FpsOverlay");  //mFpsOverlay->show();//
@@ -44,6 +47,10 @@ void BaseApp::createFrameListener()
 	mOvrTris= ovr.getOverlayElement("Core/NumTris"),
 	mOvrBat = ovr.getOverlayElement("Core/NumBatches"),
 	mOvrDbg = ovr.getOverlayElement("Core/DebugText");
+
+	LogDbg("*** input 0 ***");
+	InitKeyNamesMap();
+	LogDbg("*** input 1 ***");
 
 	OIS::ParamList pl;	size_t windowHnd = 0;
 	std::ostringstream windowHndStr;
@@ -62,19 +69,29 @@ void BaseApp::createFrameListener()
     pl.insert(std::make_pair(std::string("XAutoRepeatOn"), std::string("true")));
     #endif
 
+	LogDbg("*** input 2 ***");
 	mOISBsys = new OISB::System();
+	LogDbg("*** input 3 ***");
 	mInputManager = OIS::InputManager::createInputSystem( pl );
+	LogDbg("*** input 4 ***");
 	OISB::System::getSingleton().initialize(mInputManager);
+
+	LogDbg("*** input 5 ***");
 	if (boost::filesystem::exists(PATHMANAGER::GetUserConfigDir() + "/keys.xml"))
 		OISB::System::getSingleton().loadActionSchemaFromXMLFile(PATHMANAGER::GetUserConfigDir() + "/keys.xml");
 	else
 		OISB::System::getSingleton().loadActionSchemaFromXMLFile(PATHMANAGER::GetGameConfigDir() + "/keys-default.xml");
 
+	LogDbg("*** input 6 ***");
 	mKeyboard = OISB::System::getSingleton().getOISKeyboard();
+	LogDbg("*** input 7 ***");
 	mMouse = OISB::System::getSingleton().getOISMouse();
 
+	LogDbg("*** input 8 ***");
 	mMouse->setEventCallback(this);
+	LogDbg("*** input 9 ***");
 	mKeyboard->setEventCallback(this);
+	LogDbg("*** input 10 ***");
 	
 	// add listener for all joysticks
 	for (std::vector<OISB::JoyStick*>::iterator it=mOISBsys->mJoysticks.begin();
@@ -82,6 +99,7 @@ void BaseApp::createFrameListener()
 	{
 		(*it)->getOISJoyStick()->setEventCallback(this);
 	}
+	LogDbg("*** input 11 ***");
 
 	windowResized(mWindow);
 	WindowEventUtilities::addWindowEventListener(mWindow, this);
@@ -400,10 +418,14 @@ bool BaseApp::setup()
 	createResourceListener();
 	loadResources();
 
+	LogDbg("*** createFrameListener ***");
 	createFrameListener();
+	LogDbg("*** createScene ***");
 	createScene();//^before
-	
+
+	LogDbg("*** recreateCompositor***");
 	recreateCompositor();
+	LogDbg("*** end setup ***");
 
 	return true;
 };
