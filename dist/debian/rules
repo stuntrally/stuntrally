@@ -45,7 +45,9 @@ install: build
 	dh_prep
 	dh_installdirs
 	cd $(BUILD_TREE); $(MAKE) install DESTDIR=$(CURDIR)/debian/stuntrally
-	cp dist/stuntrally.png $(CURDIR)/debian/stuntrally/usr/share/pixmaps/stuntrally.png
+	
+	# Debian likes games in /usr/games instead of /usr/bin
+	mkdir -p $(CURDIR)/debian/stuntrally/usr/games
 	mv $(CURDIR)/debian/stuntrally/usr/bin $(CURDIR)/debian/stuntrally/usr/games
 
 	# Remove development stuff
