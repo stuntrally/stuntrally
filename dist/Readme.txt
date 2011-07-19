@@ -41,7 +41,8 @@ You need some Debian tools, at least packages "dput" and "dpkg-dev". Also, you n
   dpkg-buildpackage -sa -S    # Only if you created the orig archive yourself
   dpkg-buildpackage -sd -S    # Only if you used Launchpad's orig archive
   cd ..
-  dput ppa:stuntrally-team/stable stuntrally_VERSION_source.changes
+  dput ppa:stuntrally-team/stable stuntrally_VERSION_source.changes     # For releases
+  dput ppa:stuntrally-team/testing stuntrally_VERSION_source.changes    # For test versions
 
 
 Windows installer
