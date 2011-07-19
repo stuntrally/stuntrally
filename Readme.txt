@@ -5,8 +5,8 @@
 
     Project's Homepage:  (all links, Issue tracker, Wiki pages, old Windows releases)
             http://code.google.com/p/vdrift-ogre/
-	Windows releases:
-			https://sourceforge.net/projects/stuntrally/files/
+    Windows releases:
+            https://sourceforge.net/projects/stuntrally/files/
     Screenshots gallery:  (from all versions)
             http://picasaweb.google.com/CryHam/
     Videos:  (gameplay and editor)
