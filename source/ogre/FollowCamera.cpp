@@ -332,8 +332,6 @@ void FollowCamera::updInfo(Real time)
 	case CAM_Car:    sprintf(ss, sFmt_Car.c_str()
 		,ca->mType, CAM_Str[ca->mType], ca->mOffset.y, ca->mOffset.x, ca->mOffset.z);	break;
 	}
-	const Vector3& v = mCamera->getPosition();
-	sprintf(ss, "Pos: %6.4f %6.4f %6.4f \n\n", v.x,v.y,v.z);
 	ovInfo->setCaption(ss);
 }
 
