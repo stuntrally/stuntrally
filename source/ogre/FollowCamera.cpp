@@ -103,26 +103,33 @@ void FollowCamera::update( Real time )
 
 	if (!manualOrient)  // if !CAM_ExtAng
 	{
-		/*  Move  */
 		float dtmul = ca->mSpeed == 0 ? 1.0f : ca->mSpeed * time;
-		Vector3  addPos,addLook;
 
-		if (first)	{	pos = goalPos;  }
-
-		addPos = (goalPos - pos).normalisedCopy() * (goalPos - pos).length() * dtmul;
-		if (addPos.squaredLength() > (goalPos - pos).squaredLength())  addPos = goalPos - pos;
-		pos += addPos;
-		mCamera->setPosition( pos + ofs );
-
-		/*  Look  */
 		if (ca->mType ==  CAM_Arena)
 		{
+			Vector3  Pos(0,0,0), goalPos = ca->mOffset;
+			Pos = mCamera->getPosition();
+			Pos += (goalPos - Pos) * dtmul;
+			
+			static Radian  pitch(0), yaw(0);
+			pitch += (ca->mPitch - pitch) * dtmul;  yaw += (ca->mYaw - yaw) * dtmul;
+			
+			if (first)  {  Pos = goalPos;  pitch = ca->mPitch;  yaw = ca->mYaw;  first = false;  }
+			mCamera->setPosition( Pos );
 			mCamera->setOrientation(Quaternion::IDENTITY);
-			mCamera->pitch(ca->mPitch);  mCamera->yaw(ca->mYaw);
+			mCamera->pitch(pitch);  mCamera->yaw(yaw);
 			manualOrient = true;
 		}
 		else
-		{	if (mGoalNode)  goalLook = posGoal + ofs;
+		{
+			if (first)  pos = goalPos;
+			Vector3  addPos,addLook;
+			addPos = (goalPos - pos).normalisedCopy() * (goalPos - pos).length() * dtmul;
+			if (addPos.squaredLength() > (goalPos - pos).squaredLength())  addPos = goalPos - pos;
+			pos += addPos;
+			mCamera->setPosition( pos + ofs );
+		
+			if (mGoalNode)  goalLook = posGoal + ofs;
 			if (first)	{	mLook = goalLook;  first = false;  }
 
 			addLook = (goalLook - mLook) * dtmul;//Rot;
@@ -325,6 +332,8 @@ void FollowCamera::updInfo(Real time)
 	case CAM_Car:    sprintf(ss, sFmt_Car.c_str()
 		,ca->mType, CAM_Str[ca->mType], ca->mOffset.y, ca->mOffset.x, ca->mOffset.z);	break;
 	}
+	const Vector3& v = mCamera->getPosition();
+	sprintf(ss, "Pos: %6.4f %6.4f %6.4f \n\n", v.x,v.y,v.z);
 	ovInfo->setCaption(ss);
 }
 

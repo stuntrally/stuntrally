@@ -35,16 +35,17 @@
         <Camera on="0" name="Free far"          type="1"  yaw="0"  pitch="25"  dist="50"  offset="0 0 0"        speed="0" />
 
 
-        <Camera on="0" name="Arena right"       type="2"  yaw="220"  pitch="-10" offset="0 80 0"       speed="15" />
-        <Camera on="0" name="Arena front"       type="2"  yaw="-90"  pitch="-20" offset="-300 120 180" speed="15" />
-        <Camera on="1" name="Arena view"        type="2"  yaw="90"   pitch="-20" offset="300 100 0"    speed="25" default="0" />
-        <Camera on="0" name="Arena low"         type="2"  yaw="0.2"  pitch="-10" offset="0 50 0"       speed="15" />
+        <Camera on="0" name="Arena right"       type="2"  yaw="220"  pitch="-10" offset="0 80 0"       speed="10" />
+        <Camera on="0" name="Arena front"       type="2"  yaw="-90"  pitch="-20" offset="-300 120 180" speed="10" />
+        <Camera on="2" name="Arena view"        type="2"  yaw="90"   pitch="-20" offset="300 100 0"    speed="10" default="0" />
+        <Camera on="0" name="Arena low"         type="2"  yaw="0.2"  pitch="-10" offset="0 50 0"       speed="10" />
 
     <!--<Camera on="1" name="Arena T1"          type="2"  yaw="-1"  pitch="91" offset="-100 30 -100"   speed="0" default="1" />
         <Camera on="1" name="Arena T6"          type="2"  yaw="-1"  pitch="91" offset="60 20 -100"     speed="0" default="1" />-->
 
-        <Camera on="1" name="Arena Up low"      type="2"  yaw="0"  pitch="-90"  offset="0 300 0"       speed="0" default="0" />
-        <Camera on="0" name="Arena Up"          type="2"  yaw="0"  pitch="-90"  offset="0 500 0"       speed="0" />
-        <Camera on="0" name="Arena Up2"         type="2"  yaw="0"  pitch="-90"  offset="0 1400 0"      speed="0" />
+    <!--<Camera on="1" name="Arena low"         type="2"  yaw="80"  pitch="-20"  offset="30 0 50"      speed="5" default="1" />-->
+        <Camera on="1" name="Arena Up low"      type="2"  yaw="0"  pitch="-90"  offset="0 300 0"       speed="10" default="0" />
+        <Camera on="0" name="Arena Up"          type="2"  yaw="0"  pitch="-90"  offset="0 500 0"       speed="10" />
+        <Camera on="0" name="Arena Up2"         type="2"  yaw="0"  pitch="-90"  offset="0 1400 0"      speed="10" />
 
 </Cameras>
