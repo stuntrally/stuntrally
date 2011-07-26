@@ -124,22 +124,32 @@ void BaseApp::refreshCompositor()
 		CompositorManager::getSingleton().setCompositorEnabled((*it), "Motion Blur", false);
 	}
 	
-	// Set bloom settings (intensity, orig weight).
-	MaterialPtr blurmat = MaterialManager::getSingleton().getByName("Ogre/Compositor/BloomBlend2");
-	GpuProgramParametersSharedPtr gpuparams = blurmat->getTechnique(0)->getPass(0)->getFragmentProgramParameters();
-	gpuparams->setNamedConstant("OriginalImageWeight", pSet->bloomorig);
-	gpuparams->setNamedConstant("BlurWeight", pSet->bloomintensity);
+	//  Set Bloom params (intensity, orig weight)
+	try
+	{	MaterialPtr bloom = MaterialManager::getSingleton().getByName("Ogre/Compositor/BloomBlend2");
+		GpuProgramParametersSharedPtr params = bloom->getTechnique(0)->getPass(0)->getFragmentProgramParameters();
+		params->setNamedConstant("OriginalImageWeight", pSet->bloomorig);
+		params->setNamedConstant("BlurWeight", pSet->bloomintensity);
+	}catch(...)
+	{	LogO("!!! Failed to set bloom shader params.");  }
 	
-	///  HDR params ..
-	//MaterialPtr hdrmat = MaterialManager::getSingleton().getByName("Ogre/Compositor/BloomBlend2");
-	//GpuProgramParametersSharedPtr gpuparams = hdrmat->getTechnique(0)->getPass(0)->getFragmentProgramParameters();
-	//gpuparams->setNamedConstant("Bloom", pSet->);
+	//  HDR params todo..
+	//try
+	//{	MaterialPtr hdrmat = MaterialManager::getSingleton().getByName("Ogre/Compositor/BloomBlend2");
+	//	GpuProgramParametersSharedPtr params = hdrmat->getTechnique(0)->getPass(0)->getFragmentProgramParameters();
+	//	params->setNamedConstant("Bloom", pSet->);
+	//}catch(...)
+	//{	LogO("!!! Failed to set hdr shader params.");  }
 
-	// Motion blur intens
-	blurmat = MaterialManager::getSingleton().getByName("Ogre/Compositor/Combine");
-	gpuparams = blurmat->getTechnique(0)->getPass(0)->getFragmentProgramParameters();
-	gpuparams->setNamedConstant("blur", pSet->motionblurintensity);
+	//  Set Motion Blur intens
+	try
+	{	MaterialPtr blur = MaterialManager::getSingleton().getByName("Ogre/Compositor/Combine");
+		GpuProgramParametersSharedPtr params = blur->getTechnique(0)->getPass(0)->getFragmentProgramParameters();
+		params->setNamedConstant("blur", pSet->motionblurintensity);
+	}catch(...)
+	{	LogO("!!! Failed to set blur shader params.");  }
 	
+
 	for (std::list<Viewport*>::iterator it=mSplitMgr->mViewports.begin(); it!=mSplitMgr->mViewports.end(); it++)
 	{
 		CompositorManager::getSingleton().setCompositorEnabled((*it), "Bloom", pSet->bloom);
@@ -151,6 +161,9 @@ void BaseApp::refreshCompositor()
 //-------------------------------------------------------------------------------------
 void BaseApp::recreateCompositor()
 {
+	if (!pSet->all_effects)  // disable compositor
+		return;
+		
 	// hdr has to be first in the compositor queue
 	if (!mHDRLogic) 
 	{
@@ -162,8 +175,7 @@ void BaseApp::recreateCompositor()
 	{
 		// Motion blur has to be created in code
 		CompositorPtr comp3 = CompositorManager::getSingleton().create(
-			"Motion Blur", ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME
-		);
+			"Motion Blur", ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME);
 
 		CompositionTechnique *t = comp3->createTechnique();
 		{

@@ -71,6 +71,7 @@ void SETTINGS::Serialize(bool w, CONFIGFILE & c)
 	Param(c,w, "video.bloom", bloom);			Param(c,w, "video.bloomintensity", bloomintensity);
 	Param(c,w, "video.bloomorig", bloomorig);	Param(c,w, "video.hdr", hdr);
 	Param(c,w, "video.motionblur", motionblur);	Param(c,w, "video.motionblurintensity", motionblurintensity);
+	Param(c,w, "video.all_effects", all_effects);
 	Param(c,w, "video.windowx", windowx);		Param(c,w, "video.windowy", windowy);
 	Param(c,w, "video.fullscreen", fullscreen);
 	Param(c,w, "video.fsaa", fsaa);				Param(c,w, "video.vsync", vsync);
@@ -113,6 +114,7 @@ SETTINGS::SETTINGS() :  ///  Defaults
 	//  video
 	bloom(false), bloomintensity(0.2), bloomorig(1.0), hdr(false),
 	motionblur(false), motionblurintensity(0.3),
+	all_effects(false),
 	windowx(800), windowy(600), fullscreen(false), fsaa(0), vsync(false),
 	buffer("FBO"), rendersystem("OpenGL Rendering Subsystem"),
 	//  input

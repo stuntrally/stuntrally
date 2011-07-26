@@ -4,7 +4,7 @@
 #include "configfile.h"
 
 
-#define SET_VER  1201  // 1.2
+#define SET_VER  1202  // 1.2
 
 
 class SETTINGS
@@ -51,7 +51,7 @@ public:
 	bool veget_collis, car_collis;
 	
 	//  compositor
-	bool bloom, hdr, motionblur;
+	bool bloom, hdr, motionblur, all_effects;
 	float bloomintensity, bloomorig, motionblurintensity;
 	//  video
 	int windowx, windowy, fsaa;

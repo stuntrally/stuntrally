@@ -5,6 +5,7 @@
 
 #include "Ogre.h"
 
+
 class HDRListener: public Ogre::CompositorInstance::Listener
 {
 protected:
@@ -24,6 +25,7 @@ public:
 	virtual void notifyMaterialRender(Ogre::uint32 pass_id, Ogre::MaterialPtr &mat);
 };
 
+
 Ogre::CompositorInstance::Listener* HDRLogic::createListener(Ogre::CompositorInstance* instance)
 {
 	HDRListener* listener = new HDRListener;
@@ -33,17 +35,20 @@ Ogre::CompositorInstance::Listener* HDRLogic::createListener(Ogre::CompositorIns
 	return listener;
 }
 
+
 HDRListener::HDRListener()
 {
 }
 HDRListener::~HDRListener()
 {
 }
+
 void HDRListener::notifyViewportSize(int width, int height)
 {
 	mVpWidth = width;
 	mVpHeight = height;
 }
+
 void HDRListener::notifyCompositor(Ogre::CompositorInstance* instance)
 {
 	// Get some RTT dimensions for later calculations
@@ -96,10 +101,11 @@ void HDRListener::notifyCompositor(Ogre::CompositorInstance* instance)
 		}
 	}
 }
+
 void HDRListener::notifyMaterialSetup(Ogre::uint32 pass_id, Ogre::MaterialPtr &mat)
 {
-	// Prepare the fragment params offsets
-	switch(pass_id)
+	//  Prepare the fragment params offsets
+	switch (pass_id)
 	{
 	//case 994: // rt_lum4
 	case 993: // rt_lum3
@@ -112,27 +118,34 @@ void HDRListener::notifyMaterialSetup(Ogre::uint32 pass_id, Ogre::MaterialPtr &m
 	case 701: // rt_bloom1
 		{
 			// horizontal bloom
-			mat->load();
+		try
+		{	mat->load();
 			Ogre::GpuProgramParametersSharedPtr fparams =
 				mat->getBestTechnique()->getPass(0)->getFragmentProgramParameters();
 			fparams->setNamedConstant("sampleOffsets", mBloomTexOffsetsHorz[0], 15);
 			fparams->setNamedConstant("sampleWeights", mBloomTexWeights[0], 15);
+		}catch(...)
+		{	}
 
 			break;
 		}
 	case 700: // rt_bloom0
 		{
 			// vertical bloom
-			mat->load();
+		try
+		{	mat->load();
 			Ogre::GpuProgramParametersSharedPtr fparams =
 				mat->getTechnique(0)->getPass(0)->getFragmentProgramParameters();
 			fparams->setNamedConstant("sampleOffsets", mBloomTexOffsetsVert[0], 15);
 			fparams->setNamedConstant("sampleWeights", mBloomTexWeights[0], 15);
+		}catch(...)
+		{	}
 
 			break;
 		}
 	}
 }
+
 void HDRListener::notifyMaterialRender(Ogre::uint32 pass_id, Ogre::MaterialPtr &mat)
 {
 }
