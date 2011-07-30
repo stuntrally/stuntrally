@@ -2,7 +2,7 @@
 #include "OgreGame.h"
 #include "../vdrift/game.h"
 #include "CarModel.h" // for CreateModel()
-#include "SplitScreenManager.h"  //-
+#include "SplitScreen.h"  //-
 
 #include <OgreMaterialManager.h>
 #include <OgreTechnique.h>

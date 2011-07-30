@@ -6,7 +6,7 @@
 	#include "../OgreGame.h"
 	#include "../vdrift/settings.h"
 	#include "../vdrift/game.h"
-	#include "../ogre/SplitScreenManager.h"
+	#include "../ogre/SplitScreen.h"
 #endif
 #include "../../paged-geom/GrassLoader.h"
 #include "../../paged-geom/BatchPage.h"
@@ -230,7 +230,7 @@ void App::CreateTrees()
 					bco->setFriction(shp->friction);	bco->setRestitution(shp->restitution);
 					bco->setCollisionFlags(bco->getCollisionFlags() |
 						btCollisionObject::CF_STATIC_OBJECT /*| btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT/**/);
-					pGame->collision.world.addCollisionObject(bco);
+					pGame->collision.world->addCollisionObject(bco);
 					pGame->collision.shapes.push_back(bshp);  cntshp++;
 				}
 				#endif

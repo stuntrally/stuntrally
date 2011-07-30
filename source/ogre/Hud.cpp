@@ -293,7 +293,7 @@ void App::UpdateHUD(int carId, CarModel* pCarM, CAR* pCar, float time, Viewport*
 	//  gear, vel texts  -----------------------------
 	if (hudGear && hudVel && pCar)
 	{
-		char cg[132],sv[132];  cg[1]=0; sv[1]=0;
+		char cg[132],sv[132];  cg[0]='1'; cg[1]=0; sv[1]=0;
 		float cl = fr.clutch*0.8f + 0.2f;
 		if (fr.gear == -1)
 		{	cg[0]='R';  hudGear->setColour(ColourValue(0.3,1,1,cl));	}

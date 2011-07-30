@@ -393,7 +393,7 @@ bool TRACK::LoadSurfaces(const std::string & trackpath)
 		tempsurface.rollingDrag = temp;
 		
 		tracksurfaces.push_back(tempsurface);//
-		info_output << "  new surface" << endl;//
+		//info_output << "  new surface" << endl;//
 		
 		//std::list<TRACKSURFACE>::iterator it = tracksurfaces.begin();
 		//while(indexnum-- > 0) it++;

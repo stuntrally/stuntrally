@@ -6,7 +6,7 @@
 #include "../vdrift/track.h"
 #include "../vdrift/game.h"
 //#include "../ogre/OgreGame.h"
-#include "SplitScreenManager.h"
+#include "SplitScreen.h"
 #include "common/SceneXml.h"
 #include "FollowCamera.h"
 #include "CarReflection.h"
@@ -457,9 +457,9 @@ void CarModel::Create(int car)
 			whTrl[w]->addNode(ndWhE[w]);
 		}
 			whTrl[w]->setTrailLength(90 * pSet->trails_len);  //30
-			whTrl[w]->setInitialColour(0, 0.1,0.1,0.1, 0);
-			whTrl[w]->setColourChange(0, 0.0,0.0,0.0, /*fade*/0.08 * 1.f / pSet->trails_len);
-			whTrl[w]->setInitialWidth(0, 0.16);  //0.18 0.2
+			whTrl[w]->setInitialColour(0, 0.1f,0.1f,0.1f, 0);
+			whTrl[w]->setColourChange(0, 0.0,0.0,0.0, /*fade*/0.08f * 1.f / pSet->trails_len);
+			whTrl[w]->setInitialWidth(0, 0.16f);  //0.18 0.2
 	}
 
 	UpdParsTrails();

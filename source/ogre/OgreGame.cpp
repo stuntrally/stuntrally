@@ -3,7 +3,7 @@
 #include "OgreGame.h"
 #include "../vdrift/game.h"
 #include "../road/Road.h"
-#include "SplitScreenManager.h"
+#include "SplitScreen.h"
 #include "../paged-geom/PagedGeometry.h"
 
 #include <OgreTerrain.h>

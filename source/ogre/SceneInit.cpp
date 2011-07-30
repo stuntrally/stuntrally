@@ -5,7 +5,7 @@
 #include "../vdrift/game.h"
 #include "FollowCamera.h"
 #include "../road/Road.h"
-#include "SplitScreenManager.h"
+#include "SplitScreen.h"
 
 #include "../btOgre/BtOgrePG.h"
 #include "../btOgre/BtOgreGP.h"
@@ -36,9 +36,9 @@ void App::createScene()
     if (pSet->bltLines)
 	{	dbgdraw = new BtOgre::DebugDrawer(
 			mSceneMgr->getRootSceneNode(),
-			&pGame->collision.world);
-		pGame->collision.world.setDebugDrawer(dbgdraw);
-		pGame->collision.world.getDebugDrawer()->setDebugMode(
+			pGame->collision.world);
+		pGame->collision.world->setDebugDrawer(dbgdraw);
+		pGame->collision.world->getDebugDrawer()->setDebugMode(
 			1 /*0xfe/*8+(1<<13)*/);
 	}
 	
@@ -47,15 +47,28 @@ void App::createScene()
 	LogO(String("**** ReplayFrame size: ") + toStr(sizeof(ReplayFrame)));	
 	LogO(String("**** ReplayHeader size: ") + toStr(sizeof(ReplayHeader)));	
 
-	#if 0  // test autoload replay
-		string file = PATHMANAGER::GetReplayPath() + "/" + pSet->track + ".rpl";
-		if (replay.LoadFile(file))
-			bRplPlay = 1;
-	#endif
 	bRplRec = pSet->rpl_rec;  // startup setting
 
 	if (pSet->autostart)
 		NewGame();
+	
+	#if 0  // autoload replay
+		std::string file = PATHMANAGER::GetReplayPath() + "/S12-Infinity_good_x3.rpl"; //+ pSet->track + ".rpl";
+		if (replay.LoadFile(file))
+		{
+			std::string car = replay.header.car, trk = replay.header.track;
+			bool usr = replay.header.track_user == 1;
+
+			pSet->car[0] = car;  pSet->track = trk;  pSet->track_user = usr;
+			pSet->car_hue[0] = replay.header.hue[0];  pSet->car_sat[0] = replay.header.sat[0];  pSet->car_val[0] = replay.header.val[0];
+			for (int p=1; p < replay.header.numPlayers; ++p)
+			{	pSet->car[p] = replay.header.cars[p-1];
+				pSet->car_hue[p] = replay.header.hue[p];  pSet->car_sat[p] = replay.header.sat[p];  pSet->car_val[p] = replay.header.val[p];
+			}
+			btnNewGame(0);
+			bRplPlay = 1;
+		}
+	#endif
 }
 
 
@@ -243,7 +256,7 @@ void App::LoadTrack()  // 6
 	if (ter)	//  Terrain
 	{
 		CreateBltTerrain();
-		//CreateProps();  //-
+		CreateProps();  //-
 		CreateRoad();
 		CreateTrees();
 	}
@@ -345,26 +358,27 @@ void App::CreateProps()
 {
 	/// . dyn objs +
 	if (0)
-	for (int j=-1; j<1; j++)
-	for (int i=-1; i<1; i++)
+	for (int j=-2; j<1; j++)
+	for (int i=-2; i<1; i++)
 	{
 		btCollisionShape* shape;
+		btScalar s = Ogre::Math::RangeRandom(1,3);
 		// switch(rand() % 5)
 		switch( (50+i+j*3) % 6)
 		{
-		case 0:  shape = new btBoxShape(btVector3(0.4,0.3,0.5));  break;
-		case 1:  shape = new btSphereShape(0.5);  break;
-		case 2:  shape = new btCapsuleShapeZ(0.4,0.5);  break;
-		case 3:  shape = new btCylinderShapeX(btVector3(0.5,0.7,0.4));  break;
-		case 4:  shape = new btCylinderShapeZ(btVector3(0.5,0.6,0.7));  break;
-		case 5:  shape = new btConeShapeX(0.4,0.6);  break;
+		case 0:  shape = new btBoxShape(s*btVector3(0.4,0.3,0.5));  break;
+		case 1:  shape = new btSphereShape(s*0.5);  break;
+		case 2:  shape = new btCapsuleShapeZ(s*0.4,s*0.5);  break;
+		case 3:  shape = new btCylinderShapeX(s*btVector3(0.5,0.7,0.4));  break;
+		case 4:  shape = new btCylinderShapeZ(s*btVector3(0.5,0.6,0.7));  break;
+		case 5:  shape = new btConeShapeX(s*0.4,s*0.6);  break;
 		}
 
-		btTransform tr(btQuaternion(0,0,0), btVector3(-5+i*2,5+j*2,3));
+		btTransform tr(btQuaternion(0,0,0), btVector3(-5+i*5 -20, 5+j*5 -25,0));
 		btDefaultMotionState * ms = new btDefaultMotionState();
 		ms->setWorldTransform(tr);
 
-		btRigidBody::btRigidBodyConstructionInfo ci(320, ms, shape, btVector3(21,21,21));
+		btRigidBody::btRigidBodyConstructionInfo ci(220*s+rand()%500, ms, shape, s*21*btVector3(1,1,1));
 		ci.m_restitution = 0.9;
 		ci.m_friction = 0.9;
 		ci.m_linearDamping = 0.4;
@@ -405,7 +419,7 @@ void App::CreateProps()
 
 			// Body
 			btRigidBody* bdy = new btRigidBody(mass, stt, shp, inertia);
-			pGame->collision.world.addRigidBody(bdy);
+			pGame->collision.world->addRigidBody(bdy);
 		}
 	}
 }

@@ -8,7 +8,7 @@
 
 #include "CompositorLogics.h"
 #include "Localization.h"
-#include "SplitScreenManager.h"
+#include "SplitScreen.h"
 #include "CarModel.h"
 
 #include <OgreFontManager.h>

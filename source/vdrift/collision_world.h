@@ -32,12 +32,8 @@ public:
 	
 	// cast ray into collision world, returns first hit, caster is excluded fom hits
 	bool CastRay(
-		const MATHVECTOR <float, 3> & position,
-		const MATHVECTOR <float, 3> & direction,
-		const float length,
-		const btCollisionObject * caster,
-		COLLISION_CONTACT & contact,
-		int* pOnRoad) const;
+		const MATHVECTOR <float,3> & position, const MATHVECTOR <float,3> & direction, const float length,
+		const btCollisionObject * caster, COLLISION_CONTACT & contact, int* pOnRoad) const;
 	
 	// update world physics
 	void Update(float dt, bool profiling);
@@ -53,21 +49,19 @@ public:
 public:
 	float fixedTimestep;  int maxSubsteps;
 	
-	btDefaultCollisionConfiguration collisionconfig;
-	btCollisionDispatcher collisiondispatcher;
-	bt32BitAxisSweep3 collisionbroadphase;
-	btSequentialImpulseConstraintSolver constraintsolver;
-	btDiscreteDynamicsWorld world;
-	
-	//GL_ShapeDrawer*	m_shapeDrawer;
-	//GLDebugDrawer* m_DebugDrawer;
+	// . . . bullet sim . . .
+	btDefaultCollisionConfiguration* config;
+	btCollisionDispatcher* dispatcher;
+	bt32BitAxisSweep3* broadphase;
+	btSequentialImpulseConstraintSolver* solver;
+	btDiscreteDynamicsWorld* world;
 
+	// . . . . . .
 	btAlignedObjectArray<btCollisionShape *> shapes;
 	btAlignedObjectArray<btActionInterface *> actions;
 	btAlignedObjectArray<btTypedConstraint *> constraints;
 	btAlignedObjectArray<btTriangleIndexVertexArray *> meshes;
 	
-	//todo: cleanup here
 	TRACK * track;
 	btCollisionObject * trackObject;
 	btTriangleIndexVertexArray * trackMesh;

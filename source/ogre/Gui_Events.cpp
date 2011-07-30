@@ -5,7 +5,7 @@
 #include "../road/Road.h"
 #include "OgreGame.h"
 #include "FollowCamera.h"
-#include "SplitScreenManager.h"
+#include "SplitScreen.h"
 
 #include <MyGUI_PointerManager.h>
 #include <OIS/OIS.h>

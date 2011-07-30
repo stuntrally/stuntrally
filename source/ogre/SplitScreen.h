@@ -8,7 +8,7 @@ class SETTINGS;
 namespace Ogre {  class SceneNode;  class Root;  class SceneManager;  class RenderWindow;  class Viewport;  }
 
 /*
- * SplitScreenManager can be used to split up the screen into several areas.
+ * SplitScreenManager can be used to split up the screen into 2 - 4 areas.
  * This is useful for "Hotseat" game mode (Multiple players driving against each other on the same PC)
  * 
  * For every player a viewport and a camera will be created.

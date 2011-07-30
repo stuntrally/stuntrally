@@ -234,7 +234,7 @@ void App::CreateBltTerrain()
 	//col->setWorldTransform(tr);
 	col->setFriction(0.9);
 	col->setRestitution(0.5);
-	pGame->collision.world.addCollisionObject(col);
+	pGame->collision.world->addCollisionObject(col);
 	pGame->collision.shapes.push_back(hfShape);/**/
 
 	

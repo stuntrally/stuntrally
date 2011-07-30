@@ -1,6 +1,6 @@
 #include "pch.h"
 #include "Defines.h"
-#include "SplitScreenManager.h"
+#include "SplitScreen.h"
 
 #include "OgreGame.h"
 #include "CarModel.h"

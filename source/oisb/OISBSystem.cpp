@@ -700,7 +700,7 @@ namespace OISB
             it->second->dump(os);
         }
 
-        os << "End of dump!" << std::endl;
+        os << "End of dump" << std::endl;
     }
 
     void System::dumpActionSchemas(std::ostream& os)
@@ -712,7 +712,7 @@ namespace OISB
             it->second->dump(os);
         }
 
-        os << "End of dump!" << std::endl;
+        os << "End of dump" << std::endl;
     }
 	
 	void System::addDevice(Device* device)

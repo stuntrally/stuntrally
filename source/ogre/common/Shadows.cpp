@@ -8,7 +8,7 @@
 	#include "../OgreGame.h"
 	#include "../vdrift/settings.h"
 	#include "../road/Road.h"
-	#include "../SplitScreenManager.h"
+	#include "../SplitScreen.h"
 #endif
 #include <OgreTerrainMaterialGeneratorA.h>
 #include <OgreTerrain.h>

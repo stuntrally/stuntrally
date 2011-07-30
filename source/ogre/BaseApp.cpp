@@ -3,7 +3,7 @@
 #include "BaseApp.h"
 #include "FollowCamera.h"
 #include "../vdrift/pathmanager.h"
-#include "SplitScreenManager.h"
+#include "SplitScreen.h"
 
 #include "MyGUI_Prerequest.h"
 #include "MyGUI_PointerManager.h"
@@ -286,6 +286,7 @@ void BaseApp::InitKeyNamesMap()
 	kcMap[KC_LMENU       ] = "LAlt";  //  0x38,    // left Alt
 	kcMap[KC_SPACE       ] = "Space";  //  0x39,
 	kcMap[KC_CAPITAL     ] = "Caps Lock";  //  0x3A,
+
 	kcMap[KC_F1          ] = "F1";  //  0x3B,
 	kcMap[KC_F2          ] = "F2";  //  0x3C,
 	kcMap[KC_F3          ] = "F3";  //  0x3D,

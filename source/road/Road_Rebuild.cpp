@@ -389,7 +389,7 @@ void SplineRoad::RebuildRoadInt()
 					//  ---~~~====~~~---
 					Real brdg = min(1.f, abs(vP.y - yTer) * 0.4f);  //par ] height diff mul
 					Real h = max(0.f, 1.f - abs(vP.y - yTer) / 30.f);  // for grass
-					Vector4 c(brdg,pipe, /*border-*/(w==0 || w==iw) ? 0 : 1, h);
+					Vector4 c(brdg,pipe, /*border-*/(w==0 || w==iw) ? 0.f : 1.f, h);
 
 					//>  data road
 					pos.push_back(vP);	norm.push_back(vN);
@@ -707,8 +707,8 @@ void SplineRoad::RebuildRoadInt()
 					trimeshShape->setUserPointer((void*)7777);  // mark as road,  + mtrId..
 					
 					btRigidBody::btRigidBodyConstructionInfo infoT(0.f, 0, trimeshShape);
-					infoT.m_restitution = 0.0;
-					infoT.m_friction = 0.8;  // 1 like terrain
+					infoT.m_restitution = 0.0f;
+					infoT.m_friction = 0.8f;  // 1 like terrain
 					pGame->collision.AddRigidBody(infoT);
 					
 					//  Wall  ]
@@ -729,8 +729,8 @@ void SplineRoad::RebuildRoadInt()
 						trimeshShape->setUserPointer((void*)7777);  //-
 						
 						btRigidBody::btRigidBodyConstructionInfo infoW(0.f, 0, trimeshShape);
-						infoW.m_restitution = 0.0;
-						infoW.m_friction = 0.1;  // 0 for wall
+						infoW.m_restitution = 0.0f;
+						infoW.m_friction = 0.1f;  // 0 for wall
 						pGame->collision.AddRigidBody(infoW);
 					}
 				}
