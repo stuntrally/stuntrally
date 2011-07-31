@@ -31,7 +31,7 @@
 
 Description
 
-This game features 54 tracks in 8 sceneries and 8 drivable cars.
+This game features 55 tracks in 9 sceneries and 8 drivable cars.
 The Track Editor allows modifying and creating tracks.
 Both game and editor run on Windows and Linux.
 
@@ -129,9 +129,10 @@ Track creators
     If you manage to create an interesting track,
     it could be released in future versions.
 
-Graphic Artists
+Artists
     If you can create tree/plant / car models,
     textures for them or for terrain.
+	If you can create/edit sounds for game.
 
 Programmers
     If you know C++, OGRE or Shaders, and

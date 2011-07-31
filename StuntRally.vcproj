@@ -1126,7 +1126,7 @@
 				</File>
 			</Filter>
 			<Filter
-				Name="mat-compositor"
+				Name="mat-eff"
 				>
 				<Filter
 					Name="bloom"
