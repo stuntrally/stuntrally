@@ -266,17 +266,14 @@ material pipeAsphalt : ppx_shadow
 
 material pipeGlass : ppx_glass
 {
-	//set $ambientCol "0.5 0.5 0.5"
-	//set $diffuseCol "0.4 0.5 0.6 0.9"
-	//set $specularCol "0.5 0.54 0.56"
-
-	set $ambientCol "1.0 1.0 1.0"
-	set $diffuseCol "0.2 0.2 0.2"
-	set $specularCol "0.13 0.145 0.16"
-	set $shininess "24"
+	set $ambientCol "0.2 0.2 0.2"
+	set $diffuseCol "0.5 0.56 0.6"
+	set $specularCol "0.37 0.39 0.41"
+			// base alpha, diffuse alpha, 1
+	set $alphaParsA "0.15 0.2 0.3 0"
+	set $shininess "64"
 	set $depthBias "3"
-	set_texture_alias diffuseMap roadGlass.png
-	set $cull "none"
+	set_texture_alias diffuseMap roadGlassB.png
 }
 
 

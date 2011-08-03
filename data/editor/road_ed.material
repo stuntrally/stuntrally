@@ -54,10 +54,11 @@ material sphere_hit : ppx_diffuse
 
 material sphere_check : ppx_glass
 {
-	set $ambientCol  "0.9 0.9 1.0"
-	set $diffuseCol  "0.1 0.1 0.2"
-	set $specularCol "0.1 0.1 0.1"
-	set $shininess "8"
+	set $ambientCol  "0.4 0.4 0.5"
+	set $diffuseCol  "0.5 0.5 0.6"
+	set $specularCol "0.4 0.4 0.4"
+	set $alphaParsA "0.1 0.15 0.2 0"
+	set $shininess "32"
 	set $depthBias "6"
 	set_texture_alias diffuseMap glass.png
 }
