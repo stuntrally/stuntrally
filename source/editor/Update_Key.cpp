@@ -258,6 +258,9 @@ bool App::KeyPress(const CmdKey &arg)
 
 		case KC_MINUS:   road->ChgMtrId(-1);	break;
 		case KC_EQUALS:  road->ChgMtrId(1);		break;
+
+		case KC_5:	road->ChgAngType(-1);	break;
+		case KC_6:	road->ChgAngType(1);	break;
 	}
 
 

@@ -129,7 +129,7 @@ void SplineRoad::RotateSel(Real relA)
 		if (mP[*it].onTer)
 			pos.y = mTerrain->getHeightAtWorldPosition(pos.x, 0, pos.z) + fHeight;
 		setPos(*it, pos);
-		mP[*it].aYaw -= relA;  // rot point yaw
+		mP[*it].mYaw -= relA;  // rot point yaw
 		vMarkNodes[*it]->setPosition(pos);
 		//Move1(*it, npos);
 	}
@@ -417,8 +417,8 @@ void SplineRoad::AddAngle(Real relA)
 	if (vSel.size() > 0) {  // rotate sel
 		RotateSel(relA);  return;	}	
 	if (iChosen == -1)  {
-		newP.aYaw += relA;  return;  }
-	mP[iChosen].aYaw  += relA;
+		newP.mYaw += relA;  return;  }
+	mP[iChosen].mYaw  += relA;
 	RebuildRoad();
 }
 
@@ -430,8 +430,8 @@ void SplineRoad::AddAngleYaw(Real relA)
 		bSelChng = true;
 		return;	}	
 	if (iChosen == -1)  {
-		newP.aRoll += relA;  return;  }
-	mP[iChosen].aRoll  += relA;
+		newP.mRoll += relA;  return;  }
+	mP[iChosen].mRoll  += relA;
 	RebuildRoad();
 }
 
@@ -485,6 +485,19 @@ void SplineRoad::ChgMtrId(int relId)
 	if (iChosen == -1)  {  // one
 		newP.idMtr = std::max(-1, std::min(MTRs-1, newP.idMtr + relId));  return;  }
 	mP[iChosen].idMtr  = std::max(-1, std::min(MTRs-1, mP[iChosen].idMtr + relId));
+	Move(Vector3::ZERO);  //RebuildRoad();
+}
+
+void SplineRoad::ChgAngType(int relId)
+{
+	if (vSel.size() > 0) {  // sel
+		for (std::set<int>::const_iterator it = vSel.begin(); it != vSel.end(); ++it)
+			mP[*it].aType = (AngType)std::max(0, std::min(AT_ALL-1, mP[*it].aType + relId));
+		bSelChng = true;
+		return;  }
+	if (iChosen == -1)  {  // one
+		newP.aType = (AngType)std::max(-1, std::min(AT_ALL-1, newP.aType + relId));  return;  }
+	mP[iChosen].aType  = (AngType)std::max(-1, std::min(AT_ALL-1, mP[iChosen].aType + relId));
 	Move(Vector3::ZERO);  //RebuildRoad();
 }
 

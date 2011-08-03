@@ -205,9 +205,11 @@ bool SplineRoad::LoadFile(String fname, bool build)
 		a = n->Attribute("pos");	newP.pos = s2v(a);
 		a = n->Attribute("w");		newP.width = !a ? 6.f : s2r(a);
 
-		a = n->Attribute("a");		newP.aYaw = !a ? 0.f : s2r(a);
-		a = n->Attribute("ay");		if (a)  newP.aRoll = s2r(a);  else  {
-		  a = n->Attribute("ar");	if (a)  newP.aRoll = s2r(a);  else  newP.aRoll = 0.f;  }
+		a = n->Attribute("a");		if (a)  newP.mYaw = s2r(a);  else  newP.mYaw = 0.f;
+		a = n->Attribute("ay");		if (a)  newP.mRoll = s2r(a);  else  {
+		  a = n->Attribute("ar");	if (a)  newP.mRoll = s2r(a);  else  newP.mRoll = 0.f;  }
+		  
+		a = n->Attribute("aT");		if (a)  newP.aType = (AngType)s2i(a);
 
 		a = n->Attribute("onTer");	newP.onTer = (a && a[0]=='0') ? false : true;
 		a = n->Attribute("col");	newP.cols = !a ? 1 : s2i(a);
@@ -314,9 +316,11 @@ bool SplineRoad::SaveFile(String fname)
 				p.SetAttribute("onTer",	"0");
 
 			if (!onTer || !onTer1 || !onTer_1)
-			{	p.SetAttribute("a",  toStr( mP[i].aYaw ).c_str());
-				p.SetAttribute("ar", toStr( mP[i].aRoll ).c_str());
+			{	p.SetAttribute("a",  toStr( mP[i].mYaw ).c_str());
+				p.SetAttribute("ar", toStr( mP[i].mRoll ).c_str());
+				p.SetAttribute("aT", toStr( (int)mP[i].aType ).c_str());
 			}
+
 			if (mP[i].cols != 1)
 				p.SetAttribute("col", toStr( mP[i].cols ).c_str());
 			if (mP[i].pipe > 0.f)

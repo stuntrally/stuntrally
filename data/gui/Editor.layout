@@ -62,7 +62,7 @@
 		</Widget>
 		<Widget type="StaticImage" skin="StaticImage" position="8 64 56 56" name="brushImg"/>
 	</Widget>
-	<Widget type="Window" skin="WindowC" position="0 64 136 226" layer="Back" name="RoadCur">
+	<Widget type="Window" skin="WindowC" position="0 34 136 266" layer="Back" name="RoadCur">
 		<Property key="Widget_Colour" value="0.4 0.4 0.4"/>
 		<Property key="Widget_Alpha" value="0.6"/>
 		<Property key="Widget_Caption" value="#{RoadPoint}"/>
@@ -76,52 +76,52 @@
 			<Property key="Widget_InheritsAlpha" value="false"/>
 			<Property key="Text_TextColour" value="0.5 1.0 0.9"/>
 		</Widget>
-		<Widget type="StaticText" skin="StaticText" position="4 40 120 20" name="rdCur2">
+		<Widget type="StaticText" skin="StaticText" position="4 50 120 20" name="rdCur2">
 			<Property key="Widget_InheritsAlpha" value="false"/>
-			<Property key="Text_TextColour" value="1.0 0.8 0.7"/>
+			<Property key="Text_TextColour" value="1.0 0.8 0.6"/>
 		</Widget>
-		<Widget type="StaticText" skin="StaticText" position="4 60 120 20" name="rdCur3">
+		<Widget type="StaticText" skin="StaticText" position="4 70 120 20" name="rdCur3">
 			<Property key="Widget_InheritsAlpha" value="false"/>
-			<Property key="Text_TextColour" value="1.0 0.7 0.7"/>
+			<Property key="Text_TextColour" value="1.0 0.6 0.6"/>
 		</Widget>
-		<Widget type="StaticText" skin="StaticText" position="4 80 120 20" name="rdCur4">
+		<Widget type="StaticText" skin="StaticText" position="4 90 120 20" name="rdCur4">
+			<Property key="Widget_InheritsAlpha" value="false"/>
+			<Property key="Text_TextColour" value="0.9 0.6 0.8"/>
+		</Widget>
+		<Widget type="StaticText" skin="StaticText" position="4 120 120 20" name="rdCur5">
 			<Property key="Widget_InheritsAlpha" value="false"/>
 			<Property key="Text_TextColour" value="0.86 0.86 0.0"/>
 		</Widget>
-		<Widget type="StaticText" skin="StaticText" position="4 100 120 20" name="rdCur5">
+		<Widget type="StaticText" skin="StaticText" position="4 140 120 20" name="rdCur6">
 			<Property key="Widget_InheritsAlpha" value="false"/>
 			<Property key="Text_TextColour" value="0.7 0.77 0.8"/>
 		</Widget>
-		<Widget type="StaticText" skin="StaticText" position="4 120 120 20" name="rdCur6">
+		<Widget type="StaticText" skin="StaticText" position="4 160 120 20" name="rdCur7">
 			<Property key="Widget_InheritsAlpha" value="false"/>
 			<Property key="Text_TextColour" value="0.66 0.86 0.86"/>
 		</Widget>
-		<Widget type="StaticText" skin="StaticText" position="4 140 120 20" name="rdCur7">
+		<Widget type="StaticText" skin="StaticText" position="4 185 120 20" name="rdCur8">
 			<Property key="Widget_InheritsAlpha" value="false"/>
-			<Property key="Text_TextColour" value="0.77 0.8 0.8"/>
+			<Property key="Text_TextColour" value="0.77 0.8 0.9"/>
 		</Widget>
-		<Widget type="StaticText" skin="StaticText" position="4 170 120 20" name="rdCur8">
-			<Property key="Widget_InheritsAlpha" value="false"/>
-			<Property key="Text_TextColour" value="0.7 0.86 1.0"/>
-		</Widget>
-		<Widget type="StaticText" skin="StaticText" position="4 190 120 20" name="rdCur9">
-			<Property key="Widget_InheritsAlpha" value="false"/>
-			<Property key="Text_TextColour" value="0.6 0.8 1.0"/>
-		</Widget>
-		<Widget type="StaticText" skin="StaticText" position="4 210 120 20" name="rdCur10">
-			<Property key="Widget_InheritsAlpha" value="false"/>
-			<Property key="Text_TextColour" value="0.6 0.8 1.0"/>
-		</Widget>
-		<Widget type="StaticText" skin="StaticText" position="94 60 120 20" name="rdCur11">
+		<Widget type="StaticText" skin="StaticText" position="4 210 120 20" name="rdCur9">
 			<Property key="Widget_InheritsAlpha" value="false"/>
 			<Property key="Text_TextColour" value="0.7 0.86 1.0"/>
 		</Widget>
-		<Widget type="StaticText" skin="StaticText" position="94 80 120 20" name="rdCur12">
+		<Widget type="StaticText" skin="StaticText" position="4 250 120 20" name="rdCur10">
+			<Property key="Widget_InheritsAlpha" value="false"/>
+			<Property key="Text_TextColour" value="0.6 0.8 1.0"/>
+		</Widget>
+		<Widget type="StaticText" skin="StaticText" position="94 70 120 20" name="rdCur11">
+			<Property key="Widget_InheritsAlpha" value="false"/>
+			<Property key="Text_TextColour" value="0.7 0.86 1.0"/>
+		</Widget>
+		<Widget type="StaticText" skin="StaticText" position="94 90 120 20" name="rdCur12">
 			<Property key="Widget_InheritsAlpha" value="false"/>
 			<Property key="Text_TextColour" value="0.7 0.86 1.0"/>
 		</Widget>
 	</Widget>
-	<Widget type="Window" skin="WindowC" position="0 290 136 224" layer="Back" name="RoadStats">
+	<Widget type="Window" skin="WindowC" position="0 300 136 224" layer="Back" name="RoadStats">
 		<Property key="Widget_Colour" value="0.3 0.3 0.4"/>
 		<Property key="Widget_Alpha" value="0.6"/>
 		<Property key="Widget_Caption" value="#{RoadStats}"/>

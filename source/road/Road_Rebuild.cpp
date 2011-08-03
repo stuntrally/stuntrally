@@ -17,6 +17,17 @@
 using namespace Ogre;
 
 
+float GetAngle(float x, float y)
+{
+	if (x == 0.f && y == 0.f)
+		return 0.f;
+
+	if (y == 0.f)
+		return (x < 0.f) ? PI_d : 0.f;
+	else
+		return (y < 0.f) ? atan2f(-y, x) : (2*PI_d - atan2f(y, x));
+}
+
 ///  Rebuild
 //---------------------------------------------------------
 void SplineRoad::RebuildRoad(bool full)
@@ -63,6 +74,30 @@ void SplineRoad::RebuildRoadInt()
 	}
 
 
+	///  Auto angles prepass ...
+	if ( segs > 2)
+	for (int seg=0; seg < segs; ++seg)
+	{
+		int seg1 = (seg+1) % segs;  // next
+		int seg0 = (seg-1+segs) % segs;  // prev
+				
+		if (mP[seg].aType == AT_Manual)
+		{	mP[seg].aYaw = mP[seg].mYaw;  mP[seg].aRoll = mP[seg].mRoll;  }
+		else
+		{	mP[seg].aRoll = 0.f;
+			/// ... cd manual override, angles snap, roll= getangle, +180 loops? +
+			//Real len = (mP[seg].pos - mP[seg].pos);
+			//Vector3 vl = GetLenDir(seg, 0, 0.1f) /*+ GetLenDir(seg0, 0.9f, 1.f)*/;  vl.normalise();
+			Vector3 vl = GetLenDir(seg, 0, 0.1f) + GetLenDir(seg0, 0.9f, 1.0f);  vl.normalise();
+			Vector3 vw = Vector3(vl.z, 0, -vl.x);  vw.normalise();
+			mP[seg].aYaw  = GetAngle(vw.x, vw.z) *180.f/PI_d;
+
+			if (mP[seg].aType == AT_Both)
+			{	mP[seg].aYaw += mP[seg].mYaw;  mP[seg].aRoll += mP[seg].mRoll;  }	
+		}
+	}
+
+
 	///--------------------------------------------------------------------------------------------------------------------------
 	///  LOD
 	///--------------------------------------------------------------------------------------------------------------------------
@@ -95,6 +130,7 @@ void SplineRoad::RebuildRoadInt()
 		Real sumLenMrg = 0.f, ltc = 0.f;  int mrgGrp = 0;  //#  stats
 		Real roadLen = 0.f, rdOnT = 0.f, rdPipe = 0.f,
 			avgWidth = 0.f, stMaxH = FLT_MIN, stMinH = FLT_MAX;
+				
 		
 		//if (lod == 0)?
 		LogR("--- seg prepass ---");

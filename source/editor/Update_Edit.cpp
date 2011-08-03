@@ -111,20 +111,20 @@ bool App::frameRenderingQueued(const FrameEvent& evt)
 		if (rdTxt[1]){  Fmt(s, "Width  %5.2f", sp.width);  rdTxt[1]->setCaption(s);  }
 		if (rdTxt[2]){  Fmt(s, "yaw   %5.1f", sp.aYaw);    rdTxt[2]->setCaption(s);  }
 		if (rdTxt[3]){  Fmt(s, "roll  %5.1f", sp.aRoll);   rdTxt[3]->setCaption(s);  }
+		if (rdTxt[4]){  Fmt(s, "%d %s", sp.aType, csAngType[sp.aType].c_str());   rdTxt[4]->setCaption(s);  }
 
-		if (rdTxt[4]){	if (sp.pipe==0.f)	s[0]=0;
-					else Fmt(s, "Pipe  %5.2f", sp.pipe);   rdTxt[4]->setCaption(s);  }
-		if (rdTxt[5]){	if (sp.onTer)	s[0]=0;
-					else Fmt(s, "column  %2d", sp.cols);   rdTxt[5]->setCaption(s);  }
-		if (rdTxt[6]){  Fmt(s, "%d %s", sp.idMtr, road->getMtrStr(ic).c_str());   rdTxt[6]->setCaption(s);  }
+		if (rdTxt[5]){	if (sp.pipe==0.f)	s[0]=0;
+					else Fmt(s, "Pipe  %5.2f", sp.pipe);   rdTxt[5]->setCaption(s);  }
+		if (rdTxt[6]){	if (sp.onTer)	s[0]=0;
+					else Fmt(s, "column  %2d", sp.cols);   rdTxt[6]->setCaption(s);  }
+		if (rdTxt[7]){  Fmt(s, "%d %s", sp.idMtr, road->getMtrStr(ic).c_str());   rdTxt[7]->setCaption(s);  }
 
-		if (rdTxt[7]){	if (sp.chkR == 0.f)  s[0]=0;
-					else Fmt(s, "chkR  %4.2f", sp.chkR);   rdTxt[7]->setCaption(s);  }
+		if (rdTxt[8]){	if (sp.chkR == 0.f)  s[0]=0;
+					else Fmt(s, "chkR  %4.2f", sp.chkR);   rdTxt[8]->setCaption(s);  }
 
-		if (rdTxt[8]){
+		if (rdTxt[9]){
 			if (road->vSel.size() > 0)  Fmt(s, "sel: %d", road->vSel.size());
-			else	Fmt(s, "cur: %2d/%d", road->iChosen+1, road->vSegs.size());   rdTxt[8]->setCaption(s);  }
-		//if (rdTxt[9]){  Fmt(s, "sel: %d", road->vSel.size());   rdTxt[9]->setCaption(s);  }
+			else	Fmt(s, "cur: %2d/%d", road->iChosen+1, road->vSegs.size());   rdTxt[9]->setCaption(s);  }
 
 		if (rdTxt[11]){  rdTxt[11]->setCaption(bCur ? "Cur" : "New");
 			rdTxt[11]->setTextColour(bCur ? MyGUI::Colour(0.85,0.75,1) : MyGUI::Colour(0.3,1,0.1));  }

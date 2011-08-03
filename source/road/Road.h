@@ -83,7 +83,7 @@ public:
 	//  modify point
 	void ToggleOnTerrain(), ToggleColums();  // on chosen point
 	void AddWidth(Ogre::Real relW), AddAngle(Ogre::Real relA),AddAngleYaw(Ogre::Real relA);
-	void AddPipe(Ogre::Real relP), ChgMtrId(int relId);
+	void AddPipe(Ogre::Real relP), ChgMtrId(int relId), ChgAngType(int relId);
 	void AddChkR(Ogre::Real relR), AddBoxW(Ogre::Real rel),AddBoxH(Ogre::Real rel);
 	const Ogre::String& getMtrStr(int seg);  bool isPipe(int seg);
 	
