@@ -210,6 +210,13 @@ bool App::KeyPress(const CmdKey &arg)
 
 	///  Road keys  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * 
 	if (edMode == ED_Road && road && bEdit())
+	{
+	if (iSnap > 0)
+	switch (arg.key)
+	{
+		case KC_3:	road->AddRoll(-1,angSnap);	break;
+		case KC_4:	road->AddRoll( 1,angSnap);	break;
+	}
 	switch (arg.key)
 	{
 		//  choose 1
@@ -261,8 +268,11 @@ bool App::KeyPress(const CmdKey &arg)
 
 		case KC_5:	road->ChgAngType(-1);	break;
 		case KC_6:	road->ChgAngType(1);	break;
-	}
 
+		case KC_7:  iSnap = (iSnap-1+ciAngSnapsNum)%ciAngSnapsNum;  angSnap = crAngSnaps[iSnap];  break;
+		case KC_8:  iSnap = (iSnap+1)%ciAngSnapsNum;                angSnap = crAngSnaps[iSnap];  break;
+	}
+	}
 
 	///  Common Keys  * * * * * * * * * * * * *
 	switch (arg.key)
@@ -288,8 +298,8 @@ bool App::KeyPress(const CmdKey &arg)
 
 		//  road
 		case KC_R:	if (bEdit()){  edMode = ED_Road;	UpdEditWnds();  }	break;
-		case KC_T:	if (mWndRoadStats)  mWndRoadStats->setVisible(!mWndRoadStats->isVisible());  break;
 		case KC_B:  if (road)  road->RebuildRoad(true);  break;
+		case KC_T:	if (mWndRoadStats)  mWndRoadStats->setVisible(!mWndRoadStats->isVisible());  break;
 		case KC_M:  if (road)  road->ToggleMerge();  break;
 
 		//  start pos

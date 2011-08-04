@@ -51,7 +51,7 @@ App::App()  //  gui wigdets--
 	,ndPos(0), mpos(0), asp(4.f/3.f)
 	,ndCar(0),entCar(0),ndStBox(0),entStBox(0)
 	,grass(0), trees(0), sun(0)
-	,eTrkEvent(TE_None), bNewHmap(0), bTrGrUpd(0)
+	,eTrkEvent(TE_None), bNewHmap(0), bTrGrUpd(0), iSnap(0),angSnap(0)
 {
 	pathTrk[0] = PATHMANAGER::GetTrackPath() + "/";      pathTrkPrv[0] = pathTrk[0] + "_previews/";  resTrk = "";
 	pathTrk[1] = PATHMANAGER::GetTrackPathUser() + "/";  pathTrkPrv[1] = pathTrk[1] + "_previews/";

@@ -29,6 +29,9 @@ const int ciShadowSizesA[ciShadowNumSizes] = {512,1024,2048,4096};
 #define res  1000000.f
 #define Fmt  sprintf
 
+const int ciAngSnapsNum = 6;
+const Ogre::Real crAngSnaps[ciAngSnapsNum] = {0,15,30,45,90,180};
+
 
 namespace Forests
 {
@@ -130,7 +133,7 @@ protected:
 	class Forests::PagedGeometry *trees, *grass;
 
 	//  road  -in base
-	void SaveGrassDens();
+	void SaveGrassDens();  int iSnap;  Ogre::Real angSnap;
 
 	//  car starts
 	bool LoadStartPos(),SaveStartPos(std::string path);  void UpdStartPos();
@@ -166,7 +169,7 @@ protected:
 
 	
 	//  brush & road windows texts
-	const static int BR_TXT=5, RD_TXT=13, RDS_TXT=9;
+	const static int BR_TXT=5, RD_TXT=14, RDS_TXT=9;
 	MyGUI::StaticTextPtr brTxt[BR_TXT], rdTxt[RD_TXT],rdTxtSt[RDS_TXT];
 	MyGUI::StaticImagePtr brImg;  MyGUI::TabPtr wndTabs;
 
