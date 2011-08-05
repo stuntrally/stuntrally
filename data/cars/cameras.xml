@@ -40,6 +40,8 @@
         <Camera on="2" name="Arena view"        type="2"  yaw="90"   pitch="-20" offset="300 100 0"    speed="10" default="0" />
         <Camera on="0" name="Arena low"         type="2"  yaw="0.2"  pitch="-10" offset="0 50 0"       speed="10" />
 
+		<Camera on="1" name="Arena W"           type="2"  yaw="90"  pitch="-10" offset="51 35 0"   speed="0" default="0" />
+
     <!--<Camera on="1" name="Arena T1"          type="2"  yaw="-1"  pitch="91" offset="-100 30 -100"   speed="0" default="1" />
         <Camera on="1" name="Arena T6"          type="2"  yaw="-1"  pitch="91" offset="60 20 -100"     speed="0" default="1" />-->
 

@@ -214,6 +214,8 @@ bool App::KeyPress(const CmdKey &arg)
 	if (iSnap > 0)
 	switch (arg.key)
 	{
+		case KC_1:	road->AddYaw(-1,angSnap);	break;
+		case KC_2:	road->AddYaw( 1,angSnap);	break;
 		case KC_3:	road->AddRoll(-1,angSnap);	break;
 		case KC_4:	road->AddRoll( 1,angSnap);	break;
 	}

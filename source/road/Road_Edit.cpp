@@ -417,7 +417,7 @@ void SplineRoad::AddWidth(Real relW)     ///  Width
 void SplineRoad::AddYaw(Real relA, Real snapA)    ///  Yaw
 {	
 	if (vSel.size() > 0) {  // rotate sel
-		RotateSel(relA);  return;	}	
+		RotateSel(snapA==0.f ? relA : snapA);  return;	}	
 
 	if (iChosen == -1)  {	newP.mYaw += relA;  return;  }
 
@@ -432,7 +432,7 @@ void SplineRoad::AddRoll(Real relA, Real snapA)   ///  Roll
 {
 	if (vSel.size() > 0) {  // scale sel
 		for (std::set<int>::const_iterator it = vSel.begin(); it != vSel.end(); ++it)
-			Scale1(*it, snapA==0.f ? relA * 0.02f : snapA);
+			Scale1(*it, relA * 0.02f/*snapA==0.f ? relA * 0.02f : snapA*/);
 		bSelChng = true;	return;  }	
 
 	if (iChosen == -1)  {	newP.mRoll += relA;  return;  }
