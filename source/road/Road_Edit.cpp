@@ -498,7 +498,7 @@ void SplineRoad::ChgMtrId(int relId)   ///  Mtr Id
 			newP.idMtr = std::max(-1, std::min(MTRs-1, newP.idMtr + relId));  return;  }
 	mP[iChosen].idMtr  = std::max(-1, std::min(MTRs-1, mP[iChosen].idMtr + relId));
 
-	Move(Vector3::ZERO);  //RebuildRoad();
+	Move(Vector3::ZERO);
 }
 
 void SplineRoad::ChgAngType(int relId)   ///  Ang Type
@@ -512,7 +512,21 @@ void SplineRoad::ChgAngType(int relId)   ///  Ang Type
 			newP.aType = (AngType)std::max(0, std::min(AT_ALL-1, newP.aType + relId));  return;  }
 	mP[iChosen].aType  = (AngType)std::max(0, std::min(AT_ALL-1, mP[iChosen].aType + relId));
 
-	Move(Vector3::ZERO);  //RebuildRoad();
+	Move(Vector3::ZERO);
+}
+
+void SplineRoad::AngZero()   ///  Angles set 0
+{
+	if (vSel.size() > 0) {  // sel
+		for (std::set<int>::const_iterator it = vSel.begin(); it != vSel.end(); ++it)
+		{	mP[*it].mYaw = 0;  mP[*it].mRoll = 0;	}
+		bSelChng = true;	return;  }
+
+	if (iChosen == -1)  {  // one
+			newP.mYaw = 0;  newP.mRoll = 0;  return;  }
+	mP[iChosen].mYaw = 0;  mP[iChosen].mRoll = 0;
+
+	Move(Vector3::ZERO);
 }
 
 //  util

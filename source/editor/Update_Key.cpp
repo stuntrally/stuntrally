@@ -269,7 +269,8 @@ bool App::KeyPress(const CmdKey &arg)
 		case KC_EQUALS:  road->ChgMtrId(1);		break;
 
 		case KC_5:	road->ChgAngType(-1);	break;
-		case KC_6:	road->ChgAngType(1);	break;
+		case KC_6:	if (shift)  road->AngZero();  else
+					road->ChgAngType(1);	break;
 
 		case KC_7:  iSnap = (iSnap-1+ciAngSnapsNum)%ciAngSnapsNum;  angSnap = crAngSnaps[iSnap];  break;
 		case KC_8:  iSnap = (iSnap+1)%ciAngSnapsNum;                angSnap = crAngSnaps[iSnap];  break;
