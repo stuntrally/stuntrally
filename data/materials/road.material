@@ -276,6 +276,17 @@ material pipeGlass : ppx_glass
 	set_texture_alias diffuseMap roadGlassB.png
 }
 
+material pipeGlassCyan : ppx_glass
+{
+	set $ambientCol "0.2 0.25 0.25"
+	set $diffuseCol "0.4 0.6 0.63"
+	set $specularCol "0.32 0.39 0.41"
+	set $alphaParsA "0.3 0.3 0.4 0"
+	set $shininess "64"
+	set $depthBias "3"
+	set_texture_alias diffuseMap roadGlassB.png
+}
+
 
 //  road Wall
 //---------------------------------------------------------------------------
