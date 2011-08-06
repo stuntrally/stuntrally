@@ -352,7 +352,7 @@ void App::slReflMode(SL)
 {
 	std::string old = pSet->refl_mode;
 	
-	if (val == 0) pSet->refl_mode = "static";
+	if (val == 0) pSet->refl_mode = "static";  //enums..
 	if (val == 1) pSet->refl_mode = "single";
 	if (val == 2) pSet->refl_mode = "full";
 	
@@ -386,6 +386,15 @@ void App::slShaders(SL)
 		if (v == 2)  valShaders->setCaption("Metal");  }
 }
 
+void App::slTexSize(SL)
+{
+	int v = val;  pSet->tex_size = v;
+	if (valTexSize)
+	{	if (v == 0)  valTexSize->setCaption("Small");  else
+		if (v == 1)  valTexSize->setCaption("Big");  }
+}
+
+
 //  shadows
 void App::btnShadows(WP){	changeShadows();	}
 
@@ -396,7 +405,7 @@ void App::slShadowType(SL)
 	{	if (v == 0)  valShadowType->setCaption("None");  else
 		if (v == 1)  valShadowType->setCaption("Old");  else
 		if (v == 2)  valShadowType->setCaption("Normal");  else
-		if (v == 3)  valShadowType->setCaption("Depth");  }
+		if (v == 3)  valShadowType->setCaption("Depth-");  }
 }
 
 void App::slShadowCount(SL)

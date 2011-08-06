@@ -100,6 +100,7 @@ void App::LoadTrackEv()
 
 	//  road ~
 	road = new SplineRoad();
+	road->iTexSize = pSet->tex_size;
 	road->Setup("sphere.mesh", 1.4f*pSet->road_sphr, terrain, mSceneMgr, mCamera);
 	road->LoadFile(TrkDir()+"road.xml");
 	UpdPSSMMaterials();

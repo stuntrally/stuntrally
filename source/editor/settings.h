@@ -22,7 +22,7 @@ public:
 	float size_minimap;
 
 	//  graphics
-	int anisotropy, shaders;
+	int anisotropy, shaders, tex_size;
 	float view_distance, terdetail,terdist, road_dist;
 	float shadow_dist;  int shadow_size, shadow_count, shadow_type;
 	float trees, grass, trees_dist, grass_dist;

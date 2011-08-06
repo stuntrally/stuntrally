@@ -178,6 +178,8 @@ public:
 	std::vector<CheckSphere> mChks;  // checkpoint spheres
 	Ogre::Vector3 vStBoxDim;  // start/finish box half dimensions
 	int iDir;  // -1 or +1  if road points go +/-1 with car start orientation
+
+	int iTexSize;  //setting textures size for mtr name _s, call rebuild after change
 };
 
 #endif

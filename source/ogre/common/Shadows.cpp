@@ -136,7 +136,7 @@ void App::setMtrSplits(String sMtrName)
 			p->setCullingMode(CULL_NONE);
 			p->setFragmentProgram("sel_ps");  //p->setSelfIllumination(0,0.1,0.2);
 		}
-		#endif/**/
+		#endif
 	}
 }
 
@@ -157,9 +157,10 @@ void App::UpdPSSMMaterials()	/// . . . . . . . .
 	setMtrSplits("grass_GrassVS_");
 
 	if (!road)  return;
+	String txs = road->iTexSize == 0 ? "_s": "";
 	for (int i=0; i<MTRs; ++i)
 	{
-		if (road->sMtrRoad[i] != "") {	setMtrSplits(road->sMtrRoad[i]);  setMtrSplits(road->sMtrRoad[i]+"_ter");  }
-		if (road->sMtrPipe[i] != "")	setMtrSplits(road->sMtrPipe[i]);
+		if (road->sMtrRoad[i] != "") {	setMtrSplits(road->sMtrRoad[i]+txs);  setMtrSplits(road->sMtrRoad[i]+"_ter"+txs);  }
+		if (road->sMtrPipe[i] != "")	setMtrSplits(road->sMtrPipe[i]+txs);
 	}
 }

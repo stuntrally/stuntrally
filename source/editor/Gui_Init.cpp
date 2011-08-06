@@ -129,6 +129,7 @@ void App::InitGui()
 	Cmb(combo, "TexFiltering", comboTexFilter);
 	Slv(Anisotropy,	pSet->anisotropy /res);
 	Slv(Shaders,	pSet->shaders /res);
+	Slv(TexSize,	pSet->tex_size /res);
 
 	//  trees/grass
 	Slv(Trees,		powf(pSet->trees /4.f, 0.5f));
@@ -334,9 +335,9 @@ void App::InitGui()
 	}
 	for (size_t i=0; i < vsMaterials.size(); ++i)
 	{	String s = vsMaterials[i];
-		if (StringUtil::startsWith(s,"road") && !StringUtil::startsWith(s,"road_") && !StringUtil::endsWith(s,"_ter"))
+		if (StringUtil::startsWith(s,"road") && !StringUtil::startsWith(s,"road_") && !StringUtil::endsWith(s,"_ter") && !StringUtil::endsWith(s,"_ter_s") && !StringUtil::endsWith(s,"_s"))
 			for (int i=0; i<4; ++i)  cmbRoadMtr[i]->addItem(s);
-		if (StringUtil::startsWith(s,"pipe") && !StringUtil::startsWith(s,"pipe_"))
+		if (StringUtil::startsWith(s,"pipe") && !StringUtil::startsWith(s,"pipe_") && !StringUtil::endsWith(s,"_s"))
 			for (int i=0; i<4; ++i)  cmbPipeMtr[i]->addItem(s);
 	}
 	//-----------------------------------------------------

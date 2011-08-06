@@ -263,6 +263,16 @@ material pipeAsphalt : ppx_shadow
 	set_texture_alias diffuseMap roadAsphalt.jpg
 	set $cull "none"
 }
+//material pipeAsphalt_s : ppx_shadow
+//{
+//	set $ambientCol "0.5 0.5 0.5"
+//	set $diffuseCol "0.6 0.6 0.6"
+//	set $specularCol "0.3 0.3 0.25"
+//	set $shininess "24"
+//	set $depthBias "3"
+//	set_texture_alias diffuseMap roadAsphalt_s.jpg
+//	set $cull "none"
+//}
 
 material pipeGlass : ppx_glass
 {
@@ -328,3 +338,162 @@ material road_col : ppx_diffuse
 	//set $depthBias "3"
 	set $cull "anticlockwise"
 }
+
+
+//------------------------------------------------------------------------------------------------------------------------------------
+//  small size textures _s  -- this does not work  TODO: create materials in code ...
+//------------------------------------------------------------------------------------------------------------------------------------
+
+material roadAsphalt_s : roadAsphalt
+{
+	set_texture_alias diffuseMap roadAsphalt_s.jpg
+}
+material roadAsphalt_ter_s : roadAsphalt_ter
+{
+	set_texture_alias diffuseMap roadAsphalt_s.jpg
+	set_texture_alias normalMap volcano_7_nh1_s.png
+}
+
+material roadRdesert_s : roadRdesert
+{
+	set_texture_alias diffuseMap roadRdesert_s.jpg
+}
+
+//  greece
+material roadGDesert_ter_s : roadGDesert_ter
+{
+	set_texture_alias diffuseMap roadDesert_s.jpg
+	//set_texture_alias normalMap volcano_7_nh1_s.png
+}
+material roadGDesert_s : roadGDesert
+{
+	set_texture_alias diffuseMap roadDesert_s.jpg
+	//set_texture_alias normalMap volcano_7_nh1_s.png
+}
+
+//  sand
+material roadSand_ter_s : roadSand_ter
+{
+	set_texture_alias diffuseMap roadSand_s.jpg
+	set_texture_alias normalMap volcano_7_nh1_s.png
+}
+material roadSand_s : roadSand
+{
+	set_texture_alias diffuseMap roadSand_s.jpg
+	set_texture_alias normalMap volcano_7_nh1_s.png
+}
+
+//  ice
+material roadIce_ter_s : roadIce_ter
+{
+	set_texture_alias diffuseMap roadSnow_s.jpg
+}
+material roadIce_s : ppx_shadow_a
+{
+	set_texture_alias diffuseMap roadSnow_s.jpg
+}
+material roadIce2_ter_s : roadIce2_ter
+{
+	set_texture_alias diffuseMap roadSnow_s.jpg
+}
+material roadIce2_s : ppx_shadow_a
+{
+	set_texture_alias diffuseMap roadSnow_s.jpg
+}
+
+//  snow
+material roadSnow_ter_s : roadSnow_ter
+{
+	set_texture_alias diffuseMap roadSnow_s.jpg
+}
+material roadSnow_s : ppx_shadow
+{
+	set_texture_alias diffuseMap roadSnow_s.jpg
+}
+
+//  adesert
+material roadAdesert_ter_s : roadAdesert_ter
+{
+	set_texture_alias diffuseMap roadAdesert_s.jpg
+}
+material roadAdesert_s : ppx_shadow
+{
+	set_texture_alias diffuseMap roadAdesert_s.jpg
+}
+
+//  desert
+material roadDesert_ter_s : roadDesert_ter
+{
+	set_texture_alias diffuseMap roadDesert_s.jpg
+}
+material roadDesert_s : roadDesert
+{
+	set_texture_alias diffuseMap roadDesert_s.jpg
+}
+
+//  savannah
+material roadSavannah_ter_s : roadSavannah_ter
+{
+	set_texture_alias diffuseMap roadSavannah_s.jpg
+	set_texture_alias normalMap volcano_7_nh1_s.png
+}
+material roadSavannah_s : roadSavannah
+{
+	set_texture_alias diffuseMap roadSavannah_s.jpg
+}
+
+//  jungle
+material roadJungle_ter_s : roadJungle_ter
+{
+	set_texture_alias diffuseMap roadJungle_s.jpg
+	set_texture_alias normalMap ice_3_nh1_s.png
+}
+material roadJungle_s : roadJungle
+{
+	set_texture_alias diffuseMap roadJungle_s.jpg
+}
+
+//  mud
+material roadMud_ter_s : roadMud_ter
+{
+	set_texture_alias diffuseMap roadMud_s.jpg
+	set_texture_alias normalMap ice_3_nh1_s.png
+}
+material roadMud_s : roadMud
+{
+	set_texture_alias diffuseMap roadMud_s.jpg
+}
+
+//  pipe road
+material pipeAsphalt_s : pipeAsphalt
+{
+	set_texture_alias diffuseMap road_s.jpg
+}
+
+material pipeGlass_s : pipeGlass
+{
+}
+
+material pipeGlassCyan_s : pipeGlassCyan
+{
+}
+
+//  road Wall
+material road_wall_s : road_wall
+{
+	set_texture_alias diffuseMap brass_patina_s.jpg
+	set_texture_alias normalMap brass_patina_n_s.png
+}
+material pipe_wall_s : pipe_wall
+{
+	set_texture_alias diffuseMap brass_patina_s.jpg
+	set_texture_alias normalMap brass_patina_n_s.png
+}
+
+material road_col_s : road_col
+{
+	set_texture_alias diffuseMap concrete03_s.png
+	set_texture_alias normalMap brass_patina_n_s.png
+}
+
+//....set_texture_alias diffuseAlpha roadAlpha_s.png

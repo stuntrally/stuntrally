@@ -28,7 +28,7 @@ void SETTINGS::Serialize(bool w, CONFIGFILE & c)
 
 	Param(c,w, "display_par.anisotropy", anisotropy);	Param(c,w, "display_par.view_dist", view_distance);
 	Param(c,w, "display_par.ter_detail", terdetail);	Param(c,w, "display_par.ter_dist", terdist);
-	Param(c,w, "display_par.road_dist", road_dist);
+	Param(c,w, "display_par.road_dist", road_dist);		Param(c,w, "display_par.tex_size", tex_size);
 
 	Param(c,w, "display_adv.trees", trees);				Param(c,w, "display_adv.grass", grass);
 	Param(c,w, "display_adv.trees_dist", trees_dist);	Param(c,w, "display_adv.grass_dist", grass_dist);
@@ -63,7 +63,7 @@ SETTINGS::SETTINGS() :  ///  Defaults
 	show_fps(1), trackmap(1), size_minimap(0.5), num_mini(0),
 	//  graphics
 	anisotropy(8),	view_distance(3600),
-	terdetail(1.57), terdist(300), road_dist(1.0),
+	terdetail(1.57), terdist(300), road_dist(1.0), tex_size(1),
 	shadow_dist(2000), shadow_size(2), shadow_count(3), shadow_type(2),  /*<+*/
 	shaders(1),  trees(1.f), grass(1.f), trees_dist(1.f), grass_dist(1.f),
 	//  startup

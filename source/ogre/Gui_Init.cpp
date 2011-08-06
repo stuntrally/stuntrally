@@ -106,6 +106,7 @@ void App::InitGui()
 	
 	Slv(Anisotropy,	pSet->anisotropy /res);
 	Slv(Shaders,	pSet->shaders /res);
+	Slv(TexSize,	pSet->tex_size /res);
 	
 	//  particles/trails
 	Slv(Particles,	powf(pSet->particles_len /4.f, 0.5f));

@@ -24,7 +24,7 @@ SplineRoad::SplineRoad(GAME* pgame) : pGame(pgame),
 	rebuild(false), iDirtyId(-1), idStr(0),
 	fMarkerScale(1.f), fLodBias(1.f)
 {
-	Defaults();
+	Defaults();  iTexSize = 1;
 	iMrgSegs = 0;  segsMrg = 0;  iOldHide = -1;
 	st.Length = 0.f;  st.WidthAvg = 0.f;  st.HeightDiff = 0.f;
 	st.OnTer = 0.f;  st.Pipes = 0.f;
@@ -87,7 +87,8 @@ void SplineRoad::UpdLodVis(/*Camera* pCam,*/ float fBias, bool bFull)
 			
 			#ifdef ROAD_EDITOR
 			if (vis)
-				rs.road[i].ent->setMaterialName(bSel ? rs.sMtrRd + "_sel" : rs.sMtrRd);
+				rs.road[i].ent->setMaterialName(
+					rs.sMtrRd + (iTexSize == 0 ? "_s" : "") + (bSel ? "_sel" : "") );
 			#endif
 			
 			rs.road[i].ent->setVisible(vis);
@@ -127,7 +128,8 @@ void SplineRoad::UnsetForRnd()
 		RoadSeg& rs = vSegs[seg];
 		if (rs.empty)  continue;
 		
-		MaterialPtr mat = MaterialManager::getSingleton().getByName(rs.sMtrRd);  //^opt?..
+		MaterialPtr mat = MaterialManager::getSingleton().getByName(  //^opt?..
+			rs.sMtrRd + (iTexSize == 0 ? "_s" : ""));
 		for (int i=0; i < LODs; ++i)
 		{
 			rs.road[i].ent->setMaterial(mat);

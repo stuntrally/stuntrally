@@ -1387,6 +1387,21 @@
 						<Widget type="StaticText" skin="StaticText" position="180 220 60 24" name="AnisotropyVal">
 							<Property key="Text_TextColour" value="0.2 1 0.2"/>
 						</Widget>
+						<Widget type="StaticText" skin="StaticText" position="32 250 144 24">
+							<Property key="Widget_Caption" value="#{Size}*"/>
+							<Property key="Widget_Colour" value="0 0 0"/>
+							<Property key="Text_TextColour" value="0.5 0.8 0.5"/>
+						</Widget>
+						<Widget type="HScroll" skin="HScroll" position="248 250 320 18" name="TexSize">
+							<Property key="Scroll_Range" value="2"/>
+							<Property key="Scroll_Position" value="0"/>
+							<Property key="Scroll_Page" value="1"/>
+							<Property key="Scroll_ViewPage" value="1"/>
+							<Property key="Scroll_MoveToClick" value="true"/>
+						</Widget>
+						<Widget type="StaticText" skin="StaticText" position="180 250 60 24" name="TexSizeVal">
+							<Property key="Text_TextColour" value="0.6 0.9 0.6"/>
+						</Widget>
 					</Widget>
 					<Widget type="TabItem" skin="" position="4 26 735 425">
 						<Property key="Widget_Caption" value="#{Vegetation}"/>

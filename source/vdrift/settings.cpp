@@ -35,7 +35,7 @@ void SETTINGS::Serialize(bool w, CONFIGFILE & c)
 
 	Param(c,w, "display_par.anisotropy", anisotropy);	Param(c,w, "display_par.view_dist", view_distance);
 	Param(c,w, "display_par.ter_detail", terdetail);	Param(c,w, "display_par.ter_dist", terdist);
-	Param(c,w, "display_par.road_dist", road_dist);
+	Param(c,w, "display_par.road_dist", road_dist);		Param(c,w, "display_par.tex_size", tex_size);
 
 	Param(c,w, "display_eff.particles", particles);		Param(c,w, "display_eff.trails", trails);
 	Param(c,w, "display_eff.particles_len", particles_len);  Param(c,w, "display_eff.trail_len", trails_len);
@@ -93,7 +93,7 @@ SETTINGS::SETTINGS() :  ///  Defaults
 	size_gauges(0.18), size_minimap(0.2),
 	//  graphics
 	anisotropy(4),	view_distance(1500), bFog(0),
-	terdetail(2), terdist(100), road_dist(1.0),
+	terdetail(2), terdist(100), road_dist(1.0), tex_size(1),
 	particles(true), trails(true),
 	shadow_dist(3000), shadow_size(2), shadow_count(3), shadow_type(1),
 	refl_skip(10), refl_faces(1), refl_size(0), refl_dist(500.f), refl_mode("single"),

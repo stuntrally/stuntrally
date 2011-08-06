@@ -23,7 +23,7 @@ public:
 	float size_gauges, size_minimap;
 
 	//  graphics
-	int anisotropy, shaders;  bool bFog;
+	int anisotropy, shaders, tex_size;  bool bFog;
 	float view_distance, terdetail,terdist, road_dist;
 	float shadow_dist;  int shadow_size, shadow_count, shadow_type;
 	int refl_skip, refl_faces, refl_size;  float refl_dist;

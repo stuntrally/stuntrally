@@ -114,6 +114,15 @@ void App::slShaders(SL)
 		if (v == 2)  valShaders->setCaption("Metal");  }
 }
 
+void App::slTexSize(SL)
+{
+	int v = val;  pSet->tex_size = v;
+	if (valTexSize)
+	{	if (v == 0)  valTexSize->setCaption("Small");  else
+		if (v == 1)  valTexSize->setCaption("Big");  }
+}
+
+
 //  shadows
 void App::btnShadows(WP){	changeShadows();	}
 

@@ -1,4 +1,4 @@
-material sky/white
+material base_sky
 {
 	receive_shadows off
 	technique
@@ -10,77 +10,23 @@ material sky/white
 			depth_check off
 			fog_override true none
 
-			texture_unit
+			texture_unit diffuseMap
 			{
 				tex_address_mode mirror
-				texture sky_white.jpg
+				texture white.png
 			}
 		}
 	}
 }
 
+material sky/white   : base_sky		{	set_texture_alias diffuseMap sky_white.jpg  }
+material sky/white_s : base_sky		{	set_texture_alias diffuseMap sky_white_s.jpg  }
 
-//  best
-//---------------------------------------
-material sky/light_blue
-{
-	receive_shadows off
-	technique
-	{
-		pass
-		{
-			lighting off
-			depth_write off
-			depth_check off
-			fog_override true none
+material sky/light_blue   : base_sky  {  set_texture_alias diffuseMap sky_lightblue.jpg  }
+material sky/light_blue_s : base_sky  {  set_texture_alias diffuseMap sky_lightblue_s.jpg  }
 
-			texture_unit
-			{
-				tex_address_mode mirror
-				texture sky_lightblue.jpg
-			}
-		}
-	}
-}
+material sky/blue_clouds   : base_sky {  set_texture_alias diffuseMap sky_photo6.jpg  }
+material sky/blue_clouds_s : base_sky {  set_texture_alias diffuseMap sky_photo6_s.jpg  }
 
-material sky/blue_clouds
-{
-	receive_shadows off
-	technique
-	{
-		pass
-		{
-			lighting off
-			depth_write off
-			depth_check off
-			fog_override true none
-
-			texture_unit
-			{
-				tex_address_mode mirror
-				texture sky_photo6.jpg
-			}
-		}
-	}
-}
-
-material sky/gray_clouds
-{
-	receive_shadows off
-	technique
-	{
-		pass
-		{
-			lighting off
-			depth_write off
-			depth_check off
-			fog_override true none
-
-			texture_unit
-			{
-				tex_address_mode mirror
-				texture sky_photo3.jpg
-			}
-		}
-	}
-}
+material sky/gray_clouds   : base_sky	{  set_texture_alias diffuseMap sky_photo3.jpg  }
+material sky/gray_clouds_s : base_sky	{  set_texture_alias diffuseMap sky_photo3_s.jpg  }

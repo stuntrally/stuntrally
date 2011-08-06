@@ -72,6 +72,8 @@ void SplineRoad::RebuildRoadInt()
 			vSegs.push_back(rs);
 		}
 	}
+	//  mtr name add texture size _s
+	String txs = (iTexSize == 0) ? "_s" : "";
 
 
 	///  Auto angles prepass ...
@@ -85,11 +87,10 @@ void SplineRoad::RebuildRoadInt()
 		{	mP[seg].aYaw = mP[seg].mYaw;  mP[seg].aRoll = mP[seg].mRoll;  }
 		else
 		{	mP[seg].aRoll = 0.f;
-			/// ... cd manual override, angles snap, roll= getangle, +180 loops? +
-			//Real len = (mP[seg].pos - mP[seg].pos);
-			//Vector3 vl = GetLenDir(seg, 0, 0.1f) /*+ GetLenDir(seg0, 0.9f, 1.f)*/;  vl.normalise();
-			Vector3 vl = GetLenDir(seg, 0, 0.1f) + GetLenDir(seg0, 0.9f, 1.0f);  vl.normalise();
-			Vector3 vw = Vector3(vl.z, 0, -vl.x);  vw.normalise();
+			/// ... roll getangle?, +180 loops?, len
+			const Real dist = 0.1f;
+			Vector3 vl = GetLenDir(seg, 0.f, dist) + GetLenDir(seg0, 1.f-dist, 1.f);  //vl.normalise();
+			Vector3 vw = Vector3(vl.z, 0.f, -vl.x);  //vw.normalise();
 			mP[seg].aYaw  = GetAngle(vw.x, vw.z) *180.f/PI_d;
 
 			if (mP[seg].aType == AT_Both)
@@ -607,7 +608,7 @@ void SplineRoad::RebuildRoadInt()
 				else
 					rs.sMtrRd = sMtrRoad[id] + (onTer ? "_ter" :"");
 
-				CreateMesh(sm, aabox, pos,norm,clr,tcs, idx, rs.sMtrRd);
+				CreateMesh(sm, aabox, pos,norm,clr,tcs, idx, rs.sMtrRd + txs);
 
 				MeshPtr meshW, meshC;  // ] |
 				bool wall = posW.size() > 0;
@@ -656,7 +657,7 @@ void SplineRoad::RebuildRoadInt()
 					sm = meshW->getSubMesh(0);   // for glass only..
 					rs.sMtrWall = !wPglass ? sMtrWall : sMtrWallPipe;
 					if (posW.size() > 0)
-					CreateMesh(sm, aabox, posW,normW,clr0,tcsW, idx, rs.sMtrWall);
+					CreateMesh(sm, aabox, posW,normW,clr0,tcsW, idx, rs.sMtrWall + txs);
 				}
 				
 				
@@ -679,7 +680,7 @@ void SplineRoad::RebuildRoadInt()
 
 					sm = meshC->getSubMesh(0);
 					//if (posC.size() > 0)
-					CreateMesh(sm, aabox, posC,normC,clr0,tcsC, idx, sMtrCol);
+					CreateMesh(sm, aabox, posC,normC,clr0,tcsC, idx, sMtrCol + txs);
 				}
 				
 								
