@@ -3,6 +3,7 @@
 #include "OgreGame.h"
 #include "../vdrift/game.h"
 #include "../road/Road.h"
+#include "SplitScreen.h"
 
 #include <OgreRenderWindow.h>
 #include <OgreSceneNode.h>
@@ -21,19 +22,27 @@ using namespace Ogre;
 ///  HUD create  rpm, vel
 ///---------------------------------------------------------------------------------------------------------------
 
-void App::SizeHUD(bool full, Viewport* vp)
+void App::SizeHUD(bool full, Viewport* vp, int carId)
 {
-	float fHudScale = pSet->size_gauges;
+	// half size for 3 players top and 2 players in -horizontal-
+	float mult = 1.f;
+	if (mSplitMgr && !pSet->split_vertically &&
+		mSplitMgr->mNumViewports == 2 || mSplitMgr->mNumViewports == 3 && carId == 2)
+		mult = 0.5f;
+
+	float fHudScale = pSet->size_gauges * mult;
 	if (vp)
-	{	asp = float(vp->getActualWidth())/float(vp->getActualHeight());
-	}else{
+		asp = float(vp->getActualWidth())/float(vp->getActualHeight());
+	else
 		asp = float(mWindow->getWidth())/float(mWindow->getHeight());
-	}
+	
 	Real spx = fHudScale*1.1, spy = spx*asp;
 	xcRpm = -1 + spx;  ycRpm = -1 + spy;
 	xcVel =  1 - spx;  ycVel = -1 + spy;
 
-	if (full &&	nrpmB && nvelBk && nvelBm && nrpm &&nvel)
+	if (!full)
+		return;
+	if (nrpmB && nvelBk && nvelBm && nrpm &&nvel)
 	{
 		Vector3 sca(fHudScale,fHudScale*asp,1), sc(fHudScale,fHudScale,1);
 		nrpmB->setScale(sca);	nvelBk->setScale(sca);  nvelBm->setScale(sca);
@@ -43,17 +52,16 @@ void App::SizeHUD(bool full, Viewport* vp)
 		nrpmB->setPosition(vr);	nvelBk->setPosition(vv);  nvelBm->setPosition(vv);
 		nrpm->setPosition(vr);	nvel->setPosition(vv);
 	}
-
 	if (ndMap)
 	{
-		float fHudSize = pSet->size_minimap;
-		ndMap->setScale(fHudSize, fHudSize*asp, 1);
+		float fHudSize = pSet->size_minimap * mult;
+		ndMap->setScale(fHudSize,fHudSize*asp,1);
 
 		const float marg = 1.f + 0.05f;  // from border
 		fMiniX = 1 - fHudSize * marg, fMiniY = 1 - fHudSize*asp * marg;
 
 		ndMap->setPosition(Vector3(fMiniX,fMiniY,0));
-	}/**/
+	}
 }
 
 
@@ -137,18 +145,11 @@ void App::CreateHUD()
 	OverlayManager& ovr = OverlayManager::getSingleton();
 	ovCam = ovr.getByName("Car/CameraOverlay");
 
-	ovGear = ovr.getByName("Hud/Gear");
-	ovVel = ovr.getByName("Hud/Vel");
-	hudGear = ovr.getOverlayElement("Hud/GearText");
-	hudVel = ovr.getOverlayElement("Hud/VelText");
-
-	ovAbsTcs = ovr.getByName("Hud/AbsTcs");
-	ovCarDbg = ovr.getByName("Car/Stats");
-	hudAbs = ovr.getOverlayElement("Hud/AbsText");
-	hudTcs = ovr.getOverlayElement("Hud/TcsText");
-
-	ovTimes = ovr.getByName("Hud/Times");
-	hudTimes = ovr.getOverlayElement("Hud/TimesText");
+	ovGear = ovr.getByName("Hud/Gear");		hudGear = ovr.getOverlayElement("Hud/GearText");
+	ovVel = ovr.getByName("Hud/Vel");		hudVel = ovr.getOverlayElement("Hud/VelText");
+	ovAbsTcs = ovr.getByName("Hud/AbsTcs");	hudAbs = ovr.getOverlayElement("Hud/AbsText");
+	ovCarDbg = ovr.getByName("Car/Stats");	hudTcs = ovr.getOverlayElement("Hud/TcsText");
+	ovTimes = ovr.getByName("Hud/Times");	hudTimes = ovr.getOverlayElement("Hud/TimesText");
 
 	ovWarnWin = ovr.getByName("Hud/WarnAndWin");
 	hudWarnChk = ovr.getOverlayElement("Hud/Warning");
@@ -241,8 +242,10 @@ void App::UpdateHUD(int carId, CarModel* pCarM, CAR* pCar, float time, Viewport*
 		if (ovCam)  ovCam->hide();
 		if (mFpsOverlay)  mFpsOverlay->hide();
 	}
+	if (!pCar)  return;
 			
 	///  hud rpm,vel  --------------------------------
+	//LogO(String("pCar: ") + toStr(pCar));
 	if (pCar && !bRplPlay)
 	{	fr.vel = pCar->GetSpeedometer();
 		fr.rpm = pCar->GetEngineRPM();
@@ -251,6 +254,8 @@ void App::UpdateHUD(int carId, CarModel* pCarM, CAR* pCar, float time, Viewport*
 		//fr.throttle = pCar->dynamics.GetEngine().GetThrottle();  // not on hud
 	}
 
+	//LogO(String("car: ") + toStr(carId) +" "+ (!pCarM ? toStr(pCarM) : pCarM->sDirname));
+	//LogO(String("  vel: ") + toStr(vel) +" [] rpm: "+ toStr(fr.rpm) );
     float vel = fr.vel * (pSet->show_mph ? 2.23693629f : 3.6f);
 	UpdHUDRot(carId, pCarM, vel);
 

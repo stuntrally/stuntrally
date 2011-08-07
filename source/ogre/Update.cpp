@@ -517,16 +517,20 @@ void App::updatePoses(float time)
 //---------------------------------------------------------------------------------------------------------------
 void App::UpdHUDRot(int carId, CarModel* pCarM, float vel)
 {
+	/// TODO: rpm vel needle angles,aspect are wrong [all from the last car when bloom is on (any effects)], hud vals are ok
+	if (!pCarM)  return;
     const float rsc = -180.f/6000.f, rmin = 0.f;  //rmp
     float angrmp = fr.rpm*rsc + rmin;
     float vsc = pSet->show_mph ? -180.f/100.f : -180.f/160.f, vmin = 0.f;  //vel
     float angvel = abs(vel)*vsc + vmin;
     float angrot=0.f;  int i=0;
 
+	//pCarM = carModels[carId];
 	if (pCarM && pCarM->pMainNode)
 	{	Quaternion q = pCarM->pMainNode->getOrientation() * Quaternion(Degree(90),Vector3(0,1,0));
 		angrot = q.getYaw().valueDegrees() + 90.f;
 	}
+	//LogO(String("car: ") + toStr(carId) + " " + toStr(pCarM) + "  v " + toStr(vel) + "  r " + toStr(angrot));
     float sx = 1.4f, sy = sx*asp;  // *par len
     float psx = 2.1f * pSet->size_minimap, psy = psx;  // *par len
 
@@ -559,6 +563,8 @@ void App::UpdHUDRot(int carId, CarModel* pCarM, float vel)
 	//  vel needle
 	if (mvel)  {	mvel->beginUpdate(0);
 		for (int p=0;p<4;++p)  {  mvel->position(vx[p],vy[p], 0);  mvel->textureCoord(tc[p][0], tc[p][1]);  }	mvel->end();  }
+
+	//LogO(String("  vel ") + toStr(vel) + " ang" + toStr(angrmp));
 		
 	//  minimap car pos-es
 	int c = carId;

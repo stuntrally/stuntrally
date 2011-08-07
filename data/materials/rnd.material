@@ -55,7 +55,6 @@ material road_minimap_inv
 
 			vertex_program_ref rnd_vs  {  }
 			fragment_program_ref rnd_ps  {  }
-			//fragment_program_ref rnd_inv_ps  {  }
 			
 			texture_unit diffuseMap
 			{

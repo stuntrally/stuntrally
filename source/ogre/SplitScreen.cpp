@@ -51,18 +51,14 @@ void SplitScreenManager::UpdateCamDist()
 //  CleanUp
 void SplitScreenManager::CleanUp()
 {
-	// Viewports
 	for (std::list<Ogre::Viewport*>::iterator vpIt=mViewports.begin(); vpIt != mViewports.end(); vpIt++)
-	{
 		mWindow->removeViewport( (*vpIt)->getZOrder() );
-	}
+
 	mViewports.clear();
 
-	// Cameras
 	for (std::list<Ogre::Camera*>::iterator it=mCameras.begin(); it != mCameras.end(); it++)
-	{
 		mSceneMgr->destroyCamera(*it);
-	}
+
 	mCameras.clear();
 }
 
@@ -72,27 +68,21 @@ void SplitScreenManager::CleanUp()
 void SplitScreenManager::Align()
 {
 	CleanUp();
-	/* 
-	 * Manually create the viewports based on numPlayers.
-	 * Of course, this could be implemented in a different way to also support 12674*10^4 viewports,
-	 * but since we only need 1-4 we do it this way.
-	 */
-	for (int i=0; i<mNumViewports; i++)
+
+	//  Create the viewports based on mNumViewports = numPlayers
+	for (int i=0; i < mNumViewports; i++)
 	{
-		// Set dimensions for the viewports
+		//  set dimensions for the viewports
 		float dims[4];
 		
-		// handy macro for initializing the array
 		#define dim_(l,t,w,h)  dims[0]=l;  dims[1]=t;  dims[2]=w;  dims[3]=h
 		
 		if (mNumViewports == 1)
 		{
-			//  Only 1 player, full screen viewport
 			dim_(0.0, 0.0, 1.0, 1.0);
 		}
 		else if (mNumViewports == 2)
 		{
-			//  2 players, use split_vertically setting
 			if (!pSet->split_vertically)
 			{	if (i == 0)		{	dim_(0.0, 0.0, 1.0, 0.5);	}
 				else if (i == 1){	dim_(0.0, 0.5, 1.0, 0.5);	}
@@ -102,7 +92,6 @@ void SplitScreenManager::Align()
 		}
 		else if (mNumViewports == 3)
 		{
-			// 3 players, use split_vertically setting
 			if (!pSet->split_vertically)
 			{
 				if (i == 0)		{	dim_(0.0, 0.0, 0.5, 0.5);	}
@@ -116,7 +105,6 @@ void SplitScreenManager::Align()
 		}
 		else if (mNumViewports == 4)
 		{
-			// 4 players, 2 viewports at top and 2 at bottom
 			if (i == 0)		{	dim_(0.0, 0.0, 0.5, 0.5);	}
 			else if (i == 1){	dim_(0.5, 0.0, 0.5, 0.5);	}
 			else if (i == 2){	dim_(0.0, 0.5, 0.5, 0.5);	}
@@ -175,18 +163,15 @@ void SplitScreenManager::preViewportUpdate(const Ogre::RenderTargetViewportEvent
 	if (!pApp)  return;
 	if (pApp->bLoading)  return;
 
-	// What kind of viewport is being updated?
+	//  What kind of viewport is being updated?
+	//LogO(evt.source->getCamera()->getName());
 	if (evt.source != mGuiViewport)
 	{
 		// 3d scene viewport
 		//  get number of viewport
 		std::list<Ogre::Viewport*>::iterator vpIt = mViewports.begin();
 		int i = 0;
-		while (evt.source != *vpIt)
-		{
-			i++;
-			vpIt++;
-		}
+		while (evt.source != *vpIt)	{	i++;  vpIt++;	}
 
 		//  get car for this viewport
 		int carId = 0;
@@ -208,16 +193,20 @@ void SplitScreenManager::preViewportUpdate(const Ogre::RenderTargetViewportEvent
 		}
 			
 		//  Size HUD
-		pApp->SizeHUD(true, evt.source);
+		pApp->SizeHUD(true, evt.source, carId);
 
+		//LogO("VP car "+toStr(carId)+" "+toStr(i)+"---------------");
 		//  Update HUD for this car
-		if (pApp->carModels.size() > 0 && *carIt && (*carIt)->pCar)
+		if (pApp->carModels.size() > 0 && *carIt && (*carIt)->pCar/**/)
+		{
 			pApp->UpdateHUD( carId, *carIt, (*carIt)->pCar, 1.0f / mWindow->getLastFPS(), evt.source );
-		else
-			pApp->UpdateHUD( carId, NULL, NULL, 1.0f / mWindow->getLastFPS(), evt.source );
+		}else{
+			//LogO("VP car "+toStr(carId)+" "+toStr(i));
+			//pApp->UpdateHUD( carId, NULL, NULL, 1.0f / mWindow->getLastFPS(), evt.source );
+		}
 
 
-		//  Set skybox pos to camera
+		///  Set skybox pos to camera  - TODO: fix, sky is center only for last player ...
 		if (pApp->ndSky)
 			pApp->ndSky->setPosition(evt.source->getCamera()->getPosition());
 			
@@ -254,9 +243,9 @@ void SplitScreenManager::preViewportUpdate(const Ogre::RenderTargetViewportEvent
 	}
 	else
 	{
-		// Gui viewport, overlay and mygui
-		//  hide stuff we don't want
+		//  Gui viewport - hide stuff we don't want
 		pApp->UpdateHUD( 0, NULL, NULL, mWindow->getLastFPS() );
+		//LogO("VP gui --------------------------------------");
 
 		pApp->SizeHUD(false);
 		
