@@ -32,7 +32,7 @@ public:
 	void setTranslations();
 	
 	// This list holds new positions info for every CarModel
-	std::list<PosInfo> newPosInfos;
+	std::vector<PosInfo> newPosInfos;
 	
 	// Utility
 	Ogre::Quaternion qFixCar,qFixWh;
@@ -54,6 +54,7 @@ public:
 	
 	void UpdateHUD(int carId, class CarModel* pCarM, class CAR* pCar,
 		float time, Ogre::Viewport* vp=NULL), SizeHUD(bool full, Ogre::Viewport* vp=NULL);
+	void UpdHUDRot(int carId, CarModel* pCarM, float vel);
 
 protected:
 	virtual void createScene();
@@ -79,7 +80,7 @@ protected:
 
 	Ogre::SceneNode *nrpmB, *nvelBk,*nvelBm, *nrpm, *nvel;  // gauges
 	Ogre::SceneNode *ndPos[5], *ndMap, *ndLine;  // car pos on minimap
-	Ogre::ManualObject* mrpm, *mvel, *mpos[5];
+	Ogre::ManualObject* mrpm, *mvel, *mpos[5], *miniC;
 	Ogre::ManualObject* Create2D(const Ogre::String& mat, Ogre::SceneManager* sceneMgr,
 		Ogre::Real size, bool dyn = false, bool clr = false);
 
@@ -168,14 +169,15 @@ protected:
 	SLV(Trees);  SLV(Grass);  SLV(TreesDist);  SLV(GrassDist);  // paged
 	SLV(ReflSkip);  SLV(ReflSize);  SLV(ReflFaces);  SLV(ReflDist);  SLV(ReflMode); // refl
 	SLV(Shaders);  SLV(ShadowType);  SLV(ShadowCount);  SLV(ShadowSize);  SLV(ShadowDist);  // shadow
-	SLV(SizeGaug);  SLV(SizeMinmap);  // view
+	SLV(SizeGaug);  SLV(SizeMinimap);  SLV(ZoomMinimap);  // view
 	SLV(VolMaster);  SLV(VolEngine);  SLV(VolTires);  SLV(VolEnv);
 	SLV(CarClrH);  SLV(CarClrS);  SLV(CarClrV);  // clr
 	SLV(BloomInt);  SLV(BloomOrig);  SLV(BlurIntens);  // video
 	SLV(NumLaps);  // setup
 	
 	//  checks
-	void chkFps(WP), chkGauges(WP),	chkDigits(WP), chkMinimap(WP), chkRacingLine(WP),  // view
+	void chkFps(WP), chkGauges(WP),	chkDigits(WP),
+		chkMinimap(WP), chkMiniZoom(WP), chkMiniRot(WP),  // view
 		chkCamInfo(WP), chkTimes(WP), chkCarDbgBars(WP), chkCarDbgTxt(WP), chkBltDebug(WP), chkBltProfilerTxt(WP),
 		chkReverse(WP), chkParticles(WP), chkTrails(WP),
 		chkAbs(WP), chkTcs(WP), chkGear(WP), chkRear(WP), chkClutch(WP),  // car

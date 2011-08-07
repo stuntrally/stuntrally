@@ -120,16 +120,17 @@ void App::InitGui()
 
 	//  view sizes
 	Slv(SizeGaug,	(pSet->size_gauges-0.1f) /0.15f);
-	Slv(SizeMinmap,	(pSet->size_minimap-0.05f) /0.25f);
+	Slv(SizeMinimap,(pSet->size_minimap-0.05f) /0.25f);
+	Slv(ZoomMinimap,powf((pSet->zoom_minimap-1.0f) /9.f, 0.5f));
 	
 	//  reflect
 	Slv(ReflSkip,	powf(pSet->refl_skip /1000.f, 0.5f));
 	Slv(ReflSize,	pSet->refl_size /res);
 	Slv(ReflFaces,	pSet->refl_faces /res);
 	Slv(ReflDist,	powf((pSet->refl_dist -20.f)/1480.f, 0.5f));
-	int value; if (pSet->refl_mode == "static") value = 0;
-	else if (pSet->refl_mode == "single") value = 1;
-	else if (pSet->refl_mode == "full") value = 2;
+	int value=0;  if (pSet->refl_mode == "static")  value = 0;
+	else if (pSet->refl_mode == "single")  value = 1;
+	else if (pSet->refl_mode == "full")  value = 2;
 	Slv(ReflMode,   value /res);
 
 	//  shadows
@@ -166,8 +167,8 @@ void App::InitGui()
 	Chk("Gauges", chkGauges, show_gauges);  ShowHUD();//
 
 	Chk("Minimap", chkMinimap, trackmap);	chMinimp = mGUI->findWidget<Button>("Minimap");
+	Chk("MiniZoom", chkMiniZoom, mini_zoomed);  Chk("MiniRot", chkMiniRot, mini_rotated);
 	Chk("Times", chkTimes, show_times);		chTimes  = mGUI->findWidget<Button>("Times");
-	//Chk("Racingline", chkRacingLine, racingline);
 	Chk("CamInfo", chkCamInfo, show_cam);
 
 	Chk("CarDbgBars", chkCarDbgBars, car_dbgbars);	chDbgB = mGUI->findWidget<Button>("CarDbgBars");

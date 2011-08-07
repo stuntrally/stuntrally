@@ -827,14 +827,14 @@
 							<Property key="Widget_Caption" value="#{Digits}"/>
 							<Property key="Text_TextColour" value="0.7 0.8 0.9"/>
 						</Widget>
-						<Widget type="StaticText" skin="StaticText" position="224 58 112 26">
+						<Widget type="StaticText" skin="StaticText" position="232 58 112 26">
 							<Property key="Widget_Caption" value="#{SpeedUnit}"/>
 							<Property key="Text_TextColour" value="0.8 0.9 1.0"/>
 						</Widget>
-						<Widget type="Button" skin="RadioBox" position="344 52 80 32" name="kmh">
+						<Widget type="Button" skin="RadioBox" position="360 52 80 32" name="kmh">
 							<Property key="Widget_Caption" value="#{UnitKmh}"/>
 						</Widget>
-						<Widget type="Button" skin="RadioBox" position="424 52 80 32" name="mph">
+						<Widget type="Button" skin="RadioBox" position="440 52 80 32" name="mph">
 							<Property key="Widget_Caption" value="#{UnitMph}"/>
 						</Widget>
 						<Widget type="Button" skin="CheckBox" position="32 96 184 24" name="Gauges">
@@ -845,29 +845,44 @@
 							<Property key="Widget_Caption" value="#{Minimap} F8"/>
 							<Property key="Text_TextColour" value="0.9 0.96 1.0"/>
 						</Widget>
-						<Widget type="Button" skin="CheckBox" position="32 176 184 24" name="Times">
+						<Widget type="Button" skin="CheckBox" position="32 216 184 24" name="Times">
 							<Property key="Widget_Caption" value="#{TimesBar} F7"/>
 							<Property key="Text_TextColour" value="0.8 0.9 1.0"/>
 						</Widget>
-						<Widget type="Button" skin="CheckBox" position="32 216 184 24" name="CamInfo">
+						<Widget type="Button" skin="CheckBox" position="32 256 184 24" name="CamInfo">
 							<Property key="Widget_Caption" value="#{CameraInfo}"/>
 							<Property key="Text_TextColour" value="0.7 0.8 0.9"/>
 						</Widget>
-						<Widget type="HScroll" skin="HScroll" position="344 99 320 18" name="SizeGaug">
+						<Widget type="HScroll" skin="HScroll" position="344 100 320 18" name="SizeGaug">
 							<Property key="Scroll_Range" value="1000001"/>
 							<Property key="Scroll_MoveToClick" value="true"/>
 						</Widget>
-						<Widget type="HScroll" skin="HScroll" position="344 139 320 18" name="SizeMinmap">
+						<Widget type="HScroll" skin="HScroll" position="344 140 320 18" name="SizeMinimap">
 							<Property key="Scroll_Range" value="1000001"/>
 							<Property key="Scroll_MoveToClick" value="true"/>
 						</Widget>
-						<Widget type="StaticText" skin="StaticText" position="272 98 60 24" name="SizeGaugVal"/>
-						<Widget type="StaticText" skin="StaticText" position="272 138 60 24" name="SizeMinmapVal"/>
-						<Widget type="StaticText" skin="StaticText" position="224 98 48 24">
+						<Widget type="StaticText" skin="StaticText" position="296 98 48 24" name="SizeGaugVal"/>
+						<Widget type="StaticText" skin="StaticText" position="296 138 48 24" name="SizeMinimapVal"/>
+						<Widget type="StaticText" skin="StaticText" position="232 98 64 24">
 							<Property key="Widget_Caption" value="#{Size}"/>
 						</Widget>
-						<Widget type="StaticText" skin="StaticText" position="224 138 48 24">
+						<Widget type="StaticText" skin="StaticText" position="232 138 64 24">
 							<Property key="Widget_Caption" value="#{Size}"/>
+						</Widget>
+						<Widget type="Button" skin="CheckBox" position="60 176 116 24" name="MiniZoom">
+							<Property key="Widget_Caption" value="#{Zoom}"/>
+							<Property key="Text_TextColour" value="0.7 0.8 0.9"/>
+						</Widget>
+						<Widget type="Button" skin="CheckBox" position="180 176 116 24" name="MiniRot">
+							<Property key="Widget_Caption" value="#{Rotate}"/>
+							<Property key="Text_TextColour" value="0.7 0.8 0.9"/>
+						</Widget>
+						<Widget type="HScroll" skin="HScroll" position="344 180 320 18" name="ZoomMinimap">
+							<Property key="Scroll_Range" value="1000001"/>
+							<Property key="Scroll_MoveToClick" value="true"/>
+						</Widget>
+						<Widget type="StaticText" skin="StaticText" position="296 178 48 24" name="ZoomMinimapVal">
+							<Property key="Text_TextColour" value="0.7 0.8 0.9"/>
 						</Widget>
 					</Widget>
 					<Widget type="TabItem" skin="" position="4 26 735 428">

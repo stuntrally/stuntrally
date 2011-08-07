@@ -71,17 +71,20 @@ void App::CreateHUD()
 		float size = std::max(fMapSizeX, fMapSizeY*asp);
 		scX = 1.f / size;  scY = 1.f / size;
 
+		//for (int c=0; c<2; ++c)
+		String sMat = "circle_minimap";  //*/"road_minimap_inv";
 		asp = 1.f;  //_temp
-		ManualObject* m = Create2D("road_minimap_inv",mSceneMgr, 1);
+		ManualObject* m = Create2D(sMat,mSceneMgr,1,true,true);  miniC = m;
 		//asp = float(mWindow->getWidth())/float(mWindow->getHeight());
 		m->setVisibilityFlags(2);  m->setRenderQueueGroup(RENDER_QUEUE_OVERLAY-5);
 		
 		///  change minimap image
-		MaterialPtr mm = MaterialManager::getSingleton().getByName("road_minimap_inv");
+		MaterialPtr mm = MaterialManager::getSingleton().getByName(sMat);
 		Pass* pass = mm->getTechnique(0)->getPass(0);
 		TextureUnitState* tus = pass->getTextureUnitState(0);
 		if (tus)
 			tus->setTextureName(pSet->track + "_mini.png");
+		
 
 		float fHudSize = pSet->size_minimap;
 		const float marg = 1.f + 0.05f;  // from border
@@ -246,49 +249,10 @@ void App::UpdateHUD(int carId, CarModel* pCarM, CAR* pCar, float time, Viewport*
 		fr.gear = pCar->GetGear();
 		fr.clutch = pCar->GetClutch();
 		//fr.throttle = pCar->dynamics.GetEngine().GetThrottle();  // not on hud
-	}	
-    float vel = fr.vel * (pSet->show_mph ? 2.23693629f : 3.6f);
-    const float rsc = -180.f/6000.f, rmin = 0.f;  //rmp
-    float angrmp = fr.rpm*rsc + rmin;
-    float vsc = pSet->show_mph ? -180.f/100.f : -180.f/160.f, vmin = 0.f;  //vel
-    float angvel = abs(vel)*vsc + vmin;
-    float angrot=0.f;  int i=0;
-
-	if (pCarM && pCarM->pMainNode)
-	{	Quaternion q = pCarM->pMainNode->getOrientation() * Quaternion(Degree(90),Vector3(0,1,0));
-		angrot = q.getYaw().valueDegrees() + 90.f;
 	}
-    float sx = 1.4f, sy = sx*asp;  // *par len
-    float psx = 2.1f * pSet->size_minimap, psy = psx;  // *par len
 
-    const static float d2r = PI_d/180.f;
-    static float rx[4],ry[4], vx[4],vy[4], px[4],py[4];
-    for (int i=0; i<4; i++)
-    {
-		float ia = 45.f + float(i)*90.f;
-		float r = -(angrmp + ia) * d2r;
-		float v = -(angvel + ia) * d2r;
-		float p = -(angrot + ia) * d2r;
-		rx[i] = sx*cosf(r);  ry[i] =-sy*sinf(r);
-		vx[i] = sx*cosf(v);  vy[i] =-sy*sinf(v);
-		px[i] = psx*cosf(p);  py[i] =-psy*sinf(p);
-    }
-    const static Real tc[4][2] = {{0,1}, {1,1}, {1,0}, {0,0}};
-    
-    if (mrpm)  {	mrpm->beginUpdate(0);
-		for (int p=0;p<4;++p)  {  mrpm->position(rx[p],ry[p], 0);  mrpm->textureCoord(tc[p][0], tc[p][1]);  }
-		mrpm->end();  }
-
-	if (mvel)  {	mvel->beginUpdate(0);
-		for (int p=0;p<4;++p)  {  mvel->position(vx[p],vy[p], 0);  mvel->textureCoord(tc[p][0], tc[p][1]);  }
-		mvel->end();  }
-		
-	int c = carId;
-	if (mpos[c])  {  mpos[c]->beginUpdate(0);
-		for (int p=0;p<4;++p)  {  mpos[c]->position(px[p],py[p], 0);  mpos[c]->textureCoord(tc[p][0], tc[p][1]);
-			if (pCarM)  mpos[c]->colour(pCarM->color);  }
-		mpos[c]->end();  }
-
+    float vel = fr.vel * (pSet->show_mph ? 2.23693629f : 3.6f);
+	UpdHUDRot(carId, pCarM, vel);
 
 	//  gear, vel texts  -----------------------------
 	if (hudGear && hudVel && pCar)

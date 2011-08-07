@@ -319,11 +319,16 @@ void App::slSizeGaug(SL)
 	float v = 0.1f + 0.15f * val/res;	pSet->size_gauges = v;  SizeHUD(true);
 	if (valSizeGaug){	Fmt(s, "%4.3f", v);	valSizeGaug->setCaption(s);  }
 }
-//  size minimap
-void App::slSizeMinmap(SL)
+//  minimap
+void App::slSizeMinimap(SL)
 {
 	float v = 0.05f + 0.25f * val/res;	pSet->size_minimap = v;  SizeHUD(true);
-	if (valSizeMinmap){	Fmt(s, "%4.3f", v);	valSizeMinmap->setCaption(s);  }
+	if (valSizeMinimap){	Fmt(s, "%4.3f", v);	valSizeMinimap->setCaption(s);  }
+}
+void App::slZoomMinimap(SL)
+{
+	float v = 1.f + 9.f * powf(val/res, 2.f);	pSet->zoom_minimap = v;  SizeHUD(true);
+	if (valZoomMinimap){	Fmt(s, "%4.3f", v);	valZoomMinimap->setCaption(s);  }
 }
 
 
@@ -537,6 +542,8 @@ void App::chkFps(WP wp){			ChkEv(show_fps);	if (pSet->show_fps)  mFpsOverlay->sh
 
 void App::chkGauges(WP wp){			ChkEv(show_gauges);	ShowHUD();	}
 void App::chkMinimap(WP wp){		ChkEv(trackmap);	if (ndMap)  ndMap->setVisible(pSet->trackmap);	}
+void App::chkMiniZoom(WP wp){		ChkEv(mini_zoomed);		}
+void App::chkMiniRot(WP wp){		ChkEv(mini_rotated);	}
 void App::chkTimes(WP wp){			ChkEv(show_times);	ShowHUD();	}
 
 //void App::chkRacingLine(WP wp){		ChkEv(racingline);	if (ndLine)  ndLine->setVisible(pSet->racingline);	}

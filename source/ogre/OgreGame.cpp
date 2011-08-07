@@ -32,7 +32,7 @@ App::App()
 	,valTrees(0), valGrass(0), valTreesDist(0), valGrassDist(0)  // paged
 	,valReflSkip(0), valReflSize(0), valReflFaces(0), valReflDist(0)  // refl
 	,valShaders(0), valShadowType(0), valShadowCount(0), valShadowSize(0), valShadowDist(0)  // shadow
-	,valSizeGaug(0), valSizeMinmap(0)  // view
+	,valSizeGaug(0), valSizeMinimap(0), valZoomMinimap(0)  // view
 	,bRkmh(0),bRmph(0), chDbgT(0),chDbgB(0), chBlt(0),chBltTxt(0), chFps(0), chTimes(0),chMinimp(0), bnQuit(0)
 	,imgCar(0),imgPrv(0),imgMini(0),imgTer(0), valCar(0),valTrk(0),trkDesc(0), valLocPlayers(0)
 	,valRplPerc(0), valRplCur(0), valRplLen(0), slRplPos(0), rplList(0)
@@ -41,7 +41,7 @@ App::App()
 	,bRplPlay(0), bRplPause(0), bRplRec(0), bRplWnd(1), bGuiReinit(0)
 	// game
 	,blendMtr(0), iBlendMaps(0), dbgdraw(0)
-	,grass(0), trees(0), road(0)
+	,grass(0), trees(0), road(0), miniC(0)
 	,pr(0),pr2(0), sun(0), carIdWin(-1), iCurCar(0), bUpdCarClr(1)
 {
 	pathTrk[0] = PATHMANAGER::GetTrackPath() + "/";
@@ -134,9 +134,9 @@ ManualObject* App::Create2D(const String& mat, SceneManager* sceneMgr, Real s, b
 	m->begin(mat, RenderOperation::OT_TRIANGLE_FAN);
 
 	m->position(-s,-s*asp, 0);  m->textureCoord(0, 1);  if (clr)  m->colour(0,1,0);
-	m->position( s,-s*asp, 0);  m->textureCoord(1, 1);  if (clr)  m->colour(0,1,0);
-	m->position( s, s*asp, 0);  m->textureCoord(1, 0);  if (clr)  m->colour(0,1,0);
-	m->position(-s, s*asp, 0);  m->textureCoord(0, 0);  if (clr)  m->colour(0,1,0);
+	m->position( s,-s*asp, 0);  m->textureCoord(1, 1);  if (clr)  m->colour(1,1,0);
+	m->position( s, s*asp, 0);  m->textureCoord(1, 0);  if (clr)  m->colour(1,0,0);
+	m->position(-s, s*asp, 0);  m->textureCoord(0, 0);  if (clr)  m->colour(0,0,0);
 	m->end();
  
 	AxisAlignedBox aabInf;	aabInf.setInfinite();

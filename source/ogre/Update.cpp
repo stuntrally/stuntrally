@@ -218,7 +218,7 @@ void App::newPoses()
 	// Iterate through all car models and get new pos info
 	int iCarNum = 0;  CarModel* carM0 = 0;
 	std::vector<CarModel*>::iterator carMIt = carModels.begin();
-	std::list<PosInfo>::iterator newPosIt = newPosInfos.begin();
+	std::vector<PosInfo>::iterator newPosIt = newPosInfos.begin();
 	while (carMIt != carModels.end())
 	{
 		CarModel* carM = *carMIt;  if (iCarNum==0)  carM0 = carM;
@@ -469,7 +469,7 @@ void App::updatePoses(float time)
 	//  Update all carmodels with their newPosInfo
 	int i=0;
 	std::vector<CarModel*>::iterator carIt = carModels.begin();
-	std::list<PosInfo>::iterator newPosIt = newPosInfos.begin();
+	std::vector<PosInfo>::iterator newPosIt = newPosInfos.begin();
 	while (carIt != carModels.end())
 	{
 		CarModel* carM = *carIt;
@@ -487,8 +487,10 @@ void App::updatePoses(float time)
 		if (!bGhost)
 		{	float xp =(-newPosInfo.pos[2] - minX)*scX*2-1,
 				  yp =-(newPosInfo.pos[0] - minY)*scY*2+1;
+			newPosInfos[i].miniPos = Vector2(xp,yp);
 			if (ndPos[i])
-				ndPos[i]->setPosition(xp,yp,0);
+				if (pSet->mini_zoomed)	ndPos[i]->setPosition(0,0,0);
+				else					ndPos[i]->setPosition(xp,yp,0);
 		}
 		carIt++;  newPosIt++;  i++;
 	}
@@ -508,4 +510,73 @@ void App::updatePoses(float time)
 			int v = pos/len * res;  slRplPos->setScrollPosition(v);
 		}
 	}	
+}
+
+
+//  Update HUD rotated elems
+//---------------------------------------------------------------------------------------------------------------
+void App::UpdHUDRot(int carId, CarModel* pCarM, float vel)
+{
+    const float rsc = -180.f/6000.f, rmin = 0.f;  //rmp
+    float angrmp = fr.rpm*rsc + rmin;
+    float vsc = pSet->show_mph ? -180.f/100.f : -180.f/160.f, vmin = 0.f;  //vel
+    float angvel = abs(vel)*vsc + vmin;
+    float angrot=0.f;  int i=0;
+
+	if (pCarM && pCarM->pMainNode)
+	{	Quaternion q = pCarM->pMainNode->getOrientation() * Quaternion(Degree(90),Vector3(0,1,0));
+		angrot = q.getYaw().valueDegrees() + 90.f;
+	}
+    float sx = 1.4f, sy = sx*asp;  // *par len
+    float psx = 2.1f * pSet->size_minimap, psy = psx;  // *par len
+
+    const static Real tc[4][2] = {{0,1}, {1,1}, {1,0}, {0,0}};  // defaults, no rot
+    const static Real tp[4][2] = {{-1,-1}, {1,-1}, {1,1}, {-1,1}};
+    const static float d2r = PI_d/180.f;
+
+    static float rx[4],ry[4], vx[4],vy[4], px[4],py[4], cx[4],cy[4];  // rpm,vel, pos,crc
+    for (int i=0; i<4; i++)  // 4 verts, each+90deg
+    {
+		float ia = 45.f + float(i)*90.f;
+		float r = -(angrmp + ia) * d2r;		rx[i] = sx*cosf(r);  ry[i] =-sy*sinf(r);
+		float v = -(angvel + ia) * d2r;		vx[i] = sx*cosf(v);  vy[i] =-sy*sinf(v);
+		float p = -(angrot + ia) * d2r;		float cp = cosf(p), sp = sinf(p);
+
+		if (pSet->mini_rotated && pSet->mini_zoomed)
+			{  px[i] = psx*tp[i][0];  py[i] = psy*tp[i][1];  }
+		else{  px[i] = psx*cp*1.4f;     py[i] =-psy*sp*1.4f;  }
+
+		float z = pSet->mini_rotated ? 0.70f/pSet->zoom_minimap : 0.5f/pSet->zoom_minimap;
+		if (!pSet->mini_rotated)
+			{  cx[i] = tp[i][0]*z;  cy[i] = tp[i][1]*z-1.f;  }
+		else{  cx[i] =       cp*z;  cy[i] =      -sp*z-1.f;  }
+    }
+    
+    //  rpm needle
+    if (mrpm)  {	mrpm->beginUpdate(0);
+		for (int p=0;p<4;++p)  {  mrpm->position(rx[p],ry[p], 0);  mrpm->textureCoord(tc[p][0], tc[p][1]);  }	mrpm->end();  }
+
+	//  vel needle
+	if (mvel)  {	mvel->beginUpdate(0);
+		for (int p=0;p<4;++p)  {  mvel->position(vx[p],vy[p], 0);  mvel->textureCoord(tc[p][0], tc[p][1]);  }	mvel->end();  }
+		
+	//  minimap car pos-es
+	int c = carId;
+	if (mpos[c])  {  mpos[c]->beginUpdate(0);
+		for (int p=0;p<4;++p)  {  mpos[c]->position(px[p],py[p], 0);
+			mpos[c]->textureCoord(tc[p][0], tc[p][1]);	if (pCarM)  mpos[c]->colour(pCarM->color);  }
+		mpos[c]->end();  }
+		
+	//  minimap circle/rect
+	if (miniC && pSet->trackmap)
+	{	const Vector2& v = newPosInfos[carId].miniPos;
+		float xc = (v.x+1.f)*0.5f, yc = (v.y+1.f)*0.5f;
+		miniC->beginUpdate(0);
+		if (!pSet->mini_zoomed)
+			for (int p=0;p<4;++p)  {  miniC->position(tp[p][0],tp[p][1], 0);
+				miniC->textureCoord(tc[p][0], tc[p][1]);  miniC->colour(tc[p][0],tc[p][1], 0);  }
+		else
+			for (int p=0;p<4;++p)  {  miniC->position(tp[p][0],tp[p][1], 0);
+				miniC->textureCoord(cx[p]+xc, -cy[p]-yc);  miniC->colour(tc[p][0],tc[p][1], 1);  }
+		miniC->end();  }
 }

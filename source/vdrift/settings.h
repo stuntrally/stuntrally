@@ -4,7 +4,7 @@
 #include "configfile.h"
 
 
-#define SET_VER  1202  // 1.2
+#define SET_VER  1203  // 1.2
 
 
 class SETTINGS
@@ -18,9 +18,10 @@ public:
 	std::string car[4], track;  bool track_user;
 
 	//  show
-	bool show_fps, show_gauges, trackmap,
-		show_cam, show_times, show_digits, car_dbgbars, car_dbgtxt, ogre_dialog;
-	float size_gauges, size_minimap;
+	bool show_fps, show_gauges, trackmap, mini_zoomed, mini_rotated,
+		show_cam, show_times, show_digits,
+		car_dbgbars, car_dbgtxt, ogre_dialog;
+	float size_gauges, size_minimap, zoom_minimap;
 
 	//  graphics
 	int anisotropy, shaders, tex_size;  bool bFog;

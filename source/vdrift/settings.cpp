@@ -25,13 +25,16 @@ void SETTINGS::Serialize(bool w, CONFIGFILE & c)
 	Param(c,w, "game.trk_reverse", trackreverse);		Param(c,w, "game.num_laps", num_laps);
 	Param(c,w, "game.language", language);
 
-	Param(c,w, "display_show.fps", show_fps);		Param(c,w, "display_show.gauges", show_gauges);
+	Param(c,w, "display_show.fps", show_fps);			Param(c,w, "display_show.gauges", show_gauges);
 	Param(c,w, "display_show.trackmap", trackmap);
-	Param(c,w, "display_show.caminfo", show_cam);	Param(c,w, "display_show.times", show_times);
+	Param(c,w, "display_show.caminfo", show_cam);		Param(c,w, "display_show.times", show_times);
 	Param(c,w, "display_show.show_digits", show_digits);
-	Param(c,w, "display_show.car_dbgtxt", car_dbgtxt);Param(c,w, "display_show.show_cardbg", car_dbgbars);
+	Param(c,w, "display_show.car_dbgtxt", car_dbgtxt);	Param(c,w, "display_show.show_cardbg", car_dbgbars);
 	Param(c,w, "display_show.mph", show_mph);
-	Param(c,w, "display_size.gauges", size_gauges);	Param(c,w, "display_size.minimap", size_minimap);
+
+	Param(c,w, "display_size.gauges", size_gauges);		Param(c,w, "display_size.minimap", size_minimap);
+	Param(c,w, "display_size.mini_zoom", zoom_minimap);	Param(c,w, "display_size.mini_zoomed", mini_zoomed);
+	Param(c,w, "display_size.mini_rotated", mini_rotated);
 
 	Param(c,w, "display_par.anisotropy", anisotropy);	Param(c,w, "display_par.view_dist", view_distance);
 	Param(c,w, "display_par.ter_detail", terdetail);	Param(c,w, "display_par.ter_dist", terdist);
@@ -90,7 +93,7 @@ SETTINGS::SETTINGS() :  ///  Defaults
 	//  show
 	show_fps(1), show_gauges(1), trackmap(1),
 	show_cam(1), show_times(0), show_digits(1), car_dbgtxt(0), car_dbgbars(0),
-	size_gauges(0.18), size_minimap(0.2),
+	size_gauges(0.18), size_minimap(0.2), zoom_minimap(1.0), mini_zoomed(0), mini_rotated(1),
 	//  graphics
 	anisotropy(4),	view_distance(1500), bFog(0),
 	terdetail(2), terdist(100), road_dist(1.0), tex_size(1),

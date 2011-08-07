@@ -41,7 +41,7 @@ fragment_program sel_ps cg
 	}
 }
 
-//  game minimap
+//  game minimap   -------------
 material road_minimap_inv
 {
 	technique
@@ -65,7 +65,46 @@ material road_minimap_inv
 	}
 }
 
-//  editor
+//  game minimap circle  -------------
+//
+fragment_program circle_ps cg
+{
+	source rnd.cg
+	profiles ps_2_0 arbfp1 
+	entry_point circle_ps
+}
+
+material circle_minimap
+{
+	technique
+	{
+		pass
+		{
+			lighting off
+			depth_check off
+			depth_write off
+			scene_blend alpha_blend
+
+			vertex_program_ref circle_vs  {  }
+			fragment_program_ref circle_ps  {  }
+			
+			texture_unit diffuseMap
+			{
+				tex_address_mode clamp
+				texture grassDensity.png
+			}
+			texture_unit circleMap
+			{
+				tex_address_mode clamp
+				texture circleMini.png
+			}
+		}
+	}
+}
+
+
+
+//  editor   ------------------------
 material road_mini_0
 {
 	technique

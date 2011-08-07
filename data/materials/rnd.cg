@@ -54,3 +54,39 @@ float4 sel_ps(uniform float fTime): COLOR0
 	float3 clr = float3(0.14, 0.22, 0.36) * (0.5f + 0.1f * cos(3.f * fTime));
 	return float4(clr, 1);
 }
+
+
+//  zoomed minimap circle  ----------------------
+
+struct CIn
+{
+	float4 p	: POSITION;
+	float2 uv   : TEXCOORD0;
+	float4 clr  : COLOR;
+};
+struct COut
+{
+	float4 p	: POSITION;
+	float2 uv	: TEXCOORD0;
+	float4 clr  : COLOR;
+};
+
+COut circle_vs(CIn IN,
+	uniform float4x4 wvpMat)
+{
+	COut OUT;  OUT.uv = IN.uv;  OUT.clr = IN.clr;
+	OUT.p = mul(wvpMat, IN.p);
+	return OUT;
+}
+
+float4 circle_ps(in float2 uv : TEXCOORD0,
+				in float4 clr : COLOR,  // tc 0..1
+	uniform sampler2D diffuseMap : TEXUNIT0,
+	uniform sampler2D circleMap : TEXUNIT1): COLOR0
+{
+	float4 tex = tex2D(diffuseMap, uv);
+	float4 cir = tex2D(circleMap, clr.xy);
+
+	float a = tex.a * lerp(1, cir.b, clr.z);
+	return float4(tex.rgb, a);
+}
