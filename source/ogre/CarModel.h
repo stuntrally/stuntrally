@@ -7,6 +7,7 @@
 #ifndef _CarModel_H_
 #define _CarModel_H_
  
+#include <OgreVector2.h>
 #include <OgreVector3.h>
 #include <OgreQuaternion.h>
 #include <OgreVector4.h>

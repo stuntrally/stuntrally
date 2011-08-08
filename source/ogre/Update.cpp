@@ -7,6 +7,7 @@
 #include "../paged-geom/PagedGeometry.h"
 
 #include <OgreParticleSystem.h>
+#include <OgreManualObject.h>
 using namespace Ogre;
 
 
