@@ -1,0 +1,89 @@
+<tracks>
+	<track n="00" name="zandvoort"		crdate="10-12-09" crver="0.1" modate="10-12-09" scenery="Asphalt"	author="VDrift"	diff="" rating="" rateuser="0" />
+	<track n="01" name="J1-T"			crdate="06-06-10" crver="0.2" modate="06-06-10" scenery="Jungle"	author="CH" diff="" rating="" rateuser="0" />
+<!--1-->
+	<track n="01" name="Test1-Flat"		crdate="10-07-10" crver="0.3" modate="20-07-10" scenery="Jungle"	author="CH" diff="" rating="" rateuser="0" />
+	<track n="01" name="Test2-Asphalt"	crdate="10-07-10" crver="0.3" modate="20-07-10" scenery="Asphalt"	author="CH" diff="" rating="" rateuser="0" />
+	<track n="01" name="Test3-Bumps"	crdate="10-07-10" crver="0.3" modate="20-07-10" scenery="Jungle"	author="CH" diff="" rating="" rateuser="0" />
+
+	<track n="02" name="D1-simple"		crdate="25-07-10" crver="0.3" modate="06-11-10" scenery="Desert"	author="CH" diff="" rating="" rateuser="0" />
+	<track n="03" name="S1-simple"		crdate="29-07-10" crver="0.3" modate="29-07-10" scenery="Savannah"	author="CH" diff="" rating="" rateuser="0" />
+	<track n="04" name="S2-Frenzy"		crdate="31-07-10" crver="0.3" modate="31-07-10" scenery="Savannah"	author="CH" diff="" rating="" rateuser="0" />
+	<track n="05" name="S3-Loops"		crdate="10-08-10" crver="0.4" modate="18-09-10" scenery="Savannah"	author="CH" diff="" rating="" rateuser="0" />
+<!--5-->
+	<track n="10" name="D2-Mntn"		crdate="22-09-10" crver="0.6" modate="07-11-10" scenery="Desert"	author="CH" diff="" rating="" rateuser="0" />
+	<track n="06" name="J2-T-bumps"		crdate="12-10-10" crver="0.6" modate="12-10-10" scenery="Jungle"	author="CH" diff="" rating="" rateuser="0" />
+	<track n="07" name="D3-P"			crdate="06-11-10" crver="0.6" modate="06-11-10" scenery="Desert"	author="CH" diff="" rating="" rateuser="0" />
+	<track n="08" name="J3-S"			crdate="06-11-10" crver="0.6" modate="06-11-10" scenery="Jungle"	author="CH" diff="" rating="" rateuser="0" />
+	<track n="09" name="S4-Hills"		crdate="07-11-10" crver="0.6" modate="07-11-10" scenery="Savannah"	author="CH" diff="" rating="" rateuser="0" />
+<!--10-->
+	<track n="10" name="TestC1-circle"		crdate="16-11-10" crver="0.7" modate="16-11-10" scenery="Savannah"	author="CH" diff="" rating="" rateuser="0" />
+	<track n="10" name="TestC2-pipe-half"	crdate="16-11-10" crver="0.7" modate="16-11-10" scenery="Savannah"	author="CH" diff="" rating="" rateuser="0" />
+	<track n="10" name="TestC3-pipe-big"	crdate="16-11-10" crver="0.7" modate="16-11-10" scenery="Savannah"	author="CH" diff="" rating="" rateuser="0" />
+	<track n="10" name="TestC4-ow"			crdate="17-11-10" crver="0.7" modate="17-11-10" scenery="Savannah"	author="CH" diff="" rating="" rateuser="0" />
+
+	<track n="11" name="D4-SZ"			crdate="21-11-10" crver="0.7" modate="22-11-10" scenery="Desert"	author="CH" diff="" rating="" rateuser="0" />
+	<track n="12" name="J5-Pipes"		crdate="21-11-10" crver="0.7" modate="22-11-10" scenery="Jungle"	author="CH" diff="" rating="" rateuser="0" />
+	<track n="13" name="J4-Pipe8"		crdate="22-11-10" crver="0.7" modate="22-11-10" scenery="Jungle"	author="CH" diff="" rating="" rateuser="0" />
+<!--13-->
+	<track n="14" name="0W1-cross"		crdate="27-11-10" crver="0.8" modate="27-11-10" scenery="Winter"	author="CH" diff="" rating="" rateuser="0" />
+	<track n="15" name="0W2-qp"			crdate="27-11-10" crver="0.8" modate="27-11-10" scenery="Winter"	author="CH" diff="" rating="" rateuser="0" />
+	<track n="16" name="0W3-mouth"		crdate="28-11-10" crver="0.8" modate="28-11-10" scenery="Winter"	author="CH" diff="" rating="" rateuser="0" />
+	<track n="17" name="F1-Cc"			crdate="28-11-10" crver="0.8" modate="28-11-10" scenery="Forest"	author="CH" diff="" rating="" rateuser="0" />
+	<track n="18" name="F3-osso"		crdate="28-11-10" crver="0.8" modate="28-11-10" scenery="Forest"	author="CH" diff="" rating="" rateuser="0" />
+<!--18-->
+	<track n="19" name="F2-Cc-pipe"		crdate="04-12-10" crver="0.9" modate="04-12-10" scenery="Forest"	author="CH" diff="" rating="" rateuser="0" />
+
+	<track n="20" name="D5-jmp8-low"	crdate="04-12-10" crver="0.9" modate="04-12-10" scenery="Desert"	author="CH" diff="" rating="" rateuser="0" />
+	<track n="21" name="D6-jmp0-high"	crdate="04-12-10" crver="0.9" modate="04-12-10" scenery="Desert"	author="CH" diff="" rating="" rateuser="0" />
+	<track n="22" name="S5-LoopBasic"	crdate="04-12-10" crver="0.9" modate="12-12-10" scenery="Savannah"	author="CH" diff="" rating="" rateuser="0" />
+
+	<track n="23" name="F4-o4H"			crdate="04-12-10" crver="0.9" modate="04-12-10" scenery="Forest" 	author="CH" diff="" rating="" rateuser="0" />
+	<track n="24" name="F5-o4H-pipe"	crdate="04-12-10" crver="0.9" modate="04-12-10" scenery="Forest" 	author="CH" diff="" rating="" rateuser="0" />
+	<track n="25" name="F6-DC3"			crdate="05-12-10" crver="0.9" modate="05-12-10" scenery="Forest" 	author="CH" diff="" rating="" rateuser="0" />
+	<track n="26" name="D7-hh"			crdate="05-12-10" crver="0.9" modate="05-12-10" scenery="Desert" 	author="CH" diff="" rating="" rateuser="0" />
+
+	<track n="27" name="D8-HHY"			crdate="05-12-10" crver="0.9" modate="05-12-10" scenery="Desert"	author="CH" diff="" rating="" rateuser="0" />
+	<track n="28" name="S6-PipeCrazy"	crdate="05-12-10" crver="0.9" modate="05-12-10" scenery="Savannah" 	author="CH" diff="" rating="" rateuser="0" />
+	<track n="29" name="S7-HighMadness"	crdate="06-12-10" crver="0.9" modate="06-12-10" scenery="Savannah" 	author="CH" diff="" rating="" rateuser="0" />
+	<track n="30" name="S8-Frenzy2slow" crdate="06-12-10" crver="0.9" modate="06-12-10" scenery="Savannah" 	author="CH" diff="" rating="" rateuser="0" />
+
+	<track n="31" name="0W4-ice-blur"	crdate="12-12-10" crver="0.9" modate="12-12-10" scenery="Winter" 	author="CH" diff="" rating="" rateuser="0" />
+	<track n="32" name="0W5-O4"			crdate="22-12-10" crver="0.9" modate="22-12-10" scenery="Winter" 	author="CH" diff="" rating="" rateuser="0" />
+<!--32-->
+	<track n="33" name="S7-HighMadWide" crdate="20-12-10" crver="1.0" modate="20-12-10" scenery="Savannah" 	author="CH" diff="" rating="" rateuser="0" />
+	<track n="34" name="J6-80fun"		crdate="22-12-10" crver="1.0" modate="23-12-10" scenery="Jungle"	author="CH" diff="" rating="" rateuser="0" />
+	<track n="35" name="I1-star3"		crdate="30-12-10" crver="1.0" modate="30-12-10" scenery="Island"	author="CH" diff="" rating="" rateuser="0" />
+	<track n="36" name="S9-demo"		crdate="06-01-11" crver="1.01" modate="06-01-11" scenery="Savannah"	author="CH" diff="" rating="" rateuser="0" />
+<!--36-->
+	<track n="37" name="J7-Jsso"		crdate="03-03-11" crver="1.1" modate="03-03-11" scenery="Jungle"	author="CH" diff="" rating="" rateuser="0" />
+	<track n="38" name="0W6-88"			crdate="03-03-11" crver="1.1" modate="03-03-11" scenery="Winter"	author="CH" diff="" rating="" rateuser="0" />
+
+	<track n="39" name="F7-blur3"		crdate="05-03-11" crver="1.1" modate="05-03-11" scenery="Forest"	author="CH" diff="" rating="" rateuser="0" />
+	<track n="40" name="F8-blurX3"		crdate="05-03-11" crver="1.1" modate="05-03-11" scenery="Forest"	author="CH" diff="" rating="" rateuser="0" />
+
+	<track n="41" name="J8-oO"			crdate="05-03-11" crver="1.1" modate="05-03-11" scenery="Jungle"	author="CH" diff="" rating="" rateuser="0" />
+	<track n="41" name="S9-ozd-"		crdate="05-03-11" crver="1.1" modate="05-03-11" scenery="Jungle"	author="CH" diff="" rating="" rateuser="0" />
+	<track n="42" name="J9-oNJo"		crdate="05-03-11" crver="1.1" modate="05-03-11" scenery="Jungle"	author="CH" diff="" rating="" rateuser="0" />
+
+	<track n="43" name="0W7-LJs-Mntn"	crdate="05-03-11" crver="1.1" modate="05-03-11" scenery="Winter"	author="CH" diff="" rating="" rateuser="0" />
+	<track n="44" name="J10-Spiral"		crdate="10-03-11" crver="1.1" modate="10-03-11" scenery="Jungle"	author="CH" diff="" rating="" rateuser="0" />
+	<track n="45" name="I2-S8"			crdate="10-03-11" crver="1.1" modate="12-03-11" scenery="Island"	author="CH" diff="" rating="" rateuser="0" />
+	<track n="46" name="0W8-pipe8x8"	crdate="16-03-11" crver="1.1" modate="16-03-11" scenery="Winter"	author="CH" diff="" rating="" rateuser="0" />
+
+	<track n="47" name="S10-Pipe88"		crdate="17-03-11" crver="1.1" modate="17-03-11" scenery="Savannah"	author="CH" diff="" rating="" rateuser="0" />
+	<track n="48" name="S11-Twist8"		crdate="17-03-11" crver="1.1" modate="17-03-11" scenery="Savannah"	author="CH" diff="" rating="" rateuser="0" />
+	<track n="49" name="S12-Infinity"	crdate="17-03-11" crver="1.1" modate="18-03-11" scenery="Savannah"	author="CH" diff="" rating="" rateuser="0" />
+<!--49-->
+	<track n="50" name="M1-Hills"		crdate="16-04-11" crver="1.2" modate="17-04-11" scenery="Mud"	author="scrawl" diff="" rating="" rateuser="0" />
+	<track n="51" name="M2-Bumps"		crdate="17-04-11" crver="1.2" modate="17-04-11" scenery="Mud" 	author="scrawl" diff="" rating="" rateuser="0" />
+
+	<track n="52" name="F9-MadMntn"		crdate="17-04-11" crver="1.2" modate="23-04-11" scenery="Forest" 	author="CH" diff="" rating="" rateuser="0" />
+	<track n="53" name="A1-StuntPark"	crdate="23-04-11" crver="1.2" modate="23-04-11" scenery="Australia" author="CH" diff="" rating="" rateuser="0" />
+	<track n="54" name="G1-Long"		crdate="28-06-11" crver="1.2" modate="28-06-11" scenery="Greece" 	author="CH" diff="" rating="" rateuser="0" />
+	<track n="55" name="F10-MntnTrail"	crdate="22-07-11" crver="1.2" modate="22-07-11" scenery="Forest" 	author="CH" diff="" rating="" rateuser="0" />
+<!--55-->
+	<track n="56" name="A2-PipeCoil"	crdate="22-07-11" crver="1.3" modate="06-08-11" scenery="Australia" author="CH" diff="" rating="" rateuser="0" />
+	<track n="57" name="D9-NewElems"	crdate="22-07-11" crver="1.3" modate="06-08-11" scenery="Desert" 	author="CH" diff="" rating="" rateuser="0" />
+	<track n="00" name=""	crdate="" crver="1.3" modate="" scenery="" 	author="CH" diff="" rating="" rateuser="0" />
+</tracks>
