@@ -4,6 +4,12 @@ version = 2
 [ steering ]
 max-angle = 35.1
 
+[ model_ofs ]
+exhaust-x = 2.2
+exhaust-y = 0.39
+exhaust-z = -0.5
+exhaust-mirror-second = 0
+
 [ engine ]
 position = 0.0, 0.4, -0.1
 mass = 70.0

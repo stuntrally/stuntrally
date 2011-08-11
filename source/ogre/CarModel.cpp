@@ -413,14 +413,38 @@ void CarModel::Create(int car)
 		String si = toStr(iIndex) + "_" +toStr(i);
 		if (!pb[i])  {
 			pb[i] = pSceneMgr->createParticleSystem("Boost"+si, "Boost");
-			Vector3 bsize = (bodyBox.getMaximum() - bodyBox.getMinimum())*0.5,
-				bcenter = bodyBox.getMaximum() + bodyBox.getMinimum();
-			LogO("Car body bbox :  size " + toStr(bsize) + ",  center " + toStr(bcenter));
-			SceneNode* nb = pMainNode->createChildSceneNode(bcenter+
-				Vector3(bsize.x * 0.97, bsize.y * 0.65, bsize.z * 0.65 * (i==0 ? 1 : -1) ));
-				//Vector3(1.9 /*back*/, 0.1 /*up*/, 0.6 * (i==0 ? 1 : -1)/*sides*/ ));
-			nb->attachObject(pb[i]);
-			pb[i]->getEmitter(0)->setEmissionRate(0);  }
+			if (!pCar->manualExhaustPos)
+			{
+				// no exhaust pos in car file, guess from bounding box
+				Vector3 bsize = (bodyBox.getMaximum() - bodyBox.getMinimum())*0.5,
+					bcenter = bodyBox.getMaximum() + bodyBox.getMinimum();
+				LogO("Car body bbox :  size " + toStr(bsize) + ",  center " + toStr(bcenter));
+				SceneNode* nb = pMainNode->createChildSceneNode(bcenter+
+					Vector3(bsize.x * 0.97, bsize.y * 0.65, bsize.z * 0.65 * (i==0 ? 1 : -1) ));
+					//Vector3(1.9 /*back*/, 0.1 /*up*/, 0.6 * (i==0 ? 1 : -1)/*sides*/ ));
+				nb->attachObject(pb[i]);
+			}
+			else
+			{
+				// use exhaust pos values from car file
+				Vector3 pos;
+				if (i==0)
+				{
+					pos = Vector3( pCar->exhaustPosition[0],
+						pCar->exhaustPosition[1], pCar->exhaustPosition[2]);
+				}
+				else if (!pCar->has2exhausts)
+					continue;
+				else
+				{
+					pos = Vector3( pCar->exhaustPosition[0],
+						pCar->exhaustPosition[1], -1*pCar->exhaustPosition[2]);
+				}
+				SceneNode* nb = pMainNode->createChildSceneNode(pos);
+				nb->attachObject(pb[i]); 
+			}
+			pb[i]->getEmitter(0)->setEmissionRate(0);
+		}
 	}
 
 	///  wheel emitters  ------------------------
