@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION"
 "Report-Msgid-Bugs-To: "
-"POT-Creation-Date: 2011-07-12 19:25+0300"
+"POT-Creation-Date: 2011-08-11 19:50+0200"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>"
 "Language-Team: LANGUAGE <LL@li.org>"
@@ -79,6 +79,10 @@ msgstr ""
 
 msgctxt "ViewDist"
 msgid "View distance"
+msgstr ""
+
+msgctxt "TipRoadDist2"
+msgid "Additional distance to road."
 msgstr ""
 
 msgctxt "Sky"
@@ -159,6 +163,10 @@ msgstr ""
 
 msgctxt "TipToggleModel"
 msgid "Enable or disable this model."
+msgstr ""
+
+msgctxt "MinimapRotate"
+msgid "Rotate"
 msgstr ""
 
 msgctxt "InputReloadTrack"
@@ -279,6 +287,10 @@ msgstr ""
 
 msgctxt "NeedReload"
 msgid "* need reload"
+msgstr ""
+
+msgctxt "MinimapZoom"
+msgid "Zoom"
 msgstr ""
 
 msgctxt "ViewRight"
@@ -1007,10 +1019,6 @@ msgstr ""
 
 msgctxt "LS_TER"
 msgid "Loading terrain"
-msgstr ""
-
-msgctxt "RoadDist2"
-msgid "Additional distance to road."
 msgstr ""
 
 msgctxt "TipRoadStats"

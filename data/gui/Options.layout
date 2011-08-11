@@ -870,11 +870,11 @@
 							<Property key="Widget_Caption" value="#{Size}"/>
 						</Widget>
 						<Widget type="Button" skin="CheckBox" position="60 176 116 24" name="MiniZoom">
-							<Property key="Widget_Caption" value="#{Zoom}"/>
+							<Property key="Widget_Caption" value="#{MinimapZoom}"/>
 							<Property key="Text_TextColour" value="0.7 0.8 0.9"/>
 						</Widget>
 						<Widget type="Button" skin="CheckBox" position="180 176 116 24" name="MiniRot">
-							<Property key="Widget_Caption" value="#{Rotate}"/>
+							<Property key="Widget_Caption" value="#{MinimapRotate}"/>
 							<Property key="Text_TextColour" value="0.7 0.8 0.9"/>
 						</Widget>
 						<Widget type="HScroll" skin="HScroll" position="344 180 320 18" name="ZoomMinimap">

@@ -42,9 +42,10 @@
 	<Tag name="RoadParams">Parametry drogi</Tag>
 	<Tag name="Light">Światło</Tag>
 	<Tag name="DistToRoad">odl. do drogi</Tag>
+	<Tag name="TBPlace">Place</Tag>
 	<Tag name="TBLast">Ostatni</Tag>
 	<Tag name="TipRollDrag">Opór dla kół, większy spowoduje szybsze zwalnianie (np. 140 dla śniegu, 80 dla trawy).</Tag>
-	<Tag name="LoadTrack">Wczytaj trasę</Tag>
+	<Tag name="TipTrackList">Lista tras, kliknij by wybrać (i zobaczyć info). Naciśnij Enter by jechać. (lub [Zmień trasę] i potem [Nowa Gra])</Tag>
 	<Tag name="Back">Tył</Tag>
 	<Tag name="TipDiffusePrev">Podgląd tekstury koloru diffuse.</Tag>
 	<Tag name="smoke">dym</Tag>
@@ -62,7 +63,7 @@
 	<Tag name="CopySource">Wybierz jako źródło kopiowania</Tag>
 	<Tag name="TipDisableFog">Wyłącz mgłę gdy edycja z dystansu.</Tag>
 	<Tag name="NeedReload">* potrzeba przeładowania</Tag>
-	<Tag name="InputAssignKey">&lt;Naciśnij klawisz&gt;</Tag>
+	<Tag name="LoadTrack">Wczytaj trasę</Tag>
 	<Tag name="Count">Liczba</Tag>
 	<Tag name="UnitKm">km</Tag>
 	<Tag name="InputUndo">(jednorazowe cofnij)</Tag>
@@ -87,6 +88,7 @@
 	<Tag name="InputRoadWidth">- zmień szerokość drogi</Tag>
 	<Tag name="Replay">Powtórka</Tag>
 	<Tag name="AutoRear">Automatyczny wsteczny</Tag>
+	<Tag name="NumLaps">Number of laps</Tag>
 	<Tag name="ReflMode_single">Pojedyncze</Tag>
 	<Tag name="MapSize">Wielkość mapy</Tag>
 	<Tag name="Friction">Tarcie</Tag>
@@ -107,7 +109,7 @@
 	<Tag name="InputRoadSel">Backspace - dodaj lub usuń z selekcji</Tag>
 	<Tag name="Weather">Pogoda</Tag>
 	<Tag name="wind">wiatr</Tag>
-	<Tag name="LS_CAR">Wczytuję auto</Tag>
+	<Tag name="TipRoadStats">Statystyki całej drogi.</Tag>
 	<Tag name="MaxScale">maks. skala</Tag>
 	<Tag name="TipModelMaxScale">Maksymalna skala modelu.</Tag>
 	<Tag name="TerrainError">Bład terenu</Tag>
@@ -181,6 +183,7 @@
 	<Tag name="InputTerHeight">E - ustaw wysokość</Tag>
 	<Tag name="InputStartPos">Q - edytuj start auta</Tag>
 	<Tag name="TipModelRoadDist">Dystans od drogi do modeli (globalny, dodawany do wartości każdego modelu).</Tag>
+	<Tag name="TireTrails">Ślady opon</Tag>
 	<Tag name="InputBrushParams">Parametry pędzla</Tag>
 	<Tag name="ReflMode_static">Statyczne</Tag>
 	<Tag name="InputCameraMode">Tryb kamery</Tag>
@@ -217,11 +220,12 @@
 	<Tag name="InputMapRestartGame">Nowa gra</Tag>
 	<Tag name="Graphics">Grafika</Tag>
 	<Tag name="InputMapShowOptions">Pokaż opcje</Tag>
+	<Tag name="CarClrRandom">Random</Tag>
 	<Tag name="CarDebugText">text debug auta </Tag>
 	<Tag name="RplSize">rozmiar</Tag>
 	<Tag name="TipMudInt">Intensywność cząstek błota.</Tag>
 	<Tag name="Mode">tryb</Tag>
-	<Tag name="ChangeCar">Zmień auto</Tag>
+	<Tag name="ScaleAll">Skaluj wszystko</Tag>
 	<Tag name="InputMapPrevTab">Poprzednia zakładka</Tag>
 	<Tag name="InputTogglePreview">F7 - wejdź/wyjdź z kamery podglądu</Tag>
 	<Tag name="GameBy">Gra przez</Tag>
@@ -242,8 +246,7 @@
 	<Tag name="DisableEdit">Wyłącz do edycji</Tag>
 	<Tag name="TipAutoClutch">-ręczna nie zaimplementowana.</Tag>
 	<Tag name="MinimapUpdSkip">Pominięć odśw. minimapy</Tag>
-	<Tag name="RoadDist2">Dodatkowa odległość do drogi</Tag>
-	<Tag name="TipRoadStats">Statystyki całej drogi.</Tag>
+	<Tag name="LS_CAR">Wczytuję auto</Tag>
 	<Tag name="InputTerPaint">A - maluj tekstury (warstwy)</Tag>
 	<Tag name="RplCur">Obecne</Tag>
 	<Tag name="InputKeyNoButton">Bez przycisku</Tag>
@@ -264,7 +267,10 @@
 	<Tag name="Intensity">Intensywność</Tag>
 	<Tag name="TipSunAmbient">Kolor słońca stały, rozproszony.. R G B składowe 0 do 1 (np. 0.4 0.4 0.4)</Tag>
 	<Tag name="ChngTrkTab">zmiana w zakładce [Trasa]</Tag>
-	<Tag name="TireTrails">Ślady opon</Tag>
+	<Tag name="InputRplCtrl2">P - pause/unpause replay</Tag>
+	<Tag name="InputRplCtrl3">[ , ] - wind backwards/forwards (shift - slow, ctrl,alt - fast)</Tag>
+	<Tag name="InputRplCtrl0">Replay:</Tag>
+	<Tag name="InputRplCtrl1">Backspace - show/hide controls (hold ctrl to use mouse)</Tag>
 	<Tag name="TipGrassSwayLen">Efekt kołysania trawy długość (skala).</Tag>
 	<Tag name="intensity">Intensywność</Tag>
 	<Tag name="Fog">Mgła</Tag>
@@ -282,6 +288,7 @@
 	<Tag name="mud">błoto</Tag>
 	<Tag name="TipTerWind">Okno pędzla terenu.</Tag>
 	<Tag name="InputMapThrottle">Gaz</Tag>
+	<Tag name="TBLap">Lap</Tag>
 	<Tag name="TipGrassVisDist">Dystans widoczności dla stron trawy.</Tag>
 	<Tag name="TipModelVisDist">Dystans widoczności dla stron modeli.</Tag>
 	<Tag name="NumLocalPlayers">Liczba lokalnych graczy</Tag>
@@ -330,6 +337,7 @@
 	<Tag name="InputRoadStats">T - okno statystyki drogi</Tag>
 	<Tag name="VSync">Synchr. pionowa</Tag>
 	<Tag name="TipChangeBright">Zmień jasność koloru auta.</Tag>
+	<Tag name="InputAssignKey">&lt;Naciśnij klawisz&gt;</Tag>
 	<Tag name="Size">Rozmiar</Tag>
 	<Tag name="AutoGearbox">Automatyczna skrzynia biegów</Tag>
 	<Tag name="InputSlowFast">shift - wolno  ctrl - szybko</Tag>
@@ -376,7 +384,6 @@
 	<Tag name="CamInertia">Bezwładność kamery</Tag>
 	<Tag name="TipTerSize">Wynikowy obszar w metrach (długość boku). Wynosi ilość wierzchołków razy rozmiar trójkąta.</Tag>
 	<Tag name="speed">szybkość</Tag>
-	<Tag name="TipTrackList">Lista tras, kliknij by wybrać (i zobaczyć info). Naciśnij Enter by jechać. (lub [Zmień trasę] i potem [Nowa Gra])</Tag>
 	<Tag name="InputRoadYaw">- obrót</Tag>
 	<Tag name="RplGhosts">Duchy</Tag>
 	<Tag name="RplBestOnly">Zapisuj ducha tylko dla lepszych czasów</Tag>
@@ -437,7 +444,7 @@
 	<Tag name="TipNewTer">Stwórz nowy, płaski teren.</Tag>
 	<Tag name="TipRoadParams">Parametry punktów drogi.</Tag>
 	<Tag name="SpeedUnit">Jednostka</Tag>
-	<Tag name="ScaleAll">Skaluj wszystko</Tag>
+	<Tag name="ChangeCar">Zmień auto</Tag>
 	<Tag name="TipImpDist">Daleka odległość, od której modele widać jako 2D atrapy.</Tag>
 	<Tag name="InputMapGeneral">Ogólne</Tag>
 	<Tag name="TipTrkTerImg">Minimapa wybranej trasy (widok z góry).</Tag>
@@ -482,14 +489,9 @@
 	<Tag name="Pitch">nachylenie</Tag>
 	<Tag name="MyGUI_MessageBox_Yes">Tak</Tag>
 	<Tag name="RplAll">Wszystkie</Tag>
-	<Tag name="TBPlace">Place</Tag>
-	<Tag name="NumLaps">Number of laps</Tag>
-	<Tag name="InputRplCtrl1">Backspace - show/hide controls (hold ctrl to use mouse)</Tag>
-	<Tag name="CarClrRandom">Random</Tag>
-	<Tag name="InputRplCtrl2">P - pause/unpause replay</Tag>
-	<Tag name="InputRplCtrl3">[ , ] - wind backwards/forwards (shift - slow, ctrl,alt - fast)</Tag>
-	<Tag name="InputRplCtrl0">Replay:</Tag>
-	<Tag name="TBLap">Lap</Tag>
+	<Tag name="TipRoadDist2">Additional distance to road.</Tag>
+	<Tag name="MinimapRotate">Rotate</Tag>
+	<Tag name="MinimapZoom">Zoom</Tag>
 	<Tag name="GameVersion">1.2</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 

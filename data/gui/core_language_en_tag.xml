@@ -196,8 +196,8 @@
 	<Tag name="UnitMph">mph</Tag>
 	<Tag name="Gauges">Gauges (rpm, speed)</Tag>
 	<Tag name="Minimap">Minimap</Tag>
-	<Tag name="Zoom">Zoom</Tag>
-	<Tag name="Rotate">Rotate</Tag>
+	<Tag name="MinimapZoom">Zoom</Tag>
+	<Tag name="MinimapRotate">Rotate</Tag>
 	<Tag name="TimesBar">Times bar</Tag>
 	<Tag name="CameraInfo">Camera info</Tag>
 
