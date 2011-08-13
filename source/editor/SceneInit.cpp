@@ -253,7 +253,7 @@ void App::TerCircleUpd()
 {
 	if (!moTerC || !terrain || !road)  return;
 
-	bool edTer = bEdit() && (edMode == ED_Deform || edMode == ED_Smooth) && road->bHitTer;
+	bool edTer = bEdit() && (edMode < ED_Road) && road->bHitTer;
 	ndTerC->setVisible(edTer);
 	if (!edTer)  return;
 	
@@ -262,8 +262,9 @@ void App::TerCircleUpd()
 	static ED_MODE edOld = ED_ALL;
 	if (edOld != edMode)
 	{	edOld = edMode;
-		moTerC->setMaterialName(0, edMode == ED_Deform ? "circle_deform" : "circle_smooth");  }
-
+		moTerC->setMaterialName(0, edMode == ED_Deform ? "circle_deform" :
+									edMode == ED_Height ? "circle_height" : "circle_smooth");
+	}
 	moTerC->beginUpdate(0);
 	for (int d = 0; d < divs+2; ++d)
 	{

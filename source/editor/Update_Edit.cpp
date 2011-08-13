@@ -186,18 +186,25 @@ bool App::frameRenderingQueued(const FrameEvent& evt)
 		if (isKey(APOSTROPHE))	{  road->AddBoxW( q*0.2);  UpdStartPos();  }
 		//if (mz > 0)	// snap rot by 15 deg ..
 	}
-	else if (edMode == ED_Deform || edMode == ED_Smooth)
+	else if (edMode < ED_Road)
 	{
 		//  brush params
 		//----------------------------------------------------------------
 		if (brTxt[0]){	Fmt(s, "Size:	 %4.1f   - =", mBrSize[curBr]);		brTxt[0]->setCaption(s);	}
 		if (brTxt[1]){	Fmt(s, "Force:   %4.1f   [ ]", mBrIntens[curBr]);	brTxt[1]->setCaption(s);	}
 		if (brTxt[2]){	Fmt(s, "Power:   %4.2f   ; \'", mBrPow[curBr]);		brTxt[2]->setCaption(s);	}
-		if (edMode == ED_Deform)
-			if (brTxt[3]){	Fmt(s, "Shape: %s", csBrShape[mBrShape[curBr]].c_str());	brTxt[3]->setCaption(s);	}
+
+		if (brTxt[3])
+		if (edMode == ED_Deform || edMode == ED_Height)
+		{	Fmt(s, "Shape: %s", csBrShape[mBrShape[curBr]].c_str());	brTxt[3]->setCaption(s);	}
 		else
-			if (brTxt[3])  brTxt[3]->setCaption("");
-		if (brTxt[4])  brTxt[4]->setCaption("");
+			brTxt[3]->setCaption("");
+
+		if (brTxt[4])
+		if (edMode == ED_Height)
+		{	Fmt(s, "Height: %4.1f", terSetH);	brTxt[4]->setCaption(s);	}
+		else
+			brTxt[4]->setCaption("");
 
 		if (mz != 0)
 			if (alt){			mBrPow[curBr]   *= 1.f - 0.4f*q*mz;  updBrush();  }
@@ -321,6 +328,15 @@ void App::editMouse()
 				road->AddYaw(   vNew.x * fRot * moveMul,0.f);
 			if (mbRight)   // rot yaw
 				road->AddRoll(  vNew.y *-fRot * moveMul,0.f);
+		}
+	}
+
+	///  edit ter height val
+	if (bEdit() && edMode == ED_Height)
+	{
+		if (mbRight)
+		{	Real ym = -vNew.y * 0.5f * moveMul;
+			terSetH += ym;
 		}
 	}
 
@@ -452,6 +468,9 @@ bool App::frameEnded(const FrameEvent& evt)
 			break;
 		case ED_Smooth:
 			if (mbLeft)   smooth(road->posHit, dt);
+			break;
+		case ED_Height:
+			if (mbLeft)   height(road->posHit, dt, s);
 			break;
 		}
 	}

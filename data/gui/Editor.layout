@@ -54,11 +54,11 @@
 		</Widget>
 		<Widget type="StaticText" skin="StaticText" position="4 60 120 20" name="brush3">
 			<Property key="Widget_InheritsAlpha" value="false"/>
-			<Property key="Text_TextColour" value="0.7 0.76 0.84"/>
+			<Property key="Text_TextColour" value="0.78 0.82 0.9"/>
 		</Widget>
 		<Widget type="StaticText" skin="StaticText" position="4 80 120 20" name="brush4">
 			<Property key="Widget_InheritsAlpha" value="false"/>
-			<Property key="Text_TextColour" value="0.7 0.76 0.84"/>
+			<Property key="Text_TextColour" value="0.76 0.9 1.0"/>
 		</Widget>
 		<Widget type="StaticImage" skin="StaticImage" position="8 64 56 56" name="brushImg"/>
 	</Widget>
@@ -1763,18 +1763,18 @@
 							<Property key="Widget_Caption" value="#{InputTerSmooth}"/>
 						</Widget>
 						<Widget type="StaticText" skin="StaticText" position="32 88 212 20">
-							<Property key="Text_TextColour" value="0.4 0.5 0.6"/>
+							<Property key="Text_TextColour" value="0.6 0.8 0.8"/>
 							<Property key="Widget_Caption" value="#{InputTerHeight}"/>
 						</Widget>
-						<Widget type="StaticText" skin="StaticText" position="32 110 212 20">
+						<Widget type="StaticText" skin="StaticText" position="32 120 212 20">
 							<Property key="Text_TextColour" value="0.4 0.5 0.7"/>
 							<Property key="Widget_Caption" value="#{InputTerPaint}"/>
 						</Widget>
-						<Widget type="StaticText" skin="StaticText" position="32 132 212 20">
+						<Widget type="StaticText" skin="StaticText" position="32 142 212 20">
 							<Property key="Widget_Caption" value="#{InputPaintColor}"/>
 							<Property key="Text_TextColour" value="0.4 0.5 0.6"/>
 						</Widget>
-						<Widget type="StaticText" skin="StaticText" position="32 164 242 20">
+						<Widget type="StaticText" skin="StaticText" position="32 174 242 20">
 							<Property key="Widget_Caption" value="#{InputToggleVeget}"/>
 							<Property key="Text_TextColour" value="0.6 1.0 0.2"/>
 						</Widget>
@@ -1790,11 +1790,11 @@
 							<Property key="Widget_Caption" value="#{InputWheelPower}"/>
 							<Property key="Text_TextColour" value="0.8 0.9 1.0"/>
 						</Widget>
-						<Widget type="StaticText" skin="StaticText" position="376 110 200 20">
+						<Widget type="StaticText" skin="StaticText" position="376 120 200 20">
 							<Property key="Widget_Caption" value=""/>
 							<Property key="Text_TextColour" value="0.8 0.9 1.0"/>
 						</Widget>
-						<Widget type="StaticText" skin="StaticText" position="32 186 264 20">
+						<Widget type="StaticText" skin="StaticText" position="32 196 264 20">
 							<Property key="Widget_Caption" value="#{InputMinimapType}"/>
 							<Property key="Text_TextColour" value="0.3 0.6 0.3"/>
 						</Widget>
@@ -2153,7 +2153,6 @@
 					<Property key="Text_TextColour" value="0.6 0.8 1"/>
 				</Widget>
 			</Widget>
-			<Widget type="TabItem" skin="" position="4 26 787 531"/>
 		</Widget>
 	</Widget>
 	<Widget type="Button" skin="Button" position_real="0.909519 0 0.0899582 0.0289362" layer="Popup" name="Quit">

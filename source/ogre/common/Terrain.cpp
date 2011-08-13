@@ -25,6 +25,8 @@ using namespace Ogre;
 //--------------------------------------------------------------------------------------------------------------------------
 void App::initBlendMaps(Ogre::Terrain* terrain)
 {
+	QTimer ti;  ti.update();  // time
+
 	int b = sc.td.layers.size(), i;
 	float* pB[6];	TerrainLayerBlendMap* bMap[6];
 	Ogre::uint16 t = terrain->getLayerBlendMapSize(), x,y;
@@ -46,13 +48,13 @@ void App::initBlendMaps(Ogre::Terrain* terrain)
 	{
 		float fx = f*x, fy = f*y;	//  val,val1:  0 0 - [0]   1 0  - [1]   0 1 - [2]
 		const Real p = (b > 4) ? 3.f : ( (b > 3) ? 2.f : 1.f ), q = 1.f;
-		Real val =			 pow(0.5f + 0.5f*sinf(24.f* fx)*cosf(24.f* fy), p);
+		Real val =                       pow(0.5f + 0.5f*sinf(24.f* fx)*cosf(24.f* fy), p);
 		Real val1 = std::max(0.f, (float)pow(0.5f + 0.5f*cosf(18.f* fy)*sinf(18.f* fx), p) - val);
 		Real val2 = std::max(0.f, (float)pow(0.5f + 0.5f*cosf(22.f* fy)*sinf(21.f* fx), q) - val-val1);
 		Real val3 = std::max(0.f, (float)pow(0.5f + 0.5f*cosf(19.f* fy)*sinf(20.f* fx), q) - val-val1-val2);
 
 		//  read ter angle
-		#if 0
+		#if 1
 		int tx = (float)(x)/ft * sc.td.iTerSize, ty = (float)(t-1-y)/ft * sc.td.iTerSize;
 		float a = sc.td.hfNorm[ty*sc.td.iTerSize + tx];
 		val  = std::max(0.f, std::min(1.f, val1 + a / 20.f ));
@@ -72,13 +74,14 @@ void App::initBlendMaps(Ogre::Terrain* terrain)
 	}
 	for (i=0; i < b-1; ++i)  {
 		bMap[i]->dirty();  bMap[i]->update();  }
+	/**/
 
 	iBlendMaps = b;  blendMapSize = t;
 	
-	//blendMap[0]->loadImage("blendmap1.png", ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME);  // v^
+	//bMap[0]->loadImage("blendmap.png", ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME);
 	/*Image bl0;  // ?-
 	terrain->getLayerBlendTexture(0)->convertToImage(bl0);
-	bl0.save("blend0.png");/**/
+	bl0.save("blendmap.png");/**/
 	//terrain->getCompositeMapMaterial
 	
 	/*// set up a colour map
@@ -90,6 +93,9 @@ void App::initBlendMaps(Ogre::Terrain* terrain)
 		terrain->getGlobalColourMap()->loadImage(colourMap);
 	}
 	*/
+	ti.update();
+	float dt = ti.dt * 1000.f;
+	LogO(String("Blendmap time: ") + toStr(dt) + " ms");
 }
 
 

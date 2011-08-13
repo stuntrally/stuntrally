@@ -132,7 +132,6 @@ void App::deform(Vector3 &pos, float dtime, float brMul)
 		{
 			///  pos float -> sin data compute here (for small size brushes) ..
 			fHmap[mapPos] += mBrushData[brPos] * its;  // deform
-			//fHmap[mapPos] += (10.f - fHmap[mapPos]) * mBrushData[brPos] * its;
 			++mapPos;  ++brPos;
 		}
 	}
@@ -141,9 +140,36 @@ void App::deform(Vector3 &pos, float dtime, float brMul)
 }
 
 
-///  -\ set Height
+///  -_ set Height
 //--------------------------------------------------------------------------------------------------------------------------
-//
+void App::height(Vector3 &pos, float dtime, float brMul)
+{
+	Rect rcBrush, rcMap;  int cx,cy;
+	if (!getEditRect(pos, rcBrush, rcMap, sc.td.iTerSize, cx,cy))
+		return;
+	
+	float *fHmap = terrain->getHeightData();
+		
+	float its = mBrIntens[curBr] * dtime * brMul;
+	int mapPos, brPos, jj = cy;
+	
+	for (int j = rcMap.top; j < rcMap.bottom; ++j,++jj)
+	{
+		mapPos = j * sc.td.iTerSize + rcMap.left;
+		brPos = jj * BrushMaxSize + cx;
+
+		for (int i = rcMap.left; i < rcMap.right; ++i)
+		{
+			float d = terSetH - fHmap[mapPos];
+			d = d > 2.f ? 2.f : d < -2.f ? -2.f : d;  // par speed-
+			fHmap[mapPos] += d * mBrushData[brPos] * its;
+			++mapPos;  ++brPos;
+		}
+	}
+	terrain->dirtyRect(rcMap);
+	bTerUpd = true;
+}
+
 
 ///  |_ Filter, low pass, par: freq
 //--------------------------------------------------------------------------------------------------------------------------

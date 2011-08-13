@@ -210,12 +210,27 @@ void App::btnTerrainNew(WP)
 
 void App::btnTerGenerate(WP)
 {
+	//sc.td.iVertsX = size+1;  sc.td.UpdVals();  // new hf
+
+	float* hfData = new float[sc.td.iVertsX * sc.td.iVertsY];
+	int siz = sc.td.iVertsX * sc.td.iVertsY * sizeof(float);
+	String name = TrkDir() + "heightmap-new.f32";
+
 	for (int j=0; j < sc.td.iVertsY; ++j)  // generate noise terrain hmap
 	{
 		int a = j * sc.td.iVertsX;
 		for (int i=0; i < sc.td.iVertsX; ++i,++a)
-			sc.td.hfData[a] = pow( Noise(i*0.001f,j*0.001f, 0.3f, 4, 0.7f), 1.f ) * 10.f;
+			hfData[a] = pow( Noise(i*0.001f,j*0.001f, 0.3f, 4, 0.7f), 1.f ) * 10.f;
 	}
+	/// TODO: preview texture?, faster: ter dirty- not recreate
+
+	std::ofstream of;
+	of.open(name.c_str(), std::ios_base::binary);
+	of.write((const char*)&hfData[0], siz);
+	of.close();
+
+	delete[] hfData;
+	bNewHmap = true;	UpdateTrack();
 }
 
 

@@ -19,6 +19,10 @@ void App::UpdEditWnds()
 		{	mWndBrush->setCaption("Terrain Smooth");
 			mWndBrush->setColour(MyGUI::Colour(0.3f, 0.8f, 0.8f));
 			mWndBrush->setVisible(true);  }
+		else if (edMode == ED_Height)
+		{	mWndBrush->setCaption("Terrain Height");
+			mWndBrush->setColour(MyGUI::Colour(0.7f, 1.0f, 0.7f));
+			mWndBrush->setVisible(true);  }
 		else if (edMode == ED_Start)
 		{	mWndBrush->setCaption("Car Start pos");
 			mWndBrush->setColour(MyGUI::Colour(0.7f, 0.7f, 1.0f));
@@ -261,6 +265,7 @@ bool App::KeyPress(const CmdKey &arg)
 		else
 		{	road->newP.pos.x = road->posHit.x;
 			road->newP.pos.z = road->posHit.z;
+			road->newP.aType = AT_Both;
 			road->Insert(shift ? INS_Begin : ctrl ? INS_End : alt ? INS_CurPre : INS_Cur);
 		}	break;					  
 
@@ -277,7 +282,7 @@ bool App::KeyPress(const CmdKey &arg)
 	}
 
 	//  ter brush shape
-	if (edMode == ED_Deform)
+	if (edMode < ED_Road)
 	switch (arg.key)
 	{
 		case KC_K:	mBrShape[curBr] = (EBrShape)((mBrShape[curBr]-1 + BRS_ALL) % BRS_ALL);  updBrush();  break;
@@ -305,8 +310,8 @@ bool App::KeyPress(const CmdKey &arg)
 		//  terrain
 		case KC_D:	if (bEdit()){  edMode = ED_Deform;  curBr = 0;  updBrush();  UpdEditWnds();  }	break;
 		case KC_S:	if (bEdit()){  edMode = ED_Smooth;  curBr = 1;  updBrush();  UpdEditWnds();  }	break;
-		//case KC_E:
-		//case KC_F: TODO: ter brush set height, filter, ramp ...
+		case KC_E:	if (bEdit()){  edMode = ED_Height;  curBr = 2;  updBrush();  UpdEditWnds();  }	break;
+		//case KC_F: TODO: ter brush  filter, ramp ...
 
 		//  road
 		case KC_R:	if (bEdit()){  edMode = ED_Road;	UpdEditWnds();  }	break;

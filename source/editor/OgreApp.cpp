@@ -57,10 +57,11 @@ App::App()  //  gui wigdets--
 	pathTrk[1] = PATHMANAGER::GetTrackPathUser() + "/";  pathTrkPrv[1] = pathTrk[1] + "_previews/";
 	strFSerrors = "";
 
-	mBrSize[0] = 16.f;		mBrSize[1] = 24.f;
-	mBrIntens[0] = 20.f;	mBrIntens[1] = 20.f;
-	mBrPow[0] = 2.f;		mBrPow[1] = 2.f;
-	mBrShape[0] = BRS_Sinus;  mBrShape[1] = BRS_Sinus;
+	mBrSize[0] = 16.f;		mBrSize[1] = 24.f;		mBrSize[2] = 16.f;		
+	mBrIntens[0] = 20.f;	mBrIntens[1] = 20.f;	mBrIntens[2] = 20.f;	
+	mBrPow[0] = 2.f;		mBrPow[1] = 2.f;		mBrPow[2] = 2.f;		
+	terSetH = 10.f;
+	mBrShape[0] = BRS_Sinus;  mBrShape[1] = BRS_Sinus;	mBrShape[2] = BRS_Sinus;
 	mBrushData = new float[BrushMaxSize*BrushMaxSize];
 	sBrushTest[0]=0;   updBrush();
 
