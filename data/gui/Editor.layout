@@ -767,6 +767,10 @@
 					</Widget>
 					<Widget type="TabItem" skin="" position="4 26 727 288">
 						<Property key="Widget_Caption" value="#{Particles}"/>
+						<Widget type="Widget" skin="Panel" position="0 -8 750 300">
+							<Property key="Widget_Alpha" value="0.2"/>
+							<Property key="Widget_Colour" value="1 0.9 0.5"/>
+						</Widget>
 						<Widget type="Edit" skin="Edit" position="64 22 56 24" name="LDust">
 							<Property key="Widget_Colour" value="0.8 0.8 0.2"/>
 							<Property key="Text_TextColour" value="0.8 0.8 0.2"/>
@@ -847,13 +851,13 @@
 							<Property key="Widget_Caption" value="#{Particles}"/>
 							<Property key="Text_TextColour" value="0.8 0.8 0.7"/>
 						</Widget>
-						<Widget type="Widget" skin="Panel" position="0 -8 750 300">
-							<Property key="Widget_Alpha" value="0.2"/>
-							<Property key="Widget_Colour" value="1 0.9 0.5"/>
-						</Widget>
 					</Widget>
 					<Widget type="TabItem" skin="" position="4 26 727 288">
 						<Property key="Widget_Caption" value="#{Surface}"/>
+						<Widget type="Widget" skin="Panel" position="0 -8 750 300">
+							<Property key="Widget_Alpha" value="0.2"/>
+							<Property key="Widget_Colour" value="1 0.7 0.9"/>
+						</Widget>
 						<Widget type="StaticText" skin="StaticText" position="212 30 88 24">
 							<Property key="Widget_Caption" value="#{Surface}"/>
 							<Property key="Text_TextColour" value="0.9 0.7 0.85"/>
@@ -912,10 +916,6 @@
 						<Widget type="StaticText" skin="StaticText" position="20 110 92 24">
 							<Property key="Widget_Caption" value="#{RollingDrag}"/>
 							<Property key="Text_TextColour" value="1 0.7 0"/>
-						</Widget>
-						<Widget type="Widget" skin="Panel" position="0 -8 750 300">
-							<Property key="Widget_Alpha" value="0.2"/>
-							<Property key="Widget_Colour" value="1 0.7 0.9"/>
 						</Widget>
 					</Widget>
 				</Widget>
@@ -1761,7 +1761,7 @@
 							<Property key="Text_TextColour" value="0.8 0.9 1.0"/>
 							<Property key="Widget_Caption" value="#{InputTerSmooth}"/>
 						</Widget>
-						<Widget type="StaticText" skin="StaticText" position="32 88 212 20">
+						<Widget type="StaticText" skin="StaticText" position="32 88 312 20">
 							<Property key="Text_TextColour" value="0.6 0.8 0.8"/>
 							<Property key="Widget_Caption" value="#{InputTerHeight}"/>
 						</Widget>
@@ -1791,7 +1791,7 @@
 						</Widget>
 						<Widget type="StaticText" skin="StaticText" position="376 110 200 20">
 							<Property key="Widget_Caption" value="#{InputWheelShape}"/>
-							<Property key="Text_TextColour" value="0.84 0.86 1.0"/>
+							<Property key="Text_TextColour" value="0.72 0.76 0.9"/>
 						</Widget>
 						<Widget type="StaticText" skin="StaticText" position="376 120 200 20">
 							<Property key="Widget_Caption" value=""/>
@@ -1922,15 +1922,15 @@
 						</Widget>
 
 						<Widget type="StaticText" skin="StaticText" position="32 322 304 20">
-							<Property key="Text_TextColour" value="0.7 0.85 1.0"/>
+							<Property key="Text_TextColour" value="0.6 0.75 0.9"/>
 							<Property key="Widget_Caption" value="#{InputRoadAngType}"/>
 						</Widget>
 						<Widget type="StaticText" skin="StaticText" position="182 322 304 20">
-							<Property key="Text_TextColour" value="0.7 0.85 1.0"/>
+							<Property key="Text_TextColour" value="0.6 0.75 0.9"/>
 							<Property key="Widget_Caption" value="#{InputRoadAngZero}"/>
 						</Widget>
 						<Widget type="StaticText" skin="StaticText" position="32 344 304 20">
-							<Property key="Text_TextColour" value="0.7 0.85 1.0"/>
+							<Property key="Text_TextColour" value="0.6 0.75 0.9"/>
 							<Property key="Widget_Caption" value="#{InputRoadAngSnap}"/>
 						</Widget>
 						
