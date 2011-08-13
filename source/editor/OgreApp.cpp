@@ -60,6 +60,7 @@ App::App()  //  gui wigdets--
 	mBrSize[0] = 16.f;		mBrSize[1] = 24.f;
 	mBrIntens[0] = 20.f;	mBrIntens[1] = 20.f;
 	mBrPow[0] = 2.f;		mBrPow[1] = 2.f;
+	mBrShape[0] = BRS_Sinus;  mBrShape[1] = BRS_Sinus;
 	mBrushData = new float[BrushMaxSize*BrushMaxSize];
 	sBrushTest[0]=0;   updBrush();
 
@@ -70,6 +71,9 @@ App::App()  //  gui wigdets--
 	for (int i=0; i < StTrk; ++i)  stTrk[i] = 0;
 	for (int i=0; i < 4; ++i)  {  cmbRoadMtr[i]=0;  cmbPipeMtr[i]=0;  }
 }
+
+const Ogre::String App::csBrShape[BRS_ALL] = { "Triangle", "Sinus", "Noise" };  // static
+
 
 App::~App()
 {

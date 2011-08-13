@@ -123,6 +123,7 @@ protected:
 	char* blendMtr;  // mtr [blendMapSize x blendMapSize]
 	void initBlendMaps(Ogre::Terrain* terrain);
 	void configureTerrainDefaults(Ogre::Light* l);
+	float Noise(float x, float y, float zoom, int octaves, float persistance);
 		
 	void changeShadows(), UpdPSSMMaterials(), setMtrSplits(Ogre::String sMtrName);
 	Ogre::Vector4 splitPoints;  Ogre::ShadowCameraSetupPtr mPSSMSetup;

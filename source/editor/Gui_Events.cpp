@@ -208,9 +208,14 @@ void App::btnTerrainNew(WP)
 	bNewHmap = true;	UpdateTrack();
 }
 
-void App::btnTerrainResize(WP)
+void App::btnTerGenerate(WP)
 {
-	//..
+	for (int j=0; j < sc.td.iVertsY; ++j)  // generate noise terrain hmap
+	{
+		int a = j * sc.td.iVertsX;
+		for (int i=0; i < sc.td.iVertsX; ++i,++a)
+			sc.td.hfData[a] = pow( Noise(i*0.001f,j*0.001f, 0.3f, 4, 0.7f), 1.f ) * 10.f;
+	}
 }
 
 

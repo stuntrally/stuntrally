@@ -529,6 +529,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\source\ogre\common\simplexnoise.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\Source\ogre\common\Terrain.cpp"
 				>
 			</File>

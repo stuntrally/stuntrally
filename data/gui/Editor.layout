@@ -478,14 +478,6 @@
 			</Widget>
 			<Widget type="TabItem" skin="" position="4 26 787 531">
 				<Property key="Widget_Caption" value="#{Terrain}"/>
-				<Widget type="Widget" skin="Panel" position="180 314 552 114">
-					<Property key="Widget_Alpha" value="0.4"/>
-					<Property key="Widget_Colour" value="1 0.9 0.5"/>
-				</Widget>
-				<Widget type="Widget" skin="Panel" position="28 436 730 80">
-					<Property key="Widget_Alpha" value="0.4"/>
-					<Property key="Widget_Colour" value="1 0.7 0.9"/>
-				</Widget>
 				<Widget type="StaticText" skin="StaticText" position="32 39 120 24">
 					<Property key="Widget_Caption" value="#{HeightmapSize}"/>
 					<Property key="Text_TextColour" value="0.4 1 0.6"/>
@@ -518,25 +510,106 @@
 					<Property key="Text_TextColour" value="0.7 1 0.8"/>
 					<UserString key="tip" value="#{TipNewTer}"/>
 				</Widget>
-				<Widget type="Button" skin="Button" position="432 103 104 32" name="TerrainResize">
+				<Widget type="Button" skin="Button" position="432 103 104 32" name="TerrainGenerate">
 					<Property key="Widget_Colour" value="0.2 0.6 0.4"/>
-					<Property key="Widget_Caption" value="#{ResizeTer}"/>
+					<Property key="Widget_Caption" value="#{NewTerGenerate}"/>
 					<Property key="Text_TextColour" value="0.4 0.8 0.6"/>
-					<Property key="Widget_Visible" value="false"/>
 					<UserString key="tip" value="#{TipResizeTer}"/>
 				</Widget>
-				<Widget type="Button" skin="CheckBox" position="480 207 96 24" name="TerLayOn">
+				<Widget type="Tab" skin="Tab" position="160 38 340 20" name="TabHMapSize">
+					<Property key="Widget_Colour" value="0.7 0.9 1"/>
+					<UserString key="tip" value="#{TipTerVertCount}"/>
+					<Widget type="TabItem" skin="" position="4 26 331 -12">
+						<Property key="Widget_Caption" value="64"/>
+					</Widget>
+					<Widget type="TabItem" skin="" position="4 26 331 -12">
+						<Property key="Widget_Caption" value="128"/>
+					</Widget>
+					<Widget type="TabItem" skin="" position="4 26 331 -12">
+						<Property key="Widget_Caption" value="256"/>
+					</Widget>
+					<Widget type="TabItem" skin="" position="4 26 331 -12">
+						<Property key="Widget_Caption" value="512"/>
+					</Widget>
+					<Widget type="TabItem" skin="" position="4 26 331 -12">
+						<Property key="Widget_Caption" value="1024"/>
+					</Widget>
+					<Widget type="TabItem" skin="" position="4 26 331 -12">
+						<Property key="Widget_Caption" value="2048"/>
+					</Widget>
+				</Widget>
+				<Widget type="StaticText" skin="StaticText" position="40 195 80 24">
+					<Property key="Widget_Caption" value="#{TerLAngMin1}"/>
+					<Property key="Text_TextColour" value="0.6 0.9 0.5"/>
+				</Widget>
+				<Widget type="StaticText" skin="StaticText" position="128 195 56 24" name="TerLAngMinVal1">
+					<Property key="Text_TextColour" value="0.6 0.9 0.5"/>
+				</Widget>
+				<Widget type="HScroll" skin="HScroll" position="200 195 360 16" name="TerLAngMin1">
+					<Property key="Scroll_Range" value="1000001"/>
+					<Property key="Scroll_MoveToClick" value="true"/>
+					<Property key="Widget_Colour" value="0.6 0.9 0.5"/>
+					<UserString key="tip" value="#{TipTerAngMin}"/>
+				</Widget>
+				<Widget type="StaticText" skin="StaticText" position="40 220 80 24">
+					<Property key="Widget_Caption" value="#{TerLAngMax2}"/>
+					<Property key="Text_TextColour" value="0.6 0.9 0.5"/>
+				</Widget>
+				<Widget type="StaticText" skin="StaticText" position="128 220 56 24" name="TerLAngMaxVal2">
+					<Property key="Text_TextColour" value="0.6 0.9 0.5"/>
+				</Widget>
+				<Widget type="HScroll" skin="HScroll" position="200 220 360 16" name="TerLAngMax2">
+					<Property key="Scroll_Range" value="1000001"/>
+					<Property key="Scroll_MoveToClick" value="true"/>
+					<Property key="Widget_Colour" value="0.6 0.9 0.5"/>
+					<UserString key="tip" value="#{TipTerLAngMax}"/>
+				</Widget>
+				<Widget type="StaticText" skin="StaticText" position="40 255 80 24">
+					<Property key="Widget_Caption" value="#{TerLHMin1}"/>
+					<Property key="Text_TextColour" value="0.6 0.9 0.5"/>
+				</Widget>
+				<Widget type="StaticText" skin="StaticText" position="128 255 56 24" name="TerLHMinVal3">
+					<Property key="Text_TextColour" value="0.6 0.9 0.5"/>
+				</Widget>
+				<Widget type="HScroll" skin="HScroll" position="200 255 360 16" name="TerLHMin3">
+					<Property key="Scroll_Range" value="1000001"/>
+					<Property key="Scroll_MoveToClick" value="true"/>
+					<Property key="Widget_Colour" value="0.6 0.9 0.5"/>
+					<UserString key="tip" value="#{TipTerLHMin}"/>
+				</Widget>
+				<Widget type="StaticText" skin="StaticText" position="40 280 80 24">
+					<Property key="Widget_Caption" value="#{TerLHMax}"/>
+					<Property key="Text_TextColour" value="0.6 0.9 0.5"/>
+				</Widget>
+				<Widget type="StaticText" skin="StaticText" position="128 280 56 24" name="TerLHMaxVal4">
+					<Property key="Text_TextColour" value="0.6 0.9 0.5"/>
+				</Widget>
+				<Widget type="HScroll" skin="HScroll" position="200 280 360 16" name="TerLHMax4">
+					<Property key="Scroll_Range" value="1000001"/>
+					<Property key="Scroll_MoveToClick" value="true"/>
+					<Property key="Widget_Colour" value="0.6 0.9 0.5"/>
+					<UserString key="tip" value="#{TipTerLHMax}"/>
+				</Widget>
+				<Widget type="Progress" skin="ProgressFill" position="160 37 340 21">
+					<Property key="Widget_Colour" value="0.2 0.9 0.3"/>
+					<Property key="Widget_Alpha" value="0.3"/>
+					<Property key="Widget_Enabled" value="false"/>
+				</Widget>
+			</Widget>
+			<Widget type="TabItem" skin="" position="4 26 787 531">
+				<Property key="Widget_Caption" value="#{Layers}"/>
+				<Widget type="StaticText" skin="StaticText" position="600 60 128 24" name="TerLayersAll">
+					<Property key="Widget_Caption" value="#{Used}: "/>
+					<Property key="Text_TextColour" value="0.4 1 0.4"/>
+					<Property key="Widget_Colour" value="0.4 1 0.4"/>
+				</Widget>
+				<Widget type="Button" skin="CheckBox" position="480 60 112 24" name="TerLayOn">
 					<Property key="Widget_Caption" value="#{Enabled}"/>
 					<Property key="Text_TextColour" value="0.4 1 0.4"/>
 					<Property key="Widget_Colour" value="0.4 1 0.4"/>
 					<UserString key="tip" value="#{TipToggleLayer}"/>
 				</Widget>
-				<Widget type="StaticText" skin="StaticText" position="600 209 112 24" name="TerLayersAll">
-					<Property key="Widget_Caption" value="#{Used}: "/>
-					<Property key="Text_TextColour" value="0.4 1 0.4"/>
-					<Property key="Widget_Colour" value="0.4 1 0.4"/>
-				</Widget>
-				<Widget type="Tab" skin="Tab" position="32 168 560 24" name="TabTerLay">
+				<Widget type="Tab" skin="Tab" position="32 16 560 24" name="TabTerLay">
 					<Property key="Widget_Colour" value="0.7 0.9 1"/>
 					<UserString key="tip" value="#{TipTerLayers}"/>
 					<Widget type="TabItem" skin="" position="4 26 551 -8">
@@ -561,220 +634,291 @@
 						<Property key="Widget_Caption" value="#{Road}"/>
 					</Widget>
 				</Widget>
-				<Widget type="Tab" skin="Tab" position="160 38 340 20" name="TabHMapSize">
-					<Property key="Widget_Colour" value="0.7 0.9 1"/>
-					<UserString key="tip" value="#{TipTerVertCount}"/>
-					<Widget type="TabItem" skin="" position="4 26 331 -12">
-						<Property key="Widget_Caption" value="64"/>
-					</Widget>
-					<Widget type="TabItem" skin="" position="4 26 331 -12">
-						<Property key="Widget_Caption" value="128"/>
-					</Widget>
-					<Widget type="TabItem" skin="" position="4 26 331 -12">
-						<Property key="Widget_Caption" value="256"/>
-					</Widget>
-					<Widget type="TabItem" skin="" position="4 26 331 -12">
-						<Property key="Widget_Caption" value="512"/>
-					</Widget>
-					<Widget type="TabItem" skin="" position="4 26 331 -12">
-						<Property key="Widget_Caption" value="1024"/>
-					</Widget>
-					<Widget type="TabItem" skin="" position="4 26 331 -12">
-						<Property key="Widget_Caption" value="2048"/>
-					</Widget>
-				</Widget>
-				<Widget type="StaticImage" skin="StaticImage" position="40 207 128 128" name="TerImgDiff">
-					<UserString key="tip" value="#{TipDiffusePrev}"/>
-				</Widget>
-				<Widget type="StaticText" skin="StaticText" position="192 209 64 24">
-					<Property key="Widget_Caption" value="#{Diffuse}"/>
-					<Property key="Text_TextColour" value="0.4 1 0.4"/>
-				</Widget>
-				<Widget type="ComboBox" skin="ComboBox" position="264 207 192 24" name="TexDiffuse">
-					<Property key="Widget_Colour" value="0.5 1 0.5"/>
-					<Property key="Text_TextColour" value="0.5 1 0.5"/>
-					<Property key="Edit_ReadOnly" value="true"/>
-					<UserString key="tip" value="#{TipDiffuseTex}"/>
-				</Widget>
-				<Widget type="StaticText" skin="StaticText" position="192 242 64 24">
-					<Property key="Widget_Caption" value="#{TerNormal}"/>
-					<Property key="Text_TextColour" value="0.7 0.7 1"/>
-				</Widget>
-				<Widget type="ComboBox" skin="ComboBox" position="264 240 192 24" name="TexNormal">
-					<Property key="Widget_Colour" value="0.85 0.85 1"/>
-					<Property key="Text_TextColour" value="0.8 0.8 1"/>
-					<Property key="Edit_ReadOnly" value="true"/>
-					<UserString key="tip" value="#{TipNormalTex}"/>
-				</Widget>
-				<Widget type="Button" skin="CheckBox" position="480 240 72 24" name="TexNormAuto">
-					<Property key="Widget_Caption" value="#{auto}"/>
-					<Property key="Text_TextColour" value="0.7 0.7 1"/>
-					<Property key="Widget_Colour" value="0.7 0.7 1"/>
-					<UserString key="tip" value="#{TipTexNormAuto}"/>
-				</Widget>
-				<Widget type="StaticText" skin="StaticText" position="192 280 48 24">
-					<Property key="Widget_Caption" value="#{scale}"/>
-					<Property key="Text_TextColour" value="0.6 1 0.6"/>
-				</Widget>
-				<Widget type="Edit" skin="Edit" position="240 278 72 24" name="edTerLScale">
-					<Property key="Widget_Colour" value="0.6 1 0.6"/>
-					<Property key="Text_TextColour" value="0.6 1 0.6"/>
-				</Widget>
-				<Widget type="HScroll" skin="HScroll" position="320 280 440 18" name="TerLScale">
-					<Property key="Widget_Colour" value="0.6 1 0.6"/>
-					<Property key="Scroll_MoveToClick" value="true"/>
-					<Property key="Scroll_Range" value="1000001"/>
-					<UserString key="tip" value="#{TipTexTiling}"/>
-				</Widget>
-				<Widget type="Edit" skin="Edit" position="232 326 56 24" name="LDust">
-					<Property key="Widget_Colour" value="0.8 0.8 0.2"/>
-					<Property key="Text_TextColour" value="0.8 0.8 0.2"/>
-					<UserString key="tip" value="#{TipDustInt}"/>
-				</Widget>
-				<Widget type="Edit" skin="Edit" position="264 356 72 24" name="LDustS">
-					<Property key="Widget_Colour" value="0.8 0.8 0.2"/>
-					<Property key="Text_TextColour" value="0.8 0.8 0.2"/>
-					<UserString key="tip" value="#{TipDustSize}"/>
-				</Widget>
-				<Widget type="Edit" skin="Edit" position="344 326 56 24" name="LMud">
-					<Property key="Widget_Colour" value="0.8 0.7 0.2"/>
-					<Property key="Text_TextColour" value="0.8 0.7 0.2"/>
-					<UserString key="tip" value="#{TipMudInt}"/>
-				</Widget>
-				<Widget type="Edit" skin="Edit" position="468 326 56 24" name="LSmoke">
-					<Property key="Widget_Colour" value="0.7 0.7 0.7"/>
-					<Property key="Text_TextColour" value="0.7 0.7 0.7"/>
-					<UserString key="tip" value="#{TipSmokeInt}"/>
-				</Widget>
-				<Widget type="Edit" skin="Edit" position="440 356 160 24" name="LTrlClr">
-					<Property key="Widget_Colour" value="0.6 0.8 0"/>
-					<Property key="Text_TextColour" value="0.6 0.8 0"/>
-					<UserString key="tip" value="#{TipTrailClr}"/>
-				</Widget>
-				<Widget type="StaticText" skin="StaticText" position="192 328 40 24">
-					<Property key="Widget_Caption" value="#{dust}"/>
-					<Property key="Text_TextColour" value="0.8 0.8 0.2"/>
-				</Widget>
-				<Widget type="StaticText" skin="StaticText" position="192 358 72 24">
-					<Property key="Widget_Caption" value="#{DustSize}"/>
-					<Property key="Text_TextColour" value="0.8 0.8 0.2"/>
-				</Widget>
-				<Widget type="StaticText" skin="StaticText" position="304 328 40 23">
-					<Property key="Widget_Caption" value="#{mud}"/>
-					<Property key="Text_TextColour" value="0.8 0.7 0.2"/>
-				</Widget>
-				<Widget type="StaticText" skin="StaticText" position="412 328 52 24">
-					<Property key="Widget_Caption" value="#{smoke}"/>
-					<Property key="Text_TextColour" value="0.7 0.7 0.7"/>
-				</Widget>
-				<Widget type="StaticText" skin="StaticText" position="360 358 80 24">
-					<Property key="Widget_Caption" value="#{trailColor}"/>
-					<Property key="Text_TextColour" value="0.6 0.8 0"/>
-				</Widget>
-				<Widget type="StaticText" skin="StaticText" position="192 394 40 24">
-					<Property key="Widget_Caption" value="#{dust}"/>
-					<Property key="Text_TextColour" value="0.8 0.8 0.2"/>
-				</Widget>
-				<Widget type="StaticText" skin="StaticText" position="340 394 40 24">
-					<Property key="Widget_Caption" value="#{mud}"/>
-					<Property key="Text_TextColour" value="0.8 0.7 0.2"/>
-				</Widget>
-				<Widget type="StaticText" skin="StaticText" position="484 394 52 24">
-					<Property key="Text_TextColour" value="0.7 0.7 0.7"/>
-					<Property key="Widget_Caption" value="#{smoke}"/>
-				</Widget>
-				<Widget type="ComboBox" skin="ComboBox" position="232 392 96 24" name="CmbParDust">
-					<Property key="Widget_Colour" value="0.8 0.8 0.2"/>
-					<Property key="Text_TextColour" value="0.8 0.8 0.2"/>
-					<UserString key="tip" value="#{TipParType1}"/>
-				</Widget>
-				<Widget type="ComboBox" skin="ComboBox" position="380 392 92 24" name="CmbParMud">
-					<Property key="Widget_Colour" value="0.8 0.7 0.2"/>
-					<Property key="Text_TextColour" value="0.8 0.7 0.2"/>
-					<UserString key="tip" value="#{TipParType2}"/>
-				</Widget>
-				<Widget type="ComboBox" skin="ComboBox" position="540 392 88 24" name="CmbParSmoke">
-					<Property key="Widget_Colour" value="0.7 0.7 0.7"/>
-					<Property key="Text_TextColour" value="0.7 0.7 0.7"/>
-					<UserString key="tip" value="#{TipParType3}"/>
-				</Widget>
-				<Widget type="Progress" skin="ProgressFill" position="32 167 560 25">
+				<Widget type="Progress" skin="ProgressFill" position="32 15 560 25">
 					<Property key="Widget_Colour" value="0 0.9 0"/>
 					<Property key="Widget_Alpha" value="0.3"/>
 					<Property key="Widget_Enabled" value="false"/>
 					<UserString key="tip" value="#{TipTireParType3}"/>
 				</Widget>
-				<Widget type="Progress" skin="ProgressFill" position="160 37 340 21">
-					<Property key="Widget_Colour" value="0.2 0.9 0.3"/>
-					<Property key="Widget_Alpha" value="0.3"/>
-					<Property key="Widget_Enabled" value="false"/>
+				<Widget type="StaticImage" skin="StaticImage" position="32 47 144 144" name="TerImgDiff">
+					<UserString key="tip" value="#{TipDiffusePrev}"/>
 				</Widget>
-				<Widget type="StaticText" skin="StaticText" position="548 328 132 24">
-					<Property key="Widget_Caption" value="#{ParAmount}"/>
-					<Property key="Text_TextColour" value="0.76 0.73 0.5"/>
+				<Widget type="StaticText" skin="StaticText" position="192 60 72 24">
+					<Property key="Widget_Caption" value="#{Diffuse}"/>
+					<Property key="Text_TextColour" value="0.4 1 0.4"/>
 				</Widget>
-				<Widget type="StaticText" skin="StaticText" position="646 394 74 24">
-					<Property key="Widget_Caption" value="#{Particles}"/>
-					<Property key="Text_TextColour" value="0.8 0.8 0.7"/>
+				<Widget type="ComboBox" skin="ComboBox" position="264 60 192 24" name="TexDiffuse">
+					<Property key="Widget_Colour" value="0.5 1 0.5"/>
+					<Property key="Text_TextColour" value="0.5 1 0.5"/>
+					<Property key="Edit_ReadOnly" value="true"/>
+					<UserString key="tip" value="#{TipDiffuseTex}"/>
 				</Widget>
-				<Widget type="StaticText" skin="StaticText" position="660 450 88 24">
-					<Property key="Widget_Caption" value="#{Surface}"/>
-					<Property key="Text_TextColour" value="0.9 0.7 0.85"/>
+				<Widget type="StaticText" skin="StaticText" position="192 90 72 24">
+					<Property key="Widget_Caption" value="#{TerNormal}"/>
+					<Property key="Text_TextColour" value="0.7 0.7 1"/>
 				</Widget>
-				<Widget type="Edit" skin="Edit" position="364 448 80 24" name="SuBumpWave">
-					<Property key="Text_TextColour" value="0.87 0.75 0.93"/>
-					<Property key="Widget_Colour" value="0.87 0.75 0.93"/>
-					<UserString key="tip" value="#{TipBumpFreq}"/>
+				<Widget type="ComboBox" skin="ComboBox" position="264 90 192 24" name="TexNormal">
+					<Property key="Widget_Colour" value="0.85 0.85 1"/>
+					<Property key="Text_TextColour" value="0.8 0.8 1"/>
+					<Property key="Edit_ReadOnly" value="true"/>
+					<UserString key="tip" value="#{TipNormalTex}"/>
 				</Widget>
-				<Widget type="Edit" skin="Edit" position="540 448 80 24" name="SuBumpAmp">
-					<Property key="Widget_Colour" value="0.9 0.7 1"/>
-					<Property key="Text_TextColour" value="0.9 0.7 1"/>
-					<UserString key="tip" value="#{TipBumpAmp}"/>
+				<Widget type="Button" skin="CheckBox" position="480 90 104 24" name="TexNormAuto">
+					<Property key="Widget_Caption" value="#{auto}"/>
+					<Property key="Text_TextColour" value="0.7 0.7 1"/>
+					<Property key="Widget_Colour" value="0.7 0.7 1"/>
+					<UserString key="tip" value="#{TipTexNormAuto}"/>
 				</Widget>
-				<Widget type="ComboBox" skin="ComboBox" position="100 448 112 24" name="SurfType">
-					<Property key="Widget_Colour" value="1 0.7 0.7"/>
-					<Property key="Text_TextColour" value="1 0.7 0.7"/>
-					<UserString key="tip" value="#{TipSurfType}"/>
+				<Widget type="StaticText" skin="StaticText" position="192 126 48 24">
+					<Property key="Widget_Caption" value="#{scale}"/>
+					<Property key="Text_TextColour" value="0.6 1 0.6"/>
 				</Widget>
-				<Widget type="Edit" skin="Edit" position="148 480 80 24" name="SuRollDrag">
-					<Property key="Widget_Colour" value="1 0.75 0.3"/>
-					<Property key="Text_TextColour" value="1 0.75 0.3"/>
-					<UserString key="tip" value="#{TipRollDrag}"/>
+				<Widget type="Edit" skin="Edit" position="240 126 72 24" name="edTerLScale">
+					<Property key="Widget_Colour" value="0.6 1 0.6"/>
+					<Property key="Text_TextColour" value="0.6 1 0.6"/>
 				</Widget>
-				<Widget type="Edit" skin="Edit" position="316 480 80 24" name="SuFrict">
-					<Property key="Widget_Colour" value="1 0.6 0.2"/>
-					<Property key="Text_TextColour" value="1 0.6 0.2"/>
-					<UserString key="tip" value="#{TipSurfFrict}"/>
+				<Widget type="HScroll" skin="HScroll" position="320 128 440 18" name="TerLScale">
+					<Property key="Widget_Colour" value="0.6 1 0.6"/>
+					<Property key="Scroll_MoveToClick" value="true"/>
+					<Property key="Scroll_Range" value="1000001"/>
+					<UserString key="tip" value="#{TipTexTiling}"/>
 				</Widget>
-				<Widget type="Edit" skin="Edit" position="524 480 80 24" name="SuFrict2">
-					<Property key="Widget_Colour" value="1 0.4 0"/>
-					<Property key="Text_TextColour" value="1 0.4 0"/>
-					<Property key="Widget_Alpha" value="0.45"/>
-					<UserString key="tip" value="#{TipSurfFrict2}"/>
-				</Widget>
-				<Widget type="StaticText" skin="StaticText" position="44 450 44 24">
-					<Property key="Widget_Caption" value="#{Type}"/>
-					<Property key="Text_TextColour" value="1 0.6 0.6"/>
-				</Widget>
-				<Widget type="StaticText" skin="StaticText" position="240 450 120 24">
-					<Property key="Widget_Caption" value="#{BumpWavelen}"/>
-					<Property key="Text_TextColour" value="0.8 0.7 1"/>
-				</Widget>
-				<Widget type="StaticText" skin="StaticText" position="460 450 76 24">
-					<Property key="Widget_Caption" value="#{Amplitude}"/>
-					<Property key="Text_TextColour" value="0.8 0.6 1"/>
-				</Widget>
-				<Widget type="StaticText" skin="StaticText" position="252 482 60 24">
-					<Property key="Widget_Caption" value="#{Friction}"/>
-					<Property key="Text_TextColour" value="1 0.6 0"/>
-				</Widget>
-				<Widget type="StaticText" skin="StaticText" position="420 482 100 24">
-					<Property key="Widget_Caption" value="#{FrictionTread}"/>
-					<Property key="Text_TextColour" value="1 0.4 0"/>
-				</Widget>
-				<Widget type="StaticText" skin="StaticText" position="44 482 92 24">
-					<Property key="Widget_Caption" value="#{RollingDrag}"/>
-					<Property key="Text_TextColour" value="1 0.7 0"/>
+				<Widget type="Tab" skin="Tab" position="24 200 736 320">
+					<Property key="Tab_ButtonAutoWidth" value="true"/>
+					<Property key="Widget_Colour" value="0.73 0.88 1"/>
+					<Property key="Widget_InheritsAlpha" value="false"/>
+					<Widget type="TabItem" skin="" position="4 26 727 288">
+						<Property key="Widget_Caption" value="#{BlendMap}"/>
+						<Widget type="StaticText" skin="StaticText" position="10 25 80 24">
+							<Property key="Widget_Caption" value="#{TerLAngMin}"/>
+							<Property key="Text_TextColour" value="0.6 0.9 0.5"/>
+						</Widget>
+						<Widget type="StaticText" skin="StaticText" position="98 25 56 24" name="TerLAngMinVal">
+							<Property key="Text_TextColour" value="0.6 0.9 0.5"/>
+						</Widget>
+						<Widget type="HScroll" skin="HScroll" position="162 25 360 16" name="TerLAngMin">
+							<Property key="Scroll_Range" value="1000001"/>
+							<Property key="Scroll_MoveToClick" value="true"/>
+							<Property key="Widget_Colour" value="0.6 0.9 0.5"/>
+							<UserString key="tip" value="#{TipTerAngMin}"/>
+						</Widget>
+						<Widget type="StaticText" skin="StaticText" position="10 50 80 24">
+							<Property key="Widget_Caption" value="#{TerLAngMax}"/>
+							<Property key="Text_TextColour" value="0.6 0.9 0.5"/>
+						</Widget>
+						<Widget type="StaticText" skin="StaticText" position="98 50 56 24" name="TerLAngMaxVal">
+							<Property key="Text_TextColour" value="0.6 0.9 0.5"/>
+						</Widget>
+						<Widget type="HScroll" skin="HScroll" position="162 50 360 16" name="TerLAngMax">
+							<Property key="Scroll_Range" value="1000001"/>
+							<Property key="Scroll_MoveToClick" value="true"/>
+							<Property key="Widget_Colour" value="0.6 0.9 0.5"/>
+							<UserString key="tip" value="#{TipTerLAngMax}"/>
+						</Widget>
+						<Widget type="StaticText" skin="StaticText" position="10 85 80 24">
+							<Property key="Widget_Caption" value="#{TerLHMin}"/>
+							<Property key="Text_TextColour" value="0.6 0.9 0.5"/>
+						</Widget>
+						<Widget type="StaticText" skin="StaticText" position="98 85 56 24" name="TerLHMinVal">
+							<Property key="Text_TextColour" value="0.6 0.9 0.5"/>
+						</Widget>
+						<Widget type="HScroll" skin="HScroll" position="162 85 360 16" name="TerLHMin">
+							<Property key="Scroll_Range" value="1000001"/>
+							<Property key="Scroll_MoveToClick" value="true"/>
+							<Property key="Widget_Colour" value="0.6 0.9 0.5"/>
+							<UserString key="tip" value="#{TipTerLHMin}"/>
+						</Widget>
+						<Widget type="StaticText" skin="StaticText" position="10 110 80 24">
+							<Property key="Widget_Caption" value="#{TerLHMax}"/>
+							<Property key="Text_TextColour" value="0.6 0.9 0.5"/>
+						</Widget>
+						<Widget type="StaticText" skin="StaticText" position="98 110 56 24" name="TerLHMaxVal">
+							<Property key="Text_TextColour" value="0.6 0.9 0.5"/>
+						</Widget>
+						<Widget type="HScroll" skin="HScroll" position="162 110 360 16" name="TerLHMax">
+							<Property key="Scroll_Range" value="1000001"/>
+							<Property key="Scroll_MoveToClick" value="true"/>
+							<Property key="Widget_Colour" value="0.6 0.9 0.5"/>
+							<UserString key="tip" value="#{TipTerLHMax}"/>
+						</Widget>
+						<Widget type="HScroll" skin="HScroll" position="162 145 160 16" name="TipTerLBNoise1">
+							<Property key="Scroll_Range" value="1000001"/>
+							<Property key="Scroll_MoveToClick" value="true"/>
+							<Property key="Widget_Colour" value="0.6 0.7 0.45"/>
+							<UserString key="tip" value="#{TipTerLBNoise1}"/>
+						</Widget>
+						<Widget type="HScroll" skin="HScroll" position="162 170 160 16" name="TipTerLBNoise2">
+							<Property key="Scroll_Range" value="1000001"/>
+							<Property key="Scroll_MoveToClick" value="true"/>
+							<Property key="Widget_Colour" value="0.6 0.7 0.5"/>
+							<UserString key="tip" value="#{TipTerLBNoise1}"/>
+						</Widget>
+						<Widget type="HScroll" skin="HScroll" position="162 195 160 16" name="TipTerLBNoise3">
+							<Property key="Scroll_Range" value="1000001"/>
+							<Property key="Scroll_MoveToClick" value="true"/>
+							<Property key="Widget_Colour" value="0.6 0.7 0.55"/>
+							<UserString key="tip" value="#{TipTerLBNoise1}"/>
+						</Widget>
+						<Widget type="HScroll" skin="HScroll" position="162 220 160 16" name="TipTerLBNoise4">
+							<Property key="Scroll_Range" value="1000001"/>
+							<Property key="Scroll_MoveToClick" value="true"/>
+							<Property key="Widget_Colour" value="0.6 0.7 0.6"/>
+							<UserString key="tip" value="#{TipTerLBNoise1}"/>
+						</Widget>
+					</Widget>
+					<Widget type="TabItem" skin="" position="4 26 727 288">
+						<Property key="Widget_Caption" value="#{Particles}"/>
+						<Widget type="Edit" skin="Edit" position="64 22 56 24" name="LDust">
+							<Property key="Widget_Colour" value="0.8 0.8 0.2"/>
+							<Property key="Text_TextColour" value="0.8 0.8 0.2"/>
+							<UserString key="tip" value="#{TipDustInt}"/>
+						</Widget>
+						<Widget type="Edit" skin="Edit" position="88 92 80 24" name="LDustS">
+							<Property key="Widget_Colour" value="0.8 0.8 0.2"/>
+							<Property key="Text_TextColour" value="0.8 0.8 0.2"/>
+							<UserString key="tip" value="#{TipDustSize}"/>
+						</Widget>
+						<Widget type="Edit" skin="Edit" position="224 22 56 24" name="LMud">
+							<Property key="Widget_Colour" value="0.8 0.7 0.2"/>
+							<Property key="Text_TextColour" value="0.8 0.7 0.2"/>
+							<UserString key="tip" value="#{TipMudInt}"/>
+						</Widget>
+						<Widget type="Edit" skin="Edit" position="388 22 56 24" name="LSmoke">
+							<Property key="Widget_Colour" value="0.7 0.7 0.7"/>
+							<Property key="Text_TextColour" value="0.7 0.7 0.7"/>
+							<UserString key="tip" value="#{TipSmokeInt}"/>
+						</Widget>
+						<Widget type="Edit" skin="Edit" position="96 132 160 24" name="LTrlClr">
+							<Property key="Widget_Colour" value="0.6 0.8 0"/>
+							<Property key="Text_TextColour" value="0.6 0.8 0"/>
+							<UserString key="tip" value="#{TipTrailClr}"/>
+						</Widget>
+						<Widget type="StaticText" skin="StaticText" position="16 24 48 24">
+							<Property key="Widget_Caption" value="#{dust}"/>
+							<Property key="Text_TextColour" value="0.8 0.8 0.2"/>
+						</Widget>
+						<Widget type="StaticText" skin="StaticText" position="16 94 72 24">
+							<Property key="Widget_Caption" value="#{DustSize}"/>
+							<Property key="Text_TextColour" value="0.8 0.8 0.2"/>
+						</Widget>
+						<Widget type="StaticText" skin="StaticText" position="168 24 48 23">
+							<Property key="Widget_Caption" value="#{mud}"/>
+							<Property key="Text_TextColour" value="0.8 0.7 0.2"/>
+						</Widget>
+						<Widget type="StaticText" skin="StaticText" position="332 24 52 24">
+							<Property key="Widget_Caption" value="#{smoke}"/>
+							<Property key="Text_TextColour" value="0.7 0.7 0.7"/>
+						</Widget>
+						<Widget type="StaticText" skin="StaticText" position="16 134 80 24">
+							<Property key="Widget_Caption" value="#{trailColor}"/>
+							<Property key="Text_TextColour" value="0.6 0.8 0"/>
+						</Widget>
+						<Widget type="StaticText" skin="StaticText" position="16 58 48 24">
+							<Property key="Widget_Caption" value="#{dust}"/>
+							<Property key="Text_TextColour" value="0.8 0.8 0.2"/>
+						</Widget>
+						<Widget type="StaticText" skin="StaticText" position="168 58 48 24">
+							<Property key="Widget_Caption" value="#{mud}"/>
+							<Property key="Text_TextColour" value="0.8 0.7 0.2"/>
+						</Widget>
+						<Widget type="StaticText" skin="StaticText" position="332 58 52 24">
+							<Property key="Text_TextColour" value="0.7 0.7 0.7"/>
+							<Property key="Widget_Caption" value="#{smoke}"/>
+						</Widget>
+						<Widget type="ComboBox" skin="ComboBox" position="64 56 96 24" name="CmbParDust">
+							<Property key="Widget_Colour" value="0.8 0.8 0.2"/>
+							<Property key="Text_TextColour" value="0.8 0.8 0.2"/>
+							<UserString key="tip" value="#{TipParType1}"/>
+						</Widget>
+						<Widget type="ComboBox" skin="ComboBox" position="224 56 92 24" name="CmbParMud">
+							<Property key="Widget_Colour" value="0.8 0.7 0.2"/>
+							<Property key="Text_TextColour" value="0.8 0.7 0.2"/>
+							<UserString key="tip" value="#{TipParType2}"/>
+						</Widget>
+						<Widget type="ComboBox" skin="ComboBox" position="388 56 92 24" name="CmbParSmoke">
+							<Property key="Widget_Colour" value="0.7 0.7 0.7"/>
+							<Property key="Text_TextColour" value="0.7 0.7 0.7"/>
+							<UserString key="tip" value="#{TipParType3}"/>
+						</Widget>
+						<Widget type="StaticText" skin="StaticText" position="500 24 132 24">
+							<Property key="Widget_Caption" value="#{ParAmount}"/>
+							<Property key="Text_TextColour" value="0.76 0.73 0.5"/>
+						</Widget>
+						<Widget type="StaticText" skin="StaticText" position="646 394 74 24">
+							<Property key="Widget_Caption" value="#{Particles}"/>
+							<Property key="Text_TextColour" value="0.8 0.8 0.7"/>
+						</Widget>
+						<Widget type="Widget" skin="Panel" position="0 -8 750 300">
+							<Property key="Widget_Alpha" value="0.4"/>
+							<Property key="Widget_Colour" value="1 0.9 0.5"/>
+						</Widget>
+					</Widget>
+					<Widget type="TabItem" skin="" position="4 26 727 288">
+						<Property key="Widget_Caption" value="#{Surface}"/>
+						<Widget type="StaticText" skin="StaticText" position="212 30 88 24">
+							<Property key="Widget_Caption" value="#{Surface}"/>
+							<Property key="Text_TextColour" value="0.9 0.7 0.85"/>
+						</Widget>
+						<Widget type="Edit" skin="Edit" position="140 68 80 24" name="SuBumpWave">
+							<Property key="Text_TextColour" value="0.87 0.75 0.93"/>
+							<Property key="Widget_Colour" value="0.87 0.75 0.93"/>
+							<UserString key="tip" value="#{TipBumpFreq}"/>
+						</Widget>
+						<Widget type="Edit" skin="Edit" position="324 68 80 24" name="SuBumpAmp">
+							<Property key="Widget_Colour" value="0.9 0.7 1"/>
+							<Property key="Text_TextColour" value="0.9 0.7 1"/>
+							<UserString key="tip" value="#{TipBumpAmp}"/>
+						</Widget>
+						<Widget type="ComboBox" skin="ComboBox" position="76 28 112 24" name="SurfType">
+							<Property key="Widget_Colour" value="1 0.7 0.7"/>
+							<Property key="Text_TextColour" value="1 0.7 0.7"/>
+							<UserString key="tip" value="#{TipSurfType}"/>
+						</Widget>
+						<Widget type="Edit" skin="Edit" position="116 108 80 24" name="SuRollDrag">
+							<Property key="Widget_Colour" value="1 0.75 0.3"/>
+							<Property key="Text_TextColour" value="1 0.75 0.3"/>
+							<UserString key="tip" value="#{TipRollDrag}"/>
+						</Widget>
+						<Widget type="Edit" skin="Edit" position="284 108 80 24" name="SuFrict">
+							<Property key="Widget_Colour" value="1 0.6 0.2"/>
+							<Property key="Text_TextColour" value="1 0.6 0.2"/>
+							<UserString key="tip" value="#{TipSurfFrict}"/>
+						</Widget>
+						<Widget type="Edit" skin="Edit" position="492 108 80 24" name="SuFrict2">
+							<Property key="Widget_Colour" value="1 0.4 0"/>
+							<Property key="Text_TextColour" value="1 0.4 0"/>
+							<Property key="Widget_Alpha" value="0.45"/>
+							<UserString key="tip" value="#{TipSurfFrict2}"/>
+						</Widget>
+						<Widget type="StaticText" skin="StaticText" position="20 30 52 24">
+							<Property key="Widget_Caption" value="#{Type}"/>
+							<Property key="Text_TextColour" value="1 0.6 0.6"/>
+						</Widget>
+						<Widget type="StaticText" skin="StaticText" position="20 70 120 24">
+							<Property key="Widget_Caption" value="#{BumpWavelen}"/>
+							<Property key="Text_TextColour" value="0.8 0.7 1"/>
+						</Widget>
+						<Widget type="StaticText" skin="StaticText" position="244 70 76 24">
+							<Property key="Widget_Caption" value="#{Amplitude}"/>
+							<Property key="Text_TextColour" value="0.8 0.6 1"/>
+						</Widget>
+						<Widget type="StaticText" skin="StaticText" position="220 110 60 24">
+							<Property key="Widget_Caption" value="#{Friction}"/>
+							<Property key="Text_TextColour" value="1 0.6 0"/>
+						</Widget>
+						<Widget type="StaticText" skin="StaticText" position="388 110 100 24">
+							<Property key="Widget_Caption" value="#{FrictionTread}"/>
+							<Property key="Text_TextColour" value="1 0.4 0"/>
+						</Widget>
+						<Widget type="StaticText" skin="StaticText" position="20 110 92 24">
+							<Property key="Widget_Caption" value="#{RollingDrag}"/>
+							<Property key="Text_TextColour" value="1 0.7 0"/>
+						</Widget>
+						<Widget type="Widget" skin="Panel" position="0 -8 750 300">
+							<Property key="Widget_Alpha" value="0.4"/>
+							<Property key="Widget_Colour" value="1 0.7 0.9"/>
+						</Widget>
+					</Widget>
 				</Widget>
 			</Widget>
 			<Widget type="TabItem" skin="" position="4 26 787 531">
@@ -2009,9 +2153,10 @@
 					<Property key="Text_TextColour" value="0.6 0.8 1"/>
 				</Widget>
 			</Widget>
+			<Widget type="TabItem" skin="" position="4 26 787 531"/>
 		</Widget>
 	</Widget>
-	<Widget type="Button" skin="Button" position_real="0.91 0.00 0.09 0.03" layer="Popup" name="Quit">
+	<Widget type="Button" skin="Button" position_real="0.909519 0 0.0899582 0.0289362" layer="Popup" name="Quit">
 		<Property key="Widget_Caption" value="#{Quit}"/>
 		<Property key="Widget_Colour" value="1 0.4 0.4"/>
 	</Widget>

@@ -103,6 +103,7 @@ protected:
 
 	int iBlendMaps, blendMapSize;	//  mtr from ter  . . . 
 	void initBlendMaps(Ogre::Terrain* terrin);
+	float Noise(float x, float y, float zoom, int octaves, float persistance);
 	void configureTerrainDefaults(class Ogre::Light* l);
 		
 	void changeShadows(), UpdPSSMMaterials(), setMtrSplits(Ogre::String sMtrName);
@@ -117,6 +118,8 @@ protected:
 	///<>  terrain edit, brush
 	void updBrush();  bool bTerUpd;  char sBrushTest[512];  int curBr;
 	float mBrSize[ED_ALL],mBrIntens[ED_ALL],mBrPow[ED_ALL], *mBrushData;
+	enum EBrShape {   BRS_Triangle=0, BRS_Sinus, BRS_Noise, BRS_ALL  } mBrShape[ED_ALL];
+	const static Ogre::String csBrShape[BRS_ALL];
 
 	bool getEditRect(Ogre::Vector3& pos, Ogre::Rect& brushrect, Ogre::Rect& maprect, int size, int& cx, int& cy);
 	void deform(Ogre::Vector3 &pos, float dtime, float brMul);
@@ -214,7 +217,7 @@ protected:
 	SLV(TerTriSize);  SLV(TerLScale);
 	MyGUI::EditPtr edTerTriSize, edTerLScale;
 	void editTerTriSize(MyGUI::EditPtr), editTerLScale(MyGUI::EditPtr);
-	void btnTerrainNew(WP), btnTerrainResize(WP);
+	void btnTerrainNew(WP), btnTerGenerate(WP);
 	MyGUI::StaticTextPtr valTerLAll;
 
 	//  particles

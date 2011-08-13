@@ -342,7 +342,7 @@ bool Scene::SaveXml(String file)
 
 TerData::TerData()
 {
-	hfData = NULL;
+	hfData = NULL;  hfNorm = NULL;
 	Default();
 }
 void TerData::Default()
@@ -362,12 +362,14 @@ void TerData::Default()
 	layerRoad.tclr = ColourValue(0,0,0,1);
 	
 	UpdVals();  UpdLayers();
-	//4097-! 2049  1025+ 513  257 -33t verts
-	// 1k 100 fps 300mb ram ok+  500mb trees
-	//lay: 1- 230 fps  2- 180 fps  3- 140 fps
+	//4097-! 2049  1025+ 513  257 -33t  verts
+	//layers:  1- 230 fps  2- 180 fps  3- 140 fps
 }
+
 TerLayer::TerLayer() : on(true), tiling(4.f),
-	dust(0.f),dustS(0.2), mud(0.f), smoke(0), tclr(ColourValue::Black) {  }
+	dust(0.f),dustS(0.2), mud(0.f), smoke(0), tclr(ColourValue::Black),
+	angMin(0.f),angMax(90.f), hMin(-300.f),hMax(300.f), noise(1)
+{	}
 
 void TerData::UpdVals()
 {

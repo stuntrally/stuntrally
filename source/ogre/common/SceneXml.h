@@ -9,10 +9,11 @@
 struct TerLayer		// terrain texture layer
 {
 	bool on;
-	float tiling;
+	float tiling;   // texture repeat
 	Ogre::String texFile, texNorm;  // textures
-	float dust, mud, dustS, smoke;
-	Ogre::ColourValue tclr;
+	float dust, mud, dustS, smoke;  // particles intensities
+	Ogre::ColourValue tclr;  // trail color
+	float angMin,angMax, hMin,hMax, noise;  // blend map, angle and height range, noise
 
 	TerLayer();
 };
@@ -22,7 +23,7 @@ class TerData	///  Terrain
 {
 public:	
 	//  height field
-	float* hfData;
+	float* hfData,*hfNorm;
 	
 	//  size
 	int iVertsX, iVertsY, iTerSize;  // size in vertices

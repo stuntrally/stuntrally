@@ -137,8 +137,7 @@ bool App::KeyPress(const CmdKey &arg)
 			return true;
 		}	break;
 
-		//  Wire Frame  F10, F
-		case KC_F:  if (!bGuiFocus || alt)
+		//  Wire Frame  F10
 		case KC_F10:
 		{	mbWireFrame = !mbWireFrame;
 			mCamera->setPolygonMode(mbWireFrame ? PM_WIREFRAME : PM_SOLID);
@@ -277,15 +276,23 @@ bool App::KeyPress(const CmdKey &arg)
 	}
 	}
 
+	//  ter brush shape
+	if (edMode == ED_Deform)
+	switch (arg.key)
+	{
+		case KC_K:	mBrShape[curBr] = (EBrShape)((mBrShape[curBr]-1 + BRS_ALL) % BRS_ALL);  updBrush();  break;
+		case KC_L:	mBrShape[curBr] = (EBrShape)((mBrShape[curBr]+1) % BRS_ALL);            updBrush();  break;
+	}
+
 	///  Common Keys  * * * * * * * * * * * * *
 	switch (arg.key)
 	{
 		case KC_TAB:	//  Camera / Edit mode
 		if (!bGuiFocus && !alt)  {
-#if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
-			SetCursor(0);
-			ShowCursor(0);  //?- cursor after alt-tab
-#endif
+			#if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
+				SetCursor(0);
+				ShowCursor(0);  //?- cursor after alt-tab
+			#endif
 			bMoveCam = !bMoveCam;  UpdVisGui();  }	break;
 
 		//  fog
@@ -298,6 +305,8 @@ bool App::KeyPress(const CmdKey &arg)
 		//  terrain
 		case KC_D:	if (bEdit()){  edMode = ED_Deform;  curBr = 0;  updBrush();  UpdEditWnds();  }	break;
 		case KC_S:	if (bEdit()){  edMode = ED_Smooth;  curBr = 1;  updBrush();  UpdEditWnds();  }	break;
+		//case KC_E:
+		//case KC_F: TODO: ter brush set height, filter, ramp ...
 
 		//  road
 		case KC_R:	if (bEdit()){  edMode = ED_Road;	UpdEditWnds();  }	break;

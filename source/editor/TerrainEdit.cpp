@@ -60,30 +60,56 @@ bool App::getEditRect(Vector3& pos, Rect& rcBrush, Rect& rcMap, int size,  int& 
 	return true;
 }
 
-//  after size change
+
+///  fill brush data (shape), after size change
+//--------------------------------------------------------------------------------------------------------------------------
 void App::updBrush()
 {
 	if (mBrSize[curBr] < 1)  mBrSize[curBr] = 1;
 	if (mBrSize[curBr] > BrushMaxSize)  mBrSize[curBr] = BrushMaxSize;
 
 	int size = (int)mBrSize[curBr], a = 0;
-	float s = size * 0.5f;
+	float s = size * 0.5f, s1 = 1.f/s;
 
-	for (int y = 0; y < size; ++y)
-	{	a = y * BrushMaxSize;
-		for (int x = 0; x < size; ++x, ++a)
-		{	// -1..1
-			float fx = ((float)x - s)/s;
-			float fy = ((float)y - s)/s;
-			float d = std::max(0.f, 1.f - float(sqrt(fx*fx + fy*fy)));
-			//float c = abs(d);
-			float c = sinf(d * PI_d*0.5f);
-			mBrushData[a] = powf(c, mBrPow[curBr]);
-	}	}
+	switch (mBrShape[curBr])
+	{
+	case BRS_Triangle:
+		for (int y = 0; y < size; ++y)
+		{	a = y * BrushMaxSize;
+			for (int x = 0; x < size; ++x,++a)
+			{	float fx = ((float)x - s)*s1, fy = ((float)y - s)*s1;  // -1..1
+				float d = std::max(0.f, 1.f - float(sqrt(fx*fx + fy*fy)));  // 0..1
+				
+				float c = abs(d);
+				mBrushData[a] = powf(c, mBrPow[curBr]);
+		}	}	break;
+
+	case BRS_Sinus:
+		for (int y = 0; y < size; ++y)
+		{	a = y * BrushMaxSize;
+			for (int x = 0; x < size; ++x,++a)
+			{	float fx = ((float)x - s)*s1, fy = ((float)y - s)*s1;  // -1..1
+				float d = std::max(0.f, 1.f - float(sqrt(fx*fx + fy*fy)));  // 0..1
+				
+				float c = sinf(d * PI_d*0.5f);
+				mBrushData[a] = powf(c, mBrPow[curBr]);
+		}	}	break;
+
+	case BRS_Noise:
+		for (int y = 0; y < size; ++y)
+		{	a = y * BrushMaxSize;
+			for (int x = 0; x < size; ++x,++a)
+			{	float fx = ((float)x - s)*s1, fy = ((float)y - s)*s1;  // -1..1
+				float d = std::max(0.f, 1.f - float(sqrt(fx*fx + fy*fy)));  // 0..1
+				
+				float c = d * pow( Noise(x*0.01f,y*0.01f, 0.3f * mBrPow[curBr], 4, 0.7f) * 1.1f, 2.f);
+				mBrushData[a] = c;
+		}	}	break;
+	}
 }
 
 
-///  ^~ Deform
+///  ^v Deform
 //--------------------------------------------------------------------------------------------------------------------------
 void App::deform(Vector3 &pos, float dtime, float brMul)
 {
@@ -104,16 +130,32 @@ void App::deform(Vector3 &pos, float dtime, float brMul)
 
 		for (int i = rcMap.left; i < rcMap.right; ++i)
 		{
-			///  pos float -> sin data compute here ...
-			fHmap[mapPos] += mBrushData[brPos] * its;
+			///  pos float -> sin data compute here (for small size brushes) ..
+			fHmap[mapPos] += mBrushData[brPos] * its;  // deform
+			//fHmap[mapPos] += (10.f - fHmap[mapPos]) * mBrushData[brPos] * its;
 			++mapPos;  ++brPos;
 		}
 	}
-
 	terrain->dirtyRect(rcMap);
 	bTerUpd = true;
 }
 
+
+///  -\ set Height
+//--------------------------------------------------------------------------------------------------------------------------
+//
+
+///  |_ Filter, low pass, par: freq
+//--------------------------------------------------------------------------------------------------------------------------
+//
+
+///  \\ Ramp, par: angle, height?
+//--------------------------------------------------------------------------------------------------------------------------
+//
+
+
+///  ~- Smooth
+//--------------------------------------------------------------------------------------------------------------------------
 void App::smooth(Vector3 &pos, float dtime)
 {
 	float avg = 0.0f;
@@ -124,10 +166,6 @@ void App::smooth(Vector3 &pos, float dtime)
 		smoothTer(pos, avg / (float)sample_count, dtime);
 }
 
-
-
-///  -- Smooth
-//-----------------------------------------------------------------------------------------
 void App::calcSmoothFactor(Vector3 &pos, float& avg, int& sample_count)
 {
 	Rect rcBrush, rcMap;  int cx,cy;
@@ -142,17 +180,15 @@ void App::calcSmoothFactor(Vector3 &pos, float& avg, int& sample_count)
 	for (int j = rcMap.top;j < rcMap.bottom; ++j)
 	{
 		mapPos = j * sc.td.iTerSize + rcMap.left;
-
 		for (int i = rcMap.left;i < rcMap.right; ++i)
 		{
 			avg += fHmap[mapPos];  ++mapPos;
 		}
 	}
-	
 	sample_count = (rcMap.right - rcMap.left) * (rcMap.bottom - rcMap.top);
 }
 
-//-----------------------------------------------------------------------------------------
+//--------------------------------------------------------------------------------------------------------------------------
 void App::smoothTer(Vector3 &pos, float avg, float dtime)
 {
 	Rect rcBrush, rcMap;  int cx,cy;
@@ -160,11 +196,8 @@ void App::smoothTer(Vector3 &pos, float avg, float dtime)
 		return;
 	
 	float *fHmap = terrain->getHeightData();
-
-	float mRatio = 1.f;
-	float brushPos;
+	float mRatio = 1.f, brushPos;
 	int mapPos;
-	
 	float mFactor = mBrIntens[curBr] * dtime * 0.1f;
 
 	for(int j = rcMap.top;j < rcMap.bottom;j++)
@@ -183,7 +216,6 @@ void App::smoothTer(Vector3 &pos, float avg, float dtime)
 			brushPos += mRatio;
 		}
 	}
-
 	terrain->dirtyRect(rcMap);
 	bTerUpd = true;
 }

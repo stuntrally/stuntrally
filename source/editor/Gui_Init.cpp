@@ -55,7 +55,7 @@ void App::InitGui()
 		IntSize w = mWndOpts->getSize();  // center
 		mWndOpts->setPosition((sx-w.width)*0.5f, (sy-w.height)*0.5f);
 		mWndTabs = (TabPtr)mWndOpts->findWidget("TabWnd");
-		//mWndTabs->setIndexSelected(3);  //def*--
+		mWndTabs->setIndexSelected(3);  //default*--
 
 		//  resize Options wnd
 		const int yN = 7;
@@ -192,11 +192,16 @@ void App::InitGui()
 	Slv(TerTriSize,	powf((sc.td.fTriangleSize -0.1f)/5.9f, 0.5f));
 	Slv(TerLScale, 0);
 	Btn("TerrainNew", btnTerrainNew);
-	Btn("TerrainResize", btnTerrainResize);
+	Btn("TerrainGenerate", btnTerGenerate);
 
+	///  [Layers]
 	Chk("TerLayOn", chkTerLayOn, 1);  chkTerLay = bchk;
 	valTerLAll = (StaticTextPtr)mWndOpts->findWidget("TerLayersAll");
 	Chk("TexNormAuto", chkTexNormAutoOn, 1);  chkTexNormAuto = bchk;
+	
+	//float angMin,angMax, hMin,hMax, noise;  // blend map, angle and height range, noise
+	//Slv()
+	
 	Ed(LDust, editLDust);	Ed(LDustS, editLDust);
 	Ed(LMud,  editLDust);	Ed(LSmoke, editLDust);
 	Ed(LTrlClr, editLTrlClr);
@@ -237,15 +242,10 @@ void App::InitGui()
 	///  [Tools]  ------------------------------------
 	Btn("TrackCopySel", btnTrkCopySel);
 	valTrkCpySel = (StaticTextPtr)mWndOpts->findWidget("TrkCopySelName");
-	Btn("CopySun", btnCopySun);
-	Btn("CopyTerHmap", btnCopyTerHmap);
-	Btn("CopyTerLayers", btnCopyTerLayers);
-	Btn("CopyVeget", btnCopyVeget);
-	Btn("CopyRoad", btnCopyRoad);
-	Btn("CopyRoadPars", btnCopyRoadPars);
-
-	Btn("DeleteRoad", btnDeleteRoad);
-	Btn("ScaleAll", btnScaleAll);
+	Btn("CopySun", btnCopySun);				Btn("CopyTerHmap", btnCopyTerHmap);
+	Btn("CopyTerLayers", btnCopyTerLayers);	Btn("CopyVeget", btnCopyVeget);
+	Btn("CopyRoad", btnCopyRoad);			Btn("CopyRoadPars", btnCopyRoadPars);
+	Btn("DeleteRoad", btnDeleteRoad);		Btn("ScaleAll", btnScaleAll);
 	Ed(ScaleAllMul, editScaleAllMul);
 	
 

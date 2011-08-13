@@ -20,6 +20,7 @@
 #include <OgreManualObject.h>
 using namespace Ogre;
 
+
 //  fill Blend maps
 //--------------------------------------------------------------------------------------------------------------------------
 void App::initBlendMaps(Ogre::Terrain* terrain)
@@ -34,10 +35,12 @@ void App::initBlendMaps(Ogre::Terrain* terrain)
 	delete[] blendMtr;  blendMtr = 0;
 	blendMtr = new char[t*t];
 	#endif
+	//LogO(String("Ter blendmap size: ")+toStr(t));
 
 	for (i=0; i < b-1; ++i)  {
 		bMap[i] = terrain->getLayerBlendMap(i+1);  pB[i] = bMap[i]->getBlendPointer();  }
 
+	float ft = t;
 	for (y = 0; y < t; ++y)
 	for (x = 0; x < t; ++x)
 	{
@@ -47,6 +50,15 @@ void App::initBlendMaps(Ogre::Terrain* terrain)
 		Real val1 = std::max(0.f, (float)pow(0.5f + 0.5f*cosf(18.f* fy)*sinf(18.f* fx), p) - val);
 		Real val2 = std::max(0.f, (float)pow(0.5f + 0.5f*cosf(22.f* fy)*sinf(21.f* fx), q) - val-val1);
 		Real val3 = std::max(0.f, (float)pow(0.5f + 0.5f*cosf(19.f* fy)*sinf(20.f* fx), q) - val-val1-val2);
+
+		//  read ter angle
+		#if 0
+		int tx = (float)(x)/ft * sc.td.iTerSize, ty = (float)(t-1-y)/ft * sc.td.iTerSize;
+		float a = sc.td.hfNorm[ty*sc.td.iTerSize + tx];
+		val  = std::max(0.f, std::min(1.f, val1 + a / 20.f ));
+		val1 = std::max(0.f, std::min(1.f, val2 + (a-20.f) / 20.f ));
+		//val2 = 0.f;
+		#endif
 
 		char mtr = 1;
 		if (b > 1)  {  *(pB[0])++ = val;   if (val > 0.5f)  mtr = 2;  }
@@ -64,9 +76,10 @@ void App::initBlendMaps(Ogre::Terrain* terrain)
 	iBlendMaps = b;  blendMapSize = t;
 	
 	//blendMap[0]->loadImage("blendmap1.png", ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME);  // v^
-	//Image bl0;  // ?-
-	//terrain->getLayerBlendTexture(1)->convertToImage(bl0);
-	//bl0.save("blend0.png");
+	/*Image bl0;  // ?-
+	terrain->getLayerBlendTexture(0)->convertToImage(bl0);
+	bl0.save("blend0.png");/**/
+	//terrain->getCompositeMapMaterial
 	
 	/*// set up a colour map
 	if (!terrain->getGlobalColourMapEnabled())
@@ -80,7 +93,7 @@ void App::initBlendMaps(Ogre::Terrain* terrain)
 }
 
 
-///  Setup Terrain
+///  Setup Terrain															n
 //--------------------------------------------------------------------------------------------------------------------------
 void App::configureTerrainDefaults(Light* l)
 {
@@ -144,8 +157,10 @@ void App::CreateTerrain(bool bNewHmap, bool bTer)
 	///  --------  fill HeightField data --------
 	if (bTer)
 	{
-		delete[] sc.td.hfData;
-		sc.td.hfData = new float[sc.td.iVertsX * sc.td.iVertsY];
+		QTimer ti;  ti.update();  // time
+
+		delete[] sc.td.hfData;	sc.td.hfData = new float[sc.td.iVertsX * sc.td.iVertsY];
+		delete[] sc.td.hfNorm;	sc.td.hfNorm = new float[sc.td.iVertsX * sc.td.iVertsY];
 		int siz = sc.td.iVertsX * sc.td.iVertsY * sizeof(float);
 
 		String name = TrkDir() + (bNewHmap ? "heightmap-new.f32" : "heightmap.f32");
@@ -173,12 +188,46 @@ void App::CreateTerrain(bool bNewHmap, bool bTer)
 			fi.read((char*)&sc.td.hfData[0], siz);
 			fi.close();
 		}
+
+		///  Hmap angles  .....
+		Real t = sc.td.fTriangleSize * 2.f;  int w = sc.td.iVertsX;
+		for (int j=1; j < sc.td.iVertsY-1; ++j)  // 1 from borders
+		{
+			int a = j * w;
+			for (int i=1; i < sc.td.iVertsX-1; ++i,++a)
+			{
+				Vector3 vx(t, sc.td.hfData[a+1]-sc.td.hfData[a-1], 0);  // x+1 - x-1
+				Vector3 vz(0, sc.td.hfData[a+w]-sc.td.hfData[a-w], t);	// z+1 - z-1
+				//vx.normalise();  vz.normalise();
+				Vector3 norm = -vx.crossProduct(vz);  norm.normalise();
+				sc.td.hfNorm[a] = Math::ACos(norm.y).valueDegrees();
+				if (i==j)
+					LogO(toStr(sc.td.hfNorm[a]));
+			}
+		}
+		//  only border[] vals
+		for (int j=0; j < sc.td.iVertsY; ++j)
+		{	int a = j * sc.td.iVertsX;
+			sc.td.hfNorm[a + sc.td.iVertsX-1] = 0.f;
+			sc.td.hfNorm[a] = 0.f;
+		}
+		for (int i=0; i < sc.td.iVertsX; ++i)
+		{	sc.td.hfNorm[i] = 0.f;
+			sc.td.hfNorm[(sc.td.iVertsY-1) * sc.td.iVertsX + i] = 0.f;
+		}
+
+		
+		ti.update();
+		float dt = ti.dt * 1000.f;
+		LogO(String("Hmap time: ") + toStr(dt) + " ms");
 	}
 	///
 
 	//  Terrain
 	if (bTer)
 	{
+		QTimer tm;  tm.update();  // time
+
 		if (!mTerrainGlobals)
 		mTerrainGlobals = OGRE_NEW TerrainGlobalOptions();
 		mTerrainGroup = OGRE_NEW TerrainGroup(mSceneMgr, Terrain::ALIGN_X_Z,
@@ -205,6 +254,10 @@ void App::CreateTerrain(bool bNewHmap, bool bTer)
 		}
 
 		mTerrainGroup->freeTemporaryResources();
+
+		tm.update();	//
+		float dt = tm.dt * 1000.f;
+		LogO(String("Ter time: ") + toStr(dt) + " ms");
 	}
 	
 	changeShadows();
