@@ -686,7 +686,6 @@
 				<Widget type="Tab" skin="Tab" position="24 200 736 320">
 					<Property key="Tab_ButtonAutoWidth" value="true"/>
 					<Property key="Widget_Colour" value="0.73 0.88 1"/>
-					<Property key="Widget_InheritsAlpha" value="false"/>
 					<Widget type="TabItem" skin="" position="4 26 727 288">
 						<Property key="Widget_Caption" value="#{BlendMap}"/>
 						<Widget type="StaticText" skin="StaticText" position="10 25 80 24">
@@ -741,25 +740,25 @@
 							<Property key="Widget_Colour" value="0.6 0.9 0.5"/>
 							<UserString key="tip" value="#{TipTerLHMax}"/>
 						</Widget>
-						<Widget type="HScroll" skin="HScroll" position="162 145 160 16" name="TipTerLBNoise1">
+						<Widget type="HScroll" skin="HScroll" position="162 145 160 16" name="TerLBNoise1">
 							<Property key="Scroll_Range" value="1000001"/>
 							<Property key="Scroll_MoveToClick" value="true"/>
 							<Property key="Widget_Colour" value="0.6 0.7 0.45"/>
 							<UserString key="tip" value="#{TipTerLBNoise1}"/>
 						</Widget>
-						<Widget type="HScroll" skin="HScroll" position="162 170 160 16" name="TipTerLBNoise2">
+						<Widget type="HScroll" skin="HScroll" position="162 170 160 16" name="TerLBNoise2">
 							<Property key="Scroll_Range" value="1000001"/>
 							<Property key="Scroll_MoveToClick" value="true"/>
 							<Property key="Widget_Colour" value="0.6 0.7 0.5"/>
 							<UserString key="tip" value="#{TipTerLBNoise1}"/>
 						</Widget>
-						<Widget type="HScroll" skin="HScroll" position="162 195 160 16" name="TipTerLBNoise3">
+						<Widget type="HScroll" skin="HScroll" position="162 195 160 16" name="TerLBNoise3">
 							<Property key="Scroll_Range" value="1000001"/>
 							<Property key="Scroll_MoveToClick" value="true"/>
 							<Property key="Widget_Colour" value="0.6 0.7 0.55"/>
 							<UserString key="tip" value="#{TipTerLBNoise1}"/>
 						</Widget>
-						<Widget type="HScroll" skin="HScroll" position="162 220 160 16" name="TipTerLBNoise4">
+						<Widget type="HScroll" skin="HScroll" position="162 220 160 16" name="TerLBNoise4">
 							<Property key="Scroll_Range" value="1000001"/>
 							<Property key="Scroll_MoveToClick" value="true"/>
 							<Property key="Widget_Colour" value="0.6 0.7 0.6"/>
@@ -849,7 +848,7 @@
 							<Property key="Text_TextColour" value="0.8 0.8 0.7"/>
 						</Widget>
 						<Widget type="Widget" skin="Panel" position="0 -8 750 300">
-							<Property key="Widget_Alpha" value="0.4"/>
+							<Property key="Widget_Alpha" value="0.2"/>
 							<Property key="Widget_Colour" value="1 0.9 0.5"/>
 						</Widget>
 					</Widget>
@@ -915,7 +914,7 @@
 							<Property key="Text_TextColour" value="1 0.7 0"/>
 						</Widget>
 						<Widget type="Widget" skin="Panel" position="0 -8 750 300">
-							<Property key="Widget_Alpha" value="0.4"/>
+							<Property key="Widget_Alpha" value="0.2"/>
 							<Property key="Widget_Colour" value="1 0.7 0.9"/>
 						</Widget>
 					</Widget>
@@ -1790,6 +1789,10 @@
 							<Property key="Widget_Caption" value="#{InputWheelPower}"/>
 							<Property key="Text_TextColour" value="0.8 0.9 1.0"/>
 						</Widget>
+						<Widget type="StaticText" skin="StaticText" position="376 110 200 20">
+							<Property key="Widget_Caption" value="#{InputWheelShape}"/>
+							<Property key="Text_TextColour" value="0.84 0.86 1.0"/>
+						</Widget>
 						<Widget type="StaticText" skin="StaticText" position="376 120 200 20">
 							<Property key="Widget_Caption" value=""/>
 							<Property key="Text_TextColour" value="0.8 0.9 1.0"/>
@@ -1917,7 +1920,21 @@
 							<Property key="Text_TextColour" value="0.8 0.9 1.0"/>
 							<Property key="Widget_Caption" value="#{InputRoadChkRadius}"/>
 						</Widget>
-						<Widget type="StaticText" skin="StaticText" position="32 318 216 20">
+
+						<Widget type="StaticText" skin="StaticText" position="32 322 304 20">
+							<Property key="Text_TextColour" value="0.7 0.85 1.0"/>
+							<Property key="Widget_Caption" value="#{InputRoadAngType}"/>
+						</Widget>
+						<Widget type="StaticText" skin="StaticText" position="182 322 304 20">
+							<Property key="Text_TextColour" value="0.7 0.85 1.0"/>
+							<Property key="Widget_Caption" value="#{InputRoadAngZero}"/>
+						</Widget>
+						<Widget type="StaticText" skin="StaticText" position="32 344 304 20">
+							<Property key="Text_TextColour" value="0.7 0.85 1.0"/>
+							<Property key="Widget_Caption" value="#{InputRoadAngSnap}"/>
+						</Widget>
+						
+						<Widget type="StaticText" skin="StaticText" position="32 406 216 20">
 							<Property key="Widget_Caption" value="#{InputRoadMostSel}"/>
 							<Property key="Text_TextColour" value="0.6 0.7 0.8"/>
 						</Widget>

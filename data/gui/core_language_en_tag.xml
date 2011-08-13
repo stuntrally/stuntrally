@@ -337,14 +337,22 @@
 	<Tag name="TriSize">Triangle size</Tag>
 	<Tag name="TerrainSize">Terrain size</Tag>
 	<Tag name="NewTerFlat">New flat</Tag>
-	<Tag name="ResizeTer">Resize</Tag>
+	<Tag name="NewTerGenerate">New Generate</Tag>
 	<Tag name="Enabled">Enabled</Tag>
 	<Tag name="Used">Used</Tag>
 	<Tag name="Layer">Layer</Tag>
+	<Tag name="Layers">Layers</Tag>
+	<Tag name="BlendMap">Blendmap</Tag>
 	<Tag name="Road">Road</Tag>
 	<Tag name="TerNormal">Normal</Tag>
 	<Tag name="auto">Auto</Tag>
 	<Tag name="scale">Scale</Tag>
+
+	<Tag name="TerLAngMin">Angle Min</Tag>
+	<Tag name="TerLAngMax">Angle Max</Tag>
+	<Tag name="TerLHMin">Height Min</Tag>
+	<Tag name="TerLHMax">Height Max</Tag>
+
 	<Tag name="DustSize">dust size</Tag>
 	<Tag name="dust">dust</Tag>
 	<Tag name="mud">mud</Tag>
@@ -432,6 +440,7 @@
 	<Tag name="InputWheelSize">,=  (or Wheel)  -  Size</Tag>
 	<Tag name="InputWheelForce">[,]  (or shift-Wheel)  -  Force (intensity)</Tag>
 	<Tag name="InputWheelPower">; &apos;  (or alt-Wheel)  -  Power (shape)</Tag>
+	<Tag name="InputWheelShape">K,L  -  Brush shape</Tag>
 	<Tag name="InputMinimapType">alt-F2,F3 - Prev,next minimap type</Tag>
 	<Tag name="InputBrushParams">Brush parameters</Tag>
 	<Tag name="InputRoadEdit">R - edit road mode</Tag>
@@ -461,7 +470,10 @@
 	<Tag name="InputRoadColumn">End - on/off column</Tag>
 	<Tag name="InputRoadOnTer">Home - toggle on Terrain snap</Tag>
 	<Tag name="InputRoadPipeAngle">[,]   - pipe angle (no pipe when 0)</Tag>
-	<Tag name="InputRoadChkRadius">K, L   - checkpoint radius (chkR 0 - none)</Tag>
+	<Tag name="InputRoadChkRadius">K,L   - checkpoint radius (chkR 0 - none)</Tag>
+	<Tag name="InputRoadAngType">5,6   - angles type</Tag>
+	<Tag name="InputRoadAngSnap">7,8   - angles snap</Tag>
+	<Tag name="InputRoadAngZero">shift-6  - zero angles</Tag>
 	<Tag name="InputRoadMostSel">most work also on selection</Tag>
 	<Tag name="InputRoadCopySel">ctrl-Ins - copy selection   ctrl-Del - delete sel.</Tag>
 	<Tag name="InputRoadShiftReverse">shift-Ins - paste   shift-ctrl-Ins - reversed</Tag>
