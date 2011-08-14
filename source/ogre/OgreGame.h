@@ -98,6 +98,7 @@ protected:
 	void CreateCar();
 	void CreateTrack(), CreateRacingLine(), CreateMinimap(), CreateRoadBezier();
 	void CreateTerrain(bool bNewHmap=false, bool bTer=true), CreateBltTerrain();
+	void GetTerAngles(int xb,int yb, int xe,int ye);
 	void CreateTrees(), CreateRoad(), CreateProps();
 	void CreateSkyDome(Ogre::String sMater, Ogre::Vector3 scale);
 	void NewGame();  void NewGameDoLoad(); bool IsTerTrack();

@@ -100,7 +100,8 @@ void App::destroyScene()
 	if (grass) {  delete grass->getPageLoader();  delete grass;  grass=0;   }
 	if (trees) {  delete trees->getPageLoader();  delete trees;  trees=0;   }
 
-	delete[] sc.td.hfData;
+	delete[] sc.td.hfHeight;
+	delete[] sc.td.hfAngle;
 
 	BaseApp::destroyScene();
 }

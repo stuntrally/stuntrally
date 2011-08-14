@@ -116,7 +116,8 @@ void App::destroyScene()
 
 	if (pGame)
 		pGame->End();
-	delete[] sc.td.hfData;
+	delete[] sc.td.hfHeight;
+	delete[] sc.td.hfAngle;
 	delete[] blendMtr;  blendMtr = 0;
 
 	BaseApp::destroyScene();

@@ -125,7 +125,7 @@ void App::updateBrushPrv(bool first)
 		{	float fx = ((float)x - s)*s1, fy = ((float)y - s)*s1;  // -1..1
 			float d = std::max(0.f, 1.f - float(sqrt(fx*fx + fy*fy)));  // 0..1
 
-			float c = d * pow( abs(Noise(x*s1+0.5f*s1,y*s1+0.5f*s1, fQ, oct, 0.5f)), fP) * 0.8f;
+			float c = d * pow( abs(Noise(x*s1,y*s1, fQ, oct, 0.5f)), fP*0.5f) * 0.9f;
 			
 			//float aa = GetAngle(fx, fy), am = 2*PI_d;
 			//float n = aa/am		 * Noise(     aa*0.1f, 0.1f * fP, 3, 0.7f)
@@ -182,7 +182,7 @@ void App::updBrush()
 			{	float fx = ((float)x - s)*s1, fy = ((float)y - s)*s1;  // -1..1
 				float d = std::max(0.f, 1.f - float(sqrt(fx*fx + fy*fy)));  // 0..1
 				
-				float c = d * pow( abs(Noise(x*s1,y*s1, fQ, oct, 0.5f)), fP);
+				float c = d * pow( abs(Noise(x*s1,y*s1, fQ, oct, 0.5f)), fP*0.5f);
 
 				//float aa = GetAngle(fx, fy);
 				//float c = d * pow( Noise(aa*0.01f,aa*0.1f, 0.3f * fP, 1, 0.7f) * 1.1f, 2.f);  //star-
@@ -202,7 +202,7 @@ void App::deform(Vector3 &pos, float dtime, float brMul)
 		return;
 	
 	float *fHmap = terrain->getHeightData();
-		
+	
 	float its = mBrIntens[curBr] * dtime * brMul;
 	int mapPos, brPos, jj = cy;
 	
@@ -220,6 +220,8 @@ void App::deform(Vector3 &pos, float dtime, float brMul)
 		}
 	}
 	terrain->dirtyRect(rcMap);
+	GetTerAngles(rcMap.left,rcMap.top, rcMap.right,rcMap.bottom);
+	//initBlendMaps(terrain);
 	bTerUpd = true;
 }
 
@@ -251,6 +253,7 @@ void App::height(Vector3 &pos, float dtime, float brMul)
 		}
 	}
 	terrain->dirtyRect(rcMap);
+	GetTerAngles(rcMap.left,rcMap.top, rcMap.right,rcMap.bottom);
 	bTerUpd = true;
 }
 
@@ -327,6 +330,7 @@ void App::smoothTer(Vector3 &pos, float avg, float dtime)
 		}
 	}
 	terrain->dirtyRect(rcMap);
+	GetTerAngles(rcMap.left,rcMap.top, rcMap.right,rcMap.bottom);
 	bTerUpd = true;
 }
 

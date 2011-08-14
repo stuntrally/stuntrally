@@ -177,7 +177,7 @@ void App::LoadScene()  // 3
 	if (ter)  // load scene
 		sc.LoadXml(TrkDir()+"scene.xml");
 	else
-	{	sc.Default();  sc.td.hfData = NULL;  }	
+	{	sc.Default();  sc.td.hfHeight = NULL;  sc.td.hfAngle = NULL;  }  //?...
 	
 	//  rain  -----
 	if (!pr && sc.rainEmit > 0)  {

@@ -23,7 +23,7 @@ using namespace Ogre;
 
 //  fill Blend maps
 //--------------------------------------------------------------------------------------------------------------------------
-inline float linRange(float x, float xa, float xb, float s)  // min, max, smooth range
+inline float linRange(const float& x, const float& xa, const float& xb, const float& s)  // min, max, smooth range
 //     xa  xb
 //1    .___.
 //0__./     \.___
@@ -47,8 +47,8 @@ void App::initBlendMaps(Ogre::Terrain* terrain)
 	float* pB[6];	TerrainLayerBlendMap* bMap[6];
 	Ogre::uint16 t = terrain->getLayerBlendMapSize(), x,y;
 	//LogO(String("Ter blendmap size: ")+toStr(t));
-	//const float f = 0.8f / 2048 * sc.td.fTriangleSize * 3.14f;  //par-
-	const float f = 0.8f / t * 4 * sc.td.fTerWorldSize / t * 3.14f;  //par-
+	//const float f = 0.8f / t * 3.14f;  //par-
+	const float f = 0.8f / t * 2 * sc.td.fTerWorldSize / t * 3.14f;  //par-
 
 	//  mtr map
 	#ifndef ROAD_EDITOR
@@ -95,10 +95,9 @@ void App::initBlendMaps(Ogre::Terrain* terrain)
 		//  ter angle and height ranges
 		#if 1
 		int tx = (float)(x)/ft * w, ty = (float)(t-1-y)/ft * w, tt = ty * w + tx;
-		float a = sc.td.hfNorm[tt], h = sc.td.hfData[tt];
-		for (i=0; i < b; ++i)  {  const int i1 = i+1;
-			val[i] = bNOnly[i] ? val[i1]*noise[i] :
-				m01( val[i1]*noise[i] + linRange(a,aMin[i1],aMax[i1],aSm[i1]) * linRange(h,hMin[i1],hMax[i1],hSm[i1]) );  }
+		float a = sc.td.hfAngle[tt], h = sc.td.hfHeight[tt];
+		for (i=0; i < b; ++i)  if (!bNOnly[i]) {  const int i1 = i+1;
+			val[i] = m01( val[i1]*noise[i] + linRange(a,aMin[i1],aMax[i1],aSm[i1]) * linRange(h,hMin[i1],hMax[i1],hSm[i1]) );  }
 		#endif
 
 		char mtr = 1;
@@ -111,6 +110,7 @@ void App::initBlendMaps(Ogre::Terrain* terrain)
 	}	}
 	
 	for (i=0; i < b; ++i)  {
+		//bMap[i]->dirtyRect();
 		bMap[i]->dirty();  bMap[i]->update();  }
 
 	delete pM;
@@ -136,6 +136,51 @@ void App::initBlendMaps(Ogre::Terrain* terrain)
 	ti.update();  /// time
 	float dt = ti.dt * 1000.f;
 	LogO(String("::: Time Blendmap: ") + toStr(dt) + " ms");
+}
+
+
+///  Hmap angles  .....
+void App::GetTerAngles(int xb,int yb, int xe,int ye)
+{
+	int wx = sc.td.iVertsX, wy = sc.td.iVertsY;
+	bool full = (xe-xb == wx-1) && (ye-yb == wy-1);
+	int xB = std::max(1,xb), xE = std::min(wx-1,xe);
+	int yB = std::max(1,yb), yE = std::min(wy-1,ye);
+	float* hf = terrain ? terrain->getHeightData() : sc.td.hfHeight;
+
+	Real t = sc.td.fTriangleSize * 2.f;
+	terMaxAng = 0.f;
+	for (int j = yB; j < yE; ++j)  // 1 from borders
+	{
+		int a = j * wx + xB;
+		for (int i = xB; i < xE; ++i,++a)
+		{
+			Vector3 vx(t, hf[a+1] - hf[a-1], 0);  // x+1 - x-1
+			Vector3 vz(0, hf[a+wx] - hf[a-wx], t);	// z+1 - z-1
+			Vector3 norm = -vx.crossProduct(vz);  norm.normalise();
+			Real ang = Math::ACos(norm.y).valueDegrees();
+
+			sc.td.hfAngle[a] = ang;
+			if (ang > terMaxAng)  terMaxAng = ang;
+			//if (i==j)
+			//	LogO(toStr(sc.td.hfNorm[a]));
+		}
+	}
+	if (!full)  return;
+	//  only corner[] vals
+	//sc.td.hfNorm[0] = 0.f;
+	//  only border[] vals  todo: like above
+	for (int j=0; j < wy; ++j)  // |
+	{	int a = j * wx;
+		sc.td.hfAngle[a + wx-1] = 0.f;
+		sc.td.hfAngle[a] = 0.f;
+	}
+	int a = (wy-1) * wx;
+	for (int i=0; i < wx; ++i,++a)  // --
+	{	sc.td.hfAngle[i] = 0.f;
+		sc.td.hfAngle[a] = 0.f;
+	}
+	//LogO(String("Terrain max angle: ") + toStr(terMaxAng));
 }
 
 
@@ -206,8 +251,8 @@ void App::CreateTerrain(bool bNewHmap, bool bTer)
 		QTimer ti;  ti.update();  /// time
 
 		int wx = sc.td.iVertsX, wy = sc.td.iVertsY, wxy = wx * wy;  //wy=wx
-		delete[] sc.td.hfData;	sc.td.hfData = new float[wxy];
-		delete[] sc.td.hfNorm;	sc.td.hfNorm = new float[wxy];
+		delete[] sc.td.hfHeight;  sc.td.hfHeight = new float[wxy];
+		delete[] sc.td.hfAngle;   sc.td.hfAngle = new float[wxy];
 		int siz = wxy * sizeof(float);
 
 		String name = TrkDir() + (bNewHmap ? "heightmap-new.f32" : "heightmap.f32");
@@ -218,13 +263,13 @@ void App::CreateTerrain(bool bNewHmap, bool bTer)
 			{
 				int a = j * wx;
 				for (int i=0; i < wx; ++i,++a)
-					sc.td.hfData[a] = sc.td.getHeight(i,j);
+					sc.td.hfHeight[a] = sc.td.getHeight(i,j);
 			}
 			if (1)	// save f32 HMap
 			{
 				std::ofstream of;
 				of.open(name.c_str(), std::ios_base::binary);
-				of.write((const char*)&sc.td.hfData[0], siz);
+				of.write((const char*)&sc.td.hfHeight[0], siz);
 				of.close();
 			}
 		}
@@ -232,44 +277,12 @@ void App::CreateTerrain(bool bNewHmap, bool bTer)
 		{
 			std::ifstream fi;
 			fi.open(name.c_str(), std::ios_base::binary);
-			fi.read((char*)&sc.td.hfData[0], siz);
+			fi.read((char*)&sc.td.hfHeight[0], siz);
 			fi.close();
 		}
 
-		///  Hmap angles  .....
-		Real t = sc.td.fTriangleSize * 2.f;
-		terMaxAng = 0.f;
-		for (int j=1; j < wy-1; ++j)  // 1 from borders
-		{
-			int a = j * wx;
-			for (int i=1; i < wx-1; ++i,++a)
-			{
-				Vector3 vx(t, sc.td.hfData[a+1]-sc.td.hfData[a-1], 0);  // x+1 - x-1
-				Vector3 vz(0, sc.td.hfData[a+wx]-sc.td.hfData[a-wx], t);	// z+1 - z-1
-				Vector3 norm = -vx.crossProduct(vz);  norm.normalise();
-				Real ang = Math::ACos(norm.y).valueDegrees();
-
-				sc.td.hfNorm[a] = ang;
-				if (ang > terMaxAng)  terMaxAng = ang;
-				//if (i==j)
-				//	LogO(toStr(sc.td.hfNorm[a]));
-			}
-		}
-		//  only corner[] vals
-		//sc.td.hfNorm[0] = 0.f;
-		//  only border[] vals  todo: like above
-		for (int j=0; j < wy; ++j)  // |
-		{	int a = j * wx;
-			sc.td.hfNorm[a + wx-1] = 0.f;
-			sc.td.hfNorm[a] = 0.f;
-		}
-		int a = (wy-1) * wx;
-		for (int i=0; i < wx; ++i,++a)  // --
-		{	sc.td.hfNorm[i] = 0.f;
-			sc.td.hfNorm[a] = 0.f;
-		}
-		//LogO(String("Terrain max angle: ") + toStr(terMaxAng));
-
+		GetTerAngles(1,1,wx-1,wy-1);
+		
 		ti.update();  /// time
 		float dt = ti.dt * 1000.f;
 		LogO(String("::: Time Hmap: ") + toStr(dt) + " ms");
@@ -289,8 +302,8 @@ void App::CreateTerrain(bool bNewHmap, bool bTer)
 
 		configureTerrainDefaults(sun);
 
-		if (sc.td.hfData)
-			mTerrainGroup->defineTerrain(0,0, sc.td.hfData);
+		if (sc.td.hfHeight)
+			mTerrainGroup->defineTerrain(0,0, sc.td.hfHeight);
 		else
 			mTerrainGroup->defineTerrain(0,0, 0.f);
 
@@ -322,7 +335,7 @@ void App::CreateTerrain(bool bNewHmap, bool bTer)
 void App::CreateBltTerrain()
 {
 	btHeightfieldTerrainShape* hfShape = new btHeightfieldTerrainShape(
-		sc.td.iVertsX, sc.td.iVertsY, sc.td.hfData, sc.td.fTriangleSize,
+		sc.td.iVertsX, sc.td.iVertsY, sc.td.hfHeight, sc.td.fTriangleSize,
 		/*>?*/-200.f,200.f, 2, PHY_FLOAT,false);
 	
 	hfShape->setUseDiamondSubdivision(true);
