@@ -121,9 +121,10 @@ protected:
 
 	int iBlendMaps, blendMapSize;	//  mtr from ter  . . . 
 	char* blendMtr;  // mtr [blendMapSize x blendMapSize]
-	void initBlendMaps(Ogre::Terrain* terrain);
+	void initBlendMaps(Ogre::Terrain* terrain);  bool noBlendUpd;
 	void configureTerrainDefaults(Ogre::Light* l);
 	float Noise(float x, float y, float zoom, int octaves, float persistance);
+	Ogre::Real terMaxAng;
 		
 	void changeShadows(), UpdPSSMMaterials(), setMtrSplits(Ogre::String sMtrName);
 	Ogre::Vector4 splitPoints;  Ogre::ShadowCameraSetupPtr mPSSMSetup;
@@ -141,7 +142,7 @@ public:
 	class SplineRoad* road;
 protected:
 	///  Gui  ---------------------------------------------------------------------------
-	void InitGui(), toggleGui();
+	void InitGui(), toggleGui();  bool bGI;
 	void UpdGuiRdStats(const SplineRoad* rd, const Scene& sc, float time), ReadTrkStats();
 	void UpdCarClrSld(bool upd=true);  bool bUpdCarClr;
 

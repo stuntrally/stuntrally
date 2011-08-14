@@ -105,6 +105,7 @@ void App::tabTerLayer(TabPtr wp, size_t id)
 	bTerLay = id < sc.td.ciNumLay;
 	float scale = 0.f;
 	TerLayer* lay = &sc.td.layerRoad;
+	noBlendUpd = true;
 
 	//if (tabsTerLayers->getItemSelected()->getCaption().asUTF8() == "Road")
 	cmbTexDiff->setVisible(bTerLay);  cmbTexNorm->setVisible(bTerLay);
@@ -127,6 +128,14 @@ void App::tabTerLayer(TabPtr wp, size_t id)
 		//  tex image
 	    imgTexDiff->setImageTexture(sTex + "_prv.png");
 	    scale = lay->tiling;
+
+		//  Ter Blendmap
+		HScrollPtr sl;  size_t v;
+		Slv(TerLAngMin, lay->angMin/90.f);  Slv(TerLHMin, (lay->hMin+300.f)/600.f);
+		Slv(TerLAngMax, lay->angMax/90.f);	Slv(TerLHMax, (lay->hMax+300.f)/600.f);
+		Slv(TerLAngSm, lay->angSm/90.f);	Slv(TerLHSm, lay->hSm/200.f);
+		Slv(TerLNoise, (lay->noise+2.f)/4.f);
+		chkTerLNoiseOnly->setStateCheck(lay->bNoiseOnly);
 	}
 	//  scale layer
 	HScrollPtr sl = (HScrollPtr)mWndOpts->findWidget("TerLScale");
@@ -150,6 +159,7 @@ void App::tabTerLayer(TabPtr wp, size_t id)
 	edSuRollDrag->setCaption(toStr(su[i].rollingDrag));
 	edSuFrict->setCaption(toStr(su[i].frictionNonTread));
 	edSuFrict2->setCaption(toStr(su[i].frictionTread));  //-not used, rollResistanceCoefficient too
+	noBlendUpd = false;
 }
 
 void App::editTerTriSize(EditPtr ed)
@@ -292,7 +302,7 @@ void App::editTerLScale(EditPtr ed)
 void App::slTerLScale(SL)  //  scale layer
 {
 	Real v = 2.0f + 9.0f * powf(val/res, 1.5f);  // 0.1 + 89.9, 1 + 19
-	if (bTerLay)  sc.td.layersAll[idTerLay].tiling = v;
+	if (bTerLay && bGI)  sc.td.layersAll[idTerLay].tiling = v;
 	if (edTerLScale)  edTerLScale->setCaption(toStr(v));  // set edit
 }
 
@@ -302,31 +312,62 @@ void App::slTerLScale(SL)  //  scale layer
 void App::slTerLAngMin(SL)
 {
 	float v = 90.f * val/res;
-	if (bTerLay)  sc.td.layersAll[idTerLay].angMin = v;
+	if (bTerLay && bGI)  sc.td.layersAll[idTerLay].angMin = v;
 	if (valTerLAngMin){	Fmt(s, "%4.0f", v);  valTerLAngMin->setCaption(s);  }
-	if (terrain)
-		initBlendMaps(terrain);
+	if (terrain && bGI && !noBlendUpd)  bTerUpdBlend = true;  //initBlendMaps(terrain);
 }
 void App::slTerLAngMax(SL)
 {
 	float v = 90.f * val/res;
-	if (bTerLay)  sc.td.layersAll[idTerLay].angMax = v;
+	if (bTerLay && bGI)  sc.td.layersAll[idTerLay].angMax = v;
 	if (valTerLAngMax){	Fmt(s, "%4.0f", v);  valTerLAngMax->setCaption(s);  }
-	if (terrain)
-		initBlendMaps(terrain);
+	if (terrain && bGI && !noBlendUpd)  bTerUpdBlend = true;
+}
+void App::slTerLAngSm(SL)
+{
+	float v = 90.f * val/res;
+	if (bTerLay && bGI)  sc.td.layersAll[idTerLay].angSm = v;
+	if (valTerLAngSm){	Fmt(s, "%4.0f", v);  valTerLAngSm->setCaption(s);  }
+	if (terrain && bGI && !noBlendUpd)  bTerUpdBlend = true;
 }
 
 void App::slTerLHMin(SL)
 {
-	float v = 300.f * val/res;
-	if (bTerLay)  sc.td.layersAll[idTerLay].hMin = v;
+	float v = -300.f + 600.f * val/res;
+	if (bTerLay && bGI)  sc.td.layersAll[idTerLay].hMin = v;
 	if (valTerLHMin){	Fmt(s, "%4.0f", v);  valTerLHMin->setCaption(s);  }
+	if (terrain && bGI && !noBlendUpd)  bTerUpdBlend = true;
 }
 void App::slTerLHMax(SL)
 {
-	float v = 300.f * val/res;
-	if (bTerLay)  sc.td.layersAll[idTerLay].hMax = v;
+	float v = -300.f + 600.f * val/res;
+	if (bTerLay && bGI)  sc.td.layersAll[idTerLay].hMax = v;
 	if (valTerLHMax){	Fmt(s, "%4.0f", v);  valTerLHMax->setCaption(s);  }
+	if (terrain && bGI && !noBlendUpd)  bTerUpdBlend = true;
+}
+void App::slTerLHSm(SL)
+{
+	float v = 200.f * val/res;
+	if (bTerLay && bGI)  sc.td.layersAll[idTerLay].hSm = v;
+	if (valTerLHSm){	Fmt(s, "%4.0f", v);  valTerLHSm->setCaption(s);  }
+	if (terrain && bGI && !noBlendUpd)  bTerUpdBlend = true;
+}
+
+void App::slTerLNoise(SL)
+{
+	float v = -2.f + 4.f * val/res;
+	if (bTerLay && bGI)  sc.td.layersAll[idTerLay].noise = v;
+	if (valTerLNoise){	Fmt(s, "%4.2f", v);  valTerLNoise->setCaption(s);  }
+	if (terrain && bGI && !noBlendUpd)  bTerUpdBlend = true;
+}
+
+void App::chkTerLNoiseOnlyOn(WP wp)
+{
+	if (!bTerLay)  return;
+	sc.td.layersAll[idTerLay].bNoiseOnly = !sc.td.layersAll[idTerLay].bNoiseOnly;
+	ButtonPtr chk = wp->castType<Button>();
+	chk->setStateCheck(sc.td.layersAll[idTerLay].bNoiseOnly);
+	if (terrain && bGI && !noBlendUpd)  bTerUpdBlend = true;
 }
 
 

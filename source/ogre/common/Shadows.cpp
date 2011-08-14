@@ -4,11 +4,13 @@
 	#include "../../editor/OgreApp.h"
 	#include "../../editor/settings.h"
 	#include "../../road/Road.h"
+	#include "../QTimer.h"
 #else
 	#include "../OgreGame.h"
 	#include "../vdrift/settings.h"
 	#include "../road/Road.h"
 	#include "../SplitScreen.h"
+	#include "../QTimer.h"
 #endif
 #include <OgreTerrainMaterialGeneratorA.h>
 #include <OgreTerrain.h>

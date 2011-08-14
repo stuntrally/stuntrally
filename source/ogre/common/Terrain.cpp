@@ -23,21 +23,38 @@ using namespace Ogre;
 
 //  fill Blend maps
 //--------------------------------------------------------------------------------------------------------------------------
+inline float linRange(float x, float xa, float xb, float s)  // min, max, smooth range
+//     xa  xb
+//1    .___.
+//0__./     \.___
+//   xa-s    xb+s
+{
+	float r = std::max(0.1f, xb-xa);  // range
+	if (x <= xa-s || x >= xb+s)  return 0.f;
+	if (x >= xa && x <= xb)  return 1.f;
+	if (x < xa)  return (x-xa)/s+1;
+	if (x > xb)  return (xb-x)/s+1;
+	return 0.f;
+}
+
 void App::initBlendMaps(Ogre::Terrain* terrain)
 {
 	QTimer ti;  ti.update();  /// time
+	//for (float f=-1.f; f<=2.f; f+=0.02f)  // test
+	//	LogO(toStr(f) + " = " + toStr( linRange(f,-0.5f,1.5f,0.2f) ));
 
 	int b = sc.td.layers.size()-1, i;
 	float* pB[6];	TerrainLayerBlendMap* bMap[6];
 	Ogre::uint16 t = terrain->getLayerBlendMapSize(), x,y;
-	const float f = 0.8f / t * 3.14f;  //par-
+	//LogO(String("Ter blendmap size: ")+toStr(t));
+	//const float f = 0.8f / 2048 * sc.td.fTriangleSize * 3.14f;  //par-
+	const float f = 0.8f / t * 4 * sc.td.fTerWorldSize / t * 3.14f;  //par-
 
 	//  mtr map
 	#ifndef ROAD_EDITOR
 	delete[] blendMtr;  blendMtr = 0;
 	blendMtr = new char[t*t];
 	#endif
-	//LogO(String("Ter blendmap size: ")+toStr(t));
 
 	for (i=0; i < b; ++i)  {
 		bMap[i] = terrain->getLayerBlendMap(i+1);  pB[i] = bMap[i]->getBlendPointer();  }
@@ -49,22 +66,24 @@ void App::initBlendMaps(Ogre::Terrain* terrain)
 	#define cos_(a)  Math::Cos(a,true)
 	#define m01(v)  std::max(0.f, std::min(1.f, v ))
 	
-	//  ang params from layers
-	Real val[5], aMin[5],aRng[5], hMin[5],hRng[5], noise[5];
-	for (i=0; i < 5; ++i)
-	{  val[i]=0.f;  aMin[i]=0.f; aRng[5]=90.f;  aMin[i]=-300.f; aRng[5]=600.f;  noise[5]=1.f;  }
+	//  params from layers
+	Real val[5], aMin[5],aMax[5],aSm[5], hMin[5],hMax[5],hSm[5], noise[5];  bool bNOnly[5];
+	for (i=0; i < 5; ++i)  //-
+	{	val[i]=0.f;  aMin[i]=0.f; aMax[i]=90.f;  aSm[i]=5.f;  hSm[i]=20.f;  bNOnly[i]=1;
+		hMin[i]=-300.f; hMax[i]=300.f;  noise[i]=1.f;  }
 	
 	for (i=0; i < std::min(5, (int)sc.td.layers.size()); ++i)
 	{
 		const TerLayer& l = sc.td.layersAll[sc.td.layers[i]];
-		noise[i] = l.noise;
-		aMin[i] = l.angMin;	aRng[i] = 1.f / std::max(0.1f, l.angMax - l.angMin);
-		hMin[i] = l.hMin;	hRng[i] = 1.f / std::max(0.1f, l.hMax - l.hMin);
+		aMin[i] = l.angMin;	aMax[i] = l.angMax;
+		hMin[i] = l.hMin;	hMax[i] = l.hMax;  noise[i] = l.noise;
+		aSm[i] = l.angSm;	hSm[i] = l.hSm;    bNOnly[i] = l.bNoiseOnly;
 	}
 	
+	//  fill blendmap  ---------------
 	float ft = t;  int w = sc.td.iTerSize;
-	for (y = 0; y < t; ++y)  {  int a = y*t;
-	for (x = 0; x < t; ++x,++a)
+	for (y = 0; y < t; ++y)  {  int aa = y*t;
+	for (x = 0; x < t; ++x,++aa)
 	{
 		float fx = f*x, fy = f*y;	//  val,val1:  0 0 - [0]   1 0  - [1]   0 1 - [2]
 		const Real p = (b >= 4) ? 3.f : ( (b >= 3) ? 2.f : 1.f ), q = 1.f;
@@ -73,26 +92,21 @@ void App::initBlendMaps(Ogre::Terrain* terrain)
 		if (b >= 3)  val[2] = std::max(0.f, (float)   (0.5f + 0.5f *cos_(22.f* fy)*sin_(21.f* fx)   ) - val[0]-val[1]);
 		if (b >= 4)  val[3] = std::max(0.f, (float)   (0.5f + 0.5f *cos_(19.f* fy)*sin_(20.f* fx)   ) - val[0]-val[1]-val[2]);
 
-		//  read ter angle
+		//  ter angle and height ranges
 		#if 1
 		int tx = (float)(x)/ft * w, ty = (float)(t-1-y)/ft * w, tt = ty * w + tx;
 		float a = sc.td.hfNorm[tt], h = sc.td.hfData[tt];
-		if (b >= 1)  val[0] = m01( (val[1]*noise[0] + (a-aMin[0]) * aRng[0]) * m01( (h-hMin[0]) * hRng[0] ) );
-		if (b >= 2)  val[1] = m01( (val[2]*noise[1] + (a-aMin[1]) * aRng[1]) * m01( (h-hMin[1]) * hRng[1] ) );
-		if (b >= 3)  val[2] = m01( (val[3]*noise[2] + (a-aMin[2]) * aRng[2]) * m01( (h-hMin[2]) * hRng[2] ) );
-		if (b >= 4)  val[3] = m01( (val[2]*noise[3] + (a-aMin[3]) * aRng[3]) * m01( (h-hMin[3]) * hRng[3] ) );
+		for (i=0; i < b; ++i)  {  const int i1 = i+1;
+			val[i] = bNOnly[i] ? val[i1]*noise[i] :
+				m01( val[i1]*noise[i] + linRange(a,aMin[i1],aMax[i1],aSm[i1]) * linRange(h,hMin[i1],hMax[i1],hSm[i1]) );  }
 		#endif
 
 		char mtr = 1;
 		for (i=0; i < b; ++i)
 		{	*(pB[i])++ = val[i];  if (val[i] > 0.5f)  mtr = i+2;  }
-		//if (b >= 1)  {  *(pB[0])++ = val[0];  if (val[0] > 0.5f)  mtr = 2;  }
-		//if (b >= 2)  {  *(pB[1])++ = val[1];  if (val[1] > 0.5f)  mtr = 3;  }
-		//if (b >= 3)  {  *(pB[2])++ = val[2];  if (val[2] > 0.5f)  mtr = 4;  }
-		//if (b >= 4)  {  *(pB[3])++ = val[3];  if (val[3] > 0.5f)  mtr = 5;  }
 
 		#ifndef ROAD_EDITOR
-		blendMtr[a] = mtr;
+		blendMtr[aa] = mtr;
 		#endif
 	}	}
 	

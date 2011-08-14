@@ -350,8 +350,12 @@
 
 	<Tag name="TerLAngMin">Angle Min</Tag>
 	<Tag name="TerLAngMax">Angle Max</Tag>
+	<Tag name="TerLAngSm">Angle smooth</Tag>
 	<Tag name="TerLHMin">Height Min</Tag>
 	<Tag name="TerLHMax">Height Max</Tag>
+	<Tag name="TerLHSm">Height smooth</Tag>
+	<Tag name="TerLNoise">Noise</Tag>
+	<Tag name="TerLNoiseOnly">Only Noise</Tag>
 
 	<Tag name="DustSize">dust size</Tag>
 	<Tag name="dust">dust</Tag>
@@ -594,4 +598,12 @@
 	<Tag name="TipModelRoadDist">Distance from road to models (global, added to each models own value).</Tag>
 	<Tag name="TipImpDist">Far distance at which models will turn into 2d impostors.</Tag>
 	<Tag name="TipModelPrev">Model preview image.</Tag>
+	<Tag name="TipTerLAngMin">Starting terrain angle for layer.</Tag>
+	<Tag name="TipTerLAngMax">Ending terrain angle for layer.</Tag>
+	<Tag name="TipTerLAngSm">Angle smooth range (transition).</Tag>
+	<Tag name="TipTerLHMin">Starting terrain height for layer.</Tag>
+	<Tag name="TipTerLHMax">Ending terrain height for layer.</Tag>
+	<Tag name="TipTerLHSm">Height smooth range (transition).</Tag>
+	<Tag name="TipTerLNoise">Factor of additional noise.</Tag>
+	<Tag name="TipTerLNoiseOnly">Use only noise (no angle or height ranges)</Tag>
 </MyGUI>

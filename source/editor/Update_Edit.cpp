@@ -193,24 +193,20 @@ bool App::frameRenderingQueued(const FrameEvent& evt)
 		if (brTxt[0]){	Fmt(s, "Size:	 %4.1f   - =", mBrSize[curBr]);		brTxt[0]->setCaption(s);	}
 		if (brTxt[1]){	Fmt(s, "Force:   %4.1f   [ ]", mBrIntens[curBr]);	brTxt[1]->setCaption(s);	}
 		if (brTxt[2]){	Fmt(s, "Power:   %4.2f   ; \'", mBrPow[curBr]);		brTxt[2]->setCaption(s);	}
+		if (brTxt[3]){	Fmt(s, "Shape: %s", csBrShape[mBrShape[curBr]].c_str());	brTxt[3]->setCaption(s);	}
 
-		if (brTxt[3])
-		if (edMode == ED_Deform || edMode == ED_Height)
-		{	Fmt(s, "Shape: %s", csBrShape[mBrShape[curBr]].c_str());	brTxt[3]->setCaption(s);	}
-		else
-			brTxt[3]->setCaption("");
-
+		bool brNoise = mBrShape[curBr] == BRS_Noise;
 		if (brTxt[4])
 		if (edMode == ED_Height)
 		{	Fmt(s, "Height: %4.1f", terSetH);	brTxt[4]->setCaption(s);	}
-		else if (edMode == ED_Deform)
-		{	Fmt(s, "Freq: %4.2f", mBrFq[curBr]);	brTxt[4]->setCaption(s);	}
+		else if (brNoise)
+		{	Fmt(s, "Freq: %4.2f  O P", mBrFq[curBr]);	brTxt[4]->setCaption(s);	}
 		else
 			brTxt[4]->setCaption("");
 
 		if (brTxt[5])
-		if (edMode == ED_Deform || edMode == ED_Height)
-		{	Fmt(s, "Frq2: %4.2f", mBrF2[curBr]);	brTxt[5]->setCaption(s);	}
+		if (brNoise)
+		{	Fmt(s, "Octaves: %d  , .", mBrOct[curBr]);	brTxt[5]->setCaption(s);	}
 		else
 			brTxt[5]->setCaption("");
 
@@ -226,8 +222,6 @@ bool App::frameRenderingQueued(const FrameEvent& evt)
 		if (isKey(APOSTROPHE)){  mBrPow[curBr]  *= 1.f + 0.04f*q;  updBrush();  }
 		if (isKey(O)){			mBrFq[curBr]  *= 1.f - 0.04f*q;  updBrush();  }
 		if (isKey(P)){			mBrFq[curBr]  *= 1.f + 0.04f*q;  updBrush();  }
-		if (isKey(COMMA)){		mBrF2[curBr]  *= 1.f - 0.04f*q;  updBrush();  }
-		if (isKey(PERIOD)){		mBrF2[curBr]  *= 1.f + 0.04f*q;  updBrush();  }
 	}
 	mz = 0;  // mouse wheel
 	
@@ -487,12 +481,19 @@ bool App::frameEnded(const FrameEvent& evt)
 	}
 
 	///<>  Ter upd
-	static int ti = 0;
-	if (ti >= pSet->ter_skip)
+	static int tu = 0, bu = 0;
+	if (tu >= pSet->ter_skip)
 	if (bTerUpd)
-	{	bTerUpd = false;  ti = 0;
+	{	bTerUpd = false;  tu = 0;
 		mTerrainGroup->update();
-	}	ti++;
+	}	tu++;
+
+	if (bu >= pSet->ter_skip)
+	if (bTerUpdBlend)
+	{	bTerUpdBlend = false;  bu = 0;
+		if (terrain)
+			initBlendMaps(terrain);
+	}	bu++;
 
 	
 	if (road)  // road

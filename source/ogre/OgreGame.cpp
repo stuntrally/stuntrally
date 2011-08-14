@@ -16,7 +16,7 @@ using namespace Ogre;
 
 //  ctors  -----------------------------------------------
 App::App()
-	:pGame(0), ndMap(0), ndLine(0)
+	:pGame(0), ndMap(0), ndLine(0), bGI(0)
 	,nrpmB(0),nvelBk(0),nvelBm(0), nrpm(0),nvel(0), mrpm(0),mvel(0)
 	,hudGear(0),hudVel(0), hudAbs(0),hudTcs(0), hudTimes(0), hudWarnChk(0),hudWonPlace(0)
 	,ovGear(0),ovVel(0), ovAbsTcs(0), ovCarDbg(0),ovCarDbgTxt(0), ovCam(0), ovTimes(0), ovWarnWin(0)
@@ -40,7 +40,7 @@ App::App()
 	,rbRplCur(0), rbRplAll(0), rbRplGhosts(0), bRplBack(0),bRplFwd(0)
 	,bRplPlay(0), bRplPause(0), bRplRec(0), bRplWnd(1), bGuiReinit(0)
 	// game
-	,blendMtr(0), iBlendMaps(0), dbgdraw(0)
+	,blendMtr(0), iBlendMaps(0), dbgdraw(0), noBlendUpd(0)
 	,grass(0), trees(0), road(0), miniC(0)
 	,pr(0),pr2(0), sun(0), carIdWin(-1), iCurCar(0), bUpdCarClr(1)
 {

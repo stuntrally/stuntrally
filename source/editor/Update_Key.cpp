@@ -292,6 +292,8 @@ bool App::KeyPress(const CmdKey &arg)
 	{
 		case KC_K:	mBrShape[curBr] = (EBrShape)((mBrShape[curBr]-1 + BRS_ALL) % BRS_ALL);  updBrush();  break;
 		case KC_L:	mBrShape[curBr] = (EBrShape)((mBrShape[curBr]+1) % BRS_ALL);            updBrush();  break;
+		case KC_COMMA:	mBrOct[curBr] = std::max(1, mBrOct[curBr]-1);  updBrush();  break;
+		case KC_PERIOD:	mBrOct[curBr] = std::min(7, mBrOct[curBr]+1);  updBrush();  break;
 	}
 
 	///  Common Keys  * * * * * * * * * * * * *

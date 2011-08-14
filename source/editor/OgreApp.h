@@ -115,14 +115,14 @@ protected:
 	Ogre::ManualObject* moTerC;  Ogre::SceneNode* ndTerC;
 	void TerCircleInit(), TerCircleUpd();
 
-	void createBrushPrv(),updateBrushPrv();  Ogre::TexturePtr brushPrvTex;
+	void createBrushPrv(),updateBrushPrv(bool first=false);  Ogre::TexturePtr brushPrvTex;
 	const static int BrPrvSize = 128;  //64-
 
 
 	///<>  terrain edit, brush
-	void updBrush();  bool bTerUpd;  char sBrushTest[512];  int curBr;
+	void updBrush();  bool bTerUpd,bTerUpdBlend;  char sBrushTest[512];  int curBr;
 	float mBrSize[ED_ALL],mBrIntens[ED_ALL], *mBrushData, terSetH,
-		mBrPow[ED_ALL],mBrFq[ED_ALL],mBrF2[ED_ALL];
+		mBrPow[ED_ALL],mBrFq[ED_ALL];  int mBrOct[ED_ALL];
 	enum EBrShape {   BRS_Triangle=0, BRS_Sinus, BRS_Noise, BRS_ALL  } mBrShape[ED_ALL];
 	const static Ogre::String csBrShape[BRS_ALL];
 
@@ -158,7 +158,7 @@ protected:
 	void InitGui(),  UpdVisGui(), UpdEditWnds();
 	void UpdGuiRdStats(const SplineRoad* rd, const Scene& sc, float time), ReadTrkStats();
 	void Status(Ogre::String s, float r,float g,float b);
-	void SetGuiFromXmls();//, SetXmlsFromGui();
+	void SetGuiFromXmls();  bool noBlendUpd, bGI;
 	
 
 	//  shortcuts
@@ -213,7 +213,7 @@ protected:
 	void comboTexDiff(CMB), comboTexNorm(CMB);
 	MyGUI::StaticImagePtr imgTexDiff;
 
-	MyGUI::ButtonPtr chkTerLay;  void chkTerLayOn(WP);  // on
+	MyGUI::ButtonPtr chkTerLay,chkTerLNoiseOnly;  void chkTerLayOn(WP),chkTerLNoiseOnlyOn(WP);  // on
 	MyGUI::TabPtr tabsHmap;	  void tabHmap(TAB);  // tabs
 	MyGUI::TabPtr tabsTerLayers; void tabTerLayer(TAB);
 	int idTerLay;  bool bTerLay;  // help vars
@@ -226,8 +226,9 @@ protected:
 	void btnTerrainNew(WP), btnTerGenerate(WP);
 	MyGUI::StaticTextPtr valTerLAll;
 	//  ter blendmap
-	SLV(TerLAngMin);  SLV(TerLHMin);
-	SLV(TerLAngMax);  SLV(TerLHMax);
+	SLV(TerLAngMin);  SLV(TerLHMin);  SLV(TerLAngSm);
+	SLV(TerLAngMax);  SLV(TerLHMax);  SLV(TerLHSm);
+	SLV(TerLNoise);  //Chk("TerLNoiseOnly", chkTerLNoiseOnly, 0);
 
 	//  ter particles
 	MyGUI::EditPtr edLDust,edLDustS, edLMud,edLSmoke, edLTrlClr;

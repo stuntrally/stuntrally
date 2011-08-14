@@ -142,9 +142,13 @@ bool Scene::LoadXml(String file)
 
 			a = eTex->Attribute("angMin");	if (a)  l->angMin = s2r(a);
 			a = eTex->Attribute("angMax");	if (a)  l->angMax = s2r(a);
+			a = eTex->Attribute("angSm");	if (a)  l->angSm = s2r(a);
 			a = eTex->Attribute("hMin");	if (a)  l->hMin = s2r(a);
 			a = eTex->Attribute("hMax");	if (a)  l->hMax = s2r(a);
+			a = eTex->Attribute("hSm");		if (a)  l->hSm = s2r(a);
+
 			a = eTex->Attribute("noise");	if (a)  l->noise = s2r(a);
+			a = eTex->Attribute("nOnly");	if (a)  l->bNoiseOnly = s2i(a) > 0;  else  l->bNoiseOnly = true;
 
 			if (!road && il < td.ciNumLay)
 				td.layersAll[il++] = lay;
@@ -281,9 +285,12 @@ bool Scene::SaveXml(String file)
 			setDmst();
 			tex.SetAttribute("angMin",	toStrC( l->angMin ));
 			tex.SetAttribute("angMax",	toStrC( l->angMax ));
+			tex.SetAttribute("angSm",	toStrC( l->angSm ));
 			tex.SetAttribute("hMin",	toStrC( l->hMin ));
 			tex.SetAttribute("hMax",	toStrC( l->hMax ));
+			tex.SetAttribute("hSm",		toStrC( l->hSm ));
 			tex.SetAttribute("noise",	toStrC( l->noise ));
+			tex.SetAttribute("nOnly",	l->bNoiseOnly ? 1 : 0);
 			ter.InsertEndChild(tex);
 		}
 		l = &td.layerRoad;
@@ -379,7 +386,9 @@ void TerData::Default()
 
 TerLayer::TerLayer() : on(true), tiling(4.f),
 	dust(0.f),dustS(0.2), mud(0.f), smoke(0), tclr(ColourValue::Black),
-	angMin(0.f),angMax(90.f), hMin(-300.f),hMax(300.f), noise(1)
+	angMin(0.f),angMax(90.f), angSm(20.f),
+	hMin(-300.f),hMax(300.f), hSm(20.f),
+	noise(1), bNoiseOnly(1)
 {	}
 
 void TerData::UpdVals()

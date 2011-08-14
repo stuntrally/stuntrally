@@ -11,9 +11,13 @@ struct TerLayer		// terrain texture layer
 	bool on;
 	float tiling;   // texture repeat
 	Ogre::String texFile, texNorm;  // textures
+
 	float dust, mud, dustS, smoke;  // particles intensities
 	Ogre::ColourValue tclr;  // trail color
-	float angMin,angMax, hMin,hMax, noise;  // blend map, angle and height range, noise
+	
+	//  min,max range and smooth range for angle and height for blendmap
+	float angMin,angMax,angSm, hMin,hMax,hSm;
+	float noise;  bool bNoiseOnly;  // blendmap noise
 
 	TerLayer();
 };

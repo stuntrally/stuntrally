@@ -200,8 +200,9 @@ void App::InitGui()
 	valTerLAll = (StaticTextPtr)mWndOpts->findWidget("TerLayersAll");
 	Chk("TexNormAuto", chkTexNormAutoOn, 1);  chkTexNormAuto = bchk;
 	
-	Slv(TerLAngMin, 0);  Slv(TerLHMin, 0);
-	Slv(TerLAngMax, 0);	 Slv(TerLHMax, 0);	//Slv(TerLBNoise1, 0);
+	Slv(TerLAngMin,0);  Slv(TerLHMin,0);  Slv(TerLAngSm,0);  // blendmap
+	Slv(TerLAngMax,0);  Slv(TerLHMax,0);  Slv(TerLHSm,0);
+	Slv(TerLNoise,0);   Chk("TerLNoiseOnly", chkTerLNoiseOnlyOn, 0);  chkTerLNoiseOnly = bchk;
 	
 	Ed(LDust, editLDust);	Ed(LDustS, editLDust);
 	Ed(LMud,  editLDust);	Ed(LSmoke, editLDust);
@@ -257,7 +258,7 @@ void App::InitGui()
 	supportedLanguages.clear();
 	supportedLanguages["en"] = "English";
 	supportedLanguages["de"] = "Deutsch";  //German
-	supportedLanguages["fi"] = "Suomi";  //Finnish
+	supportedLanguages["fi"] = "Suomi";   //Finnish
 	supportedLanguages["ro"] = "Româna";  //Romanian
 	supportedLanguages["pl"] = "Polski";  //Polish
 	combo = NULL;  combo = mGUI->findWidget<ComboBox>("Lang");
@@ -375,6 +376,8 @@ void App::InitGui()
 	Btn("TrackNew",		btnTrackNew);
 	Btn("TrackRename",	btnTrackRename);
 	Btn("TrackDelete",	btnTrackDel);
+	
+	bGI = true;  // gui inited, gui events can now save vals
 
     //  load = new game
     for (int i=1; i<=3; ++i)

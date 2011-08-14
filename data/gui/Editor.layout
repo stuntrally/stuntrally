@@ -693,79 +693,100 @@
 						<Property key="Widget_Caption" value="#{BlendMap}"/>
 						<Widget type="StaticText" skin="StaticText" position="10 25 80 24">
 							<Property key="Widget_Caption" value="#{TerLAngMin}"/>
-							<Property key="Text_TextColour" value="0.6 0.9 0.5"/>
+							<Property key="Text_TextColour" value="0.6 0.9 0.2"/>
 						</Widget>
 						<Widget type="StaticText" skin="StaticText" position="98 25 56 24" name="TerLAngMinVal">
-							<Property key="Text_TextColour" value="0.6 0.9 0.5"/>
+							<Property key="Text_TextColour" value="0.6 0.9 0.2"/>
 						</Widget>
 						<Widget type="HScroll" skin="HScroll" position="162 25 360 16" name="TerLAngMin">
 							<Property key="Scroll_Range" value="1000001"/>
 							<Property key="Scroll_MoveToClick" value="true"/>
-							<Property key="Widget_Colour" value="0.6 0.9 0.5"/>
-							<UserString key="tip" value="#{TipTerAngMin}"/>
+							<Property key="Widget_Colour" value="0.6 0.9 0.2"/>
+							<UserString key="tip" value="#{TipTerLAngMin}"/>
 						</Widget>
 						<Widget type="StaticText" skin="StaticText" position="10 50 80 24">
 							<Property key="Widget_Caption" value="#{TerLAngMax}"/>
-							<Property key="Text_TextColour" value="0.6 0.9 0.5"/>
+							<Property key="Text_TextColour" value="0.6 0.9 0.2"/>
 						</Widget>
 						<Widget type="StaticText" skin="StaticText" position="98 50 56 24" name="TerLAngMaxVal">
-							<Property key="Text_TextColour" value="0.6 0.9 0.5"/>
+							<Property key="Text_TextColour" value="0.6 0.9 0.2"/>
 						</Widget>
 						<Widget type="HScroll" skin="HScroll" position="162 50 360 16" name="TerLAngMax">
 							<Property key="Scroll_Range" value="1000001"/>
 							<Property key="Scroll_MoveToClick" value="true"/>
-							<Property key="Widget_Colour" value="0.6 0.9 0.5"/>
+							<Property key="Widget_Colour" value="0.6 0.9 0.2"/>
 							<UserString key="tip" value="#{TipTerLAngMax}"/>
 						</Widget>
-						<Widget type="StaticText" skin="StaticText" position="10 85 80 24">
-							<Property key="Widget_Caption" value="#{TerLHMin}"/>
-							<Property key="Text_TextColour" value="0.6 0.9 0.5"/>
+						<Widget type="StaticText" skin="StaticText" position="10 75 80 24">
+							<Property key="Widget_Caption" value="#{TerLAngSm}"/>
+							<Property key="Text_TextColour" value="0.6 0.8 0.2"/>
 						</Widget>
-						<Widget type="StaticText" skin="StaticText" position="98 85 56 24" name="TerLHMinVal">
-							<Property key="Text_TextColour" value="0.6 0.9 0.5"/>
+						<Widget type="StaticText" skin="StaticText" position="98 75 56 24" name="TerLAngSmVal">
+							<Property key="Text_TextColour" value="0.6 0.8 0.2"/>
 						</Widget>
-						<Widget type="HScroll" skin="HScroll" position="162 85 360 16" name="TerLHMin">
+						<Widget type="HScroll" skin="HScroll" position="162 75 360 16" name="TerLAngSm">
 							<Property key="Scroll_Range" value="1000001"/>
 							<Property key="Scroll_MoveToClick" value="true"/>
-							<Property key="Widget_Colour" value="0.6 0.9 0.5"/>
-							<UserString key="tip" value="#{TipTerLHMin}"/>
+							<Property key="Widget_Colour" value="0.6 0.8 0.2"/>
+							<UserString key="tip" value="#{TipTerLAngSm}"/>
 						</Widget>
 						<Widget type="StaticText" skin="StaticText" position="10 110 80 24">
-							<Property key="Widget_Caption" value="#{TerLHMax}"/>
-							<Property key="Text_TextColour" value="0.6 0.9 0.5"/>
+							<Property key="Widget_Caption" value="#{TerLHMin}"/>
+							<Property key="Text_TextColour" value="0.6 0.9 0.6"/>
 						</Widget>
-						<Widget type="StaticText" skin="StaticText" position="98 110 56 24" name="TerLHMaxVal">
-							<Property key="Text_TextColour" value="0.6 0.9 0.5"/>
+						<Widget type="StaticText" skin="StaticText" position="98 110 56 24" name="TerLHMinVal">
+							<Property key="Text_TextColour" value="0.6 0.9 0.6"/>
 						</Widget>
-						<Widget type="HScroll" skin="HScroll" position="162 110 360 16" name="TerLHMax">
+						<Widget type="HScroll" skin="HScroll" position="162 110 360 16" name="TerLHMin">
 							<Property key="Scroll_Range" value="1000001"/>
 							<Property key="Scroll_MoveToClick" value="true"/>
-							<Property key="Widget_Colour" value="0.6 0.9 0.5"/>
+							<Property key="Widget_Colour" value="0.6 0.9 0.6"/>
+							<UserString key="tip" value="#{TipTerLHMin}"/>
+						</Widget>
+						<Widget type="StaticText" skin="StaticText" position="10 135 80 24">
+							<Property key="Widget_Caption" value="#{TerLHMax}"/>
+							<Property key="Text_TextColour" value="0.6 0.9 0.6"/>
+						</Widget>
+						<Widget type="StaticText" skin="StaticText" position="98 135 56 24" name="TerLHMaxVal">
+							<Property key="Text_TextColour" value="0.6 0.9 0.6"/>
+						</Widget>
+						<Widget type="HScroll" skin="HScroll" position="162 135 360 16" name="TerLHMax">
+							<Property key="Scroll_Range" value="1000001"/>
+							<Property key="Scroll_MoveToClick" value="true"/>
+							<Property key="Widget_Colour" value="0.6 0.9 0.6"/>
 							<UserString key="tip" value="#{TipTerLHMax}"/>
 						</Widget>
-						<Widget type="HScroll" skin="HScroll" position="162 145 160 16" name="TerLBNoise1">
-							<Property key="Scroll_Range" value="1000001"/>
-							<Property key="Scroll_MoveToClick" value="true"/>
-							<Property key="Widget_Colour" value="0.6 0.7 0.45"/>
-							<UserString key="tip" value="#{TipTerLBNoise1}"/>
+						<Widget type="StaticText" skin="StaticText" position="10 160 80 24">
+							<Property key="Widget_Caption" value="#{TerLHSm}"/>
+							<Property key="Text_TextColour" value="0.6 0.75 0.6"/>
 						</Widget>
-						<Widget type="HScroll" skin="HScroll" position="162 170 160 16" name="TerLBNoise2">
-							<Property key="Scroll_Range" value="1000001"/>
-							<Property key="Scroll_MoveToClick" value="true"/>
-							<Property key="Widget_Colour" value="0.6 0.7 0.5"/>
-							<UserString key="tip" value="#{TipTerLBNoise1}"/>
+						<Widget type="StaticText" skin="StaticText" position="98 160 56 24" name="TerLHSmVal">
+							<Property key="Text_TextColour" value="0.6 0.75 0.6"/>
 						</Widget>
-						<Widget type="HScroll" skin="HScroll" position="162 195 160 16" name="TerLBNoise3">
+						<Widget type="HScroll" skin="HScroll" position="162 160 360 16" name="TerLHSm">
 							<Property key="Scroll_Range" value="1000001"/>
 							<Property key="Scroll_MoveToClick" value="true"/>
-							<Property key="Widget_Colour" value="0.6 0.7 0.55"/>
-							<UserString key="tip" value="#{TipTerLBNoise1}"/>
+							<Property key="Widget_Colour" value="0.6 0.75 0.6"/>
+							<UserString key="tip" value="#{TipTerLHSm}"/>
 						</Widget>
-						<Widget type="HScroll" skin="HScroll" position="162 220 160 16" name="TerLBNoise4">
+						<Widget type="StaticText" skin="StaticText" position="10 195 80 24">
+							<Property key="Widget_Caption" value="#{TerLNoise}"/>
+							<Property key="Text_TextColour" value="0.6 0.9 0.7"/>
+						</Widget>
+						<Widget type="StaticText" skin="StaticText" position="98 195 56 24" name="TerLNoiseVal">
+							<Property key="Text_TextColour" value="0.6 0.9 0.7"/>
+						</Widget>
+						<Widget type="HScroll" skin="HScroll" position="162 195 360 16" name="TerLNoise">
 							<Property key="Scroll_Range" value="1000001"/>
 							<Property key="Scroll_MoveToClick" value="true"/>
-							<Property key="Widget_Colour" value="0.6 0.7 0.6"/>
-							<UserString key="tip" value="#{TipTerLBNoise1}"/>
+							<Property key="Widget_Colour" value="0.6 0.7 0.75"/>
+							<UserString key="tip" value="#{TipTerLNoise}"/>
+						</Widget>
+						<Widget type="Button" skin="CheckBox" position="560 192 84 24" name="TerLNoiseOnly">
+							<Property key="Widget_Caption" value="#{TerLNoiseOnly}"/>
+							<Property key="Widget_Colour" value="0.6 1 0.8"/>
+							<Property key="Text_TextColour" value="0.6 0.9 0.7"/>
+							<UserString key="tip" value="#{TipTerLNoiseOnly}"/>
 						</Widget>
 					</Widget>
 					<Widget type="TabItem" skin="" position="4 26 727 288">

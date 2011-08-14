@@ -30,7 +30,7 @@ App::App()  //  gui wigdets--
 	,edLiAmb(0),edLiDiff(0),edLiSpec(0), edFogClr(0), chkFog(0)
 	,cmbTexDiff(0),cmbTexNorm(0), imgTexDiff(0), terrain(0)  // terrain
 	,valTerLAll(0),tabsHmap(0),tabsTerLayers(0), idTerLay(0),bTerLay(1)
-	,chkTerLay(0),chkTexNormAuto(0), bTexNormAuto(1)
+	,chkTerLay(0),chkTexNormAuto(0), bTexNormAuto(1), chkTerLNoiseOnly(0)
 	,valTerTriSize(0),edTerTriSize(0), edTerLScale(0),valTerLScale(0)
 	,edLDust(0),edLDustS(0), edLMud(0),edLSmoke(0), edLTrlClr(0)  //ter particles
 	,cmbParDust(0),cmbParMud(0),cmbParSmoke(0)
@@ -47,7 +47,7 @@ App::App()  //  gui wigdets--
 	,imgPrv(0),imgMini(0),imgTer(0), valTrk(0), trkDesc(0),trkName(0)  // track
 
 	,mTerrainGroup(0), mTerrainPaging(0), mPageManager(0), mTerrainGlobals(0)
-	,bTerUpd(0), curBr(2), bGuiReinit(0)
+	,bTerUpd(0), curBr(2), bGuiReinit(0), noBlendUpd(0), bGI(0)
 	,ndPos(0), mpos(0), asp(4.f/3.f)
 	,ndCar(0),entCar(0),ndStBox(0),entStBox(0)
 	,grass(0), trees(0), sun(0), terMaxAng(0.f)
@@ -61,7 +61,7 @@ App::App()  //  gui wigdets--
 	mBrIntens[0] = 20.f;	mBrIntens[1] = 20.f;	mBrIntens[2] = 20.f;	
 	mBrPow[0] = 2.f;	mBrPow[1] = 2.f;	mBrPow[2] = 2.f;		
 	mBrFq[0] = 1.f;		mBrFq[1] = 1.f;		mBrFq[2] = 1.f;
-	mBrF2[0] = 0.5f;	mBrF2[1] = 0.5f;	mBrF2[2] = 0.5f;
+	mBrOct[0] = 5;		mBrOct[1] = 5;		mBrOct[2] = 5;
 	terSetH = 10.f;
 	mBrShape[0] = BRS_Sinus;  mBrShape[1] = BRS_Sinus;	mBrShape[2] = BRS_Sinus;
 	mBrushData = new float[BrushMaxSize*BrushMaxSize];
