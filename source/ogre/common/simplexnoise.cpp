@@ -51,27 +51,63 @@ float dot(int *g, float x, float y)
     return g[0]*x + g[1]*y;
 }
 
-double SimplexNoise2D(double xin, double yin)
+#define FASTFLOOR(x) ( ((x)>0) ? ((int)x) : (((int)x)-1) )
+
+float grad( int hash, float x )
 {
-    double n0, n1, n2;
+    int h = hash & 15;
+    float grad = 1.0f + (h & 7);   // Gradient value 1.0, 2.0, ..., 8.0
+    if (h&8) grad = -grad;         // Set a random sign for the gradient
+    return ( grad * x );           // Multiply the gradient with the distance
+}
+
+// 1D simplex noise
+float SimplexNoise1D(float x)
+{
+	int i0 = FASTFLOOR(x);
+	int i1 = i0 + 1;
+	float x0 = x - i0;
+	float x1 = x0 - 1.0f;
+
+	float n0, n1;
+
+	float t0 = 1.0f - x0*x0;
+	//  if(t0 < 0.0f) t0 = 0.0f;
+	t0 *= t0;
+	n0 = t0 * t0 * grad(perm[i0 & 0xff], x0);
+
+	float t1 = 1.0f - x1*x1;
+	//  if(t1 < 0.0f) t1 = 0.0f;
+	t1 *= t1;
+	n1 = t1 * t1 * grad(perm[i1 & 0xff], x1);
+
+	// The maximum value of this noise is 8*(3/4)^4 = 2.53125
+	// A factor of 0.395 would scale to fit exactly within [-1,1], but
+	// we want to match PRMan's 1D noise, so we scale it down some more.
+	return 0.25f * (n0 + n1);
+}
+
+float SimplexNoise2D(float xin, float yin)
+{
+    float n0, n1, n2;
 
     if (xin < 0)  xin = -xin;
     if (yin < 0)  yin = -yin;
 
-    double s = (xin+yin)*F2;
+    float s = (xin+yin)*F2;
     int i = xin+s > 0 ? int(xin+s) : int(xin+s-1);
     int j = yin+s > 0 ? int(yin+s) : int(yin+s-1);
 
-    double t = (i+j)*G2;
-    double X0 = i-t, x0 = xin-X0;
-    double Y0 = j-t, y0 = yin-Y0;
+    float t = (i+j)*G2;
+    float X0 = i-t, x0 = xin-X0;
+    float Y0 = j-t, y0 = yin-Y0;
     
     int i1, j1;
     if (x0 > y0) {  i1 = 1;  j1 = 0;  }
     else         {  i1 = 0;  j1 = 1;  }
 
-    double x1 = x0 - i1 + G2, x2 = x0 - 1.0f + 2.0f * G2;
-    double y1 = y0 - j1 + G2, y2 = y0 - 1.0f + 2.0f * G2;
+    float x1 = x0 - i1 + G2, x2 = x0 - 1.0f + 2.0f * G2;
+    float y1 = y0 - j1 + G2, y2 = y0 - 1.0f + 2.0f * G2;
 
     int ii = i % 255;
     int jj = j % 255;
@@ -80,29 +116,44 @@ double SimplexNoise2D(double xin, double yin)
     int gi2 = perm[ii + 1 + perm[jj + 1]] % 12;
 
 
-    double t0 = 0.5 - x0*x0 - y0*y0;
+    float t0 = 0.5 - x0*x0 - y0*y0;
     if (t0 < 0)  n0 = 0.0f;
     else
     {   t0 *= t0;
         n0 = t0 * t0 * dot(grad3[gi0], x0,y0);
     }
 
-    double t1 = 0.5 - x1*x1 - y1*y1;
+    float t1 = 0.5 - x1*x1 - y1*y1;
     if (t1 < 0)  n1 = 0.0f;
     else
     {   t1 *= t1;
         n1 = t1 * t1 * dot(grad3[gi1], x1,y1);
     }
 
-    double t2 = 0.5 - x2*x2 - y2*y2;
+    float t2 = 0.5 - x2*x2 - y2*y2;
     if (t2 < 0)  n2 = 0.0f;
     else
     {   t2 *= t2;
         n2 = t2 * t2 * dot(grad3[gi2], x2,y2);
     }
-    return std::max(std::min(70 * (n0 + n1 + n2), 1.0), -1.0);
+    return std::max(std::min(70.0 * (n0 + n1 + n2), 1.0), -1.0);
 }
 
+
+//  noise with octaves
+//
+float App::Noise(float x, float zoom, int octaves, float persistence)
+{
+    float total = 0.f;
+    for (int i=0; i < octaves; ++i)
+    {
+        int frequency   = pow(2.0, i);
+        float amplitude = pow(persistence, i);
+        total += SimplexNoise1D(x * frequency/zoom) * amplitude;
+    }
+    //float total = SimplexNoise1D(x /zoom);
+    return total;
+}
 
 float App::Noise(float x, float y, float zoom, int octaves, float persistence)
 {

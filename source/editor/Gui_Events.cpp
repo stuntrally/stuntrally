@@ -215,14 +215,15 @@ void App::btnTerGenerate(WP)
 	float* hfData = new float[sc.td.iVertsX * sc.td.iVertsY];
 	int siz = sc.td.iVertsX * sc.td.iVertsY * sizeof(float);
 	String name = TrkDir() + "heightmap-new.f32";
+	float s = sc.td.fTriangleSize*0.001f;
 
 	for (int j=0; j < sc.td.iVertsY; ++j)  // generate noise terrain hmap
 	{
 		int a = j * sc.td.iVertsX;
 		for (int i=0; i < sc.td.iVertsX; ++i,++a)
-			hfData[a] = pow( Noise(i*0.001f,j*0.001f, 0.3f, 4, 0.7f), 1.f ) * 10.f;
+			hfData[a] = pow( Noise(i*s,j*s, mBrFq[0], 5, 0.5f), mBrPow[0] ) * 10.f;
 	}
-	/// TODO: preview texture?, faster: ter dirty- not recreate
+	/// TODO: faster: ter dirty- not recreate
 
 	std::ofstream of;
 	of.open(name.c_str(), std::ios_base::binary);
@@ -293,6 +294,39 @@ void App::slTerLScale(SL)  //  scale layer
 	Real v = 2.0f + 9.0f * powf(val/res, 1.5f);  // 0.1 + 89.9, 1 + 19
 	if (bTerLay)  sc.td.layersAll[idTerLay].tiling = v;
 	if (edTerLScale)  edTerLScale->setCaption(toStr(v));  // set edit
+}
+
+
+///  Terrain BlendMap  -----------------------------
+//
+void App::slTerLAngMin(SL)
+{
+	float v = 90.f * val/res;
+	if (bTerLay)  sc.td.layersAll[idTerLay].angMin = v;
+	if (valTerLAngMin){	Fmt(s, "%4.0f", v);  valTerLAngMin->setCaption(s);  }
+	if (terrain)
+		initBlendMaps(terrain);
+}
+void App::slTerLAngMax(SL)
+{
+	float v = 90.f * val/res;
+	if (bTerLay)  sc.td.layersAll[idTerLay].angMax = v;
+	if (valTerLAngMax){	Fmt(s, "%4.0f", v);  valTerLAngMax->setCaption(s);  }
+	if (terrain)
+		initBlendMaps(terrain);
+}
+
+void App::slTerLHMin(SL)
+{
+	float v = 300.f * val/res;
+	if (bTerLay)  sc.td.layersAll[idTerLay].hMin = v;
+	if (valTerLHMin){	Fmt(s, "%4.0f", v);  valTerLHMin->setCaption(s);  }
+}
+void App::slTerLHMax(SL)
+{
+	float v = 300.f * val/res;
+	if (bTerLay)  sc.td.layersAll[idTerLay].hMax = v;
+	if (valTerLHMax){	Fmt(s, "%4.0f", v);  valTerLHMax->setCaption(s);  }
 }
 
 
@@ -533,6 +567,8 @@ void App::chkMinimap(WP wp)
 	UpdMiniVis();
 	if (ndPos)  ndPos->setVisible(pSet->trackmap);
 }
+
+//brush_prv
 
 
 //  set camera in settings at exit

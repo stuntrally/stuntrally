@@ -11,13 +11,14 @@
 #define LogR(a)
 #endif
 
+#include "../ogre/QTimer.h"
 #include <OgreTerrain.h>
 #include <OgreMeshManager.h>
 #include <OgreEntity.h>
 using namespace Ogre;
 
 
-float GetAngle(float x, float y)
+static float GetAngle(float x, float y)
 {
 	if (x == 0.f && y == 0.f)
 		return 0.f;
@@ -63,6 +64,8 @@ void SplineRoad::RebuildRoadInt()
 	}
 	
 	//  full rebuild
+	QTimer ti;  ti.update();  /// time	
+	
 	if (iDirtyId == -1)
 	{
 		DestroyRoad();
@@ -77,7 +80,7 @@ void SplineRoad::RebuildRoadInt()
 
 
 	///  Auto angles prepass ...
-	if ( segs > 2)
+	if (segs > 2)
 	for (int seg=0; seg < segs; ++seg)
 	{
 		int seg1 = (seg+1) % segs;  // next
@@ -807,6 +810,15 @@ void SplineRoad::RebuildRoadInt()
 	UpdLodVis(fLodBias);
 	if (iDirtyId == -1)
 		iOldHide = -1;
+
+
+	if (iDirtyId == -1)
+	//if (segs <= 4 || sMax - sMin > 4)
+	{
+		ti.update();	/// time
+		float dt = ti.dt * 1000.f;
+		LogO(String("::: Time Road Rebuild: ") + toStr(dt) + " ms");
+	}
 }
 
 

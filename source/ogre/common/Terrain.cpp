@@ -25,9 +25,9 @@ using namespace Ogre;
 //--------------------------------------------------------------------------------------------------------------------------
 void App::initBlendMaps(Ogre::Terrain* terrain)
 {
-	QTimer ti;  ti.update();  // time
+	QTimer ti;  ti.update();  /// time
 
-	int b = sc.td.layers.size(), i;
+	int b = sc.td.layers.size()-1, i;
 	float* pB[6];	TerrainLayerBlendMap* bMap[6];
 	Ogre::uint16 t = terrain->getLayerBlendMapSize(), x,y;
 	const float f = 0.8f / t * 3.14f;  //par-
@@ -39,45 +39,71 @@ void App::initBlendMaps(Ogre::Terrain* terrain)
 	#endif
 	//LogO(String("Ter blendmap size: ")+toStr(t));
 
-	for (i=0; i < b-1; ++i)  {
+	for (i=0; i < b; ++i)  {
 		bMap[i] = terrain->getLayerBlendMap(i+1);  pB[i] = bMap[i]->getBlendPointer();  }
 
-	float ft = t;
-	for (y = 0; y < t; ++y)
-	for (x = 0; x < t; ++x)
+	//#define sin_(a)  sinf(a)
+	//#define cos_(a)  sinf(a)
+	Math* pM = new Math();
+	#define sin_(a)  Math::Sin(a,true)
+	#define cos_(a)  Math::Cos(a,true)
+	#define m01(v)  std::max(0.f, std::min(1.f, v ))
+	
+	//  ang params from layers
+	Real val[5], aMin[5],aRng[5], hMin[5],hRng[5], noise[5];
+	for (i=0; i < 5; ++i)
+	{  val[i]=0.f;  aMin[i]=0.f; aRng[5]=90.f;  aMin[i]=-300.f; aRng[5]=600.f;  noise[5]=1.f;  }
+	
+	for (i=0; i < std::min(5, (int)sc.td.layers.size()); ++i)
+	{
+		const TerLayer& l = sc.td.layersAll[sc.td.layers[i]];
+		noise[i] = l.noise;
+		aMin[i] = l.angMin;	aRng[i] = 1.f / std::max(0.1f, l.angMax - l.angMin);
+		hMin[i] = l.hMin;	hRng[i] = 1.f / std::max(0.1f, l.hMax - l.hMin);
+	}
+	
+	float ft = t;  int w = sc.td.iTerSize;
+	for (y = 0; y < t; ++y)  {  int a = y*t;
+	for (x = 0; x < t; ++x,++a)
 	{
 		float fx = f*x, fy = f*y;	//  val,val1:  0 0 - [0]   1 0  - [1]   0 1 - [2]
-		const Real p = (b > 4) ? 3.f : ( (b > 3) ? 2.f : 1.f ), q = 1.f;
-		Real val =                       pow(0.5f + 0.5f*sinf(24.f* fx)*cosf(24.f* fy), p);
-		Real val1 = std::max(0.f, (float)pow(0.5f + 0.5f*cosf(18.f* fy)*sinf(18.f* fx), p) - val);
-		Real val2 = std::max(0.f, (float)pow(0.5f + 0.5f*cosf(22.f* fy)*sinf(21.f* fx), q) - val-val1);
-		Real val3 = std::max(0.f, (float)pow(0.5f + 0.5f*cosf(19.f* fy)*sinf(20.f* fx), q) - val-val1-val2);
+		const Real p = (b >= 4) ? 3.f : ( (b >= 3) ? 2.f : 1.f ), q = 1.f;
+		if (b >= 1)  val[0] =                      pow(0.5f + 0.5f *sin_(24.f* fx)*cos_(24.f* fy), p);
+		if (b >= 2)  val[1] = std::max(0.f, (float)pow(0.5f + 0.5f *cos_(18.f* fy)*sin_(18.f* fx), p) - val[0]);
+		if (b >= 3)  val[2] = std::max(0.f, (float)   (0.5f + 0.5f *cos_(22.f* fy)*sin_(21.f* fx)   ) - val[0]-val[1]);
+		if (b >= 4)  val[3] = std::max(0.f, (float)   (0.5f + 0.5f *cos_(19.f* fy)*sin_(20.f* fx)   ) - val[0]-val[1]-val[2]);
 
 		//  read ter angle
 		#if 1
-		int tx = (float)(x)/ft * sc.td.iTerSize, ty = (float)(t-1-y)/ft * sc.td.iTerSize;
-		float a = sc.td.hfNorm[ty*sc.td.iTerSize + tx];
-		val  = std::max(0.f, std::min(1.f, val1 + a / 20.f ));
-		val1 = std::max(0.f, std::min(1.f, val2 + (a-20.f) / 20.f ));
-		//val2 = 0.f;
+		int tx = (float)(x)/ft * w, ty = (float)(t-1-y)/ft * w, tt = ty * w + tx;
+		float a = sc.td.hfNorm[tt], h = sc.td.hfData[tt];
+		if (b >= 1)  val[0] = m01( (val[1]*noise[0] + (a-aMin[0]) * aRng[0]) * m01( (h-hMin[0]) * hRng[0] ) );
+		if (b >= 2)  val[1] = m01( (val[2]*noise[1] + (a-aMin[1]) * aRng[1]) * m01( (h-hMin[1]) * hRng[1] ) );
+		if (b >= 3)  val[2] = m01( (val[3]*noise[2] + (a-aMin[2]) * aRng[2]) * m01( (h-hMin[2]) * hRng[2] ) );
+		if (b >= 4)  val[3] = m01( (val[2]*noise[3] + (a-aMin[3]) * aRng[3]) * m01( (h-hMin[3]) * hRng[3] ) );
 		#endif
 
 		char mtr = 1;
-		if (b > 1)  {  *(pB[0])++ = val;   if (val > 0.5f)  mtr = 2;  }
-		if (b > 2)  {  *(pB[1])++ = val1;  if (val1> 0.5f)  mtr = 3;  }
-		if (b > 3)  {  *(pB[2])++ = val2;  if (val2> 0.5f)  mtr = 4;  }
-		if (b > 4)  {  *(pB[3])++ = val3;  if (val3> 0.5f)  mtr = 5;  }
+		for (i=0; i < b; ++i)
+		{	*(pB[i])++ = val[i];  if (val[i] > 0.5f)  mtr = i+2;  }
+		//if (b >= 1)  {  *(pB[0])++ = val[0];  if (val[0] > 0.5f)  mtr = 2;  }
+		//if (b >= 2)  {  *(pB[1])++ = val[1];  if (val[1] > 0.5f)  mtr = 3;  }
+		//if (b >= 3)  {  *(pB[2])++ = val[2];  if (val[2] > 0.5f)  mtr = 4;  }
+		//if (b >= 4)  {  *(pB[3])++ = val[3];  if (val[3] > 0.5f)  mtr = 5;  }
 
 		#ifndef ROAD_EDITOR
-		blendMtr[y*t + x] = mtr;
+		blendMtr[a] = mtr;
 		#endif
-	}
-	for (i=0; i < b-1; ++i)  {
-		bMap[i]->dirty();  bMap[i]->update();  }
-	/**/
-
-	iBlendMaps = b;  blendMapSize = t;
+	}	}
 	
+	for (i=0; i < b; ++i)  {
+		bMap[i]->dirty();  bMap[i]->update();  }
+
+	delete pM;
+	/**/
+	iBlendMaps = b+1;  blendMapSize = t;
+	
+	//bMap[i]->loadImage();
 	//bMap[0]->loadImage("blendmap.png", ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME);
 	/*Image bl0;  // ?-
 	terrain->getLayerBlendTexture(0)->convertToImage(bl0);
@@ -93,9 +119,9 @@ void App::initBlendMaps(Ogre::Terrain* terrain)
 		terrain->getGlobalColourMap()->loadImage(colourMap);
 	}
 	*/
-	ti.update();
+	ti.update();  /// time
 	float dt = ti.dt * 1000.f;
-	LogO(String("Blendmap time: ") + toStr(dt) + " ms");
+	LogO(String("::: Time Blendmap: ") + toStr(dt) + " ms");
 }
 
 
@@ -163,20 +189,21 @@ void App::CreateTerrain(bool bNewHmap, bool bTer)
 	///  --------  fill HeightField data --------
 	if (bTer)
 	{
-		QTimer ti;  ti.update();  // time
+		QTimer ti;  ti.update();  /// time
 
-		delete[] sc.td.hfData;	sc.td.hfData = new float[sc.td.iVertsX * sc.td.iVertsY];
-		delete[] sc.td.hfNorm;	sc.td.hfNorm = new float[sc.td.iVertsX * sc.td.iVertsY];
-		int siz = sc.td.iVertsX * sc.td.iVertsY * sizeof(float);
+		int wx = sc.td.iVertsX, wy = sc.td.iVertsY, wxy = wx * wy;  //wy=wx
+		delete[] sc.td.hfData;	sc.td.hfData = new float[wxy];
+		delete[] sc.td.hfNorm;	sc.td.hfNorm = new float[wxy];
+		int siz = wxy * sizeof(float);
 
 		String name = TrkDir() + (bNewHmap ? "heightmap-new.f32" : "heightmap.f32");
 
 		if (sc.td.GENERATE_HMAP)	//  generate height -
 		{
-			for (int j=0; j < sc.td.iVertsY; ++j)
+			for (int j=0; j < wy; ++j)
 			{
-				int a = j * sc.td.iVertsX;
-				for (int i=0; i < sc.td.iVertsX; ++i,++a)
+				int a = j * wx;
+				for (int i=0; i < wx; ++i,++a)
 					sc.td.hfData[a] = sc.td.getHeight(i,j);
 			}
 			if (1)	// save f32 HMap
@@ -196,43 +223,49 @@ void App::CreateTerrain(bool bNewHmap, bool bTer)
 		}
 
 		///  Hmap angles  .....
-		Real t = sc.td.fTriangleSize * 2.f;  int w = sc.td.iVertsX;
-		for (int j=1; j < sc.td.iVertsY-1; ++j)  // 1 from borders
+		Real t = sc.td.fTriangleSize * 2.f;
+		terMaxAng = 0.f;
+		for (int j=1; j < wy-1; ++j)  // 1 from borders
 		{
-			int a = j * w;
-			for (int i=1; i < sc.td.iVertsX-1; ++i,++a)
+			int a = j * wx;
+			for (int i=1; i < wx-1; ++i,++a)
 			{
 				Vector3 vx(t, sc.td.hfData[a+1]-sc.td.hfData[a-1], 0);  // x+1 - x-1
-				Vector3 vz(0, sc.td.hfData[a+w]-sc.td.hfData[a-w], t);	// z+1 - z-1
-				//vx.normalise();  vz.normalise();
+				Vector3 vz(0, sc.td.hfData[a+wx]-sc.td.hfData[a-wx], t);	// z+1 - z-1
 				Vector3 norm = -vx.crossProduct(vz);  norm.normalise();
-				sc.td.hfNorm[a] = Math::ACos(norm.y).valueDegrees();
-				if (i==j)
-					LogO(toStr(sc.td.hfNorm[a]));
+				Real ang = Math::ACos(norm.y).valueDegrees();
+
+				sc.td.hfNorm[a] = ang;
+				if (ang > terMaxAng)  terMaxAng = ang;
+				//if (i==j)
+				//	LogO(toStr(sc.td.hfNorm[a]));
 			}
 		}
-		//  only border[] vals
-		for (int j=0; j < sc.td.iVertsY; ++j)
-		{	int a = j * sc.td.iVertsX;
-			sc.td.hfNorm[a + sc.td.iVertsX-1] = 0.f;
+		//  only corner[] vals
+		//sc.td.hfNorm[0] = 0.f;
+		//  only border[] vals  todo: like above
+		for (int j=0; j < wy; ++j)  // |
+		{	int a = j * wx;
+			sc.td.hfNorm[a + wx-1] = 0.f;
 			sc.td.hfNorm[a] = 0.f;
 		}
-		for (int i=0; i < sc.td.iVertsX; ++i)
+		int a = (wy-1) * wx;
+		for (int i=0; i < wx; ++i,++a)  // --
 		{	sc.td.hfNorm[i] = 0.f;
-			sc.td.hfNorm[(sc.td.iVertsY-1) * sc.td.iVertsX + i] = 0.f;
+			sc.td.hfNorm[a] = 0.f;
 		}
+		//LogO(String("Terrain max angle: ") + toStr(terMaxAng));
 
-		
-		ti.update();
+		ti.update();  /// time
 		float dt = ti.dt * 1000.f;
-		LogO(String("Hmap time: ") + toStr(dt) + " ms");
+		LogO(String("::: Time Hmap: ") + toStr(dt) + " ms");
 	}
 	///
 
 	//  Terrain
 	if (bTer)
 	{
-		QTimer tm;  tm.update();  // time
+		QTimer tm;  tm.update();  /// time
 
 		if (!mTerrainGlobals)
 		mTerrainGlobals = OGRE_NEW TerrainGlobalOptions();
@@ -261,9 +294,9 @@ void App::CreateTerrain(bool bNewHmap, bool bTer)
 
 		mTerrainGroup->freeTemporaryResources();
 
-		tm.update();	//
+		tm.update();	/// time
 		float dt = tm.dt * 1000.f;
-		LogO(String("Ter time: ") + toStr(dt) + " ms");
+		LogO(String("::: Time Terrain: ") + toStr(dt) + " ms");
 	}
 	
 	changeShadows();

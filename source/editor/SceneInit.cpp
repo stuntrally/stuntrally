@@ -31,6 +31,7 @@ void App::createScene()
 	bGuiFocus = false/*true*/;  bMoveCam = true;  //*--
 	InitGui();
 	TerCircleInit();
+	createBrushPrv();
 
 	objs.LoadXml();
 	LogO(String("**** Loaded Vegetation objects: ") + toStr(objs.colsMap.size()));
@@ -82,6 +83,7 @@ void App::LoadTrack()
 }
 void App::LoadTrackEv()
 {
+	QTimer ti;  ti.update();  /// time
 	NewCommon();
 
 	if (road)
@@ -116,6 +118,10 @@ void App::LoadTrackEv()
 	LoadStartPos();
 
 	Status("Loaded", 0.5,0.7,1.0);
+
+	ti.update();	/// time
+	float dt = ti.dt * 1000.f;
+	LogO(String("::: Time Load Track: ") + toStr(dt) + " ms");
 }
 
 
@@ -175,12 +181,13 @@ String App::PathCopyTrk(int user){
 //---------------------------------------------------------------------------------------------------------------
 void App::SaveTrack()
 {
-	/*if (!pSet->track_user)  // could force it when in writable location..
+	if (!pSet->allow_save)  // could force it when in writable location
+	if (!pSet->track_user)
 	{	MyGUI::Message::createMessageBox(
 			"Message", "Save Track", "Can't save original track. Duplicate it first.",
 			MyGUI::MessageBoxStyle::IconWarning | MyGUI::MessageBoxStyle::Ok);
 		return;
-	}/**/
+	}
 	eTrkEvent = TE_Save;
 	Status("Saving...", 1,0.4,0.1);
 }

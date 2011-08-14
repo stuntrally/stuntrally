@@ -70,9 +70,9 @@ protected:
 	
 
 	//  create  . . . . . . . . . . . . . . . . . . . . . . . . 
-	bool bNewHmap, bTrGrUpd;
+	bool bNewHmap, bTrGrUpd;  Ogre::Real terMaxAng;
 	Ogre::String resTrk;  void NewCommon(), UpdTrees();
-	void CreateTerrain(bool bNewHmap=false, bool bTer=true);  //void CreateTrees();
+	void CreateTerrain(bool bNewHmap=false, bool bTer=true);
 	void CreateTrees(), reloadMtrTex(Ogre::String mtrName);
 	void CreateSkyDome(Ogre::String sMater, Ogre::Vector3 scale);
 	bool GetFolderIndex(std::string folderpath, std::list <std::string> & outputfolderlist, std::string extension="");
@@ -84,14 +84,14 @@ protected:
 	Ogre::Real asp, xm1,ym1,xm2,ym2;
 	void Rnd2TexSetup(), UpdMiniVis();
 
-	const static int RTs = 4;
+	const static int RTs = 4, RTsAdd = 2;
 	struct SRndTrg
 	{
 		Ogre::Camera* rndCam;  Ogre::RenderTexture* rndTex;
 		Ogre::Rectangle2D *rcMini;	Ogre::SceneNode* ndMini;
 		SRndTrg() : rndCam(0),rndTex(0),rcMini(0),ndMini(0) {  }
 	};
-	SRndTrg rt[RTs+1];
+	SRndTrg rt[RTs+RTsAdd];
 	virtual void preRenderTargetUpdate(const Ogre::RenderTargetEvent &evt);
 	virtual void postRenderTargetUpdate(const Ogre::RenderTargetEvent &evt);
 	
@@ -104,6 +104,7 @@ protected:
 	int iBlendMaps, blendMapSize;	//  mtr from ter  . . . 
 	void initBlendMaps(Ogre::Terrain* terrin);
 	float Noise(float x, float y, float zoom, int octaves, float persistance);
+	float Noise(float x, float zoom, int octaves, float persistence);
 	void configureTerrainDefaults(class Ogre::Light* l);
 		
 	void changeShadows(), UpdPSSMMaterials(), setMtrSplits(Ogre::String sMtrName);
@@ -113,11 +114,15 @@ protected:
 	//  ter circle mesh
 	Ogre::ManualObject* moTerC;  Ogre::SceneNode* ndTerC;
 	void TerCircleInit(), TerCircleUpd();
-	
+
+	void createBrushPrv(),updateBrushPrv();  Ogre::TexturePtr brushPrvTex;
+	const static int BrPrvSize = 128;  //64-
+
 
 	///<>  terrain edit, brush
 	void updBrush();  bool bTerUpd;  char sBrushTest[512];  int curBr;
-	float mBrSize[ED_ALL],mBrIntens[ED_ALL],mBrPow[ED_ALL], *mBrushData, terSetH;
+	float mBrSize[ED_ALL],mBrIntens[ED_ALL], *mBrushData, terSetH,
+		mBrPow[ED_ALL],mBrFq[ED_ALL],mBrF2[ED_ALL];
 	enum EBrShape {   BRS_Triangle=0, BRS_Sinus, BRS_Noise, BRS_ALL  } mBrShape[ED_ALL];
 	const static Ogre::String csBrShape[BRS_ALL];
 
@@ -173,7 +178,7 @@ protected:
 
 	
 	//  brush & road windows texts
-	const static int BR_TXT=5, RD_TXT=14, RDS_TXT=9;
+	const static int BR_TXT=6, RD_TXT=14, RDS_TXT=9;
 	MyGUI::StaticTextPtr brTxt[BR_TXT], rdTxt[RD_TXT],rdTxtSt[RDS_TXT];
 	MyGUI::StaticImagePtr brImg;  MyGUI::TabPtr wndTabs;
 
@@ -220,14 +225,17 @@ protected:
 	void editTerTriSize(MyGUI::EditPtr), editTerLScale(MyGUI::EditPtr);
 	void btnTerrainNew(WP), btnTerGenerate(WP);
 	MyGUI::StaticTextPtr valTerLAll;
+	//  ter blendmap
+	SLV(TerLAngMin);  SLV(TerLHMin);
+	SLV(TerLAngMax);  SLV(TerLHMax);
 
-	//  particles
+	//  ter particles
 	MyGUI::EditPtr edLDust,edLDustS, edLMud,edLSmoke, edLTrlClr;
 	void editLDust(MyGUI::EditPtr), editLTrlClr(MyGUI::EditPtr);
 	MyGUI::ComboBoxPtr cmbParDust,cmbParMud,cmbParSmoke;
 	void comboParDust(CMB);
 	
-	//  surfaces
+	//  ter surfaces
 	MyGUI::ComboBoxPtr cmbSurfType;  void comboSurfType(CMB);
 	MyGUI::EditPtr edSuBumpWave, edSuBumpAmp, edSuRollDrag, edSuFrict, edSuFrict2;
 	void editSurf(MyGUI::EditPtr);

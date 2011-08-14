@@ -56,6 +56,7 @@ inline Real getTerrainHeightAround(const Real x, const Real z, void *userData)
 
 void App::CreateTrees()
 {
+	QTimer ti;  ti.update();  /// time
 	gTerrain = terrain;
 	
 	//-------------------------------------- Grass --------------------------------------
@@ -112,6 +113,9 @@ void App::CreateTrees()
 		l->setMapBounds(tbnd);
 		grass->setShadersEnabled(true);//`
 	}
+	ti.update();  /// time
+	float dt = ti.dt * 1000.f;
+	LogO(String("::: Time Grass: ") + toStr(dt) + " ms");
 
 
 	//-------------------------------------- Trees --------------------------------------
@@ -239,6 +243,9 @@ void App::CreateTrees()
 		LogO(String("***** Vegetation objects count: ") + toStr(cntr) + "  shapes: " + toStr(cntshp));
 	}
 	//imgRoadSize = 0;
+	ti.update();  /// time
+	dt = ti.dt * 1000.f;
+	LogO(String("::: Time Trees: ") + toStr(dt) + " ms");
 }
 
 

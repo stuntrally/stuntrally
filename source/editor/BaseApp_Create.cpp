@@ -68,6 +68,8 @@ void BaseApp::createFrameListener()
 	mDebugOverlay= ovr.getByName("Editor/DebugOverlay");  //mDebugOverlay->show();
 	ovDbg = ovr.getOverlayElement("Editor/DebugText");
 	ovInfo= ovr.getOverlayElement("Editor/Info");
+	ovBrushPrv = ovr.getByName("Editor/BrushPrvOverlay");  //ovBrushPrv->show();
+	ovBrushMtr = ovr.getOverlayElement("Editor/BrushPrvPanel");
 
 	OIS::ParamList pl;	size_t windowHnd = 0;
 	std::ostringstream windowHndStr;
@@ -139,7 +141,7 @@ BaseApp::BaseApp()
 
 	,mDebugOverlay(0), ovSt(0), ovFps(0), ovTri(0), ovBat(0)
 	,ovPos(0), ovDbg(0), ovInfo(0), ovStat(0)
-	,ovFocus(0), ovFocBck(0)
+	,ovFocus(0), ovFocBck(0), ovBrushPrv(0), ovBrushMtr(0)
 
 	,mStatsOn(0), mShowCamPos(1), mbWireFrame(0)
 	,mx(0),my(0),mz(0),	mGUI(0), mPlatform(0)
@@ -215,6 +217,7 @@ bool BaseApp::configure()
 //-------------------------------------------------------------------------------------
 bool BaseApp::setup()
 {
+	QTimer ti;  ti.update();  /// time
 	if (pSet->rendersystem == "Default")
 	{
 		#if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
@@ -285,6 +288,11 @@ bool BaseApp::setup()
 	// -------------------------------------------------------
 
 	createFrameListener();
+
+	ti.update();	/// time
+	float dt = ti.dt * 1000.f;
+	LogO(String("::: Time Ogre Start: ") + toStr(dt) + " ms");
+
 	createScene();
 
 	return true;

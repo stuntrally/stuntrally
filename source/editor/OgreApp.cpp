@@ -28,7 +28,7 @@ App::App()  //  gui wigdets--
 	,cmbSky(0), cmbRain1(0),cmbRain2(0), valRain1Rate(0),valRain2Rate(0)  // sun
 	,valSunPitch(0),valSunYaw(0), valFogStart(0),valFogEnd(0)
 	,edLiAmb(0),edLiDiff(0),edLiSpec(0), edFogClr(0), chkFog(0)
-	,cmbTexDiff(0),cmbTexNorm(0), imgTexDiff(0)  // terrain
+	,cmbTexDiff(0),cmbTexNorm(0), imgTexDiff(0), terrain(0)  // terrain
 	,valTerLAll(0),tabsHmap(0),tabsTerLayers(0), idTerLay(0),bTerLay(1)
 	,chkTerLay(0),chkTexNormAuto(0), bTexNormAuto(1)
 	,valTerTriSize(0),edTerTriSize(0), edTerLScale(0),valTerLScale(0)
@@ -47,10 +47,10 @@ App::App()  //  gui wigdets--
 	,imgPrv(0),imgMini(0),imgTer(0), valTrk(0), trkDesc(0),trkName(0)  // track
 
 	,mTerrainGroup(0), mTerrainPaging(0), mPageManager(0), mTerrainGlobals(0)
-	,bTerUpd(0), curBr(0), bGuiReinit(0)
+	,bTerUpd(0), curBr(2), bGuiReinit(0)
 	,ndPos(0), mpos(0), asp(4.f/3.f)
 	,ndCar(0),entCar(0),ndStBox(0),entStBox(0)
-	,grass(0), trees(0), sun(0)
+	,grass(0), trees(0), sun(0), terMaxAng(0.f)
 	,eTrkEvent(TE_None), bNewHmap(0), bTrGrUpd(0), iSnap(0),angSnap(0)
 {
 	pathTrk[0] = PATHMANAGER::GetTrackPath() + "/";      pathTrkPrv[0] = pathTrk[0] + "_previews/";  resTrk = "";
@@ -59,7 +59,9 @@ App::App()  //  gui wigdets--
 
 	mBrSize[0] = 16.f;		mBrSize[1] = 24.f;		mBrSize[2] = 16.f;		
 	mBrIntens[0] = 20.f;	mBrIntens[1] = 20.f;	mBrIntens[2] = 20.f;	
-	mBrPow[0] = 2.f;		mBrPow[1] = 2.f;		mBrPow[2] = 2.f;		
+	mBrPow[0] = 2.f;	mBrPow[1] = 2.f;	mBrPow[2] = 2.f;		
+	mBrFq[0] = 1.f;		mBrFq[1] = 1.f;		mBrFq[2] = 1.f;
+	mBrF2[0] = 0.5f;	mBrF2[1] = 0.5f;	mBrF2[2] = 0.5f;
 	terSetH = 10.f;
 	mBrShape[0] = BRS_Sinus;  mBrShape[1] = BRS_Sinus;	mBrShape[2] = BRS_Sinus;
 	mBrushData = new float[BrushMaxSize*BrushMaxSize];

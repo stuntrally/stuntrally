@@ -13,6 +13,7 @@ using namespace Ogre;
 void App::InitGui()
 {
 	if (!mGUI)  return;
+	QTimer ti;  ti.update();  /// time
 	LanguageManager::getInstance().loadUserTags("core_theme_black_blue_tag.xml");
 
 	//  load layout - wnds
@@ -77,7 +78,7 @@ void App::InitGui()
 	ms.X.abs = xm;  ms.Y.abs = ym;
 	
 	//  hide  ---
-	edMode = ED_Road;  UpdEditWnds();  // *  UpdVisHit(); //after track
+	edMode = ED_Deform;  UpdEditWnds();  // *  UpdVisHit(); //after track
 	if (!mWndOpts)  return;  // error
 	
 	
@@ -199,8 +200,8 @@ void App::InitGui()
 	valTerLAll = (StaticTextPtr)mWndOpts->findWidget("TerLayersAll");
 	Chk("TexNormAuto", chkTexNormAutoOn, 1);  chkTexNormAuto = bchk;
 	
-	//float angMin,angMax, hMin,hMax, noise;  // blend map, angle and height range, noise
-	//Slv()
+	Slv(TerLAngMin, 0);  Slv(TerLHMin, 0);
+	Slv(TerLAngMax, 0);	 Slv(TerLHMax, 0);	//Slv(TerLBNoise1, 0);
 	
 	Ed(LDust, editLDust);	Ed(LDustS, editLDust);
 	Ed(LMud,  editLDust);	Ed(LSmoke, editLDust);
@@ -378,4 +379,8 @@ void App::InitGui()
     //  load = new game
     for (int i=1; i<=3; ++i)
     {	Btn("NewGame"+toStr(i), btnNewGame);  }
+
+	ti.update();	/// time
+	float dt = ti.dt * 1000.f;
+	LogO(String("::: Time Init Gui: ") + toStr(dt) + " ms");
 }

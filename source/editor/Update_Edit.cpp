@@ -203,8 +203,16 @@ bool App::frameRenderingQueued(const FrameEvent& evt)
 		if (brTxt[4])
 		if (edMode == ED_Height)
 		{	Fmt(s, "Height: %4.1f", terSetH);	brTxt[4]->setCaption(s);	}
+		else if (edMode == ED_Deform)
+		{	Fmt(s, "Freq: %4.2f", mBrFq[curBr]);	brTxt[4]->setCaption(s);	}
 		else
 			brTxt[4]->setCaption("");
+
+		if (brTxt[5])
+		if (edMode == ED_Deform || edMode == ED_Height)
+		{	Fmt(s, "Frq2: %4.2f", mBrF2[curBr]);	brTxt[5]->setCaption(s);	}
+		else
+			brTxt[5]->setCaption("");
 
 		if (mz != 0)
 			if (alt){			mBrPow[curBr]   *= 1.f - 0.4f*q*mz;  updBrush();  }
@@ -216,7 +224,10 @@ bool App::frameRenderingQueued(const FrameEvent& evt)
 		if (isKey(RBRACKET))	mBrIntens[curBr]*= 1.f + 0.04f*q;
 		if (isKey(SEMICOLON )){  mBrPow[curBr]  *= 1.f - 0.04f*q;  updBrush();  }
 		if (isKey(APOSTROPHE)){  mBrPow[curBr]  *= 1.f + 0.04f*q;  updBrush();  }
-		//KC_COMMA KC_PERIOD
+		if (isKey(O)){			mBrFq[curBr]  *= 1.f - 0.04f*q;  updBrush();  }
+		if (isKey(P)){			mBrFq[curBr]  *= 1.f + 0.04f*q;  updBrush();  }
+		if (isKey(COMMA)){		mBrF2[curBr]  *= 1.f - 0.04f*q;  updBrush();  }
+		if (isKey(PERIOD)){		mBrF2[curBr]  *= 1.f + 0.04f*q;  updBrush();  }
 	}
 	mz = 0;  // mouse wheel
 	

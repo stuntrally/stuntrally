@@ -60,7 +60,10 @@
 			<Property key="Widget_InheritsAlpha" value="false"/>
 			<Property key="Text_TextColour" value="0.76 0.9 1.0"/>
 		</Widget>
-		<Widget type="StaticImage" skin="StaticImage" position="8 64 56 56" name="brushImg"/>
+		<Widget type="StaticText" skin="StaticText" position="4 100 120 20" name="brush5">
+			<Property key="Widget_InheritsAlpha" value="false"/>
+			<Property key="Text_TextColour" value="0.76 0.9 1.0"/>
+		</Widget>
 	</Widget>
 	<Widget type="Window" skin="WindowC" position="0 34 136 266" layer="Back" name="RoadCur">
 		<Property key="Widget_Colour" value="0.4 0.4 0.4"/>

@@ -140,6 +140,12 @@ bool Scene::LoadXml(String file)
 			a = eTex->Attribute("smoke");	if (a)  l->smoke = s2r(a);
 			a = eTex->Attribute("tclr");	if (a)  l->tclr = s2c(a);
 
+			a = eTex->Attribute("angMin");	if (a)  l->angMin = s2r(a);
+			a = eTex->Attribute("angMax");	if (a)  l->angMax = s2r(a);
+			a = eTex->Attribute("hMin");	if (a)  l->hMin = s2r(a);
+			a = eTex->Attribute("hMax");	if (a)  l->hMax = s2r(a);
+			a = eTex->Attribute("noise");	if (a)  l->noise = s2r(a);
+
 			if (!road && il < td.ciNumLay)
 				td.layersAll[il++] = lay;
 			eTex = eTex->NextSiblingElement("texture");
@@ -273,6 +279,11 @@ bool Scene::SaveXml(String file)
 				tex.SetAttribute("smoke",	toStrC( l->smoke )); \
 				tex.SetAttribute("tclr",	toStrC( l->tclr ));
 			setDmst();
+			tex.SetAttribute("angMin",	toStrC( l->angMin ));
+			tex.SetAttribute("angMax",	toStrC( l->angMax ));
+			tex.SetAttribute("hMin",	toStrC( l->hMin ));
+			tex.SetAttribute("hMax",	toStrC( l->hMax ));
+			tex.SetAttribute("noise",	toStrC( l->noise ));
 			ter.InsertEndChild(tex);
 		}
 		l = &td.layerRoad;

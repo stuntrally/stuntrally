@@ -36,6 +36,7 @@ void App::UpdEditWnds()
 	//if (mWndRoadStats)  mWndRoadStats->setVisible(bRoad);
 	if (mWndCam)  mWndCam->setVisible(edMode == ED_PrvCam);
 	UpdStartPos();  // StBox visible
+	UpdVisGui();  //br prv..
 }
 void App::UpdVisGui()
 {
@@ -44,6 +45,10 @@ void App::UpdVisGui()
 	if (mGUI)  mGUI->setVisiblePointer(bGuiFocus || !bMoveCam);
 	if (road)  road->SetTerHitVis(bEdit());
 	if (!bGuiFocus && mToolTip)  mToolTip->setVisible(false);
+
+	if (ovBrushPrv)
+	if (edMode >= ED_Road || !bEdit())
+		ovBrushPrv->hide();  else  ovBrushPrv->show();
 }
 
 void App::Status(String s, float r,float g,float b)
@@ -171,12 +176,12 @@ bool App::KeyPress(const CmdKey &arg)
 		case KC_F8:  UpdateTrack();	return true;
 
    		case KC_F2:  // +-rt num
-   			if (alt) {	pSet->num_mini = (pSet->num_mini - 1 + RTs) % (RTs);  UpdMiniVis();  }
+   			if (alt) {	pSet->num_mini = (pSet->num_mini - 1 + RTs+2) % (RTs+2);  UpdMiniVis();  }
    			else if (bGuiFocus)  // prev gui tab
    				mWndTabs->setIndexSelected( (mWndTabs->getIndexSelected() - 1 + num) % num );
    			break;
    		case KC_F3:
-   			if (alt) {	pSet->num_mini = (pSet->num_mini + 1) % (RTs);  UpdMiniVis();  }
+   			if (alt) {	pSet->num_mini = (pSet->num_mini + 1) % (RTs+2);  UpdMiniVis();  }
    			else if (bGuiFocus)  // next gui tab
    				mWndTabs->setIndexSelected( (mWndTabs->getIndexSelected() + 1) % num );
    			break;

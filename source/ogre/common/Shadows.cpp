@@ -22,6 +22,8 @@ using namespace Ogre;
 //---------------------------------------------------------------------------------------------------
 void App::changeShadows()
 {
+	QTimer ti;  ti.update();  /// time
+
 	//  get settings
 	bool enabled = pSet->shadow_type != 0;
 	bool bDepth = pSet->shadow_type == 3;
@@ -109,6 +111,10 @@ void App::changeShadows()
 		matProfile->setReceiveDynamicShadowsPSSM(static_cast<PSSMShadowCameraSetup*>(mPSSMSetup.get()));
 	}
 	UpdPSSMMaterials();
+
+	ti.update();	/// time
+	float dt = ti.dt * 1000.f;
+	LogO(String("::: Time Shadows: ") + toStr(dt) + " ms");
 }
 
 

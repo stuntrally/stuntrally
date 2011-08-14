@@ -18,7 +18,7 @@ public:
 	std::string track;  bool track_user;
 
 	//  show
-	bool show_fps, trackmap;  int num_mini;
+	bool show_fps, trackmap, brush_prv;  int num_mini;
 	float size_minimap;
 
 	//  graphics
@@ -28,7 +28,7 @@ public:
 	float trees, grass, trees_dist, grass_dist;
 
 	//  startup
-	bool autostart, escquit, ogre_dialog;
+	bool autostart, escquit, ogre_dialog, allow_save;
 	std::string language;
 
 	//  settings
@@ -38,11 +38,8 @@ public:
 	
 	// video
 	int windowx, windowy;
-	bool fullscreen;
-	int fsaa;
-	bool vsync;
-	std::string buffer;
-	std::string rendersystem;
+	bool fullscreen;  int fsaa;  bool vsync;
+	std::string buffer, rendersystem;
 	
 //------------------------------------------
 	SETTINGS();
