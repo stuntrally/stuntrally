@@ -4,26 +4,31 @@
 #include "../vdrift/configfile.h"
 
 
+#define SET_VER  1200  // 1.2
+
+
 class SETTINGS
 {
 public:
 ///  params
 //------------------------------------------
+	int version;  // file version
+
 	//  track
 	std::string track;  bool track_user;
 
 	//  show
-	bool show_fps, trackmap;  int num_mini;
+	bool show_fps, trackmap, brush_prv;  int num_mini;
 	float size_minimap;
 
 	//  graphics
-	int anisotropy, shaders;
+	int anisotropy, shaders, tex_size;
 	float view_distance, terdetail,terdist, road_dist;
 	float shadow_dist;  int shadow_size, shadow_count, shadow_type;
 	float trees, grass, trees_dist, grass_dist;
 
 	//  startup
-	bool autostart, escquit, ogre_dialog;
+	bool autostart, escquit, ogre_dialog, allow_save;
 	std::string language;
 
 	//  settings
@@ -33,11 +38,8 @@ public:
 	
 	// video
 	int windowx, windowy;
-	bool fullscreen;
-	int fsaa;
-	bool vsync;
-	std::string buffer;
-	std::string rendersystem;
+	bool fullscreen;  int fsaa;  bool vsync;
+	std::string buffer, rendersystem;
 	
 //------------------------------------------
 	SETTINGS();

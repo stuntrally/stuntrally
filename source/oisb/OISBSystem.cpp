@@ -50,6 +50,7 @@ restrictions:
 
 using namespace rapidxml;
 
+
 namespace OISB
 {
     // static member singleton pointer
@@ -263,7 +264,7 @@ namespace OISB
 				(*ait).second->listProperties(list, true, false);
 				for (std::vector<String>::const_iterator lit=list.begin(); lit!=list.end(); lit++)
 				{
-					if ((*lit) != "AbsoluteValue" && (*lit) != "RelativeValue" && (*lit) != "ParentActionSchemaName" && (*lit) != "ActionName" && (*lit) != "BindableType" && (*lit) != "Active" && (*lit) != "BindableName" && (*lit) != "Changed" && (*lit) != "EmulationSpeed") {
+					if ((*lit) != "AbsoluteValue" && (*lit) != "RelativeValue" && (*lit) != "ParentActionSchemaName" && (*lit) != "ActionName" && (*lit) != "BindableType" && (*lit) != "Active" && (*lit) != "BindableName" && (*lit) != "Changed" && (*lit) != "Speed") {
 						String value = (*ait).second->getProperty<String>( (*lit) );
 						char *att_name = doc.allocate_string(value.c_str()); 
 						char *att_att = doc.allocate_string((*lit).c_str());
@@ -277,7 +278,7 @@ namespace OISB
 					for (std::vector<String>::const_iterator lit=list.begin(); lit!=list.end(); lit++)
 					{
 						// -workaround
-						if ((*lit) != "BindableType" && (*lit) != "Active" && (*lit) != "BindableName" && (*lit) != "Changed" && (*lit) != "EmulationSpeed") {
+						if ((*lit) != "BindableType" && (*lit) != "Active" && (*lit) != "BindableName" && (*lit) != "Changed" && (*lit) != "Speed") {
 						String value = static_cast<AnalogAxisAction*>((*ait).second)->getAnalogEmulator()->getProperty<String>( (*lit) );
 						char *att_name = doc.allocate_string(value.c_str()); 
 						char *att_att = doc.allocate_string((*lit).c_str());
@@ -307,7 +308,8 @@ namespace OISB
 							{
 								char *att_att = doc.allocate_string((*bnit).first.c_str());
 								bindNode->append_attribute(doc.allocate_attribute("role", att_att)); 
-								char *att_name = doc.allocate_string((*bnit).second->getBindableName().c_str()); 
+								char *att_name = doc.allocate_string(
+									(*bnit).second == (Bindable*)1 ? "None" : (*bnit).second->getBindableName().c_str()); 
 								bindNode->value(att_name);
 							}
 							else
@@ -343,7 +345,8 @@ namespace OISB
 							{
 								char *att_att = doc.allocate_string((*bnit).first.c_str());
 								bindNode->append_attribute(doc.allocate_attribute("role", att_att)); 
-								char *att_name = doc.allocate_string((*bnit).second->getBindableName().c_str()); 
+								char *att_name = doc.allocate_string(
+									(*bnit).second == (Bindable*)1 ? "None" : (*bnit).second->getBindableName().c_str()); 
 								bindNode->value(att_name);
 							}
 							else
@@ -697,7 +700,7 @@ namespace OISB
             it->second->dump(os);
         }
 
-        os << "End of dump!" << std::endl;
+        os << "End of dump" << std::endl;
     }
 
     void System::dumpActionSchemas(std::ostream& os)
@@ -709,7 +712,7 @@ namespace OISB
             it->second->dump(os);
         }
 
-        os << "End of dump!" << std::endl;
+        os << "End of dump" << std::endl;
     }
 	
 	void System::addDevice(Device* device)

@@ -29,6 +29,9 @@ const int ciShadowSizesA[ciShadowNumSizes] = {512,1024,2048,4096};
 #define res  1000000.f
 #define Fmt  sprintf
 
+const int ciAngSnapsNum = 6;
+const Ogre::Real crAngSnaps[ciAngSnapsNum] = {0,15,30,45,90,180};
+
 
 namespace Forests
 {
@@ -67,9 +70,10 @@ protected:
 	
 
 	//  create  . . . . . . . . . . . . . . . . . . . . . . . . 
-	bool bNewHmap, bTrGrUpd;
+	bool bNewHmap, bTrGrUpd;  Ogre::Real terMaxAng;
 	Ogre::String resTrk;  void NewCommon(), UpdTrees();
-	void CreateTerrain(bool bNewHmap=false, bool bTer=true);  //void CreateTrees();
+	void CreateTerrain(bool bNewHmap=false, bool bTer=true);
+	void GetTerAngles(int xb,int yb,int xe,int ye);
 	void CreateTrees(), reloadMtrTex(Ogre::String mtrName);
 	void CreateSkyDome(Ogre::String sMater, Ogre::Vector3 scale);
 	bool GetFolderIndex(std::string folderpath, std::list <std::string> & outputfolderlist, std::string extension="");
@@ -81,14 +85,14 @@ protected:
 	Ogre::Real asp, xm1,ym1,xm2,ym2;
 	void Rnd2TexSetup(), UpdMiniVis();
 
-	const static int RTs = 4;
+	const static int RTs = 4, RTsAdd = 2;
 	struct SRndTrg
 	{
 		Ogre::Camera* rndCam;  Ogre::RenderTexture* rndTex;
 		Ogre::Rectangle2D *rcMini;	Ogre::SceneNode* ndMini;
 		SRndTrg() : rndCam(0),rndTex(0),rcMini(0),ndMini(0) {  }
 	};
-	SRndTrg rt[RTs+1];
+	SRndTrg rt[RTs+RTsAdd];
 	virtual void preRenderTargetUpdate(const Ogre::RenderTargetEvent &evt);
 	virtual void postRenderTargetUpdate(const Ogre::RenderTargetEvent &evt);
 	
@@ -100,6 +104,8 @@ protected:
 
 	int iBlendMaps, blendMapSize;	//  mtr from ter  . . . 
 	void initBlendMaps(Ogre::Terrain* terrin);
+	float Noise(float x, float y, float zoom, int octaves, float persistance);
+	float Noise(float x, float zoom, int octaves, float persistence);
 	void configureTerrainDefaults(class Ogre::Light* l);
 		
 	void changeShadows(), UpdPSSMMaterials(), setMtrSplits(Ogre::String sMtrName);
@@ -109,14 +115,21 @@ protected:
 	//  ter circle mesh
 	Ogre::ManualObject* moTerC;  Ogre::SceneNode* ndTerC;
 	void TerCircleInit(), TerCircleUpd();
-	
+
+	void createBrushPrv(),updateBrushPrv(bool first=false);  Ogre::TexturePtr brushPrvTex;
+	const static int BrPrvSize = 128;  //64-
+
 
 	///<>  terrain edit, brush
-	void updBrush();  bool bTerUpd;  char sBrushTest[512];  int curBr;
-	float mBrSize[ED_ALL],mBrIntens[ED_ALL],mBrPow[ED_ALL], *mBrushData;
+	void updBrush();  bool bTerUpd,bTerUpdBlend;  char sBrushTest[512];  int curBr;
+	float mBrSize[ED_ALL],mBrIntens[ED_ALL], *mBrushData, terSetH,
+		mBrPow[ED_ALL],mBrFq[ED_ALL];  int mBrOct[ED_ALL];
+	enum EBrShape {   BRS_Triangle=0, BRS_Sinus, BRS_Noise, BRS_ALL  } mBrShape[ED_ALL];
+	const static Ogre::String csBrShape[BRS_ALL];
 
 	bool getEditRect(Ogre::Vector3& pos, Ogre::Rect& brushrect, Ogre::Rect& maprect, int size, int& cx, int& cy);
 	void deform(Ogre::Vector3 &pos, float dtime, float brMul);
+	void height(Ogre::Vector3 &pos, float dtime, float brMul);
 	void calcSmoothFactor(Ogre::Vector3 &pos, float& avg, int& sample_count);
 	void smooth(Ogre::Vector3 &pos, float dtime);
 	void smoothTer(Ogre::Vector3 &pos, float avg, float dtime);
@@ -130,7 +143,7 @@ protected:
 	class Forests::PagedGeometry *trees, *grass;
 
 	//  road  -in base
-	void SaveGrassDens();
+	void SaveGrassDens();  int iSnap;  Ogre::Real angSnap;
 
 	//  car starts
 	bool LoadStartPos(),SaveStartPos(std::string path);  void UpdStartPos();
@@ -146,7 +159,7 @@ protected:
 	void InitGui(),  UpdVisGui(), UpdEditWnds();
 	void UpdGuiRdStats(const SplineRoad* rd, const Scene& sc, float time), ReadTrkStats();
 	void Status(Ogre::String s, float r,float g,float b);
-	void SetGuiFromXmls();//, SetXmlsFromGui();
+	void SetGuiFromXmls();  bool noBlendUpd, bGI;
 	
 
 	//  shortcuts
@@ -166,13 +179,13 @@ protected:
 
 	
 	//  brush & road windows texts
-	const static int BR_TXT=5, RD_TXT=13, RDS_TXT=9;
+	const static int BR_TXT=6, RD_TXT=14, RDS_TXT=9;
 	MyGUI::StaticTextPtr brTxt[BR_TXT], rdTxt[RD_TXT],rdTxtSt[RDS_TXT];
 	MyGUI::StaticImagePtr brImg;  MyGUI::TabPtr wndTabs;
 
 
 	//  [Graphics]  sliders
-	SLV(Anisotropy);  SLV(ViewDist);  SLV(TerDetail);  SLV(TerDist);  SLV(RoadDist);  // detail
+	SLV(Anisotropy);  SLV(ViewDist);  SLV(TerDetail);  SLV(TerDist);  SLV(RoadDist);  SLV(TexSize);  // detail
 	SLV(Trees);  SLV(Grass);  SLV(TreesDist);  SLV(GrassDist);  // paged
 	SLV(Shaders);  SLV(ShadowType);  SLV(ShadowCount);  SLV(ShadowSize);  SLV(ShadowDist);  // shadow
 	//  checks
@@ -201,7 +214,7 @@ protected:
 	void comboTexDiff(CMB), comboTexNorm(CMB);
 	MyGUI::StaticImagePtr imgTexDiff;
 
-	MyGUI::ButtonPtr chkTerLay;  void chkTerLayOn(WP);  // on
+	MyGUI::ButtonPtr chkTerLay,chkTerLNoiseOnly;  void chkTerLayOn(WP),chkTerLNoiseOnlyOn(WP);  // on
 	MyGUI::TabPtr tabsHmap;	  void tabHmap(TAB);  // tabs
 	MyGUI::TabPtr tabsTerLayers; void tabTerLayer(TAB);
 	int idTerLay;  bool bTerLay;  // help vars
@@ -211,16 +224,20 @@ protected:
 	SLV(TerTriSize);  SLV(TerLScale);
 	MyGUI::EditPtr edTerTriSize, edTerLScale;
 	void editTerTriSize(MyGUI::EditPtr), editTerLScale(MyGUI::EditPtr);
-	void btnTerrainNew(WP), btnTerrainResize(WP);
+	void btnTerrainNew(WP), btnTerGenerate(WP);
 	MyGUI::StaticTextPtr valTerLAll;
+	//  ter blendmap
+	SLV(TerLAngMin);  SLV(TerLHMin);  SLV(TerLAngSm);
+	SLV(TerLAngMax);  SLV(TerLHMax);  SLV(TerLHSm);
+	SLV(TerLNoise);  //Chk("TerLNoiseOnly", chkTerLNoiseOnly, 0);
 
-	//  particles
+	//  ter particles
 	MyGUI::EditPtr edLDust,edLDustS, edLMud,edLSmoke, edLTrlClr;
 	void editLDust(MyGUI::EditPtr), editLTrlClr(MyGUI::EditPtr);
 	MyGUI::ComboBoxPtr cmbParDust,cmbParMud,cmbParSmoke;
 	void comboParDust(CMB);
 	
-	//  surfaces
+	//  ter surfaces
 	MyGUI::ComboBoxPtr cmbSurfType;  void comboSurfType(CMB);
 	MyGUI::EditPtr edSuBumpWave, edSuBumpAmp, edSuRollDrag, edSuFrict, edSuFrict2;
 	void editSurf(MyGUI::EditPtr);

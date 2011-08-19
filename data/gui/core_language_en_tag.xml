@@ -32,6 +32,8 @@
 	<Tag name="TBBest">Best</Tag>
 	<Tag name="TBScore">Score</Tag>
 	<Tag name="WrongChk">Wrong Checkpoint</Tag>
+	<Tag name="TBLap">Lap</Tag>
+	<Tag name="TBPlace">Place</Tag>
 	<Tag name="CamInfoStrings">Type,Yaw,Pitch,Dist,Height,Speed,Offset,LEFT,RIGHT,Middle,Wheel,shift,Rotate,reset,move,H,Pos</Tag>
 
 	<Tag name="Options">Options</Tag>
@@ -83,7 +85,7 @@
 	<Tag name="TipChangeHue">Change car color (hue).</Tag>
 	<Tag name="TipChangeSat">Change car color saturation (white-black).</Tag>
 	<Tag name="TipChangeBright">Change car color brightness (dark-light).</Tag>
-	
+	<Tag name="CarClrRandom">Random</Tag>
 
 	<!--  Multiplayer  -->
 	<Tag name="Multiplayer">Multiplayer</Tag>
@@ -112,23 +114,28 @@
 	<Tag name="NetRouterTip">Router port forwarding configuration might be required in order to allow peers to connect to the local port.</Tag>
 
 	<!--  Setup  -->
+	<Tag name="Game">Game</Tag>
 	<Tag name="Setup">Setup</Tag>
+
 	<Tag name="ABS">ABS (antilock brakes)</Tag>
 	<Tag name="TipABS">Prevents wheel lock when braking (default: off).</Tag>
 	<Tag name="TCS">TCS (traction control)</Tag>
 	<Tag name="TipTCS">Prevents wheel spinning when accelerating (default: off).</Tag>
+
 	<Tag name="AutoClutch">Auto clutch-</Tag>
 	<Tag name="TipAutoClutch">-Manual not implemented.</Tag>
 	<Tag name="AutoGearbox">Auto gearbox</Tag>
 	<Tag name="TipAutoGearbox">Uncheck for manual gears changing.</Tag>
 	<Tag name="AutoRear">Auto Rear gear</Tag>
 	<Tag name="TipAutoRear">Uncheck for manual Rear gear changing.</Tag>
+
 	<Tag name="VegetCol">Vegetation collision</Tag>
 	<Tag name="CarCollis">Cars collision</Tag>
+
 	<Tag name="NumLocalPlayers">Number of local players</Tag>
 	<Tag name="SplitVertically">Split Vertically</Tag>
-	<Tag name="Game">Game</Tag>
-		
+	<Tag name="NumLaps">Number of laps</Tag>
+			
 
 	<!--  Replay  -->
 	<Tag name="Replay">Replay</Tag>
@@ -220,6 +227,8 @@
 	<Tag name="UnitMph">mph</Tag>
 	<Tag name="Gauges">Gauges (rpm, speed)</Tag>
 	<Tag name="Minimap">Minimap</Tag>
+	<Tag name="MinimapZoom">Zoom</Tag>
+	<Tag name="MinimapRotate">Rotate</Tag>
 	<Tag name="TimesBar">Times bar</Tag>
 	<Tag name="CameraInfo">Camera info</Tag>
 
@@ -247,7 +256,6 @@
 	<Tag name="InputNoJS">No joystick</Tag>
 	<Tag name="InputKeyNoButton">No button</Tag>
 	<Tag name="InputKeyNoAxis">No axis</Tag>
-	<!--<Tag name="InputKeyUnassigned">&lt;Unassigned&gt;</Tag>-->
 	<Tag name="InputKeyUnassigned">-- None --</Tag>
 	<Tag name="InputAssignKey">&lt;Press a key&gt;</Tag>
 	<Tag name="InputMoveAxisTip">Move an axis to see its number</Tag>
@@ -279,6 +287,11 @@
 	<Tag name="InputMapNextCamera">Next Camera</Tag>
 	<Tag name="InputCameraTxt1">with shift - main cameras only</Tag>
 	<Tag name="InputCameraTxt2">with ctrl - switch current car when many</Tag>
+
+	<Tag name="InputRplCtrl0">Replay:</Tag>
+	<Tag name="InputRplCtrl1">Backspace - show/hide controls (hold ctrl to use mouse)</Tag>
+	<Tag name="InputRplCtrl2">P - pause/unpause replay</Tag>
+	<Tag name="InputRplCtrl3">[ , ] - wind backwards/forwards (shift - slow, ctrl,alt - fast)</Tag>
 
 
 	<!--  Sound  -->
@@ -355,14 +368,26 @@
 	<Tag name="TriSize">Triangle size</Tag>
 	<Tag name="TerrainSize">Terrain size</Tag>
 	<Tag name="NewTerFlat">New flat</Tag>
-	<Tag name="ResizeTer">Resize</Tag>
+	<Tag name="NewTerGenerate">New Generate</Tag>
 	<Tag name="Enabled">Enabled</Tag>
 	<Tag name="Used">Used</Tag>
 	<Tag name="Layer">Layer</Tag>
+	<Tag name="Layers">Layers</Tag>
+	<Tag name="BlendMap">Blendmap</Tag>
 	<Tag name="Road">Road</Tag>
 	<Tag name="TerNormal">Normal</Tag>
 	<Tag name="auto">Auto</Tag>
 	<Tag name="scale">Scale</Tag>
+
+	<Tag name="TerLAngMin">Angle Min</Tag>
+	<Tag name="TerLAngMax">Angle Max</Tag>
+	<Tag name="TerLAngSm">Angle smooth</Tag>
+	<Tag name="TerLHMin">Height Min</Tag>
+	<Tag name="TerLHMax">Height Max</Tag>
+	<Tag name="TerLHSm">Height smooth</Tag>
+	<Tag name="TerLNoise">Noise</Tag>
+	<Tag name="TerLNoiseOnly">Only Noise</Tag>
+
 	<Tag name="DustSize">dust size</Tag>
 	<Tag name="dust">dust</Tag>
 	<Tag name="mud">mud</Tag>
@@ -442,14 +467,15 @@
 	<Tag name="InputSlowFast">shift - slow   ctrl - fast</Tag>
 	<Tag name="EditTerrainMode">Edit Terrain mode</Tag>
 	<Tag name="InputTerDeform">D - Deform  (LMB up, RMB down)</Tag>
-	<Tag name="InputTerSmooth">S - Smooth  (LMB, -Noise RMB)</Tag>
-	<Tag name="InputTerHeight">E - Height set</Tag>
+	<Tag name="InputTerSmooth">S - Smooth</Tag>
+	<Tag name="InputTerHeight">E - Height set (RMB change height value)</Tag>
 	<Tag name="InputTerPaint">A - Paint Textures (layers)</Tag>
 	<Tag name="InputPaintColor">C - Paint Color</Tag>
 	<Tag name="InputToggleVeget">V - Disable / enable vegetation</Tag>
 	<Tag name="InputWheelSize">,=  (or Wheel)  -  Size</Tag>
 	<Tag name="InputWheelForce">[,]  (or shift-Wheel)  -  Force (intensity)</Tag>
 	<Tag name="InputWheelPower">; &apos;  (or alt-Wheel)  -  Power (shape)</Tag>
+	<Tag name="InputWheelShape">K,L  -  Brush shape</Tag>
 	<Tag name="InputMinimapType">alt-F2,F3 - Prev,next minimap type</Tag>
 	<Tag name="InputBrushParams">Brush parameters</Tag>
 	<Tag name="InputRoadEdit">R - edit road mode</Tag>
@@ -479,7 +505,10 @@
 	<Tag name="InputRoadColumn">End - on/off column</Tag>
 	<Tag name="InputRoadOnTer">Home - toggle on Terrain snap</Tag>
 	<Tag name="InputRoadPipeAngle">[,]   - pipe angle (no pipe when 0)</Tag>
-	<Tag name="InputRoadChkRadius">K, L   - checkpoint radius (chkR 0 - none)</Tag>
+	<Tag name="InputRoadChkRadius">K,L   - checkpoint radius (chkR 0 - none)</Tag>
+	<Tag name="InputRoadAngType">5,6   - angles type</Tag>
+	<Tag name="InputRoadAngSnap">7,8   - angles snap</Tag>
+	<Tag name="InputRoadAngZero">shift-6  - zero angles</Tag>
 	<Tag name="InputRoadMostSel">most work also on selection</Tag>
 	<Tag name="InputRoadCopySel">ctrl-Ins - copy selection   ctrl-Del - delete sel.</Tag>
 	<Tag name="InputRoadShiftReverse">shift-Ins - paste   shift-ctrl-Ins - reversed</Tag>
@@ -583,7 +612,7 @@
 	<Tag name="TipRoadDist">How far from road will the model appear.</Tag>
 	<Tag name="TipModelMinScale">Model minimal scale.</Tag>
 	<Tag name="TipModelMaxScale">Model maximal scale.</Tag>
-	<Tag name="RoadDist2">Additional distance to road.</Tag>
+	<Tag name="TipRoadDist2">Additional distance to road.</Tag>
 	<Tag name="TipWindInflL">Wind influence on model, length scale.</Tag>
 	<Tag name="TipWindInflH">Wind influence on model, height scale.</Tag>
 	<Tag name="TipGrassPageLength">Grass Page length (low will reload often, high will cause visible switching).</Tag>
@@ -600,4 +629,12 @@
 	<Tag name="TipModelRoadDist">Distance from road to models (global, added to each models own value).</Tag>
 	<Tag name="TipImpDist">Far distance at which models will turn into 2d impostors.</Tag>
 	<Tag name="TipModelPrev">Model preview image.</Tag>
+	<Tag name="TipTerLAngMin">Starting terrain angle for layer.</Tag>
+	<Tag name="TipTerLAngMax">Ending terrain angle for layer.</Tag>
+	<Tag name="TipTerLAngSm">Angle smooth range (transition).</Tag>
+	<Tag name="TipTerLHMin">Starting terrain height for layer.</Tag>
+	<Tag name="TipTerLHMax">Ending terrain height for layer.</Tag>
+	<Tag name="TipTerLHSm">Height smooth range (transition).</Tag>
+	<Tag name="TipTerLNoise">Factor of additional noise.</Tag>
+	<Tag name="TipTerLNoiseOnly">Use only noise (no angle or height ranges)</Tag>
 </MyGUI>

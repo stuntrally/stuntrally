@@ -4,14 +4,20 @@
 #include <OgreVector3.h>
 
 
+enum AngType {  AT_Manual=0, AT_Auto, AT_Both, AT_ALL  };
+const static std::string csAngType[AT_ALL] = {"Manual", "Auto", "Both"};
+
 class SplinePoint
 {
 public:
 	Ogre::Vector3 pos, tan;  // position, tangent (computed)
 	Ogre::Real width, wtan;  // road width
 
-	Ogre::Real aYaw,aRoll, tYaw,tRoll;   // yaw,pitch angles+tan
-	Ogre::Real aY,aR;   // yaw,pitch after prepass+
+	Ogre::Real mYaw,mRoll;  // manual angles, if not auto
+	AngType aType;
+	Ogre::Real aYaw,aRoll;  // working angles (from auto)
+	Ogre::Real tYaw,tRoll;  //- angles+tan interp, not used yet
+	Ogre::Real aY,aR;   // after prepass+
 
 	bool onTer;   // sticked on terrain
 	int  cols;    // on/off columns

@@ -107,8 +107,8 @@ protected:
 
 
 	///  ovelay
-	Ogre::Overlay* mDebugOverlay;
-	Ogre::OverlayElement* ovFps, *ovTri, *ovBat,  *ovSt,
+	Ogre::Overlay* mDebugOverlay, *ovBrushPrv;
+	Ogre::OverlayElement* ovFps, *ovTri, *ovBat,  *ovSt, *ovBrushMtr,
 		*ovPos, *ovDbg, *ovInfo, *ovStat, *ovFocus, *ovFocBck;  Ogre::Real fStFade;
 
 	bool alt, ctrl, shift;  // key modifiers
@@ -122,7 +122,7 @@ protected:
 	bool bMoveCam;	int mx,my,mz;  double mDTime;
 	Ogre::Real mRotX, mRotY,  mRotKX, mRotKY,  moveMul, rotMul;
 	Ogre::Vector3 mTrans;
-	enum ED_MODE {  ED_Deform=0, ED_Smooth, /*ED_Paint,*/ ED_Road, ED_Start, ED_PrvCam, ED_ALL  }
+	enum ED_MODE {  ED_Deform=0, ED_Smooth, ED_Height, /*ED_Paint,*/ ED_Road, ED_Start, ED_PrvCam, ED_ALL  }
 		edMode,edModeOld;
 
 

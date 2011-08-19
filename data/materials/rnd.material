@@ -41,7 +41,7 @@ fragment_program sel_ps cg
 	}
 }
 
-//  game minimap
+//  game minimap   -------------
 material road_minimap_inv
 {
 	technique
@@ -55,7 +55,6 @@ material road_minimap_inv
 
 			vertex_program_ref rnd_vs  {  }
 			fragment_program_ref rnd_ps  {  }
-			//fragment_program_ref rnd_inv_ps  {  }
 			
 			texture_unit diffuseMap
 			{
@@ -65,25 +64,16 @@ material road_minimap_inv
 	}
 }
 
-//  editor
-material road_mini_0
+//  game minimap circle  -------------
+//
+fragment_program circle_ps cg
 {
-	technique
-	{
-		pass
-		{
-			lighting off
-			depth_check off
-			depth_write off
-
-			texture_unit diffuseMap
-			{
-				texture RttTex0
-			}
-		}
-	}
+	source rnd.cg
+	profiles ps_2_0 arbfp1 
+	entry_point circle_ps
 }
-material road_mini_1
+
+material circle_minimap
 {
 	technique
 	{
@@ -92,68 +82,20 @@ material road_mini_1
 			lighting off
 			depth_check off
 			depth_write off
+			scene_blend alpha_blend
 
+			vertex_program_ref circle_vs  {  }
+			fragment_program_ref circle_ps  {  }
+			
 			texture_unit diffuseMap
 			{
-				texture RttTex1
+				tex_address_mode clamp
+				texture grassDensity.png
 			}
-		}
-	}
-}
-material road_mini_2
-{
-	technique
-	{
-		pass
-		{
-			lighting off
-			depth_check off
-			depth_write off
-
-			texture_unit diffuseMap
+			texture_unit circleMap
 			{
-				texture RttTex2
-			}
-		}
-	}
-}
-material road_mini_4
-{
-	technique
-	{
-		pass
-		{
-			lighting off
-			depth_check off
-			depth_write off
-
-			texture_unit diffuseMap
-			{
-				texture RttTex3
-			}
-		}
-	}
-}
-material road_mini_3
-{
-	technique
-	{
-		pass
-		{
-			lighting off
-			depth_check off
-			depth_write off
-
-			vertex_program_ref rnd_vs  {  }
-			fragment_program_ref rnd_add_ps  {  }
-
-			texture_unit diffuseAdd
-			{
-				texture RttTex0
-			}
-			texture_unit diffuseMap
-			{
-				texture RttTex2
+				tex_address_mode clamp
+				texture circleMini.png
 			}
 		}
 	}

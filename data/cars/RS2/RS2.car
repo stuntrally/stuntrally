@@ -5,6 +5,10 @@ version = 2
 interior-x = -0.05
 interior-y = 0.13
 interior-z = 0
+exhaust-x = 2.13
+exhaust-y = 0.45
+exhaust-z = 0.45
+exhaust-mirror-second = 1
 
 [ steering ] 
 max-angle = 33.19 

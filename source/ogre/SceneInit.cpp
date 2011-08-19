@@ -5,7 +5,7 @@
 #include "../vdrift/game.h"
 #include "FollowCamera.h"
 #include "../road/Road.h"
-#include "SplitScreenManager.h"
+#include "SplitScreen.h"
 
 #include "../btOgre/BtOgrePG.h"
 #include "../btOgre/BtOgreGP.h"
@@ -36,9 +36,9 @@ void App::createScene()
     if (pSet->bltLines)
 	{	dbgdraw = new BtOgre::DebugDrawer(
 			mSceneMgr->getRootSceneNode(),
-			&pGame->collision.world);
-		pGame->collision.world.setDebugDrawer(dbgdraw);
-		pGame->collision.world.getDebugDrawer()->setDebugMode(
+			pGame->collision.world);
+		pGame->collision.world->setDebugDrawer(dbgdraw);
+		pGame->collision.world->getDebugDrawer()->setDebugMode(
 			1 /*0xfe/*8+(1<<13)*/);
 	}
 	
@@ -47,15 +47,28 @@ void App::createScene()
 	LogO(String("**** ReplayFrame size: ") + toStr(sizeof(ReplayFrame)));	
 	LogO(String("**** ReplayHeader size: ") + toStr(sizeof(ReplayHeader)));	
 
-	#if 0  // test autoload replay
-		string file = PATHMANAGER::GetReplayPath() + "/" + pSet->track + ".rpl";
-		if (replay.LoadFile(file))
-			bRplPlay = 1;
-	#endif
 	bRplRec = pSet->rpl_rec;  // startup setting
 
 	if (pSet->autostart)
 		NewGame();
+	
+	#if 0  // autoload replay
+		std::string file = PATHMANAGER::GetReplayPath() + "/S12-Infinity_good_x3.rpl"; //+ pSet->track + ".rpl";
+		if (replay.LoadFile(file))
+		{
+			std::string car = replay.header.car, trk = replay.header.track;
+			bool usr = replay.header.track_user == 1;
+
+			pSet->car[0] = car;  pSet->track = trk;  pSet->track_user = usr;
+			pSet->car_hue[0] = replay.header.hue[0];  pSet->car_sat[0] = replay.header.sat[0];  pSet->car_val[0] = replay.header.val[0];
+			for (int p=1; p < replay.header.numPlayers; ++p)
+			{	pSet->car[p] = replay.header.cars[p-1];
+				pSet->car_hue[p] = replay.header.hue[p];  pSet->car_sat[p] = replay.header.sat[p];  pSet->car_val[p] = replay.header.val[p];
+			}
+			btnNewGame(0);
+			bRplPlay = 1;
+		}
+	#endif
 }
 
 
@@ -69,6 +82,8 @@ void App::NewGame()
 	toggleGui();  // hide gui
 
 	bLoading = true;
+	carIdWin = 1;
+
 	bRplPlay = 0;
 	pSet->rpl_rec = bRplRec;  // changed only at new game
 	if (mWndRpl)  mWndRpl->setVisible(false);
@@ -91,18 +106,26 @@ void App::LoadCleanUp()  // 1 first
 	resTrk = TrkDir() + "objects";
 	
 	// Delete all cars
-	for (std::list<CarModel*>::iterator it=carModels.begin(); it!=carModels.end(); it++)
+	for (std::vector<CarModel*>::iterator it=carModels.begin(); it!=carModels.end(); it++)
 		delete (*it);
 
 	carModels.clear();  newPosInfos.clear();
-	
+
 	if (grass) {  delete grass->getPageLoader();  delete grass;  grass=0;   }
 	if (trees) {  delete trees->getPageLoader();  delete trees;  trees=0;   }
 
-	//  destroy all
+	//  destroy all  TODO ...
+	///!  remove this crap and destroy everything with* manually  destroyCar, destroyScene
+	///!  check if scene (track), car, color changed, omit creating the same if not
+	//mSceneMgr->getRootSceneNode()->removeAndDestroyAllChildren();  // destroy all scenenodes
 	mSceneMgr->destroyAllManualObjects();
 	mSceneMgr->destroyAllEntities();
 	mSceneMgr->destroyAllStaticGeometry();
+		//mSceneMgr->destroyAllBillboardSets();
+		//mSceneMgr->destroyAllBillboardChains();
+		//mSceneMgr->destroyAllParticleSystems();
+		mSceneMgr->destroyAllRibbonTrails();
+   		MeshManager::getSingleton().removeAll();  // destroy all meshes
 
 	//  rain/snow
 	if (pr)  {  mSceneMgr->destroyParticleSystem(pr);   pr=0;  }
@@ -134,7 +157,7 @@ void App::LoadGame()  // 2
 		CarModel::eCarType et = CarModel::CT_LOCAL;
 		if (i >= mSplitMgr->mNumViewports && mClient) et = CarModel::CT_REMOTE;
 		// TODO: Handle car and settings stuff for remote players
-		carModels.push_back( new CarModel(i, et, pSet->car, mSceneMgr, pSet, pGame, &sc, (*camIt), this ) );
+		carModels.push_back( new CarModel(i, et, pSet->car[i], mSceneMgr, pSet, pGame, &sc, (*camIt), this ) );
 	}
 
 	/// ghost car  load if exists
@@ -143,7 +166,7 @@ void App::LoadGame()  // 2
 	{
 		/*if (*/ghplay.LoadFile(GetGhostFile());
 		//  always because ghplay can appear during play after best lap
-		CarModel* c = new CarModel(i, CarModel::CT_GHOST, pSet->car, mSceneMgr, pSet, pGame, &sc, 0, this );
+		CarModel* c = new CarModel(i, CarModel::CT_GHOST, pSet->car[0], mSceneMgr, pSet, pGame, &sc, 0, this );
 		c->pCar = (*carModels.begin())->pCar;  // based on 1st car
 		carModels.push_back(c);
 	}
@@ -159,7 +182,7 @@ void App::LoadScene()  // 3
 	if (ter)  // load scene
 		sc.LoadXml(TrkDir()+"scene.xml");
 	else
-	{	sc.Default();  sc.td.hfData = NULL;  }	
+	{	sc.Default();  sc.td.hfHeight = NULL;  sc.td.hfAngle = NULL;  }  //?...
 	
 	//  rain  -----
 	if (!pr && sc.rainEmit > 0)  {
@@ -178,9 +201,10 @@ void App::LoadScene()  // 3
 void App::LoadCar()  // 4
 {
 	// Create all cars
-	for (std::list<CarModel*>::iterator it=carModels.begin(); it!=carModels.end(); it++)
+	int i=0;
+	for (std::vector<CarModel*>::iterator it=carModels.begin(); it!=carModels.end(); it++)
 	{
-		(*it)->Create();
+		(*it)->Create(i);  ++i;
 		// Reserve an entry in newPosInfos
 		PosInfo carPosInfo;  carPosInfo.bNew = false;  //-
 		newPosInfos.push_back(carPosInfo);
@@ -188,21 +212,24 @@ void App::LoadCar()  // 4
 	
 	///  Init Replay  once
 	///=================----------------
-	replay.InitHeader(pSet->track.c_str(), pSet->track_user, pSet->car.c_str(), !bRplPlay);
+	replay.InitHeader(pSet->track.c_str(), pSet->track_user, pSet->car[0].c_str(), !bRplPlay);
 	replay.header.numPlayers = pSet->local_players;
-	ghost.InitHeader(pSet->track.c_str(), pSet->track_user, pSet->car.c_str(), !bRplPlay);
+	replay.header.hue[0] = pSet->car_hue[0];  replay.header.sat[0] = pSet->car_sat[0];  replay.header.val[0] = pSet->car_val[0];
+
+	ghost.InitHeader(pSet->track.c_str(), pSet->track_user, pSet->car[0].c_str(), !bRplPlay);
 	ghost.header.numPlayers = 1;  // ghost always 1 car
+	ghost.header.hue[0] = pSet->car_hue[0];  ghost.header.sat[0] = pSet->car_sat[0];  ghost.header.val[0] = pSet->car_val[0];
 
 	//if (pSet->local_players > 1)  // save other car names
-	//for (int p=1; p <
-		//strcpy(replay.header.cars[0], pSet->car.c_str());
+	for (int p=1; p < pSet->local_players; ++p)
+	{	strcpy(replay.header.cars[p-1], pSet->car[p].c_str());
+		replay.header.hue[p] = pSet->car_hue[p];  replay.header.sat[p] = pSet->car_sat[p];
+		replay.header.val[p] = pSet->car_val[p];  }
 	
 	int c = 0;  // copy wheels R
 	for (std::list <CAR>::const_iterator it = pGame->cars.begin(); it != pGame->cars.end(); it++,c++)
-	{
 		for (int w=0; w<4; ++w)
 			replay.header.whR[c][w] = (*it).GetTireRadius(WHEEL_POSITION(w));
-	}	// car names..
 }
 
 void App::LoadTerrain()  // 5
@@ -211,7 +238,7 @@ void App::LoadTerrain()  // 5
 	CreateTerrain(false,ter);  // common
 	
 	// Assign stuff to cars
-	for (std::list<CarModel*>::iterator it=carModels.begin(); it!=carModels.end(); it++)
+	for (std::vector<CarModel*>::iterator it=carModels.begin(); it!=carModels.end(); it++)
 	{
 		(*it)->terrain = terrain;
 		(*it)->blendMtr = blendMtr;
@@ -234,7 +261,7 @@ void App::LoadTrack()  // 6
 	if (ter)	//  Terrain
 	{
 		CreateBltTerrain();
-		//CreateProps();  //-
+		CreateProps();  //-
 		CreateRoad();
 		CreateTrees();
 	}
@@ -250,7 +277,7 @@ void App::LoadMisc()  // 7 last
 	ShowHUD(true);
 	
 	// Camera settings
-	for (std::list<CarModel*>::iterator it=carModels.begin(); it!=carModels.end(); it++)
+	for (std::vector<CarModel*>::iterator it=carModels.begin(); it!=carModels.end(); it++)
 		if ((*it)->fCam)
 		{	(*it)->fCam->first = true;
 			(*it)->fCam->mTerrain = mTerrainGroup;
@@ -321,6 +348,7 @@ void App::CreateRoad()
 
 	road = new SplineRoad(pGame);  // sphere.mesh
 	road->Setup("", 0.7,  terrain, mSceneMgr, *mSplitMgr->mCameras.begin());
+	road->iTexSize = pSet->tex_size;
 	
 	String sr = TrkDir()+"road.xml";
 	road->LoadFile(TrkDir()+"road.xml");
@@ -336,26 +364,27 @@ void App::CreateProps()
 {
 	/// . dyn objs +
 	if (0)
-	for (int j=-1; j<1; j++)
-	for (int i=-1; i<1; i++)
+	for (int j=-2; j<1; j++)
+	for (int i=-2; i<1; i++)
 	{
 		btCollisionShape* shape;
+		btScalar s = Ogre::Math::RangeRandom(1,3);
 		// switch(rand() % 5)
 		switch( (50+i+j*3) % 6)
 		{
-		case 0:  shape = new btBoxShape(btVector3(0.4,0.3,0.5));  break;
-		case 1:  shape = new btSphereShape(0.5);  break;
-		case 2:  shape = new btCapsuleShapeZ(0.4,0.5);  break;
-		case 3:  shape = new btCylinderShapeX(btVector3(0.5,0.7,0.4));  break;
-		case 4:  shape = new btCylinderShapeZ(btVector3(0.5,0.6,0.7));  break;
-		case 5:  shape = new btConeShapeX(0.4,0.6);  break;
+		case 0:  shape = new btBoxShape(s*btVector3(0.4,0.3,0.5));  break;
+		case 1:  shape = new btSphereShape(s*0.5);  break;
+		case 2:  shape = new btCapsuleShapeZ(s*0.4,s*0.5);  break;
+		case 3:  shape = new btCylinderShapeX(s*btVector3(0.5,0.7,0.4));  break;
+		case 4:  shape = new btCylinderShapeZ(s*btVector3(0.5,0.6,0.7));  break;
+		case 5:  shape = new btConeShapeX(s*0.4,s*0.6);  break;
 		}
 
-		btTransform tr(btQuaternion(0,0,0), btVector3(-5+i*2,5+j*2,3));
+		btTransform tr(btQuaternion(0,0,0), btVector3(-5+i*5 -20, 5+j*5 -25,0));
 		btDefaultMotionState * ms = new btDefaultMotionState();
 		ms->setWorldTransform(tr);
 
-		btRigidBody::btRigidBodyConstructionInfo ci(320, ms, shape, btVector3(21,21,21));
+		btRigidBody::btRigidBodyConstructionInfo ci(220*s+rand()%500, ms, shape, s*21*btVector3(1,1,1));
 		ci.m_restitution = 0.9;
 		ci.m_friction = 0.9;
 		ci.m_linearDamping = 0.4;
@@ -396,7 +425,7 @@ void App::CreateProps()
 
 			// Body
 			btRigidBody* bdy = new btRigidBody(mass, stt, shp, inertia);
-			pGame->collision.world.addRigidBody(bdy);
+			pGame->collision.world->addRigidBody(bdy);
 		}
 	}
 }

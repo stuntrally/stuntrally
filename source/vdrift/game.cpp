@@ -40,8 +40,6 @@ void GAME::Start(std::list <string> & args)
 
 	//settings->Load(PATHMANAGER::GetSettingsFile());
 	
-	eventsystem.Init(info_output);
-	
 	carcontrols_local.second.Reset();
 	
 	InitializeSound(); //if sound initialization fails, that's okay, it'll disable itself
@@ -259,7 +257,7 @@ void GAME::Test()
 ///the main game loop
 bool GAME::OneLoop()
 {
-	bool ret = !eventsystem.GetQuit() && !benchmode;
+	bool ret = true;  //!eventsystem.GetQuit() && !benchmode;
 	if (ret)
 	{
 		if (profilingmode && frame % 20 == 0)
@@ -313,7 +311,7 @@ void GAME::Tick(float deltat)
 				
 				/// update all cameras
 				if (pOgreGame->carModels.size() > 0 && (!pause || pOgreGame->bRplPlay))  // replay can be paused and needs cam upd
-					for (std::list<CarModel*>::iterator it = pOgreGame->carModels.begin(); it != pOgreGame->carModels.end(); it++)
+					for (std::vector<CarModel*>::iterator it = pOgreGame->carModels.begin(); it != pOgreGame->carModels.end(); it++)
 						if ((*it)->fCam)
 							(*it)->fCam->update(framerate);
 			}
@@ -325,7 +323,7 @@ void GAME::Tick(float deltat)
 ///increment game logic by one frame
 void GAME::AdvanceGameLogic()
 {
-	eventsystem.ProcessEvents(); //-
+	//eventsystem.ProcessEvents(); //-
 
 	if (track.Loaded())
 	{
@@ -338,7 +336,7 @@ void GAME::AdvanceGameLogic()
 			
 			//PROFILER.beginBlock("ai");
 			//ai.Visualize(rootnode);
-			ai.update(TickPeriod(), &track, cars); //-
+			//ai.update(TickPeriod(), &track, cars); //-
 			//PROFILER.endBlock("ai");
 			
 			PROFILER.beginBlock("physics");
@@ -534,7 +532,7 @@ bool GAME::NewGameDoLoadMisc()
 ///clean up all game data
 void GAME::LeaveGame()
 {
-	ai.clear_cars();
+	//ai.clear_cars();
 
 	carcontrols_local.first = NULL;
 

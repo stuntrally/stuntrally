@@ -109,22 +109,25 @@ bool App::frameRenderingQueued(const FrameEvent& evt)
 		if (rdTxt[0]){	if (sp.onTer)	Fmt(s, "On Terrain");
 					else Fmt(s, "Height  %5.2f", sp.pos.y );  rdTxt[0]->setCaption(s);  }
 		if (rdTxt[1]){  Fmt(s, "Width  %5.2f", sp.width);  rdTxt[1]->setCaption(s);  }
-		if (rdTxt[2]){  Fmt(s, "yaw   %5.1f", sp.aYaw);    rdTxt[2]->setCaption(s);  }
+
+		if (rdTxt[2]){  Fmt(s, "yaw   %5.1f",  sp.aYaw);    rdTxt[2]->setCaption(s);  }
 		if (rdTxt[3]){  Fmt(s, "roll  %5.1f", sp.aRoll);   rdTxt[3]->setCaption(s);  }
 
-		if (rdTxt[4]){	if (sp.pipe==0.f)	s[0]=0;
-					else Fmt(s, "Pipe  %5.2f", sp.pipe);   rdTxt[4]->setCaption(s);  }
-		if (rdTxt[5]){	if (sp.onTer)	s[0]=0;
-					else Fmt(s, "column  %2d", sp.cols);   rdTxt[5]->setCaption(s);  }
-		if (rdTxt[6]){  Fmt(s, "%d %s", sp.idMtr, road->getMtrStr(ic).c_str());   rdTxt[6]->setCaption(s);  }
+		if (rdTxt[4]){  Fmt(s, "%d %s", sp.aType, csAngType[sp.aType].c_str());   rdTxt[4]->setCaption(s);  }
+		if (rdTxt[13]){  Fmt(s, "%3.0f", angSnap);   rdTxt[13]->setCaption(s);  }
 
-		if (rdTxt[7]){	if (sp.chkR == 0.f)  s[0]=0;
-					else Fmt(s, "chkR  %4.2f", sp.chkR);   rdTxt[7]->setCaption(s);  }
+		if (rdTxt[5]){	if (sp.pipe==0.f)	s[0]=0;
+					else Fmt(s, "Pipe  %5.2f", sp.pipe);   rdTxt[5]->setCaption(s);  }
+		if (rdTxt[6]){	if (sp.onTer)	s[0]=0;
+					else Fmt(s, "column  %2d", sp.cols);   rdTxt[6]->setCaption(s);  }
+		if (rdTxt[7]){  Fmt(s, "%d %s", sp.idMtr, road->getMtrStr(ic).c_str());   rdTxt[7]->setCaption(s);  }
 
-		if (rdTxt[8]){
+		if (rdTxt[8]){	if (sp.chkR == 0.f)  s[0]=0;
+					else Fmt(s, "chkR  %4.2f", sp.chkR);   rdTxt[8]->setCaption(s);  }
+
+		if (rdTxt[9]){
 			if (road->vSel.size() > 0)  Fmt(s, "sel: %d", road->vSel.size());
-			else	Fmt(s, "cur: %2d/%d", road->iChosen+1, road->vSegs.size());   rdTxt[8]->setCaption(s);  }
-		//if (rdTxt[9]){  Fmt(s, "sel: %d", road->vSel.size());   rdTxt[9]->setCaption(s);  }
+			else	Fmt(s, "%2d/%d", road->iChosen+1, road->vSegs.size());   rdTxt[9]->setCaption(s);  }
 
 		if (rdTxt[11]){  rdTxt[11]->setCaption(bCur ? "Cur" : "New");
 			rdTxt[11]->setTextColour(bCur ? MyGUI::Colour(0.85,0.75,1) : MyGUI::Colour(0.3,1,0.1));  }
@@ -158,8 +161,9 @@ bool App::frameRenderingQueued(const FrameEvent& evt)
 		if (isKey(UP)||isKey(NUMPAD8))	  road->Move( vz*q);	if (isKey(DOWN)||isKey(NUMPAD2))	road->Move(-vz*q);
 		if (isKey(SUBTRACT))	road->Move(-vy*q);			if (isKey(ADD))		road->Move( vy*q);
 		if (isKey(MULTIPLY))	road->AddWidth( q*0.4f);	if (isKey(DIVIDE))	road->AddWidth(-q*0.4f);
-		if (isKey(1))			road->AddAngle(-q*3);		if (isKey(3))		road->AddAngleYaw(-q*3);
-		if (isKey(2))			road->AddAngle( q*3);		if (isKey(4))		road->AddAngleYaw( q*3);
+		if (iSnap == 0)  {
+			if (isKey(1))		road->AddYaw(-q*3,0);		if (isKey(3))		road->AddRoll(-q*3,0);
+			if (isKey(2))		road->AddYaw( q*3,0);		if (isKey(4))		road->AddRoll( q*3,0);  }
 		if (isKey(LBRACKET))	road->AddPipe(-q*0.2);	if (isKey(K ))	road->AddChkR(-q*0.2);  // chk
 		if (isKey(RBRACKET))	road->AddPipe( q*0.2);	if (isKey(L))	road->AddChkR( q*0.2);
 		if (mz > 0)			road->NextPoint();
@@ -180,17 +184,31 @@ bool App::frameRenderingQueued(const FrameEvent& evt)
 		if (isKey(SEMICOLON ))	{  road->AddBoxW(-q*0.2);  UpdStartPos();  }
 		if (isKey(RBRACKET))	{  road->AddBoxH( q*0.2);  UpdStartPos();  }
 		if (isKey(APOSTROPHE))	{  road->AddBoxW( q*0.2);  UpdStartPos();  }
-		//if (mz > 0)	// rot by 15 degree..
+		//if (mz > 0)	// snap rot by 15 deg ..
 	}
-	else if (edMode == ED_Deform || edMode == ED_Smooth)
+	else if (edMode < ED_Road)
 	{
 		//  brush params
 		//----------------------------------------------------------------
 		if (brTxt[0]){	Fmt(s, "Size:	 %4.1f   - =", mBrSize[curBr]);		brTxt[0]->setCaption(s);	}
 		if (brTxt[1]){	Fmt(s, "Force:   %4.1f   [ ]", mBrIntens[curBr]);	brTxt[1]->setCaption(s);	}
 		if (brTxt[2]){	Fmt(s, "Power:   %4.2f   ; \'", mBrPow[curBr]);		brTxt[2]->setCaption(s);	}
-		if (brTxt[3])  brTxt[3]->setCaption("");
-		if (brTxt[4])  brTxt[4]->setCaption("");
+		if (brTxt[3]){	Fmt(s, "Shape: %s", csBrShape[mBrShape[curBr]].c_str());	brTxt[3]->setCaption(s);	}
+
+		bool brNoise = mBrShape[curBr] == BRS_Noise;
+		if (brTxt[4])
+		if (edMode == ED_Height)
+		{	Fmt(s, "Height: %4.1f", terSetH);	brTxt[4]->setCaption(s);	}
+		else if (brNoise)
+		{	Fmt(s, "Freq: %4.2f  O P", mBrFq[curBr]);	brTxt[4]->setCaption(s);	}
+		else
+			brTxt[4]->setCaption("");
+
+		if (brTxt[5])
+		if (brNoise)
+		{	Fmt(s, "Octaves: %d  , .", mBrOct[curBr]);	brTxt[5]->setCaption(s);	}
+		else
+			brTxt[5]->setCaption("");
 
 		if (mz != 0)
 			if (alt){			mBrPow[curBr]   *= 1.f - 0.4f*q*mz;  updBrush();  }
@@ -202,7 +220,8 @@ bool App::frameRenderingQueued(const FrameEvent& evt)
 		if (isKey(RBRACKET))	mBrIntens[curBr]*= 1.f + 0.04f*q;
 		if (isKey(SEMICOLON )){  mBrPow[curBr]  *= 1.f - 0.04f*q;  updBrush();  }
 		if (isKey(APOSTROPHE)){  mBrPow[curBr]  *= 1.f + 0.04f*q;  updBrush();  }
-		//KC_COMMA KC_PERIOD
+		if (isKey(O)){			mBrFq[curBr]  *= 1.f - 0.04f*q;  updBrush();  }
+		if (isKey(P)){			mBrFq[curBr]  *= 1.f + 0.04f*q;  updBrush();  }
 	}
 	mz = 0;  // mouse wheel
 	
@@ -311,9 +330,18 @@ void App::editMouse()
 		}else
 		{	//  alt
 			if (mbLeft)    // rot pitch
-				road->AddAngle(   vNew.x * fRot * moveMul);
+				road->AddYaw(   vNew.x * fRot * moveMul,0.f);
 			if (mbRight)   // rot yaw
-				road->AddAngleYaw(vNew.y *-fRot * moveMul);
+				road->AddRoll(  vNew.y *-fRot * moveMul,0.f);
+		}
+	}
+
+	///  edit ter height val
+	if (bEdit() && edMode == ED_Height)
+	{
+		if (mbRight)
+		{	Real ym = -vNew.y * 0.5f * moveMul;
+			terSetH += ym;
 		}
 	}
 
@@ -321,7 +349,7 @@ void App::editMouse()
 	if (bEdit() && edMode == ED_Start /*&&
 		vStartPos.size() >= 4 && vStartRot.size() >= 4*/)
 	{
-		const Real fMove(5.0f), fRot(0.4f);  //par speed
+		const Real fMove(0.5f), fRot(0.05f);  //par speed
 		const int n = 0;  // 1st entry - all same / edit 4..
 		if (!alt)
 		{
@@ -446,16 +474,27 @@ bool App::frameEnded(const FrameEvent& evt)
 		case ED_Smooth:
 			if (mbLeft)   smooth(road->posHit, dt);
 			break;
+		case ED_Height:
+			if (mbLeft)   height(road->posHit, dt, s);
+			break;
 		}
 	}
 
 	///<>  Ter upd
-	static int ti = 0;
-	if (ti >= pSet->ter_skip)
+	static int tu = 0, bu = 0;
+	if (tu >= pSet->ter_skip)
 	if (bTerUpd)
-	{	bTerUpd = false;  ti = 0;
+	{	bTerUpd = false;  tu = 0;
 		mTerrainGroup->update();
-	}	ti++;
+		//initBlendMaps(terrain);
+	}	tu++;
+
+	if (bu >= pSet->ter_skip)
+	if (bTerUpdBlend)
+	{	bTerUpdBlend = false;  bu = 0;
+		if (terrain)
+			initBlendMaps(terrain);
+	}	bu++;
 
 	
 	if (road)  // road
@@ -486,6 +525,8 @@ bool App::frameEnded(const FrameEvent& evt)
 
 bool App::frameStarted(const Ogre::FrameEvent& evt)
 {
+	BaseApp::frameStarted(evt);
+	
 	if (bGuiReinit)  // after language change from combo
 	{	bGuiReinit = false;
 		mGUI->destroyWidgets(vwGui);

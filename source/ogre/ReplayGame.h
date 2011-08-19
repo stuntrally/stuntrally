@@ -21,12 +21,12 @@ struct ReplayHeader
 	int ver, frameSize;  // bin data format - sizeof(ReplayFrame)
 	float whR[4][4];  // cars wheels radius
 	
-	int numPlayers;    // TODO: many players...
+	int numPlayers;
 	float hue[4],sat[4],val[4];  // cars colors
 	char cars[32][3];  // car names (when numPlayers > 1)
 	char descr[128];   // description - user text
 
-	// TODO: custom replay fps 60, interpolation..
+	// custom replay fps 60, interpolation ...
 	ReplayHeader();  void Default();
 };
 

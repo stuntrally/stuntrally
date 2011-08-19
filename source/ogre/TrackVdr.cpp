@@ -2,7 +2,7 @@
 #include "OgreGame.h"
 #include "../vdrift/game.h"
 #include "CarModel.h" // for CreateModel()
-#include "SplitScreenManager.h"  //-
+#include "SplitScreen.h"  //-
 
 #include <OgreMaterialManager.h>
 #include <OgreTechnique.h>
@@ -270,9 +270,9 @@ void App::CreateMinimap()
 	
 	//  car pos dot
 	for (int i=0; i < pSet->local_players; ++i)
-	{	mpos[i] = Create2D("hud/CarPos", mSplitMgr->mGuiSceneMgr, 0.4f, true);
+	{	mpos[i] = Create2D("hud/CarPos", mSplitMgr->mGuiSceneMgr, 0.4f, true, true);
 		ndPos[i] = ndMap->createChildSceneNode();
-		ndPos[i]->scale(fHudSize*2, fHudSize*2, 1);
+		ndPos[i]->scale(fHudSize*1.5f, fHudSize*1.5f, 1);
 		ndPos[i]->attachObject(mpos[i]);  /*ndPos[i]->setVisible(false);  */}
 	ndMap->setVisible(pSet->trackmap);
 }

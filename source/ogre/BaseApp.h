@@ -34,24 +34,27 @@ public:
 	bool bLoading;
 	
 	// has to be in baseApp to switch camera on C press
-	std::list<class CarModel*> carModels;
+	std::vector<class CarModel*> carModels;
 	
 	// translation
 	// can't have it in c'tor, because mygui is not initialized
 	virtual void setTranslations() = 0;
 	
 	class SplitScreenManager* mSplitMgr;
-	
-	bool bWindowResized;  bool bSizeHUD;
 	class HDRLogic* mHDRLogic;
+	void recreateCompositor();
 	
 	class SETTINGS* pSet;
 	
-	void recreateCompositor();
-
-	Ogre::SceneNode* ndSky; //-
+	//  wnd, hud, upl
+	bool bWindowResized;  bool bSizeHUD;
 	int roadUpCnt;
 	class LoadingBar* mLoadingBar;
+	Ogre::SceneNode* ndSky;  //-
+
+	Ogre::String StrFromKey(const Ogre::String& skey);  // util for input
+	std::map<OIS::KeyCode, Ogre::String> kcMap;  // key names in english
+	void InitKeyNamesMap();
 
 protected:
 	bool mShowDialog, mShutDown;

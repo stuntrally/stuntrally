@@ -246,3 +246,18 @@ Editor/DebugOverlay
 		}
 	}
 }
+
+Editor/BrushPrvOverlay
+{
+	zorder 500
+	container BorderPanel(Editor/BrushPrvPanel)
+	{
+		metrics_mode pixels
+		vert_align bottom
+		left  0
+		width 128
+		top	 -153
+		height	128
+		//material BrushPrvMtr
+	}
+}

@@ -108,6 +108,18 @@ bool CAR::Load(class App* pApp1,
 	carconf.GetParam("model_ofs.interior-x", vInteriorOffset[0]);
 	carconf.GetParam("model_ofs.interior-y", vInteriorOffset[1]);
 	carconf.GetParam("model_ofs.interior-z", vInteriorOffset[2]);
+	
+	///-  custom exhaust pos for boost particles
+	if (carconf.GetParam("model_ofs.exhaust-x", exhaustPosition[0]))
+	{
+		manualExhaustPos = true;
+		carconf.GetParam("model_ofs.exhaust-y", exhaustPosition[1]);
+		carconf.GetParam("model_ofs.exhaust-z", exhaustPosition[2]);
+	}
+	else
+		manualExhaustPos = false;
+	if (!carconf.GetParam("model_ofs.exhaust-mirror-second", has2exhausts))
+		has2exhausts = false;
 
 	///-  custom car collision params
 	dynamics.coll_R = 0.3f;  dynamics.coll_Hofs = 0.f;

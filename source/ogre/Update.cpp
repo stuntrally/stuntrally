@@ -7,6 +7,7 @@
 #include "../paged-geom/PagedGeometry.h"
 
 #include <OgreParticleSystem.h>
+#include <OgreManualObject.h>
 using namespace Ogre;
 
 
@@ -31,9 +32,9 @@ void App::UpdThr()
 
 			if (!ret)
 				mShutDown = true;
-#if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
+		#if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
 			Sleep(0);  // par
-#endif
+		#endif
 		}
 		/*else
 		{	//  2nd test --
@@ -120,10 +121,11 @@ bool App::frameStart(Real time)
 		if (bRplPlay)
 		{
 			isFocRpl = ctrl;
-			int ta = (isKey(KC_LBRACKET) ? -2 : 0) + (isKey(KC_RBRACKET) ? 2 : 0);
+			bool le = isKey(KC_LBRACKET), ri = isKey(KC_RBRACKET), ctrlN = ctrl && (le || ri);
+			int ta = ((le || bRplBack) ? -2 : 0) + ((ri || bRplFwd) ? 2 : 0);
 			if (ta)
 			{	double tadd = ta;
-				tadd *= (shift ? 0.2 : 1) * (ctrl ? 4 : 1) * (alt ? 8 : 1);  // multiplers
+				tadd *= (shift ? 0.2 : 1) * (ctrlN ? 4 : 1) * (alt ? 8 : 1);  // multiplers
 				if (!bRplPause)  tadd -= 1;  // play compensate
 				double t = pGame->timer.GetReplayTime(), len = replay.GetTimeLength();
 				t += tadd * time;  // add
@@ -175,13 +177,13 @@ bool App::frameStart(Real time)
 			double dt = gtim.dt;
 			
 			// Update cameras for all cars
-			for (std::list<CarModel*>::iterator it=carModels.begin(); it!=carModels.end(); it++)
+			for (std::vector<CarModel*>::iterator it=carModels.begin(); it!=carModels.end(); it++)
 				if ((*it)->fCam)
 					(*it)->fCam->update(pGame->framerate);
 		}
 
 		//  update all cube maps
-		for (std::list<CarModel*>::iterator it=carModels.begin(); it!=carModels.end(); it++)
+		for (std::vector<CarModel*>::iterator it=carModels.begin(); it!=carModels.end(); it++)
 		if ((*it)->eType != CarModel::CT_GHOST && (*it)->pReflect)
 			(*it)->pReflect->Update();
 
@@ -251,12 +253,12 @@ void App::newPoses()
 	double lapTime = pGame->timer.GetPlayerTime();
 
 	// Iterate through all car models and get new pos info
-	int iCarNum = 0;
-	std::list<CarModel*>::iterator carMIt = carModels.begin();
-	std::list<PosInfo>::iterator newPosIt = newPosInfos.begin();
+	int iCarNum = 0;  CarModel* carM0 = 0;
+	std::vector<CarModel*>::iterator carMIt = carModels.begin();
+	std::vector<PosInfo>::iterator newPosIt = newPosInfos.begin();
 	while (carMIt != carModels.end())
 	{
-		CarModel* carM = *carMIt;
+		CarModel* carM = *carMIt;  if (iCarNum==0)  carM0 = carM;
 		CAR* pCar = carM->pCar;
 		PosInfo posInfo;
 		bool bGhost = carM->eType == CarModel::CT_GHOST;
@@ -281,7 +283,7 @@ void App::newPoses()
 				whPos[w] = fr.whPos[w];  whRot[w] = fr.whRot[w];
 				posInfo.whVel[w] = fr.whVel[w];
 				posInfo.whSlide[w] = fr.slide[w];  posInfo.whSqueal[w] = fr.squeal[w];
-				posInfo.whR[w] = replay.header.whR[0][w];//
+				posInfo.whR[w] = replay.header.whR[iCarNum][w];//
 				posInfo.whMtr[w] = fr.whMtr[w];
 				posInfo.fboost = fr.fboost;
 			}
@@ -300,7 +302,7 @@ void App::newPoses()
 				whPos[w] = fr.whPos[w];  whRot[w] = fr.whRot[w];
 				posInfo.whVel[w] = fr.whVel[w];
 				posInfo.whSlide[w] = fr.slide[w];  posInfo.whSqueal[w] = fr.squeal[w];
-				posInfo.whR[w] = replay.header.whR[0][w];//
+				posInfo.whR[w] = replay.header.whR[iCarNum][w];//
 				posInfo.whMtr[w] = fr.whMtr[w];
 				posInfo.fboost = fr.fboost;
 			}
@@ -426,9 +428,9 @@ void App::newPoses()
 
 		//  chekpoints, lap start
 		//-----------------------------------------------------------------------
-		if (bRplPlay || bGhost)   // dont check when replay play
+		if (bRplPlay || bGhost || !sc.ter)   // dont check when replay play
 			carM->bWrongChk = false;
-		else //if (iCarNum == 0)  // only works for 1st car?
+		else
 		{
 			if (carM->bGetStPos)  // first pos is at start
 			{	carM->bGetStPos = false;
@@ -439,7 +441,7 @@ void App::newPoses()
 			{
 				//  start/finish box dist
 				Vector4 carP(posInfo.pos.x,posInfo.pos.y,posInfo.pos.z,1);
-				carM->vStDist = carM->matStPos * carP;
+				carM->vStDist = carM0->matStPos * carP;  // start pos from 1st car always
 				carM->bInSt = abs(carM->vStDist.x) < road->vStBoxDim.x && 
 					abs(carM->vStDist.y) < road->vStBoxDim.y && 
 					abs(carM->vStDist.z) < road->vStBoxDim.z;
@@ -449,14 +451,21 @@ void App::newPoses()
 				if (ncs > 0)
 				{	if (carM->bInSt && carM->iNumChks == ncs && carM->iCurChk != -1)  // finish
 					{
-						bool best = pGame->timer.Lap(0, 0,0, true, pSet->trackreverse);  //pGame->cartimerids[pCar] ?
+						bool best = pGame->timer.Lap(iCarNum, 0,0, true, pSet->trackreverse);  //pGame->cartimerids[pCar] ?
+
 						if (!pSet->rpl_bestonly || best)  ///  new best lap, save ghost
+						if (iCarNum==0)  // for many, only 1st-
 						{
 							ghost.SaveFile(GetGhostFile());
 							ghplay.CopyFrom(ghost);
 						}
 						ghost.Clear();
+						
 						carM->iCurChk = -1;  carM->iNumChks = 1;
+
+						///  winner places  for local players > 1
+						if (carM->iWonPlace == 0 && pGame->timer.GetCurrentLap(iCarNum) >= pSet->num_laps)
+							carM->iWonPlace = carIdWin++;
 					}
 					for (int i=0; i < ncs; ++i)
 					{
@@ -483,7 +492,7 @@ void App::newPoses()
 						}
 				}	}
 		}	}
-		
+
 		(*newPosIt) = posInfo;
 		carMIt++;  newPosIt++;  iCarNum++;  // next
 	}
@@ -496,8 +505,8 @@ void App::updatePoses(float time)
 {	
 	//  Update all carmodels with their newPosInfo
 	int i=0;
-	std::list<CarModel*>::iterator carIt = carModels.begin();
-	std::list<PosInfo>::iterator newPosIt = newPosInfos.begin();
+	std::vector<CarModel*>::iterator carIt = carModels.begin();
+	std::vector<PosInfo>::iterator newPosIt = newPosInfos.begin();
 	while (carIt != carModels.end())
 	{
 		CarModel* carM = *carIt;
@@ -515,8 +524,10 @@ void App::updatePoses(float time)
 		if (!bGhost)
 		{	float xp =(-newPosInfo.pos[2] - minX)*scX*2-1,
 				  yp =-(newPosInfo.pos[0] - minY)*scY*2+1;
+			newPosInfos[i].miniPos = Vector2(xp,yp);
 			if (ndPos[i])
-				ndPos[i]->setPosition(xp,yp,0);
+				if (pSet->mini_zoomed)	ndPos[i]->setPosition(0,0,0);
+				else					ndPos[i]->setPosition(xp,yp,0);
 		}
 		carIt++;  newPosIt++;  i++;
 	}
@@ -536,4 +547,79 @@ void App::updatePoses(float time)
 			int v = pos/len * res;  slRplPos->setScrollPosition(v);
 		}
 	}	
+}
+
+
+//  Update HUD rotated elems
+//---------------------------------------------------------------------------------------------------------------
+void App::UpdHUDRot(int carId, CarModel* pCarM, float vel)
+{
+	/// TODO: rpm vel needle angles,aspect are wrong [all from the last car when bloom is on (any effects)], hud vals are ok
+	if (!pCarM)  return;
+    const float rsc = -180.f/6000.f, rmin = 0.f;  //rmp
+    float angrmp = fr.rpm*rsc + rmin;
+    float vsc = pSet->show_mph ? -180.f/100.f : -180.f/160.f, vmin = 0.f;  //vel
+    float angvel = abs(vel)*vsc + vmin;
+    float angrot=0.f;  int i=0;
+
+	//pCarM = carModels[carId];
+	if (pCarM && pCarM->pMainNode)
+	{	Quaternion q = pCarM->pMainNode->getOrientation() * Quaternion(Degree(90),Vector3(0,1,0));
+		angrot = q.getYaw().valueDegrees() + 90.f;
+	}
+	//LogO(String("car: ") + toStr(carId) + " " + toStr(pCarM) + "  v " + toStr(vel) + "  r " + toStr(angrot));
+    float sx = 1.4f, sy = sx*asp;  // *par len
+    float psx = 2.1f * pSet->size_minimap, psy = psx;  // *par len
+
+    const static Real tc[4][2] = {{0,1}, {1,1}, {1,0}, {0,0}};  // defaults, no rot
+    const static Real tp[4][2] = {{-1,-1}, {1,-1}, {1,1}, {-1,1}};
+    const static float d2r = PI_d/180.f;
+
+    static float rx[4],ry[4], vx[4],vy[4], px[4],py[4], cx[4],cy[4];  // rpm,vel, pos,crc
+    for (int i=0; i<4; i++)  // 4 verts, each+90deg
+    {
+		float ia = 45.f + float(i)*90.f;
+		float r = -(angrmp + ia) * d2r;		rx[i] = sx*cosf(r);  ry[i] =-sy*sinf(r);
+		float v = -(angvel + ia) * d2r;		vx[i] = sx*cosf(v);  vy[i] =-sy*sinf(v);
+		float p = -(angrot + ia) * d2r;		float cp = cosf(p), sp = sinf(p);
+
+		if (pSet->mini_rotated && pSet->mini_zoomed)
+			{  px[i] = psx*tp[i][0];  py[i] = psy*tp[i][1];  }
+		else{  px[i] = psx*cp*1.4f;     py[i] =-psy*sp*1.4f;  }
+
+		float z = pSet->mini_rotated ? 0.70f/pSet->zoom_minimap : 0.5f/pSet->zoom_minimap;
+		if (!pSet->mini_rotated)
+			{  cx[i] = tp[i][0]*z;  cy[i] = tp[i][1]*z-1.f;  }
+		else{  cx[i] =       cp*z;  cy[i] =      -sp*z-1.f;  }
+    }
+    
+    //  rpm needle
+    if (mrpm)  {	mrpm->beginUpdate(0);
+		for (int p=0;p<4;++p)  {  mrpm->position(rx[p],ry[p], 0);  mrpm->textureCoord(tc[p][0], tc[p][1]);  }	mrpm->end();  }
+
+	//  vel needle
+	if (mvel)  {	mvel->beginUpdate(0);
+		for (int p=0;p<4;++p)  {  mvel->position(vx[p],vy[p], 0);  mvel->textureCoord(tc[p][0], tc[p][1]);  }	mvel->end();  }
+
+	//LogO(String("  vel ") + toStr(vel) + " ang" + toStr(angrmp));
+		
+	//  minimap car pos-es
+	int c = carId;
+	if (mpos[c])  {  mpos[c]->beginUpdate(0);
+		for (int p=0;p<4;++p)  {  mpos[c]->position(px[p],py[p], 0);
+			mpos[c]->textureCoord(tc[p][0], tc[p][1]);	if (pCarM)  mpos[c]->colour(pCarM->color);  }
+		mpos[c]->end();  }
+		
+	//  minimap circle/rect
+	if (miniC && pSet->trackmap)
+	{	const Vector2& v = newPosInfos[carId].miniPos;
+		float xc = (v.x+1.f)*0.5f, yc = (v.y+1.f)*0.5f;
+		miniC->beginUpdate(0);
+		if (!pSet->mini_zoomed)
+			for (int p=0;p<4;++p)  {  miniC->position(tp[p][0],tp[p][1], 0);
+				miniC->textureCoord(tc[p][0], tc[p][1]);  miniC->colour(tc[p][0],tc[p][1], 0);  }
+		else
+			for (int p=0;p<4;++p)  {  miniC->position(tp[p][0],tp[p][1], 0);
+				miniC->textureCoord(cx[p]+xc, -cy[p]-yc);  miniC->colour(tc[p][0],tc[p][1], 1);  }
+		miniC->end();  }
 }

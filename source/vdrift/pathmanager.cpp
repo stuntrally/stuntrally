@@ -210,14 +210,17 @@ void PATHMANAGER::Init(std::ostream & info_output, std::ostream & error_output)
 	CreateDir(cache_dir, error_output);
 
 	// Print diagnostic info
-	info_output << "Ogre plugin directory: " << ogre_plugin_dir << std::endl;
-	info_output << "Home directory: " << home_dir << std::endl;
-	info_output << "Config defaults directory: " << GetGameConfigDir() << std::endl;
-	info_output << "User config directory: " << GetUserConfigDir() << std::endl;
-	info_output << "Data directory: " << GetDataPath() << std::endl;
-	info_output << "User data directory: " << GetUserDataDir() << std::endl;
-	info_output << "Cache directory: " << GetCacheDir() << std::endl;
-	info_output << "Log directory: " << GetLogDir() << std::endl;
+	std::stringstream out;
+	out << "--- Directories: ---" << ogre_plugin_dir << std::endl;
+	out << "Ogre plugin: " << ogre_plugin_dir << std::endl;
+	out << "Home:        " << home_dir << std::endl;
+	out << "Default cfg: " << GetGameConfigDir() << std::endl;
+	out << "User cfg:    " << GetUserConfigDir() << std::endl;
+	out << "Data:        " << GetDataPath() << std::endl;
+	out << "User data:   " << GetUserDataDir() << std::endl;
+	out << "Cache:       " << GetCacheDir() << std::endl;
+	out << "Log:         " << GetLogDir() << std::endl;
+	info_output << out.str();
 }
 
 bool PATHMANAGER::FileExists(const std::string & filename)

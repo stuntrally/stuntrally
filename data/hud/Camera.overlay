@@ -31,8 +31,8 @@ Car/CameraOverlay
 		vert_align bottom
 		left  0.16
 		width 0.5
-		top	-0.042
-		height	0.042
+		top	-0.063
+		height	0.063
 		//material Menu/FocusOvr2
 		//material Menu/PhysicsOvr
 

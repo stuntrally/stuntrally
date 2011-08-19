@@ -15,11 +15,11 @@ class TRACK;
 
 struct AI_Car
 {
-	AI_Car (CAR * new_car, float newdifficulty) : car (new_car), shift_time(0.0),
-		longitude_mu(0.9), lateral_mu(0.9),last_patch(NULL), use_racingline(true),
+	AI_Car (CAR * new_car, float newdifficulty) : car (new_car), shift_time(0.0f),
+		longitude_mu(0.9f), lateral_mu(0.9f),last_patch(NULL), use_racingline(true),
 		difficulty(newdifficulty)
 		{
-			inputs.resize(CARINPUT::ALL, 0.0);
+			inputs.resize(CARINPUT::ALL, 0.0f);
 		}
 	CAR * car;
 	float shift_time;

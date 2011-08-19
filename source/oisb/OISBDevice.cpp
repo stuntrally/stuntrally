@@ -101,11 +101,11 @@ namespace OISB
 	{
 	    os << "** Device: '" << getName() << "'" << std::endl;
 
+	    if (getName() == "Keyboard")
+			os << "** - count: " << mStates.size() << std::endl;
+		else
 	    for (StateMap::const_iterator it = mStates.begin(); it != mStates.end(); ++it)
-        {
-	        // TODO: dump state type too
-            os << "** - State: " << it->second->getName() << std::endl;
-        }
+	        os << "** - " << it->second->getName() << std::endl;
 
         os << "** End of device '" << getName() << "'" << std::endl;
 	}

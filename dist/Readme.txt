@@ -31,11 +31,18 @@ This is mainly designed for uploading source packages to Launchpad PPA for autom
 
 You need some Debian tools, at least packages "dput" and "dpkg-dev". Also, you need a GPG key for signing the package (Launchpad requires signing).
 
-Get the "original" tarball (stuntrally_XX.orig.tar.gz) from Launchpad, and extract it. Don't remove the archive. Copy the dist/debian directory to the extracted sources and edit debian/changelog to contain info about the new version. Version number and distribution version are important. Suffix the version with the distribution (e.g. ~natty). After that, build and upload the source package (from the extracted sources):
+1. Either get the "original" tarball (stuntrally_XX-0.orig.tar.bz2) from Launchpad or create a new one with the create-clean-sources.sh. Note that the name is important.
+2. Extract the archive, but don't delete it.
+3. If using Launchpad's orig tarball, copy all changes (from clean sources) on top of the extracted sources.
+4. Copy the dist/debian directory to the extracted sources.
+5. Edit debian/changelog to contain info about the new version. Version number and distribution version are important. Suffix the version with the distribution (e.g. ~natty).
+6. Type in commands:
 
-  dpkg-buildpackage -sd -S
+  dpkg-buildpackage -sa -S    # Only if you created the orig archive yourself
+  dpkg-buildpackage -sd -S    # Only if you used Launchpad's orig archive
   cd ..
-  dput ppa:stuntrally-team/stable stuntrally_VERSION_source.changes
+  dput ppa:stuntrally-team/stable stuntrally_VERSION_source.changes     # For releases
+  dput ppa:stuntrally-team/testing stuntrally_VERSION_source.changes    # For test versions
 
 
 Windows installer

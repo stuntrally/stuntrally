@@ -3,30 +3,43 @@
 #include "../network/protocol.hpp"
 
 
-void SETTINGS::Load(std::string sfile) {  CONFIGFILE c;  c.Load(sfile);  Serialize(false, c);  }
-void SETTINGS::Save(std::string sfile) {  CONFIGFILE c;  c.Load(sfile);  Serialize(true, c);  c.Write();  }
+void SETTINGS::Load(std::string sfile)
+{
+	CONFIGFILE c;  c.Load(sfile);
+	Serialize(false, c);
+}
+void SETTINGS::Save(std::string sfile)
+{
+	CONFIGFILE c;  c.Load(sfile);  version = SET_VER;
+	Serialize(true, c);  c.Write();
+}
 
 void SETTINGS::Serialize(bool w, CONFIGFILE & c)
 {
 	c.bFltFull = false;
-	Param(c,w, "game.car", car);			Param(c,w, "game.car_hue", car_hue);
-	Param(c,w, "game.car_sat", car_sat);	Param(c,w, "game.car_val", car_val);
+	for (int i=0; i < 4; ++i)
+	{	std::string s = "game.car";  s += char('1'+i);
+		Param(c,w, s, car[i]);				Param(c,w, s+"_hue", car_hue[i]);
+		Param(c,w, s+"_sat", car_sat[i]);	Param(c,w, s+"_val", car_val[i]);  }
 	Param(c,w, "game.track", track);		Param(c,w, "game.track_user", track_user);
-	Param(c,w, "game.local_players", local_players);     Param(c,w, "game.split_vertically", split_vertically);
-	Param(c,w, "game.trk_reverse", trackreverse);
+	Param(c,w, "game.local_players", local_players);	Param(c,w, "game.split_vertically", split_vertically);
+	Param(c,w, "game.trk_reverse", trackreverse);		Param(c,w, "game.num_laps", num_laps);
 	Param(c,w, "game.language", language);
 
-	Param(c,w, "display_show.fps", show_fps);		Param(c,w, "display_show.gauges", show_gauges);
+	Param(c,w, "display_show.fps", show_fps);			Param(c,w, "display_show.gauges", show_gauges);
 	Param(c,w, "display_show.trackmap", trackmap);
-	Param(c,w, "display_show.caminfo", show_cam);	Param(c,w, "display_show.times", show_times);
+	Param(c,w, "display_show.caminfo", show_cam);		Param(c,w, "display_show.times", show_times);
 	Param(c,w, "display_show.show_digits", show_digits);
-	Param(c,w, "display_show.car_dbgtxt", car_dbgtxt);Param(c,w, "display_show.show_cardbg", car_dbgbars);
+	Param(c,w, "display_show.car_dbgtxt", car_dbgtxt);	Param(c,w, "display_show.show_cardbg", car_dbgbars);
 	Param(c,w, "display_show.mph", show_mph);
-	Param(c,w, "display_size.gauges", size_gauges);	Param(c,w, "display_size.minimap", size_minimap);
+
+	Param(c,w, "display_size.gauges", size_gauges);		Param(c,w, "display_size.minimap", size_minimap);
+	Param(c,w, "display_size.mini_zoom", zoom_minimap);	Param(c,w, "display_size.mini_zoomed", mini_zoomed);
+	Param(c,w, "display_size.mini_rotated", mini_rotated);
 
 	Param(c,w, "display_par.anisotropy", anisotropy);	Param(c,w, "display_par.view_dist", view_distance);
 	Param(c,w, "display_par.ter_detail", terdetail);	Param(c,w, "display_par.ter_dist", terdist);
-	Param(c,w, "display_par.road_dist", road_dist);
+	Param(c,w, "display_par.road_dist", road_dist);		Param(c,w, "display_par.tex_size", tex_size);
 
 	Param(c,w, "display_eff.particles", particles);		Param(c,w, "display_eff.trails", trails);
 	Param(c,w, "display_eff.particles_len", particles_len);  Param(c,w, "display_eff.trail_len", trails_len);
@@ -50,7 +63,7 @@ void SETTINGS::Serialize(bool w, CONFIGFILE & c)
 	Param(c,w, "misc.volume", vol_master);		Param(c,w, "misc.vol_engine", vol_engine);
 	Param(c,w, "misc.vol_tires", vol_tires);	Param(c,w, "misc.vol_env", vol_env);
 
-	Param(c,w, "misc.autostartgame", autostart);
+	Param(c,w, "misc.version", version);		Param(c,w, "misc.autostartgame", autostart);
 	Param(c,w, "misc.ogredialog", ogre_dialog);	Param(c,w, "misc.escquit", escquit);
 	Param(c,w, "misc.bulletDebug", bltDebug);	Param(c,w, "misc.bulletLines", bltLines);
 	Param(c,w, "misc.bulletProfilerTxt", bltProfilerTxt);
@@ -62,6 +75,7 @@ void SETTINGS::Serialize(bool w, CONFIGFILE & c)
 	Param(c,w, "video.bloom", bloom);			Param(c,w, "video.bloomintensity", bloomintensity);
 	Param(c,w, "video.bloomorig", bloomorig);	Param(c,w, "video.hdr", hdr);
 	Param(c,w, "video.motionblur", motionblur);	Param(c,w, "video.motionblurintensity", motionblurintensity);
+	Param(c,w, "video.all_effects", all_effects);
 	Param(c,w, "video.windowx", windowx);		Param(c,w, "video.windowy", windowy);
 	Param(c,w, "video.fullscreen", fullscreen);
 	Param(c,w, "video.fsaa", fsaa);				Param(c,w, "video.vsync", vsync);
@@ -79,16 +93,16 @@ void SETTINGS::Serialize(bool w, CONFIGFILE & c)
 }
 
 SETTINGS::SETTINGS() :  ///  Defaults
+	version(100),  // old
 	//  car, track
-	car("3S"), track("J1-T"), track_user(false),
-	car_hue(0.f), car_sat(0.f), car_val(0.f),
+	track("J1-T"), track_user(false),
 	//  show
 	show_fps(1), show_gauges(1), trackmap(1),
 	show_cam(1), show_times(0), show_digits(1), car_dbgtxt(0), car_dbgbars(0),
-	size_gauges(0.18), size_minimap(0.2),
+	size_gauges(0.18), size_minimap(0.2), zoom_minimap(1.0), mini_zoomed(0), mini_rotated(1),
 	//  graphics
 	anisotropy(4),	view_distance(1500), bFog(0),
-	terdetail(2), terdist(100), road_dist(1.0),
+	terdetail(2), terdist(100), road_dist(1.0), tex_size(1),
 	particles(true), trails(true),
 	shadow_dist(3000), shadow_size(2), shadow_count(3), shadow_type(1),
 	refl_skip(10), refl_faces(1), refl_size(0), refl_dist(500.f), refl_mode("single"),
@@ -97,7 +111,8 @@ SETTINGS::SETTINGS() :  ///  Defaults
 	//  car
 	abs(1), tcs(1), autoclutch(1), autoshift(1), autorear(1), show_mph(0),
 	//  game
-	trackreverse(false), local_players(1), split_vertically(true), language(""), // "" = autodetect lang
+	trackreverse(false), local_players(1), num_laps(2),
+	split_vertically(true), language(""), // "" = autodetect lang
 	//  other
 	vol_master(1.f), vol_engine(1.f), vol_tires(1.f), vol_env(1.f),
 	autostart(0), ogre_dialog(1), escquit(0), bltDebug(0), bltLines(1),  bltProfilerTxt(0),
@@ -108,6 +123,7 @@ SETTINGS::SETTINGS() :  ///  Defaults
 	//  video
 	bloom(false), bloomintensity(0.2), bloomorig(1.0), hdr(false),
 	motionblur(false), motionblurintensity(0.3),
+	all_effects(false),
 	windowx(800), windowy(600), fullscreen(false), fsaa(0), vsync(false),
 	buffer("FBO"), rendersystem("OpenGL Rendering Subsystem"),
 	//  input
@@ -119,4 +135,7 @@ SETTINGS::SETTINGS() :  ///  Defaults
 	local_port(protocol::DEFAULT_PORT),
 	//  replay
 	rpl_rec(1), rpl_ghost(1), rpl_bestonly(1), rpl_listview(0)
-{}
+{
+	for (int i=0; i < 4; ++i)
+	{	car[i] = "ES";  car_hue[i] = 0.2f*i;  car_sat[i] = 0.f;  car_val[i] = 0.f;  }
+}

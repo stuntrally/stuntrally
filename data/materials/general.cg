@@ -46,8 +46,8 @@ VOut render_vs(VIn IN,
 	return OUT;
 }
 
-//-------------------------------------------------  ppx  -------------------------------------------------
-float4 render_ps(PIn IN,
+//-------------------------------------------------  ppx  render  -------------------------------------------------
+float4 render_ps(PIn IN,      /// _road for minimap_
 	uniform float3 ambient,	uniform float4 matDif): COLOR0
 {
 	float bridge = IN.c.x, pipe = IN.c.y;
@@ -97,7 +97,7 @@ VOut diffuse_vs(VIn IN,
 }
 
 //-------------------------------------------------  ppx  -------------------------------------------------
-float4 diffuse_ps(PIn IN,
+float4 diffuse_ps(PIn IN,		  /// _columns_
 	uniform float3 ambient,  uniform float3 lightDif0,  uniform float3 lightSpec0,
 	uniform float4 matDif,   uniform float4 matSpec,	uniform float matShininess,
 	uniform float3 fogColor,
@@ -132,9 +132,47 @@ float4 diffuse_ps(PIn IN,
 	return float4(clrSUM, diffuseTex.a /* matDif.a*/);
 }
 
+//-------------------------------------------------  ppx alpha  -------------------------------------------------
+float4 diffuse_ps_a(PIn IN,       ///  _glass pipe_
+	uniform float4 alphaPars,
+	uniform float3 ambient,  uniform float3 lightDif0,  uniform float3 lightSpec0,
+	uniform float4 matDif,   uniform float4 matSpec,	uniform float matShininess,
+	uniform float3 fogColor,
+	uniform float4 lightPos0,  uniform float3 camPos,
+	uniform float4 invSMSize,  uniform float4x4 iTWMat,
+
+	uniform sampler2D diffuseMap : TEXUNIT0,
+	uniform sampler2D normalMap : TEXUNIT1): COLOR0
+{
+	float3 ldir = normalize(lightPos0.xyz - (lightPos0.w * IN.wp.xyz));
+
+	float4 normalTex = tex2D(normalMap, IN.uv.xy);  // normal to object space
+	float3x3 tbn = float3x3(IN.t, IN.b, IN.n);
+	float3 normal = mul(transpose(tbn), normalTex.xyz * 2.f - 1.f);
+	normal = normalize(mul((float3x3)iTWMat, normal));
+
+	float3 diffuse = max(dot(ldir, -normal),0);
+
+	float3 camDir = normalize(camPos - IN.wp.xyz);
+	float3 halfVec = normalize(ldir + camDir);
+	float3 specular = pow(max(dot(-normal, halfVec),0), matShininess);
+
+	float4 diffuseTex = tex2D(diffuseMap, IN.uv.xy);
+
+	float3 diffC = diffuse * lightDif0 */*?*/ matDif.rgb  * diffuseTex.rgb;
+	float3 specC = specular * lightSpec0 * matSpec.rgb;
+	float3 clrSUM = diffuseTex.rgb * ambient + diffC + specC;
+ 
+	clrSUM = lerp(clrSUM, fogColor, /*IN.fogVal*/IN.wp.w);
+	//return float4(normal, 1);  // test
+	//return IN.c;  // road   experimental .....
+	float alpha = alphaPars.x + alphaPars.y * diffuse.r + alphaPars.z * specular.r + (1 - diffuseTex.r);
+	return float4(clrSUM, alpha);
+}
+
 
 //-------------------------------------------------  ppx env reflect  -------------------------------------
-float4 diffuse_ps_env(PIn IN,
+float4 diffuse_ps_env(PIn IN,     /// _car glass_
 	uniform float4 envPars,
 	uniform float3 ambient,  uniform float3 lightDif0,  uniform float3 lightSpec0,
 	uniform float4 matDif,   uniform float4 matSpec,	uniform float matShininess,
@@ -285,8 +323,8 @@ float4 diffuse_sh_ps(PIn IN,
 	return float4(clrSUM, diffuseTex.a);
 }
 
-//-------------------------------------------------  ppx  shadow  -----------------------------------------
-float4 diffuse_sh_a_ps(PIn IN,
+//-------------------------------------------------  ppx alpha shadow  -----------------------------------------
+float4 diffuse_sh_a_ps(PIn IN,      /// _road_
 			float4 LightPosition0	: TEXCOORD5,
 			float4 LightPosition1	: TEXCOORD6,
 			float4 LightPosition2	: TEXCOORD7,

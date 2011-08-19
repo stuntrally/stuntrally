@@ -5,7 +5,7 @@
 #define PI_d  3.14159265358979323846
 //#endif
 
-#define LogO(s)  Ogre::LogManager::getSingleton().logMessage(s);
+#define LogO(s)  Ogre::LogManager::getSingleton().logMessage(s)
 
 #include <OgreStringConverter.h>
 

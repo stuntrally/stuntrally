@@ -1074,7 +1074,7 @@ public:
 		  //btVector3 normalColor(1,1,0);
 		  //m_debugDrawer->drawLine(center,center+normal,normalColor);
 
-		  m_debugDrawer->drawLine(wv0,wv1,btVector3(0.55,0.8,1)/*m_color*/);
+		  m_debugDrawer->drawLine(wv0,wv1,btVector3(0.55f,0.8f,1.f)/*m_color*/);
 		  //m_debugDrawer->drawLine(wv1,wv2,m_color);
 		  //m_debugDrawer->drawLine(wv2,wv0,m_color);
 	  }
@@ -1351,9 +1351,9 @@ void	btCollisionWorld::debugDrawWorld()
 					case ACTIVE_TAG:			color = btVector3(1,1,1); break;
 					case ISLAND_SLEEPING:		color = btVector3(0,1,0); break;
 					case WANTS_DEACTIVATION:	color = btVector3(0,1,1); break;
-					case DISABLE_DEACTIVATION:	color = btVector3(0.96,0.98,1); break;
+					case DISABLE_DEACTIVATION:	color = btVector3(0.96f,0.98f,1); break;
 					case DISABLE_SIMULATION:	color = btVector3(1,1,0); break;
-					default:					color = btVector3(0.5,0.5,1);
+					default:					color = btVector3(0.5f,0.5f,1);
 					};
 
 					debugDrawObject(colObj->getWorldTransform(),colObj->getCollisionShape(),color);

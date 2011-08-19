@@ -6,7 +6,7 @@
 #include "../vdrift/track.h"
 #include "../vdrift/game.h"
 //#include "../ogre/OgreGame.h"
-#include "SplitScreenManager.h"
+#include "SplitScreen.h"
 #include "common/SceneXml.h"
 #include "FollowCamera.h"
 #include "CarReflection.h"
@@ -30,25 +30,23 @@ using namespace Ogre;
 
 CarModel::CarModel(unsigned int index, eCarType type, const std::string name,
 	Ogre::SceneManager* sceneMgr, SETTINGS* set, GAME* game, Scene* s, Ogre::Camera* cam, App* app) :
-	hue(0), sat(0), val(0), fCam(0), pMainNode(0), pCar(0), terrain(0), resCar(""), mCamera(0), pReflect(0), pApp(app)
+	fCam(0), pMainNode(0), pCar(0), terrain(0), resCar(""), mCamera(0), pReflect(0), pApp(app), color(1,0,0)
 {
 	iIndex = index;  sDirname = name;  pSceneMgr = sceneMgr;
 	pSet = set;  pGame = game;  sc = s;  mCamera = cam;  eType = type;
-	bGetStPos = true;
-	
-	MATHVECTOR<float, 3> offset;
-	offset.Set(5*iIndex,5*iIndex,0); // 5*sqrt(2) m distance between cars
-	/// TODO: some quaternion magic to align the cars along track start orientation
-	// 4 car positions from 1, step width,length ...
+	bGetStPos = true;  fChkTime = 0.f;  iChkWrong = -1;  iWonPlace = 0;
 	
 	if (type != CT_GHOST)  // ghost has pCar, dont create
 	{
+		int i = set->car_collis ? iIndex : 0;  //  offset car start pos when cars collide
 		MATHVECTOR<float, 3> pos(0,10,0);
 		QUATERNION<float> rot;
-		pos = pGame->track.GetStart(0/*iIndex*/).first;
-		rot = pGame->track.GetStart(0/*iIndex*/).second;
+		pos = pGame->track.GetStart(i).first;
+		rot = pGame->track.GetStart(i).second;
 
-		pCar = pGame->LoadCar(sDirname, pos + offset, rot, true, false);
+		//  offset car start pos when cars collide
+		MATHVECTOR<float, 3> offset(0,0,0);
+		pCar = pGame->LoadCar(sDirname, pos, rot, true, false);
 		if (!pCar)  LogO("Error creating car " + sDirname);
 	}
 	
@@ -67,6 +65,10 @@ CarModel::~CarModel()
 	delete fCam;  fCam = 0;
 	pSceneMgr->destroyCamera("CarCamera" + toStr(iIndex));
 	
+	//  hide trails
+	for (int w=0; w<4; ++w)  if (whTrl[w])  {	wht[w] = 0.f;
+		whTrl[w]->setVisible(false);	whTrl[w]->setInitialColour(0, 0.5,0.5,0.5, 0);	}
+
 	// destroy cloned materials
 	for (int i=0; i<NumMaterials; i++)
 		Ogre::MaterialManager::getSingleton().remove(sMtr[i]);
@@ -214,7 +216,7 @@ void CarModel::Update(PosInfo& posInfo, float time)
 //-------------------------------------------------------------------------------------------------------
 //  Create
 //-------------------------------------------------------------------------------------------------------
-void CarModel::Create()
+void CarModel::Create(int car)
 {
 	if (!pCar) return;
 	
@@ -226,7 +228,7 @@ void CarModel::Create()
 	Ogre::Root::getSingletonPtr()->addResourceLocation(resCar, "FileSystem", "Car" + toStr(iIndex));
 	
 	// Change color here - cache has to be created before loading model
-	ChangeClr();
+	ChangeClr(car);
 	
 	pMainNode = pSceneMgr->getRootSceneNode()->createChildSceneNode();
 
@@ -411,14 +413,31 @@ void CarModel::Create()
 		String si = toStr(iIndex) + "_" +toStr(i);
 		if (!pb[i])  {
 			pb[i] = pSceneMgr->createParticleSystem("Boost"+si, "Boost");
-			Vector3 bsize = (bodyBox.getMaximum() - bodyBox.getMinimum())*0.5,
-				bcenter = bodyBox.getMaximum() + bodyBox.getMinimum();
-			LogO("Car body bbox :  size " + toStr(bsize) + ",  center " + toStr(bcenter));
-			SceneNode* nb = pMainNode->createChildSceneNode(bcenter+
-				Vector3(bsize.x * 0.97, bsize.y * 0.65, bsize.z * 0.65 * (i==0 ? 1 : -1) ));
-				//Vector3(1.9 /*back*/, 0.1 /*up*/, 0.6 * (i==0 ? 1 : -1)/*sides*/ ));
-			nb->attachObject(pb[i]);
-			pb[i]->getEmitter(0)->setEmissionRate(0);  }
+			if (1/*!pCar->manualExhaustPos*/)
+			{
+				// no exhaust pos in car file, guess from bounding box
+				Vector3 bsize = (bodyBox.getMaximum() - bodyBox.getMinimum())*0.5,
+					bcenter = bodyBox.getMaximum() + bodyBox.getMinimum();
+				LogO("Car body bbox :  size " + toStr(bsize) + ",  center " + toStr(bcenter));
+				SceneNode* nb = pMainNode->createChildSceneNode(bcenter+
+					Vector3(bsize.x * 0.97, bsize.y * 0.65, bsize.z * 0.65 * (i==0 ? 1 : -1) ));
+					//Vector3(1.9 /*back*/, 0.1 /*up*/, 0.6 * (i==0 ? 1 : -1)/*sides*/ ));
+				nb->attachObject(pb[i]);
+			}else{
+				// use exhaust pos values from car file
+				Vector3 pos;
+				if (i==0)
+					pos = Vector3(pCar->exhaustPosition[0], pCar->exhaustPosition[1], pCar->exhaustPosition[2]);
+				else if (!pCar->has2exhausts)
+					continue;
+				else
+					pos = Vector3(pCar->exhaustPosition[0], pCar->exhaustPosition[1], -1*pCar->exhaustPosition[2]);
+
+				SceneNode* nb = pMainNode->createChildSceneNode(pos);
+				nb->attachObject(pb[i]); 
+			}
+			pb[i]->getEmitter(0)->setEmissionRate(0);
+		}
 	}
 
 	///  wheel emitters  ------------------------
@@ -455,9 +474,9 @@ void CarModel::Create()
 			whTrl[w]->addNode(ndWhE[w]);
 		}
 			whTrl[w]->setTrailLength(90 * pSet->trails_len);  //30
-			whTrl[w]->setInitialColour(0, 0.1,0.1,0.1, 0);
-			whTrl[w]->setColourChange(0, 0.0,0.0,0.0, /*fade*/0.08 * 1.f / pSet->trails_len);
-			whTrl[w]->setInitialWidth(0, 0.16);  //0.18 0.2
+			whTrl[w]->setInitialColour(0, 0.1f,0.1f,0.1f, 0);
+			whTrl[w]->setColourChange(0, 0.0,0.0,0.0, /*fade*/0.08f * 1.f / pSet->trails_len);
+			whTrl[w]->setInitialWidth(0, 0.16f);  //0.18 0.2
 	}
 
 	UpdParsTrails();
@@ -534,9 +553,12 @@ void CarModel::UpdWhTerMtr()
 //  utils
 //-------------------------------------------------------------------------------------------------------
 
-void CarModel::ChangeClr()
+void CarModel::ChangeClr(int car)
 {
 	bool add = 1;
+	float c_h = pSet->car_hue[car], c_s = pSet->car_sat[car], c_v = pSet->car_val[car];
+	color.setHSB(1-c_h,c_s*0.25+0.75,1/*c_v*2+0.7*/);  //set, mini pos clr
+
 	Image ima;	try{
 		ima.load(sDirname + "_body00_add.png", "Car" + toStr(iIndex));  // add, not colored
 	}catch(...){  add = 0;  }
@@ -575,9 +597,8 @@ void CarModel::ChangeClr()
 
 				Real h,s,v;  // hue shift
 				c.getHSB(&h,&s,&v);
-				h += pSet->car_hue;  if (h>1.f) h-=1.f;  // 0..1
-				s += pSet->car_sat;  // -1..1
-				v += pSet->car_val;
+				h += c_h;  if (h>1.f) h-=1.f;  // 0..1
+				s += c_s;  v += c_v;  // -1..1
 				c.setHSB(h,s,v);
 
 				r = c.r*255;  g = c.g*255;  b = c.b*255;  // set

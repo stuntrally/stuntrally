@@ -4,11 +4,13 @@
 	#include "../../editor/OgreApp.h"
 	#include "../../editor/settings.h"
 	#include "../../road/Road.h"
+	#include "../QTimer.h"
 #else
 	#include "../OgreGame.h"
 	#include "../vdrift/settings.h"
 	#include "../road/Road.h"
-	#include "../SplitScreenManager.h"
+	#include "../SplitScreen.h"
+	#include "../QTimer.h"
 #endif
 #include <OgreTerrainMaterialGeneratorA.h>
 #include <OgreTerrain.h>
@@ -22,6 +24,8 @@ using namespace Ogre;
 //---------------------------------------------------------------------------------------------------
 void App::changeShadows()
 {
+	QTimer ti;  ti.update();  /// time
+
 	//  get settings
 	bool enabled = pSet->shadow_type != 0;
 	bool bDepth = pSet->shadow_type == 3;
@@ -109,6 +113,10 @@ void App::changeShadows()
 		matProfile->setReceiveDynamicShadowsPSSM(static_cast<PSSMShadowCameraSetup*>(mPSSMSetup.get()));
 	}
 	UpdPSSMMaterials();
+
+	ti.update();	/// time
+	float dt = ti.dt * 1000.f;
+	LogO(String("::: Time Shadows: ") + toStr(dt) + " ms");
 }
 
 
@@ -117,7 +125,7 @@ void App::setMtrSplits(String sMtrName)
 	MaterialPtr mat = MaterialManager::getSingleton().getByName(sMtrName);
 	if (!mat.isNull())
 	{
-		unsigned short np = mat->getTechnique(0)->getNumPasses()-1;  // last
+		unsigned short np = mat->getTechnique(0)->getNumPasses()-1;  // last  unsigned!
 		try {
 			mat->getTechnique(0)->getPass(np)->getFragmentProgramParameters()->setNamedConstant("pssmSplitPoints", splitPoints);
 		} catch(...) {  }
@@ -136,7 +144,7 @@ void App::setMtrSplits(String sMtrName)
 			p->setCullingMode(CULL_NONE);
 			p->setFragmentProgram("sel_ps");  //p->setSelfIllumination(0,0.1,0.2);
 		}
-		#endif/**/
+		#endif
 	}
 }
 
@@ -157,9 +165,10 @@ void App::UpdPSSMMaterials()	/// . . . . . . . .
 	setMtrSplits("grass_GrassVS_");
 
 	if (!road)  return;
+	String txs = road->iTexSize == 0 ? "_s": "";
 	for (int i=0; i<MTRs; ++i)
 	{
-		if (road->sMtrRoad[i] != "") {	setMtrSplits(road->sMtrRoad[i]);  setMtrSplits(road->sMtrRoad[i]+"_ter");  }
-		if (road->sMtrPipe[i] != "")	setMtrSplits(road->sMtrPipe[i]);
+		if (road->sMtrRoad[i] != "") {	setMtrSplits(road->sMtrRoad[i]+txs);  setMtrSplits(road->sMtrRoad[i]+"_ter"+txs);  }
+		if (road->sMtrPipe[i] != "")	setMtrSplits(road->sMtrPipe[i]+txs);
 	}
 }

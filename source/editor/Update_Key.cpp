@@ -19,6 +19,10 @@ void App::UpdEditWnds()
 		{	mWndBrush->setCaption("Terrain Smooth");
 			mWndBrush->setColour(MyGUI::Colour(0.3f, 0.8f, 0.8f));
 			mWndBrush->setVisible(true);  }
+		else if (edMode == ED_Height)
+		{	mWndBrush->setCaption("Terrain Height");
+			mWndBrush->setColour(MyGUI::Colour(0.7f, 1.0f, 0.7f));
+			mWndBrush->setVisible(true);  }
 		else if (edMode == ED_Start)
 		{	mWndBrush->setCaption("Car Start pos");
 			mWndBrush->setColour(MyGUI::Colour(0.7f, 0.7f, 1.0f));
@@ -32,6 +36,7 @@ void App::UpdEditWnds()
 	//if (mWndRoadStats)  mWndRoadStats->setVisible(bRoad);
 	if (mWndCam)  mWndCam->setVisible(edMode == ED_PrvCam);
 	UpdStartPos();  // StBox visible
+	UpdVisGui();  //br prv..
 }
 void App::UpdVisGui()
 {
@@ -40,6 +45,10 @@ void App::UpdVisGui()
 	if (mGUI)  mGUI->setVisiblePointer(bGuiFocus || !bMoveCam);
 	if (road)  road->SetTerHitVis(bEdit());
 	if (!bGuiFocus && mToolTip)  mToolTip->setVisible(false);
+
+	if (ovBrushPrv)
+	if (edMode >= ED_Road || !bEdit())
+		ovBrushPrv->hide();  else  ovBrushPrv->show();
 }
 
 void App::Status(String s, float r,float g,float b)
@@ -137,8 +146,7 @@ bool App::KeyPress(const CmdKey &arg)
 			return true;
 		}	break;
 
-		//  Wire Frame  F10, F
-		case KC_F:  if (!bGuiFocus || alt)
+		//  Wire Frame  F10
 		case KC_F10:
 		{	mbWireFrame = !mbWireFrame;
 			mCamera->setPolygonMode(mbWireFrame ? PM_WIREFRAME : PM_SOLID);
@@ -168,12 +176,12 @@ bool App::KeyPress(const CmdKey &arg)
 		case KC_F8:  UpdateTrack();	return true;
 
    		case KC_F2:  // +-rt num
-   			if (alt) {	pSet->num_mini = (pSet->num_mini - 1 + RTs) % (RTs);  UpdMiniVis();  }
+   			if (alt) {	pSet->num_mini = (pSet->num_mini - 1 + RTs+2) % (RTs+2);  UpdMiniVis();  }
    			else if (bGuiFocus)  // prev gui tab
    				mWndTabs->setIndexSelected( (mWndTabs->getIndexSelected() - 1 + num) % num );
    			break;
    		case KC_F3:
-   			if (alt) {	pSet->num_mini = (pSet->num_mini + 1) % (RTs);  UpdMiniVis();  }
+   			if (alt) {	pSet->num_mini = (pSet->num_mini + 1) % (RTs+2);  UpdMiniVis();  }
    			else if (bGuiFocus)  // next gui tab
    				mWndTabs->setIndexSelected( (mWndTabs->getIndexSelected() + 1) % num );
    			break;
@@ -210,6 +218,15 @@ bool App::KeyPress(const CmdKey &arg)
 
 	///  Road keys  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * 
 	if (edMode == ED_Road && road && bEdit())
+	{
+	if (iSnap > 0)
+	switch (arg.key)
+	{
+		case KC_1:	road->AddYaw(-1,angSnap);	break;
+		case KC_2:	road->AddYaw( 1,angSnap);	break;
+		case KC_3:	road->AddRoll(-1,angSnap);	break;
+		case KC_4:	road->AddRoll( 1,angSnap);	break;
+	}
 	switch (arg.key)
 	{
 		//  choose 1
@@ -253,23 +270,41 @@ bool App::KeyPress(const CmdKey &arg)
 		else
 		{	road->newP.pos.x = road->posHit.x;
 			road->newP.pos.z = road->posHit.z;
+			road->newP.aType = AT_Both;
 			road->Insert(shift ? INS_Begin : ctrl ? INS_End : alt ? INS_CurPre : INS_Cur);
 		}	break;					  
 
 		case KC_MINUS:   road->ChgMtrId(-1);	break;
 		case KC_EQUALS:  road->ChgMtrId(1);		break;
+
+		case KC_5:	road->ChgAngType(-1);	break;
+		case KC_6:	if (shift)  road->AngZero();  else
+					road->ChgAngType(1);	break;
+
+		case KC_7:  iSnap = (iSnap-1+ciAngSnapsNum)%ciAngSnapsNum;  angSnap = crAngSnaps[iSnap];  break;
+		case KC_8:  iSnap = (iSnap+1)%ciAngSnapsNum;                angSnap = crAngSnaps[iSnap];  break;
+	}
 	}
 
+	//  ter brush shape
+	if (edMode < ED_Road)
+	switch (arg.key)
+	{
+		case KC_K:	mBrShape[curBr] = (EBrShape)((mBrShape[curBr]-1 + BRS_ALL) % BRS_ALL);  updBrush();  break;
+		case KC_L:	mBrShape[curBr] = (EBrShape)((mBrShape[curBr]+1) % BRS_ALL);            updBrush();  break;
+		case KC_COMMA:	mBrOct[curBr] = std::max(1, mBrOct[curBr]-1);  updBrush();  break;
+		case KC_PERIOD:	mBrOct[curBr] = std::min(7, mBrOct[curBr]+1);  updBrush();  break;
+	}
 
 	///  Common Keys  * * * * * * * * * * * * *
 	switch (arg.key)
 	{
 		case KC_TAB:	//  Camera / Edit mode
 		if (!bGuiFocus && !alt)  {
-#if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
-			SetCursor(0);
-			ShowCursor(0);  //?- cursor after alt-tab
-#endif
+			#if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
+				SetCursor(0);
+				ShowCursor(0);  //?- cursor after alt-tab
+			#endif
 			bMoveCam = !bMoveCam;  UpdVisGui();  }	break;
 
 		//  fog
@@ -282,11 +317,13 @@ bool App::KeyPress(const CmdKey &arg)
 		//  terrain
 		case KC_D:	if (bEdit()){  edMode = ED_Deform;  curBr = 0;  updBrush();  UpdEditWnds();  }	break;
 		case KC_S:	if (bEdit()){  edMode = ED_Smooth;  curBr = 1;  updBrush();  UpdEditWnds();  }	break;
+		case KC_E:	if (bEdit()){  edMode = ED_Height;  curBr = 2;  updBrush();  UpdEditWnds();  }	break;
+		//case KC_F: TODO: ter brush  filter, ramp ...
 
 		//  road
 		case KC_R:	if (bEdit()){  edMode = ED_Road;	UpdEditWnds();  }	break;
-		case KC_T:	if (mWndRoadStats)  mWndRoadStats->setVisible(!mWndRoadStats->isVisible());  break;
 		case KC_B:  if (road)  road->RebuildRoad(true);  break;
+		case KC_T:	if (mWndRoadStats)  mWndRoadStats->setVisible(!mWndRoadStats->isVisible());  break;
 		case KC_M:  if (road)  road->ToggleMerge();  break;
 
 		//  start pos

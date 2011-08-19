@@ -91,8 +91,8 @@ void App::InitGui()
 	
 	//  language combo  ___________________
 	supportedLanguages["en"] = "English";
-	supportedLanguages["de"] = "Deutsch";  //German
-	supportedLanguages["fi"] = "Suomi";  //Finnish
+	supportedLanguages["de"] = "Deutsch"; //German
+	supportedLanguages["fi"] = "Suomi";   //Finnish
 	supportedLanguages["ro"] = "Româna";  //Romanian
 	supportedLanguages["pl"] = "Polski";  //Polish
 	combo = NULL;  combo = (ComboBoxPtr)mLayout->findWidget("Lang");
@@ -107,6 +107,7 @@ void App::InitGui()
 	
 	Slv(Anisotropy,	pSet->anisotropy /res);
 	Slv(Shaders,	pSet->shaders /res);
+	Slv(TexSize,	pSet->tex_size /res);
 	
 	//  particles/trails
 	Slv(Particles,	powf(pSet->particles_len /4.f, 0.5f));
@@ -120,16 +121,17 @@ void App::InitGui()
 
 	//  view sizes
 	Slv(SizeGaug,	(pSet->size_gauges-0.1f) /0.15f);
-	Slv(SizeMinmap,	(pSet->size_minimap-0.05f) /0.25f);
+	Slv(SizeMinimap,(pSet->size_minimap-0.05f) /0.25f);
+	Slv(ZoomMinimap,powf((pSet->zoom_minimap-1.0f) /9.f, 0.5f));
 	
 	//  reflect
 	Slv(ReflSkip,	powf(pSet->refl_skip /1000.f, 0.5f));
 	Slv(ReflSize,	pSet->refl_size /res);
 	Slv(ReflFaces,	pSet->refl_faces /res);
 	Slv(ReflDist,	powf((pSet->refl_dist -20.f)/1480.f, 0.5f));
-	int value; if (pSet->refl_mode == "static") value = 0;
-	else if (pSet->refl_mode == "single") value = 1;
-	else if (pSet->refl_mode == "full") value = 2;
+	int value=0;  if (pSet->refl_mode == "static")  value = 0;
+	else if (pSet->refl_mode == "single")  value = 1;
+	else if (pSet->refl_mode == "full")  value = 2;
 	Slv(ReflMode,   value /res);
 
 	//  shadows
@@ -144,8 +146,7 @@ void App::InitGui()
 	Slv(VolTires,	pSet->vol_tires/1.4f); 	 Slv(VolEnv,	pSet->vol_env/1.4f);
 	
 	// car color
-	Slv(CarClrH, pSet->car_hue);
-	Slv(CarClrS, (pSet->car_sat +1)*0.5f);  Slv(CarClrV, (pSet->car_val +1)*0.5f);
+	UpdCarClrSld();
 
 	///  Checkboxes
     //------------------------------------------------------------------------
@@ -167,8 +168,8 @@ void App::InitGui()
 	Chk("Gauges", chkGauges, show_gauges);  ShowHUD();//
 
 	Chk("Minimap", chkMinimap, trackmap);	chMinimp = mGUI->findWidget<Button>("Minimap");
+	Chk("MiniZoom", chkMiniZoom, mini_zoomed);  Chk("MiniRot", chkMiniRot, mini_rotated);
 	Chk("Times", chkTimes, show_times);		chTimes  = mGUI->findWidget<Button>("Times");
-	//Chk("Racingline", chkRacingLine, racingline);
 	Chk("CamInfo", chkCamInfo, show_cam);
 
 	Chk("CarDbgBars", chkCarDbgBars, car_dbgbars);	chDbgB = mGUI->findWidget<Button>("CarDbgBars");
@@ -238,9 +239,10 @@ void App::InitGui()
     if (mWndRpl)
 	{	//  replay controls
 		Btn("RplToStart", btnRplToStart);  Btn("RplToEnd", btnRplToEnd)
-		Btn("RplBack", btnRplBack);  Btn("RplForward", btnRplForward);
 		Btn("RplPlay", btnRplPlay);  btRplPl = btn;
-
+		btn = (ButtonPtr)mWndRpl->findWidget("RplBack");	if (btn)  {		btn->eventMouseButtonPressed = newDelegate(this, &App::btnRplBackDn);  btn->eventMouseButtonReleased = newDelegate(this, &App::btnRplBackUp);  }
+		btn = (ButtonPtr)mWndRpl->findWidget("RplForward");  if (btn)  {	btn->eventMouseButtonPressed = newDelegate(this, &App::btnRplFwdDn);  btn->eventMouseButtonReleased = newDelegate(this, &App::btnRplFwdUp);  }
+		
 		//  info
 		slRplPos = (HScrollPtr)mWndRpl->findWidget("RplSlider");
 		if (slRplPos)  slRplPos->eventScrollChangePosition = newDelegate(this, &App::slRplPosEv);
@@ -258,6 +260,26 @@ void App::InitGui()
 	rplList = mGUI->findWidget<List>("RplList");
 	if (rplList)  rplList->eventListChangePosition = newDelegate(this, &App::listRplChng);
 	updReplaysList();
+
+	//  car color buttons . . . . .
+	Real hsv[10][3] = {
+		{0.43,-0.1,-0.2},	{0.90, 0.1, 0.1},	{0.00, 0.0,-0.1},	{0.28,-0.35,-0.66},	{0.75, 0.1,-0.1},
+		{0.47, 0.1,-0.1},	{0.5,-0.15,0.16},	{0.86, 0.4,-0.0},	{0.8,-0.8,-0.18},	{0.7, 0.1,-0.15}};
+	for (int i=0; i<10; i++)
+	{
+		StaticImagePtr img = (StaticImagePtr)mLayout->findWidget("carClr"+toStr(i));
+		Real h = hsv[i][0], s = hsv[i][1], v = hsv[i][2];
+		ColourValue c;  c.setHSB(1.f-h, (s+1.f)*0.5f, (v+1.f)*0.8f/**/);
+		img->setColour(Colour(c.r,c.g,c.b));
+		img->eventMouseButtonClick = newDelegate(this, &App::imgBtnCarClr);
+		img->setUserString("s", toStr(s));  img->setUserString("h", toStr(h));
+		img->setUserString("v", toStr(v));
+	}
+	Btn("CarClrRandom", btnCarClrRandom);
+	Slv(NumLaps, (pSet->num_laps - 1) / 20.f);
+	
+	TabPtr tPlr = (TabPtr)mLayout->findWidget("tabPlayer");
+	if (tPlr)  tPlr->eventTabChangeSelect = newDelegate(this, &App::tabPlayer);
 	
 	Btn("btnPlayers1", btnNumPlayers);
 	Btn("btnPlayers2", btnNumPlayers);
@@ -389,17 +411,17 @@ void App::InitGui()
 			std::ifstream check((PATHMANAGER::GetCarPath() + "/" + *i + "/about.txt").c_str());
 			if (check)  {
 				carList->addItem(*i);
-				if (*i == pSet->car) {  carList->setIndexSelected(ii);  bFound = true;  }
+				if (*i == pSet->car[0]) {  carList->setIndexSelected(ii);  bFound = true;  }
 				ii++;  }
 		}
 		if (!bFound)
-			pSet->car = *li.begin();
+			pSet->car[0] = *li.begin();
 		carList->eventListChangePosition = newDelegate(this, &App::listCarChng);
     }
 
 	//  cars text, chg btn
     valCar = (StaticTextPtr)mLayout->findWidget("CarText");
-	valCar->setCaption(TR("#{Car}: ") + pSet->car);  sListCar = pSet->car;
+	valCar->setCaption(TR("#{Car}: ") + pSet->car[0]);  sListCar = pSet->car[0];
 
     ButtonPtr btnCar = (ButtonPtr)mLayout->findWidget("ChangeCar");
     if (btnCar)  btnCar->eventMouseButtonClick = newDelegate(this, &App::btnChgCar);
@@ -522,6 +544,15 @@ void App::UpdGuiRdStats(const SplineRoad* rd, const Scene& sc, float time)
 		trkDesc->setCaption(rd->sTxtDesc.c_str());
 }
 
+void App::UpdCarClrSld(bool upd)
+{
+	HScrollPtr sl;  size_t v;
+	bUpdCarClr = false;
+	Slv(CarClrH, pSet->car_hue[iCurCar]);
+	Slv(CarClrS, (pSet->car_sat[iCurCar] +1)*0.5f);  if (upd)  bUpdCarClr = true;
+	Slv(CarClrV, (pSet->car_val[iCurCar] +1)*0.5f);  bUpdCarClr = true;
+}
+
 
 ///  Gui ToolTips
 //-----------------------------------------------------------------------------------------------------------
@@ -554,11 +585,12 @@ void App::notifyToolTip(Widget *sender, const ToolTipInfo &info)
 		return;  }
 
 	if (info.type == ToolTipInfo::Show)
-	{
+	{	// TODO: isnt resizing properly ..
 		mToolTip->setSize(320, 96);  // start size for wrap
-		mToolTipTxt->setCaption(sender->getUserString("tip"));
+		String s = TR(sender->getUserString("tip"));
+		mToolTipTxt->setCaption(s);
 		const IntSize &textsize = mToolTipTxt->getTextSize();
-		mToolTip->setSize(textsize.width +  6, textsize.height + 6);
+		mToolTip->setSize(textsize.width*1.5, textsize.height*1.5);
 		mToolTip->setVisible(true);
 		boundedMove(mToolTip, info.point);
 	}
@@ -626,24 +658,23 @@ void App::InitInputGui()
 	for (std::map<OISB::String, OISB::ActionSchema*>::const_iterator it = schemas.begin(); it != schemas.end(); it++)
 	{
 		MyGUI::TabItemPtr tabitem = inputTab->addItem( TR("#{InputMap" + (*it).first + "}") );
-		
-		//-scroll view.... doesnt work???
-		//MyGUI::ScrollViewPtr sv = tabitem->createWidget<ScrollView>("ScrollView", 0, 0, 700, 580, MyGUI::Align::Relative, "scrollView_" + (*it).first );
+
+		#define CreateText(x,y, w,h, name, text)  {  MyGUI::StaticTextPtr txt =  \
+			tabitem->createWidget<StaticText>("StaticText", x,y, w,h, MyGUI::Align::Relative, name);  \
+			if (txt)  txt->setCaption(text);  }
 		
 		///  Headers (Key 1, Key 2)
-		MyGUI::StaticTextPtr headkb = tabitem->createWidget<StaticText>(
-			"StaticText", 220, 10, 200, 24, MyGUI::Align::Relative, "staticText_" + (*it).first );
-		headkb->setCaption(TR("#88AAFF#{InputKey1}"));
-		MyGUI::StaticTextPtr headkb2 = tabitem->createWidget<StaticText>(
-			"StaticText", 360, 10, 200, 24, MyGUI::Align::Relative, "staticText_" + (*it).first );
-		headkb2->setCaption(TR("#88AAFF#{InputKey2}"));
+		CreateText(220,10, 200,24, "staticText_" + (*it).first, TR("#88AAFF#{InputKey1}"));
+		CreateText(360,10, 200,24, "staticText_" + (*it).first, TR("#88AAFF#{InputKey2}"));
 				
-		/// joystick selection menu
-		// only on player tabs
+		///  joystick selection menu
+		//  only on player tabs
 		bool playerTab = Ogre::StringUtil::startsWith( (*it).first, "player");
 		if (playerTab)
 		{
-			MyGUI::ComboBoxPtr joysticks = tabitem->createWidget<ComboBox>("ComboBox", 540, 10, 150, 24, MyGUI::Align::Relative, "joystickSel_" + (*it).first );
+			MyGUI::ComboBoxPtr joysticks = tabitem->createWidget<ComboBox>("ComboBox",
+				540,10, 150,24, MyGUI::Align::Relative,
+				"joystickSel_" + (*it).first );
 			joysticks->addItem(TR("#{InputNoJS}"));
 			joysticks->setIndexSelected(0);
 			for (std::vector<OISB::JoyStick*>::const_iterator jit=OISB::System::getSingleton().mJoysticks.begin();
@@ -651,133 +682,127 @@ void App::InitInputGui()
 			{
 				joysticks->addItem( (*jit)->getName() );
 			}
-			joysticks->addItem("Dummy Joystick");	/// test
+			joysticks->addItem("Dummy Joystick");	// test
 			joysticks->setEditReadOnly(true);
 			joysticks->eventComboChangePosition = MyGUI::newDelegate(this, &App::joystickSelectionChanged);
-		}
 		
-		// playertab: add labels that print the last pressed joystick button / last moved axis
-		if (playerTab)
-		{
-			MyGUI::StaticTextPtr label1 = tabitem->createWidget<StaticText>("StaticText", 300, 350, 300, 24, MyGUI::Align::Relative, "axisOutput_" + (*it).first);
-			label1->setCaption( TR("#{InputMoveAxisTip}") );
-			MyGUI::StaticTextPtr label2 = tabitem->createWidget<StaticText>("StaticText", 300, 380, 300, 24, MyGUI::Align::Relative, "buttonOutput_" + (*it).first);
-			label2->setCaption( TR("#{InputPressButtonTip}") );
+			//  add labels that print the last pressed joystick button / last moved axis
+			CreateText(300,350, 300,24, "axisOutput_"   + (*it).first, TR("#{InputMoveAxisTip}"));
+			CreateText(300,380, 300,24, "buttonOutput_" + (*it).first, TR("#{InputPressButtonTip}"));
 		}
 		
 		///  ------ custom action sorting ----------------
-		int i = 0, y = 0, ya = 26 / 2, yc1=0, yc2=0;
+		int i = 0, y = 0, ya = 26 / 2, yc1=0,yc2=0,yc3=0;
 		std::map <std::string, int> yRow;
 		// player
-		yRow["Throttle"] = y;	y+=2;
-		yRow["Brake"] = y;		y+=2;
+		yRow["Throttle"] = y;	y+=2;	yRow["Brake"] = y;		y+=2;
 		yRow["Steering"] = y;	y+=2+1 +2;
-		yRow["HandBrake"] = y;	y+=2;
-		yRow["Boost"] = y;		y+=2;
+		yRow["HandBrake"] = y;	y+=2;	yRow["Boost"] = y;		y+=2;
 		yRow["Flip"] = y;
-		yRow["FlipRight"] = y; y+=2;
-		yRow["FlipLeft"] = y;	y+=2 +1;
-		yRow["ShiftUp"] = y;	y+=2;
-		yRow["ShiftDown"] = y;	y+=2;
+		yRow["FlipRight"] = y;	y+=2;	yRow["FlipLeft"] = y;	y+=2 +1;
+		yRow["ShiftUp"] = y;	y+=2;	yRow["ShiftDown"] = y;	y+=2;
 		// general
 		y = 0;
 		yRow["ShowOptions"] = y; y+=2+1;
-		yRow["PrevTab"] = y;     y+=2;
-		yRow["NextTab"] = y;     y+=2+1;
+		yRow["PrevTab"] = y;     y+=2;	yRow["NextTab"] = y;    y+=2+1;
 		yRow["RestartGame"] = y; y+=2+1;  yc1 = 40 + ya * y;
 		yRow["PrevCamera"] = y;  y+=2;    yc2 = 40 + ya * y;
-		yRow["NextCamera"] = y;  y+=2+1;
+		yRow["NextCamera"] = y;  y+=2+1;  yc3 = 40 + ya * y;
 
-		//  camera infos
 		if (!playerTab)
-		{	MyGUI::StaticTextPtr txt;
-			txt = tabitem->createWidget<StaticText>("StaticText", 460, yc1, 280, 24, MyGUI::Align::Relative);  txt->setCaption(TR("#{InputCameraTxt1}"));
-			txt = tabitem->createWidget<StaticText>("StaticText", 460, yc2, 280, 24, MyGUI::Align::Relative);  txt->setCaption(TR("#{InputCameraTxt2}"));
+		{	//  camera infos
+			CreateText(460, yc1, 280, 24, "txtcam1", TR("#C0D8F0#{InputCameraTxt1}"));
+			CreateText(460, yc2, 280, 24, "txtcam1", TR("#C0D8F0#{InputCameraTxt2}"));
+			//  replay controls info text
+			CreateText(20, yc3+1*ya, 500, 24, "txtrpl1", TR("#A0D8FF#{InputRplCtrl0}"));
+			CreateText(40, yc3+3*ya, 500, 24, "txtrpl2", TR("#90C0FF#{InputRplCtrl1}"));
+			CreateText(40, yc3+5*ya, 500, 24, "txtrpl3", TR("#90C0FF#{InputRplCtrl2}"));
+			CreateText(40, yc3+7*ya, 500, 24, "txtrpl4", TR("#90C0FF#{InputRplCtrl3}"));
 		}
 		
-		///  Actions
+		///  Actions  ------------------------------------------------
 		for (std::map<OISB::String, OISB::Action*>::const_iterator
 			ait = (*it).second->mActions.begin();
 			ait != (*it).second->mActions.end(); ait++,i++)
 		{
-			// macro to strip away the Keyboard/
-			#define stripk(s) Ogre::StringUtil::split(s, "/").size() > 1 ? Ogre::StringUtil::split(s, "/")[1] : s // only strip if the '/' is there
-			
 			OISB::Action* act = (*ait).second;
-			if (act->isAnalog() == false && act->getName() == "Flip") continue;
-			const int sx = 130, sy = 24, x0 = 20, x1 = 180, x2 = 320, x3 = 540;  // button size and columns positon
+			if (act->isAnalog() == false && act->getName() == "Flip")
+				continue;
 
-			// description label
+			//  button size and columns positon
+			const int sx = 130, sy = 24, x0 = 20, x1 = 180, x2 = 320, x3 = 540;
 			const String& name = (*ait).second->getName();
-			y = 40 + ya * yRow[name];  /// y
-			MyGUI::StaticTextPtr desc = tabitem->createWidget<StaticText>("StaticText", x0, y, sx+70, sy,
-				MyGUI::Align::Relative, "staticText_" + (*ait).first );
+			y = 40 + ya * yRow[name];
+
+			//  description label
+			MyGUI::StaticTextPtr desc = tabitem->createWidget<StaticText>("StaticText",
+				x0, y, sx+70, sy,  MyGUI::Align::Relative,
+				"staticText_" + (*ait).first );
 			desc->setCaption( TR("#{InputMap" + name + "}") );
 		
-			/// keyboard binds
+			///  Keyboard binds  --------------------------------
 			//  get information about binds from OISB and set variables how the rebind buttons should be created
-			// declare vars
-			std::string key1_label = TR("#{InputKeyUnassigned}");
-			std::string key2_label = TR("#{InputKeyUnassigned}");
+			std::string skey1 = TR("#{InputKeyUnassigned}");
+			std::string skey2 = TR("#{InputKeyUnassigned}");
 			
-			// bound key(s)
+			//  bound key(s)
+			if (act->mBindings.size() > 0 && act->mBindings.front()->getNumBindables() > 0 && act->mBindings.front()->getBindable(0) && act->mBindings.front()->getBindable(0) != (OISB::Bindable*)1)
 			if (act->getActionType() == OISB::AT_TRIGGER)
 			{
-				if (act->mBindings.size() > 0 && act->mBindings.front()->getNumBindables() > 0)
-					key1_label = act->mBindings.front()->getBindable(0)->getBindableName();
+				skey1 = act->mBindings.front()->getBindable(0)->getBindableName();
 			}
 			else if (act->getActionType() == OISB::AT_ANALOG_AXIS)
 			{
-				if (act->mBindings.size() > 0 && act->mBindings.front()->getNumBindables() > 0)
+				//  look for increase/decrease binds
+				OISB::Bindable* increase = NULL, *decrease = NULL;
+				for (std::vector<std::pair<String, OISB::Bindable*> >::const_iterator
+					bnit = act->mBindings.front()->mBindables.begin();
+					bnit != act->mBindings.front()->mBindables.end(); bnit++)
 				{
-					// look for increase/decrease binds
-					OISB::Bindable* increase = NULL, *decrease = NULL;
-					for (std::vector<std::pair<String, OISB::Bindable*> >::const_iterator
-						bnit = act->mBindings.front()->mBindables.begin();
-						bnit != act->mBindings.front()->mBindables.end(); bnit++)
-					{
-						if ((*bnit).first == "increase")		increase = (*bnit).second;
-						else if ((*bnit).first == "decrease")	decrease = (*bnit).second;
-					}
-					if (increase)
-						key1_label = increase->getBindableName();
-					if (decrease)
-						key2_label = decrease->getBindableName();
+					if ((*bnit).first == "inc")			increase = (*bnit).second;
+					else if ((*bnit).first == "dec")	decrease = (*bnit).second;
 				}
+				if (increase)  skey1 = increase->getBindableName();
+				if (decrease)  skey2 = decrease->getBindableName();
 			}
 				
-			// --------- create buttons -------------
+			//  create buttons  ----------------
 			bool button2 = false;
-			if (  act->getActionType() == OISB::AT_ANALOG_AXIS && !( act->getProperty<int> ("MinimumValue") == 0 )) button2 = true;
+			if (act->getActionType() == OISB::AT_ANALOG_AXIS && !( act->getProperty<int> ("MinValue") == 0 ))
+				button2 = true;
 
-			MyGUI::ButtonPtr key1 = tabitem->createWidget<Button>("Button", /*button2 ? x2 :*/ x1, button2 ? (y + ya*2) : y, sx, sy,
-				MyGUI::Align::Relative, "inputbutton_" + (*ait).first + "_" + (*it).first + "_1");
-			key1->setCaption( stripk(key1_label) );
-			key1->eventMouseButtonClick = MyGUI::newDelegate(this, &App::controlBtnClicked);
+			MyGUI::ButtonPtr btn1 = tabitem->createWidget<Button>("Button", /*button2 ? x2 :*/
+				x1, button2 ? (y + ya*2) : y, sx, sy,  MyGUI::Align::Relative,
+				"inputbutton_" + (*ait).first + "_" + (*it).first + "_1");
+			btn1->setCaption( StrFromKey(skey1) );
+			btn1->eventMouseButtonClick = MyGUI::newDelegate(this, &App::controlBtnClicked);
 			
 			if (button2)
-			{	MyGUI::ButtonPtr key2 = tabitem->createWidget<Button>("Button", x1, y, sx, sy,
-					MyGUI::Align::Relative, "inputbutton_" + (*ait).first + "_" + (*it).first + "_2");
-				key2->setCaption( stripk(key2_label) );
-				key2->eventMouseButtonClick = MyGUI::newDelegate(this, &App::controlBtnClicked);
+			{	MyGUI::ButtonPtr btn2 = tabitem->createWidget<Button>("Button",
+					x1, y, sx, sy,  MyGUI::Align::Relative,
+					"inputbutton_" + (*ait).first + "_" + (*it).first + "_2");
+				btn2->setCaption( StrFromKey(skey2) );
+				btn2->eventMouseButtonClick = MyGUI::newDelegate(this, &App::controlBtnClicked);
 			}
 
-			/// joystick binds
-			// only on player tab
+			///  Joystick binds  --------------------------------
+			//  only on player tab
 			if (playerTab)
 			{
 				if (act->getActionType() == OISB::AT_TRIGGER)
 				{
-					MyGUI::ComboBoxPtr button = tabitem->createWidget<ComboBox>("ComboBox", x3, y, sx, sy,
-						MyGUI::Align::Relative, "jsButtonSel_" + (*ait).first + "_" + (*it).first );
+					MyGUI::ComboBoxPtr button = tabitem->createWidget<ComboBox>("ComboBox",
+						x3, y, sx, sy,  MyGUI::Align::Relative,
+						"jsButtonSel_" + (*ait).first + "_" + (*it).first );
 					button->addItem(TR("#{InputKeyNoButton}"));
 					button->setIndexSelected(0);  button->setEditReadOnly(true);
 					button->eventComboChangePosition = MyGUI::newDelegate(this, &App::joystickBindChanged);
 				}
 				else if (act->getActionType() == OISB::AT_ANALOG_AXIS)
 				{
-					MyGUI::ComboBoxPtr axis = tabitem->createWidget<ComboBox>("ComboBox", x3, y, sx, sy,
-						MyGUI::Align::Relative, "jsAxisSel_" + (*ait).first + "_" + (*it).first );
+					MyGUI::ComboBoxPtr axis = tabitem->createWidget<ComboBox>("ComboBox",
+						x3, y, sx, sy,  MyGUI::Align::Relative,
+						"jsAxisSel_" + (*ait).first + "_" + (*it).first );
 					axis->addItem(TR("#{InputKeyNoAxis}"));
 					axis->setIndexSelected(0);  axis->setEditReadOnly(true);
 					axis->eventComboChangePosition = MyGUI::newDelegate(this, &App::joystickBindChanged);
@@ -791,11 +816,12 @@ void App::InitInputGui()
 
 void App::UpdateJsButtons()
 {
-	// go through all action schemas & actions, and fill the combo boxes for JS axis / buttons
+	//  go through all action schemas & actions, and fill the combo boxes for JS axis / buttons
 	std::map<OISB::String, OISB::ActionSchema*> schemas = OISB::System::getSingleton().mActionSchemas;
 	for (std::map<OISB::String, OISB::ActionSchema*>::const_iterator it = schemas.begin(); it != schemas.end(); it++)
 	{
-		if (!Ogre::StringUtil::startsWith( (*it).first, "player")) continue; // joystick only on player tabs
+		if (!Ogre::StringUtil::startsWith( (*it).first, "player"))
+			continue;  // joystick only on player tabs
 		
 		for (std::map<OISB::String, OISB::Action*>::const_iterator
 			ait = (*it).second->mActions.begin();
@@ -803,12 +829,13 @@ void App::UpdateJsButtons()
 		{
 			OISB::Action* act = (*ait).second;
 			
-			if (act->getName() == "Flip" && act->isAnalog() == false) continue;
+			if (act->getName() == "Flip" && act->isAnalog() == false)
+				continue;
 			
 			OISB::Binding* bnd2 = NULL;
 			if (act->mBindings.size() >= 2) bnd2 = act->mBindings[1];
 			
-			// find selected oisb joystick for this tab (to get num axis & buttons)
+			//  find selected oisb joystick for this tab (to get num axis & buttons)
 			MyGUI::ComboBoxPtr jsMenu = mGUI->findWidget<ComboBox>("joystickSel_" + (*it).first);
 			std::string jsName;
 			if (jsMenu->getIndexSelected() != MyGUI::ITEM_NONE)
@@ -816,35 +843,32 @@ void App::UpdateJsButtons()
 			
 			OISB::JoyStick* js = NULL;
 			for (std::vector<OISB::JoyStick*>::const_iterator jit = mOISBsys->mJoysticks.begin();
-					jit != mOISBsys->mJoysticks.end();
-					jit++)
+					jit != mOISBsys->mJoysticks.end(); jit++)
 				if ( (*jit)->getName() == jsName ) js = (*jit);
 
-			// fill combo boxes
+			//  fill combo boxes
 			if (act->getActionType() == OISB::AT_TRIGGER)
 			{
 				MyGUI::ComboBoxPtr button = mGUI->findWidget<ComboBox>("jsButtonSel_" + (*ait).first + "_" + (*it).first);
 				button->removeAllItems();
 				button->addItem( TR("#{InputKeyNoButton}") );
-				if (js) {
-					for (std::vector<OISB::DigitalState*>::const_iterator it = js->buttons.begin();
+				if (js)
+				{	for (std::vector<OISB::DigitalState*>::const_iterator it = js->buttons.begin();
 							it != js->buttons.end(); it++)
-						button->addItem( stripk((*it)->getBindableName()) );
-				}
-					
-					
+						button->addItem( StrFromKey((*it)->getBindableName()) );
+				}					
 				button->setIndexSelected(0);
 					
-				// select correct axis/button (from user keybinds)
+				//  select correct axis/button (from user keybinds)
 				if (bnd2 && bnd2->mBindables.size() > 0) {
 					size_t result;
 					if (bnd2->getBindable(0) == NULL)
 					{
-						result = button->findItemIndexWith( stripk(bnd2->getRole(NULL)) );
+						result = button->findItemIndexWith( StrFromKey(bnd2->getRole(NULL)) );
 						if (result != MyGUI::ITEM_NONE)
 							button->setIndexSelected( result );
 					}else{
-						result = button->findItemIndexWith( stripk(bnd2->getBindable(0)->getBindableName()) );
+						result = button->findItemIndexWith( StrFromKey(bnd2->getBindable(0)->getBindableName()) );
 						if (result != MyGUI::ITEM_NONE)
 							button->setIndexSelected( result );
 					}
@@ -855,31 +879,26 @@ void App::UpdateJsButtons()
 				MyGUI::ComboBoxPtr axis = mGUI->findWidget<ComboBox>("jsAxisSel_" + (*ait).first + "_" + (*it).first);
 				axis->removeAllItems();
 				axis->addItem( TR("#{InputKeyNoAxis}") );
-				if (js) {
-					for (std::vector<OISB::AnalogAxisState*>::const_iterator it = js->axis.begin();
+				if (js)
+				{	for (std::vector<OISB::AnalogAxisState*>::const_iterator it = js->axis.begin();
 							it != js->axis.end(); it++)
-						axis->addItem( stripk((*it)->getBindableName()) );
-				}
-					
-					
+						axis->addItem( StrFromKey((*it)->getBindableName()) );
+				}					
 				axis->setIndexSelected(0);
-
 				
-				// select correct axis/button (from user keybinds)
-				if (bnd2 && bnd2->mBindables.size() > 0) {
-					size_t result;
+				//  select correct axis/button (from user keybinds)
+				if (bnd2 && bnd2->mBindables.size() > 0)
+				{	size_t result;
 					if (bnd2->getBindable(0) == NULL)
 					{
-						result = axis->findItemIndexWith( stripk(bnd2->getRole(NULL)) );
+						result = axis->findItemIndexWith( StrFromKey(bnd2->getRole(NULL)) );
 						if (result != MyGUI::ITEM_NONE)
 							axis->setIndexSelected( result );
 					}else{
-						result = axis->findItemIndexWith( stripk(bnd2->getBindable(0)->getBindableName()) );
+						result = axis->findItemIndexWith( StrFromKey(bnd2->getBindable(0)->getBindableName()) );
 						if (result != MyGUI::ITEM_NONE)
 							axis->setIndexSelected( result );
-					}
-				}
+				}	}
 			}
-		}
-	}
+	}	}
 }

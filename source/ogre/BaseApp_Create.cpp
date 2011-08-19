@@ -8,7 +8,7 @@
 
 #include "CompositorLogics.h"
 #include "Localization.h"
-#include "SplitScreenManager.h"
+#include "SplitScreen.h"
 #include "CarModel.h"
 
 #include <OgreFontManager.h>
@@ -24,6 +24,9 @@
 
 using namespace Ogre;
 
+//#define LogDbg(s)
+#define LogDbg(s)  LogO(s)
+
 
 //  Camera
 //-------------------------------------------------------------------------------------
@@ -35,7 +38,7 @@ void BaseApp::createCamera()
 //-------------------------------------------------------------------------------------
 void BaseApp::createFrameListener()
 {
-	Ogre::LogManager::getSingletonPtr()->logMessage("*** Initializing OIS ***");
+	LogO("*** Initializing OIS ***");
 
 	Ogre::OverlayManager& ovr = OverlayManager::getSingleton();
 	mFpsOverlay = ovr.getByName("Core/FpsOverlay");  //mFpsOverlay->show();//
@@ -44,6 +47,10 @@ void BaseApp::createFrameListener()
 	mOvrTris= ovr.getOverlayElement("Core/NumTris"),
 	mOvrBat = ovr.getOverlayElement("Core/NumBatches"),
 	mOvrDbg = ovr.getOverlayElement("Core/DebugText");
+
+	LogDbg("*** input 0 ***");
+	InitKeyNamesMap();
+	LogDbg("*** input 1 ***");
 
 	OIS::ParamList pl;	size_t windowHnd = 0;
 	std::ostringstream windowHndStr;
@@ -62,25 +69,29 @@ void BaseApp::createFrameListener()
     pl.insert(std::make_pair(std::string("XAutoRepeatOn"), std::string("true")));
     #endif
 
+	LogDbg("*** input 2 ***");
 	mOISBsys = new OISB::System();
+	LogDbg("*** input 3 ***");
 	mInputManager = OIS::InputManager::createInputSystem( pl );
+	LogDbg("*** input 4 ***");
 	OISB::System::getSingleton().initialize(mInputManager);
+
+	LogDbg("*** input 5 ***");
 	if (boost::filesystem::exists(PATHMANAGER::GetUserConfigDir() + "/keys.xml"))
 		OISB::System::getSingleton().loadActionSchemaFromXMLFile(PATHMANAGER::GetUserConfigDir() + "/keys.xml");
 	else
-	{
-		#if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
-		OISB::System::getSingleton().loadActionSchemaFromXMLFile(PATHMANAGER::GetGameConfigDir() + "/binds-default-win.xml");
-		#else
-		OISB::System::getSingleton().loadActionSchemaFromXMLFile(PATHMANAGER::GetGameConfigDir() + "/binds-default-nix.xml");
-		#endif
-	}
+		OISB::System::getSingleton().loadActionSchemaFromXMLFile(PATHMANAGER::GetGameConfigDir() + "/keys-default.xml");
 
+	LogDbg("*** input 6 ***");
 	mKeyboard = OISB::System::getSingleton().getOISKeyboard();
+	LogDbg("*** input 7 ***");
 	mMouse = OISB::System::getSingleton().getOISMouse();
 
+	LogDbg("*** input 8 ***");
 	mMouse->setEventCallback(this);
+	LogDbg("*** input 9 ***");
 	mKeyboard->setEventCallback(this);
+	LogDbg("*** input 10 ***");
 	
 	// add listener for all joysticks
 	for (std::vector<OISB::JoyStick*>::iterator it=mOISBsys->mJoysticks.begin();
@@ -88,6 +99,7 @@ void BaseApp::createFrameListener()
 	{
 		(*it)->getOISJoyStick()->setEventCallback(this);
 	}
+	LogDbg("*** input 11 ***");
 
 	windowResized(mWindow);
 	WindowEventUtilities::addWindowEventListener(mWindow, this);
@@ -112,22 +124,32 @@ void BaseApp::refreshCompositor()
 		CompositorManager::getSingleton().setCompositorEnabled((*it), "Motion Blur", false);
 	}
 	
-	// Set bloom settings (intensity, orig weight).
-	MaterialPtr blurmat = MaterialManager::getSingleton().getByName("Ogre/Compositor/BloomBlend2");
-	GpuProgramParametersSharedPtr gpuparams = blurmat->getTechnique(0)->getPass(0)->getFragmentProgramParameters();
-	gpuparams->setNamedConstant("OriginalImageWeight", pSet->bloomorig);
-	gpuparams->setNamedConstant("BlurWeight", pSet->bloomintensity);
+	//  Set Bloom params (intensity, orig weight)
+	try
+	{	MaterialPtr bloom = MaterialManager::getSingleton().getByName("Ogre/Compositor/BloomBlend2");
+		GpuProgramParametersSharedPtr params = bloom->getTechnique(0)->getPass(0)->getFragmentProgramParameters();
+		params->setNamedConstant("OriginalImageWeight", pSet->bloomorig);
+		params->setNamedConstant("BlurWeight", pSet->bloomintensity);
+	}catch(...)
+	{	LogO("!!! Failed to set bloom shader params.");  }
 	
-	///  HDR params ..
-	//MaterialPtr hdrmat = MaterialManager::getSingleton().getByName("Ogre/Compositor/BloomBlend2");
-	//GpuProgramParametersSharedPtr gpuparams = hdrmat->getTechnique(0)->getPass(0)->getFragmentProgramParameters();
-	//gpuparams->setNamedConstant("Bloom", pSet->);
+	//  HDR params todo..
+	//try
+	//{	MaterialPtr hdrmat = MaterialManager::getSingleton().getByName("Ogre/Compositor/BloomBlend2");
+	//	GpuProgramParametersSharedPtr params = hdrmat->getTechnique(0)->getPass(0)->getFragmentProgramParameters();
+	//	params->setNamedConstant("Bloom", pSet->);
+	//}catch(...)
+	//{	LogO("!!! Failed to set hdr shader params.");  }
 
-	// Motion blur intens
-	blurmat = MaterialManager::getSingleton().getByName("Ogre/Compositor/Combine");
-	gpuparams = blurmat->getTechnique(0)->getPass(0)->getFragmentProgramParameters();
-	gpuparams->setNamedConstant("blur", pSet->motionblurintensity);
+	//  Set Motion Blur intens
+	try
+	{	MaterialPtr blur = MaterialManager::getSingleton().getByName("Ogre/Compositor/Combine");
+		GpuProgramParametersSharedPtr params = blur->getTechnique(0)->getPass(0)->getFragmentProgramParameters();
+		params->setNamedConstant("blur", pSet->motionblurintensity);
+	}catch(...)
+	{	LogO("!!! Failed to set blur shader params.");  }
 	
+
 	for (std::list<Viewport*>::iterator it=mSplitMgr->mViewports.begin(); it!=mSplitMgr->mViewports.end(); it++)
 	{
 		CompositorManager::getSingleton().setCompositorEnabled((*it), "Bloom", pSet->bloom);
@@ -139,6 +161,9 @@ void BaseApp::refreshCompositor()
 //-------------------------------------------------------------------------------------
 void BaseApp::recreateCompositor()
 {
+	if (!pSet->all_effects)  // disable compositor
+		return;
+		
 	// hdr has to be first in the compositor queue
 	if (!mHDRLogic) 
 	{
@@ -150,8 +175,7 @@ void BaseApp::recreateCompositor()
 	{
 		// Motion blur has to be created in code
 		CompositorPtr comp3 = CompositorManager::getSingleton().create(
-			"Motion Blur", ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME
-		);
+			"Motion Blur", ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME);
 
 		CompositionTechnique *t = comp3->createTechnique();
 		{
@@ -362,7 +386,9 @@ bool BaseApp::setup()
 	mRoot->loadPlugin(PATHMANAGER::GetOgrePluginDir() + "/Plugin_ParticleFX" + D_SUFFIX);
 	mRoot->loadPlugin(PATHMANAGER::GetOgrePluginDir() + "/Plugin_CgProgramManager" + D_SUFFIX);
 
+	#ifdef _DEBUG
 	Ogre::LogManager::getSingleton().setLogDetail(LL_BOREME);//
+	#endif
 
 	setupResources();
 
@@ -377,7 +403,7 @@ bool BaseApp::setup()
 
 	TextureManager::getSingleton().setDefaultNumMipmaps(5);
 
-	// Gui
+	//  Gui
 	mPlatform = new MyGUI::OgrePlatform();
 	mPlatform->initialise(mWindow, mSceneMgr, "General", PATHMANAGER::GetLogDir() + "/MyGUI_p.log");
 	mGUI = new MyGUI::Gui();
@@ -386,7 +412,8 @@ bool BaseApp::setup()
 	
 	// ------------------------- lang ------------------------
 	if (pSet->language == "") // autodetect
-		pSet->language = getSystemLanguage();
+	{	pSet->language = getSystemLanguage();
+		setlocale(LC_NUMERIC, "C");  }
 	
 	// valid?
 	if (!boost::filesystem::exists(PATHMANAGER::GetDataPath() + "/gui/core_language_" + pSet->language + "_tag.xml"))
@@ -404,10 +431,14 @@ bool BaseApp::setup()
 	createResourceListener();
 	loadResources();
 
+	LogDbg("*** createFrameListener ***");
 	createFrameListener();
+	LogDbg("*** createScene ***");
 	createScene();//^before
-	
+
+	LogDbg("*** recreateCompositor***");
 	recreateCompositor();
+	LogDbg("*** end setup ***");
 
 	return true;
 };
@@ -506,7 +537,7 @@ bool BaseApp::mouseMoved( const OIS::MouseEvent &arg )
 	///  Follow Camera Controls
 	// -for all cars
 	int i = 0;
-	for (std::list<CarModel*>::iterator it=carModels.begin(); it!=carModels.end(); it++, i++)
+	for (std::vector<CarModel*>::iterator it=carModels.begin(); it!=carModels.end(); it++, i++)
 	if (i == iCurCam)
 	{
 		if ((*it)->fCam)

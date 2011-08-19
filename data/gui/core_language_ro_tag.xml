@@ -42,9 +42,10 @@
 	<Tag name="RoadParams">Parametrii drumului</Tag>
 	<Tag name="Light">Lumină</Tag>
 	<Tag name="DistToRoad">Distanța față de drum</Tag>
+	<Tag name="TBPlace">Place</Tag>
 	<Tag name="TBLast">Ultimul</Tag>
 	<Tag name="TipRollDrag">Drag pentru roți,valori mari va face să încetinească mai rapid(ex.140 pentru zăpadă, 80 pentru iarbă ).</Tag>
-	<Tag name="LoadTrack">Load Track</Tag>
+	<Tag name="TipTrackList">Lista traseelor,click pentru a selecta(și pentru a vedea informațiile).Apasă Enter pentru a conduce pe ele. (sau [Schimbă traseul] apoi [Joc nou])</Tag>
 	<Tag name="Back">Înapoi</Tag>
 	<Tag name="TipDiffusePrev">Textură difuză a previzualizării.</Tag>
 	<Tag name="smoke">fum</Tag>
@@ -62,7 +63,7 @@
 	<Tag name="CopySource">Setează ca sursă copiată</Tag>
 	<Tag name="TipDisableFog">Disable fog when editing road from distance.</Tag>
 	<Tag name="NeedReload">* trebuie reîncărcat</Tag>
-	<Tag name="InputAssignKey">&lt;Press a key&gt;</Tag>
+	<Tag name="LoadTrack">Load Track</Tag>
 	<Tag name="Count">Contor</Tag>
 	<Tag name="UnitKm">km</Tag>
 	<Tag name="InputUndo">(one time undo)</Tag>
@@ -87,7 +88,9 @@
 	<Tag name="InputRoadWidth">- schimbă lățimea drumului</Tag>
 	<Tag name="Replay">Replay</Tag>
 	<Tag name="AutoRear">Dat cu spatele automat</Tag>
+	<Tag name="NumLaps">Number of laps</Tag>
 	<Tag name="ReflMode_single">Singur</Tag>
+	<Tag name="MapSize">Mărimea hărții</Tag>
 	<Tag name="Friction">Fricțiune</Tag>
 	<Tag name="SetCamTo">Setează camera la</Tag>
 	<Tag name="max">max</Tag>
@@ -98,9 +101,9 @@
 	<Tag name="Model">Model</Tag>
 	<Tag name="PipeLStepsMul">Multiplicare pași L conductă</Tag>
 	<Tag name="View">Vizualizează</Tag>
-	<Tag name="TipModelRoadDist">Distanța de la drum la modele (globală,adăugată la fiecare valoare de modele proprii)</Tag>
+	<Tag name="TriSize">Mărimea triunghiului</Tag>
 	<Tag name="InputAfterChanges">(după schimbarea terenului/vegetației)</Tag>
-	<Tag name="MapSize">Mărimea hărții</Tag>
+	<Tag name="InputMapFlipRight">Flip right</Tag>
 	<Tag name="OrigImage">Întunecare</Tag>
 	<Tag name="InputRoadSelAlt">alt - selectează tot ctrl - nu selectează nimic</Tag>
 	<Tag name="InputRoadSel">Backspace - adaugă sau elimină din selecţie</Tag>
@@ -145,6 +148,7 @@
 	<Tag name="ProjectPage">project&apos;s page:</Tag>
 	<Tag name="Type">Tipul</Tag>
 	<Tag name="Engine">Motor</Tag>
+	<Tag name="InputPressButtonTip">Press a button to see its number</Tag>
 	<Tag name="TipNewGameCar">Repornește jocul (după schimbarea mașinii)</Tag>
 	<Tag name="InputWheelForce">[,] (sau shift-rotiță) - Forța (intensitatea)</Tag>
 	<Tag name="TipGrassPatchLengthMax">Lungime maximă patch iarbă.</Tag>
@@ -166,7 +170,7 @@
 	<Tag name="Exponent">exponent</Tag>
 	<Tag name="Yaw">rotire</Tag>
 	<Tag name="Detail">Detalii</Tag>
-	<Tag name="TriSize">Mărimea triunghiului</Tag>
+	<Tag name="InputMoveAxisTip">Move an axis to see its number</Tag>
 	<Tag name="Start">start</Tag>
 	<Tag name="InputRoadShiftReverse">shift-Ins - paste   shift-ctrl-Ins - reversed</Tag>
 	<Tag name="MinScale">scala minimă</Tag>
@@ -178,6 +182,8 @@
 	<Tag name="InputRoadMostSel">majoritatea merg de asemenea selectând</Tag>
 	<Tag name="InputTerHeight">E - Setează înălțimea</Tag>
 	<Tag name="InputStartPos">Q - modifică pozițiile de start</Tag>
+	<Tag name="TipModelRoadDist">Distanța de la drum la modele (globală,adăugată la fiecare valoare de modele proprii)</Tag>
+	<Tag name="TireTrails">Tire Trails</Tag>
 	<Tag name="InputBrushParams">Parametri pensulei</Tag>
 	<Tag name="ReflMode_static">Static</Tag>
 	<Tag name="InputCameraMode">Modul cameră</Tag>
@@ -214,6 +220,7 @@
 	<Tag name="InputMapRestartGame">New game</Tag>
 	<Tag name="Graphics">Grafică</Tag>
 	<Tag name="InputMapShowOptions">Arată opțiunile</Tag>
+	<Tag name="CarClrRandom">Random</Tag>
 	<Tag name="CarDebugText">Text depanare mașină </Tag>
 	<Tag name="RplSize">size</Tag>
 	<Tag name="TipMudInt">Intensitate particule noroi</Tag>
@@ -239,7 +246,6 @@
 	<Tag name="DisableEdit">Dezactivează pentru editare</Tag>
 	<Tag name="TipAutoClutch">-Manual neimplementat.</Tag>
 	<Tag name="MinimapUpdSkip">Ignoră actualizarea mini-hărții</Tag>
-	<Tag name="RoadDist2">Distanță suplimentară către drum</Tag>
 	<Tag name="LS_CAR">Se încarcă mașina</Tag>
 	<Tag name="InputTerPaint">A - Colorează texturile (straturi)</Tag>
 	<Tag name="RplCur">Cur</Tag>
@@ -261,7 +267,10 @@
 	<Tag name="Intensity">Intensitate</Tag>
 	<Tag name="TipSunAmbient">Sun light ambient (constant) color. R G B components 0 to 1 (eg. 0.4 0.4 0.4)</Tag>
 	<Tag name="ChngTrkTab">changed in [Track] tab</Tag>
-	<Tag name="TireTrails">Tire Trails</Tag>
+	<Tag name="InputRplCtrl2">P - pause/unpause replay</Tag>
+	<Tag name="InputRplCtrl3">[ , ] - wind backwards/forwards (shift - slow, ctrl,alt - fast)</Tag>
+	<Tag name="InputRplCtrl0">Replay:</Tag>
+	<Tag name="InputRplCtrl1">Backspace - show/hide controls (hold ctrl to use mouse)</Tag>
 	<Tag name="TipGrassSwayLen">Grass sway effect length (scale).</Tag>
 	<Tag name="intensity">intensitate</Tag>
 	<Tag name="Fog">Ceață</Tag>
@@ -279,6 +288,7 @@
 	<Tag name="mud">noroi</Tag>
 	<Tag name="TipTerWind">Terrain brush window.</Tag>
 	<Tag name="InputMapThrottle">Throttle</Tag>
+	<Tag name="TBLap">Lap</Tag>
 	<Tag name="TipGrassVisDist">Visibility distance for grass pages.</Tag>
 	<Tag name="TipModelVisDist">Visibility distance for model pages.</Tag>
 	<Tag name="NumLocalPlayers">Number of local players</Tag>
@@ -327,6 +337,7 @@
 	<Tag name="InputRoadStats">T - road stats window</Tag>
 	<Tag name="VSync">VSync</Tag>
 	<Tag name="TipChangeBright">Change car color brightness (dark-light).</Tag>
+	<Tag name="InputAssignKey">&lt;Press a key&gt;</Tag>
 	<Tag name="Size">Size</Tag>
 	<Tag name="AutoGearbox">Auto gearbox</Tag>
 	<Tag name="InputSlowFast">shift - slow   ctrl - fast</Tag>
@@ -373,7 +384,6 @@
 	<Tag name="CamInertia">Camera inertia</Tag>
 	<Tag name="TipTerSize">Resulting area in meters (side length). Equals vertex count multipled by triangle size.</Tag>
 	<Tag name="speed">speed</Tag>
-	<Tag name="TipTrackList">Lista traseelor,click pentru a selecta(și pentru a vedea informațiile).Apasă Enter pentru a conduce pe ele. (sau [Schimbă traseul] apoi [Joc nou])</Tag>
 	<Tag name="InputRoadYaw">- rotate yaw</Tag>
 	<Tag name="RplGhosts">Ghosts</Tag>
 	<Tag name="RplBestOnly">Save ghost only for best time</Tag>
@@ -423,6 +433,7 @@
 	<Tag name="CarCollis">Cars collision</Tag>
 	<Tag name="CameraInfo">Camera info</Tag>
 	<Tag name="NewGame">New Game</Tag>
+	<Tag name="InputMapFlipLeft">Flip left</Tag>
 	<Tag name="InputMapSteering">Direcție(roată)</Tag>
 	<Tag name="CarDebug">Car susp, long|,lat- slips</Tag>
 	<Tag name="InputRoadPick">Space - pick one/none</Tag>
@@ -478,10 +489,9 @@
 	<Tag name="Pitch">gudron</Tag>
 	<Tag name="MyGUI_MessageBox_Yes">Da</Tag>
 	<Tag name="RplAll">Toate</Tag>
-	<Tag name="InputPressButtonTip">Press a button to see its number</Tag>
-	<Tag name="InputMoveAxisTip">Move an axis to see its number</Tag>
-	<Tag name="InputMapFlipRight">Flip right</Tag>
-	<Tag name="InputMapFlipLeft">Flip left</Tag>
+	<Tag name="TipRoadDist2">Additional distance to road.</Tag>
+	<Tag name="MinimapRotate">Rotate</Tag>
+	<Tag name="MinimapZoom">Zoom</Tag>
 	<Tag name="GameVersion">1.2</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 

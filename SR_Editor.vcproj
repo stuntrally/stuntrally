@@ -224,6 +224,14 @@
 				RelativePath=".\source\editor\pch.cpp"
 				>
 				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="1"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
 					Name="Release|Win32"
 					>
 					<Tool
@@ -518,6 +526,10 @@
 			</File>
 			<File
 				RelativePath=".\Source\ogre\common\Shadows.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\source\ogre\common\simplexnoise.cpp"
 				>
 			</File>
 			<File

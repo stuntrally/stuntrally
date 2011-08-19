@@ -3,21 +3,28 @@
 
 #include "configfile.h"
 
+
+#define SET_VER  1203  // 1.2
+
+
 class SETTINGS
 {
 public:
 ///  params
 //------------------------------------------
+	int version;  // file version
+
 	//  car, track
-	std::string car, track;  bool track_user;
+	std::string car[4], track;  bool track_user;
 
 	//  show
-	bool show_fps, show_gauges, trackmap,
-		show_cam, show_times, show_digits, car_dbgbars, car_dbgtxt, ogre_dialog;
-	float size_gauges, size_minimap;
+	bool show_fps, show_gauges, trackmap, mini_zoomed, mini_rotated,
+		show_cam, show_times, show_digits,
+		car_dbgbars, car_dbgtxt, ogre_dialog;
+	float size_gauges, size_minimap, zoom_minimap;
 
 	//  graphics
-	int anisotropy, shaders;  bool bFog;
+	int anisotropy, shaders, tex_size;  bool bFog;
 	float view_distance, terdetail,terdist, road_dist;
 	float shadow_dist;  int shadow_size, shadow_count, shadow_type;
 	int refl_skip, refl_faces, refl_size;  float refl_dist;
@@ -27,12 +34,11 @@ public:
 
 	//  car
 	bool abs, tcs, autoclutch, autoshift, autorear, show_mph;
-	float car_hue, car_sat, car_val;
+	float car_hue[4], car_sat[4], car_val[4];
 
 	//  game
-	bool trackreverse;	//int number_of_laps;  float ai_difficulty;
-	int local_players;  bool split_vertically;
-	std::string language;
+	bool trackreverse;	int local_players, num_laps;
+	bool split_vertically;  std::string language;
 
 	//  other
 	float vol_master, vol_engine, vol_tires, vol_env;
@@ -46,7 +52,7 @@ public:
 	bool veget_collis, car_collis;
 	
 	//  compositor
-	bool bloom, hdr, motionblur;
+	bool bloom, hdr, motionblur, all_effects;
 	float bloomintensity, bloomorig, motionblurintensity;
 	//  video
 	int windowx, windowy, fsaa;

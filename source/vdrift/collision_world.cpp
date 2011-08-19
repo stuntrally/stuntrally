@@ -10,34 +10,35 @@
 ///  ctor bullet world
 ///----------------------------------------------------------------------------
 COLLISION_WORLD::COLLISION_WORLD() :
-	collisiondispatcher(&collisionconfig),
-	collisionbroadphase(btVector3(-5000, -5000, -5000), btVector3(5000, 5000, 5000)),
-	world(&collisiondispatcher, &collisionbroadphase, &constraintsolver, &collisionconfig),
+	config(0), dispatcher(0), broadphase(0), solver(0), world(0),
 	track(NULL), trackObject(NULL), trackMesh(NULL),
-	fixedTimestep(0.01f), maxSubsteps(7)  // default, set from settings
+	fixedTimestep(1.f/60.f), maxSubsteps(7)  // default, set from settings
 {
-	world.setGravity(btVector3(0.0, 0.0, -9.81)); ///~
-	//world.getSolverInfo().m_numIterations = 36;  //-
-	//world.getSolverInfo().m_erp = 0.3;
-	//world.getSolverInfo().m_erp2 = 0.2;
-	world.getSolverInfo().m_restitution = 0.0f;
-	//world.getDispatchInfo().m_enableSPU = true;
-	world.setForceUpdateAllAabbs(false);  //+
+	config = new btDefaultCollisionConfiguration();
+	dispatcher = new btCollisionDispatcher(config);
+
+	broadphase = new bt32BitAxisSweep3(btVector3(-5000, -5000, -5000), btVector3(5000, 5000, 5000));
+	solver = new btSequentialImpulseConstraintSolver();
+	world = new btDiscreteDynamicsWorld(dispatcher, broadphase, solver, config);
+
+	world->setGravity(btVector3(0.0, 0.0, -9.81)); ///~
+	//world->getSolverInfo().m_numIterations = 36;  //-
+	//world->getSolverInfo().m_erp = 0.3;
+	//world->getSolverInfo().m_erp2 = 0.2;
+	world->getSolverInfo().m_restitution = 0.0f;
+	world->getDispatchInfo().m_enableSPU = true;
+	world->setForceUpdateAllAabbs(false);  //+
 }
 
 COLLISION_WORLD::~COLLISION_WORLD()
 {
 	Clear();
 
-	//delete m_DebugDrawer;
-	//delete m_shapeDrawer;
-
-	//delete world;
-	//delete m_solver;
-	//
-	//delete collisionbroadphase;
-	//delete collisiondispatcher;
-	//delete collisionconfig;
+	delete world;
+	delete solver;
+	delete broadphase;
+	delete dispatcher;
+	delete config;
 }
 
 void COLLISION_WORLD::DebugDrawScene()
@@ -49,7 +50,7 @@ btCollisionObject * COLLISION_WORLD::AddCollisionObject(const MODEL & model)
 	btCollisionObject * col = new btCollisionObject();
 	btCollisionShape * shape = AddMeshShape(model);
 	col->setCollisionShape(shape);
-	world.addCollisionObject(col);
+	world->addCollisionObject(col);
 	return col;
 }
 
@@ -61,21 +62,21 @@ btRigidBody * COLLISION_WORLD::AddRigidBody(const btRigidBody::btRigidBodyConstr
 	//body->setActivationState(DISABLE_DEACTIVATION);  //!-for chassis only
 	//body->setCollisionFlags
 	#define  COL_CAR  (1<<2)
-	if (car)  world.addRigidBody(body, COL_CAR, 255 - (!bCarsCollis ? COL_CAR : 0));  // group, mask
-	else	  world.addRigidBody(body);
+	if (car)  world->addRigidBody(body, COL_CAR, 255 - (!bCarsCollis ? COL_CAR : 0));  // group, mask
+	else	  world->addRigidBody(body);
 	shapes.push_back(shape);
 	return body;
 }
 
 void COLLISION_WORLD::AddAction(btActionInterface * action)
 {
-	world.addAction(action);
+	world->addAction(action);
 	actions.push_back(action);
 }
 
 void COLLISION_WORLD::AddConstraint(btTypedConstraint * constraint, bool disableCollisionsBetweenLinked)
 {
-	world.addConstraint(constraint, disableCollisionsBetweenLinked);
+	world->addConstraint(constraint, disableCollisionsBetweenLinked);
 	constraints.push_back(constraint);
 }
 
@@ -86,7 +87,7 @@ void COLLISION_WORLD::SetTrack(TRACK * t)
 	// remove old track
 	if(track)
 	{
-		world.removeCollisionObject(trackObject);
+		world->removeCollisionObject(trackObject);
 		
 		delete trackObject->getCollisionShape();
 		trackObject->setCollisionShape(NULL);
@@ -129,7 +130,7 @@ void COLLISION_WORLD::SetTrack(TRACK * t)
 	trackObject->setCollisionShape(trackShape);
 	trackObject->setUserPointer(NULL);
 	
-	world.addCollisionObject(trackObject);
+	world->addCollisionObject(trackObject);
 	}
 }
 
@@ -230,7 +231,7 @@ bool COLLISION_WORLD::CastRay(
 	btCollisionObject * c = NULL;
 	
 	// track geometry collision
-	world.rayTest(from, to, rayCallback);
+	world->rayTest(from, to, rayCallback);
 	bool geometryHit = rayCallback.hasHit();
 	if (geometryHit)
 	{
@@ -302,8 +303,8 @@ void COLLISION_WORLD::Update(float dt, bool profiling)
 {
 	//const int maxsubsteps = 7;  ///~  70  7*6+  o:7
 	//const float fixedTimeStep = 1 / 60.0f;  ///~  320+  o:60.
-	//world.stepSimulation(dt, maxsubsteps, fixedTimeStep);
-	world.stepSimulation(dt, maxSubsteps, fixedTimestep);
+	//world->stepSimulation(dt, maxsubsteps, fixedTimeStep);
+	world->stepSimulation(dt, maxSubsteps, fixedTimestep);
 
 	///+  bullet profiling info
 	static int cc = 0;  cc++;
@@ -320,7 +321,7 @@ void COLLISION_WORLD::Update(float dt, bool profiling)
 
 void COLLISION_WORLD::DebugPrint(std::ostream & out)
 {
-	out << "Collision objects: " << world.getNumCollisionObjects() << std::endl;
+	out << "Collision objects: " << world->getNumCollisionObjects() << std::endl;
 }
 
 void COLLISION_WORLD::Clear()
@@ -341,19 +342,19 @@ void COLLISION_WORLD::Clear()
 	// remove constraint before deleting rigid body
 	for(int i = 0; i < constraints.size(); i++)
 	{
-		world.removeConstraint(constraints[i]);
+		world->removeConstraint(constraints[i]);
 	}
 	constraints.resize(0);
 	
-	for(int i = world.getNumCollisionObjects() - 1; i >= 0; i--)
+	for(int i = world->getNumCollisionObjects() - 1; i >= 0; i--)
 	{
-		btCollisionObject* obj = world.getCollisionObjectArray()[i];
+		btCollisionObject* obj = world->getCollisionObjectArray()[i];
 		btRigidBody* body = btRigidBody::upcast(obj);
 		if (body && body->getMotionState())
 		{
 			delete body->getMotionState();
 		}
-		world.removeCollisionObject(obj);
+		world->removeCollisionObject(obj);
 		delete obj;
 	}
 	
@@ -380,7 +381,7 @@ void COLLISION_WORLD::Clear()
 	
 	for(int i = 0; i < actions.size(); i++)
 	{
-		world.removeAction(actions[i]);
+		world->removeAction(actions[i]);
 	}
 	actions.resize(0);
 }

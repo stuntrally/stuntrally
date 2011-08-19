@@ -21,35 +21,35 @@ void App::Rnd2TexSetup()
 	Real sz = pSet->size_minimap;
 	xm1 = 1-sz/asp, ym1 = -1+sz, xm2 = 1.0, ym2 = -1.0;
 	
-	for (int i=0; i < RTs+1; ++i)
+	for (int i=0; i < RTs+RTsAdd; ++i)
 	{
 		SRndTrg& r = rt[i];  bool full = i==3;
 		String si = toStr(i), sMtr = /*i==3 ? "road_mini_add" :*/ "road_mini_"+si;
 		if (i < RTs)
 		{
-		String sTex = "RttTex"+si, sCam = "RttCam"+si;
+			String sTex = "RttTex"+si, sCam = "RttCam"+si;
 
-		Ogre::TextureManager::getSingleton().remove(sTex);
-		mSceneMgr->destroyCamera(sCam);  // dont destroy old - const tex sizes opt..
-		
-		///  rnd to tex - same dim as Hmap	// after track load
-		Real fDim = sc.td.fTerWorldSize;  // world dim
-		Ogre::TexturePtr texture = Ogre::TextureManager::getSingleton().createManual(sTex,
-			  ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME, TEX_TYPE_2D,
-			  dim[i], dim[i], 0, /*PF_R8G8B8*/PF_R8G8B8A8, TU_RENDERTARGET);
-			  
-		r.rndCam = mSceneMgr->createCamera(sCam);  // up
-		r.rndCam->setPosition(Vector3(0,1000,0));  r.rndCam->setOrientation(Quaternion(0.5,-0.5,0.5,0.5));
-		r.rndCam->setNearClipDistance(0.5);		r.rndCam->setFarClipDistance(50000);
-		r.rndCam->setAspectRatio(1.0);			if (!full)  r.rndCam->setProjectionType(PT_ORTHOGRAPHIC);
-		r.rndCam->setOrthoWindow(fDim,fDim);	//rt[i].rndCam->setPolygonMode(PM_WIREFRAME);
+			Ogre::TextureManager::getSingleton().remove(sTex);
+			mSceneMgr->destroyCamera(sCam);  // dont destroy old - const tex sizes opt..
+			
+			///  rnd to tex - same dim as Hmap	// after track load
+			Real fDim = sc.td.fTerWorldSize;  // world dim
+			Ogre::TexturePtr texture = Ogre::TextureManager::getSingleton().createManual(sTex,
+				  ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME, TEX_TYPE_2D,
+				  dim[i], dim[i], 0, /*PF_R8G8B8*/PF_R8G8B8A8, TU_RENDERTARGET);
+				  
+			r.rndCam = mSceneMgr->createCamera(sCam);  // up
+			r.rndCam->setPosition(Vector3(0,1000,0));  r.rndCam->setOrientation(Quaternion(0.5,-0.5,0.5,0.5));
+			r.rndCam->setNearClipDistance(0.5);		r.rndCam->setFarClipDistance(50000);
+			r.rndCam->setAspectRatio(1.0);			if (!full)  r.rndCam->setProjectionType(PT_ORTHOGRAPHIC);
+			r.rndCam->setOrthoWindow(fDim,fDim);	//rt[i].rndCam->setPolygonMode(PM_WIREFRAME);
 
-		r.rndTex = texture->getBuffer()->getRenderTarget();
-		r.rndTex->setAutoUpdated(false);	r.rndTex->addListener(this);
-		Viewport* rvp = r.rndTex->addViewport(r.rndCam);
-		rvp->setClearEveryFrame(true);   rvp->setBackgroundColour(ColourValue(0,0,0,0));
-		rvp->setOverlaysEnabled(false);  rvp->setSkiesEnabled(full);
-		rvp->setVisibilityMask(visMask[i]);
+			r.rndTex = texture->getBuffer()->getRenderTarget();
+			r.rndTex->setAutoUpdated(false);	r.rndTex->addListener(this);
+			Viewport* rvp = r.rndTex->addViewport(r.rndCam);
+			rvp->setClearEveryFrame(true);   rvp->setBackgroundColour(ColourValue(0,0,0,0));
+			rvp->setOverlaysEnabled(false);  rvp->setSkiesEnabled(full);
+			rvp->setVisibilityMask(visMask[i]);
 		}
 		///  minimap  . . . . . . . . . . . . . . . . . . . . . . . . . . . 
 		if (r.ndMini)  mSceneMgr->destroySceneNode(r.ndMini);
@@ -63,7 +63,8 @@ void App::Rnd2TexSetup()
 		r.rcMini->setBoundingBox(big);
 		r.ndMini = mSceneMgr->getRootSceneNode()->createChildSceneNode("Minimap"+si);
 		r.ndMini->attachObject(r.rcMini);	r.rcMini->setCastShadows(false);
-		r.rcMini->setMaterial(sMtr);	r.rcMini->setRenderQueueGroup(RENDER_QUEUE_OVERLAY-1);
+		r.rcMini->setMaterial(i == RTs+1 ? "BrushPrvMtr" : sMtr);
+		r.rcMini->setRenderQueueGroup(RENDER_QUEUE_OVERLAY-1);
 		r.rcMini->setVisibilityFlags(i == RTs ? 256 : 2);
 	}
 
@@ -83,7 +84,7 @@ void App::Rnd2TexSetup()
 
 void App::UpdMiniVis()
 {
-	for (int i=0; i < RTs+1; ++i)
+	for (int i=0; i < RTs+RTsAdd; ++i)
 		if (rt[i].ndMini)
 			rt[i].ndMini->setVisible(pSet->trackmap && (i == pSet->num_mini));
 }
@@ -174,4 +175,9 @@ void App::postRenderTargetUpdate(const RenderTargetEvent &evt)
 	if (road)  {
 		road->UnsetForRnd();
 		road->UpdLodVis(pSet->road_dist);  }
+
+	//  restore shadows splits todo...
+	//mCamera->setFarClipDistance(pSet->view_distance*1.1f);
+	//mCamera->setNearClipDistance(0.1f);
+	//UpdPSSMMaterials();
 }

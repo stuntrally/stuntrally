@@ -345,6 +345,10 @@ public:
 
 	///-- models offset
 	float vInteriorOffset[3];
+	// exhaust position for boost particles 
+	bool manualExhaustPos; // if true, use values below, if false, guess from bounding box
+	float exhaustPosition[3]; // position of first exhaust
+	bool has2exhausts; // car has 2nd exhaust ; if true, mirror exhaust 1 for position
 };
 
 #endif

@@ -16,6 +16,19 @@
 
 #include <OgrePlatform.h>
 #include <boost/thread.hpp>
+#include <boost/filesystem.hpp>
+#include <locale.h>
+
+
+//  load settings from default file
+void LoadDefaultSet(SETTINGS* settings, std::string setFile)
+{
+	settings->Load(PATHMANAGER::GetGameConfigDir() + "/game-default.cfg");
+	settings->Save(setFile);
+	//  delete old keys.xml too
+	if (boost::filesystem::exists(PATHMANAGER::GetUserConfigDir() + "/keys.xml"))
+		boost::filesystem::remove(PATHMANAGER::GetUserConfigDir() + "/keys.xml");
+}
 
 
 void VprThread(App* pA)
@@ -24,25 +37,21 @@ void VprThread(App* pA)
 		pA->UpdThr();
 }
 
+
+//  . . . . . . . . . .  MAIN  . . . . . . . . . .
 #if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
 	int APIENTRY WinMain(HINSTANCE hInst, HINSTANCE hPrev, LPTSTR lpCmdLine, int nCmdShow)
 #else
 	int main(int argc, char* argv[])
 #endif
 {
-	//  Load Settings
+	setlocale(LC_NUMERIC, "C");
+
 	std::stringstream dummy;
 	PATHMANAGER::Init(dummy, dummy);
-	std::string logfilename = PATHMANAGER::GetLogDir() + "/log.txt";
-	SETTINGS* settings = new SETTINGS();
-	if (!PATHMANAGER::FileExists(PATHMANAGER::GetSettingsFile()))
-	{
-		settings->Load(PATHMANAGER::GetGameConfigDir() + "/game-default.cfg");
-		settings->Save(PATHMANAGER::GetSettingsFile());
-	}
-	settings->Load(PATHMANAGER::GetSettingsFile());
 
 	// Open the log file
+	std::string logfilename = PATHMANAGER::GetLogDir() + "/log.txt";
 	std::ofstream logfile(logfilename.c_str());
 	if (!logfile)
 	{
@@ -66,7 +75,30 @@ void VprThread(App* pA)
 	// Initialize networking
 	net::ENetContainer enet;
 
-	///  game  ------------------------------
+	///  Load Settings
+	//----------------------------------------------------------------
+	SETTINGS* settings = new SETTINGS();
+	std::string setFile = PATHMANAGER::GetSettingsFile();
+	
+	if (!PATHMANAGER::FileExists(setFile))
+	{
+		info_output << "Settings not found - loading defaults." << std::endl;
+		LoadDefaultSet(settings,setFile);
+	}
+	settings->Load(setFile);  // LOAD
+	if (settings->version != SET_VER)  // loaded older, use default
+	{
+		info_output << "Settings found, but older version - loading defaults." << std::endl;
+		LoadDefaultSet(settings,setFile);
+		settings->Load(setFile);  // LOAD
+	}
+	
+	// HACK: we initialize paths a second time now that we have the output streams
+	PATHMANAGER::Init(info_output, error_output);
+
+
+	///  Game start
+	//----------------------------------------------------------------
 	GAME* pGame = new GAME(info_output, error_output, settings);
 	std::list <std::string> args;//(argv, argv + argc);
 	pGame->Start(args);  //game.End();
@@ -82,9 +114,9 @@ void VprThread(App* pA)
 			boost::thread t(VprThread, pApp);
 
 		#if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
-		pApp->Run( settings->ogre_dialog || lpCmdLine[0]!=0 );  //Release change-
+			pApp->Run( settings->ogre_dialog || lpCmdLine[0]!=0 );  //Release change-
 		#else
-		pApp->Run( settings->ogre_dialog);
+			pApp->Run( settings->ogre_dialog);
 		#endif
 	}
 	catch (Ogre::Exception& e)

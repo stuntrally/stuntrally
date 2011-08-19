@@ -3,8 +3,10 @@
     Stunt Rally - game based on VDrift and OGRE, with Track Editor
     Copyright (C) 2011  Crystal Hammer
 
-    Project's Homepage:  (Windows releases, Issue tracker, Wiki pages)
+    Project's Homepage:  (all links, Issue tracker, Wiki pages, old Windows releases)
             http://code.google.com/p/vdrift-ogre/
+    Windows releases:
+            https://sourceforge.net/projects/stuntrally/files/
     Screenshots gallery:  (from all versions)
             http://picasaweb.google.com/CryHam/
     Videos:  (gameplay and editor)
@@ -29,7 +31,7 @@
 
 Description
 
-This game features 53 tracks in 8 sceneries and 7 drivable cars.
+This game features 55 tracks in 9 sceneries and 8 drivable cars.
 The Track Editor allows modifying and creating tracks.
 Both game and editor run on Windows and Linux.
 
@@ -41,10 +43,10 @@ with Shader Model 3.0 supported.
 
 It is possible to run on older,
 (e.g. on 1 core CPU and GeForce 7600 GT, with 30 fps),
-but integrated GPUs can't handle the game.
+but integrated GPUs (or laptops) can't handle the game.
 
 The absolute minimum (ghastly) settings are
-in game-min.cfg file, copy it to game.cfg to use them.
+in config/game-min.cfg file, copy it to game.cfg to use them.
 
 ----------------------------------------------------------------------------------
 
@@ -65,7 +67,7 @@ You can change Track/Car with Up/Down keys and start with Enter.
 Esc/Tab key shows/hides Options, keys used in game
 can be seen in Options tab [Input].
 
-Change cameras with C/X or PgDown/PgUp (with shift for main cameras only).
+Change cameras with C/X (with shift for main cameras only).
 Cameras can be adjusted in game, by mouse - move mouse to see actions.
 
 All settings and logs are saved to user folder (check Wiki page [Paths]).
@@ -124,12 +126,13 @@ Help is welcomed
 Currently we are 3 developers, we are looking for:
 
 Track creators
-    If you manage to create an interesting track (or car settings)
+    If you manage to create an interesting track,
     it could be released in future versions.
 
-Graphic Artists
-    If you can create tree/plant/car models,
+Artists
+    If you can create tree/plant / car models,
     textures for them or for terrain.
+	If you can create/edit sounds for game.
 
 Programmers
     If you know C++, OGRE or Shaders, and

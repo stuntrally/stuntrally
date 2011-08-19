@@ -5,7 +5,7 @@
 #include "../road/Road.h"
 #include "OgreGame.h"
 #include "FollowCamera.h"
-#include "SplitScreenManager.h"
+#include "SplitScreen.h"
 
 #include <MyGUI_PointerManager.h>
 #include <OIS/OIS.h>
@@ -431,8 +431,62 @@ void App::chkSplitVert(WP wp)
 	ChkEv(split_vertically); 
 }
 
+void App::slNumLaps(SL)
+{
+	int v = 20.f * val/res + 1;  pSet->num_laps = v;
+	if (valNumLaps){  Fmt(s, "%d", v);	valNumLaps->setCaption(s);  }
+}
 
-// game
+void App::tabPlayer(TabPtr wp, size_t id)
+{
+	iCurCar = id;
+	//  update gui for this car (color h,s,v, name, img)
+	size_t i = carList->findItemIndexWith(pSet->car[iCurCar]);
+	if (i != ITEM_NONE)
+	{	carList->setIndexSelected(i);
+		listCarChng(carList, i);
+	}
+	UpdCarClrSld(false);  // no car color change
+}
+
+//  car color
+void App::slCarClrH(SL)
+{
+	Real v = val/res;  pSet->car_hue[iCurCar] = v;
+	if (valCarClrH){	Fmt(s, "%4.2f", v);	valCarClrH->setCaption(s);  }
+	if (iCurCar < carModels.size() && bUpdCarClr)
+		carModels[iCurCar]->ChangeClr(iCurCar);
+}
+void App::slCarClrS(SL)
+{
+	Real v = -1.f + 2.f * val/res;  pSet->car_sat[iCurCar] = v;
+	if (valCarClrS){	Fmt(s, "%4.2f", v);	valCarClrS->setCaption(s);  }
+	if (iCurCar < carModels.size() && bUpdCarClr)
+		carModels[iCurCar]->ChangeClr(iCurCar);
+}
+void App::slCarClrV(SL)
+{
+	Real v = -1.f + 2.f * val/res;  pSet->car_val[iCurCar] = v;
+	if (valCarClrV){	Fmt(s, "%4.2f", v);	valCarClrV->setCaption(s);  }
+	if (iCurCar < carModels.size() && bUpdCarClr)
+		carModels[iCurCar]->ChangeClr(iCurCar);
+}
+
+void App::imgBtnCarClr(WP img)
+{
+	pSet->car_hue[iCurCar] = s2r(img->getUserString("h"));
+	pSet->car_sat[iCurCar] = s2r(img->getUserString("s"));
+	pSet->car_val[iCurCar] = s2r(img->getUserString("v"));
+	UpdCarClrSld();
+}
+void App::btnCarClrRandom(WP)
+{
+	pSet->car_hue[iCurCar] = Math::UnitRandom();
+	pSet->car_sat[iCurCar] = Math::RangeRandom(-0.5f, 0.5f);
+	pSet->car_val[iCurCar] = Math::RangeRandom(-0.5f, 0.5f);
+	UpdCarClrSld();
+}
+
 
 //  [Graphics]
 //---------------------------------------------------------------------
@@ -552,11 +606,16 @@ void App::slSizeGaug(SL)
 	float v = 0.1f + 0.15f * val/res;	pSet->size_gauges = v;  SizeHUD(true);
 	if (valSizeGaug){	Fmt(s, "%4.3f", v);	valSizeGaug->setCaption(s);  }
 }
-//  size minimap
-void App::slSizeMinmap(SL)
+//  minimap
+void App::slSizeMinimap(SL)
 {
 	float v = 0.05f + 0.25f * val/res;	pSet->size_minimap = v;  SizeHUD(true);
-	if (valSizeMinmap){	Fmt(s, "%4.3f", v);	valSizeMinmap->setCaption(s);  }
+	if (valSizeMinimap){	Fmt(s, "%4.3f", v);	valSizeMinimap->setCaption(s);  }
+}
+void App::slZoomMinimap(SL)
+{
+	float v = 1.f + 9.f * powf(val/res, 2.f);	pSet->zoom_minimap = v;  SizeHUD(true);
+	if (valZoomMinimap){	Fmt(s, "%4.3f", v);	valZoomMinimap->setCaption(s);  }
 }
 
 
@@ -585,7 +644,7 @@ void App::slReflMode(SL)
 {
 	std::string old = pSet->refl_mode;
 	
-	if (val == 0) pSet->refl_mode = "static";
+	if (val == 0) pSet->refl_mode = "static";  //enums..
 	if (val == 1) pSet->refl_mode = "single";
 	if (val == 2) pSet->refl_mode = "full";
 	
@@ -602,7 +661,7 @@ void App::slReflMode(SL)
 }
 void App::recreateReflections()
 {
-	for (std::list<CarModel*>::iterator it = carModels.begin(); it!=carModels.end(); it++)
+	for (std::vector<CarModel*>::iterator it = carModels.begin(); it!=carModels.end(); it++)
 	{	
 		delete (*it)->pReflect;
 		(*it)->CreateReflection();
@@ -619,6 +678,15 @@ void App::slShaders(SL)
 		if (v == 2)  valShaders->setCaption("Metal");  }
 }
 
+void App::slTexSize(SL)
+{
+	int v = val;  pSet->tex_size = v;
+	if (valTexSize)
+	{	if (v == 0)  valTexSize->setCaption("Small");  else
+		if (v == 1)  valTexSize->setCaption("Big");  }
+}
+
+
 //  shadows
 void App::btnShadows(WP){	changeShadows();	}
 
@@ -629,7 +697,7 @@ void App::slShadowType(SL)
 	{	if (v == 0)  valShadowType->setCaption("None");  else
 		if (v == 1)  valShadowType->setCaption("Old");  else
 		if (v == 2)  valShadowType->setCaption("Normal");  else
-		if (v == 3)  valShadowType->setCaption("Depth");  }
+		if (v == 3)  valShadowType->setCaption("Depth-");  }
 }
 
 void App::slShadowCount(SL)
@@ -674,30 +742,6 @@ void App::slVolEnv(SL)
 }
 
 
-//  car color
-void App::slCarClrH(SL)
-{
-	Real v = val/res;  pSet->car_hue = v;
-	if (valCarClrH){	Fmt(s, "%4.2f", v);	valCarClrH->setCaption(s);  }
-	for (std::list<CarModel*>::iterator it=carModels.begin(); it!=carModels.end(); it++)
-		(*it)->ChangeClr();
-}
-void App::slCarClrS(SL)
-{
-	Real v = -1.f + 2.f * val/res;  pSet->car_sat = v;
-	if (valCarClrS){	Fmt(s, "%4.2f", v);	valCarClrS->setCaption(s);  }
-	for (std::list<CarModel*>::iterator it=carModels.begin(); it!=carModels.end(); it++)
-		(*it)->ChangeClr();
-}
-void App::slCarClrV(SL)
-{
-	Real v = -1.f + 2.f * val/res;  pSet->car_val = v;
-	if (valCarClrV){	Fmt(s, "%4.2f", v);	valCarClrV->setCaption(s);  }
-	for (std::list<CarModel*>::iterator it=carModels.begin(); it!=carModels.end(); it++)
-		(*it)->ChangeClr();
-}
-
-
 //  [Game] 	. . . . . . . . . . . . . . . . . . . .    --- lists ----    . . . . . . . . . . . . . . . . . . . .
 
 //  car
@@ -711,7 +755,7 @@ void App::listCarChng(List* li, size_t pos)
 }
 void App::btnChgCar(WP)
 {
-	if (valCar){  valCar->setCaption(TR("#{Car}: ") + sListCar);	pSet->car = sListCar;  }
+	if (valCar){  valCar->setCaption(TR("#{Car}: ") + sListCar);	pSet->car[iCurCar] = sListCar;  }
 }
 
 //  track
@@ -776,20 +820,22 @@ void App::chkReverse(WP wp){		ChkEv(trackreverse);	ReadTrkStats();  }
 void App::chkParticles(WP wp)
 {		
 	ChkEv(particles);
-	for (std::list<CarModel*>::iterator it=carModels.begin(); it!=carModels.end(); it++)
+	for (std::vector<CarModel*>::iterator it=carModels.begin(); it!=carModels.end(); it++)
 	//? if ((*it)->eType != CarModel::CT_GHOST)
 		(*it)->UpdParsTrails();
 }
 void App::chkTrails(WP wp)
 {			
 	ChkEv(trails);		
-	for (std::list<CarModel*>::iterator it=carModels.begin(); it!=carModels.end(); it++)
+	for (std::vector<CarModel*>::iterator it=carModels.begin(); it!=carModels.end(); it++)
 		(*it)->UpdParsTrails();
 }
 void App::chkFps(WP wp){			ChkEv(show_fps);	if (pSet->show_fps)  mFpsOverlay->show();  else  mFpsOverlay->hide();	}
 
 void App::chkGauges(WP wp){			ChkEv(show_gauges);	ShowHUD();	}
 void App::chkMinimap(WP wp){		ChkEv(trackmap);	if (ndMap)  ndMap->setVisible(pSet->trackmap);	}
+void App::chkMiniZoom(WP wp){		ChkEv(mini_zoomed);		}
+void App::chkMiniRot(WP wp){		ChkEv(mini_rotated);	}
 void App::chkTimes(WP wp){			ChkEv(show_times);	ShowHUD();	}
 
 //void App::chkRacingLine(WP wp){		ChkEv(racingline);	if (ndLine)  ndLine->setVisible(pSet->racingline);	}
@@ -940,7 +986,12 @@ void App::btnRplLoad(WP)  // Load
 		string car = replay.header.car, trk = replay.header.track;
 		bool usr = replay.header.track_user == 1;
 
-		pSet->car = car;  pSet->track = trk;  pSet->track_user = usr;
+		pSet->car[0] = car;  pSet->track = trk;  pSet->track_user = usr;
+		pSet->car_hue[0] = replay.header.hue[0];  pSet->car_sat[0] = replay.header.sat[0];  pSet->car_val[0] = replay.header.val[0];
+		for (int p=1; p < replay.header.numPlayers; ++p)
+		{	pSet->car[p] = replay.header.cars[p-1];
+			pSet->car_hue[p] = replay.header.hue[p];  pSet->car_sat[p] = replay.header.sat[p];  pSet->car_val[p] = replay.header.val[p];
+		}
 		btnNewGame(0);
 		bRplPlay = 1;
 	}
@@ -983,7 +1034,7 @@ void App::listRplChng(List* li, size_t pos)
 		String ss = String(TR("#{Track}: ")) + rpl.header.track + (rpl.header.track_user ? "  *user*" : "");
 		valRplName->setCaption(ss);
 
-		ss = String(TR("#{Car}: ")) + rpl.header.car +
+		ss = String(TR("#{Car}: ")) + rpl.header.car +  // #{..
 			(rpl.header.numPlayers == 1 ? "" : "       Players: " + toStr(rpl.header.numPlayers)) +
 			//(rpl.header.cars[0][0] != 0 ? " , " + rpl.header.cars[0] : "") +
 			//(rpl.header.cars[0][1] != 0 ? " , " + rpl.header.cars[1] : "") +
@@ -1054,13 +1105,10 @@ void App::btnRplToEnd(WP)
 {
 }
 
-void App::btnRplBack(WP)  //- ...
-{
-}
-
-void App::btnRplForward(WP)
-{
-}
+void App::btnRplBackDn(WP, int, int, MouseButton){	bRplBack = true;  }
+void App::btnRplBackUp(WP, int, int, MouseButton){	bRplBack = false;  }
+void App::btnRplFwdDn(WP, int, int, MouseButton){	bRplFwd = true;  }
+void App::btnRplFwdUp(WP, int, int, MouseButton){	bRplFwd = false;  }
 
 void App::btnRplPlay(WP)  // play / pause
 {
@@ -1132,7 +1180,7 @@ void App::btnRplRename(WP)
 bool App::keyPressed( const OIS::KeyEvent &arg )
 {
 	// update all keystates
-	OISB::System::getSingleton().process(0);
+	OISB::System::getSingleton().process(0.001/*?0*/);
 	
 	#define action(s)  mOISBsys->lookupAction("General/"s)->isActive()
 
@@ -1171,12 +1219,12 @@ bool App::keyPressed( const OIS::KeyEvent &arg )
 				{	int visMask = 255, i = 0;
 					roadUpCnt = 0;
 
-					for (std::list<CarModel*>::iterator it=carModels.begin(); it!=carModels.end(); it++, i++)
+					for (std::vector<CarModel*>::iterator it=carModels.begin(); it!=carModels.end(); it++, i++)
 					if (i == iCurCam)
 					{
 						if ((*it)->fCam)
 						{	(*it)->fCam->Next(iChgCam < 0, shift);
-							if ((*it)->fCam->ca.mHideGlass)  visMask = 255-16;
+							if ((*it)->fCam->ca->mHideGlass)  visMask = 255-16;
 							else        visMask = 255;
 						}
 					}

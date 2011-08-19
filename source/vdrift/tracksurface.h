@@ -42,12 +42,12 @@ public:
 	
 	TRACKSURFACE() :
 		type(GRASS),
-		bumpWaveLength(10),
-		bumpAmplitude(0),
-		frictionNonTread(0.9),
-		frictionTread(1.0),
-		rollResistanceCoefficient(1),
-		rollingDrag(5)
+		bumpWaveLength(10.f),
+		bumpAmplitude(0.f),
+		frictionNonTread(0.9f),
+		frictionTread(1.0f),
+		rollResistanceCoefficient(1.f),
+		rollingDrag(5.f)
 	{
 	}
 	

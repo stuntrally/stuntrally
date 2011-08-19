@@ -17,11 +17,11 @@ void Scene::Default()
 	rain2Emit = 0;  rain2Name = "";
 
 	fogMode = FOG_LINEAR;  fogStart = 600;  fogEnd = 1600;
-	fogClr = Vector3(0.73, 0.86, 1.0);  fogExp = 0;
+	fogClr = Vector3(0.73f, 0.86f, 1.0f);  fogExp = 0;
 
 	ldPitch = 45.f, ldYaw = 90.f;
-	lDir  = Vector3(0.0, -1.0, 1.0);	lAmb  = Vector3(0.45,0.45,0.45);
-	lDiff = Vector3(1.0, 1.0, 0.98);	lSpec = Vector3(0.99,0.99,0.97);
+	lDir  = Vector3(0.0f, -1.0f, 1.0f);	lAmb  = Vector3(0.45f, 0.45f, 0.45f);
+	lDiff = Vector3(1.0f, 1.0f, 0.98f);	lSpec = Vector3(0.99f, 0.99f, 0.97f);
 
 	sParDust = "Dust";  sParMud = "Mud";  sParSmoke = "Smoke";
 
@@ -34,7 +34,7 @@ void Scene::Default()
 	grSwayDistr = 4.0f;  grSwayLen = 0.2f;  grSwaySpeed = 0.5f;
 	trPage = 200;  trDist = 200;  trDistImp = 800;  trRdDist = 3;
 
-	camPos = Vector3(10,20,10);  camDir = Vector3(0,-0.3,1);
+	camPos = Vector3(10.f,20.f,10.f);  camDir = Vector3(0.f,-0.3f,1.f);
 }
 
 PagedLayer::PagedLayer()
@@ -139,6 +139,16 @@ bool Scene::LoadXml(String file)
 			a = eTex->Attribute("mud");		if (a)  l->mud = s2r(a);
 			a = eTex->Attribute("smoke");	if (a)  l->smoke = s2r(a);
 			a = eTex->Attribute("tclr");	if (a)  l->tclr = s2c(a);
+
+			a = eTex->Attribute("angMin");	if (a)  l->angMin = s2r(a);
+			a = eTex->Attribute("angMax");	if (a)  l->angMax = s2r(a);
+			a = eTex->Attribute("angSm");	if (a)  l->angSm = s2r(a);
+			a = eTex->Attribute("hMin");	if (a)  l->hMin = s2r(a);
+			a = eTex->Attribute("hMax");	if (a)  l->hMax = s2r(a);
+			a = eTex->Attribute("hSm");		if (a)  l->hSm = s2r(a);
+
+			a = eTex->Attribute("noise");	if (a)  l->noise = s2r(a);
+			a = eTex->Attribute("nOnly");	if (a)  l->bNoiseOnly = s2i(a) > 0;  else  l->bNoiseOnly = true;
 
 			if (!road && il < td.ciNumLay)
 				td.layersAll[il++] = lay;
@@ -273,6 +283,14 @@ bool Scene::SaveXml(String file)
 				tex.SetAttribute("smoke",	toStrC( l->smoke )); \
 				tex.SetAttribute("tclr",	toStrC( l->tclr ));
 			setDmst();
+			tex.SetAttribute("angMin",	toStrC( l->angMin ));
+			tex.SetAttribute("angMax",	toStrC( l->angMax ));
+			tex.SetAttribute("angSm",	toStrC( l->angSm ));
+			tex.SetAttribute("hMin",	toStrC( l->hMin ));
+			tex.SetAttribute("hMax",	toStrC( l->hMax ));
+			tex.SetAttribute("hSm",		toStrC( l->hSm ));
+			tex.SetAttribute("noise",	toStrC( l->noise ));
+			tex.SetAttribute("nOnly",	l->bNoiseOnly ? 1 : 0);
 			ter.InsertEndChild(tex);
 		}
 		l = &td.layerRoad;
@@ -342,7 +360,7 @@ bool Scene::SaveXml(String file)
 
 TerData::TerData()
 {
-	hfData = NULL;
+	hfHeight = NULL;  hfAngle = NULL;
 	Default();
 }
 void TerData::Default()
@@ -356,18 +374,22 @@ void TerData::Default()
 		l.on = i==0;
 		l.texFile = "jungle_0.dds";  l.texNorm = "jungle_0_nh.dds";
 		l.dust = 0.f;  l.mud = 1.f;  l.smoke = 0.f;
-		l.tclr = ColourValue(0.2,0.2,0,1);
+		l.tclr = ColourValue(0.2f,0.2f,0.f,1.f);
 	}
 	layerRoad.dust = 0.f;  layerRoad.mud = 0.f;  /*layerRoad.smoke = 1.f;*/
 	layerRoad.tclr = ColourValue(0,0,0,1);
 	
 	UpdVals();  UpdLayers();
-	//4097-! 2049  1025+ 513  257 -33t verts
-	// 1k 100 fps 300mb ram ok+  500mb trees
-	//lay: 1- 230 fps  2- 180 fps  3- 140 fps
+	//4097-! 2049  1025+ 513  257 -33t  verts
+	//layers:  1- 230 fps  2- 180 fps  3- 140 fps
 }
+
 TerLayer::TerLayer() : on(true), tiling(4.f),
-	dust(0.f),dustS(0.2), mud(0.f), smoke(0), tclr(ColourValue::Black) {  }
+	dust(0.f),dustS(0.2), mud(0.f), smoke(0), tclr(ColourValue::Black),
+	angMin(0.f),angMax(90.f), angSm(20.f),
+	hMin(-300.f),hMax(300.f), hSm(20.f),
+	noise(1), bNoiseOnly(1)
+{	}
 
 void TerData::UpdVals()
 {

@@ -1,7 +1,6 @@
 #ifndef _GAME_H
 #define _GAME_H
 
-#include "eventsystem.h"
 #include "settings.h"
 #include "pathmanager.h"
 #include "mathvector.h"
@@ -94,32 +93,19 @@ public:
 	bool debugmode;
 	bool profilingmode;
 
-	std::string controlgrab_page;
-	std::string controlgrab_input;
-	bool controlgrab_analog;
-	bool controlgrab_only_one;
-	std::pair <int,int> controlgrab_mouse_coords;
-	std::vector <EVENTSYSTEM_SDL::JOYSTICK> controlgrab_joystick_state;
-
-	EVENTSYSTEM_SDL eventsystem;
 	SOUND sound;
 	SOUNDBUFFERLIBRARY generic_sounds;
 	SETTINGS* settings;
 	TRACK track;
 
 	std::list <CAR> cars;
-	std::map <CAR *, int> cartimerids;
-	std::pair <CAR *, CARCONTROLMAP_LOCAL> carcontrols_local;
+	std::map <CAR*, int> cartimerids;
+	std::pair <CAR*, CARCONTROLMAP_LOCAL> carcontrols_local;
 public:
 	COLLISION_WORLD collision;
 	
 	TIMER timer;
-	AI ai;
-
-#ifdef ENABLE_FORCE_FEEDBACK
-	std::auto_ptr <FORCEFEEDBACK> forcefeedback;
-	double ff_update_time;
-#endif
+	//AI ai;
 
 public:
 	GAME(std::ostream & info_out, std::ostream & err_out, SETTINGS* pSettings);

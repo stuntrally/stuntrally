@@ -131,3 +131,47 @@ Hud/Times
 		}
 	}
 }
+
+
+Hud/WarnAndWin
+{
+	zorder 500
+	container BorderPanel(Hud/WarnAndWinPanel)
+	{
+		metrics_mode pixels
+		vert_align top
+		left  300
+		width 400
+		top   15
+		height 55
+		material hud/info
+
+		element TextArea(Hud/Warning)
+		{
+			metrics_mode pixels
+			left 70
+			top 10
+			width 600
+			height 53
+			font_name Vera
+			char_height 32
+			//caption Wrong Checkpoint
+			colour_top	  0.8 0.0 0.0
+			colour_bottom 1.0 0.4 0.0
+		}
+
+		element TextArea(Hud/WonPlace)
+		{
+			metrics_mode pixels
+			left 70
+			top 10
+			width 600
+			height 53
+			font_name Vera
+			char_height 32
+			//caption ---- 1 Place ----
+			colour_top	  0.3 1.0 0.3
+			colour_bottom 0.8 1.0 0.7
+		}
+	}
+}

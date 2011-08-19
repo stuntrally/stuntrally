@@ -13,6 +13,7 @@ using namespace Ogre;
 void App::SetGuiFromXmls()
 {
 	if (!mWndOpts)  return;
+	bGI = false;
 	// set slider value, upd text
 	HScrollPtr sl;  size_t v;
 
@@ -74,6 +75,7 @@ void App::SetGuiFromXmls()
 	Ed(RdHeightOfs,	road->fHeight);		Ed(RdPlsM, road->ilPmul);
 	Ed(RdSkirtLen,	road->skLen);		Ed(RdSkirtH,	road->skH);
 	Ed(RdMergeLen,	road->setMrgLen);	Ed(RdLodPLen,	road->lposLen);
+	bGI = true;
 }
 
 
@@ -588,11 +590,12 @@ void App::setToolTips(EnumeratorWidgetPtr widgets)
 void App::notifyToolTip(Widget *sender, const ToolTipInfo &info)
 {
 	if (info.type == ToolTipInfo::Show)
-	{
+	{	// TODO: Tooltip isn't resizing properly ..
 		mToolTip->setSize(320, 96);  // start size for wrap
-		mToolTipTxt->setCaption(sender->getUserString("tip"));
+		String s = TR(sender->getUserString("tip"));
+		mToolTipTxt->setCaption(s);
 		const IntSize &textsize = mToolTipTxt->getTextSize();
-		mToolTip->setSize(textsize.width +  6, textsize.height + 6);
+		mToolTip->setSize(textsize.width*1.5, textsize.height*1.5);
 		mToolTip->setVisible(true);
 		boundedMove(mToolTip, info.point);
 	}

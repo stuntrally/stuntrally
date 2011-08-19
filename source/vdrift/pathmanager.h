@@ -31,19 +31,19 @@ public:
 	static std::string GetUserConfigDir() {          return user_config_dir;  }
 	static std::string GetGameConfigDir() {          return game_config_dir;  }
 
-	static std::string GetTrackRecordsPath() {       return user_data_dir  + "/records";  }
-	static std::string GetScreenShotDir() {          return user_data_dir  + "/screenshots";  }
-	static std::string GetSettingsFile() {           return user_config_dir + "/game.cfg"; }
 	static std::string GetCacheDir() {               return cache_dir; }
 	static std::string GetLogDir() {                 return user_config_dir; }
+	static std::string GetSettingsFile() {           return user_config_dir + "/game.cfg"; }
+	static std::string GetEditorSetFile() {          return user_config_dir + "/editor.cfg"; }
+
+	static std::string GetTrackRecordsPath() {       return user_data_dir + "/records";  }
+	static std::string GetScreenShotDir() {          return user_data_dir + "/screenshots";  }
 
 	static std::string GetTreesPath() {              return game_data_dir + "/trees"; }
 	static std::string GetTrackPath() {              return game_data_dir + "/tracks"; }
 	static std::string GetTrackPathUser() {          return user_data_dir + "/tracks"; }
 	static std::string GetCarPath() {                return game_data_dir + "/cars"; }
 
-	static std::string GetCarControlsFile() {        return user_config_dir + "/controls.cfg"; }
-	static std::string GetDefaultCarControlsFile() { return game_config_dir + "/controls-default.cfg"; }
 	static std::string GetGenericSoundPath() {       return game_data_dir + "/sounds"; }
 	static std::string GetDriverPath() {             return game_data_dir + "/drivers"; }
 	static std::string GetReplayPath() {             return user_data_dir + "/replays"; }

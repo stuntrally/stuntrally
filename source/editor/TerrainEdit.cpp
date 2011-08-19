@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "Defines.h"
 #include "OgreApp.h"
+#include <OgreHardwarePixelBuffer.h>
 //#include "../vdrift/settings.h"
 using namespace Ogre;
 
@@ -60,32 +61,174 @@ bool App::getEditRect(Vector3& pos, Rect& rcBrush, Rect& rcMap, int size,  int& 
 	return true;
 }
 
-//  after size change
+
+static float GetAngle(float x, float y)
+{
+	if (x == 0.f && y == 0.f)
+		return 0.f;
+
+	if (y == 0.f)
+		return (x < 0.f) ? PI_d : 0.f;
+	else
+		return (y < 0.f) ? atan2f(-y, x) : (2*PI_d - atan2f(y, x));
+}/**/
+
+
+///  update brush preview texture  ---------------------------------
+void App::updateBrushPrv(bool first)
+{
+	if (!first && (!ovBrushPrv || edMode >= ED_Road || !bEdit()))  return;
+	if (!pSet->brush_prv || brushPrvTex.isNull())  return;
+
+	//  Lock texture and fill pixel data
+	HardwarePixelBufferSharedPtr pbuf = brushPrvTex->getBuffer();
+	pbuf->lock(HardwareBuffer::HBL_DISCARD);
+	const PixelBox& pb = pbuf->getCurrentLock();
+	uint8* p = static_cast<uint8*>(pb.data);
+
+	float s = BrPrvSize * 0.5f, s1 = 1.f/s,
+		fP = mBrPow[curBr], fQ = mBrFq[curBr]*5.f;  int oct = mBrOct[curBr];
+
+	const static float cf[3][3] = {  // color factors
+		{0.3, 0.8, 0.1}, {0.2, 0.8, 0.6}, {0.6, 0.9, 0.6}  };
+	float fB = cf[edMode][0]*255.f, fG = cf[edMode][1]*255.f, fR = cf[edMode][2]*255.f;
+
+	switch (mBrShape[curBr])
+	{
+	case BRS_Triangle:
+		for (size_t y = 0; y < BrPrvSize; ++y)
+		for (size_t x = 0; x < BrPrvSize; ++x)
+		{	float fx = ((float)x - s)*s1, fy = ((float)y - s)*s1;  // -1..1
+			float d = std::max(0.f, 1.f - float(sqrt(fx*fx + fy*fy)));  // 0..1
+
+			float c = powf( abs(d), fP);
+			
+			uint8 bR = c * fR, bG = c * fG, bB = c * fB;
+			*p++ = bR;  *p++ = bG;  *p++ = bB;  *p++ = bG > 32 ? 255 : 0;
+		}	break;
+
+	case BRS_Sinus:
+		for (size_t y = 0; y < BrPrvSize; ++y)
+		for (size_t x = 0; x < BrPrvSize; ++x)
+		{	float fx = ((float)x - s)*s1, fy = ((float)y - s)*s1;  // -1..1
+			float d = std::max(0.f, 1.f - float(sqrt(fx*fx + fy*fy)));  // 0..1
+
+			float c = powf( sinf(d * PI_d*0.5f), fP);
+			
+			uint8 bR = c * fR, bG = c * fG, bB = c * fB;
+			*p++ = bR;  *p++ = bG;  *p++ = bB;  *p++ = bG > 32 ? 255 : 0;
+		}	break;
+
+	case BRS_Noise:
+		for (size_t y = 0; y < BrPrvSize; ++y)
+		for (size_t x = 0; x < BrPrvSize; ++x)
+		{	float fx = ((float)x - s)*s1, fy = ((float)y - s)*s1;  // -1..1
+			float d = std::max(0.f, 1.f - float(sqrt(fx*fx + fy*fy)));  // 0..1
+
+			float c = d * pow( abs(Noise(x*s1,y*s1, fQ, oct, 0.5f)), fP*0.5f) * 0.9f;
+			
+			//float aa = GetAngle(fx, fy), am = 2*PI_d;
+			//float n = aa/am		 * Noise(     aa*0.1f, 0.1f * fP, 3, 0.7f)
+			//		+ (am-aa)/am * Noise((am-aa)*0.1f, 0.1f * fP, 3, 0.7f);
+			//float c = d * pow( n * 2.f, 4.f);  //star-
+			
+			uint8 bR = c * fR, bG = c * fG, bB = c * fB;
+			*p++ = bR;  *p++ = bG;  *p++ = bB;  *p++ = bG > 32 ? 255 : 0;
+		}	break;
+	}
+	pbuf->unlock();
+}
+
+///  fill brush data (shape), after size change
+//--------------------------------------------------------------------------------------------------------------------------
 void App::updBrush()
 {
 	if (mBrSize[curBr] < 1)  mBrSize[curBr] = 1;
 	if (mBrSize[curBr] > BrushMaxSize)  mBrSize[curBr] = BrushMaxSize;
+	if (mBrFq[curBr] < 0.1)  mBrFq[curBr] = 0.1;
 
 	int size = (int)mBrSize[curBr], a = 0;
-	float s = size * 0.5f;
+	float s = size * 0.5f, s1 = 1.f/s,
+		fP = mBrPow[curBr], fQ = mBrFq[curBr]*5.f;  int oct = mBrOct[curBr];
 
-	for (int y = 0; y < size; ++y)
-	{	a = y * BrushMaxSize;
-		for (int x = 0; x < size; ++x, ++a)
-		{	// -1..1
-			float fx = ((float)x - s)/s;
-			float fy = ((float)y - s)/s;
-			float d = std::max(0.f, 1.f - float(sqrt(fx*fx + fy*fy)));
-			//float c = abs(d);
-			float c = sinf(d * PI_d*0.5f);
-			mBrushData[a] = powf(c, mBrPow[curBr]);
-	}	}
+	switch (mBrShape[curBr])
+	{
+	case BRS_Triangle:
+		for (int y = 0; y < size; ++y)
+		{	a = y * BrushMaxSize;
+			for (int x = 0; x < size; ++x,++a)
+			{	float fx = ((float)x - s)*s1, fy = ((float)y - s)*s1;  // -1..1
+				float d = std::max(0.f, 1.f - float(sqrt(fx*fx + fy*fy)));  // 0..1
+				
+				float c = powf( abs(d), fP);
+				mBrushData[a] = c;
+		}	}	break;
+
+	case BRS_Sinus:
+		for (int y = 0; y < size; ++y)
+		{	a = y * BrushMaxSize;
+			for (int x = 0; x < size; ++x,++a)
+			{	float fx = ((float)x - s)*s1, fy = ((float)y - s)*s1;  // -1..1
+				float d = std::max(0.f, 1.f - float(sqrt(fx*fx + fy*fy)));  // 0..1
+				
+				float c = powf( sinf(d * PI_d*0.5f), fP);
+				mBrushData[a] = c;
+		}	}	break;
+
+	case BRS_Noise:
+		for (int y = 0; y < size; ++y)
+		{	a = y * BrushMaxSize;
+			for (int x = 0; x < size; ++x,++a)
+			{	float fx = ((float)x - s)*s1, fy = ((float)y - s)*s1;  // -1..1
+				float d = std::max(0.f, 1.f - float(sqrt(fx*fx + fy*fy)));  // 0..1
+				
+				float c = d * pow( abs(Noise(x*s1,y*s1, fQ, oct, 0.5f)), fP*0.5f);
+
+				//float aa = GetAngle(fx, fy);
+				//float c = d * pow( Noise(aa*0.01f,aa*0.1f, 0.3f * fP, 1, 0.7f) * 1.1f, 2.f);  //star-
+				mBrushData[a] = std::max(-1.f, std::min(1.f, c ));
+		}	}	break;
+	}
+	updateBrushPrv();  // upd skip..
 }
 
 
-///  ^~ Deform
+///  ^v Deform
 //--------------------------------------------------------------------------------------------------------------------------
 void App::deform(Vector3 &pos, float dtime, float brMul)
+{
+	Rect rcBrush, rcMap;  int cx,cy;
+	if (!getEditRect(pos, rcBrush, rcMap, sc.td.iTerSize, cx,cy))
+		return;
+	
+	float *fHmap = terrain->getHeightData();
+	
+	float its = mBrIntens[curBr] * dtime * brMul;
+	int mapPos, brPos, jj = cy;
+	
+	for (int j = rcMap.top; j < rcMap.bottom; ++j,++jj)
+	{
+		mapPos = j * sc.td.iTerSize + rcMap.left;
+		brPos = jj * BrushMaxSize + cx;
+		//brPos = std::max(0, std::min(BrushMaxSize*BrushMaxSize-1, brPos ));
+
+		for (int i = rcMap.left; i < rcMap.right; ++i)
+		{
+			///  pos float -> brush data compute here (for small size brushes) ..
+			fHmap[mapPos] += mBrushData[brPos] * its;  // deform
+			++mapPos;  ++brPos;
+		}
+	}
+	terrain->dirtyRect(rcMap);
+	GetTerAngles(rcMap.left,rcMap.top, rcMap.right,rcMap.bottom);
+	//initBlendMaps(terrain);
+	bTerUpd = true;
+}
+
+
+///  -_ set Height
+//--------------------------------------------------------------------------------------------------------------------------
+void App::height(Vector3 &pos, float dtime, float brMul)
 {
 	Rect rcBrush, rcMap;  int cx,cy;
 	if (!getEditRect(pos, rcBrush, rcMap, sc.td.iTerSize, cx,cy))
@@ -100,20 +243,32 @@ void App::deform(Vector3 &pos, float dtime, float brMul)
 	{
 		mapPos = j * sc.td.iTerSize + rcMap.left;
 		brPos = jj * BrushMaxSize + cx;
-		//brPos = std::max(0, std::min(BrushMaxSize*BrushMaxSize-1, brPos ));
 
 		for (int i = rcMap.left; i < rcMap.right; ++i)
 		{
-			///  pos float -> sin data compute here ...
-			fHmap[mapPos] += mBrushData[brPos] * its;
+			float d = terSetH - fHmap[mapPos];
+			d = d > 2.f ? 2.f : d < -2.f ? -2.f : d;  // par speed-
+			fHmap[mapPos] += d * mBrushData[brPos] * its;
 			++mapPos;  ++brPos;
 		}
 	}
-
 	terrain->dirtyRect(rcMap);
+	GetTerAngles(rcMap.left,rcMap.top, rcMap.right,rcMap.bottom);
 	bTerUpd = true;
 }
 
+
+///  |_ Filter, low pass, par: freq
+//--------------------------------------------------------------------------------------------------------------------------
+//
+
+///  \\ Ramp, par: angle, height? roll?
+//--------------------------------------------------------------------------------------------------------------------------
+//
+
+
+///  ~- Smooth
+//--------------------------------------------------------------------------------------------------------------------------
 void App::smooth(Vector3 &pos, float dtime)
 {
 	float avg = 0.0f;
@@ -124,10 +279,6 @@ void App::smooth(Vector3 &pos, float dtime)
 		smoothTer(pos, avg / (float)sample_count, dtime);
 }
 
-
-
-///  -- Smooth
-//-----------------------------------------------------------------------------------------
 void App::calcSmoothFactor(Vector3 &pos, float& avg, int& sample_count)
 {
 	Rect rcBrush, rcMap;  int cx,cy;
@@ -142,17 +293,15 @@ void App::calcSmoothFactor(Vector3 &pos, float& avg, int& sample_count)
 	for (int j = rcMap.top;j < rcMap.bottom; ++j)
 	{
 		mapPos = j * sc.td.iTerSize + rcMap.left;
-
 		for (int i = rcMap.left;i < rcMap.right; ++i)
 		{
 			avg += fHmap[mapPos];  ++mapPos;
 		}
 	}
-	
 	sample_count = (rcMap.right - rcMap.left) * (rcMap.bottom - rcMap.top);
 }
 
-//-----------------------------------------------------------------------------------------
+//--------------------------------------------------------------------------------------------------------------------------
 void App::smoothTer(Vector3 &pos, float avg, float dtime)
 {
 	Rect rcBrush, rcMap;  int cx,cy;
@@ -160,11 +309,8 @@ void App::smoothTer(Vector3 &pos, float avg, float dtime)
 		return;
 	
 	float *fHmap = terrain->getHeightData();
-
-	float mRatio = 1.f;
-	float brushPos;
+	float mRatio = 1.f, brushPos;
 	int mapPos;
-	
 	float mFactor = mBrIntens[curBr] * dtime * 0.1f;
 
 	for(int j = rcMap.top;j < rcMap.bottom;j++)
@@ -183,8 +329,8 @@ void App::smoothTer(Vector3 &pos, float avg, float dtime)
 			brushPos += mRatio;
 		}
 	}
-
 	terrain->dirtyRect(rcMap);
+	GetTerAngles(rcMap.left,rcMap.top, rcMap.right,rcMap.bottom);
 	bTerUpd = true;
 }
 
@@ -391,3 +537,29 @@ void App::smoothTer(Vector3 &pos, float avg, float dtime)
 	}
 	terrain->getGlobalColourMap()->getBuffer()->unlock();
 }/**/
+
+
+//  preview texture for brush and noise ter gen
+void App::createBrushPrv()
+{
+	brushPrvTex = TextureManager::getSingleton().createManual(
+		"BrushPrvTex", ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME,
+		TEX_TYPE_2D, BrPrvSize,BrPrvSize,0, PF_BYTE_RGBA, TU_DYNAMIC);
+	 	
+	//reloadMtrTex("BrushPrvMtr");
+	//ResourcePtr mt = Ogre::MaterialManager::getSingleton().getByName("BrushPrvMtr");
+	//if (!mt.isNull())  mt->reload();
+
+	// Create a material using the texture
+	MaterialPtr material = MaterialManager::getSingleton().create(
+		"BrushPrvMtr", ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME);
+	 
+	Pass* pass = material->getTechnique(0)->getPass(0);
+	pass->createTextureUnitState("BrushPrvTex");
+	pass->setSceneBlending(SBT_TRANSPARENT_ALPHA);
+
+	if (ovBrushMtr)
+		ovBrushMtr->setMaterialName("BrushPrvMtr");
+
+	updateBrushPrv(true);
+}

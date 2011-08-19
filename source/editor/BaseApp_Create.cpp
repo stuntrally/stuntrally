@@ -68,6 +68,8 @@ void BaseApp::createFrameListener()
 	mDebugOverlay= ovr.getByName("Editor/DebugOverlay");  //mDebugOverlay->show();
 	ovDbg = ovr.getOverlayElement("Editor/DebugText");
 	ovInfo= ovr.getOverlayElement("Editor/Info");
+	ovBrushPrv = ovr.getByName("Editor/BrushPrvOverlay");  //ovBrushPrv->show();
+	ovBrushMtr = ovr.getOverlayElement("Editor/BrushPrvPanel");
 
 	OIS::ParamList pl;	size_t windowHnd = 0;
 	std::ostringstream windowHndStr;
@@ -113,8 +115,9 @@ void BaseApp::destroyScene()
 void BaseApp::Run( bool showDialog )
 {
 #if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
-	ShowCursor(0);
-	SetCursor(0);
+	if (!pSet->ogre_dialog)
+	{	ShowCursor(0);
+		SetCursor(0);	}
 #endif
 
 	mShowDialog = showDialog;
@@ -138,7 +141,7 @@ BaseApp::BaseApp()
 
 	,mDebugOverlay(0), ovSt(0), ovFps(0), ovTri(0), ovBat(0)
 	,ovPos(0), ovDbg(0), ovInfo(0), ovStat(0)
-	,ovFocus(0), ovFocBck(0)
+	,ovFocus(0), ovFocBck(0), ovBrushPrv(0), ovBrushMtr(0)
 
 	,mStatsOn(0), mShowCamPos(1), mbWireFrame(0)
 	,mx(0),my(0),mz(0),	mGUI(0), mPlatform(0)
@@ -185,22 +188,18 @@ bool BaseApp::configure()
 	{
 		if (!mRoot->showConfigDialog()) return false;
 		mWindow = mRoot->initialise(true, "SR Editor");
-	}
-	else
-	{
+	}else{
 		RenderSystem* rs;
 		if (rs = mRoot->getRenderSystemByName(pSet->rendersystem))
 		{
 			mRoot->setRenderSystem(rs);
-		}
-		else
-		{
+		}else{
 			LogO("RenderSystem '" + pSet->rendersystem + "' is not available. Exiting.");
 			return false;
 		}
-
 		if (pSet->rendersystem == "OpenGL Rendering Subsystem")  // not on dx
 			mRoot->getRenderSystem()->setConfigOption("RTT Preferred Mode", pSet->buffer);
+
 		mRoot->initialise(false);
 
 		NameValuePairList settings;
@@ -218,6 +217,7 @@ bool BaseApp::configure()
 //-------------------------------------------------------------------------------------
 bool BaseApp::setup()
 {
+	QTimer ti;  ti.update();  /// time
 	if (pSet->rendersystem == "Default")
 	{
 		#if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
@@ -228,13 +228,13 @@ bool BaseApp::setup()
 	}
 	
 	// Dynamic plugin loading
-	mRoot = OGRE_NEW Root("", PATHMANAGER::GetUserConfigDir() + "/ogreset.cfg", PATHMANAGER::GetLogDir() + "/ogre_ed.log");
+	mRoot = OGRE_NEW Root("", PATHMANAGER::GetUserConfigDir() + "/ogreset_ed.cfg", PATHMANAGER::GetLogDir() + "/ogre_ed.log");
 
-#ifdef _DEBUG
-	#define D_SUFFIX "_d"
-#else
-	#define D_SUFFIX ""
-#endif
+	#ifdef _DEBUG
+		#define D_SUFFIX "_d"
+	#else
+		#define D_SUFFIX ""
+	#endif
 
 	// when show ogre dialog is on, load both rendersystems so user can select
 	if (pSet->ogre_dialog)
@@ -268,7 +268,7 @@ bool BaseApp::setup()
 	createResourceListener();
 	loadResources();
 
-	//  gui
+	//  Gui
 	mPlatform = new MyGUI::OgrePlatform();
 	mPlatform->initialise(mWindow, mSceneMgr, "General", PATHMANAGER::GetLogDir() + "/MyGUI_p.log");
 	mGUI = new MyGUI::Gui();
@@ -277,7 +277,8 @@ bool BaseApp::setup()
 	
 	// ------------------------- lang ------------------------
 	if (pSet->language == "") // autodetect
-		pSet->language = getSystemLanguage();
+	{	pSet->language = getSystemLanguage();
+		setlocale(LC_NUMERIC, "C");  }  //needed?		
 	
 	// valid?
 	if (!boost::filesystem::exists(PATHMANAGER::GetDataPath() + "/gui/core_language_" + pSet->language + "_tag.xml"))
@@ -287,6 +288,11 @@ bool BaseApp::setup()
 	// -------------------------------------------------------
 
 	createFrameListener();
+
+	ti.update();	/// time
+	float dt = ti.dt * 1000.f;
+	LogO(String("::: Time Ogre Start: ") + toStr(dt) + " ms");
+
 	createScene();
 
 	return true;

@@ -11,11 +11,23 @@
 #define LogR(a)
 #endif
 
+#include "../ogre/QTimer.h"
 #include <OgreTerrain.h>
 #include <OgreMeshManager.h>
 #include <OgreEntity.h>
 using namespace Ogre;
 
+
+static float GetAngle(float x, float y)
+{
+	if (x == 0.f && y == 0.f)
+		return 0.f;
+
+	if (y == 0.f)
+		return (x < 0.f) ? PI_d : 0.f;
+	else
+		return (y < 0.f) ? atan2f(-y, x) : (2*PI_d - atan2f(y, x));
+}
 
 ///  Rebuild
 //---------------------------------------------------------
@@ -52,6 +64,8 @@ void SplineRoad::RebuildRoadInt()
 	}
 	
 	//  full rebuild
+	QTimer ti;  ti.update();  /// time	
+	
 	if (iDirtyId == -1)
 	{
 		DestroyRoad();
@@ -59,6 +73,31 @@ void SplineRoad::RebuildRoadInt()
 		{
 			RoadSeg rs;  rs.empty = true;
 			vSegs.push_back(rs);
+		}
+	}
+	//  mtr name add texture size _s
+	String txs = (iTexSize == 0) ? "_s" : "";
+
+
+	///  Auto angles prepass ...
+	if (segs > 2)
+	for (int seg=0; seg < segs; ++seg)
+	{
+		int seg1 = (seg+1) % segs;  // next
+		int seg0 = (seg-1+segs) % segs;  // prev
+				
+		if (mP[seg].aType == AT_Manual)
+		{	mP[seg].aYaw = mP[seg].mYaw;  mP[seg].aRoll = mP[seg].mRoll;  }
+		else
+		{	mP[seg].aRoll = 0.f;
+			/// ... roll getangle?, +180 loops?, len
+			const Real dist = 0.1f;
+			Vector3 vl = GetLenDir(seg, 0.f, dist) + GetLenDir(seg0, 1.f-dist, 1.f);  //vl.normalise();
+			Vector3 vw = Vector3(vl.z, 0.f, -vl.x);  //vw.normalise();
+			mP[seg].aYaw  = GetAngle(vw.x, vw.z) *180.f/PI_d;
+
+			if (mP[seg].aType == AT_Both)
+			{	mP[seg].aYaw += mP[seg].mYaw;  mP[seg].aRoll += mP[seg].mRoll;  }	
 		}
 	}
 
@@ -95,6 +134,7 @@ void SplineRoad::RebuildRoadInt()
 		Real sumLenMrg = 0.f, ltc = 0.f;  int mrgGrp = 0;  //#  stats
 		Real roadLen = 0.f, rdOnT = 0.f, rdPipe = 0.f,
 			avgWidth = 0.f, stMaxH = FLT_MIN, stMinH = FLT_MAX;
+				
 		
 		//if (lod == 0)?
 		LogR("--- seg prepass ---");
@@ -389,7 +429,7 @@ void SplineRoad::RebuildRoadInt()
 					//  ---~~~====~~~---
 					Real brdg = min(1.f, abs(vP.y - yTer) * 0.4f);  //par ] height diff mul
 					Real h = max(0.f, 1.f - abs(vP.y - yTer) / 30.f);  // for grass
-					Vector4 c(brdg,pipe, /*border-*/(w==0 || w==iw) ? 0 : 1, h);
+					Vector4 c(brdg,pipe, /*border-*/(w==0 || w==iw) ? 0.f : 1.f, h);
 
 					//>  data road
 					pos.push_back(vP);	norm.push_back(vN);
@@ -571,7 +611,7 @@ void SplineRoad::RebuildRoadInt()
 				else
 					rs.sMtrRd = sMtrRoad[id] + (onTer ? "_ter" :"");
 
-				CreateMesh(sm, aabox, pos,norm,clr,tcs, idx, rs.sMtrRd);
+				CreateMesh(sm, aabox, pos,norm,clr,tcs, idx, rs.sMtrRd + txs);
 
 				MeshPtr meshW, meshC;  // ] |
 				bool wall = posW.size() > 0;
@@ -592,7 +632,7 @@ void SplineRoad::RebuildRoadInt()
 				///  wall ]
 				//------------------------------------------------------------------------------------
 				// wall pipe glass mtr
-				bool wPglass = isPipe(seg) && mP[seg].idMtr == 1;  // wall pipe glass mtr
+				bool wPglass = isPipe(seg) && mP[seg].idMtr >= 1;  // wall pipe glass mtr
 				//bool wPglass = isPipe(seg) && StringUtil::match(sMtrPipe[mP[seg].idMtr], "*lass*");
 				if (wall)
 				{
@@ -620,7 +660,7 @@ void SplineRoad::RebuildRoadInt()
 					sm = meshW->getSubMesh(0);   // for glass only..
 					rs.sMtrWall = !wPglass ? sMtrWall : sMtrWallPipe;
 					if (posW.size() > 0)
-					CreateMesh(sm, aabox, posW,normW,clr0,tcsW, idx, rs.sMtrWall);
+					CreateMesh(sm, aabox, posW,normW,clr0,tcsW, idx, rs.sMtrWall + txs);
 				}
 				
 				
@@ -643,7 +683,7 @@ void SplineRoad::RebuildRoadInt()
 
 					sm = meshC->getSubMesh(0);
 					//if (posC.size() > 0)
-					CreateMesh(sm, aabox, posC,normC,clr0,tcsC, idx, sMtrCol);
+					CreateMesh(sm, aabox, posC,normC,clr0,tcsC, idx, sMtrCol + txs);
 				}
 				
 								
@@ -707,8 +747,8 @@ void SplineRoad::RebuildRoadInt()
 					trimeshShape->setUserPointer((void*)7777);  // mark as road,  + mtrId..
 					
 					btRigidBody::btRigidBodyConstructionInfo infoT(0.f, 0, trimeshShape);
-					infoT.m_restitution = 0.0;
-					infoT.m_friction = 0.8;  // 1 like terrain
+					infoT.m_restitution = 0.0f;
+					infoT.m_friction = 0.8f;  // 1 like terrain
 					pGame->collision.AddRigidBody(infoT);
 					
 					//  Wall  ]
@@ -729,8 +769,8 @@ void SplineRoad::RebuildRoadInt()
 						trimeshShape->setUserPointer((void*)7777);  //-
 						
 						btRigidBody::btRigidBodyConstructionInfo infoW(0.f, 0, trimeshShape);
-						infoW.m_restitution = 0.0;
-						infoW.m_friction = 0.1;  // 0 for wall
+						infoW.m_restitution = 0.0f;
+						infoW.m_friction = 0.1f;  // 0 for wall
 						pGame->collision.AddRigidBody(infoW);
 					}
 				}
@@ -770,6 +810,15 @@ void SplineRoad::RebuildRoadInt()
 	UpdLodVis(fLodBias);
 	if (iDirtyId == -1)
 		iOldHide = -1;
+
+
+	if (iDirtyId == -1)
+	//if (segs <= 4 || sMax - sMin > 4)
+	{
+		ti.update();	/// time
+		float dt = ti.dt * 1000.f;
+		LogO(String("::: Time Road Rebuild: ") + toStr(dt) + " ms");
+	}
 }
 
 

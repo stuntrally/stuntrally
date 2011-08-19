@@ -7,10 +7,13 @@
 #ifndef _CarModel_H_
 #define _CarModel_H_
  
+#include <OgreVector2.h>
 #include <OgreVector3.h>
 #include <OgreQuaternion.h>
 #include <OgreVector4.h>
 #include <OgreMatrix4.h>
+#include <OgreColourValue.h>
+
 
 class SETTINGS;  class GAME;  class CAR;  class Scene;  class App;  class FollowCamera;  class CarReflection;
 
@@ -21,13 +24,13 @@ namespace Ogre {  class SceneNode;  class Terrain;  class Camera;  class SceneMa
 // Stores all the needed information about car coming from vdrift
 struct PosInfo
 {
-	Ogre::Vector3 pos, carY;
+	Ogre::Vector3 pos, carY;  Ogre::Vector2 miniPos;
 	Ogre::Vector3 whPos[4];  Ogre::Quaternion rot, whRot[4];  float whR[4];
 	float whVel[4], whSlide[4], whSqueal[4];  int whMtr[4];  float fboost;
 	//  new posinfo available for Update
 	bool bNew;
 
-	PosInfo() : bNew(false), pos(0,0,0)  // not inited
+	PosInfo() : bNew(false), pos(0,0,0), miniPos(0,0)  // not inited
 	{}
 };
 
@@ -54,15 +57,15 @@ public:
 	//  Create our car, based on name, color, index.
 	//  This will put the meshes together and create the particle systems.
 	//  CreateReflection() is also called.
-	void Create();
+	void Create(int car);
 	void CreateReflection();
 	
 	//  Call every vdrift substep with new position info
 	void Update(PosInfo& newPosInfo, float time);
 	
 	//  Car color, After these values are changed, ChangeClr() should be called
-	float hue, sat, val;
-	void ChangeClr();  //  Apply new color
+	Ogre::ColourValue color;  // for minimap pos tri color  //float hue, sat, val;
+	void ChangeClr(int car);  //  Apply new color
 	
 	//  Reload material textures.
 	void ReloadTex(Ogre::String mtrName);
@@ -101,8 +104,8 @@ public:
 
 	//  start pos, lap  chekpoint vars
 	bool bGetStPos;  Ogre::Matrix4 matStPos;  Ogre::Vector4 vStDist;
-	int iInChk, iCurChk, iNextChk, iNumChks;  // cur checkpoint -1 at start
-	bool bInSt, bWrongChk;
+	int iInChk, iCurChk, iNextChk, iNumChks, iWonPlace;  // cur checkpoint -1 at start
+	bool bInSt, bWrongChk;  float fChkTime;  int iChkWrong;
 	//bool Checkpoint(const PosInfo& posInfo, class SplineRoad* road);  // update
 	
 private:

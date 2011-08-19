@@ -29,8 +29,17 @@ restrictions:
 #include "OISException.h"
 
 #include <boost/algorithm/string/predicate.hpp> // String starts_with
-
 #include <cassert>
+
+#if 1
+	#include <OgreLogManager.h>
+	#define LogExc(err,str)  {  Ogre::LogManager::getSingletonPtr()->logMessage( String("#### OISB:") + str );  }
+#else
+	#define LogExc(err,str)  {  OIS_EXCEPT( err, str );  }
+#endif
+
+//  (Bindable*)1 is a fake bindable value, it stays in xml
+
 
 namespace OISB
 {
@@ -48,11 +57,18 @@ namespace OISB
         mIsActive = active;
     }
 	
-	void Binding::bind(Bindable* bindable, const String& role)
+	void Binding::bind(Bindable* bindable, const String& role, const String& role2)
     {
+		if (!bindable)
+		{
+            LogExc(OIS::E_Duplicate, String("NULL Binding of action '" + mParent->getFullName()).c_str());
+			mBindables.push_back(std::make_pair(role2, bindable));
+			return;
+		}
+    
         if (isBound(bindable))
         {
-            OIS_EXCEPT(OIS::E_Duplicate, String("Binding of action '" + mParent->getFullName() + "' already contains bindable '" + bindable->getBindableName() + "'").c_str());
+            LogExc(OIS::E_Duplicate, String("Binding of action '" + mParent->getFullName() + "' already contains bindable '" + (!bindable ? "" : bindable->getBindableName()) + "'").c_str());
         }
 		else
 		{
@@ -64,17 +80,22 @@ namespace OISB
     {
         Bindable* b = System::getSingleton().lookupBindable(bindable);
 
-        if (b)
-			bind(b, role);
+		if (!b)
+			mBindables.push_back(std::make_pair(role, (Bindable*)1));  // fake bindable, stays in xml
+		else
+			mBindables.push_back(std::make_pair(role, b));
+
+        /*if (b)
+			bind(b, role, "");
 		else
 		{
+			bind(NULL, bindable, role);  // newer throw
 			// dummy bind...
-			if (mOptional)
-				bind(NULL, bindable);
-			else
-				OIS_EXCEPT(OIS::E_General, String("Lookup of bindable '" + bindable + "' failed").c_str());
-		}
-
+			//if (mOptional)
+			//	bind(NULL, bindable);
+			//else
+			//	LogExc(OIS::E_General, String("Lookup of bindable '" + bindable + "' failed").c_str());
+		}*/
     }
 
     void Binding::unbind(Bindable* bindable)
@@ -88,7 +109,7 @@ namespace OISB
             }
         }
 
-        OIS_EXCEPT(OIS::E_General, String("Binding of action '" + mParent->getFullName() + "' doesn't contain bindable '" + bindable->getBindableName() + "'").c_str());
+        LogExc(OIS::E_General, String("Binding of action '" + mParent->getFullName() + "' doesn't contain bindable '" + bindable->getBindableName() + "'").c_str());
     }
 
     void Binding::unbind(const String& bindable)
@@ -97,7 +118,7 @@ namespace OISB
 
         if (!b)
         {
-            OIS_EXCEPT(OIS::E_General, String("Lookup of bindable '" + bindable + "' failed").c_str());
+            LogExc(OIS::E_General, String("Lookup of bindable '" + bindable + "' failed").c_str());
         }
 
         unbind(b);
@@ -133,7 +154,7 @@ namespace OISB
     {
         if (idx >= mBindables.size())
         {
-            OIS_EXCEPT(OIS::E_General, "Out of bounds");
+            LogExc(OIS::E_General, "Out of bounds");
         }
 
         BindableList::const_iterator it = mBindables.begin();
@@ -147,7 +168,7 @@ namespace OISB
         Bindable* ret = getBindable(idx);
         if (ret->getBindableType() != BT_STATE)
         {
-            OIS_EXCEPT(OIS::E_General, "Bindable at this index isn't a state!");
+            LogExc(OIS::E_General, "Bindable at this index isn't a state!");
         }
 
         return static_cast<State*>(ret);
@@ -158,7 +179,7 @@ namespace OISB
         Bindable* ret = getBindable(idx);
         if (ret->getBindableType() != BT_ACTION)
         {
-            OIS_EXCEPT(OIS::E_General, "Bindable at this index isn't an action!");
+            LogExc(OIS::E_General, "Bindable at this index isn't an action!");
         }
 
         return static_cast<Action*>(ret);
@@ -186,7 +207,8 @@ namespace OISB
             }
         }
 
-        OIS_EXCEPT(OIS::E_General, String("Binding of action '" + mParent->getFullName() + "' doesn't contain any bindable of role '" + role + "'").c_str());
+        LogExc(OIS::E_General, String("Binding of action '" + mParent->getFullName() + "' doesn't contain any bindable of role '" + role + "'").c_str());
+		return 0;
     }
 
     State* Binding::getState(const String& role) const
@@ -194,7 +216,7 @@ namespace OISB
         Bindable* ret = getBindable(role);
         if (ret->getBindableType() != BT_STATE)
         {
-            OIS_EXCEPT(OIS::E_General, "Bindable with such a role isn't a state!");
+            LogExc(OIS::E_General, "Bindable with such a role isn't a state!");
         }
 
         return static_cast<State*>(ret);
@@ -205,7 +227,7 @@ namespace OISB
         Bindable* ret = getBindable(role);
         if (ret->getBindableType() != BT_ACTION)
         {
-            OIS_EXCEPT(OIS::E_General, "Bindable with such a role isn't an action!");
+            LogExc(OIS::E_General, "Bindable with such a role isn't an action!");
         }
 
         return static_cast<Action*>(ret);
@@ -247,7 +269,7 @@ namespace OISB
         {
             Bindable* bindable = it->second;
             
-            if (!bindable || !bindable->isActive())
+            if (!bindable || bindable == (Bindable*)1 || !bindable->isActive())
             {
                 return false;
             }

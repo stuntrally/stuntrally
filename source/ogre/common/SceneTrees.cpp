@@ -6,7 +6,7 @@
 	#include "../OgreGame.h"
 	#include "../vdrift/settings.h"
 	#include "../vdrift/game.h"
-	#include "../ogre/SplitScreenManager.h"
+	#include "../ogre/SplitScreen.h"
 #endif
 #include "../../paged-geom/GrassLoader.h"
 #include "../../paged-geom/BatchPage.h"
@@ -56,6 +56,7 @@ inline Real getTerrainHeightAround(const Real x, const Real z, void *userData)
 
 void App::CreateTrees()
 {
+	QTimer ti;  ti.update();  /// time
 	gTerrain = terrain;
 	
 	//-------------------------------------- Grass --------------------------------------
@@ -112,6 +113,9 @@ void App::CreateTrees()
 		l->setMapBounds(tbnd);
 		grass->setShadersEnabled(true);//`
 	}
+	ti.update();  /// time
+	float dt = ti.dt * 1000.f;
+	LogO(String("::: Time Grass: ") + toStr(dt) + " ms");
 
 
 	//-------------------------------------- Trees --------------------------------------
@@ -230,7 +234,7 @@ void App::CreateTrees()
 					bco->setFriction(shp->friction);	bco->setRestitution(shp->restitution);
 					bco->setCollisionFlags(bco->getCollisionFlags() |
 						btCollisionObject::CF_STATIC_OBJECT /*| btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT/**/);
-					pGame->collision.world.addCollisionObject(bco);
+					pGame->collision.world->addCollisionObject(bco);
 					pGame->collision.shapes.push_back(bshp);  cntshp++;
 				}
 				#endif
@@ -239,6 +243,9 @@ void App::CreateTrees()
 		LogO(String("***** Vegetation objects count: ") + toStr(cntr) + "  shapes: " + toStr(cntshp));
 	}
 	//imgRoadSize = 0;
+	ti.update();  /// time
+	dt = ti.dt * 1000.f;
+	LogO(String("::: Time Trees: ") + toStr(dt) + " ms");
 }
 
 

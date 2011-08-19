@@ -13,6 +13,7 @@ using namespace Ogre;
 void App::InitGui()
 {
 	if (!mGUI)  return;
+	QTimer ti;  ti.update();  /// time
 	LanguageManager::getInstance().loadUserTags("core_theme_black_blue_tag.xml");
 
 	//  load layout - wnds
@@ -55,7 +56,7 @@ void App::InitGui()
 		IntSize w = mWndOpts->getSize();  // center
 		mWndOpts->setPosition((sx-w.width)*0.5f, (sy-w.height)*0.5f);
 		mWndTabs = (TabPtr)mWndOpts->findWidget("TabWnd");
-		//mWndTabs->setIndexSelected(3);  //def*--
+		mWndTabs->setIndexSelected(3);  //default*--
 
 		//  resize Options wnd
 		const int yN = 7;
@@ -77,7 +78,7 @@ void App::InitGui()
 	ms.X.abs = xm;  ms.Y.abs = ym;
 	
 	//  hide  ---
-	edMode = ED_Road;  UpdEditWnds();  // *  UpdVisHit(); //after track
+	edMode = ED_Deform;  UpdEditWnds();  // *  UpdVisHit(); //after track
 	if (!mWndOpts)  return;  // error
 	
 	
@@ -129,6 +130,7 @@ void App::InitGui()
 	Cmb(combo, "TexFiltering", comboTexFilter);
 	Slv(Anisotropy,	pSet->anisotropy /res);
 	Slv(Shaders,	pSet->shaders /res);
+	Slv(TexSize,	pSet->tex_size /res);
 
 	//  trees/grass
 	Slv(Trees,		powf(pSet->trees /4.f, 0.5f));
@@ -191,11 +193,17 @@ void App::InitGui()
 	Slv(TerTriSize,	powf((sc.td.fTriangleSize -0.1f)/5.9f, 0.5f));
 	Slv(TerLScale, 0);
 	Btn("TerrainNew", btnTerrainNew);
-	Btn("TerrainResize", btnTerrainResize);
+	Btn("TerrainGenerate", btnTerGenerate);
 
+	///  [Layers]
 	Chk("TerLayOn", chkTerLayOn, 1);  chkTerLay = bchk;
 	valTerLAll = (StaticTextPtr)mWndOpts->findWidget("TerLayersAll");
 	Chk("TexNormAuto", chkTexNormAutoOn, 1);  chkTexNormAuto = bchk;
+	
+	Slv(TerLAngMin,0);  Slv(TerLHMin,0);  Slv(TerLAngSm,0);  // blendmap
+	Slv(TerLAngMax,0);  Slv(TerLHMax,0);  Slv(TerLHSm,0);
+	Slv(TerLNoise,0);   Chk("TerLNoiseOnly", chkTerLNoiseOnlyOn, 0);  chkTerLNoiseOnly = bchk;
+	
 	Ed(LDust, editLDust);	Ed(LDustS, editLDust);
 	Ed(LMud,  editLDust);	Ed(LSmoke, editLDust);
 	Ed(LTrlClr, editLTrlClr);
@@ -236,15 +244,10 @@ void App::InitGui()
 	///  [Tools]  ------------------------------------
 	Btn("TrackCopySel", btnTrkCopySel);
 	valTrkCpySel = (StaticTextPtr)mWndOpts->findWidget("TrkCopySelName");
-	Btn("CopySun", btnCopySun);
-	Btn("CopyTerHmap", btnCopyTerHmap);
-	Btn("CopyTerLayers", btnCopyTerLayers);
-	Btn("CopyVeget", btnCopyVeget);
-	Btn("CopyRoad", btnCopyRoad);
-	Btn("CopyRoadPars", btnCopyRoadPars);
-
-	Btn("DeleteRoad", btnDeleteRoad);
-	Btn("ScaleAll", btnScaleAll);
+	Btn("CopySun", btnCopySun);				Btn("CopyTerHmap", btnCopyTerHmap);
+	Btn("CopyTerLayers", btnCopyTerLayers);	Btn("CopyVeget", btnCopyVeget);
+	Btn("CopyRoad", btnCopyRoad);			Btn("CopyRoadPars", btnCopyRoadPars);
+	Btn("DeleteRoad", btnDeleteRoad);		Btn("ScaleAll", btnScaleAll);
 	Ed(ScaleAllMul, editScaleAllMul);
 	
 
@@ -255,7 +258,7 @@ void App::InitGui()
 	supportedLanguages.clear();
 	supportedLanguages["en"] = "English";
 	supportedLanguages["de"] = "Deutsch";  //German
-	supportedLanguages["fi"] = "Suomi";  //Finnish
+	supportedLanguages["fi"] = "Suomi";   //Finnish
 	supportedLanguages["ro"] = "Româna";  //Romanian
 	supportedLanguages["pl"] = "Polski";  //Polish
 	combo = NULL;  combo = mGUI->findWidget<ComboBox>("Lang");
@@ -334,9 +337,9 @@ void App::InitGui()
 	}
 	for (size_t i=0; i < vsMaterials.size(); ++i)
 	{	String s = vsMaterials[i];
-		if (StringUtil::startsWith(s,"road") && !StringUtil::startsWith(s,"road_") && !StringUtil::endsWith(s,"_ter"))
+		if (StringUtil::startsWith(s,"road") && !StringUtil::startsWith(s,"road_") && !StringUtil::endsWith(s,"_ter") && !StringUtil::endsWith(s,"_ter_s") && !StringUtil::endsWith(s,"_s"))
 			for (int i=0; i<4; ++i)  cmbRoadMtr[i]->addItem(s);
-		if (StringUtil::startsWith(s,"pipe") && !StringUtil::startsWith(s,"pipe_"))
+		if (StringUtil::startsWith(s,"pipe") && !StringUtil::startsWith(s,"pipe_") && !StringUtil::endsWith(s,"_s"))
 			for (int i=0; i<4; ++i)  cmbPipeMtr[i]->addItem(s);
 	}
 	//-----------------------------------------------------
@@ -373,8 +376,14 @@ void App::InitGui()
 	Btn("TrackNew",		btnTrackNew);
 	Btn("TrackRename",	btnTrackRename);
 	Btn("TrackDelete",	btnTrackDel);
+	
+	bGI = true;  // gui inited, gui events can now save vals
 
     //  load = new game
     for (int i=1; i<=3; ++i)
     {	Btn("NewGame"+toStr(i), btnNewGame);  }
+
+	ti.update();	/// time
+	float dt = ti.dt * 1000.f;
+	LogO(String("::: Time Init Gui: ") + toStr(dt) + " ms");
 }
