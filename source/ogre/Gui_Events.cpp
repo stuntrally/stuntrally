@@ -33,92 +33,6 @@ using namespace MyGUI;
 	ButtonPtr chk = wp->castType<MyGUI::Button>(); \
     chk->setStateCheck(pSet->var);  }
 
-//  [Input]
-
-void App::controlBtnClicked(Widget* sender)
-{
-	sender->setCaption( TR("#{InputAssignKey}"));
-	// activate key capture mode
-	bAssignKey = true;
-	pressedKeySender = sender;
-	// hide mouse
-	MyGUI::PointerManager::getInstance().setVisible(false);
-}
-void App::joystickBindChanged(Widget* sender, size_t val)
-{
-	// get action/schema this bind belongs too
-	std::string actionName = Ogre::StringUtil::split(sender->getName(), "_")[1];
-	std::string schemaName = Ogre::StringUtil::split(sender->getName(), "_")[2];
-	
-	LogO(actionName);
-	LogO(schemaName);
-	
-	OISB::ActionSchema* schema = OISB::System::getSingleton().mActionSchemas[schemaName];
-	OISB::Action* action = schema->mActions[actionName];
-	if (action->mBindings.size() == 0) return;
-	if (action->mBindings.size() == 1) action->createBinding();
-	OISB::Binding* binding = action->mBindings[1];
-	binding->mOptional = true;
-	
-	// get selected joystick
-	// find selected oisb joystick for this tab (to get num axis & buttons)
-	MyGUI::ComboBoxPtr jsMenu = mGUI->findWidget<ComboBox>("joystickSel_" + schemaName);
-	std::string jsName;
-	if (jsMenu->getIndexSelected() != MyGUI::ITEM_NONE)
-		jsName = jsMenu->getItemNameAt( jsMenu->getIndexSelected() );
-	else 
-	{
-		LogO("Couldnt get selected joystick"); return;
-	}
-	LogO(jsName);
-		
-	// get selected axis or button
-	MyGUI::ComboBoxPtr box = static_cast<MyGUI::ComboBoxPtr> (sender);
-	if (box->getItemCount() < box->getIndexSelected() || box->getIndexSelected() == MyGUI::ITEM_NONE)
-	{
-		LogO("Invalid item value"); return;
-	}
-	std::string bindName = box->getItemNameAt(box->getIndexSelected());
-	LogO(bindName);
-	
-	// unbind old
-	for (int i=0; i<binding->getNumBindables(); i++)
-	{
-		binding->unbind(binding->getBindable(i));
-	}
-	
-	// bind new
-	try {
-		binding->bind(jsName + "/" + bindName); 
-	}
-	catch (OIS::Exception) {
-		LogO("Failed to bind '" + jsName + "/" + bindName + "'");
-	}
-
-}
-void App::joystickSelectionChanged(Widget* sender, size_t val)
-{
-	UpdateJsButtons();
-	
-	// ----------------  update all binds with the new joystick  -----------------------------------------
-	std::string actionSchemaName = Ogre::StringUtil::split(sender->getName(), "_")[1];
-	
-	OISB::ActionSchema* schema = mOISBsys->mActionSchemas[actionSchemaName];
-		
-	for (std::map<OISB::String, OISB::Action*>::const_iterator
-		ait = schema->mActions.begin();
-		ait != schema->mActions.end(); ait++)
-	{
-		MyGUI::WidgetPtr box;
-		if ((*ait).second->getActionType() == OISB::AT_TRIGGER)
-			box = mGUI->findWidget<Widget>("jsButtonSel_" + (*ait).first + "_" + actionSchemaName);
-		else if ((*ait).second->getActionType() == OISB::AT_ANALOG_AXIS)
-			box = mGUI->findWidget<Widget>("jsAxisSel_" + (*ait).first + "_" + actionSchemaName);
-			
-		joystickBindChanged(box, 0);
-	}
-	
-}
 
 //  [Setup]
 //    [Car]
@@ -147,7 +61,7 @@ void App::chkSplitVert(WP wp)
 
 void App::slNumLaps(SL)
 {
-	int v = 20.f * val/res + 1;  pSet->num_laps = v;
+	int v = 20.f * val/res + 1;  if (bGI)  pSet->num_laps = v;
 	if (valNumLaps){  Fmt(s, "%d", v);	valNumLaps->setCaption(s);  }
 }
 
@@ -166,23 +80,23 @@ void App::tabPlayer(TabPtr wp, size_t id)
 //  car color
 void App::slCarClrH(SL)
 {
-	Real v = val/res;  pSet->car_hue[iCurCar] = v;
+	Real v = val/res;  if (bGI)  pSet->car_hue[iCurCar] = v;
 	if (valCarClrH){	Fmt(s, "%4.2f", v);	valCarClrH->setCaption(s);  }
-	if (iCurCar < carModels.size() && bUpdCarClr)
+	if (iCurCar < carModels.size() && bUpdCarClr && bGI)
 		carModels[iCurCar]->ChangeClr(iCurCar);
 }
 void App::slCarClrS(SL)
 {
-	Real v = -1.f + 2.f * val/res;  pSet->car_sat[iCurCar] = v;
+	Real v = -1.f + 2.f * val/res;  if (bGI)  pSet->car_sat[iCurCar] = v;
 	if (valCarClrS){	Fmt(s, "%4.2f", v);	valCarClrS->setCaption(s);  }
-	if (iCurCar < carModels.size() && bUpdCarClr)
+	if (iCurCar < carModels.size() && bUpdCarClr && bGI)
 		carModels[iCurCar]->ChangeClr(iCurCar);
 }
 void App::slCarClrV(SL)
 {
-	Real v = -1.f + 2.f * val/res;  pSet->car_val[iCurCar] = v;
+	Real v = -1.f + 2.f * val/res;  if (bGI)  pSet->car_val[iCurCar] = v;
 	if (valCarClrV){	Fmt(s, "%4.2f", v);	valCarClrV->setCaption(s);  }
-	if (iCurCar < carModels.size() && bUpdCarClr)
+	if (iCurCar < carModels.size() && bUpdCarClr && bGI)
 		carModels[iCurCar]->ChangeClr(iCurCar);
 }
 
@@ -204,111 +118,15 @@ void App::btnCarClrRandom(WP)
 
 //  [Graphics]
 
-//  textures
-void App::comboTexFilter(SL)
-{
-	TextureFilterOptions tfo;							
-	switch (val)  {
-		case 0:	 tfo = TFO_BILINEAR;	break;
-		case 1:	 tfo = TFO_TRILINEAR;	break;
-		case 2:	 tfo = TFO_ANISOTROPIC;	break;	}
-	MaterialManager::getSingleton().setDefaultTextureFiltering(tfo);
-}
-
-void App::slAnisotropy(SL)
-{
-	MaterialManager::getSingleton().setDefaultAnisotropy(val);	pSet->anisotropy = val;
-	if (valAnisotropy)	valAnisotropy->setCaption(toStr(val));
-}
-
-//  view dist
-void App::slViewDist(SL)
-{
-	Real v = 50.f + 6950.f * powf(val/res, 2.f);
-	Vector3 sc = v*Vector3::UNIT_SCALE;
-
-	SceneNode* nskb = mSceneMgr->getSkyBoxNode();
-	if (nskb)  nskb->setScale(sc*0.58);
-	else  if (ndSky)  ndSky->setScale(sc);
-
-	pSet->view_distance = v;
-	if (valViewDist){	Fmt(s, "%4.1f km", v*0.001f);	valViewDist->setCaption(s);  }
-	// Set new far clip distance for all cams
-	mSplitMgr->UpdateCamDist();
-}
-
-//  ter detail
-void App::slTerDetail(SL)
-{
-	Real v = 20.f * powf(val/res, 2.f);  pSet->terdetail = v;
-	if (mTerrainGlobals)
-		mTerrainGlobals->setMaxPixelError(v);
-	if (valTerDetail){	Fmt(s, "%4.1f %%", v);	valTerDetail->setCaption(s);  }
-}
-
-//  ter dist
-void App::slTerDist(SL)
-{
-	Real v = 1000.f * powf(val/res, 2.f);  pSet->terdist = v;
-	if (mTerrainGlobals)
-		mTerrainGlobals->setCompositeMapDistance(v);
-	if (valTerDist){	Fmt(s, "%4.0f m", v);	valTerDist->setCaption(s);  }
-}
-
-//  road dist
-void App::slRoadDist(SL)
-{
-	Real v = 4.f * powf(val/res, 2.f);  pSet->road_dist = v;
-	if (valRoadDist){	Fmt(s, "%5.2f", v);	valRoadDist->setCaption(s);  }
-}
-
-
-//  trees/grass
-void App::slTrees(SL)
-{
-	Real v = 4.f * powf(val/res, 2.f);  pSet->trees = v;
-	if (valTrees){	Fmt(s, "%4.2f", v);	valTrees->setCaption(s);  }
-}
-void App::slGrass(SL)
-{
-	Real v = 4.f * powf(val/res, 2.f);  pSet->grass = v;
-	if (valGrass){	Fmt(s, "%4.2f", v);	valGrass->setCaption(s);  }
-}
-
-void App::slTreesDist(SL)
-{
-	Real v = 0.5f + 6.5f * powf(val/res, 2.f);  pSet->trees_dist = v;
-	if (valTreesDist){	Fmt(s, "%4.2f", v);	valTreesDist->setCaption(s);  }
-}
-void App::slGrassDist(SL)
-{
-	Real v = 0.5f + 6.5f * powf(val/res, 2.f);  pSet->grass_dist = v;
-	if (valGrassDist){	Fmt(s, "%4.2f", v);	valGrassDist->setCaption(s);  }
-}
-
-void App::btnTrGrReset(WP wp)
-{
-	HScrollPtr sl;  size_t v;
-	#define setSld(name)  sl##name(0,v);  \
-		sl = (HScrollPtr)mLayout->findWidget(#name);  if (sl)  sl->setScrollPosition(v);
-	v = res*powf(1.f /4.f, 0.5f);
-	setSld(Trees);
-	setSld(Grass);
-	v = res*powf((1.f-0.5f) /6.5f, 0.5f);
-	setSld(TreesDist);
-	setSld(GrassDist);
-}
-
-
 //  particles/trails
 void App::slParticles(SL)
 {
-	Real v = 4.f * powf(val/res, 2.f);  pSet->particles_len = v;
+	Real v = 4.f * powf(val/res, 2.f);  if (bGI)  pSet->particles_len = v;
 	if (valParticles){	Fmt(s, "%4.2f", v);	valParticles->setCaption(s);  }
 }
 void App::slTrails(SL)
 {
-	Real v = 4.f * powf(val/res, 2.f);  pSet->trails_len = v;
+	Real v = 4.f * powf(val/res, 2.f);  if (bGI)  pSet->trails_len = v;
 	if (valTrails){	Fmt(s, "%4.2f", v);	valTrails->setCaption(s);  }
 }
 
@@ -316,18 +134,18 @@ void App::slTrails(SL)
 //  view size
 void App::slSizeGaug(SL)
 {
-	float v = 0.1f + 0.15f * val/res;	pSet->size_gauges = v;  SizeHUD(true);
+	float v = 0.1f + 0.15f * val/res;	if (bGI)  {  pSet->size_gauges = v;  SizeHUD(true);  }
 	if (valSizeGaug){	Fmt(s, "%4.3f", v);	valSizeGaug->setCaption(s);  }
 }
 //  minimap
 void App::slSizeMinimap(SL)
 {
-	float v = 0.05f + 0.25f * val/res;	pSet->size_minimap = v;  SizeHUD(true);
+	float v = 0.05f + 0.25f * val/res;	if (bGI)  {  pSet->size_minimap = v;  SizeHUD(true);  }
 	if (valSizeMinimap){	Fmt(s, "%4.3f", v);	valSizeMinimap->setCaption(s);  }
 }
 void App::slZoomMinimap(SL)
 {
-	float v = 1.f + 9.f * powf(val/res, 2.f);	pSet->zoom_minimap = v;  SizeHUD(true);
+	float v = 1.f + 9.f * powf(val/res, 2.f);	if (bGI)  {  pSet->zoom_minimap = v;  SizeHUD(true);  }
 	if (valZoomMinimap){	Fmt(s, "%4.3f", v);	valZoomMinimap->setCaption(s);  }
 }
 
@@ -335,22 +153,23 @@ void App::slZoomMinimap(SL)
 //  reflect
 void App::slReflSkip(SL)
 {
-	int v = 1000.f * powf(val/res, 2.f);	pSet->refl_skip = v;
+	int v = 1000.f * powf(val/res, 2.f);	if (bGI)  pSet->refl_skip = v;
 	if (valReflSkip)  valReflSkip->setCaption(toStr(v));
 }
 void App::slReflSize(SL)
 {
-	int v = std::max( 0.0f, std::min((float) ciShadowNumSizes-1, ciShadowNumSizes * val/res));	pSet->refl_size = v;
+	int v = std::max( 0.0f, std::min((float) ciShadowNumSizes-1, ciShadowNumSizes * val/res));
+	if (bGI)  pSet->refl_size = v;
 	if (valReflSize)  valReflSize->setCaption(toStr(ciShadowSizesA[v]));
 }
 void App::slReflFaces(SL)
 {
-	pSet->refl_faces = val;
+	if (bGI)  pSet->refl_faces = val;
 	if (valReflFaces)  valReflFaces->setCaption(toStr(val));
 }
 void App::slReflDist(SL)
 {
-	float v = 20.f + 1480.f * powf(val/res, 2.f);	pSet->refl_dist = v;
+	float v = 20.f + 1480.f * powf(val/res, 2.f);	if (bGI)  pSet->refl_dist = v;
 	if (valReflDist){	Fmt(s, "%4.0f m", v);	valReflDist->setCaption(s);  }
 }
 void App::slReflMode(SL)
@@ -382,86 +201,25 @@ void App::recreateReflections()
 }
 
 
-void App::slShaders(SL)
-{
-	int v = val;  pSet->shaders = v;
-	if (valShaders)
-	{	if (v == 0)  valShaders->setCaption("Vertex");  else
-		if (v == 1)  valShaders->setCaption("Pixel");  else
-		if (v == 2)  valShaders->setCaption("Metal");  }
-}
-
-void App::slTexSize(SL)
-{
-	int v = val;  pSet->tex_size = v;
-	if (valTexSize)
-	{	if (v == 0)  valTexSize->setCaption("Small");  else
-		if (v == 1)  valTexSize->setCaption("Big");  }
-}
-
-void App::slTerMtr(SL)
-{
-	int v = val;  pSet->ter_mtr = v;
-	if (valTerMtr)
-	{	if (v == 0)  valTerMtr->setCaption("Lowest");  else
-		if (v == 1)  valTerMtr->setCaption("Low");  else
-		if (v == 2)  valTerMtr->setCaption("Normal");  else
-		if (v == 3)  valTerMtr->setCaption("Parallax");  }
-	if (bGI)  changeShadows();
-}
-
-
-//  shadows
-void App::btnShadows(WP){	changeShadows();	}
-
-void App::slShadowType(SL)
-{
-	int v = val;	pSet->shadow_type = v;
-	if (valShadowType)
-	{	if (v == 0)  valShadowType->setCaption("None");  else
-		if (v == 1)  valShadowType->setCaption("Old");  else
-		if (v == 2)  valShadowType->setCaption("Normal");  else
-		if (v == 3)  valShadowType->setCaption("Depth-");  }
-}
-
-void App::slShadowCount(SL)
-{
-	int v = 2 + 2.f * val/res;	pSet->shadow_count = v;
-	if (valShadowCount)  valShadowCount->setCaption(toStr(v));
-}
-
-void App::slShadowSize(SL)
-{
-	int v = std::max( 0.0f, std::min((float) ciShadowNumSizes-1, ciShadowNumSizes * val/res));	pSet->shadow_size = v;
-	if (valShadowSize)  valShadowSize->setCaption(toStr(ciShadowSizesA[v]));
-}
-
-void App::slShadowDist(SL)
-{
-	Real v = 50.f + 4750.f * powf(val/res, 2.f);	pSet->shadow_dist = v;
-	if (valShadowDist){  Fmt(s, "%4.1f km", v*0.001f);	valShadowDist->setCaption(s);  }
-}
-
-
 //  sound
 void App::slVolMaster(SL)
 {
-	Real v = 1.6f * val/res;	pSet->vol_master = v;	pGame->ProcessNewSettings();
+	Real v = 1.6f * val/res;	if (bGI)  {  pSet->vol_master = v;  pGame->ProcessNewSettings();  }
 	if (valVolMaster){  Fmt(s, "%4.2f", v);	valVolMaster->setCaption(s);  }
 }
 void App::slVolEngine(SL)
 {
-	Real v = 1.4f * val/res;	pSet->vol_engine = v;
+	Real v = 1.4f * val/res;	if (bGI)  pSet->vol_engine = v;
 	if (valVolEngine){  Fmt(s, "%4.2f", v);	valVolEngine->setCaption(s);  }
 }
 void App::slVolTires(SL)
 {
-	Real v = 1.4f * val/res;	pSet->vol_tires = v;
+	Real v = 1.4f * val/res;	if (bGI)  pSet->vol_tires = v;
 	if (valVolTires){  Fmt(s, "%4.2f", v);	valVolTires->setCaption(s);  }
 }
 void App::slVolEnv(SL)
 {
-	Real v = 1.4f * val/res;	pSet->vol_env = v;
+	Real v = 1.4f * val/res;	if (bGI)  pSet->vol_env = v;
 	if (valVolEnv){  Fmt(s, "%4.2f", v);	valVolEnv->setCaption(s);  }
 }
 
@@ -652,21 +410,21 @@ void App::chkVidVSync(WP wp)
 
 void App::slBloomInt(SL)
 {
-	Real v = val/res;  pSet->bloomintensity = v;
+	Real v = val/res;  if (bGI)  pSet->bloomintensity = v;
 	if (valBloomInt){	Fmt(s, "%4.2f", v);	valBloomInt->setCaption(s);  }
-	refreshCompositor();
+	if (bGI)  refreshCompositor();
 }
 void App::slBloomOrig(SL)
 {
-	Real v = val/res;  pSet->bloomorig = v;
+	Real v = val/res;  if (bGI)  pSet->bloomorig = v;
 	if (valBloomOrig){	Fmt(s, "%4.2f", v);	valBloomOrig->setCaption(s);  }
-	refreshCompositor();
+	if (bGI)  refreshCompositor();
 }
 void App::slBlurIntens(SL)
 {
-	Real v = val/res;  pSet->motionblurintensity = v;
+	Real v = val/res;  if (bGI)  pSet->motionblurintensity = v;
 	if (valBlurIntens){	Fmt(s, "%4.2f", v);	valBlurIntens->setCaption(s);  }
-	refreshCompositor();
+	if (bGI)  refreshCompositor();
 }
 
 

@@ -981,11 +981,19 @@
 					>
 				</File>
 				<File
+					RelativePath=".\source\ogre\common\Gui_Common.cpp"
+					>
+				</File>
+				<File
 					RelativePath=".\Source\ogre\Gui_Events.cpp"
 					>
 				</File>
 				<File
 					RelativePath=".\Source\ogre\Gui_Init.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\source\ogre\Gui_Input.cpp"
 					>
 				</File>
 				<File

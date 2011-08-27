@@ -445,6 +445,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\source\ogre\common\Gui_Common.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\Source\editor\Gui_Events.cpp"
 				>
 			</File>

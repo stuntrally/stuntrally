@@ -143,8 +143,12 @@ protected:
 public:	
 	class SplineRoad* road;
 protected:
-	///  Gui  ---------------------------------------------------------------------------
+
+	///-----------------------------------------------------------------------------------------------------------------
+	///  Gui
+	///-----------------------------------------------------------------------------------------------------------------
 	void InitGui(), toggleGui();  bool bGI;
+		void GuiCenterMouse(),GuiInitTooltip();
 	void UpdGuiRdStats(const SplineRoad* rd, const Scene& sc, float time), ReadTrkStats();
 	void UpdCarClrSld(bool upd=true);  bool bUpdCarClr;
 

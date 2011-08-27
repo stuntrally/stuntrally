@@ -31,11 +31,8 @@ void App::InitGui()
 	}
 	if (mWndRoadStats)  mWndRoadStats->setVisible(false);
 
-	//  tooltip
-	mToolTip = Gui::getInstance().findWidget<Widget>("ToolTip");
-	mToolTip->setVisible(false);
-	mToolTipTxt = mToolTip->getChildAt(0)->castType<Edit>();
-
+	GuiInitTooltip();
+	
 	//  Brush wnd  assign controls  ----------------------
 	if (mWndBrush)
 	{	for (int i=0; i<BR_TXT; ++i)
@@ -72,10 +69,7 @@ void App::InitGui()
 
 	//  center mouse pos
 	mGUI->setVisiblePointer(bGuiFocus || !bMoveCam);
-	int xm = mWindow->getWidth()/2, ym = mWindow->getHeight()/2;
-	InputManager::getInstance().injectMouseMove(xm, ym, 0);
-	OIS::MouseState &ms = const_cast<OIS::MouseState&>(mMouse->getMouseState());
-	ms.X.abs = xm;  ms.Y.abs = ym;
+	GuiCenterMouse();
 	
 	//  hide  ---
 	edMode = ED_Deform;  UpdEditWnds();  // *  UpdVisHit(); //after track

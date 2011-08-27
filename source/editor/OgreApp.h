@@ -157,6 +157,7 @@ protected:
 	///  Gui
 	///-----------------------------------------------------------------------------------------------------------------
 	void InitGui(),  UpdVisGui(), UpdEditWnds();
+		void GuiCenterMouse(),GuiInitTooltip();
 	void UpdGuiRdStats(const SplineRoad* rd, const Scene& sc, float time), ReadTrkStats();
 	void Status(Ogre::String s, float r,float g,float b);
 	void SetGuiFromXmls();  bool noBlendUpd, bGI;
@@ -168,7 +169,7 @@ protected:
 		//  slider event and its text field for value
 	#define SLV(name)  void sl##name(SL);  MyGUI::StaticTextPtr val##name;
 	#define SL  WP wp, size_t val				//  slider event args
-	#define CMB  MyGUI::ComboBoxPtr cmb, size_t val	//  combo event args
+	#define CMB  MyGUI::ComboBoxPtr cmb, size_t val		//  combo event args
 	#define TAB  MyGUI::TabPtr tab, size_t id			//  tab event args
 
 	//  tooltips
