@@ -124,6 +124,7 @@ protected:
 	char* blendMtr;  // mtr [blendMapSize x blendMapSize]
 	void initBlendMaps(Ogre::Terrain* terrain);  bool noBlendUpd;
 	void configureTerrainDefaults(Ogre::Light* l);
+	float Noise(float x, float zoom, int octaves, float persistance);
 	float Noise(float x, float y, float zoom, int octaves, float persistance);
 	Ogre::Real terMaxAng;
 		

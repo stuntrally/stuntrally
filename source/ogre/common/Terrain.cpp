@@ -6,13 +6,13 @@
 	#include "../../editor/settings.h"
 #else
 	#include "../OgreGame.h"
-	#include "../vdrift/game.h"
-	#include "../vdrift/settings.h"
+	#include "../../vdrift/game.h"
+	#include "../../vdrift/settings.h"
 
-	#include "../btOgre/BtOgrePG.h"
-	#include "../btOgre/BtOgreGP.h"
+	#include "../../btOgre/BtOgrePG.h"
+	#include "../../btOgre/BtOgreGP.h"
 	//#include "BtOgreDebug.h"
-	#include "../bullet/BulletCollision/CollisionShapes/btHeightfieldTerrainShape.h"
+	#include "../../bullet/BulletCollision/CollisionShapes/btHeightfieldTerrainShape.h"
 #endif
 #include <OgreRoot.h>
 #include <OgreTerrain.h>
