@@ -131,6 +131,7 @@ void App::InitGui()
 	Slv(Anisotropy,	pSet->anisotropy /res);
 	Slv(Shaders,	pSet->shaders /res);
 	Slv(TexSize,	pSet->tex_size /res);
+	Slv(TerMtr,		pSet->ter_mtr /res);
 
 	//  trees/grass
 	Slv(Trees,		powf(pSet->trees /4.f, 0.5f));
@@ -377,11 +378,11 @@ void App::InitGui()
 	Btn("TrackRename",	btnTrackRename);
 	Btn("TrackDelete",	btnTrackDel);
 	
-	bGI = true;  // gui inited, gui events can now save vals
-
     //  load = new game
     for (int i=1; i<=3; ++i)
     {	Btn("NewGame"+toStr(i), btnNewGame);  }
+
+	bGI = true;  // gui inited, gui events can now save vals
 
 	ti.update();	/// time
 	float dt = ti.dt * 1000.f;

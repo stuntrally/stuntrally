@@ -22,8 +22,9 @@ void App::InitGui()
 {
 	//  change skin
 	if (!mGUI)  return;
+	QTimer ti;  ti.update();  /// time
 	LanguageManager::getInstance().loadUserTags("core_theme_black_blue_tag.xml");
-	mGUI->load("core_skin.xml");
+	//mGUI->load("core_skin.xml");
 
 	//  load Options layout
 	vwGui = LayoutManager::getInstance().load("Options.layout");
@@ -107,6 +108,7 @@ void App::InitGui()
 	Slv(Anisotropy,	pSet->anisotropy /res);
 	Slv(Shaders,	pSet->shaders /res);
 	Slv(TexSize,	pSet->tex_size /res);
+	Slv(TerMtr,		pSet->ter_mtr /res);
 	
 	//  particles/trails
 	Slv(Particles,	powf(pSet->particles_len /4.f, 0.5f));
@@ -417,6 +419,12 @@ void App::InitGui()
     {	ButtonPtr btnNewG = (ButtonPtr)mLayout->findWidget("NewGame"+toStr(i));
 		if (btnNewG)  btnNewG->eventMouseButtonClick = newDelegate(this, &App::btnNewGame);
 	}
+
+	bGI = true;  // gui inited, gui events can now save vals
+
+	ti.update();	/// time
+	float dt = ti.dt * 1000.f;
+	LogO(String("::: Time Init Gui: ") + toStr(dt) + " ms");
 }
 
 

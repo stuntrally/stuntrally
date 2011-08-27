@@ -41,11 +41,11 @@ void App::changeShadows()
 			mTerrainGlobals->getDefaultMaterialGenerator()->getActiveProfile());
 		matProfile->setReceiveDynamicShadowsEnabled(enabled);
 		matProfile->setReceiveDynamicShadowsLowLod(true);
-			///TODO: pSet->ter_mtr  gui options +!...
-			//matProfile->setLayerNormalMappingEnabled(false);
-			//matProfile->setLayerParallaxMappingEnabled(false);
-			//matProfile->setLayerSpecularMappingEnabled(false);
 		matProfile->setGlobalColourMapEnabled(false);
+
+		matProfile->setLayerSpecularMappingEnabled(pSet->ter_mtr >= 1);  // ter mtr
+		matProfile->setLayerNormalMappingEnabled(  pSet->ter_mtr >= 2);
+		matProfile->setLayerParallaxMappingEnabled(pSet->ter_mtr >= 3);
 	}
 	
 	//  shadows old-

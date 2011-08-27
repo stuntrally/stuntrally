@@ -122,6 +122,17 @@ void App::slTexSize(SL)
 		if (v == 1)  valTexSize->setCaption("Big");  }
 }
 
+void App::slTerMtr(SL)
+{
+	int v = val;  pSet->ter_mtr = v;
+	if (valTerMtr)
+	{	if (v == 0)  valTerMtr->setCaption("Lowest");  else
+		if (v == 1)  valTerMtr->setCaption("Low");  else
+		if (v == 2)  valTerMtr->setCaption("Normal");  else
+		if (v == 3)  valTerMtr->setCaption("Parallax");  }
+	if (bGI)  changeShadows();
+}
+
 
 //  shadows
 void App::btnShadows(WP){	changeShadows();	}
