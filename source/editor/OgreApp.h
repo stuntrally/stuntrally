@@ -26,9 +26,6 @@ const int ciShadowSizesA[ciShadowNumSizes] = {512,1024,2048,4096};
 #define BrushMaxSize  512
 
 //  Gui
-#define res  1000000.f
-#define Fmt  sprintf
-
 const int ciAngSnapsNum = 6;
 const Ogre::Real crAngSnaps[ciAngSnapsNum] = {0,15,30,45,90,180};
 
@@ -157,7 +154,7 @@ protected:
 	///  Gui
 	///-----------------------------------------------------------------------------------------------------------------
 	void InitGui(),  UpdVisGui(), UpdEditWnds();
-		void GuiCenterMouse(),GuiInitTooltip();
+		void GuiCenterMouse(),GuiInitTooltip(),GuiInitLang();
 	void UpdGuiRdStats(const SplineRoad* rd, const Scene& sc, float time), ReadTrkStats();
 	void Status(Ogre::String s, float r,float g,float b);
 	void SetGuiFromXmls();  bool noBlendUpd, bGI;
@@ -166,11 +163,36 @@ protected:
 	//  shortcuts
 	typedef MyGUI::WidgetPtr WP;
 	typedef std::list <std::string> strlist;
-		//  slider event and its text field for value
+
+	//  slider event and its text field for value
 	#define SLV(name)  void sl##name(SL);  MyGUI::StaticTextPtr val##name;
-	#define SL  WP wp, size_t val				//  slider event args
+
+	#define SL   WP wp, size_t val						//  slider event args
 	#define CMB  MyGUI::ComboBoxPtr cmb, size_t val		//  combo event args
 	#define TAB  MyGUI::TabPtr tab, size_t id			//  tab event args
+
+
+	///  Gui common   --------------------------
+	typedef MyGUI::WidgetPtr WP;
+	typedef std::list <std::string> strlist;
+		//  slider event and its text field for value
+	#define SLV(name)  void sl##name(SL);  MyGUI::StaticTextPtr val##name;
+	#define SL  WP wp, size_t val	//  slider event args
+	
+	//  graphics
+	SLV(Anisotropy);  SLV(ViewDist);  SLV(TerDetail);  SLV(TerDist);  SLV(RoadDist);
+	SLV(TexSize);  SLV(TerMtr);  // detail
+	SLV(Trees);  SLV(Grass);  SLV(TreesDist);  SLV(GrassDist);  // paged
+	SLV(Shaders);  SLV(ShadowType);  SLV(ShadowCount);  SLV(ShadowSize);  SLV(ShadowDist);  // shadow
+	void comboTexFilter(SL), btnShadows(WP), btnTrGrReset(WP);
+	MyGUI::ButtonPtr bnQuit;  void btnQuit(WP);
+
+	//  language
+	void comboLanguage(SL);
+	std::map<std::string, std::string> supportedLanguages; // <short name, display name>
+	bool bGuiReinit;  MyGUI::VectorWidgetPtr vwGui;
+	///-----------------------------------------
+
 
 	//  tooltips
 	WP mToolTip;  MyGUI::EditPtr mToolTipTxt;
@@ -185,20 +207,13 @@ protected:
 	MyGUI::StaticImagePtr brImg;  MyGUI::TabPtr wndTabs;
 
 
-	//  [Graphics]  sliders
-	SLV(Anisotropy);  SLV(ViewDist);  SLV(TerDetail);  SLV(TerDist);  SLV(RoadDist);
-	SLV(TexSize);  SLV(TerMtr);  // detail
-	SLV(Trees);  SLV(Grass);  SLV(TreesDist);  SLV(GrassDist);  // paged
-	SLV(Shaders);  SLV(ShadowType);  SLV(ShadowCount);  SLV(ShadowSize);  SLV(ShadowDist);  // shadow
 	//  checks
 	void chkOgreDialog(WP), chkAutoStart(WP), chkEscQuits(WP);  // startup
-	void comboTexFilter(SL), btnTrGrReset(WP);
 	
 	//  [settings]
 	SLV(SizeMinmap);  SLV(CamSpeed);  SLV(CamInert);
 	SLV(TerUpd);  SLV(SizeRoadP);  SLV(MiniUpd);
 	void chkMinimap(WP), btnSetCam(WP);
-	MyGUI::ButtonPtr bnQuit;  void btnQuit(WP);
 	
 
 	//  [Sky]  ----
@@ -294,7 +309,7 @@ protected:
 	void listTrackChng(MyGUI::List* li, size_t pos), //btnChgTrack(WP),
 		btnTrackNew(WP),btnTrackRename(WP),btnTrackDel(WP),  // track
 		msgTrackDel(MyGUI::Message* sender, MyGUI::MessageBoxStyle result);
-	void btnNewGame(WP), btnShadows(WP);
+	void btnNewGame(WP);
 
 	#define StTrk 12
 	MyGUI::StaticImagePtr imgPrv, imgMini,imgTer;
@@ -310,13 +325,6 @@ protected:
 
 	std::vector<Ogre::String> vsMaterials;
 	void GetMaterials(Ogre::String filename, Ogre::String type="material");
-
-
-	// language
-	void comboLanguage(SL);
-	std::map<std::string, std::string> supportedLanguages; // <short name, display name>
-	bool bGuiReinit;
-	MyGUI::VectorWidgetPtr vwGui;
 };
 
 #endif

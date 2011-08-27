@@ -9,17 +9,17 @@
 #else
 	#include "../../editor/OgreApp.h"
 #endif
-
+#include <OgreMaterialManager.h>
+#include <OgreSceneManager.h>
+#include <OgreTerrain.h>
+#include <OgreRenderWindow.h>
+#include "Gui_Def.h"
 using namespace MyGUI;
 using namespace Ogre;
 
 
-#define res  1000000.f
-#define Fmt  sprintf
-
-
 ///  Gui Init
-//-------------------------------------------------------------------------------------
+//----------------------------------------------------------------------------------------------------------------
 //  [Graphics]
 
 //  textures
@@ -70,7 +70,7 @@ void App::slTerDetail(SL)
 //  ter dist
 void App::slTerDist(SL)
 {
-	Real v = 1000.f * powf(val/res, 2.f);  if (bGI)  {  pSet->terdist = v;
+	Real v = 2000.f * powf(val/res, 2.f);  if (bGI)  {  pSet->terdist = v;
 		if (mTerrainGlobals)
 			mTerrainGlobals->setCompositeMapDistance(v);  }
 	if (valTerDist){	Fmt(s, "%4.0f m", v);	valTerDist->setCaption(s);  }
@@ -183,7 +183,8 @@ void App::slShadowDist(SL)
 }
 
 
-//  gui init  common
+//  init  common
+//----------------------------------------------------------------------------------------------------------------
 void App::GuiCenterMouse()
 {
 	int xm = mWindow->getWidth()/2, ym = mWindow->getHeight()/2;
@@ -192,6 +193,7 @@ void App::GuiCenterMouse()
 	ms.X.abs = xm;  ms.Y.abs = ym;
 }
 
+//  tooltip
 void App::GuiInitTooltip()
 {
 	mToolTip = Gui::getInstance().findWidget<Widget>("ToolTip");
@@ -199,3 +201,51 @@ void App::GuiInitTooltip()
 	mToolTipTxt = mToolTip->getChildAt(0)->castType<Edit>();
 }
 
+void App::btnQuit(WP)
+{
+	mShutDown = true;
+}
+
+//  Languages combo
+void App::GuiInitLang()
+{
+	supportedLanguages["en"] = "English";
+	supportedLanguages["de"] = "Deutsch";  //German
+	supportedLanguages["fi"] = "Suomi";   //Finnish
+	supportedLanguages["ro"] = "Romana";  //Romanian â?
+	supportedLanguages["pl"] = "Polski";  //Polish
+	
+	//ComboBoxPtr combo = mGUI->findWidget<ComboBox>("Lang");
+	ComboBoxPtr combo = (ComboBoxPtr)mWndOpts->findWidget("Lang");
+	if (!combo)  return;
+	combo->eventComboChangePosition = newDelegate(this, &App::comboLanguage);
+	for (std::map<std::string, std::string>::const_iterator it = supportedLanguages.begin();
+		it != supportedLanguages.end(); it++)
+	{
+		combo->addItem(it->second);
+		if (it->first == pSet->language)
+			combo->setIndexSelected(combo->getItemCount()-1);
+	}
+}
+
+void App::comboLanguage(SL)
+{
+	if (val == MyGUI::ITEM_NONE)  return;
+	MyGUI::ComboBoxPtr cmb = static_cast<MyGUI::ComboBoxPtr>(wp);
+	std::string sel = cmb->getItemNameAt(val);
+	
+	for (std::map<std::string, std::string>::const_iterator it = supportedLanguages.begin();
+		it != supportedLanguages.end(); it++)
+	{
+		if (it->second == sel)
+			pSet->language = it->first;
+	}
+	MyGUI::LanguageManager::getInstance().setCurrentLanguage(pSet->language);
+
+	//  reinit gui
+	bGuiReinit = true;
+	
+	#ifndef ROAD_EDITOR
+	setTranslations();
+	#endif
+}

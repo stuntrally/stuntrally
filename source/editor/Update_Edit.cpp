@@ -3,6 +3,7 @@
 #include "OgreApp.h"
 #include "../road/Road.h"
 #include "../paged-geom/PagedGeometry.h"
+#include "../ogre/common/Gui_Def.h"
 using namespace Ogre;
 
 
@@ -529,7 +530,7 @@ bool App::frameStarted(const Ogre::FrameEvent& evt)
 	
 	if (bGuiReinit)  // after language change from combo
 	{	bGuiReinit = false;
-		mGUI->destroyWidgets(vwGui);
+		mGUI->destroyWidgets(vwGui);  bnQuit=0;mWndOpts=0;  //todo: rest too..
 		InitGui();
 		SetGuiFromXmls();
 		//bWindowResized = true;

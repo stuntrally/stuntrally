@@ -2,10 +2,11 @@
 #include "Defines.h"
 #include "OgreApp.h"
 #include "../road/Road.h"
+#include <boost/filesystem.hpp>
+#include "../ogre/common/Gui_Def.h"
 using namespace MyGUI;
 using namespace Ogre;
 
-#include <boost/filesystem.hpp>
 
 //  Gui from xml (scene, road), after load
 //..........................................................................................................

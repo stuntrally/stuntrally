@@ -9,14 +9,13 @@
 #include <OgreRoot.h>
 #include <OgreRenderWindow.h>
 #include <OgreOverlay.h>
+#include "common/Gui_Def.h"
 using namespace MyGUI;
 using namespace Ogre;
 
 
 ///  Gui Init
 //-------------------------------------------------------------------------------------
-#define res  1000000.f
-#define Fmt  sprintf
 
 void App::InitGui()
 {
@@ -49,7 +48,6 @@ void App::InitGui()
 	{
 		setToolTips((*it)->getEnumerator());
 		//const std::string& name = (*it)->getName();
-		//if (name == "OptionsWnd")  mWndOpts = *it;
 	}
 	GuiInitTooltip();
 		
@@ -60,17 +58,8 @@ void App::InitGui()
 
 	///  Sliders
     //------------------------------------------------------------------------
-	HScrollPtr sl;  ComboBoxPtr combo;  size_t v;  ButtonPtr btn;
-
-	// get slider, assign event, get valtext, set value from settings
-	#define Slv(name, vset)  \
-		sl = (HScrollPtr)mLayout->findWidget(#name);  \
-		if (sl)  sl->eventScrollChangePosition = newDelegate(this, &App::sl##name);  \
-		val##name = (StaticTextPtr)(mLayout->findWidget(#name"Val"));  \
-		v = vset*res;  if (sl)  sl->setScrollPosition(v);	sl##name(sl, v);
-
-	#define Btn(name, event)   btn = mGUI->findWidget<Button>(name);  \
-		if (btn)  btn->eventMouseButtonClick = newDelegate(this, &App::event);
+	ButtonPtr btn,bchk;  ComboBoxPtr combo;
+	HScrollPtr sl;  size_t v;
 
 	//  detail
 	Slv(TerDetail,	powf(pSet->terdetail /20.f, 0.5f));
@@ -82,21 +71,7 @@ void App::InitGui()
 	combo = (ComboBoxPtr)mLayout->findWidget("TexFiltering");
 	if (combo)  combo->eventComboChangePosition = newDelegate(this, &App::comboTexFilter);
 	
-	//  language combo  ___________________
-	supportedLanguages["en"] = "English";
-	supportedLanguages["de"] = "Deutsch"; //German
-	supportedLanguages["fi"] = "Suomi";   //Finnish
-	supportedLanguages["ro"] = "Româna";  //Romanian
-	supportedLanguages["pl"] = "Polski";  //Polish
-	combo = NULL;  combo = (ComboBoxPtr)mLayout->findWidget("Lang");
-	if (combo)  combo->eventComboChangePosition = newDelegate(this, &App::comboLanguage);
-	for (std::map<std::string, std::string>::const_iterator it = supportedLanguages.begin();
-		it != supportedLanguages.end(); it++)
-	{
-		combo->addItem(it->second);
-		if (it->first == pSet->language)
-			combo->setIndexSelected(combo->getItemCount()-1);
-	}
+	GuiInitLang();
 	
 	Slv(Anisotropy,	pSet->anisotropy /res);
 	Slv(Shaders,	pSet->shaders /res);
@@ -144,43 +119,37 @@ void App::InitGui()
 
 	///  Checkboxes
     //------------------------------------------------------------------------
-	ButtonPtr bchk;
-	#define Chk(name, event, var)  \
-		bchk = mGUI->findWidget<Button>(name);  \
-		if (bchk)  {  bchk->eventMouseButtonClick = newDelegate(this, &App::event);  \
-			bchk->setStateCheck(pSet->var);  }
-
 	bnQuit = mGUI->findWidget<Button>("Quit");
 	if (bnQuit)  {  bnQuit->eventMouseButtonClick = newDelegate(this, &App::btnQuit);  bnQuit->setVisible(isFocGui);  }
-	Chk("ReverseOn", chkReverse, trackreverse);
-	Chk("ParticlesOn", chkParticles, particles);	Chk("TrailsOn", chkTrails, trails);
+	Chk("ReverseOn", chkReverse, pSet->trackreverse);
+	Chk("ParticlesOn", chkParticles, pSet->particles);	Chk("TrailsOn", chkTrails, pSet->trails);
 
-	Chk("Fps", chkFps, show_fps);	chFps = mGUI->findWidget<Button>("Fps");
+	Chk("Fps", chkFps, pSet->show_fps);	chFps = mGUI->findWidget<Button>("Fps");
 	if (pSet->show_fps)  mFpsOverlay->show();  else  mFpsOverlay->hide();
 
-	Chk("Digits", chkDigits, show_digits);
-	Chk("Gauges", chkGauges, show_gauges);  ShowHUD();//
+	Chk("Digits", chkDigits, pSet->show_digits);
+	Chk("Gauges", chkGauges, pSet->show_gauges);  ShowHUD();//
 
-	Chk("Minimap", chkMinimap, trackmap);	chMinimp = mGUI->findWidget<Button>("Minimap");
-	Chk("MiniZoom", chkMiniZoom, mini_zoomed);  Chk("MiniRot", chkMiniRot, mini_rotated);
-	Chk("Times", chkTimes, show_times);		chTimes  = mGUI->findWidget<Button>("Times");
-	Chk("CamInfo", chkCamInfo, show_cam);
+	Chk("Minimap", chkMinimap, pSet->trackmap);	chMinimp = bchk;
+	Chk("MiniZoom", chkMiniZoom, pSet->mini_zoomed);  Chk("MiniRot", chkMiniRot, pSet->mini_rotated);
+	Chk("Times", chkTimes, pSet->show_times);	chTimes  = bchk;
+	Chk("CamInfo", chkCamInfo, pSet->show_cam);
 
-	Chk("CarDbgBars", chkCarDbgBars, car_dbgbars);	chDbgB = mGUI->findWidget<Button>("CarDbgBars");
-	Chk("CarDbgTxt", chkCarDbgTxt, car_dbgtxt);		chDbgT = mGUI->findWidget<Button>("CarDbgTxt");
-	Chk("BulletDebug", chkBltDebug, bltDebug);	chBlt = mGUI->findWidget<Button>("BulletDebug");
-	Chk("BulletProfilerTxt", chkBltProfilerTxt, bltProfilerTxt);	chBltTxt = mGUI->findWidget<Button>("BulletDebug");
+	Chk("CarDbgBars", chkCarDbgBars, pSet->car_dbgbars);	chDbgB = bchk;
+	Chk("CarDbgTxt", chkCarDbgTxt, pSet->car_dbgtxt);		chDbgT = bchk;
+	Chk("BulletDebug", chkBltDebug, pSet->bltDebug);	chBlt = bchk;
+	Chk("BulletProfilerTxt", chkBltProfilerTxt, pSet->bltProfilerTxt);	chBltTxt = bchk;
 	
 	//  abs, tcs
-	Chk("CarABS",  chkAbs, abs);		Chk("CarTCS", chkTcs, tcs);
-	Chk("CarGear", chkGear, autoshift);
-	Chk("CarRear", chkRear, autorear);	Chk("CarClutch", chkClutch, autoclutch);
+	Chk("CarABS",  chkAbs, pSet->abs);		Chk("CarTCS", chkTcs, pSet->tcs);
+	Chk("CarGear", chkGear, pSet->autoshift);
+	Chk("CarRear", chkRear, pSet->autorear);	Chk("CarClutch", chkClutch, pSet->autoclutch);
 	//  game
-	Chk("VegetCollis", chkVegetCollis, veget_collis);
-	Chk("CarCollis", chkCarCollis, car_collis);
+	Chk("VegetCollis", chkVegetCollis, pSet->veget_collis);
+	Chk("CarCollis", chkCarCollis, pSet->car_collis);
 	Btn("btnPlayers1", btnNumPlayers);	Btn("btnPlayers2", btnNumPlayers);
 	Btn("btnPlayers3", btnNumPlayers);	Btn("btnPlayers4", btnNumPlayers);
-	Chk("chkSplitVertically", chkSplitVert, split_vertically);
+	Chk("chkSplitVertically", chkSplitVert, pSet->split_vertically);
 	valLocPlayers = mGUI->findWidget<StaticText>("valLocPlayers");
 	if (valLocPlayers)  valLocPlayers->setCaption(toStr(pSet->local_players));
 	
@@ -194,23 +163,23 @@ void App::InitGui()
 	Btn("TrGrReset", btnTrGrReset);
 
 	//  startup
-	Chk("OgreDialog", chkOgreDialog, ogre_dialog);
-	Chk("AutoStart", chkAutoStart, autostart);
-	Chk("EscQuits", chkEscQuits, escquit);
-	Chk("BltLines", chkBltLines, bltLines);
-	Chk("ShowPictures", chkLoadPics, loadingbackground);
+	Chk("OgreDialog", chkOgreDialog, pSet->ogre_dialog);
+	Chk("AutoStart", chkAutoStart, pSet->autostart);
+	Chk("EscQuits", chkEscQuits, pSet->escquit);
+	Chk("BltLines", chkBltLines, pSet->bltLines);
+	Chk("ShowPictures", chkLoadPics, pSet->loadingbackground);
 	
 	//  compositor, video
-	Chk("Bloom", chkVidBloom, bloom);
-	Chk("HDR", chkVidHDR, hdr);
-	Chk("MotionBlur", chkVidBlur, motionblur);
+	Chk("Bloom", chkVidBloom, pSet->bloom);
+	Chk("HDR", chkVidHDR, pSet->hdr);
+	Chk("MotionBlur", chkVidBlur, pSet->motionblur);
 
 	Slv(BloomInt,	pSet->bloomintensity);
 	Slv(BloomOrig,	pSet->bloomorig);
 	Slv(BlurIntens, pSet->motionblurintensity);
 	
-	Chk("FullScreen", chkVidFullscr, fullscreen);
-	Chk("VSync", chkVidVSync, vsync);
+	Chk("FullScreen", chkVidFullscr, pSet->fullscreen);
+	Chk("VSync", chkVidVSync, pSet->vsync);
 
 	//button_ramp, speed_sens..
 	
@@ -219,9 +188,9 @@ void App::InitGui()
 	Btn("RplLoad", btnRplLoad);  Btn("RplSave", btnRplSave);
 	Btn("RplDelete", btnRplDelete);  Btn("RplRename", btnRplRename);
 	//  settings
-	Chk("RplChkAutoRec", chkRplAutoRec, rpl_rec);
-	Chk("RplChkGhost", chkRplChkGhost, rpl_ghost);
-	Chk("RplChkBestOnly", chkRplChkBestOnly, rpl_bestonly);
+	Chk("RplChkAutoRec", chkRplAutoRec, pSet->rpl_rec);
+	Chk("RplChkGhost", chkRplChkGhost, pSet->rpl_ghost);
+	Chk("RplChkBestOnly", chkRplChkBestOnly, pSet->rpl_bestonly);
 	//  radios
 	Btn("RplBtnAll", btnRplAll);  rbRplAll = btn;
 	Btn("RplBtnCur", btnRplCur);  rbRplCur = btn;
@@ -393,16 +362,17 @@ void App::InitGui()
 		valTrk->setCaption(TR("#{Track}: " + pSet->track));  sListTrack = pSet->track;
 	trkDesc = (EditPtr)mLayout->findWidget("TrackDesc");
 
-	//  track stats
-	for (int i=0; i < StTrk; ++i)
-		stTrk[i] = (StaticTextPtr)mLayout->findWidget("iv"+toStr(i+1));
+    imgCar = (StaticImagePtr)mLayout->findWidget("CarImg");
+    listCarChng(carList,0);
 
 	//  preview images
-    imgCar = (StaticImagePtr)mLayout->findWidget("CarImg");
     imgPrv = (StaticImagePtr)mLayout->findWidget("TrackImg");
     imgTer = (StaticImagePtr)mLayout->findWidget("TrkTerImg");
     imgMini = (StaticImagePtr)mLayout->findWidget("TrackMap");
-    listCarChng(carList,0);  listTrackChng(trkList,0);
+	//  track stats
+	for (int i=0; i < StTrk; ++i)
+		stTrk[i] = (StaticTextPtr)mLayout->findWidget("iv"+toStr(i+1));
+    listTrackChng(trkList,0);
 
     ButtonPtr btnTrk = (ButtonPtr)mLayout->findWidget("ChangeTrack");
     if (btnTrk)  btnTrk->eventMouseButtonClick = newDelegate(this, &App::btnChgTrack);

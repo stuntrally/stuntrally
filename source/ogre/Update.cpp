@@ -8,6 +8,7 @@
 
 #include <OgreParticleSystem.h>
 #include <OgreManualObject.h>
+#include "common/Gui_Def.h"
 using namespace Ogre;
 
 
@@ -506,10 +507,7 @@ void App::updatePoses(float time)
 		if (valRplLen)  valRplLen->setCaption(GetTimeString(len));
 
 		if (slRplPos)
-		{
-			#define res  1000000.f
-			int v = pos/len * res;  slRplPos->setScrollPosition(v);
-		}
+		{	int v = pos/len * res;  slRplPos->setScrollPosition(v);  }
 	}	
 }
 

@@ -3,17 +3,12 @@
 #include "OgreApp.h"
 #include "../road/Road.h"
 #include <fstream>
-
+#include "../ogre/common/Gui_Def.h"
 using namespace MyGUI;
 using namespace Ogre;
 
 
 ///  Gui Events
-
-#define ChkEv(var)  \
-	pSet->var = !pSet->var; \
-	ButtonPtr chk = wp->castType<Button>(); \
-	chk->setStateCheck(pSet->var);
 
 #define Slv(name, val)  \
 	sl = (HScrollPtr)mWndOpts->findWidget(#name);  \
@@ -640,29 +635,4 @@ void App::btnSetCam(WP wp)
 	else if (s=="CamRight")	{	mCameraT->setPosition(0,y0,-xz);  mCameraT->setDirection(0,0, 1);  }
 	else if (s=="CamFront")	{	mCameraT->setPosition( xz,y0,0);  mCameraT->setDirection(-1,0,0);  }
 	else if (s=="CamBack")	{	mCameraT->setPosition(-xz,y0,0);  mCameraT->setDirection( 1,0,0);  }
-}
-
-void App::btnQuit(WP)
-{
-	mShutDown = true;
-}
-
-void App::comboLanguage(SL)
-{
-	if (val == MyGUI::ITEM_NONE)  return;
-	MyGUI::ComboBoxPtr cmb = static_cast<MyGUI::ComboBoxPtr>(wp);
-	std::string sel = cmb->getItemNameAt(val);
-	
-	for (std::map<std::string, std::string>::const_iterator it = supportedLanguages.begin();
-		it != supportedLanguages.end(); it++)
-	{
-		if (it->second == sel)
-			pSet->language = it->first;
-	}
-	MyGUI::LanguageManager::getInstance().setCurrentLanguage(pSet->language);
-
-	//  reinit gui
-	bGuiReinit = true;
-	
-	//setTranslations();
 }

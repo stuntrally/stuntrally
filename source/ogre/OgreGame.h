@@ -148,7 +148,7 @@ protected:
 	///  Gui
 	///-----------------------------------------------------------------------------------------------------------------
 	void InitGui(), toggleGui();  bool bGI;
-		void GuiCenterMouse(),GuiInitTooltip();
+		void GuiCenterMouse(),GuiInitTooltip(),GuiInitLang();
 	void UpdGuiRdStats(const SplineRoad* rd, const Scene& sc, float time), ReadTrkStats();
 	void UpdCarClrSld(bool upd=true);  bool bUpdCarClr;
 
@@ -158,29 +158,38 @@ protected:
 	void notifyToolTip(MyGUI::Widget* sender, const MyGUI::ToolTipInfo& info);
 	void boundedMove(MyGUI::Widget *moving, const MyGUI::IntPoint & point);
 
-	//  Gui events
+	///  Gui common   --------------------------
 	typedef MyGUI::WidgetPtr WP;
 	typedef std::list <std::string> strlist;
 		//  slider event and its text field for value
 	#define SLV(name)  void sl##name(SL);  MyGUI::StaticTextPtr val##name;
 	#define SL  WP wp, size_t val	//  slider event args
 	
+	//  graphics
+	SLV(Anisotropy);  SLV(ViewDist);  SLV(TerDetail);  SLV(TerDist);  SLV(RoadDist);
+	SLV(TexSize);  SLV(TerMtr);  // detail
+	SLV(Trees);  SLV(Grass);  SLV(TreesDist);  SLV(GrassDist);  // paged
+	SLV(Shaders);  SLV(ShadowType);  SLV(ShadowCount);  SLV(ShadowSize);  SLV(ShadowDist);  // shadow
+	void comboTexFilter(SL), btnShadows(WP), btnTrGrReset(WP), btnQuit(WP);
+
+	//  language
+	void comboLanguage(SL);
+	std::map<std::string, std::string> supportedLanguages; // <short name, display name>
+	bool bGuiReinit;  MyGUI::VectorWidgetPtr vwGui;
+	///-----------------------------------------
+	
 	// input tab
 	void controlBtnClicked(WP), InitInputGui(), UpdateJsButtons();
 	void joystickBindChanged(WP, size_t val);
 	void joystickSelectionChanged(WP, size_t val);
-	void recreateReflections(); // call after refl_mode changed
+	void recreateReflections();  // call after refl_mode changed
 
 	//  sliders
-	SLV(Anisotropy);  SLV(ViewDist);  SLV(TerDetail);  SLV(TerDist);  SLV(RoadDist);
-	SLV(TexSize);  SLV(TerMtr);  // detail
 	SLV(Particles);  SLV(Trails);
-	SLV(Trees);  SLV(Grass);  SLV(TreesDist);  SLV(GrassDist);  // paged
 	SLV(ReflSkip);  SLV(ReflSize);  SLV(ReflFaces);  SLV(ReflDist);  SLV(ReflMode); // refl
-	SLV(Shaders);  SLV(ShadowType);  SLV(ShadowCount);  SLV(ShadowSize);  SLV(ShadowDist);  // shadow
 	SLV(SizeGaug);  SLV(SizeMinimap);  SLV(ZoomMinimap);  // view
 	SLV(VolMaster);  SLV(VolEngine);  SLV(VolTires);  SLV(VolEnv);
-	SLV(CarClrH);  SLV(CarClrS);  SLV(CarClrV);  // clr
+	SLV(CarClrH);  SLV(CarClrS);  SLV(CarClrV);  // car clr
 	SLV(BloomInt);  SLV(BloomOrig);  SLV(BlurIntens);  // video
 	SLV(NumLaps);  // setup
 	
@@ -193,18 +202,13 @@ protected:
 		chkOgreDialog(WP), chkAutoStart(WP), chkEscQuits(WP), chkBltLines(WP),  // startup
 		chkVidBloom(WP), chkVidHDR(WP), chkVidBlur(WP),  // video
 		chkVidFullscr(WP), chkVidVSync(WP), UpdBloomVals(),
-		chkLoadPics(WP), chkVegetCollis(WP), chkCarCollis(WP);
+		chkLoadPics(WP), chkVegetCollis(WP), chkCarCollis(WP);  //,car
 
-	//  language
-	void comboLanguage(SL);
-	std::map<std::string, std::string> supportedLanguages; // <short name, display name>
-	bool bGuiReinit;
-
-	void comboTexFilter(SL), imgBtnCarClr(WP), btnCarClrRandom(WP);
-	MyGUI::ButtonPtr bRkmh, bRmph;  void radKmh(WP), radMph(WP), btnTrGrReset(WP), btnQuit(WP), btnResChng(WP);
+	void imgBtnCarClr(WP), btnCarClrRandom(WP);
+	MyGUI::ButtonPtr bRkmh, bRmph;  void radKmh(WP), radMph(WP), btnResChng(WP);
 	MyGUI::ButtonPtr chDbgT,chDbgB, chBlt,chBltTxt, chFps, chTimes,chMinimp, bnQuit;
 
-	///  replay
+	///  replay  -----------------------------
 	MyGUI::StaticTextPtr valRplPerc, valRplCur, valRplLen,
 		valRplName,valRplInfo,valRplName2,valRplInfo2;
 	MyGUI::HScrollPtr slRplPos;  void slRplPosEv(SL);
@@ -229,9 +233,10 @@ public:
 	int carIdWin, iCurCar;
 protected:
 	MyGUI::ButtonPtr btRplPl;  void UpdRplPlayBtn();
+	///---------------------------------------
 
 	//  game
-	void btnNewGame(WP),btnNewGameStart(WP), btnShadows(WP);
+	void btnNewGame(WP),btnNewGameStart(WP);
 	MyGUI::ListPtr carList,trkList, resList, rplList;  void updReplaysList();
 	void listRplChng(MyGUI::List* li, size_t pos);
 	void listCarChng(MyGUI::List* li, size_t pos),		btnChgCar(WP);
