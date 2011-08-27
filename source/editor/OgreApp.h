@@ -30,10 +30,7 @@ const int ciAngSnapsNum = 6;
 const Ogre::Real crAngSnaps[ciAngSnapsNum] = {0,15,30,45,90,180};
 
 
-namespace Forests
-{
-	class PagedGeometry;
-}
+namespace Forests {  class PagedGeometry;  }
 
 
 class App : public BaseApp, public Ogre::RenderTargetListener
@@ -152,12 +149,7 @@ protected:
 
 	///-----------------------------------------------------------------------------------------------------------------
 	///  Gui
-	///-----------------------------------------------------------------------------------------------------------------
-	void UpdVisGui(), UpdEditWnds();
-	void UpdGuiRdStats(const SplineRoad* rd, const Scene& sc, float time), ReadTrkStats();
-	void Status(Ogre::String s, float r,float g,float b);
-	void SetGuiFromXmls();  bool noBlendUpd;
-	
+	///-----------------------------------------------------------------------------------------------------------------	
 
 	//  shortcuts
 	typedef MyGUI::WidgetPtr WP;
@@ -178,7 +170,7 @@ protected:
 	void comboTexFilter(SL), btnShadows(WP), btnTrGrReset(WP);
 	MyGUI::ButtonPtr bnQuit;  void btnQuit(WP);
 
-	//  tooltips
+	//  tooltip
 	WP mToolTip;  MyGUI::EditPtr mToolTipTxt;
 	void setToolTips(MyGUI::EnumeratorWidgetPtr widgets);
 	void notifyToolTip(MyGUI::Widget* sender, const MyGUI::ToolTipInfo& info);
@@ -189,11 +181,22 @@ protected:
 	std::map<std::string, std::string> supportedLanguages; // <short name, display name>
 	bool bGuiReinit;  MyGUI::VectorWidgetPtr vwGui;
 
+	//  init
 	void InitGui();  bool bGI;
-		void GuiCenterMouse(),GuiInitTooltip(),GuiInitLang(),GuiInitGraphics();
+	void GuiCenterMouse(),GuiInitTooltip(),GuiInitLang(),GuiInitGraphics();
+	
+	//  track
+	void UpdGuiRdStats(const SplineRoad* rd, const Scene& sc, float time), ReadTrkStats();
+	MyGUI::ListPtr trkList;
+	void listTrackChng(MyGUI::List* li, size_t pos), TrackListUpd();
 	///-----------------------------------------
 
 	
+	void UpdVisGui(), UpdEditWnds();
+	void Status(Ogre::String s, float r,float g,float b);
+	void SetGuiFromXmls();  bool noBlendUpd;
+
+
 	//  brush & road windows texts
 	const static int BR_TXT=6, RD_TXT=14, RDS_TXT=9;
 	MyGUI::StaticTextPtr brTxt[BR_TXT], rdTxt[RD_TXT],rdTxtSt[RDS_TXT];
@@ -298,9 +301,7 @@ protected:
 	Ogre::String PathListTrk(int user=-1), PathListTrkPrv(int user=-1);
 	Ogre::String PathCopyTrk(int user=-1);
 
-	MyGUI::ListPtr trkList;  void TrackListUpd();
-	void listTrackChng(MyGUI::List* li, size_t pos), //btnChgTrack(WP),
-		btnTrackNew(WP),btnTrackRename(WP),btnTrackDel(WP),  // track
+	void btnTrackNew(WP),btnTrackRename(WP),btnTrackDel(WP),  // track
 		msgTrackDel(MyGUI::Message* sender, MyGUI::MessageBoxStyle result);
 	void btnNewGame(WP);
 

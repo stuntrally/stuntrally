@@ -288,44 +288,10 @@ void App::InitGui()
     ///  tracks list, text, chg btn
     //------------------------------------------------------------------------
     trkList = (ListPtr)mLayout->findWidget("TrackList");
+    TrackListUpd();
     if (trkList)
-    {	trkList->removeAllItems();
-		int ii = 0, si = 0;  bool bFound = false;
-
-		strlist li, lu;
-		PATHMANAGER::GetFolderIndex(pathTrk[0], li);
-		PATHMANAGER::GetFolderIndex(pathTrk[1], lu);
-		//  original
-		for (strlist::iterator i = li.begin(); i != li.end(); ++i)
-		{
-			std::string s = pathTrk[0] + *i + "/track.txt";
-			std::ifstream check(s.c_str());
-			if (check)  {
-				trkList->addItem(*i, 0);
-				if (!pSet->track_user && *i == pSet->track)  {  si = ii;
-					trkList->setIndexSelected(si);
-					bFound = true;  bListTrackU = 0;  }
-				ii++;  }
-		}
-		//  user
-		for (strlist::iterator i = lu.begin(); i != lu.end(); ++i)
-		{
-			std::string s = pathTrk[1] + *i + "/track.txt";
-			std::ifstream check(s.c_str());
-			if (check)  {
-				trkList->addItem("*" + (*i) + "*", 1);
-				if (pSet->track_user && *i == pSet->track)  {  si = ii;
-					trkList->setIndexSelected(si);
-					bFound = true;  bListTrackU = 1;  }
-				ii++;  }
-		}
-		//  not found last track, set 1st
-		if (!bFound)
-		{	pSet->track = *li.begin();  pSet->track_user = 0;  }
-		trkList->beginToItemAt(std::max(0, si-11));  // center
-		trkList->eventListChangePosition = newDelegate(this, &App::listTrackChng);
+    	trkList->eventListChangePosition = newDelegate(this, &App::listTrackChng);
 		//?trkList->eventMouseButtonDoubleClick = newDelegate(this, &App::btnNewGameStart);
-    }
     //------------------------------------------------------------------------
 
 	//  track text, chg btn
@@ -362,52 +328,6 @@ void App::InitGui()
 	LogO(String("::: Time Init Gui: ") + toStr(dt) + " ms");
 }
 
-
-///  . .  util tracks stats  . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 
-
-void App::ReadTrkStats()
-{
-	String sRd = PathListTrk() + "/road.xml";
-	String sSc = PathListTrk() + "/scene.xml";
-
-	SplineRoad rd(pGame);  rd.LoadFile(sRd,false);  // load
-	Scene sc;  sc.LoadXml(sSc);  // fails to defaults
-	TIMER tim;  tim.Load(PATHMANAGER::GetTrackRecordsPath()+"/"+sListTrack+".txt", 0.f, pGame->error_output);
-	tim.AddCar(sListCar);  tim.SetPlayerCarID(0);
-	UpdGuiRdStats(&rd,sc, tim.GetBestLap(pSet->trackreverse));
-}
-
-void App::UpdGuiRdStats(const SplineRoad* rd, const Scene& sc, float time)
-{
-	Fmt(s, "%5.3f km", sc.td.fTerWorldSize / 1000.f);	if (stTrk[1])  stTrk[1]->setCaption(s);
-	if (!rd)  return;
-	Fmt(s, "%5.3f km", rd->st.Length / 1000.f);			if (stTrk[0])  stTrk[0]->setCaption(s);
-
-	Fmt(s, "%4.2f m", rd->st.WidthAvg);		if (stTrk[2])  stTrk[2]->setCaption(s);
-	Fmt(s, "%3.1f m", rd->st.HeightDiff);	if (stTrk[3])  stTrk[3]->setCaption(s);
-
-	Fmt(s, "%3.1f%%", rd->st.OnTer);	if (stTrk[4])  stTrk[4]->setCaption(s);
-	Fmt(s, "%3.1f%%", rd->st.Pipes);	if (stTrk[5])  stTrk[5]->setCaption(s);
-					
-	//Fmt(s, "%4.2f%%", rd->st.Yaw);	if (stTrk[6])  stTrk[6]->setCaption(s);
-	//Fmt(s, "%4.2f%%", rd->st.Pitch);	if (stTrk[7])  stTrk[7]->setCaption(s);
-	//Fmt(s, "%4.2f%%", rd->st.Roll);	if (stTrk[8])  stTrk[8]->setCaption(s);
-	
-	//  best time, avg vel,
-	if (time < 0.1f)
-	{	Fmt(s, "%s", GetTimeString(0.f).c_str());	if (stTrk[6])  stTrk[6]->setCaption(s);
-		if (pSet->show_mph)	Fmt(s, "0 mph");
-		else				Fmt(s, "0 km/h");		if (stTrk[7])  stTrk[7]->setCaption(s);
-	}else
-	{	Fmt(s, "%s", GetTimeString(time).c_str());	if (stTrk[6])  stTrk[6]->setCaption(s);
-		if (pSet->show_mph)	Fmt(s, "%4.1f mph", rd->st.Length / time * 2.23693629f);
-		else				Fmt(s, "%4.1f km/h", rd->st.Length / time * 3.6f);
-		if (stTrk[7])  stTrk[7]->setCaption(s);
-		//Fmt(s, "%4.2f%%", rd->st.Pitch);	if (stTrk[8])  stTrk[8]->setCaption(s);
-	}
-	if (trkDesc)  // desc
-		trkDesc->setCaption(rd->sTxtDesc.c_str());
-}
 
 void App::UpdCarClrSld(bool upd)
 {

@@ -147,10 +147,6 @@ protected:
 	///-----------------------------------------------------------------------------------------------------------------
 	///  Gui
 	///-----------------------------------------------------------------------------------------------------------------
-	void toggleGui();
-	void UpdGuiRdStats(const SplineRoad* rd, const Scene& sc, float time), ReadTrkStats();
-	void UpdCarClrSld(bool upd=true);  bool bUpdCarClr;
-
 
 	//  shortcuts
 	typedef MyGUI::WidgetPtr WP;
@@ -169,7 +165,7 @@ protected:
 	void comboTexFilter(SL), btnShadows(WP), btnTrGrReset(WP);
 	MyGUI::ButtonPtr bnQuit;  void btnQuit(WP);
 
-	//  tooltips
+	//  tooltip
 	WP mToolTip;  MyGUI::EditPtr mToolTipTxt;
 	void setToolTips(MyGUI::EnumeratorWidgetPtr widgets);
 	void notifyToolTip(MyGUI::Widget* sender, const MyGUI::ToolTipInfo& info);
@@ -180,11 +176,20 @@ protected:
 	std::map<std::string, std::string> supportedLanguages; // <short name, display name>
 	bool bGuiReinit;  MyGUI::VectorWidgetPtr vwGui;
 
+	//  init
 	void InitGui();  bool bGI;
-		void GuiCenterMouse(),GuiInitTooltip(),GuiInitLang(),GuiInitGraphics();
+	void GuiCenterMouse(),GuiInitTooltip(),GuiInitLang(),GuiInitGraphics();
+
+	//  track
+	void UpdGuiRdStats(const SplineRoad* rd, const Scene& sc, float time), ReadTrkStats();
+	MyGUI::ListPtr trkList;
+	void listTrackChng(MyGUI::List* li, size_t pos), TrackListUpd();
 	///-----------------------------------------
 
 	
+	void toggleGui();
+	void UpdCarClrSld(bool upd=true);  bool bUpdCarClr;
+
 	// input tab
 	void controlBtnClicked(WP), InitInputGui(), UpdateJsButtons();
 	void joystickBindChanged(WP, size_t val);
@@ -244,10 +249,9 @@ protected:
 
 	//  game
 	void btnNewGame(WP),btnNewGameStart(WP);
-	MyGUI::ListPtr carList,trkList, resList, rplList;  void updReplaysList();
+	MyGUI::ListPtr carList, resList, rplList;  void updReplaysList();
 	void listRplChng(MyGUI::List* li, size_t pos);
-	void listCarChng(MyGUI::List* li, size_t pos),		btnChgCar(WP);
-	void listTrackChng(MyGUI::List* li, size_t pos),	btnChgTrack(WP);
+	void listCarChng(MyGUI::List* li, size_t pos),  btnChgCar(WP), btnChgTrack(WP);
 	int LNext(MyGUI::ListPtr lp, int rel);  // util next in list
 	void trkLNext(int rel), carLNext(int rel), rplLNext(int rel);
 	void tabPlayer(MyGUI::TabPtr wp, size_t id);
