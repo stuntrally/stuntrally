@@ -61,38 +61,19 @@ void App::InitGui()
 	ButtonPtr btn,bchk;  ComboBoxPtr combo;
 	HScrollPtr sl;  size_t v;
 
-	//  detail
-	Slv(TerDetail,	powf(pSet->terdetail /20.f, 0.5f));
-	Slv(TerDist,	powf(pSet->terdist /1000.f, 0.5f));
-	Slv(ViewDist,	powf((pSet->view_distance -50.f)/6950.f, 0.5f));
-	Slv(RoadDist,	powf(pSet->road_dist /4.f, 0.5f));
-
-	//  textures
-	combo = (ComboBoxPtr)mLayout->findWidget("TexFiltering");
-	if (combo)  combo->eventComboChangePosition = newDelegate(this, &App::comboTexFilter);
-	
 	GuiInitLang();
-	
-	Slv(Anisotropy,	pSet->anisotropy /res);
-	Slv(Shaders,	pSet->shaders /res);
-	Slv(TexSize,	pSet->tex_size /res);
-	Slv(TerMtr,		pSet->ter_mtr /res);
-	
-	//  particles/trails
-	Slv(Particles,	powf(pSet->particles_len /4.f, 0.5f));
-	Slv(Trails,		powf(pSet->trails_len /4.f, 0.5f));
 
-	//  trees/grass
-	Slv(Trees,		powf(pSet->trees /4.f, 0.5f));
-	Slv(Grass,		powf(pSet->grass /4.f, 0.5f));
-	Slv(TreesDist,	powf((pSet->trees_dist-0.5f) /6.5f, 0.5f));
-	Slv(GrassDist,	powf((pSet->grass_dist-0.5f) /6.5f, 0.5f));
-
+	GuiInitGraphics();
+	    
 	//  view sizes
 	Slv(SizeGaug,	(pSet->size_gauges-0.1f) /0.15f);
 	Slv(SizeMinimap,(pSet->size_minimap-0.05f) /0.25f);
 	Slv(ZoomMinimap,powf((pSet->zoom_minimap-1.0f) /9.f, 0.5f));
 	
+	//  particles/trails
+	Slv(Particles,	powf(pSet->particles_len /4.f, 0.5f));
+	Slv(Trails,		powf(pSet->trails_len /4.f, 0.5f));
+
 	//  reflect
 	Slv(ReflSkip,	powf(pSet->refl_skip /1000.f, 0.5f));
 	Slv(ReflSize,	pSet->refl_size /res);
@@ -103,13 +84,6 @@ void App::InitGui()
 	else if (pSet->refl_mode == "full")  value = 2;
 	Slv(ReflMode,   value /res);
 
-	//  shadows
-	Slv(ShadowType,	pSet->shadow_type /res);
-	Slv(ShadowCount,(pSet->shadow_count-2) /2.f);
-	Slv(ShadowSize,	pSet->shadow_size /float(ciShadowNumSizes));
-	Slv(ShadowDist,	powf((pSet->shadow_dist -50.f)/4750.f, 0.5f));
-    Btn("Apply", btnShadows);
-    
     //  sound
 	Slv(VolMaster,	pSet->vol_master/1.6f);	 Slv(VolEngine,	pSet->vol_engine/1.4f);
 	Slv(VolTires,	pSet->vol_tires/1.4f); 	 Slv(VolEnv,	pSet->vol_env/1.4f);
@@ -160,8 +134,6 @@ void App::InitGui()
 		bRkmh->eventMouseButtonClick = newDelegate(this, &App::radKmh);
 		bRmph->eventMouseButtonClick = newDelegate(this, &App::radMph);  }
 
-	Btn("TrGrReset", btnTrGrReset);
-
 	//  startup
 	Chk("OgreDialog", chkOgreDialog, pSet->ogre_dialog);
 	Chk("AutoStart", chkAutoStart, pSet->autostart);
@@ -181,7 +153,7 @@ void App::InitGui()
 	Chk("FullScreen", chkVidFullscr, pSet->fullscreen);
 	Chk("VSync", chkVidVSync, pSet->vsync);
 
-	//button_ramp, speed_sens..
+	//todo: button_ramp, speed_sens..
 	
 
 	//  replays  ------------------------------------------------------------
@@ -444,70 +416,6 @@ void App::UpdCarClrSld(bool upd)
 	Slv(CarClrH, pSet->car_hue[iCurCar]);
 	Slv(CarClrS, (pSet->car_sat[iCurCar] +1)*0.5f);  if (upd)  bUpdCarClr = true;
 	Slv(CarClrV, (pSet->car_val[iCurCar] +1)*0.5f);  bUpdCarClr = true;
-}
-
-
-///  Gui ToolTips
-//-----------------------------------------------------------------------------------------------------------
-
-void App::setToolTips(EnumeratorWidgetPtr widgets)
-{
-    while (widgets.next())
-    {
-        WidgetPtr wp = widgets.current();
-		wp->setAlign(Align::Relative);
-        bool tip = wp->isUserString("tip");
-		if (tip)  // if has tooltip string
-		{	
-			// needed for translation
-			wp->setUserString("tip", LanguageManager::getInstance().replaceTags(wp->getUserString("tip")));
-			wp->setNeedToolTip(true);
-			wp->eventToolTip = newDelegate(this, &App::notifyToolTip);
-		}
-		//LogO(wp->getName() + (tip ? "  *" : ""));
-        setToolTips(wp->getEnumerator());
-    }
-}
-
-void App::notifyToolTip(Widget *sender, const ToolTipInfo &info)
-{
-	if (!mToolTip)  return;
-
-	if (!isFocGui)
-	{	mToolTip->setVisible(false);
-		return;  }
-
-	if (info.type == ToolTipInfo::Show)
-	{	// TODO: isnt resizing properly ..
-		mToolTip->setSize(320, 96);  // start size for wrap
-		String s = TR(sender->getUserString("tip"));
-		mToolTipTxt->setCaption(s);
-		const IntSize &textsize = mToolTipTxt->getTextSize();
-		mToolTip->setSize(textsize.width*1.5, textsize.height*1.5);
-		mToolTip->setVisible(true);
-		boundedMove(mToolTip, info.point);
-	}
-	else if (info.type == ToolTipInfo::Hide)
-		mToolTip->setVisible(false);
-}
-
-//  Move a widget to a point while making it stay in the viewport.
-void App::boundedMove(Widget* moving, const IntPoint& point)
-{
-	const IntPoint offset(20, 20);  // mouse cursor
-	IntPoint p = point + offset;
-
-	const IntSize& size = moving->getSize();
-	
-	unsigned int vpw = mWindow->getWidth();
-	unsigned int vph = mWindow->getHeight();
-	
-	if (p.left + size.width > vpw)
-		p.left = vpw - size.width;
-	if (p.top + size.height > vph)
-		p.top = vph - size.height;
-			
-	moving->setPosition(p);
 }
 
 

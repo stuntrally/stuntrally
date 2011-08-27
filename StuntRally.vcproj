@@ -973,15 +973,15 @@
 				Name="Gui"
 				>
 				<File
-					RelativePath=".\source\ogre\CompositorLogics.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\source\ogre\CompositorLogics.h"
-					>
-				</File>
-				<File
 					RelativePath=".\source\ogre\common\Gui_Common.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\source\ogre\common\Gui_Common.h"
+					>
+				</File>
+				<File
+					RelativePath=".\source\ogre\common\Gui_Def.h"
 					>
 				</File>
 				<File
@@ -997,35 +997,11 @@
 					>
 				</File>
 				<File
-					RelativePath=".\Source\ogre\Hud.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\source\ogre\Localization.h"
-					>
-				</File>
-				<File
-					RelativePath=".\Source\ogre\OgreGame.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\Source\ogre\OgreGame.h"
+					RelativePath=".\source\ogre\Gui_Replay.cpp"
 					>
 				</File>
 				<File
 					RelativePath=".\data\gui\Options.layout"
-					>
-				</File>
-				<File
-					RelativePath=".\source\ogre\SplitScreen.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\source\ogre\SplitScreen.h"
-					>
-				</File>
-				<File
-					RelativePath=".\Source\ogre\Update.cpp"
 					>
 				</File>
 			</Filter>
@@ -1260,6 +1236,46 @@
 						>
 					</File>
 				</Filter>
+			</Filter>
+			<Filter
+				Name="Game"
+				>
+				<File
+					RelativePath=".\source\ogre\Compositor.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\source\ogre\Compositor.h"
+					>
+				</File>
+				<File
+					RelativePath=".\Source\ogre\Hud.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\source\ogre\Localization.h"
+					>
+				</File>
+				<File
+					RelativePath=".\Source\ogre\OgreGame.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\Source\ogre\OgreGame.h"
+					>
+				</File>
+				<File
+					RelativePath=".\source\ogre\SplitScreen.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\source\ogre\SplitScreen.h"
+					>
+				</File>
+				<File
+					RelativePath=".\Source\ogre\Update.cpp"
+					>
+				</File>
 			</Filter>
 		</Filter>
 		<Filter

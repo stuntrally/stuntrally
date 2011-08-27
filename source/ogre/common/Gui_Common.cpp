@@ -185,6 +185,42 @@ void App::slShadowDist(SL)
 
 //  init  common
 //----------------------------------------------------------------------------------------------------------------
+void App::GuiInitGraphics()
+{
+	ButtonPtr btn, bchk;  ComboBoxPtr combo;
+	HScrollPtr sl;  size_t v;
+
+	//  detail
+	Slv(TerDetail,	powf(pSet->terdetail /20.f, 0.5f));
+	Slv(TerDist,	powf(pSet->terdist /2000.f, 0.5f));
+	Slv(ViewDist,	powf((pSet->view_distance -50.f)/6950.f, 0.5f));
+	Slv(RoadDist,	powf(pSet->road_dist /4.f, 0.5f));
+
+	//  textures
+	Cmb(combo, "TexFiltering", comboTexFilter);
+	Slv(Anisotropy,	pSet->anisotropy /res);
+	Slv(Shaders,	pSet->shaders /res);
+	Slv(TexSize,	pSet->tex_size /res);
+	Slv(TerMtr,		pSet->ter_mtr /res);
+
+	//  trees/grass
+	Slv(Trees,		powf(pSet->trees /4.f, 0.5f));
+	Slv(Grass,		powf(pSet->grass /4.f, 0.5f));
+	Slv(TreesDist,	powf((pSet->trees_dist-0.5f) /6.5f, 0.5f));
+	Slv(GrassDist,	powf((pSet->grass_dist-0.5f) /6.5f, 0.5f));
+	Btn("TrGrReset", btnTrGrReset);
+
+	//  shadows
+	Slv(ShadowType,	pSet->shadow_type /res);
+	Slv(ShadowCount,(pSet->shadow_count-2) /2.f);
+	Slv(ShadowSize,	pSet->shadow_size /float(ciShadowNumSizes));
+	Slv(ShadowDist,	powf((pSet->shadow_dist -50.f)/4750.f, 0.5f));
+	Btn("Apply", btnShadows);
+}
+
+
+//  util
+//----------------------------------------------------------------------------------------------------------------
 void App::GuiCenterMouse()
 {
 	int xm = mWindow->getWidth()/2, ym = mWindow->getHeight()/2;
@@ -193,7 +229,14 @@ void App::GuiCenterMouse()
 	ms.X.abs = xm;  ms.Y.abs = ym;
 }
 
-//  tooltip
+void App::btnQuit(WP)
+{
+	mShutDown = true;
+}
+
+
+///  Tooltips
+//----------------------------------------------------------------------------------------------------------------
 void App::GuiInitTooltip()
 {
 	mToolTip = Gui::getInstance().findWidget<Widget>("ToolTip");
@@ -201,12 +244,71 @@ void App::GuiInitTooltip()
 	mToolTipTxt = mToolTip->getChildAt(0)->castType<Edit>();
 }
 
-void App::btnQuit(WP)
+void App::setToolTips(EnumeratorWidgetPtr widgets)
 {
-	mShutDown = true;
+    while (widgets.next())
+    {
+        WidgetPtr wp = widgets.current();
+		wp->setAlign(Align::Relative);
+        bool tip = wp->isUserString("tip");
+		if (tip)  // if has tooltip string
+		{	
+			// needed for translation
+			wp->setUserString("tip", LanguageManager::getInstance().replaceTags(wp->getUserString("tip")));
+			wp->setNeedToolTip(true);
+			wp->eventToolTip = newDelegate(this, &App::notifyToolTip);
+		}
+		//LogO(wp->getName() + (tip ? "  *" : ""));
+        setToolTips(wp->getEnumerator());
+    }
 }
 
+void App::notifyToolTip(Widget *sender, const ToolTipInfo &info)
+{
+	if (!mToolTip)  return;
+
+	#ifndef ROAD_EDITOR
+	if (!isFocGui)
+	{	mToolTip->setVisible(false);
+		return;  }
+	#endif
+
+	if (info.type == ToolTipInfo::Show)
+	{	// TODO: Tooltip isn't resizing properly ..
+		mToolTip->setSize(320, 96);  // start size for wrap
+		String s = TR(sender->getUserString("tip"));
+		mToolTipTxt->setCaption(s);
+		const IntSize &textsize = mToolTipTxt->getTextSize();
+		mToolTip->setSize(textsize.width*1.5, textsize.height*1.5);
+		mToolTip->setVisible(true);
+		boundedMove(mToolTip, info.point);
+	}
+	else if (info.type == ToolTipInfo::Hide)
+		mToolTip->setVisible(false);
+}
+
+//  Move a widget to a point while making it stay in the viewport.
+void App::boundedMove(Widget* moving, const IntPoint& point)
+{
+	const IntPoint offset(20, 20);  // mouse cursor
+	IntPoint p = point + offset;
+
+	const IntSize& size = moving->getSize();
+	
+	int vpw = mWindow->getWidth();
+	int vph = mWindow->getHeight();
+	
+	if (p.left + size.width > vpw)
+		p.left = vpw - size.width;
+	if (p.top + size.height > vph)
+		p.top = vph - size.height;
+			
+	moving->setPosition(p);
+}
+
+
 //  Languages combo
+//----------------------------------------------------------------------------------------------------------------
 void App::GuiInitLang()
 {
 	supportedLanguages["en"] = "English";

@@ -566,64 +566,6 @@ void App::UpdGuiRdStats(const SplineRoad* rd, const Scene& sc, float time)
 }
 
 
-///  Gui ToolTips
-//-----------------------------------------------------------------------------------------------------------
-
-void App::setToolTips(EnumeratorWidgetPtr widgets)
-{
-    while (widgets.next())
-    {
-        WidgetPtr wp = widgets.current();
-		wp->setAlign(Align::Relative);
-        bool tip = wp->isUserString("tip");
-		if (tip)  // if has tooltip string
-		{	
-			// needed for translation
-			wp->setUserString("tip", LanguageManager::getInstance().replaceTags(wp->getUserString("tip")));
-			wp->setNeedToolTip(true);
-			wp->eventToolTip = newDelegate(this, &App::notifyToolTip);
-		}
-		//LogO(wp->getName() + (tip ? "  *" : ""));
-        setToolTips(wp->getEnumerator());
-    }
-}
-
-void App::notifyToolTip(Widget *sender, const ToolTipInfo &info)
-{
-	if (info.type == ToolTipInfo::Show)
-	{	// TODO: Tooltip isn't resizing properly ..
-		mToolTip->setSize(320, 96);  // start size for wrap
-		String s = TR(sender->getUserString("tip"));
-		mToolTipTxt->setCaption(s);
-		const IntSize &textsize = mToolTipTxt->getTextSize();
-		mToolTip->setSize(textsize.width*1.5, textsize.height*1.5);
-		mToolTip->setVisible(true);
-		boundedMove(mToolTip, info.point);
-	}
-	else if (info.type == ToolTipInfo::Hide)
-		mToolTip->setVisible(false);
-}
-
-//  Move a widget to a point while making it stay in the viewport.
-void App::boundedMove(Widget* moving, const IntPoint& point)
-{
-	const IntPoint offset(20, 20);  // mouse cursor
-	IntPoint p = point + offset;
-
-	const IntSize& size = moving->getSize();
-	
-	int vpw = mWindow->getWidth();
-	int vph = mWindow->getHeight();
-	
-	if (p.left + size.width > vpw)
-		p.left = vpw - size.width;
-	if (p.top + size.height > vph)
-		p.top = vph - size.height;
-			
-	moving->setPosition(p);
-}
-
-
 ///  Get Materials
 //-----------------------------------------------------------------------------------------------------------
 

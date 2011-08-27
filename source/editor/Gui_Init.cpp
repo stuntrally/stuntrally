@@ -82,32 +82,7 @@ void App::InitGui()
 
 	///  [Graphics]
 	//------------------------------------------------------------------------
-	//  detail
-	Slv(TerDetail,	powf(pSet->terdetail /20.f, 0.5f));
-	Slv(TerDist,	powf(pSet->terdist /2000.f, 0.5f));
-	Slv(ViewDist,	powf((pSet->view_distance -50.f)/6950.f, 0.5f));
-	Slv(RoadDist,	powf(pSet->road_dist /4.f, 0.5f));
-
-	//  textures
-	Cmb(combo, "TexFiltering", comboTexFilter);
-	Slv(Anisotropy,	pSet->anisotropy /res);
-	Slv(Shaders,	pSet->shaders /res);
-	Slv(TexSize,	pSet->tex_size /res);
-	Slv(TerMtr,		pSet->ter_mtr /res);
-
-	//  trees/grass
-	Slv(Trees,		powf(pSet->trees /4.f, 0.5f));
-	Slv(Grass,		powf(pSet->grass /4.f, 0.5f));
-	Slv(TreesDist,	powf((pSet->trees_dist-0.5f) /6.5f, 0.5f));
-	Slv(GrassDist,	powf((pSet->grass_dist-0.5f) /6.5f, 0.5f));
-	Btn("TrGrReset", btnTrGrReset);
-
-	//  shadows
-	Slv(ShadowType,	pSet->shadow_type /res);
-	Slv(ShadowCount,(pSet->shadow_count-2) /2.f);
-	Slv(ShadowSize,	pSet->shadow_size /float(ciShadowNumSizes));
-	Slv(ShadowDist,	powf((pSet->shadow_dist -50.f)/4750.f, 0.5f));
-	Btn("Apply", btnShadows);
+	GuiInitGraphics();
 
 
 	///  [Settings]

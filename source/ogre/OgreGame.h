@@ -147,36 +147,43 @@ protected:
 	///-----------------------------------------------------------------------------------------------------------------
 	///  Gui
 	///-----------------------------------------------------------------------------------------------------------------
-	void InitGui(), toggleGui();  bool bGI;
-		void GuiCenterMouse(),GuiInitTooltip(),GuiInitLang();
+	void toggleGui();
 	void UpdGuiRdStats(const SplineRoad* rd, const Scene& sc, float time), ReadTrkStats();
 	void UpdCarClrSld(bool upd=true);  bool bUpdCarClr;
 
-	//  tooltips
-	MyGUI::WidgetPtr mToolTip;  MyGUI::EditPtr mToolTipTxt;
-	void setToolTips(MyGUI::EnumeratorWidgetPtr widgets);
-	void notifyToolTip(MyGUI::Widget* sender, const MyGUI::ToolTipInfo& info);
-	void boundedMove(MyGUI::Widget *moving, const MyGUI::IntPoint & point);
 
-	///  Gui common   --------------------------
+	//  shortcuts
 	typedef MyGUI::WidgetPtr WP;
 	typedef std::list <std::string> strlist;
-		//  slider event and its text field for value
+	//  slider event and its text field for value
 	#define SLV(name)  void sl##name(SL);  MyGUI::StaticTextPtr val##name;
-	#define SL  WP wp, size_t val	//  slider event args
-	
+	#define SL  WP wp, size_t val						//  slider event args
+
+
+	///  Gui common   --------------------------
 	//  graphics
 	SLV(Anisotropy);  SLV(ViewDist);  SLV(TerDetail);  SLV(TerDist);  SLV(RoadDist);
 	SLV(TexSize);  SLV(TerMtr);  // detail
 	SLV(Trees);  SLV(Grass);  SLV(TreesDist);  SLV(GrassDist);  // paged
 	SLV(Shaders);  SLV(ShadowType);  SLV(ShadowCount);  SLV(ShadowSize);  SLV(ShadowDist);  // shadow
-	void comboTexFilter(SL), btnShadows(WP), btnTrGrReset(WP), btnQuit(WP);
+	void comboTexFilter(SL), btnShadows(WP), btnTrGrReset(WP);
+	MyGUI::ButtonPtr bnQuit;  void btnQuit(WP);
+
+	//  tooltips
+	WP mToolTip;  MyGUI::EditPtr mToolTipTxt;
+	void setToolTips(MyGUI::EnumeratorWidgetPtr widgets);
+	void notifyToolTip(MyGUI::Widget* sender, const MyGUI::ToolTipInfo& info);
+	void boundedMove(MyGUI::Widget *moving, const MyGUI::IntPoint & point);
 
 	//  language
 	void comboLanguage(SL);
 	std::map<std::string, std::string> supportedLanguages; // <short name, display name>
 	bool bGuiReinit;  MyGUI::VectorWidgetPtr vwGui;
+
+	void InitGui();  bool bGI;
+		void GuiCenterMouse(),GuiInitTooltip(),GuiInitLang(),GuiInitGraphics();
 	///-----------------------------------------
+
 	
 	// input tab
 	void controlBtnClicked(WP), InitInputGui(), UpdateJsButtons();
@@ -206,7 +213,7 @@ protected:
 
 	void imgBtnCarClr(WP), btnCarClrRandom(WP);
 	MyGUI::ButtonPtr bRkmh, bRmph;  void radKmh(WP), radMph(WP), btnResChng(WP);
-	MyGUI::ButtonPtr chDbgT,chDbgB, chBlt,chBltTxt, chFps, chTimes,chMinimp, bnQuit;
+	MyGUI::ButtonPtr chDbgT,chDbgB, chBlt,chBltTxt, chFps, chTimes,chMinimp;
 
 	///  replay  -----------------------------
 	MyGUI::StaticTextPtr valRplPerc, valRplCur, valRplLen,

@@ -153,32 +153,23 @@ protected:
 	///-----------------------------------------------------------------------------------------------------------------
 	///  Gui
 	///-----------------------------------------------------------------------------------------------------------------
-	void InitGui(),  UpdVisGui(), UpdEditWnds();
-		void GuiCenterMouse(),GuiInitTooltip(),GuiInitLang();
+	void UpdVisGui(), UpdEditWnds();
 	void UpdGuiRdStats(const SplineRoad* rd, const Scene& sc, float time), ReadTrkStats();
 	void Status(Ogre::String s, float r,float g,float b);
-	void SetGuiFromXmls();  bool noBlendUpd, bGI;
+	void SetGuiFromXmls();  bool noBlendUpd;
 	
 
 	//  shortcuts
 	typedef MyGUI::WidgetPtr WP;
 	typedef std::list <std::string> strlist;
-
 	//  slider event and its text field for value
 	#define SLV(name)  void sl##name(SL);  MyGUI::StaticTextPtr val##name;
-
-	#define SL   WP wp, size_t val						//  slider event args
+	#define SL  WP wp, size_t val						//  slider event args
 	#define CMB  MyGUI::ComboBoxPtr cmb, size_t val		//  combo event args
 	#define TAB  MyGUI::TabPtr tab, size_t id			//  tab event args
 
-
-	///  Gui common   --------------------------
-	typedef MyGUI::WidgetPtr WP;
-	typedef std::list <std::string> strlist;
-		//  slider event and its text field for value
-	#define SLV(name)  void sl##name(SL);  MyGUI::StaticTextPtr val##name;
-	#define SL  WP wp, size_t val	//  slider event args
 	
+	///  Gui common   --------------------------
 	//  graphics
 	SLV(Anisotropy);  SLV(ViewDist);  SLV(TerDetail);  SLV(TerDist);  SLV(RoadDist);
 	SLV(TexSize);  SLV(TerMtr);  // detail
@@ -187,18 +178,20 @@ protected:
 	void comboTexFilter(SL), btnShadows(WP), btnTrGrReset(WP);
 	MyGUI::ButtonPtr bnQuit;  void btnQuit(WP);
 
-	//  language
-	void comboLanguage(SL);
-	std::map<std::string, std::string> supportedLanguages; // <short name, display name>
-	bool bGuiReinit;  MyGUI::VectorWidgetPtr vwGui;
-	///-----------------------------------------
-
-
 	//  tooltips
 	WP mToolTip;  MyGUI::EditPtr mToolTipTxt;
 	void setToolTips(MyGUI::EnumeratorWidgetPtr widgets);
 	void notifyToolTip(MyGUI::Widget* sender, const MyGUI::ToolTipInfo& info);
 	void boundedMove(MyGUI::Widget *moving, const MyGUI::IntPoint & point);
+
+	//  language
+	void comboLanguage(SL);
+	std::map<std::string, std::string> supportedLanguages; // <short name, display name>
+	bool bGuiReinit;  MyGUI::VectorWidgetPtr vwGui;
+
+	void InitGui();  bool bGI;
+		void GuiCenterMouse(),GuiInitTooltip(),GuiInitLang(),GuiInitGraphics();
+	///-----------------------------------------
 
 	
 	//  brush & road windows texts

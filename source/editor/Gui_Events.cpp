@@ -556,6 +556,11 @@ void App::editRoad(EditPtr ed)
 
 //  [Settings]  . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
+//  Startup
+void App::chkOgreDialog(WP wp){		ChkEv(ogre_dialog);	}
+void App::chkAutoStart(WP wp){		ChkEv(autostart);	}
+void App::chkEscQuits(WP wp){		ChkEv(escquit);		}
+
 void App::slMiniUpd(SL)
 {
 	pSet->mini_skip = val;
