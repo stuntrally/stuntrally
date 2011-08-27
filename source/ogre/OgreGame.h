@@ -173,7 +173,7 @@ protected:
 
 	//  language
 	void comboLanguage(SL);
-	std::map<std::string, std::string> supportedLanguages; // <short name, display name>
+	std::map<std::string, std::string> languages; // <short name, display name>
 	bool bGuiReinit;  MyGUI::VectorWidgetPtr vwGui;
 
 	//  init
@@ -187,6 +187,11 @@ protected:
 	#define StTrk 12
 	MyGUI::StaticTextPtr valTrk, stTrk[StTrk];
 	void listTrackChng(MyGUI::List* li, size_t pos), TrackListUpd();
+
+	//  screen
+	MyGUI::ListPtr resList;
+	void InitGuiScrenRes(), btnResChng(WP), ResizeOptWnd();
+	void chkVidFullscr(WP), chkVidVSync(WP);
 	///-----------------------------------------
 
 	
@@ -214,13 +219,12 @@ protected:
 		chkCamInfo(WP), chkTimes(WP), chkCarDbgBars(WP), chkCarDbgTxt(WP), chkBltDebug(WP), chkBltProfilerTxt(WP),
 		chkReverse(WP), chkParticles(WP), chkTrails(WP),
 		chkAbs(WP), chkTcs(WP), chkGear(WP), chkRear(WP), chkClutch(WP),  // car
-		chkOgreDialog(WP), chkAutoStart(WP), chkEscQuits(WP), chkBltLines(WP),  // startup
-		chkVidBloom(WP), chkVidHDR(WP), chkVidBlur(WP),  // video
-		chkVidFullscr(WP), chkVidVSync(WP), UpdBloomVals(),
-		chkLoadPics(WP), chkVegetCollis(WP), chkCarCollis(WP);  //,car
+		chkOgreDialog(WP), chkAutoStart(WP), chkEscQuits(WP), chkBltLines(WP), chkLoadPics(WP),  // startup
+		chkVidBloom(WP), chkVidHDR(WP), chkVidBlur(WP), UpdBloomVals(),  // video
+		chkVegetCollis(WP), chkCarCollis(WP);  //car
 
 	void imgBtnCarClr(WP), btnCarClrRandom(WP);
-	MyGUI::ButtonPtr bRkmh, bRmph;  void radKmh(WP), radMph(WP), btnResChng(WP);
+	MyGUI::ButtonPtr bRkmh, bRmph;  void radKmh(WP), radMph(WP);
 	MyGUI::ButtonPtr chDbgT,chDbgB, chBlt,chBltTxt, chFps, chTimes,chMinimp;
 
 	///  replay  -----------------------------
@@ -252,7 +256,7 @@ protected:
 
 	//  game
 	void btnNewGame(WP),btnNewGameStart(WP);
-	MyGUI::ListPtr carList, resList, rplList;  void updReplaysList();
+	MyGUI::ListPtr carList, rplList;  void updReplaysList();
 	void listRplChng(MyGUI::List* li, size_t pos);
 	void listCarChng(MyGUI::List* li, size_t pos),  btnChgCar(WP), btnChgTrack(WP);
 	int LNext(MyGUI::ListPtr lp, int rel);  // util next in list

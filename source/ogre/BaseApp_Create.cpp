@@ -6,7 +6,7 @@
 #include "../vdrift/pathmanager.h"
 #include "../vdrift/settings.h"
 
-#include "CompositorLogics.h"
+#include "Compositor.h"
 #include "Localization.h"
 #include "SplitScreen.h"
 #include "CarModel.h"
@@ -273,18 +273,19 @@ void BaseApp::Run( bool showDialog )
 
 //  ctor
 //-------------------------------------------------------------------------------------
-BaseApp::BaseApp() :
-	mRoot(0), mSceneMgr(0), mWindow(0), mHDRLogic(0),
-	mShowDialog(1), mShutDown(false),
-	mInputManager(0), mMouse(0), mKeyboard(0), mOISBsys(0),
-	alt(0), ctrl(0), shift(0), roadUpCnt(0),
-	mbLeft(0), mbRight(0), mbMiddle(0), 
-	isFocGui(0),isFocRpl(0), mGUI(0), mPlatform(0),
-	mWndOpts(0), mWndTabs(0), mWndRpl(0), bSizeHUD(true), bLoading(false), bAssignKey(false), pressedKey(static_cast<OIS::KeyCode>(0) ),
+BaseApp::BaseApp()
+	:mRoot(0), mSceneMgr(0), mWindow(0), mHDRLogic(0)
+	,mShowDialog(1), mShutDown(false), bWindowResized(0)
+	,mInputManager(0), mMouse(0), mKeyboard(0), mOISBsys(0)
+	,alt(0), ctrl(0), shift(0), roadUpCnt(0)
+	,mbLeft(0), mbRight(0), mbMiddle(0)
+	,isFocGui(0),isFocRpl(0), mGUI(0), mPlatform(0)
+	,mWndOpts(0), mWndTabs(0), mWndRpl(0)
+	,bSizeHUD(true), bLoading(false), bAssignKey(false), pressedKey(static_cast<OIS::KeyCode>(0) )
 
-	mDebugOverlay(0), mFpsOverlay(0), mOvrFps(0), mOvrTris(0), mOvrBat(0), mOvrDbg(0),
-	mbShowCamPos(0), ndSky(0),	mbWireFrame(0), //*
-	iCurCam(0)
+	,mDebugOverlay(0), mFpsOverlay(0), mOvrFps(0), mOvrTris(0), mOvrBat(0), mOvrDbg(0)
+	,mbShowCamPos(0), ndSky(0),	mbWireFrame(0)
+	,iCurCam(0)
 {
 	mLoadingBar = new LoadingBar();
 }
@@ -578,13 +579,11 @@ bool BaseApp::mouseReleased( const OIS::MouseEvent &arg, OIS::MouseButtonID id )
 //  adjust mouse clipping area
 void BaseApp::windowResized(RenderWindow* rw)
 {
-	unsigned int width, height, depth;
-	int left, top;
+	unsigned int width, height, depth;  int left, top;
 	rw->getMetrics(width, height, depth, left, top);
 
 	const OIS::MouseState &ms = mMouse->getMouseState();
-	ms.width = width;
-	ms.height = height;
+	ms.width = width;  ms.height = height;
 			
 	// adjust hud
 	bSizeHUD = true;

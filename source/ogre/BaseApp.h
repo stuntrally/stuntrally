@@ -11,8 +11,8 @@
 
 #include <MyGUI_Prerequest.h>
 #include <MyGUI_Widget.h>
-namespace MyGUI{  class OgrePlatform;  };
 
+namespace MyGUI{  class OgrePlatform;  };
 namespace Ogre {  class SceneNode;  class Root;  class SceneManager;  class RenderWindow;  }
 namespace OIS  {  class InputManager;  class Mouse;  class Keyboard;  }
 namespace OISB {  class System;  };
@@ -42,7 +42,7 @@ public:
 	class SETTINGS* pSet;
 	
 	//  wnd, hud, upl
-	bool bWindowResized;  bool bSizeHUD;
+	bool bWindowResized, bSizeHUD;
 	int roadUpCnt;
 	class LoadingBar* mLoadingBar;
 	Ogre::SceneNode* ndSky;  //-

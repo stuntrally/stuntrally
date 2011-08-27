@@ -533,16 +533,14 @@ bool App::frameStarted(const Ogre::FrameEvent& evt)
 		mGUI->destroyWidgets(vwGui);  bnQuit=0;mWndOpts=0;  //todo: rest too..
 		InitGui();
 		SetGuiFromXmls();
-		//bWindowResized = true;
+		bWindowResized = true;
 		mWndTabs->setIndexSelected(8);  // switch back to view tab
-	//}
+	}
 
-	//if (bWindowResized)
-	//{	bWindowResized = false;
+	if (bWindowResized)
+	{	bWindowResized = false;
 
-		//  reposition Quit btn
-		if (bnQuit)
-			bnQuit->setCoord(pSet->windowx - 0.09*pSet->windowx, 0, 0.09*pSet->windowx, 0.03*pSet->windowy);
+		ResizeOptWnd();
 		//bSizeHUD = true;
 		
 		LoadTrack();  // shouldnt be needed but ...

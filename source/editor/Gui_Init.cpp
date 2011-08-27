@@ -55,17 +55,7 @@ void App::InitGui()
 		mWndOpts->setPosition((sx-w.width)*0.5f, (sy-w.height)*0.5f);
 		mWndTabs = (TabPtr)mWndOpts->findWidget("TabWnd");
 		//mWndTabs->setIndexSelected(3);  //default*--
-
-		//  resize Options wnd
-		const int yN = 7;
-		const Real yw[yN] = {400, 600, 720, 768, 960, 1024, 1200};
-		const Real yf[yN] = {0.0, 0.0, 0.05, 0.1, 0.2, 0.3,  0.3};
-		Real xm = 0.f, ym = 0.f;  // margin
-		for (int i=0; i < yN; ++i)
-			if (pSet->windowy >= yw[i]-10)  ym = yf[i];
-		Real yo = (1.f - ym)*pSet->windowy, xo = 4.f/3.f * yo;  // opt wnd size in pix
-		ym = (pSet->windowy - yo)*0.5f;  xm = (pSet->windowx - xo)*0.5f;
-		mWndOpts->setCoord(xm, ym, xo, yo);
+		ResizeOptWnd();
 	}
 
 	//  center mouse pos
@@ -267,6 +257,8 @@ void App::InitGui()
 	}
 	//-----------------------------------------------------
 
+	InitGuiScrenRes();
+	
 
 	///  [Track]
 	//------------------------------------------------------------------------
@@ -291,6 +283,7 @@ void App::InitGui()
     //  load = new game
     for (int i=1; i<=2; ++i)
     {	Btn("NewGame"+toStr(i), btnNewGame);  }
+
 
 	bGI = true;  // gui inited, gui events can now save vals
 

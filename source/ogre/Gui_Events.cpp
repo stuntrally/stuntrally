@@ -305,32 +305,6 @@ void App::chkLoadPics(WP wp){		ChkEv(loadingbackground);	}
 
 //  [Video]  . . . . . . . . . . . . . . . . . . . .    ---- ------ ----    . . . . . . . . . . . . . . . . . . . .
 
-void App::btnResChng(WP)
-{
-	if (!resList)  return;
-	if (resList->getIndexSelected() == MyGUI::ITEM_NONE) return;
-	String mode = resList->getItem(resList->getIndexSelected());
-
-	pSet->windowx = StringConverter::parseInt(StringUtil::split(mode, "x")[0]);
-	pSet->windowy = StringConverter::parseInt(StringUtil::split(mode, "x")[1]);
-	
-	mWindow->resize(pSet->windowx, pSet->windowy);
-	
-	if (pSet->fullscreen)
-		mWindow->setFullscreen(true, pSet->windowx, pSet->windowy);
-	else
-	{
-	#ifdef _WIN32
-		int sx = GetSystemMetrics(SM_CXSCREEN), sy = GetSystemMetrics(SM_CYSCREEN);
-		int cx = std::max(0,(sx - pSet->windowx) / 2), cy = std::max(0,(sy - pSet->windowy) / 2);
-		mWindow->reposition(cx,cy);
-	#else
-		//mWindow->reposition(0,0);  // center ?..
-	#endif
-	}
-	bWindowResized = true;
-}
-
 void App::chkVidBloom(WP wp)
 {		
 	ChkEv(bloom);		
@@ -345,15 +319,6 @@ void App::chkVidBlur(WP wp)
 {		
 	ChkEv(motionblur);
 	refreshCompositor();
-}
-
-void App::chkVidFullscr(WP wp){		ChkEv(fullscreen);
-	mWindow->setFullscreen(pSet->fullscreen, pSet->windowx, pSet->windowy); mWindow->resize(pSet->windowx, pSet->windowy);
-}
-void App::chkVidVSync(WP wp)
-{		
-	ChkEv(vsync); 
-	Ogre::Root::getSingleton().getRenderSystem()->setWaitForVerticalBlank(pSet->vsync);
 }
 
 void App::slBloomInt(SL)

@@ -9,6 +9,7 @@
 #else
 	#include "../../editor/OgreApp.h"
 #endif
+#include <OgreRoot.h>
 #include <OgreMaterialManager.h>
 #include <OgreSceneManager.h>
 #include <OgreTerrain.h>
@@ -310,18 +311,18 @@ void App::boundedMove(Widget* moving, const IntPoint& point)
 //----------------------------------------------------------------------------------------------------------------
 void App::GuiInitLang()
 {
-	supportedLanguages["en"] = "English";
-	supportedLanguages["de"] = "Deutsch";  //German
-	supportedLanguages["fi"] = "Suomi";   //Finnish
-	supportedLanguages["ro"] = "Romana";  //Romanian â?
-	supportedLanguages["pl"] = "Polski";  //Polish
+	languages["en"] = "English";
+	languages["de"] = "Deutsch";  //German
+	languages["fi"] = "Suomi";   //Finnish
+	languages["ro"] = "Romana";  //Romanian â?
+	languages["pl"] = "Polski";  //Polish
 	
 	//ComboBoxPtr combo = mGUI->findWidget<ComboBox>("Lang");
 	ComboBoxPtr combo = (ComboBoxPtr)mWndOpts->findWidget("Lang");
 	if (!combo)  return;
 	combo->eventComboChangePosition = newDelegate(this, &App::comboLanguage);
-	for (std::map<std::string, std::string>::const_iterator it = supportedLanguages.begin();
-		it != supportedLanguages.end(); it++)
+	for (std::map<std::string, std::string>::const_iterator it = languages.begin();
+		it != languages.end(); it++)
 	{
 		combo->addItem(it->second);
 		if (it->first == pSet->language)
@@ -335,8 +336,8 @@ void App::comboLanguage(SL)
 	MyGUI::ComboBoxPtr cmb = static_cast<MyGUI::ComboBoxPtr>(wp);
 	std::string sel = cmb->getItemNameAt(val);
 	
-	for (std::map<std::string, std::string>::const_iterator it = supportedLanguages.begin();
-		it != supportedLanguages.end(); it++)
+	for (std::map<std::string, std::string>::const_iterator it = languages.begin();
+		it != languages.end(); it++)
 	{
 		if (it->second == sel)
 			pSet->language = it->first;
@@ -410,7 +411,7 @@ void App::UpdGuiRdStats(const SplineRoad* rd, const Scene& sc, float time)
 }
 
 
-//  track
+//  track  . . . . . . . . . . . . . . . . . . . . . . . . . 
 void App::listTrackChng(List* li, size_t pos)
 {
 	if (!li)  return;
@@ -431,7 +432,7 @@ void App::listTrackChng(List* li, size_t pos)
 }
 
 
-//  tracks list	 . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+//  tracks list	 . . . . . . . . . . . . . . . . . . . . . . 
 //-----------------------------------------------------------------------------------------------------------
 
 void App::TrackListUpd()
@@ -488,7 +489,7 @@ void App::TrackListUpd()
 }
 
 
-//  Gui Init  [Track]
+//  Gui Init  [Track]  . . . . . . . . . . . . . . . . . . . 
 void App::GuiInitTrack()
 {
 	//  list
@@ -506,4 +507,125 @@ void App::GuiInitTrack()
 	for (int i=0; i < StTrk; ++i)
 		stTrk[i] = (StaticTextPtr)mWndOpts->findWidget("iv"+toStr(i+1));
 	listTrackChng(trkList,0);
+}
+
+
+//  [Screen] resolutions
+//-----------------------------------------------------------------------------------------------------------
+
+void App::btnResChng(WP)
+{
+	if (!resList)  return;
+	if (resList->getIndexSelected() == MyGUI::ITEM_NONE) return;
+	String mode = resList->getItem(resList->getIndexSelected());
+
+	pSet->windowx = StringConverter::parseInt(StringUtil::split(mode, "x")[0]);
+	pSet->windowy = StringConverter::parseInt(StringUtil::split(mode, "x")[1]);
+	
+	mWindow->resize(pSet->windowx, pSet->windowy);
+	
+	if (pSet->fullscreen)
+		mWindow->setFullscreen(true, pSet->windowx, pSet->windowy);
+	else
+	{
+	#ifdef _WIN32
+		int sx = GetSystemMetrics(SM_CXSCREEN), sy = GetSystemMetrics(SM_CYSCREEN);
+		int cx = std::max(0,(sx - pSet->windowx) / 2), cy = std::max(0,(sy - pSet->windowy) / 2);
+		mWindow->reposition(cx,cy);
+	#else
+		//mWindow->reposition(0,0);  //TODO: linux window size,center ?..
+	#endif
+	}
+	bWindowResized = true;
+}
+
+//  get screen resolutions
+struct ScrRes {  int w,h;  String mode;  };
+
+bool ResSort(const ScrRes& r1, const ScrRes& r2)
+{
+	return (r1.w <= r2.w) && (r1.h <= r2.h);
+}
+
+void App::InitGuiScrenRes()
+{
+	ButtonPtr bchk;
+	Chk("FullScreen", chkVidFullscr, pSet->fullscreen);
+	Chk("VSync", chkVidVSync, pSet->vsync);
+
+	//  video resolutions combobox
+	resList = (ListPtr)mWndOpts->findWidget("ResList");
+	if (resList)
+	{
+		//  get resolutions
+		const StringVector& videoModes = Root::getSingleton().getRenderSystem()->getConfigOptions()["Video Mode"].possibleValues;
+		String modeSel = "";
+		std::vector<ScrRes> vRes;
+		for (int i=0; i < videoModes.size(); i++)
+		{
+			String mode = videoModes[i];
+			StringUtil::trim(mode);
+			if (StringUtil::match(mode, "*16-bit*"))  continue;  //skip ?DX
+
+			StringVector vmopts = StringUtil::split(mode, " x");  // only resolution
+			int w = StringConverter::parseUnsignedInt(vmopts[0]);
+			int h = StringConverter::parseUnsignedInt(vmopts[1]);
+			
+			if (w >= 800 && h >= 600)  // min res
+			{
+				mode = toStr(w) + " x " + toStr(h);
+				ScrRes res;  res.w = w;  res.h = h;  res.mode = mode;
+				vRes.push_back(res);
+				int ww = w - mWindow->getWidth(), hh = h - mWindow->getHeight();
+				if (abs(ww) < 30 && abs(hh) < 50)
+					modeSel = mode;
+			}
+		}
+		//  sort and add
+		std::sort(vRes.begin(), vRes.end(), ResSort);
+		for (int r=0; r < vRes.size(); ++r)
+			resList->addItem(vRes[r].mode);
+
+		//  sel current mode
+		if (modeSel != "")
+			resList->setIndexSelected(resList->findItemIndexWith(modeSel));
+	}
+	ButtonPtr btnRes = (ButtonPtr)mWndOpts->findWidget("ResChange");
+	if (btnRes)  {  btnRes->eventMouseButtonClick = newDelegate(this, &App::btnResChng);  }
+}
+
+
+//  resize Options wnd
+void App::ResizeOptWnd()
+{
+	if (!mWndOpts)  return;
+
+	const int wx = pSet->windowx, wy = pSet->windowy;
+	const int yN = 7;
+	const Real yw[yN] = {400, 600, 720, 768, 960, 1024, 1200};
+	const Real yf[yN] = {0.0, 0.0, 0.05, 0.1, 0.2, 0.3,  0.3};
+
+	Real xm = 0.f, ym = 0.f;  // margin
+	for (int i=0; i < yN; ++i)
+		if (wy >= yw[i]-10)  ym = yf[i];
+
+	Real yo = (1.f - ym)*wy, xo = 4.f/3.f * yo;  // opt wnd size in pix
+	ym = (wy - yo)*0.5f;  xm = (wx - xo)*0.5f;
+
+	mWndOpts->setCoord(xm, ym, xo, yo);
+	if (bnQuit)  //  reposition Quit btn
+		bnQuit->setCoord(wx - 0.09*wx, 0, 0.09*wx, 0.03*wy);
+}
+
+void App::chkVidFullscr(WP wp)
+{
+	ChkEv(fullscreen);  //TODO: got broken, crashes on win ..
+	mWindow->setFullscreen(pSet->fullscreen, pSet->windowx, pSet->windowy);
+	mWindow->resize(pSet->windowx, pSet->windowy);
+}
+
+void App::chkVidVSync(WP wp)
+{		
+	ChkEv(vsync); 
+	Ogre::Root::getSingleton().getRenderSystem()->setWaitForVerticalBlank(pSet->vsync);
 }

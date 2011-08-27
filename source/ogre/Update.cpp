@@ -53,7 +53,8 @@ bool App::frameStart(Real time)
 {	
 	if (bGuiReinit)  // after language change from combo
 	{	bGuiReinit = false;
-		mGUI->destroyWidgets(vwGui);
+
+		mGUI->destroyWidgets(vwGui);  bnQuit=0;mWndOpts=0;  //todo: rest too..
 		InitGui();
 		bWindowResized = true;
 		mWndTabs->setIndexSelected(6);  // switch back to view tab
@@ -62,22 +63,7 @@ bool App::frameStart(Real time)
 	if (bWindowResized)
 	{	bWindowResized = false;
 
-		//  resize Options wnd
-		const int yN = 7;
-		const Real yw[yN] = {400, 600, 720, 768, 960, 1024, 1200};
-		const Real yf[yN] = {0.0, 0.0, 0.05, 0.1, 0.2, 0.3,  0.3};
-		Real xm = 0.f, ym = 0.f;  // margin
-		for (int i=0; i < yN; ++i)
-			if (pSet->windowy >= yw[i]-10)  ym = yf[i];
-		Real yo = (1.f - ym)*pSet->windowy, xo = 4.f/3.f * yo;  // opt wnd size in pix
-		ym = (pSet->windowy - yo)*0.5f;  xm = (pSet->windowx - xo)*0.5f;
-		
-		if (mWndOpts)
-			mWndOpts->setCoord(xm, ym, xo, yo);
-
-		//  reposition Quit btn
-		if (bnQuit)
-			bnQuit->setCoord(pSet->windowx - 0.09*pSet->windowx, 0, 0.09*pSet->windowx, 0.03*pSet->windowy);
+		ResizeOptWnd();
 		bSizeHUD = true;
 	}
 		

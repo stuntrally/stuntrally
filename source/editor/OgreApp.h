@@ -178,7 +178,7 @@ protected:
 
 	//  language
 	void comboLanguage(SL);
-	std::map<std::string, std::string> supportedLanguages; // <short name, display name>
+	std::map<std::string, std::string> languages; // <short name, display name>
 	bool bGuiReinit;  MyGUI::VectorWidgetPtr vwGui;
 
 	//  init
@@ -192,6 +192,11 @@ protected:
 	#define StTrk 12
 	MyGUI::StaticTextPtr valTrk, stTrk[StTrk];
 	void listTrackChng(MyGUI::List* li, size_t pos), TrackListUpd();
+
+	//  screen
+	MyGUI::ListPtr resList;
+	void InitGuiScrenRes(), btnResChng(WP), ResizeOptWnd();
+	void chkVidFullscr(WP), chkVidVSync(WP);
 	///-----------------------------------------
 
 	

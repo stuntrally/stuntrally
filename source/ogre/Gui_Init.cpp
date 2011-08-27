@@ -141,7 +141,7 @@ void App::InitGui()
 	Chk("BltLines", chkBltLines, pSet->bltLines);
 	Chk("ShowPictures", chkLoadPics, pSet->loadingbackground);
 	
-	//  compositor, video
+	//  effects
 	Chk("Bloom", chkVidBloom, pSet->bloom);
 	Chk("HDR", chkVidHDR, pSet->hdr);
 	Chk("MotionBlur", chkVidBlur, pSet->motionblur);
@@ -150,9 +150,6 @@ void App::InitGui()
 	Slv(BloomOrig,	pSet->bloomorig);
 	Slv(BlurIntens, pSet->motionblurintensity);
 	
-	Chk("FullScreen", chkVidFullscr, pSet->fullscreen);
-	Chk("VSync", chkVidVSync, pSet->vsync);
-
 	//todo: button_ramp, speed_sens..
 	
 
@@ -220,40 +217,7 @@ void App::InitGui()
 	///  input tab
 	InitInputGui();
 	
-	
-	///  video resolutions combobox
-    //------------------------------------------------------------------------
-	resList = (ListPtr)mWndOpts->findWidget("ResList");
-	if (resList)
-	{
-		//  fill video resolution list
-		const StringVector& videoModes = Root::getSingleton().getRenderSystem()->getConfigOptions()["Video Mode"].possibleValues;
-		String modeSel = "";
-		for (int i=0; i < videoModes.size(); i++)
-		{
-			String mode = videoModes[i];
-			StringUtil::trim(mode);
-			if (StringUtil::match(mode, "*16-bit*"))  continue;  //skip ?DX
-
-			StringVector vmopts = StringUtil::split(mode, " x");  // only resolution
-			int w = StringConverter::parseUnsignedInt(vmopts[0]);
-			int h = StringConverter::parseUnsignedInt(vmopts[1]);
-			if (w >= 800 && h >= 600)  // min res
-			{
-				mode = toStr(w) + " x " + toStr(h);
-				resList->addItem(mode);
-				int ww = w - mWindow->getWidth(), hh = h - mWindow->getHeight();
-				if (abs(ww) < 30 && abs(hh) < 50)
-					modeSel = mode;
-			}
-		}
-		// todo.. sort w,h asc.
-		//  sel current mode
-		if (modeSel != "")
-			resList->setIndexSelected(resList->findItemIndexWith(modeSel));
-	}
-	ButtonPtr btnRes = (ButtonPtr)mWndOpts->findWidget("ResChange");
-	if (btnRes)  {  btnRes->eventMouseButtonClick = newDelegate(this, &App::btnResChng);  }
+	InitGuiScrenRes();
 	
 	
 	///  cars list
@@ -293,10 +257,10 @@ void App::InitGui()
     GuiInitTrack();
 
 	//  track text, chg btn
+	trkDesc = (EditPtr)mLayout->findWidget("TrackDesc");
     valTrk = (StaticTextPtr)mLayout->findWidget("TrackText");
     if (valTrk)
 		valTrk->setCaption(TR("#{Track}: " + pSet->track));  sListTrack = pSet->track;
-	trkDesc = (EditPtr)mLayout->findWidget("TrackDesc");
 
     ButtonPtr btnTrk = (ButtonPtr)mLayout->findWidget("ChangeTrack");
     if (btnTrk)  btnTrk->eventMouseButtonClick = newDelegate(this, &App::btnChgTrack);
@@ -306,6 +270,7 @@ void App::InitGui()
     {	ButtonPtr btnNewG = (ButtonPtr)mLayout->findWidget("NewGame"+toStr(i));
 		if (btnNewG)  btnNewG->eventMouseButtonClick = newDelegate(this, &App::btnNewGame);
 	}
+
 
 	bGI = true;  // gui inited, gui events can now save vals
 

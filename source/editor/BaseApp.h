@@ -35,6 +35,9 @@ public:
 	
 	SETTINGS* pSet;
 
+	bool bWindowResized;
+	Ogre::SceneNode* ndSky; //-
+
 	//AppThr appThr;
 #if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
 	HANDLE hpr;
@@ -53,7 +56,6 @@ protected:
 
 	void createCamera(), createFrameListener();
 	void setupResources(), createResourceListener(), loadResources();
-	Ogre::SceneNode* ndSky; //-
 
 	///  frame events
 	virtual bool frameStarted(const Ogre::FrameEvent& evt);

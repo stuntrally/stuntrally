@@ -133,7 +133,8 @@ void BaseApp::Run( bool showDialog )
 //-------------------------------------------------------------------------------------
 BaseApp::BaseApp()
 	:mRoot(0), mCamera(0),mCameraT(0), mViewport(0)
-	,mSceneMgr(0), mWindow(0), mShowDialog(1), mShutDown(false)
+	,mSceneMgr(0), mWindow(0)
+	,mShowDialog(1), mShutDown(false), bWindowResized(0)
 	,mInputManager(0), mMouse(0), mKeyboard(0)
 	,alt(0), ctrl(0), shift(0)
 	,mbLeft(0), mbRight(0), mbMiddle(0)
@@ -393,6 +394,8 @@ void BaseApp::windowResized(RenderWindow* rw)
 	const OIS::MouseState &ms = mMouse->getMouseState();
 	ms.width = width;  ms.height = height;
 	
+	bWindowResized = true;
+
 	// adjust camera asp. ratio
 	if (mCamera && mViewport)
 		mCamera->setAspectRatio( float(mWindow->getWidth()) / float(mWindow->getHeight()));

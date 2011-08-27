@@ -2,7 +2,7 @@
 #define __PCH_H__
 
 //  this is the precompiled header file for VS, only for Windows build
-#ifdef aaa_MSC_VER
+#ifdef _MSC_VER
 // include file for project specific include files that are used frequently, but are changed infrequently
 
 ///  std
