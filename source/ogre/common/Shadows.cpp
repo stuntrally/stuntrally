@@ -41,6 +41,10 @@ void App::changeShadows()
 			mTerrainGlobals->getDefaultMaterialGenerator()->getActiveProfile());
 		matProfile->setReceiveDynamicShadowsEnabled(enabled);
 		matProfile->setReceiveDynamicShadowsLowLod(true);
+			///TODO: pSet->ter_mtr  gui options +!...
+			//matProfile->setLayerNormalMappingEnabled(false);
+			//matProfile->setLayerParallaxMappingEnabled(false);
+			//matProfile->setLayerSpecularMappingEnabled(false);
 		matProfile->setGlobalColourMapEnabled(false);
 	}
 	
@@ -108,9 +112,11 @@ void App::changeShadows()
 	mSceneMgr->setShadowTextureCasterMaterial(bDepth ? "PSSM/shadow_caster" : StringUtil::BLANK);
 
 	if (matProfile && terrain)  {
-		matProfile->generateForCompositeMap(terrain);
 		matProfile->setReceiveDynamicShadowsDepth(bDepth);
 		matProfile->setReceiveDynamicShadowsPSSM(static_cast<PSSMShadowCameraSetup*>(mPSSMSetup.get()));
+		MaterialPtr mtr = matProfile->generateForCompositeMap(terrain);
+		//LogO(mtr->getBestTechnique()->getPass(0)->getTextureUnitState(0)->getName());
+		//LogO(String("Ter mtr: ") + mtr->getName());
 	}
 	UpdPSSMMaterials();
 
