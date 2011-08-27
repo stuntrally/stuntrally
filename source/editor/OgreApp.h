@@ -183,11 +183,14 @@ protected:
 
 	//  init
 	void InitGui();  bool bGI;
-	void GuiCenterMouse(),GuiInitTooltip(),GuiInitLang(),GuiInitGraphics();
+	void GuiCenterMouse(),GuiInitTooltip(),GuiInitLang(), GuiInitGraphics(),GuiInitTrack();
 	
 	//  track
 	void UpdGuiRdStats(const SplineRoad* rd, const Scene& sc, float time), ReadTrkStats();
-	MyGUI::ListPtr trkList;
+	MyGUI::ListPtr trkList;  MyGUI::EditPtr trkDesc;
+	MyGUI::StaticImagePtr imgPrv,imgMini,imgTer;
+	#define StTrk 12
+	MyGUI::StaticTextPtr valTrk, stTrk[StTrk];
 	void listTrackChng(MyGUI::List* li, size_t pos), TrackListUpd();
 	///-----------------------------------------
 
@@ -239,6 +242,7 @@ protected:
 	void editTerTriSize(MyGUI::EditPtr), editTerLScale(MyGUI::EditPtr);
 	void btnTerrainNew(WP), btnTerGenerate(WP);
 	MyGUI::StaticTextPtr valTerLAll;
+	
 	//  ter blendmap
 	SLV(TerLAngMin);  SLV(TerLHMin);  SLV(TerLAngSm);
 	SLV(TerLAngMax);  SLV(TerLHMax);  SLV(TerLHSm);
@@ -305,10 +309,7 @@ protected:
 		msgTrackDel(MyGUI::Message* sender, MyGUI::MessageBoxStyle result);
 	void btnNewGame(WP);
 
-	#define StTrk 12
-	MyGUI::StaticImagePtr imgPrv, imgMini,imgTer;
-	MyGUI::StaticTextPtr valTrk, stTrk[StTrk];
-	MyGUI::EditPtr trkDesc,trkName;  void editTrkDesc(MyGUI::EditPtr);
+	MyGUI::EditPtr trkName;  void editTrkDesc(MyGUI::EditPtr);
 
 
 	//  system, utils

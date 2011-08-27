@@ -223,7 +223,7 @@ void App::InitGui()
 	
 	///  video resolutions combobox
     //------------------------------------------------------------------------
-	resList = mGUI->findWidget<List>("ResList");
+	resList = (ListPtr)mWndOpts->findWidget("ResList");
 	if (resList)
 	{
 		//  fill video resolution list
@@ -252,7 +252,7 @@ void App::InitGui()
 		if (modeSel != "")
 			resList->setIndexSelected(resList->findItemIndexWith(modeSel));
 	}
-	ButtonPtr btnRes = mGUI->findWidget<Button>("ResChange");
+	ButtonPtr btnRes = (ButtonPtr)mWndOpts->findWidget("ResChange");
 	if (btnRes)  {  btnRes->eventMouseButtonClick = newDelegate(this, &App::btnResChng);  }
 	
 	
@@ -284,33 +284,19 @@ void App::InitGui()
     ButtonPtr btnCar = (ButtonPtr)mLayout->findWidget("ChangeCar");
     if (btnCar)  btnCar->eventMouseButtonClick = newDelegate(this, &App::btnChgCar);
 
+    imgCar = (StaticImagePtr)mLayout->findWidget("CarImg");
+    listCarChng(carList,0);
+
 
     ///  tracks list, text, chg btn
     //------------------------------------------------------------------------
-    trkList = (ListPtr)mLayout->findWidget("TrackList");
-    TrackListUpd();
-    if (trkList)
-    	trkList->eventListChangePosition = newDelegate(this, &App::listTrackChng);
-		//?trkList->eventMouseButtonDoubleClick = newDelegate(this, &App::btnNewGameStart);
-    //------------------------------------------------------------------------
+    GuiInitTrack();
 
 	//  track text, chg btn
     valTrk = (StaticTextPtr)mLayout->findWidget("TrackText");
     if (valTrk)
 		valTrk->setCaption(TR("#{Track}: " + pSet->track));  sListTrack = pSet->track;
 	trkDesc = (EditPtr)mLayout->findWidget("TrackDesc");
-
-    imgCar = (StaticImagePtr)mLayout->findWidget("CarImg");
-    listCarChng(carList,0);
-
-	//  preview images
-    imgPrv = (StaticImagePtr)mLayout->findWidget("TrackImg");
-    imgTer = (StaticImagePtr)mLayout->findWidget("TrkTerImg");
-    imgMini = (StaticImagePtr)mLayout->findWidget("TrackMap");
-	//  track stats
-	for (int i=0; i < StTrk; ++i)
-		stTrk[i] = (StaticTextPtr)mLayout->findWidget("iv"+toStr(i+1));
-    listTrackChng(trkList,0);
 
     ButtonPtr btnTrk = (ButtonPtr)mLayout->findWidget("ChangeTrack");
     if (btnTrk)  btnTrk->eventMouseButtonClick = newDelegate(this, &App::btnChgTrack);

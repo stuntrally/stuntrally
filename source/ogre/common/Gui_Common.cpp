@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "../Defines.h"
 #include "../../road/Road.h"
+#include "../../vdrift/pathmanager.h"
 #ifndef ROAD_EDITOR
 	#include "../../vdrift/game.h"
 	#include "../OgreGame.h"
@@ -17,9 +18,8 @@ using namespace MyGUI;
 using namespace Ogre;
 
 
-///  Gui Init
+///  Gui Init  [Graphics]
 //----------------------------------------------------------------------------------------------------------------
-//  [Graphics]
 
 //  textures
 void App::comboTexFilter(SL)
@@ -487,3 +487,23 @@ void App::TrackListUpd()
 	}
 }
 
+
+//  Gui Init  [Track]
+void App::GuiInitTrack()
+{
+	//  list
+    trkList = (ListPtr)mWndOpts->findWidget("TrackList");
+    TrackListUpd();
+    if (trkList)
+    	trkList->eventListChangePosition = newDelegate(this, &App::listTrackChng);
+		//?trkList->eventMouseButtonDoubleClick = newDelegate(this, &App::btnNewGameStart);
+	
+	//  preview images
+	imgPrv = (StaticImagePtr)mWndOpts->findWidget("TrackImg");
+	imgTer = (StaticImagePtr)mWndOpts->findWidget("TrkTerImg");
+	imgMini = (StaticImagePtr)mWndOpts->findWidget("TrackMap");
+	//  stats text
+	for (int i=0; i < StTrk; ++i)
+		stTrk[i] = (StaticTextPtr)mWndOpts->findWidget("iv"+toStr(i+1));
+	listTrackChng(trkList,0);
+}

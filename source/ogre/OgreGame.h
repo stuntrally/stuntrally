@@ -178,11 +178,14 @@ protected:
 
 	//  init
 	void InitGui();  bool bGI;
-	void GuiCenterMouse(),GuiInitTooltip(),GuiInitLang(),GuiInitGraphics();
+	void GuiCenterMouse(),GuiInitTooltip(),GuiInitLang(), GuiInitGraphics(),GuiInitTrack();
 
 	//  track
 	void UpdGuiRdStats(const SplineRoad* rd, const Scene& sc, float time), ReadTrkStats();
-	MyGUI::ListPtr trkList;
+	MyGUI::ListPtr trkList;  MyGUI::EditPtr trkDesc;
+	MyGUI::StaticImagePtr imgPrv,imgMini,imgTer;
+	#define StTrk 12
+	MyGUI::StaticTextPtr valTrk, stTrk[StTrk];
 	void listTrackChng(MyGUI::List* li, size_t pos), TrackListUpd();
 	///-----------------------------------------
 
@@ -260,9 +263,7 @@ protected:
 	Ogre::String pathTrk[2];  Ogre::String TrkDir();
 	Ogre::String PathListTrk(int user=-1);//, PathListTrkPrv(int user=-1);
 
-	#define StTrk 12
-	MyGUI::StaticImagePtr imgCar,imgPrv,imgMini,imgTer;  MyGUI::EditPtr trkDesc;
-	MyGUI::StaticTextPtr valCar, valTrk, stTrk[StTrk];
+	MyGUI::StaticImagePtr imgCar;	MyGUI::StaticTextPtr valCar;
 
 	char s[512];
 };

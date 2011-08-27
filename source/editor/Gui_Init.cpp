@@ -275,25 +275,13 @@ void App::InitGui()
 	sCopyTrack = "";  //! none
 	bCopyTrackU = 0;
 
-	//  list
-	trkList = (ListPtr)mWndOpts->findWidget("TrackList");
-	TrackListUpd();
-	if (trkList)  trkList->eventListChangePosition = newDelegate(this, &App::listTrackChng);
+	GuiInitTrack();
 	
 	//  text desc
 	Edt(trkDesc, "TrackDesc", editTrkDesc);
 	trkName = (EditPtr)mWndOpts->findWidget("TrackName");
 	if (trkName)  trkName->setCaption(pSet->track);
-		
-	//  preview images
-	imgPrv = (StaticImagePtr)mWndOpts->findWidget("TrackImg");
-	imgTer = (StaticImagePtr)mWndOpts->findWidget("TrkTerImg");
-	imgMini = (StaticImagePtr)mWndOpts->findWidget("TrackMap");
-	//  stats text
-	for (int i=0; i < StTrk; ++i)
-		stTrk[i] = (StaticTextPtr)mWndOpts->findWidget("iv"+toStr(i+1));
-	listTrackChng(trkList,0);
-
+	
 	//  btn change,  new, rename, delete
 	//Btn("ChangeTrack",	btnChgTrack);
 	Btn("TrackNew",		btnTrackNew);
