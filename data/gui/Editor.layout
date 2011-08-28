@@ -208,15 +208,15 @@
 				<Widget type="StaticImage" skin="StaticImage" position="528 232 240 240" name="TrackMap">
 					<UserString key="tip" value="#{TipMinimapScrnEditor}"/>
 				</Widget>
-				<Widget type="StaticText" skin="StaticText" position="532 70 92 18" name="i1">
-					<Property key="Widget_Caption" value="#{Length}"/>
+				<Widget type="StaticText" skin="StaticText" position="532 70 100 18" name="i1">
+					<Property key="Widget_Caption" value="#{TrackLength}"/>
 					<Property key="Text_TextColour" value="0.4 0.8 1.0"/>
 				</Widget>
 				<Widget type="StaticText" skin="StaticText" position="638 70 90 18" name="iv1">
 					<Property key="Widget_Caption" value="#{UnitKm}"/>
 					<Property key="Text_TextColour" value="0.4 0.8 1.0"/>
 				</Widget>
-				<Widget type="StaticText" skin="StaticText" position="532 90 92 18" name="i2">
+				<Widget type="StaticText" skin="StaticText" position="532 90 100 18" name="i2">
 					<Property key="Text_TextColour" value="0.4 0.8 1.0"/>
 					<Property key="Widget_Caption" value="#{TrackArea}"/>
 				</Widget>
@@ -224,37 +224,25 @@
 					<Property key="Widget_Caption" value="#{UnitM}"/>
 					<Property key="Text_TextColour" value="0.4 0.8 1.0"/>
 				</Widget>
-				<Widget type="StaticText" skin="StaticText" position="532 120 92 18" name="i3">
-					<Property key="Widget_Caption" value="#{TrackWidthAvg}"/>
-					<Property key="Text_TextColour" value="0.6 0.75 0.9"/>
-				</Widget>
-				<Widget type="StaticText" skin="StaticText" position="638 120 82 18" name="iv3">
+                <Widget type="StaticText" skin="StaticText" position="566 120 82 18" name="iv3">
 					<Property key="Widget_Caption" value="#{UnitM}"/>
 					<Property key="Text_TextColour" value="0.6 0.75 0.9"/>
+					<UserString key="tip" value="#{TrackWidthAvg}"/>
 				</Widget>
-				<Widget type="StaticText" skin="StaticText" position="532 140 92 18" name="i4">
-					<Property key="Widget_Caption" value="#{TrackHeightDiff}"/>
-					<Property key="Text_TextColour" value="0.6 0.75 0.9"/>
-				</Widget>
-				<Widget type="StaticText" skin="StaticText" position="638 140 82 18" name="iv4">
+                <Widget type="StaticText" skin="StaticText" position="566 140 82 18" name="iv4">
 					<Property key="Widget_Caption" value="#{UnitM}"/>
 					<Property key="Text_TextColour" value="0.6 0.75 0.9"/>
+					<UserString key="tip" value="#{TrackHeightDiff}"/>
 				</Widget>
-				<Widget type="StaticText" skin="StaticText" position="532 170 92 18" name="i5">
-					<Property key="Widget_Caption" value="#{TrackInAir}"/>
-					<Property key="Text_TextColour" value="0.5 0.9 0.9"/>
-				</Widget>
-				<Widget type="StaticText" skin="StaticText" position="638 170 82 18" name="iv5">
+                <Widget type="StaticText" skin="StaticText" position="702 120 82 18" name="iv5">
 					<Property key="Widget_Caption" value="%"/>
 					<Property key="Text_TextColour" value="0.5 0.9 0.9"/>
+					<UserString key="tip" value="#{TrackInAir}"/>
 				</Widget>
-				<Widget type="StaticText" skin="StaticText" position="532 190 92 18" name="i6">
-					<Property key="Widget_Caption" value="#{TrackPipes}"/>
-					<Property key="Text_TextColour" value="0.9 0.9 0.5"/>
-				</Widget>
-				<Widget type="StaticText" skin="StaticText" position="638 190 82 18" name="iv6">
+                <Widget type="StaticText" skin="StaticText" position="702 140 82 18" name="iv6">
 					<Property key="Widget_Caption" value="%"/>
 					<Property key="Text_TextColour" value="0.9 0.9 0.5"/>
+					<UserString key="tip" value="#{TrackPipes}"/>
 				</Widget>
 				<Widget type="Edit" skin="WordWrap" position="176 360 336 75" name="TrackDesc">
 					<Property key="Edit_ReadOnly" value="false"/>
@@ -266,6 +254,51 @@
 					<Property key="Widget_Colour" value="0.4 1 0.7"/>
 					<UserString key="tip" value="#{TipTrackDescEditor}"/>
 				</Widget>
+                <Widget type="StaticImage" skin="StaticImage" position="528 120 32 40" name="trkst1">
+                    <Property key="Image_Coord" value="0 32 32 40"/>
+                    <Property key="Image_Texture" value="track_icons.png"/>
+                </Widget>
+                <Widget type="StaticImage" skin="StaticImage" position="664 120 32 40" name="trkst2">
+                    <Property key="Image_Coord" value="32 32 32 40"/>
+                    <Property key="Image_Texture" value="track_icons.png"/>
+                </Widget>
+                <Widget type="StaticImage" skin="StaticImage" position="528 172 224 32" name="trkinf7">
+                    <Property key="Image_Texture" value="track_icons.png"/>
+                    <Property key="Image_Coord" value="0 0 224 32"/>
+					<UserString key="tip" value="#{TrackDifficulties}"/>
+                </Widget>
+                <Widget type="StaticImage" skin="StaticImage" position="528 215 224 32" name="trkinf2">
+                    <Property key="Image_Texture" value="track_icons.png"/>
+                    <Property key="Image_Coord" value="0 0 1 1"/>
+                </Widget>
+                <Widget type="StaticText" skin="StaticText" position="540 204 32 24" name="ti1">
+                    <Property key="Text_TextColour" value="0.5 1.0 0.4"/>
+					<UserString key="tip" value="#{bumps}"/>
+                </Widget>
+                <Widget type="StaticText" skin="StaticText" position="572 204 32 24" name="ti2">
+                    <Property key="Text_TextColour" value="1.0 0.6 0.3"/>
+					<UserString key="tip" value="#{jumps}"/>
+                </Widget>
+                <Widget type="StaticText" skin="StaticText" position="604 204 32 24" name="ti3">
+                    <Property key="Text_TextColour" value="0.3 0.9 1.0"/>
+					<UserString key="tip" value="#{loops}"/>
+                </Widget>
+                <Widget type="StaticText" skin="StaticText" position="636 204 32 24" name="ti4">
+                    <Property key="Text_TextColour" value="0.9 0.9 0.3"/>
+					<UserString key="tip" value="#{pipes}"/>
+                </Widget>
+                <Widget type="StaticText" skin="StaticText" position="668 204 32 24" name="ti5">
+                    <Property key="Text_TextColour" value="0.8 0.8 0.8"/>
+					<UserString key="tip" value="#{banked}"/>
+                </Widget>
+                <Widget type="StaticText" skin="StaticText" position="700 204 32 24" name="ti6">
+                    <Property key="Text_TextColour" value="0.8 0.8 1.0"/>
+					<UserString key="tip" value="#{frenzy}"/>
+                </Widget>
+                <Widget type="StaticText" skin="StaticText" position="732 204 32 24" name="ti7">
+                    <Property key="Text_TextColour" value="1.0 0.8 0.8"/>
+					<UserString key="tip" value="#{long}"/>
+                </Widget>
 				<Widget type="Button" skin="Button" position="528 16 156 25" name="TrackCopySel">
 					<Property key="Widget_Caption" value="#{CopySource}"/>
 					<Property key="Widget_Colour" value="0.8 0.8 1.0"/>
