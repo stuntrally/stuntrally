@@ -434,6 +434,18 @@ void App::listTrackChng(List* li, size_t pos)
 
 //  tracks list	 . . . . . . . . . . . . . . . . . . . . . . 
 //-----------------------------------------------------------------------------------------------------------
+struct TrkL  {  std::string name;  const TrackInfo* ti;  };
+
+bool TrkSort(const TrkL& t1, const TrkL& t2)
+{
+	//if (!t1.ti || !t2.ti)
+	//	return t1.name < t2.name;  // no info only name
+	//else
+	//	return (t1.ti->n) < (t2.ti->n);
+	int n1 = !t1.ti ? 1000 : t1.ti->n;
+	int n2 = !t2.ti ? 1000 : t2.ti->n;
+	return n1 < n2;
+}
 
 void App::TrackListUpd()
 {
@@ -441,23 +453,43 @@ void App::TrackListUpd()
 	{	trkList->removeAllItems();
 		#ifdef ROAD_EDITOR
 		vsTracks.clear();  vbTracksUser.clear();
+		std::string chkfile = "/scene.xml";
+		#else
+		std::string chkfile = "/track.txt";
 		#endif
 		int ii = 0, si = 0;  bool bFound = false;
 
 		strlist li,lu;
 		PATHMANAGER::GetFolderIndex(pathTrk[0], li);
 		PATHMANAGER::GetFolderIndex(pathTrk[1], lu);  //name duplicates
-		//  original
+
+		//  sort
+		std::list<TrkL> liTrk;
 		for (strlist::iterator i = li.begin(); i != li.end(); ++i)
 		{
+			TrkL trl;  trl.name = *i;
+			//  get info for track name from tracksXml
+			int id = tracksXml.trkmap[*i];
+			const TrackInfo* pTrk = id==0 ? 0 : &tracksXml.trks[id-1];
+			trl.ti = pTrk;  // 0 if not in tracksXml
+			liTrk.push_back(trl);
+		}
+		liTrk.sort(TrkSort);
+		
+		//  original
+		//for (strlist::iterator i = li.begin(); i != li.end(); ++i)  //no sort-
+		//{	const std::string& name = *i;
+		for (std::list<TrkL>::iterator i = liTrk.begin(); i != liTrk.end(); ++i)
+		{	const std::string& name = (*i).name;
 			#ifdef ROAD_EDITOR
-			vsTracks.push_back(*i);  vbTracksUser.push_back(false);
+			vsTracks.push_back(name);  vbTracksUser.push_back(false);
 			#endif
-			std::string s = pathTrk[0] + *i + "/scene.xml";
+			std::string s = pathTrk[0] + name + chkfile;
 			std::ifstream check(s.c_str());
 			if (check)  {
-				trkList->addItem(*i, 0);
-				if (!pSet->track_user && *i == pSet->track)  {  si = ii;
+				std::string liName = /*((*i).ti ? toStr((*i).ti->n) : "==") +" "+ */name;
+				trkList->addItem(liName, 0);
+				if (!pSet->track_user && name == pSet->track)  {  si = ii;
 					trkList->setIndexSelected(si);
 					bFound = true;  bListTrackU = 0;  }
 				ii++;  }
@@ -468,7 +500,7 @@ void App::TrackListUpd()
 			#ifdef ROAD_EDITOR
 			vsTracks.push_back(*i);  vbTracksUser.push_back(true);
 			#endif
-			std::string s = pathTrk[1] + *i + "/scene.xml";
+			std::string s = pathTrk[1] + *i + chkfile;
 			std::ifstream check(s.c_str());
 			if (check)  {
 				trkList->addItem("*" + (*i) + "*", 1);
@@ -513,6 +545,7 @@ void App::GuiInitTrack()
 //  [Screen] resolutions
 //-----------------------------------------------------------------------------------------------------------
 
+//  change
 void App::btnResChng(WP)
 {
 	if (!resList)  return;
@@ -538,6 +571,7 @@ void App::btnResChng(WP)
 	}
 	bWindowResized = true;
 }
+
 
 //  get screen resolutions
 struct ScrRes {  int w,h;  String mode;  };
@@ -577,7 +611,7 @@ void App::InitGuiScrenRes()
 				ScrRes res;  res.w = w;  res.h = h;  res.mode = mode;
 				vRes.push_back(res);
 				int ww = w - mWindow->getWidth(), hh = h - mWindow->getHeight();
-				if (abs(ww) < 30 && abs(hh) < 50)
+				if (abs(ww) < 30 && abs(hh) < 50)  // window difference
 					modeSel = mode;
 			}
 		}

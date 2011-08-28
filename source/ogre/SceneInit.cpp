@@ -28,6 +28,11 @@ void App::createScene()
 
 	mRoot->addResourceLocation(pathTrk[1] + "_previews/", "FileSystem");  //prv user tracks
 	
+	//  tracks.xml
+	tracksXml.LoadXml(PATHMANAGER::GetGameConfigDir() + "/tracks.xml");
+	//tracksXml.SaveXml(PATHMANAGER::GetGameConfigDir() + "/tracks2.xml");
+
+	//  gui
 	if (!pSet->autostart)  isFocGui = true;
 	InitGui();
 
@@ -42,6 +47,7 @@ void App::createScene()
 			1 /*0xfe/*8+(1<<13)*/);
 	}
 	
+	//  collisions.xml
 	objs.LoadXml();
 	LogO(String("**** Loaded Vegetation objects: ") + toStr(objs.colsMap.size()));
 	LogO(String("**** ReplayFrame size: ") + toStr(sizeof(ReplayFrame)));	
@@ -49,6 +55,7 @@ void App::createScene()
 
 	bRplRec = pSet->rpl_rec;  // startup setting
 
+	//  load
 	if (pSet->autostart)
 		NewGame();
 	

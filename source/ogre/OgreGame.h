@@ -4,6 +4,7 @@
 #include "BaseApp.h"
 #include "common/SceneXml.h"
 #include "common/BltObjects.h"
+#include "common/TracksXml.h"
 
 #include "ReplayGame.h"
 #include "CarModel.h"
@@ -184,9 +185,10 @@ protected:
 	void UpdGuiRdStats(const SplineRoad* rd, const Scene& sc, float time), ReadTrkStats();
 	MyGUI::ListPtr trkList;  MyGUI::EditPtr trkDesc;
 	MyGUI::StaticImagePtr imgPrv,imgMini,imgTer;
-	#define StTrk 12
+	const static int StTrk=12;
 	MyGUI::StaticTextPtr valTrk, stTrk[StTrk];
 	void listTrackChng(MyGUI::List* li, size_t pos), TrackListUpd();
+	TracksXml tracksXml;
 
 	//  screen
 	MyGUI::ListPtr resList;

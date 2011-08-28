@@ -1,4 +1,5 @@
 #include "pch.h"
+//#include "../ogre/Defines.h"
 #include "collision_world.h"
 
 #include "tobullet.h"
@@ -305,6 +306,31 @@ void COLLISION_WORLD::Update(float dt, bool profiling)
 	//const float fixedTimeStep = 1 / 60.0f;  ///~  320+  o:60.
 	//world->stepSimulation(dt, maxsubsteps, fixedTimeStep);
 	world->stepSimulation(dt, maxSubsteps, fixedTimestep);
+
+	///TODO: bullet hit info for particles and sounds ...
+	/*int numManifolds = world->getDispatcher()->getNumManifolds();
+	//LogO(toStr(numManifolds));
+	for (int i=0; i < numManifolds; ++i)
+	{
+		btPersistentManifold* contactManifold =  world->getDispatcher()->getManifoldByIndexInternal(i);
+		btCollisionObject* bA = static_cast<btCollisionObject*>(contactManifold->getBody0());
+		btCollisionObject* bB = static_cast<btCollisionObject*>(contactManifold->getBody1());
+	
+		int numContacts = contactManifold->getNumContacts();
+		for (int j=0;j<numContacts;j++)
+		{
+			btManifoldPoint& pt = contactManifold->getContactPoint(j);
+			if (pt.getDistance()<0.f)
+			{
+				//bA->get
+				const btVector3& pA = pt.getPositionWorldOnA();
+				const btVector3& pB = pt.getPositionWorldOnB();
+				const btVector3& nB = pt.m_normalWorldOnB;
+				btScalar f = pt.getAppliedImpulse();
+				LogO(Ogre::String("hit-")+toStr(i)+"-"+toStr(j)+" f "+toStr(f)+"  n "+toStr(nB.getX())+"."+toStr(nB.getY())+"."+toStr(nB.getZ()));
+			}
+		}
+	}/**/
 
 	///+  bullet profiling info
 	static int cc = 0;  cc++;

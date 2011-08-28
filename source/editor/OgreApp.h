@@ -4,6 +4,7 @@
 #include "BaseApp.h"
 #include "../ogre/common/SceneXml.h"
 #include "../ogre/common/BltObjects.h"
+#include "../ogre/common/TracksXml.h"
 
 #include "../vdrift/mathvector.h"
 #include "../vdrift/quaternion.h"
@@ -189,9 +190,10 @@ protected:
 	void UpdGuiRdStats(const SplineRoad* rd, const Scene& sc, float time), ReadTrkStats();
 	MyGUI::ListPtr trkList;  MyGUI::EditPtr trkDesc;
 	MyGUI::StaticImagePtr imgPrv,imgMini,imgTer;
-	#define StTrk 12
+	const static int StTrk=12;
 	MyGUI::StaticTextPtr valTrk, stTrk[StTrk];
 	void listTrackChng(MyGUI::List* li, size_t pos), TrackListUpd();
+	TracksXml tracksXml;
 
 	//  screen
 	MyGUI::ListPtr resList;

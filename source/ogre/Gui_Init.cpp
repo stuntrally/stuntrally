@@ -193,6 +193,7 @@ void App::InitGui()
 	if (rplList)  rplList->eventListChangePosition = newDelegate(this, &App::listRplChng);
 	updReplaysList();
 
+
 	//  car color buttons . . . . .
 	Real hsv[10][3] = {
 		{0.43,-0.1,-0.2},	{0.90, 0.1, 0.1},	{0.00, 0.0,-0.1},	{0.28,-0.35,-0.66},	{0.75, 0.1,-0.1},
