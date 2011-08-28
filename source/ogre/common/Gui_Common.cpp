@@ -389,6 +389,18 @@ void App::UpdGuiRdStats(const SplineRoad* rd, const Scene& sc, float time)
 	//Fmt(s, "%4.2f%%", rd->st.Pitch);	if (stTrk[7])  stTrk[7]->setCaption(s);
 	//Fmt(s, "%4.2f%%", rd->st.Roll);	if (stTrk[8])  stTrk[8]->setCaption(s);
 	
+	int id = tracksXml.trkmap[sListTrack];
+	for (int i=0; i < InfTrk; ++i)
+		if (infTrk[i])  infTrk[i]->setCaption("");
+	if (id > 0)
+	{	const TrackInfo& ti = tracksXml.trks[id-1];
+		#define str0(v)  ((v)==0 ? "" : toStr(v))
+		if (infTrk[0])  infTrk[0]->setCaption(str0(ti.bumps));		if (infTrk[1])  infTrk[1]->setCaption(str0(ti.jumps));
+		if (infTrk[2])  infTrk[2]->setCaption(str0(ti.loops));		if (infTrk[3])  infTrk[3]->setCaption(str0(ti.pipes));
+		if (infTrk[4])  infTrk[4]->setCaption(str0(ti.banked));		if (infTrk[5])  infTrk[5]->setCaption(str0(ti.frenzy));
+		if (infTrk[6])  infTrk[6]->setCaption(str0(ti.longn));
+	}
+
 #ifndef ROAD_EDITOR  // game
 	//  best time, avg vel,
 	if (time < 0.1f)
@@ -538,6 +550,8 @@ void App::GuiInitTrack()
 	//  stats text
 	for (int i=0; i < StTrk; ++i)
 		stTrk[i] = (StaticTextPtr)mWndOpts->findWidget("iv"+toStr(i+1));
+	for (int i=0; i < InfTrk; ++i)
+		infTrk[i] = (StaticTextPtr)mWndOpts->findWidget("ti"+toStr(i+1));
 	listTrackChng(trkList,0);
 }
 

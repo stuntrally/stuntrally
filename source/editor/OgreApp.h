@@ -190,8 +190,8 @@ protected:
 	void UpdGuiRdStats(const SplineRoad* rd, const Scene& sc, float time), ReadTrkStats();
 	MyGUI::ListPtr trkList;  MyGUI::EditPtr trkDesc;
 	MyGUI::StaticImagePtr imgPrv,imgMini,imgTer;
-	const static int StTrk=12;
-	MyGUI::StaticTextPtr valTrk, stTrk[StTrk];
+	const static int StTrk = 12, InfTrk = 7;
+	MyGUI::StaticTextPtr valTrk, stTrk[StTrk], infTrk[InfTrk];
 	void listTrackChng(MyGUI::List* li, size_t pos), TrackListUpd();
 	TracksXml tracksXml;
 
