@@ -449,6 +449,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\source\ogre\common\Gui_Def.h"
+				>
+			</File>
+			<File
 				RelativePath=".\Source\editor\Gui_Events.cpp"
 				>
 			</File>
@@ -534,6 +538,14 @@
 			</File>
 			<File
 				RelativePath=".\Source\ogre\common\Terrain.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\source\ogre\common\TracksXml.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\source\ogre\common\TracksXml.h"
 				>
 			</File>
 		</Filter>
