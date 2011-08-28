@@ -121,9 +121,9 @@
                     <Property key="Image_Coord" value="0 0 224 32"/>
 					<UserString key="tip" value="#{TrackDifficulties}"/>
                 </Widget>
-                <Widget type="StaticImage" skin="StaticImage" position="528 215 224 32" name="trkinf2">
+                <Widget type="StaticImage" skin="StaticImage" position="528 226 64 32" name="trkinf2">
                     <Property key="Image_Texture" value="track_icons.png"/>
-                    <Property key="Image_Coord" value="0 0 1 1"/>
+                    <Property key="Image_Coord" value="64 32 64 32"/>
                 </Widget>
                 <Widget type="StaticText" skin="StaticText" position="540 204 32 24" name="ti1">
                     <Property key="Text_TextColour" value="0.5 1.0 0.4"/>
@@ -152,6 +152,14 @@
                 <Widget type="StaticText" skin="StaticText" position="732 204 32 24" name="ti7">
                     <Property key="Text_TextColour" value="1.0 0.8 0.8"/>
 					<UserString key="tip" value="#{long}"/>
+                </Widget>
+                <Widget type="StaticText" skin="StaticText" position="540 254 32 24" name="ti8">
+                    <Property key="Text_TextColour" value="0.8 0.9 1.0"/>
+					<UserString key="tip" value="#{difficulty}"/>
+                </Widget>
+                <Widget type="StaticText" skin="StaticText" position="572 254 32 24" name="ti9">
+                    <Property key="Text_TextColour" value="0.86 0.93 1.0"/>
+					<UserString key="tip" value="#{rating}"/>
                 </Widget>
 			</Widget>
 			<Widget type="TabItem" skin="" position="4 26 787 531">

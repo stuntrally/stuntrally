@@ -399,6 +399,7 @@ void App::UpdGuiRdStats(const SplineRoad* rd, const Scene& sc, float time)
 		if (infTrk[2])  infTrk[2]->setCaption(str0(ti.loops));		if (infTrk[3])  infTrk[3]->setCaption(str0(ti.pipes));
 		if (infTrk[4])  infTrk[4]->setCaption(str0(ti.banked));		if (infTrk[5])  infTrk[5]->setCaption(str0(ti.frenzy));
 		if (infTrk[6])  infTrk[6]->setCaption(str0(ti.longn));
+		if (infTrk[7])  infTrk[7]->setCaption(toStr(ti.diff));		if (infTrk[8])  infTrk[8]->setCaption(toStr(ti.rating));
 	}
 
 #ifndef ROAD_EDITOR  // game
