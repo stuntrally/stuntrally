@@ -3,6 +3,7 @@
 #include "OgreApp.h"
 #include "../vdrift/pathmanager.h"
 //#include "../road/Road.h"
+#include "../ogre/common/Gui_Def.h"
 using namespace MyGUI;
 using namespace Ogre;
 
@@ -25,17 +26,13 @@ void App::InitGui()
 		if (name == "CamWnd")  mWndCam = *it;  else
 		if (name == "BrushWnd")  mWndBrush = *it;  else
 		if (name == "RoadCur")   mWndRoadCur = *it;  else
-		if (name == "RoadNew")   mWndRoadNew = *it;  else
 		if (name == "RoadStats")  mWndRoadStats = *it;  else
 		if (name == "OptionsWnd")  mWndOpts = *it;
 	}
 	if (mWndRoadStats)  mWndRoadStats->setVisible(false);
 
-	//  tooltip
-	mToolTip = Gui::getInstance().findWidget<Widget>("ToolTip");
-	mToolTip->setVisible(false);
-	mToolTipTxt = mToolTip->getChildAt(0)->castType<Edit>();
-
+	GuiInitTooltip();
+	
 	//  Brush wnd  assign controls  ----------------------
 	if (mWndBrush)
 	{	for (int i=0; i<BR_TXT; ++i)
@@ -43,11 +40,12 @@ void App::InitGui()
 		brImg = (StaticImagePtr)mWndBrush->findWidget("brushImg");
 	}
 
-	//  Road wnds
+	//  Road tool windows texts
 	if (mWndRoadCur)  for (int i=0; i<RD_TXT; ++i)
 		rdTxt[i] = (StaticTextPtr)mWndRoadCur->findWidget("rdCur"+toStr(i));
 	if (mWndRoadStats)  for (int i=0; i<RDS_TXT; ++i)
 		rdTxtSt[i] = (StaticTextPtr)mWndRoadStats->findWidget("rdStat"+toStr(i));
+
 
 	//  Options wnd
 	if (mWndOpts)
@@ -56,95 +54,24 @@ void App::InitGui()
 		IntSize w = mWndOpts->getSize();  // center
 		mWndOpts->setPosition((sx-w.width)*0.5f, (sy-w.height)*0.5f);
 		mWndTabs = (TabPtr)mWndOpts->findWidget("TabWnd");
-		mWndTabs->setIndexSelected(3);  //default*--
-
-		//  resize Options wnd
-		const int yN = 7;
-		const Real yw[yN] = {400, 600, 720, 768, 960, 1024, 1200};
-		const Real yf[yN] = {0.0, 0.0, 0.05, 0.1, 0.2, 0.3,  0.3};
-		Real xm = 0.f, ym = 0.f;  // margin
-		for (int i=0; i < yN; ++i)
-			if (pSet->windowy >= yw[i]-10)  ym = yf[i];
-		Real yo = (1.f - ym)*pSet->windowy, xo = 4.f/3.f * yo;  // opt wnd size in pix
-		ym = (pSet->windowy - yo)*0.5f;  xm = (pSet->windowx - xo)*0.5f;
-		mWndOpts->setCoord(xm, ym, xo, yo);
+		//mWndTabs->setIndexSelected(3);  //default*--
+		ResizeOptWnd();
 	}
 
 	//  center mouse pos
 	mGUI->setVisiblePointer(bGuiFocus || !bMoveCam);
-	int xm = mWindow->getWidth()/2, ym = mWindow->getHeight()/2;
-	InputManager::getInstance().injectMouseMove(xm, ym, 0);
-	OIS::MouseState &ms = const_cast<OIS::MouseState&>(mMouse->getMouseState());
-	ms.X.abs = xm;  ms.Y.abs = ym;
+	GuiCenterMouse();
 	
 	//  hide  ---
 	edMode = ED_Deform;  UpdEditWnds();  // *  UpdVisHit(); //after track
 	if (!mWndOpts)  return;  // error
 	
-	
-	//  Shortcuts: find, assign event, set value
-	//------------------------------------------------------------------------
-	ButtonPtr btn, bchk;  ComboBoxPtr combo;
+	ButtonPtr btn, bchk;  ComboBoxPtr combo;  // for defines
 	HScrollPtr sl;  size_t v;
-
-	#define Slv(name, vset)  \
-		sl = (HScrollPtr)mWndOpts->findWidget(#name);  \
-		if (sl)  sl->eventScrollChangePosition = newDelegate(this, &App::sl##name);  \
-		val##name = (StaticTextPtr)(mWndOpts->findWidget(#name"Val"));  \
-		v = vset*res;  if (sl)  sl->setScrollPosition(v);	sl##name(sl, v);
-
-	#define Btn(name, event)  \
-		btn = (ButtonPtr)mWndOpts->findWidget(name);  \
-		if (btn)  btn->eventMouseButtonClick = newDelegate(this, &App::event);
-
-	#define Chk(name, event, var)  \
-		bchk = mGUI->findWidget<Button>(name);  \
-		if (bchk)  {  bchk->eventMouseButtonClick = newDelegate(this, &App::event);  \
-			bchk->setStateCheck(var);  }
-
-	#define Edt(edit, name, event)  \
-		edit = (EditPtr)mWndOpts->findWidget(name);  \
-		if (edit)  edit->eventEditTextChange = newDelegate(this, &App::event);
-
-	#define Ed(name, evt)  Edt(ed##name, #name, evt)
-		
-	#define Cmb(cmb, name, event)  \
-		cmb = (ComboBoxPtr)mWndOpts->findWidget(name);  \
-		cmb->eventComboChangePosition = newDelegate(this, &App::event);
-
-	#define Tab(tab, name, event)  \
-		tab = (TabPtr)mWndOpts->findWidget(name);  \
-		tab->eventTabChangeSelect = newDelegate(this, &App::event);
-
-
 
 	///  [Graphics]
 	//------------------------------------------------------------------------
-	//  detail
-	Slv(TerDetail,	powf(pSet->terdetail /20.f, 0.5f));
-	Slv(TerDist,	powf(pSet->terdist /2000.f, 0.5f));
-	Slv(ViewDist,	powf((pSet->view_distance -50.f)/6950.f, 0.5f));
-	Slv(RoadDist,	powf(pSet->road_dist /4.f, 0.5f));
-
-	//  textures
-	Cmb(combo, "TexFiltering", comboTexFilter);
-	Slv(Anisotropy,	pSet->anisotropy /res);
-	Slv(Shaders,	pSet->shaders /res);
-	Slv(TexSize,	pSet->tex_size /res);
-
-	//  trees/grass
-	Slv(Trees,		powf(pSet->trees /4.f, 0.5f));
-	Slv(Grass,		powf(pSet->grass /4.f, 0.5f));
-	Slv(TreesDist,	powf((pSet->trees_dist-0.5f) /6.5f, 0.5f));
-	Slv(GrassDist,	powf((pSet->grass_dist-0.5f) /6.5f, 0.5f));
-	Btn("TrGrReset", btnTrGrReset);
-
-	//  shadows
-	Slv(ShadowType,	pSet->shadow_type /res);
-	Slv(ShadowCount,(pSet->shadow_count-2) /2.f);
-	Slv(ShadowSize,	pSet->shadow_size /float(ciShadowNumSizes));
-	Slv(ShadowDist,	powf((pSet->shadow_dist -50.f)/4750.f, 0.5f));
-	Btn("Apply", btnShadows);
+	GuiInitGraphics();
 
 
 	///  [Settings]
@@ -254,22 +181,7 @@ void App::InitGui()
 	///  Fill Combo boxes  . . . . . . .
 	//------------------------------------------------------------------------------------------------------------
 
-	//  language combo  ___________________
-	supportedLanguages.clear();
-	supportedLanguages["en"] = "English";
-	supportedLanguages["de"] = "Deutsch";  //German
-	supportedLanguages["fi"] = "Suomi";   //Finnish
-	supportedLanguages["ro"] = "Româna";  //Romanian
-	supportedLanguages["pl"] = "Polski";  //Polish
-	combo = NULL;  combo = mGUI->findWidget<ComboBox>("Lang");
-	if (combo)  combo->eventComboChangePosition = newDelegate(this, &App::comboLanguage);
-	for (std::map<std::string, std::string>::const_iterator it = supportedLanguages.begin();
-		it != supportedLanguages.end(); it++)
-	{
-		combo->addItem(it->second);
-		if (it->first == pSet->language)
-			combo->setIndexSelected(combo->getItemCount()-1);
-	}
+	GuiInitLang();
 	
 	//---------------------  SKYS  ---------------------
 	Cmb(cmbSky, "SkyCombo", comboSky);
@@ -344,6 +256,8 @@ void App::InitGui()
 	}
 	//-----------------------------------------------------
 
+	InitGuiScrenRes();
+	
 
 	///  [Track]
 	//------------------------------------------------------------------------
@@ -352,36 +266,25 @@ void App::InitGui()
 	sCopyTrack = "";  //! none
 	bCopyTrackU = 0;
 
-	//  list
-	trkList = (ListPtr)mWndOpts->findWidget("TrackList");
-	TrackListUpd();
-	if (trkList)  trkList->eventListChangePosition = newDelegate(this, &App::listTrackChng);
+	GuiInitTrack();
 	
 	//  text desc
 	Edt(trkDesc, "TrackDesc", editTrkDesc);
 	trkName = (EditPtr)mWndOpts->findWidget("TrackName");
 	if (trkName)  trkName->setCaption(pSet->track);
-		
-	//  preview images
-	imgPrv = (StaticImagePtr)mWndOpts->findWidget("TrackImg");
-	imgTer = (StaticImagePtr)mWndOpts->findWidget("TrkTerImg");
-	imgMini = (StaticImagePtr)mWndOpts->findWidget("TrackMap");
-	//  stats text
-	for (int i=0; i < StTrk; ++i)
-		stTrk[i] = (StaticTextPtr)mWndOpts->findWidget("iv"+toStr(i+1));
-	listTrackChng(trkList,0);
-
+	
 	//  btn change,  new, rename, delete
 	//Btn("ChangeTrack",	btnChgTrack);
 	Btn("TrackNew",		btnTrackNew);
 	Btn("TrackRename",	btnTrackRename);
 	Btn("TrackDelete",	btnTrackDel);
 	
-	bGI = true;  // gui inited, gui events can now save vals
-
     //  load = new game
-    for (int i=1; i<=3; ++i)
+    for (int i=1; i<=2; ++i)
     {	Btn("NewGame"+toStr(i), btnNewGame);  }
+
+
+	bGI = true;  // gui inited, gui events can now save vals
 
 	ti.update();	/// time
 	float dt = ti.dt * 1000.f;

@@ -1,9 +1,13 @@
 #include "pch.h"
-// taken from OGRE compositor sample
-// only needed for HDR
-#include "CompositorLogics.h"
+#include "Compositor.h"
 
-#include "Ogre.h"
+#include <OgreCompositorInstance.h>
+#include <OgreCompositorChain.h>
+#include <OgreCompositionTechnique.h>
+#include <OgreViewport.h>
+#include <OgreMaterial.h>
+#include <OgreTechnique.h>
+#include <OgreGpuProgramParams.h>
 
 
 class HDRListener: public Ogre::CompositorInstance::Listener

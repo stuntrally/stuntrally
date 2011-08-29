@@ -160,6 +160,8 @@ void SplineRoad::RebuildRoadInt()
 			viL.push_back(il);
 			vSegLen.push_back(len);
 			roadLen += len;  //#
+			if (sp > 0.f || sp1 > 0.f)
+				rdPipe += len; //#
 
 			//-  Merge length
 			sumLenMrg += len;
@@ -169,7 +171,7 @@ void SplineRoad::RebuildRoadInt()
 			//  merge road and pipe segs, don't merge transitions
 			LogR(toStr(sp0) + "  " + toStr(sp) + "  " + toStr(sp1));
 			if (sp != sp1 || sp != sp0  ||  hid != hid1 || hid || hid0)
-			{	sumLenMrg = 0.f;  ++mrgGrp;  rdPipe += len; //#
+			{	sumLenMrg = 0.f;  ++mrgGrp;
 				vbSegMrg.push_back(1);
 			}
 			else  //  onTer change

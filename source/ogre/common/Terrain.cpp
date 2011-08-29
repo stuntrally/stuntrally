@@ -61,7 +61,7 @@ void App::initBlendMaps(Ogre::Terrain* terrain)
 
 	//#define sin_(a)  sinf(a)
 	//#define cos_(a)  sinf(a)
-	Math* pM = new Math();
+	/**/Math* pM = new Math();
 	#define sin_(a)  Math::Sin(a,true)
 	#define cos_(a)  Math::Cos(a,true)
 	#define m01(v)  std::max(0.f, std::min(1.f, v ))
@@ -119,6 +119,8 @@ void App::initBlendMaps(Ogre::Terrain* terrain)
 	
 	//bMap[i]->loadImage();
 	//bMap[0]->loadImage("blendmap.png", ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME);
+	//bMap[0]->loadImage("mapB.jpg", ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME);
+	//bMap[0]->dirty();  bMap[0]->update();
 	/*Image bl0;  // ?-
 	terrain->getLayerBlendTexture(0)->convertToImage(bl0);
 	bl0.save("blendmap.png");/**/
@@ -184,7 +186,7 @@ void App::GetTerAngles(int xb,int yb, int xe,int ye)
 }
 
 
-///  Setup Terrain															n
+///  Setup Terrain
 //--------------------------------------------------------------------------------------------------------------------------
 void App::configureTerrainDefaults(Light* l)
 {
@@ -197,7 +199,7 @@ void App::configureTerrainDefaults(Light* l)
 	mTerrainGlobals->setCompositeMapDiffuse(l->getDiffuseColour());  }
 	//mTerrainGlobals->setShadowVal(0.6f);  //+ new, for compositeMap shadow
 
-	mTerrainGlobals->setCompositeMapSize(1024);  // par,..
+	mTerrainGlobals->setCompositeMapSize(sc.td.iTerSize-1);  // par,..  1k
 	mTerrainGlobals->setCompositeMapDistance(pSet->terdist);  //100
 	mTerrainGlobals->setLightMapSize(256);  //256, 2k
 	mTerrainGlobals->setSkirtSize(1);  //`

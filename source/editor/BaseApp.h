@@ -35,6 +35,9 @@ public:
 	
 	SETTINGS* pSet;
 
+	bool bWindowResized;
+	Ogre::SceneNode* ndSky; //-
+
 	//AppThr appThr;
 #if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
 	HANDLE hpr;
@@ -53,7 +56,6 @@ protected:
 
 	void createCamera(), createFrameListener();
 	void setupResources(), createResourceListener(), loadResources();
-	Ogre::SceneNode* ndSky; //-
 
 	///  frame events
 	virtual bool frameStarted(const Ogre::FrameEvent& evt);
@@ -130,7 +132,7 @@ protected:
 	bool bGuiFocus;  // gui shown
 	MyGUI::Gui* mGUI;	MyGUI::OgrePlatform* mPlatform;
 	MyGUI::WidgetPtr mWndOpts, mWndBrush, mWndCam,
-		mWndRoadCur, mWndRoadNew, mWndRoadStats;  // gui windows
+		mWndRoadCur, mWndRoadStats;  // gui windows
 	MyGUI::TabPtr mWndTabs;
 	
 public:

@@ -32,8 +32,7 @@ void App::UpdEditWnds()
 	}
 	bool bRoad = edMode == ED_Road;
 	if (mWndRoadCur)  mWndRoadCur->setVisible(bRoad);
-	if (mWndRoadNew)  mWndRoadNew->setVisible(bRoad);
-	//if (mWndRoadStats)  mWndRoadStats->setVisible(bRoad);
+	if (mWndRoadStats)  mWndRoadStats->setVisible(bRoad);
 	if (mWndCam)  mWndCam->setVisible(edMode == ED_PrvCam);
 	UpdStartPos();  // StBox visible
 	UpdVisGui();  //br prv..
@@ -41,7 +40,7 @@ void App::UpdEditWnds()
 void App::UpdVisGui()
 {
 	if (mWndOpts)  mWndOpts->setVisible(bGuiFocus);
-	if (bnQuit)  bnQuit->setVisible(bGuiFocus);
+	if (bnQuit)  bnQuit->setVisible(bGuiFocus);  //TODO: ?crash from lang change combo
 	if (mGUI)  mGUI->setVisiblePointer(bGuiFocus || !bMoveCam);
 	if (road)  road->SetTerHitVis(bEdit());
 	if (!bGuiFocus && mToolTip)  mToolTip->setVisible(false);

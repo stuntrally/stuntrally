@@ -4,9 +4,9 @@
 #ifndef _HelperLogics_H__
 #define _HelperLogics_H__
 
-#include "OgrePrerequisites.h"
-#include "OgreCompositorLogic.h"
-#include "OgreCompositorInstance.h"
+#include <OgrePrerequisites.h>
+#include <OgreCompositorLogic.h>
+#include <OgreCompositorInstance.h>
 
 //The simple types of compositor logics will all do the same thing -
 //Attach a listener to the created compositor

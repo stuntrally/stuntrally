@@ -80,9 +80,10 @@
 	<track n="52" name="F9-MadMntn"		created="17-04-11" crtver="1.2" modified="23-04-11" scenery="Forest" 	author="CH" bumps="0" jumps="0" loops="0" pipes="0" banked="4" frenzy="3" long="4" diff="5" rating="3" rateuser="0" drivenlaps="0" />
 	<track n="53" name="A1-StuntPark"	created="23-04-11" crtver="1.2" modified="23-04-11" scenery="Australia" author="CH" bumps="0" jumps="2" loops="2" pipes="2" banked="2" frenzy="2" long="5" diff="6" rating="4" rateuser="0" drivenlaps="0" />
 	<track n="54" name="G1-Long"		created="28-06-11" crtver="1.2" modified="28-06-11" scenery="Greece" 	author="CH" bumps="1" jumps="1" loops="0" pipes="0" banked="0" frenzy="1" long="8" diff="3" rating="1" rateuser="0" drivenlaps="0" />
-	<track n="55" name="F10-MntnTrail"	created="22-07-11" crtver="1.2" modified="22-07-11" scenery="Forest" 	author="CH" bumps="5" jumps="0" loops="0" pipes="0" banked="0" frenzy="0" long="3" diff="4" rating="3" rateuser="0" drivenlaps="0" />
+	<track n="55" name="F10-MntnTrail"	created="22-07-11" crtver="1.2" modified="22-07-11" scenery="Forest" 	author="CH" bumps="5" jumps="0" loops="0" pipes="0" banked="0" frenzy="0" long="3" diff="5" rating="3" rateuser="0" drivenlaps="0" />
 <!--55-->
-	<track n="56" name="A2-PipeCoil"	created="22-07-11" crtver="1.3" modified="06-08-11" scenery="Australia" author="CH" bumps="0" jumps="0" loops="0" pipes="4" banked="0" frenzy="4" long="2" diff="5" rating="3" rateuser="0" drivenlaps="0" />
-	<track n="57" name="D9-NewElems"	created="22-07-11" crtver="1.3" modified="06-08-11" scenery="Desert" 	author="CH" bumps="0" jumps="0" loops="0" pipes="0" banked="0" frenzy="0" long="0" diff="" rating="" rateuser="0" drivenlaps="0" />
-	<track n="00" name=""	created="" crtver="1.3" modified="" scenery="" 	author="CH" bumps="0" jumps="0" loops="0" pipes="0" banked="0" frenzy="0" long="0" diff="" rating="" rateuser="0" drivenlaps="0" />
+	<track n="56" name="A2-PipeCoil"	created="22-07-11" crtver="1.3" modified="06-08-11" scenery="Australia" author="CH" bumps="0" jumps="0" loops="0" pipes="4" banked="0" frenzy="4" long="2" diff="4" rating="3" rateuser="0" drivenlaps="0" />
+	<track n="57" name="D9-NewElems"	created="22-07-11" crtver="1.3" modified="06-08-11" scenery="Desert" 	author="CH" bumps="0" jumps="0" loops="2" pipes="2" banked="0" frenzy="2" long="0" diff="3" rating="2" rateuser="0" drivenlaps="0" />
+	<track n="57" name="Test4-TerrainBig"	created="27-08-11" crtver="1.3" modified="27-08-11" scenery="Savannah" 	author="CH" bumps="2" jumps="0" loops="0" pipes="0" banked="0" frenzy="0" long="0" diff="0" rating="0" rateuser="0" drivenlaps="0" />
+	<track n="57" name="Test5-TerrainSmall"	created="27-08-11" crtver="1.3" modified="27-08-11" scenery="Savannah" 	author="CH" bumps="2" jumps="0" loops="0" pipes="0" banked="0" frenzy="0" long="0" diff="0" rating="0" rateuser="0" drivenlaps="0" />
 </tracks>

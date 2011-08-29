@@ -2,10 +2,11 @@
 #include "Defines.h"
 #include "OgreApp.h"
 #include "../road/Road.h"
+#include <boost/filesystem.hpp>
+#include "../ogre/common/Gui_Def.h"
 using namespace MyGUI;
 using namespace Ogre;
 
-#include <boost/filesystem.hpp>
 
 //  Gui from xml (scene, road), after load
 //..........................................................................................................
@@ -78,81 +79,6 @@ void App::SetGuiFromXmls()
 	bGI = true;
 }
 
-
-//  tracks list	 . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
-//-----------------------------------------------------------------------------------------------------------
-
-void App::TrackListUpd()
-{
-	///  tracks list, text, chg btn
-	//------------------------------------
-	if (trkList)
-	{	trkList->removeAllItems();
-		vsTracks.clear();  vbTracksUser.clear();
-		int ii = 0, si = 0;  bool bFound = false;
-
-		strlist li,lu;
-		GetFolderIndex(pathTrk[0], li);
-		GetFolderIndex(pathTrk[1], lu);  //name duplicates
-		//  original
-		for (strlist::iterator i = li.begin(); i != li.end(); ++i)
-		{
-			vsTracks.push_back(*i);  vbTracksUser.push_back(false);
-			std::string s = pathTrk[0] + *i + "/scene.xml";
-			std::ifstream check(s.c_str());
-			if (check)  {
-				trkList->addItem(*i, 0);
-				if (!pSet->track_user && *i == pSet->track)  {  si = ii;
-					trkList->setIndexSelected(si);
-					bFound = true;  bListTrackU = 0;  }
-				ii++;  }
-		}
-		//  user
-		for (strlist::iterator i = lu.begin(); i != lu.end(); ++i)
-		{
-			vsTracks.push_back(*i);  vbTracksUser.push_back(true);
-			std::string s = pathTrk[1] + *i + "/scene.xml";
-			std::ifstream check(s.c_str());
-			if (check)  {
-				trkList->addItem("*" + (*i) + "*", 1);
-				if (pSet->track_user && *i == pSet->track)  {  si = ii;
-					trkList->setIndexSelected(si);
-					bFound = true;  bListTrackU = 1;  }
-				ii++;  }
-		}
-		//  not found last track, set 1st
-		if (!bFound)
-		{	pSet->track = *li.begin();  pSet->track_user = 0;  UpdWndTitle();  }
-		trkList->beginToItemAt(std::max(0, si-11));  // center
-	}
-}
-
-
-void App::listTrackChng(List* li, size_t pos)
-{
-	if (!li)  return;
-	size_t i = li->getIndexSelected();  if (i==ITEM_NONE)  return;
-	
-	const UString& sl = li->getItemNameAt(i);  String s = sl;
-	s = StringUtil::replaceAll(s, "*", "");
-	sListTrack = s;
-
-	int u = *li->getItemDataAt<int>(i,false);
-	bListTrackU = u;
-	
-	//  won't refresh if same-...  road dissapears if not found...
-	if (imgPrv)  imgPrv->setImageTexture(sListTrack+".jpg");
-	if (imgTer)  imgTer->setImageTexture(sListTrack+"_ter.jpg");
-	if (imgMini)  imgMini->setImageTexture(sListTrack+"_mini.png");
-	ReadTrkStats();
-}
-
-/*void App::btnChgTrack(WP)
-{
-	//if (trkName)  trkName->setCaption(sListTrack.c_str());
-	//pSet->track = sListTrack;
-	//pSet->track_user = bListTrackU;  //UpdWndTitle();//? load
-}*/
 
 void App::btnNewGame(WP)
 {
@@ -526,100 +452,6 @@ bool App::SaveSurf(const std::string& path)
 		}
 	}
 	return cf.Write(true, path);
-}
-
-
-
-///  . .  util tracks stats  . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 
-
-void App::ReadTrkStats()
-{
-	String sRd = PathListTrk() + "/road.xml";
-	String sSc = PathListTrk() + "/scene.xml";
-
-	SplineRoad rd;  rd.LoadFile(sRd,false);  // load
-	Scene sc;  sc.LoadXml(sSc);  // fails to defaults
-	UpdGuiRdStats(&rd,sc, 0.f);
-}
-
-void App::UpdGuiRdStats(const SplineRoad* rd, const Scene& sc, float time)
-{
-	Fmt(s, "%5.3f km", sc.td.fTerWorldSize / 1000.f);	if (stTrk[1])  stTrk[1]->setCaption(s);
-	if (!rd)  return;
-	Fmt(s, "%5.3f km", rd->st.Length / 1000.f);			if (stTrk[0])  stTrk[0]->setCaption(s);
-
-	Fmt(s, "%4.2f m", rd->st.WidthAvg);		if (stTrk[2])  stTrk[2]->setCaption(s);
-	Fmt(s, "%3.1f m", rd->st.HeightDiff);	if (stTrk[3])  stTrk[3]->setCaption(s);
-
-	Fmt(s, "%3.1f%%", rd->st.OnTer);	if (stTrk[4])  stTrk[4]->setCaption(s);
-	Fmt(s, "%3.1f%%", rd->st.Pipes);	if (stTrk[5])  stTrk[5]->setCaption(s);
-
-	//Fmt(s, "%4.2f%%", rd->st.Yaw);	if (stTrk[6])  stTrk[6]->setCaption(s);
-	//Fmt(s, "%4.2f%%", rd->st.Pitch);	if (stTrk[7])  stTrk[7]->setCaption(s);
-	//Fmt(s, "%4.2f%%", rd->st.Roll);	if (stTrk[8])  stTrk[8]->setCaption(s);
-	
-	if (trkName)  //?.
-		trkName->setCaption(sListTrack.c_str());
-	if (trkDesc)  // desc
-		trkDesc->setCaption(rd->sTxtDesc.c_str());
-}
-
-
-///  Gui ToolTips
-//-----------------------------------------------------------------------------------------------------------
-
-void App::setToolTips(EnumeratorWidgetPtr widgets)
-{
-    while (widgets.next())
-    {
-        WidgetPtr wp = widgets.current();
-		wp->setAlign(Align::Relative);
-        bool tip = wp->isUserString("tip");
-		if (tip)  // if has tooltip string
-		{	
-			// needed for translation
-			wp->setUserString("tip", LanguageManager::getInstance().replaceTags(wp->getUserString("tip")));
-			wp->setNeedToolTip(true);
-			wp->eventToolTip = newDelegate(this, &App::notifyToolTip);
-		}
-		//LogO(wp->getName() + (tip ? "  *" : ""));
-        setToolTips(wp->getEnumerator());
-    }
-}
-
-void App::notifyToolTip(Widget *sender, const ToolTipInfo &info)
-{
-	if (info.type == ToolTipInfo::Show)
-	{	// TODO: Tooltip isn't resizing properly ..
-		mToolTip->setSize(320, 96);  // start size for wrap
-		String s = TR(sender->getUserString("tip"));
-		mToolTipTxt->setCaption(s);
-		const IntSize &textsize = mToolTipTxt->getTextSize();
-		mToolTip->setSize(textsize.width*1.5, textsize.height*1.5);
-		mToolTip->setVisible(true);
-		boundedMove(mToolTip, info.point);
-	}
-	else if (info.type == ToolTipInfo::Hide)
-		mToolTip->setVisible(false);
-}
-
-//  Move a widget to a point while making it stay in the viewport.
-void App::boundedMove(Widget* moving, const IntPoint& point)
-{
-	const IntPoint offset(20, 20);  // mouse cursor
-	IntPoint p = point + offset;
-
-	const IntSize& size = moving->getSize();
-	
-	int vpw = mWindow->getWidth();
-	int vph = mWindow->getHeight();
-	
-	if (p.left + size.width > vpw)
-		p.left = vpw - size.width;
-	if (p.top + size.height > vph)
-		p.top = vph - size.height;
-			
-	moving->setPosition(p);
 }
 
 

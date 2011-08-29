@@ -3,6 +3,7 @@
 #include "OgreApp.h"
 #include "../road/Road.h"
 #include "../paged-geom/PagedGeometry.h"
+#include "../vdrift/pathmanager.h"
 using namespace Ogre;
 
 
@@ -18,7 +19,6 @@ void App::createScene()
 	//  cam pos from last set
 	mCameraT->setPosition(Vector3(pSet->cam_x,pSet->cam_y,pSet->cam_z));
 	mCameraT->setDirection(Vector3(pSet->cam_dx,pSet->cam_dy,pSet->cam_dz).normalisedCopy());
-	//mCamera->pitch(Degree(-73));  //mCamera->yaw(Degree(45));
 	mViewport->setVisibilityMask(255);  // hide prv cam rect
 
 	//  tex fil
@@ -27,15 +27,21 @@ void App::createScene()
 
 	mRoot->addResourceLocation(pathTrkPrv[1], "FileSystem");  //prv user tracks
 
+	//  tracks.xml
+	tracksXml.LoadXml(PATHMANAGER::GetGameConfigDir() + "/tracks.xml");
+	//tracksXml.SaveXml(PATHMANAGER::GetGameConfigDir() + "/tracks2.xml");
+
 	//  gui
 	bGuiFocus = false/*true*/;  bMoveCam = true;  //*--
 	InitGui();
 	TerCircleInit();
 	createBrushPrv();
 
+	//  collisions.xml
 	objs.LoadXml();
 	LogO(String("**** Loaded Vegetation objects: ") + toStr(objs.colsMap.size()));
 
+	//  load
 	if (pSet->autostart)
 		LoadTrack();
 	else
