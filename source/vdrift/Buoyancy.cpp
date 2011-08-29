@@ -18,7 +18,7 @@ misrepresented as being the original software.
 3. This notice may not be removed or altered from any source distribution.
 */
 
-#include "buoyancy.h"
+#include "Buoyancy.h"
 #include <assert.h>
 
 // Returns the volume of a tetrahedron and updates the centroid accumulator.
