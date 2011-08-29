@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION"
 "Report-Msgid-Bugs-To: "
-"POT-Creation-Date: 2011-08-11 19:50+0200"
+"POT-Creation-Date: 2011-08-29 22:38+0300"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>"
 "Language-Team: LANGUAGE <LL@li.org>"
@@ -101,12 +101,20 @@ msgctxt "MyGUI_MessageBox_Retry"
 msgid "Retry"
 msgstr ""
 
+msgctxt "InputRoadAngZero"
+msgid "shift-6  - zero angles"
+msgstr ""
+
 msgctxt "LS_SCENE"
 msgid "Loading scene"
 msgstr ""
 
 msgctxt "TipTrackImg"
 msgid "In game screenshot for selected track."
+msgstr ""
+
+msgctxt "TerLNoiseOnly"
+msgid "Only Noise"
 msgstr ""
 
 msgctxt "InputValueChange"
@@ -175,6 +183,10 @@ msgstr ""
 
 msgctxt "Game"
 msgid "Game"
+msgstr ""
+
+msgctxt "TipTerLNoiseOnly"
+msgid "Use only noise (no angle or height ranges)"
 msgstr ""
 
 msgctxt "TipParType3"
@@ -277,6 +289,10 @@ msgctxt "InputNoJS"
 msgid "No joystick"
 msgstr ""
 
+msgctxt "InputRoadAngType"
+msgid "5,6   - angles type"
+msgstr ""
+
 msgctxt "CopySource"
 msgid "Set as copy source"
 msgstr ""
@@ -322,7 +338,7 @@ msgid "F2,F3 - prev,next Options tab"
 msgstr ""
 
 msgctxt "InputRoadChkRadius"
-msgid "K, L   - checkpoint radius (chkR 0 - none)"
+msgid "K,L   - checkpoint radius (chkR 0 - none)"
 msgstr ""
 
 msgctxt "FacesOnce"
@@ -331,6 +347,10 @@ msgstr ""
 
 msgctxt "InputRoadInsAlt"
 msgid "alt-shift - at start   alt-ctrl - at end"
+msgstr ""
+
+msgctxt "BlendMap"
+msgid "Blendmap"
 msgstr ""
 
 msgctxt "InputMapPrevCamera"
@@ -365,6 +385,10 @@ msgctxt "TipToggleLayer"
 msgid "Turn on/off chosen texture layer."
 msgstr ""
 
+msgctxt "TerLHSm"
+msgid "Height smooth"
+msgstr ""
+
 msgctxt "InputAssignKey"
 msgid "&lt;Press a key&gt;"
 msgstr ""
@@ -395,6 +419,10 @@ msgstr ""
 
 msgctxt "NumLaps"
 msgid "Number of laps"
+msgstr ""
+
+msgctxt "TerLAngMin"
+msgid "Angle Min"
 msgstr ""
 
 msgctxt "ReflMode_single"
@@ -449,6 +477,10 @@ msgctxt "TriSize"
 msgid "Triangle size"
 msgstr ""
 
+msgctxt "TerLAngSm"
+msgid "Angle smooth"
+msgstr ""
+
 msgctxt "InputAfterChanges"
 msgid "(after Terrain/Vegetation changes)"
 msgstr ""
@@ -477,12 +509,20 @@ msgctxt "wind"
 msgid "wind"
 msgstr ""
 
+msgctxt "TipTerLHMax"
+msgid "Ending terrain height for layer."
+msgstr ""
+
 msgctxt "LS_CAR"
 msgid "Loading car"
 msgstr ""
 
 msgctxt "MaxScale"
 msgid "max scale"
+msgstr ""
+
+msgctxt "TerLNoise"
+msgid "Noise"
 msgstr ""
 
 msgctxt "TipModelMaxScale"
@@ -629,6 +669,10 @@ msgctxt "Engine"
 msgid "Engine"
 msgstr ""
 
+msgctxt "TipTerLAngMin"
+msgid "Starting terrain angle for layer."
+msgstr ""
+
 msgctxt "InputPressButtonTip"
 msgid "Press a button to see its number"
 msgstr ""
@@ -758,7 +802,7 @@ msgid "most work also on selection"
 msgstr ""
 
 msgctxt "InputTerHeight"
-msgid "E - Height set"
+msgid "E - Height set (RMB change height value)"
 msgstr ""
 
 msgctxt "InputStartPos"
@@ -837,6 +881,10 @@ msgctxt "InputMapPlayer3"
 msgid "Player 3"
 msgstr ""
 
+msgctxt "TerLHMin"
+msgid "Height Min"
+msgstr ""
+
 msgctxt "Ambient"
 msgid "Ambient"
 msgstr ""
@@ -875,6 +923,10 @@ msgstr ""
 
 msgctxt "Other"
 msgid "Other"
+msgstr ""
+
+msgctxt "TipTerLAngSm"
+msgid "Angle smooth range (transition)."
 msgstr ""
 
 msgctxt "InputRoadNext"
@@ -923,6 +975,10 @@ msgstr ""
 
 msgctxt "CarDebugText"
 msgid "Car debug text "
+msgstr ""
+
+msgctxt "InputWheelShape"
+msgid "K,L  -  Brush shape"
 msgstr ""
 
 msgctxt "RplSize"
@@ -995,6 +1051,10 @@ msgstr ""
 
 msgctxt "BulletLines"
 msgid "Bullet debug lines"
+msgstr ""
+
+msgctxt "TerLAngMax"
+msgid "Angle Max"
 msgstr ""
 
 msgctxt "TipGrassSwaySpd"
@@ -1233,6 +1293,10 @@ msgctxt "InputStartAltLMB"
 msgid "alt-LMB - rotate  alt-RMB - pitch"
 msgstr ""
 
+msgctxt "InputRoadAngSnap"
+msgid "7,8   - angles snap"
+msgstr ""
+
 msgctxt "TipTexTiling"
 msgid "Texture tiling length (less means more repeats)."
 msgstr ""
@@ -1275,10 +1339,6 @@ msgstr ""
 
 msgctxt "SunDir"
 msgid "Sun dir."
-msgstr ""
-
-msgctxt "ResizeTer"
-msgid "Resize"
 msgstr ""
 
 msgctxt "TipSmokeInt"
@@ -1355,6 +1415,10 @@ msgstr ""
 
 msgctxt "RoadPoint"
 msgid "Road Point"
+msgstr ""
+
+msgctxt "TerLHMax"
+msgid "Height Max"
 msgstr ""
 
 msgctxt "LoadingDesc"
@@ -1525,6 +1589,10 @@ msgctxt "TipRainSnow2"
 msgid "Set 2 Rain/Snow type"
 msgstr ""
 
+msgctxt "TipTerLNoise"
+msgid "Factor of additional noise."
+msgstr ""
+
 msgctxt "InputTerDeform"
 msgid "D - Deform  (LMB up, RMB down)"
 msgstr ""
@@ -1547,6 +1615,10 @@ msgstr ""
 
 msgctxt "TipChangeSat"
 msgid "Change car color saturation (white-black)."
+msgstr ""
+
+msgctxt "TipTerLHMin"
+msgid "Starting terrain height for layer."
 msgstr ""
 
 msgctxt "FrictionTread"
@@ -1673,6 +1745,10 @@ msgctxt "page"
 msgid "page"
 msgstr ""
 
+msgctxt "Layers"
+msgid "Layers"
+msgstr ""
+
 msgctxt "Quit"
 msgid "Quit"
 msgstr ""
@@ -1695,6 +1771,10 @@ msgstr ""
 
 msgctxt "InputMapShiftUp"
 msgid "Shift up"
+msgstr ""
+
+msgctxt "NewTerGenerate"
+msgid "New Generate"
 msgstr ""
 
 msgctxt "SpeedUnit"
@@ -1841,6 +1921,10 @@ msgctxt "RplLoad"
 msgid "Load"
 msgstr ""
 
+msgctxt "TipTerLHSm"
+msgid "Height smooth range (transition)."
+msgstr ""
+
 msgctxt "MyGUI_MessageBox_Ok"
 msgid "Ok"
 msgstr ""
@@ -1910,7 +1994,7 @@ msgid "Bullet debug"
 msgstr ""
 
 msgctxt "InputTerSmooth"
-msgid "S - Smooth  (LMB, -Noise RMB)"
+msgid "S - Smooth"
 msgstr ""
 
 msgctxt "TipChangeTrack"
@@ -1971,6 +2055,10 @@ msgstr ""
 
 msgctxt "Color"
 msgid "color"
+msgstr ""
+
+msgctxt "TipTerLAngMax"
+msgid "Ending terrain angle for layer."
 msgstr ""
 
 msgctxt "Pitch"
