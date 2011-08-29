@@ -143,6 +143,23 @@ void App::LoadCleanUp()  // 1 first
 		mTerrainGroup->removeAllTerrains();
 	if (road)
 	{	road->DestroyRoad();  delete road;  road = 0;  }
+
+
+	//  water plane  . . . . . . . 
+	//---------------------------------------------------------------------
+	#if 0  // 1 for water test
+	ManualObject* man = mSceneMgr->createManualObject("WaterPlane");
+	man->begin("Water1", RenderOperation::OT_TRIANGLE_FAN);
+	 
+	Real xz = 200, y = -18, tc = 10;
+	man->position(-xz, y, xz);  man->textureCoord( 0,tc);
+	man->position( xz, y, xz);  man->textureCoord(tc,tc);
+	man->position( xz, y,-xz);  man->textureCoord(tc, 0);
+	man->position(-xz, y,-xz);  man->textureCoord( 0, 0);
+	 
+	man->end();
+	mSceneMgr->getRootSceneNode()->createChildSceneNode()->attachObject(man);
+	#endif
 }
 
 void App::LoadGame()  // 2

@@ -340,6 +340,23 @@ material road_col : ppx_diffuse
 }
 
 
+//  water
+//---------------------------------------------------------------------------
+
+material Water1 : ppx_water
+{
+	set $ambientCol "0.2 0.2 0.2"
+	set $diffuseCol "0.7 0.8 0.9"
+	set $specularCol "0.8 0.86 0.9"
+			// base alpha, diffuse alpha, 1
+	set $alphaParsA "0.2 0.3 0.3 0"
+	set $shininess "32"
+	//set $depthBias "3"
+	set_texture_alias diffuseMap water1.png
+	set_texture_alias normalMap volcano_7_nh1.png
+}
+
+
 //------------------------------------------------------------------------------------------------------------------------------------
 //  small size textures _s  -- this does not work  TODO: create materials in code ...
 //------------------------------------------------------------------------------------------------------------------------------------

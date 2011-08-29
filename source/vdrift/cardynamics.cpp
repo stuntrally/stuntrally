@@ -8,6 +8,8 @@
 #include "tobullet.h"
 #include "model.h"
 #include "../ogre/OgreGame.h"
+#include "Buoyancy.h"
+#include "../ogre/Defines.h"
 
 typedef CARDYNAMICS::T T;
 
@@ -55,14 +57,73 @@ void CARDYNAMICS::debugDraw(btIDebugDraw* debugDrawer)
 void CARDYNAMICS::Update()
 {
 	if (!chassis)  return;//
-	btTransform chassisTrans;
-	chassis->getMotionState()->getWorldTransform(chassisTrans);
-	chassisRotation = ToMathQuaternion<T>(chassisTrans.getRotation());
-	chassisCenterOfMass = ToMathVector<T>(chassisTrans.getOrigin());
+	btTransform tr;
+	chassis->getMotionState()->getWorldTransform(tr);
+	chassisRotation = ToMathQuaternion<T>(tr.getRotation());
+	chassisCenterOfMass = ToMathVector<T>(tr.getOrigin());
 	MATHVECTOR <T, 3> com = center_of_mass;
 	chassisRotation.RotateVector(com);
 	chassisPosition = chassisCenterOfMass - com;
+	
+///................................................ Buoyancy ................................................
+#if 0  // 1 for water test
+	Polyhedron poly;  RigidBody body;  WaterVolume water;
+	const float gravity = 9.8f;
+
+	//water.density = 600.0f;  water.angularDrag = 1.0f;  water.linearDrag = 0.2f;  // mud soft~ car dens 1900
+	water.density = 200.0f;  water.angularDrag = 1.0f;  water.linearDrag = 0.2f;  // mud soft~ car dens 1900
+	water.velocity.SetZero();
+	water.plane.offset = -18.0f;  water.plane.normal = Vec3(0,0,1);  //-18 Test5
+
+	poly.numVerts = 8;  poly.numFaces = 12;
+	poly.verts = new Vec3[8];
+	poly.faces = new Face[12];
+
+	float hx = 1.2f, hy = 0.7f, hz = 0.4f;  // box dim
+	poly.verts[0] = Vec3(-hx, -hy, -hz);	poly.verts[1] = Vec3(-hx, -hy,  hz);	poly.verts[2] = Vec3(-hx,  hy, -hz);	poly.verts[3] = Vec3(-hx,  hy,  hz);
+	poly.verts[4] = Vec3( hx, -hy, -hz);	poly.verts[5] = Vec3( hx, -hy,  hz);	poly.verts[6] = Vec3( hx,  hy, -hz);	poly.verts[7] = Vec3( hx,  hy,  hz);
+
+	poly.faces[0] = Face(0, 1, 3);	poly.faces[1] = Face(0, 3, 2);	poly.faces[2] = Face(6, 3, 7);	poly.faces[3] = Face(6, 2, 3);
+	poly.faces[4] = Face(4, 6, 5);	poly.faces[5] = Face(6, 7, 5);	poly.faces[6] = Face(4, 5, 0);	poly.faces[7] = Face(0, 5, 1);
+	poly.faces[8] = Face(5, 7, 1);	poly.faces[9] = Face(7, 3, 1);	poly.faces[10]= Face(0, 6, 4);	poly.faces[11]= Face(0, 2, 6);
+
+	//  approx. length
+	poly.length = 1.0f;
+	poly.volume = ComputeVolume(poly);
+
+	body.mass = 1900.0f * poly.volume;	// car density
+	body.I = (4.0f * body.mass / 12.0f) * Vec3(hy*hz, hx*hz, hx*hy);
+
+	///  body initial conditions
+	// pos & rot
+	body.x.x = chassisPosition[0];  body.x.y = chassisPosition[1];  body.x.z = chassisPosition[2];
+	body.q.x = chassisRotation[0];  body.q.y = chassisRotation[1];  body.q.z = chassisRotation[2];  body.q.w = chassisRotation[3];
+	body.q.Normalize();//
+	//  vel, ang vel
+	btVector3 v = chassis->getLinearVelocity();
+	btVector3 a = chassis->getAngularVelocity();
+	body.v.x = v.getX();  body.v.y = v.getY();  body.v.z = v.getZ();
+	body.omega.x = a.getX();  body.omega.y = a.getY();  body.omega.z = a.getZ();
+	body.F.SetZero();  body.T.SetZero();
+	
+	///  add buoyancy force
+	ComputeBuoyancy(body, poly, water, gravity);
+	//body.v += (dt/body.mass)*body.F;
+	//Vec3 tmp(body.T.x/body.I.x, body.T.y/body.I.y, body.T.z/body.I.z);
+	//body.omega += dt*tmp;
+	/*LogO(Ogre::String("F ")+
+		toStr(body.F.x) + "," + toStr(body.F.y) + "," + toStr(body.F.z) + "  T " + 
+		toStr(body.T.x) + "," + toStr(body.T.y) + "," + toStr(body.T.z));/**/
+		
+	chassis->applyCentralForce( btVector3(body.F.x,body.F.y,body.F.z) );
+	chassis->applyTorque(       btVector3(body.T.x,body.T.y,body.T.z) );
+	
+	delete[] poly.verts;
+	delete[] poly.faces;
+#endif
+///..........................................................................................................
 }
+
 
 const MATHVECTOR <T, 3> & CARDYNAMICS::GetCenterOfMassPosition() const
 {
