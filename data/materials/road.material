@@ -345,15 +345,15 @@ material road_col : ppx_diffuse
 
 material Water1 : ppx_water
 {
-	set $ambientCol "0.2 0.2 0.2"
-	set $diffuseCol "0.7 0.8 0.9"
-	set $specularCol "0.8 0.86 0.9"
-			// base alpha, diffuse alpha, 1
-	set $alphaParsA "0.2 0.3 0.3 0"
-	set $shininess "32"
-	//set $depthBias "3"
-	set_texture_alias diffuseMap water1.png
-	set_texture_alias normalMap volcano_7_nh1.png
+	set $ambientCol "0.04 0.18 0.22"
+	set $diffuseCol "0.52 0.56 0.6"
+	set $specularCol "0.76 0.78 0.8"
+
+	//set $alphaParsA "0.4 0.8 0.4 6"
+	set $alphaParsA "0.3 0.4 0.4 2"
+	set $shininess "512"
+	//set_texture_alias diffuseMap water1.png  //water_nh.png
+	set_texture_alias normalMap waveNM.png
 }
 
 

@@ -66,6 +66,17 @@ material road_minimap_inv
 
 //  game minimap circle  -------------
 //
+vertex_program circle_vs cg
+{
+	source rnd.cg
+	profiles vs_1_1 arbvp1
+	entry_point circle_vs
+ 
+	default_params
+	{
+		param_named_auto wvpMat worldviewproj_matrix
+	}
+}
 fragment_program circle_ps cg
 {
 	source rnd.cg

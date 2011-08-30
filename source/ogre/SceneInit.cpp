@@ -148,17 +148,17 @@ void App::LoadCleanUp()  // 1 first
 	//  water plane  . . . . . . . 
 	//---------------------------------------------------------------------
 	#if 0  // 1 for water test
-	ManualObject* man = mSceneMgr->createManualObject("WaterPlane");
-	man->begin("Water1", RenderOperation::OT_TRIANGLE_FAN);
-	 
-	Real xz = 200, y = -18, tc = 10;
-	man->position(-xz, y, xz);  man->textureCoord( 0,tc);
-	man->position( xz, y, xz);  man->textureCoord(tc,tc);
-	man->position( xz, y,-xz);  man->textureCoord(tc, 0);
-	man->position(-xz, y,-xz);  man->textureCoord( 0, 0);
-	 
-	man->end();
-	mSceneMgr->getRootSceneNode()->createChildSceneNode()->attachObject(man);
+	Entity* ecar = mSceneMgr->createEntity("WaterPlane", "plane.mesh");
+	MeshPtr mesh = ecar->getMesh();  unsigned short src, dest;
+	if (!mesh->suggestTangentVectorBuildParams(VES_TANGENT, src, dest))
+		mesh->buildTangentVectors(VES_TANGENT, src, dest);
+	//MaterialPtr mtr = MaterialManager::getSingleton().getByName("Examples/FresnelReflectionRefraction");
+	MaterialPtr mtr = MaterialManager::getSingleton().getByName("Water1");
+	ecar->setMaterial(mtr);
+	SceneNode* ncar = mSceneMgr->getRootSceneNode()->createChildSceneNode(
+		Vector3(0,-18,00));
+	ncar->setScale(200,200,200);
+	ncar->attachObject(ecar);
 	#endif
 }
 

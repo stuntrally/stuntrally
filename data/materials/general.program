@@ -121,6 +121,30 @@ fragment_program diffuse_ps_a cg
 	}
 }
 
+//  water  ---
+fragment_program diffuse_ps_w cg
+{
+	source general.cg
+	profiles ps_2_x arbfp1
+	entry_point diffuse_ps_w
+ 
+	default_params
+	{
+		param_named_auto  ambient  surface_ambient_colour
+		param_named_auto  lightDif0  light_diffuse_colour 0
+		param_named_auto  lightSpec0  light_specular_colour 0
+		param_named_auto  matDif  surface_diffuse_colour
+		param_named_auto  matSpec  surface_specular_colour
+		param_named_auto  matShininess  surface_shininess
+		param_named_auto  fogColor fog_colour
+		param_named_auto  fTime time		
+		
+		param_named_auto  camPos  camera_position
+		param_named_auto  lightPos0  light_position 0
+		param_named_auto  iTWMat  inverse_transpose_world_matrix
+	}
+}
+
 
 //  env reflect
 fragment_program diffuse_ps_env cg

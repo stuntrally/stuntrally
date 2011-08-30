@@ -450,17 +450,15 @@ material ppx_water			// per pixel  glass (alpha)
 	set $diffuseCol "1 1 1 1"
 	set $specularCol "1 1 1"
 	set $shininess "32"
-	set $depthBias "0"
-	set $alphaParsA "0.2 0.2 0.3 0"
+	set $alphaParsA "0.4 0.8 0.4 0"
  
 	technique
 	{
 		pass
 		{
 			scene_blend  alpha_blend
-			cull_hardware  clockwise
+			cull_hardware  none
 			transparent_sorting on
-			depth_bias $depthBias
 			depth_write off
  
 			ambient $ambientCol
@@ -468,7 +466,7 @@ material ppx_water			// per pixel  glass (alpha)
 			specular $specularCol $shininess
  
 			vertex_program_ref diffuse_vs  {  }
-			fragment_program_ref diffuse_ps_a
+			fragment_program_ref diffuse_ps_w
 			{
 				param_named alphaPars float4 $alphaParsA
 			}
@@ -477,7 +475,10 @@ material ppx_water			// per pixel  glass (alpha)
 			{
 				texture white.png
 			}
-			//  normal ...
+			texture_unit normalMap
+			{
+				texture flat_n.png
+			}
 		}
 	}
 }
