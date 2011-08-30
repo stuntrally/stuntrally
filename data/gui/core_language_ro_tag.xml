@@ -14,6 +14,7 @@
 	<Tag name="UnitKmh">km/h</Tag>
 	<Tag name="InputRoadPickOne">Alege (una)</Tag>
 	<Tag name="ViewDist">Distanță de vedere</Tag>
+	<Tag name="TipRoadDist2">Additional distance to road.</Tag>
 	<Tag name="TreeDens">Densitatea pomilor</Tag>
 	<Tag name="TerNormal">Normală</Tag>
 	<Tag name="LS_TRACK">Se încarcă traseul</Tag>
@@ -33,6 +34,7 @@
 	<Tag name="InputCamControl">W,S A,D Q,E - mișcă săgețile - rotește</Tag>
 	<Tag name="TipTrackMap">Mini-harta traseului selectat,văzut de deasupra.</Tag>
 	<Tag name="TipToggleModel">Activează sau dezactivează acest model.</Tag>
+	<Tag name="MinimapRotate">Rotate</Tag>
 	<Tag name="InputReloadTrack">F5 - reîncarcă traseul</Tag>
 	<Tag name="Game">Game</Tag>
 	<Tag name="TipParType3">Anvelopă de tip 3 (global pentru traseu)</Tag>
@@ -63,6 +65,7 @@
 	<Tag name="CopySource">Setează ca sursă copiată</Tag>
 	<Tag name="TipDisableFog">Disable fog when editing road from distance.</Tag>
 	<Tag name="NeedReload">* trebuie reîncărcat</Tag>
+	<Tag name="MinimapZoom">Zoom</Tag>
 	<Tag name="LoadTrack">Load Track</Tag>
 	<Tag name="Count">Contor</Tag>
 	<Tag name="UnitKm">km</Tag>
@@ -81,7 +84,7 @@
 	<Tag name="TipGrassDens">Cât de densă/rară va fi iarba pe teren.</Tag>
 	<Tag name="Shadows">Umbre</Tag>
 	<Tag name="TipToggleLayer">Activează/dezactivează stratul texturii alese.</Tag>
-	<Tag name="ViewRight">Vezi dreapta</Tag>
+	<Tag name="InputAssignKey">&lt;Press a key&gt;</Tag>
 	<Tag name="Wireframe">Cadru</Tag>
 	<Tag name="ChangeTrack">Schimbă traseul</Tag>
 	<Tag name="TerrainSize">Mărimea terenului</Tag>
@@ -109,7 +112,7 @@
 	<Tag name="InputRoadSel">Backspace - adaugă sau elimină din selecţie</Tag>
 	<Tag name="Weather">Vremea</Tag>
 	<Tag name="wind">Vânt</Tag>
-	<Tag name="TipRoadStats">Statistici tot drumul</Tag>
+	<Tag name="LS_CAR">Se încarcă mașina</Tag>
 	<Tag name="MaxScale">scala maximă</Tag>
 	<Tag name="TipModelMaxScale">Scală maximă model.</Tag>
 	<Tag name="TerrainError">Eroare teren</Tag>
@@ -117,7 +120,7 @@
 	<Tag name="InputStartDir">Space  -  change road direction (+ or -)</Tag>
 	<Tag name="InputRoadDel">Del - delete picked</Tag>
 	<Tag name="WidthSteps">Trepte lățime</Tag>
-	<Tag name="InputKeyNoAxis">No axis</Tag>
+	<Tag name="Diffuse">Difuză</Tag>
 	<Tag name="Sound">Sunet</Tag>
 	<Tag name="RoadPointSize">Mărime puncte drum</Tag>
 	<Tag name="Car">Mașină</Tag>
@@ -246,7 +249,7 @@
 	<Tag name="DisableEdit">Dezactivează pentru editare</Tag>
 	<Tag name="TipAutoClutch">-Manual neimplementat.</Tag>
 	<Tag name="MinimapUpdSkip">Ignoră actualizarea mini-hărții</Tag>
-	<Tag name="LS_CAR">Se încarcă mașina</Tag>
+	<Tag name="TipRoadStats">Statistici tot drumul</Tag>
 	<Tag name="InputTerPaint">A - Colorează texturile (straturi)</Tag>
 	<Tag name="RplCur">Cur</Tag>
 	<Tag name="InputKeyNoButton">No button</Tag>
@@ -308,7 +311,6 @@
 	<Tag name="ApplyShadows">Aplică umbre</Tag>
 	<Tag name="RoadStats">Road Stats</Tag>
 	<Tag name="SunDir">Direcția soarelui</Tag>
-	<Tag name="ResizeTer">Redimensionează</Tag>
 	<Tag name="TipSmokeInt">Intensitate particule praf.</Tag>
 	<Tag name="TerrainBrush">Terrain brush</Tag>
 	<Tag name="TipTexNormAuto">When checked, Normal texture is automatically set from Diffuse texture (+ _nh in filename).</Tag>
@@ -330,21 +332,20 @@
 	<Tag name="RoadPoint">Road Point</Tag>
 	<Tag name="LoadingDesc">Loading, please wait...</Tag>
 	<Tag name="TipGrassPatchHeightMax">Maximal grass patch height.</Tag>
-	<Tag name="Diffuse">Difuză</Tag>
+	<Tag name="InputKeyNoAxis">No axis</Tag>
 	<Tag name="Tires">Tires</Tag>
 	<Tag name="GrassSize">Mărimea ierbii</Tag>
 	<Tag name="TipTrkNameEditor">Selected track name, used also for renaming track and as new track name.</Tag>
 	<Tag name="InputRoadStats">T - road stats window</Tag>
 	<Tag name="VSync">VSync</Tag>
 	<Tag name="TipChangeBright">Change car color brightness (dark-light).</Tag>
-	<Tag name="InputAssignKey">&lt;Press a key&gt;</Tag>
 	<Tag name="Size">Size</Tag>
 	<Tag name="AutoGearbox">Auto gearbox</Tag>
 	<Tag name="InputSlowFast">shift - slow   ctrl - fast</Tag>
 	<Tag name="GrassMult">Grass mul</Tag>
 	<Tag name="ViewFront">vezi fața</Tag>
 	<Tag name="RplRecTime">Recorded   time</Tag>
-	<Tag name="InputTerSmooth">S - Smooth  (LMB, -Noise RMB)</Tag>
+	<Tag name="InputTerSmooth">S - Smooth</Tag>
 	<Tag name="TipChangeTrack">Sets current track to that selected in list. Press [New Game] to start it after.</Tag>
 	<Tag name="TipModelDens">How often model will appear on track area.</Tag>
 	<Tag name="InputMain">Main</Tag>
@@ -376,6 +377,7 @@
 	<Tag name="InputToggleVeget">V - Disable / enable vegetation</Tag>
 	<Tag name="MyGUI_MessageBox_Continue">Continue</Tag>
 	<Tag name="Tools">Tools</Tag>
+	<Tag name="ViewRight">Vezi dreapta</Tag>
 	<Tag name="TipGrassSwaySpd">Grass sway effect speed.</Tag>
 	<Tag name="FrictionTread">FrictionTread</Tag>
 	<Tag name="TipTrkListEditor">Tracks list, click to select (for Rename or Duplicate). Press [Load track] to change current track in editor.</Tag>
@@ -489,10 +491,30 @@
 	<Tag name="Pitch">gudron</Tag>
 	<Tag name="MyGUI_MessageBox_Yes">Da</Tag>
 	<Tag name="RplAll">Toate</Tag>
-	<Tag name="TipRoadDist2">Additional distance to road.</Tag>
-	<Tag name="MinimapRotate">Rotate</Tag>
-	<Tag name="MinimapZoom">Zoom</Tag>
-	<Tag name="GameVersion">1.2</Tag>
+	<Tag name="InputRoadAngZero">shift-6  - zero angles</Tag>
+	<Tag name="TerLNoiseOnly">Only Noise</Tag>
+	<Tag name="TipTerLNoiseOnly">Use only noise (no angle or height ranges)</Tag>
+	<Tag name="InputRoadAngType">5,6   - angles type</Tag>
+	<Tag name="BlendMap">Blendmap</Tag>
+	<Tag name="TerLHSm">Height smooth</Tag>
+	<Tag name="TerLAngMin">Angle Min</Tag>
+	<Tag name="TerLAngSm">Angle smooth</Tag>
+	<Tag name="TipTerLHMax">Ending terrain height for layer.</Tag>
+	<Tag name="TerLNoise">Noise</Tag>
+	<Tag name="TipTerLAngMin">Starting terrain angle for layer.</Tag>
+	<Tag name="TerLHMin">Height Min</Tag>
+	<Tag name="TipTerLAngSm">Angle smooth range (transition).</Tag>
+	<Tag name="InputWheelShape">K,L  -  Brush shape</Tag>
+	<Tag name="TerLAngMax">Angle Max</Tag>
+	<Tag name="InputRoadAngSnap">7,8   - angles snap</Tag>
+	<Tag name="TerLHMax">Height Max</Tag>
+	<Tag name="TipTerLNoise">Factor of additional noise.</Tag>
+	<Tag name="TipTerLHMin">Starting terrain height for layer.</Tag>
+	<Tag name="Layers">Layers</Tag>
+	<Tag name="NewTerGenerate">New Generate</Tag>
+	<Tag name="TipTerLHSm">Height smooth range (transition).</Tag>
+	<Tag name="TipTerLAngMax">Ending terrain angle for layer.</Tag>
+	<Tag name="GameVersion">1.3</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 
 </MyGUI>
