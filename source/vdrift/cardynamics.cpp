@@ -66,12 +66,13 @@ void CARDYNAMICS::Update()
 	chassisPosition = chassisCenterOfMass - com;
 	
 ///................................................ Buoyancy ................................................
-#if 0  // 1 for water test
+#if 1  // 1 for water test
 	Polyhedron poly;  RigidBody body;  WaterVolume water;
-	const float gravity = 9.8f;
 
+	water.density = 1400.0f;  water.angularDrag = 1.0f;  water.linearDrag = 0.5f;  // mud hard too springy- car dens 1900
+	//water.density = 1000.0f;  water.angularDrag = 1.8f;  water.linearDrag = 0.5f;  // mud hard~ car dens 1900
 	//water.density = 600.0f;  water.angularDrag = 1.0f;  water.linearDrag = 0.2f;  // mud soft~ car dens 1900
-	water.density = 200.0f;  water.angularDrag = 1.0f;  water.linearDrag = 0.2f;  // mud soft~ car dens 1900
+	//water.density = 300.0f;  water.angularDrag = 1.0f;  water.linearDrag = 0.2f;  // mud soft~ car dens 1900
 	water.velocity.SetZero();
 	water.plane.offset = -18.0f;  water.plane.normal = Vec3(0,0,1);  //-18 Test5
 
@@ -80,8 +81,8 @@ void CARDYNAMICS::Update()
 	poly.faces = new Face[12];
 
 	float hx = 1.2f, hy = 0.7f, hz = 0.4f;  // box dim
-	poly.verts[0] = Vec3(-hx, -hy, -hz);	poly.verts[1] = Vec3(-hx, -hy,  hz);	poly.verts[2] = Vec3(-hx,  hy, -hz);	poly.verts[3] = Vec3(-hx,  hy,  hz);
-	poly.verts[4] = Vec3( hx, -hy, -hz);	poly.verts[5] = Vec3( hx, -hy,  hz);	poly.verts[6] = Vec3( hx,  hy, -hz);	poly.verts[7] = Vec3( hx,  hy,  hz);
+	poly.verts[0] = Vec3(-hx,-hy,-hz);	poly.verts[1] = Vec3(-hx,-hy, hz);	poly.verts[2] = Vec3(-hx, hy,-hz);	poly.verts[3] = Vec3(-hx, hy, hz);
+	poly.verts[4] = Vec3( hx,-hy,-hz);	poly.verts[5] = Vec3( hx,-hy, hz);	poly.verts[6] = Vec3( hx, hy,-hz);	poly.verts[7] = Vec3( hx, hy, hz);
 
 	poly.faces[0] = Face(0, 1, 3);	poly.faces[1] = Face(0, 3, 2);	poly.faces[2] = Face(6, 3, 7);	poly.faces[3] = Face(6, 2, 3);
 	poly.faces[4] = Face(4, 6, 5);	poly.faces[5] = Face(6, 7, 5);	poly.faces[6] = Face(4, 5, 0);	poly.faces[7] = Face(0, 5, 1);
@@ -95,7 +96,7 @@ void CARDYNAMICS::Update()
 	body.I = (4.0f * body.mass / 12.0f) * Vec3(hy*hz, hx*hz, hx*hy);
 
 	///  body initial conditions
-	// pos & rot
+	//  pos & rot
 	body.x.x = chassisPosition[0];  body.x.y = chassisPosition[1];  body.x.z = chassisPosition[2];
 	body.q.x = chassisRotation[0];  body.q.y = chassisRotation[1];  body.q.z = chassisRotation[2];  body.q.w = chassisRotation[3];
 	body.q.Normalize();//
@@ -107,7 +108,7 @@ void CARDYNAMICS::Update()
 	body.F.SetZero();  body.T.SetZero();
 	
 	///  add buoyancy force
-	ComputeBuoyancy(body, poly, water, gravity);
+	ComputeBuoyancy(body, poly, water, 9.8f);
 	//body.v += (dt/body.mass)*body.F;
 	//Vec3 tmp(body.T.x/body.I.x, body.T.y/body.I.y, body.T.z/body.I.z);
 	//body.omega += dt*tmp;

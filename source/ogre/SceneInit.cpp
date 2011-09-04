@@ -143,23 +143,6 @@ void App::LoadCleanUp()  // 1 first
 		mTerrainGroup->removeAllTerrains();
 	if (road)
 	{	road->DestroyRoad();  delete road;  road = 0;  }
-
-
-	//  water plane  . . . . . . . 
-	//---------------------------------------------------------------------
-	#if 0  // 1 for water test
-	Entity* ecar = mSceneMgr->createEntity("WaterPlane", "plane.mesh");
-	MeshPtr mesh = ecar->getMesh();  unsigned short src, dest;
-	if (!mesh->suggestTangentVectorBuildParams(VES_TANGENT, src, dest))
-		mesh->buildTangentVectors(VES_TANGENT, src, dest);
-	//MaterialPtr mtr = MaterialManager::getSingleton().getByName("Examples/FresnelReflectionRefraction");
-	MaterialPtr mtr = MaterialManager::getSingleton().getByName("Water1");
-	ecar->setMaterial(mtr);
-	SceneNode* ncar = mSceneMgr->getRootSceneNode()->createChildSceneNode(
-		Vector3(0,-18,00));
-	ncar->setScale(200,200,200);
-	ncar->attachObject(ecar);
-	#endif
 }
 
 void App::LoadGame()  // 2
@@ -201,8 +184,29 @@ void App::LoadScene()  // 3
 	if (ter)  // load scene
 		sc.LoadXml(TrkDir()+"scene.xml");
 	else
-	{	sc.Default();  sc.td.hfHeight = NULL;  sc.td.hfAngle = NULL;  }  //?...
+	{	sc.Default();  sc.td.hfHeight = NULL;  sc.td.hfAngle = NULL;  }
 	
+
+	//  water planes  . . . . . . . 
+	//---------------------------------------------------------------------
+	int fl = sc.fluids.size();
+	for (int i=0; i < fl; i++)
+	{
+		const FluidBox& fb = sc.fluids[i];
+		Entity* ecar = mSceneMgr->createEntity("WaterPlane"+toStr(i), "plane.mesh");
+		MeshPtr mesh = ecar->getMesh();  unsigned short src, dest;
+		if (!mesh->suggestTangentVectorBuildParams(VES_TANGENT, src, dest))
+			mesh->buildTangentVectors(VES_TANGENT, src, dest);
+		//MaterialPtr mtr = MaterialManager::getSingleton().getByName("Examples/FresnelReflectionRefraction");
+		MaterialPtr mtr = MaterialManager::getSingleton().getByName("Ocean2_Cg");
+		//MaterialPtr mtr = MaterialManager::getSingleton().getByName("Water1");  //par
+		ecar->setMaterial(mtr);  ecar->setCastShadows(false);
+		SceneNode* ncar = mSceneMgr->getRootSceneNode()->createChildSceneNode(fb.pos);
+		ncar->setScale(fb.size);
+		ncar->attachObject(ecar);
+	}
+
+
 	//  rain  -----
 	if (!pr && sc.rainEmit > 0)  {
 		pr = mSceneMgr->createParticleSystem("Rain", sc.rainName);

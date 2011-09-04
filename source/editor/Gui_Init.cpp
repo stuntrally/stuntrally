@@ -150,7 +150,7 @@ void App::InitGui()
 	Ed(GrPage, editTrGr);  Ed(GrDist, editTrGr);  Ed(TrPage, editTrGr);  Ed(TrDist, editTrGr);
 	Ed(GrMinX, editTrGr);  Ed(GrMaxX, editTrGr);  Ed(GrMinY, editTrGr);  Ed(GrMaxY, editTrGr);
 	Ed(GrSwayDistr, editTrGr);  Ed(GrSwayLen, editTrGr);  Ed(GrSwaySpd, editTrGr);
-	Ed(TrRdDist, editTrGr);  Ed(TrImpDist, editTrGr);
+	Ed(TrRdDist, editTrGr);  Ed(TrImpDist, editTrGr);  Ed(GrDensSmooth, editTrGr);
 	imgPaged = (StaticImagePtr)mWndOpts->findWidget("ImgPaged");
 
 	Chk("LTrEnabled", chkPgLayOn, 1);  chkPgLay = bchk;

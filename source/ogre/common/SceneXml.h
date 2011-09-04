@@ -23,7 +23,7 @@ struct TerLayer		// terrain texture layer
 };
 
 
-class TerData	///  Terrain
+class TerData		///  Terrain
 {
 public:	
 	//  height field
@@ -60,6 +60,17 @@ public:
 };
 
 
+class FluidBox		// water, mud, etc.
+{
+public:
+	Ogre::Vector3 pos, rot, size;
+	int type;
+	//float density, linDamp, angDamp;
+	//sinkDamp wheel spin move pars..
+	//FluidBox();
+};
+
+
 class Scene		///  Scene
 {
 public:
@@ -87,7 +98,7 @@ public:
 	void UpdPgLayers();
 	
 	//  paged
-	Ogre::Real densTrees, densGrass;
+	Ogre::Real densTrees, densGrass;  int grDensSmooth;
 
 	//  grass  -todo layers..
 	Ogre::Real grPage, grDist;  // vis
@@ -100,6 +111,8 @@ public:
 	
 	//  preview cam
 	Ogre::Vector3 camPos,camDir;
+	
+	std::vector<FluidBox> fluids;
 		
 	//  methods
 	Scene();  void Default();

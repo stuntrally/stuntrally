@@ -206,7 +206,9 @@ bool App::frameRenderingQueued(const FrameEvent& evt)
 			brTxt[4]->setCaption("");
 
 		if (brTxt[5])
-		if (brNoise)
+		if (edMode == ED_Height && road && road->bHitTer)
+		{	Fmt(s, "Curr.H: %4.1f", road->posHit.y);	brTxt[5]->setCaption(s);	}
+		else if (brNoise)
 		{	Fmt(s, "Octaves: %d  , .", mBrOct[curBr]);	brTxt[5]->setCaption(s);	}
 		else
 			brTxt[5]->setCaption("");

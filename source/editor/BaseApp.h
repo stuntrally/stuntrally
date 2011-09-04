@@ -124,7 +124,7 @@ protected:
 	bool bMoveCam;	int mx,my,mz;  double mDTime;
 	Ogre::Real mRotX, mRotY,  mRotKX, mRotKY,  moveMul, rotMul;
 	Ogre::Vector3 mTrans;
-	enum ED_MODE {  ED_Deform=0, ED_Smooth, ED_Height, /*ED_Paint,*/ ED_Road, ED_Start, ED_PrvCam, ED_ALL  }
+	enum ED_MODE {  ED_Deform=0, ED_Smooth, ED_Height, /*ED_Paint,*/ ED_Road, ED_Start, ED_PrvCam, ED_Fluids, ED_ALL  }
 		edMode,edModeOld;
 
 

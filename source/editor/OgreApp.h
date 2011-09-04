@@ -270,7 +270,7 @@ protected:
 	//  [Vegetation]  ----
 	MyGUI::EditPtr edGrassDens,edTreesDens, edGrPage,edGrDist, edTrPage,edTrDist,
 		edGrMinX,edGrMaxX, edGrMinY,edGrMaxY,
-		edGrSwayDistr, edGrSwayLen, edGrSwaySpd, edTrRdDist, edTrImpDist;
+		edGrSwayDistr, edGrSwayLen, edGrSwaySpd, edTrRdDist, edTrImpDist, edGrDensSmooth;
 	void editTrGr(MyGUI::EditPtr);
 	//  paged layers
 	MyGUI::ComboBoxPtr cmbPgLay;  void comboPgLay(CMB);

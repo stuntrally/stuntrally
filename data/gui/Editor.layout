@@ -1221,6 +1221,10 @@
 					<Property key="Widget_Caption" value="#{ImpostorDist}"/>
 					<Property key="Text_TextColour" value="0.8 0.8 0.4"/>
 				</Widget>
+				<Widget type="StaticText" skin="StaticText" position="456 135 116 24">
+					<Property key="Widget_Caption" value="#{GrDensSmooth}"/>
+					<Property key="Text_TextColour" value="0.6 0.9 0.3"/>
+				</Widget>
 				<Widget type="Edit" skin="Edit" position="376 101 56 24" name="GrSwayLen">
 					<Property key="Text_TextColour" value="0.6 0.9 0.3"/>
 					<Property key="Widget_Colour" value="0.6 0.9 0.3"/>
@@ -1249,6 +1253,11 @@
 					<Property key="Widget_Colour" value="0.8 0.8 0.4"/>
 					<Property key="Text_TextColour" value="0.8 0.8 0.4"/>
 					<UserString key="tip" value="#{TipImpDist}"/>
+				</Widget>
+				<Widget type="Edit" skin="Edit" position="602 133 56 24" name="GrDensSmooth">
+					<Property key="Widget_Colour" value="0.6 0.9 0.3"/>
+					<Property key="Text_TextColour" value="0.6 0.9 0.3"/>
+					<UserString key="tip" value="#{TipGrDensSmooth}"/>
 				</Widget>
 				<Widget type="Progress" skin="ProgressFill" position="24 224 408 24">
 					<Property key="Widget_Alpha" value="0.3"/>
