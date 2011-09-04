@@ -10,6 +10,7 @@
 #include "../ogre/OgreGame.h"
 #include "Buoyancy.h"
 #include "../ogre/Defines.h"
+#include "../ogre/common/SceneXml.h"
 
 typedef CARDYNAMICS::T T;
 
@@ -66,15 +67,23 @@ void CARDYNAMICS::Update()
 	chassisPosition = chassisCenterOfMass - com;
 	
 ///................................................ Buoyancy ................................................
-#if 1  // 1 for water test
+	if (pScene)
+	for (int i=0; i < pScene->fluids.size(); ++i)
+	{
+	//TODO: don't init poly each time, save in car once
+	//TODO: bullet trigger to check if car in volume or  extend buoyance code to check size ...
+	//TODO: wheels poly too, speed from spinning..
+	//TODO: fluids.xml settings vector [fl.type]
+	//TODO: box rotation yaw, pitch
+	const FluidBox& fl = pScene->fluids[i];
 	Polyhedron poly;  RigidBody body;  WaterVolume water;
 
-	water.density = 1400.0f;  water.angularDrag = 1.0f;  water.linearDrag = 0.5f;  // mud hard too springy- car dens 1900
+	//water.density = 1400.0f;  water.angularDrag = 1.0f;  water.linearDrag = 0.5f;  // mud hard too springy- car dens 1900
 	//water.density = 1000.0f;  water.angularDrag = 1.8f;  water.linearDrag = 0.5f;  // mud hard~ car dens 1900
 	//water.density = 600.0f;  water.angularDrag = 1.0f;  water.linearDrag = 0.2f;  // mud soft~ car dens 1900
-	//water.density = 300.0f;  water.angularDrag = 1.0f;  water.linearDrag = 0.2f;  // mud soft~ car dens 1900
+	water.density = 300.0f;  water.angularDrag = 1.0f;  water.linearDrag = 0.2f;  // mud soft~ car dens 1900
 	water.velocity.SetZero();
-	water.plane.offset = -18.0f;  water.plane.normal = Vec3(0,0,1);  //-18 Test5
+	water.plane.offset = fl.pos.y;  water.plane.normal = Vec3(0,0,1);  //-18 Test5
 
 	poly.numVerts = 8;  poly.numFaces = 12;
 	poly.verts = new Vec3[8];
@@ -121,7 +130,7 @@ void CARDYNAMICS::Update()
 	
 	delete[] poly.verts;
 	delete[] poly.faces;
-#endif
+	}
 ///..........................................................................................................
 }
 

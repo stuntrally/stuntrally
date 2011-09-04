@@ -1,0 +1,80 @@
+
+vertex_program Cg/Ocean2VS cg
+{
+	source ocean.cg
+	entry_point ocean_vs
+	profiles vs_1_1 arbvp1
+
+	default_params
+	{
+		param_named_auto WorldViewProj worldviewproj_matrix
+		param_named_auto eyePosition camera_position_object_space
+	}
+}
+
+fragment_program Cg/Ocean2FS cg
+{
+	source ocean.cg
+	entry_point ocean_ps
+	profiles ps_2_x arbfp1
+
+}
+
+
+material Ocean2_Cg
+{
+	technique
+	{
+		pass
+		{
+			scene_blend  alpha_blend
+			cull_hardware  none
+			transparent_sorting on
+			depth_write off
+ 
+			vertex_program_ref Cg/Ocean2VS
+			{
+				param_named BumpScale float 0.3
+				param_named textureScale float2 8 8
+				param_named bumpSpeed float2 0.003 0.002
+				param_named_auto time time_0_x 100.0
+				param_named waveFreq float 0.028
+				param_named waveAmp  float 0.0
+			}
+
+			fragment_program_ref Cg/Ocean2FS
+			{
+				param_named_auto time time_0_x 100.0
+				param_named deepColor       float4 0 0.3 0.5  1.0
+				param_named shallowColor    float4 0 1 1  0.3
+				param_named reflectionColor float4 0.9 1 1 1.0
+				param_named reflectionAmount float 0.8
+				param_named reflectionBlur   float 0
+				param_named waterAmount      float 0.1
+				param_named fresnelPower float 5.0
+				param_named fresnelBias  float 0.328
+			}
+
+			texture_unit
+			{
+				//texture waves2.dds
+				//texture water_nh.png
+				texture waveNM.png
+				tex_coord_set 0
+				filtering linear linear linear
+			}
+
+			texture_unit
+			{
+				//cubic_texture cloudy_noon.jpg combinedUVW
+				cubic_texture cube.dds combinedUVW
+				//texture cube.dds
+				tex_address_mode clamp
+				tex_coord_set 1
+				filtering linear linear linear
+			}
+
+		}
+
+	}
+}

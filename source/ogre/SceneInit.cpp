@@ -187,23 +187,25 @@ void App::LoadScene()  // 3
 	{	sc.Default();  sc.td.hfHeight = NULL;  sc.td.hfAngle = NULL;  }
 	
 
-	//  water planes  . . . . . . . 
+	//  create fluid areas  . . . . . . . 
 	//---------------------------------------------------------------------
-	int fl = sc.fluids.size();
-	for (int i=0; i < fl; i++)
+	for (int i=0; i < sc.fluids.size(); i++)
 	{
 		const FluidBox& fb = sc.fluids[i];
-		Entity* ecar = mSceneMgr->createEntity("WaterPlane"+toStr(i), "plane.mesh");
-		MeshPtr mesh = ecar->getMesh();  unsigned short src, dest;
+		Entity* efl = mSceneMgr->createEntity("WaterPlane"+toStr(i), "plane.mesh");
+
+		MeshPtr mesh = efl->getMesh();  unsigned short src, dest;
 		if (!mesh->suggestTangentVectorBuildParams(VES_TANGENT, src, dest))
 			mesh->buildTangentVectors(VES_TANGENT, src, dest);
-		//MaterialPtr mtr = MaterialManager::getSingleton().getByName("Examples/FresnelReflectionRefraction");
+
 		MaterialPtr mtr = MaterialManager::getSingleton().getByName("Ocean2_Cg");
 		//MaterialPtr mtr = MaterialManager::getSingleton().getByName("Water1");  //par
-		ecar->setMaterial(mtr);  ecar->setCastShadows(false);
-		SceneNode* ncar = mSceneMgr->getRootSceneNode()->createChildSceneNode(fb.pos);
-		ncar->setScale(fb.size);
-		ncar->attachObject(ecar);
+		efl->setMaterial(mtr);  efl->setCastShadows(false);
+		efl->setRenderQueueGroup(RENDER_QUEUE_9+6);
+
+		SceneNode* nfl = mSceneMgr->getRootSceneNode()->createChildSceneNode(fb.pos);
+		nfl->setScale(fb.size);
+		nfl->attachObject(efl);
 	}
 
 

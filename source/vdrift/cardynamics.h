@@ -33,6 +33,7 @@ friend class joeserialize::Serializer;
 public:
 	typedef double T;
 	class SETTINGS* pSet;
+	class Scene* pScene;  // for fluids
 	
 	CARDYNAMICS();
 	~CARDYNAMICS();
@@ -47,7 +48,8 @@ public:
 		btVector3 & size);
 	btCollisionShape * CreateCollisionShape(const btVector3 & center, const btVector3 & size);
 
-	void Init(class SETTINGS* pSet1,
+	void Init(
+		class SETTINGS* pSet1, class Scene* pScene1,
 		COLLISION_WORLD & world,
 		const MODEL & chassisModel,
 		const MODEL & wheelModelFront,

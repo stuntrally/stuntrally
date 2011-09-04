@@ -20,7 +20,7 @@ CARDYNAMICS::CARDYNAMICS() :
 	shift_time(0.2),
 	abs(false), tcs(false),
 	maxangle(45.0),
-	bTerrain(false), pSet(0),
+	bTerrain(false), pSet(0), pScene(0),
 	doBoost(0), doFlip(0)
 {
 	for (int i=0; i<4; ++i)
@@ -605,7 +605,8 @@ bool CARDYNAMICS::Load(CONFIGFILE & c, std::ostream & error_output)
 	return true;
 }
 
-void CARDYNAMICS::Init(class SETTINGS* pSet1,
+void CARDYNAMICS::Init(
+	class SETTINGS* pSet1, class Scene* pScene1,
 	COLLISION_WORLD & world,
 	const MODEL & chassisModel,
 	const MODEL & wheelModelFront,
@@ -613,7 +614,7 @@ void CARDYNAMICS::Init(class SETTINGS* pSet1,
 	const MATHVECTOR <T, 3> & position,
 	const QUATERNION <T> & orientation)
 {
-	pSet = pSet1;
+	pSet = pSet1;  pScene = pScene1;
 	this->world = &world;
 
 	MATHVECTOR <T, 3> zero(0, 0, 0);

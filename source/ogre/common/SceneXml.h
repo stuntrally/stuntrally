@@ -60,7 +60,7 @@ public:
 };
 
 
-class FluidBox		// water, mud, etc.
+class FluidBox		// fluid box shape - water, mud, etc.
 {
 public:
 	Ogre::Vector3 pos, rot, size;
