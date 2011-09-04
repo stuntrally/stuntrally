@@ -192,19 +192,33 @@ void App::LoadScene()  // 3
 	for (int i=0; i < sc.fluids.size(); i++)
 	{
 		const FluidBox& fb = sc.fluids[i];
-		Entity* efl = mSceneMgr->createEntity("WaterPlane"+toStr(i), "plane.mesh");
+		//  plane
+		Ogre::Plane p;  p.normal = Ogre::Vector3::UNIT_Y;  p.d = 0;
+		MeshPtr mesh = Ogre::MeshManager::getSingleton().createPlane("WaterMesh"+toStr(i),
+			Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME,
+			p, fb.size.x, fb.size.z, 2,2, true, 1, 1,1, Ogre::Vector3::UNIT_Z);
 
-		MeshPtr mesh = efl->getMesh();  unsigned short src, dest;
+		Entity* efl = mSceneMgr->createEntity("WaterPlane"+toStr(i), "WaterMesh"+toStr(i));
+
+		unsigned short src, dest;
 		if (!mesh->suggestTangentVectorBuildParams(VES_TANGENT, src, dest))
 			mesh->buildTangentVectors(VES_TANGENT, src, dest);
 
-		MaterialPtr mtr = MaterialManager::getSingleton().getByName("Ocean2_Cg");
-		//MaterialPtr mtr = MaterialManager::getSingleton().getByName("Water1");  //par
+		MaterialPtr mtr = MaterialManager::getSingleton().getByName("Water1");  //par
+		//try  //  set sky map
+		{	MaterialPtr mtrSky = MaterialManager::getSingleton().getByName(sc.skyMtr);
+			Pass* passSky = mtrSky->getTechnique(0)->getPass(0);
+			TextureUnitState* tusSky = passSky->getTextureUnitState(0);
+
+			Pass* pass = mtr->getTechnique(0)->getPass(0);
+			TextureUnitState* tus = pass->getTextureUnitState(1);
+			if (tus)  tus->setTextureName(tusSky->getTextureName());
+		}
 		efl->setMaterial(mtr);  efl->setCastShadows(false);
-		efl->setRenderQueueGroup(RENDER_QUEUE_9+6);
+		efl->setRenderQueueGroup(RENDER_QUEUE_9+4);
 
 		SceneNode* nfl = mSceneMgr->getRootSceneNode()->createChildSceneNode(fb.pos);
-		nfl->setScale(fb.size);
+		//nfl->setScale(fb.size);
 		nfl->attachObject(efl);
 	}
 

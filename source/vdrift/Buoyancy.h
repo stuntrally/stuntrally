@@ -59,7 +59,7 @@ struct WaterVolume
 float ComputeVolume(Polyhedron& poly);
 
 // Compute the buoyancy and drag forces.
-void ComputeBuoyancy(RigidBody& body, Polyhedron& poly,
+bool ComputeBuoyancy(RigidBody& body, Polyhedron& poly,
 					 WaterVolume& water, float gravity);
 
 #endif

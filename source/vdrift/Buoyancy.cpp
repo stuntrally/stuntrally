@@ -208,27 +208,30 @@ float ComputeVolume(Polyhedron& poly)
 }
 
 // Compute the buoyancy and drag forces.
-void ComputeBuoyancy(RigidBody& body, Polyhedron& poly,
+bool ComputeBuoyancy(RigidBody& body, Polyhedron& poly,
 					 WaterVolume& water, float gravity)
 {
 	Vec3 c;
 	float volume = SubmergedVolume(c, body.x, body.q, poly, water.plane);
+	//..
 
-	if (volume > 0)
-	{
-		Vec3 buoyancyForce = (water.density*volume*gravity)*water.plane.normal;
+	if (volume <= 0)
+		return false;
 
-		float partialMass = body.mass * volume / poly.volume;
-		Vec3 rc = c - body.x;
-		Vec3 vc = body.v + body.omega % rc;
-		Vec3 dragForce = (partialMass*water.linearDrag)*(water.velocity - vc);
+	Vec3 buoyancyForce = (water.density*volume*gravity)*water.plane.normal;
 
-		Vec3 totalForce = buoyancyForce + dragForce;
-		body.F += totalForce;
-		body.T += rc % totalForce;
+	float partialMass = body.mass * volume / poly.volume;
+	Vec3 rc = c - body.x;
+	Vec3 vc = body.v + body.omega % rc;
+	Vec3 dragForce = (partialMass*water.linearDrag)*(water.velocity - vc);
 
-		float length2 = poly.length*poly.length;
-		Vec3 dragTorque = (-partialMass*water.angularDrag*length2)*body.omega;
-		body.T += dragTorque;
-	}
+	Vec3 totalForce = buoyancyForce + dragForce;
+	body.F += totalForce;
+	body.T += rc % totalForce;
+
+	float length2 = poly.length*poly.length;
+	Vec3 dragTorque = (-partialMass*water.angularDrag*length2)*body.omega;
+	body.T += dragTorque;
+
+	return true;
 }

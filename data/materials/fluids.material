@@ -3,11 +3,8 @@
 material ppx_water1			// per pixel  water (alpha)
 {
 	receive_shadows off
-	set $ambientCol "1 1 1 1"
-	set $diffuseCol "1 1 1 1"
 	set $specularCol "1 1 1"
 	set $shininess "32"
-	set $alphaParsA "0.4 0.8 0.4 0"
  
 	technique
 	{
@@ -18,38 +15,31 @@ material ppx_water1			// per pixel  water (alpha)
 			transparent_sorting on
 			depth_write off
  
-			ambient $ambientCol
-			diffuse $diffuseCol
 			specular $specularCol $shininess
  
 			vertex_program_ref water1_vs  {  }
 			fragment_program_ref water1_ps
 			{
-				param_named alphaPars float4 $alphaParsA
-				param_named deepColor float4 0 0.3 0.5 1.0
-				param_named shallowColor float4 0 1 1 1.0
-				param_named reflectionColor float4 0.95 1 1 1.0
-				param_named reflectionAmount float 0.9
-				param_named reflectionBlur float 0.5
-				param_named waterAmount float 0.3
+				param_named waveBump     float 0.5
+				param_named waveHighFreq float 0.0
+				param_named waveSpecular float 1.0
+				param_named deepColor       float4 0.0 0.3 0.5  1.0
+				param_named shallowColor    float4 0.0 0.9 1.0  0.3
+				param_named reflectionColor float4 0.9 1 1 1.0
+				param_named reflectionAmount float 0.7
+				param_named waterAmount      float 0.3
 				param_named fresnelPower float 5.0
-				param_named fresnelBias float 0.328
+				param_named fresnelBias  float 0.33
 			}
  
-			texture_unit diffuseMap
-			{
-				texture white.png
-			}
 			texture_unit normalMap
 			{
 				texture flat_n.png
 			}
-			texture_unit envMap
+			texture_unit skyMap
 			{
-				cubic_texture cloudy_noon.jpg combinedUVW
-				tex_address_mode clamp
-				tex_coord_set 1
-				filtering linear linear linear
+				texture white.png
+				tex_address_mode mirror
 			}
 		}
 	}
@@ -61,13 +51,7 @@ material ppx_water1			// per pixel  water (alpha)
 
 material Water1 : ppx_water1
 {
-	set $ambientCol "0.04 0.18 0.22"
-	set $diffuseCol "0.52 0.56 0.6"
-	set $specularCol "0.76 0.78 0.8"
-
-	//set $alphaParsA "0.4 0.8 0.4 6"
-	set $alphaParsA "0.3 0.4 0.4 2"
+	set $specularCol "0.98 0.99 1.0"
 	set $shininess "512"
-	//set_texture_alias diffuseMap water1.png  //water_nh.png
 	set_texture_alias normalMap waveNM.png
 }

@@ -70,7 +70,7 @@ void CARDYNAMICS::Update()
 	if (pScene)
 	for (int i=0; i < pScene->fluids.size(); ++i)
 	{
-	//TODO: don't init poly each time, save in car once
+	//TODO: dont init poly each time, save in car once
 	//TODO: bullet trigger to check if car in volume or  extend buoyance code to check size ...
 	//TODO: wheels poly too, speed from spinning..
 	//TODO: fluids.xml settings vector [fl.type]
@@ -81,23 +81,25 @@ void CARDYNAMICS::Update()
 	//water.density = 1400.0f;  water.angularDrag = 1.0f;  water.linearDrag = 0.5f;  // mud hard too springy- car dens 1900
 	//water.density = 1000.0f;  water.angularDrag = 1.8f;  water.linearDrag = 0.5f;  // mud hard~ car dens 1900
 	//water.density = 600.0f;  water.angularDrag = 1.0f;  water.linearDrag = 0.2f;  // mud soft~ car dens 1900
-	water.density = 300.0f;  water.angularDrag = 1.0f;  water.linearDrag = 0.2f;  // mud soft~ car dens 1900
+	water.density = 200.0f;  water.angularDrag = 1.0f;  water.linearDrag = 0.2f;  // mud soft~ car dens 1900
 	water.velocity.SetZero();
-	water.plane.offset = fl.pos.y;  water.plane.normal = Vec3(0,0,1);  //-18 Test5
+	water.plane.offset = fl.pos.y;  water.plane.normal = Vec3(0,0,1);
 
 	poly.numVerts = 8;  poly.numFaces = 12;
 	poly.verts = new Vec3[8];
 	poly.faces = new Face[12];
 
 	float hx = 1.2f, hy = 0.7f, hz = 0.4f;  // box dim
-	poly.verts[0] = Vec3(-hx,-hy,-hz);	poly.verts[1] = Vec3(-hx,-hy, hz);	poly.verts[2] = Vec3(-hx, hy,-hz);	poly.verts[3] = Vec3(-hx, hy, hz);
-	poly.verts[4] = Vec3( hx,-hy,-hz);	poly.verts[5] = Vec3( hx,-hy, hz);	poly.verts[6] = Vec3( hx, hy,-hz);	poly.verts[7] = Vec3( hx, hy, hz);
+	poly.verts[0] = Vec3(-hx,-hy,-hz);	poly.verts[1] = Vec3(-hx,-hy, hz);
+	poly.verts[2] = Vec3(-hx, hy,-hz);	poly.verts[3] = Vec3(-hx, hy, hz);
+	poly.verts[4] = Vec3( hx,-hy,-hz);	poly.verts[5] = Vec3( hx,-hy, hz);
+	poly.verts[6] = Vec3( hx, hy,-hz);	poly.verts[7] = Vec3( hx, hy, hz);
 
-	poly.faces[0] = Face(0, 1, 3);	poly.faces[1] = Face(0, 3, 2);	poly.faces[2] = Face(6, 3, 7);	poly.faces[3] = Face(6, 2, 3);
-	poly.faces[4] = Face(4, 6, 5);	poly.faces[5] = Face(6, 7, 5);	poly.faces[6] = Face(4, 5, 0);	poly.faces[7] = Face(0, 5, 1);
-	poly.faces[8] = Face(5, 7, 1);	poly.faces[9] = Face(7, 3, 1);	poly.faces[10]= Face(0, 6, 4);	poly.faces[11]= Face(0, 2, 6);
+	poly.faces[0] = Face(0,1,3);	poly.faces[1] = Face(0,3,2);	poly.faces[2] = Face(6,3,7);	poly.faces[3] = Face(6,2,3);
+	poly.faces[4] = Face(4,6,5);	poly.faces[5] = Face(6,7,5);	poly.faces[6] = Face(4,5,0);	poly.faces[7] = Face(0,5,1);
+	poly.faces[8] = Face(5,7,1);	poly.faces[9] = Face(7,3,1);	poly.faces[10]= Face(0,6,4);	poly.faces[11]= Face(0,2,6);
 
-	//  approx. length
+	//  approx. length-
 	poly.length = 1.0f;
 	poly.volume = ComputeVolume(poly);
 
@@ -117,17 +119,11 @@ void CARDYNAMICS::Update()
 	body.F.SetZero();  body.T.SetZero();
 	
 	///  add buoyancy force
-	ComputeBuoyancy(body, poly, water, 9.8f);
-	//body.v += (dt/body.mass)*body.F;
-	//Vec3 tmp(body.T.x/body.I.x, body.T.y/body.I.y, body.T.z/body.I.z);
-	//body.omega += dt*tmp;
-	/*LogO(Ogre::String("F ")+
-		toStr(body.F.x) + "," + toStr(body.F.y) + "," + toStr(body.F.z) + "  T " + 
-		toStr(body.T.x) + "," + toStr(body.T.y) + "," + toStr(body.T.z));/**/
-		
-	chassis->applyCentralForce( btVector3(body.F.x,body.F.y,body.F.z) );
-	chassis->applyTorque(       btVector3(body.T.x,body.T.y,body.T.z) );
-	
+	if (ComputeBuoyancy(body, poly, water, 9.8f))
+	{
+		chassis->applyCentralForce( btVector3(body.F.x,body.F.y,body.F.z) );
+		chassis->applyTorque(       btVector3(body.T.x,body.T.y,body.T.z) );
+	}	
 	delete[] poly.verts;
 	delete[] poly.faces;
 	}

@@ -8,7 +8,6 @@ vertex_program water1_vs cg
 	{
 		param_named_auto wMat world_matrix
 		param_named_auto wvpMat worldviewproj_matrix
-		param_named_auto eyePos camera_position_object_space
 		param_named_auto fogParams fog_params
 	}
 }
@@ -22,10 +21,7 @@ fragment_program water1_ps cg
  
 	default_params
 	{
-		param_named_auto  ambient  surface_ambient_colour
-		param_named_auto  lightDif0  light_diffuse_colour 0
 		param_named_auto  lightSpec0  light_specular_colour 0
-		param_named_auto  matDif  surface_diffuse_colour
 		param_named_auto  matSpec  surface_specular_colour
 		param_named_auto  matShininess  surface_shininess
 		param_named_auto  fogColor fog_colour
