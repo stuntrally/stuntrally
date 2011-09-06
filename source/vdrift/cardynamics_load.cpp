@@ -8,6 +8,7 @@
 #include "tobullet.h"
 #include "model.h"
 #include "settings.h"
+#include "../ogre/Defines.h"
 
 typedef CARDYNAMICS::T T;
 
@@ -728,6 +729,7 @@ void CARDYNAMICS::Init(
 	///  chasis^
 	chassis = world.AddRigidBody(info, true, pSet->car_collis);
 	chassis->setActivationState(DISABLE_DEACTIVATION);
+	chassis->setUserPointer(new ShapeData(ST_Car, this, 0));  ///~~
 	world.AddAction(this);
 #else
 	// init chassis

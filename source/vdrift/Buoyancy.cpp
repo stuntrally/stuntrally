@@ -213,7 +213,6 @@ bool ComputeBuoyancy(RigidBody& body, Polyhedron& poly,
 {
 	Vec3 c;
 	float volume = SubmergedVolume(c, body.x, body.q, poly, water.plane);
-	//..
 
 	if (volume <= 0)
 		return false;

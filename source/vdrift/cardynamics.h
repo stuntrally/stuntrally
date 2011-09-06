@@ -25,6 +25,7 @@
 class MODEL;
 class CONFIGFILE;
 class COLLISION_WORLD;
+class FluidBox;
 
 class CARDYNAMICS : public btActionInterface
 {
@@ -172,6 +173,8 @@ public:
 	float doFlip;
 	// rocket boost
 	float doBoost;
+
+	std::list<FluidBox*> inFluids;  // list of fluids this car is in (if any)
 
 // driveline state
 	CARFUELTANK <T> fuel_tank;

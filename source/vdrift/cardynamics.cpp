@@ -68,20 +68,21 @@ void CARDYNAMICS::Update()
 	
 ///................................................ Buoyancy ................................................
 	if (pScene)
-	for (int i=0; i < pScene->fluids.size(); ++i)
+	for (std::list<FluidBox*>::const_iterator i = inFluids.begin();
+		i != inFluids.end(); ++i)
 	{
 	//TODO: dont init poly each time, save in car once
-	//TODO: bullet trigger to check if car in volume or  extend buoyance code to check size ...
-	//TODO: wheels poly too, speed from spinning..
+	//TODO: wheels poly too or simple sphere, speed from spinning..
 	//TODO: fluids.xml settings vector [fl.type]
-	//TODO: box rotation yaw, pitch
-	const FluidBox& fl = pScene->fluids[i];
+	//TODO: fluid box -rotation yaw, pitch
+
+	const FluidBox& fl = **i;
 	Polyhedron poly;  RigidBody body;  WaterVolume water;
 
 	//water.density = 1400.0f;  water.angularDrag = 1.0f;  water.linearDrag = 0.5f;  // mud hard too springy- car dens 1900
-	//water.density = 1000.0f;  water.angularDrag = 1.8f;  water.linearDrag = 0.5f;  // mud hard~ car dens 1900
-	//water.density = 600.0f;  water.angularDrag = 1.0f;  water.linearDrag = 0.2f;  // mud soft~ car dens 1900
-	water.density = 200.0f;  water.angularDrag = 1.0f;  water.linearDrag = 0.2f;  // mud soft~ car dens 1900
+	water.density = 1000.0f;  water.angularDrag = 1.8f;  water.linearDrag = 0.5f;  // mud hard~ car dens 1900
+	//water.density = 600.0f;  water.angularDrag = 1.0f;  water.linearDrag = 0.2f;  // water slow sink~ car dens 1900
+	//water.density = 200.0f;  water.angularDrag = 1.0f;  water.linearDrag = 0.2f;  // water soft~ car dens 1900
 	water.velocity.SetZero();
 	water.plane.offset = fl.pos.y;  water.plane.normal = Vec3(0,0,1);
 
@@ -99,7 +100,7 @@ void CARDYNAMICS::Update()
 	poly.faces[4] = Face(4,6,5);	poly.faces[5] = Face(6,7,5);	poly.faces[6] = Face(4,5,0);	poly.faces[7] = Face(0,5,1);
 	poly.faces[8] = Face(5,7,1);	poly.faces[9] = Face(7,3,1);	poly.faces[10]= Face(0,6,4);	poly.faces[11]= Face(0,2,6);
 
-	//  approx. length-
+	//  approx. length-?
 	poly.length = 1.0f;
 	poly.volume = ComputeVolume(poly);
 
@@ -458,7 +459,7 @@ void CARDYNAMICS::UpdateTelemetry ( float dt )
 /// print debug info to the given ostream.  set p1, p2, etc if debug info part 1, and/or part 2, etc is desired
 void CARDYNAMICS::DebugPrint ( std::ostream & out, bool p1, bool p2, bool p3, bool p4 )
 {
-	if ( p1 )
+	if (p1)
 	{
 		out.precision(4);
 		out << "---Body---" << std::endl;
@@ -467,56 +468,57 @@ void CARDYNAMICS::DebugPrint ( std::ostream & out, bool p1, bool p2, bool p3, bo
 		//btVector3 chassisInertia(inertia[0], inertia[4], inertia[8]);
 		out << "inertia:  " << inertia[0] << "  " << inertia[4] << "  " << inertia[8] << "\n";
 		out.precision(6);
-		out << "mass: " << body.GetMass() << std::endl;	out << std::endl;
-		engine.DebugPrint ( out );	out << std::endl;
+		out << "mass: " << body.GetMass() << std::endl;
+		out << "in fluids: " << inFluids.size() << std::endl;  out << std::endl;
+		engine.DebugPrint(out);  out << std::endl;
 	return;//
-		fuel_tank.DebugPrint ( out );	out << std::endl;
-		clutch.DebugPrint ( out );	out << std::endl;
-		transmission.DebugPrint ( out );	out << std::endl;
+		fuel_tank.DebugPrint(out);  out << std::endl;
+		clutch.DebugPrint(out);  out << std::endl;
+		transmission.DebugPrint(out);	out << std::endl;
 		if ( drive == RWD )  {
-			out << "(rear)" << std::endl;		rear_differential.DebugPrint ( out );	}
+			out << "(rear)" << std::endl;		rear_differential.DebugPrint(out);	}
 		else if ( drive == FWD )  {
-			out << "(front)" << std::endl;		front_differential.DebugPrint ( out );	}
+			out << "(front)" << std::endl;		front_differential.DebugPrint(out);	}
 		else if ( drive == AWD )  {
-			out << "(center)" << std::endl;		center_differential.DebugPrint ( out );
-			out << "(front)" << std::endl;		front_differential.DebugPrint ( out );
-			out << "(rear)" << std::endl;		rear_differential.DebugPrint ( out );	}
+			out << "(center)" << std::endl;		center_differential.DebugPrint(out);
+			out << "(front)" << std::endl;		front_differential.DebugPrint(out);
+			out << "(rear)" << std::endl;		rear_differential.DebugPrint(out);	}
 		out << std::endl;
 	}
 	return;//
 
-	if ( p2 )
+	if (p2)
 	{
-		out << "(front left)" << std::endl;		suspension[FRONT_LEFT].DebugPrint ( out );	out << std::endl;
-		out << "(front right)" << std::endl;	suspension[FRONT_RIGHT].DebugPrint ( out );	out << std::endl;
-		out << "(rear left)" << std::endl;		suspension[REAR_LEFT].DebugPrint ( out );	out << std::endl;
-		out << "(rear right)" << std::endl;		suspension[REAR_RIGHT].DebugPrint ( out );	out << std::endl;
+		out << "(front left)" << std::endl;		suspension[FRONT_LEFT].DebugPrint(out);	out << std::endl;
+		out << "(front right)" << std::endl;	suspension[FRONT_RIGHT].DebugPrint(out);	out << std::endl;
+		out << "(rear left)" << std::endl;		suspension[REAR_LEFT].DebugPrint(out);	out << std::endl;
+		out << "(rear right)" << std::endl;		suspension[REAR_RIGHT].DebugPrint(out);	out << std::endl;
 
-		out << "(front left)" << std::endl;		brake[FRONT_LEFT].DebugPrint ( out );	out << std::endl;
-		out << "(front right)" << std::endl;	brake[FRONT_RIGHT].DebugPrint ( out );	out << std::endl;
-		out << "(rear left)" << std::endl;		brake[REAR_LEFT].DebugPrint ( out );	out << std::endl;
-		out << "(rear right)" << std::endl;		brake[REAR_RIGHT].DebugPrint ( out );
+		out << "(front left)" << std::endl;		brake[FRONT_LEFT].DebugPrint(out);	out << std::endl;
+		out << "(front right)" << std::endl;	brake[FRONT_RIGHT].DebugPrint(out);	out << std::endl;
+		out << "(rear left)" << std::endl;		brake[REAR_LEFT].DebugPrint(out);	out << std::endl;
+		out << "(rear right)" << std::endl;		brake[REAR_RIGHT].DebugPrint(out);
 	}
 
-	if ( p3 )
+	if (p3)
 	{
 		out << std::endl;
-		out << "(front left)" << std::endl;		wheel[FRONT_LEFT].DebugPrint ( out );	out << std::endl;
-		out << "(front right)" << std::endl;	wheel[FRONT_RIGHT].DebugPrint ( out );	out << std::endl;
-		out << "(rear left)" << std::endl;		wheel[REAR_LEFT].DebugPrint ( out );	out << std::endl;
-		out << "(rear right)" << std::endl;		wheel[REAR_RIGHT].DebugPrint ( out );	out << std::endl;
+		out << "(front left)" << std::endl;		wheel[FRONT_LEFT].DebugPrint(out);	out << std::endl;
+		out << "(front right)" << std::endl;	wheel[FRONT_RIGHT].DebugPrint(out);	out << std::endl;
+		out << "(rear left)" << std::endl;		wheel[REAR_LEFT].DebugPrint(out);	out << std::endl;
+		out << "(rear right)" << std::endl;		wheel[REAR_RIGHT].DebugPrint(out);	out << std::endl;
 
-		out << "(front left)" << std::endl;		tire[FRONT_LEFT].DebugPrint ( out );	out << std::endl;
-		out << "(front right)" << std::endl;	tire[FRONT_RIGHT].DebugPrint ( out );	out << std::endl;
-		out << "(rear left)" << std::endl;		tire[REAR_LEFT].DebugPrint ( out );		out << std::endl;
-		out << "(rear right)" << std::endl;		tire[REAR_RIGHT].DebugPrint ( out );
+		out << "(front left)" << std::endl;		tire[FRONT_LEFT].DebugPrint(out);	out << std::endl;
+		out << "(front right)" << std::endl;	tire[FRONT_RIGHT].DebugPrint(out);	out << std::endl;
+		out << "(rear left)" << std::endl;		tire[REAR_LEFT].DebugPrint(out);		out << std::endl;
+		out << "(rear right)" << std::endl;		tire[REAR_RIGHT].DebugPrint(out);
 	}
 
-	if ( p4 )
+	if (p4)
 	{
 		for ( std::vector <CARAERO<T> >::iterator i = aerodynamics.begin(); i != aerodynamics.end(); ++i )
 		{
-			i->DebugPrint ( out );	out << std::endl;
+			i->DebugPrint(out);	out << std::endl;
 		}
 	}
 }

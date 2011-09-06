@@ -191,7 +191,7 @@ void App::LoadScene()  // 3
 	//---------------------------------------------------------------------
 	for (int i=0; i < sc.fluids.size(); i++)
 	{
-		const FluidBox& fb = sc.fluids[i];
+		FluidBox& fb = sc.fluids[i];
 		//  plane
 		Ogre::Plane p;  p.normal = Ogre::Vector3::UNIT_Y;  p.d = 0;
 		MeshPtr mesh = Ogre::MeshManager::getSingleton().createPlane("WaterMesh"+toStr(i),
@@ -220,6 +220,27 @@ void App::LoadScene()  // 3
 		SceneNode* nfl = mSceneMgr->getRootSceneNode()->createChildSceneNode(fb.pos);
 		//nfl->setScale(fb.size);
 		nfl->attachObject(efl);
+
+		///  add bullet trigger box   . . . . . . . . .
+		btVector3 pc(fb.pos.x, -fb.pos.z, fb.pos.y - fb.size.y);  // center
+		btTransform tr;  tr.setIdentity();  tr.setOrigin(pc);
+
+		btCollisionShape* bshp = 0;
+		bshp = new btBoxShape(btVector3(fb.size.x/2,fb.size.z/2, fb.size.y));
+		//shp->setUserPointer((void*)7777);
+
+		btCollisionObject* bco = new btCollisionObject();
+		bco->setActivationState(DISABLE_SIMULATION);
+		bco->setCollisionShape(bshp);	bco->setWorldTransform(tr);
+		//bco->setFriction(shp->friction);	bco->setRestitution(shp->restitution);
+		bco->setCollisionFlags(bco->getCollisionFlags() |
+			/*btCollisionObject::CF_STATIC_OBJECT |*/ btCollisionObject::CF_NO_CONTACT_RESPONSE/**/);
+		
+		bco->setUserPointer(new ShapeData(ST_Fluid, 0, &fb));  ///~~
+		pGame->collision.world->addCollisionObject(bco);
+		//pGame->collision.world->contactPairTest
+		pGame->collision.shapes.push_back(bshp);
+		fb.cobj = bco;
 	}
 
 

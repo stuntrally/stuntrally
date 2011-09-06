@@ -65,9 +65,10 @@ class FluidBox		// fluid box shape - water, mud, etc.
 public:
 	Ogre::Vector3 pos, rot, size;
 	int type;
+	class btCollisionObject* cobj;
 	//float density, linDamp, angDamp;
 	//sinkDamp wheel spin move pars..
-	//FluidBox();
+	FluidBox();
 };
 
 

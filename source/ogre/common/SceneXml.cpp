@@ -45,6 +45,10 @@ PagedLayer::PagedLayer()
 	minScale = 0.1f;  maxScale = 0.25f;  ofsY = 0.f;
 }
 
+FluidBox::FluidBox() : cobj(0), type(0),
+	pos(Vector3::ZERO), rot(Vector3::ZERO), size(Vector3::ZERO)
+{	}
+
 
 //  Load
 //--------------------------------------------------------------------------------------------------------------------------------------
