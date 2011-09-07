@@ -249,7 +249,7 @@ bool COLLISION_WORLD::CastRay(
 		n = ToMathVector<float>(rayCallback.m_hitNormalWorld);
 		d = rayCallback.m_closestHitFraction * length;
 		c = rayCallback.m_collisionObject;
-		if (c->isStaticObject() && (c->getCollisionFlags() & 4 == 0))
+		if (c->isStaticObject() /*&& (c->getCollisionFlags() & btCollisionObject::CF_NO_CONTACT_RESPONSE == 0)*/)
 		{
 			void * ptr = c->getCollisionShape()->getUserPointer();
 			if (ptr == (void*)7777)
@@ -258,7 +258,7 @@ bool COLLISION_WORLD::CastRay(
 				s = trackSurface[0];
 				*pOnRoad = 1;
 			}
-			else/**/
+			else if (ptr == 0)
 			{
 				*pOnRoad = 0;
 				void * ptr = c->getUserPointer();
