@@ -136,7 +136,27 @@ bool App::frameStart(Real time)
 		if (doNetworking) {
 			//  update the local car's state to the client
 			protocol::CarStatePackage cs;
-			// TODO: Fill CarStatePackage
+			// FIXME: Skeleton CarStatePackage filling
+			// FIXME: Handles only one local car
+			for (CarModels::const_iterator it = carModels.begin(); it != carModels.end(); ++it) {
+				if ((*it)->eType == CarModel::CT_LOCAL) {
+					// FIXME: Create more elegant and quicker CarStatePackage filling
+					MATHVECTOR <float, 3> pos = (*it)->pCar->GetPosition();
+					cs.x = pos[0];
+					cs.y = pos[1];
+					cs.z = pos[2];
+					QUATERNION <float> rot = (*it)->pCar->GetOrientation();
+					cs.rotx = rot[0];
+					cs.roty = rot[1];
+					cs.roty = rot[2];
+					cs.rotz = rot[3];
+					MATHVECTOR <float, 3> vel = (*it)->pCar->GetVelocity();
+					cs.vx = pos[0];
+					cs.vy = pos[1];
+					cs.vz = pos[2];
+					break;
+				}
+			}
 			mClient->setLocalCarState(cs);
 			// check for new car states
 			protocol::CarStates states = mClient->getReceivedCarStates();

@@ -33,7 +33,8 @@ public:
 	bool bLoading;
 	
 	// has to be in baseApp to switch camera on C press
-	std::vector<class CarModel*> carModels;
+	typedef std::vector<class CarModel*> CarModels;
+	CarModels carModels;
 	
 	// translation
 	// can't have it in c'tor, because mygui is not initialized

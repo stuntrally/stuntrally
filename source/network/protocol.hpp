@@ -96,8 +96,8 @@ struct PlayerInfoPacket: public net::SimpleSerializer<PlayerInfoPacket> {
  */
 struct CarStatePackage: public net::SimpleSerializer<CarStatePackage> {
 	float x, y, z; // FIXME: Should we use some vector types?
+	float rotx, roty, rotz, rotw; // FIXME: What's the best way to transmit orientation?
 	float vx, vy, vz;
-	float rotx, roty, rotz; // FIXME: What's the best way to transmit orientation?
 
 	CarStatePackage(/* TODO: Parameters. */) {}
 };
