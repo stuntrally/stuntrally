@@ -193,10 +193,10 @@ void App::LoadScene()  // 3
 	{
 		FluidBox& fb = sc.fluids[i];
 		//  plane
-		Ogre::Plane p;  p.normal = Ogre::Vector3::UNIT_Y;  p.d = 0;
-		MeshPtr mesh = Ogre::MeshManager::getSingleton().createPlane("WaterMesh"+toStr(i),
-			Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME,
-			p, fb.size.x, fb.size.z, 2,2, true, 1, 1,1, Ogre::Vector3::UNIT_Z);
+		Plane p;  p.normal = Vector3::UNIT_Y;  p.d = 0;
+		MeshPtr mesh = MeshManager::getSingleton().createPlane("WaterMesh"+toStr(i),
+			ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME,
+			p, fb.size.x,fb.size.z, 2,2, true, 1, fb.tile.x*fb.size.x,fb.tile.y*fb.size.z, Vector3::UNIT_Z);
 
 		Entity* efl = mSceneMgr->createEntity("WaterPlane"+toStr(i), "WaterMesh"+toStr(i));
 
@@ -221,6 +221,7 @@ void App::LoadScene()  // 3
 		//nfl->setScale(fb.size);
 		nfl->attachObject(efl);
 
+		
 		///  add bullet trigger box   . . . . . . . . .
 		btVector3 pc(fb.pos.x, -fb.pos.z, fb.pos.y - fb.size.y);  // center
 		btTransform tr;  tr.setIdentity();  tr.setOrigin(pc);

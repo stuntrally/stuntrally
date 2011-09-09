@@ -154,6 +154,13 @@
 	<Tag name="NeedRestart">* need restart</Tag>
 	<Tag name="Change">Change</Tag>
 
+	<Tag name="GraphicsAllSettings">Change all graphics settings to preset:</Tag>
+	<Tag name="GraphicsAll_Lowest">Lowest</Tag>
+	<Tag name="GraphicsAll_Low">Low</Tag>
+	<Tag name="GraphicsAll_Medium">Medium</Tag>
+	<Tag name="GraphicsAll_High">High</Tag>
+	<Tag name="GraphicsAll_Ultra">Ultra</Tag>
+
 	<Tag name="Effects">Effects</Tag>
 	<Tag name="Bloom">Bloom</Tag>
 	<Tag name="Intensity">Intensity</Tag>

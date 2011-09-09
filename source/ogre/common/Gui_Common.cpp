@@ -216,6 +216,15 @@ void App::GuiInitGraphics()
 	Slv(ShadowSize,	pSet->shadow_size /float(ciShadowNumSizes));
 	Slv(ShadowDist,	powf((pSet->shadow_dist -50.f)/4750.f, 0.5f));
 	Btn("Apply", btnShadows);
+	
+	Cmb(combo, "CmbGraphicsAll", comboGraphicsAll);
+	if (combo)  {
+		combo->addItem(TR("#{GraphicsAll_Lowest}"));
+		combo->addItem(TR("#{GraphicsAll_Low}"));
+		combo->addItem(TR("#{GraphicsAll_Medium}"));
+		combo->addItem(TR("#{GraphicsAll_High}"));
+		combo->addItem(TR("#{GraphicsAll_Ultra}"));
+    }
 }
 
 
@@ -677,4 +686,25 @@ void App::chkVidVSync(WP wp)
 {		
 	ChkEv(vsync); 
 	Ogre::Root::getSingleton().getRenderSystem()->setWaitForVerticalBlank(pSet->vsync);
+}
+
+
+///  change all gui settings  -------------------------------------
+void App::comboGraphicsAll(ComboBoxPtr cmb, size_t val)
+{
+	//String s = cmb->getItemNameAt(val);
+	//String n = cmb->getName();
+	switch (val)
+	{
+	case 0:
+		break;
+	case 1:
+		break;
+	case 2:
+		break;
+	case 3:
+		break;
+	case 4:
+		break;
+	}
 }
