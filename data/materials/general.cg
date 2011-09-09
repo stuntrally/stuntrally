@@ -165,7 +165,7 @@ float4 diffuse_ps_a(PIn IN,       ///  _glass pipe_
  
 	clrSUM = lerp(clrSUM, fogColor, /*IN.fogVal*/IN.wp.w);
 	//return float4(normal, 1);  // test
-	//return IN.c;  // road   experimental .....
+	//return IN.c;  // road    experimental alpha ..
 	float alpha = alphaPars.x + alphaPars.y * diffuse.r + alphaPars.z * specular.r + (1 - diffuseTex.r);
 	return float4(clrSUM, alpha);
 }

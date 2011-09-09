@@ -57,7 +57,7 @@ void App::SetGuiFromXmls()
 	Ed(TrPage, sc.trPage);		Ed(TrDist, sc.trDist);
 	Ed(GrMinX, sc.grMinSx);		Ed(GrMaxX, sc.grMaxSx);
 	Ed(GrMinY, sc.grMinSy);		Ed(GrMaxY, sc.grMaxSy);
-	Ed(GrSwayDistr, sc.grSwayDistr);
+	Ed(GrSwayDistr, sc.grSwayDistr);  Ed(GrDensSmooth, sc.grDensSmooth);
 	Ed(GrSwayLen, sc.grSwayLen);	Ed(GrSwaySpd, sc.grSwaySpeed);
 	Ed(TrRdDist, sc.trRdDist);		Ed(TrImpDist, sc.trDistImp);
 	tabPgLayers(tabsPgLayers, 0);

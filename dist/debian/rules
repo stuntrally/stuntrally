@@ -48,7 +48,7 @@ install: build
 	
 	# Debian likes games in /usr/games instead of /usr/bin
 	mkdir -p $(CURDIR)/debian/stuntrally/usr/games
-	mv $(CURDIR)/debian/stuntrally/usr/bin $(CURDIR)/debian/stuntrally/usr/games
+	mv $(CURDIR)/debian/stuntrally/usr/bin/* $(CURDIR)/debian/stuntrally/usr/games/
 
 	# Remove development stuff
 	rm -rf $(CURDIR)/debian/stuntrally/usr/include

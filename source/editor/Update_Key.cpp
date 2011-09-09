@@ -327,6 +327,8 @@ bool App::KeyPress(const CmdKey &arg)
 
 		//  start pos
 		case KC_Q:	if (bEdit()){  edMode = ED_Start;  UpdEditWnds();  }   break;
+		//  fluids
+		case KC_W:	if (bEdit()){  edMode = ED_Fluids;  UpdEditWnds();  }   break;
 		
 		case KC_SPACE:
 			if (edMode == ED_Start && road)  road->iDir *= -1;  break;

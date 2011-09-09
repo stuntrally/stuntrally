@@ -189,8 +189,66 @@ void App::LoadScene()  // 3
 	if (ter)  // load scene
 		sc.LoadXml(TrkDir()+"scene.xml");
 	else
-	{	sc.Default();  sc.td.hfHeight = NULL;  sc.td.hfAngle = NULL;  }  //?...
+	{	sc.Default();  sc.td.hfHeight = NULL;  sc.td.hfAngle = NULL;  }
 	
+
+	//  create fluid areas  . . . . . . . 
+	//---------------------------------------------------------------------
+	for (int i=0; i < sc.fluids.size(); i++)
+	{
+		FluidBox& fb = sc.fluids[i];
+		//  plane
+		Ogre::Plane p;  p.normal = Ogre::Vector3::UNIT_Y;  p.d = 0;
+		MeshPtr mesh = Ogre::MeshManager::getSingleton().createPlane("WaterMesh"+toStr(i),
+			Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME,
+			p, fb.size.x, fb.size.z, 2,2, true, 1, 1,1, Ogre::Vector3::UNIT_Z);
+
+		Entity* efl = mSceneMgr->createEntity("WaterPlane"+toStr(i), "WaterMesh"+toStr(i));
+
+		unsigned short src, dest;
+		if (!mesh->suggestTangentVectorBuildParams(VES_TANGENT, src, dest))
+			mesh->buildTangentVectors(VES_TANGENT, src, dest);
+
+		MaterialPtr mtr = MaterialManager::getSingleton().getByName("Water1");  //par
+		//try  //  set sky map
+		{	MaterialPtr mtrSky = MaterialManager::getSingleton().getByName(sc.skyMtr);
+			Pass* passSky = mtrSky->getTechnique(0)->getPass(0);
+			TextureUnitState* tusSky = passSky->getTextureUnitState(0);
+
+			Pass* pass = mtr->getTechnique(0)->getPass(0);
+			TextureUnitState* tus = pass->getTextureUnitState(1);
+			if (tus)  tus->setTextureName(tusSky->getTextureName());
+		}
+		efl->setMaterial(mtr);  efl->setCastShadows(false);
+		efl->setRenderQueueGroup(RENDER_QUEUE_9+4);
+
+		SceneNode* nfl = mSceneMgr->getRootSceneNode()->createChildSceneNode(fb.pos);
+		//nfl->setScale(fb.size);
+		nfl->attachObject(efl);
+
+		///  add bullet trigger box   . . . . . . . . .
+		btVector3 pc(fb.pos.x, -fb.pos.z, fb.pos.y - fb.size.y);  // center
+		btTransform tr;  tr.setIdentity();  tr.setOrigin(pc);
+
+		btCollisionShape* bshp = 0;
+		bshp = new btBoxShape(btVector3(fb.size.x/2,fb.size.z/2, fb.size.y));
+		//shp->setUserPointer((void*)7777);
+
+		btCollisionObject* bco = new btCollisionObject();
+		bco->setActivationState(DISABLE_SIMULATION);
+		bco->setCollisionShape(bshp);	bco->setWorldTransform(tr);
+		//bco->setFriction(shp->friction);	bco->setRestitution(shp->restitution);
+		bco->setCollisionFlags(bco->getCollisionFlags() |
+			/*btCollisionObject::CF_STATIC_OBJECT |*/ btCollisionObject::CF_NO_CONTACT_RESPONSE/**/);
+		
+		bco->setUserPointer(new ShapeData(ST_Fluid, 0, &fb));  ///~~
+		pGame->collision.world->addCollisionObject(bco);
+		//pGame->collision.world->contactPairTest
+		pGame->collision.shapes.push_back(bshp);
+		fb.cobj = bco;
+	}
+
+
 	//  rain  -----
 	if (!pr && sc.rainEmit > 0)  {
 		pr = mSceneMgr->createParticleSystem("Rain", sc.rainName);

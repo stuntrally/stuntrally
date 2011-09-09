@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION"
 "Report-Msgid-Bugs-To: "
-"POT-Creation-Date: 2011-08-11 19:50+0200"
+"POT-Creation-Date: 2011-09-09 17:11+0300"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>"
 "Language-Team: LANGUAGE <LL@li.org>"
@@ -25,8 +25,8 @@ msgctxt "InputKeyUnassigned"
 msgid "-- None --"
 msgstr ""
 
-msgctxt "Density"
-msgid "Density"
+msgctxt "Fullscreen"
+msgid "Fullscreen"
 msgstr ""
 
 msgctxt "TipDustSize"
@@ -69,8 +69,8 @@ msgctxt "UnitKmh"
 msgid "km/h"
 msgstr ""
 
-msgctxt "InputRoadPickOne"
-msgid "Pick (one)"
+msgctxt "Density"
+msgid "Density"
 msgstr ""
 
 msgctxt "TipLoadTrkEditor"
@@ -101,12 +101,20 @@ msgctxt "MyGUI_MessageBox_Retry"
 msgid "Retry"
 msgstr ""
 
+msgctxt "InputRoadAngZero"
+msgid "shift-6  - zero angles"
+msgstr ""
+
 msgctxt "LS_SCENE"
 msgid "Loading scene"
 msgstr ""
 
 msgctxt "TipTrackImg"
 msgid "In game screenshot for selected track."
+msgstr ""
+
+msgctxt "TerLNoiseOnly"
+msgid "Only Noise"
 msgstr ""
 
 msgctxt "InputValueChange"
@@ -169,6 +177,10 @@ msgctxt "MinimapRotate"
 msgid "Rotate"
 msgstr ""
 
+msgctxt "pipes"
+msgid "pipes"
+msgstr ""
+
 msgctxt "InputReloadTrack"
 msgid "F5 - reload track"
 msgstr ""
@@ -177,12 +189,20 @@ msgctxt "Game"
 msgid "Game"
 msgstr ""
 
+msgctxt "ViewFront"
+msgid "View Front"
+msgstr ""
+
+msgctxt "TipTerLNoiseOnly"
+msgid "Use only noise (no angle or height ranges)"
+msgstr ""
+
 msgctxt "TipParType3"
 msgid "Tire Particle type 3 (global for track)."
 msgstr ""
 
-msgctxt "TipParType2"
-msgid "Tire Particle type 2 (global for track)."
+msgctxt "SkirtLength"
+msgid "Skirt Length"
 msgstr ""
 
 msgctxt "TipParType1"
@@ -225,8 +245,12 @@ msgctxt "LoadTrack"
 msgid "Load Track"
 msgstr ""
 
-msgctxt "Back"
-msgid "Back"
+msgctxt "GrDensSmooth"
+msgid "Smooth grass dens."
+msgstr ""
+
+msgctxt "TrackInAir"
+msgid "In air"
 msgstr ""
 
 msgctxt "TipDiffusePrev"
@@ -247,6 +271,10 @@ msgstr ""
 
 msgctxt "TipMinimapScrnEditor"
 msgid "Minimap of selected track, view from top."
+msgstr ""
+
+msgctxt "InputRoadPickOne"
+msgid "Pick (one)"
 msgstr ""
 
 msgctxt "ParAmount"
@@ -281,6 +309,10 @@ msgctxt "InputNoJS"
 msgid "No joystick"
 msgstr ""
 
+msgctxt "InputRoadAngType"
+msgid "5,6   - angles type"
+msgstr ""
+
 msgctxt "NetMasterPort"
 msgid "Master Server Port"
 msgstr ""
@@ -289,8 +321,8 @@ msgctxt "CopySource"
 msgid "Set as copy source"
 msgstr ""
 
-msgctxt "TerHeightMap"
-msgid "Terrain Heightmap"
+msgctxt "TreeRoadDist"
+msgid "Trees to road dist."
 msgstr ""
 
 msgctxt "NeedReload"
@@ -329,12 +361,16 @@ msgctxt "TipDustInt"
 msgid "Dust particles intensity."
 msgstr ""
 
-msgctxt "InputNextOptTab"
-msgid "F2,F3 - prev,next Options tab"
+msgctxt "CameraInfo"
+msgid "Camera info"
+msgstr ""
+
+msgctxt "frenzy"
+msgid "frenzy"
 msgstr ""
 
 msgctxt "InputRoadChkRadius"
-msgid "K, L   - checkpoint radius (chkR 0 - none)"
+msgid "K,L   - checkpoint radius (chkR 0 - none)"
 msgstr ""
 
 msgctxt "FacesOnce"
@@ -343,6 +379,10 @@ msgstr ""
 
 msgctxt "InputRoadInsAlt"
 msgid "alt-shift - at start   alt-ctrl - at end"
+msgstr ""
+
+msgctxt "BlendMap"
+msgid "Blendmap"
 msgstr ""
 
 msgctxt "InputMapPrevCamera"
@@ -375,6 +415,10 @@ msgstr ""
 
 msgctxt "TipToggleLayer"
 msgid "Turn on/off chosen texture layer."
+msgstr ""
+
+msgctxt "TerLHSm"
+msgid "Height smooth"
 msgstr ""
 
 msgctxt "InputAssignKey"
@@ -413,12 +457,12 @@ msgctxt "NumLaps"
 msgid "Number of laps"
 msgstr ""
 
-msgctxt "ReflMode_single"
-msgid "Single"
+msgctxt "TerLAngMin"
+msgid "Angle Min"
 msgstr ""
 
-msgctxt "MapSize"
-msgid "Map size"
+msgctxt "ReflMode_single"
+msgid "Single"
 msgstr ""
 
 msgctxt "Friction"
@@ -435,6 +479,10 @@ msgstr ""
 
 msgctxt "TipSunDirYaw"
 msgid "Sun direction - yaw angle."
+msgstr ""
+
+msgctxt "TipGrDensSmooth"
+msgid "Grass density map - smooth size"
 msgstr ""
 
 msgctxt "ABS"
@@ -465,12 +513,16 @@ msgctxt "TipModelRoadDist"
 msgid "Distance from road to models (global, added to each models own value)."
 msgstr ""
 
+msgctxt "TerLAngSm"
+msgid "Angle smooth"
+msgstr ""
+
 msgctxt "InputAfterChanges"
 msgid "(after Terrain/Vegetation changes)"
 msgstr ""
 
-msgctxt "SkirtLength"
-msgid "Skirt Length"
+msgctxt "InputMapFlipRight"
+msgid "Flip right"
 msgstr ""
 
 msgctxt "OrigImage"
@@ -491,6 +543,10 @@ msgstr ""
 
 msgctxt "wind"
 msgid "wind"
+msgstr ""
+
+msgctxt "TipTerLHMax"
+msgid "Ending terrain height for layer."
 msgstr ""
 
 msgctxt "LS_CAR"
@@ -557,6 +613,10 @@ msgctxt "VolMaster"
 msgid "Master"
 msgstr ""
 
+msgctxt "InputRoadCopySel"
+msgid "ctrl-Ins - copy selection   ctrl-Del - delete sel."
+msgstr ""
+
 msgctxt "TipNewGame"
 msgid "Start game on new track or Restart on current."
 msgstr ""
@@ -573,8 +633,8 @@ msgctxt "Layer"
 msgid "Layer"
 msgstr ""
 
-msgctxt "NetLocalPort"
-msgid "Local Port"
+msgctxt "Copy"
+msgid "Copy"
 msgstr ""
 
 msgctxt "EscQuit"
@@ -637,6 +697,10 @@ msgctxt "InputRoadMat"
 msgid "-,=  - road/pipe material"
 msgstr ""
 
+msgctxt "MinimapAndSize"
+msgid "Minimap, size"
+msgstr ""
+
 msgctxt "InputStartHeight"
 msgid "[,]  -  adjust start box height (bigger for pipes)"
 msgstr ""
@@ -647,6 +711,10 @@ msgstr ""
 
 msgctxt "InputMapHandBrake"
 msgid "Handbrake"
+msgstr ""
+
+msgctxt "loops"
+msgid "loops"
 msgstr ""
 
 msgctxt "ProjectPage"
@@ -663,6 +731,10 @@ msgstr ""
 
 msgctxt "MergeLength"
 msgid "Merge length"
+msgstr ""
+
+msgctxt "TipTerLAngMin"
+msgid "Starting terrain angle for layer."
 msgstr ""
 
 msgctxt "InputPressButtonTip"
@@ -689,12 +761,20 @@ msgctxt "NetRefreshList"
 msgid "Get/refresh list"
 msgstr ""
 
+msgctxt "ScaleAll"
+msgid "Scale all"
+msgstr ""
+
 msgctxt "InputMapFlip"
 msgid "Flip"
 msgstr ""
 
-msgctxt "TrackInAir"
-msgid "In air"
+msgctxt "difficulty"
+msgid "difficulty"
+msgstr ""
+
+msgctxt "bumps"
+msgid "bumps"
 msgstr ""
 
 msgctxt "TipReverse"
@@ -798,15 +878,11 @@ msgid "most work also on selection"
 msgstr ""
 
 msgctxt "InputTerHeight"
-msgid "E - Height set"
+msgid "E - Height set (RMB change height value)"
 msgstr ""
 
 msgctxt "InputStartPos"
 msgid "Q - edit car start pos"
-msgstr ""
-
-msgctxt "TipModelRoadDist"
-msgid "Distance from road to models (global, added to each models own value)."
 msgstr ""
 
 msgctxt "InputRplCtrl1"
@@ -877,6 +953,10 @@ msgctxt "InputMapPlayer3"
 msgid "Player 3"
 msgstr ""
 
+msgctxt "TerLHMin"
+msgid "Height Min"
+msgstr ""
+
 msgctxt "Ambient"
 msgid "Ambient"
 msgstr ""
@@ -885,8 +965,8 @@ msgctxt "InputCameraTxt2"
 msgid "with ctrl - switch current car when many"
 msgstr ""
 
-msgctxt "InputMapFlipRight"
-msgid "Flip right"
+msgctxt "MapSize"
+msgid "Map size"
 msgstr ""
 
 msgctxt "InputRoadNotOnTer"
@@ -915,6 +995,10 @@ msgstr ""
 
 msgctxt "Other"
 msgid "Other"
+msgstr ""
+
+msgctxt "TipTerLAngSm"
+msgid "Angle smooth range (transition)."
 msgstr ""
 
 msgctxt "InputRoadNext"
@@ -965,6 +1049,10 @@ msgctxt "CarDebugText"
 msgid "Car debug text "
 msgstr ""
 
+msgctxt "InputWheelShape"
+msgid "K,L  -  Brush shape"
+msgstr ""
+
 msgctxt "RplSize"
 msgid "size"
 msgstr ""
@@ -977,8 +1065,8 @@ msgctxt "Mode"
 msgid "mode"
 msgstr ""
 
-msgctxt "ScaleAll"
-msgid "Scale all"
+msgctxt "ChangeCar"
+msgid "Change Car"
 msgstr ""
 
 msgctxt "InputMapPrevTab"
@@ -1029,12 +1117,16 @@ msgctxt "RoadMaterials"
 msgid "Road materials"
 msgstr ""
 
-msgctxt "Fullscreen"
-msgid "Fullscreen"
+msgctxt "rating"
+msgid "rating"
 msgstr ""
 
 msgctxt "BulletLines"
 msgid "Bullet debug lines"
+msgstr ""
+
+msgctxt "TerLAngMax"
+msgid "Angle Max"
 msgstr ""
 
 msgctxt "TipGrassSwaySpd"
@@ -1133,8 +1225,8 @@ msgctxt "MotionBlur"
 msgid "Motion Blur"
 msgstr ""
 
-msgctxt "MinimapAndSize"
-msgid "Minimap, size"
+msgctxt "TerLNoise"
+msgid "Noise"
 msgstr ""
 
 msgctxt "TipChangeHue"
@@ -1159,6 +1251,10 @@ msgstr ""
 
 msgctxt "ChngTrkTab"
 msgid "changed in [Track] tab"
+msgstr ""
+
+msgctxt "TipParType2"
+msgid "Tire Particle type 2 (global for track)."
 msgstr ""
 
 msgctxt "InputRplCtrl2"
@@ -1281,6 +1377,10 @@ msgctxt "InputStartAltLMB"
 msgid "alt-LMB - rotate  alt-RMB - pitch"
 msgstr ""
 
+msgctxt "InputRoadAngSnap"
+msgid "7,8   - angles snap"
+msgstr ""
+
 msgctxt "TipTexTiling"
 msgid "Texture tiling length (less means more repeats)."
 msgstr ""
@@ -1329,10 +1429,6 @@ msgctxt "SunDir"
 msgid "Sun dir."
 msgstr ""
 
-msgctxt "ResizeTer"
-msgid "Resize"
-msgstr ""
-
 msgctxt "TipSmokeInt"
 msgid "Smoke particles intensity."
 msgstr ""
@@ -1369,8 +1465,8 @@ msgctxt "InputCamControl2"
 msgid "LMB - rotate  RMB - move  MMB - zoom"
 msgstr ""
 
-msgctxt "ColBright"
-msgid "Brightness"
+msgctxt "SkirtHeight"
+msgid "Skirt Height"
 msgstr ""
 
 msgctxt "LS_CLEANUP"
@@ -1411,6 +1507,10 @@ msgstr ""
 
 msgctxt "RoadPoint"
 msgid "Road Point"
+msgstr ""
+
+msgctxt "TerLHMax"
+msgid "Height Max"
 msgstr ""
 
 msgctxt "LoadingDesc"
@@ -1469,12 +1569,8 @@ msgctxt "GrassMult"
 msgid "Grass mul"
 msgstr ""
 
-msgctxt "ChangeCar"
-msgid "Change Car"
-msgstr ""
-
-msgctxt "ViewFront"
-msgid "View Front"
+msgctxt "Back"
+msgid "Back"
 msgstr ""
 
 msgctxt "RplRecTime"
@@ -1529,8 +1625,8 @@ msgctxt "TipWindInflH"
 msgid "Wind influence on model, height scale."
 msgstr ""
 
-msgctxt "Copy"
-msgid "Copy"
+msgctxt "NetLocalPort"
+msgid "Local Port"
 msgstr ""
 
 msgctxt "Bloom"
@@ -1541,8 +1637,8 @@ msgctxt "TipWindInflL"
 msgid "Wind influence on model, length scale."
 msgstr ""
 
-msgctxt "InputRoadCopySel"
-msgid "ctrl-Ins - copy selection   ctrl-Del - delete sel."
+msgctxt "CamInertia"
+msgid "Camera inertia"
 msgstr ""
 
 msgctxt "TrackWidthAvg"
@@ -1585,6 +1681,10 @@ msgctxt "TipRainSnow2"
 msgid "Set 2 Rain/Snow type"
 msgstr ""
 
+msgctxt "TipTerLNoise"
+msgid "Factor of additional noise."
+msgstr ""
+
 msgctxt "InputTerDeform"
 msgid "D - Deform  (LMB up, RMB down)"
 msgstr ""
@@ -1613,6 +1713,10 @@ msgctxt "TipChangeSat"
 msgid "Change car color saturation (white-black)."
 msgstr ""
 
+msgctxt "TipTerLHMin"
+msgid "Starting terrain height for layer."
+msgstr ""
+
 msgctxt "FrictionTread"
 msgid "FrictionTread"
 msgstr ""
@@ -1623,10 +1727,6 @@ msgstr ""
 
 msgctxt "InputReadyToPlay"
 msgid "(ready to play in game)"
-msgstr ""
-
-msgctxt "CamInertia"
-msgid "Camera inertia"
 msgstr ""
 
 msgctxt "TipSurfFrict"
@@ -1738,11 +1838,15 @@ msgid "Source track"
 msgstr ""
 
 msgctxt "ImpostorDist"
-msgid "impostors dist."
+msgid "Impostors dist."
 msgstr ""
 
 msgctxt "page"
 msgid "page"
+msgstr ""
+
+msgctxt "Layers"
+msgid "Layers"
 msgstr ""
 
 msgctxt "Quit"
@@ -1767,6 +1871,10 @@ msgstr ""
 
 msgctxt "InputMapShiftUp"
 msgid "Shift up"
+msgstr ""
+
+msgctxt "NewTerGenerate"
+msgid "New Generate"
 msgstr ""
 
 msgctxt "SpeedUnit"
@@ -1821,6 +1929,10 @@ msgctxt "InputRoadEdit"
 msgid "R - edit road mode"
 msgstr ""
 
+msgctxt "jumps"
+msgid "jumps"
+msgstr ""
+
 msgctxt "TBBest"
 msgid "Best"
 msgstr ""
@@ -1837,8 +1949,8 @@ msgctxt "CarCollis"
 msgid "Cars collision"
 msgstr ""
 
-msgctxt "CameraInfo"
-msgid "Camera info"
+msgctxt "banked"
+msgid "banked"
 msgstr ""
 
 msgctxt "NetRouterTip"
@@ -1909,8 +2021,12 @@ msgctxt "LS_GAME"
 msgid "Loading game"
 msgstr ""
 
-msgctxt "TreeRoadDist"
-msgid "Trees to road dist."
+msgctxt "TerHeightMap"
+msgid "Terrain Heightmap"
+msgstr ""
+
+msgctxt "long"
+msgid "long"
 msgstr ""
 
 msgctxt "PipeWStepsMul"
@@ -1919,6 +2035,10 @@ msgstr ""
 
 msgctxt "RplLoad"
 msgid "Load"
+msgstr ""
+
+msgctxt "TipTerLHSm"
+msgid "Height smooth range (transition)."
 msgstr ""
 
 msgctxt "MyGUI_MessageBox_Ok"
@@ -1981,8 +2101,8 @@ msgctxt "distribution"
 msgid "distribution"
 msgstr ""
 
-msgctxt "SkirtHeight"
-msgid "Skirt Height"
+msgctxt "ColBright"
+msgid "Brightness"
 msgstr ""
 
 msgctxt "InputWheelSize"
@@ -1994,7 +2114,7 @@ msgid "Bullet debug"
 msgstr ""
 
 msgctxt "InputTerSmooth"
-msgid "S - Smooth  (LMB, -Noise RMB)"
+msgid "S - Smooth"
 msgstr ""
 
 msgctxt "TipChangeTrack"
@@ -2037,6 +2157,10 @@ msgctxt "InputSaveTrack"
 msgid "F4 - save track"
 msgstr ""
 
+msgctxt "TrackDifficulties"
+msgid "Various Track Difficulties"
+msgstr ""
+
 msgctxt "InputMapShiftDown"
 msgid "Shift down"
 msgstr ""
@@ -2069,8 +2193,16 @@ msgctxt "Color"
 msgid "color"
 msgstr ""
 
+msgctxt "TipTerLAngMax"
+msgid "Ending terrain angle for layer."
+msgstr ""
+
 msgctxt "Pitch"
 msgid "pitch"
+msgstr ""
+
+msgctxt "InputNextOptTab"
+msgid "F2,F3 - prev,next Options tab"
 msgstr ""
 
 msgctxt "MyGUI_MessageBox_Yes"

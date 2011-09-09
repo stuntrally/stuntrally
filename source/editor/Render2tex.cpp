@@ -107,9 +107,9 @@ void App::SaveGrassDens()
 	PixelBox pb_rd(w,h,1, PF_BYTE_RGBA, rd);
 	rt[1].rndTex->copyContentsToMemory(pb_rd, RenderTarget::FB_FRONT);
 
-	//  rotate, filter
-	//  smooth _par -- in road, gui ?
-	const int f=6;  float ff = 2.f / ((f*2+1)*(f*2+1)) / 255.f;
+	//  rotate, filter  smooth size
+	const int f = sc.grDensSmooth;
+	const float ff = 2.f / ((f*2+1)*(f*2+1)) / 255.f;
 	register int v,y,x,i,j,a,b,d;
 
 	for (y = f; y < h-f; ++y) {  a = y*w +f;

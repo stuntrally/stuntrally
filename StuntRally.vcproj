@@ -837,6 +837,42 @@
 				Name="Collis"
 				>
 				<File
+					RelativePath=".\source\vdrift\Buoyancy.cpp"
+					>
+					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="0"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="0"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="ReleaseDbg|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="0"
+						/>
+					</FileConfiguration>
+				</File>
+				<File
+					RelativePath=".\source\vdrift\Buoyancy.h"
+					>
+				</File>
+				<File
+					RelativePath=".\source\vdrift\BuoyMath.h"
+					>
+				</File>
+				<File
 					RelativePath=".\Source\vdrift\collision_world.cpp"
 					>
 				</File>

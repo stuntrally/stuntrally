@@ -1,0 +1,57 @@
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 
+material ppx_water1			// per pixel  water (alpha)
+{
+	receive_shadows off
+	set $specularCol "1 1 1"
+	set $shininess "32"
+ 
+	technique
+	{
+		pass
+		{
+			scene_blend  alpha_blend
+			cull_hardware  none
+			transparent_sorting on
+			depth_write off
+ 
+			specular $specularCol $shininess
+ 
+			vertex_program_ref water1_vs  {  }
+			fragment_program_ref water1_ps
+			{
+				param_named waveBump     float 0.5
+				param_named waveHighFreq float 0.0
+				param_named waveSpecular float 1.0
+				param_named deepColor       float4 0.0 0.3 0.5  1.0
+				param_named shallowColor    float4 0.0 0.9 1.0  0.3
+				param_named reflectionColor float4 0.9 1 1 1.0
+				param_named reflectionAmount float 0.7
+				param_named waterAmount      float 0.3
+				param_named fresnelPower float 5.0
+				param_named fresnelBias  float 0.33
+			}
+ 
+			texture_unit normalMap
+			{
+				texture flat_n.png
+			}
+			texture_unit skyMap
+			{
+				texture white.png
+				tex_address_mode mirror
+			}
+		}
+	}
+}
+
+
+//  water
+//---------------------------------------------------------------------------
+
+material Water1 : ppx_water1
+{
+	set $specularCol "0.98 0.99 1.0"
+	set $shininess "512"
+	set_texture_alias normalMap waveNM.png
+}

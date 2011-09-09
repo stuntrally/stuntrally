@@ -91,6 +91,7 @@ void App::initBlendMaps(Ogre::Terrain* terrain)
 		if (b >= 2)  val[1] = std::max(0.f, (float)pow(0.5f + 0.5f *cos_(18.f* fy)*sin_(18.f* fx), p) - val[0]);
 		if (b >= 3)  val[2] = std::max(0.f, (float)   (0.5f + 0.5f *cos_(22.f* fy)*sin_(21.f* fx)   ) - val[0]-val[1]);
 		if (b >= 4)  val[3] = std::max(0.f, (float)   (0.5f + 0.5f *cos_(19.f* fy)*sin_(20.f* fx)   ) - val[0]-val[1]-val[2]);
+		// todo: noise par is only working on [1] mul val[i] *= ...
 
 		//  ter angle and height ranges
 		#if 1
@@ -344,6 +345,7 @@ void App::CreateBltTerrain()
 
 	btVector3 scl(sc.td.fTriangleSize, sc.td.fTriangleSize, 1);
 	hfShape->setLocalScaling(scl);
+	//col->setUserPointer((void*)&gSD_Terrain);
 
 	/*btRigidBody::btRigidBodyConstructionInfo infoHm(0.f, 0, hfShape);
 	infoHm.m_restitution = 0.5;  //
@@ -362,11 +364,12 @@ void App::CreateBltTerrain()
 	///  border planes []
 	const float px[4] = {-1, 1, 0, 0};
 	const float py[4] = { 0, 0,-1, 1};
-	if (1)
+
 	for (int i=0; i < 4; i++)
 	{
 		btVector3 vpl(px[i], py[i], 0);
 		btCollisionShape* shp = new btStaticPlaneShape(vpl,0);
+		//shp->setUserPointer(gSD_BorderPlane);
 		
 		btTransform tr;  tr.setIdentity();
 		tr.setOrigin(vpl * -0.5 * sc.td.fTerWorldSize);

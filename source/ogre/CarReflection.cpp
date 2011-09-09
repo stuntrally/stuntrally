@@ -42,7 +42,7 @@ CarReflection::~CarReflection()
 
 void CarReflection::Create()
 {
-	if (pSet->refl_mode == "single") cubetexName = "ReflectionCube"; // single: use 1st cubemap
+	if (pSet->refl_mode == "single")  cubetexName = "ReflectionCube"; // single: use 1st cubemap
 	else if (pSet->refl_mode == "full")
 	{
 		cubetexName = "ReflectionCube" + toStr(iIndex);
@@ -111,12 +111,7 @@ void CarReflection::Create()
 						TextureUnitState* tus = tusIt.getNext();
 						if (tus->getTextureName() == "ReflectionCube")
 							tus->setTextureName(cubetexName);
-					}
-				}	
-			}
-		}	
-	}
-
+	}	}	}	}	}
 }
 
 void CarReflection::Update()
@@ -145,5 +140,10 @@ void CarReflection::Update()
 				else  LogO("upd rt 0");
 		}
 	}
+
+	//Image im;
+	//cubetex->convertToImage(im);
+	//im.save("cube.dds");
+
 	bFirstFrame = false;
 }

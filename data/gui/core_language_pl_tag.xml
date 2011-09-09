@@ -14,6 +14,7 @@
 	<Tag name="UnitKmh">km/h</Tag>
 	<Tag name="InputRoadPickOne">Wybierz (jeden)</Tag>
 	<Tag name="ViewDist">Dalekość widzenia</Tag>
+	<Tag name="TipRoadDist2">Additional distance to road.</Tag>
 	<Tag name="TreeDens">Gęstość drzew</Tag>
 	<Tag name="TerNormal">Normalny</Tag>
 	<Tag name="LS_TRACK">Wczytuję trasę</Tag>
@@ -33,6 +34,7 @@
 	<Tag name="InputCamControl">W,S A,D Q,E - poruszaj się  Strzałki - obracaj</Tag>
 	<Tag name="TipTrackMap">Minimapa wybranej trasy (widok z góry).</Tag>
 	<Tag name="TipToggleModel">Włącz / wyłącz ten model.</Tag>
+	<Tag name="MinimapRotate">Rotate</Tag>
 	<Tag name="InputReloadTrack">F5 - przeładuj trasę</Tag>
 	<Tag name="Game">Gra</Tag>
 	<Tag name="TipParType3">typ 1 cząstek z opon (dla trasy)</Tag>
@@ -63,6 +65,7 @@
 	<Tag name="CopySource">Wybierz jako źródło kopiowania</Tag>
 	<Tag name="TipDisableFog">Wyłącz mgłę gdy edycja z dystansu.</Tag>
 	<Tag name="NeedReload">* potrzeba przeładowania</Tag>
+	<Tag name="MinimapZoom">Zoom</Tag>
 	<Tag name="LoadTrack">Wczytaj trasę</Tag>
 	<Tag name="Count">Liczba</Tag>
 	<Tag name="UnitKm">km</Tag>
@@ -81,7 +84,7 @@
 	<Tag name="TipGrassDens">Jak gęsta/rzadka będzie trawa na terenie.</Tag>
 	<Tag name="Shadows">Cienie</Tag>
 	<Tag name="TipToggleLayer">Włącz / wyłącz wybraną warstwę tekstury.</Tag>
-	<Tag name="ViewRight">Widok prawy</Tag>
+	<Tag name="InputAssignKey">&lt;Naciśnij klawisz&gt;</Tag>
 	<Tag name="Wireframe">Szkielet</Tag>
 	<Tag name="ChangeTrack">Zmień trasę</Tag>
 	<Tag name="TerrainSize">Rozmiar terenu</Tag>
@@ -109,7 +112,7 @@
 	<Tag name="InputRoadSel">Backspace - dodaj lub usuń z selekcji</Tag>
 	<Tag name="Weather">Pogoda</Tag>
 	<Tag name="wind">wiatr</Tag>
-	<Tag name="TipRoadStats">Statystyki całej drogi.</Tag>
+	<Tag name="LS_CAR">Wczytuję auto</Tag>
 	<Tag name="MaxScale">maks. skala</Tag>
 	<Tag name="TipModelMaxScale">Maksymalna skala modelu.</Tag>
 	<Tag name="TerrainError">Bład terenu</Tag>
@@ -117,7 +120,7 @@
 	<Tag name="InputStartDir">Space - zmień kierunek drogi (+ lub -)</Tag>
 	<Tag name="InputRoadDel">Del - zmaż wybrany</Tag>
 	<Tag name="WidthSteps">Kroków szerokości</Tag>
-	<Tag name="InputKeyNoAxis">Brak osi</Tag>
+	<Tag name="Diffuse">Dyfuzyjny</Tag>
 	<Tag name="Sound">Dźwięk</Tag>
 	<Tag name="RoadPointSize">Wielkość punktów drogi</Tag>
 	<Tag name="Car">Auto</Tag>
@@ -246,7 +249,7 @@
 	<Tag name="DisableEdit">Wyłącz do edycji</Tag>
 	<Tag name="TipAutoClutch">-ręczna nie zaimplementowana.</Tag>
 	<Tag name="MinimapUpdSkip">Pominięć odśw. minimapy</Tag>
-	<Tag name="LS_CAR">Wczytuję auto</Tag>
+	<Tag name="TipRoadStats">Statystyki całej drogi.</Tag>
 	<Tag name="InputTerPaint">A - maluj tekstury (warstwy)</Tag>
 	<Tag name="RplCur">Obecne</Tag>
 	<Tag name="InputKeyNoButton">Bez przycisku</Tag>
@@ -308,7 +311,6 @@
 	<Tag name="ApplyShadows">Zmień cienie</Tag>
 	<Tag name="RoadStats">Stat. drogi</Tag>
 	<Tag name="SunDir">Kierunek słońca</Tag>
-	<Tag name="ResizeTer">Zmień rozmiar</Tag>
 	<Tag name="TipSmokeInt">Intensywność cząstek dymu</Tag>
 	<Tag name="TerrainBrush">Pędzel terenu</Tag>
 	<Tag name="TipTexNormAuto">Gdy zaznaczony, tekstura normalna jest automatycznie ustawiana na podstawie diffuse (+ _nh w nazwie).</Tag>
@@ -330,14 +332,13 @@
 	<Tag name="RoadPoint">Punkt drogi</Tag>
 	<Tag name="LoadingDesc">Wczytywanie, proszę czekać...</Tag>
 	<Tag name="TipGrassPatchHeightMax">Maksymalna wysokość strony trawy.</Tag>
-	<Tag name="Diffuse">Dyfuzyjny</Tag>
+	<Tag name="InputKeyNoAxis">Brak osi</Tag>
 	<Tag name="Tires">Opony</Tag>
 	<Tag name="GrassSize">Wielkość trawy</Tag>
 	<Tag name="TipTrkNameEditor">Nazwa wybranej trasy, używana również przy zmianie nazwy i jako nazwa nowej trasy.</Tag>
 	<Tag name="InputRoadStats">T - okno statystyki drogi</Tag>
 	<Tag name="VSync">Synchr. pionowa</Tag>
 	<Tag name="TipChangeBright">Zmień jasność koloru auta.</Tag>
-	<Tag name="InputAssignKey">&lt;Naciśnij klawisz&gt;</Tag>
 	<Tag name="Size">Rozmiar</Tag>
 	<Tag name="AutoGearbox">Automatyczna skrzynia biegów</Tag>
 	<Tag name="InputSlowFast">shift - wolno  ctrl - szybko</Tag>
@@ -376,6 +377,7 @@
 	<Tag name="InputToggleVeget">V - wł. / wył. wegetację</Tag>
 	<Tag name="MyGUI_MessageBox_Continue">Kontynuuj</Tag>
 	<Tag name="Tools">Narzędzia</Tag>
+	<Tag name="ViewRight">Widok prawy</Tag>
 	<Tag name="TipGrassSwaySpd">Efekt kołysania trawy, szybkość.</Tag>
 	<Tag name="FrictionTread">Tarcie</Tag>
 	<Tag name="TipTrkListEditor">Lista tras, kliknij by wybrać (do duplikowania lub zmiany nazwy). Naciśnij [Wczytaj trasę] by zmienić obecną trasę w edytorze.</Tag>
@@ -489,10 +491,30 @@
 	<Tag name="Pitch">nachylenie</Tag>
 	<Tag name="MyGUI_MessageBox_Yes">Tak</Tag>
 	<Tag name="RplAll">Wszystkie</Tag>
-	<Tag name="TipRoadDist2">Additional distance to road.</Tag>
-	<Tag name="MinimapRotate">Rotate</Tag>
-	<Tag name="MinimapZoom">Zoom</Tag>
-	<Tag name="GameVersion">1.2</Tag>
+	<Tag name="InputRoadAngZero">shift-6  - zero angles</Tag>
+	<Tag name="TerLNoiseOnly">Only Noise</Tag>
+	<Tag name="TipTerLNoiseOnly">Use only noise (no angle or height ranges)</Tag>
+	<Tag name="InputRoadAngType">5,6   - angles type</Tag>
+	<Tag name="BlendMap">Blendmap</Tag>
+	<Tag name="TerLHSm">Height smooth</Tag>
+	<Tag name="TerLAngMin">Angle Min</Tag>
+	<Tag name="TerLAngSm">Angle smooth</Tag>
+	<Tag name="TipTerLHMax">Ending terrain height for layer.</Tag>
+	<Tag name="TerLNoise">Noise</Tag>
+	<Tag name="TipTerLAngMin">Starting terrain angle for layer.</Tag>
+	<Tag name="TerLHMin">Height Min</Tag>
+	<Tag name="TipTerLAngSm">Angle smooth range (transition).</Tag>
+	<Tag name="InputWheelShape">K,L  -  Brush shape</Tag>
+	<Tag name="TerLAngMax">Angle Max</Tag>
+	<Tag name="InputRoadAngSnap">7,8   - angles snap</Tag>
+	<Tag name="TerLHMax">Height Max</Tag>
+	<Tag name="TipTerLNoise">Factor of additional noise.</Tag>
+	<Tag name="TipTerLHMin">Starting terrain height for layer.</Tag>
+	<Tag name="Layers">Layers</Tag>
+	<Tag name="NewTerGenerate">New Generate</Tag>
+	<Tag name="TipTerLHSm">Height smooth range (transition).</Tag>
+	<Tag name="TipTerLAngMax">Ending terrain angle for layer.</Tag>
+	<Tag name="GameVersion">1.3</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 
 </MyGUI>

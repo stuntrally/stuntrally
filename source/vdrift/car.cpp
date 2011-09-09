@@ -140,7 +140,8 @@ bool CAR::Load(class App* pApp1,
 		position = initial_position;
 		orientation = initial_orientation;
 		
-		dynamics.Init(pSet, world, bodymodel, wheelmodelfront, wheelmodelrear, position, orientation);
+		dynamics.Init(pSet, &pApp->sc,
+			world, bodymodel, wheelmodelfront, wheelmodelrear, position, orientation);
 
 		dynamics.SetABS(defaultabs);
 		dynamics.SetTCS(defaulttcs);

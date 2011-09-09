@@ -1,11 +1,12 @@
 #include "pch.h"
-//#include "../ogre/Defines.h"
+#include "../ogre/Defines.h"
 #include "collision_world.h"
 
 #include "tobullet.h"
 #include "collision_contact.h"
 #include "model.h"
 #include "track.h"
+#include "cardynamics.h"
 
 
 ///  ctor bullet world
@@ -167,6 +168,7 @@ btCollisionShape * COLLISION_WORLD::AddMeshShape(const MODEL & model)
 	return shape;
 }
 
+
 struct MyRayResultCallback : public btCollisionWorld::RayResultCallback
 {
 	MyRayResultCallback(const btVector3 & rayFromWorld, const btVector3 & rayToWorld, const btCollisionObject * exclude)
@@ -185,6 +187,10 @@ struct MyRayResultCallback : public btCollisionWorld::RayResultCallback
 	virtual	btScalar	addSingleResult(btCollisionWorld::LocalRayResult& rayResult, bool normalInWorldSpace)
 	{
 		if (rayResult.m_collisionObject == m_exclude)
+			return 1.0;
+			
+		//  fluid triggers - no collision
+		if (rayResult.m_collisionObject->getCollisionFlags() & btCollisionObject::CF_NO_CONTACT_RESPONSE)
 			return 1.0;
 		
 		//caller already does the filter on the m_closestHitFraction
@@ -212,6 +218,9 @@ struct MyRayResultCallback : public btCollisionWorld::RayResultCallback
 	}
 };
 
+
+//  Ray
+//-------------------------------------------------------------------------------------------------------------------------------
 bool COLLISION_WORLD::CastRay(
 	const MATHVECTOR <float, 3> & origin,
 	const MATHVECTOR <float, 3> & direction,
@@ -240,7 +249,7 @@ bool COLLISION_WORLD::CastRay(
 		n = ToMathVector<float>(rayCallback.m_hitNormalWorld);
 		d = rayCallback.m_closestHitFraction * length;
 		c = rayCallback.m_collisionObject;
-		if (c->isStaticObject())
+		if (c->isStaticObject() /*&& (c->getCollisionFlags() & btCollisionObject::CF_NO_CONTACT_RESPONSE == 0)*/)
 		{
 			void * ptr = c->getCollisionShape()->getUserPointer();
 			if (ptr == (void*)7777)
@@ -249,7 +258,7 @@ bool COLLISION_WORLD::CastRay(
 				s = trackSurface[0];
 				*pOnRoad = 1;
 			}
-			else/**/
+			else if (ptr == 0)
 			{
 				*pOnRoad = 0;
 				void * ptr = c->getUserPointer();
@@ -300,15 +309,20 @@ bool COLLISION_WORLD::CastRay(
 	return false;
 }
 
+
+//  Update
+//-------------------------------------------------------------------------------------------------------------------------------
 void COLLISION_WORLD::Update(float dt, bool profiling)
 {
-	//const int maxsubsteps = 7;  ///~  70  7*6+  o:7
-	//const float fixedTimeStep = 1 / 60.0f;  ///~  320+  o:60.
-	//world->stepSimulation(dt, maxsubsteps, fixedTimeStep);
+	///  Simulate
 	world->stepSimulation(dt, maxSubsteps, fixedTimestep);
+	
 
-	///TODO: bullet hit info for particles and sounds ...
-	/*int numManifolds = world->getDispatcher()->getNumManifolds();
+	//  collision callback for fluid triggers  -----~~~------~~~-----
+	//inFluids.clear();  //- before update
+	//TODO: bullet hit info for particles and sounds ...
+
+	int numManifolds = world->getDispatcher()->getNumManifolds();
 	//LogO(toStr(numManifolds));
 	for (int i=0; i < numManifolds; ++i)
 	{
@@ -316,7 +330,23 @@ void COLLISION_WORLD::Update(float dt, bool profiling)
 		btCollisionObject* bA = static_cast<btCollisionObject*>(contactManifold->getBody0());
 		btCollisionObject* bB = static_cast<btCollisionObject*>(contactManifold->getBody1());
 	
-		int numContacts = contactManifold->getNumContacts();
+		/*if (bA->getCollisionFlags() & btCollisionObject::CF_NO_CONTACT_RESPONSE ||
+			bB->getCollisionFlags() & btCollisionObject::CF_NO_CONTACT_RESPONSE) /*triggers*/
+
+		//  check if car with fluid
+		void* pA = bA->getUserPointer(), *pB = bB->getUserPointer();
+		if (pA && pB)
+		{
+			ShapeData* sdA = (ShapeData*)pA, *sdB = (ShapeData*)pB, *sdCar=0, *sdFluid=0;
+			if (sdA->type == ST_Car)  sdCar = sdA;  if (sdA->type == ST_Fluid)  sdFluid = sdA;
+			if (sdB->type == ST_Car)  sdCar = sdB;	if (sdB->type == ST_Fluid)  sdFluid = sdB;
+			if (sdCar && sdFluid)
+			{
+				sdCar->pCarDyn->inFluids.push_back(sdFluid->pFluid);  // add fluid to car
+			}
+		}
+			
+		/*int numContacts = contactManifold->getNumContacts();
 		for (int j=0;j<numContacts;j++)
 		{
 			btManifoldPoint& pt = contactManifold->getContactPoint(j);
@@ -329,8 +359,9 @@ void COLLISION_WORLD::Update(float dt, bool profiling)
 				btScalar f = pt.getAppliedImpulse();
 				LogO(Ogre::String("hit-")+toStr(i)+"-"+toStr(j)+" f "+toStr(f)+"  n "+toStr(nB.getX())+"."+toStr(nB.getY())+"."+toStr(nB.getZ()));
 			}
-		}
-	}/**/
+		}/**/
+	}
+
 
 	///+  bullet profiling info
 	static int cc = 0;  cc++;
@@ -344,12 +375,15 @@ void COLLISION_WORLD::Update(float dt, bool profiling)
 		}
 	}
 }
+//-------------------------------------------------------------------------------------------------------------------------------
+
 
 void COLLISION_WORLD::DebugPrint(std::ostream & out)
 {
 	out << "Collision objects: " << world->getNumCollisionObjects() << std::endl;
 }
 
+//  Clear - delete bullet pointers
 void COLLISION_WORLD::Clear()
 {
 	track = NULL;
@@ -381,6 +415,8 @@ void COLLISION_WORLD::Clear()
 			delete body->getMotionState();
 		}
 		world->removeCollisionObject(obj);
+
+		delete obj->getUserPointer();  // ShapeData
 		delete obj;
 	}
 	

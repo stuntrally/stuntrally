@@ -340,6 +340,10 @@ void GAME::AdvanceGameLogic()
 			//PROFILER.endBlock("ai");
 			
 			PROFILER.beginBlock("physics");
+			///~~  clear fluids for each car
+			for (std::list <CAR>::iterator i = cars.begin(); i != cars.end(); ++i)
+				(*i).dynamics.inFluids.clear();
+
 			collision.Update(TickPeriod(), settings->bltProfilerTxt);
 			PROFILER.endBlock("physics");
 			

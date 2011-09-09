@@ -434,6 +434,7 @@ void App::editTrGr(EditPtr ed)
 	else if (n=="GrSwayDistr")  sc.grSwayDistr = r;
 	else if (n=="GrSwayLen")  sc.grSwayLen = r;	else if (n=="GrSwaySpd")  sc.grSwaySpeed = r;
 	else if (n=="TrRdDist")  sc.trRdDist = r;	else if (n=="TrImpDist")  sc.trDistImp = r;
+	else if (n=="GrDensSmooth")  sc.grDensSmooth = r;
 }
 
 ///  Vegetation layers  -----------------------------

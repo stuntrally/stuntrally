@@ -25,6 +25,7 @@
 class MODEL;
 class CONFIGFILE;
 class COLLISION_WORLD;
+class FluidBox;
 
 class CARDYNAMICS : public btActionInterface
 {
@@ -33,6 +34,7 @@ friend class joeserialize::Serializer;
 public:
 	typedef double T;
 	class SETTINGS* pSet;
+	class Scene* pScene;  // for fluids
 	
 	CARDYNAMICS();
 	~CARDYNAMICS();
@@ -47,7 +49,8 @@ public:
 		btVector3 & size);
 	btCollisionShape * CreateCollisionShape(const btVector3 & center, const btVector3 & size);
 
-	void Init(class SETTINGS* pSet1,
+	void Init(
+		class SETTINGS* pSet1, class Scene* pScene1,
 		COLLISION_WORLD & world,
 		const MODEL & chassisModel,
 		const MODEL & wheelModelFront,
@@ -170,6 +173,8 @@ public:
 	float doFlip;
 	// rocket boost
 	float doBoost;
+
+	std::list<FluidBox*> inFluids;  // list of fluids this car is in (if any)
 
 // driveline state
 	CARFUELTANK <T> fuel_tank;
