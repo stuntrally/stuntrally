@@ -80,9 +80,9 @@ void CARDYNAMICS::Update()
 	Polyhedron poly;  RigidBody body;  WaterVolume water;
 
 	//water.density = 1400.0f;  water.angularDrag = 1.0f;  water.linearDrag = 0.5f;  // mud hard too springy- car dens 1900
-	water.density = 1000.0f;  water.angularDrag = 1.8f;  water.linearDrag = 0.5f;  // mud hard~ car dens 1900
+	//water.density = 1000.0f;  water.angularDrag = 1.8f;  water.linearDrag = 0.5f;  // mud hard~ car dens 1900
 	//water.density = 600.0f;  water.angularDrag = 1.0f;  water.linearDrag = 0.2f;  // water slow sink~ car dens 1900
-	//water.density = 200.0f;  water.angularDrag = 1.0f;  water.linearDrag = 0.2f;  // water soft~ car dens 1900
+	water.density = 200.0f;  water.angularDrag = 0.7f;  water.linearDrag = 0.2f;  // water soft~ car dens 1900
 	water.velocity.SetZero();
 	water.plane.offset = fl.pos.y;  water.plane.normal = Vec3(0,0,1);
 
