@@ -18,6 +18,9 @@
 #include <OgreTerrain.h>
 #include <OgreTerrainGroup.h>
 #include <OgreManualObject.h>
+#include <OgreMeshManager.h>
+#include <OgreMaterialManager.h>
+#include <OgreEntity.h>
 using namespace Ogre;
 
 
