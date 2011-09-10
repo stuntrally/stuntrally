@@ -233,9 +233,7 @@ bool COLLISION_WORLD::CastRay(
 	btVector3 to = ToBulletVector(origin + direction * length);
 	MyRayResultCallback rayCallback(from, to, caster);
 	
-	MATHVECTOR <float, 3> p;
-	MATHVECTOR <float, 3> n;
-	float d;
+	MATHVECTOR <float, 3> p, n;  float d;
 	const TRACKSURFACE * s = TRACKSURFACE::None();
 	const BEZIER * b = NULL;
 	btCollisionObject * c = NULL;
@@ -252,11 +250,15 @@ bool COLLISION_WORLD::CastRay(
 		if (c->isStaticObject() /*&& (c->getCollisionFlags() & btCollisionObject::CF_NO_CONTACT_RESPONSE == 0)*/)
 		{
 			void * ptr = c->getCollisionShape()->getUserPointer();
-			if (ptr == (void*)7777)
+			if (ptr == (void*)7777)  // road
 			{
-				int a=0;
 				s = trackSurface[0];
 				*pOnRoad = 1;
+			}
+			if (ptr == (void*)7788)  // pipe
+			{
+				s = trackSurface[0];
+				*pOnRoad = 2;
 			}
 			else if (ptr == 0)
 			{
@@ -284,8 +286,7 @@ bool COLLISION_WORLD::CastRay(
 		{
 			MATHVECTOR <float, 3> bezierspace_raystart(origin[1], origin[2], origin[0]);
 			MATHVECTOR <float, 3> bezierspace_dir(direction[1], direction[2], direction[0]);
-			MATHVECTOR <float, 3> colpoint;
-			MATHVECTOR <float, 3> colnormal;
+			MATHVECTOR <float, 3> colpoint, colnormal;
 			const BEZIER * colpatch = NULL;
 			bool bezierHit = track->CastRay(bezierspace_raystart, bezierspace_dir, length, colpoint, colpatch, colnormal);
 			if (bezierHit)

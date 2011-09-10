@@ -26,9 +26,9 @@ struct PosInfo
 {
 	Ogre::Vector3 pos, carY;  Ogre::Vector2 miniPos;
 	Ogre::Vector3 whPos[4];  Ogre::Quaternion rot, whRot[4];  float whR[4];
-	float whVel[4], whSlide[4], whSqueal[4];  int whMtr[4];  float fboost;
-	//  new posinfo available for Update
-	bool bNew;
+	float whVel[4], whSlide[4], whSqueal[4];
+	int whTerMtr[4],whRoadMtr[4];  float fboost;
+	bool bNew;  //  new posinfo available for Update
 
 	PosInfo() : bNew(false), pos(0,0,0), miniPos(0,0)  // not inited
 	{}
@@ -92,7 +92,7 @@ public:
 	//  Handles our cube map.
 	CarReflection* pReflect;
 		
-	int whTerMtr[4];
+	int whTerMtr[4],whRoadMtr[4];
 	//  needed to set track surface
 	char* blendMtr; int blendMapSize;
 	

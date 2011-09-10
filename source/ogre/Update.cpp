@@ -235,7 +235,7 @@ void App::newPoses()
 				posInfo.whVel[w] = fr.whVel[w];
 				posInfo.whSlide[w] = fr.slide[w];  posInfo.whSqueal[w] = fr.squeal[w];
 				posInfo.whR[w] = replay.header.whR[iCarNum][w];//
-				posInfo.whMtr[w] = fr.whMtr[w];
+				posInfo.whTerMtr[w] = fr.whTerMtr[w];  posInfo.whRoadMtr[w] = fr.whRoadMtr[w];
 				posInfo.fboost = fr.fboost;
 			}
 		}
@@ -254,7 +254,7 @@ void App::newPoses()
 				posInfo.whVel[w] = fr.whVel[w];
 				posInfo.whSlide[w] = fr.slide[w];  posInfo.whSqueal[w] = fr.squeal[w];
 				posInfo.whR[w] = replay.header.whR[iCarNum][w];//
-				posInfo.whMtr[w] = fr.whMtr[w];
+				posInfo.whTerMtr[w] = fr.whTerMtr[w];  posInfo.whRoadMtr[w] = fr.whRoadMtr[w];
 				posInfo.fboost = fr.fboost;
 			}
 		}
@@ -273,7 +273,7 @@ void App::newPoses()
 				posInfo.whVel[w] = pCar->dynamics.GetWheelVelocity(wp).Magnitude();
 				posInfo.whSlide[w] = -1.f;  posInfo.whSqueal[w] = pCar->GetTireSquealAmount(wp, &posInfo.whSlide[w]);
 				posInfo.whR[w] = pCar->GetTireRadius(wp);//
-				posInfo.whMtr[w] = carM->whTerMtr[w];
+				posInfo.whTerMtr[w] = carM->whTerMtr[w];  posInfo.whRoadMtr[w] = carM->whRoadMtr[w];
 				posInfo.fboost = pCar->dynamics.doBoost;
 			}
 		}
@@ -344,7 +344,7 @@ void App::newPoses()
 					fr.suspVel[w] = pCar->dynamics.GetSuspension(wp).GetVelocity();
 					fr.suspDisp[w] = pCar->dynamics.GetSuspension(wp).GetDisplacementPercent();
 					//replay.header.whR[w] = pCar->GetTireRadius(wp);//
-					fr.whMtr[w] = carM->whTerMtr[w];
+					fr.whTerMtr[w] = carM->whTerMtr[w];  fr.whRoadMtr[w] = carM->whRoadMtr[w];
 				}
 				//  hud
 				fr.vel = pCar->GetSpeedometer();  fr.rpm = pCar->GetEngineRPM();

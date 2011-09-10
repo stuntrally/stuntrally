@@ -746,7 +746,7 @@ void SplineRoad::RebuildRoadInt()
 					
 					//  Road  ~
 					btCollisionShape* trimeshShape = new btBvhTriangleMeshShape(trimesh, true);
-					trimeshShape->setUserPointer((void*)7777);  // mark as road,  + mtrId..
+					trimeshShape->setUserPointer(isPipe(seg) ? (void*)7788 : (void*)7777);  // mark as road,  + mtrId..
 					
 					btRigidBody::btRigidBodyConstructionInfo infoT(0.f, 0, trimeshShape);
 					infoT.m_restitution = 0.0f;

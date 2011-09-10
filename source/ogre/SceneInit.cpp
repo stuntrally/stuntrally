@@ -218,7 +218,6 @@ void App::LoadScene()  // 3
 		efl->setRenderQueueGroup(RENDER_QUEUE_9+4);
 
 		SceneNode* nfl = mSceneMgr->getRootSceneNode()->createChildSceneNode(fb.pos);
-		//nfl->setScale(fb.size);
 		nfl->attachObject(efl);
 
 		

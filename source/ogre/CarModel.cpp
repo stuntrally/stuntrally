@@ -53,7 +53,7 @@ CarModel::CarModel(unsigned int index, eCarType type, const std::string name,
 	for (int w = 0; w < 4; ++w)
 	{	ps[w] = 0;  pm[w] = 0;  pd[w] = 0;
 		ndWh[w] = 0;  ndWhE[w] = 0; whTrl[w] = 0;
-		wht[w] = 0.f;  whTerMtr[w] = 0; }
+		wht[w] = 0.f;  whTerMtr[w] = 0;  whRoadMtr[w] = 0;  }
 	for (int i=0; i < 2; i++)
 		pb[i] = 0;
 }
@@ -131,7 +131,8 @@ void CarModel::Update(PosInfo& posInfo, float time)
 		ndWh[w]->setPosition(posInfo.whPos[w]);
 		ndWh[w]->setOrientation(posInfo.whRot[w]);
 
-		int whMtr = posInfo.whMtr[w];  //whTerMtr[w];
+		int whMtr = posInfo.whTerMtr[w];
+		int whRd = posInfo.whRoadMtr[w];
 		float whVel = posInfo.whVel[w] * 3.6f;  //kmh
 		float slide = posInfo.whSlide[w], squeal = posInfo.whSqueal[w];
 		float onGr = slide < 0.f ? 0.f : 1.f;
@@ -165,6 +166,7 @@ void CarModel::Update(PosInfo& posInfo, float time)
 		int mtr = std::max(0, std::min(whMtr-1, (int)(sc->td.layers.size()-1)));
 		TerLayer& lay = whMtr==0 ? sc->td.layerRoad : sc->td.layersAll[sc->td.layers[mtr]];
 		emitD *= lay.dust;  emitM *= lay.mud;  sizeD *= lay.dustS;  emitS *= lay.smoke;
+		if (whRd == 2)  emitD = 0;  // no dust in pipes
 
 		//  par emit
 		Vector3 vpos = posInfo.whPos[w];
@@ -544,9 +546,12 @@ void CarModel::UpdWhTerMtr()
 	if (!terrain || !blendMtr)	// vdr trk
 	{
 		for (int i=0; i<4; ++i)  // for particles/trails only
-			whTerMtr[i] = pCar->dynamics.bWhOnRoad[i] ? 0 : 1;
+		{	whTerMtr[i] = pCar->dynamics.bWhOnRoad[i] ? 0 : 1;
+			whRoadMtr[i] = pCar->dynamics.bWhOnRoad[i];  }
 		return;
 	}
+	// if whTerMtr == 0 wheel is on road and mtr is in whRoadMtr (now only for road/pipe)
+	// TODO: road has only 1 surface, extend to 4, editor tabs, surfaces.txt, alpha transition?...
 
 	int t = blendMapSize;
 	Real tws = sc->td.fTerWorldSize;
@@ -558,10 +563,9 @@ void CarModel::UpdWhTerMtr()
 		int mx = (w.x + 0.5*tws)/tws*t, my = (w.z + 0.5*tws)/tws*t;
 		mx = std::max(0,std::min(t-1, mx)), my = std::max(0,std::min(t-1, my));
 
-		int mtr = blendMtr[my*t + mx];
-		if (pCar->dynamics.bWhOnRoad[i])
-			mtr = 0;
+		int mtr = pCar->dynamics.bWhOnRoad[i] ? 0 : blendMtr[my*t + mx];
 		whTerMtr[i] = mtr;
+		whRoadMtr[i] = pCar->dynamics.bWhOnRoad[i];
 
 		///  vdr set surface for wheel
 		TRACKSURFACE* tsu = &pGame->track.tracksurfaces[mtr];

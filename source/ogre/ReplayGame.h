@@ -50,11 +50,12 @@ struct ReplayFrame
 	float speed, dynVel;
 
 	//  wheel trails, particles, snd
-	char surfType[4], whMtr[4];  //TRACKSURFACE::TYPE
+	char surfType[4], whTerMtr[4];  //TRACKSURFACE::TYPE
 	float squeal[4], slide[4], whVel[4];
 	float suspVel[4], suspDisp[4];
 	
 	float fboost;  // input, particles
+	char whRoadMtr[4];
 
 	/// sizeof:  tm 8 car 12*5 wh 16*5 h 16 snd 16 12 whtr 8 16*5
 	/// = 280 Bytes per frame
