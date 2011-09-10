@@ -493,7 +493,7 @@ void App::CreateFluids()
 			if (tus)  tus->setTextureName(tusSky->getTextureName());
 		}
 		efl->setMaterial(mtr);  efl->setCastShadows(false);
-		efl->setRenderQueueGroup(RENDER_QUEUE_9+4);
+		efl->setRenderQueueGroup(RENDER_QUEUE_9+4);  efl->setVisibilityFlags(4);  //vis+ hide like terrain
 
 		SceneNode* nfl = mSceneMgr->getRootSceneNode()->createChildSceneNode(fb.pos);
 		nfl->attachObject(efl);

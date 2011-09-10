@@ -32,7 +32,7 @@ void App::UpdEditWnds()
 	}
 	bool bRoad = edMode == ED_Road;
 	if (mWndRoadCur)  mWndRoadCur->setVisible(bRoad);
-	if (mWndRoadStats)  mWndRoadStats->setVisible(bRoad);
+	//if (mWndRoadStats)  mWndRoadStats->setVisible(bRoad);
 	if (mWndCam)  mWndCam->setVisible(edMode == ED_PrvCam);
 	UpdStartPos();  // StBox visible
 	UpdVisGui();  //br prv..

@@ -694,7 +694,7 @@ void SplineRoad::RebuildRoadInt()
 				SceneNode* node = 0, *nodeW = 0, *nodeC = 0;
 					AddMesh(mesh, sMesh, aabox, &ent, &node, "."+sEnd);
 				if (wPglass)
-					ent->setRenderQueueGroup(RENDER_QUEUE_9);  //+5 for glass pipe road`
+					ent->setRenderQueueGroup(RENDER_QUEUE_9+5);  //+5 for glass pipe road`
 				if (wall /*&& posW.size() > 0*/)
 				{	AddMesh(meshW, sMeshW, aabox, &entW, &nodeW, "W."+sEnd);
 					entW->setCastShadows(true);  }  // only cast

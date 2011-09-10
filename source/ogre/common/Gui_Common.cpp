@@ -460,6 +460,7 @@ struct TrkL  {  std::string name;  const TrackInfo* ti;  };
 
 bool TrkSort(const TrkL& t1, const TrkL& t2)
 {
+	//return t1.name < t2.name;  // default by name
 	//if (!t1.ti || !t2.ti)
 	//	return t1.name < t2.name;  // no info only name
 	//else
@@ -467,6 +468,9 @@ bool TrkSort(const TrkL& t1, const TrkL& t2)
 	int n1 = !t1.ti ? 1000 : t1.ti->n;
 	int n2 = !t2.ti ? 1000 : t2.ti->n;
 	return n1 < n2;
+	//std::string sc1 = !t1.ti ? "" : t1.ti->scenery;
+	//std::string sc2 = !t2.ti ? "" : t2.ti->scenery;
+	//return sc1 < sc2;
 }
 
 void App::TrackListUpd()
