@@ -197,8 +197,22 @@ bool Replay::GetFrame(double time, ReplayFrame* pFr, int carNum)
 	}
 	#endif
 
-	//  last time  check if ended
-	if (time <= frames[carNum][s-1].time)
+	//  last time
+	double end = frames[carNum][s-1].time;
+	if (time >= end)
+	{
+		pFr->fboost = 0.f;
+		//  clear emitters at end
+		for (int w=0; w < 4; ++w)
+		{
+			pFr->slide[w] = 0.f;
+			pFr->squeal[w] = 0.f;
+			pFr->whVel[w] = 0.f;
+		}
+	}
+	
+	//  check if ended
+	if (time <= end)
 		return true;
 	else
 		return false;

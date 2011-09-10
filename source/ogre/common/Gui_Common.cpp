@@ -694,17 +694,18 @@ void App::comboGraphicsAll(ComboBoxPtr cmb, size_t val)
 {
 	//String s = cmb->getItemNameAt(val);
 	//String n = cmb->getName();
+	// TODO:  fill all settings values for presets
 	switch (val)
 	{
-	case 0:
+	case 0:  // Lowest
 		break;
-	case 1:
+	case 1:  // Low
 		break;
-	case 2:
+	case 2:  // Medium
 		break;
-	case 3:
+	case 3:  // High
 		break;
-	case 4:
+	case 4:  // Ultra
 		break;
 	}
 }

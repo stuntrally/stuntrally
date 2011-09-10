@@ -51,3 +51,13 @@ material cartire_rear : ppx_diffuse
 	set $shininess "16"
 	set_texture_alias diffuseMap wheel_rear.png
 }
+
+material car_ghost : ppx_glass
+{
+	set $ambientCol "0.2 0.26 0.3"
+	set $diffuseCol "0.36 0.48 0.6"
+	set $specularCol "0.37 0.39 0.41"
+			// base alpha, diffuse alpha, 1
+	set $alphaParsA "0.3 0.2 0.3 0"
+	set $shininess "32"
+}

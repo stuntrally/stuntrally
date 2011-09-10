@@ -63,7 +63,7 @@ public:
 	bool x11_capture_mouse;
 	
 	//  replay
-	bool rpl_rec, rpl_ghost, rpl_bestonly;  int rpl_listview;
+	bool rpl_rec, rpl_ghost, rpl_bestonly, rpl_alpha;  int rpl_listview;
 	
 //------------------------------------------
 	SETTINGS();

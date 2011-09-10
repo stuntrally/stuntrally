@@ -46,7 +46,8 @@ PagedLayer::PagedLayer()
 }
 
 FluidBox::FluidBox() : cobj(0), type(0),
-	pos(Vector3::ZERO), rot(Vector3::ZERO), size(Vector3::ZERO)
+	pos(Vector3::ZERO), rot(Vector3::ZERO),
+	size(Vector3::ZERO), tile(0.01,0.01)
 {	}
 
 
@@ -119,10 +120,11 @@ bool Scene::LoadXml(String file)
 		while (eFl)
 		{
 			FluidBox fb;
-			a = eFl->Attribute("pos");			if (a)  fb.pos = s2v(a);
-			a = eFl->Attribute("rot");			if (a)  fb.rot = s2v(a);
-			a = eFl->Attribute("size");			if (a)  fb.size = s2v(a);
-			a = eFl->Attribute("type");			if (a)  fb.type = s2i(a);
+			a = eFl->Attribute("type");		if (a)  fb.type = s2i(a);
+			a = eFl->Attribute("pos");		if (a)  fb.pos = s2v(a);
+			a = eFl->Attribute("rot");		if (a)  fb.rot = s2v(a);
+			a = eFl->Attribute("size");		if (a)  fb.size = s2v(a);
+			a = eFl->Attribute("tile");		if (a)  fb.tile = Ogre::StringConverter::parseVector2(a);
 
 			fluids.push_back(fb);
 			eFl = eFl->NextSiblingElement("fluid");
@@ -291,10 +293,11 @@ bool Scene::SaveXml(String file)
 		{
 			fb = &fluids[i];
 			TiXmlElement fe("fluid");
+			fe.SetAttribute("type",		toStrC( fb->type ));
 			fe.SetAttribute("pos",		toStrC( fb->pos ));
 			fe.SetAttribute("rot",		toStrC( fb->rot ));
 			fe.SetAttribute("size",		toStrC( fb->size ));
-			fe.SetAttribute("type",		toStrC( fb->type ));
+			fe.SetAttribute("tile",		toStrC( fb->tile ));
 			fls.InsertEndChild(fe);
 		}
 	root.InsertEndChild(fls);
