@@ -3,6 +3,7 @@
 
 #include <OgreCommon.h>
 #include <OgreVector3.h>
+#include <OgreVector2.h>
 #include <OgreColourValue.h>
 
 
