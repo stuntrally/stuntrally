@@ -18,7 +18,8 @@ public:
 	std::string car[4], track;  bool track_user;
 
 	//  show
-	bool show_fps, show_gauges, trackmap, mini_zoomed, mini_rotated,
+	bool show_fps, show_gauges, trackmap,
+		mini_zoomed, mini_rotated, mini_terrain,
 		show_cam, show_times, show_digits,
 		car_dbgbars, car_dbgtxt, ogre_dialog;
 	float size_gauges, size_minimap, zoom_minimap;

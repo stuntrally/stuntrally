@@ -34,7 +34,7 @@ void SETTINGS::Serialize(bool w, CONFIGFILE & c)
 
 	Param(c,w, "display_size.gauges", size_gauges);		Param(c,w, "display_size.minimap", size_minimap);
 	Param(c,w, "display_size.mini_zoom", zoom_minimap);	Param(c,w, "display_size.mini_zoomed", mini_zoomed);
-	Param(c,w, "display_size.mini_rotated", mini_rotated);
+	Param(c,w, "display_size.mini_rotated", mini_rotated);	Param(c,w, "display_size.mini_terrain", mini_terrain);
 
 	Param(c,w, "display_par.anisotropy", anisotropy);	Param(c,w, "display_par.view_dist", view_distance);
 	Param(c,w, "display_par.ter_detail", terdetail);	Param(c,w, "display_par.ter_dist", terdist);
@@ -95,7 +95,8 @@ SETTINGS::SETTINGS() :  ///  Defaults
 	//  show
 	show_fps(1), show_gauges(1), trackmap(1),
 	show_cam(1), show_times(0), show_digits(1), car_dbgtxt(0), car_dbgbars(0),
-	size_gauges(0.18), size_minimap(0.2), zoom_minimap(1.0), mini_zoomed(0), mini_rotated(1),
+	size_gauges(0.18), size_minimap(0.2), zoom_minimap(1.0),
+	mini_zoomed(0), mini_rotated(1), mini_terrain(0),
 	//  graphics
 	anisotropy(4),	view_distance(1500), bFog(0),
 	terdetail(2), terdist(100), road_dist(1.0), tex_size(1), ter_mtr(2),

@@ -72,6 +72,14 @@ void App::NewCommon()
 	if (trees) {  delete trees->getPageLoader();  delete trees;  trees=0;   }
 
 	//mSceneMgr->destroyAllStaticGeometry();
+	//  fluids
+	for (int i=0; i < vFlSMesh.size(); ++i)
+	{
+		vFlNd[i]->detachAllObjects();
+		mSceneMgr->destroyEntity(vFlEnt[i]);
+		mSceneMgr->destroySceneNode(vFlNd[i]);
+		Ogre::MeshManager::getSingleton().remove(vFlSMesh[i]);
+	}		
 
 	terrain = 0;
 	if (mTerrainGroup)
@@ -101,6 +109,7 @@ void App::LoadTrackEv()
 	LoadSurf();
 	UpdWndTitle();
 
+	CreateFluids();
 	bNewHmap = false;/**/
 	CreateTerrain();
 	if (pSet->bTrees)

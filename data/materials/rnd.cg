@@ -81,12 +81,15 @@ COut circle_vs(CIn IN,
 
 float4 circle_ps(in float2 uv : TEXCOORD0,
 				in float4 clr : COLOR,  // tc 0..1
-	uniform sampler2D diffuseMap : TEXUNIT0,
-	uniform sampler2D circleMap : TEXUNIT1): COLOR0
+	uniform float showTerrain,
+	uniform sampler2D roadMap : TEXUNIT0,
+	uniform sampler2D circleMap : TEXUNIT1,
+	uniform sampler2D terMap : TEXUNIT2): COLOR0
 {
-	float4 tex = tex2D(diffuseMap, uv);
+	float4 road = tex2D(roadMap, uv);
 	float4 cir = tex2D(circleMap, clr.xy);
+	float4 ter = tex2D(terMap, uv);
 
-	float a = tex.a * lerp(1, cir.b, clr.z);
-	return float4(tex.rgb, a);
+	float a = lerp(1, cir.b, clr.z);
+	return showTerrain > 0.5f ? float4(lerp(ter.rgb,road.rgb,road.a), a) : float4(road.rgb, road.a * a);
 }

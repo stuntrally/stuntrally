@@ -69,7 +69,7 @@ protected:
 	Ogre::String resTrk;  void NewCommon(), UpdTrees();
 	void CreateTerrain(bool bNewHmap=false, bool bTer=true);
 	void GetTerAngles(int xb,int yb,int xe,int ye);
-	void CreateTrees(), reloadMtrTex(Ogre::String mtrName);
+	void CreateTrees(), reloadMtrTex(Ogre::String mtrName), CreateFluids();
 	void CreateSkyDome(Ogre::String sMater, Ogre::Vector3 scale);
 	bool GetFolderIndex(std::string folderpath, std::list <std::string> & outputfolderlist, std::string extension="");
 
@@ -92,6 +92,12 @@ protected:
 	virtual void postRenderTargetUpdate(const Ogre::RenderTargetEvent &evt);
 	
 
+	///  fluids to destroy
+	std::vector<Ogre::String/*MeshPtr*/> vFlSMesh;
+	std::vector<Ogre::Entity*> vFlEnt;
+	std::vector<Ogre::SceneNode*> vFlNd;
+	
+	
 	///  terrain
 	Ogre::Terrain* terrain;  Ogre::TerrainGlobalOptions* mTerrainGlobals;
 	Ogre::TerrainGroup* mTerrainGroup;  bool mPaging;

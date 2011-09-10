@@ -281,6 +281,7 @@ void App::chkGauges(WP wp){			ChkEv(show_gauges);	ShowHUD();	}
 void App::chkMinimap(WP wp){		ChkEv(trackmap);	if (ndMap)  ndMap->setVisible(pSet->trackmap);	}
 void App::chkMiniZoom(WP wp){		ChkEv(mini_zoomed);		}
 void App::chkMiniRot(WP wp){		ChkEv(mini_rotated);	}
+void App::chkMiniTer(WP wp){		ChkEv(mini_terrain);	UpdMiniTer();  }
 void App::chkTimes(WP wp){			ChkEv(show_times);	ShowHUD();	}
 
 //void App::chkRacingLine(WP wp){		ChkEv(racingline);	if (ndLine)  ndLine->setVisible(pSet->racingline);	}

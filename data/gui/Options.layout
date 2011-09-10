@@ -913,11 +913,11 @@
 							<Property key="Widget_Caption" value="#{Minimap} F8"/>
 							<Property key="Text_TextColour" value="0.9 0.96 1.0"/>
 						</Widget>
-						<Widget type="Button" skin="CheckBox" position="32 216 184 24" name="Times">
+                        <Widget type="Button" skin="CheckBox" position="32 256 184 24" name="Times">
 							<Property key="Widget_Caption" value="#{TimesBar} F7"/>
 							<Property key="Text_TextColour" value="0.8 0.9 1.0"/>
 						</Widget>
-						<Widget type="Button" skin="CheckBox" position="32 256 184 24" name="CamInfo">
+                        <Widget type="Button" skin="CheckBox" position="32 296 184 24" name="CamInfo">
 							<Property key="Widget_Caption" value="#{CameraInfo}"/>
 							<Property key="Text_TextColour" value="0.7 0.8 0.9"/>
 						</Widget>
@@ -937,11 +937,11 @@
 						<Widget type="StaticText" skin="StaticText" position="232 138 64 24">
 							<Property key="Widget_Caption" value="#{Size}"/>
 						</Widget>
-						<Widget type="Button" skin="CheckBox" position="60 176 116 24" name="MiniZoom">
+                        <Widget type="Button" skin="CheckBox" position="164 176 124 24" name="MiniZoom">
 							<Property key="Widget_Caption" value="#{MinimapZoom}"/>
 							<Property key="Text_TextColour" value="0.7 0.8 0.9"/>
 						</Widget>
-						<Widget type="Button" skin="CheckBox" position="180 176 116 24" name="MiniRot">
+                        <Widget type="Button" skin="CheckBox" position="164 216 124 24" name="MiniRot">
 							<Property key="Widget_Caption" value="#{MinimapRotate}"/>
 							<Property key="Text_TextColour" value="0.7 0.8 0.9"/>
 						</Widget>
@@ -952,6 +952,10 @@
 						<Widget type="StaticText" skin="StaticText" position="296 178 48 24" name="ZoomMinimapVal">
 							<Property key="Text_TextColour" value="0.7 0.8 0.9"/>
 						</Widget>
+                        <Widget type="Button" skin="CheckBox" position="316 216 136 24" name="MiniTer">
+                            <Property key="Widget_Caption" value="#{MinimapTerrain}"/>
+                            <Property key="Text_TextColour" value="0.7 0.8 0.9"/>
+                        </Widget>
 					</Widget>
 					<Widget type="TabItem" skin="" position="4 26 735 428">
 						<Property key="Widget_Caption" value="#{Other}"/>

@@ -90,8 +90,10 @@ void App::CreateHUD()
 		MaterialPtr mm = MaterialManager::getSingleton().getByName(sMat);
 		Pass* pass = mm->getTechnique(0)->getPass(0);
 		TextureUnitState* tus = pass->getTextureUnitState(0);
-		if (tus)
-			tus->setTextureName(pSet->track + "_mini.png");
+		if (tus)  tus->setTextureName(pSet->track + "_mini.png");
+		tus = pass->getTextureUnitState(2);
+		if (tus)  tus->setTextureName(pSet->track + "_ter.jpg");
+		UpdMiniTer();
 		
 
 		float fHudSize = pSet->size_minimap;
@@ -215,6 +217,17 @@ void App::ShowHUD(bool hideAll)
 		if (mGUI)	mGUI->setVisiblePointer(isFocGuiOrRpl());
 		if (mWndRpl && !bLoading)  mWndRpl->setVisible(bRplPlay && bRplWnd);  //
 	}
+}
+
+void App::UpdMiniTer()
+{
+	MaterialPtr mm = MaterialManager::getSingleton().getByName("circle_minimap");
+	Pass* pass = mm->getTechnique(0)->getPass(0);
+	if (!pass)  return;
+	try
+	{	Ogre::GpuProgramParametersSharedPtr fparams = pass->getFragmentProgramParameters();
+		fparams->setNamedConstant("showTerrain", pSet->mini_terrain ? 1.f : 0.f);
+	}catch(...){  }
 }
 
 

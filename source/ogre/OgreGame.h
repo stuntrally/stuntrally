@@ -91,7 +91,7 @@ protected:
 		*ovCam, *ovTimes, *ovWarnWin;
 
 	Ogre::String GetTimeString(float time) const;
-	void CreateHUD(), ShowHUD(bool hideAll=false);
+	void CreateHUD(), ShowHUD(bool hideAll=false), UpdMiniTer();
 
 
 	//  create  . . . . . . . . . . . . . . . . . . . . . . . . 
@@ -100,7 +100,7 @@ protected:
 	void CreateTrack(), CreateRacingLine(), CreateMinimap(), CreateRoadBezier();
 	void CreateTerrain(bool bNewHmap=false, bool bTer=true), CreateBltTerrain();
 	void GetTerAngles(int xb,int yb, int xe,int ye);
-	void CreateTrees(), CreateRoad(), CreateProps();
+	void CreateTrees(), CreateRoad(), CreateProps(), CreateFluids();
 	void CreateSkyDome(Ogre::String sMater, Ogre::Vector3 scale);
 	void NewGame();  void NewGameDoLoad(); bool IsTerTrack();
 	
@@ -218,7 +218,7 @@ protected:
 	
 	//  checks
 	void chkFps(WP), chkGauges(WP),	chkDigits(WP),
-		chkMinimap(WP), chkMiniZoom(WP), chkMiniRot(WP),  // view
+		chkMinimap(WP), chkMiniZoom(WP), chkMiniRot(WP), chkMiniTer(WP),  // view
 		chkCamInfo(WP), chkTimes(WP), chkCarDbgBars(WP), chkCarDbgTxt(WP), chkBltDebug(WP), chkBltProfilerTxt(WP),
 		chkReverse(WP), chkParticles(WP), chkTrails(WP),
 		chkAbs(WP), chkTcs(WP), chkGear(WP), chkRear(WP), chkClutch(WP),  // car

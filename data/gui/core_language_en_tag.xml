@@ -220,6 +220,7 @@
 	<Tag name="Minimap">Minimap</Tag>
 	<Tag name="MinimapZoom">Zoom</Tag>
 	<Tag name="MinimapRotate">Rotate</Tag>
+	<Tag name="MinimapTerrain">Terrain</Tag>
 	<Tag name="TimesBar">Times bar</Tag>
 	<Tag name="CameraInfo">Camera info</Tag>
 
