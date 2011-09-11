@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION"
 "Report-Msgid-Bugs-To: "
-"POT-Creation-Date: 2011-08-29 22:38+0300"
+"POT-Creation-Date: 2011-09-12 00:02+0300"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>"
 "Language-Team: LANGUAGE <LL@li.org>"
@@ -25,8 +25,8 @@ msgctxt "InputKeyUnassigned"
 msgid "-- None --"
 msgstr ""
 
-msgctxt "Density"
-msgid "Density"
+msgctxt "Fullscreen"
+msgid "Fullscreen"
 msgstr ""
 
 msgctxt "TipDustSize"
@@ -69,8 +69,8 @@ msgctxt "UnitKmh"
 msgid "km/h"
 msgstr ""
 
-msgctxt "InputRoadPickOne"
-msgid "Pick (one)"
+msgctxt "Density"
+msgid "Density"
 msgstr ""
 
 msgctxt "TipLoadTrkEditor"
@@ -137,6 +137,10 @@ msgctxt "MinimapUpdSkip"
 msgid "Minimap update skip"
 msgstr ""
 
+msgctxt "GraphicsAll_Low"
+msgid "Low"
+msgstr ""
+
 msgctxt "TipPrevWind"
 msgid "Preview camera window."
 msgstr ""
@@ -177,12 +181,20 @@ msgctxt "MinimapRotate"
 msgid "Rotate"
 msgstr ""
 
+msgctxt "pipes"
+msgid "pipes"
+msgstr ""
+
 msgctxt "InputReloadTrack"
 msgid "F5 - reload track"
 msgstr ""
 
 msgctxt "Game"
 msgid "Game"
+msgstr ""
+
+msgctxt "ViewFront"
+msgid "View Front"
 msgstr ""
 
 msgctxt "TipTerLNoiseOnly"
@@ -233,8 +245,12 @@ msgctxt "LoadTrack"
 msgid "Load Track"
 msgstr ""
 
-msgctxt "Back"
-msgid "Back"
+msgctxt "GrDensSmooth"
+msgid "Smooth grass dens."
+msgstr ""
+
+msgctxt "TrackInAir"
+msgid "In air"
 msgstr ""
 
 msgctxt "TipDiffusePrev"
@@ -255,6 +271,10 @@ msgstr ""
 
 msgctxt "TipMinimapScrnEditor"
 msgid "Minimap of selected track, view from top."
+msgstr ""
+
+msgctxt "InputRoadPickOne"
+msgid "Pick (one)"
 msgstr ""
 
 msgctxt "ParAmount"
@@ -297,8 +317,12 @@ msgctxt "CopySource"
 msgid "Set as copy source"
 msgstr ""
 
-msgctxt "TerHeightMap"
-msgid "Terrain Heightmap"
+msgctxt "TreeRoadDist"
+msgid "Trees to road dist."
+msgstr ""
+
+msgctxt "GraphicsAll_Medium"
+msgid "Medium"
 msgstr ""
 
 msgctxt "NeedReload"
@@ -309,8 +333,8 @@ msgctxt "MinimapZoom"
 msgid "Zoom"
 msgstr ""
 
-msgctxt "ViewRight"
-msgid "View Right"
+msgctxt "Diffuse"
+msgid "Diffuse"
 msgstr ""
 
 msgctxt "Count"
@@ -333,8 +357,12 @@ msgctxt "TipDustInt"
 msgid "Dust particles intensity."
 msgstr ""
 
-msgctxt "InputNextOptTab"
-msgid "F2,F3 - prev,next Options tab"
+msgctxt "CameraInfo"
+msgid "Camera info"
+msgstr ""
+
+msgctxt "frenzy"
+msgid "frenzy"
 msgstr ""
 
 msgctxt "InputRoadChkRadius"
@@ -421,10 +449,6 @@ msgctxt "NumLaps"
 msgid "Number of laps"
 msgstr ""
 
-msgctxt "TerLAngMin"
-msgid "Angle Min"
-msgstr ""
-
 msgctxt "ReflMode_single"
 msgid "Single"
 msgstr ""
@@ -447,6 +471,10 @@ msgstr ""
 
 msgctxt "TipSunDirYaw"
 msgid "Sun direction - yaw angle."
+msgstr ""
+
+msgctxt "TipGrDensSmooth"
+msgid "Grass density map - smooth size"
 msgstr ""
 
 msgctxt "ABS"
@@ -569,6 +597,10 @@ msgctxt "VolMaster"
 msgid "Master"
 msgstr ""
 
+msgctxt "InputRoadCopySel"
+msgid "ctrl-Ins - copy selection   ctrl-Del - delete sel."
+msgstr ""
+
 msgctxt "TipNewGame"
 msgid "Start game on new track or Restart on current."
 msgstr ""
@@ -657,6 +689,10 @@ msgctxt "InputMapHandBrake"
 msgid "Handbrake"
 msgstr ""
 
+msgctxt "loops"
+msgid "loops"
+msgstr ""
+
 msgctxt "ProjectPage"
 msgid "project&apos;s page:"
 msgstr ""
@@ -693,12 +729,20 @@ msgctxt "TipRoadParams"
 msgid "Road point parameters."
 msgstr ""
 
+msgctxt "ScaleAll"
+msgid "Scale all"
+msgstr ""
+
 msgctxt "InputMapFlip"
 msgid "Flip"
 msgstr ""
 
-msgctxt "TrackInAir"
-msgid "In air"
+msgctxt "difficulty"
+msgid "difficulty"
+msgstr ""
+
+msgctxt "bumps"
+msgid "bumps"
 msgstr ""
 
 msgctxt "TipReverse"
@@ -993,8 +1037,8 @@ msgctxt "Mode"
 msgid "mode"
 msgstr ""
 
-msgctxt "ScaleAll"
-msgid "Scale all"
+msgctxt "ChangeCar"
+msgid "Change Car"
 msgstr ""
 
 msgctxt "InputMapPrevTab"
@@ -1029,8 +1073,8 @@ msgctxt "TipTrailClr"
 msgid "Tire trails color. R G B A components 0 to 1 (eg. 0.4 0.4 0.2 0.6)"
 msgstr ""
 
-msgctxt "InputRoadAltMMB"
-msgid "alt-RMB (or 3,4)"
+msgctxt "MinimapTerrain"
+msgid "Terrain"
 msgstr ""
 
 msgctxt "NewDup"
@@ -1045,8 +1089,8 @@ msgctxt "RoadMaterials"
 msgid "Road materials"
 msgstr ""
 
-msgctxt "Fullscreen"
-msgid "Fullscreen"
+msgctxt "rating"
+msgid "rating"
 msgstr ""
 
 msgctxt "BulletLines"
@@ -1083,6 +1127,10 @@ msgstr ""
 
 msgctxt "TipRoadStats"
 msgid "Whole road statistics."
+msgstr ""
+
+msgctxt "GraphicsAllSettings"
+msgid "Change all graphics settings to preset:"
 msgstr ""
 
 msgctxt "TreeMult"
@@ -1341,6 +1389,10 @@ msgctxt "SunDir"
 msgid "Sun dir."
 msgstr ""
 
+msgctxt "InputRoadPick"
+msgid "Space - pick one/none"
+msgstr ""
+
 msgctxt "TipSmokeInt"
 msgid "Smoke particles intensity."
 msgstr ""
@@ -1429,8 +1481,8 @@ msgctxt "TipGrassPatchHeightMax"
 msgid "Maximal grass patch height."
 msgstr ""
 
-msgctxt "Diffuse"
-msgid "Diffuse"
+msgctxt "TerLAngMin"
+msgid "Angle Min"
 msgstr ""
 
 msgctxt "Tires"
@@ -1457,6 +1509,10 @@ msgctxt "TipChangeBright"
 msgid "Change car color brightness (dark-light)."
 msgstr ""
 
+msgctxt "InputRoadAltMMB"
+msgid "alt-RMB (or 3,4)"
+msgstr ""
+
 msgctxt "Size"
 msgid "Size"
 msgstr ""
@@ -1473,12 +1529,8 @@ msgctxt "GrassMult"
 msgid "Grass mul"
 msgstr ""
 
-msgctxt "ChangeCar"
-msgid "Change Car"
-msgstr ""
-
-msgctxt "ViewFront"
-msgid "View Front"
+msgctxt "Back"
+msgid "Back"
 msgstr ""
 
 msgctxt "RplRecTime"
@@ -1545,8 +1597,8 @@ msgctxt "TipWindInflL"
 msgid "Wind influence on model, length scale."
 msgstr ""
 
-msgctxt "InputRoadCopySel"
-msgid "ctrl-Ins - copy selection   ctrl-Del - delete sel."
+msgctxt "CamInertia"
+msgid "Camera inertia"
 msgstr ""
 
 msgctxt "TrackWidthAvg"
@@ -1613,6 +1665,10 @@ msgctxt "Tools"
 msgid "Tools"
 msgstr ""
 
+msgctxt "ViewRight"
+msgid "View Right"
+msgstr ""
+
 msgctxt "TipChangeSat"
 msgid "Change car color saturation (white-black)."
 msgstr ""
@@ -1629,12 +1685,12 @@ msgctxt "TipTrkListEditor"
 msgid "Tracks list, click to select (for Rename or Duplicate). Press [Load track] to change current track in editor."
 msgstr ""
 
-msgctxt "InputReadyToPlay"
-msgid "(ready to play in game)"
+msgctxt "GraphicsAll_Lowest"
+msgid "Lowest"
 msgstr ""
 
-msgctxt "CamInertia"
-msgid "Camera inertia"
+msgctxt "InputReadyToPlay"
+msgid "(ready to play in game)"
 msgstr ""
 
 msgctxt "TipSurfFrict"
@@ -1738,7 +1794,7 @@ msgid "Source track"
 msgstr ""
 
 msgctxt "ImpostorDist"
-msgid "impostors dist."
+msgid "Impostors dist."
 msgstr ""
 
 msgctxt "page"
@@ -1825,6 +1881,10 @@ msgctxt "InputRoadEdit"
 msgid "R - edit road mode"
 msgstr ""
 
+msgctxt "jumps"
+msgid "jumps"
+msgstr ""
+
 msgctxt "TBBest"
 msgid "Best"
 msgstr ""
@@ -1833,16 +1893,16 @@ msgctxt "RestartApply"
 msgid "Restart game, to apply *changes."
 msgstr ""
 
-msgctxt "InputMapShiftDown"
-msgid "Shift down"
+msgctxt "InputUndo"
+msgid "(one time undo)"
 msgstr ""
 
 msgctxt "CarCollis"
 msgid "Cars collision"
 msgstr ""
 
-msgctxt "CameraInfo"
-msgid "Camera info"
+msgctxt "banked"
+msgid "banked"
 msgstr ""
 
 msgctxt "NewGame"
@@ -1857,12 +1917,16 @@ msgctxt "Replay"
 msgid "Replay"
 msgstr ""
 
+msgctxt "GraphicsAll_Ultra"
+msgid "Ultra"
+msgstr ""
+
 msgctxt "CarDebug"
 msgid "Car susp, long|,lat- slips"
 msgstr ""
 
-msgctxt "InputRoadPick"
-msgid "Space - pick one/none"
+msgctxt "RplAlpha"
+msgid "Transparent ghost"
 msgstr ""
 
 msgctxt "InputRoadRebuild"
@@ -1875,6 +1939,10 @@ msgstr ""
 
 msgctxt "Environment"
 msgid "Environment"
+msgstr ""
+
+msgctxt "GraphicsAll_High"
+msgid "High"
 msgstr ""
 
 msgctxt "MyGUI_MessageBox_Cancel"
@@ -1909,8 +1977,12 @@ msgctxt "LS_GAME"
 msgid "Loading game"
 msgstr ""
 
-msgctxt "TreeRoadDist"
-msgid "Trees to road dist."
+msgctxt "TerHeightMap"
+msgid "Terrain Heightmap"
+msgstr ""
+
+msgctxt "long"
+msgid "long"
 msgstr ""
 
 msgctxt "PipeWStepsMul"
@@ -2033,8 +2105,12 @@ msgctxt "InputSaveTrack"
 msgid "F4 - save track"
 msgstr ""
 
-msgctxt "InputUndo"
-msgid "(one time undo)"
+msgctxt "TrackDifficulties"
+msgid "Various Track Difficulties"
+msgstr ""
+
+msgctxt "InputMapShiftDown"
+msgid "Shift down"
 msgstr ""
 
 msgctxt "FPS"
@@ -2063,6 +2139,10 @@ msgstr ""
 
 msgctxt "Pitch"
 msgid "pitch"
+msgstr ""
+
+msgctxt "InputNextOptTab"
+msgid "F2,F3 - prev,next Options tab"
 msgstr ""
 
 msgctxt "MyGUI_MessageBox_Yes"
