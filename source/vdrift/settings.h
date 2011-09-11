@@ -23,6 +23,7 @@ public:
 		show_cam, show_times, show_digits,
 		car_dbgbars, car_dbgtxt, ogre_dialog;
 	float size_gauges, size_minimap, zoom_minimap;
+	int tracks_view, tracks_sort;
 
 	//  graphics
 	int anisotropy, shaders, tex_size, ter_mtr;  bool bFog;

@@ -182,11 +182,8 @@
 			<Property key="Tab_ButtonWidth" value="100"/>
 			<Property key="Widget_Colour" value="0.7 0.9 1"/>
 			<Property key="Tab_ButtonAutoWidth" value="true"/>
-			<Widget type="TabItem" skin="" position="4 26 787 531">
+			<Widget type="TabItem" skin="" position="4 26 787 531" name="TabTrack">
 				<Property key="Widget_Caption" value="#{Track}"/>
-				<Widget type="List" skin="List" position="14 16 148 504" name="TrackList">
-					<UserString key="tip" value="#{TipTrkListEditor}"/>
-				</Widget>
 				<Widget type="StaticText" skin="StaticText" position="176 448 56 24" name="TrackText">
 					<Property key="Widget_InheritsAlpha" value="true"/>
 					<Property key="Widget_Colour" value="0 0 0"/>
@@ -295,6 +292,26 @@
 					<Property key="Text_TextColour" value="1.0 0.8 0.8"/>
 					<UserString key="tip" value="#{long}"/>
 				</Widget>
+				<Widget type="StaticImage" skin="StaticImage" position="256 6 48 24" name="TrkView2icons1">
+					<Property key="Image_Texture" value="track_icons.png"/>
+					<Property key="Image_Coord" value="64 32 64 32"/>
+				</Widget>
+				<Widget type="StaticImage" skin="StaticImage" position="304 6 168 24" name="TrkView2icons2">
+					<Property key="Image_Texture" value="track_icons.png"/>
+					<Property key="Image_Coord" value="0 0 224 32"/>
+				</Widget>
+                <Widget type="Button" skin="ButtonSmall" position="16 7 40 24" name="TrkView1">
+					<Property key="Widget_Caption" value="|"/>
+                    <Property key="Widget_Alpha" value="0.8"/>
+                    <Property key="Widget_Colour" value="0.6 0.8 1.0"/>
+					<Property key="Text_TextColour" value="0.45 0.58 0.8"/>
+                </Widget>
+                <Widget type="Button" skin="ButtonSmall" position="64 7 40 24" name="TrkView2">
+					<Property key="Widget_Caption" value="|||"/>
+                    <Property key="Widget_Alpha" value="0.8"/>
+                    <Property key="Widget_Colour" value="0.6 0.8 1.0"/>
+					<Property key="Text_TextColour" value="0.45 0.58 0.8"/>
+                </Widget>
 				<Widget type="Button" skin="Button" position="528 16 156 25" name="TrackCopySel">
 					<Property key="Widget_Caption" value="#{CopySource}"/>
 					<Property key="Widget_Colour" value="0.8 0.8 1.0"/>

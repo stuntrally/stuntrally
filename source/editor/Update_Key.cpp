@@ -3,7 +3,9 @@
 #include "OgreApp.h"
 #include "../road/Road.h"
 #include "../vdrift/pathmanager.h"
+#include "../ogre/common/MultiList2.h"
 using namespace Ogre;
+
 
 //  Update  input, info
 //---------------------------------------------------------------------------------------------------------------
@@ -106,10 +108,10 @@ void App::togPrvCam()
 void App::trkListNext(int rel)
 {
 	if (!(bGuiFocus && mWndTabs->getIndexSelected() == 0))  return;
-	int i = std::max(0, std::min((int)trkList->getItemCount()-1, (int)trkList->getIndexSelected()+rel ));
-	trkList->setIndexSelected(i);
-	trkList->beginToItemAt(std::max(0, i-11));  // center
-	listTrackChng(trkList,i);
+	int i = std::max(0, std::min((int)trkMList->getItemCount()-1, (int)trkMList->getIndexSelected()+rel ));
+	trkMList->setIndexSelected(i);
+	trkMList->beginToItemAt(std::max(0, i-11));  // center
+	listTrackChng(trkMList,i);
 }
 
 bool App::KeyPress(const CmdKey &arg)
@@ -126,7 +128,7 @@ bool App::KeyPress(const CmdKey &arg)
 
 			case KC_RETURN:  // save screen
 				rt[RTs-1].rndTex->writeContentsToFile(pathTrkPrv[1] + pSet->track + ".jpg");  //U
-				listTrackChng(trkList,0);  // upd gui img
+				listTrackChng(trkMList,0);  // upd gui img
 				Status("Preview saved", 1,1,0);
 				break;
 		}

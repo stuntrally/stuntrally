@@ -32,6 +32,7 @@ const Ogre::Real crAngSnaps[ciAngSnapsNum] = {0,15,30,45,90,180};
 
 
 namespace Forests {  class PagedGeometry;  }
+namespace MyGUI  {  class MultiList2;  }
 
 
 class App : public BaseApp, public Ogre::RenderTargetListener
@@ -191,15 +192,17 @@ protected:
 	//  init
 	void InitGui();  bool bGI;
 	void GuiCenterMouse(),GuiInitTooltip(),GuiInitLang(), GuiInitGraphics(),GuiInitTrack();
+	void AddTrkL(std::string name, int user, const class TrackInfo* ti);
 	
 	//  track
 	void UpdGuiRdStats(const SplineRoad* rd, const Scene& sc, float time), ReadTrkStats();
-	MyGUI::ListPtr trkList;  MyGUI::EditPtr trkDesc;
-	MyGUI::StaticImagePtr imgPrv,imgMini,imgTer;
+	MyGUI::MultiList2* trkMList;  MyGUI::EditPtr trkDesc;
+	MyGUI::StaticImagePtr imgPrv,imgMini,imgTer, imgTrkIco1,imgTrkIco2;
 	const static int StTrk = 12, InfTrk = 9;
 	MyGUI::StaticTextPtr valTrk, stTrk[StTrk], infTrk[InfTrk];
-	void listTrackChng(MyGUI::List* li, size_t pos), TrackListUpd();
-	TracksXml tracksXml;
+	void listTrackChng(MyGUI::MultiList2* li, size_t pos), TrackListUpd();
+	TracksXml tracksXml;  void btnTrkView1(WP),btnTrkView2(WP),ChangeTrackView(bool full),updTrkListDim();
+	const static int TcolW[32];
 
 	//  screen
 	MyGUI::ListPtr resList;

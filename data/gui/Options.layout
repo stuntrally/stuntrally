@@ -10,12 +10,12 @@
 			<Property key="Tab_ButtonWidth" value="86"/>
 			<Property key="Widget_Colour" value="0.7 0.85 1"/>
 			<Property key="Tab_ButtonAutoWidth" value="true"/>
-			<Widget type="TabItem" skin="" position="4 26 787 531">
+			<Widget type="TabItem" skin="" position="4 26 787 531" name="TabTrack">
 				<Property key="Widget_Caption" value="#{Track}"/>
-				<Widget type="List" skin="List" position="14 15 148 504" name="TrackList">
+				<!--<Widget type="List" skin="List" position="14 32 148 487" name="TrackList">
 					<UserString key="tip" value="#{TipTrackList}"/>
-				</Widget>
-				<Widget type="StaticText" skin="StaticText" position="176 448 200 24" name="TrackText">
+				</Widget>-->
+				<Widget type="StaticText" skin="StaticText" position="176 456 200 24" name="TrackText">
 					<Property key="Widget_InheritsAlpha" value="true"/>
 					<Property key="Widget_Colour" value="0 0 0"/>
 					<Property key="Widget_Caption" value="#{Track}"/>
@@ -27,7 +27,7 @@
 					<Property key="Text_TextColour" value="0.6 1 0.8"/>
 					<UserString key="tip" value="#{TipChangeTrack}"/>
 				</Widget>
-				<Widget type="Button" skin="CheckBox" position="400 448 120 24" name="ReverseOn">
+				<Widget type="Button" skin="CheckBox" position="400 456 120 24" name="ReverseOn">
 					<Property key="Widget_Caption" value="#{Reverse}"/>
 					<Property key="Widget_Colour" value="0.8 1 0.6"/>
 					<Property key="Text_TextColour" value="0.8 1 0.5"/>
@@ -161,13 +161,33 @@
 					<Property key="Text_TextColour" value="0.86 0.93 1.0"/>
 					<UserString key="tip" value="#{rating}"/>
 				</Widget>
+				<Widget type="StaticImage" skin="StaticImage" position="256 6 48 24" name="TrkView2icons1">
+					<Property key="Image_Texture" value="track_icons.png"/>
+					<Property key="Image_Coord" value="64 32 64 32"/>
+				</Widget>
+				<Widget type="StaticImage" skin="StaticImage" position="304 6 168 24" name="TrkView2icons2">
+					<Property key="Image_Texture" value="track_icons.png"/>
+					<Property key="Image_Coord" value="0 0 224 32"/>
+				</Widget>
+                <Widget type="Button" skin="ButtonSmall" position="16 7 40 24" name="TrkView1">
+					<Property key="Widget_Caption" value="|"/>
+                    <Property key="Widget_Alpha" value="0.8"/>
+                    <Property key="Widget_Colour" value="0.6 0.8 1.0"/>
+					<Property key="Text_TextColour" value="0.45 0.58 0.8"/>
+                </Widget>
+                <Widget type="Button" skin="ButtonSmall" position="64 7 40 24" name="TrkView2">
+					<Property key="Widget_Caption" value="|||"/>
+                    <Property key="Widget_Alpha" value="0.8"/>
+                    <Property key="Widget_Colour" value="0.6 0.8 1.0"/>
+					<Property key="Text_TextColour" value="0.45 0.58 0.8"/>
+                </Widget>
 			</Widget>
 			<Widget type="TabItem" skin="" position="4 26 787 531">
 				<Property key="Widget_Caption" value="#{Car}"/>
-				<Widget type="List" skin="List" position="14 16 148 504" name="CarList">
+				<Widget type="List" skin="List" position="14 32 148 304" name="CarList">
 					<UserString key="tip" value="#{TipCarsList}"/>
 				</Widget>
-				<Widget type="StaticText" skin="StaticText" position="176 448 200 24" name="CarText">
+				<Widget type="StaticText" skin="StaticText" position="176 456 200 24" name="CarText">
 					<Property key="Widget_InheritsAlpha" value="true"/>
 					<Property key="Widget_Caption" value="#{Car}"/>
 					<Property key="Widget_Colour" value="0 0 0"/>
@@ -261,16 +281,16 @@
 					<Property key="Text_TextColour" value="1 0.7 0.6"/>
 				</Widget>
 				<Widget type="Tab" skin="Tab" position="176 16 568 20" name="tabPlayer">
-					<Widget type="TabItem" skin="" position="4 26 559 -8">
+					<Widget type="TabItem" skin="" position="4 26 559 -12">
 						<Property key="Widget_Caption" value="#{InputMapPlayer1}"/>
 					</Widget>
-					<Widget type="TabItem" skin="" position="4 26 559 -8">
+					<Widget type="TabItem" skin="" position="4 26 559 -12">
 						<Property key="Widget_Caption" value="#{InputMapPlayer2}"/>
 					</Widget>
-					<Widget type="TabItem" skin="" position="4 26 559 -8">
+					<Widget type="TabItem" skin="" position="4 26 559 -12">
 						<Property key="Widget_Caption" value="#{InputMapPlayer3}"/>
 					</Widget>
-					<Widget type="TabItem" skin="" position="4 26 559 -8">
+					<Widget type="TabItem" skin="" position="4 26 559 -12">
 						<Property key="Widget_Caption" value="#{InputMapPlayer4}"/>
 					</Widget>
 				</Widget>
@@ -358,11 +378,11 @@
 			<Widget type="TabItem" skin="" position="4 26 787 531">
 				<Property key="Widget_Caption" value="#{Replay}"/>
 				<Widget type="List" skin="List" position="14 16 186 504" name="RplList"/>
-                <Widget type="Button" skin="CheckBox" position="224 375 240 24" name="RplChkAutoRec">
+				<Widget type="Button" skin="CheckBox" position="224 375 240 24" name="RplChkAutoRec">
 					<Property key="Widget_Caption" value="#{RplAutoRec}"/>
 					<Property key="Text_TextColour" value="0.6 0.8 1"/>
 				</Widget>
-                <Widget type="Button" skin="CheckBox" position="224 415 240 24" name="RplChkGhost">
+				<Widget type="Button" skin="CheckBox" position="224 415 240 24" name="RplChkGhost">
 					<Property key="Text_TextColour" value="0.6 0.8 1"/>
 					<Property key="Widget_Caption" value="#{RplGhost}"/>
 				</Widget>
@@ -431,10 +451,10 @@
 				<Widget type="Edit" skin="Edit" position="224 270 280 32" name="RplNameEdit">
 					<Property key="Widget_Colour" value="0.8 0.9 1"/>
 				</Widget>
-                <Widget type="Button" skin="CheckBox" position="464 415 272 24" name="RplChkAlpha">
-                    <Property key="Text_TextColour" value="0.6 0.8 1"/>
-                    <Property key="Widget_Caption" value="#{RplAlpha}*"/>
-                </Widget>
+				<Widget type="Button" skin="CheckBox" position="464 415 272 24" name="RplChkAlpha">
+					<Property key="Text_TextColour" value="0.6 0.8 1"/>
+					<Property key="Widget_Caption" value="#{RplAlpha}*"/>
+				</Widget>
 			</Widget>
 			<Widget type="TabItem" skin="" position="4 26 787 531">
 				<Property key="Widget_Caption" value="#{Screen}"/>
@@ -472,6 +492,8 @@
 							<Property key="Widget_Caption" value="#{GraphicsAllSettings}"/>
 						</Widget>
 						<Widget type="ComboBox" skin="ComboBox" position="188 164 168 26" name="CmbGraphicsAll">
+							<Property key="Edit_Static" value="true"/>
+							<Property key="Edit_ReadOnly" value="true"/>
 							<Property key="Widget_Colour" value="0.6 0.9 1"/>
 							<Property key="Text_TextColour" value="0.9 0.97 1"/>
 						</Widget>
@@ -913,11 +935,11 @@
 							<Property key="Widget_Caption" value="#{Minimap} F8"/>
 							<Property key="Text_TextColour" value="0.9 0.96 1.0"/>
 						</Widget>
-                        <Widget type="Button" skin="CheckBox" position="32 256 184 24" name="Times">
+						<Widget type="Button" skin="CheckBox" position="32 256 184 24" name="Times">
 							<Property key="Widget_Caption" value="#{TimesBar} F7"/>
 							<Property key="Text_TextColour" value="0.8 0.9 1.0"/>
 						</Widget>
-                        <Widget type="Button" skin="CheckBox" position="32 296 184 24" name="CamInfo">
+						<Widget type="Button" skin="CheckBox" position="32 296 184 24" name="CamInfo">
 							<Property key="Widget_Caption" value="#{CameraInfo}"/>
 							<Property key="Text_TextColour" value="0.7 0.8 0.9"/>
 						</Widget>
@@ -937,11 +959,11 @@
 						<Widget type="StaticText" skin="StaticText" position="232 138 64 24">
 							<Property key="Widget_Caption" value="#{Size}"/>
 						</Widget>
-                        <Widget type="Button" skin="CheckBox" position="164 176 124 24" name="MiniZoom">
+						<Widget type="Button" skin="CheckBox" position="164 176 124 24" name="MiniZoom">
 							<Property key="Widget_Caption" value="#{MinimapZoom}"/>
 							<Property key="Text_TextColour" value="0.7 0.8 0.9"/>
 						</Widget>
-                        <Widget type="Button" skin="CheckBox" position="164 216 124 24" name="MiniRot">
+						<Widget type="Button" skin="CheckBox" position="164 216 124 24" name="MiniRot">
 							<Property key="Widget_Caption" value="#{MinimapRotate}"/>
 							<Property key="Text_TextColour" value="0.7 0.8 0.9"/>
 						</Widget>
@@ -952,10 +974,10 @@
 						<Widget type="StaticText" skin="StaticText" position="296 178 48 24" name="ZoomMinimapVal">
 							<Property key="Text_TextColour" value="0.7 0.8 0.9"/>
 						</Widget>
-                        <Widget type="Button" skin="CheckBox" position="316 216 136 24" name="MiniTer">
-                            <Property key="Widget_Caption" value="#{MinimapTerrain}"/>
-                            <Property key="Text_TextColour" value="0.7 0.8 0.9"/>
-                        </Widget>
+						<Widget type="Button" skin="CheckBox" position="316 216 136 24" name="MiniTer">
+							<Property key="Widget_Caption" value="#{MinimapTerrain}"/>
+							<Property key="Text_TextColour" value="0.7 0.8 0.9"/>
+						</Widget>
 					</Widget>
 					<Widget type="TabItem" skin="" position="4 26 735 428">
 						<Property key="Widget_Caption" value="#{Other}"/>

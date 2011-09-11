@@ -125,6 +125,17 @@ void CARDYNAMICS::Update()
 		chassis->applyCentralForce( btVector3(body.F.x,body.F.y,body.F.z) );
 		chassis->applyTorque(       btVector3(body.T.x,body.T.y,body.T.z) );
 	}	
+
+	//  wheels spin ...
+	/*for (int w=0; w < 3; ++w)
+	{
+		MATHVECTOR <T, 3> pos = GetWheelPosition((WHEEL_POSITION)w);
+		if (pos.)
+		//pCar->dynamics.GetWheelOrientation(wp);
+		//T left_front_wheel_speed = wheel[FRONT_LEFT].GetAngularVelocity();
+		chassis->applyForce( btVector3(body.F.x,body.F.y,body.F.z), btVector3 );
+	}*/
+	
 	delete[] poly.verts;
 	delete[] poly.faces;
 	}

@@ -10,6 +10,7 @@
 #include <OgreRenderWindow.h>
 #include <OgreOverlay.h>
 #include "common/Gui_Def.h"
+#include "common/MultiList2.h"
 using namespace MyGUI;
 using namespace Ogre;
 
@@ -257,13 +258,14 @@ void App::InitGui()
 
     ///  tracks list, text, chg btn
     //------------------------------------------------------------------------
-    GuiInitTrack();
 
 	//  track text, chg btn
 	trkDesc = (EditPtr)mLayout->findWidget("TrackDesc");
     valTrk = (StaticTextPtr)mLayout->findWidget("TrackText");
     if (valTrk)
 		valTrk->setCaption(TR("#{Track}: " + pSet->track));  sListTrack = pSet->track;
+
+    GuiInitTrack();
 
     ButtonPtr btnTrk = (ButtonPtr)mLayout->findWidget("ChangeTrack");
     if (btnTrk)  btnTrk->eventMouseButtonClick = newDelegate(this, &App::btnChgTrack);
@@ -273,7 +275,7 @@ void App::InitGui()
     {	ButtonPtr btnNewG = (ButtonPtr)mLayout->findWidget("NewGame"+toStr(i));
 		if (btnNewG)  btnNewG->eventMouseButtonClick = newDelegate(this, &App::btnNewGame);
 	}
-
+	
 
 	bGI = true;  // gui inited, gui events can now save vals
 
@@ -294,6 +296,13 @@ void App::UpdCarClrSld(bool upd)
 
 
 //  next/prev in list by key
+int App::LNext(MyGUI::MultiList2* lp, int rel)
+{
+	int i = std::max(0, std::min((int)lp->getItemCount()-1, (int)lp->getIndexSelected()+rel ));
+	lp->setIndexSelected(i);  //not sorted !..
+	lp->beginToItemAt(std::max(0, i-11));  // center
+	return i;
+}
 int App::LNext(MyGUI::ListPtr lp, int rel)
 {
 	int i = std::max(0, std::min((int)lp->getItemCount()-1, (int)lp->getIndexSelected()+rel ));
@@ -304,7 +313,7 @@ int App::LNext(MyGUI::ListPtr lp, int rel)
 
 void App::trkLNext(int rel)	{
 	if (!(isFocGui && mWndTabs->getIndexSelected() == 0))  return;
-	listTrackChng(trkList,LNext(trkList, rel));  }
+	listTrackChng(trkMList,LNext(trkMList, rel));  }
 
 void App::carLNext(int rel)	{
 	if (!(isFocGui && mWndTabs->getIndexSelected() == 1))  return;

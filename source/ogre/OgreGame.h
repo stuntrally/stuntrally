@@ -17,6 +17,7 @@ namespace Ogre {  class SceneNode;  class Root;  class SceneManager;  class Rend
 	class Terrain;  class TerrainGlobalOptions;  class TerrainGroup;  class TerrainPaging;  class PageManager;  }
 namespace Forests {  class PagedGeometry;  }
 namespace BtOgre  {  class DebugDrawer;  }
+namespace MyGUI  {  class MultiList2;  }
 
 
 class App : public BaseApp //, public RenderTargetListener
@@ -180,15 +181,17 @@ protected:
 	//  init
 	void InitGui();  bool bGI;
 	void GuiCenterMouse(),GuiInitTooltip(),GuiInitLang(), GuiInitGraphics(),GuiInitTrack();
+	void AddTrkL(std::string name, int user, const class TrackInfo* ti);
 
 	//  track
 	void UpdGuiRdStats(const SplineRoad* rd, const Scene& sc, float time), ReadTrkStats();
-	MyGUI::ListPtr trkList;  MyGUI::EditPtr trkDesc;
-	MyGUI::StaticImagePtr imgPrv,imgMini,imgTer;
+	MyGUI::MultiList2* trkMList;  MyGUI::EditPtr trkDesc;
+	MyGUI::StaticImagePtr imgPrv,imgMini,imgTer, imgTrkIco1,imgTrkIco2;
 	const static int StTrk = 12, InfTrk = 9;
 	MyGUI::StaticTextPtr valTrk, stTrk[StTrk], infTrk[InfTrk];
-	void listTrackChng(MyGUI::List* li, size_t pos), TrackListUpd();
-	TracksXml tracksXml;
+	void listTrackChng(MyGUI::MultiList2* li, size_t pos), TrackListUpd();
+	TracksXml tracksXml;  void btnTrkView1(WP),btnTrkView2(WP),ChangeTrackView(bool full),updTrkListDim();
+	const static int TcolW[32];
 
 	//  screen
 	MyGUI::ListPtr resList;
@@ -262,7 +265,7 @@ protected:
 	MyGUI::ListPtr carList, rplList;  void updReplaysList();
 	void listRplChng(MyGUI::List* li, size_t pos);
 	void listCarChng(MyGUI::List* li, size_t pos),  btnChgCar(WP), btnChgTrack(WP);
-	int LNext(MyGUI::ListPtr lp, int rel);  // util next in list
+	int LNext(MyGUI::MultiList2* lp, int rel), LNext(MyGUI::ListPtr lp, int rel);  // util next in list
 	void trkLNext(int rel), carLNext(int rel), rplLNext(int rel);
 	void tabPlayer(MyGUI::TabPtr wp, size_t id);
 

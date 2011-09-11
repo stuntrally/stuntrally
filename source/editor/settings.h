@@ -20,6 +20,7 @@ public:
 	//  show
 	bool show_fps, trackmap, brush_prv;  int num_mini;
 	float size_minimap;
+	int tracks_view, tracks_sort;
 
 	//  graphics
 	int anisotropy, shaders, tex_size, ter_mtr;
