@@ -1013,6 +1013,10 @@
 					>
 				</File>
 				<File
+					RelativePath=".\source\ogre\common\Gui_CommonTrack.cpp"
+					>
+				</File>
+				<File
 					RelativePath=".\source\ogre\common\Gui_Def.h"
 					>
 				</File>
@@ -1121,6 +1125,38 @@
 					>
 				</File>
 				<File
+					RelativePath=".\source\ogre\common\MultiList2.cpp"
+					>
+					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="0"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="0"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="ReleaseDbg|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="0"
+						/>
+					</FileConfiguration>
+				</File>
+				<File
+					RelativePath=".\source\ogre\common\MultiList2.h"
+					>
+				</File>
+				<File
 					RelativePath=".\Source\ogre\common\SceneTrees.cpp"
 					>
 				</File>
@@ -1138,6 +1174,10 @@
 				</File>
 				<File
 					RelativePath=".\Source\ogre\common\Terrain.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\config\tracks.xml"
 					>
 				</File>
 				<File
