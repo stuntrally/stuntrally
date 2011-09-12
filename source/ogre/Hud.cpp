@@ -84,7 +84,7 @@ void App::CreateHUD()
 		asp = 1.f;  //_temp
 		ManualObject* m = Create2D(sMat,mSceneMgr,1,true,true);  miniC = m;
 		//asp = float(mWindow->getWidth())/float(mWindow->getHeight());
-		m->setVisibilityFlags(2);  m->setRenderQueueGroup(RENDER_QUEUE_OVERLAY-5);
+		m->setVisibilityFlags(2);  m->setRenderQueueGroup(RENDER_QUEUE_OVERLAY-2);
 		
 		///  change minimap image
 		MaterialPtr mm = MaterialManager::getSingleton().getByName(sMat);
@@ -117,17 +117,17 @@ void App::CreateHUD()
 	
 	//  backgr  gauges
 	ManualObject* mrpmB = Create2D("hud/rpm",mSceneMgr,1);	mrpmB->setVisibilityFlags(2);
-	mrpmB->setRenderQueueGroup(RENDER_QUEUE_OVERLAY-5);
+	mrpmB->setRenderQueueGroup(RENDER_QUEUE_OVERLAY-2);
 	nrpmB = mSceneMgr->getRootSceneNode()->createChildSceneNode();
 	nrpmB->attachObject(mrpmB);	nrpmB->setScale(0,0,0);  nrpmB->setVisible(false);
 
 	ManualObject* mvelBk = Create2D("hud/kmh",mSceneMgr,1);	mvelBk->setVisibilityFlags(2);
-	mvelBk->setRenderQueueGroup(RENDER_QUEUE_OVERLAY-5);
+	mvelBk->setRenderQueueGroup(RENDER_QUEUE_OVERLAY-2);
 	nvelBk = mSceneMgr->getRootSceneNode()->createChildSceneNode();
 	nvelBk->attachObject(mvelBk);	nvelBk->setScale(0,0,0);  mvelBk->setVisible(false);
 		
 	ManualObject* mvelBm = Create2D("hud/mph",mSceneMgr,1);	mvelBm->setVisibilityFlags(2);
-	mvelBm->setRenderQueueGroup(RENDER_QUEUE_OVERLAY-5);
+	mvelBm->setRenderQueueGroup(RENDER_QUEUE_OVERLAY-2);
 	nvelBm = mSceneMgr->getRootSceneNode()->createChildSceneNode();
 	nvelBm->attachObject(mvelBm);	nvelBm->setScale(0,0,0);  mvelBm->setVisible(false);
 		
