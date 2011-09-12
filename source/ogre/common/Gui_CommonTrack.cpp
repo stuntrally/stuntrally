@@ -206,21 +206,29 @@ void App::TrackListUpd()
 
 void App::AddTrkL(std::string name, int user, const TrackInfo* ti)
 {
+	String c = "#FFFFFF";  char ch = name.c_str()[0];
+	switch (ch)  {
+		case '0':  c = "#E0E0E0";  break;   case 'I':  c = "#FFFF80";  break;
+		case 'A':  c = "#FFA080";  break;   case 'J':  c = "#50FF50";  break;
+		case 'D':  c = "#F0F000";  break;   case 'M':  c = "#A0A000";  break;
+		case 'F':  c = "#A0D000";  break;   case 'S':  c = "#D0FF00";  break;
+		case 'G':  c = "#C0FF00";  break;   case 'T':  c = "#A0A0A0";  break;  }
+
 	MultiList2* li = trkMList;
 	li->addItem(name, 0);
 
 	if (!ti)  return;  //  details
 	int l = li->getItemCount()-1;
-
-	li->setSubItemNameAt(1,l, toStr(ti->n/10)+toStr(ti->n%10));  li->setSubItemNameAt(2,l, ti->scenery);
-	li->setSubItemNameAt(3,l, toStr(ti->crtver));
+	
+	li->setSubItemNameAt(1,l, c+toStr(ti->n/10)+toStr(ti->n%10));  li->setSubItemNameAt(2,l, c+ti->scenery);
+	li->setSubItemNameAt(3,l, c+toStr(ti->crtver));
 	//list->setSubItemNameAt(4,l, ti->created);  list->setSubItemNameAt(5,l, ti->modified);
-	#define toS(v)  (v > 0) ? "  "+toStr(v) : " "
-	li->setSubItemNameAt(4,l, toS(ti->diff));   li->setSubItemNameAt(5,l, toS(ti->rating));  //rateuser="0" drivenlaps="0"
-	li->setSubItemNameAt(6,l, toS(ti->bumps));  li->setSubItemNameAt(7,l, toS(ti->jumps));
-	li->setSubItemNameAt(8,l, toS(ti->loops));  li->setSubItemNameAt(9,l, toS(ti->pipes));
-	li->setSubItemNameAt(10,l,toS(ti->banked)); li->setSubItemNameAt(11,l,toS(ti->frenzy));
-	li->setSubItemNameAt(12,l,toS(ti->longn));
+	#define toS(clr,v)  (v > 0) ? clr##"  "+toStr(v) : " "
+	li->setSubItemNameAt(4,l, toS("#C0D0FF",ti->diff));   li->setSubItemNameAt(5,l, toS("#C0E0FF",ti->rating));  //rateuser="0" drivenlaps="0"
+	li->setSubItemNameAt(6,l, toS("#40FF00",ti->bumps));  li->setSubItemNameAt(7,l, toS("#FFA030",ti->jumps));
+	li->setSubItemNameAt(8,l, toS("#00FFFF",ti->loops));  li->setSubItemNameAt(9,l, toS("#FFFF00",ti->pipes));
+	li->setSubItemNameAt(10,l,toS("#C0C0C0",ti->banked)); li->setSubItemNameAt(11,l,toS("#C080FF",ti->frenzy));
+	li->setSubItemNameAt(12,l,toS("#FFA0A0",ti->longn));
 }
 
 
