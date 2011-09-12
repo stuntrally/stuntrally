@@ -393,6 +393,7 @@ bool App::keyPressed( const OIS::KeyEvent &arg )
 					{
 						if ((*it)->fCam)
 						{	(*it)->fCam->Next(iChgCam < 0, shift);
+							carsCamNum[i] = (*it)->fCam->miCurrent +1;  // save for pSet
 							if ((*it)->fCam->ca->mHideGlass)  visMask = 255-16;
 							else        visMask = 255;
 						}

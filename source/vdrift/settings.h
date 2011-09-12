@@ -36,7 +36,7 @@ public:
 
 	//  car
 	bool abs, tcs, autoclutch, autoshift, autorear, show_mph;
-	float car_hue[4], car_sat[4], car_val[4];
+	float car_hue[4], car_sat[4], car_val[4];  int cam_view[4];
 
 	//  game
 	bool trackreverse;	int local_players, num_laps;

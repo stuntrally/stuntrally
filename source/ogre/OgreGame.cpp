@@ -100,6 +100,9 @@ void App::setTranslations()
 
 void App::destroyScene()
 {
+	for (int i=0; i<4; ++i)
+		pSet->cam_view[i] = carsCamNum[i];
+
 	// Delete all cars
 	for (std::vector<CarModel*>::iterator it=carModels.begin(); it!=carModels.end(); it++)
 		delete (*it);

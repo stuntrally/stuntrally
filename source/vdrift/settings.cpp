@@ -20,6 +20,7 @@ void SETTINGS::Serialize(bool w, CONFIGFILE & c)
 	{	std::string s = "game.car";  s += char('1'+i);
 		Param(c,w, s, car[i]);						Param(c,w, s+"_hue", car_hue[i]);
 		Param(c,w, s+"_sat", car_sat[i]);			Param(c,w, s+"_val", car_val[i]);
+		Param(c,w, s+"_cam", cam_view[i]);
 	}
 	Param(c,w, "game.track", track);						Param(c,w, "game.track_user", track_user);
 	Param(c,w, "game.local_players", local_players);		Param(c,w, "game.split_vertically", split_vertically);
@@ -130,5 +131,5 @@ SETTINGS::SETTINGS() :  ///  Defaults
 	rpl_rec(1), rpl_ghost(1), rpl_bestonly(1), rpl_alpha(0), rpl_listview(0)
 {
 	for (int i=0; i < 4; ++i)
-	{	car[i] = "ES";  car_hue[i] = 0.2f*i;  car_sat[i] = 0.f;  car_val[i] = 0.f;  }
+	{	car[i] = "ES";  car_hue[i] = 0.2f*i;  car_sat[i] = 0.f;  car_val[i] = 0.f;  cam_view[0] = 0;  }
 }

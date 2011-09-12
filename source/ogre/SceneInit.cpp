@@ -28,6 +28,11 @@ void App::createScene()
 
 	mRoot->addResourceLocation(pathTrk[1] + "_previews/", "FileSystem");  //prv user tracks
 	
+	//  restore camNums
+	for (int i=0; i<4; ++i)
+		if (pSet->cam_view[i] >= 0)
+			carsCamNum[i] = pSet->cam_view[i];
+
 	//  tracks.xml
 	tracksXml.LoadXml(PATHMANAGER::GetGameConfigDir() + "/tracks.xml");
 	//tracksXml.SaveXml(PATHMANAGER::GetGameConfigDir() + "/tracks2.xml");
@@ -112,16 +117,24 @@ void App::LoadCleanUp()  // 1 first
 	if (resTrk != "")  Ogre::Root::getSingletonPtr()->removeResourceLocation(resTrk);
 	resTrk = TrkDir() + "objects";
 	
-	// Delete all cars
-	for (std::vector<CarModel*>::iterator it=carModels.begin(); it!=carModels.end(); it++)
-		delete (*it);
-
+	//  Delete all cars
+	for (int i=0; i < carModels.size(); i++)
+	{
+		CarModel* c = carModels[i];
+		if (c && c->fCam)
+		{
+			carsCamNum[i] = c->fCam->miCurrent +1;  // save which cam view
+			if (i < 4)
+				pSet->cam_view[i] = carsCamNum[i];
+		}
+		delete c;
+	}
 	carModels.clear();  newPosInfos.clear();
 
 	if (grass) {  delete grass->getPageLoader();  delete grass;  grass=0;   }
 	if (trees) {  delete trees->getPageLoader();  delete trees;  trees=0;   }
 
-	//  destroy all  TODO ...
+	///  destroy all  TODO ...
 	///!  remove this crap and destroy everything with* manually  destroyCar, destroyScene
 	///!  check if scene (track), car, color changed, omit creating the same if not
 	//mSceneMgr->getRootSceneNode()->removeAndDestroyAllChildren();  // destroy all scenenodes
@@ -202,12 +215,17 @@ void App::LoadScene()  // 3
 
 void App::LoadCar()  // 4
 {
-	// Create all cars
-	int i=0;
-	for (std::vector<CarModel*>::iterator it=carModels.begin(); it!=carModels.end(); it++)
+	//  Create all cars
+	for (int i=0; i < carModels.size(); ++i)
 	{
-		(*it)->Create(i);  ++i;
-		// Reserve an entry in newPosInfos
+		CarModel* c = carModels[i];
+		c->Create(i);
+
+		//  restore which cam view
+		if (c->fCam && carsCamNum[i] != 0)
+			c->fCam->setCamera(carsCamNum[i] -1);
+
+		//  Reserve an entry in newPosInfos
 		PosInfo carPosInfo;  carPosInfo.bNew = false;  //-
 		newPosInfos.push_back(carPosInfo);
 	}

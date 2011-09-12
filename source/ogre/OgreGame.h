@@ -35,6 +35,7 @@ public:
 	
 	// This list holds new positions info for every CarModel
 	std::vector<PosInfo> newPosInfos;
+	std::map<int,int> carsCamNum;  // picked camera number for cars
 	
 	// Utility
 	Ogre::Quaternion qFixCar,qFixWh;
