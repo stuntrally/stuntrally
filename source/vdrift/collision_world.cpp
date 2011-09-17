@@ -21,7 +21,7 @@ COLLISION_WORLD::COLLISION_WORLD() :
 
 	broadphase = new bt32BitAxisSweep3(btVector3(-5000, -5000, -5000), btVector3(5000, 5000, 5000));
 	solver = new btSequentialImpulseConstraintSolver();
-	world = new btDiscreteDynamicsWorld(dispatcher, broadphase, solver, config);
+	world = new DynamicsWorld(dispatcher, broadphase, solver, config);
 
 	world->setGravity(btVector3(0.0, 0.0, -9.81)); ///~
 	//world->getSolverInfo().m_numIterations = 36;  //-
@@ -313,21 +313,20 @@ bool COLLISION_WORLD::CastRay(
 
 //  Update
 //-------------------------------------------------------------------------------------------------------------------------------
-void COLLISION_WORLD::Update(float dt, bool profiling)
+
+void DynamicsWorld::solveConstraints(btContactSolverInfo& solverInfo)
 {
-	///  Simulate
-	world->stepSimulation(dt, maxSubsteps, fixedTimestep);
-	
+	btDiscreteDynamicsWorld::solveConstraints(solverInfo);
+	vHits.clear();
+	//inFluids.clear();  //- before update
 
 	//  collision callback for fluid triggers  -----~~~------~~~-----
-	//inFluids.clear();  //- before update
-	//TODO: bullet hit info for particles and sounds ...
-
-	int numManifolds = world->getDispatcher()->getNumManifolds();
+	//  and bullet hit info for particles and sounds ...
+	int numManifolds = getDispatcher()->getNumManifolds();
 	//LogO(toStr(numManifolds));
-	for (int i=0; i < numManifolds; ++i)
+	for (int i=0; i < numManifolds; ++i)  // pairs
 	{
-		btPersistentManifold* contactManifold =  world->getDispatcher()->getManifoldByIndexInternal(i);
+		btPersistentManifold* contactManifold =  getDispatcher()->getManifoldByIndexInternal(i);
 		btCollisionObject* bA = static_cast<btCollisionObject*>(contactManifold->getBody0());
 		btCollisionObject* bB = static_cast<btCollisionObject*>(contactManifold->getBody1());
 	
@@ -336,31 +335,53 @@ void COLLISION_WORLD::Update(float dt, bool profiling)
 
 		//  check if car with fluid
 		void* pA = bA->getUserPointer(), *pB = bB->getUserPointer();
-		if (pA && pB)
+		//if (pA && pB)
 		{
 			ShapeData* sdA = (ShapeData*)pA, *sdB = (ShapeData*)pB, *sdCar=0, *sdFluid=0;
-			if (sdA->type == ST_Car)  sdCar = sdA;  if (sdA->type == ST_Fluid)  sdFluid = sdA;
-			if (sdB->type == ST_Car)  sdCar = sdB;	if (sdB->type == ST_Fluid)  sdFluid = sdB;
-			if (sdCar && sdFluid)
-			{
-				sdCar->pCarDyn->inFluids.push_back(sdFluid->pFluid);  // add fluid to car
-			}
+			if (sdA) {  if (sdA->type == ST_Car)  sdCar = sdA;  if (sdA->type == ST_Fluid)  sdFluid = sdA;  }
+			if (sdB) {  if (sdB->type == ST_Car)  sdCar = sdB;  if (sdB->type == ST_Fluid)  sdFluid = sdB;  }
+			if (sdCar)
+				if (sdFluid)
+				{
+					sdCar->pCarDyn->inFluids.push_back(sdFluid->pFluid);  // add fluid to car
+				}
+				else  ///  car hit
+				{
+					int numContacts = contactManifold->getNumContacts();
+					//if (numContacts > 0)  LogO("c"+toStr(numContacts));
+					for (int j=0; j < numContacts; ++j)
+					{
+						btManifoldPoint& pt = contactManifold->getContactPoint(j);
+						//LogO(Ogre::String("hit-")+toStr(i)+"-"+toStr(j)+" f "+toStr(f)+"  n "+toStr(nB.getX())+"."+toStr(nB.getY())+"."+toStr(nB.getZ()));
+						DynamicsWorld::Hit hit;
+						hit.pos = pt.getPositionWorldOnA();  hit.norm = pt.m_normalWorldOnB;
+						hit.force = pt.getAppliedImpulse();  hit.sdCar = sdCar;
+						vHits.push_back(hit);
+					}
+				}
 		}
-			
-		/*int numContacts = contactManifold->getNumContacts();
-		for (int j=0;j<numContacts;j++)
-		{
-			btManifoldPoint& pt = contactManifold->getContactPoint(j);
-			if (pt.getDistance()<0.f)
-			{
-				//bA->get
-				const btVector3& pA = pt.getPositionWorldOnA();
-				const btVector3& pB = pt.getPositionWorldOnB();
-				const btVector3& nB = pt.m_normalWorldOnB;
-				btScalar f = pt.getAppliedImpulse();
-				LogO(Ogre::String("hit-")+toStr(i)+"-"+toStr(j)+" f "+toStr(f)+"  n "+toStr(nB.getX())+"."+toStr(nB.getY())+"."+toStr(nB.getZ()));
-			}
-		}/**/
+	}
+}
+
+
+void COLLISION_WORLD::Update(float dt, bool profiling)
+{
+	///  Simulate
+	world->stepSimulation(dt, maxSubsteps, fixedTimestep);
+	
+
+	//  use collision hit results, once a frame
+	for (int i=0; i < world->vHits.size(); ++i)
+	{
+		const DynamicsWorld::Hit& hit = world->vHits[i];
+		hit.sdCar->pCarDyn->vHitPos = Ogre::Vector3(hit.pos.getX(), hit.pos.getZ(), -hit.pos.getY());
+			const MATHVECTOR <CARDYNAMICS::T, 3> vcar = hit.sdCar->pCarDyn->GetVelocity();
+			Ogre::Vector3 norm(hit.norm.getX(), hit.norm.getZ(), -hit.norm.getY());
+			Ogre::Vector3 vel(vcar[0], vcar[2], -vcar[1]);
+		hit.sdCar->pCarDyn->vHitNorm = vel*0.2 + norm*3;
+		hit.sdCar->pCarDyn->fHitForce = hit.force * std::min(1.f,vel.squaredLength());
+		LogO(toStr(hit.force));
+		hit.sdCar->pCarDyn->fHitTime = 1.f;
 	}
 
 

@@ -90,25 +90,3 @@ material TireTrail
 		}
 	}
 }
-
-material Boost
-{
-	receive_shadows off
-	technique
-	{
-		pass
-		{
-			lighting off
-			scene_blend add
-			depth_write off
-			diffuse vertexcolour
-			//transparent_sorting off
-
-			texture_unit
-			{
-				texture boost.png
-				//tex_address_mode clamp
-			}
-		}
-	}
-}

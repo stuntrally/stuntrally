@@ -129,7 +129,7 @@ private:
 	
 	//  Particle systems, trail
 	Ogre::ParticleSystem* ps[4],*pm[4],*pd[4];  // smoke, mud, dust
-	Ogre::ParticleSystem* pb[2];  // boost
+	Ogre::ParticleSystem* pb[2], *ph;  // boost, world hit
 	Ogre::RibbonTrail* whTrl[4];
 	Ogre::Real wht[4];  // spin time (approx tire temp.)
 	Ogre::SceneNode *ndWh[4], *ndWhE[4];

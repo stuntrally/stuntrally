@@ -480,7 +480,9 @@ void CARDYNAMICS::DebugPrint ( std::ostream & out, bool p1, bool p2, bool p3, bo
 		out << "inertia:  " << inertia[0] << "  " << inertia[4] << "  " << inertia[8] << "\n";
 		out.precision(6);
 		out << "mass: " << body.GetMass() << std::endl;
-		out << "in fluids: " << inFluids.size() << std::endl;  out << std::endl;
+		out << "in fluids: " << inFluids.size() << std::endl;
+		//out << "hit : " << fHitTime << "  p " << vHitPos.x << ", " << vHitPos.x << ", " << vHitPos.z << std::endl;
+		out << std::endl;
 		engine.DebugPrint(out);  out << std::endl;
 	return;//
 		fuel_tank.DebugPrint(out);  out << std::endl;

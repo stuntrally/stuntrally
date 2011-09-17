@@ -174,7 +174,10 @@ public:
 	// rocket boost
 	float doBoost;
 
-	std::list<FluidBox*> inFluids;  // list of fluids this car is in (if any)
+	std::list<FluidBox*> inFluids;  /// list of fluids this car is in (if any)
+	Ogre::Vector3 vHitPos,vHitNorm;  // world hit data
+	float fHitTime, fHitForce;
+	
 
 // driveline state
 	CARFUELTANK <T> fuel_tank;
