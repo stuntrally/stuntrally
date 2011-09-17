@@ -135,7 +135,7 @@ void CarModel::Update(PosInfo& posInfo, float time)
 
 		pCar->dynamics.fHitTime -= time*2;
 		pe->setEmissionRate(
-			pCar->dynamics.fHitTime > 0.f ? std::min(60.f, pCar->dynamics.fHitForce * 1.4f) : 0);
+			pCar->dynamics.fHitTime > 0.f ? std::min(160.f, pCar->dynamics.fHitForce * 1.4f) : 0);
 	}
 	
 	//  wheels
@@ -262,7 +262,7 @@ void CarModel::Create(int car)
 
 	// --------- Materials  -------------------
 	String s = pSet->shaders == 0 ? "_old" : "";
-	bool ghost = 1 || eType == CT_GHOST && pSet->rpl_alpha;  //1 || for ghost test
+	bool ghost = eType == CT_GHOST && pSet->rpl_alpha;  //1 || for ghost test
 	//  ghost car has no interior, particles, trails and uses same material for all meshes
 	if (!ghost)
 	{	sMtr[Mtr_CarBody]     = "car_body"+s;		sMtr[Mtr_CarTireFront]  = "cartire_front"+s;
