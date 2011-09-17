@@ -8,6 +8,7 @@
 #include "track.h"
 #include "cardynamics.h"
 
+#include <OgreLogManager.h>
 
 ///  ctor bullet world
 ///----------------------------------------------------------------------------
