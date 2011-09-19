@@ -144,6 +144,7 @@ void App::InitGui()
 	Chk("ShowPictures", chkLoadPics, pSet->loadingbackground);
 	
 	//  effects
+	//TODO: Chk("AllEffects", load compositor shaders only if creating ...
 	Chk("Bloom", chkVidBloom, pSet->bloom);
 	Chk("HDR", chkVidHDR, pSet->hdr);
 	Chk("MotionBlur", chkVidBlur, pSet->motionblur);

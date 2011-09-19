@@ -489,7 +489,7 @@
 						</Widget>
 						<Widget type="StaticText" skin="StaticText" position="188 142 520 24">
 							<Property key="Text_TextColour" value="0.6 0.9 1"/>
-							<Property key="Widget_Caption" value="#{GraphicsAllSettings}"/>
+							<Property key="Widget_Caption" value="#{GraphicsAllSettings} *"/>
 						</Widget>
 						<Widget type="ComboBox" skin="ComboBox" position="188 164 168 26" name="CmbGraphicsAll">
 							<Property key="Edit_Static" value="true"/>

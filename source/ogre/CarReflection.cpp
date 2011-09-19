@@ -52,7 +52,7 @@ void CarReflection::Create()
 	}
 	
 	TextureManager* tm = TextureManager::getSingletonPtr();
-	int size = ciShadowSizesA[pSet->refl_size];
+	int size = ciShadowSizesA[pSet->refl_size];  // /2 ?
 
 	//  create cube render texture
 	if (! (pSet->refl_mode == "single" && iIndex != 0) )
