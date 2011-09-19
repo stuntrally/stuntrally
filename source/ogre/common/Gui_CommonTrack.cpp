@@ -223,7 +223,7 @@ void App::AddTrkL(std::string name, int user, const TrackInfo* ti)
 	li->setSubItemNameAt(1,l, c+toStr(ti->n/10)+toStr(ti->n%10));  li->setSubItemNameAt(2,l, c+ti->scenery);
 	li->setSubItemNameAt(3,l, c+toStr(ti->crtver));
 	//list->setSubItemNameAt(4,l, ti->created);  list->setSubItemNameAt(5,l, ti->modified);
-	#define toS(clr,v)  (v > 0) ? clr##"  "+toStr(v) : " "
+	#define toS(clr,v)  (v > 0) ? (clr "  "+toStr(v)) : " "
 	li->setSubItemNameAt(4,l, toS("#C0D0FF",ti->diff));   li->setSubItemNameAt(5,l, toS("#C0E0FF",ti->rating));  //rateuser="0" drivenlaps="0"
 	li->setSubItemNameAt(6,l, toS("#40FF00",ti->bumps));  li->setSubItemNameAt(7,l, toS("#FFA030",ti->jumps));
 	li->setSubItemNameAt(8,l, toS("#00FFFF",ti->loops));  li->setSubItemNameAt(9,l, toS("#FFFF00",ti->pipes));
