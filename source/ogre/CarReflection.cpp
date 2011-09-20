@@ -2,6 +2,7 @@
 #include "Defines.h"
 #include "CarReflection.h"
 #include "../vdrift/settings.h"
+#include "../ogre/common/RenderConst.h"
 
 #include <OgreSceneManager.h>
 #include <OgreLogManager.h>
@@ -74,7 +75,7 @@ void CarReflection::Create()
 			mRT->removeAllViewports();
 			Viewport* vp = mRT->addViewport(mCam);
 			vp->setOverlaysEnabled(false);
-			vp->setVisibilityMask(1+4+8);  // hide 2: hud, car,glass,tires
+			vp->setVisibilityMask(RV_MaskReflect);
 			mRT->setAutoUpdated(false);
 			//mRT->addListener(this);  //-
 			mCam->setPosition(Vector3::ZERO);

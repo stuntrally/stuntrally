@@ -449,6 +449,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\source\ogre\common\Gui_CommonTrack.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\source\ogre\common\Gui_Def.h"
 				>
 			</File>
@@ -517,10 +521,6 @@
 				>
 			</File>
 			<File
-				RelativePath=".\source\ogre\common\Gui_CommonTrack.cpp"
-				>
-			</File>
-			<File
 				RelativePath=".\source\ogre\common\MultiList2.cpp"
 				>
 				<FileConfiguration
@@ -542,6 +542,10 @@
 			</File>
 			<File
 				RelativePath=".\source\ogre\common\MultiList2.h"
+				>
+			</File>
+			<File
+				RelativePath=".\source\ogre\common\RenderConst.h"
 				>
 			</File>
 			<File

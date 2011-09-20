@@ -5,6 +5,7 @@
 #include "../road/Road.h"
 #include "SplitScreen.h"
 #include "../paged-geom/PagedGeometry.h"
+#include "common/RenderConst.h"
 
 #include <OgreTerrain.h>
 #include <OgreTerrainGroup.h>
@@ -146,7 +147,7 @@ ManualObject* App::Create2D(const String& mat, SceneManager* sceneMgr, Real s, b
  
 	AxisAlignedBox aabInf;	aabInf.setInfinite();
 	m->setBoundingBox(aabInf);  // always visible
-	m->setRenderQueueGroup(RENDER_QUEUE_OVERLAY - 1);
+	m->setRenderQueueGroup(RQG_Hud2);
 	return m;
 }
 

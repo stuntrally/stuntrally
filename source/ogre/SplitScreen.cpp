@@ -133,7 +133,7 @@ void SplitScreenManager::Align()
 	if (!mGuiViewport)
 	{
 		mGuiSceneMgr = Ogre::Root::getSingleton().createSceneManager(ST_GENERIC);
-		Ogre::Camera* guiCam = mGuiSceneMgr->createCamera("GuiCam1");
+		Ogre::Camera* guiCam = mGuiSceneMgr->createCamera("GuiCam1");  // todo destroy !..
 		mGuiViewport = mWindow->addViewport(guiCam, 100);
 	}
 	

@@ -1157,6 +1157,10 @@
 					>
 				</File>
 				<File
+					RelativePath=".\source\ogre\common\RenderConst.h"
+					>
+				</File>
+				<File
 					RelativePath=".\Source\ogre\common\SceneTrees.cpp"
 					>
 				</File>

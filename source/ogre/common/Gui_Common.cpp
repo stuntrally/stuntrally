@@ -55,6 +55,8 @@ void App::slViewDist(SL)
 	// Set new far clip distance for all cams
 	#ifndef ROAD_EDITOR
 	/*?if (bGI)*/  mSplitMgr->UpdateCamDist();
+	#else
+	mCamera->setFarClipDistance(pSet->view_distance*1.1f);
 	#endif
 }
 

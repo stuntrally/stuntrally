@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "../Defines.h"
+#include "RenderConst.h"
 #ifdef ROAD_EDITOR
 	#include "../../editor/OgreApp.h"
 #else
@@ -148,7 +149,7 @@ void App::CreateTrees()
 			PagedLayer& pg = sc.pgLayersAll[sc.pgLayers[l]];
 
 			Entity* ent = mSceneMgr->createEntity(pg.name);
-			ent->setVisibilityFlags(8);  ///vis+  disable in render targets
+			ent->setVisibilityFlags(RV_Vegetation);  ///vis+  disable in render targets
 			if (pg.windFx > 0.f)  {
 				trees->setCustomParam(ent->getName(), "windFactorX", pg.windFx);
 				trees->setCustomParam(ent->getName(), "windFactorY", pg.windFy);  }

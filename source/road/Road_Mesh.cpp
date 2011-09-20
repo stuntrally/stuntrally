@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "../ogre/Defines.h"
 #include "Road.h"
+#include "../ogre/common/RenderConst.h"
 
 #include <OgreLogManager.h>
 #include <OgreSubMesh.h>
@@ -98,7 +99,7 @@ void SplineRoad::AddMesh(MeshPtr mesh, String sMesh, const AxisAlignedBox& aabox
 	*pNode = mSceneMgr->getRootSceneNode()->createChildSceneNode("rd.node"+sEnd);
 	(*pNode)->attachObject(*pEnt);
 	(*pEnt)->setVisible(false);  (*pEnt)->setCastShadows(false);
-	(*pEnt)->setVisibilityFlags(1);  //vis road only
+	(*pEnt)->setVisibilityFlags(RV_Road);
 }
 
 

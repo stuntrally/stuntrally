@@ -6,6 +6,7 @@
 #include "FollowCamera.h"
 #include "../road/Road.h"
 #include "SplitScreen.h"
+#include "common/RenderConst.h"
 
 #include "../btOgre/BtOgrePG.h"
 #include "../btOgre/BtOgreGP.h"
@@ -203,13 +204,13 @@ void App::LoadScene()  // 3
 	if (!pr && sc.rainEmit > 0)  {
 		pr = mSceneMgr->createParticleSystem("Rain", sc.rainName);
 		mSceneMgr->getRootSceneNode()->createChildSceneNode()->attachObject(pr);
-		pr->setRenderQueueGroup(RENDER_QUEUE_9+5);
+		pr->setRenderQueueGroup(RQG_Weather);
 		pr->getEmitter(0)->setEmissionRate(0);  }
 	//  rain2  =====
 	if (!pr2 && sc.rain2Emit > 0)  {
 		pr2 = mSceneMgr->createParticleSystem("Rain2", sc.rain2Name);
 		mSceneMgr->getRootSceneNode()->createChildSceneNode()->attachObject(pr2);
-		pr2->setRenderQueueGroup(RENDER_QUEUE_9+5);
+		pr2->setRenderQueueGroup(RQG_Weather);
 		pr2->getEmitter(0)->setEmissionRate(0);  }
 }
 

@@ -15,6 +15,7 @@ Permission is granted to anyone to use this software for any purpose, including 
 //#include "Defines.h"
 #include "WindBatchPage.h"
 #include "WindBatchedGeometry.h"
+#include "../ogre/common/RenderConst.h"
 
 #include <OgreRoot.h>
 #include <OgreCamera.h>
@@ -49,7 +50,7 @@ void WindBatchPage::init(PagedGeometry *geom, const Any &data)
 	batch = new WindBatchedGeometry(sceneMgr, geom->getSceneNode());
 	dynamic_cast<WindBatchedGeometry*>(batch)->setGeom(geom);
 	fadeEnabled = false;
-	batch->setVisibilityFlags(8);  ///vis+  disable in render targets
+	batch->setVisibilityFlags(RV_Vegetation);  ///vis+  disable in render targets
 
 	const RenderSystemCapabilities *caps = Root::getSingleton().getRenderSystem()->getCapabilities();
 	if (caps->hasCapability(RSC_VERTEX_PROGRAM))

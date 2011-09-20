@@ -4,6 +4,7 @@
 #include "../road/Road.h"
 #include "../paged-geom/PagedGeometry.h"
 #include "../vdrift/pathmanager.h"
+#include "../ogre/common/RenderConst.h"
 using namespace Ogre;
 
 
@@ -19,7 +20,7 @@ void App::createScene()
 	//  cam pos from last set
 	mCameraT->setPosition(Vector3(pSet->cam_x,pSet->cam_y,pSet->cam_z));
 	mCameraT->setDirection(Vector3(pSet->cam_dx,pSet->cam_dy,pSet->cam_dz).normalisedCopy());
-	mViewport->setVisibilityMask(255);  // hide prv cam rect
+	mViewport->setVisibilityMask(RV_MaskAll);  // hide prv cam rect
 
 	//  tex fil
 	MaterialManager::getSingleton().setDefaultTextureFiltering(TFO_ANISOTROPIC);
@@ -264,8 +265,8 @@ void App::TerCircleInit()
  
 	AxisAlignedBox aabInf;	aabInf.setInfinite();
 	moTerC->setBoundingBox(aabInf);  // always visible
-	moTerC->setRenderQueueGroup(RENDER_QUEUE_OVERLAY - 1);
-	moTerC->setVisibilityFlags(2);  // hide on minimap
+	moTerC->setRenderQueueGroup(RQG_Hud2);
+	moTerC->setVisibilityFlags(RV_Hud);
 	ndTerC = mSceneMgr->getRootSceneNode()->createChildSceneNode(Vector3(0,0,0));
 	ndTerC->attachObject(moTerC);  ndTerC->setVisible(false);
 }

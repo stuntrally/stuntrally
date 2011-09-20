@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "../Defines.h"
+#include "../common/RenderConst.h"
 #include "../../road/Road.h"
 #ifdef ROAD_EDITOR
 	#include "../../editor/OgreApp.h"
@@ -322,7 +323,7 @@ void App::CreateTerrain(bool bNewHmap, bool bTer)
 			Terrain* t = ti.getNext()->instance;
 			initBlendMaps(t);
 			terrain = t;  //<set
-			terrain->setVisibilityFlags(4);  // hide terrain in render target
+			terrain->setVisibilityFlags(RV_Terrain);
 		}
 
 		mTerrainGroup->freeTemporaryResources();
@@ -424,10 +425,10 @@ void App::CreateSkyDome(String sMater, Vector3 sc)
 	}
 	m->end();	AxisAlignedBox aabInf;	aabInf.setInfinite();
 	m->setBoundingBox(aabInf);  // always visible
-	m->setRenderQueueGroup(RENDER_QUEUE_SKIES_EARLY);
+	m->setRenderQueueGroup(RQG_Sky);
 	m->setCastShadows(false);
 	#ifdef ROAD_EDITOR
-	m->setVisibilityFlags(32);  // hide on minimap
+	m->setVisibilityFlags(RV_Sky);  // hide on minimap
 	#endif
 
 	ndSky = mSceneMgr->getRootSceneNode()->createChildSceneNode();
@@ -496,14 +497,12 @@ void App::CreateFluids()
 			if (tus)  tus->setTextureName(tusSky->getTextureName());
 		}
 		efl->setMaterial(mtr);  efl->setCastShadows(false);
-		efl->setRenderQueueGroup(RENDER_QUEUE_9+4);  efl->setVisibilityFlags(4);  //vis+ hide like terrain
+		efl->setRenderQueueGroup(RQG_Fluid);  efl->setVisibilityFlags(RV_Terrain);
 
 		SceneNode* nfl = mSceneMgr->getRootSceneNode()->createChildSceneNode(fb.pos);
 		nfl->attachObject(efl);
 		#ifdef ROAD_EDITOR
-		vFlSMesh.push_back(smesh);
-		vFlEnt.push_back(efl);
-		vFlNd.push_back(nfl);
+		vFlSMesh.push_back(smesh);  vFlEnt.push_back(efl);  vFlNd.push_back(nfl);
 		#endif
 
 		

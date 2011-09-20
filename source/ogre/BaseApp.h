@@ -31,8 +31,7 @@ public:
 	// has to be in baseApp to switch camera on C press
 	std::vector<class CarModel*> carModels;
 	
-	// translation
-	// can't have it in c'tor, because mygui is not initialized
+	// translation, can't have it in c'tor, because mygui is not initialized
 	virtual void setTranslations() = 0;
 	
 	class SplitScreenManager* mSplitMgr;

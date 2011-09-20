@@ -11,6 +11,7 @@
 #include "FollowCamera.h"
 #include "CarReflection.h"
 #include "../road/Road.h"
+#include "common/RenderConst.h"
 
 #include "boost/filesystem.hpp"
 #define  FileExists(s)  boost::filesystem::exists(s)
@@ -350,7 +351,7 @@ void CarModel::Create(int car)
 	
 	//  body  ----------------------
 	Ogre::Vector3 vPofs(0,0,0);
-	AxisAlignedBox bodyBox;  Ogre::uint8 g = RENDER_QUEUE_9+7;
+	AxisAlignedBox bodyBox;  Ogre::uint8 g = RQG_CarGhost;
 
 	if (FileExists(sCar + "_body.mesh"))
 	{
@@ -359,12 +360,12 @@ void CarModel::Create(int car)
 			eCar->setMaterialName(sMtr[Mtr_CarBody]);
 		bodyBox = eCar->getBoundingBox();
 		if (ghost)  {  eCar->setRenderQueueGroup(g);  eCar->setCastShadows(false);  }
-		ncart->attachObject(eCar);  eCar->setVisibilityFlags(2);
+		ncart->attachObject(eCar);  eCar->setVisibilityFlags(RV_Car);
 	}else{
 		ManualObject* mCar = CreateModel(pSceneMgr, sMtr[Mtr_CarBody], &pCar->bodymodel.mesh, vPofs);
 		bodyBox = mCar->getBoundingBox();
 		if (mCar){	if (ghost)  {  mCar->setRenderQueueGroup(g);  mCar->setCastShadows(false);  }
-			ncart->attachObject(mCar);  mCar->setVisibilityFlags(2);  }
+			ncart->attachObject(mCar);  mCar->setVisibilityFlags(RV_Car);  }
 	}
 
 	//  interior  ----------------------
@@ -376,11 +377,11 @@ void CarModel::Create(int car)
 		Entity* eInter = pSceneMgr->createEntity("Car.interior"+ strI, sDirname + "_" + "interior.mesh", "Car" + strI);
 		eInter->setMaterialName(sMtr[Mtr_CarInterior]);
 		if (ghost)  {  eInter->setRenderQueueGroup(g);  eInter->setCastShadows(false);  }
-		ncart->attachObject(eInter);  eInter->setVisibilityFlags(2);
+		ncart->attachObject(eInter);  eInter->setVisibilityFlags(RV_Car);
 	}else{
 		ManualObject* mInter = CreateModel(pSceneMgr, sMtr[Mtr_CarInterior],&pCar->interiormodel.mesh, vPofs);
 		if (mInter){  if (ghost)  {  mInter->setRenderQueueGroup(g);  mInter->setCastShadows(false);  }
-			ncart->attachObject(mInter);  mInter->setVisibilityFlags(2);  }
+			ncart->attachObject(mInter);  mInter->setVisibilityFlags(RV_Car);  }
 	}
 	
 	//  glass  ----------------------
@@ -391,12 +392,12 @@ void CarModel::Create(int car)
 		Entity* eGlass = pSceneMgr->createEntity("Car.glass"+ strI, sDirname + "_" + "glass.mesh", "Car" + strI);
 		eGlass->setMaterialName(sMtr[Mtr_CarGlass]);
 		if (ghost)  {  eGlass->setRenderQueueGroup(g);  eGlass->setCastShadows(false);  }  else
-			eGlass->setRenderQueueGroup(RENDER_QUEUE_8);  eGlass->setVisibilityFlags(16);
+			eGlass->setRenderQueueGroup(RQG_CarGlass);  eGlass->setVisibilityFlags(RV_CarGlass);
 		ncart->attachObject(eGlass);
 	}else{
 		ManualObject* mGlass = CreateModel(pSceneMgr, sMtr[Mtr_CarGlass], &pCar->glassmodel.mesh, vPofs);
-		if (mGlass){  mGlass->setRenderQueueGroup(ghost ? g : RENDER_QUEUE_8);  if (ghost)  mGlass->setCastShadows(false);
-			ncart->attachObject(mGlass);  mGlass->setVisibilityFlags(16);  }
+		if (mGlass){  mGlass->setRenderQueueGroup(ghost ? g : RQG_CarGlass);  if (ghost)  mGlass->setCastShadows(false);
+			ncart->attachObject(mGlass);  mGlass->setVisibilityFlags(RV_CarGlass);  }
 	}
 	
 	///  save .mesh
@@ -416,7 +417,7 @@ void CarModel::Create(int car)
 			eWh->setMaterialName(sMtr[Mtr_CarTireFront]);
 			if (ghost)  {  eWh->setRenderQueueGroup(g);  eWh->setCastShadows(false);  }
 			ndWh[w] = pSceneMgr->getRootSceneNode()->createChildSceneNode();
-			ndWh[w]->attachObject(eWh);  eWh->setVisibilityFlags(2);
+			ndWh[w]->attachObject(eWh);  eWh->setVisibilityFlags(RV_Car);
 		}else{
 			if (w < 2 && FileExists(sCar + "_wheel_front.mesh"))
 			{
@@ -424,7 +425,7 @@ void CarModel::Create(int car)
 				eWh->setMaterialName(sMtr[Mtr_CarTireFront]);
 				if (ghost)  {  eWh->setRenderQueueGroup(g);  eWh->setCastShadows(false);  }
 				ndWh[w] = pSceneMgr->getRootSceneNode()->createChildSceneNode();
-				ndWh[w]->attachObject(eWh);  eWh->setVisibilityFlags(2);
+				ndWh[w]->attachObject(eWh);  eWh->setVisibilityFlags(RV_Car);
 			}else
 			if (FileExists(sCar + "_wheel_rear.mesh"))
 			{
@@ -432,7 +433,7 @@ void CarModel::Create(int car)
 				eWh->setMaterialName(sMtr[Mtr_CarTireRear]);
 				if (ghost)  {  eWh->setRenderQueueGroup(g);  eWh->setCastShadows(false);  }
 				ndWh[w] = pSceneMgr->getRootSceneNode()->createChildSceneNode();
-				ndWh[w]->attachObject(eWh);  eWh->setVisibilityFlags(2);
+				ndWh[w]->attachObject(eWh);  eWh->setVisibilityFlags(RV_Car);
 			}else{
 				ManualObject* mWh;
 				if (w < 2)	mWh = CreateModel(pSceneMgr, sMtr[Mtr_CarTireFront], &pCar->wheelmodelfront.mesh, vPofs, true);
@@ -440,7 +441,7 @@ void CarModel::Create(int car)
 				if (mWh)  {
 				if (ghost)  {  mWh->setRenderQueueGroup(g);  mWh->setCastShadows(false);  }
 				ndWh[w] = pSceneMgr->getRootSceneNode()->createChildSceneNode();
-				ndWh[w]->attachObject(mWh);  mWh->setVisibilityFlags(2);  }
+				ndWh[w]->attachObject(mWh);  mWh->setVisibilityFlags(RV_Car);  }
 			}
 		}
 	}
@@ -549,10 +550,10 @@ void CarModel::UpdParsTrails(bool visible)
 	bool vis = visible && pSet->particles;
 	for (int w=0; w < 4; w++)
 	{
-		Ogre::uint8 grp = RENDER_QUEUE_9;  //9=road  after glass
+		Ogre::uint8 grp = RQG_CarTrails;  //9=road  after glass
 		if (w < 2 &&
 			pb[w])	{	pb[w]->setVisible(vis);  pb[w]->setRenderQueueGroup(grp);  }
-		if (whTrl[w]){  whTrl[w]->setVisible(visible && pSet->trails);  whTrl[w]->setRenderQueueGroup(grp);  }  grp += 2;
+		if (whTrl[w]){  whTrl[w]->setVisible(visible && pSet->trails);  whTrl[w]->setRenderQueueGroup(grp);  }  grp = RQG_CarParticles;
 		if (ps[w])	{	ps[w]->setVisible(vis);  ps[w]->setRenderQueueGroup(grp);  }  // vdr only && !sc.ter
 		if (pm[w])	{	pm[w]->setVisible(vis);  pm[w]->setRenderQueueGroup(grp);  }
 		if (pd[w])	{	pd[w]->setVisible(vis);  pd[w]->setRenderQueueGroup(grp);  }

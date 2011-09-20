@@ -1,6 +1,7 @@
 #include "pch.h"
 //#include "Defines.h"
 #include "Road.h"
+#include "../ogre/common/RenderConst.h"
 
 #include <OgreSceneManager.h>
 #include <OgreTerrain.h>
@@ -22,7 +23,7 @@ void SplineRoad::Setup(String sMarkerMeshFile, Real scale,
 
 	#define createSphere(mat, ent, nd)  \
 		ent = mSceneMgr->createEntity(name, sMarkerMeshFile);  \
-		ent->setMaterialName(mat);  ent->setCastShadows(false);  ent->setVisibilityFlags(2);  \
+		ent->setMaterialName(mat);  ent->setCastShadows(false);  ent->setVisibilityFlags(RV_Hud);  \
 		nd = mSceneMgr->getRootSceneNode()->createChildSceneNode(name);  \
 		nd->attachObject(ent);  nd->setVisible(false);
 	
@@ -34,7 +35,7 @@ void SplineRoad::Setup(String sMarkerMeshFile, Real scale,
 	name = "sphereRot";		createSphere("sphere_rot", entRot, ndRot);
 		ndRot->setScale(fMarkerScale * fScRot * Vector3::UNIT_SCALE);
 	name = "sphereCheck";	createSphere("sphere_check", entChk, ndChk);
-		entChk->setRenderQueueGroup(80);  // after road
+		entChk->setRenderQueueGroup(RQG_RoadMarkers);  // after road
 }
 
 
@@ -46,7 +47,7 @@ void SplineRoad::AddMarker(Vector3 pos)
 	Entity* ent;  SceneNode* nod;
 	String name = "sphere"+StringConverter::toString(getNumPoints());
 	ent = mSceneMgr->createEntity(sMarkerMesh/*,name*/);
-	ent->setMaterialName("sphere_norm");  ent->setCastShadows(false);  ent->setVisibilityFlags(2);
+	ent->setMaterialName("sphere_norm");  ent->setCastShadows(false);  ent->setVisibilityFlags(RV_Hud);
 	nod = mSceneMgr->getRootSceneNode()->createChildSceneNode(/*name,*/pos);
 	nod->attachObject(ent);  nod->scale(fMarkerScale * Vector3::UNIT_SCALE);
 	vMarkNodes.push_back(nod);

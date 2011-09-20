@@ -15,6 +15,7 @@ Permission is granted to anyone to use this software for any purpose, including 
 //#include "Defines.h"
 #include "BatchPage.h"
 #include "BatchedGeometry.h"
+#include "../ogre/common/RenderConst.h"
 
 #include <OgreRoot.h>
 #include <OgreCamera.h>
@@ -101,7 +102,7 @@ void BatchPage::addEntity(Entity *ent, const Vector3 &position, const Quaternion
 void BatchPage::build()
 {
 	batch->build();
-	batch->setVisibilityFlags(8);  ///vis+  disable in render targets
+	batch->setVisibilityFlags(RV_Vegetation);  ///vis+  disable in render targets
 
 	BatchedGeometry::SubBatchIterator it = batch->getSubBatchIterator();
 	while (it.hasMoreElements()){
@@ -158,11 +159,11 @@ void BatchPage::setFade(bool enabled, Real visibleDist, Real invisibleDist)
 			if(geom)
 				batch->setRenderQueueGroup(geom->getRenderQueue());
 			else
-				batch->setRenderQueueGroup(RENDER_QUEUE_6);
+				batch->setRenderQueueGroup(RQG_BatchAlpha);
 
  		} else {
  			//Opaque batches should render in the normal render queue
- 			batch->setRenderQueueGroup(RENDER_QUEUE_MAIN);
+ 			batch->setRenderQueueGroup(RQG_BatchOpaque);
  		}
 
 		this->visibleDist = visibleDist;

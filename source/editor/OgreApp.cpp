@@ -4,6 +4,7 @@
 #include "../road/Road.h"
 #include "../vdrift/pathmanager.h"
 #include "../paged-geom/PagedGeometry.h"
+#include "../ogre/common/RenderConst.h"
 
 #if OGRE_PLATFORM != OGRE_PLATFORM_WIN32
 	// dir listing
@@ -130,7 +131,7 @@ ManualObject* App::Create2D(const String& mat, Real s, bool dyn)
  
 	AxisAlignedBox aabInf;	aabInf.setInfinite();
 	m->setBoundingBox(aabInf);  // always visible
-	m->setRenderQueueGroup(RENDER_QUEUE_OVERLAY - 1);
+	m->setRenderQueueGroup(RQG_Hud2);
 	return m;
 }
 

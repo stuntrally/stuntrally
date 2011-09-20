@@ -2,6 +2,7 @@
 #include "Defines.h"
 #include "OgreApp.h"
 #include "../road/Road.h"
+#include "../ogre/common/RenderConst.h"
 using namespace Ogre;
 
 
@@ -72,17 +73,17 @@ void App::UpdStartPos()
 	{ 	//  car for start pos
  		ndCar = mSceneMgr->getRootSceneNode()->createChildSceneNode();
 		entCar = mSceneMgr->createEntity("car.mesh");  // car
-		entCar->setVisibilityFlags(2);  ndCar->setPosition(Vector3(20000,0,0));
+		entCar->setVisibilityFlags(RV_Hud);  ndCar->setPosition(Vector3(20000,0,0));
 		ndCar->attachObject(entCar);
 	}
 	if (!ndStBox)
 	{ 	//  car for start pos
  		ndStBox = mSceneMgr->getRootSceneNode()->createChildSceneNode();
 		entStBox = mSceneMgr->createEntity("cube.mesh");  // box
-		entStBox->setVisibilityFlags(2);  ndStBox->setPosition(Vector3(20000,0,0));
+		entStBox->setVisibilityFlags(RV_Hud);  ndStBox->setPosition(Vector3(20000,0,0));
 			entStBox->setCastShadows(true);  //`
 			MaterialPtr mtr = Ogre::MaterialManager::getSingleton().getByName("sphere_check");
-			entStBox->setMaterial(mtr);  entStBox->setRenderQueueGroup(80);  // after road
+			entStBox->setMaterial(mtr);  entStBox->setRenderQueueGroup(RQG_CarGlass);  // after road
 		ndStBox->attachObject(entStBox);
 	}
 	if (vStartPos.size() < 4 || vStartRot.size() < 4)  return;

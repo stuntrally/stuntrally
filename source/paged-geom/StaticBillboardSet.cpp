@@ -16,6 +16,7 @@ Permission is granted to anyone to use this software for any purpose, including 
 //-------------------------------------------------------------------------------------
 //#include "Defines.h"
 #include "StaticBillboardSet.h"
+#include "../ogre/common/RenderConst.h"
 
 #include <OgreRoot.h>
 #include <OgreCamera.h>
@@ -524,7 +525,7 @@ void StaticBillboardSet::build()
 		//Add to scene
 		node->attachObject(entity);
 		entity->setVisible(visible);
-		entity->setVisibilityFlags(8);	///vis+  disable in render targets
+		entity->setVisibilityFlags(RV_Vegetation);	///vis+  disable in render targets
 	}
 }
 

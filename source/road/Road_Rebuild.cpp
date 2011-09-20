@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "../ogre/Defines.h"
+#include "../ogre/common/RenderConst.h"
 #include "Road.h"
 #ifndef ROAD_EDITOR
 #include "../vdrift/game.h"
@@ -694,7 +695,7 @@ void SplineRoad::RebuildRoadInt()
 				SceneNode* node = 0, *nodeW = 0, *nodeC = 0;
 					AddMesh(mesh, sMesh, aabox, &ent, &node, "."+sEnd);
 				if (wPglass)
-					ent->setRenderQueueGroup(RENDER_QUEUE_9+5);  //+5 for glass pipe road`
+					ent->setRenderQueueGroup(RQG_PipeGlass);
 				if (wall /*&& posW.size() > 0*/)
 				{	AddMesh(meshW, sMeshW, aabox, &entW, &nodeW, "W."+sEnd);
 					entW->setCastShadows(true);  }  // only cast

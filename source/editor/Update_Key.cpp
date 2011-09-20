@@ -4,6 +4,7 @@
 #include "../road/Road.h"
 #include "../vdrift/pathmanager.h"
 #include "../ogre/common/MultiList2.h"
+#include "../ogre/common/RenderConst.h"
 using namespace Ogre;
 
 
@@ -69,7 +70,7 @@ void App::togPrvCam()
 	if (edMode == ED_PrvCam)  // leave
 	{
 		edMode = edModeOld;
-		mViewport->setVisibilityMask(255);
+		mViewport->setVisibilityMask(RV_MaskAll);
 		rt[RTs].ndMini->setVisible(false);
 		ndCar->setVisible(true);
 
@@ -86,7 +87,7 @@ void App::togPrvCam()
 		edModeOld = edMode;
 		edMode = ED_PrvCam;
 		bMoveCam = true;  UpdVisGui();
-		mViewport->setVisibilityMask(256);
+		mViewport->setVisibilityMask(RV_MaskPrvCam);
 		rt[RTs].ndMini->setVisible(true);
 		ndCar->setVisible(false);
 

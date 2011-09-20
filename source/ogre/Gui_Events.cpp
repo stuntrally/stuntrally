@@ -6,6 +6,8 @@
 #include "OgreGame.h"
 #include "FollowCamera.h"
 #include "SplitScreen.h"
+#include "common/Gui_Def.h"
+#include "common/RenderConst.h"
 
 #include <MyGUI_PointerManager.h>
 #include <OIS/OIS.h>
@@ -17,7 +19,6 @@
 #include <OgreMaterialManager.h>
 #include <OgreOverlay.h>
 #include <OgreRenderWindow.h>
-#include "common/Gui_Def.h"
 using namespace std;
 using namespace Ogre;
 using namespace MyGUI;
@@ -394,8 +395,8 @@ bool App::keyPressed( const OIS::KeyEvent &arg )
 						if ((*it)->fCam)
 						{	(*it)->fCam->Next(iChgCam < 0, shift);
 							carsCamNum[i] = (*it)->fCam->miCurrent +1;  // save for pSet
-							if ((*it)->fCam->ca->mHideGlass)  visMask = 255-16;
-							else        visMask = 255;
+							if ((*it)->fCam->ca->mHideGlass)  visMask = RV_MaskAll-RV_CarGlass;
+							else        visMask = RV_MaskAll;
 						}
 					}
 					for (std::list<Viewport*>::iterator it=mSplitMgr->mViewports.begin(); it!=mSplitMgr->mViewports.end(); it++)
