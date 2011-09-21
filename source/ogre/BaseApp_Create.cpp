@@ -123,6 +123,9 @@ void BaseApp::refreshCompositor()
 		CompositorManager::getSingleton().setCompositorEnabled((*it), "HDR", false);
 		CompositorManager::getSingleton().setCompositorEnabled((*it), "Motion Blur", false);
 	}
+
+	if (!pSet->all_effects)
+		return;
 	
 	//  Set Bloom params (intensity, orig weight)
 	try
@@ -162,8 +165,23 @@ void BaseApp::refreshCompositor()
 void BaseApp::recreateCompositor()
 {
 	if (!pSet->all_effects)  // disable compositor
+	{
+		refreshCompositor();
 		return;
-		
+	}
+	
+	//  add when needed
+	//if (!ResourceGroupManager::getSingleton().isResourceGroupInitialised("Effects"))
+	{
+		std::string sPath = PATHMANAGER::GetDataPath() + "/compositor";
+		mRoot->addResourceLocation(sPath, "FileSystem", "Effects");
+		mRoot->addResourceLocation(sPath + "/bloom", "FileSystem", "Effects");
+		mRoot->addResourceLocation(sPath + "/hdr", "FileSystem", "Effects");
+		mRoot->addResourceLocation(sPath + "/motionblur", "FileSystem", "Effects");
+		ResourceGroupManager::getSingleton().initialiseResourceGroup("Effects");
+	}
+
+
 	// hdr has to be first in the compositor queue
 	if (!mHDRLogic) 
 	{

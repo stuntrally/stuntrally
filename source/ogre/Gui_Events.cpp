@@ -307,14 +307,20 @@ void App::chkLoadPics(WP wp){		ChkEv(loadingbackground);	}
 
 //  [Video]  . . . . . . . . . . . . . . . . . . . .    ---- ------ ----    . . . . . . . . . . . . . . . . . . . .
 
+void App::chkVidEffects(WP wp)
+{
+	ChkEv(all_effects);
+	recreateCompositor();
+	//refreshCompositor();
+}
 void App::chkVidBloom(WP wp)
 {		
-	ChkEv(bloom);		
-	refreshCompositor();		
+	ChkEv(bloom);
+	refreshCompositor();
 }
 void App::chkVidHDR(WP wp)
 {			
-	ChkEv(hdr);	
+	ChkEv(hdr);
 	refreshCompositor();
 }
 void App::chkVidBlur(WP wp)

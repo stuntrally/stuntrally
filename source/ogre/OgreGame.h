@@ -227,7 +227,7 @@ protected:
 		chkReverse(WP), chkParticles(WP), chkTrails(WP),
 		chkAbs(WP), chkTcs(WP), chkGear(WP), chkRear(WP), chkClutch(WP),  // car
 		chkOgreDialog(WP), chkAutoStart(WP), chkEscQuits(WP), chkBltLines(WP), chkLoadPics(WP),  // startup
-		chkVidBloom(WP), chkVidHDR(WP), chkVidBlur(WP), UpdBloomVals(),  // video
+		chkVidEffects(WP), chkVidBloom(WP), chkVidHDR(WP), chkVidBlur(WP), UpdBloomVals(),  // video
 		chkVegetCollis(WP), chkCarCollis(WP);  //car
 
 	void imgBtnCarClr(WP), btnCarClrRandom(WP);

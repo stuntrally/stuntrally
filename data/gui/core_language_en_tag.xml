@@ -163,6 +163,7 @@
 	<Tag name="GraphicsAll_Ultra">Ultra</Tag>
 
 	<Tag name="Effects">Effects</Tag>
+	<Tag name="AllEffects">Effects Enabled</Tag>
 	<Tag name="Bloom">Bloom</Tag>
 	<Tag name="Intensity">Intensity</Tag>
 	<Tag name="OrigImage">Darken</Tag>

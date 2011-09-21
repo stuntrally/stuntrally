@@ -500,52 +500,56 @@
 					</Widget>
 					<Widget type="TabItem" skin="" position="4 26 735 428">
 						<Property key="Widget_Caption" value="#{Effects}"/>
-						<Widget type="Button" skin="CheckBox" position="40 50 300 24" name="Bloom">
+						<Widget type="Button" skin="CheckBox" position="40 30 300 24" name="AllEffects">
+							<Property key="Widget_Caption" value="#{AllEffects}"/>
+							<Property key="Text_TextColour" value="1.0 1.0 0.85"/>
+						</Widget>
+						<Widget type="Button" skin="CheckBox" position="40 75 300 24" name="Bloom">
 							<Property key="Widget_Caption" value="#{Bloom}"/>
 							<Property key="Text_TextColour" value="1 1 0.5"/>
 						</Widget>
-						<Widget type="StaticText" skin="StaticText" position="66 85 118 24">
+						<Widget type="StaticText" skin="StaticText" position="66 110 118 24">
 							<Property key="Widget_Caption" value="#{Intensity}"/>
 							<Property key="Text_TextColour" value="1.0 0.9 0.0"/>
 						</Widget>
-						<Widget type="Button" skin="CheckBox" position="40 155 300 24" name="HDR">
+						<Widget type="Button" skin="CheckBox" position="40 180 300 24" name="HDR">
 							<Property key="Widget_Caption" value="#{HDR}"/>
 							<Property key="Text_TextColour" value="1 0.7 0"/>
 						</Widget>
-						<Widget type="Button" skin="CheckBox" position="40 195 300 24" name="MotionBlur">
+						<Widget type="Button" skin="CheckBox" position="40 220 300 24" name="MotionBlur">
 							<Property key="Widget_Caption" value="#{MotionBlur}"/>
 							<Property key="Text_TextColour" value="0.6 1 0.3"/>
 						</Widget>
-						<Widget type="HScroll" skin="HScroll" position="248 230 320 18" name="BlurIntens">
+						<Widget type="HScroll" skin="HScroll" position="248 255 320 18" name="BlurIntens">
 							<Property key="Scroll_MoveToClick" value="true"/>
 							<Property key="Scroll_Range" value="1000001"/>
 							<Property key="Scroll_MoveToClick" value="true"/>
 						</Widget>
-						<Widget type="StaticText" skin="StaticText" position="66 230 118 24">
+						<Widget type="StaticText" skin="StaticText" position="66 255 118 24">
 							<Property key="Widget_Caption" value="#{Intensity}"/>
 							<Property key="Text_TextColour" value="0.7 1 0.4"/>
 						</Widget>
-						<Widget type="HScroll" skin="HScroll" position="248 85 320 18" name="BloomInt">
+						<Widget type="HScroll" skin="HScroll" position="248 110 320 18" name="BloomInt">
 							<Property key="Scroll_MoveToClick" value="true"/>
 							<Property key="Scroll_Range" value="1000001"/>
 							<Property key="Scroll_MoveToClick" value="true"/>
 						</Widget>
-						<Widget type="StaticText" skin="StaticText" position="66 115 120 24">
+						<Widget type="StaticText" skin="StaticText" position="66 140 120 24">
 							<Property key="Widget_Caption" value="#{OrigImage}"/>
 							<Property key="Text_TextColour" value="1 1 0.5"/>
 						</Widget>
-						<Widget type="HScroll" skin="HScroll" position="248 115 320 18" name="BloomOrig">
+						<Widget type="HScroll" skin="HScroll" position="248 140 320 18" name="BloomOrig">
 							<Property key="Scroll_MoveToClick" value="true"/>
 							<Property key="Scroll_Range" value="1000001"/>
 							<Property key="Scroll_MoveToClick" value="true"/>
 						</Widget>
-						<Widget type="StaticText" skin="StaticText" position="184 85 60 26" name="BloomIntVal">
+						<Widget type="StaticText" skin="StaticText" position="184 110 60 26" name="BloomIntVal">
 							<Property key="Text_TextColour" value="1.0 1 0.2"/>
 						</Widget>
-						<Widget type="StaticText" skin="StaticText" position="184 115 60 24" name="BloomOrigVal">
+						<Widget type="StaticText" skin="StaticText" position="184 140 60 24" name="BloomOrigVal">
 							<Property key="Text_TextColour" value="1 1 0.5"/>
 						</Widget>
-						<Widget type="StaticText" skin="StaticText" position="184 230 60 24" name="BlurIntensVal">
+						<Widget type="StaticText" skin="StaticText" position="184 255 60 24" name="BlurIntensVal">
 							<Property key="Text_TextColour" value="0.7 1 0.4"/>
 						</Widget>
 					</Widget>
