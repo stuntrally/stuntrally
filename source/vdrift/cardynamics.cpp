@@ -473,15 +473,21 @@ void CARDYNAMICS::DebugPrint ( std::ostream & out, bool p1, bool p2, bool p3, bo
 	if (p1)
 	{
 		out.precision(4);
+	/*	out << std::endl;
+		out << "hit S : " << fSndForce << std::endl;
+		out << "hit P : " << fParIntens << std::endl;
+		//out << "hit t : " << fHitTime << std::endl;
+		out << "bHitS : " << (bHitSnd?1:0) << " id "<< sndHitN << std::endl;
+		out << "N Vel : " << fNormVel << std::endl;
+		out << "v Vel : " << GetSpeed() << std::endl;
+	return;/**/  //--^
 		out << "---Body---" << std::endl;
 		out << "c of mass: " << center_of_mass << std::endl;
-		MATRIX3 <T> inertia = body.GetInertia();
-		//btVector3 chassisInertia(inertia[0], inertia[4], inertia[8]);
+		MATRIX3 <T> inertia = body.GetInertia();  //btVector3 chassisInertia(inertia[0], inertia[4], inertia[8]);
 		out << "inertia:  " << inertia[0] << "  " << inertia[4] << "  " << inertia[8] << "\n";
 		out.precision(6);
 		out << "mass: " << body.GetMass() << std::endl;
 		out << "in fluids: " << inFluids.size() << std::endl;
-		//out << "hit : " << fHitTime << "  p " << vHitPos.x << ", " << vHitPos.x << ", " << vHitPos.z << std::endl;
 		out << std::endl;
 		engine.DebugPrint(out);  out << std::endl;
 	return;//

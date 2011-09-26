@@ -7,6 +7,7 @@
 #include "model.h"
 #include "track.h"
 #include "cardynamics.h"
+//#include "car.h"//
 
 #include <OgreLogManager.h>
 
@@ -318,7 +319,7 @@ bool COLLISION_WORLD::CastRay(
 void DynamicsWorld::solveConstraints(btContactSolverInfo& solverInfo)
 {
 	btDiscreteDynamicsWorld::solveConstraints(solverInfo);
-	vHits.clear();
+	//vHits.clear();
 	//inFluids.clear();  //- before update
 
 	//  collision callback for fluid triggers  -----~~~------~~~-----
@@ -353,11 +354,14 @@ void DynamicsWorld::solveConstraints(btContactSolverInfo& solverInfo)
 					for (int j=0; j < numContacts; ++j)
 					{
 						btManifoldPoint& pt = contactManifold->getContactPoint(j);
-						//LogO(Ogre::String("hit-")+toStr(i)+"-"+toStr(j)+" f "+toStr(f)+"  n "+toStr(nB.getX())+"."+toStr(nB.getY())+"."+toStr(nB.getZ()));
+						//LogO(Ogre::String("hit-")+toStr(i)+"-"+toStr(j)+" f "+toStr(f));
 						DynamicsWorld::Hit hit;
 						hit.pos = pt.getPositionWorldOnA();  hit.norm = pt.m_normalWorldOnB;
 						hit.force = pt.getAppliedImpulse();  hit.sdCar = sdCar;
+						hit.force = std::max(0, 60 - pt.getLifeTime());
+						hit.vel = sdCar->pCarDyn->velPrev;
 						vHits.push_back(hit);
+						//sdCar->pCarDyn->hitPnts.push_back(pt);  ///i
 					}
 				}
 		}
@@ -372,18 +376,46 @@ void COLLISION_WORLD::Update(float dt, bool profiling)
 	
 
 	//  use collision hit results, once a frame
-	for (int i=0; i < world->vHits.size(); ++i)
+	
+	int n = world->vHits.size();
+	if (n > 0)
 	{
-		const DynamicsWorld::Hit& hit = world->vHits[i];
-		hit.sdCar->pCarDyn->vHitPos = Ogre::Vector3(hit.pos.getX(), hit.pos.getZ(), -hit.pos.getY());
-			const MATHVECTOR <CARDYNAMICS::T, 3> vcar = hit.sdCar->pCarDyn->GetVelocity();
-			Ogre::Vector3 norm(hit.norm.getX(), hit.norm.getZ(), -hit.norm.getY());
-			Ogre::Vector3 vel(vcar[0], vcar[2], -vcar[1]);
-		hit.sdCar->pCarDyn->vHitNorm = vel*0.2 + norm*3;
-		hit.sdCar->pCarDyn->fHitForce = hit.force * std::min(1.f,vel.squaredLength());
-		LogO(toStr(hit.force));
-		hit.sdCar->pCarDyn->fHitTime = 1.f;
+		//LogO(toStr(n));
+		//  pick the one with biggest force
+		DynamicsWorld::Hit& hit = world->vHits[0];
+		float force = 0.f;//, vel = 0.f;
+		for (int i=0; i < n; ++i)
+			if (world->vHits[i].force > force)
+			{
+				force = world->vHits[i].force;
+				hit = world->vHits[i];
+			}
+
+		CARDYNAMICS* cd = hit.sdCar->pCarDyn;
+		btVector3 vcar = hit.vel;
+		Ogre::Vector3 vel(vcar[0], vcar[2], -vcar[1]);
+		Ogre::Vector3 norm(hit.norm.getX(), hit.norm.getZ(), -hit.norm.getY());
+		float vlen = vel.length(), normvel = abs(vel.dotProduct(norm));
+
+		//  Sparks emit params
+		cd->vHitPos = Ogre::Vector3(hit.pos.getX(), hit.pos.getZ(), -hit.pos.getY());
+		cd->vHitNorm = norm + vel * 0.1f;  //vel*0.2 + norm*3;
+		cd->fParVel = 3.0 + 0.4 * vlen;
+		cd->fParIntens = 10.f + 30.f * vlen;  //hit.force * std::min(1.f, vlen);
+
+		//if (vlen > 2.f)// && car)  //par
+		{
+			cd->fSndForce = normvel*0.02 + 0.02*vlen;  //hit.force;
+			cd->fHitTime = 1.f;  cd->fNormVel = normvel;
+			///LogO("upd sf " + toStr(cd->fSndForce) + " force " + toStr(hit.force) + " vel " + toStr(vlen) + " Nvel " + toStr(normvel));
+
+			//int f = (normvel*0.02f + 0.02f*vlen) * Ncrashsounds;
+			//int i = std::max(5, std::min(Ncrashsounds, f));
+			//cd->bHitSnd = true;//cd->fSndForce > 58;  //true;
+			//cd->sndHitN = i;
+		}
 	}
+	world->vHits.clear();//+
 
 
 	///+  bullet profiling info

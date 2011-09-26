@@ -102,8 +102,8 @@ class SOUNDBUFFERLIBRARY
 				return true;
 			
 			//prefer ogg
-			std::string filename = librarypath+"/"+buffername+".ogg";
-			if (!FileExists(filename))
+			std::string /*filename = librarypath+"/"+buffername+".ogg";
+			if (!FileExists(filename))*/
 				filename = librarypath+"/"+buffername+".wav";
 			 
 			if (!buffermap[buffername].Load(filename, sound_device_info, error_output))

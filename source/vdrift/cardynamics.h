@@ -176,7 +176,9 @@ public:
 
 	std::list<FluidBox*> inFluids;  /// list of fluids this car is in (if any)
 	Ogre::Vector3 vHitPos,vHitNorm;  // world hit data
-	float fHitTime, fHitForce;
+	float fHitTime, fParIntens,fParVel, fSndForce, fNormVel;
+	bool bHitSnd;  int sndHitN;
+	btVector3 velPrev;
 	
 
 // driveline state

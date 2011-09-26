@@ -76,7 +76,12 @@ bool GAME::InitializeSound()
 		if (!generic_sounds.Load("bump_front", sound.GetDeviceInfo(), error_output)) return false;
 		if (!generic_sounds.Load("bump_rear", sound.GetDeviceInfo(), error_output)) return false;
 		if (!generic_sounds.Load("wind", sound.GetDeviceInfo(), error_output)) return false;
-		if (!generic_sounds.Load("crash", sound.GetDeviceInfo(), error_output)) return false;
+		for (int i = 0; i < Ncrashsounds; ++i)
+		{
+			int n = i+1;
+			char name[3] = {'0'+ n/10, '0'+ n%10, 0};
+			if (!generic_sounds.Load(name, sound.GetDeviceInfo(), error_output)) return false;
+		}
 		
 		sound.SetMasterVolume(settings->vol_master);
 		sound.Pause(false);
@@ -342,7 +347,10 @@ void GAME::AdvanceGameLogic()
 			PROFILER.beginBlock("physics");
 			///~~  clear fluids for each car
 			for (std::list <CAR>::iterator i = cars.begin(); i != cars.end(); ++i)
+			{
 				(*i).dynamics.inFluids.clear();
+				(*i).dynamics.velPrev = (*i).dynamics.chassis->getLinearVelocity();
+			}
 
 			collision.Update(TickPeriod(), settings->bltProfilerTxt);
 			PROFILER.endBlock("physics");

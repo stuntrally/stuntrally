@@ -128,15 +128,16 @@ void CarModel::Update(PosInfo& posInfo, float time)
 	}
 
 	//  world hit
-	if (ph && pCar->dynamics.fHitTime > 0.f)
+	CARDYNAMICS& cd = pCar->dynamics;
+	if (ph && cd.fHitTime > 0.f && pSet->particles)
 	{
 		ParticleEmitter* pe = ph->getEmitter(0);
-		pe->setPosition(pCar->dynamics.vHitPos);
-		pe->setDirection(pCar->dynamics.vHitNorm);
+		pe->setPosition(cd.vHitPos);
+		pe->setDirection(cd.vHitNorm);
 
-		pCar->dynamics.fHitTime -= time*2;
-		pe->setEmissionRate(
-			pCar->dynamics.fHitTime > 0.f ? std::min(160.f, pCar->dynamics.fHitForce * 1.4f) : 0);
+		cd.fHitTime -= time*2;
+		pe->setEmissionRate(cd.fHitTime > 0.f ? pSet->particles_len * std::min(160.f, cd.fParIntens) * cd.fHitTime : 0);
+		pe->setParticleVelocity(cd.fParVel);
 	}
 	
 	//  wheels
