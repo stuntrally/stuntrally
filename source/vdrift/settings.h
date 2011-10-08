@@ -4,7 +4,7 @@
 #include "configfile.h"
 
 
-#define SET_VER  1203  // 1.2
+#define SET_VER  1204  // 1.2
 
 
 class SETTINGS

@@ -27,7 +27,7 @@ public:
 		lastinputs.resize(CARINPUT::ALL, 0.f);
 	}
 	
-	const std::vector <float> & ProcessInput(class App* pApp, int player, float dt);
+	const std::vector <float> & ProcessInput(int player);
 };
 
 #endif

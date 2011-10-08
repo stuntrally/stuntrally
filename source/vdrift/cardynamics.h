@@ -35,6 +35,7 @@ public:
 	typedef double T;
 	class SETTINGS* pSet;
 	class Scene* pScene;  // for fluids
+	std::vector<float> inputsCopy;  // just for dbg info txt
 	
 	CARDYNAMICS();
 	~CARDYNAMICS();

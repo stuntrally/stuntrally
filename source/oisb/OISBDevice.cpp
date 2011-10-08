@@ -105,8 +105,13 @@ namespace OISB
 			os << "** - count: " << mStates.size() << std::endl;
 		else
 	    for (StateMap::const_iterator it = mStates.begin(); it != mStates.end(); ++it)
-	        os << "** - " << it->second->getName() << std::endl;
+	    {
+	        os << "** - " << it->second->getName();
+	        if (it->second->getStateType() == ST_ANALOG_AXIS)
+				os << " - analog";
+	        os << std::endl;
+		}
 
-        os << "** End of device '" << getName() << "'" << std::endl;
+        //os << "** End of device '" << getName() << "'" << std::endl;
 	}
 }

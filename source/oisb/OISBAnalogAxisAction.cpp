@@ -47,9 +47,9 @@ namespace OISB
         mMinimumValue(-1.0f),
         mMaximumValue(1.0f),
         mSensitivity(1.0f),
+        mInverseMul(1.0f),
 
-        mAnalogEmulator(0),
-        emulationEnabled(1)
+        mAnalogEmulator(0)
 	{
         setAnalogEmulator(new LinearAnalogEmulator());
     }
@@ -88,6 +88,11 @@ namespace OISB
         mSensitivity = sensitivity;
     }
 
+    void AnalogAxisAction::setInverseMul(Real invMul)
+    {
+        mInverseMul = invMul;
+    }
+
     void AnalogAxisAction::setAnalogEmulator(AnalogEmulator* emulator)
     {
         if (mAnalogEmulator)
@@ -117,9 +122,9 @@ namespace OISB
 			list.push_back("MinValue");
 			list.push_back("MaxValue");
 			list.push_back("Sensitivity");
+			list.push_back("InverseMul");
 
 			list.push_back("AnalogEmulator");
-			list.push_back("EmulationEnabled");
 		}
 
         if (mAnalogEmulator && child)
@@ -135,11 +140,6 @@ namespace OISB
         {
             setUseAbsoluteValues(fromString<bool>(value));
         }
-		else if (name == "EmulationEnabled")
-		{
-			mAnalogEmulator->isEnabled = fromString<bool>(value);
-			emulationEnabled = fromString<bool>(value);
-		}
         else if (name == "AbsoluteValue")
         {
             OIS_EXCEPT(OIS::E_InvalidParam, "'AbsoluteValue' is a read only, you can't set it!");
@@ -161,6 +161,10 @@ namespace OISB
         {
             setSensitivity(fromString<Real>(value));
         }
+        else if (name == "InverseMul")
+        {
+            setInverseMul(fromString<Real>(value));
+        }
 
         else if (name == "AnalogEmulator")
         {
@@ -168,10 +172,10 @@ namespace OISB
             {
                 setAnalogEmulator(0);
             }
+            else
             if (value == "Linear")
             {
                 setAnalogEmulator(new LinearAnalogEmulator());
-                mAnalogEmulator->isEnabled = emulationEnabled;
             }
             else
             {
@@ -206,11 +210,6 @@ namespace OISB
         {
             return toString(getUseAbsoluteValues());
         }
-		else if (name == "EmulationEnabled")
-		{
-			if (!mAnalogEmulator) return toString(emulationEnabled);
-			return toString(mAnalogEmulator->isEnabled);
-		}
         else if (name == "AbsoluteValue")
         {
             return toString(getAbsoluteValue());
@@ -231,6 +230,10 @@ namespace OISB
         else if (name == "Sensitivity")
         {
             return toString(getSensitivity());
+        }
+        else if (name == "InverseMul")
+        {
+            return toString(getInverseMul());
         }
 
         if (name == "AnalogEmulator")
@@ -276,7 +279,7 @@ namespace OISB
 
             const Real mOldRelativeValue = mRelativeValue;
 
-            if (mAnalogEmulator && mAnalogEmulator->checkBinding(binding))
+            if (mAnalogEmulator && mAnalogEmulator->isEnabled && mAnalogEmulator->checkBinding(binding))
             {
                 if (mUseAbsoluteValues)
                 {

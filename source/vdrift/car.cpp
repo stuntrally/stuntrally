@@ -478,6 +478,7 @@ void CAR::GetEngineSoundList(std::list <SOUNDSOURCE *> & outputlist)
 void CAR::HandleInputs(const std::vector <float> & inputs, float dt)
 {
 	assert(inputs.size() == CARINPUT::ALL); //-
+	dynamics.inputsCopy = inputs;
 
 	//std::cout << "Throttle: " << inputs[CARINPUT::THROTTLE] << std::endl;
 	//std::cout << "Shift up: " << inputs[CARINPUT::SHIFT_UP] << std::endl;
@@ -716,7 +717,7 @@ void CAR::UpdateSounds(float dt)
 			crashsound[i].Play();
 			crashsoundtime[i] = 0.f;
 			dynamics.sndHitN = -1;
-			LogO("Snd:  i " + toStr(i) + "  parF " + toStr(dynamics.fParIntens) + "  sndF " + toStr(dynamics.fSndForce));
+			//LogO("Snd:  i " + toStr(i) + "  parF " + toStr(dynamics.fParIntens) + "  sndF " + toStr(dynamics.fSndForce));
 		}/**/
 	}
 	//#else
@@ -750,7 +751,7 @@ void CAR::UpdateSounds(float dt)
 				crashsound[i].Play();
 				crashsoundtime[i] = 0.f;
 			}
-			LogO("Car Snd: " + toStr(crashdecel));// + " force " + toStr(hit.force) + " vel " + toStr(vlen) + " Nvel " + toStr(normvel));
+			//LogO("Car Snd: " + toStr(crashdecel));// + " force " + toStr(hit.force) + " vel " + toStr(vlen) + " Nvel " + toStr(normvel));
 		}
 	}
 	//#endif

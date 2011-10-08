@@ -46,8 +46,6 @@ namespace OISB
 			 */
 			AnalogAxisAction(ActionSchema* parent, const String& name);
 			
-			bool emulationEnabled;
-			
 			/**
 			 * @brief destructor
 			 */
@@ -70,12 +68,12 @@ namespace OISB
 
             inline Real getAbsoluteValue() const
             {
-                return mAbsoluteValue;
+                return mInverseMul * mAbsoluteValue;
             }
 
             inline Real getRelativeValue() const
             {
-                return mRelativeValue;
+                return mInverseMul * mRelativeValue;
             }
 
             void setMinimumValue(Real min);
@@ -97,6 +95,13 @@ namespace OISB
             inline Real getSensitivity() const
             {
                 return mSensitivity;
+            }
+
+            void setInverseMul(Real invMul);
+
+            inline Real getInverseMul() const
+            {
+                return mInverseMul;
             }
 
             void setAnalogEmulator(AnalogEmulator* emulator);
@@ -134,6 +139,8 @@ namespace OISB
 			Real mMaximumValue;
 			/// calibration sensitivity
 			Real mSensitivity;
+			/// multipler to get inversed value
+			Real mInverseMul;
 
             /// class providing analog emulation, if 0, emulation is disabled
             AnalogEmulator* mAnalogEmulator;

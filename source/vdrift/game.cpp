@@ -476,7 +476,7 @@ void GAME::UpdateCarInputs(CAR & car, int i)
 {
     std::vector <float> carinputs(CARINPUT::ALL, 0.0f);
 
-    carinputs = carcontrols_local.second.ProcessInput(pOgreGame, i, TickPeriod());
+    carinputs = carcontrols_local.second.ProcessInput(i);
 
     // mult_thr __ ??
 #if 0

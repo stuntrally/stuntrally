@@ -38,6 +38,7 @@ namespace OISB
     
     void PropertySet::impl_setProperty(const String& name, const String& value)
     {
+		//#if _DEBUG..
         OIS_EXCEPT(OIS::E_InvalidParam, String("Can't set property '" + name + "' to value '" + value + "', no such property exists in this object.").c_str());
     }
 

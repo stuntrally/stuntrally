@@ -251,6 +251,8 @@ void App::UpdateHUD(int carId, CarModel* pCarM, CAR* pCar, float time, Viewport*
 		if (hudVel)  hudVel->hide();
 		if (ovTimes)  ovTimes->hide();
 		if (ovWarnWin)  ovWarnWin->hide();
+		if (ovCarDbg)  ovCarDbg->hide();
+		if (ovCarDbgTxt)  ovCarDbgTxt->hide();
 	}else{
 		/// for render viewport ---------
 		if (ovCam)  ovCam->hide();
@@ -390,8 +392,19 @@ void App::UpdateHUD(int carId, CarModel* pCarM, CAR* pCar, float time, Viewport*
 		ovU[3]->setCaption(pGame->strProfInfo);
 		//if (newPosInfos.size() > 0)
 		//ovU[3]->setCaption("carm: " + toStr(carModels.size()) + " newp: " + toStr((*newPosInfos.begin()).pos));
-	}/**/
+	}
 
+	//  input values
+	if (pCar && pGame && pGame->profilingmode)
+	{	const std::vector<float>& inp = pCar->dynamics.inputsCopy;
+	if (ovU[2] && inp.size() == CARINPUT::ALL)
+	{	sprintf(s, 
+		" Throttle %5.2f\n Brake %5.2f\n Steer %5.2f\n"
+		" Handbrake %5.2f\n Boost %5.2f\n Flip %5.2f\n"
+		,inp[CARINPUT::THROTTLE], inp[CARINPUT::BRAKE], -inp[CARINPUT::STEER_LEFT]+inp[CARINPUT::STEER_RIGHT]
+		,inp[CARINPUT::HANDBRAKE],inp[CARINPUT::BOOST], inp[CARINPUT::FLIP] );
+		ovU[2]->setCaption(String(s));
+	}	}
 
 	//  bullet profiling text  --------
 	static bool oldBltTxt = false;
