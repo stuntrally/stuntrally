@@ -107,8 +107,9 @@ void App::changeShadows()
 	{	int size = i==0 ? fTex : fTex2;
 		mSceneMgr->setShadowTextureConfig(i, size, size, bDepth ? PF_FLOAT32_R : PF_X8B8G8R8);
 	}
+	
 	mSceneMgr->setShadowTextureSelfShadow(bDepth ? true : false);  //-?
-	mSceneMgr->setShadowCasterRenderBackFaces(false/**/);
+	mSceneMgr->setShadowCasterRenderBackFaces(bDepth ? true : false);
 	mSceneMgr->setShadowTextureCasterMaterial(bDepth ? "PSSM/shadow_caster" : StringUtil::BLANK);
 
 	if (matProfile && terrain)  {
@@ -118,6 +119,7 @@ void App::changeShadows()
 		//LogO(mtr->getBestTechnique()->getPass(0)->getTextureUnitState(0)->getName());
 		//LogO(String("Ter mtr: ") + mtr->getName());
 	}
+	
 	UpdPSSMMaterials();
 
 	ti.update();	/// time

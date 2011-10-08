@@ -345,7 +345,8 @@ void DynamicsWorld::solveConstraints(btContactSolverInfo& solverInfo)
 			if (sdCar)
 				if (sdFluid)
 				{
-					sdCar->pCarDyn->inFluids.push_back(sdFluid->pFluid);  // add fluid to car
+					if (sdCar->pCarDyn->inFluids.empty())
+						sdCar->pCarDyn->inFluids.push_back(sdFluid->pFluid);  // add fluid to car (only 1)
 				}
 				else  ///  car hit
 				{
