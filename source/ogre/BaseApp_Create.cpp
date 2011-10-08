@@ -311,7 +311,7 @@ BaseApp::BaseApp()
 BaseApp::~BaseApp()
 {
 	delete mLoadingBar;
-	if (mSplitMgr) delete mSplitMgr;
+	delete mSplitMgr;
 	
 	if (mGUI)  {
 		mGUI->shutdown();	delete mGUI;	mGUI = 0;  }
