@@ -310,8 +310,8 @@ material road_wall : ppx_env
 	set_texture_alias diffuseMap brass_patina.jpg
 	set_texture_alias normalMap brass_patina_n.png
 	set $depthBias "3"
-	//set $cull "none"  //road shadowed..
-	set $cull "anticlockwise"  //err
+	set $cull "none"  //road shadowed..
+	//set $cull "anticlockwise"  //err
 }
 material pipe_wall : ppx_env
 {
