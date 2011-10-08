@@ -616,9 +616,11 @@ void App::chkMinimap(WP wp)
 //  set camera in settings at exit
 void App::SaveCam()
 {
-	Vector3 p = mCamera->getPosition(), d = mCamera->getDirection();
-	pSet->cam_x = p.x;   pSet->cam_y = p.y;   pSet->cam_z = p.z;
-	pSet->cam_dx = d.x;  pSet->cam_dy = d.y;  pSet->cam_dz = d.z;
+	if (mCamera) {
+		Vector3 p = mCamera->getPosition(), d = mCamera->getDirection();
+		pSet->cam_x = p.x;   pSet->cam_y = p.y;   pSet->cam_z = p.z;
+		pSet->cam_dx = d.x;  pSet->cam_dy = d.y;  pSet->cam_dz = d.z;
+	}
 }
 
 //  set predefined camera view
