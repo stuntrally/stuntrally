@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION"
 "Report-Msgid-Bugs-To: "
-"POT-Creation-Date: 2011-10-08 18:11+0200"
+"POT-Creation-Date: 2011-10-09 17:26+0200"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>"
 "Language-Team: LANGUAGE <LL@li.org>"
@@ -53,6 +53,14 @@ msgctxt "LS_MISC"
 msgid "Finishing"
 msgstr ""
 
+msgctxt "InputHeaderTxt2"
+msgid "Binding"
+msgstr ""
+
+msgctxt "InputHeaderTxt3"
+msgid "Value"
+msgstr ""
+
 msgctxt "AndUsing"
 msgid "and using"
 msgstr ""
@@ -87,6 +95,10 @@ msgstr ""
 
 msgctxt "Sky"
 msgid "Sky"
+msgstr ""
+
+msgctxt "InputMultipler"
+msgid "Multipler"
 msgstr ""
 
 msgctxt "TerNormal"
@@ -185,6 +197,10 @@ msgctxt "pipes"
 msgid "pipes"
 msgstr ""
 
+msgctxt "InputHeaderTxt1"
+msgid "Action"
+msgstr ""
+
 msgctxt "InputReloadTrack"
 msgid "F5 - reload track"
 msgstr ""
@@ -235,6 +251,10 @@ msgstr ""
 
 msgctxt "TBLast"
 msgid "Last"
+msgstr ""
+
+msgctxt "InputMaxVal"
+msgid "Max. Value"
 msgstr ""
 
 msgctxt "TipGrassDens"
@@ -333,8 +353,8 @@ msgctxt "MinimapZoom"
 msgid "Zoom"
 msgstr ""
 
-msgctxt "Diffuse"
-msgid "Diffuse"
+msgctxt "ViewRight"
+msgid "View Right"
 msgstr ""
 
 msgctxt "Count"
@@ -461,8 +481,8 @@ msgctxt "Friction"
 msgid "Friction"
 msgstr ""
 
-msgctxt "SetCamTo"
-msgid "Set camera to"
+msgctxt "InputMinVal"
+msgid "Min. Value"
 msgstr ""
 
 msgctxt "max"
@@ -573,8 +593,8 @@ msgctxt "WidthSteps"
 msgid "Width Steps"
 msgstr ""
 
-msgctxt "InputKeyNoAxis"
-msgid "No axis"
+msgctxt "TerLAngMin"
+msgid "Angle Min"
 msgstr ""
 
 msgctxt "Sound"
@@ -705,8 +725,8 @@ msgctxt "Engine"
 msgid "Engine"
 msgstr ""
 
-msgctxt "TipTerLAngMin"
-msgid "Starting terrain angle for layer."
+msgctxt "SetCamTo"
+msgid "Set camera to"
 msgstr ""
 
 msgctxt "InputPressButtonTip"
@@ -1141,10 +1161,6 @@ msgctxt "RplCur"
 msgid "Cur"
 msgstr ""
 
-msgctxt "InputKeyNoButton"
-msgid "No button"
-msgstr ""
-
 msgctxt "InputToggleVeget"
 msgid "V - Disable / enable vegetation"
 msgstr ""
@@ -1481,8 +1497,8 @@ msgctxt "TipGrassPatchHeightMax"
 msgid "Maximal grass patch height."
 msgstr ""
 
-msgctxt "TerLAngMin"
-msgid "Angle Min"
+msgctxt "Diffuse"
+msgid "Diffuse"
 msgstr ""
 
 msgctxt "Tires"
@@ -1663,10 +1679,6 @@ msgstr ""
 
 msgctxt "Tools"
 msgid "Tools"
-msgstr ""
-
-msgctxt "ViewRight"
-msgid "View Right"
 msgstr ""
 
 msgctxt "TipChangeSat"
@@ -1921,6 +1933,10 @@ msgctxt "Replay"
 msgid "Replay"
 msgstr ""
 
+msgctxt "InputDetailsFor"
+msgid "Details for"
+msgstr ""
+
 msgctxt "GraphicsAll_Ultra"
 msgid "Ultra"
 msgstr ""
@@ -2017,16 +2033,8 @@ msgctxt "BumpWavelen"
 msgid "Bump:  WaveLen"
 msgstr ""
 
-msgctxt "InputKey2"
-msgid "Key 2"
-msgstr ""
-
 msgctxt "TipRoadDist"
 msgid "How far from road will the model appear."
-msgstr ""
-
-msgctxt "InputKey1"
-msgid "Key 1"
 msgstr ""
 
 msgctxt "TipResizeTer"
@@ -2127,6 +2135,10 @@ msgstr ""
 
 msgctxt "InputMapBoost"
 msgid "Boost"
+msgstr ""
+
+msgctxt "TipTerLAngMin"
+msgid "Starting terrain angle for layer."
 msgstr ""
 
 msgctxt "InputStartWidth"

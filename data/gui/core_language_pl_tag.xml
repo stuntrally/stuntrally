@@ -277,7 +277,6 @@
 	<Tag name="GraphicsAllSettings">Zmień wszystkie ustawienia na zestaw:</Tag>
 	<Tag name="InputTerPaint">A - maluj tekstury (warstwy)</Tag>
 	<Tag name="RplCur">Obecne</Tag>
-	<Tag name="InputKeyNoButton">Bez przycisku</Tag>
 	<Tag name="TexCoordMul">Mnożnik tekstury</Tag>
 	<Tag name="Shadows">Cienie</Tag>
 	<Tag name="ShowPictures">Pokazuj obrazy podczas wczytywania</Tag>
@@ -359,7 +358,6 @@
 	<Tag name="TerLHMax">Wysokość Max</Tag>
 	<Tag name="LoadingDesc">Wczytywanie, proszę czekać...</Tag>
 	<Tag name="TipGrassPatchHeightMax">Maksymalna wysokość strony trawy.</Tag>
-	<Tag name="InputKeyNoAxis">Brak osi</Tag>
 	<Tag name="Tires">Opony</Tag>
 	<Tag name="FacesOnce">Boków na raz</Tag>
 	<Tag name="TipTrkNameEditor">Nazwa wybranej trasy, używana również przy zmianie nazwy i jako nazwa nowej trasy.</Tag>
@@ -467,6 +465,7 @@
 	<Tag name="TBBest">Najlepszy</Tag>
 	<Tag name="RestartApply">Zrestartuj, aby zmienić *</Tag>
 	<Tag name="InputUndo">(jednorazowe cofnij)</Tag>
+	<Tag name="AllEffects">Effects Enabled</Tag>
 	<Tag name="CarCollis">Kolizja aut</Tag>
 	<Tag name="CameraInfo">Info kamery</Tag>
 	<Tag name="NewGame">Nowa Gra</Tag>
@@ -498,9 +497,7 @@
 	<Tag name="TipRainSnowInt">Intensywność deszczu/śniegu (np. 1000)</Tag>
 	<Tag name="TrackLength">Długość</Tag>
 	<Tag name="InputStartAltMMB">alt-MMB - resetuj obrót</Tag>
-	<Tag name="InputKey2">Klawisz 2</Tag>
 	<Tag name="TipRoadDist">Jak daleko od drogi będzie się pojawiał model.</Tag>
-	<Tag name="InputKey1">Klawisz 1</Tag>
 	<Tag name="TipResizeTer">Przeskaluj dany teren z nowymi wartościami.</Tag>
 	<Tag name="DistMult">Mnożnik odl.</Tag>
 	<Tag name="Resolution">Rozdzielczość</Tag>
@@ -534,7 +531,13 @@
 	<Tag name="MyGUI_MessageBox_Yes">Tak</Tag>
 	<Tag name="RollingDrag">Opór toczenia</Tag>
 	<Tag name="RplAll">Wszystkie</Tag>
-	<Tag name="AllEffects">Effects Enabled</Tag>
+	<Tag name="InputHeaderTxt2">Binding</Tag>
+	<Tag name="InputHeaderTxt3">Value</Tag>
+	<Tag name="InputMultipler">Multipler</Tag>
+	<Tag name="InputHeaderTxt1">Action</Tag>
+	<Tag name="InputMaxVal">Max. Value</Tag>
+	<Tag name="InputMinVal">Min. Value</Tag>
+	<Tag name="InputDetailsFor">Details for</Tag>
 	<Tag name="GameVersion">1.3</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 
