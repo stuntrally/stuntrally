@@ -217,11 +217,13 @@ void App::LoadScene()  // 3
 	if (pSet->check_arrow)  {
 		if (!arrowNode) arrowNode = mSceneMgr->getRootSceneNode()->createChildSceneNode();
 		Ogre::Entity* arrowEnt = mSceneMgr->createEntity("CheckpointArrow", "arrow.mesh");
-		arrowEnt->setRenderQueueGroup(RQG_Weather);
+		arrowEnt->setRenderQueueGroup(RQG_Hud3);
 		arrowEnt->setCastShadows(false);
 		arrowRotNode = arrowNode->createChildSceneNode();
 		arrowRotNode->attachObject(arrowEnt);
-		arrowRotNode->setScale(0.5, 0.5, 0.5);  }
+		arrowRotNode->setScale(0.3, 0.3, 0.3);
+		arrowEnt->setVisibilityFlags(RV_Car); // hide in reflection
+	}
 }
 
 void App::LoadCar()  // 4

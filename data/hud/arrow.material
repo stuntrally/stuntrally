@@ -1,17 +1,64 @@
+vertex_program arrow_vs cg
+{
+	source arrow.cg
+	entry_point arrow_vp
+	profiles vs_2_0 arbvp1
+	default_params
+	{
+		param_named_auto ModelViewProj worldviewproj_matrix
+		param_named_auto ModelView world_matrix
+		param_named_auto eyePosition camera_position
+	}
+}
+fragment_program arrow_ps cg
+{
+	source arrow.cg
+	entry_point arrow_fp
+	profiles ps_2_0 arbfp1
+	default_params
+	{
+		param_named color1 float3 0.0 1.0 0.0
+		param_named color2 float3 0.0 0.4 0.0
+		param_named fresnelBias float 0
+		param_named fresnelScale float 0.5
+		param_named fresnelPower float 1
+	}
+}
+
 material Arrow
 {
-   receive_shadows off
-   technique
-   {
-      pass 0
-      {
-         colour_write off
-         depth_write on
-         depth_func always_pass
-      }
-      pass 1
-      {
-         colour_write on
-      }
-   }
+	receive_shadows off
+	technique
+	{
+		pass 0
+		{
+			colour_write off
+			depth_write on
+			depth_func always_pass
+		}
+		pass 1
+		{
+			colour_write on
+			
+			// transparent...
+			//depth_write off
+			//scene_blend add // scene_blend modulate
+			
+			vertex_program_ref arrow_vs {}
+			fragment_program_ref arrow_ps {}
+		}
+	}
+	technique
+	{
+		pass 0
+		{
+			colour_write off
+			depth_write on
+			depth_func always_pass
+		}
+		pass 1
+		{
+			colour_write on
+		}
+	}
 }

@@ -403,7 +403,7 @@ void App::newPoses()
 			if (pSet->check_arrow && arrowNode && road && road->mChks.size()>0)
 			{
 				// get vector from camera to checkpoint
-				const Ogre::Vector3& chkPos = road->mChks[carM->iNextChk].pos;
+				const Ogre::Vector3& chkPos = road->mChks[std::max(0, std::min((int)road->mChks.size()-1, carM->iNextChk))].pos;
 				const Ogre::Vector3& playerPos = carM->fCam->mCamera->getPosition();
 				Ogre::Vector3 dir = chkPos - playerPos;
 				dir[1] = 0; // only x and z rotation
