@@ -87,7 +87,12 @@ bool BaseApp::keyPressed( const OIS::KeyEvent &arg )
 		{	mbWireFrame = !mbWireFrame;
 			///  Set for all cameras
 			PolygonMode mode = mbWireFrame ? PM_WIREFRAME : PM_SOLID;
-
+			
+			if (mode == PM_WIREFRAME) // disable effects
+				refreshCompositor(true);
+			else if (mode == PM_SOLID)
+				refreshCompositor();
+				
 			if (mSplitMgr)
 			for (std::list<Camera*>::iterator it=mSplitMgr->mCameras.begin(); it!=mSplitMgr->mCameras.end(); it++)
 				(*it)->setPolygonMode(mode);

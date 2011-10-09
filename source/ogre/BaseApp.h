@@ -61,7 +61,7 @@ protected:
 	virtual void createScene() = 0;
 	virtual void destroyScene();
 
-	void createCamera(), createFrameListener(), createViewports(), refreshCompositor();
+	void createCamera(), createFrameListener(), createViewports(), refreshCompositor(bool disableAll=false);
 	void setupResources(), createResourceListener(), loadResources();
 	void LoadingOn(), LoadingOff();
 

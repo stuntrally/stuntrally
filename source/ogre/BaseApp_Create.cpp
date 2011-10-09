@@ -115,7 +115,7 @@ void BaseApp::createViewports()
 
 ///  Compositor
 //-------------------------------------------------------------------------------------
-void BaseApp::refreshCompositor()
+void BaseApp::refreshCompositor(bool disableAll)
 {
 	for (std::list<Viewport*>::iterator it=mSplitMgr->mViewports.begin(); it!=mSplitMgr->mViewports.end(); it++)
 	{
@@ -124,7 +124,7 @@ void BaseApp::refreshCompositor()
 		CompositorManager::getSingleton().setCompositorEnabled((*it), "Motion Blur", false);
 	}
 
-	if (!pSet->all_effects)
+	if (!pSet->all_effects || disableAll)
 		return;
 	
 	//  Set Bloom params (intensity, orig weight)
