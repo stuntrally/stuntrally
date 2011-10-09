@@ -343,21 +343,21 @@ void App::UpdateInputBars()
 
 		//*  one axis info
 		bool oneAxis = false;  // when brake not bound
-		OISB::AnalogAxisAction* act = static_cast<OISB::AnalogAxisAction*>(
-			OISB::System::getSingleton().lookupAction("Player" + toStr(sch) + "/Brake"));
-		if (act)  {
-			OISB::Binding* binding = act->mBindings.front();
-			if (binding)
-				oneAxis = binding->getNumBindables() == 0;  }
 		OISB::Real valBr = 0.f;  // brake val from throttle
-		if (oneAxis)
-		{
+		if (sch > 0)  {
 			OISB::AnalogAxisAction* act = static_cast<OISB::AnalogAxisAction*>(
-				OISB::System::getSingleton().lookupAction("Player" + toStr(sch) + "/Throttle"));
-			if (act)
-			{	valBr = act->getAbsoluteValue();
-				valBr = valBr < 0.f ? -valBr : 0.f;  }
-		}//*
+				OISB::System::getSingleton().lookupAction("Player" + toStr(sch) + "/Brake"));
+			if (act)  {
+				OISB::Binding* binding = act->mBindings.front();
+				if (binding)
+					oneAxis = binding->getNumBindables() == 0;  }
+			if (oneAxis)
+			{	OISB::AnalogAxisAction* act = static_cast<OISB::AnalogAxisAction*>(
+					OISB::System::getSingleton().lookupAction("Player" + toStr(sch) + "/Throttle"));
+				if (act)
+				{	valBr = act->getAbsoluteValue();
+					valBr = valBr < 0.f ? -valBr : 0.f;  }
+		}  }//*
 		
 		//  Action
 		for (std::map<OISB::String, OISB::Action*>::const_iterator
