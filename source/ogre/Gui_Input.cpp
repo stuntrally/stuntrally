@@ -342,6 +342,24 @@ void App::UpdateInputBars()
 		const OISB::String& sPlr = (*it).first;
 		if (inputTab->getIndexSelected() != sch)  continue;
 
+		//*  one axis info
+		bool oneAxis = false;  // when brake not bound
+		OISB::AnalogAxisAction* act = static_cast<OISB::AnalogAxisAction*>(
+			OISB::System::getSingleton().lookupAction("Player" + toStr(sch) + "/Brake"));
+		if (act)  {
+			OISB::Binding* binding = act->mBindings.front();
+			if (binding)
+				oneAxis = binding->getNumBindables() == 0;  }
+		OISB::Real valBr = 0.f;  // brake val from throttle
+		if (oneAxis)
+		{
+			OISB::AnalogAxisAction* act = static_cast<OISB::AnalogAxisAction*>(
+				OISB::System::getSingleton().lookupAction("Player" + toStr(sch) + "/Throttle"));
+			if (act)
+			{	valBr = act->getAbsoluteValue();
+				valBr = valBr < 0.f ? -valBr : 0.f;  }
+		}//*
+		
 		//  Action
 		for (std::map<OISB::String, OISB::Action*>::const_iterator
 			ait = (*it).second->mActions.begin();
@@ -358,6 +376,9 @@ void App::UpdateInputBars()
 				if (ac)  val = ac->getAbsoluteValue();
 			}else
 				val = act->isActive() ? 1.f : 0.f;
+				
+			if (oneAxis && act->getName() == "Throttle")  if (val < 0.f)  val = 0.f;
+			if (oneAxis && act->getName() == "Brake")  val = valBr;
 				
 			std::string sBar = "bar_" + sAct + "_" + sPlr;
 			StaticImagePtr bar = (StaticImagePtr)inputTab->findWidget(sBar);
