@@ -284,7 +284,7 @@ void App::UpdateHUD(int carId, CarModel* pCarM, CAR* pCar, float time, Viewport*
 	// motion blur slider: 1.0 = peak at 100 km/h
 	// 					   0.0 = peak at 400 km/h
 	//                  -> 0.5 = peak at 250 km/h
-	// lerp(100, 400, motionBlurIntensity)
+	// lerp(100, 400, 1-motionBlurIntensity)
 	float peakSpeed = 100 + (1-pSet->motionblurintensity) * (400-100);
 	float motionBlurAmount = std::abs(speed) / pow((peakSpeed/3.6f), 2);
 	
