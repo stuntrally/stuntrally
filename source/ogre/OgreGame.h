@@ -18,6 +18,7 @@ namespace Ogre {  class SceneNode;  class Root;  class SceneManager;  class Rend
 namespace Forests {  class PagedGeometry;  }
 namespace BtOgre  {  class DebugDrawer;  }
 namespace MyGUI  {  class MultiList2;  }
+namespace OISB   {  class AnalogAxisAction;  }
 
 
 class App : public BaseApp //, public RenderTargetListener
@@ -202,14 +203,15 @@ protected:
 	///  input tab
 	void InitInputGui(), inputBindBtnClicked(WP);
 	void InputBind(int key, int button=-1, int axis=-1);
-	void cmbJoystick(WP, size_t val), UpdateInputBars();
+	void cmbJoystick(WP, size_t val), UpdateInputBars(), inputDetailBtn(WP);
 	Ogre::String GetInputName(const Ogre::String& sName);
 	//  joy events
 	virtual bool axisMoved( const OIS::JoyStickEvent &e, int axis );
     virtual bool buttonPressed( const OIS::JoyStickEvent &e, int button );
     virtual bool buttonReleased( const OIS::JoyStickEvent &e, int button );
-	MyGUI::StaticTextPtr txtJAxis, txtJBtn;
-	int lastAxis, axisCnt;  std::string joyName;
+	MyGUI::StaticTextPtr txtJAxis, txtJBtn, txtInpDetail;
+	int lastAxis, axisCnt;  std::string joyName;  class OISB::AnalogAxisAction* actDetail;
+	MyGUI::EditPtr edInputMin, edInputMax, edInputMul;  void editInput(MyGUI::EditPtr);
 
 
 	//  sliders

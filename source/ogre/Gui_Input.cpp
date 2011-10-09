@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "Defines.h"
+#include "common/Gui_Def.h"
 #include "../vdrift/game.h"
 #include "OgreGame.h"
 #include <OIS/OIS.h>
@@ -55,6 +56,10 @@ void App::InitInputGui()
 	//  labels that print the last pressed joystick button / last moved axis
 	txtJAxis = (StaticTextPtr)inpTabAll->findWidget("axisOutput");
 	txtJBtn = (StaticTextPtr)inpTabAll->findWidget("buttonOutput");
+	txtInpDetail = (StaticTextPtr)inpTabAll->findWidget("InputDetail");
+
+	// details edits
+	Ed(InputMin, editInput);  Ed(InputMax, editInput);  Ed(InputMul, editInput);
 
 
 	///  insert a tab item for every schema (4players,global)
@@ -68,9 +73,13 @@ void App::InitInputGui()
 			tabitem->createWidget<StaticText>("StaticText", x,y, w,h, Align::Relative, name);  \
 			if (txt)  txt->setCaption(text);  }
 		
+		//  button size and columns positon
+		const int sx = 130, sy = 24, x0 = 20, x1 = 140, x2 = 285, x3 = 430;
+
 		///  Headers (Key 1, Key 2)
-		CreateText(200,10, 200,24, "staticText_" + sPlr, TR("#88AAFF#{InputKey1}"));
-		//CreateText(340,10, 200,24, "staticText_" + sPlr, TR("#88AAFF#{InputKey2}"));
+		CreateText(x0,12, sx,sy, "hdrTxt1_" + sPlr, TR("#90B0FF#{InputHeaderTxt1}"));
+		CreateText(x1,12, sx,sy, "hdrTxt2_" + sPlr, TR("#A0C0FF#{InputHeaderTxt2}"));
+		CreateText(x2,12, sx,sy, "hdrTxt3_" + sPlr, TR("#90B0FF#{InputHeaderTxt3}"));
 		
 		///  ------ custom action sorting ----------------
 		int i = 0, y = 0, ya = 26 / 2, yc1=0,yc2=0,yc3=0;
@@ -110,8 +119,6 @@ void App::InitInputGui()
 			const OISB::String& sAct = (*ait).first;
 			OISB::Action* act = (*ait).second;
 
-			//  button size and columns positon
-			const int sx = 130, sy = 24, x0 = 20, x1 = 160, x2 = 300;
 			const String& name = (*ait).second->getName();
 			y = 40 + ya * yRow[name];
 
@@ -121,38 +128,40 @@ void App::InitInputGui()
 				"staticText_" + sAct );
 			desc->setCaption( TR("#{InputMap" + name + "}") );
 		
-			///  Keyboard binds  --------------------------------
+			//  Keyboard binds  --------------------------------
 			//  get information about binds from OISB and set variables how the rebind buttons should be created
 			std::string skey1 = TR("#{InputKeyUnassigned}");
 			std::string skey2 = TR("#{InputKeyUnassigned}");
 			
 			//  bound key(s)
+			bool analog = act->getActionType() == OISB::AT_ANALOG_AXIS;
 			bool button2 = act->getName() == "Steering" || act->getName() == "Flip";  // full
-			if (act->mBindings.size() > 0 && act->mBindings.front()->getNumBindables() > 0 && act->mBindings.front()->getBindable(0) && act->mBindings.front()->getBindable(0) != (OISB::Bindable*)1)
-			if (act->getActionType() == OISB::AT_TRIGGER)
-			{
-				skey1 = GetInputName(act->mBindings.front()->getBindable(0)->getBindableName());
-			}
-			else if (act->getActionType() == OISB::AT_ANALOG_AXIS)
-			{
-				//  look for increase/decrease binds
-				OISB::Bindable* increase = NULL, *decrease = NULL, *none = NULL;
-				for (std::vector<std::pair<String, OISB::Bindable*> >::const_iterator
-					bnit = act->mBindings.front()->mBindables.begin();
-					bnit != act->mBindings.front()->mBindables.end(); bnit++)
+			if (act->mBindings.size() > 0 && act->mBindings.front()->getNumBindables() > 0 &&
+				act->mBindings.front()->getBindable(0) && act->mBindings.front()->getBindable(0) != (OISB::Bindable*)1)
+				if (act->getActionType() == OISB::AT_TRIGGER)
 				{
-					if ((*bnit).first == "inc")			increase = (*bnit).second;
-					else if ((*bnit).first == "dec")	decrease = (*bnit).second;
-					else none = (*bnit).second;
+					skey1 = GetInputName(act->mBindings.front()->getBindable(0)->getBindableName());
 				}
-				if (increase)  skey1 = GetInputName(increase->getBindableName());
-				if (decrease)  skey2 = GetInputName(decrease->getBindableName());
-				if (none)
-					(button2 ? skey2 : skey1) = GetInputName(none->getBindableName());
-			}
+				else if (analog)
+				{
+					//  look for increase/decrease binds
+					OISB::Bindable* increase = NULL, *decrease = NULL, *none = NULL;
+					for (std::vector<std::pair<String, OISB::Bindable*> >::const_iterator
+						bnit = act->mBindings.front()->mBindables.begin();
+						bnit != act->mBindings.front()->mBindables.end(); bnit++)
+					{
+						if ((*bnit).first == "inc")			increase = (*bnit).second;
+						else if ((*bnit).first == "dec")	decrease = (*bnit).second;
+						else none = (*bnit).second;
+					}
+					if (increase)  skey1 = GetInputName(increase->getBindableName());
+					if (decrease)  skey2 = GetInputName(decrease->getBindableName());
+					if (none)
+						(button2 ? skey2 : skey1) = GetInputName(none->getBindableName());
+				}
 				
-			//  create buttons  ----------------
-			ButtonPtr btn1 = tabitem->createWidget<Button>("Button", /*button2 ? x2 :*/
+			//  binding buttons  ----------------
+			ButtonPtr btn1 = tabitem->createWidget<Button>("Button",
 				x1, button2 ? (y + ya*2) : y, sx, sy,  Align::Relative,
 				"inputbutton_" + sAct + "_" + sPlr + "_1");
 			btn1->setCaption( skey1 );
@@ -166,23 +175,32 @@ void App::InitInputGui()
 				btn2->eventMouseButtonClick = MyGUI::newDelegate(this, &App::inputBindBtnClicked);
 			}
 			
-			//  create bars
+			//  value bar  --------------
 			StaticImagePtr bar = tabitem->createWidget<StaticImage>("StaticImage",
 				x2 + (button2 ? 0 : 64), y+4, button2 ? 128 : 64, 16, MyGUI::Align::Relative,
 				"bar_" + sAct + "_" + sPlr);
 			bar->setImageTexture("input_bar.png");  bar->setImageCoord(IntCoord(0,0,128,16));
+
+			//  detail btn  ----------------
+			if (analog)
+			{	btn1 = tabitem->createWidget<Button>("Button",
+					x3, y, 32, sy,  Align::Relative,
+					"inputdetail_" + sAct + "_" + sPlr + "_1");
+				btn1->setCaption(">");
+				btn1->setColour(Colour(0.6f,0.8f,1.0f));
+				btn1->eventMouseButtonClick = newDelegate(this, &App::inputDetailBtn);
+			}
 		}
 	}
 	/**/mWndTabs->setIndexSelected(7);  ///remove
 	/**/inputTab->setIndexSelected(1);
-	//toggleGui();
 }
 
 
 ///  Bind Input
 //----------------------------------------------------------------------------------------------------------------------------------
 
-void App::inputBindBtnClicked(Widget* sender)
+void App::inputBindBtnClicked(WP sender)
 {
 	sender->setCaption( TR("#{InputAssignKey}"));
 	// activate key capture mode
@@ -203,11 +221,10 @@ void App::InputBind(int key, int button, int axis)
 	
 	//  upd key name on button
 	bool isKey = key > -1, isAxis = axis > -1;
-	String joy = joyName;  // from joy combo
 	String skey0 = isKey ? "Keyboard/" + toStr(key) : 
-				isAxis ? joy + "/Axis " + toStr(axis) :
-						joy + "/Button " + toStr(button);
-	pressedKeySender->setCaption(GetInputName(skey0));
+				isAxis ? joyName + "/Axis " + toStr(axis) :
+						joyName + "/Button " + toStr(button);
+	pressedKeySender->setCaption(cancel ? TR("#{InputKeyUnassigned}") : GetInputName(skey0));
 
 	
 	//  get action/schema/index from widget name
@@ -252,6 +269,7 @@ void App::InputBind(int key, int button, int axis)
 	//  clear, unbind
 	for (int i = num-1; i >= 0; --i)
 		binding->unbind(binding->getBindable(i));
+	if (cancel)  return;  //-
 
 	//  change
 	String skey = cancel ? "" : skey0;
@@ -272,9 +290,41 @@ void App::InputBind(int key, int button, int axis)
 	else  // axis
 	{
 		binding->bind(skey,"");
-		//todo  detail panel: edits or sld for inversemul, minval, maxval, sensivity-
-		//start ok when joy wasnt detected but is in xml, save it too
+		//todo:
+		//?start ok when joy wasnt detected but is in xml, save it too
+		///one axis for throttle and brake  when nothing in brake and axis in throttle
+		//combo for quick presets: half axis, half axis inversed, full axis
 	}
+}
+
+
+///  edit details
+//-------------------------------------------------------------------------------
+void App::inputDetailBtn(WP sender)
+{
+	Ogre::vector<String>::type ss = StringUtil::split(sender->getName(), "_");
+	std::string actionName = ss[1], schemaName = ss[2], index = ss[3];
+	if (txtInpDetail)  txtInpDetail->setCaption(TR("#{InputDetailsFor}")+": "+schemaName+" " +actionName);
+
+	OISB::ActionSchema* schema = OISB::System::getSingleton().mActionSchemas[schemaName];  if (!schema)  return;//
+	OISB::Action* action = schema->mActions[actionName];  if (!action)  return;//
+	OISB::AnalogAxisAction* act = (OISB::AnalogAxisAction*)action;  if (!act)  return;//
+	actDetail = act;
+
+	if (edInputMin)  edInputMin->setCaption(toStr(act->getProperty<OISB::Real>("MinValue")));
+	if (edInputMax)  edInputMax->setCaption(toStr(act->getProperty<OISB::Real>("MaxValue")));
+	if (edInputMul)  edInputMul->setCaption(toStr(act->getProperty<OISB::Real>("InverseMul")));
+}
+
+void App::editInput(MyGUI::EditPtr ed)
+{
+	if (!actDetail)  return;
+	Real vMin = s2r(edInputMin->getCaption());
+	Real vMax = s2r(edInputMax->getCaption());
+	Real vMul = s2r(edInputMul->getCaption());
+	actDetail->setProperty("MinValue",vMin);
+	actDetail->setProperty("MaxValue",vMax);
+	actDetail->setProperty("InverseMul",vMul);
 }
 
 

@@ -244,13 +244,10 @@
 	
 	<!--  Input  -->
 	<Tag name="Input">Input</Tag>
-	<Tag name="InputKey1">Key 1</Tag>
-	<Tag name="InputKey2">Key 2</Tag>
 	<Tag name="InputNoJS">No joystick</Tag>
-	<Tag name="InputKeyNoButton">No button</Tag>
-	<Tag name="InputKeyNoAxis">No axis</Tag>
 	<Tag name="InputKeyUnassigned">-- None --</Tag>
 	<Tag name="InputAssignKey">&lt;Press a key&gt;</Tag>
+
 	<Tag name="InputMoveAxisTip">Move an axis to see its number</Tag>
 	<Tag name="InputPressButtonTip">Press a button to see its number</Tag>
 
@@ -259,6 +256,15 @@
 	<Tag name="InputMapPlayer3">Player 3</Tag>
 	<Tag name="InputMapPlayer4">Player 4</Tag>
 	<Tag name="InputMapGeneral">General</Tag>
+
+	<Tag name="InputHeaderTxt1">Action</Tag>
+	<Tag name="InputHeaderTxt2">Binding</Tag>
+	<Tag name="InputHeaderTxt3">Value</Tag>
+
+	<Tag name="InputDetailsFor">Details for</Tag>
+	<Tag name="InputMinVal">Min. Value</Tag>
+	<Tag name="InputMaxVal">Max. Value</Tag>
+	<Tag name="InputMultipler">Multipler</Tag>
 
 	<Tag name="InputMapThrottle">Throttle</Tag>
 	<Tag name="InputMapBrake">Brake</Tag>

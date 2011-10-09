@@ -4,6 +4,7 @@
 #include "../ogre/OgreGame.h"
 #include "../oisb/OISBSystem.h"
 #include "../oisb/OISBAction.h"
+#include "../oisb/OISBBinding.h"
 #include "../oisb/OISBAnalogAxisAction.h"
 #include "../oisb/OISBAnalogAxisState.h"
 
@@ -18,11 +19,13 @@ OISB::Real analogAction(std::string name, bool full=false)
 	OISB::Real val = act->getAbsoluteValue();
 	return full ? std::max(-1.f, std::min(1.f, val)) : std::max(0.f, std::min(1.f, val));
 }
+
 bool action(const std::string& name)
 {
 	const OISB::Action* act = OISB::System::getSingleton().lookupAction(name);
 	return act ? act->isActive() : false;
 }
+
 
 ///  Process Input
 const std::vector <float> & CARCONTROLMAP_LOCAL::ProcessInput(int player)
@@ -32,8 +35,16 @@ const std::vector <float> & CARCONTROLMAP_LOCAL::ProcessInput(int player)
 	lastinputs = inputs;
 	const std::string sPlr = "Player" + toStr(player+1) + "/";
 
-	//  throttle,brake
-if (0/*bFromOneAxis*/)
+	//  throttle, brake
+	bool oneAxis = false;  // when brake not bound
+	OISB::AnalogAxisAction* act = static_cast<OISB::AnalogAxisAction*>(
+		OISB::System::getSingleton().lookupAction(sPlr+"Brake"));
+	if (act)  {
+		OISB::Binding* binding = act->mBindings.front();
+		if (binding)
+			oneAxis = binding->getNumBindables() == 0;  }
+
+if (oneAxis)
 {
 	const float val = analogAction(sPlr+"Throttle", true);
 	inputs[CARINPUT::THROTTLE] = val > 0.f ?  val : 0.f;
