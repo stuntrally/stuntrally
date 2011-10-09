@@ -275,14 +275,44 @@ void App::UpdateHUD(int carId, CarModel* pCarM, CAR* pCar, float time, Viewport*
     float vel = fr.vel * (pSet->show_mph ? 2.23693629f : 3.6f);
 	UpdHUDRot(carId, pCarM, vel);
 
-	//  Set motion blur intensity for this viewport, depending on car's linear velocity
-	//!todo take into account fps (with higher fps, motion blur is less noticable)
-	//!todo the motion blur slider in gui doesnt have an effect now. it should probably be removed.
+	///   Set motion blur intensity for this viewport, depending on car's linear velocity
+	//!todo the motion blur slider in gui doesnt have an effect now
+	
 	// use velocity squared to achieve an exponential motion blur - and its faster too - wow :)
 	float speed = pCar->GetVelocity().MagnitudeSquared();
-	// speed/4000.0f seems a nice value, but i just guessed it... probably need more testing
+	
+	// peak at 250 kmh (=69 m/s), 69² = 4761
+	float motionBlurAmount = std::abs(speed)/4761.0f;
+	
+	// higher fps = less perceived motion blur
+	// time a frame will be still visible on screen:
+	// each frame, 1-motionBlurAmount of the original image is lost
+	// example (motionBlurAmount = 0.7):
+	// frame 1: full img
+	// frame 2: 0.7  * image
+	// frame 3: 0.7² * image
+	// frame 4: 0.7³ * image
+	// portion of image visible after 'n' frames:
+	// pow(motionBlurAmount, n);
+	
+	// example 1: 60 fps
+	// 0.7³ image after 4 frames: 0.066 sec
+	// example 2: 120 fps
+	// 0.7³ image after 4 frames: 0.033 sec
+	
+	// now: need to achieve *same* time for both fps values
+	// to do this, adjust motionBlurAmount
+	// (1.0/fps) * pow(motionBlurAmount, n) == (1.0/fps2) * pow(motionBlurAmount2, n)
+	// set n=4
+	// motionBlurAmount_new = sqrt(sqrt((motionBlurAmount^4 * fpsReal/desiredFps))
+	motionBlurAmount = sqrt(sqrt( pow(motionBlurAmount, 4) * ((1.0f/time) / 120.0f) ));
+		
 	// clamp to 0.9f
-	motionBlurIntensity = std::min( std::abs(speed)/4000.0f, 0.9f );
+	motionBlurAmount = std::min(motionBlurAmount, 0.9f);
+	
+	motionBlurIntensity = motionBlurAmount;
+	/// -----------------------------------------------------------------------------------
+
 
 	//  gear, vel texts  -----------------------------
 	if (hudGear && hudVel && pCar)
