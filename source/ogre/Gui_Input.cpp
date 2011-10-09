@@ -192,8 +192,9 @@ void App::InitInputGui()
 			}
 		}
 	}
-	/**/mWndTabs->setIndexSelected(7);  ///remove
-	/**/inputTab->setIndexSelected(1);
+	/**  //dbg start on input  ///remove
+	mWndTabs->setIndexSelected(7);
+	inputTab->setIndexSelected(1);  /**/
 }
 
 
@@ -290,9 +291,7 @@ void App::InputBind(int key, int button, int axis)
 	else  // axis
 	{
 		binding->bind(skey,"");
-		//todo:
-		//?start ok when joy wasnt detected but is in xml, save it too
-		///one axis for throttle and brake  when nothing in brake and axis in throttle
+		//todo: ?start ok when joy wasnt detected but is in xml, save it too
 		//combo for quick presets: half axis, half axis inversed, full axis
 	}
 }
