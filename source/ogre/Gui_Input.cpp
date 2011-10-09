@@ -82,7 +82,7 @@ void App::InitInputGui()
 		CreateText(x2,12, sx,sy, "hdrTxt3_" + sPlr, TR("#90B0FF#{InputHeaderTxt3}"));
 		
 		///  ------ custom action sorting ----------------
-		int i = 0, y = 0, ya = 26 / 2, yc1=0,yc2=0,yc3=0;
+		int i = 0, y = 0, ya = 26 / 2, yc=0;
 		std::map <std::string, int> yRow;
 		// player
 		yRow["Throttle"] = y;	y+=2;	yRow["Brake"] = y;		y+=2;
@@ -95,20 +95,20 @@ void App::InitInputGui()
 		y = 0;
 		yRow["ShowOptions"] = y; y+=2+1;
 		yRow["PrevTab"] = y;     y+=2;	yRow["NextTab"] = y;    y+=2+1;
-		yRow["RestartGame"] = y; y+=2+1;  yc1 = 40 + ya * y;
-		yRow["PrevCamera"] = y;  y+=2;    yc2 = 40 + ya * y;
-		yRow["NextCamera"] = y;  y+=2+1;  yc3 = 40 + ya * y;
+		yRow["RestartGame"] = y; y+=2+1;
+		yRow["PrevCamera"] = y;  y+=2;
+		yRow["NextCamera"] = y;  y+=2+1;  yc = 40 + ya * y;
 
 		bool playerTab = Ogre::StringUtil::startsWith( sPlr, "player");
 		if (!playerTab)
 		{	//  camera infos
-			CreateText(460, yc1, 280, 24, "txtcam1", TR("#C0D8F0#{InputCameraTxt1}"));
-			CreateText(460, yc2, 280, 24, "txtcam1", TR("#C0D8F0#{InputCameraTxt2}"));
+			CreateText(40, yc+0*ya, 280, 24, "txtcam1", TR("#C0D8F0#{InputCameraTxt1}"));
+			CreateText(40, yc+2*ya, 280, 24, "txtcam1", TR("#C0D8F0#{InputCameraTxt2}"));
 			//  replay controls info text
-			CreateText(20, yc3+1*ya, 500, 24, "txtrpl1", TR("#A0D8FF#{InputRplCtrl0}"));
-			CreateText(40, yc3+3*ya, 500, 24, "txtrpl2", TR("#90C0FF#{InputRplCtrl1}"));
-			CreateText(40, yc3+5*ya, 500, 24, "txtrpl3", TR("#90C0FF#{InputRplCtrl2}"));
-			CreateText(40, yc3+7*ya, 500, 24, "txtrpl4", TR("#90C0FF#{InputRplCtrl3}"));
+			CreateText(20, yc+5*ya, 500, 24, "txtrpl1", TR("#A0D8FF#{InputRplCtrl0}"));
+			CreateText(40, yc+7*ya, 500, 24, "txtrpl2", TR("#90C0FF#{InputRplCtrl1}"));
+			CreateText(40, yc+9*ya, 500, 24, "txtrpl3", TR("#90C0FF#{InputRplCtrl2}"));
+			CreateText(40, yc+11*ya,500, 24, "txtrpl4", TR("#90C0FF#{InputRplCtrl3}"));
 		}
 		
 		///  Actions  ------------------------------------------------
