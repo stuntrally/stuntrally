@@ -276,44 +276,47 @@ void App::UpdateHUD(int carId, CarModel* pCarM, CAR* pCar, float time, Viewport*
 	UpdHUDRot(carId, pCarM, vel);
 
 	///   Set motion blur intensity for this viewport, depending on car's linear velocity
-	// use velocity squared to achieve an exponential motion blur - and its faster too - wow :)
-	float speed = pCar->GetVelocity().MagnitudeSquared();
-	
-	// peak at 250 kmh (=69 m/s), 69² = 4761
-	// motion blur slider: 1.0 = peak at 100 km/h
-	// 					   0.0 = peak at 400 km/h
-	//                  -> 0.5 = peak at 250 km/h
-	// lerp(100, 400, 1-motionBlurIntensity)
-	float peakSpeed = 100 + (1-pSet->motionblurintensity) * (400-100);
-	float motionBlurAmount = std::abs(speed) / pow((peakSpeed/3.6f), 2);
-	
-	// higher fps = less perceived motion blur
-	// time a frame will be still visible on screen:
-	// each frame, 1-motionBlurAmount of the original image is lost
-	// example (motionBlurAmount = 0.7):
-	// frame 1: full img
-	// frame 2: 0.7  * image
-	// frame 3: 0.7² * image
-	// frame 4: 0.7³ * image
-	// portion of image visible after 'n' frames:
-	// pow(motionBlurAmount, n);
-	
-	// example 1: 60 fps
-	// 0.7³ image after 4 frames: 0.066 sec
-	// example 2: 120 fps
-	// 0.7³ image after 4 frames: 0.033 sec
-	
-	// now: need to achieve *same* time for both fps values
-	// to do this, adjust motionBlurAmount
-	// (1.0/fps) * pow(motionBlurAmount, n) == (1.0/fps2) * pow(motionBlurAmount2, n)
-	// set n=4
-	// motionBlurAmount_new = sqrt(sqrt((motionBlurAmount^4 * fpsReal/desiredFps))
-	motionBlurAmount = sqrt(sqrt( pow(motionBlurAmount, 4) * ((1.0f/time) / 120.0f) ));
+	if (pSet->motionblur)
+	{
+		// use velocity squared to achieve an exponential motion blur - and its faster too - wow :)
+		float speed = pCar->GetVelocity().MagnitudeSquared();
 		
-	// clamp to 0.9f
-	motionBlurAmount = std::min(motionBlurAmount, 0.9f);
-	
-	motionBlurIntensity = motionBlurAmount;
+		// peak at 250 kmh (=69 m/s), 69² = 4761
+		// motion blur slider: 1.0 = peak at 100 km/h
+		// 					   0.0 = peak at 400 km/h
+		//                  -> 0.5 = peak at 250 km/h
+		// lerp(100, 400, 1-motionBlurIntensity)
+		float peakSpeed = 100 + (1-pSet->motionblurintensity) * (400-100);
+		float motionBlurAmount = std::abs(speed) / pow((peakSpeed/3.6f), 2);
+		
+		// higher fps = less perceived motion blur
+		// time a frame will be still visible on screen:
+		// each frame, 1-motionBlurAmount of the original image is lost
+		// example (motionBlurAmount = 0.7):
+		// frame 1: full img
+		// frame 2: 0.7  * image
+		// frame 3: 0.7² * image
+		// frame 4: 0.7³ * image
+		// portion of image visible after 'n' frames:
+		// pow(motionBlurAmount, n);
+		
+		// example 1: 60 fps
+		// 0.7³ image after 4 frames: 0.066 sec
+		// example 2: 120 fps
+		// 0.7³ image after 4 frames: 0.033 sec
+		
+		// now: need to achieve *same* time for both fps values
+		// to do this, adjust motionBlurAmount
+		// (1.0/fps) * pow(motionBlurAmount, n) == (1.0/fps2) * pow(motionBlurAmount2, n)
+		// set n=4
+		// motionBlurAmount_new = sqrt(sqrt((motionBlurAmount^4 * fpsReal/desiredFps))
+		motionBlurAmount = sqrt(sqrt( pow(motionBlurAmount, 4) * ((1.0f/time) / 120.0f) ));
+			
+		// clamp to 0.9f
+		motionBlurAmount = std::min(motionBlurAmount, 0.9f);
+		
+		motionBlurIntensity = motionBlurAmount;
+	}
 	/// -----------------------------------------------------------------------------------
 
 
