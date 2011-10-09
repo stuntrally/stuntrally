@@ -275,6 +275,15 @@ void App::UpdateHUD(int carId, CarModel* pCarM, CAR* pCar, float time, Viewport*
     float vel = fr.vel * (pSet->show_mph ? 2.23693629f : 3.6f);
 	UpdHUDRot(carId, pCarM, vel);
 
+	//  Set motion blur intensity for this viewport, depending on car's linear velocity
+	//!todo take into account fps (with higher fps, motion blur is less noticable)
+	//!todo the motion blur slider in gui doesnt have an effect now. it should probably be removed.
+	// use velocity squared to achieve an exponential motion blur - and its faster too - wow :)
+	float speed = pCar->GetVelocity().MagnitudeSquared();
+	// speed/4000.0f seems a nice value, but i just guessed it... probably need more testing
+	// clamp to 0.9f
+	motionBlurIntensity = std::min( std::abs(speed)/4000.0f, 0.9f );
+
 	//  gear, vel texts  -----------------------------
 	if (hudGear && hudVel && pCar)
 	{

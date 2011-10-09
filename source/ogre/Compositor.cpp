@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "Compositor.h"
+#include "OgreGame.h"
 
 #include <OgreCompositorInstance.h>
 #include <OgreCompositorChain.h>
@@ -8,6 +9,58 @@
 #include <OgreMaterial.h>
 #include <OgreTechnique.h>
 #include <OgreGpuProgramParams.h>
+
+
+class MotionBlurListener : public Ogre::CompositorInstance::Listener
+{
+public:
+	MotionBlurListener(BaseApp* app);
+	virtual ~MotionBlurListener();
+	
+	BaseApp* pApp;
+
+	virtual void notifyMaterialSetup(Ogre::uint32 pass_id, Ogre::MaterialPtr &mat);
+	virtual void notifyMaterialRender(Ogre::uint32 pass_id, Ogre::MaterialPtr &mat);
+};
+
+MotionBlurLogic::MotionBlurLogic(BaseApp* app)
+{
+	pApp = app;
+}
+
+Ogre::CompositorInstance::Listener* MotionBlurLogic::createListener(Ogre::CompositorInstance*  instance)
+{
+	MotionBlurListener* listener = new MotionBlurListener(pApp);
+	return listener;
+}
+
+MotionBlurListener::MotionBlurListener(BaseApp* app) : pApp(0)
+{
+	pApp = app;
+}
+
+MotionBlurListener::~MotionBlurListener()
+{
+}
+
+void MotionBlurListener::notifyMaterialSetup(Ogre::uint32 pass_id, Ogre::MaterialPtr &mat)
+{
+}
+
+void MotionBlurListener::notifyMaterialRender(Ogre::uint32 pass_id, Ogre::MaterialPtr &mat)
+{
+	if (pass_id != 120) return;
+	//Ogre::LogManager::getSingleton().logMessage("notifyMaterialRender");
+	try
+	{	mat->load();
+		Ogre::GpuProgramParametersSharedPtr fparams =
+			mat->getBestTechnique()->getPass(0)->getFragmentProgramParameters();
+		fparams->setNamedConstant("blur", pApp->motionBlurIntensity);
+	}catch(Ogre::Exception& e)
+	{
+		Ogre::LogManager::getSingleton().logMessage("Error setting motion blur");
+	}
+}
 
 
 class HDRListener: public Ogre::CompositorInstance::Listener
@@ -28,7 +81,6 @@ public:
 	virtual void notifyMaterialSetup(Ogre::uint32 pass_id, Ogre::MaterialPtr &mat);
 	virtual void notifyMaterialRender(Ogre::uint32 pass_id, Ogre::MaterialPtr &mat);
 };
-
 
 Ogre::CompositorInstance::Listener* HDRLogic::createListener(Ogre::CompositorInstance* instance)
 {

@@ -35,8 +35,11 @@ public:
 	virtual void setTranslations() = 0;
 	
 	class SplitScreenManager* mSplitMgr;
-	class HDRLogic* mHDRLogic;
+	class HDRLogic* mHDRLogic; class MotionBlurLogic* mMotionBlurLogic;
 	void recreateCompositor();
+	
+	// motion blur
+	float motionBlurIntensity;
 	
 	class SETTINGS* pSet;
 	
@@ -49,7 +52,7 @@ public:
 	Ogre::String StrFromKey(const Ogre::String& skey);  // util for input
 	std::map<OIS::KeyCode, Ogre::String> kcMap;  // key names in english
 	void InitKeyNamesMap();
-
+	
 protected:
 	bool mShowDialog, mShutDown;
 	bool setup(), configure();  void updateStats();

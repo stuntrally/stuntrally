@@ -20,7 +20,6 @@ material Ogre/Compositor/Combine
 
 			fragment_program_ref Ogre/Compositor/Combine_fp
 			{
-				param_named blur float 0.5
 			}
 
 			vertex_program_ref Ogre/Compositor/StdQuad_Cg_vp

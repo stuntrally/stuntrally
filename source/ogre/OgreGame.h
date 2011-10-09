@@ -54,7 +54,7 @@ public:
 	
 	//  trees
 	Forests::PagedGeometry *trees, *grass;
-	
+		
 	void UpdateHUD(int carId, class CarModel* pCarM, class CAR* pCar,
 		float time, Ogre::Viewport* vp=NULL), SizeHUD(bool full, Ogre::Viewport* vp=NULL, int carId=-1);
 	void UpdHUDRot(int carId, CarModel* pCarM, float vel);
