@@ -407,8 +407,9 @@ void App::newPoses()
 				const Ogre::Vector3& playerPos = carM->fCam->mCamera->getPosition();
 				Ogre::Vector3 dir = chkPos - playerPos;
 				dir[1] = 0; // only x and z rotation
-				const Ogre::Quaternion& quat = Vector3::UNIT_Z.getRotationTo(-dir); // convert to quaternion
-				arrowRotNode->setOrientation(quat);
+				Ogre::Quaternion quat = Vector3::UNIT_Z.getRotationTo(-dir); // convert to quaternion
+				const bool valid = !quat.isNaN();
+				if (valid) arrowRotNode->setOrientation(quat);
 			}
 			
 			if (carM->bGetStPos)  // first pos is at start
