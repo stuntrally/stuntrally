@@ -1,10 +1,10 @@
 #include "pch.h"
 #include "Defines.h"
-#include "common/Gui_Def.h"
 #include "../vdrift/game.h"
 #include "OgreGame.h"
 #include <OIS/OIS.h>
 #include "../oisb/OISB.h"
+#include "common/Gui_Def.h"
 
 #include <OgreRoot.h>
 using namespace MyGUI;
@@ -225,7 +225,7 @@ void App::InputBind(int key, int button, int axis)
 	String skey0 = isKey ? "Keyboard/" + toStr(key) : 
 				isAxis ? joyName + "/Axis " + toStr(axis) :
 						joyName + "/Button " + toStr(button);
-	pressedKeySender->setCaption(cancel ? TR("#{InputKeyUnassigned}") : GetInputName(skey0));
+	pressedKeySender->setCaption(cancel ? TR("#{InputKeyUnassigned}") : MyGUI::UString(GetInputName(skey0)));
 
 	
 	//  get action/schema/index from widget name
