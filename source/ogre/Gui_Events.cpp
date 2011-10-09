@@ -478,6 +478,7 @@ bool App::keyPressed( const OIS::KeyEvent &arg )
 		}
 	}
 
+	InputBind(arg.key);
 	
 	if (!BaseApp::keyPressed(arg))
 		return true;

@@ -299,7 +299,7 @@ BaseApp::BaseApp()
 	,mbLeft(0), mbRight(0), mbMiddle(0)
 	,isFocGui(0),isFocRpl(0), mGUI(0), mPlatform(0)
 	,mWndOpts(0), mWndTabs(0), mWndRpl(0)
-	,bSizeHUD(true), bLoading(false), bAssignKey(false), pressedKey(static_cast<OIS::KeyCode>(0) )
+	,bSizeHUD(true), bLoading(false), bAssignKey(false)
 
 	,mDebugOverlay(0), mFpsOverlay(0), mOvrFps(0), mOvrTris(0), mOvrBat(0), mOvrDbg(0)
 	,mbShowCamPos(0), ndSky(0),	mbWireFrame(0)

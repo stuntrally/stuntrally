@@ -46,13 +46,13 @@ namespace OISB
     }
 
     LinearAnalogEmulator::LinearAnalogEmulator():
-        mIncreaseSpeed(1.0f),
-        mDecreaseSpeed(1.0f),
+        mIncreaseSpeed(5.0f),
+        mDecreaseSpeed(5.0f),
 
         mReturnEnabled(true),
         mReturnValue(0.0f),
-        mReturnIncreaseSpeed(1.0f),
-        mReturnDecreaseSpeed(1.0f)
+        mReturnIncreaseSpeed(5.0f),
+        mReturnDecreaseSpeed(5.0f)
     {}
            
     LinearAnalogEmulator::~LinearAnalogEmulator()

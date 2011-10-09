@@ -4,7 +4,6 @@
 #include "../vdrift/game.h"
 #include "../road/Road.h"
 #include "OgreGame.h"
-//#include "../oisb/OISB.h"
 
 #include <OgreRoot.h>
 #include <OgreRenderWindow.h>

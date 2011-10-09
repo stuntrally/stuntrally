@@ -75,9 +75,7 @@ protected:
 	bool mouseReleased(const OIS::MouseEvent &arg, OIS::MouseButtonID id);
 	void windowResized(Ogre::RenderWindow* rw), windowClosed(Ogre::RenderWindow* rw);
 	//  joystick
-    virtual bool povMoved( const OIS::JoyStickEvent &e, int pov ) = 0;
 	virtual bool axisMoved( const OIS::JoyStickEvent &e, int axis ) = 0;
-    virtual bool sliderMoved( const OIS::JoyStickEvent &e, int sliderID ) = 0;
     virtual bool buttonPressed( const OIS::JoyStickEvent &e, int button ) = 0;
     virtual bool buttonReleased( const OIS::JoyStickEvent &e, int button ) = 0;
 
@@ -95,7 +93,6 @@ public:
 	
 	// this is set to true when the user is asked to assign a new key
 	bool bAssignKey;
-	OIS::KeyCode pressedKey;
 	MyGUI::Widget* pressedKeySender;
 protected:
 

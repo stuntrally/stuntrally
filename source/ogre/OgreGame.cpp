@@ -45,6 +45,7 @@ App::App()
 	,blendMtr(0), iBlendMaps(0), dbgdraw(0), noBlendUpd(0)
 	,grass(0), trees(0), road(0), miniC(0)
 	,pr(0),pr2(0), sun(0), carIdWin(-1), iCurCar(0), bUpdCarClr(1)
+	,lastAxis(-1), axisCnt(0), txtJAxis(0), txtJBtn(0)
 {
 	pathTrk[0] = PATHMANAGER::GetTrackPath() + "/";
 	pathTrk[1] = PATHMANAGER::GetTrackPathUser() + "/";
@@ -174,32 +175,4 @@ const String& App::GetGhostFile()
 		+ pSet->track + (pSet->track_user ? "_u" : "") + (pSet->trackreverse ? "_r" : "")
 		+ "_" + pSet->car[0] + ".rpl";
 	return file;
-}
-
-/// joy events
-bool App::povMoved( const OIS::JoyStickEvent &e, int pov )
-{
-	return true;
-}
-bool App::axisMoved( const OIS::JoyStickEvent &e, int axis )
-{
-	for (int i=1; i<5; i++)
-		mGUI->findWidget<MyGUI::StaticText>("axisOutput_Player" + toStr(i))->setCaption("Moved axis: " + toStr(axis));
-	return true;
-}
-bool App::sliderMoved( const OIS::JoyStickEvent &e, int sliderID )
-{
-	return true;
-}
-bool App::buttonPressed( const OIS::JoyStickEvent &e, int button )
-{
-	for (int i=1; i<5; i++)
-		mGUI->findWidget<MyGUI::StaticText>("buttonOutput_Player" + toStr(i))->setCaption("Pressed button: " + toStr(button));
-	return true;
-}
-bool App::buttonReleased( const OIS::JoyStickEvent &e, int button )
-{
-	for (int i=1; i<5; i++)
-		mGUI->findWidget<MyGUI::StaticText>("buttonOutput_Player" + toStr(i))->setCaption("Released button: " + toStr(button));
-	return true;
 }

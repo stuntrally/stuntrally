@@ -133,14 +133,8 @@ protected:
 		
 	void changeShadows(), UpdPSSMMaterials(), setMtrSplits(Ogre::String sMtrName);
 	Ogre::Vector4 splitPoints;  Ogre::ShadowCameraSetupPtr mPSSMSetup;
+	void recreateReflections();  // call after refl_mode changed
 
-
-	/// joy events
-    virtual bool povMoved( const OIS::JoyStickEvent &e, int pov );
-	virtual bool axisMoved( const OIS::JoyStickEvent &e, int axis );
-    virtual bool sliderMoved( const OIS::JoyStickEvent &e, int sliderID );
-    virtual bool buttonPressed( const OIS::JoyStickEvent &e, int button );
-    virtual bool buttonReleased( const OIS::JoyStickEvent &e, int button );
 
 	//  road
 public:	
@@ -201,15 +195,22 @@ protected:
 	void comboGraphicsAll(MyGUI::ComboBoxPtr cmb, size_t val);
 	///-----------------------------------------
 
-	
 	void toggleGui();
 	void UpdCarClrSld(bool upd=true);  bool bUpdCarClr;
 
-	// input tab
-	void controlBtnClicked(WP), InitInputGui(), UpdateJsButtons();
-	void joystickBindChanged(WP, size_t val);
-	void joystickSelectionChanged(WP, size_t val);
-	void recreateReflections();  // call after refl_mode changed
+
+	///  input tab
+	void InitInputGui(), inputBindBtnClicked(WP);
+	void InputBind(int key, int button=-1, int axis=-1);
+	void cmbJoystick(WP, size_t val), UpdateInputBars();
+	Ogre::String GetInputName(const Ogre::String& sName);
+	//  joy events
+	virtual bool axisMoved( const OIS::JoyStickEvent &e, int axis );
+    virtual bool buttonPressed( const OIS::JoyStickEvent &e, int button );
+    virtual bool buttonReleased( const OIS::JoyStickEvent &e, int button );
+	MyGUI::StaticTextPtr txtJAxis, txtJBtn;
+	int lastAxis, axisCnt;  std::string joyName;
+
 
 	//  sliders
 	SLV(Particles);  SLV(Trails);

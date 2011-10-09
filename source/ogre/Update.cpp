@@ -74,6 +74,9 @@ bool App::frameStart(Real time)
 	}
 	else 
 	{
+		if (isFocGui && mWndTabs->getIndexSelected() == 7)
+			UpdateInputBars();
+		
 		//  keys dn/up - trklist, carlist
 		#define isKey(a)  mKeyboard->isKeyDown(OIS::a)
 		static float dirU = 0.f,dirD = 0.f;

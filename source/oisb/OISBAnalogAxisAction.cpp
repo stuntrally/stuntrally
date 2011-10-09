@@ -298,6 +298,7 @@ namespace OISB
             {
                 if (binding->getNumBindables() > 1)
                 {
+					return false;//-
                     OIS_EXCEPT(OIS::E_General, String("Having multiple states in a binding "
                         "is only allowed for emulation (analog emulator is not set or didn't "
                         "approve of the binding as well!)").c_str());
@@ -309,6 +310,7 @@ namespace OISB
                 State* st = binding->getState(0);
                 if (st->getStateType() != ST_ANALOG_AXIS)
                 {
+					return false;//-
                     OIS_EXCEPT(OIS::E_General, String("There is only one state bound and "
                         "it is not analog axis state!").c_str());
                 }
