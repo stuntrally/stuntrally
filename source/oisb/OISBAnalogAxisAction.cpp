@@ -308,7 +308,7 @@ namespace OISB
 					continue;
 					
                 State* st = binding->getState(0);
-                if (st->getStateType() != ST_ANALOG_AXIS)
+                if (st && st->getStateType() != ST_ANALOG_AXIS)
                 {
 					return false;//-
                     OIS_EXCEPT(OIS::E_General, String("There is only one state bound and "
@@ -316,7 +316,7 @@ namespace OISB
                 }
 
                 AnalogAxisState* state = static_cast<AnalogAxisState*>(st);
-
+				if (state)
                 if (mUseAbsoluteValues)
                 {
                     mRelativeValue = state->getAbsoluteValue() - mAbsoluteValue;
