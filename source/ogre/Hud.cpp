@@ -277,12 +277,16 @@ void App::UpdateHUD(int carId, CarModel* pCarM, CAR* pCar, float time, Viewport*
 
 	///   Set motion blur intensity for this viewport, depending on car's linear velocity
 	//!todo the motion blur slider in gui doesnt have an effect now
-	
 	// use velocity squared to achieve an exponential motion blur - and its faster too - wow :)
 	float speed = pCar->GetVelocity().MagnitudeSquared();
 	
 	// peak at 250 kmh (=69 m/s), 69² = 4761
-	float motionBlurAmount = std::abs(speed)/4761.0f;
+	// motion blur slider: 1.0 = peak at 100 km/h
+	// 					   0.0 = peak at 400 km/h
+	//                  -> 0.5 = peak at 250 km/h
+	// lerp(100, 400, motionBlurIntensity)
+	float peakSpeed = 100 + (1-pSet->motionblurintensity) * (400-100);
+	float motionBlurAmount = std::abs(speed) / pow((peakSpeed/3.6f), 2);
 	
 	// higher fps = less perceived motion blur
 	// time a frame will be still visible on screen:

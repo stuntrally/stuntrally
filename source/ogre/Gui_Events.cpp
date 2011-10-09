@@ -345,7 +345,7 @@ void App::slBlurIntens(SL)
 {
 	Real v = val/res;  if (bGI)  pSet->motionblurintensity = v;
 	if (valBlurIntens){	Fmt(s, "%4.2f", v);	valBlurIntens->setCaption(s);  }
-	if (bGI)  refreshCompositor();
+	// if (bGI)  refreshCompositor();   // intensity is set every frame in UpdateHUD
 }
 
 
