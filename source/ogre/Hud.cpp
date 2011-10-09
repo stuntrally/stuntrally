@@ -276,7 +276,6 @@ void App::UpdateHUD(int carId, CarModel* pCarM, CAR* pCar, float time, Viewport*
 	UpdHUDRot(carId, pCarM, vel);
 
 	///   Set motion blur intensity for this viewport, depending on car's linear velocity
-	//!todo the motion blur slider in gui doesnt have an effect now
 	// use velocity squared to achieve an exponential motion blur - and its faster too - wow :)
 	float speed = pCar->GetVelocity().MagnitudeSquared();
 	
