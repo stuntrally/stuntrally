@@ -145,12 +145,12 @@ void BaseApp::refreshCompositor()
 	//{	LogO("!!! Failed to set hdr shader params.");  }
 
 	//  Set Motion Blur intens
-	try
-	{	MaterialPtr blur = MaterialManager::getSingleton().getByName("Ogre/Compositor/Combine");
-		GpuProgramParametersSharedPtr params = blur->getTechnique(0)->getPass(0)->getFragmentProgramParameters();
-		params->setNamedConstant("blur", pSet->motionblurintensity);
-	}catch(...)
-	{	LogO("!!! Failed to set blur shader params.");  }
+	//try
+	//{	MaterialPtr blur = MaterialManager::getSingleton().getByName("Ogre/Compositor/Combine");
+	//	GpuProgramParametersSharedPtr params = blur->getTechnique(0)->getPass(0)->getFragmentProgramParameters();
+	//	params->setNamedConstant("blur", pSet->motionblurintensity);
+	//}catch(...)
+	//{	LogO("!!! Failed to set blur shader params.");  }
 	
 
 	for (std::list<Viewport*>::iterator it=mSplitMgr->mViewports.begin(); it!=mSplitMgr->mViewports.end(); it++)
@@ -181,7 +181,6 @@ void BaseApp::recreateCompositor()
 		ResourceGroupManager::getSingleton().initialiseResourceGroup("Effects");
 	}
 
-
 	// hdr has to be first in the compositor queue
 	if (!mHDRLogic) 
 	{
@@ -196,6 +195,7 @@ void BaseApp::recreateCompositor()
 			"Motion Blur", ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME);
 
 		CompositionTechnique *t = comp3->createTechnique();
+		t->setCompositorLogicName("Motion Blur");
 		{
 			CompositionTechnique::TextureDefinition *def = t->createTextureDefinition("scene");
 			def->width = 0;
@@ -235,6 +235,7 @@ void BaseApp::recreateCompositor()
 			{ CompositionPass *pass = tp->createPass();
 			pass->setType(CompositionPass::PT_RENDERQUAD);
 			pass->setMaterialName("Ogre/Compositor/Combine");
+			pass->setIdentifier(120);
 			pass->setInput(0, "scene");
 			pass->setInput(1, "sum");
 			}
@@ -260,6 +261,14 @@ void BaseApp::recreateCompositor()
 			pass->setInput(0, "sum");
 			}
 		}
+	}
+	
+	if (!mMotionBlurLogic)
+	{
+		LogO("Creating motion blur logic");
+		Ogre::LogManager::getSingleton().logMessage("Creating MotionBlurLogic");
+		mMotionBlurLogic = new MotionBlurLogic(this);
+		CompositorManager::getSingleton().registerCompositorLogic("Motion Blur", mMotionBlurLogic);
 	}
 
 	for (std::list<Viewport*>::iterator it=mSplitMgr->mViewports.begin(); it!=mSplitMgr->mViewports.end(); it++)
@@ -292,7 +301,7 @@ void BaseApp::Run( bool showDialog )
 //  ctor
 //-------------------------------------------------------------------------------------
 BaseApp::BaseApp()
-	:mRoot(0), mSceneMgr(0), mWindow(0), mHDRLogic(0)
+	:mRoot(0), mSceneMgr(0), mWindow(0), mHDRLogic(0), mMotionBlurLogic(0)
 	,mShowDialog(1), mShutDown(false), bWindowResized(0)
 	,mInputManager(0), mMouse(0), mKeyboard(0), mOISBsys(0)
 	,alt(0), ctrl(0), shift(0), roadUpCnt(0)
@@ -303,7 +312,7 @@ BaseApp::BaseApp()
 
 	,mDebugOverlay(0), mFpsOverlay(0), mOvrFps(0), mOvrTris(0), mOvrBat(0), mOvrDbg(0)
 	,mbShowCamPos(0), ndSky(0),	mbWireFrame(0)
-	,iCurCam(0), mSplitMgr(0)
+	,iCurCam(0), mSplitMgr(0), motionBlurIntensity(0.9)
 {
 	mLoadingBar = new LoadingBar();
 }
