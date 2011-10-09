@@ -55,6 +55,9 @@ public:
 	
 	//  trees
 	Forests::PagedGeometry *trees, *grass;
+	
+	Ogre::SceneNode* arrowNode; // checkpoint arrow
+	Ogre::SceneNode* arrowRotNode; // seperate node for rotation
 		
 	void UpdateHUD(int carId, class CarModel* pCarM, class CAR* pCar,
 		float time, Ogre::Viewport* vp=NULL), SizeHUD(bool full, Ogre::Viewport* vp=NULL, int carId=-1);
@@ -95,7 +98,6 @@ protected:
 
 	Ogre::String GetTimeString(float time) const;
 	void CreateHUD(), ShowHUD(bool hideAll=false), UpdMiniTer();
-
 
 	//  create  . . . . . . . . . . . . . . . . . . . . . . . . 
 	Ogre::String resCar, resTrk, resDrv;

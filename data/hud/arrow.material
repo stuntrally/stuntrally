@@ -1,0 +1,17 @@
+material Arrow
+{
+   receive_shadows off
+   technique
+   {
+      pass 0
+      {
+         colour_write off
+         depth_write on
+         depth_func always_pass
+      }
+      pass 1
+      {
+         colour_write on
+      }
+   }
+}

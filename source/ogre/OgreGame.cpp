@@ -23,7 +23,7 @@ App::App()
 	,ovGear(0),ovVel(0), ovAbsTcs(0), ovCarDbg(0),ovCarDbgTxt(0), ovCam(0), ovTimes(0), ovWarnWin(0)
 	// hud
 	,asp(1),  xcRpm(0), ycRpm(0), xcVel(0), ycVel(0)
-	,fMiniX(0),fMiniY(0), scX(1),scY(1), ofsX(0),ofsY(0), minX(0),maxX(0), minY(0),maxY(0)
+	,fMiniX(0),fMiniY(0), scX(1),scY(1), ofsX(0),ofsY(0), minX(0),maxX(0), minY(0),maxY(0), arrowNode(0)
 	// ter
 	,mTerrainGlobals(0), mTerrainGroup(0), mPaging(false)
 	,mTerrainPaging(0), mPageManager(0)

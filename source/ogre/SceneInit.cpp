@@ -212,6 +212,16 @@ void App::LoadScene()  // 3
 		mSceneMgr->getRootSceneNode()->createChildSceneNode()->attachObject(pr2);
 		pr2->setRenderQueueGroup(RQG_Weather);
 		pr2->getEmitter(0)->setEmissionRate(0);  }
+		
+	//  checkpoint arrow
+	if (pSet->check_arrow)  {
+		if (!arrowNode) arrowNode = mSceneMgr->getRootSceneNode()->createChildSceneNode();
+		Ogre::Entity* arrowEnt = mSceneMgr->createEntity("CheckpointArrow", "arrow.mesh");
+		arrowEnt->setRenderQueueGroup(RQG_Weather);
+		arrowEnt->setCastShadows(false);
+		arrowRotNode = arrowNode->createChildSceneNode();
+		arrowRotNode->attachObject(arrowEnt);
+		arrowRotNode->setScale(0.5, 0.5, 0.5);  }
 }
 
 void App::LoadCar()  // 4

@@ -135,6 +135,19 @@ bool App::frameStart(Real time)
 				if ((*it)->fCam)
 					(*it)->fCam->update(pGame->framerate);
 		}
+		
+		// align checkpoint arrow
+		// move in front of camera
+		if (pSet->check_arrow && arrowNode)
+		{
+			Ogre::Vector3 camPos = carModels.front()->fCam->mCamera->getPosition();
+			Ogre::Vector3 dir = carModels.front()->fCam->mCamera->getDirection();
+			dir.normalise();
+			Ogre::Vector3 up = carModels.front()->fCam->mCamera->getUp();
+			up.normalise();
+			Ogre::Vector3 arrowPos = camPos + 10.0f * dir + 3.5f*up;
+			arrowNode->setPosition(arrowPos);
+		}
 
 		//  update all cube maps
 		for (std::vector<CarModel*>::iterator it=carModels.begin(); it!=carModels.end(); it++)
@@ -386,6 +399,18 @@ void App::newPoses()
 			carM->bWrongChk = false;
 		else
 		{
+			// checkpoint arrow
+			if (pSet->check_arrow && arrowNode && road && road->mChks.size()>0)
+			{
+				// get vector from camera to checkpoint
+				const Ogre::Vector3& chkPos = road->mChks[carM->iNextChk].pos;
+				const Ogre::Vector3& playerPos = carM->fCam->mCamera->getPosition();
+				Ogre::Vector3 dir = chkPos - playerPos;
+				dir[1] = 0; // only x and z rotation
+				const Ogre::Quaternion& quat = Vector3::UNIT_Z.getRotationTo(-dir); // convert to quaternion
+				arrowRotNode->setOrientation(quat);
+			}
+			
 			if (carM->bGetStPos)  // first pos is at start
 			{	carM->bGetStPos = false;
 				carM->matStPos.makeInverseTransform(posInfo.pos, Vector3::UNIT_SCALE, posInfo.rot);
@@ -399,7 +424,7 @@ void App::newPoses()
 				carM->bInSt = abs(carM->vStDist.x) < road->vStBoxDim.x && 
 					abs(carM->vStDist.y) < road->vStBoxDim.y && 
 					abs(carM->vStDist.z) < road->vStBoxDim.z;
-			
+							
 				carM->iInChk = -1;  carM->bWrongChk = false;
 				int ncs = road->mChks.size();
 				if (ncs > 0)
@@ -434,7 +459,7 @@ void App::newPoses()
 							{
 								int ii = (pSet->trackreverse ? -1 : 1) * road->iDir;
 								carM->iNextChk = (carM->iCurChk + ii + ncs) % ncs;
-									
+								
 								//  any if first, or next
 								if (i == carM->iNextChk)
 								{	carM->iCurChk = i;  carM->iNumChks++;  }

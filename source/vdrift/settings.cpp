@@ -33,6 +33,7 @@ void SETTINGS::Serialize(bool w, CONFIGFILE & c)
 	Param(c,w, "display_show.caminfo", show_cam);			Param(c,w, "display_show.times", show_times);
 	Param(c,w, "display_show.car_dbgtxt", car_dbgtxt);		Param(c,w, "display_show.show_cardbg", car_dbgbars);
 	Param(c,w, "display_show.tracks_view", tracks_view);	Param(c,w, "display_show.tracks_sort", tracks_sort);
+	Param(c,w, "display_show.check_arrow", check_arrow);
 
 	Param(c,w, "display_size.gauges", size_gauges);			Param(c,w, "display_size.minimap", size_minimap);
 	Param(c,w, "display_size.mini_zoom", zoom_minimap);		Param(c,w, "display_size.mini_zoomed", mini_zoomed);
@@ -98,7 +99,7 @@ SETTINGS::SETTINGS() :  ///  Defaults
 	show_cam(1), show_times(0), show_digits(1), car_dbgtxt(0), car_dbgbars(0),
 	size_gauges(0.18), size_minimap(0.2), zoom_minimap(1.0),
 	mini_zoomed(0), mini_rotated(1), mini_terrain(0),
-	tracks_view(0), tracks_sort(0),
+	tracks_view(0), tracks_sort(0), check_arrow(0),
 	//  graphics
 	anisotropy(4),	view_distance(1500), bFog(0),
 	terdetail(2), terdist(100), road_dist(1.0), tex_size(1), ter_mtr(2),
