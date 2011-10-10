@@ -405,7 +405,7 @@ void App::newPoses()
 			{
 				// get vector from camera to checkpoint
 				Ogre::Vector3 chkPos;
-				if (carM->iCurChk == carM->iNextChk) // workaround for first checkpoint
+				if (carM->iCurChk == -1 || carM->iCurChk == carM->iNextChk) // workaround for first checkpoint
 				{
 					int id = pSet->trackreverse ? road->iChkId1Rev : road->iChkId1;
 					chkPos = road->mChks[id].pos;
