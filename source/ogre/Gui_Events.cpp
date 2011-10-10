@@ -181,6 +181,12 @@ void App::slSizeGaug(SL)
 	float v = 0.1f + 0.15f * val/res;	if (bGI)  {  pSet->size_gauges = v;  SizeHUD(true);  }
 	if (valSizeGaug){	Fmt(s, "%4.3f", v);	valSizeGaug->setCaption(s);  }
 }
+void App::slSizeArrow(SL)
+{
+	float v = val/res;	if (bGI)  {  pSet->size_arrow = v;  }
+	if (valSizeArrow){	Fmt(s, "%4.3f", v);	valSizeArrow->setCaption(s);  }
+	if (arrowNode) arrowRotNode->setScale(v/2.f, v/2.f, v/2.f);
+}
 //  minimap
 void App::slSizeMinimap(SL)
 {
@@ -279,6 +285,7 @@ void App::chkTrails(WP wp)
 void App::chkFps(WP wp){			ChkEv(show_fps);	if (pSet->show_fps)  mFpsOverlay->show();  else  mFpsOverlay->hide();	}
 
 void App::chkGauges(WP wp){			ChkEv(show_gauges);	ShowHUD();	}
+void App::chkArrow(WP wp){			ChkEv(check_arrow); if (arrowRotNode) arrowRotNode->setVisible(pSet->check_arrow);  }
 void App::chkMinimap(WP wp){		ChkEv(trackmap);	if (ndMap)  ndMap->setVisible(pSet->trackmap);	}
 void App::chkMiniZoom(WP wp){		ChkEv(mini_zoomed);		}
 void App::chkMiniRot(WP wp){		ChkEv(mini_rotated);	}

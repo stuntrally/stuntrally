@@ -214,15 +214,16 @@ void App::LoadScene()  // 3
 		pr2->getEmitter(0)->setEmissionRate(0);  }
 		
 	//  checkpoint arrow
-	if (pSet->check_arrow && !bRplPlay)  {
+	if (/*pSet->check_arrow &&*/ !bRplPlay)  { //!
 		if (!arrowNode) arrowNode = mSceneMgr->getRootSceneNode()->createChildSceneNode();
 		Ogre::Entity* arrowEnt = mSceneMgr->createEntity("CheckpointArrow", "arrow.mesh");
 		arrowEnt->setRenderQueueGroup(RQG_Hud3);
 		arrowEnt->setCastShadows(false);
 		arrowRotNode = arrowNode->createChildSceneNode();
 		arrowRotNode->attachObject(arrowEnt);
-		arrowRotNode->setScale(0.3, 0.3, 0.3);
+		arrowRotNode->setScale(pSet->size_arrow/2.f, pSet->size_arrow/2.f, pSet->size_arrow/2.f);
 		arrowEnt->setVisibilityFlags(RV_Car); // hide in reflection
+		arrowRotNode->setVisible(pSet->check_arrow); //!
 	}
 }
 

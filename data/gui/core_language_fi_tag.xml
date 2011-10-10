@@ -8,6 +8,8 @@
 	<Tag name="InputStartMeet">car will meet (next+ / prev-) point numbers</Tag>
 	<Tag name="TipAutoGearbox">Poista valinta saadaksesi manuaali vaihteet.</Tag>
 	<Tag name="LS_MISC">Finishing</Tag>
+	<Tag name="InputHeaderTxt2">Binding</Tag>
+	<Tag name="InputHeaderTxt3">Value</Tag>
 	<Tag name="AndUsing">and using</Tag>
 	<Tag name="ColumnRadius">Pylvään säde</Tag>
 	<Tag name="InputKeyUnassigned">-- Ei mitään --</Tag>
@@ -16,6 +18,7 @@
 	<Tag name="ViewDist">Piirtoetäisyys</Tag>
 	<Tag name="TipRoadDist2">Additional distance to road.</Tag>
 	<Tag name="TreeDens">Puutiheys</Tag>
+	<Tag name="InputMultipler">Multipler</Tag>
 	<Tag name="TerNormal">Normaali</Tag>
 	<Tag name="LS_TRACK">Loading track</Tag>
 	<Tag name="NeedNewGame">* peli tarvitsee aloittaa alusta</Tag>
@@ -39,6 +42,7 @@
 	<Tag name="TipToggleModel">Enable or disable this model.</Tag>
 	<Tag name="MinimapRotate">Rotate</Tag>
 	<Tag name="pipes">pipes</Tag>
+	<Tag name="InputHeaderTxt1">Action</Tag>
 	<Tag name="InputReloadTrack">F5 - lataa rata uudelleen</Tag>
 	<Tag name="Game">Game</Tag>
 	<Tag name="TipTerLNoiseOnly">Use only noise (no angle or height ranges)</Tag>
@@ -51,6 +55,7 @@
 	<Tag name="DistToRoad">etäisyys tiehen</Tag>
 	<Tag name="TBPlace">Place</Tag>
 	<Tag name="TBLast">Last</Tag>
+	<Tag name="InputMaxVal">Max. Value</Tag>
 	<Tag name="TipRollDrag">Drag for wheels, bigger will make them slow down faster (eg. 140 for snow, 80 for grass).</Tag>
 	<Tag name="LoadTrack">Load Track</Tag>
 	<Tag name="GrDensSmooth">Smooth grass dens.</Tag>
@@ -71,7 +76,6 @@
 	<Tag name="InputNoJS">Ei peliohjainta</Tag>
 	<Tag name="InputRoadAngType">5,6   - angles type</Tag>
 	<Tag name="CopySource">Aseta kopiointilähteeksi</Tag>
-	<Tag name="rating">rating</Tag>
 	<Tag name="TipDisableFog">Disable fog when editing road from distance.</Tag>
 	<Tag name="GraphicsAll_Medium">Medium</Tag>
 	<Tag name="NeedReload">* vaatii uudelleen latauksen</Tag>
@@ -105,7 +109,6 @@
 	<Tag name="Replay">Replay</Tag>
 	<Tag name="AutoRear">Auto Rear gear</Tag>
 	<Tag name="NumLaps">Number of laps</Tag>
-	<Tag name="TerLAngMin">Angle Min</Tag>
 	<Tag name="ReflMode_single">Single</Tag>
 	<Tag name="MapSize">Kartan koko</Tag>
 	<Tag name="Friction">Kitka</Tag>
@@ -138,7 +141,7 @@
 	<Tag name="InputStartDir">Space  -  change road direction (+ or -)</Tag>
 	<Tag name="Effects">Tehosteet</Tag>
 	<Tag name="WidthSteps">Width Steps</Tag>
-	<Tag name="Diffuse">Diffuse</Tag>
+	<Tag name="TerLAngMin">Angle Min</Tag>
 	<Tag name="Sound">Äänet</Tag>
 	<Tag name="RoadPointSize">Tien pisteiden koko</Tag>
 	<Tag name="Car">Auto</Tag>
@@ -158,7 +161,7 @@
 	<Tag name="TipNormalTex">Normaalitekstuuri (korkeus alpha-kanavassa).</Tag>
 	<Tag name="PipeMaterials">Putkimateriaalit</Tag>
 	<Tag name="CamInfoStrings">Type,Yaw,Pitch,Dist,Height,Speed,Offset,LEFT,RIGHT,Middle,Wheel,shift,Rotate,reset,move,H,Pos</Tag>
-	<Tag name="End">loppu</Tag>
+	<Tag name="rating">rating</Tag>
 	<Tag name="HDR">HDR-tehoste</Tag>
 	<Tag name="TipABS">Estää jarrujen lukkiutumisen (oletus: pois)</Tag>
 	<Tag name="TipGrassPatchHeightMin">Minimal grass patch height.</Tag>
@@ -170,7 +173,7 @@
 	<Tag name="ProjectPage">project&apos;s page:</Tag>
 	<Tag name="Type">Tyyppi</Tag>
 	<Tag name="Engine">Moottori</Tag>
-	<Tag name="TipTerLAngMin">Starting terrain angle for layer.</Tag>
+	<Tag name="InputMinVal">Min. Value</Tag>
 	<Tag name="InputPressButtonTip">Press a button to see its number</Tag>
 	<Tag name="TipNewGameCar">Käynnistä peli uudelleen (auton vaihdon jälkeen).</Tag>
 	<Tag name="InputWheelForce">[,]  (or shift-Wheel)  -  Force (intensity)</Tag>
@@ -229,7 +232,7 @@
 	<Tag name="BulletProfilerTxt">Bullet Profiler Times</Tag>
 	<Tag name="SkirtLength">Skirt Length</Tag>
 	<Tag name="InputRoadNotOnTer">when not on terrain</Tag>
-	<Tag name="TipNewDup">Create a new track by duplicating the selected track and using new name (change name first).</Tag>
+	<Tag name="ApplyShadows">Käytä varjoja</Tag>
 	<Tag name="TipFogEndClr">Fog end color. R G B components 0 to 1 (eg. 0.7 0.8 0.9)</Tag>
 	<Tag name="InputCameraTxt1">with shift - main cameras only</Tag>
 	<Tag name="VegetCol">Kasvillisuuden törmäystunnistus</Tag>
@@ -331,9 +334,9 @@
 	<Tag name="GrassSize">Ruohikon koko</Tag>
 	<Tag name="TipTrackDescEditor">Track description text (click to edit).</Tag>
 	<Tag name="ViewLeft">View Left</Tag>
-	<Tag name="UnitMB">Mt</Tag>
+	<Tag name="ViewFront">View Front</Tag>
 	<Tag name="RplTime">Aika</Tag>
-	<Tag name="ApplyShadows">Käytä varjoja</Tag>
+	<Tag name="TipNewDup">Create a new track by duplicating the selected track and using new name (change name first).</Tag>
 	<Tag name="RoadStats">Road Stats</Tag>
 	<Tag name="SunDir">Auringon suunta</Tag>
 	<Tag name="TipSmokeInt">Smoke particles intensity.</Tag>
@@ -358,6 +361,7 @@
 	<Tag name="TerLHMax">Height Max</Tag>
 	<Tag name="LoadingDesc">Loading, please wait...</Tag>
 	<Tag name="TipGrassPatchHeightMax">Maximal grass patch height.</Tag>
+	<Tag name="Diffuse">Diffuse</Tag>
 	<Tag name="Tires">Renkaat</Tag>
 	<Tag name="FacesOnce">Faces at once</Tag>
 	<Tag name="TipTrkNameEditor">Selected track name, used also for renaming track and as new track name.</Tag>
@@ -368,7 +372,7 @@
 	<Tag name="AutoGearbox">Auto gearbox</Tag>
 	<Tag name="InputSlowFast">shift - slow   ctrl - fast</Tag>
 	<Tag name="GrassMult">Grass mul</Tag>
-	<Tag name="ViewFront">View Front</Tag>
+	<Tag name="UnitMB">Mt</Tag>
 	<Tag name="Back">Takaisin</Tag>
 	<Tag name="RplRecTime">Recorded   time</Tag>
 	<Tag name="InputTerSmooth">S - Smooth</Tag>
@@ -471,6 +475,7 @@
 	<Tag name="NewGame">New Game</Tag>
 	<Tag name="InputMapFlipLeft">Flip left</Tag>
 	<Tag name="InputMapSteering">Ohjaus</Tag>
+	<Tag name="InputDetailsFor">Details for</Tag>
 	<Tag name="GraphicsAll_Ultra">Ultra</Tag>
 	<Tag name="CarDebug">Car susp, long|,lat- slips</Tag>
 	<Tag name="InputRoadPick">Space - pick one/none</Tag>
@@ -478,6 +483,7 @@
 	<Tag name="RplSave">Save</Tag>
 	<Tag name="Environment">Environment</Tag>
 	<Tag name="GraphicsAll_High">High</Tag>
+	<Tag name="End">loppu</Tag>
 	<Tag name="MyGUI_MessageBox_Cancel">Cancel</Tag>
 	<Tag name="TipNewTer">Create new, flat terrain.</Tag>
 	<Tag name="TipRoadParams">Tien pisteen parametrit.</Tag>
@@ -523,6 +529,7 @@
 	<Tag name="FPS">Fps, Triangles, Batches</Tag>
 	<Tag name="UnitMph">mph</Tag>
 	<Tag name="InputMapBoost">Boost</Tag>
+	<Tag name="TipTerLAngMin">Starting terrain angle for layer.</Tag>
 	<Tag name="InputStartWidth">; &apos;  -  adjust start box width (for road width)</Tag>
 	<Tag name="Color">väri</Tag>
 	<Tag name="TipTerLAngMax">Ending terrain angle for layer.</Tag>
@@ -531,13 +538,7 @@
 	<Tag name="MyGUI_MessageBox_Yes">Kyllä</Tag>
 	<Tag name="RollingDrag">Rolling Drag</Tag>
 	<Tag name="RplAll">All</Tag>
-	<Tag name="InputHeaderTxt2">Binding</Tag>
-	<Tag name="InputHeaderTxt3">Value</Tag>
-	<Tag name="InputMultipler">Multipler</Tag>
-	<Tag name="InputHeaderTxt1">Action</Tag>
-	<Tag name="InputMaxVal">Max. Value</Tag>
-	<Tag name="InputMinVal">Min. Value</Tag>
-	<Tag name="InputDetailsFor">Details for</Tag>
+	<Tag name="CheckArrow">Checkpoint Arrow</Tag>
 	<Tag name="GameVersion">1.3</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 

@@ -68,6 +68,7 @@ void App::InitGui()
 	//  view sizes
 	Slv(SizeGaug,	(pSet->size_gauges-0.1f) /0.15f);
 	Slv(SizeMinimap,(pSet->size_minimap-0.05f) /0.25f);
+	Slv(SizeArrow,  (pSet->size_arrow));
 	Slv(ZoomMinimap,powf((pSet->zoom_minimap-1.0f) /9.f, 0.5f));
 	
 	//  particles/trails
@@ -103,6 +104,7 @@ void App::InitGui()
 
 	Chk("Digits", chkDigits, pSet->show_digits);
 	Chk("Gauges", chkGauges, pSet->show_gauges);  ShowHUD();//
+	Chk("Arrow", chkArrow, pSet->check_arrow);
 
 	Chk("Minimap", chkMinimap, pSet->trackmap);	chMinimp = bchk;
 	Chk("MiniZoom", chkMiniZoom, pSet->mini_zoomed);  Chk("MiniRot", chkMiniRot, pSet->mini_rotated);

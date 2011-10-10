@@ -947,6 +947,14 @@
 							<Property key="Widget_Caption" value="#{CameraInfo}"/>
 							<Property key="Text_TextColour" value="0.7 0.8 0.9"/>
 						</Widget>
+						<Widget type="Button" skin="CheckBox" position="32 332 184 24" name="Arrow">
+							<Property key="Widget_Caption" value="#{CheckArrow}"/>
+							<Property key="Text_TextColour" value="0.7 0.8 0.9"/>
+						</Widget>
+						<Widget type="HScroll" skin="HScroll" position="344 336 320 18" name="SizeArrow">
+							<Property key="Scroll_Range" value="1000001"/>
+							<Property key="Scroll_MoveToClick" value="true"/>
+						</Widget>
 						<Widget type="HScroll" skin="HScroll" position="344 100 320 18" name="SizeGaug">
 							<Property key="Scroll_Range" value="1000001"/>
 							<Property key="Scroll_MoveToClick" value="true"/>
@@ -955,8 +963,12 @@
 							<Property key="Scroll_Range" value="1000001"/>
 							<Property key="Scroll_MoveToClick" value="true"/>
 						</Widget>
+						<Widget type="StaticText" skin="StaticText" position="296 334 48 24" name="SizeArrowVal"/>
 						<Widget type="StaticText" skin="StaticText" position="296 98 48 24" name="SizeGaugVal"/>
 						<Widget type="StaticText" skin="StaticText" position="296 138 48 24" name="SizeMinimapVal"/>
+						<Widget type="StaticText" skin="StaticText" position="232 334 64 24">
+							<Property key="Widget_Caption" value="#{Size}"/>
+						</Widget>
 						<Widget type="StaticText" skin="StaticText" position="232 98 64 24">
 							<Property key="Widget_Caption" value="#{Size}"/>
 						</Widget>

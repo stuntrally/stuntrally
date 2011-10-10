@@ -22,7 +22,7 @@ public:
 		mini_zoomed, mini_rotated, mini_terrain,
 		show_cam, show_times, show_digits,
 		car_dbgbars, car_dbgtxt, ogre_dialog;
-	float size_gauges, size_minimap, zoom_minimap;
+	float size_gauges, size_minimap, size_arrow, zoom_minimap;
 	int tracks_view, tracks_sort;
 
 	//  graphics

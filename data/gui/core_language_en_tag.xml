@@ -224,6 +224,7 @@
 	<Tag name="MinimapTerrain">Terrain</Tag>
 	<Tag name="TimesBar">Times bar</Tag>
 	<Tag name="CameraInfo">Camera info</Tag>
+	<Tag name="CheckArrow">Checkpoint Arrow</Tag>
 
 	<Tag name="Other">Other</Tag>
 	<Tag name="Development">Development</Tag>
