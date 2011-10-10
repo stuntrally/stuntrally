@@ -42,6 +42,7 @@ material Arrow
 			
 			// transparent...
 			//depth_write off
+			depth_bias 3
 			//scene_blend add // scene_blend modulate
 			
 			vertex_program_ref arrow_vs {}
