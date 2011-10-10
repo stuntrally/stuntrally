@@ -404,7 +404,14 @@ void App::newPoses()
 			if (pSet->check_arrow && arrowNode && road && road->mChks.size()>0)
 			{
 				// get vector from camera to checkpoint
-				const Ogre::Vector3& chkPos = road->mChks[std::max(0, std::min((int)road->mChks.size()-1, carM->iNextChk))].pos;
+				Ogre::Vector3 chkPos;
+				if (carM->iCurChk == carM->iNextChk) // workaround for first checkpoint
+				{
+					int id = pSet->trackreverse ? road->iChkId1Rev : road->iChkId1;
+					chkPos = road->mChks[id].pos;
+				}
+				else
+					chkPos = road->mChks[std::max(0, std::min((int)road->mChks.size()-1, carM->iNextChk))].pos;
 				const Ogre::Vector3& playerPos = carM->fCam->mCamera->getPosition();
 				Ogre::Vector3 dir = chkPos - playerPos;
 				dir[1] = 0; // only x and z rotation
@@ -412,6 +419,9 @@ void App::newPoses()
 				const bool valid = !quat.isNaN();
 				if (valid) {
 					arrowRotNode->setOrientation(quat);
+					
+					// look down a bit on -y so we can better so the arrow
+					arrowRotNode->pitch(Ogre::Degree(-20), Ogre::SceneNode::TS_LOCAL);
 				
 					// set arrow color (wrong direction: red arrow)
 					// calc angle towards cam
