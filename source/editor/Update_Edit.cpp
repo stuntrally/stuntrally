@@ -124,7 +124,7 @@ bool App::frameRenderingQueued(const FrameEvent& evt)
 		if (rdTxt[7]){  Fmt(s, "%d %s", sp.idMtr, road->getMtrStr(ic).c_str());   rdTxt[7]->setCaption(s);  }
 
 		if (rdTxt[8]){	if (sp.chkR == 0.f)  s[0]=0;
-					else Fmt(s, "chkR  %4.2f", sp.chkR);   rdTxt[8]->setCaption(s);  }
+					else Fmt(s, "chkR  %4.2f  %s", sp.chkR, road->iP1 == ic ? "<1>":"");   rdTxt[8]->setCaption(s);  }
 
 		if (rdTxt[9]){
 			if (road->vSel.size() > 0)  Fmt(s, "sel: %d", road->vSel.size());

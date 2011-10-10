@@ -529,6 +529,13 @@ void SplineRoad::AngZero()   ///  Angles set 0
 	Move(Vector3::ZERO);
 }
 
+void SplineRoad::Set1stChk()
+{
+	if (iChosen >= 0 && iChosen < getNumPoints())
+	if (mP[iChosen].chkR > 0.f)
+		iP1 = std::max(0, std::min(getNumPoints()-1, iChosen));
+}
+
 //  util
 bool SplineRoad::isPipe(int seg)
 {
