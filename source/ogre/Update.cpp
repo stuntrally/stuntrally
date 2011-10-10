@@ -8,6 +8,7 @@
 
 #include <OgreParticleSystem.h>
 #include <OgreManualObject.h>
+#include <OgreMaterialManager.h>
 #include "common/Gui_Def.h"
 using namespace Ogre;
 
@@ -409,7 +410,22 @@ void App::newPoses()
 				dir[1] = 0; // only x and z rotation
 				Ogre::Quaternion quat = Vector3::UNIT_Z.getRotationTo(-dir); // convert to quaternion
 				const bool valid = !quat.isNaN();
-				if (valid) arrowRotNode->setOrientation(quat);
+				if (valid) {
+					arrowRotNode->setOrientation(quat);
+				
+					// set arrow color (wrong direction: red arrow)
+					// calc angle towards cam
+					Real angle = (quat.zAxis().dotProduct(carM->fCam->mCamera->getOrientation().zAxis())+1)/2.0f;
+					// set color in material
+					MaterialPtr arrowMat = MaterialManager::getSingleton().getByName("Arrow");
+					Ogre::GpuProgramParametersSharedPtr fparams = arrowMat->getTechnique(0)->getPass(1)->getFragmentProgramParameters();
+					// green: 0.0 1.0 0.0     0.0 0.4 0.0
+					// red:   1.0 0.0 0.0     0.4 0.0 0.0
+					Vector3 col1 = angle * Vector3(0.0, 1.0, 0.0) + (1-angle) * Vector3(1.0, 0.0, 0.0);
+					Vector3 col2 = angle * Vector3(0.0, 0.4, 0.0) + (1-angle) * Vector3(0.4, 0.0, 0.0);
+					fparams->setNamedConstant("color1", col1);
+					fparams->setNamedConstant("color2", col2);
+				}
 			}
 			
 			if (carM->bGetStPos)  // first pos is at start
