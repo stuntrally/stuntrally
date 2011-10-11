@@ -33,11 +33,12 @@ void SETTINGS::Serialize(bool w, CONFIGFILE & c)
 	Param(c,w, "display_show.caminfo", show_cam);			Param(c,w, "display_show.times", show_times);
 	Param(c,w, "display_show.car_dbgtxt", car_dbgtxt);		Param(c,w, "display_show.show_cardbg", car_dbgbars);
 	Param(c,w, "display_show.tracks_view", tracks_view);	Param(c,w, "display_show.tracks_sort", tracks_sort);
-	Param(c,w, "display_show.check_arrow", check_arrow);    Param(c,w, "display_show.size_arrow", size_arrow);
+	Param(c,w, "display_show.check_arrow", check_arrow);
 
 	Param(c,w, "display_size.gauges", size_gauges);			Param(c,w, "display_size.minimap", size_minimap);
 	Param(c,w, "display_size.mini_zoom", zoom_minimap);		Param(c,w, "display_size.mini_zoomed", mini_zoomed);
 	Param(c,w, "display_size.mini_rotated", mini_rotated);	Param(c,w, "display_size.mini_terrain", mini_terrain);
+	Param(c,w, "display_size.arrow", size_arrow);
 
 	Param(c,w, "display_par.anisotropy", anisotropy);		Param(c,w, "display_par.view_dist", view_distance);
 	Param(c,w, "display_par.ter_detail", terdetail);		Param(c,w, "display_par.ter_dist", terdist);
