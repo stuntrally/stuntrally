@@ -51,7 +51,7 @@ void App::UpdThr()
 //---------------------------------------------------------------------------------------------------------------
 
 bool App::frameStart(Real time)
-{	
+{
 	if (bGuiReinit)  // after language change from combo
 	{	bGuiReinit = false;
 
@@ -75,6 +75,8 @@ bool App::frameStart(Real time)
 	}
 	else 
 	{
+		bool bFirstFrame = (carModels.size()>0 && carModels.front()->bGetStPos) ? true : false;
+		
 		if (isFocGui && mWndTabs->getIndexSelected() == 7)
 			UpdateInputBars();
 		
@@ -139,7 +141,7 @@ bool App::frameStart(Real time)
 		
 		// align checkpoint arrow
 		// move in front of camera
-		if (pSet->check_arrow && arrowNode)
+		if (pSet->check_arrow && arrowNode && !bRplPlay)
 		{
 			Ogre::Vector3 camPos = carModels.front()->fCam->mCamera->getPosition();
 			Ogre::Vector3 dir = carModels.front()->fCam->mCamera->getDirection();
@@ -148,6 +150,16 @@ bool App::frameStart(Real time)
 			up.normalise();
 			Ogre::Vector3 arrowPos = camPos + 10.0f * dir + 3.5f*up;
 			arrowNode->setPosition(arrowPos);
+			
+			// animate
+			if (bFirstFrame) // 1st frame: dont animate
+				arrowAnimCur = arrowAnimEnd;
+			else
+				arrowAnimCur = Ogre::Quaternion::Slerp(time, arrowAnimStart, arrowAnimEnd, true);
+			arrowRotNode->setOrientation(arrowAnimCur);
+			
+			// look down -y a bit so we can see the arrow better
+			arrowRotNode->pitch(Ogre::Degree(-20), Ogre::SceneNode::TS_LOCAL); 
 		}
 
 		//  update all cube maps
@@ -401,8 +413,11 @@ void App::newPoses()
 		else
 		{
 			// checkpoint arrow
-			if (pSet->check_arrow && arrowNode && road && road->mChks.size()>0)
+			if (pSet->check_arrow && !bRplPlay && arrowNode && road && road->mChks.size()>0)
 			{
+				// set animation start to old orientation
+				arrowAnimStart = arrowAnimCur;
+				
 				// get vector from camera to checkpoint
 				Ogre::Vector3 chkPos;
 				if (carM->iCurChk == -1 || carM->iCurChk == carM->iNextChk) // workaround for first checkpoint
@@ -412,20 +427,19 @@ void App::newPoses()
 				}
 				else
 					chkPos = road->mChks[std::max(0, std::min((int)road->mChks.size()-1, carM->iNextChk))].pos;
-				const Ogre::Vector3& playerPos = carM->fCam->mCamera->getPosition();
+				//const Ogre::Vector3& playerPos = carM->fCam->mCamera->getPosition();
+				const Ogre::Vector3& playerPos = carM->pMainNode->getPosition();
 				Ogre::Vector3 dir = chkPos - playerPos;
 				dir[1] = 0; // only x and z rotation
 				Ogre::Quaternion quat = Vector3::UNIT_Z.getRotationTo(-dir); // convert to quaternion
+
 				const bool valid = !quat.isNaN();
 				if (valid) {
-					arrowRotNode->setOrientation(quat);
-					
-					// look down a bit on -y so we can better so the arrow
-					arrowRotNode->pitch(Ogre::Degree(-20), Ogre::SceneNode::TS_LOCAL);
+					arrowAnimEnd = quat;
 				
 					// set arrow color (wrong direction: red arrow)
 					// calc angle towards cam
-					Real angle = (quat.zAxis().dotProduct(carM->fCam->mCamera->getOrientation().zAxis())+1)/2.0f;
+					Real angle = (arrowAnimCur.zAxis().dotProduct(carM->fCam->mCamera->getOrientation().zAxis())+1)/2.0f;
 					// set color in material
 					MaterialPtr arrowMat = MaterialManager::getSingleton().getByName("Arrow");
 					Ogre::GpuProgramParametersSharedPtr fparams = arrowMat->getTechnique(0)->getPass(1)->getFragmentProgramParameters();
@@ -460,7 +474,7 @@ void App::newPoses()
 						bool best = pGame->timer.Lap(iCarNum, 0,0, true, pSet->trackreverse);  //pGame->cartimerids[pCar] ?
 
 						if (!pSet->rpl_bestonly || best)  ///  new best lap, save ghost
-						if (iCarNum==0)  // for many, only 1st-
+						if (iCarNum==0 && pSet->rpl_rec)  // for many, only 1st-
 						{
 							ghost.SaveFile(GetGhostFile());
 							ghplay.CopyFrom(ghost);

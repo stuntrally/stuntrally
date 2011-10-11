@@ -58,6 +58,7 @@ public:
 	
 	Ogre::SceneNode* arrowNode; // checkpoint arrow
 	Ogre::SceneNode* arrowRotNode; // seperate node for rotation
+	Ogre::Quaternion arrowAnimStart, arrowAnimEnd, arrowAnimCur; // smooth animation
 		
 	void UpdateHUD(int carId, class CarModel* pCarM, class CAR* pCar,
 		float time, Ogre::Viewport* vp=NULL), SizeHUD(bool full, Ogre::Viewport* vp=NULL, int carId=-1);
