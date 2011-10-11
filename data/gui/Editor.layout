@@ -587,7 +587,7 @@
 						<Property key="Widget_Caption" value="2048"/>
 					</Widget>
 				</Widget>
-				<Widget type="StaticText" skin="StaticText" position="40 195 80 24">
+				<!--<Widget type="StaticText" skin="StaticText" position="40 195 80 24">
 					<Property key="Widget_Caption" value="#{TerLAngMin1}"/>
 					<Property key="Text_TextColour" value="0.6 0.9 0.5"/>
 				</Widget>
@@ -643,7 +643,7 @@
 					<Property key="Widget_Colour" value="0.2 0.9 0.3"/>
 					<Property key="Widget_Alpha" value="0.3"/>
 					<Property key="Widget_Enabled" value="false"/>
-				</Widget>
+				</Widget>-->
 			</Widget>
 			<Widget type="TabItem" skin="" position="4 26 787 531">
 				<Property key="Widget_Caption" value="#{Layers}"/>
@@ -2123,6 +2123,10 @@
 						<Widget type="StaticText" skin="StaticText" position="32 344 304 20">
 							<Property key="Text_TextColour" value="0.6 0.75 0.9"/>
 							<Property key="Widget_Caption" value="#{InputRoadAngSnap}"/>
+						</Widget>
+						<Widget type="StaticText" skin="StaticText" position="32 366 304 20">
+							<Property key="Text_TextColour" value="0.6 0.7 0.8"/>
+							<Property key="Widget_Caption" value="#{InputRoadChkFirst}"/>
 						</Widget>
 
 						<Widget type="StaticText" skin="StaticText" position="32 406 216 20">
