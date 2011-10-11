@@ -8,8 +8,8 @@
 	<Tag name="InputStartMeet">auto napotka (następne+ / poprzednie-) numery punktów</Tag>
 	<Tag name="TipAutoGearbox">Odznacz dla ręcznej skrzyni biegów.</Tag>
 	<Tag name="LS_MISC">Kończenie</Tag>
-	<Tag name="InputHeaderTxt2">Binding</Tag>
-	<Tag name="InputHeaderTxt3">Value</Tag>
+	<Tag name="InputHeaderTxt2">Przypisanie</Tag>
+	<Tag name="InputHeaderTxt3">Wartość</Tag>
 	<Tag name="AndUsing">przy użyciu</Tag>
 	<Tag name="ColumnRadius">Promień kolumn</Tag>
 	<Tag name="InputKeyUnassigned">-- Brak --</Tag>
@@ -18,7 +18,7 @@
 	<Tag name="ViewDist">Dalekość widzenia</Tag>
 	<Tag name="TipRoadDist2">Dodatkowa odległość od drogi.</Tag>
 	<Tag name="TreeDens">Gęstość drzew</Tag>
-	<Tag name="InputMultipler">Multipler</Tag>
+	<Tag name="InputMultipler">Mnożnik</Tag>
 	<Tag name="TerNormal">Normalny</Tag>
 	<Tag name="LS_TRACK">Wczytuję trasę</Tag>
 	<Tag name="NeedNewGame">* potrzebuje Nowej Gry</Tag>
@@ -42,7 +42,7 @@
 	<Tag name="TipToggleModel">Włącz / wyłącz ten model.</Tag>
 	<Tag name="MinimapRotate">Obrót</Tag>
 	<Tag name="pipes">rury</Tag>
-	<Tag name="InputHeaderTxt1">Action</Tag>
+	<Tag name="InputHeaderTxt1">Akcja</Tag>
 	<Tag name="InputReloadTrack">F5 - przeładuj trasę</Tag>
 	<Tag name="Game">Gra</Tag>
 	<Tag name="TipTerLNoiseOnly">Użyj tylko szumu (bez zakresu kątów i wysokości)</Tag>
@@ -55,7 +55,7 @@
 	<Tag name="DistToRoad">odl. do drogi</Tag>
 	<Tag name="TBPlace">Miejsce</Tag>
 	<Tag name="TBLast">Ostatni</Tag>
-	<Tag name="InputMaxVal">Max. Value</Tag>
+	<Tag name="InputMaxVal">Max. Wartość</Tag>
 	<Tag name="TipRollDrag">Opór dla kół, większy spowoduje szybsze zwalnianie (np. 140 dla śniegu, 80 dla trawy).</Tag>
 	<Tag name="LoadTrack">Wczytaj trasę</Tag>
 	<Tag name="GrDensSmooth">Wygładź gęstość trawy.</Tag>
@@ -173,7 +173,7 @@
 	<Tag name="ProjectPage">Strona projektu</Tag>
 	<Tag name="Type">Typ</Tag>
 	<Tag name="Engine">Silnik</Tag>
-	<Tag name="InputMinVal">Min. Value</Tag>
+	<Tag name="InputMinVal">Min. Wartość</Tag>
 	<Tag name="InputPressButtonTip">Naciśnij przycisk by zobaczyć</Tag>
 	<Tag name="TipNewGameCar">Startuj od nowa (po zmianie auta).</Tag>
 	<Tag name="InputWheelForce">[,] (lub shift-kółko) - Siła (intensywność)</Tag>
@@ -475,7 +475,7 @@
 	<Tag name="NewGame">Nowa Gra</Tag>
 	<Tag name="InputMapFlipLeft">Odwróć w lewo</Tag>
 	<Tag name="InputMapSteering">Sterowanie</Tag>
-	<Tag name="InputDetailsFor">Details for</Tag>
+	<Tag name="InputDetailsFor">Szczegóły dla</Tag>
 	<Tag name="GraphicsAll_Ultra">Ultra</Tag>
 	<Tag name="CarDebug">Paski zawieszenia, poślizgu | -</Tag>
 	<Tag name="InputRoadPick">Space - wybierz/żaden</Tag>
@@ -522,6 +522,7 @@
 	<Tag name="Volume">Głośność</Tag>
 	<Tag name="TipTerLayers">Liczba warstw tekstur terenu (zalecana 2-3, znacząco obniża wydajność). *Autom. przejścia wspierane do maks. 4.</Tag>
 	<Tag name="TipSurfType">Typ podłoża, wyznacza dźwięk.</Tag>
+	<Tag name="CheckArrow">Checkpoint Arrow</Tag>
 	<Tag name="InputRoadAltMMB">alt-RMB (or 3,4)</Tag>
 	<Tag name="InputSaveTrack">F4 - zapisz trasę</Tag>
 	<Tag name="TrackDifficulties">Różne trudności trasy</Tag>
@@ -538,7 +539,7 @@
 	<Tag name="MyGUI_MessageBox_Yes">Tak</Tag>
 	<Tag name="RollingDrag">Opór toczenia</Tag>
 	<Tag name="RplAll">Wszystkie</Tag>
-	<Tag name="CheckArrow">Checkpoint Arrow</Tag>
+	<Tag name="InputRoadChkFirst">0   - set checkpoint as first</Tag>
 	<Tag name="GameVersion">1.3</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 

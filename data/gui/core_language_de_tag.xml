@@ -522,6 +522,7 @@
 	<Tag name="Volume">Lautstärke</Tag>
 	<Tag name="TipTerLayers">Terrain Texturlayer (empfohlen 2-3, großer Einfluss auf die Leistung). *Auto blendmap unterstützt max. 4.</Tag>
 	<Tag name="TipSurfType">Typ der Oberfläche, bestimmt den Sound.</Tag>
+	<Tag name="CheckArrow">Checkpoint Arrow</Tag>
 	<Tag name="InputRoadAltMMB">Alt-RMB (oder 3,4)</Tag>
 	<Tag name="InputSaveTrack">F4 - Strecke speichern</Tag>
 	<Tag name="TrackDifficulties">Verschiedene Strecke Schwierigkeiten</Tag>
@@ -538,7 +539,7 @@
 	<Tag name="MyGUI_MessageBox_Yes">Ja</Tag>
 	<Tag name="RollingDrag">Rollwiderstand</Tag>
 	<Tag name="RplAll">Alle</Tag>
-	<Tag name="CheckArrow">Checkpoint Arrow</Tag>
+	<Tag name="InputRoadChkFirst">0   - set checkpoint as first</Tag>
 	<Tag name="GameVersion">1.3</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 
