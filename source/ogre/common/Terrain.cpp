@@ -2,6 +2,11 @@
 #include "../Defines.h"
 #include "../common/RenderConst.h"
 #include "../../road/Road.h"
+
+#if 0
+#include "../common/OgreTerrainMaterialGeneratorA.h"
+#endif
+
 #ifdef ROAD_EDITOR
 	#include "../../editor/OgreApp.h"
 	#include "../../editor/settings.h"
@@ -195,6 +200,11 @@ void App::GetTerAngles(int xb,int yb, int xe,int ye)
 //--------------------------------------------------------------------------------------------------------------------------
 void App::configureTerrainDefaults(Light* l)
 {
+	#if 0
+	TerrainMaterialGeneratorPtr matGen = static_cast<TerrainMaterialGeneratorPtr>(new TerrainMaterialGeneratorB());
+	mTerrainGlobals->setDefaultMaterialGenerator(matGen);
+	#endif
+
 	mTerrainGlobals->setMaxPixelError(pSet->terdetail);  // 1- 4-8+
 	//mTerrainGlobals->setUseRayBoxDistanceCalculation(true);
 	//mTerrainGlobals->getDefaultMaterialGenerator()->setDebugLevel(1);
