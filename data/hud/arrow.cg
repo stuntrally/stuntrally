@@ -41,5 +41,5 @@ void arrow_fp(
 	colorFactor = min(colorFactor, 1);
 
 	float3 col = lerp(color1, color2, colorFactor);
-	color = float4(col.xyz, 1.0);
+	color = float4(col.xyz, 0.5);
 }

@@ -39,11 +39,8 @@ material Arrow
 		pass 1
 		{
 			colour_write on
-			
-			// transparent...
-			//depth_write off
 			depth_bias 3
-			//scene_blend add // scene_blend modulate
+			scene_blend alpha_blend
 			
 			vertex_program_ref arrow_vs {}
 			fragment_program_ref arrow_ps {}
@@ -60,6 +57,7 @@ material Arrow
 		pass 1
 		{
 			colour_write on
+			depth_bias 3
 		}
 	}
 }
