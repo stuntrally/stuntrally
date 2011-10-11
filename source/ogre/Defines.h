@@ -58,5 +58,6 @@ const static ShapeData
 	gSD_Other(ST_Other);
 /**/
 
+//#define SHADOWS_D  // test depth shadows
 
 #endif

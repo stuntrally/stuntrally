@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "../Defines.h"
 
-#if 0
+#ifdef SHADOWS_D
 #include "../common/OgreTerrainMaterialGeneratorA.h"
 #endif
 
@@ -42,16 +42,14 @@ void App::changeShadows()
 	TerrainMaterialGeneratorA::SM2Profile* matProfile = 0;
 	if (mTerrainGlobals)
 	{
-		#if 1
+		#ifdef SHADOWS_D
+		Ogre::TerrainMaterialGeneratorB::SM2Profile* matProfile = static_cast<TerrainMaterialGeneratorB::SM2Profile*>(
+			mTerrainGlobals->getDefaultMaterialGenerator()->getActiveProfile());
+		#else
 		matProfile = static_cast<TerrainMaterialGeneratorA::SM2Profile*>(
 			mTerrainGlobals->getDefaultMaterialGenerator()->getActiveProfile());
 		#endif
-		
-		#if 0
-		Ogre::TerrainMaterialGeneratorB::SM2Profile* matProfile = static_cast<TerrainMaterialGeneratorB::SM2Profile*>(
-			mTerrainGlobals->getDefaultMaterialGenerator()->getActiveProfile());
-		#endif	
-		
+				
 		matProfile->setReceiveDynamicShadowsEnabled(enabled);
 		matProfile->setReceiveDynamicShadowsLowLod(true);
 		matProfile->setGlobalColourMapEnabled(false);

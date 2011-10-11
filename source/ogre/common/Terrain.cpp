@@ -3,7 +3,7 @@
 #include "../common/RenderConst.h"
 #include "../../road/Road.h"
 
-#if 0
+#ifdef SHADOWS_D
 #include "../common/OgreTerrainMaterialGeneratorA.h"
 #endif
 
@@ -200,7 +200,7 @@ void App::GetTerAngles(int xb,int yb, int xe,int ye)
 //--------------------------------------------------------------------------------------------------------------------------
 void App::configureTerrainDefaults(Light* l)
 {
-	#if 0
+	#ifdef SHADOWS_D
 	TerrainMaterialGeneratorPtr matGen = static_cast<TerrainMaterialGeneratorPtr>(new TerrainMaterialGeneratorB());
 	mTerrainGlobals->setDefaultMaterialGenerator(matGen);
 	#endif
