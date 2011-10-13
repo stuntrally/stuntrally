@@ -22,6 +22,10 @@
 #include <OgreShadowCameraSetupLiSPSM.h>
 #include <OgreShadowCameraSetupPSSM.h>
 #include <OgreMaterialManager.h>
+#include <OgreOverlay.h>
+#include <OgreOverlayContainer.h>
+#include <OgreOverlayManager.h>
+
 using namespace Ogre;
 
 
@@ -99,9 +103,11 @@ void App::changeShadows()
 		PSSMShadowCameraSetup* pssmSetup = new PSSMShadowCameraSetup();
 		#ifndef ROAD_EDITOR
 		pssmSetup->setSplitPadding(mSplitMgr->mCameras.front()->getNearClipDistance());
+		//pssmSetup->setSplitPadding(10);
 		pssmSetup->calculateSplitPoints(num, mSplitMgr->mCameras.front()->getNearClipDistance(), mSceneMgr->getShadowFarDistance());
 		#else
 		pssmSetup->setSplitPadding(mCamera->getNearClipDistance());
+		//pssmSetup->setSplitPadding(10);
 		pssmSetup->calculateSplitPoints(num, mCamera->getNearClipDistance(), mSceneMgr->getShadowFarDistance());
 		#endif
 		for (int i=0; i < num; ++i)
@@ -129,7 +135,37 @@ void App::changeShadows()
 		MaterialPtr mtr = matProfile->generateForCompositeMap(terrain);
 		//LogO(mtr->getBestTechnique()->getPass(0)->getTextureUnitState(0)->getName());
 		//LogO(String("Ter mtr: ") + mtr->getName());
+
 	}
+			
+	// shadow tex overlay
+   // add the overlay elements to show the shadow maps:
+	// init overlay elements
+	OverlayManager& mgr = OverlayManager::getSingleton();
+	Overlay* overlay = mgr.create("DebugOverlay");
+	
+	#ifdef SHADOWS_D
+	for (size_t i = 0; i < num; ++i) {
+		TexturePtr tex = mSceneMgr->getShadowTexture(i);
+
+		// Set up a debug panel to display the shadow
+		MaterialPtr debugMat = MaterialManager::getSingleton().create(
+			"Ogre/DebugTexture" + StringConverter::toString(i), 
+			ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME);
+		debugMat->getTechnique(0)->getPass(0)->setLightingEnabled(false);
+		TextureUnitState *t = debugMat->getTechnique(0)->getPass(0)->createTextureUnitState(tex->getName());
+		t->setTextureAddressingMode(TextureUnitState::TAM_CLAMP);
+
+		OverlayContainer* debugPanel = (OverlayContainer*)
+			(OverlayManager::getSingleton().createOverlayElement("Panel", "Ogre/DebugTexPanel" + StringConverter::toString(i)));
+		debugPanel->_setPosition(0.8, i*0.25);
+		debugPanel->_setDimensions(0.2, 0.24);
+		debugPanel->setMaterialName(debugMat->getName());
+		debugPanel->show();
+		overlay->add2D(debugPanel);
+		overlay->show();
+	}
+	#endif
 	
 	UpdPSSMMaterials();
 
