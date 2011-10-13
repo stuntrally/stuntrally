@@ -90,7 +90,8 @@ CarModel::~CarModel()
 	if (pSceneMgr->hasEntity("Car.glass")) pSceneMgr->destroyEntity("Car.glass");
 	
 	// Destroy resource group, will also destroy all resources in it
-	Ogre::ResourceGroupManager::getSingleton().destroyResourceGroup("Car" + toStr(iIndex));
+	if (Ogre::ResourceGroupManager::getSingleton().resourceGroupExists("Car" + toStr(iIndex)))
+		Ogre::ResourceGroupManager::getSingleton().destroyResourceGroup("Car" + toStr(iIndex));
 }
 
 void CarModel::setVisible(bool vis)
