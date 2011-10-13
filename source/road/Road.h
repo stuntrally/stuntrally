@@ -169,7 +169,7 @@ public:
 
 	int  colN;		// column regular polygon sides
 	Ogre::Real colR;		// column radius
-	Ogre::Real ilPmul,iwPmul;	 // length,width steps multipler for pipe
+	Ogre::Real ilPmul,iwPmul;	 // length,width steps multiplier for pipe
 
 	struct stats  //  for info
 	{	Ogre::Real Length,WidthAvg,HeightDiff,

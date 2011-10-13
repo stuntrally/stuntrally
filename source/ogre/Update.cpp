@@ -100,7 +100,7 @@ bool App::frameStart(Real time)
 			int ta = ((le || bRplBack) ? -2 : 0) + ((ri || bRplFwd) ? 2 : 0);
 			if (ta)
 			{	double tadd = ta;
-				tadd *= (shift ? 0.2 : 1) * (ctrlN ? 4 : 1) * (alt ? 8 : 1);  // multiplers
+				tadd *= (shift ? 0.2 : 1) * (ctrlN ? 4 : 1) * (alt ? 8 : 1);  // multipliers
 				if (!bRplPause)  tadd -= 1;  // play compensate
 				double t = pGame->timer.GetReplayTime(), len = replay.GetTimeLength();
 				t += tadd * time;  // add

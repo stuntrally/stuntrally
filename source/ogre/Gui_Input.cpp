@@ -38,8 +38,8 @@ void App::InitInputGui()
 	TabPtr inputTab = (TabPtr)inpTabAll->findWidget("InputTab");  if (!inputTab)  return;
 
 
-	///  joystick selection combo (for bind name, when more joys)
-	ComboBoxPtr cmbJoy = (ComboBoxPtr)inpTabAll->findWidget("joystickSel");
+	///  controller selection combo (for bind name, when more)
+	ComboBoxPtr cmbJoy = (ComboBoxPtr)inpTabAll->findWidget("CmbInputController");
 	if (cmbJoy)
 	{
 		//joysticks->addItem(TR("#{InputNoJS}"));//-
@@ -48,7 +48,6 @@ void App::InitInputGui()
 		for (int i=0; i < jnum; ++i)
 			cmbJoy->addItem( sys.mJoysticks[i]->getName() );
 
-		cmbJoy->setEditReadOnly(true);
 		cmbJoy->eventComboChangePosition = newDelegate(this, &App::cmbJoystick);
 		if (jnum > 0)  {  cmbJoy->setIndexSelected(0);  cmbJoystick(cmbJoy, 0);  }
 	}
@@ -58,8 +57,20 @@ void App::InitInputGui()
 	txtJBtn = (StaticTextPtr)inpTabAll->findWidget("buttonOutput");
 	txtInpDetail = (StaticTextPtr)inpTabAll->findWidget("InputDetail");
 
-	// details edits
+	//  details edits
 	Ed(InputMin, editInput);  Ed(InputMax, editInput);  Ed(InputMul, editInput);
+
+	//  preset combo
+	ComboBoxPtr combo;
+	Cmb(combo, "CmbInputDetPreset", comboInputPreset);  cmbInpDetSet = combo;
+	if (combo)  {
+		combo->removeAllItems();  combo->addItem("");
+		combo->addItem(TR("#{InpSet_KeyHalf}"));
+		combo->addItem(TR("#{InpSet_KeyFull}"));
+		combo->addItem(TR("#{InpSet_AxisHalf}"));
+		combo->addItem(TR("#{InpSet_AxisHalfInv}"));
+		combo->addItem(TR("#{InpSet_AxisFull}"));
+    }
 
 
 	///  insert a tab item for every schema (4players,global)
@@ -289,11 +300,7 @@ void App::InputBind(int key, int button, int axis)
 		if (b2)  b2->setCaption(GetInputName(decKey));
 	}
 	else  // axis
-	{
 		binding->bind(skey,"");
-		//todo: ?start ok when joy wasnt detected but is in xml, save it too
-		//combo for quick presets: half axis, half axis inversed, full axis
-	}
 }
 
 
@@ -313,6 +320,7 @@ void App::inputDetailBtn(WP sender)
 	if (edInputMin)  edInputMin->setCaption(toStr(act->getProperty<OISB::Real>("MinValue")));
 	if (edInputMax)  edInputMax->setCaption(toStr(act->getProperty<OISB::Real>("MaxValue")));
 	if (edInputMul)  edInputMul->setCaption(toStr(act->getProperty<OISB::Real>("InverseMul")));
+	if (cmbInpDetSet)  cmbInpDetSet->setIndexSelected(0);
 }
 
 void App::editInput(MyGUI::EditPtr ed)
@@ -321,6 +329,23 @@ void App::editInput(MyGUI::EditPtr ed)
 	Real vMin = s2r(edInputMin->getCaption());
 	Real vMax = s2r(edInputMax->getCaption());
 	Real vMul = s2r(edInputMul->getCaption());
+	actDetail->setProperty("MinValue",vMin);
+	actDetail->setProperty("MaxValue",vMax);
+	actDetail->setProperty("InverseMul",vMul);
+	if (cmbInpDetSet)  cmbInpDetSet->setIndexSelected(0);
+}
+
+void App::comboInputPreset(MyGUI::ComboBoxPtr cmb, size_t val)
+{
+	if (!actDetail || val==0)  return;
+	//key half, key full, axis half, axis half inversed, axis full
+	const Real aMin[5] = {0,-1, 0,  -2,  -1};
+	const Real aMax[5] = {1, 1, 2,   0,   1};
+	const Real aMul[5] = {1, 1, 0.5,-0.5, 1};
+	val = std::min((size_t)4, val-1);
+	Real vMin = aMin[val];  if (edInputMin)  edInputMin->setCaption(toStr(vMin));
+	Real vMax = aMax[val];  if (edInputMax)  edInputMax->setCaption(toStr(vMax));
+	Real vMul = aMul[val];  if (edInputMul)  edInputMul->setCaption(toStr(vMul));
 	actDetail->setProperty("MinValue",vMin);
 	actDetail->setProperty("MaxValue",vMax);
 	actDetail->setProperty("InverseMul",vMul);

@@ -12,9 +12,6 @@
 			<Property key="Tab_ButtonAutoWidth" value="true"/>
 			<Widget type="TabItem" skin="" position="4 26 787 531" name="TabTrack">
 				<Property key="Widget_Caption" value="#{Track}"/>
-				<!--<Widget type="List" skin="List" position="14 32 148 487" name="TrackList">
-					<UserString key="tip" value="#{TipTrackList}"/>
-				</Widget>-->
 				<Widget type="StaticText" skin="StaticText" position="176 456 200 24" name="TrackText">
 					<Property key="Widget_InheritsAlpha" value="true"/>
 					<Property key="Widget_Colour" value="0 0 0"/>
@@ -169,18 +166,18 @@
 					<Property key="Image_Texture" value="track_icons.png"/>
 					<Property key="Image_Coord" value="0 0 224 32"/>
 				</Widget>
-                <Widget type="Button" skin="ButtonSmall" position="16 7 40 24" name="TrkView1">
+				<Widget type="Button" skin="ButtonSmall" position="16 7 40 24" name="TrkView1">
 					<Property key="Widget_Caption" value="|"/>
-                    <Property key="Widget_Alpha" value="0.8"/>
-                    <Property key="Widget_Colour" value="0.6 0.8 1.0"/>
+					<Property key="Widget_Alpha" value="0.8"/>
+					<Property key="Widget_Colour" value="0.6 0.8 1.0"/>
 					<Property key="Text_TextColour" value="0.45 0.58 0.8"/>
-                </Widget>
-                <Widget type="Button" skin="ButtonSmall" position="64 7 40 24" name="TrkView2">
+				</Widget>
+				<Widget type="Button" skin="ButtonSmall" position="64 7 40 24" name="TrkView2">
 					<Property key="Widget_Caption" value="|||"/>
-                    <Property key="Widget_Alpha" value="0.8"/>
-                    <Property key="Widget_Colour" value="0.6 0.8 1.0"/>
+					<Property key="Widget_Alpha" value="0.8"/>
+					<Property key="Widget_Colour" value="0.6 0.8 1.0"/>
 					<Property key="Text_TextColour" value="0.45 0.58 0.8"/>
-                </Widget>
+				</Widget>
 			</Widget>
 			<Widget type="TabItem" skin="" position="4 26 787 531">
 				<Property key="Widget_Caption" value="#{Car}"/>
@@ -1067,39 +1064,53 @@
 					<Property key="Text_TextColour" value="0.75 0.85 0.95"/>
 					<Property key="Widget_Caption" value="#{InputPressButtonTip}"/>
 				</Widget>
-				<Widget type="ComboBox" skin="ComboBox" position="540 32 150 24" name="joystickSel">
+				<Widget type="StaticText" skin="StaticText" position="540 32 200 20">
+					<Property key="Text_TextColour" value="0.8 0.9 1.0"/>
+					<Property key="Widget_Caption" value="#{InputControllers}:"/>
+				</Widget>
+				<Widget type="ComboBox" skin="ComboBox" position="540 56 150 24" name="CmbInputController">
 					<Property key="Edit_Static" value="true"/>
 					<Property key="Edit_ReadOnly" value="true"/>
-					<Property key="Widget_Colour" value="0.6 0.9 1"/>
+					<Property key="Widget_Colour" value="0.65 0.85 1"/>
 					<Property key="Text_TextColour" value="0.9 0.97 1"/>
 				</Widget>
-				<Widget type="StaticText" skin="StaticText" position="540 110 300 20" name="InputDetail">
+				<Widget type="StaticText" skin="StaticText" position="540 114 244 20" name="InputDetail">
 					<Property key="Text_TextColour" value="0.8 0.9 1.0"/>
 					<Property key="Widget_Caption" value="#{InputDetailsFor}"/>
 				</Widget>
-				<Widget type="StaticText" skin="StaticText" position="540 140 300 20">
+				<Widget type="StaticText" skin="StaticText" position="540 216 244 20">
 					<Property key="Text_TextColour" value="0.6 0.8 1.0"/>
 					<Property key="Widget_Caption" value="#{InputMinVal}"/>
 				</Widget>
-				<Widget type="Edit" skin="Edit" position="540 163 80 20" name="InputMin">
+				<Widget type="Edit" skin="Edit" position="540 239 80 20" name="InputMin">
 					<Property key="Text_TextColour" value="0.6 0.8 1"/>
 					<Property key="Widget_Colour" value="0.6 0.8 1"/>
 				</Widget>
-				<Widget type="StaticText" skin="StaticText" position="540 195 300 20">
+				<Widget type="StaticText" skin="StaticText" position="540 271 244 20">
 					<Property key="Text_TextColour" value="1.0 0.7 0.5"/>
 					<Property key="Widget_Caption" value="#{InputMaxVal}"/>
 				</Widget>
-				<Widget type="Edit" skin="Edit" position="540 218 80 20" name="InputMax">
+				<Widget type="Edit" skin="Edit" position="540 294 80 20" name="InputMax">
 					<Property key="Text_TextColour" value="1 0.7 0.4"/>
 					<Property key="Widget_Colour" value="1 0.7 0.4"/>
 				</Widget>
-				<Widget type="StaticText" skin="StaticText" position="540 250 300 20">
+				<Widget type="StaticText" skin="StaticText" position="540 326 244 20">
 					<Property key="Text_TextColour" value="0.8 0.8 1.0"/>
-					<Property key="Widget_Caption" value="#{InputMultipler}"/>
+					<Property key="Widget_Caption" value="#{InputMultiplier}"/>
 				</Widget>
-				<Widget type="Edit" skin="Edit" position="540 273 80 20" name="InputMul">
+				<Widget type="Edit" skin="Edit" position="540 349 80 20" name="InputMul">
 					<Property key="Text_TextColour" value="0.8 0.8 1.0"/>
 					<Property key="Widget_Colour" value="0.8 0.8 1.0"/>
+				</Widget>
+				<Widget type="StaticText" skin="StaticText" position="540 154 244 20">
+					<Property key="Text_TextColour" value="0.7 0.9 0.9"/>
+					<Property key="Widget_Caption" value="#{InputDetailPreset}"/>
+				</Widget>
+				<Widget type="ComboBox" skin="ComboBox" position="540 176 160 26" name="CmbInputDetPreset">
+					<Property key="Edit_Static" value="true"/>
+					<Property key="Edit_ReadOnly" value="true"/>
+					<Property key="Widget_Colour" value="0.6 0.9 1"/>
+					<Property key="Text_TextColour" value="0.7 0.9 1"/>
 				</Widget>
 			</Widget>
 			<Widget type="TabItem" skin="" position="4 26 787 531">

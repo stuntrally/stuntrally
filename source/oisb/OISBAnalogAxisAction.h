@@ -139,7 +139,7 @@ namespace OISB
 			Real mMaximumValue;
 			/// calibration sensitivity
 			Real mSensitivity;
-			/// multipler to get inversed value
+			/// multiplier to get inversed value
 			Real mInverseMul;
 
             /// class providing analog emulation, if 0, emulation is disabled

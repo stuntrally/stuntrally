@@ -185,7 +185,7 @@
 	<Tag name="Anisotropy">Anisotropy</Tag>
 
 	<Tag name="Vegetation">Vegetation</Tag>
-	<Tag name="TreeMult">Trees multipler</Tag>
+	<Tag name="TreeMult">Trees multiplier</Tag>
 	<Tag name="DistMult">Distance mul</Tag>
 	<Tag name="GrassMult">Grass mul</Tag>
 	<Tag name="Reset">Reset</Tag>
@@ -262,10 +262,17 @@
 	<Tag name="InputHeaderTxt2">Binding</Tag>
 	<Tag name="InputHeaderTxt3">Value</Tag>
 
+	<Tag name="InputControllers">Controllers</Tag>
+	<Tag name="InputDetailPreset">Set from preset</Tag>
 	<Tag name="InputDetailsFor">Details for</Tag>
 	<Tag name="InputMinVal">Min. Value</Tag>
 	<Tag name="InputMaxVal">Max. Value</Tag>
-	<Tag name="InputMultipler">Multipler</Tag>
+	<Tag name="InputMultiplier">Multiplier</Tag>
+	<Tag name="InpSet_KeyHalf">Key Half</Tag>
+	<Tag name="InpSet_KeyFull">Key Full</Tag>
+	<Tag name="InpSet_AxisHalf">Axis Half</Tag>
+	<Tag name="InpSet_AxisHalfInv">Axis Half Inversed</Tag>
+	<Tag name="InpSet_AxisFull">Axis Full</Tag>
 
 	<Tag name="InputMapThrottle">Throttle</Tag>
 	<Tag name="InputMapBrake">Brake</Tag>
