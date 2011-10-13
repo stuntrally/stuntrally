@@ -18,7 +18,6 @@
 	<Tag name="ViewDist">Piirtoetäisyys</Tag>
 	<Tag name="TipRoadDist2">Additional distance to road.</Tag>
 	<Tag name="TreeDens">Puutiheys</Tag>
-	<Tag name="InputMultipler">Multipler</Tag>
 	<Tag name="TerNormal">Normaali</Tag>
 	<Tag name="LS_TRACK">Loading track</Tag>
 	<Tag name="NeedNewGame">* peli tarvitsee aloittaa alusta</Tag>
@@ -309,6 +308,7 @@
 	<Tag name="FrameSkip">Frames skip</Tag>
 	<Tag name="InputTrackScrn">(for track screenshot)</Tag>
 	<Tag name="trailColor">trail color</Tag>
+	<Tag name="InputRoadChkFirst">0   - set checkpoint as first</Tag>
 	<Tag name="UnitM">m</Tag>
 	<Tag name="EditTerrainMode">Edit Terrain mode</Tag>
 	<Tag name="TipTireParType3">Tire Particle type 3.</Tag>
@@ -539,7 +539,14 @@
 	<Tag name="MyGUI_MessageBox_Yes">Kyllä</Tag>
 	<Tag name="RollingDrag">Rolling Drag</Tag>
 	<Tag name="RplAll">All</Tag>
-	<Tag name="InputRoadChkFirst">0   - set checkpoint as first</Tag>
+	<Tag name="InpSet_AxisFull">Axis Full</Tag>
+	<Tag name="InpSet_KeyHalf">Key Half</Tag>
+	<Tag name="InpSet_AxisHalf">Axis Half</Tag>
+	<Tag name="InputDetailPreset">Set from preset</Tag>
+	<Tag name="InpSet_KeyFull">Key Full</Tag>
+	<Tag name="InputControllers">Controllers</Tag>
+	<Tag name="InputMultiplier">Multiplier</Tag>
+	<Tag name="InpSet_AxisHalfInv">Axis Half Inversed</Tag>
 	<Tag name="GameVersion">1.3</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 

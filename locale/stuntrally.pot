@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION"
 "Report-Msgid-Bugs-To: "
-"POT-Creation-Date: 2011-10-11 21:10+0200"
+"POT-Creation-Date: 2011-10-13 19:33+0200"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>"
 "Language-Team: LANGUAGE <LL@li.org>"
@@ -39,6 +39,10 @@ msgstr ""
 
 msgctxt "TipGrassSwayDistr"
 msgid "Grass sway effect distribution (how random)."
+msgstr ""
+
+msgctxt "InpSet_AxisFull"
+msgid "Axis Full"
 msgstr ""
 
 msgctxt "InputStartMeet"
@@ -95,10 +99,6 @@ msgstr ""
 
 msgctxt "Sky"
 msgid "Sky"
-msgstr ""
-
-msgctxt "InputMultipler"
-msgid "Multipler"
 msgstr ""
 
 msgctxt "TerNormal"
@@ -221,8 +221,8 @@ msgctxt "TipParType3"
 msgid "Tire Particle type 3 (global for track)."
 msgstr ""
 
-msgctxt "TipParType2"
-msgid "Tire Particle type 2 (global for track)."
+msgctxt "SkirtLength"
+msgid "Skirt Length"
 msgstr ""
 
 msgctxt "TipParType1"
@@ -331,6 +331,10 @@ msgstr ""
 
 msgctxt "InputRoadAngType"
 msgid "5,6   - angles type"
+msgstr ""
+
+msgctxt "InpSet_KeyHalf"
+msgid "Key Half"
 msgstr ""
 
 msgctxt "CopySource"
@@ -473,10 +477,6 @@ msgctxt "ReflMode_single"
 msgid "Single"
 msgstr ""
 
-msgctxt "MapSize"
-msgid "Map size"
-msgstr ""
-
 msgctxt "Friction"
 msgid "Friction"
 msgstr ""
@@ -513,6 +513,10 @@ msgctxt "Model"
 msgid "Model"
 msgstr ""
 
+msgctxt "InpSet_AxisHalf"
+msgid "Axis Half"
+msgstr ""
+
 msgctxt "PipeLStepsMul"
 msgid "Pipe L steps mul."
 msgstr ""
@@ -533,8 +537,8 @@ msgctxt "InputAfterChanges"
 msgid "(after Terrain/Vegetation changes)"
 msgstr ""
 
-msgctxt "SkirtLength"
-msgid "Skirt Length"
+msgctxt "InputMapFlipRight"
+msgid "Flip right"
 msgstr ""
 
 msgctxt "OrigImage"
@@ -695,6 +699,10 @@ msgstr ""
 
 msgctxt "InputRoadMat"
 msgid "-,=  - road/pipe material"
+msgstr ""
+
+msgctxt "InputDetailPreset"
+msgid "Set from preset"
 msgstr ""
 
 msgctxt "InputStartHeight"
@@ -957,8 +965,8 @@ msgctxt "InputCameraTxt2"
 msgid "with ctrl - switch current car when many"
 msgstr ""
 
-msgctxt "InputMapFlipRight"
-msgid "Flip right"
+msgctxt "MapSize"
+msgid "Map size"
 msgstr ""
 
 msgctxt "InputRoadNotOnTer"
@@ -1061,6 +1069,10 @@ msgctxt "ChangeCar"
 msgid "Change Car"
 msgstr ""
 
+msgctxt "InpSet_KeyFull"
+msgid "Key Full"
+msgstr ""
+
 msgctxt "InputMapPrevTab"
 msgid "Previous tab"
 msgstr ""
@@ -1154,7 +1166,7 @@ msgid "Change all graphics settings to preset:"
 msgstr ""
 
 msgctxt "TreeMult"
-msgid "Trees multipler"
+msgid "Trees multiplier"
 msgstr ""
 
 msgctxt "RplCur"
@@ -1235,6 +1247,10 @@ msgstr ""
 
 msgctxt "ChngTrkTab"
 msgid "changed in [Track] tab"
+msgstr ""
+
+msgctxt "TipParType2"
+msgid "Tire Particle type 2 (global for track)."
 msgstr ""
 
 msgctxt "InputRplCtrl2"
@@ -1449,8 +1465,8 @@ msgctxt "InputCamControl2"
 msgid "LMB - rotate  RMB - move  MMB - zoom"
 msgstr ""
 
-msgctxt "ColBright"
-msgid "Brightness"
+msgctxt "SkirtHeight"
+msgid "Skirt Height"
 msgstr ""
 
 msgctxt "LS_CLEANUP"
@@ -1781,6 +1797,10 @@ msgctxt "Amplitude"
 msgid "Amplitude"
 msgstr ""
 
+msgctxt "InputControllers"
+msgid "Controllers"
+msgstr ""
+
 msgctxt "InputRoadModify"
 msgid "Modify"
 msgstr ""
@@ -1909,6 +1929,10 @@ msgctxt "RestartApply"
 msgid "Restart game, to apply *changes."
 msgstr ""
 
+msgctxt "InputMultiplier"
+msgid "Multiplier"
+msgstr ""
+
 msgctxt "InputUndo"
 msgid "(one time undo)"
 msgstr ""
@@ -2017,6 +2041,10 @@ msgctxt "RplLoad"
 msgid "Load"
 msgstr ""
 
+msgctxt "InpSet_AxisHalfInv"
+msgid "Axis Half Inversed"
+msgstr ""
+
 msgctxt "TipTerLHSm"
 msgid "Height smooth range (transition)."
 msgstr ""
@@ -2069,8 +2097,8 @@ msgctxt "distribution"
 msgid "distribution"
 msgstr ""
 
-msgctxt "SkirtHeight"
-msgid "Skirt Height"
+msgctxt "ColBright"
+msgid "Brightness"
 msgstr ""
 
 msgctxt "InputWheelSize"
