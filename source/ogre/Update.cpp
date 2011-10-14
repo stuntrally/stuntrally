@@ -155,7 +155,7 @@ bool App::frameStart(Real time)
 			if (bFirstFrame) // 1st frame: dont animate
 				arrowAnimCur = arrowAnimEnd;
 			else
-				arrowAnimCur = Ogre::Quaternion::Slerp(time*10, arrowAnimStart, arrowAnimEnd, true);
+				arrowAnimCur = Ogre::Quaternion::Slerp(time*5, arrowAnimStart, arrowAnimEnd, true);
 			arrowRotNode->setOrientation(arrowAnimCur);
 			
 			// look down -y a bit so we can see the arrow better
