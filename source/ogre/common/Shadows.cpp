@@ -147,9 +147,13 @@ void App::changeShadows()
 		TexturePtr tex = mSceneMgr->getShadowTexture(i);
 
 		// Set up a debug panel to display the shadow
+		
+		if (MaterialManager::getSingleton().resourceExists("Ogre/DebugTexture" + toStr(i)))
+			MaterialManager::getSingleton().remove("Ogre/DebugTexture" + toStr(i));
 		MaterialPtr debugMat = MaterialManager::getSingleton().create(
-			"Ogre/DebugTexture" + StringConverter::toString(i), 
+			"Ogre/DebugTexture" + toStr(i), 
 			ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME);
+			
 		debugMat->getTechnique(0)->getPass(0)->setLightingEnabled(false);
 		TextureUnitState *t = debugMat->getTechnique(0)->getPass(0)->createTextureUnitState(tex->getName());
 		t->setTextureAddressingMode(TextureUnitState::TAM_CLAMP);
@@ -161,7 +165,7 @@ void App::changeShadows()
 		{
 			if (debugPanel = 
 				static_cast<OverlayContainer*>(
-					mgr.getOverlayElement("Ogre/DebugTexPanel" + StringConverter::toString(i)
+					mgr.getOverlayElement("Ogre/DebugTexPanel" + toStr(i)
 				)))
 				mgr.destroyOverlayElement(debugPanel);
 		}
