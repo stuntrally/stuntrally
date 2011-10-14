@@ -35,17 +35,23 @@ material ppx_shadow			// per pixel  with pssm shadow
 			texture_unit shadow_tex0
 			{
 				content_type shadow
-				tex_address_mode clamp
+				tex_address_mode border
+				tex_border_colour 1.0 1.0 1.0
+				//tex_address_mode clamp
 			}
 			texture_unit shadow_tex1
 			{
 				content_type shadow
-				tex_address_mode clamp
+				tex_address_mode border
+				tex_border_colour 1.0 1.0 1.0
+				//tex_address_mode clamp
 			}
 			texture_unit shadow_tex2
 			{
 				content_type shadow
-				tex_address_mode clamp
+				tex_address_mode border
+				tex_border_colour 1.0 1.0 1.0
+				//tex_address_mode clamp
 			}
 		}
 	}
@@ -97,17 +103,23 @@ material ppx_shadow_a		// per pixel  with pssm shadow and  alpha texture
 			texture_unit shadow_tex0
 			{
 				content_type shadow
-				tex_address_mode clamp
+				//tex_address_mode clamp
+				tex_address_mode border
+				tex_border_colour 1.0 1.0 1.0
 			}
 			texture_unit shadow_tex1
 			{
 				content_type shadow
-				tex_address_mode clamp
+				//tex_address_mode clamp
+				tex_address_mode border
+				tex_border_colour 1.0 1.0 1.0
 			}
 			texture_unit shadow_tex2
 			{
 				content_type shadow
-				tex_address_mode clamp
+				//tex_address_mode clamp
+				tex_address_mode border
+				tex_border_colour 1.0 1.0 1.0
 			}
 		}
 	}
@@ -150,17 +162,23 @@ material ppx_shadow_sel		// per pixel  with pssm shadow  +  selected pass add
 			texture_unit shadow_tex0
 			{
 				content_type shadow
-				tex_address_mode clamp
+				//tex_address_mode clamp
+				tex_address_mode border
+				tex_border_colour 1.0 1.0 1.0
 			}
 			texture_unit shadow_tex1
 			{
 				content_type shadow
-				tex_address_mode clamp
+				//tex_address_mode clamp
+				tex_address_mode border
+				tex_border_colour 1.0 1.0 1.0
 			}
 			texture_unit shadow_tex2
 			{
 				content_type shadow
-				tex_address_mode clamp
+				//tex_address_mode clamp
+				tex_address_mode border
+				tex_border_colour 1.0 1.0 1.0
 			}
 		}
 		pass	//  sel pass
