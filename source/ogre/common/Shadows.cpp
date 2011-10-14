@@ -43,7 +43,12 @@ void App::changeShadows()
 	int fTex = /*2048*/ ciShadowSizesA[pSet->shadow_size], fTex2 = fTex/2;
 	int num = /*3*/ pSet->shadow_count;
 
+	#ifdef SHADOWS_D
+	TerrainMaterialGeneratorB::SM2Profile* matProfile = 0;
+	#else
 	TerrainMaterialGeneratorA::SM2Profile* matProfile = 0;
+	#endif
+	
 	if (mTerrainGlobals)
 	{
 		#ifdef SHADOWS_D
@@ -143,7 +148,13 @@ void App::changeShadows()
    // add the overlay elements to show the shadow maps:
 	// init overlay elements
 	OverlayManager& mgr = OverlayManager::getSingleton();
-	Overlay* overlay = mgr.create("DebugOverlay");
+	Overlay* overlay;
+	
+	// destroy if already exists
+	if (overlay = mgr.getByName("DebugOverlay"))
+		mgr.destroy(overlay);
+		
+	overlay = mgr.create("DebugOverlay");
 	
 	for (size_t i = 0; i < num; ++i) {
 		TexturePtr tex = mSceneMgr->getShadowTexture(i);
@@ -156,7 +167,20 @@ void App::changeShadows()
 		TextureUnitState *t = debugMat->getTechnique(0)->getPass(0)->createTextureUnitState(tex->getName());
 		t->setTextureAddressingMode(TextureUnitState::TAM_CLAMP);
 
-		OverlayContainer* debugPanel = (OverlayContainer*)
+		OverlayContainer* debugPanel;
+		
+		// destroy container if exists
+		try
+		{
+			if (debugPanel = 
+				static_cast<OverlayContainer*>(
+					mgr.getOverlayElement("Ogre/DebugTexPanel" + StringConverter::toString(i)
+				)))
+				mgr.destroyOverlayElement(debugPanel);
+		}
+		catch (Ogre::Exception&) {}
+		
+		debugPanel = (OverlayContainer*)
 			(OverlayManager::getSingleton().createOverlayElement("Panel", "Ogre/DebugTexPanel" + StringConverter::toString(i)));
 		debugPanel->_setPosition(0.8, i*0.25);
 		debugPanel->_setDimensions(0.2, 0.24);
