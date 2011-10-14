@@ -1,9 +1,6 @@
 #include "pch.h"
 #include "../Defines.h"
-
-#ifdef SHADOWS_D
-#include "../common/OgreTerrainMaterialGeneratorA.h"
-#endif
+#include "../common/TerrainMaterialGen.h"
 
 #ifdef ROAD_EDITOR
 	#include "../../editor/OgreApp.h"
@@ -17,7 +14,6 @@
 	#include "../SplitScreen.h"
 	#include "../QTimer.h"
 #endif
-#include <OgreTerrainMaterialGeneratorA.h>
 #include <OgreTerrain.h>
 #include <OgreShadowCameraSetupLiSPSM.h>
 #include <OgreShadowCameraSetupPSSM.h>
@@ -43,21 +39,11 @@ void App::changeShadows()
 	int fTex = /*2048*/ ciShadowSizesA[pSet->shadow_size], fTex2 = fTex/2;
 	int num = /*3*/ pSet->shadow_count;
 
-	#ifdef SHADOWS_D
 	TerrainMaterialGeneratorB::SM2Profile* matProfile = 0;
-	#else
-	TerrainMaterialGeneratorA::SM2Profile* matProfile = 0;
-	#endif
 	
 	if (mTerrainGlobals)
 	{
-		#ifdef SHADOWS_D
-		Ogre::TerrainMaterialGeneratorB::SM2Profile* matProfile = static_cast<TerrainMaterialGeneratorB::SM2Profile*>(
-			mTerrainGlobals->getDefaultMaterialGenerator()->getActiveProfile());
-		#else
-		matProfile = static_cast<TerrainMaterialGeneratorA::SM2Profile*>(
-			mTerrainGlobals->getDefaultMaterialGenerator()->getActiveProfile());
-		#endif
+		matProfile = (TerrainMaterialGeneratorB::SM2Profile*) mTerrainGlobals->getDefaultMaterialGenerator()->getActiveProfile();
 				
 		matProfile->setReceiveDynamicShadowsEnabled(enabled);
 		matProfile->setReceiveDynamicShadowsLowLod(true);
@@ -131,7 +117,8 @@ void App::changeShadows()
 	}
 	
 	mSceneMgr->setShadowTextureSelfShadow(bDepth ? true : false);  //-?
-	mSceneMgr->setShadowCasterRenderBackFaces(bDepth ? true : false);
+	//mSceneMgr->setShadowCasterRenderBackFaces(bDepth ? true : false);
+	mSceneMgr->setShadowCasterRenderBackFaces(false);
 	mSceneMgr->setShadowTextureCasterMaterial(bDepth ? "PSSM/shadow_caster" : StringUtil::BLANK);
 
 	if (matProfile && terrain)  {
@@ -145,7 +132,7 @@ void App::changeShadows()
 	
 	#ifdef SHADOWS_D		
 	// shadow tex overlay
-   // add the overlay elements to show the shadow maps:
+	// add the overlay elements to show the shadow maps:
 	// init overlay elements
 	OverlayManager& mgr = OverlayManager::getSingleton();
 	Overlay* overlay;

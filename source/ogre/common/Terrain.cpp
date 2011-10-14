@@ -2,10 +2,7 @@
 #include "../Defines.h"
 #include "../common/RenderConst.h"
 #include "../../road/Road.h"
-
-#ifdef SHADOWS_D
-#include "../common/OgreTerrainMaterialGeneratorA.h"
-#endif
+#include "../common/TerrainMaterialGen.h"
 
 #ifdef ROAD_EDITOR
 	#include "../../editor/OgreApp.h"
@@ -27,6 +24,7 @@
 #include <OgreMeshManager.h>
 #include <OgreMaterialManager.h>
 #include <OgreEntity.h>
+
 using namespace Ogre;
 
 
@@ -200,10 +198,11 @@ void App::GetTerAngles(int xb,int yb, int xe,int ye)
 //--------------------------------------------------------------------------------------------------------------------------
 void App::configureTerrainDefaults(Light* l)
 {
-	#ifdef SHADOWS_D
-	TerrainMaterialGeneratorPtr matGen = static_cast<TerrainMaterialGeneratorPtr>(new TerrainMaterialGeneratorB());
+	//TerrainMaterialGeneratorPtr matGen = static_cast<TerrainMaterialGeneratorPtr>(new TerrainMaterialGeneratorB());
+	TerrainMaterialGeneratorPtr matGen;
+	TerrainMaterialGeneratorB* matGenP = new TerrainMaterialGeneratorB();
+	matGen.bind(matGenP);
 	mTerrainGlobals->setDefaultMaterialGenerator(matGen);
-	#endif
 
 	mTerrainGlobals->setMaxPixelError(pSet->terdetail);  // 1- 4-8+
 	//mTerrainGlobals->setUseRayBoxDistanceCalculation(true);

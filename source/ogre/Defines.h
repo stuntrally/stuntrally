@@ -58,6 +58,6 @@ const static ShapeData
 	gSD_Other(ST_Other);
 /**/
 
-//#define SHADOWS_D  // test depth shadows
+//#define SHADOWS_D  // enable shadow debug overlays
 
 #endif

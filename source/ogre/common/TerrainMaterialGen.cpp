@@ -25,7 +25,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 -----------------------------------------------------------------------------
 */
-#include "OgreTerrainMaterialGeneratorA.h"
+#include "TerrainMaterialGen.h"
 #include "OgreTerrain.h"
 #include "OgreMaterialManager.h"
 #include "OgreTechnique.h"
@@ -35,6 +35,7 @@ THE SOFTWARE.
 #include "OgreHighLevelGpuProgramManager.h"
 #include "OgreHardwarePixelBuffer.h"
 #include "OgreShadowCameraSetupPSSM.h"
+#include "../Defines.h"
 
 namespace Ogre
 {
@@ -220,8 +221,8 @@ namespace Ogre
 	//---------------------------------------------------------------------
 	MaterialPtr TerrainMaterialGeneratorB::SM2Profile::generate(const Terrain* terrain)
 	{
-		MaterialPtr mat2 = Ogre::MaterialManager::getSingleton().getByName("roadAsphalt");
-		return mat2;
+		//MaterialPtr mat2 = Ogre::MaterialManager::getSingleton().getByName("roadJungle_ter");
+		//return mat2;
 		
 		// re-use old material if exists
 		MaterialPtr mat = terrain->_getMaterial();
@@ -272,8 +273,9 @@ namespace Ogre
 	//---------------------------------------------------------------------
 	MaterialPtr TerrainMaterialGeneratorB::SM2Profile::generateForCompositeMap(const Terrain* terrain)
 	{
-		MaterialPtr mat2 = Ogre::MaterialManager::getSingleton().getByName("roadAsphalt");
-		return mat2;
+		//MaterialPtr mat2 = Ogre::MaterialManager::getSingleton().getByName("roadJungle_ter");
+		//return mat2;
+
 		
 		// re-use old material if exists
 		MaterialPtr mat = terrain->_getCompositeMapMaterial();
@@ -304,7 +306,10 @@ namespace Ogre
 	void TerrainMaterialGeneratorB::SM2Profile::addTechnique(
 		const MaterialPtr& mat, const Terrain* terrain, TechniqueType tt)
 	{
-
+		//setReceiveDynamicShadowsEnabled(true);
+		//setReceiveDynamicShadowsDepth(true);
+		//setReceiveDynamicShadowsPSSM(true);
+		
 		Technique* tech = mat->createTechnique();
 
 		// Only supporting one pass
@@ -565,6 +570,10 @@ namespace Ogre
 				{
 					splitPoints[i-1] = splitPointList[i];
 				}
+				/*for (uint i = 0; i < numTextures; ++i)
+				{
+					splitPoints[i] = splitPointList[i];
+				}*/
 				params->setNamedConstant("pssmSplitPoints", splitPoints);
 			}
 
@@ -1288,7 +1297,6 @@ namespace Ogre
 			"#define SHADOW_FILTER_SCALE 1 \n"
 
 			"#define SHADOW_SAMPLES NUM_SHADOW_SAMPLES_1D*NUM_SHADOW_SAMPLES_1D \n"
-
 			"float4 offsetSample(float4 uv, float2 offset, float invMapSize) \n"
 			"{ \n"
 			"	return float4(uv.xy + offset * invMapSize * uv.w, uv.z, uv.w); \n"
@@ -1316,8 +1324,9 @@ namespace Ogre
 				"		} \n"
 
 				"	shadow /= SHADOW_SAMPLES; \n"
-
-				"	return shadow; \n"
+				//" return 1;\n"
+				//"	return shadow; \n"
+				" if (shadow == 0) return 0.3; else return 1;\n"
 				"} \n";
 		}
 		else
@@ -1325,6 +1334,7 @@ namespace Ogre
 			outStream <<
 				"float calcSimpleShadow(sampler2D shadowMap, float4 shadowMapPos) \n"
 				"{ \n"
+				//"return 1;\n"
 				"	return tex2Dproj(shadowMap, shadowMapPos).x; \n"
 				"} \n";
 
@@ -1440,8 +1450,8 @@ namespace Ogre
 			if (prof->getReceiveDynamicShadowsDepth())
 			{
 				// make linear
-				outStream <<
-					"oLightSpacePos" << i << ".z = (oLightSpacePos" << i << ".z - depthRange" << i << ".x) * depthRange" << i << ".w;\n";
+				//outStream <<
+				//	"oLightSpacePos" << i << ".z = (oLightSpacePos" << i << ".z - depthRange" << i << ".x) * depthRange" << i << ".w;\n";
 
 			}
 		}
