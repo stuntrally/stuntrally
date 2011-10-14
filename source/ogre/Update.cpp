@@ -418,6 +418,11 @@ void App::newPoses()
 				// set animation start to old orientation
 				arrowAnimStart = arrowAnimCur;
 				
+				bool noAnim = false;
+				// game start: no animation
+				if (carM->iCurChk == -1)
+					noAnim = true;
+				
 				// get vector from camera to checkpoint
 				Ogre::Vector3 chkPos;
 				if (carM->iCurChk == -1 || carM->iCurChk == carM->iNextChk) // workaround for first checkpoint
@@ -435,6 +440,7 @@ void App::newPoses()
 
 				const bool valid = !quat.isNaN();
 				if (valid) {
+					if (noAnim) arrowAnimStart = quat;
 					arrowAnimEnd = quat;
 				
 					// set arrow color (wrong direction: red arrow)
