@@ -38,6 +38,9 @@ THE SOFTWARE.
 #include "OgreShadowCameraSetupPSSM.h"
 #include "../Defines.h"
 
+// depth shadows: use terrain receiver shader or use custom shader (pssm.cg)
+#define CUSTOM_RECEIVER_SHADER
+
 namespace Ogre
 {
 	//---------------------------------------------------------------------
@@ -571,10 +574,7 @@ namespace Ogre
 				{
 					splitPoints[i-1] = splitPointList[i];
 				}
-				/*for (uint i = 0; i < numTextures; ++i)
-				{
-					splitPoints[i] = splitPointList[i];
-				}*/
+
 				params->setNamedConstant("pssmSplitPoints", splitPoints);
 			}
 
@@ -1290,6 +1290,7 @@ namespace Ogre
 	void TerrainMaterialGeneratorB::SM2Profile::ShaderHelperCg::generateFpDynamicShadowsHelpers(
 		const SM2Profile* prof, const Terrain* terrain, TechniqueType tt, StringUtil::StrStreamType& outStream)
 	{
+		#ifndef CUSTOM_RECEIVER_SHADER
 		// TODO make filtering configurable
 		outStream <<
 			"// Simple PCF \n"
@@ -1326,10 +1327,26 @@ namespace Ogre
 
 				"	shadow /= SHADOW_SAMPLES; \n"
 				//" return 1;\n"
-				//"	return shadow; \n"
-				" if (shadow == 0) return 0.3; else return 1;\n"
+				"	return shadow; \n"
+				//" if (shadow == 0) return 0.3; else return 1;\n"
 				"} \n";
 		}
+		#else
+			outStream << 
+			"float shadowPCF(sampler2D shadowMap, float4 shadowMapPos, float2 offset)\n"
+			"{\n"
+				"shadowMapPos = shadowMapPos / shadowMapPos.w;\n"
+				"float2 uv = shadowMapPos.xy;\n"
+				"float3 o = float3(offset, -offset.x) * 0.3f;\n"
+				"float c =	(shadowMapPos.z <= tex2D(shadowMap, uv.xy - o.xy).r) ? 1 : 0;\n"
+				"c +=		(shadowMapPos.z <= tex2D(shadowMap, uv.xy + o.xy).r) ? 1 : 0;\n"
+				"c +=		(shadowMapPos.z <= tex2D(shadowMap, uv.xy + o.zy).r) ? 1 : 0;\n"
+				"c +=		(shadowMapPos.z <= tex2D(shadowMap, uv.xy - o.zy).r) ? 1 : 0;\n"
+				"return c / 4;\n"
+			"}\n";
+			if (prof->getReceiveDynamicShadowsDepth()) {}
+		#endif
+		
 		else
 		{
 			outStream <<
@@ -1365,9 +1382,15 @@ namespace Ogre
 				outStream << "float4 lsPos" << i << ", ";
 			if (prof->getReceiveDynamicShadowsDepth())
 			{
+				#ifndef CUSTOM_RECEIVER_SHADER
 				outStream << "\n	";
 				for (uint i = 0; i < numTextures; ++i)
 					outStream << "float invShadowmapSize" << i << ", ";
+				#else
+				outStream << "\n	";
+				for (uint i = 0; i < numTextures; ++i)
+					outStream << "float4 invShadowmapSize" << i << ", ";
+				#endif
 			}
 			outStream << "\n"
 				"	float4 pssmSplitPoints, float camDepth) \n"
@@ -1388,8 +1411,13 @@ namespace Ogre
 					"	{ \n";
 				if (prof->getReceiveDynamicShadowsDepth())
 				{
+					#ifndef CUSTOM_RECEIVER_SHADER
 					outStream <<
 						"		shadow = calcDepthShadow(shadowMap" << i << ", lsPos" << i << ", invShadowmapSize" << i << "); \n";
+					#else
+					outStream <<
+						"		shadow = shadowPCF(shadowMap" << i << ", lsPos" << i << ", invShadowmapSize" << i << ".xy); \n";
+					#endif
 				}
 				else
 				{
@@ -1401,9 +1429,11 @@ namespace Ogre
 
 			}
 
-			outStream <<
-				"	return shadow; \n"
-				"} \n\n\n";
+			if (!prof->getReceiveDynamicShadowsDepth())
+				outStream << "	return shadow; \n";
+			else 
+				outStream << "	if (shadow == 0) return 0.3; else return 1.0; \n";
+			outStream << "} \n\n\n";
 		}
 
 
