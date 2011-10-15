@@ -152,6 +152,7 @@
 	<Tag name="Resolution">Resolution</Tag>
 	<Tag name="Fullscreen">Fullscreen</Tag>
 	<Tag name="VSync">VSync</Tag>
+	<Tag name="AntiAliasing">Antialiasing</Tag>
 	<Tag name="NeedRestart">* need restart</Tag>
 	<Tag name="Change">Change</Tag>
 
@@ -205,6 +206,7 @@
 	<Tag name="Size">Size</Tag>
 	<Tag name="Count">Count</Tag>
 	<Tag name="ApplyShadows">Apply Shadows</Tag>
+	<Tag name="LightmapSize">Lightmap size</Tag>
 
 	<Tag name="Particles">Particles</Tag>
 	<Tag name="TireTrails">Tire Trails</Tag>

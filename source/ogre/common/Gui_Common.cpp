@@ -178,6 +178,13 @@ void App::slShadowSize(SL)
 	if (valShadowSize)  valShadowSize->setCaption(toStr(ciShadowSizesA[v]));
 }
 
+void App::slLightmapSize(SL)
+{
+	int v = std::max( 0.0f, std::min((float) ciShadowNumSizes-1, ciShadowNumSizes * val/res));
+	if (bGI)  pSet->lightmap_size = v;
+	if (valLightmapSize)  valLightmapSize->setCaption(toStr(ciShadowSizesA[v]));
+}
+
 void App::slShadowDist(SL)
 {
 	Real v = 50.f + 4750.f * powf(val/res, 2.f);	if (bGI)  pSet->shadow_dist = v;
@@ -211,12 +218,29 @@ void App::GuiInitGraphics()
 	Slv(TreesDist,	powf((pSet->trees_dist-0.5f) /6.5f, 0.5f));
 	Slv(GrassDist,	powf((pSet->grass_dist-0.5f) /6.5f, 0.5f));
 	Btn("TrGrReset", btnTrGrReset);
+	
+	// screen
+	// find max. fsaa
+	int fsaa = 0; int newfsaa;
+	Ogre::ConfigOptionMap& configOptions = Ogre::Root::getSingleton().getRenderSystem()->getConfigOptions();
+	Ogre::ConfigOptionMap::iterator result = configOptions.find("FSAA");
+	if ( result != configOptions.end() )
+	{
+		Ogre::ConfigOption& FSAAOption = result->second;
+		for( Ogre::StringVector::iterator i( FSAAOption.possibleValues.begin() ), iEnd( FSAAOption.possibleValues.end() ); i != iEnd; ++i )
+		{
+			newfsaa = strtol( (*i).c_str(), 0, 10  );
+			if (newfsaa > fsaa) fsaa = newfsaa;
+		}
+	}
+	Slv(AntiAliasing, float(pSet->fsaa)/float(fsaa));
 
 	//  shadows
 	Slv(ShadowType,	pSet->shadow_type /res);
 	Slv(ShadowCount,(pSet->shadow_count-2) /2.f);
 	Slv(ShadowSize,	pSet->shadow_size /float(ciShadowNumSizes));
 	Slv(ShadowDist,	powf((pSet->shadow_dist -50.f)/4750.f, 0.5f));
+	Slv(LightmapSize, pSet->lightmap_size /float(ciShadowNumSizes));
 	Btn("Apply", btnShadows);
 	
 	Cmb(combo, "CmbGraphicsAll", comboGraphicsAll);
@@ -235,6 +259,13 @@ void App::GuiInitGraphics()
 //----------------------------------------------------------------------------------------------------------------
 void App::GuiCenterMouse()
 {
+	// mouse center causes problems on x11 with mouse capture=off
+	#ifndef ROAD_EDITOR
+		#if OGRE_PLATFORM == OGRE_PLATFORM_LINUX
+		if (pSet->x11_capture_mouse == false) return;
+		#endif
+	#endif
+	
 	int xm = mWindow->getWidth()/2, ym = mWindow->getHeight()/2;
 	MyGUI::InputManager::getInstance().injectMouseMove(xm, ym, 0);
 	OIS::MouseState &ms = const_cast<OIS::MouseState&>(mMouse->getMouseState());
@@ -364,10 +395,49 @@ void App::comboLanguage(SL)
 	#endif
 }
 
-
-//  [Screen] resolutions
+//  [Screen] 
 //-----------------------------------------------------------------------------------------------------------
 
+void App::slAntiAliasing(SL)
+{
+	// get allowed values for FSAA
+	std::vector<int> fsaaValues;
+	try
+	{
+		int fsaa = 0;
+		Ogre::ConfigOptionMap& configOptions = Ogre::Root::getSingleton().getRenderSystem()->getConfigOptions();
+		Ogre::ConfigOptionMap::iterator result = configOptions.find("FSAA");
+		if ( result != configOptions.end() )
+		{
+			Ogre::ConfigOption& FSAAOption = result->second;
+			for( Ogre::StringVector::iterator i( FSAAOption.possibleValues.begin() ), iEnd( FSAAOption.possibleValues.end() ); i != iEnd; ++i )
+			{
+				fsaa = strtol( (*i).c_str(), 0, 10  );
+				fsaaValues.push_back(fsaa);
+			}
+		}
+	}
+	catch (Ogre::Exception&) { return; }
+	
+	float v = fsaaValues.back() * val/res;
+	
+	if (fsaaValues.size() < 1) return;
+	
+	for (int i=1; i<fsaaValues.size(); i++)
+	{
+		if (v >= fsaaValues[i]) continue;
+		int smaller = fsaaValues[i] - v;
+		int bigger = v - fsaaValues[i-1];
+		if (bigger > smaller) v = fsaaValues[i];
+		else v = fsaaValues[i-1];
+		break;
+	}
+	if (bGI)  pSet->fsaa = v;
+	
+	if (valAntiAliasing){  Fmt(s, "%4.0f", v); valAntiAliasing->setCaption(s);  }
+}
+
+///  resolutions
 //  change
 void App::btnResChng(WP)
 {

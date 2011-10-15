@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION"
 "Report-Msgid-Bugs-To: "
-"POT-Creation-Date: 2011-10-15 13:01+0200"
+"POT-Creation-Date: 2011-10-15 15:02+0200"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>"
 "Language-Team: LANGUAGE <LL@li.org>"
@@ -795,6 +795,10 @@ msgstr ""
 
 msgctxt "TipModelPageLength"
 msgid "Models Page length (low will reload often, high will cause visible switching)."
+msgstr ""
+
+msgctxt "LightmapSize"
+msgid "Lightmap size"
 msgstr ""
 
 msgctxt "RoadQual"
@@ -1691,6 +1695,10 @@ msgstr ""
 
 msgctxt "Length"
 msgid "Length"
+msgstr ""
+
+msgctxt "AntiAliasing"
+msgid "Antialiasing"
 msgstr ""
 
 msgctxt "MyGUI_MessageBox_Continue"

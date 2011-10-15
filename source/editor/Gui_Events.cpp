@@ -10,11 +10,6 @@ using namespace Ogre;
 
 ///  Gui Events
 
-#define Slv(name, val)  \
-	sl = (HScrollPtr)mWndOpts->findWidget(#name);  \
-	v = val*res;  if (sl)  sl->setScrollPosition(v);  sl##name(sl, v);
-
-
 //  [Sky]
 //-----------------------------------------------------------------------------------------------------------
 

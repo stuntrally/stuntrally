@@ -36,7 +36,7 @@ void SETTINGS::Serialize(bool w, CONFIGFILE & c)
 
 	Param(c,w, "shadow.dist", shadow_dist);			Param(c,w, "shadow.size", shadow_size);
 	Param(c,w, "shadow.count",shadow_count);		Param(c,w, "shadow.type", shadow_type);
-	Param(c,w, "shadow.shaders", shaders);
+	Param(c,w, "shadow.shaders", shaders);			Param(c,w, "shadow.lightmap_size", lightmap_size);
 
 	Param(c,w, "misc.version", version);			Param(c,w, "misc.autostart", autostart);
 	Param(c,w, "misc.ogredialog", ogre_dialog);		Param(c,w, "misc.escquit", escquit);
@@ -66,7 +66,7 @@ SETTINGS::SETTINGS() :  ///  Defaults
 	//  graphics
 	anisotropy(8),	view_distance(3600),
 	terdetail(1.57), terdist(300), road_dist(1.0), tex_size(1), ter_mtr(2),
-	shadow_dist(2000), shadow_size(2), shadow_count(3), shadow_type(2),  /*<+*/
+	shadow_dist(2000), shadow_size(2), lightmap_size(0), shadow_count(3), shadow_type(2),  /*<+*/
 	shaders(1),  trees(1.f), grass(1.f), trees_dist(1.f), grass_dist(1.f),
 	//  startup
 	autostart(0), ogre_dialog(1), escquit(0), language(""),

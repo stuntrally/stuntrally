@@ -25,7 +25,7 @@ public:
 	//  graphics
 	int anisotropy, shaders, tex_size, ter_mtr;
 	float view_distance, terdetail,terdist, road_dist;
-	float shadow_dist;  int shadow_size, shadow_count, shadow_type;
+	float shadow_dist;  int shadow_size, lightmap_size, shadow_count, shadow_type;
 	float trees, grass, trees_dist, grass_dist;
 
 	//  startup

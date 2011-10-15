@@ -22,8 +22,8 @@
 #include <MyGUI.h>
 
 
-const int ciShadowNumSizes = 4;
-const int ciShadowSizesA[ciShadowNumSizes] = {512,1024,2048,4096};
+const int ciShadowNumSizes = 5;
+const int ciShadowSizesA[ciShadowNumSizes] = {256,512,1024,2048,4096};
 #define BrushMaxSize  512
 
 //  Gui
@@ -174,7 +174,8 @@ protected:
 	SLV(Anisotropy);  SLV(ViewDist);  SLV(TerDetail);  SLV(TerDist);  SLV(RoadDist);
 	SLV(TexSize);  SLV(TerMtr);  // detail
 	SLV(Trees);  SLV(Grass);  SLV(TreesDist);  SLV(GrassDist);  // paged
-	SLV(Shaders);  SLV(ShadowType);  SLV(ShadowCount);  SLV(ShadowSize);  SLV(ShadowDist);  // shadow
+	SLV(Shaders);  SLV(ShadowType);  SLV(ShadowCount);  SLV(ShadowSize);  SLV(LightmapSize);  SLV(ShadowDist);  // shadow
+	SLV(AntiAliasing); // screen
 	void comboTexFilter(SL), btnShadows(WP), btnTrGrReset(WP);
 	MyGUI::ButtonPtr bnQuit;  void btnQuit(WP);
 

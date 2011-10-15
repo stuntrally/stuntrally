@@ -52,7 +52,7 @@ void SETTINGS::Serialize(bool w, CONFIGFILE & c)
 
 	Param(c,w, "shadow.dist", shadow_dist);			Param(c,w, "shadow.size", shadow_size);
 	Param(c,w, "shadow.count",shadow_count);		Param(c,w, "shadow.type", shadow_type);
-	Param(c,w, "shadow.shaders", shaders);
+	Param(c,w, "shadow.shaders", shaders);			Param(c,w, "shadow.lightmap_size", lightmap_size);
 		
 	Param(c,w, "reflect.skip_frames", refl_skip);	Param(c,w, "reflect.faces_once", refl_faces);
 	Param(c,w, "reflect.map_size", refl_size);		Param(c,w, "reflect.dist", refl_dist);
@@ -105,7 +105,7 @@ SETTINGS::SETTINGS() :  ///  Defaults
 	anisotropy(4),	view_distance(1500), bFog(0),
 	terdetail(2), terdist(100), road_dist(1.0), tex_size(1), ter_mtr(2),
 	particles(true), trails(true),
-	shadow_dist(3000), shadow_size(2), shadow_count(3), shadow_type(1),
+	shadow_dist(3000), shadow_size(2), shadow_count(3), shadow_type(1), lightmap_size(0),
 	refl_skip(10), refl_faces(1), refl_size(0), refl_dist(500.f), refl_mode("single"),
 	shaders(0),  trees(1.f), grass(1.f), trees_dist(1.f), grass_dist(1.f),
 	particles_len(1.f), trails_len(1.f),
