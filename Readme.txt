@@ -17,7 +17,7 @@
             http://picasaweb.google.com/CryHam/
     Videos:  (gameplay and editor)
             http://www.youtube.com/user/TheCrystalHammer
-	Editor tutorial:
+    Editor tutorial:
 			http://code.google.com/p/vdrift-ogre/wiki/TrackEditor
 
     This program is free software: you can redistribute it and/or modify
