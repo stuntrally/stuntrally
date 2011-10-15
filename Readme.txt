@@ -18,7 +18,7 @@
     Videos:  (gameplay and editor)
             http://www.youtube.com/user/TheCrystalHammer
     Editor tutorial:
-			http://code.google.com/p/vdrift-ogre/wiki/TrackEditor
+            http://code.google.com/p/vdrift-ogre/wiki/TrackEditor
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
