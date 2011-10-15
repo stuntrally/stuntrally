@@ -705,8 +705,8 @@ void SplineRoad::RebuildRoadInt()
 					//if (bForceShadowCaster)
 						//entC->setCastShadows(true);  // col vis?
 				}
-				if (bForceShadowCaster)
-					ent->setCastShadows(true);
+				//if (bForceShadowCaster)
+					//ent->setCastShadows(true);
 
 				
 				/**/

@@ -1429,10 +1429,13 @@ namespace Ogre
 
 			}
 
-			//if (!prof->getReceiveDynamicShadowsDepth())
-				outStream << "	return shadow; \n";
-			//else 
-			//	outStream << "	return shadow";
+			if (!prof->getReceiveDynamicShadowsDepth())
+				outStream << "  return shadow;";
+			else
+			{
+				outStream << "	shadow = (1-shadow); \n";
+				outStream << "  return (1-(shadow*0.7)); \n";
+			}
 			outStream << "} \n\n\n";
 		}
 
