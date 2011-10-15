@@ -215,7 +215,7 @@ void App::configureTerrainDefaults(Light* l)
 
 	mTerrainGlobals->setCompositeMapSize(sc.td.iTerSize-1);  // par,..  1k
 	mTerrainGlobals->setCompositeMapDistance(pSet->terdist);  //100
-	mTerrainGlobals->setLightMapSize(pSet->lightmap_size);  //256, 2k
+	mTerrainGlobals->setLightMapSize(ciShadowSizesA[pSet->lightmap_size]);  //256, 2k
 	mTerrainGlobals->setSkirtSize(1);  //`
 	//matProfile->setLightmapEnabled(false);
 
