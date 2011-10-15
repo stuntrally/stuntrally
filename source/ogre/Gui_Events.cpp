@@ -109,6 +109,12 @@ void App::btnCarClrRandom(WP)
 	UpdCarClrSld();
 }
 
+//  [Screen] (game only)
+void App::chkVidSSAA(WP wp)
+{
+	ChkEv(ssaa);
+	refreshCompositor();
+}
 
 //  [Graphics]
 

@@ -196,7 +196,7 @@ protected:
 	//  screen
 	MyGUI::ListPtr resList;
 	void InitGuiScrenRes(), btnResChng(WP), ResizeOptWnd();
-	void chkVidFullscr(WP), chkVidVSync(WP);
+	void chkVidFullscr(WP), chkVidVSync(WP), chkVidSSAA(WP);
 	void comboGraphicsAll(MyGUI::ComboBoxPtr cmb, size_t val);
 	///-----------------------------------------
 

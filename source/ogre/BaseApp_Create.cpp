@@ -122,6 +122,7 @@ void BaseApp::refreshCompositor(bool disableAll)
 		CompositorManager::getSingleton().setCompositorEnabled((*it), "Bloom", false);
 		CompositorManager::getSingleton().setCompositorEnabled((*it), "HDR", false);
 		CompositorManager::getSingleton().setCompositorEnabled((*it), "Motion Blur", false);
+		CompositorManager::getSingleton().setCompositorEnabled((*it), "SSAA", false);
 	}
 
 	if (!pSet->all_effects || disableAll)
@@ -158,6 +159,7 @@ void BaseApp::refreshCompositor(bool disableAll)
 		CompositorManager::getSingleton().setCompositorEnabled((*it), "Bloom", pSet->bloom);
 		CompositorManager::getSingleton().setCompositorEnabled((*it), "HDR", pSet->hdr);
 		CompositorManager::getSingleton().setCompositorEnabled((*it), "Motion Blur", pSet->motionblur);
+		CompositorManager::getSingleton().setCompositorEnabled((*it), "SSAA", pSet->ssaa);
 	}
 }
 
@@ -178,6 +180,7 @@ void BaseApp::recreateCompositor()
 		mRoot->addResourceLocation(sPath + "/bloom", "FileSystem", "Effects");
 		mRoot->addResourceLocation(sPath + "/hdr", "FileSystem", "Effects");
 		mRoot->addResourceLocation(sPath + "/motionblur", "FileSystem", "Effects");
+		mRoot->addResourceLocation(sPath + "/ssaa", "FileSystem", "Effects");
 		ResourceGroupManager::getSingleton().initialiseResourceGroup("Effects");
 	}
 
@@ -279,6 +282,7 @@ void BaseApp::recreateCompositor()
 		CompositorManager::getSingleton().addCompositor((*it), "HDR");
 		CompositorManager::getSingleton().addCompositor((*it), "Bloom");
 		CompositorManager::getSingleton().addCompositor((*it), "Motion Blur");
+		CompositorManager::getSingleton().addCompositor((*it), "SSAA");
 	}
 	
 	refreshCompositor();
@@ -365,7 +369,8 @@ bool BaseApp::configure()
 
 		NameValuePairList settings;
 		settings.insert(std::make_pair("title", "Stunt Rally"));
-		settings.insert(std::make_pair("FSAA", toStr(pSet->fsaa)));
+		//settings.insert(std::make_pair("FSAA", toStr(pSet->fsaa)));
+		settings.insert(std::make_pair("FSAA", "16"));
 		settings.insert(std::make_pair("vsync", pSet->vsync ? "true" : "false"));
 
 		mWindow = mRoot->createRenderWindow("Stunt Rally", pSet->windowx, pSet->windowy, pSet->fullscreen, &settings);

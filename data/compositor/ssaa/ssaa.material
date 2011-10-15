@@ -1,0 +1,36 @@
+fragment_program Ogre/Compositor/SSAA_FP cg
+{
+   source SSAA_FP.cg
+   entry_point SSAA_ps
+   profiles ps_2_0 arbfp1
+}
+
+material Ogre/Compositor/SSAA
+{
+    technique
+    {
+      pass
+      {
+         cull_hardware none
+         cull_software none
+         depth_func always_pass
+
+         vertex_program_ref Ogre/Compositor/StdQuad_Tex2a_vp
+         {
+         }
+
+         fragment_program_ref Ogre/Compositor/SSAA_FP
+         {
+            param_named_auto ScreenSize inverse_texture_size 0
+         }
+
+         texture_unit source
+         {
+            tex_coord_set 0
+            tex_address_mode clamp
+            filtering trilinear
+         }
+
+      }
+   }
+}

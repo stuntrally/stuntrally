@@ -96,6 +96,7 @@ void App::InitGui()
     //------------------------------------------------------------------------
 	bnQuit = mGUI->findWidget<Button>("Quit");
 	if (bnQuit)  {  bnQuit->eventMouseButtonClick = newDelegate(this, &App::btnQuit);  bnQuit->setVisible(isFocGui);  }
+	Chk("SSAA", chkVidSSAA, pSet->ssaa);
 	Chk("ReverseOn", chkReverse, pSet->trackreverse);
 	Chk("ParticlesOn", chkParticles, pSet->particles);	Chk("TrailsOn", chkTrails, pSet->trails);
 

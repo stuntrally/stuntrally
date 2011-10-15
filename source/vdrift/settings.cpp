@@ -85,6 +85,7 @@ void SETTINGS::Serialize(bool w, CONFIGFILE & c)
 	Param(c,w, "video.fullscreen", fullscreen);
 	Param(c,w, "video.fsaa", fsaa);					Param(c,w, "video.vsync", vsync);
 	Param(c,w, "video.buffer", buffer);				Param(c,w, "video.rendersystem", rendersystem);
+	Param(c,w, "video.ssaa", ssaa);
 
 	Param(c,w, "replay.rec", rpl_rec);				Param(c,w, "replay.ghost", rpl_ghost);
 	Param(c,w, "replay.bestonly", rpl_bestonly);	Param(c,w, "replay.listview", rpl_listview);
@@ -124,11 +125,11 @@ SETTINGS::SETTINGS() :  ///  Defaults
 	//  video
 	bloom(false), bloomintensity(0.2), bloomorig(1.0), hdr(false),
 	motionblur(false), motionblurintensity(0.3),
-	all_effects(false),
+	all_effects(false), ssaa(true),
 	windowx(800), windowy(600), fullscreen(false), fsaa(0), vsync(false),
 	buffer("FBO"), rendersystem("OpenGL Rendering Subsystem"),
 	//  input
-	x11_capture_mouse(true),
+	x11_capture_mouse(false),
 	//  replay
 	rpl_rec(1), rpl_ghost(1), rpl_bestonly(1), rpl_alpha(0), rpl_listview(0)
 {
