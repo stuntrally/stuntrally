@@ -5,14 +5,20 @@
 
     Project's Homepage:  (all links, Issue tracker, Wiki pages, old Windows releases)
             http://code.google.com/p/vdrift-ogre/
-    Windows releases:
+
+    Windows installers and source packs:
             https://sourceforge.net/projects/stuntrally/files/
+    Linux packages info:
+            http://code.google.com/p/vdrift-ogre/wiki/Packages
+    Git repositories:  (for latest sources, data, and tracks)
+            https://github.com/stuntrally/
+
     Screenshots gallery:  (from all versions)
             http://picasaweb.google.com/CryHam/
     Videos:  (gameplay and editor)
             http://www.youtube.com/user/TheCrystalHammer
-    Git repositories:  (for latest sources, data, and tracks)
-            https://github.com/stuntrally/
+	Editor tutorial:
+			http://code.google.com/p/vdrift-ogre/wiki/TrackEditor
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -31,9 +37,9 @@
 
 Description
 
-This game features 55 tracks in 9 sceneries and 8 drivable cars.
+This game features 57 tracks in 9 sceneries and 8 drivable cars.
 The Track Editor allows modifying and creating tracks.
-Both game and editor run on Windows and Linux.
+Both run on Windows and Linux.
 
 Hardware requirements
 
@@ -44,9 +50,6 @@ with Shader Model 3.0 supported.
 It is possible to run on older,
 (e.g. on 1 core CPU and GeForce 7600 GT, with 30 fps),
 but integrated GPUs (or laptops) can't handle the game.
-
-The absolute minimum (ghastly) settings are
-in config/game-min.cfg file, copy it to game.cfg to use them.
 
 ----------------------------------------------------------------------------------
 
@@ -61,12 +64,16 @@ It also introduces road pipes, and provides a 3D spline generated road.
 
 Running
 
-Run StuntRally, choose Rendering SubSystem (or [Video] tab), and its options.
-You can change Track/Car with Up/Down keys and start with Enter.
+Run StuntRally. Esc/Tab key shows/hides Options.
 
-Esc/Tab key shows/hides Options, keys used in game
-can be seen in Options tab [Input].
+At first (in Options window) go to tab [Screen] and adjust resolution.
+Pick quick settings preset (from the combobox) according to your GPU.
 
+Keys used in game can be seen in Options tab [Input].
+If you want to reassign keys, or have a game controller
+go to tab [Input] to configure it and test range.
+
+You can change Track/Car (on their tabs) with Up/Down keys and start with Enter.
 Change cameras with C/X (with shift for main cameras only).
 Cameras can be adjusted in game, by mouse - move mouse to see actions.
 
@@ -82,6 +89,7 @@ Tab key switches between Camera/Edit mode.
 There isn't (and won't be) an undo function -
 hit F5 to reload last track state, and F4 to save it.
 After saving, track can be played in game (exports all data).
+There is a Editor tutorial Wiki page with videos (link at top).
 
 Have fun !
 
@@ -114,10 +122,11 @@ libvorbis-1.2.3, libogg-1.1.4
 
 -- These are included in Source (and compiled with project):
 Bullet 2.76
-BtOgre
-OISB
-PagedGeometry 1.1.0
+BtOgre *
+OISB *
+PagedGeometry 1.1.0 *
 TinyXML
+* are modified sources
 
 ----------------------------------------------------------------------------------
 
