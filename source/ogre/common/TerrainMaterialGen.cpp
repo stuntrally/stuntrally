@@ -1483,7 +1483,6 @@ namespace Ogre
 				// make linear
 				//outStream <<
 				//	"oLightSpacePos" << i << ".z = (oLightSpacePos" << i << ".z - depthRange" << i << ".x) * depthRange" << i << ".w;\n";
-
 			}
 		}
 
