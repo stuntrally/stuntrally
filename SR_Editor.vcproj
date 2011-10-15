@@ -433,7 +433,7 @@
 			Name="Cfg,Gui"
 			>
 			<File
-				RelativePath=".\_editor.cfg"
+				RelativePath=".\data\gui\core_language_en_tag.xml"
 				>
 			</File>
 			<File
@@ -545,30 +545,6 @@
 				>
 			</File>
 			<File
-				RelativePath=".\source\ogre\common\OgreTerrainMaterialGeneratorA.cpp"
-				>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="0"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="0"
-					/>
-				</FileConfiguration>
-			</File>
-			<File
-				RelativePath=".\source\ogre\common\OgreTerrainMaterialGeneratorA.h"
-				>
-			</File>
-			<File
 				RelativePath=".\source\ogre\common\RenderConst.h"
 				>
 			</File>
@@ -594,6 +570,14 @@
 			</File>
 			<File
 				RelativePath=".\Source\ogre\common\Terrain.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\source\ogre\common\TerrainMaterialGen.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\source\ogre\common\TerrainMaterialGen.h"
 				>
 			</File>
 			<File

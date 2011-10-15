@@ -97,12 +97,13 @@ void App::listTrackChng(MultiList2* li, size_t pos)
 	if (!li)  return;
 	size_t i = li->getIndexSelected();  if (i==ITEM_NONE)  return;
 
-	const UString& sl = li->getItemNameAt(i);  String s = sl;
+	const UString& sl = li->getItemNameAt(i);  String s = sl, s1 = s;
 	s = StringUtil::replaceAll(s, "*", "");
 	sListTrack = s;
+	bListTrackU = s1 != s ? 1 : 0;
 
-	int u = *li->getItemDataAt<int>(i,false);
-	bListTrackU = u;
+	//int u = *li->getItemDataAt<int>(i,false);  //wrong i
+	//bListTrackU = u;
 	
 	//  won't refresh if same-...  road dissapears if not found...
 	if (imgPrv)  imgPrv->setImageTexture(sListTrack+".jpg");
