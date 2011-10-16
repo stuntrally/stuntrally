@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "../Defines.h"
 #include "../common/TerrainMaterialGen.h"
+#include "../common/MaterialFactory.h"
 
 #ifdef ROAD_EDITOR
 	#include "../../editor/OgreApp.h"

@@ -5,6 +5,7 @@
 #include "../vdrift/pathmanager.h"
 #include "../paged-geom/PagedGeometry.h"
 #include "../ogre/common/RenderConst.h"
+#include "../ogre/common/MaterialFactory.h"
 
 #if OGRE_PLATFORM != OGRE_PLATFORM_WIN32
 	// dir listing

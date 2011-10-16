@@ -383,7 +383,7 @@ void App::CreateRoad()
 	road = new SplineRoad(pGame);  // sphere.mesh
 	road->Setup("", 0.7,  terrain, mSceneMgr, *mSplitMgr->mCameras.begin());
 	road->iTexSize = pSet->tex_size;
-	//road->bForceShadowCaster = (pSet->shadow_type == 3);
+	road->bForceShadowCaster = (pSet->shadow_type == 3);
 	
 	String sr = TrkDir()+"road.xml";
 	road->LoadFile(TrkDir()+"road.xml");

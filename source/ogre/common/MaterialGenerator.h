@@ -1,11 +1,9 @@
 #ifndef MATERIALGENERATOR_H
 #define MATERIALGENERATOR_H
 
-class MaterialFactory;
+#include <OgreMaterial.h>
 
-// some useful defines that will save code
-#define MATGEN_CTOR_H(s) s(MaterialFactory* parent);
-#define MATGEN_CTOR(s) s::s(MaterialFactory* parent) { MaterialGenerator(parent); }
+class MaterialFactory;
 
 class MaterialGenerator
 {
@@ -16,6 +14,10 @@ public:
 	
 protected:
 	MaterialFactory* mParent;
+	
+	/// utility methods
+	// get pointer to material if it exists and delete all techniques, if not, create new
+	Ogre::MaterialPtr prepareMaterial(const std::string& matName);
 };
 
 #endif

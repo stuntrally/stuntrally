@@ -22,7 +22,7 @@ SplineRoad::SplineRoad(GAME* pgame) : pGame(pgame),
 	lastNdSel(0),lastNdChosen(0), iSelPoint(-1), iChosen(-1),
 	posHit(Vector3::UNIT_SCALE), bHitTer(0), bSelChng(0),
 	rebuild(false), iDirtyId(-1), idStr(0),
-	fMarkerScale(1.f), fLodBias(1.f) /*, bForceShadowCaster(0)*/
+	fMarkerScale(1.f), fLodBias(1.f), bForceShadowCaster(0)
 {
 	Defaults();  iTexSize = 1;
 	iMrgSegs = 0;  segsMrg = 0;  iOldHide = -1;

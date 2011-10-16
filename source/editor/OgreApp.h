@@ -5,7 +5,6 @@
 #include "../ogre/common/SceneXml.h"
 #include "../ogre/common/BltObjects.h"
 #include "../ogre/common/TracksXml.h"
-#include "../ogre/common/MaterialFactory.h"
 
 #include "../vdrift/mathvector.h"
 #include "../vdrift/quaternion.h"
@@ -22,7 +21,6 @@
 
 #include <MyGUI.h>
 
-
 const int ciShadowNumSizes = 5;
 const int ciShadowSizesA[ciShadowNumSizes] = {256,512,1024,2048,4096};
 #define BrushMaxSize  512
@@ -34,7 +32,7 @@ const Ogre::Real crAngSnaps[ciAngSnapsNum] = {0,15,30,45,90,180};
 
 namespace Forests {  class PagedGeometry;  }
 namespace MyGUI  {  class MultiList2;  }
-
+class MaterialFactory;
 
 class App : public BaseApp, public Ogre::RenderTargetListener
 {

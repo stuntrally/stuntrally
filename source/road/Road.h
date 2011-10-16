@@ -97,7 +97,7 @@ public:
 	static Ogre::Vector3 GetRot(Ogre::Real ayaw, Ogre::Real ang);
 	void SetTerHitVis(bool visible), UpdRot();
 	
-	//bool bForceShadowCaster;
+	bool bForceShadowCaster;
 	
 
 private:

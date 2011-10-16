@@ -6,6 +6,7 @@
 #include "SplitScreen.h"
 #include "../paged-geom/PagedGeometry.h"
 #include "common/RenderConst.h"
+#include "common/MaterialFactory.h"
 
 #include <OgreTerrain.h>
 #include <OgreTerrainGroup.h>

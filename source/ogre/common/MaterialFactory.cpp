@@ -1,3 +1,4 @@
+#include "pch.h"
 #include "MaterialFactory.h"
 #include "MaterialGenerator.h"
 

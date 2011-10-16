@@ -5,7 +5,6 @@
 #include "common/SceneXml.h"
 #include "common/BltObjects.h"
 #include "common/TracksXml.h"
-#include "common/MaterialFactory.h"
 
 #include "ReplayGame.h"
 #include "CarModel.h"
@@ -20,6 +19,7 @@ namespace Forests {  class PagedGeometry;  }
 namespace BtOgre  {  class DebugDrawer;  }
 namespace MyGUI  {  class MultiList2;  }
 namespace OISB   {  class AnalogAxisAction;  }
+class MaterialFactory;
 
 
 class App : public BaseApp //, public RenderTargetListener

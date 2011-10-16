@@ -704,8 +704,8 @@ void SplineRoad::RebuildRoadInt()
 				if (cols /*&& posC.size() > 0*/)
 				{	AddMesh(meshC, sMeshC, aabox, &entC, &nodeC, "C."+sEnd);
 					entC->setVisible(true);  
-					//if (bForceShadowCaster)
-					entC->setCastShadows(true);  // col vis?
+					if (bForceShadowCaster)
+						entC->setCastShadows(true);  // col vis?
 				}
 				//if (bForceShadowCaster)
 					//ent->setCastShadows(true);
