@@ -1,3 +1,4 @@
+#include "pch.h"
 /*-------------------------------------------------------------------------------------
 Copyright (c) 2006 John Judnich
 
@@ -7,17 +8,15 @@ Permission is granted to anyone to use this software for any purpose, including 
 2. Altered source versions must be plainly marked as such, and must not be misrepresented as being the original software.
 3. This notice may not be removed or altered from any source distribution.
 -------------------------------------------------------------------------------------*/
+//#include "Defines.h"
+#include "TreeLoader3D.h"
+#include "PagedGeometry.h"
+#include "PropertyMaps.h"
 
 #include <OgreRoot.h>
 #include <OgreException.h>
 #include <OgreVector3.h>
 #include <OgreQuaternion.h>
-
-
-#include "TreeLoader3D.h"
-#include "PagedGeometry.h"
-#include "PropertyMaps.h"
-
 using namespace Ogre;
 
 namespace Forests {
@@ -31,14 +30,14 @@ TreeLoader3D::TreeLoader3D(PagedGeometry *geom, const TBounds &bounds)
 	//Make sure the bounds are aligned with PagedGeometry's grid, so the TreeLoader's grid tiles will have a 1:1 relationship
 	actualBounds = bounds;
 	gridBounds = bounds;
-	gridBounds.left = pageSize * Math::Floor((gridBounds.left - geom->getBounds().left) / pageSize) + geom->getBounds().left;
-	gridBounds.top = pageSize * Math::Floor((gridBounds.top - geom->getBounds().top) / pageSize) + geom->getBounds().top;
-	gridBounds.right = pageSize * Math::Ceil((gridBounds.right - geom->getBounds().left) / pageSize) + geom->getBounds().left;
-	gridBounds.bottom = pageSize * Math::Ceil((gridBounds.bottom - geom->getBounds().top) / pageSize) + geom->getBounds().top;
+	gridBounds.left = pageSize * Ogre::Math::Floor((gridBounds.left - geom->getBounds().left) / pageSize) + geom->getBounds().left;
+	gridBounds.top = pageSize * Ogre::Math::Floor((gridBounds.top - geom->getBounds().top) / pageSize) + geom->getBounds().top;
+	gridBounds.right = pageSize * Ogre::Math::Ceil((gridBounds.right - geom->getBounds().left) / pageSize) + geom->getBounds().left;
+	gridBounds.bottom = pageSize * Ogre::Math::Ceil((gridBounds.bottom - geom->getBounds().top) / pageSize) + geom->getBounds().top;
 
 	//Calculate page grid size
-	pageGridX = (int)Math::Ceil(gridBounds.width() / pageSize) + 1;
-	pageGridZ = (int)Math::Ceil(gridBounds.height() / pageSize) + 1;
+	pageGridX = Ogre::Math::Ceil(gridBounds.width() / pageSize) + 1;
+	pageGridZ = Ogre::Math::Ceil(gridBounds.height() / pageSize) + 1;
 
 	//Reset color map
 	colorMap = NULL;
@@ -59,7 +58,7 @@ TreeLoader3D::~TreeLoader3D()
 	pageGridList.clear();
 }
 
-void TreeLoader3D::addTree(Entity *entity, const Ogre::Vector3 &position, Degree yaw, Real scale, void* userData)
+void TreeLoader3D::addTree(Entity *entity, const Ogre::Vector3 &position, Ogre::Degree yaw, Ogre::Real scale, void* userData)
 {
 	//First convert the coordinate to PagedGeometry's local system
 	#ifdef PAGEDGEOMETRY_ALTERNATE_COORDSYSTEM
@@ -70,7 +69,7 @@ void TreeLoader3D::addTree(Entity *entity, const Ogre::Vector3 &position, Degree
 
 	//Check that the tree is within bounds (DEBUG)
 	#ifdef _DEBUG
-	const Real smallVal = 0.01f;
+	const Ogre::Real smallVal = 0.01f;
 	if (pos.x < actualBounds.left-smallVal || pos.x > actualBounds.right+smallVal || pos.z < actualBounds.top-smallVal || pos.z > actualBounds.bottom+smallVal)
 		OGRE_EXCEPT(Exception::ERR_INVALIDPARAMS, "Tree position is out of bounds", "TreeLoader::addTree()");
 	if (scale < minimumScale || scale > maximumScale)
@@ -105,21 +104,21 @@ void TreeLoader3D::addTree(Entity *entity, const Ogre::Vector3 &position, Degree
 	}
 
 	//Calculate the gridbounds-relative position of the tree
-	Real xrel = pos.x - gridBounds.left;
-	Real zrel = pos.z - gridBounds.top;
+	Ogre::Real xrel = pos.x - gridBounds.left;
+	Ogre::Real zrel = pos.z - gridBounds.top;
 
 	//Get the appropriate grid element based on the new tree's position
-	int pageX = (int)Math::Floor(xrel / pageSize);
-	int pageZ = (int)Math::Floor(zrel / pageSize);
+	int pageX = Math::Floor(xrel / pageSize);
+	int pageZ = Math::Floor(zrel / pageSize);
 	std::vector<TreeDef> &treeList = _getGridPage(pageGrid, pageX, pageZ);
 
 	//Create the new tree
 	TreeDef tree;
-	tree.yPos      = (float)pos.y;
-	tree.xPos      = static_cast<uint16>(65535 * (xrel - (pageX * pageSize)) / pageSize);
-	tree.zPos      = static_cast<uint16>(65535 * (zrel - (pageZ * pageSize)) / pageSize);
-	tree.rotation  = static_cast<uint8>(255 * (yaw.valueDegrees() / 360.0f));
-	tree.scale     = static_cast<uint8>(255 * ((scale - minimumScale) / maximumScale));
+	tree.yPos = pos.y;
+	tree.xPos = 65535 * (xrel - (pageX * pageSize)) / pageSize;
+	tree.zPos = 65535 * (zrel - (pageZ * pageSize)) / pageSize;
+	tree.rotation = 255 * (yaw.valueDegrees() / 360.0f);
+	tree.scale = 255 * ((scale - minimumScale) / maximumScale);
 
 #ifdef PAGEDGEOMETRY_USER_DATA
 	tree.userData = userData;
@@ -163,10 +162,10 @@ TreeLoader3D::deleteTrees(const Vector3 &position, Real radius, Entity *type)
 		pos.z = actualBounds.bottom;
 
 	//Determine the grid blocks which might contain the requested trees
-	int minPageX = (int)Math::Floor(((pos.x-radius) - gridBounds.left) / pageSize);
-	int minPageZ = (int)Math::Floor(((pos.z-radius) - gridBounds.top) / pageSize);
-	int maxPageX = (int)Math::Floor(((pos.x+radius) - gridBounds.left) / pageSize);
-	int maxPageZ = (int)Math::Floor(((pos.z+radius) - gridBounds.top) / pageSize);
+	int minPageX = Math::Floor(((pos.x-radius) - gridBounds.left) / pageSize);
+	int minPageZ = Math::Floor(((pos.z-radius) - gridBounds.top) / pageSize);
+	int maxPageX = Math::Floor(((pos.x+radius) - gridBounds.left) / pageSize);
+	int maxPageZ = Math::Floor(((pos.z+radius) - gridBounds.top) / pageSize);
 	Real radiusSq = radius * radius;
 
 	if (minPageX < 0) minPageX = 0; else if (minPageX >= pageGridX) minPageX = pageGridX-1;
@@ -199,9 +198,9 @@ TreeLoader3D::deleteTrees(const Vector3 &position, Real radius, Entity *type)
 				uint32 i = 0;
 				while (i < treeList.size()){
 					//Get tree distance
-               Ogre::Real distX = (gridBounds.left + (tileX * pageSize) + ((Real)treeList[i].xPos / 65535) * pageSize) - pos.x;
-					Ogre::Real distZ = (gridBounds.top + (tileZ * pageSize) + ((Real)treeList[i].zPos / 65535) * pageSize) - pos.z;
-					Ogre::Real distSq = distX * distX + distZ * distZ;
+					float distX = (gridBounds.left + (tileX * pageSize) + ((Real)treeList[i].xPos / 65535) * pageSize) - pos.x;
+					float distZ = (gridBounds.top + (tileZ * pageSize) + ((Real)treeList[i].zPos / 65535) * pageSize) - pos.z;
+					float distSq = distX * distX + distZ * distZ;
 
 					if (distSq <= radiusSq){
 #ifdef PAGEDGEOMETRY_USER_DATA
@@ -255,10 +254,10 @@ TreeLoader3D::deleteTrees(TBounds area, Ogre::Entity *type)
 	else if (area.bottom > actualBounds.bottom) area.bottom = actualBounds.bottom;
 
 	//Determine the grid blocks which might contain the requested trees
-	int minPageX = (int)Math::Floor((area.left - gridBounds.left) / pageSize);
-	int minPageZ = (int)Math::Floor((area.top - gridBounds.top) / pageSize);
-	int maxPageX = (int)Math::Floor((area.right - gridBounds.left) / pageSize);
-	int maxPageZ = (int)Math::Floor((area.bottom - gridBounds.top) / pageSize);
+	int minPageX = Math::Floor((area.left - gridBounds.left) / pageSize);
+	int minPageZ = Math::Floor((area.top - gridBounds.top) / pageSize);
+	int maxPageX = Math::Floor((area.right - gridBounds.left) / pageSize);
+	int maxPageZ = Math::Floor((area.bottom - gridBounds.top) / pageSize);
 
 	if (minPageX < 0) minPageX = 0; else if (minPageX >= pageGridX) minPageX = pageGridX-1;
 	if (minPageZ < 0) minPageZ = 0; else if (minPageZ >= pageGridZ) minPageZ = pageGridZ-1;
@@ -290,8 +289,8 @@ TreeLoader3D::deleteTrees(TBounds area, Ogre::Entity *type)
 				uint32 i = 0;
 				while (i < treeList.size()){
 					//Check if tree is in bounds
-					Ogre::Real posX = (gridBounds.left + (tileX * pageSize) + ((Real)treeList[i].xPos / 65535) * pageSize);
-					Ogre::Real posZ = (gridBounds.top + (tileZ * pageSize) + ((Real)treeList[i].zPos / 65535) * pageSize);
+					float posX = (gridBounds.left + (tileX * pageSize) + ((Real)treeList[i].xPos / 65535) * pageSize);
+					float posZ = (gridBounds.top + (tileZ * pageSize) + ((Real)treeList[i].zPos / 65535) * pageSize);
 					if (posX >= area.left && posX <= area.right && posZ >= area.top && posZ <= area.bottom) {
 						//If so, delete it
 #ifdef PAGEDGEOMETRY_USER_DATA
@@ -433,16 +432,16 @@ void TreeLoader3D::setColorMap(TexturePtr map, MapChannel channel)
 void TreeLoader3D::loadPage(PageInfo &page)
 {
 	//Calculate x/z indexes for the grid array
-	page.xIndex -= (int)Math::Floor(gridBounds.left / pageSize);
-	page.zIndex -= (int)Math::Floor(gridBounds.top / pageSize);
+	page.xIndex -= Math::Floor(gridBounds.left / pageSize);
+	page.zIndex -= Math::Floor(gridBounds.top / pageSize);
 
 	//Check if the requested page is in bounds
 	if (page.xIndex < 0 || page.zIndex < 0 || page.xIndex >= pageGridX || page.zIndex >= pageGridZ)
 		return;
 
 	//For each tree type...
-	for (PageGridListIterator i = pageGridList.begin(), iend = pageGridList.end(); i != iend; ++i)
-   {
+	PageGridListIterator i;
+	for (i = pageGridList.begin(); i != pageGridList.end(); ++i){
 		//Get the appropriate tree list for the specified page
 		std::vector<TreeDef> *pageGrid = i->second;
 		std::vector<TreeDef> &treeList = _getGridPage(pageGrid, page.xIndex, page.zIndex);
@@ -463,7 +462,11 @@ void TreeLoader3D::loadPage(PageInfo &page)
 
 			//Get scale
 			Vector3 scale;
-			scale.y = (Real)o->scale * (maximumScale / 255) + minimumScale;
+			#ifdef PAGED_SCALE_16
+				scale.y = (Real)o->scale * (maximumScale / 65535) + minimumScale;
+			#else
+				scale.y = (Real)o->scale * (maximumScale / 255) + minimumScale;
+			#endif
 			scale.x = scale.y;
 			scale.z = scale.y;
 
