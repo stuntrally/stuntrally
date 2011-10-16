@@ -37,6 +37,9 @@ public:
 
 	bool bWindowResized;
 	Ogre::SceneNode* ndSky; //-
+	
+	// stuff to be executed in App after BaseApp init
+	virtual void postInit() = 0;
 
 	//AppThr appThr;
 #if OGRE_PLATFORM == OGRE_PLATFORM_WIN32

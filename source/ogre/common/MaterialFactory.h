@@ -4,7 +4,7 @@
 #include <vector>
 #include "MaterialGenerator.h"
 
-class SETTINGS;
+class SETTINGS;  class App;
 
 class MaterialFactory
 {
@@ -14,11 +14,25 @@ public:
 	
 	void generate();
 	
-private:
-	// bShaders (& ppx lighting), bEnvmap, bShadows, bDepth, iTexSize
-	SETTINGS* pSet;
+	#define setIfChanged(s) if (p != s) { s = p; bSettingsChanged = true; }
 	
-	std::vector<MaterialGenerator> mGenerators;
+	void setShaders(bool p) { setIfChanged(bShaders) };
+	void setNormalMap(bool p) { setIfChanged(bNormalMap) };
+	void setEnvMap(bool p) { setIfChanged(bEnvMap) };
+	void setShadows(bool p) { setIfChanged(bShadows) };
+	void setShadowDepth(bool p) { setIfChanged(bShadowDepth) };
+	void setTexSize(unsigned int p) { setIfChanged(iTexSize) };
+	
+	App* pApp;
+
+private:	
+	std::vector<MaterialGenerator*> mGenerators;
+	
+	bool bShaders, bNormalMap, bEnvMap, bShadows, bShadowDepth;
+	unsigned int iTexSize; 
+	
+	// if false, generate() doesn't do anything
+	bool bSettingsChanged;
 };
 
 #endif

@@ -473,6 +473,8 @@ bool BaseApp::setup()
 	LogDbg("*** recreateCompositor***");
 	recreateCompositor();
 	LogDbg("*** end setup ***");
+	
+	postInit();
 
 	return true;
 };

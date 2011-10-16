@@ -3,13 +3,16 @@
 
 class MaterialFactory;
 
+// some useful defines that will save code
+#define MATGEN_CTOR_H(s) s(MaterialFactory* parent);
+#define MATGEN_CTOR(s) s::s(MaterialFactory* parent) { MaterialGenerator(parent); }
+
 class MaterialGenerator
 {
 public:
-	MaterialGenerator();
-	~MaterialGenerator();
+	MaterialGenerator* setParent(MaterialFactory* parent);
 	
-	void setParent(MaterialFactory* parent);
+	virtual void generate() = 0;
 	
 protected:
 	MaterialFactory* mParent;

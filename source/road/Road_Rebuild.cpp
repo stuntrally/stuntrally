@@ -694,8 +694,10 @@ void SplineRoad::RebuildRoadInt()
 				Entity* ent = 0, *entW = 0, *entC = 0;
 				SceneNode* node = 0, *nodeW = 0, *nodeC = 0;
 					AddMesh(mesh, sMesh, aabox, &ent, &node, "."+sEnd);
-				if (wPglass)
+				if (wPglass) {
 					ent->setRenderQueueGroup(RQG_PipeGlass);
+					//ent->setCastShadows(true);
+				}
 				if (wall /*&& posW.size() > 0*/)
 				{	AddMesh(meshW, sMeshW, aabox, &entW, &nodeW, "W."+sEnd);
 					entW->setCastShadows(true);  }  // only cast
@@ -703,7 +705,7 @@ void SplineRoad::RebuildRoadInt()
 				{	AddMesh(meshC, sMeshC, aabox, &entC, &nodeC, "C."+sEnd);
 					entC->setVisible(true);  
 					//if (bForceShadowCaster)
-						//entC->setCastShadows(true);  // col vis?
+					entC->setCastShadows(true);  // col vis?
 				}
 				//if (bForceShadowCaster)
 					//ent->setCastShadows(true);

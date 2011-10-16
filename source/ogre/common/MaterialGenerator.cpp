@@ -1,10 +1,8 @@
 #include "MaterialGenerator.h"
 #include "MaterialFactory.h"
 
-MaterialGenerator::MaterialGenerator()
+MaterialGenerator* MaterialGenerator::setParent(MaterialFactory* parent)
 {
-}
-
-MaterialGenerator::~MaterialGenerator()
-{
+	mParent = parent;
+	return this;
 }

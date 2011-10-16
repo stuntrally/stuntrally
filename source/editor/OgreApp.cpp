@@ -78,11 +78,18 @@ App::App()  //  gui wigdets--
 	for (int i=0; i < 4; ++i)  {  cmbRoadMtr[i]=0;  cmbPipeMtr[i]=0;  }
 }
 
+void App::postInit()
+{
+	materialFactory = new MaterialFactory();
+	materialFactory->pApp = this;
+}
+
 const Ogre::String App::csBrShape[BRS_ALL] = { "Triangle", "Sinus", "Noise" };  // static
 
 
 App::~App()
 {
+	delete materialFactory;
 	delete[] mBrushData;
 	delete road;
 	if (mTerrainPaging)

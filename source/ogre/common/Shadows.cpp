@@ -34,7 +34,7 @@ void App::changeShadows()
 	//  get settings
 	bool enabled = pSet->shadow_type != 0;
 	bool bDepth = pSet->shadow_type == 3;
-
+	
 	pSet->shadow_size = std::max(0,std::min(ciShadowNumSizes-1, pSet->shadow_size));
 	int fTex = /*2048*/ ciShadowSizesA[pSet->shadow_size], fTex2 = fTex/2;
 	int num = /*3*/ pSet->shadow_count;
@@ -181,6 +181,10 @@ void App::changeShadows()
 		overlay->show();
 	}
 	#endif
+	
+	materialFactory->setShadows(enabled);
+	materialFactory->setShadowDepth(bDepth);
+	materialFactory->generate();
 	
 	UpdPSSMMaterials();
 

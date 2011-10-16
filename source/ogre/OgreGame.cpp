@@ -27,7 +27,7 @@ App::App()
 	,arrowNode(0)
 	// ter
 	,mTerrainGlobals(0), mTerrainGroup(0), mPaging(false)
-	,mTerrainPaging(0), mPageManager(0)
+	,mTerrainPaging(0), mPageManager(0), materialFactory(0)
 	// gui
 	,mToolTip(0), mToolTipTxt(0), carList(0), trkMList(0), resList(0), btRplPl(0)
 	,valAnisotropy(0), valViewDist(0), valTerDetail(0), valTerDist(0), valRoadDist(0)  // detail
@@ -74,6 +74,7 @@ String App::PathListTrk(int user) {
 
 App::~App()
 {
+	delete materialFactory;
 	delete road;
 	if (mTerrainPaging) {
 		OGRE_DELETE mTerrainPaging;
@@ -86,8 +87,17 @@ App::~App()
 	OGRE_DELETE dbgdraw;
 }
 
+void App::postInit()
+{
+	mSplitMgr->pApp = this;
+	
+	materialFactory = new MaterialFactory();
+	materialFactory->pApp = this;
+	materialFactory->generate();
+}
+
 void App::setTranslations()
-{	
+{
 	// loading states
 	loadingStates.clear();
 	loadingStates.insert(std::make_pair(LS_CLEANUP, String(TR("#{LS_CLEANUP}"))));
@@ -97,9 +107,6 @@ void App::setTranslations()
 	loadingStates.insert(std::make_pair(LS_TER, String(TR("#{LS_TER}"))));
 	loadingStates.insert(std::make_pair(LS_TRACK, String(TR("#{LS_TRACK}"))));
 	loadingStates.insert(std::make_pair(LS_MISC, String(TR("#{LS_MISC}"))));
-	
-	// Kind of nasty to have it here, but this has to be done after configure()...
-	mSplitMgr->pApp = this;
 }
 
 void App::destroyScene()

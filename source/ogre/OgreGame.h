@@ -5,6 +5,7 @@
 #include "common/SceneXml.h"
 #include "common/BltObjects.h"
 #include "common/TracksXml.h"
+#include "common/MaterialFactory.h"
 
 #include "ReplayGame.h"
 #include "CarModel.h"
@@ -30,8 +31,9 @@ public:
 	void updatePoses(float time), newPoses();
 	void UpdThr();
 	
-	// translation
-	// can't have it in c'tor, because mygui is not initialized
+	// stuff to be executed after BaseApp init
+	void postInit();
+	
 	void setTranslations();
 	
 	// This list holds new positions info for every CarModel
@@ -63,6 +65,8 @@ public:
 	void UpdateHUD(int carId, class CarModel* pCarM, class CAR* pCar,
 		float time, Ogre::Viewport* vp=NULL), SizeHUD(bool full, Ogre::Viewport* vp=NULL, int carId=-1);
 	void UpdHUDRot(int carId, CarModel* pCarM, float vel);
+	
+	MaterialFactory* materialFactory; // material generation
 
 protected:
 	virtual void createScene();
@@ -138,7 +142,6 @@ protected:
 	void changeShadows(), UpdPSSMMaterials(), setMtrSplits(Ogre::String sMtrName);
 	Ogre::Vector4 splitPoints;  Ogre::ShadowCameraSetupPtr mPSSMSetup;
 	void recreateReflections();  // call after refl_mode changed
-
 
 	//  road
 public:	

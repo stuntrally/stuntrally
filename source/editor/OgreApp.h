@@ -5,6 +5,7 @@
 #include "../ogre/common/SceneXml.h"
 #include "../ogre/common/BltObjects.h"
 #include "../ogre/common/TracksXml.h"
+#include "../ogre/common/MaterialFactory.h"
 
 #include "../vdrift/mathvector.h"
 #include "../vdrift/quaternion.h"
@@ -48,6 +49,11 @@ public:
 
 	void UpdWndTitle(), SaveCam();
 	void LoadTrack(), SaveTrack(), UpdateTrack();
+	
+	// stuff to be executed after BaseApp init
+	void postInit();
+	
+	MaterialFactory* materialFactory;
 protected:
 	void LoadTrackEv(), SaveTrackEv(), UpdateTrackEv();
 	enum TrkEvent {  TE_None=0, TE_Load, TE_Save, TE_Update  } eTrkEvent;
