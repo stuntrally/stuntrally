@@ -259,50 +259,23 @@ BatchedGeometry::SubBatchIterator BatchedGeometry::getSubBatchIterator() const
 {
 	return BatchedGeometry::SubBatchIterator((SubBatchMap&)subBatchMap);
 }
-#if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
+
 String BatchedGeometry::getFormatString(SubEntity *ent)
 {
-	const int BufSize = 1024;
-	static char buf[BufSize];
+   static char buf[1024];
+   // add materialname and buffer type
+   int countWritten =  sprintf(buf, "%s|%d", ent->getMaterialName().c_str(), ent->getSubMesh()->indexData->indexBuffer->getType());
 
-
-	int countWritten = _snprintf_s( buf, BufSize, "%s|%d",
-				ent->getMaterialName().c_str(), 
-				ent->getSubMesh()->indexData->indexBuffer->getType());
-
-	const VertexDeclaration::VertexElementList &elemList = ent->getSubMesh()->vertexData->vertexDeclaration->getElements();
-	VertexDeclaration::VertexElementList::const_iterator i;
-	for (i = elemList.begin(); i != elemList.end(); ++i)
-	{
-		const VertexElement &element = *i;
-		countWritten += _snprintf_s( buf + countWritten, BufSize - countWritten, BufSize - countWritten,
-				"|%d|%d|%d",
-				element.getSource(), element.getSemantic(), element.getType());
+   // now add vertex decl
+   const VertexDeclaration::VertexElementList &elemList = ent->getSubMesh()->vertexData->vertexDeclaration->getElements();
+   for (VertexDeclaration::VertexElementList::const_iterator i = elemList.begin(), iend = elemList.end(); i != iend; ++i)
+   {
+      const VertexElement &el = *i;
+      countWritten += sprintf(buf + countWritten, "|%d|%d|%d", el.getSource(), el.getSemantic(), el.getType());
    }
+
    return buf;
 }
-#else
-/*  old - slow */
-String BatchedGeometry::getFormatString(SubEntity *ent)
-{
-	StringUtil::StrStreamType str;
-
-	str << ent->getMaterialName() << "|";
-	str << ent->getSubMesh()->indexData->indexBuffer->getType() << "|";
-
-	const VertexDeclaration::VertexElementList &elemList = ent->getSubMesh()->vertexData->vertexDeclaration->getElements();
-	VertexDeclaration::VertexElementList::const_iterator i;
-	for (i = elemList.begin(); i != elemList.end(); ++i)
-	{
-		const VertexElement &element = *i;
-		str << element.getSource() << "|";
-		str << element.getSemantic() << "|";
-		str << element.getType() << "|";
-	}
-
-	return str.str();
-}
-#endif
 
 void BatchedGeometry::build()
 {
