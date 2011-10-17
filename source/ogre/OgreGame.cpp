@@ -94,7 +94,6 @@ void App::postInit()
 	
 	materialFactory = new MaterialFactory();
 	materialFactory->pApp = this;
-	materialFactory->generate();
 }
 
 void App::setTranslations()

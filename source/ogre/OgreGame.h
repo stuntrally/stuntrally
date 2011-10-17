@@ -138,8 +138,11 @@ protected:
 	float Noise(float x, float zoom, int octaves, float persistance);
 	float Noise(float x, float y, float zoom, int octaves, float persistance);
 	Ogre::Real terMaxAng;
-		
+
+public:
 	void changeShadows(), UpdPSSMMaterials(), setMtrSplits(Ogre::String sMtrName);
+
+protected:
 	Ogre::Vector4 splitPoints;  Ogre::ShadowCameraSetupPtr mPSSMSetup;
 	void recreateReflections();  // call after refl_mode changed
 

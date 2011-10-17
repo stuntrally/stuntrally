@@ -7,6 +7,7 @@
 #include "../road/Road.h"
 #include "SplitScreen.h"
 #include "common/RenderConst.h"
+#include "common/MaterialFactory.h"
 
 #include "../btOgre/BtOgrePG.h"
 #include "../btOgre/BtOgreGP.h"
@@ -166,6 +167,10 @@ void App::LoadGame()  // 2
 	
 	pGame->NewGameDoCleanup();
 	pGame->NewGameDoLoadTrack();
+	
+	/// generate materials
+	materialFactory->generate();
+	
 	/// init car models
 	// will create vdrift cars, actual car loading will be done later in LoadCar()
 	// this is just here because vdrift car has to be created first

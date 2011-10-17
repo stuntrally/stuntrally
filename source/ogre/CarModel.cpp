@@ -340,9 +340,12 @@ void CarModel::Create(int car)
 						else
 						if (!(StringUtil::startsWith(tus->getTextureName(), "ReflectionCube") ||
 								StringUtil::startsWith(tus->getTextureName(), "body_dyn") ||
-								tus->getTextureName() == "ReflectionCube"))
+								tus->getTextureName() == "ReflectionCube" ||
+								StringUtil::startsWith(tus->getName(), "shadow_")
+						))
 							tus->setTextureName(sDirname + "_" + tus->getTextureName());
-	}	}	}	}	}
+		}	}	}	}
+	}
 	
 	// reflection
 	CreateReflection();
@@ -359,7 +362,10 @@ void CarModel::Create(int car)
 	{
 		Entity* eCar = pSceneMgr->createEntity("Car"+ strI, sDirname + "_" + "body.mesh", "Car" + strI);
 		if (FileExists(sCar + "_body00_add.png") && FileExists(sCar + "_body00_red.png") || ghost)
+		{
 			eCar->setMaterialName(sMtr[Mtr_CarBody]);
+			//pApp->setMtrSplits(sMtr[Mtr_CarBody]);
+		}
 		bodyBox = eCar->getBoundingBox();
 		if (ghost)  {  eCar->setRenderQueueGroup(g);  eCar->setCastShadows(false);  }
 		ncart->attachObject(eCar);  eCar->setVisibilityFlags(RV_Car);
@@ -378,10 +384,12 @@ void CarModel::Create(int car)
 	{
 		Entity* eInter = pSceneMgr->createEntity("Car.interior"+ strI, sDirname + "_" + "interior.mesh", "Car" + strI);
 		eInter->setMaterialName(sMtr[Mtr_CarInterior]);
+		//eInter->setCastShadows(false);
 		if (ghost)  {  eInter->setRenderQueueGroup(g);  eInter->setCastShadows(false);  }
 		ncart->attachObject(eInter);  eInter->setVisibilityFlags(RV_Car);
 	}else{
 		ManualObject* mInter = CreateModel(pSceneMgr, sMtr[Mtr_CarInterior],&pCar->interiormodel.mesh, vPofs);
+		//mInter->setCastShadows(false);
 		if (mInter){  if (ghost)  {  mInter->setRenderQueueGroup(g);  mInter->setCastShadows(false);  }
 			ncart->attachObject(mInter);  mInter->setVisibilityFlags(RV_Car);  }
 	}

@@ -118,8 +118,7 @@ void App::changeShadows()
 	}
 	
 	mSceneMgr->setShadowTextureSelfShadow(bDepth ? true : false);  //-?
-	//mSceneMgr->setShadowCasterRenderBackFaces(bDepth ? true : false);
-	mSceneMgr->setShadowCasterRenderBackFaces(false);
+	mSceneMgr->setShadowCasterRenderBackFaces(bDepth ? true : false);
 	mSceneMgr->setShadowTextureCasterMaterial(bDepth ? "PSSM/shadow_caster" : StringUtil::BLANK);
 
 	if (matProfile && terrain)  {
@@ -184,7 +183,7 @@ void App::changeShadows()
 	#endif
 	
 	materialFactory->setShadows(enabled);
-	materialFactory->setShadowDepth(bDepth);
+	materialFactory->setShadowsDepth(bDepth);
 	materialFactory->generate();
 	
 	UpdPSSMMaterials();
