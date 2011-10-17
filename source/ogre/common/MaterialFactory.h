@@ -5,6 +5,8 @@
 
 class App;  class MaterialDefinition;
 
+#include <OgreConfigFile.h>
+
 class MaterialFactory
 {
 public:
@@ -40,11 +42,15 @@ public:
 
 private:
 	std::vector<MaterialDefinition*> mDefinitions;
+	
+	Ogre::ConfigFile mFile; // for loading mat def's from file
 
 	//!todo split points - maintain a list of materials that need it
 
 	// if false, generate() doesn't do anything
 	bool bSettingsChanged;
+	
+	void loadDefsFromFile(const std::string& file); // load MaterialDefinition's from file (can be multiple in 1 file)
 };
 
 #endif
