@@ -133,7 +133,7 @@ void MaterialFactory::loadDefsFromFile(const std::string& file)
 		LogO("[MaterialFactory] attributes:");
 		#define prop(s) LogO("[MaterialFactory]  - "#s": " + StringConverter::toString((*it)->getProps()->s));
 		#define propS(s) LogO("[MaterialFactory]  - "#s": " + (*it)->getProps()->s);
-		propS(diffuseMap); propS(normalMap); prop(hasNormalMap); propS(envMap); prop(hasEnvMap); prop(hasFresnel);
+		propS(diffuseMap); propS(normalMap); propS(envMap); prop(hasFresnel);
 		prop(fresnelBias); prop(fresnelScale); prop(fresnelPower); prop(receivesShadows); prop(receivesDepthShadows);
 	}
 	
