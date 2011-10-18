@@ -10,6 +10,7 @@
 #include <OgreTextureUnitState.h>
 #include <OgreHighLevelGpuProgramManager.h>
 #include <OgreHighLevelGpuProgram.h>
+#include <OgreGpuProgramParams.h>
 using namespace Ogre;
 
 // constructor with sensible default values
@@ -148,8 +149,8 @@ void MaterialDefinition::generate(bool fixedFunction)
 			return;
 		}
 		
-		pass->setFragmentProgram(mName + "_FP");
-		pass->setVertexProgram(mName + "_VP");
+		pass->setFragmentProgram(fragmentProg->getName());
+		pass->setVertexProgram(vertexProg->getName());
 		
 		// diffuse map
 		Ogre::TextureUnitState* tu = pass->createTextureUnitState( diffuseMap );
@@ -241,45 +242,6 @@ std::string MaterialDefinition::pickTexture(textureMap* textures)
 	return it->second;
 }
 
-//----------------------------------------------------------------------------------------
-
-HighLevelGpuProgramPtr MaterialDefinition::createFragmentProgram()
-{
-	HighLevelGpuProgramManager& mgr = HighLevelGpuProgramManager::getSingleton();
-	std::string progName = getName() + "_FP";
-
-	HighLevelGpuProgramPtr ret = mgr.getByName(progName);
-	if (!ret.isNull())
-		mgr.remove(progName);
-
-	ret = mgr.createProgram(progName, ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME, 
-		"cg", GPT_FRAGMENT_PROGRAM);
-
-	ret->setParameter("profiles", "ps_2_x arbfp1");
-	ret->setParameter("entry_point", "main_fp");
-
-	StringUtil::StrStreamType sourceStr;
-	generateFragmentProgramSource(sourceStr);
-	ret->setSource(sourceStr.str());
-	ret->load();
-	fragmentProgramParams(ret);
-	
-	return ret;
-}
-
-//----------------------------------------------------------------------------------------
-
-void MaterialDefinition::generateFragmentProgramSource(Ogre::StringUtil::StrStreamType& outStream)
-{
-	//!todo
-}
-
-//----------------------------------------------------------------------------------------
-
-void MaterialDefinition::fragmentProgramParams(HighLevelGpuProgramPtr program)
-{
-	//!todo
-}
 
 //----------------------------------------------------------------------------------------
 
@@ -311,12 +273,127 @@ HighLevelGpuProgramPtr MaterialDefinition::createVertexProgram()
 
 void MaterialDefinition::generateVertexProgramSource(Ogre::StringUtil::StrStreamType& outStream)
 {
-	//!todo
+	//!todo more optizations (needWsNormal, needEyeVector, ... etc)
+	outStream << 
+		"void main_vp( "
+		"	float2 texCoord 					: TEXCOORD0,"
+		"	float4 position 							: POSITION," // obj space
+		"	float3 normal			 			: NORMAL,"	// obj space
+		"	uniform float4 eyePosition,					 "  // obj space
+		"	out float4 oPosition			 			: POSITION,"
+		"	out float2 oTexCoord	 			: TEXCOORD0,"
+		"	out float3 oWsNormal  				: TEXCOORD1," // world space
+		"	out	float4	oTangentToCubeSpace0	: TEXCOORD2,"
+		"	out	float4	oTangentToCubeSpace1	: TEXCOORD3,"
+		"	out	float4	oTangentToCubeSpace2	: TEXCOORD4,"
+		"	uniform float4x4 wvpMat,"
+		"	uniform float4x4 wMat,"
+		"	uniform float4x4 wITMat"
+		") \n"
+		"{ \n"
+		"	oPosition = mul(wvpMat, position); \n"
+		"	oTexCoord = texCoord; \n"
+		"	oWsNormal = mul( (float3x3) wITMat, normal ); \n"
+		"	float3 eyeVector = mul( wMat, position ) - eyePosition; \n" // transform eye into view space
+		"	oTangentToCubeSpace0.w = eyeVector.x; \n" // store eye vector
+		"	oTangentToCubeSpace1.w = eyeVector.y; \n"
+		"	oTangentToCubeSpace2.w = eyeVector.z; \n"
+		"} \n";
 }
 
 //----------------------------------------------------------------------------------------
 
 void MaterialDefinition::vertexProgramParams(HighLevelGpuProgramPtr program)
 {
-	//!todo
+	GpuProgramParametersSharedPtr params = program->getDefaultParameters();
+	params->setIgnoreMissingParams(true);
+	params->setNamedAutoConstant("wMat", GpuProgramParameters::ACT_WORLD_MATRIX);
+	params->setNamedAutoConstant("wvpMat", GpuProgramParameters::ACT_WORLDVIEWPROJ_MATRIX);
+	params->setNamedAutoConstant("wITMat", GpuProgramParameters::ACT_INVERSE_TRANSPOSE_WORLD_MATRIX);
+	params->setNamedAutoConstant("eyePosition", GpuProgramParameters::ACT_CAMERA_POSITION);
+}
+
+//----------------------------------------------------------------------------------------
+
+HighLevelGpuProgramPtr MaterialDefinition::createFragmentProgram()
+{
+	HighLevelGpuProgramManager& mgr = HighLevelGpuProgramManager::getSingleton();
+	std::string progName = getName() + "_FP";
+
+	HighLevelGpuProgramPtr ret = mgr.getByName(progName);
+	if (!ret.isNull())
+		mgr.remove(progName);
+
+	ret = mgr.createProgram(progName, ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME, 
+		"cg", GPT_FRAGMENT_PROGRAM);
+
+	ret->setParameter("profiles", "ps_2_x arbfp1");
+	ret->setParameter("entry_point", "main_fp");
+
+	StringUtil::StrStreamType sourceStr;
+	generateFragmentProgramSource(sourceStr);
+	ret->setSource(sourceStr.str());
+	ret->load();
+	fragmentProgramParams(ret);
+	
+	return ret;
+}
+
+//----------------------------------------------------------------------------------------
+
+void MaterialDefinition::generateFragmentProgramSource(Ogre::StringUtil::StrStreamType& outStream)
+{
+	unsigned int texI = 1; // texture unit counter
+	outStream <<
+		"void main_fp("
+		"	in float2 texCoord : TEXCOORD0,"
+		"	in float3 wsNormal : TEXCOORD1,"
+		"	in float4 tangentToCubeSpace0 : TEXCOORD2,"
+		"	in float4 tangentToCubeSpace1 : TEXCOORD3,"
+		"	in float4 tangentToCubeSpace2 : TEXCOORD4,"
+		
+		"	uniform sampler2D diffuseMap : TEXUNIT0,"
+		"	uniform samplerCUBE envMap : TEXUNIT1,"
+		
+	; if (needEnvMap()) outStream << 
+		"	uniform float reflAmount,";
+	outStream << 
+
+		"	out float4 oColor : COLOR"
+		") \n"
+		"{ \n"
+		
+		"	float3 eyeVector; \n" // fetch view vector
+		"	eyeVector.x = tangentToCubeSpace0.w; \n"
+		"	eyeVector.y = tangentToCubeSpace1.w; \n"
+		"	eyeVector.z = tangentToCubeSpace2.w; \n"
+		"	eyeVector = normalize(eyeVector); \n"
+		"	wsNormal = normalize(wsNormal); \n"
+	
+		"	float3 r; \n" // Calculate reflection vector within world (view) space.
+		"	r = reflect( eyeVector, wsNormal ); \n"
+		
+	; if (needEnvMap()) outStream << 
+		"	float4 envColor = texCUBE(envMap, r); \n"
+	; outStream <<
+		"	float4 diffuseColor = tex2D(diffuseMap, texCoord); \n"
+		
+	; if (needEnvMap()) outStream << 
+		"	oColor = lerp(diffuseColor, envColor, reflAmount); \n"
+	; else outStream <<
+		"	oColor = diffuseColor; \n"
+		
+	; outStream << 
+		"} \n";
+}
+
+//----------------------------------------------------------------------------------------
+
+void MaterialDefinition::fragmentProgramParams(HighLevelGpuProgramPtr program)
+{
+	GpuProgramParametersSharedPtr params = program->getDefaultParameters();
+	params->setIgnoreMissingParams(true);
+	if (needEnvMap()) {
+		params->setNamedConstant("reflAmount", mProps->reflAmount);
+	}
 }
