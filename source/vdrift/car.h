@@ -15,6 +15,9 @@
 
 class BEZIER;
 class PERFORMANCE_TESTING;
+namespace protocol {
+	struct CarStatePackage;
+}
 
 class CAR 
 {
@@ -288,6 +291,9 @@ public:
 	{
 		return dynamics.GetMaxSteeringAngle();
 	}
+
+	// Update from networking
+	void UpdateCarState(const protocol::CarStatePackage& state);
 
 	///  new
 	void ResetPos(bool fromStart=true);

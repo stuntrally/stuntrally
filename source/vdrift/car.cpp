@@ -9,6 +9,7 @@
 #include "settings.h"
 #include "../ogre/OgreGame.h"  //+ replay
 #include "../ogre/Defines.h"
+#include "../network/protocol.hpp"
 #include "tobullet.h"
 #include <OgreLogManager.h>
 
@@ -822,6 +823,20 @@ bool CAR::Serialize(joeserialize::Serializer & s)
 	return true;
 }
 
+void CAR::UpdateCarState(const protocol::CarStatePackage& state)
+{
+	SetPosition(state.pos);
+
+	btTransform transform;
+	transform.setOrigin(ToBulletVector(state.pos));
+	transform.setRotation(ToBulletQuaternion(state.rot));
+	dynamics.chassis->setWorldTransform(transform);
+
+	dynamics.chassis->setLinearVelocity(ToBulletVector(state.linearVel));
+	dynamics.chassis->setAngularVelocity(ToBulletVector(state.angularVel));
+
+	dynamics.SynchronizeBody();  // set body from chassis
+}
 
 ///  new
 void CAR::ResetPos(bool fromStart)
