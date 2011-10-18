@@ -158,7 +158,7 @@ inline bool MaterialDefinition::needEnvMap()
 
 //----------------------------------------------------------------------------------------
 
-inline std::string MaterialDefinition::pickTexture(textureMap* textures)
+std::string MaterialDefinition::pickTexture(textureMap* textures)
 {
 	if (textures->size() == 0) return "";
 	
