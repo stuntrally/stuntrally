@@ -28,7 +28,91 @@ MaterialDefinition::~MaterialDefinition()
 
 void MaterialDefinition::generate()
 {
-	//!todo
+	MaterialPtr mat = prepareMaterial(mName);
+	mat->setReceiveShadows(false);
+	
+	// test
+	mParent->setShaders(false);
+	mParent->setEnvMap(false);
+	
+	// only 1 technique
+	Ogre::Technique* technique = mat->createTechnique();
+	
+	// single pass
+	Ogre::Pass* pass = technique->createPass();
+	
+	pass->setAmbient( mProps->ambient.x, mProps->ambient.y, mProps->ambient.z );
+	pass->setDiffuse( mProps->diffuse.x, mProps->diffuse.y, mProps->diffuse.z, mProps->diffuse.w );
+	
+	if (!mParent->getShaders())
+	{
+		pass->setSpecular(mProps->specular.x, mProps->specular.y, mProps->specular.z, 1.0 );
+		pass->setShininess(mProps->specular.w);
+	}
+	else
+	{
+		// shader assumes matShininess in specular w component
+		pass->setSpecular(mProps->specular.x, mProps->specular.y, mProps->specular.z, mProps->specular.w);
+	}
+	
+	// test
+	//pass->setCullingMode(CULL_NONE);
+	//pass->setShadingMode(SO_PHONG);
+		
+	if (!mParent->getShaders())
+	{
+		pass->setShadingMode(SO_PHONG);
+		
+		// diffuse map
+		Ogre::TextureUnitState* tu = pass->createTextureUnitState( mProps->diffuseMap );
+		
+		if (needEnvMap())
+		{
+			// env map
+			tu = pass->createTextureUnitState();
+			tu->setCubicTextureName( mProps->envMap, true );
+			tu->setEnvironmentMap(true, TextureUnitState::ENV_REFLECTION);
+			
+			// blend with diffuse map using 'reflection amount' property
+			tu->setColourOperationEx(LBX_BLEND_MANUAL, LBS_CURRENT, LBS_TEXTURE, 
+									ColourValue::White, ColourValue::White, 1-mProps->reflAmount);
+		}
+	}
+	else
+	{
+		// diffuse map
+		Ogre::TextureUnitState* tu = pass->createTextureUnitState( mProps->diffuseMap );
+		tu->setName("diffuseMap");
+		
+		// env map
+		if (needEnvMap())
+		{
+			tu = pass->createTextureUnitState( mProps->envMap );
+			tu->setName("envMap");
+		}
+		
+		// normal map
+		if (needNormalMap())
+		{
+			tu = pass->createTextureUnitState( mProps->normalMap );
+			tu->setName("normalMap");
+		}
+		
+		// shadow maps
+		if (needShadows())
+		{
+			for (int i = 0; i < mParent->getNumShadowTex(); ++i)
+			{
+				tu = pass->createTextureUnitState();
+				tu->setName("shadowMap" + toStr(i));
+				tu->setContentType(TextureUnitState::CONTENT_SHADOW);
+				tu->setTextureAddressingMode(TextureUnitState::TAM_BORDER);
+				tu->setTextureBorderColour(ColourValue::White);
+			}
+		}
+		
+		//!todo
+	}
 }
 
 //----------------------------------------------------------------------------------------

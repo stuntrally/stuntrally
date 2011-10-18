@@ -24,6 +24,7 @@ public:
 	void setShadows(bool p) { setIfChanged(bShadows) };
 	void setShadowsDepth(bool p) { setIfChanged(bShadowsDepth) };
 	void setTexSize(unsigned int p) { setIfChanged(iTexSize) };
+	void setNumShadowTex(unsigned int p) { setIfChanged(iNumShadowTex) };
 	
 	const bool getShaders() { return bShaders; };
 	const bool getNormalMap() { return bNormalMap; };
@@ -31,16 +32,17 @@ public:
 	const bool getShadows() { return bShadows; };
 	const bool getShadowsDepth() { return bShadowsDepth; };
 	const unsigned int getTexSize() { return iTexSize; };
+	const unsigned int getNumShadowTex() { return iNumShadowTex; };
 	///--------------------------------------------------------------------
-	
-	/// user settings definition ---------------------------------
-	bool bShaders, bNormalMap, bEnvMap, bShadows, bShadowsDepth;
-	unsigned int iTexSize;
-	/// -------------------------------------------------------
 	
 	App* pApp;
 
 private:
+	/// user settings definition ---------------------------------
+	bool bShaders, bNormalMap, bEnvMap, bShadows, bShadowsDepth;
+	unsigned int iTexSize; unsigned int iNumShadowTex;
+	/// -------------------------------------------------------
+
 	std::vector<MaterialDefinition*> mDefinitions;
 	
 	Ogre::ConfigFile mFile; // for loading mat def's from file

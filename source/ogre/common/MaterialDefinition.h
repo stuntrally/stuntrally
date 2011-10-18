@@ -6,13 +6,14 @@
 #include <OgreMaterial.h>
 #include <OgreStringConverter.h>
 #include <OgreString.h>
+#include <OgreVector3.h>
+#include <OgreVector4.h>
 
 /*
- * MaterialDefinition holds several material parameters
+ * MaterialDefinition holds several material properties
  * (e.g. has normal map, has env map, receives shadows...)
- * and has methods to read these parameters from a .matdef file,
  * as well as a method to craft a specific material out of these
- * parameters, depending on user's settings (retrieved via mParent).
+ * parameters, depending on user's settings.
  */
  
 class MaterialFactory;
@@ -22,19 +23,22 @@ struct MaterialProperties
 	std::string diffuseMap;
 	std::string normalMap;
 	std::string envMap;
+	float reflAmount;
 	bool hasFresnel; float fresnelBias, fresnelScale, fresnelPower;
 	bool receivesShadows, receivesDepthShadows;
+	Ogre::Vector3 ambient; Ogre::Vector4 diffuse; Ogre::Vector4 specular;
 	
 	//!todo:
-	// ambient/diffuse/spec colors, PPX on/off, shaders on/off, 
-	// normalmap/shadowmap/envmap "priority", twosided yes/no/only_when_receiver,
-	// alpha, [casts_shadows (probably not here)]
+	// PPX on/off, shaders on/off, 
+	// normalmap/shadowmap/envmap "priority", cull yes/no,
+	// alpha, [casts_shadows (probably not here)],
 	
 	// constructor with sensible default values
 	MaterialProperties() :
-		diffuseMap(""), normalMap(""), envMap(""), 
+		diffuseMap(""), normalMap(""), envMap(""), reflAmount(0.5),
 		hasFresnel(0), fresnelBias(0), fresnelScale(0), fresnelPower(0),
-		receivesShadows(0), receivesDepthShadows(0)
+		receivesShadows(0), receivesDepthShadows(0),
+		ambient(1.0, 1.0, 1.0), diffuse(1.0, 1.0, 1.0, 1.0), specular(0.0, 0.0, 0.0, 0.0)
 	{}
 	
 	const bool str2bool(const std::string& s)
@@ -45,6 +49,8 @@ struct MaterialProperties
 		/* else */ return false;
 	}
 	#define str2float(s) Ogre::StringConverter::parseReal(s)
+	#define str2vec3(s) Ogre::StringConverter::parseVector3(s)
+	#define str2vec4(s) Ogre::StringConverter::parseVector4(s)
 	
 	void setProperty(const std::string& prop, const std::string& value)
 	{
@@ -52,11 +58,15 @@ struct MaterialProperties
 		else if (prop == "normalMap") normalMap = value;
 		else if (prop == "envMap") envMap = value;
 		else if (prop == "hasFresnel") hasFresnel = str2bool(value);
+		else if (prop == "reflAmount") reflAmount = str2float(value);
 		else if (prop == "fresnelBias") fresnelBias = str2float(value);
 		else if (prop == "fresnelScale") fresnelScale = str2float(value);
 		else if (prop == "fresnelPower") fresnelPower = str2float(value);
 		else if (prop == "receivesShadows") receivesShadows = str2bool(value);
 		else if (prop == "receivesDepthShadows") receivesDepthShadows = str2bool(value);
+		else if (prop == "ambient") ambient = str2vec3(value);
+		else if (prop == "diffuse") diffuse = str2vec4(value);
+		else if (prop == "specular") specular = str2vec4(value);
 	}
 };
 
