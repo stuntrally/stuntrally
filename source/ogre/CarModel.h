@@ -108,6 +108,7 @@ public:
 	bool bInSt, bWrongChk;  float fChkTime;  int iChkWrong;
 	//bool Checkpoint(const PosInfo& posInfo, class SplineRoad* road);  // update
 	
+	
 private:
 	Ogre::Camera* mCamera;
 
@@ -142,7 +143,7 @@ private:
 	
 	//  index for the car (e.g. when we have 2 cars, they have indices 0 and 1)
 	//  needed for cloned materials & textures
-	unsigned int iIndex;
+	int iIndex;
 	
 	//  Our settings.
 	SETTINGS* pSet;

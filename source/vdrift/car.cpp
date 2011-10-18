@@ -9,6 +9,7 @@
 #include "settings.h"
 #include "../ogre/OgreGame.h"  //+ replay
 #include "../ogre/Defines.h"
+#include "tobullet.h"
 #include <OgreLogManager.h>
 
 #ifdef _WIN32
@@ -142,8 +143,8 @@ bool CAR::Load(class App* pApp1,
 
 		MATHVECTOR<double, 3> position;
 		QUATERNION<double> orientation;
-		position = initial_position;
-		orientation = initial_orientation;
+		position = initial_position;		posAtStart = posLastCheck = initial_position;
+		orientation = initial_orientation;	rotAtStart = rotLastCheck = initial_orientation;
 		
 		dynamics.Init(pSet, &pApp->sc,
 			world, bodymodel, wheelmodelfront, wheelmodelrear, position, orientation);
@@ -821,3 +822,21 @@ bool CAR::Serialize(joeserialize::Serializer & s)
 	return true;
 }
 
+
+///  new
+void CAR::ResetPos(bool fromStart)
+{
+	MATHVECTOR <float, 3> pos = fromStart ? posAtStart : posLastCheck;
+	QUATERNION <float> rot = fromStart ? rotAtStart : rotLastCheck;
+	SetPosition(pos);
+
+	btTransform transform;
+	transform.setOrigin(ToBulletVector(pos));
+	transform.setRotation(ToBulletQuaternion(rot));
+	dynamics.chassis->setWorldTransform(transform);
+
+	dynamics.chassis->setLinearVelocity(btVector3(0,0,0));
+	dynamics.chassis->setAngularVelocity(btVector3(0,0,0));
+
+	dynamics.SynchronizeBody();  // set body from chassis
+}

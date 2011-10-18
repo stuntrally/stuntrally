@@ -282,6 +282,9 @@ public:
 		return dynamics.GetMaxSteeringAngle();
 	}
 
+	///  new
+	void ResetPos(bool fromStart=true);
+
 //protected:
 public:
 	CARDYNAMICS dynamics;
@@ -351,6 +354,10 @@ public:
 	bool manualExhaustPos; // if true, use values below, if false, guess from bounding box
 	float exhaustPosition[3]; // position of first exhaust
 	bool has2exhausts; // car has 2nd exhaust ; if true, mirror exhaust 1 for position
+	
+	//  for new game reset
+	MATHVECTOR <float, 3> posAtStart, posLastCheck;
+	QUATERNION <float> rotAtStart, rotLastCheck;
 };
 
 #endif

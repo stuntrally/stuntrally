@@ -324,8 +324,6 @@ public:
 	
 	void SetDrive(const std::string & newdrive);
 	
-	void InitializeWheelVelocity();
-
 	void AddMassParticle(T newmass, MATHVECTOR <T, 3> newpos);
 
 	void AddAerodynamicDevice(

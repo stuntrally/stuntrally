@@ -25,31 +25,6 @@ void CARDYNAMICS::updateAction(btCollisionWorld * collisionWorld, btScalar dt)
 	Tick(dt);  // run internal simulation
 
 	SynchronizeChassis();  // update velocity
-
-	#if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
-	#if 0  // old not used
-	if (GetAsyncKeyState(VK_F1))
-	{
-		///***  reset pos  ---------------------------------------------------------------------------------
-		/*
-		T chassisMass = body.GetMass();
-		MATRIX3 <T> inertia = body.GetInertia();
-		btVector3 chassisInertia(inertia[0], inertia[4], inertia[8]);
-		*/
-		btTransform transform;
-		//transform.setOrigin(ToBulletVector(position));
-		//transform.setRotation(ToBulletQuaternion(orientation));
-		//btDefaultMotionState * chassisState = new btDefaultMotionState();
-		chassis->getMotionState()->setWorldTransform(transform);
-
-		MATHVECTOR <T, 3> zero(0, 10, 0);
-		body.SetPosition( zero);
-		//body.SetOrientation( );
-		body.SetInitialForce(zero);
-		body.SetInitialTorque(zero);
-	}
-	#endif
-	#endif
 }
 
 void CARDYNAMICS::debugDraw(btIDebugDraw* debugDrawer)
