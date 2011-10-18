@@ -60,7 +60,8 @@ clone_cd_and_purge()
 		git checkout "$TAG"
 	else
 		echo "Writing commit id to file..."
-		echo `git log | head -1 | cut --delimiter=" " -f 2` > gitcommit
+		echo `git describe --tags` > gitcommit
+		#echo `git log | head -1 | cut --delimiter=" " -f 2` > gitcommit
 	fi
 	echo "Deleting Git stuff..."
 	rm -rf .git* # Purge version control stuff
