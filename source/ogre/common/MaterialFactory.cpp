@@ -11,7 +11,7 @@ using namespace Ogre;
 
 MaterialFactory::MaterialFactory() : 
 	bShaders(1), bNormalMap(1), bEnvMap(1), bShadows(1), bShadowsDepth(1),
-	iTexSize(2048), iNumShadowTex(3),
+	iTexSize(1024), iNumShadowTex(3),
 	bSettingsChanged(1) // always have to generate at start
 {
 	// temporary test.
@@ -134,7 +134,7 @@ void MaterialFactory::loadDefsFromFile(const std::string& file)
 		LogO("[MaterialFactory] attributes:");
 		#define prop(s) LogO("[MaterialFactory]  - "#s": " + StringConverter::toString((*it)->getProps()->s));
 		#define propS(s) LogO("[MaterialFactory]  - "#s": " + (*it)->getProps()->s);
-		propS(diffuseMap); propS(normalMap); propS(envMap); prop(hasFresnel);
+		/*propS(diffuseMap); propS(normalMap);*/ propS(envMap); prop(hasFresnel);
 		prop(fresnelBias); prop(fresnelScale); prop(fresnelPower); prop(receivesShadows); prop(receivesDepthShadows);
 	}
 	
