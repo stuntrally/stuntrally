@@ -12,6 +12,8 @@
 
 #include <boost/lexical_cast.hpp>
 #include "enet-wrapper.hpp"
+#include "../vdrift/mathvector.h"
+#include "../vdrift/quaternion.h"
 
 namespace protocol {
 
@@ -95,11 +97,12 @@ struct PlayerInfoPacket: public net::SimpleSerializer<PlayerInfoPacket> {
  * These structs are passed around to update car position etc.
  */
 struct CarStatePackage: public net::SimpleSerializer<CarStatePackage> {
-	float x, y, z; // FIXME: Should we use some vector types?
-	float rotx, roty, rotz, rotw; // FIXME: What's the best way to transmit orientation?
-	float vx, vy, vz;
+	MATHVECTOR<float,3> pos;
+	QUATERNION<float> rot;
+	MATHVECTOR<float,3> linearVel;
+	MATHVECTOR<float,3> angularVel;
 
-	CarStatePackage(/* TODO: Parameters. */) {}
+	CarStatePackage() {}
 };
 
 typedef std::map<uint8_t, CarStatePackage> CarStates;
