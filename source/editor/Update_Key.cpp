@@ -3,7 +3,10 @@
 #include "OgreApp.h"
 #include "../road/Road.h"
 #include "../vdrift/pathmanager.h"
+#include "../ogre/common/MultiList2.h"
+#include "../ogre/common/RenderConst.h"
 using namespace Ogre;
+
 
 //  Update  input, info
 //---------------------------------------------------------------------------------------------------------------
@@ -32,7 +35,7 @@ void App::UpdEditWnds()
 	}
 	bool bRoad = edMode == ED_Road;
 	if (mWndRoadCur)  mWndRoadCur->setVisible(bRoad);
-	if (mWndRoadStats)  mWndRoadStats->setVisible(bRoad);
+	//if (mWndRoadStats)  mWndRoadStats->setVisible(bRoad);
 	if (mWndCam)  mWndCam->setVisible(edMode == ED_PrvCam);
 	UpdStartPos();  // StBox visible
 	UpdVisGui();  //br prv..
@@ -67,7 +70,7 @@ void App::togPrvCam()
 	if (edMode == ED_PrvCam)  // leave
 	{
 		edMode = edModeOld;
-		mViewport->setVisibilityMask(255);
+		mViewport->setVisibilityMask(RV_MaskAll);
 		rt[RTs].ndMini->setVisible(false);
 		ndCar->setVisible(true);
 
@@ -84,7 +87,7 @@ void App::togPrvCam()
 		edModeOld = edMode;
 		edMode = ED_PrvCam;
 		bMoveCam = true;  UpdVisGui();
-		mViewport->setVisibilityMask(256);
+		mViewport->setVisibilityMask(RV_MaskPrvCam);
 		rt[RTs].ndMini->setVisible(true);
 		ndCar->setVisible(false);
 
@@ -106,10 +109,10 @@ void App::togPrvCam()
 void App::trkListNext(int rel)
 {
 	if (!(bGuiFocus && mWndTabs->getIndexSelected() == 0))  return;
-	int i = std::max(0, std::min((int)trkList->getItemCount()-1, (int)trkList->getIndexSelected()+rel ));
-	trkList->setIndexSelected(i);
-	trkList->beginToItemAt(std::max(0, i-11));  // center
-	listTrackChng(trkList,i);
+	int i = std::max(0, std::min((int)trkMList->getItemCount()-1, (int)trkMList->getIndexSelected()+rel ));
+	trkMList->setIndexSelected(i);
+	trkMList->beginToItemAt(std::max(0, i-11));  // center
+	listTrackChng(trkMList,i);
 }
 
 bool App::KeyPress(const CmdKey &arg)
@@ -126,7 +129,7 @@ bool App::KeyPress(const CmdKey &arg)
 
 			case KC_RETURN:  // save screen
 				rt[RTs-1].rndTex->writeContentsToFile(pathTrkPrv[1] + pSet->track + ".jpg");  //U
-				listTrackChng(trkList,0);  // upd gui img
+				listTrackChng(trkMList,0);  // upd gui img
 				Status("Preview saved", 1,1,0);
 				break;
 		}
@@ -282,6 +285,8 @@ bool App::KeyPress(const CmdKey &arg)
 
 		case KC_7:  iSnap = (iSnap-1+ciAngSnapsNum)%ciAngSnapsNum;  angSnap = crAngSnaps[iSnap];  break;
 		case KC_8:  iSnap = (iSnap+1)%ciAngSnapsNum;                angSnap = crAngSnaps[iSnap];  break;
+		
+		case KC_0:  road->Set1stChk();  break;
 	}
 	}
 

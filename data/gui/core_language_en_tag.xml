@@ -162,6 +162,7 @@
 	<Tag name="RplAutoRec">Auto record replay</Tag>
 	<Tag name="RplGhost">Show ghost drive - best lap</Tag>
 	<Tag name="RplBestOnly">Save ghost only for best time</Tag>
+	<Tag name="RplAlpha">Transparent ghost</Tag>
 
 	<Tag name="RplAll">All</Tag>
 	<Tag name="RplCur">Cur</Tag>
@@ -182,10 +183,20 @@
 	<Tag name="Resolution">Resolution</Tag>
 	<Tag name="Fullscreen">Fullscreen</Tag>
 	<Tag name="VSync">VSync</Tag>
+	<Tag name="AntiAliasing">Antialiasing</Tag>
 	<Tag name="NeedRestart">* need restart</Tag>
 	<Tag name="Change">Change</Tag>
+	<Tag name="UseSSAA">Use SSAA when effects are enabled</Tag>
+
+	<Tag name="GraphicsAllSettings">Change all graphics settings to preset:</Tag>
+	<Tag name="GraphicsAll_Lowest">Lowest</Tag>
+	<Tag name="GraphicsAll_Low">Low</Tag>
+	<Tag name="GraphicsAll_Medium">Medium</Tag>
+	<Tag name="GraphicsAll_High">High</Tag>
+	<Tag name="GraphicsAll_Ultra">Ultra</Tag>
 
 	<Tag name="Effects">Effects</Tag>
+	<Tag name="AllEffects">Effects Enabled</Tag>
 	<Tag name="Bloom">Bloom</Tag>
 	<Tag name="Intensity">Intensity</Tag>
 	<Tag name="OrigImage">Darken</Tag>
@@ -207,7 +218,7 @@
 	<Tag name="Anisotropy">Anisotropy</Tag>
 
 	<Tag name="Vegetation">Vegetation</Tag>
-	<Tag name="TreeMult">Trees multipler</Tag>
+	<Tag name="TreeMult">Trees multiplier</Tag>
 	<Tag name="DistMult">Distance mul</Tag>
 	<Tag name="GrassMult">Grass mul</Tag>
 	<Tag name="Reset">Reset</Tag>
@@ -227,6 +238,7 @@
 	<Tag name="Size">Size</Tag>
 	<Tag name="Count">Count</Tag>
 	<Tag name="ApplyShadows">Apply Shadows</Tag>
+	<Tag name="LightmapSize">Lightmap size</Tag>
 
 	<Tag name="Particles">Particles</Tag>
 	<Tag name="TireTrails">Tire Trails</Tag>
@@ -243,8 +255,10 @@
 	<Tag name="Minimap">Minimap</Tag>
 	<Tag name="MinimapZoom">Zoom</Tag>
 	<Tag name="MinimapRotate">Rotate</Tag>
+	<Tag name="MinimapTerrain">Terrain</Tag>
 	<Tag name="TimesBar">Times bar</Tag>
 	<Tag name="CameraInfo">Camera info</Tag>
+	<Tag name="CheckArrow">Checkpoint Arrow</Tag>
 
 	<Tag name="Other">Other</Tag>
 	<Tag name="Development">Development</Tag>
@@ -265,13 +279,10 @@
 	
 	<!--  Input  -->
 	<Tag name="Input">Input</Tag>
-	<Tag name="InputKey1">Key 1</Tag>
-	<Tag name="InputKey2">Key 2</Tag>
 	<Tag name="InputNoJS">No joystick</Tag>
-	<Tag name="InputKeyNoButton">No button</Tag>
-	<Tag name="InputKeyNoAxis">No axis</Tag>
 	<Tag name="InputKeyUnassigned">-- None --</Tag>
 	<Tag name="InputAssignKey">&lt;Press a key&gt;</Tag>
+
 	<Tag name="InputMoveAxisTip">Move an axis to see its number</Tag>
 	<Tag name="InputPressButtonTip">Press a button to see its number</Tag>
 
@@ -280,6 +291,22 @@
 	<Tag name="InputMapPlayer3">Player 3</Tag>
 	<Tag name="InputMapPlayer4">Player 4</Tag>
 	<Tag name="InputMapGeneral">General</Tag>
+
+	<Tag name="InputHeaderTxt1">Action</Tag>
+	<Tag name="InputHeaderTxt2">Binding</Tag>
+	<Tag name="InputHeaderTxt3">Value</Tag>
+
+	<Tag name="InputControllers">Controllers</Tag>
+	<Tag name="InputDetailPreset">Set from preset</Tag>
+	<Tag name="InputDetailsFor">Details for</Tag>
+	<Tag name="InputMinVal">Min. Value</Tag>
+	<Tag name="InputMaxVal">Max. Value</Tag>
+	<Tag name="InputMultiplier">Multiplier</Tag>
+	<Tag name="InpSet_KeyHalf">Key Half</Tag>
+	<Tag name="InpSet_KeyFull">Key Full</Tag>
+	<Tag name="InpSet_AxisHalf">Axis Half</Tag>
+	<Tag name="InpSet_AxisHalfInv">Axis Half Inversed</Tag>
+	<Tag name="InpSet_AxisFull">Axis Full</Tag>
 
 	<Tag name="InputMapThrottle">Throttle</Tag>
 	<Tag name="InputMapBrake">Brake</Tag>
@@ -570,6 +597,7 @@
 	<Tag name="InputRoadAngType">5,6   - angles type</Tag>
 	<Tag name="InputRoadAngSnap">7,8   - angles snap</Tag>
 	<Tag name="InputRoadAngZero">shift-6  - zero angles</Tag>
+	<Tag name="InputRoadChkFirst">0   - set checkpoint as first</Tag>
 
 
 	<!-- Road  pick (one)  -->

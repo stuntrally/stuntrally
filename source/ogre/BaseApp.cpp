@@ -77,64 +77,6 @@ String BaseApp::StrFromKey(const String& skey)
 ///-------------------------------------------------------------------------------------
 bool BaseApp::keyPressed( const OIS::KeyEvent &arg )
 {
-	if (bAssignKey)
-	{	bAssignKey = false;
-		pressedKey = arg.key;
-		
-		//  cancel on backspace or escape
-		bool cancel = pressedKey == OIS::KC_BACK || pressedKey == OIS::KC_ESCAPE;
-		
-		//  upd key name on button
-		String skey0 = "Keyboard/" + toStr(pressedKey);
-		pressedKeySender->setCaption(StrFromKey(skey0));
-		//  show mouse again
-		MyGUI::PointerManager::getInstance().setVisible(true);
-		
-		//  get action/schema/index from widget name
-		Ogre::vector<String>::type ss = StringUtil::split(pressedKeySender->getName(), "_");
-		std::string actionName = ss[1], schemaName = ss[2], index = ss[3];
-		
-		OISB::ActionSchema* schema = OISB::System::getSingleton().mActionSchemas[schemaName];
-		OISB::Action* action = schema->mActions[actionName];
-		if (action->mBindings.size() == 0)
-			action->createBinding();
-		OISB::Binding* binding = action->mBindings.front();
-		
-		//  save keys
-		String decKey = "", incKey = "";
-		size_t num = binding->getNumBindables();
-		for (int i = 0; i < num; ++i)
-		{
-			OISB::Bindable* bind = binding->getBindable(i);
-			String name = bind->getBindableName();
-			String role = binding->getRole(bind);
-			//if (StringUtil::startsWith(n,"Keyboard"));
-			if (role == "dec")  decKey = name;
-			if (role == "inc")  incKey = name;
-		}
-		//  clear, unbind
-		for (int i = num-1; i >= 0; --i)
-			binding->unbind(binding->getBindable(i));
-
-		//  change
-		String skey = cancel ? "" : skey0;
-			 if (index == "1")  incKey = skey;  // lower btn - inc
-		else if (index == "2")  decKey = skey;  // upper btn - dec
-
-		//  update, bind
-		if (incKey != "")	binding->bind(incKey, "inc");
-		if (decKey != "")	binding->bind(decKey, "dec");
-		
-				
-		//  update button labels  . . . . . . . 
-		MyGUI::ButtonPtr b1 = mGUI->findWidget<MyGUI::Button>("inputbutton_" + actionName + "_" + schemaName + "_" + "1", "", false);
-		MyGUI::ButtonPtr b2 = mGUI->findWidget<MyGUI::Button>("inputbutton_" + actionName + "_" + schemaName + "_" + "2", "", false);
-		if (b1)  b1->setCaption(StrFromKey(incKey));
-		if (b2)  b2->setCaption(StrFromKey(decKey));
-		
-		return true;
-	}
-	
 	using namespace OIS;
 	if (!alt)
 	switch (arg.key)  // global
@@ -145,7 +87,12 @@ bool BaseApp::keyPressed( const OIS::KeyEvent &arg )
 		{	mbWireFrame = !mbWireFrame;
 			///  Set for all cameras
 			PolygonMode mode = mbWireFrame ? PM_WIREFRAME : PM_SOLID;
-
+			
+			if (mode == PM_WIREFRAME) // disable effects
+				refreshCompositor(true);
+			else if (mode == PM_SOLID)
+				refreshCompositor();
+				
 			if (mSplitMgr)
 			for (std::list<Camera*>::iterator it=mSplitMgr->mCameras.begin(); it!=mSplitMgr->mCameras.end(); it++)
 				(*it)->setPolygonMode(mode);

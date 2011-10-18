@@ -8,6 +8,7 @@
 
 #include <OgreParticleSystem.h>
 #include <OgreManualObject.h>
+#include <OgreMaterialManager.h>
 #include "common/Gui_Def.h"
 using namespace Ogre;
 
@@ -50,7 +51,7 @@ void App::UpdThr()
 //---------------------------------------------------------------------------------------------------------------
 
 bool App::frameStart(Real time)
-{	
+{
 	if (bGuiReinit)  // after language change from combo
 	{	bGuiReinit = false;
 
@@ -74,6 +75,11 @@ bool App::frameStart(Real time)
 	}
 	else 
 	{
+		bool bFirstFrame = (carModels.size()>0 && carModels.front()->bGetStPos) ? true : false;
+		
+		if (isFocGui && mWndTabs->getIndexSelected() == 7)
+			UpdateInputBars();
+		
 		//  keys dn/up - trklist, carlist
 		#define isKey(a)  mKeyboard->isKeyDown(OIS::a)
 		static float dirU = 0.f,dirD = 0.f;
@@ -112,7 +118,7 @@ bool App::frameStart(Real time)
 			int ta = ((le || bRplBack) ? -2 : 0) + ((ri || bRplFwd) ? 2 : 0);
 			if (ta)
 			{	double tadd = ta;
-				tadd *= (shift ? 0.2 : 1) * (ctrlN ? 4 : 1) * (alt ? 8 : 1);  // multiplers
+				tadd *= (shift ? 0.2 : 1) * (ctrlN ? 4 : 1) * (alt ? 8 : 1);  // multipliers
 				if (!bRplPause)  tadd -= 1;  // play compensate
 				double t = pGame->timer.GetReplayTime(), len = replay.GetTimeLength();
 				t += tadd * time;  // add
@@ -187,6 +193,29 @@ bool App::frameStart(Real time)
 			for (std::vector<CarModel*>::iterator it=carModels.begin(); it!=carModels.end(); it++)
 				if ((*it)->fCam)
 					(*it)->fCam->update(pGame->framerate);
+		}
+		
+		// align checkpoint arrow
+		// move in front of camera
+		if (pSet->check_arrow && arrowNode && !bRplPlay)
+		{
+			Ogre::Vector3 camPos = carModels.front()->fCam->mCamera->getPosition();
+			Ogre::Vector3 dir = carModels.front()->fCam->mCamera->getDirection();
+			dir.normalise();
+			Ogre::Vector3 up = carModels.front()->fCam->mCamera->getUp();
+			up.normalise();
+			Ogre::Vector3 arrowPos = camPos + 10.0f * dir + 3.5f*up;
+			arrowNode->setPosition(arrowPos);
+			
+			// animate
+			if (bFirstFrame) // 1st frame: dont animate
+				arrowAnimCur = arrowAnimEnd;
+			else
+				arrowAnimCur = Ogre::Quaternion::Slerp(time*5, arrowAnimStart, arrowAnimEnd, true);
+			arrowRotNode->setOrientation(arrowAnimCur);
+			
+			// look down -y a bit so we can see the arrow better
+			arrowRotNode->pitch(Ogre::Degree(-20), Ogre::SceneNode::TS_LOCAL); 
 		}
 
 		//  update all cube maps
@@ -291,7 +320,7 @@ void App::newPoses()
 				posInfo.whVel[w] = fr.whVel[w];
 				posInfo.whSlide[w] = fr.slide[w];  posInfo.whSqueal[w] = fr.squeal[w];
 				posInfo.whR[w] = replay.header.whR[iCarNum][w];//
-				posInfo.whMtr[w] = fr.whMtr[w];
+				posInfo.whTerMtr[w] = fr.whTerMtr[w];  posInfo.whRoadMtr[w] = fr.whRoadMtr[w];
 				posInfo.fboost = fr.fboost;
 			}
 		}
@@ -310,7 +339,7 @@ void App::newPoses()
 				posInfo.whVel[w] = fr.whVel[w];
 				posInfo.whSlide[w] = fr.slide[w];  posInfo.whSqueal[w] = fr.squeal[w];
 				posInfo.whR[w] = replay.header.whR[iCarNum][w];//
-				posInfo.whMtr[w] = fr.whMtr[w];
+				posInfo.whTerMtr[w] = fr.whTerMtr[w];  posInfo.whRoadMtr[w] = fr.whRoadMtr[w];
 				posInfo.fboost = fr.fboost;
 			}
 		}
@@ -329,7 +358,7 @@ void App::newPoses()
 				posInfo.whVel[w] = pCar->dynamics.GetWheelVelocity(wp).Magnitude();
 				posInfo.whSlide[w] = -1.f;  posInfo.whSqueal[w] = pCar->GetTireSquealAmount(wp, &posInfo.whSlide[w]);
 				posInfo.whR[w] = pCar->GetTireRadius(wp);//
-				posInfo.whMtr[w] = carM->whTerMtr[w];
+				posInfo.whTerMtr[w] = carM->whTerMtr[w];  posInfo.whRoadMtr[w] = carM->whRoadMtr[w];
 				posInfo.fboost = pCar->dynamics.doBoost;
 			}
 		}
@@ -400,7 +429,7 @@ void App::newPoses()
 					fr.suspVel[w] = pCar->dynamics.GetSuspension(wp).GetVelocity();
 					fr.suspDisp[w] = pCar->dynamics.GetSuspension(wp).GetDisplacementPercent();
 					//replay.header.whR[w] = pCar->GetTireRadius(wp);//
-					fr.whMtr[w] = carM->whTerMtr[w];
+					fr.whTerMtr[w] = carM->whTerMtr[w];  fr.whRoadMtr[w] = carM->whRoadMtr[w];
 				}
 				//  hud
 				fr.vel = pCar->GetSpeedometer();  fr.rpm = pCar->GetEngineRPM();
@@ -439,6 +468,52 @@ void App::newPoses()
 			carM->bWrongChk = false;
 		else
 		{
+			// checkpoint arrow
+			if (pSet->check_arrow && !bRplPlay && arrowNode && road && road->mChks.size()>0)
+			{
+				// set animation start to old orientation
+				arrowAnimStart = arrowAnimCur;
+				
+				bool noAnim = false;
+				// game start: no animation
+				if (carM->iCurChk == -1)
+					noAnim = true;
+				
+				// get vector from camera to checkpoint
+				Ogre::Vector3 chkPos;
+				if (carM->iCurChk == -1 || carM->iCurChk == carM->iNextChk) // workaround for first checkpoint
+				{
+					int id = pSet->trackreverse ? road->iChkId1Rev : road->iChkId1;
+					chkPos = road->mChks[id].pos;
+				}
+				else
+					chkPos = road->mChks[std::max(0, std::min((int)road->mChks.size()-1, carM->iNextChk))].pos;
+				//const Ogre::Vector3& playerPos = carM->fCam->mCamera->getPosition();
+				const Ogre::Vector3& playerPos = carM->pMainNode->getPosition();
+				Ogre::Vector3 dir = chkPos - playerPos;
+				dir[1] = 0; // only x and z rotation
+				Ogre::Quaternion quat = Vector3::UNIT_Z.getRotationTo(-dir); // convert to quaternion
+
+				const bool valid = !quat.isNaN();
+				if (valid) {
+					if (noAnim) arrowAnimStart = quat;
+					arrowAnimEnd = quat;
+				
+					// set arrow color (wrong direction: red arrow)
+					// calc angle towards cam
+					Real angle = (arrowAnimCur.zAxis().dotProduct(carM->fCam->mCamera->getOrientation().zAxis())+1)/2.0f;
+					// set color in material
+					MaterialPtr arrowMat = MaterialManager::getSingleton().getByName("Arrow");
+					Ogre::GpuProgramParametersSharedPtr fparams = arrowMat->getTechnique(0)->getPass(1)->getFragmentProgramParameters();
+					// green: 0.0 1.0 0.0     0.0 0.4 0.0
+					// red:   1.0 0.0 0.0     0.4 0.0 0.0
+					Vector3 col1 = angle * Vector3(0.0, 1.0, 0.0) + (1-angle) * Vector3(1.0, 0.0, 0.0);
+					Vector3 col2 = angle * Vector3(0.0, 0.4, 0.0) + (1-angle) * Vector3(0.4, 0.0, 0.0);
+					fparams->setNamedConstant("color1", col1);
+					fparams->setNamedConstant("color2", col2);
+				}
+			}
+			
 			if (carM->bGetStPos)  // first pos is at start
 			{	carM->bGetStPos = false;
 				carM->matStPos.makeInverseTransform(posInfo.pos, Vector3::UNIT_SCALE, posInfo.rot);
@@ -452,7 +527,7 @@ void App::newPoses()
 				carM->bInSt = abs(carM->vStDist.x) < road->vStBoxDim.x && 
 					abs(carM->vStDist.y) < road->vStBoxDim.y && 
 					abs(carM->vStDist.z) < road->vStBoxDim.z;
-			
+							
 				carM->iInChk = -1;  carM->bWrongChk = false;
 				int ncs = road->mChks.size();
 				if (ncs > 0)
@@ -461,7 +536,7 @@ void App::newPoses()
 						bool best = pGame->timer.Lap(iCarNum, 0,0, true, pSet->trackreverse);  //pGame->cartimerids[pCar] ?
 
 						if (!pSet->rpl_bestonly || best)  ///  new best lap, save ghost
-						if (iCarNum==0)  // for many, only 1st-
+						if (iCarNum==0 && pSet->rpl_rec)  // for many, only 1st-
 						{
 							ghost.SaveFile(GetGhostFile());
 							ghplay.CopyFrom(ghost);
@@ -487,7 +562,7 @@ void App::newPoses()
 							{
 								int ii = (pSet->trackreverse ? -1 : 1) * road->iDir;
 								carM->iNextChk = (carM->iCurChk + ii + ncs) % ncs;
-									
+								
 								//  any if first, or next
 								if (i == carM->iNextChk)
 								{	carM->iCurChk = i;  carM->iNumChks++;  }

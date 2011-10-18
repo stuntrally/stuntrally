@@ -4,11 +4,13 @@
 #include "../road/Road.h"
 #include "../vdrift/pathmanager.h"
 #include "../paged-geom/PagedGeometry.h"
+#include "../ogre/common/RenderConst.h"
+#include "../ogre/common/MaterialFactory.h"
 
 #if OGRE_PLATFORM != OGRE_PLATFORM_WIN32
-// dir listing
-#include <dirent.h>
-#include <sys/types.h>
+	// dir listing
+	#include <dirent.h>
+	#include <sys/types.h>
 #endif
 using namespace Ogre;
 
@@ -44,7 +46,8 @@ App::App()  //  gui wigdets--
 	,edRdTcMul(0),edRdLenDim(0),edRdWidthSteps(0),edRdHeightOfs(0)  // road
 	,edRdSkirtLen(0),edRdSkirtH(0), edRdMergeLen(0),edRdLodPLen(0)
 	,edRdColN(0),edRdColR(0), edRdPwsM(0),edRdPlsM(0)
-	,imgPrv(0),imgMini(0),imgTer(0), trkDesc(0),trkName(0)  // track
+	,imgPrv(0),imgMini(0),imgTer(0), imgTrkIco1(0),imgTrkIco2(0)
+	,trkMList(0),trkDesc(0),trkName(0)  // track
 
 	,mTerrainGroup(0), mTerrainPaging(0), mPageManager(0), mTerrainGlobals(0)
 	,bTerUpd(0), curBr(2), bGuiReinit(0), noBlendUpd(0), bGI(0), resList(0)
@@ -76,11 +79,18 @@ App::App()  //  gui wigdets--
 	for (int i=0; i < 4; ++i)  {  cmbRoadMtr[i]=0;  cmbPipeMtr[i]=0;  }
 }
 
+void App::postInit()
+{
+	materialFactory = new MaterialFactory();
+	materialFactory->pApp = this;
+}
+
 const Ogre::String App::csBrShape[BRS_ALL] = { "Triangle", "Sinus", "Noise" };  // static
 
 
 App::~App()
 {
+	delete materialFactory;
 	delete[] mBrushData;
 	delete road;
 	if (mTerrainPaging)
@@ -129,7 +139,7 @@ ManualObject* App::Create2D(const String& mat, Real s, bool dyn)
  
 	AxisAlignedBox aabInf;	aabInf.setInfinite();
 	m->setBoundingBox(aabInf);  // always visible
-	m->setRenderQueueGroup(RENDER_QUEUE_OVERLAY - 1);
+	m->setRenderQueueGroup(RQG_Hud2);
 	return m;
 }
 

@@ -1,5 +1,8 @@
 #include "pch.h"
 #include "../Defines.h"
+#include "../common/TerrainMaterialGen.h"
+#include "../common/MaterialFactory.h"
+
 #ifdef ROAD_EDITOR
 	#include "../../editor/OgreApp.h"
 	#include "../../editor/settings.h"
@@ -12,11 +15,14 @@
 	#include "../SplitScreen.h"
 	#include "../QTimer.h"
 #endif
-#include <OgreTerrainMaterialGeneratorA.h>
 #include <OgreTerrain.h>
 #include <OgreShadowCameraSetupLiSPSM.h>
 #include <OgreShadowCameraSetupPSSM.h>
 #include <OgreMaterialManager.h>
+#include <OgreOverlay.h>
+#include <OgreOverlayContainer.h>
+#include <OgreOverlayManager.h>
+
 using namespace Ogre;
 
 
@@ -29,16 +35,17 @@ void App::changeShadows()
 	//  get settings
 	bool enabled = pSet->shadow_type != 0;
 	bool bDepth = pSet->shadow_type == 3;
-
+	
 	pSet->shadow_size = std::max(0,std::min(ciShadowNumSizes-1, pSet->shadow_size));
 	int fTex = /*2048*/ ciShadowSizesA[pSet->shadow_size], fTex2 = fTex/2;
 	int num = /*3*/ pSet->shadow_count;
 
-	TerrainMaterialGeneratorA::SM2Profile* matProfile = 0;
+	TerrainMaterialGeneratorB::SM2Profile* matProfile = 0;
+	
 	if (mTerrainGlobals)
 	{
-		matProfile = static_cast<TerrainMaterialGeneratorA::SM2Profile*>(
-			mTerrainGlobals->getDefaultMaterialGenerator()->getActiveProfile());
+		matProfile = (TerrainMaterialGeneratorB::SM2Profile*) mTerrainGlobals->getDefaultMaterialGenerator()->getActiveProfile();
+				
 		matProfile->setReceiveDynamicShadowsEnabled(enabled);
 		matProfile->setReceiveDynamicShadowsLowLod(true);
 		matProfile->setGlobalColourMapEnabled(false);
@@ -88,9 +95,11 @@ void App::changeShadows()
 		PSSMShadowCameraSetup* pssmSetup = new PSSMShadowCameraSetup();
 		#ifndef ROAD_EDITOR
 		pssmSetup->setSplitPadding(mSplitMgr->mCameras.front()->getNearClipDistance());
+		//pssmSetup->setSplitPadding(10);
 		pssmSetup->calculateSplitPoints(num, mSplitMgr->mCameras.front()->getNearClipDistance(), mSceneMgr->getShadowFarDistance());
 		#else
 		pssmSetup->setSplitPadding(mCamera->getNearClipDistance());
+		//pssmSetup->setSplitPadding(10);
 		pssmSetup->calculateSplitPoints(num, mCamera->getNearClipDistance(), mSceneMgr->getShadowFarDistance());
 		#endif
 		for (int i=0; i < num; ++i)
@@ -107,8 +116,9 @@ void App::changeShadows()
 	{	int size = i==0 ? fTex : fTex2;
 		mSceneMgr->setShadowTextureConfig(i, size, size, bDepth ? PF_FLOAT32_R : PF_X8B8G8R8);
 	}
+	
 	mSceneMgr->setShadowTextureSelfShadow(bDepth ? true : false);  //-?
-	mSceneMgr->setShadowCasterRenderBackFaces(false/**/);
+	mSceneMgr->setShadowCasterRenderBackFaces(bDepth ? true : false);
 	mSceneMgr->setShadowTextureCasterMaterial(bDepth ? "PSSM/shadow_caster" : StringUtil::BLANK);
 
 	if (matProfile && terrain)  {
@@ -117,7 +127,65 @@ void App::changeShadows()
 		MaterialPtr mtr = matProfile->generateForCompositeMap(terrain);
 		//LogO(mtr->getBestTechnique()->getPass(0)->getTextureUnitState(0)->getName());
 		//LogO(String("Ter mtr: ") + mtr->getName());
+
 	}
+	
+	#ifdef SHADOWS_D		
+	// shadow tex overlay
+	// add the overlay elements to show the shadow maps:
+	// init overlay elements
+	OverlayManager& mgr = OverlayManager::getSingleton();
+	Overlay* overlay;
+	
+	// destroy if already exists
+	if (overlay = mgr.getByName("DebugOverlay"))
+		mgr.destroy(overlay);
+		
+	overlay = mgr.create("DebugOverlay");
+	
+	for (size_t i = 0; i < num; ++i) {
+		TexturePtr tex = mSceneMgr->getShadowTexture(i);
+
+		// Set up a debug panel to display the shadow
+		
+		if (MaterialManager::getSingleton().resourceExists("Ogre/DebugTexture" + toStr(i)))
+			MaterialManager::getSingleton().remove("Ogre/DebugTexture" + toStr(i));
+		MaterialPtr debugMat = MaterialManager::getSingleton().create(
+			"Ogre/DebugTexture" + toStr(i), 
+			ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME);
+			
+		debugMat->getTechnique(0)->getPass(0)->setLightingEnabled(false);
+		TextureUnitState *t = debugMat->getTechnique(0)->getPass(0)->createTextureUnitState(tex->getName());
+		t->setTextureAddressingMode(TextureUnitState::TAM_CLAMP);
+
+		OverlayContainer* debugPanel;
+		
+		// destroy container if exists
+		try
+		{
+			if (debugPanel = 
+				static_cast<OverlayContainer*>(
+					mgr.getOverlayElement("Ogre/DebugTexPanel" + toStr(i)
+				)))
+				mgr.destroyOverlayElement(debugPanel);
+		}
+		catch (Ogre::Exception&) {}
+		
+		debugPanel = (OverlayContainer*)
+			(OverlayManager::getSingleton().createOverlayElement("Panel", "Ogre/DebugTexPanel" + StringConverter::toString(i)));
+		debugPanel->_setPosition(0.8, i*0.25);
+		debugPanel->_setDimensions(0.2, 0.24);
+		debugPanel->setMaterialName(debugMat->getName());
+		debugPanel->show();
+		overlay->add2D(debugPanel);
+		overlay->show();
+	}
+	#endif
+	
+	materialFactory->setShadows(enabled);
+	materialFactory->setShadowsDepth(bDepth);
+	materialFactory->generate();
+	
 	UpdPSSMMaterials();
 
 	ti.update();	/// time

@@ -17,6 +17,9 @@ namespace Ogre {  class SceneNode;  class Root;  class SceneManager;  class Rend
 	class Terrain;  class TerrainGlobalOptions;  class TerrainGroup;  class TerrainPaging;  class PageManager;  }
 namespace Forests {  class PagedGeometry;  }
 namespace BtOgre  {  class DebugDrawer;  }
+namespace MyGUI  {  class MultiList2;  }
+namespace OISB   {  class AnalogAxisAction;  }
+class MaterialFactory;
 
 
 
@@ -29,12 +32,14 @@ public:
 	void updatePoses(float time), newPoses();
 	void UpdThr();
 	
-	// translation
-	// can't have it in c'tor, because mygui is not initialized
+	// stuff to be executed after BaseApp init
+	void postInit();
+	
 	void setTranslations();
 	
 	// This list holds new positions info for every CarModel
 	std::vector<PosInfo> newPosInfos;
+	std::map<int,int> carsCamNum;  // picked camera number for cars
 	
 	// Utility
 	Ogre::Quaternion qFixCar,qFixWh;
@@ -54,9 +59,15 @@ public:
 	//  trees
 	Forests::PagedGeometry *trees, *grass;
 	
+	Ogre::SceneNode* arrowNode; // checkpoint arrow
+	Ogre::SceneNode* arrowRotNode; // seperate node for rotation
+	Ogre::Quaternion arrowAnimStart, arrowAnimEnd, arrowAnimCur; // smooth animation
+		
 	void UpdateHUD(int carId, class CarModel* pCarM, class CAR* pCar,
 		float time, Ogre::Viewport* vp=NULL), SizeHUD(bool full, Ogre::Viewport* vp=NULL, int carId=-1);
 	void UpdHUDRot(int carId, CarModel* pCarM, float vel);
+	
+	MaterialFactory* materialFactory; // material generation
 
 protected:
 	virtual void createScene();
@@ -92,8 +103,7 @@ protected:
 		*ovCam, *ovTimes, *ovWarnWin;
 
 	Ogre::String GetTimeString(float time) const;
-	void CreateHUD(), ShowHUD(bool hideAll=false);
-
+	void CreateHUD(), ShowHUD(bool hideAll=false), UpdMiniTer();
 
 	//  create  . . . . . . . . . . . . . . . . . . . . . . . . 
 	Ogre::String resCar, resTrk, resDrv;
@@ -101,7 +111,7 @@ protected:
 	void CreateTrack(), CreateRacingLine(), CreateMinimap(), CreateRoadBezier();
 	void CreateTerrain(bool bNewHmap=false, bool bTer=true), CreateBltTerrain();
 	void GetTerAngles(int xb,int yb, int xe,int ye);
-	void CreateTrees(), CreateRoad(), CreateProps();
+	void CreateTrees(), CreateRoad(), CreateProps(), CreateFluids();
 	void CreateSkyDome(Ogre::String sMater, Ogre::Vector3 scale);
 	void NewGame();  void NewGameDoLoad(); bool IsTerTrack();
 	
@@ -129,17 +139,13 @@ protected:
 	float Noise(float x, float zoom, int octaves, float persistance);
 	float Noise(float x, float y, float zoom, int octaves, float persistance);
 	Ogre::Real terMaxAng;
-		
+
+public:
 	void changeShadows(), UpdPSSMMaterials(), setMtrSplits(Ogre::String sMtrName);
+
+protected:
 	Ogre::Vector4 splitPoints;  Ogre::ShadowCameraSetupPtr mPSSMSetup;
-
-
-	/// joy events
-    virtual bool povMoved( const OIS::JoyStickEvent &e, int pov );
-	virtual bool axisMoved( const OIS::JoyStickEvent &e, int axis );
-    virtual bool sliderMoved( const OIS::JoyStickEvent &e, int sliderID );
-    virtual bool buttonPressed( const OIS::JoyStickEvent &e, int button );
-    virtual bool buttonReleased( const OIS::JoyStickEvent &e, int button );
+	void recreateReflections();  // call after refl_mode changed
 
 	//  road
 public:	
@@ -163,7 +169,8 @@ protected:
 	SLV(Anisotropy);  SLV(ViewDist);  SLV(TerDetail);  SLV(TerDist);  SLV(RoadDist);
 	SLV(TexSize);  SLV(TerMtr);  // detail
 	SLV(Trees);  SLV(Grass);  SLV(TreesDist);  SLV(GrassDist);  // paged
-	SLV(Shaders);  SLV(ShadowType);  SLV(ShadowCount);  SLV(ShadowSize);  SLV(ShadowDist);  // shadow
+	SLV(Shaders);  SLV(ShadowType);  SLV(ShadowCount);  SLV(ShadowSize);  SLV(LightmapSize);  SLV(ShadowDist);  // shadow
+	SLV(AntiAliasing); // screen
 	void comboTexFilter(SL), btnShadows(WP), btnTrGrReset(WP);
 	MyGUI::ButtonPtr bnQuit;  void btnQuit(WP);
 
@@ -181,49 +188,61 @@ protected:
 	//  init
 	void InitGui();  bool bGI;
 	void GuiCenterMouse(),GuiInitTooltip(),GuiInitLang(), GuiInitGraphics(),GuiInitTrack();
+	void AddTrkL(std::string name, int user, const class TrackInfo* ti);
 
 	//  track
 	void UpdGuiRdStats(const SplineRoad* rd, const Scene& sc, float time), ReadTrkStats();
-	MyGUI::ListPtr trkList;  MyGUI::EditPtr trkDesc;
-	MyGUI::StaticImagePtr imgPrv,imgMini,imgTer;
+	MyGUI::MultiList2* trkMList;  MyGUI::EditPtr trkDesc;
+	MyGUI::StaticImagePtr imgPrv,imgMini,imgTer, imgTrkIco1,imgTrkIco2;
 	const static int StTrk = 12, InfTrk = 9;
 	MyGUI::StaticTextPtr valTrk, stTrk[StTrk], infTrk[InfTrk];
-	void listTrackChng(MyGUI::List* li, size_t pos), TrackListUpd();
-	TracksXml tracksXml;
+	void listTrackChng(MyGUI::MultiList2* li, size_t pos), TrackListUpd();
+	TracksXml tracksXml;  void btnTrkView1(WP),btnTrkView2(WP),ChangeTrackView(bool full),updTrkListDim();
+	const static int TcolW[32];
 
 	//  screen
 	MyGUI::ListPtr resList;
 	void InitGuiScrenRes(), btnResChng(WP), ResizeOptWnd();
-	void chkVidFullscr(WP), chkVidVSync(WP);
+	void chkVidFullscr(WP), chkVidVSync(WP), chkVidSSAA(WP);
+	void comboGraphicsAll(MyGUI::ComboBoxPtr cmb, size_t val);
 	///-----------------------------------------
 
-	
 	void toggleGui();
 	void UpdCarClrSld(bool upd=true);  bool bUpdCarClr;
 
-	// input tab
-	void controlBtnClicked(WP), InitInputGui(), UpdateJsButtons();
-	void joystickBindChanged(WP, size_t val);
-	void joystickSelectionChanged(WP, size_t val);
-	void recreateReflections();  // call after refl_mode changed
+
+	///  input tab
+	void InitInputGui(), inputBindBtnClicked(WP);
+	void InputBind(int key, int button=-1, int axis=-1);
+	void cmbJoystick(WP, size_t val), UpdateInputBars(), inputDetailBtn(WP);
+	Ogre::String GetInputName(const Ogre::String& sName);
+	//  joy events
+	virtual bool axisMoved( const OIS::JoyStickEvent &e, int axis );
+    virtual bool buttonPressed( const OIS::JoyStickEvent &e, int button );
+    virtual bool buttonReleased( const OIS::JoyStickEvent &e, int button );
+	MyGUI::StaticTextPtr txtJAxis, txtJBtn, txtInpDetail;
+	int lastAxis, axisCnt;  std::string joyName;  class OISB::AnalogAxisAction* actDetail;
+	MyGUI::EditPtr edInputMin, edInputMax, edInputMul;  void editInput(MyGUI::EditPtr);
+	MyGUI::ComboBoxPtr cmbInpDetSet;  void comboInputPreset(MyGUI::ComboBoxPtr cmb, size_t val);
+
 
 	//  sliders
 	SLV(Particles);  SLV(Trails);
 	SLV(ReflSkip);  SLV(ReflSize);  SLV(ReflFaces);  SLV(ReflDist);  SLV(ReflMode); // refl
-	SLV(SizeGaug);  SLV(SizeMinimap);  SLV(ZoomMinimap);  // view
+	SLV(SizeGaug);  SLV(SizeMinimap);  SLV(SizeArrow);  SLV(ZoomMinimap);  // view
 	SLV(VolMaster);  SLV(VolEngine);  SLV(VolTires);  SLV(VolEnv);
 	SLV(CarClrH);  SLV(CarClrS);  SLV(CarClrV);  // car clr
 	SLV(BloomInt);  SLV(BloomOrig);  SLV(BlurIntens);  // video
 	SLV(NumLaps);  // setup
 	
 	//  checks
-	void chkFps(WP), chkGauges(WP),	chkDigits(WP),
-		chkMinimap(WP), chkMiniZoom(WP), chkMiniRot(WP),  // view
+	void chkFps(WP), chkGauges(WP),	chkArrow(WP), chkDigits(WP),
+		chkMinimap(WP), chkMiniZoom(WP), chkMiniRot(WP), chkMiniTer(WP),  // view
 		chkCamInfo(WP), chkTimes(WP), chkCarDbgBars(WP), chkCarDbgTxt(WP), chkBltDebug(WP), chkBltProfilerTxt(WP),
 		chkReverse(WP), chkParticles(WP), chkTrails(WP),
 		chkAbs(WP), chkTcs(WP), chkGear(WP), chkRear(WP), chkClutch(WP),  // car
 		chkOgreDialog(WP), chkAutoStart(WP), chkEscQuits(WP), chkBltLines(WP), chkLoadPics(WP),  // startup
-		chkVidBloom(WP), chkVidHDR(WP), chkVidBlur(WP), UpdBloomVals(),  // video
+		chkVidEffects(WP), chkVidBloom(WP), chkVidHDR(WP), chkVidBlur(WP), UpdBloomVals(),  // video
 		chkVegetCollis(WP), chkCarCollis(WP);  //car
 
 	void imgBtnCarClr(WP), btnCarClrRandom(WP);
@@ -236,7 +255,7 @@ protected:
 	MyGUI::HScrollPtr slRplPos;  void slRplPosEv(SL);
 	MyGUI::EditPtr edRplName, edRplDesc;
 	void btnRplLoad(WP), btnRplSave(WP), btnRplDelete(WP), btnRplRename(WP),  // btn
-		chkRplAutoRec(WP),chkRplChkGhost(WP),chkRplChkBestOnly(WP),  // settings
+		chkRplAutoRec(WP),chkRplChkGhost(WP),chkRplChkBestOnly(WP),chkRplChkAlpha(WP),  // settings
 		btnRplToStart(WP),btnRplToEnd(WP), btnRplPlay(WP),  // controls
 		btnRplCur(WP),btnRplAll(WP),btnRplGhosts(WP);  // radio
 	MyGUI::ButtonPtr rbRplCur, rbRplAll, rbRplGhosts;
@@ -262,7 +281,7 @@ protected:
 	MyGUI::ListPtr carList, rplList;  void updReplaysList();
 	void listRplChng(MyGUI::List* li, size_t pos);
 	void listCarChng(MyGUI::List* li, size_t pos),  btnChgCar(WP), btnChgTrack(WP);
-	int LNext(MyGUI::ListPtr lp, int rel);  // util next in list
+	int LNext(MyGUI::MultiList2* lp, int rel), LNext(MyGUI::ListPtr lp, int rel);  // util next in list
 	void trkLNext(int rel), carLNext(int rel), rplLNext(int rel);
 	void tabPlayer(MyGUI::TabPtr wp, size_t id);
 

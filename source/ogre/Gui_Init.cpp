@@ -4,12 +4,12 @@
 #include "../vdrift/game.h"
 #include "../road/Road.h"
 #include "OgreGame.h"
-//#include "../oisb/OISB.h"
 
 #include <OgreRoot.h>
 #include <OgreRenderWindow.h>
 #include <OgreOverlay.h>
 #include "common/Gui_Def.h"
+#include "common/MultiList2.h"
 using namespace MyGUI;
 using namespace Ogre;
 
@@ -69,6 +69,7 @@ void App::InitGui()
 	//  view sizes
 	Slv(SizeGaug,	(pSet->size_gauges-0.1f) /0.15f);
 	Slv(SizeMinimap,(pSet->size_minimap-0.05f) /0.25f);
+	Slv(SizeArrow,  (pSet->size_arrow));
 	Slv(ZoomMinimap,powf((pSet->zoom_minimap-1.0f) /9.f, 0.5f));
 	
 	//  particles/trails
@@ -96,6 +97,7 @@ void App::InitGui()
     //------------------------------------------------------------------------
 	bnQuit = mGUI->findWidget<Button>("Quit");
 	if (bnQuit)  {  bnQuit->eventMouseButtonClick = newDelegate(this, &App::btnQuit);  bnQuit->setVisible(isFocGui);  }
+	Chk("SSAA", chkVidSSAA, pSet->ssaa);
 	Chk("ReverseOn", chkReverse, pSet->trackreverse);
 	Chk("ParticlesOn", chkParticles, pSet->particles);	Chk("TrailsOn", chkTrails, pSet->trails);
 
@@ -104,9 +106,11 @@ void App::InitGui()
 
 	Chk("Digits", chkDigits, pSet->show_digits);
 	Chk("Gauges", chkGauges, pSet->show_gauges);  ShowHUD();//
+	Chk("Arrow", chkArrow, pSet->check_arrow);
 
 	Chk("Minimap", chkMinimap, pSet->trackmap);	chMinimp = bchk;
 	Chk("MiniZoom", chkMiniZoom, pSet->mini_zoomed);  Chk("MiniRot", chkMiniRot, pSet->mini_rotated);
+	Chk("MiniTer", chkMiniTer, pSet->mini_terrain);
 	Chk("Times", chkTimes, pSet->show_times);	chTimes  = bchk;
 	Chk("CamInfo", chkCamInfo, pSet->show_cam);
 
@@ -143,6 +147,7 @@ void App::InitGui()
 	Chk("ShowPictures", chkLoadPics, pSet->loadingbackground);
 	
 	//  effects
+	Chk("AllEffects", chkVidEffects, pSet->all_effects);
 	Chk("Bloom", chkVidBloom, pSet->bloom);
 	Chk("HDR", chkVidHDR, pSet->hdr);
 	Chk("MotionBlur", chkVidBlur, pSet->motionblur);
@@ -163,6 +168,7 @@ void App::InitGui()
 	Chk("RplChkAutoRec", chkRplAutoRec, pSet->rpl_rec);
 	Chk("RplChkGhost", chkRplChkGhost, pSet->rpl_ghost);
 	Chk("RplChkBestOnly", chkRplChkBestOnly, pSet->rpl_bestonly);
+	Chk("RplChkAlpha", chkRplChkAlpha, pSet->rpl_alpha);
 	//  radios
 	Btn("RplBtnAll", btnRplAll);  rbRplAll = btn;
 	Btn("RplBtnCur", btnRplCur);  rbRplCur = btn;
@@ -335,13 +341,14 @@ void App::InitGui()
 
     ///  tracks list, text, chg btn
     //------------------------------------------------------------------------
-    GuiInitTrack();
 
 	//  track text, chg btn
 	trkDesc = (EditPtr)mLayout->findWidget("TrackDesc");
     valTrk = (StaticTextPtr)mLayout->findWidget("TrackText");
     if (valTrk)
 		valTrk->setCaption(TR("#{Track}: " + pSet->track));  sListTrack = pSet->track;
+
+    GuiInitTrack();
 
     ButtonPtr btnTrk = (ButtonPtr)mLayout->findWidget("ChangeTrack");
     if (btnTrk)  btnTrk->eventMouseButtonClick = newDelegate(this, &App::btnChgTrack);
@@ -351,7 +358,7 @@ void App::InitGui()
     {	ButtonPtr btnNewG = (ButtonPtr)mLayout->findWidget("NewGame"+toStr(i));
 		if (btnNewG)  btnNewG->eventMouseButtonClick = newDelegate(this, &App::btnNewGame);
 	}
-
+	
 
 	bGI = true;  // gui inited, gui events can now save vals
 
@@ -372,6 +379,13 @@ void App::UpdCarClrSld(bool upd)
 
 
 //  next/prev in list by key
+int App::LNext(MyGUI::MultiList2* lp, int rel)
+{
+	int i = std::max(0, std::min((int)lp->getItemCount()-1, (int)lp->getIndexSelected()+rel ));
+	lp->setIndexSelected(i);  //not sorted !..
+	lp->beginToItemAt(std::max(0, i-11));  // center
+	return i;
+}
 int App::LNext(MyGUI::ListPtr lp, int rel)
 {
 	int i = std::max(0, std::min((int)lp->getItemCount()-1, (int)lp->getIndexSelected()+rel ));
@@ -382,7 +396,7 @@ int App::LNext(MyGUI::ListPtr lp, int rel)
 
 void App::trkLNext(int rel)	{
 	if (!(isFocGui && mWndTabs->getIndexSelected() == 0))  return;
-	listTrackChng(trkList,LNext(trkList, rel));  }
+	listTrackChng(trkMList,LNext(trkMList, rel));  }
 
 void App::carLNext(int rel)	{
 	if (!(isFocGui && mWndTabs->getIndexSelected() == 1))  return;

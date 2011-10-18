@@ -3,6 +3,7 @@
 
 #include <OgreCommon.h>
 #include <OgreVector3.h>
+#include <OgreVector2.h>
 #include <OgreColourValue.h>
 
 
@@ -63,7 +64,7 @@ public:
 class FluidBox		// fluid box shape - water, mud, etc.
 {
 public:
-	Ogre::Vector3 pos, rot, size;
+	Ogre::Vector3 pos, rot, size;  Ogre::Vector2 tile;
 	int type;
 	class btCollisionObject* cobj;
 	//float density, linDamp, angDamp;

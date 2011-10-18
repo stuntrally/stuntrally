@@ -1,0 +1,79 @@
+float   lumRGB(float3 v)
+{
+   return dot(v, float3(0.212, 0.716, 0.072));
+}
+
+float4 SSAA_ps(float2 UV : TEXCOORD0,
+               uniform float4 ScreenSize,
+               sampler source : register(s0)) : COLOR
+{
+   float2    inverse_buffer_size = ScreenSize.xy;
+
+   float   w = 1.75;
+
+   float   t = lumRGB(tex2D(source, UV + float2(0.0, -1.0) * w * inverse_buffer_size).xyz),
+      l = lumRGB(tex2D(source, UV + float2(-1.0, 0.0) * w * inverse_buffer_size).xyz),
+      r = lumRGB(tex2D(source, UV + float2(1.0, 0.0) * w * inverse_buffer_size).xyz),
+      b = lumRGB(tex2D(source, UV + float2(0.0, 1.0) * w * inverse_buffer_size).xyz);
+
+   vec2    n = vec2(-(t - b), r - l);
+   float   nl = length(n);
+
+   if   (nl < (1.0 / 16.0))
+      return tex2D(source, UV);
+   else
+   {
+      n *= inverse_buffer_size / nl;
+
+      float4   o = tex2D(source, UV),
+         t0 = tex2D(source, UV + n * 0.5) * 0.9,
+         t1 = tex2D(source, UV - n * 0.5) * 0.9,
+         t2 = tex2D(source, UV + n) * 0.75,
+         t3 = tex2D(source, UV - n) * 0.75;
+
+      return (o + t0 + t1 + t2 + t3) / 4.3;
+   }
+}
+
+float4 NFAA_ps(float2 UV : TEXCOORD0,
+               uniform float4 ScreenSize,
+          sampler source : register(s0)) : COLOR
+{ 
+   float2 vPixelViewport = ScreenSize.xy;
+   const float fScale = 1.75;
+
+   // Offset coordinates
+   float2 upOffset = float2( 0, vPixelViewport.y )* fScale;
+   float2 rightOffset = float2( vPixelViewport.x, 0 ) * fScale;
+
+   float topHeight =         lumRGB( tex2D( source, UV.xy + upOffset).rgb );
+   float bottomHeight =      lumRGB( tex2D( source, UV.xy - upOffset).rgb );
+   float rightHeight =       lumRGB( tex2D( source, UV.xy + rightOffset).rgb );
+   float leftHeight =        lumRGB( tex2D( source, UV.xy - rightOffset).rgb );
+   float leftTopHeight =     lumRGB( tex2D( source, UV.xy - rightOffset + upOffset).rgb );
+   float leftBottomHeight =  lumRGB( tex2D( source, UV.xy - rightOffset - upOffset).rgb );
+   float rightBottomHeight = lumRGB( tex2D( source, UV.xy + rightOffset + upOffset).rgb );
+   float rightTopHeight =    lumRGB( tex2D( source, UV.xy + rightOffset - upOffset).rgb );
+     
+   // Normal map creation
+   float sum0 = rightTopHeight + topHeight + rightBottomHeight;
+   float sum1 = leftTopHeight  + bottomHeight + leftBottomHeight;
+   float sum2 = leftTopHeight  + leftHeight + rightTopHeight;
+   float sum3 = leftBottomHeight + rightHeight + rightBottomHeight;
+
+   float vec1 = (sum1 - sum0);
+   float vec2 = (sum2 - sum3);
+
+   // Put them together and scale.
+   float2 Normal = float2( vec1, vec2) * vPixelViewport * fScale;
+
+   // Color
+   float4 Scene0 = tex2D( source, UV.xy );
+   float4 Scene1 = tex2D( source, UV.xy + Normal.xy );
+   float4 Scene2 = tex2D( source, UV.xy - Normal.xy );
+   float4 Scene3 = tex2D( source, UV.xy + float2(Normal.x, -Normal.y) * 0.5 );
+   float4 Scene4 = tex2D( source, UV.xy - float2(Normal.x, -Normal.y) * 0.5 );
+
+   // Final color
+   return (Scene0 + Scene1 + Scene2 + Scene3 + Scene4) * 0.2;
+}

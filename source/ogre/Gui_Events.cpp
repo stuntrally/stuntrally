@@ -6,6 +6,8 @@
 #include "OgreGame.h"
 #include "FollowCamera.h"
 #include "SplitScreen.h"
+#include "common/Gui_Def.h"
+#include "common/RenderConst.h"
 
 #include <MyGUI_PointerManager.h>
 #include <OIS/OIS.h>
@@ -17,7 +19,6 @@
 #include <OgreMaterialManager.h>
 #include <OgreOverlay.h>
 #include <OgreRenderWindow.h>
-#include "common/Gui_Def.h"
 using namespace std;
 using namespace Ogre;
 using namespace MyGUI;
@@ -397,6 +398,12 @@ void App::btnCarClrRandom(WP)
 	UpdCarClrSld();
 }
 
+//  [Screen] (game only)
+void App::chkVidSSAA(WP wp)
+{
+	ChkEv(ssaa);
+	refreshCompositor();
+}
 
 //  [Graphics]
 //---------------------------------------------------------------------
@@ -469,6 +476,12 @@ void App::slSizeGaug(SL)
 {
 	float v = 0.1f + 0.15f * val/res;	if (bGI)  {  pSet->size_gauges = v;  SizeHUD(true);  }
 	if (valSizeGaug){	Fmt(s, "%4.3f", v);	valSizeGaug->setCaption(s);  }
+}
+void App::slSizeArrow(SL)
+{
+	float v = val/res;	if (bGI)  {  pSet->size_arrow = v;  }
+	if (valSizeArrow){	Fmt(s, "%4.3f", v);	valSizeArrow->setCaption(s);  }
+	if (arrowNode) arrowRotNode->setScale(v/2.f, v/2.f, v/2.f);
 }
 //  minimap
 void App::slSizeMinimap(SL)
@@ -569,9 +582,11 @@ void App::chkTrails(WP wp)
 void App::chkFps(WP wp){			ChkEv(show_fps);	if (pSet->show_fps)  mFpsOverlay->show();  else  mFpsOverlay->hide();	}
 
 void App::chkGauges(WP wp){			ChkEv(show_gauges);	ShowHUD();	}
+void App::chkArrow(WP wp){			ChkEv(check_arrow); if (arrowRotNode) arrowRotNode->setVisible(pSet->check_arrow);  }
 void App::chkMinimap(WP wp){		ChkEv(trackmap);	if (ndMap)  ndMap->setVisible(pSet->trackmap);	}
 void App::chkMiniZoom(WP wp){		ChkEv(mini_zoomed);		}
 void App::chkMiniRot(WP wp){		ChkEv(mini_rotated);	}
+void App::chkMiniTer(WP wp){		ChkEv(mini_terrain);	UpdMiniTer();  }
 void App::chkTimes(WP wp){			ChkEv(show_times);	ShowHUD();	}
 
 //void App::chkRacingLine(WP wp){		ChkEv(racingline);	if (ndLine)  ndLine->setVisible(pSet->racingline);	}
@@ -596,14 +611,20 @@ void App::chkLoadPics(WP wp){		ChkEv(loadingbackground);	}
 
 //  [Video]  . . . . . . . . . . . . . . . . . . . .    ---- ------ ----    . . . . . . . . . . . . . . . . . . . .
 
+void App::chkVidEffects(WP wp)
+{
+	ChkEv(all_effects);
+	recreateCompositor();
+	//refreshCompositor();
+}
 void App::chkVidBloom(WP wp)
 {		
-	ChkEv(bloom);		
-	refreshCompositor();		
+	ChkEv(bloom);
+	refreshCompositor();
 }
 void App::chkVidHDR(WP wp)
 {			
-	ChkEv(hdr);	
+	ChkEv(hdr);
 	refreshCompositor();
 }
 void App::chkVidBlur(WP wp)
@@ -628,7 +649,7 @@ void App::slBlurIntens(SL)
 {
 	Real v = val/res;  if (bGI)  pSet->motionblurintensity = v;
 	if (valBlurIntens){	Fmt(s, "%4.2f", v);	valBlurIntens->setCaption(s);  }
-	if (bGI)  refreshCompositor();
+	// if (bGI)  refreshCompositor();   // intensity is set every frame in UpdateHUD
 }
 
 
@@ -683,8 +704,9 @@ bool App::keyPressed( const OIS::KeyEvent &arg )
 					{
 						if ((*it)->fCam)
 						{	(*it)->fCam->Next(iChgCam < 0, shift);
-							if ((*it)->fCam->ca->mHideGlass)  visMask = 255-16;
-							else        visMask = 255;
+							carsCamNum[i] = (*it)->fCam->miCurrent +1;  // save for pSet
+							if ((*it)->fCam->ca->mHideGlass)  visMask = RV_MaskAll-RV_CarGlass;
+							else        visMask = RV_MaskAll;
 						}
 					}
 					for (std::list<Viewport*>::iterator it=mSplitMgr->mViewports.begin(); it!=mSplitMgr->mViewports.end(); it++)
@@ -787,6 +809,7 @@ bool App::keyPressed( const OIS::KeyEvent &arg )
 		}
 	}
 
+	InputBind(arg.key);
 	
 	if (!BaseApp::keyPressed(arg))
 		return true;

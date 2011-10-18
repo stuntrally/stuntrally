@@ -22,7 +22,7 @@ SplineRoad::SplineRoad(GAME* pgame) : pGame(pgame),
 	lastNdSel(0),lastNdChosen(0), iSelPoint(-1), iChosen(-1),
 	posHit(Vector3::UNIT_SCALE), bHitTer(0), bSelChng(0),
 	rebuild(false), iDirtyId(-1), idStr(0),
-	fMarkerScale(1.f), fLodBias(1.f)
+	fMarkerScale(1.f), fLodBias(1.f), bForceShadowCaster(0)
 {
 	Defaults();  iTexSize = 1;
 	iMrgSegs = 0;  segsMrg = 0;  iOldHide = -1;
@@ -41,6 +41,7 @@ void SplineRoad::Defaults()
 	setMrgLen = 180.f;  bMerge = false;  lposLen = 10.f;
 	colN = 4; colR = 2.f;
 	iDir = -1;  vStBoxDim = Vector3(1,3,5);  // /long |height -width
+	iP1 = 0;  iChkId1 = 0;  iChkId1Rev = 0;
 }
 
 SplineRoad::~SplineRoad()
@@ -185,6 +186,7 @@ bool SplineRoad::LoadFile(String fname, bool build)
 		a = n->Attribute("lsPm");	if (a)  ilPmul = s2r(a);
 		a = n->Attribute("stBox");	if (a)  vStBoxDim = s2v(a);
 		a = n->Attribute("iDir");	if (a)  iDir = s2i(a);
+		a = n->Attribute("iChk1");	if (a)  iP1 = s2i(a);
 	}
 	
 	n = root->FirstChildElement("stats");	if (n)  {
@@ -287,6 +289,7 @@ bool SplineRoad::SaveFile(String fname)
 		geo.SetAttribute("lsPm",	toStr( ilPmul ).c_str());
 		geo.SetAttribute("stBox",	toStr( vStBoxDim ).c_str());
 		geo.SetAttribute("iDir",	toStr( iDir ).c_str());
+		geo.SetAttribute("iChk1",	toStr( iP1 ).c_str());
 	root.InsertEndChild(geo);
 
 	TiXmlElement ste("stats");

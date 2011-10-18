@@ -3,6 +3,7 @@
 #include "OgreApp.h"
 //#include <OgreHardwarePixelBuffer.h>
 #include "../road/Road.h"
+#include "../ogre/common/RenderConst.h"
 using namespace Ogre;
 
 
@@ -13,7 +14,7 @@ void App::Rnd2TexSetup()
 	/// rt:  0 road minimap,  1 road for grass,  2 terrain minimap,  3 track preview full
 	// visibility:  1 road  2 hud,ed  4 terrain  8 trees  16-car glass  32 sky
 	const Ogre::uint32 visMask[RTs] =
-		{ 1, 1, 4, 255-2 };
+		{ RV_Road, RV_Road, RV_Terrain, RV_MaskAll-RV_Hud };
 	const int dim[RTs] =  //1025: sc.td.iVertsX
 		{ 1024, 1025, 512, 1024 };
 		
@@ -64,15 +65,15 @@ void App::Rnd2TexSetup()
 		r.ndMini = mSceneMgr->getRootSceneNode()->createChildSceneNode("Minimap"+si);
 		r.ndMini->attachObject(r.rcMini);	r.rcMini->setCastShadows(false);
 		r.rcMini->setMaterial(i == RTs+1 ? "BrushPrvMtr" : sMtr);
-		r.rcMini->setRenderQueueGroup(RENDER_QUEUE_OVERLAY-1);
-		r.rcMini->setVisibilityFlags(i == RTs ? 256 : 2);
+		r.rcMini->setRenderQueueGroup(RQG_Hud2);
+		r.rcMini->setVisibilityFlags(i == RTs ? RV_MaskPrvCam : RV_Hud);
 	}
 
 	//  pos dot on minimap  . . . . . . . .
 	if (!ndPos)  {
 		mpos = Create2D("hud/CarPos", 0.2f, true);  // dot size
-		mpos->setVisibilityFlags(2);
-		mpos->setRenderQueueGroup(RENDER_QUEUE_OVERLAY+1);
+		mpos->setVisibilityFlags(RV_Hud);
+		mpos->setRenderQueueGroup(RQG_Hud3 /*RENDER_QUEUE_OVERLAY+1*/);
 		ndPos = mSceneMgr->getRootSceneNode()->createChildSceneNode(
 			Vector3(xm1+(xm2-xm1)/2, ym1+(ym2-ym1)/2, 0));
 		float fHudSize = 0.04f;

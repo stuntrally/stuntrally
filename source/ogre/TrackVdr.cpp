@@ -3,6 +3,7 @@
 #include "../vdrift/game.h"
 #include "CarModel.h" // for CreateModel()
 #include "SplitScreen.h"  //-
+#include "common/RenderConst.h"
 
 #include <OgreMaterialManager.h>
 #include <OgreTechnique.h>
@@ -252,13 +253,11 @@ void App::CreateMinimap()
 		}
 	}
 	m->end();
-	m->setUseIdentityProjection(true);
-	m->setUseIdentityView(true);  // on hud
+	m->setUseIdentityProjection(true);  m->setUseIdentityView(true);  // on hud
 	m->setCastShadows(false);
-	m->setVisibilityFlags(2);
 	AxisAlignedBox aabInf;	aabInf.setInfinite();  m->setBoundingBox(aabInf);  // draw always
 	m->setRenderingDistance(100000.f);
-	m->setRenderQueueGroup(RENDER_QUEUE_OVERLAY - 1);
+	m->setRenderQueueGroup(RQG_Hud2);  m->setVisibilityFlags(RV_Hud);
 
 	float fHudSize = pSet->size_minimap;
 	float marg = 1.f + 0.1f;  // from border

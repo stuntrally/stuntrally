@@ -4,6 +4,7 @@
 #include "OgreGame.h"
 #include <OIS/OIS.h>
 #include "../oisb/OISB.h"
+#include "common/Gui_Def.h"
 
 #include <OgreRoot.h>
 using namespace MyGUI;
@@ -12,57 +13,87 @@ using namespace Ogre;
 
 ///  Gui Init - input tab
 //----------------------------------------------------------------------------------------------------------------------------------
+String App::GetInputName(const String& sName)
+{
+	Ogre::vector<String>::type vs = StringUtil::split(sName, "/");
+	if (vs.size() != 2)
+		return sName;
+
+	if (vs[0] == "Keyboard")
+		return StrFromKey(sName);
+	else
+		return vs[1];
+}
+
 void App::InitInputGui()
 {
-	//  Log all devices (and keys) to log.txt
-	pGame->info_output << " --------------------------------------  Input devices  BEGIN" << std::endl;
-	//OISB::System::getSingleton().dumpActionSchemas(pGame->info_output);
-	OISB::System::getSingleton().dumpDevices(pGame->info_output);
-	pGame->info_output << " --------------------------------------  Input devices  END" << std::endl;
+	//  Log all devices to log.txt
+	OISB::System& sys = OISB::System::getSingleton();
+	pGame->info_output << "--------------------------------------  Input devices  BEGIN" << std::endl;
+	//sys.dumpActionSchemas(pGame->info_output);
+	sys.dumpDevices(pGame->info_output);
+	pGame->info_output << "--------------------------------------  Input devices  END" << std::endl;
 
-	MyGUI::TabPtr inputTab = mGUI->findWidget<Tab>("InputTab");
-	if (!inputTab)  return;
+	TabItemPtr inpTabAll = mGUI->findWidget<TabItem>("InputTabAll");  if (!inpTabAll)  return;
+	TabPtr inputTab = (TabPtr)inpTabAll->findWidget("InputTab");  if (!inputTab)  return;
 
-	//  insert a tab item for every schema (4players,global)
-	std::map<OISB::String, OISB::ActionSchema*> schemas = OISB::System::getSingleton().mActionSchemas;
+
+	///  controller selection combo (for bind name, when more)
+	ComboBoxPtr cmbJoy = (ComboBoxPtr)inpTabAll->findWidget("CmbInputController");
+	if (cmbJoy)
+	{
+		//joysticks->addItem(TR("#{InputNoJS}"));//-
+		//joysticks->setIndexSelected(0);
+		int jnum = sys.mJoysticks.size();
+		for (int i=0; i < jnum; ++i)
+			cmbJoy->addItem( sys.mJoysticks[i]->getName() );
+
+		cmbJoy->eventComboChangePosition = newDelegate(this, &App::cmbJoystick);
+		if (jnum > 0)  {  cmbJoy->setIndexSelected(0);  cmbJoystick(cmbJoy, 0);  }
+	}
+
+	//  labels that print the last pressed joystick button / last moved axis
+	txtJAxis = (StaticTextPtr)inpTabAll->findWidget("axisOutput");
+	txtJBtn = (StaticTextPtr)inpTabAll->findWidget("buttonOutput");
+	txtInpDetail = (StaticTextPtr)inpTabAll->findWidget("InputDetail");
+
+	//  details edits
+	Ed(InputMin, editInput);  Ed(InputMax, editInput);  Ed(InputMul, editInput);
+
+	//  preset combo
+	ComboBoxPtr combo;
+	Cmb(combo, "CmbInputDetPreset", comboInputPreset);  cmbInpDetSet = combo;
+	if (combo)  {
+		combo->removeAllItems();  combo->addItem("");
+		combo->addItem(TR("#{InpSet_KeyHalf}"));
+		combo->addItem(TR("#{InpSet_KeyFull}"));
+		combo->addItem(TR("#{InpSet_AxisHalf}"));
+		combo->addItem(TR("#{InpSet_AxisHalfInv}"));
+		combo->addItem(TR("#{InpSet_AxisFull}"));
+    }
+
+
+	///  insert a tab item for every schema (4players,global)
+	std::map<OISB::String, OISB::ActionSchema*> schemas = sys.mActionSchemas;
 	for (std::map<OISB::String, OISB::ActionSchema*>::const_iterator it = schemas.begin(); it != schemas.end(); it++)
 	{
-		MyGUI::TabItemPtr tabitem = inputTab->addItem( TR("#{InputMap" + (*it).first + "}") );
+		const OISB::String& sPlr = (*it).first;
+		TabItemPtr tabitem = inputTab->addItem( TR("#{InputMap" + sPlr + "}") );
 
-		#define CreateText(x,y, w,h, name, text)  {  MyGUI::StaticTextPtr txt =  \
-			tabitem->createWidget<StaticText>("StaticText", x,y, w,h, MyGUI::Align::Relative, name);  \
+		#define CreateText(x,y, w,h, name, text)  {  StaticTextPtr txt =  \
+			tabitem->createWidget<StaticText>("StaticText", x,y, w,h, Align::Relative, name);  \
 			if (txt)  txt->setCaption(text);  }
 		
+		//  button size and columns positon
+		const int sx = 130, sy = 24, x0 = 20, x1 = 140, x2 = 285, x3 = 430;
+
 		///  Headers (Key 1, Key 2)
-		CreateText(220,10, 200,24, "staticText_" + (*it).first, TR("#88AAFF#{InputKey1}"));
-		CreateText(360,10, 200,24, "staticText_" + (*it).first, TR("#88AAFF#{InputKey2}"));
-				
-		///  joystick selection menu
-		//  only on player tabs
-		bool playerTab = Ogre::StringUtil::startsWith( (*it).first, "player");
-		if (playerTab)
-		{
-			MyGUI::ComboBoxPtr joysticks = tabitem->createWidget<ComboBox>("ComboBox",
-				540,10, 150,24, MyGUI::Align::Relative,
-				"joystickSel_" + (*it).first );
-			joysticks->addItem(TR("#{InputNoJS}"));
-			joysticks->setIndexSelected(0);
-			for (std::vector<OISB::JoyStick*>::const_iterator jit=OISB::System::getSingleton().mJoysticks.begin();
-				jit!=OISB::System::getSingleton().mJoysticks.end();	jit++)
-			{
-				joysticks->addItem( (*jit)->getName() );
-			}
-			joysticks->addItem("Dummy Joystick");	// test
-			joysticks->setEditReadOnly(true);
-			joysticks->eventComboChangePosition = MyGUI::newDelegate(this, &App::joystickSelectionChanged);
-		
-			//  add labels that print the last pressed joystick button / last moved axis
-			CreateText(300,350, 300,24, "axisOutput_"   + (*it).first, TR("#{InputMoveAxisTip}"));
-			CreateText(300,380, 300,24, "buttonOutput_" + (*it).first, TR("#{InputPressButtonTip}"));
-		}
+		CreateText(x0,12, sx,sy, "hdrTxt1_" + sPlr, TR("#90B0FF#{InputHeaderTxt1}"));
+		CreateText(x1,12, sx,sy, "hdrTxt2_" + sPlr, TR("#A0C0FF#{InputHeaderTxt2}"));
+		CreateText(x2,12, sx,sy, "hdrTxt3_" + sPlr, TR("#90B0FF#{InputHeaderTxt3}"));
 		
 		///  ------ custom action sorting ----------------
-		int i = 0, y = 0, ya = 26 / 2, yc1=0,yc2=0,yc3=0;
+		int i = 0, y = 0, ya = 26 / 2, yc=0;
 		std::map <std::string, int> yRow;
 		// player
 		yRow["Throttle"] = y;	y+=2;	yRow["Brake"] = y;		y+=2;
@@ -75,286 +106,356 @@ void App::InitInputGui()
 		y = 0;
 		yRow["ShowOptions"] = y; y+=2+1;
 		yRow["PrevTab"] = y;     y+=2;	yRow["NextTab"] = y;    y+=2+1;
-		yRow["RestartGame"] = y; y+=2+1;  yc1 = 40 + ya * y;
-		yRow["PrevCamera"] = y;  y+=2;    yc2 = 40 + ya * y;
-		yRow["NextCamera"] = y;  y+=2+1;  yc3 = 40 + ya * y;
+		yRow["RestartGame"] = y; y+=2+1;
+		yRow["PrevCamera"] = y;  y+=2;
+		yRow["NextCamera"] = y;  y+=2+1;  yc = 40 + ya * y;
 
+		bool playerTab = Ogre::StringUtil::startsWith( sPlr, "player");
 		if (!playerTab)
 		{	//  camera infos
-			CreateText(460, yc1, 280, 24, "txtcam1", TR("#C0D8F0#{InputCameraTxt1}"));
-			CreateText(460, yc2, 280, 24, "txtcam1", TR("#C0D8F0#{InputCameraTxt2}"));
+			CreateText(40, yc+0*ya, 280, 24, "txtcam1", TR("#C0D8F0#{InputCameraTxt1}"));
+			CreateText(40, yc+2*ya, 280, 24, "txtcam1", TR("#C0D8F0#{InputCameraTxt2}"));
 			//  replay controls info text
-			CreateText(20, yc3+1*ya, 500, 24, "txtrpl1", TR("#A0D8FF#{InputRplCtrl0}"));
-			CreateText(40, yc3+3*ya, 500, 24, "txtrpl2", TR("#90C0FF#{InputRplCtrl1}"));
-			CreateText(40, yc3+5*ya, 500, 24, "txtrpl3", TR("#90C0FF#{InputRplCtrl2}"));
-			CreateText(40, yc3+7*ya, 500, 24, "txtrpl4", TR("#90C0FF#{InputRplCtrl3}"));
+			CreateText(20, yc+5*ya, 500, 24, "txtrpl1", TR("#A0D8FF#{InputRplCtrl0}"));
+			CreateText(40, yc+7*ya, 500, 24, "txtrpl2", TR("#90C0FF#{InputRplCtrl1}"));
+			CreateText(40, yc+9*ya, 500, 24, "txtrpl3", TR("#90C0FF#{InputRplCtrl2}"));
+			CreateText(40, yc+11*ya,500, 24, "txtrpl4", TR("#90C0FF#{InputRplCtrl3}"));
 		}
 		
 		///  Actions  ------------------------------------------------
 		for (std::map<OISB::String, OISB::Action*>::const_iterator
 			ait = (*it).second->mActions.begin();
-			ait != (*it).second->mActions.end(); ait++,i++)
+			ait != (*it).second->mActions.end(); ++ait,++i)
 		{
+			const OISB::String& sAct = (*ait).first;
 			OISB::Action* act = (*ait).second;
-			if (act->isAnalog() == false && act->getName() == "Flip")
-				continue;
 
-			//  button size and columns positon
-			const int sx = 130, sy = 24, x0 = 20, x1 = 180, x2 = 320, x3 = 540;
 			const String& name = (*ait).second->getName();
 			y = 40 + ya * yRow[name];
 
 			//  description label
-			MyGUI::StaticTextPtr desc = tabitem->createWidget<StaticText>("StaticText",
-				x0, y, sx+70, sy,  MyGUI::Align::Relative,
-				"staticText_" + (*ait).first );
+			StaticTextPtr desc = tabitem->createWidget<StaticText>("StaticText",
+				x0, y+5, sx+70, sy,  Align::Relative,
+				"staticText_" + sAct );
 			desc->setCaption( TR("#{InputMap" + name + "}") );
 		
-			///  Keyboard binds  --------------------------------
+			//  Keyboard binds  --------------------------------
 			//  get information about binds from OISB and set variables how the rebind buttons should be created
 			std::string skey1 = TR("#{InputKeyUnassigned}");
 			std::string skey2 = TR("#{InputKeyUnassigned}");
 			
 			//  bound key(s)
-			if (act->mBindings.size() > 0 && act->mBindings.front()->getNumBindables() > 0 && act->mBindings.front()->getBindable(0) && act->mBindings.front()->getBindable(0) != (OISB::Bindable*)1)
-			if (act->getActionType() == OISB::AT_TRIGGER)
-			{
-				skey1 = act->mBindings.front()->getBindable(0)->getBindableName();
-			}
-			else if (act->getActionType() == OISB::AT_ANALOG_AXIS)
-			{
-				//  look for increase/decrease binds
-				OISB::Bindable* increase = NULL, *decrease = NULL;
-				for (std::vector<std::pair<String, OISB::Bindable*> >::const_iterator
-					bnit = act->mBindings.front()->mBindables.begin();
-					bnit != act->mBindings.front()->mBindables.end(); bnit++)
-				{
-					if ((*bnit).first == "inc")			increase = (*bnit).second;
-					else if ((*bnit).first == "dec")	decrease = (*bnit).second;
-				}
-				if (increase)  skey1 = increase->getBindableName();
-				if (decrease)  skey2 = decrease->getBindableName();
-			}
-				
-			//  create buttons  ----------------
-			bool button2 = false;
-			if (act->getActionType() == OISB::AT_ANALOG_AXIS && !( act->getProperty<int> ("MinValue") == 0 ))
-				button2 = true;
-
-			MyGUI::ButtonPtr btn1 = tabitem->createWidget<Button>("Button", /*button2 ? x2 :*/
-				x1, button2 ? (y + ya*2) : y, sx, sy,  MyGUI::Align::Relative,
-				"inputbutton_" + (*ait).first + "_" + (*it).first + "_1");
-			btn1->setCaption( StrFromKey(skey1) );
-			btn1->eventMouseButtonClick = MyGUI::newDelegate(this, &App::controlBtnClicked);
-			
-			if (button2)
-			{	MyGUI::ButtonPtr btn2 = tabitem->createWidget<Button>("Button",
-					x1, y, sx, sy,  MyGUI::Align::Relative,
-					"inputbutton_" + (*ait).first + "_" + (*it).first + "_2");
-				btn2->setCaption( StrFromKey(skey2) );
-				btn2->eventMouseButtonClick = MyGUI::newDelegate(this, &App::controlBtnClicked);
-			}
-
-			///  Joystick binds  --------------------------------
-			//  only on player tab
-			if (playerTab)
-			{
+			bool analog = act->getActionType() == OISB::AT_ANALOG_AXIS;
+			bool button2 = act->getName() == "Steering" || act->getName() == "Flip";  // full
+			if (act->mBindings.size() > 0 && act->mBindings.front()->getNumBindables() > 0 &&
+				act->mBindings.front()->getBindable(0) && act->mBindings.front()->getBindable(0) != (OISB::Bindable*)1)
 				if (act->getActionType() == OISB::AT_TRIGGER)
 				{
-					MyGUI::ComboBoxPtr button = tabitem->createWidget<ComboBox>("ComboBox",
-						x3, y, sx, sy,  MyGUI::Align::Relative,
-						"jsButtonSel_" + (*ait).first + "_" + (*it).first );
-					button->addItem(TR("#{InputKeyNoButton}"));
-					button->setIndexSelected(0);  button->setEditReadOnly(true);
-					button->eventComboChangePosition = MyGUI::newDelegate(this, &App::joystickBindChanged);
+					skey1 = GetInputName(act->mBindings.front()->getBindable(0)->getBindableName());
 				}
-				else if (act->getActionType() == OISB::AT_ANALOG_AXIS)
+				else if (analog)
 				{
-					MyGUI::ComboBoxPtr axis = tabitem->createWidget<ComboBox>("ComboBox",
-						x3, y, sx, sy,  MyGUI::Align::Relative,
-						"jsAxisSel_" + (*ait).first + "_" + (*it).first );
-					axis->addItem(TR("#{InputKeyNoAxis}"));
-					axis->setIndexSelected(0);  axis->setEditReadOnly(true);
-					axis->eventComboChangePosition = MyGUI::newDelegate(this, &App::joystickBindChanged);
+					//  look for increase/decrease binds
+					OISB::Bindable* increase = NULL, *decrease = NULL, *none = NULL;
+					for (std::vector<std::pair<String, OISB::Bindable*> >::const_iterator
+						bnit = act->mBindings.front()->mBindables.begin();
+						bnit != act->mBindings.front()->mBindables.end(); bnit++)
+					{
+						if ((*bnit).first == "inc")			increase = (*bnit).second;
+						else if ((*bnit).first == "dec")	decrease = (*bnit).second;
+						else none = (*bnit).second;
+					}
+					if (increase)  skey1 = GetInputName(increase->getBindableName());
+					if (decrease)  skey2 = GetInputName(decrease->getBindableName());
+					if (none)
+						(button2 ? skey2 : skey1) = GetInputName(none->getBindableName());
 				}
+				
+			//  binding buttons  ----------------
+			ButtonPtr btn1 = tabitem->createWidget<Button>("Button",
+				x1, button2 ? (y + ya*2) : y, sx, sy,  Align::Relative,
+				"inputbutton_" + sAct + "_" + sPlr + "_1");
+			btn1->setCaption( skey1 );
+			btn1->eventMouseButtonClick = newDelegate(this, &App::inputBindBtnClicked);
+			
+			if (button2)
+			{	ButtonPtr btn2 = tabitem->createWidget<Button>("Button",
+					x1, y, sx, sy,  MyGUI::Align::Relative,
+					"inputbutton_" + sAct + "_" + sPlr + "_2");
+				btn2->setCaption( skey2 );
+				btn2->eventMouseButtonClick = MyGUI::newDelegate(this, &App::inputBindBtnClicked);
+			}
+			
+			//  value bar  --------------
+			StaticImagePtr bar = tabitem->createWidget<StaticImage>("StaticImage",
+				x2 + (button2 ? 0 : 64), y+4, button2 ? 128 : 64, 16, MyGUI::Align::Relative,
+				"bar_" + sAct + "_" + sPlr);
+			bar->setImageTexture("input_bar.png");  bar->setImageCoord(IntCoord(0,0,128,16));
+
+			//  detail btn  ----------------
+			if (analog)
+			{	btn1 = tabitem->createWidget<Button>("Button",
+					x3, y, 32, sy,  Align::Relative,
+					"inputdetail_" + sAct + "_" + sPlr + "_1");
+				btn1->setCaption(">");
+				btn1->setColour(Colour(0.6f,0.8f,1.0f));
+				btn1->eventMouseButtonClick = newDelegate(this, &App::inputDetailBtn);
 			}
 		}
 	}
-	UpdateJsButtons(); // initial
+	/**  //dbg start on input  ///remove
+	mWndTabs->setIndexSelected(7);
+	inputTab->setIndexSelected(1);  /**/
 }
 
 
-void App::UpdateJsButtons()
-{
-	//  go through all action schemas & actions, and fill the combo boxes for JS axis / buttons
-	std::map<OISB::String, OISB::ActionSchema*> schemas = OISB::System::getSingleton().mActionSchemas;
-	for (std::map<OISB::String, OISB::ActionSchema*>::const_iterator it = schemas.begin(); it != schemas.end(); it++)
-	{
-		if (!Ogre::StringUtil::startsWith( (*it).first, "player"))
-			continue;  // joystick only on player tabs
-		
-		for (std::map<OISB::String, OISB::Action*>::const_iterator
-			ait = (*it).second->mActions.begin();
-			ait != (*it).second->mActions.end(); ait++)
-		{
-			OISB::Action* act = (*ait).second;
-			
-			if (act->getName() == "Flip" && act->isAnalog() == false)
-				continue;
-			
-			OISB::Binding* bnd2 = NULL;
-			if (act->mBindings.size() >= 2) bnd2 = act->mBindings[1];
-			
-			//  find selected oisb joystick for this tab (to get num axis & buttons)
-			MyGUI::ComboBoxPtr jsMenu = mGUI->findWidget<ComboBox>("joystickSel_" + (*it).first);
-			std::string jsName;
-			if (jsMenu->getIndexSelected() != MyGUI::ITEM_NONE)
-				jsName = jsMenu->getItemNameAt( jsMenu->getIndexSelected() );
-			
-			OISB::JoyStick* js = NULL;
-			for (std::vector<OISB::JoyStick*>::const_iterator jit = mOISBsys->mJoysticks.begin();
-					jit != mOISBsys->mJoysticks.end(); jit++)
-				if ( (*jit)->getName() == jsName ) js = (*jit);
+///  Bind Input
+//----------------------------------------------------------------------------------------------------------------------------------
 
-			//  fill combo boxes
-			if (act->getActionType() == OISB::AT_TRIGGER)
-			{
-				MyGUI::ComboBoxPtr button = mGUI->findWidget<ComboBox>("jsButtonSel_" + (*ait).first + "_" + (*it).first);
-				button->removeAllItems();
-				button->addItem( TR("#{InputKeyNoButton}") );
-				if (js)
-				{	for (std::vector<OISB::DigitalState*>::const_iterator it = js->buttons.begin();
-							it != js->buttons.end(); it++)
-						button->addItem( StrFromKey((*it)->getBindableName()) );
-				}					
-				button->setIndexSelected(0);
-					
-				//  select correct axis/button (from user keybinds)
-				if (bnd2 && bnd2->mBindables.size() > 0) {
-					size_t result;
-					if (bnd2->getBindable(0) == NULL)
-					{
-						result = button->findItemIndexWith( StrFromKey(bnd2->getRole(NULL)) );
-						if (result != MyGUI::ITEM_NONE)
-							button->setIndexSelected( result );
-					}else{
-						result = button->findItemIndexWith( StrFromKey(bnd2->getBindable(0)->getBindableName()) );
-						if (result != MyGUI::ITEM_NONE)
-							button->setIndexSelected( result );
-					}
-				}
-			}
-			else if (act->getActionType() == OISB::AT_ANALOG_AXIS)
-			{
-				MyGUI::ComboBoxPtr axis = mGUI->findWidget<ComboBox>("jsAxisSel_" + (*ait).first + "_" + (*it).first);
-				axis->removeAllItems();
-				axis->addItem( TR("#{InputKeyNoAxis}") );
-				if (js)
-				{	for (std::vector<OISB::AnalogAxisState*>::const_iterator it = js->axis.begin();
-							it != js->axis.end(); it++)
-						axis->addItem( StrFromKey((*it)->getBindableName()) );
-				}					
-				axis->setIndexSelected(0);
-				
-				//  select correct axis/button (from user keybinds)
-				if (bnd2 && bnd2->mBindables.size() > 0)
-				{	size_t result;
-					if (bnd2->getBindable(0) == NULL)
-					{
-						result = axis->findItemIndexWith( StrFromKey(bnd2->getRole(NULL)) );
-						if (result != MyGUI::ITEM_NONE)
-							axis->setIndexSelected( result );
-					}else{
-						result = axis->findItemIndexWith( StrFromKey(bnd2->getBindable(0)->getBindableName()) );
-						if (result != MyGUI::ITEM_NONE)
-							axis->setIndexSelected( result );
-				}	}
-			}
-	}	}
-}
-
-
-//  Events
-//-----------------------------------------------------------------------------------------------------------------
-
-void App::controlBtnClicked(Widget* sender)
+void App::inputBindBtnClicked(WP sender)
 {
 	sender->setCaption( TR("#{InputAssignKey}"));
 	// activate key capture mode
 	bAssignKey = true;
 	pressedKeySender = sender;
-	// hide mouse
+	axisCnt = 0;
 	MyGUI::PointerManager::getInstance().setVisible(false);
 }
-void App::joystickBindChanged(Widget* sender, size_t val)
+
+void App::InputBind(int key, int button, int axis)
 {
-	// get action/schema this bind belongs too
-	std::string actionName = Ogre::StringUtil::split(sender->getName(), "_")[1];
-	std::string schemaName = Ogre::StringUtil::split(sender->getName(), "_")[2];
+	if (!bAssignKey)  return;
+	bAssignKey = false;
+	MyGUI::PointerManager::getInstance().setVisible(true);
+
+	//  cancel (unbind) on Backspace or Escape
+	bool cancel = key == OIS::KC_BACK || key == OIS::KC_ESCAPE;
 	
-	LogO(actionName);
-	LogO(schemaName);
+	//  upd key name on button
+	bool isKey = key > -1, isAxis = axis > -1;
+	String skey0 = isKey ? "Keyboard/" + toStr(key) : 
+				isAxis ? joyName + "/Axis " + toStr(axis) :
+						joyName + "/Button " + toStr(button);
+	pressedKeySender->setCaption(cancel ? TR("#{InputKeyUnassigned}") : MyGUI::UString(GetInputName(skey0)));
+
 	
-	OISB::ActionSchema* schema = OISB::System::getSingleton().mActionSchemas[schemaName];
-	OISB::Action* action = schema->mActions[actionName];
-	if (action->mBindings.size() == 0) return;
-	if (action->mBindings.size() == 1) action->createBinding();
-	OISB::Binding* binding = action->mBindings[1];
-	binding->mOptional = true;
+	//  get action/schema/index from widget name
+	Ogre::vector<String>::type ss = StringUtil::split(pressedKeySender->getName(), "_");
+	std::string actionName = ss[1], schemaName = ss[2], index = ss[3];
 	
-	// get selected joystick
-	// find selected oisb joystick for this tab (to get num axis & buttons)
-	MyGUI::ComboBoxPtr jsMenu = mGUI->findWidget<ComboBox>("joystickSel_" + schemaName);
-	std::string jsName;
-	if (jsMenu->getIndexSelected() != MyGUI::ITEM_NONE)
-		jsName = jsMenu->getItemNameAt( jsMenu->getIndexSelected() );
-	else 
+	OISB::ActionSchema* schema = OISB::System::getSingleton().mActionSchemas[schemaName];  if (!schema)  return;//
+	OISB::Action* action = schema->mActions[actionName];  if (!action)  return;//
+	if (action->mBindings.size() == 0)
+		action->createBinding();
+	OISB::Binding* binding = action->mBindings.front();  if (!binding)  return;//
+
+	
+	///  change AnalogAxis params  key/button <-> axis
+	if (action->getActionType() == OISB::AT_ANALOG_AXIS)
 	{
-		LogO("Couldnt get selected joystick"); return;
+		bool full = action->getName() == "Steering" || action->getName() == "Flip";  //-1..1
+		OISB::AnalogAxisAction* act = (OISB::AnalogAxisAction*)action;
+		act->setProperty("AnalogEmulator", isAxis ? "" : "Linear");  act->setUseAbsoluteValues(/*isAxis*/false);
+		act->setProperty("MinValue", full ? -1 : 0);  act->setProperty("MaxValue", 1);
+		act->setProperty("InverseMul", 1);
+		act->setProperty("Sensitivity", 1);		// restore defaults
+		OISB::AnalogEmulator* emu = act->getAnalogEmulator();  if (emu)  {
+			emu->setProperty("DecSpeed", 5);		emu->setProperty("IncSpeed", 5);
+			emu->setProperty("ReturnEnabled", 1);	emu->setProperty("ReturnValue", 0);
+			emu->setProperty("ReturnDecSpeed", 5);	emu->setProperty("ReturnIncSpeed", 5);  }
 	}
-	LogO(jsName);
-		
-	// get selected axis or button
-	MyGUI::ComboBoxPtr box = static_cast<MyGUI::ComboBoxPtr> (sender);
-	if (box->getItemCount() < box->getIndexSelected() || box->getIndexSelected() == MyGUI::ITEM_NONE)
-	{
-		LogO("Invalid item value"); return;
-	}
-	std::string bindName = box->getItemNameAt(box->getIndexSelected());
-	LogO(bindName);
 	
-	// unbind old
-	for (int i=0; i<binding->getNumBindables(); i++)
+	//  save keys
+	String decKey = "", incKey = "";
+	size_t num = binding->getNumBindables();
+	for (int i = 0; i < num; ++i)
 	{
+		OISB::Bindable* bind = binding->getBindable(i);
+		String name = bind->getBindableName();
+		String role = binding->getRole(bind);
+
+		if (role == "dec")  decKey = name;
+		if (role == "inc")  incKey = name;
+	}
+
+	//  clear, unbind
+	for (int i = num-1; i >= 0; --i)
 		binding->unbind(binding->getBindable(i));
+	if (cancel)  return;  //-
+
+	//  change
+	String skey = cancel ? "" : skey0;
+		 if (index == "1")  incKey = skey;  // lower btn - inc
+	else if (index == "2")  decKey = skey;  // upper btn - dec
+
+	//  update, bind  key/button
+	if (!isAxis)
+	{	if (incKey != "")	binding->bind(incKey, "inc");
+		if (decKey != "")	binding->bind(decKey, "dec");
+				
+		//  update button labels  . . . . . . . 
+		MyGUI::ButtonPtr b1 = mGUI->findWidget<MyGUI::Button>("inputbutton_" + actionName + "_" + schemaName + "_" + "1", "", false);
+		MyGUI::ButtonPtr b2 = mGUI->findWidget<MyGUI::Button>("inputbutton_" + actionName + "_" + schemaName + "_" + "2", "", false);
+		if (b1)  b1->setCaption(GetInputName(incKey));
+		if (b2)  b2->setCaption(GetInputName(decKey));
 	}
-	
-	// bind new
-	try
-	{	binding->bind(jsName + "/" + bindName);  }
-	catch (OIS::Exception) {
-		LogO("Failed to bind '" + jsName + "/" + bindName + "'");	}
+	else  // axis
+		binding->bind(skey,"");
 }
 
-void App::joystickSelectionChanged(Widget* sender, size_t val)
+
+///  edit details
+//-------------------------------------------------------------------------------
+void App::inputDetailBtn(WP sender)
 {
-	UpdateJsButtons();
-	
-	// ----------------  update all binds with the new joystick  -----------------------------------------
-	std::string actionSchemaName = Ogre::StringUtil::split(sender->getName(), "_")[1];
-	
-	OISB::ActionSchema* schema = mOISBsys->mActionSchemas[actionSchemaName];
-		
-	for (std::map<OISB::String, OISB::Action*>::const_iterator
-		ait = schema->mActions.begin();
-		ait != schema->mActions.end(); ait++)
+	Ogre::vector<String>::type ss = StringUtil::split(sender->getName(), "_");
+	std::string actionName = ss[1], schemaName = ss[2], index = ss[3];
+	if (txtInpDetail)  txtInpDetail->setCaption(TR("#{InputDetailsFor}")+": "+schemaName+" " +actionName);
+
+	OISB::ActionSchema* schema = OISB::System::getSingleton().mActionSchemas[schemaName];  if (!schema)  return;//
+	OISB::Action* action = schema->mActions[actionName];  if (!action)  return;//
+	OISB::AnalogAxisAction* act = (OISB::AnalogAxisAction*)action;  if (!act)  return;//
+	actDetail = act;
+
+	if (edInputMin)  edInputMin->setCaption(toStr(act->getProperty<OISB::Real>("MinValue")));
+	if (edInputMax)  edInputMax->setCaption(toStr(act->getProperty<OISB::Real>("MaxValue")));
+	if (edInputMul)  edInputMul->setCaption(toStr(act->getProperty<OISB::Real>("InverseMul")));
+	if (cmbInpDetSet)  cmbInpDetSet->setIndexSelected(0);
+}
+
+void App::editInput(MyGUI::EditPtr ed)
+{
+	if (!actDetail)  return;
+	Real vMin = s2r(edInputMin->getCaption());
+	Real vMax = s2r(edInputMax->getCaption());
+	Real vMul = s2r(edInputMul->getCaption());
+	actDetail->setProperty("MinValue",vMin);
+	actDetail->setProperty("MaxValue",vMax);
+	actDetail->setProperty("InverseMul",vMul);
+	if (cmbInpDetSet)  cmbInpDetSet->setIndexSelected(0);
+}
+
+void App::comboInputPreset(MyGUI::ComboBoxPtr cmb, size_t val)
+{
+	if (!actDetail || val==0)  return;
+	//key half, key full, axis half, axis half inversed, axis full
+	const Real aMin[5] = {0,-1, 0,  -2,  -1};
+	const Real aMax[5] = {1, 1, 2,   0,   1};
+	const Real aMul[5] = {1, 1, 0.5,-0.5, 1};
+	val = std::min((size_t)4, val-1);
+	Real vMin = aMin[val];  if (edInputMin)  edInputMin->setCaption(toStr(vMin));
+	Real vMax = aMax[val];  if (edInputMax)  edInputMax->setCaption(toStr(vMax));
+	Real vMul = aMul[val];  if (edInputMul)  edInputMul->setCaption(toStr(vMul));
+	actDetail->setProperty("MinValue",vMin);
+	actDetail->setProperty("MaxValue",vMax);
+	actDetail->setProperty("InverseMul",vMul);
+}
+
+
+///  update input bars vis,dbg
+//-------------------------------------------------------------------------------
+void App::UpdateInputBars()
+{
+	MyGUI::TabPtr inputTab = mGUI->findWidget<Tab>("InputTab");
+	if (!inputTab)  return;
+
+	OISB::System& sys = OISB::System::getSingleton();  int sch = 0;
+	std::map<OISB::String, OISB::ActionSchema*> schemas = sys.mActionSchemas;
+	for (std::map<OISB::String, OISB::ActionSchema*>::const_iterator it = schemas.begin(); it != schemas.end(); ++it,++sch)
 	{
-		MyGUI::WidgetPtr box;
-		if ((*ait).second->getActionType() == OISB::AT_TRIGGER)
-			box = mGUI->findWidget<Widget>("jsButtonSel_" + (*ait).first + "_" + actionSchemaName);
-		else if ((*ait).second->getActionType() == OISB::AT_ANALOG_AXIS)
-			box = mGUI->findWidget<Widget>("jsAxisSel_" + (*ait).first + "_" + actionSchemaName);
-			
-		joystickBindChanged(box, 0);
+		const OISB::String& sPlr = (*it).first;
+		if (inputTab->getIndexSelected() != sch)  continue;
+
+		//*  one axis info
+		bool oneAxis = false;  // when brake not bound
+		OISB::Real valBr = 0.f;  // brake val from throttle
+		if (sch > 0)  {
+			OISB::AnalogAxisAction* act = static_cast<OISB::AnalogAxisAction*>(
+				OISB::System::getSingleton().lookupAction("Player" + toStr(sch) + "/Brake"));
+			if (act)  {
+				OISB::Binding* binding = act->mBindings.front();
+				if (binding)
+					oneAxis = binding->getNumBindables() == 0;  }
+			if (oneAxis)
+			{	OISB::AnalogAxisAction* act = static_cast<OISB::AnalogAxisAction*>(
+					OISB::System::getSingleton().lookupAction("Player" + toStr(sch) + "/Throttle"));
+				if (act)
+				{	valBr = act->getAbsoluteValue();
+					valBr = valBr < 0.f ? -valBr : 0.f;  }
+		}  }//*
+		
+		//  Action
+		for (std::map<OISB::String, OISB::Action*>::const_iterator
+			ait = (*it).second->mActions.begin();
+			ait != (*it).second->mActions.end(); ++ait)
+		{
+			const OISB::String& sAct = (*ait).first;
+			OISB::Action* act = (*ait).second;
+			float val = -1.f;
+			bool full = act->getName() == "Steering" || act->getName() == "Flip";
+			//  get val
+			if (act->getActionType() == OISB::AT_ANALOG_AXIS)
+			{
+				OISB::AnalogAxisAction* ac = static_cast<OISB::AnalogAxisAction*>(act);
+				if (ac)  val = ac->getAbsoluteValue();
+			}else
+				val = act->isActive() ? 1.f : 0.f;
+				
+			if (oneAxis && act->getName() == "Throttle")  if (val < 0.f)  val = 0.f;
+			if (oneAxis && act->getName() == "Brake")  val = valBr;
+				
+			std::string sBar = "bar_" + sAct + "_" + sPlr;
+			StaticImagePtr bar = (StaticImagePtr)inputTab->findWidget(sBar);
+			if (bar)
+			{	const int wf = 128, w = 256;  int v = -val * 128, vf = -val * 64, s=512, s0=s/2;
+				if (full)	bar->setImageCoord(IntCoord(std::max(0, std::min(s-wf, vf + s0 -wf/2)), 0, wf, 16));
+				else		bar->setImageCoord(IntCoord(std::max(0, std::min(s-w, v + s0)), 0, w, 16));
+			}
+		}
 	}
+}
+
+
+///  joysticks events
+//
+bool App::axisMoved( const OIS::JoyStickEvent &e, int axis )
+{
+	if (txtJAxis)
+	{	int iv = e.state.mAxes[axis].abs;
+		float val = iv >= 0 ? iv / 32767.f : iv / 32768.f;
+		static char ss[128];
+		sprintf(ss, "Moved axis: %d     val: %7.4f", axis, val);
+		txtJAxis->setCaption(ss);
+	}	
+	if (lastAxis != axis)
+	{	lastAxis = axis;
+		axisCnt = 0;
+	}else
+	{
+		if (axisCnt++ > 10)
+		{	axisCnt = 0;
+			//  bind when same axis moved few times, omit axes input noise-
+			InputBind(-1, -1, axis);
+		}
+	}
+	return true;
+}
+
+bool App::buttonPressed( const OIS::JoyStickEvent &e, int button )
+{
+	if (txtJBtn)  txtJBtn->setCaption("Pressed button: " + toStr(button));
+
+	InputBind(-1, button);
+
+	return true;
+}
+bool App::buttonReleased( const OIS::JoyStickEvent &e, int button )
+{
+	return true;
+}
+
+void App::cmbJoystick(Widget* sender, size_t val)
+{
+		ComboBoxPtr cmb = (ComboBoxPtr)sender;
+	joyName = cmb->getItemNameAt(val);
 }

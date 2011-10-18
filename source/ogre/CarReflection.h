@@ -19,8 +19,8 @@ class SETTINGS;
 namespace Ogre {  class Camera;  class SceneManager;  }
 
 
-const int ciShadowNumSizes = 4;
-const int ciShadowSizesA[ciShadowNumSizes] = {512,1024,2048,4096};
+const int ciShadowNumSizes = 5;
+const int ciShadowSizesA[ciShadowNumSizes] = {256, 512,1024,2048,4096};
 
 
 class CarReflection

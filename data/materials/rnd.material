@@ -82,6 +82,11 @@ fragment_program circle_ps cg
 	source rnd.cg
 	profiles ps_2_0 arbfp1 
 	entry_point circle_ps
+
+	default_params
+	{
+		param_named showTerrain float 0.0
+	}
 }
 
 material circle_minimap
@@ -98,7 +103,7 @@ material circle_minimap
 			vertex_program_ref circle_vs  {  }
 			fragment_program_ref circle_ps  {  }
 			
-			texture_unit diffuseMap
+			texture_unit roadMap  // road
 			{
 				tex_address_mode clamp
 				texture grassDensity.png
@@ -107,6 +112,11 @@ material circle_minimap
 			{
 				tex_address_mode clamp
 				texture circleMini.png
+			}
+			texture_unit terMap
+			{
+				tex_address_mode clamp
+				texture grassDensity.png
 			}
 		}
 	}

@@ -265,13 +265,13 @@ void App::InitGui()
 	bListTrackU = pSet->track_user;
 	sCopyTrack = "";  //! none
 	bCopyTrackU = 0;
-
-	GuiInitTrack();
 	
 	//  text desc
 	Edt(trkDesc, "TrackDesc", editTrkDesc);
 	trkName = (EditPtr)mWndOpts->findWidget("TrackName");
 	if (trkName)  trkName->setCaption(pSet->track);
+
+	GuiInitTrack();
 	
 	//  btn change,  new, rename, delete
 	//Btn("ChangeTrack",	btnChgTrack);

@@ -5,6 +5,8 @@
 #include "../road/Road.h"
 #include "SplitScreen.h"
 #include "../paged-geom/PagedGeometry.h"
+#include "common/RenderConst.h"
+#include "common/MaterialFactory.h"
 
 #include <OgreTerrain.h>
 #include <OgreTerrainGroup.h>
@@ -23,18 +25,20 @@ App::App()
 	// hud
 	,asp(1),  xcRpm(0), ycRpm(0), xcVel(0), ycVel(0)
 	,fMiniX(0),fMiniY(0), scX(1),scY(1), ofsX(0),ofsY(0), minX(0),maxX(0), minY(0),maxY(0)
+	,arrowNode(0)
 	// ter
 	,mTerrainGlobals(0), mTerrainGroup(0), mPaging(false)
-	,mTerrainPaging(0), mPageManager(0)
+	,mTerrainPaging(0), mPageManager(0), materialFactory(0)
 	// gui
-	,mToolTip(0), mToolTipTxt(0), carList(0), trkList(0), resList(0), btRplPl(0)
+	,mToolTip(0), mToolTipTxt(0), carList(0), trkMList(0), resList(0), btRplPl(0)
 	,valAnisotropy(0), valViewDist(0), valTerDetail(0), valTerDist(0), valRoadDist(0)  // detail
 	,valTrees(0), valGrass(0), valTreesDist(0), valGrassDist(0)  // paged
 	,valReflSkip(0), valReflSize(0), valReflFaces(0), valReflDist(0)  // refl
 	,valShaders(0), valShadowType(0), valShadowCount(0), valShadowSize(0), valShadowDist(0)  // shadow
 	,valSizeGaug(0), valSizeMinimap(0), valZoomMinimap(0)  // view
 	,bRkmh(0),bRmph(0), chDbgT(0),chDbgB(0), chBlt(0),chBltTxt(0), chFps(0), chTimes(0),chMinimp(0), bnQuit(0)
-	,imgCar(0),imgPrv(0),imgMini(0),imgTer(0), valCar(0),valTrk(0),trkDesc(0), valLocPlayers(0)
+	,imgCar(0),imgPrv(0),imgMini(0),imgTer(0), imgTrkIco1(0),imgTrkIco2(0)
+	,valCar(0),valTrk(0),trkDesc(0), valLocPlayers(0)
 	,valRplPerc(0), valRplCur(0), valRplLen(0), slRplPos(0), rplList(0)
 	,valRplName(0),valRplInfo(0),valRplName2(0),valRplInfo2(0), edRplName(0), edRplDesc(0)
 	,rbRplCur(0), rbRplAll(0), rbRplGhosts(0), bRplBack(0),bRplFwd(0)
@@ -52,6 +56,8 @@ App::App()
 	,blendMtr(0), iBlendMaps(0), dbgdraw(0), noBlendUpd(0)
 	,grass(0), trees(0), road(0), miniC(0)
 	,pr(0),pr2(0), sun(0), carIdWin(-1), iCurCar(0), bUpdCarClr(1)
+	,lastAxis(-1), axisCnt(0), txtJAxis(0), txtJBtn(0), txtInpDetail(0)
+	,edInputMin(0), edInputMax(0), edInputMul(0), actDetail(0), cmbInpDetSet(0)
 {
 	pathTrk[0] = PATHMANAGER::GetTrackPath() + "/";
 	pathTrk[1] = PATHMANAGER::GetTrackPathUser() + "/";
@@ -78,6 +84,7 @@ String App::PathListTrk(int user) {
 
 App::~App()
 {
+	delete materialFactory;
 	delete road;
 	if (mTerrainPaging) {
 		OGRE_DELETE mTerrainPaging;
@@ -90,8 +97,16 @@ App::~App()
 	OGRE_DELETE dbgdraw;
 }
 
+void App::postInit()
+{
+	mSplitMgr->pApp = this;
+	
+	materialFactory = new MaterialFactory();
+	materialFactory->pApp = this;
+}
+
 void App::setTranslations()
-{	
+{
 	// loading states
 	loadingStates.clear();
 	loadingStates.insert(std::make_pair(LS_CLEANUP, String(TR("#{LS_CLEANUP}"))));
@@ -101,13 +116,13 @@ void App::setTranslations()
 	loadingStates.insert(std::make_pair(LS_TER, String(TR("#{LS_TER}"))));
 	loadingStates.insert(std::make_pair(LS_TRACK, String(TR("#{LS_TRACK}"))));
 	loadingStates.insert(std::make_pair(LS_MISC, String(TR("#{LS_MISC}"))));
-	
-	// Kind of nasty to have it here, but this has to be done after configure()...
-	mSplitMgr->pApp = this;
 }
 
 void App::destroyScene()
 {
+	for (int i=0; i<4; ++i)
+		pSet->cam_view[i] = carsCamNum[i];
+
 	// Delete all cars
 	for (std::vector<CarModel*>::iterator it=carModels.begin(); it!=carModels.end(); it++)
 		delete (*it);
@@ -151,7 +166,7 @@ ManualObject* App::Create2D(const String& mat, SceneManager* sceneMgr, Real s, b
  
 	AxisAlignedBox aabInf;	aabInf.setInfinite();
 	m->setBoundingBox(aabInf);  // always visible
-	m->setRenderQueueGroup(RENDER_QUEUE_OVERLAY - 1);
+	m->setRenderQueueGroup(RQG_Hud2);
 	return m;
 }
 
@@ -178,32 +193,4 @@ const String& App::GetGhostFile()
 		+ pSet->track + (pSet->track_user ? "_u" : "") + (pSet->trackreverse ? "_r" : "")
 		+ "_" + pSet->car[0] + ".rpl";
 	return file;
-}
-
-/// joy events
-bool App::povMoved( const OIS::JoyStickEvent &e, int pov )
-{
-	return true;
-}
-bool App::axisMoved( const OIS::JoyStickEvent &e, int axis )
-{
-	for (int i=1; i<5; i++)
-		mGUI->findWidget<MyGUI::StaticText>("axisOutput_Player" + toStr(i))->setCaption("Moved axis: " + toStr(axis));
-	return true;
-}
-bool App::sliderMoved( const OIS::JoyStickEvent &e, int sliderID )
-{
-	return true;
-}
-bool App::buttonPressed( const OIS::JoyStickEvent &e, int button )
-{
-	for (int i=1; i<5; i++)
-		mGUI->findWidget<MyGUI::StaticText>("buttonOutput_Player" + toStr(i))->setCaption("Pressed button: " + toStr(button));
-	return true;
-}
-bool App::buttonReleased( const OIS::JoyStickEvent &e, int button )
-{
-	for (int i=1; i<5; i++)
-		mGUI->findWidget<MyGUI::StaticText>("buttonOutput_Player" + toStr(i))->setCaption("Released button: " + toStr(button));
-	return true;
 }

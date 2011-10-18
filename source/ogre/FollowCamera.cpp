@@ -23,7 +23,7 @@ using namespace Ogre;
 
 void FollowCamera::update( Real time )
 {
-	if (!mGoalNode || !ca)  return;
+	if (!mGoalNode || !ca || !mCamera)  return;
 
 	Vector3 posGoal = mGoalNode ? mGoalNode->getPosition() : Vector3::UNIT_Y;
 	Quaternion orientGoal = mGoalNode ? mGoalNode->getOrientation() : Quaternion::IDENTITY;
@@ -292,7 +292,7 @@ void FollowCamera::Move( bool mbLeft, bool mbRight, bool mbMiddle, bool shift, R
 //-----------------------------------------------------------------------------------------------------
 void FollowCamera::moveAboveTerrain()
 {
-	if (!mTerrain)  return;
+	if (!mTerrain || !mCamera)  return;
 
 	const static Real terOfs = 0.2f;  //  minimum distance above ground
 	Vector3 camPos = mCamera->getPosition();
@@ -343,6 +343,8 @@ void FollowCamera::updInfo(Real time)
 void FollowCamera::updAngle()
 {
 	if (miCount <= 0)  return;
+	miCurrent = std::max(0, std::min(miCount-1, miCurrent));
+
 	CameraAngle* c = mCameraAngles[miCurrent];
 	if (ca->mType != c->mType)	first = true;  // changed type, reset
     *ca = *c;  // copy
@@ -367,7 +369,7 @@ void FollowCamera::saveCamera()
 void FollowCamera::incCur(int dir)
 {
 	miCurrent += dir;
-	if (miCurrent >= miCount)	miCurrent = 0;
+	if (miCurrent >= miCount)	miCurrent = 0;  // -= miCount;
 	if (miCurrent < 0)			miCurrent = miCount-1;
 }
 
@@ -506,8 +508,8 @@ void FollowCamera::updFmtTxt()
 	String sTR = TR("#{CamInfoStrings}");
 	vector<String>::type vs = StringUtil::split(sTR,",");
 	
-	if (vs.size() != 16)
-	{	LogO("==== Error in camera info translate string. Need 16 strings, have "+toStr(vs.size())+", using default English. " + sTR);
+	if (vs.size() < 17)
+	{	LogO("==== Error in camera info translate string. Need 17 strings, have "+toStr(vs.size())+", using default English. " + sTR);
 		sTR="Type,Yaw,Pitch,Dist,Height,Speed,Offset,LEFT,RIGHT,Middle,Wheel,shift,Rotate,reset,move,H,Pos";
 		vs = StringUtil::split(sTR,",");  }
 

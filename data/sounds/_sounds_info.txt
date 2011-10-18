@@ -1,0 +1,35 @@
+-- original VDrift sounds
+
+bump_front
+bump_rear
+crash
+grass
+gravel
+tire_squeal
+wind
+
+-- new sounds from
+http://www.freesound.org/
+
+various smaller cuts from:
+[author  soundname]
+
+  metal hits:
+halleck  metal-medium-hit
+halleck  metal-hits-medium-1
+halleck  metal-hits-light-1
+halleck  metal-thump
+sagetyrtle  crash-1
+sagetyrtle  crash-2
+halleck  big-metal-side-impact-1
+halleck  big-metal-side-impact-2
+halleck  metal-crash-1
+
+  water,mud:
+cgeffex  large-splashes
+
+  terrain,dirt:
+halleck  hit-with-dirt-spray-1
+halleck  hit-with-dirt-spray-1-body
+halleck  hit-with-dirt-spray-2-body
+halleck  hit-with-dirt-spray-3

@@ -1,9 +1,11 @@
 void shadow_caster_vs(
-	float4 position			: POSITION,
-
-	out float4 oPosition	: POSITION,
-	out float2 oDepth		: TEXCOORD0,
-
+	float4 position : POSITION,
+	float2 uv : TEXCOORD0,
+	
+	out float4 oPosition : POSITION,
+	out float2 oDepth : TEXCOORD0,
+	out float2 oUv : TEXCOORD1,
+	
 	uniform float4x4 wvpMat)
 {
 	// this is the view space position
@@ -15,17 +17,22 @@ void shadow_caster_vs(
 
 	// clamp z to zero. seem to do the trick. :-/
 	oPosition.z = max(oPosition.z, 0);
+	
+	oUv = uv;
 }
 
 void shadow_caster_ps(
-	float2 depth		: TEXCOORD0,
-
-	out float4 oColour	: COLOR,
-
+	float2 depth : TEXCOORD0,
+	float2 uv : TEXCOORD1,
+	
+	out float4 oColour : COLOR,
+	uniform sampler2D alphaMap : TEXUNIT0,
 	uniform float4 pssmSplitPoints)
 {
 	float finalDepth = depth.x / depth.y;
-	oColour = float4(finalDepth, finalDepth, finalDepth, 1);
+	float4 trans = tex2D(alphaMap, uv);
+
+	oColour = float4(finalDepth, finalDepth, finalDepth, trans.w);
 }
 
 

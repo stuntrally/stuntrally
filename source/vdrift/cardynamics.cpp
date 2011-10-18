@@ -80,9 +80,9 @@ void CARDYNAMICS::Update()
 	Polyhedron poly;  RigidBody body;  WaterVolume water;
 
 	//water.density = 1400.0f;  water.angularDrag = 1.0f;  water.linearDrag = 0.5f;  // mud hard too springy- car dens 1900
-	water.density = 1000.0f;  water.angularDrag = 1.8f;  water.linearDrag = 0.5f;  // mud hard~ car dens 1900
+	//water.density = 1000.0f;  water.angularDrag = 1.8f;  water.linearDrag = 0.5f;  // mud hard~ car dens 1900
 	//water.density = 600.0f;  water.angularDrag = 1.0f;  water.linearDrag = 0.2f;  // water slow sink~ car dens 1900
-	//water.density = 200.0f;  water.angularDrag = 1.0f;  water.linearDrag = 0.2f;  // water soft~ car dens 1900
+	water.density = 200.0f;  water.angularDrag = 0.7f;  water.linearDrag = 0.2f;  // water soft~ car dens 1900
 	water.velocity.SetZero();
 	water.plane.offset = fl.pos.y;  water.plane.normal = Vec3(0,0,1);
 
@@ -125,6 +125,17 @@ void CARDYNAMICS::Update()
 		chassis->applyCentralForce( btVector3(body.F.x,body.F.y,body.F.z) );
 		chassis->applyTorque(       btVector3(body.T.x,body.T.y,body.T.z) );
 	}	
+
+	//  wheels spin ...
+	/*for (int w=0; w < 3; ++w)
+	{
+		MATHVECTOR <T, 3> pos = GetWheelPosition((WHEEL_POSITION)w);
+		if (pos.)
+		//pCar->dynamics.GetWheelOrientation(wp);
+		//T left_front_wheel_speed = wheel[FRONT_LEFT].GetAngularVelocity();
+		chassis->applyForce( btVector3(body.F.x,body.F.y,body.F.z), btVector3 );
+	}*/
+	
 	delete[] poly.verts;
 	delete[] poly.faces;
 	}
@@ -462,14 +473,22 @@ void CARDYNAMICS::DebugPrint ( std::ostream & out, bool p1, bool p2, bool p3, bo
 	if (p1)
 	{
 		out.precision(4);
+	/*	out << std::endl;
+		out << "hit S : " << fSndForce << std::endl;
+		out << "hit P : " << fParIntens << std::endl;
+		//out << "hit t : " << fHitTime << std::endl;
+		out << "bHitS : " << (bHitSnd?1:0) << " id "<< sndHitN << std::endl;
+		out << "N Vel : " << fNormVel << std::endl;
+		out << "v Vel : " << GetSpeed() << std::endl;
+	return;/**/  //--^
 		out << "---Body---" << std::endl;
 		out << "c of mass: " << center_of_mass << std::endl;
-		MATRIX3 <T> inertia = body.GetInertia();
-		//btVector3 chassisInertia(inertia[0], inertia[4], inertia[8]);
+		MATRIX3 <T> inertia = body.GetInertia();  //btVector3 chassisInertia(inertia[0], inertia[4], inertia[8]);
 		out << "inertia:  " << inertia[0] << "  " << inertia[4] << "  " << inertia[8] << "\n";
 		out.precision(6);
 		out << "mass: " << body.GetMass() << std::endl;
-		out << "in fluids: " << inFluids.size() << std::endl;  out << std::endl;
+		out << "in fluids: " << inFluids.size() << std::endl;
+		out << std::endl;
 		engine.DebugPrint(out);  out << std::endl;
 	return;//
 		fuel_tank.DebugPrint(out);  out << std::endl;

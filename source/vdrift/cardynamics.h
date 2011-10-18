@@ -35,6 +35,7 @@ public:
 	typedef double T;
 	class SETTINGS* pSet;
 	class Scene* pScene;  // for fluids
+	std::vector<float> inputsCopy;  // just for dbg info txt
 	
 	CARDYNAMICS();
 	~CARDYNAMICS();
@@ -174,7 +175,12 @@ public:
 	// rocket boost
 	float doBoost;
 
-	std::list<FluidBox*> inFluids;  // list of fluids this car is in (if any)
+	std::list<FluidBox*> inFluids;  /// list of fluids this car is in (if any)
+	Ogre::Vector3 vHitPos,vHitNorm;  // world hit data
+	float fHitTime, fParIntens,fParVel, fSndForce, fNormVel;
+	bool bHitSnd;  int sndHitN;
+	btVector3 velPrev;
+	
 
 // driveline state
 	CARFUELTANK <T> fuel_tank;

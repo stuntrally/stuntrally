@@ -1,15 +1,16 @@
-// taken from OGRE compositor sample
-// only needed for HDRLogic
+// adapted from OGRE compositor sample
 
 #ifndef _HelperLogics_H__
 #define _HelperLogics_H__
+
+#include "OgreGame.h"
 
 #include <OgrePrerequisites.h>
 #include <OgreCompositorLogic.h>
 #include <OgreCompositorInstance.h>
 
-//The simple types of compositor logics will all do the same thing -
-//Attach a listener to the created compositor
+// The simple types of compositor logics will all do the same thing -
+// Attach a listener to the created compositor
 class ListenerFactoryLogic : public Ogre::CompositorLogic
 {
 public:
@@ -27,7 +28,7 @@ public:
 	}
 
 protected:
-	//This is the method that implementations will need to override
+	// This is the method that implementations will need to override
 	virtual Ogre::CompositorInstance::Listener* createListener(Ogre::CompositorInstance* instance) = 0;
 private:
 	typedef std::map<Ogre::CompositorInstance*, Ogre::CompositorInstance::Listener*> ListenerMap;
@@ -35,10 +36,19 @@ private:
 
 };
 
-//The compositor logic for the hdr compositor
+// The compositor logic for the hdr compositor
 class HDRLogic : public ListenerFactoryLogic
 {
 protected:
+	virtual Ogre::CompositorInstance::Listener* createListener(Ogre::CompositorInstance* instance);
+};
+
+class MotionBlurLogic : public ListenerFactoryLogic
+{
+public:
+	MotionBlurLogic(BaseApp* app);
+protected:
+	BaseApp* pApp;
 	virtual Ogre::CompositorInstance::Listener* createListener(Ogre::CompositorInstance* instance);
 };
 

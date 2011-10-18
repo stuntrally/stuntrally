@@ -1529,7 +1529,15 @@
 				Name="Gui"
 				>
 				<File
+					RelativePath=".\data\gui\core_language_en_tag.xml"
+					>
+				</File>
+				<File
 					RelativePath=".\source\ogre\common\Gui_Common.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\source\ogre\common\Gui_CommonTrack.cpp"
 					>
 				</File>
 				<File
@@ -1641,6 +1649,46 @@
 					>
 				</File>
 				<File
+					RelativePath=".\source\ogre\Defines.h"
+					>
+				</File>
+				<File
+					RelativePath=".\source\ogre\common\MultiList2.cpp"
+					>
+					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="0"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="0"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="ReleaseDbg|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="0"
+						/>
+					</FileConfiguration>
+				</File>
+				<File
+					RelativePath=".\source\ogre\common\MultiList2.h"
+					>
+				</File>
+				<File
+					RelativePath=".\source\ogre\common\RenderConst.h"
+					>
+				</File>
+				<File
 					RelativePath=".\Source\ogre\common\SceneTrees.cpp"
 					>
 				</File>
@@ -1657,7 +1705,23 @@
 					>
 				</File>
 				<File
+					RelativePath=".\source\ogre\common\simplexnoise.cpp"
+					>
+				</File>
+				<File
 					RelativePath=".\Source\ogre\common\Terrain.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\source\ogre\common\TerrainMaterialGen.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\source\ogre\common\TerrainMaterialGen.h"
+					>
+				</File>
+				<File
+					RelativePath=".\config\tracks.xml"
 					>
 				</File>
 				<File

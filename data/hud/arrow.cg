@@ -1,0 +1,45 @@
+void arrow_vp(
+	float4 position : POSITION,
+	float3	normal					: NORMAL,	// obj space
+	uniform float4   eyePosition,			    // obj space
+	uniform float4x4 ModelView,
+	uniform float4x4 ModelViewProj,
+	out float4 oEyeVector : TEXCOORD0,
+	out float3 oNormal : TEXCOORD1,
+	out		float4	oPosition				: POSITION
+)
+{
+	// Transform eye into view space.
+	oEyeVector = mul( ModelView, position ) - eyePosition;
+	
+	oNormal = normal;
+	oPosition = mul( ModelViewProj, position );
+
+}
+
+void arrow_fp(
+	in	float4		position			: POSITION,
+	float3 eyeVector : TEXCOORD0,
+	float3 normal : TEXCOORD1,
+	
+	uniform float3 color1,
+	uniform float3 color2,
+
+	uniform float fresnelBias,
+	uniform float fresnelScale,
+	uniform float fresnelPower,
+	
+	out float4 color : COLOR
+)
+{
+	eyeVector = normalize(eyeVector);
+	normal = normalize(normal);
+
+	float colorFactor = fresnelBias +
+								fresnelScale * pow(1 + dot(eyeVector, normal),
+									fresnelPower);
+	colorFactor = min(colorFactor, 1);
+
+	float3 col = lerp(color1, color2, colorFactor);
+	color = float4(col.xyz, 0.5);
+}

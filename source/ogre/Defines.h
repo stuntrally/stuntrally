@@ -4,7 +4,7 @@
 
 #define PI_d  3.14159265358979323846
 
-
+#include <OgreLogManager.h>
 #define LogO(s)  Ogre::LogManager::getSingleton().logMessage(s)
 
 #include <OgreStringConverter.h>
@@ -58,5 +58,6 @@ const static ShapeData
 	gSD_Other(ST_Other);
 /**/
 
+//#define SHADOWS_D  // enable shadow debug overlays
 
 #endif

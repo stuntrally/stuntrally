@@ -6,6 +6,8 @@
 #include "FollowCamera.h"
 #include "../road/Road.h"
 #include "SplitScreen.h"
+#include "common/RenderConst.h"
+#include "common/MaterialFactory.h"
 
 #include "../btOgre/BtOgrePG.h"
 #include "../btOgre/BtOgreGP.h"
@@ -28,6 +30,11 @@ void App::createScene()
 
 	mRoot->addResourceLocation(pathTrk[1] + "_previews/", "FileSystem");  //prv user tracks
 	
+	//  restore camNums
+	for (int i=0; i<4; ++i)
+		if (pSet->cam_view[i] >= 0)
+			carsCamNum[i] = pSet->cam_view[i];
+
 	//  tracks.xml
 	tracksXml.LoadXml(PATHMANAGER::GetGameConfigDir() + "/tracks.xml");
 	//tracksXml.SaveXml(PATHMANAGER::GetGameConfigDir() + "/tracks2.xml");
@@ -112,27 +119,33 @@ void App::LoadCleanUp()  // 1 first
 	if (resTrk != "")  Ogre::Root::getSingletonPtr()->removeResourceLocation(resTrk);
 	resTrk = TrkDir() + "objects";
 	
-	// Delete all cars
-	for (std::vector<CarModel*>::iterator it=carModels.begin(); it!=carModels.end(); it++)
-		delete (*it);
-
+	//  Delete all cars
+	for (int i=0; i < carModels.size(); i++)
+	{
+		CarModel* c = carModels[i];
+		if (c && c->fCam)
+		{
+			carsCamNum[i] = c->fCam->miCurrent +1;  // save which cam view
+			if (i < 4)
+				pSet->cam_view[i] = carsCamNum[i];
+		}
+		delete c;
+	}
 	carModels.clear();  newPosInfos.clear();
 
 	if (grass) {  delete grass->getPageLoader();  delete grass;  grass=0;   }
 	if (trees) {  delete trees->getPageLoader();  delete trees;  trees=0;   }
 
-	//  destroy all  TODO ...
+	///  destroy all  TODO ...
 	///!  remove this crap and destroy everything with* manually  destroyCar, destroyScene
 	///!  check if scene (track), car, color changed, omit creating the same if not
 	//mSceneMgr->getRootSceneNode()->removeAndDestroyAllChildren();  // destroy all scenenodes
 	mSceneMgr->destroyAllManualObjects();
 	mSceneMgr->destroyAllEntities();
 	mSceneMgr->destroyAllStaticGeometry();
-		//mSceneMgr->destroyAllBillboardSets();
-		//mSceneMgr->destroyAllBillboardChains();
-		//mSceneMgr->destroyAllParticleSystems();
-		mSceneMgr->destroyAllRibbonTrails();
-   		MeshManager::getSingleton().removeAll();  // destroy all meshes
+	//mSceneMgr->destroyAllParticleSystems();
+	mSceneMgr->destroyAllRibbonTrails();
+	MeshManager::getSingleton().removeAll();  // destroy all meshes
 
 	//  rain/snow
 	if (pr)  {  mSceneMgr->destroyParticleSystem(pr);   pr=0;  }
@@ -154,6 +167,10 @@ void App::LoadGame()  // 2
 	
 	pGame->NewGameDoCleanup();
 	pGame->NewGameDoLoadTrack();
+	
+	/// generate materials
+	materialFactory->generate();
+	
 	/// init car models
 	// will create vdrift cars, actual car loading will be done later in LoadCar()
 	// this is just here because vdrift car has to be created first
@@ -191,86 +208,48 @@ void App::LoadScene()  // 3
 	else
 	{	sc.Default();  sc.td.hfHeight = NULL;  sc.td.hfAngle = NULL;  }
 	
-
-	//  create fluid areas  . . . . . . . 
-	//---------------------------------------------------------------------
-	for (int i=0; i < sc.fluids.size(); i++)
-	{
-		FluidBox& fb = sc.fluids[i];
-		//  plane
-		Ogre::Plane p;  p.normal = Ogre::Vector3::UNIT_Y;  p.d = 0;
-		MeshPtr mesh = Ogre::MeshManager::getSingleton().createPlane("WaterMesh"+toStr(i),
-			Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME,
-			p, fb.size.x, fb.size.z, 2,2, true, 1, 1,1, Ogre::Vector3::UNIT_Z);
-
-		Entity* efl = mSceneMgr->createEntity("WaterPlane"+toStr(i), "WaterMesh"+toStr(i));
-
-		unsigned short src, dest;
-		if (!mesh->suggestTangentVectorBuildParams(VES_TANGENT, src, dest))
-			mesh->buildTangentVectors(VES_TANGENT, src, dest);
-
-		MaterialPtr mtr = MaterialManager::getSingleton().getByName("Water1");  //par
-		//try  //  set sky map
-		{	MaterialPtr mtrSky = MaterialManager::getSingleton().getByName(sc.skyMtr);
-			Pass* passSky = mtrSky->getTechnique(0)->getPass(0);
-			TextureUnitState* tusSky = passSky->getTextureUnitState(0);
-
-			Pass* pass = mtr->getTechnique(0)->getPass(0);
-			TextureUnitState* tus = pass->getTextureUnitState(1);
-			if (tus)  tus->setTextureName(tusSky->getTextureName());
-		}
-		efl->setMaterial(mtr);  efl->setCastShadows(false);
-		efl->setRenderQueueGroup(RENDER_QUEUE_9+4);
-
-		SceneNode* nfl = mSceneMgr->getRootSceneNode()->createChildSceneNode(fb.pos);
-		//nfl->setScale(fb.size);
-		nfl->attachObject(efl);
-
-		///  add bullet trigger box   . . . . . . . . .
-		btVector3 pc(fb.pos.x, -fb.pos.z, fb.pos.y - fb.size.y);  // center
-		btTransform tr;  tr.setIdentity();  tr.setOrigin(pc);
-
-		btCollisionShape* bshp = 0;
-		bshp = new btBoxShape(btVector3(fb.size.x/2,fb.size.z/2, fb.size.y));
-		//shp->setUserPointer((void*)7777);
-
-		btCollisionObject* bco = new btCollisionObject();
-		bco->setActivationState(DISABLE_SIMULATION);
-		bco->setCollisionShape(bshp);	bco->setWorldTransform(tr);
-		//bco->setFriction(shp->friction);	bco->setRestitution(shp->restitution);
-		bco->setCollisionFlags(bco->getCollisionFlags() |
-			/*btCollisionObject::CF_STATIC_OBJECT |*/ btCollisionObject::CF_NO_CONTACT_RESPONSE/**/);
-		
-		bco->setUserPointer(new ShapeData(ST_Fluid, 0, &fb));  ///~~
-		pGame->collision.world->addCollisionObject(bco);
-		//pGame->collision.world->contactPairTest
-		pGame->collision.shapes.push_back(bshp);
-		fb.cobj = bco;
-	}
-
+	CreateFluids();
 
 	//  rain  -----
 	if (!pr && sc.rainEmit > 0)  {
 		pr = mSceneMgr->createParticleSystem("Rain", sc.rainName);
 		mSceneMgr->getRootSceneNode()->createChildSceneNode()->attachObject(pr);
-		pr->setRenderQueueGroup(RENDER_QUEUE_9+5);
+		pr->setRenderQueueGroup(RQG_Weather);
 		pr->getEmitter(0)->setEmissionRate(0);  }
 	//  rain2  =====
 	if (!pr2 && sc.rain2Emit > 0)  {
 		pr2 = mSceneMgr->createParticleSystem("Rain2", sc.rain2Name);
 		mSceneMgr->getRootSceneNode()->createChildSceneNode()->attachObject(pr2);
-		pr2->setRenderQueueGroup(RENDER_QUEUE_9+5);
+		pr2->setRenderQueueGroup(RQG_Weather);
 		pr2->getEmitter(0)->setEmissionRate(0);  }
+		
+	//  checkpoint arrow
+	if (/*pSet->check_arrow &&*/ !bRplPlay)  { //!
+		if (!arrowNode) arrowNode = mSceneMgr->getRootSceneNode()->createChildSceneNode();
+		Ogre::Entity* arrowEnt = mSceneMgr->createEntity("CheckpointArrow", "arrow.mesh");
+		arrowEnt->setRenderQueueGroup(RQG_Hud3);
+		arrowEnt->setCastShadows(false);
+		arrowRotNode = arrowNode->createChildSceneNode();
+		arrowRotNode->attachObject(arrowEnt);
+		arrowRotNode->setScale(pSet->size_arrow/2.f, pSet->size_arrow/2.f, pSet->size_arrow/2.f);
+		arrowEnt->setVisibilityFlags(RV_Car); // hide in reflection
+		arrowRotNode->setVisible(pSet->check_arrow); //!
+	}
 }
 
 void App::LoadCar()  // 4
 {
-	// Create all cars
-	int i=0;
-	for (std::vector<CarModel*>::iterator it=carModels.begin(); it!=carModels.end(); it++)
+	//  Create all cars
+	for (int i=0; i < carModels.size(); ++i)
 	{
-		(*it)->Create(i);  ++i;
-		// Reserve an entry in newPosInfos
+		CarModel* c = carModels[i];
+		c->Create(i);
+
+		//  restore which cam view
+		if (c->fCam && carsCamNum[i] != 0)
+			c->fCam->setCamera(carsCamNum[i] -1);
+
+		//  Reserve an entry in newPosInfos
 		PosInfo carPosInfo;  carPosInfo.bNew = false;  //-
 		newPosInfos.push_back(carPosInfo);
 	}
@@ -414,6 +393,7 @@ void App::CreateRoad()
 	road = new SplineRoad(pGame);  // sphere.mesh
 	road->Setup("", 0.7,  terrain, mSceneMgr, *mSplitMgr->mCameras.begin());
 	road->iTexSize = pSet->tex_size;
+	road->bForceShadowCaster = (pSet->shadow_type == 3);
 	
 	String sr = TrkDir()+"road.xml";
 	road->LoadFile(TrkDir()+"road.xml");

@@ -1,6 +1,9 @@
 #include "pch.h"
 #include "../Defines.h"
+#include "../common/RenderConst.h"
 #include "../../road/Road.h"
+#include "../common/TerrainMaterialGen.h"
+
 #ifdef ROAD_EDITOR
 	#include "../../editor/OgreApp.h"
 	#include "../../editor/settings.h"
@@ -18,6 +21,10 @@
 #include <OgreTerrain.h>
 #include <OgreTerrainGroup.h>
 #include <OgreManualObject.h>
+#include <OgreMeshManager.h>
+#include <OgreMaterialManager.h>
+#include <OgreEntity.h>
+
 using namespace Ogre;
 
 
@@ -191,6 +198,12 @@ void App::GetTerAngles(int xb,int yb, int xe,int ye)
 //--------------------------------------------------------------------------------------------------------------------------
 void App::configureTerrainDefaults(Light* l)
 {
+	//TerrainMaterialGeneratorPtr matGen = static_cast<TerrainMaterialGeneratorPtr>(new TerrainMaterialGeneratorB());
+	TerrainMaterialGeneratorPtr matGen;
+	TerrainMaterialGeneratorB* matGenP = new TerrainMaterialGeneratorB();
+	matGen.bind(matGenP);
+	mTerrainGlobals->setDefaultMaterialGenerator(matGen);
+
 	mTerrainGlobals->setMaxPixelError(pSet->terdetail);  // 1- 4-8+
 	//mTerrainGlobals->setUseRayBoxDistanceCalculation(true);
 	//mTerrainGlobals->getDefaultMaterialGenerator()->setDebugLevel(1);
@@ -202,7 +215,7 @@ void App::configureTerrainDefaults(Light* l)
 
 	mTerrainGlobals->setCompositeMapSize(sc.td.iTerSize-1);  // par,..  1k
 	mTerrainGlobals->setCompositeMapDistance(pSet->terdist);  //100
-	mTerrainGlobals->setLightMapSize(256);  //256, 2k
+	mTerrainGlobals->setLightMapSize(ciShadowSizesA[pSet->lightmap_size]);  //256, 2k
 	mTerrainGlobals->setSkirtSize(1);  //`
 	//matProfile->setLightmapEnabled(false);
 
@@ -319,7 +332,7 @@ void App::CreateTerrain(bool bNewHmap, bool bTer)
 			Terrain* t = ti.getNext()->instance;
 			initBlendMaps(t);
 			terrain = t;  //<set
-			terrain->setVisibilityFlags(4);  // hide terrain in render target
+			terrain->setVisibilityFlags(RV_Terrain);
 		}
 
 		mTerrainGroup->freeTemporaryResources();
@@ -381,6 +394,7 @@ void App::CreateBltTerrain()
 }
 #endif
 
+
 //  Sky Dome
 //----------------------------------------------------------------------------------------------------------------------
 void App::CreateSkyDome(String sMater, Vector3 sc)
@@ -420,10 +434,10 @@ void App::CreateSkyDome(String sMater, Vector3 sc)
 	}
 	m->end();	AxisAlignedBox aabInf;	aabInf.setInfinite();
 	m->setBoundingBox(aabInf);  // always visible
-	m->setRenderQueueGroup(RENDER_QUEUE_SKIES_EARLY);
+	m->setRenderQueueGroup(RQG_Sky);
 	m->setCastShadows(false);
 	#ifdef ROAD_EDITOR
-	m->setVisibilityFlags(32);  // hide on minimap
+	m->setVisibilityFlags(RV_Sky);  // hide on minimap
 	#endif
 
 	ndSky = mSceneMgr->getRootSceneNode()->createChildSceneNode();
@@ -456,4 +470,72 @@ void App::UpdSun()
 	sun->setDiffuseColour(Clr3(sc.lDiff));
 	sun->setSpecularColour(Clr3(sc.lSpec));
 	mSceneMgr->setAmbientLight(Clr3(sc.lAmb));
+}
+
+
+///  create Fluid areas  . . . . . . . 
+//----------------------------------------------------------------------------------------------------------------------
+void App::CreateFluids()
+{
+	#ifdef ROAD_EDITOR
+	vFlNd.clear();  vFlEnt.clear();  vFlSMesh.clear();
+	#endif
+	for (int i=0; i < sc.fluids.size(); i++)
+	{
+		FluidBox& fb = sc.fluids[i];
+		//  plane
+		Plane p;  p.normal = Vector3::UNIT_Y;  p.d = 0;
+		String smesh = "WaterMesh"+toStr(i);
+		MeshPtr mesh = MeshManager::getSingleton().createPlane(smesh,
+			ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME,
+			p, fb.size.x,fb.size.z, 2,2, true, 1, fb.tile.x*fb.size.x,fb.tile.y*fb.size.z, Vector3::UNIT_Z);
+
+		Entity* efl = mSceneMgr->createEntity("WaterPlane"+toStr(i), "WaterMesh"+toStr(i));
+		unsigned short src,dest;
+		if (!mesh->suggestTangentVectorBuildParams(VES_TANGENT, src,dest))
+			mesh->buildTangentVectors(VES_TANGENT, src,dest);
+
+		MaterialPtr mtr = MaterialManager::getSingleton().getByName("Water1");  //par
+		//try  //  set sky map
+		{	MaterialPtr mtrSky = MaterialManager::getSingleton().getByName(sc.skyMtr);
+			Pass* passSky = mtrSky->getTechnique(0)->getPass(0);
+			TextureUnitState* tusSky = passSky->getTextureUnitState(0);
+
+			Pass* pass = mtr->getTechnique(0)->getPass(0);
+			TextureUnitState* tus = pass->getTextureUnitState(1);
+			if (tus)  tus->setTextureName(tusSky->getTextureName());
+		}
+		efl->setMaterial(mtr);  efl->setCastShadows(false);
+		efl->setRenderQueueGroup(RQG_Fluid);  efl->setVisibilityFlags(RV_Terrain);
+
+		SceneNode* nfl = mSceneMgr->getRootSceneNode()->createChildSceneNode(fb.pos);
+		nfl->attachObject(efl);
+		#ifdef ROAD_EDITOR
+		vFlSMesh.push_back(smesh);  vFlEnt.push_back(efl);  vFlNd.push_back(nfl);
+		#endif
+
+		
+		///  add bullet trigger box   . . . . . . . . .
+		#ifndef ROAD_EDITOR
+		btVector3 pc(fb.pos.x, -fb.pos.z, fb.pos.y - fb.size.y);  // center
+		btTransform tr;  tr.setIdentity();  tr.setOrigin(pc);
+
+		btCollisionShape* bshp = 0;
+		bshp = new btBoxShape(btVector3(fb.size.x/2,fb.size.z/2, fb.size.y));
+		//shp->setUserPointer((void*)7777);
+
+		btCollisionObject* bco = new btCollisionObject();
+		bco->setActivationState(DISABLE_SIMULATION);
+		bco->setCollisionShape(bshp);	bco->setWorldTransform(tr);
+		//bco->setFriction(shp->friction);	bco->setRestitution(shp->restitution);
+		bco->setCollisionFlags(bco->getCollisionFlags() |
+			/*btCollisionObject::CF_STATIC_OBJECT |*/ btCollisionObject::CF_NO_CONTACT_RESPONSE/**/);
+		
+		bco->setUserPointer(new ShapeData(ST_Fluid, 0, &fb));  ///~~
+		pGame->collision.world->addCollisionObject(bco);
+		//pGame->collision.world->contactPairTest
+		pGame->collision.shapes.push_back(bshp);
+		fb.cobj = bco;
+		#endif
+	}
 }

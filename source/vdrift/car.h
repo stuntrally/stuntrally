@@ -303,11 +303,13 @@ public:
 	MODEL_JOE03 floatingmodelfront;
 	MODEL_JOE03 floatingmodelrear;
 
+	/// sounds
 	SOUNDSOURCE tiresqueal[4];
 	SOUNDSOURCE tirebump[4];
 	SOUNDSOURCE grasssound[4]; //added grass & gravel
 	SOUNDSOURCE gravelsound[4];
-	SOUNDSOURCE crashsound;
+	SOUNDSOURCE crashsound[Ncrashsounds];
+	float crashsoundtime[Ncrashsounds];
 	SOUNDSOURCE roadnoise;
 	
 	//CAMERA_SYSTEM cameras;

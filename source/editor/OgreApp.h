@@ -21,9 +21,8 @@
 
 #include <MyGUI.h>
 
-
-const int ciShadowNumSizes = 4;
-const int ciShadowSizesA[ciShadowNumSizes] = {512,1024,2048,4096};
+const int ciShadowNumSizes = 5;
+const int ciShadowSizesA[ciShadowNumSizes] = {256,512,1024,2048,4096};
 #define BrushMaxSize  512
 
 //  Gui
@@ -32,7 +31,8 @@ const Ogre::Real crAngSnaps[ciAngSnapsNum] = {0,15,30,45,90,180};
 
 
 namespace Forests {  class PagedGeometry;  }
-
+namespace MyGUI  {  class MultiList2;  }
+class MaterialFactory;
 
 class App : public BaseApp, public Ogre::RenderTargetListener
 {
@@ -47,6 +47,11 @@ public:
 
 	void UpdWndTitle(), SaveCam();
 	void LoadTrack(), SaveTrack(), UpdateTrack();
+	
+	// stuff to be executed after BaseApp init
+	void postInit();
+	
+	MaterialFactory* materialFactory;
 protected:
 	void LoadTrackEv(), SaveTrackEv(), UpdateTrackEv();
 	enum TrkEvent {  TE_None=0, TE_Load, TE_Save, TE_Update  } eTrkEvent;
@@ -69,7 +74,7 @@ protected:
 	Ogre::String resTrk;  void NewCommon(), UpdTrees();
 	void CreateTerrain(bool bNewHmap=false, bool bTer=true);
 	void GetTerAngles(int xb,int yb,int xe,int ye);
-	void CreateTrees(), reloadMtrTex(Ogre::String mtrName);
+	void CreateTrees(), reloadMtrTex(Ogre::String mtrName), CreateFluids();
 	void CreateSkyDome(Ogre::String sMater, Ogre::Vector3 scale);
 	bool GetFolderIndex(std::string folderpath, std::list <std::string> & outputfolderlist, std::string extension="");
 
@@ -92,6 +97,12 @@ protected:
 	virtual void postRenderTargetUpdate(const Ogre::RenderTargetEvent &evt);
 	
 
+	///  fluids to destroy
+	std::vector<Ogre::String/*MeshPtr*/> vFlSMesh;
+	std::vector<Ogre::Entity*> vFlEnt;
+	std::vector<Ogre::SceneNode*> vFlNd;
+	
+	
 	///  terrain
 	Ogre::Terrain* terrain;  Ogre::TerrainGlobalOptions* mTerrainGlobals;
 	Ogre::TerrainGroup* mTerrainGroup;  bool mPaging;
@@ -167,7 +178,8 @@ protected:
 	SLV(Anisotropy);  SLV(ViewDist);  SLV(TerDetail);  SLV(TerDist);  SLV(RoadDist);
 	SLV(TexSize);  SLV(TerMtr);  // detail
 	SLV(Trees);  SLV(Grass);  SLV(TreesDist);  SLV(GrassDist);  // paged
-	SLV(Shaders);  SLV(ShadowType);  SLV(ShadowCount);  SLV(ShadowSize);  SLV(ShadowDist);  // shadow
+	SLV(Shaders);  SLV(ShadowType);  SLV(ShadowCount);  SLV(ShadowSize);  SLV(LightmapSize);  SLV(ShadowDist);  // shadow
+	SLV(AntiAliasing); // screen
 	void comboTexFilter(SL), btnShadows(WP), btnTrGrReset(WP);
 	MyGUI::ButtonPtr bnQuit;  void btnQuit(WP);
 
@@ -185,20 +197,23 @@ protected:
 	//  init
 	void InitGui();  bool bGI;
 	void GuiCenterMouse(),GuiInitTooltip(),GuiInitLang(), GuiInitGraphics(),GuiInitTrack();
+	void AddTrkL(std::string name, int user, const class TrackInfo* ti);
 	
 	//  track
 	void UpdGuiRdStats(const SplineRoad* rd, const Scene& sc, float time), ReadTrkStats();
-	MyGUI::ListPtr trkList;  MyGUI::EditPtr trkDesc;
-	MyGUI::StaticImagePtr imgPrv,imgMini,imgTer;
+	MyGUI::MultiList2* trkMList;  MyGUI::EditPtr trkDesc;
+	MyGUI::StaticImagePtr imgPrv,imgMini,imgTer, imgTrkIco1,imgTrkIco2;
 	const static int StTrk = 12, InfTrk = 9;
 	MyGUI::StaticTextPtr valTrk, stTrk[StTrk], infTrk[InfTrk];
-	void listTrackChng(MyGUI::List* li, size_t pos), TrackListUpd();
-	TracksXml tracksXml;
+	void listTrackChng(MyGUI::MultiList2* li, size_t pos), TrackListUpd();
+	TracksXml tracksXml;  void btnTrkView1(WP),btnTrkView2(WP),ChangeTrackView(bool full),updTrkListDim();
+	const static int TcolW[32];
 
 	//  screen
 	MyGUI::ListPtr resList;
 	void InitGuiScrenRes(), btnResChng(WP), ResizeOptWnd();
 	void chkVidFullscr(WP), chkVidVSync(WP);
+	void comboGraphicsAll(MyGUI::ComboBoxPtr cmb, size_t val);
 	///-----------------------------------------
 
 	

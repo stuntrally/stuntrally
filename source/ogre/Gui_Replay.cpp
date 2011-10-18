@@ -133,6 +133,11 @@ void App::chkRplChkBestOnly(WP wp)
 	ChkEv(rpl_bestonly);
 }
 
+void App::chkRplChkAlpha(WP wp)
+{
+	ChkEv(rpl_alpha);
+}
+
 
 //  replays list filtering
 

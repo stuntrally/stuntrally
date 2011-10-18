@@ -4,7 +4,7 @@
 #include "configfile.h"
 
 
-#define SET_VER  1203  // 1.2
+#define SET_VER  1204  // 1.2
 
 
 class SETTINGS
@@ -18,15 +18,17 @@ public:
 	std::string car[4], track;  bool track_user;
 
 	//  show
-	bool show_fps, show_gauges, trackmap, mini_zoomed, mini_rotated,
+	bool show_fps, show_gauges, check_arrow, trackmap,
+		mini_zoomed, mini_rotated, mini_terrain,
 		show_cam, show_times, show_digits,
 		car_dbgbars, car_dbgtxt, ogre_dialog;
-	float size_gauges, size_minimap, zoom_minimap;
+	float size_gauges, size_minimap, size_arrow, zoom_minimap;
+	int tracks_view, tracks_sort;
 
 	//  graphics
 	int anisotropy, shaders, tex_size, ter_mtr;  bool bFog;
 	float view_distance, terdetail,terdist, road_dist;
-	float shadow_dist;  int shadow_size, shadow_count, shadow_type;
+	float shadow_dist;  int shadow_size, lightmap_size, shadow_count, shadow_type;
 	int refl_skip, refl_faces, refl_size;  float refl_dist;
 	std::string refl_mode; // static, single, full [explanation: see CarReflection.h] 
 	bool particles, trails;  float trees, grass, trees_dist, grass_dist;
@@ -34,7 +36,7 @@ public:
 
 	//  car
 	bool abs, tcs, autoclutch, autoshift, autorear, show_mph;
-	float car_hue[4], car_sat[4], car_val[4];
+	float car_hue[4], car_sat[4], car_val[4];  int cam_view[4];
 
 	//  game
 	bool trackreverse;	int local_players, num_laps;
@@ -56,14 +58,14 @@ public:
 	float bloomintensity, bloomorig, motionblurintensity;
 	//  video
 	int windowx, windowy, fsaa;
-	bool fullscreen, vsync;
+	bool fullscreen, vsync, ssaa;
 	std::string buffer, rendersystem;
 	
 	//  input
 	bool x11_capture_mouse;
 	
 	//  replay
-	bool rpl_rec, rpl_ghost, rpl_bestonly;  int rpl_listview;
+	bool rpl_rec, rpl_ghost, rpl_bestonly, rpl_alpha;  int rpl_listview;
 	
 	// network
 	std::string nickname;

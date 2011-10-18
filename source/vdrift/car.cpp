@@ -8,6 +8,8 @@
 #include "configfile.h"
 #include "settings.h"
 #include "../ogre/OgreGame.h"  //+ replay
+#include "../ogre/Defines.h"
+#include <OgreLogManager.h>
 
 #ifdef _WIN32
 bool isnan(float number) {return (number != number);}
@@ -15,11 +17,12 @@ bool isnan(double number) {return (number != number);}
 #endif
 
 CAR::CAR() :
-  pSet(0), pApp(0),
-  last_steer(0),
-  debug_wheel_draw(false),
-  sector(-1)
+	pSet(0), pApp(0),
+	last_steer(0),
+	debug_wheel_draw(false),
+	sector(-1)
 {
+	//dynamics.pCar = this;
 	vInteriorOffset[0]=0;
 	vInteriorOffset[1]=0;
 	vInteriorOffset[2]=0;
@@ -30,6 +33,8 @@ CAR::CAR() :
 		//wheelnode[i] = NULL;
 		//floatingnode[i] = NULL;
 	}
+	for (int i=0; i < Ncrashsounds; ++i)
+		crashsoundtime[i] = 0.f;
 }
 
 ///unload any loaded assets
@@ -371,17 +376,20 @@ bool CAR::LoadSounds(
 	}
 
 	//set up crash sound
+	for (int i = 0; i < Ncrashsounds; ++i)
 	{
-		const SOUNDBUFFER * buf = soundbufferlibrary.GetBuffer("crash");
+		int n = i+1;
+		char name[3] = {'0'+ n/10, '0'+ n%10, 0};
+		const SOUNDBUFFER * buf = soundbufferlibrary.GetBuffer(name);
 		if (!buf)
 		{
-			error_output << "Can't load crash sound" << std::endl;
+			error_output << "Can't load crash sound: " << name << std::endl;
 			return false;
 		}
-		crashsound.SetBuffer(*buf);
-		crashsound.Set3DEffects(true);
-		crashsound.SetLoop(false);
-		crashsound.SetGain(1.0);
+		crashsound[i].SetBuffer(*buf);
+		crashsound[i].Set3DEffects(true);
+		crashsound[i].SetLoop(false);
+		crashsound[i].SetGain(1.0);
 	}
 
 	{
@@ -451,7 +459,8 @@ void CAR::GetSoundList(std::list <SOUNDSOURCE *> & outputlist)
 	for (int i = 0; i < 4; i++)	outputlist.push_back(&gravelsound[i]);
 	for (int i = 0; i < 4; i++)	outputlist.push_back(&tirebump[i]);
 
-	outputlist.push_back(&crashsound);
+	for (int i = 0; i < Ncrashsounds; ++i)
+		outputlist.push_back(&crashsound[i]);
 	outputlist.push_back(&roadnoise);
 }
 
@@ -469,6 +478,7 @@ void CAR::GetEngineSoundList(std::list <SOUNDSOURCE *> & outputlist)
 void CAR::HandleInputs(const std::vector <float> & inputs, float dt)
 {
 	assert(inputs.size() == CARINPUT::ALL); //-
+	dynamics.inputsCopy = inputs;
 
 	//std::cout << "Throttle: " << inputs[CARINPUT::THROTTLE] << std::endl;
 	//std::cout << "Shift up: " << inputs[CARINPUT::SHIFT_UP] << std::endl;
@@ -691,29 +701,66 @@ void CAR::UpdateSounds(float dt)
 	}
 
 	//update crash sound
+	//#if 1
+	if (dynamics.bHitSnd)// && dynamics.sndHitN >= 0)
+	{
+		int f = dynamics.fParIntens * 0.04f;  //fSndForce * 0.1f;
+		int i = std::max(1, std::min(Ncrashsounds, f));
+		//int i = std::max(1, std::min(Ncrashsounds-1, dynamics.sndHitN));
+		//int i = Ncrashsounds-2;
+		float ti = 1.8f - i*0.4f;  if (ti < 0.4f)  ti = 0.4f;
+		if (dynamics.bHitSnd)// && crashsoundtime[i] > /*ti*/0.2f)  //par  //&& !crashsound[i].Audible()
+		{	dynamics.bHitSnd = false;
+			crashsound[i].SetGain(1 * pSet->vol_env);
+			crashsound[i].SetPosition(engPos[0], engPos[1], engPos[2]); //
+			crashsound[i].Stop();
+			crashsound[i].Play();
+			crashsoundtime[i] = 0.f;
+			dynamics.sndHitN = -1;
+			//LogO("Snd:  i " + toStr(i) + "  parF " + toStr(dynamics.fParIntens) + "  sndF " + toStr(dynamics.fSndForce));
+		}/**/
+	}
+	//#else
+	//update crash sound
 	{
 		crashdetection.Update(speed, dt);
 		float crashdecel = crashdetection.GetMaxDecel();
 		if (crashdecel > 0)
 		{
-			const float mingainat = 40;
-			const float maxgainat = 260;
+			const float mingainat = 0;  // 40 260
+			const float maxgainat = 160;
 			const float mingain = 0.1;
 			float gain = (crashdecel-mingainat)/(maxgainat-mingainat);
 			if (gain > 1)		gain = 1;
 			if (gain < mingain)	gain = mingain;
 
+			//int f = (normvel*0.02f + 0.02f*vlen) * Ncrashsounds;
+			//int i = std::max(5, std::min(Ncrashsounds, f));
+			//cd->bHitSnd = true;//cd->fSndForce > 58;  //true;
+			//cd->sndHitN = i;
 			//std::cout << crashdecel << ", gain: " << gain << std::endl;
+			
+			int f = crashdecel / 1400.f * Ncrashsounds;
+			int i = std::max(1, std::min(Ncrashsounds-1, f));
 
-			//if (!crashsound.Audible())
+			//if (crashsoundtime[i] > /*ti*/0.4f)  //!crashsound.Audible())
 			{
-				crashsound.SetGain(gain * pSet->vol_env);
-				crashsound.SetPosition(engPos[0], engPos[1], engPos[2]); //
-				crashsound.Stop();
-				crashsound.Play();
+				crashsound[i].SetGain(gain * pSet->vol_env);
+				crashsound[i].SetPosition(engPos[0], engPos[1], engPos[2]); //
+				crashsound[i].Stop();
+				crashsound[i].Play();
+				crashsoundtime[i] = 0.f;
 			}
+			//LogO("Car Snd: " + toStr(crashdecel));// + " force " + toStr(hit.force) + " vel " + toStr(vlen) + " Nvel " + toStr(normvel));
 		}
 	}
+	//#endif
+
+
+	//  time played
+	for (int i=0; i < Ncrashsounds; ++i)
+		if (crashsoundtime[i] < 5.f)
+			crashsoundtime[i] += dt;
 }
 
 

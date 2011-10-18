@@ -3,12 +3,39 @@
 
 #include "btBulletCollisionCommon.h"
 #include "btBulletDynamicsCommon.h"
+//#include "btAlignedObjectArray.h"
 
 template <class T, unsigned int dim> class MATHVECTOR;
 class COLLISION_CONTACT;
 class MODEL;
 class TRACK;
 class TRACKSURFACE;
+
+
+class DynamicsWorld : public btDiscreteDynamicsWorld
+{
+public:
+	DynamicsWorld(
+		btDispatcher* dispatcher,
+		btBroadphaseInterface* broadphase,
+		btConstraintSolver* constraintSolver,
+		btCollisionConfiguration* collisionConfig)
+	:	btDiscreteDynamicsWorld(dispatcher, broadphase, constraintSolver, collisionConfig)
+		//track(0),
+	{
+	}
+
+	~DynamicsWorld() {  }
+
+	void solveConstraints(btContactSolverInfo& solverInfo);  // virtual
+
+	struct Hit
+	{
+		btVector3 pos, norm, vel;  btScalar force;
+		class ShapeData* sdCar;
+	};
+	btAlignedObjectArray<Hit> vHits;
+};
 
 
 // manages bodies / collision objects / collision shapes
@@ -54,7 +81,7 @@ public:
 	btCollisionDispatcher* dispatcher;
 	bt32BitAxisSweep3* broadphase;
 	btSequentialImpulseConstraintSolver* solver;
-	btDiscreteDynamicsWorld* world;
+	DynamicsWorld* world;
 
 	// . . . . . .
 	btAlignedObjectArray<btCollisionShape *> shapes;

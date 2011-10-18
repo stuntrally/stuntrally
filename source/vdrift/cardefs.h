@@ -35,4 +35,6 @@ enum CARINPUT
 	ALL
 };  }
 
+const int Ncrashsounds = 12;
+
 #endif

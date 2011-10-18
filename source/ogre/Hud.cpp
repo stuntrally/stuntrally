@@ -4,6 +4,7 @@
 #include "../vdrift/game.h"
 #include "../road/Road.h"
 #include "SplitScreen.h"
+#include "common/RenderConst.h"
 
 #include <OgreRenderWindow.h>
 #include <OgreSceneNode.h>
@@ -84,14 +85,16 @@ void App::CreateHUD()
 		asp = 1.f;  //_temp
 		ManualObject* m = Create2D(sMat,mSceneMgr,1,true,true);  miniC = m;
 		//asp = float(mWindow->getWidth())/float(mWindow->getHeight());
-		m->setVisibilityFlags(2);  m->setRenderQueueGroup(RENDER_QUEUE_OVERLAY-5);
+		m->setVisibilityFlags(RV_Hud);  m->setRenderQueueGroup(RQG_Hud1);
 		
 		///  change minimap image
 		MaterialPtr mm = MaterialManager::getSingleton().getByName(sMat);
 		Pass* pass = mm->getTechnique(0)->getPass(0);
 		TextureUnitState* tus = pass->getTextureUnitState(0);
-		if (tus)
-			tus->setTextureName(pSet->track + "_mini.png");
+		if (tus)  tus->setTextureName(pSet->track + "_mini.png");
+		tus = pass->getTextureUnitState(2);
+		if (tus)  tus->setTextureName(pSet->track + "_ter.jpg");
+		UpdMiniTer();
 		
 
 		float fHudSize = pSet->size_minimap;
@@ -105,7 +108,7 @@ void App::CreateHUD()
 		//  car pos dot
 		for (int i=0; i < pSet->local_players; ++i)
 		{	mpos[i] = Create2D("hud/CarPos", mSceneMgr, 0.4f, true, true);
-			mpos[i]->setVisibilityFlags(2);  mpos[i]->setRenderQueueGroup(RENDER_QUEUE_OVERLAY);
+			mpos[i]->setVisibilityFlags(RV_Hud);  mpos[i]->setRenderQueueGroup(RQG_Hud3);
 			ndPos[i] = ndMap->createChildSceneNode();
 			ndPos[i]->scale(fHudSize*1.5f, fHudSize*1.5f, 1);
 			ndPos[i]->attachObject(mpos[i]);  /*ndPos[i]->setVisible(false);  */}
@@ -114,29 +117,29 @@ void App::CreateHUD()
 
 	
 	//  backgr  gauges
-	ManualObject* mrpmB = Create2D("hud/rpm",mSceneMgr,1);	mrpmB->setVisibilityFlags(2);
-	mrpmB->setRenderQueueGroup(RENDER_QUEUE_OVERLAY-5);
+	ManualObject* mrpmB = Create2D("hud/rpm",mSceneMgr,1);	mrpmB->setVisibilityFlags(RV_Hud);
+	mrpmB->setRenderQueueGroup(RQG_Hud1);
 	nrpmB = mSceneMgr->getRootSceneNode()->createChildSceneNode();
 	nrpmB->attachObject(mrpmB);	nrpmB->setScale(0,0,0);  nrpmB->setVisible(false);
 
-	ManualObject* mvelBk = Create2D("hud/kmh",mSceneMgr,1);	mvelBk->setVisibilityFlags(2);
-	mvelBk->setRenderQueueGroup(RENDER_QUEUE_OVERLAY-5);
+	ManualObject* mvelBk = Create2D("hud/kmh",mSceneMgr,1);	mvelBk->setVisibilityFlags(RV_Hud);
+	mvelBk->setRenderQueueGroup(RQG_Hud1);
 	nvelBk = mSceneMgr->getRootSceneNode()->createChildSceneNode();
 	nvelBk->attachObject(mvelBk);	nvelBk->setScale(0,0,0);  mvelBk->setVisible(false);
 		
-	ManualObject* mvelBm = Create2D("hud/mph",mSceneMgr,1);	mvelBm->setVisibilityFlags(2);
-	mvelBm->setRenderQueueGroup(RENDER_QUEUE_OVERLAY-5);
+	ManualObject* mvelBm = Create2D("hud/mph",mSceneMgr,1);	mvelBm->setVisibilityFlags(RV_Hud);
+	mvelBm->setRenderQueueGroup(RQG_Hud1);
 	nvelBm = mSceneMgr->getRootSceneNode()->createChildSceneNode();
 	nvelBm->attachObject(mvelBm);	nvelBm->setScale(0,0,0);  mvelBm->setVisible(false);
 		
 	//  needles
-	mrpm = Create2D("hud/needle",mSceneMgr,1,true);  mrpm->setVisibilityFlags(2);
-	mrpm->setRenderQueueGroup(RENDER_QUEUE_OVERLAY);
+	mrpm = Create2D("hud/needle",mSceneMgr,1,true);  mrpm->setVisibilityFlags(RV_Hud);
+	mrpm->setRenderQueueGroup(RQG_Hud3);
 	nrpm = mSceneMgr->getRootSceneNode()->createChildSceneNode();
 	nrpm->attachObject(mrpm);	nrpm->setScale(0,0,0);	nrpm->setVisible(false);
 	
-	mvel = Create2D("hud/needle",mSceneMgr,1,true);  mvel->setVisibilityFlags(2);
-	mvel->setRenderQueueGroup(RENDER_QUEUE_OVERLAY);
+	mvel = Create2D("hud/needle",mSceneMgr,1,true);  mvel->setVisibilityFlags(RV_Hud);
+	mvel->setRenderQueueGroup(RQG_Hud3);
 	nvel = mSceneMgr->getRootSceneNode()->createChildSceneNode();
 	nvel->attachObject(mvel);	nvel->setScale(0,0,0);	nvel->setVisible(false);
 
@@ -217,6 +220,17 @@ void App::ShowHUD(bool hideAll)
 	}
 }
 
+void App::UpdMiniTer()
+{
+	MaterialPtr mm = MaterialManager::getSingleton().getByName("circle_minimap");
+	Pass* pass = mm->getTechnique(0)->getPass(0);
+	if (!pass)  return;
+	try
+	{	Ogre::GpuProgramParametersSharedPtr fparams = pass->getFragmentProgramParameters();
+		fparams->setNamedConstant("showTerrain", pSet->mini_terrain ? 1.f : 0.f);
+	}catch(...){  }
+}
+
 
 //  Update HUD
 ///---------------------------------------------------------------------------------------------------------------
@@ -237,6 +251,8 @@ void App::UpdateHUD(int carId, CarModel* pCarM, CAR* pCar, float time, Viewport*
 		if (hudVel)  hudVel->hide();
 		if (ovTimes)  ovTimes->hide();
 		if (ovWarnWin)  ovWarnWin->hide();
+		if (ovCarDbg)  ovCarDbg->hide();
+		if (ovCarDbgTxt)  ovCarDbgTxt->hide();
 	}else{
 		/// for render viewport ---------
 		if (ovCam)  ovCam->hide();
@@ -258,6 +274,51 @@ void App::UpdateHUD(int carId, CarModel* pCarM, CAR* pCar, float time, Viewport*
 	//LogO(String("  vel: ") + toStr(vel) +" [] rpm: "+ toStr(fr.rpm) );
     float vel = fr.vel * (pSet->show_mph ? 2.23693629f : 3.6f);
 	UpdHUDRot(carId, pCarM, vel);
+
+	///   Set motion blur intensity for this viewport, depending on car's linear velocity
+	if (pSet->motionblur)
+	{
+		// use velocity squared to achieve an exponential motion blur - and its faster too - wow :)
+		float speed = pCar->GetVelocity().MagnitudeSquared();
+		
+		// peak at 250 kmh (=69 m/s), 69² = 4761
+		// motion blur slider: 1.0 = peak at 100 km/h
+		// 					   0.0 = peak at 400 km/h
+		//                  -> 0.5 = peak at 250 km/h
+		// lerp(100, 400, 1-motionBlurIntensity)
+		float peakSpeed = 100 + (1-pSet->motionblurintensity) * (400-100);
+		float motionBlurAmount = std::abs(speed) / pow((peakSpeed/3.6f), 2);
+		
+		// higher fps = less perceived motion blur
+		// time a frame will be still visible on screen:
+		// each frame, 1-motionBlurAmount of the original image is lost
+		// example (motionBlurAmount = 0.7):
+		// frame 1: full img
+		// frame 2: 0.7  * image
+		// frame 3: 0.7² * image
+		// frame 4: 0.7³ * image
+		// portion of image visible after 'n' frames:
+		// pow(motionBlurAmount, n);
+		
+		// example 1: 60 fps
+		// 0.7³ image after 4 frames: 0.066 sec
+		// example 2: 120 fps
+		// 0.7³ image after 4 frames: 0.033 sec
+		
+		// now: need to achieve *same* time for both fps values
+		// to do this, adjust motionBlurAmount
+		// (1.0/fps) * pow(motionBlurAmount, n) == (1.0/fps2) * pow(motionBlurAmount2, n)
+		// set n=4
+		// motionBlurAmount_new = sqrt(sqrt((motionBlurAmount^4 * fpsReal/desiredFps))
+		motionBlurAmount = sqrt(sqrt( pow(motionBlurAmount, 4) * ((1.0f/time) / 120.0f) ));
+			
+		// clamp to 0.9f
+		motionBlurAmount = std::min(motionBlurAmount, 0.9f);
+		
+		motionBlurIntensity = motionBlurAmount;
+	}
+	/// -----------------------------------------------------------------------------------
+
 
 	//  gear, vel texts  -----------------------------
 	if (hudGear && hudVel && pCar)
@@ -376,8 +437,19 @@ void App::UpdateHUD(int carId, CarModel* pCarM, CAR* pCar, float time, Viewport*
 		ovU[3]->setCaption(pGame->strProfInfo);
 		//if (newPosInfos.size() > 0)
 		//ovU[3]->setCaption("carm: " + toStr(carModels.size()) + " newp: " + toStr((*newPosInfos.begin()).pos));
-	}/**/
+	}
 
+	//  input values
+	if (pCar && pGame && pGame->profilingmode)
+	{	const std::vector<float>& inp = pCar->dynamics.inputsCopy;
+	if (ovU[2] && inp.size() == CARINPUT::ALL)
+	{	sprintf(s, 
+		" Throttle %5.2f\n Brake %5.2f\n Steer %5.2f\n"
+		" Handbrake %5.2f\n Boost %5.2f\n Flip %5.2f\n"
+		,inp[CARINPUT::THROTTLE], inp[CARINPUT::BRAKE], -inp[CARINPUT::STEER_LEFT]+inp[CARINPUT::STEER_RIGHT]
+		,inp[CARINPUT::HANDBRAKE],inp[CARINPUT::BOOST], inp[CARINPUT::FLIP] );
+		ovU[2]->setCaption(String(s));
+	}	}
 
 	//  bullet profiling text  --------
 	static bool oldBltTxt = false;

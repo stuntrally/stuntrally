@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "../ogre/Defines.h"
+#include "../ogre/common/RenderConst.h"
 #include "Road.h"
 #ifndef ROAD_EDITOR
 #include "../vdrift/game.h"
@@ -693,14 +694,23 @@ void SplineRoad::RebuildRoadInt()
 				Entity* ent = 0, *entW = 0, *entC = 0;
 				SceneNode* node = 0, *nodeW = 0, *nodeC = 0;
 					AddMesh(mesh, sMesh, aabox, &ent, &node, "."+sEnd);
-				if (wPglass)
-					ent->setRenderQueueGroup(RENDER_QUEUE_9);  //+5 for glass pipe road`
+				if (wPglass) {
+					ent->setRenderQueueGroup(RQG_PipeGlass);
+					//ent->setCastShadows(true);
+				}
 				if (wall /*&& posW.size() > 0*/)
 				{	AddMesh(meshW, sMeshW, aabox, &entW, &nodeW, "W."+sEnd);
 					entW->setCastShadows(true);  }  // only cast
 				if (cols /*&& posC.size() > 0*/)
 				{	AddMesh(meshC, sMeshC, aabox, &entC, &nodeC, "C."+sEnd);
-					entC->setVisible(true);  }  // col vis?
+					entC->setVisible(true);  
+					if (bForceShadowCaster)
+						entC->setCastShadows(true);  // col vis?
+				}
+				//if (bForceShadowCaster)
+					//ent->setCastShadows(true);
+
+				
 				/**/
 				
 				//>>  store ogre data  ------------
@@ -746,7 +756,7 @@ void SplineRoad::RebuildRoadInt()
 					
 					//  Road  ~
 					btCollisionShape* trimeshShape = new btBvhTriangleMeshShape(trimesh, true);
-					trimeshShape->setUserPointer((void*)7777);  // mark as road,  + mtrId..
+					trimeshShape->setUserPointer(isPipe(seg) ? (void*)7788 : (void*)7777);  // mark as road,  + mtrId..
 					
 					btRigidBody::btRigidBodyConstructionInfo infoT(0.f, 0, trimeshShape);
 					infoT.m_restitution = 0.0f;
@@ -795,7 +805,7 @@ void SplineRoad::RebuildRoadInt()
 	///  add checkpoints  * * *
 	if (iDirtyId == -1)  // full rebuild
 	{
-		mChks.clear();
+		mChks.clear();  iChkId1 = 0;
 		for (int i=0; i < segs; ++i)  //=getNumPoints
 		{
 			if (mP[i].chkR > 0.f)
@@ -804,9 +814,16 @@ void SplineRoad::RebuildRoadInt()
 				cs.pos = mP[i].pos;  // +ofs_y ?-
 				cs.r = mP[i].chkR * mP[i].width;
 				cs.r2 = cs.r * cs.r;
+
+				if (i == iP1)  //1st checkpoint
+					iChkId1 = mChks.size();
+
 				mChks.push_back(cs);
 			}
 		}
+		int num = (int)mChks.size();
+		if (num > 0)  //1st checkpoint for reverse
+			iChkId1Rev = (iChkId1 - iDir + num) % num;
 	}
 
 	UpdLodVis(fLodBias);

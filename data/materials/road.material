@@ -66,7 +66,7 @@ material roadSand_ter : ppx_shadow_a
 	set_texture_alias diffuseMap roadSand.jpg
 	set_texture_alias normalMap volcano_7_nh1.png
 }
-material roadSand : ppx_shadow_a
+material roadSand : ppx_shadow
 {
 	set $ambientCol "0.57 0.57 0.57"
 	set $diffuseCol "0.62 0.62 0.62"
@@ -74,7 +74,6 @@ material roadSand : ppx_shadow_a
 	set $shininess "32"
 	set $depthBias "3"
 	set_texture_alias diffuseMap roadSand.jpg
-	set_texture_alias normalMap volcano_7_nh1.png
 }
 
 //  ice

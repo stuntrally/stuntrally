@@ -7,7 +7,9 @@
 #include "model.h"
 #include "track.h"
 #include "cardynamics.h"
+//#include "car.h"//
 
+#include <OgreLogManager.h>
 
 ///  ctor bullet world
 ///----------------------------------------------------------------------------
@@ -21,7 +23,7 @@ COLLISION_WORLD::COLLISION_WORLD() :
 
 	broadphase = new bt32BitAxisSweep3(btVector3(-5000, -5000, -5000), btVector3(5000, 5000, 5000));
 	solver = new btSequentialImpulseConstraintSolver();
-	world = new btDiscreteDynamicsWorld(dispatcher, broadphase, solver, config);
+	world = new DynamicsWorld(dispatcher, broadphase, solver, config);
 
 	world->setGravity(btVector3(0.0, 0.0, -9.81)); ///~
 	//world->getSolverInfo().m_numIterations = 36;  //-
@@ -233,9 +235,7 @@ bool COLLISION_WORLD::CastRay(
 	btVector3 to = ToBulletVector(origin + direction * length);
 	MyRayResultCallback rayCallback(from, to, caster);
 	
-	MATHVECTOR <float, 3> p;
-	MATHVECTOR <float, 3> n;
-	float d;
+	MATHVECTOR <float, 3> p, n;  float d;
 	const TRACKSURFACE * s = TRACKSURFACE::None();
 	const BEZIER * b = NULL;
 	btCollisionObject * c = NULL;
@@ -252,11 +252,15 @@ bool COLLISION_WORLD::CastRay(
 		if (c->isStaticObject() /*&& (c->getCollisionFlags() & btCollisionObject::CF_NO_CONTACT_RESPONSE == 0)*/)
 		{
 			void * ptr = c->getCollisionShape()->getUserPointer();
-			if (ptr == (void*)7777)
+			if (ptr == (void*)7777)  // road
 			{
-				int a=0;
 				s = trackSurface[0];
 				*pOnRoad = 1;
+			}
+			if (ptr == (void*)7788)  // pipe
+			{
+				s = trackSurface[0];
+				*pOnRoad = 2;
 			}
 			else if (ptr == 0)
 			{
@@ -284,8 +288,7 @@ bool COLLISION_WORLD::CastRay(
 		{
 			MATHVECTOR <float, 3> bezierspace_raystart(origin[1], origin[2], origin[0]);
 			MATHVECTOR <float, 3> bezierspace_dir(direction[1], direction[2], direction[0]);
-			MATHVECTOR <float, 3> colpoint;
-			MATHVECTOR <float, 3> colnormal;
+			MATHVECTOR <float, 3> colpoint, colnormal;
 			const BEZIER * colpatch = NULL;
 			bool bezierHit = track->CastRay(bezierspace_raystart, bezierspace_dir, length, colpoint, colpatch, colnormal);
 			if (bezierHit)
@@ -312,21 +315,20 @@ bool COLLISION_WORLD::CastRay(
 
 //  Update
 //-------------------------------------------------------------------------------------------------------------------------------
-void COLLISION_WORLD::Update(float dt, bool profiling)
+
+void DynamicsWorld::solveConstraints(btContactSolverInfo& solverInfo)
 {
-	///  Simulate
-	world->stepSimulation(dt, maxSubsteps, fixedTimestep);
-	
+	btDiscreteDynamicsWorld::solveConstraints(solverInfo);
+	//vHits.clear();
+	//inFluids.clear();  //- before update
 
 	//  collision callback for fluid triggers  -----~~~------~~~-----
-	//inFluids.clear();  //- before update
-	//TODO: bullet hit info for particles and sounds ...
-
-	int numManifolds = world->getDispatcher()->getNumManifolds();
+	//  and bullet hit info for particles and sounds ...
+	int numManifolds = getDispatcher()->getNumManifolds();
 	//LogO(toStr(numManifolds));
-	for (int i=0; i < numManifolds; ++i)
+	for (int i=0; i < numManifolds; ++i)  // pairs
 	{
-		btPersistentManifold* contactManifold =  world->getDispatcher()->getManifoldByIndexInternal(i);
+		btPersistentManifold* contactManifold =  getDispatcher()->getManifoldByIndexInternal(i);
 		btCollisionObject* bA = static_cast<btCollisionObject*>(contactManifold->getBody0());
 		btCollisionObject* bB = static_cast<btCollisionObject*>(contactManifold->getBody1());
 	
@@ -335,32 +337,86 @@ void COLLISION_WORLD::Update(float dt, bool profiling)
 
 		//  check if car with fluid
 		void* pA = bA->getUserPointer(), *pB = bB->getUserPointer();
-		if (pA && pB)
+		//if (pA && pB)
 		{
 			ShapeData* sdA = (ShapeData*)pA, *sdB = (ShapeData*)pB, *sdCar=0, *sdFluid=0;
-			if (sdA->type == ST_Car)  sdCar = sdA;  if (sdA->type == ST_Fluid)  sdFluid = sdA;
-			if (sdB->type == ST_Car)  sdCar = sdB;	if (sdB->type == ST_Fluid)  sdFluid = sdB;
-			if (sdCar && sdFluid)
-			{
-				sdCar->pCarDyn->inFluids.push_back(sdFluid->pFluid);  // add fluid to car
-			}
+			if (sdA) {  if (sdA->type == ST_Car)  sdCar = sdA;  if (sdA->type == ST_Fluid)  sdFluid = sdA;  }
+			if (sdB) {  if (sdB->type == ST_Car)  sdCar = sdB;  if (sdB->type == ST_Fluid)  sdFluid = sdB;  }
+			if (sdCar)
+				if (sdFluid)
+				{
+					if (sdCar->pCarDyn->inFluids.empty())
+						sdCar->pCarDyn->inFluids.push_back(sdFluid->pFluid);  // add fluid to car (only 1)
+				}
+				else  ///  car hit
+				{
+					int numContacts = contactManifold->getNumContacts();
+					//if (numContacts > 0)  LogO("c"+toStr(numContacts));
+					for (int j=0; j < numContacts; ++j)
+					{
+						btManifoldPoint& pt = contactManifold->getContactPoint(j);
+						//LogO(Ogre::String("hit-")+toStr(i)+"-"+toStr(j)+" f "+toStr(f));
+						DynamicsWorld::Hit hit;
+						hit.pos = pt.getPositionWorldOnA();  hit.norm = pt.m_normalWorldOnB;
+						hit.force = pt.getAppliedImpulse();  hit.sdCar = sdCar;
+						hit.force = std::max(0, 60 - pt.getLifeTime());
+						hit.vel = sdCar->pCarDyn->velPrev;
+						vHits.push_back(hit);
+						//sdCar->pCarDyn->hitPnts.push_back(pt);  ///i
+					}
+				}
 		}
-			
-		/*int numContacts = contactManifold->getNumContacts();
-		for (int j=0;j<numContacts;j++)
-		{
-			btManifoldPoint& pt = contactManifold->getContactPoint(j);
-			if (pt.getDistance()<0.f)
-			{
-				//bA->get
-				const btVector3& pA = pt.getPositionWorldOnA();
-				const btVector3& pB = pt.getPositionWorldOnB();
-				const btVector3& nB = pt.m_normalWorldOnB;
-				btScalar f = pt.getAppliedImpulse();
-				LogO(Ogre::String("hit-")+toStr(i)+"-"+toStr(j)+" f "+toStr(f)+"  n "+toStr(nB.getX())+"."+toStr(nB.getY())+"."+toStr(nB.getZ()));
-			}
-		}/**/
 	}
+}
+
+
+void COLLISION_WORLD::Update(float dt, bool profiling)
+{
+	///  Simulate
+	world->stepSimulation(dt, maxSubsteps, fixedTimestep);
+	
+
+	//  use collision hit results, once a frame
+	
+	int n = world->vHits.size();
+	if (n > 0)
+	{
+		//LogO(toStr(n));
+		//  pick the one with biggest force
+		DynamicsWorld::Hit& hit = world->vHits[0];
+		float force = 0.f;//, vel = 0.f;
+		for (int i=0; i < n; ++i)
+			if (world->vHits[i].force > force)
+			{
+				force = world->vHits[i].force;
+				hit = world->vHits[i];
+			}
+
+		CARDYNAMICS* cd = hit.sdCar->pCarDyn;
+		btVector3 vcar = hit.vel;
+		Ogre::Vector3 vel(vcar[0], vcar[2], -vcar[1]);
+		Ogre::Vector3 norm(hit.norm.getX(), hit.norm.getZ(), -hit.norm.getY());
+		float vlen = vel.length(), normvel = abs(vel.dotProduct(norm));
+
+		//  Sparks emit params
+		cd->vHitPos = Ogre::Vector3(hit.pos.getX(), hit.pos.getZ(), -hit.pos.getY());
+		cd->vHitNorm = norm + vel * 0.1f;  //vel*0.2 + norm*3;
+		cd->fParVel = 3.0 + 0.4 * vlen;
+		cd->fParIntens = 10.f + 30.f * vlen;  //hit.force * std::min(1.f, vlen);
+
+		//if (vlen > 2.f)// && car)  //par
+		{
+			cd->fSndForce = normvel*0.02 + 0.02*vlen;  //hit.force;
+			cd->fHitTime = 1.f;  cd->fNormVel = normvel;
+			///LogO("upd sf " + toStr(cd->fSndForce) + " force " + toStr(hit.force) + " vel " + toStr(vlen) + " Nvel " + toStr(normvel));
+
+			//int f = (normvel*0.02f + 0.02f*vlen) * Ncrashsounds;
+			//int i = std::max(5, std::min(Ncrashsounds, f));
+			//cd->bHitSnd = true;//cd->fSndForce > 58;  //true;
+			//cd->sndHitN = i;
+		}
+	}
+	world->vHits.clear();//+
 
 
 	///+  bullet profiling info

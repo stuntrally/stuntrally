@@ -166,7 +166,8 @@ namespace OISB
     State* Binding::getState(size_t idx) const
     {
         Bindable* ret = getBindable(idx);
-        if (ret->getBindableType() != BT_STATE)
+        if (ret == (void*)1)  return 0;
+        if (ret && ret->getBindableType() != BT_STATE)
         {
             LogExc(OIS::E_General, "Bindable at this index isn't a state!");
         }

@@ -55,6 +55,8 @@ void App::slViewDist(SL)
 	// Set new far clip distance for all cams
 	#ifndef ROAD_EDITOR
 	/*?if (bGI)*/  mSplitMgr->UpdateCamDist();
+	#else
+	mCamera->setFarClipDistance(pSet->view_distance*1.1f);
 	#endif
 }
 
@@ -176,6 +178,13 @@ void App::slShadowSize(SL)
 	if (valShadowSize)  valShadowSize->setCaption(toStr(ciShadowSizesA[v]));
 }
 
+void App::slLightmapSize(SL)
+{
+	int v = std::max( 0.0f, std::min((float) ciShadowNumSizes-1, ciShadowNumSizes * val/res));
+	if (bGI)  pSet->lightmap_size = v;
+	if (valLightmapSize)  valLightmapSize->setCaption(toStr(ciShadowSizesA[v]));
+}
+
 void App::slShadowDist(SL)
 {
 	Real v = 50.f + 4750.f * powf(val/res, 2.f);	if (bGI)  pSet->shadow_dist = v;
@@ -209,13 +218,40 @@ void App::GuiInitGraphics()
 	Slv(TreesDist,	powf((pSet->trees_dist-0.5f) /6.5f, 0.5f));
 	Slv(GrassDist,	powf((pSet->grass_dist-0.5f) /6.5f, 0.5f));
 	Btn("TrGrReset", btnTrGrReset);
+	
+	// screen
+	// find max. fsaa
+	int fsaa = 0; int newfsaa;
+	Ogre::ConfigOptionMap& configOptions = Ogre::Root::getSingleton().getRenderSystem()->getConfigOptions();
+	Ogre::ConfigOptionMap::iterator result = configOptions.find("FSAA");
+	if ( result != configOptions.end() )
+	{
+		Ogre::ConfigOption& FSAAOption = result->second;
+		for( Ogre::StringVector::iterator i( FSAAOption.possibleValues.begin() ), iEnd( FSAAOption.possibleValues.end() ); i != iEnd; ++i )
+		{
+			newfsaa = strtol( (*i).c_str(), 0, 10  );
+			if (newfsaa > fsaa) fsaa = newfsaa;
+		}
+	}
+	Slv(AntiAliasing, float(pSet->fsaa)/float(fsaa));
 
 	//  shadows
 	Slv(ShadowType,	pSet->shadow_type /res);
 	Slv(ShadowCount,(pSet->shadow_count-2) /2.f);
 	Slv(ShadowSize,	pSet->shadow_size /float(ciShadowNumSizes));
 	Slv(ShadowDist,	powf((pSet->shadow_dist -50.f)/4750.f, 0.5f));
+	Slv(LightmapSize, pSet->lightmap_size /float(ciShadowNumSizes));
 	Btn("Apply", btnShadows);
+	
+	Cmb(combo, "CmbGraphicsAll", comboGraphicsAll);
+	if (combo)  {
+		combo->removeAllItems();
+		combo->addItem(TR("#{GraphicsAll_Lowest}"));
+		combo->addItem(TR("#{GraphicsAll_Low}"));
+		combo->addItem(TR("#{GraphicsAll_Medium}"));
+		combo->addItem(TR("#{GraphicsAll_High}"));
+		combo->addItem(TR("#{GraphicsAll_Ultra}"));
+    }
 }
 
 
@@ -223,6 +259,13 @@ void App::GuiInitGraphics()
 //----------------------------------------------------------------------------------------------------------------
 void App::GuiCenterMouse()
 {
+	// mouse center causes problems on x11 with mouse capture=off
+	#ifndef ROAD_EDITOR
+		#if OGRE_PLATFORM == OGRE_PLATFORM_LINUX
+		if (pSet->x11_capture_mouse == false) return;
+		#endif
+	#endif
+	
 	int xm = mWindow->getWidth()/2, ym = mWindow->getHeight()/2;
 	MyGUI::InputManager::getInstance().injectMouseMove(xm, ym, 0);
 	OIS::MouseState &ms = const_cast<OIS::MouseState&>(mMouse->getMouseState());
@@ -352,218 +395,49 @@ void App::comboLanguage(SL)
 	#endif
 }
 
-
-///  . .  util tracks stats  . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 
-//----------------------------------------------------------------------------------------------------------------
-
-void App::ReadTrkStats()
-{
-	String sRd = PathListTrk() + "/road.xml";
-	String sSc = PathListTrk() + "/scene.xml";
-
-	Scene sc;  sc.LoadXml(sSc);  // fails to defaults
-#ifndef ROAD_EDITOR  // game
-	SplineRoad rd(pGame);  rd.LoadFile(sRd,false);  // load
-	TIMER tim;  tim.Load(PATHMANAGER::GetTrackRecordsPath()+"/"+sListTrack+".txt", 0.f, pGame->error_output);
-	tim.AddCar(sListCar);  tim.SetPlayerCarID(0);
-	UpdGuiRdStats(&rd,sc, tim.GetBestLap(pSet->trackreverse));
-#else
-	SplineRoad rd;  rd.LoadFile(sRd,false);  // load
-	UpdGuiRdStats(&rd,sc, 0.f);
-#endif
-}
-
-void App::UpdGuiRdStats(const SplineRoad* rd, const Scene& sc, float time)
-{
-	Fmt(s, "%5.3f km", sc.td.fTerWorldSize / 1000.f);	if (stTrk[1])  stTrk[1]->setCaption(s);
-	if (!rd)  return;
-	Fmt(s, "%5.3f km", rd->st.Length / 1000.f);			if (stTrk[0])  stTrk[0]->setCaption(s);
-
-	Fmt(s, "%4.2f m", rd->st.WidthAvg);		if (stTrk[2])  stTrk[2]->setCaption(s);
-	Fmt(s, "%3.1f m", rd->st.HeightDiff);	if (stTrk[3])  stTrk[3]->setCaption(s);
-
-	Fmt(s, "%3.1f%%", rd->st.OnTer);	if (stTrk[4])  stTrk[4]->setCaption(s);
-	Fmt(s, "%3.1f%%", rd->st.Pipes);	if (stTrk[5])  stTrk[5]->setCaption(s);
-					
-	//Fmt(s, "%4.2f%%", rd->st.Yaw);	if (stTrk[6])  stTrk[6]->setCaption(s);
-	//Fmt(s, "%4.2f%%", rd->st.Pitch);	if (stTrk[7])  stTrk[7]->setCaption(s);
-	//Fmt(s, "%4.2f%%", rd->st.Roll);	if (stTrk[8])  stTrk[8]->setCaption(s);
-	
-	int id = tracksXml.trkmap[sListTrack];
-	for (int i=0; i < InfTrk; ++i)
-		if (infTrk[i])  infTrk[i]->setCaption("");
-	if (id > 0)
-	{	const TrackInfo& ti = tracksXml.trks[id-1];
-		#define str0(v)  ((v)==0 ? "" : toStr(v))
-		if (infTrk[0])  infTrk[0]->setCaption(str0(ti.bumps));		if (infTrk[1])  infTrk[1]->setCaption(str0(ti.jumps));
-		if (infTrk[2])  infTrk[2]->setCaption(str0(ti.loops));		if (infTrk[3])  infTrk[3]->setCaption(str0(ti.pipes));
-		if (infTrk[4])  infTrk[4]->setCaption(str0(ti.banked));		if (infTrk[5])  infTrk[5]->setCaption(str0(ti.frenzy));
-		if (infTrk[6])  infTrk[6]->setCaption(str0(ti.longn));
-		if (infTrk[7])  infTrk[7]->setCaption(toStr(ti.diff));		if (infTrk[8])  infTrk[8]->setCaption(toStr(ti.rating));
-	}
-
-#ifndef ROAD_EDITOR  // game
-	//  best time, avg vel,
-	if (time < 0.1f)
-	{	Fmt(s, "%s", GetTimeString(0.f).c_str());	if (stTrk[6])  stTrk[6]->setCaption(s);
-		if (pSet->show_mph)	Fmt(s, "0 mph");
-		else				Fmt(s, "0 km/h");		if (stTrk[7])  stTrk[7]->setCaption(s);
-	}else
-	{	Fmt(s, "%s", GetTimeString(time).c_str());	if (stTrk[6])  stTrk[6]->setCaption(s);
-		if (pSet->show_mph)	Fmt(s, "%4.1f mph", rd->st.Length / time * 2.23693629f);
-		else				Fmt(s, "%4.1f km/h", rd->st.Length / time * 3.6f);
-		if (stTrk[7])  stTrk[7]->setCaption(s);
-		//Fmt(s, "%4.2f%%", rd->st.Pitch);	if (stTrk[8])  stTrk[8]->setCaption(s);
-	}
-#else
-	if (trkName)  //?.
-		trkName->setCaption(sListTrack.c_str());
-#endif
-	if (trkDesc)  // desc
-		trkDesc->setCaption(rd->sTxtDesc.c_str());
-}
-
-
-//  track  . . . . . . . . . . . . . . . . . . . . . . . . . 
-void App::listTrackChng(List* li, size_t pos)
-{
-	if (!li)  return;
-	size_t i = li->getIndexSelected();  if (i==ITEM_NONE)  return;
-
-	const UString& sl = li->getItemNameAt(i);  String s = sl;
-	s = StringUtil::replaceAll(s, "*", "");
-	sListTrack = s;
-
-	// Master server update
-	if (mLobbyState == HOSTING && mMasterClient && mClient && edNetGameName)
-		mMasterClient->updateGame(edNetGameName->getCaption(), sListTrack, mClient->getPeerCount()+1, pSet->local_port);
-
-	int u = *li->getItemDataAt<int>(i,false);
-	bListTrackU = u;
-	
-	//  won't refresh if same-...  road dissapears if not found...
-	if (imgPrv)  imgPrv->setImageTexture(sListTrack+".jpg");
-	if (imgTer)  imgTer->setImageTexture(sListTrack+"_ter.jpg");
-	if (imgMini)  imgMini->setImageTexture(sListTrack+"_mini.png");
-	ReadTrkStats();
-}
-
-
-//  tracks list	 . . . . . . . . . . . . . . . . . . . . . . 
-//-----------------------------------------------------------------------------------------------------------
-struct TrkL  {  std::string name;  const TrackInfo* ti;  };
-
-bool TrkSort(const TrkL& t1, const TrkL& t2)
-{
-	//if (!t1.ti || !t2.ti)
-	//	return t1.name < t2.name;  // no info only name
-	//else
-	//	return (t1.ti->n) < (t2.ti->n);
-	int n1 = !t1.ti ? 1000 : t1.ti->n;
-	int n2 = !t2.ti ? 1000 : t2.ti->n;
-	return n1 < n2;
-}
-
-void App::TrackListUpd()
-{
-	if (trkList)
-	{	trkList->removeAllItems();
-		#ifdef ROAD_EDITOR
-		vsTracks.clear();  vbTracksUser.clear();
-		std::string chkfile = "/scene.xml";
-		#else
-		std::string chkfile = "/track.txt";
-		#endif
-		int ii = 0, si = 0;  bool bFound = false;
-
-		strlist li,lu;
-		PATHMANAGER::GetFolderIndex(pathTrk[0], li);
-		PATHMANAGER::GetFolderIndex(pathTrk[1], lu);  //name duplicates
-
-		//  sort
-		std::list<TrkL> liTrk;
-		for (strlist::iterator i = li.begin(); i != li.end(); ++i)
-		{
-			TrkL trl;  trl.name = *i;
-			//  get info for track name from tracksXml
-			int id = tracksXml.trkmap[*i];
-			const TrackInfo* pTrk = id==0 ? 0 : &tracksXml.trks[id-1];
-			trl.ti = pTrk;  // 0 if not in tracksXml
-			liTrk.push_back(trl);
-		}
-		liTrk.sort(TrkSort);
-		
-		//  original
-		//for (strlist::iterator i = li.begin(); i != li.end(); ++i)  //no sort-
-		//{	const std::string& name = *i;
-		for (std::list<TrkL>::iterator i = liTrk.begin(); i != liTrk.end(); ++i)
-		{	const std::string& name = (*i).name;
-			#ifdef ROAD_EDITOR
-			vsTracks.push_back(name);  vbTracksUser.push_back(false);
-			#endif
-			std::string s = pathTrk[0] + name + chkfile;
-			std::ifstream check(s.c_str());
-			if (check)  {
-				std::string liName = /*((*i).ti ? toStr((*i).ti->n) : "==") +" "+ */name;
-				trkList->addItem(liName, 0);
-				if (!pSet->track_user && name == pSet->track)  {  si = ii;
-					trkList->setIndexSelected(si);
-					bFound = true;  bListTrackU = 0;  }
-				ii++;  }
-		}
-		//  user
-		for (strlist::iterator i = lu.begin(); i != lu.end(); ++i)
-		{
-			#ifdef ROAD_EDITOR
-			vsTracks.push_back(*i);  vbTracksUser.push_back(true);
-			#endif
-			std::string s = pathTrk[1] + *i + chkfile;
-			std::ifstream check(s.c_str());
-			if (check)  {
-				trkList->addItem("*" + (*i) + "*", 1);
-				if (pSet->track_user && *i == pSet->track)  {  si = ii;
-					trkList->setIndexSelected(si);
-					bFound = true;  bListTrackU = 1;  }
-				ii++;  }
-		}
-		//  not found last track, set 1st
-		if (!bFound)
-		{	pSet->track = *li.begin();  pSet->track_user = 0;
-			#ifdef ROAD_EDITOR
-			UpdWndTitle();
-			#endif
-		}
-		trkList->beginToItemAt(std::max(0, si-11));  // center
-	}
-}
-
-
-//  Gui Init  [Track]  . . . . . . . . . . . . . . . . . . . 
-void App::GuiInitTrack()
-{
-	//  list
-    trkList = (ListPtr)mWndOpts->findWidget("TrackList");
-    TrackListUpd();
-    if (trkList)
-    	trkList->eventListChangePosition = newDelegate(this, &App::listTrackChng);
-		//?trkList->eventMouseButtonDoubleClick = newDelegate(this, &App::btnNewGameStart);
-	
-	//  preview images
-	imgPrv = (StaticImagePtr)mWndOpts->findWidget("TrackImg");
-	imgTer = (StaticImagePtr)mWndOpts->findWidget("TrkTerImg");
-	imgMini = (StaticImagePtr)mWndOpts->findWidget("TrackMap");
-	//  stats text
-	for (int i=0; i < StTrk; ++i)
-		stTrk[i] = (StaticTextPtr)mWndOpts->findWidget("iv"+toStr(i+1));
-	for (int i=0; i < InfTrk; ++i)
-		infTrk[i] = (StaticTextPtr)mWndOpts->findWidget("ti"+toStr(i+1));
-	listTrackChng(trkList,0);
-}
-
-
-//  [Screen] resolutions
+//  [Screen] 
 //-----------------------------------------------------------------------------------------------------------
 
+void App::slAntiAliasing(SL)
+{
+	// get allowed values for FSAA
+	std::vector<int> fsaaValues;
+	try
+	{
+		int fsaa = 0;
+		Ogre::ConfigOptionMap& configOptions = Ogre::Root::getSingleton().getRenderSystem()->getConfigOptions();
+		Ogre::ConfigOptionMap::iterator result = configOptions.find("FSAA");
+		if ( result != configOptions.end() )
+		{
+			Ogre::ConfigOption& FSAAOption = result->second;
+			for( Ogre::StringVector::iterator i( FSAAOption.possibleValues.begin() ), iEnd( FSAAOption.possibleValues.end() ); i != iEnd; ++i )
+			{
+				fsaa = strtol( (*i).c_str(), 0, 10  );
+				fsaaValues.push_back(fsaa);
+			}
+		}
+	}
+	catch (Ogre::Exception&) { return; }
+	
+	float v = fsaaValues.back() * val/res;
+	
+	if (fsaaValues.size() < 1) return;
+	
+	for (int i=1; i<fsaaValues.size(); i++)
+	{
+		if (v >= fsaaValues[i]) continue;
+		int smaller = fsaaValues[i] - v;
+		int bigger = v - fsaaValues[i-1];
+		if (bigger > smaller) v = fsaaValues[i];
+		else v = fsaaValues[i-1];
+		break;
+	}
+	if (bGI)  pSet->fsaa = v;
+	
+	if (valAntiAliasing){  Fmt(s, "%4.0f", v); valAntiAliasing->setCaption(s);  }
+}
+
+///  resolutions
 //  change
 void App::btnResChng(WP)
 {
@@ -668,11 +542,14 @@ void App::ResizeOptWnd()
 	mWndOpts->setCoord(xm, ym, xo, yo);
 	if (bnQuit)  //  reposition Quit btn
 		bnQuit->setCoord(wx - 0.09*wx, 0, 0.09*wx, 0.03*wy);
+
+	updTrkListDim();
 }
 
 void App::chkVidFullscr(WP wp)
 {
-	ChkEv(fullscreen);  //TODO: got broken, crashes on win ..
+	ChkEv(fullscreen);
+	//TODO: got broken, crashes on win,  need to change res 1st then fullscr..
 	mWindow->setFullscreen(pSet->fullscreen, pSet->windowx, pSet->windowy);
 	mWindow->resize(pSet->windowx, pSet->windowy);
 }
@@ -681,4 +558,138 @@ void App::chkVidVSync(WP wp)
 {		
 	ChkEv(vsync); 
 	Ogre::Root::getSingleton().getRenderSystem()->setWaitForVerticalBlank(pSet->vsync);
+}
+
+
+///  change all Graphics settings
+///..............................................................................................................................
+void App::comboGraphicsAll(ComboBoxPtr cmb, size_t val)
+{
+	//"TexFiltering", comboTexFilter ?
+	//fsaa = 0;  vsync = false;  //?  rpl?
+	//  sim  - other combobox, not recommended_
+	//game_fq = 100.f;  blt_fq = 60.f;  blt_iter = 7;  mult_thr = 0;
+	//veget_collis = true;  car_collis = false;
+
+	SETTINGS& s = *pSet;
+	switch (val)        ///  common
+	{
+	case 0:  // Lowest  -------------
+		s.anisotropy = 0;  s.view_distance = 1000;  s.terdetail = 2.0f;  s.terdist = 0.f;  s.road_dist = 2.0;
+		s.tex_size = 0;  s.ter_mtr = 0;  s.shaders = 0;
+		s.shadow_type = 0;/*0*/  s.shadow_size = 0;  s.shadow_count = 3;  s.shadow_dist = 1000;
+		s.trees = 0.f;  s.grass = 0.f;  s.trees_dist = 1.f;  s.grass_dist = 1.f;	break;
+
+	case 1:  // Low  -------------
+		s.anisotropy = 0;  s.view_distance = 1500;  s.terdetail = 1.7f;  s.terdist = 40.f;  s.road_dist = 1.8;
+		s.tex_size = 0;  s.ter_mtr = 1;  s.shaders = 0;
+		s.shadow_type = 0;/*1*/  s.shadow_size = 0;  s.shadow_count = 3;  s.shadow_dist = 1000;
+		s.trees = 0.f;  s.grass = 0.f;  s.trees_dist = 1.f;  s.grass_dist = 1.f;	break;
+
+	case 2:  // Medium  -------------
+		s.anisotropy = 4;  s.view_distance = 2500;  s.terdetail = 1.5f;  s.terdist = 80.f;  s.road_dist = 1.6;
+		s.tex_size = 1;  s.ter_mtr = 1;  s.shaders = 1;
+		s.shadow_type = 2;/*1*/  s.shadow_size = 1;  s.shadow_count = 3;  s.shadow_dist = 3000;
+		s.trees = 0.5f;  s.grass = 0.f;  s.trees_dist = 1.f;  s.grass_dist = 1.f;	break;
+
+	case 3:  // High  -------------
+		s.anisotropy = 8;  s.view_distance = 6000;  s.terdetail = 1.3f;  s.terdist = 200.f;  s.road_dist = 1.4;
+		s.tex_size = 1;  s.ter_mtr = 2;  s.shaders = 1;
+		s.shadow_type = 2;/*2*/  s.shadow_size = 2;  s.shadow_count = 3;  s.shadow_dist = 3000;
+		s.trees = 1.f;  s.grass = 1.f;  s.trees_dist = 1.f;  s.grass_dist = 1.f;	break;
+
+	case 4:  // Ultra  -------------
+		s.anisotropy = 16;  s.view_distance = 20000;  s.terdetail = 1.0f;  s.terdist = 1000.f;  s.road_dist = 1.2;
+		s.tex_size = 1;  s.ter_mtr = 2;  s.shaders = 1;
+		s.shadow_type = 2;/*3*/  s.shadow_size = 3;  s.shadow_count = 3;  s.shadow_dist = 3000;
+		s.trees = 2.f;  s.grass = 2.f;  s.trees_dist = 2.f;  s.grass_dist = 2.f;	break;
+	}
+#ifndef ROAD_EDITOR  /// game only
+	switch (val)
+	{
+	case 0:  // Lowest  -------------
+		s.particles = false;  s.trails = false;  s.particles_len = 1.f;  s.trails_len = 1.f;
+		s.refl_mode = "static";  s.refl_skip = 500;  s.refl_faces = 1;  s.refl_size = 0;  s.refl_dist = 100.f;
+		s.all_effects = false;  s.bloom = false;  s.hdr = false;  s.motionblur = false;
+		s.rpl_rec = 0;  s.rpl_ghost = 0;  s.rpl_alpha = 1;	break;
+
+	case 1:  // Low  -------------
+		s.particles = true;  s.trails = true;  s.particles_len = 1.f;  s.trails_len = 1.f;
+		s.refl_mode = "static";  s.refl_skip = 300;  s.refl_faces = 1;  s.refl_size = 0;  s.refl_dist = 200.f;
+		s.all_effects = false;  s.bloom = false;  s.hdr = false;  s.motionblur = false;
+		s.rpl_rec = 1;  s.rpl_ghost = 1;  s.rpl_alpha = 1;  break;
+
+	case 2:  // Medium  -------------
+		s.particles = true;  s.trails = true;  s.particles_len = 1.f;  s.trails_len = 1.5f;
+		s.refl_mode = "single";  s.refl_skip = 200;  s.refl_faces = 1;  s.refl_size = 0;  s.refl_dist = 500.f;
+		s.all_effects = false;  s.bloom = false;  s.hdr = false;  s.motionblur = false;
+		s.rpl_rec = 1;  s.rpl_ghost = 1;  s.rpl_alpha = 1;	break;
+
+	case 3:  // High  -------------
+		s.particles = true;  s.trails = true;  s.particles_len = 1.2f;  s.trails_len = 2.f;
+		s.refl_mode = "full";    s.refl_skip = 50;  s.refl_faces = 1;  s.refl_size = 0;  s.refl_dist = 1000.f;
+		s.all_effects = true;  s.bloom = true;  s.hdr = false;  s.motionblur = false;
+		s.rpl_rec = 1;  s.rpl_ghost = 1;  s.rpl_alpha = 0;	break;
+
+	case 4:  // Ultra  -------------
+		s.particles = true;  s.trails = true;  s.particles_len = 1.5f;  s.trails_len = 4.f;
+		s.refl_mode = "full";    s.refl_skip = 10;  s.refl_faces = 1;  s.refl_size = 1;  s.refl_dist = 1500.f;
+		s.all_effects = true;  s.bloom = true;  s.hdr = false;  s.motionblur = false;  //true;
+		s.rpl_rec = 1;  s.rpl_ghost = 1;  s.rpl_alpha = 0;	break;
+	}
+#endif
+
+#ifdef ROAD_EDITOR  /// editor only
+	switch (val)
+	{
+	case 0:  // Lowest  -------------
+		s.trackmap = 0;  s.brush_prv = 0;	s.ter_skip = 20;  s.mini_skip = 20;  break;
+
+	case 1:  // Low  -------------
+		s.trackmap = 1;  s.brush_prv = 0;	s.ter_skip = 10;  s.mini_skip = 20;  break;
+
+	case 2:  // Medium  -------------
+		s.trackmap = 1;  s.brush_prv = 1;	s.ter_skip = 3;  s.mini_skip = 6;  break;
+
+	case 3:  // High  -------------
+		s.trackmap = 1;  s.brush_prv = 1;	s.ter_skip = 2;  s.mini_skip = 4;  break;
+
+	case 4:  // Ultra  -------------
+		s.trackmap = 1;  s.brush_prv = 1;	s.ter_skip = 1;  s.mini_skip = 1;  break;
+	}
+#endif
+
+	//  update gui  sld,val,chk  ...
+	GuiInitGraphics();  // = newDelegate..?
+
+	ButtonPtr btn, bchk;  HScrollPtr sl;  size_t v;
+#ifndef ROAD_EDITOR  /// game only
+	// duplicated code..
+	Chk("ParticlesOn", chkParticles, pSet->particles);	Chk("TrailsOn", chkTrails, pSet->trails);
+	Slv(Particles,	powf(pSet->particles_len /4.f, 0.5f));
+	Slv(Trails,		powf(pSet->trails_len /4.f, 0.5f));
+
+	Slv(ReflSkip,	powf(pSet->refl_skip /1000.f, 0.5f));
+	Slv(ReflSize,	pSet->refl_size /res);
+	Slv(ReflFaces,	pSet->refl_faces /res);
+	Slv(ReflDist,	powf((pSet->refl_dist -20.f)/1480.f, 0.5f));
+	int value=0;  if (pSet->refl_mode == "static")  value = 0;
+	else if (pSet->refl_mode == "single")  value = 1;
+	else if (pSet->refl_mode == "full")  value = 2;
+	Slv(ReflMode,   value /res);
+
+	Chk("Bloom", chkVidBloom, pSet->bloom);
+	Chk("HDR", chkVidHDR, pSet->hdr);
+	Chk("MotionBlur", chkVidBlur, pSet->motionblur);
+
+	Chk("RplChkAutoRec", chkRplAutoRec, pSet->rpl_rec);
+	Chk("RplChkGhost", chkRplChkGhost, pSet->rpl_ghost);
+	Chk("RplChkAlpha", chkRplChkAlpha, pSet->rpl_alpha);
+#endif
+
+#ifdef ROAD_EDITOR  /// editor only
+	Chk("Minimap", chkMinimap, pSet->trackmap);
+	Slv(TerUpd, pSet->ter_skip /res);
+	Slv(MiniUpd, pSet->mini_skip /res);
+#endif
 }

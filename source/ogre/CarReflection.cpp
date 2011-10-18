@@ -2,6 +2,7 @@
 #include "Defines.h"
 #include "CarReflection.h"
 #include "../vdrift/settings.h"
+#include "../ogre/common/RenderConst.h"
 
 #include <OgreSceneManager.h>
 #include <OgreLogManager.h>
@@ -42,6 +43,7 @@ CarReflection::~CarReflection()
 
 void CarReflection::Create()
 {
+	bFirstFrame = true;
 	if (pSet->refl_mode == "single")  cubetexName = "ReflectionCube"; // single: use 1st cubemap
 	else if (pSet->refl_mode == "full")
 	{
@@ -50,9 +52,11 @@ void CarReflection::Create()
 		if (cubetexName == "ReflectionCube0")
 			cubetexName = "ReflectionCube";
 	}
+	else /* static */
+		cubetexName = "ReflectionCube";
 	
 	TextureManager* tm = TextureManager::getSingletonPtr();
-	int size = ciShadowSizesA[pSet->refl_size];
+	int size = ciShadowSizesA[pSet->refl_size];  // /2 ?
 
 	//  create cube render texture
 	if (! (pSet->refl_mode == "single" && iIndex != 0) )
@@ -74,7 +78,7 @@ void CarReflection::Create()
 			mRT->removeAllViewports();
 			Viewport* vp = mRT->addViewport(mCam);
 			vp->setOverlaysEnabled(false);
-			vp->setVisibilityMask(1+4+8);  // hide 2: hud, car,glass,tires
+			vp->setVisibilityMask(RV_MaskReflect);
 			mRT->setAutoUpdated(false);
 			//mRT->addListener(this);  //-
 			mCam->setPosition(Vector3::ZERO);
