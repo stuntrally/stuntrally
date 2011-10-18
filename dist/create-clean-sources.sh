@@ -2,13 +2,10 @@
 # This script is meant for easily creating clean source packages.
 # It does the following:
 # * Fetches fresh sources from Git
-# * Optionally can ignore data and tracks
+# * Optionally can ignore tracks
 # * Removes all Git stuff (.git*)
 # * Optionally creates an archive
 #
-# TODO: Allow copying files from a local source
-# TODO: Other archive formats?
-
 
 usage()
 {
@@ -18,6 +15,7 @@ usage()
 	echo "  -s, --source-only      don't download tracks"
 	echo "  -b, --bz2              create tar.bz2 archive"
 	echo "  -d, --dir WORKINGDIR   use given WORKINGDIR instead of random name in /tmp"
+	echo "  -l, --local-clone      clone from local git"
 }
 
 # Parse args
@@ -40,6 +38,9 @@ until [ -z "$1" ]; do
 		-d|--dir)
 			shift
 			TEMPDIR="$1"
+			;;
+		-l|--local-clone)
+			LOCALCLONE=1
 			;;
 		*)
 			echo "Unrecognized argument: $1"
@@ -65,6 +66,20 @@ clone_cd_and_purge()
 	rm -rf .git* # Purge version control stuff
 }
 
+# Determine git clone url
+if [ "$LOCALCLONE" ]; then
+	if [ ! -d "`pwd`/../.git" ]; then
+		echo "Error: With local clone, run the script from dist/ directory under git."
+		exit 1
+	else
+		REPOURL="`pwd`"/..
+		TRACKSURL="$REPOURL"/data/tracks
+	fi
+else
+	REPOURL="git://github.com/stuntrally/stuntrally.git"
+	TRACKSURL="git://github.com/stuntrally/tracks.git"
+fi
+
 # Working directory
 if [ ! "$TEMPDIR" ]; then
 	TEMPDIR=`mktemp -dt stuntrally-sources$TAG.XXXXXXXXXX`
@@ -83,12 +98,12 @@ cd "$TEMPDIR"
 
 # Fetch the sources
 (
-	clone_cd_and_purge git://github.com/stuntrally/stuntrally.git stuntrally
+	clone_cd_and_purge "$REPOURL" stuntrally
 
 	if [ ! "$NOTRACKS" ]; then
 		(
 			cd data
-			clone_cd_and_purge git://github.com/stuntrally/tracks.git tracks
+			clone_cd_and_purge "$TRACKSURL" tracks
 		)
 	fi
 )
