@@ -14,7 +14,7 @@ High-level architecture
 
 Client networking is split into two parts - low-level, rather abstract and general purpose networking classes that directly interface with the actual networking library, and Stunt Rally specific part, which interfaces with the low level stuff and implements the SR specific parts, like the SR application protocol and serializing state data. Rationale for this split is that the networking library can be easily swapped (if necessary) without modifying any SR-specific code and also allows to easily reuse the same lower-level code somewhere else.
 
-The first part is implemented in enet-wrapper.hpp, and the SR stuff in network.* and protocol.hpp
+The first part is implemented in enet-wrapper.hpp, and the SR stuff in the other files in this network-directory.
 
 The networking itself works in peer-to-peer fashion, so there is no server. Each peer must be connected to each other. Initially, a new peer needs to only know the address of one other - all addresses known to any one peer are continuosly synced to everyone else during the joining period.
 
@@ -38,5 +38,4 @@ Master server is a rather simple application that keeps track of games. It's tas
 	* Delete a game that has not been updated for a while
 	* Delete a game that is reported as started
 	* Provide stats when asked
-	* Optionally provide a HTTP server for seeing stats
 
