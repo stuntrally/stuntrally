@@ -469,3 +469,54 @@ void App::CreateProps()
 		}
 	}
 }
+
+/*void App::ReloadCar()
+{
+	// Delete all cars
+	for (std::vector<CarModel*>::iterator it=carModels.begin(); it!=carModels.end(); it++)
+		delete (*it);
+
+	carModels.clear();
+	newPosInfos.clear();
+
+	/// init car models
+	// will create vdrift cars, actual car loading will be done later in LoadCar()
+	// this is just here because vdrift car has to be created first
+	std::list<Camera*>::iterator camIt = mSplitMgr->mCameras.begin();
+	int i;
+	for (i=0; i < mSplitMgr->mNumViewports; i++,camIt++)
+		carModels.push_back( new CarModel(i, CarModel::CT_LOCAL, pSet->car[i], mSceneMgr, pSet, pGame, &sc, (*camIt), this ) );
+
+	//  Create all cars
+	for (int i=0; i < carModels.size(); ++i)
+	{
+		CarModel* c = carModels[i];
+		c->Create(i);
+
+		//  restore which cam view
+		if (c->fCam && carsCamNum[i] != 0)
+			c->fCam->setCamera(carsCamNum[i] -1);
+
+		//  Reserve an entry in newPosInfos
+		PosInfo carPosInfo;  carPosInfo.bNew = false;  //-
+		newPosInfos.push_back(carPosInfo);
+	}
+
+	// Assign stuff to cars
+	for (std::vector<CarModel*>::iterator it=carModels.begin(); it!=carModels.end(); it++)
+	{
+		(*it)->terrain = terrain;
+		(*it)->blendMtr = blendMtr;
+		(*it)->blendMapSize = blendMapSize;
+	}
+
+	// Camera settings
+	for (std::vector<CarModel*>::iterator it=carModels.begin(); it!=carModels.end(); it++)
+		if ((*it)->fCam)
+		{	(*it)->fCam->first = true;
+			(*it)->fCam->mTerrain = mTerrainGroup;
+			#if 0
+			(*it)->fCam->mWorld = &(pGame->collision);
+			#endif
+		}
+}*/

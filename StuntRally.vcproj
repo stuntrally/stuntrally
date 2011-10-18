@@ -1193,14 +1193,6 @@
 					>
 				</File>
 				<File
-					RelativePath=".\source\ogre\common\TerrainMaterialGen.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\source\ogre\common\TerrainMaterialGen.h"
-					>
-				</File>
-				<File
 					RelativePath=".\config\tracks.xml"
 					>
 				</File>
@@ -1212,6 +1204,42 @@
 					RelativePath=".\source\ogre\common\TracksXml.h"
 					>
 				</File>
+				<Filter
+					Name="MaterGen"
+					>
+					<File
+						RelativePath=".\source\ogre\common\MaterialDefinition.cpp"
+						>
+					</File>
+					<File
+						RelativePath=".\source\ogre\common\MaterialDefinition.h"
+						>
+					</File>
+					<File
+						RelativePath=".\source\ogre\common\MaterialFactory.cpp"
+						>
+						<FileConfiguration
+							Name="Release|Win32"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								UsePrecompiledHeader="2"
+							/>
+						</FileConfiguration>
+					</File>
+					<File
+						RelativePath=".\source\ogre\common\MaterialFactory.h"
+						>
+					</File>
+					<File
+						RelativePath=".\source\ogre\common\TerrainMaterialGen.cpp"
+						>
+					</File>
+					<File
+						RelativePath=".\source\ogre\common\TerrainMaterialGen.h"
+						>
+					</File>
+				</Filter>
 			</Filter>
 			<Filter
 				Name="mat-eff"
