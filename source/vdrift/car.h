@@ -254,7 +254,14 @@ public:
 		vel = dynamics.GetVelocity();
 		return vel;
 	}
-	
+
+	MATHVECTOR <float, 3> GetAngularVelocity() const
+	{
+		MATHVECTOR <float, 3> vel;
+		vel = dynamics.GetAngularVelocity();
+		return vel;
+	}
+
 	float GetTireMaxFx(WHEEL_POSITION tire_index) const
 	{
 		return dynamics.GetTire(tire_index).GetMaximumFx(GetMass()*0.25*9.81);
