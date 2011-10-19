@@ -560,6 +560,6 @@ void MaterialGenerator::fragmentProgramParams(HighLevelGpuProgramPtr program)
 	if (needShadows()) {
 		params->setNamedConstant("pssmSplitPoints", mParent->pApp->splitPoints);
 		for (int i=0; i<mParent->getNumShadowTex(); ++i)
-			params->setNamedAutoConstant("invShadowMapSize"+toStr(i), GpuProgramParameters::ACT_INVERSE_TEXTURE_SIZE, i);
+			params->setNamedAutoConstant("invShadowMapSize"+toStr(i), GpuProgramParameters::ACT_INVERSE_TEXTURE_SIZE, i+mShadowTexUnit_start);
 	}
 }
