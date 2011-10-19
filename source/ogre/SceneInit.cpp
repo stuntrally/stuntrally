@@ -186,7 +186,7 @@ void App::LoadGame()  // 2
 
 	/// ghost car  load if exists
 	ghplay.Clear();
-	if (!bRplPlay && pSet->rpl_ghost)  // load ghost play if exists
+	if (!bRplPlay && pSet->rpl_ghost && !mClient)  // load ghost play if exists
 	{
 		/*if (*/ghplay.LoadFile(GetGhostFile());
 		//  always because ghplay can appear during play after best lap
