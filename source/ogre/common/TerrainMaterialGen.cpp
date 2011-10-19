@@ -1223,7 +1223,7 @@ namespace Ogre
 			{
 				generateFpDynamicShadows(prof, terrain, tt, outStream);
 				outStream << 
-					"	outputCol.rgb = diffuse * rtshadow;\n";
+					"	outputCol.rgb = diffuse * (1-(1-rtshadow)*0.7);\n";
 			}
 			else
 			{

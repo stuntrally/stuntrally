@@ -31,6 +31,7 @@ struct MaterialProperties
 	// alpha (map), depth settings (bias, check, etc..),
 	// [casts_shadows (+priority) (probably not here)],
 	// read terrain lightmap on/off
+	// specular map (exponent in diffuse map alpha), normalHeight map (for parallax)
 	
 	MaterialProperties(); // constructor with sensible default values
 	void setProperty(const std::string& prop, const std::string& value);
@@ -51,9 +52,7 @@ public:
 
 private:
 	MaterialFactory* mParent;
-	
-	bool mFirstRun;
-	
+		
 	std::string mName; // name of generated material
 };
 

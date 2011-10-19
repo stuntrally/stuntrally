@@ -24,10 +24,7 @@ const inline bool str2bool(const std::string& s)
 #define str2vec4(s) Ogre::StringConverter::parseVector4(s)
 
 void MaterialProperties::setProperty(const std::string& prop, const std::string& value)
-{
-	//if (prop == "diffuseMap") diffuseMap = value;
-	//else if (prop == "normalMap") normalMap = value;
-	
+{	
 	if (prop == "envMap") envMap = value;
 	else if (prop == "hasFresnel") hasFresnel = str2bool(value);
 	else if (prop == "reflAmount") reflAmount = str2float(value);
@@ -55,8 +52,7 @@ void MaterialProperties::setProperty(const std::string& prop, const std::string&
 	}
 }
 
-MaterialDefinition::MaterialDefinition(MaterialFactory* parent, MaterialProperties* props) :
-	mFirstRun(1)
+MaterialDefinition::MaterialDefinition(MaterialFactory* parent, MaterialProperties* props)
 {
 	mParent = parent;
 	mProps = props;

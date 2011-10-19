@@ -238,6 +238,11 @@ void App::UpdPSSMMaterials()	/// . . . . . . . .
 	
 	//#ifndef ROAD_EDITOR  // GAME
 	setMtrSplits("grass_GrassVS_");
+	
+	// mtr splits for all cars (only game)
+	#ifndef ROAD_EDITOR
+	if (pSet->shadow_type == 3) recreateCarMtr();
+	#endif
 
 	if (!road)  return;
 	String txs = road->iTexSize == 0 ? "_s": "";

@@ -5,7 +5,7 @@
 #include "../vdrift/mathvector.h"
 #include "../vdrift/track.h"
 #include "../vdrift/game.h"
-//#include "../ogre/OgreGame.h"
+#include "OgreGame.h"
 #include "SplitScreen.h"
 #include "common/SceneXml.h"
 #include "FollowCamera.h"
@@ -327,6 +327,8 @@ void CarModel::RecreateMaterials()
 						))
 							tus->setTextureName(sDirname + "_" + tus->getTextureName());
 		}	}	}	}
+		if (pSet->shadow_type == 3)
+			pApp->setMtrSplits(mtr->getName());
 	}
 }
 
@@ -382,6 +384,7 @@ void CarModel::Create(int car)
 			//eCar->setMaterialName("testMat");
 			//pApp->setMtrSplits(sMtr[Mtr_CarBody]);
 		}
+		//eCar->setCastShadows(false);
 		bodyBox = eCar->getBoundingBox();
 		if (ghost)  {  eCar->setRenderQueueGroup(g);  eCar->setCastShadows(false);  }
 		ncart->attachObject(eCar);  eCar->setVisibilityFlags(RV_Car);
