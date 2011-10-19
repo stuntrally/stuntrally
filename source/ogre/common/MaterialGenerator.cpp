@@ -18,9 +18,9 @@
 #include <OgreHighLevelGpuProgramManager.h>
 #include <OgreHighLevelGpuProgram.h>
 #include <OgreGpuProgramParams.h>
-#include <OgreEntity.h>
-#include <OgreSubEntity.h>
-#include <OgreSceneManager.h>
+//#include <OgreEntity.h>
+//#include <OgreSubEntity.h>
+//#include <OgreSceneManager.h>
 using namespace Ogre;
 
 void MaterialGenerator::generate(bool fixedFunction)

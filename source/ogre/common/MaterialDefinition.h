@@ -8,7 +8,6 @@
 #include <OgreString.h>
 #include <OgreVector3.h>
 #include <OgreVector4.h>
-#include <OgreHighLevelGpuProgram.h>
  
 class MaterialFactory;
 
@@ -29,7 +28,8 @@ struct MaterialProperties
 	//!todo:
 	// PPX on/off, shaders on/off, shading mode (phong etc) for no shaders,
 	// normalmap/shadowmap/envmap "priority", cull yes/no,
-	// alpha, [casts_shadows (probably not here)],
+	// alpha (map), depth settings (bias, check, etc..),
+	// [casts_shadows (+priority) (probably not here)],
 	
 	MaterialProperties(); // constructor with sensible default values
 	void setProperty(const std::string& prop, const std::string& value);

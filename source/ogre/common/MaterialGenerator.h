@@ -4,6 +4,8 @@
 /*class MaterialDefinition;*/ class MaterialFactory;
 #include "MaterialDefinition.h" // textureMap typedef
 
+#include <OgreHighLevelGpuProgram.h>
+
 class MaterialGenerator
 {
 public:
@@ -13,6 +15,15 @@ public:
 	void generate(bool fixedFunction=false); // craft material
 	
 protected:
+	// tex unit indices
+	unsigned int mDiffuseTexUnit;
+	unsigned int mNormalTexUnit;
+	unsigned int mEnvMapTexUnit;
+	unsigned int mShadowTexUnit_start; // start offset for shadow tex units
+	
+	unsigned int mTexUnit_i; // counter
+	
+	/// utility methods
 	// get pointer to material if it exists and delete all techniques, if not, create new
 	Ogre::MaterialPtr prepareMaterial(const std::string& matName);
 	
