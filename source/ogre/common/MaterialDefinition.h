@@ -60,6 +60,8 @@ public:
 private:
 	MaterialFactory* mParent;
 	
+	bool mFirstRun;
+	
 	std::string mName; // name of generated material
 	
 	///  ------------------------ utility methods ---------------------------------------
@@ -79,6 +81,10 @@ private:
 	bool needShadows();
 	bool needNormalMap();
 	bool needEnvMap();
+	bool fpNeedWsNormal(); bool fpNeedEyeVector();
+	
+	std::string getChannel(unsigned int n);
+
 	
 	// pick best texture size (not higher than user tex size)
 	std::string pickTexture(textureMap* textures);

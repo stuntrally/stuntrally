@@ -4,6 +4,10 @@
 #include "MaterialFactory.h"
 #include "MaterialDefinition.h"
 
+#ifndef ROAD_EDITOR
+	#include "../OgreGame.h"
+#endif
+
 #include <OgreConfigFile.h>
 #include <OgreResourceGroupManager.h>
 #include <OgreStringConverter.h>
@@ -152,6 +156,11 @@ void MaterialFactory::generate()
 		for (std::vector<MaterialDefinition*>::iterator it=mDefinitions.begin();
 			it!=mDefinitions.end(); ++it)
 			(*it)->generate();
+			
+		// recreate cloned car materials
+		#ifndef ROAD_EDITOR
+		pApp->recreateCarMtr();
+		#endif
 		
 		bSettingsChanged = false;
 	}

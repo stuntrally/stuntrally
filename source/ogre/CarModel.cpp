@@ -238,34 +238,15 @@ void CarModel::Update(PosInfo& posInfo, float time)
 //-------------------------------------------------------------------------------------------------------
 //  Create
 //-------------------------------------------------------------------------------------------------------
-void CarModel::Create(int car)
+void CarModel::RecreateMaterials()
 {
-	if (!pCar) return;
+	LogO("Recreating car materials");
 	String strI = toStr(iIndex);
+	String sCar = resCar + "/" + sDirname;
+	bool ghost = eType == CT_GHOST && pSet->rpl_alpha;  //1 || for ghost test
 	
-	//  Resource locations -----------------------------------------
-	/// Add a resource group for this car
-	Ogre::ResourceGroupManager::getSingleton().createResourceGroup("Car" + strI);
-	Ogre::Root::getSingletonPtr()->addResourceLocation(PATHMANAGER::GetCacheDir(), "FileSystem");
-	resCar = PATHMANAGER::GetCarPath() + "/" + sDirname + "/textures";
-	Ogre::Root::getSingletonPtr()->addResourceLocation(resCar, "FileSystem", "Car" + strI);
-	
-	// Change color here - cache has to be created before loading model
-	ChangeClr(car);
-	
-	pMainNode = pSceneMgr->getRootSceneNode()->createChildSceneNode();
-
-	//  --------  Follow Camera  --------
-	if (mCamera)
-	{
-		fCam = new FollowCamera(mCamera);
-		fCam->mGoalNode = pMainNode;
-		fCam->loadCameras();
-	}
-
 	// --------- Materials  -------------------
 	String s = pSet->shaders == 0 ? "_old" : "";
-	bool ghost = eType == CT_GHOST && pSet->rpl_alpha;  //1 || for ghost test
 	//  ghost car has no interior, particles, trails and uses same material for all meshes
 	if (!ghost)
 	{	sMtr[Mtr_CarBody]     = "car_body"+s;		sMtr[Mtr_CarTireFront]  = "cartire_front"+s;
@@ -280,11 +261,12 @@ void CarModel::Create(int car)
 	for (int i=0; i<NumMaterials; i++)
 	{
 		mat = Ogre::MaterialManager::getSingleton().getByName(sMtr[i]);
+		if (Ogre::MaterialManager::getSingleton().resourceExists(sMtr[i] + strI))
+			Ogre::MaterialManager::getSingleton().remove(sMtr[i] + strI);
 		mat->clone(sMtr[i] + strI, false);
 		sMtr[i] = sMtr[i] + strI;
 		//LogO(" === New car mtr name: " + sMtr[i]);
 	}
-	String sCar = resCar + "/" + sDirname;
 	
 	// iterate through all materials and set body_dyn.png with correct index, add car prefix to other textures
 	if (!ghost)
@@ -341,11 +323,43 @@ void CarModel::Create(int car)
 						if (!(StringUtil::startsWith(tus->getTextureName(), "ReflectionCube") ||
 								StringUtil::startsWith(tus->getTextureName(), "body_dyn") ||
 								tus->getTextureName() == "ReflectionCube" ||
-								StringUtil::startsWith(tus->getName(), "shadow_")
+								StringUtil::startsWith(tus->getName(), "shadowmap")
 						))
 							tus->setTextureName(sDirname + "_" + tus->getTextureName());
 		}	}	}	}
 	}
+}
+
+void CarModel::Create(int car)
+{
+	if (!pCar) return;
+	String strI = toStr(iIndex);
+	
+	bool ghost = eType == CT_GHOST && pSet->rpl_alpha;  //1 || for ghost test
+	
+	//  Resource locations -----------------------------------------
+	/// Add a resource group for this car
+	Ogre::ResourceGroupManager::getSingleton().createResourceGroup("Car" + strI);
+	Ogre::Root::getSingletonPtr()->addResourceLocation(PATHMANAGER::GetCacheDir(), "FileSystem");
+	resCar = PATHMANAGER::GetCarPath() + "/" + sDirname + "/textures";
+	Ogre::Root::getSingletonPtr()->addResourceLocation(resCar, "FileSystem", "Car" + strI);
+	
+	String sCar = resCar + "/" + sDirname;
+	
+	// Change color here - cache has to be created before loading model
+	ChangeClr(car);
+	
+	pMainNode = pSceneMgr->getRootSceneNode()->createChildSceneNode();
+
+	//  --------  Follow Camera  --------
+	if (mCamera)
+	{
+		fCam = new FollowCamera(mCamera);
+		fCam->mGoalNode = pMainNode;
+		fCam->loadCameras();
+	}
+	
+	RecreateMaterials();
 	
 	// reflection
 	CreateReflection();
@@ -358,12 +372,14 @@ void CarModel::Create(int car)
 	Ogre::Vector3 vPofs(0,0,0);
 	AxisAlignedBox bodyBox;  Ogre::uint8 g = RQG_CarGhost;
 
+	sCar = resCar + "/" + sDirname;
 	if (FileExists(sCar + "_body.mesh"))
 	{
 		Entity* eCar = pSceneMgr->createEntity("Car"+ strI, sDirname + "_" + "body.mesh", "Car" + strI);
 		if (FileExists(sCar + "_body00_add.png") && FileExists(sCar + "_body00_red.png") || ghost)
 		{
 			eCar->setMaterialName(sMtr[Mtr_CarBody]);
+			//eCar->setMaterialName("testMat");
 			//pApp->setMtrSplits(sMtr[Mtr_CarBody]);
 		}
 		bodyBox = eCar->getBoundingBox();

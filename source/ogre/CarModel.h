@@ -60,6 +60,8 @@ public:
 	void Create(int car);
 	void CreateReflection();
 	
+	void RecreateMaterials();
+	
 	//  Call every vdrift substep with new position info
 	void Update(PosInfo& newPosInfo, float time);
 	

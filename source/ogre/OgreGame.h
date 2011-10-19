@@ -67,6 +67,9 @@ public:
 	void UpdHUDRot(int carId, CarModel* pCarM, float vel);
 	
 	MaterialFactory* materialFactory; // material generation
+	void recreateCarMtr();
+	
+	Ogre::SceneManager* sceneMgr() { return mSceneMgr; };
 
 protected:
 	virtual void createScene();
@@ -141,9 +144,10 @@ protected:
 
 public:
 	void changeShadows(), UpdPSSMMaterials(), setMtrSplits(Ogre::String sMtrName);
+	Ogre::Vector4 splitPoints;
 
 protected:
-	Ogre::Vector4 splitPoints;  Ogre::ShadowCameraSetupPtr mPSSMSetup;
+	Ogre::ShadowCameraSetupPtr mPSSMSetup;
 	void recreateReflections();  // call after refl_mode changed
 
 	//  road

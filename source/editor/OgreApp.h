@@ -51,6 +51,8 @@ public:
 	// stuff to be executed after BaseApp init
 	void postInit();
 	
+	Ogre::SceneManager* sceneMgr() { return mSceneMgr; };
+	
 	MaterialFactory* materialFactory;
 protected:
 	void LoadTrackEv(), SaveTrackEv(), UpdateTrackEv();
@@ -115,7 +117,10 @@ protected:
 	void configureTerrainDefaults(class Ogre::Light* l);
 		
 	void changeShadows(), UpdPSSMMaterials(), setMtrSplits(Ogre::String sMtrName);
-	Ogre::Vector4 splitPoints;  Ogre::ShadowCameraSetupPtr mPSSMSetup;
+public:
+	Ogre::Vector4 splitPoints;
+protected:
+	Ogre::ShadowCameraSetupPtr mPSSMSetup;
 
 
 	//  ter circle mesh
