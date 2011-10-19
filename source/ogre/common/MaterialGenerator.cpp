@@ -18,9 +18,6 @@
 #include <OgreHighLevelGpuProgramManager.h>
 #include <OgreHighLevelGpuProgram.h>
 #include <OgreGpuProgramParams.h>
-//#include <OgreEntity.h>
-//#include <OgreSubEntity.h>
-//#include <OgreSceneManager.h>
 using namespace Ogre;
 
 void MaterialGenerator::generate(bool fixedFunction)
@@ -46,7 +43,7 @@ void MaterialGenerator::generate(bool fixedFunction)
 	pass->setAmbient( mDef->mProps->ambient.x, mDef->mProps->ambient.y, mDef->mProps->ambient.z );
 	pass->setDiffuse( mDef->mProps->diffuse.x, mDef->mProps->diffuse.y, mDef->mProps->diffuse.z, mDef->mProps->diffuse.w );
 	
-	if (!mParent->getShaders() || fixedFunction)
+	if (!needShaders() || fixedFunction)
 	{
 		pass->setSpecular(mDef->mProps->specular.x, mDef->mProps->specular.y, mDef->mProps->specular.z, 1.0 );
 		pass->setShininess(mDef->mProps->specular.w);
@@ -64,7 +61,7 @@ void MaterialGenerator::generate(bool fixedFunction)
 	//pass->setCullingMode(CULL_NONE);
 	//pass->setShadingMode(SO_PHONG);
 	
-	if (!mParent->getShaders() || fixedFunction)
+	if (!needShaders() || fixedFunction)
 	{
 		pass->setShadingMode(SO_PHONG);
 		
@@ -167,6 +164,11 @@ MaterialPtr MaterialGenerator::prepareMaterial(const std::string& name)
 }
 
 //----------------------------------------------------------------------------------------
+
+inline bool MaterialGenerator::needShaders()
+{
+	return mParent->getShaders() /*&& mDef->mProps->shaders*/;
+}
 
 inline bool MaterialGenerator::needShadows()
 {

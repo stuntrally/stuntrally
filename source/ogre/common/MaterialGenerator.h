@@ -37,6 +37,7 @@ protected:
 	void generateFragmentProgramSource(Ogre::StringUtil::StrStreamType& outStream);
 	void fragmentProgramParams(Ogre::HighLevelGpuProgramPtr program);
 	
+	bool needShaders();
 	bool needShadows();
 	bool needNormalMap();
 	bool needEnvMap();

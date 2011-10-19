@@ -203,7 +203,7 @@ void App::setMtrSplits(String sMtrName)
 		try {
 			if (mat->getTechnique(0)->getPass(np)->hasFragmentProgram())
 				mat->getTechnique(0)->getPass(np)->getFragmentProgramParameters()->setNamedConstant("pssmSplitPoints", splitPoints);
-		} catch(...) {  }
+		} catch(...) { }
 		
 		#ifdef ROAD_EDITOR
 		//  create selected mtr
