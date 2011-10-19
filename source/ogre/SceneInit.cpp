@@ -177,11 +177,14 @@ void App::LoadGame()  // 2
 	std::list<Camera*>::iterator camIt = mSplitMgr->mCameras.begin();
 	int numCars = (mClient ? mClient->getPeerCount() : mSplitMgr->mNumViewports);
 	int i;
-	for (i = 0; i < numCars; i++,camIt++) {
+	for (i = 0; i < numCars; ++i) {
 		CarModel::eCarType et = CarModel::CT_LOCAL;
 		if (i >= mSplitMgr->mNumViewports && mClient) et = CarModel::CT_REMOTE;
-		// TODO: Handle car and settings stuff for remote players
-		carModels.push_back( new CarModel(i, et, pSet->car[i], mSceneMgr, pSet, pGame, &sc, (*camIt), this ) );
+		Camera* cam = (et == CarModel::CT_LOCAL ? *camIt : 0);
+		// TODO: Handle car positioning based on ids received from host
+		CarModel* car = new CarModel(i, et, pSet->car[i], mSceneMgr, pSet, pGame, &sc, cam, this);
+		carModels.push_back(car);
+		if (et == CarModel::CT_LOCAL) ++camIt;
 	}
 
 	/// ghost car  load if exists
