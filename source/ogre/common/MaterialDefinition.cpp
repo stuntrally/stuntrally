@@ -6,7 +6,7 @@
 
 // constructor with sensible default values
 MaterialProperties::MaterialProperties() :
-	/*diffuseMap(""), normalMap(""), envMap(""),*/ reflAmount(0.5),
+	/*diffuseMap(""), normalMap(""), */envMap(""), reflAmount(0.5),
 	hasFresnel(0), fresnelBias(0), fresnelScale(0), fresnelPower(0),
 	receivesShadows(0), receivesDepthShadows(0),
 	ambient(1.0, 1.0, 1.0), diffuse(1.0, 1.0, 1.0, 1.0), specular(0.0, 0.0, 0.0, 0.0)

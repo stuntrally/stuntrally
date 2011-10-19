@@ -27,6 +27,8 @@ void MaterialGenerator::generate(bool fixedFunction)
 {	
 	MaterialPtr mat = prepareMaterial(mDef->getName());
 	
+	LogO("needEnvMap: " + toStr(needEnvMap()));
+	
 	// reset some attributes
 	mDiffuseTexUnit = 0; mNormalTexUnit = 0; mEnvTexUnit = 0;
 	mShadowTexUnit_start = 0; mTexUnit_i = 0;
@@ -197,6 +199,21 @@ inline bool MaterialGenerator::fpNeedEyeVector()
 	//!todo
 }
 
+inline bool MaterialGenerator::vpNeedWMat()
+{
+	return fpNeedEyeVector();
+}
+
+inline bool MaterialGenerator::vpNeedWITMat()
+{
+	return fpNeedWsNormal();
+}
+
+inline bool MaterialGenerator::fpNeedTangentToCube()
+{
+	return (needNormalMap() || fpNeedEyeVector());
+}
+
 std::string MaterialGenerator::getChannel(unsigned int n)
 {
 	if (n == 0) 		return "x";
@@ -262,20 +279,22 @@ void MaterialGenerator::generateVertexProgramSource(Ogre::StringUtil::StrStreamT
 		"void main_vp( "
 		"	float2 texCoord 					: TEXCOORD0,"
 		"	float4 position 					: POSITION,"
+	; if (fpNeedWsNormal()) outStream <<
 		"	float3 normal			 			: NORMAL,"
+		"	out float3 oWsNormal  				: TEXCOORD1,"
+	; if (fpNeedEyeVector()) outStream <<
 		"	uniform float4 eyePosition,					 "
+	; outStream <<
 		"	out float4 oPosition			 	: POSITION, \n"
 	; if (!needShadows()) outStream <<
 		"	out float2 oTexCoord	 			: TEXCOORD0,"
 	; else outStream <<
 		"	out float3 oTexCoord				: TEXCOORD0,"
 		
-	; if (fpNeedWsNormal()) outStream << 
-		"	out float3 oWsNormal  				: TEXCOORD1,"
-	; outStream <<
+	; if (fpNeedTangentToCube()) outStream <<
 		"	out	float4	oTangentToCubeSpace0	: TEXCOORD2,"
 		"	out	float4	oTangentToCubeSpace1	: TEXCOORD3,"
-		"	out	float4	oTangentToCubeSpace2	: TEXCOORD4, \n"	
+		"	out	float4	oTangentToCubeSpace2	: TEXCOORD4, \n"
 	;
 	
 	if (needShadows()) {
@@ -291,12 +310,12 @@ void MaterialGenerator::generateVertexProgramSource(Ogre::StringUtil::StrStreamT
 		outStream << "\n";
 	}
 
-		if (fpNeedWsNormal())
-			outStream <<
+		  if (vpNeedWITMat()) outStream <<
 		"	uniform float4x4 wITMat,"
+		; if (vpNeedWMat()) outStream <<
+		"	uniform float4x4 wMat,"
 		; outStream << 
-		"	uniform float4x4 wvpMat,"
-		"	uniform float4x4 wMat"
+		"	uniform float4x4 wvpMat"
 		") \n"
 		"{ \n"
 		"	oPosition = mul(wvpMat, position); \n"
@@ -316,11 +335,10 @@ void MaterialGenerator::generateVertexProgramSource(Ogre::StringUtil::StrStreamT
 		
 	; if (fpNeedWsNormal()) outStream <<
 		"	oWsNormal = mul( (float3x3) wITMat, normal ); \n"
+	; if (fpNeedEyeVector()) outStream <<
+		"	float3 eyeVector = normalize(mul( wMat, position ) - eyePosition); \n" // transform eye into view space
+		"	oTangentToCubeSpace0.w = eyeVector.x; oTangentToCubeSpace1.w = eyeVector.y; oTangentToCubeSpace2.w = eyeVector.z; \n"
 	; outStream <<
-		"	float3 eyeVector = mul( wMat, position ) - eyePosition; \n" // transform eye into view space
-		"	oTangentToCubeSpace0.w = eyeVector.x; \n" // store eye vector
-		"	oTangentToCubeSpace1.w = eyeVector.y; \n"
-		"	oTangentToCubeSpace2.w = eyeVector.z; \n"
 		"} \n";
 }
 
@@ -330,11 +348,13 @@ void MaterialGenerator::vertexProgramParams(HighLevelGpuProgramPtr program)
 {
 	GpuProgramParametersSharedPtr params = program->getDefaultParameters();
 	//params->setIgnoreMissingParams(true);
-	params->setNamedAutoConstant("wMat", GpuProgramParameters::ACT_WORLD_MATRIX);
+	if (vpNeedWMat())
+		params->setNamedAutoConstant("wMat", GpuProgramParameters::ACT_WORLD_MATRIX);
 	params->setNamedAutoConstant("wvpMat", GpuProgramParameters::ACT_WORLDVIEWPROJ_MATRIX);
 	if (fpNeedWsNormal())
 		params->setNamedAutoConstant("wITMat", GpuProgramParameters::ACT_INVERSE_TRANSPOSE_WORLD_MATRIX);
-	params->setNamedAutoConstant("eyePosition", GpuProgramParameters::ACT_CAMERA_POSITION);
+	if (fpNeedEyeVector())
+		params->setNamedAutoConstant("eyePosition", GpuProgramParameters::ACT_CAMERA_POSITION);
 	
 	if (needShadows())
 	for (int i=0; i<mParent->getNumShadowTex(); ++i)
@@ -443,11 +463,12 @@ void MaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::StrStrea
 		"	in float3 texCoord : TEXCOORD0,"
 	; if (fpNeedWsNormal()) outStream <<
 		"	in float3 wsNormal : TEXCOORD1,"
-	; outStream <<
+	; if (fpNeedTangentToCube()) outStream <<
 		"	in float4 tangentToCubeSpace0 : TEXCOORD2,"
 		"	in float4 tangentToCubeSpace1 : TEXCOORD3,"
 		"	in float4 tangentToCubeSpace2 : TEXCOORD4, \n"
 		
+	; outStream <<
 		"	uniform sampler2D diffuseMap : TEXUNIT"+toStr(mDiffuseTexUnit)+", \n"
 		
 	; if (needEnvMap()) outStream << 
@@ -497,12 +518,9 @@ void MaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::StrStrea
 		
 	}
 		
-	outStream << 
-		"	float3 eyeVector; \n" // fetch view vector
-		"	eyeVector.x = tangentToCubeSpace0.w; \n"
-		"	eyeVector.y = tangentToCubeSpace1.w; \n"
-		"	eyeVector.z = tangentToCubeSpace2.w; \n"
-		"	eyeVector = normalize(eyeVector); \n"
+	  if (fpNeedEyeVector()) outStream <<
+		"	float3 eyeVector = float3(tangentToCubeSpace0.w, tangentToCubeSpace1.w, tangentToCubeSpace2.w); \n"
+		//"	eyeVector = normalize(eyeVector); \n"
 	; if (fpNeedWsNormal()) outStream <<
 		"	wsNormal = normalize(wsNormal); \n"
 		

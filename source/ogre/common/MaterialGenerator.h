@@ -41,6 +41,11 @@ protected:
 	bool needNormalMap();
 	bool needEnvMap();
 	bool fpNeedWsNormal(); bool fpNeedEyeVector();
+	bool fpNeedTangentToCube();
+	
+	// matrices
+	bool vpNeedWMat();
+	bool vpNeedWITMat();
 	
 	std::string getChannel(unsigned int n);
 	
