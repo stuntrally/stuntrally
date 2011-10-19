@@ -82,6 +82,8 @@ namespace net {
 			else { host = 0; port = 0; }
 		}
 
+		Address(const ENetAddress addr): host(addr.host), port(addr.port) { }
+
 		operator std::string() const { return IPv4(host)+":"+boost::lexical_cast<std::string>(port); }
 		bool operator==(const Address& other) { return host == other.host && port == other.port; }
 		bool operator!=(const Address& other) { return !(*this == other); }
@@ -291,6 +293,11 @@ namespace net {
 			Peers::iterator it = m_peers.find(peer_id);
 			if (it != m_peers.end()) return it->second;
 			return NULL;
+		}
+
+		Address getAddress() const {
+			boost::mutex::scoped_lock lock(m_mutex);
+			return Address(m_address);
 		}
 
 		/// Terminate the network thread. Automatically called upon destruction.

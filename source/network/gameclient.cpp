@@ -30,6 +30,7 @@ void P2PGameClient::updatePlayerInfo(const std::string& name, const std::string&
 	boost::mutex::scoped_lock lock(m_mutex);
 	m_playerInfo.name = name;
 	m_playerInfo.car = car;
+	m_playerInfo.address = m_client.getAddress();
 }
 
 void P2PGameClient::toggleReady()
@@ -143,12 +144,18 @@ size_t P2PGameClient::getPeerCount() const
 }
 
 // Mutex should be already locked when this is called
-void P2PGameClient::recountPeers()
+void P2PGameClient::recountPeersAndAssignIds()
 {
+	m_playerInfo.address = m_client.getAddress();
 	m_playerInfo.peers = 0;
-	for (PeerMap::const_iterator it = m_peers.begin(); it != m_peers.end(); ++it) {
-		if (it->second.connection == PeerInfo::CONNECTED && !it->second.name.empty())
+	int id = 0;
+	for (PeerMap::iterator it = m_peers.begin(); it != m_peers.end(); ++it) {
+		if (it->second.connection == PeerInfo::CONNECTED && !it->second.name.empty()) {
+			if (it->first < (std::string)m_playerInfo.address) it->second.id = id;
+			else m_playerInfo.id = id;
+			++id;
 			++m_playerInfo.peers;
+		}
 	}
 }
 
@@ -175,7 +182,7 @@ void P2PGameClient::disconnectEvent(net::NetworkTraffic const& e)
 		// TODO: Maybe just delete it?
 		m_peers[e.peer_address].connection = PeerInfo::DISCONNECTED;
 		picopy = m_peers[e.peer_address];
-		recountPeers();
+		recountPeersAndAssignIds();
 	}
 	// Callback (mutex unlocked to avoid dead-locks)
 	if (m_callback) m_callback->peerDisconnected(picopy);
@@ -218,10 +225,10 @@ void P2PGameClient::receiveEvent(net::NetworkTraffic const& e)
 				PeerInfo picopy = pi;
 				if (isNew) {
 					// TODO: Check for password and disconnect if fail
-					// If it's done here, we need to figure out a way to not send peer inf
+					// If it's done here, we need to figure out a way to not send peer info
 					// During the time between connection and this message
 
-					recountPeers();
+					recountPeersAndAssignIds();
 				}
 				lock.unlock(); // Mutex unlocked in callback to avoid dead-locks
 				// First info means completed connection

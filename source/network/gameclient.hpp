@@ -109,7 +109,7 @@ public:
 
 	/// Updates the player info
 	void updatePlayerInfo(const std::string& name, const std::string& car);
-
+	
 	/// Toggles the ready switch
 	void toggleReady();
 
@@ -138,6 +138,9 @@ public:
 	/// Return client state
 	State getState() const { return m_state; }
 
+	/// Returns the id
+	uint8_t getId() const { return m_playerInfo.id; }
+
 	/// Update the local car state
 	void setLocalCarState(protocol::CarStatePackage const& cs);
 
@@ -154,7 +157,8 @@ public:
 	void receiveEvent(net::NetworkTraffic const& e);
 
 private:
-	void recountPeers();
+	/// Check how many connected and introduced peers there are and assign ids
+	void recountPeersAndAssignIds();
 
 	GameClientCallback* m_callback;
 	net::NetworkObject m_client;
