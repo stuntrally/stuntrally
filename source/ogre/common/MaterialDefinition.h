@@ -9,13 +9,6 @@
 #include <OgreVector3.h>
 #include <OgreVector4.h>
 #include <OgreHighLevelGpuProgram.h>
-
-/*
- * MaterialDefinition holds several material properties
- * (e.g. has normal map, has env map, receives shadows...)
- * as well as a method to craft a specific material out of these
- * parameters, depending on user's settings.
- */
  
 class MaterialFactory;
 
@@ -47,8 +40,6 @@ class MaterialDefinition
 public:
 	MaterialDefinition(MaterialFactory* parent, MaterialProperties* props);
 	~MaterialDefinition();
-		
-	void generate(bool fixedFunction=false); // craft material
 	
 	/// get/set
 	const std::string& getName() { return mName; };
@@ -63,32 +54,6 @@ private:
 	bool mFirstRun;
 	
 	std::string mName; // name of generated material
-	
-	///  ------------------------ utility methods ---------------------------------------
-	// get pointer to material if it exists and delete all techniques, if not, create new
-	Ogre::MaterialPtr prepareMaterial(const std::string& matName);
-	
-	// vertex program
-	Ogre::HighLevelGpuProgramPtr createVertexProgram();
-	void generateVertexProgramSource(Ogre::StringUtil::StrStreamType& outStream);
-	void vertexProgramParams(Ogre::HighLevelGpuProgramPtr program);
-	
-	// fragment program
-	Ogre::HighLevelGpuProgramPtr 	createFragmentProgram();
-	void generateFragmentProgramSource(Ogre::StringUtil::StrStreamType& outStream);
-	void fragmentProgramParams(Ogre::HighLevelGpuProgramPtr program);
-	
-	bool needShadows();
-	bool needNormalMap();
-	bool needEnvMap();
-	bool fpNeedWsNormal(); bool fpNeedEyeVector();
-	
-	std::string getChannel(unsigned int n);
-
-	
-	// pick best texture size (not higher than user tex size)
-	std::string pickTexture(textureMap* textures);
-	/// ----------------------------------------------------------------------------------
 };
 
 #endif

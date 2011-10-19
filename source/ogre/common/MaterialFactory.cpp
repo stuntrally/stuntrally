@@ -3,6 +3,7 @@
 
 #include "MaterialFactory.h"
 #include "MaterialDefinition.h"
+#include "MaterialGenerator.h"
 
 #ifndef ROAD_EDITOR
 	#include "../OgreGame.h"
@@ -153,9 +154,15 @@ void MaterialFactory::generate()
 	{
 		LogO("[MaterialFactory] generating new materials...");
 		
+		MaterialGenerator generator;
+		generator.mParent = this;
+		
 		for (std::vector<MaterialDefinition*>::iterator it=mDefinitions.begin();
 			it!=mDefinitions.end(); ++it)
-			(*it)->generate();
+		{
+			generator.mDef = (*it);
+			generator.generate();
+		}
 			
 		// recreate cloned car materials
 		#ifndef ROAD_EDITOR
