@@ -97,12 +97,13 @@ struct PlayerInfoPacket: public net::SimpleSerializer<PlayerInfoPacket> {
  * These structs are passed around to update car position etc.
  */
 struct CarStatePackage: public net::SimpleSerializer<CarStatePackage> {
+	uint8_t packet_type;
 	MATHVECTOR<float,3> pos;
 	QUATERNION<float> rot;
 	MATHVECTOR<float,3> linearVel;
 	MATHVECTOR<float,3> angularVel;
 
-	CarStatePackage() {}
+	CarStatePackage(): packet_type(CAR_UPDATE) {}
 };
 
 typedef std::map<uint8_t, CarStatePackage> CarStates;
