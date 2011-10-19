@@ -30,6 +30,7 @@ struct MaterialProperties
 	// normalmap/shadowmap/envmap "priority", cull yes/no,
 	// alpha (map), depth settings (bias, check, etc..),
 	// [casts_shadows (+priority) (probably not here)],
+	// read terrain lightmap on/off
 	
 	MaterialProperties(); // constructor with sensible default values
 	void setProperty(const std::string& prop, const std::string& value);

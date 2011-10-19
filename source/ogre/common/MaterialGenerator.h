@@ -18,7 +18,7 @@ protected:
 	// tex unit indices
 	unsigned int mDiffuseTexUnit;
 	unsigned int mNormalTexUnit;
-	unsigned int mEnvMapTexUnit;
+	unsigned int mEnvTexUnit;
 	unsigned int mShadowTexUnit_start; // start offset for shadow tex units
 	
 	unsigned int mTexUnit_i; // counter

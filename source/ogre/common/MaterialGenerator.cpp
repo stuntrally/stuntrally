@@ -24,33 +24,12 @@
 using namespace Ogre;
 
 void MaterialGenerator::generate(bool fixedFunction)
-{
-	std::vector<SubEntity*> subEnts;
-
-	/*if (!mFirstRun)
-	{
-		SceneManager::MovableObjectIterator iterator = mParent->pApp->sceneMgr()->getMovableObjectIterator("Entity");
-		while (iterator.hasMoreElements())
-		{
-			En
-			* tity* e = static_cast<Entity*>(iterator.getNext());
-			for (int i=0; i<e->getNumSubEntities(); ++i)
-			{
-				Ogre::SubEntity* subent = e->getSubEntity(i);
-				if (subent->getMaterialName() == mDef->getName())
-				{
-					LogO("Found entity that has our material");
-					subEnts.push_back(subent);
-					subent->setMaterialName("BaseWhite");
-				}
-			}
-		}
-	}*/
-	
+{	
 	MaterialPtr mat = prepareMaterial(mDef->getName());
-	//mat->setReceiveShadows(false);
 	
-	LogO("needEnvMap: " + toStr(needEnvMap()));
+	// reset some attributes
+	mDiffuseTexUnit = 0; mNormalTexUnit = 0; mEnvTexUnit = 0;
+	mShadowTexUnit_start = 0; mTexUnit_i = 0;
 	
 	// test
 	//mParent->setShaders(false);
@@ -105,6 +84,43 @@ void MaterialGenerator::generate(bool fixedFunction)
 	}
 	else
 	{
+		// diffuse map
+		Ogre::TextureUnitState* tu = pass->createTextureUnitState( diffuseMap );
+		tu->setName("diffuseMap");
+		mDiffuseTexUnit = 0; mTexUnit_i++;
+		
+		// env map
+		if (needEnvMap())
+		{
+			tu = pass->createTextureUnitState( mDef->mProps->envMap );
+			tu->setName("envMap");
+			tu->setTextureAddressingMode(TextureUnitState::TAM_CLAMP);
+			mEnvTexUnit = mTexUnit_i; mTexUnit_i++;
+		}
+		
+		// normal map
+		if (needNormalMap())
+		{
+			tu = pass->createTextureUnitState( normalMap );
+			tu->setName("normalMap");
+			mNormalTexUnit = mTexUnit_i; mTexUnit_i++;
+		}
+		
+		// shadow maps
+		if (needShadows())
+		{
+			mShadowTexUnit_start = mTexUnit_i;
+			for (int i = 0; i < mParent->getNumShadowTex(); ++i)
+			{
+				tu = pass->createTextureUnitState();
+				tu->setName("shadowMap" + toStr(i));
+				tu->setContentType(TextureUnitState::CONTENT_SHADOW);
+				tu->setTextureAddressingMode(TextureUnitState::TAM_BORDER);
+				tu->setTextureBorderColour(ColourValue::White);
+				mTexUnit_i++;
+			}
+		}
+		
 		// create shaders
 		HighLevelGpuProgramPtr fragmentProg, vertexProg;
 		try
@@ -116,62 +132,18 @@ void MaterialGenerator::generate(bool fixedFunction)
 			LogO(e.getFullDescription());
 		}
 		
-		/*if (fragmentProg.isNull() || vertexProg.isNull() || 
+		if (fragmentProg.isNull() || vertexProg.isNull() || 
 			!fragmentProg->isSupported() || !vertexProg->isSupported())
 		{
 			LogO("[MaterialFactory] WARNING: shader for material '" + mDef->getName()
 				+ "' is not supported, falling back to fixed-function");
 			generate(true);
 			return;
-		}*/
+		}
 		
 		pass->setVertexProgram(vertexProg->getName());
 		pass->setFragmentProgram(fragmentProg->getName());
-		
-		// diffuse map
-		Ogre::TextureUnitState* tu = pass->createTextureUnitState( diffuseMap );
-		tu->setName("diffuseMap");
-		
-		// env map
-		if (needEnvMap())
-		{
-			tu = pass->createTextureUnitState( mDef->mProps->envMap );
-			tu->setName("envMap");
-			tu->setTextureAddressingMode(TextureUnitState::TAM_CLAMP);
-		}
-		
-		// normal map
-		if (needNormalMap())
-		{
-			tu = pass->createTextureUnitState( normalMap );
-			tu->setName("normalMap");
-		}
-		
-		// shadow maps
-		if (needShadows())
-		{
-			for (int i = 0; i < mParent->getNumShadowTex(); ++i)
-			{
-				tu = pass->createTextureUnitState();
-				tu->setName("shadowMap" + toStr(i));
-				tu->setContentType(TextureUnitState::CONTENT_SHADOW);
-				tu->setTextureAddressingMode(TextureUnitState::TAM_BORDER);
-				tu->setTextureBorderColour(ColourValue::White);
-			}
-		}
 	}
-	
-	// assign material again
-	/*if (!mFirstRun)
-	{
-		for (std::vector<SubEntity*>::iterator it=subEnts.begin();
-			it!=subEnts.end(); ++it)
-		{
-			LogO("restoring material...");
-			(*it)->setMaterialName(mDef->getName());
-		}
-	}*/
-	//mFirstRun = false;
 }
 
 //----------------------------------------------------------------------------------------
@@ -286,7 +258,6 @@ HighLevelGpuProgramPtr MaterialGenerator::createVertexProgram()
 void MaterialGenerator::generateVertexProgramSource(Ogre::StringUtil::StrStreamType& outStream)
 {
 	//!todo more optizations
-	//!todo variables for tex unit num of different maps (e.g. TEXUNIT_START_SHADOW, TEXUNIT_ENVMAP..)
 	outStream << 
 		"void main_vp( "
 		"	float2 texCoord 					: TEXCOORD0,"
@@ -477,20 +448,18 @@ void MaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::StrStrea
 		"	in float4 tangentToCubeSpace1 : TEXCOORD3,"
 		"	in float4 tangentToCubeSpace2 : TEXCOORD4, \n"
 		
-		"	uniform sampler2D diffuseMap : TEXUNIT0, \n"
+		"	uniform sampler2D diffuseMap : TEXUNIT"+toStr(mDiffuseTexUnit)+", \n"
 		
 	; if (needEnvMap()) outStream << 
-		"	uniform samplerCUBE envMap : TEXUNIT1,"
+		"	uniform samplerCUBE envMap : TEXUNIT"+toStr(mEnvTexUnit)+","
 		"	uniform float reflAmount, \n";
 	
 	if (needShadows())
 	{
-		int shadowtexStart = 2;
-		if (needNormalMap()) ++shadowtexStart;
 		for (int i=0; i<mParent->getNumShadowTex(); ++i)
 		{
 			outStream <<
-		"	uniform sampler2D shadowMap"+toStr(i)+" : TEXUNIT"+toStr(shadowtexStart+i)+", ";
+		"	uniform sampler2D shadowMap"+toStr(i)+" : TEXUNIT"+toStr(mShadowTexUnit_start+i)+", ";
 		}
 		outStream << "\n";
 		for (int i=0; i<mParent->getNumShadowTex(); ++i)
