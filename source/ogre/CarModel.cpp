@@ -85,9 +85,6 @@ CarModel::~CarModel()
 	if (ph)  {  pSceneMgr->destroyParticleSystem(ph);   ph=0;  }
 						
 	if (pMainNode) pSceneMgr->destroySceneNode(pMainNode);
-	if (pSceneMgr->hasEntity("Car")) pSceneMgr->destroyEntity("Car");
-	if (pSceneMgr->hasEntity("Car.interior")) pSceneMgr->destroyEntity("Car.interior");
-	if (pSceneMgr->hasEntity("Car.glass")) pSceneMgr->destroyEntity("Car.glass");
 	
 	// Destroy resource group, will also destroy all resources in it
 	if (Ogre::ResourceGroupManager::getSingleton().resourceGroupExists("Car" + toStr(iIndex)))
@@ -427,7 +424,7 @@ void CarModel::Create(int car)
 		if (ghost)  {  eInter->setRenderQueueGroup(g);  eInter->setCastShadows(false);  }
 		ncart->attachObject(eInter);  eInter->setVisibilityFlags(RV_Car);
 	}else{
-		ManualObject* mInter = CreateModel(pSceneMgr, sMtr[Mtr_CarInterior],&pCar->interiormodel.mesh, vPofs, false, false, "Car.interior");
+		ManualObject* mInter = CreateModel(pSceneMgr, sMtr[Mtr_CarInterior],&pCar->interiormodel.mesh, vPofs, false, false, "Car.interior"+strI);
 		//mInter->setCastShadows(false);
 		if (mInter){  if (ghost)  {  mInter->setRenderQueueGroup(g);  mInter->setCastShadows(false);  }
 			ncart->attachObject(mInter);  mInter->setVisibilityFlags(RV_Car);  }
