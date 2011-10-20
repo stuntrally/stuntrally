@@ -31,27 +31,28 @@ VOut water1_vs(VIn IN,
 
 //-------------------------------------------------  ppx water  -------------------------------------------------
 float4 water1_ps(PIn IN,       ///  _water_
-	uniform float waveBump, uniform float waveHighFreq, uniform float waveSpecular,
-	uniform float fTime,
-	uniform float3 ambient,  uniform float3 lightDif0,  uniform float3 lightSpec0,
+	uniform float3 lightDif0,  uniform float3 lightSpec0,
 	uniform float4 matDif,   uniform float4 matSpec,	uniform float matShininess,
 	uniform float3 fogColor,
-	uniform float4 lightPos0,  uniform float3 camPos,
-	uniform float4 invSMSize,  uniform float4x4 iTWMat,
+	uniform float4 lightPos0,  uniform float3 camPos,	uniform float4x4 iTWMat,
 
+	uniform float2 waveBump,
+	uniform float waveHighFreq, uniform float waveSpecular,
+	uniform float fTime,
 	uniform float4 deepColor,  uniform float4 shallowColor,  uniform float4 reflectionColor,
-	uniform float reflectionAmount,  uniform float waterAmount,
-	uniform float fresnelPower,		 uniform float fresnelBias,
+	uniform float2 reflAndWaterAmounts,
+	uniform float2 fresnelPowerBias,
 
 	uniform sampler2D normalMap : TEXUNIT0,
 	uniform sampler2D skyMap : TEXUNIT1): COLOR0
 {
+	float t = waveBump.y * fTime;
 
 	//  waves  sum 4 normal tex
-	float2 uv1 = float2(-sin(-0.06f * fTime),cos(-0.06f * fTime)) * 0.5f;  // slow big waves
-	float2 uv2 = float2( cos( 0.062f* fTime),sin( 0.062f* fTime)) * 0.4f;
-	float2 uw1 = float2(-sin(-0.11f * fTime),cos(-0.11f * fTime)) * 0.23f;  // fast small waves
-	float2 uw2 = float2( cos( 0.112f* fTime),sin( 0.112f* fTime)) * 0.21f;
+	float2 uv1 = float2(-sin(-0.06f * t),cos(-0.06f * t)) * 0.5f;  // slow big waves
+	float2 uv2 = float2( cos( 0.062f* t),sin( 0.062f* t)) * 0.4f;
+	float2 uw1 = float2(-sin(-0.11f * t),cos(-0.11f * t)) * 0.23f;  // fast small waves
+	float2 uw2 = float2( cos( 0.112f* t),sin( 0.112f* t)) * 0.21f;
 
 	const float w1 = 0.25 + waveHighFreq, w2 = 0.25 - waveHighFreq;
 	float3 normalTex = (
@@ -59,7 +60,7 @@ float4 water1_ps(PIn IN,       ///  _water_
 		(tex2D(normalMap, IN.uv.xy*8 - uw1).rgb * 2.0 - 1.0) * w1 +
 		(tex2D(normalMap, IN.uv.xy*2 + uv1).rgb * 2.0 - 1.0) * w2 +
 		(tex2D(normalMap, IN.uv.xy*2 + uv2).rgb * 2.0 - 1.0) * w2);
-	normalTex = lerp(normalTex, float3(0,0,1), waveBump);
+	normalTex = lerp(normalTex, float3(0,0,1), waveBump.x);
 
 
 	//  normal to object space
@@ -95,8 +96,8 @@ float4 water1_ps(PIn IN,       ///  _water_
 
 	//  fresnel
 	float facing = 1.0 - max(abs(dot(camDir, normal)), 0);
-	float fresnel = saturate(fresnelBias + pow(facing, fresnelPower));
-	//float fresnel = fresnelBias + fresnelScale * pow(1 + dot(eyeDir, normal), fresnelPower);
+	float fresnel = saturate(fresnelPowerBias.y + pow(facing, fresnelPowerBias.x));
+	//float fresnel = fresnelPowerBias.y + fresnelScale * pow(1 + dot(eyeDir, normal), fresnelPowerBias.x);
 	//return float4(float3(0,1,0)*fresnel,1);
 
 
@@ -104,7 +105,7 @@ float4 water1_ps(PIn IN,       ///  _water_
 	float4 waterClr = lerp(shallowColor, deepColor, facing);
 	float4 reflClr = lerp(waterClr, reflection, fresnel);
 
-	float3 clr = clrSUM.rgb * waveSpecular + waterClr.rgb * waterAmount + reflClr.rgb * reflectionAmount;
+	float3 clr = clrSUM.rgb * waveSpecular + waterClr.rgb * reflAndWaterAmounts.y + reflClr.rgb * reflAndWaterAmounts.x;
 	clr = lerp(clr, fogColor, /*IN.fogVal*/IN.wp.w);
 	return float4(clr, waterClr.a + clrSUM.r);
 }
