@@ -12,7 +12,10 @@ class MaterialFactory
 public:
 	MaterialFactory();
 	~MaterialFactory();
-		
+	
+	// maximum of 4 shadow textures
+	static const unsigned int SHADOWTEX_NUM_MAX = 4;
+	
 	void generate();
 	
 	/// user settings get/set ---------------------------------------------

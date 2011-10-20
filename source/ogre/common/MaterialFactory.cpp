@@ -22,9 +22,7 @@ MaterialFactory::MaterialFactory() :
 	// temporary test.
 	loadDefsFromFile("general.matdef");
 	
-	//!todo search all resource paths and load *.matdef files
-	
-	//!todo not clear.. car .matdef's loaded here or in carmodel?
+	//!todo search all resource paths and load *.matdef files (need to pay attention to loading order)
 }
 
 //----------------------------------------------------------------------------------------
