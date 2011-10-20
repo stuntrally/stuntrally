@@ -24,8 +24,6 @@ void MaterialGenerator::generate(bool fixedFunction)
 {	
 	MaterialPtr mat = prepareMaterial(mDef->getName());
 	
-	LogO("needEnvMap: " + toStr(needEnvMap()));
-	
 	// reset some attributes
 	mDiffuseTexUnit = 0; mNormalTexUnit = 0; mEnvTexUnit = 0;
 	mShadowTexUnit_start = 0; mTexUnit_i = 0;
@@ -34,10 +32,8 @@ void MaterialGenerator::generate(bool fixedFunction)
 	//mParent->setShaders(false);
 	//mParent->setEnvMap(false);
 	
-	// only 1 technique
+	// 1 single-pass technique
 	Ogre::Technique* technique = mat->createTechnique();
-	
-	// single pass
 	Ogre::Pass* pass = technique->createPass();
 	
 	pass->setAmbient( mDef->mProps->ambient.x, mDef->mProps->ambient.y, mDef->mProps->ambient.z );
@@ -50,23 +46,46 @@ void MaterialGenerator::generate(bool fixedFunction)
 	}
 	else
 	{
-		// shader assumes matShininess in specular w component
+		// shader assumes shininess in specular w component
 		pass->setSpecular(mDef->mProps->specular.x, mDef->mProps->specular.y, mDef->mProps->specular.z, mDef->mProps->specular.w);
 	}
 	
 	std::string diffuseMap = pickTexture(&mDef->mProps->diffuseMaps);
 	std::string normalMap = pickTexture(&mDef->mProps->normalMaps);
+	std::string alphaMap = pickTexture(&mDef->mProps->alphaMaps);
 	
 	// test
 	//pass->setCullingMode(CULL_NONE);
 	//pass->setShadingMode(SO_PHONG);
 	
+	if (mDef->mProps->transparent)
+	{
+		pass->setSceneBlending(SBT_TRANSPARENT_ALPHA);
+		pass->setDepthWriteEnabled(false);
+	}
+	
 	if (!needShaders() || fixedFunction)
 	{
 		pass->setShadingMode(SO_PHONG);
 		
+		Ogre::TextureUnitState* tu;
+		
+		//!todo alpha map
+		/// no idea how to blend this
+		// alpha map
+		/*if (needAlphaMap())
+		{
+			tu = pass->createTextureUnitState( alphaMap );
+			//tu->setAlphaOperation(LBX_SOURCE1, LBS_CURRENT, LBS_TEXTURE);
+			//tu->setColourOperation(LBO_ALPHA_BLEND);
+		}*/
+		
 		// diffuse map
-		Ogre::TextureUnitState* tu = pass->createTextureUnitState( diffuseMap );
+		tu = pass->createTextureUnitState( diffuseMap );
+		if (needAlphaMap())
+		{
+			tu->setColourOperationEx(LBX_BLEND_CURRENT_ALPHA, LBS_TEXTURE, LBS_CURRENT);
+		}
 		
 		if (needEnvMap())
 		{
@@ -87,6 +106,14 @@ void MaterialGenerator::generate(bool fixedFunction)
 		Ogre::TextureUnitState* tu = pass->createTextureUnitState( diffuseMap );
 		tu->setName("diffuseMap");
 		mDiffuseTexUnit = 0; mTexUnit_i++;
+		
+		// alpha map
+		if (needAlphaMap())
+		{
+			tu = pass->createTextureUnitState( alphaMap );
+			tu->setName("alphaMap");
+			mAlphaTexUnit = mTexUnit_i; mTexUnit_i++;
+		}
 		
 		// env map
 		if (needEnvMap())
@@ -167,7 +194,7 @@ MaterialPtr MaterialGenerator::prepareMaterial(const std::string& name)
 
 inline bool MaterialGenerator::needShaders()
 {
-	return mParent->getShaders() /*&& mDef->mProps->shaders*/;
+	return mParent->getShaders() && mDef->mProps->shaders;
 }
 
 inline bool MaterialGenerator::needShadows()
@@ -187,6 +214,11 @@ inline bool MaterialGenerator::needEnvMap()
 {
 	return (mDef->mProps->envMap != "") && mParent->getEnvMap();
 	//!todo env map priority
+}
+
+inline bool MaterialGenerator::needAlphaMap()
+{
+	return (mDef->mProps->alphaMaps.size() > 0);
 }
 
 inline bool MaterialGenerator::fpNeedWsNormal()
@@ -226,6 +258,23 @@ std::string MaterialGenerator::getChannel(unsigned int n)
 	else if (n == 2)	return "z";
 	else 				return "w";
 }
+
+//----------------------------------------------------------------------------------------
+
+/*unsigned int MaterialGenerator::countTexUnits()
+{
+	unsigned int i=1; // always diffuse map
+	
+	// we don't query mParent settings here because we 
+	// want maximum (and not actual) count of tex units
+	if (mDef->mProps->normalMaps.size() > 0) ++i;
+	if (mDef->mProps->alphaMaps.size() > 0) ++i;
+	if (mDef->mProps->envMap != "") ++i;
+	if (mDef->mProps->receivesShadows || mDef->mProps->receivesDepthShadows)
+		i += MaterialFactory::SHADOWTEX_NUM_MAX;
+	
+	return i;
+}*/
 
 //----------------------------------------------------------------------------------------
 
@@ -495,6 +544,9 @@ void MaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::StrStrea
 	; outStream <<
 		"	uniform sampler2D diffuseMap : TEXUNIT"+toStr(mDiffuseTexUnit)+", \n"
 		
+	; if (needAlphaMap()) outStream <<
+		"	uniform sampler2D alphaMap	 : TEXUNIT"+toStr(mAlphaTexUnit)+", \n"
+		
 	; if (needNormalMap()) outStream <<
 		"	uniform sampler2D normalMap  : TEXUNIT"+toStr(mNormalTexUnit)+", \n"
 		
@@ -581,6 +633,17 @@ void MaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::StrStrea
 	
 	; else outStream <<
 		"	oColor = color1; \n"
+		
+	// alpha
+	; if (mDef->mProps->transparent)
+	{
+		  if (needAlphaMap()) outStream <<
+			"	float alpha = tex2D(alphaMap, texCoord).r; \n" // use only r channel
+		; else outStream <<
+			"	float alpha = diffuseColor.w; \n"
+		; outStream << 
+		"oColor.w = alpha; \n";
+	}
 		
 	; outStream << 
 		"} \n";

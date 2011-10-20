@@ -17,7 +17,10 @@ struct MaterialProperties
 {
 	// map: tex size, tex name
 	textureMap diffuseMaps;
+	textureMap alphaMaps; bool transparent;
 	textureMap normalMaps; float bumpScale;
+	
+	bool shaders;
 	
 	std::string envMap;
 	float reflAmount;
@@ -26,9 +29,9 @@ struct MaterialProperties
 	Ogre::Vector3 ambient; Ogre::Vector4 diffuse; Ogre::Vector4 specular;
 	
 	//!todo:
-	// PPX on/off, shaders on/off, shading mode (phong etc) for no shaders,
+	// PPX on/off, shading mode (phong etc) for no shaders,
 	// normalmap/shadowmap/envmap "priority", cull yes/no,
-	// alpha (map), depth settings (bias, check, etc..),
+	// alpha (map), depth settings (bias, write, check, etc..), alpha_rejection
 	// [casts_shadows (+priority) (probably not here)],
 	// read terrain lightmap on/off
 	// specular map (exponent in diffuse map alpha), normalHeight map (for parallax)

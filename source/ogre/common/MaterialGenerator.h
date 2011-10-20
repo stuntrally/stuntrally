@@ -17,6 +17,7 @@ public:
 protected:
 	// tex unit indices
 	unsigned int mDiffuseTexUnit;
+	unsigned int mAlphaTexUnit;
 	unsigned int mNormalTexUnit;
 	unsigned int mEnvTexUnit;
 	unsigned int mShadowTexUnit_start; // start offset for shadow tex units
@@ -37,12 +38,18 @@ protected:
 	void generateFragmentProgramSource(Ogre::StringUtil::StrStreamType& outStream);
 	void fragmentProgramParams(Ogre::HighLevelGpuProgramPtr program);
 	
+	//unsigned int countTexUnits();
+	
+	//!todo
+	// unsigned int countTexCoords();
+	
 	bool needShaders();
 	bool needShadows();
-	bool needNormalMap();
-	bool needEnvMap();
+	bool needNormalMap(); bool needEnvMap(); bool needAlphaMap();
 	bool fpNeedWsNormal(); bool fpNeedEyeVector();
 	bool fpNeedTangentToCube(); bool vpNeedTangent();
+	//bool fpNeedLighting(); // fragment lighting
+	//bool vpNeedLighting(); // vertex lighting
 	
 	// matrices
 	bool vpNeedWMat();
