@@ -42,7 +42,7 @@ protected:
 	bool needNormalMap();
 	bool needEnvMap();
 	bool fpNeedWsNormal(); bool fpNeedEyeVector();
-	bool fpNeedTangentToCube();
+	bool fpNeedTangentToCube(); bool vpNeedTangent();
 	
 	// matrices
 	bool vpNeedWMat();

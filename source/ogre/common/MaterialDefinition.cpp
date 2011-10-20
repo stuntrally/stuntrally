@@ -6,7 +6,7 @@
 
 // constructor with sensible default values
 MaterialProperties::MaterialProperties() :
-	/*diffuseMap(""), normalMap(""), */envMap(""), reflAmount(0.5),
+	/*diffuseMap(""), normalMap(""), */envMap(""), reflAmount(0.2), bumpScale(1.0),
 	hasFresnel(0), fresnelBias(0), fresnelScale(0), fresnelPower(0),
 	receivesShadows(0), receivesDepthShadows(0),
 	ambient(1.0, 1.0, 1.0), diffuse(1.0, 1.0, 1.0, 1.0), specular(0.0, 0.0, 0.0, 0.0)
@@ -26,6 +26,7 @@ const inline bool str2bool(const std::string& s)
 void MaterialProperties::setProperty(const std::string& prop, const std::string& value)
 {	
 	if (prop == "envMap") envMap = value;
+	else if (prop == "bumpScale") bumpScale = str2float(value);
 	else if (prop == "hasFresnel") hasFresnel = str2bool(value);
 	else if (prop == "reflAmount") reflAmount = str2float(value);
 	else if (prop == "fresnelBias") fresnelBias = str2float(value);

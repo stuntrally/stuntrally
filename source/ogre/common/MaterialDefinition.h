@@ -17,7 +17,7 @@ struct MaterialProperties
 {
 	// map: tex size, tex name
 	textureMap diffuseMaps;
-	textureMap normalMaps;
+	textureMap normalMaps; float bumpScale;
 	
 	std::string envMap;
 	float reflAmount;

@@ -191,14 +191,17 @@ inline bool MaterialGenerator::needEnvMap()
 
 inline bool MaterialGenerator::fpNeedWsNormal()
 {
-	return needEnvMap();
-	//!todo
+	return needEnvMap() || needNormalMap();
 }
 
 inline bool MaterialGenerator::fpNeedEyeVector()
 {
 	return needEnvMap();
-	//!todo
+}
+
+inline bool MaterialGenerator::vpNeedTangent()
+{
+	return needNormalMap();
 }
 
 inline bool MaterialGenerator::vpNeedWMat()
@@ -276,11 +279,13 @@ HighLevelGpuProgramPtr MaterialGenerator::createVertexProgram()
 
 void MaterialGenerator::generateVertexProgramSource(Ogre::StringUtil::StrStreamType& outStream)
 {
-	//!todo more optizations
+	//!todo counter for TEXCOORD, choose appropriate profile if counter >= 8
 	outStream << 
 		"void main_vp( "
 		"	float2 texCoord 					: TEXCOORD0,"
 		"	float4 position 					: POSITION,"
+	; if (vpNeedTangent()) outStream <<
+		"	float3 tangent						: TANGENT,"
 	; if (fpNeedWsNormal()) outStream <<
 		"	float3 normal			 			: NORMAL,"
 		"	out float3 oWsNormal  				: TEXCOORD1,"
@@ -293,8 +298,11 @@ void MaterialGenerator::generateVertexProgramSource(Ogre::StringUtil::StrStreamT
 	; else outStream <<
 		"	out float3 oTexCoord				: TEXCOORD0,"
 		
+	; if (needNormalMap()) outStream <<
+		"	uniform float bumpScale, \n"
+		
 	; if (fpNeedTangentToCube()) outStream <<
-		"	out	float4	oTangentToCubeSpace0	: TEXCOORD2,"
+		"	out	float4	oTangentToCubeSpace0	: TEXCOORD2," // tangent to cube (world) space
 		"	out	float4	oTangentToCubeSpace1	: TEXCOORD3,"
 		"	out	float4	oTangentToCubeSpace2	: TEXCOORD4, \n"
 	;
@@ -321,6 +329,17 @@ void MaterialGenerator::generateVertexProgramSource(Ogre::StringUtil::StrStreamT
 		") \n"
 		"{ \n"
 		"	oPosition = mul(wvpMat, position); \n"
+		
+		; if (needNormalMap()) outStream <<
+		"	float3 binormal = cross(tangent, normal); \n"	// calculate binormal
+		"	float3x3 tbn = float3x3( tangent * bumpScale, \n"			// build TBN
+		"										binormal * bumpScale, \n"
+		"										normal ); \n"
+		"	float3x3 tbnInv = transpose(tbn); \n" // transpose TBN to get inverse rotation to obj space
+		"	float3x3 tmp = mul( (float3x3) wITMat, tbnInv ); \n" // concatenate with the upper-left 3x3 of inverse transpose world matrix 
+		"	oTangentToCubeSpace0.xyz = tmp[0]; \n" // store in tangentToCubeSpace to pass this on to fragment shader
+		"	oTangentToCubeSpace1.xyz = tmp[1]; \n"
+		"	oTangentToCubeSpace2.xyz = tmp[2]; \n"
 		
 	; if (needShadows()) {
 		 outStream <<
@@ -357,6 +376,9 @@ void MaterialGenerator::vertexProgramParams(HighLevelGpuProgramPtr program)
 		params->setNamedAutoConstant("wITMat", GpuProgramParameters::ACT_INVERSE_TRANSPOSE_WORLD_MATRIX);
 	if (fpNeedEyeVector())
 		params->setNamedAutoConstant("eyePosition", GpuProgramParameters::ACT_CAMERA_POSITION);
+		
+	if (needNormalMap())
+		params->setNamedConstant("bumpScale", mDef->mProps->bumpScale);
 	
 	if (needShadows())
 	for (int i=0; i<mParent->getNumShadowTex(); ++i)
@@ -473,6 +495,9 @@ void MaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::StrStrea
 	; outStream <<
 		"	uniform sampler2D diffuseMap : TEXUNIT"+toStr(mDiffuseTexUnit)+", \n"
 		
+	; if (needNormalMap()) outStream <<
+		"	uniform sampler2D normalMap  : TEXUNIT"+toStr(mNormalTexUnit)+", \n"
+		
 	; if (needEnvMap()) outStream << 
 		"	uniform samplerCUBE envMap : TEXUNIT"+toStr(mEnvTexUnit)+","
 		"	uniform float reflAmount, \n";
@@ -522,18 +547,29 @@ void MaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::StrStrea
 		
 	  if (fpNeedEyeVector()) outStream <<
 		"	float3 eyeVector = float3(tangentToCubeSpace0.w, tangentToCubeSpace1.w, tangentToCubeSpace2.w); \n"
-		//"	eyeVector = normalize(eyeVector); \n"
-	; if (fpNeedWsNormal()) outStream <<
-		"	wsNormal = normalize(wsNormal); \n"
+	; if (fpNeedWsNormal())
+	{
+		outStream <<
+		"	float3 normal;";
+		; if (needNormalMap()) outStream <<
+			"	float4 tsNormal = 2.0 * (tex2D( normalMap, texCoord.xy) - 0.5 ); \n" // fetch tangent space normal and decompress from range-compressed
+			"	normal.x = dot( tangentToCubeSpace0.xyz, tsNormal.xyz ); \n"
+			"	normal.y = dot( tangentToCubeSpace1.xyz, tsNormal.xyz ); \n"
+			"	normal.z = dot( tangentToCubeSpace2.xyz, tsNormal.xyz ); \n"
+		; else outStream <<
+			"	normal = wsNormal; \n"
+		
+		; outStream << 
+		"	normal = normalize(normal); \n"; // normalize
+	}
 		
 	; if (needEnvMap()) outStream << 
 		"	float3 r; \n" // Calculate reflection vector within world (view) space.
-		"	r = reflect( eyeVector, wsNormal ); \n"
+		"	r = reflect( eyeVector, normal ); \n"
 		"	float4 envColor = texCUBE(envMap, r); \n"
 	; outStream <<
 		"	float4 diffuseColor = tex2D(diffuseMap, texCoord); \n"
 	
-	//!todo
 	; if (needEnvMap()) outStream << 
 		"	float4 color1 = lerp(diffuseColor, envColor, reflAmount); \n"
 		
@@ -541,7 +577,7 @@ void MaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::StrStrea
 		"	float4 color1 = diffuseColor; \n"
 	
 	; if (needShadows()) outStream <<
-		"	oColor = color1 * shadowing; \n" // test
+		"	oColor = color1 * (1-(1-shadowing)*0.3); \n" // test
 	
 	; else outStream <<
 		"	oColor = color1; \n"
