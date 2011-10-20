@@ -332,6 +332,32 @@ void CarModel::RecreateMaterials()
 	}
 }
 
+void CarModel::setMtrName(const String& entName, const String& mtrName)
+{
+	Ogre::Entity* ent; Ogre::ManualObject* manual;
+
+	try {
+		ent = pSceneMgr->getEntity(entName);
+		ent->setMaterialName(mtrName);
+	} catch(Ogre::Exception&) {
+		try {
+			manual = pSceneMgr->getManualObject(entName);
+			manual->setMaterialName(0, mtrName);
+		}
+		catch(Ogre::Exception&) { LogO("!! setMtrName() for "+entName+" failed"); }
+	}
+}
+
+
+void CarModel::setMtrNames()
+{
+	setMtrName("Car"+toStr(iIndex), sMtr[Mtr_CarBody]);
+	setMtrName("Car.interior"+toStr(iIndex), sMtr[Mtr_CarInterior]);
+	setMtrName("Car.glass"+toStr(iIndex), sMtr[Mtr_CarGlass]);
+	for (int w=0; w<4; ++w)
+		setMtrName("Wheel"+toStr(iIndex)+"_"+toStr(w), w < 2 ? sMtr[Mtr_CarTireFront] : sMtr[Mtr_CarTireRear]);
+}
+
 void CarModel::Create(int car)
 {
 	if (!pCar) return;
@@ -378,18 +404,13 @@ void CarModel::Create(int car)
 	if (FileExists(sCar + "_body.mesh"))
 	{
 		Entity* eCar = pSceneMgr->createEntity("Car"+ strI, sDirname + "_" + "body.mesh", "Car" + strI);
-		if (FileExists(sCar + "_body00_add.png") && FileExists(sCar + "_body00_red.png") || ghost)
-		{
-			eCar->setMaterialName(sMtr[Mtr_CarBody]);
-			//eCar->setMaterialName("testMat");
-			//pApp->setMtrSplits(sMtr[Mtr_CarBody]);
-		}
+
 		//eCar->setCastShadows(false);
 		bodyBox = eCar->getBoundingBox();
 		if (ghost)  {  eCar->setRenderQueueGroup(g);  eCar->setCastShadows(false);  }
 		ncart->attachObject(eCar);  eCar->setVisibilityFlags(RV_Car);
 	}else{
-		ManualObject* mCar = CreateModel(pSceneMgr, sMtr[Mtr_CarBody], &pCar->bodymodel.mesh, vPofs);
+		ManualObject* mCar = CreateModel(pSceneMgr, sMtr[Mtr_CarBody], &pCar->bodymodel.mesh, vPofs, false, false, "Car"+strI);
 		bodyBox = mCar->getBoundingBox();
 		if (mCar){	if (ghost)  {  mCar->setRenderQueueGroup(g);  mCar->setCastShadows(false);  }
 			ncart->attachObject(mCar);  mCar->setVisibilityFlags(RV_Car);  }
@@ -402,12 +423,11 @@ void CarModel::Create(int car)
 	if (FileExists(sCar + "_interior.mesh"))
 	{
 		Entity* eInter = pSceneMgr->createEntity("Car.interior"+ strI, sDirname + "_" + "interior.mesh", "Car" + strI);
-		eInter->setMaterialName(sMtr[Mtr_CarInterior]);
 		//eInter->setCastShadows(false);
 		if (ghost)  {  eInter->setRenderQueueGroup(g);  eInter->setCastShadows(false);  }
 		ncart->attachObject(eInter);  eInter->setVisibilityFlags(RV_Car);
 	}else{
-		ManualObject* mInter = CreateModel(pSceneMgr, sMtr[Mtr_CarInterior],&pCar->interiormodel.mesh, vPofs);
+		ManualObject* mInter = CreateModel(pSceneMgr, sMtr[Mtr_CarInterior],&pCar->interiormodel.mesh, vPofs, false, false, "Car.interior");
 		//mInter->setCastShadows(false);
 		if (mInter){  if (ghost)  {  mInter->setRenderQueueGroup(g);  mInter->setCastShadows(false);  }
 			ncart->attachObject(mInter);  mInter->setVisibilityFlags(RV_Car);  }
@@ -419,12 +439,11 @@ void CarModel::Create(int car)
 	if (FileExists(sCar + "_glass.mesh"))
 	{
 		Entity* eGlass = pSceneMgr->createEntity("Car.glass"+ strI, sDirname + "_" + "glass.mesh", "Car" + strI);
-		eGlass->setMaterialName(sMtr[Mtr_CarGlass]);
 		if (ghost)  {  eGlass->setRenderQueueGroup(g);  eGlass->setCastShadows(false);  }  else
 			eGlass->setRenderQueueGroup(RQG_CarGlass);  eGlass->setVisibilityFlags(RV_CarGlass);
 		ncart->attachObject(eGlass);
 	}else{
-		ManualObject* mGlass = CreateModel(pSceneMgr, sMtr[Mtr_CarGlass], &pCar->glassmodel.mesh, vPofs);
+		ManualObject* mGlass = CreateModel(pSceneMgr, sMtr[Mtr_CarGlass], &pCar->glassmodel.mesh, vPofs, false, false, "Car.glass"+strI);
 		if (mGlass){  mGlass->setRenderQueueGroup(ghost ? g : RQG_CarGlass);  if (ghost)  mGlass->setCastShadows(false);
 			ncart->attachObject(mGlass);  mGlass->setVisibilityFlags(RV_CarGlass);  }
 	}
@@ -443,7 +462,6 @@ void CarModel::Create(int car)
 		if (FileExists(sCar + "_wheel.mesh"))
 		{
 			Entity* eWh = pSceneMgr->createEntity(siw, sDirname + "_wheel.mesh", "Car" + strI);
-			eWh->setMaterialName(sMtr[Mtr_CarTireFront]);
 			if (ghost)  {  eWh->setRenderQueueGroup(g);  eWh->setCastShadows(false);  }
 			ndWh[w] = pSceneMgr->getRootSceneNode()->createChildSceneNode();
 			ndWh[w]->attachObject(eWh);  eWh->setVisibilityFlags(RV_Car);
@@ -451,7 +469,6 @@ void CarModel::Create(int car)
 			if (w < 2 && FileExists(sCar + "_wheel_front.mesh"))
 			{
 				Entity* eWh = pSceneMgr->createEntity(siw, sDirname + "_" + "wheel_front.mesh", "Car" + strI);
-				eWh->setMaterialName(sMtr[Mtr_CarTireFront]);
 				if (ghost)  {  eWh->setRenderQueueGroup(g);  eWh->setCastShadows(false);  }
 				ndWh[w] = pSceneMgr->getRootSceneNode()->createChildSceneNode();
 				ndWh[w]->attachObject(eWh);  eWh->setVisibilityFlags(RV_Car);
@@ -459,14 +476,13 @@ void CarModel::Create(int car)
 			if (FileExists(sCar + "_wheel_rear.mesh"))
 			{
 				Entity* eWh = pSceneMgr->createEntity(siw, sDirname + "_" + "wheel_rear.mesh", "Car" + strI);
-				eWh->setMaterialName(sMtr[Mtr_CarTireRear]);
 				if (ghost)  {  eWh->setRenderQueueGroup(g);  eWh->setCastShadows(false);  }
 				ndWh[w] = pSceneMgr->getRootSceneNode()->createChildSceneNode();
 				ndWh[w]->attachObject(eWh);  eWh->setVisibilityFlags(RV_Car);
 			}else{
 				ManualObject* mWh;
-				if (w < 2)	mWh = CreateModel(pSceneMgr, sMtr[Mtr_CarTireFront], &pCar->wheelmodelfront.mesh, vPofs, true);
-				else		mWh = CreateModel(pSceneMgr, sMtr[Mtr_CarTireRear],  &pCar->wheelmodelrear.mesh, vPofs, true);
+				if (w < 2)	mWh = CreateModel(pSceneMgr, sMtr[Mtr_CarTireFront], &pCar->wheelmodelfront.mesh, vPofs, true, false, siw);
+				else		mWh = CreateModel(pSceneMgr, sMtr[Mtr_CarTireRear],  &pCar->wheelmodelrear.mesh, vPofs, true, false, siw);
 				if (mWh)  {
 				if (ghost)  {  mWh->setRenderQueueGroup(g);  mWh->setCastShadows(false);  }
 				ndWh[w] = pSceneMgr->getRootSceneNode()->createChildSceneNode();
@@ -691,7 +707,7 @@ void CarModel::ChangeClr(int car)
 }
 
 
-ManualObject* CarModel::CreateModel(SceneManager* sceneMgr, const String& mat, class VERTEXARRAY* a, Vector3 vPofs, bool flip, bool track)
+ManualObject* CarModel::CreateModel(SceneManager* sceneMgr, const String& mat, class VERTEXARRAY* a, Vector3 vPofs, bool flip, bool track, const String& name)
 {
 	int verts = a->vertices.size();
 	if (verts == 0)  return NULL;
@@ -700,7 +716,11 @@ ManualObject* CarModel::CreateModel(SceneManager* sceneMgr, const String& mat, c
 	int faces = a->faces.size();
 	// norms = verts, verts % 3 == 0
 
-	ManualObject* m = sceneMgr->createManualObject();
+	ManualObject* m;
+	if (name == "")
+		m = sceneMgr->createManualObject();
+	else
+		m = sceneMgr->createManualObject(name);
 	m->begin(mat, RenderOperation::OT_TRIANGLE_LIST);
 
 	int t = 0;

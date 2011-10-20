@@ -113,8 +113,9 @@ void App::setTranslations()
 
 void App::recreateCarMtr()
 {
-	for (std::vector<CarModel*>::iterator it=carModels.begin(); it!=carModels.end(); it++)
-		(*it)->RecreateMaterials();
+	for (std::vector<CarModel*>::iterator it=carModels.begin(); it!=carModels.end(); it++) {
+		(*it)->RecreateMaterials(); (*it)->setMtrNames();
+	}
 }
 
 void App::destroyScene()
