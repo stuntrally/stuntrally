@@ -1232,6 +1232,14 @@
 						>
 					</File>
 					<File
+						RelativePath=".\source\ogre\common\MaterialGenerator.cpp"
+						>
+					</File>
+					<File
+						RelativePath=".\source\ogre\common\MaterialGenerator.h"
+						>
+					</File>
+					<File
 						RelativePath=".\source\ogre\common\TerrainMaterialGen.cpp"
 						>
 					</File>

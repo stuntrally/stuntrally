@@ -175,7 +175,8 @@ bool App::KeyPress(const CmdKey &arg)
 		case KC_F4:  SaveTrack();	return true;
 		case KC_F5:  LoadTrack();	return true;
 
-		case KC_F8:  UpdateTrack();	return true;
+		case KC_F8:  UpdateTrack();  return true;
+		case KC_F9:  bTerUpdBlend = true;  return true;
 
    		case KC_F2:  // +-rt num
    			if (alt) {	pSet->num_mini = (pSet->num_mini - 1 + RTs+2) % (RTs+2);  UpdMiniVis();  }
