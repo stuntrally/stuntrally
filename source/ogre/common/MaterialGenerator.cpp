@@ -25,12 +25,8 @@ void MaterialGenerator::generate(bool fixedFunction)
 	MaterialPtr mat = prepareMaterial(mDef->getName());
 	
 	// reset some attributes
-	mDiffuseTexUnit = 0; mNormalTexUnit = 0; mEnvTexUnit = 0;
+	mDiffuseTexUnit = 0; mNormalTexUnit = 0; mEnvTexUnit = 0; mAlphaTexUnit = 0;
 	mShadowTexUnit_start = 0; mTexUnit_i = 0;
-	
-	// test
-	//mParent->setShaders(false);
-	//mParent->setEnvMap(false);
 	
 	// 1 single-pass technique
 	Ogre::Technique* technique = mat->createTechnique();
