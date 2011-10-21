@@ -27,24 +27,28 @@ struct MaterialProperties
 	textureMap diffuseMaps;
 	textureMap alphaMaps; bool transparent;
 	textureMap normalMaps; float bumpScale;
+	std::string envMap;
 	
 	CullHardwareMode cullHardware;
 	
 	bool shaders;
 	
-	std::string envMap;
 	float reflAmount;
 	bool hasFresnel; float fresnelBias, fresnelScale, fresnelPower;
 	bool receivesShadows, receivesDepthShadows;
 	Ogre::Vector3 ambient; Ogre::Vector4 diffuse; Ogre::Vector4 specular;
 	
 	//!todo:
+	// high priority:
+	// depth settings (bias, write, check, etc..), alpha_rejection
+	
+	// low priority / future:
 	// PPX on/off, shading mode (phong etc) for no shaders,
 	// normalmap/shadowmap/envmap "priority",
-	// alpha (map), depth settings (bias, write, check, etc..), alpha_rejection
 	// [casts_shadows (+priority) (probably not here)],
 	// read terrain lightmap on/off
-	// specular map (exponent in diffuse map alpha), normalHeight map (for parallax)
+	// specular map (exponent in diffuse map alpha) [or seperate map for trees]
+	// normalHeight (height in normal map alpha) [for parallax mapping]
 	
 	MaterialProperties(); // constructor with sensible default values
 	void setProperty(const std::string& prop, const std::string& value);

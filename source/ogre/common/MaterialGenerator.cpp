@@ -233,6 +233,7 @@ inline bool MaterialGenerator::fpNeedEyeVector()
 inline bool MaterialGenerator::fpNeedWPosition()
 {
 	return true; //!
+	// needed for fog too
 }
 
 inline bool MaterialGenerator::vpNeedTangent()
@@ -347,7 +348,7 @@ HighLevelGpuProgramPtr MaterialGenerator::createVertexProgram()
 
 	StringUtil::StrStreamType sourceStr;
 	generateVertexProgramSource(sourceStr);
-	LogO("Vertex program source:\n");
+	LogO("Vertex program source for '"+mDef->getName()+"':\n");
 	LogO(sourceStr.str());
 	ret->setSource(sourceStr.str());
 	ret->load();
@@ -388,6 +389,11 @@ void MaterialGenerator::generateVertexProgramSource(Ogre::StringUtil::StrStreamT
 		"	out	float4	oTangentToCubeSpace0	: TEXCOORD2," // tangent to cube (world) space
 		"	out	float4	oTangentToCubeSpace1	: TEXCOORD3,"
 		"	out	float4	oTangentToCubeSpace2	: TEXCOORD4, \n"
+	;
+	
+	// fog
+	; outStream <<
+	"	uniform float4 fogParams, \n"
 	;
 	
 	if (needShadows()) {
@@ -439,6 +445,8 @@ void MaterialGenerator::generateVertexProgramSource(Ogre::StringUtil::StrStreamT
 		
 	; if (fpNeedWPosition()) outStream <<
 		"	objectPos = position; \n"
+		// fog - save value in objectPos
+		"	objectPos.w = saturate(fogParams.x * (oPosition.z - fogParams.y) * fogParams.w); \n"
 	; if (fpNeedWsNormal()) outStream <<
 		"	oWsNormal = mul( (float3x3) wITMat, normal ); \n"
 	; if (fpNeedEyeVector()) outStream <<
@@ -470,6 +478,9 @@ void MaterialGenerator::vertexProgramParams(HighLevelGpuProgramPtr program)
 	{
 		params->setNamedAutoConstant("texWorldViewProjMatrix"+toStr(i), GpuProgramParameters::ACT_TEXTURE_WORLDVIEWPROJ_MATRIX, i);
 	}
+	
+	// fog
+	params->setNamedAutoConstant("fogParams", GpuProgramParameters::ACT_FOG_PARAMS);
 }
 
 //----------------------------------------------------------------------------------------
@@ -491,7 +502,7 @@ HighLevelGpuProgramPtr MaterialGenerator::createFragmentProgram()
 
 	StringUtil::StrStreamType sourceStr;
 	generateFragmentProgramSource(sourceStr);
-	LogO("Fragment program source:\n");
+	LogO("Fragment  program source for '"+mDef->getName()+"':\n");
 	LogO(sourceStr.str());
 	ret->setSource(sourceStr.str());
 	ret->load();
@@ -601,11 +612,12 @@ void MaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::StrStrea
 		"	uniform float3 lightDiffuse, \n"
 		"	uniform float3 lightSpecular, \n"
 		"	uniform float4 lightPosition, \n"
-		"	uniform float3 fogColor, \n"
 		// material
 		"	uniform float3 matAmbient, \n"
 		"	uniform float4 matDiffuse, \n"
 		"	uniform float4 matSpecular, \n" // shininess in w
+	; outStream <<
+		"	uniform float3 fogColor, \n"
 	;
 	
 	if (needShadows())
@@ -676,7 +688,7 @@ void MaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::StrStrea
 	// calculate lighting (per-pixel)
 	; if (fpNeedLighting()) outStream <<	
 		// Compute the diffuse term
-		"	float3 lightDir = normalize(lightPosition.xyz - (position * lightPosition.w).xyz); \n"
+		"	float3 lightDir = normalize(lightPosition.xyz - (position.xyz * lightPosition.w)); \n"
 		"	float diffuseLight = max(dot(lightDir, normal), 0); \n"
 		"	float3 diffuse = matDiffuse.xyz * lightDiffuse.xyz * diffuseTex.xyz * diffuseLight; \n"
 		// Compute the specular term
@@ -717,15 +729,8 @@ void MaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::StrStrea
 	}
 	
 	// add fog
-	/*outStream <<
-	"		float4 color2 = lerp(color1, float4(fogColor,1), position.w); \n"
-	;
-	outStream << "float4 color2 = color1; \n"
-		
-	; outStream <<
-		"	oColor = color2; \n"*/
-	; outStream <<
-		"	oColor = color1; \n"
+	outStream <<
+	"	oColor = lerp(color1, float4(fogColor,1), position.w); \n"
 		
 	// alpha
 	; if (mDef->mProps->transparent)
@@ -763,9 +768,11 @@ void MaterialGenerator::fragmentProgramParams(HighLevelGpuProgramPtr program)
 		params->setNamedAutoConstant("lightDiffuse", GpuProgramParameters::ACT_LIGHT_DIFFUSE_COLOUR, 0);
 		params->setNamedAutoConstant("lightSpecular", GpuProgramParameters::ACT_LIGHT_SPECULAR_COLOUR, 0);
 		params->setNamedAutoConstant("lightPosition", GpuProgramParameters::ACT_LIGHT_POSITION, 0);
-		//params->setNamedAutoConstant("fogColor", GpuProgramParameters::ACT_FOG_COLOUR);
 		params->setNamedConstant("matAmbient", mDef->mProps->ambient);
 		params->setNamedConstant("matDiffuse", mDef->mProps->diffuse);
 		params->setNamedConstant("matSpecular", mDef->mProps->specular);
 	}
+	
+	// fog
+	params->setNamedAutoConstant("fogColor", GpuProgramParameters::ACT_FOG_COLOUR);
 }
