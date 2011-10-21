@@ -669,7 +669,10 @@ void MaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::StrStrea
 		"		float3 specular = matSpecular.xyz * lightSpecular.xyz * specularLight; \n"
 
 		// Add together with ambient term and diffuse texture
+		; if (needShadows()) outStream <<
 		"	float3 lightColour = diffuseTex.xyz * matAmbient.xyz + diffuse*shadowing + specular*shadowing; \n"
+		; else outStream <<
+		"	float3 lightColour = diffuseTex.xyz * matAmbient.xyz + diffuse + specular; \n"
 	
 	;
 	
