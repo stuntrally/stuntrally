@@ -46,9 +46,9 @@ protected:
 	bool needShaders();
 	bool needShadows();
 	bool needNormalMap(); bool needEnvMap(); bool needAlphaMap();
-	bool fpNeedWsNormal(); bool fpNeedEyeVector();
+	bool fpNeedWsNormal(); bool fpNeedEyeVector(); bool fpNeedWPosition();
 	bool fpNeedTangentToCube(); bool vpNeedTangent();
-	//bool fpNeedLighting(); // fragment lighting
+	bool fpNeedLighting(); // fragment lighting
 	//bool vpNeedLighting(); // vertex lighting
 	
 	// matrices
@@ -60,6 +60,7 @@ protected:
 	// pick best texture size (not higher than user tex size)
 	std::string pickTexture(textureMap* textures);
 
+	Ogre::CullingMode chooseCullingMode();
 
 };
 

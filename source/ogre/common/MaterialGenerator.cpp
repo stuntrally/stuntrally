@@ -25,12 +25,8 @@ void MaterialGenerator::generate(bool fixedFunction)
 	MaterialPtr mat = prepareMaterial(mDef->getName());
 	
 	// reset some attributes
-	mDiffuseTexUnit = 0; mNormalTexUnit = 0; mEnvTexUnit = 0;
+	mDiffuseTexUnit = 0; mNormalTexUnit = 0; mEnvTexUnit = 0; mAlphaTexUnit = 0;
 	mShadowTexUnit_start = 0; mTexUnit_i = 0;
-	
-	// test
-	//mParent->setShaders(false);
-	//mParent->setEnvMap(false);
 	
 	// 1 single-pass technique
 	Ogre::Technique* technique = mat->createTechnique();
@@ -54,9 +50,7 @@ void MaterialGenerator::generate(bool fixedFunction)
 	std::string normalMap = pickTexture(&mDef->mProps->normalMaps);
 	std::string alphaMap = pickTexture(&mDef->mProps->alphaMaps);
 	
-	// test
-	//pass->setCullingMode(CULL_NONE);
-	//pass->setShadingMode(SO_PHONG);
+	pass->setCullingMode(chooseCullingMode());
 	
 	if (mDef->mProps->transparent)
 	{
@@ -221,14 +215,24 @@ inline bool MaterialGenerator::needAlphaMap()
 	return (mDef->mProps->alphaMaps.size() > 0);
 }
 
+inline bool MaterialGenerator::fpNeedLighting()
+{
+	return true; //!todo
+}
+
 inline bool MaterialGenerator::fpNeedWsNormal()
 {
-	return needEnvMap() || needNormalMap();
+	return needEnvMap() || needNormalMap() || fpNeedLighting();
 }
 
 inline bool MaterialGenerator::fpNeedEyeVector()
 {
-	return needEnvMap();
+	return needEnvMap() || fpNeedLighting();
+}
+
+inline bool MaterialGenerator::fpNeedWPosition()
+{
+	return true; //!
 }
 
 inline bool MaterialGenerator::vpNeedTangent()
@@ -298,6 +302,34 @@ std::string MaterialGenerator::pickTexture(textureMap* textures)
 
 //----------------------------------------------------------------------------------------
 
+Ogre::CullingMode MaterialGenerator::chooseCullingMode()
+{
+
+	if 		(mDef->mProps->cullHardware == CULL_HW_NONE)
+		return Ogre::CULL_NONE;
+	else if (mDef->mProps->cullHardware == CULL_HW_CLOCKWISE)
+		return Ogre::CULL_CLOCKWISE;
+	else if (mDef->mProps->cullHardware == CULL_HW_ANTICLOCKWISE)
+		return Ogre::CULL_ANTICLOCKWISE;
+	else if (mDef->mProps->cullHardware == CULL_HW_CLOCKWISE_OR_NONE)
+	{
+		if (mParent->getShadowsDepth())
+			return Ogre::CULL_NONE;
+		else
+			return Ogre::CULL_CLOCKWISE;
+	}
+	else if (mDef->mProps->cullHardware == CULL_HW_ANTICLOCKWISE_OR_NONE)
+	{
+		if (mParent->getShadowsDepth())
+			return Ogre::CULL_NONE;
+		else
+			return Ogre::CULL_ANTICLOCKWISE;
+	}
+
+}
+
+//----------------------------------------------------------------------------------------
+
 HighLevelGpuProgramPtr MaterialGenerator::createVertexProgram()
 {
 	HighLevelGpuProgramManager& mgr = HighLevelGpuProgramManager::getSingleton();
@@ -342,6 +374,8 @@ void MaterialGenerator::generateVertexProgramSource(Ogre::StringUtil::StrStreamT
 		"	uniform float4 eyePosition,					 "
 	; outStream <<
 		"	out float4 oPosition			 	: POSITION, \n"
+	; if (fpNeedWPosition()) outStream <<
+		"	out float4 objectPos				: COLOR, \n" // running out of texcoords so putting this in COLOR since its unused.
 	; if (!needShadows()) outStream <<
 		"	out float2 oTexCoord	 			: TEXCOORD0,"
 	; else outStream <<
@@ -403,6 +437,8 @@ void MaterialGenerator::generateVertexProgramSource(Ogre::StringUtil::StrStreamT
 	else outStream <<
 		"	oTexCoord = texCoord; \n"
 		
+	; if (fpNeedWPosition()) outStream <<
+		"	objectPos = position; \n"
 	; if (fpNeedWsNormal()) outStream <<
 		"	oWsNormal = mul( (float3x3) wITMat, normal ); \n"
 	; if (fpNeedEyeVector()) outStream <<
@@ -530,10 +566,14 @@ void MaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::StrStrea
 	
 	outStream <<
 		"void main_fp("
+	//; if (fpNeedWPosition()) outStream <<
+	//	"	in float4 position : POSITION,"
 	; if (!needShadows()) outStream <<
 		"	in float2 texCoord : TEXCOORD0,"
 	; else outStream <<
 		"	in float3 texCoord : TEXCOORD0,"
+	; if (fpNeedWPosition()) outStream <<
+		"	in float4 position : COLOR,"
 	; if (fpNeedWsNormal()) outStream <<
 		"	in float3 wsNormal : TEXCOORD1,"
 	; if (fpNeedTangentToCube()) outStream <<
@@ -553,6 +593,23 @@ void MaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::StrStrea
 	; if (needEnvMap()) outStream << 
 		"	uniform samplerCUBE envMap : TEXUNIT"+toStr(mEnvTexUnit)+","
 		"	uniform float reflAmount, \n";
+		
+	// lighting params
+	// only 1 directional light is supported
+	; if (fpNeedLighting()) outStream <<
+		// light
+		"	uniform float3 lightDiffuse, \n"
+		"	uniform float3 lightSpecular, \n"
+		"	uniform float4 lightPosition, \n"
+		"	uniform float3 fogColor, \n"
+		// material
+		"	uniform float3 matAmbient, \n"
+		"	uniform float4 matDiffuse, \n"
+		"	uniform float4 matSpecular, \n" // shininess in w
+		
+		"	uniform float3 objEyePos, \n" // camera pos, obj space
+		"	uniform float4x4 wMat, \n"
+	;
 	
 	if (needShadows())
 	{
@@ -604,7 +661,7 @@ void MaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::StrStrea
 		outStream <<
 		"	float3 normal;";
 		; if (needNormalMap()) outStream <<
-			"	float4 tsNormal = 2.0 * (tex2D( normalMap, texCoord.xy) - 0.5 ); \n" // fetch tangent space normal and decompress from range-compressed
+			"	float4 tsNormal = (tex2D( normalMap, texCoord.xy) * 2.0 - 1.0 ); \n" // fetch tangent space normal and decompress from range-compressed
 			"	normal.x = dot( tangentToCubeSpace0.xyz, tsNormal.xyz ); \n"
 			"	normal.y = dot( tangentToCubeSpace1.xyz, tsNormal.xyz ); \n"
 			"	normal.z = dot( tangentToCubeSpace2.xyz, tsNormal.xyz ); \n"
@@ -614,25 +671,65 @@ void MaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::StrStrea
 		; outStream << 
 		"	normal = normalize(normal); \n"; // normalize
 	}
-		
-	; if (needEnvMap()) outStream << 
-		"	float3 r; \n" // Calculate reflection vector within world (view) space.
-		"	r = reflect( eyeVector, normal ); \n"
-		"	float4 envColor = texCUBE(envMap, r); \n"
+	
+	// fetch diffuse texture
 	; outStream <<
-		"	float4 diffuseColor = tex2D(diffuseMap, texCoord); \n"
+		"	float4 diffuseTex = tex2D(diffuseMap, texCoord); \n"
+	
+	// calculate lighting (per-pixel)
+	; if (fpNeedLighting()) outStream <<	
+		// Compute the diffuse term
+		"	float3 lightDir = normalize(lightPosition.xyz - (position * lightPosition.w).xyz); \n"
+		"	float diffuseLight = max(dot(lightDir, normal), 0); \n"
+		"	float3 diffuse = matDiffuse.xyz * lightDiffuse.xyz * diffuseTex.xyz * diffuseLight; \n"
+		// Compute the specular term
+		"	float3 viewVec = normalize(objEyePos - mul(wMat, position).xyz); \n"
+		"	float3 half = normalize(lightDir + viewVec); \n"
+		"	float specularLight = pow(max(dot(normal, half), 0), matSpecular.w); \n"
+
+		"	if (diffuseLight <= 0) specularLight = 0; \n"
+		"		float3 specular = matSpecular.xyz * lightSpecular.xyz * specularLight; \n"
+
+		// Add together with ambient term and diffuse texture
+		; if (needShadows()) outStream <<
+		"	float3 lightColour = diffuseTex.xyz * matAmbient.xyz + diffuse*shadowing + specular*shadowing; \n"
+		; else outStream <<
+		"	float3 lightColour = diffuseTex.xyz * matAmbient.xyz + diffuse + specular; \n"
+	
+	;
 	
 	; if (needEnvMap()) outStream << 
-		"	float4 color1 = lerp(diffuseColor, envColor, reflAmount); \n"
-		
-	; else outStream <<
-		"	float4 color1 = diffuseColor; \n"
+		"	float3 r = reflect( eyeVector, normal ); \n" // calculate reflection vector
+		"	float4 envColor = texCUBE(envMap, r); \n" // fetch cube map
 	
-	; if (needShadows()) outStream <<
-		"	oColor = color1 * (1-(1-shadowing)*0.3); \n" // test
+	; if (needEnvMap()) 
+	{
+		; if (fpNeedLighting()) outStream <<
+		"	float4 color1 = lerp(float4(lightColour,1), envColor, reflAmount); \n"
+		; else outStream <<
+		"	float4 color1 = lerp(diffuseColour, envColor, reflAmount); \n"
+		;
+	}
+	  else
+	{
+		; if (fpNeedLighting()) outStream <<
+		"	float4 color1 = float4(lightColour,1); \n"
+		; else outStream <<
+		"	float4 color1 = diffuseTex; \n"
+		;
+	}
 	
-	; else outStream <<
-		"	oColor = color1; \n"
+	// add fog
+	/*outStream <<
+	"		float4 color2 = lerp(color1, float4(fogColor,1), position.w); \n"
+	;*/
+	outStream << "float4 color2 = color1; \n"
+	
+	//; if (needShadows()) outStream <<
+	//	"	oColor = color2 * (1-(1-shadowing)*0.3); \n" // test
+	
+	; /*else*/ outStream <<
+		"	oColor = color2; \n"
 		
 	// alpha
 	; if (mDef->mProps->transparent)
@@ -640,7 +737,7 @@ void MaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::StrStrea
 		  if (needAlphaMap()) outStream <<
 			"	float alpha = tex2D(alphaMap, texCoord).r; \n" // use only r channel
 		; else outStream <<
-			"	float alpha = diffuseColor.w; \n"
+			"	float alpha = diffuseTex.w; \n"
 		; outStream << 
 		"oColor.w = alpha; \n";
 	}
@@ -655,12 +752,28 @@ void MaterialGenerator::fragmentProgramParams(HighLevelGpuProgramPtr program)
 {
 	GpuProgramParametersSharedPtr params = program->getDefaultParameters();
 	//params->setIgnoreMissingParams(true);
-	if (needEnvMap()) {
+	if (needEnvMap())
+	{
 		params->setNamedConstant("reflAmount", mDef->mProps->reflAmount);
 	}
-	if (needShadows()) {
+	if (needShadows())
+	{
 		params->setNamedConstant("pssmSplitPoints", mParent->pApp->splitPoints);
 		for (int i=0; i<mParent->getNumShadowTex(); ++i)
 			params->setNamedAutoConstant("invShadowMapSize"+toStr(i), GpuProgramParameters::ACT_INVERSE_TEXTURE_SIZE, i+mShadowTexUnit_start);
+	}
+	if (fpNeedLighting())
+	{
+		params->setNamedAutoConstant("lightDiffuse", GpuProgramParameters::ACT_LIGHT_DIFFUSE_COLOUR, 0);
+		params->setNamedAutoConstant("lightSpecular", GpuProgramParameters::ACT_LIGHT_SPECULAR_COLOUR, 0);
+		//params->setNamedAutoConstant("lightPosition", GpuProgramParameters::ACT_LIGHT_POSITION, 0);
+		params->setNamedAutoConstant("lightPosition", GpuProgramParameters::ACT_LIGHT_POSITION, 0);
+		params->setNamedAutoConstant("objEyePos", GpuProgramParameters::ACT_CAMERA_POSITION);
+		//params->setNamedAutoConstant("fogColor", GpuProgramParameters::ACT_FOG_COLOUR);
+		params->setNamedConstant("matAmbient", mDef->mProps->ambient);
+		params->setNamedConstant("matDiffuse", mDef->mProps->diffuse);
+		params->setNamedConstant("matSpecular", mDef->mProps->specular);
+		
+		params->setNamedAutoConstant("wMat", GpuProgramParameters::ACT_WORLD_MATRIX);
 	}
 }

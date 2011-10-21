@@ -13,12 +13,22 @@ class MaterialFactory;
 
 typedef std::map<unsigned int, std::string> textureMap;
 
+enum CullHardwareMode
+{
+	CULL_HW_NONE=0x00, CULL_HW_CLOCKWISE=0x01, CULL_HW_ANTICLOCKWISE=0x02,
+
+	// or = for depth shadows on
+	CULL_HW_CLOCKWISE_OR_NONE=0x03, CULL_HW_ANTICLOCKWISE_OR_NONE=0x04
+};
+
 struct MaterialProperties
 {
 	// map: tex size, tex name
 	textureMap diffuseMaps;
 	textureMap alphaMaps; bool transparent;
 	textureMap normalMaps; float bumpScale;
+	
+	CullHardwareMode cullHardware;
 	
 	bool shaders;
 	
@@ -30,7 +40,7 @@ struct MaterialProperties
 	
 	//!todo:
 	// PPX on/off, shading mode (phong etc) for no shaders,
-	// normalmap/shadowmap/envmap "priority", cull yes/no,
+	// normalmap/shadowmap/envmap "priority",
 	// alpha (map), depth settings (bias, write, check, etc..), alpha_rejection
 	// [casts_shadows (+priority) (probably not here)],
 	// read terrain lightmap on/off
