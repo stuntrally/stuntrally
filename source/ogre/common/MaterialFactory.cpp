@@ -130,18 +130,18 @@ void MaterialFactory::loadDefsFromFile(const std::string& file)
 	}
 	
 	// debug output of material definitions and properties.
-	for (std::vector<MaterialDefinition*>::iterator it=mDefinitions.begin();
+	/*for (std::vector<MaterialDefinition*>::iterator it=mDefinitions.begin();
 			it!=mDefinitions.end(); ++it)
 	{
 		LogO("[MaterialFactory] loaded material definition " + (*it)->getName() );
 		LogO("[MaterialFactory] attributes:");
 		#define prop(s) LogO("[MaterialFactory]  - "#s": " + StringConverter::toString((*it)->getProps()->s));
 		#define propS(s) LogO("[MaterialFactory]  - "#s": " + (*it)->getProps()->s);
-		/*propS(diffuseMap); propS(normalMap);*/ propS(envMap); prop(hasFresnel);
+		propS(envMap); prop(hasFresnel);
 		prop(fresnelBias); prop(fresnelScale); prop(fresnelPower); prop(receivesShadows); prop(receivesDepthShadows);
-	}
+	}*/
 	
-	LogO("[MaterialFactory] loaded " + toStr(defI) + " definitions from " + file);
+	//LogO("[MaterialFactory] loaded " + toStr(defI) + " definitions from " + file);
 }
 
 //----------------------------------------------------------------------------------------

@@ -20,6 +20,8 @@
 #include <OgreGpuProgramParams.h>
 using namespace Ogre;
 
+//#define SHADER_DEBUG
+
 void MaterialGenerator::generate(bool fixedFunction)
 {	
 	MaterialPtr mat = prepareMaterial(mDef->getName());
@@ -174,7 +176,6 @@ MaterialPtr MaterialGenerator::prepareMaterial(const std::string& name)
 	if (MaterialManager::getSingleton().resourceExists(name))
 	{
 		mat = MaterialManager::getSingleton().getByName(name);
-		//MaterialManager::getSingleton().remove(name);
 		mat->removeAllTechniques();
 	}
 	else
@@ -230,12 +231,6 @@ inline bool MaterialGenerator::fpNeedEyeVector()
 	return needEnvMap() || fpNeedLighting();
 }
 
-inline bool MaterialGenerator::fpNeedWPosition()
-{
-	return true; //!
-	// needed for fog too
-}
-
 inline bool MaterialGenerator::vpNeedTangent()
 {
 	return needNormalMap();
@@ -263,23 +258,6 @@ std::string MaterialGenerator::getChannel(unsigned int n)
 	else if (n == 2)	return "z";
 	else 				return "w";
 }
-
-//----------------------------------------------------------------------------------------
-
-/*unsigned int MaterialGenerator::countTexUnits()
-{
-	unsigned int i=1; // always diffuse map
-	
-	// we don't query mParent settings here because we 
-	// want maximum (and not actual) count of tex units
-	if (mDef->mProps->normalMaps.size() > 0) ++i;
-	if (mDef->mProps->alphaMaps.size() > 0) ++i;
-	if (mDef->mProps->envMap != "") ++i;
-	if (mDef->mProps->receivesShadows || mDef->mProps->receivesDepthShadows)
-		i += MaterialFactory::SHADOWTEX_NUM_MAX;
-	
-	return i;
-}*/
 
 //----------------------------------------------------------------------------------------
 
@@ -348,8 +326,10 @@ HighLevelGpuProgramPtr MaterialGenerator::createVertexProgram()
 
 	StringUtil::StrStreamType sourceStr;
 	generateVertexProgramSource(sourceStr);
+	#ifdef SHADER_DEBUG
 	LogO("Vertex program source for '"+mDef->getName()+"':\n");
 	LogO(sourceStr.str());
+	#endif
 	ret->setSource(sourceStr.str());
 	ret->load();
 	vertexProgramParams(ret);
@@ -361,76 +341,73 @@ HighLevelGpuProgramPtr MaterialGenerator::createVertexProgram()
 
 void MaterialGenerator::generateVertexProgramSource(Ogre::StringUtil::StrStreamType& outStream)
 {
-	//!todo counter for TEXCOORD, choose appropriate profile if counter >= 8
 	outStream << 
 		"void main_vp( "
-		"	float2 texCoord 					: TEXCOORD0,"
-		"	float4 position 					: POSITION,"
-	; if (vpNeedTangent()) outStream <<
-		"	float3 tangent						: TANGENT,"
-	; if (fpNeedWsNormal()) outStream <<
-		"	float3 normal			 			: NORMAL,"
-		"	out float3 oWsNormal  				: TEXCOORD1,"
-	; if (fpNeedEyeVector()) outStream <<
-		"	uniform float4 eyePosition,					 "
-	; outStream <<
+		"	float2 texCoord 					: TEXCOORD0, \n"
+		"	float4 position 					: POSITION, \n";
+	if (vpNeedTangent()) outStream <<
+		"	float3 tangent						: TANGENT, \n";
+	if (fpNeedWsNormal()) outStream <<
+		"	float3 normal			 			: NORMAL, \n"
+		"	out float3 oWsNormal  				: TEXCOORD1, \n";
+	if (fpNeedEyeVector()) outStream <<
+		"	uniform float4 eyePosition,	 \n";
+	outStream <<
 		"	out float4 oPosition			 	: POSITION, \n"
-	; if (fpNeedWPosition()) outStream <<
-		"	out float4 objectPos				: COLOR, \n" // running out of texcoords so putting this in COLOR since its unused.
-	; if (!needShadows()) outStream <<
-		"	out float2 oTexCoord	 			: TEXCOORD0,"
-	; else outStream <<
-		"	out float3 oTexCoord				: TEXCOORD0,"
+		"	out float4 objectPos				: COLOR, \n"; // running out of texcoords so putting this in COLOR since its unused.
+	if (!needShadows()) outStream <<
+		"	out float2 oTexCoord	 			: TEXCOORD0, \n";
+	else outStream <<
+		"	out float3 oTexCoord				: TEXCOORD0, \n";
 		
-	; if (needNormalMap()) outStream <<
-		"	uniform float bumpScale, \n"
+	if (needNormalMap()) outStream <<
+		"	uniform float bumpScale, \n";
 		
-	; if (fpNeedTangentToCube()) outStream <<
-		"	out	float4	oTangentToCubeSpace0	: TEXCOORD2," // tangent to cube (world) space
-		"	out	float4	oTangentToCubeSpace1	: TEXCOORD3,"
-		"	out	float4	oTangentToCubeSpace2	: TEXCOORD4, \n"
-	;
+	if (fpNeedTangentToCube()) outStream <<
+		"	out	float4	oTangentToCubeSpace0	: TEXCOORD2, \n" // tangent to cube (world) space
+		"	out	float4	oTangentToCubeSpace1	: TEXCOORD3, \n"
+		"	out	float4	oTangentToCubeSpace2	: TEXCOORD4, \n";
 	
 	// fog
-	; outStream <<
+	outStream <<
 	"	uniform float4 fogParams, \n"
 	;
 	
 	if (needShadows()) {
 		for (int i=0; i<mParent->getNumShadowTex(); ++i)
 		{
-			outStream << "out float4 oLightPosition"+toStr(i)+" : TEXCOORD"+toStr(i+5)+",";
+			outStream << "out float4 oLightPosition"+toStr(i)+" : TEXCOORD"+toStr(i+5)+", \n";
 		}
 		outStream << "\n";
 		for (int i=0; i<mParent->getNumShadowTex(); ++i)
 		{
-			outStream << "uniform float4x4 texWorldViewProjMatrix"+toStr(i)+", ";
+			outStream << "uniform float4x4 texWorldViewProjMatrix"+toStr(i)+", \n";
 		}
 		outStream << "\n";
 	}
 
-		  if (vpNeedWITMat()) outStream <<
-		"	uniform float4x4 wITMat,"
-		; if (vpNeedWMat()) outStream <<
-		"	uniform float4x4 wMat,"
-		; outStream << 
-		"	uniform float4x4 wvpMat"
-		") \n"
-		"{ \n"
-		"	oPosition = mul(wvpMat, position); \n"
+	if (vpNeedWITMat()) outStream <<
+		"	uniform float4x4 wITMat, \n";
+	if (vpNeedWMat()) outStream <<
+		"	uniform float4x4 wMat, \n";
+	outStream << 
+	"	uniform float4x4 wvpMat \n"
+	") \n"
+	"{ \n"
+	"	oPosition = mul(wvpMat, position); \n";
+	
+	if (needNormalMap()) outStream <<
+	"	float3 binormal = cross(tangent, normal); \n"	// calculate binormal
+	"	float3x3 tbn = float3x3( tangent * bumpScale, \n"			// build TBN
+	"										binormal * bumpScale, \n"
+	"										normal ); \n"
+	"	float3x3 tbnInv = transpose(tbn); \n" // transpose TBN to get inverse rotation to obj space
+	"	float3x3 tmp = mul( (float3x3) wITMat, tbnInv ); \n" // concatenate with the upper-left 3x3 of inverse transpose world matrix 
+	"	oTangentToCubeSpace0.xyz = tmp[0]; \n" // store in tangentToCubeSpace to pass this on to fragment shader
+	"	oTangentToCubeSpace1.xyz = tmp[1]; \n"
+	"	oTangentToCubeSpace2.xyz = tmp[2]; \n";
 		
-		; if (needNormalMap()) outStream <<
-		"	float3 binormal = cross(tangent, normal); \n"	// calculate binormal
-		"	float3x3 tbn = float3x3( tangent * bumpScale, \n"			// build TBN
-		"										binormal * bumpScale, \n"
-		"										normal ); \n"
-		"	float3x3 tbnInv = transpose(tbn); \n" // transpose TBN to get inverse rotation to obj space
-		"	float3x3 tmp = mul( (float3x3) wITMat, tbnInv ); \n" // concatenate with the upper-left 3x3 of inverse transpose world matrix 
-		"	oTangentToCubeSpace0.xyz = tmp[0]; \n" // store in tangentToCubeSpace to pass this on to fragment shader
-		"	oTangentToCubeSpace1.xyz = tmp[1]; \n"
-		"	oTangentToCubeSpace2.xyz = tmp[2]; \n"
-		
-	; if (needShadows()) {
+	if (needShadows()) {
 		 outStream <<
 		"	oTexCoord.xy = texCoord; \n"
 		"	oTexCoord.z = oPosition.z; \n";
@@ -441,19 +418,19 @@ void MaterialGenerator::generateVertexProgramSource(Ogre::StringUtil::StrStreamT
 	}
 	
 	else outStream <<
-		"	oTexCoord = texCoord; \n"
+		"	oTexCoord = texCoord; \n";
 		
-	; if (fpNeedWPosition()) outStream <<
-		"	objectPos = position; \n"
-		// fog - save value in objectPos
-		"	objectPos.w = saturate(fogParams.x * (oPosition.z - fogParams.y) * fogParams.w); \n"
-	; if (fpNeedWsNormal()) outStream <<
-		"	oWsNormal = mul( (float3x3) wITMat, normal ); \n"
-	; if (fpNeedEyeVector()) outStream <<
+	outStream <<
+	"	objectPos = position; \n"
+	// fog - save value in objectPos
+	"	objectPos.w = saturate(fogParams.x * (oPosition.z - fogParams.y) * fogParams.w); \n";
+	if (fpNeedWsNormal()) outStream <<
+		"	oWsNormal = mul( (float3x3) wITMat, normal ); \n";
+	if (fpNeedEyeVector()) outStream <<
 		"	float3 eyeVector = mul( wMat, position ) - eyePosition; \n" // transform eye into view space
-		"	oTangentToCubeSpace0.w = eyeVector.x; oTangentToCubeSpace1.w = eyeVector.y; oTangentToCubeSpace2.w = eyeVector.z; \n"
-	; outStream <<
-		"} \n";
+		"	oTangentToCubeSpace0.w = eyeVector.x; oTangentToCubeSpace1.w = eyeVector.y; oTangentToCubeSpace2.w = eyeVector.z; \n";
+	outStream <<
+	"} \n";
 }
 
 //----------------------------------------------------------------------------------------
@@ -461,7 +438,7 @@ void MaterialGenerator::generateVertexProgramSource(Ogre::StringUtil::StrStreamT
 void MaterialGenerator::vertexProgramParams(HighLevelGpuProgramPtr program)
 {
 	GpuProgramParametersSharedPtr params = program->getDefaultParameters();
-	//params->setIgnoreMissingParams(true);
+	
 	if (vpNeedWMat())
 		params->setNamedAutoConstant("wMat", GpuProgramParameters::ACT_WORLD_MATRIX);
 	params->setNamedAutoConstant("wvpMat", GpuProgramParameters::ACT_WORLDVIEWPROJ_MATRIX);
@@ -502,8 +479,10 @@ HighLevelGpuProgramPtr MaterialGenerator::createFragmentProgram()
 
 	StringUtil::StrStreamType sourceStr;
 	generateFragmentProgramSource(sourceStr);
+	#ifdef SHADER_DEBUG
 	LogO("Fragment  program source for '"+mDef->getName()+"':\n");
 	LogO(sourceStr.str());
+	#endif
 	ret->setSource(sourceStr.str());
 	ret->load();
 	fragmentProgramParams(ret);
@@ -520,7 +499,7 @@ void MaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::StrStrea
 		/// shadow helper functions
 		// 2x2 pcf
 		outStream <<
-		"float shadowPCF(sampler2D shadowMap, float4 shadowMapPos, float2 offset)"
+		"float shadowPCF(sampler2D shadowMap, float4 shadowMapPos, float2 offset) \n"
 		"{ \n"
 		"	shadowMapPos = shadowMapPos / shadowMapPos.w; \n"
 		"	float2 uv = shadowMapPos.xy; \n"
@@ -531,30 +510,29 @@ void MaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::StrStrea
 		"	c +=		(shadowMapPos.z <= tex2D(shadowMap, uv.xy + o.zy).r) ? 1 : 0; \n"
 		"	c +=		(shadowMapPos.z <= tex2D(shadowMap, uv.xy - o.zy).r) ? 1 : 0; \n"
 		"	return c / 4;  \n"
-		"} \n"
-		;
+		"} \n";
 		
 		// pssm
 		outStream <<
 		"float calcPSSMShadow(";
 		
 		for (int i=0; i<mParent->getNumShadowTex(); ++i)
-			outStream << "sampler2D shadowMap"+toStr(i)+", ";
+			outStream << "sampler2D shadowMap"+toStr(i)+",  \n";
 		outStream << "\n";
 		for (int i=0; i<mParent->getNumShadowTex(); ++i)
-			outStream << "float4 lsPos"+toStr(i)+", ";
+			outStream << "float4 lsPos"+toStr(i)+",  \n";
 		outStream << "\n";
 		for (int i=0; i<mParent->getNumShadowTex(); ++i)
-			outStream << "float4 invShadowMapSize"+toStr(i)+", ";
+			outStream << "float4 invShadowMapSize"+toStr(i)+",  \n";
 		outStream << "\n";
 		
 		outStream <<
-		"	float4 pssmSplitPoints, float camDepth"
+		"	float4 pssmSplitPoints, float camDepth \n"
 		") \n"
 		"{ \n"
-		"	float shadow; \n"
+		"	float shadow; \n";
 		
-		; for (int i=0; i<mParent->getNumShadowTex(); ++i)
+		for (int i=0; i<mParent->getNumShadowTex(); ++i)
 		{
 			if (i==0)
 				outStream << "if (camDepth <= pssmSplitPoints.y) \n";
@@ -571,43 +549,40 @@ void MaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::StrStrea
 		
 		outStream <<
 		"	return shadow; \n"
-		"} \n"
-		;
+		"} \n";
 	}
 	
 	outStream <<
-		"void main_fp("
-	//; if (fpNeedWPosition()) outStream <<
-	//	"	in float4 position : POSITION,"
-	; if (!needShadows()) outStream <<
-		"	in float2 texCoord : TEXCOORD0,"
-	; else outStream <<
-		"	in float3 texCoord : TEXCOORD0,"
-	; if (fpNeedWPosition()) outStream <<
-		"	in float4 position : COLOR,"
-	; if (fpNeedWsNormal()) outStream <<
-		"	in float3 wsNormal : TEXCOORD1,"
-	; if (fpNeedTangentToCube()) outStream <<
-		"	in float4 tangentToCubeSpace0 : TEXCOORD2,"
-		"	in float4 tangentToCubeSpace1 : TEXCOORD3,"
-		"	in float4 tangentToCubeSpace2 : TEXCOORD4, \n"
+		"void main_fp(";
+	if (!needShadows()) outStream <<
+		"	in float2 texCoord : TEXCOORD0, \n";
+	else outStream <<
+		"	in float3 texCoord : TEXCOORD0, \n";
+	outStream <<
+		"	in float4 position : COLOR, \n";
+	if (fpNeedWsNormal()) outStream <<
+		"	in float3 wsNormal : TEXCOORD1, \n";
+	if (fpNeedTangentToCube()) outStream <<
+		"	in float4 tangentToCubeSpace0 : TEXCOORD2, \n"
+		"	in float4 tangentToCubeSpace1 : TEXCOORD3, \n"
+		"	in float4 tangentToCubeSpace2 : TEXCOORD4, \n";
 		
-	; outStream <<
-		"	uniform sampler2D diffuseMap : TEXUNIT"+toStr(mDiffuseTexUnit)+", \n"
+	outStream <<
+		"	uniform sampler2D diffuseMap : TEXUNIT"+toStr(mDiffuseTexUnit)+", \n";
 		
-	; if (needAlphaMap()) outStream <<
-		"	uniform sampler2D alphaMap	 : TEXUNIT"+toStr(mAlphaTexUnit)+", \n"
+	if (needAlphaMap()) outStream <<
+		"	uniform sampler2D alphaMap	 : TEXUNIT"+toStr(mAlphaTexUnit)+", \n";
 		
-	; if (needNormalMap()) outStream <<
-		"	uniform sampler2D normalMap  : TEXUNIT"+toStr(mNormalTexUnit)+", \n"
+	if (needNormalMap()) outStream <<
+		"	uniform sampler2D normalMap  : TEXUNIT"+toStr(mNormalTexUnit)+", \n";
 		
-	; if (needEnvMap()) outStream << 
-		"	uniform samplerCUBE envMap : TEXUNIT"+toStr(mEnvTexUnit)+","
+	if (needEnvMap()) outStream << 
+		"	uniform samplerCUBE envMap : TEXUNIT"+toStr(mEnvTexUnit)+", \n"
 		"	uniform float reflAmount, \n";
 		
 	// lighting params
 	// only 1 directional light is supported
-	; if (fpNeedLighting()) outStream <<
+	if (fpNeedLighting()) outStream <<
 		// light
 		"	uniform float3 lightDiffuse, \n"
 		"	uniform float3 lightSpecular, \n"
@@ -615,42 +590,40 @@ void MaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::StrStrea
 		// material
 		"	uniform float3 matAmbient, \n"
 		"	uniform float4 matDiffuse, \n"
-		"	uniform float4 matSpecular, \n" // shininess in w
-	; outStream <<
-		"	uniform float3 fogColor, \n"
-	;
+		"	uniform float4 matSpecular, \n"; // shininess in w
+	outStream <<
+		"	uniform float3 fogColor, \n";
 	
 	if (needShadows())
 	{
 		for (int i=0; i<mParent->getNumShadowTex(); ++i)
 		{
 			outStream <<
-		"	uniform sampler2D shadowMap"+toStr(i)+" : TEXUNIT"+toStr(mShadowTexUnit_start+i)+", ";
+		"	uniform sampler2D shadowMap"+toStr(i)+" : TEXUNIT"+toStr(mShadowTexUnit_start+i)+", \n";
 		}
 		outStream << "\n";
 		for (int i=0; i<mParent->getNumShadowTex(); ++i)
-			outStream << "in float4 lightPosition"+toStr(i)+" : TEXCOORD"+toStr(i+5)+", ";
+			outStream << "in float4 lightPosition"+toStr(i)+" : TEXCOORD"+toStr(i+5)+", \n";
 		outStream << "\n";
 		for (int i=0; i<mParent->getNumShadowTex(); ++i)
-			outStream << "uniform float4 invShadowMapSize"+toStr(i)+", ";
+			outStream << "uniform float4 invShadowMapSize"+toStr(i)+", \n";
 		outStream << "\n";
 		outStream << 
-		"	uniform float4 pssmSplitPoints,";
+		"	uniform float4 pssmSplitPoints, \n";
 	}
 	
 	
 	outStream << 
 
-		"	out float4 oColor : COLOR"
+		"	out float4 oColor : COLOR \n"
 		") \n"
-		"{ \n"
+		"{ \n";
 		
 	// calc shadowing
-	; if (needShadows()) {
+	if (needShadows()) {
 		outStream <<
 		"	float shadowing;"
-		"	shadowing = calcPSSMShadow("
-		;
+		"	shadowing = calcPSSMShadow(";
 	for (int i=0; i<mParent->getNumShadowTex(); ++i)
 		outStream << "shadowMap"+toStr(i)+", ";
 	for (int i=0; i<mParent->getNumShadowTex(); ++i)
@@ -664,29 +637,29 @@ void MaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::StrStrea
 	}
 		
 	  if (fpNeedEyeVector()) outStream <<
-		"	float3 eyeVector = normalize(float3(tangentToCubeSpace0.w, tangentToCubeSpace1.w, tangentToCubeSpace2.w)); \n"
-	; if (fpNeedWsNormal())
+		"	float3 eyeVector = normalize(float3(tangentToCubeSpace0.w, tangentToCubeSpace1.w, tangentToCubeSpace2.w)); \n";
+	if (fpNeedWsNormal())
 	{
 		outStream <<
 		"	float3 normal;";
-		; if (needNormalMap()) outStream <<
+		if (needNormalMap()) outStream <<
 			"	float4 tsNormal = (tex2D( normalMap, texCoord.xy) * 2.0 - 1.0 ); \n" // fetch tangent space normal and decompress from range-compressed
 			"	normal.x = dot( tangentToCubeSpace0.xyz, tsNormal.xyz ); \n"
 			"	normal.y = dot( tangentToCubeSpace1.xyz, tsNormal.xyz ); \n"
-			"	normal.z = dot( tangentToCubeSpace2.xyz, tsNormal.xyz ); \n"
-		; else outStream <<
-			"	normal = wsNormal; \n"
+			"	normal.z = dot( tangentToCubeSpace2.xyz, tsNormal.xyz ); \n";
+		else outStream <<
+			"	normal = wsNormal; \n";
 		
-		; outStream << 
+		outStream << 
 		"	normal = normalize(normal); \n"; // normalize
 	}
 	
 	// fetch diffuse texture
-	; outStream <<
-		"	float4 diffuseTex = tex2D(diffuseMap, texCoord); \n"
+	outStream <<
+		"	float4 diffuseTex = tex2D(diffuseMap, texCoord); \n";
 	
 	// calculate lighting (per-pixel)
-	; if (fpNeedLighting()) outStream <<	
+	if (fpNeedLighting()) outStream <<	
 		// Compute the diffuse term
 		"	float3 lightDir = normalize(lightPosition.xyz - (position.xyz * lightPosition.w)); \n"
 		"	float diffuseLight = max(dot(lightDir, normal), 0); \n"
@@ -697,53 +670,49 @@ void MaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::StrStrea
 		"	float specularLight = pow(max(dot(normal, half), 0), matSpecular.w); \n"
 
 		"	if (diffuseLight <= 0) specularLight = 0; \n"
-		"		float3 specular = matSpecular.xyz * lightSpecular.xyz * specularLight; \n"
+		"		float3 specular = matSpecular.xyz * lightSpecular.xyz * specularLight; \n";
 
 		// Add together with ambient term and diffuse texture
-		; if (needShadows()) outStream <<
-		"	float3 lightColour = diffuseTex.xyz * matAmbient.xyz + diffuse*shadowing + specular*shadowing; \n"
-		; else outStream <<
-		"	float3 lightColour = diffuseTex.xyz * matAmbient.xyz + diffuse + specular; \n"
+		if (needShadows()) outStream <<
+		"	float3 lightColour = diffuseTex.xyz * matAmbient.xyz + diffuse*shadowing + specular*shadowing; \n";
+		else outStream <<
+		"	float3 lightColour = diffuseTex.xyz * matAmbient.xyz + diffuse + specular; \n";
 	
-	;
-	
-	; if (needEnvMap()) outStream << 
+	if (needEnvMap()) outStream << 
 		"	float3 r = reflect( eyeVector, normal ); \n" // calculate reflection vector
-		"	float4 envColor = texCUBE(envMap, r); \n" // fetch cube map
+		"	float4 envColor = texCUBE(envMap, r); \n"; // fetch cube map
 	
-	; if (needEnvMap()) 
+	if (needEnvMap()) 
 	{
-		; if (fpNeedLighting()) outStream <<
-		"	float4 color1 = lerp(float4(lightColour,1), envColor, reflAmount); \n"
-		; else outStream <<
-		"	float4 color1 = lerp(diffuseColour, envColor, reflAmount); \n"
-		;
+		if (fpNeedLighting()) outStream <<
+		"	float4 color1 = lerp(float4(lightColour,1), envColor, reflAmount); \n";
+		else outStream <<
+		"	float4 color1 = lerp(diffuseColour, envColor, reflAmount); \n";
 	}
-	  else
+	else
 	{
-		; if (fpNeedLighting()) outStream <<
-		"	float4 color1 = float4(lightColour,1); \n"
-		; else outStream <<
-		"	float4 color1 = diffuseTex; \n"
-		;
+		if (fpNeedLighting()) outStream <<
+		"	float4 color1 = float4(lightColour,1); \n";
+		else outStream <<
+		"	float4 color1 = diffuseTex; \n";
 	}
 	
 	// add fog
 	outStream <<
-	"	oColor = lerp(color1, float4(fogColor,1), position.w); \n"
+	"	oColor = lerp(color1, float4(fogColor,1), position.w); \n";
 		
 	// alpha
-	; if (mDef->mProps->transparent)
+	if (mDef->mProps->transparent)
 	{
-		  if (needAlphaMap()) outStream <<
-			"	float alpha = tex2D(alphaMap, texCoord).r; \n" // use only r channel
-		; else outStream <<
-			"	float alpha = diffuseTex.w; \n"
-		; outStream << 
+		if (needAlphaMap()) outStream <<
+			"	float alpha = tex2D(alphaMap, texCoord).r; \n"; // use only r channel
+		else outStream <<
+			"	float alpha = diffuseTex.w; \n";
+		outStream << 
 		"oColor.w = alpha; \n";
 	}
 		
-	; outStream << 
+	outStream << 
 		"} \n";
 }
 
@@ -752,7 +721,7 @@ void MaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::StrStrea
 void MaterialGenerator::fragmentProgramParams(HighLevelGpuProgramPtr program)
 {
 	GpuProgramParametersSharedPtr params = program->getDefaultParameters();
-	//params->setIgnoreMissingParams(true);
+
 	if (needEnvMap())
 	{
 		params->setNamedConstant("reflAmount", mDef->mProps->reflAmount);
@@ -773,6 +742,5 @@ void MaterialGenerator::fragmentProgramParams(HighLevelGpuProgramPtr program)
 		params->setNamedConstant("matSpecular", mDef->mProps->specular);
 	}
 	
-	// fog
 	params->setNamedAutoConstant("fogColor", GpuProgramParameters::ACT_FOG_COLOUR);
 }
