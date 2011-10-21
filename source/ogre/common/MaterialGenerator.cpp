@@ -442,7 +442,7 @@ void MaterialGenerator::generateVertexProgramSource(Ogre::StringUtil::StrStreamT
 	; if (fpNeedWsNormal()) outStream <<
 		"	oWsNormal = mul( (float3x3) wITMat, normal ); \n"
 	; if (fpNeedEyeVector()) outStream <<
-		"	float3 eyeVector = normalize(mul( wMat, position ) - eyePosition); \n" // transform eye into view space
+		"	float3 eyeVector = mul( wMat, position ) - eyePosition; \n" // transform eye into view space
 		"	oTangentToCubeSpace0.w = eyeVector.x; oTangentToCubeSpace1.w = eyeVector.y; oTangentToCubeSpace2.w = eyeVector.z; \n"
 	; outStream <<
 		"} \n";
@@ -606,9 +606,6 @@ void MaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::StrStrea
 		"	uniform float3 matAmbient, \n"
 		"	uniform float4 matDiffuse, \n"
 		"	uniform float4 matSpecular, \n" // shininess in w
-		
-		"	uniform float3 objEyePos, \n" // camera pos, obj space
-		"	uniform float4x4 wMat, \n"
 	;
 	
 	if (needShadows())
@@ -655,7 +652,7 @@ void MaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::StrStrea
 	}
 		
 	  if (fpNeedEyeVector()) outStream <<
-		"	float3 eyeVector = float3(tangentToCubeSpace0.w, tangentToCubeSpace1.w, tangentToCubeSpace2.w); \n"
+		"	float3 eyeVector = normalize(float3(tangentToCubeSpace0.w, tangentToCubeSpace1.w, tangentToCubeSpace2.w)); \n"
 	; if (fpNeedWsNormal())
 	{
 		outStream <<
@@ -683,7 +680,7 @@ void MaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::StrStrea
 		"	float diffuseLight = max(dot(lightDir, normal), 0); \n"
 		"	float3 diffuse = matDiffuse.xyz * lightDiffuse.xyz * diffuseTex.xyz * diffuseLight; \n"
 		// Compute the specular term
-		"	float3 viewVec = normalize(objEyePos - mul(wMat, position).xyz); \n"
+		"	float3 viewVec = -eyeVector; \n"
 		"	float3 half = normalize(lightDir + viewVec); \n"
 		"	float specularLight = pow(max(dot(normal, half), 0), matSpecular.w); \n"
 
@@ -722,14 +719,13 @@ void MaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::StrStrea
 	// add fog
 	/*outStream <<
 	"		float4 color2 = lerp(color1, float4(fogColor,1), position.w); \n"
-	;*/
+	;
 	outStream << "float4 color2 = color1; \n"
-	
-	//; if (needShadows()) outStream <<
-	//	"	oColor = color2 * (1-(1-shadowing)*0.3); \n" // test
-	
-	; /*else*/ outStream <<
-		"	oColor = color2; \n"
+		
+	; outStream <<
+		"	oColor = color2; \n"*/
+	; outStream <<
+		"	oColor = color1; \n"
 		
 	// alpha
 	; if (mDef->mProps->transparent)
@@ -766,14 +762,10 @@ void MaterialGenerator::fragmentProgramParams(HighLevelGpuProgramPtr program)
 	{
 		params->setNamedAutoConstant("lightDiffuse", GpuProgramParameters::ACT_LIGHT_DIFFUSE_COLOUR, 0);
 		params->setNamedAutoConstant("lightSpecular", GpuProgramParameters::ACT_LIGHT_SPECULAR_COLOUR, 0);
-		//params->setNamedAutoConstant("lightPosition", GpuProgramParameters::ACT_LIGHT_POSITION, 0);
 		params->setNamedAutoConstant("lightPosition", GpuProgramParameters::ACT_LIGHT_POSITION, 0);
-		params->setNamedAutoConstant("objEyePos", GpuProgramParameters::ACT_CAMERA_POSITION);
 		//params->setNamedAutoConstant("fogColor", GpuProgramParameters::ACT_FOG_COLOUR);
 		params->setNamedConstant("matAmbient", mDef->mProps->ambient);
 		params->setNamedConstant("matDiffuse", mDef->mProps->diffuse);
 		params->setNamedConstant("matSpecular", mDef->mProps->specular);
-		
-		params->setNamedAutoConstant("wMat", GpuProgramParameters::ACT_WORLD_MATRIX);
 	}
 }
