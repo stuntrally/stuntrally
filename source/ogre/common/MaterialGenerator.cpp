@@ -54,9 +54,7 @@ void MaterialGenerator::generate(bool fixedFunction)
 	std::string normalMap = pickTexture(&mDef->mProps->normalMaps);
 	std::string alphaMap = pickTexture(&mDef->mProps->alphaMaps);
 	
-	// test
-	//pass->setCullingMode(CULL_NONE);
-	//pass->setShadingMode(SO_PHONG);
+	pass->setCullingMode(chooseCullingMode());
 	
 	if (mDef->mProps->transparent)
 	{
@@ -305,6 +303,34 @@ std::string MaterialGenerator::pickTexture(textureMap* textures)
 	return it->second;
 }
 
+
+//----------------------------------------------------------------------------------------
+
+Ogre::CullingMode MaterialGenerator::chooseCullingMode()
+{
+
+	if 		(mDef->mProps->cullHardware == CULL_HW_NONE)
+		return Ogre::CULL_NONE;
+	else if (mDef->mProps->cullHardware == CULL_HW_CLOCKWISE)
+		return Ogre::CULL_CLOCKWISE;
+	else if (mDef->mProps->cullHardware == CULL_HW_ANTICLOCKWISE)
+		return Ogre::CULL_ANTICLOCKWISE;
+	else if (mDef->mProps->cullHardware == CULL_HW_CLOCKWISE_OR_NONE)
+	{
+		if (mParent->getShadowsDepth())
+			return Ogre::CULL_NONE;
+		else
+			return Ogre::CULL_CLOCKWISE;
+	}
+	else if (mDef->mProps->cullHardware == CULL_HW_ANTICLOCKWISE_OR_NONE)
+	{
+		if (mParent->getShadowsDepth())
+			return Ogre::CULL_NONE;
+		else
+			return Ogre::CULL_ANTICLOCKWISE;
+	}
+
+}
 
 //----------------------------------------------------------------------------------------
 

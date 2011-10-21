@@ -60,6 +60,7 @@ protected:
 	// pick best texture size (not higher than user tex size)
 	std::string pickTexture(textureMap* textures);
 
+	Ogre::CullingMode chooseCullingMode();
 
 };
 
