@@ -46,9 +46,9 @@ protected:
 	bool needShaders();
 	bool needShadows();
 	bool needNormalMap(); bool needEnvMap(); bool needAlphaMap();
-	bool fpNeedWsNormal(); bool fpNeedEyeVector();
+	bool fpNeedWsNormal(); bool fpNeedEyeVector(); bool fpNeedWPosition();
 	bool fpNeedTangentToCube(); bool vpNeedTangent();
-	//bool fpNeedLighting(); // fragment lighting
+	bool fpNeedLighting(); // fragment lighting
 	//bool vpNeedLighting(); // vertex lighting
 	
 	// matrices
