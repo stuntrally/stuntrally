@@ -348,7 +348,9 @@ void CarModel::setMtrName(const String& entName, const String& mtrName)
 
 void CarModel::setMtrNames()
 {
-	setMtrName("Car"+toStr(iIndex), sMtr[Mtr_CarBody]);
+	if (FileExists(resCar + "/" + sDirname + "_body00_add.png")
+	 && FileExists(resCar + "/" + sDirname + "_body00_red.png"))
+		setMtrName("Car"+toStr(iIndex), sMtr[Mtr_CarBody]);
 	setMtrName("Car.interior"+toStr(iIndex), sMtr[Mtr_CarInterior]);
 	setMtrName("Car.glass"+toStr(iIndex), sMtr[Mtr_CarGlass]);
 	for (int w=0; w<4; ++w)
