@@ -161,16 +161,16 @@ void MaterialFactory::generate()
 			generator.mDef = (*it);
 			generator.generate();
 		}
-			
-		// recreate cloned car materials
-		#ifndef ROAD_EDITOR
-		pApp->recreateCarMtr();
-		#endif
 		
 		bSettingsChanged = false;
 	}
 	else
 		LogO("[MaterialFactory] settings not changed, using old materials");
+		
+	// recreate cloned car materials
+	#ifndef ROAD_EDITOR
+	pApp->recreateCarMtr();
+	#endif
 }
 
 //----------------------------------------------------------------------------------------
