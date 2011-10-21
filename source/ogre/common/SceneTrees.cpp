@@ -138,7 +138,7 @@ void App::CreateTrees()
 		treeLoader->setHeightFunction(getTerrainHeightAround /*,userdata*/);
 		treeLoader->setMaximumScale(4);//6
 		tws = sc.td.fTerWorldSize;
-		int r = imgRoadSize, cntr = 0, cntshp = 0;
+		int r = imgRoadSize, cntr = 0, cntshp = 0, txy = sc.td.iVertsX*sc.td.iVertsY-1;
 
 		//  set random seed
 		srand(0);  /// todo: par in scene.xml and in editor gui...
@@ -184,8 +184,8 @@ void App::CreateTrees()
 				//  check if on road
 				if (r > 0)
 				{
-					int mx = (pos.x + 0.5*tws)/tws*r,
-						my = (pos.z + 0.5*tws)/tws*r;
+				int mx = (pos.x + 0.5*tws)/tws*r,
+					my = (pos.z + 0.5*tws)/tws*r;
 
 					int c = sc.trRdDist + pg.addTrRdDist;
 					for (int jj = -c; jj <= c; ++jj)
@@ -195,6 +195,18 @@ void App::CreateTrees()
 							std::max(0,std::min(r-1, my+jj)), 0).g < 0.95f)
 								add = false;
 				}
+
+				//  check ter angle
+				int mx = (pos.x + 0.5*tws)/tws*sc.td.iVertsX,
+					my = (pos.z + 0.5*tws)/tws*sc.td.iVertsY;
+				int a = std::max(0, std::min(txy, my*sc.td.iVertsX+mx));
+				if (sc.td.hfAngle[a] > pg.maxTerAng)
+					add = false;
+
+				//  check ter height ..
+				//pos.y = terrain->getHeightAtWorldPosition(pos.x, 0, pos.z);
+				//if (pos.y < 0.f)
+				//	add = false;				
 				
 				if (!add)  continue;
 

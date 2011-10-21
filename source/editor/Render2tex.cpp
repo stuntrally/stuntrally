@@ -37,7 +37,7 @@ void App::Rnd2TexSetup()
 			Real fDim = sc.td.fTerWorldSize;  // world dim
 			Ogre::TexturePtr texture = Ogre::TextureManager::getSingleton().createManual(sTex,
 				  ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME, TEX_TYPE_2D,
-				  dim[i], dim[i], 0, /*PF_R8G8B8*/PF_R8G8B8A8, TU_RENDERTARGET);
+				  dim[i], dim[i], 0, PF_R8G8B8A8, TU_RENDERTARGET);
 				  
 			r.rndCam = mSceneMgr->createCamera(sCam);  // up
 			r.rndCam->setPosition(Vector3(0,1000,0));  r.rndCam->setOrientation(Quaternion(0.5,-0.5,0.5,0.5));
@@ -102,17 +102,29 @@ void App::SaveGrassDens()
 	}
 
 	int w = rt[1].rndTex->getWidth(), h = rt[1].rndTex->getHeight();
+	int txy = sc.td.iVertsX*sc.td.iVertsY-1;
 	using Ogre::uint;
 	uint *rd = new uint[w*h];   // road render
-	uint *gd  = new uint[w*h];  // grass dens
+	uint *gd = new uint[w*h];   // grass dens
 	PixelBox pb_rd(w,h,1, PF_BYTE_RGBA, rd);
 	rt[1].rndTex->copyContentsToMemory(pb_rd, RenderTarget::FB_FRONT);
 
-	//  rotate, filter  smooth size
 	const int f = sc.grDensSmooth;
 	const float ff = 2.f / ((f*2+1)*(f*2+1)) / 255.f;
 	register int v,y,x,i,j,a,b,d;
 
+	//  terrain max angle for grass
+	for (y = 0; y < h; ++y) {  b = y*w;
+	for (x = 0; x < w; ++x, ++b)
+	{
+		a = x * sc.td.iVertsY / h;  a *= sc.td.iVertsX;
+		a += y * sc.td.iVertsX / w;  // would be better to interpolate
+		//a = std::max(0, std::min(txy, a));
+		if (sc.td.hfAngle[a] > sc.grTerMaxAngle)
+			rd[b] = 0xFF0000;  // 255 no grass
+	}	}
+
+	//  rotate, filter  smooth size
 	for (y = f; y < h-f; ++y) {  a = y*w +f;
 	for (x = f; x < w-f; ++x, ++a)
 	{	b = x*w + (h-y);  // rot 90 ccw  b=a

@@ -55,7 +55,7 @@ public:
 	bool on;
 	Ogre::String name;  Ogre::Real dens;
 	Ogre::Real windFx, windFy;  int addTrRdDist;
-	Ogre::Real minScale, maxScale, ofsY;
+	Ogre::Real minScale, maxScale, ofsY, maxTerAng;
 	
 	PagedLayer();
 };
@@ -106,6 +106,7 @@ public:
 	Ogre::Real grPage, grDist;  // vis
 	Ogre::Real grMinSx,grMinSy, grMaxSx,grMaxSy;  // sizes
 	Ogre::Real grSwayDistr, grSwayLen, grSwaySpeed;  // sway
+	Ogre::Real grTerMaxAngle;
 
 	//  trees
 	Ogre::Real trPage, trDist, trDistImp;  // vis

@@ -438,6 +438,8 @@
 	<Tag name="ImpostorDist">Impostors dist.</Tag>
 	<Tag name="GrassSway">Grass sway</Tag>
 	<Tag name="GrDensSmooth">Smooth grass dens.</Tag>
+	<Tag name="GrTerMaxAngle">Grass Max. Terrain Angle</Tag>
+	<Tag name="LTrMaxTerAng">Max. Terrain Angle</Tag>
 
 
 	<!--  Road  -->
@@ -704,6 +706,7 @@
 	<Tag name="TipModelRoadDist">Distance from road to models (global, added to each models own value).</Tag>
 	<Tag name="TipImpDist">Far distance at which models will turn into 2d impostors.</Tag>
 	<Tag name="TipGrDensSmooth">Grass density map - smooth size</Tag>
+	<Tag name="TipGrTerMaxAngle">Terrain angle above which there won't be any grass.</Tag>
 
 	<!--  Vegetation  models  -->
 	<Tag name="TipVegetGroups">Vegetation model groups (recommended use 4-6), affects performance.</Tag>
@@ -717,5 +720,6 @@
 	<Tag name="TipWindInflL">Wind influence on model, length scale.</Tag>
 	<Tag name="TipWindInflH">Wind influence on model, height scale.</Tag>
 	<Tag name="TipModelPrev">Model preview image.</Tag>
+	<Tag name="TipLTrMaxTerAng">Terrain angle above which model won't appear.</Tag>
 
 </MyGUI>

@@ -300,18 +300,18 @@
 					<Property key="Image_Texture" value="track_icons.png"/>
 					<Property key="Image_Coord" value="0 0 224 32"/>
 				</Widget>
-                <Widget type="Button" skin="ButtonSmall" position="16 7 40 24" name="TrkView1">
+				<Widget type="Button" skin="ButtonSmall" position="16 7 40 24" name="TrkView1">
 					<Property key="Widget_Caption" value="|"/>
-                    <Property key="Widget_Alpha" value="0.8"/>
-                    <Property key="Widget_Colour" value="0.6 0.8 1.0"/>
+					<Property key="Widget_Alpha" value="0.8"/>
+					<Property key="Widget_Colour" value="0.6 0.8 1.0"/>
 					<Property key="Text_TextColour" value="0.45 0.58 0.8"/>
-                </Widget>
-                <Widget type="Button" skin="ButtonSmall" position="64 7 40 24" name="TrkView2">
+				</Widget>
+				<Widget type="Button" skin="ButtonSmall" position="64 7 40 24" name="TrkView2">
 					<Property key="Widget_Caption" value="|||"/>
-                    <Property key="Widget_Alpha" value="0.8"/>
-                    <Property key="Widget_Colour" value="0.6 0.8 1.0"/>
+					<Property key="Widget_Alpha" value="0.8"/>
+					<Property key="Widget_Colour" value="0.6 0.8 1.0"/>
 					<Property key="Text_TextColour" value="0.45 0.58 0.8"/>
-                </Widget>
+				</Widget>
 				<Widget type="Button" skin="Button" position="528 16 156 25" name="TrackCopySel">
 					<Property key="Widget_Caption" value="#{CopySource}"/>
 					<Property key="Widget_Colour" value="0.8 0.8 1.0"/>
@@ -1142,6 +1142,19 @@
 					<Property key="Widget_Colour" value="0.5 0.7 0.7"/>
 					<UserString key="tip" value="#{TipWindInflH}"/>
 				</Widget>
+				<Widget type="StaticText" skin="StaticText" position="32 476 96 24">
+					<Property key="Widget_Caption" value="#{LTrMaxTerAng}"/>
+					<Property key="Text_TextColour" value="0.6 0.9 0.9"/>
+				</Widget>
+				<Widget type="StaticText" skin="StaticText" position="128 476 56 24" name="LTrMaxTerAngVal">
+					<Property key="Text_TextColour" value="0.6 0.9 0.9"/>
+				</Widget>
+				<Widget type="HScroll" skin="HScroll" position="200 476 360 16" name="LTrMaxTerAng">
+					<Property key="Scroll_Range" value="1000001"/>
+					<Property key="Scroll_MoveToClick" value="true"/>
+					<Property key="Widget_Colour" value="0.6 0.9 0.9"/>
+					<UserString key="tip" value="#{TipLTrMaxTerAng}"/>
+				</Widget>
 				<Widget type="StaticText" skin="StaticText" position="248 40 40 24">
 					<Property key="Widget_Caption" value="#{page}"/>
 					<Property key="Text_TextColour" value="0.6 0.9 0.3"/>
@@ -1275,6 +1288,15 @@
 					<Property key="Widget_Colour" value="0.6 0.9 0.3"/>
 					<Property key="Text_TextColour" value="0.6 0.9 0.3"/>
 					<UserString key="tip" value="#{TipGrDensSmooth}"/>
+				</Widget>
+				<Widget type="StaticText" skin="StaticText" position="32 167 144 24">
+					<Property key="Widget_Caption" value="#{GrTerMaxAngle}"/>
+					<Property key="Text_TextColour" value="0.6 1 0.4"/>
+				</Widget>
+				<Widget type="Edit" skin="Edit" position="178 165 56 24" name="GrTerMaxAngle">
+					<Property key="Widget_Colour" value="0.6 0.9 0.3"/>
+					<Property key="Text_TextColour" value="0.6 0.9 0.3"/>
+					<UserString key="tip" value="#{TipGrTerMaxAngle}"/>
 				</Widget>
 				<Widget type="Progress" skin="ProgressFill" position="24 224 408 24">
 					<Property key="Widget_Alpha" value="0.3"/>
@@ -1831,11 +1853,6 @@
 							<Property key="Widget_Colour" value="0 0 0"/>
 							<Property key="Text_TextColour" value="0.7 0.8 0.9"/>
 						</Widget>
-						<!--<Widget type="StaticText" skin="StaticText" position="32 200 144 24">
-							<Property key="Widget_Caption" value="#{LightmapSize} *"/>
-							<Property key="Widget_Colour" value="0 0 0"/>
-							<Property key="Text_TextColour" value="0.7 0.8 0.9"/>
-						</Widget>-->
 						<Widget type="HScroll" skin="HScroll" position="248 80 320 16" name="ShadowType">
 							<Property key="Scroll_Range" value="4"/>
 							<Property key="Scroll_MoveToClick" value="true"/>
@@ -1852,10 +1869,6 @@
 							<Property key="Scroll_Range" value="1000001"/>
 							<Property key="Scroll_MoveToClick" value="true"/>
 						</Widget>
-						<!--<Widget type="HScroll" skin="HScroll" position="248 200 320 18" name="LightmapSize">
-							<Property key="Scroll_Range" value="1000001"/>
-							<Property key="Scroll_MoveToClick" value="true"/>
-						</Widget>-->
 						<Widget type="StaticText" skin="StaticText" position="180 80 60 24" name="ShadowTypeVal">
 							<Property key="Text_TextColour" value="0.5 0.8 1"/>
 						</Widget>
@@ -1868,9 +1881,6 @@
 						<Widget type="StaticText" skin="StaticText" position="180 170 60 24" name="ShadowDistVal">
 							<Property key="Text_TextColour" value="0.7 0.8 0.9"/>
 						</Widget>
-						<!--<Widget type="StaticText" skin="StaticText" position="180 200 60 24" name="LightmapSizeVal">
-							<Property key="Text_TextColour" value="0.7 0.8 0.9"/>
-						</Widget>-->
 						<Widget type="StaticText" skin="StaticText" position="32 40 112 24">
 							<Property key="Widget_Colour" value="0 0 0"/>
 							<Property key="Widget_Caption" value="#{Shaders}*"/>
@@ -2135,7 +2145,6 @@
 							<Property key="Text_TextColour" value="0.8 0.9 1.0"/>
 							<Property key="Widget_Caption" value="#{InputRoadChkRadius}"/>
 						</Widget>
-
 						<Widget type="StaticText" skin="StaticText" position="32 322 304 20">
 							<Property key="Text_TextColour" value="0.6 0.75 0.9"/>
 							<Property key="Widget_Caption" value="#{InputRoadAngType}"/>
@@ -2152,7 +2161,6 @@
 							<Property key="Text_TextColour" value="0.6 0.7 0.8"/>
 							<Property key="Widget_Caption" value="#{InputRoadChkFirst}"/>
 						</Widget>
-
 						<Widget type="StaticText" skin="StaticText" position="32 406 216 20">
 							<Property key="Widget_Caption" value="#{InputRoadMostSel}"/>
 							<Property key="Text_TextColour" value="0.6 0.7 0.8"/>

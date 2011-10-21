@@ -430,6 +430,7 @@ void App::editTrGr(EditPtr ed)
 	else if (n=="GrSwayLen")  sc.grSwayLen = r;	else if (n=="GrSwaySpd")  sc.grSwaySpeed = r;
 	else if (n=="TrRdDist")  sc.trRdDist = r;	else if (n=="TrImpDist")  sc.trDistImp = r;
 	else if (n=="GrDensSmooth")  sc.grDensSmooth = r;
+	else if (n=="GrTerMaxAngle")  sc.grTerMaxAngle = r;
 }
 
 ///  Vegetation layers  -----------------------------
@@ -454,6 +455,7 @@ void App::tabPgLayers(TabPtr wp, size_t id)
 	Slv(LTrMaxSc, powf(lay.maxScale /6.0f, 1.f/3.f));
 	Slv(LTrWindFx, powf(lay.windFx /12.0f, 1.f/3.f));
 	Slv(LTrWindFy, powf(lay.windFy /12.0f, 1.f/3.f));
+	Slv(LTrMaxTerAng, powf(lay.maxTerAng /90.0f, 1.f/2.f));
 }
 
 void App::chkPgLayOn(WP wp)
@@ -504,6 +506,12 @@ void App::slLTrWindFy(SL)
 {
 	Real v = 12.0f * powf(val/res, 3.f);	sc.pgLayersAll[idPgLay].windFy = v;
 	if (valLTrWindFy){  Fmt(s, "%5.3f", v);  valLTrWindFy->setCaption(s);  }
+}
+
+void App::slLTrMaxTerAng(SL)
+{
+	Real v = 90.0f * powf(val/res, 2.f);	sc.pgLayersAll[idPgLay].maxTerAng = v;
+	if (valLTrMaxTerAng){  Fmt(s, "%5.1f", v);  valLTrMaxTerAng->setCaption(s);  }
 }
 
 

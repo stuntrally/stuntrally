@@ -33,6 +33,7 @@ void Scene::Default()
 	grMinSx = 0.6f;  grMinSy = 0.6f;  grMaxSx = 0.85f;  grMaxSy = 0.9f;
 	grSwayDistr = 4.0f;  grSwayLen = 0.2f;  grSwaySpeed = 0.5f;
 	trPage = 200;  trDist = 200;  trDistImp = 800;  trRdDist = 3;
+	grTerMaxAngle = 30.f;
 
 	camPos = Vector3(10.f,20.f,10.f);  camDir = Vector3(0.f,-0.3f,1.f);
 	fluids.clear();  //
@@ -43,6 +44,7 @@ PagedLayer::PagedLayer()
 	on = 0;  name = "";  dens = 0.1f;
 	windFx = 0.0f;  windFy = 0.0f;  addTrRdDist = 0;
 	minScale = 0.1f;  maxScale = 0.25f;  ofsY = 0.f;
+	maxTerAng = 50.f;
 }
 
 FluidBox::FluidBox() : cobj(0), type(0),
@@ -208,6 +210,8 @@ bool Scene::LoadXml(String file)
 		a = ePgd->Attribute("grSwayLen");	if (a)  grSwayLen = s2r(a);
 		a = ePgd->Attribute("grSwaySpeed");	if (a)  grSwaySpeed = s2r(a);
 		a = ePgd->Attribute("grDensSmooth"); if (a)  grDensSmooth = s2i(a);
+
+		a = ePgd->Attribute("grTerMaxAngle"); if (a)  grTerMaxAngle = s2r(a);
 		//  trees
 		a = ePgd->Attribute("trPage");		if (a)  trPage = s2r(a);
 		a = ePgd->Attribute("trDist");		if (a)  trDist = s2r(a);
@@ -228,6 +232,7 @@ bool Scene::LoadXml(String file)
 			a = ePgL->Attribute("addTrRdDist");	if (a)  l.addTrRdDist = s2i(a);
 			a = ePgL->Attribute("windFx");		if (a)  l.windFx = s2r(a);
 			a = ePgL->Attribute("windFy");		if (a)  l.windFy = s2r(a);
+			a = ePgL->Attribute("maxTerAng");	if (a)  l.maxTerAng = s2r(a);
 
 			pgLayersAll[pgl++] = l;
 			ePgL = ePgL->NextSiblingElement("layer");
@@ -362,6 +367,8 @@ bool Scene::SaveXml(String file)
 		pgd.SetAttribute("grSwayLen",	toStrC( grSwayLen   ));
 		pgd.SetAttribute("grSwaySpeed",	toStrC( grSwaySpeed ));
 		pgd.SetAttribute("grDensSmooth",toStrC( grDensSmooth ));
+
+		pgd.SetAttribute("grTerMaxAngle",toStrC( grTerMaxAngle ));
 		//  trees
 		pgd.SetAttribute("trPage",		toStrC( trPage ));
 		pgd.SetAttribute("trDist",		toStrC( trDist ));
@@ -381,6 +388,7 @@ bool Scene::SaveXml(String file)
 			pgl.SetAttribute("addTrRdDist",	toStrC( l.addTrRdDist ));
 			pgl.SetAttribute("windFx",		toStrC( l.windFx ));
 			pgl.SetAttribute("windFy",		toStrC( l.windFy ));
+			pgl.SetAttribute("maxTerAng",	toStrC( l.maxTerAng ));
 			pgd.InsertEndChild(pgl);
 		}
 	root.InsertEndChild(pgd);

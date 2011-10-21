@@ -290,7 +290,8 @@ protected:
 	//  [Vegetation]  ----
 	MyGUI::EditPtr edGrassDens,edTreesDens, edGrPage,edGrDist, edTrPage,edTrDist,
 		edGrMinX,edGrMaxX, edGrMinY,edGrMaxY,
-		edGrSwayDistr, edGrSwayLen, edGrSwaySpd, edTrRdDist, edTrImpDist, edGrDensSmooth;
+		edGrSwayDistr, edGrSwayLen, edGrSwaySpd, edTrRdDist, edTrImpDist,
+		edGrDensSmooth, edGrTerMaxAngle;
 	void editTrGr(MyGUI::EditPtr);
 	//  paged layers
 	MyGUI::ComboBoxPtr cmbPgLay;  void comboPgLay(CMB);
@@ -300,6 +301,7 @@ protected:
 	MyGUI::StaticImagePtr imgPaged;  MyGUI::StaticTextPtr valLTrAll;
 	SLV(LTrDens);	SLV(LTrRdDist);
 	SLV(LTrMinSc);	SLV(LTrMaxSc);	SLV(LTrWindFx);	SLV(LTrWindFy);
+	SLV(LTrMaxTerAng);
 	
 	
 	//  [Road]  ----

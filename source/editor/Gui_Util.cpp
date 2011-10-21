@@ -60,6 +60,7 @@ void App::SetGuiFromXmls()
 	Ed(GrSwayDistr, sc.grSwayDistr);  Ed(GrDensSmooth, sc.grDensSmooth);
 	Ed(GrSwayLen, sc.grSwayLen);	Ed(GrSwaySpd, sc.grSwaySpeed);
 	Ed(TrRdDist, sc.trRdDist);		Ed(TrImpDist, sc.trDistImp);
+	Ed(GrTerMaxAngle, sc.grTerMaxAngle);
 	tabPgLayers(tabsPgLayers, 0);
 	//MeshPtr mp = MeshManager::load(sc.pgLayersAll[0].name);
 	//mp->getSubMesh(0)->
@@ -196,6 +197,7 @@ void App::btnCopyVeget(WP)
 	sc.grMinSy = sF.grMinSy;  sc.grMaxSy = sF.grMaxSy;
 	sc.grSwayDistr = sF.grSwayDistr;  sc.grSwayLen = sF.grSwayLen;
 	sc.grSwaySpeed = sF.grSwaySpeed;
+	sc.grTerMaxAngle = sF.grTerMaxAngle;
 	sc.trRdDist = sF.trRdDist;  sc.trDistImp = sF.trDistImp;
 
 	for (int i=0; i < sc.ciNumPgLay; ++i)
