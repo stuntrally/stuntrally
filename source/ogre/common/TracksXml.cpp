@@ -8,7 +8,7 @@ using namespace Ogre;
 
 TrackInfo::TrackInfo()
 	:n(-1),crtver(0.0),name("none"),scenery("none"),author("none")
-	,bumps(0),jumps(0),loops(0),pipes(0),banked(0),frenzy(0),longn(0)
+	,fluids(0),bumps(0),jumps(0),loops(0),pipes(0),banked(0),frenzy(0),longn(0)
 	,diff(0),rating(0), rateuser(0),drivenlaps(0)
 {	}
 
@@ -56,6 +56,7 @@ bool TracksXml::LoadXml(Ogre::String file)
 		a = eTrk->Attribute("scenery");		if (a)  t.scenery = std::string(a);
 		a = eTrk->Attribute("author");		if (a)  t.author = std::string(a);
 
+		a = eTrk->Attribute("fluids");		if (a)  t.fluids = s2i(a);
 		a = eTrk->Attribute("bumps");		if (a)  t.bumps = s2i(a);	a = eTrk->Attribute("jumps");		if (a)  t.jumps = s2i(a);
 		a = eTrk->Attribute("loops");		if (a)  t.loops = s2i(a);	a = eTrk->Attribute("pipes");		if (a)  t.pipes = s2i(a);
 		a = eTrk->Attribute("banked");		if (a)  t.banked = s2i(a);	a = eTrk->Attribute("frenzy");		if (a)  t.frenzy = s2i(a);
@@ -95,6 +96,7 @@ bool TracksXml::SaveXml(Ogre::String file)
 		trk.SetAttribute("scenery",		t.scenery.c_str());
 		trk.SetAttribute("author",		t.author.c_str());
 		
+		trk.SetAttribute("fluids",		toStrC( t.fluids ));
 		trk.SetAttribute("bumps",		toStrC( t.bumps ));		trk.SetAttribute("jumps",		toStrC( t.jumps ));
 		trk.SetAttribute("loops",		toStrC( t.loops ));		trk.SetAttribute("pipes",		toStrC( t.pipes ));
 		trk.SetAttribute("banked",		toStrC( t.banked ));	trk.SetAttribute("frenzy",		toStrC( t.frenzy ));
