@@ -44,7 +44,7 @@ PagedLayer::PagedLayer()
 	on = 0;  name = "";  dens = 0.1f;
 	windFx = 0.0f;  windFy = 0.0f;  addTrRdDist = 0;
 	minScale = 0.1f;  maxScale = 0.25f;  ofsY = 0.f;
-	maxTerAng = 50.f;
+	maxTerAng = 30.f;
 }
 
 FluidBox::FluidBox() : cobj(0), type(0),

@@ -401,7 +401,23 @@
 			Name="materials"
 			>
 			<File
+				RelativePath=".\data\materials\fluids.cg"
+				>
+			</File>
+			<File
+				RelativePath=".\data\materials\fluids.material"
+				>
+			</File>
+			<File
+				RelativePath=".\data\materials\fluids.program"
+				>
+			</File>
+			<File
 				RelativePath=".\data\materials\general.cg"
+				>
+			</File>
+			<File
+				RelativePath=".\data\materials\general.matdef"
 				>
 			</File>
 			<File

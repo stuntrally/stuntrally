@@ -1073,6 +1073,10 @@
 					>
 				</File>
 				<File
+					RelativePath=".\data\materials\general.matdef"
+					>
+				</File>
+				<File
 					RelativePath=".\data\materials\general.material"
 					>
 				</File>

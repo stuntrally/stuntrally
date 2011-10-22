@@ -87,5 +87,6 @@
 	<track n="57" name="Test5-TerrainSmall"	created="27-08-11" crtver="1.3" modified="27-08-11" scenery="Savanna" 	author="CH" bumps="2" jumps="0" loops="0" pipes="0" banked="0" frenzy="0" long="0" diff="0" rating="0" rateuser="0" drivenlaps="0" />
 	<track n="57" name="Test6-Fluids"	created="27-08-11" crtver="1.3" modified="27-08-11" scenery="Savanna" 	author="CH" bumps="2" jumps="0" loops="0" pipes="0" banked="0" frenzy="0" long="0" diff="0" rating="0" rateuser="0" drivenlaps="0" />
 	<track n="57" name="I3-Islands"		created="10-09-11" crtver="1.3" modified="10-09-11" scenery="Island" 	author="CH" bumps="1" jumps="0" loops="0" pipes="0" banked="0" frenzy="1" long="3" diff="3" rating="2" rateuser="0" drivenlaps="0" />
-	<track n="58" name="D9-NewElems"	created="22-07-11" crtver="1.3" modified="06-08-11" scenery="Desert" 	author="CH" bumps="0" jumps="0" loops="2" pipes="2" banked="0" frenzy="2" long="0" diff="3" rating="2" rateuser="0" drivenlaps="0" />
+<!--57-->
+	<track n="58" name="J11-Temple"		created="21-10-11" crtver="1.4" modified="21-10-11" scenery="Jungle" 	author="CH" bumps="1" jumps="0" loops="0" pipes="0" banked="1" frenzy="2" long="1" diff="3" rating="2" rateuser="0" drivenlaps="0" />
 </tracks>
