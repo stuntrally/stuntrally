@@ -84,10 +84,9 @@ void MaterialGenerator::generate(bool fixedFunction)
 		}*/
 		
 		// diffuse map
-		tu = pass->createTextureUnitState( diffuseMap );
-		if (needAlphaMap())
+		if (needDiffuseMap())
 		{
-			tu->setColourOperationEx(LBX_BLEND_CURRENT_ALPHA, LBS_TEXTURE, LBS_CURRENT);
+			tu = pass->createTextureUnitState( diffuseMap );
 		}
 		
 		if (needEnvMap())
@@ -105,10 +104,14 @@ void MaterialGenerator::generate(bool fixedFunction)
 	}
 	else
 	{
+		Ogre::TextureUnitState* tu;
 		// diffuse map
-		Ogre::TextureUnitState* tu = pass->createTextureUnitState( diffuseMap );
-		tu->setName("diffuseMap");
-		mDiffuseTexUnit = 0; mTexUnit_i++;
+		if (needDiffuseMap())
+		{
+			tu = pass->createTextureUnitState( diffuseMap );
+			tu->setName("diffuseMap");
+			mDiffuseTexUnit = mTexUnit_i; mTexUnit_i++;
+		}
 		
 		// alpha map
 		if (needAlphaMap())
@@ -217,6 +220,11 @@ inline bool MaterialGenerator::needEnvMap()
 {
 	return (mDef->mProps->envMap != "") && mParent->getEnvMap();
 	//!todo env map priority
+}
+
+inline bool MaterialGenerator::needDiffuseMap()
+{
+	return (mDef->mProps->diffuseMaps.size() > 0);
 }
 
 inline bool MaterialGenerator::needLightingAlpha()
@@ -580,7 +588,7 @@ void MaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::StrStrea
 		"	in float4 tangentToCubeSpace1 : TEXCOORD3, \n"
 		"	in float4 tangentToCubeSpace2 : TEXCOORD4, \n";
 		
-	outStream <<
+	if (needDiffuseMap()) outStream <<
 		"	uniform sampler2D diffuseMap : TEXUNIT"+toStr(mDiffuseTexUnit)+", \n";
 		
 	if (needAlphaMap()) outStream <<
@@ -672,15 +680,19 @@ void MaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::StrStrea
 	}
 	
 	// fetch diffuse texture
-	outStream <<
+	if (needDiffuseMap()) outStream <<
 		"	float4 diffuseTex = tex2D(diffuseMap, texCoord); \n";
 	
 	// calculate lighting (per-pixel)
 	if (fpNeedLighting()) outStream <<	
 		// Compute the diffuse term
 		"	float3 lightDir = normalize(lightPosition.xyz - (position.xyz * lightPosition.w)); \n"
-		"	float diffuseLight = max(dot(lightDir, normal), 0); \n"
-		"	float3 diffuse = matDiffuse.xyz * lightDiffuse.xyz * diffuseTex.xyz * diffuseLight; \n"
+		"	float diffuseLight = max(dot(lightDir, normal), 0); \n";
+		if (needDiffuseMap()) outStream <<
+			"	float3 diffuse = matDiffuse.xyz * lightDiffuse.xyz * diffuseTex.xyz * diffuseLight; \n";
+		else outStream <<
+			"	float3 diffuse = matDiffuse.xyz * lightDiffuse.xyz * diffuseLight; \n";
+		outStream <<
 		// Compute the specular term
 		"	float3 viewVec = -eyeVector; \n"
 		"	float3 half = normalize(lightDir + viewVec); \n"
@@ -688,12 +700,16 @@ void MaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::StrStrea
 
 		"	if (diffuseLight <= 0) specularLight = 0; \n"
 		"		float3 specular = matSpecular.xyz * lightSpecular.xyz * specularLight; \n";
-
-		// Add together with ambient term and diffuse texture
-		if (needShadows()) outStream <<
-		"	float3 lightColour = diffuseTex.xyz * matAmbient.xyz + diffuse*shadowing + specular*shadowing; \n";
+		// Compute the ambient term
+		if (needDiffuseMap()) outStream <<
+			"	float3 ambient = diffuseTex.xyz * matAmbient.xyz; \n";
 		else outStream <<
-		"	float3 lightColour = diffuseTex.xyz * matAmbient.xyz + diffuse + specular; \n";
+			"	float3 ambient = matAmbient.xyz; \n";
+		// Add all terms together (also with shadow)
+		if (needShadows()) outStream <<
+		"	float3 lightColour = ambient + diffuse*shadowing + specular*shadowing; \n";
+		else outStream <<
+		"	float3 lightColour = ambient + diffuse + specular; \n";
 	
 	if (needEnvMap()) outStream << 
 		"	float3 r = reflect( eyeVector, normal ); \n" // calculate reflection vector
@@ -723,10 +739,23 @@ void MaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::StrStrea
 	{
 		if (needAlphaMap()) outStream <<
 			"	float alpha = tex2D(alphaMap, texCoord).r; \n"; // use only r channel
-		else if (needLightingAlpha()) outStream <<
-			"	float alpha = lightingAlpha.x + lightingAlpha.y * diffuseLight + lightingAlpha.z * specularLight + (1-diffuseTex.r)*lightingAlpha.w; \n";
-		else outStream <<
-			"	float alpha = diffuseTex.a; \n";
+		else if (needLightingAlpha())
+		{
+			if (mDef->mProps->lightingAlpha.w == 0 && needDiffuseMap()) outStream <<
+				"	float alpha = lightingAlpha.x + lightingAlpha.y * diffuseLight + lightingAlpha.z * specularLight + (1-diffuseTex.r)*lightingAlpha.w; \n";
+			else outStream <<
+				"	float alpha = lightingAlpha.x + lightingAlpha.y * diffuseLight + lightingAlpha.z * specularLight; \n";
+		}
+		else
+		{
+			if (needDiffuseMap()) outStream <<
+				"	float alpha = diffuseTex.a; \n";
+			else {
+				outStream <<
+				"	float alpha = 1.0; \n"; // no way to get alpha value, we don't have diffuse tex and user didnt supply lightingAlpha
+				LogO("[MaterialFactory] WARNING: Material declared as transparent, but no way to get alpha value.");
+			}
+		}
 		outStream << 
 		"	oColor.w = alpha; \n";
 	}

@@ -38,6 +38,12 @@ parent = cartire_front
 diffuseMap_1024 = wheel_rear.png
 receivesDepthShadows = true
 
+[car_ghost]
+transparent = true
+ambient = 0.2 0.26 0.3
+diffuse = 0.36 0.48 0.6
+specular = 0.37 0.39 0.41 32
+lightingAlpha = 0.3 0.2 0.3 0.0
 
 ;  ------------ FM ----------------
 [car_body_FM]
