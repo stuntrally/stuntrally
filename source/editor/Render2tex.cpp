@@ -118,7 +118,7 @@ void App::SaveGrassDens()
 	for (j = -f; j <= f; ++j)
 	for (i = -f; i <= f; ++i, ++m)
 	{
-		v = std::max(0.f, (1.f - sqrt((float)(i*i+j*j)) / float(f)) * 256.f);
+		v = std::max(0.f, (1.f - sqrtf((float)(i*i+j*j)) / float(f)) * 256.f);
 		mask[m] = v;  ff += v;
 	}
 	ff = 2.f / ff;  // normally would be 1.f - but road needs to stay black and be smooth outside
