@@ -1,4 +1,5 @@
 // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 
+
 material ppx_shadow			// per pixel  with pssm shadow
 {
 	set $ambientCol "1 1 1 1"

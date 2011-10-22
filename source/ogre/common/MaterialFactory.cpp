@@ -111,7 +111,8 @@ void MaterialFactory::loadDefsFromFile(const std::string& file)
 				LogO("[MaterialFactory] parent '" + parent + "' of material "
 					"definition '" + secName + "' not found. Make sure you are"
 					" declaring / loading in the right order.");
-				return;
+				seci.getNext();
+				continue;
 			}
 			else
 			{

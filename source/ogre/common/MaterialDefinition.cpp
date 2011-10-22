@@ -11,7 +11,7 @@ MaterialProperties::MaterialProperties() :
 	envMap(""), reflAmount(0.2), bumpScale(1.0), cullHardware(CULL_HW_CLOCKWISE),
 	hasFresnel(false), fresnelBias(0), fresnelScale(0), fresnelPower(0),
 	receivesShadows(false), receivesDepthShadows(false), shaders(true), transparent(false),
-	ambient(0.5, 0.5, 0.5), diffuse(1.0, 1.0, 1.0, 1.0), specular(0.2, 0.2, 0.2, 128),
+	ambient(0.5, 0.5, 0.5), diffuse(1.0, 1.0, 1.0), specular(0.2, 0.2, 0.2, 128),
 	depthBias(0), depthCheck(true), transparentSorting(true), lightingAlpha(0.0, 0.0, 0.0, 0.0)
 {}
 
@@ -58,7 +58,7 @@ void MaterialProperties::setProperty(const std::string& prop, const std::string&
 	else if (prop == "receivesShadows") receivesShadows = str2bool(value);
 	else if (prop == "receivesDepthShadows") receivesDepthShadows = str2bool(value);
 	else if (prop == "ambient") ambient = str2vec3(value);
-	else if (prop == "diffuse") diffuse = str2vec4(value);
+	else if (prop == "diffuse") diffuse = str2vec3(value);
 	else if (prop == "specular") specular = str2vec4(value);
 	
 	// tex size in prop string
@@ -66,22 +66,29 @@ void MaterialProperties::setProperty(const std::string& prop, const std::string&
 	{
 		std::string size = prop.substr(11);
 		int isize = Ogre::StringConverter::parseInt(size);
-		diffuseMaps.insert( std::make_pair(isize, value) );
+		diffuseMaps[isize] = value;
 	}
 	else if (Ogre::StringUtil::startsWith(prop, "normalMap_", false))
 	{
 		std::string size = prop.substr(10);
 		int isize = Ogre::StringConverter::parseInt(size);
-		normalMaps.insert( std::make_pair(isize, value) );
+		normalMaps[isize] = value;
 	}
 	else if (Ogre::StringUtil::startsWith(prop, "alphaMap_", false))
 	{
 		std::string size = prop.substr(10);
 		int isize = Ogre::StringConverter::parseInt(size);
-		alphaMaps.insert( std::make_pair(isize, value) );
+		alphaMaps[isize] = value;
 	}
 	else
+	{
+		if (Ogre::StringUtil::startsWith(prop, ";")) // ';' means comment, ignore
+			return;
+		if (prop == "parent") // parent setting is parsed elsewhere
+			return;
+			
 		LogO("[MaterialFactory] WARNING: Unknown attribute '" + prop + "'");
+	}
 }
 
 MaterialDefinition::MaterialDefinition(MaterialFactory* parent, MaterialProperties* props)

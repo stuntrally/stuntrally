@@ -243,12 +243,16 @@ void CarModel::RecreateMaterials()
 	bool ghost = eType == CT_GHOST && pSet->rpl_alpha;  //1 || for ghost test
 	
 	// --------- Materials  -------------------
-	String s = pSet->shaders == 0 ? "_old" : "";
+	
+	// if specialised car material (e.g. car_body_FM) exists, use this one instead of e.g. car_body
+	// useful macro for choosing between these 2 variants
+	#define chooseMat(s) MaterialManager::getSingleton().resourceExists( "car" + String(s) + "_" + sDirname) ? "car"+String(s) + "_" + sDirname : "car"+String(s)
+	
 	//  ghost car has no interior, particles, trails and uses same material for all meshes
 	if (!ghost)
-	{	sMtr[Mtr_CarBody]     = "car_body"+s;		sMtr[Mtr_CarTireFront]  = "cartire_front"+s;
-		sMtr[Mtr_CarInterior] = "car_interior"+s;	sMtr[Mtr_CarTireRear]   = "cartire_rear"+s;
-		sMtr[Mtr_CarGlass]    = "car_glass"+s;
+	{	sMtr[Mtr_CarBody]     = chooseMat("_body");		sMtr[Mtr_CarTireFront]  = chooseMat("tire_front");
+		sMtr[Mtr_CarInterior] = chooseMat("_interior");	sMtr[Mtr_CarTireRear]   = chooseMat("tire_rear");
+		sMtr[Mtr_CarGlass]    = chooseMat("_glass");
 	}else
 	for (int i=0; i<NumMaterials; i++)
 		sMtr[i] = "car_ghost";  //+s old mtr..
@@ -286,21 +290,18 @@ void CarModel::RecreateMaterials()
 						if (tus->getTextureName() == "flat_n.png")
 						{
 							// interior normal map
-							if (i == Mtr_CarInterior && FileExists(sCar + "_interior_normal.png") 
-								&& tus->getTextureName() == "flat_n.png")
+							if (i == Mtr_CarInterior && FileExists(sCar + "_interior_normal.png"))
 							{
 								tus->setTextureName(sDirname + "_interior_normal.png");  continue;
 							}
 							// glass normal map
-							if (i == Mtr_CarGlass && FileExists(sCar + "_glass_normal.png")
-								&& tus->getTextureName() == "flat_n.png")
+							if (i == Mtr_CarGlass && FileExists(sCar + "_glass_normal.png"))
 							{
 								tus->setTextureName(sDirname + "_glass_normal.png");  continue;
 							}
 							// tire normal map
 							if ( (i == Mtr_CarTireFront || i == Mtr_CarTireRear) 
-								&& FileExists(sCar + "_wheel_normal.png") 
-								&& tus->getTextureName() == "flat_n.png")
+								&& FileExists(sCar + "_wheel_normal.png") )
 							{
 								tus->setTextureName(sDirname + "_wheel_normal.png");  continue;
 							}

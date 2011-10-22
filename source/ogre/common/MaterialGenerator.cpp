@@ -25,7 +25,7 @@ using namespace Ogre;
 void MaterialGenerator::generate(bool fixedFunction)
 {	
 	MaterialPtr mat = prepareMaterial(mDef->getName());
-		
+	
 	// reset some attributes
 	mDiffuseTexUnit = 0; mNormalTexUnit = 0; mEnvTexUnit = 0; mAlphaTexUnit = 0;
 	mShadowTexUnit_start = 0; mTexUnit_i = 0;
@@ -35,7 +35,7 @@ void MaterialGenerator::generate(bool fixedFunction)
 	Ogre::Pass* pass = technique->createPass();
 	
 	pass->setAmbient( mDef->mProps->ambient.x, mDef->mProps->ambient.y, mDef->mProps->ambient.z );
-	pass->setDiffuse( mDef->mProps->diffuse.x, mDef->mProps->diffuse.y, mDef->mProps->diffuse.z, mDef->mProps->diffuse.w );
+	pass->setDiffuse( mDef->mProps->diffuse.x, mDef->mProps->diffuse.y, mDef->mProps->diffuse.z, 1.0 );
 	
 	if (!needShaders() || fixedFunction)
 	{
@@ -187,7 +187,8 @@ MaterialPtr MaterialGenerator::prepareMaterial(const std::string& name)
 	}
 	else
 	{
-		mat = MaterialManager::getSingleton().create(name, Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME);
+		mat = MaterialManager::getSingleton().create(name, ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME);
+		mat->removeAllTechniques(); // WTF ? ogre by default inserts a technique and a pass. why?
 	}
 	return mat;
 }
@@ -601,7 +602,7 @@ void MaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::StrStrea
 		"	uniform float4 lightPosition, \n"
 		// material
 		"	uniform float3 matAmbient, \n"
-		"	uniform float4 matDiffuse, \n"
+		"	uniform float3 matDiffuse, \n"
 		"	uniform float4 matSpecular, \n"; // shininess in w
 	outStream <<
 		"	uniform float3 fogColor, \n";
