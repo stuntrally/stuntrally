@@ -60,6 +60,12 @@ void MaterialGenerator::generate(bool fixedFunction)
 		pass->setDepthWriteEnabled(false);
 	}
 	
+	if (mDef->mProps->depthBias != 0.f)
+		pass->setDepthBias( mDef->mProps->depthBias );
+		
+	if (mDef->mProps->depthCheck == false)
+		pass->setDepthCheckEnabled( false );
+	
 	if (!needShaders() || fixedFunction)
 	{
 		pass->setShadingMode(SO_PHONG);

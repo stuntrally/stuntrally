@@ -4,12 +4,15 @@
 #include "MaterialDefinition.h"
 #include "MaterialFactory.h"
 
+using namespace Ogre;
+
 // constructor with sensible default values
 MaterialProperties::MaterialProperties() :
 	envMap(""), reflAmount(0.2), bumpScale(1.0), cullHardware(CULL_HW_CLOCKWISE),
 	hasFresnel(0), fresnelBias(0), fresnelScale(0), fresnelPower(0),
 	receivesShadows(0), receivesDepthShadows(0), shaders(1), transparent(0),
-	ambient(0.5, 0.5, 0.5), diffuse(1.0, 1.0, 1.0, 1.0), specular(0.2, 0.2, 0.2, 128)
+	ambient(0.5, 0.5, 0.5), diffuse(1.0, 1.0, 1.0, 1.0), specular(0.2, 0.2, 0.2, 128),
+	depthBias(0), depthCheck(true)
 {}
 
 const inline bool str2bool(const std::string& s)
@@ -19,9 +22,10 @@ const inline bool str2bool(const std::string& s)
 	if (val == "true") return true;
 	/* else */ return false;
 }
-#define str2float(s) Ogre::StringConverter::parseReal(s)
-#define str2vec3(s) Ogre::StringConverter::parseVector3(s)
-#define str2vec4(s) Ogre::StringConverter::parseVector4(s)
+#define str2int(s) StringConverter::parseInt(s)
+#define str2float(s) StringConverter::parseReal(s)
+#define str2vec3(s) StringConverter::parseVector3(s)
+#define str2vec4(s) StringConverter::parseVector4(s)
 
 void MaterialProperties::setProperty(const std::string& prop, const std::string& value)
 {	
@@ -39,6 +43,8 @@ void MaterialProperties::setProperty(const std::string& prop, const std::string&
 				cullHardware = CULL_HW_ANTICLOCKWISE_OR_NONE;
 		}
 	}
+	else if (prop == "depthBias") depthBias = str2int(value);
+	else if (prop == "depthCheck") depthCheck = str2bool(value);
 	else if (prop == "shaders") shaders = str2bool(value);
 	else if (prop == "transparent") transparent = str2bool(value);
 	else if (prop == "bumpScale") bumpScale = str2float(value);

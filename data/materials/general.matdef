@@ -1,36 +1,39 @@
 ;[car_body]
-shaders = true
 diffuseMap_1024 = body_dyn.png
 normalMap_1 = flat_n.png
 envMap = ReflectionCube
-reflAmount = 0.2
+reflAmount = 0.1
 diffuse = 1.0 1.0 1.0 1.0
 ambient = 0.5 0.5 0.5
-;specular = 0.7 0.7 0.7 32
+specular = 0.7 0.7 0.7 32
 receivesShadows = false
 receivesDepthShadows = true
 
 ;[roadJungle_ter]
-shaders = true
 transparent = true
 diffuseMap_2048 = roadJungle.jpg
 alphaMap_2048 = roadAlpha.png
 normalMap_1024 = ice_3_nh1.png
-;envMap = ReflectionCube0
-reflAmount = 0.3
+envMap = ReflectionCube0
+reflAmount = 0.10
+bumpScale = 0.5
 receivesShadows = true
 receivesDepthShadows = true
 diffuse = 0.5 0.5 0.5 1.0
 ambient = 0.5 0.5 0.5
 specular = 0.2 0.2 0.2 32
+depthBias = 3
 
 ;[road_wall]
-shaders = true
 diffuseMap_256 = brass_patina_s.jpg
 diffuseMap_1024 = brass_patina.jpg
 normalMap_256 = brass_patina_n_s.png
 normalMap_1024 = brass_patina_n.png
 envMap = ReflectionCube0
-reflAmount = 0.2
+reflAmount = 0.1
 cullHardware = anticlockwise
 cullHardware = none_if_depthshadow
+ambient = 0.4 0.43 0.44
+diffuse = 0.7 0.76 0.8
+specular = 0.25 0.267 0.28 4
+depthBias = 3

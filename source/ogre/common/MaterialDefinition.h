@@ -23,24 +23,30 @@ enum CullHardwareMode
 
 struct MaterialProperties
 {
+	bool shaders;
+	
 	// map: tex size, tex name
 	textureMap diffuseMaps;
 	textureMap alphaMaps; bool transparent;
 	textureMap normalMaps; float bumpScale;
-	std::string envMap;
 	
 	CullHardwareMode cullHardware;
 	
-	bool shaders;
 	
+	// reflection
+	std::string envMap;
 	float reflAmount;
 	bool hasFresnel; float fresnelBias, fresnelScale, fresnelPower;
+	
+	// shadows, lighting
 	bool receivesShadows, receivesDepthShadows;
 	Ogre::Vector3 ambient; Ogre::Vector4 diffuse; Ogre::Vector4 specular;
 	
+	float depthBias; bool depthCheck;
+	
 	//!todo:
 	// high priority:
-	// depth settings (bias, write, check, etc..), alpha_rejection
+	// alpha_rejection, transparent_sorting
 	
 	// low priority / future:
 	// PPX on/off, shading mode (phong etc) for no shaders,
