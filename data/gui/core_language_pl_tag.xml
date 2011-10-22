@@ -110,6 +110,7 @@
 	<Tag name="Replay">Powtórka</Tag>
 	<Tag name="AutoRear">Automatyczny wsteczny</Tag>
 	<Tag name="NumLaps">Liczba okrążeń</Tag>
+	<Tag name="UseSSAA">Użyj SSAA przy włączonych efektach</Tag>
 	<Tag name="ReflMode_single">Pojedyncze</Tag>
 	<Tag name="Friction">Tarcie</Tag>
 	<Tag name="SetCamTo">Ustaw kamerę na</Tag>
@@ -191,6 +192,7 @@
 	<Tag name="Delete">Usuń</Tag>
 	<Tag name="Rename">Zmień nazwę</Tag>
 	<Tag name="TipModelPageLength">Rozmiar strony modeli (niski będzie ładował często, wysoki spowoduje widoczne przeskoki).</Tag>
+	<Tag name="LightmapSize">Wielkość Lightmap</Tag>
 	<Tag name="RoadQual">Jakość drogi daleko</Tag>
 	<Tag name="length">długość</Tag>
 	<Tag name="ColumnNSides">Boków kolumny</Tag>
@@ -237,7 +239,7 @@
 	<Tag name="ApplyShadows">Zmień cienie</Tag>
 	<Tag name="TipFogEndClr">Kolor mgły. R G B składowe 0 to 1 (np. 0.7 0.8 0.9)</Tag>
 	<Tag name="InputCameraTxt1">z shift - tylko główne kamery</Tag>
-	<Tag name="VegetCol">Kolizja z wegetacją</Tag>
+	<Tag name="InputToggleVeget">V - wł. / wył. wegetację</Tag>
 	<Tag name="Particles">Cząstki</Tag>
 	<Tag name="Other">Inne</Tag>
 	<Tag name="TipTerLAngSm">Kąt zakres przejściowy</Tag>
@@ -411,7 +413,8 @@
 	<Tag name="TipTerLNoise">Współ. dodatkowego szumu.</Tag>
 	<Tag name="InputTerDeform">D - Deformuj (LMB góra, RMB dół)</Tag>
 	<Tag name="TipDiffuseTex">Tekstura koloru (specular w alpha)</Tag>
-	<Tag name="InputToggleVeget">V - wł. / wył. wegetację</Tag>
+	<Tag name="VegetCol">Kolizja z wegetacją</Tag>
+	<Tag name="Track">Trasa</Tag>
 	<Tag name="MyGUI_MessageBox_Continue">Kontynuuj</Tag>
 	<Tag name="Tools">Narzędzia</Tag>
 	<Tag name="TipGrassSwaySpd">Efekt kołysania trawy, szybkość.</Tag>
@@ -525,7 +528,7 @@
 	<Tag name="InputRoadHeight">- zmień wysokość</Tag>
 	<Tag name="TipSunSpecular">Kolor słońca jaskrawy. R G B składowe 0 do 1 (np. 0.6 0.6 0.6)</Tag>
 	<Tag name="ColSat">Nasycenie</Tag>
-	<Tag name="Track">Trasa</Tag>
+	<Tag name="AntiAliasing">Wygładzanie krawędzi</Tag>
 	<Tag name="InputRoadSelectMany">Wybierz (wiele)</Tag>
 	<Tag name="Volume">Głośność</Tag>
 	<Tag name="TipTerLayers">Liczba warstw tekstur terenu (zalecana 2-3, znacząco obniża wydajność). *Autom. przejścia wspierane do maks. 4.</Tag>
@@ -547,10 +550,12 @@
 	<Tag name="MyGUI_MessageBox_Yes">Tak</Tag>
 	<Tag name="RollingDrag">Opór toczenia</Tag>
 	<Tag name="RplAll">Wszystkie</Tag>
-	<Tag name="UseSSAA">Use SSAA when effects are enabled</Tag>
-	<Tag name="LightmapSize">Lightmap size</Tag>
-	<Tag name="AntiAliasing">Antialiasing</Tag>
-	<Tag name="GameVersion">1.3</Tag>
+	<Tag name="TipGrTerMaxAngle">Terrain angle above which there won't be any grass.</Tag>
+	<Tag name="LTrMaxTerAng">Max. Terrain Angle</Tag>
+	<Tag name="GrTerMaxAngle">Grass Max. Terrain Angle</Tag>
+	<Tag name="fluids">fluids (water or mud)</Tag>
+	<Tag name="TipLTrMaxTerAng">Terrain angle above which model won't appear.</Tag>
+	<Tag name="GameVersion">1.4</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 
 </MyGUI>

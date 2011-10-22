@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION"
 "Report-Msgid-Bugs-To: "
-"POT-Creation-Date: 2011-10-15 17:00+0200"
+"POT-Creation-Date: 2011-10-23 01:34+0200"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>"
 "Language-Team: LANGUAGE <LL@li.org>"
@@ -277,6 +277,10 @@ msgctxt "TipDiffusePrev"
 msgid "Diffuse texture preview image."
 msgstr ""
 
+msgctxt "TipGrTerMaxAngle"
+msgid "Terrain angle above which there won't be any grass."
+msgstr ""
+
 msgctxt "smoke"
 msgid "smoke"
 msgstr ""
@@ -386,7 +390,7 @@ msgid "Camera info"
 msgstr ""
 
 msgctxt "frenzy"
-msgid "frenzy"
+msgid "frenzy (curly road)"
 msgstr ""
 
 msgctxt "InputRoadChkRadius"
@@ -557,8 +561,8 @@ msgctxt "InputRoadSel"
 msgid "Backspace - add to or remove from selection"
 msgstr ""
 
-msgctxt "Weather"
-msgid "Weather"
+msgctxt "LTrMaxTerAng"
+msgid "Max. Terrain Angle"
 msgstr ""
 
 msgctxt "wind"
@@ -774,7 +778,7 @@ msgid "difficulty"
 msgstr ""
 
 msgctxt "bumps"
-msgid "bumps"
+msgid "bumps (bumpy terrain)"
 msgstr ""
 
 msgctxt "TipReverse"
@@ -1037,6 +1041,10 @@ msgctxt "InputRoadPipeAngle"
 msgid "[,]   - pipe angle (no pipe when 0)"
 msgstr ""
 
+msgctxt "Weather"
+msgid "Weather"
+msgstr ""
+
 msgctxt "InputMapRestartGame"
 msgid "New game"
 msgstr ""
@@ -1095,6 +1103,10 @@ msgstr ""
 
 msgctxt "SunWeather"
 msgid "Sun and Weather"
+msgstr ""
+
+msgctxt "GrTerMaxAngle"
+msgid "Grass Max. Terrain Angle"
 msgstr ""
 
 msgctxt "TipTrkScreenEditor"
@@ -1913,6 +1925,10 @@ msgctxt "ColHue"
 msgid "Color - Hue"
 msgstr ""
 
+msgctxt "fluids"
+msgid "fluids (water or mud)"
+msgstr ""
+
 msgctxt "TBTime"
 msgid "Time"
 msgstr ""
@@ -2087,6 +2103,10 @@ msgstr ""
 
 msgctxt "DistMult"
 msgid "Distance mul"
+msgstr ""
+
+msgctxt "TipLTrMaxTerAng"
+msgid "Terrain angle above which model won't appear."
 msgstr ""
 
 msgctxt "Resolution"
