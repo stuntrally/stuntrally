@@ -576,6 +576,8 @@ void CarModel::Create(int car)
 	//  reload car materials
 	for (int i = 0; i < NumMaterials; ++i)
 		ReloadTex(sMtr[i]);
+		
+	setMtrNames();
 }
 
 //  ----------------- Reflection ------------------------
