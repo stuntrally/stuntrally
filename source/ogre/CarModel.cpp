@@ -237,7 +237,6 @@ void CarModel::Update(PosInfo& posInfo, float time)
 //-------------------------------------------------------------------------------------------------------
 void CarModel::RecreateMaterials()
 {
-	LogO("Recreating car materials");
 	String strI = toStr(iIndex);
 	String sCar = resCar + "/" + sDirname;
 	bool ghost = eType == CT_GHOST && pSet->rpl_alpha;  //1 || for ghost test
@@ -342,7 +341,7 @@ void CarModel::setMtrName(const String& entName, const String& mtrName)
 			manual = pSceneMgr->getManualObject(entName);
 			manual->setMaterialName(0, mtrName);
 		}
-		catch(Ogre::Exception&) { LogO("!! setMtrName() for "+entName+" failed"); }
+		catch(Ogre::Exception&) {  }
 	}
 }
 
