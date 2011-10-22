@@ -62,11 +62,12 @@ void App::UpdGuiRdStats(const SplineRoad* rd, const Scene& sc, float time)
 	if (id > 0)
 	{	const TrackInfo& ti = tracksXml.trks[id-1];
 		#define str0(v)  ((v)==0 ? "" : toStr(v))
-		if (infTrk[0])  infTrk[0]->setCaption(str0(ti.bumps));		if (infTrk[1])  infTrk[1]->setCaption(str0(ti.jumps));
-		if (infTrk[2])  infTrk[2]->setCaption(str0(ti.loops));		if (infTrk[3])  infTrk[3]->setCaption(str0(ti.pipes));
-		if (infTrk[4])  infTrk[4]->setCaption(str0(ti.banked));		if (infTrk[5])  infTrk[5]->setCaption(str0(ti.frenzy));
-		if (infTrk[6])  infTrk[6]->setCaption(str0(ti.longn));
-		if (infTrk[7])  infTrk[7]->setCaption(toStr(ti.diff));		if (infTrk[8])  infTrk[8]->setCaption(toStr(ti.rating));
+		if (infTrk[0])  infTrk[0]->setCaption(str0(ti.fluids));
+		if (infTrk[1])  infTrk[1]->setCaption(str0(ti.bumps));		if (infTrk[2])  infTrk[2]->setCaption(str0(ti.jumps));
+		if (infTrk[3])  infTrk[3]->setCaption(str0(ti.loops));		if (infTrk[4])  infTrk[4]->setCaption(str0(ti.pipes));
+		if (infTrk[5])  infTrk[5]->setCaption(str0(ti.banked));		if (infTrk[6])  infTrk[6]->setCaption(str0(ti.frenzy));
+		if (infTrk[7])  infTrk[7]->setCaption(str0(ti.longn));
+		if (infTrk[8])  infTrk[8]->setCaption(toStr(ti.diff));		if (infTrk[9])  infTrk[9]->setCaption(toStr(ti.rating));
 	}
 
 #ifndef ROAD_EDITOR  // game
@@ -217,6 +218,7 @@ void App::AddTrkL(std::string name, int user, const TrackInfo* ti)
 
 	MultiList2* li = trkMList;
 	li->addItem(name, 0);
+	// todo: repair N, scenery, ver sorting since it got broken from #colors
 
 	if (!ti)  return;  //  details
 	int l = li->getItemCount()-1;
@@ -226,16 +228,17 @@ void App::AddTrkL(std::string name, int user, const TrackInfo* ti)
 	//list->setSubItemNameAt(4,l, ti->created);  list->setSubItemNameAt(5,l, ti->modified);
 	#define toS(clr,v)  (v > 0) ? (clr "  "+toStr(v)) : " "
 	li->setSubItemNameAt(4,l, toS("#C0D0FF",ti->diff));   li->setSubItemNameAt(5,l, toS("#C0E0FF",ti->rating));  //rateuser="0" drivenlaps="0"
-	li->setSubItemNameAt(6,l, toS("#40FF00",ti->bumps));  li->setSubItemNameAt(7,l, toS("#FFA030",ti->jumps));
-	li->setSubItemNameAt(8,l, toS("#00FFFF",ti->loops));  li->setSubItemNameAt(9,l, toS("#FFFF00",ti->pipes));
-	li->setSubItemNameAt(10,l,toS("#C0C0C0",ti->banked)); li->setSubItemNameAt(11,l,toS("#C080FF",ti->frenzy));
-	li->setSubItemNameAt(12,l,toS("#FFA0A0",ti->longn));
+	li->setSubItemNameAt(6,l, toS("#80C0FF",ti->fluids));
+	li->setSubItemNameAt(7,l, toS("#40FF00",ti->bumps));  li->setSubItemNameAt(8,l, toS("#FFA030",ti->jumps));
+	li->setSubItemNameAt(9,l, toS("#00FFFF",ti->loops));  li->setSubItemNameAt(10,l, toS("#FFFF00",ti->pipes));
+	li->setSubItemNameAt(11,l,toS("#C0C0C0",ti->banked)); li->setSubItemNameAt(12,l,toS("#C080FF",ti->frenzy));
+	li->setSubItemNameAt(13,l,toS("#FFA0A0",ti->longn));
 }
 
 
 //  Gui Init  [Track]  . . . . . . . . . . . . . . . . . . . 
 const int wi = 32;  const int App::TcolW[32] = {
-	150, 32, 100, 40, wi, wi, wi, wi, wi, wi, wi, wi, wi, 20};
+	150, 32, 80, 40, wi, wi, wi, wi, wi, wi, wi, wi, wi, wi, 20};
 
 void App::GuiInitTrack()
 {
@@ -275,6 +278,7 @@ void App::GuiInitTrack()
 	li->addColumn("ver", TcolW[c++]);  // created  modified  author-
 	li->addColumn("diff", TcolW[c++]);  li->addColumn("*", TcolW[c++]);
 	// rateuser  drivenlaps ..
+	li->addColumn("f", TcolW[c++]);
 	li->addColumn("B", TcolW[c++]);  li->addColumn("J", TcolW[c++]);
 	li->addColumn("L", TcolW[c++]);  li->addColumn("P", TcolW[c++]);
 	li->addColumn("b", TcolW[c++]);  li->addColumn("f", TcolW[c++]);
@@ -330,6 +334,6 @@ void App::updTrkListDim()
 	int xt = 0.018*wi.width, yt = 0.052*wi.height, yico = yt - wico - 1;  //0.02*wi.height;
 	trkMList->setCoord(xt, yt, sw + 8/*frame*/, 0.70/*height*/*wi.height);
 	imgTrkIco1->setCoord(xt + xico1+2, yico, 2*wico, wico);
-	imgTrkIco2->setCoord(xt + xico2+2, yico, 7*wico, wico);
+	imgTrkIco2->setCoord(xt + xico2+2, yico, 8*wico, wico);
 	trkMList->setVisible(true);
 }
