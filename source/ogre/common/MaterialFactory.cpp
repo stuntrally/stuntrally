@@ -12,6 +12,7 @@
 #include <OgreConfigFile.h>
 #include <OgreResourceGroupManager.h>
 #include <OgreStringConverter.h>
+#include <OgreResourceGroupManager.h>
 using namespace Ogre;
 
 MaterialFactory::MaterialFactory() : 
@@ -19,10 +20,22 @@ MaterialFactory::MaterialFactory() :
 	iTexSize(1024), iNumShadowTex(3),
 	bSettingsChanged(1) // always have to generate at start
 {
-	// temporary test.
-	loadDefsFromFile("general.matdef");
-	
-	//!todo search all resource paths and load *.matdef files (need to pay attention to loading order)
+	// find all files with *.matdef extension in all resource groups
+	StringVector resourceGroups = ResourceGroupManager::getSingleton().getResourceGroups();
+	for (StringVector::iterator it = resourceGroups.begin();
+		it != resourceGroups.end(); ++it)
+	{
+		StringVectorPtr files = ResourceGroupManager::getSingleton().findResourceNames(
+			(*it),
+			"*.matdef");
+		
+		for (StringVector::iterator fit = files->begin();
+			fit != files->end(); ++fit)
+		{
+			loadDefsFromFile( (*fit) );
+		}
+		
+	}
 }
 
 //----------------------------------------------------------------------------------------
@@ -141,7 +154,7 @@ void MaterialFactory::loadDefsFromFile(const std::string& file)
 		prop(fresnelBias); prop(fresnelScale); prop(fresnelPower); prop(receivesShadows); prop(receivesDepthShadows);
 	}*/
 	
-	//LogO("[MaterialFactory] loaded " + toStr(defI) + " definitions from " + file);
+	LogO("[MaterialFactory] loaded " + toStr(defI) + " definitions from " + file);
 }
 
 //----------------------------------------------------------------------------------------

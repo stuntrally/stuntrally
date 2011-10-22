@@ -27,11 +27,12 @@ struct MaterialProperties
 	
 	// map: tex size, tex name
 	textureMap diffuseMaps;
-	textureMap alphaMaps; bool transparent;
 	textureMap normalMaps; float bumpScale;
 	
 	CullHardwareMode cullHardware;
 	
+	textureMap alphaMaps; bool transparent; 
+	Ogre::Vector4 lightingAlpha; // alpha for ambient, diffuse, spec, diffuse r channel mult
 	
 	// reflection
 	std::string envMap;
@@ -42,13 +43,9 @@ struct MaterialProperties
 	bool receivesShadows, receivesDepthShadows;
 	Ogre::Vector3 ambient; Ogre::Vector4 diffuse; Ogre::Vector4 specular;
 	
-	float depthBias; bool depthCheck;
+	float depthBias; bool depthCheck; bool transparentSorting;
 	
 	//!todo:
-	// high priority:
-	// alpha_rejection, transparent_sorting
-	
-	// low priority / future:
 	// PPX on/off, shading mode (phong etc) for no shaders,
 	// normalmap/shadowmap/envmap "priority",
 	// [casts_shadows (+priority) (probably not here)],

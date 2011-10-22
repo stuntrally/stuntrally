@@ -9,10 +9,10 @@ using namespace Ogre;
 // constructor with sensible default values
 MaterialProperties::MaterialProperties() :
 	envMap(""), reflAmount(0.2), bumpScale(1.0), cullHardware(CULL_HW_CLOCKWISE),
-	hasFresnel(0), fresnelBias(0), fresnelScale(0), fresnelPower(0),
-	receivesShadows(0), receivesDepthShadows(0), shaders(1), transparent(0),
+	hasFresnel(false), fresnelBias(0), fresnelScale(0), fresnelPower(0),
+	receivesShadows(false), receivesDepthShadows(false), shaders(true), transparent(false),
 	ambient(0.5, 0.5, 0.5), diffuse(1.0, 1.0, 1.0, 1.0), specular(0.2, 0.2, 0.2, 128),
-	depthBias(0), depthCheck(true)
+	depthBias(0), depthCheck(true), transparentSorting(true), lightingAlpha(0.0, 0.0, 0.0, 0.0)
 {}
 
 const inline bool str2bool(const std::string& s)
@@ -43,8 +43,10 @@ void MaterialProperties::setProperty(const std::string& prop, const std::string&
 				cullHardware = CULL_HW_ANTICLOCKWISE_OR_NONE;
 		}
 	}
+	else if (prop == "lightingAlpha") lightingAlpha = str2vec4(value);
 	else if (prop == "depthBias") depthBias = str2int(value);
 	else if (prop == "depthCheck") depthCheck = str2bool(value);
+	else if (prop == "transparentSorting") transparentSorting = str2bool(value);
 	else if (prop == "shaders") shaders = str2bool(value);
 	else if (prop == "transparent") transparent = str2bool(value);
 	else if (prop == "bumpScale") bumpScale = str2float(value);
@@ -78,6 +80,8 @@ void MaterialProperties::setProperty(const std::string& prop, const std::string&
 		int isize = Ogre::StringConverter::parseInt(size);
 		alphaMaps.insert( std::make_pair(isize, value) );
 	}
+	else
+		LogO("[MaterialFactory] WARNING: Unknown attribute '" + prop + "'");
 }
 
 MaterialDefinition::MaterialDefinition(MaterialFactory* parent, MaterialProperties* props)

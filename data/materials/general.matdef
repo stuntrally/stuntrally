@@ -9,12 +9,22 @@ specular = 0.7 0.7 0.7 32
 receivesShadows = false
 receivesDepthShadows = true
 
+;[car_glass]
+diffuseMap_1 = glass.png
+envMap = ReflectionCube
+reflAmount = 0.2
+transparent = true
+lightingAlpha = 0.4 0.4 0.4 0.0
+ambient = 0.8 0.8 0.8
+diffuse = 0.9 0.9 0.9 1.0
+specular = 1.0 1.0 1.0 128
+
 ;[roadJungle_ter]
 transparent = true
 diffuseMap_2048 = roadJungle.jpg
 alphaMap_2048 = roadAlpha.png
 normalMap_1024 = ice_3_nh1.png
-envMap = ReflectionCube0
+envMap = ReflectionCube
 reflAmount = 0.10
 bumpScale = 0.5
 receivesShadows = true
@@ -29,11 +39,30 @@ diffuseMap_256 = brass_patina_s.jpg
 diffuseMap_1024 = brass_patina.jpg
 normalMap_256 = brass_patina_n_s.png
 normalMap_1024 = brass_patina_n.png
-envMap = ReflectionCube0
+envMap = ReflectionCube
 reflAmount = 0.1
 cullHardware = anticlockwise
 cullHardware = none_if_depthshadow
-ambient = 0.4 0.43 0.44
-diffuse = 0.7 0.76 0.8
+ambient = 0.4 0.4 0.4
+diffuse = 0.7 0.7 0.7 1.0
 specular = 0.25 0.267 0.28 4
 depthBias = 3
+
+;[pipeGlass]
+transparent = true
+ambient = 0.2 0.2 0.2
+diffuse = 0.5 0.56 0.6 1.0
+specular = 0.37 0.39 0.41 64
+lightingAlpha = 0.15 0.2 0.3 1.0
+depthBias = 3
+diffuseMap_1 = roadGlassB.png
+
+;[pipeGlass_cyan]
+parent = pipeGlass
+ambient = 0.2 0.25 0.25
+diffuse = 0.4 0.6 0.63 1.0
+specular = 0.32 0.39 0.41 64
+lightingAlpha = 0.3 0.3 0.4 1.0
+
+;[pipe_wall]
+parent = road_wall

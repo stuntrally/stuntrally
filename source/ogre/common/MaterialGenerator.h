@@ -41,6 +41,7 @@ protected:
 	bool needShaders();
 	bool needShadows();
 	bool needNormalMap(); bool needEnvMap(); bool needAlphaMap();
+	bool needLightingAlpha();
 	bool fpNeedWsNormal(); bool fpNeedEyeVector();
 	bool fpNeedTangentToCube(); bool vpNeedTangent();
 	bool fpNeedLighting(); // fragment lighting

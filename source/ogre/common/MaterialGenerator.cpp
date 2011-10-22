@@ -25,7 +25,7 @@ using namespace Ogre;
 void MaterialGenerator::generate(bool fixedFunction)
 {	
 	MaterialPtr mat = prepareMaterial(mDef->getName());
-	
+		
 	// reset some attributes
 	mDiffuseTexUnit = 0; mNormalTexUnit = 0; mEnvTexUnit = 0; mAlphaTexUnit = 0;
 	mShadowTexUnit_start = 0; mTexUnit_i = 0;
@@ -63,8 +63,9 @@ void MaterialGenerator::generate(bool fixedFunction)
 	if (mDef->mProps->depthBias != 0.f)
 		pass->setDepthBias( mDef->mProps->depthBias );
 		
-	if (mDef->mProps->depthCheck == false)
-		pass->setDepthCheckEnabled( false );
+	pass->setDepthCheckEnabled( mDef->mProps->depthCheck );
+		
+	pass->setTransparentSortingEnabled( mDef->mProps->transparentSorting );
 	
 	if (!needShaders() || fixedFunction)
 	{
@@ -215,6 +216,11 @@ inline bool MaterialGenerator::needEnvMap()
 {
 	return (mDef->mProps->envMap != "") && mParent->getEnvMap();
 	//!todo env map priority
+}
+
+inline bool MaterialGenerator::needLightingAlpha()
+{
+	return (mDef->mProps->lightingAlpha != Vector4::ZERO);
 }
 
 inline bool MaterialGenerator::needAlphaMap()
@@ -599,6 +605,10 @@ void MaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::StrStrea
 		"	uniform float4 matSpecular, \n"; // shininess in w
 	outStream <<
 		"	uniform float3 fogColor, \n";
+		
+	if (mDef->mProps->transparent && !needAlphaMap())
+		outStream <<
+		"	uniform float4 lightingAlpha, \n";
 	
 	if (needShadows())
 	{
@@ -712,10 +722,12 @@ void MaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::StrStrea
 	{
 		if (needAlphaMap()) outStream <<
 			"	float alpha = tex2D(alphaMap, texCoord).r; \n"; // use only r channel
+		else if (needLightingAlpha()) outStream <<
+			"	float alpha = lightingAlpha.x + lightingAlpha.y * diffuseLight + lightingAlpha.z * specularLight + (1-diffuseTex.r)*lightingAlpha.w; \n";
 		else outStream <<
-			"	float alpha = diffuseTex.w; \n";
+			"	float alpha = diffuseTex.a; \n";
 		outStream << 
-		"oColor.w = alpha; \n";
+		"	oColor.w = alpha; \n";
 	}
 		
 	outStream << 
@@ -747,6 +759,8 @@ void MaterialGenerator::fragmentProgramParams(HighLevelGpuProgramPtr program)
 		params->setNamedConstant("matDiffuse", mDef->mProps->diffuse);
 		params->setNamedConstant("matSpecular", mDef->mProps->specular);
 	}
+	if (mDef->mProps->transparent && !needAlphaMap())
+		params->setNamedConstant("lightingAlpha", mDef->mProps->lightingAlpha);
 	
 	params->setNamedAutoConstant("fogColor", GpuProgramParameters::ACT_FOG_COLOUR);
 }
