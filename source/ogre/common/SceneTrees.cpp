@@ -119,7 +119,7 @@ void App::CreateTrees()
 	LogO(String("::: Time Grass: ") + toStr(dt) + " ms");
 
 
-	//-------------------------------------- Trees --------------------------------------
+	//---------------------------------------------- Trees ----------------------------------------------
 	if (fTrees > 0.f)
 	{
 		// fast: 100_ 80 j1T!,  400 400 good sav2f  200 220 both`-
@@ -158,7 +158,7 @@ void App::CreateTrees()
 			const BltCollision* col = objs.Find(pg.name);
 			Vector3 ofs(0,0,0);  if (col)  ofs = col->offset;  // mesh offset
 
-			//  num trees
+			//  num trees  ----------------------------------------------------------------
 			int cnt = fTrees * 6000 * pg.dens;
 			for (int i = 0; i < cnt; i++)
 			{
@@ -181,8 +181,8 @@ void App::CreateTrees()
 				vo.y = ofs.x * syr + ofs.y * cyr;
 				pos.x += vo.x * scl;  pos.z += vo.y * scl;
 				
-				//  check if on road
-				if (r > 0)
+				//  check if on road - uses grassDensity
+				if (r > 0)  //  ----------------
 				{
 				int mx = (pos.x + 0.5*tws)/tws*r,
 					my = (pos.z + 0.5*tws)/tws*r;
@@ -192,21 +192,21 @@ void App::CreateTrees()
 					for (int ii = -c; ii <= c; ++ii)
 						if (imgRoad.getColourAt(
 							std::max(0,std::min(r-1, mx+ii)),
-							std::max(0,std::min(r-1, my+jj)), 0).g < 0.95f)
+							std::max(0,std::min(r-1, my+jj)), 0).g < 0.5f)  //par-
 								add = false;
 				}
 
-				//  check ter angle
+				//  check ter angle  ------------
 				int mx = (pos.x + 0.5*tws)/tws*sc.td.iVertsX,
 					my = (pos.z + 0.5*tws)/tws*sc.td.iVertsY;
 				int a = std::max(0, std::min(txy, my*sc.td.iVertsX+mx));
 				if (sc.td.hfAngle[a] > pg.maxTerAng)
 					add = false;
 
-				//  check ter height ..
-				//pos.y = terrain->getHeightAtWorldPosition(pos.x, 0, pos.z);
-				//if (pos.y < 0.f)
-				//	add = false;				
+				//  check ter height  ------------
+				pos.y = terrain->getHeightAtWorldPosition(pos.x, 0, pos.z);
+				if (pos.y < pg.minTerH)
+					add = false;				
 				
 				if (!add)  continue;
 

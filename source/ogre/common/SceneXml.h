@@ -54,8 +54,10 @@ class PagedLayer	// vegetation layer
 public:
 	bool on;
 	Ogre::String name;  Ogre::Real dens;
-	Ogre::Real windFx, windFy;  int addTrRdDist;
-	Ogre::Real minScale, maxScale, ofsY, maxTerAng;
+	Ogre::Real windFx, windFy;
+	int addTrRdDist;  // dist to road
+	Ogre::Real minScale, maxScale, ofsY;
+	Ogre::Real maxTerAng, minTerH;  // terrain
 	
 	PagedLayer();
 };

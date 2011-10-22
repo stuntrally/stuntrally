@@ -63,17 +63,17 @@ material Water1 : ppx_water1  // island blue
 	set_texture_alias normalMap waveNM.png
 }
 
-material Water2 : ppx_water1  // jungle cyan green +
+material Water2 : ppx_water1  // greece cyan +
 {
-	set $specularCol	 "0.3 0.6 0.4"
+	set $specularCol	 "0.9 1.0 0.95"
 	set $shininess		 "64"
-	set $waveBump		 "0.3  1.0"
-	set $waveHighFreq	 "-0.1"
-	set $waveSpecular	 "0.6"
-	set $deepColor		 "0.1 0.3 0.2  0.95"
-	set $shallowColor	 "0.4 0.9 0.6  0.7"
-	set $reflectionColor "0.5 0.8 0.6  1.0"
-	set $reflAndWaterAmounts  "0.8 0.2"
+	set $waveBump		 "0.2  1.0"
+	set $waveHighFreq	 "0.0"
+	set $waveSpecular	 "1.0"
+	set $deepColor		 "0.1 0.3 0.2  0.9"
+	set $shallowColor	 "0.4 0.9 0.6  0.6"
+	set $reflectionColor "0.6 0.8 0.7  1.0"
+	set $reflAndWaterAmounts  "0.7 0.3"
 	set $fresnelPowerBias  "5.0  0.33"
 	set_texture_alias normalMap waveNM.png
 }
