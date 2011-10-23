@@ -18,6 +18,7 @@ specular = 0.37 0.39 0.41 64
 lightingAlpha = 0.15 0.2 0.3 1.0
 depthBias = 3
 diffuseMap_1 = roadGlassB.png
+cullHardware = none
 
 [pipeGlassCyan]
 parent = pipeGlass
