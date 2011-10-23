@@ -37,6 +37,7 @@ struct MaterialProperties
 	textureMap normalMaps; float bumpScale;
 	
 	CullHardwareMode cullHardware;
+	CullHardwareMode cullHardwareAmbient; // for ambient pass
 	
 	SceneBlendMode sceneBlend;
 	textureMap alphaMaps; bool transparent;

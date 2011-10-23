@@ -9,7 +9,7 @@ using namespace Ogre;
 // constructor with sensible default values
 MaterialProperties::MaterialProperties() :
 	abstract(false),
-	envMap(""), reflAmount(0.2), bumpScale(1.0), cullHardware(CULL_HW_CLOCKWISE),
+	envMap(""), reflAmount(0.2), bumpScale(1.0), cullHardware(CULL_HW_CLOCKWISE), cullHardwareAmbient(CULL_HW_CLOCKWISE),
 	hasFresnel(false), fresnelBias(0), fresnelScale(0), fresnelPower(0),
 	receivesShadows(false), receivesDepthShadows(false), shaders(true), transparent(false),
 	ambient(0.5, 0.5, 0.5), diffuse(1.0, 1.0, 1.0), specular(0.0, 0.0, 0.0, 0.0),
@@ -45,6 +45,19 @@ void MaterialProperties::setProperty(const std::string& prop, const std::string&
 				cullHardware = CULL_HW_CLOCKWISE_OR_NONE;
 			else if (cullHardware == CULL_HW_ANTICLOCKWISE)
 				cullHardware = CULL_HW_ANTICLOCKWISE_OR_NONE;
+		}
+	}
+	else if (prop == "cullHardwareAmbient")
+	{
+		if (value == "clockwise") cullHardwareAmbient = CULL_HW_CLOCKWISE;
+		else if (value == "none") cullHardwareAmbient = CULL_HW_NONE;
+		else if (value == "anticlockwise") cullHardwareAmbient = CULL_HW_ANTICLOCKWISE;
+		else if (value == "none_if_depthshadow")
+		{
+			if (cullHardwareAmbient == CULL_HW_CLOCKWISE)
+				cullHardwareAmbient = CULL_HW_CLOCKWISE_OR_NONE;
+			else if (cullHardware == CULL_HW_ANTICLOCKWISE)
+				cullHardwareAmbient = CULL_HW_ANTICLOCKWISE_OR_NONE;
 		}
 	}
 	else if (prop == "sceneBlend")

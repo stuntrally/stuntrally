@@ -63,6 +63,7 @@ protected:
 	std::string pickTexture(textureMap* textures);
 
 	Ogre::CullingMode chooseCullingMode();
+	Ogre::CullingMode chooseCullingModeAmbient();
 
 };
 

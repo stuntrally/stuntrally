@@ -13,12 +13,13 @@ transparent = true
 depthWrite = false
 sceneBlend = alpha
 ambient = 0.2 0.2 0.2
-diffuse = 0.5 0.56 0.6
+diffuse = 0.3 0.3 0.3
 specular = 0.37 0.39 0.41 64
-lightingAlpha = 0.15 0.2 0.3 1.0
+lightingAlpha = 0.07 0.10 0.15 1.0
 depthBias = 3
 diffuseMap_1 = roadGlassB.png
-cullHardware = clockwise
+cullHardwareAmbient = clockwise
+cullHardware = anticlockwise
 twoPass = true
 
 [pipeGlassCyan]

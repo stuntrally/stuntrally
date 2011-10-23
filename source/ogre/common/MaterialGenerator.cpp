@@ -48,7 +48,7 @@ void MaterialGenerator::generate(bool fixedFunction)
 		ambientPass->setSceneBlending(SBT_TRANSPARENT_ALPHA);
 		ambientPass->setDepthBias( mDef->mProps->depthBias );
 		ambientPass->setDepthWriteEnabled(false);
-		ambientPass->setCullingMode( chooseCullingMode() );
+		ambientPass->setCullingMode( chooseCullingModeAmbient() );
 		
 		Ogre::TextureUnitState* tu = ambientPass->createTextureUnitState( diffuseMap );
 		tu->setName("diffuseMap");
@@ -100,10 +100,7 @@ void MaterialGenerator::generate(bool fixedFunction)
 		pass->setSpecular(mDef->mProps->specular.x, mDef->mProps->specular.y, mDef->mProps->specular.z, mDef->mProps->specular.w);
 	}
 	
-	if (!mDef->mProps->twoPass)
-		pass->setCullingMode(chooseCullingMode());
-	else
-		pass->setCullingMode(CULL_ANTICLOCKWISE);
+	pass->setCullingMode(chooseCullingMode());
 	
 	if (mDef->mProps->sceneBlend == SBM_ALPHA_BLEND)
 		pass->setSceneBlending(SBT_TRANSPARENT_ALPHA);
@@ -392,7 +389,33 @@ Ogre::CullingMode MaterialGenerator::chooseCullingMode()
 		else
 			return Ogre::CULL_ANTICLOCKWISE;
 	}
+}
 
+//----------------------------------------------------------------------------------------
+
+Ogre::CullingMode MaterialGenerator::chooseCullingModeAmbient()
+{
+
+	if 		(mDef->mProps->cullHardwareAmbient == CULL_HW_NONE)
+		return Ogre::CULL_NONE;
+	else if (mDef->mProps->cullHardwareAmbient == CULL_HW_CLOCKWISE)
+		return Ogre::CULL_CLOCKWISE;
+	else if (mDef->mProps->cullHardwareAmbient == CULL_HW_ANTICLOCKWISE)
+		return Ogre::CULL_ANTICLOCKWISE;
+	else if (mDef->mProps->cullHardwareAmbient == CULL_HW_CLOCKWISE_OR_NONE)
+	{
+		if (mParent->getShadowsDepth())
+			return Ogre::CULL_NONE;
+		else
+			return Ogre::CULL_CLOCKWISE;
+	}
+	else if (mDef->mProps->cullHardwareAmbient == CULL_HW_ANTICLOCKWISE_OR_NONE)
+	{
+		if (mParent->getShadowsDepth())
+			return Ogre::CULL_NONE;
+		else
+			return Ogre::CULL_ANTICLOCKWISE;
+	}
 }
 
 //----------------------------------------------------------------------------------------
@@ -876,6 +899,8 @@ void MaterialGenerator::fragmentProgramParams(HighLevelGpuProgramPtr program)
 	params->setNamedAutoConstant("fogColor", GpuProgramParameters::ACT_FOG_COLOUR);
 }
 
+//----------------------------------------------------------------------------------------
+
 HighLevelGpuProgramPtr MaterialGenerator::createAmbientVertexProgram()
 {
 	HighLevelGpuProgramManager& mgr = HighLevelGpuProgramManager::getSingleton();
@@ -916,6 +941,8 @@ HighLevelGpuProgramPtr MaterialGenerator::createAmbientVertexProgram()
 	
 	return ret;
 }
+
+//----------------------------------------------------------------------------------------
 
 HighLevelGpuProgramPtr MaterialGenerator::createAmbientFragmentProgram()
 {
