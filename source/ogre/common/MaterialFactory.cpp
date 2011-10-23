@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "../Defines.h"
+#include "../QTimer.h"
 
 #include "MaterialFactory.h"
 #include "MaterialDefinition.h"
@@ -19,7 +20,7 @@ MaterialFactory::MaterialFactory() :
 	bShaders(1), bNormalMap(1), bEnvMap(1), bShadows(1), bShadowsDepth(1),
 	iTexSize(1024), iNumShadowTex(3),
 	bSettingsChanged(1) // always have to generate at start
-{
+{	
 	// find all files with *.matdef extension in all resource groups
 	StringVector resourceGroups = ResourceGroupManager::getSingleton().getResourceGroups();
 	for (StringVector::iterator it = resourceGroups.begin();
@@ -165,6 +166,7 @@ void MaterialFactory::generate()
 {
 	if (bSettingsChanged)
 	{
+		QTimer ti;  ti.update(); /// time
 		LogO("[MaterialFactory] generating new materials...");
 		
 		MaterialGenerator generator;
@@ -183,6 +185,9 @@ void MaterialFactory::generate()
 		}
 		
 		bSettingsChanged = false;
+		ti.update(); /// time
+		float dt = ti.dt * 1000.f;
+		LogO(String("::: Time MaterialFactory: ") + toStr(dt) + " ms");
 	}
 	else
 		LogO("[MaterialFactory] settings not changed, using old materials");
