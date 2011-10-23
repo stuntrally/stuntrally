@@ -1,28 +1,4 @@
-[road_wall]
-diffuseMap_256 = brass_patina_s.jpg
-diffuseMap_1024 = brass_patina.jpg
-normalMap_256 = brass_patina_n_s.png
-normalMap_1024 = brass_patina_n.png
-envMap = ReflectionCube
-reflAmount = 0.1
-cullHardware = anticlockwise
-cullHardware = none_if_depthshadow
-ambient = 0.4 0.43 0.44
-diffuse = 0.7 0.76 0.8
-specular = 0.24 0.267 0.28 4
-depthBias = 3
-
-[road_col]
-ambient = 0.44 0.45 0.45
-diffuse = 0.44 0.45 0.45
-specular = 0.25 0.25 0.25 24
-cullHardware = anticlockwise
-diffuseMap_256 = concrete03_s.png
-diffuseMap_1024 = concrete03.png
-normalMap_256 = brass_patina_n_s.png
-normalMap_1024 = brass_patina_n.png
-; receivesDepthShadows = true --- has flickering for some odd reason
-
+; ------------ Asphalt -------------
 [roadAsphalt]
 diffuseMap_512 = roadAsphalt_s.jpg
 diffuseMap_2048 = roadAsphalt.jpg
@@ -40,16 +16,7 @@ alphaMap_512 = roadAlpha_s.png
 alphaMap_2048 = roadAlpha.png
 transparent = true
 
-[roadRdesert]
-ambient = 0.5 0.5 0.5
-diffuse = 0.6 0.6 0.6
-specular = 0.4 0.37 0.35 28
-depthBias = 3
-diffuseMap_512 = roadRdesert_s.jpg
-diffuseMap_2048 = roadRdesert.jpg
-receivesShadows = true
-
-; ------------ greece -------------
+; ------------ Greece -------------
 [roadGDesert]
 ambient = 0.52 0.57 0.47
 diffuse = 0.53 0.55 0.52
@@ -69,8 +36,7 @@ parent = roadGDesert
 ;normalMap_512 = volcano_7_nh1_s.png
 ;normalMap_1024 = volcano_7_nh1.png
 
-; ----------- sand ------------
-
+; ----------- Sand Island ------------
 [roadSand]
 ambient = 0.57 0.57 0.57
 diffuse = 0.62 0.62 0.62
@@ -89,8 +55,30 @@ depthWrite = false
 normalMap_512 = volcano_7_nh1_s.png
 normalMap_1024 = volcano_7_nh1.png
 
-; ---------- ice ------------
+; ----------- Mud ----------
+[roadMud]
+ambient = 0.5 0.5 0.5
+diffuse = 0.5 0.5 0.5
+specular = 0.3 0.3 0.25 48
+depthBias = 3
+diffuseMap_512 = roadMud_s.jpg
+diffuseMap_2048 = roadMud.jpg
+receivesShadows = true
 
+[roadMud_ter]
+parent = roadMud
+ambient = 0.51 0.5 0.5
+diffuse = 0.45 0.45 0.45
+specular = 0.2 0.2 0.15 32
+normalMap_512 = ice_3_nh1_s.png
+normalMap_1024 = ice_3_nh1.png
+alphaMap_512 = roadAlpha_s.png
+alphaMap_2048 = roadAlpha.png
+transparent = true
+sceneBlend = alpha
+depthWrite = false
+
+; ---------- Ice Winter ------------
 [roadIce]
 ambient = 0.6 0.6 0.6
 diffuse = 0.6 0.6 0.6
@@ -118,8 +106,7 @@ parent = roadIce_ter
 ambient = 0.7 0.7 0.7
 diffuse = 0.7 0.7 0.7
 
-; ------------ snow -------------
-
+; ------------ Snow Winter -------------
 [roadSnow]
 ambient = 0.5 0.5 0.5
 diffuse = 0.6 0.6 0.6
@@ -137,8 +124,7 @@ transparent = true
 sceneBlend = alpha
 depthWrite = false
 
-; ----------- Adesert ----------
-
+; ----------- Adesert Australia ----------
 [roadAdesert]
 ambient = 0.6 0.6 0.6
 diffuse = 0.66 0.65 0.6
@@ -155,8 +141,8 @@ transparent = true
 sceneBlend = alpha
 depthWrite = false
 
-; ----------- desert -----------
 
+; ----------- Desert -----------
 [roadDesert]
 ambient = 0.6 0.6 0.6
 diffuse = 0.66 0.65 0.6
@@ -173,7 +159,7 @@ transparent = true
 sceneBlend = alpha
 depthWrite = false
 
-; ----------- savannah ----------
+; ----------- Savannah ----------
 [roadSavannah]
 ambient = 0.54 0.54 0.54
 diffuse = 0.6 0.6 0.6
@@ -193,8 +179,7 @@ transparent = true
 sceneBlend = alpha
 depthWrite = false
 
-; ----------- jungle ----------
-
+; ----------- Jungle ----------
 [roadJungle]
 ambient = 0.5 0.5 0.5
 diffuse = 0.5 0.5 0.5
@@ -214,29 +199,5 @@ alphaMap_512 = roadAlpha_s.png
 alphaMap_2048 = roadAlpha.png
 normalMap_512 = ice_3_nh1_s.png
 normalMap_1024 = ice_3_nh1.png
-sceneBlend = alpha
-depthWrite = false
-
-; ----------- mud ----------
-
-[roadMud]
-ambient = 0.5 0.5 0.5
-diffuse = 0.5 0.5 0.5
-specular = 0.3 0.3 0.25 48
-depthBias = 3
-diffuseMap_512 = roadMud_s.jpg
-diffuseMap_2048 = roadMud.jpg
-receivesShadows = true
-
-[roadMud_ter]
-parent = roadMud
-ambient = 0.51 0.5 0.5
-diffuse = 0.45 0.45 0.45
-specular = 0.2 0.2 0.15 32
-normalMap_512 = ice_3_nh1_s.png
-normalMap_1024 = ice_3_nh1.png
-alphaMap_512 = roadAlpha_s.png
-alphaMap_2048 = roadAlpha.png
-transparent = true
 sceneBlend = alpha
 depthWrite = false

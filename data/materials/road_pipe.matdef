@@ -1,3 +1,38 @@
+; ------------ Wall -------------
+[road_wall]
+diffuseMap_256 = brass_patina_s.jpg
+diffuseMap_1024 = brass_patina.jpg
+normalMap_256 = brass_patina_n_s.png
+normalMap_1024 = brass_patina_n.png
+envMap = ReflectionCube
+reflAmount = 0.1
+cullHardware = anticlockwise
+cullHardware = none_if_depthshadow
+ambient = 0.4 0.43 0.44
+diffuse = 0.7 0.76 0.8
+specular = 0.24 0.267 0.28 4
+depthBias = 3
+
+[pipe_wall]
+parent = road_wall
+ambient = 0.42 0.43 0.44
+diffuse = 0.5 0.56 0.6
+specular = 0.25 0.267 0.28 4
+cullHardware = none
+
+; ------------ Column -------------
+[road_col]
+ambient = 0.44 0.45 0.45
+diffuse = 0.44 0.45 0.45
+specular = 0.25 0.25 0.25 24
+cullHardware = anticlockwise
+diffuseMap_256 = concrete03_s.png
+diffuseMap_1024 = concrete03.png
+normalMap_256 = brass_patina_n_s.png
+normalMap_1024 = brass_patina_n.png
+; receivesDepthShadows = true --- has flickering for some odd reason
+
+; ------------ Pipes -------------
 [pipeAsphalt]
 ambient = 0.5 0.5 0.5
 diffuse = 0.6 0.6 0.6
@@ -22,17 +57,9 @@ receivesShadows = true
 ;cullHardware = clockwise
 ;twoPass = true
 
-
 ;[pipeGlassCyan]
 ;parent = pipeGlass
 ;ambient = 0.2 0.25 0.25
 ;diffuse = 0.4 0.6 0.63
 ;specular = 0.32 0.39 0.41 64
 ;lightingAlpha = 0.3 0.3 0.4 1.0
-
-[pipe_wall]
-parent = road_wall
-ambient = 0.42 0.43 0.44
-diffuse = 0.5 0.56 0.6
-specular = 0.25 0.267 0.28 4
-cullHardware = none
