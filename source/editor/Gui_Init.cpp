@@ -64,7 +64,11 @@ void App::InitGui()
 	
 	//  hide  ---
 	edMode = ED_Deform;  UpdEditWnds();  // *  UpdVisHit(); //after track
-	if (!mWndOpts)  return;  // error
+	if (!mWndOpts) 
+	{
+		LogO("WARNING: failed to create options window");
+		return;  // error
+	}
 	
 	ButtonPtr btn, bchk;  ComboBoxPtr combo;  // for defines
 	HScrollPtr sl;  size_t v;
@@ -243,7 +247,9 @@ void App::InitGui()
 		if (StringUtil::endsWith(*i,".mesh"))  cmbPgLay->addItem(*i);
 
 	//---------------------  ROADS  ---------------------
-	GetMaterials("road.material");
+	//GetMaterials("road.material");
+	GetMaterialsFromDef("road.matdef");
+	GetMaterialsFromDef("road_pipe.matdef");
 	for (size_t i=0; i<4; ++i)
 	{
 		Cmb(cmbRoadMtr[i], "RdMtr"+toStr(i+1), comboRoadMtr);
