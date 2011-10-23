@@ -80,8 +80,9 @@ void App::NewCommon()
 		mSceneMgr->destroyEntity(vFlEnt[i]);
 		mSceneMgr->destroySceneNode(vFlNd[i]);
 		Ogre::MeshManager::getSingleton().remove(vFlSMesh[i]);
-	}		
+	}	// clear in CreateFluids
 
+	//  terrain
 	terrain = 0;
 	if (mTerrainGroup)
 		mTerrainGroup->removeAllTerrains();
@@ -152,6 +153,7 @@ void App::UpdateTrackEv()
 {
 	NewCommon();
 	
+	CreateFluids();
 	CreateTerrain(bNewHmap,true);/**/
 	if (pSet->bTrees)
 		CreateTrees();
