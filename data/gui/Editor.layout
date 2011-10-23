@@ -259,9 +259,9 @@
 					<Property key="Image_Coord" value="32 32 32 40"/>
 					<Property key="Image_Texture" value="track_icons.png"/>
 				</Widget>
-				<Widget type="StaticImage" skin="StaticImage" position="528 172 224 32" name="trkinf7">
+				<Widget type="StaticImage" skin="StaticImage" position="528 172 256 32" name="trkinf7">
 					<Property key="Image_Texture" value="track_icons.png"/>
-					<Property key="Image_Coord" value="0 0 224 32"/>
+					<Property key="Image_Coord" value="0 0 256 32"/>
 					<UserString key="tip" value="#{TrackDifficulties}"/>
 				</Widget>
 				<Widget type="StaticText" skin="StaticText" position="540 204 32 24" name="ti1">

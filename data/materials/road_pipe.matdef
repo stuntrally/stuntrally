@@ -19,7 +19,7 @@ lightingAlpha = 0.15 0.2 0.3 1.0
 depthBias = 3
 diffuseMap_1 = roadGlassB.png
 
-[pipeGlass_cyan]
+[pipeGlassCyan]
 parent = pipeGlass
 ambient = 0.2 0.25 0.25
 diffuse = 0.4 0.6 0.63

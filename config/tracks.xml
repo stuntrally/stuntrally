@@ -24,7 +24,7 @@
 
 	<track n="11" name="D4-SZ"			created="21-11-10" crtver="0.7" modified="22-11-10" scenery="Desert"	author="CH" fluids="0" bumps="0" jumps="0" loops="0" pipes="0" banked="1" frenzy="1" long="2" diff="2" rating="1" rateuser="0" drivenlaps="0" />
 	<track n="12" name="J5-Pipes"		created="21-11-10" crtver="0.7" modified="22-11-10" scenery="Jungle"	author="CH" fluids="0" bumps="0" jumps="0" loops="0" pipes="3" banked="0" frenzy="2" long="1" diff="3" rating="2" rateuser="0" drivenlaps="0" />
-	<track n="13" name="J4-Pipe8"		created="22-11-10" crtver="0.7" modified="22-11-10" scenery="Jungle"	author="CH" fluids="0" bumps="0" jumps="0" loops="0" pipes="0" banked="0" frenzy="0" long="1" diff="2" rating="1" rateuser="0" drivenlaps="0" />
+	<track n="13" name="J4-Pipe8"		created="22-11-10" crtver="0.7" modified="22-11-10" scenery="Jungle"	author="CH" fluids="0" bumps="0" jumps="0" loops="0" pipes="1" banked="0" frenzy="0" long="1" diff="2" rating="1" rateuser="0" drivenlaps="0" />
 <!--13-->
 	<track n="14" name="0W1-cross"		created="27-11-10" crtver="0.8" modified="27-11-10" scenery="Winter"	author="CH" fluids="0" bumps="0" jumps="0" loops="0" pipes="0" banked="0" frenzy="0" long="2" diff="2" rating="2" rateuser="0" drivenlaps="0" />
 	<track n="15" name="0W2-qp"			created="27-11-10" crtver="0.8" modified="27-11-10" scenery="Winter"	author="CH" fluids="0" bumps="0" jumps="0" loops="0" pipes="0" banked="1" frenzy="0" long="3" diff="1" rating="0" rateuser="0" drivenlaps="0" />
@@ -89,5 +89,6 @@
 	<track n="57" name="I3-Islands"		created="10-09-11" crtver="1.3" modified="22-10-11" scenery="Island" 	author="CH" fluids="3" bumps="1" jumps="0" loops="0" pipes="0" banked="0" frenzy="1" long="3" diff="3" rating="2" rateuser="0" drivenlaps="0" />
 <!--57-->
 	<track n="58" name="J11-Temple"		created="21-10-11" crtver="1.4" modified="21-10-11" scenery="Jungle" 	author="CH" fluids="2" bumps="1" jumps="0" loops="0" pipes="0" banked="1" frenzy="2" long="1" diff="3" rating="2" rateuser="0" drivenlaps="0" />
-	<track n="59" name="G2-Coast"		created="22-10-11" crtver="1.4" modified="22-10-11" scenery="Greece" 	author="CH" fluids="1" bumps="0" jumps="1" loops="0" pipes="0" banked="0" frenzy="0" long="3" diff="2" rating="2" rateuser="0" drivenlaps="0" />
+	<track n="59" name="G2-Coast"		created="22-10-11" crtver="1.4" modified="22-10-11" scenery="Greece" 	author="CH" fluids="1" bumps="3" jumps="0" loops="0" pipes="0" banked="0" frenzy="0" long="3" diff="3" rating="4" rateuser="0" drivenlaps="0" />
+	<track n="60" name="A3-Canyon"		created="22-10-11" crtver="1.4" modified="23-10-11" scenery="Australia" author="CH" fluids="0" bumps="1" jumps="0" loops="0" pipes="0" banked="2" frenzy="0" long="5" diff="2" rating="3" rateuser="0" drivenlaps="0" />
 </tracks>
