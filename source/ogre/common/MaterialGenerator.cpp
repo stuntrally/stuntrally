@@ -30,11 +30,46 @@ void MaterialGenerator::generate(bool fixedFunction)
 	mDiffuseTexUnit = 0; mNormalTexUnit = 0; mEnvTexUnit = 0; mAlphaTexUnit = 0;
 	mShadowTexUnit_start = 0; mTexUnit_i = 0;
 	
-	// 1 single-pass technique
+	std::string diffuseMap = pickTexture(&mDef->mProps->diffuseMaps);
+	std::string normalMap = pickTexture(&mDef->mProps->normalMaps);
+	std::string alphaMap = pickTexture(&mDef->mProps->alphaMaps);
+	
 	Ogre::Technique* technique = mat->createTechnique();
+	
+	if (mDef->mProps->twoPass)
+	{
+		// create an ambient-only pass first
+		Ogre::Pass* ambientPass = technique->createPass();
+		ambientPass->setAmbient( mDef->mProps->ambient.x, mDef->mProps->ambient.y, mDef->mProps->ambient.z );
+		ambientPass->setDiffuse( mDef->mProps->diffuse.x, mDef->mProps->diffuse.y, mDef->mProps->diffuse.z, 1.0 );
+		
+		ambientPass->setSpecular(mDef->mProps->specular.x, mDef->mProps->specular.y, mDef->mProps->specular.z, mDef->mProps->specular.w );
+		//ambientPass->setShininess( mDef->mProps->specular.w );
+		
+		//ambientPass->setColourWriteEnabled(false);
+		//ambientPass->setLightingEnabled(false);
+		ambientPass->setSceneBlending(SBT_TRANSPARENT_ALPHA);
+		ambientPass->setDepthBias( mDef->mProps->depthBias );
+		ambientPass->setDepthWriteEnabled(false);
+		ambientPass->setCullingMode( chooseCullingMode() );
+		
+		Ogre::TextureUnitState* tu = ambientPass->createTextureUnitState( diffuseMap );
+		tu->setName("diffuseMap");
+		
+		ambientPass->setVertexProgram("ambient_vs", false);
+		ambientPass->setFragmentProgram("ambient_ps", false);
+	}
+	
 	Ogre::Pass* pass = technique->createPass();
 	
-	pass->setAmbient( mDef->mProps->ambient.x, mDef->mProps->ambient.y, mDef->mProps->ambient.z );
+	if (!mDef->mProps->twoPass)
+		pass->setAmbient( mDef->mProps->ambient.x, mDef->mProps->ambient.y, mDef->mProps->ambient.z );
+	else
+	{
+		// already have ambient in first pass
+		pass->setAmbient(0.0, 0.0, 0.0);
+	}
+	
 	pass->setDiffuse( mDef->mProps->diffuse.x, mDef->mProps->diffuse.y, mDef->mProps->diffuse.z, 1.0 );
 	
 	if (!needShaders() || fixedFunction)
@@ -48,11 +83,10 @@ void MaterialGenerator::generate(bool fixedFunction)
 		pass->setSpecular(mDef->mProps->specular.x, mDef->mProps->specular.y, mDef->mProps->specular.z, mDef->mProps->specular.w);
 	}
 	
-	std::string diffuseMap = pickTexture(&mDef->mProps->diffuseMaps);
-	std::string normalMap = pickTexture(&mDef->mProps->normalMaps);
-	std::string alphaMap = pickTexture(&mDef->mProps->alphaMaps);
-	
-	pass->setCullingMode(chooseCullingMode());
+	if (!mDef->mProps->twoPass)
+		pass->setCullingMode(chooseCullingMode());
+	else
+		pass->setCullingMode(CULL_ANTICLOCKWISE);
 	
 	if (mDef->mProps->sceneBlend == SBM_ALPHA_BLEND)
 		pass->setSceneBlending(SBT_TRANSPARENT_ALPHA);

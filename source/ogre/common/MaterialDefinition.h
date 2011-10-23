@@ -43,6 +43,9 @@ struct MaterialProperties
 	Ogre::Vector4 lightingAlpha; // alpha for ambient, diffuse, spec, diffuse r channel mult
 	Ogre::CompareFunction alphaRejectFunc; float alphaRejectValue;
 	
+	// 2-pass (for pipe glass)
+	bool twoPass;
+	
 	// reflection
 	std::string envMap;
 	float reflAmount;
