@@ -51,7 +51,7 @@ lightingAlpha = 0.3 0.2 0.3 0.0
 ;  ------------ FM ----------------
 [car_body_FM]
 parent = car_body
-normalMap_1024 = flat_n.png
+normalMap_1024 = normal.png
 
 [car_interior_FM]
 parent = car_interior
@@ -61,12 +61,12 @@ receivesDepthShadows = false
 
 [cartire_front_FM]
 parent = cartire_front
-normalMap_1024 = flat_n.png
+normalMap_1024 = wheel_normal.png
 bumpScale = 10
 
 [cartire_rear_FM]
 parent = cartire_rear
-normalMap_1024 = flat_n.png
+normalMap_1024 = wheel_normal.png
 bumpScale = 10
 
 

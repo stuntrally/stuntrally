@@ -285,26 +285,7 @@ void CarModel::RecreateMaterials()
 					{
 						TextureUnitState* tus = tusIt.getNext();
 						String sTex = tus->getTextureName();  //!..
-						// normal maps
-						if (tus->getTextureName() == "flat_n.png")
-						{
-							// interior normal map
-							if (i == Mtr_CarInterior && FileExists(sCar + "_interior_normal.png"))
-							{
-								tus->setTextureName(sDirname + "_interior_normal.png");  continue;
-							}
-							// glass normal map
-							if (i == Mtr_CarGlass && FileExists(sCar + "_glass_normal.png"))
-							{
-								tus->setTextureName(sDirname + "_glass_normal.png");  continue;
-							}
-							// tire normal map
-							if ( (i == Mtr_CarTireFront || i == Mtr_CarTireRear) 
-								&& FileExists(sCar + "_wheel_normal.png") )
-							{
-								tus->setTextureName(sDirname + "_wheel_normal.png");  continue;
-							}
-						}
+						
 						// only 1 tire mesh?
 						if ( (i == Mtr_CarTireFront || i == Mtr_CarTireRear) 
 							&& FileExists(sCar + "_wheel.mesh") 
