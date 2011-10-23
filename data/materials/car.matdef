@@ -31,7 +31,6 @@ receivesDepthShadows = true
 [cartire_front]
 ambient = 0.5 0.5 0.5
 diffuse = 0.6 0.6 0.6
-specular = 0.5 0.5 0.5 128
 diffuseMap_1024 = wheel_front.png
 receivesDepthShadows = true
 
