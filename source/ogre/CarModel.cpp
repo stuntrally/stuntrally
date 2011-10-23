@@ -44,6 +44,7 @@ CarModel::CarModel(unsigned int index, eCarType type, const std::string name,
 		QUATERNION<float> rot;
 		pos = pGame->track.GetStart(i).first;
 		rot = pGame->track.GetStart(i).second;
+		vStartPos = Vector3(pos[0], pos[2], -pos[1]); // save in ogre coords
 
 		//  offset car start pos when cars collide
 		MATHVECTOR<float, 3> offset(0,0,0);

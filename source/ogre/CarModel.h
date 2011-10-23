@@ -111,7 +111,7 @@ public:
 	int iInChk, iCurChk, iNextChk, iNumChks, iWonPlace;  // cur checkpoint -1 at start
 	bool bInSt, bWrongChk;  float fChkTime;  int iChkWrong;
 	//bool Checkpoint(const PosInfo& posInfo, class SplineRoad* road);  // update
-	
+	Ogre::Vector3 vStartPos;
 	
 private:
 	Ogre::Camera* mCamera;
