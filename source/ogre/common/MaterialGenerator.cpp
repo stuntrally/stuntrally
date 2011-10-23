@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "../Defines.h"
 
+#include "MaterialProperties.h"
 #include "MaterialGenerator.h"
 #include "MaterialDefinition.h"
 #include "MaterialFactory.h"
@@ -340,11 +341,6 @@ inline bool MaterialGenerator::vpNeedWITMat()
 inline bool MaterialGenerator::fpNeedTangentToCube()
 {
 	return (needNormalMap() || fpNeedEyeVector());
-}
-
-inline bool MaterialGenerator::needSpecular()
-{
-	return (mDef->mProps->specular != Vector4::ZERO);
 }
 
 std::string MaterialGenerator::getChannel(unsigned int n)
@@ -715,15 +711,12 @@ void MaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::StrStrea
 	{
 		outStream <<
 		// light
-		"	uniform float3 lightDiffuse, \n";
-		if (needSpecular()) outStream <<
-		"	uniform float3 lightSpecular, \n";
-		outStream <<
+		"	uniform float3 lightDiffuse, \n"
+		"	uniform float3 lightSpecular, \n"
 		"	uniform float4 lightPosition, \n"
 		// material
 		"	uniform float3 matAmbient, \n"
-		"	uniform float3 matDiffuse, \n";
-		if (needSpecular()) outStream <<
+		"	uniform float3 matDiffuse, \n"
 		"	uniform float4 matSpecular, \n"; // shininess in w
 	}
 	outStream <<
@@ -809,14 +802,11 @@ void MaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::StrStrea
 		outStream <<
 		// Compute the specular term
 		"	float3 viewVec = -eyeVector; \n"
-		"	float3 half = normalize(lightDir + viewVec); \n";
-		if (needSpecular()) outStream <<
+		"	float3 half = normalize(lightDir + viewVec); \n"
 		"	float specularLight = pow(max(dot(normal, half), 0), matSpecular.w); \n"
+		"	if (matSpecular.x == 0 && matSpecular.y == 0 && matSpecular.z == 0) specularLight = 0; \n"
 		"	if (diffuseLight <= 0) specularLight = 0; \n"
-		"		float3 specular = matSpecular.xyz * lightSpecular.xyz * specularLight; \n";
-		else outStream <<
-		"	float specularLight = 0; \n"
-		"	float3 specular = float3(0, 0, 0); \n";
+		"	float3 specular = matSpecular.xyz * lightSpecular.xyz * specularLight; \n";
 
 		// Compute the ambient term
 		if (needDiffuseMap()) outStream <<
@@ -915,13 +905,11 @@ void MaterialGenerator::fragmentProgramParams(HighLevelGpuProgramPtr program)
 	if (fpNeedLighting())
 	{
 		params->setNamedAutoConstant("lightDiffuse", GpuProgramParameters::ACT_LIGHT_DIFFUSE_COLOUR, 0);
-		if (needSpecular())
-			params->setNamedAutoConstant("lightSpecular", GpuProgramParameters::ACT_LIGHT_SPECULAR_COLOUR, 0);
+		params->setNamedConstant("lightSpecular", mDef->mProps->specular);
 		params->setNamedAutoConstant("lightPosition", GpuProgramParameters::ACT_LIGHT_POSITION, 0);
-		params->setNamedConstant("matAmbient", mDef->mProps->ambient);
-		params->setNamedConstant("matDiffuse", mDef->mProps->diffuse);
-		if (needSpecular())
-			params->setNamedConstant("matSpecular", mDef->mProps->specular);
+		params->setNamedAutoConstant("matAmbient", GpuProgramParameters::ACT_SURFACE_AMBIENT_COLOUR);
+		params->setNamedAutoConstant("matDiffuse", GpuProgramParameters::ACT_SURFACE_DIFFUSE_COLOUR);
+		params->setNamedAutoConstant("matSpecular", GpuProgramParameters::ACT_SURFACE_SPECULAR_COLOUR);
 	}
 	if (needLightingAlpha())
 		params->setNamedConstant("lightingAlpha", mDef->mProps->lightingAlpha);
@@ -1001,8 +989,8 @@ HighLevelGpuProgramPtr MaterialGenerator::createAmbientFragmentProgram()
 	
 	// params
 	GpuProgramParametersSharedPtr params = ret->getDefaultParameters();
-	params->setNamedConstant("ambient", mDef->mProps->ambient );
-	params->setNamedConstant("matDif", Vector4(mDef->mProps->diffuse.x, mDef->mProps->diffuse.y, mDef->mProps->diffuse.z, 1.0) );
+	params->setNamedAutoConstant("ambient", GpuProgramParameters::ACT_SURFACE_AMBIENT_COLOUR );
+	params->setNamedAutoConstant("matDif", GpuProgramParameters::ACT_SURFACE_DIFFUSE_COLOUR );
 	
 	return ret;
 }

@@ -51,7 +51,6 @@ protected:
 	bool fpNeedTangentToCube(); bool vpNeedTangent();
 	bool fpNeedLighting(); // fragment lighting
 	//bool vpNeedLighting(); // vertex lighting
-	bool needSpecular();
 	bool needFresnel();
 	
 	// matrices

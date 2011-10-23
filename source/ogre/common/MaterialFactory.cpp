@@ -2,6 +2,7 @@
 #include "../Defines.h"
 #include "../QTimer.h"
 
+#include "MaterialProperties.h"
 #include "MaterialFactory.h"
 #include "MaterialDefinition.h"
 #include "MaterialGenerator.h"
@@ -185,6 +186,7 @@ void MaterialFactory::generate()
 		}
 		
 		bSettingsChanged = false;
+		
 		ti.update(); /// time
 		float dt = ti.dt * 1000.f;
 		LogO(String("::: Time MaterialFactory: ") + toStr(dt) + " ms");
