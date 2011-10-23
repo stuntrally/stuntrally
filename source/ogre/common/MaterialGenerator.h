@@ -33,10 +33,14 @@ protected:
 	void generateVertexProgramSource(Ogre::StringUtil::StrStreamType& outStream);
 	void vertexProgramParams(Ogre::HighLevelGpuProgramPtr program);
 	
+	Ogre::HighLevelGpuProgramPtr createAmbientVertexProgram(); // ambient pass vertex program
+	
 	// fragment program
 	Ogre::HighLevelGpuProgramPtr 	createFragmentProgram();
 	void generateFragmentProgramSource(Ogre::StringUtil::StrStreamType& outStream);
 	void fragmentProgramParams(Ogre::HighLevelGpuProgramPtr program);
+	
+	Ogre::HighLevelGpuProgramPtr createAmbientFragmentProgram(); // ambient pass fragment program
 	
 	bool needShaders();
 	bool needShadows();

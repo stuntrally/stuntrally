@@ -43,11 +43,8 @@ void MaterialGenerator::generate(bool fixedFunction)
 		ambientPass->setAmbient( mDef->mProps->ambient.x, mDef->mProps->ambient.y, mDef->mProps->ambient.z );
 		ambientPass->setDiffuse( mDef->mProps->diffuse.x, mDef->mProps->diffuse.y, mDef->mProps->diffuse.z, 1.0 );
 		
-		ambientPass->setSpecular(mDef->mProps->specular.x, mDef->mProps->specular.y, mDef->mProps->specular.z, mDef->mProps->specular.w );
-		//ambientPass->setShininess( mDef->mProps->specular.w );
+		ambientPass->setSpecular(mDef->mProps->specular.x, mDef->mProps->specular.y, mDef->mProps->specular.z, mDef->mProps->specular.w);
 		
-		//ambientPass->setColourWriteEnabled(false);
-		//ambientPass->setLightingEnabled(false);
 		ambientPass->setSceneBlending(SBT_TRANSPARENT_ALPHA);
 		ambientPass->setDepthBias( mDef->mProps->depthBias );
 		ambientPass->setDepthWriteEnabled(false);
@@ -56,8 +53,28 @@ void MaterialGenerator::generate(bool fixedFunction)
 		Ogre::TextureUnitState* tu = ambientPass->createTextureUnitState( diffuseMap );
 		tu->setName("diffuseMap");
 		
-		ambientPass->setVertexProgram("ambient_vs", false);
-		ambientPass->setFragmentProgram("ambient_ps", false);
+		// create shaders
+		HighLevelGpuProgramPtr fragmentProg, vertexProg;
+		try
+		{
+			vertexProg = createAmbientVertexProgram();
+			fragmentProg = createAmbientFragmentProgram();
+		}
+		catch (Ogre::Exception& e) {
+			LogO(e.getFullDescription());
+		}
+		
+		if (fragmentProg.isNull() || vertexProg.isNull() || 
+			!fragmentProg->isSupported() || !vertexProg->isSupported())
+		{
+			LogO("[MaterialFactory] WARNING: ambient shader for material '" + mDef->getName()
+				+ "' is not supported.");
+		}
+		else
+		{
+			ambientPass->setVertexProgram(vertexProg->getName());
+			ambientPass->setFragmentProgram(fragmentProg->getName());
+		}
 	}
 	
 	Ogre::Pass* pass = technique->createPass();
@@ -857,4 +874,86 @@ void MaterialGenerator::fragmentProgramParams(HighLevelGpuProgramPtr program)
 		params->setNamedConstant("lightingAlpha", mDef->mProps->lightingAlpha);
 	
 	params->setNamedAutoConstant("fogColor", GpuProgramParameters::ACT_FOG_COLOUR);
+}
+
+HighLevelGpuProgramPtr MaterialGenerator::createAmbientVertexProgram()
+{
+	HighLevelGpuProgramManager& mgr = HighLevelGpuProgramManager::getSingleton();
+	std::string progName = mDef->getName() + "_ambient_VP";
+
+	HighLevelGpuProgramPtr ret = mgr.getByName(progName);
+	if (!ret.isNull())
+		mgr.remove(progName);
+
+	ret = mgr.createProgram(progName, ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME, 
+		"cg", GPT_VERTEX_PROGRAM);
+
+	ret->setParameter("profiles", "vs_1_1 arbvp1");
+	ret->setParameter("entry_point", "main_vp");
+
+	StringUtil::StrStreamType sourceStr;
+	
+	sourceStr <<
+	"void ambient_vs( \n"
+	"	in float2 uv, \n"
+	"	in float4 position : POSITION, \n"
+	"	uniform float4x4 wvpMat, \n"
+	"	out float4 oPos : POSITION, out float2 oUV : TEXCOORD0) \n"
+	"{ \n"
+	"	oPos = mul(wvpMat, position);  oUV = uv; \n"
+	"} \n";
+	
+	#ifdef SHADER_DEBUG
+	LogO("Vertex ambient program source for '"+mDef->getName()+"':\n");
+	LogO(sourceStr.str());
+	#endif
+	ret->setSource(sourceStr.str());
+	ret->load();
+	
+	// params
+	GpuProgramParametersSharedPtr params = ret->getDefaultParameters();
+	params->setNamedAutoConstant("wvpMat", GpuProgramParameters::ACT_WORLDVIEWPROJ_MATRIX);
+	
+	return ret;
+}
+
+HighLevelGpuProgramPtr MaterialGenerator::createAmbientFragmentProgram()
+{
+	HighLevelGpuProgramManager& mgr = HighLevelGpuProgramManager::getSingleton();
+	std::string progName = mDef->getName() + "_ambient_FP";
+
+	HighLevelGpuProgramPtr ret = mgr.getByName(progName);
+	if (!ret.isNull())
+		mgr.remove(progName);
+
+	ret = mgr.createProgram(progName, ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME, 
+		"cg", GPT_FRAGMENT_PROGRAM);
+
+	ret->setParameter("profiles", "ps_2_0 arbvp1");
+	ret->setParameter("entry_point", "main_vp");
+
+	StringUtil::StrStreamType sourceStr;
+	
+	sourceStr <<
+	"float4 ambient_ps(in float2 uv : TEXCOORD0, \n"
+	"	uniform float3 ambient,  uniform float4 matDif, \n"
+	"	uniform sampler2D diffuseMap): COLOR0 \n"
+	"{ \n"
+	"	float4 diffuseTex = tex2D(diffuseMap, uv); \n"
+	"	return float4(ambient * matDif.rgb * diffuseTex.rgb, diffuseTex.a); \n"
+	"} \n";
+	
+	#ifdef SHADER_DEBUG
+	LogO("Fragment ambient program source for '"+mDef->getName()+"':\n");
+	LogO(sourceStr.str());
+	#endif
+	ret->setSource(sourceStr.str());
+	ret->load();
+	
+	// params
+	GpuProgramParametersSharedPtr params = ret->getDefaultParameters();
+	params->setNamedConstant("ambient", mDef->mProps->ambient );
+	params->setNamedConstant("matDif", Vector4(mDef->mProps->diffuse.x, mDef->mProps->diffuse.y, mDef->mProps->diffuse.z, 1.0) );
+	
+	return ret;
 }
