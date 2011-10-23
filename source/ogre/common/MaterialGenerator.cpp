@@ -54,18 +54,26 @@ void MaterialGenerator::generate(bool fixedFunction)
 	
 	pass->setCullingMode(chooseCullingMode());
 	
-	if (mDef->mProps->transparent)
-	{
+	if (mDef->mProps->sceneBlend == SBM_ALPHA_BLEND)
 		pass->setSceneBlending(SBT_TRANSPARENT_ALPHA);
-		pass->setDepthWriteEnabled(false);
-	}
-	
-	if (mDef->mProps->depthBias != 0.f)
-		pass->setDepthBias( mDef->mProps->depthBias );
+	else if (mDef->mProps->sceneBlend == SBM_COLOUR_BLEND)
+		pass->setSceneBlending(SBT_TRANSPARENT_COLOUR);
+	else if (mDef->mProps->sceneBlend == SBM_ADD)
+		pass->setSceneBlending(SBT_ADD);
+	else if (mDef->mProps->sceneBlend == SBM_MODULATE)
+		pass->setSceneBlending(SBT_MODULATE);
+		
+	pass->setDepthWriteEnabled( mDef->mProps->depthWrite );
 		
 	pass->setDepthCheckEnabled( mDef->mProps->depthCheck );
 		
 	pass->setTransparentSortingEnabled( mDef->mProps->transparentSorting );
+	
+	pass->setAlphaRejectFunction( mDef->mProps->alphaRejectFunc );
+	pass->setAlphaRejectValue( mDef->mProps->alphaRejectValue );
+	
+	if (mDef->mProps->depthBias != 0.f)
+		pass->setDepthBias( mDef->mProps->depthBias );
 	
 	if (!needShaders() || fixedFunction)
 	{

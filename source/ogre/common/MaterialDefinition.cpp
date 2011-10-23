@@ -12,7 +12,8 @@ MaterialProperties::MaterialProperties() :
 	hasFresnel(false), fresnelBias(0), fresnelScale(0), fresnelPower(0),
 	receivesShadows(false), receivesDepthShadows(false), shaders(true), transparent(false),
 	ambient(0.5, 0.5, 0.5), diffuse(1.0, 1.0, 1.0), specular(0.0, 0.0, 0.0, 0.0),
-	depthBias(0), depthCheck(true), transparentSorting(true), lightingAlpha(0.0, 0.0, 0.0, 0.0)
+	depthBias(0), depthCheck(true), transparentSorting(true), lightingAlpha(0.0, 0.0, 0.0, 0.0),
+	sceneBlend(SBM_DEFAULT), depthWrite(true), alphaRejectFunc(CMPF_ALWAYS_PASS), alphaRejectValue(0.0)
 {}
 
 const inline bool str2bool(const std::string& s)
@@ -43,6 +44,25 @@ void MaterialProperties::setProperty(const std::string& prop, const std::string&
 				cullHardware = CULL_HW_ANTICLOCKWISE_OR_NONE;
 		}
 	}
+	else if (prop == "sceneBlend")
+	{
+		if (value == "alpha") sceneBlend = SBM_ALPHA_BLEND;
+		else if (value == "colour") sceneBlend = SBM_COLOUR_BLEND;
+		else if (value == "add") sceneBlend = SBM_ADD;
+		else if (value == "modulate") sceneBlend = SBM_MODULATE;
+	}
+	else if (prop == "alphaRejectFunc")
+	{
+		if (value == "always_fail") alphaRejectFunc = CMPF_ALWAYS_FAIL;
+		else if (value == "always_pass") alphaRejectFunc = CMPF_ALWAYS_PASS;
+		else if (value == "less") alphaRejectFunc = CMPF_LESS;
+		else if (value == "equal") alphaRejectFunc = CMPF_EQUAL;
+		else if (value == "not_equal") alphaRejectFunc = CMPF_NOT_EQUAL;
+		else if (value == "greater_equal") alphaRejectFunc = CMPF_GREATER_EQUAL;
+		else if (value == "greater") alphaRejectFunc = CMPF_GREATER;
+	}
+	else if (prop == "alphaRejectValue") alphaRejectValue = str2float(value);
+	else if (prop == "depthWrite") depthWrite = str2bool(value);
 	else if (prop == "lightingAlpha") lightingAlpha = str2vec4(value);
 	else if (prop == "depthBias") depthBias = str2int(value);
 	else if (prop == "depthCheck") depthCheck = str2bool(value);

@@ -21,6 +21,11 @@ enum CullHardwareMode
 	CULL_HW_CLOCKWISE_OR_NONE=0x03, CULL_HW_ANTICLOCKWISE_OR_NONE=0x04
 };
 
+enum SceneBlendMode
+{
+	SBM_ADD=0x00, SBM_MODULATE=0x01, SBM_COLOUR_BLEND=0x02, SBM_ALPHA_BLEND=0x03, SBM_DEFAULT=0x04
+};
+
 struct MaterialProperties
 {
 	bool shaders;
@@ -31,8 +36,10 @@ struct MaterialProperties
 	
 	CullHardwareMode cullHardware;
 	
-	textureMap alphaMaps; bool transparent; 
+	SceneBlendMode sceneBlend;
+	textureMap alphaMaps; bool transparent;
 	Ogre::Vector4 lightingAlpha; // alpha for ambient, diffuse, spec, diffuse r channel mult
+	Ogre::CompareFunction alphaRejectFunc; float alphaRejectValue;
 	
 	// reflection
 	std::string envMap;
@@ -43,7 +50,7 @@ struct MaterialProperties
 	bool receivesShadows, receivesDepthShadows;
 	Ogre::Vector3 ambient; Ogre::Vector3 diffuse; Ogre::Vector4 specular;
 	
-	float depthBias; bool depthCheck; bool transparentSorting;
+	float depthBias; bool depthCheck; bool depthWrite; bool transparentSorting;
 	
 	//!todo:
 	// PPX on/off, shading mode (phong etc) for no shaders,
