@@ -11,7 +11,7 @@ MaterialProperties::MaterialProperties() :
 	envMap(""), reflAmount(0.2), bumpScale(1.0), cullHardware(CULL_HW_CLOCKWISE),
 	hasFresnel(false), fresnelBias(0), fresnelScale(0), fresnelPower(0),
 	receivesShadows(false), receivesDepthShadows(false), shaders(true), transparent(false),
-	ambient(0.5, 0.5, 0.5), diffuse(1.0, 1.0, 1.0), specular(0.2, 0.2, 0.2, 128),
+	ambient(0.5, 0.5, 0.5), diffuse(1.0, 1.0, 1.0), specular(0.0, 0.0, 0.0, 0.0),
 	depthBias(0), depthCheck(true), transparentSorting(true), lightingAlpha(0.0, 0.0, 0.0, 0.0)
 {}
 

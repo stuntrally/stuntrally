@@ -169,6 +169,8 @@ void MaterialFactory::generate()
 		MaterialGenerator generator;
 		generator.mParent = this;
 		
+		splitMtrs.clear();
+		
 		for (std::vector<MaterialDefinition*>::iterator it=mDefinitions.begin();
 			it!=mDefinitions.end(); ++it)
 		{

@@ -176,6 +176,9 @@ void MaterialGenerator::generate(bool fixedFunction)
 		pass->setVertexProgram(vertexProg->getName());
 		pass->setFragmentProgram(fragmentProg->getName());
 	}
+	
+	if (needShadows())
+		mParent->splitMtrs.push_back( mDef->getName() );
 }
 
 //----------------------------------------------------------------------------------------
@@ -741,7 +744,7 @@ void MaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::StrStrea
 			"	float alpha = tex2D(alphaMap, texCoord).r; \n"; // use only r channel
 		else if (needLightingAlpha())
 		{
-			if (mDef->mProps->lightingAlpha.w == 0 && needDiffuseMap()) outStream <<
+			if (mDef->mProps->lightingAlpha.w != 0 && needDiffuseMap()) outStream <<
 				"	float alpha = lightingAlpha.x + lightingAlpha.y * diffuseLight + lightingAlpha.z * specularLight + (1-diffuseTex.r)*lightingAlpha.w; \n";
 			else outStream <<
 				"	float alpha = lightingAlpha.x + lightingAlpha.y * diffuseLight + lightingAlpha.z * specularLight; \n";

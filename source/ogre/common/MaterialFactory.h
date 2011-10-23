@@ -38,6 +38,8 @@ public:
 	const unsigned int getNumShadowTex() { return iNumShadowTex; };
 	///--------------------------------------------------------------------
 	
+	std::vector<std::string> splitMtrs; // list of materials that need pssm split points
+	
 	App* pApp;
 
 private:
@@ -49,8 +51,6 @@ private:
 	std::vector<MaterialDefinition*> mDefinitions;
 	
 	Ogre::ConfigFile mFile; // for loading mat def's from file
-
-	//!todo split points - maintain a list of materials that need it
 
 	//!todo decide which materials actually need to be generated
 	/// (if they are not used in track, no need to generate)

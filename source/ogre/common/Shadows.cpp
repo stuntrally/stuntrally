@@ -245,6 +245,10 @@ void App::UpdPSSMMaterials()	/// . . . . . . . .
 	#ifndef ROAD_EDITOR
 	if (pSet->shadow_type == 3) recreateCarMtr();
 	#endif
+	
+	for (std::vector<std::string>::iterator it = materialFactory->splitMtrs.begin();
+		it != materialFactory->splitMtrs.end(); ++it)
+		setMtrSplits( (*it) );
 
 	if (!road)  return;
 	String txs = road->iTexSize == 0 ? "_s": "";

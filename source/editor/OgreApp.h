@@ -116,9 +116,9 @@ protected:
 	float Noise(float x, float zoom, int octaves, float persistence);
 	void configureTerrainDefaults(class Ogre::Light* l);
 		
-	void changeShadows(), UpdPSSMMaterials(), setMtrSplits(Ogre::String sMtrName);
+	void changeShadows(), UpdPSSMMaterials();
 public:
-	Ogre::Vector4 splitPoints;
+	Ogre::Vector4 splitPoints; void setMtrSplits(Ogre::String sMtrName);
 protected:
 	Ogre::ShadowCameraSetupPtr mPSSMSetup;
 
