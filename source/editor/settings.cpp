@@ -37,6 +37,8 @@ void SETTINGS::Serialize(bool w, CONFIGFILE & c)
 	Param(c,w, "shadow.dist", shadow_dist);			Param(c,w, "shadow.size", shadow_size);
 	Param(c,w, "shadow.count",shadow_count);		Param(c,w, "shadow.type", shadow_type);
 	Param(c,w, "shadow.shaders", shaders);			Param(c,w, "shadow.lightmap_size", lightmap_size);
+	
+	Param(c,w, "input.x11_capture_mouse", x11_capture_mouse);
 
 	Param(c,w, "misc.version", version);			Param(c,w, "misc.autostart", autostart);
 	Param(c,w, "misc.ogredialog", ogre_dialog);		Param(c,w, "misc.escquit", escquit);
@@ -76,5 +78,5 @@ SETTINGS::SETTINGS() :  ///  Defaults
 	cam_speed(1.f), cam_inert(1.f),
 	ter_skip(4), road_sphr(1.f), mini_skip(4),
 	windowx(800), windowy(600), fullscreen(false), fsaa(0), vsync(false),
-	buffer("FBO"), rendersystem("OpenGL Rendering Subsystem")
+	buffer("FBO"), rendersystem("OpenGL Rendering Subsystem"), x11_capture_mouse(false)
 {	}
