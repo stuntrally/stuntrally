@@ -101,10 +101,15 @@ parent = roadIce
 ambient = 0.7 0.7 0.7
 diffuse = 0.7 0.7 0.7
 
-[roadIce_ter2]
-parent = roadIce_ter
+[roadIce2_ter]
+parent = roadIce
 ambient = 0.7 0.7 0.7
 diffuse = 0.7 0.7 0.7
+alphaMap_512 = roadAlpha_s.png
+alphaMap_2048 = roadAlpha.png
+transparent = true
+sceneBlend = alpha
+depthWrite = false
 
 ; ------------ Snow Winter -------------
 [roadSnow]
