@@ -919,7 +919,7 @@ HighLevelGpuProgramPtr MaterialGenerator::createAmbientVertexProgram()
 	StringUtil::StrStreamType sourceStr;
 	
 	sourceStr <<
-	"void ambient_vs( \n"
+	"void main_vp( \n"
 	"	in float2 uv, \n"
 	"	in float4 position : POSITION, \n"
 	"	uniform float4x4 wvpMat, \n"
@@ -956,13 +956,13 @@ HighLevelGpuProgramPtr MaterialGenerator::createAmbientFragmentProgram()
 	ret = mgr.createProgram(progName, ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME, 
 		"cg", GPT_FRAGMENT_PROGRAM);
 
-	ret->setParameter("profiles", "ps_2_0 arbvp1");
-	ret->setParameter("entry_point", "main_vp");
+	ret->setParameter("profiles", "ps_2_0 arbfp1");
+	ret->setParameter("entry_point", "main_fp");
 
 	StringUtil::StrStreamType sourceStr;
 	
 	sourceStr <<
-	"float4 ambient_ps(in float2 uv : TEXCOORD0, \n"
+	"float4 main_fp(in float2 uv : TEXCOORD0, \n"
 	"	uniform float3 ambient,  uniform float4 matDif, \n"
 	"	uniform sampler2D diffuseMap): COLOR0 \n"
 	"{ \n"
