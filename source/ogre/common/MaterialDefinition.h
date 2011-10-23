@@ -28,6 +28,8 @@ enum SceneBlendMode
 
 struct MaterialProperties
 {
+	bool abstract;
+	
 	bool shaders;
 	
 	// map: tex size, tex name

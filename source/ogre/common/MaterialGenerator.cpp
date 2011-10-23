@@ -779,7 +779,7 @@ void MaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::StrStrea
 			else {
 				outStream <<
 				"	float alpha = 1.0; \n"; // no way to get alpha value, we don't have diffuse tex and user didnt supply lightingAlpha
-				LogO("[MaterialFactory] WARNING: Material declared as transparent, but no way to get alpha value.");
+				LogO("[MaterialFactory] WARNING: Material '"+mDef->getName()+"' declared as transparent, but no way to get alpha value.");
 			}
 		}
 		outStream << 

@@ -8,6 +8,7 @@ using namespace Ogre;
 
 // constructor with sensible default values
 MaterialProperties::MaterialProperties() :
+	abstract(false),
 	envMap(""), reflAmount(0.2), bumpScale(1.0), cullHardware(CULL_HW_CLOCKWISE),
 	hasFresnel(false), fresnelBias(0), fresnelScale(0), fresnelPower(0),
 	receivesShadows(false), receivesDepthShadows(false), shaders(true), transparent(false),
@@ -29,8 +30,9 @@ const inline bool str2bool(const std::string& s)
 #define str2vec4(s) StringConverter::parseVector4(s)
 
 void MaterialProperties::setProperty(const std::string& prop, const std::string& value)
-{	
-	if (prop == "envMap") envMap = value;
+{
+	if (prop == "abstract") abstract = str2bool(value);
+	else if (prop == "envMap") envMap = value;
 	else if (prop == "cullHardware")
 	{
 		if (value == "clockwise") cullHardware = CULL_HW_CLOCKWISE;

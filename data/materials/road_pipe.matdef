@@ -1,3 +1,13 @@
+[pipeAsphalt]
+ambient = 0.5 0.5 0.5
+diffuse = 0.6 0.6 0.6
+specular = 0.3 0.3 0.25 24
+depthBias = 3
+diffuseMap_512 = roadAsphalt_s.jpg
+diffuseMap_2048 = roadAsphalt.jpg
+cullHardware = none
+receivesShadows = true
+
 [pipeGlass]
 transparent = true
 depthWrite = false
@@ -18,4 +28,7 @@ lightingAlpha = 0.3 0.3 0.4 1.0
 
 [pipe_wall]
 parent = road_wall
+ambient = 0.42 0.43 0.44
+diffuse = 0.5 0.56 0.6
+specular = 0.25 0.267 0.28 4
 cullHardware = none

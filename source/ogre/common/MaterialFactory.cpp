@@ -119,6 +119,7 @@ void MaterialFactory::loadDefsFromFile(const std::string& file)
 				// parent found, we can base our new material definition upon this parent
 				MaterialProperties* props = (*it)->getProps();
 				newProps = new MaterialProperties(*props); // use copy constructor
+				newProps->abstract = false;
 			}
 		}
 		else
@@ -174,6 +175,9 @@ void MaterialFactory::generate()
 		for (std::vector<MaterialDefinition*>::iterator it=mDefinitions.begin();
 			it!=mDefinitions.end(); ++it)
 		{
+			// don't generate abstract materials
+			if ((*it)->getProps()->abstract) continue;
+
 			generator.mDef = (*it);
 			generator.generate();
 		}

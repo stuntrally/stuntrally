@@ -20,6 +20,7 @@ receivesDepthShadows = true
 ; --------- 3D-diggers plants ---------
 
 [3D-Diggers/base]
+abstract = true
 transparent = true
 alphaRejectFunc = greater_equal
 alphaRejectValue = 128
