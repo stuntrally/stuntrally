@@ -18,10 +18,9 @@ depthWrite = false
 ambient = 0.8 0.8 0.8
 diffuse = 0.9 0.9 0.9
 specular = 1.0 1.0 1.0 128
-receivesDepthShadows = true
 twoPass = true
-cullHardware = none
-cullHardwareAmbient = none
+cullHardware = clockwise
+cullHardwareAmbient = anticlockwise
 
 [car_interior]
 diffuseMap_1024 = interior.png
