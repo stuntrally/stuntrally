@@ -64,7 +64,7 @@ receivesDepthShadows = false
 parent = car_body
 diffuseMap_1024 = chasis.png
 
-[chasis/Material#3]
+[chasis/Material_#3]
 ambient = 0.3 0.3 0.3
 diffuse = 0.5 0.5 0.5
 specular = 0.2 0.2 0.2 24
