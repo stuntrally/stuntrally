@@ -20,8 +20,6 @@
 #include <OgreGpuProgramParams.h>
 using namespace Ogre;
 
-//#define SHADER_DEBUG
-
 void MaterialGenerator::generate(bool fixedFunction)
 {	
 	MaterialPtr mat = prepareMaterial(mDef->getName());
@@ -225,6 +223,14 @@ void MaterialGenerator::generate(bool fixedFunction)
 		{
 			LogO("[MaterialFactory] WARNING: shader for material '" + mDef->getName()
 				+ "' is not supported, falling back to fixed-function");
+			LogO("[MaterialFactory] Vertex program source: ");
+			StringUtil::StrStreamType vSourceStr;
+			generateVertexProgramSource(vSourceStr);
+			LogO(vSourceStr.str());
+			LogO("[MaterialFactory] Fragment program source: ");
+			StringUtil::StrStreamType fSourceStr;
+			generateVertexProgramSource(fSourceStr);
+			LogO(fSourceStr.str());
 			generate(true);
 			return;
 		}
@@ -294,6 +300,11 @@ inline bool MaterialGenerator::needLightingAlpha()
 inline bool MaterialGenerator::needAlphaMap()
 {
 	return (mDef->mProps->alphaMaps.size() > 0);
+}
+
+inline bool MaterialGenerator::needFresnel()
+{
+	return (mDef->mProps->fresnelScale != 0) && needEnvMap();
 }
 
 inline bool MaterialGenerator::fpNeedLighting()
@@ -680,6 +691,11 @@ void MaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::StrStrea
 		"	in float4 tangentToCubeSpace1 : TEXCOORD3, \n"
 		"	in float4 tangentToCubeSpace2 : TEXCOORD4, \n";
 		
+	if (needFresnel()) outStream <<
+		"	uniform float fresnelBias, \n"
+		"	uniform float fresnelScale, \n"
+		"	uniform float fresnelPower, \n";
+		
 	if (needDiffuseMap()) outStream <<
 		"	uniform sampler2D diffuseMap : TEXUNIT"+toStr(mDiffuseTexUnit)+", \n";
 		
@@ -813,16 +829,24 @@ void MaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::StrStrea
 		else outStream <<
 		"	float3 lightColour = ambient + diffuse + specular; \n";
 	
-	if (needEnvMap()) outStream << 
+	// cube reflection
+	if (needEnvMap())
+	{
+		if (needFresnel()) outStream <<
+			"	float facing = 1.0 - max(abs(dot(eyeVector, normal)), 0); \n"
+			"	float reflectionFactor = saturate(fresnelBias + fresnelScale * pow(facing, fresnelPower)); \n";
+		
+			//"	float reflectionFactor = fresnelBias + fresnelScale * pow(1 + abs(dot(eyeVector, normal)), fresnelPower); \n";
+		else outStream <<
+			"	float reflectionFactor = reflAmount; \n";
+		outStream << 
 		"	float3 r = reflect( eyeVector, normal ); \n" // calculate reflection vector
 		"	float4 envColor = texCUBE(envMap, r); \n"; // fetch cube map
-	
-	if (needEnvMap()) 
-	{
+
 		if (fpNeedLighting()) outStream <<
-		"	float4 color1 = lerp(float4(lightColour,1), envColor, reflAmount); \n";
+		"	float4 color1 = lerp(float4(lightColour,1), envColor, reflectionFactor); \n";
 		else outStream <<
-		"	float4 color1 = lerp(diffuseColour, envColor, reflAmount); \n";
+		"	float4 color1 = lerp(diffuseColour, envColor, reflectionFactor); \n";
 	}
 	else
 	{
@@ -872,9 +896,15 @@ void MaterialGenerator::fragmentProgramParams(HighLevelGpuProgramPtr program)
 {
 	GpuProgramParametersSharedPtr params = program->getDefaultParameters();
 
-	if (needEnvMap())
+	if (needEnvMap() && !needFresnel())
 	{
 		params->setNamedConstant("reflAmount", mDef->mProps->reflAmount);
+	}
+	if (needFresnel())
+	{
+		params->setNamedConstant("fresnelScale", mDef->mProps->fresnelScale);
+		params->setNamedConstant("fresnelBias", mDef->mProps->fresnelBias);
+		params->setNamedConstant("fresnelPower", mDef->mProps->fresnelPower);
 	}
 	if (needShadows())
 	{
@@ -928,10 +958,6 @@ HighLevelGpuProgramPtr MaterialGenerator::createAmbientVertexProgram()
 	"	oPos = mul(wvpMat, position);  oUV = uv; \n"
 	"} \n";
 	
-	#ifdef SHADER_DEBUG
-	LogO("Vertex ambient program source for '"+mDef->getName()+"':\n");
-	LogO(sourceStr.str());
-	#endif
 	ret->setSource(sourceStr.str());
 	ret->load();
 	
@@ -970,10 +996,6 @@ HighLevelGpuProgramPtr MaterialGenerator::createAmbientFragmentProgram()
 	"	return float4(ambient * matDif.rgb * diffuseTex.rgb, diffuseTex.a); \n"
 	"} \n";
 	
-	#ifdef SHADER_DEBUG
-	LogO("Fragment ambient program source for '"+mDef->getName()+"':\n");
-	LogO(sourceStr.str());
-	#endif
 	ret->setSource(sourceStr.str());
 	ret->load();
 	

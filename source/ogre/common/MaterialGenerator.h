@@ -52,6 +52,7 @@ protected:
 	bool fpNeedLighting(); // fragment lighting
 	//bool vpNeedLighting(); // vertex lighting
 	bool needSpecular();
+	bool needFresnel();
 	
 	// matrices
 	bool vpNeedWMat();
