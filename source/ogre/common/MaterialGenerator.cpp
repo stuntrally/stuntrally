@@ -433,6 +433,12 @@ void MaterialGenerator::generateVertexProgramSource(Ogre::StringUtil::StrStreamT
 	"{ \n"
 	"	oPosition = mul(wvpMat, position); \n";
 	
+	if (fpNeedEyeVector()) outStream <<
+		"	float3 eyeVector = mul( wMat, position ) - eyePosition; \n" // transform eye into view space
+		"	oTangentToCubeSpace0.xyzw = eyeVector.xxxx; \n"
+		"	oTangentToCubeSpace1.xyzw = eyeVector.yyyy; \n"
+		"	oTangentToCubeSpace2.xyzw = eyeVector.zzzz; \n";
+
 	if (needNormalMap()) outStream <<
 	"	float3 binormal = cross(tangent, normal); \n"	// calculate binormal
 	"	float3x3 tbn = float3x3( tangent * bumpScale, \n"			// build TBN
@@ -453,7 +459,6 @@ void MaterialGenerator::generateVertexProgramSource(Ogre::StringUtil::StrStreamT
 			outStream << "oLightPosition"+toStr(i)+" = mul(texWorldViewProjMatrix"+toStr(i)+", position); \n";
 		}
 	}
-	
 	else outStream <<
 		"	oTexCoord = texCoord; \n";
 		
@@ -463,9 +468,6 @@ void MaterialGenerator::generateVertexProgramSource(Ogre::StringUtil::StrStreamT
 	"	objectPos.w = saturate(fogParams.x * (oPosition.z - fogParams.y) * fogParams.w); \n";
 	if (fpNeedWsNormal()) outStream <<
 		"	oWsNormal = mul( (float3x3) wITMat, normal ); \n";
-	if (fpNeedEyeVector()) outStream <<
-		"	float3 eyeVector = mul( wMat, position ) - eyePosition; \n" // transform eye into view space
-		"	oTangentToCubeSpace0.w = eyeVector.x; oTangentToCubeSpace1.w = eyeVector.y; oTangentToCubeSpace2.w = eyeVector.z; \n";
 	outStream <<
 	"} \n";
 }
