@@ -301,8 +301,8 @@ void CarModel::RecreateMaterials()
 						if (!(StringUtil::startsWith(tus->getTextureName(), "ReflectionCube") ||
 								StringUtil::startsWith(tus->getTextureName(), "body_dyn") ||
 								tus->getTextureName() == "ReflectionCube" ||
-								StringUtil::startsWith(tus->getName(), "shadowmap")
-						))
+								StringUtil::startsWith(tus->getName(), "shadowmap") ||
+								StringUtil::startsWith(tus->getTextureName(), "flat_n")))
 							tus->setTextureName(sDirname + "_" + tus->getTextureName());
 		}	}	}	}
 		if (pSet->shadow_type == 3)
