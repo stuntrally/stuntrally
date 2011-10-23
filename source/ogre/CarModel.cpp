@@ -314,15 +314,13 @@ void CarModel::setMtrName(const String& entName, const String& mtrName)
 {
 	Ogre::Entity* ent; Ogre::ManualObject* manual;
 
-	try {
-		ent = pSceneMgr->getEntity(entName);
-		ent->setMaterialName(mtrName);
-	} catch(Ogre::Exception&) {
-		try {
-			manual = pSceneMgr->getManualObject(entName);
-			manual->setMaterialName(0, mtrName);
-		}
-		catch(Ogre::Exception&) {  }
+	if (pSceneMgr->hasEntity(entName))
+	{
+		pSceneMgr->getEntity(entName)->setMaterialName(mtrName);
+	}
+	else if (pSceneMgr->hasManualObject(entName))
+	{
+		pSceneMgr->getManualObject(entName)->setMaterialName(0, mtrName);
 	}
 }
 

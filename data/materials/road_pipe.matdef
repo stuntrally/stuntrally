@@ -21,6 +21,8 @@ diffuseMap_1 = roadGlassB.png
 cullHardwareAmbient = clockwise
 cullHardware = anticlockwise
 twoPass = true
+receivesDepthShadows = true
+
 
 [pipeGlassCyan]
 parent = pipeGlass
