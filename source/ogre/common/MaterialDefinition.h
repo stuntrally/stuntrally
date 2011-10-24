@@ -3,7 +3,7 @@
 
 #include <string>
 
-class MaterialFactory;  class MaterialProperties;
+class MaterialFactory;  struct MaterialProperties;
 
 class MaterialDefinition
 {
