@@ -7,7 +7,7 @@ ambient = 0.5 0.5 0.5
 specular = 0.7 0.7 0.7 32
 receivesShadows = false
 receivesDepthShadows = true
-fresnelScale = 0.93
+fresnelScale = 0.73
 fresnelBias = 0.07
 fresnelPower = 4
 

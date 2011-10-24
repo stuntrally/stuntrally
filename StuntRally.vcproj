@@ -1049,11 +1049,15 @@
 				Name="materials"
 				>
 				<File
-					RelativePath=".\data\materials\car.material"
+					RelativePath=".\data\materials\body.material"
 					>
 				</File>
 				<File
-					RelativePath=".\data\materials\car_old.material"
+					RelativePath=".\data\materials\car.matdef"
+					>
+				</File>
+				<File
+					RelativePath=".\data\materials\car.material"
 					>
 				</File>
 				<File
@@ -1073,15 +1077,31 @@
 					>
 				</File>
 				<File
-					RelativePath=".\data\materials\general.matdef"
-					>
-				</File>
-				<File
 					RelativePath=".\data\materials\general.material"
 					>
 				</File>
 				<File
 					RelativePath=".\data\materials\general.program"
+					>
+				</File>
+				<File
+					RelativePath=".\data\materials\grass.cg"
+					>
+				</File>
+				<File
+					RelativePath=".\data\materials\grass.material"
+					>
+				</File>
+				<File
+					RelativePath=".\data\materials\pipe.material"
+					>
+				</File>
+				<File
+					RelativePath=".\data\materials\pssm.cg"
+					>
+				</File>
+				<File
+					RelativePath=".\data\materials\pssm.material"
 					>
 				</File>
 				<File
@@ -1093,7 +1113,11 @@
 					>
 				</File>
 				<File
-					RelativePath=".\data\materials\road.material"
+					RelativePath=".\data\materials\road.matdef"
+					>
+				</File>
+				<File
+					RelativePath=".\data\materials\road_pipe.matdef"
 					>
 				</File>
 			</Filter>
@@ -1253,6 +1277,14 @@
 					</File>
 					<File
 						RelativePath=".\source\ogre\common\MaterialGenerator.h"
+						>
+					</File>
+					<File
+						RelativePath=".\source\ogre\common\MaterialProperties.cpp"
+						>
+					</File>
+					<File
+						RelativePath=".\source\ogre\common\MaterialProperties.h"
 						>
 					</File>
 					<File
