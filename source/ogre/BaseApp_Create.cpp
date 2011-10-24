@@ -369,8 +369,7 @@ bool BaseApp::configure()
 
 		NameValuePairList settings;
 		settings.insert(std::make_pair("title", "Stunt Rally"));
-		//settings.insert(std::make_pair("FSAA", toStr(pSet->fsaa)));
-		settings.insert(std::make_pair("FSAA", "16"));
+		settings.insert(std::make_pair("FSAA", toStr(pSet->fsaa)));
 		settings.insert(std::make_pair("vsync", pSet->vsync ? "true" : "false"));
 
 		mWindow = mRoot->createRenderWindow("Stunt Rally", pSet->windowx, pSet->windowy, pSet->fullscreen, &settings);
