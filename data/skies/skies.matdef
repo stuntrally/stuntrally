@@ -1,4 +1,5 @@
 [base_sky]
+abstract = true
 lighting = false
 depthWrite = false
 depthCheck = false
