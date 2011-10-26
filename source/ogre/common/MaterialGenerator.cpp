@@ -104,6 +104,9 @@ void MaterialGenerator::generate(bool fixedFunction)
 	
 	if (!mDef->mProps->fog)
 		pass->setFog(true); // actually this disables fog
+		
+	if (!mDef->mProps->lighting)
+		pass->setLightingEnabled(false);
 	
 	if (mDef->mProps->sceneBlend == SBM_ALPHA_BLEND)
 		pass->setSceneBlending(SBT_TRANSPARENT_ALPHA);
