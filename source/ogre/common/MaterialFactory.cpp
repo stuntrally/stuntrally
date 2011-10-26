@@ -19,7 +19,7 @@ using namespace Ogre;
 
 MaterialFactory::MaterialFactory() : 
 	bShaders(1), bNormalMap(1), bEnvMap(1), bShadows(1), bShadowsDepth(1),
-	iTexSize(1024), iNumShadowTex(3),
+	iTexSize(4096), iNumShadowTex(3),
 	bSettingsChanged(1) // always have to generate at start
 {	
 	// find all files with *.matdef extension in all resource groups
