@@ -102,6 +102,9 @@ void MaterialGenerator::generate(bool fixedFunction)
 	
 	pass->setCullingMode(chooseCullingMode());
 	
+	if (!mDef->mProps->fog)
+		pass->setFog(true); // actually this disables fog
+	
 	if (mDef->mProps->sceneBlend == SBM_ALPHA_BLEND)
 		pass->setSceneBlending(SBT_TRANSPARENT_ALPHA);
 	else if (mDef->mProps->sceneBlend == SBM_COLOUR_BLEND)
