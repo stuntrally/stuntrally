@@ -6,6 +6,8 @@
 #include <OgreLogManager.h>
 using namespace Ogre;
 
+//----------------------------------------------------------------------------------------
+
 // constructor with sensible default values
 MaterialProperties::MaterialProperties() :
 	abstract(false),
@@ -15,9 +17,12 @@ MaterialProperties::MaterialProperties() :
 	ambient(0.5, 0.5, 0.5), diffuse(1.0, 1.0, 1.0), specular(0.0, 0.0, 0.0, 0.0),
 	depthBias(0), depthCheck(true), transparentSorting(true), lightingAlpha(0.0, 0.0, 0.0, 0.0),
 	sceneBlend(SBM_DEFAULT), depthWrite(true), alphaRejectFunc(CMPF_ALWAYS_PASS), alphaRejectValue(0.0),
-	twoPass(false)
+	twoPass(false), fog(true), lighting(true), textureAddressMode(TextureUnitState::TAM_WRAP)
 {}
 
+//----------------------------------------------------------------------------------------
+
+// utility
 const inline bool str2bool(const std::string& s)
 {
 	std::string val = s;
@@ -29,6 +34,8 @@ const inline bool str2bool(const std::string& s)
 #define str2float(s) StringConverter::parseReal(s)
 #define str2vec3(s) StringConverter::parseVector3(s)
 #define str2vec4(s) StringConverter::parseVector4(s)
+
+//----------------------------------------------------------------------------------------
 
 void MaterialProperties::setProperty(const std::string& prop, const std::string& value)
 {
@@ -77,6 +84,15 @@ void MaterialProperties::setProperty(const std::string& prop, const std::string&
 		else if (value == "greater_equal") alphaRejectFunc = CMPF_GREATER_EQUAL;
 		else if (value == "greater") alphaRejectFunc = CMPF_GREATER;
 	}
+	else if (prop == "textureAddressMode")
+	{
+		if (value == "wrap") textureAddressMode = TextureUnitState::TAM_WRAP;
+		else if (value == "clamp") textureAddressMode = TextureUnitState::TAM_CLAMP;
+		else if (value == "mirror") textureAddressMode = TextureUnitState::TAM_MIRROR;
+		else if (value == "border") textureAddressMode = TextureUnitState::TAM_BORDER;
+	}
+	else if (prop == "lighting") lighting = str2bool(value);
+	else if (prop == "fog") fog = str2bool(value);
 	else if (prop == "twoPass") twoPass = str2bool(value);
 	else if (prop == "alphaRejectValue") alphaRejectValue = str2float(value);
 	else if (prop == "depthWrite") depthWrite = str2bool(value);

@@ -6,6 +6,7 @@
 #include <OgreVector3.h>
 #include <OgreVector4.h>
 #include <OgreCommon.h>
+#include <OgreTextureUnitState.h>
 
 typedef std::map<unsigned int, std::string> textureMap;
 
@@ -29,7 +30,7 @@ struct MaterialProperties
 	bool shaders;
 	
 	// map: tex size, tex name
-	textureMap diffuseMaps;
+	textureMap diffuseMaps; Ogre::TextureUnitState::TextureAddressingMode textureAddressMode;
 	textureMap normalMaps; float bumpScale;
 	
 	CullHardwareMode cullHardware;
@@ -51,8 +52,12 @@ struct MaterialProperties
 	// shadows, lighting
 	bool receivesShadows, receivesDepthShadows;
 	Ogre::Vector3 ambient; Ogre::Vector3 diffuse; Ogre::Vector4 specular;
+	bool fog; // enable fog
+	bool lighting; // enable lighting
+
 	
 	float depthBias; bool depthCheck; bool depthWrite; bool transparentSorting;
+	
 	
 	//!todo:
 	// PPX on/off, shading mode (phong etc) for no shaders,

@@ -51,6 +51,7 @@ void MaterialGenerator::generate(bool fixedFunction)
 		
 		Ogre::TextureUnitState* tu = ambientPass->createTextureUnitState( diffuseMap );
 		tu->setName("diffuseMap");
+		tu->setTextureAddressingMode(mDef->mProps->textureAddressMode);
 		
 		// create shaders
 		HighLevelGpuProgramPtr fragmentProg, vertexProg;
@@ -123,9 +124,7 @@ void MaterialGenerator::generate(bool fixedFunction)
 		pass->setDepthBias( mDef->mProps->depthBias );
 	
 	if (!needShaders() || fixedFunction)
-	{
-		pass->setShadingMode(SO_PHONG);
-		
+	{		
 		Ogre::TextureUnitState* tu;
 		
 		//!todo alpha map
@@ -142,6 +141,7 @@ void MaterialGenerator::generate(bool fixedFunction)
 		if (needDiffuseMap())
 		{
 			tu = pass->createTextureUnitState( diffuseMap );
+			tu->setTextureAddressingMode(mDef->mProps->textureAddressMode);
 		}
 		
 		if (needEnvMap())
@@ -165,6 +165,7 @@ void MaterialGenerator::generate(bool fixedFunction)
 		{
 			tu = pass->createTextureUnitState( diffuseMap );
 			tu->setName("diffuseMap");
+			tu->setTextureAddressingMode(mDef->mProps->textureAddressMode);
 			mDiffuseTexUnit = mTexUnit_i; mTexUnit_i++;
 		}
 		
@@ -230,7 +231,7 @@ void MaterialGenerator::generate(bool fixedFunction)
 			LogO(vSourceStr.str());
 			LogO("[MaterialFactory] Fragment program source: ");
 			StringUtil::StrStreamType fSourceStr;
-			generateVertexProgramSource(fSourceStr);
+			generateFragmentProgramSource(fSourceStr);
 			LogO(fSourceStr.str());
 			generate(true);
 			return;
@@ -271,14 +272,20 @@ inline bool MaterialGenerator::needShaders()
 
 inline bool MaterialGenerator::needShadows()
 {
-	return (mDef->mProps->receivesShadows && mParent->getShadows())
-		|| (mDef->mProps->receivesDepthShadows && mParent->getShadowsDepth());
+	return (
+		mDef->mProps->lighting && // no shadows when no lighting
+		((mDef->mProps->receivesShadows && mParent->getShadows())
+		|| (mDef->mProps->receivesDepthShadows && mParent->getShadowsDepth()))
+	);
 	//!todo shadow priority
 }
 
 inline bool MaterialGenerator::needNormalMap()
 {
-	return (mDef->mProps->normalMaps.size() > 0) && mParent->getNormalMap();
+	return (
+		(mDef->mProps->lighting || needEnvMap()) &&
+		((mDef->mProps->normalMaps.size() > 0) && mParent->getNormalMap())
+	);
 	//!todo normal map priority
 }
 
@@ -310,7 +317,7 @@ inline bool MaterialGenerator::needFresnel()
 
 inline bool MaterialGenerator::fpNeedLighting()
 {
-	return true; //!todo
+	return mDef->mProps->lighting;
 }
 
 inline bool MaterialGenerator::fpNeedWsNormal()
@@ -487,9 +494,8 @@ void MaterialGenerator::generateVertexProgramSource(Ogre::StringUtil::StrStreamT
 		"	out	float4	oTangentToCubeSpace2	: TEXCOORD4, \n";
 	
 	// fog
-	outStream <<
-	"	uniform float4 fogParams, \n"
-	;
+	if (mDef->mProps->fog) outStream <<
+		"	uniform float4 fogParams, \n";
 	
 	if (needShadows()) {
 		for (int i=0; i<mParent->getNumShadowTex(); ++i)
@@ -544,9 +550,9 @@ void MaterialGenerator::generateVertexProgramSource(Ogre::StringUtil::StrStreamT
 		"	oTexCoord = texCoord; \n";
 		
 	outStream <<
-	"	objectPos = position; \n"
-	// fog - save value in objectPos
-	"	objectPos.w = saturate(fogParams.x * (oPosition.z - fogParams.y) * fogParams.w); \n";
+	"	objectPos = position; \n";
+	if (mDef->mProps->fog) outStream <<
+		"	objectPos.w = saturate(fogParams.x * (oPosition.z - fogParams.y) * fogParams.w); \n"; // save fog amount in objectPos.w
 	if (fpNeedWsNormal()) outStream <<
 		"	oWsNormal = mul( (float3x3) wITMat, normal ); \n";
 	outStream <<
@@ -576,8 +582,8 @@ void MaterialGenerator::vertexProgramParams(HighLevelGpuProgramPtr program)
 		params->setNamedAutoConstant("texWorldViewProjMatrix"+toStr(i), GpuProgramParameters::ACT_TEXTURE_WORLDVIEWPROJ_MATRIX, i);
 	}
 	
-	// fog
-	params->setNamedAutoConstant("fogParams", GpuProgramParameters::ACT_FOG_PARAMS);
+	if (mDef->mProps->fog)
+		params->setNamedAutoConstant("fogParams", GpuProgramParameters::ACT_FOG_PARAMS);
 }
 
 //----------------------------------------------------------------------------------------
@@ -719,7 +725,7 @@ void MaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::StrStrea
 		"	uniform float3 matDiffuse, \n"
 		"	uniform float4 matSpecular, \n"; // shininess in w
 	}
-	outStream <<
+	if (mDef->mProps->fog) outStream <<
 		"	uniform float3 fogColor, \n";
 		
 	if (mDef->mProps->transparent && !needAlphaMap())
@@ -791,7 +797,9 @@ void MaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::StrStrea
 		"	float4 diffuseTex = tex2D(diffuseMap, texCoord); \n";
 	
 	// calculate lighting (per-pixel)
-	if (fpNeedLighting()) outStream <<	
+	if (fpNeedLighting())
+	{
+		outStream <<	
 		// Compute the diffuse term
 		"	float3 lightDir = normalize(lightPosition.xyz - (position.xyz * lightPosition.w)); \n"
 		"	float diffuseLight = max(dot(lightDir, normal), 0); \n";
@@ -818,6 +826,7 @@ void MaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::StrStrea
 		"	float3 lightColour = ambient + diffuse*shadowing + specular*shadowing; \n";
 		else outStream <<
 		"	float3 lightColour = ambient + diffuse + specular; \n";
+	}
 	
 	// cube reflection
 	if (needEnvMap())
@@ -847,8 +856,10 @@ void MaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::StrStrea
 	}
 	
 	// add fog
-	outStream <<
-	"	oColor = lerp(color1, float4(fogColor,1), position.w); \n";
+	if (mDef->mProps->fog) outStream <<
+		"	oColor = lerp(color1, float4(fogColor,1), position.w); \n";
+	else outStream <<
+		"	oColor = color1; \n";
 		
 	// alpha
 	if (mDef->mProps->transparent)
@@ -914,7 +925,8 @@ void MaterialGenerator::fragmentProgramParams(HighLevelGpuProgramPtr program)
 	if (needLightingAlpha())
 		params->setNamedConstant("lightingAlpha", mDef->mProps->lightingAlpha);
 	
-	params->setNamedAutoConstant("fogColor", GpuProgramParameters::ACT_FOG_COLOUR);
+	if (mDef->mProps->fog)
+		params->setNamedAutoConstant("fogColor", GpuProgramParameters::ACT_FOG_COLOUR);
 }
 
 //----------------------------------------------------------------------------------------
