@@ -406,6 +406,7 @@ Ogre::CullingMode MaterialGenerator::chooseCullingMode()
 		else
 			return Ogre::CULL_ANTICLOCKWISE;
 	}
+	return Ogre::CULL_NONE;
 }
 
 //----------------------------------------------------------------------------------------
@@ -433,6 +434,7 @@ Ogre::CullingMode MaterialGenerator::chooseCullingModeAmbient()
 		else
 			return Ogre::CULL_ANTICLOCKWISE;
 	}
+	return Ogre::CULL_NONE;
 }
 
 //----------------------------------------------------------------------------------------
