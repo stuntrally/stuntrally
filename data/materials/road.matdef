@@ -87,11 +87,16 @@ depthBias = 3
 diffuseMap_512 = roadSnow_s.jpg
 diffuseMap_2048 = roadSnow.jpg
 receivesShadows = true
+envMap = ReflectionCube
+reflAmount = 0.1
+bumpScale = 0.7
 
 [roadIce_ter]
 parent = roadIce
 alphaMap_512 = roadAlpha_s.png
 alphaMap_2048 = roadAlpha.png
+normalMap_512 = volcano_7_nh1_s.png
+normalMap_1024 = volcano_7_nh1.png
 transparent = true
 sceneBlend = alpha
 depthWrite = false
@@ -107,12 +112,15 @@ ambient = 0.7 0.7 0.7
 diffuse = 0.7 0.7 0.7
 alphaMap_512 = roadAlpha_s.png
 alphaMap_2048 = roadAlpha.png
+normalMap_512 = volcano_7_nh1_s.png
+normalMap_1024 = volcano_7_nh1.png
 transparent = true
 sceneBlend = alpha
 depthWrite = false
 
 ; ------------ Snow Winter -------------
 [roadSnow]
+parent = roadIce
 ambient = 0.5 0.5 0.5
 diffuse = 0.6 0.6 0.6
 specular = 0.6 0.62 0.62 18
@@ -125,6 +133,8 @@ receivesShadows = true
 parent = roadSnow
 alphaMap_512 = roadAlpha_s.png
 alphaMap_2048 = roadAlpha.png
+normalMap_512 = volcano_7_nh1_s.png
+normalMap_1024 = volcano_7_nh1.png
 transparent = true
 sceneBlend = alpha
 depthWrite = false
