@@ -61,7 +61,6 @@ struct MaterialProperties
 	
 	//!todo:
 	// PPX on/off, shading mode (phong etc) for no shaders,
-	// normalmap/shadowmap/envmap "priority",
 	// [casts_shadows (+priority) (probably not here)],
 	// read terrain lightmap on/off
 	// specular map (exponent in diffuse map alpha) [or seperate map for trees]

@@ -5,6 +5,7 @@
 #include "MaterialGenerator.h"
 #include "MaterialDefinition.h"
 #include "MaterialFactory.h"
+#include "ShaderProperties.h"
 
 #ifndef ROAD_EDITOR
 	#include "../OgreGame.h"
@@ -217,34 +218,46 @@ void MaterialGenerator::generate(bool fixedFunction)
 		
 		// create shaders
 		HighLevelGpuProgramPtr fragmentProg, vertexProg;
-		try
-		{
-			vertexProg = createVertexProgram();
-			fragmentProg = createFragmentProgram();
-		}
-		catch (Ogre::Exception& e) {
-			LogO(e.getFullDescription());
-		}
 		
-		if (fragmentProg.isNull() || vertexProg.isNull() || 
-			!fragmentProg->isSupported() || !vertexProg->isSupported())
+		if (!mShaderCached)
 		{
-			LogO("[MaterialFactory] WARNING: shader for material '" + mDef->getName()
-				+ "' is not supported, falling back to fixed-function");
-			LogO("[MaterialFactory] Vertex program source: ");
-			StringUtil::StrStreamType vSourceStr;
-			generateVertexProgramSource(vSourceStr);
-			LogO(vSourceStr.str());
-			LogO("[MaterialFactory] Fragment program source: ");
-			StringUtil::StrStreamType fSourceStr;
-			generateFragmentProgramSource(fSourceStr);
-			LogO(fSourceStr.str());
-			generate(true);
-			return;
+			try
+			{
+				vertexProg = createVertexProgram();
+				fragmentProg = createFragmentProgram();
+			}
+			catch (Ogre::Exception& e) {
+				LogO(e.getFullDescription());
+			}
+			
+			if (fragmentProg.isNull() || vertexProg.isNull() || 
+				!fragmentProg->isSupported() || !vertexProg->isSupported())
+			{
+				LogO("[MaterialFactory] WARNING: shader for material '" + mDef->getName()
+					+ "' is not supported, falling back to fixed-function");
+				LogO("[MaterialFactory] Vertex program source: ");
+				StringUtil::StrStreamType vSourceStr;
+				generateVertexProgramSource(vSourceStr);
+				LogO(vSourceStr.str());
+				LogO("[MaterialFactory] Fragment program source: ");
+				StringUtil::StrStreamType fSourceStr;
+				generateFragmentProgramSource(fSourceStr);
+				LogO(fSourceStr.str());
+				generate(true);
+				return;
+			}
+		}
+		else
+		{
+			vertexProg = mVertexProgram;
+			fragmentProg = mFragmentProgram;
 		}
 		
 		pass->setVertexProgram(vertexProg->getName());
 		pass->setFragmentProgram(fragmentProg->getName());
+		
+		mVertexProgram = vertexProg;
+		mFragmentProgram = fragmentProg;
 	}
 	
 	if (needShadows())
@@ -278,52 +291,42 @@ inline bool MaterialGenerator::needShaders()
 
 inline bool MaterialGenerator::needShadows()
 {
-	return (
-		mDef->mProps->lighting && // no shadows when no lighting
-		((mDef->mProps->receivesShadows && mParent->getShadows())
-		|| (mDef->mProps->receivesDepthShadows && mParent->getShadowsDepth()))
-	);
-	//!todo shadow priority
+	return mShader->shadows;
 }
 
 inline bool MaterialGenerator::needNormalMap()
 {
-	return (
-		(mDef->mProps->lighting || needEnvMap()) &&
-		((mDef->mProps->normalMaps.size() > 0) && mParent->getNormalMap())
-	);
-	//!todo normal map priority
+	return mShader->normalMap;
 }
 
 inline bool MaterialGenerator::needEnvMap()
 {
-	return (mDef->mProps->envMap != "") && mParent->getEnvMap();
-	//!todo env map priority
+	return mShader->envMap;
 }
 
 inline bool MaterialGenerator::needDiffuseMap()
 {
-	return (mDef->mProps->diffuseMaps.size() > 0);
+	return mShader->diffuseMap;
 }
 
 inline bool MaterialGenerator::needLightingAlpha()
 {
-	return (mDef->mProps->lightingAlpha != Vector4::ZERO);
+	return mShader->lightingAlpha;
 }
 
 inline bool MaterialGenerator::needAlphaMap()
 {
-	return (mDef->mProps->alphaMaps.size() > 0);
+	return mShader->alphaMap;
 }
 
 inline bool MaterialGenerator::needFresnel()
 {
-	return (mDef->mProps->fresnelScale != 0) && needEnvMap();
+	return mShader->fresnel;
 }
 
 inline bool MaterialGenerator::fpNeedLighting()
 {
-	return mDef->mProps->lighting;
+	return mShader->lighting;
 }
 
 inline bool MaterialGenerator::fpNeedWsNormal()

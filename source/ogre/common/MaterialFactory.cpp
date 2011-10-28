@@ -6,6 +6,7 @@
 #include "MaterialFactory.h"
 #include "MaterialDefinition.h"
 #include "MaterialGenerator.h"
+#include "ShaderProperties.h"
 
 #ifndef ROAD_EDITOR
 	#include "../OgreGame.h"
@@ -170,10 +171,11 @@ void MaterialFactory::generate()
 		QTimer ti;  ti.update(); /// time
 		LogO("[MaterialFactory] generating new materials...");
 		
+		mShaderCache.clear();
+		splitMtrs.clear();
+		
 		MaterialGenerator generator;
 		generator.mParent = this;
-		
-		splitMtrs.clear();
 		
 		for (std::vector<MaterialDefinition*>::iterator it=mDefinitions.begin();
 			it!=mDefinitions.end(); ++it)
@@ -181,8 +183,37 @@ void MaterialFactory::generate()
 			// don't generate abstract materials
 			if ((*it)->getProps()->abstract) continue;
 
+			// shader cache - check if same shader already exists
+			ShaderProperties* shaderProps = new ShaderProperties( (*it)->mProps, this );
+			
+			bool exists = false;
+			shaderMap::iterator sit;
+			for (sit = mShaderCache.begin();
+				sit != mShaderCache.end(); ++sit)
+			{
+				if ( sit->second->isEqual( shaderProps ) )
+				{
+					exists = true;
+					break;
+				}
+			}
+			
+			if (!exists)
+				generator.mShaderCached = false;
+			else
+			{
+				generator.mShaderCached = true;
+				generator.mVertexProgram = sit->first.first;
+				generator.mFragmentProgram = sit->first.second;
+			}
+			
 			generator.mDef = (*it);
+			generator.mShader = shaderProps;
 			generator.generate();
+			
+			// insert into cache
+			if (!exists)
+				mShaderCache[ std::make_pair(generator.mVertexProgram, generator.mFragmentProgram) ] = shaderProps;
 		}
 		
 		bSettingsChanged = false;

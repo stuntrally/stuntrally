@@ -1,8 +1,7 @@
 #ifndef SHADERPROPERTIES_H
 #define SHADERPROPERTIES_H
 
-// a set of properties that influence the generated shader source code
-// these properties can be changed by user (e.g. turning env map off in his settings)
+class MaterialProperties;  class MaterialFactory;
 
 struct ShaderProperties
 {
@@ -10,6 +9,15 @@ struct ShaderProperties
 	bool diffuseMap;
 	bool alphaMap;
 	bool normalMap;
+	bool lighting;
+	bool shadows;
+	bool transparent; bool lightingAlpha; // transparency
+	
+	// compare
+	bool isEqual( ShaderProperties* other );
+	
+	// constructor
+	ShaderProperties( MaterialProperties* props, MaterialFactory* parent );
 };
 
 #endif

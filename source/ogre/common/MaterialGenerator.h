@@ -1,7 +1,7 @@
 #ifndef MATERIALGENERATOR_H
 #define MATERIALGENERATOR_H
 
-class MaterialFactory;
+class MaterialFactory;  class ShaderProperties;
 #include "MaterialDefinition.h" // textureMap typedef
 
 #include <OgreHighLevelGpuProgram.h>
@@ -10,8 +10,14 @@ class MaterialGenerator
 {
 public:
 	MaterialDefinition* mDef;
+	ShaderProperties* mShader;
 	MaterialFactory* mParent;
-		
+	
+	// shader cache
+	bool mShaderCached;
+	Ogre::HighLevelGpuProgramPtr mVertexProgram;
+	Ogre::HighLevelGpuProgramPtr mFragmentProgram;
+	
 	void generate(bool fixedFunction=false); // craft material
 	
 protected:

@@ -3,9 +3,13 @@
 
 #include <vector>
 
-class App;  class MaterialDefinition;
+class App;  class MaterialDefinition;  struct ShaderProperties;
 
 #include <OgreConfigFile.h>
+#include <OgreHighLevelGpuProgram.h>
+
+// std::map< std::pair< vertexShader, pixelShader > , shaderProperties >
+typedef std::map< std::pair< Ogre::HighLevelGpuProgramPtr, Ogre::HighLevelGpuProgramPtr >, ShaderProperties* > shaderMap;
 
 class MaterialFactory
 {
@@ -40,6 +44,8 @@ public:
 	
 	std::vector<std::string> splitMtrs; // list of materials that need pssm split points
 	
+	shaderMap* getShaderCache() { return &mShaderCache; };
+	
 	App* pApp;
 
 private:
@@ -50,10 +56,9 @@ private:
 
 	std::vector<MaterialDefinition*> mDefinitions;
 	
+	shaderMap mShaderCache;
+	
 	Ogre::ConfigFile mFile; // for loading mat def's from file
-
-	//!todo decide which materials actually need to be generated
-	/// (if they are not used in track, no need to generate)
 
 	// if false, generate() doesn't do anything
 	bool bSettingsChanged;
