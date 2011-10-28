@@ -1288,6 +1288,10 @@
 						>
 					</File>
 					<File
+						RelativePath=".\source\ogre\common\ShaderProperties.cpp"
+						>
+					</File>
+					<File
 						RelativePath=".\source\ogre\common\TerrainMaterialGen.cpp"
 						>
 					</File>

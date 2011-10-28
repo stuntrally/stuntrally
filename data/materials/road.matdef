@@ -82,7 +82,7 @@ depthWrite = false
 [roadIce]
 ambient = 0.6 0.6 0.6
 diffuse = 0.6 0.6 0.6
-specular = 0.9 0.92 0.92 12
+specular = 0.9 0.92 0.92 32
 depthBias = 3
 diffuseMap_512 = roadSnow_s.jpg
 diffuseMap_2048 = roadSnow.jpg
