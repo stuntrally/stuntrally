@@ -460,9 +460,10 @@ bool App::SaveSurf(const std::string& path)
 ///  Get Materials
 //-----------------------------------------------------------------------------------------------------------
 
-void App::GetMaterialsFromDef(String filename)
+void App::GetMaterialsFromDef(String filename, bool clear)
 {
-	vsMaterials.clear();
+	if (clear)
+		vsMaterials.clear();
 	
 	ConfigFile cf;
 	cf.load(filename, Ogre::ResourceGroupManager::AUTODETECT_RESOURCE_GROUP_NAME, "\t:=", true);

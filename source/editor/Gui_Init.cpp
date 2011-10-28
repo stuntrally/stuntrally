@@ -193,7 +193,7 @@ void App::InitGui()
 	//---------------------  SKYS  ---------------------
 	Cmb(cmbSky, "SkyCombo", comboSky);
 
-	GetMaterials("SkyDome.material");
+	GetMaterialsFromDef("skies.matdef");
 	for (size_t i=0; i < vsMaterials.size(); ++i)  {
 		String s = vsMaterials[i];  cmbSky->addItem(s);  //LogO(s);
 	}
@@ -247,9 +247,8 @@ void App::InitGui()
 		if (StringUtil::endsWith(*i,".mesh"))  cmbPgLay->addItem(*i);
 
 	//---------------------  ROADS  ---------------------
-	//GetMaterials("road.material");
 	GetMaterialsFromDef("road.matdef");
-	GetMaterialsFromDef("road_pipe.matdef");
+	GetMaterialsFromDef("road_pipe.matdef", false);
 	for (size_t i=0; i<4; ++i)
 	{
 		Cmb(cmbRoadMtr[i], "RdMtr"+toStr(i+1), comboRoadMtr);
