@@ -213,7 +213,10 @@ void MaterialFactory::generate()
 			
 			// insert into cache
 			if (!exists)
-				mShaderCache[ std::make_pair(generator.mVertexProgram, generator.mFragmentProgram) ] = shaderProps;
+			{
+				if (!generator.mVertexProgram.isNull() && !generator.mFragmentProgram.isNull()) 
+					mShaderCache[ std::make_pair(generator.mVertexProgram, generator.mFragmentProgram) ] = shaderProps;
+			}
 		}
 		
 		bSettingsChanged = false;

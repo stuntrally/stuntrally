@@ -216,22 +216,20 @@ void MaterialGenerator::generate(bool fixedFunction)
 			}
 		}
 		
-		// create shaders
-		HighLevelGpuProgramPtr fragmentProg, vertexProg;
-		
+		// create shaders		
 		if (!mShaderCached)
 		{
 			try
 			{
-				vertexProg = createVertexProgram();
-				fragmentProg = createFragmentProgram();
+				mVertexProgram = createVertexProgram();
+				mFragmentProgram = createFragmentProgram();
 			}
 			catch (Ogre::Exception& e) {
 				LogO(e.getFullDescription());
 			}
 			
-			if (fragmentProg.isNull() || vertexProg.isNull() || 
-				!fragmentProg->isSupported() || !vertexProg->isSupported())
+			if (mFragmentProgram.isNull() || mVertexProgram.isNull() || 
+				!mFragmentProgram->isSupported() || !mVertexProgram->isSupported())
 			{
 				LogO("[MaterialFactory] WARNING: shader for material '" + mDef->getName()
 					+ "' is not supported, falling back to fixed-function");
@@ -243,21 +241,15 @@ void MaterialGenerator::generate(bool fixedFunction)
 				StringUtil::StrStreamType fSourceStr;
 				generateFragmentProgramSource(fSourceStr);
 				LogO(fSourceStr.str());
+				
+				mVertexProgram.setNull(); mFragmentProgram.setNull();
 				generate(true);
 				return;
 			}
 		}
-		else
-		{
-			vertexProg = mVertexProgram;
-			fragmentProg = mFragmentProgram;
-		}
 		
-		pass->setVertexProgram(vertexProg->getName());
-		pass->setFragmentProgram(fragmentProg->getName());
-		
-		mVertexProgram = vertexProg;
-		mFragmentProgram = fragmentProg;
+		pass->setVertexProgram(mVertexProgram->getName());
+		pass->setFragmentProgram(mFragmentProgram->getName());
 	}
 	
 	if (needShadows())
