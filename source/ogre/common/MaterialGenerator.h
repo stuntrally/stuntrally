@@ -5,6 +5,7 @@ class MaterialFactory;  class ShaderProperties;
 #include "MaterialDefinition.h" // textureMap typedef
 
 #include <OgreHighLevelGpuProgram.h>
+#include <OgreGpuProgramParams.h>
 
 class MaterialGenerator
 {
@@ -38,6 +39,7 @@ protected:
 	Ogre::HighLevelGpuProgramPtr createVertexProgram();
 	void generateVertexProgramSource(Ogre::StringUtil::StrStreamType& outStream);
 	void vertexProgramParams(Ogre::HighLevelGpuProgramPtr program);
+	void individualVertexProgramParams(Ogre::GpuProgramParametersSharedPtr params);
 	
 	Ogre::HighLevelGpuProgramPtr createAmbientVertexProgram(); // ambient pass vertex program
 	
@@ -45,6 +47,7 @@ protected:
 	Ogre::HighLevelGpuProgramPtr 	createFragmentProgram();
 	void generateFragmentProgramSource(Ogre::StringUtil::StrStreamType& outStream);
 	void fragmentProgramParams(Ogre::HighLevelGpuProgramPtr program);
+	void individualFragmentProgramParams(Ogre::GpuProgramParametersSharedPtr params);
 	
 	Ogre::HighLevelGpuProgramPtr createAmbientFragmentProgram(); // ambient pass fragment program
 	

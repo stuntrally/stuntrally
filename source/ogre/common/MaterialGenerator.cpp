@@ -250,6 +250,13 @@ void MaterialGenerator::generate(bool fixedFunction)
 		
 		pass->setVertexProgram(mVertexProgram->getName());
 		pass->setFragmentProgram(mFragmentProgram->getName());
+		
+		if (mShaderCached)
+		{
+			// set individual material shader params
+			individualVertexProgramParams(pass->getVertexProgramParameters());
+			individualFragmentProgramParams(pass->getFragmentProgramParameters());
+		}
 	}
 	
 	if (needShadows())
@@ -575,7 +582,17 @@ void MaterialGenerator::vertexProgramParams(HighLevelGpuProgramPtr program)
 		params->setNamedAutoConstant("wITMat", GpuProgramParameters::ACT_INVERSE_TRANSPOSE_WORLD_MATRIX);
 	if (fpNeedEyeVector())
 		params->setNamedAutoConstant("eyePosition", GpuProgramParameters::ACT_CAMERA_POSITION);
+	
+	if (mDef->mProps->fog)
+		params->setNamedAutoConstant("fogParams", GpuProgramParameters::ACT_FOG_PARAMS);
 		
+	individualVertexProgramParams(params);
+}
+
+//----------------------------------------------------------------------------------------
+
+void MaterialGenerator::individualVertexProgramParams(GpuProgramParametersSharedPtr params)
+{
 	if (needNormalMap())
 		params->setNamedConstant("bumpScale", mDef->mProps->bumpScale);
 	
@@ -584,9 +601,6 @@ void MaterialGenerator::vertexProgramParams(HighLevelGpuProgramPtr program)
 	{
 		params->setNamedAutoConstant("texWorldViewProjMatrix"+toStr(i), GpuProgramParameters::ACT_TEXTURE_WORLDVIEWPROJ_MATRIX, i);
 	}
-	
-	if (mDef->mProps->fog)
-		params->setNamedAutoConstant("fogParams", GpuProgramParameters::ACT_FOG_PARAMS);
 }
 
 //----------------------------------------------------------------------------------------
@@ -900,6 +914,25 @@ void MaterialGenerator::fragmentProgramParams(HighLevelGpuProgramPtr program)
 {
 	GpuProgramParametersSharedPtr params = program->getDefaultParameters();
 
+	if (fpNeedLighting())
+	{
+		params->setNamedAutoConstant("lightDiffuse", GpuProgramParameters::ACT_LIGHT_DIFFUSE_COLOUR, 0);
+		params->setNamedAutoConstant("lightPosition", GpuProgramParameters::ACT_LIGHT_POSITION, 0);
+		params->setNamedAutoConstant("matAmbient", GpuProgramParameters::ACT_SURFACE_AMBIENT_COLOUR);
+		params->setNamedAutoConstant("matDiffuse", GpuProgramParameters::ACT_SURFACE_DIFFUSE_COLOUR);
+		params->setNamedAutoConstant("matSpecular", GpuProgramParameters::ACT_SURFACE_SPECULAR_COLOUR);
+	}
+	
+	if (mDef->mProps->fog)
+		params->setNamedAutoConstant("fogColor", GpuProgramParameters::ACT_FOG_COLOUR);
+	
+	individualFragmentProgramParams(params);
+}
+
+//----------------------------------------------------------------------------------------
+
+void MaterialGenerator::individualFragmentProgramParams(Ogre::GpuProgramParametersSharedPtr params)
+{
 	if (needEnvMap() && !needFresnel())
 	{
 		params->setNamedConstant("reflAmount", mDef->mProps->reflAmount);
@@ -910,26 +943,19 @@ void MaterialGenerator::fragmentProgramParams(HighLevelGpuProgramPtr program)
 		params->setNamedConstant("fresnelBias", mDef->mProps->fresnelBias);
 		params->setNamedConstant("fresnelPower", mDef->mProps->fresnelPower);
 	}
+
+	if (needLightingAlpha())
+		params->setNamedConstant("lightingAlpha", mDef->mProps->lightingAlpha);
+		
+	if (fpNeedLighting())
+		params->setNamedConstant("lightSpecular", mDef->mProps->specular);
+	
 	if (needShadows())
 	{
 		params->setNamedConstant("pssmSplitPoints", mParent->pApp->splitPoints);
 		for (int i=0; i<mParent->getNumShadowTex(); ++i)
 			params->setNamedAutoConstant("invShadowMapSize"+toStr(i), GpuProgramParameters::ACT_INVERSE_TEXTURE_SIZE, i+mShadowTexUnit_start);
 	}
-	if (fpNeedLighting())
-	{
-		params->setNamedAutoConstant("lightDiffuse", GpuProgramParameters::ACT_LIGHT_DIFFUSE_COLOUR, 0);
-		params->setNamedConstant("lightSpecular", mDef->mProps->specular);
-		params->setNamedAutoConstant("lightPosition", GpuProgramParameters::ACT_LIGHT_POSITION, 0);
-		params->setNamedAutoConstant("matAmbient", GpuProgramParameters::ACT_SURFACE_AMBIENT_COLOUR);
-		params->setNamedAutoConstant("matDiffuse", GpuProgramParameters::ACT_SURFACE_DIFFUSE_COLOUR);
-		params->setNamedAutoConstant("matSpecular", GpuProgramParameters::ACT_SURFACE_SPECULAR_COLOUR);
-	}
-	if (needLightingAlpha())
-		params->setNamedConstant("lightingAlpha", mDef->mProps->lightingAlpha);
-	
-	if (mDef->mProps->fog)
-		params->setNamedAutoConstant("fogColor", GpuProgramParameters::ACT_FOG_COLOUR);
 }
 
 //----------------------------------------------------------------------------------------
