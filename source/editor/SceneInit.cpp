@@ -5,6 +5,7 @@
 #include "../paged-geom/PagedGeometry.h"
 #include "../vdrift/pathmanager.h"
 #include "../ogre/common/RenderConst.h"
+#include "../ogre/common/MaterialFactory.h"
 using namespace Ogre;
 
 
@@ -90,6 +91,9 @@ void App::NewCommon()
 	if (resTrk != "")  mRoot->removeResourceLocation(resTrk);
 		resTrk = TrkDir() + "objects";
 	mRoot->addResourceLocation(resTrk, "FileSystem");
+
+	/// generate materials
+	materialFactory->generate();
 }
 //---------------------------------------------------------------------------------------------------------------
 void App::LoadTrack()
