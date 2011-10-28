@@ -401,6 +401,10 @@
 			Name="materials"
 			>
 			<File
+				RelativePath=".\data\editor\editor.matdef"
+				>
+			</File>
+			<File
 				RelativePath=".\data\materials\fluids.cg"
 				>
 			</File>
@@ -417,15 +421,23 @@
 				>
 			</File>
 			<File
-				RelativePath=".\data\materials\general.matdef"
-				>
-			</File>
-			<File
 				RelativePath=".\data\materials\general.material"
 				>
 			</File>
 			<File
 				RelativePath=".\data\materials\general.program"
+				>
+			</File>
+			<File
+				RelativePath=".\data\editor\render.cg"
+				>
+			</File>
+			<File
+				RelativePath=".\data\editor\render.material"
+				>
+			</File>
+			<File
+				RelativePath=".\data\editor\render.program"
 				>
 			</File>
 			<File
@@ -437,11 +449,19 @@
 				>
 			</File>
 			<File
+				RelativePath=".\data\materials\road.matdef"
+				>
+			</File>
+			<File
 				RelativePath=".\data\materials\road.material"
 				>
 			</File>
 			<File
 				RelativePath=".\data\editor\road_ed.material"
+				>
+			</File>
+			<File
+				RelativePath=".\data\materials\road_pipe.matdef"
 				>
 			</File>
 		</Filter>
