@@ -67,10 +67,10 @@ class FluidBox		// fluid box shape - water, mud, etc.
 {
 public:
 	Ogre::Vector3 pos, rot, size;  Ogre::Vector2 tile;
-	int type;
+	int id;  // index to FluidParams, -1 doesnt exist
+	std::string name;
 	class btCollisionObject* cobj;
-	//float density, linDamp, angDamp;
-	//sinkDamp wheel spin move pars..
+
 	FluidBox();
 };
 
@@ -118,9 +118,10 @@ public:
 	Ogre::Vector3 camPos,camDir;
 	
 	std::vector<FluidBox> fluids;
+	class FluidsXml* pFluidsXml;  // set this after Load
 		
 	//  methods
-	Scene();  void Default();
+	Scene();  void Default(), UpdateFluidsId();
 	bool LoadXml(Ogre::String file), SaveXml(Ogre::String file);
 };
 

@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "../Defines.h"
 #include "SceneXml.h"
+#include "FluidsXml.h"
 #include "tinyxml.h"
 
 using namespace Ogre;
@@ -8,6 +9,7 @@ using namespace Ogre;
 
 Scene::Scene()
 {
+	pFluidsXml = 0;
 	Default();
 }
 void Scene::Default()
@@ -47,10 +49,26 @@ PagedLayer::PagedLayer()
 	maxTerAng = 50.f;  minTerH = -100.f;
 }
 
-FluidBox::FluidBox() : cobj(0), type(0),
-	pos(Vector3::ZERO), rot(Vector3::ZERO),
-	size(Vector3::ZERO), tile(0.01,0.01)
+FluidBox::FluidBox()
+	:cobj(0), id(-1)
+	,pos(Vector3::ZERO), rot(Vector3::ZERO)
+	,size(Vector3::ZERO), tile(0.01,0.01)
 {	}
+
+
+
+void Scene::UpdateFluidsId()
+{
+	if (!pFluidsXml)  return;
+	
+	//  set fluids id from name
+	for (int i=0; i < fluids.size(); ++i)
+	{
+		fluids[i].id = pFluidsXml->flMap[fluids[i].name]-1;
+		if (fluids[i].id == -1)
+			LogO("! Scene fluid name: " + fluids[i].name + " not found in xml !");
+	}
+}
 
 
 //  Load
@@ -122,7 +140,8 @@ bool Scene::LoadXml(String file)
 		while (eFl)
 		{
 			FluidBox fb;
-			a = eFl->Attribute("type");		if (a)  fb.type = s2i(a);
+			a = eFl->Attribute("name");		if (a)  fb.name = std::string(a);
+
 			a = eFl->Attribute("pos");		if (a)  fb.pos = s2v(a);
 			a = eFl->Attribute("rot");		if (a)  fb.rot = s2v(a);
 			a = eFl->Attribute("size");		if (a)  fb.size = s2v(a);
@@ -249,6 +268,8 @@ bool Scene::LoadXml(String file)
 		a = eCam->Attribute("dir");		if (a)  camDir = s2v(a);
 	}
 	
+	UpdateFluidsId();
+	
 	return true;
 }
 
@@ -299,7 +320,7 @@ bool Scene::SaveXml(String file)
 		{
 			fb = &fluids[i];
 			TiXmlElement fe("fluid");
-			fe.SetAttribute("type",		toStrC( fb->type ));
+			fe.SetAttribute("name",		fb->name.c_str() );
 			fe.SetAttribute("pos",		toStrC( fb->pos ));
 			fe.SetAttribute("rot",		toStrC( fb->rot ));
 			fe.SetAttribute("size",		toStrC( fb->size ));

@@ -58,12 +58,12 @@ material ppx_water1			// per pixel  water (alpha)
 //  water
 //---------------------------------------------------------------------------
 
-material Water1 : ppx_water1  // island blue
+material Water_blue : ppx_water1  // island blue
 {
 	set_texture_alias normalMap waveNM.png
 }
 
-material Water2 : ppx_water1  // greece cyan +
+material Water_cyan : ppx_water1  // greece cyan +
 {
 	set $specularCol	 "0.9 1.0 0.95"
 	set $shininess		 "64"
@@ -78,7 +78,7 @@ material Water2 : ppx_water1  // greece cyan +
 	set_texture_alias normalMap waveNM.png
 }
 
-material Water3 : ppx_water1  // jungle green +
+material Water_green : ppx_water1  // jungle green +
 {
 	set $specularCol	 "0.32 0.4 0.25"
 	set $shininess		 "128"
@@ -93,7 +93,7 @@ material Water3 : ppx_water1  // jungle green +
 	set_texture_alias normalMap waveNM.png
 }
 
-material Water4 : ppx_water1  // light light green -
+material Water_light : ppx_water1  // light light green -
 {
 	set $specularCol	 "0.4 0.4 0.3"
 	set $shininess		 "64"
@@ -108,7 +108,7 @@ material Water4 : ppx_water1  // light light green -
 	set_texture_alias normalMap waveNM.png
 }
 
-material Water5 : ppx_water1  // yellow light +-
+material Water_yellow : ppx_water1  // yellow light +-
 {
 	set $specularCol	 "0.4 0.4 0.3"
 	set $shininess		 "64"
@@ -123,7 +123,7 @@ material Water5 : ppx_water1  // yellow light +-
 	set_texture_alias normalMap waveNM.png
 }
 
-material Water6 : ppx_water1  // mud orange ++ soft
+material Mud_orange : ppx_water1  // mud orange ++ soft
 {
 	set $specularCol	 "0.4 0.4 0.3"
 	set $shininess		 "32"
@@ -138,7 +138,7 @@ material Water6 : ppx_water1  // mud orange ++ soft
 	set_texture_alias normalMap waveNM.png
 }
 
-material Water7 : ppx_water1  // mud brown ++ hard
+material Mud_brown : ppx_water1  // mud brown + med
 {
 	set $specularCol	 "0.4 0.4 0.3"
 	set $shininess		 "128"
@@ -146,10 +146,25 @@ material Water7 : ppx_water1  // mud brown ++ hard
 	set $waveHighFreq	 "0.1"
 	set $waveSpecular	 "1.0"
 	set $deepColor		 "0.4 0.34 0.1  1.0"
-	set $shallowColor	 "0.4 0.2 0.1  0.8"
+	set $shallowColor	 "0.4 0.2 0.1  0.9"
 	set $reflectionColor "0.5 0.4 0.1  1.0"
 	set $reflAndWaterAmounts  "0.4  0.6"
-	set $fresnelPowerBias  "5.0  0.33"
+	set $fresnelPowerBias  "8.0  0.33"
 	set_texture_alias normalMap waveNM.png
+}
+
+material Mud_dark : ppx_water1  // mud brown + hard
+{
+	set $specularCol	 "0.4 0.4 0.3"
+	set $shininess		 "96"
+	set $waveBump		 "0.3  0.04"
+	set $waveHighFreq	 "0.4"
+	set $waveSpecular	 "1.0"
+	set $deepColor		 "0.2 0.17 0.05  1.0"
+	set $shallowColor	 "0.2 0.14 0.05  1.0"
+	set $reflectionColor "0.4 0.33 0.1  1.0"
+	set $reflAndWaterAmounts  "0.5  0.5"
+	set $fresnelPowerBias  "3.0  0.33"
+	set_texture_alias normalMap water_nh.png
 }
 

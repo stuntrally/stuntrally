@@ -350,6 +350,8 @@ void GAME::AdvanceGameLogic()
 			{
 				(*i).dynamics.inFluids.clear();
 				(*i).dynamics.velPrev = (*i).dynamics.chassis->getLinearVelocity();
+				for (int w=0; w < 4; ++w)
+					(*i).dynamics.inFluidsWh[w].clear();
 			}
 
 			collision.Update(TickPeriod(), settings->bltProfilerTxt);

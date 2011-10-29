@@ -35,9 +35,27 @@ void App::createScene()
 		if (pSet->cam_view[i] >= 0)
 			carsCamNum[i] = pSet->cam_view[i];
 
+	QTimer ti;  ti.update();  /// time
+
 	//  tracks.xml
 	tracksXml.LoadXml(PATHMANAGER::GetGameConfigDir() + "/tracks.xml");
 	//tracksXml.SaveXml(PATHMANAGER::GetGameConfigDir() + "/tracks2.xml");
+
+	//  fluids.xml
+	fluidsXml.LoadXml(PATHMANAGER::GetDataPath() + "/materials/fluids.xml");
+	sc.pFluidsXml = &fluidsXml;
+	LogO(String("**** Loaded fluids.xml: ") + toStr(fluidsXml.fls.size()));
+
+	//  collisions.xml
+	objs.LoadXml();
+	LogO(String("**** Loaded Vegetation objects: ") + toStr(objs.colsMap.size()));
+	LogO(String("**** ReplayFrame size: ") + toStr(sizeof(ReplayFrame)));	
+	LogO(String("**** ReplayHeader size: ") + toStr(sizeof(ReplayHeader)));	
+
+	ti.update();  /// time
+	float dt = ti.dt * 1000.f;
+	LogO(String("::: Time load xmls: ") + toStr(dt) + " ms");
+
 
 	//  gui
 	if (!pSet->autostart)  isFocGui = true;
@@ -54,12 +72,6 @@ void App::createScene()
 			1 /*0xfe/*8+(1<<13)*/);
 	}
 	
-	//  collisions.xml
-	objs.LoadXml();
-	LogO(String("**** Loaded Vegetation objects: ") + toStr(objs.colsMap.size()));
-	LogO(String("**** ReplayFrame size: ") + toStr(sizeof(ReplayFrame)));	
-	LogO(String("**** ReplayHeader size: ") + toStr(sizeof(ReplayHeader)));	
-
 	bRplRec = pSet->rpl_rec;  // startup setting
 
 	//  load

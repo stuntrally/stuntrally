@@ -27,6 +27,7 @@ enum EShapeType
 {
 	ST_Car=0,
 	ST_Fluid,
+	ST_Wheel,
 	//ST_Terrain, ST_BorderPlane,
 	//ST_Vegetation,  //-> stone, wood, plant ..
 	//ST_Road, ST_RoadWall, //ST_RoadColumn, ST_RoadPipe glass-
@@ -42,12 +43,13 @@ public:
 	EShapeType type;
 	CARDYNAMICS* pCarDyn;
 	FluidBox* pFluid;
+	int whNum;
 
 	ShapeData( EShapeType type1)
-		: type(type1), pCarDyn(0), pFluid(0)
+		: type(type1), pCarDyn(0), pFluid(0), whNum(0)
 	{	}
-	ShapeData( EShapeType type1, CARDYNAMICS* pCarDyn1, FluidBox* pFluid1)
-		: type(type1), pCarDyn(pCarDyn1), pFluid(pFluid1)
+	ShapeData( EShapeType type1, CARDYNAMICS* pCarDyn1, FluidBox* pFluid1, int whNum1=0)
+		: type(type1), pCarDyn(pCarDyn1), pFluid(pFluid1), whNum(whNum1)
 	{	}
 };
 
@@ -57,7 +59,5 @@ const static ShapeData
 	gSD_Road(ST_Road), gSD_RoadWall(ST_RoadWall),
 	gSD_Other(ST_Other);
 /**/
-
-//#define SHADOWS_D  // enable shadow debug overlays
 
 #endif

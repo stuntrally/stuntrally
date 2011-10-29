@@ -1061,6 +1061,10 @@
 					>
 				</File>
 				<File
+					RelativePath=".\data\trees\collisions.xml"
+					>
+				</File>
+				<File
 					RelativePath=".\data\materials\fluids.cg"
 					>
 				</File>
@@ -1070,6 +1074,10 @@
 				</File>
 				<File
 					RelativePath=".\data\materials\fluids.program"
+					>
+				</File>
+				<File
+					RelativePath=".\data\materials\fluids.xml"
 					>
 				</File>
 				<File
@@ -1118,6 +1126,14 @@
 				</File>
 				<File
 					RelativePath=".\data\materials\road_pipe.matdef"
+					>
+				</File>
+				<File
+					RelativePath=".\data\skies\skies.matdef"
+					>
+				</File>
+				<File
+					RelativePath=".\data\trees\trees.matdef"
 					>
 				</File>
 			</Filter>
@@ -1170,6 +1186,14 @@
 				</File>
 				<File
 					RelativePath=".\source\ogre\Defines.h"
+					>
+				</File>
+				<File
+					RelativePath=".\source\ogre\common\FluidsXml.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\source\ogre\common\FluidsXml.h"
 					>
 				</File>
 				<File

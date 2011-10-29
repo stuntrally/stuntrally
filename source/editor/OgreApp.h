@@ -5,6 +5,7 @@
 #include "../ogre/common/SceneXml.h"
 #include "../ogre/common/BltObjects.h"
 #include "../ogre/common/TracksXml.h"
+#include "../ogre/common/FluidsXml.h"
 
 #include "../vdrift/mathvector.h"
 #include "../vdrift/quaternion.h"
@@ -40,6 +41,7 @@ public:
 	App();  virtual ~App();
 
 	Scene sc;  /// scene.xml
+	FluidsXml fluidsXml;  /// fluid params xml
 	BltObjects objs;  // veget collision in bullet
 
 	TRACKSURFACE su[8];  bool LoadSurf(), SaveSurf(const Ogre::String& trk);

@@ -5,6 +5,7 @@
 #include "common/SceneXml.h"
 #include "common/BltObjects.h"
 #include "common/TracksXml.h"
+#include "common/FluidsXml.h"
 
 #include "ReplayGame.h"
 #include "CarModel.h"
@@ -49,6 +50,7 @@ public:
 	const Ogre::String& GetGhostFile();
 
 	Scene sc;  /// scene.xml
+	FluidsXml fluidsXml;  /// fluid params xml
 	BltObjects objs;  // veget collision in bullet
 	Ogre::Light* sun;  void UpdFog(bool bForce=false), UpdSun();
 	

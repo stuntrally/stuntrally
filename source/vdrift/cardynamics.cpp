@@ -41,81 +41,111 @@ void CARDYNAMICS::Update()
 	chassisRotation.RotateVector(com);
 	chassisPosition = chassisCenterOfMass - com;
 	
-///................................................ Buoyancy ................................................
-	if (pScene)
-	for (std::list<FluidBox*>::const_iterator i = inFluids.begin();
-		i != inFluids.end(); ++i)
-	{
-	//TODO: dont init poly each time, save in car once
-	//TODO: wheels poly too or simple sphere, speed from spinning..
-	//TODO: fluids.xml settings vector [fl.type]
-	//TODO: fluid box -rotation yaw, pitch
-
-	const FluidBox& fl = **i;
-	Polyhedron poly;  RigidBody body;  WaterVolume water;
-
-	//water.density = 1400.0f;  water.angularDrag = 1.0f;  water.linearDrag = 0.5f;  // mud hard too springy- car dens 1900
-	//water.density = 1000.0f;  water.angularDrag = 1.8f;  water.linearDrag = 0.5f;  // mud hard~ car dens 1900
-	//water.density = 600.0f;  water.angularDrag = 1.0f;  water.linearDrag = 0.2f;  // water slow sink~ car dens 1900
-	water.density = 200.0f;  water.angularDrag = 0.7f;  water.linearDrag = 0.2f;  // water soft~ car dens 1900
-	water.velocity.SetZero();
-	water.plane.offset = fl.pos.y;  water.plane.normal = Vec3(0,0,1);
-
-	poly.numVerts = 8;  poly.numFaces = 12;
-	poly.verts = new Vec3[8];
-	poly.faces = new Face[12];
-
-	float hx = 1.2f, hy = 0.7f, hz = 0.4f;  // box dim
-	poly.verts[0] = Vec3(-hx,-hy,-hz);	poly.verts[1] = Vec3(-hx,-hy, hz);
-	poly.verts[2] = Vec3(-hx, hy,-hz);	poly.verts[3] = Vec3(-hx, hy, hz);
-	poly.verts[4] = Vec3( hx,-hy,-hz);	poly.verts[5] = Vec3( hx,-hy, hz);
-	poly.verts[6] = Vec3( hx, hy,-hz);	poly.verts[7] = Vec3( hx, hy, hz);
-
-	poly.faces[0] = Face(0,1,3);	poly.faces[1] = Face(0,3,2);	poly.faces[2] = Face(6,3,7);	poly.faces[3] = Face(6,2,3);
-	poly.faces[4] = Face(4,6,5);	poly.faces[5] = Face(6,7,5);	poly.faces[6] = Face(4,5,0);	poly.faces[7] = Face(0,5,1);
-	poly.faces[8] = Face(5,7,1);	poly.faces[9] = Face(7,3,1);	poly.faces[10]= Face(0,6,4);	poly.faces[11]= Face(0,2,6);
-
-	//  approx. length-?
-	poly.length = 1.0f;
-	poly.volume = ComputeVolume(poly);
-
-	body.mass = 1900.0f * poly.volume;	// car density
-	body.I = (4.0f * body.mass / 12.0f) * Vec3(hy*hz, hx*hz, hx*hy);
-
-	///  body initial conditions
-	//  pos & rot
-	body.x.x = chassisPosition[0];  body.x.y = chassisPosition[1];  body.x.z = chassisPosition[2];
-	body.q.x = chassisRotation[0];  body.q.y = chassisRotation[1];  body.q.z = chassisRotation[2];  body.q.w = chassisRotation[3];
-	body.q.Normalize();//
-	//  vel, ang vel
-	btVector3 v = chassis->getLinearVelocity();
-	btVector3 a = chassis->getAngularVelocity();
-	body.v.x = v.getX();  body.v.y = v.getY();  body.v.z = v.getZ();
-	body.omega.x = a.getX();  body.omega.y = a.getY();  body.omega.z = a.getZ();
-	body.F.SetZero();  body.T.SetZero();
-	
-	///  add buoyancy force
-	if (ComputeBuoyancy(body, poly, water, 9.8f))
-	{
-		chassis->applyCentralForce( btVector3(body.F.x,body.F.y,body.F.z) );
-		chassis->applyTorque(       btVector3(body.T.x,body.T.y,body.T.z) );
-	}	
-
-	//  wheels spin ...
-	/*for (int w=0; w < 3; ++w)
-	{
-		MATHVECTOR <T, 3> pos = GetWheelPosition((WHEEL_POSITION)w);
-		if (pos.)
-		//pCar->dynamics.GetWheelOrientation(wp);
-		//T left_front_wheel_speed = wheel[FRONT_LEFT].GetAngularVelocity();
-		chassis->applyForce( btVector3(body.F.x,body.F.y,body.F.z), btVector3 );
-	}*/
-	
-	delete[] poly.verts;
-	delete[] poly.faces;
-	}
-///..........................................................................................................
+	UpdateBuoyancy();
 }
+
+///................................................ Buoyancy ................................................
+void CARDYNAMICS::UpdateBuoyancy()
+{
+	if (!pScene || (pScene->fluids.size() == 0) || !poly || !pFluids)  return;
+
+	//float bc = /*sinf(chassisPosition[0]*20.3f)*cosf(chassisPosition[1]*30.4f) +*/
+	//	sinf(chassisPosition[0]*0.3f)*cosf(chassisPosition[1]*0.32f);
+	//LogO("pos " + toStr((float)chassisPosition[0]) + " " + toStr((float)chassisPosition[1]) + "  b " + toStr(bc));
+
+	for (std::list<FluidBox*>::const_iterator i = inFluids.begin();
+		i != inFluids.end(); ++i)  // 0 or 1 is there
+	{
+		const FluidBox* fb = *i;
+		if (fb->id >= 0)
+		{
+			const FluidParams& fp = pFluids->fls[fb->id];
+
+			WaterVolume water;
+			//float bump = 1.f + 0.7f * sinf(chassisPosition[0]*fp.bumpFqX)*cosf(chassisPosition[1]*fp.bumpFqY);
+			water.density = fp.density /* (1.f + 0.7f * bc)*/;  water.angularDrag = fp.angularDrag;
+			water.linearDrag = fp.linearDrag;  water.linearDrag2 = 0.f;//1.4f;//fp.linearDrag;
+			water.velocity.SetZero();
+			water.plane.offset = fb->pos.y;  water.plane.normal = Vec3(0,0,1);
+			//todo: fluid boxes rotation yaw, pitch ?-
+
+			RigidBody body;  body.mass = body_mass;
+			body.inertia = Vec3(body_inertia.getX(),body_inertia.getY(),body_inertia.getZ());
+
+			///  body initial conditions
+			//  pos & rot
+			body.x.x = chassisPosition[0];  body.x.y = chassisPosition[1];  body.x.z = chassisPosition[2];
+			body.q.x = chassisRotation[0];  body.q.y = chassisRotation[1];  body.q.z = chassisRotation[2];  body.q.w = chassisRotation[3];
+			body.q.Normalize();//
+			//  vel, ang vel
+			btVector3 v = chassis->getLinearVelocity();
+			btVector3 a = chassis->getAngularVelocity();
+			body.v.x = v.getX();  body.v.y = v.getY();  body.v.z = v.getZ();
+			body.omega.x = a.getX();  body.omega.y = a.getY();  body.omega.z = a.getZ();
+			body.F.SetZero();  body.T.SetZero();
+			
+			//  damp from height vel
+			body.F.z += fp.heightVelRes * -1000.f * body.v.z;
+			
+			///  add buoyancy force
+			if (ComputeBuoyancy(body, *poly, water, 9.8f))
+			{
+				chassis->applyCentralForce( btVector3(body.F.x,body.F.y,body.F.z) );
+				chassis->applyTorque(       btVector3(body.T.x,body.T.y,body.T.z) );
+			}	
+		}
+	}
+
+	///  wheel spin force (for mud)
+	//_______________________________________________________
+	for (int w=0; w < 4; ++w)
+	{
+		if (inFluidsWh[w].size() > 0)  // 0 or 1 is there
+		{
+			const FluidBox* fb = *inFluidsWh[w].begin();
+			if (fb->id >= 0)
+			{
+				const FluidParams& fp = pFluids->fls[fb->id];
+				if (fp.bWhForce)
+				{
+					WHEEL_POSITION wp = WHEEL_POSITION(w);
+					float whR = GetTire(wp).GetRadius() * 1.2f;  //bigger par
+					MATHVECTOR <float, 3> wheelpos = GetWheelPosition(wp, 0);
+					wheelpos[2] -= whR;
+					
+					//  height in fluid:  0 just touching surface, 1 fully in fluid
+					//  wheel plane distance  water.plane.normal.z = 1  water.plane.offset = fl.pos.y;
+					whH[w] = (wheelpos[2] - fb->pos.y) * -0.5f / whR;
+					whH[w] = std::max(0.f, std::min(1.f, whH[w]));
+					bool inAir = GetWheelContact(wp).col == NULL;
+
+					//  bump, adds some noise
+					MATHVECTOR <T, 3> whPos = GetWheelPosition(wp) - chassisPosition;
+					float bump = sinf(whPos[0]*fp.bumpFqX)*cosf(whPos[1]*fp.bumpFqY);
+					
+					float f = std::min(fp.whMaxAngVel, std::max(-fp.whMaxAngVel, (float)wheel[w].GetAngularVelocity() ));
+					QUATERNION <T> steer;
+					steer.Rotate((-wheel[wp].GetSteerAngle() * fp.whSteerMul /*+ bump * fp.bumpAng  + bc * 0.f*/) * PI_d/180.f, 0, 0, 1);
+
+					//  forwards, side, up
+					MATHVECTOR <T, 3> force(whH[w] * fp.whForceLong * f, 0, /*^*whH[w] * fp.whForceUp*/0);
+					(Orientation()*steer).RotateVector(force);
+					//GetWheelOrientation(wp).RotateVector(force);
+					
+					//  wheel spin resistance
+					wheel[w].fluidRes = whH[w] * fp.whSpinDamp /* (1.f + bump * fp.bumpAmp)*/;
+					
+					if (whH[w] > 0.01f /*&& inAir*/)
+						chassis->applyForce( ToBulletVector(force), ToBulletVector(whPos) );
+				}
+			}
+		}
+		else
+		{	whH[w] = 0.f;  wheel[w].fluidRes = 0.f;  }
+	}
+
+}
+///..........................................................................................................
 
 
 const MATHVECTOR <T, 3> & CARDYNAMICS::GetCenterOfMassPosition() const
@@ -458,14 +488,17 @@ void CARDYNAMICS::DebugPrint ( std::ostream & out, bool p1, bool p2, bool p3, bo
 	return;/**/  //--^
 		out << "---Body---" << std::endl;
 		out << "c of mass: " << center_of_mass << std::endl;
-		MATRIX3 <T> inertia = body.GetInertia();  //btVector3 chassisInertia(inertia[0], inertia[4], inertia[8]);
-		out << "inertia:  " << inertia[0] << "  " << inertia[4] << "  " << inertia[8] << "\n";
+		//MATRIX3 <T> inertia = body.GetInertia();  //btVector3 chassisInertia(inertia[0], inertia[4], inertia[8]);
+		//out << "inertia:  " << inertia[0] << "  " << inertia[4] << "  " << inertia[8] << "\n";
 		out.precision(6);
 		out << "mass: " << body.GetMass() << std::endl;
-		out << "in fluids: " << inFluids.size() << std::endl;
+		out << "in fluids: " << inFluids.size() <<
+				" wh: " << inFluidsWh[0].size() << inFluidsWh[1].size() << inFluidsWh[2].size() << inFluidsWh[3].size() << std::endl;
+		out.precision(2);
+		out << "wh fl H: " << whH[0] << " " << whH[1] << " " << whH[2] << " " << whH[3] << " " << std::endl;
 		out << std::endl;
+	//return;//
 		engine.DebugPrint(out);  out << std::endl;
-	return;//
 		fuel_tank.DebugPrint(out);  out << std::endl;
 		clutch.DebugPrint(out);  out << std::endl;
 		transmission.DebugPrint(out);	out << std::endl;
@@ -479,7 +512,7 @@ void CARDYNAMICS::DebugPrint ( std::ostream & out, bool p1, bool p2, bool p3, bo
 			out << "(rear)" << std::endl;		rear_differential.DebugPrint(out);	}
 		out << std::endl;
 	}
-	return;//
+	//return;//
 
 	if (p2)
 	{
@@ -811,7 +844,8 @@ void CARDYNAMICS::ApplyWheelTorque(T dt, T drive_torque, int i, MATHVECTOR <T, 3
 	T friction_torque = tire_friction[0] * tire.GetRadius();
 	T wheel_torque = drive_torque - friction_torque;
 	T lock_up_torque = wheel.GetLockUpTorque(dt) - wheel_torque;	// torque needed to lock the wheel
-	T brake_torque = brake.GetTorque();
+	T brake_torque = brake.GetTorque()
+		+ wheel.fluidRes * wheel.GetAngularVelocity();  /// fluid resistance
 
 	// brake and rolling resistance torque should never exceed lock up torque
 	if(lock_up_torque >= 0 && lock_up_torque > brake_torque)

@@ -29,19 +29,30 @@ void App::createScene()
 
 	mRoot->addResourceLocation(pathTrkPrv[1], "FileSystem");  //prv user tracks
 
+	QTimer ti;  ti.update();  /// time
+
 	//  tracks.xml
 	tracksXml.LoadXml(PATHMANAGER::GetGameConfigDir() + "/tracks.xml");
 	//tracksXml.SaveXml(PATHMANAGER::GetGameConfigDir() + "/tracks2.xml");
+
+	//  fluids.xml
+	fluidsXml.LoadXml(PATHMANAGER::GetDataPath() + "/materials/fluids.xml");
+	sc.pFluidsXml = &fluidsXml;
+	LogO(String("**** Loaded fluids.xml: ") + toStr(fluidsXml.fls.size()));
+
+	//  collisions.xml
+	objs.LoadXml();
+	LogO(String("**** Loaded Vegetation objects: ") + toStr(objs.colsMap.size()));
+
+	ti.update();  /// time
+	float dt = ti.dt * 1000.f;
+	LogO(String("::: Time load xmls: ") + toStr(dt) + " ms");
 
 	//  gui
 	bGuiFocus = false/*true*/;  bMoveCam = true;  //*--
 	InitGui();
 	TerCircleInit();
 	createBrushPrv();
-
-	//  collisions.xml
-	objs.LoadXml();
-	LogO(String("**** Loaded Vegetation objects: ") + toStr(objs.colsMap.size()));
 
 	//  load
 	if (pSet->autostart)

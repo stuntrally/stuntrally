@@ -131,8 +131,7 @@ void App::changeShadows()
 
 		}
 		
-		#ifdef SHADOWS_D		
-		// shadow tex overlay
+		#if 0	// shadow tex overlay
 		// add the overlay elements to show the shadow maps:
 		// init overlay elements
 		OverlayManager& mgr = OverlayManager::getSingleton();
