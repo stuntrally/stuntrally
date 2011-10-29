@@ -1,6 +1,5 @@
 #include "pch.h"
 #include "../Defines.h"
-#include "../QTimer.h"
 
 #include "MaterialProperties.h"
 #include "MaterialFactory.h"
@@ -17,6 +16,7 @@
 #include <OgreStringConverter.h>
 #include <OgreResourceGroupManager.h>
 using namespace Ogre;
+#include "../QTimer.h"
 
 MaterialFactory::MaterialFactory() : 
 	bShaders(1), bNormalMap(1), bEnvMap(1), bShadows(1), bShadowsDepth(1),

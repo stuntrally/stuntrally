@@ -76,7 +76,22 @@ void MaterialGenerator::generate(bool fixedFunction)
 			ambientPass->setVertexProgram(vertexProg->getName());
 			ambientPass->setFragmentProgram(fragmentProg->getName());
 		}
+
+		
 	}
+
+	//add ssao technique
+	Technique* ssaopasstech = mat->createTechnique();
+	ssaopasstech->setName("geom");
+	ssaopasstech->setSchemeName("geom");
+	// Only supporting one pass
+	Pass* ssaopass = ssaopasstech->createPass();
+
+	HighLevelGpuProgramManager& hmgr = HighLevelGpuProgramManager::getSingleton();
+	HighLevelGpuProgramPtr vprog = hmgr.getByName("geom_vs");
+	HighLevelGpuProgramPtr fprog = hmgr.getByName("geom_ps");
+	ssaopass->setVertexProgram(vprog->getName());
+	ssaopass->setFragmentProgram(fprog->getName());
 	
 	Ogre::Pass* pass = technique->createPass();
 	
