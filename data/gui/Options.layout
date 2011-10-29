@@ -555,6 +555,10 @@
 						<Widget type="StaticText" skin="StaticText" position="184 255 60 24" name="BlurIntensVal">
 							<Property key="Text_TextColour" value="0.7 1 0.4"/>
 						</Widget>
+						<Widget type="Button" skin="CheckBox" position="40 280 300 24" name="ssao">
+							<Property key="Widget_Caption" value="#{ssao}"/>
+							<Property key="Text_TextColour" value="0.6 1 0.3"/>
+						</Widget>
 					</Widget>
 				</Widget>
 				<Widget type="StaticText" skin="StaticText" position="32 488 300 24">
@@ -753,6 +757,10 @@
 						</Widget>
 						<Widget type="StaticText" skin="StaticText" position="180 140 60 24" name="GrassDistVal">
 							<Property key="Text_TextColour" value="0.7 0.8 0.5"/>
+						</Widget>
+						<Widget type="Button" skin="CheckBox" position="32 250 200 26" name="UseImposters">
+							<Property key="Widget_Caption" value="#{UseImposters}*"/>
+							<Property key="Text_TextColour" value="0.6 1 0.3"/>
 						</Widget>
 					</Widget>
 					<Widget type="TabItem" skin="" position="4 26 735 428">

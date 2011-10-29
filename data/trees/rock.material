@@ -10,6 +10,23 @@ material rock.05.mat/SOLID/TEX/rockW05.png
 			}
 		}
 	}
+	// this is the technique for the scheme "geom" that the SSAO
+    // compositor uses to render the geometry map
+	technique geom
+	{
+	    scheme geom
+
+	    pass
+	    {
+	        vertex_program_ref geom_vs
+	        {
+	        }
+
+	        fragment_program_ref geom_ps
+	        {
+	        }
+	    }
+	}
 }
 
 material rock.07.mat/SOLID/TEX/rockW05.png
@@ -23,6 +40,23 @@ material rock.07.mat/SOLID/TEX/rockW05.png
 				texture rock.05w.jpg
 			}
 		}
+	}
+	// this is the technique for the scheme "geom" that the SSAO
+    // compositor uses to render the geometry map
+	technique geom
+	{
+	    scheme geom
+
+	    pass
+	    {
+	        vertex_program_ref geom_vs
+	        {
+	        }
+
+	        fragment_program_ref geom_ps
+	        {
+	        }
+	    }
 	}
 }
 
@@ -38,6 +72,23 @@ material rock.05.mat/SOLID/TEX/rock.05.png
 			}
 		}
 	}
+	// this is the technique for the scheme "geom" that the SSAO
+    // compositor uses to render the geometry map
+	technique geom
+	{
+	    scheme geom
+
+	    pass
+	    {
+	        vertex_program_ref geom_vs
+	        {
+	        }
+
+	        fragment_program_ref geom_ps
+	        {
+	        }
+	    }
+	}
 }
 
 material rock.07.mat/SOLID/TEX/rock.05.png
@@ -51,5 +102,22 @@ material rock.07.mat/SOLID/TEX/rock.05.png
 				texture rock.05.jpg
 			}
 		}
+	}
+	// this is the technique for the scheme "geom" that the SSAO
+    // compositor uses to render the geometry map
+	technique geom
+	{
+	    scheme geom
+
+	    pass
+	    {
+	        vertex_program_ref geom_vs
+	        {
+	        }
+
+	        fragment_program_ref geom_ps
+	        {
+	        }
+	    }
 	}
 }

@@ -233,7 +233,7 @@ void App::UpdPSSMMaterials()	/// . . . . . . . .
 	const PSSMShadowCameraSetup::SplitPointList& splitPointList = pssmSetup->getSplitPoints();
 	MaterialPtr mat;
 
-	for (size_t i = 0; i < /*3*/splitPointList.size(); ++i)
+	for (size_t i = 0; i < 3/*/splitPointList.size()*/; ++i)
 		splitPoints[i] = splitPointList[i];
 	
 	//#ifndef ROAD_EDITOR  // GAME

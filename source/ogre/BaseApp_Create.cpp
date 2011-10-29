@@ -121,6 +121,7 @@ void BaseApp::refreshCompositor(bool disableAll)
 	{
 		CompositorManager::getSingleton().setCompositorEnabled((*it), "Bloom", false);
 		CompositorManager::getSingleton().setCompositorEnabled((*it), "HDR", false);
+		CompositorManager::getSingleton().setCompositorEnabled((*it), "ssao", true);
 		CompositorManager::getSingleton().setCompositorEnabled((*it), "Motion Blur", false);
 		CompositorManager::getSingleton().setCompositorEnabled((*it), "SSAA", false);
 	}
@@ -160,6 +161,7 @@ void BaseApp::refreshCompositor(bool disableAll)
 		CompositorManager::getSingleton().setCompositorEnabled((*it), "HDR", pSet->hdr);
 		CompositorManager::getSingleton().setCompositorEnabled((*it), "Motion Blur", pSet->motionblur);
 		CompositorManager::getSingleton().setCompositorEnabled((*it), "SSAA", pSet->ssaa);
+		CompositorManager::getSingleton().setCompositorEnabled((*it), "ssao", pSet->ssao);
 	}
 }
 
@@ -181,6 +183,7 @@ void BaseApp::recreateCompositor()
 		mRoot->addResourceLocation(sPath + "/hdr", "FileSystem", "Effects");
 		mRoot->addResourceLocation(sPath + "/motionblur", "FileSystem", "Effects");
 		mRoot->addResourceLocation(sPath + "/ssaa", "FileSystem", "Effects");
+		mRoot->addResourceLocation(sPath + "/ssao", "FileSystem", "Effects");
 		ResourceGroupManager::getSingleton().initialiseResourceGroup("Effects");
 	}
 
@@ -191,6 +194,13 @@ void BaseApp::recreateCompositor()
 		CompositorManager::getSingleton().registerCompositorLogic("HDR", mHDRLogic);
 	}
 	
+	if (!mSSAOLogic) 
+	{
+		mSSAOLogic = new SSAOLogic();
+		mSSAOLogic->setApp(this);
+		CompositorManager::getSingleton().registerCompositorLogic("ssao", mSSAOLogic);
+	}
+
 	if (CompositorManager::getSingleton().getByName("Motion Blur").isNull())
 	{
 		// Motion blur has to be created in code
@@ -265,7 +275,9 @@ void BaseApp::recreateCompositor()
 			}
 		}
 	}
+
 	
+
 	if (!mMotionBlurLogic)
 	{
 		LogO("Creating motion blur logic");
@@ -274,12 +286,15 @@ void BaseApp::recreateCompositor()
 		CompositorManager::getSingleton().registerCompositorLogic("Motion Blur", mMotionBlurLogic);
 	}
 
+	
+
 	for (std::list<Viewport*>::iterator it=mSplitMgr->mViewports.begin(); it!=mSplitMgr->mViewports.end(); it++)
 	{
 		// remove old comp. first
 		CompositorManager::getSingleton().removeCompositorChain( (*it ));
 		
 		CompositorManager::getSingleton().addCompositor((*it), "HDR");
+		CompositorManager::getSingleton().addCompositor((*it), "ssao");
 		CompositorManager::getSingleton().addCompositor((*it), "Bloom");
 		CompositorManager::getSingleton().addCompositor((*it), "Motion Blur");
 		CompositorManager::getSingleton().addCompositor((*it), "SSAA");
@@ -305,7 +320,7 @@ void BaseApp::Run( bool showDialog )
 //  ctor
 //-------------------------------------------------------------------------------------
 BaseApp::BaseApp()
-	:mRoot(0), mSceneMgr(0), mWindow(0), mHDRLogic(0), mMotionBlurLogic(0)
+	:mRoot(0), mSceneMgr(0), mWindow(0), mHDRLogic(0), mMotionBlurLogic(0),mSSAOLogic(0)
 	,mShowDialog(1), mShutDown(false), bWindowResized(0)
 	,mInputManager(0), mMouse(0), mKeyboard(0), mOISBsys(0)
 	,alt(0), ctrl(0), shift(0), roadUpCnt(0)
@@ -337,11 +352,12 @@ BaseApp::~BaseApp()
 	
 	#if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
 		mRoot->unloadPlugin("RenderSystem_Direct3D9");
+		mRoot->unloadPlugin("RenderSystem_Direct3D11");
 	#endif
 	mRoot->unloadPlugin("RenderSystem_GL");
 	
 
-	OGRE_DELETE mRoot;
+	//OGRE_DELETE mRoot;
 	delete mHDRLogic;  mHDRLogic = 0;
 }
 
@@ -407,6 +423,7 @@ bool BaseApp::setup()
 		mRoot->loadPlugin(PATHMANAGER::GetOgrePluginDir() + "/RenderSystem_GL" + D_SUFFIX);
 		#if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
 		mRoot->loadPlugin(PATHMANAGER::GetOgrePluginDir() + "/RenderSystem_Direct3D9" + D_SUFFIX);
+		mRoot->loadPlugin(PATHMANAGER::GetOgrePluginDir() + "/RenderSystem_Direct3D11" + D_SUFFIX);
 		#endif
 	}
 	else
@@ -415,6 +432,8 @@ bool BaseApp::setup()
 			mRoot->loadPlugin(PATHMANAGER::GetOgrePluginDir() + "/RenderSystem_GL" + D_SUFFIX);
 		else if (pSet->rendersystem == "Direct3D9 Rendering Subsystem")
 			mRoot->loadPlugin(PATHMANAGER::GetOgrePluginDir() + "/RenderSystem_Direct3D9" + D_SUFFIX);
+		else if (pSet->rendersystem == "Direct3D11 Rendering Subsystem")
+			mRoot->loadPlugin(PATHMANAGER::GetOgrePluginDir() + "/RenderSystem_Direct3D11" + D_SUFFIX);
 	}
 
 	mRoot->loadPlugin(PATHMANAGER::GetOgrePluginDir() + "/Plugin_ParticleFX" + D_SUFFIX);

@@ -27,7 +27,8 @@ public:
 	float view_distance, terdetail,terdist, road_dist;
 	float shadow_dist;  int shadow_size, lightmap_size, shadow_count, shadow_type;
 	float trees, grass, trees_dist, grass_dist;
-
+	bool use_imposters;
+	
 	//  startup
 	bool autostart, escquit, ogre_dialog, allow_save;
 	std::string language;

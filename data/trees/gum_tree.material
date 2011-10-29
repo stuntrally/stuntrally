@@ -16,6 +16,25 @@ material gum_branch
 			}
 		}
 	}
+	// this is the technique for the scheme "geom" that the SSAO
+    // compositor uses to render the geometry map
+	technique geom
+	{
+	    scheme geom
+
+	    pass
+	    {
+	        alpha_rejection greater_equal 128
+	        vertex_program_ref geom_vs
+	        {
+	        }
+
+	        fragment_program_ref geom_white_ps
+	        {
+	        }
+	    }
+	}
+	
 }
 
 material gum_bark 
@@ -34,5 +53,22 @@ material gum_bark
 				tex_address_mode wrap
 			}
 		}
+	}
+	// this is the technique for the scheme "geom" that the SSAO
+    // compositor uses to render the geometry map
+	technique geom
+	{
+	    scheme geom
+
+	    pass
+	    {
+	        vertex_program_ref geom_vs
+	        {
+	        }
+
+	        fragment_program_ref geom_ps
+	        {
+	        }
+	    }
 	}
 }

@@ -271,6 +271,22 @@ namespace Ogre
 
 		updateParams(mat, terrain);
 
+		//add ssao technique
+		Technique* tech = mat->createTechnique();
+		tech->setName("geom");
+		tech->setSchemeName("geom");
+		// Only supporting one pass
+		Pass* pass = tech->createPass();
+
+		HighLevelGpuProgramManager& hmgr = HighLevelGpuProgramManager::getSingleton();
+		HighLevelGpuProgramPtr vprog = hmgr.getByName("geom_terrain_vs");
+		HighLevelGpuProgramPtr fprog = hmgr.getByName("geom_terrain_ps");
+		pass->setVertexProgram(vprog->getName());
+		pass->setFragmentProgram(fprog->getName());
+		TextureUnitState* tu = pass->createTextureUnitState();
+		tu->setTextureName(terrain->getTerrainNormalMap()->getName());
+		tu->setTextureAddressingMode(TextureUnitState::TAM_CLAMP);
+
 		return mat;
 
 	}

@@ -342,6 +342,11 @@ void App::chkVidBlur(WP wp)
 	refreshCompositor();
 }
 
+void App::chkVidSSAO(WP wp)
+{		
+	ChkEv(ssao);
+	refreshCompositor();
+}
 void App::slBloomInt(SL)
 {
 	Real v = val/res;  if (bGI)  pSet->bloomintensity = v;

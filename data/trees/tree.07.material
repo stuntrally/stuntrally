@@ -13,6 +13,25 @@ material tree.07.leaves.mat/ALPHA/TEX/tree.07.png/VertCol/TWOSIDE
 			}
 		}
 	}
+	// this is the technique for the scheme "geom" that the SSAO
+    // compositor uses to render the geometry map
+	technique geom
+	{
+	    scheme geom
+
+	    pass
+	    {
+	        alpha_rejection greater_equal 128
+	        vertex_program_ref geom_vs
+	        {
+	        }
+
+	        fragment_program_ref geom_white_ps
+	        {
+	        }
+	    }
+	}
+	
 }
 material tree.07.branch1.mat/ALPHA/TEX/tree.07.png/VertCol/TWOSIDE
 {
@@ -29,6 +48,25 @@ material tree.07.branch1.mat/ALPHA/TEX/tree.07.png/VertCol/TWOSIDE
 			}
 		}
 	}
+	// this is the technique for the scheme "geom" that the SSAO
+    // compositor uses to render the geometry map
+	technique geom
+	{
+	    scheme geom
+
+	    pass
+	    {
+	        alpha_rejection greater_equal 128
+	        vertex_program_ref geom_vs
+	        {
+	        }
+
+	        fragment_program_ref geom_white_ps
+	        {
+	        }
+	    }
+	}
+	
 }
 material tree.07.branch2.mat/ALPHA/TEX/tree.07.png/VertCol/TWOSIDE
 {
@@ -45,6 +83,25 @@ material tree.07.branch2.mat/ALPHA/TEX/tree.07.png/VertCol/TWOSIDE
 			}
 		}
 	}
+	// this is the technique for the scheme "geom" that the SSAO
+    // compositor uses to render the geometry map
+	technique geom
+	{
+	    scheme geom
+
+	    pass
+	    {
+	        alpha_rejection greater_equal 128
+	        vertex_program_ref geom_vs
+	        {
+	        }
+
+	        fragment_program_ref geom_white_ps
+	        {
+	        }
+	    }
+	}
+	
 }
 material tree.07.mat/SOLID/TEX/tree.07.png/VertCol
 {
@@ -57,5 +114,22 @@ material tree.07.mat/SOLID/TEX/tree.07.png/VertCol
 				texture tree.07.png
 			}
 		}
+	}
+	// this is the technique for the scheme "geom" that the SSAO
+    // compositor uses to render the geometry map
+	technique geom
+	{
+	    scheme geom
+
+	    pass
+	    {
+	        vertex_program_ref geom_vs
+	        {
+	        }
+
+	        fragment_program_ref geom_ps
+	        {
+	        }
+	    }
 	}
 }

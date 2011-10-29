@@ -17,6 +17,23 @@ material base_sky
 			}
 		}
 	}
+	// this is the technique for the scheme "geom" that the SSAO
+    // compositor uses to render the geometry map
+	technique geom
+	{
+	    scheme geom
+
+	    pass
+	    {
+	        vertex_program_ref geom_vs
+	        {
+	        }
+
+	        fragment_program_ref geom_ps
+	        {
+	        }
+	    }
+	}
 }
 
 material sky/white   : base_sky		{	set_texture_alias diffuseMap sky_white.jpg  }

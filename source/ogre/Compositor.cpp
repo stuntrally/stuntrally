@@ -9,7 +9,7 @@
 #include <OgreMaterial.h>
 #include <OgreTechnique.h>
 #include <OgreGpuProgramParams.h>
-
+#include "SplitScreen.h"
 
 class MotionBlurListener : public Ogre::CompositorInstance::Listener
 {
@@ -204,4 +204,78 @@ void HDRListener::notifyMaterialSetup(Ogre::uint32 pass_id, Ogre::MaterialPtr &m
 
 void HDRListener::notifyMaterialRender(Ogre::uint32 pass_id, Ogre::MaterialPtr &mat)
 {
+}
+
+
+
+class SSAOListener: public Ogre::CompositorInstance::Listener
+{
+protected:
+public:
+	SSAOListener(BaseApp * app);
+	virtual ~SSAOListener();
+	BaseApp * mApp;
+	virtual void notifyMaterialSetup(Ogre::uint32 pass_id, Ogre::MaterialPtr &mat);
+	virtual void notifyMaterialRender(Ogre::uint32 pass_id, Ogre::MaterialPtr &mat);
+};
+
+Ogre::CompositorInstance::Listener* SSAOLogic::createListener(Ogre::CompositorInstance* instance)
+{
+	SSAOListener* listener = new SSAOListener(mApp);
+	Ogre::Viewport* vp = instance->getChain()->getViewport();
+	return listener;
+}
+
+void SSAOLogic::setApp(BaseApp* app)
+{
+	mApp = app;
+}
+
+
+SSAOListener::SSAOListener(BaseApp* app)
+	:mApp(app)
+{
+}
+SSAOListener::~SSAOListener()
+{
+}
+
+void SSAOListener::notifyMaterialSetup(Ogre::uint32 pass_id, Ogre::MaterialPtr &mat)
+{
+}
+void SSAOListener::notifyMaterialRender(Ogre::uint32 pass_id, Ogre::MaterialPtr &mat)
+{
+	  if (pass_id != 42) // not SSAO, return
+            return;
+
+        // this is the camera you're using
+        #ifndef ROAD_EDITOR
+		Ogre::Camera *cam = mApp->mSplitMgr->mCameras.front();
+		#else
+		Ogre::Camera *cam = mApp->mCamera;
+		#endif
+        // calculate the far-top-right corner in view-space
+        Ogre::Vector3 farCorner = cam->getViewMatrix(true) * cam->getWorldSpaceCorners()[4];
+
+        // get the pass
+        Ogre::Pass *pass = mat->getBestTechnique()->getPass(0);
+
+        // get the vertex shader parameters
+        Ogre::GpuProgramParametersSharedPtr params = pass->getVertexProgramParameters();
+        // set the camera's far-top-right corner
+        if (params->_findNamedConstantDefinition("farCorner"))
+            params->setNamedConstant("farCorner", farCorner);
+
+        // get the fragment shader parameters
+        params = pass->getFragmentProgramParameters();
+        // set the projection matrix we need
+        static const Ogre::Matrix4 CLIP_SPACE_TO_IMAGE_SPACE(
+            0.5,    0,    0,  0.5,
+            0,   -0.5,    0,  0.5,
+            0,      0,    1,    0,
+            0,      0,    0,    1);
+        if (params->_findNamedConstantDefinition("ptMat"))
+            params->setNamedConstant("ptMat", CLIP_SPACE_TO_IMAGE_SPACE * cam->getProjectionMatrixWithRSDepth());
+        if (params->_findNamedConstantDefinition("far"))
+            params->setNamedConstant("far", cam->getFarClipDistance());
 }

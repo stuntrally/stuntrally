@@ -122,7 +122,10 @@ void App::btnTrGrReset(WP wp)
 	setSld(GrassDist);
 }
 
-
+void App::chkUseImposters(WP wp)
+{
+	ChkEv(use_imposters);
+}
 void App::slShaders(SL)
 {
 	int v = val;  if (bGI)  pSet->shaders = v;
@@ -218,7 +221,8 @@ void App::GuiInitGraphics()
 	Slv(TreesDist,	powf((pSet->trees_dist-0.5f) /6.5f, 0.5f));
 	Slv(GrassDist,	powf((pSet->grass_dist-0.5f) /6.5f, 0.5f));
 	Btn("TrGrReset", btnTrGrReset);
-	
+	Chk("UseImposters", chkUseImposters, pSet->use_imposters);
+
 	// screen
 	// find max. fsaa
 	int fsaa = 0; int newfsaa;
@@ -681,6 +685,7 @@ void App::comboGraphicsAll(ComboBoxPtr cmb, size_t val)
 	Chk("Bloom", chkVidBloom, pSet->bloom);
 	Chk("HDR", chkVidHDR, pSet->hdr);
 	Chk("MotionBlur", chkVidBlur, pSet->motionblur);
+	Chk("ssao", chkVidSSAO, pSet->ssao);
 
 	Chk("RplChkAutoRec", chkRplAutoRec, pSet->rpl_rec);
 	Chk("RplChkGhost", chkRplChkGhost, pSet->rpl_ghost);

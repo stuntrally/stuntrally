@@ -52,4 +52,14 @@ protected:
 	virtual Ogre::CompositorInstance::Listener* createListener(Ogre::CompositorInstance* instance);
 };
 
+// The compositor logic for the ssao compositor
+class SSAOLogic : public ListenerFactoryLogic
+{
+protected:
+	virtual Ogre::CompositorInstance::Listener* createListener(Ogre::CompositorInstance* instance);
+public:
+	void setApp(BaseApp* app);
+private:
+	BaseApp * mApp;
+};
 #endif

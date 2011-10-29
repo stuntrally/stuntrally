@@ -18,6 +18,24 @@ material Mud
 			}
 		}
 	}
+	// this is the technique for the scheme "geom" that the SSAO
+    // compositor uses to render the geometry map
+	technique geom
+	{
+	    scheme geom
+
+	    pass
+	    {
+	        alpha_rejection greater_equal 128
+	        vertex_program_ref geom_vs
+	        {
+	        }
+
+	        fragment_program_ref geom_white_ps
+	        {
+	        }
+	    }
+	}
 }
 
 material Dust
@@ -40,6 +58,24 @@ material Dust
 			}
 		}
 	}
+	// this is the technique for the scheme "geom" that the SSAO
+    // compositor uses to render the geometry map
+	technique geom
+	{
+	    scheme geom
+
+	    pass
+	    {
+	        alpha_rejection greater_equal 128
+	        vertex_program_ref geom_vs
+	        {
+	        }
+
+	        fragment_program_ref geom_white_ps
+	        {
+	        }
+	    }
+	}
 }
 
 material Smoke
@@ -61,6 +97,24 @@ material Smoke
 				tex_address_mode clamp
 			}
 		}
+	}
+	// this is the technique for the scheme "geom" that the SSAO
+    // compositor uses to render the geometry map
+	technique geom
+	{
+	    scheme geom
+
+	    pass
+	    {
+	        alpha_rejection greater_equal 128
+	        vertex_program_ref geom_vs
+	        {
+	        }
+
+	        fragment_program_ref geom_white_ps
+	        {
+	        }
+	    }
 	}
 }
 
@@ -88,5 +142,23 @@ material TireTrail
 				texture tireband.png
 			}
 		}
+	}
+	// this is the technique for the scheme "geom" that the SSAO
+    // compositor uses to render the geometry map
+	technique geom
+	{
+	    scheme geom
+
+	    pass
+	    {
+	        alpha_rejection greater_equal 128
+	        vertex_program_ref geom_vs
+	        {
+	        }
+
+	        fragment_program_ref geom_white_ps
+	        {
+	        }
+	    }
 	}
 }

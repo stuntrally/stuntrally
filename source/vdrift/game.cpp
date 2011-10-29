@@ -298,9 +298,9 @@ void GAME::Tick(float deltat)
 		deltat = maxtime;
 
 	target_time += deltat;
-
+	float tickperriod = TickPeriod();
 	//increment game logic by however many tick periods have passed since the last GAME::Tick
-	while (target_time - TickPeriod()*frame > TickPeriod() && curticks < maxticks)
+	while (target_time > tickperriod && curticks < maxticks)
 	{
 		frame++;
 
@@ -322,6 +322,7 @@ void GAME::Tick(float deltat)
 			}
 		}
 		curticks++;
+		target_time -= tickperriod;
 	}
 }
 

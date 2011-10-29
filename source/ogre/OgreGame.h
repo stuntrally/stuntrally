@@ -238,8 +238,9 @@ protected:
 		chkReverse(WP), chkParticles(WP), chkTrails(WP),
 		chkAbs(WP), chkTcs(WP), chkGear(WP), chkRear(WP), chkClutch(WP),  // car
 		chkOgreDialog(WP), chkAutoStart(WP), chkEscQuits(WP), chkBltLines(WP), chkLoadPics(WP),  // startup
-		chkVidEffects(WP), chkVidBloom(WP), chkVidHDR(WP), chkVidBlur(WP), UpdBloomVals(),  // video
+		chkVidEffects(WP), chkVidBloom(WP), chkVidHDR(WP), chkVidBlur(WP), UpdBloomVals(), chkVidSSAO(WP), // video
 		chkVegetCollis(WP), chkCarCollis(WP);  //car
+	void chkUseImposters(WP wp);
 
 	void imgBtnCarClr(WP), btnCarClrRandom(WP);
 	MyGUI::ButtonPtr bRkmh, bRmph;  void radKmh(WP), radMph(WP);

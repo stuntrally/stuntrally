@@ -230,7 +230,8 @@ protected:
 
 	//  checks
 	void chkOgreDialog(WP), chkAutoStart(WP), chkEscQuits(WP);  // startup
-	
+	void chkUseImposters(WP wp);
+
 	//  [settings]
 	SLV(SizeMinmap);  SLV(CamSpeed);  SLV(CamInert);
 	SLV(TerUpd);  SLV(SizeRoadP);  SLV(MiniUpd);
