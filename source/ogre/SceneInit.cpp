@@ -7,6 +7,7 @@
 #include "../road/Road.h"
 #include "SplitScreen.h"
 #include "common/RenderConst.h"
+#include "common/MaterialFactory.h"
 
 #include "../btOgre/BtOgrePG.h"
 #include "../btOgre/BtOgreGP.h"
@@ -34,9 +35,27 @@ void App::createScene()
 		if (pSet->cam_view[i] >= 0)
 			carsCamNum[i] = pSet->cam_view[i];
 
+	QTimer ti;  ti.update();  /// time
+
 	//  tracks.xml
 	tracksXml.LoadXml(PATHMANAGER::GetGameConfigDir() + "/tracks.xml");
 	//tracksXml.SaveXml(PATHMANAGER::GetGameConfigDir() + "/tracks2.xml");
+
+	//  fluids.xml
+	fluidsXml.LoadXml(PATHMANAGER::GetDataPath() + "/materials/fluids.xml");
+	sc.pFluidsXml = &fluidsXml;
+	LogO(String("**** Loaded fluids.xml: ") + toStr(fluidsXml.fls.size()));
+
+	//  collisions.xml
+	objs.LoadXml();
+	LogO(String("**** Loaded Vegetation objects: ") + toStr(objs.colsMap.size()));
+	LogO(String("**** ReplayFrame size: ") + toStr(sizeof(ReplayFrame)));	
+	LogO(String("**** ReplayHeader size: ") + toStr(sizeof(ReplayHeader)));	
+
+	ti.update();  /// time
+	float dt = ti.dt * 1000.f;
+	LogO(String("::: Time load xmls: ") + toStr(dt) + " ms");
+
 
 	//  gui
 	if (!pSet->autostart)  isFocGui = true;
@@ -53,12 +72,6 @@ void App::createScene()
 			1 /*0xfe/*8+(1<<13)*/);
 	}
 	
-	//  collisions.xml
-	objs.LoadXml();
-	LogO(String("**** Loaded Vegetation objects: ") + toStr(objs.colsMap.size()));
-	LogO(String("**** ReplayFrame size: ") + toStr(sizeof(ReplayFrame)));	
-	LogO(String("**** ReplayHeader size: ") + toStr(sizeof(ReplayHeader)));	
-
 	bRplRec = pSet->rpl_rec;  // startup setting
 
 	//  load
@@ -166,6 +179,10 @@ void App::LoadGame()  // 2
 	
 	pGame->NewGameDoCleanup();
 	pGame->NewGameDoLoadTrack();
+	
+	/// generate materials
+	materialFactory->generate();
+	
 	/// init car models
 	// will create vdrift cars, actual car loading will be done later in LoadCar()
 	// this is just here because vdrift car has to be created first
@@ -464,3 +481,54 @@ void App::CreateProps()
 		}
 	}
 }
+
+/*void App::ReloadCar()
+{
+	// Delete all cars
+	for (std::vector<CarModel*>::iterator it=carModels.begin(); it!=carModels.end(); it++)
+		delete (*it);
+
+	carModels.clear();
+	newPosInfos.clear();
+
+	/// init car models
+	// will create vdrift cars, actual car loading will be done later in LoadCar()
+	// this is just here because vdrift car has to be created first
+	std::list<Camera*>::iterator camIt = mSplitMgr->mCameras.begin();
+	int i;
+	for (i=0; i < mSplitMgr->mNumViewports; i++,camIt++)
+		carModels.push_back( new CarModel(i, CarModel::CT_LOCAL, pSet->car[i], mSceneMgr, pSet, pGame, &sc, (*camIt), this ) );
+
+	//  Create all cars
+	for (int i=0; i < carModels.size(); ++i)
+	{
+		CarModel* c = carModels[i];
+		c->Create(i);
+
+		//  restore which cam view
+		if (c->fCam && carsCamNum[i] != 0)
+			c->fCam->setCamera(carsCamNum[i] -1);
+
+		//  Reserve an entry in newPosInfos
+		PosInfo carPosInfo;  carPosInfo.bNew = false;  //-
+		newPosInfos.push_back(carPosInfo);
+	}
+
+	// Assign stuff to cars
+	for (std::vector<CarModel*>::iterator it=carModels.begin(); it!=carModels.end(); it++)
+	{
+		(*it)->terrain = terrain;
+		(*it)->blendMtr = blendMtr;
+		(*it)->blendMapSize = blendMapSize;
+	}
+
+	// Camera settings
+	for (std::vector<CarModel*>::iterator it=carModels.begin(); it!=carModels.end(); it++)
+		if ((*it)->fCam)
+		{	(*it)->fCam->first = true;
+			(*it)->fCam->mTerrain = mTerrainGroup;
+			#if 0
+			(*it)->fCam->mWorld = &(pGame->collision);
+			#endif
+		}
+}*/

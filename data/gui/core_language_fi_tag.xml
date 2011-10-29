@@ -60,7 +60,7 @@
 	<Tag name="LoadTrack">Load Track</Tag>
 	<Tag name="GrDensSmooth">Smooth grass dens.</Tag>
 	<Tag name="TerHeightMap">Maaston korkeuskartta</Tag>
-	<Tag name="bumps">bumps</Tag>
+	<Tag name="bumps">bumps (bumpy terrain)</Tag>
 	<Tag name="TipDiffusePrev">Diffuse texture preview image.</Tag>
 	<Tag name="smoke">savu</Tag>
 	<Tag name="TipChangeCar">Vaihda listan valinta nykyiseksi autoksi ja paina [Uusi peli] ajaaksesi sillä.</Tag>
@@ -87,7 +87,7 @@
 	<Tag name="SplitVertically">Split Vertically</Tag>
 	<Tag name="BasedOn">pohjautuen</Tag>
 	<Tag name="banked">banked</Tag>
-	<Tag name="frenzy">frenzy</Tag>
+	<Tag name="frenzy">frenzy (curly road)</Tag>
 	<Tag name="InputRoadChkRadius">K,L   - checkpoint radius (chkR 0 - none)</Tag>
 	<Tag name="TipDustSize">Pölyhiukkasten koko.</Tag>
 	<Tag name="InputRoadInsAlt">alt-shift - at start   alt-ctrl - at end</Tag>
@@ -110,6 +110,7 @@
 	<Tag name="Replay">Replay</Tag>
 	<Tag name="AutoRear">Auto Rear gear</Tag>
 	<Tag name="NumLaps">Number of laps</Tag>
+	<Tag name="UseSSAA">Use SSAA when effects are enabled</Tag>
 	<Tag name="ReflMode_single">Single</Tag>
 	<Tag name="Friction">Kitka</Tag>
 	<Tag name="SetCamTo">Set camera to</Tag>
@@ -191,6 +192,7 @@
 	<Tag name="Delete">Poista</Tag>
 	<Tag name="Rename">Nimeä uudelleen</Tag>
 	<Tag name="TipModelPageLength">Models Page length (low will reload often, high will cause visible switching).</Tag>
+	<Tag name="LightmapSize">Lightmap size</Tag>
 	<Tag name="RoadQual">Tien laatu kaukana</Tag>
 	<Tag name="length">pituus</Tag>
 	<Tag name="ColumnNSides">Column N sides</Tag>
@@ -237,7 +239,7 @@
 	<Tag name="ApplyShadows">Käytä varjoja</Tag>
 	<Tag name="TipFogEndClr">Fog end color. R G B components 0 to 1 (eg. 0.7 0.8 0.9)</Tag>
 	<Tag name="InputCameraTxt1">with shift - main cameras only</Tag>
-	<Tag name="VegetCol">Kasvillisuuden törmäystunnistus</Tag>
+	<Tag name="InputToggleVeget">V - Disable / enable vegetation</Tag>
 	<Tag name="Particles">Hiukkaset</Tag>
 	<Tag name="Other">Muu</Tag>
 	<Tag name="TipTerLAngSm">Angle smooth range (transition).</Tag>
@@ -411,7 +413,8 @@
 	<Tag name="TipTerLNoise">Factor of additional noise.</Tag>
 	<Tag name="InputTerDeform">D - Deform  (LMB up, RMB down)</Tag>
 	<Tag name="TipDiffuseTex">Diffuse texture (Specular in alpha).</Tag>
-	<Tag name="InputToggleVeget">V - Disable / enable vegetation</Tag>
+	<Tag name="VegetCol">Kasvillisuuden törmäystunnistus</Tag>
+	<Tag name="Track">Track</Tag>
 	<Tag name="MyGUI_MessageBox_Continue">Continue</Tag>
 	<Tag name="Tools">Tools</Tag>
 	<Tag name="TipGrassSwaySpd">Grass sway effect speed.</Tag>
@@ -525,7 +528,7 @@
 	<Tag name="InputRoadHeight">- muuta korkeutta</Tag>
 	<Tag name="TipSunSpecular">Sun light specular (shiny) color. R G B components 0 to 1 (eg. 0.6 0.6 0.6)</Tag>
 	<Tag name="ColSat">Saturation</Tag>
-	<Tag name="Track">Track</Tag>
+	<Tag name="AntiAliasing">Antialiasing</Tag>
 	<Tag name="InputRoadSelectMany">Select (many)</Tag>
 	<Tag name="Volume">Volume</Tag>
 	<Tag name="TipTerLayers">Terrain texture layers (recommended 2-3, significantly affects Fps). *Auto blendmap supports max 4.</Tag>
@@ -547,10 +550,12 @@
 	<Tag name="MyGUI_MessageBox_Yes">Kyllä</Tag>
 	<Tag name="RollingDrag">Rolling Drag</Tag>
 	<Tag name="RplAll">All</Tag>
-	<Tag name="UseSSAA">Use SSAA when effects are enabled</Tag>
-	<Tag name="LightmapSize">Lightmap size</Tag>
-	<Tag name="AntiAliasing">Antialiasing</Tag>
-	<Tag name="GameVersion">1.3</Tag>
+	<Tag name="TipGrTerMaxAngle">Terrain angle above which there won't be any grass.</Tag>
+	<Tag name="LTrMaxTerAng">Max. Terrain Angle</Tag>
+	<Tag name="GrTerMaxAngle">Grass Max. Terrain Angle</Tag>
+	<Tag name="fluids">fluids (water or mud)</Tag>
+	<Tag name="TipLTrMaxTerAng">Terrain angle above which model won't appear.</Tag>
+	<Tag name="GameVersion">1.4</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 
 </MyGUI>

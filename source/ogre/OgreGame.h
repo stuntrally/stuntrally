@@ -5,6 +5,7 @@
 #include "common/SceneXml.h"
 #include "common/BltObjects.h"
 #include "common/TracksXml.h"
+#include "common/FluidsXml.h"
 
 #include "ReplayGame.h"
 #include "CarModel.h"
@@ -49,6 +50,7 @@ public:
 	const Ogre::String& GetGhostFile();
 
 	Scene sc;  /// scene.xml
+	FluidsXml fluidsXml;  /// fluid params xml
 	BltObjects objs;  // veget collision in bullet
 	Ogre::Light* sun;  void UpdFog(bool bForce=false), UpdSun();
 	
@@ -67,6 +69,9 @@ public:
 	void UpdHUDRot(int carId, CarModel* pCarM, float vel);
 	
 	MaterialFactory* materialFactory; // material generation
+	void recreateCarMtr();
+	
+	Ogre::SceneManager* sceneMgr() { return mSceneMgr; };
 
 protected:
 	virtual void createScene();
@@ -138,9 +143,13 @@ protected:
 	float Noise(float x, float zoom, int octaves, float persistance);
 	float Noise(float x, float y, float zoom, int octaves, float persistance);
 	Ogre::Real terMaxAng;
-		
+
+public:
 	void changeShadows(), UpdPSSMMaterials(), setMtrSplits(Ogre::String sMtrName);
-	Ogre::Vector4 splitPoints;  Ogre::ShadowCameraSetupPtr mPSSMSetup;
+	Ogre::Vector4 splitPoints;
+
+protected:
+	Ogre::ShadowCameraSetupPtr mPSSMSetup;
 	void recreateReflections();  // call after refl_mode changed
 
 	//  road
@@ -190,7 +199,7 @@ protected:
 	void UpdGuiRdStats(const SplineRoad* rd, const Scene& sc, float time), ReadTrkStats();
 	MyGUI::MultiList2* trkMList;  MyGUI::EditPtr trkDesc;
 	MyGUI::StaticImagePtr imgPrv,imgMini,imgTer, imgTrkIco1,imgTrkIco2;
-	const static int StTrk = 12, InfTrk = 9;
+	const static int StTrk = 12, InfTrk = 10;
 	MyGUI::StaticTextPtr valTrk, stTrk[StTrk], infTrk[InfTrk];
 	void listTrackChng(MyGUI::MultiList2* li, size_t pos), TrackListUpd();
 	TracksXml tracksXml;  void btnTrkView1(WP),btnTrkView2(WP),ChangeTrackView(bool full),updTrkListDim();

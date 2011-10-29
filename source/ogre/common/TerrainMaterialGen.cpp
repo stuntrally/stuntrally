@@ -770,9 +770,9 @@ namespace Ogre
 		}
 		
 		if(prof->isLayerNormalMappingEnabled() || prof->isLayerParallaxMappingEnabled())
-			ret->setParameter("profiles", "ps_3_0 ps_2_x fp40 arbfp1");
+			ret->setParameter("profiles", "ps_2_x fp40 arbfp1");  /// removed ps_3_0  to work with depth shadow on dx
 		else
-			ret->setParameter("profiles", "ps_3_0 ps_2_0 fp30 arbfp1");
+			ret->setParameter("profiles", "ps_2_0 fp30 arbfp1");  /// removed ps_3_0  
 		ret->setParameter("entry_point", "main_fp");
 
 		return ret;
@@ -1239,7 +1239,7 @@ namespace Ogre
 			{
 				generateFpDynamicShadows(prof, terrain, tt, outStream);
 				outStream << 
-					"	outputCol.rgb = diffuse * rtshadow;\n";
+					"	outputCol.rgb = diffuse * (1-(1-rtshadow)*0.7);\n";
 			}
 			else
 			{

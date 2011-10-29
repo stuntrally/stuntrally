@@ -54,8 +54,10 @@ class PagedLayer	// vegetation layer
 public:
 	bool on;
 	Ogre::String name;  Ogre::Real dens;
-	Ogre::Real windFx, windFy;  int addTrRdDist;
+	Ogre::Real windFx, windFy;
+	int addTrRdDist;  // dist to road
 	Ogre::Real minScale, maxScale, ofsY;
+	Ogre::Real maxTerAng, minTerH;  // terrain
 	
 	PagedLayer();
 };
@@ -65,10 +67,10 @@ class FluidBox		// fluid box shape - water, mud, etc.
 {
 public:
 	Ogre::Vector3 pos, rot, size;  Ogre::Vector2 tile;
-	int type;
+	int id;  // index to FluidParams, -1 doesnt exist
+	std::string name;
 	class btCollisionObject* cobj;
-	//float density, linDamp, angDamp;
-	//sinkDamp wheel spin move pars..
+
 	FluidBox();
 };
 
@@ -106,6 +108,7 @@ public:
 	Ogre::Real grPage, grDist;  // vis
 	Ogre::Real grMinSx,grMinSy, grMaxSx,grMaxSy;  // sizes
 	Ogre::Real grSwayDistr, grSwayLen, grSwaySpeed;  // sway
+	Ogre::Real grTerMaxAngle;
 
 	//  trees
 	Ogre::Real trPage, trDist, trDistImp;  // vis
@@ -115,9 +118,10 @@ public:
 	Ogre::Vector3 camPos,camDir;
 	
 	std::vector<FluidBox> fluids;
+	class FluidsXml* pFluidsXml;  // set this after Load
 		
 	//  methods
-	Scene();  void Default();
+	Scene();  void Default(), UpdateFluidsId();
 	bool LoadXml(Ogre::String file), SaveXml(Ogre::String file);
 };
 

@@ -14,7 +14,8 @@ class CARWHEEL
 friend class joeserialize::Serializer;
 public:
 	//default constructor makes an S2000-like car
-	CARWHEEL() : roll_height(0.29), mass(18.14), inertia_cache(10.0), steer_angle(0) {SetInertia(10.0);}
+	CARWHEEL() : roll_height(0.29), mass(18.14), inertia_cache(10.0), steer_angle(0), fluidRes(0.f)
+	{	SetInertia(10.0);	}
 	
 	void DebugPrint(std::ostream & out)
 	{
@@ -165,7 +166,9 @@ public:
 	{
 		camber_deg = value;
 	}
-
+		
+	T fluidRes;  /// new: fluid resistance
+	
 private:
 	//constants (not actually declared as const because they can be changed after object creation)
 	MATHVECTOR <T, 3> extended_position; ///< the position of the wheel when the suspension is fully extended (zero g)

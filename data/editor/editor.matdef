@@ -1,0 +1,74 @@
+//  editor spheres
+//------------------------------------------------------------
+[sphere_norm]
+	ambient = 0.35 0.5 0.65
+	diffuse = 0.25 0.35 0.43
+	specular = 0.05 0.15 0.25 12
+    depthBias = 31
+
+[sphere_sel]
+    ambient = 0.9 0.6 0.3
+    diffuse = 0.4 0.2 0.0
+    specular = 0.3 0.2 0.1 8
+    depthBias = 31
+
+[sphere_chosen]
+	ambient = 0.5 0.45 1.2
+	diffuse = 0.2 0.2 0.6
+	specular = 0.25 0.3 0.4 12
+    depthBias = 31
+
+[sphere_rot]
+	ambient = 0.7 0.3 0.3
+	diffuse = 0.6 0.2 0.0
+	specular = 0.4 0.2 0.1 12
+    depthBias = 3
+
+[sphere_hit]
+	ambient = 0.4 0.8 0.2
+	diffuse = 0.25 0.3 0.15
+	specular = 0.25 0.3 0.25 8
+    depthBias = 3
+
+[sphere_check]
+	ambient = 0.4 0.4 0.5
+	diffuse = 0.5 0.5 0.6
+	specular = 0.4 0.4 0.4 32
+	lightingAlpha = 0.5 0.25 0.2 0
+    depthBias = 6
+    diffuseMap_2048 = glass.png
+    transparent = true
+    sceneBlend = alpha
+
+
+//  terrain circle
+//------------------------------------------------------------
+[circle_deform]
+	ambient = 0.3 0.8 0.1
+	diffuse = 0.15 0.3 0.15
+	specular = 0.25 0.3 0.25 32
+    depthBias = 3
+    diffuseMap_2048 = ter_deform.png
+
+[circle_smooth]
+	ambient = 0.2 0.8 0.6
+	diffuse = 0.15 0.2 0.15
+	specular = 0.15 0.3 0.25 32
+    depthBias = 3
+    diffuseMap_2048 = ter_smooth.png
+
+[circle_height]
+	ambient = 0.6 0.9 0.6
+	diffuse = 0.15 0.3 0.15
+	specular = 0.25 0.3 0.25 32
+    depthBias = 3
+    diffuseMap_2048 = ter_deform.png
+
+
+;[car_body1]
+;ambient = 0.5 0.5 0.5
+;diffuse = 1.0 1.0 1.0
+;specular = 0.7 0.7 0.7 32
+;diffuseMap_1024 = body_dyn.png
+;receivesShadows = false
+;receivesDepthShadows = true

@@ -311,7 +311,7 @@ public:
 				Fx = Fx*scale;
 		}/**/
 
-		// rolling resistance (broken)  ///test --
+		// rolling resistance (broken)  /// todo: is it fixed ?--
 		//Fx += GetRollingResistance(hub_velocity[0] / radius, normal_force, roll_friction_coeff);
 
 		assert(!isnan(Fx));

@@ -440,6 +440,7 @@ void App::UpdateHUD(int carId, CarModel* pCarM, CAR* pCar, float time, Viewport*
 	}
 
 	//  input values
+/*  if ()  gui check ...
 	if (pCar && pGame && pGame->profilingmode)
 	{	const std::vector<float>& inp = pCar->dynamics.inputsCopy;
 	if (ovU[2] && inp.size() == CARINPUT::ALL)
@@ -449,7 +450,7 @@ void App::UpdateHUD(int carId, CarModel* pCarM, CAR* pCar, float time, Viewport*
 		,inp[CARINPUT::THROTTLE], inp[CARINPUT::BRAKE], -inp[CARINPUT::STEER_LEFT]+inp[CARINPUT::STEER_RIGHT]
 		,inp[CARINPUT::HANDBRAKE],inp[CARINPUT::BOOST], inp[CARINPUT::FLIP] );
 		ovU[2]->setCaption(String(s));
-	}	}
+	}	}/**/
 
 	//  bullet profiling text  --------
 	static bool oldBltTxt = false;

@@ -94,7 +94,8 @@ void App::postInit()
 	
 	materialFactory = new MaterialFactory();
 	materialFactory->pApp = this;
-	materialFactory->generate();
+	materialFactory->setShadows(pSet->shadow_type >= 2);
+	materialFactory->setShadowsDepth(pSet->shadow_type == 3);
 }
 
 void App::setTranslations()
@@ -108,6 +109,13 @@ void App::setTranslations()
 	loadingStates.insert(std::make_pair(LS_TER, String(TR("#{LS_TER}"))));
 	loadingStates.insert(std::make_pair(LS_TRACK, String(TR("#{LS_TRACK}"))));
 	loadingStates.insert(std::make_pair(LS_MISC, String(TR("#{LS_MISC}"))));
+}
+
+void App::recreateCarMtr()
+{
+	for (std::vector<CarModel*>::iterator it=carModels.begin(); it!=carModels.end(); it++) {
+		(*it)->RecreateMaterials(); (*it)->setMtrNames();
+	}
 }
 
 void App::destroyScene()

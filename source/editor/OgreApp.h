@@ -5,6 +5,7 @@
 #include "../ogre/common/SceneXml.h"
 #include "../ogre/common/BltObjects.h"
 #include "../ogre/common/TracksXml.h"
+#include "../ogre/common/FluidsXml.h"
 
 #include "../vdrift/mathvector.h"
 #include "../vdrift/quaternion.h"
@@ -40,6 +41,7 @@ public:
 	App();  virtual ~App();
 
 	Scene sc;  /// scene.xml
+	FluidsXml fluidsXml;  /// fluid params xml
 	BltObjects objs;  // veget collision in bullet
 
 	TRACKSURFACE su[8];  bool LoadSurf(), SaveSurf(const Ogre::String& trk);
@@ -50,6 +52,8 @@ public:
 	
 	// stuff to be executed after BaseApp init
 	void postInit();
+	
+	Ogre::SceneManager* sceneMgr() { return mSceneMgr; };
 	
 	MaterialFactory* materialFactory;
 protected:
@@ -114,8 +118,11 @@ protected:
 	float Noise(float x, float zoom, int octaves, float persistence);
 	void configureTerrainDefaults(class Ogre::Light* l);
 		
-	void changeShadows(), UpdPSSMMaterials(), setMtrSplits(Ogre::String sMtrName);
-	Ogre::Vector4 splitPoints;  Ogre::ShadowCameraSetupPtr mPSSMSetup;
+	void changeShadows(), UpdPSSMMaterials();
+public:
+	Ogre::Vector4 splitPoints; void setMtrSplits(Ogre::String sMtrName);
+protected:
+	Ogre::ShadowCameraSetupPtr mPSSMSetup;
 
 
 	//  ter circle mesh
@@ -203,7 +210,7 @@ protected:
 	void UpdGuiRdStats(const SplineRoad* rd, const Scene& sc, float time), ReadTrkStats();
 	MyGUI::MultiList2* trkMList;  MyGUI::EditPtr trkDesc;
 	MyGUI::StaticImagePtr imgPrv,imgMini,imgTer, imgTrkIco1,imgTrkIco2;
-	const static int StTrk = 12, InfTrk = 9;
+	const static int StTrk = 12, InfTrk = 10;
 	MyGUI::StaticTextPtr valTrk, stTrk[StTrk], infTrk[InfTrk];
 	void listTrackChng(MyGUI::MultiList2* li, size_t pos), TrackListUpd();
 	TracksXml tracksXml;  void btnTrkView1(WP),btnTrkView2(WP),ChangeTrackView(bool full),updTrkListDim();
@@ -286,7 +293,8 @@ protected:
 	//  [Vegetation]  ----
 	MyGUI::EditPtr edGrassDens,edTreesDens, edGrPage,edGrDist, edTrPage,edTrDist,
 		edGrMinX,edGrMaxX, edGrMinY,edGrMaxY,
-		edGrSwayDistr, edGrSwayLen, edGrSwaySpd, edTrRdDist, edTrImpDist, edGrDensSmooth;
+		edGrSwayDistr, edGrSwayLen, edGrSwaySpd, edTrRdDist, edTrImpDist,
+		edGrDensSmooth, edGrTerMaxAngle;
 	void editTrGr(MyGUI::EditPtr);
 	//  paged layers
 	MyGUI::ComboBoxPtr cmbPgLay;  void comboPgLay(CMB);
@@ -296,6 +304,7 @@ protected:
 	MyGUI::StaticImagePtr imgPaged;  MyGUI::StaticTextPtr valLTrAll;
 	SLV(LTrDens);	SLV(LTrRdDist);
 	SLV(LTrMinSc);	SLV(LTrMaxSc);	SLV(LTrWindFx);	SLV(LTrWindFy);
+	SLV(LTrMaxTerAng);
 	
 	
 	//  [Road]  ----
@@ -343,6 +352,7 @@ protected:
 
 	std::vector<Ogre::String> vsMaterials;
 	void GetMaterials(Ogre::String filename, Ogre::String type="material");
+	void GetMaterialsFromDef(Ogre::String filename, bool clear=true);
 };
 
 #endif

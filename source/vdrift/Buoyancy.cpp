@@ -81,11 +81,11 @@ static float ClipTriangle(	Vec3& c, Vec3 p,
 
 // Computes the submerged volume and center of buoyancy of a polyhedron with
 // the water surface defined as a plane.
-static float SubmergedVolume(Vec3& c, Vec3 x, Quaternion q,
+static float SubmergedVolume(Vec3& c, Vec3 x, Quat q,
 							Polyhedron& poly, Plane& plane)
 {
 	// Transform the plane into the polyhedron frame.
-	Quaternion qt = q.Conjugate();
+	Quat qt = q.Conjugate();
 	Vec3 normal = qt.Rotate(plane.normal);
 	float offset = plane.offset - plane.normal*x;
 
@@ -222,10 +222,14 @@ bool ComputeBuoyancy(RigidBody& body, Polyhedron& poly,
 	float partialMass = body.mass * volume / poly.volume;
 	Vec3 rc = c - body.x;
 	Vec3 vc = body.v + body.omega % rc;
-	Vec3 dragForce = (partialMass*water.linearDrag)*(water.velocity - vc);
+	Vec3 dragForce = (partialMass * water.linearDrag)*(water.velocity - vc);
 
 	Vec3 totalForce = buoyancyForce + dragForce;
 	body.F += totalForce;
+	if (water.linearDrag2 > 0.001f)
+	{	Vec3 vc2 = Vec3(-body.v.x*body.v.x, -body.v.y*body.v.y, -body.v.z*body.v.z);
+		body.F += (volume / poly.volume * water.linearDrag2) * vc2;
+	}
 	body.T += rc % totalForce;
 
 	float length2 = poly.length*poly.length;

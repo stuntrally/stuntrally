@@ -13,6 +13,7 @@ class QTimer
 {
 	private:
 		double cc,fq, t,st, dt1,st1, iFR;
+		bool first;
 #if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
 		LARGE_INTEGER CC;
 #else

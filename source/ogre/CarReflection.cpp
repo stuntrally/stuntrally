@@ -43,6 +43,7 @@ CarReflection::~CarReflection()
 
 void CarReflection::Create()
 {
+	bFirstFrame = true;
 	if (pSet->refl_mode == "single")  cubetexName = "ReflectionCube"; // single: use 1st cubemap
 	else if (pSet->refl_mode == "full")
 	{
@@ -51,6 +52,8 @@ void CarReflection::Create()
 		if (cubetexName == "ReflectionCube0")
 			cubetexName = "ReflectionCube";
 	}
+	else /* static */
+		cubetexName = "ReflectionCube";
 	
 	TextureManager* tm = TextureManager::getSingletonPtr();
 	int size = ciShadowSizesA[pSet->refl_size];  // /2 ?

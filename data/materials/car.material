@@ -1,17 +1,13 @@
 import * from "general.material"
 
-//  Car		cull: clockwise anticlockwise none
-//---------------------------------------------------------------------------
-
-material car_body : ppx_env
+material car_ghost : ppx_glass
 {
-	set $ambientCol "0.9 0.9 0.9"
-	set $diffuseCol "0.8 0.8 0.8"
-	set $specularCol "1.0 1.0 1.0"
-	set $shininess "64"
-	set $envParsM "0.9 0.1 0.1 0"
-	set_texture_alias diffuseMap body_dyn.png
-	set $cull "none"
+	set $ambientCol "0.2 0.26 0.3"
+	set $diffuseCol "0.36 0.48 0.6"
+	set $specularCol "0.37 0.39 0.41"
+			// base alpha, diffuse alpha, 1
+	set $alphaParsA "0.3 0.2 0.3 0"
+	set $shininess "32"
 }
 
 material car_glass : ppx_glass_env
@@ -22,42 +18,4 @@ material car_glass : ppx_glass_env
 	set $shininess "128"
 	set $envParsM "0.8 0.22 1 0"
 	set_texture_alias diffuseMap glass.png
-}
-
-material car_interior : ppx_diffuse
-{
-	set $ambientCol "0.2 0.2 0.2"
-	set $diffuseCol "0.6 0.6 0.6"
-	set $specularCol "0.5 0.5 0.5"
-	set $shininess "12"
-	set_texture_alias diffuseMap interior.png
-	set $cull "none"
-}
-
-material cartire_front : ppx_diffuse
-{
-	set $ambientCol "0.5 0.5 0.5"
-	set $diffuseCol "0.6 0.6 0.6"
-	set $specularCol "0.5 0.5 0.5"
-	set $shininess "16"
-	set_texture_alias diffuseMap wheel_front.png
-}
-
-material cartire_rear : ppx_diffuse
-{
-	set $ambientCol "0.5 0.5 0.5"
-	set $diffuseCol "0.6 0.6 0.6"
-	set $specularCol "0.5 0.5 0.5"
-	set $shininess "16"
-	set_texture_alias diffuseMap wheel_rear.png
-}
-
-material car_ghost : ppx_glass
-{
-	set $ambientCol "0.2 0.26 0.3"
-	set $diffuseCol "0.36 0.48 0.6"
-	set $specularCol "0.37 0.39 0.41"
-			// base alpha, diffuse alpha, 1
-	set $alphaParsA "0.3 0.2 0.3 0"
-	set $shininess "32"
 }

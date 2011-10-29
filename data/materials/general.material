@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 
 material ppx_shadow			// per pixel  with pssm shadow
 {
@@ -448,6 +449,8 @@ material ppx_env			// per pixel  with cubic reflection
 	    }
 	}
 }
+=======
+>>>>>>> a7bae348b4e9510762b5974e4a3c80a2acd14654
 
 // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 
 material ppx_glass_env		// per pixel  with cubic reflection  glass (alpha)

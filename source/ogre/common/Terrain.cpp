@@ -495,9 +495,12 @@ void App::CreateFluids()
 		if (!mesh->suggestTangentVectorBuildParams(VES_TANGENT, src,dest))
 			mesh->buildTangentVectors(VES_TANGENT, src,dest);
 
-		MaterialPtr mtr = MaterialManager::getSingleton().getByName("Water1");  //par
-		//try  //  set sky map
-		{	MaterialPtr mtrSky = MaterialManager::getSingleton().getByName(sc.skyMtr);
+		String sMtr = fb.id == -1 ? "" : fluidsXml.fls[fb.id].material;  //"Water"+toStr(1+fb.type)
+		MaterialPtr mtr = MaterialManager::getSingleton().getByName(sMtr);  //par,temp
+		if (!mtr.isNull())
+		{	//  set sky map
+			MaterialPtr mtrSky = MaterialManager::getSingleton().getByName(sc.skyMtr);
+			//if (!mtrSky.isNull())  {
 			Pass* passSky = mtrSky->getTechnique(0)->getPass(0);
 			TextureUnitState* tusSky = passSky->getTextureUnitState(0);
 

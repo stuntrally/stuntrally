@@ -26,7 +26,7 @@ public:
 	/*boost::gregorian::date*/Date created, modified;
 
 	// track characteristics  (char)
-	int bumps,jumps,loops,pipes,banked,frenzy,longn;
+	int fluids,bumps,jumps,loops,pipes,banked,frenzy,longn;
 	int diff, rating;
 	int rateuser, drivenlaps;  // user info
 

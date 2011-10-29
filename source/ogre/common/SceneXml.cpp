@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "../Defines.h"
 #include "SceneXml.h"
+#include "FluidsXml.h"
 #include "tinyxml.h"
 
 using namespace Ogre;
@@ -8,6 +9,7 @@ using namespace Ogre;
 
 Scene::Scene()
 {
+	pFluidsXml = 0;
 	Default();
 }
 void Scene::Default()
@@ -33,6 +35,7 @@ void Scene::Default()
 	grMinSx = 0.6f;  grMinSy = 0.6f;  grMaxSx = 0.85f;  grMaxSy = 0.9f;
 	grSwayDistr = 4.0f;  grSwayLen = 0.2f;  grSwaySpeed = 0.5f;
 	trPage = 200;  trDist = 200;  trDistImp = 800;  trRdDist = 3;
+	grTerMaxAngle = 30.f;
 
 	camPos = Vector3(10.f,20.f,10.f);  camDir = Vector3(0.f,-0.3f,1.f);
 	fluids.clear();  //
@@ -43,12 +46,29 @@ PagedLayer::PagedLayer()
 	on = 0;  name = "";  dens = 0.1f;
 	windFx = 0.0f;  windFy = 0.0f;  addTrRdDist = 0;
 	minScale = 0.1f;  maxScale = 0.25f;  ofsY = 0.f;
+	maxTerAng = 50.f;  minTerH = -100.f;
 }
 
-FluidBox::FluidBox() : cobj(0), type(0),
-	pos(Vector3::ZERO), rot(Vector3::ZERO),
-	size(Vector3::ZERO), tile(0.01,0.01)
+FluidBox::FluidBox()
+	:cobj(0), id(-1)
+	,pos(Vector3::ZERO), rot(Vector3::ZERO)
+	,size(Vector3::ZERO), tile(0.01,0.01)
 {	}
+
+
+
+void Scene::UpdateFluidsId()
+{
+	if (!pFluidsXml)  return;
+	
+	//  set fluids id from name
+	for (int i=0; i < fluids.size(); ++i)
+	{
+		fluids[i].id = pFluidsXml->flMap[fluids[i].name]-1;
+		if (fluids[i].id == -1)
+			LogO("! Scene fluid name: " + fluids[i].name + " not found in xml !");
+	}
+}
 
 
 //  Load
@@ -120,7 +140,8 @@ bool Scene::LoadXml(String file)
 		while (eFl)
 		{
 			FluidBox fb;
-			a = eFl->Attribute("type");		if (a)  fb.type = s2i(a);
+			a = eFl->Attribute("name");		if (a)  fb.name = std::string(a);
+
 			a = eFl->Attribute("pos");		if (a)  fb.pos = s2v(a);
 			a = eFl->Attribute("rot");		if (a)  fb.rot = s2v(a);
 			a = eFl->Attribute("size");		if (a)  fb.size = s2v(a);
@@ -208,6 +229,8 @@ bool Scene::LoadXml(String file)
 		a = ePgd->Attribute("grSwayLen");	if (a)  grSwayLen = s2r(a);
 		a = ePgd->Attribute("grSwaySpeed");	if (a)  grSwaySpeed = s2r(a);
 		a = ePgd->Attribute("grDensSmooth"); if (a)  grDensSmooth = s2i(a);
+
+		a = ePgd->Attribute("grTerMaxAngle"); if (a)  grTerMaxAngle = s2r(a);
 		//  trees
 		a = ePgd->Attribute("trPage");		if (a)  trPage = s2r(a);
 		a = ePgd->Attribute("trDist");		if (a)  trDist = s2r(a);
@@ -228,6 +251,8 @@ bool Scene::LoadXml(String file)
 			a = ePgL->Attribute("addTrRdDist");	if (a)  l.addTrRdDist = s2i(a);
 			a = ePgL->Attribute("windFx");		if (a)  l.windFx = s2r(a);
 			a = ePgL->Attribute("windFy");		if (a)  l.windFy = s2r(a);
+			a = ePgL->Attribute("maxTerAng");	if (a)  l.maxTerAng = s2r(a);
+			a = ePgL->Attribute("minTerH");		if (a)  l.minTerH = s2r(a);
 
 			pgLayersAll[pgl++] = l;
 			ePgL = ePgL->NextSiblingElement("layer");
@@ -242,6 +267,8 @@ bool Scene::LoadXml(String file)
 		a = eCam->Attribute("pos");		if (a)  camPos = s2v(a);
 		a = eCam->Attribute("dir");		if (a)  camDir = s2v(a);
 	}
+	
+	UpdateFluidsId();
 	
 	return true;
 }
@@ -293,7 +320,7 @@ bool Scene::SaveXml(String file)
 		{
 			fb = &fluids[i];
 			TiXmlElement fe("fluid");
-			fe.SetAttribute("type",		toStrC( fb->type ));
+			fe.SetAttribute("name",		fb->name.c_str() );
 			fe.SetAttribute("pos",		toStrC( fb->pos ));
 			fe.SetAttribute("rot",		toStrC( fb->rot ));
 			fe.SetAttribute("size",		toStrC( fb->size ));
@@ -362,6 +389,8 @@ bool Scene::SaveXml(String file)
 		pgd.SetAttribute("grSwayLen",	toStrC( grSwayLen   ));
 		pgd.SetAttribute("grSwaySpeed",	toStrC( grSwaySpeed ));
 		pgd.SetAttribute("grDensSmooth",toStrC( grDensSmooth ));
+
+		pgd.SetAttribute("grTerMaxAngle",toStrC( grTerMaxAngle ));
 		//  trees
 		pgd.SetAttribute("trPage",		toStrC( trPage ));
 		pgd.SetAttribute("trDist",		toStrC( trDist ));
@@ -381,6 +410,8 @@ bool Scene::SaveXml(String file)
 			pgl.SetAttribute("addTrRdDist",	toStrC( l.addTrRdDist ));
 			pgl.SetAttribute("windFx",		toStrC( l.windFx ));
 			pgl.SetAttribute("windFy",		toStrC( l.windFy ));
+			pgl.SetAttribute("maxTerAng",	toStrC( l.maxTerAng ));
+			pgl.SetAttribute("minTerH",		toStrC( l.minTerH ));
 			pgd.InsertEndChild(pgl);
 		}
 	root.InsertEndChild(pgd);

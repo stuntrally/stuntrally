@@ -38,6 +38,7 @@ struct Polyhedron
 	int numFaces;
 	float length;
 	float volume;
+	Polyhedron() { }
 };
 
 struct Plane
@@ -51,7 +52,7 @@ struct WaterVolume
 	Plane plane;
 	Vec3 velocity;
 	float density;
-	float linearDrag;
+	float linearDrag,linearDrag2;
 	float angularDrag;
 };
 

@@ -93,12 +93,12 @@ inline Vec3 operator % (const Vec3& a, const Vec3& b)
 }
 
 
-struct Quaternion
+struct Quat
 {
-	Quaternion() {}
-	Quaternion(float x, float y, float z, float w) : x(x), y(y), z(z), w(w) {}
+	Quat() {}
+	Quat(float x, float y, float z, float w) : x(x), y(y), z(z), w(w) {}
 
-	Quaternion& operator += (const Quaternion& q)
+	Quat& operator += (const Quat& q)
 	{
 		x += q.x; y += q.y; z += q.z; w += q.w;
 		return *this;
@@ -117,9 +117,9 @@ struct Quaternion
 		}
 	}
 
-	Quaternion Conjugate() const
+	Quat Conjugate() const
 	{
-		return Quaternion(-x, -y, -z, w);
+		return Quat(-x, -y, -z, w);
 	}
 
 	Vec3 Rotate(const Vec3& v) const
@@ -131,10 +131,10 @@ struct Quaternion
 	float x, y, z, w;
 };
 
-// Quaternion multiplication
-inline Quaternion operator * (const Quaternion& a, const Quaternion& b)
+// Quat multiplication
+inline Quat operator * (const Quat& a, const Quat& b)
 {
-	Quaternion result;
+	Quat result;
 
 	float aW = a.w, aX = a.x, aY = a.y, aZ = a.z;
 	float bW = b.w, bX = b.x, bY = b.y, bZ = b.z;
@@ -147,15 +147,15 @@ inline Quaternion operator * (const Quaternion& a, const Quaternion& b)
 	return result;
 }
 
-inline Quaternion operator * (float s, const Quaternion& q)
+inline Quat operator * (float s, const Quat& q)
 {
-	return Quaternion(s*q.x, s*q.y, s*q.z, s*q.w);
+	return Quat(s*q.x, s*q.y, s*q.z, s*q.w);
 }
 
 struct Mat33
 {
 	Mat33() {}
-	Mat33(const Quaternion& q)
+	Mat33(const Quat& q)
 	{
 		float x = q.x, y = q.y, z = q.z, w = q.w;
 		float x2 = x+x, y2 = y+y, z2 = z+z;
@@ -185,12 +185,12 @@ struct Mat33
 struct RigidBody
 {
 	Vec3 x;		// world position of center of mass
-	Quaternion q;	// rotation
+	Quat q;		// rotation
 	Vec3 v;		// velocity of center of mass
 	Vec3 omega;	// angular velocity
 	Vec3 F;		// force at center of mass
 	Vec3 T;		// torque
-	Vec3 I;		// rotational inertia
+	Vec3 inertia;		// rotational inertia
 	float mass;
 
 };

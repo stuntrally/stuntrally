@@ -115,7 +115,7 @@ material circle_minimap
 			}
 			texture_unit terMap
 			{
-				tex_address_mode clamp
+				tex_address_mode mirror
 				texture grassDensity.png
 			}
 		}

@@ -401,6 +401,30 @@
 			Name="materials"
 			>
 			<File
+				RelativePath=".\data\trees\collisions.xml"
+				>
+			</File>
+			<File
+				RelativePath=".\data\editor\editor.matdef"
+				>
+			</File>
+			<File
+				RelativePath=".\data\materials\fluids.cg"
+				>
+			</File>
+			<File
+				RelativePath=".\data\materials\fluids.material"
+				>
+			</File>
+			<File
+				RelativePath=".\data\materials\fluids.program"
+				>
+			</File>
+			<File
+				RelativePath=".\data\materials\fluids.xml"
+				>
+			</File>
+			<File
 				RelativePath=".\data\materials\general.cg"
 				>
 			</File>
@@ -413,6 +437,18 @@
 				>
 			</File>
 			<File
+				RelativePath=".\data\editor\render.cg"
+				>
+			</File>
+			<File
+				RelativePath=".\data\editor\render.material"
+				>
+			</File>
+			<File
+				RelativePath=".\data\editor\render.program"
+				>
+			</File>
+			<File
 				RelativePath=".\data\materials\rnd.cg"
 				>
 			</File>
@@ -421,11 +457,23 @@
 				>
 			</File>
 			<File
-				RelativePath=".\data\materials\road.material"
+				RelativePath=".\data\materials\road.matdef"
 				>
 			</File>
 			<File
 				RelativePath=".\data\editor\road_ed.material"
+				>
+			</File>
+			<File
+				RelativePath=".\data\materials\road_pipe.matdef"
+				>
+			</File>
+			<File
+				RelativePath=".\data\skies\skies.matdef"
+				>
+			</File>
+			<File
+				RelativePath=".\data\trees\trees.matdef"
 				>
 			</File>
 		</Filter>
@@ -521,6 +569,14 @@
 				>
 			</File>
 			<File
+				RelativePath=".\source\ogre\common\FluidsXml.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\source\ogre\common\FluidsXml.h"
+				>
+			</File>
+			<File
 				RelativePath=".\source\ogre\common\MultiList2.cpp"
 				>
 				<FileConfiguration
@@ -573,14 +629,6 @@
 				>
 			</File>
 			<File
-				RelativePath=".\source\ogre\common\TerrainMaterialGen.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\source\ogre\common\TerrainMaterialGen.h"
-				>
-			</File>
-			<File
 				RelativePath=".\source\ogre\common\TracksXml.cpp"
 				>
 			</File>
@@ -588,6 +636,58 @@
 				RelativePath=".\source\ogre\common\TracksXml.h"
 				>
 			</File>
+			<Filter
+				Name="MaterGen"
+				>
+				<File
+					RelativePath=".\source\ogre\common\MaterialDefinition.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\source\ogre\common\MaterialDefinition.h"
+					>
+				</File>
+				<File
+					RelativePath=".\source\ogre\common\MaterialFactory.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\source\ogre\common\MaterialFactory.h"
+					>
+				</File>
+				<File
+					RelativePath=".\source\ogre\common\MaterialGenerator.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\source\ogre\common\MaterialGenerator.h"
+					>
+				</File>
+				<File
+					RelativePath=".\source\ogre\common\MaterialProperties.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\source\ogre\common\MaterialProperties.h"
+					>
+				</File>
+				<File
+					RelativePath=".\source\ogre\common\ShaderProperties.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\source\ogre\common\ShaderProperties.h"
+					>
+				</File>
+				<File
+					RelativePath=".\source\ogre\common\TerrainMaterialGen.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\source\ogre\common\TerrainMaterialGen.h"
+					>
+				</File>
+			</Filter>
 		</Filter>
 		<Filter
 			Name="paged-geom"

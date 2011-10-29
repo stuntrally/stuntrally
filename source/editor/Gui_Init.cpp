@@ -64,7 +64,11 @@ void App::InitGui()
 	
 	//  hide  ---
 	edMode = ED_Deform;  UpdEditWnds();  // *  UpdVisHit(); //after track
-	if (!mWndOpts)  return;  // error
+	if (!mWndOpts) 
+	{
+		LogO("WARNING: failed to create options window");
+		return;  // error
+	}
 	
 	ButtonPtr btn, bchk;  ComboBoxPtr combo;  // for defines
 	HScrollPtr sl;  size_t v;
@@ -150,7 +154,8 @@ void App::InitGui()
 	Ed(GrPage, editTrGr);  Ed(GrDist, editTrGr);  Ed(TrPage, editTrGr);  Ed(TrDist, editTrGr);
 	Ed(GrMinX, editTrGr);  Ed(GrMaxX, editTrGr);  Ed(GrMinY, editTrGr);  Ed(GrMaxY, editTrGr);
 	Ed(GrSwayDistr, editTrGr);  Ed(GrSwayLen, editTrGr);  Ed(GrSwaySpd, editTrGr);
-	Ed(TrRdDist, editTrGr);  Ed(TrImpDist, editTrGr);  Ed(GrDensSmooth, editTrGr);
+	Ed(TrRdDist, editTrGr);  Ed(TrImpDist, editTrGr);
+	Ed(GrDensSmooth, editTrGr);  Ed(GrTerMaxAngle, editTrGr);
 	imgPaged = (StaticImagePtr)mWndOpts->findWidget("ImgPaged");
 
 	Chk("LTrEnabled", chkPgLayOn, 1);  chkPgLay = bchk;
@@ -159,6 +164,7 @@ void App::InitGui()
 	Slv(LTrDens, 0);	Slv(LTrRdDist, 0);
 	Slv(LTrMinSc, 0);	Slv(LTrMaxSc, 0);
 	Slv(LTrWindFx, 0);	Slv(LTrWindFy, 0);
+	Slv(LTrMaxTerAng, 0);
 	
 	
 	///  [Road]  ------------------------------------
@@ -187,7 +193,7 @@ void App::InitGui()
 	//---------------------  SKYS  ---------------------
 	Cmb(cmbSky, "SkyCombo", comboSky);
 
-	GetMaterials("SkyDome.material");
+	GetMaterialsFromDef("skies.matdef");
 	for (size_t i=0; i < vsMaterials.size(); ++i)  {
 		String s = vsMaterials[i];  cmbSky->addItem(s);  //LogO(s);
 	}
@@ -241,7 +247,8 @@ void App::InitGui()
 		if (StringUtil::endsWith(*i,".mesh"))  cmbPgLay->addItem(*i);
 
 	//---------------------  ROADS  ---------------------
-	GetMaterials("road.material");
+	GetMaterialsFromDef("road.matdef");
+	GetMaterialsFromDef("road_pipe.matdef", false);
 	for (size_t i=0; i<4; ++i)
 	{
 		Cmb(cmbRoadMtr[i], "RdMtr"+toStr(i+1), comboRoadMtr);

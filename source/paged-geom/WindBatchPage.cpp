@@ -509,10 +509,10 @@ void WindBatchPage::_updateShaders()
 					catch (Ogre::Exception e)
 					{
 						// test for shader source	
-						std::ofstream shaderOutput;
+						/*std::ofstream shaderOutput;
 						shaderOutput.open("exception.log");
 						shaderOutput << e.getDescription();
-						shaderOutput.close();
+						shaderOutput.close();*/
 					}
 					catch (...) {
 						OGRE_EXCEPT(Exception::ERR_INTERNAL_ERROR, "Error configuring batched geometry transitions. If you're using materials with custom vertex shaders, they will need to implement fade transitions to be compatible with BatchPage.", "BatchPage::_updateShaders()");

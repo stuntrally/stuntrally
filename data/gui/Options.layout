@@ -113,9 +113,9 @@
 					<Property key="Image_Coord" value="32 32 32 40"/>
 					<Property key="Image_Texture" value="track_icons.png"/>
 				</Widget>
-				<Widget type="StaticImage" skin="StaticImage" position="528 172 224 32" name="trkinf7">
+				<Widget type="StaticImage" skin="StaticImage" position="528 172 256 32" name="trkinf7">
 					<Property key="Image_Texture" value="track_icons.png"/>
-					<Property key="Image_Coord" value="0 0 224 32"/>
+					<Property key="Image_Coord" value="0 0 256 32"/>
 					<UserString key="tip" value="#{TrackDifficulties}"/>
 				</Widget>
 				<Widget type="StaticImage" skin="StaticImage" position="528 226 64 32" name="trkinf2">
@@ -123,38 +123,42 @@
 					<Property key="Image_Coord" value="64 32 64 32"/>
 				</Widget>
 				<Widget type="StaticText" skin="StaticText" position="540 204 32 24" name="ti1">
+					<Property key="Text_TextColour" value="0.5 0.8 1.0"/>
+					<UserString key="tip" value="#{fluids}"/>
+				</Widget>
+				<Widget type="StaticText" skin="StaticText" position="572 204 32 24" name="ti2">
 					<Property key="Text_TextColour" value="0.5 1.0 0.4"/>
 					<UserString key="tip" value="#{bumps}"/>
 				</Widget>
-				<Widget type="StaticText" skin="StaticText" position="572 204 32 24" name="ti2">
+				<Widget type="StaticText" skin="StaticText" position="604 204 32 24" name="ti3">
 					<Property key="Text_TextColour" value="1.0 0.6 0.3"/>
 					<UserString key="tip" value="#{jumps}"/>
 				</Widget>
-				<Widget type="StaticText" skin="StaticText" position="604 204 32 24" name="ti3">
+				<Widget type="StaticText" skin="StaticText" position="636 204 32 24" name="ti4">
 					<Property key="Text_TextColour" value="0.3 0.9 1.0"/>
 					<UserString key="tip" value="#{loops}"/>
 				</Widget>
-				<Widget type="StaticText" skin="StaticText" position="636 204 32 24" name="ti4">
+				<Widget type="StaticText" skin="StaticText" position="668 204 32 24" name="ti5">
 					<Property key="Text_TextColour" value="0.9 0.9 0.3"/>
 					<UserString key="tip" value="#{pipes}"/>
 				</Widget>
-				<Widget type="StaticText" skin="StaticText" position="668 204 32 24" name="ti5">
+				<Widget type="StaticText" skin="StaticText" position="700 204 32 24" name="ti6">
 					<Property key="Text_TextColour" value="0.8 0.8 0.8"/>
 					<UserString key="tip" value="#{banked}"/>
 				</Widget>
-				<Widget type="StaticText" skin="StaticText" position="700 204 32 24" name="ti6">
+				<Widget type="StaticText" skin="StaticText" position="732 204 32 24" name="ti7">
 					<Property key="Text_TextColour" value="0.8 0.8 1.0"/>
 					<UserString key="tip" value="#{frenzy}"/>
 				</Widget>
-				<Widget type="StaticText" skin="StaticText" position="732 204 32 24" name="ti7">
+				<Widget type="StaticText" skin="StaticText" position="764 204 32 24" name="ti8">
 					<Property key="Text_TextColour" value="1.0 0.8 0.8"/>
 					<UserString key="tip" value="#{long}"/>
 				</Widget>
-				<Widget type="StaticText" skin="StaticText" position="540 254 32 24" name="ti8">
+				<Widget type="StaticText" skin="StaticText" position="540 254 32 24" name="ti9">
 					<Property key="Text_TextColour" value="0.8 0.9 1.0"/>
 					<UserString key="tip" value="#{difficulty}"/>
 				</Widget>
-				<Widget type="StaticText" skin="StaticText" position="572 254 32 24" name="ti9">
+				<Widget type="StaticText" skin="StaticText" position="572 254 32 24" name="ti10">
 					<Property key="Text_TextColour" value="0.86 0.93 1.0"/>
 					<UserString key="tip" value="#{rating}"/>
 				</Widget>
@@ -162,9 +166,9 @@
 					<Property key="Image_Texture" value="track_icons.png"/>
 					<Property key="Image_Coord" value="64 32 64 32"/>
 				</Widget>
-				<Widget type="StaticImage" skin="StaticImage" position="304 6 168 24" name="TrkView2icons2">
+				<Widget type="StaticImage" skin="StaticImage" position="304 6 192 24" name="TrkView2icons2">
 					<Property key="Image_Texture" value="track_icons.png"/>
-					<Property key="Image_Coord" value="0 0 224 32"/>
+					<Property key="Image_Coord" value="0 0 256 32"/>
 				</Widget>
 				<Widget type="Button" skin="ButtonSmall" position="16 7 40 24" name="TrkView1">
 					<Property key="Widget_Caption" value="|"/>

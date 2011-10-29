@@ -5,6 +5,7 @@
 #include "../paged-geom/PagedGeometry.h"
 #include "../vdrift/pathmanager.h"
 #include "../ogre/common/RenderConst.h"
+#include "../ogre/common/MaterialFactory.h"
 using namespace Ogre;
 
 
@@ -28,19 +29,30 @@ void App::createScene()
 
 	mRoot->addResourceLocation(pathTrkPrv[1], "FileSystem");  //prv user tracks
 
+	QTimer ti;  ti.update();  /// time
+
 	//  tracks.xml
 	tracksXml.LoadXml(PATHMANAGER::GetGameConfigDir() + "/tracks.xml");
 	//tracksXml.SaveXml(PATHMANAGER::GetGameConfigDir() + "/tracks2.xml");
+
+	//  fluids.xml
+	fluidsXml.LoadXml(PATHMANAGER::GetDataPath() + "/materials/fluids.xml");
+	sc.pFluidsXml = &fluidsXml;
+	LogO(String("**** Loaded fluids.xml: ") + toStr(fluidsXml.fls.size()));
+
+	//  collisions.xml
+	objs.LoadXml();
+	LogO(String("**** Loaded Vegetation objects: ") + toStr(objs.colsMap.size()));
+
+	ti.update();  /// time
+	float dt = ti.dt * 1000.f;
+	LogO(String("::: Time load xmls: ") + toStr(dt) + " ms");
 
 	//  gui
 	bGuiFocus = false/*true*/;  bMoveCam = true;  //*--
 	InitGui();
 	TerCircleInit();
 	createBrushPrv();
-
-	//  collisions.xml
-	objs.LoadXml();
-	LogO(String("**** Loaded Vegetation objects: ") + toStr(objs.colsMap.size()));
 
 	//  load
 	if (pSet->autostart)
@@ -80,8 +92,9 @@ void App::NewCommon()
 		mSceneMgr->destroyEntity(vFlEnt[i]);
 		mSceneMgr->destroySceneNode(vFlNd[i]);
 		Ogre::MeshManager::getSingleton().remove(vFlSMesh[i]);
-	}		
+	}	// clear in CreateFluids
 
+	//  terrain
 	terrain = 0;
 	if (mTerrainGroup)
 		mTerrainGroup->removeAllTerrains();
@@ -89,6 +102,9 @@ void App::NewCommon()
 	if (resTrk != "")  mRoot->removeResourceLocation(resTrk);
 		resTrk = TrkDir() + "objects";
 	mRoot->addResourceLocation(resTrk, "FileSystem");
+
+	/// generate materials
+	materialFactory->generate();
 }
 //---------------------------------------------------------------------------------------------------------------
 void App::LoadTrack()
@@ -152,6 +168,7 @@ void App::UpdateTrackEv()
 {
 	NewCommon();
 	
+	CreateFluids();
 	CreateTerrain(bNewHmap,true);/**/
 	if (pSet->bTrees)
 		CreateTrees();

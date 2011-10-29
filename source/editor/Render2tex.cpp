@@ -37,7 +37,7 @@ void App::Rnd2TexSetup()
 			Real fDim = sc.td.fTerWorldSize;  // world dim
 			Ogre::TexturePtr texture = Ogre::TextureManager::getSingleton().createManual(sTex,
 				  ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME, TEX_TYPE_2D,
-				  dim[i], dim[i], 0, /*PF_R8G8B8*/PF_R8G8B8A8, TU_RENDERTARGET);
+				  dim[i], dim[i], 0, PF_R8G8B8A8, TU_RENDERTARGET);
 				  
 			r.rndCam = mSceneMgr->createCamera(sCam);  // up
 			r.rndCam->setPosition(Vector3(0,1000,0));  r.rndCam->setOrientation(Quaternion(0.5,-0.5,0.5,0.5));
@@ -102,42 +102,72 @@ void App::SaveGrassDens()
 	}
 
 	int w = rt[1].rndTex->getWidth(), h = rt[1].rndTex->getHeight();
+	int txy = sc.td.iVertsX*sc.td.iVertsY-1;
 	using Ogre::uint;
 	uint *rd = new uint[w*h];   // road render
-	uint *gd  = new uint[w*h];  // grass dens
+	uint *gd = new uint[w*h];   // grass dens
 	PixelBox pb_rd(w,h,1, PF_BYTE_RGBA, rd);
 	rt[1].rndTex->copyContentsToMemory(pb_rd, RenderTarget::FB_FRONT);
 
-	//  rotate, filter  smooth size
-	const int f = sc.grDensSmooth;
-	const float ff = 2.f / ((f*2+1)*(f*2+1)) / 255.f;
-	register int v,y,x,i,j,a,b,d;
+	const int f = std::max(0, sc.grDensSmooth);
+	float ff = 0.f;  //2.f / ((f*2+1)*(f*2+1)) / 255.f;
+	register int v,i,j,m,x, a,b,d,y;
 
+	//  gauss kernel for smoothing
+	int *mask = new int[(f*2+1)*(f*2+1)];  m = 0;
+	for (j = -f; j <= f; ++j)
+	for (i = -f; i <= f; ++i, ++m)
+	{
+		v = std::max(0.f, (1.f - sqrtf((float)(i*i+j*j)) / float(f)) * 256.f);
+		mask[m] = v;  ff += v;
+	}
+	ff = 2.f / ff;  // normally would be 1.f - but road needs to stay black and be smooth outside
+		
+	///  road - rotate, smooth  -----------
 	for (y = f; y < h-f; ++y) {  a = y*w +f;
 	for (x = f; x < w-f; ++x, ++a)
 	{	b = x*w + (h-y);  // rot 90 ccw  b=a
 		
-		v = 0;  // filter f  sum
+		//  sum kernel
+		v = 0;  m = 0;
 		for (j = -f; j <= f; ++j) {  d = b -f + j*w;
-		for (i = -f; i <= f; ++i, ++d)
-			v += (rd[d] >> 16) & 0xFF;  }
+		for (i = -f; i <= f; ++i, ++d, ++m)
+			v += ((rd[d] >> 16) & 0xFF) * mask[m] / 256;  }
 
 		v = std::max(0, (int)(255.f * (1.f - v * ff) ));  // avg, inv, clamp
 		
 		gd[a] = 0xFF000000 + 0x010101 * v;  // write
 	}	}
 
-	v = 0xFFFFFFFF;  //  frame f []
+	v = 0xFFFFFFFF;  //  frame f []  get from rd[b] not clear..
 	for (y = 0;  y <= f; ++y)	for (x=0; x < w; ++x)	gd[y*w+x] = v;  // - up
 	for (y=h-f-1; y < h; ++y)	for (x=0; x < w; ++x)	gd[y*w+x] = v;  // - down
 	for (x = 0;  x <= f; ++x)	for (y=0; y < h; ++y)	gd[y*w+x] = v;  // | left
 	for (x=w-f-1; x < w; ++x)	for (y=0; y < h; ++y)	gd[y*w+x] = v;  // | right
 
+	///  terrain - max angle for grass (trees read it too)  -----------
+	for (y = 0; y < h; ++y) {  b = y*w;
+	for (x = 0; x < w; ++x, ++b)
+	{
+		a = (h-1-y) * sc.td.iVertsY / h;  a *= sc.td.iVertsX;
+		a += x * sc.td.iVertsX / w;
+		// would be better to interpolate 4 neighbours, or smooth this map
+
+		float ad = sc.td.hfAngle[a] - sc.grTerMaxAngle;  // ang diff
+		if (ad > 0.f)
+		{
+			d = 20.f * ad;  //par mul,  smooth transition
+			v = std::max(0, std::min(255, 255-d));
+			v = std::min((int)(gd[b] & 0xFF), v);  // preserve road
+			gd[b] = 0xFF000000 + 0x010101 * v;  // no grass
+		}
+	}	}
+
 	Image im;
 	im.loadDynamicImage((uchar*)gd, w,h,1, PF_BYTE_RGBA);
 	im.save(TrkDir()+"objects/grassDensity.png");
 
-	delete[] rd;  delete[] gd;
+	delete[] rd;  delete[] gd;  delete[] mask;
 
 	//  road  ----------------
 	rt[0].rndTex->writeContentsToFile(pathTrkPrv[1] + pSet->track + "_mini.png");
