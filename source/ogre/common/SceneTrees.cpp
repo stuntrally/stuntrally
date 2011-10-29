@@ -131,8 +131,10 @@ void App::CreateTrees()
 		if (bWind)
 			 trees->addDetailLevel<WindBatchPage>(sc.trDist * pSet->trees_dist, 0);
 		else trees->addDetailLevel<BatchPage>	 (sc.trDist * pSet->trees_dist, 0);
-		trees->addDetailLevel<ImpostorPage>(sc.trDistImp * pSet->trees_dist, 0);
-
+		if(pSet->use_imposters)
+		{
+			trees->addDetailLevel<ImpostorPage>(sc.trDistImp * pSet->trees_dist, 0);
+		}
 		TreeLoader2D* treeLoader = new TreeLoader2D(trees, tbnd);
 		trees->setPageLoader(treeLoader);
 		treeLoader->setHeightFunction(getTerrainHeightAround /*,userdata*/);
