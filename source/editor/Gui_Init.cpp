@@ -258,6 +258,7 @@ void App::InitGui()
 	//---------------------  ROADS  ---------------------
 	GetMaterialsFromDef("road.matdef");
 	GetMaterialsFromDef("road_pipe.matdef", false);
+	GetMaterials("pipe.material", false);
 	for (size_t i=0; i<4; ++i)
 	{
 		Cmb(cmbRoadMtr[i], "RdMtr"+toStr(i+1), comboRoadMtr);

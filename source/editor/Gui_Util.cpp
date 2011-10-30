@@ -482,9 +482,11 @@ void App::GetMaterialsFromDef(String filename, bool clear)
 	}
 }
 
-void App::GetMaterials(String filename, String type)
+void App::GetMaterials(String filename, bool clear, String type)
 {
-	vsMaterials.clear();
+	if (clear)
+		vsMaterials.clear();
+	
 	DataStreamPtr stream = ResourceGroupManager::getSingleton().openResource(filename);
 	if(!stream.isNull())
 	{	try
