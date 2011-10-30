@@ -266,6 +266,10 @@ protected:
 	int idTerLay;  bool bTerLay;  // help vars
 	MyGUI::ButtonPtr chkTexNormAuto;  void chkTexNormAutoOn(WP);  bool bTexNormAuto;  // auto
 
+	//  ter generate
+	SLV(TerGenScale);  SLV(TerGenOfsX);  SLV(TerGenOfsY);
+	SLV(TerGenFreq);  SLV(TerGenOct);  SLV(TerGenPers);  SLV(TerGenPow);
+	
 	//  ter size
 	SLV(TerTriSize);  SLV(TerLScale);
 	MyGUI::EditPtr edTerTriSize, edTerLScale;

@@ -46,6 +46,9 @@ public:
 	bool fullscreen;  int fsaa;  bool vsync;
 	std::string buffer, rendersystem;
 	
+	//  ter generate
+	float gen_freq, gen_persist, gen_pow, gen_scale, gen_ofsx, gen_ofsy;  int gen_oct;
+	
 //------------------------------------------
 	SETTINGS();
 

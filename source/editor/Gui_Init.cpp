@@ -127,6 +127,15 @@ void App::InitGui()
 	Btn("TerrainNew", btnTerrainNew);
 	Btn("TerrainGenerate", btnTerGenerate);
 
+	Slv(TerGenScale,powf(pSet->gen_scale   /60.f, 1.f/2.f));  // generate
+	Slv(TerGenOfsX, (pSet->gen_ofsx+2.f) /4.f);
+	Slv(TerGenOfsY, (pSet->gen_ofsy+2.f) /4.f);
+	Slv(TerGenOct,  Real(pSet->gen_oct)	/res);
+	Slv(TerGenFreq, pSet->gen_freq    /0.7f);
+	Slv(TerGenPers, pSet->gen_persist /0.7f);
+	Slv(TerGenPow,  powf(pSet->gen_pow     /6.f,  1.f/2.f));
+
+
 	///  [Layers]
 	Chk("TerLayOn", chkTerLayOn, 1);  chkTerLay = bchk;
 	valTerLAll = (StaticTextPtr)mWndOpts->findWidget("TerLayersAll");

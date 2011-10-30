@@ -57,6 +57,11 @@ void SETTINGS::Serialize(bool w, CONFIGFILE & c)
 	Param(c,w, "video.fullscreen", fullscreen);
 	Param(c,w, "video.fsaa", fsaa);					Param(c,w, "video.vsync", vsync);
 	Param(c,w, "video.buffer", buffer);				Param(c,w, "video.rendersystem", rendersystem);
+	
+	Param(c,w, "generate.scale", gen_scale);
+	Param(c,w, "generate.freq", gen_freq);			Param(c,w, "generate.persist", gen_persist);
+	Param(c,w, "generate.pow", gen_pow);			Param(c,w, "generate.oct", gen_oct);
+	Param(c,w, "generate.ofsx", gen_ofsx);			Param(c,w, "generate.ofsy", gen_ofsy);
 }
 
 SETTINGS::SETTINGS() :  ///  Defaults
@@ -79,5 +84,8 @@ SETTINGS::SETTINGS() :  ///  Defaults
 	cam_speed(1.f), cam_inert(1.f),
 	ter_skip(4), road_sphr(1.f), mini_skip(4),
 	windowx(800), windowy(600), fullscreen(false), fsaa(0), vsync(false),
-	buffer("FBO"), rendersystem("OpenGL Rendering Subsystem"), x11_capture_mouse(false)
+	buffer("FBO"), rendersystem("OpenGL Rendering Subsystem"), x11_capture_mouse(false),
+	//  ter gen
+	gen_scale(20.f), gen_freq(0.2f), gen_oct(3), gen_persist(0.4f),
+	gen_pow(1.5f), gen_ofsx(0.f), gen_ofsy(0.f)
 {	}

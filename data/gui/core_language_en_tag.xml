@@ -394,6 +394,15 @@
 	<Tag name="auto">Auto</Tag>
 	<Tag name="scale">Scale</Tag>
 
+	<!--  Terrain  generate  -->
+	<Tag name="TerGenScale">Scale Height</Tag>
+	<Tag name="TerGenFreq">Freq. zoom</Tag>
+	<Tag name="TerGenOct">Octaves</Tag>
+	<Tag name="TerGenPers">Persistance noise</Tag>
+	<Tag name="TerGenPow">Power (shape)</Tag>
+	<Tag name="TerGenOfsX">Offset X</Tag>
+	<Tag name="TerGenOfsY">Offset Y</Tag>
+	
 	<!--  Terrain  blendmap  -->
 	<Tag name="TerLAngMin">Angle Min</Tag>
 	<Tag name="TerLAngMax">Angle Max</Tag>

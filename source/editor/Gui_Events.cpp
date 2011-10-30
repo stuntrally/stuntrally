@@ -208,22 +208,25 @@ void App::btnTerrainNew(WP)
 	bNewHmap = true;	UpdateTrack();
 }
 
+//  Terrain  generate  --------------------------------
 void App::btnTerGenerate(WP)
 {
-	//sc.td.iVertsX = size+1;  sc.td.UpdVals();  // new hf
-
 	float* hfData = new float[sc.td.iVertsX * sc.td.iVertsY];
 	int siz = sc.td.iVertsX * sc.td.iVertsY * sizeof(float);
 	String name = TrkDir() + "heightmap-new.f32";
-	float s = sc.td.fTriangleSize*0.001f;
+	float s = sc.td.fTriangleSize*0.001f,
+		ox = pSet->gen_ofsx *s*sc.td.iVertsX, oy = pSet->gen_ofsy *s*sc.td.iVertsY;
 
-	for (int j=0; j < sc.td.iVertsY; ++j)  // generate noise terrain hmap
-	{
-		int a = j * sc.td.iVertsX;
+	//  generate noise terrain hmap
+	for (int j=0; j < sc.td.iVertsY; ++j)
+	{	int a = j * sc.td.iVertsX;
 		for (int i=0; i < sc.td.iVertsX; ++i,++a)
-			hfData[a] = pow( Noise(i*s,j*s, mBrFq[0], 5, 0.5f), mBrPow[0] ) * 10.f;
+		{
+			float y = Noise(i*s-oy, j*s+ox, pSet->gen_freq, pSet->gen_oct, pSet->gen_persist);
+			y = y >= 0.f ? powf(y, pSet->gen_pow) : -powf(-y, pSet->gen_pow);
+			hfData[a] = y * pSet->gen_scale;
+		}
 	}
-	/// TODO: faster: ter dirty- not recreate
 
 	std::ofstream of;
 	of.open(name.c_str(), std::ios_base::binary);
@@ -233,6 +236,44 @@ void App::btnTerGenerate(WP)
 	delete[] hfData;
 	bNewHmap = true;	UpdateTrack();
 }
+
+void App::slTerGenScale(SL)
+{
+	float v = 60.f * powf(val/res, 2.f);	if (bGI)  pSet->gen_scale = v;
+	if (valTerGenScale){	Fmt(s, "%4.2f", v);  valTerGenScale->setCaption(s);  }
+}
+void App::slTerGenOfsX(SL)
+{
+	float v = -2.f + 4.f * val/res;		if (bGI)  pSet->gen_ofsx = v;
+	if (valTerGenOfsX){	Fmt(s, "%5.3f", v);  valTerGenOfsX->setCaption(s);  }
+}
+void App::slTerGenOfsY(SL)
+{
+	float v = -2.f + 4.f * val/res;		if (bGI)  pSet->gen_ofsy = v;
+	if (valTerGenOfsY){	Fmt(s, "%5.3f", v);  valTerGenOfsY->setCaption(s);  }
+}
+
+void App::slTerGenFreq(SL)
+{
+	float v = 0.7f * val/res;	if (bGI)  pSet->gen_freq = v;
+	if (valTerGenFreq){	Fmt(s, "%5.3f", v);  valTerGenFreq->setCaption(s);  }
+}
+void App::slTerGenOct(SL)
+{
+	if (bGI)  pSet->gen_oct = val;
+	if (valTerGenOct){	Fmt(s, "%d", val);  valTerGenOct->setCaption(s);  }
+}
+void App::slTerGenPers(SL)
+{
+	float v = 0.7f * val/res;	if (bGI)  pSet->gen_persist = v;
+	if (valTerGenPers){	Fmt(s, "%5.3f", v);  valTerGenPers->setCaption(s);  }
+}
+void App::slTerGenPow(SL)
+{
+	float v = 6.f * powf(val/res, 2.f);		if (bGI)  pSet->gen_pow = v;
+	if (valTerGenPow){	Fmt(s, "%5.3f", v);  valTerGenPow->setCaption(s);  }
+}
+
 
 
 ///  Terrain layers  -----------------------------
