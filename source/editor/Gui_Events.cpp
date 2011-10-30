@@ -499,7 +499,7 @@ void App::tabPgLayers(TabPtr wp, size_t id)
 	Slv(LTrWindFx, powf(lay.windFx /12.0f, 1.f/3.f));
 	Slv(LTrWindFy, powf(lay.windFy /12.0f, 1.f/3.f));
 	Slv(LTrMaxTerAng, powf(lay.maxTerAng /90.0f, 1.f/2.f));
-	//minTerH..
+	if (edLTrMinTerH)  edLTrMinTerH->setCaption(toStr(lay.minTerH));
 }
 
 void App::chkPgLayOn(WP wp)
@@ -557,7 +557,11 @@ void App::slLTrMaxTerAng(SL)
 	Real v = 90.0f * powf(val/res, 2.f);	sc.pgLayersAll[idPgLay].maxTerAng = v;
 	if (valLTrMaxTerAng){  Fmt(s, "%5.1f", v);  valLTrMaxTerAng->setCaption(s);  }
 }
-//minTerH..
+void App::editLTrMinTerH(EditPtr ed)
+{
+	sc.pgLayersAll[idPgLay].minTerH = s2r(ed->getCaption());
+}
+
 
 
 //  [Road]

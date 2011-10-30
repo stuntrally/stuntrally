@@ -309,6 +309,7 @@ protected:
 	SLV(LTrDens);	SLV(LTrRdDist);
 	SLV(LTrMinSc);	SLV(LTrMaxSc);	SLV(LTrWindFx);	SLV(LTrWindFy);
 	SLV(LTrMaxTerAng);
+	MyGUI::EditPtr edLTrMinTerH;  void editLTrMinTerH(MyGUI::EditPtr);
 	
 	
 	//  [Road]  ----

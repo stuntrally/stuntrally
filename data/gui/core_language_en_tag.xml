@@ -455,8 +455,8 @@
 	<Tag name="GrassSway">Grass sway</Tag>
 	<Tag name="GrDensSmooth">Smooth grass dens.</Tag>
 	<Tag name="GrTerMaxAngle">Grass Max. Terrain Angle</Tag>
-	<Tag name="LTrMaxTerAng">Max. Terrain Angle</Tag>
-	<Tag name="LTrMinTerH">Min. Terrain Height</Tag>
+	<Tag name="LTrMaxTerAng">max terrain Angle</Tag>
+	<Tag name="LTrMinTerH">min terrain Height</Tag>
 
 
 	<!--  Road  -->
@@ -745,5 +745,6 @@
 	<Tag name="TipWindInflH">Wind influence on model, height scale.</Tag>
 	<Tag name="TipModelPrev">Model preview image.</Tag>
 	<Tag name="TipLTrMaxTerAng">Terrain angle above which model won't appear.</Tag>
+	<Tag name="TipLTrMinTerH">Terrain height below which model won't appear.</Tag>
 
 </MyGUI>

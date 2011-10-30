@@ -173,7 +173,7 @@ void App::InitGui()
 	Slv(LTrDens, 0);	Slv(LTrRdDist, 0);
 	Slv(LTrMinSc, 0);	Slv(LTrMaxSc, 0);
 	Slv(LTrWindFx, 0);	Slv(LTrWindFy, 0);
-	Slv(LTrMaxTerAng, 0);
+	Slv(LTrMaxTerAng, 0);  Ed(LTrMinTerH, editLTrMinTerH);
 	
 	
 	///  [Road]  ------------------------------------

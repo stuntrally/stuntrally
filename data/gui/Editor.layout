@@ -1235,19 +1235,19 @@
 							<Property key="Widget_Colour" value="0.0 0.9 0.9"/>
 							<Property key="Widget_Enabled" value="false"/>
 						</Widget>
-						<Widget type="StaticText" skin="StaticText" position="16 58 80 24">
+						<Widget type="StaticText" skin="StaticText" position="16 58 104 24">
 							<Property key="Widget_Caption" value="#{Model}"/>
 							<Property key="Text_TextColour" value="0.3 0.8 1"/>
 						</Widget>
-						<Widget type="StaticText" skin="StaticText" position="16 95 80 24">
+						<Widget type="StaticText" skin="StaticText" position="16 95 104 24">
 							<Property key="Widget_Caption" value="#{Density}"/>
 							<Property key="Text_TextColour" value="0.6 1 1"/>
 						</Widget>
-						<Widget type="StaticText" skin="StaticText" position="16 135 80 24">
+						<Widget type="StaticText" skin="StaticText" position="16 135 104 24">
 							<Property key="Widget_Caption" value="#{MinScale}"/>
 							<Property key="Text_TextColour" value="0.6 0.8 0.8"/>
 						</Widget>
-						<Widget type="StaticText" skin="StaticText" position="16 159 80 24">
+						<Widget type="StaticText" skin="StaticText" position="16 159 104 24">
 							<Property key="Widget_Caption" value="#{MaxScale}"/>
 							<Property key="Text_TextColour" value="0.6 0.8 0.8"/>
 						</Widget>
@@ -1282,7 +1282,7 @@
 						<Widget type="StaticText" skin="StaticText" position="128 159 56 24" name="LTrMaxScVal">
 							<Property key="Text_TextColour" value="0.6 0.8 0.8"/>
 						</Widget>
-						<Widget type="StaticText" skin="StaticText" position="16 271 96 24">
+						<Widget type="StaticText" skin="StaticText" position="16 271 104 24">
 							<Property key="Widget_Caption" value="#{DistToRoad}"/>
 							<Property key="Text_TextColour" value="0.6 0.9 0.9"/>
 							<UserString key="tip" value="#{TipRoadDist}"/>
@@ -1308,11 +1308,11 @@
 							<Property key="Widget_Colour" value="0.6 0.9 0.9"/>
 							<UserString key="tip" value="#{TipRoadDist2}"/>
 						</Widget>
-						<Widget type="StaticText" skin="StaticText" position="16 199 80 24">
+						<Widget type="StaticText" skin="StaticText" position="16 199 104 24">
 							<Property key="Widget_Caption" value="#{wind} Fx"/>
 							<Property key="Text_TextColour" value="0.5 0.7 0.7"/>
 						</Widget>
-						<Widget type="StaticText" skin="StaticText" position="16 223 80 24">
+						<Widget type="StaticText" skin="StaticText" position="16 223 104 24">
 							<Property key="Widget_Caption" value="#{wind} Fy"/>
 							<Property key="Text_TextColour" value="0.5 0.7 0.7"/>
 						</Widget>
@@ -1334,7 +1334,7 @@
 							<Property key="Widget_Colour" value="0.5 0.7 0.7"/>
 							<UserString key="tip" value="#{TipWindInflH}"/>
 						</Widget>
-						<Widget type="StaticText" skin="StaticText" position="16 308 96 24">
+						<Widget type="StaticText" skin="StaticText" position="16 308 112 24">
 							<Property key="Widget_Caption" value="#{LTrMaxTerAng}"/>
 							<Property key="Text_TextColour" value="0.6 0.9 0.9"/>
 						</Widget>
@@ -1353,17 +1353,14 @@
 							<Property key="Image_Index" value="0"/>
 							<UserString key="tip" value="#{TipModelPrev}"/>
 						</Widget>
-						<Widget type="StaticText" skin="StaticText" position="16 335 96 24">
+						<Widget type="StaticText" skin="StaticText" position="16 335 112 24">
 							<Property key="Text_TextColour" value="0.6 0.9 0.9"/>
 							<Property key="Widget_Caption" value="#{LTrMinTerH}"/>
 						</Widget>
-						<Widget type="StaticText" skin="StaticText" position="128 335 56 24" name="LTrMinTerHVal">
-							<Property key="Text_TextColour" value="0.6 0.9 0.9"/>
-						</Widget>
-						<Widget type="HScroll" skin="HScroll" position="184 335 360 16" name="LTrMinTerH">
+						<Widget type="Edit" skin="Edit" position="128 332 64 24" name="LTrMinTerH">
 							<Property key="Widget_Colour" value="0.6 0.9 0.9"/>
-							<Property key="Scroll_Range" value="1000001"/>
-							<Property key="Scroll_MoveToClick" value="true"/>
+							<Property key="Text_TextColour" value="0.6 0.9 0.9"/>
+							<UserString key="tip" value="#{TipLTrMinTerH}"/>
 						</Widget>
 					</Widget>
 				</Widget>
