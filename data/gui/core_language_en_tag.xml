@@ -589,7 +589,7 @@
 	<Tag name="InputRoadDel">Del - delete picked</Tag>
 	<Tag name="InputRoadIns">Ins - insert new (after picked, alt - before)</Tag>
 	<Tag name="InputRoadInsAlt">alt-shift - at start   alt-ctrl - at end</Tag>
-	<Tag name="InputRoadNew">ctrl-Space - set new from picked</Tag>
+	<Tag name="InputRoadNew">ctrl-Space - set new point's values from picked</Tag>
 
 	<!-- Road  select (many)  -->
 	<Tag name="InputRoadSelectMany">Select (many)</Tag>
@@ -605,7 +605,8 @@
 	<Tag name="InputRoadStats">T - road stats window</Tag>
 
 
-	<!--  start pos  -->
+	<!--  Start pos  -->
+	<Tag name="InputStart">Start</Tag>
 	<Tag name="InputStartPos">Q - edit car start pos</Tag>
 	<Tag name="InputStartLMB">LMB - move  RMB - height</Tag>
 	<Tag name="InputStartAltLMB">alt-LMB - rotate  alt-RMB - pitch</Tag>
@@ -615,6 +616,10 @@
 	<Tag name="InputStartWidth">; &apos;  -  adjust start box width (for road width)</Tag>
 	<Tag name="InputStartDir">Space  -  change road direction (+ or -)</Tag>
 	<Tag name="InputStartMeet">car will meet (next+ / prev-) point numbers</Tag>
+
+
+	<!--  Fluids  -->
+	<Tag name="InputFluids">Fluids</Tag>
 	
 
 <!--  ............................................................................................................................  -->
