@@ -121,7 +121,7 @@ void App::InitGui()
 	//  abs, tcs
 	Chk("CarABS",  chkAbs, pSet->abs);		Chk("CarTCS", chkTcs, pSet->tcs);
 	Chk("CarGear", chkGear, pSet->autoshift);
-	Chk("CarRear", chkRear, pSet->autorear);	Chk("CarClutch", chkClutch, pSet->autoclutch);
+	Chk("CarRear", chkRear, pSet->autorear);	//Chk("CarClutch", chkClutch, pSet->autoclutch);
 	//  game
 	Chk("VegetCollis", chkVegetCollis, pSet->veget_collis);
 	Chk("CarCollis", chkCarCollis, pSet->car_collis);
