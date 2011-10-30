@@ -62,13 +62,14 @@
 	<Tag name="TerHeightMap">Înăltimea terenului</Tag>
 	<Tag name="bumps">bumps (bumpy terrain)</Tag>
 	<Tag name="TipDiffusePrev">Textură difuză a previzualizării.</Tag>
+	<Tag name="TipGrTerMaxAngle">Terrain angle above which there won't be any grass.</Tag>
 	<Tag name="smoke">fum</Tag>
 	<Tag name="TipChangeCar">Schimbă mașina curentă cu cea selectată in listă,apoi apasă [Joc nou] pentru a o conduce.</Tag>
 	<Tag name="TreeMult">Trees multiplier</Tag>
 	<Tag name="TipGrDensSmooth">Grass density map - smooth size</Tag>
 	<Tag name="ParAmount">Numărul de particule</Tag>
 	<Tag name="MyGUI_MessageBox_No">Nu</Tag>
-	<Tag name="InputRoadNew">ctrl-Space - set new from picked</Tag>
+	<Tag name="InputRoadNew">ctrl-Space - set new point's values from picked</Tag>
 	<Tag name="Top">Deasupra</Tag>
 	<Tag name="TerUpdSkip">Ignoră actualizarea terenului</Tag>
 	<Tag name="Input">Intrare</Tag>
@@ -134,7 +135,7 @@
 	<Tag name="RplAlpha">Transparent ghost</Tag>
 	<Tag name="wind">Vânt</Tag>
 	<Tag name="TipTerLHMax">Ending terrain height for layer.</Tag>
-	<Tag name="LS_CAR">Se încarcă mașina</Tag>
+	<Tag name="TipRoadStats">Statistici tot drumul</Tag>
 	<Tag name="MaxScale">scala maximă</Tag>
 	<Tag name="TerLNoise">Noise</Tag>
 	<Tag name="TipModelMaxScale">Scală maximă model.</Tag>
@@ -249,6 +250,7 @@
 	<Tag name="min">min</Tag>
 	<Tag name="BumpWavelen">Bump:  WaveLen</Tag>
 	<Tag name="InputRoadPipeAngle">[,] - unghiul tubului (nici un tub cand e 0)</Tag>
+	<Tag name="LTrMaxTerAng">Max. Terrain Angle</Tag>
 	<Tag name="InputMapRestartGame">New game</Tag>
 	<Tag name="Graphics">Grafică</Tag>
 	<Tag name="InputMapShowOptions">Arată opțiunile</Tag>
@@ -264,6 +266,7 @@
 	<Tag name="InputTogglePreview">F7 - enter/leave preview camera</Tag>
 	<Tag name="GameBy">A game by</Tag>
 	<Tag name="SunWeather">Soare si vreme</Tag>
+	<Tag name="GrTerMaxAngle">Grass Max. Terrain Angle</Tag>
 	<Tag name="TipTrkScreenEditor">Captură de ecran pentru traseul selectat</Tag>
 	<Tag name="RplDelete">Delete</Tag>
 	<Tag name="TipAutoRear">Uncheck for manual Rear gear changing.</Tag>
@@ -279,9 +282,8 @@
 	<Tag name="Sky">Cer</Tag>
 	<Tag name="WrongChk">Wrong Checkpoint</Tag>
 	<Tag name="DisableEdit">Dezactivează pentru editare</Tag>
-	<Tag name="TipAutoClutch">-Manual neimplementat.</Tag>
 	<Tag name="MinimapUpdSkip">Ignoră actualizarea mini-hărții</Tag>
-	<Tag name="TipRoadStats">Statistici tot drumul</Tag>
+	<Tag name="LS_CAR">Se încarcă mașina</Tag>
 	<Tag name="GraphicsAllSettings">Change all graphics settings to preset:</Tag>
 	<Tag name="InputTerPaint">A - Colorează texturile (straturi)</Tag>
 	<Tag name="RplCur">Cur</Tag>
@@ -468,8 +470,8 @@
 	<Tag name="ScaleMul">Scale multiplier</Tag>
 	<Tag name="Reverse">Reverse</Tag>
 	<Tag name="scale">Scale</Tag>
-	<Tag name="AutoClutch">Auto clutch-</Tag>
 	<Tag name="ColHue">Color - Hue</Tag>
+	<Tag name="fluids">fluids (water or mud)</Tag>
 	<Tag name="TipLoadTrkEditor">Încarcă traseul (după schimbare) sau reîncarcă traseul curent.</Tag>
 	<Tag name="InputRoadAltLMB">alt-LMB (or 1,2)</Tag>
 	<Tag name="TipModelPrev">Model preview image.</Tag>
@@ -517,6 +519,7 @@
 	<Tag name="TipRoadDist">How far from road will the model appear.</Tag>
 	<Tag name="TipResizeTer">Resize current terrain with new values.</Tag>
 	<Tag name="DistMult">Distance mul</Tag>
+	<Tag name="InputStartWidth">; &apos; - ajustează lățimea casetei de start (pentru lăţimea drumului)</Tag>
 	<Tag name="Resolution">Resolution</Tag>
 	<Tag name="Left">Left</Tag>
 	<Tag name="TipDustInt">Intensitate particule praf.</Tag>
@@ -542,7 +545,7 @@
 	<Tag name="UnitMph">mph</Tag>
 	<Tag name="InputMapBoost">Boost</Tag>
 	<Tag name="TipTerLAngMin">Starting terrain angle for layer.</Tag>
-	<Tag name="InputStartWidth">; &apos; - ajustează lățimea casetei de start (pentru lăţimea drumului)</Tag>
+	<Tag name="TipLTrMaxTerAng">Terrain angle above which model won't appear.</Tag>
 	<Tag name="Color">culoare</Tag>
 	<Tag name="TipTerLAngMax">Ending terrain angle for layer.</Tag>
 	<Tag name="Pitch">gudron</Tag>
@@ -550,11 +553,19 @@
 	<Tag name="MyGUI_MessageBox_Yes">Da</Tag>
 	<Tag name="RollingDrag">Învârtire mașină</Tag>
 	<Tag name="RplAll">Toate</Tag>
-	<Tag name="TipGrTerMaxAngle">Terrain angle above which there won't be any grass.</Tag>
-	<Tag name="LTrMaxTerAng">Max. Terrain Angle</Tag>
-	<Tag name="GrTerMaxAngle">Grass Max. Terrain Angle</Tag>
-	<Tag name="fluids">fluids (water or mud)</Tag>
-	<Tag name="TipLTrMaxTerAng">Terrain angle above which model won't appear.</Tag>
+	<Tag name="LTrMinTerH">Min. Terrain Height</Tag>
+	<Tag name="RearThrottleInverse">Rear throttle inverse--</Tag>
+	<Tag name="UseImposters">Use Imposters</Tag>
+	<Tag name="ssao">SSAO</Tag>
+	<Tag name="Models">Models</Tag>
+	<Tag name="InputFluids">Fluids</Tag>
+	<Tag name="InputUpdBlendmap">F9 - update terrain blendmap</Tag>
+	<Tag name="Properties">Properties</Tag>
+	<Tag name="TipRearThrottleInverse">Inverse throttle and brake function in rear gear.</Tag>
+	<Tag name="Materials">Materials</Tag>
+	<Tag name="BoostAndFlip">Boost and flip</Tag>
+	<Tag name="ScaleTerHeight">Terrain Height</Tag>
+	<Tag name="InputStart">Start</Tag>
 	<Tag name="GameVersion">1.4</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 
