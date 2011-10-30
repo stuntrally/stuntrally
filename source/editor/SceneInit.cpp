@@ -179,6 +179,7 @@ void App::UpdateTrackEv()
 	UpdPSSMMaterials();
 
 	Rnd2TexSetup();
+	//bTerUpdBlend = true;  //also?
 
 	Status("Updated",0.5,1.0,0.7);
 }

@@ -246,6 +246,8 @@ void App::chkTerLayOn(WP wp)
 	sc.td.UpdLayers();
 	if (valTerLAll)
 		valTerLAll->setCaption("Used: "+toStr(sc.td.layers.size()));
+	//  force update, blendmap sliders crash if not
+	UpdateTrack();
 }
 
 void App::chkTexNormAutoOn(WP wp)
