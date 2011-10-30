@@ -14,12 +14,11 @@ QTimer::QTimer()
 	LARGE_INTEGER FQ;
 	if (QueryPerformanceFrequency( &FQ ))
 		fq = double( FQ.QuadPart );
+	QueryPerformanceCounter( &CC );
+	st = double( CC.QuadPart ) / fq;
 #else
 	clock_gettime(CLOCK_MONOTONIC, &startTime);
 #endif
-    dt=0;
-	QueryPerformanceCounter( &CC );
-	st = double( CC.QuadPart ) / fq;
 }
 
 bool QTimer::update()

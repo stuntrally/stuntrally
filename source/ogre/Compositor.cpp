@@ -8,6 +8,7 @@
 #include <OgreViewport.h>
 #include <OgreMaterial.h>
 #include <OgreTechnique.h>
+#include <OgreCamera.h>
 #include <OgreGpuProgramParams.h>
 #include "SplitScreen.h"
 
