@@ -106,15 +106,16 @@
 	<Tag name="TCS">TCS (traction control)</Tag>
 	<Tag name="TipTCS">Prevents wheel spinning when accelerating (default: off).</Tag>
 
-	<Tag name="AutoClutch">Auto clutch-</Tag>
-	<Tag name="TipAutoClutch">-Manual not implemented.</Tag>
 	<Tag name="AutoGearbox">Auto gearbox</Tag>
 	<Tag name="TipAutoGearbox">Uncheck for manual gears changing.</Tag>
 	<Tag name="AutoRear">Auto Rear gear</Tag>
 	<Tag name="TipAutoRear">Uncheck for manual Rear gear changing.</Tag>
+	<Tag name="RearThrottleInverse">Rear throttle inverse--</Tag>
+	<Tag name="TipRearThrottleInverse">Inverse throttle and brake function in rear gear.</Tag>
 
 	<Tag name="VegetCol">Vegetation collision</Tag>
 	<Tag name="CarCollis">Cars collision</Tag>
+	<Tag name="BoostAndFlip">Boost and flip</Tag>
 
 	<Tag name="NumLocalPlayers">Number of local players</Tag>
 	<Tag name="SplitVertically">Split Vertically</Tag>
@@ -422,6 +423,8 @@
 
 
 	<!--  Vegetation  -->
+	<Tag name="Properties">Properties</Tag>
+	<Tag name="Models">Models</Tag>
 	<Tag name="GrassDens">Grass   density</Tag>
 	<Tag name="TreeDens">Trees   density</Tag>
 	<Tag name="Model">Model</Tag>
@@ -444,6 +447,7 @@
 	<Tag name="GrDensSmooth">Smooth grass dens.</Tag>
 	<Tag name="GrTerMaxAngle">Grass Max. Terrain Angle</Tag>
 	<Tag name="LTrMaxTerAng">Max. Terrain Angle</Tag>
+	<Tag name="LTrMinTerH">Min. Terrain Height</Tag>
 
 
 	<!--  Road  -->
@@ -474,6 +478,7 @@
 	<Tag name="RoadParams">Road parameters</Tag>
 	<Tag name="ScaleMul">Scale multiplier</Tag>
 	<Tag name="ScaleAll">Scale all</Tag>
+	<Tag name="ScaleTerHeight">Terrain Height</Tag>
 	<Tag name="DeleteRoad">Delete Road</Tag>
 	<Tag name="NeedReload">* need reload</Tag>
 
@@ -535,6 +540,7 @@
 
 	<Tag name="InputToggleVeget">V - Disable / enable vegetation</Tag>
 	<Tag name="InputMinimapType">alt-F2,F3 - Prev,next minimap type</Tag>
+	<Tag name="InputUpdBlendmap">F9 - update terrain blendmap</Tag>
 	<!--  Terrain  brush  -->
 	<Tag name="InputBrushParams">Brush parameters</Tag>
 	<Tag name="InputWheelSize">,=  (or Wheel)  -  Size</Tag>

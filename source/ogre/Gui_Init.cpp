@@ -118,10 +118,10 @@ void App::InitGui()
 	Chk("BulletDebug", chkBltDebug, pSet->bltDebug);	chBlt = bchk;
 	Chk("BulletProfilerTxt", chkBltProfilerTxt, pSet->bltProfilerTxt);	chBltTxt = bchk;
 	
-	//  abs, tcs
-	Chk("CarABS",  chkAbs, pSet->abs);		Chk("CarTCS", chkTcs, pSet->tcs);
-	Chk("CarGear", chkGear, pSet->autoshift);
-	Chk("CarRear", chkRear, pSet->autorear);	//Chk("CarClutch", chkClutch, pSet->autoclutch);
+	//  car setup  todo: for each player ..
+	Chk("CarABS",  chkAbs, pSet->abs);			Chk("CarTCS", chkTcs, pSet->tcs);
+	Chk("CarGear", chkGear, pSet->autoshift);	Chk("CarRear", chkRear, pSet->autorear);
+	Chk("CarRearThrInv", chkRearInv, pSet->rear_inv);
 	//  game
 	Chk("VegetCollis", chkVegetCollis, pSet->veget_collis);
 	Chk("CarCollis", chkCarCollis, pSet->car_collis);
