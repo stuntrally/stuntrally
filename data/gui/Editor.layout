@@ -563,7 +563,7 @@
 					<Property key="Text_TextColour" value="0.7 1 0.8"/>
 					<UserString key="tip" value="#{TipNewTer}"/>
 				</Widget>
-				<Widget type="Button" skin="Button" position="304 167 104 32" name="TerrainGenerate">
+				<Widget type="Button" skin="Button" position="304 159 104 32" name="TerrainGenerate">
 					<Property key="Widget_Colour" value="0.2 0.6 0.4"/>
 					<Property key="Widget_Caption" value="#{NewTerGenerate}"/>
 					<Property key="Text_TextColour" value="0.4 0.8 0.6"/>
@@ -615,62 +615,62 @@
 					<Property key="Scroll_MoveToClick" value="true"/>
 					<Property key="Widget_Colour" value="0.6 0.9 0.5"/>
 				</Widget>
-				<Widget type="StaticText" skin="StaticText" position="32 255 108 24">
+				<Widget type="StaticText" skin="StaticText" position="32 271 108 24">
 					<Property key="Widget_Caption" value="#{TerGenOct}"/>
-					<Property key="Text_TextColour" value="0.6 0.9 0.5"/>
+					<Property key="Text_TextColour" value="0.6 0.9 0.7"/>
 				</Widget>
-				<Widget type="StaticText" skin="StaticText" position="148 255 56 24" name="TerGenOctVal">
-					<Property key="Text_TextColour" value="0.6 1.0 0.8"/>
+				<Widget type="StaticText" skin="StaticText" position="148 271 56 24" name="TerGenOctVal">
+					<Property key="Text_TextColour" value="0.6 1.0 0.9"/>
 				</Widget>
-				<Widget type="HScroll" skin="HScroll" position="208 255 400 16" name="TerGenOct">
+				<Widget type="HScroll" skin="HScroll" position="208 271 400 16" name="TerGenOct">
 					<Property key="Scroll_Range" value="10"/>
 					<Property key="Scroll_MoveToClick" value="true"/>
-					<Property key="Widget_Colour" value="0.6 0.9 0.5"/>
+					<Property key="Widget_Colour" value="0.6 0.9 0.7"/>
 				</Widget>
-				<Widget type="StaticText" skin="StaticText" position="32 280 108 24">
+				<Widget type="StaticText" skin="StaticText" position="32 296 108 24">
 					<Property key="Widget_Caption" value="#{TerGenPers}"/>
-					<Property key="Text_TextColour" value="0.6 0.9 0.5"/>
+					<Property key="Text_TextColour" value="0.6 0.9 0.7"/>
 				</Widget>
-				<Widget type="StaticText" skin="StaticText" position="148 280 56 24" name="TerGenPersVal">
-					<Property key="Text_TextColour" value="0.6 1.0 0.8"/>
+				<Widget type="StaticText" skin="StaticText" position="148 296 56 24" name="TerGenPersVal">
+					<Property key="Text_TextColour" value="0.6 1.0 0.9"/>
 				</Widget>
-				<Widget type="HScroll" skin="HScroll" position="208 280 400 16" name="TerGenPers">
+				<Widget type="HScroll" skin="HScroll" position="208 296 400 16" name="TerGenPers">
 					<Property key="Scroll_Range" value="1000001"/>
 					<Property key="Scroll_MoveToClick" value="true"/>
-					<Property key="Widget_Colour" value="0.6 0.9 0.5"/>
+					<Property key="Widget_Colour" value="0.6 0.9 0.7"/>
 				</Widget>
-				<Widget type="StaticText" skin="StaticText" position="32 305 108 24">
+				<Widget type="StaticText" skin="StaticText" position="32 321 108 24">
 					<Property key="Widget_Caption" value="#{TerGenPow}"/>
-					<Property key="Text_TextColour" value="0.6 0.9 0.5"/>
+					<Property key="Text_TextColour" value="0.6 0.9 0.7"/>
 				</Widget>
-				<Widget type="StaticText" skin="StaticText" position="148 305 56 24" name="TerGenPowVal">
-					<Property key="Text_TextColour" value="0.6 1.0 0.8"/>
+				<Widget type="StaticText" skin="StaticText" position="148 321 56 24" name="TerGenPowVal">
+					<Property key="Text_TextColour" value="0.6 1.0 0.9"/>
 				</Widget>
-				<Widget type="HScroll" skin="HScroll" position="208 305 400 16" name="TerGenPow">
+				<Widget type="HScroll" skin="HScroll" position="208 321 400 16" name="TerGenPow">
 					<Property key="Scroll_Range" value="1000001"/>
 					<Property key="Scroll_MoveToClick" value="true"/>
-					<Property key="Widget_Colour" value="0.6 0.9 0.5"/>
+					<Property key="Widget_Colour" value="0.6 0.9 0.7"/>
 				</Widget>
-				<Widget type="StaticText" skin="StaticText" position="32 330 108 24">
+				<Widget type="StaticText" skin="StaticText" position="32 362 108 24">
 					<Property key="Widget_Caption" value="#{TerGenOfsX}"/>
 					<Property key="Text_TextColour" value="0.6 0.9 0.5"/>
 				</Widget>
-				<Widget type="StaticText" skin="StaticText" position="148 330 56 24" name="TerGenOfsXVal">
+				<Widget type="StaticText" skin="StaticText" position="148 362 56 24" name="TerGenOfsXVal">
 					<Property key="Text_TextColour" value="0.6 1.0 0.8"/>
 				</Widget>
-				<Widget type="HScroll" skin="HScroll" position="208 330 400 16" name="TerGenOfsX">
+				<Widget type="HScroll" skin="HScroll" position="208 362 400 16" name="TerGenOfsX">
 					<Property key="Scroll_Range" value="1000001"/>
 					<Property key="Scroll_MoveToClick" value="true"/>
 					<Property key="Widget_Colour" value="0.6 0.9 0.5"/>
 				</Widget>
-				<Widget type="StaticText" skin="StaticText" position="32 355 108 24">
+				<Widget type="StaticText" skin="StaticText" position="32 387 108 24">
 					<Property key="Widget_Caption" value="#{TerGenOfsY}"/>
 					<Property key="Text_TextColour" value="0.6 0.9 0.5"/>
 				</Widget>
-				<Widget type="StaticText" skin="StaticText" position="148 355 56 24" name="TerGenOfsYVal">
+				<Widget type="StaticText" skin="StaticText" position="148 387 56 24" name="TerGenOfsYVal">
 					<Property key="Text_TextColour" value="0.6 1.0 0.8"/>
 				</Widget>
-				<Widget type="HScroll" skin="HScroll" position="208 355 400 16" name="TerGenOfsY">
+				<Widget type="HScroll" skin="HScroll" position="208 387 400 16" name="TerGenOfsY">
 					<Property key="Scroll_Range" value="1000001"/>
 					<Property key="Scroll_MoveToClick" value="true"/>
 					<Property key="Widget_Colour" value="0.6 0.9 0.5"/>
