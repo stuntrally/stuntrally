@@ -32,7 +32,7 @@ struct MaterialProperties
 	// map: tex size, tex name
 	textureMap diffuseMaps; Ogre::TextureUnitState::TextureAddressingMode textureAddressMode;
 	textureMap normalMaps; float bumpScale;
-	
+	textureMap lightMaps;textureMap blendMaps;
 	CullHardwareMode cullHardware;
 	CullHardwareMode cullHardwareAmbient; // for ambient pass
 	

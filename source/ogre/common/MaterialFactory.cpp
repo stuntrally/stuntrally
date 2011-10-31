@@ -224,14 +224,15 @@ void MaterialFactory::generate()
 		ti.update(); /// time
 		float dt = ti.dt * 1000.f;
 		LogO(String("::: Time MaterialFactory: ") + toStr(dt) + " ms");
+
+		// recreate cloned car materials
+		#ifndef ROAD_EDITOR
+		pApp->recreateCarMtr();
+		#endif
 	}
 	else
 		LogO("[MaterialFactory] settings not changed, using old materials");
 		
-	// recreate cloned car materials
-	#ifndef ROAD_EDITOR
-	pApp->recreateCarMtr();
-	#endif
 }
 
 //----------------------------------------------------------------------------------------

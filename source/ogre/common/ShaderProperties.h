@@ -7,7 +7,9 @@ struct ShaderProperties
 {
 	bool envMap; bool fresnel;
 	bool diffuseMap;
+	bool lightMap;
 	bool alphaMap;
+	bool blendMap;
 	bool normalMap;
 	bool lighting;
 	bool shadows;

@@ -1,5 +1,6 @@
 [car_body]
-diffuseMap_1024 = body_dyn.png
+lightMap_1024 = body_light.png
+blendMap_1024 = body_blend.png
 envMap = ReflectionCube
 reflAmount = 0.1
 diffuse = 1.0 1.0 1.0

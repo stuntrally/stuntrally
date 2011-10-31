@@ -24,6 +24,8 @@ public:
 protected:
 	// tex unit indices
 	unsigned int mDiffuseTexUnit;
+	unsigned int mLightTexUnit;
+	unsigned int mBlendTexUnit;
 	unsigned int mAlphaTexUnit;
 	unsigned int mNormalTexUnit;
 	unsigned int mEnvTexUnit;
@@ -53,8 +55,9 @@ protected:
 	
 	bool needShaders();
 	bool needShadows();
-	bool needNormalMap(); bool needEnvMap(); bool needAlphaMap();
-	bool needDiffuseMap();
+	bool needNormalMap(); bool needEnvMap();
+	bool needAlphaMap();bool needBlendMap();
+	bool needDiffuseMap();bool needLightMap();
 	bool needLightingAlpha();
 	bool fpNeedWsNormal(); bool fpNeedEyeVector();
 	bool fpNeedTangentToCube(); bool vpNeedTangent();

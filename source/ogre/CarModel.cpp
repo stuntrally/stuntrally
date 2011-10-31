@@ -266,6 +266,9 @@ void CarModel::RecreateMaterials()
 			Ogre::MaterialManager::getSingleton().remove(sMtr[i] + strI);
 		mat->clone(sMtr[i] + strI, false);
 		sMtr[i] = sMtr[i] + strI;
+		// Change color here - cache has to be created before loading model
+		ChangeClr(iIndex);
+
 		//LogO(" === New car mtr name: " + sMtr[i]);
 	}
 	
@@ -296,15 +299,23 @@ void CarModel::RecreateMaterials()
 							tus->setTextureName("wheel.png");
 						}
 						
-						if (tus->getTextureName() == "body_dyn.png")
-							tus->setTextureName("body_dyn" + strI + ".png");
+						if (tus->getTextureName() == "body_light.png")
+						{
+							tus->setTextureName(sCar + "_body00_red.png");
+						}
+						else if (tus->getTextureName() == "body_blend.png")
+						{
+							tus->setTextureName(sCar + "_body00_add.png");
+						}
 						else
-						if (!(StringUtil::startsWith(tus->getTextureName(), "ReflectionCube") ||
+						{
+							if (!(StringUtil::startsWith(tus->getTextureName(), "ReflectionCube") ||
 								StringUtil::startsWith(tus->getTextureName(), "body_dyn") ||
 								tus->getTextureName() == "ReflectionCube" ||
 								StringUtil::startsWith(tus->getName(), "shadowmap") ||
 								StringUtil::startsWith(tus->getTextureName(), "flat_n")))
 							tus->setTextureName(sDirname + "_" + tus->getTextureName());
+						}
 		}	}	}	}
 		if (pSet->shadow_type == 3)
 			pApp->setMtrSplits(mtr->getName());
@@ -353,9 +364,6 @@ void CarModel::Create(int car)
 	
 	String sCar = resCar + "/" + sDirname;
 	
-	// Change color here - cache has to be created before loading model
-	ChangeClr(car);
-	
 	pMainNode = pSceneMgr->getRootSceneNode()->createChildSceneNode();
 
 	//  --------  Follow Camera  --------
@@ -367,7 +375,7 @@ void CarModel::Create(int car)
 	}
 	
 	RecreateMaterials();
-	
+		
 	// reflection
 	CreateReflection();
 
@@ -552,11 +560,7 @@ void CarModel::Create(int car)
 	}
 
 	UpdParsTrails();
-	
-	//  reload car materials
-	for (int i = 0; i < NumMaterials; ++i)
-		ReloadTex(sMtr[i]);
-		
+			
 	setMtrNames();
 }
 
@@ -631,60 +635,15 @@ void CarModel::UpdWhTerMtr()
 
 void CarModel::ChangeClr(int car)
 {
-	bool add = 1;
+	//bool add = 1;
 	float c_h = pSet->car_hue[car], c_s = pSet->car_sat[car], c_v = pSet->car_val[car];
 	color.setHSB(1-c_h,c_s*0.25+0.75,1/*c_v*2+0.7*/);  //set, mini pos clr
-
-	Image ima;	try{
-		ima.load(sDirname + "_body00_add.png", "Car" + toStr(iIndex));  // add, not colored
-	}catch(...){  add = 0;  }
-	uchar* da = 0;  size_t incRow,incRowA=0, inc1=0,inc1A=0;
-	if (add)
-	{	PixelBox pba = ima.getPixelBox();
-		da = (uchar*)pba.data;  incRowA = pba.rowPitch;
-		inc1A = PixelUtil::getNumElemBytes(pba.format);
-	}
-	String svName = PATHMANAGER::GetCacheDir() + "/body_dyn" + toStr(iIndex) + ".png";  // dynamic
-	Image im;  try{
-		im.load(sDirname + "_body00_red.png", "Car" + toStr(iIndex));  // original red diffuse
-	}catch(...){  return;  }
-	if (im.getWidth())
+//	color.setHSB(c_h,c_s,c_v);
+	MaterialPtr mtr = (MaterialPtr)MaterialManager::getSingleton().getByName(sMtr[Mtr_CarBody]);
+	if (!mtr.isNull())
 	{
-		PixelBox pb = im.getPixelBox();
-		size_t xw = pb.getWidth(), yw = pb.getHeight();
-
-		uchar* d = (uchar*)pb.data;  incRow = pb.rowPitch;
-		inc1 = PixelUtil::getNumElemBytes(pb.format);
-
-		//Ogre::LogManager::getSingleton().logMessage(
-			//"img clr +++  w "+toStr(xw)+"  h "+toStr(yw)+"  pf "+toStr(pb.format)+"  iA "+toStr(inc1A));
-
-		size_t x,y,a,aa;
-		for (y = 0; y < yw; ++y)
-		{	a = y*incRow*inc1, aa = y*incRowA*inc1A;
-		for (x = 0; x < xw; ++x)
-		{
-			uchar r,g,b;
-			if (da && da[aa+3] > 60)  // adding area (not transparent)
-			{	r = da[aa];  g = da[aa+1];  b = da[aa+2];	}
-			else
-			{	r = d[a], g = d[a+1], b = d[a+2];  // get
-				ColourValue c(r/255.f,g/255.f,b/255.f);  //
-
-				Real h,s,v;  // hue shift
-				c.getHSB(&h,&s,&v);
-				h += c_h;  if (h>1.f) h-=1.f;  // 0..1
-				s += c_s;  v += c_v;  // -1..1
-				c.setHSB(h,s,v);
-
-				r = c.r*255;  g = c.g*255;  b = c.b*255;  // set
-			}
-			d[a] = r;  d[a+1] = g;  d[a+2] = b;	 // write back
-			a += inc1;  aa += inc1A;  // next pixel
-		}	}
+		mtr->setDiffuse(color);
 	}
-	im.save(svName);
-	ReloadTex(sMtr[Mtr_CarBody]);
 }
 
 

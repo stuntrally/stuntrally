@@ -127,6 +127,18 @@ void MaterialProperties::setProperty(const std::string& prop, const std::string&
 		int isize = Ogre::StringConverter::parseInt(size);
 		normalMaps[isize] = value;
 	}
+	else if (Ogre::StringUtil::startsWith(prop, "lightMap_", false))
+	{
+		std::string size = prop.substr(9);
+		int isize = Ogre::StringConverter::parseInt(size);
+		lightMaps[isize] = value;
+	}
+	else if (Ogre::StringUtil::startsWith(prop, "blendMap_", false))
+	{
+		std::string size = prop.substr(9);
+		int isize = Ogre::StringConverter::parseInt(size);
+		blendMaps[isize] = value;
+	}
 	else if (Ogre::StringUtil::startsWith(prop, "alphaMap_", false))
 	{
 		std::string size = prop.substr(10);

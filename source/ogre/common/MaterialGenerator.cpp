@@ -32,7 +32,9 @@ void MaterialGenerator::generate(bool fixedFunction)
 	
 	std::string diffuseMap = pickTexture(&mDef->mProps->diffuseMaps);
 	std::string normalMap = pickTexture(&mDef->mProps->normalMaps);
+	std::string lightMap = pickTexture(&mDef->mProps->lightMaps);
 	std::string alphaMap = pickTexture(&mDef->mProps->alphaMaps);
+	std::string blendMap = pickTexture(&mDef->mProps->blendMaps);
 	
 	Ogre::Technique* technique = mat->createTechnique();
 	
@@ -165,7 +167,16 @@ void MaterialGenerator::generate(bool fixedFunction)
 			tu = pass->createTextureUnitState( diffuseMap );
 			tu->setTextureAddressingMode(mDef->mProps->textureAddressMode);
 		}
-		
+		if (needLightMap())
+		{
+			tu = pass->createTextureUnitState( lightMap );
+			tu->setTextureAddressingMode(mDef->mProps->textureAddressMode);
+		}
+		if (needBlendMap())
+		{
+			tu = pass->createTextureUnitState( blendMap );
+			tu->setTextureAddressingMode(mDef->mProps->textureAddressMode);
+		}
 		if (needEnvMap())
 		{
 			// env map
@@ -189,6 +200,20 @@ void MaterialGenerator::generate(bool fixedFunction)
 			tu->setName("diffuseMap");
 			tu->setTextureAddressingMode(mDef->mProps->textureAddressMode);
 			mDiffuseTexUnit = mTexUnit_i; mTexUnit_i++;
+		}
+		if (needLightMap())
+		{
+			tu = pass->createTextureUnitState( lightMap );
+			tu->setName("lightMap");
+			tu->setTextureAddressingMode(mDef->mProps->textureAddressMode);
+			mLightTexUnit = mTexUnit_i; mTexUnit_i++;
+		}
+		if (needBlendMap())
+		{
+			tu = pass->createTextureUnitState( blendMap );
+			tu->setName("blendMap");
+			tu->setTextureAddressingMode(mDef->mProps->textureAddressMode);
+			mBlendTexUnit = mTexUnit_i; mTexUnit_i++;
 		}
 		
 		// alpha map
@@ -321,6 +346,16 @@ inline bool MaterialGenerator::needEnvMap()
 inline bool MaterialGenerator::needDiffuseMap()
 {
 	return mShader->diffuseMap;
+}
+
+inline bool MaterialGenerator::needLightMap()
+{
+	return mShader->lightMap;
+}
+
+inline bool MaterialGenerator::needBlendMap()
+{
+	return mShader->blendMap;
 }
 
 inline bool MaterialGenerator::needLightingAlpha()
@@ -732,6 +767,12 @@ void MaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::StrStrea
 		
 	if (needDiffuseMap()) outStream <<
 		"	uniform sampler2D diffuseMap : TEXUNIT"+toStr(mDiffuseTexUnit)+", \n";
+	
+	if (needLightMap()) outStream <<
+		"	uniform sampler2D lightMap : TEXUNIT"+toStr(mLightTexUnit)+", \n";
+
+	if (needBlendMap()) outStream <<
+		"	uniform sampler2D blendMap : TEXUNIT"+toStr(mBlendTexUnit)+", \n";
 		
 	if (needAlphaMap()) outStream <<
 		"	uniform sampler2D alphaMap	 : TEXUNIT"+toStr(mAlphaTexUnit)+", \n";
@@ -828,6 +869,12 @@ void MaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::StrStrea
 	if (needDiffuseMap()) outStream <<
 		"	float4 diffuseTex = tex2D(diffuseMap, texCoord); \n";
 	
+	if (needLightMap()) outStream <<
+		"	float4 lightTex = tex2D(lightMap, texCoord);lightTex=float4(lightTex.r,lightTex.r,lightTex.r,1.0f);//single channel map \n";
+
+	if (needBlendMap()) outStream <<
+		"	float4 blendTex = tex2D(blendMap, texCoord); \n";
+
 	// calculate lighting (per-pixel)
 	if (fpNeedLighting())
 	{
@@ -835,10 +882,11 @@ void MaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::StrStrea
 		// Compute the diffuse term
 		"	float3 lightDir = normalize(lightPosition.xyz - (position.xyz * lightPosition.w)); \n"
 		"	float diffuseLight = max(dot(lightDir, normal), 0); \n";
-		if (needDiffuseMap()) outStream <<
-			"	float3 diffuse = matDiffuse.xyz * lightDiffuse.xyz * diffuseTex.xyz * diffuseLight; \n";
-		else outStream <<
-			"	float3 diffuse = matDiffuse.xyz * lightDiffuse.xyz * diffuseLight; \n";
+		
+		outStream << "	float3 diffuse = matDiffuse.xyz * lightDiffuse.xyz *  diffuseLight ";
+		if (needDiffuseMap()) outStream <<	"* diffuseTex.xyz ";
+		if (needLightMap()) outStream <<	"* lightTex.xyz ";
+		outStream <<	"; \n";
 		outStream <<
 		// Compute the specular term
 		"	float3 viewVec = -eyeVector; \n"
@@ -849,10 +897,16 @@ void MaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::StrStrea
 		"	float3 specular = matSpecular.xyz * lightSpecular.xyz * specularLight; \n";
 
 		// Compute the ambient term
-		if (needDiffuseMap()) outStream <<
-			"	float3 ambient = diffuseTex.xyz * matAmbient.xyz; \n";
-		else outStream <<
-			"	float3 ambient = matAmbient.xyz; \n";
+		outStream << "	float3 ambient = matAmbient.xyz ";
+		if (needDiffuseMap()) outStream <<	"* diffuseTex.xyz ";
+		if (needLightMap()) outStream <<	"* lightTex.xyz ";
+		outStream << "; \n";
+
+		if (needBlendMap())
+		{
+			outStream <<	"ambient =  lerp(ambient, blendTex.xyz , blendTex.a); \n";
+		}
+
 		// Add all terms together (also with shadow)
 		if (needShadows()) outStream <<
 		"	float3 lightColour = ambient + diffuse*shadowing + specular*shadowing; \n";
