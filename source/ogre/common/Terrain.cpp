@@ -511,7 +511,8 @@ void App::CreateFluids()
 		efl->setMaterial(mtr);  efl->setCastShadows(false);
 		efl->setRenderQueueGroup(RQG_Fluid);  efl->setVisibilityFlags(RV_Terrain);
 
-		SceneNode* nfl = mSceneMgr->getRootSceneNode()->createChildSceneNode(fb.pos);
+		SceneNode* nfl = mSceneMgr->getRootSceneNode()->createChildSceneNode(
+			fb.pos, Quaternion(Degree(fb.rot.x),Vector3::UNIT_Y));
 		nfl->attachObject(efl);
 		#ifdef ROAD_EDITOR
 		vFlSMesh.push_back(smesh);  vFlEnt.push_back(efl);  vFlNd.push_back(nfl);
@@ -522,6 +523,7 @@ void App::CreateFluids()
 		#ifndef ROAD_EDITOR
 		btVector3 pc(fb.pos.x, -fb.pos.z, fb.pos.y - fb.size.y);  // center
 		btTransform tr;  tr.setIdentity();  tr.setOrigin(pc);
+		tr.setRotation(btQuaternion(0, 0, fb.rot.x*PI_d/180.f));
 
 		btCollisionShape* bshp = 0;
 		bshp = new btBoxShape(btVector3(fb.size.x/2,fb.size.z/2, fb.size.y));
