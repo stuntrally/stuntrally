@@ -203,13 +203,13 @@ void App::InitGui()
 
 	//  car color buttons . . . . .
 	Real hsv[10][3] = {
-		{0.43,-0.1,-0.2},	{0.90, 0.1, 0.1},	{0.00, 0.0,-0.1},	{0.28,-0.35,-0.66},	{0.75, 0.1,-0.1},
-		{0.47, 0.1,-0.1},	{0.5,-0.15,0.16},	{0.86, 0.4,-0.0},	{0.8,-0.8,-0.18},	{0.7, 0.1,-0.15}};
+		{0.43,0.86,0.73}, {0.90,1.00,0.80}, {0.00,1.00,0.66}, {0.28,0.57,0.17}, {0.75,0.90,0.55},
+		{0.47,0.90,0.80}, {0.50,0.33,0.80}, {0.86,1.00,0.87}, {0.83,0.10,0.58}, {0.70,0.38,0.74}};
 	for (int i=0; i<10; i++)
 	{
 		StaticImagePtr img = (StaticImagePtr)mLayout->findWidget("carClr"+toStr(i));
 		Real h = hsv[i][0], s = hsv[i][1], v = hsv[i][2];
-		ColourValue c;  c.setHSB(1.f-h, (s+1.f)*0.5f, (v+1.f)*0.8f/**/);
+		ColourValue c;  c.setHSB(1.f-h, s, v);
 		img->setColour(Colour(c.r,c.g,c.b));
 		img->eventMouseButtonClick = newDelegate(this, &App::imgBtnCarClr);
 		img->setUserString("s", toStr(s));  img->setUserString("h", toStr(h));
