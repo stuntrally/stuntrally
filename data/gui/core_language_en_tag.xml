@@ -106,15 +106,16 @@
 	<Tag name="TCS">TCS (traction control)</Tag>
 	<Tag name="TipTCS">Prevents wheel spinning when accelerating (default: off).</Tag>
 
-	<Tag name="AutoClutch">Auto clutch-</Tag>
-	<Tag name="TipAutoClutch">-Manual not implemented.</Tag>
 	<Tag name="AutoGearbox">Auto gearbox</Tag>
 	<Tag name="TipAutoGearbox">Uncheck for manual gears changing.</Tag>
 	<Tag name="AutoRear">Auto Rear gear</Tag>
 	<Tag name="TipAutoRear">Uncheck for manual Rear gear changing.</Tag>
+	<Tag name="RearThrottleInverse">Rear throttle inverse--</Tag>
+	<Tag name="TipRearThrottleInverse">Inverse throttle and brake function in rear gear.</Tag>
 
 	<Tag name="VegetCol">Vegetation collision</Tag>
 	<Tag name="CarCollis">Cars collision</Tag>
+	<Tag name="BoostAndFlip">Boost and flip</Tag>
 
 	<Tag name="NumLocalPlayers">Number of local players</Tag>
 	<Tag name="SplitVertically">Split Vertically</Tag>
@@ -180,6 +181,7 @@
 	<Tag name="NeedNewGame">* need New Game</Tag>
 	<Tag name="RestartApply">Restart game, to apply *changes.</Tag>
 
+	<Tag name="Materials">Materials</Tag>
 	<Tag name="Detail">Detail</Tag>
 	<Tag name="TerrainError">Terrain error</Tag>
 	<Tag name="TerHQDist">Terrain HQ dist</Tag>
@@ -193,7 +195,7 @@
 	<Tag name="DistMult">Distance mul</Tag>
 	<Tag name="GrassMult">Grass mul</Tag>
 	<Tag name="Reset">Reset</Tag>
-  <Tag name="UseImposters">Use Imposters</Tag>
+	<Tag name="UseImposters">Use Imposters</Tag>
 
 	<Tag name="Reflections">Reflections</Tag>
 	<Tag name="FrameSkip">Frames skip</Tag>
@@ -392,6 +394,15 @@
 	<Tag name="auto">Auto</Tag>
 	<Tag name="scale">Scale</Tag>
 
+	<!--  Terrain  generate  -->
+	<Tag name="TerGenScale">Scale Height</Tag>
+	<Tag name="TerGenFreq">Freq. zoom</Tag>
+	<Tag name="TerGenOct">Octaves</Tag>
+	<Tag name="TerGenPers">Persistance noise</Tag>
+	<Tag name="TerGenPow">Power (shape)</Tag>
+	<Tag name="TerGenOfsX">Offset X</Tag>
+	<Tag name="TerGenOfsY">Offset Y</Tag>
+	
 	<!--  Terrain  blendmap  -->
 	<Tag name="TerLAngMin">Angle Min</Tag>
 	<Tag name="TerLAngMax">Angle Max</Tag>
@@ -421,6 +432,8 @@
 
 
 	<!--  Vegetation  -->
+	<Tag name="Properties">Properties</Tag>
+	<Tag name="Models">Models</Tag>
 	<Tag name="GrassDens">Grass   density</Tag>
 	<Tag name="TreeDens">Trees   density</Tag>
 	<Tag name="Model">Model</Tag>
@@ -442,7 +455,8 @@
 	<Tag name="GrassSway">Grass sway</Tag>
 	<Tag name="GrDensSmooth">Smooth grass dens.</Tag>
 	<Tag name="GrTerMaxAngle">Grass Max. Terrain Angle</Tag>
-	<Tag name="LTrMaxTerAng">Max. Terrain Angle</Tag>
+	<Tag name="LTrMaxTerAng">max terrain Angle</Tag>
+	<Tag name="LTrMinTerH">min terrain Height</Tag>
 
 
 	<!--  Road  -->
@@ -473,6 +487,7 @@
 	<Tag name="RoadParams">Road parameters</Tag>
 	<Tag name="ScaleMul">Scale multiplier</Tag>
 	<Tag name="ScaleAll">Scale all</Tag>
+	<Tag name="ScaleTerHeight">Terrain Height</Tag>
 	<Tag name="DeleteRoad">Delete Road</Tag>
 	<Tag name="NeedReload">* need reload</Tag>
 
@@ -534,6 +549,7 @@
 
 	<Tag name="InputToggleVeget">V - Disable / enable vegetation</Tag>
 	<Tag name="InputMinimapType">alt-F2,F3 - Prev,next minimap type</Tag>
+	<Tag name="InputUpdBlendmap">F9 - update terrain blendmap</Tag>
 	<!--  Terrain  brush  -->
 	<Tag name="InputBrushParams">Brush parameters</Tag>
 	<Tag name="InputWheelSize">,=  (or Wheel)  -  Size</Tag>
@@ -582,7 +598,7 @@
 	<Tag name="InputRoadDel">Del - delete picked</Tag>
 	<Tag name="InputRoadIns">Ins - insert new (after picked, alt - before)</Tag>
 	<Tag name="InputRoadInsAlt">alt-shift - at start   alt-ctrl - at end</Tag>
-	<Tag name="InputRoadNew">ctrl-Space - set new from picked</Tag>
+	<Tag name="InputRoadNew">ctrl-Space - set new point's values from picked</Tag>
 
 	<!-- Road  select (many)  -->
 	<Tag name="InputRoadSelectMany">Select (many)</Tag>
@@ -598,7 +614,8 @@
 	<Tag name="InputRoadStats">T - road stats window</Tag>
 
 
-	<!--  start pos  -->
+	<!--  Start pos  -->
+	<Tag name="InputStart">Start</Tag>
 	<Tag name="InputStartPos">Q - edit car start pos</Tag>
 	<Tag name="InputStartLMB">LMB - move  RMB - height</Tag>
 	<Tag name="InputStartAltLMB">alt-LMB - rotate  alt-RMB - pitch</Tag>
@@ -608,6 +625,10 @@
 	<Tag name="InputStartWidth">; &apos;  -  adjust start box width (for road width)</Tag>
 	<Tag name="InputStartDir">Space  -  change road direction (+ or -)</Tag>
 	<Tag name="InputStartMeet">car will meet (next+ / prev-) point numbers</Tag>
+
+
+	<!--  Fluids  -->
+	<Tag name="InputFluids">Fluids</Tag>
 	
 
 <!--  ............................................................................................................................  -->
@@ -724,5 +745,6 @@
 	<Tag name="TipWindInflH">Wind influence on model, height scale.</Tag>
 	<Tag name="TipModelPrev">Model preview image.</Tag>
 	<Tag name="TipLTrMaxTerAng">Terrain angle above which model won't appear.</Tag>
+	<Tag name="TipLTrMinTerH">Terrain height below which model won't appear.</Tag>
 
 </MyGUI>

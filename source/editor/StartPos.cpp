@@ -78,14 +78,15 @@ void App::UpdStartPos()
 	}
 	if (!ndStBox)
 	{ 	//  car for start pos
- 		ndStBox = mSceneMgr->getRootSceneNode()->createChildSceneNode();
-		entStBox = mSceneMgr->createEntity("cube.mesh");  // box
-		entStBox->setVisibilityFlags(RV_Hud);  ndStBox->setPosition(Vector3(20000,0,0));
-			entStBox->setCastShadows(true);  //`
-			MaterialPtr mtr = Ogre::MaterialManager::getSingleton().getByName("sphere_check");
-			entStBox->setMaterial(mtr);  entStBox->setRenderQueueGroup(RQG_CarGlass);  // after road
-		ndStBox->attachObject(entStBox);
-	}
+		MaterialPtr mtr = Ogre::MaterialManager::getSingleton().getByName("sphere_check");
+		if (!mtr.isNull())
+ 		{	ndStBox = mSceneMgr->getRootSceneNode()->createChildSceneNode();
+			entStBox = mSceneMgr->createEntity("cube.mesh");  // box
+			entStBox->setVisibilityFlags(RV_Hud);  ndStBox->setPosition(Vector3(20000,0,0));
+				entStBox->setCastShadows(true);  //`
+				entStBox->setMaterial(mtr);  entStBox->setRenderQueueGroup(RQG_CarGlass);  // after road
+			ndStBox->attachObject(entStBox);
+	}	}
 	if (vStartPos.size() < 4 || vStartRot.size() < 4)  return;
 
 	float* pos = &vStartPos[0][0];

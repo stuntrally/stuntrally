@@ -36,7 +36,7 @@ public:
 	float particles_len, trails_len;
 
 	//  car
-	bool abs, tcs, autoclutch, autoshift, autorear, show_mph;
+	bool abs, tcs, autoshift, autorear, rear_inv, show_mph;
 	float car_hue[4], car_sat[4], car_val[4];  int cam_view[4];
 
 	//  game

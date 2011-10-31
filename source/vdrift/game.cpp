@@ -705,9 +705,10 @@ void GAME::ProcessNewSettings()
 	{
 		carcontrols_local.first->SetABS(settings->abs);
 		carcontrols_local.first->SetTCS(settings->tcs);
-		carcontrols_local.first->SetAutoClutch(settings->autoclutch);
 		carcontrols_local.first->SetAutoShift(settings->autoshift);
 		carcontrols_local.first->SetAutoRear(settings->autorear);
+		//todo: rear throttle brake inversee:  settings->rear_inv 
+		//carcontrols_local.first->SetAutoClutch(settings->rear_inv);
 	}
 
 	sound.SetMasterVolume(settings->vol_master);

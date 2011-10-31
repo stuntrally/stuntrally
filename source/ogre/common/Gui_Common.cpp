@@ -42,7 +42,7 @@ void App::slAnisotropy(SL)
 //  view dist
 void App::slViewDist(SL)
 {
-	Real v = 50.f + 6950.f * powf(val/res, 2.f);
+	Real v = 50.f + 19950.f * powf(val/res, 2.f);
 	Vector3 sc = v*Vector3::UNIT_SCALE;
 
 	SceneNode* nskb = mSceneMgr->getSkyBoxNode();
@@ -205,7 +205,7 @@ void App::GuiInitGraphics()
 	//  detail
 	Slv(TerDetail,	powf(pSet->terdetail /20.f, 0.5f));
 	Slv(TerDist,	powf(pSet->terdist /2000.f, 0.5f));
-	Slv(ViewDist,	powf((pSet->view_distance -50.f)/6950.f, 0.5f));
+	Slv(ViewDist,	powf((pSet->view_distance -50.f)/19950.f, 0.5f));
 	Slv(RoadDist,	powf(pSet->road_dist /4.f, 0.5f));
 
 	//  textures

@@ -59,8 +59,8 @@ void SETTINGS::Serialize(bool w, CONFIGFILE & c)
 	Param(c,w, "reflect.map_size", refl_size);		Param(c,w, "reflect.dist", refl_dist);
 	Param(c,w, "reflect.mode", refl_mode);
 
-	Param(c,w, "control.autoclutch", autoclutch);	Param(c,w, "control.autotrans", autoshift);
-	Param(c,w, "control.autorear", autorear);
+	Param(c,w, "control.autotrans", autoshift);
+	Param(c,w, "control.autorear", autorear);		Param(c,w, "control.rear_inv", rear_inv);
 	Param(c,w, "control.abs", abs);					Param(c,w, "control.tcs", tcs);
 	Param(c,w, "control.veget_collis", veget_collis);
 	Param(c,w, "control.car_collis", car_collis);
@@ -113,7 +113,7 @@ SETTINGS::SETTINGS() :  ///  Defaults
 	shaders(0),  trees(1.f), grass(1.f), trees_dist(1.f), grass_dist(1.f),
 	particles_len(1.f), trails_len(1.f),use_imposters(false),
 	//  car
-	abs(1), tcs(1), autoclutch(1), autoshift(1), autorear(1), show_mph(0),
+	abs(1), tcs(1), autoshift(1), autorear(1), rear_inv(1), show_mph(0),
 	//  game
 	trackreverse(false), local_players(1), num_laps(2),
 	split_vertically(true), language(""), // "" = autodetect lang

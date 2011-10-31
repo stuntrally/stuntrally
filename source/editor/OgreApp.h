@@ -266,6 +266,10 @@ protected:
 	int idTerLay;  bool bTerLay;  // help vars
 	MyGUI::ButtonPtr chkTexNormAuto;  void chkTexNormAutoOn(WP);  bool bTexNormAuto;  // auto
 
+	//  ter generate
+	SLV(TerGenScale);  SLV(TerGenOfsX);  SLV(TerGenOfsY);
+	SLV(TerGenFreq);  SLV(TerGenOct);  SLV(TerGenPers);  SLV(TerGenPow);
+	
 	//  ter size
 	SLV(TerTriSize);  SLV(TerLScale);
 	MyGUI::EditPtr edTerTriSize, edTerLScale;
@@ -305,6 +309,7 @@ protected:
 	SLV(LTrDens);	SLV(LTrRdDist);
 	SLV(LTrMinSc);	SLV(LTrMaxSc);	SLV(LTrWindFx);	SLV(LTrWindFy);
 	SLV(LTrMaxTerAng);
+	MyGUI::EditPtr edLTrMinTerH;  void editLTrMinTerH(MyGUI::EditPtr);
 	
 	
 	//  [Road]  ----
@@ -351,7 +356,7 @@ protected:
 	bool TrackExists(Ogre::String name);  // util
 
 	std::vector<Ogre::String> vsMaterials;
-	void GetMaterials(Ogre::String filename, Ogre::String type="material");
+	void GetMaterials(Ogre::String filename, bool clear=true, Ogre::String type="material");
 	void GetMaterialsFromDef(Ogre::String filename, bool clear=true);
 };
 
