@@ -109,12 +109,6 @@ void App::btnCarClrRandom(WP)
 	UpdCarClrSld();
 }
 
-//  [Screen] (game only)
-void App::chkVidSSAA(WP wp)
-{
-	ChkEv(ssaa);
-	refreshCompositor();
-}
 
 //  [Graphics]
 
@@ -322,31 +316,29 @@ void App::chkLoadPics(WP wp){		ChkEv(loadingbackground);	}
 
 void App::chkVidEffects(WP wp)
 {
-	ChkEv(all_effects);
-	recreateCompositor();
-	//refreshCompositor();
+	ChkEv(all_effects);  recreateCompositor();  //refreshCompositor();
 }
 void App::chkVidBloom(WP wp)
 {		
-	ChkEv(bloom);
-	refreshCompositor();
+	ChkEv(bloom);  refreshCompositor();
 }
 void App::chkVidHDR(WP wp)
 {			
-	ChkEv(hdr);
-	refreshCompositor();
+	ChkEv(hdr);  refreshCompositor();
 }
 void App::chkVidBlur(WP wp)
 {		
-	ChkEv(motionblur);
-	refreshCompositor();
+	ChkEv(motionblur);  refreshCompositor();
 }
-
+void App::chkVidSSAA(WP wp)
+{
+	ChkEv(ssaa);  refreshCompositor();
+}
 void App::chkVidSSAO(WP wp)
 {		
-	ChkEv(ssao);
-	refreshCompositor();
+	ChkEv(ssao);  refreshCompositor();
 }
+
 void App::slBloomInt(SL)
 {
 	Real v = val/res;  if (bGI)  pSet->bloomintensity = v;
@@ -400,10 +392,8 @@ bool App::keyPressed( const OIS::KeyEvent &arg )
 		if (!isFocGui)
 		{
 			int iChgCam = 0;
-			if (action("NextCamera"))  // Next
-				iChgCam = 1;
-			if (action("PrevCamera"))  // Prev
-				iChgCam = -1;
+			if (action("NextCamera"))  iChgCam = 1;  // Next
+			if (action("PrevCamera"))  iChgCam =-1;  // Prev
 			if (iChgCam)
 			{
 				if (ctrl)

@@ -48,9 +48,7 @@ void BaseApp::createFrameListener()
 	mOvrBat = ovr.getOverlayElement("Core/NumBatches"),
 	mOvrDbg = ovr.getOverlayElement("Core/DebugText");
 
-	LogDbg("*** input 0 ***");
 	InitKeyNamesMap();
-	LogDbg("*** input 1 ***");
 
 	OIS::ParamList pl;	size_t windowHnd = 0;
 	std::ostringstream windowHndStr;
@@ -69,29 +67,22 @@ void BaseApp::createFrameListener()
     pl.insert(std::make_pair(std::string("XAutoRepeatOn"), std::string("true")));
     #endif
 
-	LogDbg("*** input 2 ***");
 	mOISBsys = new OISB::System();
-	LogDbg("*** input 3 ***");
 	mInputManager = OIS::InputManager::createInputSystem( pl );
-	LogDbg("*** input 4 ***");
 	OISB::System::getSingleton().initialize(mInputManager);
 
-	LogDbg("*** input 5 ***");
+	LogDbg("*** input load keys.xml ***");
 	if (boost::filesystem::exists(PATHMANAGER::GetUserConfigDir() + "/keys.xml"))
 		OISB::System::getSingleton().loadActionSchemaFromXMLFile(PATHMANAGER::GetUserConfigDir() + "/keys.xml");
 	else
 		OISB::System::getSingleton().loadActionSchemaFromXMLFile(PATHMANAGER::GetGameConfigDir() + "/keys-default.xml");
 
-	LogDbg("*** input 6 ***");
+	LogDbg("*** input set callbacks ***");
 	mKeyboard = OISB::System::getSingleton().getOISKeyboard();
-	LogDbg("*** input 7 ***");
 	mMouse = OISB::System::getSingleton().getOISMouse();
 
-	LogDbg("*** input 8 ***");
 	mMouse->setEventCallback(this);
-	LogDbg("*** input 9 ***");
 	mKeyboard->setEventCallback(this);
-	LogDbg("*** input 10 ***");
 	
 	// add listener for all joysticks
 	for (std::vector<OISB::JoyStick*>::iterator it=mOISBsys->mJoysticks.begin();
@@ -99,7 +90,7 @@ void BaseApp::createFrameListener()
 	{
 		(*it)->getOISJoyStick()->setEventCallback(this);
 	}
-	LogDbg("*** input 11 ***");
+	LogDbg("*** input end ***");
 
 	windowResized(mWindow);
 	WindowEventUtilities::addWindowEventListener(mWindow, this);
@@ -276,7 +267,6 @@ void BaseApp::recreateCompositor()
 		}
 	}
 
-	
 
 	if (!mMotionBlurLogic)
 	{
@@ -286,7 +276,6 @@ void BaseApp::recreateCompositor()
 		CompositorManager::getSingleton().registerCompositorLogic("Motion Blur", mMotionBlurLogic);
 	}
 
-	
 
 	for (std::list<Viewport*>::iterator it=mSplitMgr->mViewports.begin(); it!=mSplitMgr->mViewports.end(); it++)
 	{
@@ -485,15 +474,16 @@ bool BaseApp::setup()
 
 	LogDbg("*** createFrameListener ***");
 	createFrameListener();
+
 	LogDbg("*** createScene ***");
 	createScene();//^before
 
-	LogDbg("*** recreateCompositor***");
+	LogDbg("*** recreateCompositor ***");
 	recreateCompositor();
+
+	postInit();
 	LogDbg("*** end setup ***");
 	
-	postInit();
-
 	return true;
 };
 
