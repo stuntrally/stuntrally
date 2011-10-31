@@ -188,11 +188,10 @@ bool App::frameRenderingQueued(const FrameEvent& evt)
 	}
 	else if (edMode == ED_Fluids && sc.fluids.size() > 0)
 	{
-		FluidBox& fb = sc.fluids[iFlCur];
+		FluidBox& fb = sc.fluids[iFlCur];									if (flTxt[1])	flTxt[1]->setCaption(fb.name.c_str());
 		Fmt(s, "Cur/All:  %d/%d", iFlCur+1, sc.fluids.size());				if (flTxt[0])	flTxt[0]->setCaption(s);
-		/*Fmt(s, "Type:  %s", fb.name.c_str());*/							if (flTxt[1])	flTxt[1]->setCaption(fb.name.c_str());
 		Fmt(s, "Pos:  %4.1f %4.1f %4.1f", fb.pos.x, fb.pos.y, fb.pos.z);	if (flTxt[2])	flTxt[2]->setCaption(s);
-		Fmt(s, "Rot:  %4.1f %4.1f", fb.rot.x, fb.rot.y);					if (flTxt[3])	flTxt[3]->setCaption(s);
+		Fmt(s, "Rot:  %4.1f", fb.rot.x);									if (flTxt[3])	flTxt[3]->setCaption(s);
 		Fmt(s, "Size:  %4.1f %4.1f %4.1f", fb.size.x, fb.size.y, fb.size.z); if (flTxt[4])	flTxt[4]->setCaption(s);
 		Fmt(s, "Tile:  %5.3f %5.3f", fb.tile.x, fb.tile.y);					if (flTxt[5])	flTxt[5]->setCaption(s);
 
@@ -200,6 +199,10 @@ bool App::frameRenderingQueued(const FrameEvent& evt)
 		if (isKey(RBRACKET)){	fb.tile   *= 1.f + 0.04f*q;  bRecreateFluids = true;  }
 		if (isKey(SEMICOLON )){	fb.tile.y *= 1.f - 0.04f*q;  bRecreateFluids = true;  }
 		if (isKey(APOSTROPHE)){	fb.tile.y *= 1.f + 0.04f*q;  bRecreateFluids = true;  }
+		if (mz != 0)  // wheel prev/next
+		{	int fls = sc.fluids.size();
+			if (fls > 0)  iFlCur = (iFlCur-mz+fls)%fls;
+		}
 	}
 	else if (edMode < ED_Road)
 	{
@@ -412,7 +415,7 @@ void App::editMouse()
 	if (bEdit() && edMode == ED_Fluids && sc.fluids.size() > 0)
 	{
 		FluidBox& fb = sc.fluids[iFlCur];
-		const Real fMove(0.5f), fRot(0.05f);  //par speed
+		const Real fMove(0.5f), fRot(1.5f);  //par speed
 		if (!alt)
 		{
 			if (mbLeft)	// move on xz
@@ -428,6 +431,12 @@ void App::editMouse()
 				Real ym = -vNew.y * fMove * moveMul;
 				fb.pos.y += ym;
 				vFlNd[iFlCur]->setPosition(fb.pos);
+			}else
+			if (mbMiddle)  // rot yaw
+			{
+				Real xm = vNew.x * fRot * moveMul;
+				fb.rot.x += xm;
+				vFlNd[iFlCur]->setOrientation(Quaternion(Degree(fb.rot.x),Vector3::UNIT_Y));
 			}
 		}else
 		{

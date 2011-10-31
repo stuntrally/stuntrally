@@ -270,6 +270,14 @@ void App::btnScaleAll(WP)
 		road->mP[i].width *= sf;
 	}
 	road->bSelChng = true;
+	
+	//  fluids
+	for (int i=0; i < sc.fluids.size(); ++i)
+	{
+		FluidBox& fb = sc.fluids[i];
+		fb.pos.x *= sf;  fb.pos.z *= sf;
+		fb.size.x *= sf;  fb.size.z *= sf;
+	}
 
 	//  ter
 	sc.td.fTriangleSize *= sf;  sc.td.UpdVals();

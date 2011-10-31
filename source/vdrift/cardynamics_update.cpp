@@ -164,7 +164,7 @@ void CARDYNAMICS::DebugPrint ( std::ostream & out, bool p1, bool p2, bool p3, bo
 		out << "mass: " << body.GetMass() << std::endl << std::endl;
 	#endif
 
-	#if 0	// fluids
+	#if 1	// fluids
 		out << "in fluids: " << inFluids.size() <<
 				" wh: " << inFluidsWh[0].size() << inFluidsWh[1].size() << inFluidsWh[2].size() << inFluidsWh[3].size() << std::endl;
 		out.precision(2);
