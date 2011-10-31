@@ -294,8 +294,8 @@ void App::UpdCarClrSld(bool upd)
 	HScrollPtr sl;  size_t v;
 	bUpdCarClr = false;
 	Slv(CarClrH, pSet->car_hue[iCurCar]);
-	Slv(CarClrS, (pSet->car_sat[iCurCar] +1)*0.5f);  if (upd)  bUpdCarClr = true;
-	Slv(CarClrV, (pSet->car_val[iCurCar] +1)*0.5f);  bUpdCarClr = true;
+	Slv(CarClrS, pSet->car_sat[iCurCar]);  if (upd)  bUpdCarClr = true;
+	Slv(CarClrV, pSet->car_val[iCurCar]);  bUpdCarClr = true;
 }
 
 

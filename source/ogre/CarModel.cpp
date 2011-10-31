@@ -635,13 +635,12 @@ void CarModel::UpdWhTerMtr()
 
 void CarModel::ChangeClr(int car)
 {
-	//bool add = 1;
 	float c_h = pSet->car_hue[car], c_s = pSet->car_sat[car], c_v = pSet->car_val[car];
-	color.setHSB(1-c_h,c_s*0.25+0.75,1/*c_v*2+0.7*/);  //set, mini pos clr
-//	color.setHSB(c_h,c_s,c_v);
+	color.setHSB(1-c_h,c_s,c_v);  //set, mini pos clr
 	MaterialPtr mtr = (MaterialPtr)MaterialManager::getSingleton().getByName(sMtr[Mtr_CarBody]);
 	if (!mtr.isNull())
 	{
+		mtr->setAmbient(color);
 		mtr->setDiffuse(color);
 	}
 }

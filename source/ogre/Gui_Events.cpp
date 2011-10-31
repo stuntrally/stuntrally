@@ -81,14 +81,14 @@ void App::slCarClrH(SL)
 }
 void App::slCarClrS(SL)
 {
-	Real v = -1.f + 2.f * val/res;  if (bGI)  pSet->car_sat[iCurCar] = v;
+	Real v = val/res;  if (bGI)  pSet->car_sat[iCurCar] = v;
 	if (valCarClrS){	Fmt(s, "%4.2f", v);	valCarClrS->setCaption(s);  }
 	if (iCurCar < carModels.size() && bUpdCarClr && bGI)
 		carModels[iCurCar]->ChangeClr(iCurCar);
 }
 void App::slCarClrV(SL)
 {
-	Real v = -1.f + 2.f * val/res;  if (bGI)  pSet->car_val[iCurCar] = v;
+	Real v = val/res;  if (bGI)  pSet->car_val[iCurCar] = v;
 	if (valCarClrV){	Fmt(s, "%4.2f", v);	valCarClrV->setCaption(s);  }
 	if (iCurCar < carModels.size() && bUpdCarClr && bGI)
 		carModels[iCurCar]->ChangeClr(iCurCar);
@@ -104,8 +104,8 @@ void App::imgBtnCarClr(WP img)
 void App::btnCarClrRandom(WP)
 {
 	pSet->car_hue[iCurCar] = Math::UnitRandom();
-	pSet->car_sat[iCurCar] = Math::RangeRandom(-0.5f, 0.5f);
-	pSet->car_val[iCurCar] = Math::RangeRandom(-0.5f, 0.5f);
+	pSet->car_sat[iCurCar] = Math::UnitRandom();
+	pSet->car_val[iCurCar] = Math::UnitRandom();
 	UpdCarClrSld();
 }
 
