@@ -112,7 +112,7 @@ void BaseApp::refreshCompositor(bool disableAll)
 	{
 		CompositorManager::getSingleton().setCompositorEnabled((*it), "Bloom", false);
 		CompositorManager::getSingleton().setCompositorEnabled((*it), "HDR", false);
-		CompositorManager::getSingleton().setCompositorEnabled((*it), "ssao", true);
+		CompositorManager::getSingleton().setCompositorEnabled((*it), "ssao", false);
 		CompositorManager::getSingleton().setCompositorEnabled((*it), "Motion Blur", false);
 		CompositorManager::getSingleton().setCompositorEnabled((*it), "SSAA", false);
 	}
