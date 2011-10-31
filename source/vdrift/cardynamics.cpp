@@ -615,8 +615,9 @@ void CARDYNAMICS::ApplyWheelTorque(T dt, T drive_torque, int i, MATHVECTOR <T, 3
 	T friction_torque = tire_friction[0] * tire.GetRadius();
 	T wheel_torque = drive_torque - friction_torque;
 	T lock_up_torque = wheel.GetLockUpTorque(dt) - wheel_torque;	// torque needed to lock the wheel
+	T angVel = wheel.GetAngularVelocity();  if (angVel < 0.0)  angVel = -angVel; //
 	T brake_torque = brake.GetTorque()
-		+ wheel.fluidRes * wheel.GetAngularVelocity();  /// fluid resistance
+		+ wheel.fluidRes * angVel;  /// fluid resistance
 
 	// brake and rolling resistance torque should never exceed lock up torque
 	if(lock_up_torque >= 0 && lock_up_torque > brake_torque)
