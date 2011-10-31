@@ -346,7 +346,7 @@ BaseApp::~BaseApp()
 	mRoot->unloadPlugin("RenderSystem_GL");
 	
 
-	//OGRE_DELETE mRoot;
+	OGRE_DELETE mRoot;
 	delete mHDRLogic;  mHDRLogic = 0;
 }
 

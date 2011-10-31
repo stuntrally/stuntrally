@@ -50,7 +50,7 @@ PagedLayer::PagedLayer()
 }
 
 FluidBox::FluidBox()
-	:cobj(0), id(-1)
+	:cobj(0), id(-1), isWater(false)
 	,pos(Vector3::ZERO), rot(Vector3::ZERO)
 	,size(Vector3::ZERO), tile(0.01,0.01)
 {	}
@@ -65,6 +65,7 @@ void Scene::UpdateFluidsId()
 	for (int i=0; i < fluids.size(); ++i)
 	{
 		fluids[i].id = pFluidsXml->flMap[fluids[i].name]-1;
+		fluids[i].isWater = Ogre::StringUtil::startsWith(String(fluids[i].name), "water");
 		if (fluids[i].id == -1)
 			LogO("! Scene fluid name: " + fluids[i].name + " not found in xml !");
 	}

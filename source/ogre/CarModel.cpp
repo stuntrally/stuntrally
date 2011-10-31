@@ -54,6 +54,7 @@ CarModel::CarModel(unsigned int index, eCarType type, const std::string name,
 	
 	for (int w = 0; w < 4; ++w)
 	{	ps[w] = 0;  pm[w] = 0;  pd[w] = 0;
+		pflW[w] = 0;  pflM[w] = 0;
 		ndWh[w] = 0;  ndWhE[w] = 0; whTrl[w] = 0;
 		wht[w] = 0.f;  whTerMtr[w] = 0;  whRoadMtr[w] = 0;  }
 	for (int i=0; i < 2; i++)
@@ -80,7 +81,9 @@ CarModel::~CarModel()
 	for (int w=0; w < 4; w++)  {
 		if (ps[w]) {  pSceneMgr->destroyParticleSystem(ps[w]);   ps[w]=0;  }
 		if (pm[w]) {  pSceneMgr->destroyParticleSystem(pm[w]);   pm[w]=0;  }
-		if (pd[w]) {  pSceneMgr->destroyParticleSystem(pd[w]);   pd[w]=0;  }  }
+		if (pd[w]) {  pSceneMgr->destroyParticleSystem(pd[w]);   pd[w]=0;  }
+		if (pflW[w]) {  pSceneMgr->destroyParticleSystem(pflW[w]);   pflW[w]=0;  }
+		if (pflM[w]) {  pSceneMgr->destroyParticleSystem(pflM[w]);   pflM[w]=0;  }  }
 	for (int i=0; i < 2; i++)
 		if (pb[i]) {  pSceneMgr->destroyParticleSystem(pb[i]);   pb[i]=0;  }
 	if (ph)  {  pSceneMgr->destroyParticleSystem(ph);   ph=0;  }
@@ -161,19 +164,21 @@ void CarModel::Update(PosInfo& posInfo, float time)
 
 		if (!pGame->pause)
 		{
-			 Real sq = squeal* std::min(1.f, wht[w]), l = pSet->particles_len * onGr;
-			 emitS = sq * (whVel * 30) * l *0.3f;  //..
-			 emitM = slide < 1.4f ? 0.f :  (8.f * sq * std::min(5.f, slide) * l);
-			 emitD = (std::min(140.f, whVel) / 3.5f + slide * 1.f ) * l;  
-			 //  resume
-			 if (pd[w])  {
-			 pd[w]->setSpeedFactor(1.f);  ps[w]->setSpeedFactor(1.f);  pm[w]->setSpeedFactor(1.f);
-			 if (w < 2)  pb[w]->setSpeedFactor(1.f);  }
+			Real sq = squeal* std::min(1.f, wht[w]), l = pSet->particles_len * onGr;
+			emitS = sq * (whVel * 30) * l *0.3f;  //..
+			emitM = slide < 1.4f ? 0.f :  (8.f * sq * std::min(5.f, slide) * l);
+			emitD = (std::min(140.f, whVel) / 3.5f + slide * 1.f ) * l;  
+			if (pd[w])  {	//  resume
+				pd[w]->setSpeedFactor(1.f);  ps[w]->setSpeedFactor(1.f);  pm[w]->setSpeedFactor(1.f);
+			if (w < 2)  pb[w]->setSpeedFactor(1.f);  }
+			if (pflW[w])  {
+				pflW[w]->setSpeedFactor(1.f);  pflM[w]->setSpeedFactor(1.f);  }
 		}else{
-			 //  stop par sys
-			 if (pd[w])  {
-			 pd[w]->setSpeedFactor(0.f);  ps[w]->setSpeedFactor(0.f);  pm[w]->setSpeedFactor(0.f);
-			 if (w < 2)  pb[w]->setSpeedFactor(0.f);  }
+			if (pd[w])  {	//  stop par sys
+				pd[w]->setSpeedFactor(0.f);  ps[w]->setSpeedFactor(0.f);  pm[w]->setSpeedFactor(0.f);
+			if (w < 2)  pb[w]->setSpeedFactor(0.f);  }
+			if (pflW[w])  {
+				pflW[w]->setSpeedFactor(0.f);  pflM[w]->setSpeedFactor(0.f);  }
 		}
 		Real sizeD = (0.3f + 1.1f * std::min(140.f, whVel) / 140.f) * (w < 2 ? 0.5f : 1.f);
 
@@ -192,7 +197,7 @@ void CarModel::Update(PosInfo& posInfo, float time)
 			if (ps[w] && sc->td.layerRoad.smoke > 0.f/*&& !sc->ter*/)  // only at vdr road
 			{
 				ParticleEmitter* pe = ps[w]->getEmitter(0);
-				pe->setPosition(vpos + posInfo.carY * wR*0.7f); // 0.218
+				pe->setPosition(vpos + posInfo.carY * wR*0.7f);
 				/**/ps[w]->getAffector(0)->setParameter("alpha", toStr(-0.4f - 0.07f/2.4f * whVel));
 				/**/pe->setTimeToLive( std::max(0.1, 2 - whVel/2.4f * 0.04) );  // fade,live
 				pe->setDirection(-posInfo.carY);	pe->setEmissionRate(emitS);
@@ -200,14 +205,37 @@ void CarModel::Update(PosInfo& posInfo, float time)
 			if (pm[w])	//  mud
 			{	ParticleEmitter* pe = pm[w]->getEmitter(0);
 				//pe->setDimensions(sizeM,sizeM);
-				pe->setPosition(vpos + posInfo.carY * wR*0.7f); // 0.218
+				pe->setPosition(vpos + posInfo.carY * wR*0.7f);
 				pe->setDirection(-posInfo.carY);	pe->setEmissionRate(emitM);
 			}
 			if (pd[w])	//  dust
 			{	pd[w]->setDefaultDimensions(sizeD,sizeD);
 				ParticleEmitter* pe = pd[w]->getEmitter(0);
-				pe->setPosition(vpos + posInfo.carY * wR*0.51f ); // 0.16
+				pe->setPosition(vpos + posInfo.carY * wR*0.51f);
 				pe->setDirection(-posInfo.carY);	pe->setEmissionRate(emitD);
+			}
+			//  fluids .::.
+			bool inFl = cd.inFluidsWh[w].size() > 0;
+			bool water = true;
+			if (inFl)
+			{	const FluidBox* fb = *cd.inFluidsWh[w].begin();
+				water = fb->isWater;
+			}
+			if (pflM[w])  //  Mud ^
+			{
+				float vel = Math::Abs(pCar->dynamics.wheel[w].GetAngularVelocity());
+				float emitM = inFl && vel > 30.f ? cd.whH[w] * std::min(80.f, 1.5f * vel) : 0.f;
+				ParticleEmitter* pe = pflM[w]->getEmitter(0);
+				pe->setPosition(vpos + posInfo.carY * wR*0.51f);
+				pe->setDirection(-posInfo.carY);	pe->setEmissionRate(emitM * pSet->particles_len);
+			}
+			if (pflW[w])  //  Water ~
+			{
+				float vel = pCar->GetSpeed();
+				float emitW = inFl && water && vel > 10.f ? std::min(80.f, 3.0f * vel) : 0.f;
+				ParticleEmitter* pe = pflW[w]->getEmitter(0);
+				pe->setPosition(vpos + posInfo.carY * wR*0.51f);
+				pe->setDirection(-posInfo.carY);	pe->setEmissionRate(emitW * pSet->particles_len);
 			}
 		}
 
@@ -538,6 +566,14 @@ void CarModel::Create(int car)
 			pd[w] = pSceneMgr->createParticleSystem("Dust"+siw, sc->sParDust);
 			pSceneMgr->getRootSceneNode()->createChildSceneNode()->attachObject(pd[w]);
 			pd[w]->getEmitter(0)->setEmissionRate(0);  }
+		if (!pflM[w])  {
+			pflM[w] = pSceneMgr->createParticleSystem("FlMud"+siw, "FluidMud");
+			pSceneMgr->getRootSceneNode()->createChildSceneNode()->attachObject(pflM[w]);
+			pflM[w]->getEmitter(0)->setEmissionRate(0);  }
+		if (!pflW[w])  {
+			pflW[w] = pSceneMgr->createParticleSystem("FlWater"+siw, "FluidWater");
+			pSceneMgr->getRootSceneNode()->createChildSceneNode()->attachObject(pflW[w]);
+			pflW[w]->getEmitter(0)->setEmissionRate(0);  }
 
 		//  trails
 		if (!ndWhE[w])
@@ -589,6 +625,8 @@ void CarModel::UpdParsTrails(bool visible)
 		if (ps[w])	{	ps[w]->setVisible(vis);  ps[w]->setRenderQueueGroup(grp);  }  // vdr only && !sc.ter
 		if (pm[w])	{	pm[w]->setVisible(vis);  pm[w]->setRenderQueueGroup(grp);  }
 		if (pd[w])	{	pd[w]->setVisible(vis);  pd[w]->setRenderQueueGroup(grp);  }
+		if (pflM[w]){	pflM[w]->setVisible(vis);  pflM[w]->setRenderQueueGroup(grp);  }
+		if (pflW[w]){	pflW[w]->setVisible(vis);  pflW[w]->setRenderQueueGroup(grp);  }
 		if (ph)		{	ph->setVisible(vis);     ph->setRenderQueueGroup(grp);     }
 	}
 }

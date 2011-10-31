@@ -67,9 +67,10 @@ class FluidBox		// fluid box shape - water, mud, etc.
 {
 public:
 	Ogre::Vector3 pos, rot, size;  Ogre::Vector2 tile;
-	int id;  // index to FluidParams, -1 doesnt exist
+	int id;  // auto set, index to FluidParams, -1 doesnt exist
 	std::string name;
 	class btCollisionObject* cobj;
+	bool isWater;  // auto set,  todo: index to fluid particles array..
 
 	FluidBox();
 };
