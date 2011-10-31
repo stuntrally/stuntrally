@@ -1,15 +1,11 @@
 #include "pch.h"
 #include "cardynamics.h"
-
-#include "configfile.h"
-#include "tracksurface.h"
 #include "coordinatesystems.h"
 #include "collision_world.h"
 #include "tobullet.h"
 #include "model.h"
 #include "settings.h"
 #include "../ogre/Defines.h"
-#include "../ogre/common/SceneXml.h"
 #include "Buoyancy.h"
 
 typedef CARDYNAMICS::T T;

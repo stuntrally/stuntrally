@@ -36,9 +36,9 @@ class CARBRAKE
 		void DebugPrint(std::ostream & out)
 		{
 			out << "---Brake---" << std::endl;
-			out << "Brake control: " << brake_factor << std::endl;
-			out << "Handbrake control: " << handbrake_factor << std::endl;
-			out << "Braking torque: " << lasttorque << std::endl;
+			out << "Brake    : " << brake_factor << std::endl;
+			out << "Handbrake: " << handbrake_factor << std::endl;
+			out << "Torque: " << lasttorque << std::endl;
 			out << "Locked: " << locked << std::endl;
 		}
 		

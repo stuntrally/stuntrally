@@ -593,6 +593,10 @@
 					>
 				</File>
 				<File
+					RelativePath=".\source\vdrift\cardynamics_update.cpp"
+					>
+				</File>
+				<File
 					RelativePath=".\Source\vdrift\carengine.h"
 					>
 				</File>

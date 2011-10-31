@@ -1,7 +1,7 @@
 #ifndef SHADERPROPERTIES_H
 #define SHADERPROPERTIES_H
 
-class MaterialProperties;  class MaterialFactory;
+struct MaterialProperties;  class MaterialFactory;
 
 struct ShaderProperties
 {

@@ -35,11 +35,11 @@ class CARCLUTCH
 		void DebugPrint(std::ostream & out)
 		{
 			out << "---Clutch---" << std::endl;
-			out << "Clutch position: " << clutch_position << std::endl;
+			out << "Position: " << clutch_position << std::endl;
 			out << "Locked: " << locked << std::endl;
 			out << "Torque: " << last_torque << std::endl;
-			out << "Engine speed: " << engine_speed << std::endl;
-			out << "Drive speed: " << drive_speed << std::endl;
+			out << "Engine: " << engine_speed << std::endl;
+			out << "Drive : " << drive_speed << std::endl;
 		}
 
 		void SetSlidingFriction ( const T& value )

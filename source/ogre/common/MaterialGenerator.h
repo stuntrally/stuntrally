@@ -1,7 +1,7 @@
 #ifndef MATERIALGENERATOR_H
 #define MATERIALGENERATOR_H
 
-class MaterialFactory;  class ShaderProperties;
+class MaterialFactory;  struct ShaderProperties;
 #include "MaterialDefinition.h" // textureMap typedef
 
 #include <OgreHighLevelGpuProgram.h>
