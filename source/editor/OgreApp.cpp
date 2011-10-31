@@ -57,6 +57,7 @@ App::App()  //  gui wigdets--
 	,ndCar(0),entCar(0),ndStBox(0),entStBox(0)
 	,grass(0), trees(0), sun(0), terMaxAng(0.f)
 	,eTrkEvent(TE_None), bNewHmap(0), bTrGrUpd(0)
+	,iFlCur(0), bRecreateFluids(0)
 {
 	pathTrk[0] = PATHMANAGER::GetTrackPath() + "/";      pathTrkPrv[0] = pathTrk[0] + "_previews/";  resTrk = "";
 	pathTrk[1] = PATHMANAGER::GetTrackPathUser() + "/";  pathTrkPrv[1] = pathTrk[1] + "_previews/";
@@ -76,6 +77,7 @@ App::App()  //  gui wigdets--
 	for (int i=0; i<BR_TXT; ++i)  brTxt[i]=0;
 	for (int i=0; i<RD_TXT; ++i)  rdTxt[i]=0;
 	for (int i=0; i<RDS_TXT; ++i)  rdTxtSt[i]=0;
+	for (int i=0; i<FL_TXT; ++i)  flTxt[i]=0;
 	
 	for (int i=0; i < StTrk; ++i)  stTrk[i] = 0;
 	for (int i=0; i < 4; ++i)  {  cmbRoadMtr[i]=0;  cmbPipeMtr[i]=0;  }

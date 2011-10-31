@@ -148,6 +148,8 @@ void App::TrackListUpd()
 		strlist li,lu;
 		PATHMANAGER::GetFolderIndex(pathTrk[0], li);
 		PATHMANAGER::GetFolderIndex(pathTrk[1], lu);  //name duplicates
+		if (li.size() == 0 || lu.size() == 0)
+			LogO("Error: no tracks !!! in data/tracks/ crashing.");
 
 		//  sort
 		std::list<TrkL> liTrk;

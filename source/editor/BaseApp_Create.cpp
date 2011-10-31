@@ -150,7 +150,7 @@ BaseApp::BaseApp()
 	,mStatsOn(0), mShowCamPos(1), mbWireFrame(0)
 	,mx(0),my(0),mz(0),	mGUI(0), mPlatform(0)
 	,mWndOpts(0), mWndBrush(0), mWndCam(0)
-	,mWndRoadCur(0), mWndRoadStats(0)
+	,mWndRoadCur(0), mWndRoadStats(0), mWndFluids(0)
 
 	,i_cmdKeyPress(0), cmdKeyPress(0)
 	,i_cmdKeyRel(0), cmdKeyRel(0)

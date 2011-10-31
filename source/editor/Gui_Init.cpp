@@ -27,7 +27,8 @@ void App::InitGui()
 		if (name == "BrushWnd")  mWndBrush = *it;  else
 		if (name == "RoadCur")   mWndRoadCur = *it;  else
 		if (name == "RoadStats")  mWndRoadStats = *it;  else
-		if (name == "OptionsWnd")  mWndOpts = *it;
+		if (name == "OptionsWnd")  mWndOpts = *it;  else
+		if (name == "FluidsWnd")  mWndFluids = *it;
 	}
 	if (mWndRoadStats)  mWndRoadStats->setVisible(false);
 
@@ -45,6 +46,10 @@ void App::InitGui()
 		rdTxt[i] = (StaticTextPtr)mWndRoadCur->findWidget("rdCur"+toStr(i));
 	if (mWndRoadStats)  for (int i=0; i<RDS_TXT; ++i)
 		rdTxtSt[i] = (StaticTextPtr)mWndRoadStats->findWidget("rdStat"+toStr(i));
+
+	//  Fluid window texts
+	if (mWndFluids)  for (int i=0; i<FL_TXT; ++i)
+		flTxt[i] = (StaticTextPtr)mWndFluids->findWidget("flTxt"+toStr(i));
 
 
 	//  Options wnd

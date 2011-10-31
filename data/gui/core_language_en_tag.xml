@@ -628,9 +628,19 @@
 
 
 	<!--  Fluids  -->
-	<Tag name="InputFluids">Fluids</Tag>
+	<Tag name="Fluids">Fluids</Tag>
+	<Tag name="InputFluidsMode">W - edit fluids</Tag>
+	<Tag name="InputFluidsPrevNext">PgUp,PgDn (or Wheel) - previous/next fluid</Tag>
+	<Tag name="InputFluidsIns">Ins - insert new, default fluid at cursor</Tag>
+	<Tag name="InputFluidsDel">Del - delete current</Tag>
+	<Tag name="InputFluidsMove">LMB - move   RMB - height</Tag>
+	<Tag name="InputFluidsSize">alt-LMB - size   alt-RMB - depth</Tag>
+	<Tag name="InputFluidsRot">MMB - rotate yaw</Tag>
+	<Tag name="InputFluidsType">-,=  - change fluid type (water,mud,etc.)</Tag>
+	<Tag name="InputFluidsTile">[,]  - change texture tiling</Tag>
+	<Tag name="InputFluidsTileY">; &apos;  - change texture tiling, one coord. only</Tag>
 	
-
+		
 <!--  ............................................................................................................................  -->
 <!--  Tips  -->
 <!--  ............................................................................................................................  -->
@@ -640,6 +650,7 @@
 	<Tag name="TipTerWind">Terrain brush window.</Tag>
 	<Tag name="TipRoadParams">Road point parameters.</Tag>
 	<Tag name="TipRoadStats">Whole road statistics.</Tag>
+	<Tag name="TipFluidsWnd">Fluid parameters window.</Tag>
 
 	<!--  Track  -->
 	<Tag name="TipTrkListEditor">Tracks list, click to select (for Rename or Duplicate). Press [Load track] to change current track in editor.</Tag>

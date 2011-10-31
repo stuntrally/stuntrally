@@ -56,7 +56,7 @@ void CARDYNAMICS::UpdateBuoyancy()
 			WaterVolume water;
 			//float bump = 1.f + 0.7f * sinf(chassisPosition[0]*fp.bumpFqX)*cosf(chassisPosition[1]*fp.bumpFqY);
 			water.density = fp.density /* (1.f + 0.7f * bc)*/;  water.angularDrag = fp.angularDrag;
-			water.linearDrag = fp.linearDrag;  water.linearDrag2 = 0.f;//1.4f;//fp.linearDrag;
+			water.linearDrag = fp.linearDrag;  water.linearDrag2 = 0.f;  //1.4f;//fp.linearDrag2;
 			water.velocity.SetZero();
 			water.plane.offset = fb->pos.y;  water.plane.normal = Vec3(0,0,1);
 			//todo: fluid boxes rotation yaw, pitch ?-

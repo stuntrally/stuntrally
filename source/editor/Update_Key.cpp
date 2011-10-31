@@ -37,6 +37,7 @@ void App::UpdEditWnds()
 	if (mWndRoadCur)  mWndRoadCur->setVisible(bRoad);
 	//if (mWndRoadStats)  mWndRoadStats->setVisible(bRoad);
 	if (mWndCam)  mWndCam->setVisible(edMode == ED_PrvCam);
+	if (mWndFluids)  mWndFluids->setVisible(edMode == ED_Fluids);
 	UpdStartPos();  // StBox visible
 	UpdVisGui();  //br prv..
 }
@@ -299,6 +300,62 @@ bool App::KeyPress(const CmdKey &arg)
 		case KC_L:	mBrShape[curBr] = (EBrShape)((mBrShape[curBr]+1) % BRS_ALL);            updBrush();  break;
 		case KC_COMMA:	mBrOct[curBr] = std::max(1, mBrOct[curBr]-1);  updBrush();  break;
 		case KC_PERIOD:	mBrOct[curBr] = std::min(7, mBrOct[curBr]+1);  updBrush();  break;
+	}
+	
+	//  Fluids ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ 
+	if (edMode == ED_Fluids)
+	{	int fls = sc.fluids.size();
+		switch (arg.key)
+		{
+			//  ins
+			case KC_INSERT:	case KC_NUMPAD0:
+			if (road && road->bHitTer)
+			{
+				FluidBox fb;	fb.name = "water blue";
+				fb.pos = road->posHit;	fb.rot = Ogre::Vector3(0.f, 0.f, 0.f);
+				fb.size = Ogre::Vector3(50.f, 20.f, 50.f);	fb.tile = Vector2(0.01f, 0.01f);
+				sc.fluids.push_back(fb);
+				sc.UpdateFluidsId();
+				iFlCur = sc.fluids.size()-1;
+				bRecreateFluids = true;
+			}	break;
+		}
+		if (fls > 0)
+		switch (arg.key)
+		{
+			//  first, last
+			case KC_HOME:  case KC_NUMPAD7:
+				iFlCur = 0;  break;
+			case KC_END:  case KC_NUMPAD1:
+				if (fls > 0)  iFlCur = fls-1;  break;
+
+			//  prev,next
+			case KC_PGUP:	case KC_NUMPAD9:
+				if (fls > 0) {  iFlCur = (iFlCur-1+fls)%fls;	}	break;
+			case KC_PGDOWN:	case KC_NUMPAD3:
+				if (fls > 0) {  iFlCur = (iFlCur+1)%fls;		}	break;
+
+			//  del
+			case KC_DELETE:	case KC_DECIMAL:
+			case KC_NUMPAD5:
+				if (fls == 1)	sc.fluids.clear();
+				else			sc.fluids.erase(sc.fluids.begin() + iFlCur);
+				iFlCur = std::min(iFlCur, (int)sc.fluids.size()-1);
+				bRecreateFluids = true;
+				break;
+
+			//  prev,next type
+			case KC_MINUS:
+			{	FluidBox& fb = sc.fluids[iFlCur];
+				fb.id = (fb.id-1 + fluidsXml.fls.size()) % fluidsXml.fls.size();
+				fb.name = fluidsXml.fls[fb.id].name;
+				bRecreateFluids = true;  }	break;
+			case KC_EQUALS:
+			{	FluidBox& fb = sc.fluids[iFlCur];
+				fb.id = (fb.id+1) % fluidsXml.fls.size();
+				fb.name = fluidsXml.fls[fb.id].name;
+				bRecreateFluids = true;  }	break;
+		}
 	}
 
 	///  Common Keys  * * * * * * * * * * * * *

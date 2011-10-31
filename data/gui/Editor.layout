@@ -65,6 +65,37 @@
 			<Property key="Text_TextColour" value="0.76 0.9 1.0"/>
 		</Widget>
 	</Widget>
+	<Widget type="Window" skin="WindowC" position="0 64 180 160" layer="Back" name="FluidsWnd">
+		<Property key="Widget_Caption" value="#{Fluids}"/>
+		<Property key="Widget_Colour" value="0.1 0.3 0.5"/>
+		<Property key="Widget_Alpha" value="0.6"/>
+		<Property key="Window_Snap" value="true"/>
+		<UserString key="tip" value="#{TipFluidsWnd}"/>
+		<Widget type="StaticText" skin="StaticText" position="4 0 160 20" name="flTxt0">
+			<Property key="Widget_InheritsAlpha" value="false"/>
+			<Property key="Text_TextColour" value="0.7 0.86 1.0"/>
+		</Widget>
+		<Widget type="StaticText" skin="StaticText" position="4 20 160 20" name="flTxt1">
+			<Property key="Widget_InheritsAlpha" value="false"/>
+			<Property key="Text_TextColour" value="0.8 0.9 1.0"/>
+		</Widget>
+		<Widget type="StaticText" skin="StaticText" position="4 40 160 20" name="flTxt2">
+			<Property key="Widget_InheritsAlpha" value="false"/>
+			<Property key="Text_TextColour" value="0.6 0.75 0.9"/>
+		</Widget>
+		<Widget type="StaticText" skin="StaticText" position="4 60 160 20" name="flTxt3">
+			<Property key="Widget_InheritsAlpha" value="false"/>
+			<Property key="Text_TextColour" value="0.6 0.75 0.9"/>
+		</Widget>
+		<Widget type="StaticText" skin="StaticText" position="4 80 160 20" name="flTxt4">
+			<Property key="Widget_InheritsAlpha" value="false"/>
+			<Property key="Text_TextColour" value="0.6 0.8 1.0"/>
+		</Widget>
+		<Widget type="StaticText" skin="StaticText" position="4 100 160 20" name="flTxt5">
+			<Property key="Widget_InheritsAlpha" value="false"/>
+			<Property key="Text_TextColour" value="0.6 0.8 1.0"/>
+		</Widget>
+	</Widget>
 	<Widget type="Window" skin="WindowC" position="0 34 136 266" layer="Back" name="RoadCur">
 		<Property key="Widget_Colour" value="0.4 0.4 0.4"/>
 		<Property key="Widget_Alpha" value="0.6"/>
@@ -1931,15 +1962,15 @@
 					<Property key="Tab_ButtonWidth" value="140"/>
 					<Widget type="TabItem" skin="" position="4 26 711 447">
 						<Property key="Widget_Caption" value="#{InputMain}"/>
-						<Widget type="StaticText" skin="StaticText" position="32 44 256 20">
+						<Widget type="StaticText" skin="StaticText" position="32 44 288 20">
 							<Property key="Text_TextColour" value="0.9 0.96 1.0"/>
 							<Property key="Widget_Caption" value="#{InputToggleCam}"/>
 						</Widget>
-						<Widget type="StaticText" skin="StaticText" position="32 77 256 20">
+						<Widget type="StaticText" skin="StaticText" position="32 77 288 20">
 							<Property key="Text_TextColour" value="1.0 1.0 0.2"/>
 							<Property key="Widget_Caption" value="#{InputToggleGUIMode}"/>
 						</Widget>
-						<Widget type="StaticText" skin="StaticText" position="32 98 256 20">
+						<Widget type="StaticText" skin="StaticText" position="32 98 288 20">
 							<Property key="Text_TextColour" value="0.7 0.7 0.1"/>
 							<Property key="Widget_Caption" value="#{InputNextOptTab}"/>
 						</Widget>
@@ -1967,27 +1998,27 @@
 							<Property key="Widget_Caption" value="#{InputAfterChanges}"/>
 							<Property key="Text_TextColour" value="0.1 0.75 0.35"/>
 						</Widget>
-						<Widget type="StaticText" skin="StaticText" position="96 14 96 20">
+						<Widget type="StaticText" skin="StaticText" position="96 14 152 20">
 							<Property key="Widget_Caption" value="#{InputMain}"/>
 							<Property key="Text_TextColour" value="0.8 0.8 1.0"/>
 						</Widget>
-						<Widget type="StaticText" skin="StaticText" position="32 226 312 20">
+						<Widget type="StaticText" skin="StaticText" position="32 226 368 20">
 							<Property key="Widget_Caption" value="#{InputTogglePreview}"/>
 							<Property key="Text_TextColour" value="0.7 0.86 1"/>
 						</Widget>
-						<Widget type="StaticText" skin="StaticText" position="172 248 212 20">
+						<Widget type="StaticText" skin="StaticText" position="172 248 236 20">
 							<Property key="Widget_Caption" value="#{InputTrackScrn}"/>
 							<Property key="Text_TextColour" value="0.6 0.76 0.9"/>
 						</Widget>
-						<Widget type="StaticText" skin="StaticText" position="440 14 128 20">
+						<Widget type="StaticText" skin="StaticText" position="440 14 184 20">
 							<Property key="Widget_Caption" value="#{InputCameraMode}"/>
 							<Property key="Text_TextColour" value="0.4 0.7 1.0"/>
 						</Widget>
-						<Widget type="StaticText" skin="StaticText" position="376 44 280 20">
+						<Widget type="StaticText" skin="StaticText" position="376 44 320 20">
 							<Property key="Text_TextColour" value="0.8 0.9 1.0"/>
 							<Property key="Widget_Caption" value="#{InputCamControl}"/>
 						</Widget>
-						<Widget type="StaticText" skin="StaticText" position="376 66 296 20">
+						<Widget type="StaticText" skin="StaticText" position="376 66 320 20">
 							<Property key="Widget_Caption" value="#{InputCamControl2}"/>
 							<Property key="Text_TextColour" value="0.8 0.9 1.0"/>
 						</Widget>
@@ -1995,22 +2026,22 @@
 							<Property key="Text_TextColour" value="0.6 0.6 0.9"/>
 							<Property key="Widget_Caption" value="#{InputValueChange}"/>
 						</Widget>
-						<Widget type="StaticText" skin="StaticText" position="376 132 296 20">
+						<Widget type="StaticText" skin="StaticText" position="376 132 320 20">
 							<Property key="Text_TextColour" value="0.7 0.7 1.0"/>
 							<Property key="Widget_Caption" value="#{InputSlowFast}"/>
 						</Widget>
 					</Widget>
 					<Widget type="TabItem" skin="" position="4 26 711 447">
 						<Property key="Widget_Caption" value="#{Terrain}"/>
-						<Widget type="StaticText" skin="StaticText" position="96 14 144 20">
+						<Widget type="StaticText" skin="StaticText" position="96 14 248 20">
 							<Property key="Text_TextColour" value="0.8 0.9 1.0"/>
 							<Property key="Widget_Caption" value="#{EditTerrainMode}"/>
 						</Widget>
-						<Widget type="StaticText" skin="StaticText" position="32 44 240 20">
+						<Widget type="StaticText" skin="StaticText" position="32 44 312 20">
 							<Property key="Widget_Caption" value="#{InputTerDeform}"/>
 							<Property key="Text_TextColour" value="0.5 1.0 0.3"/>
 						</Widget>
-						<Widget type="StaticText" skin="StaticText" position="32 66 232 20">
+						<Widget type="StaticText" skin="StaticText" position="32 66 312 20">
 							<Property key="Widget_Caption" value="#{InputTerSmooth}"/>
 							<Property key="Text_TextColour" value="0.3 0.8 0.8"/>
 						</Widget>
@@ -2018,54 +2049,54 @@
 							<Property key="Widget_Caption" value="#{InputTerHeight}"/>
 							<Property key="Text_TextColour" value="0.7 1.0 0.7"/>
 						</Widget>
-						<Widget type="StaticText" skin="StaticText" position="32 174 242 20">
+						<Widget type="StaticText" skin="StaticText" position="32 174 312 20">
 							<Property key="Widget_Caption" value="#{InputToggleVeget}"/>
 							<Property key="Text_TextColour" value="0.6 1.0 0.2"/>
 						</Widget>
-						<Widget type="StaticText" skin="StaticText" position="376 44 200 20">
+						<Widget type="StaticText" skin="StaticText" position="376 44 320 20">
 							<Property key="Widget_Caption" value="-#{InputWheelSize}"/>
 							<Property key="Text_TextColour" value="0.8 0.9 1.0"/>
 						</Widget>
-						<Widget type="StaticText" skin="StaticText" position="376 66 304 20">
+						<Widget type="StaticText" skin="StaticText" position="376 66 320 20">
 							<Property key="Widget_Caption" value="#{InputWheelForce}"/>
 							<Property key="Text_TextColour" value="0.8 0.9 1.0"/>
 						</Widget>
-						<Widget type="StaticText" skin="StaticText" position="376 88 272 20">
+						<Widget type="StaticText" skin="StaticText" position="376 88 320 20">
 							<Property key="Widget_Caption" value="#{InputWheelPower}"/>
 							<Property key="Text_TextColour" value="0.8 0.9 1.0"/>
 						</Widget>
-						<Widget type="StaticText" skin="StaticText" position="376 110 200 20">
+						<Widget type="StaticText" skin="StaticText" position="376 110 320 20">
 							<Property key="Widget_Caption" value="#{InputWheelShape}"/>
 							<Property key="Text_TextColour" value="0.72 0.76 0.9"/>
 						</Widget>
-						<Widget type="StaticText" skin="StaticText" position="376 120 200 20">
+						<Widget type="StaticText" skin="StaticText" position="376 132 320 20">
 							<Property key="Widget_Caption" value=""/>
 							<Property key="Text_TextColour" value="0.8 0.9 1.0"/>
 						</Widget>
-						<Widget type="StaticText" skin="StaticText" position="32 196 264 20">
+						<Widget type="StaticText" skin="StaticText" position="32 196 312 20">
 							<Property key="Widget_Caption" value="#{InputMinimapType}"/>
 							<Property key="Text_TextColour" value="0.3 0.6 0.3"/>
 						</Widget>
-						<Widget type="StaticText" skin="StaticText" position="440 14 146 20">
+						<Widget type="StaticText" skin="StaticText" position="440 14 256 20">
 							<Property key="Widget_Caption" value="#{InputBrushParams}"/>
 							<Property key="Text_TextColour" value="0.5 1.0 0.3"/>
 						</Widget>
-						<Widget type="StaticText" skin="StaticText" position="32 218 264 20">
+						<Widget type="StaticText" skin="StaticText" position="32 218 312 20">
 							<Property key="Widget_Caption" value="#{InputUpdBlendmap}"/>
 							<Property key="Text_TextColour" value="0.7 0.9 0.1"/>
 						</Widget>
 					</Widget>
 					<Widget type="TabItem" skin="" position="4 26 711 447">
 						<Property key="Widget_Caption" value="#{Road} 1"/>
-						<Widget type="StaticText" skin="StaticText" position="32 236 160 20">
+						<Widget type="StaticText" skin="StaticText" position="32 236 320 20">
 							<Property key="Widget_Caption" value="#{InputRoadEdit}"/>
 							<Property key="Text_TextColour" value="1.0 0.7 0.0"/>
 						</Widget>
-						<Widget type="StaticText" skin="StaticText" position="32 116 312 20">
+						<Widget type="StaticText" skin="StaticText" position="32 116 320 20">
 							<Property key="Text_TextColour" value="0.8 0.9 1.0"/>
 							<Property key="Widget_Caption" value="#{InputRoadIns}"/>
 						</Widget>
-						<Widget type="StaticText" skin="StaticText" position="64 138 248 20">
+						<Widget type="StaticText" skin="StaticText" position="64 138 288 20">
 							<Property key="Widget_Caption" value="#{InputRoadInsAlt}"/>
 							<Property key="Text_TextColour" value="0.5 0.6 0.7"/>
 						</Widget>
@@ -2073,7 +2104,7 @@
 							<Property key="Text_TextColour" value="0.8 0.9 1.0"/>
 							<Property key="Widget_Caption" value="#{InputRoadNext}"/>
 						</Widget>
-						<Widget type="StaticText" skin="StaticText" position="32 38 212 20">
+						<Widget type="StaticText" skin="StaticText" position="32 38 320 20">
 							<Property key="Widget_Caption" value="#{InputRoadPick}"/>
 							<Property key="Text_TextColour" value="0.8 0.9 1.0"/>
 						</Widget>
@@ -2081,7 +2112,7 @@
 							<Property key="Text_TextColour" value="0.7 0.85 1.0"/>
 							<Property key="Widget_Caption" value="#{InputRoadSel}"/>
 						</Widget>
-						<Widget type="StaticText" skin="StaticText" position="408 60 262 20">
+						<Widget type="StaticText" skin="StaticText" position="408 60 288 20">
 							<Property key="Text_TextColour" value="0.5 0.65 0.8"/>
 							<Property key="Widget_Caption" value="#{InputRoadSelAlt}"/>
 						</Widget>
@@ -2089,23 +2120,23 @@
 							<Property key="Text_TextColour" value="1.0 0.6 0.1"/>
 							<Property key="Widget_Caption" value="#{InputRoadRebuild}"/>
 						</Widget>
-						<Widget type="StaticText" skin="StaticText" position="32 288 280 20">
+						<Widget type="StaticText" skin="StaticText" position="32 288 320 20">
 							<Property key="Text_TextColour" value="0.7 0.8 0.9"/>
 							<Property key="Widget_Caption" value="#{InputRoadMerge}"/>
 						</Widget>
-						<Widget type="StaticText" skin="StaticText" position="32 310 240 20">
+						<Widget type="StaticText" skin="StaticText" position="32 310 320 20">
 							<Property key="Text_TextColour" value="0.7 0.8 0.9"/>
 							<Property key="Widget_Caption" value="#{InputRoadStats}"/>
 						</Widget>
-						<Widget type="StaticText" skin="StaticText" position="32 94 212 20">
+						<Widget type="StaticText" skin="StaticText" position="32 94 320 20">
 							<Property key="Widget_Caption" value="#{InputRoadDel}"/>
 							<Property key="Text_TextColour" value="0.8 0.9 1.0"/>
 						</Widget>
-						<Widget type="StaticText" skin="StaticText" position="32 168 280 20">
+						<Widget type="StaticText" skin="StaticText" position="32 168 320 20">
 							<Property key="Text_TextColour" value="0.6 0.7 0.8"/>
 							<Property key="Widget_Caption" value="#{InputRoadNew}"/>
 						</Widget>
-						<Widget type="StaticText" skin="StaticText" position="96 14 184 20">
+						<Widget type="StaticText" skin="StaticText" position="96 14 240 20">
 							<Property key="Text_TextColour" value="0.65 0.65 1"/>
 							<Property key="Widget_Caption" value="#{InputRoadPickOne}"/>
 						</Widget>
@@ -2117,11 +2148,11 @@
 							<Property key="Text_TextColour" value="0.7 0.85 1.0"/>
 							<Property key="Widget_Caption" value="#{InputRoadCopySel}"/>
 						</Widget>
-						<Widget type="StaticText" skin="StaticText" position="376 116 312 20">
+						<Widget type="StaticText" skin="StaticText" position="376 116 320 20">
 							<Property key="Text_TextColour" value="0.7 0.85 1.0"/>
 							<Property key="Widget_Caption" value="#{InputRoadShiftReverse}"/>
 						</Widget>
-						<Widget type="StaticText" skin="StaticText" position="442 138 214 20">
+						<Widget type="StaticText" skin="StaticText" position="442 138 254 20">
 							<Property key="Text_TextColour" value="0.5 0.6 0.7"/>
 							<Property key="Widget_Caption" value="#{InputRoadAfterPick}"/>
 						</Widget>
@@ -2144,23 +2175,23 @@
 							<Property key="Widget_Caption" value="#{InputRoadAltMMB}"/>
 							<Property key="Text_TextColour" value="0.7 0.85 1.0"/>
 						</Widget>
-						<Widget type="StaticText" skin="StaticText" position="170 164 166 20">
+						<Widget type="StaticText" skin="StaticText" position="170 164 190 20">
 							<Property key="Text_TextColour" value="0.7 0.85 1.0"/>
 							<Property key="Widget_Caption" value="*#{InputRoadNotOnTer}"/>
 						</Widget>
-						<Widget type="StaticText" skin="StaticText" position="170 38 126 20">
+						<Widget type="StaticText" skin="StaticText" position="170 38 190 20">
 							<Property key="Widget_Caption" value="#{InputRoadMove}"/>
 							<Property key="Text_TextColour" value="0.85 0.9 1.0"/>
 						</Widget>
-						<Widget type="StaticText" skin="StaticText" position="170 60 134 20">
+						<Widget type="StaticText" skin="StaticText" position="170 60 190 20">
 							<Property key="Widget_Caption" value="#{InputRoadHeight}*"/>
 							<Property key="Text_TextColour" value="0.85 0.9 1.0"/>
 						</Widget>
-						<Widget type="StaticText" skin="StaticText" position="170 82 158 20">
+						<Widget type="StaticText" skin="StaticText" position="170 82 190 20">
 							<Property key="Widget_Caption" value="#{InputRoadWidth}"/>
 							<Property key="Text_TextColour" value="0.85 0.9 1.0"/>
 						</Widget>
-						<Widget type="StaticText" skin="StaticText" position="170 112 126 20">
+						<Widget type="StaticText" skin="StaticText" position="170 112 190 20">
 							<Property key="Text_TextColour" value="0.7 0.85 1.0"/>
 							<Property key="Widget_Caption" value="#{InputRoadYaw}*"/>
 						</Widget>
@@ -2172,43 +2203,43 @@
 							<Property key="Text_TextColour" value="0.7 0.85 1.0"/>
 							<Property key="Widget_Caption" value="#{InputRoadAltLMB}"/>
 						</Widget>
-						<Widget type="StaticText" skin="StaticText" position="376 116 264 20">
+						<Widget type="StaticText" skin="StaticText" position="376 116 320 20">
 							<Property key="Text_TextColour" value="0.8 0.9 1.0"/>
 							<Property key="Widget_Caption" value="#{InputRoadMat}"/>
 						</Widget>
-						<Widget type="StaticText" skin="StaticText" position="376 38 212 20">
+						<Widget type="StaticText" skin="StaticText" position="376 38 320 20">
 							<Property key="Text_TextColour" value="0.7 0.85 1.0"/>
 							<Property key="Widget_Caption" value="#{InputRoadColumn}*"/>
 						</Widget>
-						<Widget type="StaticText" skin="StaticText" position="376 60 232 20">
+						<Widget type="StaticText" skin="StaticText" position="376 60 320 20">
 							<Property key="Text_TextColour" value="0.8 0.9 1.0"/>
 							<Property key="Widget_Caption" value="#{InputRoadOnTer}"/>
 						</Widget>
-						<Widget type="StaticText" skin="StaticText" position="376 94 304 20">
+						<Widget type="StaticText" skin="StaticText" position="376 94 320 20">
 							<Property key="Text_TextColour" value="0.8 0.9 1.0"/>
 							<Property key="Widget_Caption" value="#{InputRoadPipeAngle}"/>
 						</Widget>
-						<Widget type="StaticText" skin="StaticText" position="376 152 304 20">
+						<Widget type="StaticText" skin="StaticText" position="376 152 320 20">
 							<Property key="Text_TextColour" value="0.8 0.9 1.0"/>
 							<Property key="Widget_Caption" value="#{InputRoadChkRadius}"/>
 						</Widget>
-						<Widget type="StaticText" skin="StaticText" position="32 202 304 20">
+						<Widget type="StaticText" skin="StaticText" position="32 202 328 20">
 							<Property key="Text_TextColour" value="0.6 0.75 0.9"/>
 							<Property key="Widget_Caption" value="#{InputRoadAngType}"/>
 						</Widget>
-						<Widget type="StaticText" skin="StaticText" position="32 224 304 20">
+						<Widget type="StaticText" skin="StaticText" position="32 224 328 20">
 							<Property key="Text_TextColour" value="0.6 0.75 0.9"/>
 							<Property key="Widget_Caption" value="#{InputRoadAngZero}"/>
 						</Widget>
-						<Widget type="StaticText" skin="StaticText" position="32 246 304 20">
+						<Widget type="StaticText" skin="StaticText" position="32 246 328 20">
 							<Property key="Text_TextColour" value="0.6 0.75 0.9"/>
 							<Property key="Widget_Caption" value="#{InputRoadAngSnap}"/>
 						</Widget>
-						<Widget type="StaticText" skin="StaticText" position="376 174 304 20">
+						<Widget type="StaticText" skin="StaticText" position="376 174 320 20">
 							<Property key="Text_TextColour" value="0.6 0.7 0.8"/>
 							<Property key="Widget_Caption" value="#{InputRoadChkFirst}"/>
 						</Widget>
-						<Widget type="StaticText" skin="StaticText" position="32 406 216 20">
+						<Widget type="StaticText" skin="StaticText" position="32 406 328 20">
 							<Property key="Widget_Caption" value="#{InputRoadMostSel}"/>
 							<Property key="Text_TextColour" value="0.6 0.7 0.8"/>
 						</Widget>
@@ -2219,19 +2250,19 @@
 					</Widget>
 					<Widget type="TabItem" skin="" position="4 26 711 447">
 						<Property key="Widget_Caption" value="#{InputStart}"/>
-						<Widget type="StaticText" skin="StaticText" position="96 14 212 20">
+						<Widget type="StaticText" skin="StaticText" position="96 14 256 20">
 							<Property key="Text_TextColour" value="0.7 0.7 1.0"/>
 							<Property key="Widget_Caption" value="#{InputStartPos}"/>
 						</Widget>
-						<Widget type="StaticText" skin="StaticText" position="32 66 256 20">
+						<Widget type="StaticText" skin="StaticText" position="32 66 320 20">
 							<Property key="Text_TextColour" value="0.8 0.9 1.0"/>
 							<Property key="Widget_Caption" value="#{InputStartAltLMB}"/>
 						</Widget>
-						<Widget type="StaticText" skin="StaticText" position="32 88 264 20">
+						<Widget type="StaticText" skin="StaticText" position="32 88 320 20">
 							<Property key="Text_TextColour" value="0.8 0.9 1.0"/>
 							<Property key="Widget_Caption" value="#{InputStartAltMMB}"/>
 						</Widget>
-						<Widget type="StaticText" skin="StaticText" position="32 44 256 20">
+						<Widget type="StaticText" skin="StaticText" position="32 44 320 20">
 							<Property key="Text_TextColour" value="0.8 0.9 1.0"/>
 							<Property key="Widget_Caption" value="#{InputStartLMB}"/>
 						</Widget>
@@ -2239,11 +2270,11 @@
 							<Property key="Text_TextColour" value="0.8 0.9 1.0"/>
 							<Property key="Widget_Caption" value="#{InputStartHeight}"/>
 						</Widget>
-						<Widget type="StaticText" skin="StaticText" position="32 152 320 20">
+						<Widget type="StaticText" skin="StaticText" position="32 152 336 20">
 							<Property key="Text_TextColour" value="0.8 0.9 1.0"/>
 							<Property key="Widget_Caption" value="#{InputStartWidth}"/>
 						</Widget>
-						<Widget type="StaticText" skin="StaticText" position="32 174 320 20">
+						<Widget type="StaticText" skin="StaticText" position="32 174 336 20">
 							<Property key="Text_TextColour" value="0.8 0.9 1.0"/>
 							<Property key="Widget_Caption" value="#{InputStartDir}"/>
 						</Widget>
@@ -2253,7 +2284,47 @@
 						</Widget>
 					</Widget>
 					<Widget type="TabItem" skin="" position="4 26 711 447">
-						<Property key="Widget_Caption" value="#{InputFluids}"/>
+						<Property key="Widget_Caption" value="#{Fluids}"/>
+						<Widget type="StaticText" skin="StaticText" position="96 14 212 20">
+							<Property key="Text_TextColour" value="0.3 0.65 1.0"/>
+							<Property key="Widget_Caption" value="#{InputFluidsMode}"/>
+						</Widget>
+						<Widget type="StaticText" skin="StaticText" position="376 44 320 20">
+							<Property key="Text_TextColour" value="0.8 0.9 1.0"/>
+							<Property key="Widget_Caption" value="#{InputFluidsPrevNext}"/>
+						</Widget>
+						<Widget type="StaticText" skin="StaticText" position="376 66 320 20">
+							<Property key="Text_TextColour" value="0.8 0.9 1.0"/>
+							<Property key="Widget_Caption" value="#{InputFluidsIns}"/>
+						</Widget>
+						<Widget type="StaticText" skin="StaticText" position="376 88 320 20">
+							<Property key="Text_TextColour" value="0.8 0.9 1.0"/>
+							<Property key="Widget_Caption" value="#{InputFluidsDel}"/>
+						</Widget>
+						<Widget type="StaticText" skin="StaticText" position="32 44 320 20">
+							<Property key="Text_TextColour" value="0.8 0.9 1.0"/>
+							<Property key="Widget_Caption" value="#{InputFluidsMove}"/>
+						</Widget>
+						<Widget type="StaticText" skin="StaticText" position="32 66 320 20">
+							<Property key="Text_TextColour" value="0.8 0.9 1.0"/>
+							<Property key="Widget_Caption" value="#{InputFluidsSize}"/>
+						</Widget>
+						<Widget type="StaticText" skin="StaticText" position="32 126 320 20">
+							<Property key="Text_TextColour" value="0.8 0.9 1.0"/>
+							<Property key="Widget_Caption" value="#{InputFluidsType}"/>
+						</Widget>
+						<Widget type="StaticText" skin="StaticText" position="32 148 320 20">
+							<Property key="Text_TextColour" value="0.6 0.75 0.9"/>
+							<Property key="Widget_Caption" value="#{InputFluidsTile}"/>
+						</Widget>
+						<Widget type="StaticText" skin="StaticText" position="32 170 320 20">
+							<Property key="Text_TextColour" value="0.6 0.75 0.9"/>
+							<Property key="Widget_Caption" value="#{InputFluidsTileY}"/>
+						</Widget>
+						<Widget type="StaticText" skin="StaticText" position="32 88 320 20">
+							<Property key="Text_TextColour" value="0.8 0.9 1.0"/>
+							<Property key="Widget_Caption" value="#{InputFluidsRot}"/>
+						</Widget>
 					</Widget>
 				</Widget>
 			</Widget>

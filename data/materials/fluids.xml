@@ -20,15 +20,15 @@
 
 	<!--<fluid name="grease soft"	material="" density="600" angDamp="0.8" linDamp="0.3" heightDamp="0" />-->
 
-	<!--material Water_blue : ppx_water1  // island blue
-		material Water_cyan : ppx_water1  // greece cyan +
-		material Water_green : ppx_water1  // jungle green +
-		material Water_light : ppx_water1  // light light green -
-		material Water_yellow : ppx_water1  // yellow light -->
-	<!--water.density = 1400.0f;  water.angularDrag = 1.0f;  water.linearDrag = 0.5f;  // mud hard too springy- car dens 1900
-		water.density = 1200.0f;  water.angularDrag = 1.8f;  water.linearDrag = 0.8f;  // mud hard~ car dens 1900
-		water.density = 2000.0f;  water.angularDrag = 2.2f;  water.linearDrag = 0.6f;  // mud hard~ car dens 1900
-		water.density = 1000.0f;  water.angularDrag = 1.8f;  water.linearDrag = 0.5f;  // mud hard~ car dens 1900
-		water.density = 600.0f;  water.angularDrag = 1.0f;  water.linearDrag = 0.2f;  // water slow sink~ car dens 1900
-		water.density = 200.0f;  water.angularDrag = 0.7f;  water.linearDrag = 0.2f;  // water soft~ car dens 1900-->
+	<!--materials
+		Water_blue  island blue
+		Water_cyan  greece cyan +
+		Water_green  jungle green +
+		Water_light  light light green -
+		Water_yellow  yellow light -->
+	<!--density = 1400.0f;  angularDrag = 1.0f;  linearDrag = 0.5f;  // mud hard too springy- 
+		density = 2000.0f;  angularDrag = 2.2f;  linearDrag = 0.6f;  // mud hard~
+		density = 1000.0f;  angularDrag = 1.8f;  linearDrag = 0.5f;  // mud hard~
+		density = 600.0f;  angularDrag = 1.0f;  linearDrag = 0.2f;  // water slow sink~ 
+		density = 200.0f;  angularDrag = 0.7f;  linearDrag = 0.2f;  // water soft~ -->
 </fluids>

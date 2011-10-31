@@ -542,3 +542,17 @@ void App::CreateFluids()
 		#endif
 	}
 }
+
+#ifdef ROAD_EDITOR
+void App::DestroyFluids()
+{
+	for (int i=0; i < vFlSMesh.size(); ++i)
+	{
+		vFlNd[i]->detachAllObjects();
+		mSceneMgr->destroyEntity(vFlEnt[i]);
+		mSceneMgr->destroySceneNode(vFlNd[i]);
+		Ogre::MeshManager::getSingleton().remove(vFlSMesh[i]);
+	}
+	vFlNd.clear();  vFlEnt.clear();  vFlSMesh.clear();
+}
+#endif

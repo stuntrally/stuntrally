@@ -78,7 +78,7 @@ protected:
 	Ogre::String resTrk;  void NewCommon(), UpdTrees();
 	void CreateTerrain(bool bNewHmap=false, bool bTer=true);
 	void GetTerAngles(int xb,int yb,int xe,int ye);
-	void CreateTrees(), reloadMtrTex(Ogre::String mtrName), CreateFluids();
+	void CreateTrees(), reloadMtrTex(Ogre::String mtrName), CreateFluids(), DestroyFluids();
 	void CreateSkyDome(Ogre::String sMater, Ogre::Vector3 scale);
 	bool GetFolderIndex(std::string folderpath, std::list <std::string> & outputfolderlist, std::string extension="");
 
@@ -105,6 +105,7 @@ protected:
 	std::vector<Ogre::String/*MeshPtr*/> vFlSMesh;
 	std::vector<Ogre::Entity*> vFlEnt;
 	std::vector<Ogre::SceneNode*> vFlNd;
+	int iFlCur;  bool bRecreateFluids;
 	
 	
 	///  terrain
@@ -230,8 +231,8 @@ protected:
 
 
 	//  brush & road windows texts
-	const static int BR_TXT=6, RD_TXT=14, RDS_TXT=9;
-	MyGUI::StaticTextPtr brTxt[BR_TXT], rdTxt[RD_TXT],rdTxtSt[RDS_TXT];
+	const static int BR_TXT=6, RD_TXT=14, RDS_TXT=9, FL_TXT=6;
+	MyGUI::StaticTextPtr brTxt[BR_TXT], rdTxt[RD_TXT],rdTxtSt[RDS_TXT], flTxt[FL_TXT];
 	MyGUI::StaticImagePtr brImg;  MyGUI::TabPtr wndTabs;
 
 
