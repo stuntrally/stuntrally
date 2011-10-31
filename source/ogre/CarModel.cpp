@@ -181,7 +181,9 @@ void CarModel::Update(PosInfo& posInfo, float time)
 		int mtr = std::max(0, std::min(whMtr-1, (int)(sc->td.layers.size()-1)));
 		TerLayer& lay = whMtr==0 ? sc->td.layerRoad : sc->td.layersAll[sc->td.layers[mtr]];
 		emitD *= lay.dust;  emitM *= lay.mud;  sizeD *= lay.dustS;  emitS *= lay.smoke;
+
 		if (whRd == 2)  emitD = 0;  // no dust in pipes
+		if (cd.inFluidsWh[w].size() > 0)  emitD = 0;  // no dust in fluids
 
 		//  par emit
 		Vector3 vpos = posInfo.whPos[w];

@@ -320,8 +320,8 @@ void CARDYNAMICS::Tick(T dt)
 
 	feedback /= (num_repeats + 1);
 
-	fuel_tank.Consume ( engine.FuelRate() * dt );
-	engine.SetOutOfGas ( fuel_tank.Empty() );
+	fuel_tank.Consume(engine.FuelRate() * dt);
+	//engine.SetOutOfGas(fuel_tank.Empty());
 
 	const float tacho_factor = 0.1;
 	tacho_rpm = engine.GetRPM() * tacho_factor + tacho_rpm * (1.0 - tacho_factor);

@@ -24,7 +24,7 @@ material ppx_water1			// per pixel  water (alpha)
 			scene_blend  alpha_blend
 			cull_hardware  none
 			transparent_sorting on
-			depth_write off
+			depth_write on
 
 			specular $specularCol $shininess
  
