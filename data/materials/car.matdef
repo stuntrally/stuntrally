@@ -62,7 +62,16 @@ receivesDepthShadows = false
 ; ------------- RS2 ----------------
 
 [chasis/Material#1]
-parent = car_body
+envMap = ReflectionCube
+reflAmount = 0.1
+diffuse = 1.0 1.0 1.0
+ambient = 0.5 0.5 0.5
+specular = 0.7 0.7 0.7 32
+receivesShadows = false
+receivesDepthShadows = true
+fresnelScale = 0.73
+fresnelBias = 0.07
+fresnelPower = 4
 diffuseMap_1024 = chasis.png
 
 [chasis/Material_#3]
