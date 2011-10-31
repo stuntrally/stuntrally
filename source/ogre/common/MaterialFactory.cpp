@@ -48,6 +48,18 @@ MaterialFactory::~MaterialFactory()
 	for (std::vector<MaterialDefinition*>::iterator it=mDefinitions.begin();
 		it!=mDefinitions.end(); ++it)
 		delete (*it);
+		
+	deleteShaderCache();
+}
+
+//----------------------------------------------------------------------------------------
+
+void MaterialFactory::deleteShaderCache()
+{
+	for (shaderMap::iterator it=mShaderCache.begin(); it!=mShaderCache.end(); ++it)
+		delete (*it).second;
+	
+	mShaderCache.clear();
 }
 
 //----------------------------------------------------------------------------------------
@@ -171,7 +183,7 @@ void MaterialFactory::generate()
 		QTimer ti;  ti.update(); /// time
 		LogO("[MaterialFactory] generating new materials...");
 		
-		mShaderCache.clear();
+		deleteShaderCache();
 		splitMtrs.clear();
 		
 		MaterialGenerator generator;

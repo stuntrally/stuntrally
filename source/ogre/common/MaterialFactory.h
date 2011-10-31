@@ -57,6 +57,7 @@ private:
 	std::vector<MaterialDefinition*> mDefinitions;
 	
 	shaderMap mShaderCache;
+	void deleteShaderCache(); // cleanup
 	
 	Ogre::ConfigFile mFile; // for loading mat def's from file
 

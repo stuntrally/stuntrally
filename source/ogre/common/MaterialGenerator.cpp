@@ -95,6 +95,9 @@ void MaterialGenerator::generate(bool fixedFunction)
 	ssaopass->setVertexProgram(vprog->getName());
 	ssaopass->setFragmentProgram(fprog->getName());
 	
+	if ( !mDef->mProps->transparent ) // not doing this for transparent stuff (e.g. leaves) as a temporary workaround now
+		ssaopass->setCullingMode( chooseCullingMode() );
+	
 	Ogre::Pass* pass = technique->createPass();
 	
 	if (!mDef->mProps->twoPass)
