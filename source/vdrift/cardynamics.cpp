@@ -719,6 +719,7 @@ void CARDYNAMICS::UpdateDriveline(T dt, T drive_torque[])
 	T clutch_speed = transmission.CalculateClutchSpeed(driveshaft_speed);
 	T crankshaft_speed = engine.GetAngularVelocity();
 	T engine_drag = clutch.GetTorque(crankshaft_speed, clutch_speed);
+	engine_drag += 0.1;  // fixes clutch stall bug when car vel = 0 and all wheels in air
 
 	engine.ComputeForces();
 
