@@ -1,82 +1,81 @@
 [car_body]
-lightMap_1024 = body_light.png
-blendMap_1024 = body_blend.png
-envMap = ReflectionCube
-reflAmount = 0.1
-diffuse = 1.0 1.0 1.0
-ambient = 0.5 0.5 0.5
-specular = 0.7 0.7 0.7 32
-receivesShadows = false
-receivesDepthShadows = true
-fresnelScale = 0.73
-fresnelBias = 0.07
-fresnelPower = 4
+	lightMap_1024 = body_light.png
+	blendMap_1024 = body_blend.png
+	envMap = ReflectionCube
+	reflAmount = 0.1
+	diffuse = 1.0 1.0 1.0
+	ambient = 0.5 0.5 0.5
+	specular = 0.7 0.7 0.7 32
+	receivesShadows = false
+	receivesDepthShadows = true
+	fresnelScale = 0.73
+	fresnelBias = 0.07
+	fresnelPower = 4
 
 [car_interior]
-diffuseMap_1024 = interior.png
-ambient = 0.2 0.2 0.2
-diffuse = 0.6 0.6 0.6
-specular = 0.5 0.5 0.5 12
-receivesDepthShadows = true
+	diffuseMap_1024 = interior.png
+	ambient = 0.2 0.2 0.2
+	diffuse = 0.6 0.6 0.6
+	specular = 0.5 0.5 0.5 12
+	receivesDepthShadows = true
 
 [cartire_front]
-ambient = 0.5 0.5 0.5
-diffuse = 0.6 0.6 0.6
-diffuseMap_1024 = wheel_front.png
-receivesDepthShadows = true
+	ambient = 0.5 0.5 0.5
+	diffuse = 0.6 0.6 0.6
+	diffuseMap_1024 = wheel_front.png
+	receivesDepthShadows = true
 
 [cartire_rear]
-parent = cartire_front
-diffuseMap_1024 = wheel_rear.png
-receivesDepthShadows = true
+	parent = cartire_front
+	diffuseMap_1024 = wheel_rear.png
+	receivesDepthShadows = true
 
 ;  ------------ FM ----------------
 [car_body_FM]
-parent = car_body
-normalMap_1024 = normal.png
+	parent = car_body
+	normalMap_1024 = normal.png
 
 [car_interior_FM]
-parent = car_interior
-normalMap_1024 = interior_normal.png
-cullHardware = none
-receivesDepthShadows = false
+	parent = car_interior
+	normalMap_1024 = interior_normal.png
+	cullHardware = none
+	receivesDepthShadows = false
 
 [cartire_front_FM]
-parent = cartire_front
-normalMap_1024 = wheel_normal.png
-bumpScale = 10
+	parent = cartire_front
+	normalMap_1024 = wheel_normal.png
+	bumpScale = 10
 
 [cartire_rear_FM]
-parent = cartire_rear
-normalMap_1024 = wheel_normal.png
-bumpScale = 10
+	parent = cartire_rear
+	normalMap_1024 = wheel_normal.png
+	bumpScale = 10
 
 
 ;  ------------ 360 ----------------
 [car_interior_360]
-parent = car_interior
-cullHardware = none
-receivesDepthShadows = false
+	parent = car_interior
+	cullHardware = none
+	receivesDepthShadows = false
 
 
 ; ------------- RS2 ----------------
 
 [chasis/Material#1]
-envMap = ReflectionCube
-reflAmount = 0.1
-diffuse = 1.0 1.0 1.0
-ambient = 0.5 0.5 0.5
-specular = 0.7 0.7 0.7 32
-receivesShadows = false
-receivesDepthShadows = true
-fresnelScale = 0.73
-fresnelBias = 0.07
-fresnelPower = 4
-diffuseMap_1024 = chasis.png
+	envMap = ReflectionCube
+	reflAmount = 0.1
+	diffuse = 1.0 1.0 1.0
+	ambient = 0.5 0.5 0.5
+	specular = 0.7 0.7 0.7 32
+	receivesShadows = false
+	receivesDepthShadows = true
+	fresnelScale = 0.73
+	fresnelBias = 0.07
+	fresnelPower = 4
+	diffuseMap_1024 = chasis.png
 
 [chasis/Material_#3]
-ambient = 0.3 0.3 0.3
-diffuse = 0.5 0.5 0.5
-specular = 0.2 0.2 0.2 24
-diffuseMap_1024 = chasis_a.jpg
-
+	ambient = 0.3 0.3 0.3
+	diffuse = 0.5 0.5 0.5
+	specular = 0.2 0.2 0.2 24
+	diffuseMap_1024 = chasis_a.jpg

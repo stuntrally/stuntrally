@@ -111,6 +111,11 @@ class CARBRAKE
 			return brake_factor;
 		}
 		
+		T GetHandbrakeFactor() const
+		{
+			return handbrake_factor;
+		}
+		
 		bool Serialize(joeserialize::Serializer & s)
 		{
 			_SERIALIZE_(s,brake_factor);

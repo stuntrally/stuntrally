@@ -117,6 +117,39 @@ void CarModel::Update(PosInfo& posInfo, float time)
 	pMainNode->setPosition(posInfo.pos);
 	pMainNode->setOrientation(posInfo.rot);
 	
+	//  brake state
+	std::string texName;
+	// trigger when any wheel is braking
+	bool braking = false;
+	for (int w=0; w<4; ++w)
+	{
+		if (pCar->dynamics.GetBrake(static_cast<WHEEL_POSITION>(w)).GetBrakeFactor() > 0
+		 || pCar->dynamics.GetBrake(static_cast<WHEEL_POSITION>(w)).GetHandbrakeFactor() > 0)
+			braking = true;
+	}
+	if (braking)
+		texName = sDirname + "_body00_brake.png";
+	else
+		texName = sDirname + "_body00_add.png";
+	MaterialPtr mtr = MaterialManager::getSingleton().getByName(sMtr[Mtr_CarBody]);
+	for (int i=0; i < NumMaterials; i++)
+	{
+		MaterialPtr mtr = (MaterialPtr)MaterialManager::getSingleton().getByName(sMtr[i]);
+		if (!mtr.isNull())
+		{	Material::TechniqueIterator techIt = mtr->getTechniqueIterator();
+			while (techIt.hasMoreElements())
+			{	Technique* tech = techIt.getNext();
+				Technique::PassIterator passIt = tech->getPassIterator();
+				while (passIt.hasMoreElements())
+				{	Pass* pass = passIt.getNext();
+					Pass::TextureUnitStateIterator tusIt = pass->getTextureUnitStateIterator();
+					while (tusIt.hasMoreElements())
+					{
+						TextureUnitState* tus = tusIt.getNext();
+						
+						if (tus->getName() == "blendMap")
+							tus->setTextureName( texName );
+	}	}	}	}	}
 
 	//  update particle emitters
 	//  boost
