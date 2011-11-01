@@ -66,9 +66,9 @@
 
 
 [car_body]
-ambient = 0.5 0.5 0.5
-diffuse = 1.0 1.0 1.0
-specular = 0.7 0.7 0.7 32
-diffuseMap_1024 = body_dyn.png
-receivesShadows = false
-receivesDepthShadows = true
+	ambient = 0.5 0.5 0.5
+	diffuse = 1.0 1.0 1.0
+	specular = 0.7 0.7 0.7 32
+	diffuseMap_1024 = body_dyn.png
+	receivesShadows = false
+	receivesDepthShadows = true

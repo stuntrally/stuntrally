@@ -25,7 +25,7 @@ using namespace Ogre;
 void MaterialGenerator::generate(bool fixedFunction)
 {	
 	MaterialPtr mat = prepareMaterial(mDef->getName());
-	
+		
 	// reset some attributes
 	mDiffuseTexUnit = 0; mNormalTexUnit = 0; mEnvTexUnit = 0; mAlphaTexUnit = 0;
 	mShadowTexUnit_start = 0; mTerrainLightTexUnit = 0; mTexUnit_i = 0;
@@ -965,7 +965,7 @@ void MaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::StrStrea
 		}
 
 		// Add all terms together (also with shadow)
-		if (needShadows()) outStream <<
+		if (needShadows() || needTerrainLightMap()) outStream <<
 		"	float3 lightColour = ambient + diffuse*shadowing + specular*shadowing; \n";
 		else outStream <<
 		"	float3 lightColour = ambient + diffuse + specular; \n";
@@ -1050,9 +1050,6 @@ void MaterialGenerator::fragmentProgramParams(HighLevelGpuProgramPtr program)
 	if (mDef->mProps->fog)
 		params->setNamedAutoConstant("fogColor", GpuProgramParameters::ACT_FOG_COLOUR);
 		
-	if (needTerrainLightMap())
-		params->setNamedConstant("terrainWorldSize", Real(1025)); // real value set later in changeShadows()
-	
 	individualFragmentProgramParams(params);
 }
 
@@ -1083,6 +1080,9 @@ void MaterialGenerator::individualFragmentProgramParams(Ogre::GpuProgramParamete
 		for (int i=0; i<mParent->getNumShadowTex(); ++i)
 			params->setNamedAutoConstant("invShadowMapSize"+toStr(i), GpuProgramParameters::ACT_INVERSE_TEXTURE_SIZE, i+mShadowTexUnit_start);
 	}
+	
+	if (needTerrainLightMap())
+		params->setNamedConstant("terrainWorldSize", Real(1025)); // real value set later in changeShadows()
 }
 
 //----------------------------------------------------------------------------------------
