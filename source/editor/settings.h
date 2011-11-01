@@ -27,7 +27,8 @@ public:
 	float view_distance, terdetail,terdist, road_dist;
 	float shadow_dist;  int shadow_size, lightmap_size, shadow_count, shadow_type;
 	float trees, grass, trees_dist, grass_dist;
-
+	bool use_imposters;
+	
 	//  startup
 	bool autostart, escquit, ogre_dialog, allow_save;
 	std::string language;
@@ -37,10 +38,16 @@ public:
 	int ter_skip, mini_skip;  float road_sphr;
 	float cam_speed, cam_inert, cam_x,cam_y,cam_z, cam_dx,cam_dy,cam_dz;
 	
+	//  input
+	bool x11_capture_mouse;
+	
 	// video
 	int windowx, windowy;
 	bool fullscreen;  int fsaa;  bool vsync;
 	std::string buffer, rendersystem;
+	
+	//  ter generate
+	float gen_freq, gen_persist, gen_pow, gen_scale, gen_ofsx, gen_ofsy;  int gen_oct;
 	
 //------------------------------------------
 	SETTINGS();

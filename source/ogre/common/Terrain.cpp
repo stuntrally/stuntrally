@@ -495,9 +495,12 @@ void App::CreateFluids()
 		if (!mesh->suggestTangentVectorBuildParams(VES_TANGENT, src,dest))
 			mesh->buildTangentVectors(VES_TANGENT, src,dest);
 
-		MaterialPtr mtr = MaterialManager::getSingleton().getByName("Water1");  //par
-		//try  //  set sky map
-		{	MaterialPtr mtrSky = MaterialManager::getSingleton().getByName(sc.skyMtr);
+		String sMtr = fb.id == -1 ? "" : fluidsXml.fls[fb.id].material;  //"Water"+toStr(1+fb.type)
+		MaterialPtr mtr = MaterialManager::getSingleton().getByName(sMtr);  //par,temp
+		if (!mtr.isNull())
+		{	//  set sky map
+			MaterialPtr mtrSky = MaterialManager::getSingleton().getByName(sc.skyMtr);
+			//if (!mtrSky.isNull())  {
 			Pass* passSky = mtrSky->getTechnique(0)->getPass(0);
 			TextureUnitState* tusSky = passSky->getTextureUnitState(0);
 
@@ -508,7 +511,8 @@ void App::CreateFluids()
 		efl->setMaterial(mtr);  efl->setCastShadows(false);
 		efl->setRenderQueueGroup(RQG_Fluid);  efl->setVisibilityFlags(RV_Terrain);
 
-		SceneNode* nfl = mSceneMgr->getRootSceneNode()->createChildSceneNode(fb.pos);
+		SceneNode* nfl = mSceneMgr->getRootSceneNode()->createChildSceneNode(
+			fb.pos, Quaternion(Degree(fb.rot.x),Vector3::UNIT_Y));
 		nfl->attachObject(efl);
 		#ifdef ROAD_EDITOR
 		vFlSMesh.push_back(smesh);  vFlEnt.push_back(efl);  vFlNd.push_back(nfl);
@@ -519,6 +523,7 @@ void App::CreateFluids()
 		#ifndef ROAD_EDITOR
 		btVector3 pc(fb.pos.x, -fb.pos.z, fb.pos.y - fb.size.y);  // center
 		btTransform tr;  tr.setIdentity();  tr.setOrigin(pc);
+		tr.setRotation(btQuaternion(0, 0, fb.rot.x*PI_d/180.f));
 
 		btCollisionShape* bshp = 0;
 		bshp = new btBoxShape(btVector3(fb.size.x/2,fb.size.z/2, fb.size.y));
@@ -539,3 +544,17 @@ void App::CreateFluids()
 		#endif
 	}
 }
+
+#ifdef ROAD_EDITOR
+void App::DestroyFluids()
+{
+	for (int i=0; i < vFlSMesh.size(); ++i)
+	{
+		vFlNd[i]->detachAllObjects();
+		mSceneMgr->destroyEntity(vFlEnt[i]);
+		mSceneMgr->destroySceneNode(vFlNd[i]);
+		Ogre::MeshManager::getSingleton().remove(vFlSMesh[i]);
+	}
+	vFlNd.clear();  vFlEnt.clear();  vFlSMesh.clear();
+}
+#endif

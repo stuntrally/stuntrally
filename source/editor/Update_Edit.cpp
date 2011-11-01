@@ -176,7 +176,6 @@ bool App::frameRenderingQueued(const FrameEvent& evt)
 		//----------------------------------------------------------------
 		Vector3 p;  if (ndCar)  p = ndCar->getPosition();
 		Fmt(s, "%4.1f %4.1f %4.1f", p.x,p.y,p.z);	if (brTxt[0])	brTxt[0]->setCaption(/*s*/"");
-		//Fmt(s, "start box");						if (brTxt[1])	brTxt[1]->setCaption(s);
 		Fmt(s, "width %4.1f", road->vStBoxDim.z);	if (brTxt[1])	brTxt[1]->setCaption(s);
 		Fmt(s, "height %4.1f",road->vStBoxDim.y);	if (brTxt[2])	brTxt[2]->setCaption(s);
 		Fmt(s, "road dir %+d", road->iDir);			if (brTxt[3])	brTxt[3]->setCaption(s);
@@ -186,6 +185,24 @@ bool App::frameRenderingQueued(const FrameEvent& evt)
 		if (isKey(RBRACKET))	{  road->AddBoxH( q*0.2);  UpdStartPos();  }
 		if (isKey(APOSTROPHE))	{  road->AddBoxW( q*0.2);  UpdStartPos();  }
 		//if (mz > 0)	// snap rot by 15 deg ..
+	}
+	else if (edMode == ED_Fluids && sc.fluids.size() > 0)
+	{
+		FluidBox& fb = sc.fluids[iFlCur];									if (flTxt[1])	flTxt[1]->setCaption(fb.name.c_str());
+		Fmt(s, "Cur/All:  %d/%d", iFlCur+1, sc.fluids.size());				if (flTxt[0])	flTxt[0]->setCaption(s);
+		Fmt(s, "Pos:  %4.1f %4.1f %4.1f", fb.pos.x, fb.pos.y, fb.pos.z);	if (flTxt[2])	flTxt[2]->setCaption(s);
+		Fmt(s, "Rot:  %4.1f", fb.rot.x);									if (flTxt[3])	flTxt[3]->setCaption(s);
+		Fmt(s, "Size:  %4.1f %4.1f %4.1f", fb.size.x, fb.size.y, fb.size.z); if (flTxt[4])	flTxt[4]->setCaption(s);
+		Fmt(s, "Tile:  %5.3f %5.3f", fb.tile.x, fb.tile.y);					if (flTxt[5])	flTxt[5]->setCaption(s);
+
+		if (isKey(LBRACKET)){	fb.tile   *= 1.f - 0.04f*q;  bRecreateFluids = true;  }  //
+		if (isKey(RBRACKET)){	fb.tile   *= 1.f + 0.04f*q;  bRecreateFluids = true;  }
+		if (isKey(SEMICOLON )){	fb.tile.y *= 1.f - 0.04f*q;  bRecreateFluids = true;  }
+		if (isKey(APOSTROPHE)){	fb.tile.y *= 1.f + 0.04f*q;  bRecreateFluids = true;  }
+		if (mz != 0)  // wheel prev/next
+		{	int fls = sc.fluids.size();
+			if (fls > 0)  iFlCur = (iFlCur-mz+fls)%fls;
+		}
 	}
 	else if (edMode < ED_Road)
 	{
@@ -225,6 +242,8 @@ bool App::frameRenderingQueued(const FrameEvent& evt)
 		if (isKey(APOSTROPHE)){  mBrPow[curBr]  *= 1.f + 0.04f*q;  updBrush();  }
 		if (isKey(O)){			mBrFq[curBr]  *= 1.f - 0.04f*q;  updBrush();  }
 		if (isKey(P)){			mBrFq[curBr]  *= 1.f + 0.04f*q;  updBrush();  }
+		
+		if (mBrIntens[curBr] < 0.1f)  mBrIntens[curBr] = 0.1;  // rest in updBrush
 	}
 	mz = 0;  // mouse wheel
 	
@@ -391,9 +410,57 @@ void App::editMouse()
 			}
 		}
 	}
+
+	///  edit fluids . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+	if (bEdit() && edMode == ED_Fluids && sc.fluids.size() > 0)
+	{
+		FluidBox& fb = sc.fluids[iFlCur];
+		const Real fMove(0.5f), fRot(1.5f);  //par speed
+		if (!alt)
+		{
+			if (mbLeft)	// move on xz
+			{
+				Vector3 vx = mCameraT->getRight();	   vx.y = 0;  vx.normalise();
+				Vector3 vz = mCameraT->getDirection();  vz.y = 0;  vz.normalise();
+				Vector3 vm = (-vNew.y * vz + vNew.x * vx) * fMove * moveMul;
+				fb.pos += vm;
+				vFlNd[iFlCur]->setPosition(fb.pos);
+			}else
+			if (mbRight)  // move y
+			{
+				Real ym = -vNew.y * fMove * moveMul;
+				fb.pos.y += ym;
+				vFlNd[iFlCur]->setPosition(fb.pos);
+			}else
+			if (mbMiddle)  // rot yaw
+			{
+				Real xm = vNew.x * fRot * moveMul;
+				fb.rot.x += xm;
+				vFlNd[iFlCur]->setOrientation(Quaternion(Degree(fb.rot.x),Vector3::UNIT_Y));
+			}
+		}else
+		{
+			if (mbLeft)  // size xz
+			{
+				Vector3 vm = Vector3(vNew.y, 0, vNew.x) * fMove * moveMul;
+				fb.size += vm;
+				if (fb.size.x < 0.2f)  fb.size.x = 0.2f;
+				if (fb.size.z < 0.2f)  fb.size.z = 0.2f;
+				bRecreateFluids = true;  //
+			}else
+			if (mbRight)  // size y
+			{
+				float vm = -vNew.y * fMove * moveMul;
+				fb.size.y += vm;
+				if (fb.size.y < 0.2f)  fb.size.y = 0.2f;
+				bRecreateFluids = true;  //
+			}
+		}
+	}
 }
 
 
+//---------------------------------------------------------------------------------------------------------------
 bool App::frameEnded(const FrameEvent& evt)
 {
 	//  track events
@@ -526,6 +593,7 @@ bool App::frameEnded(const FrameEvent& evt)
 }
 
 
+//---------------------------------------------------------------------------------------------------------------
 bool App::frameStarted(const Ogre::FrameEvent& evt)
 {
 	BaseApp::frameStarted(evt);
@@ -546,6 +614,12 @@ bool App::frameStarted(const Ogre::FrameEvent& evt)
 		//bSizeHUD = true;
 		
 		LoadTrack();  // shouldnt be needed but ...
+	}
+	
+	if (bRecreateFluids)
+	{	bRecreateFluids = false;
+		DestroyFluids();
+		CreateFluids();
 	}
 	return true;
 }

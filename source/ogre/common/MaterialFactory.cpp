@@ -1,25 +1,44 @@
 #include "pch.h"
 #include "../Defines.h"
 
+#include "MaterialProperties.h"
 #include "MaterialFactory.h"
 #include "MaterialDefinition.h"
+#include "MaterialGenerator.h"
+#include "ShaderProperties.h"
+
+#ifndef ROAD_EDITOR
+	#include "../OgreGame.h"
+#endif
 
 #include <OgreConfigFile.h>
 #include <OgreResourceGroupManager.h>
 #include <OgreStringConverter.h>
+#include <OgreResourceGroupManager.h>
 using namespace Ogre;
+#include "../QTimer.h"
 
 MaterialFactory::MaterialFactory() : 
 	bShaders(1), bNormalMap(1), bEnvMap(1), bShadows(1), bShadowsDepth(1),
-	iTexSize(1024), iNumShadowTex(3),
+	iTexSize(4096), iNumShadowTex(3),
 	bSettingsChanged(1) // always have to generate at start
-{
-	// temporary test.
-	loadDefsFromFile("general.matdef");
-	
-	//!todo search all resource paths and load *.matdef files
-	
-	//!todo not clear.. car .matdef's loaded here or in carmodel?
+{	
+	// find all files with *.matdef extension in all resource groups
+	StringVector resourceGroups = ResourceGroupManager::getSingleton().getResourceGroups();
+	for (StringVector::iterator it = resourceGroups.begin();
+		it != resourceGroups.end(); ++it)
+	{
+		StringVectorPtr files = ResourceGroupManager::getSingleton().findResourceNames(
+			(*it),
+			"*.matdef");
+		
+		for (StringVector::iterator fit = files->begin();
+			fit != files->end(); ++fit)
+		{
+			loadDefsFromFile( (*fit) );
+		}
+		
+	}
 }
 
 //----------------------------------------------------------------------------------------
@@ -29,6 +48,18 @@ MaterialFactory::~MaterialFactory()
 	for (std::vector<MaterialDefinition*>::iterator it=mDefinitions.begin();
 		it!=mDefinitions.end(); ++it)
 		delete (*it);
+		
+	deleteShaderCache();
+}
+
+//----------------------------------------------------------------------------------------
+
+void MaterialFactory::deleteShaderCache()
+{
+	for (shaderMap::iterator it=mShaderCache.begin(); it!=mShaderCache.end(); ++it)
+		delete (*it).second;
+	
+	mShaderCache.clear();
 }
 
 //----------------------------------------------------------------------------------------
@@ -95,13 +126,15 @@ void MaterialFactory::loadDefsFromFile(const std::string& file)
 				LogO("[MaterialFactory] parent '" + parent + "' of material "
 					"definition '" + secName + "' not found. Make sure you are"
 					" declaring / loading in the right order.");
-				return;
+				seci.getNext();
+				continue;
 			}
 			else
 			{
 				// parent found, we can base our new material definition upon this parent
 				MaterialProperties* props = (*it)->getProps();
 				newProps = new MaterialProperties(*props); // use copy constructor
+				newProps->abstract = false;
 			}
 		}
 		else
@@ -127,16 +160,16 @@ void MaterialFactory::loadDefsFromFile(const std::string& file)
 	}
 	
 	// debug output of material definitions and properties.
-	for (std::vector<MaterialDefinition*>::iterator it=mDefinitions.begin();
+	/*for (std::vector<MaterialDefinition*>::iterator it=mDefinitions.begin();
 			it!=mDefinitions.end(); ++it)
 	{
 		LogO("[MaterialFactory] loaded material definition " + (*it)->getName() );
 		LogO("[MaterialFactory] attributes:");
 		#define prop(s) LogO("[MaterialFactory]  - "#s": " + StringConverter::toString((*it)->getProps()->s));
 		#define propS(s) LogO("[MaterialFactory]  - "#s": " + (*it)->getProps()->s);
-		/*propS(diffuseMap); propS(normalMap);*/ propS(envMap); prop(hasFresnel);
+		propS(envMap); prop(hasFresnel);
 		prop(fresnelBias); prop(fresnelScale); prop(fresnelPower); prop(receivesShadows); prop(receivesDepthShadows);
-	}
+	}*/
 	
 	LogO("[MaterialFactory] loaded " + toStr(defI) + " definitions from " + file);
 }
@@ -147,16 +180,71 @@ void MaterialFactory::generate()
 {
 	if (bSettingsChanged)
 	{
+		QTimer ti;  ti.update(); /// time
 		LogO("[MaterialFactory] generating new materials...");
+		
+		deleteShaderCache();
+		splitMtrs.clear();
+		
+		MaterialGenerator generator;
+		generator.mParent = this;
 		
 		for (std::vector<MaterialDefinition*>::iterator it=mDefinitions.begin();
 			it!=mDefinitions.end(); ++it)
-			(*it)->generate();
+		{
+			// don't generate abstract materials
+			if ((*it)->getProps()->abstract) continue;
+
+			// shader cache - check if same shader already exists
+			ShaderProperties* shaderProps = new ShaderProperties( (*it)->mProps, this );
+			
+			bool exists = false;
+			shaderMap::iterator sit;
+			for (sit = mShaderCache.begin();
+				sit != mShaderCache.end(); ++sit)
+			{
+				if ( sit->second->isEqual( shaderProps ) )
+				{
+					exists = true;
+					break;
+				}
+			}
+			
+			if (!exists)
+				generator.mShaderCached = false;
+			else
+			{
+				generator.mShaderCached = true;
+				generator.mVertexProgram = sit->first.first;
+				generator.mFragmentProgram = sit->first.second;
+			}
+			
+			generator.mDef = (*it);
+			generator.mShader = shaderProps;
+			generator.generate();
+			
+			// insert into cache
+			if (!exists)
+			{
+				if (!generator.mVertexProgram.isNull() && !generator.mFragmentProgram.isNull()) 
+					mShaderCache[ std::make_pair(generator.mVertexProgram, generator.mFragmentProgram) ] = shaderProps;
+			}
+		}
 		
 		bSettingsChanged = false;
+		
+		ti.update(); /// time
+		float dt = ti.dt * 1000.f;
+		LogO(String("::: Time MaterialFactory: ") + toStr(dt) + " ms");
+
+		// recreate cloned car materials
+		#ifndef ROAD_EDITOR
+		pApp->recreateCarMtr();
+		#endif
 	}
 	else
 		LogO("[MaterialFactory] settings not changed, using old materials");
+		
 }
 
 //----------------------------------------------------------------------------------------

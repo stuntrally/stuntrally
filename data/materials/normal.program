@@ -1,0 +1,73 @@
+vertex_program geom_vs cg
+{
+    source normal.cg
+    profiles vs_1_1 arbvp1
+    entry_point geom_vs
+
+    default_params
+    {
+        param_named_auto wvpMat worldviewproj_matrix
+        param_named_auto wvMat worldview_matrix
+    }
+}
+
+fragment_program geom_ps cg
+{
+    source normal.cg
+    profiles ps_2_0 arbfp1
+    entry_point geom_ps
+
+    default_params
+    {
+        param_named_auto far far_clip_distance
+    }
+}
+
+fragment_program geom_alpha_ps cg
+{
+    source normal.cg
+    profiles ps_2_0 arbfp1
+    entry_point geom_alpha_ps
+
+    default_params
+    {
+        param_named_auto far far_clip_distance
+    }
+}
+
+vertex_program geom_terrain_vs cg
+{
+    source normal.cg
+    profiles vs_1_1 arbvp1
+    entry_point geom_terrain_vs
+
+    default_params
+    {
+        param_named_auto vpMat viewproj_matrix
+        param_named_auto wMat world_matrix
+        param_named_auto vMat view_matrix
+    }
+}
+fragment_program geom_terrain_ps cg
+{
+    source normal.cg
+    profiles ps_2_0 arbfp1
+    entry_point geom_terrain_ps
+
+    default_params
+    {
+        param_named_auto wvMat worldview_matrix
+		param_named_auto far far_clip_distance
+    }
+}
+fragment_program geom_white_ps cg
+{
+    source normal.cg
+    profiles ps_2_0 arbfp1
+    entry_point geom_white_ps
+
+    default_params
+    {
+        param_named_auto far far_clip_distance
+    }
+}

@@ -1,122 +1,12 @@
 #include "pch.h"
 #include "cardynamics.h"
-
-#include "configfile.h"
-#include "tracksurface.h"
-#include "coordinatesystems.h"
-#include "collision_world.h"
 #include "tobullet.h"
-#include "model.h"
-#include "../ogre/OgreGame.h"
-#include "Buoyancy.h"
-#include "../ogre/Defines.h"
-#include "../ogre/common/SceneXml.h"
 
 typedef CARDYNAMICS::T T;
 
 
-// executed as last function(after integration) in bullet singlestepsimulation
-void CARDYNAMICS::updateAction(btCollisionWorld * collisionWorld, btScalar dt)
-{
-	SynchronizeBody();  // get velocity, position orientation after dt
-
-	UpdateWheelContacts();  // update wheel contacts given new velocity, position
-
-	Tick(dt);  // run internal simulation
-
-	SynchronizeChassis();  // update velocity
-}
-
 void CARDYNAMICS::debugDraw(btIDebugDraw* debugDrawer)
 {	}
-
-void CARDYNAMICS::Update()
-{
-	if (!chassis)  return;//
-	btTransform tr;
-	chassis->getMotionState()->getWorldTransform(tr);
-	chassisRotation = ToMathQuaternion<T>(tr.getRotation());
-	chassisCenterOfMass = ToMathVector<T>(tr.getOrigin());
-	MATHVECTOR <T, 3> com = center_of_mass;
-	chassisRotation.RotateVector(com);
-	chassisPosition = chassisCenterOfMass - com;
-	
-///................................................ Buoyancy ................................................
-	if (pScene)
-	for (std::list<FluidBox*>::const_iterator i = inFluids.begin();
-		i != inFluids.end(); ++i)
-	{
-	//TODO: dont init poly each time, save in car once
-	//TODO: wheels poly too or simple sphere, speed from spinning..
-	//TODO: fluids.xml settings vector [fl.type]
-	//TODO: fluid box -rotation yaw, pitch
-
-	const FluidBox& fl = **i;
-	Polyhedron poly;  RigidBody body;  WaterVolume water;
-
-	//water.density = 1400.0f;  water.angularDrag = 1.0f;  water.linearDrag = 0.5f;  // mud hard too springy- car dens 1900
-	//water.density = 1000.0f;  water.angularDrag = 1.8f;  water.linearDrag = 0.5f;  // mud hard~ car dens 1900
-	//water.density = 600.0f;  water.angularDrag = 1.0f;  water.linearDrag = 0.2f;  // water slow sink~ car dens 1900
-	water.density = 200.0f;  water.angularDrag = 0.7f;  water.linearDrag = 0.2f;  // water soft~ car dens 1900
-	water.velocity.SetZero();
-	water.plane.offset = fl.pos.y;  water.plane.normal = Vec3(0,0,1);
-
-	poly.numVerts = 8;  poly.numFaces = 12;
-	poly.verts = new Vec3[8];
-	poly.faces = new Face[12];
-
-	float hx = 1.2f, hy = 0.7f, hz = 0.4f;  // box dim
-	poly.verts[0] = Vec3(-hx,-hy,-hz);	poly.verts[1] = Vec3(-hx,-hy, hz);
-	poly.verts[2] = Vec3(-hx, hy,-hz);	poly.verts[3] = Vec3(-hx, hy, hz);
-	poly.verts[4] = Vec3( hx,-hy,-hz);	poly.verts[5] = Vec3( hx,-hy, hz);
-	poly.verts[6] = Vec3( hx, hy,-hz);	poly.verts[7] = Vec3( hx, hy, hz);
-
-	poly.faces[0] = Face(0,1,3);	poly.faces[1] = Face(0,3,2);	poly.faces[2] = Face(6,3,7);	poly.faces[3] = Face(6,2,3);
-	poly.faces[4] = Face(4,6,5);	poly.faces[5] = Face(6,7,5);	poly.faces[6] = Face(4,5,0);	poly.faces[7] = Face(0,5,1);
-	poly.faces[8] = Face(5,7,1);	poly.faces[9] = Face(7,3,1);	poly.faces[10]= Face(0,6,4);	poly.faces[11]= Face(0,2,6);
-
-	//  approx. length-?
-	poly.length = 1.0f;
-	poly.volume = ComputeVolume(poly);
-
-	body.mass = 1900.0f * poly.volume;	// car density
-	body.I = (4.0f * body.mass / 12.0f) * Vec3(hy*hz, hx*hz, hx*hy);
-
-	///  body initial conditions
-	//  pos & rot
-	body.x.x = chassisPosition[0];  body.x.y = chassisPosition[1];  body.x.z = chassisPosition[2];
-	body.q.x = chassisRotation[0];  body.q.y = chassisRotation[1];  body.q.z = chassisRotation[2];  body.q.w = chassisRotation[3];
-	body.q.Normalize();//
-	//  vel, ang vel
-	btVector3 v = chassis->getLinearVelocity();
-	btVector3 a = chassis->getAngularVelocity();
-	body.v.x = v.getX();  body.v.y = v.getY();  body.v.z = v.getZ();
-	body.omega.x = a.getX();  body.omega.y = a.getY();  body.omega.z = a.getZ();
-	body.F.SetZero();  body.T.SetZero();
-	
-	///  add buoyancy force
-	if (ComputeBuoyancy(body, poly, water, 9.8f))
-	{
-		chassis->applyCentralForce( btVector3(body.F.x,body.F.y,body.F.z) );
-		chassis->applyTorque(       btVector3(body.T.x,body.T.y,body.T.z) );
-	}	
-
-	//  wheels spin ...
-	/*for (int w=0; w < 3; ++w)
-	{
-		MATHVECTOR <T, 3> pos = GetWheelPosition((WHEEL_POSITION)w);
-		if (pos.)
-		//pCar->dynamics.GetWheelOrientation(wp);
-		//T left_front_wheel_speed = wheel[FRONT_LEFT].GetAngularVelocity();
-		chassis->applyForce( btVector3(body.F.x,body.F.y,body.F.z), btVector3 );
-	}*/
-	
-	delete[] poly.verts;
-	delete[] poly.faces;
-	}
-///..........................................................................................................
-}
-
 
 const MATHVECTOR <T, 3> & CARDYNAMICS::GetCenterOfMassPosition() const
 {
@@ -138,10 +28,6 @@ MATHVECTOR <T, 3> CARDYNAMICS::GetWheelPosition(WHEEL_POSITION wp) const
 	MATHVECTOR <T, 3> pos = GetLocalWheelPosition(wp, suspension[wp].GetDisplacementPercent());
 	chassisRotation.RotateVector(pos);
 	return pos + chassisPosition;
-
-	//btTransform wheelTrans;
-	//wheelBody[WHEEL_POSITION(wp)]->getMotionState()->getWorldTransform(wheelTrans);
-	//return ToMathVector<T>(wheelTrans.getOrigin());
 }
 
 MATHVECTOR <T, 3> CARDYNAMICS::GetWheelPosition(WHEEL_POSITION wp, T displacement_percent) const
@@ -159,19 +45,11 @@ QUATERNION <T> CARDYNAMICS::GetWheelOrientation(WHEEL_POSITION wp) const
 		siderot.Rotate(3.141593, 0, 0, 1);
 	}
 	return chassisRotation * GetWheelSteeringAndSuspensionOrientation(wp) * wheel[wp].GetOrientation() * siderot;
-
-	//btTransform wheelTrans;
-	//wheelBody[WHEEL_POSITION(wp)]->getMotionState()->getWorldTransform(wheelTrans);
-	//return ToMathQuaternion<T>(wheelTrans.getRotation()) * siderot;
 }
 
 QUATERNION <T> CARDYNAMICS::GetUprightOrientation(WHEEL_POSITION wp) const
 {
 	return chassisRotation * GetWheelSteeringAndSuspensionOrientation(wp);
-
-	//btTransform wheelTrans;
-	//wheelBody[WHEEL_POSITION(wp)]->getMotionState()->getWorldTransform(wheelTrans);
-	//return ToMathQuaternion<T>(wheelTrans.getRotation());
 }
 
 /// worldspace wheel center position
@@ -448,81 +326,6 @@ void CARDYNAMICS::UpdateTelemetry ( float dt )
 	//telemetry.Update ( dt );
 }
 
-/// print debug info to the given ostream.  set p1, p2, etc if debug info part 1, and/or part 2, etc is desired
-void CARDYNAMICS::DebugPrint ( std::ostream & out, bool p1, bool p2, bool p3, bool p4 )
-{
-	if (p1)
-	{
-		out.precision(4);
-	/*	out << std::endl;
-		out << "hit S : " << fSndForce << std::endl;
-		out << "hit P : " << fParIntens << std::endl;
-		//out << "hit t : " << fHitTime << std::endl;
-		out << "bHitS : " << (bHitSnd?1:0) << " id "<< sndHitN << std::endl;
-		out << "N Vel : " << fNormVel << std::endl;
-		out << "v Vel : " << GetSpeed() << std::endl;
-	return;/**/  //--^
-		out << "---Body---" << std::endl;
-		out << "c of mass: " << center_of_mass << std::endl;
-		MATRIX3 <T> inertia = body.GetInertia();  //btVector3 chassisInertia(inertia[0], inertia[4], inertia[8]);
-		out << "inertia:  " << inertia[0] << "  " << inertia[4] << "  " << inertia[8] << "\n";
-		out.precision(6);
-		out << "mass: " << body.GetMass() << std::endl;
-		out << "in fluids: " << inFluids.size() << std::endl;
-		out << std::endl;
-		engine.DebugPrint(out);  out << std::endl;
-	return;//
-		fuel_tank.DebugPrint(out);  out << std::endl;
-		clutch.DebugPrint(out);  out << std::endl;
-		transmission.DebugPrint(out);	out << std::endl;
-		if ( drive == RWD )  {
-			out << "(rear)" << std::endl;		rear_differential.DebugPrint(out);	}
-		else if ( drive == FWD )  {
-			out << "(front)" << std::endl;		front_differential.DebugPrint(out);	}
-		else if ( drive == AWD )  {
-			out << "(center)" << std::endl;		center_differential.DebugPrint(out);
-			out << "(front)" << std::endl;		front_differential.DebugPrint(out);
-			out << "(rear)" << std::endl;		rear_differential.DebugPrint(out);	}
-		out << std::endl;
-	}
-	return;//
-
-	if (p2)
-	{
-		out << "(front left)" << std::endl;		suspension[FRONT_LEFT].DebugPrint(out);	out << std::endl;
-		out << "(front right)" << std::endl;	suspension[FRONT_RIGHT].DebugPrint(out);	out << std::endl;
-		out << "(rear left)" << std::endl;		suspension[REAR_LEFT].DebugPrint(out);	out << std::endl;
-		out << "(rear right)" << std::endl;		suspension[REAR_RIGHT].DebugPrint(out);	out << std::endl;
-
-		out << "(front left)" << std::endl;		brake[FRONT_LEFT].DebugPrint(out);	out << std::endl;
-		out << "(front right)" << std::endl;	brake[FRONT_RIGHT].DebugPrint(out);	out << std::endl;
-		out << "(rear left)" << std::endl;		brake[REAR_LEFT].DebugPrint(out);	out << std::endl;
-		out << "(rear right)" << std::endl;		brake[REAR_RIGHT].DebugPrint(out);
-	}
-
-	if (p3)
-	{
-		out << std::endl;
-		out << "(front left)" << std::endl;		wheel[FRONT_LEFT].DebugPrint(out);	out << std::endl;
-		out << "(front right)" << std::endl;	wheel[FRONT_RIGHT].DebugPrint(out);	out << std::endl;
-		out << "(rear left)" << std::endl;		wheel[REAR_LEFT].DebugPrint(out);	out << std::endl;
-		out << "(rear right)" << std::endl;		wheel[REAR_RIGHT].DebugPrint(out);	out << std::endl;
-
-		out << "(front left)" << std::endl;		tire[FRONT_LEFT].DebugPrint(out);	out << std::endl;
-		out << "(front right)" << std::endl;	tire[FRONT_RIGHT].DebugPrint(out);	out << std::endl;
-		out << "(rear left)" << std::endl;		tire[REAR_LEFT].DebugPrint(out);		out << std::endl;
-		out << "(rear right)" << std::endl;		tire[REAR_RIGHT].DebugPrint(out);
-	}
-
-	if (p4)
-	{
-		for ( std::vector <CARAERO<T> >::iterator i = aerodynamics.begin(); i != aerodynamics.end(); ++i )
-		{
-			i->DebugPrint(out);	out << std::endl;
-		}
-	}
-}
-
 bool CARDYNAMICS::Serialize ( joeserialize::Serializer & s )
 {
 	_SERIALIZE_ ( s,body );
@@ -746,6 +549,7 @@ MATHVECTOR <T, 3> CARDYNAMICS::UpdateSuspension ( int i , T dt )
 	return suspension_force;
 }
 
+
 // aplies tire friction  to car, returns friction in world space
 MATHVECTOR <T, 3> CARDYNAMICS::ApplyTireForce(int i, const T normal_force, const QUATERNION <T> & wheel_space)
 {
@@ -817,7 +621,9 @@ void CARDYNAMICS::ApplyWheelTorque(T dt, T drive_torque, int i, MATHVECTOR <T, 3
 	T friction_torque = tire_friction[0] * tire.GetRadius();
 	T wheel_torque = drive_torque - friction_torque;
 	T lock_up_torque = wheel.GetLockUpTorque(dt) - wheel_torque;	// torque needed to lock the wheel
-	T brake_torque = brake.GetTorque();
+	T angVel = wheel.GetAngularVelocity();  if (angVel < 0.0)  angVel = -angVel; //
+	T brake_torque = brake.GetTorque()
+		+ wheel.fluidRes * angVel;  /// fluid resistance
 
 	// brake and rolling resistance torque should never exceed lock up torque
 	if(lock_up_torque >= 0 && lock_up_torque > brake_torque)
@@ -845,133 +651,6 @@ void CARDYNAMICS::ApplyWheelTorque(T dt, T drive_torque, int i, MATHVECTOR <T, 3
 	ApplyTorque(world_wheel_torque);
 }
 
-void CARDYNAMICS::UpdateBody(T dt, T drive_torque[])
-{
-	body.Integrate1(dt);
-	//chassis->clearForces();
-
-	UpdateWheelVelocity();
-
-	ApplyEngineTorqueToBody();
-
-	ApplyAerodynamicsToBody(dt);
-	
-
-	///***  manual car flip over  ---------------------------------------------------------------------------------
-	if (doFlip > 0.01f || doFlip < -0.01f)
-	{
-		MATRIX3 <T> inertia = body.GetInertia();
-		btVector3 inrt(inertia[0], inertia[4], inertia[8]);
-		float t = inrt[inrt.maxAxis()] * doFlip * 12.f;  // strength
-		MATHVECTOR <T, 3> v(t,0,0);
-		Orientation().RotateVector(v);
-		ApplyTorque(v);
-	}
-	///***  boost
-	if (doBoost > 0.01f)
-	{
-		T f = body.GetMass() * doBoost * 16.f;  // power
-		MATHVECTOR <T, 3> v(f,0,0), ofs(0,0,0);
-		Orientation().RotateVector(v);
-		ApplyForce(v, ofs);
-	}
-	///***
-	
-
-	T normal_force[WHEEL_POSITION_SIZE];
-	for(int i = 0; i < WHEEL_POSITION_SIZE; i++)
-	{
-		MATHVECTOR <T, 3> suspension_force = UpdateSuspension(i, dt);
-		normal_force[i] = suspension_force.dot(wheel_contact[i].GetNormal());
-		if (normal_force[i] < 0) normal_force[i] = 0;
-
-		MATHVECTOR <T, 3> tire_friction = ApplyTireForce(i, normal_force[i], wheel_orientation[i]);
-		ApplyWheelTorque(dt, drive_torque[i], i, tire_friction, wheel_orientation[i]);
-	}
-
-	body.Integrate2(dt);
-	//chassis->integrateVelocities(dt);
-
-	// update wheel state
-	for(int i = 0; i < WHEEL_POSITION_SIZE; i++)
-	{
-		wheel_position[i] = GetWheelPositionAtDisplacement(WHEEL_POSITION(i), suspension[i].GetDisplacementPercent());
-		wheel_orientation[i] = Orientation() * GetWheelSteeringAndSuspensionOrientation(WHEEL_POSITION(i));
-	}
-	InterpolateWheelContacts(dt);
-
-	for(int i = 0; i < WHEEL_POSITION_SIZE; i++)
-	{
-		if (abs)  DoABS(i, normal_force[i]);
-		if (tcs)  DoTCS(i, normal_force[i]);
-	}
-}
-
-void CARDYNAMICS::Tick ( T dt )
-{
-	// has to happen before UpdateDriveline, overrides clutch, throttle
-	UpdateTransmission(dt);
-
-	const int num_repeats = 30;  ///~ 30+  o:10
-	const float internal_dt = dt / num_repeats;
-	for(int i = 0; i < num_repeats; ++i)
-	{
-		T drive_torque[WHEEL_POSITION_SIZE];
-
-		UpdateDriveline(internal_dt, drive_torque);
-
-		UpdateBody(internal_dt, drive_torque);
-
-		feedback += 0.5 * (tire[FRONT_LEFT].GetFeedback() + tire[FRONT_RIGHT].GetFeedback());
-	}
-
-	feedback /= (num_repeats + 1);
-
-	fuel_tank.Consume ( engine.FuelRate() * dt );
-	engine.SetOutOfGas ( fuel_tank.Empty() );
-
-	const float tacho_factor = 0.1;
-	tacho_rpm = engine.GetRPM() * tacho_factor + tacho_rpm * (1.0 - tacho_factor);
-
-	UpdateTelemetry(dt);
-}
-
-void CARDYNAMICS::SynchronizeBody()
-{
-	MATHVECTOR<T, 3> v = ToMathVector<T>(chassis->getLinearVelocity());
-	MATHVECTOR<T, 3> w = ToMathVector<T>(chassis->getAngularVelocity());
-	MATHVECTOR<T, 3> p = ToMathVector<T>(chassis->getCenterOfMassPosition());
-	QUATERNION<T> q = ToMathQuaternion<T>(chassis->getOrientation());
-	body.SetPosition(p);
-	body.SetOrientation(q);
-	body.SetVelocity(v);
-	body.SetAngularVelocity(w);
-}
-
-void CARDYNAMICS::SynchronizeChassis()
-{
-	chassis->setLinearVelocity(ToBulletVector(body.GetVelocity()));
-	chassis->setAngularVelocity(ToBulletVector(body.GetAngularVelocity()));
-}
-
-void CARDYNAMICS::UpdateWheelContacts()
-{
-	MATHVECTOR <float, 3> raydir = GetDownVector();
-	for (int i = 0; i < WHEEL_POSITION_SIZE; i++)
-	{
-		COLLISION_CONTACT & wheelContact = wheel_contact[WHEEL_POSITION(i)];
-		MATHVECTOR <float, 3> raystart = LocalToWorld(wheel[i].GetExtendedPosition());
-		raystart = raystart - raydir * tire[i].GetRadius();  //*!
-		float raylen = 1;  // !par
-		
-		//vRayStarts[i] = raystart;  // info
-		//vRayDirs[i] = raystart + raydir * raylen;
-		
-		world->CastRay(raystart, raydir, raylen, chassis, wheelContact, /*R+*/&bWhOnRoad[i]);
-		if (bTerrain)  ///  terrain surf from blendmap
-			wheelContact.SetSurface(terSurf[i]);
-	}
-}
 
 void CARDYNAMICS::InterpolateWheelContacts(T dt)
 {
@@ -1046,6 +725,7 @@ void CARDYNAMICS::UpdateDriveline(T dt, T drive_torque[])
 	T clutch_speed = transmission.CalculateClutchSpeed(driveshaft_speed);
 	T crankshaft_speed = engine.GetAngularVelocity();
 	T engine_drag = clutch.GetTorque(crankshaft_speed, clutch_speed);
+	engine_drag += 0.1;  // fixes clutch stall bug when car vel = 0 and all wheels in air
 
 	engine.ComputeForces();
 
@@ -1141,7 +821,7 @@ void CARDYNAMICS::UpdateTransmission(T dt)
 	{
 		int gear = NextGear();
 		
-		//  auto Rear gear
+		///  auto Rear gear  -todo inv thr-brk
 		if (autorear)
 		{
 			T gas = engine.GetThrottle();

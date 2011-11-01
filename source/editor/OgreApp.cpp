@@ -39,10 +39,12 @@ App::App()  //  gui wigdets--
 	,cmbSurfType(0),edSuBumpWave(0),edSuBumpAmp(0),edSuRollDrag(0),edSuFrict(0),edSuFrict2(0)  //ter surfaces
 	,edGrassDens(0),edTreesDens(0), edGrPage(0),edGrDist(0), edTrPage(0),edTrDist(0)  // vegetation
 	,edGrMinX(0),edGrMaxX(0), edGrMinY(0),edGrMaxY(0)
-	,edGrSwayDistr(0), edGrSwayLen(0), edGrSwaySpd(0), edTrRdDist(0), edTrImpDist(0), edGrDensSmooth(0)
+	,edGrSwayDistr(0), edGrSwayLen(0), edGrSwaySpd(0), edTrRdDist(0), edTrImpDist(0)
+	,edGrDensSmooth(0), edGrTerMaxAngle(0)
 	,cmbPgLay(0), chkPgLay(0), tabsPgLayers(0), idPgLay(0)  //paged layers
 	,imgPaged(0), valLTrAll(0)
 	,valLTrDens(0),valLTrRdDist(0), valLTrMinSc(0),valLTrMaxSc(0), valLTrWindFx(0),valLTrWindFy(0)
+	,valLTrMaxTerAng(0),edLTrMinTerH(0)
 	,edRdTcMul(0),edRdLenDim(0),edRdWidthSteps(0),edRdHeightOfs(0)  // road
 	,edRdSkirtLen(0),edRdSkirtH(0), edRdMergeLen(0),edRdLodPLen(0)
 	,edRdColN(0),edRdColR(0), edRdPwsM(0),edRdPlsM(0)
@@ -55,6 +57,7 @@ App::App()  //  gui wigdets--
 	,ndCar(0),entCar(0),ndStBox(0),entStBox(0)
 	,grass(0), trees(0), sun(0), terMaxAng(0.f)
 	,eTrkEvent(TE_None), bNewHmap(0), bTrGrUpd(0)
+	,iFlCur(0), bRecreateFluids(0)
 {
 	pathTrk[0] = PATHMANAGER::GetTrackPath() + "/";      pathTrkPrv[0] = pathTrk[0] + "_previews/";  resTrk = "";
 	pathTrk[1] = PATHMANAGER::GetTrackPathUser() + "/";  pathTrkPrv[1] = pathTrk[1] + "_previews/";
@@ -74,6 +77,7 @@ App::App()  //  gui wigdets--
 	for (int i=0; i<BR_TXT; ++i)  brTxt[i]=0;
 	for (int i=0; i<RD_TXT; ++i)  rdTxt[i]=0;
 	for (int i=0; i<RDS_TXT; ++i)  rdTxtSt[i]=0;
+	for (int i=0; i<FL_TXT; ++i)  flTxt[i]=0;
 	
 	for (int i=0; i < StTrk; ++i)  stTrk[i] = 0;
 	for (int i=0; i < 4; ++i)  {  cmbRoadMtr[i]=0;  cmbPipeMtr[i]=0;  }

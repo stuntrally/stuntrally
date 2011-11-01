@@ -48,9 +48,7 @@ void BaseApp::createFrameListener()
 	mOvrBat = ovr.getOverlayElement("Core/NumBatches"),
 	mOvrDbg = ovr.getOverlayElement("Core/DebugText");
 
-	LogDbg("*** input 0 ***");
 	InitKeyNamesMap();
-	LogDbg("*** input 1 ***");
 
 	OIS::ParamList pl;	size_t windowHnd = 0;
 	std::ostringstream windowHndStr;
@@ -69,29 +67,22 @@ void BaseApp::createFrameListener()
     pl.insert(std::make_pair(std::string("XAutoRepeatOn"), std::string("true")));
     #endif
 
-	LogDbg("*** input 2 ***");
 	mOISBsys = new OISB::System();
-	LogDbg("*** input 3 ***");
 	mInputManager = OIS::InputManager::createInputSystem( pl );
-	LogDbg("*** input 4 ***");
 	OISB::System::getSingleton().initialize(mInputManager);
 
-	LogDbg("*** input 5 ***");
+	LogDbg("*** input load keys.xml ***");
 	if (boost::filesystem::exists(PATHMANAGER::GetUserConfigDir() + "/keys.xml"))
 		OISB::System::getSingleton().loadActionSchemaFromXMLFile(PATHMANAGER::GetUserConfigDir() + "/keys.xml");
 	else
 		OISB::System::getSingleton().loadActionSchemaFromXMLFile(PATHMANAGER::GetGameConfigDir() + "/keys-default.xml");
 
-	LogDbg("*** input 6 ***");
+	LogDbg("*** input set callbacks ***");
 	mKeyboard = OISB::System::getSingleton().getOISKeyboard();
-	LogDbg("*** input 7 ***");
 	mMouse = OISB::System::getSingleton().getOISMouse();
 
-	LogDbg("*** input 8 ***");
 	mMouse->setEventCallback(this);
-	LogDbg("*** input 9 ***");
 	mKeyboard->setEventCallback(this);
-	LogDbg("*** input 10 ***");
 	
 	// add listener for all joysticks
 	for (std::vector<OISB::JoyStick*>::iterator it=mOISBsys->mJoysticks.begin();
@@ -99,7 +90,7 @@ void BaseApp::createFrameListener()
 	{
 		(*it)->getOISJoyStick()->setEventCallback(this);
 	}
-	LogDbg("*** input 11 ***");
+	LogDbg("*** input end ***");
 
 	windowResized(mWindow);
 	WindowEventUtilities::addWindowEventListener(mWindow, this);
@@ -121,6 +112,7 @@ void BaseApp::refreshCompositor(bool disableAll)
 	{
 		CompositorManager::getSingleton().setCompositorEnabled((*it), "Bloom", false);
 		CompositorManager::getSingleton().setCompositorEnabled((*it), "HDR", false);
+		CompositorManager::getSingleton().setCompositorEnabled((*it), "ssao", false);
 		CompositorManager::getSingleton().setCompositorEnabled((*it), "Motion Blur", false);
 		CompositorManager::getSingleton().setCompositorEnabled((*it), "SSAA", false);
 	}
@@ -160,6 +152,7 @@ void BaseApp::refreshCompositor(bool disableAll)
 		CompositorManager::getSingleton().setCompositorEnabled((*it), "HDR", pSet->hdr);
 		CompositorManager::getSingleton().setCompositorEnabled((*it), "Motion Blur", pSet->motionblur);
 		CompositorManager::getSingleton().setCompositorEnabled((*it), "SSAA", pSet->ssaa);
+		CompositorManager::getSingleton().setCompositorEnabled((*it), "ssao", pSet->ssao);
 	}
 }
 
@@ -181,6 +174,7 @@ void BaseApp::recreateCompositor()
 		mRoot->addResourceLocation(sPath + "/hdr", "FileSystem", "Effects");
 		mRoot->addResourceLocation(sPath + "/motionblur", "FileSystem", "Effects");
 		mRoot->addResourceLocation(sPath + "/ssaa", "FileSystem", "Effects");
+		mRoot->addResourceLocation(sPath + "/ssao", "FileSystem", "Effects");
 		ResourceGroupManager::getSingleton().initialiseResourceGroup("Effects");
 	}
 
@@ -191,6 +185,13 @@ void BaseApp::recreateCompositor()
 		CompositorManager::getSingleton().registerCompositorLogic("HDR", mHDRLogic);
 	}
 	
+	if (!mSSAOLogic) 
+	{
+		mSSAOLogic = new SSAOLogic();
+		mSSAOLogic->setApp(this);
+		CompositorManager::getSingleton().registerCompositorLogic("ssao", mSSAOLogic);
+	}
+
 	if (CompositorManager::getSingleton().getByName("Motion Blur").isNull())
 	{
 		// Motion blur has to be created in code
@@ -265,7 +266,8 @@ void BaseApp::recreateCompositor()
 			}
 		}
 	}
-	
+
+
 	if (!mMotionBlurLogic)
 	{
 		LogO("Creating motion blur logic");
@@ -274,12 +276,14 @@ void BaseApp::recreateCompositor()
 		CompositorManager::getSingleton().registerCompositorLogic("Motion Blur", mMotionBlurLogic);
 	}
 
+
 	for (std::list<Viewport*>::iterator it=mSplitMgr->mViewports.begin(); it!=mSplitMgr->mViewports.end(); it++)
 	{
 		// remove old comp. first
 		CompositorManager::getSingleton().removeCompositorChain( (*it ));
 		
 		CompositorManager::getSingleton().addCompositor((*it), "HDR");
+		CompositorManager::getSingleton().addCompositor((*it), "ssao");
 		CompositorManager::getSingleton().addCompositor((*it), "Bloom");
 		CompositorManager::getSingleton().addCompositor((*it), "Motion Blur");
 		CompositorManager::getSingleton().addCompositor((*it), "SSAA");
@@ -306,7 +310,7 @@ void BaseApp::Run( bool showDialog )
 //-------------------------------------------------------------------------------------
 
 BaseApp::BaseApp()
-	:mRoot(0), mSceneMgr(0), mWindow(0), mHDRLogic(0), mMotionBlurLogic(0)
+	:mRoot(0), mSceneMgr(0), mWindow(0), mHDRLogic(0), mMotionBlurLogic(0),mSSAOLogic(0)
 	,mShowDialog(1), mShutDown(false), bWindowResized(0)
 	,mInputManager(0), mMouse(0), mKeyboard(0), mOISBsys(0)
 	,alt(0), ctrl(0), shift(0), roadUpCnt(0)
@@ -338,6 +342,7 @@ BaseApp::~BaseApp()
 	
 	#if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
 		mRoot->unloadPlugin("RenderSystem_Direct3D9");
+		mRoot->unloadPlugin("RenderSystem_Direct3D11");
 	#endif
 	mRoot->unloadPlugin("RenderSystem_GL");
 	
@@ -370,8 +375,7 @@ bool BaseApp::configure()
 
 		NameValuePairList settings;
 		settings.insert(std::make_pair("title", "Stunt Rally"));
-		//settings.insert(std::make_pair("FSAA", toStr(pSet->fsaa)));
-		settings.insert(std::make_pair("FSAA", "16"));
+		settings.insert(std::make_pair("FSAA", toStr(pSet->fsaa)));
 		settings.insert(std::make_pair("vsync", pSet->vsync ? "true" : "false"));
 
 		mWindow = mRoot->createRenderWindow("Stunt Rally", pSet->windowx, pSet->windowy, pSet->fullscreen, &settings);
@@ -408,6 +412,7 @@ bool BaseApp::setup()
 		mRoot->loadPlugin(PATHMANAGER::GetOgrePluginDir() + "/RenderSystem_GL" + D_SUFFIX);
 		#if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
 		mRoot->loadPlugin(PATHMANAGER::GetOgrePluginDir() + "/RenderSystem_Direct3D9" + D_SUFFIX);
+		mRoot->loadPlugin(PATHMANAGER::GetOgrePluginDir() + "/RenderSystem_Direct3D11" + D_SUFFIX);
 		#endif
 	}
 	else
@@ -416,6 +421,8 @@ bool BaseApp::setup()
 			mRoot->loadPlugin(PATHMANAGER::GetOgrePluginDir() + "/RenderSystem_GL" + D_SUFFIX);
 		else if (pSet->rendersystem == "Direct3D9 Rendering Subsystem")
 			mRoot->loadPlugin(PATHMANAGER::GetOgrePluginDir() + "/RenderSystem_Direct3D9" + D_SUFFIX);
+		else if (pSet->rendersystem == "Direct3D11 Rendering Subsystem")
+			mRoot->loadPlugin(PATHMANAGER::GetOgrePluginDir() + "/RenderSystem_Direct3D11" + D_SUFFIX);
 	}
 
 	mRoot->loadPlugin(PATHMANAGER::GetOgrePluginDir() + "/Plugin_ParticleFX" + D_SUFFIX);
@@ -468,15 +475,16 @@ bool BaseApp::setup()
 
 	LogDbg("*** createFrameListener ***");
 	createFrameListener();
+
 	LogDbg("*** createScene ***");
 	createScene();//^before
 
-	LogDbg("*** recreateCompositor***");
+	LogDbg("*** recreateCompositor ***");
 	recreateCompositor();
+
+	postInit();
 	LogDbg("*** end setup ***");
 	
-	postInit();
-
 	return true;
 };
 

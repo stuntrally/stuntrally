@@ -209,13 +209,13 @@ class CARENGINE
 		void DebugPrint(std::ostream & out)
 		{
 			out << "---Engine---" << std::endl;
-			out << "Throttle position: " << throttle_position << std::endl;
-			out << "Combustion torque: " << combustion_torque << std::endl;
-			out << "Clutch torque: " << -clutch_torque << std::endl;
-			out << "Friction torque: " << friction_torque << std::endl;
-			out << "Total torque: " << GetTorque() << std::endl;
+			out << "Throttle: " << throttle_position << std::endl;
+			out << "Combustion: " << combustion_torque << std::endl;
+			out << "Clutch  : " << -clutch_torque << std::endl;
+			out << "Friction: " << friction_torque << std::endl;
+			out << "Total   : " << GetTorque() << std::endl;
 			out << "RPM: " << GetRPM() << std::endl;
-			out << "Rev limit exceeded: " << rev_limit_exceeded << std::endl;
+			out << "Exceeded: " << rev_limit_exceeded << std::endl;
 			out << "Running: " << !stalled << std::endl;
 		}
 		

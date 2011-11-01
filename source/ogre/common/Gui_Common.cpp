@@ -42,7 +42,7 @@ void App::slAnisotropy(SL)
 //  view dist
 void App::slViewDist(SL)
 {
-	Real v = 50.f + 6950.f * powf(val/res, 2.f);
+	Real v = 50.f + 19950.f * powf(val/res, 2.f);
 	Vector3 sc = v*Vector3::UNIT_SCALE;
 
 	SceneNode* nskb = mSceneMgr->getSkyBoxNode();
@@ -122,7 +122,10 @@ void App::btnTrGrReset(WP wp)
 	setSld(GrassDist);
 }
 
-
+void App::chkUseImposters(WP wp)
+{
+	ChkEv(use_imposters);
+}
 void App::slShaders(SL)
 {
 	int v = val;  if (bGI)  pSet->shaders = v;
@@ -202,7 +205,7 @@ void App::GuiInitGraphics()
 	//  detail
 	Slv(TerDetail,	powf(pSet->terdetail /20.f, 0.5f));
 	Slv(TerDist,	powf(pSet->terdist /2000.f, 0.5f));
-	Slv(ViewDist,	powf((pSet->view_distance -50.f)/6950.f, 0.5f));
+	Slv(ViewDist,	powf((pSet->view_distance -50.f)/19950.f, 0.5f));
 	Slv(RoadDist,	powf(pSet->road_dist /4.f, 0.5f));
 
 	//  textures
@@ -218,7 +221,8 @@ void App::GuiInitGraphics()
 	Slv(TreesDist,	powf((pSet->trees_dist-0.5f) /6.5f, 0.5f));
 	Slv(GrassDist,	powf((pSet->grass_dist-0.5f) /6.5f, 0.5f));
 	Btn("TrGrReset", btnTrGrReset);
-	
+	Chk("UseImposters", chkUseImposters, pSet->use_imposters);
+
 	// screen
 	// find max. fsaa
 	int fsaa = 0; int newfsaa;
@@ -260,10 +264,8 @@ void App::GuiInitGraphics()
 void App::GuiCenterMouse()
 {
 	// mouse center causes problems on x11 with mouse capture=off
-	#ifndef ROAD_EDITOR
-		#if OGRE_PLATFORM == OGRE_PLATFORM_LINUX
-		if (pSet->x11_capture_mouse == false) return;
-		#endif
+	#if OGRE_PLATFORM == OGRE_PLATFORM_LINUX
+	if (pSet->x11_capture_mouse == false) return;
 	#endif
 	
 	int xm = mWindow->getWidth()/2, ym = mWindow->getHeight()/2;
@@ -601,7 +603,7 @@ void App::comboGraphicsAll(ComboBoxPtr cmb, size_t val)
 	case 4:  // Ultra  -------------
 		s.anisotropy = 16;  s.view_distance = 20000;  s.terdetail = 1.0f;  s.terdist = 1000.f;  s.road_dist = 1.2;
 		s.tex_size = 1;  s.ter_mtr = 2;  s.shaders = 1;
-		s.shadow_type = 2;/*3*/  s.shadow_size = 3;  s.shadow_count = 3;  s.shadow_dist = 3000;
+		s.shadow_type = 3;/*3*/  s.shadow_size = 3;  s.shadow_count = 3;  s.shadow_dist = 3000;
 		s.trees = 2.f;  s.grass = 2.f;  s.trees_dist = 2.f;  s.grass_dist = 2.f;	break;
 	}
 #ifndef ROAD_EDITOR  /// game only
@@ -661,6 +663,7 @@ void App::comboGraphicsAll(ComboBoxPtr cmb, size_t val)
 
 	//  update gui  sld,val,chk  ...
 	GuiInitGraphics();  // = newDelegate..?
+	changeShadows(); // apply shadow
 
 	ButtonPtr btn, bchk;  HScrollPtr sl;  size_t v;
 #ifndef ROAD_EDITOR  /// game only
@@ -681,6 +684,7 @@ void App::comboGraphicsAll(ComboBoxPtr cmb, size_t val)
 	Chk("Bloom", chkVidBloom, pSet->bloom);
 	Chk("HDR", chkVidHDR, pSet->hdr);
 	Chk("MotionBlur", chkVidBlur, pSet->motionblur);
+	Chk("ssao", chkVidSSAO, pSet->ssao);
 
 	Chk("RplChkAutoRec", chkRplAutoRec, pSet->rpl_rec);
 	Chk("RplChkGhost", chkRplChkGhost, pSet->rpl_ghost);

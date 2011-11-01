@@ -271,6 +271,22 @@ namespace Ogre
 
 		updateParams(mat, terrain);
 
+		//add ssao technique
+		Technique* tech = mat->createTechnique();
+		tech->setName("geom");
+		tech->setSchemeName("geom");
+		// Only supporting one pass
+		Pass* pass = tech->createPass();
+
+		HighLevelGpuProgramManager& hmgr = HighLevelGpuProgramManager::getSingleton();
+		HighLevelGpuProgramPtr vprog = hmgr.getByName("geom_terrain_vs");
+		HighLevelGpuProgramPtr fprog = hmgr.getByName("geom_terrain_ps");
+		pass->setVertexProgram(vprog->getName());
+		pass->setFragmentProgram(fprog->getName());
+		TextureUnitState* tu = pass->createTextureUnitState();
+		tu->setTextureName(terrain->getTerrainNormalMap()->getName());
+		tu->setTextureAddressingMode(TextureUnitState::TAM_CLAMP);
+
 		return mat;
 
 	}
@@ -754,9 +770,9 @@ namespace Ogre
 		}
 		
 		if(prof->isLayerNormalMappingEnabled() || prof->isLayerParallaxMappingEnabled())
-			ret->setParameter("profiles", "ps_3_0 ps_2_x fp40 arbfp1");
+			ret->setParameter("profiles", "ps_2_x fp40 arbfp1");  /// removed ps_3_0  to work with depth shadow on dx
 		else
-			ret->setParameter("profiles", "ps_3_0 ps_2_0 fp30 arbfp1");
+			ret->setParameter("profiles", "ps_2_0 fp30 arbfp1");  /// removed ps_3_0  
 		ret->setParameter("entry_point", "main_fp");
 
 		return ret;
@@ -1223,7 +1239,7 @@ namespace Ogre
 			{
 				generateFpDynamicShadows(prof, terrain, tt, outStream);
 				outStream << 
-					"	outputCol.rgb = diffuse * rtshadow;\n";
+					"	outputCol.rgb = diffuse * (1-(1-rtshadow)*0.7);\n";
 			}
 			else
 			{

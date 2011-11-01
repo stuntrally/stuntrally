@@ -79,9 +79,12 @@ void BaseApp::createFrameListener()
 	pl.insert(std::make_pair(std::string("WINDOW"), windowHndStr.str()));
 	
     #if defined OIS_LINUX_PLATFORM
-    //pl.insert(std::make_pair(std::string("x11_mouse_grab"), std::string("false")));
-    //pl.insert(std::make_pair(std::string("x11_mouse_hide"), std::string("false")));
-    //pl.insert(std::make_pair(std::string("x11_keyboard_grab"), std::string("false")));
+    if (!pSet->x11_capture_mouse)
+    {
+		pl.insert(std::make_pair(std::string("x11_mouse_grab"), std::string("false")));
+		pl.insert(std::make_pair(std::string("x11_mouse_hide"), std::string("true")));
+		pl.insert(std::make_pair(std::string("x11_keyboard_grab"), std::string("false")));
+	}
     pl.insert(std::make_pair(std::string("XAutoRepeatOn"), std::string("true")));
     #endif
 
@@ -147,7 +150,7 @@ BaseApp::BaseApp()
 	,mStatsOn(0), mShowCamPos(1), mbWireFrame(0)
 	,mx(0),my(0),mz(0),	mGUI(0), mPlatform(0)
 	,mWndOpts(0), mWndBrush(0), mWndCam(0)
-	,mWndRoadCur(0), mWndRoadStats(0)
+	,mWndRoadCur(0), mWndRoadStats(0), mWndFluids(0)
 
 	,i_cmdKeyPress(0), cmdKeyPress(0)
 	,i_cmdKeyRel(0), cmdKeyRel(0)
@@ -243,6 +246,7 @@ bool BaseApp::setup()
 		mRoot->loadPlugin(PATHMANAGER::GetOgrePluginDir() + "/RenderSystem_GL" + D_SUFFIX);
 		#if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
 		mRoot->loadPlugin(PATHMANAGER::GetOgrePluginDir() + "/RenderSystem_Direct3D9" + D_SUFFIX);
+		mRoot->loadPlugin(PATHMANAGER::GetOgrePluginDir() + "/RenderSystem_Direct3D11" + D_SUFFIX);
 		#endif
 	}
 	else
@@ -251,6 +255,8 @@ bool BaseApp::setup()
 			mRoot->loadPlugin(PATHMANAGER::GetOgrePluginDir() + "/RenderSystem_GL" + D_SUFFIX);
 		else if (pSet->rendersystem == "Direct3D9 Rendering Subsystem")
 			mRoot->loadPlugin(PATHMANAGER::GetOgrePluginDir() + "/RenderSystem_Direct3D9" + D_SUFFIX);
+		else if (pSet->rendersystem == "Direct3D11 Rendering Subsystem")
+			mRoot->loadPlugin(PATHMANAGER::GetOgrePluginDir() + "/RenderSystem_Direct3D11" + D_SUFFIX);
 	}
 
 	mRoot->loadPlugin(PATHMANAGER::GetOgrePluginDir() + "/Plugin_ParticleFX" + D_SUFFIX);

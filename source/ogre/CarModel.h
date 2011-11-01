@@ -18,7 +18,7 @@
 class SETTINGS;  class GAME;  class CAR;  class Scene;  class App;  class FollowCamera;  class CarReflection;
 
 namespace Ogre {  class SceneNode;  class Terrain;  class Camera;  class SceneManager;
-	class ParticleSystem;  class RibbonTrail;  class ManualObject;  }
+	class ParticleSystem;  class Entity;  class RibbonTrail;  class ManualObject;  }
 
 
 // Stores all the needed information about car coming from vdrift
@@ -60,6 +60,10 @@ public:
 	void Create(int car);
 	void CreateReflection();
 	
+	void RecreateMaterials();
+	void setMtrNames(); // assign materials to entity / manualobject
+	void setMtrName(const Ogre::String& entName, const Ogre::String& mtrName);
+	
 	//  Call every vdrift substep with new position info
 	void Update(PosInfo& newPosInfo, float time);
 	
@@ -78,7 +82,7 @@ public:
 	
 	//  Create ogre model from .joe, Static method so VDrift track (TrackVdr.cpp) can use this too
 	static Ogre::ManualObject* CreateModel( Ogre::SceneManager* sceneMgr, const Ogre::String& mat,
-		class VERTEXARRAY* a, Ogre::Vector3 vPofs, bool flip=false, bool track=false);
+		class VERTEXARRAY* a, Ogre::Vector3 vPofs, bool flip=false, bool track=false, const Ogre::String& name="");
 
 	//  Follow camera for this car.
 	//  This can be null (for remote [network] cars)
@@ -107,7 +111,7 @@ public:
 	int iInChk, iCurChk, iNextChk, iNumChks, iWonPlace;  // cur checkpoint -1 at start
 	bool bInSt, bWrongChk;  float fChkTime;  int iChkWrong;
 	//bool Checkpoint(const PosInfo& posInfo, class SplineRoad* road);  // update
-	
+	Ogre::Vector3 vStartPos;
 	
 private:
 	Ogre::Camera* mCamera;
@@ -127,14 +131,15 @@ private:
 		Mtr_CarTireFront, Mtr_CarTireRear,
 		NumMaterials  };
 	std::string sMtr[NumMaterials];
-	
+		
 	//  Particle systems, trail
 	Ogre::ParticleSystem* ps[4],*pm[4],*pd[4];  // smoke, mud, dust
+	Ogre::ParticleSystem* pflW[4],*pflM[4];  // water, mud, hit and swirl
 	Ogre::ParticleSystem* pb[2], *ph;  // boost, world hit
 	Ogre::RibbonTrail* whTrl[4];
 	Ogre::Real wht[4];  // spin time (approx tire temp.)
 	Ogre::SceneNode *ndWh[4], *ndWhE[4];
-
+	
 	//  Dir name of car (e.g. ES or RS2)
 	std::string sDirname;
 	

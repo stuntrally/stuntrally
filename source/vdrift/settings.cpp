@@ -50,6 +50,7 @@ void SETTINGS::Serialize(bool w, CONFIGFILE & c)
 	Param(c,w, "display_eff.particles_len", particles_len);	Param(c,w, "display_eff.trail_len", trails_len);
 	Param(c,w, "display_adv.trees", trees);					Param(c,w, "display_adv.grass", grass);
 	Param(c,w, "display_adv.trees_dist", trees_dist);		Param(c,w, "display_adv.grass_dist", grass_dist);
+	Param(c,w, "display_adv.use_imposters", use_imposters);
 
 	Param(c,w, "shadow.dist", shadow_dist);			Param(c,w, "shadow.size", shadow_size);
 	Param(c,w, "shadow.count",shadow_count);		Param(c,w, "shadow.type", shadow_type);
@@ -59,8 +60,8 @@ void SETTINGS::Serialize(bool w, CONFIGFILE & c)
 	Param(c,w, "reflect.map_size", refl_size);		Param(c,w, "reflect.dist", refl_dist);
 	Param(c,w, "reflect.mode", refl_mode);
 
-	Param(c,w, "control.autoclutch", autoclutch);	Param(c,w, "control.autotrans", autoshift);
-	Param(c,w, "control.autorear", autorear);
+	Param(c,w, "control.autotrans", autoshift);
+	Param(c,w, "control.autorear", autorear);		Param(c,w, "control.rear_inv", rear_inv);
 	Param(c,w, "control.abs", abs);					Param(c,w, "control.tcs", tcs);
 	Param(c,w, "control.veget_collis", veget_collis);
 	Param(c,w, "control.car_collis", car_collis);
@@ -87,6 +88,7 @@ void SETTINGS::Serialize(bool w, CONFIGFILE & c)
 	Param(c,w, "video.fsaa", fsaa);					Param(c,w, "video.vsync", vsync);
 	Param(c,w, "video.buffer", buffer);				Param(c,w, "video.rendersystem", rendersystem);
 	Param(c,w, "video.ssaa", ssaa);
+	Param(c,w, "video.ssao", ssao);
 
 	Param(c,w, "network.nickname", nickname);
 	Param(c,w, "network.master_server_address", master_server_address);
@@ -115,9 +117,9 @@ SETTINGS::SETTINGS() :  ///  Defaults
 	shadow_dist(3000), shadow_size(2), shadow_count(3), shadow_type(1), lightmap_size(0),
 	refl_skip(10), refl_faces(1), refl_size(0), refl_dist(500.f), refl_mode("single"),
 	shaders(0),  trees(1.f), grass(1.f), trees_dist(1.f), grass_dist(1.f),
-	particles_len(1.f), trails_len(1.f),
+	particles_len(1.f), trails_len(1.f),use_imposters(true),
 	//  car
-	abs(1), tcs(1), autoclutch(1), autoshift(1), autorear(1), show_mph(0),
+	abs(1), tcs(1), autoshift(1), autorear(1), rear_inv(1), show_mph(0),
 	//  game
 	trackreverse(false), local_players(1), num_laps(2),
 	split_vertically(true), language(""), // "" = autodetect lang
@@ -131,7 +133,7 @@ SETTINGS::SETTINGS() :  ///  Defaults
 	//  video
 	bloom(false), bloomintensity(0.2), bloomorig(1.0), hdr(false),
 	motionblur(false), motionblurintensity(0.3),
-	all_effects(false), ssaa(true),
+	all_effects(false), ssaa(true), ssao(false),
 	windowx(800), windowy(600), fullscreen(false), fsaa(0), vsync(false),
 	buffer("FBO"), rendersystem("OpenGL Rendering Subsystem"),
 	//  input

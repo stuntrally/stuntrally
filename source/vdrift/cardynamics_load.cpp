@@ -1,19 +1,18 @@
 #include "pch.h"
 #include "cardynamics.h"
-
-#include "configfile.h"
-#include "tracksurface.h"
 #include "coordinatesystems.h"
 #include "collision_world.h"
 #include "tobullet.h"
 #include "model.h"
 #include "settings.h"
 #include "../ogre/Defines.h"
+#include "Buoyancy.h"
 
 typedef CARDYNAMICS::T T;
 
+
 CARDYNAMICS::CARDYNAMICS() :
-	world(NULL), chassis(NULL),
+	world(NULL), chassis(NULL), whTrigs(0),
 	drive(RWD), tacho_rpm(0),
 	autoclutch(true), autoshift(true), autorear(true),
 	shifted(true), shift_gear(0),
@@ -38,12 +37,24 @@ CARDYNAMICS::CARDYNAMICS() :
 	brake.resize ( WHEEL_POSITION_SIZE );
 	abs_active.resize ( WHEEL_POSITION_SIZE, false );
 	tcs_active.resize ( WHEEL_POSITION_SIZE, false );
-	//wheelBody.resize(WHEEL_POSITION_SIZE);
+
+	poly = NULL;
 }
 
 CARDYNAMICS::~CARDYNAMICS()
-{}
+{
+	if (poly)
+	{
+		delete[] poly->verts;
+		delete[] poly->faces;
+	}
+	delete poly;
+}
 
+
+//----------------------------------------------------------------------------------------------------------------------------------
+///  Load  (.car file)
+//----------------------------------------------------------------------------------------------------------------------------------
 bool CARDYNAMICS::Load(CONFIGFILE & c, std::ostream & error_output)
 {
 	bTerrain = false;
@@ -606,8 +617,12 @@ bool CARDYNAMICS::Load(CONFIGFILE & c, std::ostream & error_output)
 	return true;
 }
 
+
+//----------------------------------------------------------------------------------------------------------------------------------
+///  Init  dynamics
+//----------------------------------------------------------------------------------------------------------------------------------
 void CARDYNAMICS::Init(
-	class SETTINGS* pSet1, class Scene* pScene1,
+	class SETTINGS* pSet1, class Scene* pScene1, class FluidsXml* pFluids1,
 	COLLISION_WORLD & world,
 	const MODEL & chassisModel,
 	const MODEL & wheelModelFront,
@@ -615,7 +630,7 @@ void CARDYNAMICS::Init(
 	const MATHVECTOR <T, 3> & position,
 	const QUATERNION <T> & orientation)
 {
-	pSet = pSet1;  pScene = pScene1;
+	pSet = pSet1;  pScene = pScene1;  pFluids = pFluids1;
 	this->world = &world;
 
 	MATHVECTOR <T, 3> zero(0, 0, 0);
@@ -627,18 +642,11 @@ void CARDYNAMICS::Init(
 	// init engine
 	engine.SetInitialConditions();
 
-#if 1
+
 	// init chassis
 	btTransform tr;
 	tr.setIdentity();
-/*
-	// convex hull collision shape (one order of magnitude framerate drop)
-	localtransform.setOrigin(ToBulletVector(-center_of_mass));
-	const float * vertices = NULL;
-	int vertices_size = 0;
-	chassisModel.GetVertexArray().GetVertices(vertices, vertices_size);
-	btConvexHullShape * hull = new btConvexHullShape(vertices, vertices_size / 3, 3 * sizeof(float));
-*/
+
 	AABB <float> box = chassisModel.GetAABB();
 	for (int i = 0; i < 4; i++)
 	{
@@ -657,12 +665,13 @@ void CARDYNAMICS::Init(
 		box.CombineWith(wheelaabb);
 	}
 
+
+	///  chassis shape  ---------------------------------------------------------
 	const MATHVECTOR <T, 3> verticalMargin(0, 0, 0.3);
 	btVector3 origin = ToBulletVector(box.GetCenter() + verticalMargin - center_of_mass);
 	btVector3 size = ToBulletVector(box.GetSize() - verticalMargin);
 
 	//btCompoundShape * chassisShape = new btCompoundShape(false);
-	///  chassis shapes
 	#if 0
 		//btBoxShape * hull = new btBoxShape( btVector3(1.8,0.8,0.5) );
 		btBoxShape * hull = new btBoxShape( btVector3(1.7,0.7,0.3) );
@@ -684,11 +693,9 @@ void CARDYNAMICS::Init(
 		btScalar rad[numSph];  btVector3 pos[numSph];
 		pos[i] = origin + btVector3( 1.8,-h,h0 + -zh);  rad[i] = r*0.6;  ++i;  // front
 		pos[i] = origin + btVector3( 1.8, h,h0 + -zh);  rad[i] = r*0.6;  ++i;
-		pos[i] = origin + btVector3( 0.9,-h,h0 + -zh);  rad[i] = r;  ++i;
+		pos[i] = origin + btVector3( 0.9,-h,h0 + -zh);  rad[i] = r;  ++i;	// front near
 		pos[i] = origin + btVector3( 0.9, h,h0 + -zh);  rad[i] = r;  ++i;
-		//pos[i] = origin + btVector3( 0.0,-h,-zh);  rad[i] = r;  ++i;  // center
-		//pos[i] = origin + btVector3( 0.0, h,-zh);  rad[i] = r;  ++i;
-		pos[i] = origin + btVector3(-0.9,-h,h0 + -zh);  rad[i] = r;  ++i;
+		pos[i] = origin + btVector3(-0.9,-h,h0 + -zh);  rad[i] = r;  ++i;	// rear near
 		pos[i] = origin + btVector3(-0.9, h,h0 + -zh);  rad[i] = r;  ++i;
 		pos[i] = origin + btVector3(-1.9,-h,h0 + -zh);  rad[i] = r*0.6;  ++i;  // rear
 		pos[i] = origin + btVector3(-1.9, h,h0 + -zh);  rad[i] = r*0.6;  ++i;
@@ -696,19 +703,9 @@ void CARDYNAMICS::Init(
 		pos[i] = origin + btVector3( 0.4, h*0.8,h0 + zh*0.2);  rad[i] = r*0.6;  ++i;
 		pos[i] = origin + btVector3(-0.3,-h*0.8,h0 + zh*0.4);  rad[i] = r*0.6;  ++i;
 		pos[i] = origin + btVector3(-0.3, h*0.8,h0 + zh*0.4);  rad[i] = r*0.6;  ++i;
-		pos[i] = origin + btVector3(-1.1,-h*0.8,h0 + zh*0.2);  rad[i] = r*0.6;  ++i;
-		pos[i] = origin + btVector3(-1.1, h*0.8,h0 + zh*0.2);  rad[i] = r*0.6;  ++i;/**/
-		btMultiSphereShape* chassisShape = new btMultiSphereShape(pos, rad, numSph/**/);
-
-	/*  tr.setOrigin(origin + btVector3( 1.8,0,-zh));	btCapsuleShape* c1 = new btCapsuleShape(r*0.6,h);	chassisShape->addChildShape(tr, c1);
-		tr.setOrigin(origin + btVector3(-0.9,0,-zh));	btCapsuleShape* c3 = new btCapsuleShape(r,h);	chassisShape->addChildShape(tr, c3);
-		tr.setOrigin(origin + btVector3( 0.0,0,-zh));	btCapsuleShape* c5 = new btCapsuleShape(r,h);	chassisShape->addChildShape(tr, c5);
-		tr.setOrigin(origin + btVector3( 0.9,0,-zh));	btCapsuleShape* c4 = new btCapsuleShape(r,h);	chassisShape->addChildShape(tr, c4);
-		tr.setOrigin(origin + btVector3(-1.9,0,-zh));	btCapsuleShape* c2 = new btCapsuleShape(r*0.6,h);	chassisShape->addChildShape(tr, c2);
-		// top
-		tr.setOrigin(origin + btVector3( 0.4,0,zh*0.2));	btCapsuleShape* c6 = new btCapsuleShape(r*0.6,h*0.8);	chassisShape->addChildShape(tr, c6);
-		tr.setOrigin(origin + btVector3(-0.3,0,zh*0.4));	btCapsuleShape* c7 = new btCapsuleShape(r*0.6,h*0.8);	chassisShape->addChildShape(tr, c7);
-		tr.setOrigin(origin + btVector3(-1.1,0,zh*0.2));	btCapsuleShape* c8 = new btCapsuleShape(r*0.6,h*0.8);	chassisShape->addChildShape(tr, c8);*/
+		pos[i] = origin + btVector3(-1.1,-h*0.8,h0 + zh*0.2);  rad[i] = r*0.6;  ++i;  // top rear
+		pos[i] = origin + btVector3(-1.1, h*0.8,h0 + zh*0.2);  rad[i] = r*0.6;  ++i;
+		btMultiSphereShape* chassisShape = new btMultiSphereShape(pos, rad, numSph);
 	#endif
 
 
@@ -730,33 +727,75 @@ void CARDYNAMICS::Init(
 	chassis = world.AddRigidBody(info, true, pSet->car_collis);
 	chassis->setActivationState(DISABLE_DEACTIVATION);
 	chassis->setUserPointer(new ShapeData(ST_Car, this, 0));  ///~~
+	
 	world.AddAction(this);
-#else
-	// init chassis
-	T chassisMass = body.GetMass();
-	MATRIX3 <T> inertia = body.GetInertia();
-	btVector3 chassisInertia(inertia[0], inertia[4], inertia[8]);
+	
 
-	btTransform transform;
-	transform.setOrigin(ToBulletVector(position));
-	transform.setRotation(ToBulletQuaternion(orientation));
-	btDefaultMotionState * chassisState = new btDefaultMotionState();
-	chassisState->setWorldTransform(transform);
-	
-	btVector3 origin, size;
-	GetCollisionBox(chassisModel, wheelModelFront, wheelModelRear, origin, size);
-	
-	btCollisionShape * chassisShape = NULL;
-	chassisShape = CreateCollisionShape(origin, size);
-	
-	// create rigid body
-	btRigidBody::btRigidBodyConstructionInfo info(chassisMass, chassisState, chassisShape, chassisInertia);
-	info.m_angularDamping = 0.5;
-	info.m_friction = 0.5;
-	chassis = world.AddRigidBody(info);
-	chassis->setContactProcessingThreshold(0); // internal edge workaround(swept sphere shape required)
-	world.AddAction(this);
-#endif
+	///  join chassis and wheel triggers
+	//________________________________________________________
+	//if (pScene->fluids.size() > 0)  // if fluids on scene ..load scene before car?
+	{
+		for (int w=0; w < 4; ++w)
+		{
+			WHEEL_POSITION wp = WHEEL_POSITION(w);
+			T whR = GetTire(wp).GetRadius() * 1.2;  //bigger
+			MATHVECTOR <float, 3> wheelpos = GetWheelPosition(wp, 0);
+			wheelpos[2] += whR;
+
+			btSphereShape* whSph = new btSphereShape(whR);
+			//btCylinderShapeX* whSph = new btCylinderShapeX(btVector3(whR,whR,whR));//todo..
+			whTrigs = new btRigidBody(0.001f, 0, whSph);
+			
+			whTrigs->setUserPointer(new ShapeData(ST_Wheel, this, 0, w));  ///~~
+			whTrigs->setActivationState(DISABLE_DEACTIVATION);
+			whTrigs->setCollisionFlags(whTrigs->getCollisionFlags() | btCollisionObject::CF_NO_CONTACT_RESPONSE);
+			world.world->addRigidBody(whTrigs);
+			world.shapes.push_back(whSph);
+				
+			//todo: collision mask only to fluid triggers
+			//todo: optimize- 1 constr only or none?
+			//todo: cylinders? fixed constr\_
+			/*btTransform f1,f2;  f1.setIdentity();  f2.setIdentity();
+			f1.setOrigin(ToBulletVector(wheelpos));
+			btGeneric6DofConstraint* constr = new btGeneric6DofConstraint(*chassis, *whTrigs, f1, f2, true);
+			constr->setLimit(0,0,0);  constr->setLimit(1,0,1);  constr->setLimit(2,0,0);
+			//constr->setLimit(3,0,0);
+			//constr->setLimit(4,0,0);
+			constr->setLimit(5,0,0);/*??*/
+			btTypedConstraint* constr = new btPoint2PointConstraint(*chassis, *whTrigs,
+				ToBulletVector(wheelpos), btVector3(0,0,0));
+			world.world->addConstraint(constr, true);
+			world.constraints.push_back(constr);
+		}
+
+		///  init poly for buoyancy computations
+		//________________________________________________________
+		if (poly == NULL)
+		{
+			poly = new Polyhedron();
+			poly->numVerts = 8;  poly->numFaces = 12;
+			poly->verts = new Vec3[8];
+			poly->faces = new Face[12];
+
+			float hx = 1.2f, hy = 0.7f, hz = 0.4f;  // box dim
+			poly->verts[0] = Vec3(-hx,-hy,-hz);	poly->verts[1] = Vec3(-hx,-hy, hz);
+			poly->verts[2] = Vec3(-hx, hy,-hz);	poly->verts[3] = Vec3(-hx, hy, hz);
+			poly->verts[4] = Vec3( hx,-hy,-hz);	poly->verts[5] = Vec3( hx,-hy, hz);
+			poly->verts[6] = Vec3( hx, hy,-hz);	poly->verts[7] = Vec3( hx, hy, hz);
+
+			poly->faces[0] = Face(0,1,3);	poly->faces[1] = Face(0,3,2);	poly->faces[2] = Face(6,3,7);	poly->faces[3] = Face(6,2,3);
+			poly->faces[4] = Face(4,6,5);	poly->faces[5] = Face(6,7,5);	poly->faces[6] = Face(4,5,0);	poly->faces[7] = Face(0,5,1);
+			poly->faces[8] = Face(5,7,1);	poly->faces[9] = Face(7,3,1);	poly->faces[10]= Face(0,6,4);	poly->faces[11]= Face(0,2,6);
+
+			poly->length = 1.0f;  //  approx. length-?
+			poly->volume = ComputeVolume(*poly);
+
+			body_mass = 1900.0f * 2.688;  //poly->volume;  // car density
+			body_inertia = (4.0f * body_mass / 12.0f) * btVector3(hy*hz, hx*hz, hx*hy);
+		}
+	}
+	//-------------------------------------------------------------	
+
 
 	// init wheels, suspension
 	for (int i = 0; i < WHEEL_POSITION_SIZE; i++)
@@ -768,80 +807,4 @@ void CARDYNAMICS::Init(
 	}
 
 	AlignWithGround();//--
-}
-
-// calculate bounding box from chassis, wheel meshes
-void CARDYNAMICS::GetCollisionBox(
-	const MODEL & chassisModel,
-	const MODEL & wheelModelFront,
-	const MODEL & wheelModelRear,
-	btVector3 & center,
-	btVector3 & size)
-{
-	AABB <float> box = chassisModel.GetAABB();
-	float bottom = box.GetCenter()[2] - box.GetSize()[2] * 0.5;
-	for (int i = 0; i < 4; i++)
-	{
-		MATHVECTOR <float, 3> wheelpos = GetLocalWheelPosition(WHEEL_POSITION(i), 0);
-
-		const MODEL * wheelmodel = &wheelModelFront;
-		if (i > 1) wheelmodel = &wheelModelRear;
-
-		float sidefactor = 1.0;
-		if (i == 1 || i == 3) sidefactor = -1.0;
-
-		AABB <float> wheelaabb;
-		wheelaabb.SetFromCorners(
-			wheelpos - wheelmodel->GetAABB().GetSize() * 0.5 * sidefactor,
-			wheelpos + wheelmodel->GetAABB().GetSize() * 0.5 * sidefactor);
-		box.CombineWith(wheelaabb);
-	}
-	float bottom_new = box.GetCenter()[2] - box.GetSize()[2] * 0.5;
-	const float delta = 0.1;
-	MATHVECTOR <T, 3> offset(0, 0, bottom - bottom_new + delta);
-
-	center = ToBulletVector(box.GetCenter() + offset * 0.5 - center_of_mass);
-	size = ToBulletVector(box.GetSize() - offset);
-}
-
-// create collision shape from bounding box
-btCollisionShape * CARDYNAMICS::CreateCollisionShape(const btVector3 & center, const btVector3 & size)
-{
-/*	// use two capsules to approximate collision box
-	assert(size[0] > size[1] && size[1] > size[2]);
-	btScalar radius = size[2] * 0.5;
-	btScalar height = size[0] - size[2];
-	btVector3 sideOffset(0, size[1] * 0.5 - size[2] * 0.5, 0);
-	btCollisionShape * hull0 = new btCapsuleShapeX(radius, height);
-	btCollisionShape * hull1 = new btCapsuleShapeX(radius, height);
-	btVector3 origin0 = center + sideOffset;
-	btVector3 origin1 = center - sideOffset;
-	
-	btCompoundShape * shape = new btCompoundShape(false);
-	btTransform localtransform;
-	localtransform.setIdentity();
-	localtransform.setOrigin(origin0);
-	shape->addChildShape(localtransform, hull0);
-	localtransform.setOrigin(origin1);
-	shape->addChildShape(localtransform, hull1);*/
-	
-	// use btMultiSphereShape(4 spheres) to approximate bounding box
-	btVector3 hsize = 0.5 * size;
-	int min = hsize.minAxis();
-	int max = hsize.maxAxis();
-	btVector3 maxAxis(0, 0, 0);
-	maxAxis[max] = 1;
-	int numSpheres = 4;
-	btScalar radius = hsize[min];
-	btScalar radii[4] = {radius, radius, radius, radius};
-	btVector3 positions[4];
-	btVector3 offset0 = hsize - btVector3(radius, radius, radius);
-	btVector3 offset1 = offset0 - 2 * offset0[max] * maxAxis;
-	positions[0] = center + offset0;
-	positions[1] = center + offset1;
-	positions[2] = center - offset0;
-	positions[3] = center - offset1;
-	btMultiSphereShape * shape = new btMultiSphereShape(positions, radii, numSpheres);
-	
-	return shape;
 }

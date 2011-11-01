@@ -19,7 +19,6 @@
 #include "macros.h"
 #include "collision_contact.h"
 #include "cartelemetry.h"
-//#include "btBulletDynamicsCommon.h"
 #include "../btOgre/BtOgreDebug.h"
 
 class MODEL;
@@ -35,6 +34,7 @@ public:
 	typedef double T;
 	class SETTINGS* pSet;
 	class Scene* pScene;  // for fluids
+	class FluidsXml* pFluids;  // to get fluid params
 	std::vector<float> inputsCopy;  // just for dbg info txt
 	
 	CARDYNAMICS();
@@ -42,16 +42,8 @@ public:
 	
 	bool Load(CONFIGFILE & c, std::ostream & error_output);
 
-	void GetCollisionBox(
-		const MODEL & chassisModel,
-		const MODEL & wheelModelFront,
-		const MODEL & wheelModelRear,
-		btVector3 & center,
-		btVector3 & size);
-	btCollisionShape * CreateCollisionShape(const btVector3 & center, const btVector3 & size);
-
 	void Init(
-		class SETTINGS* pSet1, class Scene* pScene1,
+		class SETTINGS* pSet1, class Scene* pScene1, class FluidsXml* pFluids1,
 		COLLISION_WORLD & world,
 		const MODEL & chassisModel,
 		const MODEL & wheelModelFront,
@@ -64,7 +56,7 @@ public:
 	virtual void debugDraw(btIDebugDraw * debugDrawer);
 
 // graphics interface, interpolated!
-	void Update(); // update interpolated chassis state
+	void Update(), UpdateBuoyancy(); // update interpolated chassis state
 	const MATHVECTOR <T, 3> & GetCenterOfMassPosition() const;
 	const MATHVECTOR <T, 3> & GetPosition() const;
 	const QUATERNION <T> & GetOrientation() const;
@@ -163,8 +155,12 @@ public:
 	RIGIDBODY <T> body;
 	MATHVECTOR <T, 3> center_of_mass;
 	COLLISION_WORLD * world;
-	btRigidBody * chassis;
-	//std::vector <btRigidBody *> wheelBody;
+	btRigidBody * chassis, * whTrigs;
+
+	///  for buoyancy
+	float whH[4];
+	struct Polyhedron* poly;
+	float body_mass;  btVector3 body_inertia;
 
 	// interpolated chassis state
 	MATHVECTOR <T, 3> chassisPosition;
@@ -176,7 +172,7 @@ public:
 	// rocket boost
 	float doBoost;
 
-	std::list<FluidBox*> inFluids;  /// list of fluids this car is in (if any)
+	std::list<FluidBox*> inFluids,inFluidsWh[4];  /// list of fluids this car is in (if any)
 	Ogre::Vector3 vHitPos,vHitNorm;  // world hit data
 	float fHitTime, fParIntens,fParVel, fSndForce, fNormVel;
 	bool bHitSnd;  int sndHitN;

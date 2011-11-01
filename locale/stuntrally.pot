@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION"
 "Report-Msgid-Bugs-To: "
-"POT-Creation-Date: 2011-10-18 22:41+0300"
+"POT-Creation-Date: 2011-11-01 14:47+0200"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>"
 "Language-Team: LANGUAGE <LL@li.org>"
@@ -93,6 +93,10 @@ msgctxt "TipRoadDist2"
 msgid "Additional distance to road."
 msgstr ""
 
+msgctxt "TipLTrMinTerH"
+msgid "Terrain height below which model won't appear."
+msgstr ""
+
 msgctxt "TreeDens"
 msgid "Trees   density"
 msgstr ""
@@ -169,6 +173,10 @@ msgctxt "TipSunDiffuse"
 msgid "Sun light diffuse (normal) color. R G B components 0 to 1 (eg. 0.9 0.9 0.9)"
 msgstr ""
 
+msgctxt "LTrMinTerH"
+msgid "min terrain Height"
+msgstr ""
+
 msgctxt "HUD"
 msgid "HUD"
 msgstr ""
@@ -181,16 +189,20 @@ msgctxt "TipTrackMap"
 msgid "Minimap of selected track, view from top."
 msgstr ""
 
-msgctxt "TipToggleModel"
-msgid "Enable or disable this model."
+msgctxt "TerGenOfsY"
+msgid "Offset Y"
 msgstr ""
 
-msgctxt "MinimapRotate"
-msgid "Rotate"
+msgctxt "TerGenOfsX"
+msgid "Offset X"
 msgstr ""
 
 msgctxt "pipes"
 msgid "pipes"
+msgstr ""
+
+msgctxt "InputFluidsTile"
+msgid "[,]  - change texture tiling"
 msgstr ""
 
 msgctxt "InputHeaderTxt1"
@@ -277,6 +289,14 @@ msgctxt "TipDiffusePrev"
 msgid "Diffuse texture preview image."
 msgstr ""
 
+msgctxt "TipGrTerMaxAngle"
+msgid "Terrain angle above which there won't be any grass."
+msgstr ""
+
+msgctxt "RestartApply"
+msgid "Restart game, to apply *changes."
+msgstr ""
+
 msgctxt "smoke"
 msgid "smoke"
 msgstr ""
@@ -297,8 +317,8 @@ msgctxt "InputRoadPickOne"
 msgid "Pick (one)"
 msgstr ""
 
-msgctxt "ParAmount"
-msgid "Particle amounts"
+msgctxt "NetGame"
+msgid "Game"
 msgstr ""
 
 msgctxt "MyGUI_MessageBox_No"
@@ -306,7 +326,11 @@ msgid "No"
 msgstr ""
 
 msgctxt "InputRoadNew"
-msgid "ctrl-Space - set new from picked"
+msgid "ctrl-Space - set new point's values from picked"
+msgstr ""
+
+msgctxt "InputFluidsMode"
+msgid "W - edit fluids"
 msgstr ""
 
 msgctxt "Top"
@@ -394,7 +418,7 @@ msgid "Camera info"
 msgstr ""
 
 msgctxt "frenzy"
-msgid "frenzy"
+msgid "frenzy (curly road)"
 msgstr ""
 
 msgctxt "InputRoadChkRadius"
@@ -409,12 +433,20 @@ msgctxt "InputRoadInsAlt"
 msgid "alt-shift - at start   alt-ctrl - at end"
 msgstr ""
 
+msgctxt "RearThrottleInverse"
+msgid "Rear throttle inverse--"
+msgstr ""
+
 msgctxt "BlendMap"
 msgid "Blendmap"
 msgstr ""
 
 msgctxt "InputMapPrevCamera"
 msgid "Previous Camera"
+msgstr ""
+
+msgctxt "InputFluidsSize"
+msgid "alt-LMB - size   alt-RMB - depth"
 msgstr ""
 
 msgctxt "InputMapBrake"
@@ -465,12 +497,16 @@ msgctxt "ChangeTrack"
 msgid "Change Track"
 msgstr ""
 
-msgctxt "TerrainSize"
-msgid "Terrain size"
+msgctxt "RoadQual"
+msgid "Road far quality"
 msgstr ""
 
 msgctxt "NetServer"
 msgid "Server"
+msgstr ""
+
+msgctxt "TerrainSize"
+msgid "Terrain size"
 msgstr ""
 
 msgctxt "InputRoadWidth"
@@ -481,12 +517,16 @@ msgctxt "InputMapSteering"
 msgid "Steering"
 msgstr ""
 
+msgctxt "NewDup"
+msgid "New (Duplicate)"
+msgstr ""
+
 msgctxt "AutoRear"
 msgid "Auto Rear gear"
 msgstr ""
 
-msgctxt "NumLaps"
-msgid "Number of laps"
+msgctxt "TerGenFreq"
+msgid "Freq. zoom"
 msgstr ""
 
 msgctxt "UseSSAA"
@@ -593,8 +633,16 @@ msgctxt "MaxScale"
 msgid "max scale"
 msgstr ""
 
+msgctxt "Fluids"
+msgid "Fluids"
+msgstr ""
+
 msgctxt "NetNickname"
 msgid "Nickname"
+msgstr ""
+
+msgctxt "UseImposters"
+msgid "Use Imposters"
 msgstr ""
 
 msgctxt "NetSettings"
@@ -607,6 +655,10 @@ msgstr ""
 
 msgctxt "TerrainError"
 msgid "Terrain error"
+msgstr ""
+
+msgctxt "InputFluidsDel"
+msgid "Del - delete current"
 msgstr ""
 
 msgctxt "NeedNewGame"
@@ -633,6 +685,10 @@ msgctxt "Sound"
 msgid "Sound"
 msgstr ""
 
+msgctxt "InputFluidsIns"
+msgid "Ins - insert new, default fluid at cursor"
+msgstr ""
+
 msgctxt "RoadPointSize"
 msgid "Road points size"
 msgstr ""
@@ -651,6 +707,10 @@ msgstr ""
 
 msgctxt "InputRoadCopySel"
 msgid "ctrl-Ins - copy selection   ctrl-Del - delete sel."
+msgstr ""
+
+msgctxt "NumLaps"
+msgid "Number of laps"
 msgstr ""
 
 msgctxt "TriSize"
@@ -699,6 +759,10 @@ msgstr ""
 
 msgctxt "TipBumpAmp"
 msgid "Amplitude of additional bumps on surface (how high)."
+msgstr ""
+
+msgctxt "InputFluidsMove"
+msgid "LMB - move   RMB - height"
 msgstr ""
 
 msgctxt "TipNormalTex"
@@ -797,6 +861,10 @@ msgctxt "TipRoadParams"
 msgid "Road point parameters."
 msgstr ""
 
+msgctxt "ssao"
+msgid "SSAO"
+msgstr ""
+
 msgctxt "NetRefreshList"
 msgid "Get/refresh list"
 msgstr ""
@@ -814,7 +882,7 @@ msgid "difficulty"
 msgstr ""
 
 msgctxt "bumps"
-msgid "bumps"
+msgid "bumps (bumpy terrain)"
 msgstr ""
 
 msgctxt "TipReverse"
@@ -837,6 +905,10 @@ msgctxt "Rename"
 msgid "Rename"
 msgstr ""
 
+msgctxt "InputFluidsRot"
+msgid "MMB - rotate yaw"
+msgstr ""
+
 msgctxt "TipModelPageLength"
 msgid "Models Page length (low will reload often, high will cause visible switching)."
 msgstr ""
@@ -845,8 +917,8 @@ msgctxt "LightmapSize"
 msgid "Lightmap size"
 msgstr ""
 
-msgctxt "RoadQual"
-msgid "Road far quality"
+msgctxt "TerGenPers"
+msgid "Persistance noise"
 msgstr ""
 
 msgctxt "length"
@@ -867,6 +939,10 @@ msgstr ""
 
 msgctxt "Exponent"
 msgid "exponent"
+msgstr ""
+
+msgctxt "InputFluidsPrevNext"
+msgid "PgUp,PgDn (or Wheel) - previous/next fluid"
 msgstr ""
 
 msgctxt "Yaw"
@@ -911,6 +987,10 @@ msgstr ""
 
 msgctxt "Screenshot"
 msgid "screenshot"
+msgstr ""
+
+msgctxt "Models"
+msgid "Models"
 msgstr ""
 
 msgctxt "Screen"
@@ -1073,6 +1153,10 @@ msgctxt "InputRoadPipeAngle"
 msgid "[,]   - pipe angle (no pipe when 0)"
 msgstr ""
 
+msgctxt "LTrMaxTerAng"
+msgid "max terrain Angle"
+msgstr ""
+
 msgctxt "InputMapRestartGame"
 msgid "New game"
 msgstr ""
@@ -1133,6 +1217,10 @@ msgctxt "SunWeather"
 msgid "Sun and Weather"
 msgstr ""
 
+msgctxt "GrTerMaxAngle"
+msgid "Grass Max. Terrain Angle"
+msgstr ""
+
 msgctxt "TipTrkScreenEditor"
 msgid "In game screenshot for selected track."
 msgstr ""
@@ -1145,6 +1233,10 @@ msgctxt "TipAutoRear"
 msgid "Uncheck for manual Rear gear changing."
 msgstr ""
 
+msgctxt "TipToggleModel"
+msgid "Enable or disable this model."
+msgstr ""
+
 msgctxt "TipTrailClr"
 msgid "Tire trails color. R G B A components 0 to 1 (eg. 0.4 0.4 0.2 0.6)"
 msgstr ""
@@ -1153,8 +1245,8 @@ msgctxt "MinimapTerrain"
 msgid "Terrain"
 msgstr ""
 
-msgctxt "NewDup"
-msgid "New (Duplicate)"
+msgctxt "MinimapRotate"
+msgid "Rotate"
 msgstr ""
 
 msgctxt "TrackHeightDiff"
@@ -1185,16 +1277,12 @@ msgctxt "Sky"
 msgid "Sky"
 msgstr ""
 
-msgctxt "WrongChk"
-msgid "Wrong Checkpoint"
+msgctxt "TCS"
+msgid "TCS (traction control)"
 msgstr ""
 
 msgctxt "DisableEdit"
 msgid "Disable for edit"
-msgstr ""
-
-msgctxt "TipAutoClutch"
-msgid "-Manual not implemented."
 msgstr ""
 
 msgctxt "LS_TER"
@@ -1253,8 +1341,8 @@ msgctxt "Leave"
 msgid "Leave (exit)"
 msgstr ""
 
-msgctxt "TipVegetModels"
-msgid "Models (meshes) for vegetation. Found in data/trees/."
+msgctxt "InputRoadMove"
+msgid "- move point"
 msgstr ""
 
 msgctxt "Engine"
@@ -1285,8 +1373,8 @@ msgctxt "TipChangeHue"
 msgid "Change car color (hue)."
 msgstr ""
 
-msgctxt "InputRoadMove"
-msgid "- move point"
+msgctxt "InputUpdBlendmap"
+msgid "F9 - update terrain blendmap"
 msgstr ""
 
 msgctxt "Intensity"
@@ -1361,6 +1449,10 @@ msgctxt "InputRoadChkFirst"
 msgid "0   - set checkpoint as first"
 msgstr ""
 
+msgctxt "NumLocalPlayers"
+msgid "Number of local players"
+msgstr ""
+
 msgctxt "UnitM"
 msgid "m"
 msgstr ""
@@ -1377,8 +1469,8 @@ msgctxt "InputRoadLMB"
 msgid "LMB (or Arrows)"
 msgstr ""
 
-msgctxt "TCS"
-msgid "TCS (traction control)"
+msgctxt "WrongChk"
+msgid "Wrong Checkpoint"
 msgstr ""
 
 msgctxt "NeedRestart"
@@ -1409,8 +1501,8 @@ msgctxt "TipModelVisDist"
 msgid "Visibility distance for model pages."
 msgstr ""
 
-msgctxt "NumLocalPlayers"
-msgid "Number of local players"
+msgctxt "TerGenScale"
+msgid "Scale Height"
 msgstr ""
 
 msgctxt "Settings"
@@ -1541,12 +1633,20 @@ msgctxt "EnterSave"
 msgid "Enter - save"
 msgstr ""
 
+msgctxt "Properties"
+msgid "Properties"
+msgstr ""
+
 msgctxt "TipBumpFreq"
 msgid "Frequency of additional bumps on surface (distance between them)."
 msgstr ""
 
 msgctxt "InputRoadDel"
 msgid "Del - delete picked"
+msgstr ""
+
+msgctxt "InputFluidsTileY"
+msgid "; &apos;  - change texture tiling, one coord. only"
 msgstr ""
 
 msgctxt "Multiplayer"
@@ -1561,8 +1661,8 @@ msgctxt "InputToggleGUIMode"
 msgid "F1 or ` - GUI mode (toggle Options)"
 msgstr ""
 
-msgctxt "TipFogEndDist"
-msgid "Fog end distance [meters]."
+msgctxt "TipRearThrottleInverse"
+msgid "Inverse throttle and brake function in rear gear."
 msgstr ""
 
 msgctxt "RoadPoint"
@@ -1705,6 +1805,10 @@ msgctxt "CamInertia"
 msgid "Camera inertia"
 msgstr ""
 
+msgctxt "InputFluidsType"
+msgid "-,=  - change fluid type (water,mud,etc.)"
+msgstr ""
+
 msgctxt "TrackWidthAvg"
 msgid "Width avg."
 msgstr ""
@@ -1805,8 +1909,8 @@ msgctxt "TipSurfFrict"
 msgid "Surface friction (eg. 1.0 asphalt, 0.7 gravel, 0.5 ice)."
 msgstr ""
 
-msgctxt "NetGame"
-msgid "Game"
+msgctxt "ParAmount"
+msgid "Particle amounts"
 msgstr ""
 
 msgctxt "speed"
@@ -1937,6 +2041,10 @@ msgctxt "InputHelp"
 msgid "Input/help"
 msgstr ""
 
+msgctxt "TipVegetModels"
+msgid "Models (meshes) for vegetation. Found in data/trees/."
+msgstr ""
+
 msgctxt "Sun"
 msgid "Sun"
 msgstr ""
@@ -1973,12 +2081,16 @@ msgctxt "scale"
 msgid "Scale"
 msgstr ""
 
-msgctxt "AutoClutch"
-msgid "Auto clutch-"
+msgctxt "UnitMph"
+msgid "mph"
 msgstr ""
 
 msgctxt "ColHue"
 msgid "Color - Hue"
+msgstr ""
+
+msgctxt "fluids"
+msgid "fluids (water or mud)"
 msgstr ""
 
 msgctxt "TBTime"
@@ -2009,8 +2121,12 @@ msgctxt "TBBest"
 msgid "Best"
 msgstr ""
 
-msgctxt "RestartApply"
-msgid "Restart game, to apply *changes."
+msgctxt "TipFluidsWnd"
+msgid "Fluid parameters window."
+msgstr ""
+
+msgctxt "Materials"
+msgid "Materials"
 msgstr ""
 
 msgctxt "InputMultiplier"
@@ -2077,6 +2193,10 @@ msgctxt "Environment"
 msgid "Environment"
 msgstr ""
 
+msgctxt "BoostAndFlip"
+msgid "Boost and flip"
+msgstr ""
+
 msgctxt "GraphicsAll_High"
 msgid "High"
 msgstr ""
@@ -2091,6 +2211,10 @@ msgstr ""
 
 msgctxt "Vegetation"
 msgid "Vegetation"
+msgstr ""
+
+msgctxt "TerGenPow"
+msgid "Power (shape)"
 msgstr ""
 
 msgctxt "Used"
@@ -2133,6 +2257,10 @@ msgctxt "InpSet_AxisHalfInv"
 msgid "Axis Half Inversed"
 msgstr ""
 
+msgctxt "ScaleTerHeight"
+msgid "Terrain Height"
+msgstr ""
+
 msgctxt "TipTerLHSm"
 msgid "Height smooth range (transition)."
 msgstr ""
@@ -2163,6 +2291,10 @@ msgstr ""
 
 msgctxt "DistMult"
 msgid "Distance mul"
+msgstr ""
+
+msgctxt "TipLTrMaxTerAng"
+msgid "Terrain angle above which model won't appear."
 msgstr ""
 
 msgctxt "Error"
@@ -2225,6 +2357,10 @@ msgctxt "InputRoadSelectMany"
 msgid "Select (many)"
 msgstr ""
 
+msgctxt "TerGenOct"
+msgid "Octaves"
+msgstr ""
+
 msgctxt "Volume"
 msgid "Volume"
 msgstr ""
@@ -2265,10 +2401,6 @@ msgctxt "NetJoinGame"
 msgid "Join game"
 msgstr ""
 
-msgctxt "UnitMph"
-msgid "mph"
-msgstr ""
-
 msgctxt "InputMapBoost"
 msgid "Boost"
 msgstr ""
@@ -2281,8 +2413,16 @@ msgctxt "NetChat"
 msgid "Chat"
 msgstr ""
 
+msgctxt "InputStart"
+msgid "Start"
+msgstr ""
+
 msgctxt "InputStartWidth"
 msgid "; &apos;  -  adjust start box width (for road width)"
+msgstr ""
+
+msgctxt "TipFogEndDist"
+msgid "Fog end distance [meters]."
 msgstr ""
 
 msgctxt "Color"

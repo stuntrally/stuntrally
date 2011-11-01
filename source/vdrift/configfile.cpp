@@ -375,15 +375,27 @@ string CONFIGFILE::Strip(string instr, char stripchar)
 {
 	string::size_type pos = 0;
 	string outstr = "";
-	
+	int length= instr.length();
 	while (pos < /*(int)*/ instr.length())
 	{
-		if (instr.c_str()[pos] != stripchar)
-			outstr = outstr + instr.substr(pos, 1);
+//		if (instr.c_str()[pos] != stripchar)
+//			outstr = outstr + instr.substr(pos, 1);
+		if (instr.c_str()[pos] == stripchar)
+		{
+			break;
+		}
+		//	outstr = outstr + instr.substr(pos, 1);
 		
 		pos++;
 	}
-	
+	if(pos > 0)
+	{
+		outstr = instr.substr(0, pos);
+	}
+	if(pos+1 < length )
+	{
+		outstr = outstr + instr.substr(pos+1, (length-pos)-1);
+	}
 	return outstr;
 }
 

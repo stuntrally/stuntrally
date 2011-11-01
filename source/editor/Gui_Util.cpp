@@ -60,6 +60,7 @@ void App::SetGuiFromXmls()
 	Ed(GrSwayDistr, sc.grSwayDistr);  Ed(GrDensSmooth, sc.grDensSmooth);
 	Ed(GrSwayLen, sc.grSwayLen);	Ed(GrSwaySpd, sc.grSwaySpeed);
 	Ed(TrRdDist, sc.trRdDist);		Ed(TrImpDist, sc.trDistImp);
+	Ed(GrTerMaxAngle, sc.grTerMaxAngle);
 	tabPgLayers(tabsPgLayers, 0);
 	//MeshPtr mp = MeshManager::load(sc.pgLayersAll[0].name);
 	//mp->getSubMesh(0)->
@@ -196,6 +197,7 @@ void App::btnCopyVeget(WP)
 	sc.grMinSy = sF.grMinSy;  sc.grMaxSy = sF.grMaxSy;
 	sc.grSwayDistr = sF.grSwayDistr;  sc.grSwayLen = sF.grSwayLen;
 	sc.grSwaySpeed = sF.grSwaySpeed;
+	sc.grTerMaxAngle = sF.grTerMaxAngle;
 	sc.trRdDist = sF.trRdDist;  sc.trDistImp = sF.trDistImp;
 
 	for (int i=0; i < sc.ciNumPgLay; ++i)
@@ -268,6 +270,14 @@ void App::btnScaleAll(WP)
 		road->mP[i].width *= sf;
 	}
 	road->bSelChng = true;
+	
+	//  fluids
+	for (int i=0; i < sc.fluids.size(); ++i)
+	{
+		FluidBox& fb = sc.fluids[i];
+		fb.pos.x *= sf;  fb.pos.z *= sf;
+		fb.size.x *= sf;  fb.size.z *= sf;
+	}
 
 	//  ter
 	sc.td.fTriangleSize *= sf;  sc.td.UpdVals();
@@ -458,9 +468,33 @@ bool App::SaveSurf(const std::string& path)
 ///  Get Materials
 //-----------------------------------------------------------------------------------------------------------
 
-void App::GetMaterials(String filename, String type)
+void App::GetMaterialsFromDef(String filename, bool clear)
 {
-	vsMaterials.clear();
+	if (clear)
+		vsMaterials.clear();
+	
+	ConfigFile cf;
+	cf.load(filename, Ogre::ResourceGroupManager::AUTODETECT_RESOURCE_GROUP_NAME, "\t:=", true);
+	
+	ConfigFile::SectionIterator seci = cf.getSectionIterator();
+	String secName, key, value;
+
+	while (seci.hasMoreElements())
+	{
+		secName = seci.peekNextKey();
+		
+		if (!(cf.getSetting("abstract", secName) == "true"))
+			vsMaterials.push_back(secName);
+		
+		seci.getNext();
+	}
+}
+
+void App::GetMaterials(String filename, bool clear, String type)
+{
+	if (clear)
+		vsMaterials.clear();
+	
 	DataStreamPtr stream = ResourceGroupManager::getSingleton().openResource(filename);
 	if(!stream.isNull())
 	{	try

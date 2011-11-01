@@ -135,7 +135,7 @@ protected:
 	bool bGuiFocus;  // gui shown
 	MyGUI::Gui* mGUI;	MyGUI::OgrePlatform* mPlatform;
 	MyGUI::WidgetPtr mWndOpts, mWndBrush, mWndCam,
-		mWndRoadCur, mWndRoadStats;  // gui windows
+		mWndRoadCur, mWndRoadStats, mWndFluids;  // gui windows
 	MyGUI::TabPtr mWndTabs;
 	
 public:

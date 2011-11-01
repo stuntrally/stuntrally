@@ -33,10 +33,13 @@ void SETTINGS::Serialize(bool w, CONFIGFILE & c)
 
 	Param(c,w, "display_adv.trees", trees);					Param(c,w, "display_adv.grass", grass);
 	Param(c,w, "display_adv.trees_dist", trees_dist);		Param(c,w, "display_adv.grass_dist", grass_dist);
+	Param(c,w, "display_adv.use_imposters", use_imposters);
 
 	Param(c,w, "shadow.dist", shadow_dist);			Param(c,w, "shadow.size", shadow_size);
 	Param(c,w, "shadow.count",shadow_count);		Param(c,w, "shadow.type", shadow_type);
 	Param(c,w, "shadow.shaders", shaders);			Param(c,w, "shadow.lightmap_size", lightmap_size);
+	
+	Param(c,w, "input.x11_capture_mouse", x11_capture_mouse);
 
 	Param(c,w, "misc.version", version);			Param(c,w, "misc.autostart", autostart);
 	Param(c,w, "misc.ogredialog", ogre_dialog);		Param(c,w, "misc.escquit", escquit);
@@ -54,6 +57,11 @@ void SETTINGS::Serialize(bool w, CONFIGFILE & c)
 	Param(c,w, "video.fullscreen", fullscreen);
 	Param(c,w, "video.fsaa", fsaa);					Param(c,w, "video.vsync", vsync);
 	Param(c,w, "video.buffer", buffer);				Param(c,w, "video.rendersystem", rendersystem);
+	
+	Param(c,w, "generate.scale", gen_scale);
+	Param(c,w, "generate.freq", gen_freq);			Param(c,w, "generate.persist", gen_persist);
+	Param(c,w, "generate.pow", gen_pow);			Param(c,w, "generate.oct", gen_oct);
+	Param(c,w, "generate.ofsx", gen_ofsx);			Param(c,w, "generate.ofsy", gen_ofsy);
 }
 
 SETTINGS::SETTINGS() :  ///  Defaults
@@ -67,7 +75,7 @@ SETTINGS::SETTINGS() :  ///  Defaults
 	anisotropy(8),	view_distance(3600),
 	terdetail(1.57), terdist(300), road_dist(1.0), tex_size(1), ter_mtr(2),
 	shadow_dist(2000), shadow_size(2), lightmap_size(0), shadow_count(3), shadow_type(2),  /*<+*/
-	shaders(1),  trees(1.f), grass(1.f), trees_dist(1.f), grass_dist(1.f),
+	shaders(1),  trees(1.f), grass(1.f), trees_dist(1.f), grass_dist(1.f),use_imposters(false),
 	//  startup
 	autostart(0), ogre_dialog(1), escquit(0), language(""),
 	//  settings
@@ -76,5 +84,8 @@ SETTINGS::SETTINGS() :  ///  Defaults
 	cam_speed(1.f), cam_inert(1.f),
 	ter_skip(4), road_sphr(1.f), mini_skip(4),
 	windowx(800), windowy(600), fullscreen(false), fsaa(0), vsync(false),
-	buffer("FBO"), rendersystem("OpenGL Rendering Subsystem")
+	buffer("FBO"), rendersystem("OpenGL Rendering Subsystem"), x11_capture_mouse(false),
+	//  ter gen
+	gen_scale(20.f), gen_freq(0.2f), gen_oct(3), gen_persist(0.4f),
+	gen_pow(1.5f), gen_ofsx(0.f), gen_ofsy(0.f)
 {	}

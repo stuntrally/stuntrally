@@ -5,6 +5,7 @@
 #include "../ogre/common/SceneXml.h"
 #include "../ogre/common/BltObjects.h"
 #include "../ogre/common/TracksXml.h"
+#include "../ogre/common/FluidsXml.h"
 
 #include "../vdrift/mathvector.h"
 #include "../vdrift/quaternion.h"
@@ -40,6 +41,7 @@ public:
 	App();  virtual ~App();
 
 	Scene sc;  /// scene.xml
+	FluidsXml fluidsXml;  /// fluid params xml
 	BltObjects objs;  // veget collision in bullet
 
 	TRACKSURFACE su[8];  bool LoadSurf(), SaveSurf(const Ogre::String& trk);
@@ -50,6 +52,8 @@ public:
 	
 	// stuff to be executed after BaseApp init
 	void postInit();
+	
+	Ogre::SceneManager* sceneMgr() { return mSceneMgr; };
 	
 	MaterialFactory* materialFactory;
 protected:
@@ -74,7 +78,7 @@ protected:
 	Ogre::String resTrk;  void NewCommon(), UpdTrees();
 	void CreateTerrain(bool bNewHmap=false, bool bTer=true);
 	void GetTerAngles(int xb,int yb,int xe,int ye);
-	void CreateTrees(), reloadMtrTex(Ogre::String mtrName), CreateFluids();
+	void CreateTrees(), reloadMtrTex(Ogre::String mtrName), CreateFluids(), DestroyFluids();
 	void CreateSkyDome(Ogre::String sMater, Ogre::Vector3 scale);
 	bool GetFolderIndex(std::string folderpath, std::list <std::string> & outputfolderlist, std::string extension="");
 
@@ -101,6 +105,7 @@ protected:
 	std::vector<Ogre::String/*MeshPtr*/> vFlSMesh;
 	std::vector<Ogre::Entity*> vFlEnt;
 	std::vector<Ogre::SceneNode*> vFlNd;
+	int iFlCur;  bool bRecreateFluids;
 	
 	
 	///  terrain
@@ -114,8 +119,11 @@ protected:
 	float Noise(float x, float zoom, int octaves, float persistence);
 	void configureTerrainDefaults(class Ogre::Light* l);
 		
-	void changeShadows(), UpdPSSMMaterials(), setMtrSplits(Ogre::String sMtrName);
-	Ogre::Vector4 splitPoints;  Ogre::ShadowCameraSetupPtr mPSSMSetup;
+	void changeShadows(), UpdPSSMMaterials();
+public:
+	Ogre::Vector4 splitPoints; void setMtrSplits(Ogre::String sMtrName);
+protected:
+	Ogre::ShadowCameraSetupPtr mPSSMSetup;
 
 
 	//  ter circle mesh
@@ -203,7 +211,7 @@ protected:
 	void UpdGuiRdStats(const SplineRoad* rd, const Scene& sc, float time), ReadTrkStats();
 	MyGUI::MultiList2* trkMList;  MyGUI::EditPtr trkDesc;
 	MyGUI::StaticImagePtr imgPrv,imgMini,imgTer, imgTrkIco1,imgTrkIco2;
-	const static int StTrk = 12, InfTrk = 9;
+	const static int StTrk = 12, InfTrk = 10;
 	MyGUI::StaticTextPtr valTrk, stTrk[StTrk], infTrk[InfTrk];
 	void listTrackChng(MyGUI::MultiList2* li, size_t pos), TrackListUpd();
 	TracksXml tracksXml;  void btnTrkView1(WP),btnTrkView2(WP),ChangeTrackView(bool full),updTrkListDim();
@@ -223,14 +231,15 @@ protected:
 
 
 	//  brush & road windows texts
-	const static int BR_TXT=6, RD_TXT=14, RDS_TXT=9;
-	MyGUI::StaticTextPtr brTxt[BR_TXT], rdTxt[RD_TXT],rdTxtSt[RDS_TXT];
+	const static int BR_TXT=6, RD_TXT=14, RDS_TXT=9, FL_TXT=6;
+	MyGUI::StaticTextPtr brTxt[BR_TXT], rdTxt[RD_TXT],rdTxtSt[RDS_TXT], flTxt[FL_TXT];
 	MyGUI::StaticImagePtr brImg;  MyGUI::TabPtr wndTabs;
 
 
 	//  checks
 	void chkOgreDialog(WP), chkAutoStart(WP), chkEscQuits(WP);  // startup
-	
+	void chkUseImposters(WP wp);
+
 	//  [settings]
 	SLV(SizeMinmap);  SLV(CamSpeed);  SLV(CamInert);
 	SLV(TerUpd);  SLV(SizeRoadP);  SLV(MiniUpd);
@@ -258,6 +267,10 @@ protected:
 	int idTerLay;  bool bTerLay;  // help vars
 	MyGUI::ButtonPtr chkTexNormAuto;  void chkTexNormAutoOn(WP);  bool bTexNormAuto;  // auto
 
+	//  ter generate
+	SLV(TerGenScale);  SLV(TerGenOfsX);  SLV(TerGenOfsY);
+	SLV(TerGenFreq);  SLV(TerGenOct);  SLV(TerGenPers);  SLV(TerGenPow);
+	
 	//  ter size
 	SLV(TerTriSize);  SLV(TerLScale);
 	MyGUI::EditPtr edTerTriSize, edTerLScale;
@@ -285,7 +298,8 @@ protected:
 	//  [Vegetation]  ----
 	MyGUI::EditPtr edGrassDens,edTreesDens, edGrPage,edGrDist, edTrPage,edTrDist,
 		edGrMinX,edGrMaxX, edGrMinY,edGrMaxY,
-		edGrSwayDistr, edGrSwayLen, edGrSwaySpd, edTrRdDist, edTrImpDist, edGrDensSmooth;
+		edGrSwayDistr, edGrSwayLen, edGrSwaySpd, edTrRdDist, edTrImpDist,
+		edGrDensSmooth, edGrTerMaxAngle;
 	void editTrGr(MyGUI::EditPtr);
 	//  paged layers
 	MyGUI::ComboBoxPtr cmbPgLay;  void comboPgLay(CMB);
@@ -295,6 +309,8 @@ protected:
 	MyGUI::StaticImagePtr imgPaged;  MyGUI::StaticTextPtr valLTrAll;
 	SLV(LTrDens);	SLV(LTrRdDist);
 	SLV(LTrMinSc);	SLV(LTrMaxSc);	SLV(LTrWindFx);	SLV(LTrWindFy);
+	SLV(LTrMaxTerAng);
+	MyGUI::EditPtr edLTrMinTerH;  void editLTrMinTerH(MyGUI::EditPtr);
 	
 	
 	//  [Road]  ----
@@ -341,7 +357,8 @@ protected:
 	bool TrackExists(Ogre::String name);  // util
 
 	std::vector<Ogre::String> vsMaterials;
-	void GetMaterials(Ogre::String filename, Ogre::String type="material");
+	void GetMaterials(Ogre::String filename, bool clear=true, Ogre::String type="material");
+	void GetMaterialsFromDef(Ogre::String filename, bool clear=true);
 };
 
 #endif

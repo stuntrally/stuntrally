@@ -339,14 +339,32 @@ void DynamicsWorld::solveConstraints(btContactSolverInfo& solverInfo)
 		void* pA = bA->getUserPointer(), *pB = bB->getUserPointer();
 		//if (pA && pB)
 		{
-			ShapeData* sdA = (ShapeData*)pA, *sdB = (ShapeData*)pB, *sdCar=0, *sdFluid=0;
-			if (sdA) {  if (sdA->type == ST_Car)  sdCar = sdA;  if (sdA->type == ST_Fluid)  sdFluid = sdA;  }
-			if (sdB) {  if (sdB->type == ST_Car)  sdCar = sdB;  if (sdB->type == ST_Fluid)  sdFluid = sdB;  }
+			ShapeData* sdA = (ShapeData*)pA, *sdB = (ShapeData*)pB, *sdCar=0, *sdFluid=0, *sdWheel=0;
+			if (sdA) {  if (sdA->type == ST_Car)  sdCar = sdA;  else if (sdA->type == ST_Fluid)  sdFluid = sdA;  else if (sdA->type == ST_Wheel)  sdWheel = sdA;  }
+			if (sdB) {  if (sdB->type == ST_Car)  sdCar = sdB;  else if (sdB->type == ST_Fluid)  sdFluid = sdB;  else if (sdB->type == ST_Wheel)  sdWheel = sdB;  }
+			if (sdWheel)
+			{
+				if (sdFluid)
+				{
+					std::list<FluidBox*>& fl = sdWheel->pCarDyn->inFluidsWh[sdWheel->whNum];
+					if (fl.empty())
+						fl.push_back(sdFluid->pFluid);  // add fluid to wheel (only 1)
+					//LogO("Wheel+ Fluid " + toStr(sdWheel->whNum));
+				}
+			}else
 			if (sdCar)
 				if (sdFluid)
 				{
 					if (sdCar->pCarDyn->inFluids.empty())
 						sdCar->pCarDyn->inFluids.push_back(sdFluid->pFluid);  // add fluid to car (only 1)
+					
+					/*int numContacts = contactManifold->getNumContacts();
+					//if (numContacts > 0)  LogO("c"+toStr(numContacts));
+					for (int j=0; j < numContacts; ++j)
+					{
+						btManifoldPoint& pt = contactManifold->getContactPoint(j);
+						//LogO("Car-Fluid " + toStr(pt.m_index0) + " " + toStr(pt.m_index1) + " " + toStr(pt.m_partId0) + " " + toStr(pt.m_partId1));
+					}/**/
 				}
 				else  ///  car hit
 				{

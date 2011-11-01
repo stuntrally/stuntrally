@@ -481,6 +481,14 @@ void App::newPoses()
 				}
 				else
 					chkPos = road->mChks[std::max(0, std::min((int)road->mChks.size()-1, carM->iNextChk))].pos;
+					
+				// workaround for last checkpoint
+				if (carM->iNumChks == road->mChks.size())
+				{
+					// point arrow to start position
+					chkPos = carM->vStartPos;
+				}
+				
 				//const Ogre::Vector3& playerPos = carM->fCam->mCamera->getPosition();
 				const Ogre::Vector3& playerPos = carM->pMainNode->getPosition();
 				Ogre::Vector3 dir = chkPos - playerPos;
@@ -510,7 +518,8 @@ void App::newPoses()
 			if (carM->bGetStPos)  // first pos is at start
 			{	carM->bGetStPos = false;
 				carM->matStPos.makeInverseTransform(posInfo.pos, Vector3::UNIT_SCALE, posInfo.rot);
-				carM->iCurChk = -1;  carM->iNextChk = -1;  carM->iNumChks = 1;  // reset lap
+				carM->iCurChk = -1;  carM->iNumChks = 1;  // reset lap
+				carM->iNextChk = pSet->trackreverse ? road->iChkId1Rev : road->iChkId1;
 			}
 			if (road && !carM->bGetStPos)
 			{

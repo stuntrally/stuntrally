@@ -27,7 +27,8 @@ void App::InitGui()
 		if (name == "BrushWnd")  mWndBrush = *it;  else
 		if (name == "RoadCur")   mWndRoadCur = *it;  else
 		if (name == "RoadStats")  mWndRoadStats = *it;  else
-		if (name == "OptionsWnd")  mWndOpts = *it;
+		if (name == "OptionsWnd")  mWndOpts = *it;  else
+		if (name == "FluidsWnd")  mWndFluids = *it;
 	}
 	if (mWndRoadStats)  mWndRoadStats->setVisible(false);
 
@@ -45,6 +46,10 @@ void App::InitGui()
 		rdTxt[i] = (StaticTextPtr)mWndRoadCur->findWidget("rdCur"+toStr(i));
 	if (mWndRoadStats)  for (int i=0; i<RDS_TXT; ++i)
 		rdTxtSt[i] = (StaticTextPtr)mWndRoadStats->findWidget("rdStat"+toStr(i));
+
+	//  Fluid window texts
+	if (mWndFluids)  for (int i=0; i<FL_TXT; ++i)
+		flTxt[i] = (StaticTextPtr)mWndFluids->findWidget("flTxt"+toStr(i));
 
 
 	//  Options wnd
@@ -64,7 +69,11 @@ void App::InitGui()
 	
 	//  hide  ---
 	edMode = ED_Deform;  UpdEditWnds();  // *  UpdVisHit(); //after track
-	if (!mWndOpts)  return;  // error
+	if (!mWndOpts) 
+	{
+		LogO("WARNING: failed to create options window");
+		return;  // error
+	}
 	
 	ButtonPtr btn, bchk;  ComboBoxPtr combo;  // for defines
 	HScrollPtr sl;  size_t v;
@@ -122,6 +131,15 @@ void App::InitGui()
 	Btn("TerrainNew", btnTerrainNew);
 	Btn("TerrainGenerate", btnTerGenerate);
 
+	Slv(TerGenScale,powf(pSet->gen_scale   /60.f, 1.f/2.f));  // generate
+	Slv(TerGenOfsX, (pSet->gen_ofsx+2.f) /4.f);
+	Slv(TerGenOfsY, (pSet->gen_ofsy+2.f) /4.f);
+	Slv(TerGenOct,  Real(pSet->gen_oct)	/res);
+	Slv(TerGenFreq, pSet->gen_freq    /0.7f);
+	Slv(TerGenPers, pSet->gen_persist /0.7f);
+	Slv(TerGenPow,  powf(pSet->gen_pow     /6.f,  1.f/2.f));
+
+
 	///  [Layers]
 	Chk("TerLayOn", chkTerLayOn, 1);  chkTerLay = bchk;
 	valTerLAll = (StaticTextPtr)mWndOpts->findWidget("TerLayersAll");
@@ -149,7 +167,8 @@ void App::InitGui()
 	Ed(GrPage, editTrGr);  Ed(GrDist, editTrGr);  Ed(TrPage, editTrGr);  Ed(TrDist, editTrGr);
 	Ed(GrMinX, editTrGr);  Ed(GrMaxX, editTrGr);  Ed(GrMinY, editTrGr);  Ed(GrMaxY, editTrGr);
 	Ed(GrSwayDistr, editTrGr);  Ed(GrSwayLen, editTrGr);  Ed(GrSwaySpd, editTrGr);
-	Ed(TrRdDist, editTrGr);  Ed(TrImpDist, editTrGr);  Ed(GrDensSmooth, editTrGr);
+	Ed(TrRdDist, editTrGr);  Ed(TrImpDist, editTrGr);
+	Ed(GrDensSmooth, editTrGr);  Ed(GrTerMaxAngle, editTrGr);
 	imgPaged = (StaticImagePtr)mWndOpts->findWidget("ImgPaged");
 
 	Chk("LTrEnabled", chkPgLayOn, 1);  chkPgLay = bchk;
@@ -158,6 +177,7 @@ void App::InitGui()
 	Slv(LTrDens, 0);	Slv(LTrRdDist, 0);
 	Slv(LTrMinSc, 0);	Slv(LTrMaxSc, 0);
 	Slv(LTrWindFx, 0);	Slv(LTrWindFy, 0);
+	Slv(LTrMaxTerAng, 0);  Ed(LTrMinTerH, editLTrMinTerH);
 	
 	
 	///  [Road]  ------------------------------------
@@ -186,7 +206,7 @@ void App::InitGui()
 	//---------------------  SKYS  ---------------------
 	Cmb(cmbSky, "SkyCombo", comboSky);
 
-	GetMaterials("SkyDome.material");
+	GetMaterialsFromDef("skies.matdef");
 	for (size_t i=0; i < vsMaterials.size(); ++i)  {
 		String s = vsMaterials[i];  cmbSky->addItem(s);  //LogO(s);
 	}
@@ -240,7 +260,9 @@ void App::InitGui()
 		if (StringUtil::endsWith(*i,".mesh"))  cmbPgLay->addItem(*i);
 
 	//---------------------  ROADS  ---------------------
-	GetMaterials("road.material");
+	GetMaterialsFromDef("road.matdef");
+	GetMaterialsFromDef("road_pipe.matdef", false);
+	GetMaterials("pipe.material", false);
 	for (size_t i=0; i<4; ++i)
 	{
 		Cmb(cmbRoadMtr[i], "RdMtr"+toStr(i+1), comboRoadMtr);

@@ -5,6 +5,7 @@
 #include "common/SceneXml.h"
 #include "common/BltObjects.h"
 #include "common/TracksXml.h"
+#include "common/FluidsXml.h"
 
 #include "ReplayGame.h"
 #include "CarModel.h"
@@ -50,6 +51,7 @@ public:
 	const Ogre::String& GetGhostFile();
 
 	Scene sc;  /// scene.xml
+	FluidsXml fluidsXml;  /// fluid params xml
 	BltObjects objs;  // veget collision in bullet
 	Ogre::Light* sun;  void UpdFog(bool bForce=false), UpdSun();
 	
@@ -68,6 +70,9 @@ public:
 	void UpdHUDRot(int carId, CarModel* pCarM, float vel);
 	
 	MaterialFactory* materialFactory; // material generation
+	void recreateCarMtr();
+	
+	Ogre::SceneManager* sceneMgr() { return mSceneMgr; };
 
 protected:
 	virtual void createScene();
@@ -142,9 +147,10 @@ protected:
 
 public:
 	void changeShadows(), UpdPSSMMaterials(), setMtrSplits(Ogre::String sMtrName);
+	Ogre::Vector4 splitPoints;
 
 protected:
-	Ogre::Vector4 splitPoints;  Ogre::ShadowCameraSetupPtr mPSSMSetup;
+	Ogre::ShadowCameraSetupPtr mPSSMSetup;
 	void recreateReflections();  // call after refl_mode changed
 
 	//  road
@@ -194,7 +200,7 @@ protected:
 	void UpdGuiRdStats(const SplineRoad* rd, const Scene& sc, float time), ReadTrkStats();
 	MyGUI::MultiList2* trkMList;  MyGUI::EditPtr trkDesc;
 	MyGUI::StaticImagePtr imgPrv,imgMini,imgTer, imgTrkIco1,imgTrkIco2;
-	const static int StTrk = 12, InfTrk = 9;
+	const static int StTrk = 12, InfTrk = 10;
 	MyGUI::StaticTextPtr valTrk, stTrk[StTrk], infTrk[InfTrk];
 	void listTrackChng(MyGUI::MultiList2* li, size_t pos), TrackListUpd();
 	TracksXml tracksXml;  void btnTrkView1(WP),btnTrkView2(WP),ChangeTrackView(bool full),updTrkListDim();
@@ -240,10 +246,11 @@ protected:
 		chkMinimap(WP), chkMiniZoom(WP), chkMiniRot(WP), chkMiniTer(WP),  // view
 		chkCamInfo(WP), chkTimes(WP), chkCarDbgBars(WP), chkCarDbgTxt(WP), chkBltDebug(WP), chkBltProfilerTxt(WP),
 		chkReverse(WP), chkParticles(WP), chkTrails(WP),
-		chkAbs(WP), chkTcs(WP), chkGear(WP), chkRear(WP), chkClutch(WP),  // car
+		chkAbs(WP), chkTcs(WP), chkGear(WP), chkRear(WP), chkRearInv(WP),  // car
 		chkOgreDialog(WP), chkAutoStart(WP), chkEscQuits(WP), chkBltLines(WP), chkLoadPics(WP),  // startup
-		chkVidEffects(WP), chkVidBloom(WP), chkVidHDR(WP), chkVidBlur(WP), UpdBloomVals(),  // video
+		chkVidEffects(WP), chkVidBloom(WP), chkVidHDR(WP), chkVidBlur(WP), UpdBloomVals(), chkVidSSAO(WP), // video
 		chkVegetCollis(WP), chkCarCollis(WP);  //car
+	void chkUseImposters(WP wp);
 
 	void imgBtnCarClr(WP), btnCarClrRandom(WP);
 	MyGUI::ButtonPtr bRkmh, bRmph;  void radKmh(WP), radMph(WP);

@@ -43,6 +43,7 @@ public:
 		
 	class SplitScreenManager* mSplitMgr;
 	class HDRLogic* mHDRLogic; class MotionBlurLogic* mMotionBlurLogic;
+	class SSAOLogic* mSSAOLogic;
 	void recreateCompositor();
 	
 	// motion blur

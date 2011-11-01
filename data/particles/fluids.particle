@@ -1,0 +1,108 @@
+//  Mud
+particle_system FluidMud
+{
+	material			FluidMud
+	quota				1500
+	particle_width		0.5
+	particle_height		0.5
+	cull_each			false
+	billboard_type		point
+	//renderer			billboard
+    //sorted			true
+
+	emitter Box
+	{
+		angle	5
+		position	0 0.2 0
+		direction	0 1 0
+		width	0.8
+		height	0.2
+		depth	0.2  //h
+
+		colour				0.5 0.5 0.2  1.0
+		colour_range_start	0.5 0.5 0.1  0.7
+		colour_range_end	0.5 0.5 0.2  1.0
+
+		velocity_min	3.1
+		velocity_max	6.8
+		time_to_live_min	1.5
+		time_to_live_max	2
+	}
+
+	affector Rotator
+	{
+		rotation_range_start 0
+		rotation_range_end 360
+		rotation_speed_range_start -120
+		rotation_speed_range_end 120
+	}
+	affector LinearForce
+	{
+		force_vector	0 -9.8 0
+		force_application	add
+	}
+
+	//affector DirectionRandomiser
+	//{
+	//	randomness	2
+	//}
+}
+
+
+//  Water
+particle_system FluidWater
+{
+	material			FluidWater
+	quota				1000
+	particle_width		0.6
+	particle_height		0.6
+	cull_each			false
+	billboard_type		point
+	//renderer			billboard
+    //sorted			true
+
+	emitter Box
+	{
+		angle	8
+		position	0 0.2 0
+		direction	0 1 0
+		width	0.9
+		height	0.5
+		depth	0.3  //h
+
+		colour				1.0 1.0 1.0  0.8
+		colour_range_start	1.0 1.0 1.0  0.6
+		colour_range_end	1.0 1.0 1.0  1.0
+
+		velocity_min	3.5
+		velocity_max	6.0
+		time_to_live_min	1.5
+		time_to_live_max	2
+	}
+
+	affector Rotator
+	{
+		rotation_range_start 0
+		rotation_range_end 360
+		rotation_speed_range_start -120
+		rotation_speed_range_end 120
+	}
+	affector LinearForce
+	{
+		force_vector	0 -9.8 0
+		force_application	add
+	}
+
+	//affector DirectionRandomiser
+	//{
+	//	randomness	2
+	//}
+
+	//affector ColourFader
+	//{
+	//	red		-0.018
+	//	green	-0.021
+	//	blue	-0.027
+	//	alpha	-0.140
+	//}
+}

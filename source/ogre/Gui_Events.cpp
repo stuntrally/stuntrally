@@ -324,7 +324,7 @@ void App::chkTcs(WP wp){		ChkEv(tcs);		if (pGame)  pGame->ProcessNewSettings();	
 
 void App::chkGear(WP wp){		ChkEv(autoshift);	if (pGame)  pGame->ProcessNewSettings();	}
 void App::chkRear(WP wp){		ChkEv(autorear);	if (pGame)  pGame->ProcessNewSettings();	}
-void App::chkClutch(WP wp){		ChkEv(autoclutch);	if (pGame)  pGame->ProcessNewSettings();	}
+void App::chkRearInv(WP wp){	ChkEv(rear_inv);	if (pGame)  pGame->ProcessNewSettings();	}
 //    [Game]
 void App::chkVegetCollis(WP wp){	ChkEv(veget_collis);	}
 void App::chkCarCollis(WP wp){		ChkEv(car_collis);		}
@@ -370,14 +370,14 @@ void App::slCarClrH(SL)
 }
 void App::slCarClrS(SL)
 {
-	Real v = -1.f + 2.f * val/res;  if (bGI)  pSet->car_sat[iCurCar] = v;
+	Real v = val/res;  if (bGI)  pSet->car_sat[iCurCar] = v;
 	if (valCarClrS){	Fmt(s, "%4.2f", v);	valCarClrS->setCaption(s);  }
 	if (iCurCar < carModels.size() && bUpdCarClr && bGI)
 		carModels[iCurCar]->ChangeClr(iCurCar);
 }
 void App::slCarClrV(SL)
 {
-	Real v = -1.f + 2.f * val/res;  if (bGI)  pSet->car_val[iCurCar] = v;
+	Real v = val/res;  if (bGI)  pSet->car_val[iCurCar] = v;
 	if (valCarClrV){	Fmt(s, "%4.2f", v);	valCarClrV->setCaption(s);  }
 	if (iCurCar < carModels.size() && bUpdCarClr && bGI)
 		carModels[iCurCar]->ChangeClr(iCurCar);
@@ -393,17 +393,11 @@ void App::imgBtnCarClr(WP img)
 void App::btnCarClrRandom(WP)
 {
 	pSet->car_hue[iCurCar] = Math::UnitRandom();
-	pSet->car_sat[iCurCar] = Math::RangeRandom(-0.5f, 0.5f);
-	pSet->car_val[iCurCar] = Math::RangeRandom(-0.5f, 0.5f);
+	pSet->car_sat[iCurCar] = Math::UnitRandom();
+	pSet->car_val[iCurCar] = Math::UnitRandom();
 	UpdCarClrSld();
 }
 
-//  [Screen] (game only)
-void App::chkVidSSAA(WP wp)
-{
-	ChkEv(ssaa);
-	refreshCompositor();
-}
 
 //  [Graphics]
 //---------------------------------------------------------------------
@@ -613,24 +607,27 @@ void App::chkLoadPics(WP wp){		ChkEv(loadingbackground);	}
 
 void App::chkVidEffects(WP wp)
 {
-	ChkEv(all_effects);
-	recreateCompositor();
-	//refreshCompositor();
+	ChkEv(all_effects);  recreateCompositor();  //refreshCompositor();
 }
 void App::chkVidBloom(WP wp)
 {		
-	ChkEv(bloom);
-	refreshCompositor();
+	ChkEv(bloom);  refreshCompositor();
 }
 void App::chkVidHDR(WP wp)
 {			
-	ChkEv(hdr);
-	refreshCompositor();
+	ChkEv(hdr);  refreshCompositor();
 }
 void App::chkVidBlur(WP wp)
 {		
-	ChkEv(motionblur);
-	refreshCompositor();
+	ChkEv(motionblur);  refreshCompositor();
+}
+void App::chkVidSSAA(WP wp)
+{
+	ChkEv(ssaa);  refreshCompositor();
+}
+void App::chkVidSSAO(WP wp)
+{		
+	ChkEv(ssao);  refreshCompositor();
 }
 
 void App::slBloomInt(SL)
@@ -686,10 +683,8 @@ bool App::keyPressed( const OIS::KeyEvent &arg )
 		if (!isFocGui)
 		{
 			int iChgCam = 0;
-			if (action("NextCamera"))  // Next
-				iChgCam = 1;
-			if (action("PrevCamera"))  // Prev
-				iChgCam = -1;
+			if (action("NextCamera"))  iChgCam = 1;  // Next
+			if (action("PrevCamera"))  iChgCam =-1;  // Prev
 			if (iChgCam)
 			{
 				if (ctrl)

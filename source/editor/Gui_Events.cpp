@@ -208,22 +208,25 @@ void App::btnTerrainNew(WP)
 	bNewHmap = true;	UpdateTrack();
 }
 
+//  Terrain  generate  --------------------------------
 void App::btnTerGenerate(WP)
 {
-	//sc.td.iVertsX = size+1;  sc.td.UpdVals();  // new hf
-
 	float* hfData = new float[sc.td.iVertsX * sc.td.iVertsY];
 	int siz = sc.td.iVertsX * sc.td.iVertsY * sizeof(float);
 	String name = TrkDir() + "heightmap-new.f32";
-	float s = sc.td.fTriangleSize*0.001f;
+	float s = sc.td.fTriangleSize*0.001f,
+		ox = pSet->gen_ofsx *s*sc.td.iVertsX, oy = pSet->gen_ofsy *s*sc.td.iVertsY;
 
-	for (int j=0; j < sc.td.iVertsY; ++j)  // generate noise terrain hmap
-	{
-		int a = j * sc.td.iVertsX;
+	//  generate noise terrain hmap
+	for (int j=0; j < sc.td.iVertsY; ++j)
+	{	int a = j * sc.td.iVertsX;
 		for (int i=0; i < sc.td.iVertsX; ++i,++a)
-			hfData[a] = pow( Noise(i*s,j*s, mBrFq[0], 5, 0.5f), mBrPow[0] ) * 10.f;
+		{
+			float y = Noise(i*s-oy, j*s+ox, pSet->gen_freq, pSet->gen_oct, pSet->gen_persist);
+			y = y >= 0.f ? powf(y, pSet->gen_pow) : -powf(-y, pSet->gen_pow);
+			hfData[a] = y * pSet->gen_scale;
+		}
 	}
-	/// TODO: faster: ter dirty- not recreate
 
 	std::ofstream of;
 	of.open(name.c_str(), std::ios_base::binary);
@@ -233,6 +236,44 @@ void App::btnTerGenerate(WP)
 	delete[] hfData;
 	bNewHmap = true;	UpdateTrack();
 }
+
+void App::slTerGenScale(SL)
+{
+	float v = 60.f * powf(val/res, 2.f);	if (bGI)  pSet->gen_scale = v;
+	if (valTerGenScale){	Fmt(s, "%4.2f", v);  valTerGenScale->setCaption(s);  }
+}
+void App::slTerGenOfsX(SL)
+{
+	float v = -2.f + 4.f * val/res;		if (bGI)  pSet->gen_ofsx = v;
+	if (valTerGenOfsX){	Fmt(s, "%5.3f", v);  valTerGenOfsX->setCaption(s);  }
+}
+void App::slTerGenOfsY(SL)
+{
+	float v = -2.f + 4.f * val/res;		if (bGI)  pSet->gen_ofsy = v;
+	if (valTerGenOfsY){	Fmt(s, "%5.3f", v);  valTerGenOfsY->setCaption(s);  }
+}
+
+void App::slTerGenFreq(SL)
+{
+	float v = 0.7f * val/res;	if (bGI)  pSet->gen_freq = v;
+	if (valTerGenFreq){	Fmt(s, "%5.3f", v);  valTerGenFreq->setCaption(s);  }
+}
+void App::slTerGenOct(SL)
+{
+	if (bGI)  pSet->gen_oct = val;
+	if (valTerGenOct){	Fmt(s, "%d", val);  valTerGenOct->setCaption(s);  }
+}
+void App::slTerGenPers(SL)
+{
+	float v = 0.7f * val/res;	if (bGI)  pSet->gen_persist = v;
+	if (valTerGenPers){	Fmt(s, "%5.3f", v);  valTerGenPers->setCaption(s);  }
+}
+void App::slTerGenPow(SL)
+{
+	float v = 6.f * powf(val/res, 2.f);		if (bGI)  pSet->gen_pow = v;
+	if (valTerGenPow){	Fmt(s, "%5.3f", v);  valTerGenPow->setCaption(s);  }
+}
+
 
 
 ///  Terrain layers  -----------------------------
@@ -246,6 +287,8 @@ void App::chkTerLayOn(WP wp)
 	sc.td.UpdLayers();
 	if (valTerLAll)
 		valTerLAll->setCaption("Used: "+toStr(sc.td.layers.size()));
+	//  force update, blendmap sliders crash if not
+	UpdateTrack();
 }
 
 void App::chkTexNormAutoOn(WP wp)
@@ -430,6 +473,7 @@ void App::editTrGr(EditPtr ed)
 	else if (n=="GrSwayLen")  sc.grSwayLen = r;	else if (n=="GrSwaySpd")  sc.grSwaySpeed = r;
 	else if (n=="TrRdDist")  sc.trRdDist = r;	else if (n=="TrImpDist")  sc.trDistImp = r;
 	else if (n=="GrDensSmooth")  sc.grDensSmooth = r;
+	else if (n=="GrTerMaxAngle")  sc.grTerMaxAngle = r;
 }
 
 ///  Vegetation layers  -----------------------------
@@ -454,6 +498,8 @@ void App::tabPgLayers(TabPtr wp, size_t id)
 	Slv(LTrMaxSc, powf(lay.maxScale /6.0f, 1.f/3.f));
 	Slv(LTrWindFx, powf(lay.windFx /12.0f, 1.f/3.f));
 	Slv(LTrWindFy, powf(lay.windFy /12.0f, 1.f/3.f));
+	Slv(LTrMaxTerAng, powf(lay.maxTerAng /90.0f, 1.f/2.f));
+	if (edLTrMinTerH)  edLTrMinTerH->setCaption(toStr(lay.minTerH));
 }
 
 void App::chkPgLayOn(WP wp)
@@ -505,6 +551,17 @@ void App::slLTrWindFy(SL)
 	Real v = 12.0f * powf(val/res, 3.f);	sc.pgLayersAll[idPgLay].windFy = v;
 	if (valLTrWindFy){  Fmt(s, "%5.3f", v);  valLTrWindFy->setCaption(s);  }
 }
+
+void App::slLTrMaxTerAng(SL)
+{
+	Real v = 90.0f * powf(val/res, 2.f);	sc.pgLayersAll[idPgLay].maxTerAng = v;
+	if (valLTrMaxTerAng){  Fmt(s, "%5.1f", v);  valLTrMaxTerAng->setCaption(s);  }
+}
+void App::editLTrMinTerH(EditPtr ed)
+{
+	sc.pgLayersAll[idPgLay].minTerH = s2r(ed->getCaption());
+}
+
 
 
 //  [Road]
