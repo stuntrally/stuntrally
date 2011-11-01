@@ -18,7 +18,7 @@ MaterialProperties::MaterialProperties() :
 	depthBias(0), depthCheck(true), transparentSorting(true), lightingAlpha(0.0, 0.0, 0.0, 0.0),
 	sceneBlend(SBM_DEFAULT), depthWrite(true), alphaRejectFunc(CMPF_ALWAYS_PASS), alphaRejectValue(0.0),
 	twoPass(false), fog(true), lighting(true), textureAddressMode(TextureUnitState::TAM_WRAP),
-	terrainLightMap(false)
+	terrainLightMap(false), ssao(true)
 {}
 
 //----------------------------------------------------------------------------------------
