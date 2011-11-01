@@ -50,7 +50,6 @@
 	ambient = 0.3 0.3 0.3
 	diffuse = 0.65 0.65 0.65
 	specular = 0.5 0.5 0.5 1 32
-	ssao = false
 
 [3D-Diggers/farn02]
 	parent = 3D-Diggers/farn01
@@ -64,7 +63,6 @@
 	transparent = true
 	diffuseMap_512 = fir01.png
 	terrainLightMap = true
-	ssao = false
 
 [3D-Diggers/firW1]
 	ambient = 0.5 0.5 0.5
@@ -74,7 +72,6 @@
 	transparent = true
 	diffuseMap_512 = fir01w.png
 	terrainLightMap = true
-	ssao = false
 
 [3D-Diggers/fir02]
 	ambient = 0.5 0.5 0.5
