@@ -1003,6 +1003,8 @@ void MaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::StrStrea
 	{
 		if (fpNeedLighting()) outStream <<
 		"	float4 color1 = float4(lightColour,1); \n";
+		else if (needShadows()) outStream << // shadows, but no lighting
+		"	float4 color1 = diffuseTex * (0.65f + 0.35f * shadowing); \n";
 		else outStream <<
 		"	float4 color1 = diffuseTex; \n";
 	}

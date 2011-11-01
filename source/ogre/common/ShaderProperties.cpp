@@ -25,10 +25,9 @@ ShaderProperties::ShaderProperties( MaterialProperties* props, MaterialFactory* 
 	blendMap = (props->blendMaps.size() > 0);
 	normalMap = ((props->normalMaps.size() > 0) && parent->getNormalMap());
 	lighting = props->lighting;
-	shadows = (lighting && (
-			    (props->receivesShadows && parent->getShadows()) 
+	shadows = ( (props->receivesShadows && parent->getShadows()) 
 			||  (props->receivesDepthShadows && parent->getShadowsDepth())
-	));
+	);
 	lightingAlpha = (props->lightingAlpha != Vector4::ZERO);
 }
 
