@@ -30,14 +30,16 @@ void MaterialGenerator::generate(bool fixedFunction)
 	mDiffuseTexUnit = 0; mNormalTexUnit = 0; mEnvTexUnit = 0; mAlphaTexUnit = 0;
 	mShadowTexUnit_start = 0; mTerrainLightTexUnit = 0; mTexUnit_i = 0;
 	
+	// choose textures from list (depending on user iTexSize setting)
 	std::string diffuseMap = pickTexture(&mDef->mProps->diffuseMaps);
 	std::string normalMap = pickTexture(&mDef->mProps->normalMaps);
 	std::string lightMap = pickTexture(&mDef->mProps->lightMaps);
 	std::string alphaMap = pickTexture(&mDef->mProps->alphaMaps);
 	std::string blendMap = pickTexture(&mDef->mProps->blendMaps);
 	
+	// -------------------------- Main technique ----------------------------- //
 	Ogre::Technique* technique = mat->createTechnique();
-	
+		
 	if (mDef->mProps->twoPass)
 	{
 		// create an ambient-only pass first
@@ -81,34 +83,8 @@ void MaterialGenerator::generate(bool fixedFunction)
 
 		
 	}
-
-	//add ssao technique
-	Technique* ssaopasstech = mat->createTechnique();
-	ssaopasstech->setName("geom");
-	ssaopasstech->setSchemeName("geom");
-	// Only supporting one pass
-	Pass* ssaopass = ssaopasstech->createPass();
-
-	HighLevelGpuProgramManager& hmgr = HighLevelGpuProgramManager::getSingleton();
-	if ( !mDef->mProps->transparent ) 
-	{
-		HighLevelGpuProgramPtr vprog = hmgr.getByName("geom_vs");
-		HighLevelGpuProgramPtr fprog = hmgr.getByName("geom_ps");
-		ssaopass->setVertexProgram(vprog->getName());
-		ssaopass->setFragmentProgram(fprog->getName());
-		ssaopass->setCullingMode( chooseCullingMode() );
-	}
-	else
-	{
-		HighLevelGpuProgramPtr vprog = hmgr.getByName("geom_vs");
-		HighLevelGpuProgramPtr fprog = hmgr.getByName("geom_alpha_ps");
-		ssaopass->setVertexProgram(vprog->getName());
-		ssaopass->setFragmentProgram(fprog->getName());
-		ssaopass->setCullingMode( CULL_NONE );
-		ssaopass->setAlphaRejectSettings(CMPF_GREATER_EQUAL, 128);
-		ssaopass->createTextureUnitState( diffuseMap );
-		
-	}
+	
+	// Main pass
 	Ogre::Pass* pass = technique->createPass();
 	
 	if (!mDef->mProps->twoPass)
@@ -320,6 +296,41 @@ void MaterialGenerator::generate(bool fixedFunction)
 			individualFragmentProgramParams(pass->getFragmentProgramParameters());
 		}
 	}
+	// ----------------------------------------------------------------------- //
+	
+	
+	// ------------------------ SSAO technique ------------------------------- //
+	Technique* ssaopasstech = mat->createTechnique();
+	ssaopasstech->setName("geom");
+	ssaopasstech->setSchemeName("geom");
+	Pass* ssaopass = ssaopasstech->createPass();
+
+	HighLevelGpuProgramManager& hmgr = HighLevelGpuProgramManager::getSingleton();
+	
+	// choose vertex program
+	std::string vprogname = "geom_vs";
+	
+	// choose fragment program
+	std::string fprogname = "geom_ps";
+	if ( !mDef->mProps->ssao )
+		fprogname = "geom_white_ps"; // no contribution to ssao, will just return (0,0,0,0)
+	else if ( mDef->mProps->transparent )
+		fprogname = "geom_alpha_ps";
+	
+	ssaopass->setVertexProgram(vprogname);
+	ssaopass->setFragmentProgram(fprogname);
+	
+	if ( !mDef->mProps->transparent ) 
+	{
+		ssaopass->setCullingMode( chooseCullingMode() );
+	}
+	else
+	{
+		ssaopass->setCullingMode( CULL_NONE );
+		ssaopass->setAlphaRejectSettings(CMPF_GREATER_EQUAL, 128);
+		ssaopass->createTextureUnitState( diffuseMap );
+	}
+	// ----------------------------------------------------------------------- //
 	
 	// indicate that we need the pssm split points
 	if (needShadows())
