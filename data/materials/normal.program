@@ -23,6 +23,18 @@ fragment_program geom_ps cg
     }
 }
 
+fragment_program geom_alpha_ps cg
+{
+    source normal.cg
+    profiles ps_2_0 arbfp1
+    entry_point geom_alpha_ps
+
+    default_params
+    {
+        param_named_auto far far_clip_distance
+    }
+}
+
 vertex_program geom_terrain_vs cg
 {
     source normal.cg

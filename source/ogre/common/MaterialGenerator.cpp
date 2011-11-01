@@ -90,14 +90,25 @@ void MaterialGenerator::generate(bool fixedFunction)
 	Pass* ssaopass = ssaopasstech->createPass();
 
 	HighLevelGpuProgramManager& hmgr = HighLevelGpuProgramManager::getSingleton();
-	HighLevelGpuProgramPtr vprog = hmgr.getByName("geom_vs");
-	HighLevelGpuProgramPtr fprog = hmgr.getByName("geom_ps");
-	ssaopass->setVertexProgram(vprog->getName());
-	ssaopass->setFragmentProgram(fprog->getName());
-	
-	if ( !mDef->mProps->transparent ) // not doing this for transparent stuff (e.g. leaves) as a temporary workaround now
+	if ( !mDef->mProps->transparent ) 
+	{
+		HighLevelGpuProgramPtr vprog = hmgr.getByName("geom_vs");
+		HighLevelGpuProgramPtr fprog = hmgr.getByName("geom_ps");
+		ssaopass->setVertexProgram(vprog->getName());
+		ssaopass->setFragmentProgram(fprog->getName());
 		ssaopass->setCullingMode( chooseCullingMode() );
-	
+	}
+	else
+	{
+		HighLevelGpuProgramPtr vprog = hmgr.getByName("geom_vs");
+		HighLevelGpuProgramPtr fprog = hmgr.getByName("geom_alpha_ps");
+		ssaopass->setVertexProgram(vprog->getName());
+		ssaopass->setFragmentProgram(fprog->getName());
+		ssaopass->setCullingMode( CULL_NONE );
+		ssaopass->setAlphaRejectSettings(CMPF_GREATER_EQUAL, 128);
+		ssaopass->createTextureUnitState( diffuseMap );
+		
+	}
 	Ogre::Pass* pass = technique->createPass();
 	
 	if (!mDef->mProps->twoPass)
