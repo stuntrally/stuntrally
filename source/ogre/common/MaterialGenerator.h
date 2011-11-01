@@ -29,6 +29,7 @@ protected:
 	unsigned int mAlphaTexUnit;
 	unsigned int mNormalTexUnit;
 	unsigned int mEnvTexUnit;
+	unsigned int mTerrainLightTexUnit; // global terrain lightmap
 	unsigned int mShadowTexUnit_start; // start offset for shadow tex units
 	
 	unsigned int mTexUnit_i; // counter
@@ -55,19 +56,30 @@ protected:
 	
 	bool needShaders();
 	bool needShadows();
-	bool needNormalMap(); bool needEnvMap();
-	bool needAlphaMap();bool needBlendMap();
-	bool needDiffuseMap();bool needLightMap();
-	bool needLightingAlpha();
-	bool fpNeedWsNormal(); bool fpNeedEyeVector();
-	bool fpNeedTangentToCube(); bool vpNeedTangent();
-	bool fpNeedLighting(); // fragment lighting
-	//bool vpNeedLighting(); // vertex lighting
-	bool needFresnel();
 	
-	// matrices
+	// textures
+	bool needNormalMap(); bool needEnvMap();
+	bool needAlphaMap(); bool needBlendMap();
+	bool needDiffuseMap(); bool needLightMap();
+	bool needTerrainLightMap();
+	
+	// vertex shader input
+	bool vpNeedTangent();
 	bool vpNeedWMat();
 	bool vpNeedWITMat();
+	
+	// passtrough (vertex to fragment)
+	bool fpNeedTangentToCube();
+	bool fpNeedWsNormal();
+	bool fpNeedEyeVector();
+	 
+	// lighting
+	bool fpNeedLighting(); // fragment lighting
+	//bool vpNeedLighting(); // vertex lighting
+	
+	bool needFresnel();
+	bool needLightingAlpha();
+	
 	
 	std::string getChannel(unsigned int n);
 	

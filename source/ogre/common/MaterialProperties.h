@@ -52,6 +52,7 @@ struct MaterialProperties
 	// shadows, lighting
 	bool receivesShadows, receivesDepthShadows;
 	Ogre::Vector3 ambient; Ogre::Vector3 diffuse; Ogre::Vector4 specular;
+	bool terrainLightMap;
 	bool fog; // enable fog
 	bool lighting; // enable lighting
 

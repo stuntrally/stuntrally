@@ -302,7 +302,7 @@ void CarModel::RecreateMaterials()
 		//LogO(" === New car mtr name: " + sMtr[i]);
 	}
 	
-	// iterate through all materials and set body_dyn.png with correct index, add car prefix to other textures
+	// iterate through all cloned car materials and set correct texture names
 	if (!ghost)
 	for (int i=0; i < NumMaterials; i++)
 	{
@@ -340,7 +340,6 @@ void CarModel::RecreateMaterials()
 						else
 						{
 							if (!(StringUtil::startsWith(tus->getTextureName(), "ReflectionCube") ||
-								StringUtil::startsWith(tus->getTextureName(), "body_dyn") ||
 								tus->getTextureName() == "ReflectionCube" ||
 								StringUtil::startsWith(tus->getName(), "shadowmap") ||
 								StringUtil::startsWith(tus->getTextureName(), "flat_n")))

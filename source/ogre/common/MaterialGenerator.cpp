@@ -28,7 +28,7 @@ void MaterialGenerator::generate(bool fixedFunction)
 	
 	// reset some attributes
 	mDiffuseTexUnit = 0; mNormalTexUnit = 0; mEnvTexUnit = 0; mAlphaTexUnit = 0;
-	mShadowTexUnit_start = 0; mTexUnit_i = 0;
+	mShadowTexUnit_start = 0; mTerrainLightTexUnit = 0; mTexUnit_i = 0;
 	
 	std::string diffuseMap = pickTexture(&mDef->mProps->diffuseMaps);
 	std::string normalMap = pickTexture(&mDef->mProps->normalMaps);
@@ -207,7 +207,7 @@ void MaterialGenerator::generate(bool fixedFunction)
 	else
 	{
 		Ogre::TextureUnitState* tu;
-		// diffuse map
+		// diffuse / light / blend maps
 		if (needDiffuseMap())
 		{
 			tu = pass->createTextureUnitState( diffuseMap );
@@ -228,6 +228,14 @@ void MaterialGenerator::generate(bool fixedFunction)
 			tu->setName("blendMap");
 			tu->setTextureAddressingMode(mDef->mProps->textureAddressMode);
 			mBlendTexUnit = mTexUnit_i; mTexUnit_i++;
+		}
+		
+		// global terrain lightmap (static)
+		if (needTerrainLightMap())
+		{
+			tu = pass->createTextureUnitState(""); // texture name set later (in changeShadows)
+			tu->setName("terrainLightMap");
+			mTerrainLightTexUnit = mTexUnit_i; mTexUnit_i++;
 		}
 		
 		// alpha map
@@ -255,7 +263,7 @@ void MaterialGenerator::generate(bool fixedFunction)
 			mNormalTexUnit = mTexUnit_i; mTexUnit_i++;
 		}
 		
-		// shadow maps
+		// realtime shadow maps
 		if (needShadows())
 		{
 			mShadowTexUnit_start = mTexUnit_i;
@@ -313,8 +321,13 @@ void MaterialGenerator::generate(bool fixedFunction)
 		}
 	}
 	
+	// indicate that we need the pssm split points
 	if (needShadows())
 		mParent->splitMtrs.push_back( mDef->getName() );
+		
+	// indicate that we need terrain lightmap texture and terrainWorldSize
+	if (needTerrainLightMap())
+		mParent->terrainLightMapMtrs.push_back( mDef->getName() );
 }
 
 //----------------------------------------------------------------------------------------
@@ -322,16 +335,14 @@ void MaterialGenerator::generate(bool fixedFunction)
 MaterialPtr MaterialGenerator::prepareMaterial(const std::string& name)
 {
 	MaterialPtr mat;
+	
 	if (MaterialManager::getSingleton().resourceExists(name))
-	{
 		mat = MaterialManager::getSingleton().getByName(name);
-		mat->removeAllTechniques();
-	}
 	else
-	{
 		mat = MaterialManager::getSingleton().create(name, ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME);
-		mat->removeAllTechniques(); // WTF ? ogre by default inserts a technique and a pass. why?
-	}
+	
+	mat->removeAllTechniques();
+	
 	return mat;
 }
 
@@ -367,6 +378,11 @@ inline bool MaterialGenerator::needLightMap()
 	return mShader->lightMap;
 }
 
+inline bool MaterialGenerator::needTerrainLightMap()
+{
+	return mShader->terrainLightMap;
+}
+
 inline bool MaterialGenerator::needBlendMap()
 {
 	return mShader->blendMap;
@@ -394,7 +410,7 @@ inline bool MaterialGenerator::fpNeedLighting()
 
 inline bool MaterialGenerator::fpNeedWsNormal()
 {
-	return needEnvMap() || needNormalMap() || fpNeedLighting();
+	return needEnvMap() || needNormalMap() || fpNeedLighting() || needTerrainLightMap();
 }
 
 inline bool MaterialGenerator::fpNeedEyeVector()
@@ -409,7 +425,7 @@ inline bool MaterialGenerator::vpNeedTangent()
 
 inline bool MaterialGenerator::vpNeedWMat()
 {
-	return fpNeedEyeVector();
+	return fpNeedEyeVector() || needTerrainLightMap();
 }
 
 inline bool MaterialGenerator::vpNeedWITMat()
@@ -525,10 +541,6 @@ HighLevelGpuProgramPtr MaterialGenerator::createVertexProgram()
 
 	StringUtil::StrStreamType sourceStr;
 	generateVertexProgramSource(sourceStr);
-	#ifdef SHADER_DEBUG
-	LogO("Vertex program source for '"+mDef->getName()+"':\n");
-	LogO(sourceStr.str());
-	#endif
 	ret->setSource(sourceStr.str());
 	ret->load();
 	vertexProgramParams(ret);
@@ -540,6 +552,8 @@ HighLevelGpuProgramPtr MaterialGenerator::createVertexProgram()
 
 void MaterialGenerator::generateVertexProgramSource(Ogre::StringUtil::StrStreamType& outStream)
 {
+	// note: world position xz for fragment is stored in oTexCoord.w, oWsNormal.w
+	
 	outStream << 
 		"void main_vp( "
 		"	float2 texCoord 					: TEXCOORD0, \n"
@@ -548,16 +562,13 @@ void MaterialGenerator::generateVertexProgramSource(Ogre::StringUtil::StrStreamT
 		"	float3 tangent						: TANGENT, \n";
 	if (fpNeedWsNormal()) outStream <<
 		"	float3 normal			 			: NORMAL, \n"
-		"	out float3 oWsNormal  				: TEXCOORD1, \n";
+		"	out float4 oWsNormal  				: TEXCOORD1, \n";
 	if (fpNeedEyeVector()) outStream <<
 		"	uniform float4 eyePosition,	 \n";
 	outStream <<
 		"	out float4 oPosition			 	: POSITION, \n"
-		"	out float4 objectPos				: COLOR, \n"; // running out of texcoords so putting this in COLOR since its unused.
-	if (!needShadows()) outStream <<
-		"	out float2 oTexCoord	 			: TEXCOORD0, \n";
-	else outStream <<
-		"	out float3 oTexCoord				: TEXCOORD0, \n";
+		"	out float4 objectPos				: COLOR, \n" // running out of texcoords so putting this in COLOR since its unused.
+		"	out float4 oTexCoord				: TEXCOORD0, \n";
 		
 	if (needNormalMap()) outStream <<
 		"	uniform float bumpScale, \n";
@@ -593,9 +604,11 @@ void MaterialGenerator::generateVertexProgramSource(Ogre::StringUtil::StrStreamT
 	") \n"
 	"{ \n"
 	"	oPosition = mul(wvpMat, position); \n";
+	if (vpNeedWMat()) outStream <<
+	"	float4 worldPosition = mul(wMat, position); \n";
 	
 	if (fpNeedEyeVector()) outStream <<
-		"	float3 eyeVector = mul( wMat, position ) - eyePosition; \n" // transform eye into view space
+		"	float3 eyeVector = worldPosition.xyz - eyePosition; \n" // transform eye into view space
 		"	oTangentToCubeSpace0.xyzw = eyeVector.xxxx; \n"
 		"	oTangentToCubeSpace1.xyzw = eyeVector.yyyy; \n"
 		"	oTangentToCubeSpace2.xyzw = eyeVector.zzzz; \n";
@@ -611,24 +624,34 @@ void MaterialGenerator::generateVertexProgramSource(Ogre::StringUtil::StrStreamT
 	"	oTangentToCubeSpace1.xyz = tmp[1]; \n"
 	"	oTangentToCubeSpace2.xyz = tmp[2]; \n";
 		
-	if (needShadows()) {
-		 outStream <<
-		"	oTexCoord.xy = texCoord; \n"
-		"	oTexCoord.z = oPosition.z; \n";
+	if (needShadows())
+	{
 		for (int i=0; i<mParent->getNumShadowTex(); ++i)
 		{
 			outStream << "oLightPosition"+toStr(i)+" = mul(texWorldViewProjMatrix"+toStr(i)+", position); \n";
 		}
 	}
-	else outStream <<
-		"	oTexCoord = texCoord; \n";
+	
+	std::string texCoordW = "1";
+	if (needTerrainLightMap()) texCoordW = "worldPosition.z";
+	
+	std::string texCoordZ = "1";
+	if (needShadows()) texCoordZ = "oPosition.z";
+	
+	outStream <<
+	"	oTexCoord = float4(texCoord.x, texCoord.y, "+texCoordZ+", "+texCoordW+"); \n";
 		
 	outStream <<
 	"	objectPos = position; \n";
 	if (mDef->mProps->fog) outStream <<
 		"	objectPos.w = saturate(fogParams.x * (oPosition.z - fogParams.y) * fogParams.w); \n"; // save fog amount in objectPos.w
-	if (fpNeedWsNormal()) outStream <<
-		"	oWsNormal = mul( (float3x3) wITMat, normal ); \n";
+	if (fpNeedWsNormal())
+	{
+		std::string wsNormalW = "1";
+		if (needTerrainLightMap()) wsNormalW = "worldPosition.x";
+		outStream <<
+		"	oWsNormal = float4(mul( (float3x3) wITMat, normal ), "+wsNormalW+"); \n";
+	}
 	outStream <<
 	"} \n";
 }
@@ -686,10 +709,6 @@ HighLevelGpuProgramPtr MaterialGenerator::createFragmentProgram()
 
 	StringUtil::StrStreamType sourceStr;
 	generateFragmentProgramSource(sourceStr);
-	#ifdef SHADER_DEBUG
-	LogO("Fragment  program source for '"+mDef->getName()+"':\n");
-	LogO(sourceStr.str());
-	#endif
 	ret->setSource(sourceStr.str());
 	ret->load();
 	fragmentProgramParams(ret);
@@ -760,15 +779,11 @@ void MaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::StrStrea
 	}
 	
 	outStream <<
-		"void main_fp(";
-	if (!needShadows()) outStream <<
-		"	in float2 texCoord : TEXCOORD0, \n";
-	else outStream <<
-		"	in float3 texCoord : TEXCOORD0, \n";
-	outStream <<
+		"void main_fp("
+		"	in float4 texCoord : TEXCOORD0, \n"
 		"	in float4 position : COLOR, \n";
 	if (fpNeedWsNormal()) outStream <<
-		"	in float3 wsNormal : TEXCOORD1, \n";
+		"	in float4 wsNormal : TEXCOORD1, \n";
 	if (fpNeedTangentToCube()) outStream <<
 		"	in float4 tangentToCubeSpace0 : TEXCOORD2, \n"
 		"	in float4 tangentToCubeSpace1 : TEXCOORD3, \n"
@@ -784,6 +799,10 @@ void MaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::StrStrea
 	
 	if (needLightMap()) outStream <<
 		"	uniform sampler2D lightMap : TEXUNIT"+toStr(mLightTexUnit)+", \n";
+		
+	if (needTerrainLightMap()) outStream <<
+		"	uniform sampler2D terrainLightMap : TEXUNIT"+toStr(mTerrainLightTexUnit)+", \n"
+		"	uniform float terrainWorldSize, \n";
 
 	if (needBlendMap()) outStream <<
 		"	uniform sampler2D blendMap : TEXUNIT"+toStr(mBlendTexUnit)+", \n";
@@ -845,23 +864,47 @@ void MaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::StrStrea
 		"{ \n";
 		
 	// calc shadowing
-	if (needShadows()) {
+	if (needShadows() || needTerrainLightMap())
 		outStream <<
-		"	float shadowing;"
-		"	shadowing = calcPSSMShadow(";
-	for (int i=0; i<mParent->getNumShadowTex(); ++i)
-		outStream << "shadowMap"+toStr(i)+", ";
-	for (int i=0; i<mParent->getNumShadowTex(); ++i)
-		outStream << "lightPosition"+toStr(i)+", ";
-	for (int i=0; i<mParent->getNumShadowTex(); ++i)
-		outStream << "invShadowMapSize"+toStr(i)+", ";
+		"	float shadowing; \n";
+		
+	if (needShadows())
+	{
+		outStream <<
+		"	float shadowingRT;"
+		"	shadowingRT = calcPSSMShadow(";
+		for (int i=0; i<mParent->getNumShadowTex(); ++i)
+			outStream << "shadowMap"+toStr(i)+", ";
+		for (int i=0; i<mParent->getNumShadowTex(); ++i)
+			outStream << "lightPosition"+toStr(i)+", ";
+		for (int i=0; i<mParent->getNumShadowTex(); ++i)
+			outStream << "invShadowMapSize"+toStr(i)+", ";
 		
 		outStream <<
 		"pssmSplitPoints, texCoord.z); \n";
-		
 	}
-		
-	  if (fpNeedEyeVector()) outStream <<
+	
+	if (needTerrainLightMap())
+	{
+		outStream <<
+		"	float shadowingLM; \n"
+		"	float2 worldPos = float2(wsNormal.w, texCoord.w); \n" // get world position
+		"	float2 lmTexCoord = (worldPos / terrainWorldSize) + 0.5; \n" // convert to image space 0..1
+		"	shadowingLM = tex2D(terrainLightMap, lmTexCoord).x; \n"; // fetch texture r channel
+	}
+	
+	// put together realtime and static shadow
+	if (needShadows() || needTerrainLightMap())
+	{
+		if (needShadows() && needTerrainLightMap()) outStream <<
+		"	shadowing = min(shadowingRT, shadowingLM); \n";
+		else if (needShadows()) outStream <<
+		"	shadowing = shadowingRT; \n";
+		else /* if (needTerrainLightMap()) */ outStream <<
+		"	shadowing = shadowingLM; \n";
+	}
+	
+	if (fpNeedEyeVector()) outStream <<
 		"	float3 eyeVector = normalize(float3(tangentToCubeSpace0.w, tangentToCubeSpace1.w, tangentToCubeSpace2.w)); \n";
 	if (fpNeedWsNormal())
 	{
@@ -881,13 +924,13 @@ void MaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::StrStrea
 	
 	// fetch diffuse texture
 	if (needDiffuseMap()) outStream <<
-		"	float4 diffuseTex = tex2D(diffuseMap, texCoord); \n";
+		"	float4 diffuseTex = tex2D(diffuseMap, texCoord.xy); \n";
 	
 	if (needLightMap()) outStream <<
-		"	float4 lightTex = tex2D(lightMap, texCoord);lightTex=float4(lightTex.r,lightTex.r,lightTex.r,1.0f);//single channel map \n";
+		"	float4 lightTex = tex2D(lightMap, texCoord.xy);lightTex=float4(lightTex.r,lightTex.r,lightTex.r,1.0f);//single channel map \n";
 
 	if (needBlendMap()) outStream <<
-		"	float4 blendTex = tex2D(blendMap, texCoord); \n";
+		"	float4 blendTex = tex2D(blendMap, texCoord.xy); \n";
 
 	// calculate lighting (per-pixel)
 	if (fpNeedLighting())
@@ -934,8 +977,6 @@ void MaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::StrStrea
 		if (needFresnel()) outStream <<
 			"	float facing = 1.0 - max(abs(dot(eyeVector, normal)), 0); \n"
 			"	float reflectionFactor = saturate(fresnelBias + fresnelScale * pow(facing, fresnelPower)); \n";
-		
-			//"	float reflectionFactor = fresnelBias + fresnelScale * pow(1 + abs(dot(eyeVector, normal)), fresnelPower); \n";
 		else outStream <<
 			"	float reflectionFactor = reflAmount; \n";
 		outStream << 
@@ -965,7 +1006,7 @@ void MaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::StrStrea
 	if (mDef->mProps->transparent)
 	{
 		if (needAlphaMap()) outStream <<
-			"	float alpha = tex2D(alphaMap, texCoord).r; \n"; // use only r channel
+			"	float alpha = tex2D(alphaMap, texCoord.xy).r; \n"; // use only r channel
 		else if (needLightingAlpha())
 		{
 			if (mDef->mProps->lightingAlpha.w != 0 && needDiffuseMap()) outStream <<
@@ -1008,6 +1049,9 @@ void MaterialGenerator::fragmentProgramParams(HighLevelGpuProgramPtr program)
 	
 	if (mDef->mProps->fog)
 		params->setNamedAutoConstant("fogColor", GpuProgramParameters::ACT_FOG_COLOUR);
+		
+	if (needTerrainLightMap())
+		params->setNamedConstant("terrainWorldSize", Real(1025)); // real value set later in changeShadows()
 	
 	individualFragmentProgramParams(params);
 }

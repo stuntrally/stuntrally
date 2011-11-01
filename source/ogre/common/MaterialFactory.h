@@ -43,6 +43,7 @@ public:
 	///--------------------------------------------------------------------
 	
 	std::vector<std::string> splitMtrs; // list of materials that need pssm split points
+	std::vector<std::string> terrainLightMapMtrs; // list of materials that need terrain lightmap texture and terrainWorldSize
 	
 	shaderMap* getShaderCache() { return &mShaderCache; };
 	

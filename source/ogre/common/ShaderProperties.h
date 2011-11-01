@@ -8,6 +8,7 @@ struct ShaderProperties
 	bool envMap; bool fresnel;
 	bool diffuseMap;
 	bool lightMap;
+	bool terrainLightMap;
 	bool alphaMap;
 	bool blendMap;
 	bool normalMap;

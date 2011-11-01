@@ -15,6 +15,7 @@ normalMap_1024 = volcano_7_nh1.png
 alphaMap_512 = roadAlpha_s.png
 alphaMap_2048 = roadAlpha.png
 transparent = true
+terrainLightMap = true
 
 ; ------------ Greece -------------
 [roadGDesert]
@@ -33,6 +34,7 @@ receivesShadows = true
 
 [roadGDesert_ter]
 parent = roadGDesert
+terrainLightMap = true
 ;normalMap_512 = volcano_7_nh1_s.png
 ;normalMap_1024 = volcano_7_nh1.png
 
@@ -54,6 +56,7 @@ sceneBlend = alpha
 depthWrite = false
 normalMap_512 = volcano_7_nh1_s.png
 normalMap_1024 = volcano_7_nh1.png
+terrainLightMap = true
 
 ; ----------- Mud ----------
 [roadMud]
@@ -77,6 +80,7 @@ alphaMap_2048 = roadAlpha.png
 transparent = true
 sceneBlend = alpha
 depthWrite = false
+terrainLightMap = true
 
 ; ---------- Ice Winter ------------
 [roadIce]
@@ -100,6 +104,7 @@ normalMap_1024 = volcano_7_nh1.png
 transparent = true
 sceneBlend = alpha
 depthWrite = false
+terrainLightMap = true
 
 [roadIce2]
 parent = roadIce
@@ -117,6 +122,7 @@ normalMap_1024 = volcano_7_nh1.png
 transparent = true
 sceneBlend = alpha
 depthWrite = false
+terrainLightMap = true
 
 ; ------------ Snow Winter -------------
 [roadSnow]
@@ -135,6 +141,7 @@ alphaMap_2048 = roadAlpha.png
 transparent = true
 sceneBlend = alpha
 depthWrite = false
+terrainLightMap = true
 
 ; ----------- Adesert Australia ----------
 [roadAdesert]
@@ -152,6 +159,7 @@ alphaMap_2048 = roadAlpha.png
 transparent = true
 sceneBlend = alpha
 depthWrite = false
+terrainLightMap = true
 
 
 ; ----------- Desert -----------
@@ -170,6 +178,7 @@ alphaMap_2048 = roadAlpha.png
 transparent = true
 sceneBlend = alpha
 depthWrite = false
+terrainLightMap = true
 
 ; ----------- Savannah ----------
 [roadSavannah]
@@ -190,6 +199,7 @@ alphaMap_2048 = roadAlpha.png
 transparent = true
 sceneBlend = alpha
 depthWrite = false
+terrainLightMap = true
 
 ; ----------- Jungle ----------
 [roadJungle]
@@ -213,3 +223,4 @@ normalMap_512 = ice_3_nh1_s.png
 normalMap_1024 = ice_3_nh1.png
 sceneBlend = alpha
 depthWrite = false
+terrainLightMap = true

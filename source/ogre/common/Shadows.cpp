@@ -186,6 +186,32 @@ void App::changeShadows()
 	materialFactory->setShadows(pSet->shadow_type != 0);
 	materialFactory->setShadowsDepth(bDepth);
 	materialFactory->generate();
+	
+	// set terrain lightmap texture and terrainWorldSize for all materials that need it
+	for (std::vector<std::string>::const_iterator it = materialFactory->terrainLightMapMtrs.begin();
+		it != materialFactory->terrainLightMapMtrs.end(); ++it)
+	{
+		MaterialPtr mtr = MaterialManager::getSingleton().getByName( (*it) );
+		
+		if (!mtr.isNull())
+		{	Material::TechniqueIterator techIt = mtr->getTechniqueIterator();
+			while (techIt.hasMoreElements())
+			{	Technique* tech = techIt.getNext();
+				Technique::PassIterator passIt = tech->getPassIterator();
+				while (passIt.hasMoreElements())
+				{	Pass* pass = passIt.getNext();
+					Pass::TextureUnitStateIterator tusIt = pass->getTextureUnitStateIterator();
+					while (tusIt.hasMoreElements())
+					{
+						TextureUnitState* tus = tusIt.getNext();
+						if (tus->getName() == "terrainLightMap")
+						{
+							tus->setTextureName( terrain->getLightmap()->getName() );
+							pass->getFragmentProgramParameters()->setNamedConstant( "terrainWorldSize", Real( sc.td.fTerWorldSize ) );
+						}
+					}
+		}	}	}
+	}
 		
 	UpdPSSMMaterials();
 
