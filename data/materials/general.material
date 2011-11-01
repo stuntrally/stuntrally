@@ -78,7 +78,7 @@ material ppx_glass_env		// per pixel  with cubic reflection  glass (alpha)
 	        {
 	        }
 
-	        fragment_program_ref geom_ps
+	        fragment_program_ref geom_white_ps
 	        {
 	        }
 	    }
@@ -158,7 +158,7 @@ material ppx_glass			// per pixel  glass (alpha)
 	        {
 	        }
 
-	        fragment_program_ref geom_ps
+	        fragment_program_ref geom_white_ps
 	        {
 	        }
 	    }

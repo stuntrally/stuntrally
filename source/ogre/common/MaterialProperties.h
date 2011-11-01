@@ -55,7 +55,9 @@ struct MaterialProperties
 	bool terrainLightMap;
 	bool fog; // enable fog
 	bool lighting; // enable lighting
-
+	
+	// contribute to ssao yes/no
+	bool ssao;
 	
 	float depthBias; bool depthCheck; bool depthWrite; bool transparentSorting;
 	

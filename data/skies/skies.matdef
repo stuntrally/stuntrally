@@ -5,6 +5,7 @@ depthWrite = false
 depthCheck = false
 fog = false
 textureAddressMode = mirror
+ssao = false
 
 [sky/white]
 parent = base_sky

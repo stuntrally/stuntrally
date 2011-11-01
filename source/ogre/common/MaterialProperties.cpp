@@ -18,7 +18,7 @@ MaterialProperties::MaterialProperties() :
 	depthBias(0), depthCheck(true), transparentSorting(true), lightingAlpha(0.0, 0.0, 0.0, 0.0),
 	sceneBlend(SBM_DEFAULT), depthWrite(true), alphaRejectFunc(CMPF_ALWAYS_PASS), alphaRejectValue(0.0),
 	twoPass(false), fog(true), lighting(true), textureAddressMode(TextureUnitState::TAM_WRAP),
-	terrainLightMap(false)
+	terrainLightMap(false), ssao(true)
 {}
 
 //----------------------------------------------------------------------------------------
@@ -92,6 +92,7 @@ void MaterialProperties::setProperty(const std::string& prop, const std::string&
 		else if (value == "mirror") textureAddressMode = TextureUnitState::TAM_MIRROR;
 		else if (value == "border") textureAddressMode = TextureUnitState::TAM_BORDER;
 	}
+	else if (prop == "ssao") ssao = str2bool(value);
 	else if (prop == "terrainLightMap") terrainLightMap = str2bool(value);
 	else if (prop == "lighting") lighting = str2bool(value);
 	else if (prop == "fog") fog = str2bool(value);
