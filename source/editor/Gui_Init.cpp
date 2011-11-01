@@ -215,7 +215,7 @@ void App::InitGui()
 	Cmb(cmbRain1, "Rain1Cmb", comboRain1);  cmbRain1->addItem("");
 	Cmb(cmbRain2, "Rain2Cmb", comboRain2);  cmbRain2->addItem("");
 
-	GetMaterials("weather.particle", "particle_system");
+	GetMaterials("weather.particle", true, "particle_system");
 	for (size_t i=0; i < vsMaterials.size(); ++i)
 	{	String s = vsMaterials[i];
 		cmbRain1->addItem(s);  cmbRain2->addItem(s);
@@ -242,7 +242,7 @@ void App::InitGui()
 	}
 	
 	//  particles
-	GetMaterials("tires.particle", "particle_system");
+	GetMaterials("tires.particle", true, "particle_system");
 	for (size_t i=0; i < vsMaterials.size(); ++i)
 	{	String s = vsMaterials[i];
 		cmbParDust->addItem(s);  cmbParMud->addItem(s);  cmbParSmoke->addItem(s);

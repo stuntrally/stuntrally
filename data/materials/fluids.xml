@@ -11,7 +11,7 @@
 		bumpFqX="21.2" bumpFqY="30.2" bumpAmp="0.8" bumpAng="0.4" whSteerMul="2" />
 
 	<fluid name="mud med"		material="Mud_brown"  density="800"  angDamp="1.7" linDamp="0.8" heightDamp="6"
-		bWhForce="1" whMaxAngVel="50" whSpinDamp="25"  whForceLong="80" whForceUp="100"
+		bWhForce="1" whMaxAngVel="60" whSpinDamp="25"  whForceLong="80" whForceUp="100"
 		bumpFqX="21.2" bumpFqY="30.2" bumpAmp="0.8" bumpAng="0.4" whSteerMul="2" />
 
 	<fluid name="mud hard"		material="Mud_dark"  density="1000" angDamp="2.2" linDamp="1.3" heightDamp="10"

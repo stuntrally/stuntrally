@@ -91,4 +91,5 @@
 	<track n="58" name="J11-Temple"		created="21-10-11" crtver="1.4" modified="21-10-11" scenery="Jungle" 	author="CH" fluids="2" bumps="1" jumps="0" loops="0" pipes="0" banked="1" frenzy="2" long="1" diff="3" rating="2" rateuser="0" drivenlaps="0" />
 	<track n="59" name="G2-Coast"		created="22-10-11" crtver="1.4" modified="22-10-11" scenery="Greece" 	author="CH" fluids="1" bumps="3" jumps="0" loops="0" pipes="0" banked="0" frenzy="0" long="3" diff="3" rating="4" rateuser="0" drivenlaps="0" />
 	<track n="60" name="A3-Canyon"		created="22-10-11" crtver="1.4" modified="23-10-11" scenery="Australia" author="CH" fluids="0" bumps="1" jumps="0" loops="0" pipes="0" banked="2" frenzy="0" long="5" diff="2" rating="3" rateuser="0" drivenlaps="0" />
+	<track n="61" name="J12-Fog"		created="01-11-11" crtver="1.4" modified="01-11-11" scenery="Jungle" 	author="CH" fluids="1" bumps="0" jumps="0" loops="0" pipes="0" banked="0" frenzy="0" long="2" diff="2" rating="2" rateuser="0" drivenlaps="0" />
 </tracks>

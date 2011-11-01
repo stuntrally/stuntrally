@@ -1,4 +1,54 @@
-//  Mud
+//  Mud soft
+particle_system FluidMudSoft
+{
+	material			FluidMudSoft
+	quota				1500
+	particle_width		0.4
+	particle_height		0.4
+	cull_each			false
+	billboard_type		point
+	//renderer			billboard
+    //sorted			true
+
+	emitter Box
+	{
+		angle	5
+		position	0 0.2 0
+		direction	0 1 0
+		width	0.8
+		height	0.2
+		depth	0.2  //h
+
+		colour				0.9 0.9 0.2  0.9
+		colour_range_start	0.9 0.9 0.1  0.6
+		colour_range_end	0.9 0.9 0.2  0.9
+
+		velocity_min	3.1
+		velocity_max	6.8
+		time_to_live_min	1.5
+		time_to_live_max	2
+	}
+
+	affector Rotator
+	{
+		rotation_range_start 0
+		rotation_range_end 360
+		rotation_speed_range_start -120
+		rotation_speed_range_end 120
+	}
+	affector LinearForce
+	{
+		force_vector	0 -9.8 0
+		force_application	add
+	}
+
+	//affector DirectionRandomiser
+	//{
+	//	randomness	2
+	//}
+}
+
+//  Mud dark
 particle_system FluidMud
 {
 	material			FluidMud
