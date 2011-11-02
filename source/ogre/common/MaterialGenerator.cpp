@@ -421,7 +421,7 @@ inline bool MaterialGenerator::fpNeedLighting()
 
 inline bool MaterialGenerator::fpNeedWsNormal()
 {
-	return needEnvMap() || needNormalMap() || fpNeedLighting() || needTerrainLightMap() || UseMRT();
+	return needEnvMap() || needNormalMap() || fpNeedLighting() || needTerrainLightMap();
 }
 
 inline bool MaterialGenerator::fpNeedEyeVector()
@@ -437,14 +437,6 @@ inline bool MaterialGenerator::vpNeedTangent()
 inline bool MaterialGenerator::vpNeedWMat()
 {
 	return fpNeedEyeVector() || needTerrainLightMap();
-}
-inline bool MaterialGenerator::vpNeedWvMat()
-{
-	return UseMRT();
-}
-inline bool MaterialGenerator::UseMRT()
-{
-	return true;
 }
 
 inline bool MaterialGenerator::vpNeedWITMat()
@@ -588,22 +580,15 @@ void MaterialGenerator::generateVertexProgramSource(Ogre::StringUtil::StrStreamT
 		"	out float4 oPosition			 	: POSITION, \n"
 		"	out float4 objectPos				: COLOR, \n" // running out of texcoords so putting this in COLOR since its unused.
 		"	out float4 oTexCoord				: TEXCOORD0, \n";
-	int oTexCoordIndex=2;
+		
 	if (needNormalMap()) outStream <<
 		"	uniform float bumpScale, \n";
 		
-	if (fpNeedTangentToCube()) 
-	{
-		 outStream <<"	out	float4	oTangentToCubeSpace0	: TEXCOORD"+ toStr( oTexCoordIndex++ ) +", \n"; // tangent to cube (world) space
-		 outStream <<"	out	float4	oTangentToCubeSpace1	: TEXCOORD"+ toStr( oTexCoordIndex++ ) +", \n";
-		 outStream <<"	out	float4	oTangentToCubeSpace2	: TEXCOORD"+ toStr( oTexCoordIndex++ ) +", \n";
-	}
-	if(UseMRT())
-	{
-		//view space position,view space normal 
-		outStream << "	out	float4	oViewPosition	: TEXCOORD"+ toStr( oTexCoordIndex++ ) +", \n";
-		outStream << "	out	float4	oViewNormal	: TEXCOORD"+ toStr( oTexCoordIndex++ ) +", \n";
-	}
+	if (fpNeedTangentToCube()) outStream <<
+		"	out	float4	oTangentToCubeSpace0	: TEXCOORD2, \n" // tangent to cube (world) space
+		"	out	float4	oTangentToCubeSpace1	: TEXCOORD3, \n"
+		"	out	float4	oTangentToCubeSpace2	: TEXCOORD4, \n";
+	
 	// fog
 	if (mDef->mProps->fog) outStream <<
 		"	uniform float4 fogParams, \n";
@@ -611,7 +596,7 @@ void MaterialGenerator::generateVertexProgramSource(Ogre::StringUtil::StrStreamT
 	if (needShadows()) {
 		for (int i=0; i<mParent->getNumShadowTex(); ++i)
 		{
-			outStream << "out float4 oLightPosition"+toStr(i)+" : TEXCOORD"+toStr(i+oTexCoordIndex)+", \n";
+			outStream << "out float4 oLightPosition"+toStr(i)+" : TEXCOORD"+toStr(i+5)+", \n";
 		}
 		outStream << "\n";
 		for (int i=0; i<mParent->getNumShadowTex(); ++i)
@@ -625,8 +610,6 @@ void MaterialGenerator::generateVertexProgramSource(Ogre::StringUtil::StrStreamT
 		"	uniform float4x4 wITMat, \n";
 	if (vpNeedWMat()) outStream <<
 		"	uniform float4x4 wMat, \n";
-	if (vpNeedWvMat()) outStream <<
-		"	uniform float4x4 wvMat, \n";
 	outStream << 
 	"	uniform float4x4 wvpMat \n"
 	") \n"
@@ -680,15 +663,6 @@ void MaterialGenerator::generateVertexProgramSource(Ogre::StringUtil::StrStreamT
 		outStream <<
 		"	oWsNormal = float4(mul( (float3x3) wITMat, normal ), "+wsNormalW+"); \n";
 	}
-
-	if(UseMRT())
-	{
-		//view space position,view space normal 
-		outStream <<
-		" oViewPosition = mul(wvMat, position); \n" 
-		" oViewNormal = mul(wvMat, float4(normal, 0)); \n";
-	}
-
 	outStream <<
 	"} \n";
 }
@@ -701,8 +675,6 @@ void MaterialGenerator::vertexProgramParams(HighLevelGpuProgramPtr program)
 	
 	if (vpNeedWMat())
 		params->setNamedAutoConstant("wMat", GpuProgramParameters::ACT_WORLD_MATRIX);
-	if (vpNeedWvMat())
-		params->setNamedAutoConstant("wvMat", GpuProgramParameters::ACT_WORLDVIEW_MATRIX);
 	params->setNamedAutoConstant("wvpMat", GpuProgramParameters::ACT_WORLDVIEWPROJ_MATRIX);
 	if (fpNeedWsNormal())
 		params->setNamedAutoConstant("wITMat", GpuProgramParameters::ACT_INVERSE_TRANSPOSE_WORLD_MATRIX);
@@ -823,18 +795,11 @@ void MaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::StrStrea
 		"	in float4 position : COLOR, \n";
 	if (fpNeedWsNormal()) outStream <<
 		"	in float4 wsNormal : TEXCOORD1, \n";
-	int oTexCoordIndex=2;
-	if (fpNeedTangentToCube()) 
-	{
-		outStream << "	in float4 tangentToCubeSpace0 : TEXCOORD"+ toStr( oTexCoordIndex++ ) +", \n";
-		outStream << "	in float4 tangentToCubeSpace1 : TEXCOORD"+ toStr( oTexCoordIndex++ ) +", \n";
-		outStream << "	in float4 tangentToCubeSpace2 : TEXCOORD"+ toStr( oTexCoordIndex++ ) +", \n";
-	}
-	if (UseMRT()) 
-	{
-		outStream << "	in float4 viewPosition : TEXCOORD"+ toStr( oTexCoordIndex++ ) +", \n";
-		outStream << "	in float4 viewNormal : TEXCOORD"+ toStr( oTexCoordIndex++ ) +", \n";
-	}
+	if (fpNeedTangentToCube()) outStream <<
+		"	in float4 tangentToCubeSpace0 : TEXCOORD2, \n"
+		"	in float4 tangentToCubeSpace1 : TEXCOORD3, \n"
+		"	in float4 tangentToCubeSpace2 : TEXCOORD4, \n";
+		
 	if (needFresnel()) outStream <<
 		"	uniform float fresnelBias, \n"
 		"	uniform float fresnelScale, \n"
@@ -903,17 +868,10 @@ void MaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::StrStrea
 	}
 	
 	
-	if(UseMRT())
-	{
-		outStream << "	out float4 oColor : COLOR0, \n";
-		outStream << "	out float4 oColor1 : COLOR1, \n";
-		outStream << "	uniform float far \n";
-	}
-	else
-	{
-			outStream << "	out float4 oColor : COLOR \n";
-	}
-	outStream << 	") \n"
+	outStream << 
+
+		"	out float4 oColor : COLOR \n"
+		") \n"
 		"{ \n";
 		
 	// calc shadowing
@@ -1082,16 +1040,7 @@ void MaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::StrStrea
 		outStream << 
 		"	oColor.w = alpha; \n";
 	}
-	
-	if(UseMRT())
-	{
-		outStream <<  "oColor1 = float4(length(viewPosition.xyz) / far, normalize(viewNormal.xyz).xyz); \n";
-		if(mDef->mProps->transparent)
-		{
-			//mutiply the diffuse texture alpha
-			outStream << "oColor1 = oColor1 * tex2D(diffuseMap, texCoord.xy).a;";    
-		}
-	}
+		
 	outStream << 
 		"} \n";
 }
@@ -1113,12 +1062,7 @@ void MaterialGenerator::fragmentProgramParams(HighLevelGpuProgramPtr program)
 	
 	if (mDef->mProps->fog)
 		params->setNamedAutoConstant("fogColor", GpuProgramParameters::ACT_FOG_COLOUR);
-	
-	if(UseMRT())
-	{
-		params->setNamedAutoConstant("far", GpuProgramParameters::ACT_FAR_CLIP_DISTANCE);
-	}
-
+		
 	individualFragmentProgramParams(params);
 }
 
