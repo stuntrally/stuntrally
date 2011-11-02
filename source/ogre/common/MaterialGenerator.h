@@ -73,6 +73,10 @@ protected:
 	bool fpNeedWsNormal();
 	bool fpNeedEyeVector();
 	 
+	//MRT
+	bool vpNeedWvMat();
+	bool UseMRT();
+
 	// lighting
 	bool fpNeedLighting(); // fragment lighting
 	//bool vpNeedLighting(); // vertex lighting

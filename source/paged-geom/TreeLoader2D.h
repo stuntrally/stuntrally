@@ -227,20 +227,14 @@ public:
 
 	\warning Be sure to call this before adding any trees - otherwise adjusting this value will cause
 	the size of the currently added trees to change. */
-	void setMaximumScale(Ogre::Real maxScale)
-	{
-		maximumScale = maxScale;
-	}
+	void setMaximumScale(Ogre::Real maxScale)	{ maximumScale = maxScale;	}
 
 	/** \brief Gets the maximum tree scale value
 	\returns The maximum tree scale value
 
 	This function will return the maximum tree scale value as set by setMaximumScale(). By
 	default this value will be 2.0. */
-	float getMaximumScale()
-	{
-		return maximumScale;
-	}
+   Ogre::Real getMaximumScale() const  { return maximumScale; }
 
 	/** \brief Sets the minimum tree scale value
 
@@ -251,45 +245,30 @@ public:
 
 	\warning Be sure to call this before adding any trees - otherwise adjusting this value will cause
 	the size of the currently added trees to change. */
-	void setMinimumScale(Ogre::Real minScale)
-	{
-		minimumScale = minScale;
-	}
+	void setMinimumScale(Ogre::Real minScale)	{ minimumScale = minScale;	}
 
 	/** \brief Gets the minimum tree scale value
 	\returns The minimum tree scale value
 
 	This function will return the minimum tree scale value as set by setMinimumScale(). By
 	default this value will be 0. */
-	float getMinimumScale()
-	{
-		return minimumScale;
-	}
+	Ogre::Real getMinimumScale() const { return minimumScale; }
 
 	/** \brief Gets the tree boundary area
 	\returns A TBounds boundary value
 
 	This function returns the boundaries in which all trees are added. This value is set from the constructor. */
-	inline const TBounds &getBounds()
-	{
-		return actualBounds;
-	}
+   const TBounds &getBounds() const { return actualBounds; }
 
 	void loadPage(PageInfo &page);
 
 private:
 	friend class TreeIterator2D;
 
-#define PAGED_SCALE_16
 	struct TreeDef
 	{
 		Ogre::uint16 xPos, zPos;
-#ifdef PAGED_SCALE_16
-		Ogre::uint16 scale;
-#else
-		Ogre::uint8 scale;
-#endif
-		Ogre::uint8 rotation;
+		Ogre::uint8 scale, rotation;
 #ifdef PAGEDGEOMETRY_USER_DATA
 		void* userData;
 #endif
