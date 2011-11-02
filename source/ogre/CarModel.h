@@ -149,7 +149,8 @@ private:
 	//  index for the car (e.g. when we have 2 cars, they have indices 0 and 1)
 	//  needed for cloned materials & textures
 	int iIndex;
-	
+	bool bBraking;
+	void RefreshBrakingMaterial();
 	//  Our settings.
 	SETTINGS* pSet;
 	App* pApp;
