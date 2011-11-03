@@ -10,6 +10,7 @@ class MaterialFactory;  struct ShaderProperties;
 class MaterialGenerator
 {
 public:
+	MaterialGenerator();
 	MaterialDefinition* mDef;
 	ShaderProperties* mShader;
 	MaterialFactory* mParent;
@@ -73,6 +74,12 @@ protected:
 	bool fpNeedWsNormal();
 	bool fpNeedEyeVector();
 	 
+	//MRT
+	bool bUseMRT;
+	bool vpNeedWvMat();
+	bool UseMRT();
+	bool UsePerPixelNormals();
+
 	// lighting
 	bool fpNeedLighting(); // fragment lighting
 	//bool vpNeedLighting(); // vertex lighting
