@@ -96,7 +96,7 @@
 	<track n="61" name="J12-Fog"		created="01-11-11" crtver="1.4" modified="01-11-11" scenery="Jungle" 	author="CH" fluids="1" bumps="0" jumps="0" loops="0" pipes="0" banked="0" frenzy="0" long="2" diff="2" rating="2" rateuser="0" drivenlaps="0" />
 	<track n="62" name="J13-Tropic"		created="01-11-11" crtver="1.4" modified="01-11-11" scenery="Jungle" 	author="CH" fluids="1" bumps="2" jumps="0" loops="0" pipes="0" banked="2" frenzy="2" long="7" diff="3" rating="4" rateuser="0" drivenlaps="0" />
 
-	<track n="63" name="F11-Dawn"		created="03-11-11" crtver="1.4" modified="03-11-11" scenery="Forest" 	author="CH" fluids="0" bumps="1" jumps="0" loops="0" pipes="0" banked="2" frenzy="2" long="1" diff="1" rating="2" rateuser="0" drivenlaps="0" />
-	<track n="64" name="I4-Sunset"		created="03-11-11" crtver="1.4" modified="03-11-11" scenery="Island" 	author="CH" fluids="1" bumps="0" jumps="0" loops="0" pipes="0" banked="1" frenzy="1" long="2" diff="2" rating="2" rateuser="0" drivenlaps="0" />
+	<track n="63" name="F11-Dawn"		created="03-11-11" crtver="1.4" modified="03-11-11" scenery="Forest" 	author="CH" fluids="0" bumps="1" jumps="0" loops="0" pipes="0" banked="2" frenzy="1" long="1" diff="1" rating="2" rateuser="0" drivenlaps="0" />
+	<track n="64" name="I4-Sunset"		created="03-11-11" crtver="1.4" modified="03-11-11" scenery="Island" 	author="CH" fluids="1" bumps="0" jumps="0" loops="0" pipes="0" banked="1" frenzy="2" long="2" diff="2" rating="2" rateuser="0" drivenlaps="0" />
 
 </tracks>
