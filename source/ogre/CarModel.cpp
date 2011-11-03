@@ -31,7 +31,8 @@ using namespace Ogre;
 
 CarModel::CarModel(unsigned int index, eCarType type, const std::string name,
 	Ogre::SceneManager* sceneMgr, SETTINGS* set, GAME* game, Scene* s, Ogre::Camera* cam, App* app) :
-	fCam(0), pMainNode(0), pCar(0), terrain(0), resCar(""), mCamera(0), pReflect(0), pApp(app), color(1,0,0)
+	fCam(0), pMainNode(0), pCar(0), terrain(0), resCar(""), mCamera(0), pReflect(0), pApp(app), color(1,0,0),
+	bLightMapEnabled(true), bBraking(false)
 {
 	iIndex = index;  sDirname = name;  pSceneMgr = sceneMgr;
 	pSet = set;  pGame = game;  sc = s;  mCamera = cam;  eType = type;
@@ -131,6 +132,30 @@ void CarModel::Update(PosInfo& posInfo, float time)
 		bBraking=braking;
 		RefreshBrakingMaterial();
 	}
+	
+	//  terrain lightmap enable/disable (depending on distance to terrain)
+	#define MAX_TERRAIN_DIST 2.0 // meters
+	Ogre::Vector3 carPos = pMainNode->getPosition();
+	float terrainHeight = terrain->getHeightAtWorldPosition(carPos);
+	float diff = std::abs(carPos.y - terrainHeight);
+	bool changed = false;
+	if (diff > MAX_TERRAIN_DIST)
+	{
+		if (bLightMapEnabled)
+		{
+			changed = true;
+			bLightMapEnabled = false;
+		}
+	}
+	else if (!bLightMapEnabled)
+	{
+		changed = true;
+		bLightMapEnabled = true;
+	}
+	
+	if (changed)
+		UpdateLightMap();
+		
 
 	//  update particle emitters
 	//  boost
@@ -276,6 +301,30 @@ void CarModel::Update(PosInfo& posInfo, float time)
 	UpdWhTerMtr();
 }
 
+void CarModel::UpdateLightMap()
+{
+	MaterialPtr mtr;
+	for (int i=0; i < NumMaterials; i++)
+	{
+		mtr = (MaterialPtr)MaterialManager::getSingleton().getByName(sMtr[i]);
+		if (!mtr.isNull())
+		{	Material::TechniqueIterator techIt = mtr->getTechniqueIterator();
+			while (techIt.hasMoreElements())
+			{	Technique* tech = techIt.getNext();
+				Technique::PassIterator passIt = tech->getPassIterator();
+				while (passIt.hasMoreElements())
+				{
+					Pass* pass = passIt.getNext();
+
+					if (pass->hasFragmentProgram())
+					{
+						GpuProgramParametersSharedPtr params = pass->getFragmentProgramParameters();
+						params->setIgnoreMissingParams(true); // don't throw exception if material doesnt use lightmap
+						params->setNamedConstant("enableTerrainLightMap", bLightMapEnabled ? Real(1) : Real(0));
+					}
+	}	}	}	}
+}
+
 void CarModel::RefreshBrakingMaterial()
 {
 	std::string texName;
@@ -283,10 +332,10 @@ void CarModel::RefreshBrakingMaterial()
 	texName = sDirname + "_body00_brake.png";
 	else
 		texName = sDirname + "_body00_add.png";
-	MaterialPtr mtr = MaterialManager::getSingleton().getByName(sMtr[Mtr_CarBody]);
+	MaterialPtr mtr;
 	for (int i=0; i < NumMaterials; i++)
 	{
-		MaterialPtr mtr = (MaterialPtr)MaterialManager::getSingleton().getByName(sMtr[i]);
+		mtr = (MaterialPtr)MaterialManager::getSingleton().getByName(sMtr[i]);
 		if (!mtr.isNull())
 		{	Material::TechniqueIterator techIt = mtr->getTechniqueIterator();
 			while (techIt.hasMoreElements())
@@ -384,6 +433,7 @@ void CarModel::RecreateMaterials()
 							if (!(StringUtil::startsWith(tus->getTextureName(), "ReflectionCube") ||
 								tus->getTextureName() == "ReflectionCube" ||
 								StringUtil::startsWith(tus->getName(), "shadowmap") ||
+								StringUtil::startsWith(tus->getName(), "terrainlightmap") ||
 								StringUtil::startsWith(tus->getTextureName(), "flat_n")))
 							tus->setTextureName(sDirname + "_" + tus->getTextureName());
 						}

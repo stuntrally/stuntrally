@@ -813,6 +813,7 @@ void MaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::StrStrea
 		
 	if (needTerrainLightMap()) outStream <<
 		"	uniform sampler2D terrainLightMap : TEXUNIT"+toStr(mTerrainLightTexUnit)+", \n"
+		"	uniform float enableTerrainLightMap, \n"
 		"	uniform float terrainWorldSize, \n";
 
 	if (needBlendMap()) outStream <<
@@ -901,7 +902,8 @@ void MaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::StrStrea
 		"	float shadowingLM; \n"
 		"	float2 worldPos = float2(wsNormal.w, texCoord.w); \n" // get world position
 		"	float2 lmTexCoord = (worldPos / terrainWorldSize) + 0.5; \n" // convert to image space 0..1
-		"	shadowingLM = tex2D(terrainLightMap, lmTexCoord).x; \n"; // fetch texture r channel
+		"	shadowingLM = tex2D(terrainLightMap, lmTexCoord).x; \n" // fetch texture r channel
+		"	if (enableTerrainLightMap == 0.f) shadowingLM = 1.f; \n";
 	}
 	
 	// put together realtime and static shadow
@@ -1014,6 +1016,14 @@ void MaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::StrStrea
 		"	oColor = lerp(color1, float4(fogColor,1), position.w); \n";
 	else outStream <<
 		"	oColor = color1; \n";
+	
+	// debug colour output  ------------------------------------------
+	
+	// world position debug (for lightmap)
+	//if (needTerrainLightMap()) outStream <<
+	//	"	oColor = oColor*float4(texCoord.w, wsNormal.w, 1, 1); \n";
+	
+	// ---------------------------------------------------------------
 		
 	// alpha
 	if (mDef->mProps->transparent)
@@ -1063,6 +1073,9 @@ void MaterialGenerator::fragmentProgramParams(HighLevelGpuProgramPtr program)
 	if (mDef->mProps->fog)
 		params->setNamedAutoConstant("fogColor", GpuProgramParameters::ACT_FOG_COLOUR);
 		
+	if (needTerrainLightMap())
+		params->setNamedConstant("enableTerrainLightMap", Real(1));
+	
 	individualFragmentProgramParams(params);
 }
 

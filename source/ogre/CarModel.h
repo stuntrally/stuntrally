@@ -154,6 +154,10 @@ private:
 	bool bBraking;
 	void RefreshBrakingMaterial();
 	
+	//  lightmap enable/disable depending on dist. to terrain
+	bool bLightMapEnabled;
+	void UpdateLightMap();
+	
 	//  Our settings.
 	SETTINGS* pSet;
 	App* pApp;

@@ -11,6 +11,7 @@
 	fresnelScale = 0.73
 	fresnelBias = 0.07
 	fresnelPower = 4
+	terrainLightMap = true
 
 [car_interior]
 	diffuseMap_1024 = interior.png
@@ -18,17 +19,20 @@
 	diffuse = 0.6 0.6 0.6
 	specular = 0.5 0.5 0.5 12
 	receivesDepthShadows = true
+	terrainLightMap = true
 
 [cartire_front]
 	ambient = 0.5 0.5 0.5
 	diffuse = 0.6 0.6 0.6
 	diffuseMap_1024 = wheel_front.png
 	receivesDepthShadows = true
+	terrainLightMap = true
 
 [cartire_rear]
 	parent = cartire_front
 	diffuseMap_1024 = wheel_rear.png
 	receivesDepthShadows = true
+	terrainLightMap = true
 
 ;  ------------ FM ----------------
 [car_body_FM]
