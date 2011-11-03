@@ -536,7 +536,6 @@ namespace Ogre
 		GpuProgramParametersSharedPtr params = prog->getDefaultParameters();
 		params->setIgnoreMissingParams(true);
 		params->setNamedAutoConstant("worldMatrix", GpuProgramParameters::ACT_WORLD_MATRIX);
-		params->setNamedAutoConstant("worldViewMatrix", GpuProgramParameters::ACT_WORLDVIEW_MATRIX);
 		params->setNamedAutoConstant("viewProjMatrix", GpuProgramParameters::ACT_VIEWPROJ_MATRIX);
 		params->setNamedAutoConstant("lodMorph", GpuProgramParameters::ACT_CUSTOM, 
 			Terrain::LOD_MORPH_CUSTOM_PARAM);
@@ -576,10 +575,7 @@ namespace Ogre
 		params->setNamedAutoConstant("lightSpecularColour", GpuProgramParameters::ACT_LIGHT_SPECULAR_COLOUR, 0);
 		params->setNamedAutoConstant("eyePosObjSpace", GpuProgramParameters::ACT_CAMERA_POSITION_OBJECT_SPACE);
 		params->setNamedAutoConstant("fogColour", GpuProgramParameters::ACT_FOG_COLOUR);
-		
-		params->setNamedAutoConstant("worldViewMatrix", GpuProgramParameters::ACT_WORLDVIEW_MATRIX);
-		params->setNamedAutoConstant("far", GpuProgramParameters::ACT_FAR_CLIP_DISTANCE);
-		
+
 		if (prof->isShadowingEnabled(tt, terrain))
 		{
 			uint numTextures = 1;
@@ -795,7 +791,6 @@ namespace Ogre
 
 		outStream << 
 			"uniform float4x4 worldMatrix,\n"
-			"uniform float4x4 worldViewMatrix,\n"
 			"uniform float4x4 viewProjMatrix,\n"
 			"uniform float2   lodMorph,\n"; // morph amount, morph LOD target
 
@@ -833,9 +828,6 @@ namespace Ogre
 		{
 			outStream << ", out float2 lodInfo : TEXCOORD" << texCoordSet++ << "\n";
 		}
-
-		//ssao
-		outStream << ",out float4 oViewPosition : TEXCOORD"<< texCoordSet++ << "\n";
 
 		bool fog = terrain->getSceneManager()->getFogMode() != FOG_NONE && tt != RENDER_COMPOSITE_MAP;
 		if (fog)
@@ -939,7 +931,7 @@ namespace Ogre
 
 
 		outStream << 
-			"void main_fp(\n"
+			"float4 main_fp(\n"
 			"float4 position : TEXCOORD0,\n";
 
 		uint texCoordSet = 1;
@@ -1027,11 +1019,6 @@ namespace Ogre
 			}
 		}
 
-		//ssao
-		outStream << ",	in float4 viewPosition : TEXCOORD"+ toStr( texCoordSet++ ) +" \n";
-		outStream << ",	uniform float far \n";
-		outStream << ",	uniform float4x4 worldViewMatrix \n";
-	
 		if (prof->isShadowingEnabled(tt, terrain))
 		{
 			generateFpDynamicShadowsParams(&texCoordSet, &currentSamplerIdx, prof, terrain, tt, outStream);
@@ -1046,10 +1033,7 @@ namespace Ogre
 		}
 
 		outStream << 
-			",out float4 oColor : COLOR0 \n"
-			",out float4 oColor1 : COLOR1 ) \n";
-		
-		outStream << 
+			") : COLOR\n"
 			"{\n"
 			"	float4 outputCol;\n"
 			"	float shadow = 1.0;\n"
@@ -1236,14 +1220,9 @@ namespace Ogre
 			}
 		}
 		
-		//view space position,view space normal 
-		outStream <<
-		" oViewPosition = mul(worldViewMatrix, pos); \n" ;
-
 		if (prof->isShadowingEnabled(tt, terrain))
 			generateVpDynamicShadows(prof, terrain, tt, outStream);
 
-	
 		outStream << 
 			"}\n";
 
@@ -1318,15 +1297,10 @@ namespace Ogre
 			outStream << "	outputCol.rgb = lerp(outputCol.rgb, fogColour, fogVal);\n";
 		}
 
-		if (tt != LOW_LOD)
-		{
-			//ssao
-			outStream <<  "float4 mviewnormal = mul(worldViewMatrix, float4(normal, 0));\n";
-			outStream <<  "oColor1 = float4(length(viewPosition.xyz) / far, normalize(mviewnormal.xyz).xyz); \n";
-		}
 		// Final return
-		outStream << "	oColor = outputCol;\n"
+		outStream << "	return outputCol;\n"
 			<< "}\n";
+
 	}
 	//---------------------------------------------------------------------
 	void TerrainMaterialGeneratorB::SM2Profile::ShaderHelperCg::generateFpDynamicShadowsHelpers(
