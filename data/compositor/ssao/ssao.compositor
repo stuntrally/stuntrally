@@ -126,7 +126,7 @@ compositor ssao
 			input none
 			pass clear 
 			{
-		//		buffers colour depth stencil
+				buffers colour depth stencil
 			}
 			pass render_scene
 			{

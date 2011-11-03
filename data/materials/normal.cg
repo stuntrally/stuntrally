@@ -72,7 +72,8 @@ geomOut geom_terrain_ps(in float4 vp : TEXCOORD0, in float2 uvMisc : TEXCOORD1,
 }
 
 geomOut geom_white_ps(in float4 vp : TEXCOORD0, in float2 uvMisc : TEXCOORD1,
-	uniform sampler2D globalNormal : register(s0))
+	uniform sampler2D globalNormal : register(s0),
+	uniform float far)
 {
     geomOut OUT;
 	OUT.c = float4(0,0,0,0);

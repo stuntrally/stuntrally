@@ -68,5 +68,6 @@ fragment_program geom_white_ps cg
 
     default_params
     {
+        param_named_auto far far_clip_distance
     }
 }
