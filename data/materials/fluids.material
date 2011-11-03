@@ -93,6 +93,22 @@ material Water_green : ppx_water1  // jungle green +
 	set_texture_alias normalMap waveNM.png
 }
 
+material Water_sunset : ppx_water1  // island sunset +
+{
+	set $specularCol	 "1.0 0.6 0.3"
+	set $shininess		 "16"
+	set $waveBump		 "0.0  0.8"
+	set $waveHighFreq	 "0.1"
+	set $waveSpecular	 "1.1"
+	set $deepColor		 "0.1 0.3 0.4  1.0"
+	set $shallowColor	 "0.21 0.5 0.7  0.6"
+	set $reflectionColor "0.8 0.65 0.5  1.0"
+	set $reflAndWaterAmounts  "0.6  0.4"
+	set $fresnelPowerBias  "5.0  0.33"
+	set_texture_alias normalMap water_nh.png
+}
+
+
 material Water_light : ppx_water1  // light light green -
 {
 	set $specularCol	 "0.4 0.4 0.3"
@@ -122,6 +138,7 @@ material Water_yellow : ppx_water1  // yellow light +-
 	set $fresnelPowerBias  "5.0  0.33"
 	set_texture_alias normalMap waveNM.png
 }
+
 
 material Mud_orange : ppx_water1  // mud orange ++ soft
 {
