@@ -44,6 +44,7 @@
 	diffuse = 0.62 0.62 0.62
 	specular = 0.23 0.23 0.22 32
 	depthBias = 3
+	diffuseMap_512 = roadSand_s.jpg
 	diffuseMap_2048 = roadSand.jpg
 	receivesShadows = true
 
@@ -56,6 +57,27 @@
 	depthWrite = false
 	normalMap_512 = volcano_7_nh1_s.png
 	normalMap_1024 = volcano_7_nh1.png
+	terrainLightMap = true
+
+; ----------- Sand Island sunset ------------
+[roadSandSet]
+	ambient = 0.57 0.57 0.57
+	diffuse = 0.62 0.62 0.62
+	specular = 0.23 0.23 0.22 32
+	depthBias = 3
+	diffuseMap_512 = roadSandSet_s.jpg
+	diffuseMap_2048 = roadSandSet.jpg
+	receivesShadows = true
+
+[roadSandSet_ter]
+	parent = roadSandSet
+	alphaMap_512 = roadAlpha_s.png
+	alphaMap_2048 = roadAlpha.png
+	transparent = true
+	sceneBlend = alpha
+	depthWrite = false
+	normalMap_512 = ice_3_nh1_s.png
+	normalMap_1024 = ice_3_nh1.png
 	terrainLightMap = true
 
 ; ----------- Mud ----------
@@ -149,6 +171,7 @@
 	diffuse = 0.66 0.65 0.6
 	specular = 0.36 0.32 0.3 32
 	depthBias = 3
+	diffuseMap_512 = roadAdesert_s.jpg
 	diffuseMap_2048 = roadAdesert.jpg
 	receivesShadows = true
 
@@ -168,6 +191,7 @@
 	diffuse = 0.66 0.65 0.6
 	specular = 0.36 0.34 0.3 18
 	depthBias = 3
+	diffuseMap_512 = roadDesert_s.jpg
 	diffuseMap_2048 = roadDesert.jpg
 	receivesShadows = true
 
