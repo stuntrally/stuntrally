@@ -150,6 +150,10 @@ private:
 	//  needed for cloned materials & textures
 	int iIndex;
 	
+	//  brake state
+	bool bBraking;
+	void RefreshBrakingMaterial();
+	
 	//  Our settings.
 	SETTINGS* pSet;
 	App* pApp;
