@@ -42,26 +42,20 @@ diffuseMap_2048 = roadAsphalt.jpg
 cullHardware = none
 receivesShadows = true
 
-;[pipeGlass]
-;transparent = true
-;depthWrite = false
-;sceneBlend = alpha
-;sceneBlendAmbient = alpha
-;ambient = 0.2 0.2 0.2
-;diffuse = 0.5 0.56 0.6
-;specular = 0.37 0.39 0.41 64
-;lightingAlpha = 0.15 0.2 0.3 1
-;depthBias = 3
-;diffuseMap_1 = roadGlassB.png
-;cullHardwareAmbient = clockwise
-;cullHardware = anticlockwise
-;twoPass = true
-;fullPass = true
-;ssao = false
+[pipeGlass]
+customGenerator = PipeGlass
+transparent = true
+ambient = 0.2 0.2 0.2
+diffuse = 0.5 0.56 0.6
+specular = 0.37 0.39 0.41 64
+lightingAlpha = 0.15 0.2 0.3 1
+depthBias = 3
+diffuseMap_1 = roadGlassB.png
+ssao = false
 
-;[pipeGlassCyan]
-;parent = pipeGlass
-;ambient = 0.2 0.25 0.25
-;diffuse = 0.4 0.6 0.63
-;specular = 0.32 0.39 0.41 64
-;lightingAlpha = 0.3 0.3 0.4 1.0
+[pipeGlassCyan]
+parent = pipeGlass
+ambient = 0.2 0.25 0.25
+diffuse = 0.4 0.6 0.63
+specular = 0.32 0.39 0.41 64
+lightingAlpha = 0.3 0.3 0.4 1.0
