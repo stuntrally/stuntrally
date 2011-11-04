@@ -16,7 +16,7 @@ MaterialProperties::MaterialProperties() :
 	receivesShadows(false), receivesDepthShadows(false), shaders(true), transparent(false),
 	ambient(0.5, 0.5, 0.5), diffuse(1.0, 1.0, 1.0), specular(0.0, 0.0, 0.0, 0.0),
 	depthBias(0), depthCheck(true), transparentSorting(true), lightingAlpha(0.0, 0.0, 0.0, 0.0),
-	sceneBlend(SBM_DEFAULT), depthWrite(true), alphaRejectFunc(CMPF_ALWAYS_PASS), alphaRejectValue(0.0),
+	sceneBlend(SBM_DEFAULT), sceneBlendAmbient(SBM_DEFAULT), depthWrite(true), alphaRejectFunc(CMPF_ALWAYS_PASS), alphaRejectValue(0.0),
 	twoPass(false), fog(true), lighting(true), textureAddressMode(TextureUnitState::TAM_WRAP),
 	terrainLightMap(false), ssao(true)
 {}
@@ -74,6 +74,13 @@ void MaterialProperties::setProperty(const std::string& prop, const std::string&
 		else if (value == "colour") sceneBlend = SBM_COLOUR_BLEND;
 		else if (value == "add") sceneBlend = SBM_ADD;
 		else if (value == "modulate") sceneBlend = SBM_MODULATE;
+	}
+	else if (prop == "sceneBlendAmbient")
+	{
+		if (value == "alpha") sceneBlendAmbient = SBM_ALPHA_BLEND;
+		else if (value == "colour") sceneBlendAmbient = SBM_COLOUR_BLEND;
+		else if (value == "add") sceneBlendAmbient = SBM_ADD;
+		else if (value == "modulate") sceneBlendAmbient = SBM_MODULATE;
 	}
 	else if (prop == "alphaRejectFunc")
 	{

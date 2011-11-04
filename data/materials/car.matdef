@@ -12,6 +12,24 @@
 	fresnelBias = 0.07
 	fresnelPower = 4
 	terrainLightMap = true
+	
+[car_glass]
+	twoPass = true
+	envMap = ReflectionCube
+	reflAmount = 0.2
+	ambient = 0.8 0.8 0.8
+	diffuse = 0.9 0.9 0.9
+	specular = 1.0 1.0 1.0 128
+	diffuseMap_1024 = glass.png
+	depthWrite = false
+	transparent = true
+	sceneBlendAmbient = alpha
+	sceneBlend = add
+	receivesDepthShadows = true
+	cullHardwareAmbient = none
+	cullHardware = none
+	terrainLightMap = true
+	ssao = false
 
 [car_interior]
 	diffuseMap_1024 = interior.png
@@ -48,12 +66,10 @@
 [cartire_front_FM]
 	parent = cartire_front
 	normalMap_1024 = wheel_normal.png
-	bumpScale = 10
 
 [cartire_rear_FM]
 	parent = cartire_rear
 	normalMap_1024 = wheel_normal.png
-	bumpScale = 10
 
 
 ;  ------------ 360 ----------------
@@ -77,9 +93,15 @@
 	fresnelBias = 0.07
 	fresnelPower = 4
 	diffuseMap_1024 = chasis.png
+	
+[chasis/Material#2]
+	parent = car_glass
+	diffuseMap_1024 = ventanas.png
+	terrainLightMap = false
 
 [chasis/Material_#3]
 	ambient = 0.3 0.3 0.3
 	diffuse = 0.5 0.5 0.5
 	specular = 0.2 0.2 0.2 24
 	diffuseMap_1024 = chasis_a.jpg
+

@@ -49,7 +49,15 @@ void MaterialGenerator::generate(bool fixedFunction)
 		
 		ambientPass->setSpecular(mDef->mProps->specular.x, mDef->mProps->specular.y, mDef->mProps->specular.z, mDef->mProps->specular.w);
 		
-		ambientPass->setSceneBlending(SBT_TRANSPARENT_ALPHA);
+		if (mDef->mProps->sceneBlendAmbient == SBM_ALPHA_BLEND)
+			ambientPass->setSceneBlending(SBT_TRANSPARENT_ALPHA);
+		else if (mDef->mProps->sceneBlendAmbient == SBM_COLOUR_BLEND)
+			ambientPass->setSceneBlending(SBT_TRANSPARENT_COLOUR);
+		else if (mDef->mProps->sceneBlendAmbient == SBM_ADD)
+			ambientPass->setSceneBlending(SBT_ADD);
+		else if (mDef->mProps->sceneBlendAmbient == SBM_MODULATE)
+			ambientPass->setSceneBlending(SBT_MODULATE);
+			
 		ambientPass->setDepthBias( mDef->mProps->depthBias );
 		ambientPass->setDepthWriteEnabled(false);
 		ambientPass->setCullingMode( chooseCullingModeAmbient() );

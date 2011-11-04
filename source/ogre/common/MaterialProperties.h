@@ -37,6 +37,7 @@ struct MaterialProperties
 	CullHardwareMode cullHardwareAmbient; // for ambient pass
 	
 	SceneBlendMode sceneBlend;
+	SceneBlendMode sceneBlendAmbient; // for ambient pass
 	textureMap alphaMaps; bool transparent;
 	Ogre::Vector4 lightingAlpha; // alpha for ambient, diffuse, spec, diffuse r channel mult
 	Ogre::CompareFunction alphaRejectFunc; float alphaRejectValue;
