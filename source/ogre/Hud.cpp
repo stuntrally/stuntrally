@@ -83,7 +83,7 @@ void App::CreateHUD()
 		//for (int c=0; c<2; ++c)
 		String sMat = "circle_minimap";  //*/"road_minimap_inv";
 		asp = 1.f;  //_temp
-		ManualObject* m = Create2D(sMat,mSceneMgr,1,true,true);  miniC = m;
+		ManualObject* m = Create2D(sMat,mSplitMgr->mHUDSceneMgr,1,true,true);  miniC = m;
 		//asp = float(mWindow->getWidth())/float(mWindow->getHeight());
 		m->setVisibilityFlags(RV_Hud);  m->setRenderQueueGroup(RQG_Hud1);
 		
@@ -101,13 +101,13 @@ void App::CreateHUD()
 		const float marg = 1.f + 0.05f;  // from border
 		fMiniX = 1 - fHudSize * marg, fMiniY = 1 - fHudSize*asp * marg;
 
-		ndMap = mSceneMgr->getRootSceneNode()->createChildSceneNode(Vector3(fMiniX,fMiniY,0));
+		ndMap = mSplitMgr->mHUDSceneMgr->getRootSceneNode()->createChildSceneNode(Vector3(fMiniX,fMiniY,0));
 		ndMap->scale(fHudSize, fHudSize*asp, 1);
 		ndMap->attachObject(m);
 		
 		//  car pos dot
 		for (int i=0; i < pSet->local_players; ++i)
-		{	mpos[i] = Create2D("hud/CarPos", mSceneMgr, 0.4f, true, true);
+		{	mpos[i] = Create2D("hud/CarPos", mSplitMgr->mHUDSceneMgr, 0.4f, true, true);
 			mpos[i]->setVisibilityFlags(RV_Hud);  mpos[i]->setRenderQueueGroup(RQG_Hud3);
 			ndPos[i] = ndMap->createChildSceneNode();
 			ndPos[i]->scale(fHudSize*1.5f, fHudSize*1.5f, 1);
@@ -117,30 +117,30 @@ void App::CreateHUD()
 
 	
 	//  backgr  gauges
-	ManualObject* mrpmB = Create2D("hud/rpm",mSceneMgr,1);	mrpmB->setVisibilityFlags(RV_Hud);
+	ManualObject* mrpmB = Create2D("hud/rpm",mSplitMgr->mHUDSceneMgr,1);	mrpmB->setVisibilityFlags(RV_Hud);
 	mrpmB->setRenderQueueGroup(RQG_Hud1);
-	nrpmB = mSceneMgr->getRootSceneNode()->createChildSceneNode();
+	nrpmB = mSplitMgr->mHUDSceneMgr->getRootSceneNode()->createChildSceneNode();
 	nrpmB->attachObject(mrpmB);	nrpmB->setScale(0,0,0);  nrpmB->setVisible(false);
 
-	ManualObject* mvelBk = Create2D("hud/kmh",mSceneMgr,1);	mvelBk->setVisibilityFlags(RV_Hud);
+	ManualObject* mvelBk = Create2D("hud/kmh",mSplitMgr->mHUDSceneMgr,1);	mvelBk->setVisibilityFlags(RV_Hud);
 	mvelBk->setRenderQueueGroup(RQG_Hud1);
-	nvelBk = mSceneMgr->getRootSceneNode()->createChildSceneNode();
+	nvelBk = mSplitMgr->mHUDSceneMgr->getRootSceneNode()->createChildSceneNode();
 	nvelBk->attachObject(mvelBk);	nvelBk->setScale(0,0,0);  mvelBk->setVisible(false);
 		
-	ManualObject* mvelBm = Create2D("hud/mph",mSceneMgr,1);	mvelBm->setVisibilityFlags(RV_Hud);
+	ManualObject* mvelBm = Create2D("hud/mph",mSplitMgr->mHUDSceneMgr,1);	mvelBm->setVisibilityFlags(RV_Hud);
 	mvelBm->setRenderQueueGroup(RQG_Hud1);
-	nvelBm = mSceneMgr->getRootSceneNode()->createChildSceneNode();
+	nvelBm = mSplitMgr->mHUDSceneMgr->getRootSceneNode()->createChildSceneNode();
 	nvelBm->attachObject(mvelBm);	nvelBm->setScale(0,0,0);  mvelBm->setVisible(false);
 		
 	//  needles
-	mrpm = Create2D("hud/needle",mSceneMgr,1,true);  mrpm->setVisibilityFlags(RV_Hud);
+	mrpm = Create2D("hud/needle",mSplitMgr->mHUDSceneMgr,1,true);  mrpm->setVisibilityFlags(RV_Hud);
 	mrpm->setRenderQueueGroup(RQG_Hud3);
-	nrpm = mSceneMgr->getRootSceneNode()->createChildSceneNode();
+	nrpm = mSplitMgr->mHUDSceneMgr->getRootSceneNode()->createChildSceneNode();
 	nrpm->attachObject(mrpm);	nrpm->setScale(0,0,0);	nrpm->setVisible(false);
 	
-	mvel = Create2D("hud/needle",mSceneMgr,1,true);  mvel->setVisibilityFlags(RV_Hud);
+	mvel = Create2D("hud/needle",mSplitMgr->mHUDSceneMgr,1,true);  mvel->setVisibilityFlags(RV_Hud);
 	mvel->setRenderQueueGroup(RQG_Hud3);
-	nvel = mSceneMgr->getRootSceneNode()->createChildSceneNode();
+	nvel = mSplitMgr->mHUDSceneMgr->getRootSceneNode()->createChildSceneNode();
 	nvel->attachObject(mvel);	nvel->setScale(0,0,0);	nvel->setVisible(false);
 
 
