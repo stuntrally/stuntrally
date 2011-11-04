@@ -30,7 +30,6 @@ diffuseMap_256 = concrete03_s.png
 diffuseMap_1024 = concrete03.png
 normalMap_256 = brass_patina_n_s.png
 normalMap_1024 = brass_patina_n.png
-; receivesDepthShadows = true --- has flickering for some odd reason
 
 ; ------------ Pipes -------------
 [pipeAsphalt]
@@ -47,15 +46,18 @@ receivesShadows = true
 ;transparent = true
 ;depthWrite = false
 ;sceneBlend = alpha
-;ambient = 0.6 0.6 0.6
+;sceneBlendAmbient = alpha
+;ambient = 0.2 0.2 0.2
 ;diffuse = 0.5 0.56 0.6
-;specular = 0.37 0.39 0.41
+;specular = 0.37 0.39 0.41 64
 ;lightingAlpha = 0.15 0.2 0.3 1
 ;depthBias = 3
 ;diffuseMap_1 = roadGlassB.png
 ;cullHardwareAmbient = clockwise
-;cullHardware = clockwise
+;cullHardware = anticlockwise
 ;twoPass = true
+;fullPass = true
+;ssao = false
 
 ;[pipeGlassCyan]
 ;parent = pipeGlass

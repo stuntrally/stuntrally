@@ -42,7 +42,6 @@ void MaterialGenerator::generate(bool fixedFunction)
 		
 	if (mDef->mProps->twoPass)
 	{
-		// create an ambient-only pass first
 		Ogre::Pass* ambientPass = technique->createPass();
 		ambientPass->setAmbient( mDef->mProps->ambient.x, mDef->mProps->ambient.y, mDef->mProps->ambient.z );
 		ambientPass->setDiffuse( mDef->mProps->diffuse.x, mDef->mProps->diffuse.y, mDef->mProps->diffuse.z, 1.0 );
@@ -76,7 +75,7 @@ void MaterialGenerator::generate(bool fixedFunction)
 		catch (Ogre::Exception& e) {
 			LogO(e.getFullDescription());
 		}
-		
+
 		if (fragmentProg.isNull() || vertexProg.isNull() || 
 			!fragmentProg->isSupported() || !vertexProg->isSupported())
 		{
@@ -87,9 +86,7 @@ void MaterialGenerator::generate(bool fixedFunction)
 		{
 			ambientPass->setVertexProgram(vertexProg->getName());
 			ambientPass->setFragmentProgram(fragmentProg->getName());
-		}
-
-		
+		}		
 	}
 	
 	// Main pass
@@ -347,6 +344,14 @@ void MaterialGenerator::generate(bool fixedFunction)
 	// indicate that we need terrain lightmap texture and terrainWorldSize
 	if (needTerrainLightMap())
 		mParent->terrainLightMapMtrs.push_back( mDef->getName() );
+		
+	// export material (test)
+	/*
+	if (mDef->getName() == "pipeGlass") {
+	MaterialSerializer serializer;
+	serializer.exportMaterial(mat, "test.material");
+	}
+	*/
 }
 
 //----------------------------------------------------------------------------------------
@@ -940,7 +945,7 @@ void MaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::StrStrea
 			"	normal = wsNormal; \n";
 		
 		outStream << 
-		"	normal = normalize(normal); \n"; // normalize
+		"	normal = normalize(normal); \n";
 	}
 	
 	// fetch diffuse texture
@@ -1027,9 +1032,17 @@ void MaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::StrStrea
 	
 	// debug colour output  ------------------------------------------
 	
-	// world position debug (for lightmap)
+	// world position (for lightmap)
 	//if (needTerrainLightMap()) outStream <<
 	//	"	oColor = oColor*float4(texCoord.w, wsNormal.w, 1, 1); \n";
+	
+	// normal
+	//outStream <<
+	//"	oColor = oColor * float4(normal.x, normal.y, normal.z, 1); \n";
+	
+	// spec
+	//outStream <<
+	//"	oColor = oColor * float4(specularLight, 0.0, 0.0, 1.0); \n";
 	
 	// ---------------------------------------------------------------
 		
