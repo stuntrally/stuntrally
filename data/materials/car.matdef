@@ -25,6 +25,15 @@
 	receivesDepthShadows = true
 	terrainLightMap = true
 	ssao = false
+	
+[car_ghost]
+	customGenerator = PipeGlass
+	ambient = 0.2 0.26 0.8
+	diffuse = 0.36 0.48 1.0
+	specular = 0.37 0.39 0.7 32
+	lightingAlpha = 0.3 0.2 0.3 1
+	transparent = true
+	diffuseMap_1 = white.png
 
 [car_interior]
 	diffuseMap_1024 = interior.png

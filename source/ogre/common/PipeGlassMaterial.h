@@ -4,6 +4,7 @@
 // Pipe glass material
 
 #include "MaterialGenerator.h"
+#include <OgreGpuProgramParams.h>
 
 class PipeGlassMaterialGenerator : public MaterialGenerator
 {
@@ -13,8 +14,10 @@ public:
 	virtual void generate(bool fixedFunction=false);
 	
 protected:
-	virtual Ogre::HighLevelGpuProgramPtr createPipeFragmentProgram(); // ambient pass fragment program
-	virtual Ogre::HighLevelGpuProgramPtr createPipeVertexProgram(); // ambient pass vertex program
+	virtual Ogre::HighLevelGpuProgramPtr createPipeFragmentProgram();
+	virtual Ogre::HighLevelGpuProgramPtr createPipeVertexProgram();
+	
+	virtual void individualFragmentProgramParams(Ogre::GpuProgramParametersSharedPtr params);
 };
  
 #endif

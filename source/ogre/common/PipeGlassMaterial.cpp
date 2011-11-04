@@ -16,6 +16,8 @@ PipeGlassMaterialGenerator::PipeGlassMaterialGenerator()
 	mName = "PipeGlass";
 }
 
+//----------------------------------------------------------------------------------------
+
 void PipeGlassMaterialGenerator::generate(bool fixedFunction)
 {
 	mMaterial = prepareMaterial(mDef->getName());
@@ -62,29 +64,42 @@ void PipeGlassMaterialGenerator::generate(bool fixedFunction)
 	tu->setTextureAddressingMode(mDef->mProps->textureAddressMode);
 	
 	// create shaders (same for both passes)
-	//!todo cache
-	HighLevelGpuProgramPtr fragmentProg, vertexProg;
-	try
+	if (!mShaderCached)
 	{
-		vertexProg = createPipeVertexProgram();
-		fragmentProg = createPipeFragmentProgram();
-	}
-	catch (Ogre::Exception& e) {
-		LogO(e.getFullDescription());
-	}
+		HighLevelGpuProgramPtr fragmentProg, vertexProg;
+		LogO("Creating shader for " + mDef->getName() );
+		try
+		{
+			mVertexProgram = createPipeVertexProgram();
+			mFragmentProgram = createPipeFragmentProgram();
+		}
+		catch (Ogre::Exception& e) {
+			LogO(e.getFullDescription());
+		}
 
-	if (fragmentProg.isNull() || vertexProg.isNull() || 
-		!fragmentProg->isSupported() || !vertexProg->isSupported())
-	{
-		LogO("[MaterialFactory] WARNING: pipe glass shader for material '" + mDef->getName()
-			+ "' is not supported.");
+		if (mFragmentProgram.isNull() || mVertexProgram.isNull() || 
+			!mFragmentProgram->isSupported() || !mVertexProgram->isSupported())
+		{
+			LogO("[MaterialFactory] WARNING: pipe glass shader for material '" + mDef->getName()
+				+ "' is not supported.");
+		}
+		else
+		{
+			pass1->setVertexProgram(mVertexProgram->getName());
+			pass1->setFragmentProgram(mFragmentProgram->getName());
+			pass2->setVertexProgram(mVertexProgram->getName());
+			pass2->setFragmentProgram(mFragmentProgram->getName());
+		}
 	}
 	else
 	{
-		pass1->setVertexProgram(vertexProg->getName());
-		pass1->setFragmentProgram(fragmentProg->getName());
-		pass2->setVertexProgram(vertexProg->getName());
-		pass2->setFragmentProgram(fragmentProg->getName());
+		pass1->setVertexProgram(mVertexProgram->getName());
+		pass1->setFragmentProgram(mFragmentProgram->getName());
+		pass2->setVertexProgram(mVertexProgram->getName());
+		pass2->setFragmentProgram(mFragmentProgram->getName());
+		
+		individualFragmentProgramParams(pass1->getFragmentProgramParameters());
+		individualFragmentProgramParams(pass2->getFragmentProgramParameters());
 	}
 
 	// ----------------------------------------------------------------------- //
@@ -228,8 +243,14 @@ HighLevelGpuProgramPtr PipeGlassMaterialGenerator::createPipeFragmentProgram()
 	params->setNamedAutoConstant("lightPos0", GpuProgramParameters::ACT_LIGHT_POSITION, 0);
 	params->setNamedAutoConstant("iTWMat", GpuProgramParameters::ACT_INVERSE_TRANSPOSE_WORLD_MATRIX);
 	
-	params->setNamedConstant("alphaPars", mDef->mProps->lightingAlpha);
-	
+	individualFragmentProgramParams(params);
+
 	return ret;
 }
 
+//----------------------------------------------------------------------------------------
+
+void PipeGlassMaterialGenerator::individualFragmentProgramParams(Ogre::GpuProgramParametersSharedPtr params)
+{
+	params->setNamedConstant("alphaPars", mDef->mProps->lightingAlpha);
+}
