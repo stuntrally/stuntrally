@@ -319,92 +319,92 @@ MaterialPtr MaterialGenerator::prepareMaterial(const std::string& name)
 
 //----------------------------------------------------------------------------------------
 
-inline bool MaterialGenerator::needShaders()
+bool MaterialGenerator::needShaders()
 {
 	return mParent->getShaders() && mDef->mProps->shaders;
 }
 
-inline bool MaterialGenerator::needShadows()
+bool MaterialGenerator::needShadows()
 {
 	return mShader->shadows;
 }
 
-inline bool MaterialGenerator::needNormalMap()
+bool MaterialGenerator::needNormalMap()
 {
 	return mShader->normalMap;
 }
 
-inline bool MaterialGenerator::needEnvMap()
+bool MaterialGenerator::needEnvMap()
 {
 	return mShader->envMap;
 }
 
-inline bool MaterialGenerator::needDiffuseMap()
+bool MaterialGenerator::needDiffuseMap()
 {
 	return mShader->diffuseMap;
 }
 
-inline bool MaterialGenerator::needLightMap()
+bool MaterialGenerator::needLightMap()
 {
 	return mShader->lightMap;
 }
 
-inline bool MaterialGenerator::needTerrainLightMap()
+bool MaterialGenerator::needTerrainLightMap()
 {
 	return mShader->terrainLightMap;
 }
 
-inline bool MaterialGenerator::needBlendMap()
+bool MaterialGenerator::needBlendMap()
 {
 	return mShader->blendMap;
 }
 
-inline bool MaterialGenerator::needLightingAlpha()
+bool MaterialGenerator::needLightingAlpha()
 {
 	return mShader->lightingAlpha;
 }
 
-inline bool MaterialGenerator::needAlphaMap()
+bool MaterialGenerator::needAlphaMap()
 {
 	return mShader->alphaMap;
 }
 
-inline bool MaterialGenerator::needFresnel()
+bool MaterialGenerator::needFresnel()
 {
 	return mShader->fresnel;
 }
 
-inline bool MaterialGenerator::fpNeedLighting()
+bool MaterialGenerator::fpNeedLighting()
 {
 	return mShader->lighting;
 }
 
-inline bool MaterialGenerator::fpNeedWsNormal()
+bool MaterialGenerator::fpNeedWsNormal()
 {
 	return needEnvMap() || needNormalMap() || fpNeedLighting() || needTerrainLightMap();
 }
 
-inline bool MaterialGenerator::fpNeedEyeVector()
+bool MaterialGenerator::fpNeedEyeVector()
 {
 	return needEnvMap() || fpNeedLighting();
 }
 
-inline bool MaterialGenerator::vpNeedTangent()
+bool MaterialGenerator::vpNeedTangent()
 {
 	return needNormalMap();
 }
 
-inline bool MaterialGenerator::vpNeedWMat()
+bool MaterialGenerator::vpNeedWMat()
 {
 	return fpNeedEyeVector() || needTerrainLightMap();
 }
 
-inline bool MaterialGenerator::vpNeedWITMat()
+bool MaterialGenerator::vpNeedWITMat()
 {
 	return fpNeedWsNormal();
 }
 
-inline bool MaterialGenerator::fpNeedTangentToCube()
+bool MaterialGenerator::fpNeedTangentToCube()
 {
 	return (needNormalMap() || fpNeedEyeVector());
 }

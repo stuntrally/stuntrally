@@ -1276,6 +1276,14 @@
 					Name="MaterGen"
 					>
 					<File
+						RelativePath=".\source\ogre\common\GlassMaterial.cpp"
+						>
+					</File>
+					<File
+						RelativePath=".\source\ogre\common\GlassMaterial.h"
+						>
+					</File>
+					<File
 						RelativePath=".\source\ogre\common\MaterialDefinition.cpp"
 						>
 					</File>
