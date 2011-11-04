@@ -3,7 +3,7 @@
 
 class MaterialFactory;  struct ShaderProperties;
 #include "MaterialDefinition.h" // textureMap typedef
-
+#include "MaterialProperties.h"
 #include <OgreHighLevelGpuProgram.h>
 #include <OgreGpuProgramParams.h>
 
@@ -21,6 +21,10 @@ public:
 	Ogre::HighLevelGpuProgramPtr mFragmentProgram;
 	
 	void generate(bool fixedFunction=false); // craft material
+
+	//MRT
+	static bool bUseMRT;
+	static bool MRTSupported();
 	
 protected:
 	// tex unit indices
@@ -75,9 +79,7 @@ protected:
 	bool fpNeedEyeVector();
 	 
 	//MRT
-	bool bUseMRT;
 	bool vpNeedWvMat();
-	bool UseMRT();
 	bool UsePerPixelNormals();
 
 	// lighting

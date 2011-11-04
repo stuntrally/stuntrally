@@ -1,7 +1,6 @@
 #include "pch.h"
 #include "../Defines.h"
 
-#include "MaterialProperties.h"
 #include "MaterialGenerator.h"
 #include "MaterialDefinition.h"
 #include "MaterialFactory.h"
@@ -23,16 +22,11 @@
 #include <OgreRoot.h>
 using namespace Ogre;
 
+bool MaterialGenerator::bUseMRT=false;	
+
 MaterialGenerator::MaterialGenerator()
 {
-	bUseMRT=false;
-	const RenderSystemCapabilities *caps = Root::getSingleton().getRenderSystem()->getCapabilities();
-	if(caps->isShaderProfileSupported("ps_3_0") 
-		|| caps->isShaderProfileSupported("fp40")
-		)
-	{
-		bUseMRT=true;
-	}
+	
 }
 void MaterialGenerator::generate(bool fixedFunction)
 {	
@@ -433,7 +427,7 @@ inline bool MaterialGenerator::fpNeedLighting()
 
 inline bool MaterialGenerator::fpNeedWsNormal()
 {
-	return needEnvMap() || needNormalMap() || fpNeedLighting() || needTerrainLightMap() || UseMRT();
+	return needEnvMap() || needNormalMap() || fpNeedLighting() || needTerrainLightMap() || MRTSupported();
 }
 
 inline bool MaterialGenerator::fpNeedEyeVector()
@@ -452,14 +446,26 @@ inline bool MaterialGenerator::vpNeedWMat()
 }
 inline bool MaterialGenerator::vpNeedWvMat()
 {
-	return UseMRT();
+	return MRTSupported();
 }
 inline bool MaterialGenerator::UsePerPixelNormals()
 {
 	return false;//this is not working at the moment
 }
-inline bool MaterialGenerator::UseMRT()
+inline bool MaterialGenerator::MRTSupported()
 {
+	static bool bMRTSupportCalculated=false;
+	if(!bMRTSupportCalculated)
+	{
+		const RenderSystemCapabilities *caps = Root::getSingleton().getRenderSystem()->getCapabilities();
+		if(caps->isShaderProfileSupported("ps_3_0") 
+		//	|| caps->isShaderProfileSupported("fp40")
+			)
+		{
+			bUseMRT=true;
+		}
+		bMRTSupportCalculated=true;
+	}
 	return bUseMRT;
 }
 
@@ -571,7 +577,7 @@ HighLevelGpuProgramPtr MaterialGenerator::createVertexProgram()
 	ret = mgr.createProgram(progName, ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME, 
 		"cg", GPT_VERTEX_PROGRAM);
 
-	if(UseMRT())
+	if(MRTSupported())
 	{
 		ret->setParameter("profiles", "vs_3_0 vp40");
 	}
@@ -630,7 +636,7 @@ void MaterialGenerator::generateVertexProgramSource(Ogre::StringUtil::StrStreamT
 		 outStream <<"	out	float4	oTangentToCubeSpace1	: TEXCOORD"+ toStr( oTexCoordIndex++ ) +", \n";
 		 outStream <<"	out	float4	oTangentToCubeSpace2	: TEXCOORD"+ toStr( oTexCoordIndex++ ) +", \n";
 	}
-	if(UseMRT())
+	if(MRTSupported())
 	{
 		if(!UsePerPixelNormals())
 		{
@@ -723,7 +729,7 @@ void MaterialGenerator::generateVertexProgramSource(Ogre::StringUtil::StrStreamT
 
 	}
 
-	if(UseMRT())
+	if(MRTSupported())
 	{
 		if(!UsePerPixelNormals())
 		{
@@ -794,7 +800,7 @@ HighLevelGpuProgramPtr MaterialGenerator::createFragmentProgram()
 	ret = mgr.createProgram(progName, ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME, 
 			"cg", GPT_FRAGMENT_PROGRAM);
 
-	if(UseMRT())
+	if(MRTSupported())
 	{
 		ret->setParameter("profiles", "ps_3_0 fp40");
 	//	ret->setParameter("profiles", "ps_3_0 fp40");	
@@ -829,7 +835,7 @@ void MaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::StrStrea
 		"	float2 uv = shadowMapPos.xy; \n"
 		"	float3 o = float3(offset, -offset.x) * 0.3f; \n";
 
-		if(UseMRT())
+		if(MRTSupported())
 		{
 			outStream <<
 				"	float c =	(shadowMapPos.z <= tex2Dlod(shadowMap,  float4(uv.xy - o.xy,0,0)).r) ? 1 : 0; \n"
@@ -916,7 +922,7 @@ void MaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::StrStrea
 		outStream << "	in float4 tangentToCubeSpace1 : TEXCOORD"+ toStr( oTexCoordIndex++ ) +", \n";
 		outStream << "	in float4 tangentToCubeSpace2 : TEXCOORD"+ toStr( oTexCoordIndex++ ) +", \n";
 	}
-	if (UseMRT()) 
+	if (MRTSupported()) 
 	{
 		if(!UsePerPixelNormals())
 		{
@@ -997,7 +1003,7 @@ void MaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::StrStrea
 	}
 	
 	
-	if(UseMRT())
+	if(MRTSupported())
 	{
 		outStream << "	out float4 oColor : COLOR0, \n";
 		outStream << "	out float4 oColor1 : COLOR1, \n";
@@ -1189,7 +1195,7 @@ void MaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::StrStrea
 		"	oColor.w = alpha; \n";
 	}
 	
-	if(UseMRT())
+	if(MRTSupported())
 	{
 		outStream <<  "float4 viewPosition = mul(wvMat, float4(position.xyz,1.0)); \n";
 		if(UsePerPixelNormals())
@@ -1250,7 +1256,7 @@ void MaterialGenerator::fragmentProgramParams(HighLevelGpuProgramPtr program)
 	if (vpNeedWvMat())
 		params->setNamedAutoConstant("wvMat", GpuProgramParameters::ACT_WORLDVIEW_MATRIX);
 
-	if(UseMRT())
+	if(MRTSupported())
 	{
 		params->setNamedAutoConstant("far", GpuProgramParameters::ACT_FAR_CLIP_DISTANCE);
 	}
