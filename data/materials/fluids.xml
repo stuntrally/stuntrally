@@ -19,6 +19,7 @@
 		bumpFqX="21.2" bumpFqY="30.2" bumpAmp="0.8" bumpAng="40" whSteerMul="1.4" />
 
 	<fluid name="water sunset"	material="Water_sunset" density="200" angDamp="0.7" linDamp="0.2" heightDamp="0" />
+	<fluid name="water dark"	material="Water_dark" density="200" angDamp="0.7" linDamp="0.2" heightDamp="0" />
 
 	<!--<fluid name="grease soft"	material="" density="600" angDamp="0.8" linDamp="0.3" heightDamp="0" />-->
 

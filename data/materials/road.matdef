@@ -80,6 +80,27 @@
 	normalMap_1024 = ice_3_nh1.png
 	terrainLightMap = true
 
+; ----------- Sand Island dark ------------
+[roadSandDark]
+	ambient = 0.07 0.07 0.04
+	diffuse = 0.52 0.62 0.42
+	specular = 0.3 0.3 0.2 24
+	depthBias = 3
+	diffuseMap_512 = roadSandSet_s.jpg
+	diffuseMap_2048 = roadSandSet.jpg
+	receivesShadows = true
+
+[roadSandDark_ter]
+	parent = roadSandDark
+	alphaMap_512 = roadAlpha_s.png
+	alphaMap_2048 = roadAlpha.png
+	transparent = true
+	sceneBlend = alpha
+	depthWrite = false
+	normalMap_512 = ice_3_nh1_s.png
+	normalMap_1024 = ice_3_nh1.png
+	terrainLightMap = true
+
 ; ----------- Mud ----------
 [roadMud]
 	ambient = 0.5 0.5 0.5

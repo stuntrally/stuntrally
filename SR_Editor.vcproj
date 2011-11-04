@@ -680,6 +680,14 @@
 					>
 				</File>
 				<File
+					RelativePath=".\source\ogre\common\PipeGlassMaterial.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\source\ogre\common\PipeGlassMaterial.h"
+					>
+				</File>
+				<File
 					RelativePath=".\source\ogre\common\ShaderProperties.cpp"
 					>
 				</File>

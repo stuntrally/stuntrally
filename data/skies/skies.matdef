@@ -40,3 +40,8 @@ diffuseMap_1024 = sky_dawn_s.jpg
 diffuseMap_2048 = sky_dawn.jpg
 
 
+[sky/duskstormy]
+parent = base_sky
+diffuseMap_1024 = duskstormy_s.jpg
+diffuseMap_2048 = duskstormy.jpg
+
