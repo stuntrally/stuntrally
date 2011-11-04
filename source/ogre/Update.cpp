@@ -551,7 +551,15 @@ void App::updatePoses(float time)
 		//  hide ghost when empty
 		bool bGhost = carM->eType == CarModel::CT_GHOST;
 		if (bGhost)
+		{
 			carM->setVisible((ghplay.GetNumFrames() > 0) && pSet->rpl_ghost);
+			
+			//  hide ghost car when close to player car
+			CarModel* playerCar = carModels.front();
+			
+			float distance = carM->pMainNode->getPosition().squaredDistance(playerCar->pMainNode->getPosition());
+			if (distance < 4.f) carM->setVisible(false);
+		}
 		
 		carM->Update(newPosInfo, time);
 		
