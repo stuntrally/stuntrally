@@ -5,6 +5,7 @@
 #include "MaterialFactory.h"
 #include "MaterialDefinition.h"
 #include "MaterialGenerator.h"
+#include "GlassMaterial.h"
 #include "ShaderProperties.h"
 
 #ifndef ROAD_EDITOR
@@ -37,8 +38,17 @@ MaterialFactory::MaterialFactory() :
 		{
 			loadDefsFromFile( (*fit) );
 		}
-		
 	}
+	
+	// create our generators
+	mGenerator = new MaterialGenerator();
+	mGenerator->mParent = this;
+	
+	MaterialGenerator* glass = static_cast<MaterialGenerator*>(new GlassMaterialGenerator());
+	glass->mParent = this;
+	mCustomGenerators.push_back(glass);
+	
+	
 }
 
 //----------------------------------------------------------------------------------------
@@ -48,8 +58,14 @@ MaterialFactory::~MaterialFactory()
 	for (std::vector<MaterialDefinition*>::iterator it=mDefinitions.begin();
 		it!=mDefinitions.end(); ++it)
 		delete (*it);
-		
+	
 	deleteShaderCache();
+	
+	delete mGenerator;
+	
+	std::vector<MaterialGenerator*>::iterator gIt;
+	for (gIt = mCustomGenerators.begin(); gIt != mCustomGenerators.end(); ++gIt)
+		delete (*gIt);
 }
 
 //----------------------------------------------------------------------------------------
@@ -185,15 +201,34 @@ void MaterialFactory::generate()
 		
 		deleteShaderCache();
 		splitMtrs.clear();
-		
-		MaterialGenerator generator;
-		generator.mParent = this;
+		terrainLightMapMtrs.clear();
 		
 		for (std::vector<MaterialDefinition*>::iterator it=mDefinitions.begin();
 			it!=mDefinitions.end(); ++it)
 		{
 			// don't generate abstract materials
 			if ((*it)->getProps()->abstract) continue;
+			
+			// find an appropriate generator
+			MaterialGenerator* generator;
+			if ((*it)->getProps()->customGenerator == "")
+				generator = mGenerator; // default
+			else
+			{
+				// iterate through custom generators
+				std::vector<MaterialGenerator*>::iterator gIt;
+				for (gIt = mCustomGenerators.begin(); gIt != mCustomGenerators.end(); ++gIt)
+				{
+					if ( (*gIt)->mName == (*it)->getProps()->customGenerator)
+						generator = (*gIt);
+				}
+				if (gIt == mCustomGenerators.end())
+				{
+					LogO("[MaterialFactory] WARNING: Custom generator '" + (*it)->getProps()->customGenerator + "' \
+					referenced by material '" + (*it)->getName() + "' not found. Using default generator.");
+					generator = mGenerator; 
+				}
+			}
 
 			// shader cache - check if same shader already exists
 			ShaderProperties* shaderProps = new ShaderProperties( (*it)->mProps, this );
@@ -211,23 +246,23 @@ void MaterialFactory::generate()
 			}
 			
 			if (!exists)
-				generator.mShaderCached = false;
+				generator->mShaderCached = false;
 			else
 			{
-				generator.mShaderCached = true;
-				generator.mVertexProgram = sit->first.first;
-				generator.mFragmentProgram = sit->first.second;
+				generator->mShaderCached = true;
+				generator->mVertexProgram = sit->first.first;
+				generator->mFragmentProgram = sit->first.second;
 			}
 			
-			generator.mDef = (*it);
-			generator.mShader = shaderProps;
-			generator.generate();
+			generator->mDef = (*it);
+			generator->mShader = shaderProps;
+			generator->generate();
 			
 			// insert into cache
 			if (!exists)
 			{
-				if (!generator.mVertexProgram.isNull() && !generator.mFragmentProgram.isNull()) 
-					mShaderCache[ std::make_pair(generator.mVertexProgram, generator.mFragmentProgram) ] = shaderProps;
+				if (!generator->mVertexProgram.isNull() && !generator->mFragmentProgram.isNull()) 
+					mShaderCache[ std::make_pair(generator->mVertexProgram, generator->mFragmentProgram) ] = shaderProps;
 			}
 		}
 		

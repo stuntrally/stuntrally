@@ -1,8 +1,8 @@
 #ifndef MATERIALGENERATOR_H
 #define MATERIALGENERATOR_H
 
-class MaterialFactory;  struct ShaderProperties;
-#include "MaterialDefinition.h" // textureMap typedef
+class MaterialFactory;  class MaterialDefinition;  struct ShaderProperties;
+#include "MaterialProperties.h" // textureMap typedef
 
 #include <OgreHighLevelGpuProgram.h>
 #include <OgreGpuProgramParams.h>
@@ -14,12 +14,16 @@ public:
 	ShaderProperties* mShader;
 	MaterialFactory* mParent;
 	
+	// name of material generator - used for custom (water, glass...)
+	// for standard material generator (i.e. this one) name is empty
+	std::string mName;
+	
 	// shader cache
 	bool mShaderCached;
 	Ogre::HighLevelGpuProgramPtr mVertexProgram;
 	Ogre::HighLevelGpuProgramPtr mFragmentProgram;
 	
-	void generate(bool fixedFunction=false); // craft material
+	virtual void generate(bool fixedFunction=false); // craft material
 	
 protected:
 	// tex unit indices
@@ -40,17 +44,19 @@ protected:
 	
 	// vertex program
 	Ogre::HighLevelGpuProgramPtr createVertexProgram();
-	void generateVertexProgramSource(Ogre::StringUtil::StrStreamType& outStream);
-	void vertexProgramParams(Ogre::HighLevelGpuProgramPtr program);
-	void individualVertexProgramParams(Ogre::GpuProgramParametersSharedPtr params);
+	virtual void generateVertexProgramSource(Ogre::StringUtil::StrStreamType& outStream);
+	virtual void vertexProgramParams(Ogre::HighLevelGpuProgramPtr program);
+	virtual void individualVertexProgramParams(Ogre::GpuProgramParametersSharedPtr params);
+	
+	virtual void fpRealtimeShadowHelperSource(Ogre::StringUtil::StrStreamType& outStream);
 	
 	Ogre::HighLevelGpuProgramPtr createAmbientVertexProgram(); // ambient pass vertex program
 	
 	// fragment program
 	Ogre::HighLevelGpuProgramPtr 	createFragmentProgram();
-	void generateFragmentProgramSource(Ogre::StringUtil::StrStreamType& outStream);
-	void fragmentProgramParams(Ogre::HighLevelGpuProgramPtr program);
-	void individualFragmentProgramParams(Ogre::GpuProgramParametersSharedPtr params);
+	virtual void generateFragmentProgramSource(Ogre::StringUtil::StrStreamType& outStream);
+	virtual void fragmentProgramParams(Ogre::HighLevelGpuProgramPtr program);
+	virtual void individualFragmentProgramParams(Ogre::GpuProgramParametersSharedPtr params);
 	
 	Ogre::HighLevelGpuProgramPtr createAmbientFragmentProgram(); // ambient pass fragment program
 	

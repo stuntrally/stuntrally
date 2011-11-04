@@ -60,13 +60,16 @@ struct MaterialProperties
 	// contribute to ssao yes/no
 	bool ssao;
 	
+	// use custom generator (for very specific materials like water, glass)
+	// empty ("") means no custom generator
+	std::string customGenerator; 
+	
 	float depthBias; bool depthCheck; bool depthWrite; bool transparentSorting;
 	
 	
 	//!todo:
 	// PPX on/off, shading mode (phong etc) for no shaders,
 	// [casts_shadows (+priority) (probably not here)],
-	// read terrain lightmap on/off
 	// specular map (exponent in diffuse map alpha) [or seperate map for trees]
 	// normalHeight (height in normal map alpha) [for parallax mapping]
 	

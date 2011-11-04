@@ -742,65 +742,70 @@ HighLevelGpuProgramPtr MaterialGenerator::createFragmentProgram()
 
 //----------------------------------------------------------------------------------------
 
+void MaterialGenerator::fpRealtimeShadowHelperSource(Ogre::StringUtil::StrStreamType& outStream)
+{
+	/// shadow helper functions
+	// 2x2 pcf
+	outStream <<
+	"float shadowPCF(sampler2D shadowMap, float4 shadowMapPos, float2 offset) \n"
+	"{ \n"
+	"	shadowMapPos = shadowMapPos / shadowMapPos.w; \n"
+	"	float2 uv = shadowMapPos.xy; \n"
+	"	float3 o = float3(offset, -offset.x) * 0.3f; \n"
+
+	"	float c =	(shadowMapPos.z <= tex2D(shadowMap, uv.xy - o.xy).r) ? 1 : 0; \n"
+	"	c +=		(shadowMapPos.z <= tex2D(shadowMap, uv.xy + o.xy).r) ? 1 : 0; \n"
+	"	c +=		(shadowMapPos.z <= tex2D(shadowMap, uv.xy + o.zy).r) ? 1 : 0; \n"
+	"	c +=		(shadowMapPos.z <= tex2D(shadowMap, uv.xy - o.zy).r) ? 1 : 0; \n"
+	"	return c / 4;  \n"
+	"} \n";
+	
+	// pssm
+	outStream <<
+	"float calcPSSMShadow(";
+	
+	for (int i=0; i<mParent->getNumShadowTex(); ++i)
+		outStream << "sampler2D shadowMap"+toStr(i)+",  \n";
+	outStream << "\n";
+	for (int i=0; i<mParent->getNumShadowTex(); ++i)
+		outStream << "float4 lsPos"+toStr(i)+",  \n";
+	outStream << "\n";
+	for (int i=0; i<mParent->getNumShadowTex(); ++i)
+		outStream << "float4 invShadowMapSize"+toStr(i)+",  \n";
+	outStream << "\n";
+	
+	outStream <<
+	"	float4 pssmSplitPoints, float camDepth \n"
+	") \n"
+	"{ \n"
+	"	float shadow; \n";
+	
+	for (int i=0; i<mParent->getNumShadowTex(); ++i)
+	{
+		if (i==0)
+			outStream << "if (camDepth <= pssmSplitPoints.y) \n";
+		else if (i < mParent->getNumShadowTex()-1)
+			outStream << "else if (camDepth <= pssmSplitPoints."+getChannel(i+1)+") \n";
+		else
+			outStream << "else \n";
+			
+		outStream <<
+		"{ \n"
+		"	shadow = shadowPCF(shadowMap"+toStr(i)+", lsPos"+toStr(i)+", invShadowMapSize"+toStr(i)+".xy); \n"
+		"} \n";
+	}
+	
+	outStream <<
+	"	return shadow; \n"
+	"} \n";
+}
+
+//----------------------------------------------------------------------------------------
+
 void MaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::StrStreamType& outStream)
 {
 	if (needShadows())
-	{
-		/// shadow helper functions
-		// 2x2 pcf
-		outStream <<
-		"float shadowPCF(sampler2D shadowMap, float4 shadowMapPos, float2 offset) \n"
-		"{ \n"
-		"	shadowMapPos = shadowMapPos / shadowMapPos.w; \n"
-		"	float2 uv = shadowMapPos.xy; \n"
-		"	float3 o = float3(offset, -offset.x) * 0.3f; \n"
-
-		"	float c =	(shadowMapPos.z <= tex2D(shadowMap, uv.xy - o.xy).r) ? 1 : 0; \n"
-		"	c +=		(shadowMapPos.z <= tex2D(shadowMap, uv.xy + o.xy).r) ? 1 : 0; \n"
-		"	c +=		(shadowMapPos.z <= tex2D(shadowMap, uv.xy + o.zy).r) ? 1 : 0; \n"
-		"	c +=		(shadowMapPos.z <= tex2D(shadowMap, uv.xy - o.zy).r) ? 1 : 0; \n"
-		"	return c / 4;  \n"
-		"} \n";
-		
-		// pssm
-		outStream <<
-		"float calcPSSMShadow(";
-		
-		for (int i=0; i<mParent->getNumShadowTex(); ++i)
-			outStream << "sampler2D shadowMap"+toStr(i)+",  \n";
-		outStream << "\n";
-		for (int i=0; i<mParent->getNumShadowTex(); ++i)
-			outStream << "float4 lsPos"+toStr(i)+",  \n";
-		outStream << "\n";
-		for (int i=0; i<mParent->getNumShadowTex(); ++i)
-			outStream << "float4 invShadowMapSize"+toStr(i)+",  \n";
-		outStream << "\n";
-		
-		outStream <<
-		"	float4 pssmSplitPoints, float camDepth \n"
-		") \n"
-		"{ \n"
-		"	float shadow; \n";
-		
-		for (int i=0; i<mParent->getNumShadowTex(); ++i)
-		{
-			if (i==0)
-				outStream << "if (camDepth <= pssmSplitPoints.y) \n";
-			else if (i < mParent->getNumShadowTex()-1)
-				outStream << "else if (camDepth <= pssmSplitPoints."+getChannel(i+1)+") \n";
-			else
-				outStream << "else \n";
-				
-			outStream <<
-			"{ \n"
-			"	shadow = shadowPCF(shadowMap"+toStr(i)+", lsPos"+toStr(i)+", invShadowMapSize"+toStr(i)+".xy); \n"
-			"} \n";
-		}
-		
-		outStream <<
-		"	return shadow; \n"
-		"} \n";
-	}
+		fpRealtimeShadowHelperSource(outStream);
 	
 	outStream <<
 		"void main_fp("
