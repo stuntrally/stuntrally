@@ -59,7 +59,29 @@
 	normalMap_1024 = volcano_7_nh1.png
 	terrainLightMap = true
 
-; ----------- Sand Island sunset ------------
+
+; ----------- Sand Island shore ======------
+[roadSandShore]
+	ambient = 0.34 0.43 0.46
+	diffuse = 0.38 0.44 0.5
+	specular = 0.31 0.32 0.33 32
+	depthBias = 3
+	diffuseMap_512 = roadSnow_s.jpg
+	diffuseMap_2048 = roadSnow.jpg
+	receivesShadows = true
+
+[roadSandShore_ter]
+	parent = roadSandShore
+	alphaMap_512 = roadAlpha_s.png
+	alphaMap_2048 = roadAlpha.png
+	transparent = true
+	sceneBlend = alpha
+	depthWrite = false
+	normalMap_512 = volcano_7_nh1_s.png
+	normalMap_1024 = volcano_7_nh1.png
+	terrainLightMap = true
+
+; ----------- Sand Island sunset ======------
 [roadSandSet]
 	ambient = 0.57 0.57 0.57
 	diffuse = 0.62 0.62 0.62
@@ -80,7 +102,7 @@
 	normalMap_1024 = ice_3_nh1.png
 	terrainLightMap = true
 
-; ----------- Sand Island dark ------------
+; ----------- Sand Island dark ======------
 [roadSandDark]
 	ambient = 0.07 0.07 0.04
 	diffuse = 0.52 0.62 0.42
@@ -100,6 +122,7 @@
 	normalMap_512 = ice_3_nh1_s.png
 	normalMap_1024 = ice_3_nh1.png
 	terrainLightMap = true
+
 
 ; ----------- Mud ----------
 [roadMud]

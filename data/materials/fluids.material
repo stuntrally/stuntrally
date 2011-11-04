@@ -108,6 +108,21 @@ material Water_sunset : ppx_water1  // island sunset +
 	set_texture_alias normalMap water_nh.png
 }
 
+material Water_shore : ppx_water1  // island overcast
+{
+	set $specularCol	 "0.65 0.67 0.7"
+	set $shininess		 "4"
+	set $waveBump		 "0.2  0.8"
+	set $waveHighFreq	 "0.3"
+	set $waveSpecular	 "1.0"
+	set $deepColor		 "0.26 0.32 0.43  1.0"
+	set $shallowColor	 "0.21 0.35 0.45  0.6"
+	set $reflectionColor "0.6 0.65 0.68  1.0"
+	set $reflAndWaterAmounts  "0.8  0.2"
+	set $fresnelPowerBias  "5.0  0.33"
+	set_texture_alias normalMap water_nh.png
+}
+
 material Water_dark : ppx_water1  // island dark
 {
 	set $specularCol	 "1.0 0.8 0.3"

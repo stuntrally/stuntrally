@@ -45,3 +45,8 @@ parent = base_sky
 diffuseMap_1024 = duskstormy_s.jpg
 diffuseMap_2048 = duskstormy.jpg
 
+[sky/dayovercast]
+parent = base_sky
+diffuseMap_1024 = dayovercast_s.jpg
+diffuseMap_2048 = dayovercast.jpg
+
