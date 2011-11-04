@@ -224,7 +224,7 @@ void App::changeShadows()
 void App::setMtrSplits(String sMtrName)
 {
 	MaterialPtr mat = MaterialManager::getSingleton().getByName(sMtrName);
-	if (!mat.isNull())
+	if (!mat.isNull() && mat->getNumTechniques()>0)
 	{
 		unsigned short np = mat->getTechnique(0)->getNumPasses()-1;  // last  unsigned!
 		try {
@@ -273,7 +273,10 @@ void App::UpdPSSMMaterials()	/// . . . . . . . .
 	
 	for (std::vector<std::string>::iterator it = materialFactory->splitMtrs.begin();
 		it != materialFactory->splitMtrs.end(); ++it)
+	{
+		//LogO("Set splits: " + (*it) );
 		setMtrSplits( (*it) );
+	}
 
 	if (!road)  return;
 	String txs = road->iTexSize == 0 ? "_s": "";

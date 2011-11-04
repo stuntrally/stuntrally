@@ -14,20 +14,15 @@
 	terrainLightMap = true
 	
 [car_glass]
-	twoPass = true
+	customGenerator = Glass
 	envMap = ReflectionCube
 	reflAmount = 0.2
 	ambient = 0.8 0.8 0.8
 	diffuse = 0.9 0.9 0.9
 	specular = 1.0 1.0 1.0 128
 	diffuseMap_1024 = glass.png
-	depthWrite = false
 	transparent = true
-	sceneBlendAmbient = alpha
-	sceneBlend = add
 	receivesDepthShadows = true
-	cullHardwareAmbient = none
-	cullHardware = none
 	terrainLightMap = true
 	ssao = false
 

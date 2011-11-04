@@ -47,6 +47,7 @@ bool ShaderProperties::isEqual( ShaderProperties* other )
 	if (other->transparent != transparent) return false;
 	if (other->lighting != lighting) return false;
 	if (other->lightingAlpha != lightingAlpha) return false;
+	if (other->customGenerator != customGenerator) return false;
 	
 	return true;
 }

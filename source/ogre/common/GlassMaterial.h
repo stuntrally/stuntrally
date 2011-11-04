@@ -10,9 +10,11 @@ class GlassMaterialGenerator : public MaterialGenerator
 public:
 	GlassMaterialGenerator();
 
-	std::string mName;
-
-	//virtual void generate(bool fixedFunction=false);
+	virtual void generate(bool fixedFunction=false);
+	
+protected:
+	virtual Ogre::HighLevelGpuProgramPtr createAmbientFragmentProgram(); // ambient pass fragment program
+	virtual Ogre::HighLevelGpuProgramPtr createAmbientVertexProgram(); // ambient pass vertex program
 };
  
 #endif

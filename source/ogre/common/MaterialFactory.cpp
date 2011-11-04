@@ -220,12 +220,15 @@ void MaterialFactory::generate()
 				for (gIt = mCustomGenerators.begin(); gIt != mCustomGenerators.end(); ++gIt)
 				{
 					if ( (*gIt)->mName == (*it)->getProps()->customGenerator)
+					{
 						generator = (*gIt);
+						break;
+					}
 				}
 				if (gIt == mCustomGenerators.end())
 				{
 					LogO("[MaterialFactory] WARNING: Custom generator '" + (*it)->getProps()->customGenerator + "' \
-					referenced by material '" + (*it)->getName() + "' not found. Using default generator.");
+referenced by material '" + (*it)->getName() + "' not found. Using default generator.");
 					generator = mGenerator; 
 				}
 			}

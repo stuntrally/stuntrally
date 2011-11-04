@@ -6,6 +6,9 @@ class MaterialFactory;  class MaterialDefinition;  struct ShaderProperties;
 
 #include <OgreHighLevelGpuProgram.h>
 #include <OgreGpuProgramParams.h>
+#include <OgreMaterial.h>
+
+namespace Ogre { class Pass; }
 
 class MaterialGenerator
 {
@@ -38,63 +41,74 @@ protected:
 	
 	unsigned int mTexUnit_i; // counter
 	
+	// textures
+	std::string mDiffuseMap;
+	std::string mNormalMap;
+	std::string mLightMap;
+	std::string mAlphaMap;
+	std::string mBlendMap;
+	virtual void chooseTextures();
+	virtual void resetTexUnitCounter();
+	virtual void createTexUnits(Ogre::Pass* pass, bool shaders);
+	
+	// material
+	Ogre::MaterialPtr mMaterial;
+	
 	/// utility methods
 	// get pointer to material if it exists and delete all techniques, if not, create new
-	Ogre::MaterialPtr prepareMaterial(const std::string& matName);
+	virtual Ogre::MaterialPtr prepareMaterial(const std::string& matName);
+	
+	// techniques
+	virtual void createSSAOTechnique();
 	
 	// vertex program
-	Ogre::HighLevelGpuProgramPtr createVertexProgram();
+	virtual Ogre::HighLevelGpuProgramPtr createVertexProgram();
 	virtual void generateVertexProgramSource(Ogre::StringUtil::StrStreamType& outStream);
 	virtual void vertexProgramParams(Ogre::HighLevelGpuProgramPtr program);
 	virtual void individualVertexProgramParams(Ogre::GpuProgramParametersSharedPtr params);
 	
 	virtual void fpRealtimeShadowHelperSource(Ogre::StringUtil::StrStreamType& outStream);
-	
-	Ogre::HighLevelGpuProgramPtr createAmbientVertexProgram(); // ambient pass vertex program
-	
+		
 	// fragment program
-	Ogre::HighLevelGpuProgramPtr 	createFragmentProgram();
+	virtual Ogre::HighLevelGpuProgramPtr 	createFragmentProgram();
 	virtual void generateFragmentProgramSource(Ogre::StringUtil::StrStreamType& outStream);
 	virtual void fragmentProgramParams(Ogre::HighLevelGpuProgramPtr program);
 	virtual void individualFragmentProgramParams(Ogre::GpuProgramParametersSharedPtr params);
 	
-	Ogre::HighLevelGpuProgramPtr createAmbientFragmentProgram(); // ambient pass fragment program
 	
-	bool needShaders();
-	bool needShadows();
+	virtual bool needShaders();
+	virtual bool needShadows();
 	
 	// textures
-	bool needNormalMap(); bool needEnvMap();
-	bool needAlphaMap(); bool needBlendMap();
-	bool needDiffuseMap(); bool needLightMap();
-	bool needTerrainLightMap();
+	virtual bool needNormalMap(); virtual bool needEnvMap();
+	virtual bool needAlphaMap(); virtual bool needBlendMap();
+	virtual bool needDiffuseMap(); virtual bool needLightMap();
+	virtual bool needTerrainLightMap();
 	
 	// vertex shader input
-	bool vpNeedTangent();
-	bool vpNeedWMat();
-	bool vpNeedWITMat();
+	virtual bool vpNeedTangent();
+	virtual bool vpNeedWMat();
+	virtual bool vpNeedWITMat();
 	
 	// passtrough (vertex to fragment)
-	bool fpNeedTangentToCube();
-	bool fpNeedWsNormal();
-	bool fpNeedEyeVector();
+	virtual bool fpNeedTangentToCube();
+	virtual bool fpNeedWsNormal();
+	virtual bool fpNeedEyeVector();
 	 
 	// lighting
-	bool fpNeedLighting(); // fragment lighting
+	virtual bool fpNeedLighting(); // fragment lighting
 	//bool vpNeedLighting(); // vertex lighting
 	
-	bool needFresnel();
-	bool needLightingAlpha();
+	virtual bool needFresnel();
+	virtual bool needLightingAlpha();
 	
 	
-	std::string getChannel(unsigned int n);
+	virtual std::string getChannel(unsigned int n);
 	
 	// pick best texture size (not higher than user tex size)
-	std::string pickTexture(textureMap* textures);
+	virtual std::string pickTexture(textureMap* textures);
 
-	Ogre::CullingMode chooseCullingMode();
-	Ogre::CullingMode chooseCullingModeAmbient();
-
+	virtual Ogre::CullingMode chooseCullingMode();
 };
 
 #endif

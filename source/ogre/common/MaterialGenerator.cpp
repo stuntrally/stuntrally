@@ -24,82 +24,21 @@ using namespace Ogre;
 
 void MaterialGenerator::generate(bool fixedFunction)
 {	
-	MaterialPtr mat = prepareMaterial(mDef->getName());
-		
+	mMaterial = prepareMaterial(mDef->getName());
+	
 	// reset some attributes
-	mDiffuseTexUnit = 0; mNormalTexUnit = 0; mEnvTexUnit = 0; mAlphaTexUnit = 0;
-	mShadowTexUnit_start = 0; mTerrainLightTexUnit = 0; mTexUnit_i = 0;
+	resetTexUnitCounter();
 	
 	// choose textures from list (depending on user iTexSize setting)
-	std::string diffuseMap = pickTexture(&mDef->mProps->diffuseMaps);
-	std::string normalMap = pickTexture(&mDef->mProps->normalMaps);
-	std::string lightMap = pickTexture(&mDef->mProps->lightMaps);
-	std::string alphaMap = pickTexture(&mDef->mProps->alphaMaps);
-	std::string blendMap = pickTexture(&mDef->mProps->blendMaps);
+	chooseTextures();
 	
 	// -------------------------- Main technique ----------------------------- //
-	Ogre::Technique* technique = mat->createTechnique();
-		
-	if (mDef->mProps->twoPass)
-	{
-		Ogre::Pass* ambientPass = technique->createPass();
-		ambientPass->setAmbient( mDef->mProps->ambient.x, mDef->mProps->ambient.y, mDef->mProps->ambient.z );
-		ambientPass->setDiffuse( mDef->mProps->diffuse.x, mDef->mProps->diffuse.y, mDef->mProps->diffuse.z, 1.0 );
-		
-		ambientPass->setSpecular(mDef->mProps->specular.x, mDef->mProps->specular.y, mDef->mProps->specular.z, mDef->mProps->specular.w);
-		
-		if (mDef->mProps->sceneBlendAmbient == SBM_ALPHA_BLEND)
-			ambientPass->setSceneBlending(SBT_TRANSPARENT_ALPHA);
-		else if (mDef->mProps->sceneBlendAmbient == SBM_COLOUR_BLEND)
-			ambientPass->setSceneBlending(SBT_TRANSPARENT_COLOUR);
-		else if (mDef->mProps->sceneBlendAmbient == SBM_ADD)
-			ambientPass->setSceneBlending(SBT_ADD);
-		else if (mDef->mProps->sceneBlendAmbient == SBM_MODULATE)
-			ambientPass->setSceneBlending(SBT_MODULATE);
-			
-		ambientPass->setDepthBias( mDef->mProps->depthBias );
-		ambientPass->setDepthWriteEnabled(false);
-		ambientPass->setCullingMode( chooseCullingModeAmbient() );
-		
-		Ogre::TextureUnitState* tu = ambientPass->createTextureUnitState( diffuseMap );
-		tu->setName("diffuseMap");
-		tu->setTextureAddressingMode(mDef->mProps->textureAddressMode);
-		
-		// create shaders
-		HighLevelGpuProgramPtr fragmentProg, vertexProg;
-		try
-		{
-			vertexProg = createAmbientVertexProgram();
-			fragmentProg = createAmbientFragmentProgram();
-		}
-		catch (Ogre::Exception& e) {
-			LogO(e.getFullDescription());
-		}
-
-		if (fragmentProg.isNull() || vertexProg.isNull() || 
-			!fragmentProg->isSupported() || !vertexProg->isSupported())
-		{
-			LogO("[MaterialFactory] WARNING: ambient shader for material '" + mDef->getName()
-				+ "' is not supported.");
-		}
-		else
-		{
-			ambientPass->setVertexProgram(vertexProg->getName());
-			ambientPass->setFragmentProgram(fragmentProg->getName());
-		}		
-	}
+	Ogre::Technique* technique = mMaterial->createTechnique();
 	
 	// Main pass
 	Ogre::Pass* pass = technique->createPass();
 	
-	if (!mDef->mProps->twoPass)
-		pass->setAmbient( mDef->mProps->ambient.x, mDef->mProps->ambient.y, mDef->mProps->ambient.z );
-	else
-	{
-		// already have ambient in first pass
-		pass->setAmbient(0.0, 0.0, 0.0);
-	}
-	
+	pass->setAmbient( mDef->mProps->ambient.x, mDef->mProps->ambient.y, mDef->mProps->ambient.z );
 	pass->setDiffuse( mDef->mProps->diffuse.x, mDef->mProps->diffuse.y, mDef->mProps->diffuse.z, 1.0 );
 	
 	if (!needShaders() || fixedFunction)
@@ -143,121 +82,10 @@ void MaterialGenerator::generate(bool fixedFunction)
 		pass->setDepthBias( mDef->mProps->depthBias );
 	
 	if (!needShaders() || fixedFunction)
-	{		
-		Ogre::TextureUnitState* tu;
-		
-		//!todo alpha map
-		/// no idea how to blend this
-		// alpha map
-		/*if (needAlphaMap())
-		{
-			tu = pass->createTextureUnitState( alphaMap );
-			//tu->setAlphaOperation(LBX_SOURCE1, LBS_CURRENT, LBS_TEXTURE);
-			//tu->setColourOperation(LBO_ALPHA_BLEND);
-		}*/
-		
-		// diffuse map
-		if (needDiffuseMap())
-		{
-			tu = pass->createTextureUnitState( diffuseMap );
-			tu->setTextureAddressingMode(mDef->mProps->textureAddressMode);
-		}
-		if (needLightMap())
-		{
-			tu = pass->createTextureUnitState( lightMap );
-			tu->setTextureAddressingMode(mDef->mProps->textureAddressMode);
-		}
-		if (needBlendMap())
-		{
-			tu = pass->createTextureUnitState( blendMap );
-			tu->setTextureAddressingMode(mDef->mProps->textureAddressMode);
-		}
-		if (needEnvMap())
-		{
-			// env map
-			tu = pass->createTextureUnitState();
-			tu->setCubicTextureName( mDef->mProps->envMap, true );
-			tu->setEnvironmentMap(true, TextureUnitState::ENV_REFLECTION);
-			tu->setTextureAddressingMode(TextureUnitState::TAM_CLAMP);
-			
-			// blend with diffuse map using 'reflection amount' property
-			tu->setColourOperationEx(LBX_BLEND_MANUAL, LBS_CURRENT, LBS_TEXTURE, 
-									ColourValue::White, ColourValue::White, 1-mDef->mProps->reflAmount);
-		}
-	}
+		createTexUnits(pass, false);
 	else
 	{
-		Ogre::TextureUnitState* tu;
-		// diffuse / light / blend maps
-		if (needDiffuseMap())
-		{
-			tu = pass->createTextureUnitState( diffuseMap );
-			tu->setName("diffuseMap");
-			tu->setTextureAddressingMode(mDef->mProps->textureAddressMode);
-			mDiffuseTexUnit = mTexUnit_i; mTexUnit_i++;
-		}
-		if (needLightMap())
-		{
-			tu = pass->createTextureUnitState( lightMap );
-			tu->setName("lightMap");
-			tu->setTextureAddressingMode(mDef->mProps->textureAddressMode);
-			mLightTexUnit = mTexUnit_i; mTexUnit_i++;
-		}
-		if (needBlendMap())
-		{
-			tu = pass->createTextureUnitState( blendMap );
-			tu->setName("blendMap");
-			tu->setTextureAddressingMode(mDef->mProps->textureAddressMode);
-			mBlendTexUnit = mTexUnit_i; mTexUnit_i++;
-		}
-		
-		// global terrain lightmap (static)
-		if (needTerrainLightMap())
-		{
-			tu = pass->createTextureUnitState(""); // texture name set later (in changeShadows)
-			tu->setName("terrainLightMap");
-			mTerrainLightTexUnit = mTexUnit_i; mTexUnit_i++;
-		}
-		
-		// alpha map
-		if (needAlphaMap())
-		{
-			tu = pass->createTextureUnitState( alphaMap );
-			tu->setName("alphaMap");
-			mAlphaTexUnit = mTexUnit_i; mTexUnit_i++;
-		}
-		
-		// env map
-		if (needEnvMap())
-		{
-			tu = pass->createTextureUnitState( mDef->mProps->envMap );
-			tu->setName("envMap");
-			tu->setTextureAddressingMode(TextureUnitState::TAM_CLAMP);
-			mEnvTexUnit = mTexUnit_i; mTexUnit_i++;
-		}
-		
-		// normal map
-		if (needNormalMap())
-		{
-			tu = pass->createTextureUnitState( normalMap );
-			tu->setName("normalMap");
-			mNormalTexUnit = mTexUnit_i; mTexUnit_i++;
-		}
-		
-		// realtime shadow maps
-		if (needShadows())
-		{
-			mShadowTexUnit_start = mTexUnit_i;
-			for (int i = 0; i < mParent->getNumShadowTex(); ++i)
-			{
-				tu = pass->createTextureUnitState();
-				tu->setName("shadowMap" + toStr(i));
-				tu->setContentType(TextureUnitState::CONTENT_SHADOW);
-				tu->setTextureAddressingMode(TextureUnitState::TAM_BORDER);
-				tu->setTextureBorderColour(ColourValue::White);
-				mTexUnit_i++;
-			}
-		}
+		createTexUnits(pass, true);
 		
 		// create shaders		
 		if (!mShaderCached)
@@ -303,9 +131,134 @@ void MaterialGenerator::generate(bool fixedFunction)
 	}
 	// ----------------------------------------------------------------------- //
 	
+	createSSAOTechnique();
 	
-	// ------------------------ SSAO technique ------------------------------- //
-	Technique* ssaopasstech = mat->createTechnique();
+	// indicate that we need the pssm split points
+	if (needShadows())
+		mParent->splitMtrs.push_back( mDef->getName() );
+		
+	// indicate that we need terrain lightmap texture and terrainWorldSize
+	if (needTerrainLightMap())
+		mParent->terrainLightMapMtrs.push_back( mDef->getName() );
+		
+	// export material (test)
+	/*
+	if (mDef->getName() == "pipeGlass") {
+	MaterialSerializer serializer;
+	serializer.exportMaterial(mat, "test.material");
+	}
+	*/
+}
+
+//----------------------------------------------------------------------------------------
+
+void MaterialGenerator::createTexUnits(Ogre::Pass* pass, bool shaders)
+{
+	Ogre::TextureUnitState* tu;
+	
+	// diffuse / light / blend maps
+	if (needDiffuseMap())
+	{
+		tu = pass->createTextureUnitState( mDiffuseMap );
+		tu->setName("diffuseMap");
+		tu->setTextureAddressingMode(mDef->mProps->textureAddressMode);
+		mDiffuseTexUnit = mTexUnit_i; mTexUnit_i++;
+	}
+	if (needLightMap())
+	{
+		tu = pass->createTextureUnitState( mLightMap );
+		tu->setName("lightMap");
+		tu->setTextureAddressingMode(mDef->mProps->textureAddressMode);
+		mLightTexUnit = mTexUnit_i; mTexUnit_i++;
+	}
+	if (needBlendMap())
+	{
+		tu = pass->createTextureUnitState( mBlendMap );
+		tu->setName("blendMap");
+		tu->setTextureAddressingMode(mDef->mProps->textureAddressMode);
+		mBlendTexUnit = mTexUnit_i; mTexUnit_i++;
+	}
+	
+	// env map
+	if (needEnvMap())
+	{
+		if (shaders)
+		{
+			tu = pass->createTextureUnitState( mDef->mProps->envMap );
+			tu->setName("envMap");
+			
+			mEnvTexUnit = mTexUnit_i; mTexUnit_i++;
+		}
+		else
+		{
+			tu = pass->createTextureUnitState();
+			tu->setCubicTextureName( mDef->mProps->envMap, true );
+			tu->setEnvironmentMap(true, TextureUnitState::ENV_REFLECTION);
+			
+			// blend with diffuse map using 'reflection amount' property
+			tu->setColourOperationEx(LBX_BLEND_MANUAL, LBS_CURRENT, LBS_TEXTURE, 
+									ColourValue::White, ColourValue::White, 1-mDef->mProps->reflAmount);
+		}
+		tu->setTextureAddressingMode(TextureUnitState::TAM_CLAMP);
+	}
+	
+	
+	if (shaders)
+	{
+		// global terrain lightmap (static)
+		if (needTerrainLightMap())
+		{
+			tu = pass->createTextureUnitState(""); // texture name set later (in changeShadows)
+			tu->setName("terrainLightMap");
+			mTerrainLightTexUnit = mTexUnit_i; mTexUnit_i++;
+		}
+		
+		// alpha map
+		if (needAlphaMap())
+		{
+			tu = pass->createTextureUnitState( mAlphaMap );
+			tu->setName("alphaMap");
+			mAlphaTexUnit = mTexUnit_i; mTexUnit_i++;
+		}
+		
+		// normal map
+		if (needNormalMap())
+		{
+			tu = pass->createTextureUnitState( mNormalMap );
+			tu->setName("normalMap");
+			mNormalTexUnit = mTexUnit_i; mTexUnit_i++;
+		}
+		
+		// realtime shadow maps
+		if (needShadows())
+		{
+			mShadowTexUnit_start = mTexUnit_i;
+			for (int i = 0; i < mParent->getNumShadowTex(); ++i)
+			{
+				tu = pass->createTextureUnitState();
+				tu->setName("shadowMap" + toStr(i));
+				tu->setContentType(TextureUnitState::CONTENT_SHADOW);
+				tu->setTextureAddressingMode(TextureUnitState::TAM_BORDER);
+				tu->setTextureBorderColour(ColourValue::White);
+				mTexUnit_i++;
+			}
+		}
+	}
+}
+
+//----------------------------------------------------------------------------------------
+
+void MaterialGenerator::resetTexUnitCounter()
+{
+	mDiffuseTexUnit = 0; mNormalTexUnit = 0; mEnvTexUnit = 0; mAlphaTexUnit = 0;
+	mShadowTexUnit_start = 0; mTerrainLightTexUnit = 0; mTexUnit_i = 0;
+}
+
+//----------------------------------------------------------------------------------------
+
+void MaterialGenerator::createSSAOTechnique()
+{
+	Technique* ssaopasstech = mMaterial->createTechnique();
 	ssaopasstech->setName("geom");
 	ssaopasstech->setSchemeName("geom");
 	Pass* ssaopass = ssaopasstech->createPass();
@@ -333,25 +286,19 @@ void MaterialGenerator::generate(bool fixedFunction)
 	{
 		ssaopass->setCullingMode( CULL_NONE );
 		ssaopass->setAlphaRejectSettings(CMPF_GREATER_EQUAL, 128);
-		ssaopass->createTextureUnitState( diffuseMap );
+		ssaopass->createTextureUnitState( mDiffuseMap );
 	}
-	// ----------------------------------------------------------------------- //
-	
-	// indicate that we need the pssm split points
-	if (needShadows())
-		mParent->splitMtrs.push_back( mDef->getName() );
-		
-	// indicate that we need terrain lightmap texture and terrainWorldSize
-	if (needTerrainLightMap())
-		mParent->terrainLightMapMtrs.push_back( mDef->getName() );
-		
-	// export material (test)
-	/*
-	if (mDef->getName() == "pipeGlass") {
-	MaterialSerializer serializer;
-	serializer.exportMaterial(mat, "test.material");
-	}
-	*/
+}
+
+//----------------------------------------------------------------------------------------
+
+void MaterialGenerator::chooseTextures()
+{
+	mDiffuseMap = pickTexture(&mDef->mProps->diffuseMaps);
+	mNormalMap = pickTexture(&mDef->mProps->normalMaps);
+	mLightMap = pickTexture(&mDef->mProps->lightMaps);
+	mAlphaMap = pickTexture(&mDef->mProps->alphaMaps);
+	mBlendMap = pickTexture(&mDef->mProps->blendMaps);
 }
 
 //----------------------------------------------------------------------------------------
@@ -509,34 +456,6 @@ Ogre::CullingMode MaterialGenerator::chooseCullingMode()
 			return Ogre::CULL_CLOCKWISE;
 	}
 	else if (mDef->mProps->cullHardware == CULL_HW_ANTICLOCKWISE_OR_NONE)
-	{
-		if (mParent->getShadowsDepth())
-			return Ogre::CULL_NONE;
-		else
-			return Ogre::CULL_ANTICLOCKWISE;
-	}
-	return Ogre::CULL_NONE;
-}
-
-//----------------------------------------------------------------------------------------
-
-Ogre::CullingMode MaterialGenerator::chooseCullingModeAmbient()
-{
-
-	if 		(mDef->mProps->cullHardwareAmbient == CULL_HW_NONE)
-		return Ogre::CULL_NONE;
-	else if (mDef->mProps->cullHardwareAmbient == CULL_HW_CLOCKWISE)
-		return Ogre::CULL_CLOCKWISE;
-	else if (mDef->mProps->cullHardwareAmbient == CULL_HW_ANTICLOCKWISE)
-		return Ogre::CULL_ANTICLOCKWISE;
-	else if (mDef->mProps->cullHardwareAmbient == CULL_HW_CLOCKWISE_OR_NONE)
-	{
-		if (mParent->getShadowsDepth())
-			return Ogre::CULL_NONE;
-		else
-			return Ogre::CULL_CLOCKWISE;
-	}
-	else if (mDef->mProps->cullHardwareAmbient == CULL_HW_ANTICLOCKWISE_OR_NONE)
 	{
 		if (mParent->getShadowsDepth())
 			return Ogre::CULL_NONE;
@@ -1135,82 +1054,4 @@ void MaterialGenerator::individualFragmentProgramParams(Ogre::GpuProgramParamete
 	
 	if (needTerrainLightMap())
 		params->setNamedConstant("terrainWorldSize", Real(1025)); // real value set later in changeShadows()
-}
-
-//----------------------------------------------------------------------------------------
-
-HighLevelGpuProgramPtr MaterialGenerator::createAmbientVertexProgram()
-{
-	HighLevelGpuProgramManager& mgr = HighLevelGpuProgramManager::getSingleton();
-	std::string progName = mDef->getName() + "_ambient_VP";
-
-	HighLevelGpuProgramPtr ret = mgr.getByName(progName);
-	if (!ret.isNull())
-		mgr.remove(progName);
-
-	ret = mgr.createProgram(progName, ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME, 
-		"cg", GPT_VERTEX_PROGRAM);
-
-	ret->setParameter("profiles", "vs_1_1 arbvp1");
-	ret->setParameter("entry_point", "main_vp");
-
-	StringUtil::StrStreamType sourceStr;
-	
-	sourceStr <<
-	"void main_vp( \n"
-	"	in float2 uv, \n"
-	"	in float4 position : POSITION, \n"
-	"	uniform float4x4 wvpMat, \n"
-	"	out float4 oPos : POSITION, out float2 oUV : TEXCOORD0) \n"
-	"{ \n"
-	"	oPos = mul(wvpMat, position);  oUV = uv; \n"
-	"} \n";
-	
-	ret->setSource(sourceStr.str());
-	ret->load();
-	
-	// params
-	GpuProgramParametersSharedPtr params = ret->getDefaultParameters();
-	params->setNamedAutoConstant("wvpMat", GpuProgramParameters::ACT_WORLDVIEWPROJ_MATRIX);
-	
-	return ret;
-}
-
-//----------------------------------------------------------------------------------------
-
-HighLevelGpuProgramPtr MaterialGenerator::createAmbientFragmentProgram()
-{
-	HighLevelGpuProgramManager& mgr = HighLevelGpuProgramManager::getSingleton();
-	std::string progName = mDef->getName() + "_ambient_FP";
-
-	HighLevelGpuProgramPtr ret = mgr.getByName(progName);
-	if (!ret.isNull())
-		mgr.remove(progName);
-
-	ret = mgr.createProgram(progName, ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME, 
-		"cg", GPT_FRAGMENT_PROGRAM);
-
-	ret->setParameter("profiles", "ps_2_0 arbfp1");
-	ret->setParameter("entry_point", "main_fp");
-
-	StringUtil::StrStreamType sourceStr;
-	
-	sourceStr <<
-	"float4 main_fp(in float2 uv : TEXCOORD0, \n"
-	"	uniform float3 ambient,  uniform float4 matDif, \n"
-	"	uniform sampler2D diffuseMap): COLOR0 \n"
-	"{ \n"
-	"	float4 diffuseTex = tex2D(diffuseMap, uv); \n"
-	"	return float4(ambient * matDif.rgb * diffuseTex.rgb, diffuseTex.a); \n"
-	"} \n";
-	
-	ret->setSource(sourceStr.str());
-	ret->load();
-	
-	// params
-	GpuProgramParametersSharedPtr params = ret->getDefaultParameters();
-	params->setNamedAutoConstant("ambient", GpuProgramParameters::ACT_SURFACE_AMBIENT_COLOUR );
-	params->setNamedAutoConstant("matDif", GpuProgramParameters::ACT_SURFACE_DIFFUSE_COLOUR );
-	
-	return ret;
 }

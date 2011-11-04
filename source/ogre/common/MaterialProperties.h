@@ -34,17 +34,12 @@ struct MaterialProperties
 	textureMap normalMaps; float bumpScale;
 	textureMap lightMaps;textureMap blendMaps;
 	CullHardwareMode cullHardware;
-	CullHardwareMode cullHardwareAmbient; // for ambient pass
 	
 	SceneBlendMode sceneBlend;
-	SceneBlendMode sceneBlendAmbient; // for ambient pass
 	textureMap alphaMaps; bool transparent;
 	Ogre::Vector4 lightingAlpha; // alpha for ambient, diffuse, spec, diffuse r channel mult
 	Ogre::CompareFunction alphaRejectFunc; float alphaRejectValue;
-	
-	// 2-pass (for pipe glass)
-	bool twoPass;
-	
+		
 	// reflection
 	std::string envMap;
 	float reflAmount;
