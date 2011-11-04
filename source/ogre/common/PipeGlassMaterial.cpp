@@ -16,6 +16,8 @@ PipeGlassMaterialGenerator::PipeGlassMaterialGenerator()
 	mName = "PipeGlass";
 }
 
+//----------------------------------------------------------------------------------------
+
 void PipeGlassMaterialGenerator::generate(bool fixedFunction)
 {
 	mMaterial = prepareMaterial(mDef->getName());
@@ -95,6 +97,9 @@ void PipeGlassMaterialGenerator::generate(bool fixedFunction)
 		pass1->setFragmentProgram(mFragmentProgram->getName());
 		pass2->setVertexProgram(mVertexProgram->getName());
 		pass2->setFragmentProgram(mFragmentProgram->getName());
+		
+		individualFragmentProgramParams(pass1->getFragmentProgramParameters());
+		individualFragmentProgramParams(pass2->getFragmentProgramParameters());
 	}
 
 	// ----------------------------------------------------------------------- //
@@ -238,8 +243,14 @@ HighLevelGpuProgramPtr PipeGlassMaterialGenerator::createPipeFragmentProgram()
 	params->setNamedAutoConstant("lightPos0", GpuProgramParameters::ACT_LIGHT_POSITION, 0);
 	params->setNamedAutoConstant("iTWMat", GpuProgramParameters::ACT_INVERSE_TRANSPOSE_WORLD_MATRIX);
 	
-	params->setNamedConstant("alphaPars", mDef->mProps->lightingAlpha);
-	
+	individualFragmentProgramParams(params);
+
 	return ret;
 }
 
+//----------------------------------------------------------------------------------------
+
+void PipeGlassMaterialGenerator::individualFragmentProgramParams(Ogre::GpuProgramParametersSharedPtr params)
+{
+	params->setNamedConstant("alphaPars", mDef->mProps->lightingAlpha);
+}
