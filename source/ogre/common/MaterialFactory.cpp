@@ -7,6 +7,7 @@
 #include "MaterialGenerator.h"
 #include "GlassMaterial.h"
 #include "PipeGlassMaterial.h"
+#include "WaterMaterial.h"
 #include "ShaderProperties.h"
 
 #ifndef ROAD_EDITOR
@@ -52,6 +53,10 @@ MaterialFactory::MaterialFactory() :
 	MaterialGenerator* pipeglass = static_cast<MaterialGenerator*>(new PipeGlassMaterialGenerator());
 	pipeglass->mParent = this;
 	mCustomGenerators.push_back(pipeglass);
+	
+	MaterialGenerator* water = static_cast<MaterialGenerator*>(new WaterMaterialGenerator());
+	water->mParent = this;
+	mCustomGenerators.push_back(water);
 }
 
 //----------------------------------------------------------------------------------------
@@ -178,18 +183,6 @@ void MaterialFactory::loadDefsFromFile(const std::string& file)
 		++defI;
 	}
 	
-	// debug output of material definitions and properties.
-	/*for (std::vector<MaterialDefinition*>::iterator it=mDefinitions.begin();
-			it!=mDefinitions.end(); ++it)
-	{
-		LogO("[MaterialFactory] loaded material definition " + (*it)->getName() );
-		LogO("[MaterialFactory] attributes:");
-		#define prop(s) LogO("[MaterialFactory]  - "#s": " + StringConverter::toString((*it)->getProps()->s));
-		#define propS(s) LogO("[MaterialFactory]  - "#s": " + (*it)->getProps()->s);
-		propS(envMap); prop(hasFresnel);
-		prop(fresnelBias); prop(fresnelScale); prop(fresnelPower); prop(receivesShadows); prop(receivesDepthShadows);
-	}*/
-	
 	LogO("[MaterialFactory] loaded " + toStr(defI) + " definitions from " + file);
 }
 
@@ -211,6 +204,8 @@ void MaterialFactory::generate()
 		{
 			// don't generate abstract materials
 			if ((*it)->getProps()->abstract) continue;
+			
+			LogO("generating " + (*it)->getName());
 			
 			// find an appropriate generator
 			MaterialGenerator* generator;
@@ -270,6 +265,8 @@ referenced by material '" + (*it)->getName() + "' not found. Using default gener
 				if (!generator->mVertexProgram.isNull() && !generator->mFragmentProgram.isNull()) 
 					mShaderCache[ std::make_pair(generator->mVertexProgram, generator->mFragmentProgram) ] = shaderProps;
 			}
+			else
+				delete shaderProps;
 		}
 		
 		bSettingsChanged = false;

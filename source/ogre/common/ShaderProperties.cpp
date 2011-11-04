@@ -29,6 +29,7 @@ ShaderProperties::ShaderProperties( MaterialProperties* props, MaterialFactory* 
 			||  (props->receivesDepthShadows && parent->getShadowsDepth())
 	);
 	lightingAlpha = (props->lightingAlpha != Vector4::ZERO);
+	customGenerator = props->customGenerator;
 }
 
 //----------------------------------------------------------------------------------------
