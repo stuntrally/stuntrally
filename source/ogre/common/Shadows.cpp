@@ -188,6 +188,7 @@ void App::changeShadows()
 	materialFactory->generate();
 	
 	// set terrain lightmap texture and terrainWorldSize for all materials that need it
+	if (road) // naive check if a game has been started already
 	for (std::vector<std::string>::const_iterator it = materialFactory->terrainLightMapMtrs.begin();
 		it != materialFactory->terrainLightMapMtrs.end(); ++it)
 	{
