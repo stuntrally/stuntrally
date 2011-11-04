@@ -601,6 +601,7 @@ HighLevelGpuProgramPtr MaterialGenerator::createVertexProgram()
 void MaterialGenerator::generateVertexProgramSource(Ogre::StringUtil::StrStreamType& outStream)
 {
 	// note: world position xz for fragment is stored in oTexCoord.w, oWsNormal.w
+	int oTexCoordIndex=1;
 	
 	outStream << 
 		"void main_vp( "
@@ -617,7 +618,15 @@ void MaterialGenerator::generateVertexProgramSource(Ogre::StringUtil::StrStreamT
 		}
 		else
 		{
-			outStream <<"	out float4 oWsNormal  				: COLOR1, \n";
+			if(MRTSupported())
+			{
+				outStream <<"	out float4 oWsNormal  				: COLOR1, \n";
+			}
+			else
+			{
+				outStream <<"	out float4 oWsNormal  				: TEXCOORD1, \n";	
+				oTexCoordIndex++;
+			}
 		}
 	}
 	if (fpNeedEyeVector()) outStream <<
@@ -626,7 +635,6 @@ void MaterialGenerator::generateVertexProgramSource(Ogre::StringUtil::StrStreamT
 		"	out float4 oPosition			 	: POSITION, \n"
 		"	out float4 objectPos				: COLOR, \n" // running out of texcoords so putting this in COLOR since its unused.
 		"	out float4 oTexCoord				: TEXCOORD0, \n";
-	int oTexCoordIndex=1;
 	if (needNormalMap()) outStream <<
 		"	uniform float bumpScale, \n";
 		
@@ -896,6 +904,7 @@ void MaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::StrStrea
 		"} \n";
 	}
 	
+	int oTexCoordIndex=1;
 	outStream <<
 		"void main_fp("
 		"	in float4 texCoord : TEXCOORD0, \n"
@@ -908,14 +917,21 @@ void MaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::StrStrea
 		}
 		else
 		{
-			outStream <<"	in float4 wsNormal : COLOR1, \n";
+			if(MRTSupported())
+			{
+				outStream <<"	in float4 wsNormal : COLOR1, \n";
+			}
+			else
+			{
+				outStream <<"	in float4 wsNormal : TEXCOORD1, \n";
+				oTexCoordIndex++;
+			}
 		}
 	}
 	if (vpNeedWvMat()) outStream <<
 		"	uniform float4x4 wvMat, \n";
 	if (vpNeedWMat()) outStream <<
 		"	uniform float4x4 wMat, \n";
-	int oTexCoordIndex=1;
 	if (fpNeedTangentToCube()) 
 	{
 		outStream << "	in float4 tangentToCubeSpace0 : TEXCOORD"+ toStr( oTexCoordIndex++ ) +", \n";
