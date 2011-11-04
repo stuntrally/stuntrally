@@ -157,6 +157,7 @@ void App::LoadCleanUp()  // 1 first
 	mSceneMgr->destroyAllStaticGeometry();
 	//mSceneMgr->destroyAllParticleSystems();
 	mSceneMgr->destroyAllRibbonTrails();
+	mSplitMgr->mHUDSceneMgr->destroyAllManualObjects();
 	MeshManager::getSingleton().removeAll();  // destroy all meshes
 
 	//  rain/snow
