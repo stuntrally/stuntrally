@@ -6,6 +6,7 @@
 #include "MaterialDefinition.h"
 #include "MaterialGenerator.h"
 #include "GlassMaterial.h"
+#include "PipeGlassMaterial.h"
 #include "ShaderProperties.h"
 
 #ifndef ROAD_EDITOR
@@ -48,7 +49,9 @@ MaterialFactory::MaterialFactory() :
 	glass->mParent = this;
 	mCustomGenerators.push_back(glass);
 	
-	
+	MaterialGenerator* pipeglass = static_cast<MaterialGenerator*>(new PipeGlassMaterialGenerator());
+	pipeglass->mParent = this;
+	mCustomGenerators.push_back(pipeglass);
 }
 
 //----------------------------------------------------------------------------------------
