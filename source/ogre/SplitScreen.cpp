@@ -140,6 +140,7 @@ void SplitScreenManager::Align()
 		// HUD viewport
 		mHUDViewports.push_back(mWindow->addViewport( mHUDCamera, i+5, dims[0], dims[1], dims[2], dims[3]));
 		mHUDViewports.back()->setClearEveryFrame(true, FBT_DEPTH);
+		mHUDViewports.back()->setOverlaysEnabled(false);
 		mHUDViewports.back()->setBackgroundColour(ColourValue(0.0, 0.0, 0.0, 0.0));
 	}
 	
