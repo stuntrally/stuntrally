@@ -51,7 +51,7 @@
 	<track n="31" name="0W4-ice-blur"	created="12-12-10" crtver="0.9" modified="12-12-10" scenery="Winter" 	author="CH" fluids="0" bumps="0" jumps="0" loops="0" pipes="0" banked="0" frenzy="2" long="0" diff="3" rating="2" rateuser="0" drivenlaps="0" />
 	<track n="32" name="0W5-O4"			created="22-12-10" crtver="0.9" modified="22-12-10" scenery="Winter" 	author="CH" fluids="0" bumps="0" jumps="0" loops="0" pipes="0" banked="2" frenzy="2" long="3" diff="2" rating="2" rateuser="0" drivenlaps="0" />
 <!--32-->
-	<track n="33" name="S7-HighMadWide" created="20-12-10" crtver="1.0" modified="20-12-10" scenery="Savanna" 	author="CH" fluids="0" bumps="0" jumps="0" loops="0" pipes="0" banked="3" frenzy="1" long="3" diff="3" rating="2" rateuser="0" drivenlaps="0" />
+	<track n="33" name="S7-HighMadWide" created="20-12-10" crtver="1.0" modified="20-12-10" scenery="Savanna" 	author="CH" fluids="0" bumps="1" jumps="0" loops="1" pipes="0" banked="3" frenzy="1" long="3" diff="3" rating="2" rateuser="0" drivenlaps="0" />
 	<track n="34" name="J6-80fun"		created="22-12-10" crtver="1.0" modified="23-12-10" scenery="Jungle"	author="CH" fluids="0" bumps="0" jumps="1" loops="0" pipes="2" banked="1" frenzy="2" long="3" diff="3" rating="3" rateuser="0" drivenlaps="0" />
 	<track n="35" name="I1-star3"		created="30-12-10" crtver="1.0" modified="10-09-11" scenery="Island"	author="CH" fluids="1" bumps="0" jumps="0" loops="0" pipes="0" banked="0" frenzy="1" long="2" diff="1" rating="0" rateuser="0" drivenlaps="0" />
 	<track n="36" name="S9-demo"		created="06-01-11" crtver="1.01" modified="06-01-11" scenery="Savanna"	author="CH" fluids="0" bumps="1" jumps="0" loops="0" pipes="1" banked="1" frenzy="1" long="1" diff="2" rating="2" rateuser="0" drivenlaps="0" />

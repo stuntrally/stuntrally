@@ -50,3 +50,8 @@ parent = base_sky
 diffuseMap_1024 = dayovercast_s.jpg
 diffuseMap_2048 = dayovercast.jpg
 
+[sky/magic]
+parent = base_sky
+diffuseMap_1024 = magic_s.jpg
+diffuseMap_2048 = magic.jpg
+

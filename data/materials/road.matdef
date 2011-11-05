@@ -123,6 +123,30 @@
 	normalMap_1024 = ice_3_nh1.png
 	terrainLightMap = true
 
+; ----------- Magic ======------
+[roadSandMagic]
+	ambient = 0.12 0.08 0.28
+	diffuse = 0.42 0.52 0.92
+	specular = 0.3 0.6 1.0 64
+	depthBias = 3
+	diffuseMap_512 = roadSandSet_s.jpg
+	diffuseMap_2048 = roadSandSet.jpg
+	receivesShadows = true
+	envMap = ReflectionCube
+	reflAmount = 0.15
+	bumpScale = 0.3
+
+[roadSandMagic_ter]
+	parent = roadSandMagic
+	alphaMap_512 = roadAlpha_s.png
+	alphaMap_2048 = roadAlpha.png
+	transparent = true
+	sceneBlend = alpha
+	depthWrite = false
+	normalMap_512 = ice_3_nh1_s.png
+	normalMap_1024 = ice_3_nh1.png
+	terrainLightMap = true
+
 
 ; ----------- Mud ----------
 [roadMud]
