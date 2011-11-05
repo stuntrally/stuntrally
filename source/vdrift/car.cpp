@@ -328,14 +328,10 @@ bool CAR::LoadSounds(
 	{
 		const SOUNDBUFFER * buf = soundbufferlibrary.GetBuffer("gravel");
 		if (!buf)
-		{
-			error_output << "Can't load gravel sound" << std::endl;
-			return false;
+		{	error_output << "Can't load gravel sound" << std::endl;		return false;
 		}
-		gravelsound[i].SetBuffer(*buf);
-		gravelsound[i].Set3DEffects(true);
-		gravelsound[i].SetLoop(true);
-		gravelsound[i].SetGain(0);
+		gravelsound[i].SetBuffer(*buf);		gravelsound[i].Set3DEffects(true);
+		gravelsound[i].SetLoop(true);		gravelsound[i].SetGain(0);
 		int samples = gravelsound[i].GetSoundBuffer().GetSoundInfo().GetSamples();
 		gravelsound[i].SeekToSample((samples/4)*i);
 		gravelsound[i].Play();
@@ -350,10 +346,8 @@ bool CAR::LoadSounds(
 			error_output << "Can't load grass sound" << std::endl;
 			return false;
 		}
-		grasssound[i].SetBuffer(*buf);
-		grasssound[i].Set3DEffects(true);
-		grasssound[i].SetLoop(true);
-		grasssound[i].SetGain(0);
+		grasssound[i].SetBuffer(*buf);		grasssound[i].Set3DEffects(true);
+		grasssound[i].SetLoop(true);		grasssound[i].SetGain(0);
 		int samples = grasssound[i].GetSoundBuffer().GetSoundInfo().GetSamples();
 		grasssound[i].SeekToSample((samples/4)*i);
 		grasssound[i].Play();
@@ -366,46 +360,33 @@ bool CAR::LoadSounds(
 		if (i >= 2)
 			buf = soundbufferlibrary.GetBuffer("bump_rear");
 		if (!buf)
-		{
-			error_output << "Can't load bump sound: " << i << std::endl;
-			return false;
+		{	error_output << "Can't load bump sound: " << i << std::endl;	return false;
 		}
-		tirebump[i].SetBuffer(*buf);
-		tirebump[i].Set3DEffects(true);
-		tirebump[i].SetLoop(false);
-		tirebump[i].SetGain(1.0);
+		tirebump[i].SetBuffer(*buf);	tirebump[i].Set3DEffects(true);
+		tirebump[i].SetLoop(false);		tirebump[i].SetGain(1.0);
 	}
 
-	//set up crash sound
+	//set up crash sounds (many)
 	for (int i = 0; i < Ncrashsounds; ++i)
 	{
 		int n = i+1;
 		char name[3] = {'0'+ n/10, '0'+ n%10, 0};
 		const SOUNDBUFFER * buf = soundbufferlibrary.GetBuffer(name);
 		if (!buf)
-		{
-			error_output << "Can't load crash sound: " << name << std::endl;
-			return false;
+		{	error_output << "Can't load crash sound: " << name << std::endl;	return false;
 		}
-		crashsound[i].SetBuffer(*buf);
-		crashsound[i].Set3DEffects(true);
-		crashsound[i].SetLoop(false);
-		crashsound[i].SetGain(1.0);
+		crashsound[i].SetBuffer(*buf);	crashsound[i].Set3DEffects(true);
+		crashsound[i].SetLoop(false);	crashsound[i].SetGain(1.0);
 	}
 
 	{
 		const SOUNDBUFFER * buf = soundbufferlibrary.GetBuffer("wind");
 		if (!buf)
-		{
-			error_output << "Can't load wind sound" << std::endl;
-			return false;
+		{	error_output << "Can't load wind sound" << std::endl;	return false;
 		}
-		roadnoise.SetBuffer(*buf);
-		roadnoise.Set3DEffects(true);
-		roadnoise.SetLoop(true);
-		roadnoise.SetGain(0);
-		roadnoise.SetPitch(1.0);
-		roadnoise.Play();
+		roadnoise.SetBuffer(*buf);	roadnoise.Set3DEffects(true);
+		roadnoise.SetLoop(true);	roadnoise.SetGain(0);
+		roadnoise.SetPitch(1.0);	roadnoise.Play();
 	}
 
 	return true;
@@ -702,7 +683,7 @@ void CAR::UpdateSounds(float dt)
 	}
 
 	//update crash sound
-	//#if 1
+	#if 0
 	if (dynamics.bHitSnd)// && dynamics.sndHitN >= 0)
 	{
 		int f = dynamics.fParIntens * 0.04f;  //fSndForce * 0.1f;
@@ -721,6 +702,7 @@ void CAR::UpdateSounds(float dt)
 			//LogO("Snd:  i " + toStr(i) + "  parF " + toStr(dynamics.fParIntens) + "  sndF " + toStr(dynamics.fSndForce));
 		}/**/
 	}
+	#endif
 	//#else
 	//update crash sound
 	{

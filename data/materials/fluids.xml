@@ -14,8 +14,8 @@
 
 
 	<fluid name="mud easy soft"	material="Mud_orange" density="600"  angDamp="1.2" linDamp="0.4" heightDamp="3"
-		bWhForce="1" whMaxAngVel="70" whSpinDamp="20"  whForceLong="70" whForceUp="60"
-		bumpFqX="10.2" bumpFqY="10.5" bumpAmp="0.2" bumpAngle="0" whSteerMul="3" />
+		bWhForce="1" whMaxAngVel="70" whSpinDamp="20"  whForceLong="70" whForceUp="40"
+		bumpFqX="10.2" bumpFqY="10.5" bumpAmp="0.2" bumpAngle="0" whSteerMul="2" />
 
 	<fluid name="mud easy med"	material="Mud_brown"  density="800"  angDamp="1.7" linDamp="0.8" heightDamp="6"
 		bWhForce="1" whMaxAngVel="60" whSpinDamp="25"  whForceLong="80" whForceUp="15"
@@ -27,12 +27,12 @@
 
 
 	<fluid name="mud soft"		material="Mud_orange" density="600"  angDamp="1.2" linDamp="0.6" heightDamp="3"
-		bWhForce="1" whMaxAngVel="20" whSpinDamp="20"  whForceLong="260" whForceUp="40"
+		bWhForce="1" whMaxAngVel="20" whSpinDamp="20"  whForceLong="160" whForceUp="30"
 		bumpFqX="10.2" bumpFqY="10.5" bumpAmp="0.8" bumpAngle="10" whSteerMul="1" />
 
 	<fluid name="mud med"		material="Mud_brown"  density="800"  angDamp="1.7" linDamp="0.8" heightDamp="6"
 		bWhForce="1" whMaxAngVel="60" whSpinDamp="25"  whForceLong="80" whForceUp="15"
-		bumpFqX="22.2" bumpFqY="23.2" bumpAmp="0.8" bumpAngle="20" whSteerMul="2" />
+		bumpFqX="22.2" bumpFqY="23.2" bumpAmp="0.8" bumpAngle="20" whSteerMul="1.5" />
 
 	<fluid name="mud hard"		material="Mud_dark"  density="1000" angDamp="2.2" linDamp="1.3" heightDamp="10"
 		bWhForce="1" whMaxAngVel="50" whSpinDamp="30"  whForceLong="80" whForceUp="10"
@@ -40,7 +40,7 @@
 
 
 	<fluid name="grease jelly"	material="Grease_jelly" density="800"  angDamp="1.2" linDamp="0.4" heightDamp="3"
-		bWhForce="1" whMaxAngVel="70" whSpinDamp="20"  whForceLong="70" whForceUp="60"
+		bWhForce="1" whMaxAngVel="70" whSpinDamp="20"  whForceLong="70" whForceUp="50"
 		bumpFqX="10.2" bumpFqY="10.5" bumpAmp="0.2" bumpAngle="0" whSteerMul="3" />
 
 	<!--materials   particles..

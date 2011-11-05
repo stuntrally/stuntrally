@@ -125,7 +125,7 @@
 
 ; ----------- Magic ======------
 [roadSandMagic]
-	ambient = 0.12 0.08 0.28
+	ambient = 0.09 0.08 0.38
 	diffuse = 0.42 0.52 0.92
 	specular = 0.3 0.6 1.0 64
 	depthBias = 3
