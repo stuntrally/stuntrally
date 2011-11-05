@@ -31,8 +31,8 @@ material Boost
 
 			texture_unit
 			{
+				tex_address_mode clamp
 				texture boost.png
-				//tex_address_mode clamp
 			}
 		}
 	}
