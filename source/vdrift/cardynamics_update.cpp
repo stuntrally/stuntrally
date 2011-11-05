@@ -98,17 +98,19 @@ void CARDYNAMICS::UpdateBuoyancy()
 			if (fb->id >= 0)
 			{
 				const FluidParams& fp = pFluids->fls[fb->id];
+
+				WHEEL_POSITION wp = WHEEL_POSITION(w);
+				float whR = GetTire(wp).GetRadius() * 1.2f;  //bigger par
+				MATHVECTOR <float, 3> wheelpos = GetWheelPosition(wp, 0);
+				wheelpos[2] -= whR;
+				
+				//  height in fluid:  0 just touching surface, 1 fully in fluid
+				//  wheel plane distance  water.plane.normal.z = 1  water.plane.offset = fl.pos.y;
+				whH[w] = (wheelpos[2] - fb->pos.y) * -0.5f / whR;
+				whH[w] = std::max(0.f, std::min(1.f, whH[w]));
+
 				if (fp.bWhForce)
 				{
-					WHEEL_POSITION wp = WHEEL_POSITION(w);
-					float whR = GetTire(wp).GetRadius() * 1.2f;  //bigger par
-					MATHVECTOR <float, 3> wheelpos = GetWheelPosition(wp, 0);
-					wheelpos[2] -= whR;
-					
-					//  height in fluid:  0 just touching surface, 1 fully in fluid
-					//  wheel plane distance  water.plane.normal.z = 1  water.plane.offset = fl.pos.y;
-					whH[w] = (wheelpos[2] - fb->pos.y) * -0.5f / whR;
-					whH[w] = std::max(0.f, std::min(1.f, whH[w]));
 					bool inAir = GetWheelContact(wp).col == NULL;
 
 					//  bump, adds some noise
