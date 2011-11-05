@@ -528,6 +528,10 @@
 				RelativePath=".\Source\Editor\Render2tex.cpp"
 				>
 			</File>
+			<File
+				RelativePath=".\config\tracks.xml"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="Scene"
