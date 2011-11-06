@@ -14,7 +14,7 @@
 
 
 	<fluid name="mud easy soft"	material="Mud_orange" density="600"  angDamp="1.2" linDamp="0.4" heightDamp="3"
-		bWhForce="1" whMaxAngVel="70" whSpinDamp="20"  whForceLong="70" whForceUp="40"
+		bWhForce="1" whMaxAngVel="70" whSpinDamp="20"  whForceLong="70" whForceUp="20"
 		bumpFqX="10.2" bumpFqY="10.5" bumpAmp="0.2" bumpAngle="0" whSteerMul="2" />
 
 	<fluid name="mud easy med"	material="Mud_brown"  density="800"  angDamp="1.7" linDamp="0.8" heightDamp="6"
