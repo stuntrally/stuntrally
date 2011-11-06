@@ -104,5 +104,6 @@
 	<track n="67" name="X1-Magic"		created="05-11-11" crtver="1.4" modified="05-11-11" scenery="Unidentified" 	author="CH" fluids="2" bumps="2" jumps="0" loops="0" pipes="1" banked="2" frenzy="1" long="1" diff="3" rating="1" />
 
 	<track n="68" name="D9-Mud"			created="06-11-11" crtver="1.4" modified="06-11-11" scenery="Desert" 	author="CH" fluids="3" bumps="0" jumps="1" loops="0" pipes="0" banked="0" frenzy="0" long="1" diff="1" rating="2" />
+	<track n="69" name="J14-Muddy"		created="06-11-11" crtver="1.4" modified="06-11-11" scenery="Jungle" 	author="CH" fluids="5" bumps="1" jumps="0" loops="0" pipes="0" banked="1" frenzy="1" long="1" diff="3" rating="2" />
 
 </tracks>
