@@ -611,14 +611,15 @@ void App::UpdHUDRot(int carId, CarModel* pCarM, float vel)
     float sx = 1.4f, sy = sx*asp;  // *par len
     float psx = 2.1f * pSet->size_minimap, psy = psx;  // *par len
 
-    const static Real tc[4][2] = {{0,1}, {1,1}, {1,0}, {0,0}};  // defaults, no rot
-    const static Real tp[4][2] = {{-1,-1}, {1,-1}, {1,1}, {-1,1}};
+    const static Real tc[4][2] = {{0,1}, {1,1}, {0,0}, {1,0}};  // defaults, no rot
+    const static Real tp[4][2] = {{-1,-1}, {1,-1}, {-1,1}, {1,1}};
     const static float d2r = PI_d/180.f;
+    const static Real ang[4] = {0.f,90.f,270.f,180.f};
 
     static float rx[4],ry[4], vx[4],vy[4], px[4],py[4], cx[4],cy[4];  // rpm,vel, pos,crc
     for (int i=0; i<4; i++)  // 4 verts, each+90deg
     {
-		float ia = 45.f + float(i)*90.f;
+		float ia = 45.f + ang[i];  //float(i)*90.f;
 		float r = -(angrmp + ia) * d2r;		rx[i] = sx*cosf(r);  ry[i] =-sy*sinf(r);
 		float v = -(angvel + ia) * d2r;		vx[i] = sx*cosf(v);  vy[i] =-sy*sinf(v);
 		float p = -(angrot + ia) * d2r;		float cp = cosf(p), sp = sinf(p);
