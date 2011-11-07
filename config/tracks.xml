@@ -106,4 +106,7 @@
 	<track n="68" name="D9-Mud"			created="06-11-11" crtver="1.4" modified="06-11-11" scenery="Desert" 	author="CH" fluids="3" bumps="0" jumps="1" loops="0" pipes="0" banked="0" frenzy="0" long="1" diff="1" rating="2" />
 	<track n="69" name="J14-Muddy"		created="06-11-11" crtver="1.4" modified="06-11-11" scenery="Jungle" 	author="CH" fluids="5" bumps="1" jumps="0" loops="0" pipes="0" banked="1" frenzy="1" long="1" diff="3" rating="2" />
 
+	<track n="69" name="TestC5-egg"		created="06-11-11" crtver="1.4" modified="07-11-11" scenery="Forest" 	author="CH" fluids="0" bumps="0" jumps="0" loops="0" pipes="0" banked="4" frenzy="1" long="1" diff="1" rating="2" />
+	<track n="70" name="S13-Hole"		created="06-11-11" crtver="1.4" modified="07-11-11" scenery="Savanna" 	author="CH" fluids="1" bumps="0" jumps="0" loops="0" pipes="0" banked="5" frenzy="3" long="3" diff="5" rating="2" />
+
 </tracks>
