@@ -22,11 +22,79 @@
 #include <MyGUI.h>
 #include <MyGUI_OgrePlatform.h>
 
+#include <OgreRTShaderSystem.h>
+#include "common/MaterialGenerator.h"
 using namespace Ogre;
+
 
 //#define LogDbg(s)
 #define LogDbg(s)  LogO(s)
 
+
+/** This class demonstrates basic usage of the RTShader system.
+It sub class the material manager listener class and when a target scheme callback
+is invoked with the shader generator scheme it tries to create an equivalent shader
+based technique based on the default technique of the given material.
+*/
+class ShaderGeneratorTechniqueResolverListener : public Ogre::MaterialManager::Listener
+{
+public:
+
+	ShaderGeneratorTechniqueResolverListener(Ogre::RTShader::ShaderGenerator* pShaderGenerator)
+	{
+		mShaderGenerator = pShaderGenerator;			
+	}
+
+	/** This is the hook point where shader based technique will be created.
+	It will be called whenever the material manager won't find appropriate technique
+	that satisfy the target scheme name. If the scheme name is out target RT Shader System
+	scheme name we will try to create shader generated technique for it. 
+	*/
+	virtual Ogre::Technique* handleSchemeNotFound(unsigned short schemeIndex, 
+		const Ogre::String& schemeName, Ogre::Material* originalMaterial, unsigned short lodIndex, 
+		const Ogre::Renderable* rend)
+	{	
+		Ogre::Technique* generatedTech = NULL;
+
+		// Case this is the default shader generator scheme.
+		if (schemeName == Ogre::RTShader::ShaderGenerator::DEFAULT_SCHEME_NAME)
+		{
+			bool techniqueCreated;
+
+			// Create shader generated technique for this material.
+			techniqueCreated = mShaderGenerator->createShaderBasedTechnique(
+				originalMaterial->getName(), 
+				Ogre::MaterialManager::DEFAULT_SCHEME_NAME, 
+				schemeName);	
+
+			// Case technique registration succeeded.
+			if (techniqueCreated)
+			{
+				// Force creating the shaders for the generated technique.
+				mShaderGenerator->validateMaterial(schemeName, originalMaterial->getName());
+				
+				// Grab the generated technique.
+				Ogre::Material::TechniqueIterator itTech = originalMaterial->getTechniqueIterator();
+
+				while (itTech.hasMoreElements())
+				{
+					Ogre::Technique* curTech = itTech.getNext();
+
+					if (curTech->getSchemeName() == schemeName)
+					{
+						generatedTech = curTech;
+						break;
+					}
+				}				
+			}
+		}
+
+		return generatedTech;
+	}
+
+protected:	
+	Ogre::RTShader::ShaderGenerator*	mShaderGenerator;			// The shader generator instance.		
+};
 
 //  Camera
 //-------------------------------------------------------------------------------------
@@ -112,7 +180,14 @@ void BaseApp::refreshCompositor(bool disableAll)
 	{
 		CompositorManager::getSingleton().setCompositorEnabled((*it), "Bloom", false);
 		CompositorManager::getSingleton().setCompositorEnabled((*it), "HDR", false);
-		CompositorManager::getSingleton().setCompositorEnabled((*it), "ssao", false);
+		if(MaterialGenerator::MRTSupported())
+		{
+			CompositorManager::getSingleton().setCompositorEnabled((*it), "ssao", false);
+		}
+		else
+		{
+			CompositorManager::getSingleton().setCompositorEnabled((*it), "ssaoNoMRT", false);
+		}
 		CompositorManager::getSingleton().setCompositorEnabled((*it), "Motion Blur", false);
 		CompositorManager::getSingleton().setCompositorEnabled((*it), "SSAA", false);
 	}
@@ -123,9 +198,12 @@ void BaseApp::refreshCompositor(bool disableAll)
 	//  Set Bloom params (intensity, orig weight)
 	try
 	{	MaterialPtr bloom = MaterialManager::getSingleton().getByName("Ogre/Compositor/BloomBlend2");
-		GpuProgramParametersSharedPtr params = bloom->getTechnique(0)->getPass(0)->getFragmentProgramParameters();
-		params->setNamedConstant("OriginalImageWeight", pSet->bloomorig);
-		params->setNamedConstant("BlurWeight", pSet->bloomintensity);
+		if(!bloom.isNull())
+		{
+			GpuProgramParametersSharedPtr params = bloom->getTechnique(0)->getPass(0)->getFragmentProgramParameters();
+			params->setNamedConstant("OriginalImageWeight", pSet->bloomorig);
+			params->setNamedConstant("BlurWeight", pSet->bloomintensity);
+		}
 	}catch(...)
 	{	LogO("!!! Failed to set bloom shader params.");  }
 	
@@ -152,7 +230,14 @@ void BaseApp::refreshCompositor(bool disableAll)
 		CompositorManager::getSingleton().setCompositorEnabled((*it), "HDR", pSet->hdr);
 		CompositorManager::getSingleton().setCompositorEnabled((*it), "Motion Blur", pSet->motionblur);
 		CompositorManager::getSingleton().setCompositorEnabled((*it), "SSAA", pSet->ssaa);
-		CompositorManager::getSingleton().setCompositorEnabled((*it), "ssao", pSet->ssao);
+		if(MaterialGenerator::MRTSupported())
+		{
+			CompositorManager::getSingleton().setCompositorEnabled((*it), "ssao", pSet->ssao);
+		}
+		else
+		{
+			CompositorManager::getSingleton().setCompositorEnabled((*it), "ssaoNoMRT", pSet->ssao);
+		}
 	}
 }
 
@@ -189,7 +274,15 @@ void BaseApp::recreateCompositor()
 	{
 		mSSAOLogic = new SSAOLogic();
 		mSSAOLogic->setApp(this);
-		CompositorManager::getSingleton().registerCompositorLogic("ssao", mSSAOLogic);
+		if(MaterialGenerator::MRTSupported())
+		{
+			CompositorManager::getSingleton().registerCompositorLogic("ssao", mSSAOLogic);
+		}
+		else
+		{
+			CompositorManager::getSingleton().registerCompositorLogic("ssaoNoMRT", mSSAOLogic);
+		}
+
 	}
 
 	if (CompositorManager::getSingleton().getByName("Motion Blur").isNull())
@@ -283,7 +376,14 @@ void BaseApp::recreateCompositor()
 		CompositorManager::getSingleton().removeCompositorChain( (*it ));
 		
 		CompositorManager::getSingleton().addCompositor((*it), "HDR");
-		CompositorManager::getSingleton().addCompositor((*it), "ssao");
+		if(MaterialGenerator::MRTSupported())
+		{
+			CompositorManager::getSingleton().addCompositor((*it), "ssao");
+		}
+		else
+		{
+			CompositorManager::getSingleton().addCompositor((*it), "ssaoNoMRT");
+		}
 		CompositorManager::getSingleton().addCompositor((*it), "Bloom");
 		CompositorManager::getSingleton().addCompositor((*it), "Motion Blur");
 		CompositorManager::getSingleton().addCompositor((*it), "SSAA");
@@ -310,6 +410,7 @@ void BaseApp::Run( bool showDialog )
 //-------------------------------------------------------------------------------------
 BaseApp::BaseApp()
 	:mRoot(0), mSceneMgr(0), mWindow(0), mHDRLogic(0), mMotionBlurLogic(0),mSSAOLogic(0)
+	,mShaderGenerator(0),mMaterialMgrListener(0)
 	,mShowDialog(1), mShutDown(false), bWindowResized(0)
 	,mInputManager(0), mMouse(0), mKeyboard(0), mOISBsys(0)
 	,alt(0), ctrl(0), shift(0), roadUpCnt(0)
@@ -327,6 +428,8 @@ BaseApp::BaseApp()
 
 BaseApp::~BaseApp()
 {
+	refreshCompositor(false);
+	CompositorManager::getSingleton().removeAll();
 	delete mLoadingBar;
 	delete mSplitMgr;
 	
@@ -337,15 +440,26 @@ BaseApp::~BaseApp()
 
 	WindowEventUtilities::removeWindowEventListener(mWindow, this);
 	windowClosed(mWindow);
-	
-	
+	// Unregister the material manager listener.
+	if (mMaterialMgrListener != NULL)
+	{			
+		Ogre::MaterialManager::getSingleton().removeListener(mMaterialMgrListener);
+		delete mMaterialMgrListener;
+		mMaterialMgrListener = NULL;
+	}
+
+	// Finalize RTShader system.
+	if (mShaderGenerator != NULL)
+	{				
+		Ogre::RTShader::ShaderGenerator::finalize();
+		mShaderGenerator = NULL;
+	}
 	#if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
 		mRoot->unloadPlugin("RenderSystem_Direct3D9");
 		mRoot->unloadPlugin("RenderSystem_Direct3D11");
 	#endif
 	mRoot->unloadPlugin("RenderSystem_GL");
 	
-
 	OGRE_DELETE mRoot;
 	delete mHDRLogic;  mHDRLogic = 0;
 }
@@ -431,6 +545,23 @@ bool BaseApp::setup()
 	Ogre::LogManager::getSingleton().setLogDetail(LL_BOREME);//
 	#endif
 
+	//RT ShaderSystem
+	if (Ogre::RTShader::ShaderGenerator::initialize())
+	{ 
+		// Grab the shader generator pointer.
+		mShaderGenerator = Ogre::RTShader::ShaderGenerator::getSingletonPtr();
+ 
+		// Add the shader libs resource location.
+		Ogre::ResourceGroupManager::getSingleton().addResourceLocation(PATHMANAGER::GetDataPath()+"/RTShaderLib", "FileSystem");
+ 
+		// Set shader cache path.
+		mShaderGenerator->setShaderCachePath(PATHMANAGER::GetShaderCacheDir());		
+ 
+		// Create and register the material manager listener.
+		mMaterialMgrListener = new ShaderGeneratorTechniqueResolverListener(mShaderGenerator);				
+		Ogre::MaterialManager::getSingleton().addListener(mMaterialMgrListener);	
+	}
+
 	setupResources();
 
 	if (!configure())
@@ -439,6 +570,10 @@ bool BaseApp::setup()
 	mSceneMgr = mRoot->createSceneManager(/*ST_GENERIC/**/ST_EXTERIOR_FAR/**/);
 	mSplitMgr = new SplitScreenManager(mSceneMgr, mWindow, pSet);
 
+	if(mShaderGenerator != NULL)
+	{
+		mShaderGenerator->addSceneManager(mSceneMgr);
+	}
 	createCamera();
 	createViewports(); // calls mSplitMgr->Align();
 
@@ -468,7 +603,36 @@ bool BaseApp::setup()
 	
 	// After having initialised mygui, we can set translated strings
 	setTranslations();
+	if(mShaderGenerator != NULL && mRoot->getRenderSystem()->getCapabilities()->hasCapability(Ogre::RSC_FIXED_FUNCTION) == false)
+	{
+		// creates shaders for base material BaseWhite using the RTSS
+		Ogre::MaterialPtr baseWhite = Ogre::MaterialManager::getSingleton().getByName("BaseWhite", Ogre::ResourceGroupManager::INTERNAL_RESOURCE_GROUP_NAME);				
+		baseWhite->setLightingEnabled(false);
+		mShaderGenerator->createShaderBasedTechnique(
+			"BaseWhite", 
+			Ogre::MaterialManager::DEFAULT_SCHEME_NAME, 
+			Ogre::RTShader::ShaderGenerator::DEFAULT_SCHEME_NAME);	
+		mShaderGenerator->validateMaterial(Ogre::RTShader::ShaderGenerator::DEFAULT_SCHEME_NAME, 
+			"BaseWhite");
+		baseWhite->getTechnique(0)->getPass(0)->setVertexProgram(
+		baseWhite->getTechnique(1)->getPass(0)->getVertexProgram()->getName());
+		baseWhite->getTechnique(0)->getPass(0)->setFragmentProgram(
+		baseWhite->getTechnique(1)->getPass(0)->getFragmentProgram()->getName());
 
+		// creates shaders for base material BaseWhiteNoLighting using the RTSS
+		mShaderGenerator->createShaderBasedTechnique(
+			"BaseWhiteNoLighting", 
+			Ogre::MaterialManager::DEFAULT_SCHEME_NAME, 
+			Ogre::RTShader::ShaderGenerator::DEFAULT_SCHEME_NAME);	
+		mShaderGenerator->validateMaterial(Ogre::RTShader::ShaderGenerator::DEFAULT_SCHEME_NAME, 
+			"BaseWhiteNoLighting");
+		Ogre::MaterialPtr baseWhiteNoLighting = Ogre::MaterialManager::getSingleton().getByName("BaseWhiteNoLighting", Ogre::ResourceGroupManager::INTERNAL_RESOURCE_GROUP_NAME);
+		baseWhiteNoLighting->getTechnique(0)->getPass(0)->setVertexProgram(
+		baseWhiteNoLighting->getTechnique(1)->getPass(0)->getVertexProgram()->getName());
+		baseWhiteNoLighting->getTechnique(0)->getPass(0)->setFragmentProgram(
+		baseWhiteNoLighting->getTechnique(1)->getPass(0)->getFragmentProgram()->getName());
+
+	}
 	createResourceListener();
 	loadResources();
 
@@ -480,6 +644,7 @@ bool BaseApp::setup()
 
 	LogDbg("*** recreateCompositor ***");
 	recreateCompositor();
+	
 
 	postInit();
 	LogDbg("*** end setup ***");

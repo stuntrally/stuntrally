@@ -478,18 +478,23 @@ void WindBatchPage::_updateShaders()
 						GpuProgramParametersSharedPtr params = pass->getVertexProgramParameters();
 
 						if (lightingEnabled) {
-							params->setNamedAutoConstant("objSpaceLight", GpuProgramParameters::ACT_LIGHT_POSITION_OBJECT_SPACE);
-							params->setNamedAutoConstant("lightDiffuse", GpuProgramParameters::ACT_DERIVED_LIGHT_DIFFUSE_COLOUR);
-							params->setNamedAutoConstant("lightAmbient", GpuProgramParameters::ACT_DERIVED_AMBIENT_LIGHT_COLOUR);
+							if(params->_findNamedConstantDefinition("objSpaceLight",false))
+								params->setNamedAutoConstant("objSpaceLight", GpuProgramParameters::ACT_LIGHT_POSITION_OBJECT_SPACE);
+							if(params->_findNamedConstantDefinition("lightDiffuse",false))
+								params->setNamedAutoConstant("lightDiffuse", GpuProgramParameters::ACT_DERIVED_LIGHT_DIFFUSE_COLOUR);
+							if(params->_findNamedConstantDefinition("lightAmbient",false))
+								params->setNamedAutoConstant("lightAmbient", GpuProgramParameters::ACT_DERIVED_AMBIENT_LIGHT_COLOUR);
 							//params->setNamedAutoConstant("matAmbient", GpuProgramParameters::ACT_SURFACE_AMBIENT_COLOUR);
 						}
 
-						params->setNamedConstantFromTime("time", 1);
+						if(params->_findNamedConstantDefinition("time",false))
+							params->setNamedConstantFromTime("time", 1);
 
 						if(shaderLanguage.compare("glsl"))
 						{
 							//glsl can use the built in gl_ModelViewProjectionMatrix
-							params->setNamedAutoConstant("worldViewProj", GpuProgramParameters::ACT_WORLDVIEWPROJ_MATRIX);
+							if(params->_findNamedConstantDefinition("worldViewProj",false))
+								params->setNamedAutoConstant("worldViewProj", GpuProgramParameters::ACT_WORLDVIEWPROJ_MATRIX);
 						}
 
 						if (fadeEnabled){

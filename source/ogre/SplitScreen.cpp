@@ -16,6 +16,9 @@
 #include <OgreLogManager.h>
 #include <OgreParticleSystem.h>
 #include <OgreParticleEmitter.h>
+
+#include <OgreRTShaderSystem.h>
+
 using namespace Ogre;
 
 
@@ -135,6 +138,12 @@ void SplitScreenManager::Align()
 		mGuiSceneMgr = Ogre::Root::getSingleton().createSceneManager(ST_GENERIC);
 		Ogre::Camera* guiCam = mGuiSceneMgr->createCamera("GuiCam1");  // todo destroy !..
 		mGuiViewport = mWindow->addViewport(guiCam, 100);
+
+		Ogre::RTShader::ShaderGenerator *mShaderGenerator = Ogre::RTShader::ShaderGenerator::getSingletonPtr();
+		if(mShaderGenerator != NULL)
+		{
+			mShaderGenerator->addSceneManager(mSceneMgr);
+		}
 	}
 	
 	AdjustRatio();

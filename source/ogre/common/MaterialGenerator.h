@@ -74,6 +74,7 @@ protected:
 	bool vpNeedWITMat();
 	
 	// passtrough (vertex to fragment)
+	bool fpNeedWMat();
 	bool fpNeedTangentToCube();
 	bool fpNeedWsNormal();
 	bool fpNeedEyeVector();

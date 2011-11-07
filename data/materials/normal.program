@@ -1,7 +1,7 @@
 vertex_program geom_vs cg
 {
     source normal.cg
-    profiles vs_1_1 arbvp1
+    profiles vs_4_0 vs_1_1 arbvp1
     entry_point geom_vs
 
     default_params
@@ -14,7 +14,7 @@ vertex_program geom_vs cg
 fragment_program geom_ps cg
 {
     source normal.cg
-    profiles ps_2_0 arbfp1
+    profiles ps_4_0 ps_2_0 arbfp1
     entry_point geom_ps
 
     default_params
@@ -26,7 +26,7 @@ fragment_program geom_ps cg
 fragment_program geom_alpha_ps cg
 {
     source normal.cg
-    profiles ps_2_0 arbfp1
+    profiles ps_4_0 ps_2_0 arbfp1
     entry_point geom_alpha_ps
 
     default_params
@@ -38,7 +38,7 @@ fragment_program geom_alpha_ps cg
 vertex_program geom_terrain_vs cg
 {
     source normal.cg
-    profiles vs_1_1 arbvp1
+    profiles vs_4_0 vs_1_1 arbvp1
     entry_point geom_terrain_vs
 
     default_params
@@ -51,7 +51,7 @@ vertex_program geom_terrain_vs cg
 fragment_program geom_terrain_ps cg
 {
     source normal.cg
-    profiles ps_2_0 arbfp1
+    profiles ps_4_0 ps_2_0 arbfp1
     entry_point geom_terrain_ps
 
     default_params
@@ -63,7 +63,7 @@ fragment_program geom_terrain_ps cg
 fragment_program geom_white_ps cg
 {
     source normal.cg
-    profiles ps_2_0 arbfp1
+    profiles ps_4_0 ps_2_0 arbfp1
     entry_point geom_white_ps
 
     default_params

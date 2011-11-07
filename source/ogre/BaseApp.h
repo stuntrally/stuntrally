@@ -13,10 +13,14 @@
 #include <MyGUI_Widget.h>
 
 namespace MyGUI{  class OgrePlatform;  };
-namespace Ogre {  class SceneNode;  class Root;  class SceneManager;  class RenderWindow;  }
+namespace Ogre 
+{  
+	class SceneNode;  class Root;  class SceneManager;  class RenderWindow;
+	namespace RTShader{ class ShaderGenerator; };
+}
 namespace OIS  {  class InputManager;  class Mouse;  class Keyboard;  }
 namespace OISB {  class System;  };
-
+class ShaderGeneratorTechniqueResolverListener;
 
 class BaseApp :
 		public Ogre::FrameListener, public Ogre::WindowEventListener,
@@ -89,6 +93,8 @@ protected:
 	///  Ogre
 	Ogre::Root *mRoot;  Ogre::SceneManager* mSceneMgr;
 	Ogre::RenderWindow* mWindow;
+	Ogre::RTShader::ShaderGenerator *mShaderGenerator;
+	ShaderGeneratorTechniqueResolverListener*	mMaterialMgrListener;		// Shader generator material manager listener.	
 
 	///  input
 	OISB::System* mOISBsys;
