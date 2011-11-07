@@ -457,7 +457,7 @@ inline bool MaterialGenerator::UsePerPixelNormals()
 {
 	return false;//this is not working at the moment
 }
-inline bool MaterialGenerator::MRTSupported()
+bool MaterialGenerator::MRTSupported()
 {
 	static bool bMRTSupportCalculated=false;
 	if(!bMRTSupportCalculated)
