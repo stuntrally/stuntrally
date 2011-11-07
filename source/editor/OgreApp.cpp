@@ -63,9 +63,9 @@ App::App()  //  gui wigdets--
 	pathTrk[1] = PATHMANAGER::GetTrackPathUser() + "/";  pathTrkPrv[1] = pathTrk[1] + "_previews/";
 	strFSerrors = "";
 
-	mBrSize[0] = 16.f;		mBrSize[1] = 24.f;		mBrSize[2] = 16.f;		
-	mBrIntens[0] = 20.f;	mBrIntens[1] = 20.f;	mBrIntens[2] = 20.f;	
-	mBrPow[0] = 2.f;	mBrPow[1] = 2.f;	mBrPow[2] = 2.f;		
+	mBrSize[0] = 16.f;		mBrSize[1] = 24.f;		mBrSize[2] = 16.f;
+	mBrIntens[0] = 20.f;	mBrIntens[1] = 20.f;	mBrIntens[2] = 20.f;
+	mBrPow[0] = 2.f;	mBrPow[1] = 2.f;	mBrPow[2] = 2.f;
 	mBrFq[0] = 1.f;		mBrFq[1] = 1.f;		mBrFq[2] = 1.f;
 	mBrOct[0] = 5;		mBrOct[1] = 5;		mBrOct[2] = 5;
 	terSetH = 10.f;
@@ -133,12 +133,11 @@ ManualObject* App::Create2D(const String& mat, Real s, bool dyn)
 	m->setCastShadows(false);
 
 	m->estimateVertexCount(4);
-	m->begin(mat, RenderOperation::OT_TRIANGLE_FAN);
-
+	m->begin(mat, RenderOperation::OT_TRIANGLE_STRIP);
 	m->position(-s,-s*asp, 0);  m->textureCoord(0, 1);
 	m->position( s,-s*asp, 0);  m->textureCoord(1, 1);
-	m->position( s, s*asp, 0);  m->textureCoord(1, 0);
 	m->position(-s, s*asp, 0);  m->textureCoord(0, 0);
+	m->position( s, s*asp, 0);  m->textureCoord(1, 0);
 	m->end();
  
 	AxisAlignedBox aabInf;	aabInf.setInfinite();

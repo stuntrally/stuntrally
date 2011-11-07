@@ -34,7 +34,7 @@ bool App::frameRenderingQueued(const FrameEvent& evt)
 		}
 		if (mpos)  {	mpos->beginUpdate(0);
 			mpos->position(px[0],py[0], 0);  mpos->textureCoord(0, 1);	mpos->position(px[1],py[1], 0);  mpos->textureCoord(1, 1);
-			mpos->position(px[2],py[2], 0);  mpos->textureCoord(1, 0);	mpos->position(px[3],py[3], 0);  mpos->textureCoord(0, 0);
+			mpos->position(px[3],py[3], 0);  mpos->textureCoord(0, 0);	mpos->position(px[2],py[2], 0);  mpos->textureCoord(1, 0);
 			mpos->end();  }
 	}
 	
