@@ -37,8 +37,9 @@ namespace MyGUI
 		mWidthBar(0),
 		mButtonMain(nullptr),
 		mLastMouseFocusIndex(ITEM_NONE),
-		mSortUp(true),
+		mSortUp(true), mSortUpOld(true),
 		mSortColumnIndex(ITEM_NONE),
+		mSortColumnIndexOld(ITEM_NONE),
 		mWidthSeparator(0),
 		mOffsetButtonSeparator(2),
 		mItemSelected(ITEM_NONE),
@@ -245,15 +246,15 @@ namespace MyGUI
 			mSortUp = !mSortUp;
 			redrawButtons();
 			// если было недосортированно то сортируем
-			if (mFrameAdvise) sortList();
+			//if (mFrameAdvise) sortList();
 
-			flipList();
+			//flipList();
 		}
 		else
 		{
 			mSortUp = true;
 			redrawButtons();
-			sortList();
+			//sortList();
 		}
 	}
 
@@ -504,6 +505,7 @@ namespace MyGUI
 
 	void MultiList2::flipList()
 	{
+		return;  ///! custom sort
 		if (ITEM_NONE == mSortColumnIndex) return;
 
 		size_t last = mVectorColumnInfo.front().list->getItemCount();
@@ -537,6 +539,7 @@ namespace MyGUI
 
 	void MultiList2::sortList()
 	{
+		return;  ///! custom sort
 		if (ITEM_NONE == mSortColumnIndex) return;
 
 		List* list = mVectorColumnInfo[mSortColumnIndex].list;

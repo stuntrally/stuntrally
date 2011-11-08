@@ -539,10 +539,11 @@ void App::GetMaterials(String filename, bool clear, String type)
 namespace bfs = boost::filesystem;
 
 bool App::TrackExists(String name/*, bool user*/)
-{
-	for (size_t i=0; i < vsTracks.size(); ++i)
-		if (vsTracks[i] == name /*&& vbTracksUser[i] == 1/*user*/)
-			return true;
+{	// ignore letters case..
+	for (strlist::const_iterator it = liTracks.begin(); it != liTracks.end(); ++it)
+		if (*it == name)  return true;
+	for (strlist::const_iterator it = liTracksUser.begin(); it != liTracksUser.end(); ++it)
+		if (*it == name)  return true;
 	return false;
 }
 

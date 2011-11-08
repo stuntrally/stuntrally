@@ -201,9 +201,14 @@ protected:
 	MyGUI::StaticImagePtr imgPrv,imgMini,imgTer, imgTrkIco1,imgTrkIco2;
 	const static int StTrk = 12, InfTrk = 10;
 	MyGUI::StaticTextPtr valTrk, stTrk[StTrk], infTrk[InfTrk];
-	void listTrackChng(MyGUI::MultiList2* li, size_t pos), TrackListUpd();
+
+	void listTrackChng(MyGUI::MultiList2* li, size_t pos), TrackListUpd(bool resetNotFound=false);
 	TracksXml tracksXml;  void btnTrkView1(WP),btnTrkView2(WP),ChangeTrackView(bool full),updTrkListDim();
 	const static int TcolW[32];
+
+	void edTrkFind(MyGUI::EditPtr);  Ogre::String sTrkFind;
+	strlist liTracks,liTracksUser;  void FillTrackLists();
+	std::list<TrkL> liTrk;
 
 	//  screen
 	MyGUI::ListPtr resList;

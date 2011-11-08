@@ -42,7 +42,8 @@ void BaseApp::createCamera()
 	mCameraT->lookAt(Vector3(0,0,0));
 
 	mViewport = mWindow->addViewport(mCamera);
-	mViewport->setBackgroundColour(ColourValue(0.5,0.65,0.8));  //`
+	//mViewport->setBackgroundColour(ColourValue(0.5,0.65,0.8));  //`
+	mViewport->setBackgroundColour(ColourValue(0.2,0.3,0.4));  //`
 	Real asp = Real(mViewport->getActualWidth()) / Real(mViewport->getActualHeight());
 	mCamera->setAspectRatio(asp);
 }

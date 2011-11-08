@@ -52,6 +52,8 @@ namespace MyGUI
 		
 		///  custom methods  --------------
 		void beginToItemAt(size_t id);
+		bool mSortUp, mSortUpOld;
+		size_t mSortColumnIndex, mSortColumnIndexOld;
 		
 
 		//------------------------------------------------------------------------------//
@@ -321,9 +323,6 @@ namespace MyGUI
 		VectorWidgetPtr mSeparators;
 
 		size_t mLastMouseFocusIndex;
-
-		bool mSortUp;
-		size_t mSortColumnIndex;
 
 		int mWidthSeparator;
 		std::string mSkinSeparator;

@@ -10,6 +10,7 @@
 #include <OgreManualObject.h>
 #include <OgreMaterialManager.h>
 #include "common/Gui_Def.h"
+#include "common/MultiList2.h"
 using namespace Ogre;
 
 
@@ -68,6 +69,19 @@ bool App::frameStart(Real time)
 		bSizeHUD = true;
 	}
 		
+	///  sort trk list
+	if (trkMList && trkMList->mSortColumnIndex != trkMList->mSortColumnIndexOld
+		|| trkMList->mSortUp != trkMList->mSortUpOld)
+	{
+		trkMList->mSortColumnIndexOld = trkMList->mSortColumnIndex;
+		trkMList->mSortUpOld = trkMList->mSortUp;
+
+		pSet->tracks_sort = trkMList->mSortColumnIndex;  // to set
+		pSet->tracks_sortup = trkMList->mSortUp;
+		TrackListUpd(false);
+	}
+
+
 	if (bLoading)
 	{
 		NewGameDoLoad();
@@ -203,15 +217,8 @@ bool App::frameStart(Real time)
 		if (pr && pr2 && pGame)
 		{
 			if (pGame->pause)
-			{
-				 pr->setSpeedFactor(0.f);
-				 pr2->setSpeedFactor(0.f);
-			}
-			else
-			{
-				 pr->setSpeedFactor(1.f);
-				 pr2->setSpeedFactor(1.f);
-			}
+				{	 pr->setSpeedFactor(0.f);	 pr2->setSpeedFactor(0.f);	}
+			else{	 pr->setSpeedFactor(1.f);	 pr2->setSpeedFactor(1.f);	}
 		}
 		
 		return ret;

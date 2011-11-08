@@ -54,8 +54,8 @@
 	<Tag name="TipTrkTerImg">Minimap of selected track, view from top.</Tag>
 	<Tag name="TipTrackMap">Minimap of selected track, view from top.</Tag>
 
+	<Tag name="Find">Find</Tag>
 	<Tag name="TrackDifficulties">Various Track Difficulties</Tag>
-	<Tag name="TipTrackMap">Minimap of selected track, view from top.</Tag>
 	<Tag name="TipTrackMap">Minimap of selected track, view from top.</Tag>
 	<Tag name="fluids">fluids (water or mud)</Tag>
 	<Tag name="bumps">bumps (bumpy terrain)</Tag>

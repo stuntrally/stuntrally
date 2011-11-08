@@ -4,6 +4,7 @@
 #include "../road/Road.h"
 #include "../paged-geom/PagedGeometry.h"
 #include "../ogre/common/Gui_Def.h"
+#include "../ogre/common/MultiList2.h"
 using namespace Ogre;
 
 
@@ -621,5 +622,18 @@ bool App::frameStarted(const Ogre::FrameEvent& evt)
 		DestroyFluids();
 		CreateFluids();
 	}
+	
+	///  sort trk list
+	if (trkMList && trkMList->mSortColumnIndex != trkMList->mSortColumnIndexOld
+		|| trkMList->mSortUp != trkMList->mSortUpOld)
+	{
+		trkMList->mSortColumnIndexOld = trkMList->mSortColumnIndex;
+		trkMList->mSortUpOld = trkMList->mSortUp;
+
+		pSet->tracks_sort = trkMList->mSortColumnIndex;  // to set
+		pSet->tracks_sortup = trkMList->mSortUp;
+		TrackListUpd(false);
+	}
+
 	return true;
 }
