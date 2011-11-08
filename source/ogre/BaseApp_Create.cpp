@@ -525,7 +525,14 @@ bool BaseApp::setup()
 		mRoot->loadPlugin(PATHMANAGER::GetOgrePluginDir() + "/RenderSystem_GL" + D_SUFFIX);
 		#if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
 		mRoot->loadPlugin(PATHMANAGER::GetOgrePluginDir() + "/RenderSystem_Direct3D9" + D_SUFFIX);
-		mRoot->loadPlugin(PATHMANAGER::GetOgrePluginDir() + "/RenderSystem_Direct3D11" + D_SUFFIX);
+		try
+		{
+			mRoot->loadPlugin(PATHMANAGER::GetOgrePluginDir() + "/RenderSystem_Direct3D11" + D_SUFFIX);
+		}
+		catch(...)
+		{
+			//Ignore D3D11 plugin is not available
+		}
 		#endif
 	}
 	else
@@ -535,7 +542,16 @@ bool BaseApp::setup()
 		else if (pSet->rendersystem == "Direct3D9 Rendering Subsystem")
 			mRoot->loadPlugin(PATHMANAGER::GetOgrePluginDir() + "/RenderSystem_Direct3D9" + D_SUFFIX);
 		else if (pSet->rendersystem == "Direct3D11 Rendering Subsystem")
-			mRoot->loadPlugin(PATHMANAGER::GetOgrePluginDir() + "/RenderSystem_Direct3D11" + D_SUFFIX);
+		{
+			try
+			{
+				mRoot->loadPlugin(PATHMANAGER::GetOgrePluginDir() + "/RenderSystem_Direct3D11" + D_SUFFIX);
+			}
+			catch(...)
+			{
+				//Ignore D3D11 plugin is not available
+			}
+		}
 	}
 
 	mRoot->loadPlugin(PATHMANAGER::GetOgrePluginDir() + "/Plugin_ParticleFX" + D_SUFFIX);
