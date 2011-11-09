@@ -322,7 +322,7 @@ void App::setToolTips(EnumeratorWidgetPtr widgets)
 			// needed for translation
 			wp->setUserString("tip", LanguageManager::getInstance().replaceTags(wp->getUserString("tip")));
 			wp->setNeedToolTip(true);
-			wp->eventToolTip = newDelegate(this, &App::notifyToolTip);
+			wp->eventToolTip += newDelegate(this, &App::notifyToolTip);
 		}
 		//LogO(wp->getName() + (tip ? "  *" : ""));
         setToolTips(wp->getEnumerator());
@@ -386,7 +386,7 @@ void App::GuiInitLang()
 	//ComboBoxPtr combo = mGUI->findWidget<ComboBox>("Lang");
 	ComboBoxPtr combo = (ComboBoxPtr)mWndOpts->findWidget("Lang");
 	if (!combo)  return;
-	combo->eventComboChangePosition = newDelegate(this, &App::comboLanguage);
+	combo->eventComboChangePosition += newDelegate(this, &App::comboLanguage);
 	for (std::map<std::string, std::string>::const_iterator it = languages.begin();
 		it != languages.end(); it++)
 	{
@@ -541,7 +541,7 @@ void App::InitGuiScrenRes()
 			resList->setIndexSelected(resList->findItemIndexWith(modeSel));
 	}
 	ButtonPtr btnRes = (ButtonPtr)mWndOpts->findWidget("ResChange");
-	if (btnRes)  {  btnRes->eventMouseButtonClick = newDelegate(this, &App::btnResChng);  }
+	if (btnRes)  {  btnRes->eventMouseButtonClick += newDelegate(this, &App::btnResChng);  }
 }
 
 
@@ -683,7 +683,7 @@ void App::comboGraphicsAll(ComboBoxPtr cmb, size_t val)
 #endif
 
 	//  update gui  sld,val,chk  ...
-	GuiInitGraphics();  // = newDelegate..?
+	GuiInitGraphics();  // += newDelegate..?
 	changeShadows(); // apply shadow
 
 	ButtonPtr btn, bchk;  HScrollPtr sl;  size_t v;

@@ -106,7 +106,7 @@ void App::InitGui()
 	Chk("AutoStart", chkAutoStart, pSet->autostart);
 	Chk("EscQuits", chkEscQuits, pSet->escquit);
 	bnQuit = mGUI->findWidget<Button>("Quit");
-	if (bnQuit)  {  bnQuit->eventMouseButtonClick = newDelegate(this, &App::btnQuit);  bnQuit->setVisible(false);  }
+	if (bnQuit)  {  bnQuit->eventMouseButtonClick += newDelegate(this, &App::btnQuit);  bnQuit->setVisible(false);  }
 	
 
 	///  [Sky]
