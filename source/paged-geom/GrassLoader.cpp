@@ -1372,7 +1372,7 @@ void GrassLayer::_updateShaders()
 					}
 					else if(shaderLanguage == "cg")
 					{
-						vertexShader->setParameter("profiles", "vs_1_1 arbvp1");
+						vertexShader->setParameter("profiles", "vs_4_0 vs_1_1 arbvp1");
 						vertexShader->setParameter("entry_point", "main");
 					}
 					// GLSL can only have one entry point "main".
