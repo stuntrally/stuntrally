@@ -6,6 +6,8 @@
 #include "../ogre/common/BltObjects.h"
 #include "../ogre/common/TracksXml.h"
 #include "../ogre/common/FluidsXml.h"
+#include "../ogre/common/MessageBox.h"
+#include "../ogre/common/MessageBoxStyle.h"
 
 #include "../vdrift/mathvector.h"
 #include "../vdrift/quaternion.h"
