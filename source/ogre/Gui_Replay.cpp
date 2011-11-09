@@ -216,7 +216,7 @@ void App::btnRplDelete(WP)
 	Message* message = Message::createMessageBox(
 		"Message", "Delete Replay ?", name,  // #{..
 		MessageBoxStyle::IconQuest | MessageBoxStyle::Yes | MessageBoxStyle::No);
-	message->eventMessageBoxResult = newDelegate(this, &App::msgRplDelete);
+	message->eventMessageBoxResult += newDelegate(this, &App::msgRplDelete);
 	//message->setUserString("FileName", fileName);
 }
 void App::msgRplDelete(Message* sender, MessageBoxStyle result)

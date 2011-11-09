@@ -95,7 +95,7 @@ void App::InitGui()
 	///  Checkboxes
     //------------------------------------------------------------------------
 	bnQuit = mGUI->findWidget<Button>("Quit");
-	if (bnQuit)  {  bnQuit->eventMouseButtonClick = newDelegate(this, &App::btnQuit);  bnQuit->setVisible(isFocGui);  }
+	if (bnQuit)  {  bnQuit->eventMouseButtonClick += newDelegate(this, &App::btnQuit);  bnQuit->setVisible(isFocGui);  }
 	Chk("SSAA", chkVidSSAA, pSet->ssaa);
 	Chk("ReverseOn", chkReverse, pSet->trackreverse);
 	Chk("ParticlesOn", chkParticles, pSet->particles);	Chk("TrailsOn", chkTrails, pSet->trails);
@@ -135,8 +135,8 @@ void App::InitGui()
 	bRkmh = mGUI->findWidget<Button>("kmh");
 	bRmph = mGUI->findWidget<Button>("mph");
 	if (bRkmh && bRmph)  {  bRkmh->setStateCheck(!pSet->show_mph);  bRmph->setStateCheck(pSet->show_mph);
-		bRkmh->eventMouseButtonClick = newDelegate(this, &App::radKmh);
-		bRmph->eventMouseButtonClick = newDelegate(this, &App::radMph);  }
+		bRkmh->eventMouseButtonClick += newDelegate(this, &App::radKmh);
+		bRmph->eventMouseButtonClick += newDelegate(this, &App::radMph);  }
 
 	//  startup
 	Chk("OgreDialog", chkOgreDialog, pSet->ogre_dialog);
@@ -179,12 +179,12 @@ void App::InitGui()
 	{	//  replay controls
 		Btn("RplToStart", btnRplToStart);  Btn("RplToEnd", btnRplToEnd)
 		Btn("RplPlay", btnRplPlay);  btRplPl = btn;
-		btn = (ButtonPtr)mWndRpl->findWidget("RplBack");	if (btn)  {		btn->eventMouseButtonPressed = newDelegate(this, &App::btnRplBackDn);  btn->eventMouseButtonReleased = newDelegate(this, &App::btnRplBackUp);  }
-		btn = (ButtonPtr)mWndRpl->findWidget("RplForward");  if (btn)  {	btn->eventMouseButtonPressed = newDelegate(this, &App::btnRplFwdDn);  btn->eventMouseButtonReleased = newDelegate(this, &App::btnRplFwdUp);  }
+		btn = (ButtonPtr)mWndRpl->findWidget("RplBack");	if (btn)  {		btn->eventMouseButtonPressed += newDelegate(this, &App::btnRplBackDn);  btn->eventMouseButtonReleased += newDelegate(this, &App::btnRplBackUp);  }
+		btn = (ButtonPtr)mWndRpl->findWidget("RplForward");  if (btn)  {	btn->eventMouseButtonPressed += newDelegate(this, &App::btnRplFwdDn);  btn->eventMouseButtonReleased += newDelegate(this, &App::btnRplFwdUp);  }
 		
 		//  info
 		slRplPos = (HScrollPtr)mWndRpl->findWidget("RplSlider");
-		if (slRplPos)  slRplPos->eventScrollChangePosition = newDelegate(this, &App::slRplPosEv);
+		if (slRplPos)  slRplPos->eventScrollChangePosition += newDelegate(this, &App::slRplPosEv);
 
 		valRplPerc = (StaticTextPtr)mWndRpl->findWidget("RplPercent");
     	valRplCur = (StaticTextPtr)mWndRpl->findWidget("RplTimeCur");
@@ -197,7 +197,7 @@ void App::InitGui()
 	edRplDesc = mGUI->findWidget<Edit>("RplDesc");
 
 	rplList = mGUI->findWidget<List>("RplList");
-	if (rplList)  rplList->eventListChangePosition = newDelegate(this, &App::listRplChng);
+	if (rplList)  rplList->eventListChangePosition += newDelegate(this, &App::listRplChng);
 	updReplaysList();
 
 
@@ -211,7 +211,7 @@ void App::InitGui()
 		Real h = hsv[i][0], s = hsv[i][1], v = hsv[i][2];
 		ColourValue c;  c.setHSB(1.f-h, s, v);
 		img->setColour(Colour(c.r,c.g,c.b));
-		img->eventMouseButtonClick = newDelegate(this, &App::imgBtnCarClr);
+		img->eventMouseButtonClick += newDelegate(this, &App::imgBtnCarClr);
 		img->setUserString("s", toStr(s));  img->setUserString("h", toStr(h));
 		img->setUserString("v", toStr(v));
 	}
@@ -219,7 +219,7 @@ void App::InitGui()
 	Slv(NumLaps, (pSet->num_laps - 1) / 20.f);
 	
 	TabPtr tPlr = (TabPtr)mLayout->findWidget("tabPlayer");
-	if (tPlr)  tPlr->eventTabChangeSelect = newDelegate(this, &App::tabPlayer);
+	if (tPlr)  tPlr->eventTabChangeSelect += newDelegate(this, &App::tabPlayer);
 	
 	
 	///  input tab
@@ -246,7 +246,7 @@ void App::InitGui()
 		}
 		if (!bFound)
 			pSet->car[0] = *li.begin();
-		carList->eventListChangePosition = newDelegate(this, &App::listCarChng);
+		carList->eventListChangePosition += newDelegate(this, &App::listCarChng);
     }
 
 	//  cars text, chg btn
@@ -254,7 +254,7 @@ void App::InitGui()
 	valCar->setCaption(TR("#{Car}: ") + pSet->car[0]);  sListCar = pSet->car[0];
 
     ButtonPtr btnCar = (ButtonPtr)mLayout->findWidget("ChangeCar");
-    if (btnCar)  btnCar->eventMouseButtonClick = newDelegate(this, &App::btnChgCar);
+    if (btnCar)  btnCar->eventMouseButtonClick += newDelegate(this, &App::btnChgCar);
 
     imgCar = (StaticImagePtr)mLayout->findWidget("CarImg");
     listCarChng(carList,0);
@@ -272,12 +272,12 @@ void App::InitGui()
     GuiInitTrack();
 
     ButtonPtr btnTrk = (ButtonPtr)mLayout->findWidget("ChangeTrack");
-    if (btnTrk)  btnTrk->eventMouseButtonClick = newDelegate(this, &App::btnChgTrack);
+    if (btnTrk)  btnTrk->eventMouseButtonClick += newDelegate(this, &App::btnChgTrack);
 
     //  new game
     for (int i=1; i<=4; ++i)
     {	ButtonPtr btnNewG = (ButtonPtr)mLayout->findWidget("NewGame"+toStr(i));
-		if (btnNewG)  btnNewG->eventMouseButtonClick = newDelegate(this, &App::btnNewGame);
+		if (btnNewG)  btnNewG->eventMouseButtonClick += newDelegate(this, &App::btnNewGame);
 	}
 	
 

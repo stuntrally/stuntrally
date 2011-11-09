@@ -51,7 +51,7 @@ void App::InitInputGui()
 		for (int i=0; i < jnum; ++i)
 			cmbJoy->addItem( sys.mJoysticks[i]->getName() );
 
-		cmbJoy->eventComboChangePosition = newDelegate(this, &App::cmbJoystick);
+		cmbJoy->eventComboChangePosition = +newDelegate(this, &App::cmbJoystick);
 		if (jnum > 0)  {  cmbJoy->setIndexSelected(0);  cmbJoystick(cmbJoy, 0);  }
 	}
 
@@ -179,14 +179,14 @@ void App::InitInputGui()
 				x1, button2 ? (y + ya*2) : y, sx, sy,  ALIGN,
 				"inputbutton_" + sAct + "_" + sPlr + "_1");
 			btn1->setCaption( skey1 );
-			btn1->eventMouseButtonClick = newDelegate(this, &App::inputBindBtnClicked);
+			btn1->eventMouseButtonClick += newDelegate(this, &App::inputBindBtnClicked);
 			
 			if (button2)
 			{	ButtonPtr btn2 = tabitem->createWidget<Button>("Button",
 					x1, y, sx, sy,  ALIGN,
 					"inputbutton_" + sAct + "_" + sPlr + "_2");
 				btn2->setCaption( skey2 );
-				btn2->eventMouseButtonClick = MyGUI::newDelegate(this, &App::inputBindBtnClicked);
+				btn2->eventMouseButtonClick += MyGUI::newDelegate(this, &App::inputBindBtnClicked);
 			}
 			
 			//  value bar  --------------
@@ -202,7 +202,7 @@ void App::InitInputGui()
 					"inputdetail_" + sAct + "_" + sPlr + "_1");
 				btn1->setCaption(">");
 				btn1->setColour(Colour(0.6f,0.8f,1.0f));
-				btn1->eventMouseButtonClick = newDelegate(this, &App::inputDetailBtn);
+				btn1->eventMouseButtonClick += newDelegate(this, &App::inputDetailBtn);
 			}
 		}
 	}

@@ -152,8 +152,8 @@ void App::GuiInitTrack()
 	//*li->setAlpha(0.8);*/  li->setInheritsAlpha(false);
 	
 	trkMList = li;  if (!li)  LogO("Error: No MListTracks in layout !");
-   	trkMList->eventListChangePosition = newDelegate(this, &App::listTrackChng);
-   	//..trkMList->eventListSelectAccept = newDelegate(this, &App::btnNewGameStart);
+   	trkMList->eventListChangePosition += newDelegate(this, &App::listTrackChng);
+   	//..trkMList->eventListSelectAccept += newDelegate(this, &App::btnNewGameStart);
    	trkMList->setVisible(false);
 	
 	//  preview images

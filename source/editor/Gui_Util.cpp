@@ -365,7 +365,7 @@ void App::btnTrackDel(WP)
 	Message* message = Message::createMessageBox(
 		"Message", bListTrackU==0 ? "Delete original Track ?" : "Delete Track ?", sListTrack,
 		MessageBoxStyle::IconQuest | MessageBoxStyle::Yes | MessageBoxStyle::No);
-	message->eventMessageBoxResult = newDelegate(this, &App::msgTrackDel);
+	message->eventMessageBoxResult += newDelegate(this, &App::msgTrackDel);
 	//message->setUserString("FileName", fileName);
 }
 void App::msgTrackDel(Message* sender, MessageBoxStyle result)
