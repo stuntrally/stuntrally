@@ -11,6 +11,9 @@
 #include "CarModel.h"
 #include "CarReflection.h"
 
+#include "common/MessageBox/MessageBox.h"
+#include "common/MessageBox/MessageBoxStyle.h"
+
 #include <MyGUI.h>
 #include <OgreShadowCameraSetup.h>
 

@@ -449,6 +449,9 @@ bool BaseApp::setup()
 	mPlatform->initialise(mWindow, mSceneMgr, "General", PATHMANAGER::GetLogDir() + "/MyGUI_p.log");
 	mGUI = new MyGUI::Gui();
 	mGUI->initialise("core.xml", PATHMANAGER::GetLogDir() + "/MyGUI.log");
+#if MYGUI_VERSION_MINOR >= 2
+	MyGUI::ResourceManager::getInstance().load("MessageBoxResources.xml");
+#endif
 	mGUI->setVisiblePointer(false);
 	
 	// ------------------------- lang ------------------------
