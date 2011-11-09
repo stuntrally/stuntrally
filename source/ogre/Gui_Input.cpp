@@ -11,11 +11,7 @@ using namespace MyGUI;
 using namespace Ogre;
 
 // MyGUI 3.2 has no Align::Relative
-#if MYGUI_VERSION_MINOR >= 2
-	#define ALIGN Align::Default
-#else
-	#define ALIGN Align::Relative
-#endif
+#define ALIGN Align::Default
 
 
 ///  Gui Init - input tab
