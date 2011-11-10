@@ -776,6 +776,7 @@ void MaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::StrStrea
 		"	uniform float3 lightDiffuse, \n"
 		"	uniform float3 lightSpecular, \n"
 		"	uniform float4 lightPosition, \n"
+		"	uniform float3 globalAmbient, \n"
 		// material
 		"	uniform float3 matAmbient, \n"
 		"	uniform float3 matDiffuse, \n"
@@ -911,7 +912,7 @@ void MaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::StrStrea
 		"	float3 specular = matSpecular.xyz * lightSpecular.xyz * specularLight; \n";
 
 		// Compute the ambient term
-		outStream << "	float3 ambient = matAmbient.xyz ";
+		outStream << "	float3 ambient = matAmbient.xyz * globalAmbient.xyz ";
 		if (needDiffuseMap()) outStream <<	"* diffuseTex.xyz ";
 		if (needLightMap()) outStream <<	"* lightTex.xyz ";
 		outStream << "; \n";
@@ -1020,6 +1021,7 @@ void MaterialGenerator::fragmentProgramParams(HighLevelGpuProgramPtr program)
 		params->setNamedAutoConstant("matAmbient", GpuProgramParameters::ACT_SURFACE_AMBIENT_COLOUR);
 		params->setNamedAutoConstant("matDiffuse", GpuProgramParameters::ACT_SURFACE_DIFFUSE_COLOUR);
 		params->setNamedAutoConstant("matSpecular", GpuProgramParameters::ACT_SURFACE_SPECULAR_COLOUR);
+		params->setNamedAutoConstant("globalAmbient", GpuProgramParameters::ACT_AMBIENT_LIGHT_COLOUR);
 	}
 	
 	if (mDef->mProps->fog)

@@ -201,6 +201,7 @@ HighLevelGpuProgramPtr PipeGlassMaterialGenerator::createPipeFragmentProgram()
 	"}; \n"
 	"float4 main_fp(PIn IN, \n"
 	"	uniform float4 alphaPars, \n"
+	"	uniform float3 globalAmbient, \n"
 	"	uniform float3 ambient,  uniform float3 lightDif0,  uniform float3 lightSpec0, \n"
 	"	uniform float4 matDif,   uniform float4 matSpec,	uniform float matShininess, \n"
 	"	uniform float3 fogColor, \n"
@@ -221,7 +222,7 @@ HighLevelGpuProgramPtr PipeGlassMaterialGenerator::createPipeFragmentProgram()
 	"	float4 diffuseTex = tex2D(diffuseMap, IN.uv.xy); \n"
 	"	float3 diffC = diffuse * lightDif0 * matDif.rgb  * diffuseTex.rgb; \n"
 	"	float3 specC = specular * lightSpec0 * matSpec.rgb; \n"
-	"	float3 clrSUM = diffuseTex.rgb * ambient + diffC + specC; \n"
+	"	float3 clrSUM = diffuseTex.rgb * ambient * globalAmbient + diffC + specC; \n"
 	"	clrSUM = lerp(clrSUM, fogColor, IN.wp.w); \n"
 	"	float alpha = alphaPars.x + alphaPars.y * diffuse.r + alphaPars.z * specular.r + (1 - diffuseTex.r); \n"
 	"	return float4(clrSUM, alpha); \n"
@@ -233,6 +234,7 @@ HighLevelGpuProgramPtr PipeGlassMaterialGenerator::createPipeFragmentProgram()
 	// params
 	GpuProgramParametersSharedPtr params = ret->getDefaultParameters();
 	params->setNamedAutoConstant("ambient", GpuProgramParameters::ACT_SURFACE_AMBIENT_COLOUR);
+	params->setNamedAutoConstant("globalAmbient", GpuProgramParameters::ACT_AMBIENT_LIGHT_COLOUR);
 	params->setNamedAutoConstant("lightDif0", GpuProgramParameters::ACT_LIGHT_DIFFUSE_COLOUR, 0);
 	params->setNamedAutoConstant("lightSpec0", GpuProgramParameters::ACT_LIGHT_SPECULAR_COLOUR, 0);
 	params->setNamedAutoConstant("matDif", GpuProgramParameters::ACT_SURFACE_DIFFUSE_COLOUR);
