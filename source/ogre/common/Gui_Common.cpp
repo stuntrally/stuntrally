@@ -25,7 +25,7 @@ using namespace Ogre;
 //----------------------------------------------------------------------------------------------------------------
 
 //  textures
-void App::comboTexFilter(SL)
+void App::comboTexFilter(CMB)
 {
 	TextureFilterOptions tfo;							
 	switch (val)  {
@@ -113,9 +113,9 @@ void App::slGrassDist(SL)
 
 void App::btnTrGrReset(WP wp)
 {
-	HScrollPtr sl;  size_t v;
+	ScrollBar* sl;  size_t v;
 	#define setSld(name)  sl##name(0,v);  \
-		sl = (HScrollPtr)mWndOpts->findWidget(#name);  if (sl)  sl->setScrollPosition(v);
+		sl = (ScrollBar*)mWndOpts->findWidget(#name);  if (sl)  sl->setScrollPosition(v);
 	v = res*powf(1.f /4.f, 0.5f);
 	setSld(Trees);
 	setSld(Grass);
@@ -183,13 +183,6 @@ void App::slShadowSize(SL)
 	if (valShadowSize)  valShadowSize->setCaption(toStr(ciShadowSizesA[v]));
 }
 
-void App::slLightmapSize(SL)
-{
-	int v = std::max( 0.0f, std::min((float) ciShadowNumSizes-1, ciShadowNumSizes * val/res));
-	if (bGI)  pSet->lightmap_size = v;
-	if (valLightmapSize)  valLightmapSize->setCaption(toStr(ciShadowSizesA[v]));
-}
-
 void App::slShadowDist(SL)
 {
 	Real v = 50.f + 4750.f * powf(val/res, 2.f);	if (bGI)  pSet->shadow_dist = v;
@@ -202,7 +195,7 @@ void App::slShadowDist(SL)
 void App::GuiInitGraphics()
 {
 	ButtonPtr btn, bchk;  ComboBoxPtr combo;
-	HScrollPtr sl;  size_t v;
+	ScrollBar* sl;  size_t v;
 
 	//  detail
 	Slv(TerDetail,	powf(pSet->terdetail /20.f, 0.5f));
@@ -246,7 +239,6 @@ void App::GuiInitGraphics()
 	Slv(ShadowCount,(pSet->shadow_count-2) /2.f);
 	Slv(ShadowSize,	pSet->shadow_size /float(ciShadowNumSizes));
 	Slv(ShadowDist,	powf((pSet->shadow_dist -50.f)/4750.f, 0.5f));
-	Slv(LightmapSize, pSet->lightmap_size /float(ciShadowNumSizes));
 	Btn("Apply", btnShadows);
 	
 	Cmb(combo, "CmbGraphicsAll", comboGraphicsAll);
@@ -396,7 +388,7 @@ void App::GuiInitLang()
 	}
 }
 
-void App::comboLanguage(SL)
+void App::comboLanguage(MyGUI::ComboBox* wp, size_t val)
 {
 	if (val == MyGUI::ITEM_NONE)  return;
 	MyGUI::ComboBoxPtr cmb = static_cast<MyGUI::ComboBoxPtr>(wp);
@@ -466,7 +458,7 @@ void App::btnResChng(WP)
 {
 	if (!resList)  return;
 	if (resList->getIndexSelected() == MyGUI::ITEM_NONE) return;
-	String mode = resList->getItem(resList->getIndexSelected());
+	String mode = resList->getItemNameAt(resList->getIndexSelected());
 
 	pSet->windowx = StringConverter::parseInt(StringUtil::split(mode, "x")[0]);
 	pSet->windowy = StringConverter::parseInt(StringUtil::split(mode, "x")[1]);
@@ -686,7 +678,7 @@ void App::comboGraphicsAll(ComboBoxPtr cmb, size_t val)
 	GuiInitGraphics();  // += newDelegate..?
 	changeShadows(); // apply shadow
 
-	ButtonPtr btn, bchk;  HScrollPtr sl;  size_t v;
+	ButtonPtr btn, bchk;  ScrollBar* sl;  size_t v;
 #ifndef ROAD_EDITOR  /// game only
 	// duplicated code..
 	Chk("ParticlesOn", chkParticles, pSet->particles);	Chk("TrailsOn", chkTrails, pSet->trails);
@@ -719,7 +711,7 @@ void App::comboGraphicsAll(ComboBoxPtr cmb, size_t val)
 #endif
 }
 
-void App::comboRenderSystem(ComboBoxPtr cmb, size_t val)
+void App::comboRenderSystem(CMB)
 {
-	pSet->rendersystem = cmb->getItemNameAt(val);
+	pSet->rendersystem = wp->getItemNameAt(val);
 }

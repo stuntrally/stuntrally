@@ -18,6 +18,9 @@
 #include <OgreOverlayElement.h>
 using namespace Ogre;
 
+#include <MyGUI_PointerManager.h>
+using namespace MyGUI;
+
 
 ///---------------------------------------------------------------------------------------------------------------
 ///  HUD create  rpm, vel
@@ -189,7 +192,7 @@ void App::ShowHUD(bool hideAll)
 		if (ovWarnWin)  ovWarnWin->hide();
 		if (mFpsOverlay)  mFpsOverlay->hide();
 		if (ndMap)  ndMap->setVisible(false);
-		if (mGUI)	mGUI->setVisiblePointer(false);
+		if (mGUI)	PointerManager::getInstance().setVisible(false);
 		if (mWndRpl)  mWndRpl->setVisible(false);
 	}else{
 		bool show = pSet->show_gauges;
@@ -215,7 +218,7 @@ void App::ShowHUD(bool hideAll)
 		if (ovWarnWin){  if (pSet->show_times)  ovWarnWin->show();  else  ovWarnWin->hide();  }
 		if (mFpsOverlay) { if (pSet->show_fps) mFpsOverlay->show(); else mFpsOverlay->hide(); }
 		if (ndMap)  ndMap->setVisible(pSet->trackmap);
-		if (mGUI)	mGUI->setVisiblePointer(isFocGuiOrRpl());
+		if (mGUI)	PointerManager::getInstance().setVisible(isFocGuiOrRpl());
 		if (mWndRpl && !bLoading)  mWndRpl->setVisible(bRplPlay && bRplWnd);  //
 	}
 }
