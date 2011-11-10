@@ -892,7 +892,13 @@ void MaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::StrStrea
 		
 		outStream << "	float3 diffuse = matDiffuse.xyz * lightDiffuse.xyz *  diffuseLight ";
 		if (needDiffuseMap()) outStream <<	"* diffuseTex.xyz ";
-		if (needLightMap()) outStream <<	"* lightTex.xyz ";
+		if (needLightMap())
+		{
+			if (needBlendMap())
+				outStream <<	"* lerp(lightTex.xyz, blendTex.xyz, blendTex.a); \n";
+			else
+				outStream <<	"* lightTex.xyz ";
+		}
 		outStream <<	"; \n";
 		outStream <<
 		// Compute the specular term
