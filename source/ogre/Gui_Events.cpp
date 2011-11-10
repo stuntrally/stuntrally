@@ -253,7 +253,7 @@ void App::btnNewGame(WP)
 	if (mWndOpts)  mWndOpts->setVisible(isFocGui);
 	if (mWndRpl)  mWndRpl->setVisible(false);//
 	if (bnQuit)  bnQuit->setVisible(isFocGui);
-	mGUI->setVisiblePointer(isFocGuiOrRpl());
+	PointerManager::getInstance().setVisible(isFocGuiOrRpl());
 	mToolTip->setVisible(false);
 }
 void App::btnNewGameStart(WP wp)
@@ -300,8 +300,8 @@ void App::chkCarDbgTxt(WP wp){		ChkEv(car_dbgtxt);	ShowHUD();	}
 void App::chkBltDebug(WP wp){		ChkEv(bltDebug);	}
 void App::chkBltProfilerTxt(WP wp){	ChkEv(bltProfilerTxt);	}
 
-void App::radKmh(WP wp){	bRkmh->setStateCheck(true);  bRmph->setStateCheck(false);  pSet->show_mph = false;  ShowHUD();  }
-void App::radMph(WP wp){	bRkmh->setStateCheck(false);  bRmph->setStateCheck(true);  pSet->show_mph = true;   ShowHUD();  }
+void App::radKmh(WP wp){	bRkmh->setStateSelected(true);  bRmph->setStateSelected(false);  pSet->show_mph = false;  ShowHUD();  }
+void App::radMph(WP wp){	bRkmh->setStateSelected(false);  bRmph->setStateSelected(true);  pSet->show_mph = true;   ShowHUD();  }
 
 //  Startup
 void App::chkOgreDialog(WP wp){		ChkEv(ogre_dialog);	}
@@ -501,6 +501,6 @@ void App::toggleGui()
 	isFocGui = !isFocGui;
 	if (mWndOpts)	mWndOpts->setVisible(isFocGui);
 	if (bnQuit)  bnQuit->setVisible(isFocGui);
-	if (mGUI)	mGUI->setVisiblePointer(isFocGuiOrRpl());
+	if (mGUI)	PointerManager::getInstance().setVisible(isFocGuiOrRpl());
 	if (!isFocGui)  mToolTip->setVisible(false);
 }

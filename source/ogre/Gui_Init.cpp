@@ -26,7 +26,7 @@ void App::InitGui()
 	//mGUI->load("core_skin.xml");
 
 	//  load Options layout
-	vwGui = LayoutManager::getInstance().load("Options.layout");
+	vwGui = LayoutManager::getInstance().loadLayout("Options.layout");
 	mLayout = vwGui.at(0);
 
 	//  window
@@ -36,7 +36,7 @@ void App::InitGui()
 		int sx = mWindow->getWidth(), sy = mWindow->getHeight();
 		IntSize w = mWndOpts->getSize();  // center
 		mWndOpts->setPosition((sx-w.width)*0.5f, (sy-w.height)*0.5f);  }
-	mGUI->setVisiblePointer(isFocGui);
+	PointerManager::getInstance().setVisible(isFocGui);
 	mWndTabs = (TabPtr)mLayout->findWidget("TabWnd");
 
 	mWndRpl = mGUI->findWidget<Window>("RplWnd",false);
@@ -59,7 +59,7 @@ void App::InitGui()
 	///  Sliders
     //------------------------------------------------------------------------
 	ButtonPtr btn,bchk;  ComboBoxPtr combo;
-	HScrollPtr sl;  size_t v;
+	ScrollBar* sl;  size_t v;
 
 	GuiInitLang();
 
@@ -134,7 +134,7 @@ void App::InitGui()
 	//  kmh/mph radio
 	bRkmh = mGUI->findWidget<Button>("kmh");
 	bRmph = mGUI->findWidget<Button>("mph");
-	if (bRkmh && bRmph)  {  bRkmh->setStateCheck(!pSet->show_mph);  bRmph->setStateCheck(pSet->show_mph);
+	if (bRkmh && bRmph)  {  bRkmh->setStateSelected(!pSet->show_mph);  bRmph->setStateSelected(pSet->show_mph);
 		bRkmh->eventMouseButtonClick += newDelegate(this, &App::radKmh);
 		bRmph->eventMouseButtonClick += newDelegate(this, &App::radMph);  }
 
@@ -173,7 +173,7 @@ void App::InitGui()
 	Btn("RplBtnGhosts", btnRplGhosts);  rbRplGhosts = btn;  btn = 0;
 	switch (pSet->rpl_listview)  // load from set
 	{	case 0: btn = rbRplAll;  break;  case 1: btn = rbRplCur;  break;  case 2: btn = rbRplGhosts;  break;  }
-	if (btn)  btn->setStateCheck(true);
+	if (btn)  btn->setStateSelected(true);
 	
     if (mWndRpl)
 	{	//  replay controls
@@ -183,7 +183,7 @@ void App::InitGui()
 		btn = (ButtonPtr)mWndRpl->findWidget("RplForward");  if (btn)  {	btn->eventMouseButtonPressed += newDelegate(this, &App::btnRplFwdDn);  btn->eventMouseButtonReleased += newDelegate(this, &App::btnRplFwdUp);  }
 		
 		//  info
-		slRplPos = (HScrollPtr)mWndRpl->findWidget("RplSlider");
+		slRplPos = (ScrollBar*)mWndRpl->findWidget("RplSlider");
 		if (slRplPos)  slRplPos->eventScrollChangePosition += newDelegate(this, &App::slRplPosEv);
 
 		valRplPerc = (StaticTextPtr)mWndRpl->findWidget("RplPercent");
@@ -291,7 +291,7 @@ void App::InitGui()
 
 void App::UpdCarClrSld(bool upd)
 {
-	HScrollPtr sl;  size_t v;
+	ScrollBar* sl;  size_t v;
 	bUpdCarClr = false;
 	Slv(CarClrH, pSet->car_hue[iCurCar]);
 	Slv(CarClrS, pSet->car_sat[iCurCar]);  if (upd)  bUpdCarClr = true;

@@ -120,7 +120,7 @@ void App::chkRplAutoRec(WP wp)
 	bRplRec = !bRplRec;  // changes take effect next game start
 	if (!wp)  return;
 	ButtonPtr chk = wp->castType<MyGUI::Button>();
-    chk->setStateCheck(bRplRec);
+    chk->setStateSelected(bRplRec);
 }
 
 void App::chkRplChkGhost(WP wp)
@@ -143,19 +143,19 @@ void App::chkRplChkAlpha(WP wp)
 
 void App::btnRplAll(WP)
 {
-	rbRplCur->setStateCheck(false);  rbRplAll->setStateCheck(true);  rbRplGhosts->setStateCheck(false);
+	rbRplCur->setStateSelected(false);  rbRplAll->setStateSelected(true);  rbRplGhosts->setStateSelected(false);
 	pSet->rpl_listview = 0;  updReplaysList();
 }
 
 void App::btnRplCur(WP)
 {
-	rbRplCur->setStateCheck(true);  rbRplAll->setStateCheck(false);  rbRplGhosts->setStateCheck(false);
+	rbRplCur->setStateSelected(true);  rbRplAll->setStateSelected(false);  rbRplGhosts->setStateSelected(false);
 	pSet->rpl_listview = 1;  updReplaysList();
 }
 
 void App::btnRplGhosts(WP)
 {
-	rbRplCur->setStateCheck(false);  rbRplAll->setStateCheck(false);  rbRplGhosts->setStateCheck(true);
+	rbRplCur->setStateSelected(false);  rbRplAll->setStateSelected(false);  rbRplGhosts->setStateSelected(true);
 	pSet->rpl_listview = 2;  updReplaysList();
 }
 

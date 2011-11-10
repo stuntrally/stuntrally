@@ -216,7 +216,7 @@
 					<UserString key="tip" value="#{TipNewGameCar}"/>
 				</Widget>
 				<Widget type="StaticImage" skin="StaticImage" position="448 200 320 320" name="CarImg"/>
-				<Widget type="HScroll" skin="HScroll" position="320 74 448 18" name="CarClrH">
+				<Widget type="ScrollBar" skin="ScrollBarH" position="320 74 448 18" name="CarClrH">
 					<Property key="Scroll_Range" value="1000001"/>
 					<Property key="Scroll_MoveToClick" value="true"/>
 					<UserString key="tip" value="#{TipChangeHue}"/>
@@ -224,7 +224,7 @@
 				<Widget type="StaticText" skin="StaticText" position="270 74 42 24" name="CarClrHVal">
 					<Property key="Text_TextColour" value="0.8 0.9 1.0"/>
 				</Widget>
-				<Widget type="HScroll" skin="HScroll" position="320 104 448 18" name="CarClrS">
+				<Widget type="ScrollBar" skin="ScrollBarH" position="320 104 448 18" name="CarClrS">
 					<Property key="Scroll_Range" value="1000001"/>
 					<Property key="Scroll_MoveToClick" value="true"/>
 					<UserString key="tip" value="#{TipChangeSat}"/>
@@ -232,7 +232,7 @@
 				<Widget type="StaticText" skin="StaticText" position="270 104 42 24" name="CarClrSVal">
 					<Property key="Text_TextColour" value="0.8 0.9 1.0"/>
 				</Widget>
-				<Widget type="HScroll" skin="HScroll" position="320 134 448 18" name="CarClrV">
+				<Widget type="ScrollBar" skin="ScrollBarH" position="320 134 448 18" name="CarClrV">
 					<Property key="Scroll_Range" value="1000001"/>
 					<Property key="Scroll_MoveToClick" value="true"/>
 					<UserString key="tip" value="#{TipChangeBright}"/>
@@ -384,7 +384,7 @@
 				<Widget type="StaticText" skin="StaticText" position="496 383 64 24" name="NumLapsVal">
 					<Property key="Text_TextColour" value="0.8 0.95 1"/>
 				</Widget>
-				<Widget type="HScroll" skin="HScroll" position="312 413 408 18" name="NumLaps">
+				<Widget type="ScrollBar" skin="ScrollBarH" position="312 413 408 18" name="NumLaps">
 					<Property key="Scroll_Range" value="1000001"/>
 					<Property key="Scroll_MoveToClick" value="true"/>
 				</Widget>
@@ -506,7 +506,7 @@
 						<Widget type="StaticText" skin="StaticText" position="375 184 30 24" name="AntiAliasingVal">
 							<Property key="Text_TextColour" value="0.8 0.9 1.0"/>
 						</Widget>
-						<Widget type="HScroll" skin="HScroll" position="420 184 252 18" name="AntiAliasing">
+						<Widget type="ScrollBar" skin="ScrollBarH" position="420 184 252 18" name="AntiAliasing">
 							<Property key="Scroll_MoveToClick" value="true"/>
 							<Property key="Scroll_Range" value="1000001"/>
 							<Property key="Scroll_MoveToClick" value="true"/>
@@ -549,7 +549,7 @@
 							<Property key="Widget_Caption" value="#{MotionBlur}"/>
 							<Property key="Text_TextColour" value="0.6 1 0.3"/>
 						</Widget>
-						<Widget type="HScroll" skin="HScroll" position="248 255 320 18" name="BlurIntens">
+						<Widget type="ScrollBar" skin="ScrollBarH" position="248 255 320 18" name="BlurIntens">
 							<Property key="Scroll_MoveToClick" value="true"/>
 							<Property key="Scroll_Range" value="1000001"/>
 							<Property key="Scroll_MoveToClick" value="true"/>
@@ -558,7 +558,7 @@
 							<Property key="Widget_Caption" value="#{Intensity}"/>
 							<Property key="Text_TextColour" value="0.7 1 0.4"/>
 						</Widget>
-						<Widget type="HScroll" skin="HScroll" position="248 110 320 18" name="BloomInt">
+						<Widget type="ScrollBar" skin="ScrollBarH" position="248 110 320 18" name="BloomInt">
 							<Property key="Scroll_MoveToClick" value="true"/>
 							<Property key="Scroll_Range" value="1000001"/>
 							<Property key="Scroll_MoveToClick" value="true"/>
@@ -567,7 +567,7 @@
 							<Property key="Widget_Caption" value="#{OrigImage}"/>
 							<Property key="Text_TextColour" value="1 1 0.5"/>
 						</Widget>
-						<Widget type="HScroll" skin="HScroll" position="248 140 320 18" name="BloomOrig">
+						<Widget type="ScrollBar" skin="ScrollBarH" position="248 140 320 18" name="BloomOrig">
 							<Property key="Scroll_MoveToClick" value="true"/>
 							<Property key="Scroll_Range" value="1000001"/>
 							<Property key="Scroll_MoveToClick" value="true"/>
@@ -639,7 +639,7 @@
 							<Property key="Widget_Colour" value="0 0 0"/>
 							<Property key="Text_TextColour" value="0.2 1 0.2"/>
 						</Widget>
-						<Widget type="HScroll" skin="HScroll" position="248 80 320 18" name="Anisotropy">
+						<Widget type="ScrollBar" skin="ScrollBarH" position="248 80 320 18" name="Anisotropy">
 							<Property key="Scroll_Range" value="17"/>
 							<Property key="Scroll_Position" value="0"/>
 							<Property key="Scroll_Page" value="1"/>
@@ -654,7 +654,7 @@
 							<Property key="Widget_Colour" value="0 0 0"/>
 							<Property key="Text_TextColour" value="0.6 0.9 0.6"/>
 						</Widget>
-						<Widget type="HScroll" skin="HScroll" position="248 110 320 18" name="TexSize">
+						<Widget type="ScrollBar" skin="ScrollBarH" position="248 110 320 18" name="TexSize">
 							<Property key="Scroll_Range" value="2"/>
 							<Property key="Scroll_Position" value="0"/>
 							<Property key="Scroll_Page" value="1"/>
@@ -669,7 +669,7 @@
 							<Property key="Widget_Colour" value="0 0 0"/>
 							<Property key="Text_TextColour" value="0.6 1.0 0.0"/>
 						</Widget>
-						<Widget type="HScroll" skin="HScroll" position="248 140 320 18" name="TerMtr">
+						<Widget type="ScrollBar" skin="ScrollBarH" position="248 140 320 18" name="TerMtr">
 							<Property key="Scroll_Range" value="4"/>
 							<Property key="Scroll_Position" value="0"/>
 							<Property key="Scroll_Page" value="1"/>
@@ -684,7 +684,7 @@
 							<Property key="Widget_Caption" value="#{Shaders}*"/>
 							<Property key="Text_TextColour" value="1.0 1.0 0.0"/>
 						</Widget>
-						<Widget type="HScroll" skin="HScroll" position="248 170 320 18" name="Shaders">
+						<Widget type="ScrollBar" skin="ScrollBarH" position="248 170 320 18" name="Shaders">
 							<Property key="Scroll_Range" value="2"/>
 							<Property key="Scroll_MoveToClick" value="true"/>
 						</Widget>
@@ -699,7 +699,7 @@
 							<Property key="Widget_Colour" value="0 0 0"/>
 							<Property key="Text_TextColour" value="0.3 0.9 0.9"/>
 						</Widget>
-						<Widget type="HScroll" skin="HScroll" position="248 50 320 18" name="TerDetail">
+						<Widget type="ScrollBar" skin="ScrollBarH" position="248 50 320 18" name="TerDetail">
 							<Property key="Scroll_Range" value="1000001"/>
 							<Property key="Scroll_MoveToClick" value="true"/>
 						</Widget>
@@ -708,7 +708,7 @@
 							<Property key="Widget_Colour" value="0 0 0"/>
 							<Property key="Text_TextColour" value="0.6 1 0.9"/>
 						</Widget>
-						<Widget type="HScroll" skin="HScroll" position="248 80 320 18" name="TerDist">
+						<Widget type="ScrollBar" skin="ScrollBarH" position="248 80 320 18" name="TerDist">
 							<Property key="Scroll_Range" value="1000001"/>
 							<Property key="Scroll_MoveToClick" value="true"/>
 						</Widget>
@@ -717,7 +717,7 @@
 							<Property key="Widget_Colour" value="0 0 0"/>
 							<Property key="Text_TextColour" value="0.5 1 0.8"/>
 						</Widget>
-						<Widget type="HScroll" skin="HScroll" position="248 110 320 18" name="ViewDist">
+						<Widget type="ScrollBar" skin="ScrollBarH" position="248 110 320 18" name="ViewDist">
 							<Property key="Scroll_MoveToClick" value="true"/>
 							<Property key="Scroll_Range" value="1000001"/>
 							<Property key="Scroll_MoveToClick" value="true"/>
@@ -736,7 +736,7 @@
 							<Property key="Widget_Colour" value="0 0 0"/>
 							<Property key="Text_TextColour" value="0.3 0.9 0.9"/>
 						</Widget>
-						<Widget type="HScroll" skin="HScroll" position="248 140 320 18" name="RoadDist">
+						<Widget type="ScrollBar" skin="ScrollBarH" position="248 140 320 18" name="RoadDist">
 							<Property key="Scroll_Range" value="1000001"/>
 							<Property key="Scroll_MoveToClick" value="true"/>
 						</Widget>
@@ -771,19 +771,19 @@
 							<Property key="Widget_Colour" value="0 0 0"/>
 							<Property key="Text_TextColour" value="0.7 0.8 0.5"/>
 						</Widget>
-						<Widget type="HScroll" skin="HScroll" position="248 50 320 18" name="Trees">
+						<Widget type="ScrollBar" skin="ScrollBarH" position="248 50 320 18" name="Trees">
 							<Property key="Scroll_Range" value="1000001"/>
 							<Property key="Scroll_MoveToClick" value="true"/>
 						</Widget>
-						<Widget type="HScroll" skin="HScroll" position="248 80 320 18" name="TreesDist">
+						<Widget type="ScrollBar" skin="ScrollBarH" position="248 80 320 18" name="TreesDist">
 							<Property key="Scroll_Range" value="1000001"/>
 							<Property key="Scroll_MoveToClick" value="true"/>
 						</Widget>
-						<Widget type="HScroll" skin="HScroll" position="248 110 320 18" name="Grass">
+						<Widget type="ScrollBar" skin="ScrollBarH" position="248 110 320 18" name="Grass">
 							<Property key="Scroll_Range" value="1000001"/>
 							<Property key="Scroll_MoveToClick" value="true"/>
 						</Widget>
-						<Widget type="HScroll" skin="HScroll" position="248 140 320 18" name="GrassDist">
+						<Widget type="ScrollBar" skin="ScrollBarH" position="248 140 320 18" name="GrassDist">
 							<Property key="Scroll_Range" value="1000001"/>
 							<Property key="Scroll_MoveToClick" value="true"/>
 						</Widget>
@@ -830,19 +830,19 @@
 							<Property key="Widget_Colour" value="0 0 0"/>
 							<Property key="Text_TextColour" value="0.7 0.8 0.9"/>
 						</Widget>
-						<Widget type="HScroll" skin="HScroll" position="248 50 320 16" name="ShadowType">
+						<Widget type="ScrollBar" skin="ScrollBarH" position="248 50 320 16" name="ShadowType">
 							<Property key="Scroll_Range" value="4"/>
 							<Property key="Scroll_MoveToClick" value="true"/>
 						</Widget>
-						<Widget type="HScroll" skin="HScroll" position="248 80 320 18" name="ShadowSize">
+						<Widget type="ScrollBar" skin="ScrollBarH" position="248 80 320 18" name="ShadowSize">
 							<Property key="Scroll_Range" value="1000001"/>
 							<Property key="Scroll_MoveToClick" value="true"/>
 						</Widget>
-						<Widget type="HScroll" skin="HScroll" position="248 110 320 18" name="ShadowCount">
+						<Widget type="ScrollBar" skin="ScrollBarH" position="248 110 320 18" name="ShadowCount">
 							<Property key="Scroll_Range" value="1000001"/>
 							<Property key="Scroll_MoveToClick" value="true"/>
 						</Widget>
-						<Widget type="HScroll" skin="HScroll" position="248 140 320 18" name="ShadowDist">
+						<Widget type="ScrollBar" skin="ScrollBarH" position="248 140 320 18" name="ShadowDist">
 							<Property key="Scroll_Range" value="1000001"/>
 							<Property key="Scroll_MoveToClick" value="true"/>
 						</Widget>
@@ -866,7 +866,7 @@
 							<Property key="Widget_Colour" value="0 0 0"/>
 							<Property key="Text_TextColour" value="1 0.8 0.4"/>
 						</Widget>
-						<Widget type="HScroll" skin="HScroll" position="248 50 320 18" name="ReflSkip">
+						<Widget type="ScrollBar" skin="ScrollBarH" position="248 50 320 18" name="ReflSkip">
 							<Property key="Scroll_Range" value="1000001"/>
 							<Property key="Scroll_MoveToClick" value="true"/>
 						</Widget>
@@ -875,7 +875,7 @@
 							<Property key="Widget_Colour" value="0 0 0"/>
 							<Property key="Text_TextColour" value="1 0.8 0.2"/>
 						</Widget>
-						<Widget type="HScroll" skin="HScroll" position="248 80 320 18" name="ReflSize">
+						<Widget type="ScrollBar" skin="ScrollBarH" position="248 80 320 18" name="ReflSize">
 							<Property key="Scroll_Range" value="1000001"/>
 							<Property key="Scroll_MoveToClick" value="true"/>
 						</Widget>
@@ -884,7 +884,7 @@
 							<Property key="Widget_Colour" value="0 0 0"/>
 							<Property key="Text_TextColour" value="1.0 0.6 0.4"/>
 						</Widget>
-						<Widget type="HScroll" skin="HScroll" position="248 110 320 18" name="ReflFaces">
+						<Widget type="ScrollBar" skin="ScrollBarH" position="248 110 320 18" name="ReflFaces">
 							<Property key="Scroll_Range" value="7"/>
 							<Property key="Scroll_MoveToClick" value="true"/>
 						</Widget>
@@ -893,11 +893,11 @@
 							<Property key="Widget_Colour" value="0 0 0"/>
 							<Property key="Text_TextColour" value="0.9 0.5 0.5"/>
 						</Widget>
-						<Widget type="HScroll" skin="HScroll" position="248 140 320 18" name="ReflDist">
+						<Widget type="ScrollBar" skin="ScrollBarH" position="248 140 320 18" name="ReflDist">
 							<Property key="Scroll_Range" value="1000001"/>
 							<Property key="Scroll_MoveToClick" value="true"/>
 						</Widget>
-						<Widget type="HScroll" skin="HScroll" position="248 170 320 18" name="ReflMode">
+						<Widget type="ScrollBar" skin="ScrollBarH" position="248 170 320 18" name="ReflMode">
 							<Property key="Scroll_Range" value="3"/>
 							<Property key="Scroll_MoveToClick" value="true"/>
 						</Widget>
@@ -924,11 +924,11 @@
 					</Widget>
 					<Widget type="TabItem" skin="" position="4 26 735 368">
 						<Property key="Widget_Caption" value="#{Particles}"/>
-						<Widget type="HScroll" skin="HScroll" position="248 50 320 18" name="Particles">
+						<Widget type="ScrollBar" skin="ScrollBarH" position="248 50 320 18" name="Particles">
 							<Property key="Scroll_Range" value="1000001"/>
 							<Property key="Scroll_MoveToClick" value="true"/>
 						</Widget>
-						<Widget type="HScroll" skin="HScroll" position="248 80 320 18" name="Trails">
+						<Widget type="ScrollBar" skin="ScrollBarH" position="248 80 320 18" name="Trails">
 							<Property key="Scroll_Range" value="1000001"/>
 							<Property key="Scroll_MoveToClick" value="true"/>
 						</Widget>
@@ -997,11 +997,11 @@
 							<Property key="Widget_Caption" value="#{CheckArrow}"/>
 							<Property key="Text_TextColour" value="0.7 0.8 0.9"/>
 						</Widget>
-						<Widget type="HScroll" skin="HScroll" position="344 240 320 18" name="SizeArrow">
+						<Widget type="ScrollBar" skin="ScrollBarH" position="344 240 320 18" name="SizeArrow">
 							<Property key="Scroll_Range" value="1000001"/>
 							<Property key="Scroll_MoveToClick" value="true"/>
 						</Widget>
-						<Widget type="HScroll" skin="HScroll" position="344 100 320 18" name="SizeGaug">
+						<Widget type="ScrollBar" skin="ScrollBarH" position="344 100 320 18" name="SizeGaug">
 							<Property key="Scroll_Range" value="1000001"/>
 							<Property key="Scroll_MoveToClick" value="true"/>
 						</Widget>
@@ -1020,7 +1020,7 @@
 							<Property key="Widget_Caption" value="#{Minimap} F8"/>
 							<Property key="Text_TextColour" value="0.9 0.96 1.0"/>
 						</Widget>
-						<Widget type="HScroll" skin="HScroll" position="344 60 320 18" name="SizeMinimap">
+						<Widget type="ScrollBar" skin="ScrollBarH" position="344 60 320 18" name="SizeMinimap">
 							<Property key="Scroll_Range" value="1000001"/>
 							<Property key="Scroll_MoveToClick" value="true"/>
 						</Widget>
@@ -1036,7 +1036,7 @@
 							<Property key="Widget_Caption" value="#{MinimapRotate}"/>
 							<Property key="Text_TextColour" value="0.7 0.8 0.9"/>
 						</Widget>
-						<Widget type="HScroll" skin="HScroll" position="344 100 320 18" name="ZoomMinimap">
+						<Widget type="ScrollBar" skin="ScrollBarH" position="344 100 320 18" name="ZoomMinimap">
 							<Property key="Scroll_Range" value="1000001"/>
 							<Property key="Scroll_MoveToClick" value="true"/>
 						</Widget>
@@ -1191,19 +1191,19 @@
 					<Property key="Widget_Caption" value="#{Environment}"/>
 					<Property key="Text_TextColour" value="0.6 0.75 1.0"/>
 				</Widget>
-				<Widget type="HScroll" skin="HScroll" position="248 100 320 18" name="VolMaster">
+				<Widget type="ScrollBar" skin="ScrollBarH" position="248 100 320 18" name="VolMaster">
 					<Property key="Scroll_MoveToClick" value="true"/>
 					<Property key="Scroll_Range" value="1000001"/>
 				</Widget>
-				<Widget type="HScroll" skin="HScroll" position="248 140 320 18" name="VolEngine">
+				<Widget type="ScrollBar" skin="ScrollBarH" position="248 140 320 18" name="VolEngine">
 					<Property key="Scroll_MoveToClick" value="true"/>
 					<Property key="Scroll_Range" value="1000001"/>
 				</Widget>
-				<Widget type="HScroll" skin="HScroll" position="248 180 320 18" name="VolTires">
+				<Widget type="ScrollBar" skin="ScrollBarH" position="248 180 320 18" name="VolTires">
 					<Property key="Scroll_MoveToClick" value="true"/>
 					<Property key="Scroll_Range" value="1000001"/>
 				</Widget>
-				<Widget type="HScroll" skin="HScroll" position="248 220 320 18" name="VolEnv">
+				<Widget type="ScrollBar" skin="ScrollBarH" position="248 220 320 18" name="VolEnv">
 					<Property key="Scroll_MoveToClick" value="true"/>
 					<Property key="Scroll_Range" value="1000001"/>
 				</Widget>
@@ -1282,7 +1282,7 @@
 	</Widget>
 	<Widget type="Window" skin="WindowCS" position="224 -20 820 104" layer="Back" name="RplWnd">
 		<Property key="Widget_Alpha" value="0.3"/>
-		<Widget type="HScroll" skin="HScroll" position="4 41 800 20" name="RplSlider">
+		<Widget type="ScrollBar" skin="ScrollBarH" position="4 41 800 20" name="RplSlider">
 			<Property key="Widget_Alpha" value="0.6"/>
 			<Property key="Widget_InheritsAlpha" value="false"/>
 			<Property key="Widget_Colour" value="0.8 0.9 1"/>

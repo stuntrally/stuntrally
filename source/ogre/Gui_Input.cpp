@@ -51,7 +51,7 @@ void App::InitInputGui()
 		for (int i=0; i < jnum; ++i)
 			cmbJoy->addItem( sys.mJoysticks[i]->getName() );
 
-		cmbJoy->eventComboChangePosition = +newDelegate(this, &App::cmbJoystick);
+		cmbJoy->eventComboChangePosition += newDelegate(this, &App::cmbJoystick);
 		if (jnum > 0)  {  cmbJoy->setIndexSelected(0);  cmbJoystick(cmbJoy, 0);  }
 	}
 
@@ -457,8 +457,7 @@ bool App::buttonReleased( const OIS::JoyStickEvent &e, int button )
 	return true;
 }
 
-void App::cmbJoystick(Widget* sender, size_t val)
+void App::cmbJoystick(CMB)
 {
-		ComboBoxPtr cmb = (ComboBoxPtr)sender;
-	joyName = cmb->getItemNameAt(val);
+	joyName = wp->getItemNameAt(val);
 }
