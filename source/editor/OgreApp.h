@@ -179,9 +179,9 @@ protected:
 	typedef std::list <std::string> strlist;
 	//  slider event and its text field for value
 	#define SLV(name)  void sl##name(SL);  MyGUI::StaticTextPtr val##name;
-	#define SL  WP wp, size_t val						//  slider event args
+	#define SL  MyGUI::ScrollBar* wp, size_t val						//  slider event args
 	#define CMB  MyGUI::ComboBoxPtr cmb, size_t val		//  combo event args
-	#define TAB  MyGUI::TabPtr tab, size_t id			//  tab event args
+	#define TAB  MyGUI::Tab* tab, size_t id			//  tab event args
 
 	
 	///  Gui common   --------------------------
@@ -191,7 +191,7 @@ protected:
 	SLV(Trees);  SLV(Grass);  SLV(TreesDist);  SLV(GrassDist);  // paged
 	SLV(Shaders);  SLV(ShadowType);  SLV(ShadowCount);  SLV(ShadowSize);  SLV(LightmapSize);  SLV(ShadowDist);  // shadow
 	SLV(AntiAliasing); // screen
-	void comboTexFilter(SL), btnShadows(WP), btnTrGrReset(WP);
+	void comboTexFilter(CMB), btnShadows(WP), btnTrGrReset(WP);
 	MyGUI::ButtonPtr bnQuit;  void btnQuit(WP);
 
 	//  tooltip
@@ -201,7 +201,7 @@ protected:
 	void boundedMove(MyGUI::Widget *moving, const MyGUI::IntPoint & point);
 
 	//  language
-	void comboLanguage(SL);
+	void comboLanguage(CMB);
 	std::map<std::string, std::string> languages; // <short name, display name>
 	bool bGuiReinit;  MyGUI::VectorWidgetPtr vwGui;
 
@@ -229,8 +229,9 @@ protected:
 	MyGUI::ListPtr resList;
 	void InitGuiScrenRes(), btnResChng(WP), ResizeOptWnd();
 	void chkVidFullscr(WP), chkVidVSync(WP);
-	void comboGraphicsAll(MyGUI::ComboBoxPtr cmb, size_t val),
-		comboRenderSystem(MyGUI::ComboBoxPtr cmb, size_t val);
+
+	void comboGraphicsAll(CMB),
+		comboRenderSystem(CMB);
 	///-----------------------------------------
 
 	

@@ -12,11 +12,22 @@ const static float res = 1000000.f;  //float slider int res
 //HScrollPtr sl;  size_t v;
 //TODO: make App methods of these..
 
-#define Slv(name, vset)  \
-	sl = mGUI->findWidget<ScrollBar>(#name);  \
-	if (sl)  sl->eventScrollChangePosition += newDelegate(this, &App::sl##name);  \
-	val##name = (StaticTextPtr)(mWndOpts->findWidget(#name"Val"));  \
-	v = vset*res;  if (sl)  sl->setScrollPosition(v);	sl##name(sl, v);
+#ifdef ROAD_EDITOR
+// using = delegate instead of += for editor. this will unfortunately produce 
+// mygui warnings, but prevents a crash because some delegates are assigned
+// multiple times in editor.
+	#define Slv(name, vset)  \
+		sl = mGUI->findWidget<ScrollBar>(#name);  \
+		if (sl)  sl->eventScrollChangePosition = newDelegate(this, &App::sl##name);  \
+		val##name = (StaticTextPtr)(mWndOpts->findWidget(#name"Val"));  \
+		v = vset*res;  if (sl)  sl->setScrollPosition(v);	sl##name(sl, v);
+#else
+	#define Slv(name, vset)  \
+		sl = mGUI->findWidget<ScrollBar>(#name);  \
+		if (sl)  sl->eventScrollChangePosition += newDelegate(this, &App::sl##name);  \
+		val##name = (StaticTextPtr)(mWndOpts->findWidget(#name"Val"));  \
+		v = vset*res;  if (sl)  sl->setScrollPosition(v);	sl##name(sl, v);
+#endif
 
 #define Btn(name, event)  \
 	btn = mGUI->findWidget<Button>(name);  \

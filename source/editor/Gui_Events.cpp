@@ -105,7 +105,7 @@ void App::tabTerLayer(TabPtr wp, size_t id)
 	{	if (id >= sc.td.ciNumLay)  return;
 		lay = &sc.td.layersAll[id];
 
-		chkTerLay->setStateCheck(lay->on);
+		chkTerLay->setStateSelected(lay->on);
 		cmbTexDiff->setIndexSelected( cmbTexDiff->findItemIndexWith(lay->texFile) );
 		cmbTexNorm->setIndexSelected( cmbTexNorm->findItemIndexWith(lay->texNorm) );
 
@@ -114,21 +114,21 @@ void App::tabTerLayer(TabPtr wp, size_t id)
 		StringUtil::splitBaseFilename(lay->texFile,sTex,sExt);
 		StringUtil::splitBaseFilename(lay->texNorm,sNorm,sExt);
 		bool bAuto = sTex + "_nh" == sNorm;
-		chkTexNormAuto->setStateCheck(bAuto);
+		chkTexNormAuto->setStateSelected(bAuto);
 		//  tex image
 	    imgTexDiff->setImageTexture(sTex + "_prv.png");
 	    scale = lay->tiling;
 
 		//  Ter Blendmap
-		HScrollPtr sl;  size_t v;
+		ScrollBar* sl;  size_t v;
 		Slv(TerLAngMin, lay->angMin/90.f);  Slv(TerLHMin, (lay->hMin+300.f)/600.f);
 		Slv(TerLAngMax, lay->angMax/90.f);	Slv(TerLHMax, (lay->hMax+300.f)/600.f);
 		Slv(TerLAngSm, lay->angSm/90.f);	Slv(TerLHSm, lay->hSm/200.f);
 		Slv(TerLNoise, (lay->noise+2.f)/4.f);
-		chkTerLNoiseOnly->setStateCheck(lay->bNoiseOnly);
+		chkTerLNoiseOnly->setStateSelected(lay->bNoiseOnly);
 	}
 	//  scale layer
-	HScrollPtr sl = (HScrollPtr)mWndOpts->findWidget("TerLScale");
+	ScrollBar* sl = (HScrollPtr)mWndOpts->findWidget("TerLScale");
 	if (sl)  sl->setVisible(bTerLay);
 	if (bTerLay)  {
 		if (edTerLScale)  edTerLScale->setCaption(toStr(scale));
@@ -157,7 +157,7 @@ void App::editTerTriSize(EditPtr ed)
 	Real r = std::max(0.1f, s2r(ed->getCaption()) );
 	sc.td.fTriangleSize = r;  sc.td.UpdVals();
 
-	HScrollPtr sl = (HScrollPtr)mWndOpts->findWidget("TerTriSize");  // set slider
+	ScrollBar* sl = (HScrollPtr)mWndOpts->findWidget("TerTriSize");  // set slider
 	size_t v = std::min(1.f, powf((r -0.1f)/5.9f, 0.5f) )*res;
 	if (sl)  sl->setScrollPosition(v);
 	// result val text
@@ -283,7 +283,7 @@ void App::chkTerLayOn(WP wp)
 	if (!bTerLay)  return;
 	sc.td.layersAll[idTerLay].on = !sc.td.layersAll[idTerLay].on;
 	ButtonPtr chk = wp->castType<Button>();
-	chk->setStateCheck(sc.td.layersAll[idTerLay].on);
+	chk->setStateSelected(sc.td.layersAll[idTerLay].on);
 	sc.td.UpdLayers();
 	if (valTerLAll)
 		valTerLAll->setCaption("Used: "+toStr(sc.td.layers.size()));
@@ -295,7 +295,7 @@ void App::chkTexNormAutoOn(WP wp)
 {
 	bTexNormAuto = !bTexNormAuto;
 	ButtonPtr chk = wp->castType<Button>();
-	chk->setStateCheck(bTexNormAuto);
+	chk->setStateSelected(bTexNormAuto);
 }
 
 void App::comboTexDiff(ComboBoxPtr cmb, size_t val)
@@ -327,7 +327,7 @@ void App::editTerLScale(EditPtr ed)
 	Real r = std::max(0.01f, s2r(ed->getCaption()) );
 	if (bTerLay)  sc.td.layersAll[idTerLay].tiling = r;
 
-	HScrollPtr sl = (HScrollPtr)mWndOpts->findWidget("TerLScale");  // set slider
+	ScrollBar* sl = (HScrollPtr)mWndOpts->findWidget("TerLScale");  // set slider
 	size_t v = std::min(1.f,std::max(0.f, powf((r - 2.0f)/9.0f, 1.f/1.5f) ))*res;
 	if (sl)  sl->setScrollPosition(v);
 }
@@ -399,7 +399,7 @@ void App::chkTerLNoiseOnlyOn(WP wp)
 	if (!bTerLay)  return;
 	sc.td.layersAll[idTerLay].bNoiseOnly = !sc.td.layersAll[idTerLay].bNoiseOnly;
 	ButtonPtr chk = wp->castType<Button>();
-	chk->setStateCheck(sc.td.layersAll[idTerLay].bNoiseOnly);
+	chk->setStateSelected(sc.td.layersAll[idTerLay].bNoiseOnly);
 	if (terrain && bGI && !noBlendUpd)  bTerUpdBlend = true;
 }
 
@@ -483,14 +483,14 @@ void App::tabPgLayers(TabPtr wp, size_t id)
 	idPgLay = id;  // help var
 	const PagedLayer& lay = sc.pgLayersAll[id];
 
-	chkPgLay->setStateCheck(lay.on);
+	chkPgLay->setStateSelected(lay.on);
 	cmbPgLay->setIndexSelected( cmbPgLay->findItemIndexWith(lay.name) );
 	if (imgPaged)	imgPaged->setImageTexture(lay.name + ".png");
 	if (valLTrAll)
 		valLTrAll->setCaption("Used: "+toStr(sc.pgLayers.size()));
 
 	//  set slider values
-	HScrollPtr sl;  size_t v;
+	ScrollBar* sl;  size_t v;
 	Slv(LTrDens, powf((lay.dens-0.001f) /1.0f, 0.5f));
 	Slv(LTrRdDist, Real(lay.addTrRdDist) /res);
 
@@ -507,7 +507,7 @@ void App::chkPgLayOn(WP wp)
 	sc.pgLayersAll[idPgLay].on = !sc.pgLayersAll[idPgLay].on;
 	sc.UpdPgLayers();
 	ButtonPtr chk = wp->castType<Button>();
-	chk->setStateCheck(sc.pgLayersAll[idPgLay].on);
+	chk->setStateSelected(sc.pgLayersAll[idPgLay].on);
 	if (valLTrAll)
 		valLTrAll->setCaption("Used: "+toStr(sc.pgLayers.size()));
 }
