@@ -858,30 +858,3 @@ ManualObject* CarModel::CreateModel(SceneManager* sceneMgr, const String& mat, c
 	return m;
 }
 
-
-void CarModel::ReloadTex(String mtrName)
-{
-	MaterialPtr mtr = (MaterialPtr)MaterialManager::getSingleton().getByName(mtrName);
-	if (!mtr.isNull())
-	{	Material::TechniqueIterator techIt = mtr->getTechniqueIterator();
-		while (techIt.hasMoreElements())
-		{	Technique* tech = techIt.getNext();
-			Technique::PassIterator passIt = tech->getPassIterator();
-			while (passIt.hasMoreElements())
-			{	Pass* pass = passIt.getNext();
-				Pass::TextureUnitStateIterator tusIt = pass->getTextureUnitStateIterator();
-				while (tusIt.hasMoreElements())
-				{	TextureUnitState* tus = tusIt.getNext();  String name = tus->getTextureName();
-					if (! (Ogre::StringUtil::startsWith(name, "ReflectionCube", false) || name == "ReflectionCube") )
-					{
-						Ogre::LogManager::getSingletonPtr()->logMessage( "Tex Reload: " + name );
-						TexturePtr tex = (TexturePtr)Ogre::TextureManager::getSingleton().getByName( name );
-						if (!tex.isNull())
-						{							
-							tex->reload();
-						}
-					}
-				}
-	}	}	}	
-}
-
