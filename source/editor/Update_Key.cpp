@@ -47,7 +47,7 @@ void App::UpdVisGui()
 {
 	if (mWndOpts)  mWndOpts->setVisible(bGuiFocus);
 	if (bnQuit)  bnQuit->setVisible(bGuiFocus);  //TODO: ?crash from lang change combo
-	if (mGUI)  mGUI->setVisiblePointer(bGuiFocus || !bMoveCam);
+	if (mGUI)  PointerManager::getInstance().setVisible(bGuiFocus || !bMoveCam);
 	if (road)  road->SetTerHitVis(bEdit());
 	if (!bGuiFocus && mToolTip)  mToolTip->setVisible(false);
 
@@ -217,7 +217,7 @@ bool App::KeyPress(const CmdKey &arg)
 		}
 		if (arg.key == KC_ESCAPE || arg.key == KC_BACK)
 			text = 0;
-		mGUI->injectKeyPress(MyGUI::KeyCode::Enum(arg.key), text);
+		MyGUI::InputManager::getInstance().injectKeyPress(MyGUI::KeyCode::Enum(arg.key), text);
 		return true;
 	}
 
@@ -373,7 +373,7 @@ bool App::KeyPress(const CmdKey &arg)
 
 		//  fog
 		case KC_G:  {
-			pSet->bFog = !pSet->bFog;  chkFog->setStateCheck(pSet->bFog);  UpdFog();  }  break;
+			pSet->bFog = !pSet->bFog;  chkFog->setStateSelected(pSet->bFog);  UpdFog();  }  break;
 
 		//  trees
 		case KC_V:	bTrGrUpd = true;  break;
@@ -387,7 +387,7 @@ bool App::KeyPress(const CmdKey &arg)
 		//  road
 		case KC_R:	if (bEdit()){  edMode = ED_Road;	UpdEditWnds();  }	break;
 		case KC_B:  if (road)  road->RebuildRoad(true);  break;
-		case KC_T:	if (mWndRoadStats)  mWndRoadStats->setVisible(!mWndRoadStats->isVisible());  break;
+		case KC_T:	if (mWndRoadStats)  mWndRoadStats->setVisible(!mWndRoadStats->getVisible());  break;
 		case KC_M:  if (road)  road->ToggleMerge();  break;
 
 		//  start pos

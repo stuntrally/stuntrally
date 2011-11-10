@@ -76,7 +76,7 @@ void App::InitGui()
 	}
 	
 	ButtonPtr btn, bchk;  ComboBoxPtr combo;  // for defines
-	HScrollPtr sl;  size_t v;
+	ScrollBar* sl;  size_t v;
 
 
 	///  [Graphics]
