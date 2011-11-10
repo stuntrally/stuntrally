@@ -428,7 +428,10 @@ BaseApp::BaseApp()
 
 BaseApp::~BaseApp()
 {
-	refreshCompositor(false);
+	if(mSplitMgr)
+	{
+		refreshCompositor(false);
+	}
 	CompositorManager::getSingleton().removeAll();
 	delete mLoadingBar;
 	delete mSplitMgr;

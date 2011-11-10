@@ -464,6 +464,7 @@ bool MaterialGenerator::MRTSupported()
 	{
 		const RenderSystemCapabilities *caps = Root::getSingleton().getRenderSystem()->getCapabilities();
 		if(caps->isShaderProfileSupported("ps_3_0") 
+		//	|| caps->isShaderProfileSupported("ps_4_0")
 		//	|| caps->isShaderProfileSupported("fp40")
 			)
 		{
@@ -610,12 +611,18 @@ void MaterialGenerator::generateVertexProgramSource(Ogre::StringUtil::StrStreamT
 	
 	outStream << 
 		"void main_vp( "
-		"	float2 texCoord 					: TEXCOORD0, \n"
 		"	float4 position 					: POSITION, \n";
+	
+	if (fpNeedWsNormal()) 
+	{
+		outStream <<"	float3 normal			 			: NORMAL, \n";
+	}
 	if (vpNeedTangent()) outStream <<
 		"	float3 tangent						: TANGENT, \n";
+	outStream << 
+		"	float2 texCoord 					: TEXCOORD0, \n";
 	
-	if (fpNeedEyeVector()) outStream <<
+		if (fpNeedEyeVector()) outStream <<
 		"	uniform float4 eyePosition,	 \n";
 	outStream <<
 		"	out float4 oPosition			 	: POSITION, \n"
@@ -624,7 +631,6 @@ void MaterialGenerator::generateVertexProgramSource(Ogre::StringUtil::StrStreamT
 	
 	if (fpNeedWsNormal()) 
 	{
-		outStream <<"	float3 normal			 			: NORMAL, \n";
 		if(UsePerPixelNormals())
 		{
 			outStream <<"	out float4 oNormal  				: COLOR1, \n";
