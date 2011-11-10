@@ -511,7 +511,7 @@ void CarModel::Create(int car)
 	
 	RecreateMaterials();
 		
-	// reflection
+	//  reflection
 	CreateReflection();
 
 	//  car Models:  body, interior, glass  -------
@@ -704,6 +704,15 @@ void CarModel::Create(int car)
 	UpdParsTrails();
 			
 	setMtrNames();
+	
+	//  this snippet makes sure the brake texture is pre-loaded.
+	//  since it is not used until you actually brake, we have to explicitely declare it
+	ResourceGroupManager::getSingleton().declareResource(sDirname + "_body00_brake.png", "Texture", "Car" + strI);
+	ResourceGroupManager::getSingleton().declareResource(sDirname + "_body00_add.png", "Texture", "Car" + strI);
+	
+	//  now just preload the whole resource group
+	ResourceGroupManager::getSingleton().initialiseResourceGroup("Car" + strI);
+	ResourceGroupManager::getSingleton().loadResourceGroup("Car" + strI);
 }
 
 //  ----------------- Reflection ------------------------
