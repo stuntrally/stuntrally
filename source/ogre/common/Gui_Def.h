@@ -12,45 +12,34 @@ const static float res = 1000000.f;  //float slider int res
 //HScrollPtr sl;  size_t v;
 //TODO: make App methods of these..
 
-#ifdef ROAD_EDITOR
-// using = delegate instead of += for editor. this will unfortunately produce 
-// mygui warnings, but prevents a crash because some delegates are assigned
-// multiple times in editor.
-	#define Slv(name, vset)  \
-		sl = mGUI->findWidget<ScrollBar>(#name);  \
-		if (sl)  sl->eventScrollChangePosition = newDelegate(this, &App::sl##name);  \
-		val##name = (StaticTextPtr)(mWndOpts->findWidget(#name"Val"));  \
-		v = vset*res;  if (sl)  sl->setScrollPosition(v);	sl##name(sl, v);
-#else
-	#define Slv(name, vset)  \
-		sl = mGUI->findWidget<ScrollBar>(#name);  \
-		if (sl)  sl->eventScrollChangePosition += newDelegate(this, &App::sl##name);  \
-		val##name = (StaticTextPtr)(mWndOpts->findWidget(#name"Val"));  \
-		v = vset*res;  if (sl)  sl->setScrollPosition(v);	sl##name(sl, v);
-#endif
+#define Slv(name, vset)  \
+	sl = mGUI->findWidget<ScrollBar>(#name);  \
+	if (sl && sl->eventScrollChangePosition.empty())  sl->eventScrollChangePosition += newDelegate(this, &App::sl##name);  \
+	val##name = (StaticTextPtr)(mWndOpts->findWidget(#name"Val"));  \
+	v = vset*res;  if (sl)  sl->setScrollPosition(v);	sl##name(sl, v);
 
 #define Btn(name, event)  \
 	btn = mGUI->findWidget<Button>(name);  \
-	if (btn)  btn->eventMouseButtonClick += newDelegate(this, &App::event);
+	if (btn && btn->eventMouseButtonClick.empty())  btn->eventMouseButtonClick += newDelegate(this, &App::event);
 
 #define Chk(name, event, var)  \
 	bchk = mGUI->findWidget<Button>(name);  \
-	if (bchk)  {  bchk->eventMouseButtonClick += newDelegate(this, &App::event);  \
+	if (bchk && bchk->eventMouseButtonClick.empty())  {  bchk->eventMouseButtonClick += newDelegate(this, &App::event);  \
 		bchk->setStateSelected(var);  }
 
 #define Edt(edit, name, event)  \
 	edit = (EditPtr)mWndOpts->findWidget(name);  \
-	if (edit)  edit->eventEditTextChange += newDelegate(this, &App::event);		
+	if (edit && edit->eventEditTextChange.empty())  edit->eventEditTextChange += newDelegate(this, &App::event);		
 
 #define Ed(name, evt)  Edt(ed##name, #name, evt)
 	
 #define Cmb(cmb, name, event)  \
 	cmb = mGUI->findWidget<ComboBox>(name);  \
-	cmb->eventComboChangePosition += newDelegate(this, &App::event);
+	if (cmb && cmb->eventComboChangePosition.empty())  cmb->eventComboChangePosition += newDelegate(this, &App::event);
 
 #define Tab(tab, name, event)  \
 	tab = mGUI->findWidget<Tab>(name);  \
-	tab->eventTabChangeSelect += newDelegate(this, &App::event);
+	if (tab && tab->eventTabChangeSelect.empty()) tab->eventTabChangeSelect += newDelegate(this, &App::event);
 		
 		
 //  checkboxes event
