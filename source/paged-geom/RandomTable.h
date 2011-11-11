@@ -91,7 +91,7 @@ inline void RandomTable::generateRandomNumbers()
 	MTRand mtrand(time(NULL));
 #endif
 	for(unsigned long i = 0; i < tableSize; i++)
-		table[i] = mtrand.rand();
+		table[i] = (float)mtrand.rand();
 #endif //USE_OGRE_RANDOM
 }
 
