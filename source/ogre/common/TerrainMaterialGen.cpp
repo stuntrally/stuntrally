@@ -1069,9 +1069,16 @@ namespace Ogre
 		}
 
 		outStream << 
-			",out float4 oColor : COLOR0 \n"
-			",out float4 oColor1 : COLOR1 ) \n";
-		
+			",out float4 oColor : COLOR0 \n";
+
+		if(MaterialGenerator::MRTSupported())
+		{
+			outStream << 
+				",out float4 oColor1 : COLOR1  \n";
+		}
+		outStream << 
+			") \n";
+
 		outStream << 
 			"{\n"
 			"	float4 outputCol;\n"
@@ -1417,13 +1424,26 @@ namespace Ogre
 		
 		else
 		{
-			outStream <<
-				"float calcSimpleShadow(sampler2D shadowMap, float4 shadowMapPos) \n"
-				"{ \n"
-				//"return 1;\n"
-				"	return tex2Dproj(shadowMap, shadowMapPos.xyz).x; \n"
-				"} \n";
-
+			GpuProgramManager& gmgr = GpuProgramManager::getSingleton();
+			if (!gmgr.isSyntaxSupported("ps_4_0"))
+			{
+				outStream <<
+					"float calcSimpleShadow(sampler2D shadowMap, float4 shadowMapPos) \n"
+					"{ \n"
+					//"return 1;\n"
+					"	return tex2Dproj(shadowMap, shadowMapPos).x; \n"
+					"} \n";
+			}
+			else
+			{
+				outStream <<
+					"float calcSimpleShadow(sampler2D shadowMap, float4 shadowMapPos) \n"
+					"{ \n"
+					//"return 1;\n"
+					"	return tex2Dproj(shadowMap, shadowMapPos,0.0f).x; \n"
+					"} \n";
+			
+			}
 		}
 
 		if (prof->getReceiveDynamicShadowsPSSM())
