@@ -9,6 +9,7 @@
 	#include "../vdrift/game.h"
 	#include "../ogre/SplitScreen.h"
 #endif
+#include "../vdrift/pathmanager.h"
 #include "../../paged-geom/GrassLoader.h"
 #include "../../paged-geom/BatchPage.h"
 #include "../../paged-geom/WindBatchPage.h"
@@ -91,6 +92,7 @@ void App::CreateTrees()
 		#else
 		grass = new PagedGeometry(mCamera, sc.grPage);  //30
 		#endif
+		grass->setTempDir(PATHMANAGER::GetCacheDir());
 		grass->addDetailLevel<GrassPage>(sc.grDist * pSet->grass_dist);
 
 		GrassLoader *grassLoader = new Forests::GrassLoader(grass);
@@ -128,6 +130,7 @@ void App::CreateTrees()
 		#else
 		trees = new PagedGeometry(mCamera, sc.trPage);
 		#endif
+		trees->setTempDir(PATHMANAGER::GetCacheDir());
 		if (bWind)
 			 trees->addDetailLevel<WindBatchPage>(sc.trDist * pSet->trees_dist, 0);
 		else trees->addDetailLevel<BatchPage>	 (sc.trDist * pSet->trees_dist, 0);

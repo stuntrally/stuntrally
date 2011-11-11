@@ -29,7 +29,7 @@ using namespace Ogre;
 using namespace Forests;
 
 // static members initialization
-Ogre::uint  Forests::ImpostorPage::s_nImpostorResolution    = 128;
+Ogre::uint  Forests::ImpostorPage::s_nImpostorResolution    = 128*2;
 Ogre::uint  Forests::ImpostorPage::s_nSelfInstances         = 0;
 Ogre::uint  Forests::ImpostorPage::s_nUpdateInstanceID      = 0;
 ColourValue Forests::ImpostorPage::s_clrImpostorBackground  = ColourValue(0.0f, 0.3f, 0.0f, 0.0f);
@@ -340,6 +340,8 @@ void ImpostorBatch::setBillboardOrigin(BillboardOrigin origin)
 
 String ImpostorBatch::generateEntityKey(Entity *entity)
 {
+	return entity->getMesh()->getName();  ///T + easier (AND avoids crash when having material name with / in it)
+	
 	StringUtil::StrStreamType entityKey;
 	entityKey << entity->getMesh()->getName();
 	for (unsigned int i = 0; i < entity->getNumSubEntities(); ++i)
@@ -586,6 +588,9 @@ void ImpostorTexture::renderTextures(bool force)
 #ifdef IMPOSTOR_FILE_SAVE
 	//Calculate the filename hash used to uniquely identity this render
 	String strKey = entityKey;
+	
+	///T
+	/*
 	char key[32] = {0};
 	uint32 i = 0;
 	for (String::const_iterator it = entityKey.begin(); it != entityKey.end(); ++it)
@@ -595,24 +600,27 @@ void ImpostorTexture::renderTextures(bool force)
 	}
 	for (i = 0; i < sizeof(key); ++i)
 		key[i] = (key[i] % 26) + 'A';
+	*/
 
 	String tempdir = this->group->getParentPagedGeometry()->getTempdir();
 	ResourceGroupManager::getSingleton().addResourceLocation(tempdir, "FileSystem", "BinFolder");
 
-	String fileNamePNG = "Impostor." + String(key, sizeof(key)) + '.' + StringConverter::toString(textureSize) + ".png";
-	String fileNameDDS = "Impostor." + String(key, sizeof(key)) + '.' + StringConverter::toString(textureSize) + ".dds";
+	///T
+	String fileNamePNG = strKey + ".png";
+	String fileNameDDS = strKey + ".dds";
 
 	//Attempt to load the pre-render file if allowed
 	needsRegen = force;
 	if (!needsRegen){
+		
 		try{
-			texture = TextureManager::getSingleton().load(fileNameDDS, "BinFolder", TEX_TYPE_2D, MIP_UNLIMITED);
+			texture = TextureManager::getSingleton().load(fileNamePNG, "BinFolder", TEX_TYPE_2D, MIP_UNLIMITED); ///T png first
 		}
-		catch (...){
+		catch (Ogre::Exception&){
 			try{
-				texture = TextureManager::getSingleton().load(fileNamePNG, "BinFolder", TEX_TYPE_2D, MIP_UNLIMITED);
+				texture = TextureManager::getSingleton().load(fileNameDDS, "BinFolder", TEX_TYPE_2D, MIP_UNLIMITED);
 			}
-			catch (...){
+			catch (Ogre::Exception&){
 				needsRegen = true;
 			}
 		}
@@ -646,7 +654,7 @@ void ImpostorTexture::renderTextures(bool force)
 	
 #ifdef IMPOSTOR_FILE_SAVE
 		//Save RTT to file with respecting the temp dir
-		renderTarget->writeContentsToFile(tempdir + fileNamePNG);
+		renderTarget->writeContentsToFile(tempdir + "/" + fileNamePNG); ///T missing /
 
 		//Load the render into the appropriate texture view
 		texture = TextureManager::getSingleton().load(fileNamePNG, "BinFolder", TEX_TYPE_2D, MIP_UNLIMITED);

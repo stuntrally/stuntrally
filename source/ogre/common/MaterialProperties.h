@@ -55,6 +55,10 @@ struct MaterialProperties
 	// contribute to ssao yes/no
 	bool ssao;
 	
+	// wind waving effect
+	// 0 = off, 1 = for grass (quad), 2 = for trees (mesh)
+	unsigned int wind;
+	
 	// use custom generator (for very specific materials like water, glass)
 	// empty ("") means no custom generator
 	std::string customGenerator; 

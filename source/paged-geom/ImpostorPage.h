@@ -29,7 +29,7 @@ Permission is granted to anyone to use this software for any purpose, including 
 #endif
 
 //The number of angle increments around the yaw axis to render impostor "snapshots" of trees
-#define IMPOSTOR_YAW_ANGLES 8
+#define IMPOSTOR_YAW_ANGLES 4 ///T
 
 //The number of angle increments around the pitch axis to render impostor "snapshots" of trees
 #define IMPOSTOR_PITCH_ANGLES 4
