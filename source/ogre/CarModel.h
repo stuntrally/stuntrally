@@ -70,10 +70,7 @@ public:
 	//  Car color, After these values are changed, ChangeClr() should be called
 	Ogre::ColourValue color;  // for minimap pos tri color  //float hue, sat, val;
 	void ChangeClr(int car);  //  Apply new color
-	
-	//  Reload material textures.
-	void ReloadTex(Ogre::String mtrName);
-	
+		
 	//  track surface for wheels
 	void UpdWhTerMtr();
 	

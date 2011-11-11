@@ -6,8 +6,8 @@
 #include "../ogre/common/BltObjects.h"
 #include "../ogre/common/TracksXml.h"
 #include "../ogre/common/FluidsXml.h"
-#include "../ogre/common/MessageBox.h"
-#include "../ogre/common/MessageBoxStyle.h"
+#include "../ogre/common/MessageBox/MessageBox.h"
+#include "../ogre/common/MessageBox/MessageBoxStyle.h"
 
 #include "../vdrift/mathvector.h"
 #include "../vdrift/quaternion.h"
@@ -229,7 +229,8 @@ protected:
 	MyGUI::ListPtr resList;
 	void InitGuiScrenRes(), btnResChng(WP), ResizeOptWnd();
 	void chkVidFullscr(WP), chkVidVSync(WP);
-	void comboGraphicsAll(MyGUI::ComboBoxPtr cmb, size_t val);
+	void comboGraphicsAll(MyGUI::ComboBoxPtr cmb, size_t val),
+		comboRenderSystem(MyGUI::ComboBoxPtr cmb, size_t val);
 	///-----------------------------------------
 
 	

@@ -263,6 +263,25 @@ void App::GuiInitGraphics()
 		combo->addItem(TR("#{GraphicsAll_High}"));
 		combo->addItem(TR("#{GraphicsAll_Ultra}"));
     }
+    
+    //  render systems
+	Cmb(combo, "CmbRendSys", comboRenderSystem);
+	if (combo)  {
+		combo->removeAllItems();
+
+		const int nRS = 4;
+		const String rs[nRS] = {"Default", "OpenGL Rendering Subsystem",
+			"Direct3D9 Rendering Subsystem", "Direct3D11 Rendering Subsystem"};
+		for (int i=0; i < nRS; ++i)
+		{
+			combo->addItem(rs[i]);
+			if (pSet->rendersystem == rs[i])
+				combo->setIndexSelected(combo->getItemCount()-1);
+		}
+		//const RenderSystemList& rsl = Ogre::Root::getSingleton().getAvailableRenderers();
+		//for (int i=0; i < rsl.size(); ++i)
+		//	combo->addItem(rsl[i]->getName());
+	}
 }
 
 
@@ -703,4 +722,9 @@ void App::comboGraphicsAll(ComboBoxPtr cmb, size_t val)
 	Slv(TerUpd, pSet->ter_skip /res);
 	Slv(MiniUpd, pSet->mini_skip /res);
 #endif
+}
+
+void App::comboRenderSystem(ComboBoxPtr cmb, size_t val)
+{
+	pSet->rendersystem = cmb->getItemNameAt(val);
 }
