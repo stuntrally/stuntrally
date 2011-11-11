@@ -4,7 +4,7 @@
 	envMap = ReflectionCube
 	reflAmount = 0.1
 	diffuse = 1.0 1.0 1.0
-	ambient = 0.5 0.5 0.5
+	ambient = 1.0 1.0 1.0
 	specular = 0.7 0.7 0.7 32
 	receivesShadows = false
 	receivesDepthShadows = true
@@ -37,14 +37,14 @@
 
 [car_interior]
 	diffuseMap_1024 = interior.png
-	ambient = 0.2 0.2 0.2
+	ambient = 0.4 0.4 0.4
 	diffuse = 0.6 0.6 0.6
 	specular = 0.5 0.5 0.5 12
 	receivesDepthShadows = true
 	terrainLightMap = true
 
 [cartire_front]
-	ambient = 0.5 0.5 0.5
+	ambient = 1.0 1.0 1.0
 	diffuse = 0.6 0.6 0.6
 	diffuseMap_1024 = wheel_front.png
 	receivesDepthShadows = true
@@ -89,7 +89,7 @@
 	envMap = ReflectionCube
 	reflAmount = 0.1
 	diffuse = 1.0 1.0 1.0
-	ambient = 0.5 0.5 0.5
+	ambient = 1.0 1.0 1.0
 	specular = 0.7 0.7 0.7 32
 	receivesShadows = false
 	receivesDepthShadows = true
@@ -104,7 +104,7 @@
 	terrainLightMap = false
 
 [chasis/Material_#3]
-	ambient = 0.3 0.3 0.3
+	ambient = 0.6 0.6 0.6
 	diffuse = 0.5 0.5 0.5
 	specular = 0.2 0.2 0.2 24
 	diffuseMap_1024 = chasis_a.jpg
