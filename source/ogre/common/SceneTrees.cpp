@@ -128,13 +128,17 @@ void App::CreateTrees()
 		#else
 		trees = new PagedGeometry(mCamera, sc.trPage);
 		#endif
+
+		// TODO: logic to compare track (scene.xml) scenery int value,
+		// if changed - force recreate impostors
+		//trees->forceRegenImpostors = true; // when scenery int val changed..
+
 		if (bWind)
 			 trees->addDetailLevel<WindBatchPage>(sc.trDist * pSet->trees_dist, 0);
 		else trees->addDetailLevel<BatchPage>	 (sc.trDist * pSet->trees_dist, 0);
-		if(pSet->use_imposters)
-		{
+		if (pSet->use_imposters)
 			trees->addDetailLevel<ImpostorPage>(sc.trDistImp * pSet->trees_dist, 0);
-		}
+
 		TreeLoader2D* treeLoader = new TreeLoader2D(trees, tbnd);
 		trees->setPageLoader(treeLoader);
 		treeLoader->setHeightFunction(getTerrainHeightAround /*,userdata*/);
