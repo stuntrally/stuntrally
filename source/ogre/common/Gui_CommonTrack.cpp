@@ -112,7 +112,8 @@ void App::AddTrkL(std::string name, int user, const TrackInfo* ti)
 		case 'A':  c = "#FFA080";  break;   case 'J':  c = "#50FF50";  break;
 		case 'D':  c = "#F0F000";  break;   case 'M':  c = "#A0A000";  break;
 		case 'F':  c = "#A0D000";  break;   case 'S':  c = "#D0FF00";  break;
-		case 'G':  c = "#C0FF00";  break;   case 'T':  c = "#A0A0A0";  break;  }
+		case 'G':  c = "#C0FF00";  break;   case 'T':  c = "#A0A0A0";  break;
+		case 'V':  c = "#202008";  break;   case 'X':  c = "#5858C0";  break;  }
 
 	MultiList2* li = trkMList;
 	li->addItem(name, 0);
