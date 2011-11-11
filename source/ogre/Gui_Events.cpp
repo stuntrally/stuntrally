@@ -404,13 +404,10 @@ bool App::keyPressed( const OIS::KeyEvent &arg )
 		if (!isFocGui)
 		{
 			int iChgCam = 0;
-			LogO("OIS: " + GetInputName(mOISBsys->lookupAction("General/NextCamera")->mBindings[0]->mBindables[0].second->getBindableName()) );
-			LogO("Pressed: " + mKeyboard->getAsString(arg.key));
-			if (action("NextCamera"))  { LogO("nextCam"); iChgCam = 1;   }// Next
-			if (action("PrevCamera"))  { LogO("prevCam"); iChgCam =-1; }  // Prev
+			if (action("NextCamera"))  iChgCam = 1;  // Next
+			if (action("PrevCamera"))  iChgCam =-1;  // Prev
 			if (iChgCam)
 			{
-				LogO("ChgCam");
 				if (ctrl)
 					//  change current camera car index
 					iCurCam = (iCurCam + iChgCam +pSet->local_players) % pSet->local_players;
