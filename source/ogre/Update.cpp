@@ -297,6 +297,7 @@ void App::newPoses()
 		else
 		//  get data from vdrift
 		//-----------------------------------------------------------------------
+		if (pCar)
 		{
 			pos = pCar->dynamics.GetPosition();
 			rot = pCar->dynamics.GetOrientation();
@@ -347,6 +348,7 @@ void App::newPoses()
 					MATHVECTOR <float,3>());
 			}
 			bool incar = true;
+			if (pCar)
 			{
 				std::list <SOUNDSOURCE *> soundlist;
 				pCar->GetEngineSoundList(soundlist);
@@ -358,7 +360,7 @@ void App::newPoses()
 		///-----------------------------------------------------------------------
 		//  record  save data for replay
 		///-----------------------------------------------------------------------
-		if (pSet->rpl_rec && !pGame->pause && !bGhost)
+		if (pSet->rpl_rec && !pGame->pause && !bGhost && pCar)
 		{
 			//static int ii = 0;
 			//if (ii++ >= 0)	// 1 half game framerate
