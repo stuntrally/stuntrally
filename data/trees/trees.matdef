@@ -137,6 +137,7 @@
 	alphaRejectFunc = greater
 	alphaRejectValue = 192
 	diffuseMap_512 = tree.07.png
+	diffuse = 0.5 0.5 0.5
 	transparent = true
 	terrainLightMap = true
 
@@ -158,6 +159,7 @@
 	diffuseMap_512 = tree.09.png
 	transparent = true
 	terrainLightMap = true
+	diffuse = 0.5 0.5 0.5
 
 [tree.09.mat/ALPHA/TEX/tree.09.png/VertCol/TWOSIDE]
 	parent = leaves.09.mat/ALPHA/TEX/tree.09.png/VertCol/TWOSIDE
