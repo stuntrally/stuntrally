@@ -6,6 +6,8 @@
 #ifndef __MESSAGE_BOX_STYLE_H__
 #define __MESSAGE_BOX_STYLE_H__
 
+#ifndef ROAD_EDITOR
+
 #include <MyGUI.h>
 
 namespace MyGUI
@@ -226,4 +228,5 @@ namespace MyGUI
 
 } // namespace MyGUI
 
+#endif
 #endif // __MESSAGE_BOX_STYLE_H__

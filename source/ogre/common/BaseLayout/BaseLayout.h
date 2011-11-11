@@ -8,6 +8,8 @@
 #ifndef __BASE_LAYOUT_H__
 #define __BASE_LAYOUT_H__
 
+#ifndef ROAD_EDITOR
+
 #include <MyGUI.h>
 #include "WrapsAttribute.h"
 
@@ -238,4 +240,5 @@ namespace wraps
 
 } // namespace wraps
 
+#endif
 #endif // __BASE_LAYOUT_H__
