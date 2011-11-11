@@ -27,7 +27,7 @@ App::App()
 	,fMiniX(0),fMiniY(0), scX(1),scY(1), ofsX(0),ofsY(0), minX(0),maxX(0), minY(0),maxY(0)
 	,arrowNode(0)
 	// ter
-	,mTerrainGlobals(0), mTerrainGroup(0), mPaging(false)
+	,mTerrainGlobals(0), mTerrainGroup(0), mPaging(false), sceneryId(0)
 	,mTerrainPaging(0), mPageManager(0), materialFactory(0)
 	// gui
 	,mToolTip(0), mToolTipTxt(0), carList(0), trkMList(0), resList(0), btRplPl(0)

@@ -118,6 +118,9 @@ public:
 	//  preview cam
 	Ogre::Vector3 camPos,camDir;
 	
+	//  to force regenerating impostors on different sceneries
+	int sceneryId;
+	
 	std::vector<FluidBox> fluids;
 	class FluidsXml* pFluidsXml;  // set this after Load
 		

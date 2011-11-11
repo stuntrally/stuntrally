@@ -38,6 +38,7 @@ void Scene::Default()
 	grTerMaxAngle = 30.f;
 
 	camPos = Vector3(10.f,20.f,10.f);  camDir = Vector3(0.f,-0.3f,1.f);
+	sceneryId = 0;
 	fluids.clear();  //
 }
 
@@ -123,6 +124,7 @@ bool Scene::LoadXml(String file)
 	eLi = root->FirstChildElement("light");
 	if (eLi)
 	{
+		a = eLi->Attribute("sceneryId");	if (a)  sceneryId = s2i(a);  ///
 		a = eLi->Attribute("pitch");		if (a)  ldPitch = s2r(a);
 		a = eLi->Attribute("yaw");			if (a)  ldYaw = s2r(a);
 		a = eLi->Attribute("dir");			if (a)  {  lDir = s2v(a);
@@ -308,6 +310,7 @@ bool Scene::SaveXml(String file)
 	root.InsertEndChild(fog);
 
 	TiXmlElement li("light");
+		li.SetAttribute("sceneryId",	toStrC( sceneryId ));
 		li.SetAttribute("pitch",		toStrC( ldPitch ));
 		li.SetAttribute("yaw",			toStrC( ldYaw ));
 		li.SetAttribute("ambient",		toStrC( lAmb ));
@@ -497,7 +500,7 @@ void Scene::UpdPgLayers()
 
 
 //
-/// terrain  Height function  (for generate)
+/// terrain  Height function  (for generate)  very old--
 //
 int TerData::GENERATE_HMAP = 0;
 float TerData::getHeight(const float& fi, const float& fj)
