@@ -1110,7 +1110,7 @@ void GrassLayer::_updateShaders()
 			//Generate a string ID that identifies the current set of vertex shader options
 			StringUtil::StrStreamType tmpName;
 			tmpName << "GrassVS_";
-			if (animate)
+			/*if (animate)
 				tmpName << "anim_";
 			if (blend)
 				tmpName << "blend_";
@@ -1121,7 +1121,7 @@ void GrassLayer::_updateShaders()
 			if (fadeTechnique == FADETECH_GROW || fadeTechnique == FADETECH_ALPHAGROW)
 				tmpName << maxHeight << "_";
 			tmpName << farViewDist << "_";
-			tmpName << "vp";
+			tmpName << "vp";*/
 			const String vsName = tmpName.str();
 
 			//Generate a string ID that identifies the material combined with the vertex shader
