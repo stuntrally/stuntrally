@@ -220,6 +220,7 @@ protected:
 
 	void comboGraphicsAll(CMB),
 		comboRenderSystem(CMB);
+		
 	///-----------------------------------------
 
 	void toggleGui();

@@ -232,7 +232,6 @@ protected:
 
 	void comboGraphicsAll(CMB),
 		comboRenderSystem(CMB);
-	///-----------------------------------------
 
 	
 	void UpdVisGui(), UpdEditWnds();
