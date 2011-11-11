@@ -796,7 +796,6 @@ void CarModel::ChangeClr(int car)
 	MaterialPtr mtr = (MaterialPtr)MaterialManager::getSingleton().getByName(sMtr[Mtr_CarBody]);
 	if (!mtr.isNull())
 	{
-		mtr->setAmbient(color);
 		mtr->setDiffuse(color);
 	}
 }
