@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION"
 "Report-Msgid-Bugs-To: "
-"POT-Creation-Date: 2011-11-09 17:56+0100"
+"POT-Creation-Date: 2011-11-11 19:14+0100"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>"
 "Language-Team: LANGUAGE <LL@li.org>"
@@ -87,6 +87,10 @@ msgstr ""
 
 msgctxt "ViewDist"
 msgid "View distance"
+msgstr ""
+
+msgctxt "RplParticles"
+msgid "Particles (for not transparent ghost)"
 msgstr ""
 
 msgctxt "TipRoadDist2"
@@ -187,6 +191,10 @@ msgstr ""
 
 msgctxt "TipTrackMap"
 msgid "Minimap of selected track, view from top."
+msgstr ""
+
+msgctxt "RenderSystem"
+msgid "Render System"
 msgstr ""
 
 msgctxt "TerGenOfsY"
@@ -645,8 +653,8 @@ msgctxt "WidthSteps"
 msgid "Width Steps"
 msgstr ""
 
-msgctxt "TerLAngMin"
-msgid "Angle Min"
+msgctxt "Diffuse"
+msgid "Diffuse"
 msgstr ""
 
 msgctxt "Sound"
@@ -895,6 +903,10 @@ msgstr ""
 
 msgctxt "InputFluidsPrevNext"
 msgid "PgUp,PgDn (or Wheel) - previous/next fluid"
+msgstr ""
+
+msgctxt "RplCurrent"
+msgid "Current"
 msgstr ""
 
 msgctxt "Yaw"
@@ -1257,10 +1269,6 @@ msgctxt "TreeMult"
 msgid "Trees multiplier"
 msgstr ""
 
-msgctxt "RplCur"
-msgid "Cur"
-msgstr ""
-
 msgctxt "InputToggleVeget"
 msgid "V - Disable / enable vegetation"
 msgstr ""
@@ -1617,8 +1625,8 @@ msgctxt "TipGrassPatchHeightMax"
 msgid "Maximal grass patch height."
 msgstr ""
 
-msgctxt "Diffuse"
-msgid "Diffuse"
+msgctxt "TerLAngMin"
+msgid "Angle Min"
 msgstr ""
 
 msgctxt "Tires"
