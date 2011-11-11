@@ -231,7 +231,7 @@ protected:
 	void chkVidFullscr(WP), chkVidVSync(WP);
 
 	void comboGraphicsAll(CMB),
-		comboRenderSystem(CMB);
+		comboRenderSystem(MyGUI::ComboBoxPtr wp, size_t val);
 
 	
 	void UpdVisGui(), UpdEditWnds();

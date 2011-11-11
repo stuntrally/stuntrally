@@ -278,9 +278,9 @@ bool BaseApp::setup()
 
 	//  Gui
 	mPlatform = new MyGUI::OgrePlatform();
-	mPlatform->initialise(mWindow, mSceneMgr, "General", PATHMANAGER::GetLogDir() + "/MyGUI_p.log");
+	mPlatform->initialise(mWindow, mSceneMgr, "General", PATHMANAGER::GetLogDir() + "/MyGUI.log");
 	mGUI = new MyGUI::Gui();
-	mGUI->initialise("core.xml", PATHMANAGER::GetLogDir() + "/MyGUI.log");
+	mGUI->initialise("core.xml");
 	
 	MyGUI::ResourceManager::getInstance().load("MessageBoxResources.xml");
 	

@@ -711,7 +711,7 @@ void App::comboGraphicsAll(ComboBoxPtr cmb, size_t val)
 #endif
 }
 
-void App::comboRenderSystem(CMB)
+void App::comboRenderSystem(ComboBoxPtr wp, size_t val)
 {
 	pSet->rendersystem = wp->getItemNameAt(val);
 }

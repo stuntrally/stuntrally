@@ -18,7 +18,7 @@ void App::InitGui()
 	LanguageManager::getInstance().loadUserTags("core_theme_black_blue_tag.xml");
 
 	//  load layout - wnds
-	vwGui = LayoutManager::getInstance().load("Editor.layout");
+	vwGui = LayoutManager::getInstance().loadLayout("Editor.layout");
 	for (VectorWidgetPtr::iterator it = vwGui.begin(); it != vwGui.end(); ++it)
 	{
 		setToolTips((*it)->getEnumerator());
@@ -64,7 +64,7 @@ void App::InitGui()
 	}
 
 	//  center mouse pos
-	mGUI->setVisiblePointer(bGuiFocus || !bMoveCam);
+	PointerManager::getInstance().setVisible(bGuiFocus || !bMoveCam);
 	GuiCenterMouse();
 	
 	//  hide  ---
