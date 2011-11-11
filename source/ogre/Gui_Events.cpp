@@ -13,6 +13,7 @@
 #include <OIS/OIS.h>
 #include "../oisb/OISB.h"
 #include <boost/filesystem.hpp>
+#include <boost/algorithm/string.hpp>
 
 #include <OgreRoot.h>
 #include <OgreTerrain.h>
@@ -363,14 +364,23 @@ void App::slBlurIntens(SL)
 //-----------------------------------------------------------------------------------------------------------
 //  Key pressed
 //-----------------------------------------------------------------------------------------------------------
+
+// util
+bool App::actionIsActive(std::string name, std::string pressed)
+{
+	std::string actionKey = GetInputName(mOISBsys->lookupAction("General/" + name)->mBindings[0]->mBindables[0].second->getBindableName());
+	boost::to_lower(actionKey);
+	boost::to_lower(pressed);
+	return actionKey == pressed;
+}
+
 bool App::keyPressed( const OIS::KeyEvent &arg )
 {
 	// update all keystates
 	OISB::System::getSingleton().process(0.001/*?0*/);
 	
 	// action key == pressed key
-	#define action(s) GetInputName(mOISBsys->lookupAction("General/"s)->mBindings[0]->mBindables[0].second->getBindableName()) \
-						== mKeyboard->getAsString(arg.key)
+	#define action(s) actionIsActive(s, mKeyboard->getAsString(arg.key))
 
 	if (!bAssignKey)
 	{
@@ -394,10 +404,13 @@ bool App::keyPressed( const OIS::KeyEvent &arg )
 		if (!isFocGui)
 		{
 			int iChgCam = 0;
-			if (action("NextCamera"))  iChgCam = 1;  // Next
-			if (action("PrevCamera"))  iChgCam =-1;  // Prev
+			LogO("OIS: " + GetInputName(mOISBsys->lookupAction("General/NextCamera")->mBindings[0]->mBindables[0].second->getBindableName()) );
+			LogO("Pressed: " + mKeyboard->getAsString(arg.key));
+			if (action("NextCamera"))  { LogO("nextCam"); iChgCam = 1;   }// Next
+			if (action("PrevCamera"))  { LogO("prevCam"); iChgCam =-1; }  // Prev
 			if (iChgCam)
 			{
+				LogO("ChgCam");
 				if (ctrl)
 					//  change current camera car index
 					iCurCam = (iCurCam + iChgCam +pSet->local_players) % pSet->local_players;
