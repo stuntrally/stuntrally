@@ -1,15 +1,15 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <MyGUI>
 	<!--  MsgBox  -->
-	<Tag name="MyGUI_MessageBox_Ok">Ok</Tag>
-	<Tag name="MyGUI_MessageBox_Yes">Yes</Tag>
-	<Tag name="MyGUI_MessageBox_No">No</Tag>
-	<Tag name="MyGUI_MessageBox_Abort">Abort</Tag>
-	<Tag name="MyGUI_MessageBox_Retry">Retry</Tag>
-	<Tag name="MyGUI_MessageBox_Ignore">Ignore</Tag>
-	<Tag name="MyGUI_MessageBox_Cancel">Cancel</Tag>
-	<Tag name="MyGUI_MessageBox_Try">Try</Tag>
-	<Tag name="MyGUI_MessageBox_Continue">Continue</Tag>
+	<Tag name="MessageBox_Ok">Ok</Tag>
+	<Tag name="MessageBox_Yes">Yes</Tag>
+	<Tag name="MessageBox_No">No</Tag>
+	<Tag name="MessageBox_Abort">Abort</Tag>
+	<Tag name="MessageBox_Retry">Retry</Tag>
+	<Tag name="MessageBox_Ignore">Ignore</Tag>
+	<Tag name="MessageBox_Cancel">Cancel</Tag>
+	<Tag name="MessageBox_Try">Try</Tag>
+	<Tag name="MessageBox_Continue">Continue</Tag>
 	
 	<!--  Loading tags  -->
 	<Tag name="LoadingDesc">Loading, please wait...</Tag>
