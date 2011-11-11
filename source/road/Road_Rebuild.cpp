@@ -19,6 +19,20 @@
 using namespace Ogre;
 
 
+//---------------------------------------------------------------------------------------------------------------
+Vector3 getNormalAtWorldPosition(Terrain* terrain, Real x, Real z, Real s)
+{
+	Real y0=0;
+	Vector3 vx(x-s, y0, z), vz(x, y0, z-s);
+	Vector3 vX(x+s, y0, z), vZ(x, y0, z+s);
+	vx.y = terrain->getHeightAtWorldPosition(vx);  vX.y = terrain->getHeightAtWorldPosition(vX);
+	vz.y = terrain->getHeightAtWorldPosition(vz);  vZ.y = terrain->getHeightAtWorldPosition(vZ);
+	Vector3 v_x = vx-vX;  v_x.normalise();
+	Vector3 v_z = vz-vZ;  v_z.normalise();
+	Vector3 n = -v_x.crossProduct(v_z);  n.normalise();
+	return n;
+}
+
 static float GetAngle(float x, float y)
 {
 	if (x == 0.f && y == 0.f)
@@ -205,7 +219,7 @@ void SplineRoad::RebuildRoadInt()
 				
 			///  normal <dir>  /
 			if (lod == 0)
-			{	Vector3 vn = vl.crossProduct(vw.normalisedCopy());  vn.normalise();
+			{	Vector3 vn = vl.crossProduct(vw);  //vn.normalise();
 				//if (vn.y < 0.f)  vn = -vn;  // always up y+
 				vnSeg0.push_back(vn);  }
 
@@ -411,7 +425,10 @@ void SplineRoad::RebuildRoadInt()
 						vN = vn;
 						yTer = mTerrain->getHeightAtWorldPosition(vP.x, 0, vP.z);
 						if (onTer1)  //  onTerrain
+						{
 							vP.y = yTer + fHeight * ((w==0 || w==iw) ? 0.15f : 1.f);
+							vN = getNormalAtWorldPosition(mTerrain, vP.x, vP.z, lenDiv*0.5f /*0.5f*/);
+						}
 					}else
 					{	///  pipe (_)
 						Real oo = (tcw - 0.5)/0.5 * PI_d * pipe;

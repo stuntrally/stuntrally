@@ -368,7 +368,9 @@ bool App::keyPressed( const OIS::KeyEvent &arg )
 	// update all keystates
 	OISB::System::getSingleton().process(0.001/*?0*/);
 	
-	#define action(s)  mOISBsys->lookupAction("General/"s)->isActive()
+	// action key == pressed key
+	#define action(s) GetInputName(mOISBsys->lookupAction("General/"s)->mBindings[0]->mBindables[0].second->getBindableName()) \
+						== mKeyboard->getAsString(arg.key)
 
 	if (!bAssignKey)
 	{
