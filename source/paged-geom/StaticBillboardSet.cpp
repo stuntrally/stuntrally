@@ -150,7 +150,8 @@ mFadeInvisibleDist      (0.f)
          }
 
          HighLevelGpuProgramPtr vertexShader = HighLevelGpuProgramManager::getSingleton().getByName("Sprite_vp");
-         assert(vertexShader.isNull() && "Sprite_vp already exist");
+         if (!vertexShader.isNull())
+			HighLevelGpuProgramManager::getSingleton().remove(vertexShader->getName());
 
          vertexShader = HighLevelGpuProgramManager::getSingleton().createProgram(
             "Sprite_vp", ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME, shaderLanguage, GPT_VERTEX_PROGRAM);
@@ -258,7 +259,7 @@ mFadeInvisibleDist      (0.f)
          }
 
          HighLevelGpuProgramPtr vertexShader2 = HighLevelGpuProgramManager::getSingleton().getByName("SpriteFade_vp");
-         assert(vertexShader2.isNull() && "SpriteFade_vp already exist");
+         if (!vertexShader2.isNull()) HighLevelGpuProgramManager::getSingleton().remove(vertexShader2->getName());
          vertexShader2 = HighLevelGpuProgramManager::getSingleton().createProgram("SpriteFade_vp",
             ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME, shaderLanguage, GPT_VERTEX_PROGRAM);
          vertexShader2->setSource(vertexProg2);
