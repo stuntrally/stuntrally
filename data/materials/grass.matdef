@@ -1,0 +1,12 @@
+[grass_GrassVS_]
+	ssao = false
+	alphaRejectFunc = greater
+	alphaRejectValue = 128
+	diffuseMap_1 = grass1.png
+	cullHardware = none
+	sceneBlend = alpha
+	lighting = false
+	receivesShadows = true
+	transparent = true
+	wind = 1
+	terrainLightMap = true
