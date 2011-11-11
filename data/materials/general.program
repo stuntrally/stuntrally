@@ -2,7 +2,7 @@
 vertex_program ambient_vs cg
 {
 	source general.cg
-	profiles vs_1_1 arbvp1
+	profiles vs_4_0 vs_1_1 arbvp1
 	entry_point ambient_vs
  
 	default_params
@@ -14,7 +14,7 @@ vertex_program ambient_vs cg
 fragment_program ambient_ps cg
 {
 	source general.cg
-	profiles ps_2_0 arbfp1
+	profiles ps_4_0 ps_2_0 arbfp1
 	entry_point ambient_ps
  
 	default_params
@@ -31,7 +31,7 @@ fragment_program ambient_ps cg
 vertex_program diffuse_vs cg
 {
 	source general.cg
-	profiles vs_1_1 arbvp1
+	profiles vs_4_0 vs_1_1 arbvp1
 	entry_point diffuse_vs
  
 	default_params
@@ -46,7 +46,7 @@ vertex_program diffuse_vs cg
 fragment_program diffuse_ps_a cg
 {
 	source general.cg
-	profiles ps_2_x arbfp1
+	profiles ps_4_0 ps_2_x arbfp1
 	entry_point diffuse_ps_a
  
 	default_params
@@ -70,7 +70,7 @@ fragment_program diffuse_ps_a cg
 fragment_program diffuse_ps_env cg
 {
 	source general.cg
-	profiles ps_2_x arbfp1
+	profiles ps_4_0 ps_2_x arbfp1
 	entry_point diffuse_ps_env
  
 	default_params

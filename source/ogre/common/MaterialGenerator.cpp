@@ -1221,6 +1221,9 @@ void MaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::StrStrea
 				LogO("[MaterialFactory] WARNING: Material '"+mDef->getName()+"' declared as transparent, but no way to get alpha value.");
 			}
 		}
+		//discard rejected alpha pixels
+		outStream << 
+			"	clip( alpha<"+toStr(mDef->mProps->alphaRejectValue/255.0f)+" ? -1:1); \n";
 		outStream << 
 		"	oColor.w = alpha; \n";
 	}

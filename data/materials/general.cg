@@ -3,18 +3,15 @@ struct VIn
 {
 	float4 p : POSITION;	float3 n : NORMAL;
 	float3 t : TANGENT;		float3 uv: TEXCOORD0;
-	float4 c : COLOR;
 };
 struct VOut
 {
 	float4 p : POSITION;	float3 uv : TEXCOORD0;	float4 wp : TEXCOORD1;
 	float3 n : TEXCOORD2;	float3 t  : TEXCOORD3;	float3 b  : TEXCOORD4;
-	float4 c : COLOR;
 };
 struct PIn
-{							float3 uv : TEXCOORD0;	float4 wp : TEXCOORD1;
+{	float4 p : POSITION;	float3 uv : TEXCOORD0;	float4 wp : TEXCOORD1;
 	float3 n : TEXCOORD2;	float3 t  : TEXCOORD3;	float3 b  : TEXCOORD4;
-	float4 c : COLOR;
 };
 
 void ambient_vs(VIn IN,
@@ -24,7 +21,7 @@ void ambient_vs(VIn IN,
 	oPos = mul(wvpMat, IN.p);  oUV = IN.uv.xy;
 }
 
-float4 ambient_ps(in float2 uv : TEXCOORD0,
+float4 ambient_ps(in float4 iPos : POSITION,in float2 uv : TEXCOORD0,
 	uniform float3 ambient,  uniform float4 matDif,
 	uniform sampler2D diffuseMap): COLOR0
 {
@@ -44,7 +41,7 @@ VOut diffuse_vs(VIn IN,
 	OUT.wp = mul(wMat, IN.p);
 	OUT.p = mul(wvpMat, IN.p);
 	OUT.n = IN.n;  OUT.t = IN.t;  OUT.b = cross(IN.t, IN.n);
-	OUT.c = IN.c;  //clr
+//	OUT.c = IN.c;  //clr
 	OUT.wp.w = saturate(fogParams.x * (OUT.p.z - fogParams.y) * fogParams.w);
 	return OUT;
 }
@@ -57,7 +54,7 @@ float4 diffuse_ps_a(PIn IN,       ///  _glass pipe_
 	uniform float4 matDif,   uniform float4 matSpec,	uniform float matShininess,
 	uniform float3 fogColor,
 	uniform float4 lightPos0,  uniform float3 camPos,
-	uniform float4 invSMSize,  uniform float4x4 iTWMat,
+	uniform float4x4 iTWMat,
 
 	uniform sampler2D diffuseMap : TEXUNIT0,
 	uniform sampler2D normalMap : TEXUNIT1): COLOR0
@@ -96,7 +93,7 @@ float4 diffuse_ps_env(PIn IN,     /// _car glass_
 	uniform float4 matDif,   uniform float4 matSpec,	uniform float matShininess,
 	uniform float3 fogColor,
 	uniform float4 lightPos0,  uniform float3 camPos,
-	uniform float4 invSMSize,  uniform float4x4 iTWMat,
+	uniform float4x4 iTWMat,
 
 	uniform sampler2D diffuseMap : TEXUNIT0,
 	uniform sampler2D normalMap : TEXUNIT1,
