@@ -424,8 +424,11 @@ void BaseApp::windowResized(RenderWindow* rw)
 		mCamera->setAspectRatio( float(mWindow->getWidth()) / float(mWindow->getHeight()));
 	
 	// write new window size to settings
+	// crashed on windows when setting fullscreen on
+	#if OGRE_PLATFORM == OGRE_PLATFORM_LINUX
 	pSet->windowx = mWindow->getWidth();
 	pSet->windowy = mWindow->getHeight();
+	#endif
 }
 
 void BaseApp::windowClosed(RenderWindow* rw)
