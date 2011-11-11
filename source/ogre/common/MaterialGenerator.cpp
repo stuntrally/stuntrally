@@ -141,11 +141,26 @@ void MaterialGenerator::generate(bool fixedFunction)
 	if (needTerrainLightMap())
 		mParent->terrainLightMapMtrs.push_back( mDef->getName() );
 		
-	// export material (test)
+	// uncomment to export to .material
 	/*
 	if (mDef->getName() == "pipeGlass") {
 	MaterialSerializer serializer;
 	serializer.exportMaterial(mat, "test.material");
+	}
+	*/
+	
+	// uncomment to see full shader source code in log
+	/*
+	if (mDef->getName() == "car_body")
+	{
+		LogO("[MaterialFactory] Vertex program source: ");
+		StringUtil::StrStreamType vSourceStr;
+		generateVertexProgramSource(vSourceStr);
+		LogO(vSourceStr.str());
+		LogO("[MaterialFactory] Fragment program source: ");
+		StringUtil::StrStreamType fSourceStr;
+		generateFragmentProgramSource(fSourceStr);
+		LogO(fSourceStr.str());
 	}
 	*/
 }
@@ -587,8 +602,14 @@ void MaterialGenerator::generateVertexProgramSource(Ogre::StringUtil::StrStreamT
 		
 	outStream <<
 	"	objectPos = position; \n";
-	if (mDef->mProps->fog) outStream <<
-		"	objectPos.w = saturate(fogParams.x * (oPosition.z - fogParams.y) * fogParams.w); \n"; // save fog amount in objectPos.w
+	if (mDef->mProps->fog)
+	{
+		outStream <<
+		"	if (fogParams.z != 1.0) \n"
+		"		objectPos.w = saturate(fogParams.x * (oPosition.z - fogParams.y) * fogParams.w); \n" // save fog amount in objectPos.w
+		"	else \n"
+		"		objectPos.w = 0.0; \n";
+	}
 	if (fpNeedWsNormal())
 	{
 		std::string wsNormalW = "1";
