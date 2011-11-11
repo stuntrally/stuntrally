@@ -109,6 +109,8 @@ void GrassLoader::frameUpdate()
 		layer->_updateShaders();
 
 		GpuProgramParametersSharedPtr params = layer->material->getTechnique(0)->getPass(0)->getVertexProgramParameters();
+		///T don't crash
+		params->setIgnoreMissingParams(true);
 		if (layer->animate){
 			//Increment animation frame
 			layer->waveCount += ellapsed * (layer->animSpeed * Math::PI);
@@ -1392,6 +1394,9 @@ void GrassLayer::_updateShaders()
 				Pass *pass = tmpMat->getTechnique(0)->getPass(0);
 				pass->setVertexProgram(vsName);
 				GpuProgramParametersSharedPtr params = pass->getVertexProgramParameters();
+				
+				///T  don't crash
+				params->setIgnoreMissingParams(true);
 
 				if(shaderLanguage.compare("glsl"))
 					//glsl can use the built in gl_ModelViewProjectionMatrix

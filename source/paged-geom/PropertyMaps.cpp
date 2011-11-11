@@ -134,10 +134,11 @@ Ogre::Real DensityMap::_getDensityAt_Unfiltered(Ogre::Real x, Ogre::Real z, cons
 
 	size_t mapWidth = pixels->getWidth(), mapHeight = pixels->getHeight();
 
+	///T  doesnt seem to be incorrect in opengl mode
 #if OGRE_PLATFORM != OGRE_PLATFORM_APPLE
 	// Patch incorrect PixelBox::getWidth() in OpenGL mode
-	if (Root::getSingleton().getRenderSystem()->getName() == "OpenGL Rendering Subsystem")
-		--mapWidth;
+	//if (Root::getSingleton().getRenderSystem()->getName() == "OpenGL Rendering Subsystem")
+		//--mapWidth;
 #endif //OGRE_PLATFORM_APPLE
 
 	size_t xindex = size_t(mapWidth * (x - mapBounds.left) / mapBounds.width());
@@ -160,10 +161,11 @@ Ogre::Real DensityMap::_getDensityAt_Bilinear(Ogre::Real x, Ogre::Real z, const 
 	uint32 mapWidth = (uint32)pixels->getWidth();
 	uint32 mapHeight = (uint32)pixels->getHeight();
 
+	///T  doesnt seem to be incorrect in opengl mode
 #if OGRE_PLATFORM != OGRE_PLATFORM_APPLE
 	//Patch incorrect PixelBox::getWidth() in OpenGL mode
-	if (Root::getSingleton().getRenderSystem()->getName() == "OpenGL Rendering Subsystem")
-		--mapWidth;
+	//if (Root::getSingleton().getRenderSystem()->getName() == "OpenGL Rendering Subsystem")
+		//--mapWidth;
 #endif //OGRE_PLATFORM_APPLE
 
 	Ogre::Real xIndexFloat = (mapWidth * (x - mapBounds.left) / mapBounds.width()) - 0.5f;
