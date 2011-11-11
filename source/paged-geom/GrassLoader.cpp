@@ -1112,6 +1112,7 @@ void GrassLayer::_updateShaders()
 			//Generate a string ID that identifies the current set of vertex shader options
 			StringUtil::StrStreamType tmpName;
 			tmpName << "GrassVS_";
+			///T we use our own material (only one) so we want static material name
 			/*if (animate)
 				tmpName << "anim_";
 			if (blend)

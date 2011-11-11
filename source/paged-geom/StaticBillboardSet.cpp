@@ -149,6 +149,7 @@ mFadeInvisibleDist      (0.f)
                "}";
          }
 
+		///T don't crash when shader already exists
          HighLevelGpuProgramPtr vertexShader = HighLevelGpuProgramManager::getSingleton().getByName("Sprite_vp");
          if (!vertexShader.isNull())
 			HighLevelGpuProgramManager::getSingleton().remove(vertexShader->getName());
@@ -258,6 +259,7 @@ mFadeInvisibleDist      (0.f)
                "}";
          }
 
+		///T don't crash when shader already exists
          HighLevelGpuProgramPtr vertexShader2 = HighLevelGpuProgramManager::getSingleton().getByName("SpriteFade_vp");
          if (!vertexShader2.isNull()) HighLevelGpuProgramManager::getSingleton().remove(vertexShader2->getName());
          vertexShader2 = HighLevelGpuProgramManager::getSingleton().createProgram("SpriteFade_vp",
