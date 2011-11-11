@@ -8,6 +8,9 @@
 #ifndef __ATTRIBUTE_H__
 #define __ATTRIBUTE_H__
 
+#include <MyGUI_Prerequest.h>
+#if MYGUI_VERSION_MINOR >= 2
+
 namespace attribute
 {
 
@@ -120,4 +123,5 @@ namespace attribute
 	static attribute::_attribute<_class> _attribute##_##_class(_value)
 }
 
+#endif
 #endif // __ATTRIBUTE_H__
