@@ -108,6 +108,6 @@
 
 	<track n="69" name="TestC5-egg"		created="06-11-11" crtver="1.4" modified="07-11-11" scenery="Forest" 	author="CH" fluids="0" bumps="0" jumps="0" loops="0" pipes="0" banked="4" frenzy="1" long="1" diff="1" rating="2" />
 	<track n="70" name="S13-Hole"		created="06-11-11" crtver="1.4" modified="07-11-11" scenery="Savanna" 	author="CH" fluids="1" bumps="0" jumps="0" loops="0" pipes="0" banked="5" frenzy="3" long="3" diff="5" rating="2" />
-	<track n="71" name="0W9-IceFrenzy"	created="07-11-11" crtver="1.4" modified="12-11-11" scenery="Winter" 	author="CH" fluids="1" bumps="0" jumps="0" loops="0" pipes="0" banked="2" frenzy="1" long="2" diff="2" rating="2" />
+	<track n="71" name="0W9-IceFrenzy"	created="07-11-11" crtver="1.4" modified="12-11-11" scenery="Winter" 	author="CH" fluids="1" bumps="0" jumps="0" loops="0" pipes="0" banked="3" frenzy="2" long="4" diff="2" rating="2" />
 
 </tracks>
