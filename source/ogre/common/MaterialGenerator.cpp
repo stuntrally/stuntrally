@@ -441,7 +441,7 @@ bool MaterialGenerator::UsePerPixelNormals()
 }
 bool MaterialGenerator::MRTSupported()
 {
-	return false; //! MRT is still buggy
+	//return false; //! MRT is still buggy
 	
 	static bool bMRTSupportCalculated=false;
 	if(!bMRTSupportCalculated)
@@ -734,6 +734,8 @@ void MaterialGenerator::vertexProgramParams(HighLevelGpuProgramPtr program)
 	if (vpNeedWMat())
 		params->setNamedAutoConstant("wMat", GpuProgramParameters::ACT_WORLD_MATRIX);
 	params->setNamedAutoConstant("wvpMat", GpuProgramParameters::ACT_WORLDVIEWPROJ_MATRIX);
+	if (vpNeedWvMat())
+		params->setNamedAutoConstant("wvMat", GpuProgramParameters::ACT_WORLDVIEW_MATRIX);
 	if (fpNeedWsNormal())
 		params->setNamedAutoConstant("wITMat", GpuProgramParameters::ACT_INVERSE_TRANSPOSE_WORLD_MATRIX);
 	if (fpNeedEyeVector())
