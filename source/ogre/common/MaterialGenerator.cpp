@@ -989,6 +989,9 @@ void MaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::StrStrea
 	if (mDef->mProps->transparent && needLightingAlpha())
 		outStream <<
 		"	uniform float4 lightingAlpha, \n";
+		
+	if (mDef->mProps->transparent) outStream <<
+		"	uniform float alphaRejectValue, \n";
 	
 	if (needShadows())
 	{
@@ -1208,9 +1211,9 @@ void MaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::StrStrea
 				LogO("[MaterialFactory] WARNING: Material '"+mDef->getName()+"' declared as transparent, but no way to get alpha value.");
 			}
 		}
-		//discard rejected alpha pixels
+		// discard rejected alpha pixels
 		outStream << 
-			"	clip( alpha<"+toStr(mDef->mProps->alphaRejectValue/255.0f)+" ? -1:1); \n";
+			"	clip( alpha<alphaRejectValue ? -1:1); \n";
 		outStream << 
 		"	oColor.w = alpha; \n";
 	}
@@ -1225,7 +1228,7 @@ void MaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::StrStrea
 		outStream <<  "oColor1 = float4(length(viewPosition.xyz) / far, normalize(viewNormal.xyz).xyz); \n";
 		if(mDef->mProps->transparent)
 		{
-			//mutiply the diffuse texture alpha
+			// mutiply the diffuse texture alpha
 			outStream << "oColor1 = oColor1 * tex2D(diffuseMap, texCoord.xy).a;";    
 		}
 	}
@@ -1278,6 +1281,9 @@ void MaterialGenerator::individualFragmentProgramParams(Ogre::GpuProgramParamete
 		params->setNamedConstant("fresnelBias", mDef->mProps->fresnelBias);
 		params->setNamedConstant("fresnelPower", mDef->mProps->fresnelPower);
 	}
+	
+	if (mDef->mProps->transparent)
+		params->setNamedConstant("alphaRejectValue", Real(mDef->mProps->alphaRejectValue/255.0f));
 
 	if (needLightingAlpha())
 		params->setNamedConstant("lightingAlpha", mDef->mProps->lightingAlpha);
