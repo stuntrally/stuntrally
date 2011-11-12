@@ -427,20 +427,11 @@ void App::newPoses()
 				// set animation start to old orientation
 				arrowAnimStart = arrowAnimCur;
 				
-				bool noAnim = false;
 				// game start: no animation
-				if (carM->iCurChk == -1)
-					noAnim = true;
+				bool noAnim = carM->iNumChks == 0;
 				
 				// get vector from camera to checkpoint
-				Ogre::Vector3 chkPos;
-				if (carM->iCurChk == -1 || carM->iCurChk == carM->iNextChk) // workaround for first checkpoint
-				{
-					int id = pSet->trackreverse ? road->iChkId1Rev : road->iChkId1;
-					chkPos = road->mChks[id].pos;
-				}
-				else
-					chkPos = road->mChks[std::max(0, std::min((int)road->mChks.size()-1, carM->iNextChk))].pos;
+				Ogre::Vector3 chkPos = road->mChks[std::max(0, std::min((int)road->mChks.size()-1, carM->iNextChk))].pos;
 					
 				// workaround for last checkpoint
 				if (carM->iNumChks == road->mChks.size())
@@ -478,8 +469,7 @@ void App::newPoses()
 			if (carM->bGetStPos)  // first pos is at start
 			{	carM->bGetStPos = false;
 				carM->matStPos.makeInverseTransform(posInfo.pos, Vector3::UNIT_SCALE, posInfo.rot);
-				carM->iCurChk = -1;  carM->iNumChks = 1;  // reset lap
-				carM->iNextChk = pSet->trackreverse ? road->iChkId1Rev : road->iChkId1;
+				carM->ResetChecks();
 			}
 			if (road && !carM->bGetStPos)
 			{
@@ -505,7 +495,7 @@ void App::newPoses()
 						}
 						ghost.Clear();
 						
-						carM->iCurChk = -1;  carM->iNumChks = 1;
+						carM->ResetChecks();
 
 						///  winner places  for local players > 1
 						if (carM->iWonPlace == 0 && pGame->timer.GetCurrentLap(iCarNum) >= pSet->num_laps)
@@ -518,20 +508,15 @@ void App::newPoses()
 						if (d2 < cs.r2)  // car in checkpoint
 						{
 							carM->iInChk = i;
-							if (carM->iCurChk == -1)  // first, any
-							{	carM->iCurChk = i;  carM->iNumChks = 1;  }
-							else if (carM->iNumChks < ncs)
-							{
+							//  next check
+							if (i == carM->iNextChk && carM->iNumChks < ncs)
+							{	carM->iCurChk = i;  carM->iNumChks++;
 								int ii = (pSet->trackreverse ? -1 : 1) * road->iDir;
 								carM->iNextChk = (carM->iCurChk + ii + ncs) % ncs;
-								
-								//  any if first, or next
-								if (i == carM->iNextChk)
-								{	carM->iCurChk = i;  carM->iNumChks++;  }
-								else
-								if (carM->iInChk != carM->iCurChk)
-									carM->bWrongChk = true;
 							}
+							else
+							if (carM->iInChk != carM->iCurChk)
+								carM->bWrongChk = true;
 							break;
 						}
 				}	}

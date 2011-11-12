@@ -441,7 +441,7 @@ bool MaterialGenerator::UsePerPixelNormals()
 }
 bool MaterialGenerator::MRTSupported()
 {
-	return false; //! MRT is still buggy
+	//return false; //! MRT is still buggy
 	
 	static bool bMRTSupportCalculated=false;
 	if(!bMRTSupportCalculated)
@@ -629,7 +629,7 @@ void MaterialGenerator::generateVertexProgramSource(Ogre::StringUtil::StrStreamT
 	if (needShadows()) {
 		for (int i=0; i<mParent->getNumShadowTex(); ++i)
 		{
-			outStream << "out float4 oLightPosition"+toStr(i)+" : TEXCOORD"+toStr(i+5)+", \n";
+			outStream << "out float4 oLightPosition"+toStr(i)+" : TEXCOORD"+toStr(oTexCoordIndex++)+", \n";
 		}
 		outStream << "\n";
 		for (int i=0; i<mParent->getNumShadowTex(); ++i)
@@ -734,6 +734,8 @@ void MaterialGenerator::vertexProgramParams(HighLevelGpuProgramPtr program)
 	if (vpNeedWMat())
 		params->setNamedAutoConstant("wMat", GpuProgramParameters::ACT_WORLD_MATRIX);
 	params->setNamedAutoConstant("wvpMat", GpuProgramParameters::ACT_WORLDVIEWPROJ_MATRIX);
+	if (vpNeedWvMat())
+		params->setNamedAutoConstant("wvMat", GpuProgramParameters::ACT_WORLDVIEW_MATRIX);
 	if (fpNeedWsNormal())
 		params->setNamedAutoConstant("wITMat", GpuProgramParameters::ACT_INVERSE_TRANSPOSE_WORLD_MATRIX);
 	if (fpNeedEyeVector())
@@ -969,6 +971,9 @@ void MaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::StrStrea
 	if (mDef->mProps->transparent && needLightingAlpha())
 		outStream <<
 		"	uniform float4 lightingAlpha, \n";
+		
+	if (mDef->mProps->transparent) outStream <<
+		"	uniform float alphaRejectValue, \n";
 	
 	if (needShadows())
 	{
@@ -979,7 +984,7 @@ void MaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::StrStrea
 		}
 		outStream << "\n";
 		for (int i=0; i<mParent->getNumShadowTex(); ++i)
-			outStream << "in float4 lightPosition"+toStr(i)+" : TEXCOORD"+toStr(i+5)+", \n";
+			outStream << "in float4 lightPosition"+toStr(i)+" : TEXCOORD"+toStr(oTexCoordIndex++)+", \n";
 		outStream << "\n";
 		for (int i=0; i<mParent->getNumShadowTex(); ++i)
 			outStream << "uniform float4 invShadowMapSize"+toStr(i)+", \n";
@@ -1182,9 +1187,9 @@ void MaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::StrStrea
 				LogO("[MaterialFactory] WARNING: Material '"+mDef->getName()+"' declared as transparent, but no way to get alpha value.");
 			}
 		}
-		//discard rejected alpha pixels
+		// discard rejected alpha pixels
 		outStream << 
-			"	clip( alpha<"+toStr(mDef->mProps->alphaRejectValue/255.0f)+" ? -1:1); \n";
+			"	clip( alpha<alphaRejectValue ? -1:1); \n";
 		outStream << 
 		"	oColor.w = alpha; \n";
 	}
@@ -1199,7 +1204,7 @@ void MaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::StrStrea
 		outStream <<  "oColor1 = float4(length(viewPosition.xyz) / far, normalize(viewNormal.xyz).xyz); \n";
 		if(mDef->mProps->transparent)
 		{
-			//mutiply the diffuse texture alpha
+			// mutiply the diffuse texture alpha
 			outStream << "oColor1 = oColor1 * tex2D(diffuseMap, texCoord.xy).a;";    
 		}
 	}
@@ -1253,6 +1258,9 @@ void MaterialGenerator::individualFragmentProgramParams(Ogre::GpuProgramParamete
 		params->setNamedConstant("fresnelBias", mDef->mProps->fresnelBias);
 		params->setNamedConstant("fresnelPower", mDef->mProps->fresnelPower);
 	}
+	
+	if (mDef->mProps->transparent)
+		params->setNamedConstant("alphaRejectValue", Real(mDef->mProps->alphaRejectValue/255.0f));
 
 	if (needLightingAlpha())
 		params->setNamedConstant("lightingAlpha", mDef->mProps->lightingAlpha);
