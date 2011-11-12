@@ -400,7 +400,15 @@ loader(0)
 	//Calculate the entity's bounding box and it's diameter
 	boundingBox = entity->getBoundingBox();
 
-	entityRadius = Math::boundingRadiusFromAABB(boundingBox);
+	///T
+	//entityRadius = Math::boundingRadiusFromAABB(boundingBox);
+	Real tmp;
+	entityRadius = boundingBox.getMaximum().x - boundingBox.getCenter().x;
+	tmp = boundingBox.getMaximum().y - boundingBox.getCenter().y;
+	if (tmp > entityRadius) entityRadius = tmp;
+	tmp = boundingBox.getMaximum().z - boundingBox.getCenter().z;
+	if (tmp > entityRadius) entityRadius = tmp;
+	
 	entityDiameter = 2.0f * entityRadius;
 	entityCenter = boundingBox.getCenter();
 	
