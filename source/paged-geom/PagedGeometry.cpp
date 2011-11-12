@@ -68,6 +68,8 @@ PagedGeometry::PagedGeometry(Camera* cam, const Real pageSize, Ogre::RenderQueue
 	// FIXME: Use Cache dir
 	tempdir=""; // empty for current working directory
 	shadersEnabled = true; // enable shaders by default
+
+	forceRegenImpostors = false;  ///T
 }
 
 PagedGeometry::~PagedGeometry()
