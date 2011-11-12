@@ -851,7 +851,7 @@ void MaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::StrStrea
 {
 	if (needShadows())
 		fpRealtimeShadowHelperSource(outStream);
-	int oTexCoordIndex=0;
+	int oTexCoordIndex=1;
 	outStream <<
 		"void main_fp("
 		"	in float4 iPosition : POSITION, \n"
