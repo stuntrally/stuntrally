@@ -70,6 +70,8 @@ m_nRenderQueue(queue)
 	geometryAllowedVisible = true;
 	tempdir=""; // empty for current working directory
 	shadersEnabled = true; // enable shaders by default
+
+	forceRegenImpostors = false;  ///T
 }
 
 PagedGeometry::~PagedGeometry()

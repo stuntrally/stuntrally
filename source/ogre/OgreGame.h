@@ -56,6 +56,7 @@ public:
 	FluidsXml fluidsXml;  /// fluid params xml
 	BltObjects objs;  // veget collision in bullet
 	Ogre::Light* sun;  void UpdFog(bool bForce=false), UpdSun();
+	int sceneryId;  // from scene
 	
 	// Rain, snow
 	Ogre::ParticleSystem *pr,*pr2;
@@ -228,6 +229,7 @@ protected:
 	///  input tab
 	void InitInputGui(), inputBindBtnClicked(WP);
 	void InputBind(int key, int button=-1, int axis=-1);
+	bool actionIsActive(std::string, std::string);
 	void cmbJoystick(WP, size_t val), UpdateInputBars(), inputDetailBtn(WP);
 	Ogre::String GetInputName(const Ogre::String& sName);
 	//  joy events

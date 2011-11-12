@@ -754,8 +754,11 @@ public:
 	float getCustomParam(const Ogre::String &paramName, float defaultParamValue) const;
 
 
-   /// Returns the rendering queue that paged geometry was constructed with
-   Ogre::uint8 getRenderQueue() const  { return m_nRenderQueue; }
+	/// Returns the rendering queue that paged geometry was constructed with
+	Ogre::uint8 getRenderQueue() const  { return m_nRenderQueue; }
+	
+	///T  custom bool to force regenerating all impostor textures
+	bool forceRegenImpostors;
 
 protected:
 	//Internal function - do not use

@@ -25,6 +25,12 @@ Permission is granted to anyone to use this software for any purpose, including 
 #include "ImpostorPage.h"
 #include "StaticBillboardSet.h"
 
+///T 
+#include "../ogre/Defines.h"
+#include "../ogre/QTimer.h"
+
+namespace Forests {
+
 using namespace Ogre;
 using namespace Forests;
 
@@ -341,8 +347,8 @@ void ImpostorBatch::setBillboardOrigin(BillboardOrigin origin)
 String ImpostorBatch::generateEntityKey(Entity *entity)
 {
 	return entity->getMesh()->getName();  ///T + easier (AND avoids crash when having material name with / in it)
-	
-	StringUtil::StrStreamType entityKey;
+
+	/*StringUtil::StrStreamType entityKey;
 	entityKey << entity->getMesh()->getName();
 	for (unsigned int i = 0; i < entity->getNumSubEntities(); ++i)
    {
@@ -352,7 +358,7 @@ String ImpostorBatch::generateEntityKey(Entity *entity)
 #ifdef IMPOSTOR_RENDER_ABOVE_ONLY
 	entityKey << "_RAO";
 #endif
-	return entityKey.str();
+	return entityKey.str();*/
 }
 
 //-------------------------------------------------------------------------------------
@@ -490,6 +496,7 @@ void ImpostorTexture::regenerateAll()
 
 void ImpostorTexture::renderTextures(bool force)
 {
+	QTimer ti;  ti.update();  ///T  /// time
 #ifdef IMPOSTOR_FILE_SAVE
 	TexturePtr renderTexture;
 #else
@@ -610,7 +617,7 @@ void ImpostorTexture::renderTextures(bool force)
 	String fileNameDDS = strKey + ".dds";
 
 	//Attempt to load the pre-render file if allowed
-	needsRegen = force;
+	needsRegen = force || group->getParentPagedGeometry()->forceRegenImpostors;  ///T
 	if (!needsRegen){
 		
 		try{
@@ -702,6 +709,11 @@ void ImpostorTexture::renderTextures(bool force)
 	if (TextureManager::getSingletonPtr())
 		TextureManager::getSingleton().remove(texName2);
 #endif
+
+	ti.update();	///T  /// time
+	float dt = ti.dt * 1000.f;
+	Ogre::LogManager::getSingleton().logMessage(String("::: Time Impostor: ") +
+		toStr(dt) + " ms (" + strKey + ") " + (needsRegen ? " Generated" : " loaded"));
 }
 
 String ImpostorTexture::removeInvalidCharacters(String s)
@@ -756,3 +768,5 @@ ImpostorTexture *ImpostorTexture::getTexture(ImpostorPage *group, Entity *entity
 		}
 	}
 }
+
+} // namespace Forests
