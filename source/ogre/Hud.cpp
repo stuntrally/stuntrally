@@ -423,17 +423,6 @@ void App::UpdateHUD(int carId, CarModel* pCarM, CAR* pCar, float time, Viewport*
 	oldCarTxt = pSet->car_dbgtxt;
 	
 
-	///  ghost, checkpoints  ----------
-	/*if (ovU[0] && pCarM)
-	{
-		String s = String("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n")+  //"wr:" + (pCarM->bWrongChk?"W":".") + 
-			"                      ghost:  "  + GetTimeString(ghost.GetTimeLength()) + "  "  + toStr(ghost.GetNumFrames()) + "\n" +
-			"                      ghplay: " + GetTimeString(ghplay.GetTimeLength()) + "  " + toStr(ghplay.GetNumFrames()) + "\n" +
-			"                      bInSt:" + (pCarM->bInSt ? "1":"0") + " iCur:" + toStr(pCarM->iCurChk) + " iIn:" + toStr(pCarM->iInChk) + " iNext:" + toStr(pCarM->iNextChk) + " iNumChks:" + toStr(pCarM->iNumChks);
-		ovU[0]->setCaption(s);
-	}/**/
-	
-
 	//  profiling times -
 	if (pGame && pGame->profilingmode && ovU[3])
 	{
@@ -509,11 +498,16 @@ void App::UpdateHUD(int carId, CarModel* pCarM, CAR* pCar, float time, Viewport*
 
 	//  checkpoint warning  --------
 	if (road && hudWarnChk && pCarM)
-	{	/* chks info *
-		sprintf(s, "           st %d in%2d cur%2d nxt %d  num %d / all %d  T= %4.2f  %s" //"st-d %6.2f %6.2f %6.2f"
-			,pCarM->bInSt ? 1:0, pCarM->iInChk, pCarM->iCurChk, pCarM->iNextChk,  pCarM->iNumChks, road->mChks.size()
-			,pCarM->fChkTime,  pCarM->bWrongChk ? "Wrong Checkpoint" : "");  //,vStDist.x, vStDist.y, vStDist.z);
-		hudCheck->setCaption(s);/**/
+	{	/* checks info *
+		if (ovU[0])
+		//	"ghost:  "  + GetTimeString(ghost.GetTimeLength()) + "  "  + toStr(ghost.GetNumFrames()) + "\n" +
+		//	"ghplay: " + GetTimeString(ghplay.GetTimeLength()) + "  " + toStr(ghplay.GetNumFrames()) + "\n" +
+		{	sprintf(s, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n"
+				"         st %d in%2d  |  cur%2d > next %d  |  Num %d / All %d  T= %4.2f"
+			,pCarM->bInSt ? 1:0, pCarM->iInChk, pCarM->iCurChk, pCarM->iNextChk
+			,pCarM->iNumChks, road->mChks.size(), pCarM->fChkTime);
+			ovU[0]->setCaption(s);
+		}	/**/
 
 		if (pCarM->bWrongChk)
 			pCarM->fChkTime = 2.f;  //par sec

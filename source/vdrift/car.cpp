@@ -805,7 +805,7 @@ bool CAR::Serialize(joeserialize::Serializer & s)
 }
 
 
-///  new
+///  reset car, pos and state
 void CAR::ResetPos(bool fromStart)
 {
 	MATHVECTOR <float, 3> pos = fromStart ? posAtStart : posLastCheck;
@@ -821,4 +821,16 @@ void CAR::ResetPos(bool fromStart)
 	dynamics.chassis->setAngularVelocity(btVector3(0,0,0));
 
 	dynamics.SynchronizeBody();  // set body from chassis
+
+	//  engine, wheels
+	dynamics.engine.SetInitialConditions();
+	for (int w=0; w < 4; ++w)
+	{
+		MATHVECTOR <CARDYNAMICS::T, 3> zero(0,0,0);
+		dynamics.wheel[w].SetAngularVelocity(0);
+		//dynamics.wheel_velocity[w] = zero;
+	}
+
+	//dynamics.SynchronizeChassis();
+	dynamics.UpdateWheelContacts();
 }

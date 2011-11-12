@@ -92,7 +92,7 @@ void SETTINGS::Serialize(bool w, CONFIGFILE & c)
 
 	Param(c,w, "replay.rec", rpl_rec);				Param(c,w, "replay.ghost", rpl_ghost);
 	Param(c,w, "replay.bestonly", rpl_bestonly);	Param(c,w, "replay.listview", rpl_listview);
-	Param(c,w, "replay.alpha", rpl_alpha);
+	Param(c,w, "replay.alpha", rpl_alpha);			Param(c,w, "replay.ghostpar", rpl_ghostpar);
 }
 
 SETTINGS::SETTINGS() :  ///  Defaults
@@ -135,7 +135,8 @@ SETTINGS::SETTINGS() :  ///  Defaults
 	//  input
 	x11_capture_mouse(false),
 	//  replay
-	rpl_rec(1), rpl_ghost(1), rpl_bestonly(1), rpl_alpha(0), rpl_listview(0),
+	rpl_rec(1), rpl_ghost(1), rpl_bestonly(1),
+	rpl_alpha(0), rpl_ghostpar(0), rpl_listview(0),
 	sceneryIdOld(0)
 {
 	for (int i=0; i < 4; ++i)

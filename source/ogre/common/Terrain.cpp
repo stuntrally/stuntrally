@@ -249,7 +249,7 @@ void App::configureTerrainDefaults(Light* l)
 void App::CreateTerrain(bool bNewHmap, bool bTer)
 {
 	iBlendMaps = 0;  terrain = 0;
-
+	
 	///  sky
 	Vector3 scl = pSet->view_distance*Vector3::UNIT_SCALE;
 	CreateSkyDome(bTer ? sc.skyMtr : "sky/blue_clouds", scl);
@@ -311,7 +311,12 @@ void App::CreateTerrain(bool bNewHmap, bool bTer)
 		QTimer tm;  tm.update();  /// time
 
 		if (!mTerrainGlobals)
-		mTerrainGlobals = OGRE_NEW TerrainGlobalOptions();
+			mTerrainGlobals = OGRE_NEW TerrainGlobalOptions();
+		if (mTerrainGroup)
+		{
+			OGRE_DELETE mTerrainGroup;
+			mTerrainGroup = 0;
+		}
 		mTerrainGroup = OGRE_NEW TerrainGroup(mSceneMgr, Terrain::ALIGN_X_Z,
 			sc.td.iTerSize, sc.td.fTerWorldSize);
 		mTerrainGroup->setOrigin(Vector3::ZERO);

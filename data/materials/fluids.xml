@@ -2,6 +2,7 @@
 	<fluid name="water blue"	material="Water_blue"  density="200" angDamp="0.7" linDamp="0.2" heightDamp="0" />
 	<fluid name="water cyan"	material="Water_cyan"  density="200" angDamp="0.7" linDamp="0.2" heightDamp="0" />
 	<fluid name="water green"	material="Water_green" density="200" angDamp="0.7" linDamp="0.2" heightDamp="0" />
+	<fluid name="water white"	material="Water_white" density="200" angDamp="0.7" linDamp="0.2" heightDamp="0" />
 	
 	<fluid name="water blue med"	material="Water_blue"  density="200" angDamp="0.7" linDamp="0.2" heightDamp="0" />
 	<fluid name="water cyan med"	material="Water_cyan"  density="600" angDamp="0.8" linDamp="0.3" heightDamp="0" />
