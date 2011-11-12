@@ -37,7 +37,7 @@ THE SOFTWARE.
 #include "OgreHardwarePixelBuffer.h"
 #include "OgreShadowCameraSetupPSSM.h"
 #include "../Defines.h"
-
+#include "MaterialGenerator.h"
 // depth shadows: use terrain receiver shader or use custom shader (pssm.cg)
 #define CUSTOM_RECEIVER_SHADER
 
@@ -249,7 +249,7 @@ namespace Ogre
 		// Automatically disable normal & parallax mapping if card cannot handle it
 		// We do this rather than having a specific technique for it since it's simpler
 		GpuProgramManager& gmgr = GpuProgramManager::getSingleton();
-		if (!gmgr.isSyntaxSupported("ps_3_0") && !gmgr.isSyntaxSupported("ps_2_x")
+		if (!gmgr.isSyntaxSupported("ps_4_0") && !gmgr.isSyntaxSupported("ps_3_0") && !gmgr.isSyntaxSupported("ps_2_x")
 			&& !gmgr.isSyntaxSupported("fp40") && !gmgr.isSyntaxSupported("arbfp1"))
 		{
 			setLayerNormalMappingEnabled(false);
@@ -536,9 +536,12 @@ namespace Ogre
 		GpuProgramParametersSharedPtr params = prog->getDefaultParameters();
 		params->setIgnoreMissingParams(true);
 		params->setNamedAutoConstant("worldMatrix", GpuProgramParameters::ACT_WORLD_MATRIX);
-		params->setNamedAutoConstant("viewProjMatrix", GpuProgramParameters::ACT_VIEWPROJ_MATRIX);
-		params->setNamedAutoConstant("lodMorph", GpuProgramParameters::ACT_CUSTOM, 
-			Terrain::LOD_MORPH_CUSTOM_PARAM);
+		params->setNamedAutoConstant("worldViewMatrix", GpuProgramParameters::ACT_WORLDVIEW_MATRIX);		params->setNamedAutoConstant("viewProjMatrix", GpuProgramParameters::ACT_VIEWPROJ_MATRIX);
+		if (tt != RENDER_COMPOSITE_MAP)
+		{
+			params->setNamedAutoConstant("lodMorph", GpuProgramParameters::ACT_CUSTOM, 
+				Terrain::LOD_MORPH_CUSTOM_PARAM);
+		}
 		params->setNamedAutoConstant("fogParams", GpuProgramParameters::ACT_FOG_PARAMS);
 
 		if (prof->isShadowingEnabled(tt, terrain))
@@ -554,8 +557,8 @@ namespace Ogre
 					GpuProgramParameters::ACT_TEXTURE_VIEWPROJ_MATRIX, i);
 				if (prof->getReceiveDynamicShadowsDepth())
 				{
-					params->setNamedAutoConstant("depthRange" + StringConverter::toString(i), 
-						GpuProgramParameters::ACT_SHADOW_SCENE_DEPTH_RANGE, i);
+				//	params->setNamedAutoConstant("depthRange" + StringConverter::toString(i), 
+				//		GpuProgramParameters::ACT_SHADOW_SCENE_DEPTH_RANGE, i);
 				}
 			}
 		}
@@ -572,10 +575,18 @@ namespace Ogre
 		params->setNamedAutoConstant("ambient", GpuProgramParameters::ACT_AMBIENT_LIGHT_COLOUR);
 		params->setNamedAutoConstant("lightPosObjSpace", GpuProgramParameters::ACT_LIGHT_POSITION_OBJECT_SPACE, 0);
 		params->setNamedAutoConstant("lightDiffuseColour", GpuProgramParameters::ACT_LIGHT_DIFFUSE_COLOUR, 0);
-		params->setNamedAutoConstant("lightSpecularColour", GpuProgramParameters::ACT_LIGHT_SPECULAR_COLOUR, 0);
+		if (tt != LOW_LOD && tt != RENDER_COMPOSITE_MAP)
+		{
+			params->setNamedAutoConstant("lightSpecularColour", GpuProgramParameters::ACT_LIGHT_SPECULAR_COLOUR, 0);
+		}
 		params->setNamedAutoConstant("eyePosObjSpace", GpuProgramParameters::ACT_CAMERA_POSITION_OBJECT_SPACE);
 		params->setNamedAutoConstant("fogColour", GpuProgramParameters::ACT_FOG_COLOUR);
-
+		
+		if(MaterialGenerator::MRTSupported())
+		{
+			params->setNamedAutoConstant("worldViewMatrix", GpuProgramParameters::ACT_WORLDVIEW_MATRIX);
+			params->setNamedAutoConstant("far", GpuProgramParameters::ACT_FAR_CLIP_DISTANCE);
+		}
 		if (prof->isShadowingEnabled(tt, terrain))
 		{
 			uint numTextures = 1;
@@ -744,7 +755,7 @@ namespace Ogre
 			ret->unload();
 		}
 
-		ret->setParameter("profiles", "vs_3_0 vs_2_0 arbvp1");
+		ret->setParameter("profiles", "vs_4_0 vs_3_0 vs_2_0 arbvp1");
 		ret->setParameter("entry_point", "main_vp");
 
 		return ret;
@@ -770,9 +781,9 @@ namespace Ogre
 		}
 		
 		if(prof->isLayerNormalMappingEnabled() || prof->isLayerParallaxMappingEnabled())
-			ret->setParameter("profiles", "ps_2_x fp40 arbfp1");  /// removed ps_3_0  to work with depth shadow on dx
+			ret->setParameter("profiles", "ps_4_0 ps_2_x fp40 arbfp1");  /// removed ps_3_0  to work with depth shadow on dx
 		else
-			ret->setParameter("profiles", "ps_2_0 fp30 arbfp1");  /// removed ps_3_0  
+			ret->setParameter("profiles", "ps_4_0 ps_2_0 fp30 arbfp1");  /// removed ps_3_0  
 		ret->setParameter("entry_point", "main_fp");
 
 		return ret;
@@ -791,18 +802,25 @@ namespace Ogre
 
 		outStream << 
 			"uniform float4x4 worldMatrix,\n"
-			"uniform float4x4 viewProjMatrix,\n"
-			"uniform float2   lodMorph,\n"; // morph amount, morph LOD target
+			"uniform float4x4 worldViewMatrix,\n"
+			"uniform float4x4 viewProjMatrix,\n";
 
+		if (tt != RENDER_COMPOSITE_MAP)
+		{
+			outStream << 
+				"uniform float2   lodMorph,\n"; // morph amount, morph LOD target
+		}
 		// uv multipliers
 		uint maxLayers = prof->getMaxLayers(terrain);
 		uint numLayers = std::min(maxLayers, static_cast<uint>(terrain->getLayerCount()));
 		uint numUVMultipliers = (numLayers / 4);
 		if (numLayers % 4)
 			++numUVMultipliers;
-		for (uint i = 0; i < numUVMultipliers; ++i)
-			outStream << "uniform float4 uvMul" << i << ", \n";
-
+		if (tt != LOW_LOD)
+		{
+			for (uint i = 0; i < numUVMultipliers; ++i)
+				outStream << "uniform float4 uvMul" << i << ", \n";
+		}
 		outStream <<
 			"out float4 oPos : POSITION,\n"
 			"out float4 oPosObj : TEXCOORD0 \n";
@@ -828,6 +846,9 @@ namespace Ogre
 		{
 			outStream << ", out float2 lodInfo : TEXCOORD" << texCoordSet++ << "\n";
 		}
+
+		//ssao	
+		outStream << ",out float4 oViewPosition : TEXCOORD"<< texCoordSet++ << "\n";	
 
 		bool fog = terrain->getSceneManager()->getFogMode() != FOG_NONE && tt != RENDER_COMPOSITE_MAP;
 		if (fog)
@@ -931,7 +952,8 @@ namespace Ogre
 
 
 		outStream << 
-			"float4 main_fp(\n"
+			"void main_fp(\n"
+			"float4 iPosition : POSITION,\n"
 			"float4 position : TEXCOORD0,\n";
 
 		uint texCoordSet = 1;
@@ -969,17 +991,23 @@ namespace Ogre
 
 		uint currentSamplerIdx = 0;
 
-		outStream <<
-			// Only 1 light supported in this version
-			// deferred shading profile / generator later, ok? :)
-			"uniform float3 ambient,\n"
-			"uniform float4 lightPosObjSpace,\n"
-			"uniform float3 lightDiffuseColour,\n"
-			"uniform float3 lightSpecularColour,\n"
-			"uniform float3 eyePosObjSpace,\n"
-			// pack scale, bias and specular
-			"uniform float4 scaleBiasSpecular,\n";
-
+		if (tt != LOW_LOD)
+		{
+			outStream <<
+				// Only 1 light supported in this version
+				// deferred shading profile / generator later, ok? :)
+				"uniform float3 eyePosObjSpace,\n"
+				"uniform float4 lightPosObjSpace,\n"
+				"uniform float3 lightDiffuseColour,\n"
+				"uniform float3 ambient,\n"
+				// pack scale, bias and specular
+				"uniform float4 scaleBiasSpecular,\n";
+		}
+		if (tt != LOW_LOD && tt != RENDER_COMPOSITE_MAP)
+		{
+			outStream <<
+				"uniform float3 lightSpecularColour,\n";
+		}
 		if (tt == LOW_LOD)
 		{
 			// single composite map covers all the others below
@@ -1019,6 +1047,13 @@ namespace Ogre
 			}
 		}
 
+		//ssao
+		outStream << ",	in float4 viewPosition : TEXCOORD"+ toStr( texCoordSet++ ) +" \n";
+		if(MaterialGenerator::MRTSupported())
+		{
+			outStream << ",	uniform float far \n";	
+			outStream << ",	uniform float4x4 worldViewMatrix \n";
+		}
 		if (prof->isShadowingEnabled(tt, terrain))
 		{
 			generateFpDynamicShadowsParams(&texCoordSet, &currentSamplerIdx, prof, terrain, tt, outStream);
@@ -1033,7 +1068,17 @@ namespace Ogre
 		}
 
 		outStream << 
-			") : COLOR\n"
+			",out float4 oColor : COLOR0 \n";
+
+		if(MaterialGenerator::MRTSupported())
+		{
+			outStream << 
+				",out float4 oColor1 : COLOR1  \n";
+		}
+		outStream << 
+			") \n";
+
+		outStream << 
 			"{\n"
 			"	float4 outputCol;\n"
 			"	float shadow = 1.0;\n"
@@ -1049,11 +1094,14 @@ namespace Ogre
 
 		}
 
+		if (tt != LOW_LOD)
+		{
+			outStream <<
+				"	float3 lightDir = \n"
+				"		lightPosObjSpace.xyz -  (position.xyz * lightPosObjSpace.w);\n"
+				"	float3 eyeDir = eyePosObjSpace - position.xyz;\n";
+		}
 		outStream <<
-			"	float3 lightDir = \n"
-			"		lightPosObjSpace.xyz -  (position.xyz * lightPosObjSpace.w);\n"
-			"	float3 eyeDir = eyePosObjSpace - position.xyz;\n"
-
 			// set up accumulation areas
 			"	float3 diffuse = float3(0,0,0);\n"
 			"	float specular = 0;\n";
@@ -1220,7 +1268,8 @@ namespace Ogre
 			}
 		}
 		
-		if (prof->isShadowingEnabled(tt, terrain))
+		//view space position,view space normal 
+		outStream <<		" oViewPosition = mul(worldViewMatrix, pos); \n" ;		if (prof->isShadowingEnabled(tt, terrain))
 			generateVpDynamicShadows(prof, terrain, tt, outStream);
 
 		outStream << 
@@ -1297,8 +1346,14 @@ namespace Ogre
 			outStream << "	outputCol.rgb = lerp(outputCol.rgb, fogColour, fogVal);\n";
 		}
 
+		if (tt != LOW_LOD && MaterialGenerator::MRTSupported())
+		{
+			//ssao
+			outStream <<  "float4 mviewnormal = mul(worldViewMatrix, float4(normal, 0));\n";
+			outStream <<  "oColor1 = float4(length(viewPosition.xyz) / far, normalize(mviewnormal.xyz).xyz); \n";
+		}
 		// Final return
-		outStream << "	return outputCol;\n"
+		outStream << "	oColor = outputCol;\n"
 			<< "}\n";
 
 	}
@@ -1365,13 +1420,26 @@ namespace Ogre
 		
 		else
 		{
-			outStream <<
-				"float calcSimpleShadow(sampler2D shadowMap, float4 shadowMapPos) \n"
-				"{ \n"
-				//"return 1;\n"
-				"	return tex2Dproj(shadowMap, shadowMapPos).x; \n"
-				"} \n";
-
+			GpuProgramManager& gmgr = GpuProgramManager::getSingleton();
+			if (!gmgr.isSyntaxSupported("ps_4_0"))
+			{
+				outStream <<
+					"float calcSimpleShadow(sampler2D shadowMap, float4 shadowMapPos) \n"
+					"{ \n"
+					//"return 1;\n"
+					"	return tex2Dproj(shadowMap, shadowMapPos).x; \n"
+					"} \n";
+			}
+			else
+			{
+				outStream <<
+					"float calcSimpleShadow(sampler2D shadowMap, float4 shadowMapPos) \n"
+					"{ \n"
+					//"return 1;\n"
+					"	return tex2Dproj(shadowMap, shadowMapPos,0.0f).x; \n"
+					"} \n";
+			
+			}
 		}
 
 		if (prof->getReceiveDynamicShadowsPSSM())
@@ -1469,8 +1537,8 @@ namespace Ogre
 				", uniform float4x4 texViewProjMatrix" << i << " \n";
 			if (prof->getReceiveDynamicShadowsDepth())
 			{
-				outStream <<
-					", uniform float4 depthRange" << i << " // x = min, y = max, z = range, w = 1/range \n";
+			//	outStream <<
+			//		", uniform float4 depthRange" << i << " // x = min, y = max, z = range, w = 1/range \n";
 			}
 		}
 

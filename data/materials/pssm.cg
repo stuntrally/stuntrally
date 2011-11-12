@@ -22,6 +22,7 @@ void shadow_caster_vs(
 }
 
 void shadow_caster_ps(
+	float4 position : POSITION,
 	float2 depth : TEXCOORD0,
 	float2 uv : TEXCOORD1,
 	
@@ -102,6 +103,7 @@ float shadowPCF(sampler2D shadowMap, float4 shadowMapPos, float2 offset)
 
 // to put it simply, this does 100% per pixel diffuse lighting
 void shadow_receiver_ps(
+	float4 iPosition		: POSITION,
 	float3 uv				: TEXCOORD0,
 	float3 OSlightDir		: TEXCOORD1,
 	float3 OShalfAngle		: TEXCOORD2,

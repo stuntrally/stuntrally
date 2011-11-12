@@ -1,7 +1,7 @@
 vertex_program rnd_vs cg
 {
 	source rnd.cg
-	profiles vs_1_1 arbvp1
+	profiles vs_4_0 vs_1_1 arbvp1
 	entry_point rnd_vs
  
 	default_params
@@ -12,19 +12,19 @@ vertex_program rnd_vs cg
 fragment_program rnd_ps cg
 {
 	source rnd.cg
-	profiles ps_2_0 arbfp1
+	profiles ps_4_0 ps_2_0 arbfp1
 	entry_point rnd_ps
 }
 fragment_program rnd_inv_ps cg
 {
 	source rnd.cg
-	profiles ps_2_0 arbfp1
+	profiles ps_4_0 ps_2_0 arbfp1
 	entry_point rnd_inv_ps
 }
 fragment_program rnd_add_ps cg
 {
 	source rnd.cg
-	profiles ps_2_0 arbfp1
+	profiles ps_4_0 ps_2_0 arbfp1
 	entry_point rnd_add_ps
 }
 
@@ -32,7 +32,7 @@ fragment_program rnd_add_ps cg
 fragment_program sel_ps cg
 {
 	source rnd.cg
-	profiles ps_2_0 arbfp1
+	profiles ps_4_0 ps_2_0 arbfp1
 	entry_point sel_ps
  
 	default_params
@@ -69,7 +69,7 @@ material road_minimap_inv
 vertex_program circle_vs cg
 {
 	source rnd.cg
-	profiles vs_1_1 arbvp1
+	profiles vs_4_0 vs_1_1 arbvp1
 	entry_point circle_vs
  
 	default_params
@@ -80,7 +80,7 @@ vertex_program circle_vs cg
 fragment_program circle_ps cg
 {
 	source rnd.cg
-	profiles ps_2_0 arbfp1 
+	profiles ps_4_0 ps_2_0 arbfp1 
 	entry_point circle_ps
 
 	default_params
