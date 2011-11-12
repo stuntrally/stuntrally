@@ -629,7 +629,7 @@ void MaterialGenerator::generateVertexProgramSource(Ogre::StringUtil::StrStreamT
 	if (needShadows()) {
 		for (int i=0; i<mParent->getNumShadowTex(); ++i)
 		{
-			outStream << "out float4 oLightPosition"+toStr(i)+" : TEXCOORD"+toStr(i+5)+", \n";
+			outStream << "out float4 oLightPosition"+toStr(i)+" : TEXCOORD"+toStr(oTexCoordIndex++)+", \n";
 		}
 		outStream << "\n";
 		for (int i=0; i<mParent->getNumShadowTex(); ++i)
@@ -981,7 +981,7 @@ void MaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::StrStrea
 		}
 		outStream << "\n";
 		for (int i=0; i<mParent->getNumShadowTex(); ++i)
-			outStream << "in float4 lightPosition"+toStr(i)+" : TEXCOORD"+toStr(i+5)+", \n";
+			outStream << "in float4 lightPosition"+toStr(i)+" : TEXCOORD"+toStr(oTexCoordIndex++)+", \n";
 		outStream << "\n";
 		for (int i=0; i<mParent->getNumShadowTex(); ++i)
 			outStream << "uniform float4 invShadowMapSize"+toStr(i)+", \n";
