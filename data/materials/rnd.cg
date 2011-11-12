@@ -20,7 +20,7 @@ iVOut rnd_vs(iVIn IN,
 }
 
 
-float4 rnd_ps(in float2 uv : TEXCOORD0,
+float4 rnd_ps(in float4 p	: POSITION,in float2 uv : TEXCOORD0,
 	uniform sampler2D diffuseMap : TEXUNIT0): COLOR0
 {
 	return tex2D(diffuseMap, uv);
@@ -28,7 +28,7 @@ float4 rnd_ps(in float2 uv : TEXCOORD0,
 
 
 //  rot, inv
-float4 rnd_inv_ps(in float2 uv : TEXCOORD0,
+float4 rnd_inv_ps(in float4 p	: POSITION,in float2 uv : TEXCOORD0,
 	uniform sampler2D diffuseMap : TEXUNIT0): COLOR0
 {
 	float2 uv2 = float2(uv.y, 1.f - uv.x);  // rotate 90'
@@ -37,7 +37,7 @@ float4 rnd_inv_ps(in float2 uv : TEXCOORD0,
 
 
 //  add 2 tex
-float4 rnd_add_ps(in float2 uv : TEXCOORD0,
+float4 rnd_add_ps(in float4 p	: POSITION,in float2 uv : TEXCOORD0,
 	uniform sampler2D diffuseAdd : TEXUNIT0,
 	uniform sampler2D diffuseMap : TEXUNIT1): COLOR0
 {
@@ -79,7 +79,8 @@ COut circle_vs(CIn IN,
 	return OUT;
 }
 
-float4 circle_ps(in float2 uv : TEXCOORD0,
+float4 circle_ps(in float4 p	: POSITION,
+				in float2 uv : TEXCOORD0,
 				in float4 clr : COLOR,  // tc 0..1
 	uniform float showTerrain,
 	uniform sampler2D roadMap : TEXUNIT0,

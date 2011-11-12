@@ -117,9 +117,19 @@ float4 ssao_ps(
     return float4(occ, occ, occ, 1);
 }
 
+void ssaoBlur_vs(in float4 position : POSITION
+	,in float2 uv :TEXCOORD0
+	,uniform float4x4 wvp
+	,out float4 oPosition : POSITION
+	,out float2 oUV :TEXCOORD0)
+{
+	oPosition = mul(wvp, position);
+	oUV = uv;
+	return;
+}
 #define NUM_BLUR_SAMPLES 8
 
-float4 ssaoBlurX_ps(float2 uv : TEXCOORD0,
+float4 ssaoBlurX_ps(float4 iPosition : POSITION,float2 uv : TEXCOORD0,
     uniform float4 invTexSize,
     uniform sampler2D map : TEXUNIT0, uniform sampler2D geomMap : TEXUNIT1): COLOR0
 {
@@ -147,7 +157,7 @@ float4 ssaoBlurX_ps(float2 uv : TEXCOORD0,
     return sum / denom;
 }
 
-float4 ssaoBlurY_ps(float2 uv : TEXCOORD0,
+float4 ssaoBlurY_ps(float4 iPosition : POSITION,float2 uv : TEXCOORD0,
     uniform float4 invTexSize,
     uniform sampler2D map : TEXUNIT0, uniform sampler2D geomMap : TEXUNIT1): COLOR0
 {
@@ -175,4 +185,22 @@ float4 ssaoBlurY_ps(float2 uv : TEXCOORD0,
     return sum / denom;
 }
 
+void ssaoMultiply_vs(in float4 position : POSITION
+	,in float2 uv :TEXCOORD0
+	,uniform float4x4 wvp
+	,out float4 oPosition : POSITION
+	,out float2 oUV :TEXCOORD0)
+{
+	oPosition = mul(wvp, position);
+	oUV = uv;
+	return;
+}
 
+void ssaoMultiply_ps(in float4 position : POSITION
+	,in float2 uv :TEXCOORD0
+	,uniform sampler2D tex1 : TEXUNIT0, uniform sampler2D tex2 : TEXUNIT1
+	,out float4 oColor : COLOR)
+{
+	oColor = tex2D(tex1, uv) * tex2D(tex2, uv);
+	return;
+}

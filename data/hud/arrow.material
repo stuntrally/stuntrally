@@ -2,7 +2,7 @@ vertex_program arrow_vs cg
 {
 	source arrow.cg
 	entry_point arrow_vp
-	profiles vs_2_0 arbvp1
+	profiles vs_4_0 vs_2_0 arbvp1
 	default_params
 	{
 		param_named_auto ModelViewProj worldviewproj_matrix
@@ -14,7 +14,7 @@ fragment_program arrow_ps cg
 {
 	source arrow.cg
 	entry_point arrow_fp
-	profiles ps_2_0 arbfp1
+	profiles ps_4_0 ps_2_0 arbfp1
 	default_params
 	{
 		param_named color1 float3 0.0 1.0 0.0
@@ -35,6 +35,8 @@ material Arrow
 			colour_write off
 			depth_write on
 			depth_func always_pass
+			vertex_program_ref arrow_vs {}
+			fragment_program_ref arrow_ps {}
 		}
 		pass 1
 		{

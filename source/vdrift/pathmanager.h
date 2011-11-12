@@ -32,6 +32,7 @@ public:
 	static std::string GetGameConfigDir() {          return game_config_dir;  }
 
 	static std::string GetCacheDir() {               return cache_dir; }
+	static std::string GetShaderCacheDir() {         return cache_dir + "/shaders"; }
 	static std::string GetLogDir() {                 return user_config_dir; }
 	static std::string GetSettingsFile() {           return user_config_dir + "/game.cfg"; }
 	static std::string GetEditorSetFile() {          return user_config_dir + "/editor.cfg"; }

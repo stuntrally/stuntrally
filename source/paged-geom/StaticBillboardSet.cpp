@@ -165,7 +165,7 @@ StaticBillboardSet::StaticBillboardSet(SceneManager *mgr, SceneNode *rootSceneNo
 				}
 				else if(shaderLanguage == "cg")
 				{
-					vertexShader->setParameter("profiles", "vs_1_1 arbvp1");
+					vertexShader->setParameter("profiles", "vs_4_0 vs_1_1 arbvp1");
 					vertexShader->setParameter("entry_point", "Sprite_vp");
 				}
 				// GLSL can only have one entry point "main".
@@ -266,7 +266,7 @@ StaticBillboardSet::StaticBillboardSet(SceneManager *mgr, SceneNode *rootSceneNo
 				}
 				else if(shaderLanguage == "cg")
 				{
-					vertexShader2->setParameter("profiles", "vs_1_1 arbvp1");
+					vertexShader2->setParameter("profiles", "vs_4_0 vs_1_1 arbvp1");
 					vertexShader2->setParameter("entry_point", "SpriteFade_vp");
 				}
 				// GLSL can only have one entry point "main".

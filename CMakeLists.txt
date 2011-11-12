@@ -43,9 +43,9 @@ add_definitions(-DSHARED_DATA_DIR="${SHARE_INSTALL}")
 # Libraries
 
 find_package(OGRE REQUIRED QUIET)
-include_directories(${OGRE_INCLUDE_DIRS} ${OGRE_Terrain_INCLUDE_DIRS} ${OGRE_Paging_INCLUDE_DIRS})
+include_directories(${OGRE_INCLUDE_DIRS} ${OGRE_Terrain_INCLUDE_DIRS} ${OGRE_Paging_INCLUDE_DIRS} ${OGRE_RTShaderSystem_INCLUDE_DIRS})
 link_directories(${OGRE_LIBRARY_DIRS})
-list(APPEND LIBS ${OGRE_LIBRARIES} ${OGRE_Terrain_LIBRARIES} ${OGRE_Paging_LIBRARIES})
+list(APPEND LIBS ${OGRE_LIBRARIES} ${OGRE_Terrain_LIBRARIES} ${OGRE_Paging_LIBRARIES} ${OGRE_RTShaderSystem_LIBRARIES})
 
 find_package(MyGUI REQUIRED QUIET)
 include_directories(${MYGUI_INCLUDE_DIRS})
