@@ -52,7 +52,7 @@ vertex_program grassVP cg
 { 
 	source grass.cg 
 	entry_point main_vp 
-	profiles vs_1_1 arbvp1 
+	profiles vs_4_0 vs_1_1 arbvp1 
 
 	default_params
 	{ 
@@ -83,7 +83,7 @@ fragment_program grassFP cg
 { 
 	source grass.cg 
 	entry_point main_fp 
-	profiles ps_2_x arbfp1 
+	profiles ps_4_0 ps_2_x arbfp1 
 
 	default_params
 	{ 
@@ -119,8 +119,6 @@ material grass_GrassVS_
 			scene_blend alpha_blend
 			alpha_rejection greater_equal 128
 			//transparency_casts_shadows off
-			//depth_write off
-			
 			vertex_program_ref   grassVP { }
 			fragment_program_ref grassFP { }
 

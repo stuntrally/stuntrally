@@ -52,6 +52,21 @@ material ppx_water1			// per pixel  water (alpha)
 			}
 		}
 	}
+	technique geom
+	{
+	    scheme geom
+
+	    pass
+	    {
+			vertex_program_ref geom_vs
+	        {
+	        }
+
+	        fragment_program_ref geom_white_ps
+	        {
+	        }
+	    }
+	}
 }
 
 

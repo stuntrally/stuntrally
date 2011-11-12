@@ -119,11 +119,14 @@ void GrassLoader::frameUpdate()
 			if (layer->waveCount > M_PI*2) layer->waveCount -= M_PI*2;
 
 			//Set vertex shader parameters
-			params->setNamedConstant("time", layer->waveCount);
-			params->setNamedConstant("frequency", layer->animFreq);
+			if(params->_findNamedConstantDefinition("time",false))
+				params->setNamedConstant("time", layer->waveCount);
+			if(params->_findNamedConstantDefinition("frequency",false))
+				params->setNamedConstant("frequency", layer->animFreq);
 
 			Vector3 direction = windDir * layer->animMag;
-			params->setNamedConstant("direction", Vector4(direction.x, direction.y, direction.z, 0));
+			if(params->_findNamedConstantDefinition("direction",false))
+				params->setNamedConstant("direction", Vector4(direction.x, direction.y, direction.z, 0));
 
 		}
 	}
@@ -1098,7 +1101,7 @@ void GrassLayer::_updateShaders()
 
 			//Generate a string ID that identifies the current set of vertex shader options
 			StringUtil::StrStreamType tmpName;
-			tmpName << "GrassVS_";
+			tmpName << "GrassVS_";   ///T
 			/*if (animate)
 				tmpName << "anim_";
 			if (blend)
@@ -1110,7 +1113,7 @@ void GrassLayer::_updateShaders()
 			if (fadeTechnique == FADETECH_GROW || fadeTechnique == FADETECH_ALPHAGROW)
 				tmpName << maxHeight << "_";
 			tmpName << farViewDist << "_";
-			tmpName << "vp";*/
+			tmpName << "vp";*/   ///T
 			const String vsName = tmpName.str();
 
 			//Generate a string ID that identifies the material combined with the vertex shader
@@ -1369,7 +1372,7 @@ void GrassLayer::_updateShaders()
 					}
 					else if(shaderLanguage == "cg")
 					{
-						vertexShader->setParameter("profiles", "vs_1_1 arbvp1");
+						vertexShader->setParameter("profiles", "vs_4_0 vs_1_1 arbvp1");
 						vertexShader->setParameter("entry_point", "main");
 					}
 					// GLSL can only have one entry point "main".
@@ -1410,8 +1413,10 @@ void GrassLayer::_updateShaders()
 			//Now the material (tmpMat) has either been found or just created (depending on whether or not it was already
 			//created). The appropriate vertex shader should be applied and the material is ready for use.
 			Pass *pass = tmpMat->getTechnique(0)->getPass(0);
-			pass->getVertexProgramParameters()->setNamedConstant("fadeRange", fadeRange);
-
+			if(pass->getVertexProgramParameters()->_findNamedConstantDefinition("fadeRange",false))
+			{
+				pass->getVertexProgramParameters()->setNamedConstant("fadeRange", fadeRange);
+			}
 			//Apply the new material
 			material = tmpMat;
 		}

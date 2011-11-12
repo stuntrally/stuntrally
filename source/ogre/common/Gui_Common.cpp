@@ -256,9 +256,15 @@ void App::GuiInitGraphics()
 	if (combo)  {
 		combo->removeAllItems();
 
+		#if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
 		const int nRS = 4;
 		const String rs[nRS] = {"Default", "OpenGL Rendering Subsystem",
 			"Direct3D9 Rendering Subsystem", "Direct3D11 Rendering Subsystem"};
+		#else
+		const int nRS = 2;
+		const String rs[nRS] = {"Default", "OpenGL Rendering Subsystem"};
+		#endif
+			
 		for (int i=0; i < nRS; ++i)
 		{
 			combo->addItem(rs[i]);

@@ -28,6 +28,7 @@ Permission is granted to anyone to use this software for any purpose, including 
 using namespace Ogre;
 
 #include "../vdrift/pathmanager.h"
+#include "../ogre/QTimer.h"
 
 namespace Forests {
 
@@ -301,7 +302,7 @@ void ImpostorBatch::setBillboardOrigin(BillboardOrigin origin)
 
 String ImpostorBatch::generateEntityKey(Entity *entity)
 {
-	return entity->getMesh()->getName();  ///+ easy
+	return entity->getMesh()->getName();  ///T + easier
 
 	StringUtil::StrStreamType entityKey;
 	entityKey << entity->getMesh()->getName();
@@ -457,6 +458,7 @@ void ImpostorTexture::regenerateAll()
 
 void ImpostorTexture::renderTextures(bool force)
 {
+	QTimer ti;  ti.update();  ///T  /// time
 #ifdef IMPOSTOR_FILE_SAVE
 	TexturePtr renderTexture;
 #else
@@ -559,14 +561,15 @@ void ImpostorTexture::renderTextures(bool force)
 	#endif
 
 	//old: String tempdir = this->group->geom->getTempdir();
-	String tempdir = PATHMANAGER::GetCacheDir();
+	String tempdir = PATHMANAGER::GetCacheDir();  ///T
 	ResourceGroupManager::getSingleton().addResourceLocation(tempdir, "FileSystem", "BinFolder");
 	//T+   // sKey + '.' + StringConverter::toString(textureSize) + 
 	String fileNamePNG = sKey + ".png";
 	String fileNameDDS = sKey + ".dds";
 
 	//Attempt to load the pre-render file if allowed
-	needsRegen = force;//true
+	needsRegen = force || group->geom->forceRegenImpostors;  ///T
+	//needsRegen = force;//true
 	if (!needsRegen){
 		try{
 			texture = TextureManager::getSingleton().load(fileNamePNG, "BinFolder", TEX_TYPE_2D, MIP_UNLIMITED);
@@ -599,7 +602,7 @@ void ImpostorTexture::renderTextures(bool force)
 			{
 				Radian yaw = Degree((360.0f * i) * xDivFactor); //0, 45, 90, 135, 180, 225, 270, 315
 				#define toStr(v)   Ogre::StringConverter::toString(v)
-				Ogre::LogManager::getSingleton().logMessage("Tree: " + toStr(yaw) + "  " + toStr(pitch));
+				//Ogre::LogManager::getSingleton().logMessage("Tree: " + toStr(yaw) + "  " + toStr(pitch));
 					
 				//Position camera
 				camNode->setPosition(0, 0, 0);
@@ -657,6 +660,11 @@ void ImpostorTexture::renderTextures(bool force)
 	if (TextureManager::getSingletonPtr())
 		TextureManager::getSingleton().remove(texName2);
 #endif
+
+	ti.update();	///T  /// time
+	float dt = ti.dt * 1000.f;
+	Ogre::LogManager::getSingleton().logMessage(String("::: Time Impostor: ") +
+		toStr(dt) + " ms (" + sKey + ") " + (needsRegen ? " Generated" : " loaded"));
 }
 
 String ImpostorTexture::removeInvalidCharacters(String s)

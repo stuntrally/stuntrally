@@ -1,7 +1,6 @@
 #include "pch.h"
 #include "../Defines.h"
 
-#include "MaterialProperties.h"
 #include "MaterialFactory.h"
 #include "MaterialDefinition.h"
 #include "MaterialGenerator.h"
@@ -205,7 +204,7 @@ void MaterialFactory::generate()
 			// don't generate abstract materials
 			if ((*it)->getProps()->abstract) continue;
 			
-			LogO("generating " + (*it)->getName());
+			//LogO("generating " + (*it)->getName());
 			
 			// find an appropriate generator
 			MaterialGenerator* generator;
