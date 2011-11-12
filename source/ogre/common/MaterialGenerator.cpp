@@ -441,6 +441,8 @@ bool MaterialGenerator::UsePerPixelNormals()
 }
 bool MaterialGenerator::MRTSupported()
 {
+	return false; //! MRT is still buggy
+	
 	static bool bMRTSupportCalculated=false;
 	if(!bMRTSupportCalculated)
 	{
