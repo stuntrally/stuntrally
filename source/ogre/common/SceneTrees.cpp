@@ -131,9 +131,11 @@ void App::CreateTrees()
 
 		//  when sceneryId val changed (tracks with different light)
 		//  || gui force regen ...
+		#ifndef ROAD_EDITOR
 		trees->forceRegenImpostors = sceneryId != pSet->sceneryIdOld;
 		LogO(String("||| Force impostors regen : ") + (trees->forceRegenImpostors ? "Yes":"No") +
 			", old: " + toStr(pSet->sceneryIdOld) + " cur: " + toStr(sceneryId));
+		#endif
 
 		if (bWind)
 			 trees->addDetailLevel<WindBatchPage>(sc.trDist * pSet->trees_dist, 0);
