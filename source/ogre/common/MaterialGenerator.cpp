@@ -624,6 +624,8 @@ void MaterialGenerator::generateVertexProgramSource(Ogre::StringUtil::StrStreamT
 
 	if (vpNeedWITMat()) outStream <<
 		"	uniform float4x4 wITMat, \n";
+	if (vpNeedWvMat()) outStream <<
+		"	uniform float4x4 wvMat, \n";
 	if (vpNeedWMat()) outStream <<
 		"	uniform float4x4 wMat, \n";
 	outStream << 
