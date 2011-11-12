@@ -541,14 +541,15 @@ void ImpostorTexture::renderTextures(bool force)
 		oldSceneNode->detachObject(entity);
 	}
 
+	///T
 	Ogre::SceneNode *n1= node->createChildSceneNode();
 	n1->attachObject(entity);
-	n1->setPosition(-entityCenter + Vector3(10,0,10));
+	n1->setPosition(-entityCenter /*+ Vector3(10,0,10)*/);
 
-	Entity *e2 = entity->clone(entity->getName() + "_clone");
+	/*Entity *e2 = entity->clone(entity->getName() + "_clone");
 	Ogre::SceneNode *n2= node->createChildSceneNode();
 	n2->attachObject(e2);
-	n2->setPosition(-entityCenter + Vector3(10,0,10));
+	n2->setPosition(-entityCenter + Vector3(10,0,10));*/
 	
 	//Set up camera FOV
 	const Real objDist = entityRadius * 100;
@@ -557,7 +558,7 @@ void ImpostorTexture::renderTextures(bool force)
 	
 	renderCamera->setAspectRatio(1.0f);
 	renderCamera->setFOVy(Math::ATan(entityDiameter / objDist));
-	renderCamera->setNearClipDistance(nearDist);
+	renderCamera->setNearClipDistance(/*nearDist*/ 0.1f); ///T
 	renderCamera->setFarClipDistance(farDist);
 	
 	//Disable mipmapping (without this, masked textures look bad)
@@ -583,13 +584,13 @@ void ImpostorTexture::renderTextures(bool force)
 
 	uint8 oldRenderQueueGroup = entity->getRenderQueueGroup();
 	entity->setRenderQueueGroup(group->getParentPagedGeometry()->getRenderQueue() + 1);
-	e2->setRenderQueueGroup(entity->getRenderQueueGroup());
+	//e2->setRenderQueueGroup(entity->getRenderQueueGroup()); ///T
 	bool oldVisible = entity->getVisible();
 	entity->setVisible(true);
-	e2->setVisible(true);
+	//e2->setVisible(true); ///T
    Ogre::Real oldMaxDistance = entity->getRenderingDistance();
 	entity->setRenderingDistance(0);
-	e2->setRenderingDistance(0);
+	//e2->setRenderingDistance(0); ///T
 
 	bool needsRegen = true;
 #ifdef IMPOSTOR_FILE_SAVE
@@ -675,7 +676,7 @@ void ImpostorTexture::renderTextures(bool force)
 	entity->setRenderQueueGroup(oldRenderQueueGroup);
 	entity->setRenderingDistance(oldMaxDistance);
 
-	sceneMgr->destroyEntity(e2);
+	//sceneMgr->destroyEntity(e2); ///T
 
 	sceneMgr->removeSpecialCaseRenderQueue(group->getParentPagedGeometry()->getRenderQueue() + 1);
 	// Restore original state
@@ -693,7 +694,7 @@ void ImpostorTexture::renderTextures(bool force)
 	
 	//Delete scene node
 	node->detachAllObjects();
-	n2->detachAllObjects();
+	//n2->detachAllObjects(); ///T
 	n1->detachAllObjects();
 	node->removeAndDestroyAllChildren();
 	if (oldSceneNode) {
