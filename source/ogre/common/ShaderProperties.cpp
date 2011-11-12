@@ -29,6 +29,7 @@ ShaderProperties::ShaderProperties( MaterialProperties* props, MaterialFactory* 
 			||  (props->receivesDepthShadows && parent->getShadowsDepth())
 	);
 	lightingAlpha = (props->lightingAlpha != Vector4::ZERO);
+	wind = props->wind;
 	customGenerator = props->customGenerator;
 }
 
@@ -49,6 +50,7 @@ bool ShaderProperties::isEqual( ShaderProperties* other )
 	if (other->lighting != lighting) return false;
 	if (other->lightingAlpha != lightingAlpha) return false;
 	if (other->customGenerator != customGenerator) return false;
+	if (other->wind != wind) return false;
 	
 	return true;
 }

@@ -153,8 +153,8 @@ void MaterialGenerator::generate(bool fixedFunction)
 	*/
 	
 	// uncomment to see full shader source code in log
-	/*
-	if (mDef->getName() == "car_body")
+	
+	if (mDef->getName() == "grass_GrassVS_")
 	{
 		LogO("[MaterialFactory] Vertex program source: ");
 		StringUtil::StrStreamType vSourceStr;
@@ -165,7 +165,7 @@ void MaterialGenerator::generate(bool fixedFunction)
 		generateFragmentProgramSource(fSourceStr);
 		LogO(fSourceStr.str());
 	}
-	*/
+	
 }
 
 //----------------------------------------------------------------------------------------
@@ -568,6 +568,14 @@ void MaterialGenerator::generateVertexProgramSource(Ogre::StringUtil::StrStreamT
 	outStream << 
 		"void main_vp( "
 		"	float4 position 					: POSITION, \n";
+		
+	if (mShader->wind == 1)
+	{
+		outStream <<
+			"	uniform float time, \n"
+			"	uniform float frequency, \n"
+			"	uniform float4 direction, \n";
+	}
 	
 	if (fpNeedWsNormal()) 
 	{
@@ -648,7 +656,20 @@ void MaterialGenerator::generateVertexProgramSource(Ogre::StringUtil::StrStreamT
 	outStream << 
 	"	uniform float4x4 wvpMat \n"
 	") \n"
-	"{ \n"
+	"{ \n";
+	
+	if (mShader->wind == 1)
+	{
+		outStream <<
+		"	float oldposx = position.x; \n"
+		"	if (texCoord.y == 0.0f) \n"
+		"	{ \n"
+		"		float offset = sin(time + oldposx * frequency); \n"
+		"		position += direction * offset; \n"
+		"	} \n";
+	}
+	
+	outStream <<
 	"	oPosition = mul(wvpMat, position); \n";
 	if (vpNeedWMat()) outStream <<
 	"	float4 worldPosition = mul(wMat, position); \n";

@@ -79,6 +79,7 @@ void MaterialProperties::setProperty(const std::string& prop, const std::string&
 		else if (value == "mirror") textureAddressMode = TextureUnitState::TAM_MIRROR;
 		else if (value == "border") textureAddressMode = TextureUnitState::TAM_BORDER;
 	}
+	else if (prop == "wind") wind = str2int(value);
 	else if (prop == "customGenerator") customGenerator = value;
 	else if (prop == "ssao") ssao = str2bool(value);
 	else if (prop == "terrainLightMap") terrainLightMap = str2bool(value);

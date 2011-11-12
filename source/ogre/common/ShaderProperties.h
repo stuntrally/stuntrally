@@ -15,6 +15,7 @@ struct ShaderProperties
 	bool lighting;
 	bool shadows;
 	bool transparent; bool lightingAlpha; // transparency
+	unsigned int wind;
 	
 	// use custom generator (for very specific materials like water, glass)
 	// empty ("") means no custom generator
