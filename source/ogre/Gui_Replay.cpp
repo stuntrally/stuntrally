@@ -138,6 +138,11 @@ void App::chkRplChkAlpha(WP wp)
 	ChkEv(rpl_alpha);
 }
 
+void App::chkRplChkPar(WP wp)
+{
+	ChkEv(rpl_ghostpar);
+}
+
 
 //  replays list filtering
 

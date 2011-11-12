@@ -66,7 +66,8 @@ public:
 	bool x11_capture_mouse;
 	
 	//  replay
-	bool rpl_rec, rpl_ghost, rpl_bestonly, rpl_alpha;  int rpl_listview;
+	bool rpl_rec, rpl_ghost, rpl_bestonly;
+	bool rpl_alpha, rpl_ghostpar;  int rpl_listview;
 
 	int sceneryIdOld;  // not a setting, just to remember on quit
 	

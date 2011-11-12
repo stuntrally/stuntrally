@@ -231,6 +231,10 @@ void CarModel::Update(PosInfo& posInfo, float time)
 		if (whRd == 2)  emitD = 0;  // no dust in pipes
 		if (cd.inFluidsWh[w].size() > 0)  emitD = 0;  // no dust in fluids
 
+		bool ghost = eType == CT_GHOST;  // opt dis for ghost
+		if (ghost && !pSet->rpl_ghostpar)
+		{	emitD = 0.f;  emitM = 0.f;  emitS = 0.f;  }
+
 		///  emit particles
 		Vector3 vpos = posInfo.whPos[w];
 		if (pSet->particles)
@@ -257,7 +261,7 @@ void CarModel::Update(PosInfo& posInfo, float time)
 			}
 
 			//  fluids .::.
-			bool inFl = cd.inFluidsWh[w].size() > 0;
+			bool inFl = cd.inFluidsWh[w].size() > 0 && !ghost;  //dis for ghost
 			int idPar = -1;
 			if (inFl)
 			{	const FluidBox* fb = *cd.inFluidsWh[w].begin();
