@@ -129,9 +129,13 @@ void App::CreateTrees()
 		trees = new PagedGeometry(mCamera, sc.trPage);
 		#endif
 
-		// TODO: logic to compare track (scene.xml) scenery int value,
-		// if changed - force recreate impostors
-		//trees->forceRegenImpostors = true; // when scenery int val changed..
+		//  when sceneryId val changed (tracks with different light)
+		//  || gui force regen ...
+		#ifndef ROAD_EDITOR
+		trees->forceRegenImpostors = sceneryId != pSet->sceneryIdOld;
+		LogO(String("||| Force impostors regen : ") + (trees->forceRegenImpostors ? "Yes":"No") +
+			", old: " + toStr(pSet->sceneryIdOld) + " cur: " + toStr(sceneryId));
+		#endif
 
 		if (bWind)
 			 trees->addDetailLevel<WindBatchPage>(sc.trDist * pSet->trees_dist, 0);

@@ -231,7 +231,7 @@ void CarModel::Update(PosInfo& posInfo, float time)
 		if (whRd == 2)  emitD = 0;  // no dust in pipes
 		if (cd.inFluidsWh[w].size() > 0)  emitD = 0;  // no dust in fluids
 
-		//  par emit
+		///  emit particles
 		Vector3 vpos = posInfo.whPos[w];
 		if (pSet->particles)
 		{
@@ -258,16 +258,16 @@ void CarModel::Update(PosInfo& posInfo, float time)
 
 			//  fluids .::.
 			bool inFl = cd.inFluidsWh[w].size() > 0;
-			bool water = true, mudDark = false;
+			int idPar = -1;
 			if (inFl)
 			{	const FluidBox* fb = *cd.inFluidsWh[w].begin();
-				water = fb->isWater;  mudDark = fb->isMudDark;
+				idPar = fb->idParticles;
 			}
 			if (pflW[w])  //  Water ~
 			{
 				float vel = pCar->GetSpeed();  // depth.. only on surface?
-				float emitW = inFl && water && vel > 10.f && cd.whH[w] < 1.f
-							? std::min(80.f, 3.0f * vel) : 0.f;
+				bool e = idPar == 0 &&  vel > 10.f && cd.whH[w] < 1.f;
+				float emitW = e ?  std::min(80.f, 3.0f * vel)  : 0.f;
 				ParticleEmitter* pe = pflW[w]->getEmitter(0);
 				pe->setPosition(vpos + posInfo.carY * wR*0.51f);
 				pe->setDirection(-posInfo.carY);	pe->setEmissionRate(emitW * pSet->particles_len);
@@ -275,8 +275,8 @@ void CarModel::Update(PosInfo& posInfo, float time)
 			if (pflM[w])  //  Mud ^
 			{
 				float vel = Math::Abs(pCar->dynamics.wheel[w].GetAngularVelocity());
-				float emitM = inFl && !water && mudDark && vel > 30.f
-							? cd.whH[w] * std::min(80.f, 1.5f * vel) : 0.f;
+				bool e = idPar == 2 &&  vel > 30.f;
+				float emitM = e ?  cd.whH[w] * std::min(80.f, 1.5f * vel)  : 0.f;
 				ParticleEmitter* pe = pflM[w]->getEmitter(0);
 				pe->setPosition(vpos + posInfo.carY * wR*0.51f);
 				pe->setDirection(-posInfo.carY);	pe->setEmissionRate(emitM * pSet->particles_len);
@@ -284,8 +284,9 @@ void CarModel::Update(PosInfo& posInfo, float time)
 			if (pflMs[w])  //  Mud soft ^
 			{
 				float vel = Math::Abs(pCar->dynamics.wheel[w].GetAngularVelocity());
-				float emitM = inFl && !water && !mudDark && vel > 30.f
-							? cd.whH[w] * std::min(160.f, 3.f * vel) : 0.f;
+				
+				bool e = idPar == 1 &&  vel > 30.f;
+				float emitM = e ?  cd.whH[w] * std::min(160.f, 3.f * vel)  : 0.f;
 				ParticleEmitter* pe = pflMs[w]->getEmitter(0);
 				pe->setPosition(vpos + posInfo.carY * wR*0.51f);
 				pe->setDirection(-posInfo.carY);	pe->setEmissionRate(emitM * pSet->particles_len);
