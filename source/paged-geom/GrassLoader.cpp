@@ -1408,10 +1408,6 @@ void GrassLayer::_updateShaders()
 					params->setNamedAutoConstant("worldViewProj", GpuProgramParameters::ACT_WORLDVIEWPROJ_MATRIX);
 				params->setNamedAutoConstant("camPos", GpuProgramParameters::ACT_CAMERA_POSITION_OBJECT_SPACE);
 				params->setNamedAutoConstant("fadeRange", GpuProgramParameters::ACT_CUSTOM, 1);
-				///T fadeRange for fragment shader
-				GpuProgramParametersSharedPtr fparams = pass->getFragmentProgramParameters();
-				fparams->setNamedConstant("fadeRange", fadeRange);
-
 
 				if (animate){
 					params->setNamedAutoConstant("time", GpuProgramParameters::ACT_CUSTOM, 1);

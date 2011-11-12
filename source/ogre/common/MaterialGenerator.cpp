@@ -595,8 +595,9 @@ void MaterialGenerator::generateVertexProgramSource(Ogre::StringUtil::StrStreamT
 			"	uniform float time, \n"
 			"	uniform float frequency, \n"
 			"	uniform float3 objSpaceCam, \n"
-			"	out float3 oObjSpaceCam : TEXCOORD"+toStr(oTexCoordIndex++)+", \n"
-			"	uniform float4 direction, \n";
+			"	uniform float fadeRange, \n"
+			"	uniform float4 direction, \n"
+			"	out float alphaFade : TEXCOORD"+toStr(oTexCoordIndex++)+", \n";
 	}
 
 	if (fpNeedWsNormal()) 
@@ -668,14 +669,18 @@ void MaterialGenerator::generateVertexProgramSource(Ogre::StringUtil::StrStreamT
 	
 	if (mShader->wind == 1)
 	{
+		// wave
 		outStream <<
-		"	oObjSpaceCam = objSpaceCam; \n"
 		"	float oldposx = position.x; \n"
 		"	if (texCoord.y == 0.0f) \n"
 		"	{ \n"
 		"		float offset = sin(time + oldposx * frequency); \n"
 		"		position += direction * offset; \n"
-		"	} \n";
+		"	} \n"
+		
+		// fade
+		"	float dist = distance(objSpaceCam.xz, position.xz); \n"
+		"	alphaFade = (2.0f - (2.0f * dist / (fadeRange))); \n";
 	}
 	
 	outStream <<
@@ -792,6 +797,10 @@ void MaterialGenerator::individualVertexProgramParams(GpuProgramParametersShared
 	{
 		params->setNamedAutoConstant("texWorldViewProjMatrix"+toStr(i), GpuProgramParameters::ACT_TEXTURE_WORLDVIEWPROJ_MATRIX, i);
 	}
+	
+	if (mShader->wind == 1)
+		params->setNamedConstant("fadeRange", Real(100)); // real value set in paged-geom/GrassLoader.cpp
+
 }
 
 //----------------------------------------------------------------------------------------
@@ -920,8 +929,7 @@ void MaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::StrStrea
 		"	in float4 vertexColour : TEXCOORD"+toStr(oTexCoordIndex++)+", \n";
 		
 	if (mShader->wind == 1) outStream <<
-		"	in float3 objSpaceCam : TEXCOORD"+toStr(oTexCoordIndex++)+", \n"
-		"	uniform float fadeRange, \n";
+		"	in float alphaFade : TEXCOORD"+toStr(oTexCoordIndex++)+", \n";
 	
 	if (fpNeedWsNormal()) 
 	{
@@ -1236,8 +1244,7 @@ void MaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::StrStrea
 		}
 		
 		if (mShader->wind == 1) outStream <<
-			"	float dist = distance(objSpaceCam.xz, position.xz); \n"
-			"	alpha *= (2.0f - (2.0f * dist / (fadeRange))); \n";
+			"	alpha *= alphaFade; \n";
 		
 		// discard rejected alpha pixels
 		outStream << 
@@ -1328,8 +1335,5 @@ void MaterialGenerator::individualFragmentProgramParams(Ogre::GpuProgramParamete
 	
 	if (needTerrainLightMap())
 		params->setNamedConstant("terrainWorldSize", Real(1025)); // real value set later in changeShadows()
-		
-	if (mShader->wind == 1)
-		params->setNamedConstant("fadeRange", Real(100)); // real value set in paged-geom/GrassLoader.cpp
 }
 
