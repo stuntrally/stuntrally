@@ -56,6 +56,7 @@ public:
 	FluidsXml fluidsXml;  /// fluid params xml
 	BltObjects objs;  // veget collision in bullet
 	Ogre::Light* sun;  void UpdFog(bool bForce=false), UpdSun();
+	int sceneryId;  // from scene
 	
 	// Rain, snow
 	Ogre::ParticleSystem *pr,*pr2;
@@ -217,7 +218,8 @@ protected:
 	MyGUI::ListPtr resList;
 	void InitGuiScrenRes(), btnResChng(WP), ResizeOptWnd();
 	void chkVidFullscr(WP), chkVidVSync(WP), chkVidSSAA(WP);
-	void comboGraphicsAll(MyGUI::ComboBoxPtr cmb, size_t val);
+	void comboGraphicsAll(MyGUI::ComboBoxPtr cmb, size_t val),
+		comboRenderSystem(MyGUI::ComboBoxPtr cmb, size_t val);
 	///-----------------------------------------
 
 	void toggleGui();
@@ -227,6 +229,7 @@ protected:
 	///  input tab
 	void InitInputGui(), inputBindBtnClicked(WP);
 	void InputBind(int key, int button=-1, int axis=-1);
+	bool actionIsActive(std::string, std::string);
 	void cmbJoystick(WP, size_t val), UpdateInputBars(), inputDetailBtn(WP);
 	Ogre::String GetInputName(const Ogre::String& sName);
 	//  joy events

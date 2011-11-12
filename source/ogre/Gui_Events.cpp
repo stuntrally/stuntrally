@@ -13,6 +13,7 @@
 #include <OIS/OIS.h>
 #include "../oisb/OISB.h"
 #include <boost/filesystem.hpp>
+#include <boost/algorithm/string.hpp>
 
 #include <OgreRoot.h>
 #include <OgreTerrain.h>
@@ -363,12 +364,23 @@ void App::slBlurIntens(SL)
 //-----------------------------------------------------------------------------------------------------------
 //  Key pressed
 //-----------------------------------------------------------------------------------------------------------
+
+// util
+bool App::actionIsActive(std::string name, std::string pressed)
+{
+	std::string actionKey = GetInputName(mOISBsys->lookupAction("General/" + name)->mBindings[0]->mBindables[0].second->getBindableName());
+	boost::to_lower(actionKey);
+	boost::to_lower(pressed);
+	return actionKey == pressed;
+}
+
 bool App::keyPressed( const OIS::KeyEvent &arg )
 {
 	// update all keystates
 	OISB::System::getSingleton().process(0.001/*?0*/);
 	
-	#define action(s)  mOISBsys->lookupAction("General/"s)->isActive()
+	// action key == pressed key
+	#define action(s) actionIsActive(s, mKeyboard->getAsString(arg.key))
 
 	if (!bAssignKey)
 	{

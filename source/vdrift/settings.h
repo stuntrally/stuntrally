@@ -67,6 +67,8 @@ public:
 	
 	//  replay
 	bool rpl_rec, rpl_ghost, rpl_bestonly, rpl_alpha;  int rpl_listview;
+
+	int sceneryIdOld;  // not a setting, just to remember on quit
 	
 //------------------------------------------
 	SETTINGS();

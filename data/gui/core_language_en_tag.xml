@@ -134,9 +134,10 @@
 	<Tag name="RplGhost">Show ghost drive - best lap</Tag>
 	<Tag name="RplBestOnly">Save ghost only for best time</Tag>
 	<Tag name="RplAlpha">Transparent ghost</Tag>
+	<Tag name="RplParticles">Particles (for not transparent ghost)</Tag>
 
 	<Tag name="RplAll">All</Tag>
-	<Tag name="RplCur">Cur</Tag>
+	<Tag name="RplCurrent">Current</Tag>
 	<Tag name="RplGhosts">Ghosts</Tag>
 	
 	<Tag name="RplTime">Time</Tag>
@@ -154,6 +155,8 @@
 	<Tag name="Resolution">Resolution</Tag>
 	<Tag name="Fullscreen">Fullscreen</Tag>
 	<Tag name="VSync">VSync</Tag>
+	<Tag name="RenderSystem">Render System</Tag>
+	
 	<Tag name="AntiAliasing">Antialiasing</Tag>
 	<Tag name="NeedRestart">* need restart</Tag>
 	<Tag name="Change">Change</Tag>

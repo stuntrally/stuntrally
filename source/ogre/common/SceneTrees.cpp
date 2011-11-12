@@ -128,13 +128,21 @@ void App::CreateTrees()
 		#else
 		trees = new PagedGeometry(mCamera, sc.trPage);
 		#endif
+
+		//  when sceneryId val changed (tracks with different light)
+		//  || gui force regen ...
+		#ifndef ROAD_EDITOR
+		trees->forceRegenImpostors = sceneryId != pSet->sceneryIdOld;
+		LogO(String("||| Force impostors regen : ") + (trees->forceRegenImpostors ? "Yes":"No") +
+			", old: " + toStr(pSet->sceneryIdOld) + " cur: " + toStr(sceneryId));
+		#endif
+
 		if (bWind)
 			 trees->addDetailLevel<WindBatchPage>(sc.trDist * pSet->trees_dist, 0);
 		else trees->addDetailLevel<BatchPage>	 (sc.trDist * pSet->trees_dist, 0);
-		if(pSet->use_imposters)
-		{
+		if (pSet->use_imposters)
 			trees->addDetailLevel<ImpostorPage>(sc.trDistImp * pSet->trees_dist, 0);
-		}
+
 		TreeLoader2D* treeLoader = new TreeLoader2D(trees, tbnd);
 		trees->setPageLoader(treeLoader);
 		treeLoader->setHeightFunction(getTerrainHeightAround /*,userdata*/);

@@ -204,7 +204,7 @@ void MaterialFactory::generate()
 			// don't generate abstract materials
 			if ((*it)->getProps()->abstract) continue;
 			
-			LogO("generating " + (*it)->getName());
+			//LogO("generating " + (*it)->getName());
 			
 			// find an appropriate generator
 			MaterialGenerator* generator;

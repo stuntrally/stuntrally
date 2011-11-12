@@ -212,7 +212,11 @@ void App::LoadScene()  // 3
 {
 	bool ter = IsTerTrack();
 	if (ter)  // load scene
+	{
 		sc.LoadXml(TrkDir()+"scene.xml");
+		pSet->sceneryIdOld = sceneryId;
+		sceneryId = sc.sceneryId;
+	}
 	else
 	{	sc.Default();  sc.td.hfHeight = NULL;  sc.td.hfAngle = NULL;  }
 	

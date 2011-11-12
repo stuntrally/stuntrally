@@ -194,7 +194,7 @@ void App::InitGui()
 	valRplName = mGUI->findWidget<StaticText>("RplName");  valRplName2 = mGUI->findWidget<StaticText>("RplName2");
 	valRplInfo = mGUI->findWidget<StaticText>("RplInfo");  valRplInfo2 = mGUI->findWidget<StaticText>("RplInfo2");
 	edRplName = mGUI->findWidget<Edit>("RplNameEdit");
-	edRplDesc = mGUI->findWidget<Edit>("RplDesc");
+	//edRplDesc = mGUI->findWidget<Edit>("RplDesc");
 
 	rplList = mGUI->findWidget<List>("RplList");
 	if (rplList)  rplList->eventListChangePosition = newDelegate(this, &App::listRplChng);

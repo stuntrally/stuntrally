@@ -18,6 +18,7 @@
 	<Tag name="InputRoadPickOne">Auswählen (eins)</Tag>
 	<Tag name="ViewDist">Sichtweite</Tag>
 	<Tag name="TipRoadDist2">Zusätzlicher Abstand zur Strecke.</Tag>
+	<Tag name="TipLTrMinTerH">Terrain height below which model won't appear.</Tag>
 	<Tag name="TreeDens">Baumdichte</Tag>
 	<Tag name="TerNormal">Normale</Tag>
 	<Tag name="LS_TRACK">Lade Strecke</Tag>
@@ -26,7 +27,7 @@
 	<Tag name="TipTrackImg">Bildschirmfoto der ausgewählten Strecke.</Tag>
 	<Tag name="TerLNoiseOnly">Nur Rauschen</Tag>
 	<Tag name="InputValueChange">Jede Bewegung/Werteveränderung mit </Tag>
-	<Tag name="InputRoadMat">-,= - Straßen-/Röhrenmaterial</Tag>
+	<Tag name="Terrain">Terrain</Tag>
 	<Tag name="Surface">Oberfläche</Tag>
 	<Tag name="TBScore">Punkte</Tag>
 	<Tag name="LS_TER">Lade Terrain</Tag>
@@ -40,9 +41,10 @@
 	<Tag name="HUD">HUD</Tag>
 	<Tag name="InputCamControl">W,S A,D Q,E - Pfeiltasten - drehen</Tag>
 	<Tag name="TipTrackMap">Minikarte der ausgewählten Strecke, Sicht von oben.</Tag>
-	<Tag name="TipToggleModel">Modell aktivieren oder deaktivieren.</Tag>
+	<Tag name="TerGenOfsY">Offset Y</Tag>
 	<Tag name="MinimapRotate">Drehen</Tag>
 	<Tag name="pipes">röhren</Tag>
+	<Tag name="InputFluidsTile">[,]  - change texture tiling</Tag>
 	<Tag name="InputHeaderTxt1">Aktion</Tag>
 	<Tag name="InputReloadTrack">F5 - Neu laden</Tag>
 	<Tag name="Game">Spiel</Tag>
@@ -72,6 +74,7 @@
 	<Tag name="ParAmount">Partikelanzahl</Tag>
 	<Tag name="MyGUI_MessageBox_No">Nein</Tag>
 	<Tag name="InputRoadNew">ctrl-Space - set new point's values from picked</Tag>
+	<Tag name="InputFluidsMode">W - edit fluids</Tag>
 	<Tag name="Top">Oben</Tag>
 	<Tag name="TerUpdSkip">Terrain-Update überspr.</Tag>
 	<Tag name="Input">Eingabe</Tag>
@@ -109,6 +112,7 @@
 	<Tag name="InputAssignKey">&lt;Zuweisen&gt;</Tag>
 	<Tag name="Wireframe">Drahtgitter</Tag>
 	<Tag name="ChangeTrack">Strecke wechseln</Tag>
+	<Tag name="RoadQual">Straßenqualität</Tag>
 	<Tag name="TerrainSize">Terrain-Größe</Tag>
 	<Tag name="InputRoadWidth">- Straßenbreite</Tag>
 	<Tag name="Replay">Replay</Tag>
@@ -140,20 +144,24 @@
 	<Tag name="TipTerLHMax">Höhenende für den Terrain-Layer.</Tag>
 	<Tag name="TipRoadStats">Statistiken der Straße.</Tag>
 	<Tag name="MaxScale">max. Skal.</Tag>
+	<Tag name="Fluids">Fluids</Tag>
 	<Tag name="TerLNoise">Rauschen</Tag>
 	<Tag name="UseImposters">Use Imposters</Tag>
 	<Tag name="TipModelMaxScale">Maximale Skalierung des Modells.</Tag>
 	<Tag name="TerrainError">Terrainabweichung</Tag>
+	<Tag name="InputRoadMerge">M - umsch. Straßen zusammenf. (zum Test)</Tag>
 	<Tag name="MyGUI_MessageBox_Retry">Wiederholen</Tag>
 	<Tag name="InputStartDir">Space - Straßenrichtung (+ oder -)</Tag>
 	<Tag name="Effects">Effekte</Tag>
 	<Tag name="WidthSteps">Breiten-Steps</Tag>
 	<Tag name="TerLAngMin">Winkel min.</Tag>
 	<Tag name="Sound">Sound</Tag>
+	<Tag name="InputFluidsIns">Ins - insert new, default fluid at cursor</Tag>
 	<Tag name="RoadPointSize">Größe Straßenpunkte</Tag>
 	<Tag name="Car">Auto</Tag>
 	<Tag name="TipSkyMats">Namen der Sky-Materialien (aus SkyDome.material)</Tag>
 	<Tag name="VolMaster">Master</Tag>
+	<Tag name="TerGenFreq">Freq. zoom</Tag>
 	<Tag name="TipNewGame">Ein Spiel auf neuer Strecke starten oder auf der aktuellen Strecke neu starten.</Tag>
 	<Tag name="ReflMode">Modus</Tag>
 	<Tag name="TipCopySource">Strecke als Kopierquelle für den [Werkzeuge] Tab auswählen.</Tag>
@@ -165,6 +173,7 @@
 	<Tag name="TipRenameTrk">Ausgewählte Strecke umbenennen (zuerst Namen ändern)</Tag>
 	<Tag name="MyGUI_MessageBox_Try">Versuchen</Tag>
 	<Tag name="TipBumpAmp">Amplitude (Höhe) zusätzlicher Unebenheiten der Oberfläche</Tag>
+	<Tag name="InputFluidsMove">LMB - move   RMB - height</Tag>
 	<Tag name="TipNormalTex">Normaltextur (Höhe im Alphakanal)</Tag>
 	<Tag name="PipeMaterials">Röhrenmaterialien</Tag>
 	<Tag name="CamInfoStrings">Typ,Gierung,Neigung,Abstand,Höhe,Geschw.,Offset,LINKS,RECHTS,Mitte,Rad,shift,Rotieren,zurücks.,bewegen,H,Pos</Tag>
@@ -172,7 +181,7 @@
 	<Tag name="HDR">HDR</Tag>
 	<Tag name="TipABS">Verhindert das Blockieren der Reifen beim Bremsen (Standard: aus)</Tag>
 	<Tag name="TipGrassPatchHeightMin">Minimale Höhe des Grasflecks.</Tag>
-	<Tag name="Terrain">Terrain</Tag>
+	<Tag name="InputRoadMat">-,= - Straßen-/Röhrenmaterial</Tag>
 	<Tag name="InputDetailPreset">Voreinstellung</Tag>
 	<Tag name="InputStartHeight">[,] - Starthöhe verändern (größer für Röhren)</Tag>
 	<Tag name="TipSunDirPitch">Richtung der Sonne - Neigung.</Tag>
@@ -188,6 +197,7 @@
 	<Tag name="TipGrassPatchLengthMax">Maximale Länge des Grasflecks.</Tag>
 	<Tag name="Vegetation">Vegetation</Tag>
 	<Tag name="ssao">SSAO</Tag>
+	<Tag name="TerGenPow">Power (shape)</Tag>
 	<Tag name="InputMapFlip">Umdrehen</Tag>
 	<Tag name="difficulty">Schwierigkeit</Tag>
 	<Tag name="TrackInAir">Luft</Tag>
@@ -197,14 +207,16 @@
 	<Tag name="Options">Optionen</Tag>
 	<Tag name="Delete">Entfernen</Tag>
 	<Tag name="Rename">Umbenennen</Tag>
+	<Tag name="InputFluidsRot">MMB - rotate yaw</Tag>
 	<Tag name="TipModelPageLength">Page-Länge der Modelle (niedriger Wert verursacht häufiges neu Laden, hoher Wert macht die Übergänge sichtbar)</Tag>
 	<Tag name="LightmapSize">Lightmap-Größe</Tag>
-	<Tag name="RoadQual">Straßenqualität</Tag>
+	<Tag name="TerGenPers">Persistance noise</Tag>
 	<Tag name="length">Länge</Tag>
 	<Tag name="ColumnNSides">Säulen N sides</Tag>
 	<Tag name="RplAutoRec">Automatisch aufnehmen</Tag>
 	<Tag name="Reflections">Spiegelungen</Tag>
 	<Tag name="Exponent">Exponent</Tag>
+	<Tag name="InputFluidsPrevNext">PgUp,PgDn (or Wheel) - previous/next fluid</Tag>
 	<Tag name="Yaw">gieren</Tag>
 	<Tag name="Detail">Detail</Tag>
 	<Tag name="InputMoveAxisTip">Achse bewegen, um die Nummer zu sehen</Tag>
@@ -276,9 +288,10 @@
 	<Tag name="TipTrkScreenEditor">Bildschirmfoto der ausgewählten Strecke.</Tag>
 	<Tag name="RplDelete">Löschen</Tag>
 	<Tag name="TipAutoRear">Für manuellen Rückwärtsgang Haken rausnehmen.</Tag>
+	<Tag name="TipToggleModel">Modell aktivieren oder deaktivieren.</Tag>
 	<Tag name="TipTrailClr">Farbe der Reifenspuren. R G B A Komponenten von 0 bis 1 (z.B. 0.4 0.4 0.2 0.6)</Tag>
 	<Tag name="MinimapTerrain">Gelände</Tag>
-	<Tag name="NewDup">Neu (Kopie)</Tag>
+	<Tag name="TerGenOfsX">Offset X</Tag>
 	<Tag name="TrackHeightDiff">Höhendiff.</Tag>
 	<Tag name="RoadMaterials">Straßenmaterialien</Tag>
 	<Tag name="Fullscreen">Vollbild</Tag>
@@ -292,7 +305,7 @@
 	<Tag name="LS_CAR">Lade Auto</Tag>
 	<Tag name="GraphicsAllSettings">Grafik-Voreinstellungen:</Tag>
 	<Tag name="InputTerPaint">A - Anstrichtextur (Layer)</Tag>
-	<Tag name="RplCur">Aktuell</Tag>
+	<Tag name="InputFluidsSize">alt-LMB - size   alt-RMB - depth</Tag>
 	<Tag name="TexCoordMul">Tex Coord mul.</Tag>
 	<Tag name="Shadows">Schatten</Tag>
 	<Tag name="ShowPictures">Bilder beim Laden anzeigen</Tag>
@@ -324,6 +337,7 @@
 	<Tag name="InputTrackScrn">(für Bildschirmfoto)</Tag>
 	<Tag name="trailColor">Spurenfarbe</Tag>
 	<Tag name="InputRoadChkFirst">0 - ersten Wegpunkt setzen</Tag>
+	<Tag name="TerGenScale">Scale Height</Tag>
 	<Tag name="UnitM">m</Tag>
 	<Tag name="EditTerrainMode">Terrain bearb. Modus</Tag>
 	<Tag name="TipTireParType3">Reifenpartikel Typ 3</Tag>
@@ -371,6 +385,7 @@
 	<Tag name="TipBumpFreq">Frequenz zusätzlicher Unebenheiten der Oberfläche (Distanz zwischen diesen)</Tag>
 	<Tag name="InputRoadDel">Entf - ausgew. löschen</Tag>
 	<Tag name="SkirtLength">Skirt-Länge</Tag>
+	<Tag name="InputFluidsTileY">; &apos;  - change texture tiling, one coord. only</Tag>
 	<Tag name="InputUpdate">F8 - Aktualisieren</Tag>
 	<Tag name="InputToggleGUIMode">F1 - Optionsfenster anzeigen</Tag>
 	<Tag name="TipRearThrottleInverse">Inverse throttle and brake function in rear gear.</Tag>
@@ -380,7 +395,7 @@
 	<Tag name="TipGrassPatchHeightMax">Maximale Höhe des Grasflecks.</Tag>
 	<Tag name="Diffuse">Diffuse</Tag>
 	<Tag name="Tires">Reifen</Tag>
-	<Tag name="GrassSize">Größe des Gras</Tag>
+	<Tag name="TipTrackList">Streckenauswahl - klicken, um auswählen; Enter, um darauf zu fahren. (oder [Strecke wechseln] und dann [Neues Spiel])</Tag>
 	<Tag name="TipTrkNameEditor">Name der ausgewählten Strecke, wird auch zum Umbenennen und als neuer Streckenname benutzt.</Tag>
 	<Tag name="InputRoadStats">T - Straßenstatistiken</Tag>
 	<Tag name="VSync">VSync</Tag>
@@ -400,7 +415,7 @@
 	<Tag name="NewTerFlat">Neu</Tag>
 	<Tag name="TipTCS">Verhindert das Rutschen der Reifen beim Beschleunigen (Standard: aus)</Tag>
 	<Tag name="InputRoadColumn">Ende - Säule an/aus</Tag>
-	<Tag name="InputRoadMerge">M - umsch. Straßen zusammenf. (zum Test)</Tag>
+	<Tag name="InputFluidsDel">Del - delete current</Tag>
 	<Tag name="set1">set1</Tag>
 	<Tag name="set2">set2</Tag>
 	<Tag name="auto">Auto</Tag>
@@ -409,6 +424,7 @@
 	<Tag name="InputStartLMB">LMB - bewegen RMB - Höhe</Tag>
 	<Tag name="TipWindInflL">Einfluss des Winds auf das Modell, Längenskalierung.</Tag>
 	<Tag name="InputRoadCopySel">Strg-Einfg - Ausw. kopieren Strg-Entf - Ausw. löschen</Tag>
+	<Tag name="InputFluidsType">-,=  - change fluid type (water,mud,etc.)</Tag>
 	<Tag name="TrackWidthAvg">Breite avg.</Tag>
 	<Tag name="About">Über</Tag>
 	<Tag name="TrackPipes">Röhren</Tag>
@@ -437,7 +453,6 @@
 	<Tag name="CamInertia">Kameraträgheit</Tag>
 	<Tag name="TipTerSize">Resultierende Seitenlänge in Metern. Entspricht der Vertexanzahl multipliziert mit Triangle-Größe.</Tag>
 	<Tag name="speed">Geschw.</Tag>
-	<Tag name="TipTrackList">Streckenauswahl - klicken, um auswählen; Enter, um darauf zu fahren. (oder [Strecke wechseln] und dann [Neues Spiel])</Tag>
 	<Tag name="TipTerLHMin">Minimale Terrainhöhe der Ebene.</Tag>
 	<Tag name="RplGhosts">Geister</Tag>
 	<Tag name="RplBestOnly">Geist nur für beste Zeit speichern</Tag>
@@ -462,7 +477,7 @@
 	<Tag name="RplFileSize">Dateigröße</Tag>
 	<Tag name="SourceTrack">Bezugsquelle</Tag>
 	<Tag name="ImpostorDist">impostor dist.</Tag>
-	<Tag name="page">Page</Tag>
+	<Tag name="Find">Find</Tag>
 	<Tag name="Layers">Schichten</Tag>
 	<Tag name="Quit">Beenden</Tag>
 	<Tag name="Minimap">Minikarte</Tag>
@@ -483,10 +498,12 @@
 	<Tag name="fluids">fluids (water or mud)</Tag>
 	<Tag name="TipLoadTrkEditor">Andere Strecke laden oder aktuelle Strecke neu Laden.</Tag>
 	<Tag name="InputRoadAltLMB">Alt-LMB (oder 1,2)</Tag>
+	<Tag name="TrackDifficulties">Schwierigkeit der Strecke</Tag>
 	<Tag name="TipModelPrev">Vorschaubild des Modells.</Tag>
 	<Tag name="InputRoadEdit">R - Straße editieren</Tag>
 	<Tag name="jumps">Sprünge</Tag>
 	<Tag name="TBBest">Beste</Tag>
+	<Tag name="TipFluidsWnd">Fluid parameters window.</Tag>
 	<Tag name="RestartApply">Spiel neustarten, um *Änderungen anzuwenden.</Tag>
 	<Tag name="InputMultiplier">Faktor</Tag>
 	<Tag name="InputUndo">(rückgängig)</Tag>
@@ -495,6 +512,7 @@
 	<Tag name="CameraInfo">Kamerainfo</Tag>
 	<Tag name="NewGame">Neues Spiel</Tag>
 	<Tag name="InputMapFlipLeft">Nach links flippern</Tag>
+	<Tag name="page">Page</Tag>
 	<Tag name="InputMapSteering">Lenkung</Tag>
 	<Tag name="InputDetailsFor">Details</Tag>
 	<Tag name="GraphicsAll_Ultra">Ultra</Tag>
@@ -532,6 +550,7 @@
 	<Tag name="DistMult">Distanzmult.</Tag>
 	<Tag name="InputStartWidth">; &apos; - Startbreite ändern (für Straßenbreite)</Tag>
 	<Tag name="Resolution">Auflösung</Tag>
+	<Tag name="GrassSize">Größe des Gras</Tag>
 	<Tag name="Left">Links</Tag>
 	<Tag name="TipDustInt">Intensität der Staubpartikel.</Tag>
 	<Tag name="Startup">Start</Tag>
@@ -544,13 +563,14 @@
 	<Tag name="ColSat">Sättigung</Tag>
 	<Tag name="AntiAliasing">Antialiasing</Tag>
 	<Tag name="InputRoadSelectMany">Auswahl (viele)</Tag>
+	<Tag name="TerGenOct">Octaves</Tag>
 	<Tag name="Volume">Lautstärke</Tag>
 	<Tag name="TipTerLayers">Terrain Texturlayer (empfohlen 2-3, großer Einfluss auf die Leistung). *Auto blendmap unterstützt max. 4.</Tag>
 	<Tag name="TipSurfType">Typ der Oberfläche, bestimmt den Sound.</Tag>
 	<Tag name="CheckArrow">Wegpunkt-Pfeil</Tag>
 	<Tag name="InputRoadAltMMB">Alt-RMB (oder 3,4)</Tag>
 	<Tag name="InputSaveTrack">F4 - Strecke speichern</Tag>
-	<Tag name="TrackDifficulties">Schwierigkeit der Strecke</Tag>
+	<Tag name="NewDup">Neu (Kopie)</Tag>
 	<Tag name="TipSurfFrict">Oberflächenreibung (z.B. 1.0 Asphalt, 0.7 Kies, 0.5 Eis)</Tag>
 	<Tag name="FPS">Fps, Triangles, Batches</Tag>
 	<Tag name="InputMapBoost">Boost</Tag>
@@ -565,27 +585,9 @@
 	<Tag name="MyGUI_MessageBox_Yes">Ja</Tag>
 	<Tag name="RollingDrag">Rollwiderstand</Tag>
 	<Tag name="RplAll">Alle</Tag>
-	<Tag name="TipLTrMinTerH">Terrain height below which model won't appear.</Tag>
-	<Tag name="TerGenOfsY">Offset Y</Tag>
-	<Tag name="InputFluidsTile">[,]  - change texture tiling</Tag>
-	<Tag name="InputFluidsMode">W - edit fluids</Tag>
-	<Tag name="InputFluidsSize">alt-LMB - size   alt-RMB - depth</Tag>
-	<Tag name="TerGenFreq">Freq. zoom</Tag>
-	<Tag name="Fluids">Fluids</Tag>
-	<Tag name="InputFluidsDel">Del - delete current</Tag>
-	<Tag name="InputFluidsIns">Ins - insert new, default fluid at cursor</Tag>
-	<Tag name="InputFluidsMove">LMB - move   RMB - height</Tag>
-	<Tag name="InputFluidsRot">MMB - rotate yaw</Tag>
-	<Tag name="TerGenPers">Persistance noise</Tag>
-	<Tag name="InputFluidsPrevNext">PgUp,PgDn (or Wheel) - previous/next fluid</Tag>
-	<Tag name="TerGenOfsX">Offset X</Tag>
-	<Tag name="TerGenScale">Scale Height</Tag>
-	<Tag name="InputFluidsTileY">; &apos;  - change texture tiling, one coord. only</Tag>
-	<Tag name="InputFluidsType">-,=  - change fluid type (water,mud,etc.)</Tag>
-	<Tag name="Find">Find</Tag>
-	<Tag name="TipFluidsWnd">Fluid parameters window.</Tag>
-	<Tag name="TerGenPow">Power (shape)</Tag>
-	<Tag name="TerGenOct">Octaves</Tag>
+	<Tag name="RplParticles">Particles (for not transparent ghost)</Tag>
+	<Tag name="RenderSystem">Render System</Tag>
+	<Tag name="RplCurrent">Current</Tag>
 	<Tag name="GameVersion">1.4</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 
