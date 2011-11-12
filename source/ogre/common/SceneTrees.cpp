@@ -62,7 +62,9 @@ void App::CreateTrees()
 	gTerrain = terrain;
 	
 	//-------------------------------------- Grass --------------------------------------
-	reloadMtrTex("grass_GrassVS_"); //+
+	TexturePtr grassTex = Ogre::TextureManager::getSingleton().getByName("grass1.png");
+	if (!grassTex.isNull())
+		grassTex->reload();
 
 	TexturePtr rdtex = (TexturePtr)Ogre::TextureManager::getSingleton().getByName("grassDensity.png");
 	if (!rdtex.isNull())
@@ -273,31 +275,3 @@ void App::CreateTrees()
 	dt = ti.dt * 1000.f;
 	LogO(String("::: Time Trees: ") + toStr(dt) + " ms");
 }
-
-
-//  reload material textures
-//----------------------------------------------------------------------------------------------------------------
-void App::reloadMtrTex(String mtrName)
-{
-	MaterialPtr mtr = (MaterialPtr)MaterialManager::getSingleton().getByName(mtrName);
-	if (!mtr.isNull())
-	{	Material::TechniqueIterator techIt = mtr->getTechniqueIterator();
-		while (techIt.hasMoreElements())
-		{	Technique* tech = techIt.getNext();
-			Technique::PassIterator passIt = tech->getPassIterator();
-			while (passIt.hasMoreElements())
-			{	Pass* pass = passIt.getNext();
-				Pass::TextureUnitStateIterator tusIt = pass->getTextureUnitStateIterator();
-				while (tusIt.hasMoreElements())
-				{	TextureUnitState* tus = tusIt.getNext();  String name = tus->getTextureName();
-					if (! (Ogre::StringUtil::startsWith(name, "ReflectionCube", false) || name == "ReflectionCube") )
-					{
-						Ogre::LogManager::getSingletonPtr()->logMessage( "Tex Reload: " + name );
-						TexturePtr tex = (TexturePtr)Ogre::TextureManager::getSingleton().getByName( name );
-						if (!tex.isNull())
-						{							
-							tex->reload();
-						}
-					}
-				}
-}	}	}	}

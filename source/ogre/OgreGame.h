@@ -93,7 +93,6 @@ protected:
 		Mtr_CarTireFront, Mtr_CarTireRear,
 		Mtr_Road,  NumMaterials  };
 	Ogre::String sMtr[NumMaterials];
-	void reloadMtrTex(Ogre::String mtrName);
 
 	//  2D, hud  ----
 	float asp,  xcRpm, ycRpm, xcVel, ycVel,

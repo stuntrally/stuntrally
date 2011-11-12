@@ -81,7 +81,7 @@ protected:
 	Ogre::String resTrk;  void NewCommon(), UpdTrees();
 	void CreateTerrain(bool bNewHmap=false, bool bTer=true);
 	void GetTerAngles(int xb,int yb,int xe,int ye);
-	void CreateTrees(), reloadMtrTex(Ogre::String mtrName), CreateFluids(), DestroyFluids();
+	void CreateTrees(), CreateFluids(), DestroyFluids();
 	void CreateSkyDome(Ogre::String sMater, Ogre::Vector3 scale);
 	bool GetFolderIndex(std::string folderpath, std::list <std::string> & outputfolderlist, std::string extension="");
 
