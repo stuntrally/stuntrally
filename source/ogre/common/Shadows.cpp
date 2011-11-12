@@ -231,7 +231,9 @@ void App::setMtrSplits(String sMtrName)
 	{
 		unsigned short np = mat->getTechnique(0)->getNumPasses()-1;  // last  unsigned!
 		try {
-			if (mat->getTechnique(0)->getPass(np)->hasFragmentProgram())
+			if (mat->getTechnique(0)->getPass(np)->hasFragmentProgram() 
+				&& mat->getTechnique(0)->getPass(np)->getFragmentProgramParameters()->_findNamedConstantDefinition("pssmSplitPoints",false)
+				)
 				mat->getTechnique(0)->getPass(np)->getFragmentProgramParameters()->setNamedConstant("pssmSplitPoints", splitPoints);
 		} catch(...) { }
 		

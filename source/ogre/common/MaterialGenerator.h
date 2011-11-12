@@ -27,6 +27,10 @@ public:
 	Ogre::HighLevelGpuProgramPtr mFragmentProgram;
 	
 	virtual void generate(bool fixedFunction=false); // craft material
+
+	//MRT
+	static bool bUseMRT;
+	static bool MRTSupported();
 	
 protected:
 	// tex unit indices
@@ -91,10 +95,15 @@ protected:
 	virtual bool vpNeedWITMat();
 	
 	// passtrough (vertex to fragment)
+	virtual bool fpNeedWMat();
 	virtual bool fpNeedTangentToCube();
 	virtual bool fpNeedWsNormal();
 	virtual bool fpNeedEyeVector();
 	 
+	//MRT
+	virtual bool vpNeedWvMat();
+	virtual bool UsePerPixelNormals();
+
 	// lighting
 	virtual bool fpNeedLighting(); // fragment lighting
 	//bool vpNeedLighting(); // vertex lighting

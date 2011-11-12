@@ -117,11 +117,14 @@ void GrassLoader::frameUpdate()
 			if (layer->waveCount > Math::PI*2) layer->waveCount -= Math::PI*2;
 
 			//Set vertex shader parameters
-			params->setNamedConstant("time", layer->waveCount);
-			params->setNamedConstant("frequency", layer->animFreq);
+			if(params->_findNamedConstantDefinition("time",false))
+				params->setNamedConstant("time", layer->waveCount);
+			if(params->_findNamedConstantDefinition("frequency",false))
+				params->setNamedConstant("frequency", layer->animFreq);
 
 			Vector3 direction = windDir * layer->animMag;
-			params->setNamedConstant("direction", Vector4(direction.x, direction.y, direction.z, 0));
+			if(params->_findNamedConstantDefinition("direction",false))
+				params->setNamedConstant("direction", Vector4(direction.x, direction.y, direction.z, 0));
 
 		}
 	}
@@ -1378,7 +1381,7 @@ void GrassLayer::_updateShaders()
 					}
 					else if(shaderLanguage == "cg")
 					{
-						vertexShader->setParameter("profiles", "vs_1_1 arbvp1");
+						vertexShader->setParameter("profiles", "vs_4_0 vs_1_1 arbvp1");
 						vertexShader->setParameter("entry_point", "main");
 					}
 					// GLSL can only have one entry point "main".

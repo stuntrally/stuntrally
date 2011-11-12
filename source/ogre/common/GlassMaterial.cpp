@@ -181,15 +181,15 @@ HighLevelGpuProgramPtr GlassMaterialGenerator::createAmbientVertexProgram()
 	ret = mgr.createProgram(progName, ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME, 
 		"cg", GPT_VERTEX_PROGRAM);
 
-	ret->setParameter("profiles", "vs_1_1 arbvp1");
+	ret->setParameter("profiles", "vs_4_0 vs_1_1 arbvp1");
 	ret->setParameter("entry_point", "main_vp");
 
 	StringUtil::StrStreamType sourceStr;
 	
 	sourceStr <<
 	"void main_vp( \n"
-	"	in float2 uv, \n"
 	"	in float4 position : POSITION, \n"
+	"	in float2 uv :TEXCOORD0, \n"
 	"	uniform float4x4 wvpMat, \n"
 	"	out float4 oPos : POSITION, out float2 oUV : TEXCOORD0) \n"
 	"{ \n"
@@ -220,13 +220,13 @@ HighLevelGpuProgramPtr GlassMaterialGenerator::createAmbientFragmentProgram()
 	ret = mgr.createProgram(progName, ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME, 
 		"cg", GPT_FRAGMENT_PROGRAM);
 
-	ret->setParameter("profiles", "ps_2_0 arbfp1");
+	ret->setParameter("profiles", "ps_4_0 ps_2_0 arbfp1");
 	ret->setParameter("entry_point", "main_fp");
 
 	StringUtil::StrStreamType sourceStr;
 	
 	sourceStr <<
-	"float4 main_fp(in float2 uv : TEXCOORD0, \n"
+	"float4 main_fp(float4 iPos : POSITION,in float2 uv : TEXCOORD0, \n"
 	"	uniform float3 ambient,  uniform float4 matDif, \n"
 	"	uniform sampler2D diffuseMap): COLOR0 \n"
 	"{ \n"

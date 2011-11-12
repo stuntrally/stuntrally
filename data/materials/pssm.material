@@ -2,7 +2,7 @@
 vertex_program PSSM/shadow_caster_vs cg
 {
 	source pssm.cg
-	profiles vs_1_1 arbvp1
+	profiles vs_4_0 vs_1_1 arbvp1
 	entry_point shadow_caster_vs
 
 	default_params
@@ -17,7 +17,7 @@ vertex_program PSSM/shadow_caster_vs cg
 fragment_program PSSM/shadow_caster_ps cg
 {
 	source pssm.cg
-	profiles ps_2_0 arbfp1
+	profiles ps_4_0 ps_2_0 arbfp1
 	entry_point shadow_caster_ps
 
 	default_params
@@ -48,7 +48,7 @@ material PSSM/shadow_caster
 vertex_program PSSM/shadow_receiver_vs cg
 {
 	source pssm.cg
-	profiles vs_1_1 arbvp1
+	profiles vs_4_0 vs_1_1 arbvp1
 	entry_point shadow_receiver_vs
 
 	default_params
@@ -68,7 +68,7 @@ vertex_program PSSM/shadow_receiver_vs cg
 fragment_program PSSM/shadow_receiver_ps cg
 {
 	source pssm.cg
-	profiles ps_2_x arbfp1
+	profiles ps_4_0 ps_2_x arbfp1
 	entry_point shadow_receiver_ps
 
 	default_params

@@ -163,6 +163,18 @@ ManualObject* App::Create2D(const String& mat, SceneManager* sceneMgr, Real s, b
 	m->position( s, s*asp, 0);  m->textureCoord(1, 0);  if (clr)  m->colour(1,0,0);
 	m->end();
  
+	//TODO:replace OT_TRIANGLE_FAN with a more friendly version for D3D11 as it is not supported
+	/*
+		m->estimateVertexCount(6);
+	m->begin(mat, RenderOperation::OT_TRIANGLE_LIST);
+
+	m->position(-s, s*asp, 0);  m->textureCoord(0, 0);  if (clr)  m->colour(0,0,0);
+	m->position( s, s*asp, 0);  m->textureCoord(1, 0);  if (clr)  m->colour(1,0,0);
+	m->position(-s,-s*asp, 0);  m->textureCoord(0, 1);  if (clr)  m->colour(0,1,0);
+	m->position( s, s*asp, 0);  m->textureCoord(1, 0);  if (clr)  m->colour(1,0,0);
+	m->position(-s,-s*asp, 0);  m->textureCoord(0, 1);  if (clr)  m->colour(0,1,0);
+	m->end();
+	*/
 	AxisAlignedBox aabInf;	aabInf.setInfinite();
 	m->setBoundingBox(aabInf);  // always visible
 	m->setRenderQueueGroup(RQG_Hud2);

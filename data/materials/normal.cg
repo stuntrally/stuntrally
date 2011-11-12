@@ -1,7 +1,7 @@
 void geom_vs(
     in float4 p : POSITION, in float3 n : NORMAL,
-    out float4 cp : POSITION,
 	in float2 uv : TEXCOORD0,
+    out float4 cp : POSITION,
     out float4 vp : TEXCOORD0, // view-space position
     out float4 vn : TEXCOORD1,
     out float2 ouv : TEXCOORD2,
@@ -19,14 +19,17 @@ struct geomOut
     float4 c : COLOR0;
 };
 
-geomOut geom_ps(in float4 vp : TEXCOORD0, in float4 vn : TEXCOORD1, uniform float far)
+geomOut geom_ps(in float4 iPosition : POSITION,
+in float4 vp : TEXCOORD0, in float4 vn : TEXCOORD1,   in float2 uv : TEXCOORD2,
+  uniform float far)
 {
     geomOut OUT;
     OUT.c = float4(length(vp.xyz) / far, normalize(vn.xyz).xyz);
     return OUT;
 }
 
-geomOut geom_alpha_ps(in float4 vp : TEXCOORD0, in float4 vn : TEXCOORD1,
+geomOut geom_alpha_ps(in float4 iPosition : POSITION,
+	in float4 vp : TEXCOORD0, in float4 vn : TEXCOORD1,
 	in float2 uv : TEXCOORD2,
 	uniform sampler2D diffuseMap : register(s0),
 	uniform float far)
@@ -59,7 +62,8 @@ float4 expand(float4 v)
 { 
 	return v * 2 - 1;
 }
-geomOut geom_terrain_ps(in float4 vp : TEXCOORD0, in float2 uvMisc : TEXCOORD1,
+geomOut geom_terrain_ps(in float4 iPosition : POSITION,
+	in float4 vp : TEXCOORD0, in float2 uvMisc : TEXCOORD1,
 	uniform sampler2D globalNormal : register(s0),
 	uniform float far,uniform float4x4 wvMat)
 {
@@ -71,9 +75,8 @@ geomOut geom_terrain_ps(in float4 vp : TEXCOORD0, in float2 uvMisc : TEXCOORD1,
     return OUT;
 }
 
-geomOut geom_white_ps(in float4 vp : TEXCOORD0, in float2 uvMisc : TEXCOORD1,
-	uniform sampler2D globalNormal : register(s0),
-	uniform float far)
+geomOut geom_white_ps(in float4 iPosition : POSITION,in float4 vp : TEXCOORD0, in float4 uvMisc : TEXCOORD1, in float2 uv : TEXCOORD2,
+	uniform sampler2D globalNormal : register(s0))
 {
     geomOut OUT;
 	OUT.c = float4(0,0,0,0);
