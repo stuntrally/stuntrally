@@ -10,6 +10,13 @@
 using namespace MyGUI;
 using namespace Ogre;
 
+// MyGUI 3.2 has no Align::Relative
+#if MYGUI_VERSION_MINOR >= 2
+	#define ALIGN Align::Default
+#else
+	#define ALIGN Align::Relative
+#endif
+
 
 ///  Gui Init - input tab
 //----------------------------------------------------------------------------------------------------------------------------------
@@ -81,7 +88,7 @@ void App::InitInputGui()
 		TabItemPtr tabitem = inputTab->addItem( TR("#{InputMap" + sPlr + "}") );
 
 		#define CreateText(x,y, w,h, name, text)  {  StaticTextPtr txt =  \
-			tabitem->createWidget<StaticText>("StaticText", x,y, w,h, Align::Relative, name);  \
+			tabitem->createWidget<StaticText>("StaticText", x,y, w,h, ALIGN, name);  \
 			if (txt)  txt->setCaption(text);  }
 		
 		//  button size and columns positon
@@ -135,7 +142,7 @@ void App::InitInputGui()
 
 			//  description label
 			StaticTextPtr desc = tabitem->createWidget<StaticText>("StaticText",
-				x0, y+5, sx+70, sy,  Align::Relative,
+				x0, y+5, sx+70, sy,  ALIGN,
 				"staticText_" + sAct );
 			desc->setCaption( TR("#{InputMap" + name + "}") );
 		
@@ -173,14 +180,14 @@ void App::InitInputGui()
 				
 			//  binding buttons  ----------------
 			ButtonPtr btn1 = tabitem->createWidget<Button>("Button",
-				x1, button2 ? (y + ya*2) : y, sx, sy,  Align::Relative,
+				x1, button2 ? (y + ya*2) : y, sx, sy,  ALIGN,
 				"inputbutton_" + sAct + "_" + sPlr + "_1");
 			btn1->setCaption( skey1 );
 			btn1->eventMouseButtonClick = newDelegate(this, &App::inputBindBtnClicked);
 			
 			if (button2)
 			{	ButtonPtr btn2 = tabitem->createWidget<Button>("Button",
-					x1, y, sx, sy,  MyGUI::Align::Relative,
+					x1, y, sx, sy,  ALIGN,
 					"inputbutton_" + sAct + "_" + sPlr + "_2");
 				btn2->setCaption( skey2 );
 				btn2->eventMouseButtonClick = MyGUI::newDelegate(this, &App::inputBindBtnClicked);
@@ -188,14 +195,14 @@ void App::InitInputGui()
 			
 			//  value bar  --------------
 			StaticImagePtr bar = tabitem->createWidget<StaticImage>("StaticImage",
-				x2 + (button2 ? 0 : 64), y+4, button2 ? 128 : 64, 16, MyGUI::Align::Relative,
+				x2 + (button2 ? 0 : 64), y+4, button2 ? 128 : 64, 16, ALIGN,
 				"bar_" + sAct + "_" + sPlr);
 			bar->setImageTexture("input_bar.png");  bar->setImageCoord(IntCoord(0,0,128,16));
 
 			//  detail btn  ----------------
 			if (analog)
 			{	btn1 = tabitem->createWidget<Button>("Button",
-					x3, y, 32, sy,  Align::Relative,
+					x3, y, 32, sy,  ALIGN,
 					"inputdetail_" + sAct + "_" + sPlr + "_1");
 				btn1->setCaption(">");
 				btn1->setColour(Colour(0.6f,0.8f,1.0f));
@@ -214,7 +221,7 @@ void App::InitInputGui()
 
 void App::inputBindBtnClicked(WP sender)
 {
-	sender->setCaption( TR("#{InputAssignKey}"));
+	static_cast<StaticTextPtr>(sender)->setCaption( TR("#{InputAssignKey}"));
 	// activate key capture mode
 	bAssignKey = true;
 	pressedKeySender = sender;
@@ -236,7 +243,7 @@ void App::InputBind(int key, int button, int axis)
 	String skey0 = isKey ? "Keyboard/" + toStr(key) : 
 				isAxis ? joyName + "/Axis " + toStr(axis) :
 						joyName + "/Button " + toStr(button);
-	pressedKeySender->setCaption(cancel ? TR("#{InputKeyUnassigned}") : MyGUI::UString(GetInputName(skey0)));
+	static_cast<StaticTextPtr>(pressedKeySender)->setCaption(cancel ? TR("#{InputKeyUnassigned}") : MyGUI::UString(GetInputName(skey0)));
 
 	
 	//  get action/schema/index from widget name

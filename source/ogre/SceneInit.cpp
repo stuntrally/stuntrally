@@ -157,6 +157,7 @@ void App::LoadCleanUp()  // 1 first
 	mSceneMgr->destroyAllStaticGeometry();
 	//mSceneMgr->destroyAllParticleSystems();
 	mSceneMgr->destroyAllRibbonTrails();
+	mSplitMgr->mHUDSceneMgr->destroyAllManualObjects();
 	MeshManager::getSingleton().removeAll();  // destroy all meshes
 
 	//  rain/snow
@@ -175,7 +176,7 @@ void App::LoadGame()  // 2
 	//  viewports
 	mSplitMgr->mNumViewports = bRplPlay ? replay.header.numPlayers : pSet->local_players;  // set num players
 	mSplitMgr->Align();
-	mPlatform->getRenderManagerPtr()->setActiveViewport(mSplitMgr->mNumViewports);
+	mPlatform->getRenderManagerPtr()->setActiveViewport(mSplitMgr->mNumViewports*2);
 	
 	pGame->NewGameDoCleanup();
 	pGame->NewGameDoLoadTrack();

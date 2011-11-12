@@ -70,7 +70,7 @@ public:
 	int id;  // auto set, index to FluidParams, -1 doesnt exist
 	std::string name;
 	class btCollisionObject* cobj;
-	bool isWater;  // auto set,  todo: index to fluid particles array..
+	bool isWater,isMudDark;  // auto set,  todo: index to fluid particles array..
 
 	FluidBox();
 };

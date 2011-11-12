@@ -536,8 +536,7 @@ namespace Ogre
 		GpuProgramParametersSharedPtr params = prog->getDefaultParameters();
 		params->setIgnoreMissingParams(true);
 		params->setNamedAutoConstant("worldMatrix", GpuProgramParameters::ACT_WORLD_MATRIX);
-		params->setNamedAutoConstant("worldViewMatrix", GpuProgramParameters::ACT_WORLDVIEW_MATRIX);
-		params->setNamedAutoConstant("viewProjMatrix", GpuProgramParameters::ACT_VIEWPROJ_MATRIX);
+		params->setNamedAutoConstant("worldViewMatrix", GpuProgramParameters::ACT_WORLDVIEW_MATRIX);		params->setNamedAutoConstant("viewProjMatrix", GpuProgramParameters::ACT_VIEWPROJ_MATRIX);
 		if (tt != RENDER_COMPOSITE_MAP)
 		{
 			params->setNamedAutoConstant("lodMorph", GpuProgramParameters::ACT_CUSTOM, 
@@ -848,8 +847,8 @@ namespace Ogre
 			outStream << ", out float2 lodInfo : TEXCOORD" << texCoordSet++ << "\n";
 		}
 
-		//ssao
-		outStream << ",out float4 oViewPosition : TEXCOORD"<< texCoordSet++ << "\n";
+		//ssao	
+		outStream << ",out float4 oViewPosition : TEXCOORD"<< texCoordSet++ << "\n";	
 
 		bool fog = terrain->getSceneManager()->getFogMode() != FOG_NONE && tt != RENDER_COMPOSITE_MAP;
 		if (fog)
@@ -1270,13 +1269,9 @@ namespace Ogre
 		}
 		
 		//view space position,view space normal 
-		outStream <<
-		" oViewPosition = mul(worldViewMatrix, pos); \n" ;
-
-		if (prof->isShadowingEnabled(tt, terrain))
+		outStream <<		" oViewPosition = mul(worldViewMatrix, pos); \n" ;		if (prof->isShadowingEnabled(tt, terrain))
 			generateVpDynamicShadows(prof, terrain, tt, outStream);
 
-	
 		outStream << 
 			"}\n";
 
@@ -1360,6 +1355,7 @@ namespace Ogre
 		// Final return
 		outStream << "	oColor = outputCol;\n"
 			<< "}\n";
+
 	}
 	//---------------------------------------------------------------------
 	void TerrainMaterialGeneratorB::SM2Profile::ShaderHelperCg::generateFpDynamicShadowsHelpers(

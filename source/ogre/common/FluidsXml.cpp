@@ -54,7 +54,7 @@ bool FluidsXml::LoadXml(std::string file)
 		a = eFl->Attribute("bumpFqX");		if (a)  fp.bumpFqX = s2r(a);
 		a = eFl->Attribute("bumpFqY");		if (a)  fp.bumpFqY = s2r(a);
 		a = eFl->Attribute("bumpAmp");		if (a)  fp.bumpAmp = s2r(a);
-		a = eFl->Attribute("bumpAng");		if (a)  fp.bumpAng = s2r(a);
+		a = eFl->Attribute("bumpAngle");	if (a)  fp.bumpAng = s2r(a);
 		//
 
 		fls.push_back(fp);

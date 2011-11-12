@@ -182,6 +182,15 @@
 					<Property key="Widget_Colour" value="0.6 0.8 1.0"/>
 					<Property key="Text_TextColour" value="0.45 0.58 0.8"/>
 				</Widget>
+                <Widget type="StaticText" skin="StaticText" position="16 448 72 24">
+                    <Property key="Widget_Caption" value="#{Find}:"/>
+                    <Property key="Text_TextColour" value="0.7 0.8 0.9"/>
+                </Widget>
+                <Widget type="Edit" skin="Edit" position="16 472 88 24" name="TrackFind">
+                    <Property key="Widget_Colour" value="0.7 0.8 0.9"/>
+                    <Property key="Edit_MaxTextLength" value="20"/>
+                    <Property key="Text_TextColour" value="0.8 0.9 1.0"/>
+                </Widget>
 			</Widget>
 			<Widget type="TabItem" skin="" position="4 26 787 531">
 				<Property key="Widget_Caption" value="#{Car}"/>

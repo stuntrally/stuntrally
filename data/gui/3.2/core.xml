@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<MyGUI type="List">
+	
+	<List file="core_font.xml"/>
+	<List file="core_images.xml"/>
+	<List file="core_commonskins.xml"/>
+	<List file="core_blackbluetheme.xml"/>
+	<List file="core_pointers.xml"/>
+	<List file="core_layers.xml"/>
+	<List file="core_language.xml"/>
+	<List file="core_settings.xml"/>
+	
+</MyGUI>

@@ -34,16 +34,12 @@ struct MaterialProperties
 	textureMap normalMaps; float bumpScale;
 	textureMap lightMaps;textureMap blendMaps;
 	CullHardwareMode cullHardware;
-	CullHardwareMode cullHardwareAmbient; // for ambient pass
 	
 	SceneBlendMode sceneBlend;
 	textureMap alphaMaps; bool transparent;
 	Ogre::Vector4 lightingAlpha; // alpha for ambient, diffuse, spec, diffuse r channel mult
 	Ogre::CompareFunction alphaRejectFunc; float alphaRejectValue;
-	
-	// 2-pass (for pipe glass)
-	bool twoPass;
-	
+		
 	// reflection
 	std::string envMap;
 	float reflAmount;
@@ -59,13 +55,16 @@ struct MaterialProperties
 	// contribute to ssao yes/no
 	bool ssao;
 	
+	// use custom generator (for very specific materials like water, glass)
+	// empty ("") means no custom generator
+	std::string customGenerator; 
+	
 	float depthBias; bool depthCheck; bool depthWrite; bool transparentSorting;
 	
 	
 	//!todo:
 	// PPX on/off, shading mode (phong etc) for no shaders,
 	// [casts_shadows (+priority) (probably not here)],
-	// read terrain lightmap on/off
 	// specular map (exponent in diffuse map alpha) [or seperate map for trees]
 	// normalHeight (height in normal map alpha) [for parallax mapping]
 	

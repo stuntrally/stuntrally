@@ -93,6 +93,67 @@ material Water_green : ppx_water1  // jungle green +
 	set_texture_alias normalMap waveNM.png
 }
 
+material Water_sunset : ppx_water1  // island sunset +
+{
+	set $specularCol	 "1.0 0.6 0.3"
+	set $shininess		 "16"
+	set $waveBump		 "0.0  0.8"
+	set $waveHighFreq	 "0.1"
+	set $waveSpecular	 "1.1"
+	set $deepColor		 "0.1 0.3 0.4  1.0"
+	set $shallowColor	 "0.21 0.5 0.7  0.6"
+	set $reflectionColor "0.8 0.65 0.5  1.0"
+	set $reflAndWaterAmounts  "0.6  0.4"
+	set $fresnelPowerBias  "5.0  0.33"
+	set_texture_alias normalMap water_nh.png
+}
+
+material Water_shore : ppx_water1  // island overcast
+{
+	set $specularCol	 "0.65 0.67 0.7"
+	set $shininess		 "4"
+	set $waveBump		 "0.2  0.8"
+	set $waveHighFreq	 "0.3"
+	set $waveSpecular	 "1.0"
+	set $deepColor		 "0.26 0.32 0.43  1.0"
+	set $shallowColor	 "0.21 0.35 0.45  0.6"
+	set $reflectionColor "0.6 0.65 0.68  1.0"
+	set $reflAndWaterAmounts  "0.8  0.2"
+	set $fresnelPowerBias  "5.0  0.33"
+	set_texture_alias normalMap water_nh.png
+}
+
+material Water_dark : ppx_water1  // island dark
+{
+	set $specularCol	 "1.0 0.8 0.3"
+	set $shininess		 "32"
+	set $waveBump		 "0.0  0.8"
+	set $waveHighFreq	 "0.1"
+	set $waveSpecular	 "0.7"
+	set $deepColor		 "0.06 0.14 0.2  0.8"
+	set $shallowColor	 "0.11 0.15 0.17  1.0"
+	set $reflectionColor "0.8 0.65 0.5  1.0"
+	set $reflAndWaterAmounts  "0.8  0.2"
+	set $fresnelPowerBias  "5.0  0.33"
+	set_texture_alias normalMap water_nh.png
+}
+
+material Grease_jelly : ppx_water1  // magic
+{
+	set $specularCol	 "0.4 0.8 1.0"
+	set $shininess		 "96"
+	set $waveBump		 "0.4  0.2"
+	set $waveHighFreq	 "-0.2"
+	set $waveSpecular	 "1.0"
+	set $deepColor		 "0.26 0.20 0.4  0.9"
+	set $shallowColor	 "0.21 0.22 0.48  0.95"
+	set $reflectionColor "0.3 0.3 0.6  1.0"
+	set $reflAndWaterAmounts  "0.6  0.4"
+	set $fresnelPowerBias  "5.0  0.33"
+	set_texture_alias normalMap waveNM.png
+}
+
+
 material Water_light : ppx_water1  // light light green -
 {
 	set $specularCol	 "0.4 0.4 0.3"
@@ -122,6 +183,7 @@ material Water_yellow : ppx_water1  // yellow light +-
 	set $fresnelPowerBias  "5.0  0.33"
 	set_texture_alias normalMap waveNM.png
 }
+
 
 material Mud_orange : ppx_water1  // mud orange ++ soft
 {

@@ -42,7 +42,8 @@ void BaseApp::createCamera()
 	mCameraT->lookAt(Vector3(0,0,0));
 
 	mViewport = mWindow->addViewport(mCamera);
-	mViewport->setBackgroundColour(ColourValue(0.5,0.65,0.8));  //`
+	//mViewport->setBackgroundColour(ColourValue(0.5,0.65,0.8));  //`
+	mViewport->setBackgroundColour(ColourValue(0.2,0.3,0.4));  //`
 	Real asp = Real(mViewport->getActualWidth()) / Real(mViewport->getActualHeight());
 	mCamera->setAspectRatio(asp);
 }
@@ -281,6 +282,10 @@ bool BaseApp::setup()
 	mGUI = new MyGUI::Gui();
 	mGUI->initialise("core.xml", PATHMANAGER::GetLogDir() + "/MyGUI.log");
 	
+#if MYGUI_VERSION_MINOR >= 2
+	MyGUI::ResourceManager::getInstance().load("MessageBoxResources.xml");
+#endif
+	
 	
 	// ------------------------- lang ------------------------
 	if (pSet->language == "") // autodetect
@@ -329,6 +334,17 @@ void BaseApp::setupResources()
 			archName = i->second;
 			ResourceGroupManager::getSingleton().addResourceLocation(
 				PATHMANAGER::GetDataPath() + "/" + archName, typeName, secName);
+				
+			if (archName == "gui")
+			{
+				#if MYGUI_VERSION_MINOR >= 2
+				ResourceGroupManager::getSingleton().addResourceLocation(
+					PATHMANAGER::GetDataPath() + "/gui/3.2", typeName, secName);
+				#else
+				ResourceGroupManager::getSingleton().addResourceLocation(
+					PATHMANAGER::GetDataPath() + "/gui/3.0", typeName, secName);
+				#endif
+			}
 		}
 	}
 }

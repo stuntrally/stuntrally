@@ -1276,6 +1276,14 @@
 					Name="MaterGen"
 					>
 					<File
+						RelativePath=".\source\ogre\common\GlassMaterial.cpp"
+						>
+					</File>
+					<File
+						RelativePath=".\source\ogre\common\GlassMaterial.h"
+						>
+					</File>
+					<File
 						RelativePath=".\source\ogre\common\MaterialDefinition.cpp"
 						>
 					</File>
@@ -1313,6 +1321,14 @@
 					</File>
 					<File
 						RelativePath=".\source\ogre\common\MaterialProperties.h"
+						>
+					</File>
+					<File
+						RelativePath=".\source\ogre\common\PipeGlassMaterial.cpp"
+						>
+					</File>
+					<File
+						RelativePath=".\source\ogre\common\PipeGlassMaterial.h"
 						>
 					</File>
 					<File

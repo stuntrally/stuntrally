@@ -14,6 +14,7 @@ material RainDrop
 
 			texture_unit
 			{
+				tex_address_mode clamp
 				texture droplet.png
 			}
 		}
@@ -36,6 +37,7 @@ material SnowFlake
 
 			texture_unit
 			{
+				tex_address_mode clamp
 				texture snow.png
 			}
 		}

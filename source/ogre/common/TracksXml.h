@@ -23,12 +23,12 @@ class TrackInfo
 public:
 	int n;  float crtver;
 	std::string name, scenery, author;
-	/*boost::gregorian::date*/Date created, modified;
+	Date created, modified;
 
 	// track characteristics  (char)
 	int fluids,bumps,jumps,loops,pipes,banked,frenzy,longn;
 	int diff, rating;
-	int rateuser, drivenlaps;  // user info
+	int rateuser, drivenlaps;  // todo: user info ...
 
 	TrackInfo();
 };
@@ -44,6 +44,16 @@ public:
 	//  methods
 	//TracksXml();  void Default();
 	bool LoadXml(Ogre::String file), SaveXml(Ogre::String file);
+};
+
+
+//  tracks list item - with info for sorting
+struct TrkL
+{
+	std::string name;
+	const TrackInfo* ti;
+	const class App* pA;
+	bool test;  //Test*
 };
 
 #endif

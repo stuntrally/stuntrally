@@ -94,21 +94,27 @@ void CARDYNAMICS::UpdateBuoyancy()
 	{
 		if (inFluidsWh[w].size() > 0)  // 0 or 1 is there
 		{
+			MATHVECTOR <T, 3> up(0,0,1);
+			Orientation().RotateVector(up);
+			float upZ = std::max(0.f, (float)up[2]);
+			
 			const FluidBox* fb = *inFluidsWh[w].begin();
 			if (fb->id >= 0)
 			{
 				const FluidParams& fp = pFluids->fls[fb->id];
+
+				WHEEL_POSITION wp = WHEEL_POSITION(w);
+				float whR = GetTire(wp).GetRadius() * 1.2f;  //bigger par
+				MATHVECTOR <float, 3> wheelpos = GetWheelPosition(wp, 0);
+				wheelpos[2] -= whR;
+				
+				//  height in fluid:  0 just touching surface, 1 fully in fluid
+				//  wheel plane distance  water.plane.normal.z = 1  water.plane.offset = fl.pos.y;
+				whH[w] = (wheelpos[2] - fb->pos.y) * -0.5f / whR;
+				whH[w] = std::max(0.f, std::min(1.f, whH[w]));
+
 				if (fp.bWhForce)
 				{
-					WHEEL_POSITION wp = WHEEL_POSITION(w);
-					float whR = GetTire(wp).GetRadius() * 1.2f;  //bigger par
-					MATHVECTOR <float, 3> wheelpos = GetWheelPosition(wp, 0);
-					wheelpos[2] -= whR;
-					
-					//  height in fluid:  0 just touching surface, 1 fully in fluid
-					//  wheel plane distance  water.plane.normal.z = 1  water.plane.offset = fl.pos.y;
-					whH[w] = (wheelpos[2] - fb->pos.y) * -0.5f / whR;
-					whH[w] = std::max(0.f, std::min(1.f, whH[w]));
 					bool inAir = GetWheelContact(wp).col == NULL;
 
 					//  bump, adds some noise
@@ -117,15 +123,15 @@ void CARDYNAMICS::UpdateBuoyancy()
 					
 					float f = std::min(fp.whMaxAngVel, std::max(-fp.whMaxAngVel, (float)wheel[w].GetAngularVelocity() ));
 					QUATERNION <T> steer;
-					steer.Rotate((-wheel[wp].GetSteerAngle() * fp.whSteerMul /*+ bump * fp.bumpAng  + bc * 0.f*/) * PI_d/180.f, 0, 0, 1);
+					float angle = -wheel[wp].GetSteerAngle() * fp.whSteerMul  + bump * fp.bumpAng;
+					steer.Rotate(angle * PI_d/180.f, 0, 0, 1);
 
 					//  forwards, side, up
-					MATHVECTOR <T, 3> force(whH[w] * fp.whForceLong * f, 0, /*^*whH[w] * fp.whForceUp*/0);
+					MATHVECTOR <T, 3> force(whH[w] * fp.whForceLong * f, 0, /*^ 0*/100.f * whH[w] * fp.whForceUp * upZ);
 					(Orientation()*steer).RotateVector(force);
-					//GetWheelOrientation(wp).RotateVector(force);
 					
 					//  wheel spin resistance
-					wheel[w].fluidRes = whH[w] * fp.whSpinDamp /* (1.f + bump * fp.bumpAmp)*/;
+					wheel[w].fluidRes = whH[w] * fp.whSpinDamp  * (1.f + bump * fp.bumpAmp);
 					
 					if (whH[w] > 0.01f /*&& inAir*/)
 						chassis->applyForce( ToBulletVector(force), ToBulletVector(whPos) );
@@ -162,6 +168,11 @@ void CARDYNAMICS::DebugPrint ( std::ostream & out, bool p1, bool p2, bool p3, bo
 		//MATRIX3 <T> inertia = body.GetInertia();  //btVector3 chassisInertia(inertia[0], inertia[4], inertia[8]);
 		//out << "inertia:  " << inertia[0] << "  " << inertia[4] << "  " << inertia[8] << "\n";
 		out << "mass: " << body.GetMass() << std::endl << std::endl;
+		
+		//MATHVECTOR <T, 3> up(0,0,1);
+		//Orientation().RotateVector(up);
+		//out << "up: " << up << std::endl;
+		
 	#endif
 
 	#if 1	// fluids

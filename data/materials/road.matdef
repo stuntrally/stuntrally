@@ -44,6 +44,7 @@
 	diffuse = 0.62 0.62 0.62
 	specular = 0.23 0.23 0.22 32
 	depthBias = 3
+	diffuseMap_512 = roadSand_s.jpg
 	diffuseMap_2048 = roadSand.jpg
 	receivesShadows = true
 
@@ -57,6 +58,95 @@
 	normalMap_512 = volcano_7_nh1_s.png
 	normalMap_1024 = volcano_7_nh1.png
 	terrainLightMap = true
+
+
+; ----------- Sand Island shore ======------
+[roadSandShore]
+	ambient = 0.34 0.43 0.46
+	diffuse = 0.38 0.44 0.5
+	specular = 0.31 0.32 0.33 32
+	depthBias = 3
+	diffuseMap_512 = roadSnow_s.jpg
+	diffuseMap_2048 = roadSnow.jpg
+	receivesShadows = true
+
+[roadSandShore_ter]
+	parent = roadSandShore
+	alphaMap_512 = roadAlpha_s.png
+	alphaMap_2048 = roadAlpha.png
+	transparent = true
+	sceneBlend = alpha
+	depthWrite = false
+	normalMap_512 = volcano_7_nh1_s.png
+	normalMap_1024 = volcano_7_nh1.png
+	terrainLightMap = true
+
+; ----------- Sand Island sunset ======------
+[roadSandSet]
+	ambient = 0.57 0.57 0.57
+	diffuse = 0.62 0.62 0.62
+	specular = 0.23 0.23 0.22 32
+	depthBias = 3
+	diffuseMap_512 = roadSandSet_s.jpg
+	diffuseMap_2048 = roadSandSet.jpg
+	receivesShadows = true
+
+[roadSandSet_ter]
+	parent = roadSandSet
+	alphaMap_512 = roadAlpha_s.png
+	alphaMap_2048 = roadAlpha.png
+	transparent = true
+	sceneBlend = alpha
+	depthWrite = false
+	normalMap_512 = ice_3_nh1_s.png
+	normalMap_1024 = ice_3_nh1.png
+	terrainLightMap = true
+
+; ----------- Sand Island dark ======------
+[roadSandDark]
+	ambient = 0.07 0.07 0.04
+	diffuse = 0.52 0.62 0.42
+	specular = 0.3 0.3 0.2 24
+	depthBias = 3
+	diffuseMap_512 = roadSandSet_s.jpg
+	diffuseMap_2048 = roadSandSet.jpg
+	receivesShadows = true
+
+[roadSandDark_ter]
+	parent = roadSandDark
+	alphaMap_512 = roadAlpha_s.png
+	alphaMap_2048 = roadAlpha.png
+	transparent = true
+	sceneBlend = alpha
+	depthWrite = false
+	normalMap_512 = ice_3_nh1_s.png
+	normalMap_1024 = ice_3_nh1.png
+	terrainLightMap = true
+
+; ----------- Magic ======------
+[roadSandMagic]
+	ambient = 0.09 0.08 0.38
+	diffuse = 0.42 0.52 0.92
+	specular = 0.3 0.6 1.0 64
+	depthBias = 3
+	diffuseMap_512 = roadSandSet_s.jpg
+	diffuseMap_2048 = roadSandSet.jpg
+	receivesShadows = true
+	envMap = ReflectionCube
+	reflAmount = 0.15
+	bumpScale = 0.3
+
+[roadSandMagic_ter]
+	parent = roadSandMagic
+	alphaMap_512 = roadAlpha_s.png
+	alphaMap_2048 = roadAlpha.png
+	transparent = true
+	sceneBlend = alpha
+	depthWrite = false
+	normalMap_512 = ice_3_nh1_s.png
+	normalMap_1024 = ice_3_nh1.png
+	terrainLightMap = true
+
 
 ; ----------- Mud ----------
 [roadMud]
@@ -149,6 +239,7 @@
 	diffuse = 0.66 0.65 0.6
 	specular = 0.36 0.32 0.3 32
 	depthBias = 3
+	diffuseMap_512 = roadAdesert_s.jpg
 	diffuseMap_2048 = roadAdesert.jpg
 	receivesShadows = true
 
@@ -168,6 +259,7 @@
 	diffuse = 0.66 0.65 0.6
 	specular = 0.36 0.34 0.3 18
 	depthBias = 3
+	diffuseMap_512 = roadDesert_s.jpg
 	diffuseMap_2048 = roadDesert.jpg
 	receivesShadows = true
 

@@ -16,6 +16,10 @@ struct ShaderProperties
 	bool shadows;
 	bool transparent; bool lightingAlpha; // transparency
 	
+	// use custom generator (for very specific materials like water, glass)
+	// empty ("") means no custom generator
+	std::string customGenerator; 
+	
 	// compare
 	bool isEqual( ShaderProperties* other );
 	

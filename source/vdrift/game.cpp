@@ -175,6 +175,7 @@ bool GAME::ParseArguments(std::list <string> & args)
 	
 	///+
 	//if (argmap.find("-profiling") != argmap.end() || argmap.find("-benchmark") != argmap.end())
+	//if (settings->bltLines/*bltProfilerTxt*/)
 	{
 		PROFILER.init(20);
 		profilingmode = true;

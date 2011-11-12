@@ -15,7 +15,7 @@ material FluidMudSoft
 			texture_unit
 			{
 				tex_address_mode clamp
-				texture fluid-mud-dark.png
+				texture fluid-mud-soft.png
 			}
 		}
 	}

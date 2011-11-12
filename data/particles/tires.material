@@ -14,6 +14,7 @@ material Mud
 
 			texture_unit
 			{
+				tex_address_mode clamp
 				texture mud.png
 			}
 		}
@@ -54,6 +55,7 @@ material Dust
 
 			texture_unit
 			{
+				tex_address_mode clamp
 				texture dust.png
 			}
 		}
@@ -93,8 +95,8 @@ material Smoke
 
 			texture_unit
 			{
-				texture smoke.png
 				tex_address_mode clamp
+				texture smoke.png
 			}
 		}
 	}

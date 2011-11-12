@@ -18,6 +18,13 @@
 using namespace MyGUI;
 using namespace Ogre;
 
+// MyGUI 3.2 has no Align::Relative
+#if MYGUI_VERSION_MINOR >= 2
+	#define ALIGN Align::Default
+#else
+	#define ALIGN Align::Relative
+#endif
+
 
 ///  Gui Init  [Graphics]
 //----------------------------------------------------------------------------------------------------------------
@@ -294,7 +301,7 @@ void App::setToolTips(EnumeratorWidgetPtr widgets)
     while (widgets.next())
     {
         WidgetPtr wp = widgets.current();
-		wp->setAlign(Align::Relative);
+		wp->setAlign(ALIGN);
         bool tip = wp->isUserString("tip");
 		if (tip)  // if has tooltip string
 		{	

@@ -3,7 +3,7 @@
 
 #include <vector>
 
-class App;  class MaterialDefinition;  struct ShaderProperties;
+class App;  class MaterialDefinition;  class MaterialGenerator;  struct ShaderProperties;
 
 #include <OgreConfigFile.h>
 #include <OgreHighLevelGpuProgram.h>
@@ -56,6 +56,9 @@ private:
 	/// -------------------------------------------------------
 
 	std::vector<MaterialDefinition*> mDefinitions;
+	
+	MaterialGenerator* mGenerator;
+	std::vector<MaterialGenerator*> mCustomGenerators;
 	
 	shaderMap mShaderCache;
 	void deleteShaderCache(); // cleanup
