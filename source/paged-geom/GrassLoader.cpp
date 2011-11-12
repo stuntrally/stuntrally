@@ -1407,7 +1407,7 @@ void GrassLayer::_updateShaders()
 					//glsl can use the built in gl_ModelViewProjectionMatrix
 					params->setNamedAutoConstant("worldViewProj", GpuProgramParameters::ACT_WORLDVIEWPROJ_MATRIX);
 				params->setNamedAutoConstant("camPos", GpuProgramParameters::ACT_CAMERA_POSITION_OBJECT_SPACE);
-				params->setNamedAutoConstant("fadeRange", GpuProgramParameters::ACT_CUSTOM, 1);
+				//params->setNamedAutoConstant("fadeRange", GpuProgramParameters::ACT_CUSTOM, 1);
 
 				if (animate){
 					params->setNamedAutoConstant("time", GpuProgramParameters::ACT_CUSTOM, 1);
@@ -1426,10 +1426,12 @@ void GrassLayer::_updateShaders()
 					params->setNamedConstant("grassHeight", maxHeight * 1.05f);
 				}
 
-				pass->getVertexProgramParameters()->setNamedConstant("fadeRange", fadeRange);
+				params->setNamedConstant("fadeRange", fadeRange);
 			}
 			//Now the material (tmpMat) has either been found or just created (depending on whether or not it was already
 			//created). The appropriate vertex shader should be applied and the material is ready for use.
+			
+			tmpMat->getTechnique(0)->getPass(0)->getVertexProgramParameters()->setNamedConstant("fadeRange", fadeRange);
 
 			//Apply the new material
 			material = tmpMat;

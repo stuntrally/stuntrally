@@ -12,6 +12,7 @@
 	#include "../../editor/OgreApp.h"
 #endif
 
+
 #include <OgreMaterialManager.h>
 #include <OgreTechnique.h>
 #include <OgrePass.h>
@@ -797,10 +798,6 @@ void MaterialGenerator::individualVertexProgramParams(GpuProgramParametersShared
 	{
 		params->setNamedAutoConstant("texWorldViewProjMatrix"+toStr(i), GpuProgramParameters::ACT_TEXTURE_WORLDVIEWPROJ_MATRIX, i);
 	}
-	
-	if (mShader->wind == 1)
-		params->setNamedConstant("fadeRange", Real(100)); // real value set in paged-geom/GrassLoader.cpp
-
 }
 
 //----------------------------------------------------------------------------------------
