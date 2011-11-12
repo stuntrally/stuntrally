@@ -563,19 +563,11 @@ HighLevelGpuProgramPtr MaterialGenerator::createVertexProgram()
 void MaterialGenerator::generateVertexProgramSource(Ogre::StringUtil::StrStreamType& outStream)
 {
 	// note: world position xz for fragment is stored in oTexCoord.w, oWsNormal.w
-	int oTexCoordIndex=1;
+	int oTexCoordIndex=0;
 	
 	outStream << 
 		"void main_vp( "
 		"	float4 position 					: POSITION, \n";
-		
-	if (mShader->wind == 1)
-	{
-		outStream <<
-			"	uniform float time, \n"
-			"	uniform float frequency, \n"
-			"	uniform float4 direction, \n";
-	}
 	
 	if (fpNeedWsNormal()) 
 	{
@@ -591,7 +583,21 @@ void MaterialGenerator::generateVertexProgramSource(Ogre::StringUtil::StrStreamT
 	outStream <<
 		"	out float4 oPosition			 	: POSITION, \n"
 		"	out float4 objectPos				: COLOR, \n" // running out of texcoords so putting this in COLOR since its unused.
-		"	out float4 oTexCoord				: TEXCOORD0, \n";
+		"	out float4 oTexCoord				: TEXCOORD"+toStr(oTexCoordIndex++)+", \n";
+		
+	if (mShader->vertexColour) outStream <<
+		"	float4 color 						: COLOR, \n"
+		"	out float4 oVertexColour				: TEXCOORD"+toStr(oTexCoordIndex++)+", \n";
+		
+	if (mShader->wind == 1)
+	{
+		outStream <<
+			"	uniform float time, \n"
+			"	uniform float frequency, \n"
+			"	uniform float3 objSpaceCam, \n"
+			"	out float3 oObjSpaceCam : TEXCOORD"+toStr(oTexCoordIndex++)+", \n"
+			"	uniform float4 direction, \n";
+	}
 
 	if (fpNeedWsNormal()) 
 	{
@@ -607,8 +613,7 @@ void MaterialGenerator::generateVertexProgramSource(Ogre::StringUtil::StrStreamT
 			}
 			else
 			{
-				outStream <<"	out float4 oWsNormal  				: TEXCOORD1, \n";	
-				oTexCoordIndex++;
+				outStream <<"	out float4 oWsNormal  				: TEXCOORD"+toStr(oTexCoordIndex++)+", \n";	
 			}
 		}
 	}
@@ -658,9 +663,13 @@ void MaterialGenerator::generateVertexProgramSource(Ogre::StringUtil::StrStreamT
 	") \n"
 	"{ \n";
 	
+	if (mShader->vertexColour) outStream <<
+		"	oVertexColour = color; \n";
+	
 	if (mShader->wind == 1)
 	{
 		outStream <<
+		"	oObjSpaceCam = objSpaceCam; \n"
 		"	float oldposx = position.x; \n"
 		"	if (texCoord.y == 0.0f) \n"
 		"	{ \n"
@@ -762,6 +771,9 @@ void MaterialGenerator::vertexProgramParams(HighLevelGpuProgramPtr program)
 	
 	if (mDef->mProps->fog)
 		params->setNamedAutoConstant("fogParams", GpuProgramParameters::ACT_FOG_PARAMS);
+		
+	if (mShader->wind == 1)
+		params->setNamedAutoConstant("objSpaceCam", GpuProgramParameters::ACT_CAMERA_POSITION_OBJECT_SPACE);
 		
 	individualVertexProgramParams(params);
 }
@@ -895,12 +907,19 @@ void MaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::StrStrea
 {
 	if (needShadows())
 		fpRealtimeShadowHelperSource(outStream);
-	int oTexCoordIndex=1;
+	int oTexCoordIndex=0;
 	outStream <<
 		"void main_fp("
 		"	in float4 iPosition : POSITION, \n"
 		"	in float4 position : COLOR, \n"
-		"	in float4 texCoord : TEXCOORD0, \n";
+		"	in float4 texCoord : TEXCOORD"+toStr(oTexCoordIndex++)+", \n";
+		
+	if (mShader->vertexColour) outStream <<
+		"	in float4 vertexColour : TEXCOORD"+toStr(oTexCoordIndex++)+", \n";
+		
+	if (mShader->wind == 1) outStream <<
+		"	in float3 objSpaceCam : TEXCOORD"+toStr(oTexCoordIndex++)+", \n"
+		"	uniform float fadeRange, \n";
 	
 	if (fpNeedWsNormal()) 
 	{
@@ -916,8 +935,7 @@ void MaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::StrStrea
 			}
 			else
 			{
-				outStream <<"	in float4 wsNormal : TEXCOORD1, \n";
-				oTexCoordIndex++;
+				outStream <<"	in float4 wsNormal : TEXCOORD"+toStr(oTexCoordIndex++)+", \n";
 			}
 		}
 	}
@@ -1167,6 +1185,9 @@ void MaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::StrStrea
 		"	float4 color1 = diffuseTex; \n";
 	}
 	
+	if (mShader->vertexColour) outStream <<
+		"	color1 *= vertexColour; \n";
+	
 	// add fog
 	if (mDef->mProps->fog) outStream <<
 		"	oColor = lerp(color1, float4(fogColor,1), position.w); \n";
@@ -1211,6 +1232,11 @@ void MaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::StrStrea
 				LogO("[MaterialFactory] WARNING: Material '"+mDef->getName()+"' declared as transparent, but no way to get alpha value.");
 			}
 		}
+		
+		if (mShader->wind == 1) outStream <<
+			"	float dist = distance(objSpaceCam.xz, position.xz); \n"
+			"	alpha *= (2.0f - (2.0f * dist / (fadeRange))); \n";
+		
 		// discard rejected alpha pixels
 		outStream << 
 			"	clip( alpha<alphaRejectValue ? -1:1); \n";
@@ -1283,7 +1309,7 @@ void MaterialGenerator::individualFragmentProgramParams(Ogre::GpuProgramParamete
 	}
 	
 	if (mDef->mProps->transparent)
-		params->setNamedConstant("alphaRejectValue", Real(mDef->mProps->alphaRejectValue/255.0f));
+		params->setNamedConstant("alphaRejectValue", Real(float(mDef->mProps->alphaRejectValue)/float(255.0f)));
 
 	if (needLightingAlpha())
 		params->setNamedConstant("lightingAlpha", mDef->mProps->lightingAlpha);
@@ -1300,5 +1326,8 @@ void MaterialGenerator::individualFragmentProgramParams(Ogre::GpuProgramParamete
 	
 	if (needTerrainLightMap())
 		params->setNamedConstant("terrainWorldSize", Real(1025)); // real value set later in changeShadows()
+		
+	if (mShader->wind == 1)
+		params->setNamedConstant("fadeRange", Real(100)); // real value set in paged-geom/GrassLoader.cpp
 }
 

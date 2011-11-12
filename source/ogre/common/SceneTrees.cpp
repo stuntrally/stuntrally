@@ -62,7 +62,7 @@ void App::CreateTrees()
 	gTerrain = terrain;
 	
 	//-------------------------------------- Grass --------------------------------------
-	reloadMtrTex("grass"); //+
+	reloadMtrTex("grass_GrassVS_"); //+
 
 	TexturePtr rdtex = (TexturePtr)Ogre::TextureManager::getSingleton().getByName("grassDensity.png");
 	if (!rdtex.isNull())

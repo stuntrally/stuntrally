@@ -31,6 +31,7 @@ ShaderProperties::ShaderProperties( MaterialProperties* props, MaterialFactory* 
 	lightingAlpha = (props->lightingAlpha != Vector4::ZERO);
 	wind = props->wind;
 	customGenerator = props->customGenerator;
+	vertexColour = props->vertexColour;
 }
 
 //----------------------------------------------------------------------------------------
@@ -51,6 +52,7 @@ bool ShaderProperties::isEqual( ShaderProperties* other )
 	if (other->lightingAlpha != lightingAlpha) return false;
 	if (other->customGenerator != customGenerator) return false;
 	if (other->wind != wind) return false;
+	if (other->vertexColour != vertexColour) return false;
 	
 	return true;
 }

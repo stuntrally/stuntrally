@@ -59,6 +59,8 @@ struct MaterialProperties
 	// 0 = off, 1 = for grass (quad), 2 = for trees (mesh)
 	unsigned int wind;
 	
+	bool vertexColour;
+	
 	// use custom generator (for very specific materials like water, glass)
 	// empty ("") means no custom generator
 	std::string customGenerator; 
