@@ -37,6 +37,7 @@ CarModel::CarModel(unsigned int index, eCarType type, const std::string name,
 	iIndex = index;  sDirname = name;  pSceneMgr = sceneMgr;
 	pSet = set;  pGame = game;  sc = s;  mCamera = cam;  eType = type;
 	bGetStPos = true;  fChkTime = 0.f;  iChkWrong = -1;  iWonPlace = 0;
+	iCurChk = -1;  iNumChks = 0;  //ResetChecks();  // road isnt yet
 	
 	if (type != CT_GHOST)  // ghost has pCar, dont create
 	{
@@ -106,6 +107,13 @@ void CarModel::setVisible(bool vis)
 	UpdParsTrails(vis);
 }
 
+void CarModel::ResetChecks()  // needs to be done after road load!
+{
+	iCurChk = -1;  iNumChks = 0;  // reset lap, chk vars
+	if (pApp && pApp->road)
+		iNextChk = pSet->trackreverse ? pApp->road->iChkId1Rev : pApp->road->iChkId1;
+}
+
 
 //  Update
 //-------------------------------------------------------------------------------------------------------
@@ -122,15 +130,16 @@ void CarModel::Update(PosInfo& posInfo, float time)
 	//  brake state
 	//  trigger when any wheel is braking
 	bool braking = false;
+	if (eType == CT_LOCAL)
 	for (int w=0; w<4; ++w)
 	{
 		if (pCar->dynamics.GetBrake(static_cast<WHEEL_POSITION>(w)).GetBrakeFactor() > 0
 		 || pCar->dynamics.GetBrake(static_cast<WHEEL_POSITION>(w)).GetHandbrakeFactor() > 0)
 			braking = true;
 	}
-	if (bBraking!=braking)
+	if (bBraking != braking)
 	{
-		bBraking=braking;
+		bBraking = braking;
 		RefreshBrakingMaterial();
 	}
 	

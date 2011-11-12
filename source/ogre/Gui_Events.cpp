@@ -397,8 +397,15 @@ bool App::keyPressed( const OIS::KeyEvent &arg )
 	
 		//  new game
 		if (action("RestartGame"))
+		if (ctrl)
 		{	NewGame();  return false;	}
-
+		else
+		{	///  reset car
+			carModels[0]->pCar->ResetPos(false);
+			carModels[0]->fCam->first = true;
+			pGame->timer.Reset(0);
+			carModels[0]->ResetChecks();
+		}
 
 		///  Cameras  ---------------------------------
 		if (!isFocGui)
