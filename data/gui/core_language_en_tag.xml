@@ -110,7 +110,7 @@
 	<Tag name="TipAutoGearbox">Uncheck for manual gears changing.</Tag>
 	<Tag name="AutoRear">Auto Rear gear</Tag>
 	<Tag name="TipAutoRear">Uncheck for manual Rear gear changing.</Tag>
-	<Tag name="RearThrottleInverse">Rear throttle inverse--</Tag>
+	<Tag name="RearThrottleInverse">Rear throttle inverse</Tag>
 	<Tag name="TipRearThrottleInverse">Inverse throttle and brake function in rear gear.</Tag>
 
 	<Tag name="VegetCol">Vegetation collision</Tag>
@@ -285,24 +285,29 @@
 	<Tag name="InpSet_AxisHalfInv">Axis Half Inversed</Tag>
 	<Tag name="InpSet_AxisFull">Axis Full</Tag>
 
+	<!--  Input  Map  player  -->
 	<Tag name="InputMapThrottle">Throttle</Tag>
 	<Tag name="InputMapBrake">Brake</Tag>
-	<Tag name="InputMapFlip">Flip</Tag>
-	<Tag name="InputMapFlipRight">Flip right</Tag>
-	<Tag name="InputMapFlipLeft">Flip left</Tag>
-	<Tag name="InputMapBoost">Boost</Tag>
-	<Tag name="InputMapHandBrake">Handbrake</Tag>
 	<Tag name="InputMapSteering">Steering</Tag>
+
+	<Tag name="InputMapHandBrake">Handbrake</Tag>
+	<Tag name="InputMapBoost">Boost</Tag>
+	<Tag name="InputMapFlip">Flip</Tag>
+
 	<Tag name="InputMapShiftUp">Shift up</Tag>
 	<Tag name="InputMapShiftDown">Shift down</Tag>
 
+	<Tag name="InputMapPrevCamera">Previous Camera</Tag>
+	<Tag name="InputMapNextCamera">Next Camera</Tag>
+	<Tag name="InputMapLastChk">Go to last checkp.</Tag>
+
+	<!--  Input  Map  -->
 	<Tag name="InputMapShowOptions">Show options</Tag>
 	<Tag name="InputMapPrevTab">Previous tab</Tag>
 	<Tag name="InputMapNextTab">Next tab</Tag>
 	<Tag name="InputMapRestartGame">New game</Tag>
+	<Tag name="InputMapResetGame">Reset game</Tag>
 
-	<Tag name="InputMapPrevCamera">Previous Camera</Tag>
-	<Tag name="InputMapNextCamera">Next Camera</Tag>
 	<Tag name="InputCameraTxt1">with shift - main cameras only</Tag>
 	<Tag name="InputCameraTxt2">with ctrl - switch current car when many</Tag>
 
