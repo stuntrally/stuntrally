@@ -16,11 +16,14 @@
 #include <OgreLogManager.h>
 #include <OgreParticleSystem.h>
 #include <OgreParticleEmitter.h>
+
+#include <OgreRTShaderSystem.h>
+
 using namespace Ogre;
 
 
 SplitScreenManager::SplitScreenManager(Ogre::SceneManager* sceneMgr, Ogre::RenderWindow* window, SETTINGS* set) :
-	pApp(0), mGuiViewport(0), mGuiSceneMgr(0)
+	pApp(0), mGuiViewport(0), mGuiSceneMgr(0), mHUDSceneMgr(0)
 {
 	mWindow = window;
 	mSceneMgr = sceneMgr;
@@ -53,12 +56,14 @@ void SplitScreenManager::CleanUp()
 {
 	for (std::list<Ogre::Viewport*>::iterator vpIt=mViewports.begin(); vpIt != mViewports.end(); vpIt++)
 		mWindow->removeViewport( (*vpIt)->getZOrder() );
-
 	mViewports.clear();
+	
+	for (std::list<Ogre::Viewport*>::iterator vpIt=mHUDViewports.begin(); vpIt != mHUDViewports.end(); vpIt++)
+		mWindow->removeViewport( (*vpIt)->getZOrder() );
+	mHUDViewports.clear();
 
 	for (std::list<Ogre::Camera*>::iterator it=mCameras.begin(); it != mCameras.end(); it++)
 		mSceneMgr->destroyCamera(*it);
-
 	mCameras.clear();
 }
 
@@ -68,8 +73,15 @@ void SplitScreenManager::CleanUp()
 void SplitScreenManager::Align()
 {
 	CleanUp();
+	
+	//  Create HUD scene manager & camera if they dont exist already
+	if (!mHUDSceneMgr)
+	{
+		mHUDSceneMgr = Root::getSingleton().createSceneManager(ST_GENERIC);
+		mHUDCamera = mHUDSceneMgr->createCamera("HUDCamera"); //!todo destroy
+	}
 
-	//  Create the viewports based on mNumViewports = numPlayers
+	//  Create the viewports (sets of 3d render & hud viewports) based on mNumViewports = numPlayers
 	for (int i=0; i < mNumViewports; i++)
 	{
 		//  set dimensions for the viewports
@@ -127,6 +139,12 @@ void SplitScreenManager::Align()
 		// Create viewport
 		// use i as Z order
 		mViewports.push_back(mWindow->addViewport( mCameras.back(), i, dims[0], dims[1], dims[2], dims[3]));
+		
+		// HUD viewport
+		mHUDViewports.push_back(mWindow->addViewport( mHUDCamera, i+5, dims[0], dims[1], dims[2], dims[3]));
+		mHUDViewports.back()->setClearEveryFrame(true, FBT_DEPTH);
+		mHUDViewports.back()->setOverlaysEnabled(false);
+		mHUDViewports.back()->setBackgroundColour(ColourValue(0.0, 0.0, 0.0, 0.0));
 	}
 	
 	// Create gui viewport if not already existing
@@ -135,6 +153,12 @@ void SplitScreenManager::Align()
 		mGuiSceneMgr = Ogre::Root::getSingleton().createSceneManager(ST_GENERIC);
 		Ogre::Camera* guiCam = mGuiSceneMgr->createCamera("GuiCam1");  // todo destroy !..
 		mGuiViewport = mWindow->addViewport(guiCam, 100);
+
+		Ogre::RTShader::ShaderGenerator *mShaderGenerator = Ogre::RTShader::ShaderGenerator::getSingletonPtr();
+		if(mShaderGenerator != NULL)
+		{
+			mShaderGenerator->addSceneManager(mSceneMgr);
+		}
 	}
 	
 	AdjustRatio();
@@ -153,6 +177,12 @@ void SplitScreenManager::AdjustRatio()
 		(*camIt)->setAspectRatio( float((*vpIt)->getActualWidth()) / float((*vpIt)->getActualHeight()) );
 		camIt++;
 	}
+	
+	if (mHUDViewports.size() > 0)
+	{
+		Ogre::Viewport* firstHUDvp = mHUDViewports.front();
+		mHUDCamera->setAspectRatio( float(firstHUDvp->getActualWidth()) / float(firstHUDvp->getActualHeight()) );
+	}
 }
 
 
@@ -170,8 +200,9 @@ void SplitScreenManager::preViewportUpdate(const Ogre::RenderTargetViewportEvent
 		// 3d scene viewport
 		//  get number of viewport
 		std::list<Ogre::Viewport*>::iterator vpIt = mViewports.begin();
+		std::list<Ogre::Viewport*>::iterator hudVpIt = mHUDViewports.begin();
 		int i = 0;
-		while (evt.source != *vpIt)	{	i++;  vpIt++;	}
+		while (evt.source != *vpIt && evt.source != *hudVpIt)	{	i++;  vpIt++; hudVpIt++;	}
 
 		//  get car for this viewport
 		int carId = 0;

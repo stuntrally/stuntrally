@@ -4,6 +4,7 @@
 #include "../road/Road.h"
 #include "../paged-geom/PagedGeometry.h"
 #include "../ogre/common/Gui_Def.h"
+#include "../ogre/common/MultiList2.h"
 using namespace Ogre;
 
 
@@ -34,7 +35,7 @@ bool App::frameRenderingQueued(const FrameEvent& evt)
 		}
 		if (mpos)  {	mpos->beginUpdate(0);
 			mpos->position(px[0],py[0], 0);  mpos->textureCoord(0, 1);	mpos->position(px[1],py[1], 0);  mpos->textureCoord(1, 1);
-			mpos->position(px[2],py[2], 0);  mpos->textureCoord(1, 0);	mpos->position(px[3],py[3], 0);  mpos->textureCoord(0, 0);
+			mpos->position(px[3],py[3], 0);  mpos->textureCoord(0, 0);	mpos->position(px[2],py[2], 0);  mpos->textureCoord(1, 0);
 			mpos->end();  }
 	}
 	
@@ -621,5 +622,18 @@ bool App::frameStarted(const Ogre::FrameEvent& evt)
 		DestroyFluids();
 		CreateFluids();
 	}
+	
+	///  sort trk list
+	if (trkMList && trkMList->mSortColumnIndex != trkMList->mSortColumnIndexOld
+		|| trkMList->mSortUp != trkMList->mSortUpOld)
+	{
+		trkMList->mSortColumnIndexOld = trkMList->mSortColumnIndex;
+		trkMList->mSortUpOld = trkMList->mSortUp;
+
+		pSet->tracks_sort = trkMList->mSortColumnIndex;  // to set
+		pSet->tracks_sortup = trkMList->mSortUp;
+		TrackListUpd(false);
+	}
+
 	return true;
 }

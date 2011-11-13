@@ -75,7 +75,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="SDL.lib libvorbisfile.lib OgreMain_d.lib ois_d.lib OgreTerrain_d.lib OgrePaging_d.lib MyGUIEngine_d.lib MyGUI.OgrePlatform_d.lib enet_d.lib"
+				AdditionalDependencies="SDL.lib libvorbisfile.lib OgreMain_d.lib ois_d.lib OgreTerrain_d.lib OgrePaging_d.lib OgreRTShaderSystem_d.lib MyGUIEngine_d.lib MyGUI.OgrePlatform_d.lib enet_d.lib"
 				OutputFile="StuntRally_d.exe"
 				LinkIncremental="2"
 				SuppressStartupBanner="true"
@@ -175,7 +175,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="SDL.lib libvorbisfile.lib OgreMain.lib OIS.lib OgreTerrain.lib OgrePaging.lib MyGUIEngine.lib MyGUI.OgrePlatform.lib enet.lib"
+				AdditionalDependencies="SDL.lib libvorbisfile.lib OgreMain.lib OIS.lib OgreTerrain.lib OgrePaging.lib OgreRTShaderSystem.lib MyGUIEngine.lib MyGUI.OgrePlatform.lib enet.lib"
 				OutputFile="StuntRally.exe"
 				LinkIncremental="1"
 				SuppressStartupBanner="true"
@@ -1796,6 +1796,14 @@
 					Name="MaterGen"
 					>
 					<File
+						RelativePath=".\source\ogre\common\GlassMaterial.cpp"
+						>
+					</File>
+					<File
+						RelativePath=".\source\ogre\common\GlassMaterial.h"
+						>
+					</File>
+					<File
 						RelativePath=".\source\ogre\common\MaterialDefinition.cpp"
 						>
 					</File>
@@ -1833,6 +1841,14 @@
 					</File>
 					<File
 						RelativePath=".\source\ogre\common\MaterialProperties.h"
+						>
+					</File>
+					<File
+						RelativePath=".\source\ogre\common\PipeGlassMaterial.cpp"
+						>
+					</File>
+					<File
+						RelativePath=".\source\ogre\common\PipeGlassMaterial.h"
 						>
 					</File>
 					<File

@@ -170,6 +170,7 @@ void App::InitGui()
 	Chk("RplChkGhost", chkRplChkGhost, pSet->rpl_ghost);
 	Chk("RplChkBestOnly", chkRplChkBestOnly, pSet->rpl_bestonly);
 	Chk("RplChkAlpha", chkRplChkAlpha, pSet->rpl_alpha);
+	Chk("RplChkParticles", chkRplChkPar, pSet->rpl_ghostpar);
 	//  radios
 	Btn("RplBtnAll", btnRplAll);  rbRplAll = btn;
 	Btn("RplBtnCur", btnRplCur);  rbRplCur = btn;
@@ -197,7 +198,7 @@ void App::InitGui()
 	valRplName = mGUI->findWidget<StaticText>("RplName");  valRplName2 = mGUI->findWidget<StaticText>("RplName2");
 	valRplInfo = mGUI->findWidget<StaticText>("RplInfo");  valRplInfo2 = mGUI->findWidget<StaticText>("RplInfo2");
 	edRplName = mGUI->findWidget<Edit>("RplNameEdit");
-	edRplDesc = mGUI->findWidget<Edit>("RplDesc");
+	//edRplDesc = mGUI->findWidget<Edit>("RplDesc");
 
 	rplList = mGUI->findWidget<List>("RplList");
 	if (rplList)  rplList->eventListChangePosition = newDelegate(this, &App::listRplChng);

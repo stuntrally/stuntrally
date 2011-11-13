@@ -20,15 +20,16 @@ ShaderProperties::ShaderProperties( MaterialProperties* props, MaterialFactory* 
 	fresnel = (envMap && props->fresnelScale != 0.f);
 	diffuseMap = (props->diffuseMaps.size() > 0);
 	lightMap = (props->lightMaps.size() > 0);
+	terrainLightMap = props->terrainLightMap;
 	alphaMap = (transparent && (props->alphaMaps.size() > 0));
 	blendMap = (props->blendMaps.size() > 0);
 	normalMap = ((props->normalMaps.size() > 0) && parent->getNormalMap());
 	lighting = props->lighting;
-	shadows = (lighting && (
-			    (props->receivesShadows && parent->getShadows()) 
+	shadows = ( (props->receivesShadows && parent->getShadows()) 
 			||  (props->receivesDepthShadows && parent->getShadowsDepth())
-	));
+	);
 	lightingAlpha = (props->lightingAlpha != Vector4::ZERO);
+	customGenerator = props->customGenerator;
 }
 
 //----------------------------------------------------------------------------------------
@@ -39,6 +40,7 @@ bool ShaderProperties::isEqual( ShaderProperties* other )
 	if (other->fresnel != fresnel) return false;
 	if (other->diffuseMap != diffuseMap) return false;
 	if (other->lightMap != lightMap) return false;
+	if (other->terrainLightMap != terrainLightMap) return false;
 	if (other->alphaMap != alphaMap) return false;
 	if (other->blendMap != blendMap) return false;
 	if (other->normalMap != normalMap) return false;
@@ -46,6 +48,7 @@ bool ShaderProperties::isEqual( ShaderProperties* other )
 	if (other->transparent != transparent) return false;
 	if (other->lighting != lighting) return false;
 	if (other->lightingAlpha != lightingAlpha) return false;
+	if (other->customGenerator != customGenerator) return false;
 	
 	return true;
 }

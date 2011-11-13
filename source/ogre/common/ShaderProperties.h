@@ -8,12 +8,17 @@ struct ShaderProperties
 	bool envMap; bool fresnel;
 	bool diffuseMap;
 	bool lightMap;
+	bool terrainLightMap;
 	bool alphaMap;
 	bool blendMap;
 	bool normalMap;
 	bool lighting;
 	bool shadows;
 	bool transparent; bool lightingAlpha; // transparency
+	
+	// use custom generator (for very specific materials like water, glass)
+	// empty ("") means no custom generator
+	std::string customGenerator; 
 	
 	// compare
 	bool isEqual( ShaderProperties* other );

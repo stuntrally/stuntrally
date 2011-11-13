@@ -66,14 +66,12 @@ public:
 	
 	//  Call every vdrift substep with new position info
 	void Update(PosInfo& newPosInfo, float time);
+	void UpdateKeys();  // for camera X,C, last chk F12
 	
 	//  Car color, After these values are changed, ChangeClr() should be called
 	Ogre::ColourValue color;  // for minimap pos tri color  //float hue, sat, val;
 	void ChangeClr(int car);  //  Apply new color
-	
-	//  Reload material textures.
-	void ReloadTex(Ogre::String mtrName);
-	
+		
 	//  track surface for wheels
 	void UpdWhTerMtr();
 	
@@ -111,7 +109,7 @@ public:
 	int iInChk, iCurChk, iNextChk, iNumChks, iWonPlace;  // cur checkpoint -1 at start
 	bool bInSt, bWrongChk;  float fChkTime;  int iChkWrong;
 	//bool Checkpoint(const PosInfo& posInfo, class SplineRoad* road);  // update
-	Ogre::Vector3 vStartPos;
+	Ogre::Vector3 vStartPos;  void ResetChecks();
 	
 private:
 	Ogre::Camera* mCamera;
@@ -134,7 +132,7 @@ private:
 		
 	//  Particle systems, trail
 	Ogre::ParticleSystem* ps[4],*pm[4],*pd[4];  // smoke, mud, dust
-	Ogre::ParticleSystem* pflW[4],*pflM[4];  // water, mud, hit and swirl
+	Ogre::ParticleSystem* pflW[4],*pflM[4],*pflMs[4];  // water, mud, mud soft
 	Ogre::ParticleSystem* pb[2], *ph;  // boost, world hit
 	Ogre::RibbonTrail* whTrl[4];
 	Ogre::Real wht[4];  // spin time (approx tire temp.)
@@ -149,6 +147,18 @@ private:
 	//  index for the car (e.g. when we have 2 cars, they have indices 0 and 1)
 	//  needed for cloned materials & textures
 	int iIndex;
+	
+	//  brake state
+	bool bBraking;
+	void RefreshBrakingMaterial();
+	
+	//  lightmap enable/disable depending on dist. to terrain
+	bool bLightMapEnabled;
+	void UpdateLightMap();
+	
+	//  cam,chk old states
+	int iCamNextOld;
+	bool bLastChkOld;
 	
 	//  Our settings.
 	SETTINGS* pSet;

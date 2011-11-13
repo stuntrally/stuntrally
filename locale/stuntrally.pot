@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION"
 "Report-Msgid-Bugs-To: "
-"POT-Creation-Date: 2011-11-01 14:47+0200"
+"POT-Creation-Date: 2011-11-13 16:15+0200"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>"
 "Language-Team: LANGUAGE <LL@li.org>"
@@ -27,10 +27,6 @@ msgstr ""
 
 msgctxt "Fullscreen"
 msgid "Fullscreen"
-msgstr ""
-
-msgctxt "InputMapShowOptions"
-msgid "Show options"
 msgstr ""
 
 msgctxt "TipGrassSwayDistr"
@@ -89,6 +85,10 @@ msgctxt "ViewDist"
 msgid "View distance"
 msgstr ""
 
+msgctxt "RplParticles"
+msgid "Particles (for not transparent ghost)"
+msgstr ""
+
 msgctxt "TipRoadDist2"
 msgid "Additional distance to road."
 msgstr ""
@@ -115,6 +115,10 @@ msgstr ""
 
 msgctxt "InputRoadAngZero"
 msgid "shift-6  - zero angles"
+msgstr ""
+
+msgctxt "RoadQual"
+msgid "Road far quality"
 msgstr ""
 
 msgctxt "LS_SCENE"
@@ -189,12 +193,16 @@ msgctxt "TipTrackMap"
 msgid "Minimap of selected track, view from top."
 msgstr ""
 
+msgctxt "RenderSystem"
+msgid "Render System"
+msgstr ""
+
 msgctxt "TerGenOfsY"
 msgid "Offset Y"
 msgstr ""
 
-msgctxt "TerGenOfsX"
-msgid "Offset X"
+msgctxt "MinimapRotate"
+msgid "Rotate"
 msgstr ""
 
 msgctxt "pipes"
@@ -229,8 +237,8 @@ msgctxt "TipParType3"
 msgid "Tire Particle type 3 (global for track)."
 msgstr ""
 
-msgctxt "SkirtLength"
-msgid "Skirt Length"
+msgctxt "TipParType2"
+msgid "Tire Particle type 2 (global for track)."
 msgstr ""
 
 msgctxt "TipParType1"
@@ -295,6 +303,10 @@ msgstr ""
 
 msgctxt "RestartApply"
 msgid "Restart game, to apply *changes."
+msgstr ""
+
+msgctxt "InputMapResetGame"
+msgid "Reset game"
 msgstr ""
 
 msgctxt "smoke"
@@ -434,7 +446,7 @@ msgid "alt-shift - at start   alt-ctrl - at end"
 msgstr ""
 
 msgctxt "RearThrottleInverse"
-msgid "Rear throttle inverse--"
+msgid "Rear throttle inverse"
 msgstr ""
 
 msgctxt "BlendMap"
@@ -497,16 +509,12 @@ msgctxt "ChangeTrack"
 msgid "Change Track"
 msgstr ""
 
-msgctxt "RoadQual"
-msgid "Road far quality"
+msgctxt "TerrainSize"
+msgid "Terrain size"
 msgstr ""
 
 msgctxt "NetServer"
 msgid "Server"
-msgstr ""
-
-msgctxt "TerrainSize"
-msgid "Terrain size"
 msgstr ""
 
 msgctxt "InputRoadWidth"
@@ -597,8 +605,8 @@ msgctxt "InputAfterChanges"
 msgid "(after Terrain/Vegetation changes)"
 msgstr ""
 
-msgctxt "InputMapFlipRight"
-msgid "Flip right"
+msgctxt "MapSize"
+msgid "Map size"
 msgstr ""
 
 msgctxt "OrigImage"
@@ -677,8 +685,8 @@ msgctxt "WidthSteps"
 msgid "Width Steps"
 msgstr ""
 
-msgctxt "TerLAngMin"
-msgid "Angle Min"
+msgctxt "Diffuse"
+msgid "Diffuse"
 msgstr ""
 
 msgctxt "Sound"
@@ -693,8 +701,8 @@ msgctxt "RoadPointSize"
 msgid "Road points size"
 msgstr ""
 
-msgctxt "Car"
-msgid "Car"
+msgctxt "auto"
+msgid "Auto"
 msgstr ""
 
 msgctxt "TipSkyMats"
@@ -945,6 +953,10 @@ msgctxt "InputFluidsPrevNext"
 msgid "PgUp,PgDn (or Wheel) - previous/next fluid"
 msgstr ""
 
+msgctxt "RplCurrent"
+msgid "Current"
+msgstr ""
+
 msgctxt "Yaw"
 msgid "yaw"
 msgstr ""
@@ -1017,8 +1029,8 @@ msgctxt "InputBrushParams"
 msgid "Brush parameters"
 msgstr ""
 
-msgctxt "InputMapNextCamera"
-msgid "Next Camera"
+msgctxt "InputMapShowOptions"
+msgid "Show options"
 msgstr ""
 
 msgctxt "InputCameraMode"
@@ -1089,8 +1101,8 @@ msgctxt "InputCameraTxt2"
 msgid "with ctrl - switch current car when many"
 msgstr ""
 
-msgctxt "MapSize"
-msgid "Map size"
+msgctxt "SkirtLength"
+msgid "Skirt Length"
 msgstr ""
 
 msgctxt "InputRoadNotOnTer"
@@ -1245,8 +1257,8 @@ msgctxt "MinimapTerrain"
 msgid "Terrain"
 msgstr ""
 
-msgctxt "MinimapRotate"
-msgid "Rotate"
+msgctxt "TerGenOfsX"
+msgid "Offset X"
 msgstr ""
 
 msgctxt "TrackHeightDiff"
@@ -1299,10 +1311,6 @@ msgstr ""
 
 msgctxt "TreeMult"
 msgid "Trees multiplier"
-msgstr ""
-
-msgctxt "RplCur"
-msgid "Cur"
 msgstr ""
 
 msgctxt "TipTerSize"
@@ -1391,10 +1399,6 @@ msgstr ""
 
 msgctxt "ChngTrkTab"
 msgid "changed in [Track] tab"
-msgstr ""
-
-msgctxt "TipParType2"
-msgid "Tire Particle type 2 (global for track)."
 msgstr ""
 
 msgctxt "InputRplCtrl2"
@@ -1633,6 +1637,10 @@ msgctxt "EnterSave"
 msgid "Enter - save"
 msgstr ""
 
+msgctxt "InputMapLastChk"
+msgid "Go to last checkp."
+msgstr ""
+
 msgctxt "Properties"
 msgid "Properties"
 msgstr ""
@@ -1681,8 +1689,8 @@ msgctxt "TipGrassPatchHeightMax"
 msgid "Maximal grass patch height."
 msgstr ""
 
-msgctxt "Diffuse"
-msgid "Diffuse"
+msgctxt "TerLAngMin"
+msgid "Angle Min"
 msgstr ""
 
 msgctxt "Tires"
@@ -1781,8 +1789,8 @@ msgctxt "set2"
 msgid "set2"
 msgstr ""
 
-msgctxt "auto"
-msgid "Auto"
+msgctxt "Car"
+msgid "Car"
 msgstr ""
 
 msgctxt "TipWindInflH"
@@ -1895,6 +1903,10 @@ msgstr ""
 
 msgctxt "TipTrkListEditor"
 msgid "Tracks list, click to select (for Rename or Duplicate). Press [Load track] to change current track in editor."
+msgstr ""
+
+msgctxt "InputMapNextCamera"
+msgid "Next Camera"
 msgstr ""
 
 msgctxt "GraphicsAll_Lowest"
@@ -2017,8 +2029,8 @@ msgctxt "ImpostorDist"
 msgid "Impostors dist."
 msgstr ""
 
-msgctxt "page"
-msgid "page"
+msgctxt "Find"
+msgid "Find"
 msgstr ""
 
 msgctxt "Layers"
@@ -2157,8 +2169,8 @@ msgctxt "NewGame"
 msgid "New Game"
 msgstr ""
 
-msgctxt "InputMapFlipLeft"
-msgid "Flip left"
+msgctxt "page"
+msgid "page"
 msgstr ""
 
 msgctxt "Replay"

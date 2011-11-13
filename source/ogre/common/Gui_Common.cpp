@@ -18,6 +18,13 @@
 using namespace MyGUI;
 using namespace Ogre;
 
+// MyGUI 3.2 has no Align::Relative
+#if MYGUI_VERSION_MINOR >= 2
+	#define ALIGN Align::Default
+#else
+	#define ALIGN Align::Relative
+#endif
+
 
 ///  Gui Init  [Graphics]
 //----------------------------------------------------------------------------------------------------------------
@@ -256,6 +263,31 @@ void App::GuiInitGraphics()
 		combo->addItem(TR("#{GraphicsAll_High}"));
 		combo->addItem(TR("#{GraphicsAll_Ultra}"));
     }
+    
+    //  render systems
+	Cmb(combo, "CmbRendSys", comboRenderSystem);
+	if (combo)  {
+		combo->removeAllItems();
+
+		#if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
+		const int nRS = 4;
+		const String rs[nRS] = {"Default", "OpenGL Rendering Subsystem",
+			"Direct3D9 Rendering Subsystem", "Direct3D11 Rendering Subsystem"};
+		#else
+		const int nRS = 2;
+		const String rs[nRS] = {"Default", "OpenGL Rendering Subsystem"};
+		#endif
+			
+		for (int i=0; i < nRS; ++i)
+		{
+			combo->addItem(rs[i]);
+			if (pSet->rendersystem == rs[i])
+				combo->setIndexSelected(combo->getItemCount()-1);
+		}
+		//const RenderSystemList& rsl = Ogre::Root::getSingleton().getAvailableRenderers();
+		//for (int i=0; i < rsl.size(); ++i)
+		//	combo->addItem(rsl[i]->getName());
+	}
 }
 
 
@@ -294,7 +326,7 @@ void App::setToolTips(EnumeratorWidgetPtr widgets)
     while (widgets.next())
     {
         WidgetPtr wp = widgets.current();
-		wp->setAlign(Align::Relative);
+		wp->setAlign(ALIGN);
         bool tip = wp->isUserString("tip");
 		if (tip)  // if has tooltip string
 		{	
@@ -696,4 +728,9 @@ void App::comboGraphicsAll(ComboBoxPtr cmb, size_t val)
 	Slv(TerUpd, pSet->ter_skip /res);
 	Slv(MiniUpd, pSet->mini_skip /res);
 #endif
+}
+
+void App::comboRenderSystem(ComboBoxPtr cmb, size_t val)
+{
+	pSet->rendersystem = cmb->getItemNameAt(val);
 }

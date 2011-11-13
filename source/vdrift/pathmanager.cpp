@@ -208,18 +208,20 @@ void PATHMANAGER::Init(std::ostream & info_output, std::ostream & error_output)
 	#endif
 	// Create cache dir
 	CreateDir(cache_dir, error_output);
+	CreateDir(GetShaderCacheDir(), error_output);
 
 	// Print diagnostic info
 	std::stringstream out;
 	out << "--- Directories: ---" << ogre_plugin_dir << std::endl;
-	out << "Ogre plugin: " << ogre_plugin_dir << std::endl;
-	out << "Home:        " << home_dir << std::endl;
-	out << "Default cfg: " << GetGameConfigDir() << std::endl;
-	out << "User cfg:    " << GetUserConfigDir() << std::endl;
-	out << "Data:        " << GetDataPath() << std::endl;
-	out << "User data:   " << GetUserDataDir() << std::endl;
-	out << "Cache:       " << GetCacheDir() << std::endl;
-	out << "Log:         " << GetLogDir() << std::endl;
+	out << "Ogre plugin:  " << ogre_plugin_dir << std::endl;
+	out << "Home:         " << home_dir << std::endl;
+	out << "Default cfg:  " << GetGameConfigDir() << std::endl;
+	out << "User cfg:     " << GetUserConfigDir() << std::endl;
+	out << "Data:         " << GetDataPath() << std::endl;
+	out << "User data:    " << GetUserDataDir() << std::endl;
+	out << "Cache:        " << GetCacheDir() << std::endl;
+	out << "Shader cache: " << GetShaderCacheDir() << std::endl;
+	out << "Log:          " << GetLogDir() << std::endl;
 	info_output << out.str();
 }
 

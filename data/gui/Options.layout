@@ -182,6 +182,15 @@
 					<Property key="Widget_Colour" value="0.6 0.8 1.0"/>
 					<Property key="Text_TextColour" value="0.45 0.58 0.8"/>
 				</Widget>
+				<Widget type="StaticText" skin="StaticText" position="16 448 72 24">
+					<Property key="Widget_Caption" value="#{Find}:"/>
+					<Property key="Text_TextColour" value="0.7 0.8 0.9"/>
+				</Widget>
+				<Widget type="Edit" skin="Edit" position="16 472 88 24" name="TrackFind">
+					<Property key="Widget_Colour" value="0.7 0.8 0.9"/>
+					<Property key="Edit_MaxTextLength" value="20"/>
+					<Property key="Text_TextColour" value="0.8 0.9 1.0"/>
+				</Widget>
 			</Widget>
 			<Widget type="TabItem" skin="" position="4 26 787 531">
 				<Property key="Widget_Caption" value="#{Car}"/>
@@ -524,82 +533,75 @@
 			<Widget type="TabItem" skin="" position="4 26 787 531">
 				<Property key="Widget_Caption" value="#{Replay}"/>
 				<Widget type="List" skin="List" position="14 16 186 504" name="RplList"/>
-				<Widget type="Button" skin="CheckBox" position="224 375 240 24" name="RplChkAutoRec">
-					<Property key="Widget_Caption" value="#{RplAutoRec}"/>
-					<Property key="Text_TextColour" value="0.6 0.8 1"/>
-				</Widget>
-				<Widget type="Button" skin="CheckBox" position="224 415 240 24" name="RplChkGhost">
-					<Property key="Text_TextColour" value="0.6 0.8 1"/>
+				<Widget type="Button" skin="CheckBox" position="424 295 280 24" name="RplChkGhost">
+					<Property key="Text_TextColour" value="0.76 0.9 1"/>
 					<Property key="Widget_Caption" value="#{RplGhost}"/>
 				</Widget>
-				<Widget type="Button" skin="CheckBox" position="464 375 272 24" name="RplChkBestOnly">
-					<Property key="Text_TextColour" value="0.6 0.8 1"/>
+				<Widget type="Button" skin="CheckBox" position="424 335 280 24" name="RplChkAutoRec">
+					<Property key="Widget_Caption" value="#{RplAutoRec}"/>
+					<Property key="Text_TextColour" value="0.5 0.7 0.9"/>
+				</Widget>
+				<Widget type="Button" skin="CheckBox" position="424 375 280 24" name="RplChkBestOnly">
+					<Property key="Text_TextColour" value="0.5 0.7 0.9"/>
 					<Property key="Widget_Caption" value="#{RplBestOnly}"/>
 				</Widget>
-				<Widget type="Button" skin="RadioBox" position="224 471 100 24" name="RplBtnAll">
+				<Widget type="Button" skin="RadioBox" position="224 311 160 24" name="RplBtnAll">
 					<Property key="Widget_Colour" value="0.6 0.8 1"/>
 					<Property key="Text_TextColour" value="0.6 0.8 1"/>
 					<Property key="Widget_Caption" value="#{RplAll}"/>
 				</Widget>
-				<Widget type="Button" skin="RadioBox" position="324 471 100 24" name="RplBtnCur">
+				<Widget type="Button" skin="RadioBox" position="224 351 160 24" name="RplBtnCur">
 					<Property key="Widget_Colour" value="0.6 0.8 1"/>
-					<Property key="Text_TextColour" value="0.6 0.8 1"/>
-					<Property key="Widget_Caption" value="#{RplCur}"/>
+					<Property key="Text_TextColour" value="0.5 0.7 0.9"/>
+					<Property key="Widget_Caption" value="#{RplCurrent}"/>
 				</Widget>
-				<Widget type="Button" skin="RadioBox" position="424 471 160 24" name="RplBtnGhosts">
+				<Widget type="Button" skin="RadioBox" position="224 391 160 24" name="RplBtnGhosts">
 					<Property key="Widget_Colour" value="0.6 0.8 1"/>
 					<Property key="Text_TextColour" value="0.6 0.8 1"/>
 					<Property key="Widget_Caption" value="#{RplGhosts}"/>
 				</Widget>
-				<Widget type="Button" skin="Button" position="224 308 152 32" name="RplSave">
+				<Widget type="Button" skin="Button" position="224 220 152 32" name="RplSave">
 					<Property key="Widget_Caption" value="#{RplSave}"/>
 					<Property key="Text_TextColour" value="0.8 1 1"/>
 					<Property key="Widget_Colour" value="0.4 0.8 1"/>
 				</Widget>
-				<Widget type="Button" skin="Button" position="224 170 152 32" name="RplLoad">
+				<Widget type="Button" skin="Button" position="224 98 152 32" name="RplLoad">
 					<Property key="Widget_Caption" value="#{RplLoad}"/>
 					<Property key="Text_TextColour" value="0.8 1 1"/>
 					<Property key="Widget_Colour" value="0.6 0.6 1"/>
 				</Widget>
-				<Widget type="Button" skin="Button" position="424 174 128 24" name="RplDelete">
+				<Widget type="Button" skin="Button" position="424 102 128 24" name="RplDelete">
 					<Property key="Widget_Colour" value="1 0.4 0"/>
 					<Property key="Widget_Caption" value="#{RplDelete}"/>
 					<Property key="Text_TextColour" value="1 0.4 0.4"/>
 				</Widget>
-				<Widget type="Button" skin="Button" position="424 308 128 32" name="RplRename">
+				<Widget type="Button" skin="Button" position="424 220 128 32" name="RplRename">
 					<Property key="Text_TextColour" value="1 0.8 0.4"/>
 					<Property key="Widget_Colour" value="1 0.8 0.4"/>
 					<Property key="Widget_Caption" value="#{RplRename}"/>
 				</Widget>
-				<Widget type="StaticText" skin="StaticText" position="224 24 184 24" name="RplName">
+				<Widget type="StaticText" skin="StaticText" position="224 16 184 24" name="RplName">
 					<Property key="Text_TextColour" value="0.84 0.8 1"/>
 				</Widget>
-				<Widget type="StaticText" skin="StaticText" position="224 48 184 44" name="RplInfo">
+				<Widget type="StaticText" skin="StaticText" position="224 40 184 44" name="RplInfo">
 					<Property key="Text_TextColour" value="0.9 0.9 1"/>
 				</Widget>
-				<Widget type="StaticText" skin="StaticText" position="416 48 216 44" name="RplInfo2">
+				<Widget type="StaticText" skin="StaticText" position="408 40 216 44" name="RplInfo2">
 					<Property key="Text_TextColour" value="0.76 0.76 0.82"/>
 				</Widget>
-				<Widget type="StaticText" skin="StaticText" position="224 240 416 24" name="RplName2">
+				<Widget type="StaticText" skin="StaticText" position="224 160 416 24" name="RplName2">
 					<Property key="Text_TextColour" value="1 0.8 0.6"/>
 				</Widget>
-				<Widget type="Widget" skin="Panel" position="224 104 456 57">
-					<Property key="Widget_Alpha" value="0.8"/>
-					<Property key="Widget_Colour" value="0.8 0.8 1.0"/>
-					<Widget type="Edit" skin="WordWrap" position="4 4 456 56" name="RplDesc">
-						<Property key="Widget_InheritsAlpha" value="false"/>
-						<Property key="Edit_WordWrap" value="true"/>
-						<Property key="Text_TextAlign" value="Left Top"/>
-						<Property key="Text_TextColour" value="0.8 0.8 1"/>
-						<Property key="Widget_Colour" value="0.7 0.7 0.8"/>
-					</Widget>
-				</Widget>
-				<Widget type="Edit" skin="Edit" position="224 270 280 32" name="RplNameEdit">
+				<Widget type="Edit" skin="Edit" position="224 184 240 24" name="RplNameEdit">
 					<Property key="Widget_Colour" value="0.8 0.9 1"/>
 				</Widget>
-				<Widget type="Button" skin="CheckBox" position="464 415 272 24" name="RplChkAlpha">
-					<Property key="Text_TextColour" value="0.6 0.8 1"/>
+				<Widget type="Button" skin="CheckBox" position="424 415 280 24" name="RplChkAlpha">
+					<Property key="Text_TextColour" value="0.76 0.9 1"/>
 					<Property key="Widget_Caption" value="#{RplAlpha}*"/>
+				</Widget>
+				<Widget type="Button" skin="CheckBox" position="424 455 280 24" name="RplChkParticles">
+					<Property key="Text_TextColour" value="0.6 0.8 1"/>
+					<Property key="Widget_Caption" value="#{RplParticles}"/>
 				</Widget>
 			</Widget>
 			<Widget type="TabItem" skin="" position="4 26 787 531">
@@ -649,6 +651,16 @@
 						<Widget type="Button" skin="CheckBox" position="380 216 316 24" name="SSAA">
 							<Property key="Widget_Caption" value="#{UseSSAA}"/>
 							<Property key="Text_TextColour" value="0.6 0.9 1"/>
+						</Widget>
+						<Widget type="StaticText" skin="StaticText" position="188 350 240 24">
+							<Property key="Text_TextColour" value="0.7 0.9 0.9"/>
+							<Property key="Widget_Caption" value="#{RenderSystem} *"/>
+						</Widget>
+						<Widget type="ComboBox" skin="ComboBox" position="188 382 272 24" name="CmbRendSys">
+							<Property key="Text_TextColour" value="0.7 1 1"/>
+							<Property key="Widget_Colour" value="0.7 0.9 0.9"/>
+							<Property key="Edit_Static" value="true"/>
+							<Property key="Edit_ReadOnly" value="true"/>
 						</Widget>
 					</Widget>
 					<Widget type="TabItem" skin="" position="4 26 735 428">

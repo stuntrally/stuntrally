@@ -15,6 +15,7 @@
 
 class BEZIER;
 class PERFORMANCE_TESTING;
+
 namespace protocol {
 	struct CarStatePackage;
 }
@@ -297,6 +298,7 @@ public:
 
 	///  new
 	void ResetPos(bool fromStart=true);
+	void SavePosAtCheck();
 
 //protected:
 public:
@@ -361,6 +363,7 @@ public:
 		std::ostream & error_output);
 		
 
+	//-------------------------------------------------------------------------------
 	///-- models offset
 	float vInteriorOffset[3];
 	// exhaust position for boost particles 
@@ -368,9 +371,13 @@ public:
 	float exhaustPosition[3]; // position of first exhaust
 	bool has2exhausts; // car has 2nd exhaust ; if true, mirror exhaust 1 for position
 	
-	//  for new game reset
+	//  for new game reset  and goto last checkp.
 	MATHVECTOR <float, 3> posAtStart, posLastCheck;
 	QUATERNION <float> rotAtStart, rotLastCheck;
+
+	//  car inputs  (new: cam,chk)
+	int iCamNext;
+	bool bLastChk;
 };
 
 #endif

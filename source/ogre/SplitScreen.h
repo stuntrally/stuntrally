@@ -36,6 +36,11 @@ public:
 	Ogre::SceneManager* mGuiSceneMgr;
 	Ogre::Viewport* mGuiViewport;
 	
+	// Hud viewports & scene manager & cameras
+	std::list<Ogre::Viewport*> mHUDViewports;
+	Ogre::Camera* mHUDCamera;
+	Ogre::SceneManager* mHUDSceneMgr;
+	
 	// This method should always be called after mNumPlayers is changed.
 	// It will create new viewports and cameras and arrange them.
 	void Align();

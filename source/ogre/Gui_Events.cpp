@@ -13,6 +13,7 @@
 #include <OIS/OIS.h>
 #include "../oisb/OISB.h"
 #include <boost/filesystem.hpp>
+#include <boost/algorithm/string.hpp>
 
 #include <OgreRoot.h>
 #include <OgreTerrain.h>
@@ -654,12 +655,23 @@ void App::slBlurIntens(SL)
 //-----------------------------------------------------------------------------------------------------------
 //  Key pressed
 //-----------------------------------------------------------------------------------------------------------
+
+// util
+bool App::actionIsActive(std::string name, std::string pressed)
+{
+	std::string actionKey = GetInputName(mOISBsys->lookupAction("General/" + name)->mBindings[0]->mBindables[0].second->getBindableName());
+	boost::to_lower(actionKey);
+	boost::to_lower(pressed);
+	return actionKey == pressed;
+}
+
 bool App::keyPressed( const OIS::KeyEvent &arg )
 {
 	// update all keystates
 	OISB::System::getSingleton().process(0.001/*?0*/);
 	
-	#define action(s)  mOISBsys->lookupAction("General/"s)->isActive()
+	// action key == pressed key
+	#define action(s)  actionIsActive(s, mKeyboard->getAsString(arg.key))
 
 	if (!bAssignKey)
 	{
@@ -674,41 +686,21 @@ bool App::keyPressed( const OIS::KeyEvent &arg )
 		if (action("ShowOptions"))
 		{	toggleGui();  return false;  }
 	
-		//  new game
+		//  new game - reload
 		if (action("RestartGame"))
 		{	NewGame();  return false;	}
 
-
-		///  Cameras  ---------------------------------
-		if (!isFocGui)
+		//  new game - fast (same track & cars)
+		if (action("ResetGame"))
 		{
-			int iChgCam = 0;
-			if (action("NextCamera"))  iChgCam = 1;  // Next
-			if (action("PrevCamera"))  iChgCam =-1;  // Prev
-			if (iChgCam)
+			for (int c=0; c < carModels.size(); ++c)
 			{
-				if (ctrl)
-					//  change current camera car index
-					iCurCam = (iCurCam + iChgCam +pSet->local_players) % pSet->local_players;
-				else
-				{	int visMask = 255, i = 0;
-					roadUpCnt = 0;
-
-					for (std::vector<CarModel*>::iterator it=carModels.begin(); it!=carModels.end(); it++, i++)
-					if (i == iCurCam)
-					{
-						if ((*it)->fCam)
-						{	(*it)->fCam->Next(iChgCam < 0, shift);
-							carsCamNum[i] = (*it)->fCam->miCurrent +1;  // save for pSet
-							if ((*it)->fCam->ca->mHideGlass)  visMask = RV_MaskAll-RV_CarGlass;
-							else        visMask = RV_MaskAll;
-						}
-					}
-					for (std::list<Viewport*>::iterator it=mSplitMgr->mViewports.begin(); it!=mSplitMgr->mViewports.end(); it++)
-						(*it)->setVisibilityMask(visMask);
-				}
-				return false;
-		}	}
+				if (carModels[c]->pCar)  carModels[c]->pCar->ResetPos(true);
+				if (carModels[c]->fCam)  carModels[c]->fCam->first = true;
+				carModels[c]->ResetChecks();
+			}
+			pGame->timer.Reset(0);
+		}
 	}
 	
 	using namespace OIS;

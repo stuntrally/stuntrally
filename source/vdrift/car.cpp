@@ -22,7 +22,8 @@ CAR::CAR() :
 	pSet(0), pApp(0),
 	last_steer(0),
 	debug_wheel_draw(false),
-	sector(-1)
+	sector(-1),
+	iCamNext(0), bLastChk(0)
 {
 	//dynamics.pCar = this;
 	vInteriorOffset[0]=0;
@@ -329,14 +330,10 @@ bool CAR::LoadSounds(
 	{
 		const SOUNDBUFFER * buf = soundbufferlibrary.GetBuffer("gravel");
 		if (!buf)
-		{
-			error_output << "Can't load gravel sound" << std::endl;
-			return false;
+		{	error_output << "Can't load gravel sound" << std::endl;		return false;
 		}
-		gravelsound[i].SetBuffer(*buf);
-		gravelsound[i].Set3DEffects(true);
-		gravelsound[i].SetLoop(true);
-		gravelsound[i].SetGain(0);
+		gravelsound[i].SetBuffer(*buf);		gravelsound[i].Set3DEffects(true);
+		gravelsound[i].SetLoop(true);		gravelsound[i].SetGain(0);
 		int samples = gravelsound[i].GetSoundBuffer().GetSoundInfo().GetSamples();
 		gravelsound[i].SeekToSample((samples/4)*i);
 		gravelsound[i].Play();
@@ -351,10 +348,8 @@ bool CAR::LoadSounds(
 			error_output << "Can't load grass sound" << std::endl;
 			return false;
 		}
-		grasssound[i].SetBuffer(*buf);
-		grasssound[i].Set3DEffects(true);
-		grasssound[i].SetLoop(true);
-		grasssound[i].SetGain(0);
+		grasssound[i].SetBuffer(*buf);		grasssound[i].Set3DEffects(true);
+		grasssound[i].SetLoop(true);		grasssound[i].SetGain(0);
 		int samples = grasssound[i].GetSoundBuffer().GetSoundInfo().GetSamples();
 		grasssound[i].SeekToSample((samples/4)*i);
 		grasssound[i].Play();
@@ -367,46 +362,33 @@ bool CAR::LoadSounds(
 		if (i >= 2)
 			buf = soundbufferlibrary.GetBuffer("bump_rear");
 		if (!buf)
-		{
-			error_output << "Can't load bump sound: " << i << std::endl;
-			return false;
+		{	error_output << "Can't load bump sound: " << i << std::endl;	return false;
 		}
-		tirebump[i].SetBuffer(*buf);
-		tirebump[i].Set3DEffects(true);
-		tirebump[i].SetLoop(false);
-		tirebump[i].SetGain(1.0);
+		tirebump[i].SetBuffer(*buf);	tirebump[i].Set3DEffects(true);
+		tirebump[i].SetLoop(false);		tirebump[i].SetGain(1.0);
 	}
 
-	//set up crash sound
+	//set up crash sounds (many)
 	for (int i = 0; i < Ncrashsounds; ++i)
 	{
 		int n = i+1;
 		char name[3] = {'0'+ n/10, '0'+ n%10, 0};
 		const SOUNDBUFFER * buf = soundbufferlibrary.GetBuffer(name);
 		if (!buf)
-		{
-			error_output << "Can't load crash sound: " << name << std::endl;
-			return false;
+		{	error_output << "Can't load crash sound: " << name << std::endl;	return false;
 		}
-		crashsound[i].SetBuffer(*buf);
-		crashsound[i].Set3DEffects(true);
-		crashsound[i].SetLoop(false);
-		crashsound[i].SetGain(1.0);
+		crashsound[i].SetBuffer(*buf);	crashsound[i].Set3DEffects(true);
+		crashsound[i].SetLoop(false);	crashsound[i].SetGain(1.0);
 	}
 
 	{
 		const SOUNDBUFFER * buf = soundbufferlibrary.GetBuffer("wind");
 		if (!buf)
-		{
-			error_output << "Can't load wind sound" << std::endl;
-			return false;
+		{	error_output << "Can't load wind sound" << std::endl;	return false;
 		}
-		roadnoise.SetBuffer(*buf);
-		roadnoise.Set3DEffects(true);
-		roadnoise.SetLoop(true);
-		roadnoise.SetGain(0);
-		roadnoise.SetPitch(1.0);
-		roadnoise.Play();
+		roadnoise.SetBuffer(*buf);	roadnoise.Set3DEffects(true);
+		roadnoise.SetLoop(true);	roadnoise.SetGain(0);
+		roadnoise.SetPitch(1.0);	roadnoise.Play();
 	}
 
 	return true;
@@ -476,27 +458,26 @@ void CAR::GetEngineSoundList(std::list <SOUNDSOURCE *> & outputlist)
 }
 
 
+///   Car Inputs  * * * * * * * 
 //--------------------------------------------------------------------------------------------------------------------------
 void CAR::HandleInputs(const std::vector <float> & inputs, float dt)
 {
 	assert(inputs.size() == CARINPUT::ALL); //-
 	dynamics.inputsCopy = inputs;
 
-	//std::cout << "Throttle: " << inputs[CARINPUT::THROTTLE] << std::endl;
-	//std::cout << "Shift up: " << inputs[CARINPUT::SHIFT_UP] << std::endl;
-
 	int cur_gear = dynamics.GetTransmission().GetGear();
-	bool rear = cur_gear == -1;  //..if (disable_auto_rear)  rear = false;
+	bool rear = pSet->rear_inv ? cur_gear == -1 : false;  //if (disable_auto_rear)  rear = false;
 
-	//set brakes
-	dynamics.SetBrake( !rear ? inputs[CARINPUT::BRAKE] : inputs[CARINPUT::THROTTLE]);
+	//  set brakes
+	float brake = !rear ? inputs[CARINPUT::BRAKE] : inputs[CARINPUT::THROTTLE];
+	dynamics.SetBrake(brake);
 	dynamics.SetHandBrake(inputs[CARINPUT::HANDBRAKE]);
 	
-	// boost, flip over
+	//  boost, flip over
 	dynamics.doBoost = inputs[CARINPUT::BOOST];
 	dynamics.doFlip = inputs[CARINPUT::FLIP];
 
-	//do steering
+	//  steering
 	float steer_value = inputs[CARINPUT::STEER_RIGHT];
 	if (std::abs(inputs[CARINPUT::STEER_LEFT]) > std::abs(inputs[CARINPUT::STEER_RIGHT])) //use whichever control is larger
 		steer_value = -inputs[CARINPUT::STEER_LEFT];
@@ -507,7 +488,7 @@ void CAR::HandleInputs(const std::vector <float> & inputs, float dt)
 	//if (inputs[CARINPUT::START_ENGINE])
 	//	dynamics.StartEngine();
 
-	//do shifting
+	//  shifting
 	int gear_change = 0;
 	if (inputs[CARINPUT::SHIFT_UP] == 1.0)		gear_change = 1;
 	if (inputs[CARINPUT::SHIFT_DOWN] == 1.0)	gear_change = -1;
@@ -516,6 +497,7 @@ void CAR::HandleInputs(const std::vector <float> & inputs, float dt)
 	/*if (inputs[CARINPUT::REVERSE])	new_gear = -1;
 	if (inputs[CARINPUT::FIRST_GEAR])	new_gear = 1;*/
 
+	//  throttle
 	float throttle = !rear ? inputs[CARINPUT::THROTTLE] : inputs[CARINPUT::BRAKE];
 	float clutch = 1 - inputs[CARINPUT::CLUTCH]; // 
 
@@ -523,9 +505,14 @@ void CAR::HandleInputs(const std::vector <float> & inputs, float dt)
 	dynamics.SetThrottle(throttle);
 	dynamics.SetClutch(clutch);
 
-	//do driver aid toggles
+	//  abs tcs
+	///TODO: car setup separated for all (4) players: (auto shift, auto rear, rear inv, abs, tcs)  ...
 	//if (inputs[CARINPUT::ABS_TOGGLE])	dynamics.SetABS(!dynamics.GetABSEnabled());
 	//if (inputs[CARINPUT::TCS_TOGGLE])	dynamics.SetTCS(!dynamics.GetTCSEnabled());
+	
+	//  cam, chk
+	iCamNext = -inputs[CARINPUT::PREV_CAM] + inputs[CARINPUT::NEXT_CAM];
+	bLastChk = inputs[CARINPUT::LAST_CHK];
 }
 
 
@@ -703,7 +690,7 @@ void CAR::UpdateSounds(float dt)
 	}
 
 	//update crash sound
-	//#if 1
+	#if 0
 	if (dynamics.bHitSnd)// && dynamics.sndHitN >= 0)
 	{
 		int f = dynamics.fParIntens * 0.04f;  //fSndForce * 0.1f;
@@ -722,6 +709,7 @@ void CAR::UpdateSounds(float dt)
 			//LogO("Snd:  i " + toStr(i) + "  parF " + toStr(dynamics.fParIntens) + "  sndF " + toStr(dynamics.fSndForce));
 		}/**/
 	}
+	#endif
 	//#else
 	//update crash sound
 	{
@@ -838,7 +826,7 @@ void CAR::UpdateCarState(const protocol::CarStatePackage& state)
 	dynamics.SynchronizeBody();  // set body from chassis
 }
 
-///  new
+///  reset car, pos and state
 void CAR::ResetPos(bool fromStart)
 {
 	MATHVECTOR <float, 3> pos = fromStart ? posAtStart : posLastCheck;
@@ -854,4 +842,32 @@ void CAR::ResetPos(bool fromStart)
 	dynamics.chassis->setAngularVelocity(btVector3(0,0,0));
 
 	dynamics.SynchronizeBody();  // set body from chassis
+
+	//  engine, wheels
+	dynamics.engine.SetInitialConditions();
+	for (int w=0; w < 4; ++w)
+	{
+		MATHVECTOR <CARDYNAMICS::T, 3> zero(0,0,0);
+		dynamics.wheel[w].SetAngularVelocity(0);
+		//dynamics.wheel_velocity[w] = zero;
+	}
+
+	//dynamics.SynchronizeChassis();
+	dynamics.UpdateWheelContacts();
+}
+
+///  save car pos and rot
+void CAR::SavePosAtCheck()
+{
+	dynamics.body.GetPosition();
+	posLastCheck = dynamics.body.GetPosition();
+	rotLastCheck = dynamics.body.GetOrientation();
+	//MATHVECTOR <float, 3> pos = fromStart ? posAtStart : posLastCheck;
+	//QUATERNION <float> rot = fromStart ? rotAtStart : rotLastCheck;
+
+	//btTransform transform;
+	//dynamics.chassis->getWorldTransform();
+	//transform.setOrigin(ToBulletVector(pos));
+	//transform.setRotation(ToBulletQuaternion(rot));
+	//dynamics.chassis->setWorldTransform(transform);
 }

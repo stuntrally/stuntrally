@@ -6,6 +6,8 @@
 #include "../ogre/common/BltObjects.h"
 #include "../ogre/common/TracksXml.h"
 #include "../ogre/common/FluidsXml.h"
+#include "../ogre/common/MessageBox/MessageBox.h"
+#include "../ogre/common/MessageBox/MessageBoxStyle.h"
 
 #include "../vdrift/mathvector.h"
 #include "../vdrift/quaternion.h"
@@ -34,6 +36,7 @@ const Ogre::Real crAngSnaps[ciAngSnapsNum] = {0,15,30,45,90,180};
 namespace Forests {  class PagedGeometry;  }
 namespace MyGUI  {  class MultiList2;  }
 class MaterialFactory;
+
 
 class App : public BaseApp, public Ogre::RenderTargetListener
 {
@@ -213,15 +216,21 @@ protected:
 	MyGUI::StaticImagePtr imgPrv,imgMini,imgTer, imgTrkIco1,imgTrkIco2;
 	const static int StTrk = 12, InfTrk = 10;
 	MyGUI::StaticTextPtr valTrk, stTrk[StTrk], infTrk[InfTrk];
-	void listTrackChng(MyGUI::MultiList2* li, size_t pos), TrackListUpd();
+
+	void listTrackChng(MyGUI::MultiList2* li, size_t pos), TrackListUpd(bool resetNotFound=false);
 	TracksXml tracksXml;  void btnTrkView1(WP),btnTrkView2(WP),ChangeTrackView(bool full),updTrkListDim();
 	const static int TcolW[32];
+
+	void edTrkFind(MyGUI::EditPtr);  Ogre::String sTrkFind;
+	strlist liTracks,liTracksUser;  void FillTrackLists();
+	std::list<TrkL> liTrk;
 
 	//  screen
 	MyGUI::ListPtr resList;
 	void InitGuiScrenRes(), btnResChng(WP), ResizeOptWnd();
 	void chkVidFullscr(WP), chkVidVSync(WP);
-	void comboGraphicsAll(MyGUI::ComboBoxPtr cmb, size_t val);
+	void comboGraphicsAll(MyGUI::ComboBoxPtr cmb, size_t val),
+		comboRenderSystem(MyGUI::ComboBoxPtr cmb, size_t val);
 	///-----------------------------------------
 
 	
@@ -335,9 +344,6 @@ protected:
 	Ogre::String pathTrk[2], pathTrkPrv[2];    // 0 read only  1 //U user paths for save
 	std::string TrkDir();  // path to track dir (from pSet settings)
 
-	std::vector<Ogre::String> vsTracks;
-	std::vector<bool> vbTracksUser;
-	
 	Ogre::String sListTrack;  int bListTrackU;
 	Ogre::String sCopyTrack;  int bCopyTrackU;  // for tools
 	Ogre::String PathListTrk(int user=-1), PathListTrkPrv(int user=-1);

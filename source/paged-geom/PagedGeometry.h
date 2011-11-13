@@ -759,6 +759,9 @@ public:
 	\returns Ogre::RenderQueue number of the rendering queue
 	*/
 	Ogre::RenderQueueGroupID getRenderQueue() const;
+	
+	///T  custom bool to force regenerating all impostor textures
+	bool forceRegenImpostors;
 
 protected:
 	//Internal function - do not use

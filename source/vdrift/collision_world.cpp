@@ -315,14 +315,13 @@ bool COLLISION_WORLD::CastRay(
 
 //  Update
 //-------------------------------------------------------------------------------------------------------------------------------
-
 void DynamicsWorld::solveConstraints(btContactSolverInfo& solverInfo)
 {
 	btDiscreteDynamicsWorld::solveConstraints(solverInfo);
 	//vHits.clear();
 	//inFluids.clear();  //- before update
 
-	//  collision callback for fluid triggers  -----~~~------~~~-----
+	///  collision callback
 	//  and bullet hit info for particles and sounds ...
 	int numManifolds = getDispatcher()->getNumManifolds();
 	//LogO(toStr(numManifolds));
@@ -335,14 +334,14 @@ void DynamicsWorld::solveConstraints(btContactSolverInfo& solverInfo)
 		/*if (bA->getCollisionFlags() & btCollisionObject::CF_NO_CONTACT_RESPONSE ||
 			bB->getCollisionFlags() & btCollisionObject::CF_NO_CONTACT_RESPONSE) /*triggers*/
 
-		//  check if car with fluid
 		void* pA = bA->getUserPointer(), *pB = bB->getUserPointer();
 		//if (pA && pB)
 		{
 			ShapeData* sdA = (ShapeData*)pA, *sdB = (ShapeData*)pB, *sdCar=0, *sdFluid=0, *sdWheel=0;
 			if (sdA) {  if (sdA->type == ST_Car)  sdCar = sdA;  else if (sdA->type == ST_Fluid)  sdFluid = sdA;  else if (sdA->type == ST_Wheel)  sdWheel = sdA;  }
 			if (sdB) {  if (sdB->type == ST_Car)  sdCar = sdB;  else if (sdB->type == ST_Fluid)  sdFluid = sdB;  else if (sdB->type == ST_Wheel)  sdWheel = sdB;  }
-			if (sdWheel)
+
+			if (sdWheel)  /// wheel - fluid  -----~~~------~~~-----
 			{
 				if (sdFluid)
 				{
@@ -353,7 +352,7 @@ void DynamicsWorld::solveConstraints(btContactSolverInfo& solverInfo)
 				}
 			}else
 			if (sdCar)
-				if (sdFluid)
+				if (sdFluid)  /// car - fluid  -----~~~------~~~-----
 				{
 					if (sdCar->pCarDyn->inFluids.empty())
 						sdCar->pCarDyn->inFluids.push_back(sdFluid->pFluid);  // add fluid to car (only 1)

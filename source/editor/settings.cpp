@@ -24,7 +24,8 @@ void SETTINGS::Serialize(bool w, CONFIGFILE & c)
 	Param(c,w, "display_show.fps", show_fps);
 	Param(c,w, "display_show.trackmap", trackmap);			Param(c,w, "display_size.minimap", size_minimap);
 	Param(c,w, "display_show.mini_num", num_mini);			Param(c,w, "display_show.brushpreview", brush_prv);
-	Param(c,w, "display_show.tracks_view", tracks_view);	Param(c,w, "display_show.tracks_sort", tracks_sort);
+	Param(c,w, "display_show.tracks_view", tracks_view);
+	Param(c,w, "display_show.tracks_sort", tracks_sort);	Param(c,w, "display_show.tracks_sortup", tracks_sortup);
 
 	Param(c,w, "display_par.anisotropy", anisotropy);		Param(c,w, "display_par.view_dist", view_distance);
 	Param(c,w, "display_par.ter_detail", terdetail);		Param(c,w, "display_par.ter_dist", terdist);
@@ -70,7 +71,7 @@ SETTINGS::SETTINGS() :  ///  Defaults
 	track("J1-T"), track_user(false), allow_save(0),
 	//  show
 	show_fps(1), trackmap(1), size_minimap(0.5), num_mini(0), brush_prv(1),
-	tracks_view(0), tracks_sort(0),
+	tracks_view(0), tracks_sort(0), tracks_sortup(0),
 	//  graphics
 	anisotropy(8),	view_distance(3600),
 	terdetail(1.57), terdist(300), road_dist(1.0), tex_size(1), ter_mtr(2),

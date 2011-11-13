@@ -5,6 +5,8 @@
 #include "../vdrift/pathmanager.h"
 #include "../ogre/common/MultiList2.h"
 #include "../ogre/common/RenderConst.h"
+#include <MyGUI.h>
+using namespace MyGUI;
 using namespace Ogre;
 
 
@@ -15,19 +17,19 @@ void App::UpdEditWnds()
 {
 	if (mWndBrush){
 		if (edMode == ED_Deform)
-		{	mWndBrush->setCaption("Terrain Deform");  
+		{	static_cast<StaticTextPtr>(mWndBrush)->setCaption("Terrain Deform");  
 			mWndBrush->setColour(MyGUI::Colour(0.5f, 0.9f, 0.3f));
 			mWndBrush->setVisible(true);  }
 		else if (edMode == ED_Smooth)
-		{	mWndBrush->setCaption("Terrain Smooth");
+		{	static_cast<StaticTextPtr>(mWndBrush)->setCaption("Terrain Smooth");
 			mWndBrush->setColour(MyGUI::Colour(0.3f, 0.8f, 0.8f));
 			mWndBrush->setVisible(true);  }
 		else if (edMode == ED_Height)
-		{	mWndBrush->setCaption("Terrain Height");
+		{	static_cast<StaticTextPtr>(mWndBrush)->setCaption("Terrain Height");
 			mWndBrush->setColour(MyGUI::Colour(0.7f, 1.0f, 0.7f));
 			mWndBrush->setVisible(true);  }
 		else if (edMode == ED_Start)
-		{	mWndBrush->setCaption("Car Start pos");
+		{	static_cast<StaticTextPtr>(mWndBrush)->setCaption("Car Start pos");
 			mWndBrush->setColour(MyGUI::Colour(0.7f, 0.7f, 1.0f));
 			mWndBrush->setVisible(true);  }
 		else

@@ -4,7 +4,7 @@
 #include "configfile.h"
 
 
-#define SET_VER  1204  // 1.2
+#define SET_VER  1350  // 1.4
 
 
 class SETTINGS
@@ -23,7 +23,7 @@ public:
 		show_cam, show_times, show_digits,
 		car_dbgbars, car_dbgtxt, ogre_dialog;
 	float size_gauges, size_minimap, size_arrow, zoom_minimap;
-	int tracks_view, tracks_sort;
+	int tracks_view, tracks_sort;  bool tracks_sortup;
 
 	//  graphics
 	int anisotropy, shaders, tex_size, ter_mtr;  bool bFog;
@@ -66,7 +66,10 @@ public:
 	bool x11_capture_mouse;
 	
 	//  replay
-	bool rpl_rec, rpl_ghost, rpl_bestonly, rpl_alpha;  int rpl_listview;
+	bool rpl_rec, rpl_ghost, rpl_bestonly;
+	bool rpl_alpha, rpl_ghostpar;  int rpl_listview;
+
+	int sceneryIdOld;  // not a setting, just to remember on quit
 	
 	// network
 	std::string nickname;

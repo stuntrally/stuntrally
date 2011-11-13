@@ -31,11 +31,14 @@ using namespace Ogre;
 
 CarModel::CarModel(unsigned int index, eCarType type, const std::string name,
 	Ogre::SceneManager* sceneMgr, SETTINGS* set, GAME* game, Scene* s, Ogre::Camera* cam, App* app) :
-	fCam(0), pMainNode(0), pCar(0), terrain(0), resCar(""), mCamera(0), pReflect(0), pApp(app), color(1,0,0)
+	fCam(0), pMainNode(0), pCar(0), terrain(0), resCar(""), mCamera(0), pReflect(0), pApp(app), color(1,0,0),
+	bLightMapEnabled(true), bBraking(false),
+	iCamNextOld(0), bLastChkOld(0)	
 {
 	iIndex = index;  sDirname = name;  pSceneMgr = sceneMgr;
 	pSet = set;  pGame = game;  sc = s;  mCamera = cam;  eType = type;
 	bGetStPos = true;  fChkTime = 0.f;  iChkWrong = -1;  iWonPlace = 0;
+	iCurChk = -1;  iNumChks = 0;  //ResetChecks();  // road isnt yet
 	
 	if (type != CT_GHOST)  // ghost has pCar, dont create
 	{
@@ -54,7 +57,7 @@ CarModel::CarModel(unsigned int index, eCarType type, const std::string name,
 	
 	for (int w = 0; w < 4; ++w)
 	{	ps[w] = 0;  pm[w] = 0;  pd[w] = 0;
-		pflW[w] = 0;  pflM[w] = 0;
+		pflW[w] = 0;  pflM[w] = 0;  pflMs[w] = 0;
 		ndWh[w] = 0;  ndWhE[w] = 0; whTrl[w] = 0;
 		wht[w] = 0.f;  whTerMtr[w] = 0;  whRoadMtr[w] = 0;  }
 	for (int i=0; i < 2; i++)
@@ -83,7 +86,8 @@ CarModel::~CarModel()
 		if (pm[w]) {  pSceneMgr->destroyParticleSystem(pm[w]);   pm[w]=0;  }
 		if (pd[w]) {  pSceneMgr->destroyParticleSystem(pd[w]);   pd[w]=0;  }
 		if (pflW[w]) {  pSceneMgr->destroyParticleSystem(pflW[w]);   pflW[w]=0;  }
-		if (pflM[w]) {  pSceneMgr->destroyParticleSystem(pflM[w]);   pflM[w]=0;  }  }
+		if (pflM[w]) {  pSceneMgr->destroyParticleSystem(pflM[w]);   pflM[w]=0;  }
+		if (pflMs[w]) {  pSceneMgr->destroyParticleSystem(pflMs[w]);   pflMs[w]=0;  }  }
 	for (int i=0; i < 2; i++)
 		if (pb[i]) {  pSceneMgr->destroyParticleSystem(pb[i]);   pb[i]=0;  }
 	if (ph)  {  pSceneMgr->destroyParticleSystem(ph);   ph=0;  }
@@ -104,7 +108,15 @@ void CarModel::setVisible(bool vis)
 	UpdParsTrails(vis);
 }
 
+void CarModel::ResetChecks()  // needs to be done after road load!
+{
+	iCurChk = -1;  iNumChks = 0;  // reset lap, chk vars
+	if (pApp && pApp->road)
+		iNextChk = pSet->trackreverse ? pApp->road->iChkId1Rev : pApp->road->iChkId1;
+}
 
+
+//-------------------------------------------------------------------------------------------------------
 //  Update
 //-------------------------------------------------------------------------------------------------------
 void CarModel::Update(PosInfo& posInfo, float time)
@@ -117,6 +129,45 @@ void CarModel::Update(PosInfo& posInfo, float time)
 	pMainNode->setPosition(posInfo.pos);
 	pMainNode->setOrientation(posInfo.rot);
 	
+	//  brake state
+	//  trigger when any wheel is braking
+	bool braking = false;
+	if (eType == CT_LOCAL)
+	for (int w=0; w<4; ++w)
+	{
+		if (pCar->dynamics.GetBrake(static_cast<WHEEL_POSITION>(w)).GetBrakeFactor() > 0
+		 || pCar->dynamics.GetBrake(static_cast<WHEEL_POSITION>(w)).GetHandbrakeFactor() > 0)
+			braking = true;
+	}
+	if (bBraking != braking)
+	{
+		bBraking = braking;
+		RefreshBrakingMaterial();
+	}
+	
+	//  terrain lightmap enable/disable (depending on distance to terrain)
+	#define MAX_TERRAIN_DIST 2.0 // meters
+	Ogre::Vector3 carPos = pMainNode->getPosition();
+	float terrainHeight = terrain->getHeightAtWorldPosition(carPos);
+	float diff = std::abs(carPos.y - terrainHeight);
+	bool changed = false;
+	if (diff > MAX_TERRAIN_DIST)
+	{
+		if (bLightMapEnabled)
+		{
+			changed = true;
+			bLightMapEnabled = false;
+		}
+	}
+	else if (!bLightMapEnabled)
+	{
+		changed = true;
+		bLightMapEnabled = true;
+	}
+	
+	if (changed)
+		UpdateLightMap();
+		
 
 	//  update particle emitters
 	//  boost
@@ -142,7 +193,7 @@ void CarModel::Update(PosInfo& posInfo, float time)
 		pe->setParticleVelocity(cd.fParVel);
 	}
 	
-	//  wheels
+	//  wheels  ------------------------------------------------------------------------
 	for (int w=0; w < 4; w++)
 	{
 		float wR = posInfo.whR[w];
@@ -168,17 +219,18 @@ void CarModel::Update(PosInfo& posInfo, float time)
 			emitS = sq * (whVel * 30) * l *0.3f;  //..
 			emitM = slide < 1.4f ? 0.f :  (8.f * sq * std::min(5.f, slide) * l);
 			emitD = (std::min(140.f, whVel) / 3.5f + slide * 1.f ) * l;  
+
 			if (pd[w])  {	//  resume
 				pd[w]->setSpeedFactor(1.f);  ps[w]->setSpeedFactor(1.f);  pm[w]->setSpeedFactor(1.f);
 			if (w < 2)  pb[w]->setSpeedFactor(1.f);  }
 			if (pflW[w])  {
-				pflW[w]->setSpeedFactor(1.f);  pflM[w]->setSpeedFactor(1.f);  }
+				pflW[w]->setSpeedFactor(1.f);  pflM[w]->setSpeedFactor(1.f);  pflMs[w]->setSpeedFactor(1.f);  }
 		}else{
 			if (pd[w])  {	//  stop par sys
 				pd[w]->setSpeedFactor(0.f);  ps[w]->setSpeedFactor(0.f);  pm[w]->setSpeedFactor(0.f);
 			if (w < 2)  pb[w]->setSpeedFactor(0.f);  }
 			if (pflW[w])  {
-				pflW[w]->setSpeedFactor(0.f);  pflM[w]->setSpeedFactor(0.f);  }
+				pflW[w]->setSpeedFactor(0.f);  pflM[w]->setSpeedFactor(0.f);  pflMs[w]->setSpeedFactor(0.f);  }
 		}
 		Real sizeD = (0.3f + 1.1f * std::min(140.f, whVel) / 140.f) * (w < 2 ? 0.5f : 1.f);
 
@@ -190,12 +242,16 @@ void CarModel::Update(PosInfo& posInfo, float time)
 		if (whRd == 2)  emitD = 0;  // no dust in pipes
 		if (cd.inFluidsWh[w].size() > 0)  emitD = 0;  // no dust in fluids
 
-		//  par emit
+		bool ghost = eType == CT_GHOST;  // opt dis for ghost
+		if (ghost && !pSet->rpl_ghostpar)
+		{	emitD = 0.f;  emitM = 0.f;  emitS = 0.f;  }
+
+		///  emit particles
 		Vector3 vpos = posInfo.whPos[w];
 		if (pSet->particles)
 		{
 			if (ps[w] && sc->td.layerRoad.smoke > 0.f/*&& !sc->ter*/)  // only at vdr road
-			{
+			{			//  smoke
 				ParticleEmitter* pe = ps[w]->getEmitter(0);
 				pe->setPosition(vpos + posInfo.carY * wR*0.7f);
 				/**/ps[w]->getAffector(0)->setParameter("alpha", toStr(-0.4f - 0.07f/2.4f * whVel));
@@ -214,28 +270,41 @@ void CarModel::Update(PosInfo& posInfo, float time)
 				pe->setPosition(vpos + posInfo.carY * wR*0.51f);
 				pe->setDirection(-posInfo.carY);	pe->setEmissionRate(emitD);
 			}
+
 			//  fluids .::.
-			bool inFl = cd.inFluidsWh[w].size() > 0;
-			bool water = true;
+			bool inFl = cd.inFluidsWh[w].size() > 0 && !ghost;  //dis for ghost
+			int idPar = -1;
 			if (inFl)
 			{	const FluidBox* fb = *cd.inFluidsWh[w].begin();
-				water = fb->isWater;
+				idPar = fb->idParticles;
+			}
+			if (pflW[w])  //  Water ~
+			{
+				float vel = pCar->GetSpeed();  // depth.. only on surface?
+				bool e = idPar == 0 &&  vel > 10.f && cd.whH[w] < 1.f;
+				float emitW = e ?  std::min(80.f, 3.0f * vel)  : 0.f;
+				ParticleEmitter* pe = pflW[w]->getEmitter(0);
+				pe->setPosition(vpos + posInfo.carY * wR*0.51f);
+				pe->setDirection(-posInfo.carY);	pe->setEmissionRate(emitW * pSet->particles_len);
 			}
 			if (pflM[w])  //  Mud ^
 			{
 				float vel = Math::Abs(pCar->dynamics.wheel[w].GetAngularVelocity());
-				float emitM = inFl && vel > 30.f ? cd.whH[w] * std::min(80.f, 1.5f * vel) : 0.f;
+				bool e = idPar == 2 &&  vel > 30.f;
+				float emitM = e ?  cd.whH[w] * std::min(80.f, 1.5f * vel)  : 0.f;
 				ParticleEmitter* pe = pflM[w]->getEmitter(0);
 				pe->setPosition(vpos + posInfo.carY * wR*0.51f);
 				pe->setDirection(-posInfo.carY);	pe->setEmissionRate(emitM * pSet->particles_len);
 			}
-			if (pflW[w])  //  Water ~
+			if (pflMs[w])  //  Mud soft ^
 			{
-				float vel = pCar->GetSpeed();
-				float emitW = inFl && water && vel > 10.f ? std::min(80.f, 3.0f * vel) : 0.f;
-				ParticleEmitter* pe = pflW[w]->getEmitter(0);
+				float vel = Math::Abs(pCar->dynamics.wheel[w].GetAngularVelocity());
+				
+				bool e = idPar == 1 &&  vel > 30.f;
+				float emitM = e ?  cd.whH[w] * std::min(160.f, 3.f * vel)  : 0.f;
+				ParticleEmitter* pe = pflMs[w]->getEmitter(0);
 				pe->setPosition(vpos + posInfo.carY * wR*0.51f);
-				pe->setDirection(-posInfo.carY);	pe->setEmissionRate(emitW * pSet->particles_len);
+				pe->setDirection(-posInfo.carY);	pe->setEmissionRate(emitM * pSet->particles_len);
 			}
 		}
 
@@ -260,124 +329,58 @@ void CarModel::Update(PosInfo& posInfo, float time)
 	
 	// blendmaps
 	UpdWhTerMtr();
+	
+	UpdateKeys();
+}
+
+
+void CarModel::UpdateKeys()
+{
+	if (!pCar)  return;
+
+	///  go to last checkp.
+	if (pCar->bLastChk && !bLastChkOld)
+	{
+		pCar->ResetPos(false);
+		if (fCam)
+			fCam->first = true;
+		else
+			LogO("no fCam");
+	}
+	bLastChkOld = pCar->bLastChk;
+
+	///  change Cameras  ---------------------------------
+	//if (!pApp->isFocGui)
+	if (pCar->iCamNext != 0 && iCamNextOld == 0)
+	{
+		//  with ctrl - change current camera car index  (mouse move camera for many players)
+		if (pApp->ctrl && iIndex == 0)
+			pApp->iCurCam = (pApp->iCurCam + pCar->iCamNext + pSet->local_players) % pSet->local_players;
+		else
+		{
+			int visMask = 255;
+			pApp->roadUpCnt = 0;
+
+			if (fCam)
+			{	fCam->Next(pCar->iCamNext < 0, pApp->shift);
+				pApp->carsCamNum[iIndex] = fCam->miCurrent +1;  // save for pSet
+				visMask = fCam->ca->mHideGlass ? RV_MaskAll-RV_CarGlass : RV_MaskAll;
+			}
+			else
+				LogO("no fCam");
+
+			for (std::list<Viewport*>::iterator it = pApp->mSplitMgr->mViewports.begin();
+				it != pApp->mSplitMgr->mViewports.end(); ++it)
+				(*it)->setVisibilityMask(visMask);
+		}
+	}
+	iCamNextOld = pCar->iCamNext;
 }
 
 
 //-------------------------------------------------------------------------------------------------------
 //  Create
 //-------------------------------------------------------------------------------------------------------
-void CarModel::RecreateMaterials()
-{
-	String strI = toStr(iIndex);
-	String sCar = resCar + "/" + sDirname;
-	bool ghost = eType == CT_GHOST && pSet->rpl_alpha;  //1 || for ghost test
-	
-	// --------- Materials  -------------------
-	
-	// if specialised car material (e.g. car_body_FM) exists, use this one instead of e.g. car_body
-	// useful macro for choosing between these 2 variants
-	#define chooseMat(s) MaterialManager::getSingleton().resourceExists( "car" + String(s) + "_" + sDirname) ? "car"+String(s) + "_" + sDirname : "car"+String(s)
-	
-	//  ghost car has no interior, particles, trails and uses same material for all meshes
-	if (!ghost)
-	{	sMtr[Mtr_CarBody]     = chooseMat("_body");		sMtr[Mtr_CarTireFront]  = chooseMat("tire_front");
-		sMtr[Mtr_CarInterior] = chooseMat("_interior");	sMtr[Mtr_CarTireRear]   = chooseMat("tire_rear");
-		sMtr[Mtr_CarGlass]    = chooseMat("_glass");
-	}else
-	for (int i=0; i<NumMaterials; i++)
-		sMtr[i] = "car_ghost";  //+s old mtr..
-
-	// copy material to a new material with index
-	Ogre::MaterialPtr mat;
-	for (int i=0; i<NumMaterials; i++)
-	{
-		mat = Ogre::MaterialManager::getSingleton().getByName(sMtr[i]);
-		if (Ogre::MaterialManager::getSingleton().resourceExists(sMtr[i] + strI))
-			Ogre::MaterialManager::getSingleton().remove(sMtr[i] + strI);
-		mat->clone(sMtr[i] + strI, false);
-		sMtr[i] = sMtr[i] + strI;
-		// Change color here - cache has to be created before loading model
-		ChangeClr(iIndex);
-
-		//LogO(" === New car mtr name: " + sMtr[i]);
-	}
-	
-	// iterate through all materials and set body_dyn.png with correct index, add car prefix to other textures
-	if (!ghost)
-	for (int i=0; i < NumMaterials; i++)
-	{
-		MaterialPtr mtr = (MaterialPtr)MaterialManager::getSingleton().getByName(sMtr[i]);
-		if (!mtr.isNull())
-		{	Material::TechniqueIterator techIt = mtr->getTechniqueIterator();
-			while (techIt.hasMoreElements())
-			{	Technique* tech = techIt.getNext();
-				Technique::PassIterator passIt = tech->getPassIterator();
-				while (passIt.hasMoreElements())
-				{	Pass* pass = passIt.getNext();
-					Pass::TextureUnitStateIterator tusIt = pass->getTextureUnitStateIterator();
-					while (tusIt.hasMoreElements())
-					{
-						TextureUnitState* tus = tusIt.getNext();
-						String sTex = tus->getTextureName();  //!..
-						
-						// only 1 tire mesh?
-						if ( (i == Mtr_CarTireFront || i == Mtr_CarTireRear) 
-							&& FileExists(sCar + "_wheel.mesh") 
-							&& (tus->getTextureName() == "wheel_front.png" || tus->getTextureName() == "wheel_rear.png") )
-						{
-							// set same texture for both
-							tus->setTextureName("wheel.png");
-						}
-						
-						if (tus->getTextureName() == "body_light.png")
-						{
-							tus->setTextureName(sCar + "_body00_red.png");
-						}
-						else if (tus->getTextureName() == "body_blend.png")
-						{
-							tus->setTextureName(sCar + "_body00_add.png");
-						}
-						else
-						{
-							if (!(StringUtil::startsWith(tus->getTextureName(), "ReflectionCube") ||
-								StringUtil::startsWith(tus->getTextureName(), "body_dyn") ||
-								tus->getTextureName() == "ReflectionCube" ||
-								StringUtil::startsWith(tus->getName(), "shadowmap") ||
-								StringUtil::startsWith(tus->getTextureName(), "flat_n")))
-							tus->setTextureName(sDirname + "_" + tus->getTextureName());
-						}
-		}	}	}	}
-		if (pSet->shadow_type == 3)
-			pApp->setMtrSplits(mtr->getName());
-	}
-}
-
-void CarModel::setMtrName(const String& entName, const String& mtrName)
-{
-	Ogre::Entity* ent; Ogre::ManualObject* manual;
-
-	if (pSceneMgr->hasEntity(entName))
-	{
-		pSceneMgr->getEntity(entName)->setMaterialName(mtrName);
-	}
-	else if (pSceneMgr->hasManualObject(entName))
-	{
-		pSceneMgr->getManualObject(entName)->setMaterialName(0, mtrName);
-	}
-}
-
-
-void CarModel::setMtrNames()
-{
-	if (FileExists(resCar + "/" + sDirname + "_body00_add.png")
-	 && FileExists(resCar + "/" + sDirname + "_body00_red.png"))
-		setMtrName("Car"+toStr(iIndex), sMtr[Mtr_CarBody]);
-	setMtrName("Car.interior"+toStr(iIndex), sMtr[Mtr_CarInterior]);
-	setMtrName("Car.glass"+toStr(iIndex), sMtr[Mtr_CarGlass]);
-	for (int w=0; w<4; ++w)
-		setMtrName("Wheel"+toStr(iIndex)+"_"+toStr(w), w < 2 ? sMtr[Mtr_CarTireFront] : sMtr[Mtr_CarTireRear]);
-}
-
 void CarModel::Create(int car)
 {
 	if (!pCar) return;
@@ -406,7 +409,7 @@ void CarModel::Create(int car)
 	
 	RecreateMaterials();
 		
-	// reflection
+	//  reflection
 	CreateReflection();
 
 	//  car Models:  body, interior, glass  -------
@@ -556,24 +559,23 @@ void CarModel::Create(int car)
 		String siw = strI + "_" +toStr(w);
 		if (!ps[w])  {
 			ps[w] = pSceneMgr->createParticleSystem("Smoke"+siw, sc->sParSmoke);
-			pSceneMgr->getRootSceneNode()->createChildSceneNode()->attachObject(ps[w]);
-			ps[w]->getEmitter(0)->setEmissionRate(0);  }
+			pSceneMgr->getRootSceneNode()->createChildSceneNode()->attachObject(ps[w]);		ps[w]->getEmitter(0)->setEmissionRate(0);  }
 		if (!pm[w])  {
 			pm[w] = pSceneMgr->createParticleSystem("Mud"+siw, sc->sParMud);
-			pSceneMgr->getRootSceneNode()->createChildSceneNode()->attachObject(pm[w]);
-			pm[w]->getEmitter(0)->setEmissionRate(0);  }
+			pSceneMgr->getRootSceneNode()->createChildSceneNode()->attachObject(pm[w]);		pm[w]->getEmitter(0)->setEmissionRate(0);  }
 		if (!pd[w])  {
 			pd[w] = pSceneMgr->createParticleSystem("Dust"+siw, sc->sParDust);
-			pSceneMgr->getRootSceneNode()->createChildSceneNode()->attachObject(pd[w]);
-			pd[w]->getEmitter(0)->setEmissionRate(0);  }
-		if (!pflM[w])  {
-			pflM[w] = pSceneMgr->createParticleSystem("FlMud"+siw, "FluidMud");
-			pSceneMgr->getRootSceneNode()->createChildSceneNode()->attachObject(pflM[w]);
-			pflM[w]->getEmitter(0)->setEmissionRate(0);  }
+			pSceneMgr->getRootSceneNode()->createChildSceneNode()->attachObject(pd[w]);		pd[w]->getEmitter(0)->setEmissionRate(0);  }
+
 		if (!pflW[w])  {
 			pflW[w] = pSceneMgr->createParticleSystem("FlWater"+siw, "FluidWater");
-			pSceneMgr->getRootSceneNode()->createChildSceneNode()->attachObject(pflW[w]);
-			pflW[w]->getEmitter(0)->setEmissionRate(0);  }
+			pSceneMgr->getRootSceneNode()->createChildSceneNode()->attachObject(pflW[w]);	pflW[w]->getEmitter(0)->setEmissionRate(0);  }
+		if (!pflM[w])  {
+			pflM[w] = pSceneMgr->createParticleSystem("FlMud"+siw, "FluidMud");
+			pSceneMgr->getRootSceneNode()->createChildSceneNode()->attachObject(pflM[w]);	pflM[w]->getEmitter(0)->setEmissionRate(0);  }
+		if (!pflMs[w])  {
+			pflMs[w] = pSceneMgr->createParticleSystem("FlMudS"+siw, "FluidMudSoft");
+			pSceneMgr->getRootSceneNode()->createChildSceneNode()->attachObject(pflMs[w]);	pflMs[w]->getEmitter(0)->setEmissionRate(0);  }
 
 		//  trails
 		if (!ndWhE[w])
@@ -600,6 +602,182 @@ void CarModel::Create(int car)
 	UpdParsTrails();
 			
 	setMtrNames();
+	
+	//  this snippet makes sure the brake texture is pre-loaded.
+	//  since it is not used until you actually brake, we have to explicitely declare it
+	ResourceGroupManager::getSingleton().declareResource(sDirname + "_body00_brake.png", "Texture", "Car" + strI);
+	ResourceGroupManager::getSingleton().declareResource(sDirname + "_body00_add.png", "Texture", "Car" + strI);
+	
+	//  now just preload the whole resource group
+	ResourceGroupManager::getSingleton().initialiseResourceGroup("Car" + strI);
+	ResourceGroupManager::getSingleton().loadResourceGroup("Car" + strI);
+}
+
+
+//-------------------------------------------------------------------------------------------------------
+//  utility
+//-------------------------------------------------------------------------------------------------------
+void CarModel::UpdateLightMap()
+{
+	MaterialPtr mtr;
+	for (int i=0; i < NumMaterials; i++)
+	{
+		mtr = (MaterialPtr)MaterialManager::getSingleton().getByName(sMtr[i]);
+		if (!mtr.isNull())
+		{	Material::TechniqueIterator techIt = mtr->getTechniqueIterator();
+			while (techIt.hasMoreElements())
+			{	Technique* tech = techIt.getNext();
+				Technique::PassIterator passIt = tech->getPassIterator();
+				while (passIt.hasMoreElements())
+				{
+					Pass* pass = passIt.getNext();
+
+					if (pass->hasFragmentProgram())
+					{
+						GpuProgramParametersSharedPtr params = pass->getFragmentProgramParameters();
+						params->setIgnoreMissingParams(true); // don't throw exception if material doesnt use lightmap
+						params->setNamedConstant("enableTerrainLightMap", bLightMapEnabled ? Real(1) : Real(0));
+					}
+	}	}	}	}
+}
+
+void CarModel::RefreshBrakingMaterial()
+{
+	std::string texName;
+	if (bBraking)
+	texName = sDirname + "_body00_brake.png";
+	else
+		texName = sDirname + "_body00_add.png";
+	MaterialPtr mtr;
+	for (int i=0; i < NumMaterials; i++)
+	{
+		mtr = (MaterialPtr)MaterialManager::getSingleton().getByName(sMtr[i]);
+		if (!mtr.isNull())
+		{	Material::TechniqueIterator techIt = mtr->getTechniqueIterator();
+			while (techIt.hasMoreElements())
+			{	Technique* tech = techIt.getNext();
+				Technique::PassIterator passIt = tech->getPassIterator();
+				while (passIt.hasMoreElements())
+				{	Pass* pass = passIt.getNext();
+					Pass::TextureUnitStateIterator tusIt = pass->getTextureUnitStateIterator();
+					while (tusIt.hasMoreElements())
+					{
+						TextureUnitState* tus = tusIt.getNext();
+
+						if (tus->getName() == "blendMap")
+							tus->setTextureName( texName );
+	}	}	}	}	}
+}
+
+void CarModel::RecreateMaterials()
+{
+	String strI = toStr(iIndex);
+	String sCar = resCar + "/" + sDirname;
+	bool ghost = eType == CT_GHOST && pSet->rpl_alpha;  //1 || for ghost test
+	
+	// --------- Materials  -------------------
+	
+	// if specialised car material (e.g. car_body_FM) exists, use this one instead of e.g. car_body
+	// useful macro for choosing between these 2 variants
+	#define chooseMat(s) MaterialManager::getSingleton().resourceExists( "car" + String(s) + "_" + sDirname) ? "car"+String(s) + "_" + sDirname : "car"+String(s)
+	
+	//  ghost car has no interior, particles, trails and uses same material for all meshes
+	if (!ghost)
+	{	sMtr[Mtr_CarBody]     = chooseMat("_body");		sMtr[Mtr_CarTireFront]  = chooseMat("tire_front");
+		sMtr[Mtr_CarInterior] = chooseMat("_interior");	sMtr[Mtr_CarTireRear]   = chooseMat("tire_rear");
+		sMtr[Mtr_CarGlass]    = chooseMat("_glass");
+	}else
+	for (int i=0; i<NumMaterials; i++)
+		sMtr[i] = "car_ghost";  //+s old mtr..
+
+	// copy material to a new material with index
+	Ogre::MaterialPtr mat;
+	for (int i=0; i<NumMaterials; i++)
+	{
+		mat = Ogre::MaterialManager::getSingleton().getByName(sMtr[i]);
+		if (Ogre::MaterialManager::getSingleton().resourceExists(sMtr[i] + strI))
+			Ogre::MaterialManager::getSingleton().remove(sMtr[i] + strI);
+		mat->clone(sMtr[i] + strI, false);
+		sMtr[i] = sMtr[i] + strI;
+		// Change color here - cache has to be created before loading model
+		ChangeClr(iIndex);
+
+		//LogO(" === New car mtr name: " + sMtr[i]);
+	}
+	
+	// iterate through all cloned car materials and set correct texture names
+	if (!ghost)
+	for (int i=0; i < NumMaterials; i++)
+	{
+		MaterialPtr mtr = (MaterialPtr)MaterialManager::getSingleton().getByName(sMtr[i]);
+		if (!mtr.isNull())
+		{	Material::TechniqueIterator techIt = mtr->getTechniqueIterator();
+			while (techIt.hasMoreElements())
+			{	Technique* tech = techIt.getNext();
+				Technique::PassIterator passIt = tech->getPassIterator();
+				while (passIt.hasMoreElements())
+				{	Pass* pass = passIt.getNext();
+					Pass::TextureUnitStateIterator tusIt = pass->getTextureUnitStateIterator();
+					while (tusIt.hasMoreElements())
+					{
+						TextureUnitState* tus = tusIt.getNext();
+						String sTex = tus->getTextureName();  //!..
+						
+						// only 1 tire mesh?
+						if ( (i == Mtr_CarTireFront || i == Mtr_CarTireRear) 
+							&& FileExists(sCar + "_wheel.mesh") 
+							&& (tus->getTextureName() == "wheel_front.png" || tus->getTextureName() == "wheel_rear.png") )
+						{
+							// set same texture for both
+							tus->setTextureName("wheel.png");
+						}
+						
+						if (tus->getTextureName() == "body_light.png")
+						{
+							tus->setTextureName(sCar + "_body00_red.png");
+						}
+						else if (tus->getTextureName() == "body_blend.png")
+						{
+							tus->setTextureName(sCar + "_body00_add.png");
+						}
+						else
+						{
+							if (!(StringUtil::startsWith(tus->getTextureName(), "ReflectionCube") ||
+								tus->getTextureName() == "ReflectionCube" ||
+								StringUtil::startsWith(tus->getName(), "shadowmap") ||
+								StringUtil::startsWith(tus->getName(), "terrainlightmap") ||
+								StringUtil::startsWith(tus->getTextureName(), "flat_n")))
+							tus->setTextureName(sDirname + "_" + tus->getTextureName());
+						}
+		}	}	}	}
+		if (pSet->shadow_type == 3)
+			pApp->setMtrSplits(mtr->getName());
+	}
+}
+
+void CarModel::setMtrName(const String& entName, const String& mtrName)
+{
+	Ogre::Entity* ent; Ogre::ManualObject* manual;
+
+	if (pSceneMgr->hasEntity(entName))
+	{
+		pSceneMgr->getEntity(entName)->setMaterialName(mtrName);
+	}
+	else if (pSceneMgr->hasManualObject(entName))
+	{
+		pSceneMgr->getManualObject(entName)->setMaterialName(0, mtrName);
+	}
+}
+
+void CarModel::setMtrNames()
+{
+	if (FileExists(resCar + "/" + sDirname + "_body00_add.png")
+	 && FileExists(resCar + "/" + sDirname + "_body00_red.png"))
+		setMtrName("Car"+toStr(iIndex), sMtr[Mtr_CarBody]);
+	setMtrName("Car.interior"+toStr(iIndex), sMtr[Mtr_CarInterior]);
+	setMtrName("Car.glass"+toStr(iIndex), sMtr[Mtr_CarGlass]);
+	for (int w=0; w<4; ++w)
+		setMtrName("Wheel"+toStr(iIndex)+"_"+toStr(w), w < 2 ? sMtr[Mtr_CarTireFront] : sMtr[Mtr_CarTireRear]);
 }
 
 //  ----------------- Reflection ------------------------
@@ -622,11 +800,14 @@ void CarModel::UpdParsTrails(bool visible)
 		if (w < 2 &&
 			pb[w])	{	pb[w]->setVisible(vis);  pb[w]->setRenderQueueGroup(grp);  }
 		if (whTrl[w]){  whTrl[w]->setVisible(visible && pSet->trails);  whTrl[w]->setRenderQueueGroup(grp);  }  grp = RQG_CarParticles;
+
 		if (ps[w])	{	ps[w]->setVisible(vis);  ps[w]->setRenderQueueGroup(grp);  }  // vdr only && !sc.ter
 		if (pm[w])	{	pm[w]->setVisible(vis);  pm[w]->setRenderQueueGroup(grp);  }
 		if (pd[w])	{	pd[w]->setVisible(vis);  pd[w]->setRenderQueueGroup(grp);  }
-		if (pflM[w]){	pflM[w]->setVisible(vis);  pflM[w]->setRenderQueueGroup(grp);  }
+
 		if (pflW[w]){	pflW[w]->setVisible(vis);  pflW[w]->setRenderQueueGroup(grp);  }
+		if (pflM[w]){	pflM[w]->setVisible(vis);  pflM[w]->setRenderQueueGroup(grp);  }
+		if (pflMs[w]){	pflMs[w]->setVisible(vis);  pflMs[w]->setRenderQueueGroup(grp);  }
 		if (ph)		{	ph->setVisible(vis);     ph->setRenderQueueGroup(grp);     }
 	}
 }
@@ -740,32 +921,5 @@ ManualObject* CarModel::CreateModel(SceneManager* sceneMgr, const String& mat, c
 	}
 	m->end();
 	return m;
-}
-
-
-void CarModel::ReloadTex(String mtrName)
-{
-	MaterialPtr mtr = (MaterialPtr)MaterialManager::getSingleton().getByName(mtrName);
-	if (!mtr.isNull())
-	{	Material::TechniqueIterator techIt = mtr->getTechniqueIterator();
-		while (techIt.hasMoreElements())
-		{	Technique* tech = techIt.getNext();
-			Technique::PassIterator passIt = tech->getPassIterator();
-			while (passIt.hasMoreElements())
-			{	Pass* pass = passIt.getNext();
-				Pass::TextureUnitStateIterator tusIt = pass->getTextureUnitStateIterator();
-				while (tusIt.hasMoreElements())
-				{	TextureUnitState* tus = tusIt.getNext();  String name = tus->getTextureName();
-					if (! (Ogre::StringUtil::startsWith(name, "ReflectionCube", false) || name == "ReflectionCube") )
-					{
-						Ogre::LogManager::getSingletonPtr()->logMessage( "Tex Reload: " + name );
-						TexturePtr tex = (TexturePtr)Ogre::TextureManager::getSingleton().getByName( name );
-						if (!tex.isNull())
-						{							
-							tex->reload();
-						}
-					}
-				}
-	}	}	}	
 }
 

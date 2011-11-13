@@ -33,7 +33,8 @@ void SETTINGS::Serialize(bool w, CONFIGFILE & c)
 	Param(c,w, "display_show.trackmap", trackmap);
 	Param(c,w, "display_show.caminfo", show_cam);			Param(c,w, "display_show.times", show_times);
 	Param(c,w, "display_show.car_dbgtxt", car_dbgtxt);		Param(c,w, "display_show.show_cardbg", car_dbgbars);
-	Param(c,w, "display_show.tracks_view", tracks_view);	Param(c,w, "display_show.tracks_sort", tracks_sort);
+	Param(c,w, "display_show.tracks_view", tracks_view);
+	Param(c,w, "display_show.tracks_sort", tracks_sort);	Param(c,w, "display_show.tracks_sortup", tracks_sortup);
 	Param(c,w, "display_show.check_arrow", check_arrow);
 
 	Param(c,w, "display_size.gauges", size_gauges);			Param(c,w, "display_size.minimap", size_minimap);
@@ -74,7 +75,7 @@ void SETTINGS::Serialize(bool w, CONFIGFILE & c)
 	Param(c,w, "misc.bulletDebug", bltDebug);		Param(c,w, "misc.bulletLines", bltLines);
 	Param(c,w, "misc.bulletProfilerTxt", bltProfilerTxt);
 	Param(c,w, "misc.loadingback", loadingbackground);
-	Param(c,w, "input.x11_capture_mouse", x11_capture_mouse);
+	Param(c,w, "misc.sceneryIdOld", sceneryIdOld);	Param(c,w, "input.x11_capture_mouse", x11_capture_mouse);
 	
 	Param(c,w, "sim.game_fq", game_fq);				Param(c,w, "sim.mult_thr", mult_thr);
 	Param(c,w, "sim.blt_fq", blt_fq);				Param(c,w, "sim.blt_iter", blt_iter);
@@ -97,7 +98,7 @@ void SETTINGS::Serialize(bool w, CONFIGFILE & c)
 
 	Param(c,w, "replay.rec", rpl_rec);				Param(c,w, "replay.ghost", rpl_ghost);
 	Param(c,w, "replay.bestonly", rpl_bestonly);	Param(c,w, "replay.listview", rpl_listview);
-	Param(c,w, "replay.alpha", rpl_alpha);
+	Param(c,w, "replay.alpha", rpl_alpha);			Param(c,w, "replay.ghostpar", rpl_ghostpar);
 }
 
 SETTINGS::SETTINGS() :  ///  Defaults
@@ -109,7 +110,8 @@ SETTINGS::SETTINGS() :  ///  Defaults
 	show_cam(1), show_times(0), show_digits(1), car_dbgtxt(0), car_dbgbars(0),
 	size_gauges(0.18), size_minimap(0.2), zoom_minimap(1.0),
 	mini_zoomed(0), mini_rotated(1), mini_terrain(0),
-	tracks_view(0), tracks_sort(0), check_arrow(0), size_arrow(0.2),
+	tracks_view(0), tracks_sort(0), tracks_sortup(0),
+	check_arrow(0), size_arrow(0.2),
 	//  graphics
 	anisotropy(4),	view_distance(1500), bFog(0),
 	terdetail(2), terdist(100), road_dist(1.0), tex_size(1), ter_mtr(2),
@@ -144,7 +146,9 @@ SETTINGS::SETTINGS() :  ///  Defaults
 	master_server_port(protocol::DEFAULT_PORT),
 	local_port(protocol::DEFAULT_PORT),
 	//  replay
-	rpl_rec(1), rpl_ghost(1), rpl_bestonly(1), rpl_alpha(0), rpl_listview(0)
+	rpl_rec(1), rpl_ghost(1), rpl_bestonly(1),
+	rpl_alpha(0), rpl_ghostpar(0), rpl_listview(0),
+	sceneryIdOld(0)
 {
 	for (int i=0; i < 4; ++i)
 	{	car[i] = "ES";  car_hue[i] = 0.2f*i;  car_sat[i] = 0.f;  car_val[i] = 0.f;  cam_view[0] = 0;  }

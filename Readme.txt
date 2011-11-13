@@ -141,7 +141,7 @@ Track creators
 Artists
     If you can create tree/plant / car models,
     textures for them or for terrain.
-	If you can create/edit sounds for game.
+    If you can create/edit sounds for game.
 
 Programmers
     If you know C++, OGRE or Shaders, and

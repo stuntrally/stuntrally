@@ -3,7 +3,7 @@
 
 #include <vector>
 
-class App;  class MaterialDefinition;  struct ShaderProperties;
+class App;  class MaterialDefinition;  class MaterialGenerator;  struct ShaderProperties;
 
 #include <OgreConfigFile.h>
 #include <OgreHighLevelGpuProgram.h>
@@ -43,6 +43,7 @@ public:
 	///--------------------------------------------------------------------
 	
 	std::vector<std::string> splitMtrs; // list of materials that need pssm split points
+	std::vector<std::string> terrainLightMapMtrs; // list of materials that need terrain lightmap texture and terrainWorldSize
 	
 	shaderMap* getShaderCache() { return &mShaderCache; };
 	
@@ -55,6 +56,9 @@ private:
 	/// -------------------------------------------------------
 
 	std::vector<MaterialDefinition*> mDefinitions;
+	
+	MaterialGenerator* mGenerator;
+	std::vector<MaterialGenerator*> mCustomGenerators;
 	
 	shaderMap mShaderCache;
 	void deleteShaderCache(); // cleanup

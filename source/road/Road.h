@@ -70,7 +70,7 @@ public:
 	//  Update
 	void UpdLodVis(/*Camera* pCam,*/ float fBias=1.f, bool bFull=false), SetForRnd(Ogre::String sMtr),UnsetForRnd();
 	void Pick(Ogre::Camera* mCamera, Ogre::Real mx, Ogre::Real my, bool bAddH=false, bool bHide=false);
-	void ToggleMerge();
+	void ToggleMerge(), SetChecks();
 
 	//  Manipulate  -------
 	SplinePoint newP;  // new point for insert

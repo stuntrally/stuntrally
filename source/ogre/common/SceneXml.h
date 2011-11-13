@@ -70,7 +70,7 @@ public:
 	int id;  // auto set, index to FluidParams, -1 doesnt exist
 	std::string name;
 	class btCollisionObject* cobj;
-	bool isWater;  // auto set,  todo: index to fluid particles array..
+	int idParticles;  // auto set  index for wheel particles  -1 none
 
 	FluidBox();
 };
@@ -117,6 +117,9 @@ public:
 	
 	//  preview cam
 	Ogre::Vector3 camPos,camDir;
+	
+	//  to force regenerating impostors on different sceneries
+	int sceneryId;
 	
 	std::vector<FluidBox> fluids;
 	class FluidsXml* pFluidsXml;  // set this after Load

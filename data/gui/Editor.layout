@@ -377,6 +377,15 @@
 					<Property key="Widget_Colour" value="1 0.6 0.3"/>
 					<UserString key="tip" value="#{TipDeleteTrk}"/>
 				</Widget>
+                <Widget type="StaticText" skin="StaticText" position="16 448 72 24">
+                    <Property key="Widget_Caption" value="#{Find}:"/>
+                    <Property key="Text_TextColour" value="0.7 0.8 0.9"/>
+                </Widget>
+                <Widget type="Edit" skin="Edit" position="16 472 88 24" name="TrackFind">
+                    <Property key="Widget_Colour" value="0.7 0.8 0.9"/>
+                    <Property key="Edit_MaxTextLength" value="20"/>
+                    <Property key="Text_TextColour" value="0.8 0.9 1.0"/>
+                </Widget>
 			</Widget>
 			<Widget type="TabItem" skin="" position="4 26 787 531">
 				<Property key="Widget_Caption" value="#{Sun}"/>
@@ -1679,6 +1688,16 @@
 							<Property key="Widget_Caption" value="#{Change}"/>
 							<Property key="Text_TextColour" value="0.7 1 1"/>
 							<Property key="Widget_Colour" value="0.6 1 1"/>
+						</Widget>
+						<Widget type="StaticText" skin="StaticText" position="188 350 240 24">
+							<Property key="Text_TextColour" value="0.7 0.9 0.9"/>
+							<Property key="Widget_Caption" value="#{RenderSystem} *"/>
+						</Widget>
+						<Widget type="ComboBox" skin="ComboBox" position="188 382 272 24" name="CmbRendSys">
+							<Property key="Text_TextColour" value="0.7 1 1"/>
+							<Property key="Widget_Colour" value="0.7 0.9 0.9"/>
+							<Property key="Edit_Static" value="true"/>
+							<Property key="Edit_ReadOnly" value="true"/>
 						</Widget>
 					</Widget>
 				</Widget>

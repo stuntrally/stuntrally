@@ -4,7 +4,7 @@
 vertex_program ssao_vs cg
 {
     source ssao.cg
-    profiles vs_1_1 arbvp1
+    profiles vs_4_0 vs_1_1 arbvp1
     entry_point ssao_vs
     default_params
     {
@@ -17,17 +17,27 @@ fragment_program ssao_ps cg
     source ssao.cg
     entry_point ssao_ps
     // will run on anything with pixel shader 2.b and up
-    profiles ps_2_x arbfp1
+    profiles ps_4_0 ps_2_x arbfp1
     default_params
     {
     }
 }
 
+vertex_program ssaoBlur_vs cg
+{
+    source ssao.cg
+    profiles vs_4_0 vs_1_1 arbvp1
+    entry_point ssaoBlur_vs
+    default_params
+    {
+        param_named_auto wvp worldviewproj_matrix
+    }
+}
 fragment_program ssaoBlurX_ps cg
 {
     source ssao.cg
     entry_point ssaoBlurX_ps
-    profiles ps_2_x arbfp1
+    profiles ps_4_0 ps_2_x arbfp1
     default_params
     {
         param_named_auto invTexSize inverse_texture_size 0
@@ -38,10 +48,30 @@ fragment_program ssaoBlurY_ps cg
 {
     source ssao.cg
     entry_point ssaoBlurY_ps
-    profiles ps_2_x arbfp1
+    profiles ps_4_0 ps_2_x arbfp1
     default_params
     {
         param_named_auto invTexSize inverse_texture_size 0
+    }
+}
+
+vertex_program ssaoMultiply_vs cg
+{
+    source ssao.cg
+    profiles vs_4_0 vs_1_1 arbvp1
+    entry_point ssaoMultiply_vs
+    default_params
+    {
+        param_named_auto wvp worldviewproj_matrix
+    }
+}
+fragment_program ssaoMultiply_ps cg
+{
+    source ssao.cg
+    entry_point ssaoMultiply_ps
+    profiles ps_4_0 ps_2_x arbfp1
+    default_params
+    {
     }
 }
 
@@ -80,6 +110,9 @@ material ssaoBlurX
     {
         pass
         {
+			vertex_program_ref ssaoBlur_vs
+            {
+            }
             fragment_program_ref ssaoBlurX_ps
             {
             }
@@ -105,6 +138,9 @@ material ssaoBlurY
     {
         pass
         {
+			vertex_program_ref ssaoBlur_vs
+            {
+            }
             fragment_program_ref ssaoBlurY_ps
             {
             }
@@ -130,15 +166,22 @@ material modulate
     {
         pass
         {
-            lighting off
+        //    lighting off
+			vertex_program_ref ssaoMultiply_vs
+            {
+            }
+        
+		    fragment_program_ref ssaoMultiply_ps
+            {
+            }
 
-            texture_unit
+            texture_unit tex1
             {
                 texture white.png
                 filtering bilinear
             }
 
-            texture_unit
+            texture_unit tex2
             {
                 texture white.png
                 filtering bilinear

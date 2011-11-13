@@ -1,10 +1,12 @@
 #include "pch.h"
 #include "../Defines.h"
 
-#include "MaterialProperties.h"
 #include "MaterialFactory.h"
 #include "MaterialDefinition.h"
 #include "MaterialGenerator.h"
+#include "GlassMaterial.h"
+#include "PipeGlassMaterial.h"
+//#include "WaterMaterial.h"
 #include "ShaderProperties.h"
 
 #ifndef ROAD_EDITOR
@@ -37,8 +39,23 @@ MaterialFactory::MaterialFactory() :
 		{
 			loadDefsFromFile( (*fit) );
 		}
-		
 	}
+	
+	// create our generators
+	mGenerator = new MaterialGenerator();
+	mGenerator->mParent = this;
+	
+	MaterialGenerator* glass = static_cast<MaterialGenerator*>(new GlassMaterialGenerator());
+	glass->mParent = this;
+	mCustomGenerators.push_back(glass);
+	
+	MaterialGenerator* pipeglass = static_cast<MaterialGenerator*>(new PipeGlassMaterialGenerator());
+	pipeglass->mParent = this;
+	mCustomGenerators.push_back(pipeglass);
+	
+	//MaterialGenerator* water = static_cast<MaterialGenerator*>(new WaterMaterialGenerator());
+	//water->mParent = this;
+	//mCustomGenerators.push_back(water);
 }
 
 //----------------------------------------------------------------------------------------
@@ -48,8 +65,14 @@ MaterialFactory::~MaterialFactory()
 	for (std::vector<MaterialDefinition*>::iterator it=mDefinitions.begin();
 		it!=mDefinitions.end(); ++it)
 		delete (*it);
-		
+	
 	deleteShaderCache();
+	
+	delete mGenerator;
+	
+	std::vector<MaterialGenerator*>::iterator gIt;
+	for (gIt = mCustomGenerators.begin(); gIt != mCustomGenerators.end(); ++gIt)
+		delete (*gIt);
 }
 
 //----------------------------------------------------------------------------------------
@@ -159,18 +182,6 @@ void MaterialFactory::loadDefsFromFile(const std::string& file)
 		++defI;
 	}
 	
-	// debug output of material definitions and properties.
-	/*for (std::vector<MaterialDefinition*>::iterator it=mDefinitions.begin();
-			it!=mDefinitions.end(); ++it)
-	{
-		LogO("[MaterialFactory] loaded material definition " + (*it)->getName() );
-		LogO("[MaterialFactory] attributes:");
-		#define prop(s) LogO("[MaterialFactory]  - "#s": " + StringConverter::toString((*it)->getProps()->s));
-		#define propS(s) LogO("[MaterialFactory]  - "#s": " + (*it)->getProps()->s);
-		propS(envMap); prop(hasFresnel);
-		prop(fresnelBias); prop(fresnelScale); prop(fresnelPower); prop(receivesShadows); prop(receivesDepthShadows);
-	}*/
-	
 	LogO("[MaterialFactory] loaded " + toStr(defI) + " definitions from " + file);
 }
 
@@ -185,15 +196,39 @@ void MaterialFactory::generate()
 		
 		deleteShaderCache();
 		splitMtrs.clear();
-		
-		MaterialGenerator generator;
-		generator.mParent = this;
+		terrainLightMapMtrs.clear();
 		
 		for (std::vector<MaterialDefinition*>::iterator it=mDefinitions.begin();
 			it!=mDefinitions.end(); ++it)
 		{
 			// don't generate abstract materials
 			if ((*it)->getProps()->abstract) continue;
+			
+			//LogO("generating " + (*it)->getName());
+			
+			// find an appropriate generator
+			MaterialGenerator* generator;
+			if ((*it)->getProps()->customGenerator == "")
+				generator = mGenerator; // default
+			else
+			{
+				// iterate through custom generators
+				std::vector<MaterialGenerator*>::iterator gIt;
+				for (gIt = mCustomGenerators.begin(); gIt != mCustomGenerators.end(); ++gIt)
+				{
+					if ( (*gIt)->mName == (*it)->getProps()->customGenerator)
+					{
+						generator = (*gIt);
+						break;
+					}
+				}
+				if (gIt == mCustomGenerators.end())
+				{
+					LogO("[MaterialFactory] WARNING: Custom generator '" + (*it)->getProps()->customGenerator + "' \
+referenced by material '" + (*it)->getName() + "' not found. Using default generator.");
+					generator = mGenerator; 
+				}
+			}
 
 			// shader cache - check if same shader already exists
 			ShaderProperties* shaderProps = new ShaderProperties( (*it)->mProps, this );
@@ -211,24 +246,26 @@ void MaterialFactory::generate()
 			}
 			
 			if (!exists)
-				generator.mShaderCached = false;
+				generator->mShaderCached = false;
 			else
 			{
-				generator.mShaderCached = true;
-				generator.mVertexProgram = sit->first.first;
-				generator.mFragmentProgram = sit->first.second;
+				generator->mShaderCached = true;
+				generator->mVertexProgram = sit->first.first;
+				generator->mFragmentProgram = sit->first.second;
 			}
 			
-			generator.mDef = (*it);
-			generator.mShader = shaderProps;
-			generator.generate();
+			generator->mDef = (*it);
+			generator->mShader = shaderProps;
+			generator->generate();
 			
 			// insert into cache
 			if (!exists)
 			{
-				if (!generator.mVertexProgram.isNull() && !generator.mFragmentProgram.isNull()) 
-					mShaderCache[ std::make_pair(generator.mVertexProgram, generator.mFragmentProgram) ] = shaderProps;
+				if (!generator->mVertexProgram.isNull() && !generator->mFragmentProgram.isNull()) 
+					mShaderCache[ std::make_pair(generator->mVertexProgram, generator->mFragmentProgram) ] = shaderProps;
 			}
+			else
+				delete shaderProps;
 		}
 		
 		bSettingsChanged = false;

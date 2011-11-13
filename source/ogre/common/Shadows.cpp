@@ -186,6 +186,35 @@ void App::changeShadows()
 	materialFactory->setShadows(pSet->shadow_type != 0);
 	materialFactory->setShadowsDepth(bDepth);
 	materialFactory->generate();
+	
+	// set terrain lightmap texture and terrainWorldSize for all materials that need it
+	if (terrain) // naive check if a game has been started already
+	{
+		for (std::vector<std::string>::const_iterator it = materialFactory->terrainLightMapMtrs.begin();
+			it != materialFactory->terrainLightMapMtrs.end(); ++it)
+		{
+			MaterialPtr mtr = MaterialManager::getSingleton().getByName( (*it) );
+			
+			if (!mtr.isNull())
+			{	Material::TechniqueIterator techIt = mtr->getTechniqueIterator();
+				while (techIt.hasMoreElements())
+				{	Technique* tech = techIt.getNext();
+					Technique::PassIterator passIt = tech->getPassIterator();
+					while (passIt.hasMoreElements())
+					{	Pass* pass = passIt.getNext();
+						Pass::TextureUnitStateIterator tusIt = pass->getTextureUnitStateIterator();
+						while (tusIt.hasMoreElements())
+						{
+							TextureUnitState* tus = tusIt.getNext();
+							if (tus->getName() == "terrainLightMap")
+							{
+								tus->setTextureName( terrain->getLightmap()->getName() );
+								pass->getFragmentProgramParameters()->setNamedConstant( "terrainWorldSize", Real( sc.td.fTerWorldSize ) );
+							}
+						}
+			}	}	}
+		}
+	}
 		
 	UpdPSSMMaterials();
 
@@ -198,11 +227,13 @@ void App::changeShadows()
 void App::setMtrSplits(String sMtrName)
 {
 	MaterialPtr mat = MaterialManager::getSingleton().getByName(sMtrName);
-	if (!mat.isNull())
+	if (!mat.isNull() && mat->getNumTechniques()>0)
 	{
 		unsigned short np = mat->getTechnique(0)->getNumPasses()-1;  // last  unsigned!
 		try {
-			if (mat->getTechnique(0)->getPass(np)->hasFragmentProgram())
+			if (mat->getTechnique(0)->getPass(np)->hasFragmentProgram() 
+				&& mat->getTechnique(0)->getPass(np)->getFragmentProgramParameters()->_findNamedConstantDefinition("pssmSplitPoints",false)
+				)
 				mat->getTechnique(0)->getPass(np)->getFragmentProgramParameters()->setNamedConstant("pssmSplitPoints", splitPoints);
 		} catch(...) { }
 		
@@ -247,7 +278,10 @@ void App::UpdPSSMMaterials()	/// . . . . . . . .
 	
 	for (std::vector<std::string>::iterator it = materialFactory->splitMtrs.begin();
 		it != materialFactory->splitMtrs.end(); ++it)
+	{
+		//LogO("Set splits: " + (*it) );
 		setMtrSplits( (*it) );
+	}
 
 	if (!road)  return;
 	String txs = road->iTexSize == 0 ? "_s": "";
