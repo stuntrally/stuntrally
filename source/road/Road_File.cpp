@@ -53,6 +53,31 @@ void SplineRoad::ToggleMerge()
 	RebuildRoad(true);
 }
 
+
+void SplineRoad::SetChecks()  // after xml load
+{
+	///  add checkpoints  * * *
+	mChks.clear();  iChkId1 = 0;
+	for (int i=0; i < mP.size(); ++i)  //=getNumPoints
+	{
+		if (mP[i].chkR > 0.f)
+		{
+			CheckSphere cs;
+			cs.pos = mP[i].pos;  // +ofs_y ?-
+			cs.r = mP[i].chkR * mP[i].width;
+			cs.r2 = cs.r * cs.r;
+
+			if (i == iP1)  //1st checkpoint
+				iChkId1 = mChks.size();
+
+			mChks.push_back(cs);
+		}
+	}
+	int num = (int)mChks.size();
+	if (num > 0)  //1st checkpoint for reverse
+		iChkId1Rev = (iChkId1 - iDir + num) % num;
+}
+
 	
 
 ///  update road lods visibility
@@ -246,6 +271,8 @@ bool SplineRoad::LoadFile(String fname, bool build)
 	#endif
 	newP.SetDefault();
 	iChosen = -1;  //std::max(0, std::min((int)(mP.size()-1), iChosen));
+	
+	SetChecks();
 	if (build)  RebuildRoad(true);
 	return true;
 }

@@ -93,7 +93,6 @@ protected:
 		Mtr_CarTireFront, Mtr_CarTireRear,
 		Mtr_Road,  NumMaterials  };
 	Ogre::String sMtr[NumMaterials];
-	void reloadMtrTex(Ogre::String mtrName);
 
 	//  2D, hud  ----
 	float asp,  xcRpm, ycRpm, xcVel, ycVel,
@@ -276,7 +275,7 @@ protected:
 	MyGUI::ScrollBar* slRplPos;  void slRplPosEv(SL);
 	MyGUI::EditPtr edRplName, edRplDesc;
 	void btnRplLoad(WP), btnRplSave(WP), btnRplDelete(WP), btnRplRename(WP),  // btn
-		chkRplAutoRec(WP),chkRplChkGhost(WP),chkRplChkBestOnly(WP),chkRplChkAlpha(WP),  // settings
+		chkRplAutoRec(WP),chkRplChkGhost(WP),chkRplChkBestOnly(WP),chkRplChkAlpha(WP),chkRplChkPar(WP),  // replay
 		btnRplToStart(WP),btnRplToEnd(WP), btnRplPlay(WP),  // controls
 		btnRplCur(WP),btnRplAll(WP),btnRplGhosts(WP);  // radio
 	MyGUI::ButtonPtr rbRplCur, rbRplAll, rbRplGhosts;

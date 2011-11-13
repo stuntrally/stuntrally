@@ -18,7 +18,6 @@
 
 
 /* some helpful OIS macro */
-//#cmakedefine
-#define  OIS_USING_DIR
+//#cmakedefine OIS_USING_DIR
 
 #endif //PagedGeometryConfig_h__

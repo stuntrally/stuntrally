@@ -187,9 +187,9 @@ private:
 	friend class GrassLayer;
 
 	//Helper functions
-	Ogre::Mesh *generateGrass_QUAD(PageInfo &page, GrassLayer *layer, float *grassPositions, unsigned int grassCount);
-	Ogre::Mesh *generateGrass_CROSSQUADS(PageInfo &page, GrassLayer *layer, float *grassPositions, unsigned int grassCount);
-	Ogre::Mesh *generateGrass_SPRITE(PageInfo &page, GrassLayer *layer, float *grassPositions, unsigned int grassCount);
+	Ogre::Mesh *generateGrass_QUAD(PageInfo &page, GrassLayer *layer, const float *grassPositions, unsigned int grassCount);
+	Ogre::Mesh *generateGrass_CROSSQUADS(PageInfo &page, GrassLayer *layer, const float *grassPositions, unsigned int grassCount);
+	Ogre::Mesh *generateGrass_SPRITE(PageInfo &page, GrassLayer *layer, const float *grassPositions, unsigned int grassCount);
 
 	//List of grass types
 	std::list<GrassLayer*> layerList;
@@ -313,7 +313,7 @@ public:
 	This returns the currently set maximum slope which is used to determine what ground is too steep
 	for grass to be placed on. Note that this returns the slope as a slope ratio, not an angle. If you
 	need an angle value, convert with ATan() (maxSlopeAngle = ATan(maxSlopeRatio)).*/
-	float getMaxSlope() const { return maxSlope; }
+	Ogre::Real getMaxSlope() const { return maxSlope; }
 
 	/** \brief Sets the density map used for this grass layer
 	\param mapFile The density map image
@@ -425,7 +425,7 @@ public:
 	Note that although you can edit the density map in real-time through this class, the changes
 	won't be uploaded to your video card until you call PagedGeometry::reloadGeometry(). If you
 	don't, the grass you see will remain unchanged. */
-	DensityMap *getDensityMap() { return densityMap; }
+	DensityMap* getDensityMap() const { return densityMap; }
 
 	/** \brief Gets a pointer to the color map being used
 
@@ -436,7 +436,7 @@ public:
 	Note that although you can edit the color map in real-time through this class, the changes
 	won't be uploaded to your video card until you call PagedGeometry::reloadGeometry(). If you
 	don't, the grass you see will remain unchanged. */
-	ColorMap *getColorMap() { return colorMap; }
+	ColorMap* getColorMap() const { return colorMap; }
 
 	/** \brief Sets the technique used to render this grass layer
 	\param style The GrassTechnique style used to display grass.
@@ -482,10 +482,10 @@ public:
 
 	\note Since this is measured in world units, you may have to adjust this depending on
 	the size of your grass as set by setMinimumSize() and setMaximumSize().*/
-	void setSwayLength(float mag) { animMag = mag; }
+	void setSwayLength(Ogre::Real mag) { animMag = mag; }
 
 	/** \brief Sets the sway speed of the grass (measured in "sways-per-second") */
-	void setSwaySpeed(float speed) { animSpeed = speed; }
+	void setSwaySpeed(Ogre::Real speed) { animSpeed = speed; }
 
 	/** \brief Sets the smooth distribution (positional phase shift) of the grass swaying animation
 
@@ -495,7 +495,7 @@ public:
 	distribution. The higher this value is, the more "chaotic" the wind will appear. Lower values give
 	a smoother breeze appearance, but values too high can look unrealistic.
 	*/
-	void setSwayDistribution(float freq) { animFreq = freq; }
+	void setSwayDistribution(Ogre::Real freq) { animFreq = freq; }
 
 private:
 	friend class GrassLoader;
@@ -526,12 +526,12 @@ private:
 
 	//Grass material/shape properties
 	Ogre::MaterialPtr material;
-	float density;
-	float minWidth, maxWidth;
-	float minHeight, maxHeight;
+   Ogre::Real density;
+	Ogre::Real minWidth, maxWidth;
+	Ogre::Real minHeight, maxHeight;
 
-	float minY, maxY;
-    float maxSlope;
+	Ogre::Real minY, maxY;
+   Ogre::Real maxSlope;
 
 	FadeTechnique fadeTechnique;
 	GrassTechnique renderTechnique;
@@ -547,10 +547,10 @@ private:
 
 	//Grass shader properties
 	bool animate, blend, lighting, shaderNeedsUpdate;
-	float animMag, animSpeed, animFreq;
+	Ogre::Real animMag, animSpeed, animFreq;
 
 	//Current frame of animation for this layer
-	float waveCount;
+	Ogre::Real waveCount;
 
 	PagedGeometry *geom;
 };

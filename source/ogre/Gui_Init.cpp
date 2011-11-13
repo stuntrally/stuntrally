@@ -167,6 +167,7 @@ void App::InitGui()
 	Chk("RplChkGhost", chkRplChkGhost, pSet->rpl_ghost);
 	Chk("RplChkBestOnly", chkRplChkBestOnly, pSet->rpl_bestonly);
 	Chk("RplChkAlpha", chkRplChkAlpha, pSet->rpl_alpha);
+	Chk("RplChkParticles", chkRplChkPar, pSet->rpl_ghostpar);
 	//  radios
 	Btn("RplBtnAll", btnRplAll);  rbRplAll = btn;
 	Btn("RplBtnCur", btnRplCur);  rbRplCur = btn;

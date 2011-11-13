@@ -22,10 +22,12 @@ namespace OIS  {  class InputManager;  class Mouse;  class Keyboard;  }
 namespace OISB {  class System;  };
 class ShaderGeneratorTechniqueResolverListener;
 
+
 class BaseApp :
 		public Ogre::FrameListener, public Ogre::WindowEventListener,
 		public OIS::KeyListener, public OIS::MouseListener, public OIS::JoyStickListener
 {
+	friend class CarModel;
 public:
 	BaseApp();	virtual ~BaseApp();
 	virtual void Run( bool showDialog );

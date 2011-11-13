@@ -7,20 +7,28 @@ class App;  class MaterialDefinition;  class MaterialGenerator;  struct ShaderPr
 
 #include <OgreConfigFile.h>
 #include <OgreHighLevelGpuProgram.h>
+#include <OgreSingleton.h>
 
 // std::map< std::pair< vertexShader, pixelShader > , shaderProperties >
 typedef std::map< std::pair< Ogre::HighLevelGpuProgramPtr, Ogre::HighLevelGpuProgramPtr >, ShaderProperties* > shaderMap;
 
-class MaterialFactory
+class MaterialFactory : public Ogre::Singleton<MaterialFactory>
 {
 public:
 	MaterialFactory();
 	~MaterialFactory();
 	
+    static MaterialFactory& getSingleton(void);
+    static MaterialFactory* getSingletonPtr(void);
+	
 	// maximum of 4 shadow textures
 	static const unsigned int SHADOWTEX_NUM_MAX = 4;
 	
 	void generate();
+	
+	/// settings that can change runtime
+	void setFog(bool fog);
+	
 	
 	/// user settings get/set ---------------------------------------------
 	#define setIfChanged(s) if (p != s) { s = p; bSettingsChanged = true; }
@@ -44,6 +52,7 @@ public:
 	
 	std::vector<std::string> splitMtrs; // list of materials that need pssm split points
 	std::vector<std::string> terrainLightMapMtrs; // list of materials that need terrain lightmap texture and terrainWorldSize
+	std::vector<std::string> fogMtrs; // list of materials that involve fog
 	
 	shaderMap* getShaderCache() { return &mShaderCache; };
 	

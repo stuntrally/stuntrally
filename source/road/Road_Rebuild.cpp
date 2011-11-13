@@ -819,30 +819,6 @@ void SplineRoad::RebuildRoadInt()
 	//  lod end
 
 	
-	///  add checkpoints  * * *
-	if (iDirtyId == -1)  // full rebuild
-	{
-		mChks.clear();  iChkId1 = 0;
-		for (int i=0; i < segs; ++i)  //=getNumPoints
-		{
-			if (mP[i].chkR > 0.f)
-			{
-				CheckSphere cs;
-				cs.pos = mP[i].pos;  // +ofs_y ?-
-				cs.r = mP[i].chkR * mP[i].width;
-				cs.r2 = cs.r * cs.r;
-
-				if (i == iP1)  //1st checkpoint
-					iChkId1 = mChks.size();
-
-				mChks.push_back(cs);
-			}
-		}
-		int num = (int)mChks.size();
-		if (num > 0)  //1st checkpoint for reverse
-			iChkId1Rev = (iChkId1 - iDir + num) % num;
-	}
-
 	UpdLodVis(fLodBias);
 	if (iDirtyId == -1)
 		iOldHide = -1;
