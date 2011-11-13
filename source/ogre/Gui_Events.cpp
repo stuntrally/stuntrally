@@ -380,7 +380,7 @@ bool App::keyPressed( const OIS::KeyEvent &arg )
 	OISB::System::getSingleton().process(0.001/*?0*/);
 	
 	// action key == pressed key
-	#define action(s) actionIsActive(s, mKeyboard->getAsString(arg.key))
+	#define action(s)  actionIsActive(s, mKeyboard->getAsString(arg.key))
 
 	if (!bAssignKey)
 	{
@@ -395,48 +395,21 @@ bool App::keyPressed( const OIS::KeyEvent &arg )
 		if (action("ShowOptions"))
 		{	toggleGui();  return false;  }
 	
-		//  new game
+		//  new game - reload
 		if (action("RestartGame"))
-		if (ctrl)
 		{	NewGame();  return false;	}
-		else
-		{	///  reset car
-			carModels[0]->pCar->ResetPos(false);
-			carModels[0]->fCam->first = true;
-			pGame->timer.Reset(0);
-			carModels[0]->ResetChecks();
-		}
 
-		///  Cameras  ---------------------------------
-		if (!isFocGui)
+		//  new game - fast (same track & cars)
+		if (action("ResetGame"))
 		{
-			int iChgCam = 0;
-			if (action("NextCamera"))  iChgCam = 1;  // Next
-			if (action("PrevCamera"))  iChgCam =-1;  // Prev
-			if (iChgCam)
+			for (int c=0; c < carModels.size(); ++c)
 			{
-				if (ctrl)
-					//  change current camera car index
-					iCurCam = (iCurCam + iChgCam +pSet->local_players) % pSet->local_players;
-				else
-				{	int visMask = 255, i = 0;
-					roadUpCnt = 0;
-
-					for (std::vector<CarModel*>::iterator it=carModels.begin(); it!=carModels.end(); it++, i++)
-					if (i == iCurCam)
-					{
-						if ((*it)->fCam)
-						{	(*it)->fCam->Next(iChgCam < 0, shift);
-							carsCamNum[i] = (*it)->fCam->miCurrent +1;  // save for pSet
-							if ((*it)->fCam->ca->mHideGlass)  visMask = RV_MaskAll-RV_CarGlass;
-							else        visMask = RV_MaskAll;
-						}
-					}
-					for (std::list<Viewport*>::iterator it=mSplitMgr->mViewports.begin(); it!=mSplitMgr->mViewports.end(); it++)
-						(*it)->setVisibilityMask(visMask);
-				}
-				return false;
-		}	}
+				if (carModels[c]->pCar)  carModels[c]->pCar->ResetPos(true);
+				if (carModels[c]->fCam)  carModels[c]->fCam->first = true;
+				carModels[c]->ResetChecks();
+			}
+			pGame->timer.Reset(0);
+		}
 	}
 	
 	using namespace OIS;

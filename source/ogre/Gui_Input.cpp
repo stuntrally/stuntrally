@@ -103,30 +103,28 @@ void App::InitInputGui()
 		int i = 0, y = 0, ya = 26 / 2, yc=0;
 		std::map <std::string, int> yRow;
 		// player
-		yRow["Throttle"] = y;	y+=2;	yRow["Brake"] = y;		y+=2;
-		yRow["Steering"] = y;	y+=2+1 +2;
-		yRow["HandBrake"] = y;	y+=2;	yRow["Boost"] = y;		y+=2;
-		yRow["Flip"] = y;
-		yRow["FlipRight"] = y;	y+=2;	yRow["FlipLeft"] = y;	y+=2 +1;
-		yRow["ShiftUp"] = y;	y+=2;	yRow["ShiftDown"] = y;	y+=2;
-		// general
-		y = 0;
+		yRow["Throttle"] = y;	y+=2;	yRow["Brake"] = y;	y+=2;	yRow["Steering"] = y;	y+=2+1 +2;
+		yRow["HandBrake"] = y;	y+=2;	yRow["Boost"] = y;	y+=2;	yRow["Flip"] = y;		y+=2+1 +2;
+		yRow["ShiftUp"] = y;	y+=2;	yRow["ShiftDown"] = y;	y+=2 +1;
+		yRow["PrevCamera"] = y; y+=2;	yRow["NextCamera"] = y; y+=2+1;  //yc = 40 + ya * y;
+		yRow["LastChk"] = y;	y+=2;
+		y = 0;  // general
 		yRow["ShowOptions"] = y; y+=2+1;
 		yRow["PrevTab"] = y;     y+=2;	yRow["NextTab"] = y;    y+=2+1;
-		yRow["RestartGame"] = y; y+=2+1;
-		yRow["PrevCamera"] = y;  y+=2;
-		yRow["NextCamera"] = y;  y+=2+1;  yc = 40 + ya * y;
+		yRow["RestartGame"] = y; y+=2;
+		yRow["ResetGame"] = y;   y+=2+1;	yc = 40 + ya * y;
 
 		bool playerTab = Ogre::StringUtil::startsWith( sPlr, "player");
 		if (!playerTab)
-		{	//  camera infos
-			CreateText(40, yc+0*ya, 280, 24, "txtcam1", TR("#C0D8F0#{InputCameraTxt1}"));
-			CreateText(40, yc+2*ya, 280, 24, "txtcam1", TR("#C0D8F0#{InputCameraTxt2}"));
+		{	y = yc+2*ya;  //  camera infos
+			CreateText(20,y, 280,24, "txtcam1", TR("#B0D8F8#{InputMapNextCamera} / #{InputMapPrevCamera}"));  y+=2*ya;
+			CreateText(40,y, 280,24, "txtcam2", TR("#B0D8F8#{InputCameraTxt1}"));  y+=2*ya;
+			CreateText(40,y, 280,24, "txtcam3", TR("#B0D8F8#{InputCameraTxt2}"));  y+=3*ya;
 			//  replay controls info text
-			CreateText(20, yc+5*ya, 500, 24, "txtrpl1", TR("#A0D8FF#{InputRplCtrl0}"));
-			CreateText(40, yc+7*ya, 500, 24, "txtrpl2", TR("#90C0FF#{InputRplCtrl1}"));
-			CreateText(40, yc+9*ya, 500, 24, "txtrpl3", TR("#90C0FF#{InputRplCtrl2}"));
-			CreateText(40, yc+11*ya,500, 24, "txtrpl4", TR("#90C0FF#{InputRplCtrl3}"));
+			CreateText(20,y, 500,24, "txtrpl1", TR("#C0E0FF#{InputRplCtrl0}"));  y+=2*ya;
+			CreateText(40,y, 500,24, "txtrpl2", TR("#90C0FF#{InputRplCtrl1}"));  y+=2*ya;
+			CreateText(40,y, 500,24, "txtrpl3", TR("#90C0FF#{InputRplCtrl2}"));  y+=2*ya;
+			CreateText(40,y, 500,24, "txtrpl4", TR("#90C0FF#{InputRplCtrl3}"));  y+=2*ya;
 		}
 		
 		///  Actions  ------------------------------------------------
@@ -194,10 +192,13 @@ void App::InitInputGui()
 			}
 			
 			//  value bar  --------------
-			StaticImagePtr bar = tabitem->createWidget<StaticImage>("StaticImage",
-				x2 + (button2 ? 0 : 64), y+4, button2 ? 128 : 64, 16, ALIGN,
-				"bar_" + sAct + "_" + sPlr);
-			bar->setImageTexture("input_bar.png");  bar->setImageCoord(IntCoord(0,0,128,16));
+			if (playerTab)
+			{
+				StaticImagePtr bar = tabitem->createWidget<StaticImage>("StaticImage",
+					x2 + (button2 ? 0 : 64), y+4, button2 ? 128 : 64, 16, ALIGN,
+					"bar_" + sAct + "_" + sPlr);
+				bar->setImageTexture("input_bar.png");  bar->setImageCoord(IntCoord(0,0,128,16));
+			}
 
 			//  detail btn  ----------------
 			if (analog)

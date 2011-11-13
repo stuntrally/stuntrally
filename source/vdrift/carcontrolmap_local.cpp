@@ -69,6 +69,12 @@ if (oneAxis)
 	inputs[CARINPUT::HANDBRAKE] = analogAction(sPlr+"HandBrake");
 	inputs[CARINPUT::BOOST]     = analogAction(sPlr+"Boost");
 	inputs[CARINPUT::FLIP]      = analogAction(sPlr+"Flip", true);
+	
+	//  cam
+	inputs[CARINPUT::PREV_CAM]	= action(sPlr+"PrevCamera");
+	inputs[CARINPUT::NEXT_CAM]	= action(sPlr+"NextCamera");
+	//  last chk
+	inputs[CARINPUT::LAST_CHK]	= action(sPlr+"LastChk");
 
 	return inputs;
 }
