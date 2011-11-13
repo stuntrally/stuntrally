@@ -28,12 +28,12 @@ CarReflection::~CarReflection()
 	
 	for (int face = 0; face < 6; face++)
 	{
-		try{
+		std::string camName = "Reflect_" + toStr(iIndex) + "_" + toStr(face);
+		if (pSceneMgr->hasCamera(camName))
+		{
 			Camera* cam = pSceneMgr->getCamera("Reflect_" + toStr(iIndex) + "_" + toStr(face));
-			if (cam) {	pSceneMgr->destroyCamera(cam);
-				LogO("destroy refl cam ok");  }
-		}catch(...) {
-			LogO("destroy refl cam err");  }
+			pSceneMgr->destroyCamera(cam);
+		}
 	}
 
 	// destroy cube tex - only if created by ourself
