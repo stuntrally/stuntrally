@@ -32,7 +32,8 @@ using namespace Ogre;
 CarModel::CarModel(unsigned int index, eCarType type, const std::string name,
 	Ogre::SceneManager* sceneMgr, SETTINGS* set, GAME* game, Scene* s, Ogre::Camera* cam, App* app) :
 	fCam(0), pMainNode(0), pCar(0), terrain(0), resCar(""), mCamera(0), pReflect(0), pApp(app), color(1,0,0),
-	bLightMapEnabled(true), bBraking(false)
+	bLightMapEnabled(true), bBraking(false),
+	iCamNextOld(0), bLastChkOld(0)	
 {
 	iIndex = index;  sDirname = name;  pSceneMgr = sceneMgr;
 	pSet = set;  pGame = game;  sc = s;  mCamera = cam;  eType = type;
@@ -115,6 +116,7 @@ void CarModel::ResetChecks()  // needs to be done after road load!
 }
 
 
+//-------------------------------------------------------------------------------------------------------
 //  Update
 //-------------------------------------------------------------------------------------------------------
 void CarModel::Update(PosInfo& posInfo, float time)
@@ -327,176 +329,58 @@ void CarModel::Update(PosInfo& posInfo, float time)
 	
 	// blendmaps
 	UpdWhTerMtr();
+	
+	UpdateKeys();
 }
 
-void CarModel::UpdateLightMap()
+
+void CarModel::UpdateKeys()
 {
-	MaterialPtr mtr;
-	for (int i=0; i < NumMaterials; i++)
+	if (!pCar)  return;
+
+	///  go to last checkp.
+	if (pCar->bLastChk && !bLastChkOld)
 	{
-		mtr = (MaterialPtr)MaterialManager::getSingleton().getByName(sMtr[i]);
-		if (!mtr.isNull())
-		{	Material::TechniqueIterator techIt = mtr->getTechniqueIterator();
-			while (techIt.hasMoreElements())
-			{	Technique* tech = techIt.getNext();
-				Technique::PassIterator passIt = tech->getPassIterator();
-				while (passIt.hasMoreElements())
-				{
-					Pass* pass = passIt.getNext();
+		pCar->ResetPos(false);
+		if (fCam)
+			fCam->first = true;
+		else
+			LogO("no fCam");
+	}
+	bLastChkOld = pCar->bLastChk;
 
-					if (pass->hasFragmentProgram())
-					{
-						GpuProgramParametersSharedPtr params = pass->getFragmentProgramParameters();
-						params->setIgnoreMissingParams(true); // don't throw exception if material doesnt use lightmap
-						params->setNamedConstant("enableTerrainLightMap", bLightMapEnabled ? Real(1) : Real(0));
-					}
-	}	}	}	}
-}
-
-void CarModel::RefreshBrakingMaterial()
-{
-	std::string texName;
-	if (bBraking)
-	texName = sDirname + "_body00_brake.png";
-	else
-		texName = sDirname + "_body00_add.png";
-	MaterialPtr mtr;
-	for (int i=0; i < NumMaterials; i++)
+	///  change Cameras  ---------------------------------
+	//if (!pApp->isFocGui)
+	if (pCar->iCamNext != 0 && iCamNextOld == 0)
 	{
-		mtr = (MaterialPtr)MaterialManager::getSingleton().getByName(sMtr[i]);
-		if (!mtr.isNull())
-		{	Material::TechniqueIterator techIt = mtr->getTechniqueIterator();
-			while (techIt.hasMoreElements())
-			{	Technique* tech = techIt.getNext();
-				Technique::PassIterator passIt = tech->getPassIterator();
-				while (passIt.hasMoreElements())
-				{	Pass* pass = passIt.getNext();
-					Pass::TextureUnitStateIterator tusIt = pass->getTextureUnitStateIterator();
-					while (tusIt.hasMoreElements())
-					{
-						TextureUnitState* tus = tusIt.getNext();
+		//  with ctrl - change current camera car index  (mouse move camera for many players)
+		if (pApp->ctrl && iIndex == 0)
+			pApp->iCurCam = (pApp->iCurCam + pCar->iCamNext + pSet->local_players) % pSet->local_players;
+		else
+		{
+			int visMask = 255;
+			pApp->roadUpCnt = 0;
 
-						if (tus->getName() == "blendMap")
-							tus->setTextureName( texName );
-	}	}	}	}	}
+			if (fCam)
+			{	fCam->Next(pCar->iCamNext < 0, pApp->shift);
+				pApp->carsCamNum[iIndex] = fCam->miCurrent +1;  // save for pSet
+				visMask = fCam->ca->mHideGlass ? RV_MaskAll-RV_CarGlass : RV_MaskAll;
+			}
+			else
+				LogO("no fCam");
+
+			for (std::list<Viewport*>::iterator it = pApp->mSplitMgr->mViewports.begin();
+				it != pApp->mSplitMgr->mViewports.end(); ++it)
+				(*it)->setVisibilityMask(visMask);
+		}
+	}
+	iCamNextOld = pCar->iCamNext;
 }
 
 
 //-------------------------------------------------------------------------------------------------------
 //  Create
 //-------------------------------------------------------------------------------------------------------
-void CarModel::RecreateMaterials()
-{
-	String strI = toStr(iIndex);
-	String sCar = resCar + "/" + sDirname;
-	bool ghost = eType == CT_GHOST && pSet->rpl_alpha;  //1 || for ghost test
-	
-	// --------- Materials  -------------------
-	
-	// if specialised car material (e.g. car_body_FM) exists, use this one instead of e.g. car_body
-	// useful macro for choosing between these 2 variants
-	#define chooseMat(s) MaterialManager::getSingleton().resourceExists( "car" + String(s) + "_" + sDirname) ? "car"+String(s) + "_" + sDirname : "car"+String(s)
-	
-	//  ghost car has no interior, particles, trails and uses same material for all meshes
-	if (!ghost)
-	{	sMtr[Mtr_CarBody]     = chooseMat("_body");		sMtr[Mtr_CarTireFront]  = chooseMat("tire_front");
-		sMtr[Mtr_CarInterior] = chooseMat("_interior");	sMtr[Mtr_CarTireRear]   = chooseMat("tire_rear");
-		sMtr[Mtr_CarGlass]    = chooseMat("_glass");
-	}else
-	for (int i=0; i<NumMaterials; i++)
-		sMtr[i] = "car_ghost";  //+s old mtr..
-
-	// copy material to a new material with index
-	Ogre::MaterialPtr mat;
-	for (int i=0; i<NumMaterials; i++)
-	{
-		mat = Ogre::MaterialManager::getSingleton().getByName(sMtr[i]);
-		if (Ogre::MaterialManager::getSingleton().resourceExists(sMtr[i] + strI))
-			Ogre::MaterialManager::getSingleton().remove(sMtr[i] + strI);
-		mat->clone(sMtr[i] + strI, false);
-		sMtr[i] = sMtr[i] + strI;
-		// Change color here - cache has to be created before loading model
-		ChangeClr(iIndex);
-
-		//LogO(" === New car mtr name: " + sMtr[i]);
-	}
-	
-	// iterate through all cloned car materials and set correct texture names
-	if (!ghost)
-	for (int i=0; i < NumMaterials; i++)
-	{
-		MaterialPtr mtr = (MaterialPtr)MaterialManager::getSingleton().getByName(sMtr[i]);
-		if (!mtr.isNull())
-		{	Material::TechniqueIterator techIt = mtr->getTechniqueIterator();
-			while (techIt.hasMoreElements())
-			{	Technique* tech = techIt.getNext();
-				Technique::PassIterator passIt = tech->getPassIterator();
-				while (passIt.hasMoreElements())
-				{	Pass* pass = passIt.getNext();
-					Pass::TextureUnitStateIterator tusIt = pass->getTextureUnitStateIterator();
-					while (tusIt.hasMoreElements())
-					{
-						TextureUnitState* tus = tusIt.getNext();
-						String sTex = tus->getTextureName();  //!..
-						
-						// only 1 tire mesh?
-						if ( (i == Mtr_CarTireFront || i == Mtr_CarTireRear) 
-							&& FileExists(sCar + "_wheel.mesh") 
-							&& (tus->getTextureName() == "wheel_front.png" || tus->getTextureName() == "wheel_rear.png") )
-						{
-							// set same texture for both
-							tus->setTextureName("wheel.png");
-						}
-						
-						if (tus->getTextureName() == "body_light.png")
-						{
-							tus->setTextureName(sCar + "_body00_red.png");
-						}
-						else if (tus->getTextureName() == "body_blend.png")
-						{
-							tus->setTextureName(sCar + "_body00_add.png");
-						}
-						else
-						{
-							if (!(StringUtil::startsWith(tus->getTextureName(), "ReflectionCube") ||
-								tus->getTextureName() == "ReflectionCube" ||
-								StringUtil::startsWith(tus->getName(), "shadowmap") ||
-								StringUtil::startsWith(tus->getName(), "terrainlightmap") ||
-								StringUtil::startsWith(tus->getTextureName(), "flat_n")))
-							tus->setTextureName(sDirname + "_" + tus->getTextureName());
-						}
-		}	}	}	}
-		if (pSet->shadow_type == 3)
-			pApp->setMtrSplits(mtr->getName());
-	}
-}
-
-void CarModel::setMtrName(const String& entName, const String& mtrName)
-{
-	Ogre::Entity* ent; Ogre::ManualObject* manual;
-
-	if (pSceneMgr->hasEntity(entName))
-	{
-		pSceneMgr->getEntity(entName)->setMaterialName(mtrName);
-	}
-	else if (pSceneMgr->hasManualObject(entName))
-	{
-		pSceneMgr->getManualObject(entName)->setMaterialName(0, mtrName);
-	}
-}
-
-
-void CarModel::setMtrNames()
-{
-	if (FileExists(resCar + "/" + sDirname + "_body00_add.png")
-	 && FileExists(resCar + "/" + sDirname + "_body00_red.png"))
-		setMtrName("Car"+toStr(iIndex), sMtr[Mtr_CarBody]);
-	setMtrName("Car.interior"+toStr(iIndex), sMtr[Mtr_CarInterior]);
-	setMtrName("Car.glass"+toStr(iIndex), sMtr[Mtr_CarGlass]);
-	for (int w=0; w<4; ++w)
-		setMtrName("Wheel"+toStr(iIndex)+"_"+toStr(w), w < 2 ? sMtr[Mtr_CarTireFront] : sMtr[Mtr_CarTireRear]);
-}
-
 void CarModel::Create(int car)
 {
 	if (!pCar) return;
@@ -727,6 +611,173 @@ void CarModel::Create(int car)
 	//  now just preload the whole resource group
 	ResourceGroupManager::getSingleton().initialiseResourceGroup("Car" + strI);
 	ResourceGroupManager::getSingleton().loadResourceGroup("Car" + strI);
+}
+
+
+//-------------------------------------------------------------------------------------------------------
+//  utility
+//-------------------------------------------------------------------------------------------------------
+void CarModel::UpdateLightMap()
+{
+	MaterialPtr mtr;
+	for (int i=0; i < NumMaterials; i++)
+	{
+		mtr = (MaterialPtr)MaterialManager::getSingleton().getByName(sMtr[i]);
+		if (!mtr.isNull())
+		{	Material::TechniqueIterator techIt = mtr->getTechniqueIterator();
+			while (techIt.hasMoreElements())
+			{	Technique* tech = techIt.getNext();
+				Technique::PassIterator passIt = tech->getPassIterator();
+				while (passIt.hasMoreElements())
+				{
+					Pass* pass = passIt.getNext();
+
+					if (pass->hasFragmentProgram())
+					{
+						GpuProgramParametersSharedPtr params = pass->getFragmentProgramParameters();
+						params->setIgnoreMissingParams(true); // don't throw exception if material doesnt use lightmap
+						params->setNamedConstant("enableTerrainLightMap", bLightMapEnabled ? Real(1) : Real(0));
+					}
+	}	}	}	}
+}
+
+void CarModel::RefreshBrakingMaterial()
+{
+	std::string texName;
+	if (bBraking)
+	texName = sDirname + "_body00_brake.png";
+	else
+		texName = sDirname + "_body00_add.png";
+	MaterialPtr mtr;
+	for (int i=0; i < NumMaterials; i++)
+	{
+		mtr = (MaterialPtr)MaterialManager::getSingleton().getByName(sMtr[i]);
+		if (!mtr.isNull())
+		{	Material::TechniqueIterator techIt = mtr->getTechniqueIterator();
+			while (techIt.hasMoreElements())
+			{	Technique* tech = techIt.getNext();
+				Technique::PassIterator passIt = tech->getPassIterator();
+				while (passIt.hasMoreElements())
+				{	Pass* pass = passIt.getNext();
+					Pass::TextureUnitStateIterator tusIt = pass->getTextureUnitStateIterator();
+					while (tusIt.hasMoreElements())
+					{
+						TextureUnitState* tus = tusIt.getNext();
+
+						if (tus->getName() == "blendMap")
+							tus->setTextureName( texName );
+	}	}	}	}	}
+}
+
+void CarModel::RecreateMaterials()
+{
+	String strI = toStr(iIndex);
+	String sCar = resCar + "/" + sDirname;
+	bool ghost = eType == CT_GHOST && pSet->rpl_alpha;  //1 || for ghost test
+	
+	// --------- Materials  -------------------
+	
+	// if specialised car material (e.g. car_body_FM) exists, use this one instead of e.g. car_body
+	// useful macro for choosing between these 2 variants
+	#define chooseMat(s) MaterialManager::getSingleton().resourceExists( "car" + String(s) + "_" + sDirname) ? "car"+String(s) + "_" + sDirname : "car"+String(s)
+	
+	//  ghost car has no interior, particles, trails and uses same material for all meshes
+	if (!ghost)
+	{	sMtr[Mtr_CarBody]     = chooseMat("_body");		sMtr[Mtr_CarTireFront]  = chooseMat("tire_front");
+		sMtr[Mtr_CarInterior] = chooseMat("_interior");	sMtr[Mtr_CarTireRear]   = chooseMat("tire_rear");
+		sMtr[Mtr_CarGlass]    = chooseMat("_glass");
+	}else
+	for (int i=0; i<NumMaterials; i++)
+		sMtr[i] = "car_ghost";  //+s old mtr..
+
+	// copy material to a new material with index
+	Ogre::MaterialPtr mat;
+	for (int i=0; i<NumMaterials; i++)
+	{
+		mat = Ogre::MaterialManager::getSingleton().getByName(sMtr[i]);
+		if (Ogre::MaterialManager::getSingleton().resourceExists(sMtr[i] + strI))
+			Ogre::MaterialManager::getSingleton().remove(sMtr[i] + strI);
+		mat->clone(sMtr[i] + strI, false);
+		sMtr[i] = sMtr[i] + strI;
+		// Change color here - cache has to be created before loading model
+		ChangeClr(iIndex);
+
+		//LogO(" === New car mtr name: " + sMtr[i]);
+	}
+	
+	// iterate through all cloned car materials and set correct texture names
+	if (!ghost)
+	for (int i=0; i < NumMaterials; i++)
+	{
+		MaterialPtr mtr = (MaterialPtr)MaterialManager::getSingleton().getByName(sMtr[i]);
+		if (!mtr.isNull())
+		{	Material::TechniqueIterator techIt = mtr->getTechniqueIterator();
+			while (techIt.hasMoreElements())
+			{	Technique* tech = techIt.getNext();
+				Technique::PassIterator passIt = tech->getPassIterator();
+				while (passIt.hasMoreElements())
+				{	Pass* pass = passIt.getNext();
+					Pass::TextureUnitStateIterator tusIt = pass->getTextureUnitStateIterator();
+					while (tusIt.hasMoreElements())
+					{
+						TextureUnitState* tus = tusIt.getNext();
+						String sTex = tus->getTextureName();  //!..
+						
+						// only 1 tire mesh?
+						if ( (i == Mtr_CarTireFront || i == Mtr_CarTireRear) 
+							&& FileExists(sCar + "_wheel.mesh") 
+							&& (tus->getTextureName() == "wheel_front.png" || tus->getTextureName() == "wheel_rear.png") )
+						{
+							// set same texture for both
+							tus->setTextureName("wheel.png");
+						}
+						
+						if (tus->getTextureName() == "body_light.png")
+						{
+							tus->setTextureName(sCar + "_body00_red.png");
+						}
+						else if (tus->getTextureName() == "body_blend.png")
+						{
+							tus->setTextureName(sCar + "_body00_add.png");
+						}
+						else
+						{
+							if (!(StringUtil::startsWith(tus->getTextureName(), "ReflectionCube") ||
+								tus->getTextureName() == "ReflectionCube" ||
+								StringUtil::startsWith(tus->getName(), "shadowmap") ||
+								StringUtil::startsWith(tus->getName(), "terrainlightmap") ||
+								StringUtil::startsWith(tus->getTextureName(), "flat_n")))
+							tus->setTextureName(sDirname + "_" + tus->getTextureName());
+						}
+		}	}	}	}
+		if (pSet->shadow_type == 3)
+			pApp->setMtrSplits(mtr->getName());
+	}
+}
+
+void CarModel::setMtrName(const String& entName, const String& mtrName)
+{
+	Ogre::Entity* ent; Ogre::ManualObject* manual;
+
+	if (pSceneMgr->hasEntity(entName))
+	{
+		pSceneMgr->getEntity(entName)->setMaterialName(mtrName);
+	}
+	else if (pSceneMgr->hasManualObject(entName))
+	{
+		pSceneMgr->getManualObject(entName)->setMaterialName(0, mtrName);
+	}
+}
+
+void CarModel::setMtrNames()
+{
+	if (FileExists(resCar + "/" + sDirname + "_body00_add.png")
+	 && FileExists(resCar + "/" + sDirname + "_body00_red.png"))
+		setMtrName("Car"+toStr(iIndex), sMtr[Mtr_CarBody]);
+	setMtrName("Car.interior"+toStr(iIndex), sMtr[Mtr_CarInterior]);
+	setMtrName("Car.glass"+toStr(iIndex), sMtr[Mtr_CarGlass]);
+	for (int w=0; w<4; ++w)
+		setMtrName("Wheel"+toStr(iIndex)+"_"+toStr(w), w < 2 ? sMtr[Mtr_CarTireFront] : sMtr[Mtr_CarTireRear]);
 }
 
 //  ----------------- Reflection ------------------------

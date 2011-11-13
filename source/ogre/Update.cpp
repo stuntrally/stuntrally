@@ -510,9 +510,12 @@ void App::newPoses()
 							carM->iInChk = i;
 							//  next check
 							if (i == carM->iNextChk && carM->iNumChks < ncs)
-							{	carM->iCurChk = i;  carM->iNumChks++;
+							{
+								carM->iCurChk = i;  carM->iNumChks++;
 								int ii = (pSet->trackreverse ? -1 : 1) * road->iDir;
 								carM->iNextChk = (carM->iCurChk + ii + ncs) % ncs;
+								//  save car pos and rot
+								carM->pCar->SavePosAtCheck();
 							}
 							else
 							if (carM->iInChk != carM->iCurChk)

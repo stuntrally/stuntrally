@@ -17,7 +17,8 @@ private:
 public:
 	CARCONTROLMAP_LOCAL()
 	{
-		for (int i=0; i<4; i++) {grUpOld[i] = false; grDnOld[i] = false;}
+		for (int i=0; i<4; i++)
+		{	grUpOld[i] = false;  grDnOld[i] = false;  }
 		//Reset();
 	}
 	
