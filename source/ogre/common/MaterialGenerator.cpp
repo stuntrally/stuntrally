@@ -158,7 +158,7 @@ void MaterialGenerator::generate(bool fixedFunction)
 	*/
 	
 	// uncomment to see full shader source code in log
-	
+	/*
 	if (mDef->getName() == "grass_GrassVS_")
 	{
 		LogO("[MaterialFactory] Vertex program source: ");
@@ -170,7 +170,7 @@ void MaterialGenerator::generate(bool fixedFunction)
 		generateFragmentProgramSource(fSourceStr);
 		LogO(fSourceStr.str());
 	}
-	
+	*/
 }
 
 //----------------------------------------------------------------------------------------
