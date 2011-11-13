@@ -48,7 +48,9 @@ MaterialFactory::MaterialFactory() :
 	bShaders(1), bNormalMap(1), bEnvMap(1), bShadows(1), bShadowsDepth(1),
 	iTexSize(4096), iNumShadowTex(3),
 	bSettingsChanged(1) // always have to generate at start
-{	
+{
+	QTimer ti;  ti.update(); /// time
+	
 	// find all files with *.matdef extension in all resource groups
 	StringVector resourceGroups = ResourceGroupManager::getSingleton().getResourceGroups();
 	for (StringVector::iterator it = resourceGroups.begin();
@@ -84,6 +86,10 @@ MaterialFactory::MaterialFactory() :
 	//MaterialGenerator* water = static_cast<MaterialGenerator*>(new WaterMaterialGenerator());
 	//water->mParent = this;
 	//mCustomGenerators.push_back(water);
+	
+	ti.update(); /// time
+	float dt = ti.dt * 1000.f;
+	LogO(String("::: Time loading material definitions: ") + toStr(dt) + " ms");
 }
 
 //----------------------------------------------------------------------------------------
