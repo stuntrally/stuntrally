@@ -27,6 +27,7 @@ Permission is granted to anyone to use this software for any purpose, including 
 #include <OgreHardwarePixelBuffer.h>
 using namespace Ogre;
 
+#include "../ogre/common/MaterialFactory.h"
 #include "../vdrift/pathmanager.h"
 #include "../ogre/QTimer.h"
 
@@ -528,6 +529,8 @@ void ImpostorTexture::renderTextures(bool force)
 	Real oldFogStart = sceneMgr->getFogStart();
 	Real oldFogEnd = sceneMgr->getFogEnd();
 	sceneMgr->setFog(FOG_NONE);
+	///T no fog when using custom shaders
+	MaterialFactory::getSingleton().setFog(false);
 	
 	// Get current status of the queue mode
 	Ogre::SceneManager::SpecialCaseRenderQueueMode OldSpecialCaseRenderQueueMode = sceneMgr->getSpecialCaseRenderQueueMode();
@@ -641,6 +644,8 @@ void ImpostorTexture::renderTextures(bool force)
 
 	//Re-enable fog
 	sceneMgr->setFog(oldFogMode, oldFogColor, oldFogDensity, oldFogStart, oldFogEnd);
+	///T no fog when using custom shaders
+	MaterialFactory::getSingleton().setFog(true);
 
 	//Delete camera
 	renderTarget->removeViewport(0);

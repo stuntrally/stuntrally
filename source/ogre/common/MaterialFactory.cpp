@@ -12,13 +12,31 @@
 #ifndef ROAD_EDITOR
 	#include "../OgreGame.h"
 #endif
+#include "../QTimer.h"
 
 #include <OgreConfigFile.h>
 #include <OgreResourceGroupManager.h>
 #include <OgreStringConverter.h>
 #include <OgreResourceGroupManager.h>
+#include <OgreMaterial.h>
+#include <OgreMaterialManager.h>
+#include <OgreTechnique.h>
+#include <OgrePass.h>
 using namespace Ogre;
-#include "../QTimer.h"
+
+//----------------------------------------------------------------------------------------
+
+template<> MaterialFactory* Ogre::Singleton<MaterialFactory>::ms_Singleton = 0;
+MaterialFactory* MaterialFactory::getSingletonPtr(void)
+{
+    return ms_Singleton;
+}
+MaterialFactory& MaterialFactory::getSingleton(void)
+{  
+    assert( ms_Singleton );  return ( *ms_Singleton );  
+}
+
+//----------------------------------------------------------------------------------------
 
 MaterialFactory::MaterialFactory() : 
 	bShaders(1), bNormalMap(1), bEnvMap(1), bShadows(1), bShadowsDepth(1),
@@ -83,6 +101,22 @@ void MaterialFactory::deleteShaderCache()
 		delete (*it).second;
 	
 	mShaderCache.clear();
+}
+
+//----------------------------------------------------------------------------------------
+
+void MaterialFactory::setFog(bool fog)
+{
+	for (std::vector<std::string>::iterator it=fogMtrs.begin();
+		it != fogMtrs.end(); ++it)
+	{
+		MaterialPtr mat = MaterialManager::getSingleton().getByName( (*it) );
+		if (mat->getTechnique(0)->getPass(0)->hasVertexProgram())
+		{
+			GpuProgramParametersSharedPtr vparams = mat->getTechnique(0)->getPass(0)->getVertexProgramParameters();
+			vparams->setNamedConstant("enableFog", fog ? Real(1.0) : Real(0.0));
+		}
+	}
 }
 
 //----------------------------------------------------------------------------------------
