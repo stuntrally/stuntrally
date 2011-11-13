@@ -73,12 +73,6 @@ void MaterialGenerator::generate(bool fixedFunction)
 	else if (mDef->mProps->sceneBlend == SBM_MODULATE)
 		pass->setSceneBlending(SBT_MODULATE);
 		
-	/*if (mDef->mProps->diffuse_vertcol)
-	{
-		LogO("diff vertcol");
-		pass->setVertexColourTracking(TVC_DIFFUSE);
-	}*/
-		
 	pass->setDepthWriteEnabled( mDef->mProps->depthWrite );
 		
 	pass->setDepthCheckEnabled( mDef->mProps->depthCheck );
@@ -655,7 +649,7 @@ void MaterialGenerator::generateVertexProgramSource(Ogre::StringUtil::StrStreamT
 	}
 
 	// fog
-	if (mDef->mProps->fog) outStream <<
+	outStream <<
 		"	uniform float enableFog, \n"
 		"	uniform float4 fogParams, \n";
 	
@@ -767,11 +761,8 @@ void MaterialGenerator::generateVertexProgramSource(Ogre::StringUtil::StrStreamT
 		
 	outStream <<
 	"	objectPos = position; \n";
-	if (mDef->mProps->fog)
-	{
-		outStream <<
-		"	objectPos.w = enableFog * saturate(fogParams.x * (oPosition.z - fogParams.y) * fogParams.w); \n"; // save fog amount in objectPos.w
-	}
+	outStream <<
+	"	objectPos.w = enableFog * saturate(fogParams.x * (oPosition.z - fogParams.y) * fogParams.w); \n"; // save fog amount in objectPos.w
 	if (fpNeedWsNormal())
 	{
 		if(UsePerPixelNormals())
@@ -816,11 +807,7 @@ void MaterialGenerator::vertexProgramParams(HighLevelGpuProgramPtr program)
 	if (fpNeedEyeVector())
 		params->setNamedAutoConstant("eyePosition", GpuProgramParameters::ACT_CAMERA_POSITION);
 	
-	if (mDef->mProps->fog)
-	{
-		params->setNamedAutoConstant("fogParams", GpuProgramParameters::ACT_FOG_PARAMS);
-		params->setNamedConstant("enableFog", Real(1.0));
-	}
+	params->setNamedAutoConstant("fogParams", GpuProgramParameters::ACT_FOG_PARAMS);
 		
 	if (mShader->wind == 1)
 		params->setNamedAutoConstant("objSpaceCam", GpuProgramParameters::ACT_CAMERA_POSITION_OBJECT_SPACE);
@@ -840,6 +827,8 @@ void MaterialGenerator::individualVertexProgramParams(GpuProgramParametersShared
 	{
 		params->setNamedAutoConstant("texWorldViewProjMatrix"+toStr(i), GpuProgramParameters::ACT_TEXTURE_WORLDVIEWPROJ_MATRIX, i);
 	}
+	
+	params->setNamedConstant("enableFog", mDef->mProps->fog ? Real(1.0) : Real(0.0));
 }
 
 //----------------------------------------------------------------------------------------
@@ -1050,7 +1039,7 @@ void MaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::StrStrea
 		"	uniform float3 matDiffuse, \n"
 		"	uniform float4 matSpecular, \n"; // shininess in w
 	}
-	if (mDef->mProps->fog) outStream <<
+	outStream <<
 		"	uniform float3 fogColor, \n";
 		
 	if (mDef->mProps->transparent && needLightingAlpha())
@@ -1238,10 +1227,8 @@ void MaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::StrStrea
 		"	color1 *= vertexColour; \n";
 	
 	// add fog
-	if (mDef->mProps->fog) outStream <<
+	outStream <<
 		"	oColor = lerp(color1, float4(fogColor,1), position.w); \n";
-	else outStream <<
-		"	oColor = color1; \n";
 	
 	// debug colour output  ------------------------------------------
 	
@@ -1326,8 +1313,8 @@ void MaterialGenerator::fragmentProgramParams(HighLevelGpuProgramPtr program)
 		params->setNamedAutoConstant("matSpecular", GpuProgramParameters::ACT_SURFACE_SPECULAR_COLOUR);
 	}
 	
-	if (mDef->mProps->fog)
-		params->setNamedAutoConstant("fogColor", GpuProgramParameters::ACT_FOG_COLOUR);
+	params->setNamedAutoConstant("fogColor", GpuProgramParameters::ACT_FOG_COLOUR);
+	
 	if (vpNeedWvMat())
 		params->setNamedAutoConstant("wvMat", GpuProgramParameters::ACT_WORLDVIEW_MATRIX);
 

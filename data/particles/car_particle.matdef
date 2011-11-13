@@ -3,7 +3,6 @@
 	depthWrite = false
 	sceneBlend = add
 	diffuseMap_1 = spark.png
-	fog = false
 	vertexColour = true
 
 [Boost]

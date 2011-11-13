@@ -24,6 +24,11 @@
 #include <OgrePass.h>
 using namespace Ogre;
 
+// use shader cache
+// if you disable it, startup time will be A LOT longer...
+// so the only reason you would disable this is to trace down a bug
+#define USE_CACHE
+
 //----------------------------------------------------------------------------------------
 
 template<> MaterialFactory* Ogre::Singleton<MaterialFactory>::ms_Singleton = 0;
@@ -231,6 +236,7 @@ void MaterialFactory::generate()
 		
 		deleteShaderCache();
 		splitMtrs.clear();
+		fogMtrs.clear();
 		terrainLightMapMtrs.clear();
 		
 		for (std::vector<MaterialDefinition*>::iterator it=mDefinitions.begin();
@@ -294,6 +300,7 @@ referenced by material '" + (*it)->getName() + "' not found. Using default gener
 			generator->generate();
 			
 			// insert into cache
+			#ifdef USE_CACHE
 			if (!exists)
 			{
 				if (!generator->mVertexProgram.isNull() && !generator->mFragmentProgram.isNull()) 
@@ -301,6 +308,9 @@ referenced by material '" + (*it)->getName() + "' not found. Using default gener
 			}
 			else
 				delete shaderProps;
+			#else
+			delete shaderProps;
+			#endif
 		}
 		
 		bSettingsChanged = false;
