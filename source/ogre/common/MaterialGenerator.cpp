@@ -1245,12 +1245,13 @@ void MaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::StrStrea
 			}
 		}
 		
-		if (mShader->wind == 1) outStream <<
-			"	alpha *= alphaFade; \n";
-		
 		// discard rejected alpha pixels
 		outStream << 
 			"	clip( alpha<alphaRejectValue ? -1:1); \n";
+		
+		if (mShader->wind == 1) outStream <<
+			"	alpha *= alphaFade; \n";
+		
 		outStream << 
 		"	oColor.w = alpha; \n";
 	}
@@ -1320,7 +1321,7 @@ void MaterialGenerator::individualFragmentProgramParams(Ogre::GpuProgramParamete
 	}
 	
 	if (mDef->mProps->transparent)
-		params->setNamedConstant("alphaRejectValue", Real(float(mDef->mProps->alphaRejectValue)/float(255.0f)));
+		params->setNamedConstant("alphaRejectValue", Real(float(mDef->mProps->alphaRejectValue)/float(256.0f)));
 
 	if (needLightingAlpha())
 		params->setNamedConstant("lightingAlpha", mDef->mProps->lightingAlpha);
