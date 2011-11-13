@@ -1,7 +1,7 @@
 vertex_program water1_vs cg
 {
 	source fluids.cg
-	profiles vs_4_0 vs_1_1 arbvp1
+	profiles vs_4_0 vs_2_x arbvp1
 	entry_point water1_vs
  
 	default_params
