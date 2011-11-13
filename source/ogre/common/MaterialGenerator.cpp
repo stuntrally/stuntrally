@@ -145,6 +145,10 @@ void MaterialGenerator::generate(bool fixedFunction)
 	if (needTerrainLightMap())
 		mParent->terrainLightMapMtrs.push_back( mDef->getName() );
 		
+	// indicate we need enable/disable fog parameter
+	if (mDef->mProps->fog)
+		mParent->fogMtrs.push_back( mDef->getName() );
+		
 	// uncomment to export to .material
 	/*
 	if (mDef->getName() == "pipeGlass") {
@@ -639,6 +643,7 @@ void MaterialGenerator::generateVertexProgramSource(Ogre::StringUtil::StrStreamT
 
 	// fog
 	if (mDef->mProps->fog) outStream <<
+		"	uniform float enableFog, \n"
 		"	uniform float4 fogParams, \n";
 	
 	if (needShadows()) {
@@ -728,10 +733,7 @@ void MaterialGenerator::generateVertexProgramSource(Ogre::StringUtil::StrStreamT
 	if (mDef->mProps->fog)
 	{
 		outStream <<
-		"	if (fogParams.z != 1.0) \n"
-		"		objectPos.w = saturate(fogParams.x * (oPosition.z - fogParams.y) * fogParams.w); \n" // save fog amount in objectPos.w
-		"	else \n"
-		"		objectPos.w = 0.0; \n";
+		"	objectPos.w = enableFog * saturate(fogParams.x * (oPosition.z - fogParams.y) * fogParams.w); \n"; // save fog amount in objectPos.w
 	}
 	if (fpNeedWsNormal())
 	{
@@ -778,7 +780,10 @@ void MaterialGenerator::vertexProgramParams(HighLevelGpuProgramPtr program)
 		params->setNamedAutoConstant("eyePosition", GpuProgramParameters::ACT_CAMERA_POSITION);
 	
 	if (mDef->mProps->fog)
+	{
 		params->setNamedAutoConstant("fogParams", GpuProgramParameters::ACT_FOG_PARAMS);
+		params->setNamedConstant("enableFog", Real(1.0));
+	}
 		
 	if (mShader->wind == 1)
 		params->setNamedAutoConstant("objSpaceCam", GpuProgramParameters::ACT_CAMERA_POSITION_OBJECT_SPACE);
