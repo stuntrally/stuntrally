@@ -1,0 +1,26 @@
+[Base_particle]
+	abstract = true
+	lighting = false
+	sceneBlend = alpha
+	textureAddressMode = clamp
+	ssao = false
+	depthWrite = false
+	vertexColour = true
+
+[Mud]
+	parent = Base_particle
+	diffuseMap_1 = mud.png
+	alphaRejectFunc = greater
+	alphaRejectValue = 64
+
+[Dust]
+	parent = Base_particle
+	diffuseMap_1 = dust.png
+
+[Smoke]
+	parent = Base_particle
+	diffuseMap_1 = smoke.png
+	
+[TireTrail]
+	parent = Base_particle
+	diffuseMap_1 = tireband.png

@@ -113,6 +113,7 @@ void MaterialFactory::setFog(bool fog)
 		MaterialPtr mat = MaterialManager::getSingleton().getByName( (*it) );
 		if (mat->getTechnique(0)->getPass(0)->hasVertexProgram())
 		{
+			LogO("set fog for " + (*it));
 			GpuProgramParametersSharedPtr vparams = mat->getTechnique(0)->getPass(0)->getVertexProgramParameters();
 			vparams->setNamedConstant("enableFog", fog ? Real(1.0) : Real(0.0));
 		}

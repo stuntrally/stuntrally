@@ -1,0 +1,15 @@
+[RainDrop]
+	lighting = false
+	depthWrite = false
+	vertexColour = true
+	sceneBlend = alpha
+	textureAddressMode = clamp
+	diffuseMap_1 = droplet.png
+	
+[SnowFlake]
+	lighting = false
+	depthWrite = false
+	vertexColour = true
+	sceneBlend = alpha
+	textureAddressMode = clamp
+	diffuseMap_1 = snow.png

@@ -73,6 +73,12 @@ void MaterialGenerator::generate(bool fixedFunction)
 	else if (mDef->mProps->sceneBlend == SBM_MODULATE)
 		pass->setSceneBlending(SBT_MODULATE);
 		
+	/*if (mDef->mProps->diffuse_vertcol)
+	{
+		LogO("diff vertcol");
+		pass->setVertexColourTracking(TVC_DIFFUSE);
+	}*/
+		
 	pass->setDepthWriteEnabled( mDef->mProps->depthWrite );
 		
 	pass->setDepthCheckEnabled( mDef->mProps->depthCheck );
@@ -159,7 +165,7 @@ void MaterialGenerator::generate(bool fixedFunction)
 	
 	// uncomment to see full shader source code in log
 	/*
-	if (mDef->getName() == "grass_GrassVS_")
+	if (mDef->getName() == "Particles/Spark")
 	{
 		LogO("[MaterialFactory] Vertex program source: ");
 		StringUtil::StrStreamType vSourceStr;

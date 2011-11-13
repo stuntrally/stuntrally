@@ -1,0 +1,15 @@
+[Particles/Spark]
+	lighting = false
+	depthWrite = false
+	sceneBlend = add
+	diffuseMap_1 = spark.png
+	fog = false
+	vertexColour = true
+
+[Boost]
+	lighting = false
+	sceneBlend = add
+	depthWrite = false
+	vertexColour = true
+	textureAddressMode = clamp
+	diffuseMap_1 = boost.png
