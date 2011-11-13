@@ -17,6 +17,7 @@
 	<Tag name="UnitKmh">km/h</Tag>
 	<Tag name="InputRoadPickOne">Auswählen (eins)</Tag>
 	<Tag name="ViewDist">Sichtweite</Tag>
+	<Tag name="RplParticles">Particles (for not transparent ghost)</Tag>
 	<Tag name="TipRoadDist2">Zusätzlicher Abstand zur Strecke.</Tag>
 	<Tag name="TipLTrMinTerH">Terrain height below which model won't appear.</Tag>
 	<Tag name="TreeDens">Baumdichte</Tag>
@@ -41,6 +42,7 @@
 	<Tag name="HUD">HUD</Tag>
 	<Tag name="InputCamControl">W,S A,D Q,E - Pfeiltasten - drehen</Tag>
 	<Tag name="TipTrackMap">Minikarte der ausgewählten Strecke, Sicht von oben.</Tag>
+	<Tag name="RenderSystem">Render System</Tag>
 	<Tag name="TerGenOfsY">Offset Y</Tag>
 	<Tag name="MinimapRotate">Drehen</Tag>
 	<Tag name="pipes">röhren</Tag>
@@ -97,7 +99,7 @@
 	<Tag name="InputRoadChkRadius">K,L - Wegpunkt-Radius (chkR 0 - keiner)</Tag>
 	<Tag name="TipDustSize">Staubpartikelgröße.</Tag>
 	<Tag name="InputRoadInsAlt">Alt-Shift - am Anfang Alt-Strg - am Ende</Tag>
-	<Tag name="RearThrottleInverse">Rear throttle inverse--</Tag>
+	<Tag name="RearThrottleInverse">Rear throttle inverse</Tag>
 	<Tag name="BlendMap">Blendmap</Tag>
 	<Tag name="InputMapPrevCamera">Vorherige Kamera</Tag>
 	<Tag name="InputMapBrake">Bremsen</Tag>
@@ -134,7 +136,6 @@
 	<Tag name="TriSize">Triangle-Größe</Tag>
 	<Tag name="TerLAngSm">Winkelglättung</Tag>
 	<Tag name="InputAfterChanges">(nach Terrain/Vegetationsveränderung)</Tag>
-	<Tag name="InputMapFlipRight">Nach rechts flippern</Tag>
 	<Tag name="OrigImage">Abdunkeln</Tag>
 	<Tag name="InputRoadSelAlt">alt - alle, strg - kein</Tag>
 	<Tag name="InputRoadSel">Backspace - zu Auswahl hinzufügen/entfernen</Tag>
@@ -154,7 +155,7 @@
 	<Tag name="InputStartDir">Space - Straßenrichtung (+ oder -)</Tag>
 	<Tag name="Effects">Effekte</Tag>
 	<Tag name="WidthSteps">Breiten-Steps</Tag>
-	<Tag name="TerLAngMin">Winkel min.</Tag>
+	<Tag name="Diffuse">Diffuse</Tag>
 	<Tag name="Sound">Sound</Tag>
 	<Tag name="InputFluidsIns">Ins - insert new, default fluid at cursor</Tag>
 	<Tag name="RoadPointSize">Größe Straßenpunkte</Tag>
@@ -257,7 +258,7 @@
 	<Tag name="InputRoadNotOnTer">wenn nicht auf Terrain</Tag>
 	<Tag name="ApplyShadows">Schatten anwenden</Tag>
 	<Tag name="TipFogEndClr">Ausklangfarbe des Nebels. R G B Komponenten von 0 bis 1 (z.B. 0.7 0.8 0.9)</Tag>
-	<Tag name="InputCameraTxt1">Mit Shift - Nur Hauptkameras</Tag>
+	<Tag name="FrameSkip">FrameSkip</Tag>
 	<Tag name="InputToggleVeget">V - Vegetation an/aus</Tag>
 	<Tag name="Particles">Partikel</Tag>
 	<Tag name="Other">Sonstige</Tag>
@@ -333,7 +334,7 @@
 	<Tag name="Fog">Nebel</Tag>
 	<Tag name="InputCameraTxt2">Mit Strg - Auto für Kameraänderung wechseln</Tag>
 	<Tag name="InputMapNextTab">Nächster Tab</Tag>
-	<Tag name="FrameSkip">FrameSkip</Tag>
+	<Tag name="InputCameraTxt1">Mit Shift - Nur Hauptkameras</Tag>
 	<Tag name="InputTrackScrn">(für Bildschirmfoto)</Tag>
 	<Tag name="trailColor">Spurenfarbe</Tag>
 	<Tag name="InputRoadChkFirst">0 - ersten Wegpunkt setzen</Tag>
@@ -375,7 +376,7 @@
 	<Tag name="InputRoadMMB">MMB (oder Num /,*)</Tag>
 	<Tag name="Textures">Texturen</Tag>
 	<Tag name="TipTerVertCount">Terrain Vertexanzahl auf jeder Seite. Anwenden durch die Buttons [Neu] oder [Ändern]</Tag>
-	<Tag name="HeightmapSize">Heightmap-Größe</Tag>
+	<Tag name="RplCurrent">Current</Tag>
 	<Tag name="InputCamControl2">LMB - drehen RMB - bewegen MMB - zoom</Tag>
 	<Tag name="ColBright">Helligkeit</Tag>
 	<Tag name="LS_CLEANUP">Aufräumen</Tag>
@@ -393,7 +394,7 @@
 	<Tag name="TerLHMax">Höhe Max</Tag>
 	<Tag name="LoadingDesc">Laden, bitte warten...</Tag>
 	<Tag name="TipGrassPatchHeightMax">Maximale Höhe des Grasflecks.</Tag>
-	<Tag name="Diffuse">Diffuse</Tag>
+	<Tag name="TerLAngMin">Winkel min.</Tag>
 	<Tag name="Tires">Reifen</Tag>
 	<Tag name="TipTrackList">Streckenauswahl - klicken, um auswählen; Enter, um darauf zu fahren. (oder [Strecke wechseln] und dann [Neues Spiel])</Tag>
 	<Tag name="TipTrkNameEditor">Name der ausgewählten Strecke, wird auch zum Umbenennen und als neuer Streckenname benutzt.</Tag>
@@ -446,6 +447,7 @@
 	<Tag name="TipGrassSwaySpd">Grasschwingung Geschw.</Tag>
 	<Tag name="FrictionTread">ReibungsProfil</Tag>
 	<Tag name="InputMapShiftDown">Runterschalten</Tag>
+	<Tag name="HeightmapSize">Heightmap-Größe</Tag>
 	<Tag name="TipTrkListEditor">Streckenliste, Klicken zum Auswählen (zum Umbenennen oder Duplizieren). [Strecke Laden] drücken um die Strecke im Editor zu öffnen.</Tag>
 	<Tag name="InputMapNextCamera">Nächste Kamera</Tag>
 	<Tag name="GraphicsAll_Lowest">Niedrigste</Tag>
@@ -511,7 +513,6 @@
 	<Tag name="CarCollis">Autokollision</Tag>
 	<Tag name="CameraInfo">Kamerainfo</Tag>
 	<Tag name="NewGame">Neues Spiel</Tag>
-	<Tag name="InputMapFlipLeft">Nach links flippern</Tag>
 	<Tag name="page">Page</Tag>
 	<Tag name="InputMapSteering">Lenkung</Tag>
 	<Tag name="InputDetailsFor">Details</Tag>
@@ -585,9 +586,8 @@
 	<Tag name="MyGUI_MessageBox_Yes">Ja</Tag>
 	<Tag name="RollingDrag">Rollwiderstand</Tag>
 	<Tag name="RplAll">Alle</Tag>
-	<Tag name="RplParticles">Particles (for not transparent ghost)</Tag>
-	<Tag name="RenderSystem">Render System</Tag>
-	<Tag name="RplCurrent">Current</Tag>
+	<Tag name="InputMapResetGame">Reset game</Tag>
+	<Tag name="InputMapLastChk">Go to last checkp.</Tag>
 	<Tag name="GameVersion">1.4</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 
