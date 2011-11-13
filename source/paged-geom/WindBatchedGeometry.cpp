@@ -12,7 +12,7 @@ Permission is granted to anyone to use this software for any purpose, including 
 //A "lightweight" version of Ogre::StaticGeometry, which gives you a little more control
 //over the batch materials, etc.
 //-------------------------------------------------------------------------------------
-
+#include "pch.h"
 #include <OgreRoot.h>
 #include <OgreRenderSystem.h>
 #include <OgreCamera.h>

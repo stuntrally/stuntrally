@@ -11,7 +11,7 @@ Permission is granted to anyone to use this software for any purpose, including 
 //PagedGeometry.h
 //Main source file for the PagedGeometry engine.
 //-------------------------------------------------------------------------------------
-
+#include "pch.h"
 #include <OgreRoot.h>
 #include <OgreTimer.h>
 #include <OgreCamera.h>

@@ -7,7 +7,7 @@ Permission is granted to anyone to use this software for any purpose, including 
     2. Altered source versions must be plainly marked as such, and must not be misrepresented as being the original software.
     3. This notice may not be removed or altered from any source distribution.
 -------------------------------------------------------------------------------------*/
-
+#include "pch.h"
 #include <OgreRoot.h>
 #include <OgreException.h>
 #include <OgreVector3.h>
