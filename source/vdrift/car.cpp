@@ -21,7 +21,8 @@ CAR::CAR() :
 	pSet(0), pApp(0),
 	last_steer(0),
 	debug_wheel_draw(false),
-	sector(-1)
+	sector(-1),
+	iCamNext(0), bLastChk(0)
 {
 	//dynamics.pCar = this;
 	vInteriorOffset[0]=0;
@@ -456,27 +457,26 @@ void CAR::GetEngineSoundList(std::list <SOUNDSOURCE *> & outputlist)
 }
 
 
+///   Car Inputs  * * * * * * * 
 //--------------------------------------------------------------------------------------------------------------------------
 void CAR::HandleInputs(const std::vector <float> & inputs, float dt)
 {
 	assert(inputs.size() == CARINPUT::ALL); //-
 	dynamics.inputsCopy = inputs;
 
-	//std::cout << "Throttle: " << inputs[CARINPUT::THROTTLE] << std::endl;
-	//std::cout << "Shift up: " << inputs[CARINPUT::SHIFT_UP] << std::endl;
-
 	int cur_gear = dynamics.GetTransmission().GetGear();
-	bool rear = cur_gear == -1;  //..if (disable_auto_rear)  rear = false;
+	bool rear = pSet->rear_inv ? cur_gear == -1 : false;  //if (disable_auto_rear)  rear = false;
 
-	//set brakes
-	dynamics.SetBrake( !rear ? inputs[CARINPUT::BRAKE] : inputs[CARINPUT::THROTTLE]);
+	//  set brakes
+	float brake = !rear ? inputs[CARINPUT::BRAKE] : inputs[CARINPUT::THROTTLE];
+	dynamics.SetBrake(brake);
 	dynamics.SetHandBrake(inputs[CARINPUT::HANDBRAKE]);
 	
-	// boost, flip over
+	//  boost, flip over
 	dynamics.doBoost = inputs[CARINPUT::BOOST];
 	dynamics.doFlip = inputs[CARINPUT::FLIP];
 
-	//do steering
+	//  steering
 	float steer_value = inputs[CARINPUT::STEER_RIGHT];
 	if (std::abs(inputs[CARINPUT::STEER_LEFT]) > std::abs(inputs[CARINPUT::STEER_RIGHT])) //use whichever control is larger
 		steer_value = -inputs[CARINPUT::STEER_LEFT];
@@ -487,7 +487,7 @@ void CAR::HandleInputs(const std::vector <float> & inputs, float dt)
 	//if (inputs[CARINPUT::START_ENGINE])
 	//	dynamics.StartEngine();
 
-	//do shifting
+	//  shifting
 	int gear_change = 0;
 	if (inputs[CARINPUT::SHIFT_UP] == 1.0)		gear_change = 1;
 	if (inputs[CARINPUT::SHIFT_DOWN] == 1.0)	gear_change = -1;
@@ -496,6 +496,7 @@ void CAR::HandleInputs(const std::vector <float> & inputs, float dt)
 	/*if (inputs[CARINPUT::REVERSE])	new_gear = -1;
 	if (inputs[CARINPUT::FIRST_GEAR])	new_gear = 1;*/
 
+	//  throttle
 	float throttle = !rear ? inputs[CARINPUT::THROTTLE] : inputs[CARINPUT::BRAKE];
 	float clutch = 1 - inputs[CARINPUT::CLUTCH]; // 
 
@@ -503,9 +504,14 @@ void CAR::HandleInputs(const std::vector <float> & inputs, float dt)
 	dynamics.SetThrottle(throttle);
 	dynamics.SetClutch(clutch);
 
-	//do driver aid toggles
+	//  abs tcs
+	///TODO: car setup separated for all (4) players: (auto shift, auto rear, rear inv, abs, tcs)  ...
 	//if (inputs[CARINPUT::ABS_TOGGLE])	dynamics.SetABS(!dynamics.GetABSEnabled());
 	//if (inputs[CARINPUT::TCS_TOGGLE])	dynamics.SetTCS(!dynamics.GetTCSEnabled());
+	
+	//  cam, chk
+	iCamNext = -inputs[CARINPUT::PREV_CAM] + inputs[CARINPUT::NEXT_CAM];
+	bLastChk = inputs[CARINPUT::LAST_CHK];
 }
 
 
@@ -833,4 +839,20 @@ void CAR::ResetPos(bool fromStart)
 
 	//dynamics.SynchronizeChassis();
 	dynamics.UpdateWheelContacts();
+}
+
+///  save car pos and rot
+void CAR::SavePosAtCheck()
+{
+	dynamics.body.GetPosition();
+	posLastCheck = dynamics.body.GetPosition();
+	rotLastCheck = dynamics.body.GetOrientation();
+	//MATHVECTOR <float, 3> pos = fromStart ? posAtStart : posLastCheck;
+	//QUATERNION <float> rot = fromStart ? rotAtStart : rotLastCheck;
+
+	//btTransform transform;
+	//dynamics.chassis->getWorldTransform();
+	//transform.setOrigin(ToBulletVector(pos));
+	//transform.setRotation(ToBulletQuaternion(rot));
+	//dynamics.chassis->setWorldTransform(transform);
 }

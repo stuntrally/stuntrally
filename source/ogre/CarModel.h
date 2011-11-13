@@ -66,6 +66,7 @@ public:
 	
 	//  Call every vdrift substep with new position info
 	void Update(PosInfo& newPosInfo, float time);
+	void UpdateKeys();  // for camera X,C, last chk F12
 	
 	//  Car color, After these values are changed, ChangeClr() should be called
 	Ogre::ColourValue color;  // for minimap pos tri color  //float hue, sat, val;
@@ -154,6 +155,10 @@ private:
 	//  lightmap enable/disable depending on dist. to terrain
 	bool bLightMapEnabled;
 	void UpdateLightMap();
+	
+	//  cam,chk old states
+	int iCamNextOld;
+	bool bLastChkOld;
 	
 	//  Our settings.
 	SETTINGS* pSet;

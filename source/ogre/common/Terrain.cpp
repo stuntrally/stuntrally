@@ -458,7 +458,8 @@ inline ColourValue Clr3(const Vector3& v)
 void App::UpdFog(bool bForce)
 {
 	//  fog  directx has 4x denser fog, why ???-
-	bool dx = strncmp(mRoot->getRenderSystem()->getName().c_str(), "Direct", 6)==0;
+	//  reverted - custom shaders
+	bool dx = false;  //strncmp(mRoot->getRenderSystem()->getName().c_str(), "Direct", 6)==0;
 	Real mul = dx ? 0.25f : 1.f;  // sc.fogExp
 	ColourValue clr = Clr3(sc.fogClr);
 	if (!pSet->bFog || bForce)
