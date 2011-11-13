@@ -311,6 +311,9 @@ void MaterialGenerator::createSSAOTechnique()
 	ssaopass->setVertexProgram(vprogname);
 	ssaopass->setFragmentProgram(fprogname);
 	
+	if (mDef->mProps->ssaoReject)
+		ssaopass->setAlphaRejectSettings(CMPF_GREATER, 128);
+	
 	if ( !mDef->mProps->transparent ) 
 	{
 		ssaopass->setCullingMode( chooseCullingMode() );

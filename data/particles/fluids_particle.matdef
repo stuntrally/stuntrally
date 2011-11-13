@@ -1,5 +1,6 @@
 [FluidMud]
 	ssao = false
+	ssaoReject = true
 	lighting = false
 	depthWrite = false
 	sceneBlend = alpha

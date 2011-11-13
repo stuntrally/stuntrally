@@ -1,4 +1,6 @@
 [Particles/Spark]
+	ssao = false
+	ssaoReject = true
 	lighting = false
 	depthWrite = false
 	sceneBlend = add
@@ -6,6 +8,8 @@
 	vertexColour = true
 
 [Boost]
+	ssao = false
+	ssaoReject = true
 	lighting = false
 	sceneBlend = add
 	depthWrite = false

@@ -4,6 +4,7 @@
 	sceneBlend = alpha
 	textureAddressMode = clamp
 	ssao = false
+	ssaoReject = true
 	depthWrite = false
 	vertexColour = true
 
