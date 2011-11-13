@@ -6,6 +6,7 @@
 	sceneBlend = add
 	diffuseMap_1 = spark.png
 	vertexColour = true
+	fog = false
 
 [Boost]
 	ssao = false
@@ -16,3 +17,4 @@
 	vertexColour = true
 	textureAddressMode = clamp
 	diffuseMap_1 = boost.png
+	fog = false
