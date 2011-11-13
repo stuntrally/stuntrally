@@ -597,12 +597,19 @@ void MaterialGenerator::generateVertexProgramSource(Ogre::StringUtil::StrStreamT
 	if (mShader->wind == 1)
 	{
 		outStream <<
-			"	uniform float time, \n"
-			"	uniform float frequency, \n"
-			"	uniform float3 objSpaceCam, \n"
-			"	uniform float fadeRange, \n"
-			"	uniform float4 direction, \n"
-			"	out float alphaFade : TEXCOORD"+toStr(oTexCoordIndex++)+", \n";
+		"	uniform float time, \n"
+		"	uniform float frequency, \n"
+		"	uniform float3 objSpaceCam, \n"
+		"	uniform float fadeRange, \n"
+		"	uniform float4 direction, \n"
+		"	out float alphaFade : TEXCOORD"+toStr(oTexCoordIndex++)+", \n";
+	}
+	else if (mShader->wind == 2)
+	{
+		outStream <<
+		"	uniform float time, \n"
+		"	float4 windParams 	: TEXCOORD1, \n"
+		"	float4 originPos 	: TEXCOORD2, \n";
 	}
 
 	if (fpNeedWsNormal()) 
@@ -687,6 +694,30 @@ void MaterialGenerator::generateVertexProgramSource(Ogre::StringUtil::StrStreamT
 		// fade
 		"	float dist = distance(objSpaceCam.xz, position.xz); \n"
 		"	alphaFade = (2.0f - (2.0f * dist / (fadeRange))); \n";
+	}
+	else if (mShader->wind == 2)
+	{
+		outStream <<
+		"	float radiusCoeff = windParams.x; \n"
+		"	float heightCoeff = windParams.y; \n"
+		"	float factorX = windParams.z; \n"
+		"	float factorY = windParams.w; \n"
+		/* 
+		2 different methods are used to for the sin calculation :
+		- the first one gives a better effect but at the cost of a few fps because of the 2 sines
+		- the second one uses less ressources but is a bit less realistic
+
+			a sin approximation could be use to optimize performances
+		*/
+#if 0
+		"	position.y += sin(time + originPos.z + position.y + position.x) * radiusCoeff * radiusCoeff * factorY; \n"
+		"	position.x += sin(time + originPos.z ) * heightCoeff * heightCoeff * factorX ; \n"
+#else
+		"	float sinval = sin(time + originPos.z ); \n"
+		"	position.y += sinval * radiusCoeff * radiusCoeff * factorY; \n"
+		"	position.x += sinval * heightCoeff * heightCoeff * factorX ; \n"
+#endif
+		;
 	}
 	
 	outStream <<
