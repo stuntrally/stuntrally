@@ -1,4 +1,4 @@
-[grass_GrassVS_]
+[grass]
 	ssao = false
 	alphaRejectFunc = greater_equal
 	alphaRejectValue = 128

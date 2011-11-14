@@ -6,6 +6,7 @@
 #include "MaterialGenerator.h"
 #include "GlassMaterial.h"
 #include "PipeGlassMaterial.h"
+#include "ArrowMaterial.h"
 //#include "WaterMaterial.h"
 #include "ShaderProperties.h"
 
@@ -23,6 +24,11 @@
 #include <OgreTechnique.h>
 #include <OgrePass.h>
 using namespace Ogre;
+
+// use shader cache
+// if you disable it, startup time will be A LOT longer...
+// so the only reason you would disable this is to trace down a bug
+#define USE_CACHE
 
 //----------------------------------------------------------------------------------------
 
@@ -42,7 +48,9 @@ MaterialFactory::MaterialFactory() :
 	bShaders(1), bNormalMap(1), bEnvMap(1), bShadows(1), bShadowsDepth(1),
 	iTexSize(4096), iNumShadowTex(3),
 	bSettingsChanged(1) // always have to generate at start
-{	
+{
+	QTimer ti;  ti.update(); /// time
+	
 	// find all files with *.matdef extension in all resource groups
 	StringVector resourceGroups = ResourceGroupManager::getSingleton().getResourceGroups();
 	for (StringVector::iterator it = resourceGroups.begin();
@@ -71,9 +79,17 @@ MaterialFactory::MaterialFactory() :
 	pipeglass->mParent = this;
 	mCustomGenerators.push_back(pipeglass);
 	
+	MaterialGenerator* arrow = static_cast<MaterialGenerator*>(new ArrowMaterialGenerator());
+	arrow->mParent = this;
+	mCustomGenerators.push_back(arrow);
+	
 	//MaterialGenerator* water = static_cast<MaterialGenerator*>(new WaterMaterialGenerator());
 	//water->mParent = this;
 	//mCustomGenerators.push_back(water);
+	
+	ti.update(); /// time
+	float dt = ti.dt * 1000.f;
+	LogO(String("::: Time loading material definitions: ") + toStr(dt) + " ms");
 }
 
 //----------------------------------------------------------------------------------------
@@ -230,6 +246,7 @@ void MaterialFactory::generate()
 		
 		deleteShaderCache();
 		splitMtrs.clear();
+		fogMtrs.clear();
 		terrainLightMapMtrs.clear();
 		
 		for (std::vector<MaterialDefinition*>::iterator it=mDefinitions.begin();
@@ -293,6 +310,7 @@ referenced by material '" + (*it)->getName() + "' not found. Using default gener
 			generator->generate();
 			
 			// insert into cache
+			#ifdef USE_CACHE
 			if (!exists)
 			{
 				if (!generator->mVertexProgram.isNull() && !generator->mFragmentProgram.isNull()) 
@@ -300,6 +318,9 @@ referenced by material '" + (*it)->getName() + "' not found. Using default gener
 			}
 			else
 				delete shaderProps;
+			#else
+			delete shaderProps;
+			#endif
 		}
 		
 		bSettingsChanged = false;

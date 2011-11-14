@@ -363,8 +363,6 @@ void BaseApp::recreateCompositor()
 
 	if (!mMotionBlurLogic)
 	{
-		LogO("Creating motion blur logic");
-		Ogre::LogManager::getSingleton().logMessage("Creating MotionBlurLogic");
 		mMotionBlurLogic = new MotionBlurLogic(this);
 		CompositorManager::getSingleton().registerCompositorLogic("Motion Blur", mMotionBlurLogic);
 	}
@@ -376,7 +374,7 @@ void BaseApp::recreateCompositor()
 		CompositorManager::getSingleton().removeCompositorChain( (*it ));
 		
 		CompositorManager::getSingleton().addCompositor((*it), "HDR");
-		if(MaterialGenerator::MRTSupported())
+		if (MaterialGenerator::MRTSupported())
 		{
 			CompositorManager::getSingleton().addCompositor((*it), "ssao");
 		}

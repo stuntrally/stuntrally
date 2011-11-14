@@ -1132,7 +1132,8 @@ void GrassLayer::_updateShaders()
 			const String vsName = tmpName.str();
 
 			//Generate a string ID that identifies the material combined with the vertex shader
-			const String matName = material->getName() + "_" + vsName;
+			///T we use our own material (only one) so we want static material name
+			const String matName = "grass";
 
 			//Check if the desired material already exists (if not, create it)
 			MaterialPtr tmpMat = MaterialManager::getSingleton().getByName(matName);
@@ -1145,252 +1146,7 @@ void GrassLayer::_updateShaders()
 				tmpMat->setLightingEnabled(false);
 				//tmpMat->setReceiveShadows(false);
 
-				//Check if the desired shader already exists (if not, compile it)
-				String shaderLanguage;
-				HighLevelGpuProgramPtr vertexShader = HighLevelGpuProgramManager::getSingleton().getByName(vsName);
-				if (vertexShader.isNull())
-				{
-					if (Root::getSingleton().getRenderSystem()->getName() == "Direct3D9 Rendering Subsystem")
-						shaderLanguage = "hlsl";
-					else if(Root::getSingleton().getRenderSystem()->getName() == "OpenGL Rendering Subsystem")
-						shaderLanguage = "glsl";
-					else
-						shaderLanguage = "cg";
-
-					//Generate the grass shader
-					String vertexProgSource;
-
-					if(!shaderLanguage.compare("hlsl") || !shaderLanguage.compare("cg"))
-					{
-
-						vertexProgSource =
-							"void main( \n"
-							"	float4 iPosition : POSITION, \n"
-							"	float4 iColor : COLOR, \n"
-							"	float2 iUV       : TEXCOORD0,	\n"
-							"	out float4 oPosition : POSITION, \n"
-							"	out float4 oColor : COLOR, \n"
-							"	out float2 oUV       : TEXCOORD0,	\n";
-
-						if (lighting) vertexProgSource +=
-							"   uniform float4   objSpaceLight,   \n"
-							"   uniform float4   lightDiffuse,   \n"
-							"   uniform float4   lightAmbient,   \n";
-
-						if (animate) vertexProgSource +=
-							"	uniform float time,	\n"
-							"	uniform float frequency,	\n"
-							"	uniform float4 direction,	\n";
-
-						if (fadeTechnique == FADETECH_GROW || fadeTechnique == FADETECH_ALPHAGROW) vertexProgSource +=
-							"	uniform float grassHeight,	\n";
-
-						if (renderTechnique == GRASSTECH_SPRITE || lighting) vertexProgSource +=
-							"   float4 iNormal : NORMAL, \n";
-
-						vertexProgSource +=
-							"	uniform float4x4 worldViewProj,	\n"
-							"	uniform float3 camPos, \n"
-							"	uniform float fadeRange ) \n"
-							"{	\n"
-							"	oColor.rgb = iColor.rgb;   \n"
-							"	float4 position = iPosition;	\n"
-							"	float dist = distance(camPos.xz, position.xz);	\n";
-
-						if (lighting)
-						{
-							vertexProgSource +=
-							"   float3 light = normalize(objSpaceLight.xyz - (iPosition.xyz * objSpaceLight.w)); \n"
-							"   float diffuseFactor = max(dot(float4(0,1,0,0), light), 0); \n"
-							"   oColor = (lightAmbient + diffuseFactor * lightDiffuse) * iColor; \n";
-						}
-						else
-						{
-							vertexProgSource +=
-							"   oColor.rgb = iColor.rgb;               \n";
-						}
-
-						if (fadeTechnique == FADETECH_ALPHA || fadeTechnique == FADETECH_ALPHAGROW) vertexProgSource +=
-							//Fade out in the distance
-							"	oColor.a = 2.0f - (2.0f * dist / fadeRange);   \n";
-						else vertexProgSource +=
-							"	oColor.a = 1.0f;   \n";
-
-						vertexProgSource +=
-							"	float oldposx = position.x;	\n";
-
-						if (renderTechnique == GRASSTECH_SPRITE) vertexProgSource +=
-							//Face the camera
-							"	float3 dirVec = (float3)position - (float3)camPos;		\n"
-							"	float3 p = normalize(cross(float4(0,1,0,0), dirVec));	\n"
-							"	position += float4(p.x * iNormal.x, iNormal.y, p.z * iNormal.x, 0);	\n";
-
-						if (animate) vertexProgSource +=
-							"	if (iUV.y == 0.0f){	\n"
-							//Wave grass in breeze
-							"		float offset = sin(time + oldposx * frequency);	\n"
-							"		position += direction * offset;	\n"
-							"	}	\n";
-
-						if (blend && animate) vertexProgSource +=
-							"	else {	\n";
-						else if (blend) vertexProgSource +=
-							"	if (iUV.y != 0.0f){	\n";
-
-						if (blend) vertexProgSource +=
-							//Blend the base of nearby grass into the terrain
-							"		oColor.a = clamp(oColor.a, 0, 1) * 4.0f * ((dist / fadeRange) - 0.1f);	\n"
-							"	}	\n";
-
-						if (fadeTechnique == FADETECH_GROW || fadeTechnique == FADETECH_ALPHAGROW) vertexProgSource +=
-							"	float offset = (2.0f * dist / fadeRange) - 1.0f; \n"
-							"	position.y -= grassHeight * clamp(offset, 0, 1); ";
-
-						vertexProgSource +=
-							"	oPosition = mul(worldViewProj, position);  \n";
-
-						vertexProgSource +=
-							"	oUV = iUV;\n"
-							"}";
-					}
-					else
-					{
-						//Must be glsl
-						if (lighting)
-						{
-							vertexProgSource =
-							"uniform vec4 objSpaceLight; \n"
-							"uniform vec4 lightDiffuse; \n"
-							"uniform vec4 lightAmbient; \n";
-						}
-
-						if (animate)
-						{
-							vertexProgSource +=
-							"uniform float time; \n"
-							"uniform float frequency; \n"
-							"uniform vec4 direction; \n";
-						}
-
-						if (fadeTechnique == FADETECH_GROW || fadeTechnique == FADETECH_ALPHAGROW)
-						{
-							vertexProgSource +=
-							"uniform float grassHeight;	\n";
-						}
-
-						vertexProgSource +=
-							"uniform vec3 camPos; \n"
-							"uniform float fadeRange; \n"
-							"\n"
-							"void main()"
-							"{ \n"
-							"    vec4 color = gl_Color; \n"
-							"    vec4 position = gl_Vertex;	\n"
-							"    float dist = distance(camPos.xz, position.xz);	\n";
-
-						if (lighting)
-						{
-							vertexProgSource +=
-							"    vec3 light = normalize(objSpaceLight.xyz - (gl_Vertex.xyz * objSpaceLight.w)); \n"
-							"    float diffuseFactor = max( dot( vec3(0.0,1.0,0.0), light), 0.0); \n"
-							"    color = (lightAmbient + diffuseFactor * lightDiffuse) * gl_Color; \n";
-						}
-						else
-						{
-							vertexProgSource +=
-							"    color.xyz = gl_Color.xyz; \n";
-						}
-
-						if (fadeTechnique == FADETECH_ALPHA || fadeTechnique == FADETECH_ALPHAGROW)
-						{
-							vertexProgSource +=
-							//Fade out in the distance
-							"    color.w = 2.0 - (2.0 * dist / fadeRange); \n";
-						}
-						else
-						{
-							vertexProgSource +=
-							"    color.w = 1.0; \n";
-						}
-
-						if (renderTechnique == GRASSTECH_SPRITE)
-						{
-							vertexProgSource +=
-							//Face the camera
-							"    vec3 dirVec = position.xyz - camPos.xyz; \n"
-							"    vec3 p = normalize(cross(vec3(0.0,1.0,0.0), dirVec)); \n"
-							"    position += vec4(p.x * gl_Normal.x, gl_Normal.y, p.z * gl_Normal.x, 0.0); \n";
-						}
-
-						if (animate)
-						{
-							vertexProgSource +=
-							"    if (gl_MultiTexCoord0.y == 0.0) \n"
-							"    { \n"
-							//Wave grass in breeze
-							"        position += direction * sin(time + gl_Vertex.x * frequency); \n"
-							"    } \n";
-						}
-
-						if (blend && animate)
-						{
-							vertexProgSource +=
-							"    else \n"
-							"    { \n";
-						}
-						else if (blend)
-						{
-							vertexProgSource +=
-							"    if (gl_MultiTexCoord0.y != 0.0) \n"
-							"    { \n";
-						}
-
-						if (blend)
-						{
-							vertexProgSource +=
-							//Blend the base of nearby grass into the terrain
-							"        color.w = clamp(color.w, 0.0, 1.0) * 4.0 * ((dist / fadeRange) - 0.1); \n"
-							"    } \n";
-						}
-
-						if (fadeTechnique == FADETECH_GROW || fadeTechnique == FADETECH_ALPHAGROW)
-						{
-							vertexProgSource +=
-							"    position.y -= grassHeight * clamp((2.0 * dist / fadeRange) - 1.0, 0.0, 1.0); \n";
-						}
-
-						vertexProgSource +=
-						"    gl_Position = gl_ModelViewProjectionMatrix * position; \n"
-						"    gl_FrontColor = color; \n"
-						"    gl_TexCoord[0] = gl_MultiTexCoord0; \n"
-						"    gl_FogFragCoord = gl_Position.z; \n"
-						"}";
-					}
-
-					vertexShader = HighLevelGpuProgramManager::getSingleton().createProgram(
-						vsName,
-						ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME,
-						shaderLanguage, GPT_VERTEX_PROGRAM);
-
-					vertexShader->setSource(vertexProgSource);
-
-					if (shaderLanguage == "hlsl")
-					{
-						vertexShader->setParameter("target", "vs_1_1");
-						vertexShader->setParameter("entry_point", "main");
-					}
-					else if(shaderLanguage == "cg")
-					{
-						vertexShader->setParameter("profiles", "vs_4_0 vs_1_1 arbvp1");
-						vertexShader->setParameter("entry_point", "main");
-					}
-					// GLSL can only have one entry point "main".
-
-					vertexShader->load();
-				} else
-				{
-					shaderLanguage = vertexShader->getLanguage();
-				}
+				///T removed shader creation code (we have our own shader)
 
 				//Now the vertex shader (vertexShader) has either been found or just generated
 				//(depending on whether or not it was already generated).
@@ -1402,11 +1158,9 @@ void GrassLayer::_updateShaders()
 				
 				///T  don't crash
 				params->setIgnoreMissingParams(true);
+				
+				///T removed params not needed (in our own shader)
 
-				if(shaderLanguage.compare("glsl"))
-					//glsl can use the built in gl_ModelViewProjectionMatrix
-					params->setNamedAutoConstant("worldViewProj", GpuProgramParameters::ACT_WORLDVIEWPROJ_MATRIX);
-				params->setNamedAutoConstant("camPos", GpuProgramParameters::ACT_CAMERA_POSITION_OBJECT_SPACE);
 				//params->setNamedAutoConstant("fadeRange", GpuProgramParameters::ACT_CUSTOM, 1);
 
 				if (animate){
@@ -1415,16 +1169,10 @@ void GrassLayer::_updateShaders()
 					params->setNamedAutoConstant("direction", GpuProgramParameters::ACT_CUSTOM, 4);
 				}
 
-				if (lighting){
-					params->setNamedAutoConstant("objSpaceLight", GpuProgramParameters::ACT_LIGHT_POSITION_OBJECT_SPACE);
-					params->setNamedAutoConstant("lightDiffuse", GpuProgramParameters::ACT_DERIVED_LIGHT_DIFFUSE_COLOUR);
-					params->setNamedAutoConstant("lightAmbient", GpuProgramParameters::ACT_DERIVED_AMBIENT_LIGHT_COLOUR);
-				}
-
-				if (fadeTechnique == FADETECH_GROW || fadeTechnique == FADETECH_ALPHAGROW){
+				/*if (fadeTechnique == FADETECH_GROW || fadeTechnique == FADETECH_ALPHAGROW){
 					params->setNamedAutoConstant("grassHeight", GpuProgramParameters::ACT_CUSTOM, 1);
 					params->setNamedConstant("grassHeight", maxHeight * 1.05f);
-				}
+				}*/
 
 				params->setNamedConstant("fadeRange", fadeRange);
 			}
