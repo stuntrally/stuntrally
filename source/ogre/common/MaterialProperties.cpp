@@ -18,7 +18,7 @@ MaterialProperties::MaterialProperties() :
 	depthBias(0), depthCheck(true), transparentSorting(true), lightingAlpha(0.0, 0.0, 0.0, 0.0),
 	sceneBlend(SBM_DEFAULT), depthWrite(true), alphaRejectFunc(CMPF_ALWAYS_PASS), alphaRejectValue(0.0),
 	fog(true), lighting(true), textureAddressMode(TextureUnitState::TAM_WRAP),
-	terrainLightMap(false), ssao(true), customGenerator(""), wind(0), vertexColour(false)
+	terrainLightMap(false), ssao(true), ssaoReject(false), customGenerator(""), wind(0), vertexColour(false)
 {}
 
 //----------------------------------------------------------------------------------------
@@ -79,6 +79,7 @@ void MaterialProperties::setProperty(const std::string& prop, const std::string&
 		else if (value == "mirror") textureAddressMode = TextureUnitState::TAM_MIRROR;
 		else if (value == "border") textureAddressMode = TextureUnitState::TAM_BORDER;
 	}
+	else if (prop == "ssaoReject") ssaoReject = str2bool(value);
 	else if (prop == "vertexColour") vertexColour = str2bool(value);
 	else if (prop == "wind") wind = str2int(value);
 	else if (prop == "customGenerator") customGenerator = value;

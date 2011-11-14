@@ -54,6 +54,7 @@ struct MaterialProperties
 	
 	// contribute to ssao yes/no
 	bool ssao;
+	bool ssaoReject; // alpha reject greater 128 for ssao technique
 	
 	// wind waving effect
 	// 0 = off, 1 = for grass (quad), 2 = for trees (mesh)

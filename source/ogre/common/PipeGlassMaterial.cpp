@@ -67,7 +67,6 @@ void PipeGlassMaterialGenerator::generate(bool fixedFunction)
 	if (!mShaderCached)
 	{
 		HighLevelGpuProgramPtr fragmentProg, vertexProg;
-		LogO("Creating shader for " + mDef->getName() );
 		try
 		{
 			mVertexProgram = createPipeVertexProgram();

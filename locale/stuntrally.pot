@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION"
 "Report-Msgid-Bugs-To: "
-"POT-Creation-Date: 2011-11-11 19:14+0100"
+"POT-Creation-Date: 2011-11-13 22:32+0100"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>"
 "Language-Team: LANGUAGE <LL@li.org>"
@@ -27,10 +27,6 @@ msgstr ""
 
 msgctxt "Fullscreen"
 msgid "Fullscreen"
-msgstr ""
-
-msgctxt "InputMapShowOptions"
-msgid "Show options"
 msgstr ""
 
 msgctxt "TipGrassSwayDistr"
@@ -237,8 +233,8 @@ msgctxt "TipParType3"
 msgid "Tire Particle type 3 (global for track)."
 msgstr ""
 
-msgctxt "SkirtLength"
-msgid "Skirt Length"
+msgctxt "TipParType2"
+msgid "Tire Particle type 2 (global for track)."
 msgstr ""
 
 msgctxt "TipParType1"
@@ -299,6 +295,10 @@ msgstr ""
 
 msgctxt "RestartApply"
 msgid "Restart game, to apply *changes."
+msgstr ""
+
+msgctxt "InputMapResetGame"
+msgid "Reset game"
 msgstr ""
 
 msgctxt "smoke"
@@ -430,7 +430,7 @@ msgid "alt-shift - at start   alt-ctrl - at end"
 msgstr ""
 
 msgctxt "RearThrottleInverse"
-msgid "Rear throttle inverse--"
+msgid "Rear throttle inverse"
 msgstr ""
 
 msgctxt "BlendMap"
@@ -581,8 +581,8 @@ msgctxt "InputAfterChanges"
 msgid "(after Terrain/Vegetation changes)"
 msgstr ""
 
-msgctxt "InputMapFlipRight"
-msgid "Flip right"
+msgctxt "MapSize"
+msgid "Map size"
 msgstr ""
 
 msgctxt "OrigImage"
@@ -985,8 +985,8 @@ msgctxt "InputBrushParams"
 msgid "Brush parameters"
 msgstr ""
 
-msgctxt "InputMapNextCamera"
-msgid "Next Camera"
+msgctxt "InputMapShowOptions"
+msgid "Show options"
 msgstr ""
 
 msgctxt "InputCameraMode"
@@ -1057,8 +1057,8 @@ msgctxt "InputCameraTxt2"
 msgid "with ctrl - switch current car when many"
 msgstr ""
 
-msgctxt "MapSize"
-msgid "Map size"
+msgctxt "SkirtLength"
+msgid "Skirt Length"
 msgstr ""
 
 msgctxt "InputRoadNotOnTer"
@@ -1345,10 +1345,6 @@ msgctxt "ChngTrkTab"
 msgid "changed in [Track] tab"
 msgstr ""
 
-msgctxt "TipParType2"
-msgid "Tire Particle type 2 (global for track)."
-msgstr ""
-
 msgctxt "InputRplCtrl2"
 msgid "P - pause/unpause replay"
 msgstr ""
@@ -1579,6 +1575,10 @@ msgstr ""
 
 msgctxt "EnterSave"
 msgid "Enter - save"
+msgstr ""
+
+msgctxt "InputMapLastChk"
+msgid "Go to last checkp."
 msgstr ""
 
 msgctxt "Properties"
@@ -1833,6 +1833,10 @@ msgctxt "TipTrkListEditor"
 msgid "Tracks list, click to select (for Rename or Duplicate). Press [Load track] to change current track in editor."
 msgstr ""
 
+msgctxt "InputMapNextCamera"
+msgid "Next Camera"
+msgstr ""
+
 msgctxt "GraphicsAll_Lowest"
 msgid "Lowest"
 msgstr ""
@@ -2079,10 +2083,6 @@ msgstr ""
 
 msgctxt "NewGame"
 msgid "New Game"
-msgstr ""
-
-msgctxt "InputMapFlipLeft"
-msgid "Flip left"
 msgstr ""
 
 msgctxt "page"
