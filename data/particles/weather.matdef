@@ -5,6 +5,7 @@
 	sceneBlend = alpha
 	textureAddressMode = clamp
 	diffuseMap_1 = droplet.png
+	fog = false
 	
 [SnowFlake]
 	lighting = false
@@ -13,3 +14,4 @@
 	sceneBlend = alpha
 	textureAddressMode = clamp
 	diffuseMap_1 = snow.png
+	fog = false
