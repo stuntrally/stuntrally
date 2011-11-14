@@ -39,6 +39,10 @@ void MaterialGenerator::generate(bool fixedFunction)
 	// -------------------------- Main technique ----------------------------- //
 	Ogre::Technique* technique = mMaterial->createTechnique();
 	
+	// shadow caster
+	if (!mDef->mProps->transparent)
+		technique->setShadowCasterMaterial("PSSM/shadow_caster_noalpha");
+	
 	// Main pass
 	Ogre::Pass* pass = technique->createPass();
 	
