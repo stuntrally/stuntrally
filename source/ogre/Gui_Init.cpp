@@ -293,7 +293,11 @@ void App::InitGui()
 void App::UpdCarClrSld(bool upd)
 {
 	HScrollPtr sl;  size_t v;
-	bUpdCarClr = false;
+	
+	// this causes problems (color not applied)
+	//bUpdCarClr = false;
+	// car color update is instant now anyway.
+	
 	Slv(CarClrH, pSet->car_hue[iCurCar]);
 	Slv(CarClrS, pSet->car_sat[iCurCar]);  if (upd)  bUpdCarClr = true;
 	Slv(CarClrV, pSet->car_val[iCurCar]);  bUpdCarClr = true;

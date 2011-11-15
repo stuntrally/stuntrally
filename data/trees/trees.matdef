@@ -29,7 +29,6 @@
 	alphaRejectFunc = greater_equal
 	alphaRejectValue = 128
 	terrainLightMap = true
-	wind = 2
 
 [3D-Diggers/plant1]
 	parent = 3D-Diggers/base
@@ -53,10 +52,12 @@
 	ambient = 0.9 0.9 0.9
 	diffuse = 0.7 0.7 0.7
 	specular = 0.5 0.5 0.5 1 32
+	wind = 2
 
 [3D-Diggers/farn02]
 	parent = 3D-Diggers/farn01
 	diffuseMap_256 = farn02.png
+	wind = 2
 
 [3D-Diggers/fir01]
 	ambient = 1.0 1.0 1.0
@@ -100,7 +101,6 @@
 	diffuse = 0.6 0.6 0.6
 	diffuseMap_256 = shroom1.png
 	receivesDepthShadows = true
-	wind = 2
 
 [3D-Diggers/shroom2]
 	parent = 3D-Diggers/shroom1
@@ -126,7 +126,6 @@
 	diffuseMap_1024 = rock.05w.jpg
 	receivesDepthShadows = true
 	terrainLightMap = true
-	wind = 2
 
 [rock.07.mat/SOLID/TEX/rockW05.png]
 	parent = rock.05.mat/SOLID/TEX/rockW05.png
@@ -135,7 +134,6 @@
 	diffuseMap_1024 = rock.05.jpg
 	receivesDepthShadows = true
 	terrainLightMap = true
-	wind = 2
 
 [rock.07.mat/SOLID/TEX/rock.05.png]
 	parent = rock.05.mat/SOLID/TEX/rock.05.png
