@@ -614,6 +614,8 @@ bool App::frameStarted(const Ogre::FrameEvent& evt)
 		ResizeOptWnd();
 		//bSizeHUD = true;
 		
+		SizeGUI();
+		
 		LoadTrack();  // shouldnt be needed but ...
 	}
 	
@@ -624,8 +626,8 @@ bool App::frameStarted(const Ogre::FrameEvent& evt)
 	}
 	
 	///  sort trk list
-	if (trkMList && trkMList->mSortColumnIndex != trkMList->mSortColumnIndexOld
-		|| trkMList->mSortUp != trkMList->mSortUpOld)
+	if (trkMList && (trkMList->mSortColumnIndex != trkMList->mSortColumnIndexOld
+		|| trkMList->mSortUp != trkMList->mSortUpOld))
 	{
 		trkMList->mSortColumnIndexOld = trkMList->mSortColumnIndex;
 		trkMList->mSortUpOld = trkMList->mSortUp;

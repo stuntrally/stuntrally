@@ -66,6 +66,7 @@ bool App::frameStart(Real time)
 	{	bWindowResized = false;
 
 		ResizeOptWnd();
+		SizeGUI();
 		bSizeHUD = true;
 	}
 		

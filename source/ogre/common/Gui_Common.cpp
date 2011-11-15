@@ -153,7 +153,7 @@ void App::slTerMtr(SL)
 		if (v == 1)  valTerMtr->setCaption("Low");  else
 		if (v == 2)  valTerMtr->setCaption("Normal");  else
 		if (v == 3)  valTerMtr->setCaption("Parallax");  }
-	if (bGI)  changeShadows();
+	//if (bGI)  changeShadows();
 }
 
 
@@ -298,6 +298,69 @@ void App::btnQuit(WP)
 	mShutDown = true;
 }
 
+//  begin MyGUI HACKS
+//-----------------------------------------------------------------------------------
+
+void App::SizeGUI()
+{		
+	// call recursive method for all root widgets
+	for (VectorWidgetPtr::iterator it = vwGui.begin(); it != vwGui.end(); ++it)
+	{
+		doSizeGUI((*it)->getEnumerator());
+	}
+}
+
+void App::doSizeGUI(MyGUI::EnumeratorWidgetPtr widgets)
+{
+	while (widgets.next())
+	{
+        WidgetPtr wp = widgets.current();
+
+		std::string relativeTo = wp->getUserString("RelativeTo");
+		
+		if (relativeTo != "")
+		{
+			// position & size relative to the widget specified in "RelativeTo" property (or full screen)
+			MyGUI::IntSize relativeSize;
+			if (relativeTo == "Screen")
+				relativeSize = MyGUI::IntSize(mWindow->getWidth(), mWindow->getHeight());
+			else
+			{
+				WidgetPtr window = mGUI->findWidget<Widget>(relativeTo);
+				relativeSize = window->getSize();
+			}
+			
+			// retrieve original size & pos
+			MyGUI::IntPoint origPos;
+			MyGUI::IntSize origSize;
+			origPos.left = s2i( wp->getUserString("origPosX") );
+			origPos.top = s2i( wp->getUserString("origPosY") );
+			origSize.width = s2i( wp->getUserString("origSizeX") );
+			origSize.height = s2i( wp->getUserString("origSizeY") );
+			
+			// calc new size & pos
+			const MyGUI::IntPoint& newPos = MyGUI::IntPoint(
+				int(origPos.left * (float(relativeSize.width) / 800)),
+				int(origPos.top * (float(relativeSize.height) / 600))
+			);
+			
+			const MyGUI::IntSize& newScale = MyGUI::IntSize(
+				int(origSize.width * (float(relativeSize.width) / 800)),
+				int(origSize.height * (float(relativeSize.height) / 600))
+			);
+			
+			// apply
+			wp->setPosition(newPos);
+			wp->setSize(newScale);
+		}
+		
+		doSizeGUI(wp->getEnumerator());
+	}
+}
+
+//-----------------------------------------------------------------------------------
+
+
 
 ///  Tooltips
 //----------------------------------------------------------------------------------------------------------------
@@ -314,9 +377,18 @@ void App::setToolTips(EnumeratorWidgetPtr widgets)
     {
         WidgetPtr wp = widgets.current();
 		wp->setAlign(ALIGN);
+		
+		MyGUI::IntPoint origPos = wp->getPosition();
+		MyGUI::IntSize origSize = wp->getSize();
+		
+		wp->setUserString("origPosX", toStr(origPos.left));
+		wp->setUserString("origPosY", toStr(origPos.top));
+		wp->setUserString("origSizeX", toStr(origSize.width));
+		wp->setUserString("origSizeY", toStr(origSize.height));
+		
         bool tip = wp->isUserString("tip");
 		if (tip)  // if has tooltip string
-		{	
+		{
 			// needed for translation
 			wp->setUserString("tip", LanguageManager::getInstance().replaceTags(wp->getUserString("tip")));
 			wp->setNeedToolTip(true);
@@ -381,8 +453,7 @@ void App::GuiInitLang()
 	languages["ro"] = "Romana";  //Romanian â?
 	languages["pl"] = "Polski";  //Polish
 	
-	//ComboBoxPtr combo = mGUI->findWidget<ComboBox>("Lang");
-	ComboBoxPtr combo = (ComboBoxPtr)mWndOpts->findWidget("Lang");
+	ComboBoxPtr combo = mGUI->findWidget<ComboBox>("Lang");
 	if (!combo)  return;
 	combo->eventComboChangePosition += newDelegate(this, &App::comboLanguage);
 	for (std::map<std::string, std::string>::const_iterator it = languages.begin();
@@ -502,7 +573,7 @@ void App::InitGuiScrenRes()
 	Chk("VSync", chkVidVSync, pSet->vsync);
 
 	//  video resolutions combobox
-	resList = (ListPtr)mWndOpts->findWidget("ResList");
+	resList = mGUI->findWidget<List>("ResList");
 	if (resList)
 	{
 		//  get resolutions
@@ -538,7 +609,7 @@ void App::InitGuiScrenRes()
 		if (modeSel != "")
 			resList->setIndexSelected(resList->findItemIndexWith(modeSel));
 	}
-	ButtonPtr btnRes = (ButtonPtr)mWndOpts->findWidget("ResChange");
+	ButtonPtr btnRes = mGUI->findWidget<Button>("ResChange");
 	if (btnRes)  {  btnRes->eventMouseButtonClick += newDelegate(this, &App::btnResChng);  }
 }
 

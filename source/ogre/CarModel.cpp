@@ -624,7 +624,7 @@ void CarModel::UpdateLightMap()
 	MaterialPtr mtr;
 	for (int i=0; i < NumMaterials; i++)
 	{
-		mtr = (MaterialPtr)MaterialManager::getSingleton().getByName(sMtr[i]);
+		mtr = MaterialManager::getSingleton().getByName(sMtr[i]);
 		if (!mtr.isNull())
 		{	Material::TechniqueIterator techIt = mtr->getTechniqueIterator();
 			while (techIt.hasMoreElements())
@@ -653,7 +653,7 @@ void CarModel::RefreshBrakingMaterial()
 	MaterialPtr mtr;
 	for (int i=0; i < NumMaterials; i++)
 	{
-		mtr = (MaterialPtr)MaterialManager::getSingleton().getByName(sMtr[i]);
+		mtr = MaterialManager::getSingleton().getByName(sMtr[i]);
 		if (!mtr.isNull())
 		{	Material::TechniqueIterator techIt = mtr->getTechniqueIterator();
 			while (techIt.hasMoreElements())
@@ -711,7 +711,7 @@ void CarModel::RecreateMaterials()
 	if (!ghost)
 	for (int i=0; i < NumMaterials; i++)
 	{
-		MaterialPtr mtr = (MaterialPtr)MaterialManager::getSingleton().getByName(sMtr[i]);
+		MaterialPtr mtr = MaterialManager::getSingleton().getByName(sMtr[i]);
 		if (!mtr.isNull())
 		{	Material::TechniqueIterator techIt = mtr->getTechniqueIterator();
 			while (techIt.hasMoreElements())
@@ -860,7 +860,7 @@ void CarModel::ChangeClr(int car)
 {
 	float c_h = pSet->car_hue[car], c_s = pSet->car_sat[car], c_v = pSet->car_val[car];
 	color.setHSB(1-c_h,c_s,c_v);  //set, mini pos clr
-	MaterialPtr mtr = (MaterialPtr)MaterialManager::getSingleton().getByName(sMtr[Mtr_CarBody]);
+	MaterialPtr mtr = MaterialManager::getSingleton().getByName(sMtr[Mtr_CarBody]);
 	if (!mtr.isNull())
 	{
 		mtr->setDiffuse(color);

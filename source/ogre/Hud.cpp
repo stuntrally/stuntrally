@@ -213,7 +213,7 @@ void App::ShowHUD(bool hideAll)
 		//for (int i=0; i<5; ++i)
 		//{	if (ovU[i])  if (show)  ovU[i]->show();  else  ovU[i]->hide();  }
 
-		if (ovCam)	{  if (pSet->show_cam)    ovCam->show();    else  ovCam->hide();     }
+		if (ovCam)	{  if (pSet->show_cam && !isFocGui)    ovCam->show();    else  ovCam->hide();     }
 		if (ovTimes){  if (pSet->show_times)  ovTimes->show();  else  ovTimes->hide();   }
 		if (ovWarnWin){  if (pSet->show_times)  ovWarnWin->show();  else  ovWarnWin->hide();  }
 		if (mFpsOverlay) { if (pSet->show_fps) mFpsOverlay->show(); else mFpsOverlay->hide(); }

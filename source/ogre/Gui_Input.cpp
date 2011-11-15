@@ -38,11 +38,11 @@ void App::InitInputGui()
 	pGame->info_output << "--------------------------------------  Input devices  END" << std::endl;
 
 	TabItemPtr inpTabAll = mGUI->findWidget<TabItem>("InputTabAll");  if (!inpTabAll)  return;
-	TabPtr inputTab = (TabPtr)inpTabAll->findWidget("InputTab");  if (!inputTab)  return;
+	TabPtr inputTab = mGUI->findWidget<Tab>("InputTab");  if (!inputTab)  return;
 
 
 	///  controller selection combo (for bind name, when more)
-	ComboBoxPtr cmbJoy = (ComboBoxPtr)inpTabAll->findWidget("CmbInputController");
+	ComboBoxPtr cmbJoy = mGUI->findWidget<ComboBox>("CmbInputController");
 	if (cmbJoy)
 	{
 		//joysticks->addItem(TR("#{InputNoJS}"));//-
@@ -56,9 +56,9 @@ void App::InitInputGui()
 	}
 
 	//  labels that print the last pressed joystick button / last moved axis
-	txtJAxis = (StaticTextPtr)inpTabAll->findWidget("axisOutput");
-	txtJBtn = (StaticTextPtr)inpTabAll->findWidget("buttonOutput");
-	txtInpDetail = (StaticTextPtr)inpTabAll->findWidget("InputDetail");
+	txtJAxis = mGUI->findWidget<StaticText>("axisOutput");
+	txtJBtn = mGUI->findWidget<StaticText>("buttonOutput");
+	txtInpDetail = mGUI->findWidget<StaticText>("InputDetail");
 
 	//  details edits
 	Ed(InputMin, editInput);  Ed(InputMax, editInput);  Ed(InputMul, editInput);
@@ -409,7 +409,7 @@ void App::UpdateInputBars()
 			if (oneAxis && act->getName() == "Brake")  val = valBr;
 				
 			std::string sBar = "bar_" + sAct + "_" + sPlr;
-			StaticImagePtr bar = (StaticImagePtr)inputTab->findWidget(sBar);
+			StaticImagePtr bar = mGUI->findWidget<StaticImage>(sBar, false);
 			if (bar)
 			{	const int wf = 128, w = 256;  int v = -val * 128, vf = -val * 64, s=512, s0=s/2;
 				if (full)	bar->setImageCoord(IntCoord(std::max(0, std::min(s-wf, vf + s0 -wf/2)), 0, wf, 16));
