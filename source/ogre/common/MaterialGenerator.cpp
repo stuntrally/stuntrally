@@ -1148,11 +1148,13 @@ void MaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::StrStrea
 	if (needDiffuseMap()) outStream <<
 		"	float4 diffuseTex = tex2D(diffuseMap, texCoord.xy); \n";
 	
-	if (needLightMap()) outStream <<
-		"	float4 lightTex = tex2D(lightMap, texCoord.xy);lightTex=float4(lightTex.r,lightTex.r,lightTex.r,1.0f);//single channel map \n";
-
-	if (needBlendMap()) outStream <<
-		"	float4 blendTex = tex2D(blendMap, texCoord.xy); \n";
+	else if (needLightMap() && needBlendMap())
+	{
+		outStream <<
+		"	float3 lightTex = tex2D(lightMap, texCoord.xy).x * matDiffuse.xyz; \n"
+		"	float4 blendTex = tex2D(blendMap, texCoord.xy); \n"
+		"	float4 diffuseTex = float4( lerp(lightTex.xyz, blendTex.xyz, blendTex.a), 1 ); \n";
+	}
 
 	// calculate lighting (per-pixel)
 	if (fpNeedLighting())
@@ -1162,16 +1164,14 @@ void MaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::StrStrea
 		"	float3 lightDir = normalize(lightPosition.xyz - (position.xyz * lightPosition.w)); \n"
 		"	float diffuseLight = max(dot(lightDir, normal), 0); \n";
 		
-		outStream << "	float3 diffuse = matDiffuse.xyz * lightDiffuse.xyz *  diffuseLight ";
-		if (needDiffuseMap()) outStream <<	"* diffuseTex.xyz ";
-		if (needLightMap())
-		{
-			if (needBlendMap())
-				outStream <<	"* lerp(lightTex.xyz, blendTex.xyz, blendTex.a); \n";
-			else
-				outStream <<	"* lightTex.xyz ";
-		}
-		outStream <<	"; \n";
+		if ((needLightMap() && needBlendMap())) outStream <<
+			"	float3 diffuse = lightDiffuse.xyz *  diffuseLight * diffuseTex.xyz; \n";
+		else if (needDiffuseMap()) outStream <<
+			"	float3 diffuse = matDiffuse.xyz * lightDiffuse.xyz *  diffuseLight * diffuseTex.xyz; \n";
+		else outStream <<
+			"	float3 diffuse = matDiffuse.xyz * lightDiffuse.xyz * diffuseLight; \n";
+			
+
 		outStream <<
 		// Compute the specular term
 		"	float3 viewVec = -eyeVector; \n"
@@ -1183,14 +1183,9 @@ void MaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::StrStrea
 
 		// Compute the ambient term
 		outStream << "	float3 ambient = matAmbient.xyz ";
-		if (needDiffuseMap()) outStream <<	"* diffuseTex.xyz ";
-		if (needLightMap()) outStream <<	"* lightTex.xyz ";
-		outStream << "; \n";
+		if (needDiffuseMap() || (needLightMap() && needBlendMap())) outStream <<	"* diffuseTex.xyz";
 
-		if (needBlendMap())
-		{
-			outStream <<	"ambient =  lerp(ambient, blendTex.xyz , blendTex.a); \n";
-		}
+		outStream << "; \n";
 
 		// Add all terms together (also with shadow)
 		if (needShadows() || needTerrainLightMap()) outStream <<
