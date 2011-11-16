@@ -66,7 +66,7 @@ protected:
 	bool mShowDialog, mShutDown;
 	bool setup(), configure();  void updateStats();
 	
-	bool bFirstFrame;
+	bool bFirstRenderFrame;
 
 	///  create
 	virtual void createScene() = 0;

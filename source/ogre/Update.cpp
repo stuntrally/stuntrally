@@ -81,7 +81,7 @@ bool App::frameStart(Real time)
 		TrackListUpd(false);
 	}
 	
-	if (bFirstFrame)
+	if (bFirstRenderFrame)
 		updTrkListDim();
 
 	if (bLoading)
@@ -223,7 +223,7 @@ bool App::frameStart(Real time)
 			else{	 pr->setSpeedFactor(1.f);	 pr2->setSpeedFactor(1.f);	}
 		}
 		
-		bFirstFrame = false;
+		bFirstRenderFrame = false;
 		
 		return ret;
 	}

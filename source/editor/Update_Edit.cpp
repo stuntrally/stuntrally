@@ -619,7 +619,7 @@ bool App::frameStarted(const Ogre::FrameEvent& evt)
 		LoadTrack();  // shouldnt be needed but ...
 	}
 	
-	if (bFirstFrame)
+	if (bFirstRenderFrame)
 		updTrkListDim();
 	
 	if (bRecreateFluids)
@@ -640,7 +640,7 @@ bool App::frameStarted(const Ogre::FrameEvent& evt)
 		TrackListUpd(false);
 	}
 	
-	bFirstFrame = false;
+	bFirstRenderFrame = false;
 	
 	return true;
 }
