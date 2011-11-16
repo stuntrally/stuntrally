@@ -51,7 +51,9 @@
 			mItemSelected(ITEM_NONE),
 			mFrameAdvise(false),
 			mClient(nullptr),
-			mHeaderPlace(nullptr)
+			mHeaderPlace(nullptr),
+			mSortUpOld(true),
+			mSortColumnIndexOld(ITEM_NONE)
 		{
 		}
 		
