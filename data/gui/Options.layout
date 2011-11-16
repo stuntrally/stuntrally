@@ -15,7 +15,7 @@
 			<Widget type="TabItem" skin="" position="4 26 787 531" name="TabTrack">
 				<UserString key="RelativeTo" value="OptionsWnd"/>
 				<Property key="Caption" value="#{Track}"/>
-				<Widget type="StaticText" skin="StaticText" position="176 456 200 24" name="TrackText">
+				<Widget type="TextBox" skin="TextBox" position="176 456 200 24" name="TrackText">
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 					<Property key="InheritsAlpha" value="true"/>
 					<Property key="Colour" value="0 0 0"/>
@@ -55,65 +55,65 @@
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 					<UserString key="tip" value="#{TipTrackMap}"/>
 				</Widget>
-				<Widget type="StaticText" skin="StaticText" position="532 70 100 18" name="i1">
+				<Widget type="TextBox" skin="TextBox" position="532 70 100 18" name="i1">
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 					<Property key="Caption" value="#{TrackLength}"/>
 					<Property key="TextColour" value="0.4 0.8 1.0"/>
 				</Widget>
-				<Widget type="StaticText" skin="StaticText" position="638 70 90 18" name="iv1">
+				<Widget type="TextBox" skin="TextBox" position="638 70 90 18" name="iv1">
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 					<Property key="Caption" value="#{UnitKm}"/>
 					<Property key="TextColour" value="0.4 0.8 1.0"/>
 				</Widget>
-				<Widget type="StaticText" skin="StaticText" position="532 90 100 18" name="i2">
+				<Widget type="TextBox" skin="TextBox" position="532 90 100 18" name="i2">
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 					<Property key="TextColour" value="0.4 0.8 1.0"/>
 					<Property key="Caption" value="#{TrackArea}"/>
 				</Widget>
-				<Widget type="StaticText" skin="StaticText" position="638 90 90 18" name="iv2">
+				<Widget type="TextBox" skin="TextBox" position="638 90 90 18" name="iv2">
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 					<Property key="Caption" value="#{UnitM}"/>
 					<Property key="TextColour" value="0.4 0.8 1.0"/>
 				</Widget>
-				<Widget type="StaticText" skin="StaticText" position="566 120 82 18" name="iv3">
+				<Widget type="TextBox" skin="TextBox" position="566 120 82 18" name="iv3">
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 					<Property key="Caption" value="#{UnitM}"/>
 					<Property key="TextColour" value="0.6 0.75 0.9"/>
 					<UserString key="tip" value="#{TrackWidthAvg}"/>
 				</Widget>
-				<Widget type="StaticText" skin="StaticText" position="566 140 82 18" name="iv4">
+				<Widget type="TextBox" skin="TextBox" position="566 140 82 18" name="iv4">
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 					<Property key="Caption" value="#{UnitM}"/>
 					<Property key="TextColour" value="0.6 0.75 0.9"/>
 					<UserString key="tip" value="#{TrackHeightDiff}"/>
 				</Widget>
-				<Widget type="StaticText" skin="StaticText" position="702 120 82 18" name="iv5">
+				<Widget type="TextBox" skin="TextBox" position="702 120 82 18" name="iv5">
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 					<Property key="Caption" value="%"/>
 					<Property key="TextColour" value="0.5 0.9 0.9"/>
 					<UserString key="tip" value="#{TrackInAir}"/>
 				</Widget>
-				<Widget type="StaticText" skin="StaticText" position="702 140 82 18" name="iv6">
+				<Widget type="TextBox" skin="TextBox" position="702 140 82 18" name="iv6">
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 					<Property key="Caption" value="%"/>
 					<Property key="TextColour" value="0.9 0.9 0.5"/>
 					<UserString key="tip" value="#{TrackPipes}"/>
 				</Widget>
-				<Widget type="StaticText" skin="StaticText" position="532 20 100 18" name="i7">
+				<Widget type="TextBox" skin="TextBox" position="532 20 100 18" name="i7">
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 					<Property key="Caption" value="#{TrackBestTime}"/>
 					<Property key="TextColour" value="0.7 0.86 1.0"/>
 				</Widget>
-				<Widget type="StaticText" skin="StaticText" position="638 20 90 18" name="iv7">
+				<Widget type="TextBox" skin="TextBox" position="638 20 90 18" name="iv7">
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 					<Property key="TextColour" value="0.7 0.86 1.0"/>
 				</Widget>
-				<Widget type="StaticText" skin="StaticText" position="532 40 100 18" name="i8">
+				<Widget type="TextBox" skin="TextBox" position="532 40 100 18" name="i8">
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 					<Property key="Caption" value="#{TrackAvgSpeed}"/>
 					<Property key="TextColour" value="0.7 0.86 1.0"/>
 				</Widget>
-				<Widget type="StaticText" skin="StaticText" position="638 40 90 18" name="iv8">
+				<Widget type="TextBox" skin="TextBox" position="638 40 90 18" name="iv8">
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 					<Property key="TextColour" value="0.7 0.86 1.0"/>
 				</Widget>
@@ -149,52 +149,52 @@
 					<Property key="ImageTexture" value="track_icons.png"/>
 					<Property key="ImageCoord" value="64 32 64 32"/>
 				</Widget>
-				<Widget type="StaticText" skin="StaticText" position="540 204 32 24" name="ti1">
+				<Widget type="TextBox" skin="TextBox" position="540 204 32 24" name="ti1">
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 					<Property key="TextColour" value="0.5 0.8 1.0"/>
 					<UserString key="tip" value="#{fluids}"/>
 				</Widget>
-				<Widget type="StaticText" skin="StaticText" position="572 204 32 24" name="ti2">
+				<Widget type="TextBox" skin="TextBox" position="572 204 32 24" name="ti2">
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 					<Property key="TextColour" value="0.5 1.0 0.4"/>
 					<UserString key="tip" value="#{bumps}"/>
 				</Widget>
-				<Widget type="StaticText" skin="StaticText" position="604 204 32 24" name="ti3">
+				<Widget type="TextBox" skin="TextBox" position="604 204 32 24" name="ti3">
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 					<Property key="TextColour" value="1.0 0.6 0.3"/>
 					<UserString key="tip" value="#{jumps}"/>
 				</Widget>
-				<Widget type="StaticText" skin="StaticText" position="636 204 32 24" name="ti4">
+				<Widget type="TextBox" skin="TextBox" position="636 204 32 24" name="ti4">
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 					<Property key="TextColour" value="0.3 0.9 1.0"/>
 					<UserString key="tip" value="#{loops}"/>
 				</Widget>
-				<Widget type="StaticText" skin="StaticText" position="668 204 32 24" name="ti5">
+				<Widget type="TextBox" skin="TextBox" position="668 204 32 24" name="ti5">
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 					<Property key="TextColour" value="0.9 0.9 0.3"/>
 					<UserString key="tip" value="#{pipes}"/>
 				</Widget>
-				<Widget type="StaticText" skin="StaticText" position="700 204 32 24" name="ti6">
+				<Widget type="TextBox" skin="TextBox" position="700 204 32 24" name="ti6">
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 					<Property key="TextColour" value="0.8 0.8 0.8"/>
 					<UserString key="tip" value="#{banked}"/>
 				</Widget>
-				<Widget type="StaticText" skin="StaticText" position="732 204 32 24" name="ti7">
+				<Widget type="TextBox" skin="TextBox" position="732 204 32 24" name="ti7">
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 					<Property key="TextColour" value="0.8 0.8 1.0"/>
 					<UserString key="tip" value="#{frenzy}"/>
 				</Widget>
-				<Widget type="StaticText" skin="StaticText" position="764 204 32 24" name="ti8">
+				<Widget type="TextBox" skin="TextBox" position="764 204 32 24" name="ti8">
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 					<Property key="TextColour" value="1.0 0.8 0.8"/>
 					<UserString key="tip" value="#{long}"/>
 				</Widget>
-				<Widget type="StaticText" skin="StaticText" position="540 254 32 24" name="ti9">
+				<Widget type="TextBox" skin="TextBox" position="540 254 32 24" name="ti9">
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 					<Property key="TextColour" value="0.8 0.9 1.0"/>
 					<UserString key="tip" value="#{difficulty}"/>
 				</Widget>
-				<Widget type="StaticText" skin="StaticText" position="572 254 32 24" name="ti10">
+				<Widget type="TextBox" skin="TextBox" position="572 254 32 24" name="ti10">
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 					<Property key="TextColour" value="0.86 0.93 1.0"/>
 					<UserString key="tip" value="#{rating}"/>
@@ -223,7 +223,7 @@
 					<Property key="Colour" value="0.6 0.8 1.0"/>
 					<Property key="TextColour" value="0.45 0.58 0.8"/>
 				</Widget>
-				<Widget type="StaticText" skin="StaticText" position="16 448 72 24">
+				<Widget type="TextBox" skin="TextBox" position="16 448 72 24">
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 					<Property key="Caption" value="#{Find}:"/>
 					<Property key="TextColour" value="0.7 0.8 0.9"/>
@@ -242,7 +242,7 @@
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 					<UserString key="tip" value="#{TipCarsList}"/>
 				</Widget>
-				<Widget type="StaticText" skin="StaticText" position="176 456 200 24" name="CarText">
+				<Widget type="TextBox" skin="TextBox" position="176 456 200 24" name="CarText">
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 					<Property key="InheritsAlpha" value="true"/>
 					<Property key="Caption" value="#{Car}"/>
@@ -272,7 +272,7 @@
 					<Property key="MoveToClick" value="true"/>
 					<UserString key="tip" value="#{TipChangeHue}"/>
 				</Widget>
-				<Widget type="StaticText" skin="StaticText" position="270 74 42 24" name="CarClrHVal">
+				<Widget type="TextBox" skin="TextBox" position="270 74 42 24" name="CarClrHVal">
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 					<Property key="TextColour" value="0.8 0.9 1.0"/>
 				</Widget>
@@ -282,7 +282,7 @@
 					<Property key="MoveToClick" value="true"/>
 					<UserString key="tip" value="#{TipChangeSat}"/>
 				</Widget>
-				<Widget type="StaticText" skin="StaticText" position="270 104 42 24" name="CarClrSVal">
+				<Widget type="TextBox" skin="TextBox" position="270 104 42 24" name="CarClrSVal">
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 					<Property key="TextColour" value="0.8 0.9 1.0"/>
 				</Widget>
@@ -292,21 +292,21 @@
 					<Property key="MoveToClick" value="true"/>
 					<UserString key="tip" value="#{TipChangeBright}"/>
 				</Widget>
-				<Widget type="StaticText" skin="StaticText" position="270 134 42 24" name="CarClrVVal">
+				<Widget type="TextBox" skin="TextBox" position="270 134 42 24" name="CarClrVVal">
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 					<Property key="TextColour" value="0.8 0.9 1.0"/>
 				</Widget>
-				<Widget type="StaticText" skin="StaticText" position="176 74 88 24">
+				<Widget type="TextBox" skin="TextBox" position="176 74 88 24">
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 					<Property key="Caption" value="#{ColHue}"/>
 					<Property key="TextColour" value="0.5 0.8 1.0"/>
 				</Widget>
-				<Widget type="StaticText" skin="StaticText" position="176 104 88 24">
+				<Widget type="TextBox" skin="TextBox" position="176 104 88 24">
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 					<Property key="TextColour" value="0.7 0.8 0.9"/>
 					<Property key="Caption" value="#{ColSat}"/>
 				</Widget>
-				<Widget type="StaticText" skin="StaticText" position="176 134 88 24">
+				<Widget type="TextBox" skin="TextBox" position="176 134 88 24">
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 					<Property key="TextColour" value="0.5 0.7 0.9"/>
 					<Property key="Caption" value="#{ColBright}"/>
@@ -454,29 +454,29 @@
 					<Property key="Caption" value="4"/>
 					<Property key="Colour" value="1 0.5 0.5"/>
 				</Widget>
-				<Widget type="StaticText" skin="StaticText" position="312 231 176 24">
+				<Widget type="TextBox" skin="TextBox" position="312 231 176 24">
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 					<Property key="Caption" value="#{NumLocalPlayers}"/>
 					<Property key="TextColour" value="0.7 0.9 1"/>
 				</Widget>
-				<Widget type="StaticText" skin="StaticText" position="496 231 64 24" name="valLocPlayers">
+				<Widget type="TextBox" skin="TextBox" position="496 231 64 24" name="valLocPlayers">
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 					<Property key="TextColour" value="0.8 0.92 1"/>
 				</Widget>
-				<Widget type="StaticText" skin="StaticText" position="32 23 120 24">
+				<Widget type="TextBox" skin="TextBox" position="32 23 120 24">
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 					<Property key="Caption" value="#{Car}"/>
 				</Widget>
-				<Widget type="StaticText" skin="StaticText" position="312 23 136 24">
+				<Widget type="TextBox" skin="TextBox" position="312 23 136 24">
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 					<Property key="Caption" value="#{Game}"/>
 				</Widget>
-				<Widget type="StaticText" skin="StaticText" position="312 383 176 24">
+				<Widget type="TextBox" skin="TextBox" position="312 383 176 24">
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 					<Property key="Caption" value="#{NumLaps}"/>
 					<Property key="TextColour" value="0.7 0.9 1"/>
 				</Widget>
-				<Widget type="StaticText" skin="StaticText" position="496 383 64 24" name="NumLapsVal">
+				<Widget type="TextBox" skin="TextBox" position="496 383 64 24" name="NumLapsVal">
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 					<Property key="TextColour" value="0.8 0.95 1"/>
 				</Widget>
@@ -490,7 +490,7 @@
 					<Property key="Colour" value="0.55 0.75 1"/>
 					<Property key="TextColour" value="0.6 0.8 1"/>
 				</Widget>
-				<Widget type="StaticText" skin="StaticText" position="312 160 176 24">
+				<Widget type="TextBox" skin="TextBox" position="312 160 176 24">
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 					<Property key="TextColour" value="0.55 0.75 1"/>
 					<Property key="Caption" value="#{BoostAndFlip}"/>
@@ -559,19 +559,19 @@
 					<Property key="Colour" value="1 0.8 0.4"/>
 					<Property key="Caption" value="#{RplRename}"/>
 				</Widget>
-				<Widget type="StaticText" skin="StaticText" position="224 16 184 24" name="RplName">
+				<Widget type="TextBox" skin="TextBox" position="224 16 184 24" name="RplName">
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 					<Property key="TextColour" value="0.84 0.8 1"/>
 				</Widget>
-				<Widget type="StaticText" skin="StaticText" position="224 40 184 44" name="RplInfo">
+				<Widget type="TextBox" skin="TextBox" position="224 40 184 44" name="RplInfo">
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 					<Property key="TextColour" value="0.9 0.9 1"/>
 				</Widget>
-				<Widget type="StaticText" skin="StaticText" position="408 40 216 44" name="RplInfo2">
+				<Widget type="TextBox" skin="TextBox" position="408 40 216 44" name="RplInfo2">
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 					<Property key="TextColour" value="0.76 0.76 0.82"/>
 				</Widget>
-				<Widget type="StaticText" skin="StaticText" position="224 160 416 24" name="RplName2">
+				<Widget type="TextBox" skin="TextBox" position="224 160 416 24" name="RplName2">
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 					<Property key="TextColour" value="1 0.8 0.6"/>
 				</Widget>
@@ -601,7 +601,7 @@
 					<Widget type="TabItem" skin="" position="4 26 735 428">
 						<UserString key="RelativeTo" value="OptionsWnd"/>
 						<Property key="Caption" value="#{Video}"/>
-						<Widget type="StaticText" skin="StaticText" position="32 18 112 24">
+						<Widget type="TextBox" skin="TextBox" position="32 18 112 24">
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 							<Property key="Caption" value="#{Resolution}"/>
 							<Property key="Colour" value="0 0 0"/>
@@ -617,12 +617,12 @@
 							<Property key="Caption" value="#{VSync} *"/>
 							<Property key="TextColour" value="0.5 0.9 1"/>
 						</Widget>
-						<Widget type="StaticText" skin="StaticText" position="350 146 136 24">
+						<Widget type="TextBox" skin="TextBox" position="350 146 136 24">
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 							<Property key="Caption" value="#{AntiAliasing} *"/>
 							<Property key="TextColour" value="0.6 0.9 1"/>
 						</Widget>
-						<Widget type="StaticText" skin="StaticText" position="375 184 30 24" name="AntiAliasingVal">
+						<Widget type="TextBox" skin="TextBox" position="375 184 30 24" name="AntiAliasingVal">
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 							<Property key="TextColour" value="0.8 0.9 1.0"/>
 						</Widget>
@@ -633,7 +633,7 @@
 							<Property key="MoveToClick" value="true"/>
 							<Property key="Colour" value="0.6 0.8 1.0"/>
 						</Widget>
-						<Widget type="StaticText" skin="StaticText" position="32 488 136 24">
+						<Widget type="TextBox" skin="TextBox" position="32 488 136 24">
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 							<Property key="Caption" value="#{NeedRestart}"/>
 							<Property key="TextColour" value="0.7 1 0.5"/>
@@ -652,7 +652,7 @@
 							<Property key="Caption" value="#{UseSSAA}"/>
 							<Property key="TextColour" value="0.6 0.9 1"/>
 						</Widget>
-						<Widget type="StaticText" skin="StaticText" position="188 350 240 24">
+						<Widget type="TextBox" skin="TextBox" position="188 350 240 24">
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 							<Property key="TextColour" value="0.7 0.9 0.9"/>
 							<Property key="Caption" value="#{RenderSystem} *"/>
@@ -678,7 +678,7 @@
 							<Property key="Caption" value="#{Bloom}"/>
 							<Property key="TextColour" value="1 1 0.5"/>
 						</Widget>
-						<Widget type="StaticText" skin="StaticText" position="66 110 118 24">
+						<Widget type="TextBox" skin="TextBox" position="66 110 118 24">
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 							<Property key="Caption" value="#{Intensity}"/>
 							<Property key="TextColour" value="1.0 0.9 0.0"/>
@@ -699,7 +699,7 @@
 							<Property key="Range" value="1000001"/>
 							<Property key="MoveToClick" value="true"/>
 						</Widget>
-						<Widget type="StaticText" skin="StaticText" position="66 255 118 24">
+						<Widget type="TextBox" skin="TextBox" position="66 255 118 24">
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 							<Property key="Caption" value="#{Intensity}"/>
 							<Property key="TextColour" value="0.7 1 0.4"/>
@@ -710,7 +710,7 @@
 							<Property key="Range" value="1000001"/>
 							<Property key="MoveToClick" value="true"/>
 						</Widget>
-						<Widget type="StaticText" skin="StaticText" position="66 140 120 24">
+						<Widget type="TextBox" skin="TextBox" position="66 140 120 24">
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 							<Property key="Caption" value="#{OrigImage}"/>
 							<Property key="TextColour" value="1 1 0.5"/>
@@ -721,15 +721,15 @@
 							<Property key="Range" value="1000001"/>
 							<Property key="MoveToClick" value="true"/>
 						</Widget>
-						<Widget type="StaticText" skin="StaticText" position="184 110 60 26" name="BloomIntVal">
+						<Widget type="TextBox" skin="TextBox" position="184 110 60 26" name="BloomIntVal">
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 							<Property key="TextColour" value="1.0 1 0.2"/>
 						</Widget>
-						<Widget type="StaticText" skin="StaticText" position="184 140 60 24" name="BloomOrigVal">
+						<Widget type="TextBox" skin="TextBox" position="184 140 60 24" name="BloomOrigVal">
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 							<Property key="TextColour" value="1 1 0.5"/>
 						</Widget>
-						<Widget type="StaticText" skin="StaticText" position="184 255 60 24" name="BlurIntensVal">
+						<Widget type="TextBox" skin="TextBox" position="184 255 60 24" name="BlurIntensVal">
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 							<Property key="TextColour" value="0.7 1 0.4"/>
 						</Widget>
@@ -740,7 +740,7 @@
 						</Widget>
 					</Widget>
 				</Widget>
-				<Widget type="StaticText" skin="StaticText" position="32 488 300 24">
+				<Widget type="TextBox" skin="TextBox" position="32 488 300 24">
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 					<Property key="Caption" value="#{NeedRestart}"/>
 					<Property key="TextColour" value="0.5 0.9 1"/>
@@ -749,7 +749,7 @@
 			<Widget type="TabItem" skin="" position="4 26 787 531" layer="Back">
 				<UserString key="RelativeTo" value="OptionsWnd"/>
 				<Property key="Caption" value="#{Graphics}"/>
-				<Widget type="StaticText" skin="StaticText" position="32 488 236 24">
+				<Widget type="TextBox" skin="TextBox" position="32 488 236 24">
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 					<Property key="Caption" value="#{NeedNewGame}"/>
 					<Property key="TextColour" value="0.7 1 0.5"/>
@@ -761,7 +761,7 @@
 					<Property key="TextColour" value="0.3 1 0.2"/>
 					<UserString key="tip" value="#{RestartApply}"/>
 				</Widget>
-				<Widget type="StaticText" skin="StaticText" position="24 18 312 24">
+				<Widget type="TextBox" skin="TextBox" position="24 18 312 24">
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 					<Property key="TextColour" value="0.6 0.9 1"/>
 					<Property key="Caption" value="#{GraphicsAllSettings} *"/>
@@ -790,14 +790,14 @@
 							<Property key="ReadOnly" value="true"/>
 							<Property key="TextColour" value="0.2 1 0.2"/>
 						</Widget>
-						<Widget type="StaticText" skin="StaticText" position="32 50 144 24">
+						<Widget type="TextBox" skin="TextBox" position="32 50 144 24">
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 							<Property key="Caption" value="#{Textures}"/>
 							<Property key="Colour" value="0 0 0"/>
 							<Property key="Alpha" value="1"/>
 							<Property key="TextColour" value="0.2 1 0.2"/>
 						</Widget>
-						<Widget type="StaticText" skin="StaticText" position="32 80 144 24">
+						<Widget type="TextBox" skin="TextBox" position="32 80 144 24">
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 							<Property key="Caption" value="#{Anisotropy}"/>
 							<Property key="Colour" value="0 0 0"/>
@@ -811,11 +811,11 @@
 							<Property key="Scroll_ViewPage" value="1"/>
 							<Property key="MoveToClick" value="true"/>
 						</Widget>
-						<Widget type="StaticText" skin="StaticText" position="180 80 60 24" name="AnisotropyVal">
+						<Widget type="TextBox" skin="TextBox" position="180 80 60 24" name="AnisotropyVal">
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 							<Property key="TextColour" value="0.2 1 0.2"/>
 						</Widget>
-						<Widget type="StaticText" skin="StaticText" position="32 110 144 24">
+						<Widget type="TextBox" skin="TextBox" position="32 110 144 24">
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 							<Property key="Caption" value="#{Size}*"/>
 							<Property key="Colour" value="0 0 0"/>
@@ -829,11 +829,11 @@
 							<Property key="Scroll_ViewPage" value="1"/>
 							<Property key="MoveToClick" value="true"/>
 						</Widget>
-						<Widget type="StaticText" skin="StaticText" position="180 110 60 24" name="TexSizeVal">
+						<Widget type="TextBox" skin="TextBox" position="180 110 60 24" name="TexSizeVal">
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 							<Property key="TextColour" value="0.6 0.9 0.6"/>
 						</Widget>
-						<Widget type="StaticText" skin="StaticText" position="32 140 144 24">
+						<Widget type="TextBox" skin="TextBox" position="32 140 144 24">
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 							<Property key="Caption" value="#{Terrain}"/>
 							<Property key="Colour" value="0 0 0"/>
@@ -847,11 +847,11 @@
 							<Property key="Scroll_ViewPage" value="1"/>
 							<Property key="MoveToClick" value="true"/>
 						</Widget>
-						<Widget type="StaticText" skin="StaticText" position="180 140 60 24" name="TerMtrVal">
+						<Widget type="TextBox" skin="TextBox" position="180 140 60 24" name="TerMtrVal">
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 							<Property key="TextColour" value="0.6 1.0 0.1"/>
 						</Widget>
-						<Widget type="StaticText" skin="StaticText" position="32 170 144 24">
+						<Widget type="TextBox" skin="TextBox" position="32 170 144 24">
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 							<Property key="Colour" value="0 0 0"/>
 							<Property key="Caption" value="#{Shaders}*"/>
@@ -862,7 +862,7 @@
 							<Property key="Range" value="2"/>
 							<Property key="MoveToClick" value="true"/>
 						</Widget>
-						<Widget type="StaticText" skin="StaticText" position="180 170 60 24" name="ShadersVal">
+						<Widget type="TextBox" skin="TextBox" position="180 170 60 24" name="ShadersVal">
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 							<Property key="TextColour" value="1.0 1.0 0.1"/>
 						</Widget>
@@ -870,7 +870,7 @@
 					<Widget type="TabItem" skin="" position="4 26 735 368">
 						<UserString key="RelativeTo" value="OptionsWnd"/>
 						<Property key="Caption" value="#{Detail}"/>
-						<Widget type="StaticText" skin="StaticText" position="32 50 144 24">
+						<Widget type="TextBox" skin="TextBox" position="32 50 144 24">
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 							<Property key="Caption" value="#{TerrainError}"/>
 							<Property key="Colour" value="0 0 0"/>
@@ -881,7 +881,7 @@
 							<Property key="Range" value="1000001"/>
 							<Property key="MoveToClick" value="true"/>
 						</Widget>
-						<Widget type="StaticText" skin="StaticText" position="32 80 144 24">
+						<Widget type="TextBox" skin="TextBox" position="32 80 144 24">
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 							<Property key="Caption" value="#{TerHQDist}*"/>
 							<Property key="Colour" value="0 0 0"/>
@@ -892,7 +892,7 @@
 							<Property key="Range" value="1000001"/>
 							<Property key="MoveToClick" value="true"/>
 						</Widget>
-						<Widget type="StaticText" skin="StaticText" position="32 110 144 24">
+						<Widget type="TextBox" skin="TextBox" position="32 110 144 24">
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 							<Property key="Caption" value="#{ViewDist}"/>
 							<Property key="Colour" value="0 0 0"/>
@@ -904,19 +904,19 @@
 							<Property key="Range" value="1000001"/>
 							<Property key="MoveToClick" value="true"/>
 						</Widget>
-						<Widget type="StaticText" skin="StaticText" position="180 50 60 24" name="TerDetailVal">
+						<Widget type="TextBox" skin="TextBox" position="180 50 60 24" name="TerDetailVal">
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 							<Property key="TextColour" value="0.3 0.9 0.9"/>
 						</Widget>
-						<Widget type="StaticText" skin="StaticText" position="180 80 60 24" name="TerDistVal">
+						<Widget type="TextBox" skin="TextBox" position="180 80 60 24" name="TerDistVal">
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 							<Property key="TextColour" value="0.6 1 0.9"/>
 						</Widget>
-						<Widget type="StaticText" skin="StaticText" position="180 110 60 24" name="ViewDistVal">
+						<Widget type="TextBox" skin="TextBox" position="180 110 60 24" name="ViewDistVal">
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 							<Property key="TextColour" value="0.5 1 0.8"/>
 						</Widget>
-						<Widget type="StaticText" skin="StaticText" position="32 140 144 24">
+						<Widget type="TextBox" skin="TextBox" position="32 140 144 24">
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 							<Property key="Caption" value="#{RoadQual}"/>
 							<Property key="Colour" value="0 0 0"/>
@@ -927,7 +927,7 @@
 							<Property key="Range" value="1000001"/>
 							<Property key="MoveToClick" value="true"/>
 						</Widget>
-						<Widget type="StaticText" skin="StaticText" position="180 140 60 24" name="RoadDistVal">
+						<Widget type="TextBox" skin="TextBox" position="180 140 60 24" name="RoadDistVal">
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 							<Property key="TextColour" value="0.3 0.9 0.9"/>
 						</Widget>
@@ -941,25 +941,25 @@
 							<Property key="Colour" value="0.6 1.0 0.3"/>
 							<Property key="TextColour" value="0.3 1 0.2"/>
 						</Widget>
-						<Widget type="StaticText" skin="StaticText" position="32 50 144 24">
+						<Widget type="TextBox" skin="TextBox" position="32 50 144 24">
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 							<Property key="Caption" value="#{TreeMult}*"/>
 							<Property key="Colour" value="0 0 0"/>
 							<Property key="TextColour" value="0.5 1 0.5"/>
 						</Widget>
-						<Widget type="StaticText" skin="StaticText" position="32 80 144 24">
+						<Widget type="TextBox" skin="TextBox" position="32 80 144 24">
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 							<Property key="Caption" value="#{DistMult}*"/>
 							<Property key="Colour" value="0 0 0"/>
 							<Property key="TextColour" value="0.5 0.8 0.5"/>
 						</Widget>
-						<Widget type="StaticText" skin="StaticText" position="32 110 144 24">
+						<Widget type="TextBox" skin="TextBox" position="32 110 144 24">
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 							<Property key="Caption" value="#{GrassMult}*"/>
 							<Property key="Colour" value="0 0 0"/>
 							<Property key="TextColour" value="0.7 1 0.5"/>
 						</Widget>
-						<Widget type="StaticText" skin="StaticText" position="32 140 144 24">
+						<Widget type="TextBox" skin="TextBox" position="32 140 144 24">
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 							<Property key="Caption" value="#{DistMult}*"/>
 							<Property key="Colour" value="0 0 0"/>
@@ -985,19 +985,19 @@
 							<Property key="Range" value="1000001"/>
 							<Property key="MoveToClick" value="true"/>
 						</Widget>
-						<Widget type="StaticText" skin="StaticText" position="180 50 60 24" name="TreesVal">
+						<Widget type="TextBox" skin="TextBox" position="180 50 60 24" name="TreesVal">
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 							<Property key="TextColour" value="0.5 1 0.5"/>
 						</Widget>
-						<Widget type="StaticText" skin="StaticText" position="180 80 60 24" name="TreesDistVal">
+						<Widget type="TextBox" skin="TextBox" position="180 80 60 24" name="TreesDistVal">
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 							<Property key="TextColour" value="0.5 0.8 0.5"/>
 						</Widget>
-						<Widget type="StaticText" skin="StaticText" position="180 110 60 24" name="GrassVal">
+						<Widget type="TextBox" skin="TextBox" position="180 110 60 24" name="GrassVal">
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 							<Property key="TextColour" value="0.7 1 0.5"/>
 						</Widget>
-						<Widget type="StaticText" skin="StaticText" position="180 140 60 24" name="GrassDistVal">
+						<Widget type="TextBox" skin="TextBox" position="180 140 60 24" name="GrassDistVal">
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 							<Property key="TextColour" value="0.7 0.8 0.5"/>
 						</Widget>
@@ -1015,25 +1015,25 @@
 							<Property key="Caption" value="#{ApplyShadows}"/>
 							<Property key="Colour" value="0.7 0.85 1.0"/>
 						</Widget>
-						<Widget type="StaticText" skin="StaticText" position="32 50 144 24">
+						<Widget type="TextBox" skin="TextBox" position="32 50 144 24">
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 							<Property key="Caption" value="#{Shadows}"/>
 							<Property key="Colour" value="0 0 0"/>
 							<Property key="TextColour" value="0.5 0.8 1"/>
 						</Widget>
-						<Widget type="StaticText" skin="StaticText" position="32 80 144 24">
+						<Widget type="TextBox" skin="TextBox" position="32 80 144 24">
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 							<Property key="Caption" value="#{Size}"/>
 							<Property key="Colour" value="0 0 0"/>
 							<Property key="TextColour" value="0.5 0.8 1"/>
 						</Widget>
-						<Widget type="StaticText" skin="StaticText" position="32 110 144 24">
+						<Widget type="TextBox" skin="TextBox" position="32 110 144 24">
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 							<Property key="Caption" value="#{Count}"/>
 							<Property key="Colour" value="0 0 0"/>
 							<Property key="TextColour" value="0.75 0.85 1"/>
 						</Widget>
-						<Widget type="StaticText" skin="StaticText" position="32 140 144 24">
+						<Widget type="TextBox" skin="TextBox" position="32 140 144 24">
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 							<Property key="Caption" value="#{Distance}"/>
 							<Property key="Colour" value="0 0 0"/>
@@ -1059,19 +1059,19 @@
 							<Property key="Range" value="1000001"/>
 							<Property key="MoveToClick" value="true"/>
 						</Widget>
-						<Widget type="StaticText" skin="StaticText" position="180 50 60 24" name="ShadowTypeVal">
+						<Widget type="TextBox" skin="TextBox" position="180 50 60 24" name="ShadowTypeVal">
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 							<Property key="TextColour" value="0.5 0.8 1"/>
 						</Widget>
-						<Widget type="StaticText" skin="StaticText" position="180 80 60 24" name="ShadowSizeVal">
+						<Widget type="TextBox" skin="TextBox" position="180 80 60 24" name="ShadowSizeVal">
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 							<Property key="TextColour" value="0.5 0.8 1"/>
 						</Widget>
-						<Widget type="StaticText" skin="StaticText" position="180 110 60 24" name="ShadowCountVal">
+						<Widget type="TextBox" skin="TextBox" position="180 110 60 24" name="ShadowCountVal">
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 							<Property key="TextColour" value="0.75 0.85 1"/>
 						</Widget>
-						<Widget type="StaticText" skin="StaticText" position="180 140 60 24" name="ShadowDistVal">
+						<Widget type="TextBox" skin="TextBox" position="180 140 60 24" name="ShadowDistVal">
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 							<Property key="TextColour" value="0.7 0.8 0.9"/>
 						</Widget>
@@ -1079,7 +1079,7 @@
 					<Widget type="TabItem" skin="" position="4 26 735 368">
 						<UserString key="RelativeTo" value="OptionsWnd"/>
 						<Property key="Caption" value="#{Reflections}"/>
-						<Widget type="StaticText" skin="StaticText" position="32 50 144 24">
+						<Widget type="TextBox" skin="TextBox" position="32 50 144 24">
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 							<Property key="Caption" value="#{FrameSkip}"/>
 							<Property key="Colour" value="0 0 0"/>
@@ -1090,7 +1090,7 @@
 							<Property key="Range" value="1000001"/>
 							<Property key="MoveToClick" value="true"/>
 						</Widget>
-						<Widget type="StaticText" skin="StaticText" position="32 80 144 24">
+						<Widget type="TextBox" skin="TextBox" position="32 80 144 24">
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 							<Property key="Caption" value="#{MapSize}*"/>
 							<Property key="Colour" value="0 0 0"/>
@@ -1101,7 +1101,7 @@
 							<Property key="Range" value="1000001"/>
 							<Property key="MoveToClick" value="true"/>
 						</Widget>
-						<Widget type="StaticText" skin="StaticText" position="32 110 144 24">
+						<Widget type="TextBox" skin="TextBox" position="32 110 144 24">
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 							<Property key="Caption" value="#{FacesOnce}"/>
 							<Property key="Colour" value="0 0 0"/>
@@ -1112,7 +1112,7 @@
 							<Property key="Range" value="7"/>
 							<Property key="MoveToClick" value="true"/>
 						</Widget>
-						<Widget type="StaticText" skin="StaticText" position="32 140 144 24">
+						<Widget type="TextBox" skin="TextBox" position="32 140 144 24">
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 							<Property key="Caption" value="#{Distance}*"/>
 							<Property key="Colour" value="0 0 0"/>
@@ -1128,29 +1128,29 @@
 							<Property key="Range" value="3"/>
 							<Property key="MoveToClick" value="true"/>
 						</Widget>
-						<Widget type="StaticText" skin="StaticText" position="32 170 144 24">
+						<Widget type="TextBox" skin="TextBox" position="32 170 144 24">
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 							<Property key="Caption" value="#{ReflMode}"/>
 							<Property key="Colour" value="0 0 0"/>
 							<Property key="TextColour" value="1.0 0.6 0.4"/>
 						</Widget>
-						<Widget type="StaticText" skin="StaticText" position="180 50 60 24" name="ReflSkipVal">
+						<Widget type="TextBox" skin="TextBox" position="180 50 60 24" name="ReflSkipVal">
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 							<Property key="TextColour" value="1 0.8 0.4"/>
 						</Widget>
-						<Widget type="StaticText" skin="StaticText" position="180 80 60 24" name="ReflSizeVal">
+						<Widget type="TextBox" skin="TextBox" position="180 80 60 24" name="ReflSizeVal">
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 							<Property key="TextColour" value="1 0.8 0.2"/>
 						</Widget>
-						<Widget type="StaticText" skin="StaticText" position="180 110 60 24" name="ReflFacesVal">
+						<Widget type="TextBox" skin="TextBox" position="180 110 60 24" name="ReflFacesVal">
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 							<Property key="TextColour" value="1.0 0.6 0.4"/>
 						</Widget>
-						<Widget type="StaticText" skin="StaticText" position="180 140 60 24" name="ReflDistVal">
+						<Widget type="TextBox" skin="TextBox" position="180 140 60 24" name="ReflDistVal">
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 							<Property key="TextColour" value="0.9 0.5 0.5"/>
 						</Widget>
-						<Widget type="StaticText" skin="StaticText" position="180 170 60 24" name="ReflModeVal">
+						<Widget type="TextBox" skin="TextBox" position="180 170 60 24" name="ReflModeVal">
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 							<Property key="TextColour" value="0.9 0.5 0.5"/>
 						</Widget>
@@ -1178,11 +1178,11 @@
 							<Property key="Caption" value="#{TireTrails}*"/>
 							<Property key="TextColour" value="1.0 0.8 0.6"/>
 						</Widget>
-						<Widget type="StaticText" skin="StaticText" position="180 50 60 24" name="ParticlesVal">
+						<Widget type="TextBox" skin="TextBox" position="180 50 60 24" name="ParticlesVal">
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 							<Property key="TextColour" value="1 0.9 0"/>
 						</Widget>
-						<Widget type="StaticText" skin="StaticText" position="180 80 60 24" name="TrailsVal">
+						<Widget type="TextBox" skin="TextBox" position="180 80 60 24" name="TrailsVal">
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 							<Property key="TextColour" value="1.0 0.8 0.6"/>
 						</Widget>
@@ -1192,7 +1192,7 @@
 			<Widget type="TabItem" skin="" position="4 26 787 531">
 				<UserString key="RelativeTo" value="OptionsWnd"/>
 				<Property key="Caption" value="#{View}"/>
-				<Widget type="StaticText" skin="StaticText" position="16 483 180 24">
+				<Widget type="TextBox" skin="TextBox" position="16 483 180 24">
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 					<Property key="Caption" value="Language"/>
 					<Property key="TextColour" value="0.6 0.8 1"/>
@@ -1217,7 +1217,7 @@
 							<Property key="Caption" value="#{Digits}"/>
 							<Property key="TextColour" value="0.7 0.8 0.9"/>
 						</Widget>
-						<Widget type="StaticText" skin="StaticText" position="232 58 112 26">
+						<Widget type="TextBox" skin="TextBox" position="232 58 112 26">
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 							<Property key="Caption" value="#{SpeedUnit}"/>
 							<Property key="TextColour" value="0.8 0.9 1.0"/>
@@ -1260,17 +1260,17 @@
 							<Property key="Range" value="1000001"/>
 							<Property key="MoveToClick" value="true"/>
 						</Widget>
-						<Widget type="StaticText" skin="StaticText" position="296 238 48 24" name="SizeArrowVal">
+						<Widget type="TextBox" skin="TextBox" position="296 238 48 24" name="SizeArrowVal">
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
-						<Widget type="StaticText" skin="StaticText" position="296 98 48 24" name="SizeGaugVal">
+						<Widget type="TextBox" skin="TextBox" position="296 98 48 24" name="SizeGaugVal">
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
-						<Widget type="StaticText" skin="StaticText" position="232 238 64 24">
+						<Widget type="TextBox" skin="TextBox" position="232 238 64 24">
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 							<Property key="Caption" value="#{Size}"/>
 						</Widget>
-						<Widget type="StaticText" skin="StaticText" position="232 98 64 24">
+						<Widget type="TextBox" skin="TextBox" position="232 98 64 24">
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 							<Property key="Caption" value="#{Size}"/>
 						</Widget>
@@ -1288,10 +1288,10 @@
 							<Property key="Range" value="1000001"/>
 							<Property key="MoveToClick" value="true"/>
 						</Widget>
-						<Widget type="StaticText" skin="StaticText" position="296 58 48 24" name="SizeMinimapVal">
+						<Widget type="TextBox" skin="TextBox" position="296 58 48 24" name="SizeMinimapVal">
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
-						<Widget type="StaticText" skin="StaticText" position="232 58 64 24">
+						<Widget type="TextBox" skin="TextBox" position="232 58 64 24">
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 							<Property key="Caption" value="#{Size}"/>
 						</Widget>
@@ -1310,7 +1310,7 @@
 							<Property key="Range" value="1000001"/>
 							<Property key="MoveToClick" value="true"/>
 						</Widget>
-						<Widget type="StaticText" skin="StaticText" position="296 98 48 24" name="ZoomMinimapVal">
+						<Widget type="TextBox" skin="TextBox" position="296 98 48 24" name="ZoomMinimapVal">
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 							<Property key="TextColour" value="0.7 0.8 0.9"/>
 						</Widget>
@@ -1323,7 +1323,7 @@
 					<Widget type="TabItem" skin="" position="4 26 735 428">
 						<UserString key="RelativeTo" value="OptionsWnd"/>
 						<Property key="Caption" value="#{Other}"/>
-						<Widget type="StaticText" skin="StaticText" position="40 30 216 24">
+						<Widget type="TextBox" skin="TextBox" position="40 30 216 24">
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 							<Property key="Caption" value="#{Development}"/>
 							<Property key="TextColour" value="0.7 0.85 1.0"/>
@@ -1358,7 +1358,7 @@
 							<Property key="Caption" value="#{CarDebugText}  shift-F9"/>
 							<Property key="TextColour" value="0.7 0.85 1.0"/>
 						</Widget>
-						<Widget type="StaticText" skin="StaticText" position="352 30 216 24">
+						<Widget type="TextBox" skin="TextBox" position="352 30 216 24">
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 							<Property key="TextColour" value="0.75 0.85 0.95"/>
 							<Property key="Caption" value="#{Startup}"/>
@@ -1400,17 +1400,17 @@
 					<Property key="Colour" value="0.73 0.88 1"/>
 					<Property key="ButtonWidth" value="100"/>
 				</Widget>
-				<Widget type="StaticText" skin="StaticText" position="548 460 244 20" name="axisOutput">
+				<Widget type="TextBox" skin="TextBox" position="548 460 244 20" name="axisOutput">
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 					<Property key="TextColour" value="0.75 0.85 0.95"/>
 					<Property key="Caption" value="#{InputMoveAxisTip}"/>
 				</Widget>
-				<Widget type="StaticText" skin="StaticText" position="548 480 244 20" name="buttonOutput">
+				<Widget type="TextBox" skin="TextBox" position="548 480 244 20" name="buttonOutput">
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 					<Property key="TextColour" value="0.75 0.85 0.95"/>
 					<Property key="Caption" value="#{InputPressButtonTip}"/>
 				</Widget>
-				<Widget type="StaticText" skin="StaticText" position="548 32 200 20">
+				<Widget type="TextBox" skin="TextBox" position="548 32 200 20">
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 					<Property key="TextColour" value="0.8 0.9 1.0"/>
 					<Property key="Caption" value="#{InputControllers}:"/>
@@ -1422,12 +1422,12 @@
 					<Property key="Colour" value="0.65 0.85 1"/>
 					<Property key="TextColour" value="0.9 0.97 1"/>
 				</Widget>
-				<Widget type="StaticText" skin="StaticText" position="548 114 236 20" name="InputDetail">
+				<Widget type="TextBox" skin="TextBox" position="548 114 236 20" name="InputDetail">
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 					<Property key="TextColour" value="0.8 0.9 1.0"/>
 					<Property key="Caption" value="#{InputDetailsFor}"/>
 				</Widget>
-				<Widget type="StaticText" skin="StaticText" position="548 216 236 20">
+				<Widget type="TextBox" skin="TextBox" position="548 216 236 20">
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 					<Property key="TextColour" value="0.6 0.8 1.0"/>
 					<Property key="Caption" value="#{InputMinVal}"/>
@@ -1437,7 +1437,7 @@
 					<Property key="TextColour" value="0.6 0.8 1"/>
 					<Property key="Colour" value="0.6 0.8 1"/>
 				</Widget>
-				<Widget type="StaticText" skin="StaticText" position="548 271 236 20">
+				<Widget type="TextBox" skin="TextBox" position="548 271 236 20">
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 					<Property key="TextColour" value="1.0 0.7 0.5"/>
 					<Property key="Caption" value="#{InputMaxVal}"/>
@@ -1447,7 +1447,7 @@
 					<Property key="TextColour" value="1 0.7 0.4"/>
 					<Property key="Colour" value="1 0.7 0.4"/>
 				</Widget>
-				<Widget type="StaticText" skin="StaticText" position="548 326 236 20">
+				<Widget type="TextBox" skin="TextBox" position="548 326 236 20">
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 					<Property key="TextColour" value="0.8 0.8 1.0"/>
 					<Property key="Caption" value="#{InputMultiplier}"/>
@@ -1457,7 +1457,7 @@
 					<Property key="TextColour" value="0.8 0.8 1.0"/>
 					<Property key="Colour" value="0.8 0.8 1.0"/>
 				</Widget>
-				<Widget type="StaticText" skin="StaticText" position="548 154 236 20">
+				<Widget type="TextBox" skin="TextBox" position="548 154 236 20">
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 					<Property key="TextColour" value="0.7 0.9 0.9"/>
 					<Property key="Caption" value="#{InputDetailPreset}"/>
@@ -1473,27 +1473,27 @@
 			<Widget type="TabItem" skin="" position="4 26 787 531">
 				<UserString key="RelativeTo" value="OptionsWnd"/>
 				<Property key="Caption" value="#{Sound}"/>
-				<Widget type="StaticText" skin="StaticText" position="32 60 144 30">
+				<Widget type="TextBox" skin="TextBox" position="32 60 144 30">
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 					<Property key="Caption" value="#{Volume}"/>
 					<Property key="TextColour" value="0.9 0.96 1.0"/>
 				</Widget>
-				<Widget type="StaticText" skin="StaticText" position="32 100 144 30">
+				<Widget type="TextBox" skin="TextBox" position="32 100 144 30">
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 					<Property key="Caption" value="#{VolMaster}"/>
 					<Property key="TextColour" value="0.9 0.94 1.0"/>
 				</Widget>
-				<Widget type="StaticText" skin="StaticText" position="32 140 144 30">
+				<Widget type="TextBox" skin="TextBox" position="32 140 144 30">
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 					<Property key="Caption" value="#{Engine}"/>
 					<Property key="TextColour" value="0.8 0.85 1.0"/>
 				</Widget>
-				<Widget type="StaticText" skin="StaticText" position="32 180 144 30">
+				<Widget type="TextBox" skin="TextBox" position="32 180 144 30">
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 					<Property key="Caption" value="#{Tires}"/>
 					<Property key="TextColour" value="0.75 0.8 1.0"/>
 				</Widget>
-				<Widget type="StaticText" skin="StaticText" position="32 220 144 30">
+				<Widget type="TextBox" skin="TextBox" position="32 220 144 30">
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 					<Property key="Caption" value="#{Environment}"/>
 					<Property key="TextColour" value="0.6 0.75 1.0"/>
@@ -1518,19 +1518,19 @@
 					<Property key="MoveToClick" value="true"/>
 					<Property key="Range" value="1000001"/>
 				</Widget>
-				<Widget type="StaticText" skin="StaticText" position="180 100 60 24" name="VolMasterVal">
+				<Widget type="TextBox" skin="TextBox" position="180 100 60 24" name="VolMasterVal">
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 					<Property key="TextColour" value="0.9 0.94 1.0"/>
 				</Widget>
-				<Widget type="StaticText" skin="StaticText" position="180 140 60 24" name="VolEngineVal">
+				<Widget type="TextBox" skin="TextBox" position="180 140 60 24" name="VolEngineVal">
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 					<Property key="TextColour" value="0.8 0.85 1.0"/>
 				</Widget>
-				<Widget type="StaticText" skin="StaticText" position="180 180 60 24" name="VolTiresVal">
+				<Widget type="TextBox" skin="TextBox" position="180 180 60 24" name="VolTiresVal">
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 					<Property key="TextColour" value="0.75 0.8 1.0"/>
 				</Widget>
-				<Widget type="StaticText" skin="StaticText" position="180 220 60 24" name="VolEnvVal">
+				<Widget type="TextBox" skin="TextBox" position="180 220 60 24" name="VolEnvVal">
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 					<Property key="TextColour" value="0.6 0.75 1.0"/>
 				</Widget>
@@ -1538,28 +1538,28 @@
 			<Widget type="TabItem" skin="" position="4 26 787 531">
 				<UserString key="RelativeTo" value="OptionsWnd"/>
 				<Property key="Caption" value="#{About}"/>
-				<Widget type="StaticText" skin="StaticText" position="24 194 168 24">
+				<Widget type="TextBox" skin="TextBox" position="24 194 168 24">
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 					<Property key="Caption" value="#{Version} #{GameVersion}"/>
 					<Property key="TextColour" value="0.7 1 0.5"/>
 				</Widget>
-				<Widget type="StaticText" skin="StaticText" position="144 248 144 24">
+				<Widget type="TextBox" skin="TextBox" position="144 248 144 24">
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 					<Property key="Caption" value="#{GameBy}"/>
 					<Property key="TextColour" value="0.7 0.86 1"/>
 					<Property key="TextAlign" value="Right Top"/>
 				</Widget>
-				<Widget type="StaticText" skin="StaticText" position="520 248 160 24">
+				<Widget type="TextBox" skin="TextBox" position="520 248 160 24">
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 					<Property key="Caption" value="#{AndContributors}"/>
 					<Property key="TextColour" value="0.7 0.86 1"/>
 				</Widget>
-				<Widget type="StaticText" skin="StaticText" position="172 416 150 24">
+				<Widget type="TextBox" skin="TextBox" position="172 416 150 24">
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 					<Property key="Caption" value="#{BasedOn}"/>
 					<Property key="TextColour" value="0.85 0.85 0.85"/>
 				</Widget>
-				<Widget type="StaticText" skin="StaticText" position="594 416 150 24">
+				<Widget type="TextBox" skin="TextBox" position="594 416 150 24">
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 					<Property key="Caption" value="#{AndUsing}"/>
 					<Property key="TextColour" value="0.8 1 0.8"/>
@@ -1578,7 +1578,7 @@
 					<Property key="ImageTexture" value="ogre-logo.png"/>
 					<UserString key="tip" value="www.ogre3d.org"/>
 				</Widget>
-				<Widget type="StaticText" skin="StaticText" position="24 160 440 24">
+				<Widget type="TextBox" skin="TextBox" position="24 160 440 24">
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 					<Property key="Caption" value="#{ProjectPage}     #{PageURL}"/>
 					<Property key="TextColour" value="0.7 0.86 1.0"/>
@@ -1655,7 +1655,7 @@
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="Colour" value="0.9 0.92 1"/>
 			<Property key="Alpha" value="0.6"/>
-			<Widget type="StaticText" skin="StaticText" position="0 0 100 34" name="RplPercent">
+			<Widget type="TextBox" skin="TextBox" position="0 0 100 34" name="RplPercent">
 				<UserString key="RelativeTo" value="OptionsWnd"/>
 				<Property key="InheritsAlpha" value="false"/>
 				<Property key="Alpha" value="1"/>
@@ -1669,7 +1669,7 @@
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="Colour" value="0.9 0.96 1.0"/>
 			<Property key="Alpha" value="0.6"/>
-			<Widget type="StaticText" skin="StaticText" position="0 0 140 34" name="RplTimeCur">
+			<Widget type="TextBox" skin="TextBox" position="0 0 140 34" name="RplTimeCur">
 				<UserString key="RelativeTo" value="OptionsWnd"/>
 				<Property key="InheritsAlpha" value="false"/>
 				<Property key="Alpha" value="1"/>
@@ -1683,7 +1683,7 @@
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="Colour" value="0.8 0.9 1"/>
 			<Property key="Alpha" value="0.5"/>
-			<Widget type="StaticText" skin="StaticText" position="0 0 140 34" name="RplTimeLen">
+			<Widget type="TextBox" skin="TextBox" position="0 0 140 34" name="RplTimeLen">
 				<UserString key="RelativeTo" value="OptionsWnd"/>
 				<Property key="InheritsAlpha" value="false"/>
 				<Property key="Alpha" value="1"/>

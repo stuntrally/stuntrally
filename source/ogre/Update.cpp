@@ -66,6 +66,7 @@ bool App::frameStart(Real time)
 	{	bWindowResized = false;
 		ResizeOptWnd();
 		SizeGUI();
+		updTrkListDim();
 		bSizeHUD = true;
 	}
 		
@@ -80,9 +81,6 @@ bool App::frameStart(Real time)
 		pSet->tracks_sortup = trkMList->mSortUp;
 		TrackListUpd(false);
 	}
-	
-	if (bFirstRenderFrame)
-		updTrkListDim();
 
 	if (bLoading)
 	{

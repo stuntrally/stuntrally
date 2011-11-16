@@ -613,14 +613,11 @@ bool App::frameStarted(const Ogre::FrameEvent& evt)
 
 		ResizeOptWnd();
 		//bSizeHUD = true;
-		
 		SizeGUI();
+		updTrkListDim();
 		
 		LoadTrack();  // shouldnt be needed but ...
 	}
-	
-	if (bFirstRenderFrame)
-		updTrkListDim();
 	
 	if (bRecreateFluids)
 	{	bRecreateFluids = false;
