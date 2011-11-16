@@ -21,6 +21,7 @@ void App::InitGui()
 	for (VectorWidgetPtr::iterator it = vwGui.begin(); it != vwGui.end(); ++it)
 	{
 		const std::string& name = (*it)->getName();
+		setToolTips((*it)->getEnumerator());
 		if (name == "CamWnd")  mWndCam = *it;  else
 		if (name == "BrushWnd")  mWndBrush = *it;  else
 		if (name == "RoadCur")   mWndRoadCur = *it;  else
@@ -48,8 +49,7 @@ void App::InitGui()
 	//  Fluid window texts
 	if (mWndFluids)  for (int i=0; i<FL_TXT; ++i)
 		flTxt[i] = mGUI->findWidget<StaticText>("flTxt"+toStr(i));
-
-
+		
 	//  Options wnd
 	if (mWndOpts)
 	{	mWndOpts->setVisible(false);
@@ -302,12 +302,6 @@ void App::InitGui()
     //  load = new game
     for (int i=1; i<=2; ++i)
     {	Btn("NewGame"+toStr(i), btnNewGame);  }
-
-	//  tooltips
-	for (VectorWidgetPtr::iterator it = vwGui.begin(); it != vwGui.end(); ++it)
-	{
-		setToolTips((*it)->getEnumerator());
-	}
 
 	bGI = true;  // gui inited, gui events can now save vals
 

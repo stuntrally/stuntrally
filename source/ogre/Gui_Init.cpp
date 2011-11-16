@@ -36,6 +36,13 @@ void App::InitGui()
 		mWndOpts->setPosition((sx-w.width)*0.5f, (sy-w.height)*0.5f);  }
 	PointerManager::getInstance().setVisible(isFocGui);
 	mWndTabs = mGUI->findWidget<Tab>("TabWnd");
+	
+	//  tooltip  ------
+	for (VectorWidgetPtr::iterator it = vwGui.begin(); it != vwGui.end(); ++it)
+	{
+		setToolTips((*it)->getEnumerator());
+		//const std::string& name = (*it)->getName();
+	}
 
 	mWndRpl = mGUI->findWidget<Window>("RplWnd",false);
 	if (mWndRpl)  mWndRpl->setVisible(false);
@@ -272,17 +279,6 @@ void App::InitGui()
 		if (btnNewG)  btnNewG->eventMouseButtonClick += newDelegate(this, &App::btnNewGame);
 	}
 	
-	
-	//  tooltip  ------
-	for (VectorWidgetPtr::iterator it = vwGui.begin(); it != vwGui.end(); ++it)
-	{
-		setToolTips((*it)->getEnumerator());
-		//const std::string& name = (*it)->getName();
-	}
-	
-	// initial gui size
-	SizeGUI();
-
 	bGI = true;  // gui inited, gui events can now save vals
 
 	ti.update();	/// time

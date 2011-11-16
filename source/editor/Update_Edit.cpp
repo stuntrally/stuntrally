@@ -619,6 +619,9 @@ bool App::frameStarted(const Ogre::FrameEvent& evt)
 		LoadTrack();  // shouldnt be needed but ...
 	}
 	
+	if (bFirstFrame)
+		updTrkListDim();
+	
 	if (bRecreateFluids)
 	{	bRecreateFluids = false;
 		DestroyFluids();
@@ -636,6 +639,8 @@ bool App::frameStarted(const Ogre::FrameEvent& evt)
 		pSet->tracks_sortup = trkMList->mSortUp;
 		TrackListUpd(false);
 	}
-
+	
+	bFirstFrame = false;
+	
 	return true;
 }
