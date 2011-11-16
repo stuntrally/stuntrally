@@ -300,18 +300,18 @@
 				</Widget>
 				<Widget type="StaticImage" skin="StaticImage" position="528 120 32 40" name="trkst1">
 					<UserString key="RelativeTo" value="OptionsWnd"/>
-					<Property key="Image_Coord" value="0 32 32 40"/>
+					<Property key="ImageCoord" value="0 32 32 40"/>
 					<Property key="Image_Texture" value="track_icons.png"/>
 				</Widget>
 				<Widget type="StaticImage" skin="StaticImage" position="664 120 32 40" name="trkst2">
 					<UserString key="RelativeTo" value="OptionsWnd"/>
-					<Property key="Image_Coord" value="32 32 32 40"/>
+					<Property key="ImageCoord" value="32 32 32 40"/>
 					<Property key="Image_Texture" value="track_icons.png"/>
 				</Widget>
 				<Widget type="StaticImage" skin="StaticImage" position="528 172 256 32" name="trkinf7">
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 					<Property key="Image_Texture" value="track_icons.png"/>
-					<Property key="Image_Coord" value="0 0 256 32"/>
+					<Property key="ImageCoord" value="0 0 256 32"/>
 					<UserString key="tip" value="#{TrackDifficulties}"/>
 				</Widget>
 				<Widget type="StaticText" skin="StaticText" position="540 204 32 24" name="ti1">
@@ -357,12 +357,12 @@
 				<Widget type="StaticImage" skin="StaticImage" position="256 6 48 24" name="TrkView2icons1">
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 					<Property key="Image_Texture" value="track_icons.png"/>
-					<Property key="Image_Coord" value="64 32 64 32"/>
+					<Property key="ImageCoord" value="64 32 64 32"/>
 				</Widget>
 				<Widget type="StaticImage" skin="StaticImage" position="304 6 168 24" name="TrkView2icons2">
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 					<Property key="Image_Texture" value="track_icons.png"/>
-					<Property key="Image_Coord" value="0 0 224 32"/>
+					<Property key="ImageCoord" value="0 0 224 32"/>
 				</Widget>
 				<Widget type="Button" skin="ButtonSmall" position="16 7 40 24" name="TrkView1">
 					<UserString key="RelativeTo" value="OptionsWnd"/>
@@ -1664,7 +1664,7 @@
 						<Widget type="StaticImage" skin="StaticImage" position="564 56 180 180" name="ImgPaged">
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 							<Property key="Image_Tile" value="256 256"/>
-							<Property key="Image_Coord" value="0 256 256 512"/>
+							<Property key="ImageCoord" value="0 256 256 512"/>
 							<Property key="Image_Index" value="0"/>
 							<UserString key="tip" value="#{TipModelPrev}"/>
 						</Widget>
