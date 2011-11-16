@@ -5,6 +5,7 @@
 #include "../paged-geom/PagedGeometry.h"
 #include "../ogre/common/Gui_Def.h"
 #include "../ogre/common/MultiList2.h"
+#include "../ogre/common/MaterialFactory.h"
 using namespace Ogre;
 
 
@@ -636,6 +637,8 @@ bool App::frameStarted(const Ogre::FrameEvent& evt)
 		pSet->tracks_sortup = trkMList->mSortUp;
 		TrackListUpd(false);
 	}
+	
+	materialFactory->update();
 	
 	bFirstRenderFrame = false;
 	

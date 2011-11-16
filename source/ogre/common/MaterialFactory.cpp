@@ -7,7 +7,7 @@
 #include "GlassMaterial.h"
 #include "PipeGlassMaterial.h"
 #include "ArrowMaterial.h"
-//#include "WaterMaterial.h"
+#include "WaterMaterial.h"
 #include "ShaderProperties.h"
 
 #ifndef ROAD_EDITOR
@@ -83,9 +83,9 @@ MaterialFactory::MaterialFactory() :
 	arrow->mParent = this;
 	mCustomGenerators.push_back(arrow);
 	
-	//MaterialGenerator* water = static_cast<MaterialGenerator*>(new WaterMaterialGenerator());
-	//water->mParent = this;
-	//mCustomGenerators.push_back(water);
+	MaterialGenerator* water = static_cast<MaterialGenerator*>(new WaterMaterialGenerator());
+	water->mParent = this;
+	mCustomGenerators.push_back(water);
 	
 	ti.update(); /// time
 	float dt = ti.dt * 1000.f;
@@ -248,6 +248,7 @@ void MaterialFactory::generate()
 		splitMtrs.clear();
 		fogMtrs.clear();
 		terrainLightMapMtrs.clear();
+		timeMtrs.clear();
 		
 		for (std::vector<MaterialDefinition*>::iterator it=mDefinitions.begin();
 			it!=mDefinitions.end(); ++it)
@@ -341,3 +342,28 @@ referenced by material '" + (*it)->getName() + "' not found. Using default gener
 
 //----------------------------------------------------------------------------------------
 
+void MaterialFactory::update()
+{
+	for (std::vector<std::string>::const_iterator it = timeMtrs.begin();
+		it != timeMtrs.end(); ++it)
+	{
+		MaterialPtr mtr = MaterialManager::getSingleton().getByName( (*it) );
+		
+		if (!mtr.isNull())
+		{	Material::TechniqueIterator techIt = mtr->getTechniqueIterator();
+			while (techIt.hasMoreElements())
+			{	Technique* tech = techIt.getNext();
+				Technique::PassIterator passIt = tech->getPassIterator();
+				while (passIt.hasMoreElements())
+				{	Pass* pass = passIt.getNext();
+					
+					// time
+					if (pass->hasFragmentProgram() && pass->getFragmentProgramParameters()->_findNamedConstantDefinition("time"))
+						pass->getFragmentProgramParameters()->setNamedConstantFromTime( "time", 1 );
+				}
+			}	
+		}	
+	}
+}
+
+//----------------------------------------------------------------------------------------

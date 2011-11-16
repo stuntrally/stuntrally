@@ -74,7 +74,7 @@ protected:
 	virtual void fpRealtimeShadowHelperSource(Ogre::StringUtil::StrStreamType& outStream);
 		
 	// fragment program
-	virtual Ogre::HighLevelGpuProgramPtr 	createFragmentProgram();
+	virtual Ogre::HighLevelGpuProgramPtr createFragmentProgram();
 	virtual void generateFragmentProgramSource(Ogre::StringUtil::StrStreamType& outStream);
 	virtual void fragmentProgramParams(Ogre::HighLevelGpuProgramPtr program);
 	virtual void individualFragmentProgramParams(Ogre::GpuProgramParametersSharedPtr params);

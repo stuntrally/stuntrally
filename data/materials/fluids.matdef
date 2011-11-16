@@ -1,0 +1,186 @@
+[Base_water]
+	abstract = true
+	customGenerator = Water
+	specular = 1.0 1.0 1.0 32
+	waveBump = 0.5 1.0
+	waveHighFreq = 0.0
+	waveSpecular = 1.0
+	deepColour = 0.0 0.3 0.5 1.0
+	shallowColour = 0.0 0.9 1.0 0.3
+	reflectionColour = 0.9 1.0 1.0 1.0
+	reflAmount = 0.7
+	fresnelPower = 5.0
+	fresnelBias = 0.33
+	fresnelScale = 1
+	normalMap_1 = flat_n.png
+	terrainLightMap = true
+	receivesShadows = true
+	
+
+; ------------ island blue ------------
+[Water_blue]
+	parent = Base_water
+	normalMap_1 = waveNM.png
+	
+
+; ------------ greece cyan ------------
+[Water_cyan]
+	parent = Base_water
+	specular = 0.9 1.0 0.95 64
+	waveBump = 0.2 1.0
+	deepColour = 0.1 0.3 0.2 0.9
+	shallowColour = 0.4 0.9 0.6 0.6
+	reflectionColour = 0.6 0.8 0.7 1.0
+	normalMap_1 = waveNM.png
+	
+
+; ------------ jungle green -----------
+[Water_green]
+	parent = Base_water
+	specular = 0.32 0.4 0.25 128
+	waveBump = 0.1 1.2
+	waveHighFreq = 0.1
+	waveSpecular = 1.2
+	deepColour = 0.19 0.22 0.06 0.95
+	shallowColour = 0.21 0.35 0.0 0.6
+	reflectionColour = 0.6 0.8 0.35 1.0
+	reflAmount = 0.65
+	normalMap_1 = waveNM.png
+	
+
+; ------------ winter white -----------
+[Water_white]
+	parent = Base_water
+	specular = 0.96 1.0 1.0 128
+	waveBump = 0.4 0.8
+	waveHighFreq = -0.1
+	deepColour = 0.66 0.89 0.9 1.0
+	shallowColour = 0.45 0.78 0.8 0.85
+	reflectionColour = 0.9 1.0 0.97 1.0
+	reflAmount = 0.9
+	fresnelPower = 2.0
+	normalMap_1 = water_nh.png
+	
+
+; ------------ island sunset -----------
+[Water_sunset]
+	parent = Base_water
+	specular = 1.0 0.6 0.3 16
+	waveBump = 0.0 0.8
+	waveHighFreq = 0.1
+	waveSpecular = 1.1
+	deepColour = 0.1 0.3 0.4 1.0
+	shallowColour = 0.21 0.5 0.7 0.6
+	reflectionColour = 0.8 0.65 0.5 1.0
+	reflAmount = 0.6
+	normalMap_1 = water_nh.png
+	
+
+; ------------ island overcast ---------
+[Water_shore]
+	parent = Base_water
+	specular = 0.65 0.67 0.7 4
+	waveBump = 0.2 0.8
+	waveHighFreq = 0.3
+	deepColour = 0.26 0.32 0.43 1.0
+	shallowColour = 0.21 0.35 0.45 0.6
+	reflectionColour = 0.6 0.65 0.68 1.0
+	reflAmount = 0.8 0.2
+	normalMap_1 = water_nh.png
+	
+
+; ------------ island dark -------------
+[Water_dark]
+	parent = Base_water
+	specular = 1.0 0.8 0.3 32
+	waveBump = 0.0 0.8
+	waveHighFreq = 0.1
+	waveSpecular = 0.7
+	deepColour = 0.06 0.14 0.2 0.8
+	shallowColour = 0.11 0.15 0.17 1.0
+	reflectionColour = 0.8 0.65 0.5 1.0
+	reflAmount = 0.8
+	normalMap_1 = water_nh.png
+	
+
+; ------------- magic ------------------
+[Grease_jelly]
+	parent = Base_water
+	specular = 0.4 0.8 1.0 96
+	waveBump = 0.4 0.2
+	waveHighFreq = -0.2
+	deepColour = 0.26 0.2 0.4 0.9
+	shallowColour = 0.21 0.22 0.48 0.95
+	reflectionColour = 0.3 0.3 0.6 1.0
+	reflAmount = 0.6
+	normalMap_1 = waveNM.png
+	
+
+; ----------- light light green --------
+[Water_light]
+	parent = Base_water
+	specular = 0.4 0.4 0.3 64
+	waveBump = 0.6 1.0
+	waveHighFreq = -0.1
+	waveSpecular = 1.0
+	deepColour = 0.55 0.56 0.3 0.95
+	shallowColour = 0.5 0.6 0.1 0.7
+	reflectionColour = 0.4 0.5 0.2 1.0
+	reflAmount = 0.5
+	normalMap_1 = waveNM.png
+	
+
+; ------------- yellow light -----------
+[Water_yellow]
+	parent = Base_water
+	specular = 0.4 0.4 0.3 64
+	waveBump = 0.6 1.0
+	waveHighFreq = -0.1
+	deepColour = 0.7 0.7 0.2 0.95
+	shallowColour = 0.9 1.0 0.3 0.7
+	reflectionColour = 0.75 0.8 0.4 1.0
+	reflAmount = 0.6
+	normalMap_1 = waveNM.png
+	
+
+; ----------- mud orange soft ----------
+[Mud_orange]
+	parent = Base_water
+	specular = 0.4 0.4 0.3 32
+	waveBump = 0.8 0.3
+	waveHighFreq = -0.1
+	deepColour = 0.6 0.4 0.1 1.0
+	shallowColour = 0.45 0.3 0.1 0.7
+	reflectionColour = 0.5 0.45 0.15 1.0
+	reflAmount = 0.3
+	normalMap_1 = waveNM.png
+	
+	
+; ---------- mud brown med --------------
+[Mud_brown]
+	parent = Base_water
+	specular = 0.4 0.4 0.3 128
+	waveBump = 0.4 0.1
+	waveHighFreq = 0.1
+	deepColour = 0.4 0.34 0.1 1.0
+	shallowColour = 0.4 0.2 0.1 0.9
+	reflectionColour = 0.5 0.4 0.1 1.0
+	reflAmount = 0.5
+	fresnelPower = 8.0
+	normalMap_1 = waveNM.png
+	
+
+; ----------- mud brown hard -------------
+[Mud_dark]
+	parent = Base_water
+	specular = 0.4 0.4 0.3 96
+	waveBump = 0.3 0.04
+	waveHighFreq = 0.4
+	deepColour = 0.2 0.17 0.05 1.0
+	shallowColour = 0.2 0.14 0.05 1.0
+	reflectionColour = 0.4 0.33 0.1 1.0
+	reflAmount = 0.5
+	fresnelPower = 3.0
+	normalMap_1 = water_nh.png
+
+
