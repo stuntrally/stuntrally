@@ -147,22 +147,30 @@ void CarModel::Update(PosInfo& posInfo, float time)
 	
 	//  terrain lightmap enable/disable (depending on distance to terrain)
 	#define MAX_TERRAIN_DIST 2.0 // meters
-	Ogre::Vector3 carPos = pMainNode->getPosition();
-	float terrainHeight = terrain->getHeightAtWorldPosition(carPos);
-	float diff = std::abs(carPos.y - terrainHeight);
 	bool changed = false;
-	if (diff > MAX_TERRAIN_DIST)
+	if (terrain)
 	{
-		if (bLightMapEnabled)
+		Ogre::Vector3 carPos = pMainNode->getPosition();
+		float terrainHeight = terrain->getHeightAtWorldPosition(carPos);
+		float diff = std::abs(carPos.y - terrainHeight);
+		if (diff > MAX_TERRAIN_DIST)
+		{
+			if (bLightMapEnabled)
+			{
+				changed = true;
+				bLightMapEnabled = false;
+			}
+		}
+		else if (!bLightMapEnabled)
 		{
 			changed = true;
-			bLightMapEnabled = false;
+			bLightMapEnabled = true;
 		}
 	}
-	else if (!bLightMapEnabled)
+	//  if no terrain, disable
+	else if (bLightMapEnabled)
 	{
-		changed = true;
-		bLightMapEnabled = true;
+		changed = true; bLightMapEnabled = false;
 	}
 	
 	if (changed)
