@@ -149,7 +149,7 @@ void App::GuiInitTrack()
 	//MyGUI::FactoryManager::getInstance().unregisterFactory<MultiList2>("Widget");
 
 	TabItem* trktab = (TabItem*)mWndOpts->findWidget("TabTrack");
-	MultiList2* li = trktab->createWidget<MultiList2>("MultiList",0,0,600,300, Align::Left | Align::VStretch);
+	MultiList2* li = trktab->createWidget<MultiList2>("MultiListBox",0,0,600,300, Align::Left | Align::VStretch);
 	//li->setUserString("RelativeTo", "OptionsWnd");
 	//*li->setAlpha(0.8);*/  li->setInheritsAlpha(false);
 	
