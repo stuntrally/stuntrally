@@ -21,8 +21,6 @@
 	along with MyGUI.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include "MyGUI_Prerequest.h"
-
 #include "MyGUI_Precompiled.h"
 #include "MultiList2.h"
 #include "MyGUI_MultiListItem.h"
@@ -48,7 +46,9 @@ namespace MyGUI
 		mItemSelected(ITEM_NONE),
 		mFrameAdvise(false),
 		mClient(nullptr),
-		mHeaderPlace(nullptr)
+		mHeaderPlace(nullptr),
+		mSortUpOld(true),
+		mSortColumnIndexOld(ITEM_NONE)
 	{
 	}
 	
