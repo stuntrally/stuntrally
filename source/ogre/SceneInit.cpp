@@ -16,6 +16,8 @@
 #include "../paged-geom/PagedGeometry.h"
 
 #include <MyGUI_OgrePlatform.h>
+#include <MyGUI_PointerManager.h>
+using namespace MyGUI;
 #include <OgreTerrainGroup.h>
 using namespace Ogre;
 
@@ -117,7 +119,7 @@ void App::NewGame()
 	LoadingOn();
 	ShowHUD(true);  // hide HUD
 	mFpsOverlay->hide();  // hide FPS
-	mGUI->setVisiblePointer(false);
+	PointerManager::getInstance().setVisible(false);
 
 	currentLoadingState = loadingStates.begin();
 }
@@ -126,7 +128,7 @@ void App::NewGame()
 
 void App::LoadCleanUp()  // 1 first
 {
-	if (mGUI)	mGUI->setVisiblePointer(isFocGui);
+	if (mGUI)	PointerManager::getInstance().setVisible(isFocGui);
 	// rem old track
 	if (resTrk != "")  Ogre::Root::getSingletonPtr()->removeResourceLocation(resTrk);
 	resTrk = TrkDir() + "objects";

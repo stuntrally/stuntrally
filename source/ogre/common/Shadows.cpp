@@ -29,9 +29,9 @@ using namespace Ogre;
 ///  Shadows config
 //---------------------------------------------------------------------------------------------------
 void App::changeShadows()
-{
+{	
 	QTimer ti;  ti.update();  /// time
-
+	
 	//  get settings
 	bool enabled = pSet->shadow_type != 0;
 	bool bDepth = pSet->shadow_type == 3;

@@ -163,23 +163,25 @@ protected:
 	///-----------------------------------------------------------------------------------------------------------------
 	///  Gui
 	///-----------------------------------------------------------------------------------------------------------------
+	//  size
+	void SizeGUI(); void doSizeGUI(MyGUI::EnumeratorWidgetPtr);
 
 	//  shortcuts
 	typedef MyGUI::WidgetPtr WP;
 	typedef std::list <std::string> strlist;
 	//  slider event and its text field for value
 	#define SLV(name)  void sl##name(SL);  MyGUI::StaticTextPtr val##name;
-	#define SL  WP wp, size_t val						//  slider event args
-
+	#define SL  MyGUI::ScrollBar* wp, size_t val						//  slider event args
+	#define CMB MyGUI::ComboBox* wp, size_t val // combobox event args
 
 	///  Gui common   --------------------------
 	//  graphics
 	SLV(Anisotropy);  SLV(ViewDist);  SLV(TerDetail);  SLV(TerDist);  SLV(RoadDist);
 	SLV(TexSize);  SLV(TerMtr);  // detail
 	SLV(Trees);  SLV(Grass);  SLV(TreesDist);  SLV(GrassDist);  // paged
-	SLV(Shaders);  SLV(ShadowType);  SLV(ShadowCount);  SLV(ShadowSize);  SLV(LightmapSize);  SLV(ShadowDist);  // shadow
+	SLV(Shaders);  SLV(ShadowType);  SLV(ShadowCount);  SLV(ShadowSize);  SLV(ShadowDist);  // shadow
 	SLV(AntiAliasing); // screen
-	void comboTexFilter(SL), btnShadows(WP), btnTrGrReset(WP);
+	void comboTexFilter(CMB), btnShadows(WP), btnTrGrReset(WP);
 	MyGUI::ButtonPtr bnQuit;  void btnQuit(WP);
 
 	//  tooltip
@@ -189,7 +191,7 @@ protected:
 	void boundedMove(MyGUI::Widget *moving, const MyGUI::IntPoint & point);
 
 	//  language
-	void comboLanguage(SL);
+	void comboLanguage(CMB);
 	std::map<std::string, std::string> languages; // <short name, display name>
 	bool bGuiReinit;  MyGUI::VectorWidgetPtr vwGui;
 
@@ -217,8 +219,10 @@ protected:
 	MyGUI::ListPtr resList;
 	void InitGuiScrenRes(), btnResChng(WP), ResizeOptWnd();
 	void chkVidFullscr(WP), chkVidVSync(WP), chkVidSSAA(WP);
-	void comboGraphicsAll(MyGUI::ComboBoxPtr cmb, size_t val),
-		comboRenderSystem(MyGUI::ComboBoxPtr cmb, size_t val);
+
+	void comboGraphicsAll(CMB),
+		comboRenderSystem(CMB);
+		
 	///-----------------------------------------
 
 	void toggleGui();
@@ -228,8 +232,10 @@ protected:
 	///  input tab
 	void InitInputGui(), inputBindBtnClicked(WP);
 	void InputBind(int key, int button=-1, int axis=-1);
+
 	bool actionIsActive(std::string, std::string);
-	void cmbJoystick(WP, size_t val), UpdateInputBars(), inputDetailBtn(WP);
+	void cmbJoystick(CMB), UpdateInputBars(), inputDetailBtn(WP);
+
 	Ogre::String GetInputName(const Ogre::String& sName);
 	//  joy events
 	virtual bool axisMoved( const OIS::JoyStickEvent &e, int axis );
@@ -238,7 +244,7 @@ protected:
 	MyGUI::StaticTextPtr txtJAxis, txtJBtn, txtInpDetail;
 	int lastAxis, axisCnt;  std::string joyName;  class OISB::AnalogAxisAction* actDetail;
 	MyGUI::EditPtr edInputMin, edInputMax, edInputMul;  void editInput(MyGUI::EditPtr);
-	MyGUI::ComboBoxPtr cmbInpDetSet;  void comboInputPreset(MyGUI::ComboBoxPtr cmb, size_t val);
+	MyGUI::ComboBox* cmbInpDetSet;  void comboInputPreset(CMB);
 
 
 	//  sliders
@@ -268,7 +274,7 @@ protected:
 	///  replay  -----------------------------
 	MyGUI::StaticTextPtr valRplPerc, valRplCur, valRplLen,
 		valRplName,valRplInfo,valRplName2,valRplInfo2;
-	MyGUI::HScrollPtr slRplPos;  void slRplPosEv(SL);
+	MyGUI::ScrollBar* slRplPos;  void slRplPosEv(SL);
 	MyGUI::EditPtr edRplName, edRplDesc;
 	void btnRplLoad(WP), btnRplSave(WP), btnRplDelete(WP), btnRplRename(WP),  // btn
 		chkRplAutoRec(WP),chkRplChkGhost(WP),chkRplChkBestOnly(WP),chkRplChkAlpha(WP),chkRplChkPar(WP),  // replay

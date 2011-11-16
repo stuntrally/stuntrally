@@ -409,7 +409,7 @@ void BaseApp::Run( bool showDialog )
 BaseApp::BaseApp()
 	:mRoot(0), mSceneMgr(0), mWindow(0), mHDRLogic(0), mMotionBlurLogic(0),mSSAOLogic(0)
 	,mShaderGenerator(0),mMaterialMgrListener(0)
-	,mShowDialog(1), mShutDown(false), bWindowResized(0)
+	,mShowDialog(1), mShutDown(false), bWindowResized(0), bFirstRenderFrame(true)
 	,mInputManager(0), mMouse(0), mKeyboard(0), mOISBsys(0)
 	,alt(0), ctrl(0), shift(0), roadUpCnt(0)
 	,mbLeft(0), mbRight(0), mbMiddle(0)
@@ -598,16 +598,14 @@ bool BaseApp::setup()
 
 	//  Gui
 	mPlatform = new MyGUI::OgrePlatform();
-	mPlatform->initialise(mWindow, mSceneMgr, "General", PATHMANAGER::GetLogDir() + "/MyGUI_p.log");
+	mPlatform->initialise(mWindow, mSceneMgr, "General", PATHMANAGER::GetLogDir() + "/MyGUI.log");
 	mGUI = new MyGUI::Gui();
 	
-	mGUI->initialise("core.xml", PATHMANAGER::GetLogDir() + "/MyGUI.log");
+	mGUI->initialise("core.xml");
 	
-#if MYGUI_VERSION_MINOR >= 2
 	MyGUI::ResourceManager::getInstance().load("MessageBoxResources.xml");
-#endif
 
-	mGUI->setVisiblePointer(false);
+	MyGUI::PointerManager::getInstance().setVisible(false);
 	
 	// ------------------------- lang ------------------------
 	if (pSet->language == "") // autodetect
@@ -703,17 +701,6 @@ void BaseApp::setupResources()
 			archName = i->second;
 			ResourceGroupManager::getSingleton().addResourceLocation(
 				PATHMANAGER::GetDataPath() + "/" + archName, typeName, secName);
-				
-			if (archName == "gui")
-			{
-				#if MYGUI_VERSION_MINOR >= 2
-				ResourceGroupManager::getSingleton().addResourceLocation(
-					PATHMANAGER::GetDataPath() + "/gui/3.2", typeName, secName);
-				#else
-				ResourceGroupManager::getSingleton().addResourceLocation(
-					PATHMANAGER::GetDataPath() + "/gui/3.0", typeName, secName);
-				#endif
-			}
 		}
 	}
 }
@@ -762,7 +749,7 @@ bool BaseApp::keyReleased( const OIS::KeyEvent &arg )
 {
 	if (bAssignKey) return true;
 	if (isFocGui && mGUI)  {
-		mGUI->injectKeyRelease(MyGUI::KeyCode::Enum(arg.key));
+		MyGUI::InputManager::getInstance().injectKeyRelease(MyGUI::KeyCode::Enum(arg.key));
 		return true;  }
 
 	return true;
@@ -774,7 +761,7 @@ bool BaseApp::mouseMoved( const OIS::MouseEvent &arg )
 {
 	if (bAssignKey) return true;
 	if (isFocGuiOrRpl() && mGUI)  {
-		mGUI->injectMouseMove(arg.state.X.abs, arg.state.Y.abs, arg.state.Z.abs);
+		MyGUI::InputManager::getInstance().injectMouseMove(arg.state.X.abs, arg.state.Y.abs, arg.state.Z.abs);
 		return true;  }
 
 	///  Follow Camera Controls
@@ -794,7 +781,7 @@ bool BaseApp::mousePressed( const OIS::MouseEvent &arg, OIS::MouseButtonID id )
 {
 	if (bAssignKey) return true;
 	if (isFocGuiOrRpl() && mGUI)  {
-		mGUI->injectMousePress(arg.state.X.abs, arg.state.Y.abs, MyGUI::MouseButton::Enum(id));
+		MyGUI::InputManager::getInstance().injectMousePress(arg.state.X.abs, arg.state.Y.abs, MyGUI::MouseButton::Enum(id));
 		return true;  }
 
 	if		(id == MB_Left)		mbLeft = true;
@@ -807,7 +794,7 @@ bool BaseApp::mouseReleased( const OIS::MouseEvent &arg, OIS::MouseButtonID id )
 {
 	if (bAssignKey) return true;
 	if (isFocGuiOrRpl() && mGUI)  {
-		mGUI->injectMouseRelease(arg.state.X.abs, arg.state.Y.abs, MyGUI::MouseButton::Enum(id));
+		MyGUI::InputManager::getInstance().injectMouseRelease(arg.state.X.abs, arg.state.Y.abs, MyGUI::MouseButton::Enum(id));
 		return true;  }
 
 	if		(id == MB_Left)		mbLeft = false;

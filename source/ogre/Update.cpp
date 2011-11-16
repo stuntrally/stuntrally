@@ -64,8 +64,9 @@ bool App::frameStart(Real time)
 
 	if (bWindowResized)
 	{	bWindowResized = false;
-
 		ResizeOptWnd();
+		SizeGUI();
+		updTrkListDim();
 		bSizeHUD = true;
 	}
 		
@@ -80,7 +81,6 @@ bool App::frameStart(Real time)
 		pSet->tracks_sortup = trkMList->mSortUp;
 		TrackListUpd(false);
 	}
-
 
 	if (bLoading)
 	{
@@ -220,6 +220,8 @@ bool App::frameStart(Real time)
 				{	 pr->setSpeedFactor(0.f);	 pr2->setSpeedFactor(0.f);	}
 			else{	 pr->setSpeedFactor(1.f);	 pr2->setSpeedFactor(1.f);	}
 		}
+		
+		bFirstRenderFrame = false;
 		
 		return ret;
 	}

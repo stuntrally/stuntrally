@@ -66,7 +66,7 @@ void App::CreateTrees()
 	if (!grassTex.isNull())
 		grassTex->reload();
 
-	TexturePtr rdtex = (TexturePtr)Ogre::TextureManager::getSingleton().getByName("grassDensity.png");
+	TexturePtr rdtex = Ogre::TextureManager::getSingleton().getByName("grassDensity.png");
 	if (!rdtex.isNull())
 		rdtex->reload();
 

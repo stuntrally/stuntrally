@@ -27,6 +27,8 @@ void Scene::Default()
 
 	sParDust = "Dust";  sParMud = "Mud";  sParSmoke = "Smoke";
 
+	ter = true;
+
 	td.Default();
 	td.layerRoad.smoke = !ter ? 1.f : 0.f;  //`
 

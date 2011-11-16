@@ -63,7 +63,7 @@ namespace OISB
             OIS_EXCEPT(OIS::E_Duplicate, String("Action '" + name + "' already exists in ActionSchema '" + getName() + "'").c_str());
 		}
 
-		Action* ret = new TriggerAction(this, name);
+		Action* ret;
         switch (type)
         {
         case AT_TRIGGER:

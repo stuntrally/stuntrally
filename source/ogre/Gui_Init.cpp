@@ -22,11 +22,9 @@ void App::InitGui()
 	//  change skin
 	if (!mGUI)  return;
 	QTimer ti;  ti.update();  /// time
-	LanguageManager::getInstance().loadUserTags("core_theme_black_blue_tag.xml");
-	//mGUI->load("core_skin.xml");
 
 	//  load Options layout
-	vwGui = LayoutManager::getInstance().load("Options.layout");
+	vwGui = LayoutManager::getInstance().loadLayout("Options.layout");
 	mLayout = vwGui.at(0);
 
 	//  window
@@ -36,19 +34,19 @@ void App::InitGui()
 		int sx = mWindow->getWidth(), sy = mWindow->getHeight();
 		IntSize w = mWndOpts->getSize();  // center
 		mWndOpts->setPosition((sx-w.width)*0.5f, (sy-w.height)*0.5f);  }
-	mGUI->setVisiblePointer(isFocGui);
-	mWndTabs = (TabPtr)mLayout->findWidget("TabWnd");
-
-	mWndRpl = mGUI->findWidget<Window>("RplWnd",false);
-	if (mWndRpl)  mWndRpl->setVisible(false);
-
-
+	PointerManager::getInstance().setVisible(isFocGui);
+	mWndTabs = mGUI->findWidget<Tab>("TabWnd");
+	
 	//  tooltip  ------
 	for (VectorWidgetPtr::iterator it = vwGui.begin(); it != vwGui.end(); ++it)
 	{
 		setToolTips((*it)->getEnumerator());
 		//const std::string& name = (*it)->getName();
 	}
+
+	mWndRpl = mGUI->findWidget<Window>("RplWnd",false);
+	if (mWndRpl)  mWndRpl->setVisible(false);
+
 	GuiInitTooltip();
 		
 	GuiCenterMouse();
@@ -59,7 +57,7 @@ void App::InitGui()
 	///  Sliders
     //------------------------------------------------------------------------
 	ButtonPtr btn,bchk;  ComboBoxPtr combo;
-	HScrollPtr sl;  size_t v;
+	ScrollBar* sl;  size_t v;
 
 	GuiInitLang();
 
@@ -95,7 +93,7 @@ void App::InitGui()
 	///  Checkboxes
     //------------------------------------------------------------------------
 	bnQuit = mGUI->findWidget<Button>("Quit");
-	if (bnQuit)  {  bnQuit->eventMouseButtonClick = newDelegate(this, &App::btnQuit);  bnQuit->setVisible(isFocGui);  }
+	if (bnQuit)  {  bnQuit->eventMouseButtonClick += newDelegate(this, &App::btnQuit);  bnQuit->setVisible(isFocGui);  }
 	Chk("SSAA", chkVidSSAA, pSet->ssaa);
 	Chk("ReverseOn", chkReverse, pSet->trackreverse);
 	Chk("ParticlesOn", chkParticles, pSet->particles);	Chk("TrailsOn", chkTrails, pSet->trails);
@@ -134,9 +132,9 @@ void App::InitGui()
 	//  kmh/mph radio
 	bRkmh = mGUI->findWidget<Button>("kmh");
 	bRmph = mGUI->findWidget<Button>("mph");
-	if (bRkmh && bRmph)  {  bRkmh->setStateCheck(!pSet->show_mph);  bRmph->setStateCheck(pSet->show_mph);
-		bRkmh->eventMouseButtonClick = newDelegate(this, &App::radKmh);
-		bRmph->eventMouseButtonClick = newDelegate(this, &App::radMph);  }
+	if (bRkmh && bRmph)  {  bRkmh->setStateSelected(!pSet->show_mph);  bRmph->setStateSelected(pSet->show_mph);
+		bRkmh->eventMouseButtonClick += newDelegate(this, &App::radKmh);
+		bRmph->eventMouseButtonClick += newDelegate(this, &App::radMph);  }
 
 	//  startup
 	Chk("OgreDialog", chkOgreDialog, pSet->ogre_dialog);
@@ -174,22 +172,22 @@ void App::InitGui()
 	Btn("RplBtnGhosts", btnRplGhosts);  rbRplGhosts = btn;  btn = 0;
 	switch (pSet->rpl_listview)  // load from set
 	{	case 0: btn = rbRplAll;  break;  case 1: btn = rbRplCur;  break;  case 2: btn = rbRplGhosts;  break;  }
-	if (btn)  btn->setStateCheck(true);
+	if (btn)  btn->setStateSelected(true);
 	
     if (mWndRpl)
 	{	//  replay controls
 		Btn("RplToStart", btnRplToStart);  Btn("RplToEnd", btnRplToEnd)
 		Btn("RplPlay", btnRplPlay);  btRplPl = btn;
-		btn = (ButtonPtr)mWndRpl->findWidget("RplBack");	if (btn)  {		btn->eventMouseButtonPressed = newDelegate(this, &App::btnRplBackDn);  btn->eventMouseButtonReleased = newDelegate(this, &App::btnRplBackUp);  }
-		btn = (ButtonPtr)mWndRpl->findWidget("RplForward");  if (btn)  {	btn->eventMouseButtonPressed = newDelegate(this, &App::btnRplFwdDn);  btn->eventMouseButtonReleased = newDelegate(this, &App::btnRplFwdUp);  }
+		btn = mGUI->findWidget<Button>("RplBack");	if (btn)  {		btn->eventMouseButtonPressed += newDelegate(this, &App::btnRplBackDn);  btn->eventMouseButtonReleased += newDelegate(this, &App::btnRplBackUp);  }
+		btn = mGUI->findWidget<Button>("RplForward");  if (btn)  {	btn->eventMouseButtonPressed += newDelegate(this, &App::btnRplFwdDn);  btn->eventMouseButtonReleased += newDelegate(this, &App::btnRplFwdUp);  }
 		
 		//  info
-		slRplPos = (HScrollPtr)mWndRpl->findWidget("RplSlider");
-		if (slRplPos)  slRplPos->eventScrollChangePosition = newDelegate(this, &App::slRplPosEv);
+		slRplPos = (ScrollBar*)mWndRpl->findWidget("RplSlider");
+		if (slRplPos)  slRplPos->eventScrollChangePosition += newDelegate(this, &App::slRplPosEv);
 
-		valRplPerc = (StaticTextPtr)mWndRpl->findWidget("RplPercent");
-    	valRplCur = (StaticTextPtr)mWndRpl->findWidget("RplTimeCur");
-    	valRplLen = (StaticTextPtr)mWndRpl->findWidget("RplTimeLen");
+		valRplPerc = mGUI->findWidget<StaticText>("RplPercent");
+    	valRplCur = mGUI->findWidget<StaticText>("RplTimeCur");
+    	valRplLen = mGUI->findWidget<StaticText>("RplTimeLen");
 	}
 	//  text desc
 	valRplName = mGUI->findWidget<StaticText>("RplName");  valRplName2 = mGUI->findWidget<StaticText>("RplName2");
@@ -198,7 +196,7 @@ void App::InitGui()
 	//edRplDesc = mGUI->findWidget<Edit>("RplDesc");
 
 	rplList = mGUI->findWidget<List>("RplList");
-	if (rplList)  rplList->eventListChangePosition = newDelegate(this, &App::listRplChng);
+	if (rplList)  rplList->eventListChangePosition += newDelegate(this, &App::listRplChng);
 	updReplaysList();
 
 
@@ -208,19 +206,19 @@ void App::InitGui()
 		{0.47,0.90,0.80}, {0.50,0.33,0.80}, {0.86,1.00,0.87}, {0.83,0.10,0.58}, {0.70,0.38,0.74}};
 	for (int i=0; i<10; i++)
 	{
-		StaticImagePtr img = (StaticImagePtr)mLayout->findWidget("carClr"+toStr(i));
+		StaticImagePtr img = mGUI->findWidget<StaticImage>("carClr"+toStr(i));
 		Real h = hsv[i][0], s = hsv[i][1], v = hsv[i][2];
 		ColourValue c;  c.setHSB(1.f-h, s, v);
 		img->setColour(Colour(c.r,c.g,c.b));
-		img->eventMouseButtonClick = newDelegate(this, &App::imgBtnCarClr);
+		img->eventMouseButtonClick += newDelegate(this, &App::imgBtnCarClr);
 		img->setUserString("s", toStr(s));  img->setUserString("h", toStr(h));
 		img->setUserString("v", toStr(v));
 	}
 	Btn("CarClrRandom", btnCarClrRandom);
 	Slv(NumLaps, (pSet->num_laps - 1) / 20.f);
 	
-	TabPtr tPlr = (TabPtr)mLayout->findWidget("tabPlayer");
-	if (tPlr)  tPlr->eventTabChangeSelect = newDelegate(this, &App::tabPlayer);
+	TabPtr tPlr = mGUI->findWidget<Tab>("tabPlayer");
+	if (tPlr)  tPlr->eventTabChangeSelect += newDelegate(this, &App::tabPlayer);
 	
 	
 	///  input tab
@@ -231,7 +229,7 @@ void App::InitGui()
 	
 	///  cars list
     //------------------------------------------------------------------------
-    carList = (ListPtr)mLayout->findWidget("CarList");
+    carList = mGUI->findWidget<List>("CarList");
     if (carList)
     {	carList->removeAllItems();  int ii = 0;  bool bFound = false;
 
@@ -247,17 +245,17 @@ void App::InitGui()
 		}
 		if (!bFound)
 			pSet->car[0] = *li.begin();
-		carList->eventListChangePosition = newDelegate(this, &App::listCarChng);
+		carList->eventListChangePosition += newDelegate(this, &App::listCarChng);
     }
 
 	//  cars text, chg btn
-    valCar = (StaticTextPtr)mLayout->findWidget("CarText");
+    valCar = mGUI->findWidget<StaticText>("CarText");
 	valCar->setCaption(TR("#{Car}: ") + pSet->car[0]);  sListCar = pSet->car[0];
 
-    ButtonPtr btnCar = (ButtonPtr)mLayout->findWidget("ChangeCar");
-    if (btnCar)  btnCar->eventMouseButtonClick = newDelegate(this, &App::btnChgCar);
+    ButtonPtr btnCar = mGUI->findWidget<Button>("ChangeCar");
+    if (btnCar)  btnCar->eventMouseButtonClick += newDelegate(this, &App::btnChgCar);
 
-    imgCar = (StaticImagePtr)mLayout->findWidget("CarImg");
+    imgCar = mGUI->findWidget<StaticImage>("CarImg");
     listCarChng(carList,0);
 
 
@@ -265,23 +263,22 @@ void App::InitGui()
     //------------------------------------------------------------------------
 
 	//  track text, chg btn
-	trkDesc = (EditPtr)mLayout->findWidget("TrackDesc");
-    valTrk = (StaticTextPtr)mLayout->findWidget("TrackText");
+	trkDesc = mGUI->findWidget<Edit>("TrackDesc");
+    valTrk = mGUI->findWidget<StaticText>("TrackText");
     if (valTrk)
 		valTrk->setCaption(TR("#{Track}: " + pSet->track));  sListTrack = pSet->track;
 
     GuiInitTrack();
 
-    ButtonPtr btnTrk = (ButtonPtr)mLayout->findWidget("ChangeTrack");
-    if (btnTrk)  btnTrk->eventMouseButtonClick = newDelegate(this, &App::btnChgTrack);
+    ButtonPtr btnTrk = mGUI->findWidget<Button>("ChangeTrack");
+    if (btnTrk)  btnTrk->eventMouseButtonClick += newDelegate(this, &App::btnChgTrack);
 
     //  new game
-    for (int i=1; i<=4; ++i)
-    {	ButtonPtr btnNewG = (ButtonPtr)mLayout->findWidget("NewGame"+toStr(i));
-		if (btnNewG)  btnNewG->eventMouseButtonClick = newDelegate(this, &App::btnNewGame);
+    for (int i=1; i<=3; ++i)
+    {	ButtonPtr btnNewG = mGUI->findWidget<Button>("NewGame"+toStr(i));
+		if (btnNewG)  btnNewG->eventMouseButtonClick += newDelegate(this, &App::btnNewGame);
 	}
 	
-
 	bGI = true;  // gui inited, gui events can now save vals
 
 	ti.update();	/// time
@@ -292,7 +289,7 @@ void App::InitGui()
 
 void App::UpdCarClrSld(bool upd)
 {
-	HScrollPtr sl;  size_t v;
+	ScrollBar* sl;  size_t v;
 	
 	// this causes problems (color not applied)
 	//bUpdCarClr = false;

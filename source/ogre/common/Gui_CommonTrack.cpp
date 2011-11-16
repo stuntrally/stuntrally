@@ -149,31 +149,33 @@ void App::GuiInitTrack()
 	//MyGUI::FactoryManager::getInstance().unregisterFactory<MultiList2>("Widget");
 
 	TabItem* trktab = (TabItem*)mWndOpts->findWidget("TabTrack");
-	MultiList2* li = trktab->createWidget<MultiList2>("MultiList",0,0,600,300,Align::Left | Align::VStretch);
+	MultiList2* li = trktab->createWidget<MultiList2>("MultiListBox",0,0,600,300, Align::Left | Align::VStretch);
+	//li->setUserString("RelativeTo", "OptionsWnd");
 	//*li->setAlpha(0.8);*/  li->setInheritsAlpha(false);
 	
 	trkMList = li;  if (!li)  LogO("Error: No MListTracks in layout !");
-   	trkMList->eventListChangePosition = newDelegate(this, &App::listTrackChng);
-   	//..trkMList->eventListSelectAccept = newDelegate(this, &App::btnNewGameStart);
+   	trkMList->eventListChangePosition += newDelegate(this, &App::listTrackChng);
+   	//..trkMList->eventListSelectAccept += newDelegate(this, &App::btnNewGameStart);
    	trkMList->setVisible(false);
 	
 	//  preview images
-	imgPrv = (StaticImagePtr)mWndOpts->findWidget("TrackImg");
-	imgTer = (StaticImagePtr)mWndOpts->findWidget("TrkTerImg");
-	imgMini = (StaticImagePtr)mWndOpts->findWidget("TrackMap");
+	imgPrv = mGUI->findWidget<StaticImage>("TrackImg");
+	imgTer = mGUI->findWidget<StaticImage>("TrkTerImg");
+	imgMini = mGUI->findWidget<StaticImage>("TrackMap");
 	//  stats text
-	for (int i=0; i < StTrk; ++i)
-		stTrk[i] = (StaticTextPtr)mWndOpts->findWidget("iv"+toStr(i+1));
+	for (int i=0; i < StTrk; ++i) //!
+		stTrk[i] = mGUI->findWidget<StaticText>("iv"+toStr(i+1), false);
+		
 	for (int i=0; i < InfTrk; ++i)
-		infTrk[i] = (StaticTextPtr)mWndOpts->findWidget("ti"+toStr(i+1));
+		infTrk[i] = mGUI->findWidget<StaticText>("ti"+toStr(i+1), false);
 		
 	EditPtr edit;
 	Edt(edit, "TrackFind", edTrkFind);
 
 	ButtonPtr btn;
 	Btn("TrkView1", btnTrkView1);	Btn("TrkView2", btnTrkView2);
-	imgTrkIco1 = (StaticImagePtr)mWndOpts->findWidget("TrkView2icons1");
-	imgTrkIco2 = (StaticImagePtr)mWndOpts->findWidget("TrkView2icons2");
+	imgTrkIco1 = mGUI->findWidget<StaticImage>("TrkView2icons1");
+	imgTrkIco2 = mGUI->findWidget<StaticImage>("TrkView2icons2");
 	
 	li->removeAllColumns();  int c=0;
 	li->addColumn("Name", TcolW[c++]);  li->addColumn("N", TcolW[c++]);

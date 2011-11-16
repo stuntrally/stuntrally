@@ -15,14 +15,13 @@ void App::InitGui()
 {
 	if (!mGUI)  return;
 	QTimer ti;  ti.update();  /// time
-	LanguageManager::getInstance().loadUserTags("core_theme_black_blue_tag.xml");
 
 	//  load layout - wnds
-	vwGui = LayoutManager::getInstance().load("Editor.layout");
+	vwGui = LayoutManager::getInstance().loadLayout("Editor.layout");
 	for (VectorWidgetPtr::iterator it = vwGui.begin(); it != vwGui.end(); ++it)
 	{
-		setToolTips((*it)->getEnumerator());
 		const std::string& name = (*it)->getName();
+		setToolTips((*it)->getEnumerator());
 		if (name == "CamWnd")  mWndCam = *it;  else
 		if (name == "BrushWnd")  mWndBrush = *it;  else
 		if (name == "RoadCur")   mWndRoadCur = *it;  else
@@ -37,34 +36,33 @@ void App::InitGui()
 	//  Brush wnd  assign controls  ----------------------
 	if (mWndBrush)
 	{	for (int i=0; i<BR_TXT; ++i)
-			brTxt[i] = (StaticTextPtr)mWndBrush->findWidget("brush"+toStr(i));
-		brImg = (StaticImagePtr)mWndBrush->findWidget("brushImg");
+			brTxt[i] = mGUI->findWidget<StaticText>("brush"+toStr(i));
+		brImg = mGUI->findWidget<StaticImage>("brushImg", false);
 	}
 
 	//  Road tool windows texts
 	if (mWndRoadCur)  for (int i=0; i<RD_TXT; ++i)
-		rdTxt[i] = (StaticTextPtr)mWndRoadCur->findWidget("rdCur"+toStr(i));
+		rdTxt[i] = mGUI->findWidget<StaticText>("rdCur"+toStr(i));
 	if (mWndRoadStats)  for (int i=0; i<RDS_TXT; ++i)
-		rdTxtSt[i] = (StaticTextPtr)mWndRoadStats->findWidget("rdStat"+toStr(i));
+		rdTxtSt[i] = mGUI->findWidget<StaticText>("rdStat"+toStr(i));
 
 	//  Fluid window texts
 	if (mWndFluids)  for (int i=0; i<FL_TXT; ++i)
-		flTxt[i] = (StaticTextPtr)mWndFluids->findWidget("flTxt"+toStr(i));
-
-
+		flTxt[i] = mGUI->findWidget<StaticText>("flTxt"+toStr(i));
+		
 	//  Options wnd
 	if (mWndOpts)
 	{	mWndOpts->setVisible(false);
 		int sx = mWindow->getWidth(), sy = mWindow->getHeight();
 		IntSize w = mWndOpts->getSize();  // center
 		mWndOpts->setPosition((sx-w.width)*0.5f, (sy-w.height)*0.5f);
-		mWndTabs = (TabPtr)mWndOpts->findWidget("TabWnd");
+		mWndTabs = mGUI->findWidget<Tab>("TabWnd");
 		//mWndTabs->setIndexSelected(3);  //default*--
 		ResizeOptWnd();
 	}
 
 	//  center mouse pos
-	mGUI->setVisiblePointer(bGuiFocus || !bMoveCam);
+	PointerManager::getInstance().setVisible(bGuiFocus || !bMoveCam);
 	GuiCenterMouse();
 	
 	//  hide  ---
@@ -76,7 +74,7 @@ void App::InitGui()
 	}
 	
 	ButtonPtr btn, bchk;  ComboBoxPtr combo;  // for defines
-	HScrollPtr sl;  size_t v;
+	ScrollBar* sl;  size_t v;
 
 
 	///  [Graphics]
@@ -106,7 +104,7 @@ void App::InitGui()
 	Chk("AutoStart", chkAutoStart, pSet->autostart);
 	Chk("EscQuits", chkEscQuits, pSet->escquit);
 	bnQuit = mGUI->findWidget<Button>("Quit");
-	if (bnQuit)  {  bnQuit->eventMouseButtonClick = newDelegate(this, &App::btnQuit);  bnQuit->setVisible(false);  }
+	if (bnQuit)  {  bnQuit->eventMouseButtonClick += newDelegate(this, &App::btnQuit);  bnQuit->setVisible(false);  }
 	
 
 	///  [Sky]
@@ -121,7 +119,7 @@ void App::InitGui()
 
 	///  [Terrain]
 	//------------------------------------------------------------------------
-	imgTexDiff = (StaticImagePtr)mWndOpts->findWidget("TerImgDiff");
+	imgTexDiff = mGUI->findWidget<StaticImage>("TerImgDiff");
 	Tab(tabsHmap, "TabHMapSize", tabHmap);
 	Tab(tabsTerLayers, "TabTerLay", tabTerLayer);
 
@@ -143,7 +141,7 @@ void App::InitGui()
 
 	///  [Layers]
 	Chk("TerLayOn", chkTerLayOn, 1);  chkTerLay = bchk;
-	valTerLAll = (StaticTextPtr)mWndOpts->findWidget("TerLayersAll");
+	valTerLAll = mGUI->findWidget<StaticText>("TerLayersAll");
 	Chk("TexNormAuto", chkTexNormAutoOn, 1);  chkTexNormAuto = bchk;
 	
 	Slv(TerLAngMin,0);  Slv(TerLHMin,0);  Slv(TerLAngSm,0);  // blendmap
@@ -170,10 +168,10 @@ void App::InitGui()
 	Ed(GrSwayDistr, editTrGr);  Ed(GrSwayLen, editTrGr);  Ed(GrSwaySpd, editTrGr);
 	Ed(TrRdDist, editTrGr);  Ed(TrImpDist, editTrGr);
 	Ed(GrDensSmooth, editTrGr);  Ed(GrTerMaxAngle, editTrGr);
-	imgPaged = (StaticImagePtr)mWndOpts->findWidget("ImgPaged");
+	imgPaged = mGUI->findWidget<StaticImage>("ImgPaged");
 
 	Chk("LTrEnabled", chkPgLayOn, 1);  chkPgLay = bchk;
-	valLTrAll = (StaticTextPtr)mWndOpts->findWidget("LTrAll");
+	valLTrAll = mGUI->findWidget<StaticText>("LTrAll");
 	Tab(tabsPgLayers, "LTrNumTab", tabPgLayers);
 	Slv(LTrDens, 0);	Slv(LTrRdDist, 0);
 	Slv(LTrMinSc, 0);	Slv(LTrMaxSc, 0);
@@ -191,7 +189,7 @@ void App::InitGui()
 
 	///  [Tools]  ------------------------------------
 	Btn("TrackCopySel", btnTrkCopySel);
-	valTrkCpySel = (StaticTextPtr)mWndOpts->findWidget("TrkCopySelName");
+	valTrkCpySel = mGUI->findWidget<StaticText>("TrkCopySelName");
 	Btn("CopySun", btnCopySun);				Btn("CopyTerHmap", btnCopyTerHmap);
 	Btn("CopyTerLayers", btnCopyTerLayers);	Btn("CopyVeget", btnCopyVeget);
 	Btn("CopyRoad", btnCopyRoad);			Btn("CopyRoadPars", btnCopyRoadPars);
@@ -290,7 +288,7 @@ void App::InitGui()
 	
 	//  text desc
 	Edt(trkDesc, "TrackDesc", editTrkDesc);
-	trkName = (EditPtr)mWndOpts->findWidget("TrackName");
+	trkName = mGUI->findWidget<Edit>("TrackName");
 	if (trkName)  trkName->setCaption(pSet->track);
 
 	GuiInitTrack();
@@ -304,7 +302,6 @@ void App::InitGui()
     //  load = new game
     for (int i=1; i<=2; ++i)
     {	Btn("NewGame"+toStr(i), btnNewGame);  }
-
 
 	bGI = true;  // gui inited, gui events can now save vals
 
