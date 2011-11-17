@@ -5,6 +5,12 @@
 #include "MaterialDefinition.h"
 #include "MaterialFactory.h"
 
+#ifndef ROAD_EDITOR
+	#include "../OgreGame.h"
+#else
+	#include "../../editor/OgreApp.h"
+#endif
+
 #include <OgreMaterial.h>
 #include <OgrePass.h>
 #include <OgreTechnique.h>
@@ -39,11 +45,34 @@ void WaterMaterialGenerator::generate(bool fixedFunction)
 	tu->setName("normalMap");
 	mNormalTexUnit = mTexUnit_i; mTexUnit_i++;
 
+	// global terrain lightmap (static)
+	if (needTerrainLightMap())
+	{
+		tu = pass->createTextureUnitState(""); // texture name set later (in changeShadows)
+		tu->setName("terrainLightMap");
+		mTerrainLightTexUnit = mTexUnit_i; mTexUnit_i++;
+	}
+
 	// env map
 	tu = pass->createTextureUnitState( "white.png" );
 	tu->setName("skyMap");
 	tu->setTextureAddressingMode(TextureUnitState::TAM_MIRROR);
 	mEnvTexUnit = mTexUnit_i; mTexUnit_i++;
+	
+	// realtime shadow maps
+	if (needShadows())
+	{
+		mShadowTexUnit_start = mTexUnit_i;
+		for (int i = 0; i < mParent->getNumShadowTex(); ++i)
+		{
+			tu = pass->createTextureUnitState();
+			tu->setName("shadowMap" + toStr(i));
+			tu->setContentType(TextureUnitState::CONTENT_SHADOW);
+			tu->setTextureAddressingMode(TextureUnitState::TAM_BORDER);
+			tu->setTextureBorderColour(ColourValue::White);
+			mTexUnit_i++;
+		}
+	}
 	
 	// shader
 	if (!mShaderCached)
@@ -67,6 +96,14 @@ void WaterMaterialGenerator::generate(bool fixedFunction)
 	
 	// indicate we need 'time' parameter set every frame
 	mParent->timeMtrs.push_back(mDef->getName());
+	
+	// indicate shadow
+	if (needShadows())
+		mParent->splitMtrs.push_back(mDef->getName());
+	
+	// indicate lightmap
+	if (needTerrainLightMap())
+		mParent->terrainLightMapMtrs.push_back(mDef->getName());
 	 
 	// mParent->fogMtrs.... // not important, only for impostors
 }
@@ -75,6 +112,7 @@ void WaterMaterialGenerator::generate(bool fixedFunction)
 
 void WaterMaterialGenerator::generateVertexProgramSource(Ogre::StringUtil::StrStreamType& outStream)
 {
+	mTexCoord_i = 5;
 	outStream <<
 	"struct VIn \n"
 	"{ \n"
@@ -87,14 +125,29 @@ void WaterMaterialGenerator::generateVertexProgramSource(Ogre::StringUtil::StrSt
 	"	float3 n : TEXCOORD2;	float3 t  : TEXCOORD3;	float3 b  : TEXCOORD4; \n"
 	"}; \n"
 	"VOut main_vp(VIn IN, \n"
-	"	uniform float4x4 wMat,  uniform float4x4 wvpMat, \n"
+	"	uniform float4x4 wMat,  uniform float4x4 wvpMat, \n";
+	
+	vpShadowingParams(outStream);
+	
+	outStream <<
 	"	uniform float4 fogParams) \n"
 	"{ \n"
-	"	VOut OUT;  OUT.uv = IN.uv; \n"
+	"	VOut OUT; \n"
 	"	OUT.wp = mul(wMat, IN.p); \n"
 	"	OUT.p = mul(wvpMat, IN.p); \n"
 	"	OUT.n = IN.n;  OUT.t = IN.t;  OUT.b = cross(IN.t, IN.n); \n"
 	"	OUT.wp.w = saturate(fogParams.x * (OUT.p.z - fogParams.y) * fogParams.w); \n"
+	"	OUT.uv.xyz = float3(IN.uv.x, IN.uv.y, OUT.p.z); \n";
+	
+	if (needShadows())
+	{
+		for (int i=0; i<mParent->getNumShadowTex(); ++i)
+		{
+			outStream << "oLightPosition"+toStr(i)+" = mul(texWorldViewProjMatrix"+toStr(i)+", IN.p); \n";
+		}
+	}
+	
+	outStream <<
 	"	return OUT; \n"
 	"} \n";
 }
@@ -116,7 +169,12 @@ void WaterMaterialGenerator::vertexProgramParams(Ogre::HighLevelGpuProgramPtr pr
 
 void WaterMaterialGenerator::individualVertexProgramParams(Ogre::GpuProgramParametersSharedPtr params)
 {
-
+	params->setIgnoreMissingParams(true); //! workaround 'Parameter texWorldViewProjMatrix0 does not exist' - no idea why its happening
+	if (needShadows())
+	for (int i=0; i<mParent->getNumShadowTex(); ++i)
+	{
+		params->setNamedAutoConstant("texWorldViewProjMatrix"+toStr(i), GpuProgramParameters::ACT_TEXTURE_WORLDVIEWPROJ_MATRIX, i);
+	}
 }
 
 //----------------------------------------------------------------------------------------
@@ -157,7 +215,12 @@ HighLevelGpuProgramPtr WaterMaterialGenerator::createVertexProgram()
 
 void WaterMaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::StrStreamType& outStream)
 {
-	//!todo global ambient?
+	//!todo correct lighting - diffuse, ambient, global ambient?
+	
+	mTexCoord_i = 5;
+	
+	if (needShadows())
+		fpRealtimeShadowHelperSource(outStream);
 	
 	outStream <<
 	"struct PIn \n"
@@ -174,10 +237,31 @@ void WaterMaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::Str
 	"	uniform float time, \n"
 	"	uniform float4 deepColor,  uniform float4 shallowColor,  uniform float4 reflectionColor, \n"
 	"	uniform float2 reflAndWaterAmounts, \n"
-	"	uniform float2 fresnelPowerBias, \n"
-	"	uniform sampler2D normalMap : TEXUNIT0, \n"
-	"	uniform sampler2D skyMap : TEXUNIT1): COLOR0 \n"
-	"{ \n"
+	"	uniform float2 fresnelPowerBias, \n";
+	
+	fpShadowingParams(outStream);
+	
+	outStream <<
+	"	uniform sampler2D normalMap : TEXUNIT"+toStr(mNormalTexUnit)+", \n";
+	if (needTerrainLightMap())
+	{	
+		outStream <<
+		"	uniform sampler2D terrainLightMap : TEXUNIT"+toStr(mTerrainLightTexUnit)+", \n"
+		"	uniform float terrainWorldSize, \n";
+	}
+	outStream <<
+	"	uniform sampler2D skyMap : TEXUNIT"+toStr(mEnvTexUnit)+"): COLOR0 \n"
+	"{ \n";
+		
+	if (needTerrainLightMap()) outStream <<
+		"	float4 wsNormal = float4(1.0, 1.0, 1.0, IN.wp.x); \n"
+		"	float enableTerrainLightMap = 1.0; \n";
+	if (needTerrainLightMap() || needShadows()) outStream <<
+		"	float4 texCoord = float4(1.0, 1.0, IN.uv.z, IN.wp.z); \n";
+	
+	fpCalcShadowSource(outStream);
+	
+	outStream <<
 	"	float matShininess = matSpec.w; \n"
 	"	float t = waveBump.y * time; \n"
 		//  waves  sum 4 normal tex
@@ -200,8 +284,14 @@ void WaterMaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::Str
 	"	float3 ldir = normalize(lightPos0.xyz - (lightPos0.w * IN.wp.xyz)); \n"
 	"	float3 camDir = normalize(camPos - IN.wp.xyz); \n"
 	"	float3 halfVec = normalize(ldir + camDir); \n"
-	"	float3 specular = pow(max(dot(normal, halfVec), 0), matShininess); \n"
-	"	float3 specC = specular * lightSpec0 * matSpec.rgb; \n"
+	"	float3 specular = pow(max(dot(normal, halfVec), 0), matShininess); \n";
+	
+	if (needShadows() || needTerrainLightMap()) outStream <<
+		"	float3 specC = specular * lightSpec0 * matSpec.rgb * shadowing; \n";
+	else outStream <<
+		"	float3 specC = specular * lightSpec0 * matSpec.rgb; \n";
+		
+	outStream <<
 	"	float3 clrSUM = /*diffC +*/ specC; \n"
 		//  reflection  3D vec to sky dome map 2D uv
 	"	float3 refl = reflect(-camDir, normal); \n"
@@ -209,7 +299,7 @@ void WaterMaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::Str
 	"	float2 refl2; \n"
 	"	refl2.x = /*(refl.x == 0) ? 0 :*/ ( (refl.z < 0.0) ? atan2(-refl.z, refl.x) : (2*PI - atan2(refl.z, refl.x)) ); \n"
 	"	refl2.x = 1 - refl2.x / (2*PI); \n"  // yaw 0..1
-	"	refl2.y = 1 - asin(refl.y) / PI*2;  //pitch 0..1 \n"
+	"	refl2.y = 1 - asin(refl.y) / PI*2; \n" //pitch 0..1
 	"	float4 reflection = tex2D(skyMap, refl2) * reflectionColor; \n"
 		//  fresnel
 	"	float facing = 1.0 - max(abs(dot(camDir, normal)), 0); \n"
@@ -218,8 +308,12 @@ void WaterMaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::Str
 	"	float4 waterClr = lerp(shallowColor, deepColor, facing); \n"
 	"	float4 reflClr = lerp(waterClr, reflection, fresnel); \n"
 	"	float3 clr = clrSUM.rgb * waveSpecular + waterClr.rgb * reflAndWaterAmounts.y + reflClr.rgb * reflAndWaterAmounts.x; \n"
-	"	clr = lerp(clr, fogColor, /*IN.fogVal*/IN.wp.w); \n"
-	"	return float4(clr, waterClr.a + clrSUM.r); \n"
+	"	clr = lerp(clr, fogColor, /*IN.fogVal*/IN.wp.w); \n";
+	if (needShadows() || needTerrainLightMap()) outStream <<
+		"	return float4(clr*(0.65 + 0.35*shadowing), waterClr.a+clrSUM.r); \n";
+	else outStream <<
+		"	return float4(clr, waterClr.a + clrSUM.r); \n";
+	outStream <<
 	"} \n";
 }
 
@@ -255,6 +349,13 @@ void WaterMaterialGenerator::individualFragmentProgramParams(Ogre::GpuProgramPar
 	params->setNamedConstant("matSpec", mDef->mProps->specular);
 	params->setNamedConstant("reflAndWaterAmounts", Vector3(mDef->mProps->reflAmount, 1-mDef->mProps->reflAmount, 0));
 	params->setNamedConstant("fresnelPowerBias", Vector3(mDef->mProps->fresnelPower, mDef->mProps->fresnelBias, 0));
+	
+	if (needShadows())
+	{
+		params->setNamedConstant("pssmSplitPoints", mParent->pApp->splitPoints);
+		for (int i=0; i<mParent->getNumShadowTex(); ++i)
+			params->setNamedAutoConstant("invShadowMapSize"+toStr(i), GpuProgramParameters::ACT_INVERSE_TEXTURE_SIZE, i+mShadowTexUnit_start);
+	}
 }
 
 //----------------------------------------------------------------------------------------

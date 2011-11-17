@@ -283,6 +283,7 @@ referenced by material '" + (*it)->getName() + "' not found. Using default gener
 			}
 
 			// shader cache - check if same shader already exists
+			//!todo shader cache performance: cache vertex and fragment shader seperately
 			ShaderProperties* shaderProps = new ShaderProperties( (*it)->mProps, this );
 			
 			bool exists = false;
@@ -305,7 +306,7 @@ referenced by material '" + (*it)->getName() + "' not found. Using default gener
 				generator->mVertexProgram = sit->first.first;
 				generator->mFragmentProgram = sit->first.second;
 			}
-			
+						
 			generator->mDef = (*it);
 			generator->mShader = shaderProps;
 			generator->generate();

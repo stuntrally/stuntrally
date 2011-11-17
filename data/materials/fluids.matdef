@@ -13,9 +13,8 @@
 	fresnelBias = 0.33
 	fresnelScale = 1
 	normalMap_1 = flat_n.png
-	terrainLightMap = true
 	receivesShadows = true
-	
+	;terrainLightMap = true
 
 ; ------------ island blue ------------
 [Water_blue]

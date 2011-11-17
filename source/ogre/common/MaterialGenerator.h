@@ -43,7 +43,9 @@ protected:
 	unsigned int mTerrainLightTexUnit; // global terrain lightmap
 	unsigned int mShadowTexUnit_start; // start offset for shadow tex units
 	
-	unsigned int mTexUnit_i; // counter
+	// count
+	unsigned int mTexUnit_i;
+	unsigned int mTexCoord_i;
 	
 	// textures
 	std::string mDiffuseMap;
@@ -71,13 +73,17 @@ protected:
 	virtual void vertexProgramParams(Ogre::HighLevelGpuProgramPtr program);
 	virtual void individualVertexProgramParams(Ogre::GpuProgramParametersSharedPtr params);
 	
-	virtual void fpRealtimeShadowHelperSource(Ogre::StringUtil::StrStreamType& outStream);
-		
 	// fragment program
 	virtual Ogre::HighLevelGpuProgramPtr createFragmentProgram();
 	virtual void generateFragmentProgramSource(Ogre::StringUtil::StrStreamType& outStream);
 	virtual void fragmentProgramParams(Ogre::HighLevelGpuProgramPtr program);
 	virtual void individualFragmentProgramParams(Ogre::GpuProgramParametersSharedPtr params);
+	
+	// source generation helpers
+	virtual void vpShadowingParams(Ogre::StringUtil::StrStreamType& outStream);
+	virtual void fpRealtimeShadowHelperSource(Ogre::StringUtil::StrStreamType& outStream);
+	virtual void fpCalcShadowSource(Ogre::StringUtil::StrStreamType& outStream);
+	virtual void fpShadowingParams(Ogre::StringUtil::StrStreamType& outStream);
 	
 	
 	virtual bool needShaders();

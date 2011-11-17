@@ -568,10 +568,30 @@ HighLevelGpuProgramPtr MaterialGenerator::createVertexProgram()
 
 //----------------------------------------------------------------------------------------
 
+void MaterialGenerator::vpShadowingParams(Ogre::StringUtil::StrStreamType& outStream)
+{
+	
+	
+	if (needShadows()) {
+		for (int i=0; i<mParent->getNumShadowTex(); ++i)
+		{
+			outStream << "out float4 oLightPosition"+toStr(i)+" : TEXCOORD"+toStr(mTexCoord_i++)+", \n";
+		}
+		outStream << "\n";
+		for (int i=0; i<mParent->getNumShadowTex(); ++i)
+		{
+			outStream << "uniform float4x4 texWorldViewProjMatrix"+toStr(i)+", \n";
+		}
+		outStream << "\n";
+	}
+}
+
+//----------------------------------------------------------------------------------------
+
 void MaterialGenerator::generateVertexProgramSource(Ogre::StringUtil::StrStreamType& outStream)
 {
 	// note: world position xz for fragment is stored in oTexCoord.w, oWsNormal.w
-	int oTexCoordIndex=0;
+	mTexCoord_i=0;
 	
 	outStream << 
 		"void main_vp( "
@@ -591,11 +611,11 @@ void MaterialGenerator::generateVertexProgramSource(Ogre::StringUtil::StrStreamT
 	outStream <<
 		"	out float4 oPosition			 	: POSITION, \n"
 		"	out float4 objectPos				: COLOR, \n" // running out of texcoords so putting this in COLOR since its unused.
-		"	out float4 oTexCoord				: TEXCOORD"+toStr(oTexCoordIndex++)+", \n";
+		"	out float4 oTexCoord				: TEXCOORD"+toStr(mTexCoord_i++)+", \n";
 		
 	if (mShader->vertexColour) outStream <<
 		"	float4 color 						: COLOR, \n"
-		"	out float4 oVertexColour				: TEXCOORD"+toStr(oTexCoordIndex++)+", \n";
+		"	out float4 oVertexColour				: TEXCOORD"+toStr(mTexCoord_i++)+", \n";
 		
 	if (mShader->wind == 1)
 	{
@@ -605,7 +625,7 @@ void MaterialGenerator::generateVertexProgramSource(Ogre::StringUtil::StrStreamT
 		"	uniform float3 objSpaceCam, \n"
 		"	uniform float fadeRange, \n"
 		"	uniform float4 direction, \n"
-		"	out float alphaFade : TEXCOORD"+toStr(oTexCoordIndex++)+", \n";
+		"	out float alphaFade : TEXCOORD"+toStr(mTexCoord_i++)+", \n";
 	}
 	else if (mShader->wind == 2)
 	{
@@ -629,7 +649,7 @@ void MaterialGenerator::generateVertexProgramSource(Ogre::StringUtil::StrStreamT
 			}
 			else
 			{
-				outStream <<"	out float4 oWsNormal  				: TEXCOORD"+toStr(oTexCoordIndex++)+", \n";	
+				outStream <<"	out float4 oWsNormal  				: TEXCOORD"+toStr(mTexCoord_i++)+", \n";	
 			}
 		}
 	}
@@ -638,16 +658,16 @@ void MaterialGenerator::generateVertexProgramSource(Ogre::StringUtil::StrStreamT
 		
 	if (fpNeedTangentToCube()) 
 	{
-		 outStream <<"	out	float4	oTangentToCubeSpace0	: TEXCOORD"+ toStr( oTexCoordIndex++ ) +", \n"; // tangent to cube (world) space
-		 outStream <<"	out	float4	oTangentToCubeSpace1	: TEXCOORD"+ toStr( oTexCoordIndex++ ) +", \n";
-		 outStream <<"	out	float4	oTangentToCubeSpace2	: TEXCOORD"+ toStr( oTexCoordIndex++ ) +", \n";
+		 outStream <<"	out	float4	oTangentToCubeSpace0	: TEXCOORD"+ toStr( mTexCoord_i++ ) +", \n"; // tangent to cube (world) space
+		 outStream <<"	out	float4	oTangentToCubeSpace1	: TEXCOORD"+ toStr( mTexCoord_i++ ) +", \n";
+		 outStream <<"	out	float4	oTangentToCubeSpace2	: TEXCOORD"+ toStr( mTexCoord_i++ ) +", \n";
 	}
 	if(MRTSupported())
 	{
 		if(!UsePerPixelNormals())
 		{
 			//view space normal 
-			outStream << "	out	float4	oViewNormal	: TEXCOORD"+ toStr( oTexCoordIndex++ ) +", \n";
+			outStream << "	out	float4	oViewNormal	: TEXCOORD"+ toStr( mTexCoord_i++ ) +", \n";
 		}
 	}
 
@@ -655,19 +675,8 @@ void MaterialGenerator::generateVertexProgramSource(Ogre::StringUtil::StrStreamT
 	outStream <<
 		"	uniform float enableFog, \n"
 		"	uniform float4 fogParams, \n";
-	
-	if (needShadows()) {
-		for (int i=0; i<mParent->getNumShadowTex(); ++i)
-		{
-			outStream << "out float4 oLightPosition"+toStr(i)+" : TEXCOORD"+toStr(oTexCoordIndex++)+", \n";
-		}
-		outStream << "\n";
-		for (int i=0; i<mParent->getNumShadowTex(); ++i)
-		{
-			outStream << "uniform float4x4 texWorldViewProjMatrix"+toStr(i)+", \n";
-		}
-		outStream << "\n";
-	}
+		
+	vpShadowingParams(outStream);
 
 	if (vpNeedWITMat()) outStream <<
 		"	uniform float4x4 wITMat, \n";
@@ -937,10 +946,78 @@ void MaterialGenerator::fpRealtimeShadowHelperSource(Ogre::StringUtil::StrStream
 		"} \n";
 	}
 	
-	int oTexCoordIndex=1;
 	outStream <<
 	"	return shadow; \n"
 	"} \n";
+}
+
+//----------------------------------------------------------------------------------------
+
+void MaterialGenerator::fpShadowingParams(Ogre::StringUtil::StrStreamType& outStream)
+{
+	if (needShadows())
+	{
+		for (int i=0; i<mParent->getNumShadowTex(); ++i)
+		{
+			outStream <<
+		"	uniform sampler2D shadowMap"+toStr(i)+" : TEXUNIT"+toStr(mShadowTexUnit_start+i)+", \n";
+		}
+		outStream << "\n";
+		for (int i=0; i<mParent->getNumShadowTex(); ++i)
+			outStream << "in float4 lightPosition"+toStr(i)+" : TEXCOORD"+toStr(mTexCoord_i++)+", \n";
+		outStream << "\n";
+		for (int i=0; i<mParent->getNumShadowTex(); ++i)
+			outStream << "uniform float4 invShadowMapSize"+toStr(i)+", \n";
+		outStream << "\n";
+		outStream << 
+		"	uniform float4 pssmSplitPoints, \n";
+	}
+}
+
+//----------------------------------------------------------------------------------------
+
+void MaterialGenerator::fpCalcShadowSource(Ogre::StringUtil::StrStreamType& outStream)
+{
+	if (needShadows() || needTerrainLightMap())
+		outStream <<
+		"	float shadowing; \n";
+		
+	if (needShadows())
+	{
+		outStream <<
+		"	float shadowingRT;"
+		"	shadowingRT = calcPSSMShadow(";
+		for (int i=0; i<mParent->getNumShadowTex(); ++i)
+			outStream << "shadowMap"+toStr(i)+", ";
+		for (int i=0; i<mParent->getNumShadowTex(); ++i)
+			outStream << "lightPosition"+toStr(i)+", ";
+		for (int i=0; i<mParent->getNumShadowTex(); ++i)
+			outStream << "invShadowMapSize"+toStr(i)+", ";
+		
+		outStream <<
+		"pssmSplitPoints, texCoord.z); \n";
+	}
+	
+	if (needTerrainLightMap())
+	{
+		outStream <<
+		"	float shadowingLM; \n"
+		"	float2 worldPos = float2(wsNormal.w, texCoord.w); \n" // get world position
+		"	float2 lmTexCoord = (worldPos / terrainWorldSize) + 0.5; \n" // convert to image space 0..1
+		"	shadowingLM = tex2D(terrainLightMap, lmTexCoord).x; \n" // fetch texture r channel
+		"	if (enableTerrainLightMap == 0.f) shadowingLM = 1.f; \n";
+	}
+	
+	// put together realtime and static shadow
+	if (needShadows() || needTerrainLightMap())
+	{
+		if (needShadows() && needTerrainLightMap()) outStream <<
+		"	shadowing = min(shadowingRT, shadowingLM); \n";
+		else if (needShadows()) outStream <<
+		"	shadowing = shadowingRT; \n";
+		else /* if (needTerrainLightMap()) */ outStream <<
+		"	shadowing = shadowingLM; \n";
+	}
 }
 
 //----------------------------------------------------------------------------------------
@@ -949,18 +1026,18 @@ void MaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::StrStrea
 {
 	if (needShadows())
 		fpRealtimeShadowHelperSource(outStream);
-	int oTexCoordIndex=0;
+	mTexCoord_i=0;
 	outStream <<
 		"void main_fp("
 		"	in float4 iPosition : POSITION, \n"
 		"	in float4 position : COLOR, \n"
-		"	in float4 texCoord : TEXCOORD"+toStr(oTexCoordIndex++)+", \n";
-		
+		"	in float4 texCoord : TEXCOORD"+toStr(mTexCoord_i++)+", \n";
+	
 	if (mShader->vertexColour) outStream <<
-		"	in float4 vertexColour : TEXCOORD"+toStr(oTexCoordIndex++)+", \n";
-		
+		"	in float4 vertexColour : TEXCOORD"+toStr(mTexCoord_i++)+", \n";
+	
 	if (mShader->wind == 1) outStream <<
-		"	in float alphaFade : TEXCOORD"+toStr(oTexCoordIndex++)+", \n";
+		"	in float alphaFade : TEXCOORD"+toStr(mTexCoord_i++)+", \n";
 	
 	if (fpNeedWsNormal()) 
 	{
@@ -976,23 +1053,26 @@ void MaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::StrStrea
 			}
 			else
 			{
-				outStream <<"	in float4 wsNormal : TEXCOORD"+toStr(oTexCoordIndex++)+", \n";
+				outStream <<"	in float4 wsNormal : TEXCOORD"+toStr(mTexCoord_i++)+", \n";
 			}
 		}
 	}
 	if (fpNeedTangentToCube()) 
 	{
-		outStream << "	in float4 tangentToCubeSpace0 : TEXCOORD"+ toStr( oTexCoordIndex++ ) +", \n";
-		outStream << "	in float4 tangentToCubeSpace1 : TEXCOORD"+ toStr( oTexCoordIndex++ ) +", \n";
-		outStream << "	in float4 tangentToCubeSpace2 : TEXCOORD"+ toStr( oTexCoordIndex++ ) +", \n";
+		outStream << "	in float4 tangentToCubeSpace0 : TEXCOORD"+ toStr( mTexCoord_i++ ) +", \n";
+		outStream << "	in float4 tangentToCubeSpace1 : TEXCOORD"+ toStr( mTexCoord_i++ ) +", \n";
+		outStream << "	in float4 tangentToCubeSpace2 : TEXCOORD"+ toStr( mTexCoord_i++ ) +", \n";
 	}
 	if (MRTSupported()) 
 	{
 		if(!UsePerPixelNormals())
 		{
-			outStream << "	in float4 viewNormal : TEXCOORD"+ toStr( oTexCoordIndex++ ) +", \n";
+			outStream << "	in float4 viewNormal : TEXCOORD"+ toStr( mTexCoord_i++ ) +", \n";
 		}
 	}
+
+	fpShadowingParams(outStream);
+	
 	if (vpNeedWvMat()) outStream <<
 		"	uniform float4x4 wvMat, \n";
 	if (fpNeedWMat()) outStream <<
@@ -1052,24 +1132,6 @@ void MaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::StrStrea
 	if (mDef->mProps->transparent) outStream <<
 		"	uniform float alphaRejectValue, \n";
 	
-	if (needShadows())
-	{
-		for (int i=0; i<mParent->getNumShadowTex(); ++i)
-		{
-			outStream <<
-		"	uniform sampler2D shadowMap"+toStr(i)+" : TEXUNIT"+toStr(mShadowTexUnit_start+i)+", \n";
-		}
-		outStream << "\n";
-		for (int i=0; i<mParent->getNumShadowTex(); ++i)
-			outStream << "in float4 lightPosition"+toStr(i)+" : TEXCOORD"+toStr(oTexCoordIndex++)+", \n";
-		outStream << "\n";
-		for (int i=0; i<mParent->getNumShadowTex(); ++i)
-			outStream << "uniform float4 invShadowMapSize"+toStr(i)+", \n";
-		outStream << "\n";
-		outStream << 
-		"	uniform float4 pssmSplitPoints, \n";
-	}
-	
 	
 	if(MRTSupported())
 	{
@@ -1083,48 +1145,9 @@ void MaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::StrStrea
 	}
 	outStream << 	") \n"
 		"{ \n";
-		
+	
 	// calc shadowing
-	if (needShadows() || needTerrainLightMap())
-		outStream <<
-		"	float shadowing; \n";
-		
-	if (needShadows())
-	{
-		outStream <<
-		"	float shadowingRT;"
-		"	shadowingRT = calcPSSMShadow(";
-		for (int i=0; i<mParent->getNumShadowTex(); ++i)
-			outStream << "shadowMap"+toStr(i)+", ";
-		for (int i=0; i<mParent->getNumShadowTex(); ++i)
-			outStream << "lightPosition"+toStr(i)+", ";
-		for (int i=0; i<mParent->getNumShadowTex(); ++i)
-			outStream << "invShadowMapSize"+toStr(i)+", ";
-		
-		outStream <<
-		"pssmSplitPoints, texCoord.z); \n";
-	}
-	
-	if (needTerrainLightMap())
-	{
-		outStream <<
-		"	float shadowingLM; \n"
-		"	float2 worldPos = float2(wsNormal.w, texCoord.w); \n" // get world position
-		"	float2 lmTexCoord = (worldPos / terrainWorldSize) + 0.5; \n" // convert to image space 0..1
-		"	shadowingLM = tex2D(terrainLightMap, lmTexCoord).x; \n" // fetch texture r channel
-		"	if (enableTerrainLightMap == 0.f) shadowingLM = 1.f; \n";
-	}
-	
-	// put together realtime and static shadow
-	if (needShadows() || needTerrainLightMap())
-	{
-		if (needShadows() && needTerrainLightMap()) outStream <<
-		"	shadowing = min(shadowingRT, shadowingLM); \n";
-		else if (needShadows()) outStream <<
-		"	shadowing = shadowingRT; \n";
-		else /* if (needTerrainLightMap()) */ outStream <<
-		"	shadowing = shadowingLM; \n";
-	}
+	fpCalcShadowSource(outStream);
 	
 	if (fpNeedEyeVector()) outStream <<
 		"	float3 eyeVector = normalize(float3(tangentToCubeSpace0.w, tangentToCubeSpace1.w, tangentToCubeSpace2.w)); \n";
