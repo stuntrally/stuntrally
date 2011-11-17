@@ -3,6 +3,7 @@
 
 #include <OgreStringConverter.h>
 #include <OgreString.h>
+#include <OgreVector2.h>
 #include <OgreVector3.h>
 #include <OgreVector4.h>
 #include <OgreCommon.h>
@@ -39,7 +40,7 @@ struct MaterialProperties
 	textureMap alphaMaps; bool transparent;
 	Ogre::Vector4 lightingAlpha; // alpha for ambient, diffuse, spec, diffuse r channel mult
 	Ogre::CompareFunction alphaRejectFunc; float alphaRejectValue;
-		
+	
 	// reflection
 	std::string envMap;
 	float reflAmount;
@@ -68,6 +69,11 @@ struct MaterialProperties
 	
 	float depthBias; bool depthCheck; bool depthWrite; bool transparentSorting;
 	
+	// water
+	Ogre::Vector2 waveBump;
+	float waveHighFreq;
+	float waveSpecular;
+	Ogre::Vector4 deepColour, shallowColour, reflectionColour;
 	
 	//!todo:
 	// PPX on/off, shading mode (phong etc) for no shaders,

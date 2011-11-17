@@ -5,6 +5,7 @@
 #include "../road/Road.h"
 #include "../vdrift/game.h"
 #include "../paged-geom/PagedGeometry.h"
+#include "../ogre/common/MaterialFactory.h"
 
 #include <OgreParticleSystem.h>
 #include <OgreManualObject.h>
@@ -220,6 +221,8 @@ bool App::frameStart(Real time)
 				{	 pr->setSpeedFactor(0.f);	 pr2->setSpeedFactor(0.f);	}
 			else{	 pr->setSpeedFactor(1.f);	 pr2->setSpeedFactor(1.f);	}
 		}
+		
+		materialFactory->update();
 		
 		bFirstRenderFrame = false;
 		
