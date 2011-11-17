@@ -34,7 +34,6 @@ ShaderProperties::ShaderProperties( MaterialProperties* props, MaterialFactory* 
 	shadows = ( (props->receivesShadows && parent->getShadows()) 
 			||  (props->receivesDepthShadows && parent->getShadowsDepth())
 			  ) && (1-props->shadowPriority <= parent->getShaderQuality());
-	if (!(1-props->shadowPriority <= parent->getShaderQuality())) LogO("SHADOWS OFF, 1-: " + toStr(1-props->shadowPriority) + ", shadQual: " + toStr(parent->getShaderQuality()));
 	lightingAlpha = (props->lightingAlpha != Vector4::ZERO);
 	wind = (parent->getShaderQuality() > 0.1) ? props->wind : 0;
 	customGenerator = props->customGenerator;
