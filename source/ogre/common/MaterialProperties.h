@@ -75,6 +75,10 @@ struct MaterialProperties
 	float waveSpecular;
 	Ogre::Vector4 deepColour, shallowColour, reflectionColour;
 	
+	// priority for various properties (for 'Shader quality' slider)
+	// 0 ... 1, default: 0.5
+	float envMapPriority, shadowPriority, normalMapPriority;
+	
 	//!todo:
 	// PPX on/off, shading mode (phong etc) for no shaders,
 	// [casts_shadows (+priority) (probably not here)],

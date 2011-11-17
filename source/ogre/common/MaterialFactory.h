@@ -44,6 +44,7 @@ public:
 	void setShadowsDepth(bool p) { setIfChanged(bShadowsDepth) };
 	void setTexSize(unsigned int p) { setIfChanged(iTexSize) };
 	void setNumShadowTex(unsigned int p) { setIfChanged(iNumShadowTex) };
+	void setShaderQuality(float p) { setIfChanged(fShaderQuality) };
 	
 	const bool getShaders() { return bShaders; };
 	const bool getNormalMap() { return bNormalMap; };
@@ -52,6 +53,7 @@ public:
 	const bool getShadowsDepth() { return bShadowsDepth; };
 	const unsigned int getTexSize() { return iTexSize; };
 	const unsigned int getNumShadowTex() { return iNumShadowTex; };
+	const float getShaderQuality() { return fShaderQuality; };
 	///--------------------------------------------------------------------
 	
 	std::vector<std::string> splitMtrs; // materials that need pssm split points
@@ -67,6 +69,7 @@ private:
 	/// user settings definition ---------------------------------
 	bool bShaders, bNormalMap, bEnvMap, bShadows, bShadowsDepth;
 	unsigned int iTexSize; unsigned int iNumShadowTex;
+	float fShaderQuality;
 	/// -------------------------------------------------------
 
 	std::vector<MaterialDefinition*> mDefinitions;

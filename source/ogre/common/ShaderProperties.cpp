@@ -12,22 +12,22 @@ using namespace Ogre;
 //----------------------------------------------------------------------------------------
 
 ShaderProperties::ShaderProperties( MaterialProperties* props, MaterialFactory* parent )
-{
-	//!todo priority for envmap, normalmap, shadow
-	
+{	
 	transparent = props->transparent;
-	envMap = ((props->envMap != "") && parent->getEnvMap());
+	envMap = ((props->envMap != "") && parent->getEnvMap())
+		&& (props->envMapPriority <= parent->getShaderQuality());
 	fresnel = (envMap && props->fresnelScale != 0.f);
 	diffuseMap = (props->diffuseMaps.size() > 0);
 	lightMap = (props->lightMaps.size() > 0);
 	terrainLightMap = props->terrainLightMap;
 	alphaMap = (transparent && (props->alphaMaps.size() > 0));
 	blendMap = (props->blendMaps.size() > 0);
-	normalMap = ((props->normalMaps.size() > 0) && parent->getNormalMap());
+	normalMap = ((props->normalMaps.size() > 0) && parent->getNormalMap())
+		&& (props->normalMapPriority <= parent->getShaderQuality());
 	lighting = props->lighting;
 	shadows = ( (props->receivesShadows && parent->getShadows()) 
 			||  (props->receivesDepthShadows && parent->getShadowsDepth())
-	);
+			  ) && props->shadowPriority <= parent->getShaderQuality();
 	lightingAlpha = (props->lightingAlpha != Vector4::ZERO);
 	wind = props->wind;
 	customGenerator = props->customGenerator;

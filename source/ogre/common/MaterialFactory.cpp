@@ -46,7 +46,7 @@ MaterialFactory& MaterialFactory::getSingleton(void)
 
 MaterialFactory::MaterialFactory() : 
 	bShaders(1), bNormalMap(1), bEnvMap(1), bShadows(1), bShadowsDepth(1),
-	iTexSize(4096), iNumShadowTex(3),
+	iTexSize(4096), iNumShadowTex(3), fShaderQuality(0.5),
 	bSettingsChanged(1) // always have to generate at start
 {
 	QTimer ti;  ti.update(); /// time
