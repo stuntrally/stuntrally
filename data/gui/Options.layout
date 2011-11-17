@@ -6,7 +6,7 @@
 		<Property key="Caption" value="#{Options}"/>
 		<Property key="Alpha" value="0.3"/>
 		<Property key="Snap" value="false"/>
-		<Widget type="Tab" skin="Tab" position="0 0 800 600" align="Default" layer="Back" name="TabWnd">
+		<Widget type="TabControl" skin="TabControl" position="0 0 800 600" align="Default" layer="Back" name="TabWnd">
 			<UserString key="RelativeTo" value="OptionsWnd"/>
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="ButtonWidth" value="86"/>
@@ -117,7 +117,7 @@
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 					<Property key="TextColour" value="0.7 0.86 1.0"/>
 				</Widget>
-				<Widget type="Edit" skin="WordWrap" position="176 367 336 75" name="TrackDesc">
+				<Widget type="EditBox" skin="WordWrap" position="176 367 336 75" name="TrackDesc">
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 					<Property key="ReadOnly" value="true"/>
 					<Property key="MultiLine" value="true"/>
@@ -228,7 +228,7 @@
 					<Property key="Caption" value="#{Find}:"/>
 					<Property key="TextColour" value="0.7 0.8 0.9"/>
 				</Widget>
-				<Widget type="Edit" skin="Edit" position="16 472 88 24" name="TrackFind">
+				<Widget type="EditBox" skin="EditBox" position="16 472 88 24" name="TrackFind">
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 					<Property key="Colour" value="0.7 0.8 0.9"/>
 					<Property key="MaxTextLength" value="20"/>
@@ -238,7 +238,7 @@
 			<Widget type="TabItem" skin="" position="4 26 787 531">
 				<UserString key="RelativeTo" value="OptionsWnd"/>
 				<Property key="Caption" value="#{Car}"/>
-				<Widget type="List" skin="List" position="14 32 148 304" name="CarList">
+				<Widget type="ListBox" skin="ListBox" position="14 32 148 304" name="CarList">
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 					<UserString key="tip" value="#{TipCarsList}"/>
 				</Widget>
@@ -361,7 +361,7 @@
 					<Property key="Colour" value="1 0.8 0.5"/>
 					<Property key="TextColour" value="1 0.7 0.6"/>
 				</Widget>
-				<Widget type="Tab" skin="Tab" position="176 16 568 20" name="tabPlayer">
+				<Widget type="TabControl" skin="TabControl" position="176 16 568 20" name="tabPlayer">
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 					<Widget type="TabItem" skin="" position="4 26 559 -12">
 						<UserString key="RelativeTo" value="OptionsWnd"/>
@@ -384,7 +384,7 @@
 			<Widget type="TabItem" skin="" position="4 26 787 531">
 				<UserString key="RelativeTo" value="OptionsWnd"/>
 				<Property key="Caption" value="#{Setup}"/>
-				<Widget type="Widget" skin="Panel" position="304 220 464 232">
+				<Widget type="Widget" skin="PanelSkin" position="304 220 464 232">
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 					<Property key="Alpha" value="0.3"/>
 					<Property key="Colour" value="0.4 0.5 0.6"/>
@@ -499,7 +499,7 @@
 			<Widget type="TabItem" skin="" position="4 26 787 531">
 				<UserString key="RelativeTo" value="OptionsWnd"/>
 				<Property key="Caption" value="#{Replay}"/>
-				<Widget type="List" skin="List" position="14 16 186 504" name="RplList">
+				<Widget type="ListBox" skin="ListBox" position="14 16 186 504" name="RplList">
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 				</Widget>
 				<Widget type="Button" skin="CheckBox" position="424 295 280 24" name="RplChkGhost">
@@ -517,19 +517,19 @@
 					<Property key="TextColour" value="0.5 0.7 0.9"/>
 					<Property key="Caption" value="#{RplBestOnly}"/>
 				</Widget>
-				<Widget type="Button" skin="RadioBox" position="224 311 160 24" name="RplBtnAll">
+				<Widget type="Button" skin="RadioButton" position="224 311 160 24" name="RplBtnAll">
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 					<Property key="Colour" value="0.6 0.8 1"/>
 					<Property key="TextColour" value="0.6 0.8 1"/>
 					<Property key="Caption" value="#{RplAll}"/>
 				</Widget>
-				<Widget type="Button" skin="RadioBox" position="224 351 160 24" name="RplBtnCur">
+				<Widget type="Button" skin="RadioButton" position="224 351 160 24" name="RplBtnCur">
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 					<Property key="Colour" value="0.6 0.8 1"/>
 					<Property key="TextColour" value="0.5 0.7 0.9"/>
 					<Property key="Caption" value="#{RplCurrent}"/>
 				</Widget>
-				<Widget type="Button" skin="RadioBox" position="224 391 160 24" name="RplBtnGhosts">
+				<Widget type="Button" skin="RadioButton" position="224 391 160 24" name="RplBtnGhosts">
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 					<Property key="Colour" value="0.6 0.8 1"/>
 					<Property key="TextColour" value="0.6 0.8 1"/>
@@ -575,7 +575,7 @@
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 					<Property key="TextColour" value="1 0.8 0.6"/>
 				</Widget>
-				<Widget type="Edit" skin="Edit" position="224 184 240 24" name="RplNameEdit">
+				<Widget type="EditBox" skin="EditBox" position="224 184 240 24" name="RplNameEdit">
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 					<Property key="Colour" value="0.8 0.9 1"/>
 				</Widget>
@@ -593,7 +593,7 @@
 			<Widget type="TabItem" skin="" position="4 26 787 531">
 				<UserString key="RelativeTo" value="OptionsWnd"/>
 				<Property key="Caption" value="#{Screen}"/>
-				<Widget type="Tab" skin="Tab" position="16 15 744 460">
+				<Widget type="TabControl" skin="TabControl" position="16 15 744 460">
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 					<Property key="ButtonAutoWidth" value="false"/>
 					<Property key="Colour" value="0.73 0.88 1"/>
@@ -638,7 +638,7 @@
 							<Property key="Caption" value="#{NeedRestart}"/>
 							<Property key="TextColour" value="0.7 1 0.5"/>
 						</Widget>
-						<Widget type="List" skin="List" position="32 54 132 354" name="ResList">
+						<Widget type="ListBox" skin="ListBox" position="32 54 132 354" name="ResList">
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
 						<Widget type="Button" skin="Button" position="188 54 92 24" name="ResChange">
@@ -773,7 +773,7 @@
 					<Property key="Colour" value="0.6 0.9 1"/>
 					<Property key="TextColour" value="0.9 0.97 1"/>
 				</Widget>
-				<Widget type="Tab" skin="Tab" position="16 65 744 400">
+				<Widget type="TabControl" skin="TabControl" position="16 65 744 400">
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 					<Property key="ButtonAutoWidth" value="true"/>
 					<Property key="Colour" value="0.73 0.88 1"/>
@@ -806,9 +806,9 @@
 						<Widget type="ScrollBar" skin="ScrollBarH" position="248 80 320 18" name="Anisotropy">
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 							<Property key="Range" value="17"/>
-							<Property key="Scroll_Position" value="0"/>
-							<Property key="Scroll_Page" value="1"/>
-							<Property key="Scroll_ViewPage" value="1"/>
+							<Property key="RangePosition" value="0"/>
+							<Property key="Page" value="1"/>
+							<Property key="ViewPage" value="1"/>
 							<Property key="MoveToClick" value="true"/>
 						</Widget>
 						<Widget type="TextBox" skin="TextBox" position="180 80 60 24" name="AnisotropyVal">
@@ -824,9 +824,9 @@
 						<Widget type="ScrollBar" skin="ScrollBarH" position="248 110 320 18" name="TexSize">
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 							<Property key="Range" value="2"/>
-							<Property key="Scroll_Position" value="0"/>
-							<Property key="Scroll_Page" value="1"/>
-							<Property key="Scroll_ViewPage" value="1"/>
+							<Property key="RangePosition" value="0"/>
+							<Property key="Page" value="1"/>
+							<Property key="ViewPage" value="1"/>
 							<Property key="MoveToClick" value="true"/>
 						</Widget>
 						<Widget type="TextBox" skin="TextBox" position="180 110 60 24" name="TexSizeVal">
@@ -842,9 +842,9 @@
 						<Widget type="ScrollBar" skin="ScrollBarH" position="248 140 320 18" name="TerMtr">
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 							<Property key="Range" value="4"/>
-							<Property key="Scroll_Position" value="0"/>
-							<Property key="Scroll_Page" value="1"/>
-							<Property key="Scroll_ViewPage" value="1"/>
+							<Property key="RangePosition" value="0"/>
+							<Property key="Page" value="1"/>
+							<Property key="ViewPage" value="1"/>
 							<Property key="MoveToClick" value="true"/>
 						</Widget>
 						<Widget type="TextBox" skin="TextBox" position="180 140 60 24" name="TerMtrVal">
@@ -1204,7 +1204,7 @@
 					<Property key="ReadOnly" value="true"/>
 					<Property key="TextColour" value="0.6 0.8 1"/>
 				</Widget>
-				<Widget type="Tab" skin="Tab" position="16 15 744 460">
+				<Widget type="TabControl" skin="TabControl" position="16 15 744 460">
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 					<Property key="ButtonAutoWidth" value="false"/>
 					<Property key="Colour" value="0.73 0.88 1"/>
@@ -1222,11 +1222,11 @@
 							<Property key="Caption" value="#{SpeedUnit}"/>
 							<Property key="TextColour" value="0.8 0.9 1.0"/>
 						</Widget>
-						<Widget type="Button" skin="RadioBox" position="360 52 80 32" name="kmh">
+						<Widget type="Button" skin="RadioButton" position="360 52 80 32" name="kmh">
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 							<Property key="Caption" value="#{UnitKmh}"/>
 						</Widget>
-						<Widget type="Button" skin="RadioBox" position="440 52 80 32" name="mph">
+						<Widget type="Button" skin="RadioButton" position="440 52 80 32" name="mph">
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 							<Property key="Caption" value="#{UnitMph}"/>
 						</Widget>
@@ -1394,7 +1394,7 @@
 			<Widget type="TabItem" skin="" position="4 26 787 531" name="InputTabAll">
 				<UserString key="RelativeTo" value="OptionsWnd"/>
 				<Property key="Caption" value="#{Input}"/>
-				<Widget type="Tab" skin="Tab" position="16 15 504 490" name="InputTab">
+				<Widget type="TabControl" skin="TabControl" position="16 15 504 490" name="InputTab">
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 					<Property key="ButtonAutoWidth" value="false"/>
 					<Property key="Colour" value="0.73 0.88 1"/>
@@ -1432,7 +1432,7 @@
 					<Property key="TextColour" value="0.6 0.8 1.0"/>
 					<Property key="Caption" value="#{InputMinVal}"/>
 				</Widget>
-				<Widget type="Edit" skin="Edit" position="548 239 80 20" name="InputMin">
+				<Widget type="EditBox" skin="EditBox" position="548 239 80 20" name="InputMin">
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 					<Property key="TextColour" value="0.6 0.8 1"/>
 					<Property key="Colour" value="0.6 0.8 1"/>
@@ -1442,7 +1442,7 @@
 					<Property key="TextColour" value="1.0 0.7 0.5"/>
 					<Property key="Caption" value="#{InputMaxVal}"/>
 				</Widget>
-				<Widget type="Edit" skin="Edit" position="548 294 80 20" name="InputMax">
+				<Widget type="EditBox" skin="EditBox" position="548 294 80 20" name="InputMax">
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 					<Property key="TextColour" value="1 0.7 0.4"/>
 					<Property key="Colour" value="1 0.7 0.4"/>
@@ -1452,7 +1452,7 @@
 					<Property key="TextColour" value="0.8 0.8 1.0"/>
 					<Property key="Caption" value="#{InputMultiplier}"/>
 				</Widget>
-				<Widget type="Edit" skin="Edit" position="548 349 80 20" name="InputMul">
+				<Widget type="EditBox" skin="EditBox" position="548 349 80 20" name="InputMul">
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 					<Property key="TextColour" value="0.8 0.8 1.0"/>
 					<Property key="Colour" value="0.8 0.8 1.0"/>
@@ -1590,10 +1590,10 @@
 			</Widget>
 		</Widget>
 	</Widget>
-	<Widget type="Widget" skin="Panel" position="200 400 224 56" layer="ToolTip" name="ToolTip">
+	<Widget type="Widget" skin="PanelSkin" position="200 400 224 56" layer="ToolTip" name="ToolTip">
 		<Property key="Alpha" value="0.8"/>
 		<Property key="Colour" value="0.3 0.5 0.9"/>
-		<Widget type="Edit" skin="WordWrapSimple" position="4 4 218 54" align="Stretch">
+		<Widget type="EditBox" skin="WordWrapEmpty" position="4 4 218 54" align="Stretch">
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="TextColour" value="0.9 0.96 1.0"/>
 			<Property key="WordWrap" value="true"/>
@@ -1650,7 +1650,7 @@
 			<Property key="Colour" value="0.6 0.8 1"/>
 			<Property key="Alpha" value="0.6"/>
 		</Widget>
-		<Widget type="Widget" skin="PanelSmall" position="350 4 120 34">
+		<Widget type="Widget" skin="PanelSkin" position="350 4 120 34">
 			<UserString key="RelativeTo" value="OptionsWnd"/>
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="Colour" value="0.9 0.92 1"/>
@@ -1664,7 +1664,7 @@
 				<Property key="FontName" value="font_Vera.24"/>
 			</Widget>
 		</Widget>
-		<Widget type="Widget" skin="PanelSmall" position="500 4 140 34">
+		<Widget type="Widget" skin="PanelSkin" position="500 4 140 34">
 			<UserString key="RelativeTo" value="OptionsWnd"/>
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="Colour" value="0.9 0.96 1.0"/>
@@ -1678,7 +1678,7 @@
 				<Property key="FontName" value="font_Vera.24"/>
 			</Widget>
 		</Widget>
-		<Widget type="Widget" skin="PanelSmall" position="650 4 140 34">
+		<Widget type="Widget" skin="PanelSkin" position="650 4 140 34">
 			<UserString key="RelativeTo" value="OptionsWnd"/>
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="Colour" value="0.8 0.9 1"/>
