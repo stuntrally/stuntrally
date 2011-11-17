@@ -69,7 +69,7 @@ bool CAR::Load(class App* pApp1,
 
 	//load car body graphics
 	if (!LoadInto( carpath+"/"+carname+"/body.joe", bodymodel, error_output))
-		info_output << "No car body model, continuing without one" << std::endl;
+		/*info_output << "No car body model, continuing without one" << std::endl*/;
 
 	//load driver graphics --
 	//if (!LoadInto( driverpath+"/body.joe", drivermodel, error_output))
@@ -77,17 +77,17 @@ bool CAR::Load(class App* pApp1,
 
 	//load car interior graphics
 	if (!LoadInto( carpath+"/"+carname+"/interior.joe", interiormodel, nullout ))
-		info_output << "No car interior model exists, continuing without one" << std::endl;
+		/*info_output << "No car interior model exists, continuing without one" << std::endl*/;
 
 	//load car glass graphics
 	if (!LoadInto( carpath+"/"+carname+"/glass.joe", glassmodel, nullout ))
-		info_output << "No car glass model exists, continuing without one" << std::endl;
+		/*info_output << "No car glass model exists, continuing without one" << std::endl*/;
 
 	//load wheel graphics
 	for (int i = 0; i < 2; i++)  // front pair
 	{
 		if (!LoadInto( carpath+"/"+carname+"/wheel_front.joe", wheelmodelfront, error_output))
-			info_output << "No car wheel_front model, continuing without one" << std::endl;
+			/*info_output << "No car wheel_front model, continuing without one" << std::endl*/;
 
 		//load floating elements
 		std::stringstream nullout;
@@ -96,7 +96,7 @@ bool CAR::Load(class App* pApp1,
 	for (int i = 2; i < 4; i++)  // rear pair
 	{
 		if (!LoadInto( carpath+"/"+carname+"/wheel_rear.joe", wheelmodelrear, error_output))
-			info_output << "No car wheel_rear model, continuing without one" << std::endl;
+			/*info_output << "No car wheel_rear model, continuing without one" << std::endl*/;
 
 		//load floating elements
 		std::stringstream nullout;
@@ -404,7 +404,7 @@ bool CAR::LoadInto(const std::string & joefile, MODEL_JOE03 & output_model,	std:
 		{
 			if (!output_model.Load(joefile, error_output))
 			{
-				error_output << "Error loading model: " << joefile << std::endl;
+				/*error_output << "Error loading model: " << joefile << std::endl;*/
 				return false;
 			}
 		}
