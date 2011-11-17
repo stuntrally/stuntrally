@@ -283,7 +283,6 @@ referenced by material '" + (*it)->getName() + "' not found. Using default gener
 			}
 
 			// shader cache - check if same shader already exists
-			//!todo shader cache performance: cache vertex and fragment shader seperately
 			ShaderProperties* shaderProps = new ShaderProperties( (*it)->mProps, this );
 			
 			bool exists = false;

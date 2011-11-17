@@ -181,7 +181,7 @@ protected:
 	SLV(Trees);  SLV(Grass);  SLV(TreesDist);  SLV(GrassDist);  // paged
 	SLV(Shaders);  SLV(ShadowType);  SLV(ShadowCount);  SLV(ShadowSize);  SLV(ShadowDist);  // shadow
 	SLV(AntiAliasing); // screen
-	void comboTexFilter(CMB), btnShadows(WP), btnTrGrReset(WP);
+	void comboTexFilter(CMB), btnShadows(WP), btnShaders(WP), btnTrGrReset(WP);
 	MyGUI::ButtonPtr bnQuit;  void btnQuit(WP);
 
 	//  tooltip

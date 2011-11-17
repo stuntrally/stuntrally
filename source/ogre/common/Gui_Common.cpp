@@ -167,6 +167,11 @@ void App::slTerMtr(SL)
 //  shadows
 void App::btnShadows(WP){	changeShadows();	}
 
+void App::btnShaders(WP)
+{
+	materialFactory->generate();
+}
+
 void App::slShadowType(SL)
 {
 	int v = val;	if (bGI)  pSet->shadow_type = v;
@@ -247,6 +252,8 @@ void App::GuiInitGraphics()
 	Slv(ShadowSize,	pSet->shadow_size /float(ciShadowNumSizes));
 	Slv(ShadowDist,	powf((pSet->shadow_dist -50.f)/4750.f, 0.5f));
 	Btn("Apply", btnShadows);
+	
+	Btn("ApplyShaders", btnShaders); 
 	
 	Cmb(combo, "CmbGraphicsAll", comboGraphicsAll);
 	if (combo)  {

@@ -77,6 +77,10 @@ private:
 	MaterialGenerator* mGenerator;
 	std::vector<MaterialGenerator*> mCustomGenerators;
 	
+	//!todo more intelligent shader caching
+	/// - only regenerate when shader properties changed, not when e.g. only tex size was changed
+	/// - cache vertex and fragment shader seperately (some materials will have same vertex shader, but different fragment)
+	/// - how about making a hash out of the shader source code, and use this for isEqual comparison?
 	shaderMap mShaderCache;
 	void deleteShaderCache(); // cleanup
 	

@@ -2127,7 +2127,7 @@
 						</Widget>
 						<Widget type="TextBox" skin="TextBox" position="32 110 144 24">
 							<UserString key="RelativeTo" value="OptionsWnd"/>
-							<Property key="Caption" value="#{Size}*"/>
+							<Property key="Caption" value="#{TexSize}"/>
 							<Property key="Colour" value="0 0 0"/>
 							<Property key="TextColour" value="0.6 0.9 0.6"/>
 						</Widget>
@@ -2164,7 +2164,7 @@
 						<Widget type="TextBox" skin="TextBox" position="32 170 144 24">
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 							<Property key="Colour" value="0 0 0"/>
-							<Property key="Caption" value="#{Shaders}*"/>
+							<Property key="Caption" value="#{Shaders}"/>
 							<Property key="TextColour" value="1.0 1.0 0.0"/>
 						</Widget>
 						<Widget type="ScrollBar" skin="ScrollBarH" position="248 170 320 18" name="Shaders">
@@ -2176,6 +2176,11 @@
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 							<Property key="TextColour" value="1.0 1.0 0.1"/>
 						</Widget>
+						<Widget type="Button" skin="Button" position="32 210 200 26" layer="Back" name="ApplyShaders">
+							<UserString key="RelativeTo" value="OptionsWnd"/>
+							<Property key="Caption" value="#{ApplyShaders}"/>
+							<Property key="Colour" value="0.7 0.85 1.0"/>
+						</Widget>	
 					</Widget>
 					<Widget type="TabItem" skin="" position="4 26 735 368">
 						<UserString key="RelativeTo" value="OptionsWnd"/>
