@@ -261,7 +261,7 @@ void App::slTerGenFreq(SL)
 void App::slTerGenOct(SL)
 {
 	if (bGI)  pSet->gen_oct = val;
-	if (valTerGenOct){	Fmt(s, "%d", val);  valTerGenOct->setCaption(s);  }
+	if (valTerGenOct){	Fmt(s, "%lu", val);  valTerGenOct->setCaption(s);  }
 }
 void App::slTerGenPers(SL)
 {
@@ -617,7 +617,7 @@ void App::chkEscQuits(WP wp){		ChkEv(escquit);		}
 void App::slMiniUpd(SL)
 {
 	pSet->mini_skip = val;
-	if (valMiniUpd){	Fmt(s, "%d", val);	valMiniUpd->setCaption(s);  }
+	if (valMiniUpd){	Fmt(s, "%lu", val);	valMiniUpd->setCaption(s);  }
 }
 
 void App::slSizeRoadP(SL)
@@ -643,7 +643,7 @@ void App::slCamSpeed(SL)
 void App::slTerUpd(SL)
 {
 	pSet->ter_skip = val;
-	if (valTerUpd){	Fmt(s, "%d", val);	valTerUpd->setCaption(s);  }
+	if (valTerUpd){	Fmt(s, "%lu", val);	valTerUpd->setCaption(s);  }
 }
 
 void App::slSizeMinmap(SL)
