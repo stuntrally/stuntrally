@@ -87,6 +87,12 @@ void App::postInit()
 {
 	materialFactory = new MaterialFactory();
 	materialFactory->pApp = this;
+	materialFactory->setShadows(pSet->shadow_type >= 2);
+	materialFactory->setShadowsDepth(pSet->shadow_type == 3);
+	if (pSet->tex_size == 0)
+		materialFactory->setTexSize(0);
+	else if (pSet->tex_size == 1)
+		materialFactory->setTexSize(4096);
 }
 
 const Ogre::String App::csBrShape[BRS_ALL] = { "Triangle", "Sinus", "Noise" };  // static

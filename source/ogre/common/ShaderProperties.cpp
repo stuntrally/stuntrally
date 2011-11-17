@@ -35,7 +35,7 @@ ShaderProperties::ShaderProperties( MaterialProperties* props, MaterialFactory* 
 			||  (props->receivesDepthShadows && parent->getShadowsDepth())
 			  ) && props->shadowPriority <= parent->getShaderQuality();
 	lightingAlpha = (props->lightingAlpha != Vector4::ZERO);
-	wind = props->wind && (parent->getShaderQuality() > 0.1);
+	wind = (parent->getShaderQuality() > 0.1) ? props->wind : 0;
 	customGenerator = props->customGenerator;
 	vertexColour = props->vertexColour;
 }

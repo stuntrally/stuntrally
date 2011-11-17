@@ -2,6 +2,7 @@
 #include "../Defines.h"
 #include "../../road/Road.h"
 #include "../../vdrift/pathmanager.h"
+#include "MaterialFactory.h"
 #ifndef ROAD_EDITOR
 	#include "../../vdrift/game.h"
 	#include "../OgreGame.h"
@@ -143,6 +144,12 @@ void App::slTexSize(SL)
 	if (valTexSize)
 	{	if (v == 0)  valTexSize->setCaption("Small");  else
 		if (v == 1)  valTexSize->setCaption("Big");  }
+	
+	if (!materialFactory) return;
+	if (v == 0)
+		materialFactory->setTexSize(0); // lowest
+	else if (v == 1)
+		materialFactory->setTexSize(4096); // highest
 }
 
 void App::slTerMtr(SL)

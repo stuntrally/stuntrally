@@ -801,6 +801,8 @@ void MaterialGenerator::generateVertexProgramSource(Ogre::StringUtil::StrStreamT
 	}
 	outStream <<
 	"} \n";
+	
+	if (mDef->getName() == "3D-Diggers/fir02") LogO(outStream.str());
 }
 
 //----------------------------------------------------------------------------------------
