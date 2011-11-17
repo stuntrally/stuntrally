@@ -859,7 +859,7 @@
 						</Widget>
 						<Widget type="ScrollBar" skin="ScrollBarH" position="248 170 320 18" name="Shaders">
 							<UserString key="RelativeTo" value="OptionsWnd"/>
-							<Property key="Range" value="2"/>
+							<Property key="Range" value="1000001"/>
 							<Property key="MoveToClick" value="true"/>
 						</Widget>
 						<Widget type="TextBox" skin="TextBox" position="180 170 60 24" name="ShadersVal">

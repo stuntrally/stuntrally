@@ -131,11 +131,16 @@ void App::chkUseImposters(WP wp)
 }
 void App::slShaders(SL)
 {
-	int v = val;  if (bGI)  pSet->shaders = v;
+	float v = val/res;  if (bGI)  pSet->shaders = v;
 	if (valShaders)
-	{	if (v == 0)  valShaders->setCaption("Vertex");  else
-		if (v == 1)  valShaders->setCaption("Pixel");  else
-		if (v == 2)  valShaders->setCaption("Metal");  }
+	{	valShaders->setCaption("Very low");
+		if (v > 0.2)  valShaders->setCaption("Low");
+		if (v > 0.4) valShaders->setCaption("Medium");
+		if (v > 0.6)  valShaders->setCaption("High");
+		if (v > 0.8)  valShaders->setCaption("Ultra");
+	}
+		
+	if (materialFactory) materialFactory->setShaderQuality(v);
 }
 
 void App::slTexSize(SL)
@@ -218,7 +223,7 @@ void App::GuiInitGraphics()
 	//  textures
 	Cmb(combo, "TexFiltering", comboTexFilter);
 	Slv(Anisotropy,	pSet->anisotropy /res);
-	Slv(Shaders,	pSet->shaders /res);
+	Slv(Shaders,	pSet->shaders);
 	Slv(TexSize,	pSet->tex_size /res);
 	Slv(TerMtr,		pSet->ter_mtr /res);
 
@@ -688,19 +693,19 @@ void App::comboGraphicsAll(ComboBoxPtr cmb, size_t val)
 
 	case 1:  // Low  -------------
 		s.anisotropy = 0;  s.view_distance = 1500;  s.terdetail = 1.7f;  s.terdist = 40.f;  s.road_dist = 1.8;
-		s.tex_size = 0;  s.ter_mtr = 1;  s.shaders = 0;
+		s.tex_size = 0;  s.ter_mtr = 1;  s.shaders = 25;
 		s.shadow_type = 0;/*1*/  s.shadow_size = 0;  s.shadow_count = 3;  s.shadow_dist = 1000;
 		s.trees = 0.f;  s.grass = 0.f;  s.trees_dist = 1.f;  s.grass_dist = 1.f;	break;
 
 	case 2:  // Medium  -------------
 		s.anisotropy = 4;  s.view_distance = 2500;  s.terdetail = 1.5f;  s.terdist = 80.f;  s.road_dist = 1.6;
-		s.tex_size = 1;  s.ter_mtr = 1;  s.shaders = 1;
+		s.tex_size = 1;  s.ter_mtr = 1;  s.shaders = 0.5;
 		s.shadow_type = 2;/*1*/  s.shadow_size = 1;  s.shadow_count = 3;  s.shadow_dist = 3000;
 		s.trees = 0.5f;  s.grass = 0.f;  s.trees_dist = 1.f;  s.grass_dist = 1.f;	break;
 
 	case 3:  // High  -------------
 		s.anisotropy = 8;  s.view_distance = 6000;  s.terdetail = 1.3f;  s.terdist = 200.f;  s.road_dist = 1.4;
-		s.tex_size = 1;  s.ter_mtr = 2;  s.shaders = 1;
+		s.tex_size = 1;  s.ter_mtr = 2;  s.shaders = 0.75;
 		s.shadow_type = 2;/*2*/  s.shadow_size = 2;  s.shadow_count = 3;  s.shadow_dist = 3000;
 		s.trees = 1.f;  s.grass = 1.f;  s.trees_dist = 1.f;  s.grass_dist = 1.f;	break;
 
