@@ -307,13 +307,15 @@ void WaterMaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::Str
 		//  water color
 	"	float4 waterClr = lerp(shallowColor, deepColor, facing); \n"
 	"	float4 reflClr = lerp(waterClr, reflection, fresnel); \n"
-	"	float3 clr = clrSUM.rgb * waveSpecular + waterClr.rgb * reflAndWaterAmounts.y + reflClr.rgb * reflAndWaterAmounts.x; \n"
-	"	clr = lerp(clr, fogColor, /*IN.fogVal*/IN.wp.w); \n";
+	"	float3 clr = clrSUM.rgb * waveSpecular + waterClr.rgb * reflAndWaterAmounts.y + reflClr.rgb * reflAndWaterAmounts.x; \n";
+	
 	if (needShadows() || needTerrainLightMap()) outStream <<
-		"	return float4(clr*(0.65 + 0.35*shadowing), waterClr.a+clrSUM.r); \n";
+		"	clr = lerp(clr*(0.7+0.3*shadowing), fogColor, /*IN.fogVal*/IN.wp.w); \n";
 	else outStream <<
-		"	return float4(clr, waterClr.a + clrSUM.r); \n";
+		"	clr = lerp(clr, fogColor, /*IN.fogVal*/IN.wp.w); \n";
+	
 	outStream <<
+		"	return float4(clr, waterClr.a + clrSUM.r); \n"
 	"} \n";
 }
 
