@@ -117,7 +117,7 @@
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 					<Property key="TextColour" value="0.7 0.86 1.0"/>
 				</Widget>
-				<Widget type="EditBox" skin="WordWrap" position="176 367 336 75" name="TrackDesc">
+				<Widget type="EditBox" skin="WordWrapEmpty" position="176 367 336 75" name="TrackDesc">
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 					<Property key="ReadOnly" value="true"/>
 					<Property key="MultiLine" value="true"/>
@@ -209,14 +209,14 @@
 					<Property key="ImageTexture" value="track_icons.png"/>
 					<Property key="ImageCoord" value="0 0 256 32"/>
 				</Widget>
-				<Widget type="Button" skin="ButtonSmall" position="16 7 40 24" name="TrkView1">
+				<Widget type="Button" skin="Button" position="16 7 40 24" name="TrkView1">
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 					<Property key="Caption" value="|"/>
 					<Property key="Alpha" value="0.8"/>
 					<Property key="Colour" value="0.6 0.8 1.0"/>
 					<Property key="TextColour" value="0.45 0.58 0.8"/>
 				</Widget>
-				<Widget type="Button" skin="ButtonSmall" position="64 7 40 24" name="TrkView2">
+				<Widget type="Button" skin="Button" position="64 7 40 24" name="TrkView2">
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 					<Property key="Caption" value="|||"/>
 					<Property key="Alpha" value="0.8"/>
