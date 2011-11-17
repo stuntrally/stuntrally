@@ -12,14 +12,20 @@ using namespace Ogre;
 //----------------------------------------------------------------------------------------
 
 ShaderProperties::ShaderProperties( MaterialProperties* props, MaterialFactory* parent )
-{	
+{
+	// shader quality:
+	//  normal map, env map, shadow receiver [adjustable for each material in .matdef]
+	//  fresnel >= 0.3
+	//  terrain lightmap >= 0.2
+	//  wind >= 0.1
+	
 	transparent = props->transparent;
 	envMap = ((props->envMap != "") && parent->getEnvMap())
 		&& (props->envMapPriority <= parent->getShaderQuality());
-	fresnel = (envMap && props->fresnelScale != 0.f);
+	fresnel = (envMap && props->fresnelScale != 0.f) && (parent->getShaderQuality() >= 0.3);
 	diffuseMap = (props->diffuseMaps.size() > 0);
 	lightMap = (props->lightMaps.size() > 0);
-	terrainLightMap = props->terrainLightMap;
+	terrainLightMap = props->terrainLightMap && (parent->getShaderQuality() >= 0.2);
 	alphaMap = (transparent && (props->alphaMaps.size() > 0));
 	blendMap = (props->blendMaps.size() > 0);
 	normalMap = ((props->normalMaps.size() > 0) && parent->getNormalMap())
@@ -29,7 +35,7 @@ ShaderProperties::ShaderProperties( MaterialProperties* props, MaterialFactory* 
 			||  (props->receivesDepthShadows && parent->getShadowsDepth())
 			  ) && props->shadowPriority <= parent->getShaderQuality();
 	lightingAlpha = (props->lightingAlpha != Vector4::ZERO);
-	wind = props->wind;
+	wind = props->wind && (parent->getShaderQuality() > 0.1);
 	customGenerator = props->customGenerator;
 	vertexColour = props->vertexColour;
 }
