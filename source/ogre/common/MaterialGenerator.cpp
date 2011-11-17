@@ -713,7 +713,7 @@ void MaterialGenerator::generateVertexProgramSource(Ogre::StringUtil::StrStreamT
 		"	float radiusCoeff = windParams.x; \n"
 		"	float heightCoeff = windParams.y; \n"
 		"	float factorX = windParams.z; \n"
-		"	float factorY = windParams.w; \n"
+		"	float factorY = windParams.w; \n";
 		/* 
 		2 different methods are used to for the sin calculation :
 		- the first one gives a better effect but at the cost of a few fps because of the 2 sines
@@ -721,15 +721,16 @@ void MaterialGenerator::generateVertexProgramSource(Ogre::StringUtil::StrStreamT
 
 			a sin approximation could be use to optimize performances
 		*/
-#if 0
-		"	position.y += sin(time + originPos.z + position.y + position.x) * radiusCoeff * radiusCoeff * factorY; \n"
-		"	position.x += sin(time + originPos.z ) * heightCoeff * heightCoeff * factorX ; \n"
-#else
-		"	float sinval = sin(time + originPos.z ); \n"
-		"	position.y += sinval * radiusCoeff * radiusCoeff * factorY; \n"
-		"	position.x += sinval * heightCoeff * heightCoeff * factorX ; \n"
-#endif
-		;
+		
+		// we can safely make permutations depending on "shaderQuality" since it does not change per material.
+		//! might need to revisit this assumption when using more excessive caching (shaders that persist after settings change)
+		if (mParent->getShaderQuality() > 0.6) outStream <<
+			"	position.y += sin(time + originPos.z + position.y + position.x) * radiusCoeff * radiusCoeff * factorY; \n"
+			"	position.x += sin(time + originPos.z ) * heightCoeff * heightCoeff * factorX ; \n";
+		else outStream <<
+			"	float sinval = sin(time + originPos.z ); \n"
+			"	position.y += sinval * radiusCoeff * radiusCoeff * factorY; \n"
+			"	position.x += sinval * heightCoeff * heightCoeff * factorX ; \n";
 	}
 	
 	outStream <<
@@ -801,8 +802,6 @@ void MaterialGenerator::generateVertexProgramSource(Ogre::StringUtil::StrStreamT
 	}
 	outStream <<
 	"} \n";
-	
-	if (mDef->getName() == "3D-Diggers/fir02") LogO(outStream.str());
 }
 
 //----------------------------------------------------------------------------------------

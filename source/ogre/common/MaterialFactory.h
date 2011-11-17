@@ -16,6 +16,8 @@ class App;  class MaterialDefinition;  class MaterialGenerator;  struct ShaderPr
 /// - cache vertex and fragment shader seperately (some materials will have same vertex shader, but different fragment)
 /// - how about making a hash out of the shader source code, and use this for isEqual comparison?
 
+//!todo paged-geom cloned materials don't update immediately (code for recreating those materials)
+
 // std::map< std::pair< vertexShader, pixelShader > , shaderProperties >
 typedef std::map< std::pair< Ogre::HighLevelGpuProgramPtr, Ogre::HighLevelGpuProgramPtr >, ShaderProperties* > shaderMap;
 

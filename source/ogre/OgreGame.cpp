@@ -96,6 +96,7 @@ void App::postInit()
 	materialFactory->pApp = this;
 	materialFactory->setShadows(pSet->shadow_type >= 2);
 	materialFactory->setShadowsDepth(pSet->shadow_type == 3);
+	materialFactory->setShaderQuality(pSet->shaders);
 	if (pSet->tex_size == 0)
 		materialFactory->setTexSize(0);
 	else if (pSet->tex_size == 1)

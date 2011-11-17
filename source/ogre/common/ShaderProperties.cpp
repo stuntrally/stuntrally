@@ -21,7 +21,7 @@ ShaderProperties::ShaderProperties( MaterialProperties* props, MaterialFactory* 
 	
 	transparent = props->transparent;
 	envMap = ((props->envMap != "") && parent->getEnvMap())
-		&& (props->envMapPriority <= parent->getShaderQuality());
+		&& (1-props->envMapPriority <= parent->getShaderQuality());
 	fresnel = (envMap && props->fresnelScale != 0.f) && (parent->getShaderQuality() >= 0.3);
 	diffuseMap = (props->diffuseMaps.size() > 0);
 	lightMap = (props->lightMaps.size() > 0);
@@ -29,11 +29,12 @@ ShaderProperties::ShaderProperties( MaterialProperties* props, MaterialFactory* 
 	alphaMap = (transparent && (props->alphaMaps.size() > 0));
 	blendMap = (props->blendMaps.size() > 0);
 	normalMap = ((props->normalMaps.size() > 0) && parent->getNormalMap())
-		&& (props->normalMapPriority <= parent->getShaderQuality());
+		&& (1-props->normalMapPriority <= parent->getShaderQuality());
 	lighting = props->lighting;
 	shadows = ( (props->receivesShadows && parent->getShadows()) 
 			||  (props->receivesDepthShadows && parent->getShadowsDepth())
-			  ) && props->shadowPriority <= parent->getShaderQuality();
+			  ) && (1-props->shadowPriority <= parent->getShaderQuality());
+	if (!(1-props->shadowPriority <= parent->getShaderQuality())) LogO("SHADOWS OFF, 1-: " + toStr(1-props->shadowPriority) + ", shadQual: " + toStr(parent->getShaderQuality()));
 	lightingAlpha = (props->lightingAlpha != Vector4::ZERO);
 	wind = (parent->getShaderQuality() > 0.1) ? props->wind : 0;
 	customGenerator = props->customGenerator;
