@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION"
 "Report-Msgid-Bugs-To: "
-"POT-Creation-Date: 2011-11-13 16:15+0200"
+"POT-Creation-Date: 2011-11-17 19:22+0200"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>"
 "Language-Team: LANGUAGE <LL@li.org>"
@@ -109,16 +109,12 @@ msgctxt "LS_TRACK"
 msgid "Loading track"
 msgstr ""
 
-msgctxt "MyGUI_MessageBox_Retry"
-msgid "Retry"
+msgctxt "NeedNewGame"
+msgid "* need New Game"
 msgstr ""
 
 msgctxt "InputRoadAngZero"
 msgid "shift-6  - zero angles"
-msgstr ""
-
-msgctxt "RoadQual"
-msgid "Road far quality"
 msgstr ""
 
 msgctxt "LS_SCENE"
@@ -269,6 +265,10 @@ msgctxt "TBPlace"
 msgid "Place"
 msgstr ""
 
+msgctxt "MessageBox_Retry"
+msgid "Retry"
+msgstr ""
+
 msgctxt "TBLast"
 msgid "Last"
 msgstr ""
@@ -331,10 +331,6 @@ msgstr ""
 
 msgctxt "NetGame"
 msgid "Game"
-msgstr ""
-
-msgctxt "MyGUI_MessageBox_No"
-msgid "No"
 msgstr ""
 
 msgctxt "InputRoadNew"
@@ -449,6 +445,10 @@ msgctxt "RearThrottleInverse"
 msgid "Rear throttle inverse"
 msgstr ""
 
+msgctxt "MessageBox_Yes"
+msgid "Yes"
+msgstr ""
+
 msgctxt "BlendMap"
 msgid "Blendmap"
 msgstr ""
@@ -463,10 +463,6 @@ msgstr ""
 
 msgctxt "InputMapBrake"
 msgid "Brake"
-msgstr ""
-
-msgctxt "MyGUI_MessageBox_Abort"
-msgid "Abort"
 msgstr ""
 
 msgctxt "Video"
@@ -489,8 +485,8 @@ msgctxt "InputRoadYaw"
 msgid "- rotate yaw"
 msgstr ""
 
-msgctxt "TipToggleLayer"
-msgid "Turn on/off chosen texture layer."
+msgctxt "MessageBox_Try"
+msgid "Try"
 msgstr ""
 
 msgctxt "TerLHSm"
@@ -509,20 +505,24 @@ msgctxt "ChangeTrack"
 msgid "Change Track"
 msgstr ""
 
-msgctxt "TerrainSize"
-msgid "Terrain size"
+msgctxt "RoadQual"
+msgid "Road far quality"
 msgstr ""
 
 msgctxt "NetServer"
 msgid "Server"
 msgstr ""
 
+msgctxt "TerrainSize"
+msgid "Terrain size"
+msgstr ""
+
 msgctxt "InputRoadWidth"
 msgid "- change road width"
 msgstr ""
 
-msgctxt "InputMapSteering"
-msgid "Steering"
+msgctxt "Replay"
+msgid "Replay"
 msgstr ""
 
 msgctxt "NewDup"
@@ -573,10 +573,6 @@ msgctxt "TipCarsList"
 msgid "Cars list, click to select (and see image). Press [Change car] and then [New Game] to drive with it."
 msgstr ""
 
-msgctxt "MyGUI_MessageBox_Ignore"
-msgid "Ignore"
-msgstr ""
-
 msgctxt "Model"
 msgid "Model"
 msgstr ""
@@ -615,6 +611,10 @@ msgstr ""
 
 msgctxt "InputRoadSelAlt"
 msgid "alt - select all   ctrl - select none"
+msgstr ""
+
+msgctxt "MessageBox_Continue"
+msgid "Continue"
 msgstr ""
 
 msgctxt "InputRoadSel"
@@ -667,10 +667,6 @@ msgstr ""
 
 msgctxt "InputFluidsDel"
 msgid "Del - delete current"
-msgstr ""
-
-msgctxt "NeedNewGame"
-msgid "* need New Game"
 msgstr ""
 
 msgctxt "InputRoadRebuild"
@@ -761,10 +757,6 @@ msgctxt "TipRenameTrk"
 msgid "Rename selected track with new name (change name first)."
 msgstr ""
 
-msgctxt "MyGUI_MessageBox_Try"
-msgid "Try"
-msgstr ""
-
 msgctxt "TipBumpAmp"
 msgid "Amplitude of additional bumps on surface (how high)."
 msgstr ""
@@ -837,8 +829,8 @@ msgctxt "Type"
 msgid "Type"
 msgstr ""
 
-msgctxt "NetWaiting"
-msgid "Waiting..."
+msgctxt "Engine"
+msgid "Engine"
 msgstr ""
 
 msgctxt "MergeLength"
@@ -875,6 +867,10 @@ msgstr ""
 
 msgctxt "NetRefreshList"
 msgid "Get/refresh list"
+msgstr ""
+
+msgctxt "MessageBox_Abort"
+msgid "Abort"
 msgstr ""
 
 msgctxt "ScaleAll"
@@ -931,6 +927,10 @@ msgstr ""
 
 msgctxt "length"
 msgid "length"
+msgstr ""
+
+msgctxt "MessageBox_No"
+msgid "No"
 msgstr ""
 
 msgctxt "ColumnNSides"
@@ -1353,10 +1353,6 @@ msgctxt "InputRoadMove"
 msgid "- move point"
 msgstr ""
 
-msgctxt "Engine"
-msgid "Engine"
-msgstr ""
-
 msgctxt "GrassSway"
 msgid "Grass sway"
 msgstr ""
@@ -1589,6 +1585,10 @@ msgctxt "TipSmokeInt"
 msgid "Smoke particles intensity."
 msgstr ""
 
+msgctxt "MessageBox_Ignore"
+msgid "Ignore"
+msgstr ""
+
 msgctxt "TerrainBrush"
 msgid "Terrain brush"
 msgstr ""
@@ -1737,6 +1737,10 @@ msgctxt "InputSlowFast"
 msgid "shift - slow   ctrl - fast"
 msgstr ""
 
+msgctxt "MessageBox_Cancel"
+msgid "Cancel"
+msgstr ""
+
 msgctxt "GrassMult"
 msgid "Grass mul"
 msgstr ""
@@ -1877,10 +1881,6 @@ msgctxt "AntiAliasing"
 msgid "Antialiasing"
 msgstr ""
 
-msgctxt "MyGUI_MessageBox_Continue"
-msgid "Continue"
-msgstr ""
-
 msgctxt "Tools"
 msgid "Tools"
 msgstr ""
@@ -1899,6 +1899,10 @@ msgstr ""
 
 msgctxt "FrictionTread"
 msgid "FrictionTread"
+msgstr ""
+
+msgctxt "TipToggleLayer"
+msgid "Turn on/off chosen texture layer."
 msgstr ""
 
 msgctxt "TipTrkListEditor"
@@ -2057,6 +2061,10 @@ msgctxt "TipVegetModels"
 msgid "Models (meshes) for vegetation. Found in data/trees/."
 msgstr ""
 
+msgctxt "CheckArrow"
+msgid "Checkpoint Arrow"
+msgstr ""
+
 msgctxt "Sun"
 msgid "Sun"
 msgstr ""
@@ -2173,8 +2181,8 @@ msgctxt "page"
 msgid "page"
 msgstr ""
 
-msgctxt "Replay"
-msgid "Replay"
+msgctxt "InputMapSteering"
+msgid "Steering"
 msgstr ""
 
 msgctxt "InputDetailsFor"
@@ -2197,6 +2205,10 @@ msgctxt "No"
 msgid "No"
 msgstr ""
 
+msgctxt "MessageBox_Ok"
+msgid "Ok"
+msgstr ""
+
 msgctxt "RplSave"
 msgid "Save"
 msgstr ""
@@ -2211,10 +2223,6 @@ msgstr ""
 
 msgctxt "GraphicsAll_High"
 msgid "High"
-msgstr ""
-
-msgctxt "MyGUI_MessageBox_Cancel"
-msgid "Cancel"
 msgstr ""
 
 msgctxt "TipNewTer"
@@ -2275,10 +2283,6 @@ msgstr ""
 
 msgctxt "TipTerLHSm"
 msgid "Height smooth range (transition)."
-msgstr ""
-
-msgctxt "MyGUI_MessageBox_Ok"
-msgid "Ok"
 msgstr ""
 
 msgctxt "TipRainSnowInt"
@@ -2385,8 +2389,8 @@ msgctxt "TipSurfType"
 msgid "Type of surface, determines sound."
 msgstr ""
 
-msgctxt "CheckArrow"
-msgid "Checkpoint Arrow"
+msgctxt "NetWaiting"
+msgid "Waiting..."
 msgstr ""
 
 msgctxt "Reverse"
@@ -2451,10 +2455,6 @@ msgstr ""
 
 msgctxt "InputNextOptTab"
 msgid "F2,F3 - prev,next Options tab"
-msgstr ""
-
-msgctxt "MyGUI_MessageBox_Yes"
-msgid "Yes"
 msgstr ""
 
 msgctxt "RplAll"

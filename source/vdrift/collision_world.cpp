@@ -476,6 +476,7 @@ void COLLISION_WORLD::Clear()
 	for(int i = 0; i < constraints.size(); i++)
 	{
 		world->removeConstraint(constraints[i]);
+		delete constraints[i];
 	}
 	constraints.resize(0);
 	

@@ -10,6 +10,7 @@
 	alphaRejectValue = 128
 	cullHardware = none
 	terrainLightMap = true
+	wind = 2
 
 [gum_bark]
 	diffuseMap_512 = gum_bark.png
@@ -18,6 +19,7 @@
 	specular = 0.12 0.12 0.12 30.75
 	receivesDepthShadows = true
 	terrainLightMap = true
+	wind = 2
 
 ; --------- 3D-diggers plants ---------
 
@@ -50,10 +52,12 @@
 	ambient = 0.3 0.3 0.3
 	diffuse = 0.65 0.65 0.65
 	specular = 0.5 0.5 0.5 1 32
+	wind = 2
 
 [3D-Diggers/farn02]
 	parent = 3D-Diggers/farn01
 	diffuseMap_256 = farn02.png
+	wind = 2
 
 [3D-Diggers/fir01]
 	ambient = 0.5 0.5 0.5
@@ -63,6 +67,7 @@
 	transparent = true
 	diffuseMap_512 = fir01.png
 	terrainLightMap = true
+	wind = 2
 
 [3D-Diggers/firW1]
 	ambient = 0.5 0.5 0.5
@@ -72,6 +77,7 @@
 	transparent = true
 	diffuseMap_512 = fir01w.png
 	terrainLightMap = true
+	wind = 2
 
 [3D-Diggers/fir02]
 	ambient = 0.5 0.5 0.5
@@ -79,6 +85,7 @@
 	diffuseMap_512 = fir02.jpg
 	receivesDepthShadows = true
 	terrainLightMap = true
+	wind = 2
 
 [3D-Diggers/firW2]
 	ambient = 0.5 0.5 0.5
@@ -86,6 +93,7 @@
 	diffuseMap_512 = fir02w.jpg
 	receivesDepthShadows = true
 	terrainLightMap = true
+	wind = 2
 
 [3D-Diggers/shroom1]
 	parent = 3D-Diggers/base
@@ -108,6 +116,7 @@
 	specular = 0.3 0.3 0.3 21
 	transparent = true
 	terrainLightMap = true
+	wind = 2
 
 ; --------- rocks (self shadowed) -----------------
 
@@ -139,6 +148,7 @@
 	diffuseMap_512 = tree.07.png
 	transparent = true
 	terrainLightMap = true
+	wind = 2
 
 [tree.07.leaves.mat/ALPHA/TEX/tree.07.png/VertCol/TWOSIDE]
 	parent = tree.07.branch1.mat/ALPHA/TEX/tree.07.png/VertCol/TWOSIDE
@@ -150,6 +160,7 @@
 	diffuseMap_512 = tree.07.png
 	receivesDepthShadows = true
 	terrainLightMap = true
+	wind = 2
 
 [leaves.09.mat/ALPHA/TEX/tree.09.png/VertCol/TWOSIDE]
 	ambient = 0.5 0.5 0.5
@@ -160,6 +171,7 @@
 	diffuseMap_512 = tree.09.png
 	transparent = true
 	terrainLightMap = true
+	wind = 2
 
 [tree.09.mat/ALPHA/TEX/tree.09.png/VertCol/TWOSIDE]
 	parent = leaves.09.mat/ALPHA/TEX/tree.09.png/VertCol/TWOSIDE
@@ -174,4 +186,5 @@
 	diffuseMap_512 = tree.09.png
 	receivesDepthShadows = true
 	terrainLightMap = true
+	wind = 2
 

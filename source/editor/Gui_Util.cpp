@@ -16,10 +16,10 @@ void App::SetGuiFromXmls()
 	if (!mWndOpts)  return;
 	bGI = false;
 	// set slider value, upd text
-	HScrollPtr sl;  size_t v;
+	ScrollBar* sl;  size_t v;
 
 	#define Slv(name, val)  \
-		sl = (HScrollPtr)mWndOpts->findWidget(#name);  \
+		sl = (ScrollBar*)mWndOpts->findWidget(#name);  \
 		v = val*res;  if (sl)  sl->setScrollPosition(v);  sl##name(sl, v);
 	
 	#define Ed(name, val)  ed##name->setCaption(toStr(val));
@@ -365,7 +365,7 @@ void App::btnTrackDel(WP)
 	Message* message = Message::createMessageBox(
 		"Message", bListTrackU==0 ? "Delete original Track ?" : "Delete Track ?", sListTrack,
 		MessageBoxStyle::IconQuest | MessageBoxStyle::Yes | MessageBoxStyle::No);
-	message->eventMessageBoxResult = newDelegate(this, &App::msgTrackDel);
+	message->eventMessageBoxResult += newDelegate(this, &App::msgTrackDel);
 	//message->setUserString("FileName", fileName);
 }
 void App::msgTrackDel(Message* sender, MessageBoxStyle result)

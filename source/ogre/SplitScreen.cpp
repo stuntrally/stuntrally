@@ -199,10 +199,12 @@ void SplitScreenManager::preViewportUpdate(const Ogre::RenderTargetViewportEvent
 	{
 		// 3d scene viewport
 		//  get number of viewport
+		bool hudVp = false;
 		std::list<Ogre::Viewport*>::iterator vpIt = mViewports.begin();
 		std::list<Ogre::Viewport*>::iterator hudVpIt = mHUDViewports.begin();
 		int i = 0;
 		while (evt.source != *vpIt && evt.source != *hudVpIt)	{	i++;  vpIt++; hudVpIt++;	}
+		if (evt.source == *hudVpIt) hudVp = true;
 
 		//  get car for this viewport
 		int carId = 0;
@@ -235,6 +237,8 @@ void SplitScreenManager::preViewportUpdate(const Ogre::RenderTargetViewportEvent
 			//LogO("VP car "+toStr(carId)+" "+toStr(i));
 			//pApp->UpdateHUD( carId, NULL, NULL, 1.0f / mWindow->getLastFPS(), evt.source );
 		}
+		
+		if (hudVp) return;
 
 
 		///  Set skybox pos to camera  - TODO: fix, sky is center only for last player ...

@@ -101,7 +101,7 @@ void CarReflection::Create()
 	// Iterate through our materials and add an index to ReflectionCube texture reference
 	for (int i=0; i < NumMaterials; i++)
 	{
-		MaterialPtr mtr = (MaterialPtr)MaterialManager::getSingleton().getByName(sMtr[i]);
+		MaterialPtr mtr = MaterialManager::getSingleton().getByName(sMtr[i]);
 		if (!mtr.isNull())
 		{	Material::TechniqueIterator techIt = mtr->getTechniqueIterator();
 			while (techIt.hasMoreElements())

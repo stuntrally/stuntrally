@@ -6,25 +6,51 @@
 #include "MaterialGenerator.h"
 #include "GlassMaterial.h"
 #include "PipeGlassMaterial.h"
-//#include "WaterMaterial.h"
+#include "ArrowMaterial.h"
+#include "WaterMaterial.h"
 #include "ShaderProperties.h"
 
 #ifndef ROAD_EDITOR
 	#include "../OgreGame.h"
 #endif
+#include "../QTimer.h"
 
 #include <OgreConfigFile.h>
 #include <OgreResourceGroupManager.h>
 #include <OgreStringConverter.h>
 #include <OgreResourceGroupManager.h>
+#include <OgreMaterial.h>
+#include <OgreMaterialManager.h>
+#include <OgreTechnique.h>
+#include <OgrePass.h>
 using namespace Ogre;
-#include "../QTimer.h"
+
+// use shader cache
+// if you disable it, startup time will be A LOT longer...
+// so the only reason you would disable this is to trace down a bug
+#define USE_CACHE
+
+//----------------------------------------------------------------------------------------
+
+template<> MaterialFactory* Ogre::Singleton<MaterialFactory>::ms_Singleton = 0;
+MaterialFactory* MaterialFactory::getSingletonPtr(void)
+{
+    return ms_Singleton;
+}
+MaterialFactory& MaterialFactory::getSingleton(void)
+{  
+    assert( ms_Singleton );  return ( *ms_Singleton );  
+}
+
+//----------------------------------------------------------------------------------------
 
 MaterialFactory::MaterialFactory() : 
 	bShaders(1), bNormalMap(1), bEnvMap(1), bShadows(1), bShadowsDepth(1),
 	iTexSize(4096), iNumShadowTex(3),
 	bSettingsChanged(1) // always have to generate at start
-{	
+{
+	QTimer ti;  ti.update(); /// time
+	
 	// find all files with *.matdef extension in all resource groups
 	StringVector resourceGroups = ResourceGroupManager::getSingleton().getResourceGroups();
 	for (StringVector::iterator it = resourceGroups.begin();
@@ -53,9 +79,17 @@ MaterialFactory::MaterialFactory() :
 	pipeglass->mParent = this;
 	mCustomGenerators.push_back(pipeglass);
 	
-	//MaterialGenerator* water = static_cast<MaterialGenerator*>(new WaterMaterialGenerator());
-	//water->mParent = this;
-	//mCustomGenerators.push_back(water);
+	MaterialGenerator* arrow = static_cast<MaterialGenerator*>(new ArrowMaterialGenerator());
+	arrow->mParent = this;
+	mCustomGenerators.push_back(arrow);
+	
+	MaterialGenerator* water = static_cast<MaterialGenerator*>(new WaterMaterialGenerator());
+	water->mParent = this;
+	mCustomGenerators.push_back(water);
+	
+	ti.update(); /// time
+	float dt = ti.dt * 1000.f;
+	LogO(String("::: Time loading material definitions: ") + toStr(dt) + " ms");
 }
 
 //----------------------------------------------------------------------------------------
@@ -83,6 +117,22 @@ void MaterialFactory::deleteShaderCache()
 		delete (*it).second;
 	
 	mShaderCache.clear();
+}
+
+//----------------------------------------------------------------------------------------
+
+void MaterialFactory::setFog(bool fog)
+{
+	for (std::vector<std::string>::iterator it=fogMtrs.begin();
+		it != fogMtrs.end(); ++it)
+	{
+		MaterialPtr mat = MaterialManager::getSingleton().getByName( (*it) );
+		if (mat->getTechnique(0)->getPass(0)->hasVertexProgram())
+		{
+			GpuProgramParametersSharedPtr vparams = mat->getTechnique(0)->getPass(0)->getVertexProgramParameters();
+			vparams->setNamedConstant("enableFog", fog ? Real(1.0) : Real(0.0));
+		}
+	}
 }
 
 //----------------------------------------------------------------------------------------
@@ -196,7 +246,9 @@ void MaterialFactory::generate()
 		
 		deleteShaderCache();
 		splitMtrs.clear();
+		fogMtrs.clear();
 		terrainLightMapMtrs.clear();
+		timeMtrs.clear();
 		
 		for (std::vector<MaterialDefinition*>::iterator it=mDefinitions.begin();
 			it!=mDefinitions.end(); ++it)
@@ -231,6 +283,7 @@ referenced by material '" + (*it)->getName() + "' not found. Using default gener
 			}
 
 			// shader cache - check if same shader already exists
+			//!todo shader cache performance: cache vertex and fragment shader seperately
 			ShaderProperties* shaderProps = new ShaderProperties( (*it)->mProps, this );
 			
 			bool exists = false;
@@ -253,12 +306,13 @@ referenced by material '" + (*it)->getName() + "' not found. Using default gener
 				generator->mVertexProgram = sit->first.first;
 				generator->mFragmentProgram = sit->first.second;
 			}
-			
+						
 			generator->mDef = (*it);
 			generator->mShader = shaderProps;
 			generator->generate();
 			
 			// insert into cache
+			#ifdef USE_CACHE
 			if (!exists)
 			{
 				if (!generator->mVertexProgram.isNull() && !generator->mFragmentProgram.isNull()) 
@@ -266,6 +320,9 @@ referenced by material '" + (*it)->getName() + "' not found. Using default gener
 			}
 			else
 				delete shaderProps;
+			#else
+			delete shaderProps;
+			#endif
 		}
 		
 		bSettingsChanged = false;
@@ -286,3 +343,28 @@ referenced by material '" + (*it)->getName() + "' not found. Using default gener
 
 //----------------------------------------------------------------------------------------
 
+void MaterialFactory::update()
+{
+	for (std::vector<std::string>::const_iterator it = timeMtrs.begin();
+		it != timeMtrs.end(); ++it)
+	{
+		MaterialPtr mtr = MaterialManager::getSingleton().getByName( (*it) );
+		
+		if (!mtr.isNull())
+		{	Material::TechniqueIterator techIt = mtr->getTechniqueIterator();
+			while (techIt.hasMoreElements())
+			{	Technique* tech = techIt.getNext();
+				Technique::PassIterator passIt = tech->getPassIterator();
+				while (passIt.hasMoreElements())
+				{	Pass* pass = passIt.getNext();
+					
+					// time
+					if (pass->hasFragmentProgram() && pass->getFragmentProgramParameters()->_findNamedConstantDefinition("time"))
+						pass->getFragmentProgramParameters()->setNamedConstantFromTime( "time", 1 );
+				}
+			}	
+		}	
+	}
+}
+
+//----------------------------------------------------------------------------------------

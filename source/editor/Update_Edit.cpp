@@ -5,6 +5,7 @@
 #include "../paged-geom/PagedGeometry.h"
 #include "../ogre/common/Gui_Def.h"
 #include "../ogre/common/MultiList2.h"
+#include "../ogre/common/MaterialFactory.h"
 using namespace Ogre;
 
 
@@ -476,7 +477,7 @@ bool App::frameEnded(const FrameEvent& evt)
 	///  input event queues  ------------------------------------
 	for (int i=0; i < i_cmdKeyRel; ++i)
 	{	const CmdKey& k = cmdKeyRel[i];
-		mGUI->injectKeyRelease(MyGUI::KeyCode::Enum(k.key));  }
+		MyGUI::InputManager::getInstance().injectKeyRelease(MyGUI::KeyCode::Enum(k.key));  }
 	i_cmdKeyRel = 0;
 
 	for (int i=0; i < i_cmdKeyPress; ++i)
@@ -486,12 +487,12 @@ bool App::frameEnded(const FrameEvent& evt)
 
 	for (int i=0; i < i_cmdMouseMove; ++i)
 	{	const CmdMouseMove& c = cmdMouseMove[i];
-		mGUI->injectMouseMove(c.ms.X.abs, c.ms.Y.abs, c.ms.Z.abs);  }
+		MyGUI::InputManager::getInstance().injectMouseMove(c.ms.X.abs, c.ms.Y.abs, c.ms.Z.abs);  }
 	i_cmdMouseMove = 0;
 
 	for (int i=0; i < i_cmdMousePress; ++i)
 	{	const CmdMouseBtn& b = cmdMousePress[i];
-		mGUI->injectMousePress(b.ms.X.abs, b.ms.Y.abs, MyGUI::MouseButton::Enum(b.btn));
+		MyGUI::InputManager::getInstance().injectMousePress(b.ms.X.abs, b.ms.Y.abs, MyGUI::MouseButton::Enum(b.btn));
 #if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
 		SetCursor(0);
 		ShowCursor(0); 
@@ -502,7 +503,7 @@ bool App::frameEnded(const FrameEvent& evt)
 
 	for (int i=0; i < i_cmdMouseRel; ++i)
 	{	const CmdMouseBtn& b = cmdMouseRel[i];
-		mGUI->injectMouseRelease(b.ms.X.abs, b.ms.Y.abs, MyGUI::MouseButton::Enum(b.btn));  }
+		MyGUI::InputManager::getInstance().injectMouseRelease(b.ms.X.abs, b.ms.Y.abs, MyGUI::MouseButton::Enum(b.btn));  }
 	i_cmdMouseRel = 0;
 	
 
@@ -613,6 +614,8 @@ bool App::frameStarted(const Ogre::FrameEvent& evt)
 
 		ResizeOptWnd();
 		//bSizeHUD = true;
+		SizeGUI();
+		updTrkListDim();
 		
 		LoadTrack();  // shouldnt be needed but ...
 	}
@@ -624,8 +627,8 @@ bool App::frameStarted(const Ogre::FrameEvent& evt)
 	}
 	
 	///  sort trk list
-	if (trkMList && trkMList->mSortColumnIndex != trkMList->mSortColumnIndexOld
-		|| trkMList->mSortUp != trkMList->mSortUpOld)
+	if (trkMList && (trkMList->mSortColumnIndex != trkMList->mSortColumnIndexOld
+		|| trkMList->mSortUp != trkMList->mSortUpOld))
 	{
 		trkMList->mSortColumnIndexOld = trkMList->mSortColumnIndex;
 		trkMList->mSortUpOld = trkMList->mSortUp;
@@ -634,6 +637,10 @@ bool App::frameStarted(const Ogre::FrameEvent& evt)
 		pSet->tracks_sortup = trkMList->mSortUp;
 		TrackListUpd(false);
 	}
-
+	
+	materialFactory->update();
+	
+	bFirstRenderFrame = false;
+	
 	return true;
 }

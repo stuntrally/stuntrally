@@ -11,11 +11,7 @@ using namespace MyGUI;
 using namespace Ogre;
 
 // MyGUI 3.2 has no Align::Relative
-#if MYGUI_VERSION_MINOR >= 2
-	#define ALIGN Align::Default
-#else
-	#define ALIGN Align::Relative
-#endif
+#define ALIGN Align::Default
 
 
 ///  Gui Init - input tab
@@ -42,11 +38,11 @@ void App::InitInputGui()
 	pGame->info_output << "--------------------------------------  Input devices  END" << std::endl;
 
 	TabItemPtr inpTabAll = mGUI->findWidget<TabItem>("InputTabAll");  if (!inpTabAll)  return;
-	TabPtr inputTab = (TabPtr)inpTabAll->findWidget("InputTab");  if (!inputTab)  return;
+	TabPtr inputTab = mGUI->findWidget<Tab>("InputTab");  if (!inputTab)  return;
 
 
 	///  controller selection combo (for bind name, when more)
-	ComboBoxPtr cmbJoy = (ComboBoxPtr)inpTabAll->findWidget("CmbInputController");
+	ComboBoxPtr cmbJoy = mGUI->findWidget<ComboBox>("CmbInputController");
 	if (cmbJoy)
 	{
 		//joysticks->addItem(TR("#{InputNoJS}"));//-
@@ -55,14 +51,14 @@ void App::InitInputGui()
 		for (int i=0; i < jnum; ++i)
 			cmbJoy->addItem( sys.mJoysticks[i]->getName() );
 
-		cmbJoy->eventComboChangePosition = newDelegate(this, &App::cmbJoystick);
+		cmbJoy->eventComboChangePosition += newDelegate(this, &App::cmbJoystick);
 		if (jnum > 0)  {  cmbJoy->setIndexSelected(0);  cmbJoystick(cmbJoy, 0);  }
 	}
 
 	//  labels that print the last pressed joystick button / last moved axis
-	txtJAxis = (StaticTextPtr)inpTabAll->findWidget("axisOutput");
-	txtJBtn = (StaticTextPtr)inpTabAll->findWidget("buttonOutput");
-	txtInpDetail = (StaticTextPtr)inpTabAll->findWidget("InputDetail");
+	txtJAxis = mGUI->findWidget<StaticText>("axisOutput");
+	txtJBtn = mGUI->findWidget<StaticText>("buttonOutput");
+	txtInpDetail = mGUI->findWidget<StaticText>("InputDetail");
 
 	//  details edits
 	Ed(InputMin, editInput);  Ed(InputMax, editInput);  Ed(InputMul, editInput);
@@ -87,8 +83,19 @@ void App::InitInputGui()
 		const OISB::String& sPlr = (*it).first;
 		TabItemPtr tabitem = inputTab->addItem( TR("#{InputMap" + sPlr + "}") );
 
+		// use for widgets that should have relative size
+		#define setOrigPos(widget) \
+			widget->setUserString("origPosX", toStr(widget->getPosition().left)); \
+			widget->setUserString("origPosY", toStr(widget->getPosition().top)); \
+			widget->setUserString("origSizeX", toStr(widget->getSize().width)); \
+			widget->setUserString("origSizeY", toStr(widget->getSize().height)); \
+			widget->setUserString("RelativeTo", "OptionsWnd");
+
 		#define CreateText(x,y, w,h, name, text)  {  StaticTextPtr txt =  \
 			tabitem->createWidget<StaticText>("StaticText", x,y, w,h, ALIGN, name);  \
+			txt->setUserString("origPosX", toStr(x)); txt->setUserString("origPosY", toStr(y)); \
+			txt->setUserString("origSizeX", toStr(w)); txt->setUserString("origSizeY", toStr(h)); \
+			txt->setUserString("RelativeTo", "OptionsWnd"); \
 			if (txt)  txt->setCaption(text);  }
 		
 		//  button size and columns positon
@@ -142,6 +149,7 @@ void App::InitInputGui()
 			StaticTextPtr desc = tabitem->createWidget<StaticText>("StaticText",
 				x0, y+5, sx+70, sy,  ALIGN,
 				"staticText_" + sAct );
+			setOrigPos(desc);
 			desc->setCaption( TR("#{InputMap" + name + "}") );
 		
 			//  Keyboard binds  --------------------------------
@@ -180,15 +188,17 @@ void App::InitInputGui()
 			ButtonPtr btn1 = tabitem->createWidget<Button>("Button",
 				x1, button2 ? (y + ya*2) : y, sx, sy,  ALIGN,
 				"inputbutton_" + sAct + "_" + sPlr + "_1");
+			setOrigPos(btn1);
 			btn1->setCaption( skey1 );
-			btn1->eventMouseButtonClick = newDelegate(this, &App::inputBindBtnClicked);
+			btn1->eventMouseButtonClick += newDelegate(this, &App::inputBindBtnClicked);
 			
 			if (button2)
 			{	ButtonPtr btn2 = tabitem->createWidget<Button>("Button",
 					x1, y, sx, sy,  ALIGN,
 					"inputbutton_" + sAct + "_" + sPlr + "_2");
 				btn2->setCaption( skey2 );
-				btn2->eventMouseButtonClick = MyGUI::newDelegate(this, &App::inputBindBtnClicked);
+				setOrigPos(btn2);
+				btn2->eventMouseButtonClick += MyGUI::newDelegate(this, &App::inputBindBtnClicked);
 			}
 			
 			//  value bar  --------------
@@ -197,6 +207,7 @@ void App::InitInputGui()
 				StaticImagePtr bar = tabitem->createWidget<StaticImage>("StaticImage",
 					x2 + (button2 ? 0 : 64), y+4, button2 ? 128 : 64, 16, ALIGN,
 					"bar_" + sAct + "_" + sPlr);
+				setOrigPos(bar);
 				bar->setImageTexture("input_bar.png");  bar->setImageCoord(IntCoord(0,0,128,16));
 			}
 
@@ -205,9 +216,10 @@ void App::InitInputGui()
 			{	btn1 = tabitem->createWidget<Button>("Button",
 					x3, y, 32, sy,  ALIGN,
 					"inputdetail_" + sAct + "_" + sPlr + "_1");
+				setOrigPos(btn1);
 				btn1->setCaption(">");
 				btn1->setColour(Colour(0.6f,0.8f,1.0f));
-				btn1->eventMouseButtonClick = newDelegate(this, &App::inputDetailBtn);
+				btn1->eventMouseButtonClick += newDelegate(this, &App::inputDetailBtn);
 			}
 		}
 	}
@@ -413,7 +425,7 @@ void App::UpdateInputBars()
 			if (oneAxis && act->getName() == "Brake")  val = valBr;
 				
 			std::string sBar = "bar_" + sAct + "_" + sPlr;
-			StaticImagePtr bar = (StaticImagePtr)inputTab->findWidget(sBar);
+			StaticImagePtr bar = mGUI->findWidget<StaticImage>(sBar, false);
 			if (bar)
 			{	const int wf = 128, w = 256;  int v = -val * 128, vf = -val * 64, s=512, s0=s/2;
 				if (full)	bar->setImageCoord(IntCoord(std::max(0, std::min(s-wf, vf + s0 -wf/2)), 0, wf, 16));
@@ -462,8 +474,7 @@ bool App::buttonReleased( const OIS::JoyStickEvent &e, int button )
 	return true;
 }
 
-void App::cmbJoystick(Widget* sender, size_t val)
+void App::cmbJoystick(CMB)
 {
-		ComboBoxPtr cmb = (ComboBoxPtr)sender;
-	joyName = cmb->getItemNameAt(val);
+	joyName = wp->getItemNameAt(val);
 }

@@ -5,6 +5,7 @@
 #include "../road/Road.h"
 #include "../vdrift/game.h"
 #include "../paged-geom/PagedGeometry.h"
+#include "../ogre/common/MaterialFactory.h"
 
 #include <OgreParticleSystem.h>
 #include <OgreManualObject.h>
@@ -64,8 +65,9 @@ bool App::frameStart(Real time)
 
 	if (bWindowResized)
 	{	bWindowResized = false;
-
 		ResizeOptWnd();
+		SizeGUI();
+		updTrkListDim();
 		bSizeHUD = true;
 	}
 		
@@ -80,7 +82,6 @@ bool App::frameStart(Real time)
 		pSet->tracks_sortup = trkMList->mSortUp;
 		TrackListUpd(false);
 	}
-
 
 	if (bLoading)
 	{
@@ -269,6 +270,10 @@ bool App::frameStart(Real time)
 				{	 pr->setSpeedFactor(0.f);	 pr2->setSpeedFactor(0.f);	}
 			else{	 pr->setSpeedFactor(1.f);	 pr2->setSpeedFactor(1.f);	}
 		}
+		
+		materialFactory->update();
+		
+		bFirstRenderFrame = false;
 		
 		return ret;
 	}
@@ -505,13 +510,16 @@ void App::newPoses()
 					Real angle = (arrowAnimCur.zAxis().dotProduct(carM->fCam->mCamera->getOrientation().zAxis())+1)/2.0f;
 					// set color in material
 					MaterialPtr arrowMat = MaterialManager::getSingleton().getByName("Arrow");
-					Ogre::GpuProgramParametersSharedPtr fparams = arrowMat->getTechnique(0)->getPass(1)->getFragmentProgramParameters();
-					// green: 0.0 1.0 0.0     0.0 0.4 0.0
-					// red:   1.0 0.0 0.0     0.4 0.0 0.0
-					Vector3 col1 = angle * Vector3(0.0, 1.0, 0.0) + (1-angle) * Vector3(1.0, 0.0, 0.0);
-					Vector3 col2 = angle * Vector3(0.0, 0.4, 0.0) + (1-angle) * Vector3(0.4, 0.0, 0.0);
-					fparams->setNamedConstant("color1", col1);
-					fparams->setNamedConstant("color2", col2);
+					if (arrowMat->getTechnique(0)->getPass(1)->hasFragmentProgram())
+					{
+						Ogre::GpuProgramParametersSharedPtr fparams = arrowMat->getTechnique(0)->getPass(1)->getFragmentProgramParameters();
+						// green: 0.0 1.0 0.0     0.0 0.4 0.0
+						// red:   1.0 0.0 0.0     0.4 0.0 0.0
+						Vector3 col1 = angle * Vector3(0.0, 1.0, 0.0) + (1-angle) * Vector3(1.0, 0.0, 0.0);
+						Vector3 col2 = angle * Vector3(0.0, 0.4, 0.0) + (1-angle) * Vector3(0.4, 0.0, 0.0);
+						fparams->setNamedConstant("color1", col1);
+						fparams->setNamedConstant("color2", col2);
+					}
 				}
 			}
 			

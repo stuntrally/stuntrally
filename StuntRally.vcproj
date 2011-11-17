@@ -146,7 +146,7 @@
 				Optimization="3"
 				InlineFunctionExpansion="2"
 				FavorSizeOrSpeed="1"
-				AdditionalIncludeDirectories="Source\bullet;&quot;e:\v\SDL-1.2.14\include&quot;;&quot;e:\v\libvorbis-1.2.3\include&quot;;&quot;e:\v\libogg-1.1.4\include&quot;"
+				AdditionalIncludeDirectories="Source\bullet;&quot;e:\v\SDL-1.2.14\include&quot;;&quot;e:\v\libvorbis-1.2.3\include&quot;;&quot;e:\v\libogg-1.1.4\include&quot;;&quot;e:\v\MyGUI-3.2\trunk\MyGUIEngine\include&quot;;&quot;e:\v\MyGUI-3.2\trunk\Platforms\Ogre\OgrePlatform\include&quot;"
 				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;ENET_DLL;_USE_MATH_DEFINES;"
 				StringPooling="true"
 				RuntimeLibrary="2"
@@ -179,7 +179,7 @@
 				OutputFile="StuntRally.exe"
 				LinkIncremental="1"
 				SuppressStartupBanner="true"
-				AdditionalLibraryDirectories="e:\v\ogre171\lib\Release;e:\v\ogre171\Dependencies\lib\Release;e:\v\ogre171\MyGUI3.0\lib\Release;&quot;e:\v\enet-1.3.1\Release&quot;"
+				AdditionalLibraryDirectories="e:\v\ogre171\lib\Release;e:\v\ogre171\Dependencies\lib\Release;e:\v\ogre171\MyGUI3.0\lib\Release;&quot;e:\v\enet-1.3.1\Release&quot;&quot;e:\v\MyGUI-3.2\trunk\bin\lib\Release&quot;"
 				IgnoreDefaultLibraryNames=""
 				SubSystem="2"
 				RandomizedBaseAddress="1"
@@ -1621,6 +1621,10 @@
 					>
 				</File>
 				<File
+					RelativePath=".\data\materials\grass.matdef"
+					>
+				</File>
+				<File
 					RelativePath=".\data\materials\grass.material"
 					>
 				</File>
@@ -1795,6 +1799,14 @@
 				<Filter
 					Name="MaterGen"
 					>
+					<File
+						RelativePath=".\source\ogre\common\ArrowMaterial.cpp"
+						>
+					</File>
+					<File
+						RelativePath=".\source\ogre\common\ArrowMaterial.h"
+						>
+					</File>
 					<File
 						RelativePath=".\source\ogre\common\GlassMaterial.cpp"
 						>

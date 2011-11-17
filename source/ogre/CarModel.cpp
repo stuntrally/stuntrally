@@ -33,7 +33,7 @@ CarModel::CarModel(unsigned int index, eCarType type, const std::string name,
 	Ogre::SceneManager* sceneMgr, SETTINGS* set, GAME* game, Scene* s, Ogre::Camera* cam, App* app) :
 	fCam(0), pMainNode(0), pCar(0), terrain(0), resCar(""), mCamera(0), pReflect(0), pApp(app), color(1,0,0),
 	bLightMapEnabled(true), bBraking(false),
-	iCamNextOld(0), bLastChkOld(0)	
+	iCamNextOld(0), bLastChkOld(0), bWrongChk(0)
 {
 	iIndex = index;  sDirname = name;  pSceneMgr = sceneMgr;
 	pSet = set;  pGame = game;  sc = s;  mCamera = cam;  eType = type;
@@ -147,22 +147,30 @@ void CarModel::Update(PosInfo& posInfo, float time)
 	
 	//  terrain lightmap enable/disable (depending on distance to terrain)
 	#define MAX_TERRAIN_DIST 2.0 // meters
-	Ogre::Vector3 carPos = pMainNode->getPosition();
-	float terrainHeight = terrain->getHeightAtWorldPosition(carPos);
-	float diff = std::abs(carPos.y - terrainHeight);
 	bool changed = false;
-	if (diff > MAX_TERRAIN_DIST)
+	if (terrain)
 	{
-		if (bLightMapEnabled)
+		Ogre::Vector3 carPos = pMainNode->getPosition();
+		float terrainHeight = terrain->getHeightAtWorldPosition(carPos);
+		float diff = std::abs(carPos.y - terrainHeight);
+		if (diff > MAX_TERRAIN_DIST)
+		{
+			if (bLightMapEnabled)
+			{
+				changed = true;
+				bLightMapEnabled = false;
+			}
+		}
+		else if (!bLightMapEnabled)
 		{
 			changed = true;
-			bLightMapEnabled = false;
+			bLightMapEnabled = true;
 		}
 	}
-	else if (!bLightMapEnabled)
+	//  if no terrain, disable
+	else if (bLightMapEnabled)
 	{
-		changed = true;
-		bLightMapEnabled = true;
+		changed = true; bLightMapEnabled = false;
 	}
 	
 	if (changed)
@@ -605,8 +613,10 @@ void CarModel::Create(int car)
 	
 	//  this snippet makes sure the brake texture is pre-loaded.
 	//  since it is not used until you actually brake, we have to explicitely declare it
-	ResourceGroupManager::getSingleton().declareResource(sDirname + "_body00_brake.png", "Texture", "Car" + strI);
-	ResourceGroupManager::getSingleton().declareResource(sDirname + "_body00_add.png", "Texture", "Car" + strI);
+	if (FileExists(sCar + "_body00_brake.png"))
+		ResourceGroupManager::getSingleton().declareResource(sDirname + "_body00_brake.png", "Texture", "Car" + strI);
+	if (FileExists(sCar + "_body00_add.png"))
+		ResourceGroupManager::getSingleton().declareResource(sDirname + "_body00_add.png", "Texture", "Car" + strI);
 	
 	//  now just preload the whole resource group
 	ResourceGroupManager::getSingleton().initialiseResourceGroup("Car" + strI);
@@ -622,7 +632,7 @@ void CarModel::UpdateLightMap()
 	MaterialPtr mtr;
 	for (int i=0; i < NumMaterials; i++)
 	{
-		mtr = (MaterialPtr)MaterialManager::getSingleton().getByName(sMtr[i]);
+		mtr = MaterialManager::getSingleton().getByName(sMtr[i]);
 		if (!mtr.isNull())
 		{	Material::TechniqueIterator techIt = mtr->getTechniqueIterator();
 			while (techIt.hasMoreElements())
@@ -651,7 +661,7 @@ void CarModel::RefreshBrakingMaterial()
 	MaterialPtr mtr;
 	for (int i=0; i < NumMaterials; i++)
 	{
-		mtr = (MaterialPtr)MaterialManager::getSingleton().getByName(sMtr[i]);
+		mtr = MaterialManager::getSingleton().getByName(sMtr[i]);
 		if (!mtr.isNull())
 		{	Material::TechniqueIterator techIt = mtr->getTechniqueIterator();
 			while (techIt.hasMoreElements())
@@ -709,7 +719,7 @@ void CarModel::RecreateMaterials()
 	if (!ghost)
 	for (int i=0; i < NumMaterials; i++)
 	{
-		MaterialPtr mtr = (MaterialPtr)MaterialManager::getSingleton().getByName(sMtr[i]);
+		MaterialPtr mtr = MaterialManager::getSingleton().getByName(sMtr[i]);
 		if (!mtr.isNull())
 		{	Material::TechniqueIterator techIt = mtr->getTechniqueIterator();
 			while (techIt.hasMoreElements())
@@ -858,10 +868,9 @@ void CarModel::ChangeClr(int car)
 {
 	float c_h = pSet->car_hue[car], c_s = pSet->car_sat[car], c_v = pSet->car_val[car];
 	color.setHSB(1-c_h,c_s,c_v);  //set, mini pos clr
-	MaterialPtr mtr = (MaterialPtr)MaterialManager::getSingleton().getByName(sMtr[Mtr_CarBody]);
+	MaterialPtr mtr = MaterialManager::getSingleton().getByName(sMtr[Mtr_CarBody]);
 	if (!mtr.isNull())
 	{
-		mtr->setAmbient(color);
 		mtr->setDiffuse(color);
 	}
 }
