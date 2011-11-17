@@ -69,12 +69,12 @@
 	<Tag name="TipDiffusePrev">Textură difuză a previzualizării.</Tag>
 	<Tag name="TipGrTerMaxAngle">Terrain angle above which there won't be any grass.</Tag>
 	<Tag name="Materials">Materials</Tag>
+	<Tag name="InputMapResetGame">Reset game</Tag>
 	<Tag name="smoke">fum</Tag>
 	<Tag name="TipChangeCar">Schimbă mașina curentă cu cea selectată in listă,apoi apasă [Joc nou] pentru a o conduce.</Tag>
 	<Tag name="TreeMult">Trees multiplier</Tag>
 	<Tag name="TipGrDensSmooth">Grass density map - smooth size</Tag>
 	<Tag name="ParAmount">Numărul de particule</Tag>
-	<Tag name="MyGUI_MessageBox_No">Nu</Tag>
 	<Tag name="InputRoadNew">ctrl-Space - set new point's values from picked</Tag>
 	<Tag name="InputFluidsMode">W - edit fluids</Tag>
 	<Tag name="Top">Deasupra</Tag>
@@ -103,7 +103,6 @@
 	<Tag name="BlendMap">Blendmap</Tag>
 	<Tag name="InputMapPrevCamera">Previous Camera</Tag>
 	<Tag name="InputMapBrake">Brake</Tag>
-	<Tag name="MyGUI_MessageBox_Abort">Anulează</Tag>
 	<Tag name="Video">Video</Tag>
 	<Tag name="ViewStart">Vizualizează startul</Tag>
 	<Tag name="TipGrassDens">Cât de densă/rară va fi iarba pe teren.</Tag>
@@ -128,7 +127,6 @@
 	<Tag name="TipTerTriSize">Mărime triunghiuri teren în [metri](recomandat: 1 - 2,  folosește mai multe pentru zone ale terenului mai mari).Se schimbă după Actualizare(F8).</Tag>
 	<Tag name="ABS">ABS (antiblocare frâne)</Tag>
 	<Tag name="TipCarsList">Listă mașini, click pentru a selecta (si a vedea imagine). Apasă [Schimbă mașina] apoi [Joc nou] pentru a o conduce.</Tag>
-	<Tag name="MyGUI_MessageBox_Ignore">Ignoră</Tag>
 	<Tag name="Model">Model</Tag>
 	<Tag name="InpSet_AxisHalf">Axis Half</Tag>
 	<Tag name="PipeLStepsMul">Multiplicare pași L conductă</Tag>
@@ -136,6 +134,7 @@
 	<Tag name="TriSize">Mărimea triunghiului</Tag>
 	<Tag name="TerLAngSm">Angle smooth</Tag>
 	<Tag name="InputAfterChanges">(după schimbarea terenului/vegetației)</Tag>
+	<Tag name="SkirtLength">Lungime fustă drum</Tag>
 	<Tag name="OrigImage">Întunecare</Tag>
 	<Tag name="InputRoadSelAlt">alt - selectează tot ctrl - nu selectează nimic</Tag>
 	<Tag name="InputRoadSel">Backspace - adaugă sau elimină din selecţie</Tag>
@@ -151,7 +150,6 @@
 	<Tag name="TipModelMaxScale">Scală maximă model.</Tag>
 	<Tag name="TerrainError">Eroare teren</Tag>
 	<Tag name="InputRoadMerge">M - toggle road merge segs (for test)</Tag>
-	<Tag name="MyGUI_MessageBox_Retry">Reîncearcă</Tag>
 	<Tag name="InputStartDir">Space  -  change road direction (+ or -)</Tag>
 	<Tag name="Effects">Efecte</Tag>
 	<Tag name="WidthSteps">Trepte lățime</Tag>
@@ -172,7 +170,6 @@
 	<Tag name="LengthDim">Dimensiune lungime</Tag>
 	<Tag name="Bloom">Încețoșare</Tag>
 	<Tag name="TipRenameTrk">Redenumește traseul selectat.</Tag>
-	<Tag name="MyGUI_MessageBox_Try">Încearcă</Tag>
 	<Tag name="TipBumpAmp">Amplitudinea denivelărilor suplimentare pe suprafaţă (cât de mare).</Tag>
 	<Tag name="InputFluidsMove">LMB - move   RMB - height</Tag>
 	<Tag name="TipNormalTex">Texturi normale(înalțimea în alpha)</Tag>
@@ -258,7 +255,7 @@
 	<Tag name="InputRoadNotOnTer">when not on terrain</Tag>
 	<Tag name="ApplyShadows">Aplică umbre</Tag>
 	<Tag name="TipFogEndClr">Fog end color. R G B components 0 to 1 (eg. 0.7 0.8 0.9)</Tag>
-	<Tag name="FrameSkip">Frames skip</Tag>
+	<Tag name="InputCameraTxt1">with shift - main cameras only</Tag>
 	<Tag name="InputToggleVeget">V - Disable / enable vegetation</Tag>
 	<Tag name="Particles">Particule</Tag>
 	<Tag name="Other">Alte</Tag>
@@ -334,7 +331,7 @@
 	<Tag name="Fog">Ceață</Tag>
 	<Tag name="InputCameraTxt2">with ctrl - switch current car when many</Tag>
 	<Tag name="InputMapNextTab">Next tab</Tag>
-	<Tag name="InputCameraTxt1">with shift - main cameras only</Tag>
+	<Tag name="FrameSkip">Frames skip</Tag>
 	<Tag name="InputTrackScrn">(for track screenshot)</Tag>
 	<Tag name="trailColor">trail color</Tag>
 	<Tag name="InputRoadChkFirst">0   - set checkpoint as first</Tag>
@@ -382,10 +379,10 @@
 	<Tag name="LS_CLEANUP">Curățare</Tag>
 	<Tag name="RplRename">Rename</Tag>
 	<Tag name="EnterSave">Enter - salvare</Tag>
+	<Tag name="InputMapLastChk">Go to last checkp.</Tag>
 	<Tag name="Properties">Properties</Tag>
 	<Tag name="TipBumpFreq">Frequency of additional bumps on surface (distance between them).</Tag>
 	<Tag name="InputRoadDel">Del - delete picked</Tag>
-	<Tag name="SkirtLength">Lungime fustă drum</Tag>
 	<Tag name="InputFluidsTileY">; &apos;  - change texture tiling, one coord. only</Tag>
 	<Tag name="InputUpdate">F8 - update track</Tag>
 	<Tag name="InputToggleGUIMode">F1 or ` - GUI mode (toggle Options)</Tag>
@@ -442,7 +439,6 @@
 	<Tag name="TipDiffuseTex">Diffuse texture (Specular in alpha).</Tag>
 	<Tag name="VegetCol">Vegetation collision</Tag>
 	<Tag name="Track">Track</Tag>
-	<Tag name="MyGUI_MessageBox_Continue">Continue</Tag>
 	<Tag name="Tools">Tools</Tag>
 	<Tag name="TipGrassSwaySpd">Grass sway effect speed.</Tag>
 	<Tag name="FrictionTread">FrictionTread</Tag>
@@ -525,7 +521,6 @@
 	<Tag name="BoostAndFlip">Boost and flip</Tag>
 	<Tag name="GraphicsAll_High">High</Tag>
 	<Tag name="End">sfârșit</Tag>
-	<Tag name="MyGUI_MessageBox_Cancel">Cancel</Tag>
 	<Tag name="TipNewTer">Create new, flat terrain.</Tag>
 	<Tag name="TipRoadParams">Parametri punct drum</Tag>
 	<Tag name="SpeedUnit">Speed unit</Tag>
@@ -542,7 +537,6 @@
 	<Tag name="ScaleTerHeight">Terrain Height</Tag>
 	<Tag name="TipTerLHSm">Height smooth range (transition).</Tag>
 	<Tag name="TBTime">Time</Tag>
-	<Tag name="MyGUI_MessageBox_Ok">Ok</Tag>
 	<Tag name="TipRainSnowInt">Rain/Snow intensity (eg. 1000)</Tag>
 	<Tag name="TrackLength">Length</Tag>
 	<Tag name="InputStartAltMMB">alt-MMB - resetează rotația</Tag>
@@ -583,11 +577,17 @@
 	<Tag name="TipTerLAngMax">Ending terrain angle for layer.</Tag>
 	<Tag name="Pitch">gudron</Tag>
 	<Tag name="InputNextOptTab">F2,F3 - fila de opțiuni precedentă,următoare</Tag>
-	<Tag name="MyGUI_MessageBox_Yes">Da</Tag>
 	<Tag name="RollingDrag">Învârtire mașină</Tag>
 	<Tag name="RplAll">Toate</Tag>
-	<Tag name="InputMapResetGame">Reset game</Tag>
-	<Tag name="InputMapLastChk">Go to last checkp.</Tag>
+	<Tag name="MessageBox_Retry">Retry</Tag>
+	<Tag name="MessageBox_Yes">Yes</Tag>
+	<Tag name="MessageBox_Try">Try</Tag>
+	<Tag name="MessageBox_Continue">Continue</Tag>
+	<Tag name="MessageBox_Abort">Abort</Tag>
+	<Tag name="MessageBox_No">No</Tag>
+	<Tag name="MessageBox_Ignore">Ignore</Tag>
+	<Tag name="MessageBox_Cancel">Cancel</Tag>
+	<Tag name="MessageBox_Ok">Ok</Tag>
 	<Tag name="GameVersion">1.4</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 

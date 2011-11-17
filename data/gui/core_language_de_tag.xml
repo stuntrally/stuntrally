@@ -92,12 +92,12 @@
 	<Tag name="TipDiffusePrev">Vorschaubild der Textur.</Tag>
 	<Tag name="TipGrTerMaxAngle">Terrain angle above which there won't be any grass.</Tag>
 	<Tag name="Materials">Materials</Tag>
+	<Tag name="InputMapResetGame">Reset game</Tag>
 	<Tag name="smoke">Rauch</Tag>
 	<Tag name="TipChangeCar">Aktives Auto wechseln, drücke [Neues Spiel] um ein neues Spiel mit dem aktiven Auto zu starten.</Tag>
 	<Tag name="TreeMult">Baumanzahl</Tag>
 	<Tag name="TipGrDensSmooth">Grasverteilungsmap - glätten</Tag>
 	<Tag name="ParAmount">Partikelanzahl</Tag>
-	<Tag name="MyGUI_MessageBox_No">Nein</Tag>
 	<Tag name="InputRoadNew">ctrl-Space - set new point's values from picked</Tag>
 	<Tag name="InputFluidsMode">W - edit fluids</Tag>
 	<Tag name="Top">Oben</Tag>
@@ -126,7 +126,6 @@
 	<Tag name="BlendMap">Blendmap</Tag>
 	<Tag name="InputMapPrevCamera">Vorherige Kamera</Tag>
 	<Tag name="InputMapBrake">Bremsen</Tag>
-	<Tag name="MyGUI_MessageBox_Abort">Abbrechen</Tag>
 	<Tag name="Video">Bildschirm</Tag>
 	<Tag name="ViewStart">Ans. Start</Tag>
 	<Tag name="TipGrassDens">Hohes oder niedrige Anzahl von Gras auf dem Boden.</Tag>
@@ -151,7 +150,6 @@
 	<Tag name="TipTerTriSize">Triangle-Größe des Terrains (in Metern) - empfohlen: 1-2, größerer Wert für größere Fläche). Anwenden durch Aktualisierung (F8).</Tag>
 	<Tag name="ABS">ABS (Antiblockiersystem)</Tag>
 	<Tag name="TipCarsList">Autoauswahl, klicken um Vorschau zu sehen. [Auto wechseln] drücken und dann [Neues Spiel].</Tag>
-	<Tag name="MyGUI_MessageBox_Ignore">Ignorieren</Tag>
 	<Tag name="Model">Modell</Tag>
 	<Tag name="InpSet_AxisHalf">Achse halb</Tag>
 	<Tag name="PipeLStepsMul">Röhren L-Steps Mult.</Tag>
@@ -159,6 +157,7 @@
 	<Tag name="TriSize">Triangle-Größe</Tag>
 	<Tag name="TerLAngSm">Winkelglättung</Tag>
 	<Tag name="InputAfterChanges">(nach Terrain/Vegetationsveränderung)</Tag>
+	<Tag name="SkirtLength">Skirt-Länge</Tag>
 	<Tag name="OrigImage">Abdunkeln</Tag>
 	<Tag name="InputRoadSelAlt">alt - alle, strg - kein</Tag>
 	<Tag name="InputRoadSel">Backspace - zu Auswahl hinzufügen/entfernen</Tag>
@@ -174,7 +173,6 @@
 	<Tag name="TipModelMaxScale">Maximale Skalierung des Modells.</Tag>
 	<Tag name="TerrainError">Terrainabweichung</Tag>
 	<Tag name="InputRoadMerge">M - umsch. Straßen zusammenf. (zum Test)</Tag>
-	<Tag name="MyGUI_MessageBox_Retry">Wiederholen</Tag>
 	<Tag name="InputStartDir">Space - Straßenrichtung (+ oder -)</Tag>
 	<Tag name="Effects">Effekte</Tag>
 	<Tag name="WidthSteps">Breiten-Steps</Tag>
@@ -195,7 +193,6 @@
 	<Tag name="LengthDim">Längen dim.</Tag>
 	<Tag name="Bloom">Überstrahlung</Tag>
 	<Tag name="TipRenameTrk">Ausgewählte Strecke umbenennen (zuerst Namen ändern)</Tag>
-	<Tag name="MyGUI_MessageBox_Try">Versuchen</Tag>
 	<Tag name="TipBumpAmp">Amplitude (Höhe) zusätzlicher Unebenheiten der Oberfläche</Tag>
 	<Tag name="InputFluidsMove">LMB - move   RMB - height</Tag>
 	<Tag name="TipNormalTex">Normaltextur (Höhe im Alphakanal)</Tag>
@@ -281,7 +278,7 @@
 	<Tag name="InputRoadNotOnTer">wenn nicht auf Terrain</Tag>
 	<Tag name="ApplyShadows">Schatten anwenden</Tag>
 	<Tag name="TipFogEndClr">Ausklangfarbe des Nebels. R G B Komponenten von 0 bis 1 (z.B. 0.7 0.8 0.9)</Tag>
-	<Tag name="FrameSkip">FrameSkip</Tag>
+	<Tag name="InputCameraTxt1">Mit Shift - Nur Hauptkameras</Tag>
 	<Tag name="InputToggleVeget">V - Vegetation an/aus</Tag>
 	<Tag name="Particles">Partikel</Tag>
 	<Tag name="Other">Sonstige</Tag>
@@ -357,7 +354,7 @@
 	<Tag name="Fog">Nebel</Tag>
 	<Tag name="InputCameraTxt2">Mit Strg - Auto für Kameraänderung wechseln</Tag>
 	<Tag name="InputMapNextTab">Nächster Tab</Tag>
-	<Tag name="InputCameraTxt1">Mit Shift - Nur Hauptkameras</Tag>
+	<Tag name="FrameSkip">FrameSkip</Tag>
 	<Tag name="InputTrackScrn">(für Bildschirmfoto)</Tag>
 	<Tag name="trailColor">Spurenfarbe</Tag>
 	<Tag name="InputRoadChkFirst">0 - ersten Wegpunkt setzen</Tag>
@@ -405,10 +402,10 @@
 	<Tag name="LS_CLEANUP">Aufräumen</Tag>
 	<Tag name="RplRename">Umbenennen</Tag>
 	<Tag name="EnterSave">Enter - speichern</Tag>
+	<Tag name="InputMapLastChk">Go to last checkp.</Tag>
 	<Tag name="Properties">Properties</Tag>
 	<Tag name="TipBumpFreq">Frequenz zusätzlicher Unebenheiten der Oberfläche (Distanz zwischen diesen)</Tag>
 	<Tag name="InputRoadDel">Entf - ausgew. löschen</Tag>
-	<Tag name="SkirtLength">Skirt-Länge</Tag>
 	<Tag name="InputFluidsTileY">; &apos;  - change texture tiling, one coord. only</Tag>
 	<Tag name="InputUpdate">F8 - Aktualisieren</Tag>
 	<Tag name="InputToggleGUIMode">F1 - Optionsfenster anzeigen</Tag>
@@ -465,7 +462,6 @@
 	<Tag name="TipDiffuseTex">Diffusetextur (Specular in Alphakanal).</Tag>
 	<Tag name="VegetCol">Vegetation Kollision</Tag>
 	<Tag name="Track">Strecke</Tag>
-	<Tag name="MyGUI_MessageBox_Continue">Fortsetzen</Tag>
 	<Tag name="Tools">Werkzeuge</Tag>
 	<Tag name="TipGrassSwaySpd">Grasschwingung Geschw.</Tag>
 	<Tag name="FrictionTread">ReibungsProfil</Tag>
@@ -548,7 +544,6 @@
 	<Tag name="BoostAndFlip">Boost and flip</Tag>
 	<Tag name="GraphicsAll_High">Hoch</Tag>
 	<Tag name="End">Ende</Tag>
-	<Tag name="MyGUI_MessageBox_Cancel">Abbruch</Tag>
 	<Tag name="TipNewTer">Neues, flaches Terrain erstellen.</Tag>
 	<Tag name="TipRoadParams">Parameter des Straßenpunkts</Tag>
 	<Tag name="SpeedUnit">Einheit</Tag>
@@ -565,7 +560,6 @@
 	<Tag name="ScaleTerHeight">Terrain Height</Tag>
 	<Tag name="TipTerLHSm">Höhenglättung (Übergang)</Tag>
 	<Tag name="TBTime">Zeit</Tag>
-	<Tag name="MyGUI_MessageBox_Ok">Ok</Tag>
 	<Tag name="TipRainSnowInt">Rain/Snow Intensität (z.B. 1000)</Tag>
 	<Tag name="TrackLength">Länge</Tag>
 	<Tag name="InputStartAltMMB">Alt-MMB - Rotation zurücks.</Tag>
@@ -606,11 +600,17 @@
 	<Tag name="TipTerLAngMax">Maximaler Winkel für den Terrain-Layer.</Tag>
 	<Tag name="Pitch">neigen</Tag>
 	<Tag name="InputNextOptTab">F2,F3 - vorheriger/nächster Tab</Tag>
-	<Tag name="MyGUI_MessageBox_Yes">Ja</Tag>
 	<Tag name="RollingDrag">Rollwiderstand</Tag>
 	<Tag name="RplAll">Alle</Tag>
-	<Tag name="InputMapResetGame">Reset game</Tag>
-	<Tag name="InputMapLastChk">Go to last checkp.</Tag>
+	<Tag name="MessageBox_Retry">Retry</Tag>
+	<Tag name="MessageBox_Yes">Yes</Tag>
+	<Tag name="MessageBox_Try">Try</Tag>
+	<Tag name="MessageBox_Continue">Continue</Tag>
+	<Tag name="MessageBox_Abort">Abort</Tag>
+	<Tag name="MessageBox_No">No</Tag>
+	<Tag name="MessageBox_Ignore">Ignore</Tag>
+	<Tag name="MessageBox_Cancel">Cancel</Tag>
+	<Tag name="MessageBox_Ok">Ok</Tag>
 	<Tag name="GameVersion">1.4</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 
