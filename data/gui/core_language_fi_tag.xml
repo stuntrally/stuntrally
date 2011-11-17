@@ -96,12 +96,12 @@
 	<Tag name="TipDiffusePrev">Diffuse texture preview image.</Tag>
 	<Tag name="TipGrTerMaxAngle">Terrain angle above which there won't be any grass.</Tag>
 	<Tag name="Materials">Materials</Tag>
+	<Tag name="InputMapResetGame">Reset game</Tag>
 	<Tag name="smoke">savu</Tag>
 	<Tag name="TipChangeCar">Vaihda listan valinta nykyiseksi autoksi ja paina [Uusi peli] ajaaksesi sillä.</Tag>
 	<Tag name="TreeMult">Trees multiplier</Tag>
 	<Tag name="TipGrDensSmooth">Grass density map - smooth size</Tag>
 	<Tag name="ParAmount">Hiukkasten määrä</Tag>
-	<Tag name="MyGUI_MessageBox_No">Ei</Tag>
 	<Tag name="InputRoadNew">ctrl-Space - set new point's values from picked</Tag>
 	<Tag name="InputFluidsMode">W - edit fluids</Tag>
 	<Tag name="Top">Ylös</Tag>
@@ -130,7 +130,6 @@
 	<Tag name="BlendMap">Blendmap</Tag>
 	<Tag name="InputMapPrevCamera">Previous Camera</Tag>
 	<Tag name="InputMapBrake">Jarru</Tag>
-	<Tag name="MyGUI_MessageBox_Abort">Keskeytä</Tag>
 	<Tag name="Video">Video</Tag>
 	<Tag name="ViewStart">Näytä alku</Tag>
 	<Tag name="TipGrassDens">Kuinka tiheää/harvinaista ruohikko on maastossa.</Tag>
@@ -155,7 +154,6 @@
 	<Tag name="TipTerTriSize">Terrain triangle size in [meters] (recommended: 1 - 2, use more for big track area). Changed after Update (F8).</Tag>
 	<Tag name="ABS">ABS (lukkiutumattomat jarrut)</Tag>
 	<Tag name="TipCarsList">Cars list, click to select (and see image). Press [Change car] and then [New Game] to drive with it.</Tag>
-	<Tag name="MyGUI_MessageBox_Ignore">Ohita</Tag>
 	<Tag name="Model">Malli</Tag>
 	<Tag name="InpSet_AxisHalf">Axis Half</Tag>
 	<Tag name="PipeLStepsMul">Pipe L steps mul.</Tag>
@@ -163,6 +161,7 @@
 	<Tag name="TriSize">Kolmiokoko</Tag>
 	<Tag name="TerLAngSm">Angle smooth</Tag>
 	<Tag name="InputAfterChanges">(maaston/kasvillisuuden muutoksien jälkeen)</Tag>
+	<Tag name="SkirtLength">Skirt Length</Tag>
 	<Tag name="OrigImage">Tummenna</Tag>
 	<Tag name="InputRoadSelAlt">alt - valitse kaikki ctrl - poista valinta</Tag>
 	<Tag name="InputRoadSel">Askelpalautin - lisää tai poista valinnasta</Tag>
@@ -178,7 +177,6 @@
 	<Tag name="TipModelMaxScale">Model maximal scale.</Tag>
 	<Tag name="TerrainError">Maaston virhe</Tag>
 	<Tag name="InputRoadMerge">M - toggle road merge segs (for test)</Tag>
-	<Tag name="MyGUI_MessageBox_Retry">Yritä uudelleen</Tag>
 	<Tag name="InputStartDir">Space  -  change road direction (+ or -)</Tag>
 	<Tag name="Effects">Tehosteet</Tag>
 	<Tag name="WidthSteps">Width Steps</Tag>
@@ -199,7 +197,6 @@
 	<Tag name="LengthDim">Length dim.</Tag>
 	<Tag name="Bloom">Bloom-tehoste</Tag>
 	<Tag name="TipRenameTrk">Rename selected track with new name (change name first).</Tag>
-	<Tag name="MyGUI_MessageBox_Try">Kokeile</Tag>
 	<Tag name="TipBumpAmp">Amplitude of additional bumps on surface (how high).</Tag>
 	<Tag name="InputFluidsMove">LMB - move   RMB - height</Tag>
 	<Tag name="TipNormalTex">Normaalitekstuuri (korkeus alpha-kanavassa).</Tag>
@@ -285,7 +282,7 @@
 	<Tag name="InputRoadNotOnTer">when not on terrain</Tag>
 	<Tag name="ApplyShadows">Käytä varjoja</Tag>
 	<Tag name="TipFogEndClr">Fog end color. R G B components 0 to 1 (eg. 0.7 0.8 0.9)</Tag>
-	<Tag name="FrameSkip">Frames skip</Tag>
+	<Tag name="InputCameraTxt1">with shift - main cameras only</Tag>
 	<Tag name="InputToggleVeget">V - Disable / enable vegetation</Tag>
 	<Tag name="Particles">Hiukkaset</Tag>
 	<Tag name="Other">Muu</Tag>
@@ -361,7 +358,7 @@
 	<Tag name="Fog">Sumu</Tag>
 	<Tag name="InputCameraTxt2">with ctrl - switch current car when many</Tag>
 	<Tag name="InputMapNextTab">Seuraava välilehti</Tag>
-	<Tag name="InputCameraTxt1">with shift - main cameras only</Tag>
+	<Tag name="FrameSkip">Frames skip</Tag>
 	<Tag name="InputTrackScrn">(for track screenshot)</Tag>
 	<Tag name="trailColor">trail color</Tag>
 	<Tag name="InputRoadChkFirst">0   - set checkpoint as first</Tag>
@@ -409,10 +406,10 @@
 	<Tag name="LS_CLEANUP">Siistitään</Tag>
 	<Tag name="RplRename">Muuta nimeä</Tag>
 	<Tag name="EnterSave">Enter - tallenna</Tag>
+	<Tag name="InputMapLastChk">Go to last checkp.</Tag>
 	<Tag name="Properties">Properties</Tag>
 	<Tag name="TipBumpFreq">Frequency of additional bumps on surface (distance between them).</Tag>
 	<Tag name="InputRoadDel">Del - delete picked</Tag>
-	<Tag name="SkirtLength">Skirt Length</Tag>
 	<Tag name="InputFluidsTileY">; &apos;  - change texture tiling, one coord. only</Tag>
 	<Tag name="InputUpdate">F8 - update track</Tag>
 	<Tag name="InputToggleGUIMode">F1 or ` - GUI mode (toggle Options)</Tag>
@@ -469,7 +466,6 @@
 	<Tag name="TipDiffuseTex">Diffuse texture (Specular in alpha).</Tag>
 	<Tag name="VegetCol">Kasvillisuuden törmäystunnistus</Tag>
 	<Tag name="Track">Track</Tag>
-	<Tag name="MyGUI_MessageBox_Continue">Continue</Tag>
 	<Tag name="Tools">Tools</Tag>
 	<Tag name="TipGrassSwaySpd">Grass sway effect speed.</Tag>
 	<Tag name="FrictionTread">FrictionTread</Tag>
@@ -552,7 +548,6 @@
 	<Tag name="BoostAndFlip">Boost and flip</Tag>
 	<Tag name="GraphicsAll_High">High</Tag>
 	<Tag name="End">loppu</Tag>
-	<Tag name="MyGUI_MessageBox_Cancel">Cancel</Tag>
 	<Tag name="TipNewTer">Create new, flat terrain.</Tag>
 	<Tag name="TipRoadParams">Tien pisteen parametrit.</Tag>
 	<Tag name="SpeedUnit">Speed unit</Tag>
@@ -569,7 +564,6 @@
 	<Tag name="ScaleTerHeight">Terrain Height</Tag>
 	<Tag name="TipTerLHSm">Height smooth range (transition).</Tag>
 	<Tag name="TBTime">Time</Tag>
-	<Tag name="MyGUI_MessageBox_Ok">Ok</Tag>
 	<Tag name="TipRainSnowInt">Rain/Snow intensity (eg. 1000)</Tag>
 	<Tag name="TrackLength">Length</Tag>
 	<Tag name="InputStartAltMMB">alt-MMB - reset rotation</Tag>
@@ -610,11 +604,17 @@
 	<Tag name="TipTerLAngMax">Ending terrain angle for layer.</Tag>
 	<Tag name="Pitch">pitch</Tag>
 	<Tag name="InputNextOptTab">F2,F3 - prev,next Options tab</Tag>
-	<Tag name="MyGUI_MessageBox_Yes">Kyllä</Tag>
 	<Tag name="RollingDrag">Rolling Drag</Tag>
 	<Tag name="RplAll">All</Tag>
-	<Tag name="InputMapResetGame">Reset game</Tag>
-	<Tag name="InputMapLastChk">Go to last checkp.</Tag>
+	<Tag name="MessageBox_Retry">Retry</Tag>
+	<Tag name="MessageBox_Yes">Yes</Tag>
+	<Tag name="MessageBox_Try">Try</Tag>
+	<Tag name="MessageBox_Continue">Continue</Tag>
+	<Tag name="MessageBox_Abort">Abort</Tag>
+	<Tag name="MessageBox_No">No</Tag>
+	<Tag name="MessageBox_Ignore">Ignore</Tag>
+	<Tag name="MessageBox_Cancel">Cancel</Tag>
+	<Tag name="MessageBox_Ok">Ok</Tag>
 	<Tag name="GameVersion">1.4</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 

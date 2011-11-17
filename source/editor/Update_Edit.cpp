@@ -129,8 +129,8 @@ bool App::frameRenderingQueued(const FrameEvent& evt)
 					else Fmt(s, "chkR  %4.2f  %s", sp.chkR, road->iP1 == ic ? "<1>":"");   rdTxt[8]->setCaption(s);  }
 
 		if (rdTxt[9]){
-			if (road->vSel.size() > 0)  Fmt(s, "sel: %d", road->vSel.size());
-			else	Fmt(s, "%2d/%d", road->iChosen+1, road->vSegs.size());   rdTxt[9]->setCaption(s);  }
+			if (road->vSel.size() > 0)  Fmt(s, "sel: %lu", road->vSel.size());
+			else	Fmt(s, "%2d/%lu", road->iChosen+1, road->vSegs.size());   rdTxt[9]->setCaption(s);  }
 
 		if (rdTxt[11]){  rdTxt[11]->setCaption(bCur ? "Cur" : "New");
 			rdTxt[11]->setTextColour(bCur ? MyGUI::Colour(0.85,0.75,1) : MyGUI::Colour(0.3,1,0.1));  }
@@ -191,7 +191,7 @@ bool App::frameRenderingQueued(const FrameEvent& evt)
 	else if (edMode == ED_Fluids && sc.fluids.size() > 0)
 	{
 		FluidBox& fb = sc.fluids[iFlCur];									if (flTxt[1])	flTxt[1]->setCaption(fb.name.c_str());
-		Fmt(s, "Cur/All:  %d/%d", iFlCur+1, sc.fluids.size());				if (flTxt[0])	flTxt[0]->setCaption(s);
+		Fmt(s, "Cur/All:  %d/%lu", iFlCur+1, sc.fluids.size());				if (flTxt[0])	flTxt[0]->setCaption(s);
 		Fmt(s, "Pos:  %4.1f %4.1f %4.1f", fb.pos.x, fb.pos.y, fb.pos.z);	if (flTxt[2])	flTxt[2]->setCaption(s);
 		Fmt(s, "Rot:  %4.1f", fb.rot.x);									if (flTxt[3])	flTxt[3]->setCaption(s);
 		Fmt(s, "Size:  %4.1f %4.1f %4.1f", fb.size.x, fb.size.y, fb.size.z); if (flTxt[4])	flTxt[4]->setCaption(s);
