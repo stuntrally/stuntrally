@@ -1,7 +1,7 @@
 [road]
 	shadowPriority = 0.8
 	envMapPriority = 0.8
-	normalMapPriority = 1.0 
+	normalMapPriority = 0.5 
 
 ; ------------ Asphalt -------------
 [roadAsphalt]
