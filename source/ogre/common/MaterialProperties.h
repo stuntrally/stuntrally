@@ -52,7 +52,6 @@ struct MaterialProperties
 	bool terrainLightMap;
 	bool fog; // enable fog
 	bool lighting; // enable lighting
-	float hdrScale; // color multiplier when HDR is enabled
 	
 	// contribute to ssao yes/no
 	bool ssao;

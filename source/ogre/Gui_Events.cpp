@@ -8,7 +8,6 @@
 #include "SplitScreen.h"
 #include "common/Gui_Def.h"
 #include "common/RenderConst.h"
-#include "common/MaterialFactory.h"
 
 #include <MyGUI_PointerManager.h>
 #include <OIS/OIS.h>
@@ -327,10 +326,6 @@ void App::chkVidBloom(WP wp)
 void App::chkVidHDR(WP wp)
 {			
 	ChkEv(hdr);  refreshCompositor();
-	materialFactory->setHDR(pSet->hdr);
-	
-	// generate new materials (terrain and material factory)
-	if (terrain) { changeShadows(); }
 }
 void App::chkVidBlur(WP wp)
 {		

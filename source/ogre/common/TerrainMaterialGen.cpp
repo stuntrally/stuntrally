@@ -38,8 +38,6 @@ THE SOFTWARE.
 #include "OgreShadowCameraSetupPSSM.h"
 #include "../Defines.h"
 #include "MaterialGenerator.h"
-#include "MaterialFactory.h"
-
 // depth shadows: use terrain receiver shader or use custom shader (pssm.cg)
 #define CUSTOM_RECEIVER_SHADER
 
@@ -1355,12 +1353,8 @@ namespace Ogre
 			outStream <<  "oColor1 = float4(length(viewPosition.xyz) / far, normalize(mviewnormal.xyz).xyz); \n";
 		}
 		// Final return
-		if (MaterialFactory::getSingleton().getHDR())
-			outStream << "  oColor = outputCol * 2;\n";
-		else
-			outStream << "	oColor = outputCol;\n";
-			
-		outStream << "}\n";
+		outStream << "	oColor = outputCol;\n"
+			<< "}\n";
 
 	}
 	//---------------------------------------------------------------------
