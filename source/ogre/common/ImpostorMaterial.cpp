@@ -64,6 +64,7 @@ void ImpostorMaterialGenerator::generate(bool fixedFunction)
 		"	out float2 oUv       : TEXCOORD0,	\n"
 		"	out float4 oColor    : COLOR, \n"
 		"	out float oFog       : FOG,	\n"
+		"	uniform float4 fogParams, \n"
 		"	uniform float4x4 worldViewProj,	\n"
 		"	uniform float    uScroll, \n"
 		"	uniform float    vScroll, \n"
@@ -83,44 +84,53 @@ void ImpostorMaterialGenerator::generate(bool fixedFunction)
 		"	oUv.y += vScroll; \n"
 
 		//Fog
-		"	oFog = oPosition.z; \n"
+		"	oFog = saturate(fogParams.x * (oPosition.z - fogParams.y) * fogParams.w); \n"
 		"}";
 		
 		vshader->setSource(outStream.str());
 		vshader->load();
+		
+		vshader->getDefaultParameters()->setNamedAutoConstant("fogParams", GpuProgramParameters::ACT_FOG_PARAMS);
 	}
 	
 	
 	// ------------- FRAGMENT -----------------------------------------------
 	
 	// ensure shader does not exist already.
-	/*HighLevelGpuProgramPtr fshader = mgr.getByName("Sprite_fp");
+	HighLevelGpuProgramPtr fshader = mgr.getByName("Sprite_fp");
 	if (fshader.isNull())
 	{
-		fshader = mgr.createProgram(progName, ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME, 
+		fshader = mgr.createProgram("Sprite_fp", ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME, 
 			"cg", GPT_FRAGMENT_PROGRAM);
 			
 		if(MRTSupported())
 		{
-			ret->setParameter("profiles", "ps_4_0 ps_3_0 fp40");
+			fshader->setParameter("profiles", "ps_4_0 ps_3_0 fp40");
 		}
 		else
 		{
-			ret->setParameter("profiles", "ps_4_0 ps_2_x arbfp1");	
+			fshader->setParameter("profiles", "ps_4_0 ps_2_x arbfp1");	
 		}
-		ret->setParameter("entry_point", "Sprite_fp");
+		fshader->setParameter("entry_point", "Sprite_fp");
 		
 		// simple pixel shader that only reads texture and fog
-		StringUtil::StrStreamType& outStream;
+		StringUtil::StrStreamType outStream;
 		outStream <<
 		"void Sprite_fp( 	\n"
 		"	uniform sampler2D texture, \n"
 		"	float2 texCoord : TEXCOORD0, \n"
-		"	float fog : FOG \n"
+		"	float fog : FOG, \n"
+		"	uniform float4 fogColor, \n"
+		"	out float4 oColor : COLOR \n"
 		") \n"
 		"{ \n"
 		"	float4 texColor = tex2D(texture, texCoord); \n"
+		"	oColor = float4(lerp(texColor.xyz, fogColor.xyz, fog), texColor.a); \n"
+		"} \n";
 		
+		fshader->setSource(outStream.str());
+		fshader->load();
 		
-	}*/
+		fshader->getDefaultParameters()->setNamedAutoConstant("fogColor", GpuProgramParameters::ACT_FOG_COLOUR);
+	}
 }

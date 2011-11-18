@@ -823,6 +823,11 @@ void StaticBillboardSet::updateAll(const Vector3 &cameraDirection)
          params->setNamedAutoConstant(preRotatedQuad2, GpuProgramParameters::ACT_CUSTOM);
          params->setNamedAutoConstant(preRotatedQuad3, GpuProgramParameters::ACT_CUSTOM);
       }
+      if (!p->hasFragmentProgram())
+      {
+		  static const Ogre::String Sprite_fp = "Sprite_fp";
+		  p->setFragmentProgram(Sprite_fp);
+	  }
 
       // Which prerotated quad use
       const float *pQuad = i1->second->getOrigin() == BBO_CENTER ? preRotatedQuad_BBO_CENTER : preRotatedQuad_BBO_BOTTOM_CENTER;
