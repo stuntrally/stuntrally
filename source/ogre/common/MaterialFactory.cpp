@@ -48,7 +48,7 @@ MaterialFactory& MaterialFactory::getSingleton(void)
 
 MaterialFactory::MaterialFactory() : 
 	bShaders(1), bNormalMap(1), bEnvMap(1), bShadows(1), bShadowsDepth(1),
-	iTexSize(4096), iNumShadowTex(3), fShaderQuality(0.5),
+	iTexSize(4096), iNumShadowTex(3), fShaderQuality(0.5), bHDR(0),
 	bSettingsChanged(1) // always have to generate at start
 {
 	QTimer ti;  ti.update(); /// time
@@ -90,7 +90,7 @@ MaterialFactory::MaterialFactory() :
 	mCustomGenerators.push_back(water);
 	
 	MaterialGenerator* impostor = static_cast<MaterialGenerator*>(new ImpostorMaterialGenerator());
-	water->mParent = this;
+	impostor->mParent = this;
 	mCustomGenerators.push_back(impostor);
 	
 	ti.update(); /// time

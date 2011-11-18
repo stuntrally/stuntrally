@@ -54,12 +54,14 @@ public:
 	void setTexSize(unsigned int p) { setIfChanged(iTexSize) };
 	void setNumShadowTex(unsigned int p) { setIfChanged(iNumShadowTex) };
 	void setShaderQuality(float p) { setIfChanged(fShaderQuality) };
+	void setHDR(bool p) { setIfChanged(bHDR) };
 	
 	const bool getShaders() { return bShaders; };
 	const bool getNormalMap() { return bNormalMap; };
 	const bool getEnvMap() { return bEnvMap; };
 	const bool getShadows() { return bShadows; };
 	const bool getShadowsDepth() { return bShadowsDepth; };
+	const bool getHDR() { return bHDR; };
 	const unsigned int getTexSize() { return iTexSize; };
 	const unsigned int getNumShadowTex() { return iNumShadowTex; };
 	const float getShaderQuality() { return fShaderQuality; };
@@ -78,7 +80,7 @@ private:
 	/// user settings definition ---------------------------------
 	bool bShaders, bNormalMap, bEnvMap, bShadows, bShadowsDepth;
 	unsigned int iTexSize; unsigned int iNumShadowTex;
-	float fShaderQuality;
+	float fShaderQuality; bool bHDR;
 	/// -------------------------------------------------------
 
 	std::vector<MaterialDefinition*> mDefinitions;

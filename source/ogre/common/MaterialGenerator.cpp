@@ -1084,6 +1084,9 @@ void MaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::StrStrea
 		"	uniform float fresnelScale, \n"
 		"	uniform float fresnelPower, \n";
 		
+	outStream <<
+	"	uniform float hdrScale, \n";
+		
 	if (needDiffuseMap()) outStream <<
 		"	uniform sampler2D diffuseMap : TEXUNIT"+toStr(mDiffuseTexUnit)+", \n";
 	
@@ -1250,7 +1253,11 @@ void MaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::StrStrea
 	
 	// add fog
 	outStream <<
-		"	oColor = lerp(color1, float4(fogColor,1), position.w); \n";
+	"	oColor = lerp(color1, float4(fogColor,1), position.w); \n";
+		
+	// hdr
+	outStream <<
+	"	oColor *= hdrScale; \n";
 	
 	// debug colour output  ------------------------------------------
 	
@@ -1381,6 +1388,8 @@ void MaterialGenerator::individualFragmentProgramParams(Ogre::GpuProgramParamete
 		for (int i=0; i<mParent->getNumShadowTex(); ++i)
 			params->setNamedAutoConstant("invShadowMapSize"+toStr(i), GpuProgramParameters::ACT_INVERSE_TEXTURE_SIZE, i+mShadowTexUnit_start);
 	}
+	
+	params->setNamedConstant("hdrScale", mParent->getHDR() ? Real(mDef->mProps->hdrScale) : Real(1.0));
 	
 	if (needTerrainLightMap())
 		params->setNamedConstant("terrainWorldSize", Real(1025)); // real value set later in changeShadows()

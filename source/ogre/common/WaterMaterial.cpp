@@ -243,6 +243,7 @@ void WaterMaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::Str
 	"	float3 n : TEXCOORD2;	float3 t  : TEXCOORD3;	float3 b  : TEXCOORD4; \n"
 	"}; \n"
 	"float4 main_fp(PIn IN,  \n"      ///  _water_
+	"	uniform float hdrScale, \n"
 	"   uniform float3 lightSpec0, \n"
 	"	uniform float4 matSpec,	\n"
 	"	uniform float3 fogColor, \n"
@@ -330,7 +331,7 @@ void WaterMaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::Str
 		"	clr = lerp(clr, fogColor, /*IN.fogVal*/IN.wp.w); \n";
 	
 	outStream <<
-		"	return float4(clr, waterClr.a + clrSUM.r); \n"
+		"	return float4(clr*hdrScale, waterClr.a + clrSUM.r); \n"
 	"} \n";
 }
 
@@ -366,6 +367,7 @@ void WaterMaterialGenerator::individualFragmentProgramParams(Ogre::GpuProgramPar
 	params->setNamedConstant("matSpec", mDef->mProps->specular);
 	params->setNamedConstant("reflAndWaterAmounts", Vector3(mDef->mProps->reflAmount, 1-mDef->mProps->reflAmount, 0));
 	params->setNamedConstant("fresnelPowerBias", Vector3(mDef->mProps->fresnelPower, mDef->mProps->fresnelBias, 0));
+	params->setNamedConstant("hdrScale", mParent->getHDR() ? Real(mDef->mProps->hdrScale) : Real(1.0));
 	
 	if (needShadows())
 	{
