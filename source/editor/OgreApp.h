@@ -112,7 +112,10 @@ protected:
 	
 	
 	///  terrain
-	Ogre::Terrain* terrain;  Ogre::TerrainGlobalOptions* mTerrainGlobals;
+public:
+	Ogre::Terrain* terrain;
+protected:
+	Ogre::TerrainGlobalOptions* mTerrainGlobals;
 	Ogre::TerrainGroup* mTerrainGroup;  bool mPaging;
 	Ogre::TerrainPaging* mTerrainPaging;  Ogre::PageManager* mPageManager;
 
