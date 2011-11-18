@@ -683,23 +683,23 @@
 							<Property key="Caption" value="#{Intensity}"/>
 							<Property key="TextColour" value="1.0 0.9 0.0"/>
 						</Widget>
-						<Widget type="Button" skin="CheckBox" position="40 180 300 24" name="HDR">
+						<!--<Widget type="Button" skin="CheckBox" position="40 180 300 24" name="HDR">
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 							<Property key="Caption" value="#{HDR}"/>
 							<Property key="TextColour" value="1 0.7 0"/>
-						</Widget>
-						<Widget type="Button" skin="CheckBox" position="40 220 300 24" name="MotionBlur">
+						</Widget>-->
+						<Widget type="Button" skin="CheckBox" position="40 180 300 24" name="MotionBlur">
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 							<Property key="Caption" value="#{MotionBlur}"/>
 							<Property key="TextColour" value="0.6 1 0.3"/>
 						</Widget>
-						<Widget type="ScrollBar" skin="ScrollBarH" position="248 255 320 18" name="BlurIntens">
+						<Widget type="ScrollBar" skin="ScrollBarH" position="248 215 320 18" name="BlurIntens">
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 							<Property key="MoveToClick" value="true"/>
 							<Property key="Range" value="1000001"/>
 							<Property key="MoveToClick" value="true"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="66 255 118 24">
+						<Widget type="TextBox" skin="TextBox" position="66 215 118 24">
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 							<Property key="Caption" value="#{Intensity}"/>
 							<Property key="TextColour" value="0.7 1 0.4"/>
@@ -729,11 +729,11 @@
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 							<Property key="TextColour" value="1 1 0.5"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="184 255 60 24" name="BlurIntensVal">
+						<Widget type="TextBox" skin="TextBox" position="184 215 60 24" name="BlurIntensVal">
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 							<Property key="TextColour" value="0.7 1 0.4"/>
 						</Widget>
-						<Widget type="Button" skin="CheckBox" position="40 290 300 24" name="ssao">
+						<Widget type="Button" skin="CheckBox" position="40 250 300 24" name="ssao">
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 							<Property key="Caption" value="#{ssao}"/>
 							<Property key="TextColour" value="0.6 1 0.3"/>
