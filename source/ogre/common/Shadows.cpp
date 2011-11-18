@@ -39,6 +39,9 @@ void App::changeShadows()
 	pSet->shadow_size = std::max(0,std::min(ciShadowNumSizes-1, pSet->shadow_size));
 	int fTex = /*2048*/ ciShadowSizesA[pSet->shadow_size], fTex2 = fTex/2;
 	int num = /*3*/ pSet->shadow_count;
+	
+	// disable 4 shadow textures (does not work because no texcoord's left in shader)
+	if (num == 4) num = 3;
 
 	TerrainMaterialGeneratorB::SM2Profile* matProfile = 0;
 	
@@ -183,6 +186,7 @@ void App::changeShadows()
 		#endif
 	}
 	
+	materialFactory->setNumShadowTex(num);
 	materialFactory->setShadows(pSet->shadow_type != 0);
 	materialFactory->setShadowsDepth(bDepth);
 	materialFactory->generate();

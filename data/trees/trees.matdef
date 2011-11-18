@@ -11,6 +11,7 @@
 	cullHardware = none
 	terrainLightMap = true
 	wind = 2
+	shadowPriority = 0.1
 
 [gum_bark]
 	diffuseMap_512 = gum_bark.png
@@ -20,6 +21,7 @@
 	receivesDepthShadows = true
 	terrainLightMap = true
 	wind = 2
+	shadowPriority = 0.1
 
 ; --------- 3D-diggers plants ---------
 
@@ -29,6 +31,7 @@
 	alphaRejectFunc = greater_equal
 	alphaRejectValue = 128
 	terrainLightMap = true
+	shadowPriority = 0.1
 
 [3D-Diggers/plant1]
 	parent = 3D-Diggers/base
@@ -62,6 +65,7 @@
 [3D-Diggers/fir01]
 	ambient = 1.0 1.0 1.0
 	diffuse = 0.6 0.6 0.6
+	shadowPriority = 0.1
 	alphaRejectFunc = greater
 	alphaRejectValue = 128
 	transparent = true
@@ -72,6 +76,7 @@
 [3D-Diggers/firW1]
 	ambient = 1.0 1.0 1.0
 	diffuse = 0.6 0.6 0.6
+	shadowPriority = 0.1
 	alphaRejectFunc = greater
 	alphaRejectValue = 128
 	transparent = true
@@ -82,6 +87,7 @@
 [3D-Diggers/fir02]
 	ambient = 1.0 1.0 1.0
 	diffuse = 0.6 0.6 0.6
+	shadowPriority = 0.1
 	diffuseMap_512 = fir02.jpg
 	receivesDepthShadows = true
 	terrainLightMap = true
@@ -90,12 +96,14 @@
 [3D-Diggers/firW2]
 	ambient = 1.0 1.0 1.0
 	diffuse = 0.6 0.6 0.6
+	shadowPriority = 0.1
 	diffuseMap_512 = fir02w.jpg
 	receivesDepthShadows = true
 	terrainLightMap = true
 	wind = 2
 
 [3D-Diggers/shroom1]
+	shadowPriority = 0.1
 	parent = 3D-Diggers/base
 	ambient = 0.5 0.5 0.5
 	diffuse = 0.6 0.6 0.6
@@ -110,6 +118,7 @@
 ; ---------------------------------
 
 [Palm]
+	shadowPriority = 0.1
 	diffuseMap_512 = palm.png
 	alphaRejectFunc = greater
 	alphaRejectValue = 79
@@ -126,6 +135,7 @@
 	diffuseMap_1024 = rock.05w.jpg
 	receivesDepthShadows = true
 	terrainLightMap = true
+	shadowPriority = 0.4
 
 [rock.07.mat/SOLID/TEX/rockW05.png]
 	parent = rock.05.mat/SOLID/TEX/rockW05.png
@@ -134,6 +144,7 @@
 	diffuseMap_1024 = rock.05.jpg
 	receivesDepthShadows = true
 	terrainLightMap = true
+	shadowPriority = 0.4
 
 [rock.07.mat/SOLID/TEX/rock.05.png]
 	parent = rock.05.mat/SOLID/TEX/rock.05.png
@@ -142,6 +153,7 @@
 ; ---------- jungle trees ----------------
 
 [tree.07.branch1.mat/ALPHA/TEX/tree.07.png/VertCol/TWOSIDE]
+	shadowPriority = 0.4
 	cullHardware = none
 	alphaRejectFunc = greater
 	alphaRejectValue = 192
@@ -162,8 +174,10 @@
 	receivesDepthShadows = true
 	terrainLightMap = true
 	wind = 2
+	shadowPriority = 0.4
 
 [leaves.09.mat/ALPHA/TEX/tree.09.png/VertCol/TWOSIDE]
+	shadowPriority = 0.4
 	cullHardware = none
 	alphaRejectFunc = greater
 	alphaRejectValue = 192
@@ -183,6 +197,7 @@
 	parent = leaves.09.mat/ALPHA/TEX/tree.09.png/VertCol/TWOSIDE
 
 [tree.09.mat/SOLID/TEX/tree.09.png/VertCol]
+	shadowPriority = 0.4
 	diffuseMap_512 = tree.09.png
 	receivesDepthShadows = true
 	terrainLightMap = true

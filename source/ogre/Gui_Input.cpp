@@ -92,7 +92,7 @@ void App::InitInputGui()
 			widget->setUserString("RelativeTo", "OptionsWnd");
 
 		#define CreateText(x,y, w,h, name, text)  {  StaticTextPtr txt =  \
-			tabitem->createWidget<StaticText>("StaticText", x,y, w,h, ALIGN, name);  \
+			tabitem->createWidget<TextBox>("TextBox", x,y, w,h, ALIGN, name);  \
 			txt->setUserString("origPosX", toStr(x)); txt->setUserString("origPosY", toStr(y)); \
 			txt->setUserString("origSizeX", toStr(w)); txt->setUserString("origSizeY", toStr(h)); \
 			txt->setUserString("RelativeTo", "OptionsWnd"); \
@@ -146,7 +146,7 @@ void App::InitInputGui()
 			y = 40 + ya * yRow[name];
 
 			//  description label
-			StaticTextPtr desc = tabitem->createWidget<StaticText>("StaticText",
+			StaticTextPtr desc = tabitem->createWidget<TextBox>("TextBox",
 				x0, y+5, sx+70, sy,  ALIGN,
 				"staticText_" + sAct );
 			setOrigPos(desc);
@@ -204,7 +204,7 @@ void App::InitInputGui()
 			//  value bar  --------------
 			if (playerTab)
 			{
-				StaticImagePtr bar = tabitem->createWidget<StaticImage>("StaticImage",
+				StaticImagePtr bar = tabitem->createWidget<ImageBox>("ImageBox",
 					x2 + (button2 ? 0 : 64), y+4, button2 ? 128 : 64, 16, ALIGN,
 					"bar_" + sAct + "_" + sPlr);
 				setOrigPos(bar);

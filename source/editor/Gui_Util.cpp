@@ -395,42 +395,47 @@ void App::msgTrackDel(Message* sender, MessageBoxStyle result)
 
 bool App::LoadSurf()
 {
-	std::string path = pathTrk[bListTrackU] + pSet->track + "/surfaces.txt";
-	CONFIGFILE cf;
-	if (!cf.Load(path))
-	{	LogO("Can't find surfaces configfile: " + path);  return false;  }
+	std::string path = "surfaces.txt";
+	Ogre::ConfigFile cf;
+	try { cf.load(path); } catch (Ogre::Exception&) { LogO("Can't find surfaces configfile: " + path);  return false; }
 	
-	strlist sl;
-	cf.GetSectionList(sl);
-		
-	int si = 0;
-	for (strlist::const_iterator s = sl.begin(); s != sl.end(); ++s)
+	Ogre::ConfigFile::SectionIterator seci = cf.getSectionIterator();
+	Ogre::String secName, key, value;
+
+	while (seci.hasMoreElements())
 	{
 		TRACKSURFACE surf;
-		surf.name = *s;
 		
-		int id;
-		cf.GetParam(*s + ".ID", id);	surf.setType(id);
-		float f = 0.0;
-		cf.GetParam(*s + ".BumpWaveLength", f);		surf.bumpWaveLength = f;
-		cf.GetParam(*s + ".BumpAmplitude", f);		surf.bumpAmplitude = f;
-		cf.GetParam(*s + ".FrictionNonTread", f);	surf.frictionNonTread = f;
-		cf.GetParam(*s + ".FrictionTread", f);		surf.frictionTread = f;
-		cf.GetParam(*s + ".RollResistanceCoefficient", f);  surf.rollResistanceCoefficient = f;
-		cf.GetParam(*s + ".RollingDrag", f);		surf.rollingDrag = f;
+		secName = seci.peekNextKey();
+		if (secName == Ogre::StringUtil::BLANK) { seci.getNext(); continue; }
 		
-		if (StringUtil::startsWith(surf.name, "l_"))
+		int l;
+		if (StringUtil::startsWith(secName, "l_"))
 		{
-			int l = surf.name[2]-'0';  // saved ter layers by editor, all + road
-			if (l < 8)
-				su[l] = surf;
+			l = secName[2]-'0';  // saved ter layers by editor, all + road
 		}else
 		{
-			int l = surf.name[0]-'B';  // A is road, B-F ter layers - used only
-			if (l < 0)  su[6] = surf;
-			else  su[l] = surf;
+			l = secName[0]-'B';  // A is road, B-F ter layers - used only
+			if (l < 0)  l = 6;
+		}
+		if (l < 0) l = 0; if (l > 7) l = 7;
+		
+		su[l] = surf;
+		
+		Ogre::ConfigFile::SettingsMultiMap *settings = seci.getNext();
+		Ogre::ConfigFile::SettingsMultiMap::iterator i;
+		for (i = settings->begin(); i != settings->end(); ++i)
+		{
+			if (i->first == "ID") su[l].setType( s2i(i->second) );
+			else if (i->first == "BumpWaveLength") su[l].bumpWaveLength = s2r(i->second);
+			else if (i->first == "BumpAmplitude") su[l].bumpAmplitude = s2r(i->second);
+			else if (i->first == "FrictionNonTread") su[l].frictionNonTread = s2r(i->second);
+			else if (i->first == "FrictionTread") su[l].frictionTread = s2r(i->second);
+			else if (i->first == "RollResistanceCoefficient") su[l].rollResistanceCoefficient = s2r(i->second);
+			else if (i->first == "RollingDrag") su[l].rollingDrag = s2r(i->second);
 		}
 	}
+
 	return true;
 }
 

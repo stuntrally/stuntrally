@@ -112,7 +112,7 @@ SETTINGS::SETTINGS() :  ///  Defaults
 	particles(true), trails(true),
 	shadow_dist(3000), shadow_size(2), shadow_count(3), shadow_type(1), lightmap_size(0),
 	refl_skip(10), refl_faces(1), refl_size(0), refl_dist(500.f), refl_mode("single"),
-	shaders(0),  trees(1.f), grass(1.f), trees_dist(1.f), grass_dist(1.f),
+	shaders(0.5),  trees(1.f), grass(1.f), trees_dist(1.f), grass_dist(1.f),
 	particles_len(1.f), trails_len(1.f),use_imposters(true),
 	//  car
 	abs(1), tcs(1), autoshift(1), autorear(1), rear_inv(1), show_mph(0),

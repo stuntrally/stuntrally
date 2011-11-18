@@ -1,9 +1,9 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <MyGUI type="Layout">
-	<Widget type="Widget" skin="Panel" position="200 400 224 56" layer="ToolTip" name="ToolTip">
+	<Widget type="Widget" skin="PanelSkin" position="200 400 224 56" layer="ToolTip" name="ToolTip">
 		<Property key="Alpha" value="0.8"/>
 		<Property key="Colour" value="0.3 0.5 0.9"/>
-		<Widget type="Edit" skin="WordWrapSimple" position="4 4 218 54" align="Stretch">
+		<Widget type="EditBox" skin="WordWrapEmpty" position="4 4 218 54" align="Stretch">
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="TextColour" value="0.9 0.96 1.0"/>
 			<Property key="WordWrap" value="true"/>
@@ -209,7 +209,7 @@
 		<Property key="Alpha" value="0.3"/>
 		<Property key="Snap" value="true"/>
 		<Property key="Visible" value="true"/>
-		<Widget type="Tab" skin="Tab" position="0 0 796 563" align="Stretch" layer="Back" name="TabWnd">
+		<Widget type="TabControl" skin="TabControl" position="0 0 796 563" align="Stretch" layer="Back" name="TabWnd">
 			<UserString key="RelativeTo" value="OptionsWnd"/>
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="ButtonWidth" value="100"/>
@@ -288,7 +288,7 @@
 					<Property key="TextColour" value="0.9 0.9 0.5"/>
 					<UserString key="tip" value="#{TrackPipes}"/>
 				</Widget>
-				<Widget type="Edit" skin="WordWrap" position="176 360 336 75" name="TrackDesc">
+				<Widget type="EditBox" skin="WordWrapEmpty" position="176 360 336 75" name="TrackDesc">
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 					<Property key="ReadOnly" value="false"/>
 					<Property key="MultiLine" value="true"/>
@@ -365,14 +365,14 @@
 					<Property key="ImageTexture" value="track_icons.png"/>
 					<Property key="ImageCoord" value="0 0 224 32"/>
 				</Widget>
-				<Widget type="Button" skin="ButtonSmall" position="16 7 40 24" name="TrkView1">
+				<Widget type="Button" skin="Button" position="16 7 40 24" name="TrkView1">
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 					<Property key="Caption" value="|"/>
 					<Property key="Alpha" value="0.8"/>
 					<Property key="Colour" value="0.6 0.8 1.0"/>
 					<Property key="TextColour" value="0.45 0.58 0.8"/>
 				</Widget>
-				<Widget type="Button" skin="ButtonSmall" position="64 7 40 24" name="TrkView2">
+				<Widget type="Button" skin="Button" position="64 7 40 24" name="TrkView2">
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 					<Property key="Caption" value="|||"/>
 					<Property key="Alpha" value="0.8"/>
@@ -400,7 +400,7 @@
 					<Property key="TextColour" value="1 0.9 0.4"/>
 					<UserString key="tip" value="#{TipRenameTrk}"/>
 				</Widget>
-				<Widget type="Edit" skin="Edit" position="240 447 160 24" name="TrackName">
+				<Widget type="EditBox" skin="EditBox" position="240 447 160 24" name="TrackName">
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 					<Property key="Colour" value="0.6 1 0.8"/>
 					<Property key="TextColour" value="0.6 1 0.8"/>
@@ -419,7 +419,7 @@
                     <Property key="Caption" value="#{Find}:"/>
                     <Property key="TextColour" value="0.7 0.8 0.9"/>
                 </Widget>
-                <Widget type="Edit" skin="Edit" position="16 472 88 24" name="TrackFind">
+                <Widget type="EditBox" skin="EditBox" position="16 472 88 24" name="TrackFind">
 					<UserString key="RelativeTo" value="OptionsWnd"/>
                     <Property key="Colour" value="0.7 0.8 0.9"/>
                     <Property key="MaxTextLength" value="20"/>
@@ -446,14 +446,14 @@
 					<Property key="Caption" value="#{SunDir}"/>
 					<Property key="TextColour" value="1 1 0.5"/>
 				</Widget>
-				<Widget type="HScroll" skin="HScroll" position="280 71 320 16" name="SunPitch">
+				<Widget type="ScrollBar" skin="ScrollBarH" position="280 71 320 16" name="SunPitch">
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 					<Property key="MoveToClick" value="true"/>
 					<Property key="Range" value="1000001"/>
 					<Property key="Colour" value="1 0.8 0.2"/>
 					<UserString key="tip" value="#{TipSunDirPitch}"/>
 				</Widget>
-				<Widget type="HScroll" skin="HScroll" position="280 95 320 16" name="SunYaw">
+				<Widget type="ScrollBar" skin="ScrollBarH" position="280 95 320 16" name="SunYaw">
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 					<Property key="MoveToClick" value="true"/>
 					<Property key="Range" value="1000001"/>
@@ -485,19 +485,19 @@
 					<Property key="Caption" value="#{Specular}"/>
 					<Property key="TextColour" value="0.8 0.8 0.7"/>
 				</Widget>
-				<Widget type="Edit" skin="Edit" position="208 143 164 24" name="LiAmb">
+				<Widget type="EditBox" skin="EditBox" position="208 143 164 24" name="LiAmb">
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 					<Property key="Colour" value="0.8 0.8 0.8"/>
 					<Property key="TextColour" value="0.7 0.7 0.66"/>
 					<UserString key="tip" value="#{TipSunAmbient}"/>
 				</Widget>
-				<Widget type="Edit" skin="Edit" position="208 175 164 24" name="LiDiff">
+				<Widget type="EditBox" skin="EditBox" position="208 175 164 24" name="LiDiff">
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 					<Property key="Colour" value="0.95 0.95 0.95"/>
 					<Property key="TextColour" value="0.9 0.9 0.8"/>
 					<UserString key="tip" value="#{TipSunDiffuse}"/>
 				</Widget>
-				<Widget type="Edit" skin="Edit" position="208 207 164 24" name="LiSpec">
+				<Widget type="EditBox" skin="EditBox" position="208 207 164 24" name="LiSpec">
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 					<Property key="Colour" value="0.9 0.9 0.9"/>
 					<Property key="TextColour" value="0.8 0.8 0.7"/>
@@ -508,7 +508,7 @@
 					<Property key="Caption" value="#{Fog}"/>
 					<Property key="TextColour" value="0.7 0.85 1"/>
 				</Widget>
-				<Widget type="Edit" skin="Edit" position="208 255 164 24" name="FogClr">
+				<Widget type="EditBox" skin="EditBox" position="208 255 164 24" name="FogClr">
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 					<Property key="TextColour" value="0.8 0.9 1"/>
 					<Property key="Colour" value="0.8 0.9 1"/>
@@ -543,18 +543,18 @@
 					<Property key="Caption" value="#{Exponent}"/>
 					<Property key="Visible" value="false"/>
 				</Widget>
-				<Widget type="Edit" skin="Edit" position="440 295 104 24">
+				<Widget type="EditBox" skin="EditBox" position="440 295 104 24">
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 					<Property key="Visible" value="false"/>
 				</Widget>
-				<Widget type="HScroll" skin="HScroll" position="280 295 320 16" name="FogStart">
+				<Widget type="ScrollBar" skin="ScrollBarH" position="280 295 320 16" name="FogStart">
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 					<Property key="MoveToClick" value="true"/>
 					<Property key="Range" value="1000001"/>
 					<Property key="Colour" value="0.7 0.85 1"/>
 					<UserString key="tip" value="#{TipFogStartDist}"/>
 				</Widget>
-				<Widget type="HScroll" skin="HScroll" position="280 319 320 16" name="FogEnd">
+				<Widget type="ScrollBar" skin="ScrollBarH" position="280 319 320 16" name="FogEnd">
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 					<Property key="MoveToClick" value="true"/>
 					<Property key="Range" value="1000001"/>
@@ -611,7 +611,7 @@
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 					<Property key="TextColour" value="0.8 1 1"/>
 				</Widget>
-				<Widget type="HScroll" skin="HScroll" position="280 407 320 16" name="Rain1Rate">
+				<Widget type="ScrollBar" skin="ScrollBarH" position="280 407 320 16" name="Rain1Rate">
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 					<Property key="Range" value="1000001"/>
 					<Property key="MoveToClick" value="true"/>
@@ -622,7 +622,7 @@
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 					<Property key="TextColour" value="0.8 1 1"/>
 				</Widget>
-				<Widget type="HScroll" skin="HScroll" position="280 471 320 16" name="Rain2Rate">
+				<Widget type="ScrollBar" skin="ScrollBarH" position="280 471 320 16" name="Rain2Rate">
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 					<Property key="Range" value="1000001"/>
 					<Property key="MoveToClick" value="true"/>
@@ -663,14 +663,14 @@
 					<Property key="Caption" value="#{TriSize} [#{UnitM}]"/>
 					<Property key="TextColour" value="0.4 1 0.7"/>
 				</Widget>
-				<Widget type="HScroll" skin="HScroll" position="256 73 440 18" name="TerTriSize">
+				<Widget type="ScrollBar" skin="ScrollBarH" position="256 73 440 18" name="TerTriSize">
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 					<Property key="Range" value="1000001"/>
 					<Property key="MoveToClick" value="true"/>
 					<Property key="Colour" value="0.7 1 0.8"/>
 					<UserString key="tip" value="#{TipTerTriSize}"/>
 				</Widget>
-				<Widget type="Edit" skin="Edit" position="168 71 80 24" name="edTerTriSize">
+				<Widget type="EditBox" skin="EditBox" position="168 71 80 24" name="edTerTriSize">
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 					<Property key="TextColour" value="0.7 1 0.8"/>
 					<Property key="Colour" value="0.7 1 0.8"/>
@@ -699,7 +699,7 @@
 					<Property key="TextColour" value="0.4 0.8 0.6"/>
 					<UserString key="tip" value="#{TipResizeTer}"/>
 				</Widget>
-				<Widget type="Tab" skin="Tab" position="160 38 340 20" name="TabHMapSize">
+				<Widget type="TabControl" skin="TabControl" position="160 38 340 20" name="TabHMapSize">
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 					<Property key="Colour" value="0.7 0.9 1"/>
 					<UserString key="tip" value="#{TipTerVertCount}"/>
@@ -737,7 +737,7 @@
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 					<Property key="TextColour" value="0.6 1.0 0.8"/>
 				</Widget>
-				<Widget type="HScroll" skin="HScroll" position="208 205 400 16" name="TerGenScale">
+				<Widget type="ScrollBar" skin="ScrollBarH" position="208 205 400 16" name="TerGenScale">
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 					<Property key="Range" value="1000001"/>
 					<Property key="MoveToClick" value="true"/>
@@ -752,7 +752,7 @@
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 					<Property key="TextColour" value="0.6 1.0 0.8"/>
 				</Widget>
-				<Widget type="HScroll" skin="HScroll" position="208 230 400 16" name="TerGenFreq">
+				<Widget type="ScrollBar" skin="ScrollBarH" position="208 230 400 16" name="TerGenFreq">
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 					<Property key="Range" value="1000001"/>
 					<Property key="MoveToClick" value="true"/>
@@ -767,7 +767,7 @@
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 					<Property key="TextColour" value="0.6 1.0 0.9"/>
 				</Widget>
-				<Widget type="HScroll" skin="HScroll" position="208 271 400 16" name="TerGenOct">
+				<Widget type="ScrollBar" skin="ScrollBarH" position="208 271 400 16" name="TerGenOct">
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 					<Property key="Range" value="10"/>
 					<Property key="MoveToClick" value="true"/>
@@ -782,7 +782,7 @@
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 					<Property key="TextColour" value="0.6 1.0 0.9"/>
 				</Widget>
-				<Widget type="HScroll" skin="HScroll" position="208 296 400 16" name="TerGenPers">
+				<Widget type="ScrollBar" skin="ScrollBarH" position="208 296 400 16" name="TerGenPers">
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 					<Property key="Range" value="1000001"/>
 					<Property key="MoveToClick" value="true"/>
@@ -797,7 +797,7 @@
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 					<Property key="TextColour" value="0.6 1.0 0.9"/>
 				</Widget>
-				<Widget type="HScroll" skin="HScroll" position="208 321 400 16" name="TerGenPow">
+				<Widget type="ScrollBar" skin="ScrollBarH" position="208 321 400 16" name="TerGenPow">
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 					<Property key="Range" value="1000001"/>
 					<Property key="MoveToClick" value="true"/>
@@ -812,7 +812,7 @@
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 					<Property key="TextColour" value="0.6 1.0 0.8"/>
 				</Widget>
-				<Widget type="HScroll" skin="HScroll" position="208 362 400 16" name="TerGenOfsX">
+				<Widget type="ScrollBar" skin="ScrollBarH" position="208 362 400 16" name="TerGenOfsX">
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 					<Property key="Range" value="1000001"/>
 					<Property key="MoveToClick" value="true"/>
@@ -827,17 +827,17 @@
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 					<Property key="TextColour" value="0.6 1.0 0.8"/>
 				</Widget>
-				<Widget type="HScroll" skin="HScroll" position="208 387 400 16" name="TerGenOfsY">
+				<Widget type="ScrollBar" skin="ScrollBarH" position="208 387 400 16" name="TerGenOfsY">
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 					<Property key="Range" value="1000001"/>
 					<Property key="MoveToClick" value="true"/>
 					<Property key="Colour" value="0.6 0.9 0.5"/>
 				</Widget>
-				<Widget type="Progress" skin="ProgressFill" position="160 37 340 21">
+				<Widget type="ProgressBar" skin="ProgressBarFill" position="160 37 340 21">
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 					<Property key="Colour" value="0.2 0.9 0.3"/>
 					<Property key="Alpha" value="0.3"/>
-					<Property key="Widget_Enabled" value="false"/>
+					<Property key="Enabled" value="false"/>
 				</Widget>
 			</Widget>
 			<Widget type="TabItem" skin="" position="4 26 787 531">
@@ -856,7 +856,7 @@
 					<Property key="Colour" value="0.4 1 0.4"/>
 					<UserString key="tip" value="#{TipToggleLayer}"/>
 				</Widget>
-				<Widget type="Tab" skin="Tab" position="32 16 560 24" name="TabTerLay">
+				<Widget type="TabControl" skin="TabControl" position="32 16 560 24" name="TabTerLay">
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 					<Property key="Colour" value="0.7 0.9 1"/>
 					<UserString key="tip" value="#{TipTerLayers}"/>
@@ -889,11 +889,11 @@
 						<Property key="Caption" value="#{Road}"/>
 					</Widget>
 				</Widget>
-				<Widget type="Progress" skin="ProgressFill" position="32 15 560 25">
+				<Widget type="ProgressBar" skin="ProgressBarFill" position="32 15 560 25">
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 					<Property key="Colour" value="0 0.9 0"/>
 					<Property key="Alpha" value="0.3"/>
-					<Property key="Widget_Enabled" value="false"/>
+					<Property key="Enabled" value="false"/>
 					<UserString key="tip" value="#{TipTireParType3}"/>
 				</Widget>
 				<Widget type="ImageBox" skin="ImageBox" position="32 47 144 144" name="TerImgDiff">
@@ -936,19 +936,19 @@
 					<Property key="Caption" value="#{scale}"/>
 					<Property key="TextColour" value="0.6 1 0.6"/>
 				</Widget>
-				<Widget type="Edit" skin="Edit" position="240 126 72 24" name="edTerLScale">
+				<Widget type="EditBox" skin="EditBox" position="240 126 72 24" name="edTerLScale">
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 					<Property key="Colour" value="0.6 1 0.6"/>
 					<Property key="TextColour" value="0.6 1 0.6"/>
 				</Widget>
-				<Widget type="HScroll" skin="HScroll" position="320 128 440 18" name="TerLScale">
+				<Widget type="ScrollBar" skin="ScrollBarH" position="320 128 440 18" name="TerLScale">
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 					<Property key="Colour" value="0.6 1 0.6"/>
 					<Property key="MoveToClick" value="true"/>
 					<Property key="Range" value="1000001"/>
 					<UserString key="tip" value="#{TipTexTiling}"/>
 				</Widget>
-				<Widget type="Tab" skin="Tab" position="24 200 736 320">
+				<Widget type="TabControl" skin="TabControl" position="24 200 736 320">
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 					<Property key="ButtonAutoWidth" value="true"/>
 					<Property key="Colour" value="0.73 0.88 1"/>
@@ -964,7 +964,7 @@
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 							<Property key="TextColour" value="0.6 0.9 0.2"/>
 						</Widget>
-						<Widget type="HScroll" skin="HScroll" position="162 25 360 16" name="TerLAngMin">
+						<Widget type="ScrollBar" skin="ScrollBarH" position="162 25 360 16" name="TerLAngMin">
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 							<Property key="Range" value="1000001"/>
 							<Property key="MoveToClick" value="true"/>
@@ -980,7 +980,7 @@
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 							<Property key="TextColour" value="0.6 0.9 0.2"/>
 						</Widget>
-						<Widget type="HScroll" skin="HScroll" position="162 50 360 16" name="TerLAngMax">
+						<Widget type="ScrollBar" skin="ScrollBarH" position="162 50 360 16" name="TerLAngMax">
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 							<Property key="Range" value="1000001"/>
 							<Property key="MoveToClick" value="true"/>
@@ -996,7 +996,7 @@
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 							<Property key="TextColour" value="0.6 0.8 0.2"/>
 						</Widget>
-						<Widget type="HScroll" skin="HScroll" position="162 75 360 16" name="TerLAngSm">
+						<Widget type="ScrollBar" skin="ScrollBarH" position="162 75 360 16" name="TerLAngSm">
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 							<Property key="Range" value="1000001"/>
 							<Property key="MoveToClick" value="true"/>
@@ -1012,7 +1012,7 @@
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 							<Property key="TextColour" value="0.6 0.9 0.6"/>
 						</Widget>
-						<Widget type="HScroll" skin="HScroll" position="162 110 360 16" name="TerLHMin">
+						<Widget type="ScrollBar" skin="ScrollBarH" position="162 110 360 16" name="TerLHMin">
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 							<Property key="Range" value="1000001"/>
 							<Property key="MoveToClick" value="true"/>
@@ -1028,7 +1028,7 @@
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 							<Property key="TextColour" value="0.6 0.9 0.6"/>
 						</Widget>
-						<Widget type="HScroll" skin="HScroll" position="162 135 360 16" name="TerLHMax">
+						<Widget type="ScrollBar" skin="ScrollBarH" position="162 135 360 16" name="TerLHMax">
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 							<Property key="Range" value="1000001"/>
 							<Property key="MoveToClick" value="true"/>
@@ -1044,7 +1044,7 @@
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 							<Property key="TextColour" value="0.6 0.75 0.6"/>
 						</Widget>
-						<Widget type="HScroll" skin="HScroll" position="162 160 360 16" name="TerLHSm">
+						<Widget type="ScrollBar" skin="ScrollBarH" position="162 160 360 16" name="TerLHSm">
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 							<Property key="Range" value="1000001"/>
 							<Property key="MoveToClick" value="true"/>
@@ -1060,7 +1060,7 @@
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 							<Property key="TextColour" value="0.6 0.9 0.7"/>
 						</Widget>
-						<Widget type="HScroll" skin="HScroll" position="162 195 360 16" name="TerLNoise">
+						<Widget type="ScrollBar" skin="ScrollBarH" position="162 195 360 16" name="TerLNoise">
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 							<Property key="Range" value="1000001"/>
 							<Property key="MoveToClick" value="true"/>
@@ -1078,36 +1078,36 @@
 					<Widget type="TabItem" skin="" position="4 26 727 288">
 						<UserString key="RelativeTo" value="OptionsWnd"/>
 						<Property key="Caption" value="#{Particles}"/>
-						<Widget type="Widget" skin="Panel" position="0 -8 750 300">
+						<Widget type="Widget" skin="PanelSkin" position="0 -8 750 300">
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 							<Property key="Alpha" value="0.2"/>
 							<Property key="Colour" value="1 0.9 0.5"/>
 						</Widget>
-						<Widget type="Edit" skin="Edit" position="64 22 56 24" name="LDust">
+						<Widget type="EditBox" skin="EditBox" position="64 22 56 24" name="LDust">
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 							<Property key="Colour" value="0.8 0.8 0.2"/>
 							<Property key="TextColour" value="0.8 0.8 0.2"/>
 							<UserString key="tip" value="#{TipDustInt}"/>
 						</Widget>
-						<Widget type="Edit" skin="Edit" position="88 92 80 24" name="LDustS">
+						<Widget type="EditBox" skin="EditBox" position="88 92 80 24" name="LDustS">
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 							<Property key="Colour" value="0.8 0.8 0.2"/>
 							<Property key="TextColour" value="0.8 0.8 0.2"/>
 							<UserString key="tip" value="#{TipDustSize}"/>
 						</Widget>
-						<Widget type="Edit" skin="Edit" position="224 22 56 24" name="LMud">
+						<Widget type="EditBox" skin="EditBox" position="224 22 56 24" name="LMud">
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 							<Property key="Colour" value="0.8 0.7 0.2"/>
 							<Property key="TextColour" value="0.8 0.7 0.2"/>
 							<UserString key="tip" value="#{TipMudInt}"/>
 						</Widget>
-						<Widget type="Edit" skin="Edit" position="388 22 56 24" name="LSmoke">
+						<Widget type="EditBox" skin="EditBox" position="388 22 56 24" name="LSmoke">
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 							<Property key="Colour" value="0.7 0.7 0.7"/>
 							<Property key="TextColour" value="0.7 0.7 0.7"/>
 							<UserString key="tip" value="#{TipSmokeInt}"/>
 						</Widget>
-						<Widget type="Edit" skin="Edit" position="96 132 160 24" name="LTrlClr">
+						<Widget type="EditBox" skin="EditBox" position="96 132 160 24" name="LTrlClr">
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 							<Property key="Colour" value="0.6 0.8 0"/>
 							<Property key="TextColour" value="0.6 0.8 0"/>
@@ -1185,7 +1185,7 @@
 					<Widget type="TabItem" skin="" position="4 26 727 288">
 						<UserString key="RelativeTo" value="OptionsWnd"/>
 						<Property key="Caption" value="#{Surface}"/>
-						<Widget type="Widget" skin="Panel" position="0 -8 750 300">
+						<Widget type="Widget" skin="PanelSkin" position="0 -8 750 300">
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 							<Property key="Alpha" value="0.2"/>
 							<Property key="Colour" value="1 0.7 0.9"/>
@@ -1195,13 +1195,13 @@
 							<Property key="Caption" value="#{Surface}"/>
 							<Property key="TextColour" value="0.9 0.7 0.85"/>
 						</Widget>
-						<Widget type="Edit" skin="Edit" position="140 68 80 24" name="SuBumpWave">
+						<Widget type="EditBox" skin="EditBox" position="140 68 80 24" name="SuBumpWave">
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 							<Property key="TextColour" value="0.87 0.75 0.93"/>
 							<Property key="Colour" value="0.87 0.75 0.93"/>
 							<UserString key="tip" value="#{TipBumpFreq}"/>
 						</Widget>
-						<Widget type="Edit" skin="Edit" position="324 68 80 24" name="SuBumpAmp">
+						<Widget type="EditBox" skin="EditBox" position="324 68 80 24" name="SuBumpAmp">
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 							<Property key="Colour" value="0.9 0.7 1"/>
 							<Property key="TextColour" value="0.9 0.7 1"/>
@@ -1213,19 +1213,19 @@
 							<Property key="TextColour" value="1 0.7 0.7"/>
 							<UserString key="tip" value="#{TipSurfType}"/>
 						</Widget>
-						<Widget type="Edit" skin="Edit" position="116 108 80 24" name="SuRollDrag">
+						<Widget type="EditBox" skin="EditBox" position="116 108 80 24" name="SuRollDrag">
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 							<Property key="Colour" value="1 0.75 0.3"/>
 							<Property key="TextColour" value="1 0.75 0.3"/>
 							<UserString key="tip" value="#{TipRollDrag}"/>
 						</Widget>
-						<Widget type="Edit" skin="Edit" position="284 108 80 24" name="SuFrict">
+						<Widget type="EditBox" skin="EditBox" position="284 108 80 24" name="SuFrict">
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 							<Property key="Colour" value="1 0.6 0.2"/>
 							<Property key="TextColour" value="1 0.6 0.2"/>
 							<UserString key="tip" value="#{TipSurfFrict}"/>
 						</Widget>
-						<Widget type="Edit" skin="Edit" position="492 108 80 24" name="SuFrict2">
+						<Widget type="EditBox" skin="EditBox" position="492 108 80 24" name="SuFrict2">
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 							<Property key="Colour" value="1 0.4 0"/>
 							<Property key="TextColour" value="1 0.4 0"/>
@@ -1268,7 +1268,7 @@
 			<Widget type="TabItem" skin="" position="4 26 787 531">
 				<UserString key="RelativeTo" value="OptionsWnd"/>
 				<Property key="Caption" value="#{Vegetation}"/>
-				<Widget type="Tab" skin="Tab" position="16 15 752 497">
+				<Widget type="TabControl" skin="TabControl" position="16 15 752 497">
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 					<Property key="ButtonWidth" value="180"/>
 					<Property key="Colour" value="0.73 0.88 1"/>
@@ -1280,7 +1280,7 @@
 							<Property key="Caption" value="#{GrassDens}"/>
 							<Property key="TextColour" value="0.6 1 0.4"/>
 						</Widget>
-						<Widget type="Edit" skin="Edit" position="152 30 64 24" name="GrassDens">
+						<Widget type="EditBox" skin="EditBox" position="152 30 64 24" name="GrassDens">
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 							<Property key="TextColour" value="0.6 1 0.4"/>
 							<Property key="Colour" value="0.6 1 0.4"/>
@@ -1291,7 +1291,7 @@
 							<Property key="Caption" value="#{TreeDens}"/>
 							<Property key="TextColour" value="0.9 0.9 0.6"/>
 						</Widget>
-						<Widget type="Edit" skin="Edit" position="488 30 64 24" name="TreesDens">
+						<Widget type="EditBox" skin="EditBox" position="488 30 64 24" name="TreesDens">
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 							<Property key="TextColour" value="0.9 0.9 0.6"/>
 							<Property key="Colour" value="0.9 0.9 0.6"/>
@@ -1332,25 +1332,25 @@
 							<Property key="Caption" value="#{min} y"/>
 							<Property key="TextColour" value="0.6 0.9 0.3"/>
 						</Widget>
-						<Widget type="Edit" skin="Edit" position="152 62 64 24" name="GrPage">
+						<Widget type="EditBox" skin="EditBox" position="152 62 64 24" name="GrPage">
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 							<Property key="Colour" value="0.6 0.9 0.3"/>
 							<Property key="TextColour" value="0.6 0.9 0.3"/>
 							<UserString key="tip" value="#{TipGrassPageLength}"/>
 						</Widget>
-						<Widget type="Edit" skin="Edit" position="488 62 64 24" name="TrPage">
+						<Widget type="EditBox" skin="EditBox" position="488 62 64 24" name="TrPage">
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 							<Property key="Colour" value="0.8 0.8 0.4"/>
 							<Property key="TextColour" value="0.8 0.8 0.4"/>
 							<UserString key="tip" value="#{TipModelPageLength}"/>
 						</Widget>
-						<Widget type="Edit" skin="Edit" position="152 86 64 24" name="GrDist">
+						<Widget type="EditBox" skin="EditBox" position="152 86 64 24" name="GrDist">
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 							<Property key="Colour" value="0.6 0.9 0.3"/>
 							<Property key="TextColour" value="0.6 0.9 0.3"/>
 							<UserString key="tip" value="#{TipGrassVisDist}"/>
 						</Widget>
-						<Widget type="Edit" skin="Edit" position="488 86 64 24" name="TrDist">
+						<Widget type="EditBox" skin="EditBox" position="488 86 64 24" name="TrDist">
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 							<Property key="Colour" value="0.8 0.8 0.4"/>
 							<Property key="TextColour" value="0.8 0.8 0.4"/>
@@ -1361,25 +1361,25 @@
 							<Property key="Caption" value="#{max} y"/>
 							<Property key="TextColour" value="0.6 1 0.4"/>
 						</Widget>
-						<Widget type="Edit" skin="Edit" position="96 149 56 24" name="GrMinX">
+						<Widget type="EditBox" skin="EditBox" position="96 149 56 24" name="GrMinX">
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 							<Property key="TextColour" value="0.6 0.9 0.3"/>
 							<Property key="Colour" value="0.6 0.9 0.3"/>
 							<UserString key="tip" value="#{TipGrassPatchLengthMin}"/>
 						</Widget>
-						<Widget type="Edit" skin="Edit" position="232 149 56 24" name="GrMaxX">
+						<Widget type="EditBox" skin="EditBox" position="232 149 56 24" name="GrMaxX">
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 							<Property key="Colour" value="0.6 1 0.4"/>
 							<Property key="TextColour" value="0.6 1 0.4"/>
 							<UserString key="tip" value="#{TipGrassPatchLengthMax}"/>
 						</Widget>
-						<Widget type="Edit" skin="Edit" position="96 173 56 24" name="GrMinY">
+						<Widget type="EditBox" skin="EditBox" position="96 173 56 24" name="GrMinY">
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 							<Property key="Colour" value="0.6 0.9 0.3"/>
 							<Property key="TextColour" value="0.6 0.9 0.3"/>
 							<UserString key="tip" value="#{TipGrassPatchHeightMin}"/>
 						</Widget>
-						<Widget type="Edit" skin="Edit" position="232 173 56 24" name="GrMaxY">
+						<Widget type="EditBox" skin="EditBox" position="232 173 56 24" name="GrMaxY">
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 							<Property key="Colour" value="0.6 1 0.4"/>
 							<Property key="TextColour" value="0.6 1 0.4"/>
@@ -1420,13 +1420,13 @@
 							<Property key="Caption" value="#{GrDensSmooth}"/>
 							<Property key="TextColour" value="0.6 0.9 0.3"/>
 						</Widget>
-						<Widget type="Edit" skin="Edit" position="144 253 56 24" name="GrSwayLen">
+						<Widget type="EditBox" skin="EditBox" position="144 253 56 24" name="GrSwayLen">
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 							<Property key="TextColour" value="0.6 0.9 0.3"/>
 							<Property key="Colour" value="0.6 0.9 0.3"/>
 							<UserString key="tip" value="#{TipGrassSwayLen}"/>
 						</Widget>
-						<Widget type="Edit" skin="Edit" position="144 277 56 24" name="GrSwaySpd">
+						<Widget type="EditBox" skin="EditBox" position="144 277 56 24" name="GrSwaySpd">
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 							<Property key="Colour" value="0.6 0.9 0.3"/>
 							<Property key="TextColour" value="0.6 0.9 0.3"/>
@@ -1437,25 +1437,25 @@
 							<Property key="Caption" value="#{GrassSway}:"/>
 							<Property key="TextColour" value="0.6 1 0.4"/>
 						</Widget>
-						<Widget type="Edit" skin="Edit" position="144 229 56 24" name="GrSwayDistr">
+						<Widget type="EditBox" skin="EditBox" position="144 229 56 24" name="GrSwayDistr">
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 							<Property key="TextColour" value="0.6 0.9 0.3"/>
 							<Property key="Colour" value="0.6 0.9 0.3"/>
 							<UserString key="tip" value="#{TipGrassSwayDistr}"/>
 						</Widget>
-						<Widget type="Edit" skin="Edit" position="514 165 56 24" name="TrRdDist">
+						<Widget type="EditBox" skin="EditBox" position="514 165 56 24" name="TrRdDist">
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 							<Property key="Colour" value="0.9 0.9 0.4"/>
 							<Property key="TextColour" value="0.9 0.9 0.4"/>
 							<UserString key="tip" value="#{TipModelRoadDist}"/>
 						</Widget>
-						<Widget type="Edit" skin="Edit" position="514 133 56 24" name="TrImpDist">
+						<Widget type="EditBox" skin="EditBox" position="514 133 56 24" name="TrImpDist">
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 							<Property key="Colour" value="0.8 0.8 0.4"/>
 							<Property key="TextColour" value="0.8 0.8 0.4"/>
 							<UserString key="tip" value="#{TipImpDist}"/>
 						</Widget>
-						<Widget type="Edit" skin="Edit" position="178 317 64 24" name="GrDensSmooth">
+						<Widget type="EditBox" skin="EditBox" position="178 317 64 24" name="GrDensSmooth">
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 							<Property key="Colour" value="0.6 1 0.4"/>
 							<Property key="TextColour" value="0.6 1 0.4"/>
@@ -1466,7 +1466,7 @@
 							<Property key="Caption" value="#{GrTerMaxAngle}"/>
 							<Property key="TextColour" value="0.6 1 0.4"/>
 						</Widget>
-						<Widget type="Edit" skin="Edit" position="178 349 64 24" name="GrTerMaxAngle">
+						<Widget type="EditBox" skin="EditBox" position="178 349 64 24" name="GrTerMaxAngle">
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 							<Property key="Colour" value="0.6 1 0.4"/>
 							<Property key="TextColour" value="0.6 1 0.4"/>
@@ -1476,7 +1476,7 @@
 					<Widget type="TabItem" skin="" position="4 26 743 465">
 						<UserString key="RelativeTo" value="OptionsWnd"/>
 						<Property key="Caption" value="#{Models}"/>
-						<Widget type="Tab" skin="Tab" position="16 16 408 24" name="LTrNumTab">
+						<Widget type="TabControl" skin="TabControl" position="16 16 408 24" name="LTrNumTab">
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 							<Property key="Colour" value="0.6 0.8 0.8"/>
 							<Property key="Visible" value="true"/>
@@ -1519,11 +1519,11 @@
 								<Property key="Caption" value="9"/>
 							</Widget>
 						</Widget>
-						<Widget type="Progress" skin="ProgressFill" position="16 16 408 24">
+						<Widget type="ProgressBar" skin="ProgressBarFill" position="16 16 408 24">
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 							<Property key="Alpha" value="0.3"/>
 							<Property key="Colour" value="0.0 0.9 0.9"/>
-							<Property key="Widget_Enabled" value="false"/>
+							<Property key="Enabled" value="false"/>
 						</Widget>
 						<Widget type="TextBox" skin="TextBox" position="16 58 104 24">
 							<UserString key="RelativeTo" value="OptionsWnd"/>
@@ -1556,7 +1556,7 @@
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 							<Property key="TextColour" value="0.6 1 1"/>
 						</Widget>
-						<Widget type="HScroll" skin="HScroll" position="184 95 360 16" name="LTrDens">
+						<Widget type="ScrollBar" skin="ScrollBarH" position="184 95 360 16" name="LTrDens">
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 							<Property key="Range" value="1000001"/>
 							<Property key="MoveToClick" value="true"/>
@@ -1593,21 +1593,21 @@
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 							<Property key="TextColour" value="0.6 0.9 0.9"/>
 						</Widget>
-						<Widget type="HScroll" skin="HScroll" position="184 135 360 16" name="LTrMinSc">
+						<Widget type="ScrollBar" skin="ScrollBarH" position="184 135 360 16" name="LTrMinSc">
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 							<Property key="Range" value="1000001"/>
 							<Property key="MoveToClick" value="true"/>
 							<Property key="Colour" value="0.6 0.8 0.8"/>
 							<UserString key="tip" value="#{TipModelMinScale}"/>
 						</Widget>
-						<Widget type="HScroll" skin="HScroll" position="184 159 360 16" name="LTrMaxSc">
+						<Widget type="ScrollBar" skin="ScrollBarH" position="184 159 360 16" name="LTrMaxSc">
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 							<Property key="Range" value="1000001"/>
 							<Property key="MoveToClick" value="true"/>
 							<Property key="Colour" value="0.6 0.8 0.8"/>
 							<UserString key="tip" value="#{TipModelMaxScale}"/>
 						</Widget>
-						<Widget type="HScroll" skin="HScroll" position="184 271 360 16" name="LTrRdDist">
+						<Widget type="ScrollBar" skin="ScrollBarH" position="184 271 360 16" name="LTrRdDist">
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 							<Property key="Range" value="21"/>
 							<Property key="MoveToClick" value="true"/>
@@ -1632,14 +1632,14 @@
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 							<Property key="TextColour" value="0.5 0.7 0.7"/>
 						</Widget>
-						<Widget type="HScroll" skin="HScroll" position="184 199 360 16" name="LTrWindFx">
+						<Widget type="ScrollBar" skin="ScrollBarH" position="184 199 360 16" name="LTrWindFx">
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 							<Property key="Range" value="1000001"/>
 							<Property key="MoveToClick" value="true"/>
 							<Property key="Colour" value="0.5 0.7 0.7"/>
 							<UserString key="tip" value="#{TipWindInflL}"/>
 						</Widget>
-						<Widget type="HScroll" skin="HScroll" position="184 223 360 16" name="LTrWindFy">
+						<Widget type="ScrollBar" skin="ScrollBarH" position="184 223 360 16" name="LTrWindFy">
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 							<Property key="Range" value="1000001"/>
 							<Property key="MoveToClick" value="true"/>
@@ -1655,7 +1655,7 @@
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 							<Property key="TextColour" value="0.6 0.9 0.9"/>
 						</Widget>
-						<Widget type="HScroll" skin="HScroll" position="184 308 360 16" name="LTrMaxTerAng">
+						<Widget type="ScrollBar" skin="ScrollBarH" position="184 308 360 16" name="LTrMaxTerAng">
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 							<Property key="Range" value="1000001"/>
 							<Property key="MoveToClick" value="true"/>
@@ -1674,7 +1674,7 @@
 							<Property key="TextColour" value="0.6 0.9 0.9"/>
 							<Property key="Caption" value="#{LTrMinTerH}"/>
 						</Widget>
-						<Widget type="Edit" skin="Edit" position="128 332 64 24" name="LTrMinTerH">
+						<Widget type="EditBox" skin="EditBox" position="128 332 64 24" name="LTrMinTerH">
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 							<Property key="Colour" value="0.6 0.9 0.9"/>
 							<Property key="TextColour" value="0.6 0.9 0.9"/>
@@ -1741,7 +1741,7 @@
 					<Property key="Caption" value="#{TexCoordMul}"/>
 					<Property key="TextColour" value="0.6 1 1"/>
 				</Widget>
-				<Widget type="Edit" skin="Edit" position="172 192 76 24" name="RdTcMul">
+				<Widget type="EditBox" skin="EditBox" position="172 192 76 24" name="RdTcMul">
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 					<Property key="TextColour" value="0.6 1 1"/>
 					<Property key="Colour" value="0.6 1 1"/>
@@ -1776,32 +1776,32 @@
 					<Property key="Caption" value="#{MergeLength}"/>
 					<Property key="TextColour" value="0.4 0.9 0.4"/>
 				</Widget>
-				<Widget type="Edit" skin="Edit" position="172 224 76 24" name="RdLenDim">
+				<Widget type="EditBox" skin="EditBox" position="172 224 76 24" name="RdLenDim">
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 					<Property key="Colour" value="0.5 1 0.7"/>
 					<Property key="TextColour" value="0.5 1 0.7"/>
 				</Widget>
-				<Widget type="Edit" skin="Edit" position="172 256 76 24" name="RdWidthSteps">
+				<Widget type="EditBox" skin="EditBox" position="172 256 76 24" name="RdWidthSteps">
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 					<Property key="Colour" value="0.5 1 0.7"/>
 					<Property key="TextColour" value="0.5 1 0.7"/>
 				</Widget>
-				<Widget type="Edit" skin="Edit" position="172 304 76 24" name="RdHeightOfs">
+				<Widget type="EditBox" skin="EditBox" position="172 304 76 24" name="RdHeightOfs">
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 					<Property key="Colour" value="0.5 0.8 0.8"/>
 					<Property key="TextColour" value="0.5 0.8 0.8"/>
 				</Widget>
-				<Widget type="Edit" skin="Edit" position="172 336 76 24" name="RdSkirtLen">
+				<Widget type="EditBox" skin="EditBox" position="172 336 76 24" name="RdSkirtLen">
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 					<Property key="Colour" value="0.5 0.7 0.9"/>
 					<Property key="TextColour" value="0.5 0.7 0.9"/>
 				</Widget>
-				<Widget type="Edit" skin="Edit" position="172 368 76 24" name="RdSkirtH">
+				<Widget type="EditBox" skin="EditBox" position="172 368 76 24" name="RdSkirtH">
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 					<Property key="Colour" value="0.5 0.7 0.9"/>
 					<Property key="TextColour" value="0.5 0.7 0.9"/>
 				</Widget>
-				<Widget type="Edit" skin="Edit" position="172 416 76 24" name="RdMergeLen">
+				<Widget type="EditBox" skin="EditBox" position="172 416 76 24" name="RdMergeLen">
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 					<Property key="Colour" value="0.4 0.9 0.4"/>
 					<Property key="TextColour" value="0.4 0.9 0.4"/>
@@ -1811,7 +1811,7 @@
 					<Property key="Caption" value="#{LODPointsDist}"/>
 					<Property key="TextColour" value="0.4 0.9 0.4"/>
 				</Widget>
-				<Widget type="Edit" skin="Edit" position="172 448 76 24" name="RdLodPLen">
+				<Widget type="EditBox" skin="EditBox" position="172 448 76 24" name="RdLodPLen">
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 					<Property key="Colour" value="0.4 0.9 0.4"/>
 					<Property key="TextColour" value="0.4 0.9 0.4"/>
@@ -1836,22 +1836,22 @@
 					<Property key="Caption" value="#{PipeLStepsMul}"/>
 					<Property key="TextColour" value="0.9 0.9 0.4"/>
 				</Widget>
-				<Widget type="Edit" skin="Edit" position="452 192 76 24" name="RdColN">
+				<Widget type="EditBox" skin="EditBox" position="452 192 76 24" name="RdColN">
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 					<Property key="Colour" value="0.7 0.7 0.7"/>
 					<Property key="TextColour" value="0.7 0.7 0.7"/>
 				</Widget>
-				<Widget type="Edit" skin="Edit" position="452 224 76 24" name="RdColR">
+				<Widget type="EditBox" skin="EditBox" position="452 224 76 24" name="RdColR">
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 					<Property key="Colour" value="0.7 0.7 0.7"/>
 					<Property key="TextColour" value="0.7 0.7 0.7"/>
 				</Widget>
-				<Widget type="Edit" skin="Edit" position="452 272 76 24" name="RdPwsM">
+				<Widget type="EditBox" skin="EditBox" position="452 272 76 24" name="RdPwsM">
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 					<Property key="Colour" value="0.9 0.9 0.4"/>
 					<Property key="TextColour" value="0.9 0.9 0.4"/>
 				</Widget>
-				<Widget type="Edit" skin="Edit" position="452 304 76 24" name="RdPlsM">
+				<Widget type="EditBox" skin="EditBox" position="452 304 76 24" name="RdPlsM">
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 					<Property key="TextColour" value="0.9 0.9 0.4"/>
 					<Property key="Colour" value="0.9 0.9 0.4"/>
@@ -1880,7 +1880,7 @@
 			<Widget type="TabItem" skin="" position="4 26 787 531">
 				<UserString key="RelativeTo" value="OptionsWnd"/>
 				<Property key="Caption" value="#{Tools}"/>
-				<Widget type="Widget" skin="PanelSmall" position="24 52 554 132">
+				<Widget type="Widget" skin="PanelSkin" position="24 52 554 132">
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 					<Property key="Colour" value="0.8 0.8 1"/>
 					<Property key="Alpha" value="0.4"/>
@@ -1951,7 +1951,7 @@
 					<Property key="Colour" value="0.7 1 0.8"/>
 					<Property key="Caption" value="#{ScaleAll}"/>
 				</Widget>
-				<Widget type="Edit" skin="Edit" position="156 210 80 24" name="ScaleAllMul">
+				<Widget type="EditBox" skin="EditBox" position="156 210 80 24" name="ScaleAllMul">
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 					<Property key="Colour" value="0.7 1 0.8"/>
 					<Property key="TextColour" value="0.7 1 0.8"/>
@@ -1968,7 +1968,7 @@
 					<Property key="Caption" value="#{ScaleMul}"/>
 					<Property key="TextColour" value="0.3 1 0.3"/>
 				</Widget>
-				<Widget type="Edit" skin="Edit" position="156 248 80 24" name="ScaleTerHMul">
+				<Widget type="EditBox" skin="EditBox" position="156 248 80 24" name="ScaleTerHMul">
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 					<Property key="Colour" value="0.3 1 0.3"/>
 					<Property key="TextColour" value="0.3 1 0.3"/>
@@ -1984,7 +1984,7 @@
 			<Widget type="TabItem" skin="" position="4 26 787 531">
 				<UserString key="RelativeTo" value="OptionsWnd"/>
 				<Property key="Caption" value="#{Screen}"/>
-				<Widget type="Tab" skin="Tab" position="16 15 744 460">
+				<Widget type="TabControl" skin="TabControl" position="16 15 744 460">
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 					<Property key="ButtonAutoWidth" value="false"/>
 					<Property key="Colour" value="0.73 0.88 1"/>
@@ -2017,9 +2017,8 @@
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 							<Property key="TextColour" value="0.8 0.9 1.0"/>
 						</Widget>
-						<Widget type="HScroll" skin="HScroll" position="420 184 252 18" name="AntiAliasing">
+						<Widget type="ScrollBar" skin="ScrollBarH" position="420 184 252 18" name="AntiAliasing">
 							<UserString key="RelativeTo" value="OptionsWnd"/>
-							<Property key="MoveToClick" value="true"/>
 							<Property key="Range" value="1000001"/>
 							<Property key="MoveToClick" value="true"/>
 							<Property key="Colour" value="0.6 0.8 1.0"/>
@@ -2029,7 +2028,7 @@
 							<Property key="Caption" value="#{NeedRestart}"/>
 							<Property key="TextColour" value="0.7 1 0.5"/>
 						</Widget>
-						<Widget type="List" skin="List" position="32 54 132 354" name="ResList">
+						<Widget type="ListBox" skin="ListBox" position="32 54 132 354" name="ResList">
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
 						<Widget type="Button" skin="Button" position="188 54 92 24" name="ResChange">
@@ -2084,7 +2083,7 @@
 					<Property key="Colour" value="0.6 0.9 1"/>
 					<Property key="TextColour" value="0.9 0.97 1"/>
 				</Widget>
-				<Widget type="Tab" skin="Tab" position="16 65 744 400">
+				<Widget type="TabControl" skin="TabControl" position="16 65 744 400">
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 					<Property key="ButtonAutoWidth" value="true"/>
 					<Property key="Colour" value="0.73 0.88 1"/>
@@ -2114,12 +2113,12 @@
 							<Property key="Colour" value="0 0 0"/>
 							<Property key="TextColour" value="0.2 1 0.2"/>
 						</Widget>
-						<Widget type="HScroll" skin="HScroll" position="248 80 320 18" name="Anisotropy">
+						<Widget type="ScrollBar" skin="ScrollBarH" position="248 80 320 18" name="Anisotropy">
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 							<Property key="Range" value="17"/>
-							<Property key="Scroll_Position" value="0"/>
-							<Property key="Scroll_Page" value="1"/>
-							<Property key="Scroll_ViewPage" value="1"/>
+							<Property key="RangePosition" value="0"/>
+							<Property key="Page" value="1"/>
+							<Property key="ViewPage" value="1"/>
 							<Property key="MoveToClick" value="true"/>
 						</Widget>
 						<Widget type="TextBox" skin="TextBox" position="180 80 60 24" name="AnisotropyVal">
@@ -2128,16 +2127,16 @@
 						</Widget>
 						<Widget type="TextBox" skin="TextBox" position="32 110 144 24">
 							<UserString key="RelativeTo" value="OptionsWnd"/>
-							<Property key="Caption" value="#{Size}*"/>
+							<Property key="Caption" value="#{TexSize}"/>
 							<Property key="Colour" value="0 0 0"/>
 							<Property key="TextColour" value="0.6 0.9 0.6"/>
 						</Widget>
-						<Widget type="HScroll" skin="HScroll" position="248 110 320 18" name="TexSize">
+						<Widget type="ScrollBar" skin="ScrollBarH" position="248 110 320 18" name="TexSize">
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 							<Property key="Range" value="2"/>
-							<Property key="Scroll_Position" value="0"/>
-							<Property key="Scroll_Page" value="1"/>
-							<Property key="Scroll_ViewPage" value="1"/>
+							<Property key="RangePosition" value="0"/>
+							<Property key="Page" value="1"/>
+							<Property key="ViewPage" value="1"/>
 							<Property key="MoveToClick" value="true"/>
 						</Widget>
 						<Widget type="TextBox" skin="TextBox" position="180 110 60 24" name="TexSizeVal">
@@ -2150,12 +2149,12 @@
 							<Property key="Colour" value="0 0 0"/>
 							<Property key="TextColour" value="0.6 1.0 0.0"/>
 						</Widget>
-						<Widget type="HScroll" skin="HScroll" position="248 140 320 18" name="TerMtr">
+						<Widget type="ScrollBar" skin="ScrollBarH" position="248 140 320 18" name="TerMtr">
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 							<Property key="Range" value="4"/>
-							<Property key="Scroll_Position" value="0"/>
-							<Property key="Scroll_Page" value="1"/>
-							<Property key="Scroll_ViewPage" value="1"/>
+							<Property key="RangePosition" value="0"/>
+							<Property key="Page" value="1"/>
+							<Property key="ViewPage" value="1"/>
 							<Property key="MoveToClick" value="true"/>
 						</Widget>
 						<Widget type="TextBox" skin="TextBox" position="180 140 60 24" name="TerMtrVal">
@@ -2165,10 +2164,10 @@
 						<Widget type="TextBox" skin="TextBox" position="32 170 144 24">
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 							<Property key="Colour" value="0 0 0"/>
-							<Property key="Caption" value="#{Shaders}*"/>
+							<Property key="Caption" value="#{Shaders}"/>
 							<Property key="TextColour" value="1.0 1.0 0.0"/>
 						</Widget>
-						<Widget type="HScroll" skin="HScroll" position="248 170 320 18" name="Shaders">
+						<Widget type="ScrollBar" skin="ScrollBarH" position="248 170 320 18" name="Shaders">
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 							<Property key="Range" value="2"/>
 							<Property key="MoveToClick" value="true"/>
@@ -2177,6 +2176,11 @@
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 							<Property key="TextColour" value="1.0 1.0 0.1"/>
 						</Widget>
+						<Widget type="Button" skin="Button" position="32 210 200 26" layer="Back" name="ApplyShaders">
+							<UserString key="RelativeTo" value="OptionsWnd"/>
+							<Property key="Caption" value="#{ApplyShaders}"/>
+							<Property key="Colour" value="0.7 0.85 1.0"/>
+						</Widget>	
 					</Widget>
 					<Widget type="TabItem" skin="" position="4 26 735 368">
 						<UserString key="RelativeTo" value="OptionsWnd"/>
@@ -2187,7 +2191,7 @@
 							<Property key="Colour" value="0 0 0"/>
 							<Property key="TextColour" value="0.3 0.9 0.9"/>
 						</Widget>
-						<Widget type="HScroll" skin="HScroll" position="248 50 320 18" name="TerDetail">
+						<Widget type="ScrollBar" skin="ScrollBarH" position="248 50 320 18" name="TerDetail">
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 							<Property key="Range" value="1000001"/>
 							<Property key="MoveToClick" value="true"/>
@@ -2198,7 +2202,7 @@
 							<Property key="Colour" value="0 0 0"/>
 							<Property key="TextColour" value="0.6 1 0.9"/>
 						</Widget>
-						<Widget type="HScroll" skin="HScroll" position="248 80 320 18" name="TerDist">
+						<Widget type="ScrollBar" skin="ScrollBarH" position="248 80 320 18" name="TerDist">
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 							<Property key="Range" value="1000001"/>
 							<Property key="MoveToClick" value="true"/>
@@ -2209,9 +2213,8 @@
 							<Property key="Colour" value="0 0 0"/>
 							<Property key="TextColour" value="0.5 1 0.8"/>
 						</Widget>
-						<Widget type="HScroll" skin="HScroll" position="248 110 320 18" name="ViewDist">
+						<Widget type="ScrollBar" skin="ScrollBarH" position="248 110 320 18" name="ViewDist">
 							<UserString key="RelativeTo" value="OptionsWnd"/>
-							<Property key="MoveToClick" value="true"/>
 							<Property key="Range" value="1000001"/>
 							<Property key="MoveToClick" value="true"/>
 						</Widget>
@@ -2233,7 +2236,7 @@
 							<Property key="Colour" value="0 0 0"/>
 							<Property key="TextColour" value="0.3 0.9 0.9"/>
 						</Widget>
-						<Widget type="HScroll" skin="HScroll" position="248 140 320 18" name="RoadDist">
+						<Widget type="ScrollBar" skin="ScrollBarH" position="248 140 320 18" name="RoadDist">
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 							<Property key="Range" value="1000001"/>
 							<Property key="MoveToClick" value="true"/>
@@ -2276,22 +2279,22 @@
 							<Property key="Colour" value="0 0 0"/>
 							<Property key="TextColour" value="0.7 0.8 0.5"/>
 						</Widget>
-						<Widget type="HScroll" skin="HScroll" position="248 50 320 18" name="Trees">
+						<Widget type="ScrollBar" skin="ScrollBarH" position="248 50 320 18" name="Trees">
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 							<Property key="Range" value="1000001"/>
 							<Property key="MoveToClick" value="true"/>
 						</Widget>
-						<Widget type="HScroll" skin="HScroll" position="248 80 320 18" name="TreesDist">
+						<Widget type="ScrollBar" skin="ScrollBarH" position="248 80 320 18" name="TreesDist">
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 							<Property key="Range" value="1000001"/>
 							<Property key="MoveToClick" value="true"/>
 						</Widget>
-						<Widget type="HScroll" skin="HScroll" position="248 110 320 18" name="Grass">
+						<Widget type="ScrollBar" skin="ScrollBarH" position="248 110 320 18" name="Grass">
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 							<Property key="Range" value="1000001"/>
 							<Property key="MoveToClick" value="true"/>
 						</Widget>
-						<Widget type="HScroll" skin="HScroll" position="248 140 320 18" name="GrassDist">
+						<Widget type="ScrollBar" skin="ScrollBarH" position="248 140 320 18" name="GrassDist">
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 							<Property key="Range" value="1000001"/>
 							<Property key="MoveToClick" value="true"/>
@@ -2350,22 +2353,22 @@
 							<Property key="Colour" value="0 0 0"/>
 							<Property key="TextColour" value="0.7 0.8 0.9"/>
 						</Widget>
-						<Widget type="HScroll" skin="HScroll" position="248 50 320 16" name="ShadowType">
+						<Widget type="ScrollBar" skin="ScrollBarH" position="248 50 320 16" name="ShadowType">
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 							<Property key="Range" value="4"/>
 							<Property key="MoveToClick" value="true"/>
 						</Widget>
-						<Widget type="HScroll" skin="HScroll" position="248 80 320 18" name="ShadowSize">
+						<Widget type="ScrollBar" skin="ScrollBarH" position="248 80 320 18" name="ShadowSize">
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 							<Property key="Range" value="1000001"/>
 							<Property key="MoveToClick" value="true"/>
 						</Widget>
-						<Widget type="HScroll" skin="HScroll" position="248 110 320 18" name="ShadowCount">
+						<Widget type="ScrollBar" skin="ScrollBarH" position="248 110 320 18" name="ShadowCount">
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 							<Property key="Range" value="1000001"/>
 							<Property key="MoveToClick" value="true"/>
 						</Widget>
-						<Widget type="HScroll" skin="HScroll" position="248 140 320 18" name="ShadowDist">
+						<Widget type="ScrollBar" skin="ScrollBarH" position="248 140 320 18" name="ShadowDist">
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 							<Property key="Range" value="1000001"/>
 							<Property key="MoveToClick" value="true"/>
@@ -2392,7 +2395,7 @@
 			<Widget type="TabItem" skin="" position="4 26 787 531">
 				<UserString key="RelativeTo" value="OptionsWnd"/>
 				<Property key="Caption" value="#{InputHelp}"/>
-				<Widget type="Tab" skin="Tab" position="30 24 720 479">
+				<Widget type="TabControl" skin="TabControl" position="30 24 720 479">
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 					<Property key="Colour" value="0.73 0.88 1"/>
 					<Property key="ButtonWidth" value="140"/>
@@ -2895,7 +2898,7 @@
 					<Property key="Caption" value="#{MinimapAndSize}"/>
 					<Property key="TextColour" value="0.5 0.8 0.3"/>
 				</Widget>
-				<Widget type="HScroll" skin="HScroll" position="272 202 320 16" name="SizeMinmap">
+				<Widget type="ScrollBar" skin="ScrollBarH" position="272 202 320 16" name="SizeMinmap">
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 					<Property key="Range" value="1000001"/>
 					<Property key="MoveToClick" value="true"/>
@@ -2910,7 +2913,7 @@
 					<Property key="Caption" value="#{RoadPointSize}"/>
 					<Property key="TextColour" value="0.6 0.9 0.9"/>
 				</Widget>
-				<Widget type="HScroll" skin="HScroll" position="272 96 320 16" name="SizeRoadP">
+				<Widget type="ScrollBar" skin="ScrollBarH" position="272 96 320 16" name="SizeRoadP">
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 					<Property key="Range" value="1000001"/>
 					<Property key="MoveToClick" value="true"/>
@@ -2920,7 +2923,7 @@
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 					<Property key="TextColour" value="0.6 0.9 0.9"/>
 				</Widget>
-				<Widget type="HScroll" skin="HScroll" position="272 126 320 16" name="TerUpd">
+				<Widget type="ScrollBar" skin="ScrollBarH" position="272 126 320 16" name="TerUpd">
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 					<Property key="MoveToClick" value="true"/>
 					<Property key="Range" value="21"/>
@@ -2936,7 +2939,7 @@
 					<Property key="Caption" value="#{TerUpdSkip}"/>
 					<Property key="TextColour" value="0.4 0.9 0.4"/>
 				</Widget>
-				<Widget type="HScroll" skin="HScroll" position="272 20 320 16" name="CamSpeed">
+				<Widget type="ScrollBar" skin="ScrollBarH" position="272 20 320 16" name="CamSpeed">
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 					<Property key="MoveToClick" value="true"/>
 					<Property key="Range" value="1000001"/>
@@ -2959,7 +2962,7 @@
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 					<Property key="TextColour" value="0.4 0.65 0.9"/>
 				</Widget>
-				<Widget type="HScroll" skin="HScroll" position="272 50 320 16" name="CamInert">
+				<Widget type="ScrollBar" skin="ScrollBarH" position="272 50 320 16" name="CamInert">
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 					<Property key="Range" value="1000001"/>
 					<Property key="MoveToClick" value="true"/>
@@ -2974,7 +2977,7 @@
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 					<Property key="TextColour" value="0.4 0.6 0.4"/>
 				</Widget>
-				<Widget type="HScroll" skin="HScroll" position="272 172 320 16" name="MiniUpd">
+				<Widget type="ScrollBar" skin="ScrollBarH" position="272 172 320 16" name="MiniUpd">
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 					<Property key="MoveToClick" value="true"/>
 					<Property key="Range" value="21"/>
@@ -3047,7 +3050,7 @@
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 					<Property key="TextColour" value="0.3 0.6 0.3"/>
 				</Widget>
-				<Widget type="HScroll" skin="HScroll" position="272 232 320 16" name="MiniType">
+				<Widget type="ScrollBar" skin="ScrollBarH" position="272 232 320 16" name="MiniType">
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 					<Property key="Range" value="4"/>
 					<Property key="MoveToClick" value="true"/>

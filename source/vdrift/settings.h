@@ -26,7 +26,8 @@ public:
 	int tracks_view, tracks_sort;  bool tracks_sortup;
 
 	//  graphics
-	int anisotropy, shaders, tex_size, ter_mtr;  bool bFog;
+	int anisotropy, tex_size, ter_mtr;  bool bFog;
+	float shaders;
 	float view_distance, terdetail,terdist, road_dist;
 	float shadow_dist;  int shadow_size, lightmap_size, shadow_count, shadow_type;
 	int refl_skip, refl_faces, refl_size;  float refl_dist;

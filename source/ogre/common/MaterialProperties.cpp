@@ -20,6 +20,7 @@ MaterialProperties::MaterialProperties() :
 	fog(true), lighting(true), textureAddressMode(TextureUnitState::TAM_WRAP),
 	terrainLightMap(false), ssao(true), ssaoReject(false), customGenerator(""), wind(0), vertexColour(false),
 	waveBump(0.5, 1.0), waveHighFreq(0.0), waveSpecular(1.0),
+	envMapPriority(0.5), shadowPriority(0.5), normalMapPriority(0.5),
 	deepColour(0.0, 0.3, 0.5, 1.0), shallowColour(0.0, 0.9, 1.0, 0.3), reflectionColour(0.9, 1.0, 1.0, 1.0)
 {}
 
@@ -82,6 +83,9 @@ void MaterialProperties::setProperty(const std::string& prop, const std::string&
 		else if (value == "mirror") textureAddressMode = TextureUnitState::TAM_MIRROR;
 		else if (value == "border") textureAddressMode = TextureUnitState::TAM_BORDER;
 	}
+	else if (prop == "envMapPriority") envMapPriority = str2float(value);
+	else if (prop == "shadowPriority") shadowPriority = str2float(value);
+	else if (prop == "normalMapPriority") normalMapPriority = str2float(value);
 	else if (prop == "ssaoReject") ssaoReject = str2bool(value);
 	else if (prop == "vertexColour") vertexColour = str2bool(value);
 	else if (prop == "wind") wind = str2int(value);
