@@ -18,26 +18,26 @@ void App::SetGuiFromXmls()
 	// set slider value, upd text
 	ScrollBar* sl;  size_t v;
 
-	#define Slv(name, val)  \
+	#define _Slv(name, val)  \
 		sl = (ScrollBar*)mWndOpts->findWidget(#name);  \
 		v = val*res;  if (sl)  sl->setScrollPosition(v);  sl##name(sl, v);
 	
-	#define Ed(name, val)  ed##name->setCaption(toStr(val));
-	#define Cmb(cmb, str)  cmb->setIndexSelected( cmb->findItemIndexWith(str) );
+	#define _Ed(name, val)  ed##name->setCaption(toStr(val));
+	#define _Cmb(cmb, str)  cmb->setIndexSelected( cmb->findItemIndexWith(str) );
 	
 
 	//  [Sky]
 	//-----------------------------------------------
-	Cmb(cmbSky, sc.skyMtr);
-	Slv(SunPitch, sc.ldPitch /90.f);
-	Slv(SunYaw,   (sc.ldYaw + 180.f)  /360.f);
-	Ed(LiAmb, sc.lAmb);  Ed(LiDiff, sc.lDiff);  Ed(LiSpec, sc.lSpec);
-	Ed(FogClr, sc.fogClr);
-	Slv(FogStart, powf(sc.fogStart /2000.f, 0.5f));
-	Slv(FogEnd,   powf(sc.fogEnd   /2000.f, 0.5f));
+	_Cmb(cmbSky, sc.skyMtr);
+	_Slv(SunPitch, sc.ldPitch /90.f);
+	_Slv(SunYaw,   (sc.ldYaw + 180.f)  /360.f);
+	_Ed(LiAmb, sc.lAmb);  _Ed(LiDiff, sc.lDiff);  _Ed(LiSpec, sc.lSpec);
+	_Ed(FogClr, sc.fogClr);
+	_Slv(FogStart, powf(sc.fogStart /2000.f, 0.5f));
+	_Slv(FogEnd,   powf(sc.fogEnd   /2000.f, 0.5f));
 
-	Cmb(cmbRain1, sc.rainName);		Slv(Rain1Rate, sc.rainEmit /6000.f);
-	Cmb(cmbRain2, sc.rain2Name);	Slv(Rain2Rate, sc.rain2Emit /6000.f);	
+	_Cmb(cmbRain1, sc.rainName);		_Slv(Rain1Rate, sc.rainEmit /6000.f);
+	_Cmb(cmbRain2, sc.rain2Name);	_Slv(Rain2Rate, sc.rain2Emit /6000.f);	
 	
 	//  [Terrain]
 	//-----------------------------------------------
@@ -47,20 +47,20 @@ void App::SetGuiFromXmls()
 	editTerTriSize(edTerTriSize);
 	
 	tabTerLayer(tabsTerLayers, 0);  // set 1st
-	Cmb(cmbParDust, sc.sParDust);	Cmb(cmbParMud,  sc.sParMud);
-	Cmb(cmbParSmoke,sc.sParSmoke);
+	_Cmb(cmbParDust, sc.sParDust);	_Cmb(cmbParMud,  sc.sParMud);
+	_Cmb(cmbParSmoke,sc.sParSmoke);
 
 	//  [Vegetation]
 	//-----------------------------------------------
-	Ed(GrassDens, sc.densGrass);	Ed(TreesDens, sc.densTrees);
-	Ed(GrPage, sc.grPage);		Ed(GrDist, sc.grDist);
-	Ed(TrPage, sc.trPage);		Ed(TrDist, sc.trDist);
-	Ed(GrMinX, sc.grMinSx);		Ed(GrMaxX, sc.grMaxSx);
-	Ed(GrMinY, sc.grMinSy);		Ed(GrMaxY, sc.grMaxSy);
-	Ed(GrSwayDistr, sc.grSwayDistr);  Ed(GrDensSmooth, sc.grDensSmooth);
-	Ed(GrSwayLen, sc.grSwayLen);	Ed(GrSwaySpd, sc.grSwaySpeed);
-	Ed(TrRdDist, sc.trRdDist);		Ed(TrImpDist, sc.trDistImp);
-	Ed(GrTerMaxAngle, sc.grTerMaxAngle);
+	_Ed(GrassDens, sc.densGrass);	_Ed(TreesDens, sc.densTrees);
+	_Ed(GrPage, sc.grPage);		_Ed(GrDist, sc.grDist);
+	_Ed(TrPage, sc.trPage);		_Ed(TrDist, sc.trDist);
+	_Ed(GrMinX, sc.grMinSx);		_Ed(GrMaxX, sc.grMaxSx);
+	_Ed(GrMinY, sc.grMinSy);		_Ed(GrMaxY, sc.grMaxSy);
+	_Ed(GrSwayDistr, sc.grSwayDistr);  _Ed(GrDensSmooth, sc.grDensSmooth);
+	_Ed(GrSwayLen, sc.grSwayLen);	_Ed(GrSwaySpd, sc.grSwaySpeed);
+	_Ed(TrRdDist, sc.trRdDist);		_Ed(TrImpDist, sc.trDistImp);
+	_Ed(GrTerMaxAngle, sc.grTerMaxAngle);
 	tabPgLayers(tabsPgLayers, 0);
 	//MeshPtr mp = MeshManager::load(sc.pgLayersAll[0].name);
 	//mp->getSubMesh(0)->
@@ -68,15 +68,15 @@ void App::SetGuiFromXmls()
 	//  [Road]
 	//-----------------------------------------------
 	for (int i=0; i < 4/*MTRs*/; ++i)
-	{	Cmb(cmbRoadMtr[i], road->sMtrRoad[i]);
-		Cmb(cmbPipeMtr[i], road->sMtrPipe[i]);  }
+	{	_Cmb(cmbRoadMtr[i], road->sMtrRoad[i]);
+		_Cmb(cmbPipeMtr[i], road->sMtrPipe[i]);  }
 
-	Ed(RdTcMul,		road->tcMul);		Ed(RdColN, road->colN);
-	Ed(RdLenDim,	road->lenDiv0);		Ed(RdColR, road->colR);
-	Ed(RdWidthSteps,road->iw0);			Ed(RdPwsM, road->iwPmul);
-	Ed(RdHeightOfs,	road->fHeight);		Ed(RdPlsM, road->ilPmul);
-	Ed(RdSkirtLen,	road->skLen);		Ed(RdSkirtH,	road->skH);
-	Ed(RdMergeLen,	road->setMrgLen);	Ed(RdLodPLen,	road->lposLen);
+	_Ed(RdTcMul,		road->tcMul);		_Ed(RdColN, road->colN);
+	_Ed(RdLenDim,	road->lenDiv0);		_Ed(RdColR, road->colR);
+	_Ed(RdWidthSteps,road->iw0);			_Ed(RdPwsM, road->iwPmul);
+	_Ed(RdHeightOfs,	road->fHeight);		_Ed(RdPlsM, road->ilPmul);
+	_Ed(RdSkirtLen,	road->skLen);		_Ed(RdSkirtH,	road->skH);
+	_Ed(RdMergeLen,	road->setMrgLen);	_Ed(RdLodPLen,	road->lposLen);
 	bGI = true;
 }
 
