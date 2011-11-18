@@ -4,11 +4,13 @@
 #include "MaterialFactory.h"
 #include "MaterialDefinition.h"
 #include "MaterialGenerator.h"
+#include "ShaderProperties.h"
+
 #include "GlassMaterial.h"
 #include "PipeGlassMaterial.h"
 #include "ArrowMaterial.h"
 #include "WaterMaterial.h"
-#include "ShaderProperties.h"
+#include "ImpostorMaterial.h"
 
 #ifndef ROAD_EDITOR
 	#include "../OgreGame.h"
@@ -86,6 +88,10 @@ MaterialFactory::MaterialFactory() :
 	MaterialGenerator* water = static_cast<MaterialGenerator*>(new WaterMaterialGenerator());
 	water->mParent = this;
 	mCustomGenerators.push_back(water);
+	
+	MaterialGenerator* impostor = static_cast<MaterialGenerator*>(new ImpostorMaterialGenerator());
+	water->mParent = this;
+	mCustomGenerators.push_back(impostor);
 	
 	ti.update(); /// time
 	float dt = ti.dt * 1000.f;

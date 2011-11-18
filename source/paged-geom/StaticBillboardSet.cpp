@@ -81,7 +81,8 @@ mFadeInvisibleDist      (0.f)
    if (mRenderMethod == BB_METHOD_ACCELERATED)
    {
       //Load vertex shader to align billboards to face the camera (if not loaded already)
-      if (s_nSelfInstances == 0)
+      ///T commented out shader creation code, we create these ourselves
+     /* if (s_nSelfInstances == 0)
       {
          const Ogre::String &renderName = Root::getSingleton().getRenderSystem()->getName();
          s_isGLSL = renderName == "OpenGL Rendering Subsystem" ? true : false;
@@ -283,7 +284,7 @@ mFadeInvisibleDist      (0.f)
          }
          // compile it
          vertexShader2->load();
-      }
+      }*/
    }
    else
    {
