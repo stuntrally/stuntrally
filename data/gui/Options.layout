@@ -5,7 +5,7 @@
 		<Property key="MaxSize" value="2560 1600"/>
 		<Property key="Caption" value="#{Options}"/>
 		<Property key="Alpha" value="0.3"/>
-		<Property key="Snap" value="false"/>
+		<Property key="Snap" value="true"/>
 		<Widget type="TabControl" skin="TabControl" position="0 0 800 600" align="Default" layer="Back" name="TabWnd">
 			<UserString key="RelativeTo" value="OptionsWnd"/>
 			<Property key="InheritsAlpha" value="false"/>
