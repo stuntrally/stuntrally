@@ -49,7 +49,7 @@ App::App()  //  gui wigdets--
 	,edRdSkirtLen(0),edRdSkirtH(0), edRdMergeLen(0),edRdLodPLen(0)
 	,edRdColN(0),edRdColR(0), edRdPwsM(0),edRdPlsM(0)
 	,imgPrv(0),imgMini(0),imgTer(0), imgTrkIco1(0),imgTrkIco2(0)
-	,trkMList(0),trkDesc(0),trkName(0)  // track
+	,trkMList(0),trkDesc(0),trkName(0),bListTrackU(0)  // track
 
 	,mTerrainGroup(0), mTerrainPaging(0), mPageManager(0), mTerrainGlobals(0)
 	,bTerUpd(0), curBr(2), bGuiReinit(0), noBlendUpd(0), bGI(0), resList(0)
@@ -87,6 +87,13 @@ void App::postInit()
 {
 	materialFactory = new MaterialFactory();
 	materialFactory->pApp = this;
+	materialFactory->setShadows(pSet->shadow_type >= 2);
+	materialFactory->setShadowsDepth(pSet->shadow_type == 3);
+	materialFactory->setShaderQuality(pSet->shaders);
+	if (pSet->tex_size == 0)
+		materialFactory->setTexSize(0);
+	else if (pSet->tex_size == 1)
+		materialFactory->setTexSize(4096);
 }
 
 const Ogre::String App::csBrShape[BRS_ALL] = { "Triangle", "Sinus", "Noise" };  // static
@@ -131,7 +138,6 @@ ManualObject* App::Create2D(const String& mat, Real s, bool dyn)
 	m->setUseIdentityProjection(true);
 	m->setUseIdentityView(true);
 	m->setCastShadows(false);
-
 	m->estimateVertexCount(4);
 	m->begin(mat, RenderOperation::OT_TRIANGLE_STRIP);
 	m->position(-s,-s*asp, 0);  m->textureCoord(0, 1);
@@ -140,6 +146,19 @@ ManualObject* App::Create2D(const String& mat, Real s, bool dyn)
 	m->position( s, s*asp, 0);  m->textureCoord(1, 0);
 	m->end();
  
+	//TODO:replace OT_TRIANGLE_FAN with a more friendly version for D3D11 as it is not supported
+	/*
+	m->estimateVertexCount(6);
+	m->begin(mat, RenderOperation::OT_TRIANGLE_LIST);
+
+	m->position(-s,-s*asp, 0);  m->textureCoord(0, 1);
+	m->position( s,-s*asp, 0);  m->textureCoord(1, 1);
+	m->position( s, s*asp, 0);  m->textureCoord(1, 0);
+	m->position(-s, s*asp, 0);  m->textureCoord(0, 0);
+	m->position(-s,-s*asp, 0);  m->textureCoord(0, 1);
+	m->position( s, s*asp, 0);  m->textureCoord(1, 0);
+	m->end();
+	*/
 	AxisAlignedBox aabInf;	aabInf.setInfinite();
 	m->setBoundingBox(aabInf);  // always visible
 	m->setRenderQueueGroup(RQG_Hud2);

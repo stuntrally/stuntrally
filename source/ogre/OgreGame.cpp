@@ -27,7 +27,7 @@ App::App()
 	,fMiniX(0),fMiniY(0), scX(1),scY(1), ofsX(0),ofsY(0), minX(0),maxX(0), minY(0),maxY(0)
 	,arrowNode(0)
 	// ter
-	,mTerrainGlobals(0), mTerrainGroup(0), mPaging(false)
+	,mTerrainGlobals(0), mTerrainGroup(0), mPaging(false), sceneryId(0)
 	,mTerrainPaging(0), mPageManager(0), materialFactory(0)
 	// gui
 	,mToolTip(0), mToolTipTxt(0), carList(0), trkMList(0), resList(0), btRplPl(0)
@@ -96,6 +96,11 @@ void App::postInit()
 	materialFactory->pApp = this;
 	materialFactory->setShadows(pSet->shadow_type >= 2);
 	materialFactory->setShadowsDepth(pSet->shadow_type == 3);
+	materialFactory->setShaderQuality(pSet->shaders);
+	if (pSet->tex_size == 0)
+		materialFactory->setTexSize(0);
+	else if (pSet->tex_size == 1)
+		materialFactory->setTexSize(4096);
 }
 
 void App::setTranslations()
@@ -163,6 +168,18 @@ ManualObject* App::Create2D(const String& mat, SceneManager* sceneMgr, Real s, b
 	m->position( s, s*asp, 0);  m->textureCoord(1, 0);  if (clr)  m->colour(1,0,0);
 	m->end();
  
+	//TODO:replace OT_TRIANGLE_FAN with a more friendly version for D3D11 as it is not supported
+	/*
+		m->estimateVertexCount(6);
+	m->begin(mat, RenderOperation::OT_TRIANGLE_LIST);
+
+	m->position(-s, s*asp, 0);  m->textureCoord(0, 0);  if (clr)  m->colour(0,0,0);
+	m->position( s, s*asp, 0);  m->textureCoord(1, 0);  if (clr)  m->colour(1,0,0);
+	m->position(-s,-s*asp, 0);  m->textureCoord(0, 1);  if (clr)  m->colour(0,1,0);
+	m->position( s, s*asp, 0);  m->textureCoord(1, 0);  if (clr)  m->colour(1,0,0);
+	m->position(-s,-s*asp, 0);  m->textureCoord(0, 1);  if (clr)  m->colour(0,1,0);
+	m->end();
+	*/
 	AxisAlignedBox aabInf;	aabInf.setInfinite();
 	m->setBoundingBox(aabInf);  // always visible
 	m->setRenderQueueGroup(RQG_Hud2);

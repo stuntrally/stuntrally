@@ -61,7 +61,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="OgreMain_d.lib ois_d.lib OgreTerrain_d.lib OgrePaging_d.lib MyGUIEngine_d.lib MyGUI.OgrePlatform_d.lib"
+				AdditionalDependencies="OgreMain_d.lib ois_d.lib OgreTerrain_d.lib OgrePaging_d.lib OgreRTShaderSystem_d.lib MyGUIEngine_d.lib MyGUI.OgrePlatform_d.lib"
 				OutputFile="$(ProjectName)_d.exe"
 				LinkIncremental="2"
 				AdditionalLibraryDirectories="e:\v\ogre171\lib\debug;e:\v\ogre171\Dependencies\lib\Debug;e:\v\ogre171\MyGUI3.0\lib\Debug"
@@ -119,7 +119,7 @@
 				Optimization="2"
 				EnableIntrinsicFunctions="true"
 				WholeProgramOptimization="false"
-				AdditionalIncludeDirectories=""
+				AdditionalIncludeDirectories="&quot;e:\v\MyGUI-3.2\trunk\MyGUIEngine\include&quot;;&quot;e:\v\MyGUI-3.2\trunk\Platforms\Ogre\OgrePlatform\include&quot;"
 				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;ROAD_EDITOR;NOMINMAX;"
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="true"
@@ -140,10 +140,10 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="OgreMain.lib ois.lib OgreTerrain.lib OgrePaging.lib MyGUIEngine.lib MyGUI.OgrePlatform.lib"
+				AdditionalDependencies="OgreMain.lib ois.lib OgreTerrain.lib OgrePaging.lib OgreRTShaderSystem.lib MyGUIEngine.lib MyGUI.OgrePlatform.lib"
 				OutputFile="$(ProjectName).exe"
 				LinkIncremental="1"
-				AdditionalLibraryDirectories="e:\v\ogre171\lib\Release;e:\v\ogre171\Dependencies\lib\Release;e:\v\ogre171\MyGUI3.0\lib\Release"
+				AdditionalLibraryDirectories="e:\v\ogre171\lib\Release;e:\v\ogre171\Dependencies\lib\Release;&quot;e:\v\MyGUI-3.2\trunk\bin\lib\Release&quot;"
 				GenerateDebugInformation="true"
 				SubSystem="2"
 				OptimizeReferences="2"
@@ -643,6 +643,14 @@
 			<Filter
 				Name="MaterGen"
 				>
+				<File
+					RelativePath=".\source\ogre\common\ArrowMaterial.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\source\ogre\common\ArrowMaterial.h"
+					>
+				</File>
 				<File
 					RelativePath=".\source\ogre\common\GlassMaterial.cpp"
 					>

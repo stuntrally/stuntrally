@@ -2,6 +2,7 @@
 #include "../Defines.h"
 #include "../../road/Road.h"
 #include "../../vdrift/pathmanager.h"
+#include "MaterialFactory.h"
 #ifndef ROAD_EDITOR
 	#include "../../vdrift/game.h"
 	#include "../OgreGame.h"
@@ -19,18 +20,13 @@ using namespace MyGUI;
 using namespace Ogre;
 
 // MyGUI 3.2 has no Align::Relative
-#if MYGUI_VERSION_MINOR >= 2
-	#define ALIGN Align::Default
-#else
-	#define ALIGN Align::Relative
-#endif
-
+#define ALIGN Align::Default
 
 ///  Gui Init  [Graphics]
 //----------------------------------------------------------------------------------------------------------------
 
 //  textures
-void App::comboTexFilter(SL)
+void App::comboTexFilter(CMB)
 {
 	TextureFilterOptions tfo;							
 	switch (val)  {
@@ -118,9 +114,9 @@ void App::slGrassDist(SL)
 
 void App::btnTrGrReset(WP wp)
 {
-	HScrollPtr sl;  size_t v;
+	ScrollBar* sl;  size_t v;
 	#define setSld(name)  sl##name(0,v);  \
-		sl = (HScrollPtr)mWndOpts->findWidget(#name);  if (sl)  sl->setScrollPosition(v);
+		sl = (ScrollBar*)mWndOpts->findWidget(#name);  if (sl)  sl->setScrollPosition(v);
 	v = res*powf(1.f /4.f, 0.5f);
 	setSld(Trees);
 	setSld(Grass);
@@ -135,11 +131,16 @@ void App::chkUseImposters(WP wp)
 }
 void App::slShaders(SL)
 {
-	int v = val;  if (bGI)  pSet->shaders = v;
+	float v = val/res;  if (bGI)  pSet->shaders = v;
 	if (valShaders)
-	{	if (v == 0)  valShaders->setCaption("Vertex");  else
-		if (v == 1)  valShaders->setCaption("Pixel");  else
-		if (v == 2)  valShaders->setCaption("Metal");  }
+	{	valShaders->setCaption("Very low");
+		if (v > 0.2)  valShaders->setCaption("Low");
+		if (v > 0.4) valShaders->setCaption("Medium");
+		if (v > 0.6)  valShaders->setCaption("High");
+		if (v > 0.8)  valShaders->setCaption("Ultra");
+	}
+		
+	if (materialFactory) materialFactory->setShaderQuality(v);
 }
 
 void App::slTexSize(SL)
@@ -148,6 +149,12 @@ void App::slTexSize(SL)
 	if (valTexSize)
 	{	if (v == 0)  valTexSize->setCaption("Small");  else
 		if (v == 1)  valTexSize->setCaption("Big");  }
+	
+	if (!materialFactory) return;
+	if (v == 0)
+		materialFactory->setTexSize(0); // lowest
+	else if (v == 1)
+		materialFactory->setTexSize(4096); // highest
 }
 
 void App::slTerMtr(SL)
@@ -158,12 +165,17 @@ void App::slTerMtr(SL)
 		if (v == 1)  valTerMtr->setCaption("Low");  else
 		if (v == 2)  valTerMtr->setCaption("Normal");  else
 		if (v == 3)  valTerMtr->setCaption("Parallax");  }
-	if (bGI)  changeShadows();
+	//if (bGI)  changeShadows();
 }
 
 
 //  shadows
 void App::btnShadows(WP){	changeShadows();	}
+
+void App::btnShaders(WP)
+{
+	materialFactory->generate();
+}
 
 void App::slShadowType(SL)
 {
@@ -188,13 +200,6 @@ void App::slShadowSize(SL)
 	if (valShadowSize)  valShadowSize->setCaption(toStr(ciShadowSizesA[v]));
 }
 
-void App::slLightmapSize(SL)
-{
-	int v = std::max( 0.0f, std::min((float) ciShadowNumSizes-1, ciShadowNumSizes * val/res));
-	if (bGI)  pSet->lightmap_size = v;
-	if (valLightmapSize)  valLightmapSize->setCaption(toStr(ciShadowSizesA[v]));
-}
-
 void App::slShadowDist(SL)
 {
 	Real v = 50.f + 4750.f * powf(val/res, 2.f);	if (bGI)  pSet->shadow_dist = v;
@@ -207,7 +212,7 @@ void App::slShadowDist(SL)
 void App::GuiInitGraphics()
 {
 	ButtonPtr btn, bchk;  ComboBoxPtr combo;
-	HScrollPtr sl;  size_t v;
+	ScrollBar* sl;  size_t v;
 
 	//  detail
 	Slv(TerDetail,	powf(pSet->terdetail /20.f, 0.5f));
@@ -218,7 +223,7 @@ void App::GuiInitGraphics()
 	//  textures
 	Cmb(combo, "TexFiltering", comboTexFilter);
 	Slv(Anisotropy,	pSet->anisotropy /res);
-	Slv(Shaders,	pSet->shaders /res);
+	Slv(Shaders,	pSet->shaders);
 	Slv(TexSize,	pSet->tex_size /res);
 	Slv(TerMtr,		pSet->ter_mtr /res);
 
@@ -251,8 +256,9 @@ void App::GuiInitGraphics()
 	Slv(ShadowCount,(pSet->shadow_count-2) /2.f);
 	Slv(ShadowSize,	pSet->shadow_size /float(ciShadowNumSizes));
 	Slv(ShadowDist,	powf((pSet->shadow_dist -50.f)/4750.f, 0.5f));
-	Slv(LightmapSize, pSet->lightmap_size /float(ciShadowNumSizes));
 	Btn("Apply", btnShadows);
+	
+	Btn("ApplyShaders", btnShaders); 
 	
 	Cmb(combo, "CmbGraphicsAll", comboGraphicsAll);
 	if (combo)  {
@@ -269,9 +275,15 @@ void App::GuiInitGraphics()
 	if (combo)  {
 		combo->removeAllItems();
 
+		#if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
 		const int nRS = 4;
 		const String rs[nRS] = {"Default", "OpenGL Rendering Subsystem",
 			"Direct3D9 Rendering Subsystem", "Direct3D11 Rendering Subsystem"};
+		#else
+		const int nRS = 2;
+		const String rs[nRS] = {"Default", "OpenGL Rendering Subsystem"};
+		#endif
+			
 		for (int i=0; i < nRS; ++i)
 		{
 			combo->addItem(rs[i]);
@@ -305,6 +317,69 @@ void App::btnQuit(WP)
 	mShutDown = true;
 }
 
+//  begin MyGUI HACKS
+//-----------------------------------------------------------------------------------
+
+void App::SizeGUI()
+{		
+	// call recursive method for all root widgets
+	for (VectorWidgetPtr::iterator it = vwGui.begin(); it != vwGui.end(); ++it)
+	{
+		doSizeGUI((*it)->getEnumerator());
+	}
+}
+
+void App::doSizeGUI(MyGUI::EnumeratorWidgetPtr widgets)
+{
+	while (widgets.next())
+	{
+        WidgetPtr wp = widgets.current();
+
+		std::string relativeTo = wp->getUserString("RelativeTo");
+		
+		if (relativeTo != "")
+		{
+			// position & size relative to the widget specified in "RelativeTo" property (or full screen)
+			MyGUI::IntSize relativeSize;
+			if (relativeTo == "Screen")
+				relativeSize = MyGUI::IntSize(mWindow->getWidth(), mWindow->getHeight());
+			else
+			{
+				WidgetPtr window = mGUI->findWidget<Widget>(relativeTo);
+				relativeSize = window->getSize();
+			}
+			
+			// retrieve original size & pos
+			MyGUI::IntPoint origPos;
+			MyGUI::IntSize origSize;
+			origPos.left = s2i( wp->getUserString("origPosX") );
+			origPos.top = s2i( wp->getUserString("origPosY") );
+			origSize.width = s2i( wp->getUserString("origSizeX") );
+			origSize.height = s2i( wp->getUserString("origSizeY") );
+			
+			// calc new size & pos
+			const MyGUI::IntPoint& newPos = MyGUI::IntPoint(
+				int(origPos.left * (float(relativeSize.width) / 800)),
+				int(origPos.top * (float(relativeSize.height) / 600))
+			);
+			
+			const MyGUI::IntSize& newScale = MyGUI::IntSize(
+				int(origSize.width * (float(relativeSize.width) / 800)),
+				int(origSize.height * (float(relativeSize.height) / 600))
+			);
+			
+			// apply
+			wp->setPosition(newPos);
+			wp->setSize(newScale);
+		}
+		
+		doSizeGUI(wp->getEnumerator());
+	}
+}
+
+//-----------------------------------------------------------------------------------
+
+
 
 ///  Tooltips
 //----------------------------------------------------------------------------------------------------------------
@@ -321,13 +396,22 @@ void App::setToolTips(EnumeratorWidgetPtr widgets)
     {
         WidgetPtr wp = widgets.current();
 		wp->setAlign(ALIGN);
+		
+		MyGUI::IntPoint origPos = wp->getPosition();
+		MyGUI::IntSize origSize = wp->getSize();
+		
+		wp->setUserString("origPosX", toStr(origPos.left));
+		wp->setUserString("origPosY", toStr(origPos.top));
+		wp->setUserString("origSizeX", toStr(origSize.width));
+		wp->setUserString("origSizeY", toStr(origSize.height));
+		
         bool tip = wp->isUserString("tip");
 		if (tip)  // if has tooltip string
-		{	
+		{
 			// needed for translation
 			wp->setUserString("tip", LanguageManager::getInstance().replaceTags(wp->getUserString("tip")));
 			wp->setNeedToolTip(true);
-			wp->eventToolTip = newDelegate(this, &App::notifyToolTip);
+			wp->eventToolTip += newDelegate(this, &App::notifyToolTip);
 		}
 		//LogO(wp->getName() + (tip ? "  *" : ""));
         setToolTips(wp->getEnumerator());
@@ -388,10 +472,9 @@ void App::GuiInitLang()
 	languages["ro"] = "Romana";  //Romanian â?
 	languages["pl"] = "Polski";  //Polish
 	
-	//ComboBoxPtr combo = mGUI->findWidget<ComboBox>("Lang");
-	ComboBoxPtr combo = (ComboBoxPtr)mWndOpts->findWidget("Lang");
+	ComboBoxPtr combo = mGUI->findWidget<ComboBox>("Lang");
 	if (!combo)  return;
-	combo->eventComboChangePosition = newDelegate(this, &App::comboLanguage);
+	combo->eventComboChangePosition += newDelegate(this, &App::comboLanguage);
 	for (std::map<std::string, std::string>::const_iterator it = languages.begin();
 		it != languages.end(); it++)
 	{
@@ -401,7 +484,7 @@ void App::GuiInitLang()
 	}
 }
 
-void App::comboLanguage(SL)
+void App::comboLanguage(MyGUI::ComboBox* wp, size_t val)
 {
 	if (val == MyGUI::ITEM_NONE)  return;
 	MyGUI::ComboBoxPtr cmb = static_cast<MyGUI::ComboBoxPtr>(wp);
@@ -471,7 +554,7 @@ void App::btnResChng(WP)
 {
 	if (!resList)  return;
 	if (resList->getIndexSelected() == MyGUI::ITEM_NONE) return;
-	String mode = resList->getItem(resList->getIndexSelected());
+	String mode = resList->getItemNameAt(resList->getIndexSelected());
 
 	pSet->windowx = StringConverter::parseInt(StringUtil::split(mode, "x")[0]);
 	pSet->windowy = StringConverter::parseInt(StringUtil::split(mode, "x")[1]);
@@ -509,7 +592,7 @@ void App::InitGuiScrenRes()
 	Chk("VSync", chkVidVSync, pSet->vsync);
 
 	//  video resolutions combobox
-	resList = (ListPtr)mWndOpts->findWidget("ResList");
+	resList = mGUI->findWidget<List>("ResList");
 	if (resList)
 	{
 		//  get resolutions
@@ -545,8 +628,8 @@ void App::InitGuiScrenRes()
 		if (modeSel != "")
 			resList->setIndexSelected(resList->findItemIndexWith(modeSel));
 	}
-	ButtonPtr btnRes = (ButtonPtr)mWndOpts->findWidget("ResChange");
-	if (btnRes)  {  btnRes->eventMouseButtonClick = newDelegate(this, &App::btnResChng);  }
+	ButtonPtr btnRes = mGUI->findWidget<Button>("ResChange");
+	if (btnRes)  {  btnRes->eventMouseButtonClick += newDelegate(this, &App::btnResChng);  }
 }
 
 
@@ -610,19 +693,19 @@ void App::comboGraphicsAll(ComboBoxPtr cmb, size_t val)
 
 	case 1:  // Low  -------------
 		s.anisotropy = 0;  s.view_distance = 1500;  s.terdetail = 1.7f;  s.terdist = 40.f;  s.road_dist = 1.8;
-		s.tex_size = 0;  s.ter_mtr = 1;  s.shaders = 0;
+		s.tex_size = 0;  s.ter_mtr = 1;  s.shaders = 25;
 		s.shadow_type = 0;/*1*/  s.shadow_size = 0;  s.shadow_count = 3;  s.shadow_dist = 1000;
 		s.trees = 0.f;  s.grass = 0.f;  s.trees_dist = 1.f;  s.grass_dist = 1.f;	break;
 
 	case 2:  // Medium  -------------
 		s.anisotropy = 4;  s.view_distance = 2500;  s.terdetail = 1.5f;  s.terdist = 80.f;  s.road_dist = 1.6;
-		s.tex_size = 1;  s.ter_mtr = 1;  s.shaders = 1;
+		s.tex_size = 1;  s.ter_mtr = 1;  s.shaders = 0.5;
 		s.shadow_type = 2;/*1*/  s.shadow_size = 1;  s.shadow_count = 3;  s.shadow_dist = 3000;
 		s.trees = 0.5f;  s.grass = 0.f;  s.trees_dist = 1.f;  s.grass_dist = 1.f;	break;
 
 	case 3:  // High  -------------
 		s.anisotropy = 8;  s.view_distance = 6000;  s.terdetail = 1.3f;  s.terdist = 200.f;  s.road_dist = 1.4;
-		s.tex_size = 1;  s.ter_mtr = 2;  s.shaders = 1;
+		s.tex_size = 1;  s.ter_mtr = 2;  s.shaders = 0.75;
 		s.shadow_type = 2;/*2*/  s.shadow_size = 2;  s.shadow_count = 3;  s.shadow_dist = 3000;
 		s.trees = 1.f;  s.grass = 1.f;  s.trees_dist = 1.f;  s.grass_dist = 1.f;	break;
 
@@ -688,10 +771,10 @@ void App::comboGraphicsAll(ComboBoxPtr cmb, size_t val)
 #endif
 
 	//  update gui  sld,val,chk  ...
-	GuiInitGraphics();  // = newDelegate..?
+	GuiInitGraphics();  // += newDelegate..?
 	changeShadows(); // apply shadow
 
-	ButtonPtr btn, bchk;  HScrollPtr sl;  size_t v;
+	ButtonPtr btn, bchk;  ScrollBar* sl;  size_t v;
 #ifndef ROAD_EDITOR  /// game only
 	// duplicated code..
 	Chk("ParticlesOn", chkParticles, pSet->particles);	Chk("TrailsOn", chkTrails, pSet->trails);
@@ -724,7 +807,7 @@ void App::comboGraphicsAll(ComboBoxPtr cmb, size_t val)
 #endif
 }
 
-void App::comboRenderSystem(ComboBoxPtr cmb, size_t val)
+void App::comboRenderSystem(ComboBoxPtr wp, size_t val)
 {
-	pSet->rendersystem = cmb->getItemNameAt(val);
+	pSet->rendersystem = wp->getItemNameAt(val);
 }

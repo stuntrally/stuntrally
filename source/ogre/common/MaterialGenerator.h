@@ -27,6 +27,10 @@ public:
 	Ogre::HighLevelGpuProgramPtr mFragmentProgram;
 	
 	virtual void generate(bool fixedFunction=false); // craft material
+
+	//MRT
+	static bool bUseMRT;
+	static bool MRTSupported();
 	
 protected:
 	// tex unit indices
@@ -39,7 +43,9 @@ protected:
 	unsigned int mTerrainLightTexUnit; // global terrain lightmap
 	unsigned int mShadowTexUnit_start; // start offset for shadow tex units
 	
-	unsigned int mTexUnit_i; // counter
+	// count
+	unsigned int mTexUnit_i;
+	unsigned int mTexCoord_i;
 	
 	// textures
 	std::string mDiffuseMap;
@@ -67,13 +73,17 @@ protected:
 	virtual void vertexProgramParams(Ogre::HighLevelGpuProgramPtr program);
 	virtual void individualVertexProgramParams(Ogre::GpuProgramParametersSharedPtr params);
 	
-	virtual void fpRealtimeShadowHelperSource(Ogre::StringUtil::StrStreamType& outStream);
-		
 	// fragment program
-	virtual Ogre::HighLevelGpuProgramPtr 	createFragmentProgram();
+	virtual Ogre::HighLevelGpuProgramPtr createFragmentProgram();
 	virtual void generateFragmentProgramSource(Ogre::StringUtil::StrStreamType& outStream);
 	virtual void fragmentProgramParams(Ogre::HighLevelGpuProgramPtr program);
 	virtual void individualFragmentProgramParams(Ogre::GpuProgramParametersSharedPtr params);
+	
+	// source generation helpers
+	virtual void vpShadowingParams(Ogre::StringUtil::StrStreamType& outStream);
+	virtual void fpRealtimeShadowHelperSource(Ogre::StringUtil::StrStreamType& outStream);
+	virtual void fpCalcShadowSource(Ogre::StringUtil::StrStreamType& outStream);
+	virtual void fpShadowingParams(Ogre::StringUtil::StrStreamType& outStream);
 	
 	
 	virtual bool needShaders();
@@ -91,10 +101,15 @@ protected:
 	virtual bool vpNeedWITMat();
 	
 	// passtrough (vertex to fragment)
+	virtual bool fpNeedWMat();
 	virtual bool fpNeedTangentToCube();
 	virtual bool fpNeedWsNormal();
 	virtual bool fpNeedEyeVector();
 	 
+	//MRT
+	virtual bool vpNeedWvMat();
+	virtual bool UsePerPixelNormals();
+
 	// lighting
 	virtual bool fpNeedLighting(); // fragment lighting
 	//bool vpNeedLighting(); // vertex lighting

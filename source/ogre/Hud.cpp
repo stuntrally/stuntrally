@@ -18,6 +18,9 @@
 #include <OgreOverlayElement.h>
 using namespace Ogre;
 
+#include <MyGUI_PointerManager.h>
+using namespace MyGUI;
+
 
 ///---------------------------------------------------------------------------------------------------------------
 ///  HUD create  rpm, vel
@@ -189,7 +192,7 @@ void App::ShowHUD(bool hideAll)
 		if (ovWarnWin)  ovWarnWin->hide();
 		if (mFpsOverlay)  mFpsOverlay->hide();
 		if (ndMap)  ndMap->setVisible(false);
-		if (mGUI)	mGUI->setVisiblePointer(false);
+		if (mGUI)	PointerManager::getInstance().setVisible(false);
 		if (mWndRpl)  mWndRpl->setVisible(false);
 	}else{
 		bool show = pSet->show_gauges;
@@ -210,12 +213,12 @@ void App::ShowHUD(bool hideAll)
 		//for (int i=0; i<5; ++i)
 		//{	if (ovU[i])  if (show)  ovU[i]->show();  else  ovU[i]->hide();  }
 
-		if (ovCam)	{  if (pSet->show_cam)    ovCam->show();    else  ovCam->hide();     }
+		if (ovCam)	{  if (pSet->show_cam && !isFocGui)    ovCam->show();    else  ovCam->hide();     }
 		if (ovTimes){  if (pSet->show_times)  ovTimes->show();  else  ovTimes->hide();   }
 		if (ovWarnWin){  if (pSet->show_times)  ovWarnWin->show();  else  ovWarnWin->hide();  }
 		if (mFpsOverlay) { if (pSet->show_fps) mFpsOverlay->show(); else mFpsOverlay->hide(); }
 		if (ndMap)  ndMap->setVisible(pSet->trackmap);
-		if (mGUI)	mGUI->setVisiblePointer(isFocGuiOrRpl());
+		if (mGUI)	PointerManager::getInstance().setVisible(isFocGuiOrRpl());
 		if (mWndRpl && !bLoading)  mWndRpl->setVisible(bRplPlay && bRplWnd);  //
 	}
 }
@@ -227,7 +230,10 @@ void App::UpdMiniTer()
 	if (!pass)  return;
 	try
 	{	Ogre::GpuProgramParametersSharedPtr fparams = pass->getFragmentProgramParameters();
-		fparams->setNamedConstant("showTerrain", pSet->mini_terrain ? 1.f : 0.f);
+		if(fparams->_findNamedConstantDefinition("showTerrain",false))
+		{
+			fparams->setNamedConstant("showTerrain", pSet->mini_terrain ? 1.f : 0.f);
+		}
 	}catch(...){  }
 }
 
@@ -420,17 +426,6 @@ void App::UpdateHUD(int carId, CarModel* pCarM, CAR* pCar, float time, Viewport*
 	oldCarTxt = pSet->car_dbgtxt;
 	
 
-	///  ghost, checkpoints  ----------
-	/*if (ovU[0] && pCarM)
-	{
-		String s = String("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n")+  //"wr:" + (pCarM->bWrongChk?"W":".") + 
-			"                      ghost:  "  + GetTimeString(ghost.GetTimeLength()) + "  "  + toStr(ghost.GetNumFrames()) + "\n" +
-			"                      ghplay: " + GetTimeString(ghplay.GetTimeLength()) + "  " + toStr(ghplay.GetNumFrames()) + "\n" +
-			"                      bInSt:" + (pCarM->bInSt ? "1":"0") + " iCur:" + toStr(pCarM->iCurChk) + " iIn:" + toStr(pCarM->iInChk) + " iNext:" + toStr(pCarM->iNextChk) + " iNumChks:" + toStr(pCarM->iNumChks);
-		ovU[0]->setCaption(s);
-	}/**/
-	
-
 	//  profiling times -
 	if (pGame && pGame->profilingmode && ovU[3])
 	{
@@ -506,11 +501,16 @@ void App::UpdateHUD(int carId, CarModel* pCarM, CAR* pCar, float time, Viewport*
 
 	//  checkpoint warning  --------
 	if (road && hudWarnChk && pCarM)
-	{	/* chks info *
-		sprintf(s, "           st %d in%2d cur%2d nxt %d  num %d / all %d  T= %4.2f  %s" //"st-d %6.2f %6.2f %6.2f"
-			,pCarM->bInSt ? 1:0, pCarM->iInChk, pCarM->iCurChk, pCarM->iNextChk,  pCarM->iNumChks, road->mChks.size()
-			,pCarM->fChkTime,  pCarM->bWrongChk ? "Wrong Checkpoint" : "");  //,vStDist.x, vStDist.y, vStDist.z);
-		hudCheck->setCaption(s);/**/
+	{	/* checks info *
+		if (ovU[0])
+		//	"ghost:  "  + GetTimeString(ghost.GetTimeLength()) + "  "  + toStr(ghost.GetNumFrames()) + "\n" +
+		//	"ghplay: " + GetTimeString(ghplay.GetTimeLength()) + "  " + toStr(ghplay.GetNumFrames()) + "\n" +
+		{	sprintf(s, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n"
+				"         st %d in%2d  |  cur%2d > next %d  |  Num %d / All %d  T= %4.2f"
+			,pCarM->bInSt ? 1:0, pCarM->iInChk, pCarM->iCurChk, pCarM->iNextChk
+			,pCarM->iNumChks, road->mChks.size(), pCarM->fChkTime);
+			ovU[0]->setCaption(s);
+		}	/**/
 
 		if (pCarM->bWrongChk)
 			pCarM->fChkTime = 2.f;  //par sec

@@ -138,7 +138,7 @@ void BaseApp::Run( bool showDialog )
 BaseApp::BaseApp()
 	:mRoot(0), mCamera(0),mCameraT(0), mViewport(0)
 	,mSceneMgr(0), mWindow(0)
-	,mShowDialog(1), mShutDown(false), bWindowResized(0)
+	,mShowDialog(1), mShutDown(false), bWindowResized(0), bFirstRenderFrame(true)
 	,mInputManager(0), mMouse(0), mKeyboard(0)
 	,alt(0), ctrl(0), shift(0)
 	,mbLeft(0), mbRight(0), mbMiddle(0)
@@ -278,13 +278,11 @@ bool BaseApp::setup()
 
 	//  Gui
 	mPlatform = new MyGUI::OgrePlatform();
-	mPlatform->initialise(mWindow, mSceneMgr, "General", PATHMANAGER::GetLogDir() + "/MyGUI_p.log");
+	mPlatform->initialise(mWindow, mSceneMgr, "General", PATHMANAGER::GetLogDir() + "/MyGUI.log");
 	mGUI = new MyGUI::Gui();
-	mGUI->initialise("core.xml", PATHMANAGER::GetLogDir() + "/MyGUI.log");
+	mGUI->initialise("core.xml");
 	
-#if MYGUI_VERSION_MINOR >= 2
 	MyGUI::ResourceManager::getInstance().load("MessageBoxResources.xml");
-#endif
 	
 	
 	// ------------------------- lang ------------------------
@@ -334,17 +332,6 @@ void BaseApp::setupResources()
 			archName = i->second;
 			ResourceGroupManager::getSingleton().addResourceLocation(
 				PATHMANAGER::GetDataPath() + "/" + archName, typeName, secName);
-				
-			if (archName == "gui")
-			{
-				#if MYGUI_VERSION_MINOR >= 2
-				ResourceGroupManager::getSingleton().addResourceLocation(
-					PATHMANAGER::GetDataPath() + "/gui/3.2", typeName, secName);
-				#else
-				ResourceGroupManager::getSingleton().addResourceLocation(
-					PATHMANAGER::GetDataPath() + "/gui/3.0", typeName, secName);
-				#endif
-			}
 		}
 	}
 }

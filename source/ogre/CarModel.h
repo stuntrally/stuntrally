@@ -66,6 +66,7 @@ public:
 	
 	//  Call every vdrift substep with new position info
 	void Update(PosInfo& newPosInfo, float time);
+	void UpdateKeys();  // for camera X,C, last chk F12
 	
 	//  Car color, After these values are changed, ChangeClr() should be called
 	Ogre::ColourValue color;  // for minimap pos tri color  //float hue, sat, val;
@@ -108,7 +109,7 @@ public:
 	int iInChk, iCurChk, iNextChk, iNumChks, iWonPlace;  // cur checkpoint -1 at start
 	bool bInSt, bWrongChk;  float fChkTime;  int iChkWrong;
 	//bool Checkpoint(const PosInfo& posInfo, class SplineRoad* road);  // update
-	Ogre::Vector3 vStartPos;
+	Ogre::Vector3 vStartPos;  void ResetChecks();
 	
 private:
 	Ogre::Camera* mCamera;
@@ -154,6 +155,10 @@ private:
 	//  lightmap enable/disable depending on dist. to terrain
 	bool bLightMapEnabled;
 	void UpdateLightMap();
+	
+	//  cam,chk old states
+	int iCamNextOld;
+	bool bLastChkOld;
 	
 	//  Our settings.
 	SETTINGS* pSet;

@@ -27,6 +27,8 @@ void Scene::Default()
 
 	sParDust = "Dust";  sParMud = "Mud";  sParSmoke = "Smoke";
 
+	ter = true;
+
 	td.Default();
 	td.layerRoad.smoke = !ter ? 1.f : 0.f;  //`
 
@@ -38,6 +40,7 @@ void Scene::Default()
 	grTerMaxAngle = 30.f;
 
 	camPos = Vector3(10.f,20.f,10.f);  camDir = Vector3(0.f,-0.3f,1.f);
+	sceneryId = 0;
 	fluids.clear();  //
 }
 
@@ -50,7 +53,7 @@ PagedLayer::PagedLayer()
 }
 
 FluidBox::FluidBox()
-	:cobj(0), id(-1), isWater(false), isMudDark(false)
+	:cobj(0), id(-1), idParticles(0)
 	,pos(Vector3::ZERO), rot(Vector3::ZERO)
 	,size(Vector3::ZERO), tile(0.01,0.01)
 {	}
@@ -64,10 +67,10 @@ void Scene::UpdateFluidsId()
 	//  set fluids id from name
 	for (int i=0; i < fluids.size(); ++i)
 	{
-		fluids[i].id = pFluidsXml->flMap[fluids[i].name]-1;
-		fluids[i].isWater = Ogre::StringUtil::startsWith(String(fluids[i].name), "water");
-		fluids[i].isMudDark = Ogre::StringUtil::endsWith(String(fluids[i].name), "hard") && !fluids[i].isWater;
-		if (fluids[i].id == -1)
+		int id = pFluidsXml->flMap[fluids[i].name]-1;
+		fluids[i].id = id;
+		fluids[i].idParticles = id == -1 ? -1 : pFluidsXml->fls[id].idParticles;
+		if (id == -1)
 			LogO("! Scene fluid name: " + fluids[i].name + " not found in xml !");
 	}
 }
@@ -123,6 +126,7 @@ bool Scene::LoadXml(String file)
 	eLi = root->FirstChildElement("light");
 	if (eLi)
 	{
+		a = eLi->Attribute("sceneryId");	if (a)  sceneryId = s2i(a);  ///
 		a = eLi->Attribute("pitch");		if (a)  ldPitch = s2r(a);
 		a = eLi->Attribute("yaw");			if (a)  ldYaw = s2r(a);
 		a = eLi->Attribute("dir");			if (a)  {  lDir = s2v(a);
@@ -308,6 +312,7 @@ bool Scene::SaveXml(String file)
 	root.InsertEndChild(fog);
 
 	TiXmlElement li("light");
+		li.SetAttribute("sceneryId",	toStrC( sceneryId ));
 		li.SetAttribute("pitch",		toStrC( ldPitch ));
 		li.SetAttribute("yaw",			toStrC( ldYaw ));
 		li.SetAttribute("ambient",		toStrC( lAmb ));
@@ -497,7 +502,7 @@ void Scene::UpdPgLayers()
 
 
 //
-/// terrain  Height function  (for generate)
+/// terrain  Height function  (for generate)  very old--
 //
 int TerData::GENERATE_HMAP = 0;
 float TerData::getHeight(const float& fi, const float& fj)

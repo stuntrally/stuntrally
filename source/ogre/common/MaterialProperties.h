@@ -3,6 +3,7 @@
 
 #include <OgreStringConverter.h>
 #include <OgreString.h>
+#include <OgreVector2.h>
 #include <OgreVector3.h>
 #include <OgreVector4.h>
 #include <OgreCommon.h>
@@ -39,7 +40,7 @@ struct MaterialProperties
 	textureMap alphaMaps; bool transparent;
 	Ogre::Vector4 lightingAlpha; // alpha for ambient, diffuse, spec, diffuse r channel mult
 	Ogre::CompareFunction alphaRejectFunc; float alphaRejectValue;
-		
+	
 	// reflection
 	std::string envMap;
 	float reflAmount;
@@ -54,6 +55,13 @@ struct MaterialProperties
 	
 	// contribute to ssao yes/no
 	bool ssao;
+	bool ssaoReject; // alpha reject greater 128 for ssao technique
+	
+	// wind waving effect
+	// 0 = off, 1 = for grass (quad), 2 = for trees (mesh)
+	unsigned int wind;
+	
+	bool vertexColour;
 	
 	// use custom generator (for very specific materials like water, glass)
 	// empty ("") means no custom generator
@@ -61,6 +69,15 @@ struct MaterialProperties
 	
 	float depthBias; bool depthCheck; bool depthWrite; bool transparentSorting;
 	
+	// water
+	Ogre::Vector2 waveBump;
+	float waveHighFreq;
+	float waveSpecular;
+	Ogre::Vector4 deepColour, shallowColour, reflectionColour;
+	
+	// priority for various properties (for 'Shader quality' slider)
+	// 0 ... 1, default: 0.5
+	float envMapPriority, shadowPriority, normalMapPriority;
 	
 	//!todo:
 	// PPX on/off, shading mode (phong etc) for no shaders,

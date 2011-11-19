@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION"
 "Report-Msgid-Bugs-To: "
-"POT-Creation-Date: 2011-11-11 19:14+0100"
+"POT-Creation-Date: 2011-11-17 21:09+0100"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>"
 "Language-Team: LANGUAGE <LL@li.org>"
@@ -27,10 +27,6 @@ msgstr ""
 
 msgctxt "Fullscreen"
 msgid "Fullscreen"
-msgstr ""
-
-msgctxt "InputMapShowOptions"
-msgid "Show options"
 msgstr ""
 
 msgctxt "TipGrassSwayDistr"
@@ -113,8 +109,8 @@ msgctxt "LS_TRACK"
 msgid "Loading track"
 msgstr ""
 
-msgctxt "MyGUI_MessageBox_Retry"
-msgid "Retry"
+msgctxt "NeedNewGame"
+msgid "* need New Game"
 msgstr ""
 
 msgctxt "InputRoadAngZero"
@@ -237,8 +233,8 @@ msgctxt "TipParType3"
 msgid "Tire Particle type 3 (global for track)."
 msgstr ""
 
-msgctxt "SkirtLength"
-msgid "Skirt Length"
+msgctxt "TipParType2"
+msgid "Tire Particle type 2 (global for track)."
 msgstr ""
 
 msgctxt "TipParType1"
@@ -263,6 +259,10 @@ msgstr ""
 
 msgctxt "TBPlace"
 msgid "Place"
+msgstr ""
+
+msgctxt "MessageBox_Retry"
+msgid "Retry"
 msgstr ""
 
 msgctxt "TBLast"
@@ -301,6 +301,10 @@ msgctxt "RestartApply"
 msgid "Restart game, to apply *changes."
 msgstr ""
 
+msgctxt "InputMapResetGame"
+msgid "Reset game"
+msgstr ""
+
 msgctxt "smoke"
 msgid "smoke"
 msgstr ""
@@ -323,10 +327,6 @@ msgstr ""
 
 msgctxt "ParAmount"
 msgid "Particle amounts"
-msgstr ""
-
-msgctxt "MyGUI_MessageBox_No"
-msgid "No"
 msgstr ""
 
 msgctxt "InputRoadNew"
@@ -430,7 +430,11 @@ msgid "alt-shift - at start   alt-ctrl - at end"
 msgstr ""
 
 msgctxt "RearThrottleInverse"
-msgid "Rear throttle inverse--"
+msgid "Rear throttle inverse"
+msgstr ""
+
+msgctxt "MessageBox_Yes"
+msgid "Yes"
 msgstr ""
 
 msgctxt "BlendMap"
@@ -449,10 +453,6 @@ msgctxt "InputMapBrake"
 msgid "Brake"
 msgstr ""
 
-msgctxt "MyGUI_MessageBox_Abort"
-msgid "Abort"
-msgstr ""
-
 msgctxt "Video"
 msgid "Video"
 msgstr ""
@@ -469,8 +469,8 @@ msgctxt "Digits"
 msgid "Digits (gear, speed)"
 msgstr ""
 
-msgctxt "TipToggleLayer"
-msgid "Turn on/off chosen texture layer."
+msgctxt "MessageBox_Try"
+msgid "Try"
 msgstr ""
 
 msgctxt "TerLHSm"
@@ -501,8 +501,8 @@ msgctxt "InputRoadWidth"
 msgid "- change road width"
 msgstr ""
 
-msgctxt "InputMapSteering"
-msgid "Steering"
+msgctxt "Replay"
+msgid "Replay"
 msgstr ""
 
 msgctxt "AutoRear"
@@ -549,10 +549,6 @@ msgctxt "TipCarsList"
 msgid "Cars list, click to select (and see image). Press [Change car] and then [New Game] to drive with it."
 msgstr ""
 
-msgctxt "MyGUI_MessageBox_Ignore"
-msgid "Ignore"
-msgstr ""
-
 msgctxt "Model"
 msgid "Model"
 msgstr ""
@@ -581,8 +577,8 @@ msgctxt "InputAfterChanges"
 msgid "(after Terrain/Vegetation changes)"
 msgstr ""
 
-msgctxt "InputMapFlipRight"
-msgid "Flip right"
+msgctxt "MapSize"
+msgid "Map size"
 msgstr ""
 
 msgctxt "OrigImage"
@@ -591,6 +587,10 @@ msgstr ""
 
 msgctxt "InputRoadSelAlt"
 msgid "alt - select all   ctrl - select none"
+msgstr ""
+
+msgctxt "MessageBox_Continue"
+msgid "Continue"
 msgstr ""
 
 msgctxt "InputRoadSel"
@@ -639,10 +639,6 @@ msgstr ""
 
 msgctxt "InputFluidsDel"
 msgid "Del - delete current"
-msgstr ""
-
-msgctxt "NeedNewGame"
-msgid "* need New Game"
 msgstr ""
 
 msgctxt "Effects"
@@ -723,10 +719,6 @@ msgstr ""
 
 msgctxt "TipRenameTrk"
 msgid "Rename selected track with new name (change name first)."
-msgstr ""
-
-msgctxt "MyGUI_MessageBox_Try"
-msgid "Try"
 msgstr ""
 
 msgctxt "TipBumpAmp"
@@ -829,6 +821,10 @@ msgctxt "ssao"
 msgid "SSAO"
 msgstr ""
 
+msgctxt "MessageBox_Abort"
+msgid "Abort"
+msgstr ""
+
 msgctxt "ScaleAll"
 msgid "Scale all"
 msgstr ""
@@ -883,6 +879,10 @@ msgstr ""
 
 msgctxt "length"
 msgid "length"
+msgstr ""
+
+msgctxt "MessageBox_No"
+msgid "No"
 msgstr ""
 
 msgctxt "ColumnNSides"
@@ -985,8 +985,8 @@ msgctxt "InputBrushParams"
 msgid "Brush parameters"
 msgstr ""
 
-msgctxt "InputMapNextCamera"
-msgid "Next Camera"
+msgctxt "InputMapShowOptions"
+msgid "Show options"
 msgstr ""
 
 msgctxt "InputCameraMode"
@@ -1057,8 +1057,8 @@ msgctxt "InputCameraTxt2"
 msgid "with ctrl - switch current car when many"
 msgstr ""
 
-msgctxt "MapSize"
-msgid "Map size"
+msgctxt "SkirtLength"
+msgid "Skirt Length"
 msgstr ""
 
 msgctxt "InputRoadNotOnTer"
@@ -1337,16 +1337,16 @@ msgctxt "Intensity"
 msgid "Intensity"
 msgstr ""
 
+msgctxt "TexSize"
+msgid "Texture size"
+msgstr ""
+
 msgctxt "TipSunAmbient"
 msgid "Sun light ambient (constant) color. R G B components 0 to 1 (eg. 0.4 0.4 0.4)"
 msgstr ""
 
 msgctxt "ChngTrkTab"
 msgid "changed in [Track] tab"
-msgstr ""
-
-msgctxt "TipParType2"
-msgid "Tire Particle type 2 (global for track)."
 msgstr ""
 
 msgctxt "InputRplCtrl2"
@@ -1533,6 +1533,10 @@ msgctxt "TipSmokeInt"
 msgid "Smoke particles intensity."
 msgstr ""
 
+msgctxt "MessageBox_Ignore"
+msgid "Ignore"
+msgstr ""
+
 msgctxt "TerrainBrush"
 msgid "Terrain brush"
 msgstr ""
@@ -1579,6 +1583,10 @@ msgstr ""
 
 msgctxt "EnterSave"
 msgid "Enter - save"
+msgstr ""
+
+msgctxt "InputMapLastChk"
+msgid "Go to last checkp."
 msgstr ""
 
 msgctxt "Properties"
@@ -1667,6 +1675,10 @@ msgstr ""
 
 msgctxt "InputSlowFast"
 msgid "shift - slow   ctrl - fast"
+msgstr ""
+
+msgctxt "MessageBox_Cancel"
+msgid "Cancel"
 msgstr ""
 
 msgctxt "GrassMult"
@@ -1809,10 +1821,6 @@ msgctxt "AntiAliasing"
 msgid "Antialiasing"
 msgstr ""
 
-msgctxt "MyGUI_MessageBox_Continue"
-msgid "Continue"
-msgstr ""
-
 msgctxt "Tools"
 msgid "Tools"
 msgstr ""
@@ -1829,8 +1837,16 @@ msgctxt "FrictionTread"
 msgid "FrictionTread"
 msgstr ""
 
+msgctxt "TipToggleLayer"
+msgid "Turn on/off chosen texture layer."
+msgstr ""
+
 msgctxt "TipTrkListEditor"
 msgid "Tracks list, click to select (for Rename or Duplicate). Press [Load track] to change current track in editor."
+msgstr ""
+
+msgctxt "InputMapNextCamera"
+msgid "Next Camera"
 msgstr ""
 
 msgctxt "GraphicsAll_Lowest"
@@ -2081,16 +2097,12 @@ msgctxt "NewGame"
 msgid "New Game"
 msgstr ""
 
-msgctxt "InputMapFlipLeft"
-msgid "Flip left"
-msgstr ""
-
 msgctxt "page"
 msgid "page"
 msgstr ""
 
-msgctxt "Replay"
-msgid "Replay"
+msgctxt "InputMapSteering"
+msgid "Steering"
 msgstr ""
 
 msgctxt "InputDetailsFor"
@@ -2099,6 +2111,10 @@ msgstr ""
 
 msgctxt "GraphicsAll_Ultra"
 msgid "Ultra"
+msgstr ""
+
+msgctxt "ApplyShaders"
+msgid "Apply shaders"
 msgstr ""
 
 msgctxt "CarDebug"
@@ -2111,6 +2127,10 @@ msgstr ""
 
 msgctxt "InputRoadRebuild"
 msgid "B - rebuild road (after terrain change, etc.)"
+msgstr ""
+
+msgctxt "MessageBox_Ok"
+msgid "Ok"
 msgstr ""
 
 msgctxt "RplSave"
@@ -2127,10 +2147,6 @@ msgstr ""
 
 msgctxt "GraphicsAll_High"
 msgid "High"
-msgstr ""
-
-msgctxt "MyGUI_MessageBox_Cancel"
-msgid "Cancel"
 msgstr ""
 
 msgctxt "TipNewTer"
@@ -2191,10 +2207,6 @@ msgstr ""
 
 msgctxt "TipTerLHSm"
 msgid "Height smooth range (transition)."
-msgstr ""
-
-msgctxt "MyGUI_MessageBox_Ok"
-msgid "Ok"
 msgstr ""
 
 msgctxt "TipRainSnowInt"
@@ -2359,10 +2371,6 @@ msgstr ""
 
 msgctxt "InputNextOptTab"
 msgid "F2,F3 - prev,next Options tab"
-msgstr ""
-
-msgctxt "MyGUI_MessageBox_Yes"
-msgid "Yes"
 msgstr ""
 
 msgctxt "RplAll"

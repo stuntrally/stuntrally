@@ -17,7 +17,6 @@
 #include "timer.h"
 #include "forcefeedback.h"
 #include "ai.h"
-#include "quickmp.h"
 
 #include "../ogre/QTimer.h"
 

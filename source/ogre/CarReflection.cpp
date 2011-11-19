@@ -28,12 +28,12 @@ CarReflection::~CarReflection()
 	
 	for (int face = 0; face < 6; face++)
 	{
-		try{
+		std::string camName = "Reflect_" + toStr(iIndex) + "_" + toStr(face);
+		if (pSceneMgr->hasCamera(camName))
+		{
 			Camera* cam = pSceneMgr->getCamera("Reflect_" + toStr(iIndex) + "_" + toStr(face));
-			if (cam) {	pSceneMgr->destroyCamera(cam);
-				LogO("destroy refl cam ok");  }
-		}catch(...) {
-			LogO("destroy refl cam err");  }
+			pSceneMgr->destroyCamera(cam);
+		}
 	}
 
 	// destroy cube tex - only if created by ourself
@@ -101,7 +101,7 @@ void CarReflection::Create()
 	// Iterate through our materials and add an index to ReflectionCube texture reference
 	for (int i=0; i < NumMaterials; i++)
 	{
-		MaterialPtr mtr = (MaterialPtr)MaterialManager::getSingleton().getByName(sMtr[i]);
+		MaterialPtr mtr = MaterialManager::getSingleton().getByName(sMtr[i]);
 		if (!mtr.isNull())
 		{	Material::TechniqueIterator techIt = mtr->getTechniqueIterator();
 			while (techIt.hasMoreElements())

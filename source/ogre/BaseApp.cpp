@@ -108,7 +108,7 @@ bool BaseApp::keyPressed( const OIS::KeyEvent &arg )
 
 	if (isFocGui && mGUI)	// gui
 	{
-		mGUI->injectKeyPress(MyGUI::KeyCode::Enum(arg.key), arg.text);
+		MyGUI::InputManager::getInstance().injectKeyPress(MyGUI::KeyCode::Enum(arg.key), arg.text);
 		return false;
 	}
 

@@ -1,5 +1,11 @@
+[road]
+	shadowPriority = 0.8
+	envMapPriority = 0.8
+	normalMapPriority = 0.5 
+
 ; ------------ Asphalt -------------
 [roadAsphalt]
+	parent = road
 	diffuseMap_512 = roadAsphalt_s.jpg
 	diffuseMap_2048 = roadAsphalt.jpg
 	ambient = 1.2 1.2 1.2
@@ -19,6 +25,7 @@
 
 ; ------------ Greece -------------
 [roadGDesert]
+	parent = road
 	ambient = 1.04 1.14 0.94
 	diffuse = 0.53 0.55 0.52
 	specular = 0.23 0.23 0.22 32
@@ -41,6 +48,7 @@
 ; ----------- Sand Island ------------
 [roadSand]
 	ambient = 1.14 1.14 1.14
+	parent = road
 	diffuse = 0.62 0.62 0.62
 	specular = 0.23 0.23 0.22 32
 	depthBias = 3
@@ -63,6 +71,7 @@
 ; ----------- Sand Island shore ======------
 [roadSandShore]
 	ambient = 0.64 0.86 0.92
+	parent = road
 	diffuse = 0.38 0.44 0.5
 	specular = 0.31 0.32 0.33 32
 	depthBias = 3
@@ -84,6 +93,7 @@
 ; ----------- Sand Island sunset ======------
 [roadSandSet]
 	ambient = 1.14 1.14 1.14
+	parent = road
 	diffuse = 0.62 0.62 0.62
 	specular = 0.23 0.23 0.22 32
 	depthBias = 3
@@ -105,6 +115,7 @@
 ; ----------- Sand Island dark ======------
 [roadSandDark]
 	ambient = 0.14 0.14 0.08
+	parent = road
 	diffuse = 0.52 0.62 0.42
 	specular = 0.3 0.3 0.2 24
 	depthBias = 3
@@ -126,6 +137,7 @@
 ; ----------- Magic ======------
 [roadSandMagic]
 	ambient = 0.18 0.16 0.76
+	parent = road
 	diffuse = 0.42 0.52 0.92
 	specular = 0.3 0.6 1.0 64
 	depthBias = 3
@@ -151,6 +163,7 @@
 ; ----------- Mud ----------
 [roadMud]
 	ambient = 1.0 1.0 1.0
+	parent = road
 	diffuse = 0.5 0.5 0.5
 	specular = 0.3 0.3 0.25 48
 	depthBias = 3
@@ -175,6 +188,7 @@
 ; ---------- Ice Winter ------------
 [roadIce]
 	ambient = 1.2 1.2 1.2
+	parent = road
 	diffuse = 0.6 0.6 0.6
 	specular = 0.9 0.92 0.92 32
 	depthBias = 3
@@ -217,6 +231,7 @@
 ; ------------ Snow Winter -------------
 [roadSnow]
 	ambient = 1.0 1.0 1.0
+	parent = road
 	diffuse = 0.6 0.6 0.6
 	specular = 0.6 0.62 0.62 18
 	depthBias = 3
@@ -236,6 +251,7 @@
 ; ----------- Adesert Australia ----------
 [roadAdesert]
 	ambient = 1.2 1.2 1.2
+	parent = road
 	diffuse = 0.66 0.65 0.6
 	specular = 0.36 0.32 0.3 32
 	depthBias = 3
@@ -256,6 +272,7 @@
 ; ----------- Desert -----------
 [roadDesert]
 	ambient = 1.2 1.2 1.2
+	parent = road
 	diffuse = 0.66 0.65 0.6
 	specular = 0.36 0.34 0.3 18
 	depthBias = 3
@@ -275,6 +292,7 @@
 ; ----------- Savannah ----------
 [roadSavannah]
 	ambient = 1.08 1.08 1.08
+	parent = road
 	diffuse = 0.6 0.6 0.6
 	specular = 0.1 0.1 0.08 24
 	depthBias = 3
@@ -296,6 +314,7 @@
 ; ----------- Jungle ----------
 [roadJungle]
 	ambient = 1.0 1.0 1.0
+	parent = road
 	diffuse = 0.5 0.5 0.5
 	specular = 0.3 0.3 0.25 48
 	depthBias = 3

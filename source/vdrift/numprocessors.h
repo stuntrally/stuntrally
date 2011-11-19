@@ -6,18 +6,18 @@ namespace NUMPROCESSORS
 
 #if defined(WIN32) || defined(_WIN32) || defined (__WIN32) || defined(__WIN32__) \
 	|| defined (_WIN64) || defined(__CYGWIN__) || defined(__MINGW32__)
-	//#include <windows.h>
-	//#include <process.h>
+	#include <windows.h>
+	#include <process.h>
 #elif defined(__APPLE__) || defined (__FreeBSD__)
 	//#include <pthread.h>
 
 	// Required to get number of processors on OS X using sysctlbyname.
-	//#include <sys/sysctl.h>
+	#include <sys/sysctl.h>
 #elif defined(unix) || defined(__unix) || defined(__unix__)
 	//#include <pthread.h>
 
 	// Required to get number of processors using get_nprocs_conf.
-	//#include <sys/sysinfo.h>
+	#include <sys/sysinfo.h>
 #else
 	#error This development environment doesnt support pthreads or windows threads
 #endif

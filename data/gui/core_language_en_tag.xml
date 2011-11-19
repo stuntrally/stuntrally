@@ -1,15 +1,15 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <MyGUI>
 	<!--  MsgBox  -->
-	<Tag name="MyGUI_MessageBox_Ok">Ok</Tag>
-	<Tag name="MyGUI_MessageBox_Yes">Yes</Tag>
-	<Tag name="MyGUI_MessageBox_No">No</Tag>
-	<Tag name="MyGUI_MessageBox_Abort">Abort</Tag>
-	<Tag name="MyGUI_MessageBox_Retry">Retry</Tag>
-	<Tag name="MyGUI_MessageBox_Ignore">Ignore</Tag>
-	<Tag name="MyGUI_MessageBox_Cancel">Cancel</Tag>
-	<Tag name="MyGUI_MessageBox_Try">Try</Tag>
-	<Tag name="MyGUI_MessageBox_Continue">Continue</Tag>
+	<Tag name="MessageBox_Ok">Ok</Tag>
+	<Tag name="MessageBox_Yes">Yes</Tag>
+	<Tag name="MessageBox_No">No</Tag>
+	<Tag name="MessageBox_Abort">Abort</Tag>
+	<Tag name="MessageBox_Retry">Retry</Tag>
+	<Tag name="MessageBox_Ignore">Ignore</Tag>
+	<Tag name="MessageBox_Cancel">Cancel</Tag>
+	<Tag name="MessageBox_Try">Try</Tag>
+	<Tag name="MessageBox_Continue">Continue</Tag>
 	
 	<!--  Loading tags  -->
 	<Tag name="LoadingDesc">Loading, please wait...</Tag>
@@ -110,7 +110,7 @@
 	<Tag name="TipAutoGearbox">Uncheck for manual gears changing.</Tag>
 	<Tag name="AutoRear">Auto Rear gear</Tag>
 	<Tag name="TipAutoRear">Uncheck for manual Rear gear changing.</Tag>
-	<Tag name="RearThrottleInverse">Rear throttle inverse--</Tag>
+	<Tag name="RearThrottleInverse">Rear throttle inverse</Tag>
 	<Tag name="TipRearThrottleInverse">Inverse throttle and brake function in rear gear.</Tag>
 
 	<Tag name="VegetCol">Vegetation collision</Tag>
@@ -183,6 +183,7 @@
 	<Tag name="Graphics">Graphics</Tag>
 	<Tag name="NeedNewGame">* need New Game</Tag>
 	<Tag name="RestartApply">Restart game, to apply *changes.</Tag>
+	<Tag name="ApplyShaders">Apply shaders</Tag>
 
 	<Tag name="Materials">Materials</Tag>
 	<Tag name="Detail">Detail</Tag>
@@ -213,6 +214,7 @@
 	<Tag name="Shadows">Shadows</Tag>
 	<Tag name="Shaders">Shaders</Tag>
 	<Tag name="Size">Size</Tag>
+	<Tag name="TexSize">Texture size</Tag>
 	<Tag name="Count">Count</Tag>
 	<Tag name="ApplyShadows">Apply Shadows</Tag>
 	<Tag name="LightmapSize">Lightmap size</Tag>
@@ -285,24 +287,29 @@
 	<Tag name="InpSet_AxisHalfInv">Axis Half Inversed</Tag>
 	<Tag name="InpSet_AxisFull">Axis Full</Tag>
 
+	<!--  Input  Map  player  -->
 	<Tag name="InputMapThrottle">Throttle</Tag>
 	<Tag name="InputMapBrake">Brake</Tag>
-	<Tag name="InputMapFlip">Flip</Tag>
-	<Tag name="InputMapFlipRight">Flip right</Tag>
-	<Tag name="InputMapFlipLeft">Flip left</Tag>
-	<Tag name="InputMapBoost">Boost</Tag>
-	<Tag name="InputMapHandBrake">Handbrake</Tag>
 	<Tag name="InputMapSteering">Steering</Tag>
+
+	<Tag name="InputMapHandBrake">Handbrake</Tag>
+	<Tag name="InputMapBoost">Boost</Tag>
+	<Tag name="InputMapFlip">Flip</Tag>
+
 	<Tag name="InputMapShiftUp">Shift up</Tag>
 	<Tag name="InputMapShiftDown">Shift down</Tag>
 
+	<Tag name="InputMapPrevCamera">Previous Camera</Tag>
+	<Tag name="InputMapNextCamera">Next Camera</Tag>
+	<Tag name="InputMapLastChk">Go to last checkp.</Tag>
+
+	<!--  Input  Map  -->
 	<Tag name="InputMapShowOptions">Show options</Tag>
 	<Tag name="InputMapPrevTab">Previous tab</Tag>
 	<Tag name="InputMapNextTab">Next tab</Tag>
 	<Tag name="InputMapRestartGame">New game</Tag>
+	<Tag name="InputMapResetGame">Reset game</Tag>
 
-	<Tag name="InputMapPrevCamera">Previous Camera</Tag>
-	<Tag name="InputMapNextCamera">Next Camera</Tag>
 	<Tag name="InputCameraTxt1">with shift - main cameras only</Tag>
 	<Tag name="InputCameraTxt2">with ctrl - switch current car when many</Tag>
 

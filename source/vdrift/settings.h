@@ -4,7 +4,7 @@
 #include "configfile.h"
 
 
-#define SET_VER  1204  // 1.2
+#define SET_VER  1350  // 1.4
 
 
 class SETTINGS
@@ -26,7 +26,8 @@ public:
 	int tracks_view, tracks_sort;  bool tracks_sortup;
 
 	//  graphics
-	int anisotropy, shaders, tex_size, ter_mtr;  bool bFog;
+	int anisotropy, tex_size, ter_mtr;  bool bFog;
+	float shaders;
 	float view_distance, terdetail,terdist, road_dist;
 	float shadow_dist;  int shadow_size, lightmap_size, shadow_count, shadow_type;
 	int refl_skip, refl_faces, refl_size;  float refl_dist;
@@ -66,7 +67,10 @@ public:
 	bool x11_capture_mouse;
 	
 	//  replay
-	bool rpl_rec, rpl_ghost, rpl_bestonly, rpl_alpha;  int rpl_listview;
+	bool rpl_rec, rpl_ghost, rpl_bestonly;
+	bool rpl_alpha, rpl_ghostpar;  int rpl_listview;
+
+	int sceneryIdOld;  // not a setting, just to remember on quit
 	
 //------------------------------------------
 	SETTINGS();

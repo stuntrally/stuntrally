@@ -9,7 +9,6 @@
 #include <MyGUI.h>
 
 #include <MyGUI_Prerequest.h>
-#if MYGUI_VERSION_MINOR >= 2
 
 namespace MyGUI
 {
@@ -228,7 +227,5 @@ namespace MyGUI
 	};
 
 } // namespace MyGUI
-
-#endif
 
 #endif // __MESSAGE_BOX_STYLE_H__

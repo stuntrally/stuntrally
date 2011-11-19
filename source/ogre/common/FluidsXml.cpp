@@ -10,6 +10,7 @@ FluidParams::FluidParams()
 	,bWhForce(false), whMaxAngVel(100.f), whSpinDamp(10)
 	,whForceLong(30.f), whForceUp(50.f), whSteerMul(1.f)
 	,bumpFqX(20.f), bumpFqY(30.f),bumpAmp(0.2f), bumpAng(0.5f)
+	,idParticles(0)
 {	}
 
 
@@ -55,6 +56,8 @@ bool FluidsXml::LoadXml(std::string file)
 		a = eFl->Attribute("bumpFqY");		if (a)  fp.bumpFqY = s2r(a);
 		a = eFl->Attribute("bumpAmp");		if (a)  fp.bumpAmp = s2r(a);
 		a = eFl->Attribute("bumpAngle");	if (a)  fp.bumpAng = s2r(a);
+		
+		a = eFl->Attribute("idParticles");	if (a)  fp.idParticles = s2i(a);
 		//
 
 		fls.push_back(fp);

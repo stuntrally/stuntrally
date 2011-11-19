@@ -59,11 +59,12 @@ float shadowPCF(sampler2D shadowMap, float4 shadowMapPos, float2 offset)
 }
 
 ///
-void main_fp(float3 uv			: TEXCOORD0, 
+void main_fp(float4 iPosition : POSITION,
+			float4 iColor    : COLOR,
+			 float3 uv			: TEXCOORD0, 
 			 //float3 lightDir	: TEXCOORD1,
 			 //float3 eyeDir	: TEXCOORD2,
 			 //float3 halfAngle	: TEXCOORD3,
-			float4 iColor    : COLOR,
 
 			float4 LightPosition0	: TEXCOORD1,
 			float4 LightPosition1	: TEXCOORD2,
@@ -89,7 +90,7 @@ void main_fp(float3 uv			: TEXCOORD0,
 			 out float4 oColor : COLOR)
 { 
 
-	float4 diffTex = tex2D(diffuseMap, uv);
+	float4 diffTex = tex2D(diffuseMap, uv.xy);
 	float3 diffClr = diffTex.xyz;
 
 	// calculate shadow
@@ -115,4 +116,5 @@ void main_fp(float3 uv			: TEXCOORD0,
 	//oColor = splitColour;
 	float3 clr = diffClr * (0.65f + 0.35f * shadowing);
 	oColor = float4(clr, diffTex.a) * iColor;
+	clip( oColor.a < 0.5 ? -1:1);
 }

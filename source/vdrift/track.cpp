@@ -496,7 +496,7 @@ bool TRACK::LoadRoads(const std::string & trackpath, bool reverse)
 		//return false;
 	}
 
-	int numroads;
+	int numroads=0;
 
 	trackfile >> numroads;
 

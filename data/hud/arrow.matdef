@@ -1,0 +1,3 @@
+[Arrow]
+	ssao = false
+	customGenerator = Arrow

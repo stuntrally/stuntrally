@@ -272,6 +272,15 @@ public:
 	double GetReplayTime() {	assert(carId<car.size());	return car[carId].GetTimeReplay();  }  // replay
 	void SetReplayTime(double t){assert(carId<car.size());	return car[carId].SetTimeReplay(t);  }
 	void RestartReplay()   {	assert(carId<car.size());	return car[carId].RestartReplay();  }
+	void Reset(int id = -1)
+	{
+		if (id == -1)
+		{
+		for(int i=0; i < car.size(); ++i)
+			car[i].Reset();
+		}else
+			car[id].Reset();
+	}
 	
 	float GetLastLap() {assert(carId<car.size());return car[carId].GetLastLap();}
 	float GetBestLap(bool bTrackReverse)

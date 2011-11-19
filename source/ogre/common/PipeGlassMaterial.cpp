@@ -67,7 +67,6 @@ void PipeGlassMaterialGenerator::generate(bool fixedFunction)
 	if (!mShaderCached)
 	{
 		HighLevelGpuProgramPtr fragmentProg, vertexProg;
-		LogO("Creating shader for " + mDef->getName() );
 		try
 		{
 			mVertexProgram = createPipeVertexProgram();
@@ -129,7 +128,7 @@ HighLevelGpuProgramPtr PipeGlassMaterialGenerator::createPipeVertexProgram()
 	ret = mgr.createProgram(progName, ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME, 
 		"cg", GPT_VERTEX_PROGRAM);
 
-	ret->setParameter("profiles", "vs_1_1 arbvp1");
+	ret->setParameter("profiles", "vs_4_0 vs_1_1 arbvp1");
 	ret->setParameter("entry_point", "main_vp");
 
 	StringUtil::StrStreamType sourceStr;
@@ -188,14 +187,14 @@ HighLevelGpuProgramPtr PipeGlassMaterialGenerator::createPipeFragmentProgram()
 	ret = mgr.createProgram(progName, ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME, 
 		"cg", GPT_FRAGMENT_PROGRAM);
 
-	ret->setParameter("profiles", "ps_2_x arbfp1");
+	ret->setParameter("profiles", "ps_4_0 ps_2_x arbfp1");
 	ret->setParameter("entry_point", "main_fp");
 
 	StringUtil::StrStreamType sourceStr;
 	
 	sourceStr <<
 	"struct PIn \n"
-	"{							float3 uv : TEXCOORD0;	float4 wp : TEXCOORD1; \n"
+	"{	float4 p : POSITION;	float3 uv : TEXCOORD0;	float4 wp : TEXCOORD1; \n"
 	"	float3 n : TEXCOORD2;	float3 t  : TEXCOORD3;	float3 b  : TEXCOORD4; \n"
 	"	float4 c : COLOR; \n"
 	"}; \n"
@@ -206,7 +205,7 @@ HighLevelGpuProgramPtr PipeGlassMaterialGenerator::createPipeFragmentProgram()
 	"	uniform float4 matDif,   uniform float4 matSpec,	uniform float matShininess, \n"
 	"	uniform float3 fogColor, \n"
 	"	uniform float4 lightPos0,  uniform float3 camPos, \n"
-	"	uniform float4 invSMSize,  uniform float4x4 iTWMat, \n"
+	"	uniform float4x4 iTWMat, \n"
 	"	uniform sampler2D diffuseMap : TEXUNIT0, \n"
 	"	uniform sampler2D normalMap : TEXUNIT1): COLOR0 \n"
 	"{ \n"

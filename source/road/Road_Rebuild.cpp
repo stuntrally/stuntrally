@@ -90,8 +90,6 @@ void SplineRoad::RebuildRoadInt()
 			vSegs.push_back(rs);
 		}
 	}
-	//  mtr name add texture size _s
-	String txs = (iTexSize == 0) ? "_s" : "";
 
 
 	///  Auto angles prepass ...
@@ -631,7 +629,7 @@ void SplineRoad::RebuildRoadInt()
 				else
 					rs.sMtrRd = sMtrRoad[id] + (onTer ? "_ter" :"");
 
-				CreateMesh(sm, aabox, pos,norm,clr,tcs, idx, rs.sMtrRd + txs);
+				CreateMesh(sm, aabox, pos,norm,clr,tcs, idx, rs.sMtrRd);
 
 				MeshPtr meshW, meshC;  // ] |
 				bool wall = posW.size() > 0;
@@ -680,7 +678,7 @@ void SplineRoad::RebuildRoadInt()
 					sm = meshW->getSubMesh(0);   // for glass only..
 					rs.sMtrWall = !wPglass ? sMtrWall : sMtrWallPipe;
 					if (posW.size() > 0)
-					CreateMesh(sm, aabox, posW,normW,clr0,tcsW, idx, rs.sMtrWall + txs);
+					CreateMesh(sm, aabox, posW,normW,clr0,tcsW, idx, rs.sMtrWall);
 				}
 				
 				
@@ -703,7 +701,7 @@ void SplineRoad::RebuildRoadInt()
 
 					sm = meshC->getSubMesh(0);
 					//if (posC.size() > 0)
-					CreateMesh(sm, aabox, posC,normC,clr0,tcsC, idx, sMtrCol + txs);
+					CreateMesh(sm, aabox, posC,normC,clr0,tcsC, idx, sMtrCol);
 				}
 				
 								
@@ -819,30 +817,6 @@ void SplineRoad::RebuildRoadInt()
 	//  lod end
 
 	
-	///  add checkpoints  * * *
-	if (iDirtyId == -1)  // full rebuild
-	{
-		mChks.clear();  iChkId1 = 0;
-		for (int i=0; i < segs; ++i)  //=getNumPoints
-		{
-			if (mP[i].chkR > 0.f)
-			{
-				CheckSphere cs;
-				cs.pos = mP[i].pos;  // +ofs_y ?-
-				cs.r = mP[i].chkR * mP[i].width;
-				cs.r2 = cs.r * cs.r;
-
-				if (i == iP1)  //1st checkpoint
-					iChkId1 = mChks.size();
-
-				mChks.push_back(cs);
-			}
-		}
-		int num = (int)mChks.size();
-		if (num > 0)  //1st checkpoint for reverse
-			iChkId1Rev = (iChkId1 - iDir + num) % num;
-	}
-
 	UpdLodVis(fLodBias);
 	if (iDirtyId == -1)
 		iOldHide = -1;

@@ -74,7 +74,7 @@ void SETTINGS::Serialize(bool w, CONFIGFILE & c)
 	Param(c,w, "misc.bulletDebug", bltDebug);		Param(c,w, "misc.bulletLines", bltLines);
 	Param(c,w, "misc.bulletProfilerTxt", bltProfilerTxt);
 	Param(c,w, "misc.loadingback", loadingbackground);
-	Param(c,w, "input.x11_capture_mouse", x11_capture_mouse);
+	Param(c,w, "misc.sceneryIdOld", sceneryIdOld);	Param(c,w, "input.x11_capture_mouse", x11_capture_mouse);
 	
 	Param(c,w, "sim.game_fq", game_fq);				Param(c,w, "sim.mult_thr", mult_thr);
 	Param(c,w, "sim.blt_fq", blt_fq);				Param(c,w, "sim.blt_iter", blt_iter);
@@ -92,7 +92,7 @@ void SETTINGS::Serialize(bool w, CONFIGFILE & c)
 
 	Param(c,w, "replay.rec", rpl_rec);				Param(c,w, "replay.ghost", rpl_ghost);
 	Param(c,w, "replay.bestonly", rpl_bestonly);	Param(c,w, "replay.listview", rpl_listview);
-	Param(c,w, "replay.alpha", rpl_alpha);
+	Param(c,w, "replay.alpha", rpl_alpha);			Param(c,w, "replay.ghostpar", rpl_ghostpar);
 }
 
 SETTINGS::SETTINGS() :  ///  Defaults
@@ -112,7 +112,7 @@ SETTINGS::SETTINGS() :  ///  Defaults
 	particles(true), trails(true),
 	shadow_dist(3000), shadow_size(2), shadow_count(3), shadow_type(1), lightmap_size(0),
 	refl_skip(10), refl_faces(1), refl_size(0), refl_dist(500.f), refl_mode("single"),
-	shaders(0),  trees(1.f), grass(1.f), trees_dist(1.f), grass_dist(1.f),
+	shaders(0.5),  trees(1.f), grass(1.f), trees_dist(1.f), grass_dist(1.f),
 	particles_len(1.f), trails_len(1.f),use_imposters(true),
 	//  car
 	abs(1), tcs(1), autoshift(1), autorear(1), rear_inv(1), show_mph(0),
@@ -135,7 +135,9 @@ SETTINGS::SETTINGS() :  ///  Defaults
 	//  input
 	x11_capture_mouse(false),
 	//  replay
-	rpl_rec(1), rpl_ghost(1), rpl_bestonly(1), rpl_alpha(0), rpl_listview(0)
+	rpl_rec(1), rpl_ghost(1), rpl_bestonly(1),
+	rpl_alpha(0), rpl_ghostpar(0), rpl_listview(0),
+	sceneryIdOld(0)
 {
 	for (int i=0; i < 4; ++i)
 	{	car[i] = "ES";  car_hue[i] = 0.2f*i;  car_sat[i] = 0.f;  car_val[i] = 0.f;  cam_view[0] = 0;  }

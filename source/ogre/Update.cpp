@@ -5,6 +5,7 @@
 #include "../road/Road.h"
 #include "../vdrift/game.h"
 #include "../paged-geom/PagedGeometry.h"
+#include "../ogre/common/MaterialFactory.h"
 
 #include <OgreParticleSystem.h>
 #include <OgreManualObject.h>
@@ -64,8 +65,9 @@ bool App::frameStart(Real time)
 
 	if (bWindowResized)
 	{	bWindowResized = false;
-
 		ResizeOptWnd();
+		SizeGUI();
+		updTrkListDim();
 		bSizeHUD = true;
 	}
 		
@@ -80,7 +82,6 @@ bool App::frameStart(Real time)
 		pSet->tracks_sortup = trkMList->mSortUp;
 		TrackListUpd(false);
 	}
-
 
 	if (bLoading)
 	{
@@ -220,6 +221,10 @@ bool App::frameStart(Real time)
 				{	 pr->setSpeedFactor(0.f);	 pr2->setSpeedFactor(0.f);	}
 			else{	 pr->setSpeedFactor(1.f);	 pr2->setSpeedFactor(1.f);	}
 		}
+		
+		materialFactory->update();
+		
+		bFirstRenderFrame = false;
 		
 		return ret;
 	}
@@ -427,20 +432,11 @@ void App::newPoses()
 				// set animation start to old orientation
 				arrowAnimStart = arrowAnimCur;
 				
-				bool noAnim = false;
 				// game start: no animation
-				if (carM->iCurChk == -1)
-					noAnim = true;
+				bool noAnim = carM->iNumChks == 0;
 				
 				// get vector from camera to checkpoint
-				Ogre::Vector3 chkPos;
-				if (carM->iCurChk == -1 || carM->iCurChk == carM->iNextChk) // workaround for first checkpoint
-				{
-					int id = pSet->trackreverse ? road->iChkId1Rev : road->iChkId1;
-					chkPos = road->mChks[id].pos;
-				}
-				else
-					chkPos = road->mChks[std::max(0, std::min((int)road->mChks.size()-1, carM->iNextChk))].pos;
+				Ogre::Vector3 chkPos = road->mChks[std::max(0, std::min((int)road->mChks.size()-1, carM->iNextChk))].pos;
 					
 				// workaround for last checkpoint
 				if (carM->iNumChks == road->mChks.size())
@@ -465,21 +461,23 @@ void App::newPoses()
 					Real angle = (arrowAnimCur.zAxis().dotProduct(carM->fCam->mCamera->getOrientation().zAxis())+1)/2.0f;
 					// set color in material
 					MaterialPtr arrowMat = MaterialManager::getSingleton().getByName("Arrow");
-					Ogre::GpuProgramParametersSharedPtr fparams = arrowMat->getTechnique(0)->getPass(1)->getFragmentProgramParameters();
-					// green: 0.0 1.0 0.0     0.0 0.4 0.0
-					// red:   1.0 0.0 0.0     0.4 0.0 0.0
-					Vector3 col1 = angle * Vector3(0.0, 1.0, 0.0) + (1-angle) * Vector3(1.0, 0.0, 0.0);
-					Vector3 col2 = angle * Vector3(0.0, 0.4, 0.0) + (1-angle) * Vector3(0.4, 0.0, 0.0);
-					fparams->setNamedConstant("color1", col1);
-					fparams->setNamedConstant("color2", col2);
+					if (arrowMat->getTechnique(0)->getPass(1)->hasFragmentProgram())
+					{
+						Ogre::GpuProgramParametersSharedPtr fparams = arrowMat->getTechnique(0)->getPass(1)->getFragmentProgramParameters();
+						// green: 0.0 1.0 0.0     0.0 0.4 0.0
+						// red:   1.0 0.0 0.0     0.4 0.0 0.0
+						Vector3 col1 = angle * Vector3(0.0, 1.0, 0.0) + (1-angle) * Vector3(1.0, 0.0, 0.0);
+						Vector3 col2 = angle * Vector3(0.0, 0.4, 0.0) + (1-angle) * Vector3(0.4, 0.0, 0.0);
+						fparams->setNamedConstant("color1", col1);
+						fparams->setNamedConstant("color2", col2);
+					}
 				}
 			}
 			
 			if (carM->bGetStPos)  // first pos is at start
 			{	carM->bGetStPos = false;
 				carM->matStPos.makeInverseTransform(posInfo.pos, Vector3::UNIT_SCALE, posInfo.rot);
-				carM->iCurChk = -1;  carM->iNumChks = 1;  // reset lap
-				carM->iNextChk = pSet->trackreverse ? road->iChkId1Rev : road->iChkId1;
+				carM->ResetChecks();
 			}
 			if (road && !carM->bGetStPos)
 			{
@@ -505,7 +503,7 @@ void App::newPoses()
 						}
 						ghost.Clear();
 						
-						carM->iCurChk = -1;  carM->iNumChks = 1;
+						carM->ResetChecks();
 
 						///  winner places  for local players > 1
 						if (carM->iWonPlace == 0 && pGame->timer.GetCurrentLap(iCarNum) >= pSet->num_laps)
@@ -518,20 +516,18 @@ void App::newPoses()
 						if (d2 < cs.r2)  // car in checkpoint
 						{
 							carM->iInChk = i;
-							if (carM->iCurChk == -1)  // first, any
-							{	carM->iCurChk = i;  carM->iNumChks = 1;  }
-							else if (carM->iNumChks < ncs)
+							//  next check
+							if (i == carM->iNextChk && carM->iNumChks < ncs)
 							{
+								carM->iCurChk = i;  carM->iNumChks++;
 								int ii = (pSet->trackreverse ? -1 : 1) * road->iDir;
 								carM->iNextChk = (carM->iCurChk + ii + ncs) % ncs;
-								
-								//  any if first, or next
-								if (i == carM->iNextChk)
-								{	carM->iCurChk = i;  carM->iNumChks++;  }
-								else
-								if (carM->iInChk != carM->iCurChk)
-									carM->bWrongChk = true;
+								//  save car pos and rot
+								carM->pCar->SavePosAtCheck();
 							}
+							else
+							if (carM->iInChk != carM->iCurChk)
+								carM->bWrongChk = true;
 							break;
 						}
 				}	}

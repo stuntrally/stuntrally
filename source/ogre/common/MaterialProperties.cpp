@@ -18,7 +18,10 @@ MaterialProperties::MaterialProperties() :
 	depthBias(0), depthCheck(true), transparentSorting(true), lightingAlpha(0.0, 0.0, 0.0, 0.0),
 	sceneBlend(SBM_DEFAULT), depthWrite(true), alphaRejectFunc(CMPF_ALWAYS_PASS), alphaRejectValue(0.0),
 	fog(true), lighting(true), textureAddressMode(TextureUnitState::TAM_WRAP),
-	terrainLightMap(false), ssao(true), customGenerator("")
+	terrainLightMap(false), ssao(true), ssaoReject(false), customGenerator(""), wind(0), vertexColour(false),
+	waveBump(0.5, 1.0), waveHighFreq(0.0), waveSpecular(1.0),
+	envMapPriority(0.5), shadowPriority(0.5), normalMapPriority(0.5),
+	deepColour(0.0, 0.3, 0.5, 1.0), shallowColour(0.0, 0.9, 1.0, 0.3), reflectionColour(0.9, 1.0, 1.0, 1.0)
 {}
 
 //----------------------------------------------------------------------------------------
@@ -33,6 +36,7 @@ const inline bool str2bool(const std::string& s)
 }
 #define str2int(s) StringConverter::parseInt(s)
 #define str2float(s) StringConverter::parseReal(s)
+#define str2vec2(s) StringConverter::parseVector2(s)
 #define str2vec3(s) StringConverter::parseVector3(s)
 #define str2vec4(s) StringConverter::parseVector4(s)
 
@@ -79,6 +83,12 @@ void MaterialProperties::setProperty(const std::string& prop, const std::string&
 		else if (value == "mirror") textureAddressMode = TextureUnitState::TAM_MIRROR;
 		else if (value == "border") textureAddressMode = TextureUnitState::TAM_BORDER;
 	}
+	else if (prop == "envMapPriority") envMapPriority = str2float(value);
+	else if (prop == "shadowPriority") shadowPriority = str2float(value);
+	else if (prop == "normalMapPriority") normalMapPriority = str2float(value);
+	else if (prop == "ssaoReject") ssaoReject = str2bool(value);
+	else if (prop == "vertexColour") vertexColour = str2bool(value);
+	else if (prop == "wind") wind = str2int(value);
 	else if (prop == "customGenerator") customGenerator = value;
 	else if (prop == "ssao") ssao = str2bool(value);
 	else if (prop == "terrainLightMap") terrainLightMap = str2bool(value);
@@ -135,6 +145,16 @@ void MaterialProperties::setProperty(const std::string& prop, const std::string&
 		int isize = Ogre::StringConverter::parseInt(size);
 		alphaMaps[isize] = value;
 	}
+
+	// water
+	else if (prop == "waveBump") waveBump = str2vec2(value);
+	else if (prop == "waveHighFreq") waveHighFreq = str2float(value);
+	else if (prop == "waveSpecular") waveSpecular = str2float(value);
+	else if (prop == "deepColour") deepColour = str2vec4(value);
+	else if (prop == "shallowColour") shallowColour = str2vec4(value);
+	else if (prop == "reflectionColour") reflectionColour = str2vec4(value);
+
+	// not found
 	else
 	{
 		if (Ogre::StringUtil::startsWith(prop, ";")) // ';' means comment, ignore

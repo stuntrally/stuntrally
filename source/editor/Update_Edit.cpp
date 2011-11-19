@@ -5,6 +5,7 @@
 #include "../paged-geom/PagedGeometry.h"
 #include "../ogre/common/Gui_Def.h"
 #include "../ogre/common/MultiList2.h"
+#include "../ogre/common/MaterialFactory.h"
 using namespace Ogre;
 
 
@@ -128,8 +129,8 @@ bool App::frameRenderingQueued(const FrameEvent& evt)
 					else Fmt(s, "chkR  %4.2f  %s", sp.chkR, road->iP1 == ic ? "<1>":"");   rdTxt[8]->setCaption(s);  }
 
 		if (rdTxt[9]){
-			if (road->vSel.size() > 0)  Fmt(s, "sel: %d", road->vSel.size());
-			else	Fmt(s, "%2d/%d", road->iChosen+1, road->vSegs.size());   rdTxt[9]->setCaption(s);  }
+			if (road->vSel.size() > 0)  Fmt(s, "sel: %lu", road->vSel.size());
+			else	Fmt(s, "%2d/%lu", road->iChosen+1, road->vSegs.size());   rdTxt[9]->setCaption(s);  }
 
 		if (rdTxt[11]){  rdTxt[11]->setCaption(bCur ? "Cur" : "New");
 			rdTxt[11]->setTextColour(bCur ? MyGUI::Colour(0.85,0.75,1) : MyGUI::Colour(0.3,1,0.1));  }
@@ -190,7 +191,7 @@ bool App::frameRenderingQueued(const FrameEvent& evt)
 	else if (edMode == ED_Fluids && sc.fluids.size() > 0)
 	{
 		FluidBox& fb = sc.fluids[iFlCur];									if (flTxt[1])	flTxt[1]->setCaption(fb.name.c_str());
-		Fmt(s, "Cur/All:  %d/%d", iFlCur+1, sc.fluids.size());				if (flTxt[0])	flTxt[0]->setCaption(s);
+		Fmt(s, "Cur/All:  %d/%lu", iFlCur+1, sc.fluids.size());				if (flTxt[0])	flTxt[0]->setCaption(s);
 		Fmt(s, "Pos:  %4.1f %4.1f %4.1f", fb.pos.x, fb.pos.y, fb.pos.z);	if (flTxt[2])	flTxt[2]->setCaption(s);
 		Fmt(s, "Rot:  %4.1f", fb.rot.x);									if (flTxt[3])	flTxt[3]->setCaption(s);
 		Fmt(s, "Size:  %4.1f %4.1f %4.1f", fb.size.x, fb.size.y, fb.size.z); if (flTxt[4])	flTxt[4]->setCaption(s);
@@ -476,7 +477,7 @@ bool App::frameEnded(const FrameEvent& evt)
 	///  input event queues  ------------------------------------
 	for (int i=0; i < i_cmdKeyRel; ++i)
 	{	const CmdKey& k = cmdKeyRel[i];
-		mGUI->injectKeyRelease(MyGUI::KeyCode::Enum(k.key));  }
+		MyGUI::InputManager::getInstance().injectKeyRelease(MyGUI::KeyCode::Enum(k.key));  }
 	i_cmdKeyRel = 0;
 
 	for (int i=0; i < i_cmdKeyPress; ++i)
@@ -486,12 +487,12 @@ bool App::frameEnded(const FrameEvent& evt)
 
 	for (int i=0; i < i_cmdMouseMove; ++i)
 	{	const CmdMouseMove& c = cmdMouseMove[i];
-		mGUI->injectMouseMove(c.ms.X.abs, c.ms.Y.abs, c.ms.Z.abs);  }
+		MyGUI::InputManager::getInstance().injectMouseMove(c.ms.X.abs, c.ms.Y.abs, c.ms.Z.abs);  }
 	i_cmdMouseMove = 0;
 
 	for (int i=0; i < i_cmdMousePress; ++i)
 	{	const CmdMouseBtn& b = cmdMousePress[i];
-		mGUI->injectMousePress(b.ms.X.abs, b.ms.Y.abs, MyGUI::MouseButton::Enum(b.btn));
+		MyGUI::InputManager::getInstance().injectMousePress(b.ms.X.abs, b.ms.Y.abs, MyGUI::MouseButton::Enum(b.btn));
 #if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
 		SetCursor(0);
 		ShowCursor(0); 
@@ -502,7 +503,7 @@ bool App::frameEnded(const FrameEvent& evt)
 
 	for (int i=0; i < i_cmdMouseRel; ++i)
 	{	const CmdMouseBtn& b = cmdMouseRel[i];
-		mGUI->injectMouseRelease(b.ms.X.abs, b.ms.Y.abs, MyGUI::MouseButton::Enum(b.btn));  }
+		MyGUI::InputManager::getInstance().injectMouseRelease(b.ms.X.abs, b.ms.Y.abs, MyGUI::MouseButton::Enum(b.btn));  }
 	i_cmdMouseRel = 0;
 	
 
@@ -613,6 +614,8 @@ bool App::frameStarted(const Ogre::FrameEvent& evt)
 
 		ResizeOptWnd();
 		//bSizeHUD = true;
+		SizeGUI();
+		updTrkListDim();
 		
 		LoadTrack();  // shouldnt be needed but ...
 	}
@@ -624,8 +627,8 @@ bool App::frameStarted(const Ogre::FrameEvent& evt)
 	}
 	
 	///  sort trk list
-	if (trkMList && trkMList->mSortColumnIndex != trkMList->mSortColumnIndexOld
-		|| trkMList->mSortUp != trkMList->mSortUpOld)
+	if (trkMList && (trkMList->mSortColumnIndex != trkMList->mSortColumnIndexOld
+		|| trkMList->mSortUp != trkMList->mSortUpOld))
 	{
 		trkMList->mSortColumnIndexOld = trkMList->mSortColumnIndex;
 		trkMList->mSortUpOld = trkMList->mSortUp;
@@ -634,6 +637,10 @@ bool App::frameStarted(const Ogre::FrameEvent& evt)
 		pSet->tracks_sortup = trkMList->mSortUp;
 		TrackListUpd(false);
 	}
-
+	
+	materialFactory->update();
+	
+	bFirstRenderFrame = false;
+	
 	return true;
 }
