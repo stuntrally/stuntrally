@@ -106,6 +106,7 @@ namespace Forests
 
    private:
       DensityMap(Ogre::TexturePtr texture, MapChannel channel);
+      DensityMap(Ogre::String map, MapChannel channel);
       ~DensityMap();
 
       static std::map<Ogre::String, DensityMap*> selfList;

@@ -21,6 +21,7 @@
 
 #include <MyGUI.h>
 #include <MyGUI_OgrePlatform.h>
+#include "common/MyGUI_D3D11.h"
 
 #include <OgreRTShaderSystem.h>
 #include "common/MaterialGenerator.h"
@@ -597,7 +598,7 @@ bool BaseApp::setup()
 	TextureManager::getSingleton().setDefaultNumMipmaps(5);
 
 	//  Gui
-	mPlatform = new MyGUI::OgrePlatform();
+	mPlatform = new MyGUI::OgreD3D11Platform();
 	mPlatform->initialise(mWindow, mSceneMgr, "General", PATHMANAGER::GetLogDir() + "/MyGUI.log");
 	mGUI = new MyGUI::Gui();
 	

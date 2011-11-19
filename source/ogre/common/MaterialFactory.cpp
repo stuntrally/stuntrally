@@ -90,7 +90,7 @@ MaterialFactory::MaterialFactory() :
 	mCustomGenerators.push_back(water);
 	
 	MaterialGenerator* impostor = static_cast<MaterialGenerator*>(new ImpostorMaterialGenerator());
-	water->mParent = this;
+	impostor->mParent = this;
 	mCustomGenerators.push_back(impostor);
 	
 	ti.update(); /// time

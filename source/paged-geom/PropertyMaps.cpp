@@ -29,11 +29,19 @@ std::map<String, DensityMap*> DensityMap::selfList;
 
 DensityMap *DensityMap::load(const String &fileName, MapChannel channel)
 {
-	//Load image
-	TexturePtr map = TextureManager::getSingleton().load(fileName, ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME, TEX_TYPE_2D, 0);
+	const String key = fileName + StringConverter::toString((int)channel);
 
-	//Copy image to pixelbox
-	return load(map, channel);
+	std::map<String, DensityMap*>::iterator i;
+	i = selfList.find(key);
+
+	DensityMap *m;
+	if (i != selfList.end())
+		m = i->second;
+	else
+		m = new DensityMap(fileName, channel);
+
+	++(m->refCount);
+	return m;
 }
 
 DensityMap *DensityMap::load(TexturePtr texture, MapChannel channel)
@@ -120,7 +128,45 @@ DensityMap::DensityMap(TexturePtr map, MapChannel channel)
 		delete[] static_cast<uint8*>(tmpPixels.data);
 	}
 }
+DensityMap::DensityMap(String map, MapChannel channel)
+{
+	filter = MAPFILTER_BILINEAR;
 
+	//Load image
+	Image ima;
+	ima.load(map, ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME);
+	//tmap->convertToImage(ima);
+	//Add self to selfList
+	selfKey = map + StringConverter::toString((int)channel);
+	selfList.insert(std::pair<String, DensityMap*>(selfKey, this));
+	refCount = 0;
+	PixelBox pba = ima.getPixelBox();
+	PixelFormat z=ima.getFormat();
+	//Prepare a PixelBox (8-bit greyscale) to receive the density values
+	pixels = new PixelBox(Box(0, 0, pba.getWidth(), pba.getHeight()), PF_BYTE_L);
+	pixels->data = new uint8[pixels->getConsecutiveSize()];
+	uint8 *outputPtr = (uint8*)pixels->data;
+	int width = pba.getWidth();
+	int height = pba.getHeight();
+	for(int i=0 ;i< width;i++)
+	{
+		for(int j=0;j< height;j++)
+		{
+			ColourValue col = pba.getColourAt(i,j,0);
+			float colval;
+			switch (channel){
+				case CHANNEL_RED: colval = col.r; break;
+				case CHANNEL_GREEN: colval = col.g; break;
+				case CHANNEL_BLUE: colval = col.b; break;
+				case CHANNEL_ALPHA: colval = col.a; break;
+				case CHANNEL_COLOR: colval = col.r; break;
+				default: OGRE_EXCEPT(0, "Invalid channel", "GrassLayer::setDensityMap()"); break;
+			}
+			outputPtr[j*width+i] = colval * 255.0f;
+
+		}
+	}
+}
 
 //Returns the density map value at the given location
 //Make sure a density map exists before calling this.

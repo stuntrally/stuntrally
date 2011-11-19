@@ -12,7 +12,7 @@
 #include <MyGUI_Prerequest.h>
 #include <MyGUI_Widget.h>
 
-namespace MyGUI{  class OgrePlatform;  };
+namespace MyGUI{  class OgrePlatform; class OgreD3D11Platform; };
 namespace Ogre 
 {  
 	class SceneNode;  class Root;  class SceneManager;  class RenderWindow;
@@ -125,7 +125,7 @@ protected:
 	///  Gui
 	bool isFocGuiOrRpl()  {  return isFocGui || isFocRpl;  }
 	bool isFocGui,isFocRpl;  // gui shown
-	MyGUI::Gui* mGUI;		MyGUI::OgrePlatform* mPlatform;
+	MyGUI::Gui* mGUI;		MyGUI::OgreD3D11Platform* mPlatform;
 	MyGUI::WidgetPtr mLayout, mWndOpts, mWndRpl;  // options window
 	MyGUI::TabPtr mWndTabs;
 	MyGUI::VectorWidgetPtr vwGui;
