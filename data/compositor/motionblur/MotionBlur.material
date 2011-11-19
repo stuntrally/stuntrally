@@ -1,7 +1,7 @@
 fragment_program Ogre/Compositor/Combine_fp cg
 {
 	source Combine_fp.cg
-	profiles ps_2_0 arbfp1
+	profiles ps_4_0 ps_2_0 arbfp1
 	entry_point Combine_fp
 
 	default_params
@@ -51,6 +51,14 @@ material Ogre/Compositor/Copyback
 		{
 			lighting off
 			depth_check off
+			
+			vertex_program_ref Ogre/Compositor/StdQuad_Cg_vp
+			{
+			}
+
+			fragment_program_ref Ogre/Compositor/StdQuad_fp
+            {
+            }
 
 			texture_unit Temp
 			{
@@ -71,6 +79,14 @@ material Ogre/Compositor/MotionBlur
 		{
 			lighting off
 			depth_check off
+
+			vertex_program_ref Ogre/Compositor/StdQuad_Cg_vp
+			{
+			}
+			
+			fragment_program_ref Ogre/Compositor/StdQuad_fp
+            {
+            }
 
 			texture_unit Sum
 			{

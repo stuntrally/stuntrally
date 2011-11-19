@@ -91,6 +91,7 @@ geomOut geom_white_ps(in float4 iPosition : POSITION,in float4 vp : TEXCOORD0, i
 	uniform sampler2D globalNormal : register(s0))
 {
     geomOut OUT;
+    OUT.c = float4(0,0,0,0);
     clip(-1);
 	return OUT;
 }
