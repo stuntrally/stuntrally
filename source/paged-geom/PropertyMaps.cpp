@@ -152,7 +152,11 @@ DensityMap::DensityMap(String map, MapChannel channel)
 	{
 		for(int j=0;j< height;j++)
 		{
-			ColourValue col = pba.getColourAt(i,j,0);
+			ColourValue col(1,1,1,1);// = pba.getColourAt(i,j,0);
+			col.r = ((uint8*)pba.data)[(j*width+i)*3+0]/255.f;
+			col.g = ((uint8*)pba.data)[(j*width+i)*3+1]/255.f;
+			col.b = ((uint8*)pba.data)[(j*width+i)*3+2]/255.f;
+			//col.a = ((uint8*)pba.data)[(j*width+i)*3+3]/255.f;
 			float colval;
 			switch (channel){
 				case CHANNEL_RED: colval = col.r; break;
