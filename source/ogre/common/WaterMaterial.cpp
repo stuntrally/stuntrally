@@ -23,6 +23,8 @@ WaterMaterialGenerator::WaterMaterialGenerator()
 	mName = "Water";
 }
 
+//----------------------------------------------------------------------------------------
+
 void WaterMaterialGenerator::generate(bool fixedFunction)
 {
 	mMaterial = prepareMaterial(mDef->getName());

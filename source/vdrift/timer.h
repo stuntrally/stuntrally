@@ -276,10 +276,18 @@ public:
 	{
 		if (id == -1)
 		{
-		for(int i=0; i < car.size(); ++i)
-			car[i].Reset();
-		}else
-			car[id].Reset();
+			for(int i=0; i < car.size(); ++i)
+			{
+				car[i].Reset();
+			}
+		}
+		else
+		{
+			if(car.size() > id)
+			{
+				car[id].Reset();
+			}
+		}
 	}
 	
 	float GetLastLap() {assert(carId<car.size());return car[carId].GetLastLap();}

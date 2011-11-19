@@ -184,7 +184,7 @@ void App::slShadowType(SL)
 	{	if (v == 0)  valShadowType->setCaption("None");  else
 		if (v == 1)  valShadowType->setCaption("Old");  else
 		if (v == 2)  valShadowType->setCaption("Normal");  else
-		if (v == 3)  valShadowType->setCaption("Depth-");  }
+		if (v == 3)  valShadowType->setCaption("Depth");  }
 }
 
 void App::slShadowCount(SL)

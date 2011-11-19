@@ -122,8 +122,8 @@ void App::AddTrkL(std::string name, int user, const TrackInfo* ti)
 	if (!ti)  return;  //  details
 	int l = li->getItemCount()-1;
 	
-	li->setSubItemNameAt(1,l, c+toStr(ti->n/10)+toStr(ti->n%10));  li->setSubItemNameAt(2,l, c+ti->scenery);
-	li->setSubItemNameAt(3,l, c+toStr(ti->crtver));
+	li->setSubItemNameAt(1,l, toStr(ti->n/10)+toStr(ti->n%10));  li->setSubItemNameAt(2,l, c+ti->scenery);
+	li->setSubItemNameAt(3,l, toStr(ti->crtver));
 	//list->setSubItemNameAt(4,l, ti->created);  list->setSubItemNameAt(5,l, ti->modified);
 	#define toS(clr,v)  (v > 0) ? (clr "  "+toStr(v)) : " "
 	li->setSubItemNameAt(4,l, toS("#C0D0FF",ti->diff));   li->setSubItemNameAt(5,l, toS("#C0E0FF",ti->rating));  //rateuser="0" drivenlaps="0"

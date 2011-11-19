@@ -146,7 +146,7 @@ void App::InitGui()
 	//  effects
 	Chk("AllEffects", chkVidEffects, pSet->all_effects);
 	Chk("Bloom", chkVidBloom, pSet->bloom);
-	Chk("HDR", chkVidHDR, pSet->hdr);
+	//Chk("HDR", chkVidHDR, pSet->hdr);
 	Chk("MotionBlur", chkVidBlur, pSet->motionblur);
 	Chk("ssao", chkVidSSAO, pSet->ssao);
 
