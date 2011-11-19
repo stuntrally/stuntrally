@@ -36,8 +36,8 @@ namespace MyGUI
 		void initialise(Ogre::RenderWindow* _window, Ogre::SceneManager* _scene);
 		void shutdown();
 
-		static OgreRenderManager& getInstance();
-		static OgreRenderManager* getInstancePtr();
+		static OgreD3D11RenderManager& getInstance();
+		static OgreD3D11RenderManager* getInstancePtr();
 
 		/** @see RenderManager::getViewSize */
 		virtual const IntSize& getViewSize() const;
