@@ -14,6 +14,7 @@ struct VOut
 
 struct PIn
 {
+	float4 p   : POSITION; 
     float2 uv  : TEXCOORD0;
     float3 ray : TEXCOORD1;
 };
@@ -35,6 +36,12 @@ VOut ssao_vs(VIn IN, uniform float4x4 wvp, uniform float3 farCorner)
 float3 computeZ(float2 xy)
 {
     return float3(xy, sqrt(1.0 - dot(xy, xy)));
+}
+
+// for ps_4_0, we want to use tex2Dlod because it's faster
+ps_4_0 float4 TEX2DLOD(sampler2D map, float2 uv)
+{
+    return tex2Dlod(map, float4(uv.xy, 0, 0));
 }
 
 // for ps_3_0, we want to use tex2Dlod because it's faster

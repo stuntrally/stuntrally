@@ -582,7 +582,7 @@ namespace Ogre
 		params->setNamedAutoConstant("eyePosObjSpace", GpuProgramParameters::ACT_CAMERA_POSITION_OBJECT_SPACE);
 		params->setNamedAutoConstant("fogColour", GpuProgramParameters::ACT_FOG_COLOUR);
 		
-		if(MaterialGenerator::MRTSupported())
+		if(tt != LOW_LOD && MaterialGenerator::MRTSupported())
 		{
 			params->setNamedAutoConstant("worldViewMatrix", GpuProgramParameters::ACT_WORLDVIEW_MATRIX);
 			params->setNamedAutoConstant("far", GpuProgramParameters::ACT_FAR_CLIP_DISTANCE);
@@ -1049,7 +1049,7 @@ namespace Ogre
 
 		//ssao
 		outStream << ",	in float4 viewPosition : TEXCOORD"+ toStr( texCoordSet++ ) +" \n";
-		if(MaterialGenerator::MRTSupported())
+		if(tt != LOW_LOD && MaterialGenerator::MRTSupported())
 		{
 			outStream << ",	uniform float far \n";	
 			outStream << ",	uniform float4x4 worldViewMatrix \n";
