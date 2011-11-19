@@ -16,7 +16,6 @@
 #include "../paged-geom/PagedGeometry.h"
 
 #include <MyGUI_OgrePlatform.h>
-#include "common/MyGUI_D3D11.h"
 #include <MyGUI_PointerManager.h>
 using namespace MyGUI;
 #include <OgreTerrainGroup.h>

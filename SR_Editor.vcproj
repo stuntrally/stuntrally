@@ -501,14 +501,6 @@
 				>
 			</File>
 			<File
-				RelativePath=".\source\ogre\common\MyGUI_D3D11.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\source\ogre\common\MyGUI_D3D11.h"
-				>
-			</File>
-			<File
 				RelativePath=".\source\ogre\common\Gui_Def.h"
 				>
 			</File>
