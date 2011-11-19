@@ -738,13 +738,13 @@ void App::comboGraphicsAll(ComboBoxPtr cmb, size_t val)
 
 	case 3:  // High  -------------
 		s.particles = true;  s.trails = true;  s.particles_len = 1.2f;  s.trails_len = 2.f;
-		s.refl_mode = "full";    s.refl_skip = 50;  s.refl_faces = 1;  s.refl_size = 0;  s.refl_dist = 1000.f;
+		s.refl_mode = "single";    s.refl_skip = 50;  s.refl_faces = 1;  s.refl_size = 0;  s.refl_dist = 1000.f;
 		s.all_effects = true;  s.bloom = true;  s.hdr = false;  s.motionblur = false;
 		s.rpl_rec = 1;  s.rpl_ghost = 1;  s.rpl_alpha = 0;	break;
 
 	case 4:  // Ultra  -------------
 		s.particles = true;  s.trails = true;  s.particles_len = 1.5f;  s.trails_len = 4.f;
-		s.refl_mode = "full";    s.refl_skip = 10;  s.refl_faces = 1;  s.refl_size = 1;  s.refl_dist = 1500.f;
+		s.refl_mode = "single";    s.refl_skip = 10;  s.refl_faces = 1;  s.refl_size = 1;  s.refl_dist = 1500.f;
 		s.all_effects = true;  s.bloom = true;  s.hdr = false;  s.motionblur = true;
 		s.rpl_rec = 1;  s.rpl_ghost = 1;  s.rpl_alpha = 0;	break;
 	}
