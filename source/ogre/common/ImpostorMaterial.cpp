@@ -128,6 +128,7 @@ void ImpostorMaterialGenerator::generate(bool fixedFunction)
 		"{ \n"
 		"	float4 texColor = tex2D(texture, texCoord); \n"
 		"	oColor = float4(lerp(texColor.xyz, fogColor.xyz, fog), texColor.a); \n"
+		"	clip( oColor.a > 0.0f ? 1:-1); \n"
 		"} \n";
 		
 		fshader->setSource(outStream.str());
