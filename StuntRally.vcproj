@@ -1513,6 +1513,14 @@
 					>
 				</File>
 				<File
+					RelativePath=".\source\ogre\common\MyGUI_D3D11.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\source\ogre\common\MyGUI_D3D11.h"
+					>
+				</File>
+				<File
 					RelativePath=".\Source\ogre\Hud.cpp"
 					>
 				</File>
