@@ -9,13 +9,13 @@
 #include "MyGUI_D3D11.h"
 namespace MyGUI
 {
-	OgreRenderManager& OgreRenderManager::getInstance()
+	OgreD3D11RenderManager& OgreD3D11RenderManager::getInstance()
 	{
 		return *getInstancePtr();
 	}
-	OgreRenderManager* OgreRenderManager::getInstancePtr()
+	OgreD3D11RenderManager* OgreD3D11RenderManager::getInstancePtr()
 	{
-		return static_cast<OgreRenderManager*>(RenderManager::getInstancePtr());
+		return static_cast<OgreD3D11RenderManager*>(RenderManager::getInstancePtr());
 	}
 
 	OgreD3D11RenderManager::OgreD3D11RenderManager() :
