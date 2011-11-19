@@ -114,7 +114,7 @@
 
 ; ----------- Sand Island dark ======------
 [roadSandDark]
-	ambient = 0.14 0.14 0.08
+	ambient = 0.6 0.6 0.4
 	parent = road
 	diffuse = 0.52 0.62 0.42
 	specular = 0.3 0.3 0.2 24
@@ -136,7 +136,7 @@
 
 ; ----------- Magic ======------
 [roadSandMagic]
-	ambient = 0.18 0.16 0.76
+	ambient = 0.34 0.28 0.76
 	parent = road
 	diffuse = 0.42 0.52 0.92
 	specular = 0.3 0.6 1.0 64
