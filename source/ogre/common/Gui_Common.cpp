@@ -693,7 +693,7 @@ void App::comboGraphicsAll(ComboBoxPtr cmb, size_t val)
 
 	case 1:  // Low  -------------
 		s.anisotropy = 0;  s.view_distance = 1500;  s.terdetail = 1.7f;  s.terdist = 40.f;  s.road_dist = 1.8;
-		s.tex_size = 0;  s.ter_mtr = 1;  s.shaders = 25;
+		s.tex_size = 0;  s.ter_mtr = 1;  s.shaders = 0.25;
 		s.shadow_type = 0;/*1*/  s.shadow_size = 0;  s.shadow_count = 3;  s.shadow_dist = 1000;
 		s.trees = 0.f;  s.grass = 0.f;  s.trees_dist = 1.f;  s.grass_dist = 1.f;	break;
 
