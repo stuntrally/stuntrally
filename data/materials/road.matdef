@@ -210,24 +210,6 @@
 	depthWrite = false
 	terrainLightMap = true
 
-[roadIce2]
-	parent = roadIce
-	ambient = 1.4 1.4 .14
-	diffuse = 0.7 0.7 0.7
-
-[roadIce2_ter]
-	parent = roadIce
-	ambient = 1.4 1.4 1.4
-	diffuse = 0.7 0.7 0.7
-	alphaMap_512 = roadAlpha_s.png
-	alphaMap_2048 = roadAlpha.png
-	normalMap_512 = volcano_7_nh1_s.png
-	normalMap_1024 = volcano_7_nh1.png
-	transparent = true
-	sceneBlend = alpha
-	depthWrite = false
-	terrainLightMap = true
-
 ; ------------ Snow Winter -------------
 [roadSnow]
 	ambient = 1.0 1.0 1.0
@@ -237,14 +219,14 @@
 	depthBias = 3
 	diffuseMap_512 = roadSnow_s.jpg
 	diffuseMap_2048 = roadSnow.jpg
-	normalMap_512 = volcano_7_nh1_s.png
-	normalMap_1024 = volcano_7_nh1.png
 	receivesShadows = true
 
 [roadSnow_ter]
 	parent = roadSnow
 	alphaMap_512 = roadAlpha_s.png
 	alphaMap_2048 = roadAlpha.png
+	normalMap_512 = volcano_7_nh1_s.png
+	normalMap_1024 = volcano_7_nh1.png
 	transparent = true
 	sceneBlend = alpha
 	depthWrite = false
@@ -273,9 +255,9 @@
 
 ; ----------- Desert -----------
 [roadDesert]
-	ambient = 1.2 1.2 1.2
+	ambient = 0.85 0.85 0.85
 	parent = road
-	diffuse = 0.66 0.65 0.6
+	diffuse = 0.81 0.8 0.75
 	specular = 0.36 0.34 0.3 18
 	depthBias = 3
 	diffuseMap_512 = roadDesert_s.jpg
