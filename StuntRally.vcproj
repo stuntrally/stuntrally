@@ -1296,6 +1296,14 @@
 						>
 					</File>
 					<File
+						RelativePath=".\source\ogre\common\ImpostorMaterial.cpp"
+						>
+					</File>
+					<File
+						RelativePath=".\source\ogre\common\ImpostorMaterial.h"
+						>
+					</File>
+					<File
 						RelativePath=".\source\ogre\common\MaterialDefinition.cpp"
 						>
 					</File>
@@ -1353,6 +1361,14 @@
 					</File>
 					<File
 						RelativePath=".\source\ogre\common\TerrainMaterialGen.h"
+						>
+					</File>
+					<File
+						RelativePath=".\source\ogre\common\WaterMaterial.cpp"
+						>
+					</File>
+					<File
+						RelativePath=".\source\ogre\common\WaterMaterial.h"
 						>
 					</File>
 				</Filter>
