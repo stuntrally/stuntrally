@@ -41,6 +41,7 @@ public:
 	
 	/// settings that can change runtime
 	void setFog(bool fog);
+	void setWind(bool wind);
 	
 	
 	/// user settings get/set ---------------------------------------------
@@ -68,6 +69,7 @@ public:
 	std::vector<std::string> splitMtrs; // materials that need pssm split points
 	std::vector<std::string> terrainLightMapMtrs; // materials that need terrain lightmap texture and terrainWorldSize
 	std::vector<std::string> fogMtrs; // materials that involve fog
+	std::vector<std::string> windMtrs; // wind == 2
 	std::vector<std::string> timeMtrs; // for animated materials
 	
 	shaderMap* getShaderCache() { return &mShaderCache; };

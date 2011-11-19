@@ -174,7 +174,7 @@ void App::btnShadows(WP){	changeShadows();	}
 
 void App::btnShaders(WP)
 {
-	materialFactory->generate();
+	changeShadows();
 }
 
 void App::slShadowType(SL)
@@ -693,7 +693,7 @@ void App::comboGraphicsAll(ComboBoxPtr cmb, size_t val)
 
 	case 1:  // Low  -------------
 		s.anisotropy = 0;  s.view_distance = 1500;  s.terdetail = 1.7f;  s.terdist = 40.f;  s.road_dist = 1.8;
-		s.tex_size = 0;  s.ter_mtr = 1;  s.shaders = 25;
+		s.tex_size = 0;  s.ter_mtr = 1;  s.shaders = 0.25;
 		s.shadow_type = 0;/*1*/  s.shadow_size = 0;  s.shadow_count = 3;  s.shadow_dist = 1000;
 		s.trees = 0.f;  s.grass = 0.f;  s.trees_dist = 1.f;  s.grass_dist = 1.f;	break;
 
@@ -738,14 +738,14 @@ void App::comboGraphicsAll(ComboBoxPtr cmb, size_t val)
 
 	case 3:  // High  -------------
 		s.particles = true;  s.trails = true;  s.particles_len = 1.2f;  s.trails_len = 2.f;
-		s.refl_mode = "full";    s.refl_skip = 50;  s.refl_faces = 1;  s.refl_size = 0;  s.refl_dist = 1000.f;
+		s.refl_mode = "single";    s.refl_skip = 50;  s.refl_faces = 1;  s.refl_size = 0;  s.refl_dist = 1000.f;
 		s.all_effects = true;  s.bloom = true;  s.hdr = false;  s.motionblur = false;
 		s.rpl_rec = 1;  s.rpl_ghost = 1;  s.rpl_alpha = 0;	break;
 
 	case 4:  // Ultra  -------------
 		s.particles = true;  s.trails = true;  s.particles_len = 1.5f;  s.trails_len = 4.f;
-		s.refl_mode = "full";    s.refl_skip = 10;  s.refl_faces = 1;  s.refl_size = 1;  s.refl_dist = 1500.f;
-		s.all_effects = true;  s.bloom = true;  s.hdr = false;  s.motionblur = false;  //true;
+		s.refl_mode = "single";    s.refl_skip = 10;  s.refl_faces = 1;  s.refl_size = 1;  s.refl_dist = 1500.f;
+		s.all_effects = true;  s.bloom = true;  s.hdr = false;  s.motionblur = true;
 		s.rpl_rec = 1;  s.rpl_ghost = 1;  s.rpl_alpha = 0;	break;
 	}
 #endif

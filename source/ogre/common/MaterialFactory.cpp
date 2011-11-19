@@ -143,6 +143,22 @@ void MaterialFactory::setFog(bool fog)
 
 //----------------------------------------------------------------------------------------
 
+void MaterialFactory::setWind(bool wind)
+{
+	for (std::vector<std::string>::iterator it=windMtrs.begin();
+		it != windMtrs.end(); ++it)
+	{
+		MaterialPtr mat = MaterialManager::getSingleton().getByName( (*it) );
+		if (mat->getTechnique(0)->getPass(0)->hasVertexProgram())
+		{
+			GpuProgramParametersSharedPtr vparams = mat->getTechnique(0)->getPass(0)->getVertexProgramParameters();
+			vparams->setNamedConstant("enableWind", wind ? Real(1.0) : Real(0.0));
+		}
+	}
+}
+
+//----------------------------------------------------------------------------------------
+
 void MaterialFactory::loadDefsFromFile(const std::string& file)
 {
 	try
@@ -255,6 +271,7 @@ void MaterialFactory::generate()
 		fogMtrs.clear();
 		terrainLightMapMtrs.clear();
 		timeMtrs.clear();
+		windMtrs.clear();
 		
 		for (std::vector<MaterialDefinition*>::iterator it=mDefinitions.begin();
 			it!=mDefinitions.end(); ++it)
