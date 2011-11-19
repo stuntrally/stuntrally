@@ -339,6 +339,8 @@ referenced by material '" + (*it)->getName() + "' not found. Using default gener
 			{
 				if (!generator->mVertexProgram.isNull() && !generator->mFragmentProgram.isNull()) 
 					mShaderCache[ std::make_pair(generator->mVertexProgram, generator->mFragmentProgram) ] = shaderProps;
+				else
+					delete shaderProps;
 			}
 			else
 				delete shaderProps;
