@@ -164,8 +164,8 @@
 [roadMud]
 	ambient = 1.0 1.0 1.0
 	parent = road
-	diffuse = 0.5 0.5 0.5
-	specular = 0.3 0.3 0.25 48
+	diffuse = 0.7 0.7 0.7
+	specular = 0.2 0.2 0.15 32
 	depthBias = 3
 	diffuseMap_512 = roadMud_s.jpg
 	diffuseMap_2048 = roadMud.jpg
@@ -173,9 +173,7 @@
 
 [roadMud_ter]
 	parent = roadMud
-	ambient = 0.51 0.5 0.5
-	diffuse = 0.45 0.45 0.45
-	specular = 0.2 0.2 0.15 32
+	specular = 0.3 0.3 0.3 64
 	normalMap_512 = ice_3_nh1_s.png
 	normalMap_1024 = ice_3_nh1.png
 	alphaMap_512 = roadAlpha_s.png
@@ -275,9 +273,9 @@
 
 ; ----------- Savannah ----------
 [roadSavannah]
-	ambient = 1.08 1.08 1.08
+	ambient = 0.88 0.88 0.88
 	parent = road
-	diffuse = 0.6 0.6 0.6
+	diffuse = 0.8 0.8 0.8
 	specular = 0.1 0.1 0.08 24
 	depthBias = 3
 	diffuseMap_512 = roadSavannah_s.jpg
