@@ -174,7 +174,7 @@ bool MODEL_JOE03::Load ( const std::string & filename, std::ostream & err_output
 		m_FilePointer = fopen(filename.c_str(), "rb");
 		if (!m_FilePointer)
 		{
-			err_output << "MODEL_JOE03: Failed to open file " << filename << std::endl;
+			//err_output << "MODEL_JOE03: Failed to open file " << filename << std::endl;
 			return false;
 		}
 	}
@@ -182,7 +182,7 @@ bool MODEL_JOE03::Load ( const std::string & filename, std::ostream & err_output
 	{
 		if (!pack->Pack_fopen(filename))
 		{
-			err_output << "MODEL_JOE03: Failed to open file " << filename << " in " /*<< pack->GetPath()*/ << std::endl;
+			//err_output << "MODEL_JOE03: Failed to open file " << filename << " in " /*<< pack->GetPath()*/ << std::endl;
 			return false;
 		}
 	}
