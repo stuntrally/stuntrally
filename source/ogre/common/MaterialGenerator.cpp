@@ -149,6 +149,11 @@ void MaterialGenerator::generate(bool fixedFunction)
 	if (mDef->mProps->fog)
 		mParent->fogMtrs.push_back( mDef->getName() );
 		
+	// indicate we need enable/disable wind parameter
+	// only needed for trees (wind == 2) because they have impostors
+	if (mDef->mProps->wind == 2)
+		mParent->windMtrs.push_back( mDef->getName() );
+	
 	// uncomment to export to .material
 	/*
 	if (mDef->getName() == "pipeGlass") {
@@ -631,6 +636,7 @@ void MaterialGenerator::generateVertexProgramSource(Ogre::StringUtil::StrStreamT
 	{
 		outStream <<
 		"	uniform float time, \n"
+		"	uniform float enableWind, \n"
 		"	float4 windParams 	: TEXCOORD1, \n"
 		"	float4 originPos 	: TEXCOORD2, \n";
 	}
@@ -725,10 +731,10 @@ void MaterialGenerator::generateVertexProgramSource(Ogre::StringUtil::StrStreamT
 		// we can safely make permutations depending on "shaderQuality" since it does not change per material.
 		//! might need to revisit this assumption when using more excessive caching (shaders that persist after settings change)
 		if (mParent->getShaderQuality() > 0.6) outStream <<
-			"	position.y += sin(time + originPos.z + position.y + position.x) * radiusCoeff * radiusCoeff * factorY; \n"
-			"	position.x += sin(time + originPos.z ) * heightCoeff * heightCoeff * factorX ; \n";
+			"	position.y += enableWind * sin(time + originPos.z + position.y + position.x) * radiusCoeff * radiusCoeff * factorY; \n"
+			"	position.x += enableWind * sin(time + originPos.z ) * heightCoeff * heightCoeff * factorX ; \n";
 		else outStream <<
-			"	float sinval = sin(time + originPos.z ); \n"
+			"	float sinval = enableWind * sin(time + originPos.z ); \n"
 			"	position.y += sinval * radiusCoeff * radiusCoeff * factorY; \n"
 			"	position.x += sinval * heightCoeff * heightCoeff * factorX ; \n";
 	}
@@ -824,6 +830,9 @@ void MaterialGenerator::vertexProgramParams(HighLevelGpuProgramPtr program)
 		
 	if (mShader->wind == 1)
 		params->setNamedAutoConstant("objSpaceCam", GpuProgramParameters::ACT_CAMERA_POSITION_OBJECT_SPACE);
+	
+	else if (mShader->wind == 2)
+		params->setNamedConstant("enableWind", Real(1.0));
 		
 	individualVertexProgramParams(params);
 }

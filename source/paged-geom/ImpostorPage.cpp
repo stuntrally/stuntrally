@@ -586,6 +586,7 @@ void ImpostorTexture::renderTextures(bool force)
 	sceneMgr->setFog(FOG_NONE);
 	///T no fog when using custom shaders
 	MaterialFactory::getSingleton().setFog(false);
+	MaterialFactory::getSingleton().setWind(false);
 	
 	// Get current status of the queue mode
 	Ogre::SceneManager::SpecialCaseRenderQueueMode OldSpecialCaseRenderQueueMode = sceneMgr->getSpecialCaseRenderQueueMode();
@@ -700,6 +701,7 @@ void ImpostorTexture::renderTextures(bool force)
 	sceneMgr->setFog(oldFogMode, oldFogColor, oldFogDensity, oldFogStart, oldFogEnd);
 	///T no fog when using custom shaders
 	MaterialFactory::getSingleton().setFog(true);
+	MaterialFactory::getSingleton().setWind(true);
 
 	//Delete camera
 	renderTarget->removeViewport(0);
