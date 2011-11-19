@@ -174,7 +174,7 @@ void App::btnShadows(WP){	changeShadows();	}
 
 void App::btnShaders(WP)
 {
-	materialFactory->generate();
+	changeShadows();
 }
 
 void App::slShadowType(SL)
