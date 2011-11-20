@@ -100,9 +100,6 @@ namespace OISB
 
 	const String& JoyStick::getName() const
 	{
-		//static String name = "JoyStick" + mJoyStick->getID() mJoyStick->vendor();
-		//static String name = mJoyStick->vendor();
-		
 		// unique name for each JS
 		static String name = mJoyStick->vendor() + "_" + boost::lexical_cast<std::string>(mID);
 		
