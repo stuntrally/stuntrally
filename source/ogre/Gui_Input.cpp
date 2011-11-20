@@ -291,12 +291,14 @@ void App::InputBind(int key, int button, int axis)
 	for (int i = 0; i < num; ++i)
 	{
 		OISB::Bindable* bind = binding->getBindable(i);
+		if (bind && bind != (void*)1)
+		{
 		String name = bind->getBindableName();
 		String role = binding->getRole(bind);
 
 		if (role == "dec")  decKey = name;
 		if (role == "inc")  incKey = name;
-	}
+	}	}
 
 	//  clear, unbind
 	for (int i = num-1; i >= 0; --i)
