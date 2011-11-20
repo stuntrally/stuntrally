@@ -152,7 +152,11 @@ DensityMap::DensityMap(String map, MapChannel channel)
 	{
 		for(int j=0;j< height;j++)
 		{
+			#if OGRE_VERSION_PATCH >= 3
 			ColourValue col = pba.getColourAt(i,j,0);
+			#else
+			ColourValue col = ima.getColourAt(i,j,0);
+			#endif
 			float colval;
 			switch (channel){
 				case CHANNEL_RED: colval = col.r; break;
