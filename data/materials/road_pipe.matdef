@@ -7,7 +7,7 @@ normalMap_256 = brass_patina_n_s.png
 normalMap_1024 = brass_patina_n.png
 envMap = ReflectionCube
 reflAmount = 0.1
-ambient = 0.42 0.43 0.44
+ambient = 0.84 0.86 0.88
 diffuse = 0.5 0.56 0.6
 specular = 0.25 0.267 0.28 4
 cullHardware = none
@@ -16,13 +16,13 @@ cullHardware = none
 parent = pipe_wall
 cullHardware = anticlockwise
 cullHardware = none_if_depthshadow
-ambient = 0.4 0.43 0.44
+ambient = 0.8 0.86 0.88
 diffuse = 0.7 0.76 0.8
 specular = 0.24 0.267 0.28 4
 
 ; ------------ Column -------------
 [road_col]
-ambient = 0.44 0.45 0.45
+ambient = 0.88 0.90 0.90
 diffuse = 0.44 0.45 0.45
 specular = 0.25 0.25 0.25 24
 cullHardware = anticlockwise
@@ -33,7 +33,7 @@ normalMap_1024 = brass_patina_n.png
 
 ; ------------ Pipes -------------
 [pipeAsphalt]
-ambient = 0.5 0.5 0.5
+ambient = 1.0 1.0 1.0
 diffuse = 0.6 0.6 0.6
 specular = 0.3 0.3 0.25 24
 depthBias = 3
@@ -45,7 +45,7 @@ receivesShadows = true
 [pipeGlass]
 customGenerator = PipeGlass
 transparent = true
-ambient = 0.2 0.2 0.2
+ambient = 0.4 0.4 0.4
 diffuse = 0.5 0.56 0.6
 specular = 0.37 0.39 0.41 64
 lightingAlpha = 0.15 0.2 0.3 1
@@ -55,7 +55,7 @@ ssao = false
 
 [pipeGlassCyan]
 parent = pipeGlass
-ambient = 0.2 0.25 0.25
+ambient = 0.4 0.5 0.5
 diffuse = 0.4 0.6 0.63
 specular = 0.32 0.39 0.41 64
 lightingAlpha = 0.3 0.3 0.4 1.0

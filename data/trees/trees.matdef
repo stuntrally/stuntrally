@@ -3,8 +3,8 @@
 ; --------- gum tree ----------
 [gum_branch]
 	diffuseMap_512 = gum_branch.png
-	ambient = 0.34 0.34 0.34
-	diffuse = 0.53 0.53 0.53
+	ambient = 0.59 0.59 0.59
+	diffuse = 0.59 0.59 0.59
 	transparent = true
 	alphaRejectFunc = greater
 	alphaRejectValue = 128
@@ -35,7 +35,7 @@
 
 [3D-Diggers/plant1]
 	parent = 3D-Diggers/base
-	ambient = 0.3 0.3 0.3
+	ambient = 0.9 0.9 0.9
 	diffuse = 0.5 0.5 0.5
 	diffuseMap_256 = plant1.png
 
@@ -45,15 +45,15 @@
 
 [3D-Diggers/plant2]
 	parent = 3D-Diggers/base
-	ambient = 0.3 0.3 0.3
-	diffuse = 0.5 0.5 0.5
+	ambient = 1.0 1.0 1.0
+	diffuse = 0.6 0.6 0.6
 	diffuseMap_256 = plant2.png
 
 [3D-Diggers/farn01]
 	parent = 3D-Diggers/base
 	diffuseMap_256 = farn01.png
-	ambient = 0.3 0.3 0.3
-	diffuse = 0.65 0.65 0.65
+	ambient = 0.9 0.9 0.9
+	diffuse = 0.7 0.7 0.7
 	specular = 0.5 0.5 0.5 1 32
 	wind = 2
 
@@ -63,9 +63,9 @@
 	wind = 2
 
 [3D-Diggers/fir01]
+	ambient = 1.0 1.0 1.0
+	diffuse = 0.6 0.6 0.6
 	shadowPriority = 0.1
-	ambient = 0.5 0.5 0.5
-	diffuse = 0.4 0.4 0.4
 	alphaRejectFunc = greater
 	alphaRejectValue = 128
 	transparent = true
@@ -74,9 +74,9 @@
 	wind = 2
 
 [3D-Diggers/firW1]
+	ambient = 1.0 1.0 1.0
+	diffuse = 0.6 0.6 0.6
 	shadowPriority = 0.1
-	ambient = 0.5 0.5 0.5
-	diffuse = 0.4 0.4 0.4
 	alphaRejectFunc = greater
 	alphaRejectValue = 128
 	transparent = true
@@ -85,18 +85,18 @@
 	wind = 2
 
 [3D-Diggers/fir02]
+	ambient = 1.0 1.0 1.0
+	diffuse = 0.6 0.6 0.6
 	shadowPriority = 0.1
-	ambient = 0.5 0.5 0.5
-	diffuse = 0.4 0.4 0.4
 	diffuseMap_512 = fir02.jpg
 	receivesDepthShadows = true
 	terrainLightMap = true
 	wind = 2
 
 [3D-Diggers/firW2]
+	ambient = 1.0 1.0 1.0
+	diffuse = 0.6 0.6 0.6
 	shadowPriority = 0.1
-	ambient = 0.5 0.5 0.5
-	diffuse = 0.4 0.4 0.4
 	diffuseMap_512 = fir02w.jpg
 	receivesDepthShadows = true
 	terrainLightMap = true
@@ -105,8 +105,8 @@
 [3D-Diggers/shroom1]
 	shadowPriority = 0.1
 	parent = 3D-Diggers/base
-	ambient = 0.3 0.3 0.3
-	diffuse = 0.5 0.5 0.5
+	ambient = 0.5 0.5 0.5
+	diffuse = 0.6 0.6 0.6
 	diffuseMap_256 = shroom1.png
 	receivesDepthShadows = true
 
@@ -122,6 +122,8 @@
 	diffuseMap_512 = palm.png
 	alphaRejectFunc = greater
 	alphaRejectValue = 79
+	ambient = 1.0 1.0 1.0
+	diffuse = 0.6 0.6 0.6
 	specular = 0.3 0.3 0.3 21
 	transparent = true
 	terrainLightMap = true
@@ -152,12 +154,11 @@
 
 [tree.07.branch1.mat/ALPHA/TEX/tree.07.png/VertCol/TWOSIDE]
 	shadowPriority = 0.4
-	ambient = 0.5 0.5 0.5
-	diffuse = 0.5 0.5 0.5
 	cullHardware = none
 	alphaRejectFunc = greater
 	alphaRejectValue = 192
 	diffuseMap_512 = tree.07.png
+	diffuse = 0.5 0.5 0.5
 	transparent = true
 	terrainLightMap = true
 	wind = 2
@@ -177,14 +178,13 @@
 
 [leaves.09.mat/ALPHA/TEX/tree.09.png/VertCol/TWOSIDE]
 	shadowPriority = 0.4
-	ambient = 0.5 0.5 0.5
-	diffuse = 0.5 0.5 0.5
 	cullHardware = none
 	alphaRejectFunc = greater
 	alphaRejectValue = 192
 	diffuseMap_512 = tree.09.png
 	transparent = true
 	terrainLightMap = true
+	diffuse = 0.5 0.5 0.5
 	wind = 2
 
 [tree.09.mat/ALPHA/TEX/tree.09.png/VertCol/TWOSIDE]
