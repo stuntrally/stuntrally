@@ -94,8 +94,8 @@ namespace OISB
 
 	const String& JoyStick::getName() const
 	{
-		//static String name = "JoyStick" + mJoyStick->getID() mJoyStick->vendor();
-		static String name = mJoyStick->vendor();
+		static String name = mJoyStick->getID() + "_" + mJoyStick->vendor();
+		//static String name = mJoyStick->vendor();
 		return name;
 	}
 

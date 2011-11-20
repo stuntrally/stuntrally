@@ -267,14 +267,10 @@ void App::UpdPSSMMaterials()	/// . . . . . . . .
 	//--  pssm params
 	PSSMShadowCameraSetup* pssmSetup = static_cast<PSSMShadowCameraSetup*>(mPSSMSetup.get());
 	const PSSMShadowCameraSetup::SplitPointList& splitPointList = pssmSetup->getSplitPoints();
-	MaterialPtr mat;
 
-	for (size_t i = 0; i < 3/*/splitPointList.size()*/; ++i)
+	for (size_t i = 0; i < splitPointList.size(); ++i)
 		splitPoints[i] = splitPointList[i];
-	
-	//#ifndef ROAD_EDITOR  // GAME
-	setMtrSplits("grass_GrassVS_");
-	
+
 	// mtr splits for all cars (only game)
 	#ifndef ROAD_EDITOR
 	if (pSet->shadow_type == 3) recreateCarMtr();
@@ -285,12 +281,5 @@ void App::UpdPSSMMaterials()	/// . . . . . . . .
 	{
 		//LogO("Set splits: " + (*it) );
 		setMtrSplits( (*it) );
-	}
-
-	if (!road)  return;
-	for (int i=0; i<MTRs; ++i)
-	{
-		if (road->sMtrRoad[i] != "") {	setMtrSplits(road->sMtrRoad[i]);  setMtrSplits(road->sMtrRoad[i]+"_ter");  }
-		if (road->sMtrPipe[i] != "")	setMtrSplits(road->sMtrPipe[i]);
 	}
 }
