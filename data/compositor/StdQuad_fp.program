@@ -1,0 +1,17 @@
+fragment_program Ogre/Compositor/StdQuad_Cg_fp cg
+{
+	source StdQuad_fp.cg
+	entry_point StdQuad_fp
+	profiles ps_4_0 ps_2_0 arbfp1
+
+	default_params
+	{
+	}
+}
+
+
+
+fragment_program Ogre/Compositor/StdQuad_fp unified
+{
+	delegate Ogre/Compositor/StdQuad_Cg_fp
+}

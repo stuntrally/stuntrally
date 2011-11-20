@@ -305,6 +305,8 @@ void MaterialGenerator::createSSAOTechnique()
 	
 	// choose vertex program
 	std::string vprogname = "geom_vs";
+	if ( mDef->mProps->transparent )
+		vprogname = "geom_coord_vs";
 	
 	// choose fragment program
 	std::string fprogname = "geom_ps";

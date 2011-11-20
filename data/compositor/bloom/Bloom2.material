@@ -92,7 +92,7 @@ fragment_program BrightBloom2_ps20_hlsl hlsl
 vertex_program Blur_vs11_cg cg
 {
 	source Blur_vs11.hlsl
-	profiles vs_1_1 arbvp1
+	profiles vs_4_0 vs_1_1 arbvp1
 	entry_point main
 }
 
@@ -100,13 +100,13 @@ vertex_program Blur_vs11_cg cg
 fragment_program BlurV_ps20_cg cg
 {
 	source BlurV_ps20.hlsl
-	profiles ps_2_0 arbfp1
+	profiles ps_4_0 ps_2_0 arbfp1
 	entry_point main
 }
 fragment_program BlurH_ps20_cg cg
 {
 	source BlurH_ps20.hlsl
-	profiles ps_2_0 arbfp1
+	profiles ps_4_0 ps_2_0 arbfp1
 	entry_point main
 }
 
@@ -114,7 +114,7 @@ fragment_program BlurH_ps20_cg cg
 fragment_program Bloom2_ps20_cg cg
 {
 	source Bloom2_ps20.hlsl
-	profiles ps_2_0 arbfp1
+	profiles ps_4_0 ps_2_0 arbfp1
 	entry_point main
 }
 
@@ -122,7 +122,7 @@ fragment_program Bloom2_ps20_cg cg
 fragment_program BrightBloom2_ps20_cg cg
 {
 	source BrightBloom2_ps20.hlsl
-	profiles ps_2_0 arbfp1
+	profiles ps_4_0 ps_2_0 arbfp1
 	entry_point main
 }
 
@@ -223,30 +223,31 @@ material Ogre/Compositor/BloomBlend2
     {
         pass
         {
-		cull_hardware none
-		cull_software none
-		depth_check off
+			cull_hardware none
+			cull_software none
+			depth_check off
 
-		fragment_program_ref Bloom2_ps
-		{
-			param_named OriginalImageWeight float 1.0
-			param_named BlurWeight float 0.65
-		}
-		//vertex_program_ref Blur_vs
-		//	{
-		//	}
-            texture_unit
-            {
-			tex_coord_set 0
-			tex_address_mode clamp
-			filtering none
-            }
-		texture_unit
-		{
-			tex_coord_set 0
-			tex_address_mode clamp
-			filtering trilinear
-		}
+			vertex_program_ref Ogre/Compositor/StdQuad_Cg_vp
+			{
+
+			}
+			fragment_program_ref Bloom2_ps
+			{
+				param_named OriginalImageWeight float 1.0
+				param_named BlurWeight float 0.65
+			}
+			texture_unit
+			{
+				tex_coord_set 0
+				tex_address_mode clamp
+				filtering none
+			}
+			texture_unit
+			{
+				tex_coord_set 0
+				tex_address_mode clamp
+				filtering trilinear
+			}
         }
     }
 }
@@ -263,10 +264,14 @@ material Ogre/Compositor/BrightPass2
 			cull_software none
 			depth_check off
 
+			vertex_program_ref Ogre/Compositor/StdQuad_Cg_vp
+			{
+
+			}
 			fragment_program_ref BrightBloom2_ps
 			{
 			}
-			texture_unit
+			texture_unit RT
 			{
 				tex_address_mode clamp
   				filtering none

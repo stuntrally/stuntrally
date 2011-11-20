@@ -1,5 +1,5 @@
-sampler Blur1: register(s1);
-sampler RT: register(s0);
+sampler2D Blur1: register(s1);
+sampler2D RT: register(s0);
 
 
 float luminance(float3 c)
@@ -7,7 +7,7 @@ float luminance(float3 c)
 	return dot( c, float3(0.3, 0.59, 0.11) );
 }
 
-float4 main(float2 texCoord: TEXCOORD0) : COLOR {
+float4 main(float4 iPos: POSITION,float2 texCoord: TEXCOORD0) : COLOR {
 	float4 sharp = tex2D(RT,   texCoord);
 	float4 blur  = tex2D(Blur1, texCoord);
 

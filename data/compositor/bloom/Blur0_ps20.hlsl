@@ -1,7 +1,7 @@
-sampler RT: register(s0);
+sampler2D RT: register(s0);
 // Simple blur filter
 
-float4 main(float2 texCoord: TEXCOORD0) : COLOR {
+float4 main(float4 iPos: POSITION,float2 texCoord: TEXCOORD0) : COLOR {
 
 	float2 samples[12] = {
    	-0.326212, -0.405805,
