@@ -772,7 +772,6 @@ void App::comboGraphicsAll(ComboBoxPtr cmb, size_t val)
 
 	//  update gui  sld,val,chk  ...
 	GuiInitGraphics();  // += newDelegate..?
-	changeShadows(); // apply shadow
 
 	ButtonPtr btn, bchk;  ScrollBar* sl;  size_t v;
 #ifndef ROAD_EDITOR  /// game only
@@ -805,6 +804,8 @@ void App::comboGraphicsAll(ComboBoxPtr cmb, size_t val)
 	Slv(TerUpd, pSet->ter_skip /res);
 	Slv(MiniUpd, pSet->mini_skip /res);
 #endif
+
+	changeShadows(); // apply shadow, material factory generate
 }
 
 void App::comboRenderSystem(ComboBoxPtr wp, size_t val)
