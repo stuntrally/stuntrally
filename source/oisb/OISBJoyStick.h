@@ -55,6 +55,8 @@ namespace OISB
 		private:
             /// OIS' implementation JoyStick
 			OIS::JoyStick* mJoyStick;
+			
+			unsigned int mID;
 		
 		public:
 			std::vector<AnalogAxisState*> axis;
