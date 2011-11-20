@@ -711,7 +711,7 @@ void App::comboGraphicsAll(ComboBoxPtr cmb, size_t val)
 
 	case 4:  // Ultra  -------------
 		s.anisotropy = 16;  s.view_distance = 20000;  s.terdetail = 1.0f;  s.terdist = 1000.f;  s.road_dist = 1.2;
-		s.tex_size = 1;  s.ter_mtr = 2;  s.shaders = 1;
+		s.tex_size = 1;  s.ter_mtr = 3;  s.shaders = 1;
 		s.shadow_type = 3;/*3*/  s.shadow_size = 3;  s.shadow_count = 3;  s.shadow_dist = 3000;
 		s.trees = 2.f;  s.grass = 2.f;  s.trees_dist = 2.f;  s.grass_dist = 2.f;	break;
 	}
@@ -772,7 +772,6 @@ void App::comboGraphicsAll(ComboBoxPtr cmb, size_t val)
 
 	//  update gui  sld,val,chk  ...
 	GuiInitGraphics();  // += newDelegate..?
-	changeShadows(); // apply shadow
 
 	ButtonPtr btn, bchk;  ScrollBar* sl;  size_t v;
 #ifndef ROAD_EDITOR  /// game only
@@ -791,7 +790,7 @@ void App::comboGraphicsAll(ComboBoxPtr cmb, size_t val)
 	Slv(ReflMode,   value /res);
 
 	Chk("Bloom", chkVidBloom, pSet->bloom);
-	Chk("HDR", chkVidHDR, pSet->hdr);
+	//Chk("HDR", chkVidHDR, pSet->hdr);
 	Chk("MotionBlur", chkVidBlur, pSet->motionblur);
 	Chk("ssao", chkVidSSAO, pSet->ssao);
 
@@ -805,6 +804,8 @@ void App::comboGraphicsAll(ComboBoxPtr cmb, size_t val)
 	Slv(TerUpd, pSet->ter_skip /res);
 	Slv(MiniUpd, pSet->mini_skip /res);
 #endif
+
+	changeShadows(); // apply shadow, material factory generate
 }
 
 void App::comboRenderSystem(ComboBoxPtr wp, size_t val)

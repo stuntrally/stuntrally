@@ -288,10 +288,9 @@ void App::UpdPSSMMaterials()	/// . . . . . . . .
 	}
 
 	if (!road)  return;
-	String txs = road->iTexSize == 0 ? "_s": "";
 	for (int i=0; i<MTRs; ++i)
 	{
-		if (road->sMtrRoad[i] != "") {	setMtrSplits(road->sMtrRoad[i]+txs);  setMtrSplits(road->sMtrRoad[i]+"_ter"+txs);  }
-		if (road->sMtrPipe[i] != "")	setMtrSplits(road->sMtrPipe[i]+txs);
+		if (road->sMtrRoad[i] != "") {	setMtrSplits(road->sMtrRoad[i]);  setMtrSplits(road->sMtrRoad[i]+"_ter");  }
+		if (road->sMtrPipe[i] != "")	setMtrSplits(road->sMtrPipe[i]);
 	}
 }

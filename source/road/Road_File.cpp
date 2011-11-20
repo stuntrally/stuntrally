@@ -114,7 +114,7 @@ void SplineRoad::UpdLodVis(/*Camera* pCam,*/ float fBias, bool bFull)
 			#ifdef ROAD_EDITOR
 			if (vis)
 				rs.road[i].ent->setMaterialName(
-					rs.sMtrRd + (iTexSize == 0 ? "_s" : "") + (bSel ? "_sel" : "") );
+					rs.sMtrRd + (bSel ? "_sel" : "") );
 			#endif
 			
 			rs.road[i].ent->setVisible(vis);
@@ -155,7 +155,7 @@ void SplineRoad::UnsetForRnd()
 		if (rs.empty)  continue;
 		
 		MaterialPtr mat = MaterialManager::getSingleton().getByName(  //^opt?..
-			rs.sMtrRd + (iTexSize == 0 ? "_s" : ""));
+			rs.sMtrRd);
 		for (int i=0; i < LODs; ++i)
 		{
 			rs.road[i].ent->setMaterial(mat);
