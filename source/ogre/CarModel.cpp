@@ -12,6 +12,7 @@
 #include "CarReflection.h"
 #include "../road/Road.h"
 #include "common/RenderConst.h"
+#include "common/MaterialFactory.h"
 
 #include "boost/filesystem.hpp"
 #define  FileExists(s)  boost::filesystem::exists(s)
@@ -760,7 +761,13 @@ void CarModel::RecreateMaterials()
 						}
 		}	}	}	}
 		if (pSet->shadow_type == 3)
+		{
+			// pssm split
 			pApp->setMtrSplits(mtr->getName());
+			
+			// terrain lightmap
+			MaterialFactory::getSingleton().terrainLightMapMtrs.push_back(mtr->getName());
+		}
 	}
 }
 
