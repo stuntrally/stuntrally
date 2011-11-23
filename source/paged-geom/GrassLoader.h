@@ -269,6 +269,10 @@ public:
 
 	/** \brief Sets the maximum density (measured in grass quads/billboards per square unit) of grass */
 	void setDensity(float density) { this->density = density; }
+	
+	///T
+	// trigger shader updates
+	void applyShader();
 
 	/** \brief Sets a minimum / maximum height where grass may appear
 	\param minHeight Sets the minimum height grass may have. 0 = no minimum

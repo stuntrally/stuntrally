@@ -3,6 +3,10 @@
 #include "../common/TerrainMaterialGen.h"
 #include "../common/MaterialFactory.h"
 
+#include "../paged-geom/PagedGeometry.h"
+#include "../paged-geom/GrassLoader.h"
+using namespace Forests;
+
 #ifdef ROAD_EDITOR
 	#include "../../editor/OgreApp.h"
 	#include "../../editor/settings.h"
@@ -219,6 +223,23 @@ void App::changeShadows()
 			}	}	}
 		}
 	}
+	
+	// -------------------   update the paged-geom materials
+	
+	// grass is not cloned, just need to set new shader parameters
+	if (grass)
+	{
+		GrassLoader *grassLoader = static_cast<GrassLoader*>(grass->getPageLoader());
+		for (std::list<GrassLayer*>::iterator it= grassLoader->getLayerList().begin();
+			it != grassLoader->getLayerList().end(); ++it)
+		{
+			GrassLayer* layer = (*it);
+			layer->applyShader();
+		}
+	}
+	
+	// trees are more complicated since they are cloned
+	//!todo
 		
 	UpdPSSMMaterials();
 
