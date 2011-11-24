@@ -1,3 +1,14 @@
+vertex_program Ogre/Needle_vp cg
+{
+	source Needle_vp.cg
+	entry_point Needle_vp
+	profiles vs_4_0 vs_1_1 arbvp1
+
+	default_params
+	{
+		param_named_auto worldViewProj worldviewproj_matrix
+	}
+}
 material hud/needle
 {
 	receive_shadows off
@@ -9,8 +20,14 @@ material hud/needle
 			depth_check off
 			depth_write off
 			scene_blend alpha_blend
-
-			texture_unit
+			cull_hardware none
+			vertex_program_ref Ogre/Needle_vp
+			{
+			}
+			fragment_program_ref Ogre/Compositor/StdQuad_fp
+			{
+			} 
+			texture_unit tex1
 			{
 				texture gneedle.png
 			}
@@ -29,7 +46,14 @@ material hud/rpm
 			depth_check off
 			depth_write off
 			scene_blend alpha_blend
+			cull_hardware none
 
+			vertex_program_ref Ogre/Compositor/StdQuad_Cg_vp
+			{
+			}
+			fragment_program_ref Ogre/Compositor/StdQuad_fp
+			{
+			} 
 			texture_unit
 			{
 				texture grpm.png
@@ -49,7 +73,13 @@ material hud/kmh
 			depth_check off
 			depth_write off
 			scene_blend alpha_blend
-
+			cull_hardware none
+			vertex_program_ref Ogre/Compositor/StdQuad_Cg_vp
+			{
+			}
+			fragment_program_ref Ogre/Compositor/StdQuad_fp
+			{
+			} 
 			texture_unit
 			{
 				texture gkmh.png
@@ -69,7 +99,13 @@ material hud/mph
 			depth_check off
 			depth_write off
 			scene_blend alpha_blend
-
+			cull_hardware none
+			vertex_program_ref Ogre/Compositor/StdQuad_Cg_vp
+			{
+			}
+			fragment_program_ref Ogre/Compositor/StdQuad_fp
+			{
+			} 
 			texture_unit
 			{
 				texture gmph.png
@@ -105,7 +141,13 @@ material hud/CarDot
 			depth_check off
 			depth_write off
 			scene_blend alpha_blend
-			
+			cull_hardware none
+			vertex_program_ref Ogre/Compositor/StdQuad_Cg_vp
+			{
+			}
+			fragment_program_ref Ogre/Compositor/StdQuad_fp
+			{
+			} 
 			texture_unit
 			{
 				texture cardot0.png
@@ -126,7 +168,14 @@ material hud/CarPos
 			depth_write off
 			scene_blend alpha_blend
 			diffuse vertexcolour
+			cull_hardware none
 			
+			vertex_program_ref Ogre/Compositor/StdQuad_Cg_vp
+			{
+			}
+			fragment_program_ref Ogre/Compositor/StdQuad_fp
+			{
+			} 
 			texture_unit
 			{
 				texture carpos0.png
@@ -145,7 +194,14 @@ material hud/Times
 			lighting off
 			depth_check off
 			scene_blend alpha_blend
-
+			cull_hardware none
+			
+			vertex_program_ref Ogre/Compositor/StdQuad_Cg_vp
+			{
+			}
+			fragment_program_ref Ogre/Compositor/StdQuad_fp
+			{
+			} 
 			texture_unit
 			{
 				texture border_rect.png
@@ -164,7 +220,13 @@ material hud/info
 			lighting off
 			depth_check off
 			scene_blend alpha_blend
-
+			cull_hardware none
+			vertex_program_ref Ogre/Compositor/StdQuad_Cg_vp
+			{
+			}
+			fragment_program_ref Ogre/Compositor/StdQuad_fp
+			{
+			} 
 			texture_unit
 			{
 				texture border_rect.png

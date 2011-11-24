@@ -34,4 +34,5 @@ void shadow_caster_ps(
 	float4 trans = tex2D(alphaMap, uv);
 
 	oColour = float4(finalDepth, finalDepth, finalDepth, trans.w);
+	clip( oColour.a > 0.5 ? 1:-1);
 }

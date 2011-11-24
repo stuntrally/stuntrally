@@ -273,7 +273,10 @@ void App::UpdPSSMMaterials()	/// . . . . . . . .
 
 	// mtr splits for all cars (only game)
 	#ifndef ROAD_EDITOR
-	if (pSet->shadow_type == 3) recreateCarMtr();
+	//if (pSet->shadow_type == 3) 
+	{
+		recreateCarMtr();
+	}
 	#endif
 	
 	for (std::vector<std::string>::iterator it = materialFactory->splitMtrs.begin();
