@@ -777,6 +777,13 @@ void GrassLayer::setMaterialName(const String &matName)
 	}
 }
 
+
+///T
+void GrassLayer::applyShader()
+{
+	shaderNeedsUpdate = true;
+}
+
 void GrassLayer::setMinimumSize(float width, float height)
 {
 	minWidth = width;

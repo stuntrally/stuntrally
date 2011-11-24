@@ -125,6 +125,10 @@ void CarReflection::Update()
 	// static: only 1st frame
 	if ( pSet->refl_mode == "static" && bFirstFrame == false ) return;
 	
+	// don't render shadows in reflection
+	ShadowTechnique oldShadow = pSceneMgr->getShadowTechnique();
+	pSceneMgr->setShadowTechnique(SHADOWTYPE_NONE);
+	
 	//  skip frames
 	if (++iCounter >= pSet->refl_skip || bFirstFrame)
 	{
@@ -144,6 +148,9 @@ void CarReflection::Update()
 				//else  LogO("upd rt 0");
 		}
 	}
+
+	// restore shadows
+	pSceneMgr->setShadowTechnique(oldShadow);
 
 	//Image im;
 	//cubetex->convertToImage(im);
