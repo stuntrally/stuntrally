@@ -1083,8 +1083,6 @@ void MaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::StrStrea
 		}
 	}
 
-	fpShadowingParams(outStream);
-	
 	if (vpNeedWvMat()) outStream <<
 		"	uniform float4x4 wvMat, \n";
 	if (fpNeedWMat()) outStream <<
@@ -1119,6 +1117,8 @@ void MaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::StrStrea
 		"	uniform samplerCUBE envMap : TEXUNIT"+toStr(mEnvTexUnit)+", \n";
 	if (needEnvMap() && !needFresnel()) outStream << 
 		"	uniform float reflAmount, \n";
+	
+	fpShadowingParams(outStream);
 		
 	// lighting params
 	// only 1 directional light is supported
