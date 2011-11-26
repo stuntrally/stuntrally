@@ -31,7 +31,7 @@ void shadow_caster_ps(
 {
 	float finalDepth = depth.x / depth.y;
 	
-	oColour = float4(finalDepth, finalDepth, finalDepth, finalDepth);
+	oColour = float4(finalDepth, finalDepth, finalDepth, 1);
 }
 
 void shadow_caster_alpha_ps(

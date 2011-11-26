@@ -131,7 +131,7 @@ void MaterialGenerator::generate(bool fixedFunction)
 		{
 			if(mParent->getShadowsDepth())
 			{
-				pass->setShadowCasterFragmentProgram("PSSM/shadow_caster_ps");
+				technique->setShadowCasterMaterial("PSSM/shadow_caster_noalpha");
 			}
 		}
 		if (mShaderCached)

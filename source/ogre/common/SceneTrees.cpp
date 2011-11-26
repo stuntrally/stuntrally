@@ -66,15 +66,9 @@ void App::CreateTrees()
 	if (!grassTex.isNull())
 		grassTex->reload();
 
-	TexturePtr rdtex = Ogre::TextureManager::getSingleton().getByName("grassDensity.png");
-	if (!rdtex.isNull())
-		rdtex->reload();
-
 	int imgRoadSize = 0;
 	Image imgRoad;  imgRoad.load("grassDensity.png","General");
 	imgRoadSize = imgRoad.getWidth();  // square[]
-	//imgRoad.save("grassDens.png");
-	//LogO("grass img " + toStr(imgRoadSize));
 
 	using namespace Forests;
 	Real tws = sc.td.fTerWorldSize * 0.5f;
