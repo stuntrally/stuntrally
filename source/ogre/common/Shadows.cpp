@@ -239,8 +239,25 @@ void App::changeShadows()
 	}
 	
 	// trees are more complicated since they are cloned
-	//!todo
-		
+	if(trees)
+	{
+		trees->reloadGeometry();
+		std::vector<ResourcePtr> reosurceToDelete;
+		ResourceManager::ResourceMapIterator it = MaterialManager::getSingleton().getResourceIterator();
+		while (it.hasMoreElements())
+		{
+			ResourcePtr material = it.getNext();
+			String materialName = material->getName();
+			std::string::size_type pos =materialName.find("BatchMat|");
+			if( pos != std::string::npos ) {
+				reosurceToDelete.push_back(material);
+			}
+		}
+		for(int i=0;i<reosurceToDelete.size();i++)
+		{
+			MaterialManager::getSingleton().remove(reosurceToDelete[i]);
+		}
+	}
 	UpdPSSMMaterials();
 
 	ti.update();	/// time

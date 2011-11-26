@@ -126,6 +126,14 @@ void MaterialGenerator::generate(bool fixedFunction)
 		pass->setVertexProgram(mVertexProgram->getName());
 		pass->setFragmentProgram(mFragmentProgram->getName());
 		
+		//set shadow caster
+		if(!mDef->mProps->transparent)
+		{
+			if(mParent->getShadowsDepth())
+			{
+				pass->setShadowCasterFragmentProgram("PSSM/shadow_caster_ps");
+			}
+		}
 		if (mShaderCached)
 		{
 			// set individual material shader params
