@@ -475,7 +475,8 @@ void App::newPoses()
 		else
 		{
 			// checkpoint arrow
-			if (pSet->check_arrow && !bRplPlay && arrowNode && road && road->mChks.size()>0)
+			if (pSet->check_arrow && carM->eType == CarModel::CT_LOCAL
+			  && !bRplPlay && arrowNode && road && road->mChks.size()>0)
 			{
 				// set animation start to old orientation
 				arrowAnimStart = arrowAnimCur;
