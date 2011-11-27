@@ -15,7 +15,7 @@
 #include "../network/masterclient.hpp"
 #include "../network/gameclient.hpp"
 
-namespace MyGUI{  class OgrePlatform;  };
+namespace MyGUI{  class OgrePlatform; class OgreD3D11Platform; };
 namespace Ogre 
 {  
 	class SceneNode;  class Root;  class SceneManager;  class RenderWindow;
@@ -130,7 +130,7 @@ protected:
 	///  Gui
 	bool isFocGuiOrRpl()  {  return isFocGui || isFocRpl;  }
 	bool isFocGui,isFocRpl;  // gui shown
-	MyGUI::Gui* mGUI;		MyGUI::OgrePlatform* mPlatform;
+	MyGUI::Gui* mGUI;		MyGUI::OgreD3D11Platform* mPlatform;
 	MyGUI::WidgetPtr mLayout, mWndOpts, mWndRpl;  // options window
 	MyGUI::TabPtr mWndTabs;
 	MyGUI::VectorWidgetPtr vwGui;

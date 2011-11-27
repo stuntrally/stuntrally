@@ -27,15 +27,21 @@ restrictions:
 
 #include <OISJoyStick.h>
 
+#include <boost/lexical_cast.hpp>
+
 #include <stdio.h>
 
 // TODO: finish sliders, POV
+
+static unsigned int joystick_count = 0;
 
 namespace OISB
 {
 	JoyStick::JoyStick(OIS::JoyStick* joy):
 		mJoyStick(joy)
 	{
+		mID = joystick_count; joystick_count++;
+		
 		int num_axis = mJoyStick->getNumberOfComponents(OIS::OIS_Axis);
 		for(int a = 0; a<num_axis; a++)
 		{
@@ -94,8 +100,9 @@ namespace OISB
 
 	const String& JoyStick::getName() const
 	{
-		//static String name = "JoyStick" + mJoyStick->getID() mJoyStick->vendor();
-		static String name = mJoyStick->vendor();
+		// unique name for each JS
+		static String name = mJoyStick->vendor() + "_" + boost::lexical_cast<std::string>(mID);
+		
 		return name;
 	}
 

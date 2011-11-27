@@ -582,7 +582,7 @@ namespace Ogre
 		params->setNamedAutoConstant("eyePosObjSpace", GpuProgramParameters::ACT_CAMERA_POSITION_OBJECT_SPACE);
 		params->setNamedAutoConstant("fogColour", GpuProgramParameters::ACT_FOG_COLOUR);
 		
-		if(MaterialGenerator::MRTSupported())
+		if(tt != LOW_LOD && MaterialGenerator::MRTSupported())
 		{
 			params->setNamedAutoConstant("worldViewMatrix", GpuProgramParameters::ACT_WORLDVIEW_MATRIX);
 			params->setNamedAutoConstant("far", GpuProgramParameters::ACT_FAR_CLIP_DISTANCE);
@@ -605,15 +605,15 @@ namespace Ogre
 				params->setNamedConstant("pssmSplitPoints", splitPoints);
 			}
 
-			if (prof->getReceiveDynamicShadowsDepth())
-			{
+			//if (prof->getReceiveDynamicShadowsDepth())
+			//{
 				size_t samplerOffset = (tt == HIGH_LOD) ? mShadowSamplerStartHi : mShadowSamplerStartLo;
 				for (uint i = 0; i < numTextures; ++i)
 				{
 					params->setNamedAutoConstant("inverseShadowmapSize" + StringConverter::toString(i), 
 						GpuProgramParameters::ACT_INVERSE_TEXTURE_SIZE, i + samplerOffset);
 				}
-			}
+			//}
 		}
 
 
@@ -1049,7 +1049,7 @@ namespace Ogre
 
 		//ssao
 		outStream << ",	in float4 viewPosition : TEXCOORD"+ toStr( texCoordSet++ ) +" \n";
-		if(MaterialGenerator::MRTSupported())
+		if(tt != LOW_LOD && MaterialGenerator::MRTSupported())
 		{
 			outStream << ",	uniform float far \n";	
 			outStream << ",	uniform float4x4 worldViewMatrix \n";
@@ -1464,8 +1464,8 @@ namespace Ogre
 			outStream << "\n	";
 			for (uint i = 0; i < numTextures; ++i)
 				outStream << "float4 lsPos" << i << ", ";
-			if (prof->getReceiveDynamicShadowsDepth())
-			{
+			//if (prof->getReceiveDynamicShadowsDepth())
+			//{
 				#ifndef CUSTOM_RECEIVER_SHADER
 				outStream << "\n	";
 				for (uint i = 0; i < numTextures; ++i)
@@ -1475,7 +1475,7 @@ namespace Ogre
 				for (uint i = 0; i < numTextures; ++i)
 					outStream << "float4 invShadowmapSize" << i << ", ";
 				#endif
-			}
+			//}
 			outStream << "\n"
 				"	float4 pssmSplitPoints, float camDepth) \n"
 				"{ \n"
@@ -1506,20 +1506,15 @@ namespace Ogre
 				else
 				{
 					outStream <<
-						"		shadow = calcSimpleShadow(shadowMap" << i << ", lsPos" << i << "); \n";
+						"		shadow = shadowPCF(shadowMap" << i << ", lsPos" << i << ", invShadowmapSize" << i << ".xy); \n";
 				}
 				outStream <<
 					"	} \n";
 
 			}
 
-			if (!prof->getReceiveDynamicShadowsDepth())
-				outStream << "  return shadow;";
-			else
-			{
-				outStream << "	shadow = (1-shadow); \n";
-				outStream << "  return (1-(shadow*0.7)); \n";
-			}
+			outStream << "  return shadow;";
+
 			outStream << "} \n\n\n";
 		}
 
@@ -1606,11 +1601,11 @@ namespace Ogre
 				", uniform sampler2D shadowMap" << i << " : register(s" << *sampler << ") \n";
 			*sampler = *sampler + 1;
 			*texCoord = *texCoord + 1;
-			if (prof->getReceiveDynamicShadowsDepth())
-			{
+			//if (prof->getReceiveDynamicShadowsDepth())
+			//{
 				outStream <<
 					", uniform float inverseShadowmapSize" << i << " \n";
-			}
+			//}
 		}
 
 	}
@@ -1640,12 +1635,12 @@ namespace Ogre
 
 			for (uint i = 0; i < numTextures; ++i)
 				outStream << "lightSpacePos" << i << ", ";
-			if (prof->getReceiveDynamicShadowsDepth())
-			{
+			//if (prof->getReceiveDynamicShadowsDepth())
+			//{
 				outStream << "\n		";
 				for (uint i = 0; i < numTextures; ++i)
 					outStream << "inverseShadowmapSize" << i << ", ";
-			}
+			//}
 			outStream << "\n" <<
 				"		pssmSplitPoints, camDepth);\n";
 
@@ -1660,7 +1655,7 @@ namespace Ogre
 			else
 			{
 				outStream <<
-					"	float rtshadow = calcSimpleShadow(shadowMap0, lightSpacePos0);";
+					"	float rtshadow = calcSimpleShadow(shadowMap0, lightSpacePos0, inverseShadowmapSize0);";
 			}
 		}
 

@@ -1816,6 +1816,14 @@
 						>
 					</File>
 					<File
+						RelativePath=".\source\ogre\common\ImpostorMaterial.cpp"
+						>
+					</File>
+					<File
+						RelativePath=".\source\ogre\common\ImpostorMaterial.h"
+						>
+					</File>
+					<File
 						RelativePath=".\source\ogre\common\MaterialDefinition.cpp"
 						>
 					</File>
@@ -1873,6 +1881,14 @@
 					</File>
 					<File
 						RelativePath=".\source\ogre\common\TerrainMaterialGen.h"
+						>
+					</File>
+					<File
+						RelativePath=".\source\ogre\common\WaterMaterial.cpp"
+						>
+					</File>
+					<File
+						RelativePath=".\source\ogre\common\WaterMaterial.h"
 						>
 					</File>
 				</Filter>
@@ -2014,6 +2030,14 @@
 				</File>
 				<File
 					RelativePath=".\source\ogre\Compositor.h"
+					>
+				</File>
+				<File
+					RelativePath=".\source\ogre\common\MyGUI_D3D11.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\source\ogre\common\MyGUI_D3D11.h"
 					>
 				</File>
 				<File

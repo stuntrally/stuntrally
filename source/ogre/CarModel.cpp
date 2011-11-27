@@ -12,6 +12,7 @@
 #include "CarReflection.h"
 #include "../road/Road.h"
 #include "common/RenderConst.h"
+#include "common/MaterialFactory.h"
 
 #include "boost/filesystem.hpp"
 #define  FileExists(s)  boost::filesystem::exists(s)
@@ -373,13 +374,12 @@ void CarModel::UpdateKeys()
 			{	fCam->Next(pCar->iCamNext < 0, pApp->shift);
 				pApp->carsCamNum[iIndex] = fCam->miCurrent +1;  // save for pSet
 				visMask = fCam->ca->mHideGlass ? RV_MaskAll-RV_CarGlass : RV_MaskAll;
+				for (std::list<Viewport*>::iterator it = pApp->mSplitMgr->mViewports.begin();
+					it != pApp->mSplitMgr->mViewports.end(); ++it)
+					(*it)->setVisibilityMask(visMask);
 			}
-			else
-				LogO("no fCam");
 
-			for (std::list<Viewport*>::iterator it = pApp->mSplitMgr->mViewports.begin();
-				it != pApp->mSplitMgr->mViewports.end(); ++it)
-				(*it)->setVisibilityMask(visMask);
+
 		}
 	}
 	iCamNextOld = pCar->iCamNext;
@@ -761,7 +761,13 @@ void CarModel::RecreateMaterials()
 						}
 		}	}	}	}
 		if (pSet->shadow_type == 3)
+		{
+			// pssm split
 			pApp->setMtrSplits(mtr->getName());
+			
+			// terrain lightmap
+			MaterialFactory::getSingleton().terrainLightMapMtrs.push_back(mtr->getName());
+		}
 	}
 }
 

@@ -380,6 +380,7 @@ namespace MyGUI
 
 	void MultiList2::flipList()
 	{
+		return;
 		if (ITEM_NONE == mSortColumnIndex)
 			return;
 
@@ -418,6 +419,7 @@ namespace MyGUI
 
 	void MultiList2::sortList()
 	{
+		return;
 		if (ITEM_NONE == mSortColumnIndex)
 			return;
 

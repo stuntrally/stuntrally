@@ -227,11 +227,11 @@ HighLevelGpuProgramPtr GlassMaterialGenerator::createAmbientFragmentProgram()
 	
 	sourceStr <<
 	"float4 main_fp(float4 iPos : POSITION,in float2 uv : TEXCOORD0, \n"
-	"	uniform float3 ambient,  uniform float4 matDif, \n"
+	"	uniform float3 ambient,  uniform float3 globalAmbient,  uniform float4 matDif, \n"
 	"	uniform sampler2D diffuseMap): COLOR0 \n"
 	"{ \n"
 	"	float4 diffuseTex = tex2D(diffuseMap, uv); \n"
-	"	return float4(ambient * matDif.rgb * diffuseTex.rgb, diffuseTex.a); \n"
+	"	return float4(ambient * globalAmbient * matDif.rgb * diffuseTex.rgb, diffuseTex.a); \n"
 	"} \n";
 	
 	ret->setSource(sourceStr.str());
@@ -240,6 +240,7 @@ HighLevelGpuProgramPtr GlassMaterialGenerator::createAmbientFragmentProgram()
 	// params
 	GpuProgramParametersSharedPtr params = ret->getDefaultParameters();
 	params->setNamedAutoConstant("ambient", GpuProgramParameters::ACT_SURFACE_AMBIENT_COLOUR );
+	params->setNamedAutoConstant("globalAmbient", GpuProgramParameters::ACT_AMBIENT_LIGHT_COLOUR);
 	params->setNamedAutoConstant("matDif", GpuProgramParameters::ACT_SURFACE_DIFFUSE_COLOUR );
 	
 	return ret;

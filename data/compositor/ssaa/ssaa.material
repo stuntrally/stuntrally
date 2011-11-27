@@ -2,7 +2,7 @@ fragment_program Ogre/Compositor/SSAA_FP cg
 {
    source SSAA_FP.cg
    entry_point SSAA_ps
-   profiles ps_2_0 arbfp1
+   profiles ps_4_0 ps_2_0 arbfp1
 }
 
 material Ogre/Compositor/SSAA

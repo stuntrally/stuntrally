@@ -3,6 +3,10 @@
 #include "../common/TerrainMaterialGen.h"
 #include "../common/MaterialFactory.h"
 
+#include "../paged-geom/PagedGeometry.h"
+#include "../paged-geom/GrassLoader.h"
+using namespace Forests;
+
 #ifdef ROAD_EDITOR
 	#include "../../editor/OgreApp.h"
 	#include "../../editor/settings.h"
@@ -39,6 +43,9 @@ void App::changeShadows()
 	pSet->shadow_size = std::max(0,std::min(ciShadowNumSizes-1, pSet->shadow_size));
 	int fTex = /*2048*/ ciShadowSizesA[pSet->shadow_size], fTex2 = fTex/2;
 	int num = /*3*/ pSet->shadow_count;
+	
+	// disable 4 shadow textures (does not work because no texcoord's left in shader)
+	if (num == 4) num = 3;
 
 	TerrainMaterialGeneratorB::SM2Profile* matProfile = 0;
 	
@@ -183,6 +190,7 @@ void App::changeShadows()
 		#endif
 	}
 	
+	materialFactory->setNumShadowTex(num);
 	materialFactory->setShadows(pSet->shadow_type != 0);
 	materialFactory->setShadowsDepth(bDepth);
 	materialFactory->generate();
@@ -213,6 +221,42 @@ void App::changeShadows()
 							}
 						}
 			}	}	}
+		}
+	}
+	
+	// -------------------   update the paged-geom materials
+	
+	// grass is not cloned, just need to set new shader parameters
+	if (grass)
+	{
+		GrassLoader *grassLoader = static_cast<GrassLoader*>(grass->getPageLoader());
+		for (std::list<GrassLayer*>::iterator it= grassLoader->getLayerList().begin();
+			it != grassLoader->getLayerList().end(); ++it)
+		{
+			GrassLayer* layer = (*it);
+			layer->applyShader();
+		}
+	}
+	
+	// trees are more complicated since they are cloned
+	if (trees)
+	{
+		trees->reloadGeometry();
+		std::vector<ResourcePtr> resourceToDelete;
+		ResourceManager::ResourceMapIterator it = MaterialManager::getSingleton().getResourceIterator();
+		while (it.hasMoreElements())
+		{
+			ResourcePtr material = it.getNext();
+			String materialName = material->getName();
+			std::string::size_type pos =materialName.find("BatchMat|");
+			if( pos != std::string::npos )
+			{
+				resourceToDelete.push_back(material);
+			}
+		}
+		for(int i=0;i<resourceToDelete.size();i++)
+		{
+			MaterialManager::getSingleton().remove(resourceToDelete[i]);
 		}
 	}
 		
@@ -263,14 +307,10 @@ void App::UpdPSSMMaterials()	/// . . . . . . . .
 	//--  pssm params
 	PSSMShadowCameraSetup* pssmSetup = static_cast<PSSMShadowCameraSetup*>(mPSSMSetup.get());
 	const PSSMShadowCameraSetup::SplitPointList& splitPointList = pssmSetup->getSplitPoints();
-	MaterialPtr mat;
 
-	for (size_t i = 0; i < 3/*/splitPointList.size()*/; ++i)
+	for (size_t i = 0; i < splitPointList.size(); ++i)
 		splitPoints[i] = splitPointList[i];
-	
-	//#ifndef ROAD_EDITOR  // GAME
-	setMtrSplits("grass_GrassVS_");
-	
+
 	// mtr splits for all cars (only game)
 	#ifndef ROAD_EDITOR
 	if (pSet->shadow_type == 3) recreateCarMtr();
@@ -281,13 +321,5 @@ void App::UpdPSSMMaterials()	/// . . . . . . . .
 	{
 		//LogO("Set splits: " + (*it) );
 		setMtrSplits( (*it) );
-	}
-
-	if (!road)  return;
-	String txs = road->iTexSize == 0 ? "_s": "";
-	for (int i=0; i<MTRs; ++i)
-	{
-		if (road->sMtrRoad[i] != "") {	setMtrSplits(road->sMtrRoad[i]+txs);  setMtrSplits(road->sMtrRoad[i]+"_ter"+txs);  }
-		if (road->sMtrPipe[i] != "")	setMtrSplits(road->sMtrPipe[i]+txs);
 	}
 }

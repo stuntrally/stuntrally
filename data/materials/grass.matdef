@@ -11,3 +11,4 @@
 	wind = 1
 	terrainLightMap = true
 	vertexColour = true
+	shadowPriority = 0.3

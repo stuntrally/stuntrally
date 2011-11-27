@@ -11,6 +11,19 @@ vertex_program geom_vs cg
     }
 }
 
+vertex_program geom_coord_vs cg
+{
+    source normal.cg
+    profiles vs_4_0 vs_1_1 arbvp1
+    entry_point geom_coord_vs
+
+    default_params
+    {
+        param_named_auto wvpMat worldviewproj_matrix
+        param_named_auto wvMat worldview_matrix
+    }
+}
+
 fragment_program geom_ps cg
 {
     source normal.cg

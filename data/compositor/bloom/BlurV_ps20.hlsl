@@ -3,7 +3,7 @@
 // Vertical Gaussian-Blur pass
 //-------------------------------
 
-sampler Blur0: register(s0);
+sampler2D Blur0: register(s0);
 // Simple blur filter
 
 //We use the Normal-gauss distribution formula
@@ -40,7 +40,7 @@ static const float2 pos[11] =
 0, 5
 };
 
-float4 main(float2 texCoord: TEXCOORD0) : COLOR
+float4 main(float4 iPos: POSITION,float2 texCoord: TEXCOORD0) : COLOR
 {
    float4 sum = 0;
    for (int i = 0; i < 11; i++)

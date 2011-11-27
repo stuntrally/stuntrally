@@ -112,7 +112,10 @@ protected:
 	
 	
 	///  terrain
-	Ogre::Terrain* terrain;  Ogre::TerrainGlobalOptions* mTerrainGlobals;
+public:
+	Ogre::Terrain* terrain;
+protected:
+	Ogre::TerrainGlobalOptions* mTerrainGlobals;
 	Ogre::TerrainGroup* mTerrainGroup;  bool mPaging;
 	Ogre::TerrainPaging* mTerrainPaging;  Ogre::PageManager* mPageManager;
 
@@ -193,7 +196,7 @@ protected:
 	SLV(Trees);  SLV(Grass);  SLV(TreesDist);  SLV(GrassDist);  // paged
 	SLV(Shaders);  SLV(ShadowType);  SLV(ShadowCount);  SLV(ShadowSize);  SLV(LightmapSize);  SLV(ShadowDist);  // shadow
 	SLV(AntiAliasing); // screen
-	void comboTexFilter(CMB), btnShadows(WP), btnTrGrReset(WP);
+	void comboTexFilter(CMB), btnShadows(WP), btnShaders(WP), btnTrGrReset(WP);
 	MyGUI::ButtonPtr bnQuit;  void btnQuit(WP);
 
 	//  tooltip

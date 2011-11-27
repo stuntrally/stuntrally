@@ -149,6 +149,11 @@ void MaterialGenerator::generate(bool fixedFunction)
 	if (mDef->mProps->fog)
 		mParent->fogMtrs.push_back( mDef->getName() );
 		
+	// indicate we need enable/disable wind parameter
+	// only needed for trees (wind == 2) because they have impostors
+	if (mDef->mProps->wind == 2)
+		mParent->windMtrs.push_back( mDef->getName() );
+	
 	// uncomment to export to .material
 	/*
 	if (mDef->getName() == "pipeGlass") {
@@ -231,7 +236,7 @@ void MaterialGenerator::createTexUnits(Ogre::Pass* pass, bool shaders)
 		// global terrain lightmap (static)
 		if (needTerrainLightMap())
 		{
-			tu = pass->createTextureUnitState(""); // texture name set later (in changeShadows)
+			tu = pass->createTextureUnitState("white.png"); // texture name set later (in changeShadows)
 			tu->setName("terrainLightMap");
 			mTerrainLightTexUnit = mTexUnit_i; mTexUnit_i++;
 		}
@@ -300,6 +305,8 @@ void MaterialGenerator::createSSAOTechnique()
 	
 	// choose vertex program
 	std::string vprogname = "geom_vs";
+	if ( mDef->mProps->transparent )
+		vprogname = "geom_coord_vs";
 	
 	// choose fragment program
 	std::string fprogname = "geom_ps";
@@ -631,6 +638,7 @@ void MaterialGenerator::generateVertexProgramSource(Ogre::StringUtil::StrStreamT
 	{
 		outStream <<
 		"	uniform float time, \n"
+		"	uniform float enableWind, \n"
 		"	float4 windParams 	: TEXCOORD1, \n"
 		"	float4 originPos 	: TEXCOORD2, \n";
 	}
@@ -713,7 +721,7 @@ void MaterialGenerator::generateVertexProgramSource(Ogre::StringUtil::StrStreamT
 		"	float radiusCoeff = windParams.x; \n"
 		"	float heightCoeff = windParams.y; \n"
 		"	float factorX = windParams.z; \n"
-		"	float factorY = windParams.w; \n"
+		"	float factorY = windParams.w; \n";
 		/* 
 		2 different methods are used to for the sin calculation :
 		- the first one gives a better effect but at the cost of a few fps because of the 2 sines
@@ -721,15 +729,16 @@ void MaterialGenerator::generateVertexProgramSource(Ogre::StringUtil::StrStreamT
 
 			a sin approximation could be use to optimize performances
 		*/
-#if 0
-		"	position.y += sin(time + originPos.z + position.y + position.x) * radiusCoeff * radiusCoeff * factorY; \n"
-		"	position.x += sin(time + originPos.z ) * heightCoeff * heightCoeff * factorX ; \n"
-#else
-		"	float sinval = sin(time + originPos.z ); \n"
-		"	position.y += sinval * radiusCoeff * radiusCoeff * factorY; \n"
-		"	position.x += sinval * heightCoeff * heightCoeff * factorX ; \n"
-#endif
-		;
+		
+		// we can safely make permutations depending on "shaderQuality" since it does not change per material.
+		//! might need to revisit this assumption when using more excessive caching (shaders that persist after settings change)
+		if (mParent->getShaderQuality() > 0.6) outStream <<
+			"	position.y += enableWind * sin(time + originPos.z + position.y + position.x) * radiusCoeff * radiusCoeff * factorY; \n"
+			"	position.x += enableWind * sin(time + originPos.z ) * heightCoeff * heightCoeff * factorX ; \n";
+		else outStream <<
+			"	float sinval = enableWind * sin(time + originPos.z ); \n"
+			"	position.y += sinval * radiusCoeff * radiusCoeff * factorY; \n"
+			"	position.x += sinval * heightCoeff * heightCoeff * factorX ; \n";
 	}
 	
 	outStream <<
@@ -823,6 +832,9 @@ void MaterialGenerator::vertexProgramParams(HighLevelGpuProgramPtr program)
 		
 	if (mShader->wind == 1)
 		params->setNamedAutoConstant("objSpaceCam", GpuProgramParameters::ACT_CAMERA_POSITION_OBJECT_SPACE);
+	
+	else if (mShader->wind == 2)
+		params->setNamedConstant("enableWind", Real(1.0));
 		
 	individualVertexProgramParams(params);
 }
@@ -1117,6 +1129,7 @@ void MaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::StrStrea
 		"	uniform float3 lightDiffuse, \n"
 		"	uniform float3 lightSpecular, \n"
 		"	uniform float4 lightPosition, \n"
+		"	uniform float3 globalAmbient, \n"
 		// material
 		"	uniform float3 matAmbient, \n"
 		"	uniform float3 matDiffuse, \n"
@@ -1205,9 +1218,8 @@ void MaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::StrStrea
 		"	float3 specular = matSpecular.xyz * lightSpecular.xyz * specularLight; \n";
 
 		// Compute the ambient term
-		outStream << "	float3 ambient = matAmbient.xyz ";
+		outStream << "	float3 ambient = matAmbient.xyz * globalAmbient.xyz ";
 		if (needDiffuseMap() || (needLightMap() && needBlendMap())) outStream <<	"* diffuseTex.xyz";
-
 		outStream << "; \n";
 
 		// Add all terms together (also with shadow)
@@ -1332,6 +1344,7 @@ void MaterialGenerator::fragmentProgramParams(HighLevelGpuProgramPtr program)
 		params->setNamedAutoConstant("matAmbient", GpuProgramParameters::ACT_SURFACE_AMBIENT_COLOUR);
 		params->setNamedAutoConstant("matDiffuse", GpuProgramParameters::ACT_SURFACE_DIFFUSE_COLOUR);
 		params->setNamedAutoConstant("matSpecular", GpuProgramParameters::ACT_SURFACE_SPECULAR_COLOUR);
+		params->setNamedAutoConstant("globalAmbient", GpuProgramParameters::ACT_AMBIENT_LIGHT_COLOUR);
 	}
 	
 	params->setNamedAutoConstant("fogColor", GpuProgramParameters::ACT_FOG_COLOUR);

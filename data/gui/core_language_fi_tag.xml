@@ -612,8 +612,10 @@
 	<Tag name="MessageBox_Continue">Continue</Tag>
 	<Tag name="MessageBox_Abort">Abort</Tag>
 	<Tag name="MessageBox_No">No</Tag>
+	<Tag name="TexSize">Texture size</Tag>
 	<Tag name="MessageBox_Ignore">Ignore</Tag>
 	<Tag name="MessageBox_Cancel">Cancel</Tag>
+	<Tag name="ApplyShaders">Apply shaders</Tag>
 	<Tag name="MessageBox_Ok">Ok</Tag>
 	<Tag name="GameVersion">1.4</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>

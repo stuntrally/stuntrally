@@ -4,11 +4,13 @@
 #include "MaterialFactory.h"
 #include "MaterialDefinition.h"
 #include "MaterialGenerator.h"
+#include "ShaderProperties.h"
+
 #include "GlassMaterial.h"
 #include "PipeGlassMaterial.h"
 #include "ArrowMaterial.h"
 #include "WaterMaterial.h"
-#include "ShaderProperties.h"
+#include "ImpostorMaterial.h"
 
 #ifndef ROAD_EDITOR
 	#include "../OgreGame.h"
@@ -46,7 +48,7 @@ MaterialFactory& MaterialFactory::getSingleton(void)
 
 MaterialFactory::MaterialFactory() : 
 	bShaders(1), bNormalMap(1), bEnvMap(1), bShadows(1), bShadowsDepth(1),
-	iTexSize(4096), iNumShadowTex(3),
+	iTexSize(4096), iNumShadowTex(3), fShaderQuality(0.5),
 	bSettingsChanged(1) // always have to generate at start
 {
 	QTimer ti;  ti.update(); /// time
@@ -86,6 +88,10 @@ MaterialFactory::MaterialFactory() :
 	MaterialGenerator* water = static_cast<MaterialGenerator*>(new WaterMaterialGenerator());
 	water->mParent = this;
 	mCustomGenerators.push_back(water);
+	
+	MaterialGenerator* impostor = static_cast<MaterialGenerator*>(new ImpostorMaterialGenerator());
+	impostor->mParent = this;
+	mCustomGenerators.push_back(impostor);
 	
 	ti.update(); /// time
 	float dt = ti.dt * 1000.f;
@@ -131,6 +137,22 @@ void MaterialFactory::setFog(bool fog)
 		{
 			GpuProgramParametersSharedPtr vparams = mat->getTechnique(0)->getPass(0)->getVertexProgramParameters();
 			vparams->setNamedConstant("enableFog", fog ? Real(1.0) : Real(0.0));
+		}
+	}
+}
+
+//----------------------------------------------------------------------------------------
+
+void MaterialFactory::setWind(bool wind)
+{
+	for (std::vector<std::string>::iterator it=windMtrs.begin();
+		it != windMtrs.end(); ++it)
+	{
+		MaterialPtr mat = MaterialManager::getSingleton().getByName( (*it) );
+		if (mat->getTechnique(0)->getPass(0)->hasVertexProgram())
+		{
+			GpuProgramParametersSharedPtr vparams = mat->getTechnique(0)->getPass(0)->getVertexProgramParameters();
+			vparams->setNamedConstant("enableWind", wind ? Real(1.0) : Real(0.0));
 		}
 	}
 }
@@ -249,6 +271,7 @@ void MaterialFactory::generate()
 		fogMtrs.clear();
 		terrainLightMapMtrs.clear();
 		timeMtrs.clear();
+		windMtrs.clear();
 		
 		for (std::vector<MaterialDefinition*>::iterator it=mDefinitions.begin();
 			it!=mDefinitions.end(); ++it)
@@ -283,7 +306,6 @@ referenced by material '" + (*it)->getName() + "' not found. Using default gener
 			}
 
 			// shader cache - check if same shader already exists
-			//!todo shader cache performance: cache vertex and fragment shader seperately
 			ShaderProperties* shaderProps = new ShaderProperties( (*it)->mProps, this );
 			
 			bool exists = false;
@@ -317,6 +339,8 @@ referenced by material '" + (*it)->getName() + "' not found. Using default gener
 			{
 				if (!generator->mVertexProgram.isNull() && !generator->mFragmentProgram.isNull()) 
 					mShaderCache[ std::make_pair(generator->mVertexProgram, generator->mFragmentProgram) ] = shaderProps;
+				else
+					delete shaderProps;
 			}
 			else
 				delete shaderProps;

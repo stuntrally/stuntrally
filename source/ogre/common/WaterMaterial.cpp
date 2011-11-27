@@ -15,12 +15,15 @@
 #include <OgrePass.h>
 #include <OgreTechnique.h>
 #include <OgreHighLevelGpuProgramManager.h>
+#include <OgreMaterialManager.h>
 using namespace Ogre;
 
 WaterMaterialGenerator::WaterMaterialGenerator()
 {
 	mName = "Water";
 }
+
+//----------------------------------------------------------------------------------------
 
 void WaterMaterialGenerator::generate(bool fixedFunction)
 {
@@ -54,7 +57,19 @@ void WaterMaterialGenerator::generate(bool fixedFunction)
 	}
 
 	// env map
-	tu = pass->createTextureUnitState( "white.png" );
+	// retrieve sky texture name from scene
+	std::string skyTexName;
+	if (mParent->pApp->terrain)
+	{
+		MaterialPtr mtrSky = MaterialManager::getSingleton().getByName(mParent->pApp->sc.skyMtr);
+		Pass* passSky = mtrSky->getTechnique(0)->getPass(0);
+		TextureUnitState* tusSky = passSky->getTextureUnitState(0);
+
+		skyTexName = tusSky->getTextureName();
+	}
+	else skyTexName = "white.png";
+	
+	tu = pass->createTextureUnitState( skyTexName );
 	tu->setName("skyMap");
 	tu->setTextureAddressingMode(TextureUnitState::TAM_MIRROR);
 	mEnvTexUnit = mTexUnit_i; mTexUnit_i++;

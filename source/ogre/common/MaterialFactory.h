@@ -9,6 +9,15 @@ class App;  class MaterialDefinition;  class MaterialGenerator;  struct ShaderPr
 #include <OgreHighLevelGpuProgram.h>
 #include <OgreSingleton.h>
 
+//!todo memory usage: unload old textures after texture size was switched
+
+//!todo more intelligent shader caching
+/// - only regenerate when shader properties changed, not when e.g. only tex size was changed
+/// - cache vertex and fragment shader seperately (some materials will have same vertex shader, but different fragment)
+/// - how about making a hash out of the shader source code, and use this for isEqual comparison?
+
+//!todo paged-geom cloned materials don't update immediately (code for recreating those materials)
+
 // std::map< std::pair< vertexShader, pixelShader > , shaderProperties >
 typedef std::map< std::pair< Ogre::HighLevelGpuProgramPtr, Ogre::HighLevelGpuProgramPtr >, ShaderProperties* > shaderMap;
 
@@ -32,6 +41,7 @@ public:
 	
 	/// settings that can change runtime
 	void setFog(bool fog);
+	void setWind(bool wind);
 	
 	
 	/// user settings get/set ---------------------------------------------
@@ -44,6 +54,7 @@ public:
 	void setShadowsDepth(bool p) { setIfChanged(bShadowsDepth) };
 	void setTexSize(unsigned int p) { setIfChanged(iTexSize) };
 	void setNumShadowTex(unsigned int p) { setIfChanged(iNumShadowTex) };
+	void setShaderQuality(float p) { setIfChanged(fShaderQuality) };
 	
 	const bool getShaders() { return bShaders; };
 	const bool getNormalMap() { return bNormalMap; };
@@ -52,11 +63,13 @@ public:
 	const bool getShadowsDepth() { return bShadowsDepth; };
 	const unsigned int getTexSize() { return iTexSize; };
 	const unsigned int getNumShadowTex() { return iNumShadowTex; };
+	const float getShaderQuality() { return fShaderQuality; };
 	///--------------------------------------------------------------------
 	
 	std::vector<std::string> splitMtrs; // materials that need pssm split points
 	std::vector<std::string> terrainLightMapMtrs; // materials that need terrain lightmap texture and terrainWorldSize
 	std::vector<std::string> fogMtrs; // materials that involve fog
+	std::vector<std::string> windMtrs; // wind == 2
 	std::vector<std::string> timeMtrs; // for animated materials
 	
 	shaderMap* getShaderCache() { return &mShaderCache; };
@@ -67,6 +80,7 @@ private:
 	/// user settings definition ---------------------------------
 	bool bShaders, bNormalMap, bEnvMap, bShadows, bShadowsDepth;
 	unsigned int iTexSize; unsigned int iNumShadowTex;
+	float fShaderQuality;
 	/// -------------------------------------------------------
 
 	std::vector<MaterialDefinition*> mDefinitions;

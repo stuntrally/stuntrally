@@ -214,6 +214,7 @@
 	<Tag name="Graphics">Graphics</Tag>
 	<Tag name="NeedNewGame">* need New Game</Tag>
 	<Tag name="RestartApply">Restart game, to apply *changes.</Tag>
+	<Tag name="ApplyShaders">Apply shaders</Tag>
 
 	<Tag name="Materials">Materials</Tag>
 	<Tag name="Detail">Detail</Tag>
@@ -244,6 +245,7 @@
 	<Tag name="Shadows">Shadows</Tag>
 	<Tag name="Shaders">Shaders</Tag>
 	<Tag name="Size">Size</Tag>
+	<Tag name="TexSize">Texture size</Tag>
 	<Tag name="Count">Count</Tag>
 	<Tag name="ApplyShadows">Apply Shadows</Tag>
 	<Tag name="LightmapSize">Lightmap size</Tag>

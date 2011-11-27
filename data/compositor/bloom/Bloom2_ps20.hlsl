@@ -2,9 +2,9 @@
 // Bloom
 
 
-float4 main(float2 texCoord: TEXCOORD0,
-		uniform sampler RT: register(s0),
-		uniform sampler Blur1: register(s1),
+float4 main(float4 iPos: POSITION,float2 texCoord: TEXCOORD0,
+		uniform sampler2D RT: register(s0),
+		uniform sampler2D Blur1: register(s1),
 		uniform float OriginalImageWeight,
 		uniform float BlurWeight
 		) : COLOR {

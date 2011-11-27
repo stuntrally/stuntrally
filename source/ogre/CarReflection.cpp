@@ -64,7 +64,7 @@ void CarReflection::Create()
 		cubetex = tm->createManual(cubetexName, 
 			ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME, TEX_TYPE_CUBE_MAP, 
 			size,size, 0/*mips*/, PF_R8G8B8, TU_RENDERTARGET);
-			LogO("created rt cube");
+			//LogO("created rt cube");
 
 		for (int face = 0; face < 6; face++)
 		{
@@ -74,7 +74,7 @@ void CarReflection::Create()
 			//mCam->setFarClipDistance(pSet->refl_dist);  //sky-
 
 			RenderTarget* mRT = cubetex->getBuffer(face)->getRenderTarget();
-			LogO( "rt face Name: " + mRT->getName() );
+			//LogO( "rt face Name: " + mRT->getName() );
 			mRT->removeAllViewports();
 			Viewport* vp = mRT->addViewport(mCam);
 			vp->setOverlaysEnabled(false);
@@ -125,6 +125,10 @@ void CarReflection::Update()
 	// static: only 1st frame
 	if ( pSet->refl_mode == "static" && bFirstFrame == false ) return;
 	
+	// don't render shadows in reflection
+	ShadowTechnique oldShadow = pSceneMgr->getShadowTechnique();
+	pSceneMgr->setShadowTechnique(SHADOWTYPE_NONE);
+	
 	//  skip frames
 	if (++iCounter >= pSet->refl_skip || bFirstFrame)
 	{
@@ -139,11 +143,14 @@ void CarReflection::Update()
 			RenderTarget* rt = pRTs[iCam];
 
 			if (cam) cam->setPosition ( camPosition );
-				else  LogO("upd cam 0");
+				//else  LogO("upd cam 0");
 			if (rt)  rt->update();
-				else  LogO("upd rt 0");
+				//else  LogO("upd rt 0");
 		}
 	}
+
+	// restore shadows
+	pSceneMgr->setShadowTechnique(oldShadow);
 
 	//Image im;
 	//cubetex->convertToImage(im);
