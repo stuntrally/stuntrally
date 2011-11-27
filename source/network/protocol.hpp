@@ -82,13 +82,14 @@ struct PeerAddressPacket: public net::SimpleSerializer<PeerAddressPacket> {
  */
 struct PlayerInfoPacket: public net::SimpleSerializer<PlayerInfoPacket> {
 	uint8_t packet_type;
+	int32_t random_id;
 	char name[16];
 	char car[10];
 	char password[16];
 	uint8_t peers;
 	uint8_t ready;
 
-	PlayerInfoPacket(): packet_type(PLAYER_INFO), ready(), peers() {}
+	PlayerInfoPacket(): packet_type(PLAYER_INFO), random_id(-1), ready(), peers() {}
 };
 
 

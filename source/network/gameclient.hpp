@@ -10,11 +10,14 @@
 #include "protocol.hpp"
 
 
+typedef int8_t ClientID;
+
 /**
  * @brief Application specific peer information.
  */
 struct PeerInfo {
-	int8_t id; ///< ID number, used with car state updates
+	ClientID id; ///< ID number, used with car state updates
+	int32_t random_id; ///< random number used to determine id
 	net::Address address; ///< Address
 	std::string name; ///< Nickname
 	std::string car; ///< Car
@@ -24,9 +27,10 @@ struct PeerInfo {
 	unsigned ping; ///< Average packet round-trip time
 	enum ConnectionState { DISCONNECTED = 0, CONNECTING = 1, CONNECTED = 2 } connection; ///< Connection state
 
-	PeerInfo(net::Address addr = net::Address()): id(-1), address(addr), name(), car(), peers(), ready(), ping(0), connection(DISCONNECTED) {}
+	PeerInfo(net::Address addr = net::Address()): id(-1), random_id(-1), address(addr), name(), car(), peers(), ready(), ping(0), connection(DISCONNECTED) {}
 
 	PeerInfo& operator=(const protocol::PlayerInfoPacket& pip) {
+		random_id = pip.random_id;
 		name = std::string(pip.name); car = std::string(pip.car); password = std::string(pip.password);
 		peers = pip.peers; ready = pip.ready;
 		return *this;
@@ -41,10 +45,10 @@ struct PeerInfo {
 
 	operator protocol::PlayerInfoPacket() {
 		protocol::PlayerInfoPacket pip;
-		// FIXME: Yack, memcpy
 		memcpy(pip.name, name.c_str(), 16);
 		memcpy(pip.car, car.c_str(), 10);
 		memcpy(pip.password, password.c_str(), 16);
+		pip.random_id = random_id;
 		pip.peers = peers;
 		pip.ready = ready;
 		return pip;
@@ -139,7 +143,7 @@ public:
 	State getState() const { return m_state; }
 
 	/// Returns the id
-	int8_t getId() const { return m_playerInfo.id; }
+	ClientID getId() const { return m_playerInfo.id; }
 
 	/// Update the local car state
 	void setLocalCarState(protocol::CarStatePackage const& cs);

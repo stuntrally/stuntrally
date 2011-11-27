@@ -5,6 +5,7 @@
 P2PGameClient::P2PGameClient(GameClientCallback* callback, int port)
 	: m_callback(callback), m_client(*this, port), m_state(DISCONNECTED), m_mutex(), m_cond(), m_playerInfo(), m_carState()
 {
+	m_playerInfo.random_id = std::rand(); // Client id is based on this
 	m_carState.packet_type = -1; // Invalidate until set
 }
 
@@ -68,21 +69,18 @@ void P2PGameClient::startGame(bool broadcast)
 	if (m_state == GAME) return;
 	m_state = GAME;
 	{
-		// Clean up all zombie peers and assign id numbers
+		// Clean up all zombie peers
 		boost::mutex::scoped_lock lock(m_mutex);
-		int id = 0;
 		PeerMap::iterator it = m_peers.begin();
 		while (it != m_peers.end()) {
 			PeerInfo& pi = it->second;
 			// Check condition
-			if (pi.connection != PeerInfo::CONNECTED || pi.name.empty()) {
+			if (pi.connection != PeerInfo::CONNECTED || pi.name.empty())
 				m_peers.erase(it++);
-			} else {
-				pi.id = id;
-				++id;
-				++it;
-			}
+			else ++it;
 		}
+		// Assign id numbers
+		recountPeersAndAssignIds();
 	}
 	// Send notification
 	if (broadcast)
@@ -150,15 +148,26 @@ void P2PGameClient::recountPeersAndAssignIds()
 {
 	m_playerInfo.address = m_client.getAddress();
 	m_playerInfo.peers = 0;
-	int id = 0;
+	m_playerInfo.id = -1;
+	typedef std::map<int32_t, PeerInfo*> IDSorter;
+	IDSorter idsorter;
+	idsorter[m_playerInfo.random_id] = &m_playerInfo;
 	for (PeerMap::iterator it = m_peers.begin(); it != m_peers.end(); ++it) {
 		if (it->second.connection == PeerInfo::CONNECTED && !it->second.name.empty()) {
-			if (it->first < (std::string)m_playerInfo.address) it->second.id = id;
-			else m_playerInfo.id = id;
-			++id;
+			idsorter[it->second.random_id] = &it->second;
 			++m_playerInfo.peers;
 		}
+		it->second.id = -1;
 	}
+	// Assign IDs
+	ClientID id = 0;
+	for (IDSorter::iterator it = idsorter.begin(); it != idsorter.end(); ++it, ++id) {
+		it->second->id = id;
+	}
+	// Validate unique IDs
+	for (PeerMap::const_iterator it = m_peers.begin(); it != m_peers.end(); ++it)
+		if (it->second.id == -1)
+			throw std::runtime_error("Unassigned or duplicate client ID!");
 }
 
 void P2PGameClient::connectionEvent(net::NetworkTraffic const& e)
