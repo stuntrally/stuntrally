@@ -194,14 +194,18 @@ void App::LoadGame()  // 2
 	int numCars = (mClient ? mClient->getPeerCount()+1 : mSplitMgr->mNumViewports);
 	int i;
 	for (i = 0; i < numCars; ++i) {
+		// TODO: This only handles one local player
 		CarModel::eCarType et = CarModel::CT_LOCAL;
-		if (i >= mSplitMgr->mNumViewports && mClient) et = CarModel::CT_REMOTE;
+		if (mClient && mClient->getId() != i) et = CarModel::CT_REMOTE;
 		Camera* cam = (et == CarModel::CT_LOCAL ? *camIt : 0);
-		// TODO: Handle car positioning based on ids received from host
 		CarModel* car = new CarModel(i, et, pSet->car[i], mSceneMgr, pSet, pGame, &sc, cam, this);
 		carModels.push_back(car);
 		if (et == CarModel::CT_LOCAL) ++camIt;
 	}
+	// FIXME: Various places assume carModels[0] is local...
+	if (carModels[0]->eType == CarModel::CT_REMOTE && mClient)
+		std::swap(carModels[0], carModels[mClient->getId()]);
+	assert(carModels[0]->eType == CarModel::CT_LOCAL);
 
 	/// ghost car  load if exists
 	ghplay.Clear();

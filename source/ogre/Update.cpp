@@ -168,11 +168,13 @@ bool App::frameStart(Real time)
 				}
 			}
 			mClient->setLocalCarState(cs);
+
 			// check for new car states
 			protocol::CarStates states = mClient->getReceivedCarStates();
 			for (protocol::CarStates::const_iterator it = states.begin(); it != states.end(); ++it) {
-				//int8_t id = it->first; // Car number
-				int8_t id = 1; /*FIXME*/
+				int8_t id = it->first; // Car number
+				// FIXME: Various places assume carModels[0] is local...
+				if (id == 0) id = mClient->getId();
 				CarModel* cm = carModels[id];
 				if (cm && cm->pCar)
 					cm->pCar->UpdateCarState(it->second);
