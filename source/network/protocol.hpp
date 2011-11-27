@@ -106,6 +106,6 @@ struct CarStatePackage: public net::SimpleSerializer<CarStatePackage> {
 	CarStatePackage(): packet_type(CAR_UPDATE) {}
 };
 
-typedef std::map<uint8_t, CarStatePackage> CarStates;
+typedef std::map<int8_t, CarStatePackage> CarStates;
 
 }

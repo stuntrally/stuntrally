@@ -139,7 +139,7 @@ public:
 	State getState() const { return m_state; }
 
 	/// Returns the id
-	uint8_t getId() const { return m_playerInfo.id; }
+	int8_t getId() const { return m_playerInfo.id; }
 
 	/// Update the local car state
 	void setLocalCarState(protocol::CarStatePackage const& cs);
