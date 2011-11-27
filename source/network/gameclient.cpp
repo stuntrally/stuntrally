@@ -3,8 +3,9 @@
 
 
 P2PGameClient::P2PGameClient(GameClientCallback* callback, int port)
-	: m_callback(callback), m_client(*this, port), m_state(DISCONNECTED), m_mutex(), m_cond(), m_playerInfo()
+	: m_callback(callback), m_client(*this, port), m_state(DISCONNECTED), m_mutex(), m_cond(), m_playerInfo(), m_carState()
 {
+	m_carState.packet_type = -1; // Invalidate until set
 }
 
 P2PGameClient::~P2PGameClient()
@@ -115,7 +116,8 @@ void P2PGameClient::senderThread() {
 		else if (m_state == GAME)
 		{
 			// Broadcast car state
-			m_client.broadcast(m_carState);
+			if ((bool)m_carState)
+				m_client.broadcast(m_carState);
 			// Wait some
 			m_cond.timed_wait(lock, now() + 0.050); // 20 FPS
 		}

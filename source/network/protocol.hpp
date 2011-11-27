@@ -104,6 +104,7 @@ struct CarStatePackage: public net::SimpleSerializer<CarStatePackage> {
 	MATHVECTOR<float,3> angularVel;
 
 	CarStatePackage(): packet_type(CAR_UPDATE) {}
+	operator bool() { return packet_type == CAR_UPDATE; }
 };
 
 typedef std::map<int8_t, CarStatePackage> CarStates;
