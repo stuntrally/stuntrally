@@ -221,7 +221,7 @@ material hud/info
 			depth_check off
 			scene_blend alpha_blend
 			cull_hardware none
-			vertex_program_ref Ogre/Compositor/StdQuad_Cg_vp
+			vertex_program_ref Ogre/Needle_vp
 			{
 			}
 			fragment_program_ref Ogre/Compositor/StdQuad_fp
