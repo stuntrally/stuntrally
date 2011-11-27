@@ -196,13 +196,13 @@ material hud/Times
 			scene_blend alpha_blend
 			cull_hardware none
 			
-			vertex_program_ref Ogre/Compositor/StdQuad_Cg_vp
+			vertex_program_ref Ogre/Needle_vp
 			{
 			}
 			fragment_program_ref Ogre/Compositor/StdQuad_fp
 			{
 			} 
-			texture_unit
+			texture_unit tex1
 			{
 				texture border_rect.png
 			}
