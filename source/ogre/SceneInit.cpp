@@ -191,7 +191,7 @@ void App::LoadGame()  // 2
 	// will create vdrift cars, actual car loading will be done later in LoadCar()
 	// this is just here because vdrift car has to be created first
 	std::list<Camera*>::iterator camIt = mSplitMgr->mCameras.begin();
-	int numCars = (mClient ? mClient->getPeerCount() : mSplitMgr->mNumViewports);
+	int numCars = (mClient ? mClient->getPeerCount()+1 : mSplitMgr->mNumViewports);
 	int i;
 	for (i = 0; i < numCars; ++i) {
 		CarModel::eCarType et = CarModel::CT_LOCAL;
