@@ -386,13 +386,13 @@
 				<Property key="Caption" value="#{Multiplayer}"/>
 				<Widget type="Tab" skin="Tab" position="16 15 744 497" name="tabsNet">
 					<UserString key="RelativeTo" value="OptionsWnd"/>
-					<Property key="Tab_ButtonAutoWidth" value="false"/>
+					<Property key="ButtonAutoWidth" value="false"/>
 					<Property key="Colour" value="0.73 0.88 1"/>
-					<Property key="Tab_ButtonWidth" value="100"/>
+					<Property key="ButtonWidth" value="100"/>
 					<Widget type="TabItem" skin="" position="4 26 735 465">
 						<UserString key="RelativeTo" value="OptionsWnd"/>
 						<Property key="Caption" value="#{NetServer}"/>
-						<Widget type="MultiList" skin="MultiList" position="20 54 696 338" name="MListServers">
+						<Widget type="MultiListBox" skin="MultiListBox" position="20 54 696 338" name="MListServers">
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 							<Property key="Colour" value="0.6 1 0.6"/>
 						</Widget>
@@ -421,7 +421,7 @@
 							<Property key="Colour" value="1 0.8 0.5"/>
 							<Property key="Caption" value="#{NetDirectConnect}"/>
 						</Widget>
-						<Widget type="Widget" skin="Panel" position="0 0 800 500" layer="Popup" name="panelNetServer">
+						<Widget type="Widget" skin="PanelSkin" position="0 0 800 500" layer="Popup" name="panelNetServer">
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 							<Property key="Colour" value="0.8 0.96 1"/>
 							<Property key="Alpha" value="0.8"/>
@@ -435,7 +435,7 @@
 							<Property key="Caption" value="#{NetGameName}:"/>
 							<Property key="TextColour" value="0.6 0.9 1"/>
 						</Widget>
-						<Widget type="Edit" skin="Edit" position="164 22 268 24" name="edNetGameName">
+						<Widget type="EditBox" skin="EditBox" position="164 22 268 24" name="edNetGameName">
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 							<Property key="Caption" value="Stunt Rally Race"/>
 							<Property key="Colour" value="0.6 0.8 1"/>
@@ -451,7 +451,7 @@
 							<Property key="Caption" value="#{NetLeaveGame}"/>
 							<Property key="Colour" value="1. 0.6 0.3"/>
 						</Widget>
-						<Widget type="MultiList" skin="MultiList" position="20 56 412 146" name="MListPlayers">
+						<Widget type="MultiListBox" skin="MultiListBox" position="20 56 412 146" name="MListPlayers">
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 							<Property key="Colour" value="0.4 1 0.4"/>
 						</Widget>
@@ -460,11 +460,11 @@
 							<Property key="Caption" value="#{NetChat}"/>
 							<Property key="TextColour" value="0.6 0.8 1"/>
 						</Widget>
-						<Widget type="Widget" skin="Panel" position="20 236 412 182">
+						<Widget type="Widget" skin="PanelSkin" position="20 236 412 182">
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 							<Property key="Colour" value="0.8 0.96 1"/>
 							<Property key="Alpha" value="0.8"/>
-							<Widget type="Edit" skin="WordWrap" position="1 1 407 180" name="edNetChat">
+							<Widget type="EditBox" skin="WordWrapEmpty" position="1 1 407 180" name="edNetChat">
 								<UserString key="RelativeTo" value="OptionsWnd"/>
 								<Property key="WordWrap" value="true"/>
 								<Property key="VisibleVScroll" value="true"/>
@@ -474,7 +474,7 @@
 								<Property key="MaxTextLength" value="120000"/>
 							</Widget>
 						</Widget>
-						<Widget type="Edit" skin="Edit" position="20 430 412 24" name="edNetChatMsg">
+						<Widget type="EditBox" skin="EditBox" position="20 430 412 24" name="edNetChatMsg">
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 							<Property key="Colour" value="0.6 0.8 1"/>
 						</Widget>
@@ -486,12 +486,12 @@
 							<Property key="Caption" value="#{Track}:"/>
 							<Property key="TextColour" value="0.4 1.0 0.5"/>
 						</Widget>
-						<Widget type="Edit" skin="WordWrap" position="452 318 256 104" name="edNetTrackInfo">
+						<Widget type="EditBox" skin="WordWrapEmpty" position="452 318 256 104" name="edNetTrackInfo">
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 							<Property key="Caption" value="Track info text"/>
 							<Property key="TextColour" value="0.6 1.0 0.8"/>
 						</Widget>
-						<Widget type="Widget" skin="Panel" position="0 0 800 500" layer="Popup" name="panelNetGame">
+						<Widget type="Widget" skin="PanelSkin" position="0 0 800 500" layer="Popup" name="panelNetGame">
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 							<Property key="Colour" value="0.8 0.96 1"/>
 							<Property key="Alpha" value="0.8"/>
@@ -519,26 +519,26 @@
 						<Widget type="TextBox" skin="TextBox" position="20 158 144 24">
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
-						<Widget type="Edit" skin="Edit" position="180 24 136 24" name="edNetNick">
+						<Widget type="EditBox" skin="EditBox" position="180 24 136 24" name="edNetNick">
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 							<Property key="Colour" value="0.7 0.9 1"/>
 							<Property key="Caption" value="StuntMan"/>
 						</Widget>
-						<Widget type="Edit" skin="Edit" position="180 62 136 26" name="edNetServerIP">
+						<Widget type="EditBox" skin="EditBox" position="180 62 136 26" name="edNetServerIP">
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 							<Property key="Colour" value="0.8 0.9 1"/>
 							<Property key="Caption" value="127.0.0.1"/>
 						</Widget>
-						<Widget type="Edit" skin="Edit" position="180 94 136 24" name="edNetServerPort">
+						<Widget type="EditBox" skin="EditBox" position="180 94 136 24" name="edNetServerPort">
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 							<Property key="Colour" value="0.8 0.9 1"/>
 						</Widget>
-						<Widget type="Edit" skin="Edit" position="180 126 136 24" name="edNetLocalPort">
+						<Widget type="EditBox" skin="EditBox" position="180 126 136 24" name="edNetLocalPort">
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 							<Property key="Colour" value="0.7 0.8 1"/>
 						</Widget>
 						<!-- wordwrap hack -->
-						<Widget type="Edit" skin="WordWrap" position="20 190 300 96" name="RouterTip">
+						<Widget type="EditBox" skin="WordWrapEmpty" position="20 190 300 96" name="RouterTip">
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 							<Property key="ReadOnly" value="true"/>
 							<Property key="MultiLine" value="true"/>
