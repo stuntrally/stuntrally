@@ -162,7 +162,7 @@ public:
 
 private:
 	/// Check how many connected and introduced peers there are and assign ids
-	void recountPeersAndAssignIds();
+	void recountPeersAndAssignIds(bool validate = false);
 
 	GameClientCallback* m_callback;
 	net::NetworkObject m_client;

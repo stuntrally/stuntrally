@@ -80,7 +80,7 @@ void P2PGameClient::startGame(bool broadcast)
 			else ++it;
 		}
 		// Assign id numbers
-		recountPeersAndAssignIds();
+		recountPeersAndAssignIds(true);
 	}
 	// Send notification
 	if (broadcast)
@@ -144,7 +144,7 @@ size_t P2PGameClient::getPeerCount() const
 }
 
 // Mutex should be already locked when this is called
-void P2PGameClient::recountPeersAndAssignIds()
+void P2PGameClient::recountPeersAndAssignIds(bool validate)
 {
 	m_playerInfo.address = m_client.getAddress();
 	m_playerInfo.peers = 0;
@@ -164,6 +164,7 @@ void P2PGameClient::recountPeersAndAssignIds()
 	for (IDSorter::iterator it = idsorter.begin(); it != idsorter.end(); ++it, ++id) {
 		it->second->id = id;
 	}
+	if (!validate) return;
 	// Validate unique IDs
 	for (PeerMap::const_iterator it = m_peers.begin(); it != m_peers.end(); ++it)
 		if (it->second.id == -1)
