@@ -317,7 +317,7 @@ void App::evEdNetLocalPort(EditPtr ed)
 #define ChkEv(var)  \
 	pSet->var = !pSet->var;  if (wp) {  \
 	ButtonPtr chk = wp->castType<MyGUI::Button>(); \
-	chk->setStateCheck(pSet->var);  }
+	chk->setStateSelected(pSet->var);  }
 
 
 //  [Setup]

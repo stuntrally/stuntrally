@@ -258,7 +258,7 @@ void App::InitGui()
 	valNetGameName = mGUI->findWidget<StaticText>("valNetGameName");
 	edNetGameName = mGUI->findWidget<Edit>("edNetGameName");
 	if (edNetGameName)
-		edNetGameName->eventEditTextChange = newDelegate(this, &App::evEdNetGameName);
+		edNetGameName->eventEditTextChange += newDelegate(this, &App::evEdNetGameName);
 	
 	listPlayers = mGUI->findWidget<MultiList>("MListPlayers");
 	if (listPlayers)
@@ -293,13 +293,13 @@ void App::InitGui()
 	edNetServerPort = mGUI->findWidget<Edit>("edNetServerPort");
 	edNetLocalPort = mGUI->findWidget<Edit>("edNetLocalPort");
 	if (edNetNick)		{	edNetNick->setCaption(pSet->nickname);						
-		edNetNick->eventEditTextChange = newDelegate(this, &App::evEdNetNick);	}
+		edNetNick->eventEditTextChange += newDelegate(this, &App::evEdNetNick);	}
 	if (edNetServerIP)	{	edNetServerIP->setCaption(pSet->master_server_address);
-		edNetServerIP->eventEditTextChange = newDelegate(this, &App::evEdNetServerIP);	}
+		edNetServerIP->eventEditTextChange += newDelegate(this, &App::evEdNetServerIP);	}
 	if (edNetServerPort){	edNetServerPort->setCaption(toStr(pSet->master_server_port));
-		edNetServerPort->eventEditTextChange = newDelegate(this, &App::evEdNetServerPort);	}
+		edNetServerPort->eventEditTextChange += newDelegate(this, &App::evEdNetServerPort);	}
 	if (edNetLocalPort)	{	edNetLocalPort->setCaption(toStr(pSet->local_port));
-		edNetLocalPort->eventEditTextChange = newDelegate(this, &App::evEdNetLocalPort);	}
+		edNetLocalPort->eventEditTextChange += newDelegate(this, &App::evEdNetLocalPort);	}
 
 
 	///  input tab  -------
