@@ -196,16 +196,19 @@ void App::LoadGame()  // 2
 	for (i = 0; i < numCars; ++i) {
 		// TODO: This only handles one local player
 		CarModel::eCarType et = CarModel::CT_LOCAL;
-		if (mClient && mClient->getId() != i) et = CarModel::CT_REMOTE;
+		int startpos_index = i;
+		if (mClient) {
+			// FIXME: Various places assume carModels[0] is local
+			// so we swap 0 and local's id but preserve starting position
+			if (i == 0) startpos_index = mClient->getId();
+			else et = CarModel::CT_REMOTE;
+			if (i == mClient->getId()) startpos_index = 0;
+		}
 		Camera* cam = (et == CarModel::CT_LOCAL ? *camIt : 0);
-		CarModel* car = new CarModel(i, et, pSet->car[i], mSceneMgr, pSet, pGame, &sc, cam, this);
+		CarModel* car = new CarModel(i, et, pSet->car[i], mSceneMgr, pSet, pGame, &sc, cam, this, startpos_index);
 		carModels.push_back(car);
 		if (et == CarModel::CT_LOCAL) ++camIt;
 	}
-	// FIXME: Various places assume carModels[0] is local...
-	if (carModels[0]->eType == CarModel::CT_REMOTE && mClient)
-		std::swap(carModels[0], carModels[mClient->getId()]);
-	assert(carModels[0]->eType == CarModel::CT_LOCAL);
 
 	/// ghost car  load if exists
 	ghplay.Clear();

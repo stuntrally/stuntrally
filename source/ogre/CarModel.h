@@ -48,7 +48,8 @@ public:
 
 	//  Constructor, will assign members and create the vdrift car
 	CarModel( unsigned int index, eCarType type, const std::string name,
-		Ogre::SceneManager* sceneMgr, SETTINGS* set, GAME* game, Scene* sc, Ogre::Camera* cam, App* app);
+		Ogre::SceneManager* sceneMgr, SETTINGS* set, GAME* game, Scene* sc,
+		Ogre::Camera* cam, App* app, int startpos_index = -1);
 	
 	//  Destructor - will remove meshes & particle systems, 
 	//  the VDrift car and the FollowCamera, delete pReflect
