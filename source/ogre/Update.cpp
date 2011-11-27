@@ -157,7 +157,6 @@ bool App::frameStart(Real time)
 		if (doNetworking) {
 			//  update the local car's state to the client
 			protocol::CarStatePackage cs;
-			// FIXME: Skeleton CarStatePackage filling
 			// FIXME: Handles only one local car
 			for (CarModels::const_iterator it = carModels.begin(); it != carModels.end(); ++it) {
 				if ((*it)->eType == CarModel::CT_LOCAL) {

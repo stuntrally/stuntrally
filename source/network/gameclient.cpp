@@ -93,7 +93,7 @@ void P2PGameClient::senderThread() {
 		boost::mutex::scoped_lock lock(m_mutex);
 		if (m_state == LOBBY)
 		{
-			// Boradcast local player's meta info
+			// Broadcast local player's meta info
 			protocol::PlayerInfoPacket pip = (protocol::PlayerInfoPacket)m_playerInfo;
 			m_client.broadcast(pip);
 			// Loop all peers
@@ -225,8 +225,8 @@ void P2PGameClient::receiveEvent(net::NetworkTraffic const& e)
 				PeerInfo picopy = pi;
 				if (isNew) {
 					// TODO: Check for password and disconnect if fail
-					// If it's done here, we need to figure out a way to not send peer info
-					// During the time between connection and this message
+					// If it's done here, we need to figure out a way to not send
+					// peer info during the time between connection and this message
 
 					recountPeersAndAssignIds();
 				}
