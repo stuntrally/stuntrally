@@ -127,13 +127,7 @@ void MaterialGenerator::generate(bool fixedFunction)
 		pass->setFragmentProgram(mFragmentProgram->getName());
 		
 		//set shadow caster
-		if(!mDef->mProps->transparent)
-		{
-			if(mParent->getShadowsDepth())
-			{
-				technique->setShadowCasterMaterial("PSSM/shadow_caster_noalpha");
-			}
-		}
+		technique->setShadowCasterMaterial(chooseShadowCasterMaterial());
 		if (mShaderCached)
 		{
 			// set individual material shader params
@@ -548,6 +542,28 @@ Ogre::CullingMode MaterialGenerator::chooseCullingMode()
 	return Ogre::CULL_NONE;
 }
 
+//----------------------------------------------------------------------------------------
+
+Ogre::String MaterialGenerator::chooseShadowCasterMaterial()
+{
+	Ogre::String shadowCasterMaterial = StringUtil::BLANK;
+	if(!mDef->mProps->transparent)
+	{
+		if(mParent->getShadowsDepth())
+		{
+			Ogre::CullingMode cmode = chooseCullingMode();
+			if(cmode == Ogre::CullingMode::CULL_NONE)
+			{
+				shadowCasterMaterial = "PSSM/shadow_caster_nocull";				
+			}
+			else
+			{
+				shadowCasterMaterial = "PSSM/shadow_caster_noalpha";
+			}
+		}
+	}
+	return shadowCasterMaterial;
+}
 //----------------------------------------------------------------------------------------
 
 HighLevelGpuProgramPtr MaterialGenerator::createVertexProgram()

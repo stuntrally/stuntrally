@@ -70,3 +70,22 @@ material PSSM/shadow_caster_noalpha
 		}
 	}
 }
+
+material PSSM/shadow_caster_nocull
+{
+	technique
+	{
+		// all this will do is write depth and depth² to red and green
+		pass
+		{
+			cull_hardware none
+			vertex_program_ref PSSM/shadow_caster_vs
+			{
+			}
+
+			fragment_program_ref PSSM/shadow_caster_ps
+			{
+			}
+		}
+	}
+}

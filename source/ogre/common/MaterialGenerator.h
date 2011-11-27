@@ -124,6 +124,7 @@ protected:
 	virtual std::string pickTexture(textureMap* textures);
 
 	virtual Ogre::CullingMode chooseCullingMode();
+	virtual Ogre::String chooseShadowCasterMaterial();
 };
 
 #endif
