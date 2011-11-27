@@ -153,7 +153,9 @@ void App::peerState(PeerInfo peer, uint8_t state)
 void App::join(std::string host, std::string port)
 {
 	try {
-		mClient.reset(new P2PGameClient(this, pSet->local_port));
+		// FIXME: To make local testing easier, use random port for now
+		int tempport = 4000 + rand() % 50;
+		mClient.reset(new P2PGameClient(this, /*pSet->local_port*/ tempport));
 		mClient->updatePlayerInfo(pSet->nickname, sListCar);
 		mClient->connect(host, boost::lexical_cast<int>(port)); // Lobby phase started automatically
 		boost::mutex::scoped_lock lock(netGuiMutex);
