@@ -99,6 +99,7 @@ void P2PGameClient::senderThread() {
 			for (PeerMap::iterator it = m_peers.begin(); it != m_peers.end(); ++it) {
 				PeerInfo& pi = it->second;
 				// Check if we should try connecting to the peer
+				// TODO: Should we also do this during GAME phase
 				if (pi.connection == PeerInfo::DISCONNECTED) {
 					std::cout << "Connecting to " << pi.address << std::endl;
 					pi.connection = PeerInfo::CONNECTING;
@@ -173,7 +174,7 @@ void P2PGameClient::recountPeersAndAssignIds(bool validate)
 
 void P2PGameClient::connectionEvent(net::NetworkTraffic const& e)
 {
-	std::cout << "Connection address=" << e.peer_address << "   id=" << e.peer_id << std::endl;
+	std::cout << "Connection from " << e.peer_address << std::endl;
 	if (m_state == LOBBY) {
 		boost::mutex::scoped_lock lock(m_mutex);
 		PeerInfo& pi = m_peers[e.peer_address];
@@ -187,11 +188,12 @@ void P2PGameClient::connectionEvent(net::NetworkTraffic const& e)
 
 void P2PGameClient::disconnectEvent(net::NetworkTraffic const& e)
 {
-	std::cout << "Disconnected address=" << e.peer_address << "   id=" << e.peer_id << std::endl;
+	std::cout << "Disconnected " << e.peer_address << std::endl;
 	PeerInfo picopy;
 	{
 		boost::mutex::scoped_lock lock(m_mutex);
-		// TODO: Maybe just delete it?
+		// We probably don't want to delete it right away,
+		// since we could try reconnecting
 		m_peers[e.peer_address].connection = PeerInfo::DISCONNECTED;
 		picopy = m_peers[e.peer_address];
 		recountPeersAndAssignIds();
