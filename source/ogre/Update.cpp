@@ -171,8 +171,8 @@ bool App::frameStart(Real time)
 			// check for new car states
 			protocol::CarStates states = mClient->getReceivedCarStates();
 			for (protocol::CarStates::const_iterator it = states.begin(); it != states.end(); ++it) {
-				int8_t id = it->first; // Car number
-				// FIXME: untested, probably crashes and is all wrong
+				//int8_t id = it->first; // Car number
+				int8_t id = 1; /*FIXME*/
 				CarModel* cm = carModels[id];
 				if (cm && cm->pCar)
 					cm->pCar->UpdateCarState(it->second);
