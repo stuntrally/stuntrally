@@ -782,20 +782,6 @@ bool App::keyPressed( const OIS::KeyEvent &arg )
 			}	}
 			return false;
 		}
-
-		//  change gui tabs
-		if (mWndTabs)
-		{	int num = mWndTabs->getItemCount();
-			if (isFocGui)  switch (arg.key)
-			{
-				case KC_F2:  // prev tab
-					mWndTabs->setIndexSelected( (mWndTabs->getIndexSelected() - 1 + num) % num );
-					return true;
-				case KC_F3:  // next tab
-					mWndTabs->setIndexSelected( (mWndTabs->getIndexSelected() + 1) % num );
-					return true;
-			}
-		}
 	}
 
 	InputBind(arg.key);
