@@ -160,10 +160,7 @@ bool App::frameStart(Real time)
 			// FIXME: Handles only one local car
 			for (CarModels::const_iterator it = carModels.begin(); it != carModels.end(); ++it) {
 				if ((*it)->eType == CarModel::CT_LOCAL) {
-					cs.pos = (*it)->pCar->GetPosition();
-					cs.rot = (*it)->pCar->GetOrientation();
-					cs.linearVel = (*it)->pCar->GetVelocity();
-					cs.angularVel = (*it)->pCar->GetAngularVelocity();
+					cs = (*it)->pCar->GetCarStatePackage();
 					break;
 				}
 			}

@@ -293,7 +293,8 @@ public:
 		return dynamics.GetMaxSteeringAngle();
 	}
 
-	// Update from networking
+	// Networking
+	protocol::CarStatePackage GetCarStatePackage() const;
 	void UpdateCarState(const protocol::CarStatePackage& state);
 
 	///  new

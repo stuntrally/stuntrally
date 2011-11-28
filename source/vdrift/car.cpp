@@ -811,6 +811,16 @@ bool CAR::Serialize(joeserialize::Serializer & s)
 	return true;
 }
 
+protocol::CarStatePackage CAR::GetCarStatePackage() const
+{
+	protocol::CarStatePackage csp;
+	csp.pos = GetPosition();
+	csp.rot = GetOrientation();
+	csp.linearVel = GetVelocity();
+	csp.angularVel = GetAngularVelocity();
+	return csp;
+}
+
 void CAR::UpdateCarState(const protocol::CarStatePackage& state)
 {
 	// FIXME: Need to add some kind of lazy position correction,
@@ -824,7 +834,7 @@ void CAR::UpdateCarState(const protocol::CarStatePackage& state)
 	//SetPosition(newpos);
 
 	//btTransform transform;
-	//transform.setOrigin(dynamics.chassis->getCenterOfMassPosition());
+	//transform.setOrigin(ToBulletVector(newpos));
 	//transform.setRotation(ToBulletQuaternion(state.rot));
 	//dynamics.chassis->setWorldTransform(transform);
 
