@@ -128,8 +128,7 @@ protected:
 	bool isFocGui,isFocRpl;  // gui shown
 	MyGUI::Gui* mGUI;
 	
-	// naive check if we have MyGUI 3.2 RC or 3.2 SVN. D3D11 ogre platform depends on MyGUI 3.2 SVN
-	#ifdef MYGUI_PLATFORM_LOG_FILENAME
+	#if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
 	MyGUI::OgreD3D11Platform* mPlatform;
 	#else
 	MyGUI::OgrePlatform* mPlatform;

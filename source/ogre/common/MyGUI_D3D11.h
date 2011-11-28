@@ -1,7 +1,6 @@
 ﻿#ifndef __MYGUI_OGRE_D3D11PLATFORM_H__
 #define __MYGUI_OGRE_D3D11PLATFORM_H__
 
-#include "MyGUI_Prerequest.h"
 #include "MyGUI_OgreTexture.h"
 #include "MyGUI_OgreVertexBuffer.h"
 #include "MyGUI_OgreRenderManager.h"
@@ -12,10 +11,9 @@
 #include "MyGUI_OgrePlatform.h"
 #include "MyGUI_LastHeader.h"
 
-// naive check if we have MyGUI 3.2 RC or 3.2 SVN. D3D11 ogre platform depends on MyGUI 3.2 SVN
+#include <OgrePlatform.h>
 
-// 3.2 SVN has this defined, RC doesnt
-#ifdef MYGUI_PLATFORM_LOG_FILENAME
+#if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
 
 namespace MyGUI
 {

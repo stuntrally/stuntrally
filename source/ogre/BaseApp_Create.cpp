@@ -598,12 +598,12 @@ bool BaseApp::setup()
 	TextureManager::getSingleton().setDefaultNumMipmaps(5);
 
 	//  Gui
-	// naive check if we have MyGUI 3.2 RC or 3.2 SVN. D3D11 ogre platform depends on MyGUI 3.2 SVN
-	#ifdef MYGUI_PLATFORM_LOG_FILENAME
+	#if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
 	mPlatform = new MyGUI::OgreD3D11Platform();
 	#else
 	mPlatform = new MyGUI::OgrePlatform();
 	#endif
+	
 	mPlatform->initialise(mWindow, mSceneMgr, "General", PATHMANAGER::GetLogDir() + "/MyGUI.log");
 	mGUI = new MyGUI::Gui();
 	
