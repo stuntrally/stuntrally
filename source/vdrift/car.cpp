@@ -831,6 +831,12 @@ void CAR::UpdateCarState(const protocol::CarStatePackage& state)
 	QUATERNION<float> currot = ToMathQuaternion<float>(dynamics.chassis->getCenterOfMassTransform().getRotation());
 	QUATERNION<float> newrot = currot.QuatSlerp(state.rot, 0.5f);
 
+	// If the estimate drifts too far for some reason, do a quick correction
+	if (errorvec.MagnitudeSquared() > 9.0f) {
+		newpos = state.pos;
+		newrot = state.rot;
+	}
+
 	SetPosition(newpos);
 
 	btTransform transform;
