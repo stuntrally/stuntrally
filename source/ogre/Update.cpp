@@ -92,7 +92,8 @@ bool App::frameStart(Real time)
 	{
 		bool bFirstFrame = (carModels.size()>0 && carModels.front()->bGetStPos) ? true : false;
 		
-		if (isFocGui && mWndTabs->getIndexSelected() == 7)
+		//FIXME getIndexSelected() doesn't return the proper value here.. might be connected to the fact that network branch switches to network tab at startup
+		if (isFocGui /*&& mWndTabs->getIndexSelected() == 7*/)
 			UpdateInputBars();
 		
 		//  keys dn/up - trklist, carlist
