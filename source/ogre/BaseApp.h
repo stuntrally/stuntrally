@@ -112,7 +112,7 @@ public:
 	MyGUI::Widget* pressedKeySender;
 protected:
 
-	///  ovelay
+	///  overlay
 	Ogre::Overlay* mDebugOverlay, *mFpsOverlay;  // fps stats
 	Ogre::OverlayElement* mOvrFps, *mOvrTris, *mOvrBat, *mOvrDbg;
 
@@ -125,7 +125,15 @@ protected:
 	///  Gui
 	bool isFocGuiOrRpl()  {  return isFocGui || isFocRpl;  }
 	bool isFocGui,isFocRpl;  // gui shown
-	MyGUI::Gui* mGUI;		MyGUI::OgreD3D11Platform* mPlatform;
+	MyGUI::Gui* mGUI;
+	
+	// naive check if we have MyGUI 3.2 RC or 3.2 SVN. D3D11 ogre platform depends on MyGUI 3.2 SVN
+	#ifdef MYGUI_PLATFORM_LOG_FILENAME
+	MyGUI::OgreD3D11Platform* mPlatform;
+	#else
+	MyGUI::OgrePlatform* mPlatform;
+	#endif
+	
 	MyGUI::WidgetPtr mLayout, mWndOpts, mWndRpl;  // options window
 	MyGUI::TabPtr mWndTabs;
 	MyGUI::VectorWidgetPtr vwGui;
