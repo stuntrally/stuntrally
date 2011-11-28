@@ -7,6 +7,12 @@
 #include "MyGUI_Timer.h"
 #include "MyGUI_Gui.h"
 #include "MyGUI_D3D11.h"
+
+// naive check if we have MyGUI 3.2 RC or 3.2 SVN. D3D11 ogre platform depends on MyGUI 3.2 SVN
+
+// 3.2 SVN has this defined, RC doesnt
+#ifdef MYGUI_PLATFORM_LOG_FILENAME
+
 namespace MyGUI
 {
 	OgreD3D11RenderManager& OgreD3D11RenderManager::getInstance()
@@ -573,3 +579,5 @@ namespace MyGUI
 	}
 
 }
+
+#endif

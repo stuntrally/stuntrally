@@ -12,6 +12,11 @@
 #include "MyGUI_OgrePlatform.h"
 #include "MyGUI_LastHeader.h"
 
+// naive check if we have MyGUI 3.2 RC or 3.2 SVN. D3D11 ogre platform depends on MyGUI 3.2 SVN
+
+// 3.2 SVN has this defined, RC doesnt
+#ifdef MYGUI_PLATFORM_LOG_FILENAME
+
 namespace MyGUI
 {
 	
@@ -198,5 +203,7 @@ namespace MyGUI
 	};
 
 } 
+
+#endif
 
 #endif 
