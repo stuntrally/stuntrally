@@ -814,8 +814,8 @@ bool CAR::Serialize(joeserialize::Serializer & s)
 protocol::CarStatePackage CAR::GetCarStatePackage() const
 {
 	protocol::CarStatePackage csp;
-	csp.pos = GetPosition();
-	csp.rot = GetOrientation();
+	csp.pos = ToMathVector<float>(dynamics.chassis->getCenterOfMassPosition());
+	csp.rot = ToMathQuaternion<float>(dynamics.chassis->getCenterOfMassTransform().getRotation());
 	csp.linearVel = GetVelocity();
 	csp.angularVel = GetAngularVelocity();
 	return csp;
@@ -823,21 +823,22 @@ protocol::CarStatePackage CAR::GetCarStatePackage() const
 
 void CAR::UpdateCarState(const protocol::CarStatePackage& state)
 {
-	// FIXME: Need to add some kind of lazy position correction,
-	// but simply setting velocities seems to work rather well
+	// Velocity based estimation from physics engine works rather well
+	// for a while, so we use pos/rot only for lazy corrections
+	MATHVECTOR<float,3> curpos = ToMathVector<float>(dynamics.chassis->getCenterOfMassPosition());
+	MATHVECTOR<float,3> errorvec = state.pos - curpos;
+	MATHVECTOR<float,3> newpos = curpos + (errorvec * 0.1f);
+	QUATERNION<float> currot = ToMathQuaternion<float>(dynamics.chassis->getCenterOfMassTransform().getRotation());
+	QUATERNION<float> newrot = currot.QuatSlerp(state.rot, 0.5f);
 
-	//MATHVECTOR <double,3> newpos = state.pos;
-	//newpos = newpos + dynamics.GetPosition();
-	//newpos = newpos + ToMathVector<double>(dynamics.chassis->getCenterOfMassPosition());
-	//newpos = newpos * 0.5;
+	SetPosition(newpos);
 
-	//SetPosition(newpos);
+	btTransform transform;
+	transform.setOrigin(ToBulletVector(newpos));
+	transform.setRotation(ToBulletQuaternion(newrot));
+	dynamics.chassis->setWorldTransform(transform);
 
-	//btTransform transform;
-	//transform.setOrigin(ToBulletVector(newpos));
-	//transform.setRotation(ToBulletQuaternion(state.rot));
-	//dynamics.chassis->setWorldTransform(transform);
-
+	// No interpolation in velocities
 	dynamics.chassis->setLinearVelocity(ToBulletVector(state.linearVel));
 	dynamics.chassis->setAngularVelocity(ToBulletVector(state.angularVel));
 
