@@ -11,8 +11,8 @@
 
 #include <MyGUI_Prerequest.h>
 #include <MyGUI_Widget.h>
+#include <MyGUI_OgrePlatform.h>
 
-namespace MyGUI{  class OgrePlatform; class OgreD3D11Platform; };
 namespace Ogre 
 {  
 	class SceneNode;  class Root;  class SceneManager;  class RenderWindow;
