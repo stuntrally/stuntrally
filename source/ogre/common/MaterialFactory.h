@@ -27,8 +27,9 @@ public:
 	MaterialFactory();
 	~MaterialFactory();
 	
-    static MaterialFactory& getSingleton(void);
-    static MaterialFactory* getSingletonPtr(void);
+	// only needed when accessing the singleton from another library
+    //static MaterialFactory& getSingleton(void);
+    //static MaterialFactory* getSingletonPtr(void);
 	
 	// maximum of 4 shadow textures
 	static const unsigned int SHADOWTEX_NUM_MAX = 4;

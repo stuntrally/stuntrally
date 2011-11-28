@@ -34,7 +34,10 @@ using namespace Ogre;
 
 //----------------------------------------------------------------------------------------
 
+// only needed when accessing the singleton from another library
+
 template<> MaterialFactory* Ogre::Singleton<MaterialFactory>::ms_Singleton = 0;
+/*
 MaterialFactory* MaterialFactory::getSingletonPtr(void)
 {
     return ms_Singleton;
@@ -43,6 +46,7 @@ MaterialFactory& MaterialFactory::getSingleton(void)
 {  
     assert( ms_Singleton );  return ( *ms_Singleton );  
 }
+*/
 
 //----------------------------------------------------------------------------------------
 
