@@ -13,6 +13,7 @@
 #include <MyGUI_Widget.h>
 #include <MyGUI_OgrePlatform.h>
 
+namespace MyGUI { class OgreD3D11Platform; }
 namespace Ogre 
 {  
 	class SceneNode;  class Root;  class SceneManager;  class RenderWindow;
