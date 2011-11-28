@@ -813,17 +813,26 @@ bool CAR::Serialize(joeserialize::Serializer & s)
 
 void CAR::UpdateCarState(const protocol::CarStatePackage& state)
 {
-	SetPosition(state.pos);
+	// FIXME: Need to add some kind of lazy position correction,
+	// but simply setting velocities seems to work rather well
 
-	btTransform transform;
-	transform.setOrigin(ToBulletVector(state.pos));
-	transform.setRotation(ToBulletQuaternion(state.rot));
-	dynamics.chassis->setWorldTransform(transform);
+	//MATHVECTOR <double,3> newpos = state.pos;
+	//newpos = newpos + dynamics.GetPosition();
+	//newpos = newpos + ToMathVector<double>(dynamics.chassis->getCenterOfMassPosition());
+	//newpos = newpos * 0.5;
+
+	//SetPosition(newpos);
+
+	//btTransform transform;
+	//transform.setOrigin(dynamics.chassis->getCenterOfMassPosition());
+	//transform.setRotation(ToBulletQuaternion(state.rot));
+	//dynamics.chassis->setWorldTransform(transform);
 
 	dynamics.chassis->setLinearVelocity(ToBulletVector(state.linearVel));
 	dynamics.chassis->setAngularVelocity(ToBulletVector(state.angularVel));
 
 	dynamics.SynchronizeBody();  // set body from chassis
+	dynamics.UpdateWheelContacts();
 }
 
 ///  reset car, pos and state
