@@ -92,6 +92,21 @@ void App::rebuildPlayerList()
 	}
 }
 
+void App::uploadGameInfo()
+{
+	if (!mMasterClient || !mClient || !edNetGameName || !pSet)
+		return;
+	protocol::GameInfo game;
+	// FIXME: This memcpy stuff is really hairy
+	memcpy(game.name, edNetGameName->getCaption().c_str(), 32);
+	memcpy(game.track, sListTrack.c_str(), 32);
+	game.players = mClient->getPeerCount()+1;
+	game.collisions = pSet->car_collis;
+	game.port = pSet->local_port;
+	game.locked = false;
+	mMasterClient->updateGame(game);
+}
+
 void App::setNetGuiHosting(bool enabled)
 {
 	edNetGameName->setEnabled(enabled);
@@ -109,8 +124,7 @@ void App::gameListChanged(protocol::GameList list)
 void App::peerConnected(PeerInfo peer)
 {
 	// Master server player count update
-	if (mLobbyState == HOSTING && mMasterClient && mClient && edNetGameName)
-		mMasterClient->updateGame(edNetGameName->getCaption(), sListTrack, mClient->getPeerCount()+1, pSet->car_collis, pSet->local_port);
+	if (mLobbyState == HOSTING) uploadGameInfo();
 	// Schedule Gui updates
 	boost::mutex::scoped_lock lock(netGuiMutex);
 	sChatBuffer = sChatBuffer + "Connected: " + peer.name + "\n";
@@ -121,8 +135,7 @@ void App::peerDisconnected(PeerInfo peer)
 {
 	if (peer.name.empty()) return;
 	// Master server player count update
-	if (mLobbyState == HOSTING && mMasterClient && mClient && edNetGameName)
-		mMasterClient->updateGame(edNetGameName->getCaption(), sListTrack, mClient->getPeerCount()+1, pSet->car_collis, pSet->local_port);
+	if (mLobbyState == HOSTING) uploadGameInfo();
 	// Schedule Gui updates
 	boost::mutex::scoped_lock lock(netGuiMutex);
 	sChatBuffer = sChatBuffer + "Disconnected: " + peer.name + "\n";
@@ -216,7 +229,7 @@ void App::evBtnNetCreate(WP)
 			mMasterClient.reset(new MasterClient(this));
 			mMasterClient->connect(pSet->master_server_address, pSet->master_server_port);
 		}
-		mMasterClient->updateGame(edNetGameName->getCaption(), sListTrack, mClient->getPeerCount()+1, pSet->car_collis, pSet->local_port);
+		uploadGameInfo();
 		rebuildPlayerList();
 		setNetGuiHosting(true);
 		tabsNet->setIndexSelected(1);
@@ -286,7 +299,7 @@ void App::evEdNetGameName(EditPtr ed)
 {
 	// game name text changed
 	if (mLobbyState != HOSTING || !mMasterClient || !mClient) return;
-	mMasterClient->updateGame(ed->getCaption(), sListTrack, mClient->getPeerCount()+1, pSet->car_collis, pSet->local_port);
+	uploadGameInfo();
 }
 
 //  net settings

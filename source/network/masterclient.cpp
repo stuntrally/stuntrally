@@ -31,17 +31,11 @@ void MasterClient::refreshList()
 	if (m_callback) m_callback->gameListChanged(m_games);
 }
 
-void MasterClient::updateGame(const std::string& name, const std::string& track, int players, bool collisions, int port, std::string password)
+void MasterClient::updateGame(const protocol::GameInfo &game, std::string password)
 {
 	{
 		boost::mutex::scoped_lock lock(m_mutex);
-		// FIXME: This memcpy stuff is really hairy
-		memcpy(m_game.name, name.c_str(), 32);
-		memcpy(m_game.track, track.c_str(), 32);
-		m_game.players = players;
-		m_game.collisions = collisions;
-		m_game.port = port;
-		m_game.locked = (password.empty() ? false : true);
+		m_game = game;
 		m_password = password;
 		m_sendUpdates = true;
 	}

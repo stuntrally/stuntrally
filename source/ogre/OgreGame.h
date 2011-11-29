@@ -323,6 +323,7 @@ protected:
 
 	void rebuildGameList();
 	void rebuildPlayerList();
+	void uploadGameInfo();
 	void setNetGuiHosting(bool enabled);
 	void gameListChanged(protocol::GameList list);
 	void peerConnected(PeerInfo peer);
