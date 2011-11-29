@@ -50,6 +50,7 @@ struct GameInfo: public net::SimpleSerializer<GameInfo> {
 	uint32_t timestamp; // Set by server
 	uint8_t players;    // Set by client
 	uint8_t collisions; // Set by client
+	uint8_t laps;       // Set by client
 	uint8_t locked;     // Set by client
 	char name[32];      // Set by client
 	char track[32];     // Set by client
