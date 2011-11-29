@@ -80,10 +80,21 @@ struct MaterialProperties
 	float envMapPriority, shadowPriority, normalMapPriority;
 	
 	//!todo:
-	// PPX on/off, shading mode (phong etc) for no shaders,
-	// [casts_shadows (+priority) (probably not here)],
-	// specular map (exponent in diffuse map alpha) [or seperate map for trees]
-	// normalHeight (height in normal map alpha) [for parallax mapping]
+	/*
+	 * shader features:
+	 * - per vertex lighting
+	 * - ambient occlusion map (pre-baked, seperate map) - this map would only be used when SSAO effect is off
+	 * - specular / reflectivity map (specular exponent / reflectivity factor in diffuse map alpha)
+	 * - normalHeight map (height in normal map alpha) [for parallax mapping]
+	 * 
+	 * portability / reusability:
+	 * - support different light types (point, directional, spot)
+	 * - support more than 1 light at a time (most likely using pass iteration)
+	 * - support shadowing methods aside from PSSM
+	 * 
+	 * other:
+	 * - make it easier to add custom shaders
+	 */
 	
 	MaterialProperties(); // constructor with sensible default values
 	void setProperty(const std::string& prop, const std::string& value);

@@ -563,7 +563,7 @@ void App::updatePoses(float time)
 			CarModel* playerCar = carModels.front();
 			
 			float distance = carM->pMainNode->getPosition().squaredDistance(playerCar->pMainNode->getPosition());
-			if (distance < 4.f) carM->setVisible(false);
+			if (distance < 16.f) carM->setVisible(false);
 		}
 		
 		carM->Update(newPosInfo, time);
