@@ -599,7 +599,12 @@ bool BaseApp::setup()
 	TextureManager::getSingleton().setDefaultNumMipmaps(5);
 
 	//  Gui
+	#if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
 	mPlatform = new MyGUI::OgreD3D11Platform();
+	#else
+	mPlatform = new MyGUI::OgrePlatform();
+	#endif
+	
 	mPlatform->initialise(mWindow, mSceneMgr, "General", PATHMANAGER::GetLogDir() + "/MyGUI.log");
 	mGUI = new MyGUI::Gui();
 	

@@ -1,4 +1,5 @@
-﻿#include "MyGUI_OgreDataManager.h"
+﻿#include "MyGUI_Prerequest.h"
+#include "MyGUI_OgreDataManager.h"
 #include "MyGUI_OgreRenderManager.h"
 #include "MyGUI_OgreTexture.h"
 #include "MyGUI_OgreVertexBuffer.h"
@@ -7,6 +8,11 @@
 #include "MyGUI_Timer.h"
 #include "MyGUI_Gui.h"
 #include "MyGUI_D3D11.h"
+
+#include <OgrePlatform.h>
+
+#if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
+
 namespace MyGUI
 {
 	OgreD3D11RenderManager& OgreD3D11RenderManager::getInstance()
@@ -573,3 +579,5 @@ namespace MyGUI
 	}
 
 }
+
+#endif
