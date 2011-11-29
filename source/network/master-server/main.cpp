@@ -1,3 +1,7 @@
+// Copyright Tapio Vierros 2011
+// Licensed under GPLv3 or later.
+// See License.txt for more info on licensing.
+
 #include <iostream>
 #include <string>
 #include <map>
@@ -110,7 +114,7 @@ public:
 		if (e.packet_length <= 0 || !e.packet_data) return;
 		switch (e.packet_data[0]) {
 			case protocol::GAME_LIST: {
-				out(VERBOSE) << "Game list request received" << std::endl;
+				out(VERBOSE) << "Game list request received from " << e.peer_address << std::endl;
 				protocol::GameList games = m_glm.getGames();
 				// Send an info packet for each game
 				for (protocol::GameList::const_iterator it = games.begin(); it != games.end(); ++it) {
@@ -124,7 +128,7 @@ public:
 				if (!peer) return;
 				// Unserialize
 				protocol::GameInfo game = *reinterpret_cast<const protocol::GameInfo*>(e.packet_data);
-				out(VERBOSE) << "Game update received for \"" << game.name << "\"" << std::endl;
+				out(VERBOSE) << "Game update received for \"" << game.name << "\" from " << e.peer_address << std::endl;
 				// Fill in peer address
 				game.address = peer->address.host;
 				// Update game status
@@ -135,7 +139,7 @@ public:
 				break;
 			}
 			default: {
-				out(VERBOSE) << "Unknown packet type " << int(e.packet_data[0]) << " received" << std::endl;
+				out(VERBOSE) << "Unknown packet type " << int(e.packet_data[0]) << " received from " << e.peer_address << std::endl;
 			}
 		}
 	}
