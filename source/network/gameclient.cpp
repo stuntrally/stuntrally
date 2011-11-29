@@ -144,6 +144,14 @@ size_t P2PGameClient::getPeerCount() const
 	return m_playerInfo.peers;
 }
 
+PeerInfo P2PGameClient::getPeer(ClientID id) const
+{
+	boost::mutex::scoped_lock lock(m_mutex);
+	for (PeerMap::const_iterator it = m_peers.begin(); it != m_peers.end(); ++it)
+		if (it->second.id == id) return it->second;
+	return PeerInfo();
+}
+
 // Mutex should be already locked when this is called
 void P2PGameClient::recountPeersAndAssignIds(bool validate)
 {

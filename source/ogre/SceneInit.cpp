@@ -197,15 +197,17 @@ void App::LoadGame()  // 2
 		// TODO: This only handles one local player
 		CarModel::eCarType et = CarModel::CT_LOCAL;
 		int startpos_index = i;
+		std::string carName = pSet->car[i];
 		if (mClient) {
 			// FIXME: Various places assume carModels[0] is local
 			// so we swap 0 and local's id but preserve starting position
 			if (i == 0) startpos_index = mClient->getId();
 			else et = CarModel::CT_REMOTE;
 			if (i == mClient->getId()) startpos_index = 0;
+			if (i != 0) carName = mClient->getPeer(startpos_index).car;
 		}
 		Camera* cam = (et == CarModel::CT_LOCAL ? *camIt : 0);
-		CarModel* car = new CarModel(i, et, pSet->car[i], mSceneMgr, pSet, pGame, &sc, cam, this, startpos_index);
+		CarModel* car = new CarModel(i, et, carName, mSceneMgr, pSet, pGame, &sc, cam, this, startpos_index);
 		carModels.push_back(car);
 		if (et == CarModel::CT_LOCAL) ++camIt;
 	}

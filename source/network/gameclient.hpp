@@ -139,6 +139,9 @@ public:
 	/// Get copy of peer infos
 	PeerMap getPeers() const { return m_peers; }
 
+	/// Get copy of peer info by id
+	PeerInfo getPeer(ClientID id) const;
+
 	/// Return client state
 	State getState() const { return m_state; }
 
