@@ -41,6 +41,7 @@ int main(int argc, char** argv) {
 	mc.connect(host, port);
 	boost::this_thread::sleep(boost::posix_time::milliseconds(2000));
 
+/* FIXME: Update for new MasterClient API
 	std::cout << "> Creating a test game" << std::endl;
 	mc.updateGame("Test game", "M-001", 1, true, 1234);
 	boost::this_thread::sleep(boost::posix_time::milliseconds(1500));
@@ -63,7 +64,7 @@ int main(int argc, char** argv) {
 
 	std::cout << "> Request yet another new list (should be empty)" << std::endl;
 	mc.refreshList();
-
+*/
 
 	while (true) {
 
