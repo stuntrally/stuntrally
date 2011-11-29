@@ -102,6 +102,7 @@ void App::uploadGameInfo()
 	memcpy(game.track, sListTrack.c_str(), 32);
 	game.players = mClient->getPeerCount()+1;
 	game.collisions = pSet->car_collis;
+	game.laps = pSet->num_laps;
 	game.port = pSet->local_port;
 	game.locked = false;
 	mMasterClient->updateGame(game);
