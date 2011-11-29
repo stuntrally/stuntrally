@@ -110,7 +110,7 @@ void App::peerConnected(PeerInfo peer)
 {
 	// Master server player count update
 	if (mLobbyState == HOSTING && mMasterClient && mClient && edNetGameName)
-		mMasterClient->updateGame(edNetGameName->getCaption(), sListTrack, mClient->getPeerCount()+1, pSet->local_port);
+		mMasterClient->updateGame(edNetGameName->getCaption(), sListTrack, mClient->getPeerCount()+1, pSet->car_collis, pSet->local_port);
 	// Schedule Gui updates
 	boost::mutex::scoped_lock lock(netGuiMutex);
 	sChatBuffer = sChatBuffer + "Connected: " + peer.name + "\n";
@@ -122,7 +122,7 @@ void App::peerDisconnected(PeerInfo peer)
 	if (peer.name.empty()) return;
 	// Master server player count update
 	if (mLobbyState == HOSTING && mMasterClient && mClient && edNetGameName)
-		mMasterClient->updateGame(edNetGameName->getCaption(), sListTrack, mClient->getPeerCount()+1, pSet->local_port);
+		mMasterClient->updateGame(edNetGameName->getCaption(), sListTrack, mClient->getPeerCount()+1, pSet->car_collis, pSet->local_port);
 	// Schedule Gui updates
 	boost::mutex::scoped_lock lock(netGuiMutex);
 	sChatBuffer = sChatBuffer + "Disconnected: " + peer.name + "\n";
@@ -216,7 +216,7 @@ void App::evBtnNetCreate(WP)
 			mMasterClient.reset(new MasterClient(this));
 			mMasterClient->connect(pSet->master_server_address, pSet->master_server_port);
 		}
-		mMasterClient->updateGame(edNetGameName->getCaption(), sListTrack, mClient->getPeerCount()+1, pSet->local_port);
+		mMasterClient->updateGame(edNetGameName->getCaption(), sListTrack, mClient->getPeerCount()+1, pSet->car_collis, pSet->local_port);
 		rebuildPlayerList();
 		setNetGuiHosting(true);
 		tabsNet->setIndexSelected(1);
@@ -286,7 +286,7 @@ void App::evEdNetGameName(EditPtr ed)
 {
 	// game name text changed
 	if (mLobbyState != HOSTING || !mMasterClient || !mClient) return;
-	mMasterClient->updateGame(ed->getCaption(), sListTrack, mClient->getPeerCount()+1, pSet->local_port);
+	mMasterClient->updateGame(ed->getCaption(), sListTrack, mClient->getPeerCount()+1, pSet->car_collis, pSet->local_port);
 }
 
 //  net settings
