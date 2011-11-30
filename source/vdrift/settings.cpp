@@ -75,7 +75,7 @@ void SETTINGS::Serialize(bool w, CONFIGFILE & c)
 	Param(c,w, "misc.bulletDebug", bltDebug);		Param(c,w, "misc.bulletLines", bltLines);
 	Param(c,w, "misc.bulletProfilerTxt", bltProfilerTxt);
 	Param(c,w, "misc.loadingback", loadingbackground);
-	Param(c,w, "misc.sceneryIdOld", sceneryIdOld);	Param(c,w, "input.x11_capture_mouse", x11_capture_mouse);
+	Param(c,w, "input.x11_capture_mouse", x11_capture_mouse);
 	
 	Param(c,w, "sim.game_fq", game_fq);				Param(c,w, "sim.mult_thr", mult_thr);
 	Param(c,w, "sim.blt_fq", blt_fq);				Param(c,w, "sim.blt_iter", blt_iter);
@@ -147,8 +147,7 @@ SETTINGS::SETTINGS() :  ///  Defaults
 	local_port(protocol::DEFAULT_PORT),
 	//  replay
 	rpl_rec(1), rpl_ghost(1), rpl_bestonly(1),
-	rpl_alpha(0), rpl_ghostpar(0), rpl_listview(0),
-	sceneryIdOld(0)
+	rpl_alpha(0), rpl_ghostpar(0), rpl_listview(0)
 {
 	for (int i=0; i < 4; ++i)
 	{	car[i] = "ES";  car_hue[i] = 0.2f*i;  car_sat[i] = 0.f;  car_val[i] = 0.f;  cam_view[0] = 0;  }

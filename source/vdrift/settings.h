@@ -69,8 +69,6 @@ public:
 	//  replay
 	bool rpl_rec, rpl_ghost, rpl_bestonly;
 	bool rpl_alpha, rpl_ghostpar;  int rpl_listview;
-
-	int sceneryIdOld;  // not a setting, just to remember on quit
 	
 	// network
 	std::string nickname;

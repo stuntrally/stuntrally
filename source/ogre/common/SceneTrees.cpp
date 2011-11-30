@@ -17,6 +17,8 @@
 #include "../../paged-geom/TreeLoader2D.h"
 #include "BltObjects.h"
 
+#include <boost/filesystem.hpp>
+
 #include <OgreTerrain.h>
 using namespace Ogre;
 
@@ -65,16 +67,20 @@ void App::CreateTrees()
 	TexturePtr grassTex = Ogre::TextureManager::getSingleton().getByName("grass1.png");
 	if (!grassTex.isNull())
 		grassTex->reload();
-
-	TexturePtr rdtex = Ogre::TextureManager::getSingleton().getByName("grassDensity.png");
-	if (!rdtex.isNull())
-		rdtex->reload();
-
+		
 	int imgRoadSize = 0;
 	Image imgRoad;  imgRoad.load("grassDensity.png","General");
 	imgRoadSize = imgRoad.getWidth();  // square[]
-	//imgRoad.save("grassDens.png");
-	//LogO("grass img " + toStr(imgRoadSize));
+		
+	// remove old BinFolder's (paged geom temp resource groups)
+	if (ResourceGroupManager::getSingleton().resourceGroupExists("BinFolder"))
+	{
+		StringVectorPtr locations = ResourceGroupManager::getSingleton().listResourceLocations("BinFolder");
+		for (StringVector::const_iterator it=locations->begin(); it!=locations->end(); ++it)
+		{
+			ResourceGroupManager::getSingleton().removeResourceLocation( (*it), "BinFolder" );
+		}
+	}
 
 	using namespace Forests;
 	Real tws = sc.td.fTerWorldSize * 0.5f;
@@ -94,7 +100,11 @@ void App::CreateTrees()
 		#else
 		grass = new PagedGeometry(mCamera, sc.grPage);  //30
 		#endif
-		grass->setTempDir(PATHMANAGER::GetCacheDir());
+		
+		// create dir if not exist
+		boost::filesystem::create_directory(PATHMANAGER::GetCacheDir() + "/" + toStr(sc.sceneryId));
+		grass->setTempDir(PATHMANAGER::GetCacheDir() + "/" + toStr(sc.sceneryId) + "/");
+		
 		grass->addDetailLevel<GrassPage>(sc.grDist * pSet->grass_dist);
 
 		GrassLoader *grassLoader = new Forests::GrassLoader(grass);
@@ -132,15 +142,10 @@ void App::CreateTrees()
 		#else
 		trees = new PagedGeometry(mCamera, sc.trPage);
 		#endif
-		trees->setTempDir(PATHMANAGER::GetCacheDir());
-
-		//  when sceneryId val changed (tracks with different light)
-		//  || gui force regen ...
-		#ifndef ROAD_EDITOR
-		trees->forceRegenImpostors = sceneryId != pSet->sceneryIdOld;
-		LogO(String("||| Force impostors regen : ") + (trees->forceRegenImpostors ? "Yes":"No") +
-			", old: " + toStr(pSet->sceneryIdOld) + " cur: " + toStr(sceneryId));
-		#endif
+		
+		// create dir if not exist
+		boost::filesystem::create_directory(PATHMANAGER::GetCacheDir() + "/" + toStr(sc.sceneryId));
+		trees->setTempDir(PATHMANAGER::GetCacheDir() + "/" + toStr(sc.sceneryId) + "/");
 
 		if (bWind)
 			 trees->addDetailLevel<WindBatchPage>(sc.trDist * pSet->trees_dist, 0);

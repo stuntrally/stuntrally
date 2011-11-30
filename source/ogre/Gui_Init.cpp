@@ -76,7 +76,7 @@ void App::InitGui()
 
 	//  reflect
 	Slv(ReflSkip,	powf(pSet->refl_skip /1000.f, 0.5f));
-	Slv(ReflSize,	pSet->refl_size /res);
+	Slv(ReflSize,	pSet->refl_size /float(ciShadowNumSizes));
 	Slv(ReflFaces,	pSet->refl_faces /res);
 	Slv(ReflDist,	powf((pSet->refl_dist -20.f)/1480.f, 0.5f));
 	int value=0;  if (pSet->refl_mode == "static")  value = 0;

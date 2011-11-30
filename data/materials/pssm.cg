@@ -27,6 +27,19 @@ void shadow_caster_ps(
 	float2 uv : TEXCOORD1,
 	
 	out float4 oColour : COLOR,
+	uniform float4 pssmSplitPoints)
+{
+	float finalDepth = depth.x / depth.y;
+	
+	oColour = float4(finalDepth, finalDepth, finalDepth, 1);
+}
+
+void shadow_caster_alpha_ps(
+	float4 position : POSITION,
+	float2 depth : TEXCOORD0,
+	float2 uv : TEXCOORD1,
+	
+	out float4 oColour : COLOR,
 	uniform sampler2D alphaMap : TEXUNIT0,
 	uniform float4 pssmSplitPoints)
 {
@@ -34,4 +47,5 @@ void shadow_caster_ps(
 	float4 trans = tex2D(alphaMap, uv);
 
 	oColour = float4(finalDepth, finalDepth, finalDepth, trans.w);
+	clip( oColour.a > 0.5 ? 1:-1);
 }

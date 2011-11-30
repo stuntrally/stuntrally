@@ -57,7 +57,6 @@ public:
 	FluidsXml fluidsXml;  /// fluid params xml
 	BltObjects objs;  // veget collision in bullet
 	Ogre::Light* sun;  void UpdFog(bool bForce=false), UpdSun();
-	int sceneryId;  // from scene
 	
 	// Rain, snow
 	Ogre::ParticleSystem *pr,*pr2;

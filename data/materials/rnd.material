@@ -52,6 +52,7 @@ material road_minimap_inv
 			depth_check off
 			depth_write off
 			scene_blend alpha_blend
+			cull_hardware none
 
 			vertex_program_ref rnd_vs  {  }
 			fragment_program_ref rnd_ps  {  }
@@ -99,6 +100,7 @@ material circle_minimap
 			depth_check off
 			depth_write off
 			scene_blend alpha_blend
+			cull_hardware none
 
 			vertex_program_ref circle_vs  {  }
 			fragment_program_ref circle_ps  {  }

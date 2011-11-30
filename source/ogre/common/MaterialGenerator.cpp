@@ -126,6 +126,8 @@ void MaterialGenerator::generate(bool fixedFunction)
 		pass->setVertexProgram(mVertexProgram->getName());
 		pass->setFragmentProgram(mFragmentProgram->getName());
 		
+		//set shadow caster
+		technique->setShadowCasterMaterial(chooseShadowCasterMaterial());
 		if (mShaderCached)
 		{
 			// set individual material shader params
@@ -540,6 +542,28 @@ Ogre::CullingMode MaterialGenerator::chooseCullingMode()
 	return Ogre::CULL_NONE;
 }
 
+//----------------------------------------------------------------------------------------
+
+Ogre::String MaterialGenerator::chooseShadowCasterMaterial()
+{
+	Ogre::String shadowCasterMaterial = StringUtil::BLANK;
+	if(!mDef->mProps->transparent)
+	{
+		if(mParent->getShadowsDepth())
+		{
+			Ogre::CullingMode cmode = chooseCullingMode();
+			if(cmode == Ogre::CULL_NONE)
+			{
+				shadowCasterMaterial = "PSSM/shadow_caster_nocull";				
+			}
+			else
+			{
+				shadowCasterMaterial = "PSSM/shadow_caster_noalpha";
+			}
+		}
+	}
+	return shadowCasterMaterial;
+}
 //----------------------------------------------------------------------------------------
 
 HighLevelGpuProgramPtr MaterialGenerator::createVertexProgram()
@@ -1083,8 +1107,6 @@ void MaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::StrStrea
 		}
 	}
 
-	fpShadowingParams(outStream);
-	
 	if (vpNeedWvMat()) outStream <<
 		"	uniform float4x4 wvMat, \n";
 	if (fpNeedWMat()) outStream <<
@@ -1119,6 +1141,8 @@ void MaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::StrStrea
 		"	uniform samplerCUBE envMap : TEXUNIT"+toStr(mEnvTexUnit)+", \n";
 	if (needEnvMap() && !needFresnel()) outStream << 
 		"	uniform float reflAmount, \n";
+	
+	fpShadowingParams(outStream);
 		
 	// lighting params
 	// only 1 directional light is supported

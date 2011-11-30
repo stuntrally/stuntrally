@@ -24,6 +24,16 @@ fragment_program PSSM/shadow_caster_ps cg
 	{
 	}
 }
+fragment_program PSSM/shadow_caster_alpha_ps cg
+{
+	source pssm.cg
+	profiles ps_4_0 ps_2_0 arbfp1
+	entry_point shadow_caster_alpha_ps
+
+	default_params
+	{
+	}
+}
 
 material PSSM/shadow_caster
 {
@@ -32,6 +42,43 @@ material PSSM/shadow_caster
 		// all this will do is write depth and depth² to red and green
 		pass
 		{
+			vertex_program_ref PSSM/shadow_caster_vs
+			{
+			}
+
+			fragment_program_ref PSSM/shadow_caster_alpha_ps
+			{
+			}
+		}
+	}
+}
+
+material PSSM/shadow_caster_noalpha
+{
+	technique
+	{
+		// all this will do is write depth and depth² to red and green
+		pass
+		{
+			vertex_program_ref PSSM/shadow_caster_vs
+			{
+			}
+
+			fragment_program_ref PSSM/shadow_caster_ps
+			{
+			}
+		}
+	}
+}
+
+material PSSM/shadow_caster_nocull
+{
+	technique
+	{
+		// all this will do is write depth and depth² to red and green
+		pass
+		{
+			cull_hardware none
 			vertex_program_ref PSSM/shadow_caster_vs
 			{
 			}

@@ -62,10 +62,13 @@ void WaterMaterialGenerator::generate(bool fixedFunction)
 	if (mParent->pApp->terrain)
 	{
 		MaterialPtr mtrSky = MaterialManager::getSingleton().getByName(mParent->pApp->sc.skyMtr);
-		Pass* passSky = mtrSky->getTechnique(0)->getPass(0);
-		TextureUnitState* tusSky = passSky->getTextureUnitState(0);
+		if(!mtrSky.isNull())
+		{
+			Pass* passSky = mtrSky->getTechnique(0)->getPass(0);
+			TextureUnitState* tusSky = passSky->getTextureUnitState(0);
 
-		skyTexName = tusSky->getTextureName();
+			skyTexName = tusSky->getTextureName();
+		}
 	}
 	else skyTexName = "white.png";
 	

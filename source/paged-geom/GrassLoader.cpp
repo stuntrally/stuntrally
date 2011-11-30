@@ -1181,12 +1181,12 @@ void GrassLayer::_updateShaders()
 					params->setNamedConstant("grassHeight", maxHeight * 1.05f);
 				}*/
 
-				params->setNamedConstant("fadeRange", fadeRange);
 			}
 			//Now the material (tmpMat) has either been found or just created (depending on whether or not it was already
 			//created). The appropriate vertex shader should be applied and the material is ready for use.
 			
-			tmpMat->getTechnique(0)->getPass(0)->getVertexProgramParameters()->setNamedConstant("fadeRange", fadeRange);
+			if (tmpMat->getTechnique(0)->getPass(0)->getVertexProgramParameters()->_findNamedConstantDefinition("fadeRange", false))
+				tmpMat->getTechnique(0)->getPass(0)->getVertexProgramParameters()->setNamedConstant("fadeRange", fadeRange);
 
 			//Apply the new material
 			material = tmpMat;

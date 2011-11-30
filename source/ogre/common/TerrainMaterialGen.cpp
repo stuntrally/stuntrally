@@ -1655,7 +1655,7 @@ namespace Ogre
 			else
 			{
 				outStream <<
-					"	float rtshadow = calcSimpleShadow(shadowMap0, lightSpacePos0, inverseShadowmapSize0);";
+					"	float rtshadow = calcSimpleShadow(shadowMap0, lightSpacePos0);";
 			}
 		}
 

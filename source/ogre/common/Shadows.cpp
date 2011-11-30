@@ -239,27 +239,25 @@ void App::changeShadows()
 	}
 	
 	// trees are more complicated since they are cloned
-	if (trees)
+	if(trees)
 	{
 		trees->reloadGeometry();
-		std::vector<ResourcePtr> resourceToDelete;
+		std::vector<ResourcePtr> reosurceToDelete;
 		ResourceManager::ResourceMapIterator it = MaterialManager::getSingleton().getResourceIterator();
 		while (it.hasMoreElements())
 		{
 			ResourcePtr material = it.getNext();
 			String materialName = material->getName();
 			std::string::size_type pos =materialName.find("BatchMat|");
-			if( pos != std::string::npos )
-			{
-				resourceToDelete.push_back(material);
+			if( pos != std::string::npos ) {
+				reosurceToDelete.push_back(material);
 			}
 		}
-		for(int i=0;i<resourceToDelete.size();i++)
+		for(int i=0;i<reosurceToDelete.size();i++)
 		{
-			MaterialManager::getSingleton().remove(resourceToDelete[i]);
+			MaterialManager::getSingleton().remove(reosurceToDelete[i]);
 		}
 	}
-		
 	UpdPSSMMaterials();
 
 	ti.update();	/// time
@@ -313,7 +311,10 @@ void App::UpdPSSMMaterials()	/// . . . . . . . .
 
 	// mtr splits for all cars (only game)
 	#ifndef ROAD_EDITOR
-	if (pSet->shadow_type == 3) recreateCarMtr();
+	//if (pSet->shadow_type == 3) 
+	{
+		recreateCarMtr();
+	}
 	#endif
 	
 	for (std::vector<std::string>::iterator it = materialFactory->splitMtrs.begin();
