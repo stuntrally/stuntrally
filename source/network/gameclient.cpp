@@ -297,6 +297,7 @@ void P2PGameClient::receiveEvent(net::NetworkTraffic const& e)
 			if (m_state != LOBBY) break;
 			protocol::GameInfo game = *reinterpret_cast<protocol::GameInfo const*>(e.packet_data);
 			if (m_callback) m_callback->gameInfo(game);
+			break;
 		}
 		default: {
 			std::cout << "Received unknown packet type: " << (int)e.packet_data[0] << std::endl;

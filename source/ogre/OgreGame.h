@@ -322,6 +322,8 @@ protected:
 
 	void rebuildGameList();
 	void rebuildPlayerList();
+	void updateGameInfo();
+	void updateGameInfoGUI();
 	void uploadGameInfo();
 	void setNetGuiHosting(bool enabled);
 	void gameListChanged(protocol::GameList list);
@@ -330,12 +332,15 @@ protected:
 	void peerInfo(PeerInfo peer);
 	void peerMessage(PeerInfo peer, std::string msg);
 	void peerState(PeerInfo peer, uint8_t state);
+	void gameInfo(protocol::GameInfo game);
 	void join(std::string host, std::string port);
 
 	mutable boost::mutex netGuiMutex;
 	MyGUI::UString sChatBuffer;
+	protocol::GameInfo netGameInfo;
 	bool bRebuildPlayerList;
 	bool bRebuildGameList;
+	bool bUpdateGameInfo;
 	bool bStartGame;
 
 	MyGUI::TabPtr tabsNet;  //void tabNet(TabPtr tab, size_t id);

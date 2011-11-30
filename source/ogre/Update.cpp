@@ -115,6 +115,7 @@ bool App::frameStart(Real time)
 			boost::mutex::scoped_lock lock(netGuiMutex);
 			if (bRebuildGameList) { rebuildGameList(); bRebuildGameList = false; }
 			if (bRebuildPlayerList) { rebuildPlayerList(); bRebuildPlayerList = false; }
+			if (bUpdateGameInfo) { updateGameInfo(); bUpdateGameInfo = false; }
 			if (sChatBuffer != edNetChat->getCaption()) edNetChat->setCaption(sChatBuffer);
 			if (bStartGame) {
 				// TODO: Probably some more stuff here...

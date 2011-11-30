@@ -92,20 +92,50 @@ void App::rebuildPlayerList()
 	}
 }
 
+void App::updateGameInfo()
+{
+	if (netGameInfo.name && edNetGameName) {
+		std::string name(netGameInfo.name);
+		edNetGameName->setCaption(name);
+	}
+	if (netGameInfo.track) {
+		std::string track(netGameInfo.track);
+		sListTrack = track;
+	}
+	// FIXME: These should not modify global settings, only for one game
+	pSet->car_collis = netGameInfo.collisions;
+	pSet->num_laps = netGameInfo.laps;
+	updateGameInfoGUI();
+}
+
+void App::updateGameInfoGUI()
+{
+	//  update track info
+	if (valNetTrack)
+		valNetTrack->setCaption("Track: " + sListTrack);
+	if (imgNetTrack)
+		imgNetTrack->setImageTexture(sListTrack+".jpg");
+	if (edNetTrackInfo)
+		edNetTrackInfo->setCaption("Lorem ipsum");
+}
+
 void App::uploadGameInfo()
 {
 	if (!mMasterClient || !mClient || !edNetGameName || !pSet)
 		return;
 	protocol::GameInfo game;
 	std::string gamename = edNetGameName->getCaption();
+	std::string trackname = sListTrack;
 	std::memcpy(game.name, gamename.c_str(), 32);
-	std::memcpy(game.track, sListTrack.c_str(), 32);
+	std::memcpy(game.track, trackname.c_str(), 32);
 	game.players = mClient->getPeerCount()+1;
 	game.collisions = pSet->car_collis;
 	game.laps = pSet->num_laps;
 	game.port = pSet->local_port;
 	game.locked = false;
-	mMasterClient->updateGame(game);
+	mMasterClient->updateGame(game); // Upload to master server
+	if (mClient) // Send to peers
+		mClient->broadcastGameInfo(game);
 }
 
 void App::setNetGuiHosting(bool enabled)
@@ -164,6 +194,13 @@ void App::peerState(PeerInfo peer, uint8_t state)
 	if (state == protocol::START_GAME) bStartGame = true;
 }
 
+void App::gameInfo(protocol::GameInfo game)
+{
+	boost::mutex::scoped_lock lock(netGuiMutex);
+	netGameInfo = game;
+	bUpdateGameInfo = true;
+}
+
 void App::join(std::string host, std::string port)
 {
 	try {
@@ -177,14 +214,7 @@ void App::join(std::string host, std::string port)
 		return;
 	}
 
-	//  update track info
-	if (valNetTrack)
-		valNetTrack->setCaption("Track: " + sListTrack);
-	if (imgNetTrack)
-		imgNetTrack->setImageTexture(sListTrack+".jpg");
-	if (edNetTrackInfo)
-		edNetTrackInfo->setCaption("Lorem ipsum");
-
+	updateGameInfoGUI();
 	rebuildPlayerList();
 	setNetGuiHosting(false);
 	tabsNet->setIndexSelected(1);
@@ -231,6 +261,7 @@ void App::evBtnNetCreate(WP)
 			mMasterClient->connect(pSet->master_server_address, pSet->master_server_port);
 		}
 		uploadGameInfo();
+		updateGameInfoGUI();
 		rebuildPlayerList();
 		setNetGuiHosting(true);
 		tabsNet->setIndexSelected(1);
@@ -257,7 +288,7 @@ void App::evBtnNetDirect(WP)
 {
 	// direct connect ..
 	// TODO: Need to get host and port from user somehow
-	raiseError("Direct connecting is not yet supported.\nSorry about that.");
+	raiseError("Direct connecting is not yet available.\nSorry about that.");
 	return;
 	//join(host, port);
 }
@@ -550,6 +581,11 @@ void App::btnChgTrack(WP)
 	pSet->track = sListTrack;
 	pSet->track_user = bListTrackU;
 	if (valTrk)  valTrk->setCaption(TR("#{Track}: ") + sListTrack);
+
+	if (mMasterClient) {
+		uploadGameInfo();
+		updateGameInfoGUI();
+	}
 }
 
 //  new game

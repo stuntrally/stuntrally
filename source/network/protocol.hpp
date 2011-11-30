@@ -55,7 +55,7 @@ struct GameInfo: public net::SimpleSerializer<GameInfo> {
 	char name[32];      // Set by client
 	char track[32];     // Set by client
 
-	GameInfo(): packet_type(GAME_STATUS) {}
+	GameInfo(): packet_type(GAME_STATUS) { name[0] = '\0'; track[0] = '\0'; }
 
 	bool operator==(const GameInfo& other) { return id == other.id; }
 	bool operator!=(const GameInfo& other) { return !(*this == other); }
