@@ -17,6 +17,8 @@
 #include "../../paged-geom/TreeLoader2D.h"
 #include "BltObjects.h"
 
+#include <boost/filesystem.hpp>
+
 #include <OgreTerrain.h>
 using namespace Ogre;
 
@@ -69,6 +71,16 @@ void App::CreateTrees()
 	TexturePtr rdtex = Ogre::TextureManager::getSingleton().getByName("grassDensity.png");
 	if (!rdtex.isNull())
 		rdtex->reload();
+		
+	// remove old BinFolder's (paged geom temp resource groups)
+	if (ResourceGroupManager::getSingleton().resourceGroupExists("BinFolder"))
+	{
+		StringVectorPtr locations = ResourceGroupManager::getSingleton().listResourceLocations("BinFolder");
+		for (StringVector::const_iterator it=locations->begin(); it!=locations->end(); ++it)
+		{
+			ResourceGroupManager::getSingleton().removeResourceLocation( (*it), "BinFolder" );
+		}
+	}
 
 	int imgRoadSize = 0;
 	Image imgRoad;  imgRoad.load("grassDensity.png","General");
@@ -94,7 +106,15 @@ void App::CreateTrees()
 		#else
 		grass = new PagedGeometry(mCamera, sc.grPage);  //30
 		#endif
+		
+		// create dir if not exist
+		#ifndef ROAD_EDITOR
+		boost::filesystem::create_directory(PATHMANAGER::GetCacheDir() + "/" + toStr(sceneryId));
+		grass->setTempDir(PATHMANAGER::GetCacheDir() + "/" + toStr(sceneryId) + "/");
+		#else
 		grass->setTempDir(PATHMANAGER::GetCacheDir());
+		#endif
+		
 		grass->addDetailLevel<GrassPage>(sc.grDist * pSet->grass_dist);
 
 		GrassLoader *grassLoader = new Forests::GrassLoader(grass);
@@ -132,14 +152,13 @@ void App::CreateTrees()
 		#else
 		trees = new PagedGeometry(mCamera, sc.trPage);
 		#endif
-		trees->setTempDir(PATHMANAGER::GetCacheDir());
-
-		//  when sceneryId val changed (tracks with different light)
-		//  || gui force regen ...
+		
 		#ifndef ROAD_EDITOR
-		trees->forceRegenImpostors = sceneryId != pSet->sceneryIdOld;
-		LogO(String("||| Force impostors regen : ") + (trees->forceRegenImpostors ? "Yes":"No") +
-			", old: " + toStr(pSet->sceneryIdOld) + " cur: " + toStr(sceneryId));
+		// create dir if not exist
+		boost::filesystem::create_directory(PATHMANAGER::GetCacheDir() + "/" + toStr(sceneryId));
+		trees->setTempDir(PATHMANAGER::GetCacheDir() + "/" + toStr(sceneryId) + "/");
+		#else
+		trees->setTempDir(PATHMANAGER::GetCacheDir());
 		#endif
 
 		if (bWind)
