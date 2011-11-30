@@ -17,7 +17,7 @@
 struct MasterClientCallback {
 	/// Called when the list has changed
 	/// @param list how the complete list looks now after the change
-	virtual void gameListChanged(protocol::GameList list) {};
+	virtual void gameListChanged(protocol::GameList list) {}
 };
 
 

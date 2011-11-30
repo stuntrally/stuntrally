@@ -114,4 +114,4 @@ struct CarStatePackage: public net::SimpleSerializer<CarStatePackage> {
 
 typedef std::map<int8_t, CarStatePackage> CarStates;
 
-}
+} // namespace protocol

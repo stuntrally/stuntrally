@@ -67,25 +67,25 @@ typedef std::map<std::string, PeerInfo> PeerMap;
 struct GameClientCallback {
 	/// Called when there is a new connection
 	/// @param peer the new peer
-	virtual void peerConnected(PeerInfo peer) {};
+	virtual void peerConnected(PeerInfo peer) {}
 
 	/// Called when a peer disconnects
 	/// @param peer the disconnected peer
-	virtual void peerDisconnected(PeerInfo peer) {};
+	virtual void peerDisconnected(PeerInfo peer) {}
 
 	/// Called when a player info is received
 	/// @param peer the updated peer
-	virtual void peerInfo(PeerInfo peer) {};
+	virtual void peerInfo(PeerInfo peer) {}
 
 	/// Called when a text message arrives
 	/// @param peer the new peer
 	/// @param msg the message body
-	virtual void peerMessage(PeerInfo peer, std::string msg) {};
+	virtual void peerMessage(PeerInfo peer, std::string msg) {}
 
 	/// Called when a state change arrives
 	/// @param peer the sender peer
 	/// @param state the state code
-	virtual void peerState(PeerInfo peer, uint8_t state) {};
+	virtual void peerState(PeerInfo peer, uint8_t state) {}
 };
 
 
