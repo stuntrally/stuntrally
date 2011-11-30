@@ -827,7 +827,7 @@ void CAR::UpdateCarState(const protocol::CarStatePackage& state)
 	// for a while, so we use pos/rot only for lazy corrections
 	MATHVECTOR<float,3> curpos = ToMathVector<float>(dynamics.chassis->getCenterOfMassPosition());
 	MATHVECTOR<float,3> errorvec = state.pos - curpos;
-	MATHVECTOR<float,3> newpos = curpos + (errorvec * 0.5f);
+	MATHVECTOR<float,3> newpos = curpos + (errorvec * 0.05f);
 	QUATERNION<float> currot = ToMathQuaternion<float>(dynamics.chassis->getCenterOfMassTransform().getRotation());
 	QUATERNION<float> newrot = currot.QuatSlerp(state.rot, 0.5f);
 
