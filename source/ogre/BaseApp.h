@@ -11,8 +11,9 @@
 
 #include <MyGUI_Prerequest.h>
 #include <MyGUI_Widget.h>
+#include <MyGUI_OgrePlatform.h>
 
-namespace MyGUI{  class OgrePlatform; class OgreD3D11Platform; };
+namespace MyGUI { class OgreD3D11Platform; }
 namespace Ogre 
 {  
 	class SceneNode;  class Root;  class SceneManager;  class RenderWindow;
@@ -112,7 +113,7 @@ public:
 	MyGUI::Widget* pressedKeySender;
 protected:
 
-	///  ovelay
+	///  overlay
 	Ogre::Overlay* mDebugOverlay, *mFpsOverlay;  // fps stats
 	Ogre::OverlayElement* mOvrFps, *mOvrTris, *mOvrBat, *mOvrDbg;
 
@@ -125,7 +126,14 @@ protected:
 	///  Gui
 	bool isFocGuiOrRpl()  {  return isFocGui || isFocRpl;  }
 	bool isFocGui,isFocRpl;  // gui shown
-	MyGUI::Gui* mGUI;		MyGUI::OgreD3D11Platform* mPlatform;
+	MyGUI::Gui* mGUI;
+	
+	#if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
+	MyGUI::OgreD3D11Platform* mPlatform;
+	#else
+	MyGUI::OgrePlatform* mPlatform;
+	#endif
+	
 	MyGUI::WidgetPtr mLayout, mWndOpts, mWndRpl;  // options window
 	MyGUI::TabPtr mWndTabs;
 	MyGUI::VectorWidgetPtr vwGui;

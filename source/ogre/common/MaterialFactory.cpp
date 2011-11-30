@@ -34,7 +34,10 @@ using namespace Ogre;
 
 //----------------------------------------------------------------------------------------
 
+// ms_Singleton was renamed to msSingleton in ogre 1.8
+#if OGRE_VERSION_MINOR < 8
 template<> MaterialFactory* Ogre::Singleton<MaterialFactory>::ms_Singleton = 0;
+
 MaterialFactory* MaterialFactory::getSingletonPtr(void)
 {
     return ms_Singleton;
@@ -43,6 +46,18 @@ MaterialFactory& MaterialFactory::getSingleton(void)
 {  
     assert( ms_Singleton );  return ( *ms_Singleton );  
 }
+#else
+template<> MaterialFactory* Ogre::Singleton<MaterialFactory>::msSingleton = 0;
+
+MaterialFactory* MaterialFactory::getSingletonPtr(void)
+{
+    return msSingleton;
+}
+MaterialFactory& MaterialFactory::getSingleton(void)
+{  
+    assert( msSingleton );  return ( *msSingleton );  
+}
+#endif
 
 //----------------------------------------------------------------------------------------
 
