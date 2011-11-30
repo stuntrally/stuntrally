@@ -97,9 +97,9 @@ void App::uploadGameInfo()
 	if (!mMasterClient || !mClient || !edNetGameName || !pSet)
 		return;
 	protocol::GameInfo game;
-	// FIXME: This memcpy stuff is really hairy
-	memcpy(game.name, edNetGameName->getCaption().c_str(), 32);
-	memcpy(game.track, sListTrack.c_str(), 32);
+	std::string gamename = edNetGameName->getCaption();
+	std::memcpy(game.name, gamename.c_str(), 32);
+	std::memcpy(game.track, sListTrack.c_str(), 32);
 	game.players = mClient->getPeerCount()+1;
 	game.collisions = pSet->car_collis;
 	game.laps = pSet->num_laps;
