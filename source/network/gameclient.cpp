@@ -3,9 +3,10 @@
 
 
 P2PGameClient::P2PGameClient(GameClientCallback* callback, int port)
-	: m_callback(callback), m_client(*this, port), m_state(DISCONNECTED), m_mutex(), m_cond(), m_playerInfo(), m_carState()
+	: m_callback(callback), m_client(*this, port), m_state(DISCONNECTED), m_mutex(), m_cond(), m_playerInfo(), m_game(), m_carState()
 {
 	m_playerInfo.random_id = std::rand(); // Client id is based on this
+	m_game.packet_type = -1; // Invalidate until set
 	m_carState.packet_type = -1; // Invalidate until set
 }
 
@@ -95,6 +96,9 @@ void P2PGameClient::senderThread() {
 			// Broadcast local player's meta info
 			protocol::PlayerInfoPacket pip = (protocol::PlayerInfoPacket)m_playerInfo;
 			m_client.broadcast(pip);
+			// If game info is set, broadcast it
+			if (m_game.packet_type == protocol::GAME_STATUS)
+				m_client.broadcast(m_game);
 			// Loop all peers
 			for (PeerMap::iterator it = m_peers.begin(); it != m_peers.end(); ++it) {
 				PeerInfo& pi = it->second;
@@ -150,6 +154,13 @@ PeerInfo P2PGameClient::getPeer(ClientID id) const
 	for (PeerMap::const_iterator it = m_peers.begin(); it != m_peers.end(); ++it)
 		if (it->second.id == id) return it->second;
 	return PeerInfo();
+}
+
+void P2PGameClient::broadcastGameInfo(const protocol::GameInfo &game)
+{
+	boost::mutex::scoped_lock lock(m_mutex);
+	m_game = game;
+	m_game.packet_type = protocol::GAME_STATUS; // Just to make sure
 }
 
 // Mutex should be already locked when this is called
@@ -281,6 +292,11 @@ void P2PGameClient::receiveEvent(net::NetworkTraffic const& e)
 			if (pi.id < 0) break;
 			m_receivedCarStates[pi.id] = csp;
 			break;
+		}
+		case protocol::GAME_STATUS: {
+			if (m_state != LOBBY) break;
+			protocol::GameInfo game = *reinterpret_cast<protocol::GameInfo const*>(e.packet_data);
+			if (m_callback) m_callback->gameInfo(game);
 		}
 		default: {
 			std::cout << "Received unknown packet type: " << (int)e.packet_data[0] << std::endl;

@@ -86,6 +86,10 @@ struct GameClientCallback {
 	/// @param peer the sender peer
 	/// @param state the state code
 	virtual void peerState(PeerInfo peer, uint8_t state) {}
+
+	/// Called when game info update arrives
+	/// @param peer the updated peer
+	virtual void gameInfo(protocol::GameInfo game) {}
 };
 
 
@@ -148,6 +152,9 @@ public:
 	/// Returns the id
 	ClientID getId() const { return m_playerInfo.id; }
 
+	/// Sets and sends the game info (for hosts)
+	void broadcastGameInfo(protocol::GameInfo const& game);
+
 	/// Update the local car state
 	void setLocalCarState(protocol::CarStatePackage const& cs);
 
@@ -176,5 +183,6 @@ private:
 	mutable boost::mutex m_mutex;
 	boost::condition m_cond;
 	PeerInfo m_playerInfo;
+	protocol::GameInfo m_game;
 	protocol::CarStatePackage m_carState;
 };
