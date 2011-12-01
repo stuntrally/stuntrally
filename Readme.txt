@@ -111,9 +111,9 @@ OGRE 1.7 + Dependencies, with plugins:
     Plugin_ParticleFX
     Plugin_CgProgramManager
     OIS
-MyGUI 3.0
+MyGUI 3.2
     MyGUIEngine, MyGUI.OgrePlatform
-boost 1.43
+Boost 1.43+
     headers, thread, filesystem
 
 -- And for VDrift:
@@ -141,10 +141,10 @@ Track creators
 Artists
     If you can create tree/plant / car models,
     textures for them or for terrain.
-    If you can create/edit sounds for game.
+    If you can create/edit sounds for the game.
 
 Programmers
-    If you know C++, OGRE or Shaders, and
+    If you know C++, OGRE or shaders, and
     could handle one (or some) of the project's [Issues], 
     or want to do something better and know how to.
 
