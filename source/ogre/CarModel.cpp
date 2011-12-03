@@ -556,7 +556,7 @@ void CarModel::Create(int car)
 		String si = strI + "_" +toStr(i);
 		if (!pb[i])  {
 			pb[i] = mSceneMgr->createParticleSystem("Boost"+si, "Boost");
-			if (1/*!pCar->manualExhaustPos*/)
+			if (!pSet->boostFromExhaust || !pCar->manualExhaustPos)
 			{
 				// no exhaust pos in car file, guess from bounding box
 				Vector3 bsize = (bodyBox.getMaximum() - bodyBox.getMinimum())*0.5,
