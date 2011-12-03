@@ -34,11 +34,25 @@ struct PosInfo
 	{}
 };
 
+struct MeshObject
+{	
+	Ogre::Vector3 offset;
+	std::string meshFile;
+	std::string material;
+	std::string renderQueue;
+	std::string node; // node to attach to
+	bool rotate; // inherit rotation from node? (e.g. false for brake discs)
+	bool castShadows;
+	
+	MeshObject() : offset(0,0,0), node("main"), renderQueue("car"), rotate(true), castShadows(true)
+	{}
+};
+
 class CarModel
 {
 public:
 	/// -------------------- Car Types ---------------------------
-	//              Control         Physics (VDrift car)    Camera
+	//              Source          Physics (VDrift car)    Camera
 	// CT_LOCAL:    Local player    yes	                    yes
 	// CT_REPLAY:   Replay file     no                      yes
 	// CT_GHOST:	Replay file		no						no
@@ -46,17 +60,14 @@ public:
 	enum eCarType {  CT_LOCAL=0, CT_REPLAY, CT_GHOST, CT_REMOTE };
 	eCarType eType;
 
-	//  Constructor, will assign members and create the vdrift car
+
 	CarModel( unsigned int index, eCarType type, const std::string name,
 		Ogre::SceneManager* sceneMgr, SETTINGS* set, GAME* game, Scene* sc, Ogre::Camera* cam, App* app);
 	
-	//  Destructor - will remove meshes & particle systems, 
-	//  the VDrift car and the FollowCamera, delete pReflect
 	~CarModel();
 	
-	//  Create our car, based on name, color, index.
-	//  This will put the meshes together and create the particle systems.
-	//  CreateReflection() is also called.
+	
+	//  Create car (also calls CreateReflection)
 	void Create(int car);
 	void CreateReflection();
 	
@@ -64,7 +75,7 @@ public:
 	void setMtrNames(); // assign materials to entity / manualobject
 	void setMtrName(const Ogre::String& entName, const Ogre::String& mtrName);
 	
-	//  Call every vdrift substep with new position info
+	//  Call this every vdrift substep with new position info
 	void Update(PosInfo& newPosInfo, float time);
 	void UpdateKeys();  // for camera X,C, last chk F12
 	
@@ -100,11 +111,10 @@ public:
 	
 	Ogre::Terrain* terrain;
 	
-	//  VDrift car.  For e.g. replay cars that don't 
-	//  need physics simulation, this can be null.
+	//  VDrift car (can be null)
 	CAR* pCar;
 
-	//  start pos, lap  chekpoint vars
+	//  start pos, lap  checkpoint vars
 	bool bGetStPos;  Ogre::Matrix4 matStPos;  Ogre::Vector4 vStDist;
 	int iInChk, iCurChk, iNextChk, iNumChks, iWonPlace;  // cur checkpoint -1 at start
 	bool bInSt, bWrongChk;  float fChkTime;  int iChkWrong;
@@ -121,7 +131,7 @@ private:
 	Scene* sc;
 
 	//  SceneManager to use
-	Ogre::SceneManager* pSceneMgr;
+	Ogre::SceneManager* mSceneMgr;
 
 	//  Material names, will be initialized in Create()
 	enum eMaterials {
@@ -129,6 +139,9 @@ private:
 		Mtr_CarTireFront, Mtr_CarTireRear,
 		NumMaterials  };
 	std::string sMtr[NumMaterials];
+	
+	//  Mesh objects
+	std::list<MeshObject> meshObjs;
 		
 	//  Particle systems, trail
 	Ogre::ParticleSystem* ps[4],*pm[4],*pd[4];  // smoke, mud, dust
