@@ -153,7 +153,7 @@ void MaterialGenerator::generate(bool fixedFunction)
 		
 	// indicate we need enable/disable wind parameter
 	// only needed for trees (wind == 2) because they have impostors
-	if (mDef->mProps->wind == 2)
+	if (mShader->wind == 2)
 		mParent->windMtrs.push_back( mDef->getName() );
 	
 	// uncomment to export to .material
