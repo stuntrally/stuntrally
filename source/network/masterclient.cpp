@@ -65,14 +65,6 @@ void MasterClient::gameInfoSenderThread()
 
 void MasterClient::connectionEvent(net::NetworkTraffic const& e)
 {
-	if (e.event_data != protocol::MASTER_PROTOCOL_VERSION) {
-		std::cout << "Incompatible protocol versions "
-				<< "(my: " << protocol::MASTER_PROTOCOL_VERSION
-				<< " hers: " << e.event_data << ")!" << std::endl;
-		// TODO: Real disconnect
-		terminate();
-		return;
-	}
 	std::cout << "Connection to master server established" << std::endl;
 	// Send refresh request automatically after connection is established
 	refreshList();
