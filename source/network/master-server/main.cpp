@@ -103,7 +103,9 @@ public:
 	{
 		out(VERBOSE) << "Connection id=" << e.peer_id << " " << e.peer_address << std::endl;
 		if (e.event_data != protocol::MASTER_PROTOCOL_VERSION) {
-			out(VERBOSE) << "Incompatible protocol versions!" << std::endl;
+			out(VERBOSE) << "Incompatible protocol versions "
+				<< "(my: " << protocol::MASTER_PROTOCOL_VERSION
+				<< " hers: " << e.event_data << ")!" << std::endl;
 			// TODO: Disconnect
 			return;
 		}

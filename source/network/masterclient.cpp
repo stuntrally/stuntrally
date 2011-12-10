@@ -66,7 +66,9 @@ void MasterClient::gameInfoSenderThread()
 void MasterClient::connectionEvent(net::NetworkTraffic const& e)
 {
 	if (e.event_data != protocol::MASTER_PROTOCOL_VERSION) {
-		std::cout << "Incompatible protocol versions!" << std::endl;
+		std::cout << "Incompatible protocol versions "
+				<< "(my: " << protocol::MASTER_PROTOCOL_VERSION
+				<< " hers: " << e.event_data << ")!" << std::endl;
 		// TODO: Real disconnect
 		terminate();
 		return;
