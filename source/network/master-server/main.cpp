@@ -102,6 +102,11 @@ public:
 	void connectionEvent(net::NetworkTraffic const& e)
 	{
 		out(VERBOSE) << "Connection id=" << e.peer_id << " " << e.peer_address << std::endl;
+		if (e.event_data != protocol::MASTER_PROTOCOL_VERSION) {
+			out(VERBOSE) << "Incompatible protocol versions!" << std::endl;
+			// TODO: Disconnect
+			return;
+		}
 	}
 
 	void disconnectEvent(net::NetworkTraffic const& e)

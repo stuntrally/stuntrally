@@ -25,7 +25,7 @@ void P2PGameClient::connect(const std::string& address, int port, std::string pa
 		m_playerInfo.password = password;
 	}
 	startLobby();
-	m_client.connect(address, port);
+	m_client.connect(address, port, NULL, protocol::GAME_PROTOCOL_VERSION);
 }
 
 void P2PGameClient::updatePlayerInfo(const std::string& name, const std::string& car)
@@ -107,7 +107,7 @@ void P2PGameClient::senderThread() {
 				if (pi.connection == PeerInfo::DISCONNECTED) {
 					std::cout << "Connecting to " << pi.address << std::endl;
 					pi.connection = PeerInfo::CONNECTING;
-					m_client.connect(pi.address);
+					m_client.connect(pi.address, NULL, protocol::GAME_PROTOCOL_VERSION);
 				}
 				// Broadcast peer's info
 				protocol::PeerAddressPacket pap(it->second.address);
@@ -193,6 +193,11 @@ void P2PGameClient::recountPeersAndAssignIds(bool validate)
 
 void P2PGameClient::connectionEvent(net::NetworkTraffic const& e)
 {
+	if (e.event_data != protocol::GAME_PROTOCOL_VERSION) {
+		std::cout << "Incompatible protocol versions!" << std::endl;
+		// TODO: Disconnect
+		return;
+	}
 	std::cout << "Connection from " << e.peer_address << std::endl;
 	if (m_state == LOBBY) {
 		boost::mutex::scoped_lock lock(m_mutex);

@@ -15,7 +15,7 @@ MasterClient::~MasterClient()
 
 void MasterClient::connect(const std::string& address, int port)
 {
-	m_client.connect(address, port);
+	m_client.connect(address, port, NULL, protocol::MASTER_PROTOCOL_VERSION);
 }
 
 void MasterClient::refreshList()
@@ -65,6 +65,12 @@ void MasterClient::gameInfoSenderThread()
 
 void MasterClient::connectionEvent(net::NetworkTraffic const& e)
 {
+	if (e.event_data != protocol::MASTER_PROTOCOL_VERSION) {
+		std::cout << "Incompatible protocol versions!" << std::endl;
+		// TODO: Real disconnect
+		terminate();
+		return;
+	}
 	std::cout << "Connection to master server established" << std::endl;
 	// Send refresh request automatically after connection is established
 	refreshList();
