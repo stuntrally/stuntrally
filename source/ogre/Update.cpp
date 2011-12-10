@@ -148,14 +148,14 @@ bool App::frameStart(Real time)
 
 		if (!pGame)
 			return false;
-		pGame->pause = bRplPlay ? (bRplPause || isFocGui) : isFocGui;
+
+		bool doNetworking = (mClient && mClient->getState() == P2PGameClient::GAME);
+		// Note that there is no pause when in networked game
+		pGame->pause = bRplPlay ? (bRplPause || isFocGui) : (isFocGui && !doNetworking);
 
 
 		///  step Game  *******
 
-		// FIXME: Is this proper condition?
-		bool doNetworking = (mClient && mClient->getState() == P2PGameClient::GAME && !isFocGui && !pGame->pause);
-		
 		//  handle networking stuff
 		if (doNetworking) {
 			//  update the local car's state to the client
