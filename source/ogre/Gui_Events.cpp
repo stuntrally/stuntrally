@@ -239,8 +239,8 @@ void App::evBtnNetJoin(WP)
 	size_t i = listServers->getIndexSelected();
 	if (i == ITEM_NONE) return;
 
-	std::string host = listServers->getSubItemNameAt(4, i);
-	std::string port = listServers->getSubItemNameAt(5, i);
+	std::string host = listServers->getSubItemNameAt(5, i);
+	std::string port = listServers->getSubItemNameAt(6, i);
 	join(host, port);
 }
 
