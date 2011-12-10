@@ -119,6 +119,7 @@ bool App::frameStart(Real time)
 			if (sChatBuffer != edNetChat->getCaption()) edNetChat->setCaption(sChatBuffer);
 			if (bStartGame) {
 				// TODO: Probably some more stuff here...
+				mMasterClient.reset();
 				mClient->startGame();
 				btnNewGameStart(NULL);
 				bStartGame = false;
