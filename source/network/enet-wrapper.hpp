@@ -96,16 +96,19 @@ namespace net {
 
 	/// Network traffic container
 	struct NetworkTraffic {
-		NetworkTraffic(const enet_uint8* pckd = NULL, size_t pckl = 0):
-			peer_id(0), peer_address(), peer_data(NULL), packet_data(pckd), packet_length(pckl), ping(0) {}
-		NetworkTraffic(ENetPeer* peer, void* dptr, const enet_uint8* pckd = NULL, size_t pckl = 0):
-			peer_id(peer->incomingPeerID), peer_address(peer), peer_data(dptr), packet_data(pckd), packet_length(pckl), ping(peer->roundTripTime) {}
+		NetworkTraffic(const enet_uint8* pckd = NULL, size_t pckl = 0, enet_uint32 evdata = 0):
+			peer_id(0), peer_address(), peer_data(NULL), packet_data(pckd),
+			packet_length(pckl), ping(0), event_data(evdata) {}
+		NetworkTraffic(ENetPeer* peer, void* dptr, const enet_uint8* pckd = NULL, size_t pckl = 0, enet_uint32 evdata = 0):
+			peer_id(peer->incomingPeerID), peer_address(peer), peer_data(dptr), packet_data(pckd),
+			packet_length(pckl), ping(peer->roundTripTime), event_data(evdata) {}
 		peer_id_t peer_id; ///< Peer ID assigned by the library
 		Address peer_address; ///< Address from which the peer connected
 		void* peer_data; ///< User data associated with the peer that sent the traffic
 		const enet_uint8* packet_data; ///< The actual packet data (empty for connect/disconnect events)
 		size_t packet_length; ///< Length of the packet data in bytes
 		unsigned ping; ///< Average round-trip time to the peer
+		enet_uint32 event_data; ///< Data associated with the event
 	};
 
 	/// Inherit this to easily convert simple structs to NetworkTraffic
@@ -197,15 +200,15 @@ namespace net {
 						break;
 					} case ENET_EVENT_TYPE_CONNECT: {
 						m_peers[e.peer->incomingPeerID] = e.peer;
-						m_listener.connectionEvent(NetworkTraffic(e.peer, e.peer->data));
+						m_listener.connectionEvent(NetworkTraffic(e.peer, e.peer->data, NULL, 0, e.data));
 						break;
 					} case ENET_EVENT_TYPE_DISCONNECT: {
-						m_listener.disconnectEvent(NetworkTraffic(e.peer, e.peer->data));
+						m_listener.disconnectEvent(NetworkTraffic(e.peer, e.peer->data, NULL, 0, e.data));
 						e.peer->data = NULL;
 						m_peers.erase(e.peer->incomingPeerID);
 						break;
 					} case ENET_EVENT_TYPE_RECEIVE: {
-						m_listener.receiveEvent(NetworkTraffic(e.peer, e.peer->data, e.packet->data, e.packet->dataLength));
+						m_listener.receiveEvent(NetworkTraffic(e.peer, e.peer->data, e.packet->data, e.packet->dataLength, e.data));
 						enet_packet_destroy(e.packet); // Clean-up
 						break;
 					}
@@ -220,7 +223,7 @@ namespace net {
 		 * @param port the port to connect to
 		 * @param data application specific data that can be retrieved in events
 		 */
-		void connect(const std::string& host, int port, void* data = NULL) {
+		void connect(const std::string& host, int port, void* data = NULL, uint32_t connection_data = 0) {
 			// Set properties
 			ENetAddress address;
 			enet_address_set_host(&address, host.c_str());
@@ -228,7 +231,7 @@ namespace net {
 			// Initiate the connection
 			ENetPeer* peer = NULL;
 			boost::mutex::scoped_lock lock(m_mutex);
-			peer = enet_host_connect(m_host, &address, ENetChannels, 0);
+			peer = enet_host_connect(m_host, &address, ENetChannels, connection_data);
 			if (!peer) throw std::runtime_error("No available peers for initiating an ENet connection.");
 			peer->data = data;
 		}
@@ -238,7 +241,7 @@ namespace net {
 		 * @param addr the address to connect to
 		 * @param data application specific data that can be retrieved in events
 		 */
-		void connect(const Address& addr, void* data = NULL) {
+		void connect(const Address& addr, void* data = NULL, uint32_t connection_data = 0) {
 			// Set properties
 			ENetAddress address;
 			address.host = addr.host;
@@ -246,7 +249,7 @@ namespace net {
 			// Initiate the connection
 			ENetPeer* peer = NULL;
 			boost::mutex::scoped_lock lock(m_mutex);
-			peer = enet_host_connect(m_host, &address, ENetChannels, 0);
+			peer = enet_host_connect(m_host, &address, ENetChannels, connection_data);
 			if (!peer) throw std::runtime_error("No available peers for initiating an ENet connection.");
 			peer->data = data;
 		}
