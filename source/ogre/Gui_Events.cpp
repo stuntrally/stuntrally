@@ -52,9 +52,10 @@ void App::rebuildGameList() {
 		int l = listServers->getItemCount()-1;
 		listServers->setSubItemNameAt(1, l, std::string(it->second.track));
 		listServers->setSubItemNameAt(2, l, boost::lexical_cast<std::string>((int)it->second.players));
-		listServers->setSubItemNameAt(3, l, yesno((bool)it->second.locked));
-		listServers->setSubItemNameAt(4, l, net::IPv4(it->second.address));
-		listServers->setSubItemNameAt(5, l, boost::lexical_cast<std::string>((int)it->second.port));
+		listServers->setSubItemNameAt(3, l, yesno((bool)it->second.collisions));
+		listServers->setSubItemNameAt(4, l, yesno((bool)it->second.locked));
+		listServers->setSubItemNameAt(5, l, net::IPv4(it->second.address));
+		listServers->setSubItemNameAt(6, l, boost::lexical_cast<std::string>((int)it->second.port));
 	}
 }
 

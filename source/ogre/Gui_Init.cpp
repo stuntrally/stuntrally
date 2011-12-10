@@ -242,11 +242,12 @@ void App::InitGui()
     valNetGames = mGUI->findWidget<StaticText>("valNetGames");
 	listServers = mGUI->findWidget<MultiList>("MListServers");
 	if (listServers)
-	{	listServers->addColumn("Game name", 200);
-		listServers->addColumn("Track", 140);
-		listServers->addColumn("Players", 80);
-		listServers->addColumn("Password", 80);
-		listServers->addColumn("Host", 110);
+	{	listServers->addColumn("Game name", 180);
+		listServers->addColumn("Track", 120);
+		listServers->addColumn("Players", 70);
+		listServers->addColumn("Collisions", 70);
+		listServers->addColumn("Locked", 70);
+		listServers->addColumn("Host", 130);
 		listServers->addColumn("Port", 80);
 	}
 	Btn("btnNetRefresh", evBtnNetRefresh);  btnNetRefresh = btn;
