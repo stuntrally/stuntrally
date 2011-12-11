@@ -6,6 +6,7 @@
 #include "../vdrift/game.h"
 #include "../paged-geom/PagedGeometry.h"
 #include "../ogre/common/MaterialFactory.h"
+#include "../oisb/OISBSystem.h"
 
 #include <OgreParticleSystem.h>
 #include <OgreManualObject.h>
@@ -130,6 +131,9 @@ bool App::frameStart(Real time)
 		pGame->pause = bRplPlay ? (bRplPause || isFocGui) : isFocGui;
 
 
+		// input
+		OISB::System::getSingleton().process(time);
+
 		///  step Game  *******
 		//  single thread, sim on draw
 		bool ret = true;
@@ -137,8 +141,9 @@ bool App::frameStart(Real time)
 		{
 			ret = pGame->OneLoop();
 			if (!ret)  mShutDown = true;
+			updatePoses(time);  //pGame->framerate
 		}
-		updatePoses(time);  //pGame->framerate
+		
 
 		//  multi thread
 		if (pSet->mult_thr == 1)
@@ -152,6 +157,8 @@ bool App::frameStart(Real time)
 			for (std::vector<CarModel*>::iterator it=carModels.begin(); it!=carModels.end(); it++)
 				if ((*it)->fCam)
 					(*it)->fCam->update(pGame->framerate);
+					
+			updatePoses(time);  //pGame->framerate
 		}
 		
 		// align checkpoint arrow

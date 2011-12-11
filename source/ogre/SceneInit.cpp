@@ -344,7 +344,7 @@ void App::LoadMisc()  // 7 last
 
 /* Actual loading procedure that gets called every frame during load. Performs a single loading step. */
 void App::NewGameDoLoad()
-{	
+{
 	if (currentLoadingState == loadingStates.end())
 	{
 		// Loading finished.
