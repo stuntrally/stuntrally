@@ -273,7 +273,8 @@ bool GAME::OneLoop()
 		double dt = qtim.dt;
 		clocktime += dt;
 		
-		OISB::System::getSingleton().process(dt);
+		if (OISB::System::getSingletonPtr() != NULL)
+			OISB::System::getSingleton().process(dt);
 
 		Tick(dt);  // do CPU intensive stuff in parallel with the GPU
 
