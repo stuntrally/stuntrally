@@ -202,6 +202,12 @@ void App::gameInfo(protocol::GameInfo game)
 	bUpdateGameInfo = true;
 }
 
+void App::error(string what)
+{
+	boost::mutex::scoped_lock lock(netGuiMutex);
+	sChatBuffer = sChatBuffer + "ERROR! " + what + "\n";
+}
+
 void App::join(std::string host, std::string port)
 {
 	try {

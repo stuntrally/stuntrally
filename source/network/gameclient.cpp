@@ -196,9 +196,9 @@ void P2PGameClient::connectionEvent(net::NetworkTraffic const& e)
 	if (e.event_data && e.event_data != protocol::GAME_PROTOCOL_VERSION) {
 		if (m_callback) {
 			std::ostringstream oss;
-			oss << "Incompatible protocol versions "
+			oss << "Peer attempting to connect has incompatible protocol version "
 				<< "(my: " << protocol::GAME_PROTOCOL_VERSION
-				<< " hers: " << e.event_data << ")!" << std::endl;
+				<< " hers: " << e.event_data << ")!";
 			m_callback->error(oss.str());
 		}
 		// TODO: Disconnect
