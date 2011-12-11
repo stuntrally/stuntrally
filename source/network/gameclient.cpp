@@ -194,9 +194,13 @@ void P2PGameClient::recountPeersAndAssignIds(bool validate)
 void P2PGameClient::connectionEvent(net::NetworkTraffic const& e)
 {
 	if (e.event_data && e.event_data != protocol::GAME_PROTOCOL_VERSION) {
-		std::cout << "Incompatible protocol versions "
+		if (m_callback) {
+			std::ostringstream oss;
+			oss << "Incompatible protocol versions "
 				<< "(my: " << protocol::GAME_PROTOCOL_VERSION
 				<< " hers: " << e.event_data << ")!" << std::endl;
+			m_callback->error(oss.str());
+		}
 		// TODO: Disconnect
 		return;
 	}
