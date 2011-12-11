@@ -292,12 +292,21 @@ namespace net {
 			send(peer_id, traffic, flags);
 		}
 
+		/// Disconnects the given peer
+		void disconnect(peer_id_t peer_id, uint32_t disconnection_data = 0) {
+			ENetPeer* peer = getPeerPtr(peer_id);
+			if (!peer) return;
+			enet_peer_disconnect(peer, disconnection_data);
+		}
+
+		/// Returns a raw ENet peer pointer
 		ENetPeer* getPeerPtr(peer_id_t peer_id) {
 			Peers::iterator it = m_peers.find(peer_id);
 			if (it != m_peers.end()) return it->second;
 			return NULL;
 		}
 
+		/// Get address of the local host
 		Address getAddress() const {
 			boost::mutex::scoped_lock lock(m_mutex);
 			return Address(m_address);

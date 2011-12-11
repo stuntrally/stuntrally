@@ -201,7 +201,7 @@ void P2PGameClient::connectionEvent(net::NetworkTraffic const& e)
 				<< " hers: " << e.event_data << ")!";
 			m_callback->error(oss.str());
 		}
-		// TODO: Disconnect
+		m_client.disconnect(e.peer_id, protocol::GAME_PROTOCOL_VERSION);
 		return;
 	}
 	std::cout << "Connection from " << e.peer_address << std::endl;

@@ -106,8 +106,8 @@ public:
 			out(VERBOSE) << "Incompatible protocol versions "
 				<< "(my: " << protocol::MASTER_PROTOCOL_VERSION
 				<< " hers: " << e.event_data << ")!" << std::endl;
-			// TODO: Send error packet
-			// TODO: Disconnect
+			// TODO: Send error packet?
+			m_client.disconnect(e.peer_id, protocol::MASTER_PROTOCOL_VERSION);
 			return;
 		}
 	}
