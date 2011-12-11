@@ -1,6 +1,16 @@
 #include "gameclient.hpp"
 #include "xtime.hpp"
 
+namespace {
+	std::string formulateProtocolVersionError(uint32_t remote_version) {
+		std::ostringstream oss;
+		oss << "Peer attempting to connect has incompatible protocol version "
+			<< "(my: " << protocol::GAME_PROTOCOL_VERSION
+			<< " hers: " << remote_version << ")!";
+		return oss.str();
+	}
+}
+
 
 P2PGameClient::P2PGameClient(GameClientCallback* callback, int port)
 	: m_callback(callback), m_client(*this, port), m_state(DISCONNECTED), m_mutex(), m_cond(), m_playerInfo(), m_game(), m_carState()
@@ -194,14 +204,10 @@ void P2PGameClient::recountPeersAndAssignIds(bool validate)
 void P2PGameClient::connectionEvent(net::NetworkTraffic const& e)
 {
 	if (e.event_data && e.event_data != protocol::GAME_PROTOCOL_VERSION) {
-		if (m_callback) {
-			std::ostringstream oss;
-			oss << "Peer attempting to connect has incompatible protocol version "
-				<< "(my: " << protocol::GAME_PROTOCOL_VERSION
-				<< " hers: " << e.event_data << ")!";
-			m_callback->error(oss.str());
-		}
-		m_client.disconnect(e.peer_id, protocol::GAME_PROTOCOL_VERSION);
+		if (m_callback)
+			m_callback->error(formulateProtocolVersionError(e.event_data));
+		// We force the disconnection, so that no local event is generated
+		m_client.disconnect(e.peer_id, true, protocol::GAME_PROTOCOL_VERSION);
 		return;
 	}
 	std::cout << "Connection from " << e.peer_address << std::endl;
@@ -228,7 +234,9 @@ void P2PGameClient::disconnectEvent(net::NetworkTraffic const& e)
 		picopy = m_peers[e.peer_address];
 		recountPeersAndAssignIds();
 	}
-	// Callback (mutex unlocked to avoid dead-locks)
+	// Callbacks (mutex unlocked to avoid dead-locks)
+	if (m_callback && e.event_data && e.event_data != protocol::GAME_PROTOCOL_VERSION)
+		m_callback->error(formulateProtocolVersionError(e.event_data));
 	if (m_callback) m_callback->peerDisconnected(picopy);
 }
 

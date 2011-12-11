@@ -293,10 +293,11 @@ namespace net {
 		}
 
 		/// Disconnects the given peer
-		void disconnect(peer_id_t peer_id, uint32_t disconnection_data = 0) {
+		void disconnect(peer_id_t peer_id, bool force = false, uint32_t disconnection_data = 0) {
 			ENetPeer* peer = getPeerPtr(peer_id);
 			if (!peer) return;
-			enet_peer_disconnect(peer, disconnection_data);
+			if (force) enet_peer_disconnect_now(peer, disconnection_data);
+			else enet_peer_disconnect(peer, disconnection_data);
 		}
 
 		/// Returns a raw ENet peer pointer
