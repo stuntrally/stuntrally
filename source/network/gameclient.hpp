@@ -90,6 +90,10 @@ struct GameClientCallback {
 	/// Called when game info update arrives
 	/// @param peer the updated peer
 	virtual void gameInfo(protocol::GameInfo game) {}
+
+	/// Called when an error occured
+	/// @param what the error description
+	virtual void error(std::string what) {}
 };
 
 
