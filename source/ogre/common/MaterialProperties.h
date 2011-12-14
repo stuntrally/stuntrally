@@ -57,9 +57,12 @@ struct MaterialProperties
 	
 	// environment cube map (useful for reflections) 
 	std::string envMap;
-	float reflAmount; // amount of reflection
+	float reflAmount; // amount of reflection (no effect if fresnel effect is used)
 	// fresnel effect (dynamic amount of reflection, based on camera angle)
 	bool hasFresnel; float fresnelBias, fresnelScale, fresnelPower;
+	
+	// specifies the amount of reflection in 'r' channel (is also used with fresnel effect)
+	textureMap reflectivityMaps;
 	// ------------------------------------------
 	
 	// shadows, lighting

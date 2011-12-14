@@ -151,6 +151,12 @@ void MaterialProperties::setProperty(const std::string& prop, const std::string&
 		int isize = Ogre::StringConverter::parseInt(size);
 		specMaps[isize] = value;
 	}
+	else if (Ogre::StringUtil::startsWith(prop, "reflectivityMap", false))
+	{
+		std::string size = prop.substr(10);
+		int isize = Ogre::StringConverter::parseInt(size);
+		reflectivityMaps[isize] = value;
+	}
 
 	// water
 	else if (prop == "waveBump") waveBump = str2vec2(value);

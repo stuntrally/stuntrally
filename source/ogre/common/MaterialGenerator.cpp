@@ -209,15 +209,6 @@ void MaterialGenerator::createTexUnits(Ogre::Pass* pass, bool shaders)
 		mBlendTexUnit = mTexUnit_i; mTexUnit_i++;
 	}
 	
-	// spec map
-	if (needSpecMap())
-	{
-		tu = pass->createTextureUnitState( mSpecMap );
-		tu->setName("specMap");
-		tu->setTextureAddressingMode(mDef->mProps->textureAddressMode);
-		mSpecTexUnit = mTexUnit_i; mTexUnit_i++;
-	}
-	
 	// env map
 	if (needEnvMap())
 	{
@@ -239,6 +230,24 @@ void MaterialGenerator::createTexUnits(Ogre::Pass* pass, bool shaders)
 									ColourValue::White, ColourValue::White, 1-mDef->mProps->reflAmount);
 		}
 		tu->setTextureAddressingMode(TextureUnitState::TAM_CLAMP);
+	}
+	
+	// spec map
+	if (needSpecMap())
+	{
+		tu = pass->createTextureUnitState( mSpecMap );
+		tu->setName("specMap");
+		tu->setTextureAddressingMode(mDef->mProps->textureAddressMode);
+		mSpecTexUnit = mTexUnit_i; mTexUnit_i++;
+	}
+	
+	// reflectivity map
+	if (needReflectivityMap())
+	{
+		tu = pass->createTextureUnitState( mReflMap );
+		tu->setName("reflectivityMap");
+		tu->setTextureAddressingMode(mDef->mProps->textureAddressMode);
+		mReflTexUnit = mTexUnit_i; mTexUnit_i++;
 	}
 	
 	
@@ -354,6 +363,7 @@ void MaterialGenerator::chooseTextures()
 	mAlphaMap = pickTexture(&mDef->mProps->alphaMaps);
 	mBlendMap = pickTexture(&mDef->mProps->blendMaps);
 	mSpecMap = pickTexture(&mDef->mProps->specMaps);
+	mReflMap = pickTexture(&mDef->mProps->reflectivityMaps);
 }
 
 //----------------------------------------------------------------------------------------
@@ -418,6 +428,11 @@ bool MaterialGenerator::needBlendMap()
 bool MaterialGenerator::needSpecMap()
 {
 	return mShader->specMap;
+}
+
+bool MaterialGenerator::needReflectivityMap()
+{
+	return mShader->reflectivityMap;
 }
 
 bool MaterialGenerator::needLightingAlpha()
@@ -1159,6 +1174,9 @@ void MaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::StrStrea
 		
 	if (needSpecMap()) outStream <<
 		"	uniform sampler2D specMap : TEXUNIT"+toStr(mSpecTexUnit)+", \n";
+		
+	if (needReflectivityMap()) outStream <<
+		"	uniform sampler2D reflectivityMap : TEXUNIT"+toStr(mReflTexUnit)+", \n";
 	
 	fpShadowingParams(outStream);
 		
@@ -1281,11 +1299,22 @@ void MaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::StrStrea
 	// cube reflection
 	if (needEnvMap())
 	{
-		if (needFresnel()) outStream <<
-			"	float facing = 1.0 - max(abs(dot(eyeVector, normal)), 0); \n"
-			"	float reflectionFactor = saturate(fresnelBias + fresnelScale * pow(facing, fresnelPower)); \n";
-		else outStream <<
-			"	float reflectionFactor = reflAmount; \n";
+		if (needFresnel())
+		{
+			outStream <<
+			"	float facing = 1.0 - max(abs(dot(eyeVector, normal)), 0); \n";
+			if (!needReflectivityMap()) outStream <<
+				"	float reflectionFactor = saturate(fresnelBias + fresnelScale * pow(facing, fresnelPower)); \n";
+			else outStream <<
+				"	float reflectionFactor = tex2D(reflectivityMap, texCoord.xy).r * saturate(fresnelBias + fresnelScale * pow(facing, fresnelPower)); \n";
+		}
+		else
+		{
+			if (!needReflectivityMap()) outStream <<
+				"	float reflectionFactor = reflAmount; \n";
+			else outStream <<
+				"	float reflectionFactor = tex2D(reflectivityMap, texCoord.xy).r * reflAmount; \n";
+		}
 		outStream << 
 		"	float3 r = reflect( eyeVector, normal ); \n" // calculate reflection vector
 		"	float4 envColor = texCUBE(envMap, r); \n"; // fetch cube map

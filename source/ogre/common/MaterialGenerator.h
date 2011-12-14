@@ -41,6 +41,7 @@ protected:
 	unsigned int mNormalTexUnit;
 	unsigned int mEnvTexUnit;
 	unsigned int mSpecTexUnit;
+	unsigned int mReflTexUnit;
 	unsigned int mTerrainLightTexUnit; // global terrain lightmap
 	unsigned int mShadowTexUnit_start; // start offset for shadow tex units
 	
@@ -55,6 +56,7 @@ protected:
 	std::string mAlphaMap;
 	std::string mBlendMap;
 	std::string mSpecMap;
+	std::string mReflMap;
 	virtual void chooseTextures();
 	virtual void resetTexUnitCounter();
 	virtual void createTexUnits(Ogre::Pass* pass, bool shaders);
@@ -97,6 +99,7 @@ protected:
 	virtual bool needDiffuseMap(); virtual bool needLightMap();
 	virtual bool needSpecMap();
 	virtual bool needTerrainLightMap();
+	virtual bool needReflectivityMap();
 	
 	// vertex shader input
 	virtual bool vpNeedTangent();

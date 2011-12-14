@@ -70,7 +70,7 @@
 	normalMapPriority = 0.3
 	
 ; ------------- ES --------------
-	
+
 [cartire_front_ES]
 	parent = cartire_front
 	diffuseMap_1024 = wheel.png

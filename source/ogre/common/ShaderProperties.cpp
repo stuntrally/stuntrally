@@ -23,6 +23,7 @@ ShaderProperties::ShaderProperties( MaterialProperties* props, MaterialFactory* 
 	terrainLightMap = props->terrainLightMap && (parent->getShaderQuality() >= 0.2);
 	alphaMap = (transparent && (props->alphaMaps.size() > 0));
 	blendMap = (props->blendMaps.size() > 0);
+	reflectivityMap = (props->reflectivityMaps.size() > 0) && envMap;
 	normalMap = ((props->normalMaps.size() > 0) && parent->getNormalMap())
 		&& (1-props->normalMapPriority <= parent->getShaderQuality());
 	lighting = props->lighting;
@@ -47,6 +48,7 @@ bool ShaderProperties::isEqual( ShaderProperties* other )
 	if (other->alphaMap != alphaMap) return false;
 	if (other->specMap != specMap) return false;
 	if (other->blendMap != blendMap) return false;
+	if (other->reflectivityMap != reflectivityMap) return false;
 	if (other->normalMap != normalMap) return false;
 	if (other->shadows != shadows) return false;
 	if (other->transparent != transparent) return false;

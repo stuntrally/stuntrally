@@ -10,6 +10,7 @@ struct ShaderProperties
 	bool lightMap;
 	bool terrainLightMap;
 	bool alphaMap;
+	bool reflectivityMap;
 	bool blendMap;
 	bool specMap;
 	bool normalMap;
