@@ -138,13 +138,13 @@ void SplitScreenManager::Align()
 		
 		// Create viewport
 		// use i as Z order
-		mViewports.push_back(mWindow->addViewport( mCameras.back(), i, dims[0], dims[1], dims[2], dims[3]));
+		mViewports.push_back(mWindow->addViewport( mCameras.back(), i+5, dims[0], dims[1], dims[2], dims[3]));
 		
 		// HUD viewport
-		mHUDViewports.push_back(mWindow->addViewport( mHUDCamera, i+5, dims[0], dims[1], dims[2], dims[3]));
-		mHUDViewports.back()->setClearEveryFrame(true, FBT_DEPTH);
-		mHUDViewports.back()->setOverlaysEnabled(false);
-		mHUDViewports.back()->setBackgroundColour(ColourValue(0.0, 0.0, 0.0, 0.0));
+		//mHUDViewports.push_back(mWindow->addViewport( mHUDCamera, i, dims[0], dims[1], dims[2], dims[3]));
+		//mHUDViewports.back()->setClearEveryFrame(true, FBT_DEPTH);
+		//mHUDViewports.back()->setOverlaysEnabled(false);
+		//mHUDViewports.back()->setBackgroundColour(ColourValue(0.0, 0.0, 0.0, 0.0));
 	}
 	
 	// Create gui viewport if not already existing
@@ -160,6 +160,8 @@ void SplitScreenManager::Align()
 			mShaderGenerator->addSceneManager(mSceneMgr);
 		}
 	}
+	
+	mHUDSceneMgr = mSceneMgr;
 	
 	AdjustRatio();
 	
