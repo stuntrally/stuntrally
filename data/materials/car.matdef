@@ -68,6 +68,17 @@
 	terrainLightMap = true
 	shadowPriority = 0.3
 	normalMapPriority = 0.3
+	
+; ------------- ES --------------
+	
+[cartire_front_ES]
+	parent = cartire_front
+	diffuseMap_1024 = wheel.png
+	normalMap_1024 = wheel_normal.png
+	diffuse = 1.0 1.0 1.0
+
+[cartire_rear_ES]
+	parent = cartire_front_ES
 
 ;  ------------ FM ----------------
 [car_body_FM]
