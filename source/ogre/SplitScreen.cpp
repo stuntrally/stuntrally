@@ -205,8 +205,11 @@ void SplitScreenManager::preViewportUpdate(const Ogre::RenderTargetViewportEvent
 		std::list<Ogre::Viewport*>::iterator vpIt = mViewports.begin();
 		std::list<Ogre::Viewport*>::iterator hudVpIt = mHUDViewports.begin();
 		int i = 0;
+		if (vpIt != mViewports.end() && hudVpIt != mHUDViewports.end())
+		{
 		while (evt.source != *vpIt && evt.source != *hudVpIt)	{	i++;  vpIt++; hudVpIt++;	}
 		if (evt.source == *hudVpIt) hudVp = true;
+		}
 
 		//  get car for this viewport
 		int carId = 0;

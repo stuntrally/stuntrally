@@ -79,7 +79,7 @@
 				OutputFile="StuntRally_d.exe"
 				LinkIncremental="2"
 				SuppressStartupBanner="true"
-				AdditionalLibraryDirectories="e:\v\ogre171\lib\Debug;e:\v\ogre171\Dependencies\lib\Debug;e:\v\ogre171\MyGUI3.0\lib\Debug"
+				AdditionalLibraryDirectories="e:\v\ogre171\lib\Debug;e:\v\ogre171\Dependencies\lib\Debug;&quot;e:\v\MyGUI-3.2\trunk\bin\lib\Debug&quot;"
 				IgnoreDefaultLibraryNames=""
 				GenerateDebugInformation="true"
 				ProgramDatabaseFile="StuntRally_d.pdb"
@@ -1513,19 +1513,19 @@
 					>
 				</File>
 				<File
-					RelativePath=".\source\ogre\common\MyGUI_D3D11.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\source\ogre\common\MyGUI_D3D11.h"
-					>
-				</File>
-				<File
 					RelativePath=".\Source\ogre\Hud.cpp"
 					>
 				</File>
 				<File
 					RelativePath=".\source\ogre\Localization.h"
+					>
+				</File>
+				<File
+					RelativePath=".\source\ogre\common\MyGUI_D3D11.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\source\ogre\common\MyGUI_D3D11.h"
 					>
 				</File>
 				<File
