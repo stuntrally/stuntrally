@@ -11,6 +11,7 @@ struct ShaderProperties
 	bool terrainLightMap;
 	bool alphaMap;
 	bool blendMap;
+	bool specMap;
 	bool normalMap;
 	bool lighting;
 	bool shadows;

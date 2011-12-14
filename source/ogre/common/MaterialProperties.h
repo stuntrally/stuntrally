@@ -26,25 +26,41 @@ enum SceneBlendMode
 
 struct MaterialProperties
 {
+	// set this to 'true' if the material is never used (only a base material that other materials have as parent)
 	bool abstract;
 	
+	// use shaders (there is no reason to set this to false, the fixed function support is very limited and most likely broken)
 	bool shaders;
 	
-	// map: tex size, tex name
-	textureMap diffuseMaps; Ogre::TextureUnitState::TextureAddressingMode textureAddressMode;
-	textureMap normalMaps; float bumpScale;
-	textureMap lightMaps;textureMap blendMaps;
-	CullHardwareMode cullHardware;
+	// --------- textures -----------------------
+	// textureMap: map of textures and their size
 	
-	SceneBlendMode sceneBlend;
+	// diffuse map (affects color)
+	textureMap diffuseMaps;
+	
+	// tangent space normal map
+	textureMap normalMaps;
+	float bumpScale; // default = 1; decrease or increase this to change effect of normal map
+	
+	// this is an alternative to diffuse maps that can be used to 
+	// change the color of certain parts of a material on-the-fly.
+	// the lightMap holds the brightness of parts with dynamic color in 'r' channel
+	// the blendMap contains parts that should NOT be affected by the color change
+	textureMap lightMaps; textureMap blendMaps;
+	
+	// specular map. holds the specular color in RGB, shininess in alpha.
+	textureMap specMaps;
+	
+	// alpha map, transparency in 'r' channel (has no effect if 'transparent' is false)
 	textureMap alphaMaps; bool transparent;
-	Ogre::Vector4 lightingAlpha; // alpha for ambient, diffuse, spec, diffuse r channel mult
-	Ogre::CompareFunction alphaRejectFunc; float alphaRejectValue;
+	Ogre::Vector4 lightingAlpha; // multiply alpha with ambient, diffuse, spec, (1-red channel of diffuse map)
 	
-	// reflection
+	// environment cube map (useful for reflections) 
 	std::string envMap;
-	float reflAmount;
+	float reflAmount; // amount of reflection
+	// fresnel effect (dynamic amount of reflection, based on camera angle)
 	bool hasFresnel; float fresnelBias, fresnelScale, fresnelPower;
+	// ------------------------------------------
 	
 	// shadows, lighting
 	bool receivesShadows, receivesDepthShadows;
@@ -59,15 +75,16 @@ struct MaterialProperties
 	
 	// wind waving effect
 	// 0 = off, 1 = for grass (quad), 2 = for trees (mesh)
+	// this relies on paged-geom to set the appropriate parameters for the effect
 	unsigned int wind;
 	
+	// multiply the colour output with the vertex colour
 	bool vertexColour;
 	
 	// use custom generator (for very specific materials like water, glass)
-	// empty ("") means no custom generator
+	// empty ("") means the default generator
 	std::string customGenerator; 
 	
-	float depthBias; bool depthCheck; bool depthWrite; bool transparentSorting;
 	
 	// water
 	Ogre::Vector2 waveBump;
@@ -79,13 +96,21 @@ struct MaterialProperties
 	// 0 ... 1, default: 0.5
 	float envMapPriority, shadowPriority, normalMapPriority;
 	
+	// regular ogre material settings, refer to the ogre manual
+	CullHardwareMode cullHardware;
+	Ogre::TextureUnitState::TextureAddressingMode textureAddressMode;
+	SceneBlendMode sceneBlend;
+	Ogre::CompareFunction alphaRejectFunc; float alphaRejectValue;
+	float depthBias; bool depthCheck; bool depthWrite; bool transparentSorting;
+	
 	//!todo:
 	/*
 	 * shader features:
 	 * - per vertex lighting
 	 * - ambient occlusion map (pre-baked, seperate map) - this map would only be used when SSAO effect is off
 	 * - specular / reflectivity map (specular exponent / reflectivity factor in diffuse map alpha)
-	 * - normalHeight map (height in normal map alpha) [for parallax mapping]
+	 * - parallax mapping, normalHeight map (height in normal map alpha)
+	 * - displacement mapping
 	 * 
 	 * portability / reusability:
 	 * - support different light types (point, directional, spot)

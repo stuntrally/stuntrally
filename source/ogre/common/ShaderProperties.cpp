@@ -13,17 +13,12 @@ using namespace Ogre;
 
 ShaderProperties::ShaderProperties( MaterialProperties* props, MaterialFactory* parent )
 {
-	// shader quality:
-	//  normal map, env map, shadow receiver [adjustable for each material in .matdef]
-	//  fresnel >= 0.3
-	//  terrain lightmap >= 0.2
-	//  wind >= 0.1
-	
 	transparent = props->transparent;
 	envMap = ((props->envMap != "") && parent->getEnvMap())
 		&& (1-props->envMapPriority <= parent->getShaderQuality());
 	fresnel = (envMap && props->fresnelScale != 0.f) && (parent->getShaderQuality() >= 0.3);
 	diffuseMap = (props->diffuseMaps.size() > 0);
+	specMap = (props->specMaps.size() > 0) && (parent->getShaderQuality() > 0.5);
 	lightMap = (props->lightMaps.size() > 0);
 	terrainLightMap = props->terrainLightMap && (parent->getShaderQuality() >= 0.2);
 	alphaMap = (transparent && (props->alphaMaps.size() > 0));
@@ -50,6 +45,7 @@ bool ShaderProperties::isEqual( ShaderProperties* other )
 	if (other->lightMap != lightMap) return false;
 	if (other->terrainLightMap != terrainLightMap) return false;
 	if (other->alphaMap != alphaMap) return false;
+	if (other->specMap != specMap) return false;
 	if (other->blendMap != blendMap) return false;
 	if (other->normalMap != normalMap) return false;
 	if (other->shadows != shadows) return false;

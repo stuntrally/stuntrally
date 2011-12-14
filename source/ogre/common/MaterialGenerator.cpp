@@ -209,6 +209,15 @@ void MaterialGenerator::createTexUnits(Ogre::Pass* pass, bool shaders)
 		mBlendTexUnit = mTexUnit_i; mTexUnit_i++;
 	}
 	
+	// spec map
+	if (needSpecMap())
+	{
+		tu = pass->createTextureUnitState( mSpecMap );
+		tu->setName("specMap");
+		tu->setTextureAddressingMode(mDef->mProps->textureAddressMode);
+		mSpecTexUnit = mTexUnit_i; mTexUnit_i++;
+	}
+	
 	// env map
 	if (needEnvMap())
 	{
@@ -344,6 +353,7 @@ void MaterialGenerator::chooseTextures()
 	mLightMap = pickTexture(&mDef->mProps->lightMaps);
 	mAlphaMap = pickTexture(&mDef->mProps->alphaMaps);
 	mBlendMap = pickTexture(&mDef->mProps->blendMaps);
+	mSpecMap = pickTexture(&mDef->mProps->specMaps);
 }
 
 //----------------------------------------------------------------------------------------
@@ -403,6 +413,11 @@ bool MaterialGenerator::needTerrainLightMap()
 bool MaterialGenerator::needBlendMap()
 {
 	return mShader->blendMap;
+}
+
+bool MaterialGenerator::needSpecMap()
+{
+	return mShader->specMap;
 }
 
 bool MaterialGenerator::needLightingAlpha()
@@ -1141,6 +1156,9 @@ void MaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::StrStrea
 		"	uniform samplerCUBE envMap : TEXUNIT"+toStr(mEnvTexUnit)+", \n";
 	if (needEnvMap() && !needFresnel()) outStream << 
 		"	uniform float reflAmount, \n";
+		
+	if (needSpecMap()) outStream <<
+		"	uniform sampler2D specMap : TEXUNIT"+toStr(mSpecTexUnit)+", \n";
 	
 	fpShadowingParams(outStream);
 		
@@ -1156,7 +1174,8 @@ void MaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::StrStrea
 		"	uniform float3 globalAmbient, \n"
 		// material
 		"	uniform float3 matAmbient, \n"
-		"	uniform float3 matDiffuse, \n"
+		"	uniform float3 matDiffuse, \n";
+		if (!needSpecMap()) outStream <<
 		"	uniform float4 matSpecular, \n"; // shininess in w
 	}
 	outStream <<
@@ -1231,15 +1250,21 @@ void MaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::StrStrea
 		else outStream <<
 			"	float3 diffuse = matDiffuse.xyz * lightDiffuse.xyz * diffuseLight; \n";
 			
-
-		outStream <<
 		// Compute the specular term
+		if (needSpecMap()) outStream <<
+			"	float4 specTex = tex2D(specMap, texCoord.xy); \n"
+			"	float3 matSpec = specTex.xyz; \n"
+			"	float shininess = specTex.w*256; \n";
+		else outStream <<
+			"	float3 matSpec = matSpecular.xyz; \n"
+			"	float shininess = matSpecular.w; \n";
+		outStream <<
 		"	float3 viewVec = -eyeVector; \n"
 		"	float3 half = normalize(lightDir + viewVec); \n"
-		"	float specularLight = pow(max(dot(normal, half), 0), matSpecular.w); \n"
-		"	if (matSpecular.x == 0 && matSpecular.y == 0 && matSpecular.z == 0) specularLight = 0; \n"
+		"	float specularLight = pow(max(dot(normal, half), 0), shininess); \n"
+		"	if (matSpec.x == 0 && matSpec.y == 0 && matSpec.z == 0) specularLight = 0; \n"
 		"	if (diffuseLight <= 0) specularLight = 0; \n"
-		"	float3 specular = matSpecular.xyz * lightSpecular.xyz * specularLight; \n";
+		"	float3 specular = matSpec.xyz * lightSpecular.xyz * specularLight; \n";
 
 		// Compute the ambient term
 		outStream << "	float3 ambient = matAmbient.xyz * globalAmbient.xyz ";
@@ -1367,7 +1392,8 @@ void MaterialGenerator::fragmentProgramParams(HighLevelGpuProgramPtr program)
 		params->setNamedAutoConstant("lightPosition", GpuProgramParameters::ACT_LIGHT_POSITION, 0);
 		params->setNamedAutoConstant("matAmbient", GpuProgramParameters::ACT_SURFACE_AMBIENT_COLOUR);
 		params->setNamedAutoConstant("matDiffuse", GpuProgramParameters::ACT_SURFACE_DIFFUSE_COLOUR);
-		params->setNamedAutoConstant("matSpecular", GpuProgramParameters::ACT_SURFACE_SPECULAR_COLOUR);
+		if (!needSpecMap())
+			params->setNamedAutoConstant("matSpecular", GpuProgramParameters::ACT_SURFACE_SPECULAR_COLOUR);
 		params->setNamedAutoConstant("globalAmbient", GpuProgramParameters::ACT_AMBIENT_LIGHT_COLOUR);
 	}
 	
