@@ -398,6 +398,9 @@ void CarModel::UpdateKeys()
 			else
 				node->yaw(Ogre::Degree(90), Node::TS_LOCAL);
 			node->pitch(Ogre::Degree(180), Node::TS_LOCAL);
+			
+			node->yaw(-Degree(pCar->dynamics.wheel[i].GetSteerAngle()));
+			
 		}
 	}
 	
