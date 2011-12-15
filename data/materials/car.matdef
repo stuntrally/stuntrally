@@ -75,6 +75,8 @@
 	parent = cartire_front
 	diffuseMap_1024 = wheel.png
 	normalMap_1024 = wheel_normal.png
+	specMap_1024 = wheel_spec.png
+	specular = 0.3 0.3 0.3 64
 	diffuse = 1.0 1.0 1.0
 
 [cartire_rear_ES]
