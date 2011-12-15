@@ -383,6 +383,24 @@ void CarModel::UpdateKeys()
 		}
 	}
 	iCamNextOld = pCar->iCamNext;
+	
+	//  update brake meshes orientation
+	for (int i=0; i<4; ++i)
+	{
+		if (mSceneMgr->hasSceneNode("brake_node" + toStr(iIndex) + "_" + toStr(i)))
+		{
+			SceneNode* node = mSceneMgr->getSceneNode("brake_node" + toStr(iIndex) + "_" + toStr(i));
+			node->_setDerivedOrientation( pMainNode->getOrientation() );
+			
+			// this transformation code is just so the brake mesh can have the same alignment as the wheel mesh
+			if (i%2 == 0)
+				node->yaw(Ogre::Degree(-90), Node::TS_LOCAL);
+			else
+				node->yaw(Ogre::Degree(90), Node::TS_LOCAL);
+			node->pitch(Ogre::Degree(180), Node::TS_LOCAL);
+		}
+	}
+	
 }
 
 
@@ -427,118 +445,106 @@ void CarModel::Create(int car)
 	Ogre::Vector3 vPofs(0,0,0);
 	AxisAlignedBox bodyBox;  Ogre::uint8 g = RQG_CarGhost;
 	
-	//  Read mesh objects from meshes.cfg file, if available
-	bool meshCfg;
-	ConfigFile cf;
-	try
+	//  body  ----------------------
+
+	sCar = resCar + "/" + sDirname;
+	if (FileExists(sCar + "_body.mesh"))
 	{
-		cf.load("meshes.cfg", "Car" + strI, "\t:=", true);
-		meshCfg = true;
+		Entity* eCar = mSceneMgr->createEntity("Car"+ strI, sDirname + "_" + "body.mesh", "Car" + strI);
+
+		//eCar->setCastShadows(false);
+		bodyBox = eCar->getBoundingBox();
+		if (ghost)  {  eCar->setRenderQueueGroup(g);  eCar->setCastShadows(false);  }
+		ncart->attachObject(eCar);  eCar->setVisibilityFlags(RV_Car);
+	}else{
+		ManualObject* mCar = CreateModel(mSceneMgr, sMtr[Mtr_CarBody], &pCar->bodymodel.mesh, vPofs, false, false, "Car"+strI);
+		bodyBox = mCar->getBoundingBox();
+		if (mCar){	if (ghost)  {  mCar->setRenderQueueGroup(g);  mCar->setCastShadows(false);  }
+			ncart->attachObject(mCar);  mCar->setVisibilityFlags(RV_Car);  }
 	}
-	catch (Ogre::Exception&)
+
+	//  interior  ----------------------
+	vPofs = Vector3(pCar->vInteriorOffset[0],pCar->vInteriorOffset[1],pCar->vInteriorOffset[2]);  //x+ back y+ down z+ right
+
+	if (!ghost)
+	if (FileExists(sCar + "_interior.mesh"))
 	{
-		meshCfg = false;
+		Entity* eInter = mSceneMgr->createEntity("Car.interior"+ strI, sDirname + "_" + "interior.mesh", "Car" + strI);
+		//eInter->setCastShadows(false);
+		if (ghost)  {  eInter->setRenderQueueGroup(g);  eInter->setCastShadows(false);  }
+		ncart->attachObject(eInter);  eInter->setVisibilityFlags(RV_Car);
+	}else{
+		ManualObject* mInter = CreateModel(mSceneMgr, sMtr[Mtr_CarInterior],&pCar->interiormodel.mesh, vPofs, false, false, "Car.interior"+strI);
+		//mInter->setCastShadows(false);
+		if (mInter){  if (ghost)  {  mInter->setRenderQueueGroup(g);  mInter->setCastShadows(false);  }
+			ncart->attachObject(mInter);  mInter->setVisibilityFlags(RV_Car);  }
 	}
 	
-	if (meshCfg)
+	//  glass  ----------------------
+	vPofs = Vector3(0,0,0);
+
+	if (FileExists(sCar + "_glass.mesh"))
 	{
-		//!todo
-		
-		//!todo bounding box (bodyBox)
+		Entity* eGlass = mSceneMgr->createEntity("Car.glass"+ strI, sDirname + "_" + "glass.mesh", "Car" + strI);
+		if (ghost)  {  eGlass->setRenderQueueGroup(g);  eGlass->setCastShadows(false);  }  else
+			eGlass->setRenderQueueGroup(RQG_CarGlass);  eGlass->setVisibilityFlags(RV_CarGlass);
+		ncart->attachObject(eGlass);
+	}else{
+		ManualObject* mGlass = CreateModel(mSceneMgr, sMtr[Mtr_CarGlass], &pCar->glassmodel.mesh, vPofs, false, false, "Car.glass"+strI);
+		if (mGlass){  mGlass->setRenderQueueGroup(ghost ? g : RQG_CarGlass);  if (ghost)  mGlass->setCastShadows(false);
+			ncart->attachObject(mGlass);  mGlass->setVisibilityFlags(RV_CarGlass);  }
 	}
-	else
+	
+	///  save .mesh
+	/**  MeshPtr mpCar = mCar->convertToMesh("MeshCar");
+	Ogre::MeshSerializer* msr = new Ogre::MeshSerializer();
+	msr->exportMesh(mpCar.getPointer(), "car.mesh");/**/
+
+
+	//  wheels  ----------------------
+	for (int w=0; w < 4; w++)
 	{
-		//  body  ----------------------
-
-		sCar = resCar + "/" + sDirname;
-		if (FileExists(sCar + "_body.mesh"))
+		// only 1 mesh for both?
+		String siw = "Wheel"+ strI + "_" +toStr(w);
+		if (FileExists(sCar + "_wheel.mesh"))
 		{
-			Entity* eCar = mSceneMgr->createEntity("Car"+ strI, sDirname + "_" + "body.mesh", "Car" + strI);
-
-			//eCar->setCastShadows(false);
-			bodyBox = eCar->getBoundingBox();
-			if (ghost)  {  eCar->setRenderQueueGroup(g);  eCar->setCastShadows(false);  }
-			ncart->attachObject(eCar);  eCar->setVisibilityFlags(RV_Car);
+			Entity* eWh = mSceneMgr->createEntity(siw, sDirname + "_wheel.mesh", "Car" + strI);
+			if (ghost)  {  eWh->setRenderQueueGroup(g);  eWh->setCastShadows(false);  }
+			ndWh[w] = mSceneMgr->getRootSceneNode()->createChildSceneNode();
+			ndWh[w]->attachObject(eWh);  eWh->setVisibilityFlags(RV_Car);
 		}else{
-			ManualObject* mCar = CreateModel(mSceneMgr, sMtr[Mtr_CarBody], &pCar->bodymodel.mesh, vPofs, false, false, "Car"+strI);
-			bodyBox = mCar->getBoundingBox();
-			if (mCar){	if (ghost)  {  mCar->setRenderQueueGroup(g);  mCar->setCastShadows(false);  }
-				ncart->attachObject(mCar);  mCar->setVisibilityFlags(RV_Car);  }
-		}
-
-		//  interior  ----------------------
-		vPofs = Vector3(pCar->vInteriorOffset[0],pCar->vInteriorOffset[1],pCar->vInteriorOffset[2]);  //x+ back y+ down z+ right
-
-		if (!ghost)
-		if (FileExists(sCar + "_interior.mesh"))
-		{
-			Entity* eInter = mSceneMgr->createEntity("Car.interior"+ strI, sDirname + "_" + "interior.mesh", "Car" + strI);
-			//eInter->setCastShadows(false);
-			if (ghost)  {  eInter->setRenderQueueGroup(g);  eInter->setCastShadows(false);  }
-			ncart->attachObject(eInter);  eInter->setVisibilityFlags(RV_Car);
-		}else{
-			ManualObject* mInter = CreateModel(mSceneMgr, sMtr[Mtr_CarInterior],&pCar->interiormodel.mesh, vPofs, false, false, "Car.interior"+strI);
-			//mInter->setCastShadows(false);
-			if (mInter){  if (ghost)  {  mInter->setRenderQueueGroup(g);  mInter->setCastShadows(false);  }
-				ncart->attachObject(mInter);  mInter->setVisibilityFlags(RV_Car);  }
-		}
-		
-		//  glass  ----------------------
-		vPofs = Vector3(0,0,0);
-
-		if (FileExists(sCar + "_glass.mesh"))
-		{
-			Entity* eGlass = mSceneMgr->createEntity("Car.glass"+ strI, sDirname + "_" + "glass.mesh", "Car" + strI);
-			if (ghost)  {  eGlass->setRenderQueueGroup(g);  eGlass->setCastShadows(false);  }  else
-				eGlass->setRenderQueueGroup(RQG_CarGlass);  eGlass->setVisibilityFlags(RV_CarGlass);
-			ncart->attachObject(eGlass);
-		}else{
-			ManualObject* mGlass = CreateModel(mSceneMgr, sMtr[Mtr_CarGlass], &pCar->glassmodel.mesh, vPofs, false, false, "Car.glass"+strI);
-			if (mGlass){  mGlass->setRenderQueueGroup(ghost ? g : RQG_CarGlass);  if (ghost)  mGlass->setCastShadows(false);
-				ncart->attachObject(mGlass);  mGlass->setVisibilityFlags(RV_CarGlass);  }
-		}
-		
-		///  save .mesh
-		/**  MeshPtr mpCar = mCar->convertToMesh("MeshCar");
-		Ogre::MeshSerializer* msr = new Ogre::MeshSerializer();
-		msr->exportMesh(mpCar.getPointer(), "car.mesh");/**/
-
-
-		//  wheels  ----------------------
-		for (int w=0; w < 4; w++)
-		{
-			// only 1 mesh for both?
-			String siw = "Wheel"+ strI + "_" +toStr(w);
-			if (FileExists(sCar + "_wheel.mesh"))
+			if (w < 2 && FileExists(sCar + "_wheel_front.mesh"))
 			{
-				Entity* eWh = mSceneMgr->createEntity(siw, sDirname + "_wheel.mesh", "Car" + strI);
+				Entity* eWh = mSceneMgr->createEntity(siw, sDirname + "_" + "wheel_front.mesh", "Car" + strI);
+				if (ghost)  {  eWh->setRenderQueueGroup(g);  eWh->setCastShadows(false);  }
+				ndWh[w] = mSceneMgr->getRootSceneNode()->createChildSceneNode();
+				ndWh[w]->attachObject(eWh);  eWh->setVisibilityFlags(RV_Car);
+			}else
+			if (FileExists(sCar + "_wheel_rear.mesh"))
+			{
+				Entity* eWh = mSceneMgr->createEntity(siw, sDirname + "_" + "wheel_rear.mesh", "Car" + strI);
 				if (ghost)  {  eWh->setRenderQueueGroup(g);  eWh->setCastShadows(false);  }
 				ndWh[w] = mSceneMgr->getRootSceneNode()->createChildSceneNode();
 				ndWh[w]->attachObject(eWh);  eWh->setVisibilityFlags(RV_Car);
 			}else{
-				if (w < 2 && FileExists(sCar + "_wheel_front.mesh"))
-				{
-					Entity* eWh = mSceneMgr->createEntity(siw, sDirname + "_" + "wheel_front.mesh", "Car" + strI);
-					if (ghost)  {  eWh->setRenderQueueGroup(g);  eWh->setCastShadows(false);  }
-					ndWh[w] = mSceneMgr->getRootSceneNode()->createChildSceneNode();
-					ndWh[w]->attachObject(eWh);  eWh->setVisibilityFlags(RV_Car);
-				}else
-				if (FileExists(sCar + "_wheel_rear.mesh"))
-				{
-					Entity* eWh = mSceneMgr->createEntity(siw, sDirname + "_" + "wheel_rear.mesh", "Car" + strI);
-					if (ghost)  {  eWh->setRenderQueueGroup(g);  eWh->setCastShadows(false);  }
-					ndWh[w] = mSceneMgr->getRootSceneNode()->createChildSceneNode();
-					ndWh[w]->attachObject(eWh);  eWh->setVisibilityFlags(RV_Car);
-				}else{
-					ManualObject* mWh;
-					if (w < 2)	mWh = CreateModel(mSceneMgr, sMtr[Mtr_CarTireFront], &pCar->wheelmodelfront.mesh, vPofs, true, false, siw);
-					else		mWh = CreateModel(mSceneMgr, sMtr[Mtr_CarTireRear],  &pCar->wheelmodelrear.mesh, vPofs, true, false, siw);
-					if (mWh)  {
-					if (ghost)  {  mWh->setRenderQueueGroup(g);  mWh->setCastShadows(false);  }
-					ndWh[w] = mSceneMgr->getRootSceneNode()->createChildSceneNode();
-					ndWh[w]->attachObject(mWh);  mWh->setVisibilityFlags(RV_Car);  }
-				}
+				ManualObject* mWh;
+				if (w < 2)	mWh = CreateModel(mSceneMgr, sMtr[Mtr_CarTireFront], &pCar->wheelmodelfront.mesh, vPofs, true, false, siw);
+				else		mWh = CreateModel(mSceneMgr, sMtr[Mtr_CarTireRear],  &pCar->wheelmodelrear.mesh, vPofs, true, false, siw);
+				if (mWh)  {
+				if (ghost)  {  mWh->setRenderQueueGroup(g);  mWh->setCastShadows(false);  }
+				ndWh[w] = mSceneMgr->getRootSceneNode()->createChildSceneNode();
+				ndWh[w]->attachObject(mWh);  mWh->setVisibilityFlags(RV_Car);  }
 			}
+		}
+		
+		// brake mesh.. only on rear wheels
+		//! todo: add a param to car file to control which wheels have brakes
+		if (FileExists(sCar + "_brake.mesh"))
+		{
+			Entity* eBrake = mSceneMgr->createEntity(siw + "_brake", sDirname + "_brake.mesh", "Car" + strI);
+			if (ghost)  {  eBrake->setRenderQueueGroup(g);  eBrake->setCastShadows(false);  }
+			SceneNode* node = ndWh[w]->createChildSceneNode("brake_node" + toStr(iIndex) + "_" + toStr(w));
+			node->attachObject(eBrake);
 		}
 	}
 
@@ -816,7 +822,10 @@ void CarModel::setMtrNames()
 	setMtrName("Car.interior"+toStr(iIndex), sMtr[Mtr_CarInterior]);
 	setMtrName("Car.glass"+toStr(iIndex), sMtr[Mtr_CarGlass]);
 	for (int w=0; w<4; ++w)
+	{
 		setMtrName("Wheel"+toStr(iIndex)+"_"+toStr(w), w < 2 ? sMtr[Mtr_CarTireFront] : sMtr[Mtr_CarTireRear]);
+		setMtrName("Wheel"+toStr(iIndex)+"_"+toStr(w)+"_brake", w < 2 ? sMtr[Mtr_CarTireFront] : sMtr[Mtr_CarTireRear]);
+	}
 }
 
 //  ----------------- Reflection ------------------------

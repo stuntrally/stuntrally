@@ -34,20 +34,6 @@ struct PosInfo
 	{}
 };
 
-struct MeshObject
-{	
-	Ogre::Vector3 offset;
-	std::string meshFile;
-	std::string material;
-	std::string renderQueue;
-	std::string node; // node to attach to
-	bool rotate; // inherit rotation from node? (e.g. false for brake discs)
-	bool castShadows;
-	
-	MeshObject() : offset(0,0,0), node("main"), renderQueue("car"), rotate(true), castShadows(true)
-	{}
-};
-
 class CarModel
 {
 public:
@@ -139,10 +125,7 @@ private:
 		Mtr_CarTireFront, Mtr_CarTireRear,
 		NumMaterials  };
 	std::string sMtr[NumMaterials];
-	
-	//  Mesh objects
-	std::list<MeshObject> meshObjs;
-		
+			
 	//  Particle systems, trail
 	Ogre::ParticleSystem* ps[4],*pm[4],*pd[4];  // smoke, mud, dust
 	Ogre::ParticleSystem* pflW[4],*pflM[4],*pflMs[4];  // water, mud, mud soft
