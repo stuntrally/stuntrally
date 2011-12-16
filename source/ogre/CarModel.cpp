@@ -88,7 +88,9 @@ CarModel::~CarModel()
 		if (pd[w]) {  mSceneMgr->destroyParticleSystem(pd[w]);   pd[w]=0;  }
 		if (pflW[w]) {  mSceneMgr->destroyParticleSystem(pflW[w]);   pflW[w]=0;  }
 		if (pflM[w]) {  mSceneMgr->destroyParticleSystem(pflM[w]);   pflM[w]=0;  }
-		if (pflMs[w]) {  mSceneMgr->destroyParticleSystem(pflMs[w]);   pflMs[w]=0;  }  }
+		if (pflMs[w]) {  mSceneMgr->destroyParticleSystem(pflMs[w]);   pflMs[w]=0;  }  
+		if (mSceneMgr->hasSceneNode("brake_node"+toStr(iIndex)+"_"+toStr(w))) mSceneMgr->destroySceneNode("brake_node"+toStr(iIndex)+"_"+toStr(w));
+	}
 	for (int i=0; i < 2; i++)
 		if (pb[i]) {  mSceneMgr->destroyParticleSystem(pb[i]);   pb[i]=0;  }
 	if (ph)  {  mSceneMgr->destroyParticleSystem(ph);   ph=0;  }
