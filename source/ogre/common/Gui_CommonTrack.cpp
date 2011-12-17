@@ -68,8 +68,8 @@ void App::TrackListUpd(bool resetNotFound)
 		//  original
 		for (std::list<TrkL>::iterator i = liTrk2.begin(); i != liTrk2.end(); ++i)
 		{
-			const std::string& name = (*i).name;
-			if (sTrkFind == "" || StringUtil::match(name, sTrkFind, false))
+			String name = (*i).name, nlow = name;  StringUtil::toLowerCase(nlow);
+			if (sTrkFind == "" || strstr(nlow.c_str(), sTrkFind.c_str()) != 0)
 			{
 				AddTrkL(name, 0, (*i).ti);
 				if (!pSet->track_user && name == pSet->track)  {  si = ii;
@@ -80,8 +80,8 @@ void App::TrackListUpd(bool resetNotFound)
 		//  user
 		for (strlist::iterator i = liTracksUser.begin(); i != liTracksUser.end(); ++i)
 		{
-			const std::string& name = *i;
-			if (sTrkFind == "" || StringUtil::match(name, sTrkFind, false))
+			String name = *i, nlow = name;  StringUtil::toLowerCase(nlow);
+			if (sTrkFind == "" || strstr(nlow.c_str(), sTrkFind.c_str()) != 0)
 			{
 				AddTrkL("*" + (*i) + "*", 1, 0);
 				if (pSet->track_user && name == pSet->track)  {  si = ii;
@@ -229,7 +229,9 @@ void App::edTrkFind(EditPtr ed)
 	if (s == "")
 		sTrkFind = "";
 	else
-		sTrkFind = "*" + s + "*";
+	{	sTrkFind = s;
+		StringUtil::toLowerCase(sTrkFind);
+	}
 	TrackListUpd(false);
 }
 
