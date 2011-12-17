@@ -35,6 +35,7 @@ Permission is granted to anyone to use this software for any purpose, including 
 #include "PagedGeometry.h"
 #include "PropertyMaps.h"
 #include "RandomTable.h"
+#include "../ogre/common/RenderConst.h"
 
 #include <limits> //for numeric_limits
 
@@ -182,6 +183,7 @@ void GrassLoader::loadPage(PageInfo &page)
 			//Add the mesh to PagedGeometry
 			Entity *entity = geom->getCamera()->getSceneManager()->createEntity(getUniqueID(), mesh->getName());
 			entity->setRenderQueueGroup(renderQueue);
+			entity->setVisibilityFlags(RV_Vegetation);  ///T  disable in render targets
 			entity->setCastShadows(false);
 			addEntity(entity, page.centerPoint, Quaternion::IDENTITY, Vector3::UNIT_SCALE);
 

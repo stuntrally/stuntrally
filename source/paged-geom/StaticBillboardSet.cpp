@@ -37,6 +37,7 @@ Permission is granted to anyone to use this software for any purpose, including 
 #include <OgreEntity.h>
 
 #include "StaticBillboardSet.h"
+#include "../ogre/common/RenderConst.h"
 
 using namespace Ogre;
 using namespace Forests;
@@ -555,6 +556,7 @@ void StaticBillboardSet::build()
       // Add to scene
       mpSceneNode->attachObject(mpEntity);
       mpEntity->setVisible(mVisible);
+      mpEntity->setVisibilityFlags(RV_Vegetation);	///T  disable in render targets
    }
 }
 

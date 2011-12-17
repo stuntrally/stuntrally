@@ -25,6 +25,7 @@ Permission is granted to anyone to use this software for any purpose, including 
 
 #include "BatchPage.h"
 #include "BatchedGeometry.h"
+#include "../ogre/common/RenderConst.h"
 
 
 using namespace Ogre;
@@ -123,10 +124,11 @@ void BatchPage::addEntity(Entity *ent, const Vector3 &position, const Quaternion
 void BatchPage::build()
 {
 	m_pBatchGeom->build();
+	m_pBatchGeom->setVisibilityFlags(RV_Vegetation);  ///T  disable in render targets
 	BatchedGeometry::TSubBatchIterator it = m_pBatchGeom->getSubBatchIterator();
 
 	while (it.hasMoreElements())
-   {
+	{
 		BatchedGeometry::SubBatch *subBatch = it.getNext();
 		const MaterialPtr &ptrMat = subBatch->getMaterial();
 
@@ -135,15 +137,15 @@ void BatchPage::build()
 		//doesn't support specular, and fixed-function needs to look
 		//the same as the shader (for computers with no shader support)
 		for (unsigned short t = 0, tCnt = ptrMat->getNumTechniques(); t < tCnt; ++t)
-      {
+		{
 			Technique *tech = ptrMat->getTechnique(t);
 			for (unsigned short p = 0, pCnt = tech->getNumPasses(); p < pCnt; ++p)
-         {
+			{
 				Pass *pass = tech->getPass(p);
 				//if (pass->getVertexProgramName() == "")
 				//	pass->setSpecular(0, 0, 0, 1);
-            if (!pass->hasVertexProgram())
-               pass->setSpecular(0.f, 0.f, 0.f, 1.f);
+				if (!pass->hasVertexProgram())
+				   pass->setSpecular(0.f, 0.f, 0.f, 1.f);
 			}
 		}
 
