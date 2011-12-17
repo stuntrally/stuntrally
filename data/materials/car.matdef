@@ -151,6 +151,11 @@
 	parent = cartire_front_M3
 	
 ; ------------- XM -----------------
+[car_body_XM]
+	parent = car_body
+	reflectivityMap_1024 = refl.png
+	;specMap_1024 = spec.png
+
 [cartire_front_XM]
 	parent = cartire_front
 	diffuseMap_1024 = wheel.png
