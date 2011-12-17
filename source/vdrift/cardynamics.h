@@ -157,7 +157,8 @@ public:
 	btRigidBody * chassis, * whTrigs;
 
 	///  for buoyancy
-	float whH[4];
+	float whH[4];  // wheel submerge 0..1
+	int whP[4];  // fluid particles id
 	struct Polyhedron* poly;
 	float body_mass;  btVector3 body_inertia;
 

@@ -351,7 +351,7 @@ void App::newPoses()
 		///  sound listener  - - - - -
 		if (!bGhost)
 		{
-			if (pGame->sound.Enabled())  // todo: set from camera, for each player? ..
+			if (pGame->sound.Enabled())  // TODO: set from camera, for each player? ..
 			{
 				pGame->sound.SetListener(
 					MATHVECTOR <float,3> (pos[0], pos[1], pos[2]),

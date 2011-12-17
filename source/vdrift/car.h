@@ -315,8 +315,8 @@ public:
 	SOUNDSOURCE crashsound[Ncrashsounds];
 	float crashsoundtime[Ncrashsounds];
 	SOUNDSOURCE roadnoise;
-	
-	//CAMERA_SYSTEM cameras;
+	SOUNDSOURCE mudsnd, watersnd[Nwatersounds];  // fluids
+	bool fluidHitOld;
 	
 	//internal variables that might change during driving (so, they need to be serialized)
 	float last_steer;

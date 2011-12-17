@@ -22,7 +22,8 @@ CAR::CAR() :
 	last_steer(0),
 	debug_wheel_draw(false),
 	sector(-1),
-	iCamNext(0), bLastChk(0)
+	iCamNext(0), bLastChk(0),
+	fluidHitOld(0)
 {
 	//dynamics.pCar = this;
 	vInteriorOffset[0]=0;
@@ -390,6 +391,27 @@ bool CAR::LoadSounds(
 		roadnoise.SetPitch(1.0);	roadnoise.Play();
 	}
 
+	//set up  fluid sounds
+	for (int i = 0; i < Nwatersounds; ++i)
+	{
+		char name[16];
+		sprintf(name, "water%d", i+1);
+		const SOUNDBUFFER * buf = soundbufferlibrary.GetBuffer(name);
+		if (!buf)
+		{	error_output << "Can't load water sound: " << name << std::endl;	return false;
+		}
+		watersnd[i].SetBuffer(*buf);	watersnd[i].Set3DEffects(true);
+		watersnd[i].SetLoop(false);		watersnd[i].SetGain(0);
+	}
+	{
+		const SOUNDBUFFER * buf = soundbufferlibrary.GetBuffer("mud1");
+		if (!buf)
+		{	error_output << "Can't load mud sound " << std::endl;	return false;
+		}
+		mudsnd.SetBuffer(*buf);		mudsnd.Set3DEffects(true);
+		mudsnd.SetLoop(false);		mudsnd.SetGain(0);
+	}
+
 	return true;
 }
 
@@ -431,20 +453,22 @@ void CAR::Update(double dt)
 
 void CAR::GetSoundList(std::list <SOUNDSOURCE *> & outputlist)
 {
-	for (std::list <std::pair <ENGINESOUNDINFO, SOUNDSOURCE> >::iterator i =
-		enginesounds.begin(); i != enginesounds.end(); ++i)
-	{
+	for (std::list <std::pair <ENGINESOUNDINFO, SOUNDSOURCE> >::iterator
+		i = enginesounds.begin(); i != enginesounds.end(); ++i)
 		outputlist.push_back(&i->second);
-	}
 
-	for (int i = 0; i < 4; i++)	outputlist.push_back(&tiresqueal[i]);
-	for (int i = 0; i < 4; i++)	outputlist.push_back(&grasssound[i]);
-	for (int i = 0; i < 4; i++)	outputlist.push_back(&gravelsound[i]);
-	for (int i = 0; i < 4; i++)	outputlist.push_back(&tirebump[i]);
+	for (int i = 0; i < 4; i++)  outputlist.push_back(&tiresqueal[i]);
+	for (int i = 0; i < 4; i++)  outputlist.push_back(&grasssound[i]);
+	for (int i = 0; i < 4; i++)  outputlist.push_back(&gravelsound[i]);
+	for (int i = 0; i < 4; i++)  outputlist.push_back(&tirebump[i]);
 
 	for (int i = 0; i < Ncrashsounds; ++i)
 		outputlist.push_back(&crashsound[i]);
 	outputlist.push_back(&roadnoise);
+
+	for (int i = 0; i < Nwatersounds; ++i)
+		outputlist.push_back(&watersnd[i]);
+	outputlist.push_back(&mudsnd);
 }
 
 void CAR::GetEngineSoundList(std::list <SOUNDSOURCE *> & outputlist)
@@ -522,6 +546,7 @@ void CAR::UpdateSounds(float dt)
 	MATHVECTOR <float,3> engPos, whPos[4];  // engine, wheels pos
 	TRACKSURFACE::TYPE surfType[4];
 	float squeal[4],whVel[4], suspVel[4],suspDisp[4];
+	float whH_all = 0.f;
 	
 	///  replay play  ------------------------------------------
 	if (pApp->bRplPlay)
@@ -551,7 +576,7 @@ void CAR::UpdateSounds(float dt)
 		engPos = dynamics.GetEnginePosition();
 		speed = GetSpeed();
 		dynVel = dynamics.GetVelocity().Magnitude();
-
+		
 		for (int w=0; w<4; ++w)
 		{
 			WHEEL_POSITION wp = WHEEL_POSITION(w);
@@ -565,6 +590,8 @@ void CAR::UpdateSounds(float dt)
 			//  susp
 			suspVel[w] = dynamics.GetSuspension(wp).GetVelocity();
 			suspDisp[w] = dynamics.GetSuspension(wp).GetDisplacementPercent();
+
+			whH_all += dynamics.whH[w];
 		}
 	}
 	///  ------------------------------------------
@@ -687,6 +714,42 @@ void CAR::UpdateSounds(float dt)
 			}
 		}
 	}
+	
+	//update fluids sound
+	bool fluidHit = whH_all > 1.f;
+	//LogO(toStr(whH_all) + "  v "+ toStr(dynVel));
+
+	if (fluidHit && !fluidHitOld)
+	//if (dynVel > 10.f && whH_all > 1.f && )
+	{
+		bool mud = false;
+		for (int w=0; w < 4; ++w)
+			if (dynamics.whP[w] >= 1)  mud = true;
+		
+		int i = std::min(Nwatersounds-1, (int)(dynVel / 15.f));
+		float gain = std::min(3.0f, 0.3f + dynVel / 30.f);
+		SOUNDSOURCE& snd = /*mud ? mudsnd : */watersnd[i];
+		
+		//LogO("fluid hit i"+toStr(i)+" g"+toStr(gain)+" "+(mud?"mud":"wtr"));
+		if (!snd.Audible())
+		{
+			snd.SetGain(gain /* * pSet->vol_env*/);
+			snd.SetPosition(engPos[0], engPos[1], engPos[2]);
+			snd.Stop();
+			snd.Play();
+		}
+
+		if (mud)  {
+		SOUNDSOURCE& snd = mudsnd;
+		if (!snd.Audible())
+		{
+			snd.SetGain(gain /* * pSet->vol_env*/);
+			snd.SetPosition(engPos[0], engPos[1], engPos[2]);
+			snd.Stop();
+			snd.Play();
+		}	}
+	}
+	fluidHitOld = fluidHit;
 
 	//update crash sound
 	#if 0

@@ -63,6 +63,11 @@
 drive = AWD
 version = 2
 
+[ collision ]
+manual = 0
+radius = 0.3
+offsetH = 0.0
+
 [ steering ]
 max-angle = 21.0
 

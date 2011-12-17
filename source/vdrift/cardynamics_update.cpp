@@ -107,6 +107,7 @@ void CARDYNAMICS::UpdateBuoyancy()
 				float whR = GetTire(wp).GetRadius() * 1.2f;  //bigger par
 				MATHVECTOR <float, 3> wheelpos = GetWheelPosition(wp, 0);
 				wheelpos[2] -= whR;
+				whP[w] = fp.idParticles;
 				
 				//  height in fluid:  0 just touching surface, 1 fully in fluid
 				//  wheel plane distance  water.plane.normal.z = 1  water.plane.offset = fl.pos.y;
@@ -139,7 +140,7 @@ void CARDYNAMICS::UpdateBuoyancy()
 			}
 		}
 		else
-		{	whH[w] = 0.f;  wheel[w].fluidRes = 0.f;  }
+		{	whH[w] = 0.f;  wheel[w].fluidRes = 0.f;  whP[w] = -1;	}
 	}
 
 }

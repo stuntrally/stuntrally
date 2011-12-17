@@ -70,18 +70,25 @@ bool GAME::InitializeSound()
 	{
 		generic_sounds.SetLibraryPath(PATHMANAGER::GetGenericSoundPath());
 		
-		if (!generic_sounds.Load("tire_squeal", sound.GetDeviceInfo(), error_output)) return false;
-		if (!generic_sounds.Load("grass", sound.GetDeviceInfo(), error_output)) return false;
-		if (!generic_sounds.Load("gravel", sound.GetDeviceInfo(), error_output)) return false;
-		if (!generic_sounds.Load("bump_front", sound.GetDeviceInfo(), error_output)) return false;
-		if (!generic_sounds.Load("bump_rear", sound.GetDeviceInfo(), error_output)) return false;
-		if (!generic_sounds.Load("wind", sound.GetDeviceInfo(), error_output)) return false;
+		if (!generic_sounds.Load("tire_squeal", sound.GetDeviceInfo(), error_output))  return false;
+		if (!generic_sounds.Load("grass", sound.GetDeviceInfo(), error_output))  return false;
+		if (!generic_sounds.Load("gravel", sound.GetDeviceInfo(), error_output))  return false;
+		if (!generic_sounds.Load("bump_front", sound.GetDeviceInfo(), error_output))  return false;
+		if (!generic_sounds.Load("bump_rear", sound.GetDeviceInfo(), error_output))  return false;
+		if (!generic_sounds.Load("wind", sound.GetDeviceInfo(), error_output))  return false;
 		for (int i = 0; i < Ncrashsounds; ++i)
 		{
 			int n = i+1;
 			char name[3] = {'0'+ n/10, '0'+ n%10, 0};
-			if (!generic_sounds.Load(name, sound.GetDeviceInfo(), error_output)) return false;
+			if (!generic_sounds.Load(name, sound.GetDeviceInfo(), error_output))  return false;
 		}
+		for (int i = 0; i < Nwatersounds; ++i)
+		{
+			char name[16];
+			sprintf(name, "water%d", i+1);
+			if (!generic_sounds.Load(name, sound.GetDeviceInfo(), error_output))  return false;
+		}
+		if (!generic_sounds.Load("mud1", sound.GetDeviceInfo(), error_output))  return false;
 		
 		sound.SetMasterVolume(settings->vol_master);
 		sound.Pause(false);
