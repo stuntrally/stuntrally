@@ -69,6 +69,15 @@
 	shadowPriority = 0.3
 	normalMapPriority = 0.3
 	
+; ------------- 3S --------------
+
+[cartire_front_3S]
+	parent = cartire_front
+	diffuseMap_1024 = wheel.png
+
+[cartire_rear_3S]
+	parent = cartire_front_3S
+
 ; ------------- ES --------------
 
 [cartire_front_ES]
@@ -107,9 +116,50 @@
 	parent = car_interior
 	cullHardware = none
 	receivesDepthShadows = false
+	
+[cartire_front_360]
+	parent = cartire_front
+	diffuseMap_1024 = wheel.png
 
+[cartire_rear_360]
+	parent = cartire_front_360
+	
+; ------------- CT ------------------
+[car_body_CT]
+	parent = car_body
+	reflectivityMap_1024 = refl.png
+	
+[cartire_front_CT]
+	parent = cartire_front
+	diffuseMap_1024 = wheel.png
+
+[cartire_rear_CT]
+	parent = cartire_front_CT
+	
+; ------------- M3 -----------------
+[cartire_front_M3]
+	parent = cartire_front
+	diffuseMap_1024 = wheel.png
+
+[cartire_rear_M3]
+	parent = cartire_front_M3
+	
+; ------------- XM -----------------
+[cartire_front_XM]
+	parent = cartire_front
+	diffuseMap_1024 = wheel.png
+
+[cartire_rear_XM]
+	parent = cartire_front_XM
 
 ; ------------- RS2 ----------------
+
+[cartire_front_RS2]
+	parent = cartire_front
+	diffuseMap_1024 = wheel.png
+
+[cartire_rear_RS2]
+	parent = cartire_front_RS2
 
 [chasis/Material#1]
 	envMap = ReflectionCube
