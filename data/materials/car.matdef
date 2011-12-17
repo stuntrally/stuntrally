@@ -124,6 +124,12 @@
 [cartire_rear_360]
 	parent = cartire_front_360
 	
+; ------------- 3S ------------------
+[car_body_3S]
+	parent = car_body
+	reflectivityMap_1024 = refl.png
+	specMap_1024 = spec.png
+
 ; ------------- CT ------------------
 [car_body_CT]
 	parent = car_body
@@ -153,7 +159,6 @@
 	parent = cartire_front_XM
 
 ; ------------- RS2 ----------------
-
 [cartire_front_RS2]
 	parent = cartire_front
 	diffuseMap_1024 = wheel.png
