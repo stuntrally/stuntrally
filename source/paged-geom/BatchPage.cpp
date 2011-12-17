@@ -40,14 +40,14 @@ unsigned long BatchPage::s_nGUID = 0;
 //-----------------------------------------------------------------------------
 /// Default constructor
 BatchPage::BatchPage() :
-m_pPagedGeom         (NULL),
-m_pSceneMgr          (NULL),
-m_pBatchGeom         (NULL),
-m_nLODLevel          (0),
-m_bFadeEnabled       (false),
+m_pPagedGeom		 (NULL),
+m_pSceneMgr		  (NULL),
+m_pBatchGeom		 (NULL),
+m_nLODLevel		  (0),
+m_bFadeEnabled	   (false),
 m_bShadersSupported  (false),
-m_fVisibleDist       (Ogre::Real(0.)),
-m_fInvisibleDist     (Ogre::Real(0.))
+m_fVisibleDist	   (Ogre::Real(0.)),
+m_fInvisibleDist	 (Ogre::Real(0.))
 {
 	// empty
 }
@@ -66,13 +66,13 @@ void BatchPage::init(PagedGeometry *geom_, const Any &data)
 #endif
 
 	m_pPagedGeom   = geom_;
-	m_pSceneMgr    = m_pPagedGeom->getSceneManager();
+	m_pSceneMgr	= m_pPagedGeom->getSceneManager();
 	m_pBatchGeom   = new BatchedGeometry(m_pSceneMgr, m_pPagedGeom->getSceneNode());
-	m_nLODLevel    = datacast;
+	m_nLODLevel	= datacast;
 	m_bFadeEnabled = false;
 
 	if (!m_pPagedGeom->getShadersEnabled())
-		m_bShadersSupported = false;     // shaders disabled by config
+		m_bShadersSupported = false;	 // shaders disabled by config
 	else
 	{
 		// determine if shaders available
@@ -193,7 +193,7 @@ void BatchPage::setFade(bool enabled, Real visibleDist, Real invisibleDist)
 			//Opaque batches should render in the normal render queue
 			m_pBatchGeom->setRenderQueueGroup(RQG_BatchOpaque);  ///T  own render queue groups
 
-		m_fVisibleDist    = visibleDist;
+		m_fVisibleDist	= visibleDist;
 		m_fInvisibleDist  = invisibleDist;
 		_updateShaders();
 	}

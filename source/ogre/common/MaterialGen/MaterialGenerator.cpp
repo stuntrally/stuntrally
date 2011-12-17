@@ -160,7 +160,7 @@ void MaterialGenerator::generate(bool fixedFunction)
 	/*
 	if (mDef->getName() == "pipeGlass") {
 	MaterialSerializer serializer;
-	serializer.exportMaterial(mat, "test.material");
+	serializer.exportMaterial(mMaterial, "test.material");
 	}
 	*/
 	
@@ -1257,7 +1257,7 @@ void MaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::StrStrea
 	if (fpNeedLighting())
 	{
 		outStream <<	
-		// Compute the diffuse term
+		// compute the diffuse term
 		"	float3 lightDir = normalize(lightPosition.xyz - (position.xyz * lightPosition.w)); \n"
 		"	float diffuseLight = max(dot(lightDir, normal), 0); \n";
 		
@@ -1268,11 +1268,11 @@ void MaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::StrStrea
 		else outStream <<
 			"	float3 diffuse = matDiffuse.xyz * lightDiffuse.xyz * diffuseLight; \n";
 			
-		// Compute the specular term
+		// compute the specular term
 		if (needSpecMap()) outStream <<
 			"	float4 specTex = tex2D(specMap, texCoord.xy); \n"
 			"	float3 matSpec = specTex.xyz; \n"
-			"	float shininess = specTex.w*256; \n";
+			"	float shininess = specTex.w*255; \n";
 		else outStream <<
 			"	float3 matSpec = matSpecular.xyz; \n"
 			"	float shininess = matSpecular.w; \n";
@@ -1284,12 +1284,12 @@ void MaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::StrStrea
 		"	if (diffuseLight <= 0) specularLight = 0; \n"
 		"	float3 specular = matSpec.xyz * lightSpecular.xyz * specularLight; \n";
 
-		// Compute the ambient term
+		// compute the ambient term
 		outStream << "	float3 ambient = matAmbient.xyz * globalAmbient.xyz ";
 		if (needDiffuseMap() || (needLightMap() && needBlendMap())) outStream <<	"* diffuseTex.xyz";
 		outStream << "; \n";
 
-		// Add all terms together (also with shadow)
+		// add all terms together (also with shadow)
 		if (needShadows() || needTerrainLightMap()) outStream <<
 		"	float3 lightColour = ambient + diffuse*shadowing + specular*shadowing; \n";
 		else outStream <<

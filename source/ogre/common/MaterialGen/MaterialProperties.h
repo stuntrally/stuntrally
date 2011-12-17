@@ -48,7 +48,7 @@ struct MaterialProperties
 	// the blendMap contains parts that should NOT be affected by the color change
 	textureMap lightMaps; textureMap blendMaps;
 	
-	// specular map. holds the specular color in RGB, shininess in alpha.
+	// specular map. holds the specular color in RGB, shininess in alpha (0 to 255).
 	textureMap specMaps;
 	
 	// alpha map, transparency in 'r' channel (has no effect if 'transparent' is false)
@@ -110,13 +110,15 @@ struct MaterialProperties
 	/*
 	 * shader features:
 	 * - per vertex lighting
+	 * - object space normal maps (useful for meshes with mirrored UVs)
 	 * - ambient occlusion map (pre-baked, seperate map) - this map would only be used when SSAO effect is off
-	 * - specular / reflectivity map (specular exponent / reflectivity factor in diffuse map alpha)
+	 * - diffuseSpec map (specular intensity in diffuse map alpha) 
 	 * - parallax mapping, normalHeight map (height in normal map alpha)
 	 * - displacement mapping
 	 * 
 	 * portability / reusability:
 	 * - support different light types (point, directional, spot)
+	 * - support emissive lighting calculations
 	 * - support more than 1 light at a time (most likely using pass iteration)
 	 * - support shadowing methods aside from PSSM
 	 * 
