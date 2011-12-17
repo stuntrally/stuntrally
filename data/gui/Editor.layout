@@ -218,7 +218,7 @@
 			<Widget type="TabItem" skin="" position="4 26 787 531" name="TabTrack">
 				<UserString key="RelativeTo" value="OptionsWnd"/>
 				<Property key="Caption" value="#{Track}"/>
-				<Widget type="TextBox" skin="TextBox" position="176 448 56 24" name="TrackText">
+				<Widget type="TextBox" skin="TextBox" position="176 458 56 24" name="TrackText">
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 					<Property key="InheritsAlpha" value="true"/>
 					<Property key="Colour" value="0 0 0"/>
@@ -363,7 +363,7 @@
 				<Widget type="ImageBox" skin="ImageBox" position="304 6 168 24" name="TrkView2icons2">
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 					<Property key="ImageTexture" value="track_icons.png"/>
-					<Property key="ImageCoord" value="0 0 224 32"/>
+					<Property key="ImageCoord" value="0 0 256 32"/>
 				</Widget>
 				<Widget type="Button" skin="Button" position="16 7 40 24" name="TrkView1">
 					<UserString key="RelativeTo" value="OptionsWnd"/>
@@ -393,14 +393,14 @@
 					<Property key="TextColour" value="0.8 1 0.5"/>
 					<UserString key="tip" value="#{TipNewDup}"/>
 				</Widget>
-				<Widget type="Button" skin="Button" position="416 447 80 24" name="TrackRename">
+				<Widget type="Button" skin="Button" position="416 457 80 24" name="TrackRename">
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 					<Property key="Caption" value="#{Rename}"/>
 					<Property key="Colour" value="1 0.9 0.4"/>
 					<Property key="TextColour" value="1 0.9 0.4"/>
 					<UserString key="tip" value="#{TipRenameTrk}"/>
 				</Widget>
-				<Widget type="EditBox" skin="EditBox" position="240 447 160 24" name="TrackName">
+				<Widget type="EditBox" skin="EditBox" position="240 457 160 24" name="TrackName">
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 					<Property key="Colour" value="0.6 1 0.8"/>
 					<Property key="TextColour" value="0.6 1 0.8"/>
@@ -414,12 +414,12 @@
 					<Property key="Colour" value="1 0.6 0.3"/>
 					<UserString key="tip" value="#{TipDeleteTrk}"/>
 				</Widget>
-                <Widget type="TextBox" skin="TextBox" position="16 448 72 24">
+                <Widget type="TextBox" skin="TextBox" position="16 458 72 24">
 					<UserString key="RelativeTo" value="OptionsWnd"/>
                     <Property key="Caption" value="#{Find}:"/>
                     <Property key="TextColour" value="0.7 0.8 0.9"/>
                 </Widget>
-                <Widget type="EditBox" skin="EditBox" position="16 472 88 24" name="TrackFind">
+                <Widget type="EditBox" skin="EditBox" position="16 482 88 24" name="TrackFind">
 					<UserString key="RelativeTo" value="OptionsWnd"/>
                     <Property key="Colour" value="0.7 0.8 0.9"/>
                     <Property key="MaxTextLength" value="20"/>

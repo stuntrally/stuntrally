@@ -1660,7 +1660,7 @@
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="Colour" value="0.9 0.92 1"/>
 			<Property key="Alpha" value="0.6"/>
-			<Widget type="TextBox" skin="TextBox" position="0 0 75 26" name="RplPercent">
+			<Widget type="TextBox" skin="TextBox" position="0 2 75 24" name="RplPercent">
 				<UserString key="RelativeTo" value="OptionsWnd"/>
 				<Property key="InheritsAlpha" value="false"/>
 				<Property key="Alpha" value="1"/>
@@ -1674,7 +1674,7 @@
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="Colour" value="0.9 0.96 1.0"/>
 			<Property key="Alpha" value="0.6"/>
-			<Widget type="TextBox" skin="TextBox" position="0 0 105 24" name="RplTimeCur">
+			<Widget type="TextBox" skin="TextBox" position="0 2 105 24" name="RplTimeCur">
 				<UserString key="RelativeTo" value="OptionsWnd"/>
 				<Property key="InheritsAlpha" value="false"/>
 				<Property key="Alpha" value="1"/>
@@ -1688,7 +1688,7 @@
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="Colour" value="0.8 0.9 1"/>
 			<Property key="Alpha" value="0.5"/>
-			<Widget type="TextBox" skin="TextBox" position="0 0 105 24" name="RplTimeLen">
+			<Widget type="TextBox" skin="TextBox" position="0 2 105 24" name="RplTimeLen">
 				<UserString key="RelativeTo" value="OptionsWnd"/>
 				<Property key="InheritsAlpha" value="false"/>
 				<Property key="Alpha" value="1"/>
