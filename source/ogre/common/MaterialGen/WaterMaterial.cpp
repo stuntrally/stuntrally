@@ -38,7 +38,7 @@ void WaterMaterialGenerator::generate(bool fixedFunction)
 	Ogre::Pass* pass = technique->createPass();
 	
 	pass->setCullingMode(CULL_NONE);
-	pass->setDepthWriteEnabled(false);
+	pass->setDepthWriteEnabled(true);
 	pass->setSceneBlending(SBT_TRANSPARENT_ALPHA);
 	
 	Ogre::TextureUnitState* tu;
