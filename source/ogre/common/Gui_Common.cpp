@@ -2,7 +2,7 @@
 #include "../Defines.h"
 #include "../../road/Road.h"
 #include "../../vdrift/pathmanager.h"
-#include "MaterialFactory.h"
+#include "MaterialGen/MaterialFactory.h"
 #ifndef ROAD_EDITOR
 	#include "../../vdrift/game.h"
 	#include "../OgreGame.h"
@@ -49,7 +49,7 @@ void App::slViewDist(SL)
 	Vector3 sc = v*Vector3::UNIT_SCALE;
 
 	SceneNode* nskb = mSceneMgr->getSkyBoxNode();
-	if (nskb)  nskb->setScale(sc*0.58);
+	if (nskb)  nskb->setScale(sc*0.58f);
 	else  if (ndSky)  ndSky->setScale(sc);
 
 	if (bGI)  pSet->view_distance = v;
@@ -523,24 +523,24 @@ void App::slAntiAliasing(SL)
 			Ogre::ConfigOption& FSAAOption = result->second;
 			for( Ogre::StringVector::iterator i( FSAAOption.possibleValues.begin() ), iEnd( FSAAOption.possibleValues.end() ); i != iEnd; ++i )
 			{
-				fsaa = strtol( (*i).c_str(), 0, 10  );
+				fsaa = strtol( (*i).c_str(), 0, 10 );
 				fsaaValues.push_back(fsaa);
 			}
 		}
 	}
-	catch (Ogre::Exception&) { return; }
+	catch (Ogre::Exception&) {  return;  }
 	
 	float v = fsaaValues.back() * val/res;
 	
-	if (fsaaValues.size() < 1) return;
+	if (fsaaValues.size() < 1)  return;
 	
-	for (int i=1; i<fsaaValues.size(); i++)
+	for (int i=1; i < (int)fsaaValues.size(); i++)
 	{
-		if (v >= fsaaValues[i]) continue;
+		if (v >= fsaaValues[i])  continue;
 		int smaller = fsaaValues[i] - v;
 		int bigger = v - fsaaValues[i-1];
-		if (bigger > smaller) v = fsaaValues[i];
-		else v = fsaaValues[i-1];
+		if (bigger > smaller)  v = fsaaValues[i];
+		else  v = fsaaValues[i-1];
 		break;
 	}
 	if (bGI)  pSet->fsaa = v;
@@ -640,8 +640,8 @@ void App::ResizeOptWnd()
 
 	const int wx = pSet->windowx, wy = pSet->windowy;
 	const int yN = 7;
-	const Real yw[yN] = {400, 600, 720, 768, 960, 1024, 1200};
-	const Real yf[yN] = {0.0, 0.0, 0.05, 0.1, 0.2, 0.3,  0.3};
+	const Real yw[yN] = {400.f, 600.f, 720.f, 768.f, 960.f, 1024.f, 1200.f};
+	const Real yf[yN] = {0.0f,  0.0f,  0.05f, 0.1f,  0.2f,  0.3f,   0.3f};
 
 	Real xm = 0.f, ym = 0.f;  // margin
 	for (int i=0; i < yN; ++i)
@@ -773,7 +773,7 @@ void App::comboGraphicsAll(ComboBoxPtr cmb, size_t val)
 	//  update gui  sld,val,chk  ...
 	GuiInitGraphics();  // += newDelegate..?
 
-	ButtonPtr btn, bchk;  ScrollBar* sl;  size_t v;
+	ButtonPtr bchk;  ScrollBar* sl;  size_t v;
 #ifndef ROAD_EDITOR  /// game only
 	// duplicated code..
 	Chk("ParticlesOn", chkParticles, pSet->particles);	Chk("TrailsOn", chkTrails, pSet->trails);

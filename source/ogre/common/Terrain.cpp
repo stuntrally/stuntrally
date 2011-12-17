@@ -2,7 +2,7 @@
 #include "../Defines.h"
 #include "../common/RenderConst.h"
 #include "../../road/Road.h"
-#include "../common/TerrainMaterialGen.h"
+#include "../common/MaterialGen/TerrainMaterialGen.h"
 
 #ifdef ROAD_EDITOR
 	#include "../../editor/OgreApp.h"

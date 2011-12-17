@@ -5,7 +5,7 @@
 #include "../road/Road.h"
 #include "../vdrift/game.h"
 #include "../paged-geom/PagedGeometry.h"
-#include "../ogre/common/MaterialFactory.h"
+#include "../ogre/common/MaterialGen/MaterialFactory.h"
 #include "../oisb/OISBSystem.h"
 
 #include <OgreParticleSystem.h>

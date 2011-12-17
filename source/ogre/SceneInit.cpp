@@ -7,7 +7,7 @@
 #include "../road/Road.h"
 #include "SplitScreen.h"
 #include "common/RenderConst.h"
-#include "common/MaterialFactory.h"
+#include "common/MaterialGen/MaterialFactory.h"
 
 #include "../btOgre/BtOgrePG.h"
 #include "../btOgre/BtOgreGP.h"

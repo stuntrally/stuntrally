@@ -36,7 +36,7 @@ THE SOFTWARE.
 #include "OgreHighLevelGpuProgramManager.h"
 #include "OgreHardwarePixelBuffer.h"
 #include "OgreShadowCameraSetupPSSM.h"
-#include "../Defines.h"
+#include "../../Defines.h"
 #include "MaterialGenerator.h"
 // depth shadows: use terrain receiver shader or use custom shader (pssm.cg)
 #define CUSTOM_RECEIVER_SHADER

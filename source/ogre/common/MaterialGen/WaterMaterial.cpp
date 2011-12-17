@@ -1,14 +1,14 @@
 #include "pch.h"
-#include "../Defines.h"
+#include "../../Defines.h"
 
 #include "WaterMaterial.h"
 #include "MaterialDefinition.h"
 #include "MaterialFactory.h"
 
 #ifndef ROAD_EDITOR
-	#include "../OgreGame.h"
+	#include "../../OgreGame.h"
 #else
-	#include "../../editor/OgreApp.h"
+	#include "../../../editor/OgreApp.h"
 #endif
 
 #include <OgreMaterial.h>

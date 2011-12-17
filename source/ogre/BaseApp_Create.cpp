@@ -24,7 +24,7 @@
 #include "common/MyGUI_D3D11.h"
 
 #include <OgreRTShaderSystem.h>
-#include "common/MaterialGenerator.h"
+#include "common/MaterialGen/MaterialGenerator.h"
 using namespace Ogre;
 
 

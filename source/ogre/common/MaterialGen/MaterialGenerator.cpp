@@ -1,5 +1,5 @@
 #include "pch.h"
-#include "../Defines.h"
+#include "../../Defines.h"
 
 #include "MaterialGenerator.h"
 #include "MaterialDefinition.h"
@@ -7,9 +7,9 @@
 #include "ShaderProperties.h"
 
 #ifndef ROAD_EDITOR
-	#include "../OgreGame.h"
+	#include "../../OgreGame.h"
 #else
-	#include "../../editor/OgreApp.h"
+	#include "../../../editor/OgreApp.h"
 #endif
 
 

@@ -5,7 +5,7 @@
 #include "../paged-geom/PagedGeometry.h"
 #include "../vdrift/pathmanager.h"
 #include "../ogre/common/RenderConst.h"
-#include "../ogre/common/MaterialFactory.h"
+#include "../ogre/common/MaterialGen/MaterialFactory.h"
 using namespace Ogre;
 
 

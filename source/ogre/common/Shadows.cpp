@@ -1,11 +1,8 @@
 #include "pch.h"
 #include "../Defines.h"
-#include "../common/TerrainMaterialGen.h"
-#include "../common/MaterialFactory.h"
+#include "../common/MaterialGen/TerrainMaterialGen.h"
+#include "../common/MaterialGen/MaterialFactory.h"
 
-#include "../paged-geom/PagedGeometry.h"
-#include "../paged-geom/GrassLoader.h"
-using namespace Forests;
 
 #ifdef ROAD_EDITOR
 	#include "../../editor/OgreApp.h"
@@ -19,6 +16,8 @@ using namespace Forests;
 	#include "../SplitScreen.h"
 	#include "../QTimer.h"
 #endif
+	#include "../../paged-geom/PagedGeometry.h"
+	#include "../../paged-geom/GrassLoader.h"
 #include <OgreTerrain.h>
 #include <OgreShadowCameraSetupLiSPSM.h>
 #include <OgreShadowCameraSetupPSSM.h>
@@ -28,6 +27,7 @@ using namespace Forests;
 #include <OgreOverlayManager.h>
 
 using namespace Ogre;
+using namespace Forests;
 
 
 ///  Shadows config
