@@ -1611,9 +1611,9 @@
 		<Property key="Caption" value="#{Quit}"/>
 		<Property key="Colour" value="1 0.4 0.4"/>
 	</Widget>
-	<Widget type="Window" skin="WindowCS" position="224 -20 820 104" layer="Back" name="RplWnd">
+	<Widget type="Window" skin="WindowCS" position="224 -20 860 112" layer="Back" name="RplWnd">
 		<Property key="Alpha" value="0.3"/>
-		<Widget type="ScrollBar" skin="ScrollBarH" position="4 41 800 20" name="RplSlider">
+		<Widget type="ScrollBar" skin="ScrollBarH" position="4 36 600 16" name="RplSlider">
 			<UserString key="RelativeTo" value="OptionsWnd"/>
 			<Property key="Alpha" value="0.6"/>
 			<Property key="InheritsAlpha" value="false"/>
@@ -1655,12 +1655,12 @@
 			<Property key="Colour" value="0.6 0.8 1"/>
 			<Property key="Alpha" value="0.6"/>
 		</Widget>
-		<Widget type="Widget" skin="PanelSkin" position="350 4 120 34">
+		<Widget type="Widget" skin="PanelSkin" position="280 4 80 26">
 			<UserString key="RelativeTo" value="OptionsWnd"/>
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="Colour" value="0.9 0.92 1"/>
 			<Property key="Alpha" value="0.6"/>
-			<Widget type="TextBox" skin="TextBox" position="0 0 100 34" name="RplPercent">
+			<Widget type="TextBox" skin="TextBox" position="0 0 75 26" name="RplPercent">
 				<UserString key="RelativeTo" value="OptionsWnd"/>
 				<Property key="InheritsAlpha" value="false"/>
 				<Property key="Alpha" value="1"/>
@@ -1669,12 +1669,12 @@
 				<Property key="FontName" value="font_Vera.24"/>
 			</Widget>
 		</Widget>
-		<Widget type="Widget" skin="PanelSkin" position="500 4 140 34">
+		<Widget type="Widget" skin="PanelSkin" position="380 4 100 26">
 			<UserString key="RelativeTo" value="OptionsWnd"/>
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="Colour" value="0.9 0.96 1.0"/>
 			<Property key="Alpha" value="0.6"/>
-			<Widget type="TextBox" skin="TextBox" position="0 0 140 34" name="RplTimeCur">
+			<Widget type="TextBox" skin="TextBox" position="0 0 105 24" name="RplTimeCur">
 				<UserString key="RelativeTo" value="OptionsWnd"/>
 				<Property key="InheritsAlpha" value="false"/>
 				<Property key="Alpha" value="1"/>
@@ -1683,12 +1683,12 @@
 				<Property key="FontName" value="font_Vera.24"/>
 			</Widget>
 		</Widget>
-		<Widget type="Widget" skin="PanelSkin" position="650 4 140 34">
+		<Widget type="Widget" skin="PanelSkin" position="500 4 100 26">
 			<UserString key="RelativeTo" value="OptionsWnd"/>
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="Colour" value="0.8 0.9 1"/>
 			<Property key="Alpha" value="0.5"/>
-			<Widget type="TextBox" skin="TextBox" position="0 0 140 34" name="RplTimeLen">
+			<Widget type="TextBox" skin="TextBox" position="0 0 105 24" name="RplTimeLen">
 				<UserString key="RelativeTo" value="OptionsWnd"/>
 				<Property key="InheritsAlpha" value="false"/>
 				<Property key="Alpha" value="1"/>
