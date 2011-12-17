@@ -156,34 +156,6 @@ material hud/CarDot
 	}
 }
 
-material hud/CarPos
-{
-	receive_shadows off
-	technique
-	{
-		pass
-		{
-			lighting off
-			depth_check off
-			depth_write off
-			scene_blend alpha_blend
-			diffuse vertexcolour
-			cull_hardware none
-			
-			vertex_program_ref Ogre/Compositor/StdQuad_Cg_vp
-			{
-			}
-			fragment_program_ref Ogre/Compositor/StdQuad_fp
-			{
-			} 
-			texture_unit
-			{
-				texture carpos0.png
-			}
-		}
-	}
-}
-
 material hud/Times
 {
 	receive_shadows off

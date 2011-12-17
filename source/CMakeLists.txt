@@ -15,7 +15,7 @@ else()
 endif()
 
 # Search include files from all source sub directories
-include_directories(btOgre bullet ogre paged-geom road tinyxml vdrift)
+include_directories(btOgre bullet ogre ogre/common paged-geom road tinyxml vdrift)
 
 # Compile our libraries
 foreach(ourlib   tinyxml bullet oisb paged-geom)
@@ -31,6 +31,7 @@ if(BUILD_GAME)
 		btOgre/*.cpp
 		ogre/*.cpp
 		ogre/*/*.cpp
+		ogre/*/*/*.cpp
 		road/*.cpp
 	)
 	if (MSVC)
@@ -51,6 +52,7 @@ if(BUILD_EDITOR)
 		vdrift/pathmanager.cpp
 		ogre/QTimer.cpp
 		ogre/common/*.cpp
+		ogre/common/MaterialGen/*.cpp
 		road/*.cpp
 	)
 

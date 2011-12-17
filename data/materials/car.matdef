@@ -107,6 +107,18 @@
 	parent = car_interior
 	cullHardware = none
 	receivesDepthShadows = false
+	
+; ------------- CT ------------------
+[car_body_CT]
+	parent = car_body
+	reflectivityMap_1024 = refl.png
+	
+[cartire_front_CT]
+	parent = cartire_front
+	diffuseMap_1024 = wheel.png
+
+[cartire_rear_CT]
+	parent = cartire_front_CT
 
 
 ; ------------- RS2 ----------------

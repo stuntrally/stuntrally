@@ -1,0 +1,7 @@
+[hud/CarPos]
+	lighting = false
+	depthWrite = false
+	sceneBlend = alpha
+	vertexColour = true
+	cullHardware = none
+	diffuseMap_1 = carpos0.png
