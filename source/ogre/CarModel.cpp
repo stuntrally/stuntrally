@@ -205,6 +205,7 @@ void CarModel::Update(PosInfo& posInfo, float time)
 	}
 	
 	//  wheels  ------------------------------------------------------------------------
+	float whMudSpin = 0.f;
 	for (int w=0; w < 4; w++)
 	{
 		float wR = posInfo.whR[w];
@@ -302,7 +303,7 @@ void CarModel::Update(PosInfo& posInfo, float time)
 			{
 				float vel = Math::Abs(pCar->dynamics.wheel[w].GetAngularVelocity());
 				bool e = idPar == 2 &&  vel > 30.f;
-				float emitM = e ?  cd.whH[w] * std::min(80.f, 1.5f * vel)  : 0.f;
+				float emitM = e ?  cd.whH[w] * std::min(80.f, 1.5f * vel)  : 0.f;  whMudSpin += emitM / 80.f;
 				ParticleEmitter* pe = pflM[w]->getEmitter(0);
 				pe->setPosition(vpos + posInfo.carY * wR*0.51f);
 				pe->setDirection(-posInfo.carY);	pe->setEmissionRate(emitM * pSet->particles_len);
@@ -312,7 +313,7 @@ void CarModel::Update(PosInfo& posInfo, float time)
 				float vel = Math::Abs(pCar->dynamics.wheel[w].GetAngularVelocity());
 				
 				bool e = idPar == 1 &&  vel > 30.f;
-				float emitM = e ?  cd.whH[w] * std::min(160.f, 3.f * vel)  : 0.f;
+				float emitM = e ?  cd.whH[w] * std::min(160.f, 3.f * vel)  : 0.f;  whMudSpin += emitM / 80.f;
 				ParticleEmitter* pe = pflMs[w]->getEmitter(0);
 				pe->setPosition(vpos + posInfo.carY * wR*0.51f);
 				pe->setDirection(-posInfo.carY);	pe->setEmissionRate(emitM * pSet->particles_len);
@@ -334,6 +335,9 @@ void CarModel::Update(PosInfo& posInfo, float time)
 				lay.tclr.r,lay.tclr.g,lay.tclr.b, lay.tclr.a * al/**/);
 		}
 	}
+	//pCar->whMudSpin = whMudSpin;  // for snd, move to posInfo..
+	pCar->whMudSpin += (whMudSpin - pCar->whMudSpin)*0.3f;  //_every 2nd val=0 why?
+	//LogO(toStr(pCar->whMudSpin));
 
 	// Reflection
 	pReflect->camPosition = pMainNode->getPosition();

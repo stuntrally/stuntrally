@@ -314,9 +314,9 @@ public:
 	SOUNDSOURCE gravelsound[4];
 	SOUNDSOURCE crashsound[Ncrashsounds];
 	float crashsoundtime[Ncrashsounds];
-	SOUNDSOURCE roadnoise;
-	SOUNDSOURCE mudsnd, watersnd[Nwatersounds];  // fluids
-	bool fluidHitOld;
+	SOUNDSOURCE roadnoise,boostsnd;
+	SOUNDSOURCE mudsnd, watersnd[Nwatersounds], mud_cont,water_cont;  // fluids
+	bool fluidHitOld;  float whMudSpin;  //new vars
 	
 	//internal variables that might change during driving (so, they need to be serialized)
 	float last_steer;

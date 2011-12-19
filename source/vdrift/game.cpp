@@ -12,6 +12,7 @@
 #include "performance_testing.h"
 #include "quickprof.h"
 #include "tracksurface.h"
+#include "../ogre/QTimer.h"
 #include "../ogre/OgreGame.h"
 #include "../ogre/FollowCamera.h"
 #include "../oisb/OISBSystem.h"
@@ -66,6 +67,8 @@ void GAME::Start(std::list <string> & args)
 
 bool GAME::InitializeSound()
 {
+	QTimer ti;  ti.update();  /// time
+	
 	if (sound.Init(2048, info_output, error_output))
 	{
 		generic_sounds.SetLibraryPath(PATHMANAGER::GetGenericSoundPath());
@@ -89,6 +92,9 @@ bool GAME::InitializeSound()
 			if (!generic_sounds.Load(name, sound.GetDeviceInfo(), error_output))  return false;
 		}
 		if (!generic_sounds.Load("mud1", sound.GetDeviceInfo(), error_output))  return false;
+		if (!generic_sounds.Load("mud_cont", sound.GetDeviceInfo(), error_output))  return false;
+		if (!generic_sounds.Load("water_cont", sound.GetDeviceInfo(), error_output))  return false;
+		if (!generic_sounds.Load("boost", sound.GetDeviceInfo(), error_output))  return false;
 		
 		sound.SetMasterVolume(settings->vol_master);
 		sound.Pause(false);
@@ -100,6 +106,10 @@ bool GAME::InitializeSound()
 	}
 
 	info_output << "Sound initialization successful" << endl;
+
+	ti.update();	/// time
+	float dt = ti.dt * 1000.f;
+	info_output << "::: Time Sounds: " << dt << " ms" << endl;
 	return true;
 }
 

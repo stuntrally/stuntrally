@@ -411,6 +411,36 @@ bool CAR::LoadSounds(
 		mudsnd.SetBuffer(*buf);		mudsnd.Set3DEffects(true);
 		mudsnd.SetLoop(false);		mudsnd.SetGain(0);
 	}
+	//set up fluid cont. sounds
+	{
+		const SOUNDBUFFER * buf = soundbufferlibrary.GetBuffer("mud_cont");
+		if (!buf)
+		{	error_output << "Can't load mud_cont sound" << std::endl;	return false;
+		}
+		mud_cont.SetBuffer(*buf);	mud_cont.Set3DEffects(true);
+		mud_cont.SetLoop(true);		mud_cont.SetGain(0);
+		mud_cont.SetPitch(1.0);		mud_cont.Play();
+	}
+	{
+		const SOUNDBUFFER * buf = soundbufferlibrary.GetBuffer("water_cont");
+		if (!buf)
+		{	error_output << "Can't load water_cont sound" << std::endl;	return false;
+		}
+		water_cont.SetBuffer(*buf);	water_cont.Set3DEffects(true);
+		water_cont.SetLoop(true);	water_cont.SetGain(0);
+		water_cont.SetPitch(1.0);	water_cont.Play();
+	}
+	
+	//set up boost sound
+	{
+		const SOUNDBUFFER * buf = soundbufferlibrary.GetBuffer("boost");
+		if (!buf)
+		{	error_output << "Can't load boost sound" << std::endl;	return false;
+		}
+		boostsnd.SetBuffer(*buf);	boostsnd.Set3DEffects(true);
+		boostsnd.SetLoop(true);		boostsnd.SetGain(0);
+		boostsnd.SetPitch(1.0);		boostsnd.Play();
+	}
 
 	return true;
 }
@@ -465,10 +495,14 @@ void CAR::GetSoundList(std::list <SOUNDSOURCE *> & outputlist)
 	for (int i = 0; i < Ncrashsounds; ++i)
 		outputlist.push_back(&crashsound[i]);
 	outputlist.push_back(&roadnoise);
+	outputlist.push_back(&boostsnd);
 
 	for (int i = 0; i < Nwatersounds; ++i)
 		outputlist.push_back(&watersnd[i]);
 	outputlist.push_back(&mudsnd);
+	
+	outputlist.push_back(&mud_cont);
+	outputlist.push_back(&water_cont);
 }
 
 void CAR::GetEngineSoundList(std::list <SOUNDSOURCE *> & outputlist)
@@ -546,7 +580,7 @@ void CAR::UpdateSounds(float dt)
 	MATHVECTOR <float,3> engPos, whPos[4];  // engine, wheels pos
 	TRACKSURFACE::TYPE surfType[4];
 	float squeal[4],whVel[4], suspVel[4],suspDisp[4];
-	float whH_all = 0.f;
+	float whH_all = 0.f;  bool mud = false;
 	
 	///  replay play  ------------------------------------------
 	if (pApp->bRplPlay)
@@ -567,6 +601,8 @@ void CAR::UpdateSounds(float dt)
 			//  susp
 			suspVel[w] = pApp->fr.suspVel[w];
 			suspDisp[w] = pApp->fr.suspDisp[w];
+			//  TODO fluids snd & par in replays...
+			//whH_all
 		}
 	}
 	else  /// game  ------------------------------------------
@@ -590,8 +626,9 @@ void CAR::UpdateSounds(float dt)
 			//  susp
 			suspVel[w] = dynamics.GetSuspension(wp).GetVelocity();
 			suspDisp[w] = dynamics.GetSuspension(wp).GetDisplacementPercent();
-
+			//  fluids
 			whH_all += dynamics.whH[w];
+			if (dynamics.whP[w] >= 1)  mud = true;
 		}
 	}
 	///  ------------------------------------------
@@ -715,17 +752,13 @@ void CAR::UpdateSounds(float dt)
 		}
 	}
 	
-	//update fluids sound
+	//update fluids sound - hit
 	bool fluidHit = whH_all > 1.f;
 	//LogO(toStr(whH_all) + "  v "+ toStr(dynVel));
 
 	if (fluidHit && !fluidHitOld)
 	//if (dynVel > 10.f && whH_all > 1.f && )
 	{
-		bool mud = false;
-		for (int w=0; w < 4; ++w)
-			if (dynamics.whP[w] >= 1)  mud = true;
-		
 		int i = std::min(Nwatersounds-1, (int)(dynVel / 15.f));
 		float gain = std::min(3.0f, 0.3f + dynVel / 30.f);
 		SOUNDSOURCE& snd = /*mud ? mudsnd : */watersnd[i];
@@ -733,7 +766,7 @@ void CAR::UpdateSounds(float dt)
 		//LogO("fluid hit i"+toStr(i)+" g"+toStr(gain)+" "+(mud?"mud":"wtr"));
 		if (!snd.Audible())
 		{
-			snd.SetGain(gain /* * pSet->vol_env*/);
+			snd.SetGain(gain /* * pSet->vol_fluids*/);
 			snd.SetPosition(engPos[0], engPos[1], engPos[2]);
 			snd.Stop();
 			snd.Play();
@@ -743,7 +776,7 @@ void CAR::UpdateSounds(float dt)
 		SOUNDSOURCE& snd = mudsnd;
 		if (!snd.Audible())
 		{
-			snd.SetGain(gain /* * pSet->vol_env*/);
+			snd.SetGain(gain /* * pSet->vol_fluids*/);
 			snd.SetPosition(engPos[0], engPos[1], engPos[2]);
 			snd.Stop();
 			snd.Play();
@@ -751,6 +784,29 @@ void CAR::UpdateSounds(float dt)
 	}
 	fluidHitOld = fluidHit;
 
+	//update fluids sound - continuous
+	{
+		float vel = mud && whH_all > 0.1f ?
+			whMudSpin * 2.5f : 0.f;
+		mud_cont.SetGain(std::min(1.f, vel) /* 1.0f /* * pSet->vol_fluids..*/);
+		mud_cont.SetPitch(std::max(0.7f, std::min(3.f, vel * 0.35f)));
+		mud_cont.SetPosition(engPos[0], engPos[1], engPos[2]);
+	}
+	{
+		float vel = !mud && whH_all > 0.1f && whH_all < 3.9f ?
+			dynVel / 30.f : 0.f;
+		water_cont.SetGain(std::min(1.f, vel * 1.5f) /* 1.0f /* * pSet->vol_fluids..*/);
+		water_cont.SetPitch(std::max(0.7f, std::min(1.3f, vel)));
+		water_cont.SetPosition(engPos[0], engPos[1], engPos[2]);
+	}
+	
+	//update boost sound
+	{
+		float gain = dynamics.doBoost;
+		boostsnd.SetGain(gain * 0.36 /* * pSet->vol_env*/);
+		boostsnd.SetPosition(engPos[0], engPos[1], engPos[2]); //back?-
+	}
+	
 	//update crash sound
 	#if 0
 	if (dynamics.bHitSnd)// && dynamics.sndHitN >= 0)
@@ -807,7 +863,6 @@ void CAR::UpdateSounds(float dt)
 		}
 	}
 	//#endif
-
 
 	//  time played
 	for (int i=0; i < Ncrashsounds; ++i)
