@@ -766,7 +766,7 @@ void CAR::UpdateSounds(float dt)
 		//LogO("fluid hit i"+toStr(i)+" g"+toStr(gain)+" "+(mud?"mud":"wtr"));
 		if (!snd.Audible())
 		{
-			snd.SetGain(gain /* * pSet->vol_fluids*/);
+			snd.SetGain(gain * pSet->vol_env);
 			snd.SetPosition(engPos[0], engPos[1], engPos[2]);
 			snd.Stop();
 			snd.Play();
@@ -776,7 +776,7 @@ void CAR::UpdateSounds(float dt)
 		SOUNDSOURCE& snd = mudsnd;
 		if (!snd.Audible())
 		{
-			snd.SetGain(gain /* * pSet->vol_fluids*/);
+			snd.SetGain(gain * pSet->vol_env);
 			snd.SetPosition(engPos[0], engPos[1], engPos[2]);
 			snd.Stop();
 			snd.Play();
@@ -788,14 +788,14 @@ void CAR::UpdateSounds(float dt)
 	{
 		float vel = mud && whH_all > 0.1f ?
 			whMudSpin * 2.5f : 0.f;
-		mud_cont.SetGain(std::min(1.f, vel) /* 1.0f /* * pSet->vol_fluids..*/);
+		mud_cont.SetGain(std::min(1.f, vel) * pSet->vol_env);
 		mud_cont.SetPitch(std::max(0.7f, std::min(3.f, vel * 0.35f)));
 		mud_cont.SetPosition(engPos[0], engPos[1], engPos[2]);
 	}
 	{
 		float vel = !mud && whH_all > 0.1f && whH_all < 3.9f ?
 			dynVel / 30.f : 0.f;
-		water_cont.SetGain(std::min(1.f, vel * 1.5f) /* 1.0f /* * pSet->vol_fluids..*/);
+		water_cont.SetGain(std::min(1.f, vel * 1.5f) * pSet->vol_env);
 		water_cont.SetPitch(std::max(0.7f, std::min(1.3f, vel)));
 		water_cont.SetPosition(engPos[0], engPos[1], engPos[2]);
 	}
@@ -803,7 +803,7 @@ void CAR::UpdateSounds(float dt)
 	//update boost sound
 	{
 		float gain = dynamics.doBoost;
-		boostsnd.SetGain(gain * 0.36 /* * pSet->vol_env*/);
+		boostsnd.SetGain(gain * 0.57f * pSet->vol_engine);
 		boostsnd.SetPosition(engPos[0], engPos[1], engPos[2]); //back?-
 	}
 	
