@@ -59,6 +59,7 @@
 	<Tag name="Light">Lumină</Tag>
 	<Tag name="DistToRoad">Distanța față de drum</Tag>
 	<Tag name="TBPlace">Place</Tag>
+	<Tag name="MessageBox_Retry">Retry</Tag>
 	<Tag name="TBLast">Ultimul</Tag>
 	<Tag name="InputMaxVal">Max. Value</Tag>
 	<Tag name="TipRollDrag">Drag pentru roți,valori mari va face să încetinească mai rapid(ex.140 pentru zăpadă, 80 pentru iarbă ).</Tag>
@@ -100,6 +101,7 @@
 	<Tag name="TipDustSize">Mărimea particulelor de praf.</Tag>
 	<Tag name="InputRoadInsAlt">alt-shift - at start   alt-ctrl - at end</Tag>
 	<Tag name="RearThrottleInverse">Rear throttle inverse</Tag>
+	<Tag name="MessageBox_Yes">Yes</Tag>
 	<Tag name="BlendMap">Blendmap</Tag>
 	<Tag name="InputMapPrevCamera">Previous Camera</Tag>
 	<Tag name="InputMapBrake">Brake</Tag>
@@ -108,7 +110,7 @@
 	<Tag name="TipGrassDens">Cât de densă/rară va fi iarba pe teren.</Tag>
 	<Tag name="Digits">Cifre (treapta de viteză,viteza)</Tag>
 	<Tag name="InputRoadYaw">- rotate yaw</Tag>
-	<Tag name="TipToggleLayer">Activează/dezactivează stratul texturii alese.</Tag>
+	<Tag name="MessageBox_Try">Try</Tag>
 	<Tag name="TerLHSm">Height smooth</Tag>
 	<Tag name="InputAssignKey">&lt;Press a key&gt;</Tag>
 	<Tag name="Wireframe">Cadru</Tag>
@@ -116,7 +118,7 @@
 	<Tag name="RoadQual">Calitatea in depărtare a traseului</Tag>
 	<Tag name="TerrainSize">Mărimea terenului</Tag>
 	<Tag name="InputRoadWidth">- schimbă lățimea drumului</Tag>
-	<Tag name="Replay">Replay</Tag>
+	<Tag name="InputMapSteering">Direcție(roată)</Tag>
 	<Tag name="AutoRear">Dat cu spatele automat</Tag>
 	<Tag name="NumLaps">Number of laps</Tag>
 	<Tag name="UseSSAA">Use SSAA when effects are enabled</Tag>
@@ -125,7 +127,7 @@
 	<Tag name="SetCamTo">Setează camera la</Tag>
 	<Tag name="max">max</Tag>
 	<Tag name="TipTerTriSize">Mărime triunghiuri teren în [metri](recomandat: 1 - 2,  folosește mai multe pentru zone ale terenului mai mari).Se schimbă după Actualizare(F8).</Tag>
-	<Tag name="ABS">ABS (antiblocare frâne)</Tag>
+	<Tag name="MessageBox_No">No</Tag>
 	<Tag name="TipCarsList">Listă mașini, click pentru a selecta (si a vedea imagine). Apasă [Schimbă mașina] apoi [Joc nou] pentru a o conduce.</Tag>
 	<Tag name="Model">Model</Tag>
 	<Tag name="InpSet_AxisHalf">Axis Half</Tag>
@@ -137,6 +139,7 @@
 	<Tag name="SkirtLength">Lungime fustă drum</Tag>
 	<Tag name="OrigImage">Întunecare</Tag>
 	<Tag name="InputRoadSelAlt">alt - selectează tot ctrl - nu selectează nimic</Tag>
+	<Tag name="MessageBox_Continue">Continue</Tag>
 	<Tag name="InputRoadSel">Backspace - adaugă sau elimină din selecţie</Tag>
 	<Tag name="LTrMaxTerAng">max terrain Angle</Tag>
 	<Tag name="RplAlpha">Transparent ghost</Tag>
@@ -196,6 +199,7 @@
 	<Tag name="Vegetation">Vegetation</Tag>
 	<Tag name="ssao">SSAO</Tag>
 	<Tag name="TerGenPow">Power (shape)</Tag>
+	<Tag name="MessageBox_Abort">Abort</Tag>
 	<Tag name="InputMapFlip">Flip</Tag>
 	<Tag name="difficulty">difficulty</Tag>
 	<Tag name="TrackInAir">În aer</Tag>
@@ -210,6 +214,7 @@
 	<Tag name="LightmapSize">Lightmap size</Tag>
 	<Tag name="TerGenPers">Persistance noise</Tag>
 	<Tag name="length">lungime</Tag>
+	<Tag name="ABS">ABS (antiblocare frâne)</Tag>
 	<Tag name="ColumnNSides">Fețele coloanei N</Tag>
 	<Tag name="RplAutoRec">Autoînregistrare reluare</Tag>
 	<Tag name="Reflections">Reflections</Tag>
@@ -255,7 +260,7 @@
 	<Tag name="InputRoadNotOnTer">when not on terrain</Tag>
 	<Tag name="ApplyShadows">Aplică umbre</Tag>
 	<Tag name="TipFogEndClr">Fog end color. R G B components 0 to 1 (eg. 0.7 0.8 0.9)</Tag>
-	<Tag name="InputCameraTxt1">with shift - main cameras only</Tag>
+	<Tag name="FrameSkip">Frames skip</Tag>
 	<Tag name="InputToggleVeget">V - Disable / enable vegetation</Tag>
 	<Tag name="Particles">Particule</Tag>
 	<Tag name="Other">Alte</Tag>
@@ -320,6 +325,7 @@
 	<Tag name="TipChangeHue">Schimbă culoarea mașinii</Tag>
 	<Tag name="InputUpdBlendmap">F9 - update terrain blendmap</Tag>
 	<Tag name="Intensity">Intensitate</Tag>
+	<Tag name="TexSize">Texture size</Tag>
 	<Tag name="TipSunAmbient">Sun light ambient (constant) color. R G B components 0 to 1 (eg. 0.4 0.4 0.4)</Tag>
 	<Tag name="ChngTrkTab">changed in [Track] tab</Tag>
 	<Tag name="InputRplCtrl2">P - pause/unpause replay</Tag>
@@ -331,7 +337,7 @@
 	<Tag name="Fog">Ceață</Tag>
 	<Tag name="InputCameraTxt2">with ctrl - switch current car when many</Tag>
 	<Tag name="InputMapNextTab">Next tab</Tag>
-	<Tag name="FrameSkip">Frames skip</Tag>
+	<Tag name="InputCameraTxt1">with shift - main cameras only</Tag>
 	<Tag name="InputTrackScrn">(for track screenshot)</Tag>
 	<Tag name="trailColor">trail color</Tag>
 	<Tag name="InputRoadChkFirst">0   - set checkpoint as first</Tag>
@@ -367,6 +373,7 @@
 	<Tag name="RoadStats">Road Stats</Tag>
 	<Tag name="SunDir">Direcția soarelui</Tag>
 	<Tag name="TipSmokeInt">Intensitate particule praf.</Tag>
+	<Tag name="MessageBox_Ignore">Ignore</Tag>
 	<Tag name="TerrainBrush">Terrain brush</Tag>
 	<Tag name="TipTexNormAuto">When checked, Normal texture is automatically set from Diffuse texture (+ _nh in filename).</Tag>
 	<Tag name="TrackBestTime">Cel mai bun timp</Tag>
@@ -401,6 +408,7 @@
 	<Tag name="Size">Size</Tag>
 	<Tag name="AutoGearbox">Auto gearbox</Tag>
 	<Tag name="InputSlowFast">shift - slow   ctrl - fast</Tag>
+	<Tag name="MessageBox_Cancel">Cancel</Tag>
 	<Tag name="GrassMult">Grass mul</Tag>
 	<Tag name="UnitMB">MB</Tag>
 	<Tag name="Back">Înapoi</Tag>
@@ -444,6 +452,7 @@
 	<Tag name="FrictionTread">FrictionTread</Tag>
 	<Tag name="InputMapShiftDown">Shift down</Tag>
 	<Tag name="HeightmapSize">Heightmap size</Tag>
+	<Tag name="TipToggleLayer">Activează/dezactivează stratul texturii alese.</Tag>
 	<Tag name="TipTrkListEditor">Tracks list, click to select (for Rename or Duplicate). Press [Load track] to change current track in editor.</Tag>
 	<Tag name="InputMapNextCamera">Next Camera</Tag>
 	<Tag name="GraphicsAll_Lowest">Lowest</Tag>
@@ -510,12 +519,14 @@
 	<Tag name="CameraInfo">Camera info</Tag>
 	<Tag name="NewGame">New Game</Tag>
 	<Tag name="page">page</Tag>
-	<Tag name="InputMapSteering">Direcție(roată)</Tag>
+	<Tag name="Replay">Replay</Tag>
 	<Tag name="InputDetailsFor">Details for</Tag>
 	<Tag name="GraphicsAll_Ultra">Ultra</Tag>
+	<Tag name="ApplyShaders">Apply shaders</Tag>
 	<Tag name="CarDebug">Car susp, long|,lat- slips</Tag>
 	<Tag name="InputRoadPick">Space - pick one/none</Tag>
 	<Tag name="InputRoadRebuild">B - rebuild road (after terrain change, etc.)</Tag>
+	<Tag name="MessageBox_Ok">Ok</Tag>
 	<Tag name="RplSave">Save</Tag>
 	<Tag name="Environment">Environment</Tag>
 	<Tag name="BoostAndFlip">Boost and flip</Tag>
@@ -579,17 +590,6 @@
 	<Tag name="InputNextOptTab">F2,F3 - fila de opțiuni precedentă,următoare</Tag>
 	<Tag name="RollingDrag">Învârtire mașină</Tag>
 	<Tag name="RplAll">Toate</Tag>
-	<Tag name="MessageBox_Retry">Retry</Tag>
-	<Tag name="MessageBox_Yes">Yes</Tag>
-	<Tag name="MessageBox_Try">Try</Tag>
-	<Tag name="MessageBox_Continue">Continue</Tag>
-	<Tag name="MessageBox_Abort">Abort</Tag>
-	<Tag name="MessageBox_No">No</Tag>
-	<Tag name="TexSize">Texture size</Tag>
-	<Tag name="MessageBox_Ignore">Ignore</Tag>
-	<Tag name="MessageBox_Cancel">Cancel</Tag>
-	<Tag name="ApplyShaders">Apply shaders</Tag>
-	<Tag name="MessageBox_Ok">Ok</Tag>
 	<Tag name="GameVersion">1.4</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 
