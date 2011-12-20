@@ -802,7 +802,7 @@ void CAR::UpdateSounds(float dt)
 	
 	//update boost sound
 	{
-		float gain = dynamics.doBoost;
+		float gain = dynamics.boostVal;
 		boostsnd.SetGain(gain * 0.57f * pSet->vol_engine);
 		boostsnd.SetPosition(engPos[0], engPos[1], engPos[2]); //back?-
 	}

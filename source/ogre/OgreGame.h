@@ -314,7 +314,8 @@ protected:
 	Ogre::String PathListTrk(int user=-1);//, PathListTrkPrv(int user=-1);
 
 	MyGUI::StaticImagePtr imgCar;	MyGUI::StaticTextPtr valCar;
-
+	void comboBoost(CMB), comboFlip(CMB);
+	
 	char s[512];
 };
 

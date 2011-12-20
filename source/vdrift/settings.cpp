@@ -26,6 +26,8 @@ void SETTINGS::Serialize(bool w, CONFIGFILE & c)
 	Param(c,w, "game.local_players", local_players);		Param(c,w, "game.split_vertically", split_vertically);
 	Param(c,w, "game.trk_reverse", trackreverse);			Param(c,w, "game.num_laps", num_laps);
 	Param(c,w, "game.language", language);
+	Param(c,w, "game.boost_type", boost_type);				Param(c,w, "game.flip_type", flip_type);
+	Param(c,w, "game.boost_power", boost_power);
 
 	Param(c,w, "display_show.fps", show_fps);				Param(c,w, "display_show.mph", show_mph);
 	Param(c,w, "display_show.gauges", show_gauges);			Param(c,w, "display_show.show_digits", show_digits);
@@ -122,6 +124,7 @@ SETTINGS::SETTINGS() :  ///  Defaults
 	//  game
 	trackreverse(false), local_players(1), num_laps(2),
 	split_vertically(true), language(""), // "" = autodetect lang
+	boost_type(1), flip_type(1), boost_power(1.f),
 	//  other
 	vol_master(1.f), vol_engine(1.f), vol_tires(1.f), vol_env(1.f),
 	autostart(0), ogre_dialog(1), escquit(0), bltDebug(0), bltLines(1),  bltProfilerTxt(0),

@@ -323,8 +323,8 @@ void App::newPoses()
 				posInfo.whSlide[w] = -1.f;  posInfo.whSqueal[w] = pCar->GetTireSquealAmount(wp, &posInfo.whSlide[w]);
 				posInfo.whR[w] = pCar->GetTireRadius(wp);//
 				posInfo.whTerMtr[w] = carM->whTerMtr[w];  posInfo.whRoadMtr[w] = carM->whRoadMtr[w];
-				posInfo.fboost = pCar->dynamics.doBoost;
 			}
+			posInfo.fboost = pCar->dynamics.boostVal;
 		}
 		
 
