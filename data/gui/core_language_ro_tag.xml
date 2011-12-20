@@ -529,7 +529,6 @@
 	<Tag name="MessageBox_Ok">Ok</Tag>
 	<Tag name="RplSave">Save</Tag>
 	<Tag name="Environment">Environment</Tag>
-	<Tag name="BoostAndFlip">Boost and flip</Tag>
 	<Tag name="GraphicsAll_High">High</Tag>
 	<Tag name="End">sfârșit</Tag>
 	<Tag name="TipNewTer">Create new, flat terrain.</Tag>
@@ -590,6 +589,13 @@
 	<Tag name="InputNextOptTab">F2,F3 - fila de opțiuni precedentă,următoare</Tag>
 	<Tag name="RollingDrag">Învârtire mașină</Tag>
 	<Tag name="RplAll">Toate</Tag>
+	<Tag name="FuelBoost">Boost Fuel</Tag>
+	<Tag name="Flip">Flip</Tag>
+	<Tag name="Always">Always</Tag>
+	<Tag name="FuelLap">Fuel each lap</Tag>
+	<Tag name="FuelTime">Fuel over time</Tag>
+	<Tag name="Boost">Boost</Tag>
+	<Tag name="Never">Never</Tag>
 	<Tag name="GameVersion">1.4</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 
