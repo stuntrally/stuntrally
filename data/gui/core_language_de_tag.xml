@@ -529,7 +529,6 @@
 	<Tag name="MessageBox_Ok">Ok</Tag>
 	<Tag name="RplSave">Speichern</Tag>
 	<Tag name="Environment">Umgebung</Tag>
-	<Tag name="BoostAndFlip">Boost und umdrehen</Tag>
 	<Tag name="GraphicsAll_High">Hoch</Tag>
 	<Tag name="End">Ende</Tag>
 	<Tag name="TipNewTer">Neues, flaches Terrain erstellen.</Tag>
@@ -590,6 +589,13 @@
 	<Tag name="InputNextOptTab">F2,F3 - vorheriger/nächster Tab</Tag>
 	<Tag name="RollingDrag">Rollwiderstand</Tag>
 	<Tag name="RplAll">Alle</Tag>
+	<Tag name="FuelBoost">Boost Fuel</Tag>
+	<Tag name="Flip">Flip</Tag>
+	<Tag name="Always">Always</Tag>
+	<Tag name="FuelLap">Fuel each lap</Tag>
+	<Tag name="FuelTime">Fuel over time</Tag>
+	<Tag name="Boost">Boost</Tag>
+	<Tag name="Never">Never</Tag>
 	<Tag name="GameVersion">1.4</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 
