@@ -1,6 +1,6 @@
 [car_body]
-	lightMap_1024 = body_light.png
-	blendMap_1024 = body_blend.png
+	lightMap_1024 = body00_red.png
+	blendMap_1024 = body00_add.png
 	reflectivityMap_1024 = refl.png
 	envMap = ReflectionCube
 	reflAmount = 0.1
@@ -84,6 +84,17 @@
 	parent = cartire_front_3S
 
 ; ------------- ES --------------
+[car_body_ES]
+	parent = car_body
+	normalMap_1024 = normal.png
+	specMap_1024 = spec.png
+	
+[car_interior_ES]
+	parent = car_interior
+	ambient = 1.0 1.0 1.0
+	diffuse = 1.0 1.0 1.0
+	normalMap_1024 = interior_normal.png
+	
 [cartire_front_ES]
 	parent = cartire_front
 	diffuseMap_1024 = wheel.png
