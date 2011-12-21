@@ -20,8 +20,8 @@ using namespace Ogre;
 App::App()
 	:pGame(0), ndMap(0), ndLine(0), bGI(0)
 	,nrpmB(0),nvelBk(0),nvelBm(0), nrpm(0),nvel(0), mrpm(0),mvel(0)
-	,hudGear(0),hudVel(0), hudAbs(0),hudTcs(0), hudTimes(0), hudWarnChk(0),hudWonPlace(0)
-	,ovGear(0),ovVel(0), ovAbsTcs(0), ovCarDbg(0),ovCarDbgTxt(0), ovCam(0), ovTimes(0), ovWarnWin(0)
+	,hudGear(0),hudVel(0),hudBoost(0), hudAbs(0),hudTcs(0), hudTimes(0), hudWarnChk(0),hudWonPlace(0)
+	,ovGear(0),ovVel(0),ovBoost(0), ovAbsTcs(0), ovCarDbg(0),ovCarDbgTxt(0), ovCam(0), ovTimes(0), ovWarnWin(0)
 	// hud
 	,asp(1),  xcRpm(0), ycRpm(0), xcVel(0), ycVel(0)
 	,fMiniX(0),fMiniY(0), scX(1),scY(1), ofsX(0),ofsY(0), minX(0),maxX(0), minY(0),maxY(0)

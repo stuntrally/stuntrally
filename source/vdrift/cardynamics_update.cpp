@@ -303,8 +303,8 @@ void CARDYNAMICS::UpdateBody(T dt, T drive_torque[])
 	//  add fuel over time
 	if (pSet->boost_type == 2)
 	{
-		boostFuel += dt * gfBoostFuelAddSec;  // par speed
-		if (boostFuel > gfBoostFuelMax)  boostFuel = gfBoostFuelMax;  // par max val
+		boostFuel += dt * gfBoostFuelAddSec;
+		if (boostFuel > gfBoostFuelMax)  boostFuel = gfBoostFuelMax;
 		// todo: val on hud..
 	}
 	//LogO(toStr(boostFuel));

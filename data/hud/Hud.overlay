@@ -31,7 +31,6 @@ Hud/Vel
 		vert_align bottom
 		horz_align right
 		left   -0.065
-		//right  0.27
 		width  0.065
 		top     -0.08
 		height	 0.08
@@ -43,6 +42,31 @@ Hud/Vel
 			char_height 0.055
 			caption 123
 			colour_top    0.7 0.7 0.8
+			colour_bottom 0.8 0.9 1.0
+		}
+	}
+}
+
+
+Hud/Boost
+{
+	zorder 500
+	container BorderPanel(Hud/BoostPanel)
+	{
+		vert_align bottom
+		horz_align right
+		left   -0.195
+		width  0.065
+		top     -0.05
+		height	 0.03
+		//material Core/StatsBlockCenter
+
+		element TextArea(Hud/BoostText)
+		{
+			font_name Digits
+			char_height 0.025
+			//caption 123
+			colour_top    0.4 0.7 0.8
 			colour_bottom 0.8 0.9 1.0
 		}
 	}
