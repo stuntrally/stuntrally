@@ -6,7 +6,7 @@
 	reflAmount = 0.1
 	diffuse = 1.0 1.0 1.0
 	ambient = 1.0 1.0 1.0
-	specular = 0.7 0.7 0.7 32
+	specular = 0.7 0.7 0.7 128
 	receivesShadows = false
 	receivesDepthShadows = true
 	fresnelScale = 0.73
@@ -88,12 +88,14 @@
 	parent = car_body
 	normalMap_1024 = normal.png
 	specMap_1024 = spec.png
+	ssao = false
 	
 [car_interior_ES]
 	parent = car_interior
 	ambient = 1.0 1.0 1.0
 	diffuse = 1.0 1.0 1.0
 	normalMap_1024 = interior_normal.png
+	ssao = false
 	
 [cartire_front_ES]
 	parent = cartire_front
@@ -102,6 +104,7 @@
 	specMap_1024 = wheel_spec.png
 	specular = 0.3 0.3 0.3 64
 	diffuse = 1.0 1.0 1.0
+	ssao = false
 
 [cartire_rear_ES]
 	parent = cartire_front_ES
