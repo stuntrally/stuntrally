@@ -307,7 +307,7 @@ void CARDYNAMICS::UpdateBody(T dt, T drive_torque[])
 		if (boostFuel > 3.f)  boostFuel = 3.f;  // par max val
 		// todo: val on hud..
 	}
-	LogO(toStr(boostFuel));
+	//LogO(toStr(boostFuel));
 	///***  -------------------------------------------------------------
 	
 
