@@ -5,7 +5,8 @@
 #include "../road/Road.h"
 #include "../vdrift/game.h"
 #include "../paged-geom/PagedGeometry.h"
-#include "../ogre/common/MaterialFactory.h"
+#include "../ogre/common/MaterialGen/MaterialFactory.h"
+#include "../oisb/OISBSystem.h"
 
 #include <OgreParticleSystem.h>
 #include <OgreManualObject.h>
@@ -154,6 +155,9 @@ bool App::frameStart(Real time)
 		pGame->pause = bRplPlay ? (bRplPause || isFocGui) : (isFocGui && !doNetworking);
 
 
+		// input
+		OISB::System::getSingleton().process(time);
+
 		///  step Game  *******
 
 		//  handle networking stuff
@@ -187,8 +191,9 @@ bool App::frameStart(Real time)
 		{
 			ret = pGame->OneLoop();
 			if (!ret)  mShutDown = true;
+			updatePoses(time);  //pGame->framerate
 		}
-		updatePoses(time);  //pGame->framerate
+		
 
 		//  multi thread
 		if (pSet->mult_thr == 1)
@@ -202,6 +207,8 @@ bool App::frameStart(Real time)
 			for (std::vector<CarModel*>::iterator it=carModels.begin(); it!=carModels.end(); it++)
 				if ((*it)->fCam)
 					(*it)->fCam->update(pGame->framerate);
+					
+			updatePoses(time);  //pGame->framerate
 		}
 		
 		// align checkpoint arrow
@@ -366,8 +373,8 @@ void App::newPoses()
 				posInfo.whSlide[w] = -1.f;  posInfo.whSqueal[w] = pCar->GetTireSquealAmount(wp, &posInfo.whSlide[w]);
 				posInfo.whR[w] = pCar->GetTireRadius(wp);//
 				posInfo.whTerMtr[w] = carM->whTerMtr[w];  posInfo.whRoadMtr[w] = carM->whRoadMtr[w];
-				posInfo.fboost = pCar->dynamics.doBoost;
 			}
+			posInfo.fboost = pCar->dynamics.boostVal;
 		}
 		
 
@@ -394,7 +401,7 @@ void App::newPoses()
 		///  sound listener  - - - - -
 		if (!bGhost)
 		{
-			if (pGame->sound.Enabled())  // todo: set from camera, for each player? ..
+			if (pGame->sound.Enabled())  // TODO: set from camera, for each player? ..
 			{
 				pGame->sound.SetListener(
 					MATHVECTOR <float,3> (pos[0], pos[1], pos[2]),
@@ -555,6 +562,9 @@ void App::newPoses()
 						ghost.Clear();
 						
 						carM->ResetChecks();
+						//  restore boost fuel, each lap
+						if (pSet->boost_type == 1 && carM->pCar)
+							carM->pCar->dynamics.boostFuel = gfBoostFuelStart;
 
 						///  winner places  for local players > 1
 						if (carM->iWonPlace == 0 && pGame->timer.GetCurrentLap(iCarNum) >= pSet->num_laps)

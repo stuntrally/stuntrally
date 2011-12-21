@@ -11,7 +11,7 @@ wind
 -- new sounds from
 http://www.freesound.org/
 
-various smaller cuts from:
+various smaller cuts, from:
 [author  soundname]
 
   metal hits:
@@ -28,8 +28,15 @@ halleck  metal-crash-1
   water,mud:
 cgeffex  large-splashes
 
+  mud_cont, water_cont
+justinbw  water-spigget-onto-mud-1
+justinbw  water-spigget-onto-mud-2
+
   terrain,dirt:
 halleck  hit-with-dirt-spray-1
 halleck  hit-with-dirt-spray-1-body
 halleck  hit-with-dirt-spray-2-body
 halleck  hit-with-dirt-spray-3
+
+  boost
+nathanshadow  thruster-level-ii

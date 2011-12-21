@@ -7,7 +7,7 @@
 #include "../road/Road.h"
 #include "SplitScreen.h"
 #include "common/RenderConst.h"
-#include "common/MaterialFactory.h"
+#include "common/MaterialGen/MaterialFactory.h"
 
 #include "../btOgre/BtOgrePG.h"
 #include "../btOgre/BtOgreGP.h"
@@ -179,7 +179,7 @@ void App::LoadGame()  // 2
 	//  viewports
 	mSplitMgr->mNumViewports = bRplPlay ? replay.header.numPlayers : pSet->local_players;  // set num players
 	mSplitMgr->Align();
-	mPlatform->getRenderManagerPtr()->setActiveViewport(mSplitMgr->mNumViewports*2);
+	mPlatform->getRenderManagerPtr()->setActiveViewport(mSplitMgr->mNumViewports);
 	
 	pGame->NewGameDoCleanup();
 	pGame->NewGameDoLoadTrack();
@@ -361,7 +361,7 @@ void App::LoadMisc()  // 7 last
 
 /* Actual loading procedure that gets called every frame during load. Performs a single loading step. */
 void App::NewGameDoLoad()
-{	
+{
 	if (currentLoadingState == loadingStates.end())
 	{
 		// Loading finished.

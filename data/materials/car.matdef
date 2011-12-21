@@ -1,11 +1,12 @@
 [car_body]
-	lightMap_1024 = body_light.png
-	blendMap_1024 = body_blend.png
+	lightMap_1024 = body00_red.png
+	blendMap_1024 = body00_add.png
+	reflectivityMap_1024 = refl.png
 	envMap = ReflectionCube
 	reflAmount = 0.1
 	diffuse = 1.0 1.0 1.0
 	ambient = 1.0 1.0 1.0
-	specular = 0.7 0.7 0.7 32
+	specular = 0.7 0.7 0.7 128
 	receivesShadows = false
 	receivesDepthShadows = true
 	fresnelScale = 0.73
@@ -68,8 +69,47 @@
 	terrainLightMap = true
 	shadowPriority = 0.3
 	normalMapPriority = 0.3
+	
 
-;  ------------ FM ----------------
+; ------------- 3S --------------
+[car_body_3S]
+	parent = car_body
+	specMap_1024 = spec.png
+
+[cartire_front_3S]
+	parent = cartire_front
+	diffuseMap_1024 = wheel.png
+
+[cartire_rear_3S]
+	parent = cartire_front_3S
+
+; ------------- ES --------------
+[car_body_ES]
+	parent = car_body
+	normalMap_1024 = normal.png
+	specMap_1024 = spec.png
+	ssao = false
+	
+[car_interior_ES]
+	parent = car_interior
+	ambient = 1.0 1.0 1.0
+	diffuse = 1.0 1.0 1.0
+	normalMap_1024 = interior_normal.png
+	ssao = false
+	
+[cartire_front_ES]
+	parent = cartire_front
+	diffuseMap_1024 = wheel.png
+	normalMap_1024 = wheel_normal.jpg
+	specMap_1024 = wheel_spec.png
+	specular = 0.3 0.3 0.3 64
+	diffuse = 1.0 1.0 1.0
+	ssao = false
+
+[cartire_rear_ES]
+	parent = cartire_front_ES
+
+; ------------ FM ----------------
 [car_body_FM]
 	parent = car_body
 	normalMap_1024 = normal.png
@@ -89,14 +129,51 @@
 	normalMap_1024 = wheel_normal.png
 
 
-;  ------------ 360 ----------------
+; ------------ 360 ----------------
 [car_interior_360]
 	parent = car_interior
 	cullHardware = none
 	receivesDepthShadows = false
+	
+[cartire_front_360]
+	parent = cartire_front
+	diffuseMap_1024 = wheel.png
+
+[cartire_rear_360]
+	parent = cartire_front_360
+
+; ------------- CT ------------------
+[cartire_front_CT]
+	parent = cartire_front
+	diffuseMap_1024 = wheel.png
+
+[cartire_rear_CT]
+	parent = cartire_front_CT
+	
+; ------------- M3 -----------------
+[cartire_front_M3]
+	parent = cartire_front
+	diffuseMap_1024 = wheel.png
+
+[cartire_rear_M3]
+	parent = cartire_front_M3
+	
+; ------------- XM -----------------
+[cartire_front_XM]
+	parent = cartire_front
+	diffuseMap_1024 = wheel.png
+
+[cartire_rear_XM]
+	parent = cartire_front_XM
 
 
 ; ------------- RS2 ----------------
+[cartire_front_RS2]
+	parent = cartire_front
+	diffuseMap_1024 = wheel.png
+
+[cartire_rear_RS2]
+	parent = cartire_front_RS2
 
 [chasis/Material#1]
 	envMap = ReflectionCube

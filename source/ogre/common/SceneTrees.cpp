@@ -9,7 +9,7 @@
 	#include "../vdrift/game.h"
 	#include "../ogre/SplitScreen.h"
 #endif
-#include "../vdrift/pathmanager.h"
+#include "../../vdrift/pathmanager.h"
 #include "../../paged-geom/GrassLoader.h"
 #include "../../paged-geom/BatchPage.h"
 #include "../../paged-geom/WindBatchPage.h"
@@ -18,7 +18,6 @@
 #include "BltObjects.h"
 
 #include <boost/filesystem.hpp>
-
 #include <OgreTerrain.h>
 using namespace Ogre;
 

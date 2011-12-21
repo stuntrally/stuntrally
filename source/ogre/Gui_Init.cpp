@@ -124,6 +124,25 @@ void App::InitGui()
 	//  game
 	Chk("VegetCollis", chkVegetCollis, pSet->veget_collis);
 	Chk("CarCollis", chkCarCollis, pSet->car_collis);
+	//  boost, flip combos
+	Cmb(combo, "CmbBoost", comboBoost);
+	if (combo)
+	{	combo->removeAllItems();
+		combo->addItem(TR("#{Never}"));
+		combo->addItem(TR("#{FuelLap}"));
+		combo->addItem(TR("#{FuelTime}"));
+		combo->addItem(TR("#{Always}"));
+		combo->setIndexSelected(pSet->boost_type);
+	}
+	Cmb(combo, "CmbFlip", comboFlip);
+	if (combo)
+	{	combo->removeAllItems();
+		combo->addItem(TR("#{Never}"));
+		combo->addItem(TR("#{FuelBoost}"));
+		combo->addItem(TR("#{Always}"));
+		combo->setIndexSelected(pSet->flip_type);
+	}
+
 	Btn("btnPlayers1", btnNumPlayers);	Btn("btnPlayers2", btnNumPlayers);
 	Btn("btnPlayers3", btnNumPlayers);	Btn("btnPlayers4", btnNumPlayers);
 	Chk("chkSplitVertically", chkSplitVert, pSet->split_vertically);

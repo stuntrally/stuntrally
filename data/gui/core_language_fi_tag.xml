@@ -86,6 +86,7 @@
 	<Tag name="Light">Valo</Tag>
 	<Tag name="DistToRoad">etäisyys tiehen</Tag>
 	<Tag name="TBPlace">Place</Tag>
+	<Tag name="MessageBox_Retry">Retry</Tag>
 	<Tag name="TBLast">Last</Tag>
 	<Tag name="InputMaxVal">Max. Value</Tag>
 	<Tag name="TipRollDrag">Drag for wheels, bigger will make them slow down faster (eg. 140 for snow, 80 for grass).</Tag>
@@ -127,6 +128,7 @@
 	<Tag name="TipDustSize">Pölyhiukkasten koko.</Tag>
 	<Tag name="InputRoadInsAlt">alt-shift - at start   alt-ctrl - at end</Tag>
 	<Tag name="RearThrottleInverse">Rear throttle inverse</Tag>
+	<Tag name="MessageBox_Yes">Yes</Tag>
 	<Tag name="BlendMap">Blendmap</Tag>
 	<Tag name="InputMapPrevCamera">Previous Camera</Tag>
 	<Tag name="InputMapBrake">Jarru</Tag>
@@ -135,7 +137,7 @@
 	<Tag name="TipGrassDens">Kuinka tiheää/harvinaista ruohikko on maastossa.</Tag>
 	<Tag name="Digits">Numerot (vaihde, nopeus)</Tag>
 	<Tag name="InputRoadYaw">- rotate yaw</Tag>
-	<Tag name="TipToggleLayer">Kytke valittu tekstuurikerros päälle/pois.</Tag>
+	<Tag name="MessageBox_Try">Try</Tag>
 	<Tag name="TerLHSm">Height smooth</Tag>
 	<Tag name="InputAssignKey">&lt;Paina näppäintä&gt;</Tag>
 	<Tag name="Wireframe">Rautalankamalli</Tag>
@@ -143,7 +145,7 @@
 	<Tag name="RoadQual">Tien laatu kaukana</Tag>
 	<Tag name="TerrainSize">Maaston koko</Tag>
 	<Tag name="InputRoadWidth">- vaihda tien leveyttä</Tag>
-	<Tag name="Replay">Replay</Tag>
+	<Tag name="InputMapSteering">Ohjaus</Tag>
 	<Tag name="AutoRear">Auto Rear gear</Tag>
 	<Tag name="NumLaps">Number of laps</Tag>
 	<Tag name="UseSSAA">Use SSAA when effects are enabled</Tag>
@@ -152,7 +154,7 @@
 	<Tag name="SetCamTo">Set camera to</Tag>
 	<Tag name="max">maksimi</Tag>
 	<Tag name="TipTerTriSize">Terrain triangle size in [meters] (recommended: 1 - 2, use more for big track area). Changed after Update (F8).</Tag>
-	<Tag name="ABS">ABS (lukkiutumattomat jarrut)</Tag>
+	<Tag name="MessageBox_No">No</Tag>
 	<Tag name="TipCarsList">Cars list, click to select (and see image). Press [Change car] and then [New Game] to drive with it.</Tag>
 	<Tag name="Model">Malli</Tag>
 	<Tag name="InpSet_AxisHalf">Axis Half</Tag>
@@ -164,6 +166,7 @@
 	<Tag name="SkirtLength">Skirt Length</Tag>
 	<Tag name="OrigImage">Tummenna</Tag>
 	<Tag name="InputRoadSelAlt">alt - valitse kaikki ctrl - poista valinta</Tag>
+	<Tag name="MessageBox_Continue">Continue</Tag>
 	<Tag name="InputRoadSel">Askelpalautin - lisää tai poista valinnasta</Tag>
 	<Tag name="LTrMaxTerAng">max terrain Angle</Tag>
 	<Tag name="RplAlpha">Transparent ghost</Tag>
@@ -223,6 +226,7 @@
 	<Tag name="Vegetation">Vegetation</Tag>
 	<Tag name="ssao">SSAO</Tag>
 	<Tag name="TerGenPow">Power (shape)</Tag>
+	<Tag name="MessageBox_Abort">Abort</Tag>
 	<Tag name="InputMapFlip">Pyöräytä</Tag>
 	<Tag name="difficulty">difficulty</Tag>
 	<Tag name="TrackInAir">Ilmassa</Tag>
@@ -237,6 +241,7 @@
 	<Tag name="LightmapSize">Lightmap size</Tag>
 	<Tag name="TerGenPers">Persistance noise</Tag>
 	<Tag name="length">pituus</Tag>
+	<Tag name="ABS">ABS (lukkiutumattomat jarrut)</Tag>
 	<Tag name="ColumnNSides">Column N sides</Tag>
 	<Tag name="RplAutoRec">Nauhoita uusinta automaattisesti</Tag>
 	<Tag name="Reflections">Heijastukset</Tag>
@@ -282,7 +287,7 @@
 	<Tag name="InputRoadNotOnTer">when not on terrain</Tag>
 	<Tag name="ApplyShadows">Käytä varjoja</Tag>
 	<Tag name="TipFogEndClr">Fog end color. R G B components 0 to 1 (eg. 0.7 0.8 0.9)</Tag>
-	<Tag name="InputCameraTxt1">with shift - main cameras only</Tag>
+	<Tag name="FrameSkip">Frames skip</Tag>
 	<Tag name="InputToggleVeget">V - Disable / enable vegetation</Tag>
 	<Tag name="Particles">Hiukkaset</Tag>
 	<Tag name="Other">Muu</Tag>
@@ -347,6 +352,7 @@
 	<Tag name="TipChangeHue">Change car color (hue).</Tag>
 	<Tag name="InputUpdBlendmap">F9 - update terrain blendmap</Tag>
 	<Tag name="Intensity">Voimakkuus</Tag>
+	<Tag name="TexSize">Texture size</Tag>
 	<Tag name="TipSunAmbient">Sun light ambient (constant) color. R G B components 0 to 1 (eg. 0.4 0.4 0.4)</Tag>
 	<Tag name="ChngTrkTab">changed in [Track] tab</Tag>
 	<Tag name="InputRplCtrl2">P - pause/unpause replay</Tag>
@@ -358,7 +364,7 @@
 	<Tag name="Fog">Sumu</Tag>
 	<Tag name="InputCameraTxt2">with ctrl - switch current car when many</Tag>
 	<Tag name="InputMapNextTab">Seuraava välilehti</Tag>
-	<Tag name="FrameSkip">Frames skip</Tag>
+	<Tag name="InputCameraTxt1">with shift - main cameras only</Tag>
 	<Tag name="InputTrackScrn">(for track screenshot)</Tag>
 	<Tag name="trailColor">trail color</Tag>
 	<Tag name="InputRoadChkFirst">0   - set checkpoint as first</Tag>
@@ -394,6 +400,7 @@
 	<Tag name="RoadStats">Road Stats</Tag>
 	<Tag name="SunDir">Auringon suunta</Tag>
 	<Tag name="TipSmokeInt">Smoke particles intensity.</Tag>
+	<Tag name="MessageBox_Ignore">Ignore</Tag>
 	<Tag name="TerrainBrush">Maaston sivellin</Tag>
 	<Tag name="TipTexNormAuto">When checked, Normal texture is automatically set from Diffuse texture (+ _nh in filename).</Tag>
 	<Tag name="TrackBestTime">Paras aika</Tag>
@@ -428,6 +435,7 @@
 	<Tag name="Size">Size</Tag>
 	<Tag name="AutoGearbox">Auto gearbox</Tag>
 	<Tag name="InputSlowFast">shift - slow   ctrl - fast</Tag>
+	<Tag name="MessageBox_Cancel">Cancel</Tag>
 	<Tag name="GrassMult">Grass mul</Tag>
 	<Tag name="UnitMB">Mt</Tag>
 	<Tag name="Back">Takaisin</Tag>
@@ -471,6 +479,7 @@
 	<Tag name="FrictionTread">FrictionTread</Tag>
 	<Tag name="InputMapShiftDown">Shift down</Tag>
 	<Tag name="HeightmapSize">Korkeuskartan koko</Tag>
+	<Tag name="TipToggleLayer">Kytke valittu tekstuurikerros päälle/pois.</Tag>
 	<Tag name="TipTrkListEditor">Tracks list, click to select (for Rename or Duplicate). Press [Load track] to change current track in editor.</Tag>
 	<Tag name="InputMapNextCamera">Seuraava kamera</Tag>
 	<Tag name="GraphicsAll_Lowest">Lowest</Tag>
@@ -537,15 +546,16 @@
 	<Tag name="CameraInfo">Camera info</Tag>
 	<Tag name="NewGame">New Game</Tag>
 	<Tag name="page">page</Tag>
-	<Tag name="InputMapSteering">Ohjaus</Tag>
+	<Tag name="Replay">Replay</Tag>
 	<Tag name="InputDetailsFor">Details for</Tag>
 	<Tag name="GraphicsAll_Ultra">Ultra</Tag>
+	<Tag name="ApplyShaders">Apply shaders</Tag>
 	<Tag name="CarDebug">Car susp, long|,lat- slips</Tag>
 	<Tag name="InputRoadPick">Space - pick one/none</Tag>
 	<Tag name="InputRoadRebuild">B - rebuild road (after terrain change, etc.)</Tag>
+	<Tag name="MessageBox_Ok">Ok</Tag>
 	<Tag name="RplSave">Save</Tag>
 	<Tag name="Environment">Environment</Tag>
-	<Tag name="BoostAndFlip">Boost and flip</Tag>
 	<Tag name="GraphicsAll_High">High</Tag>
 	<Tag name="End">loppu</Tag>
 	<Tag name="TipNewTer">Create new, flat terrain.</Tag>
@@ -606,17 +616,13 @@
 	<Tag name="InputNextOptTab">F2,F3 - prev,next Options tab</Tag>
 	<Tag name="RollingDrag">Rolling Drag</Tag>
 	<Tag name="RplAll">All</Tag>
-	<Tag name="MessageBox_Retry">Retry</Tag>
-	<Tag name="MessageBox_Yes">Yes</Tag>
-	<Tag name="MessageBox_Try">Try</Tag>
-	<Tag name="MessageBox_Continue">Continue</Tag>
-	<Tag name="MessageBox_Abort">Abort</Tag>
-	<Tag name="MessageBox_No">No</Tag>
-	<Tag name="TexSize">Texture size</Tag>
-	<Tag name="MessageBox_Ignore">Ignore</Tag>
-	<Tag name="MessageBox_Cancel">Cancel</Tag>
-	<Tag name="ApplyShaders">Apply shaders</Tag>
-	<Tag name="MessageBox_Ok">Ok</Tag>
+	<Tag name="FuelBoost">Boost Fuel</Tag>
+	<Tag name="Flip">Flip</Tag>
+	<Tag name="Always">Always</Tag>
+	<Tag name="FuelLap">Fuel each lap</Tag>
+	<Tag name="FuelTime">Fuel over time</Tag>
+	<Tag name="Boost">Boost</Tag>
+	<Tag name="Never">Never</Tag>
 	<Tag name="GameVersion">1.4</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 

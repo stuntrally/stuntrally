@@ -125,7 +125,7 @@
 				EnableFunctionLevelLinking="true"
 				UsePrecompiledHeader="2"
 				PrecompiledHeaderThrough="pch.h"
-				WarningLevel="3"
+				WarningLevel="1"
 				DebugInformationFormat="0"
 				DisableSpecificWarnings="4995;4996;"
 			/>
@@ -501,14 +501,6 @@
 				>
 			</File>
 			<File
-				RelativePath=".\source\ogre\common\MyGUI_D3D11.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\source\ogre\common\MyGUI_D3D11.h"
-				>
-			</File>
-			<File
 				RelativePath=".\source\ogre\common\Gui_Def.h"
 				>
 			</File>
@@ -522,6 +514,14 @@
 			</File>
 			<File
 				RelativePath=".\Source\editor\Gui_Util.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\source\ogre\common\MyGUI_D3D11.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\source\ogre\common\MyGUI_D3D11.h"
 				>
 			</File>
 			<File
@@ -648,82 +648,6 @@
 				RelativePath=".\source\ogre\common\TracksXml.h"
 				>
 			</File>
-			<Filter
-				Name="MaterGen"
-				>
-				<File
-					RelativePath=".\source\ogre\common\ArrowMaterial.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\source\ogre\common\ArrowMaterial.h"
-					>
-				</File>
-				<File
-					RelativePath=".\source\ogre\common\GlassMaterial.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\source\ogre\common\GlassMaterial.h"
-					>
-				</File>
-				<File
-					RelativePath=".\source\ogre\common\MaterialDefinition.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\source\ogre\common\MaterialDefinition.h"
-					>
-				</File>
-				<File
-					RelativePath=".\source\ogre\common\MaterialFactory.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\source\ogre\common\MaterialFactory.h"
-					>
-				</File>
-				<File
-					RelativePath=".\source\ogre\common\MaterialGenerator.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\source\ogre\common\MaterialGenerator.h"
-					>
-				</File>
-				<File
-					RelativePath=".\source\ogre\common\MaterialProperties.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\source\ogre\common\MaterialProperties.h"
-					>
-				</File>
-				<File
-					RelativePath=".\source\ogre\common\PipeGlassMaterial.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\source\ogre\common\PipeGlassMaterial.h"
-					>
-				</File>
-				<File
-					RelativePath=".\source\ogre\common\ShaderProperties.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\source\ogre\common\ShaderProperties.h"
-					>
-				</File>
-				<File
-					RelativePath=".\source\ogre\common\TerrainMaterialGen.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\source\ogre\common\TerrainMaterialGen.h"
-					>
-				</File>
-			</Filter>
 		</Filter>
 		<Filter
 			Name="paged-geom"
@@ -826,6 +750,98 @@
 			</File>
 			<File
 				RelativePath=".\Source\paged-geom\WindBatchPage.h"
+				>
+			</File>
+		</Filter>
+		<Filter
+			Name="MaterialGen"
+			>
+			<File
+				RelativePath=".\source\ogre\common\MaterialGen\ArrowMaterial.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\source\ogre\common\MaterialGen\ArrowMaterial.h"
+				>
+			</File>
+			<File
+				RelativePath=".\source\ogre\common\MaterialGen\GlassMaterial.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\source\ogre\common\MaterialGen\GlassMaterial.h"
+				>
+			</File>
+			<File
+				RelativePath=".\source\ogre\common\MaterialGen\ImpostorMaterial.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\source\ogre\common\MaterialGen\ImpostorMaterial.h"
+				>
+			</File>
+			<File
+				RelativePath=".\source\ogre\common\MaterialGen\MaterialDefinition.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\source\ogre\common\MaterialGen\MaterialDefinition.h"
+				>
+			</File>
+			<File
+				RelativePath=".\source\ogre\common\MaterialGen\MaterialFactory.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\source\ogre\common\MaterialGen\MaterialFactory.h"
+				>
+			</File>
+			<File
+				RelativePath=".\source\ogre\common\MaterialGen\MaterialGenerator.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\source\ogre\common\MaterialGen\MaterialGenerator.h"
+				>
+			</File>
+			<File
+				RelativePath=".\source\ogre\common\MaterialGen\MaterialProperties.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\source\ogre\common\MaterialGen\MaterialProperties.h"
+				>
+			</File>
+			<File
+				RelativePath=".\source\ogre\common\MaterialGen\PipeGlassMaterial.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\source\ogre\common\MaterialGen\PipeGlassMaterial.h"
+				>
+			</File>
+			<File
+				RelativePath=".\source\ogre\common\MaterialGen\ShaderProperties.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\source\ogre\common\MaterialGen\ShaderProperties.h"
+				>
+			</File>
+			<File
+				RelativePath=".\source\ogre\common\MaterialGen\TerrainMaterialGen.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\source\ogre\common\MaterialGen\TerrainMaterialGen.h"
+				>
+			</File>
+			<File
+				RelativePath=".\source\ogre\common\MaterialGen\WaterMaterial.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\source\ogre\common\MaterialGen\WaterMaterial.h"
 				>
 			</File>
 		</Filter>

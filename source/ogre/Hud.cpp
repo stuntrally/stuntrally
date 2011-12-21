@@ -153,6 +153,7 @@ void App::CreateHUD()
 
 	ovGear = ovr.getByName("Hud/Gear");		hudGear = ovr.getOverlayElement("Hud/GearText");
 	ovVel = ovr.getByName("Hud/Vel");		hudVel = ovr.getOverlayElement("Hud/VelText");
+	ovBoost = ovr.getByName("Hud/Boost");	hudBoost = ovr.getOverlayElement("Hud/BoostText");
 	ovAbsTcs = ovr.getByName("Hud/AbsTcs");	hudAbs = ovr.getOverlayElement("Hud/AbsText");
 	ovCarDbg = ovr.getByName("Car/Stats");	hudTcs = ovr.getOverlayElement("Hud/TcsText");
 	ovTimes = ovr.getByName("Hud/Times");	hudTimes = ovr.getOverlayElement("Hud/TimesText");
@@ -185,6 +186,7 @@ void App::ShowHUD(bool hideAll)
 		if (nrpm)	nrpm->setVisible(false);	if (nvel)	nvel->setVisible(false);
 		if (ovGear)	  ovGear->hide();		if (ovVel)	  ovVel->hide();
 		if (ovAbsTcs) ovAbsTcs->hide();
+		if (ovBoost)  ovBoost->hide();		//if (hudBoost)  hudBoost->hide();
 		if (hudGear)  hudGear->hide();		if (hudVel)   hudVel->hide();
 		if (ovCarDbg)  ovCarDbg->hide();	if (ovCarDbgTxt)  ovCarDbgTxt->hide();
 
@@ -202,9 +204,11 @@ void App::ShowHUD(bool hideAll)
 		if (nrpm)	nrpm->setVisible(show);		if (nvel)	nvel->setVisible(show);
 		if (ovGear)	{  if (1||show)  ovGear->show();  else  ovGear->hide();  }
 		if (ovVel)	{  if (1||show)  ovVel->show();   else  ovVel->hide();   }
+		if (ovBoost){  if (show && (pSet->boost_type == 1 || pSet->boost_type == 2))
+									ovBoost->show();    else  ovBoost->hide();  }
 		if (ovAbsTcs){ if (show)  ovAbsTcs->show();   else  ovAbsTcs->hide(); }
-		if (hudGear) {if (pSet->show_digits) hudGear->show(); else hudGear->hide(); }
-		if (hudVel) {if (pSet->show_digits) hudVel->show(); else hudVel->hide(); }
+		if (hudGear){  if (pSet->show_digits)  hudGear->show(); else  hudGear->hide();  }
+		if (hudVel) {  if (pSet->show_digits)  hudVel->show();  else  hudVel->hide();  }
 
 		show = pSet->car_dbgbars;
 		if (ovCarDbg){  if (show)  ovCarDbg->show();  else  ovCarDbg->hide();   }
@@ -255,6 +259,7 @@ void App::UpdateHUD(int carId, CarModel* pCarM, CAR* pCar, float time, Viewport*
 		/// for gui viewport ----------------------
 		if (hudGear)  hudGear->hide();
 		if (hudVel)  hudVel->hide();
+		if (ovBoost)  ovBoost->hide();
 		if (ovTimes)  ovTimes->hide();
 		if (ovWarnWin)  ovWarnWin->hide();
 		if (ovCarDbg)  ovCarDbg->hide();
@@ -348,6 +353,12 @@ void App::UpdateHUD(int carId, CarModel* pCarM, CAR* pCar, float time, Viewport*
 		#define m01(x)  std::min(1.0, std::max(0.0, (double) x))
 		hudVel->setColour(ColourValue(m01(k*2), m01(0.5+k*1.5-k*k*2.5), m01(1+k*0.8-k*k*3.5)));
 	}
+	if (hudBoost && pCar && hudBoost->isVisible())
+	{
+		char sb[132];
+		sprintf(sb, "%3.1f", pCar->dynamics.boostFuel);
+		hudBoost->setCaption(String(sb));
+	}
 	
 	//  abs, tcs on  --------
 	if (hudAbs && hudTcs)
@@ -429,7 +440,8 @@ void App::UpdateHUD(int carId, CarModel* pCarM, CAR* pCar, float time, Viewport*
 	//  profiling times -
 	if (pGame && pGame->profilingmode && ovU[3])
 	{
-		ovU[3]->setCaption(pGame->strProfInfo);
+		if (pSet->mult_thr != 1) //! this one is causing a crash sometimes with multithreading.. maybe need a mutex? i have no idea..
+			ovU[3]->setCaption(pGame->strProfInfo);
 		//if (newPosInfos.size() > 0)
 		//ovU[3]->setCaption("carm: " + toStr(carModels.size()) + " newp: " + toStr((*newPosInfos.begin()).pos));
 	}

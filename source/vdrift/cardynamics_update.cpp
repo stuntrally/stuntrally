@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "cardynamics.h"
 #include "collision_world.h"
+#include "settings.h"
 #include "tobullet.h"
 #include "../ogre/OgreGame.h"
 #include "Buoyancy.h"
@@ -107,6 +108,7 @@ void CARDYNAMICS::UpdateBuoyancy()
 				float whR = GetTire(wp).GetRadius() * 1.2f;  //bigger par
 				MATHVECTOR <float, 3> wheelpos = GetWheelPosition(wp, 0);
 				wheelpos[2] -= whR;
+				whP[w] = fp.idParticles;
 				
 				//  height in fluid:  0 just touching surface, 1 fully in fluid
 				//  wheel plane distance  water.plane.normal.z = 1  water.plane.offset = fl.pos.y;
@@ -139,7 +141,7 @@ void CARDYNAMICS::UpdateBuoyancy()
 			}
 		}
 		else
-		{	whH[w] = 0.f;  wheel[w].fluidRes = 0.f;  }
+		{	whH[w] = 0.f;  wheel[w].fluidRes = 0.f;  whP[w] = -1;	}
 	}
 
 }
@@ -259,25 +261,54 @@ void CARDYNAMICS::UpdateBody(T dt, T drive_torque[])
 	ApplyAerodynamicsToBody(dt);
 	
 
-	///***  manual car flip over  ---------------------------------------------------------------------------------
-	if (doFlip > 0.01f || doFlip < -0.01f)
+	///***  manual car flip over  ---------------------------------------
+	if ((doFlip > 0.01f || doFlip < -0.01f) &&
+		pSet->flip_type > 0)
 	{
 		MATRIX3 <T> inertia = body.GetInertia();
 		btVector3 inrt(inertia[0], inertia[4], inertia[8]);
 		float t = inrt[inrt.maxAxis()] * doFlip * 12.f;  // strength
+
+		if (pSet->flip_type == 1)  // fuel dec
+		{
+			boostFuel -= doFlip > 0.f ? doFlip * dt : -doFlip * dt;
+			if (boostFuel < 0.f)  boostFuel = 0.f;
+			if (boostFuel <= 0.f)  t = 0.0;
+		}
 		MATHVECTOR <T, 3> v(t,0,0);
 		Orientation().RotateVector(v);
 		ApplyTorque(v);
 	}
-	///***  boost
-	if (doBoost > 0.01f)
+
+	///***  boost  ------------------------------------------------------
+	if (doBoost > 0.01f	&& pSet->boost_type > 0)
 	{
-		T f = body.GetMass() * doBoost * 16.f;  // power
-		MATHVECTOR <T, 3> v(f,0,0), ofs(0,0,0);
-		Orientation().RotateVector(v);
-		ApplyForce(v, ofs);
+		boostVal = doBoost;
+		if (pSet->boost_type == 1 || pSet->boost_type == 2)  // fuel dec
+		{
+			boostFuel -= doBoost * dt;
+			if (boostFuel < 0.f)  boostFuel = 0.f;
+			if (boostFuel <= 0.f)  boostVal = 0.f;
+		}
+		if (boostVal > 0.01f)
+		{
+			float f = body.GetMass() * boostVal * 16.f * pSet->boost_power;  // power
+			MATHVECTOR <T, 3> v(f,0,0);
+			Orientation().RotateVector(v);
+			ApplyForce(v);
+		}
+	}else
+		boostVal = 0.f;
+		
+	//  add fuel over time
+	if (pSet->boost_type == 2)
+	{
+		boostFuel += dt * gfBoostFuelAddSec;
+		if (boostFuel > gfBoostFuelMax)  boostFuel = gfBoostFuelMax;
+		// todo: val on hud..
 	}
-	///***
+	//LogO(toStr(boostFuel));
+	///***  -------------------------------------------------------------
 	
 
 	T normal_force[WHEEL_POSITION_SIZE];

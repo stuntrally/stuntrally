@@ -104,9 +104,9 @@ protected:
 	Ogre::ManualObject* Create2D(const Ogre::String& mat, Ogre::SceneManager* sceneMgr,
 		Ogre::Real size, bool dyn = false, bool clr = false);
 
-	Ogre::OverlayElement* hudGear,*hudVel, *ovL[5],*ovR[5],*ovS[5],*ovU[5],
+	Ogre::OverlayElement* hudGear,*hudVel,*hudBoost, *ovL[5],*ovR[5],*ovS[5],*ovU[5],
 		*hudAbs,*hudTcs, *hudTimes, *hudWarnChk,*hudWonPlace;
-	Ogre::Overlay* ovGear,*ovVel, *ovAbsTcs,*ovCarDbg,*ovCarDbgTxt,
+	Ogre::Overlay* ovGear,*ovVel,*ovBoost, *ovAbsTcs,*ovCarDbg,*ovCarDbgTxt,
 		*ovCam, *ovTimes, *ovWarnWin;
 
 	Ogre::String GetTimeString(float time) const;
@@ -315,7 +315,8 @@ protected:
 	Ogre::String PathListTrk(int user=-1);//, PathListTrkPrv(int user=-1);
 
 	MyGUI::StaticImagePtr imgCar;	MyGUI::StaticTextPtr valCar;
-
+	void comboBoost(CMB), comboFlip(CMB);
+	
 	char s[512];
 
 	//  multiplayer

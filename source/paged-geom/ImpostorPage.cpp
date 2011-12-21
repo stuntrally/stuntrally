@@ -26,7 +26,7 @@ Permission is granted to anyone to use this software for any purpose, including 
 #include "StaticBillboardSet.h"
 
 #include "../ogre/Defines.h"
-#include "../ogre/common/MaterialFactory.h"
+#include "../ogre/common/MaterialGen/MaterialFactory.h"
 #include "../vdrift/pathmanager.h"
 #include "../ogre/QTimer.h"
 

@@ -8,7 +8,6 @@
 #define LogO(s)  Ogre::LogManager::getSingleton().logMessage(s)
 
 #include <OgreStringConverter.h>
-
 #define toStr(v)   Ogre::StringConverter::toString(v)
 #define toStrC(v)  Ogre::StringConverter::toString(v).c_str()
 
@@ -22,7 +21,6 @@
 
 
 //  info for collision shapes  (hit, triggers)
-
 enum EShapeType
 {
 	ST_Car=0,
@@ -34,9 +32,7 @@ enum EShapeType
 	ST_Other
 };
 
-class CARDYNAMICS;
-class FluidBox;
-
+class CARDYNAMICS;  class FluidBox;
 class ShapeData
 {
 public:
@@ -53,11 +49,15 @@ public:
 	{	}
 };
 
-/*
-const static ShapeData
+/*const static ShapeData
 	gSD_Terrain(ST_Terrain), gSD_BorderPlane(ST_BorderPlane),
 	gSD_Road(ST_Road), gSD_RoadWall(ST_RoadWall),
-	gSD_Other(ST_Other);
-/**/
+	gSD_Other(ST_Other);/**/
+
+
+///  boost fuel params  ----
+const static float gfBoostFuelStart = 3.f,  // seconds (each lap)
+	gfBoostFuelMax = 3.f,  // max val, tank	
+	gfBoostFuelAddSec = 0.1f;  // add value each second
 
 #endif

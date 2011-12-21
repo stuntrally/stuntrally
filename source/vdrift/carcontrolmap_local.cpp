@@ -33,6 +33,9 @@ const std::vector <float> & CARCONTROLMAP_LOCAL::ProcessInput(int player)
 	assert(inputs.size() == CARINPUT::ALL);
 
 	lastinputs = inputs;
+
+	if (OISB::System::getSingletonPtr() == NULL) return inputs;
+	
 	const std::string sPlr = "Player" + toStr(player+1) + "/";
 
 	//  throttle, brake

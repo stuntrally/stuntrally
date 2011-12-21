@@ -24,6 +24,7 @@ Permission is granted to anyone to use this software for any purpose, including 
 
 #include "WindBatchPage.h"
 #include "WindBatchedGeometry.h"
+#include "../ogre/common/RenderConst.h"
 
 // to dump the shader source in a file
 #include <fstream>
@@ -51,6 +52,7 @@ void WindBatchPage::init(PagedGeometry *geom, const Any &data)
 	m_nLODLevel    = datacast; 
 	m_pPagedGeom   = geom;
 	m_bFadeEnabled = false;
+   m_pBatchGeom->setVisibilityFlags(RV_Vegetation);  ///T  disable in render targets
 
 	const RenderSystemCapabilities *caps = Root::getSingleton().getRenderSystem()->getCapabilities();
    m_bShadersSupported = caps->hasCapability(RSC_VERTEX_PROGRAM) ? true : false;    // <-- DELETE THIS

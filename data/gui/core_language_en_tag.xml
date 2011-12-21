@@ -146,7 +146,16 @@
 
 	<Tag name="VegetCol">Vegetation collision</Tag>
 	<Tag name="CarCollis">Cars collision</Tag>
-	<Tag name="BoostAndFlip">Boost and flip</Tag>
+
+	<Tag name="Boost">Boost</Tag>
+	<Tag name="Flip">Flip</Tag>
+
+	<Tag name="Never">Never</Tag>
+	<Tag name="Always">Always</Tag>
+
+	<Tag name="FuelLap">Fuel each lap</Tag>
+	<Tag name="FuelTime">Fuel over time</Tag>
+	<Tag name="FuelBoost">Boost Fuel</Tag>
 
 	<Tag name="NumLocalPlayers">Number of local players</Tag>
 	<Tag name="SplitVertically">Split Vertically</Tag>

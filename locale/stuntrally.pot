@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION"
 "Report-Msgid-Bugs-To: "
-"POT-Creation-Date: 2011-11-27 19:28+0200"
+"POT-Creation-Date: 2011-12-21 23:03+0200"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>"
 "Language-Team: LANGUAGE <LL@li.org>"
@@ -197,8 +197,8 @@ msgctxt "TerGenOfsY"
 msgid "Offset Y"
 msgstr ""
 
-msgctxt "MinimapRotate"
-msgid "Rotate"
+msgctxt "FuelBoost"
+msgid "Boost Fuel"
 msgstr ""
 
 msgctxt "pipes"
@@ -255,6 +255,10 @@ msgstr ""
 
 msgctxt "Light"
 msgid "Light"
+msgstr ""
+
+msgctxt "Flip"
+msgid "Flip"
 msgstr ""
 
 msgctxt "DistToRoad"
@@ -525,10 +529,6 @@ msgctxt "Replay"
 msgid "Replay"
 msgstr ""
 
-msgctxt "NewDup"
-msgid "New (Duplicate)"
-msgstr ""
-
 msgctxt "AutoRear"
 msgid "Auto Rear gear"
 msgstr ""
@@ -553,8 +553,8 @@ msgctxt "InputMinVal"
 msgid "Min. Value"
 msgstr ""
 
-msgctxt "max"
-msgid "max"
+msgctxt "Always"
+msgid "Always"
 msgstr ""
 
 msgctxt "TipSunDirYaw"
@@ -701,6 +701,10 @@ msgctxt "auto"
 msgid "Auto"
 msgstr ""
 
+msgctxt "FuelLap"
+msgid "Fuel each lap"
+msgstr ""
+
 msgctxt "TipSkyMats"
 msgid "Sky material names (from SkyDome.material)."
 msgstr ""
@@ -771,6 +775,10 @@ msgstr ""
 
 msgctxt "PipeMaterials"
 msgid "Pipe materials"
+msgstr ""
+
+msgctxt "InputRoadSelectMany"
+msgid "Select (many)"
 msgstr ""
 
 msgctxt "CamInfoStrings"
@@ -865,6 +873,10 @@ msgctxt "ssao"
 msgid "SSAO"
 msgstr ""
 
+msgctxt "max"
+msgid "max"
+msgstr ""
+
 msgctxt "NetRefreshList"
 msgid "Get/refresh list"
 msgstr ""
@@ -911,6 +923,10 @@ msgstr ""
 
 msgctxt "InputFluidsRot"
 msgid "MMB - rotate yaw"
+msgstr ""
+
+msgctxt "InputRoadChkFirst"
+msgid "0   - set checkpoint as first"
 msgstr ""
 
 msgctxt "TipModelPageLength"
@@ -1007,6 +1023,10 @@ msgstr ""
 
 msgctxt "Screen"
 msgid "Screen"
+msgstr ""
+
+msgctxt "FuelTime"
+msgid "Fuel over time"
 msgstr ""
 
 msgctxt "InputRoadMostSel"
@@ -1117,8 +1137,8 @@ msgctxt "TipFogEndClr"
 msgid "Fog end color. R G B components 0 to 1 (eg. 0.7 0.8 0.9)"
 msgstr ""
 
-msgctxt "InputCameraTxt1"
-msgid "with shift - main cameras only"
+msgctxt "Multiplayer"
+msgid "Multiplayer"
 msgstr ""
 
 msgctxt "VegetCol"
@@ -1257,8 +1277,8 @@ msgctxt "MinimapTerrain"
 msgid "Terrain"
 msgstr ""
 
-msgctxt "TerGenOfsX"
-msgid "Offset X"
+msgctxt "NewDup"
+msgid "New (Duplicate)"
 msgstr ""
 
 msgctxt "TrackHeightDiff"
@@ -1449,8 +1469,8 @@ msgctxt "trailColor"
 msgid "trail color"
 msgstr ""
 
-msgctxt "InputRoadChkFirst"
-msgid "0   - set checkpoint as first"
+msgctxt "Boost"
+msgid "Boost"
 msgstr ""
 
 msgctxt "NumLocalPlayers"
@@ -1533,6 +1553,10 @@ msgctxt "InputRoadAngSnap"
 msgid "7,8   - angles snap"
 msgstr ""
 
+msgctxt "TerGenOfsX"
+msgid "Offset X"
+msgstr ""
+
 msgctxt "TipTexTiling"
 msgid "Texture tiling length (less means more repeats)."
 msgstr ""
@@ -1563,6 +1587,10 @@ msgstr ""
 
 msgctxt "RplTime"
 msgid "Time"
+msgstr ""
+
+msgctxt "MinimapRotate"
+msgid "Rotate"
 msgstr ""
 
 msgctxt "Yes"
@@ -1659,10 +1687,6 @@ msgstr ""
 
 msgctxt "InputFluidsTileY"
 msgid "; &apos;  - change texture tiling, one coord. only"
-msgstr ""
-
-msgctxt "Multiplayer"
-msgid "Multiplayer"
 msgstr ""
 
 msgctxt "InputUpdate"
@@ -2097,8 +2121,8 @@ msgctxt "AndContributors"
 msgid "and contributors."
 msgstr ""
 
-msgctxt "ScaleMul"
-msgid "Scale multiplier"
+msgctxt "InputCameraTxt1"
+msgid "with shift - main cameras only"
 msgstr ""
 
 msgctxt "scale"
@@ -2223,10 +2247,6 @@ msgstr ""
 
 msgctxt "Environment"
 msgid "Environment"
-msgstr ""
-
-msgctxt "BoostAndFlip"
-msgid "Boost and flip"
 msgstr ""
 
 msgctxt "GraphicsAll_High"
@@ -2377,8 +2397,12 @@ msgctxt "Track"
 msgid "Track"
 msgstr ""
 
-msgctxt "InputRoadSelectMany"
-msgid "Select (many)"
+msgctxt "ScaleMul"
+msgid "Scale multiplier"
+msgstr ""
+
+msgctxt "Never"
+msgid "Never"
 msgstr ""
 
 msgctxt "TerGenOct"

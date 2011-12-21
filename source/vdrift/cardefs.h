@@ -36,6 +36,6 @@ enum CARINPUT
 	ALL
 };  }
 
-const int Ncrashsounds = 12;
+const int Ncrashsounds = 12, Nwatersounds = 3;
 
 #endif

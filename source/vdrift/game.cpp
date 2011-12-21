@@ -12,6 +12,7 @@
 #include "performance_testing.h"
 #include "quickprof.h"
 #include "tracksurface.h"
+#include "../ogre/QTimer.h"
 #include "../ogre/OgreGame.h"
 #include "../ogre/FollowCamera.h"
 #include "../oisb/OISBSystem.h"
@@ -66,22 +67,34 @@ void GAME::Start(std::list <string> & args)
 
 bool GAME::InitializeSound()
 {
+	QTimer ti;  ti.update();  /// time
+	
 	if (sound.Init(2048, info_output, error_output))
 	{
 		generic_sounds.SetLibraryPath(PATHMANAGER::GetGenericSoundPath());
 		
-		if (!generic_sounds.Load("tire_squeal", sound.GetDeviceInfo(), error_output)) return false;
-		if (!generic_sounds.Load("grass", sound.GetDeviceInfo(), error_output)) return false;
-		if (!generic_sounds.Load("gravel", sound.GetDeviceInfo(), error_output)) return false;
-		if (!generic_sounds.Load("bump_front", sound.GetDeviceInfo(), error_output)) return false;
-		if (!generic_sounds.Load("bump_rear", sound.GetDeviceInfo(), error_output)) return false;
-		if (!generic_sounds.Load("wind", sound.GetDeviceInfo(), error_output)) return false;
+		if (!generic_sounds.Load("tire_squeal", sound.GetDeviceInfo(), error_output))  return false;
+		if (!generic_sounds.Load("grass", sound.GetDeviceInfo(), error_output))  return false;
+		if (!generic_sounds.Load("gravel", sound.GetDeviceInfo(), error_output))  return false;
+		if (!generic_sounds.Load("bump_front", sound.GetDeviceInfo(), error_output))  return false;
+		if (!generic_sounds.Load("bump_rear", sound.GetDeviceInfo(), error_output))  return false;
+		if (!generic_sounds.Load("wind", sound.GetDeviceInfo(), error_output))  return false;
 		for (int i = 0; i < Ncrashsounds; ++i)
 		{
 			int n = i+1;
 			char name[3] = {'0'+ n/10, '0'+ n%10, 0};
-			if (!generic_sounds.Load(name, sound.GetDeviceInfo(), error_output)) return false;
+			if (!generic_sounds.Load(name, sound.GetDeviceInfo(), error_output))  return false;
 		}
+		for (int i = 0; i < Nwatersounds; ++i)
+		{
+			char name[16];
+			sprintf(name, "water%d", i+1);
+			if (!generic_sounds.Load(name, sound.GetDeviceInfo(), error_output))  return false;
+		}
+		if (!generic_sounds.Load("mud1", sound.GetDeviceInfo(), error_output))  return false;
+		if (!generic_sounds.Load("mud_cont", sound.GetDeviceInfo(), error_output))  return false;
+		if (!generic_sounds.Load("water_cont", sound.GetDeviceInfo(), error_output))  return false;
+		if (!generic_sounds.Load("boost", sound.GetDeviceInfo(), error_output))  return false;
 		
 		sound.SetMasterVolume(settings->vol_master);
 		sound.Pause(false);
@@ -93,6 +106,10 @@ bool GAME::InitializeSound()
 	}
 
 	info_output << "Sound initialization successful" << endl;
+
+	ti.update();	/// time
+	float dt = ti.dt * 1000.f;
+	info_output << "::: Time Sounds: " << dt << " ms" << endl;
 	return true;
 }
 
@@ -273,7 +290,8 @@ bool GAME::OneLoop()
 		double dt = qtim.dt;
 		clocktime += dt;
 		
-		OISB::System::getSingleton().process(dt);
+		//if (OISB::System::getSingletonPtr() != NULL)
+			//OISB::System::getSingleton().process(dt);
 
 		Tick(dt);  // do CPU intensive stuff in parallel with the GPU
 
