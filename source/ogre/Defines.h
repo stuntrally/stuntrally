@@ -60,4 +60,9 @@ const static ShapeData
 	gSD_Other(ST_Other);
 /**/
 
+///  boost fuel params  ----
+const static float gfBoostFuelStart = 3.f,  // seconds (each lap)
+	gfBoostFuelMax = 3.f,  // max val, tank	
+	gfBoostFuelAddSec = 0.1f;  // add value each second
+
 #endif
