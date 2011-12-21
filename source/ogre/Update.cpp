@@ -511,6 +511,9 @@ void App::newPoses()
 						ghost.Clear();
 						
 						carM->ResetChecks();
+						//  restore boost fuel, each lap
+						if (pSet->boost_type == 1 && carM->pCar)
+							carM->pCar->dynamics.boostFuel = gfBoostFuelStart;
 
 						///  winner places  for local players > 1
 						if (carM->iWonPlace == 0 && pGame->timer.GetCurrentLap(iCarNum) >= pSet->num_laps)

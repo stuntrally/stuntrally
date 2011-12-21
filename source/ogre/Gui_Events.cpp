@@ -44,7 +44,7 @@ void App::chkCarCollis(WP wp){		ChkEv(car_collis);		}
 //  boost, flip
 void App::comboBoost(CMB)
 {
-	pSet->boost_type = val;
+	pSet->boost_type = val;  ShowHUD();
 }
 void App::comboFlip(CMB)
 {
@@ -414,11 +414,7 @@ bool App::keyPressed( const OIS::KeyEvent &arg )
 		{
 			for (int c=0; c < carModels.size(); ++c)
 			{
-				if (carModels[c]->pCar)
-				{
-					carModels[c]->pCar->dynamics.boostFuel = 3.f;  // par max val
-					carModels[c]->pCar->ResetPos(true);
-				}
+				if (carModels[c]->pCar)  carModels[c]->pCar->ResetPos(true);
 				if (carModels[c]->fCam)  carModels[c]->fCam->first = true;
 				carModels[c]->ResetChecks();
 			}

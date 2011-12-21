@@ -945,6 +945,8 @@ void CAR::ResetPos(bool fromStart)
 	dynamics.chassis->setAngularVelocity(btVector3(0,0,0));
 
 	dynamics.SynchronizeBody();  // set body from chassis
+	if (fromStart)  // restore boost fuel
+		dynamics.boostFuel = gfBoostFuelStart;
 
 	//  engine, wheels
 	dynamics.engine.SetInitialConditions();
@@ -954,6 +956,7 @@ void CAR::ResetPos(bool fromStart)
 		dynamics.wheel[w].SetAngularVelocity(0);
 		//dynamics.wheel_velocity[w] = zero;
 	}
+	crashdetection.Update(0.f, 0.1f);  //prevent car hit sound
 
 	//dynamics.SynchronizeChassis();
 	dynamics.UpdateWheelContacts();
