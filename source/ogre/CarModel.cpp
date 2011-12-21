@@ -747,9 +747,7 @@ void CarModel::RecreateMaterials()
 			Ogre::MaterialManager::getSingleton().remove(sMtr[i] + strI);
 		mat->clone(sMtr[i] + strI, false);
 		sMtr[i] = sMtr[i] + strI;
-		// Change color here - cache has to be created before loading model
-		ChangeClr(iIndex);
-
+		
 		//LogO(" === New car mtr name: " + sMtr[i]);
 	}
 	
@@ -780,23 +778,12 @@ void CarModel::RecreateMaterials()
 							tus->setTextureName("wheel.png");
 						}
 						
-						if (tus->getTextureName() == "body_light.png")
-						{
-							tus->setTextureName(sCar + "_body00_red.png");
-						}
-						else if (tus->getTextureName() == "body_blend.png")
-						{
-							tus->setTextureName(sCar + "_body00_add.png");
-						}
-						else
-						{
-							if (!(StringUtil::startsWith(tus->getTextureName(), "ReflectionCube") ||
-								tus->getTextureName() == "ReflectionCube" ||
-								StringUtil::startsWith(tus->getName(), "shadowmap") ||
-								StringUtil::startsWith(tus->getName(), "terrainlightmap") ||
-								StringUtil::startsWith(tus->getTextureName(), "flat_n")))
-							tus->setTextureName(sDirname + "_" + tus->getTextureName());
-						}
+						if (!(StringUtil::startsWith(tus->getTextureName(), "ReflectionCube") ||
+							tus->getTextureName() == "ReflectionCube" ||
+							StringUtil::startsWith(tus->getName(), "shadowmap") ||
+							StringUtil::startsWith(tus->getName(), "terrainlightmap") ||
+							StringUtil::startsWith(tus->getTextureName(), "flat_n")))
+						tus->setTextureName(sDirname + "_" + tus->getTextureName());
 		}	}	}	}
 		if (pSet->shadow_type == 3)
 		{
@@ -807,6 +794,8 @@ void CarModel::RecreateMaterials()
 			MaterialFactory::getSingleton().terrainLightMapMtrs.push_back(mtr->getName());
 		}
 	}
+	
+	ChangeClr(iIndex);
 }
 
 void CarModel::setMtrName(const String& entName, const String& mtrName)
@@ -826,7 +815,7 @@ void CarModel::setMtrName(const String& entName, const String& mtrName)
 void CarModel::setMtrNames()
 {
 	if (FileExists(resCar + "/" + sDirname + "_body00_add.png")
-	 && FileExists(resCar + "/" + sDirname + "_body00_red.png"))
+	 || FileExists(resCar + "/" + sDirname + "_body00_red.png"))
 		setMtrName("Car"+toStr(iIndex), sMtr[Mtr_CarBody]);
 	setMtrName("Car.interior"+toStr(iIndex), sMtr[Mtr_CarInterior]);
 	setMtrName("Car.glass"+toStr(iIndex), sMtr[Mtr_CarGlass]);
