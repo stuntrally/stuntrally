@@ -126,6 +126,7 @@
 	normalMap_1024 = palm2_normal.png
 	specMap_1024 = palm2_specular.png
 	specular = 0.5 0.5 0.5 32
+	cullHardware = none
 
 [Palm]
 	diffuseMap_512 = palm.png
