@@ -304,7 +304,7 @@ void App::newPoses()
 				posInfo.whSlide[w] = fr.slide[w];  posInfo.whSqueal[w] = fr.squeal[w];
 				posInfo.whR[w] = replay.header.whR[iCarNum][w];//
 				posInfo.whTerMtr[w] = fr.whTerMtr[w];  posInfo.whRoadMtr[w] = fr.whRoadMtr[w];
-				posInfo.fboost = fr.fboost;  posInfo.fsteer = fr.steer;
+				posInfo.fboost = fr.fboost;
 			}
 		}
 		else
