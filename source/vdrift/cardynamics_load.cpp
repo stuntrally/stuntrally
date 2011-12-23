@@ -726,7 +726,7 @@ void CARDYNAMICS::Init(
 	info.m_restitution = 0.0;  //...
 	info.m_friction = 0.7;  /// 0.4~ 0.75
 	///  chasis^
-	chassis = world.AddRigidBody(info, true, pSet->car_collis);
+	chassis = world.AddRigidBody(info, true, pSet->collis_cars);
 	chassis->setActivationState(DISABLE_DEACTIVATION);
 	chassis->setUserPointer(new ShapeData(ST_Car, this, 0));  ///~~
 	

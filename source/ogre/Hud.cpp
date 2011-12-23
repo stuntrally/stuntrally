@@ -440,7 +440,7 @@ void App::UpdateHUD(int carId, CarModel* pCarM, CAR* pCar, float time, Viewport*
 	//  profiling times -
 	if (pGame && pGame->profilingmode && ovU[3])
 	{
-		if (pSet->mult_thr != 1) //! this one is causing a crash sometimes with multithreading.. maybe need a mutex? i have no idea..
+		if (pSet->multi_thr != 1) //! this one is causing a crash sometimes with multithreading.. maybe need a mutex? i have no idea..
 			ovU[3]->setCaption(pGame->strProfInfo);
 		//if (newPosInfos.size() > 0)
 		//ovU[3]->setCaption("carm: " + toStr(carModels.size()) + " newp: " + toStr((*newPosInfos.begin()).pos));

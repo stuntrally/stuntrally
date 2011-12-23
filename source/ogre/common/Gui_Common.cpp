@@ -679,7 +679,7 @@ void App::comboGraphicsAll(ComboBoxPtr cmb, size_t val)
 	//"TexFiltering", comboTexFilter ?
 	//fsaa = 0;  vsync = false;  //?  rpl?
 	//  sim  - other combobox, not recommended_
-	//game_fq = 100.f;  blt_fq = 60.f;  blt_iter = 7;  mult_thr = 0;
+	//game_fq = 100.f;  blt_fq = 60.f;  blt_iter = 7;  dyn_iter = 10;  mult_thr = 0;  //<low
 	//veget_collis = true;  car_collis = false;
 
 	SETTINGS& s = *pSet;

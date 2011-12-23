@@ -26,7 +26,7 @@ void App::UpdThr()
 	{
 		///  step Game  **
 		//  separate thread
-		if (pSet->mult_thr == 1 && !bLoading)
+		if (pSet->multi_thr == 1 && !bLoading)
 		{
 			bool ret = pGame->OneLoop();
 
@@ -137,7 +137,7 @@ bool App::frameStart(Real time)
 		///  step Game  *******
 		//  single thread, sim on draw
 		bool ret = true;
-		if (pSet->mult_thr != 1)
+		if (pSet->multi_thr != 1)
 		{
 			ret = pGame->OneLoop();
 			if (!ret)  mShutDown = true;
@@ -146,7 +146,7 @@ bool App::frameStart(Real time)
 		
 
 		//  multi thread
-		if (pSet->mult_thr == 1)
+		if (pSet->multi_thr == 1)
 		{
 			/// ???? ---------
 			static QTimer gtim;
