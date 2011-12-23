@@ -132,7 +132,7 @@ SETTINGS::SETTINGS() :  ///  Defaults
 	collis_veget(true), collis_cars(false),
 	local_players(1), num_laps(2),
 	split_vertically(true), language(""), // "" = autodetect lang
-	boost_type(1), flip_type(1), boost_power(1.f),
+	boost_type(2), flip_type(1), boost_power(1.f),
 	//  misc
 	autostart(0), ogre_dialog(0), escquit(0),
 	bltDebug(0), bltLines(1),  bltProfilerTxt(0),
