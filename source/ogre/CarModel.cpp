@@ -457,7 +457,8 @@ void CarModel::Create(int car)
 	//  body  ----------------------
 
 	sCar = resCar + "/" + sDirname;
-	if (FileExists(sCar + "_body.mesh"))
+	String sCar2 = PATHMANAGER::GetCarPath() + "/" + sDirname + "/" + sDirname;
+	if (FileExists(sCar2 + "_body.mesh"))
 	{
 		Entity* eCar = mSceneMgr->createEntity("Car"+ strI, sDirname + "_" + "body.mesh", "Car" + strI);
 
@@ -476,7 +477,7 @@ void CarModel::Create(int car)
 	vPofs = Vector3(pCar->vInteriorOffset[0],pCar->vInteriorOffset[1],pCar->vInteriorOffset[2]);  //x+ back y+ down z+ right
 
 	if (!ghost)
-	if (FileExists(sCar + "_interior.mesh"))
+	if (FileExists(sCar2 + "_interior.mesh"))
 	{
 		Entity* eInter = mSceneMgr->createEntity("Car.interior"+ strI, sDirname + "_" + "interior.mesh", "Car" + strI);
 		//eInter->setCastShadows(false);
@@ -492,7 +493,7 @@ void CarModel::Create(int car)
 	//  glass  ----------------------
 	vPofs = Vector3(0,0,0);
 
-	if (FileExists(sCar + "_glass.mesh"))
+	if (FileExists(sCar2 + "_glass.mesh"))
 	{
 		Entity* eGlass = mSceneMgr->createEntity("Car.glass"+ strI, sDirname + "_" + "glass.mesh", "Car" + strI);
 		if (ghost)  {  eGlass->setRenderQueueGroup(g);  eGlass->setCastShadows(false);  }  else
@@ -515,21 +516,21 @@ void CarModel::Create(int car)
 	{
 		// only 1 mesh for both?
 		String siw = "Wheel"+ strI + "_" +toStr(w);
-		if (FileExists(sCar + "_wheel.mesh"))
+		if (FileExists(sCar2 + "_wheel.mesh"))
 		{
 			Entity* eWh = mSceneMgr->createEntity(siw, sDirname + "_wheel.mesh", "Car" + strI);
 			if (ghost)  {  eWh->setRenderQueueGroup(g);  eWh->setCastShadows(false);  }
 			ndWh[w] = mSceneMgr->getRootSceneNode()->createChildSceneNode();
 			ndWh[w]->attachObject(eWh);  eWh->setVisibilityFlags(RV_Car);
 		}else{
-			if (w < 2 && FileExists(sCar + "_wheel_front.mesh"))
+			if (w < 2 && FileExists(sCar2 + "_wheel_front.mesh"))
 			{
 				Entity* eWh = mSceneMgr->createEntity(siw, sDirname + "_" + "wheel_front.mesh", "Car" + strI);
 				if (ghost)  {  eWh->setRenderQueueGroup(g);  eWh->setCastShadows(false);  }
 				ndWh[w] = mSceneMgr->getRootSceneNode()->createChildSceneNode();
 				ndWh[w]->attachObject(eWh);  eWh->setVisibilityFlags(RV_Car);
 			}else
-			if (FileExists(sCar + "_wheel_rear.mesh"))
+			if (FileExists(sCar2 + "_wheel_rear.mesh"))
 			{
 				Entity* eWh = mSceneMgr->createEntity(siw, sDirname + "_" + "wheel_rear.mesh", "Car" + strI);
 				if (ghost)  {  eWh->setRenderQueueGroup(g);  eWh->setCastShadows(false);  }
@@ -548,7 +549,7 @@ void CarModel::Create(int car)
 		
 		// brake mesh.. only on rear wheels
 		//! todo: add a param to car file to control which wheels have brakes
-		if (FileExists(sCar + "_brake.mesh"))
+		if (FileExists(sCar2 + "_brake.mesh"))
 		{
 			Entity* eBrake = mSceneMgr->createEntity(siw + "_brake", sDirname + "_brake.mesh", "Car" + strI);
 			if (ghost)  {  eBrake->setRenderQueueGroup(g);  eBrake->setCastShadows(false);  }
