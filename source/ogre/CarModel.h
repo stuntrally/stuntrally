@@ -27,7 +27,7 @@ struct PosInfo
 	Ogre::Vector3 pos, carY;  Ogre::Vector2 miniPos;
 	Ogre::Vector3 whPos[4];  Ogre::Quaternion rot, whRot[4];  float whR[4];
 	float whVel[4], whSlide[4], whSqueal[4];
-	int whTerMtr[4],whRoadMtr[4];  float fboost;
+	int whTerMtr[4],whRoadMtr[4];  float fboost,fsteer;
 	bool bNew;  //  new posinfo available for Update
 
 	PosInfo() : bNew(false), pos(0,0,0), miniPos(0,0)  // not inited
@@ -136,7 +136,7 @@ private:
 	//  Nodes
 	Ogre::SceneNode *ndWh[4], *ndWhE[4], *ndBrake[4];
 	
-	//  Dir name of car (e.g. ES or RS2)
+	//  Dir name of car (e.g. ES)
 	std::string sDirname;
 	
 	//  Path to car textures, e.g. /usr/share/stuntrally/data/cars/CT/textures
