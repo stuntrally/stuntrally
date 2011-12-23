@@ -27,7 +27,7 @@ struct PosInfo
 	Ogre::Vector3 pos, carY;  Ogre::Vector2 miniPos;
 	Ogre::Vector3 whPos[4];  Ogre::Quaternion rot, whRot[4];  float whR[4];
 	float whVel[4], whSlide[4], whSqueal[4];
-	int whTerMtr[4],whRoadMtr[4];  float fboost,fsteer;
+	int whTerMtr[4],whRoadMtr[4];  float fboost;
 	bool bNew;  //  new posinfo available for Update
 
 	PosInfo() : bNew(false), pos(0,0,0), miniPos(0,0)  // not inited
