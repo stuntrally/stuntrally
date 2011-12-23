@@ -122,10 +122,12 @@
 
 [cartire_front_FM]
 	parent = cartire_front
+	diffuseMap_1024 = wheel.png
 	normalMap_1024 = wheel_normal.png
 
 [cartire_rear_FM]
 	parent = cartire_rear
+	diffuseMap_1024 = wheel.png
 	normalMap_1024 = wheel_normal.png
 
 
