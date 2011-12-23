@@ -1,6 +1,12 @@
 drive = AWD
 version = 2
 
+[ model_ofs ]
+exhaust-x = 2.2
+exhaust-y = 0.45
+exhaust-z = 0.56
+exhaust-mirror-second = 0
+
 [ steering ]
 max-angle = 33.0
 
