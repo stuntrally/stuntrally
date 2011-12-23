@@ -38,8 +38,8 @@ void App::chkGear(WP wp){		ChkEv(autoshift);	if (pGame)  pGame->ProcessNewSettin
 void App::chkRear(WP wp){		ChkEv(autorear);	if (pGame)  pGame->ProcessNewSettings();	}
 void App::chkRearInv(WP wp){	ChkEv(rear_inv);	if (pGame)  pGame->ProcessNewSettings();	}
 //    [Game]
-void App::chkVegetCollis(WP wp){	ChkEv(veget_collis);	}
-void App::chkCarCollis(WP wp){		ChkEv(car_collis);		}
+void App::chkVegetCollis(WP wp){	ChkEv(collis_veget);	}
+void App::chkCarCollis(WP wp){		ChkEv(collis_cars);		}
 
 //  boost, flip
 void App::comboBoost(CMB)

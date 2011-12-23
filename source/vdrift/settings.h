@@ -4,7 +4,7 @@
 #include "configfile.h"
 
 
-#define SET_VER  1350  // 1.4
+#define SET_VER  1380  // 1.4
 
 
 class SETTINGS
@@ -52,9 +52,8 @@ public:
 	bool loadingbackground;
 	
 	//  sim freq (1/interval timestep)
-	float game_fq, blt_fq;  int blt_iter;
-	int mult_thr;
-	bool veget_collis, car_collis;
+	float game_fq, blt_fq;  int blt_iter, dyn_iter, multi_thr;
+	bool collis_veget, collis_cars;
 	
 	//  compositor
 	bool bloom, hdr, motionblur, all_effects;

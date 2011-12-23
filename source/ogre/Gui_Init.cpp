@@ -121,8 +121,8 @@ void App::InitGui()
 	Chk("CarGear", chkGear, pSet->autoshift);	Chk("CarRear", chkRear, pSet->autorear);
 	Chk("CarRearThrInv", chkRearInv, pSet->rear_inv);
 	//  game
-	Chk("VegetCollis", chkVegetCollis, pSet->veget_collis);
-	Chk("CarCollis", chkCarCollis, pSet->car_collis);
+	Chk("VegetCollis", chkVegetCollis, pSet->collis_veget);
+	Chk("CarCollis", chkCarCollis, pSet->collis_cars);
 	//  boost, flip combos
 	Cmb(combo, "CmbBoost", comboBoost);
 	if (combo)
@@ -220,10 +220,11 @@ void App::InitGui()
 
 
 	//  car color buttons . . . . .
-	Real hsv[10][3] = {
-		{0.43,0.86,0.73}, {0.90,1.00,0.80}, {0.00,1.00,0.66}, {0.28,0.57,0.17}, {0.75,0.90,0.55},
-		{0.47,0.90,0.80}, {0.50,0.33,0.80}, {0.86,1.00,0.87}, {0.83,0.10,0.58}, {0.70,0.38,0.74}};
-	for (int i=0; i<10; i++)
+	Real hsv[15][3] = {
+		{0.43,0.80,0.80}, {0.47,0.90,0.85}, {0.50,0.33,0.90}, {0.56,0.80,0.80}, {0.55,0.50,0.32}, 
+		{0.75,0.90,0.90}, {0.70,0.80,0.80}, {0.86,1.00,0.97}, {0.91,1.00,1.00}, {0.00,0.97,0.93},
+		{0.35,0.70,0.40}, {0.28,0.57,0.17}, {0.28,0.00,0.10}, {0.83,0.00,0.58}, {0.41,0.00,0.88}, };
+	for (int i=0; i<15; i++)
 	{
 		StaticImagePtr img = mGUI->findWidget<StaticImage>("carClr"+toStr(i));
 		Real h = hsv[i][0], s = hsv[i][1], v = hsv[i][2];
