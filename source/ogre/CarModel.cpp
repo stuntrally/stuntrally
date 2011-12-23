@@ -345,6 +345,28 @@ void CarModel::Update(PosInfo& posInfo, float time)
 	// blendmaps
 	UpdWhTerMtr();
 	
+	//  update brake meshes orientation
+	for (int i=0; i<4; ++i)
+	{
+		if (mSceneMgr->hasSceneNode("brake_node" + toStr(iIndex) + "_" + toStr(i)))
+		{
+			SceneNode* node = mSceneMgr->getSceneNode("brake_node" + toStr(iIndex) + "_" + toStr(i));
+			node->_setDerivedOrientation( pMainNode->getOrientation() );
+			
+			// this transformation code is just so the brake mesh can have the same alignment as the wheel mesh
+			node->yaw(Ogre::Degree(-90), Node::TS_LOCAL);
+			if (i%2 == 1)
+				node->setScale(-1, 1, 1);
+				
+			node->pitch(Ogre::Degree(180), Node::TS_LOCAL);
+			
+			if (eType != CT_GHOST)
+				node->yaw(-Degree(pCar->dynamics.wheel[i].GetSteerAngle()));
+			else
+				node->yaw(Degree(pApp->fr.steer * pCar->dynamics.GetMaxSteeringAngle()));
+		}
+	}
+	
 	UpdateKeys();
 }
 
@@ -389,27 +411,6 @@ void CarModel::UpdateKeys()
 		}
 	}
 	iCamNextOld = pCar->iCamNext;
-	
-	//  update brake meshes orientation
-	for (int i=0; i<4; ++i)
-	{
-		if (mSceneMgr->hasSceneNode("brake_node" + toStr(iIndex) + "_" + toStr(i)))
-		{
-			SceneNode* node = mSceneMgr->getSceneNode("brake_node" + toStr(iIndex) + "_" + toStr(i));
-			node->_setDerivedOrientation( pMainNode->getOrientation() );
-			
-			// this transformation code is just so the brake mesh can have the same alignment as the wheel mesh
-			if (i%2 == 0)
-				node->yaw(Ogre::Degree(-90), Node::TS_LOCAL);
-			else
-				node->yaw(Ogre::Degree(90), Node::TS_LOCAL);
-			node->pitch(Ogre::Degree(180), Node::TS_LOCAL);
-			
-			node->yaw(-Degree(pCar->dynamics.wheel[i].GetSteerAngle()));
-			
-		}
-	}
-	
 }
 
 
