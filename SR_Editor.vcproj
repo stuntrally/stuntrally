@@ -64,7 +64,7 @@
 				AdditionalDependencies="OgreMain_d.lib ois_d.lib OgreTerrain_d.lib OgrePaging_d.lib OgreRTShaderSystem_d.lib MyGUIEngine_d.lib MyGUI.OgrePlatform_d.lib"
 				OutputFile="$(ProjectName)_d.exe"
 				LinkIncremental="2"
-				AdditionalLibraryDirectories="e:\v\ogre171\lib\debug;e:\v\ogre171\Dependencies\lib\Debug;e:\v\ogre171\MyGUI3.0\lib\Debug"
+				AdditionalLibraryDirectories="e:\v\ogre171\lib\debug;e:\v\ogre171\Dependencies\lib\Debug;&quot;e:\v\MyGUI-3.2\trunk\bin\lib\Debug&quot;"
 				GenerateDebugInformation="true"
 				SubSystem="2"
 				TargetMachine="1"
