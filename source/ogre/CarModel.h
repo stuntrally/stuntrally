@@ -132,7 +132,9 @@ private:
 	Ogre::ParticleSystem* pb[2], *ph;  // boost, world hit
 	Ogre::RibbonTrail* whTrl[4];
 	Ogre::Real wht[4];  // spin time (approx tire temp.)
-	Ogre::SceneNode *ndWh[4], *ndWhE[4];
+	
+	//  Nodes
+	Ogre::SceneNode *ndWh[4], *ndWhE[4], *ndBrake[4];
 	
 	//  Dir name of car (e.g. ES or RS2)
 	std::string sDirname;

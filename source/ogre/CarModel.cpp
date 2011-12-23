@@ -60,6 +60,7 @@ CarModel::CarModel(unsigned int index, eCarType type, const std::string name,
 	{	ps[w] = 0;  pm[w] = 0;  pd[w] = 0;
 		pflW[w] = 0;  pflM[w] = 0;  pflMs[w] = 0;
 		ndWh[w] = 0;  ndWhE[w] = 0; whTrl[w] = 0;
+		ndBrake[w] = 0;
 		wht[w] = 0.f;  whTerMtr[w] = 0;  whRoadMtr[w] = 0;  }
 	for (int i=0; i < 2; i++)
 		pb[i] = 0;
@@ -89,7 +90,7 @@ CarModel::~CarModel()
 		if (pflW[w]) {  mSceneMgr->destroyParticleSystem(pflW[w]);   pflW[w]=0;  }
 		if (pflM[w]) {  mSceneMgr->destroyParticleSystem(pflM[w]);   pflM[w]=0;  }
 		if (pflMs[w]) {  mSceneMgr->destroyParticleSystem(pflMs[w]);   pflMs[w]=0;  }  
-		if (mSceneMgr->hasSceneNode("brake_node"+toStr(iIndex)+"_"+toStr(w))) mSceneMgr->destroySceneNode("brake_node"+toStr(iIndex)+"_"+toStr(w));
+		if (ndBrake[w]) mSceneMgr->destroySceneNode(ndBrake[w]);
 	}
 	for (int i=0; i < 2; i++)
 		if (pb[i]) {  mSceneMgr->destroyParticleSystem(pb[i]);   pb[i]=0;  }
@@ -348,22 +349,21 @@ void CarModel::Update(PosInfo& posInfo, float time)
 	//  update brake meshes orientation
 	for (int i=0; i<4; ++i)
 	{
-		if (mSceneMgr->hasSceneNode("brake_node" + toStr(iIndex) + "_" + toStr(i)))
+		if (ndBrake[i])
 		{
-			SceneNode* node = mSceneMgr->getSceneNode("brake_node" + toStr(iIndex) + "_" + toStr(i));
-			node->_setDerivedOrientation( pMainNode->getOrientation() );
+			ndBrake[i]->_setDerivedOrientation( pMainNode->getOrientation() );
 			
 			// this transformation code is just so the brake mesh can have the same alignment as the wheel mesh
-			node->yaw(Ogre::Degree(-90), Node::TS_LOCAL);
+			ndBrake[i]->yaw(Ogre::Degree(-90), Node::TS_LOCAL);
 			if (i%2 == 1)
-				node->setScale(-1, 1, 1);
+				ndBrake[i]->setScale(-1, 1, 1);
 				
-			node->pitch(Ogre::Degree(180), Node::TS_LOCAL);
+			ndBrake[i]->pitch(Ogre::Degree(180), Node::TS_LOCAL);
 			
 			if (eType != CT_GHOST)
-				node->yaw(-Degree(pCar->dynamics.wheel[i].GetSteerAngle()));
+				ndBrake[i]->yaw(-Degree(pCar->dynamics.wheel[i].GetSteerAngle()));
 			else
-				node->yaw(Degree(pApp->fr.steer * pCar->dynamics.GetMaxSteeringAngle()));
+				ndBrake[i]->yaw(Degree(pApp->fr.steer * pCar->dynamics.GetMaxSteeringAngle()));
 		}
 	}
 	
@@ -554,8 +554,8 @@ void CarModel::Create(int car)
 		{
 			Entity* eBrake = mSceneMgr->createEntity(siw + "_brake", sDirname + "_brake.mesh", "Car" + strI);
 			if (ghost)  {  eBrake->setRenderQueueGroup(g);  eBrake->setCastShadows(false);  }
-			SceneNode* node = ndWh[w]->createChildSceneNode("brake_node" + toStr(iIndex) + "_" + toStr(w));
-			node->attachObject(eBrake);
+			ndBrake[w] = ndWh[w]->createChildSceneNode();
+			ndBrake[w]->attachObject(eBrake);
 		}
 	}
 
