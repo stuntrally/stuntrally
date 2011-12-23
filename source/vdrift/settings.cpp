@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "settings.h"
+#include <stdio.h>
 
 
 void SETTINGS::Load(std::string sfile)
