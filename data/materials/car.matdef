@@ -167,13 +167,13 @@
 	parent = cartire_front_XM
 
 
-; ------------- RS2 ----------------
-[cartire_front_RS2]
+; ------------- RS ----------------
+[cartire_front_RS]
 	parent = cartire_front
 	diffuseMap_1024 = wheel.png
 
-[cartire_rear_RS2]
-	parent = cartire_front_RS2
+[cartire_rear_RS]
+	parent = cartire_front_RS
 
 [chasis/Material#1]
 	envMap = ReflectionCube

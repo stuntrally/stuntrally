@@ -301,7 +301,7 @@ void CarModel::Update(PosInfo& posInfo, float time)
 			}
 			if (pflM[w])  //  Mud ^
 			{
-				float vel = Math::Abs(pCar->dynamics.wheel[w].GetAngularVelocity());
+				float vel = Math::Abs(cd.wheel[w].GetAngularVelocity());
 				bool e = idPar == 2 &&  vel > 30.f;
 				float emitM = e ?  cd.whH[w] * std::min(80.f, 1.5f * vel)  : 0.f;  whMudSpin += emitM / 80.f;
 				ParticleEmitter* pe = pflM[w]->getEmitter(0);
@@ -310,7 +310,7 @@ void CarModel::Update(PosInfo& posInfo, float time)
 			}
 			if (pflMs[w])  //  Mud soft ^
 			{
-				float vel = Math::Abs(pCar->dynamics.wheel[w].GetAngularVelocity());
+				float vel = Math::Abs(cd.wheel[w].GetAngularVelocity());
 				
 				bool e = idPar == 1 &&  vel > 30.f;
 				float emitM = e ?  cd.whH[w] * std::min(160.f, 3.f * vel)  : 0.f;  whMudSpin += emitM / 80.f;
@@ -361,9 +361,9 @@ void CarModel::Update(PosInfo& posInfo, float time)
 			node->pitch(Ogre::Degree(180), Node::TS_LOCAL);
 			
 			if (eType != CT_GHOST)
-				node->yaw(-Degree(pCar->dynamics.wheel[i].GetSteerAngle()));
-			else
-				node->yaw(Degree(pApp->fr.steer * pCar->dynamics.GetMaxSteeringAngle()));
+				node->yaw(-Degree(cd.wheel[i].GetSteerAngle()));
+			else	// todo: ghost wrong
+				node->yaw(Degree(/*posInfo.fsteer*/pApp->fr.steer * cd.GetMaxSteeringAngle()));
 		}
 	}
 	
