@@ -39,7 +39,7 @@ torque-curve-17 = 7000, 450.83
 sliding = 0.27
 radius = 0.15
 area = 0.75
-max-pressure = 65000.0
+max-pressure = 93000.0
 
 [ transmission ]
 gears = 5
@@ -64,7 +64,7 @@ fuel-density = 1.0
 [ suspension-front ]
 spring-constant = 102000
 #spring-constant = 72000
-bounce = 11050
+bounce = 13050
 #bounce = 7500
 rebound = 10700
 #rebound = 5000
@@ -78,7 +78,7 @@ anti-roll = 5000
 [ suspension-rear ]
 spring-constant = 98000
 #spring-constant = 68000
-bounce = 10000
+bounce = 13000
 #bounce = 7500
 rebound = 9992.14
 #rebound = 5000
