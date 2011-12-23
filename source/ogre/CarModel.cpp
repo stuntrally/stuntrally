@@ -363,7 +363,7 @@ void CarModel::Update(PosInfo& posInfo, float time)
 			if (eType != CT_GHOST)
 				ndBrake[i]->yaw(-Degree(pCar->dynamics.wheel[i].GetSteerAngle()));
 			else
-				ndBrake[i]->yaw(Degree(pApp->fr.steer * pCar->dynamics.GetMaxSteeringAngle()));
+				ndBrake[i]->yaw(-Degree(pApp->ghostFrame.steer * pCar->dynamics.GetMaxSteeringAngle()));
 		}
 	}
 	

@@ -272,20 +272,21 @@ void App::newPoses()
 		///-----------------------------------------------------------------------
 		if (bGhost)
 		{
-			ReplayFrame fr;
-			bool ok = ghplay.GetFrame(lapTime, &fr, 0);
+			ReplayFrame frame;
+			bool ok = ghplay.GetFrame(lapTime, &frame, 0);
 			//  car
-			pos = fr.pos;  rot = fr.rot;
+			pos = frame.pos;  rot = frame.rot;
 			//  wheels
 			for (int w=0; w < 4; ++w)
 			{
-				whPos[w] = fr.whPos[w];  whRot[w] = fr.whRot[w];
-				posInfo.whVel[w] = fr.whVel[w];
-				posInfo.whSlide[w] = fr.slide[w];  posInfo.whSqueal[w] = fr.squeal[w];
+				whPos[w] = frame.whPos[w];  whRot[w] = frame.whRot[w];
+				posInfo.whVel[w] = frame.whVel[w];
+				posInfo.whSlide[w] = frame.slide[w];  posInfo.whSqueal[w] = frame.squeal[w];
 				posInfo.whR[w] = replay.header.whR[iCarNum][w];//
-				posInfo.whTerMtr[w] = fr.whTerMtr[w];  posInfo.whRoadMtr[w] = fr.whRoadMtr[w];
-				posInfo.fboost = fr.fboost;
+				posInfo.whTerMtr[w] = frame.whTerMtr[w];  posInfo.whRoadMtr[w] = frame.whRoadMtr[w];
+				posInfo.fboost = frame.fboost;
 			}
+			ghostFrame = frame;
 		}
 		else if (bRplPlay)
 		{
