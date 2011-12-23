@@ -3,3 +3,9 @@ Url:		http://www.opengameart.org/content/gum-tree
 Artist:		lattice (OpenGameArt.org user)
 License(s):	CC-BY 3.0
 Date:		04/11/2010
+
+Model:		palm2.mesh
+Url: 		http://opengameart.org/content/palm-tree-v2
+Artist:		
+License(s):	
+Date:		23/12/2011
