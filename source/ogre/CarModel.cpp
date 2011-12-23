@@ -360,10 +360,13 @@ void CarModel::Update(PosInfo& posInfo, float time)
 				
 			ndBrake[i]->pitch(Ogre::Degree(180), Node::TS_LOCAL);
 			
-			if (eType != CT_GHOST)
-				ndBrake[i]->yaw(-Degree(pCar->dynamics.wheel[i].GetSteerAngle()));
-			else
-				ndBrake[i]->yaw(-Degree(pApp->ghostFrame.steer * pCar->dynamics.GetMaxSteeringAngle()));
+			if (i==0 || i==1) // turn only front wheels
+			{
+				if (eType != CT_GHOST)
+					ndBrake[i]->yaw(-Degree(pCar->dynamics.wheel[i].GetSteerAngle()));
+				else 
+					ndBrake[i]->yaw(-Degree(pApp->ghostFrame.steer * pCar->dynamics.GetMaxSteeringAngle()));
+			}
 		}
 	}
 	
