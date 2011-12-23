@@ -6,6 +6,6 @@ Date:		04/11/2010
 
 Model:		palm2.mesh
 Url: 		http://opengameart.org/content/palm-tree-v2
-Artist:		
-License(s):	
+Artist:		yughues (OpenGameArt.org user)
+License(s):	CC0 (Public Domain)
 Date:		23/12/2011
