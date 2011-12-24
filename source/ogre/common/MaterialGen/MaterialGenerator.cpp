@@ -209,29 +209,6 @@ void MaterialGenerator::createTexUnits(Ogre::Pass* pass, bool shaders)
 		mBlendTexUnit = mTexUnit_i; mTexUnit_i++;
 	}
 	
-	// env map
-	if (needEnvMap())
-	{
-		if (shaders)
-		{
-			tu = pass->createTextureUnitState( mDef->mProps->envMap );
-			tu->setName("envMap");
-			
-			mEnvTexUnit = mTexUnit_i; mTexUnit_i++;
-		}
-		else
-		{
-			tu = pass->createTextureUnitState();
-			tu->setCubicTextureName( mDef->mProps->envMap, true );
-			tu->setEnvironmentMap(true, TextureUnitState::ENV_REFLECTION);
-			
-			// blend with diffuse map using 'reflection amount' property
-			tu->setColourOperationEx(LBX_BLEND_MANUAL, LBS_CURRENT, LBS_TEXTURE, 
-									ColourValue::White, ColourValue::White, 1-mDef->mProps->reflAmount);
-		}
-		tu->setTextureAddressingMode(TextureUnitState::TAM_CLAMP);
-	}
-	
 	// spec map
 	if (needSpecMap())
 	{
@@ -250,56 +227,52 @@ void MaterialGenerator::createTexUnits(Ogre::Pass* pass, bool shaders)
 		mReflTexUnit = mTexUnit_i; mTexUnit_i++;
 	}
 	
-	
-	if (shaders)
+	// global terrain lightmap (static)
+	if (needTerrainLightMap())
 	{
-		// global terrain lightmap (static)
-		if (needTerrainLightMap())
-		{
-			tu = pass->createTextureUnitState("white.png"); // texture name set later (in changeShadows)
-			tu->setName("terrainLightMap");
-			mTerrainLightTexUnit = mTexUnit_i; mTexUnit_i++;
-		}
-		
-		// alpha map
-		if (needAlphaMap())
-		{
-			tu = pass->createTextureUnitState( mAlphaMap );
-			tu->setName("alphaMap");
-			mAlphaTexUnit = mTexUnit_i; mTexUnit_i++;
-		}
-		
-		// normal map
-		if (needNormalMap())
-		{
-			tu = pass->createTextureUnitState( mNormalMap );
-			tu->setName("normalMap");
-			mNormalTexUnit = mTexUnit_i; mTexUnit_i++;
-		}
+		tu = pass->createTextureUnitState("white.png"); // texture name set later (in changeShadows)
+		tu->setName("terrainLightMap");
+		mTerrainLightTexUnit = mTexUnit_i; mTexUnit_i++;
+	}
+	
+	// alpha map
+	if (needAlphaMap())
+	{
+		tu = pass->createTextureUnitState( mAlphaMap );
+		tu->setName("alphaMap");
+		mAlphaTexUnit = mTexUnit_i; mTexUnit_i++;
+	}
+	
+	// normal map
+	if (needNormalMap())
+	{
+		tu = pass->createTextureUnitState( mNormalMap );
+		tu->setName("normalMap");
+		mNormalTexUnit = mTexUnit_i; mTexUnit_i++;
+	}
 
-		// env map
-		if (needEnvMap())
-		{
-			tu = pass->createTextureUnitState( mDef->mProps->envMap );
-			tu->setName("envMap");
-			tu->setTextureAddressingMode(TextureUnitState::TAM_CLAMP);
-			mEnvTexUnit = mTexUnit_i; mTexUnit_i++;
-		}
+	// env map
+	if (needEnvMap())
+	{
+		tu = pass->createTextureUnitState( mDef->mProps->envMap );
+		tu->setName("envMap");
+		tu->setTextureAddressingMode(TextureUnitState::TAM_CLAMP);
+		mEnvTexUnit = mTexUnit_i; mTexUnit_i++;
+	}
 
-		
-		// realtime shadow maps
-		if (needShadows())
+	
+	// realtime shadow maps
+	if (needShadows())
+	{
+		mShadowTexUnit_start = mTexUnit_i;
+		for (int i = 0; i < mParent->getNumShadowTex(); ++i)
 		{
-			mShadowTexUnit_start = mTexUnit_i;
-			for (int i = 0; i < mParent->getNumShadowTex(); ++i)
-			{
-				tu = pass->createTextureUnitState();
-				tu->setName("shadowMap" + toStr(i));
-				tu->setContentType(TextureUnitState::CONTENT_SHADOW);
-				tu->setTextureAddressingMode(TextureUnitState::TAM_BORDER);
-				tu->setTextureBorderColour(ColourValue::White);
-				mTexUnit_i++;
-			}
+			tu = pass->createTextureUnitState();
+			tu->setName("shadowMap" + toStr(i));
+			tu->setContentType(TextureUnitState::CONTENT_SHADOW);
+			tu->setTextureAddressingMode(TextureUnitState::TAM_BORDER);
+			tu->setTextureBorderColour(ColourValue::White);
+			mTexUnit_i++;
 		}
 	}
 }
