@@ -7,6 +7,8 @@ max-angle = 33.19
 [ collision ]
 manual = 1
 radius = 0.35
+width = 0.55
+height = 0.46
 offsetH = 0.05
 
 [ engine ] 

@@ -9,6 +9,13 @@ exhaust-y = 0.45
 exhaust-z = -0.42
 exhaust-mirror-second = 0
 
+[ collision ]
+manual = 1
+radius = 0.39
+width = 0.564
+height = 0.45
+offsetH = 0.0
+
 [ engine ]
 position = 1.42, 0.0, -0.44
 mass = 80.0

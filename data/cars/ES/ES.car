@@ -1,6 +1,9 @@
 drive = AWD
 version = 2
 
+[ steering ]
+max-angle = 35.1
+
 [ model_ofs ]
 interior-x = -0.05
 interior-y = 0.13
@@ -10,13 +13,12 @@ exhaust-y = 0.31
 exhaust-z = 0.40
 exhaust-mirror-second = 0
 
-[ steering ]
-max-angle = 35.1
-
 [ collision ]
 manual = 1
-radius = 0.4
-offsetH = 0.3
+radius = 0.35
+width = 0.5
+height = 0.51
+offsetH = 0.28
 
 [ engine ]
 position = 0.0, 0.4, -0.1
