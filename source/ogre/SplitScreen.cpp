@@ -196,54 +196,37 @@ void SplitScreenManager::preViewportUpdate(const Ogre::RenderTargetViewportEvent
 	if (pApp->bLoading)  return;
 
 	//  What kind of viewport is being updated?
-	//LogO(evt.source->getCamera()->getName());
+	const String& vpName = evt.source->getCamera()->getName();
+	//LogO(vpName);
+	
 	if (evt.source != mGuiViewport)
 	{
 		// 3d scene viewport
 		//  get number of viewport
-		bool hudVp = false;
+		/*bool hudVp = false;
 		std::list<Ogre::Viewport*>::iterator vpIt = mViewports.begin();
 		std::list<Ogre::Viewport*>::iterator hudVpIt = mHUDViewports.begin();
 		int i = 0;
 		if (vpIt != mViewports.end() && hudVpIt != mHUDViewports.end())
 		{
-		while (evt.source != *vpIt && evt.source != *hudVpIt)	{	i++;  vpIt++; hudVpIt++;	}
-		if (evt.source == *hudVpIt) hudVp = true;
-		}
+			while (evt.source != *vpIt && evt.source != *hudVpIt)	{	i++;  vpIt++; hudVpIt++;	}
+			if (evt.source == *hudVpIt) hudVp = true;
+		}*/
 
 		//  get car for this viewport
-		int carId = 0;
-		std::vector<CarModel*>::iterator carIt = pApp->carModels.begin();
-		if (pApp->carModels.size() > 0)
-		{
-			int j = 0;
-			while (j <= i)
-			{
-				if ((*carIt)->eType == CarModel::CT_REMOTE)
-					j--;
-				else
-					if (j == i)
-						break;
-				j++;
-				carIt++;
-			}
-			carId = j;
-		}
+		int carId = 0;  //-1
+		sscanf(vpName.c_str(), "PlayerCamera%d", &carId);
+		//LogO(vpName + " " + toStr(carId));
+		CarModel* pCarM = pApp->carModels[carId];
 			
 		//  Size HUD
 		pApp->SizeHUD(true, evt.source, carId);
 
-		//LogO("VP car "+toStr(carId)+" "+toStr(i)+"---------------");
 		//  Update HUD for this car
-		if (pApp->carModels.size() > 0 && *carIt && (*carIt)->pCar/**/)
-		{
-			pApp->UpdateHUD( carId, *carIt, (*carIt)->pCar, 1.0f / mWindow->getLastFPS(), evt.source );
-		}else{
-			//LogO("VP car "+toStr(carId)+" "+toStr(i));
-			//pApp->UpdateHUD( carId, NULL, NULL, 1.0f / mWindow->getLastFPS(), evt.source );
-		}
+		//LogO("VP car "+toStr(carId)+" "+toStr(i)+"---------------");
+		pApp->UpdateHUD( carId, pCarM, pCarM->pCar, 1.0f / mWindow->getLastFPS(), evt.source );
 		
-		if (hudVp) return;
+		//if (hudVp) return;
 
 
 		///  Set skybox pos to camera  - TODO: fix, sky is center only for last player ...

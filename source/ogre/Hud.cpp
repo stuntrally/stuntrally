@@ -269,7 +269,6 @@ void App::UpdateHUD(int carId, CarModel* pCarM, CAR* pCar, float time, Viewport*
 		if (ovCam)  ovCam->hide();
 		if (mFpsOverlay)  mFpsOverlay->hide();
 	}
-	if (!pCar)  return;
 			
 	///  hud rpm,vel  --------------------------------
 	//LogO(String("pCar: ") + toStr(pCar));
@@ -285,6 +284,8 @@ void App::UpdateHUD(int carId, CarModel* pCarM, CAR* pCar, float time, Viewport*
 	//LogO(String("  vel: ") + toStr(vel) +" [] rpm: "+ toStr(fr.rpm) );
     float vel = fr.vel * (pSet->show_mph ? 2.23693629f : 3.6f);
 	UpdHUDRot(carId, pCarM, vel);
+
+	if (!pCar)  return;
 
 	///   Set motion blur intensity for this viewport, depending on car's linear velocity
 	if (pSet->motionblur)
@@ -446,19 +447,6 @@ void App::UpdateHUD(int carId, CarModel* pCarM, CAR* pCar, float time, Viewport*
 		//ovU[3]->setCaption("carm: " + toStr(carModels.size()) + " newp: " + toStr((*newPosInfos.begin()).pos));
 	}
 
-	//  input values
-/*  if ()  gui check ...
-	if (pCar && pGame && pGame->profilingmode)
-	{	const std::vector<float>& inp = pCar->dynamics.inputsCopy;
-	if (ovU[2] && inp.size() == CARINPUT::ALL)
-	{	sprintf(s, 
-		" Throttle %5.2f\n Brake %5.2f\n Steer %5.2f\n"
-		" Handbrake %5.2f\n Boost %5.2f\n Flip %5.2f\n"
-		,inp[CARINPUT::THROTTLE], inp[CARINPUT::BRAKE], -inp[CARINPUT::STEER_LEFT]+inp[CARINPUT::STEER_RIGHT]
-		,inp[CARINPUT::HANDBRAKE],inp[CARINPUT::BOOST], inp[CARINPUT::FLIP] );
-		ovU[2]->setCaption(String(s));
-	}	}/**/
-
 	//  bullet profiling text  --------
 	static bool oldBltTxt = false;
 	if (ovU[1])
@@ -556,6 +544,18 @@ void App::UpdateHUD(int carId, CarModel* pCarM, CAR* pCar, float time, Viewport*
 	}
 	#endif
 
+	//  input values
+	/*if (pCar && pGame && pGame->profilingmode)
+	{	const std::vector<float>& inp = pCar->dynamics.inputsCopy;
+	if (ovU[2] && inp.size() == CARINPUT::ALL)
+	{	sprintf(s, 
+		" Throttle %5.2f\n Brake %5.2f\n Steer %5.2f\n"
+		" Handbrake %5.2f\n Boost %5.2f\n Flip %5.2f\n"
+		,inp[CARINPUT::THROTTLE], inp[CARINPUT::BRAKE], -inp[CARINPUT::STEER_LEFT]+inp[CARINPUT::STEER_RIGHT]
+		,inp[CARINPUT::HANDBRAKE],inp[CARINPUT::BOOST], inp[CARINPUT::FLIP] );
+		ovU[2]->setCaption(String(s));
+	}	}/**/
+
     //update lap, place, race
 	/*timer.GetStagingTimeLeft(), timer.GetPlayerCurrentLap(), race_laps, curplace.first, curplace.second,
 		car.GetEngineRedline(), car.GetEngineRPMLimit(), car.GetSpeedometer(), settings->GetMPH(),
@@ -563,16 +563,6 @@ void App::UpdateHUD(int carId, CarModel* pCarM, CAR* pCar, float time, Viewport*
 
 
 	///  debug text  --------
-	/*const MATHVECTOR <double,3> pos = pCar->dynamics.body.GetPosition();
-	char ss[202];
-	sprintf(ss,
-		//"kmh:%5.1f rpm:%5d gear:%d  "
-		"Pos: %5.2f %5.2f %5.2f"
-		//,vel, pCar->GetEngineRPM(), gear
-		,pos[0], pos[1], pos[2]
-		);
-	mDebugText = String(ss);	/**/
-
 	/** char s[256];  // wheel ray
 	for (int i=0; i < 4; i++)
 	{
