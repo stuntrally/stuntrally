@@ -158,8 +158,16 @@ bool CAR::Load(class App* pApp1,
 	// load driver
 	{
 		float pos[3];
-		if (!carconf.GetParam("driver.position", pos, error_output)) return false;
+		if (!carconf.GetParam("driver.view-position", pos, error_output)) return false;
 		if (version == 2) COORDINATESYSTEMS::ConvertCarCoordinateSystemV2toV1(pos[0], pos[1], pos[2]);
+		
+		driver_view_position.Set(pos[0], pos[1], pos[2]);
+		
+		if (!carconf.GetParam("driver.hood-mounted-view-position", pos, error_output)) return false;
+		if (version == 2) COORDINATESYSTEMS::ConvertCarCoordinateSystemV2toV1(pos[0], pos[1], pos[2]);
+		
+		hood_view_position.Set(pos[0], pos[1], pos[2]);
+		
 		/*if (drivernode) //move the driver model to the coordinates given
 		{
 			MATHVECTOR <float, 3> floatpos;

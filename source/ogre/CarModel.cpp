@@ -444,6 +444,21 @@ void CarModel::Create(int car)
 		fCam = new FollowCamera(mCamera);
 		fCam->mGoalNode = pMainNode;
 		fCam->loadCameras();
+		
+		//  set in-car camera position to driver position
+		Ogre::Vector3 driver_view_position = Vector3(pCar->driver_view_position[0], pCar->driver_view_position[2], -pCar->driver_view_position[1]);
+		
+		Ogre::Vector3 hood_view_position = Vector3(pCar->hood_view_position[0], pCar->hood_view_position[2], -pCar->hood_view_position[1]);
+		
+		for (std::vector<CameraAngle*>::iterator it=fCam->mCameraAngles.begin();
+			it!=fCam->mCameraAngles.end(); ++it)
+		{
+			if ( (*it)->mName == "Car driver" )
+				(*it)->mOffset = driver_view_position;
+				
+			if ( (*it)->mName == "Car bonnet" )
+				(*it)->mOffset = hood_view_position;
+		}
 	}
 	
 	RecreateMaterials();
