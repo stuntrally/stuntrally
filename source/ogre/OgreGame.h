@@ -70,7 +70,7 @@ public:
 		
 	void UpdateHUD(int carId, class CarModel* pCarM, class CAR* pCar,
 		float time, Ogre::Viewport* vp=NULL), SizeHUD(bool full, Ogre::Viewport* vp=NULL, int carId=-1);
-	void UpdHUDRot(int carId, CarModel* pCarM, float vel);
+	void UpdHUDRot(int carId, CarModel* pCarM, float vel, float rpm);
 	
 	MaterialFactory* materialFactory; // material generation
 	void recreateCarMtr();

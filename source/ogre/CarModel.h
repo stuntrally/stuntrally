@@ -99,6 +99,8 @@ public:
 	
 	//  VDrift car (can be null)
 	CAR* pCar;
+	
+	float angCarY;  // car yaw angle for minimap
 
 	//  start pos, lap  checkpoint vars
 	bool bGetStPos;  Ogre::Matrix4 matStPos;  Ogre::Vector4 vStDist;

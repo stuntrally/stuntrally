@@ -34,7 +34,7 @@ CarModel::CarModel(unsigned int index, eCarType type, const std::string name,
 	Ogre::SceneManager* sceneMgr, SETTINGS* set, GAME* game, Scene* s, Ogre::Camera* cam, App* app) :
 	fCam(0), pMainNode(0), pCar(0), terrain(0), resCar(""), mCamera(0), pReflect(0), pApp(app), color(1,0,0),
 	bLightMapEnabled(true), bBraking(false),
-	iCamNextOld(0), bLastChkOld(0), bWrongChk(0)
+	iCamNextOld(0), bLastChkOld(0), bWrongChk(0), angCarY(0)
 {
 	iIndex = index;  sDirname = name;  mSceneMgr = sceneMgr;
 	pSet = set;  pGame = game;  sc = s;  mCamera = cam;  eType = type;
@@ -132,6 +132,10 @@ void CarModel::Update(PosInfo& posInfo, float time)
 	//  car pos and rot
 	pMainNode->setPosition(posInfo.pos);
 	pMainNode->setOrientation(posInfo.rot);
+
+	//  upd rotY for minimap
+	Quaternion q = posInfo.rot * Quaternion(Degree(90),Vector3(0,1,0));
+	angCarY = q.getYaw().valueDegrees() + 90.f;
 	
 	//  brake state
 	//  trigger when any wheel is braking

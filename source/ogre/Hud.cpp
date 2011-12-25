@@ -247,7 +247,7 @@ void App::UpdMiniTer()
 void App::UpdateHUD(int carId, CarModel* pCarM, CAR* pCar, float time, Viewport* vp)
 {
 	if (bSizeHUD)
-	{	bSizeHUD = false;
+	{	bSizeHUD = false;  // split x num plr ?..
 		SizeHUD(true);	}
 		
 	// show/hide for render viewport / gui viewport
@@ -269,10 +269,11 @@ void App::UpdateHUD(int carId, CarModel* pCarM, CAR* pCar, float time, Viewport*
 		if (ovCam)  ovCam->hide();
 		if (mFpsOverlay)  mFpsOverlay->hide();
 	}
+	//*H*/LogO(String("car: ") + toStr(carId) +" "+ (!pCarM ? toStr(pCarM) : pCarM->sDirname) +" "+ (vp?"v+":"v-") +" "+ (pCar?"c+":"c-") +" "+ (pCarM?"m+":"m-"));
+	if (!pCar)  return;  //-1 for ^above hiding in gui vp
 			
 	///  hud rpm,vel  --------------------------------
-	//LogO(String("pCar: ") + toStr(pCar));
-	if (pCar && !bRplPlay)
+	if (pCar && !bRplPlay)  // for local cars only..
 	{	fr.vel = pCar->GetSpeedometer();
 		fr.rpm = pCar->GetEngineRPM();
 		fr.gear = pCar->GetGear();
@@ -280,12 +281,10 @@ void App::UpdateHUD(int carId, CarModel* pCarM, CAR* pCar, float time, Viewport*
 		//fr.throttle = pCar->dynamics.GetEngine().GetThrottle();  // not on hud
 	}
 
-	//LogO(String("car: ") + toStr(carId) +" "+ (!pCarM ? toStr(pCarM) : pCarM->sDirname));
-	//LogO(String("  vel: ") + toStr(vel) +" [] rpm: "+ toStr(fr.rpm) );
     float vel = fr.vel * (pSet->show_mph ? 2.23693629f : 3.6f);
-	UpdHUDRot(carId, pCarM, vel);
-
-	if (!pCar)  return;
+    float rpm = fr.rpm;
+	//*H*/LogO(String("car: ") + toStr(carId) + "  vel: "+ toStr(vel) +"  rpm: "+ toStr(rpm));
+	UpdHUDRot(carId, pCarM, vel, rpm);
 
 	///   Set motion blur intensity for this viewport, depending on car's linear velocity
 	if (pSet->motionblur)

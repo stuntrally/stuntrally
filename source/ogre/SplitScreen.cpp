@@ -192,12 +192,11 @@ void SplitScreenManager::AdjustRatio()
 //------------------------------------------------------------------------------------------------------------------
 void SplitScreenManager::preViewportUpdate(const Ogre::RenderTargetViewportEvent& evt)
 {
-	if (!pApp)  return;
-	if (pApp->bLoading)  return;
+	if (!pApp || pApp->bLoading)  return;
 
 	//  What kind of viewport is being updated?
 	const String& vpName = evt.source->getCamera()->getName();
-	//LogO(vpName);
+	//*H*/LogO(vpName);  //GuiCam1  PlayerCamera0,1..
 	
 	if (evt.source != mGuiViewport)
 	{
@@ -216,20 +215,20 @@ void SplitScreenManager::preViewportUpdate(const Ogre::RenderTargetViewportEvent
 		//  get car for this viewport
 		int carId = 0;  //-1
 		sscanf(vpName.c_str(), "PlayerCamera%d", &carId);
-		//LogO(vpName + " " + toStr(carId));
 		CarModel* pCarM = pApp->carModels[carId];
 			
 		//  Size HUD
 		pApp->SizeHUD(true, evt.source, carId);
 
 		//  Update HUD for this car
-		//LogO("VP car "+toStr(carId)+" "+toStr(i)+"---------------");
+		//*H*/LogO("VP car "+toStr(carId)+" "+toStr(i)+"---------------");
 		pApp->UpdateHUD( carId, pCarM, pCarM->pCar, 1.0f / mWindow->getLastFPS(), evt.source );
 		
-		//if (hudVp) return;
+		//if (hudVp) return;  // ?..
 
 
 		///  Set skybox pos to camera  - TODO: fix, sky is center only for last player ...
+		//  idea: with compositor this needs separate sky nodes (own sky for each player) and showing 1 sky for 1 player
 		if (pApp->ndSky)
 			pApp->ndSky->setPosition(evt.source->getCamera()->getPosition());
 			
@@ -243,6 +242,7 @@ void SplitScreenManager::preViewportUpdate(const Ogre::RenderTargetViewportEvent
 		}
 		
 		//  Update rain/snow - depends on camera
+		//  todo: every player/viewport needs own weather particles  pr[carId]
 		if (pSet->particles)
 		{	
 			const Vector3& pos = evt.source->getCamera()->getPosition();
@@ -267,9 +267,9 @@ void SplitScreenManager::preViewportUpdate(const Ogre::RenderTargetViewportEvent
 	else
 	{
 		//  Gui viewport - hide stuff we don't want
-		pApp->UpdateHUD( 0, NULL, NULL, mWindow->getLastFPS() );
-		//LogO("VP gui --------------------------------------");
+		//*H*/LogO("VP gui --------------------------------------");
 
+		pApp->UpdateHUD(-1, NULL, NULL, mWindow->getLastFPS() );
 		pApp->SizeHUD(false);
 		
 		// no mouse in key capture mode
