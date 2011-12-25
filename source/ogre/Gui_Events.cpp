@@ -26,7 +26,6 @@ using namespace MyGUI;
 
 
 ///  Gui Events
-//-----------------------------------------------------------------------------------------------------------
 
 //  [Multiplayer]
 //---------------------------------------------------------------------
@@ -293,11 +292,25 @@ void App::evBtnNetLeave(WP)
 
 void App::evBtnNetDirect(WP)
 {
-	// direct connect ..
-	// TODO: Need to get host and port from user somehow
-	raiseError("Direct connecting is not yet available.\nSorry about that.");
-	return;
-	//join(host, port);
+	popup.Show(newDelegate(this, &App::evBtnNetDirectClose),
+		TR("#{NetDirectConnect}"), true,
+		TR("#{NetMasterIp}"), TR("#{NetMasterPort}"), "", "",
+		"localhost","4243", "","",  //pSet-> ..
+		TR("#{MessageBox_Ok}"),	TR("#{MessageBox_Cancel}"), "", "");
+}
+
+void App::evBtnNetDirectClose()
+{
+	popup.Hide();
+	if (popup.btnResult != 0)  return;
+	
+	Message::createMessageBox(
+		"Message", TR("#{NetDirectConnect}"),
+		//toStr(popup.btnResult)+"\n"+
+		popup.edit0+"\n"+popup.edit1+"\n"+popup.edit2+"\n"+popup.edit3,
+		MessageBoxStyle::IconInfo | MessageBoxStyle::Ok);
+
+	//join(edit0, edit1);  // host, port
 }
 
 void App::evBtnNetReady(WP)
@@ -363,6 +376,8 @@ void App::evEdNetLocalPort(EditPtr ed)
 {
 	pSet->local_port = s2i(ed->getCaption());
 }
+
+///--------------------------------------------------------------------------------------------------------------------------------
 
 #define ChkEv(var)  \
 	pSet->var = !pSet->var;  if (wp) {  \

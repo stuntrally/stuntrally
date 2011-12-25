@@ -2,6 +2,7 @@
 #define _OgreGame_h_
 
 #include "BaseApp.h"
+#include "common/Gui_Popup.h"
 #include "common/SceneXml.h"
 #include "common/BltObjects.h"
 #include "common/TracksXml.h"
@@ -319,6 +320,9 @@ protected:
 	
 	char s[512];
 
+	GuiPopup popup;
+	///---------------------------------------
+
 	//  multiplayer
 
 	void rebuildGameList();
@@ -352,7 +356,7 @@ protected:
 
 	MyGUI::ButtonPtr btnNetRefresh,btnNetJoin,btnNetCreate,btnNetDirect;
 	MyGUI::ButtonPtr btnNetReady,btnNetLeave;
-	void evBtnNetRefresh(WP),evBtnNetJoin(WP),evBtnNetCreate(WP),evBtnNetDirect(WP);
+	void evBtnNetRefresh(WP),evBtnNetJoin(WP),evBtnNetCreate(WP),evBtnNetDirect(WP),evBtnNetDirectClose();
 	void evBtnNetReady(WP),evBtnNetLeave(WP);
 
 	MyGUI::StaticImagePtr imgNetTrack;
