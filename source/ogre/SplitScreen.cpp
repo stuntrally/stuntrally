@@ -215,7 +215,12 @@ void SplitScreenManager::preViewportUpdate(const Ogre::RenderTargetViewportEvent
 		//  get car for this viewport
 		int carId = 0;  //-1
 		sscanf(vpName.c_str(), "PlayerCamera%d", &carId);
-		CarModel* pCarM = pApp->carModels[carId];
+		
+		CarModel* pCarM = NULL;
+		if (pApp->carModels.size() > carId)
+			pCarM = pApp->carModels[carId];
+		
+		if (!pCarM) return;
 			
 		//  Size HUD
 		pApp->SizeHUD(true, evt.source, carId);
