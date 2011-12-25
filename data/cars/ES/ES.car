@@ -18,7 +18,9 @@ manual = 1
 radius = 0.35
 width = 0.5
 height = 0.51
-offsetH = 0.28
+offsetL = 0.07
+offsetW = -0.02
+offsetH = 0.74
 
 [ engine ]
 position = 0.0, 0.4, -0.1

@@ -130,14 +130,18 @@ bool CAR::Load(class App* pApp1,
 		has2exhausts = false;
 
 	///-  custom car collision params
-	dynamics.coll_R = 0.3f;  dynamics.coll_Hofs = 0.f;
-	dynamics.coll_H = 0.45f; dynamics.coll_W = 0.5f;
+	dynamics.coll_R = 0.3f;  dynamics.coll_H = 0.45f;  dynamics.coll_W = 0.5f;
+	dynamics.coll_Lofs = 0.f;  dynamics.coll_Wofs = 0.f;  dynamics.coll_Hofs = 0.f;
 	dynamics.coll_manual = false;  // normally auto
+
 	if (carconf.GetParam("collision.manual", dynamics.coll_manual))
 	{
 		carconf.GetParam("collision.radius", dynamics.coll_R);
 		carconf.GetParam("collision.width", dynamics.coll_W);
 		carconf.GetParam("collision.height", dynamics.coll_H);
+
+		carconf.GetParam("collision.offsetL", dynamics.coll_Lofs);
+		carconf.GetParam("collision.offsetW", dynamics.coll_Wofs);
 		carconf.GetParam("collision.offsetH", dynamics.coll_Hofs);
 	}
 	

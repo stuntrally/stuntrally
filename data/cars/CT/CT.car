@@ -13,9 +13,11 @@ exhaust-mirror-second = 1
 [ collision ]
 manual = 1
 radius = 0.333
-width = 0.514
+width = 0.54
 height = 0.45
-offsetH = 0.0
+offsetL = 0.09
+offsetW = -0.02
+offsetH = 0.8
 
 [ engine ]
 position = 0.0, -0.6, -0.46
