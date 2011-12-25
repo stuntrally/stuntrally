@@ -283,6 +283,11 @@ void App::updTrkListDim()
 	imgTrkIco1->setCoord(xt + xico1+2, yico, 2*wico, wico);
 	imgTrkIco2->setCoord(xt + xico2+2, yico, 8*wico, wico);
 	trkMList->setVisible(true);
+
+	if (panelNetTrack)  {
+		TabItem* trkTab = mGUI->findWidget<TabItem>("TabTrack");
+		const IntCoord& tc = trkTab->getCoord();
+		panelNetTrack->setCoord(0,0,tc.width*0.66f,tc.height);  }
 }
 
 

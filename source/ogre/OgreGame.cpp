@@ -46,7 +46,7 @@ App::App()
 	// gui multiplayer
 	,netGuiMutex(), sChatBuffer(), netGameInfo()
 	,bRebuildPlayerList(), bRebuildGameList(), bUpdateGameInfo(), bStartGame()
-	,tabsNet(0), panelNetServer(0), panelNetGame(0)
+	,tabsNet(0), panelNetServer(0), panelNetGame(0), panelNetTrack(0)
 	,listServers(0), listPlayers(0), edNetChat(0), imgNetTrack(0)
     ,btnNetRefresh(0), btnNetJoin(0), btnNetCreate(0), btnNetDirect(0)
     ,btnNetReady(0), btnNetLeave(0)

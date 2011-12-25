@@ -80,7 +80,7 @@
 				OutputFile="StuntRally_d.exe"
 				LinkIncremental="2"
 				SuppressStartupBanner="true"
-				AdditionalLibraryDirectories="e:\v\ogre171\lib\Debug;e:\v\ogre171\Dependencies\lib\Debug;&quot;e:\v\MyGUI-3.2\trunk\bin\lib\Debug&quot;&quot;e:\v\enet-1.3.1\Debug&quot;"
+				AdditionalLibraryDirectories="e:\v\ogre171\lib\Debug;e:\v\ogre171\Dependencies\lib\Debug;&quot;e:\v\MyGUI-3.2\trunk\bin\lib\Debug&quot;;&quot;e:\v\enet-1.3.1\Debug&quot;"
 				IgnoreDefaultLibraryNames=""
 				GenerateDebugInformation="true"
 				ProgramDatabaseFile="StuntRally_d.pdb"
@@ -180,7 +180,7 @@
 				OutputFile="StuntRally.exe"
 				LinkIncremental="1"
 				SuppressStartupBanner="true"
-				AdditionalLibraryDirectories="e:\v\ogre171\lib\Release;e:\v\ogre171\Dependencies\lib\Release;e:\v\ogre171\MyGUI3.0\lib\Release;&quot;e:\v\enet-1.3.1\Release&quot;&quot;e:\v\MyGUI-3.2\trunk\bin\lib\Release&quot;"
+				AdditionalLibraryDirectories="e:\v\ogre171\lib\Release;e:\v\ogre171\Dependencies\lib\Release;e:\v\ogre171\MyGUI3.0\lib\Release;&quot;e:\v\enet-1.3.1\Release&quot;;&quot;e:\v\MyGUI-3.2\trunk\bin\lib\Release&quot;"
 				IgnoreDefaultLibraryNames=""
 				SubSystem="2"
 				RandomizedBaseAddress="1"
@@ -375,14 +375,6 @@
 				</File>
 				<File
 					RelativePath=".\Source\vdrift\ai.h"
-					>
-				</File>
-				<File
-					RelativePath=".\Source\vdrift\eventsystem.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\Source\vdrift\eventsystem.h"
 					>
 				</File>
 				<File
@@ -762,14 +754,6 @@
 		<Filter
 			Name="Collis"
 			>
-			<File
-				RelativePath=".\Source\vdrift\collision_detection.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\Source\vdrift\collision_detection.h"
-				>
-			</File>
 			<File
 				RelativePath=".\Source\vdrift\collision_world.cpp"
 				>

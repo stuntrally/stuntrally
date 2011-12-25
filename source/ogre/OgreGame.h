@@ -346,7 +346,7 @@ protected:
 	bool bStartGame;
 
 	MyGUI::TabPtr tabsNet;  //void tabNet(TabPtr tab, size_t id);
-	MyGUI::WidgetPtr panelNetServer,panelNetGame;
+	MyGUI::WidgetPtr panelNetServer,panelNetGame,panelNetTrack;
 	MyGUI::MultiListPtr listServers, listPlayers;
 	MyGUI::EditPtr edNetChat;  // chat area, set text through sChatBuffer
 

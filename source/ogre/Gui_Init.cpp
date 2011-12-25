@@ -294,6 +294,7 @@ void App::InitGui()
 	//  panels to hide tabs
 	panelNetServer = mGUI->findWidget<Widget>("panelNetServer");
 	panelNetGame = mGUI->findWidget<Widget>("panelNetGame");
+	//panelNetTrack = mGUI->findWidget<Widget>("panelNetTrack",false);
 	panelNetServer->setVisible(false);
 	panelNetGame->setVisible(true);
 
@@ -369,6 +370,20 @@ void App::InitGui()
 		valTrk->setCaption(TR("#{Track}: " + pSet->track));  sListTrack = pSet->track;
 
     GuiInitTrack();
+
+	//if (!panelNetTrack)
+	{
+		TabItem* trkTab = mGUI->findWidget<TabItem>("TabTrack");
+		trkTab->setColour(Colour(0.8f,0.96f,1.f));
+		const IntCoord& tc = trkTab->getCoord();
+
+		panelNetTrack = trkTab->createWidget<Widget>(
+			"PanelSkin", 0,0,tc.width*0.66f,tc.height, Align::Default/*, "Popup", "panelNetTrack"*/);
+		panelNetTrack->setColour(Colour(0.8f,0.96f,1.f));
+		panelNetTrack->setAlpha(0.8f);
+		panelNetTrack->setVisible(false);
+		//<UserString key="RelativeTo" value="OptionsWnd"/>
+	}
 
     ButtonPtr btnTrk = mGUI->findWidget<Button>("ChangeTrack");
     if (btnTrk)  btnTrk->eventMouseButtonClick += newDelegate(this, &App::btnChgTrack);
