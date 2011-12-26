@@ -1,32 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <MyGUI>
-	<!-- General -->
-	<Tag name="Yes">Yes</Tag>
-	<Tag name="No">No</Tag>
-	<Tag name="Error">Error</Tag>
-	<Tag name="Multiplayer">Multiplayer</Tag>
-	<!--  Server -->
-	<Tag name="NetServer">Server</Tag>
-	<Tag name="NetGamesAvail">Available games</Tag>
-	<Tag name="NetRefreshList">Get/refresh list</Tag>
-	<Tag name="NetJoinGame">Join game</Tag>
-	<Tag name="NetCreateGame">Create game</Tag>
-	<Tag name="NetDirectConnect">Direct connect</Tag>
-	<!-- Game -->
-	<Tag name="NetGame">Game</Tag>
-	<Tag name="NetGameName">Game Name</Tag>
-	<Tag name="NetStart">Start</Tag>
-	<Tag name="NetReady">Ready</Tag>
-	<Tag name="NetWaiting">Waiting...</Tag>
-	<Tag name="NetLeaveGame">Leave game</Tag>
-	<Tag name="NetChat">Chat</Tag>
-	<!-- Settings -->
-	<Tag name="NetSettings">Settings</Tag>
-	<Tag name="NetNickname">Nickname</Tag>
-	<Tag name="NetMasterIp">Master Server IP</Tag>
-	<Tag name="NetMasterPort">Master Server Port</Tag>
-	<Tag name="NetLocalPort">Local Port</Tag>
-	<Tag name="NetRouterTip">Router port forwarding configuration might be required in order to allow peers to connect to the local port.</Tag>
 	<Tag name="TipTreeDens">Objektien (puut, kivet, jne.) määrä.</Tag>
 	<Tag name="CamSpeed">Kameran nopeus</Tag>
 	<Tag name="Density">Tiheys</Tag>
@@ -35,7 +8,7 @@
 	<Tag name="TipSunDirYaw">Sun direction - yaw angle.</Tag>
 	<Tag name="InputStartMeet">car will meet (next+ / prev-) point numbers</Tag>
 	<Tag name="TipAutoGearbox">Poista valinta saadaksesi manuaali vaihteet.</Tag>
-	<Tag name="LS_MISC">Finishing</Tag>
+	<Tag name="InputHeaderTxt1">Action</Tag>
 	<Tag name="InputHeaderTxt2">Binding</Tag>
 	<Tag name="InputHeaderTxt3">Value</Tag>
 	<Tag name="AndUsing">and using</Tag>
@@ -47,7 +20,7 @@
 	<Tag name="RplParticles">Particles (for not transparent ghost)</Tag>
 	<Tag name="TipRoadDist2">Additional distance to road.</Tag>
 	<Tag name="TipLTrMinTerH">Terrain height below which model won't appear.</Tag>
-	<Tag name="TreeDens">Puutiheys</Tag>
+	<Tag name="Sky">Taivas</Tag>
 	<Tag name="TerNormal">Normaali</Tag>
 	<Tag name="LS_TRACK">Loading track</Tag>
 	<Tag name="NeedNewGame">* peli tarvitsee aloittaa alusta</Tag>
@@ -58,7 +31,7 @@
 	<Tag name="Terrain">Maasto</Tag>
 	<Tag name="Surface">Pinta-ala</Tag>
 	<Tag name="TBScore">Score</Tag>
-	<Tag name="LS_TER">Ladataan maastoa</Tag>
+	<Tag name="InputRoadChkFirst">0   - set checkpoint as first</Tag>
 	<Tag name="GraphicsAll_Low">Low</Tag>
 	<Tag name="TipPrevWind">Preview camera window.</Tag>
 	<Tag name="InputPaintColor">C - Paint Color</Tag>
@@ -71,10 +44,10 @@
 	<Tag name="TipTrackMap">Minimap of selected track, view from top.</Tag>
 	<Tag name="RenderSystem">Render System</Tag>
 	<Tag name="TerGenOfsY">Offset Y</Tag>
-	<Tag name="MinimapRotate">Rotate</Tag>
+	<Tag name="FuelBoost">Boost Fuel</Tag>
 	<Tag name="pipes">pipes</Tag>
 	<Tag name="InputFluidsTile">[,]  - change texture tiling</Tag>
-	<Tag name="InputHeaderTxt1">Action</Tag>
+	<Tag name="LS_MISC">Finishing</Tag>
 	<Tag name="InputReloadTrack">F5 - lataa rata uudelleen</Tag>
 	<Tag name="Game">Game</Tag>
 	<Tag name="TipTerLNoiseOnly">Use only noise (no angle or height ranges)</Tag>
@@ -84,6 +57,7 @@
 	<Tag name="GrassDens">Ruohikon tiheys</Tag>
 	<Tag name="RoadParams">Tien parametrit</Tag>
 	<Tag name="Light">Valo</Tag>
+	<Tag name="Flip">Flip</Tag>
 	<Tag name="DistToRoad">etäisyys tiehen</Tag>
 	<Tag name="TBPlace">Place</Tag>
 	<Tag name="MessageBox_Retry">Retry</Tag>
@@ -150,7 +124,6 @@
 	<Tag name="NumLaps">Number of laps</Tag>
 	<Tag name="UseSSAA">Use SSAA when effects are enabled</Tag>
 	<Tag name="ReflMode_single">Single</Tag>
-	<Tag name="Friction">Kitka</Tag>
 	<Tag name="SetCamTo">Set camera to</Tag>
 	<Tag name="max">maksimi</Tag>
 	<Tag name="TipTerTriSize">Terrain triangle size in [meters] (recommended: 1 - 2, use more for big track area). Changed after Update (F8).</Tag>
@@ -177,6 +150,7 @@
 	<Tag name="Fluids">Fluids</Tag>
 	<Tag name="TerLNoise">Noise</Tag>
 	<Tag name="UseImposters">Use Imposters</Tag>
+	<Tag name="MinimapRotate">Rotate</Tag>
 	<Tag name="TipModelMaxScale">Model maximal scale.</Tag>
 	<Tag name="TerrainError">Maaston virhe</Tag>
 	<Tag name="InputRoadMerge">M - toggle road merge segs (for test)</Tag>
@@ -188,12 +162,14 @@
 	<Tag name="InputFluidsIns">Ins - insert new, default fluid at cursor</Tag>
 	<Tag name="RoadPointSize">Tien pisteiden koko</Tag>
 	<Tag name="Car">Auto</Tag>
+	<Tag name="FuelLap">Fuel each lap</Tag>
 	<Tag name="TipSkyMats">Sky material names (from SkyDome.material).</Tag>
 	<Tag name="VolMaster">Pääkanava</Tag>
 	<Tag name="TerGenFreq">Freq. zoom</Tag>
 	<Tag name="TipNewGame">Start game on new track or Restart on current.</Tag>
 	<Tag name="ReflMode">Mode</Tag>
 	<Tag name="TipCopySource">Pick selected track for copy source, used in [Tools] tab.</Tag>
+	<Tag name="InputMapNextTab">Seuraava välilehti</Tag>
 	<Tag name="Layer">Taso</Tag>
 	<Tag name="EscQuit">Esc lopettaa</Tag>
 	<Tag name="Gauges">Mittarit (moottorin kierrosmäärä, nopeus)</Tag>
@@ -225,6 +201,7 @@
 	<Tag name="TipGrassPatchLengthMax">Maximal grass patch length.</Tag>
 	<Tag name="Vegetation">Vegetation</Tag>
 	<Tag name="ssao">SSAO</Tag>
+	<Tag name="Always">Always</Tag>
 	<Tag name="TerGenPow">Power (shape)</Tag>
 	<Tag name="MessageBox_Abort">Abort</Tag>
 	<Tag name="InputMapFlip">Pyöräytä</Tag>
@@ -259,6 +236,7 @@
 	<Tag name="Screenshot">kuvankaappaus</Tag>
 	<Tag name="Models">Models</Tag>
 	<Tag name="Screen">Näyttö</Tag>
+	<Tag name="FuelTime">Fuel over time</Tag>
 	<Tag name="InputRoadMostSel">most work also on selection</Tag>
 	<Tag name="InputTerHeight">E - Height set (RMB change height value)</Tag>
 	<Tag name="InputStartPos">Q - muokkaa auton aloituspistettä</Tag>
@@ -328,7 +306,7 @@
 	<Tag name="BulletLines">Bullet debug lines</Tag>
 	<Tag name="TerLAngMax">Angle Max</Tag>
 	<Tag name="TipChangeSat">Change car color saturation (white-black).</Tag>
-	<Tag name="Sky">Taivas</Tag>
+	<Tag name="TreeDens">Puutiheys</Tag>
 	<Tag name="WrongChk">Väärä tarkistuspiste</Tag>
 	<Tag name="DisableEdit">Disable for edit</Tag>
 	<Tag name="MinimapUpdSkip">Minimap update skip</Tag>
@@ -363,11 +341,11 @@
 	<Tag name="intensity">voimakkuus</Tag>
 	<Tag name="Fog">Sumu</Tag>
 	<Tag name="InputCameraTxt2">with ctrl - switch current car when many</Tag>
-	<Tag name="InputMapNextTab">Seuraava välilehti</Tag>
+	<Tag name="Friction">Kitka</Tag>
 	<Tag name="InputCameraTxt1">with shift - main cameras only</Tag>
 	<Tag name="InputTrackScrn">(for track screenshot)</Tag>
 	<Tag name="trailColor">trail color</Tag>
-	<Tag name="InputRoadChkFirst">0   - set checkpoint as first</Tag>
+	<Tag name="Boost">Boost</Tag>
 	<Tag name="TerGenScale">Scale Height</Tag>
 	<Tag name="UnitM">m</Tag>
 	<Tag name="EditTerrainMode">Edit Terrain mode</Tag>
@@ -446,6 +424,7 @@
 	<Tag name="InputMain">Main</Tag>
 	<Tag name="TipVegetGroups">Vegetation model groups (recommended use 4-6), affects performance.</Tag>
 	<Tag name="NewTerFlat">New flat</Tag>
+	<Tag name="ColSat">Saturation</Tag>
 	<Tag name="TipTCS">Prevents wheel spinning when accelerating (default: off).</Tag>
 	<Tag name="InputRoadColumn">End - on/off column</Tag>
 	<Tag name="InputFluidsDel">Del - delete current</Tag>
@@ -532,7 +511,6 @@
 	<Tag name="fluids">fluids (water or mud)</Tag>
 	<Tag name="TipLoadTrkEditor">Load track (after change) or Reload current track.</Tag>
 	<Tag name="InputRoadAltLMB">alt-LMB (or 1,2)</Tag>
-	<Tag name="TrackDifficulties">Various Track Difficulties</Tag>
 	<Tag name="TipModelPrev">Model preview image.</Tag>
 	<Tag name="InputRoadEdit">R - edit road mode</Tag>
 	<Tag name="jumps">jumps</Tag>
@@ -581,6 +559,7 @@
 	<Tag name="TipResizeTer">Resize current terrain with new values.</Tag>
 	<Tag name="DistMult">Distance mul</Tag>
 	<Tag name="InputStartWidth">; &apos;  -  adjust start box width (for road width)</Tag>
+	<Tag name="NewDup">New (Duplicate)</Tag>
 	<Tag name="Resolution">Resolution</Tag>
 	<Tag name="GrassSize">Ruohikon koko</Tag>
 	<Tag name="Left">Left</Tag>
@@ -592,9 +571,10 @@
 	<Tag name="BulletDebug">Bullet debug</Tag>
 	<Tag name="InputRoadHeight">- muuta korkeutta</Tag>
 	<Tag name="TipSunSpecular">Sun light specular (shiny) color. R G B components 0 to 1 (eg. 0.6 0.6 0.6)</Tag>
-	<Tag name="ColSat">Saturation</Tag>
+	<Tag name="LS_TER">Ladataan maastoa</Tag>
 	<Tag name="AntiAliasing">Antialiasing</Tag>
 	<Tag name="InputRoadSelectMany">Select (many)</Tag>
+	<Tag name="Never">Never</Tag>
 	<Tag name="TerGenOct">Octaves</Tag>
 	<Tag name="Volume">Volume</Tag>
 	<Tag name="TipTerLayers">Terrain texture layers (recommended 2-3, significantly affects Fps). *Auto blendmap supports max 4.</Tag>
@@ -602,7 +582,7 @@
 	<Tag name="CheckArrow">Checkpoint Arrow</Tag>
 	<Tag name="InputRoadAltMMB">alt-RMB (or 3,4)</Tag>
 	<Tag name="InputSaveTrack">F4 - save track</Tag>
-	<Tag name="NewDup">New (Duplicate)</Tag>
+	<Tag name="TrackDifficulties">Various Track Difficulties</Tag>
 	<Tag name="TipSurfFrict">Surface friction (eg. 1.0 asphalt, 0.7 gravel, 0.5 ice).</Tag>
 	<Tag name="FPS">Fps, Triangles, Batches</Tag>
 	<Tag name="InputMapBoost">Boost</Tag>
@@ -616,13 +596,32 @@
 	<Tag name="InputNextOptTab">F2,F3 - prev,next Options tab</Tag>
 	<Tag name="RollingDrag">Rolling Drag</Tag>
 	<Tag name="RplAll">All</Tag>
-	<Tag name="FuelBoost">Boost Fuel</Tag>
-	<Tag name="Flip">Flip</Tag>
-	<Tag name="Always">Always</Tag>
-	<Tag name="FuelLap">Fuel each lap</Tag>
-	<Tag name="FuelTime">Fuel over time</Tag>
-	<Tag name="Boost">Boost</Tag>
-	<Tag name="Never">Never</Tag>
+	<Tag name="NetDirectConnect">Direct connect</Tag>
+	<Tag name="NetGame">Game</Tag>
+	<Tag name="NetReady">Ready</Tag>
+	<Tag name="NetMasterPort">Master Server Port</Tag>
+	<Tag name="NetLeaveGame">Leave game</Tag>
+	<Tag name="NetServer">Server</Tag>
+	<Tag name="NetNickname">Nickname</Tag>
+	<Tag name="NetSettings">Settings</Tag>
+	<Tag name="NetRefreshList">Get/refresh list</Tag>
+	<Tag name="NetStart">Start</Tag>
+	<Tag name="Multiplayer">Multiplayer</Tag>
+	<Tag name="NetPort">Port</Tag>
+	<Tag name="NetGameName">Game Name</Tag>
+	<Tag name="NetGamesAvail">Available games</Tag>
+	<Tag name="Yes">Yes</Tag>
+	<Tag name="NetLocalPort">Local Port</Tag>
+	<Tag name="NetAddress">Address</Tag>
+	<Tag name="NetCreateGame">Create game</Tag>
+	<Tag name="NetMasterIp">Master Server IP</Tag>
+	<Tag name="NetRouterTip">Router port forwarding configuration might be required in order to allow peers to connect to the local port.</Tag>
+	<Tag name="No">No</Tag>
+	<Tag name="Error">Error</Tag>
+	<Tag name="NetWaiting">Waiting...</Tag>
+	<Tag name="NetJoinGame">Join game</Tag>
+	<Tag name="NetChat">Chat</Tag>
+	<Tag name="GraphicsAll_VeryHigh">Very High</Tag>
 	<Tag name="GameVersion">1.4</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 

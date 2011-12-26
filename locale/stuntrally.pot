@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION"
 "Report-Msgid-Bugs-To: "
-"POT-Creation-Date: 2011-12-21 23:03+0200"
+"POT-Creation-Date: 2011-12-26 13:01+0200"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>"
 "Language-Team: LANGUAGE <LL@li.org>"
@@ -509,16 +509,12 @@ msgctxt "ChangeTrack"
 msgid "Change Track"
 msgstr ""
 
-msgctxt "RoadQual"
-msgid "Road far quality"
+msgctxt "TerrainSize"
+msgid "Terrain size"
 msgstr ""
 
 msgctxt "NetServer"
 msgid "Server"
-msgstr ""
-
-msgctxt "TerrainSize"
-msgid "Terrain size"
 msgstr ""
 
 msgctxt "InputRoadWidth"
@@ -679,6 +675,10 @@ msgstr ""
 
 msgctxt "WidthSteps"
 msgid "Width Steps"
+msgstr ""
+
+msgctxt "GrassSway"
+msgid "Grass sway"
 msgstr ""
 
 msgctxt "Diffuse"
@@ -937,8 +937,8 @@ msgctxt "LightmapSize"
 msgid "Lightmap size"
 msgstr ""
 
-msgctxt "TerGenPers"
-msgid "Persistance noise"
+msgctxt "RoadQual"
+msgid "Road far quality"
 msgstr ""
 
 msgctxt "length"
@@ -1333,6 +1333,10 @@ msgctxt "TreeMult"
 msgid "Trees multiplier"
 msgstr ""
 
+msgctxt "NetPort"
+msgid "Port"
+msgstr ""
+
 msgctxt "TipTerSize"
 msgid "Resulting area in meters (side length). Equals vertex count multipled by triangle size."
 msgstr ""
@@ -1373,8 +1377,8 @@ msgctxt "InputRoadMove"
 msgid "- move point"
 msgstr ""
 
-msgctxt "GrassSway"
-msgid "Grass sway"
+msgctxt "TerGenPers"
+msgid "Persistance noise"
 msgstr ""
 
 msgctxt "Right"
@@ -1855,6 +1859,10 @@ msgstr ""
 
 msgctxt "About"
 msgid "About"
+msgstr ""
+
+msgctxt "NetAddress"
+msgid "Address"
 msgstr ""
 
 msgctxt "AutoLoad"
@@ -2475,6 +2483,10 @@ msgstr ""
 
 msgctxt "Color"
 msgid "color"
+msgstr ""
+
+msgctxt "GraphicsAll_VeryHigh"
+msgid "Very High"
 msgstr ""
 
 msgctxt "TipTerLAngMax"
