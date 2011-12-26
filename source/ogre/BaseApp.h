@@ -116,6 +116,8 @@ public:
 	// this is set to true when the user is asked to assign a new key
 	bool bAssignKey;
 	MyGUI::Widget* pressedKeySender;
+
+	bool isFocGuiOrRpl()  {  return isFocGui || isFocRpl;  }
 protected:
 
 	///  overlay
@@ -129,7 +131,6 @@ protected:
 	int iCurCam;
 
 	///  Gui
-	bool isFocGuiOrRpl()  {  return isFocGui || isFocRpl;  }
 	bool isFocGui,isFocRpl;  // gui shown
 	MyGUI::Gui* mGUI;
 	
