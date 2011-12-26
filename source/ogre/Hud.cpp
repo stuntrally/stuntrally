@@ -161,8 +161,20 @@ void App::CreateHUD()
 	ovAbsTcs = ovr.getByName("Hud/AbsTcs");	hudAbs = ovr.getOverlayElement("Hud/AbsText");
 	ovCarDbg = ovr.getByName("Car/Stats");	hudTcs = ovr.getOverlayElement("Hud/TcsText");
 	ovTimes = ovr.getByName("Hud/Times");	hudTimes = ovr.getOverlayElement("Hud/TimesText");
-	ovOpp = ovr.getByName("Hud/Opponents");	hudOpp = ovr.getOverlayElement("Hud/OppText");
-	hudOppB = ovr.getOverlayElement("Hud/OpponentsPanel");
+
+	ovOpp = ovr.getByName("Hud/Opponents"); hudOppB = ovr.getOverlayElement("Hud/OpponentsPanel");
+	for (int o=0; o < 5; ++o)  for (int c=0; c < 3; ++c)  {
+		hudOpp[o][c] = ovr.getOverlayElement("Hud/OppText"+toStr(o)+"_"+toStr(c));  hudOpp[o][c]->setCaption("");  }
+	
+	for (int o=0; o < carModels.size(); ++o)  // fill car names, not changed during play
+	{
+		const CarModel* cm = carModels[o];
+		if (cm->eType != CarModel::CT_REPLAY)
+		{
+			hudOpp[o][2]->setCaption(cm->sDispName);
+			hudOpp[o][2]->setColour(cm->color);
+		}
+	}
 
 	ovWarnWin = ovr.getByName("Hud/WarnAndWin");
 	hudWarnChk = ovr.getOverlayElement("Hud/Warning");
@@ -177,7 +189,7 @@ void App::CreateHUD()
 		ovR[i] = ovr.getOverlayElement("R_"+toStr(i+1));
 		ovS[i] = ovr.getOverlayElement("S_"+toStr(i+1));
 		ovU[i] = ovr.getOverlayElement("U_"+toStr(i+1));	}
-
+		
 	ShowHUD();  //_
 	bSizeHUD = true;
 	//SizeHUD(true);
@@ -298,27 +310,40 @@ void App::UpdateHUD(int carId, CarModel* pCarM, CAR* pCar, float time, Viewport*
 			UpdHUDRot(i, carModels[i], 0.f, 0.f);
 
 	///  opponents list  ------------------
-	if (hudOpp && hudOpp->isVisible() && pCarM && pCarM->pMainNode)
+	if (ovOpp->isVisible() && pCarM && pCarM->pMainNode)
 	{
-		String s;  char ss[128];
-		for (int i=0; i < carModels.size(); ++i)
+		ColourValue c;  char ss[128];
+
+		for (int o=0; o < carModels.size(); ++o)
+		if (hudOpp[o][0])
 		{
-			CarModel* cm = carModels[i];
+			const CarModel* cm = carModels[o];
 			if (cm->eType != CarModel::CT_REPLAY && cm->pMainNode)
 			{
-				Vector3 v = carModels[i]->pMainNode->getPosition() - pCarM->pMainNode->getPosition();
-				float dist = v.length();
 				float rChks = road ? road->mChks.size() : 1.f, perc = 100.f * cm->iNumChks / rChks;
+
+				if (o != carId)  // no dist to self
+				{
+					Vector3 v = carModels[o]->pMainNode->getPosition() - pCarM->pMainNode->getPosition();
+					float dist = v.length();  // meters, mph:feet?
+					//  dist m
+					sprintf(ss, "%3.0fm", dist);		hudOpp[o][1]->setCaption(ss);
+					Real h = std::min(60.f, dist) / 60.f;
+					c.setHSB(0.5f - h * 0.4f, 1,1);		hudOpp[o][1]->setColour(c);
+				}
+				else  hudOpp[o][1]->setCaption("");
+					
+				if (cm->eType != CarModel::CT_GHOST)  // todo, save perc for ghost/replay ..
+				{	//  percent %
+					sprintf(ss, "%3.0f%%", perc);		hudOpp[o][0]->setCaption(ss);
+					c.setHSB(perc*0.01f*0.4f, 0.7f,1);	hudOpp[o][0]->setColour(c);
+				}
+				else  hudOpp[o][0]->setCaption("");
 				
-				if (i == carId)  // no dist to self
-					sprintf(ss, "     %2.0f%% %s\n", perc, cm->sDispName.c_str());
-				else  // ghost has no perc ..
-					sprintf(ss, "%3.0fm %2.0f%% %s\n", dist, perc, cm->sDispName.c_str());
-				//sprintf(ss, "%s %4.1f m\n", cm->sDispName.c_str(), d);  // meters, mph:feet?
-				s += String(ss);
+				//  name once in CreateHUD
+				hudOpp[o][2]->setColour(cm->color);
 			}
 		}
-		hudOpp->setCaption(s);
 	}
 	///------------------------------------
 

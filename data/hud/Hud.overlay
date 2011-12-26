@@ -209,20 +209,136 @@ Hud/Opponents
 		vert_align bottom
 		horz_align left
 		left   0
-		width  200
+		width  230
 		top     -440
 		height	 100
 		material hud/Opponents
 
-		element TextArea(Hud/OppText)
+		//  col 0  ---------
+		element TextArea(Hud/OppText0_0)
 		{
 			metrics_mode pixels
 			font_name Vera
-			char_height 20
-			left 10
+			char_height 22
+			left 5
 			top  5
-			colour_top    0.5 0.7 1.0
-			colour_bottom 0.8 0.9 1.0
 		}
+		element TextArea(Hud/OppText1_0)
+		{
+			metrics_mode pixels
+			font_name Vera
+			char_height 22
+			left 5
+			top  25
+		}
+		element TextArea(Hud/OppText2_0)
+		{
+			metrics_mode pixels
+			font_name Vera
+			char_height 22
+			left 5
+			top  45
+		}
+		element TextArea(Hud/OppText3_0)
+		{
+			metrics_mode pixels
+			font_name Vera
+			char_height 22
+			left 5
+			top  65
+		}
+		element TextArea(Hud/OppText4_0)
+		{
+			metrics_mode pixels
+			font_name Vera
+			char_height 22
+			left 5
+			top  85
+		}
+
+		//  col 1  ---------
+		element TextArea(Hud/OppText0_1)
+		{
+			metrics_mode pixels
+			font_name Vera
+			char_height 22
+			left 65
+			top  5
+		}
+		element TextArea(Hud/OppText1_1)
+		{
+			metrics_mode pixels
+			font_name Vera
+			char_height 22
+			left 65
+			top  25
+		}
+		element TextArea(Hud/OppText2_1)
+		{
+			metrics_mode pixels
+			font_name Vera
+			char_height 22
+			left 65
+			top  45
+		}
+		element TextArea(Hud/OppText3_1)
+		{
+			metrics_mode pixels
+			font_name Vera
+			char_height 22
+			left 65
+			top  65
+		}
+		element TextArea(Hud/OppText4_1)
+		{
+			metrics_mode pixels
+			font_name Vera
+			char_height 22
+			left 65
+			top  85
+		}
+
+		//  col 2  ---------
+		element TextArea(Hud/OppText0_2)
+		{
+			metrics_mode pixels
+			font_name Vera
+			char_height 22
+			left 130
+			top  5
+		}
+		element TextArea(Hud/OppText1_2)
+		{
+			metrics_mode pixels
+			font_name Vera
+			char_height 22
+			left 130
+			top  25
+		}
+		element TextArea(Hud/OppText2_2)
+		{
+			metrics_mode pixels
+			font_name Vera
+			char_height 22
+			left 130
+			top  45
+		}
+		element TextArea(Hud/OppText3_2)
+		{
+			metrics_mode pixels
+			font_name Vera
+			char_height 22
+			left 130
+			top  65
+		}
+		element TextArea(Hud/OppText4_2)
+		{
+			metrics_mode pixels
+			font_name Vera
+			char_height 22
+			left 130
+			top  85
+		}
+		//  ----------------
 	}
 }

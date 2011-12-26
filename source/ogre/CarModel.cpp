@@ -43,7 +43,7 @@ CarModel::CarModel(unsigned int index, eCarType type, const std::string name,
 	iCurChk = -1;  iNumChks = 0;  //ResetChecks();  // road isnt yet
 
 	if (type == CT_GHOST)		sDispName = "Ghost";
-	else if (type == CT_LOCAL)	sDispName = "Player"+toStr(iIndex);
+	else if (type == CT_LOCAL)	sDispName = "Player"+toStr(iIndex+1);
 	
 	if (type != CT_GHOST)  // ghost has pCar, dont create
 	{
