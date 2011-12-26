@@ -108,13 +108,17 @@ void App::CreateHUD()
 		ndMap->scale(fHudSize, fHudSize*asp, 1);
 		ndMap->attachObject(m);
 		
-		//  car pos dot
-		for (int i=0; i < pSet->local_players; ++i)
-		{	mpos[i] = Create2D("hud/CarPos", mSplitMgr->mHUDSceneMgr, 0.4f, true, true);
-			mpos[i]->setVisibilityFlags(RV_Hud);  mpos[i]->setRenderQueueGroup(RQG_Hud3);
-			ndPos[i] = ndMap->createChildSceneNode();
-			ndPos[i]->scale(fHudSize*1.5f, fHudSize*1.5f, 1);
-			ndPos[i]->attachObject(mpos[i]);  /*ndPos[i]->setVisible(false);  */}
+		//  car pos dot - for all carModels (ghost and remote too)
+		vMoPos.clear();
+		vNdPos.clear();
+		for (int i=0; i < /*pSet->local_players*/carModels.size(); ++i)
+		{	vMoPos.push_back(0);
+			vMoPos[i] = Create2D("hud/CarPos", mSplitMgr->mHUDSceneMgr, 0.4f, true, true);
+			vMoPos[i]->setVisibilityFlags(RV_Hud);  vMoPos[i]->setRenderQueueGroup(RQG_Hud3);
+			vNdPos.push_back(0);
+			vNdPos[i] = ndMap->createChildSceneNode();
+			vNdPos[i]->scale(fHudSize*1.5f, fHudSize*1.5f, 1);
+			vNdPos[i]->attachObject(vMoPos[i]);  /*vNdPos[i]->setVisible(false);  */}
 		ndMap->setVisible(false/*pSet->trackmap*/);
 	}
 
@@ -157,6 +161,8 @@ void App::CreateHUD()
 	ovAbsTcs = ovr.getByName("Hud/AbsTcs");	hudAbs = ovr.getOverlayElement("Hud/AbsText");
 	ovCarDbg = ovr.getByName("Car/Stats");	hudTcs = ovr.getOverlayElement("Hud/TcsText");
 	ovTimes = ovr.getByName("Hud/Times");	hudTimes = ovr.getOverlayElement("Hud/TimesText");
+	ovOpp = ovr.getByName("Hud/Opponents");	hudOpp = ovr.getOverlayElement("Hud/OppText");
+	hudOppB = ovr.getOverlayElement("Hud/OpponentsPanel");
 
 	ovWarnWin = ovr.getByName("Hud/WarnAndWin");
 	hudWarnChk = ovr.getOverlayElement("Hud/Warning");
@@ -190,8 +196,8 @@ void App::ShowHUD(bool hideAll)
 		if (hudGear)  hudGear->hide();		if (hudVel)   hudVel->hide();
 		if (ovCarDbg)  ovCarDbg->hide();	if (ovCarDbgTxt)  ovCarDbgTxt->hide();
 
-		if (ovCam)	 ovCam->hide();		if (ovTimes) ovTimes->hide();
-		if (ovWarnWin)  ovWarnWin->hide();
+		if (ovCam)	 ovCam->hide();			if (ovTimes)  ovTimes->hide();
+		if (ovWarnWin)  ovWarnWin->hide();	if (ovOpp)  ovOpp->hide();
 		if (mFpsOverlay)  mFpsOverlay->hide();
 		if (ndMap)  ndMap->setVisible(false);
 		if (mGUI)	PointerManager::getInstance().setVisible(false);
@@ -219,6 +225,7 @@ void App::ShowHUD(bool hideAll)
 
 		if (ovCam)	{  if (pSet->show_cam && !isFocGui)    ovCam->show();    else  ovCam->hide();     }
 		if (ovTimes){  if (pSet->show_times)  ovTimes->show();  else  ovTimes->hide();   }
+		if (ovOpp)  {  if (pSet->show_opponents && road && road->getNumPoints() > 0)  ovOpp->show();  else  ovOpp->hide();   }
 		if (ovWarnWin){  if (pSet->show_times)  ovWarnWin->show();  else  ovWarnWin->hide();  }
 		if (mFpsOverlay) { if (pSet->show_fps) mFpsOverlay->show(); else mFpsOverlay->hide(); }
 		if (ndMap)  ndMap->setVisible(pSet->trackmap);
@@ -257,13 +264,9 @@ void App::UpdateHUD(int carId, CarModel* pCarM, CAR* pCar, float time, Viewport*
 	if (!vp)
 	{
 		/// for gui viewport ----------------------
-		if (hudGear)  hudGear->hide();
-		if (hudVel)  hudVel->hide();
-		if (ovBoost)  ovBoost->hide();
-		if (ovTimes)  ovTimes->hide();
-		if (ovWarnWin)  ovWarnWin->hide();
-		if (ovCarDbg)  ovCarDbg->hide();
-		if (ovCarDbgTxt)  ovCarDbgTxt->hide();
+		if (hudGear)  hudGear->hide();		if (hudVel)  hudVel->hide();		if (ovBoost)  ovBoost->hide();
+		if (ovTimes)  ovTimes->hide();		if (ovWarnWin)  ovWarnWin->hide();	if (ovOpp)  ovOpp->hide();
+		if (ovCarDbg)  ovCarDbg->hide();	if (ovCarDbgTxt)  ovCarDbgTxt->hide();
 	}else{
 		/// for render viewport ---------
 		if (ovCam)  ovCam->hide();
@@ -271,6 +274,7 @@ void App::UpdateHUD(int carId, CarModel* pCarM, CAR* pCar, float time, Viewport*
 	}
 	//*H*/LogO(String("car: ") + toStr(carId) +" "+ (!pCarM ? toStr(pCarM) : pCarM->sDirname) +" "+ (vp?"v+":"v-") +" "+ (pCar?"c+":"c-") +" "+ (pCarM?"m+":"m-"));
 	if (!pCar)  return;  //-1 for ^above hiding in gui vp
+
 			
 	///  hud rpm,vel  --------------------------------
 	if (pCar && !bRplPlay)  // for local cars only..
@@ -285,6 +289,39 @@ void App::UpdateHUD(int carId, CarModel* pCarM, CAR* pCar, float time, Viewport*
     float rpm = fr.rpm;
 	//*H*/LogO(String("car: ") + toStr(carId) + "  vel: "+ toStr(vel) +"  rpm: "+ toStr(rpm));
 	UpdHUDRot(carId, pCarM, vel, rpm);
+
+
+	///  update remote players  -----------
+	if (carId == 0 && !pSet->mini_rotated && !pSet->mini_zoomed)  // the only fall that works
+	for (int i=0; i < carModels.size(); ++i)
+		if (carModels[i]->eType != CarModel::CT_LOCAL && carModels[i]->eType != CarModel::CT_REPLAY)
+			UpdHUDRot(i, carModels[i], 0.f, 0.f);
+
+	///  opponents list  ------------------
+	if (hudOpp && hudOpp->isVisible() && pCarM && pCarM->pMainNode)
+	{
+		String s;  char ss[128];
+		for (int i=0; i < carModels.size(); ++i)
+		{
+			CarModel* cm = carModels[i];
+			if (cm->eType != CarModel::CT_REPLAY && cm->pMainNode)
+			{
+				Vector3 v = carModels[i]->pMainNode->getPosition() - pCarM->pMainNode->getPosition();
+				float dist = v.length();
+				float rChks = road ? road->mChks.size() : 1.f, perc = 100.f * cm->iNumChks / rChks;
+				
+				if (i == carId)  // no dist to self
+					sprintf(ss, "     %2.0f%% %s\n", perc, cm->sDispName.c_str());
+				else  // ghost has no perc ..
+					sprintf(ss, "%3.0fm %2.0f%% %s\n", dist, perc, cm->sDispName.c_str());
+				//sprintf(ss, "%s %4.1f m\n", cm->sDispName.c_str(), d);  // meters, mph:feet?
+				s += String(ss);
+			}
+		}
+		hudOpp->setCaption(s);
+	}
+	///------------------------------------
+
 
 	///   Set motion blur intensity for this viewport, depending on car's linear velocity
 	if (pSet->motionblur)

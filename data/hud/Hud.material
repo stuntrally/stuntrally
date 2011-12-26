@@ -185,6 +185,32 @@ material hud/Times
 	}
 }
 
+material hud/Opponents
+{
+	receive_shadows off
+	technique
+	{
+		pass
+		{
+			lighting off
+			depth_check off
+			scene_blend alpha_blend
+			cull_hardware none
+			
+			vertex_program_ref Ogre/Needle_vp
+			{
+			}
+			fragment_program_ref Ogre/Compositor/StdQuad_fp
+			{
+			} 
+			texture_unit tex1
+			{
+				texture opp_rect.png
+			}
+		}
+	}
+}
+
 material hud/info
 {
 	receive_shadows off

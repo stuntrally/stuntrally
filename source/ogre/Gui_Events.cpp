@@ -690,6 +690,7 @@ void App::chkMiniZoom(WP wp){		ChkEv(mini_zoomed);		}
 void App::chkMiniRot(WP wp){		ChkEv(mini_rotated);	}
 void App::chkMiniTer(WP wp){		ChkEv(mini_terrain);	UpdMiniTer();  }
 void App::chkTimes(WP wp){			ChkEv(show_times);	ShowHUD();	}
+void App::chkOpponents(WP wp){		ChkEv(show_opponents);	ShowHUD();	}
 
 //void App::chkRacingLine(WP wp){		ChkEv(racingline);	if (ndLine)  ndLine->setVisible(pSet->racingline);	}
 void App::chkCamInfo(WP wp){		ChkEv(show_cam);	ShowHUD();	}
@@ -857,6 +858,9 @@ bool App::keyPressed( const OIS::KeyEvent &arg )
 			break;
 
 			case KC_F7:		// Times
+			if (shift)
+			{	WP wp = chOpponents;  ChkEv(show_opponents);  ShowHUD();  }
+			else
 			{	WP wp = chTimes;  ChkEv(show_times);  ShowHUD();  }
 				return false;
 				

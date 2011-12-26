@@ -212,11 +212,11 @@ void App::LoadGame()  // 2
 		if (et == CarModel::CT_LOCAL) ++camIt;
 	}
 
-	/// ghost car  load if exists
+	/// ghost car
 	ghplay.Clear();
-	if (!bRplPlay && pSet->rpl_ghost && !mClient)  // load ghost play if exists
+	if (!bRplPlay && pSet->rpl_ghost && !mClient)
 	{
-		/*if (*/ghplay.LoadFile(GetGhostFile());
+		ghplay.LoadFile(GetGhostFile());  // loads ghost play if exists
 		//  always because ghplay can appear during play after best lap
 		CarModel* c = new CarModel(i, CarModel::CT_GHOST, pSet->car[0], mSceneMgr, pSet, pGame, &sc, 0, this );
 		c->pCar = (*carModels.begin())->pCar;  // based on 1st car
@@ -356,6 +356,9 @@ void App::LoadMisc()  // 7 last
 	CreateHUD();
 	// immediately hide it
 	ShowHUD(true);
+	
+	if (hudOppB)  // resize opp list
+		hudOppB->setHeight(carModels.size() * 20 + 10);
 	
 	// Camera settings
 	for (std::vector<CarModel*>::iterator it=carModels.begin(); it!=carModels.end(); it++)

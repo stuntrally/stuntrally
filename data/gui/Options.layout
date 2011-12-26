@@ -1452,6 +1452,11 @@
 							<Property key="TextColour" value="0.8 0.9 1.0"/>
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
+						<Widget type="Button" skin="CheckBox" position="232 156 184 24" name="Opponents">
+							<Property key="Caption" value="#{OpponentsList}  shift-F7"/>
+							<Property key="TextColour" value="0.8 0.9 1.0"/>
+							<UserString key="RelativeTo" value="OptionsWnd"/>
+						</Widget>
 						<Widget type="Button" skin="CheckBox" position="32 196 184 24" name="CamInfo">
 							<Property key="Caption" value="#{CameraInfo}"/>
 							<Property key="TextColour" value="0.7 0.8 0.9"/>

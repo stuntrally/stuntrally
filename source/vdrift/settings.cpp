@@ -46,7 +46,7 @@ void SETTINGS::Serialize(bool w, CONFIGFILE & c)
 	Param(c,w, "hud_show.car_dbgtxt", car_dbgtxt);		Param(c,w, "hud_show.show_cardbg", car_dbgbars);
 	Param(c,w, "hud_show.tracks_view", tracks_view);
 	Param(c,w, "hud_show.tracks_sort", tracks_sort);	Param(c,w, "hud_show.tracks_sortup", tracks_sortup);
-	Param(c,w, "hud_show.check_arrow", check_arrow);
+	Param(c,w, "hud_show.check_arrow", check_arrow);	Param(c,w, "hud_show.opponents", show_opponents);
 
 	Param(c,w, "hud_size.gauges", size_gauges);			Param(c,w, "hud_size.minimap", size_minimap);
 	Param(c,w, "hud_size.mini_zoom", zoom_minimap);		Param(c,w, "hud_size.mini_zoomed", mini_zoomed);
@@ -120,7 +120,7 @@ SETTINGS::SETTINGS() :  ///  Defaults
 	track("J1-T"), track_user(false), trackreverse(false),
 	//  hud
 	show_fps(1), show_gauges(1), trackmap(1),
-	show_cam(1), show_times(0), show_digits(1),
+	show_cam(1), show_times(0), show_digits(1), show_opponents(1),
 	car_dbgtxt(0), car_dbgbars(0),
 	size_gauges(0.18), size_minimap(0.2), zoom_minimap(1.0),
 	mini_zoomed(0), mini_rotated(1), mini_terrain(0),

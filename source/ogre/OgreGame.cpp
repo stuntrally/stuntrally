@@ -20,8 +20,11 @@ using namespace Ogre;
 App::App()
 	:pGame(0), ndMap(0), ndLine(0), bGI(0)
 	,nrpmB(0),nvelBk(0),nvelBm(0), nrpm(0),nvel(0), mrpm(0),mvel(0)
-	,hudGear(0),hudVel(0),hudBoost(0), hudAbs(0),hudTcs(0), hudTimes(0), hudWarnChk(0),hudWonPlace(0)
-	,ovGear(0),ovVel(0),ovBoost(0), ovAbsTcs(0), ovCarDbg(0),ovCarDbgTxt(0), ovCam(0), ovTimes(0), ovWarnWin(0)
+	// ovr
+	,hudGear(0),hudVel(0),hudBoost(0), hudAbs(0),hudTcs(0)
+	,hudTimes(0), hudWarnChk(0),hudWonPlace(0), hudOpp(0),hudOppB(0)
+	,ovGear(0),ovVel(0),ovBoost(0), ovAbsTcs(0), ovCarDbg(0),ovCarDbgTxt(0)
+	,ovCam(0), ovTimes(0), ovWarnWin(0), ovOpp(0)
 	// hud
 	,asp(1),  xcRpm(0), ycRpm(0), xcVel(0), ycVel(0)
 	,fMiniX(0),fMiniY(0), scX(1),scY(1), ofsX(0),ofsY(0), minX(0),maxX(0), minY(0),maxY(0)
@@ -36,7 +39,8 @@ App::App()
 	,valReflSkip(0), valReflSize(0), valReflFaces(0), valReflDist(0)  // refl
 	,valShaders(0), valShadowType(0), valShadowCount(0), valShadowSize(0), valShadowDist(0)  // shadow
 	,valSizeGaug(0), valSizeMinimap(0), valZoomMinimap(0)  // view
-	,bRkmh(0),bRmph(0), chDbgT(0),chDbgB(0), chBlt(0),chBltTxt(0), chFps(0), chTimes(0),chMinimp(0), bnQuit(0)
+	,bRkmh(0),bRmph(0), chDbgT(0),chDbgB(0), chBlt(0),chBltTxt(0), chFps(0)
+	,chTimes(0),chMinimp(0),chOpponents(0), bnQuit(0)
 	,imgCar(0),imgPrv(0),imgMini(0),imgTer(0), imgTrkIco1(0),imgTrkIco2(0)
 	,valCar(0),valTrk(0),trkDesc(0), valLocPlayers(0)
 	,valRplPerc(0), valRplCur(0), valRplLen(0), slRplPos(0), rplList(0)
@@ -64,7 +68,7 @@ App::App()
 	pathTrk[1] = PATHMANAGER::GetTrackPathUser() + "/";
 	resCar = "";  resTrk = "";  resDrv = "";
 	int i;
-	for (i=0; i < 5; ++i)  {  ndPos[i]=0;  mpos[i]=0;  }
+	//for (i=0; i < 5; ++i)  {  ndPos[i]=0;  mpos[i]=0;  }
 	for (i=0; i < 5; ++i)
 	{	ovL[i]=0;  ovR[i]=0;  ovS[i]=0;  ovU[i]=0;  }
 	for (i=0; i < StTrk; ++i)  stTrk[i] = 0;
