@@ -22,7 +22,7 @@ App::App()
 	,nrpmB(0),nvelBk(0),nvelBm(0), nrpm(0),nvel(0), mrpm(0),mvel(0)
 	// ovr
 	,hudGear(0),hudVel(0),hudBoost(0), hudAbs(0),hudTcs(0)
-	,hudTimes(0), hudWarnChk(0),hudWonPlace(0), hudOpp(0),hudOppB(0)
+	,hudTimes(0), hudWarnChk(0),hudWonPlace(0), hudOppB(0)
 	,ovGear(0),ovVel(0),ovBoost(0), ovAbsTcs(0), ovCarDbg(0),ovCarDbgTxt(0)
 	,ovCam(0), ovTimes(0), ovWarnWin(0), ovOpp(0)
 	// hud
@@ -58,7 +58,9 @@ App::App()
 	pathTrk[1] = PATHMANAGER::GetTrackPathUser() + "/";
 	resCar = "";  resTrk = "";  resDrv = "";
 	int i;
-	//for (i=0; i < 5; ++i)  {  ndPos[i]=0;  mpos[i]=0;  }
+	for (int o=0; o < 5; ++o)  for (int c=0; c < 3; ++c)
+		hudOpp[o][c] = 0;
+		
 	for (i=0; i < 5; ++i)
 	{	ovL[i]=0;  ovR[i]=0;  ovS[i]=0;  ovU[i]=0;  }
 	for (i=0; i < StTrk; ++i)  stTrk[i] = 0;

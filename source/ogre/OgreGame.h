@@ -108,7 +108,7 @@ protected:
 		Ogre::Real size, bool dyn = false, bool clr = false);
 
 	Ogre::OverlayElement* hudGear,*hudVel,*hudBoost, *ovL[5],*ovR[5],*ovS[5],*ovU[5],
-		*hudAbs,*hudTcs, *hudTimes, *hudWarnChk,*hudWonPlace, *hudOpp,*hudOppB;
+		*hudAbs,*hudTcs, *hudTimes, *hudWarnChk,*hudWonPlace, *hudOpp[5][3],*hudOppB;
 	Ogre::Overlay* ovGear,*ovVel,*ovBoost, *ovAbsTcs,*ovCarDbg,*ovCarDbgTxt,
 		*ovCam, *ovTimes, *ovWarnWin, *ovOpp;
 
