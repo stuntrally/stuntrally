@@ -110,7 +110,7 @@ void VprThread(App* pA)
 
 	try
 	{
-		if (settings->mult_thr > 0)
+		if (settings->multi_thr > 0)
 			boost::thread t(VprThread, pApp);
 
 		#if OGRE_PLATFORM == OGRE_PLATFORM_WIN32

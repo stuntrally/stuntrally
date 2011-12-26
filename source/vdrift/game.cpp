@@ -329,7 +329,7 @@ void GAME::Tick(float deltat)
 		{
 			pOgreGame->newPoses();
 
-			if (settings->mult_thr != 1)  // == 0
+			if (settings->multi_thr != 1)  // == 0
 			{	//  single thread
 				pOgreGame->updatePoses(deltat);
 				
@@ -851,7 +851,7 @@ void GAME::UpdateDriftScore(CAR & car, double dt)
 	}
 
 	//if (settings,
-	if (settings->mult_thr != 1) // cartimerids.size() > 0)
+	if (settings->multi_thr != 1) // cartimerids.size() > 0)
 	timer.SetIsDrifting(cartimerids[&car], is_drifting, on_track && !spin_out);
 	
 	//std::cout << is_drifting << ", " << on_track << ", " << car_angle << endl;

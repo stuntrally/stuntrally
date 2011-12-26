@@ -311,6 +311,9 @@ public:
 	
 	MODEL_JOE03 drivermodel;
 	
+	MATHVECTOR<float, 3> driver_view_position; 
+	MATHVECTOR<float, 3> hood_view_position;
+	
 	SUSPENSIONBUMPDETECTION suspbump[4];
 	CRASHDETECTION crashdetection;
 

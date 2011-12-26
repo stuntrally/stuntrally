@@ -18,7 +18,7 @@ ShaderProperties::ShaderProperties( MaterialProperties* props, MaterialFactory* 
 		&& (1-props->envMapPriority <= parent->getShaderQuality());
 	fresnel = (envMap && props->fresnelScale != 0.f) && (parent->getShaderQuality() >= 0.3);
 	diffuseMap = (props->diffuseMaps.size() > 0);
-	specMap = (props->specMaps.size() > 0) && (parent->getShaderQuality() > 0.5);
+	specMap = (props->specMaps.size() > 0) && (parent->getShaderQuality() >= 0.5);
 	lightMap = (props->lightMaps.size() > 0);
 	terrainLightMap = props->terrainLightMap && (parent->getShaderQuality() >= 0.2);
 	alphaMap = (transparent && (props->alphaMaps.size() > 0));

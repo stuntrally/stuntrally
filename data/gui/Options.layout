@@ -355,7 +355,27 @@
 					<Property key="ImageTexture" value="white.png"/>
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 				</Widget>
-				<Widget type="Button" skin="Button" position="176 303 136 32" name="CarClrRandom">
+				<Widget type="ImageBox" skin="ImageBox" position="176 296 40 40" name="carClr10">
+					<Property key="ImageTexture" value="white.png"/>
+					<UserString key="RelativeTo" value="OptionsWnd"/>
+				</Widget>
+				<Widget type="ImageBox" skin="ImageBox" position="224 296 40 40" name="carClr11">
+					<Property key="ImageTexture" value="white.png"/>
+					<UserString key="RelativeTo" value="OptionsWnd"/>
+				</Widget>
+				<Widget type="ImageBox" skin="ImageBox" position="272 296 40 40" name="carClr12">
+					<Property key="ImageTexture" value="white.png"/>
+					<UserString key="RelativeTo" value="OptionsWnd"/>
+				</Widget>
+				<Widget type="ImageBox" skin="ImageBox" position="320 296 40 40" name="carClr13">
+					<Property key="ImageTexture" value="white.png"/>
+					<UserString key="RelativeTo" value="OptionsWnd"/>
+				</Widget>
+				<Widget type="ImageBox" skin="ImageBox" position="368 296 40 40" name="carClr14">
+					<Property key="ImageTexture" value="white.png"/>
+					<UserString key="RelativeTo" value="OptionsWnd"/>
+				</Widget>
+				<Widget type="Button" skin="Button" position="176 353 136 32" name="CarClrRandom">
 					<Property key="Caption" value="#{CarClrRandom}"/>
 					<Property key="Colour" value="1 0.8 0.5"/>
 					<Property key="TextColour" value="1 0.7 0.6"/>

@@ -275,12 +275,21 @@ void App::LoadCar()  // 4
 
 		//  restore which cam view
 		if (c->fCam && carsCamNum[i] != 0)
+		{
 			c->fCam->setCamera(carsCamNum[i] -1);
+			
+			int visMask = 255;
+			visMask = c->fCam->ca->mHideGlass ? RV_MaskAll-RV_CarGlass : RV_MaskAll;
+			for (std::list<Viewport*>::iterator it = mSplitMgr->mViewports.begin();
+				it != mSplitMgr->mViewports.end(); ++it)
+				(*it)->setVisibilityMask(visMask);
+		}
 
 		//  Reserve an entry in newPosInfos
 		PosInfo carPosInfo;  carPosInfo.bNew = false;  //-
 		newPosInfos.push_back(carPosInfo);
 	}
+	
 	
 	///  Init Replay  once
 	///=================----------------

@@ -207,6 +207,7 @@
 	<Tag name="GraphicsAll_Low">Low</Tag>
 	<Tag name="GraphicsAll_Medium">Medium</Tag>
 	<Tag name="GraphicsAll_High">High</Tag>
+	<Tag name="GraphicsAll_VeryHigh">Very High</Tag>
 	<Tag name="GraphicsAll_Ultra">Ultra</Tag>
 
 	<Tag name="Effects">Effects</Tag>

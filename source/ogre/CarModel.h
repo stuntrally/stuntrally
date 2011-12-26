@@ -100,6 +100,8 @@ public:
 	
 	//  VDrift car (can be null)
 	CAR* pCar;
+	
+	float angCarY;  // car yaw angle for minimap
 
 	//  start pos, lap  checkpoint vars
 	bool bGetStPos;  Ogre::Matrix4 matStPos;  Ogre::Vector4 vStDist;
@@ -133,9 +135,11 @@ private:
 	Ogre::ParticleSystem* pb[2], *ph;  // boost, world hit
 	Ogre::RibbonTrail* whTrl[4];
 	Ogre::Real wht[4];  // spin time (approx tire temp.)
-	Ogre::SceneNode *ndWh[4], *ndWhE[4];
 	
-	//  Dir name of car (e.g. ES or RS2)
+	//  Nodes
+	Ogre::SceneNode *ndWh[4], *ndWhE[4], *ndBrake[4];
+	
+	//  Dir name of car (e.g. ES)
 	std::string sDirname;
 	
 	//  Path to car textures, e.g. /usr/share/stuntrally/data/cars/CT/textures

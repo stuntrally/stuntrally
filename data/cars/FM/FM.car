@@ -1,6 +1,9 @@
 drive = AWD
 version = 2
 
+[ steering ]
+max-angle = 35.1
+
 [ model_ofs ]
 interior-x = -0.05
 interior-y = 0.13
@@ -10,13 +13,14 @@ exhaust-y = 0.45
 exhaust-z = 0.45
 exhaust-mirror-second = 1
 
-[ steering ]
-max-angle = 35.1
-
 [ collision ]
 manual = 1
-radius = 0.4
-offsetH = 0.3
+radius = 0.3
+width = 0.56
+height = 0.57
+offsetL = 0.0
+offsetW = -0.02
+offsetH = 0.64
 
 [ engine ]
 position = 0.0, 0.4, -0.1
@@ -229,8 +233,8 @@ handbrake = 1.8
 [ driver ]
 position = -0.38, 0.023, 0.1
 mass = 80.0
-view-position = -0.38, 0.023, 0.5
-hood-mounted-view-position = 0.0, 1.0, 0.45
+view-position = 0.2, -0.4, 0.5
+hood-mounted-view-position = -0.7, 0, 0.4
 
 [ drag ]
 position = 0.0, 0.0, -0.60

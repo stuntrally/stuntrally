@@ -35,7 +35,7 @@ CarModel::CarModel(unsigned int index, eCarType type, const std::string name,
 	Ogre::Camera* cam, App* app, int startpos_index) :
 	fCam(0), pMainNode(0), pCar(0), terrain(0), resCar(""), mCamera(0), pReflect(0), pApp(app), color(1,0,0),
 	bLightMapEnabled(true), bBraking(false),
-	iCamNextOld(0), bLastChkOld(0), bWrongChk(0)
+	iCamNextOld(0), bLastChkOld(0), bWrongChk(0), angCarY(0)
 {
 	iIndex = index;  sDirname = name;  mSceneMgr = sceneMgr;
 	pSet = set;  pGame = game;  sc = s;  mCamera = cam;  eType = type;
@@ -45,7 +45,7 @@ CarModel::CarModel(unsigned int index, eCarType type, const std::string name,
 	if (type != CT_GHOST)  // ghost has pCar, dont create
 	{
 		if (startpos_index == -1) startpos_index = iIndex;
-		int i = set->car_collis ? startpos_index : 0;  //  offset car start pos when cars collide
+		int i = set->collis_cars ? startpos_index : 0;  //  offset car start pos when cars collide
 		MATHVECTOR<float, 3> pos(0,10,0);
 		QUATERNION<float> rot;
 		pos = pGame->track.GetStart(i).first;
@@ -62,6 +62,7 @@ CarModel::CarModel(unsigned int index, eCarType type, const std::string name,
 	{	ps[w] = 0;  pm[w] = 0;  pd[w] = 0;
 		pflW[w] = 0;  pflM[w] = 0;  pflMs[w] = 0;
 		ndWh[w] = 0;  ndWhE[w] = 0; whTrl[w] = 0;
+		ndBrake[w] = 0;
 		wht[w] = 0.f;  whTerMtr[w] = 0;  whRoadMtr[w] = 0;  }
 	for (int i=0; i < 2; i++)
 		pb[i] = 0;
@@ -91,7 +92,7 @@ CarModel::~CarModel()
 		if (pflW[w]) {  mSceneMgr->destroyParticleSystem(pflW[w]);   pflW[w]=0;  }
 		if (pflM[w]) {  mSceneMgr->destroyParticleSystem(pflM[w]);   pflM[w]=0;  }
 		if (pflMs[w]) {  mSceneMgr->destroyParticleSystem(pflMs[w]);   pflMs[w]=0;  }  
-		if (mSceneMgr->hasSceneNode("brake_node"+toStr(iIndex)+"_"+toStr(w))) mSceneMgr->destroySceneNode("brake_node"+toStr(iIndex)+"_"+toStr(w));
+		if (ndBrake[w]) mSceneMgr->destroySceneNode(ndBrake[w]);
 	}
 	for (int i=0; i < 2; i++)
 		if (pb[i]) {  mSceneMgr->destroyParticleSystem(pb[i]);   pb[i]=0;  }
@@ -133,6 +134,10 @@ void CarModel::Update(PosInfo& posInfo, float time)
 	//  car pos and rot
 	pMainNode->setPosition(posInfo.pos);
 	pMainNode->setOrientation(posInfo.rot);
+
+	//  upd rotY for minimap
+	Quaternion q = posInfo.rot * Quaternion(Degree(90),Vector3(0,1,0));
+	angCarY = q.getYaw().valueDegrees() + 90.f;
 	
 	//  brake state
 	//  trigger when any wheel is braking
@@ -303,7 +308,7 @@ void CarModel::Update(PosInfo& posInfo, float time)
 			}
 			if (pflM[w])  //  Mud ^
 			{
-				float vel = Math::Abs(pCar->dynamics.wheel[w].GetAngularVelocity());
+				float vel = Math::Abs(cd.wheel[w].GetAngularVelocity());
 				bool e = idPar == 2 &&  vel > 30.f;
 				float emitM = e ?  cd.whH[w] * std::min(80.f, 1.5f * vel)  : 0.f;  whMudSpin += emitM / 80.f;
 				ParticleEmitter* pe = pflM[w]->getEmitter(0);
@@ -312,7 +317,7 @@ void CarModel::Update(PosInfo& posInfo, float time)
 			}
 			if (pflMs[w])  //  Mud soft ^
 			{
-				float vel = Math::Abs(pCar->dynamics.wheel[w].GetAngularVelocity());
+				float vel = Math::Abs(cd.wheel[w].GetAngularVelocity());
 				
 				bool e = idPar == 1 &&  vel > 30.f;
 				float emitM = e ?  cd.whH[w] * std::min(160.f, 3.f * vel)  : 0.f;  whMudSpin += emitM / 80.f;
@@ -346,6 +351,30 @@ void CarModel::Update(PosInfo& posInfo, float time)
 	
 	// blendmaps
 	UpdWhTerMtr();
+	
+	//  update brake meshes orientation
+	for (int i=0; i<4; ++i)
+	{
+		if (ndBrake[i])
+		{
+			ndBrake[i]->_setDerivedOrientation( pMainNode->getOrientation() );
+			
+			// this transformation code is just so the brake mesh can have the same alignment as the wheel mesh
+			ndBrake[i]->yaw(Ogre::Degree(-90), Node::TS_LOCAL);
+			if (i%2 == 1)
+				ndBrake[i]->setScale(-1, 1, 1);
+				
+			ndBrake[i]->pitch(Ogre::Degree(180), Node::TS_LOCAL);
+			
+			if (i==0 || i==1) // turn only front wheels
+			{
+				if (eType != CT_GHOST)
+					ndBrake[i]->yaw(-Degree(pCar->dynamics.wheel[i].GetSteerAngle()));
+				else 
+					ndBrake[i]->yaw(-Degree(pApp->ghostFrame.steer * pCar->dynamics.GetMaxSteeringAngle()));
+			}
+		}
+	}
 	
 	UpdateKeys();
 }
@@ -391,27 +420,6 @@ void CarModel::UpdateKeys()
 		}
 	}
 	iCamNextOld = pCar->iCamNext;
-	
-	//  update brake meshes orientation
-	for (int i=0; i<4; ++i)
-	{
-		if (mSceneMgr->hasSceneNode("brake_node" + toStr(iIndex) + "_" + toStr(i)))
-		{
-			SceneNode* node = mSceneMgr->getSceneNode("brake_node" + toStr(iIndex) + "_" + toStr(i));
-			node->_setDerivedOrientation( pMainNode->getOrientation() );
-			
-			// this transformation code is just so the brake mesh can have the same alignment as the wheel mesh
-			if (i%2 == 0)
-				node->yaw(Ogre::Degree(-90), Node::TS_LOCAL);
-			else
-				node->yaw(Ogre::Degree(90), Node::TS_LOCAL);
-			node->pitch(Ogre::Degree(180), Node::TS_LOCAL);
-			
-			node->yaw(-Degree(pCar->dynamics.wheel[i].GetSteerAngle()));
-			
-		}
-	}
-	
 }
 
 
@@ -442,6 +450,21 @@ void CarModel::Create(int car)
 		fCam = new FollowCamera(mCamera);
 		fCam->mGoalNode = pMainNode;
 		fCam->loadCameras();
+		
+		//  set in-car camera position to driver position
+		Ogre::Vector3 driver_view_position = Vector3(pCar->driver_view_position[0], pCar->driver_view_position[2], -pCar->driver_view_position[1]);
+		
+		Ogre::Vector3 hood_view_position = Vector3(pCar->hood_view_position[0], pCar->hood_view_position[2], -pCar->hood_view_position[1]);
+		
+		for (std::vector<CameraAngle*>::iterator it=fCam->mCameraAngles.begin();
+			it!=fCam->mCameraAngles.end(); ++it)
+		{
+			if ( (*it)->mName == "Car driver" )
+				(*it)->mOffset = driver_view_position;
+				
+			if ( (*it)->mName == "Car bonnet" )
+				(*it)->mOffset = hood_view_position;
+		}
 	}
 	
 	RecreateMaterials();
@@ -459,7 +482,8 @@ void CarModel::Create(int car)
 	//  body  ----------------------
 
 	sCar = resCar + "/" + sDirname;
-	if (FileExists(sCar + "_body.mesh"))
+	String sCar2 = PATHMANAGER::GetCarPath() + "/" + sDirname + "/" + sDirname;
+	if (FileExists(sCar2 + "_body.mesh"))
 	{
 		Entity* eCar = mSceneMgr->createEntity("Car"+ strI, sDirname + "_" + "body.mesh", "Car" + strI);
 
@@ -478,7 +502,7 @@ void CarModel::Create(int car)
 	vPofs = Vector3(pCar->vInteriorOffset[0],pCar->vInteriorOffset[1],pCar->vInteriorOffset[2]);  //x+ back y+ down z+ right
 
 	if (!ghost)
-	if (FileExists(sCar + "_interior.mesh"))
+	if (FileExists(sCar2 + "_interior.mesh"))
 	{
 		Entity* eInter = mSceneMgr->createEntity("Car.interior"+ strI, sDirname + "_" + "interior.mesh", "Car" + strI);
 		//eInter->setCastShadows(false);
@@ -494,7 +518,7 @@ void CarModel::Create(int car)
 	//  glass  ----------------------
 	vPofs = Vector3(0,0,0);
 
-	if (FileExists(sCar + "_glass.mesh"))
+	if (FileExists(sCar2 + "_glass.mesh"))
 	{
 		Entity* eGlass = mSceneMgr->createEntity("Car.glass"+ strI, sDirname + "_" + "glass.mesh", "Car" + strI);
 		if (ghost)  {  eGlass->setRenderQueueGroup(g);  eGlass->setCastShadows(false);  }  else
@@ -517,21 +541,21 @@ void CarModel::Create(int car)
 	{
 		// only 1 mesh for both?
 		String siw = "Wheel"+ strI + "_" +toStr(w);
-		if (FileExists(sCar + "_wheel.mesh"))
+		if (FileExists(sCar2 + "_wheel.mesh"))
 		{
 			Entity* eWh = mSceneMgr->createEntity(siw, sDirname + "_wheel.mesh", "Car" + strI);
 			if (ghost)  {  eWh->setRenderQueueGroup(g);  eWh->setCastShadows(false);  }
 			ndWh[w] = mSceneMgr->getRootSceneNode()->createChildSceneNode();
 			ndWh[w]->attachObject(eWh);  eWh->setVisibilityFlags(RV_Car);
 		}else{
-			if (w < 2 && FileExists(sCar + "_wheel_front.mesh"))
+			if (w < 2 && FileExists(sCar2 + "_wheel_front.mesh"))
 			{
 				Entity* eWh = mSceneMgr->createEntity(siw, sDirname + "_" + "wheel_front.mesh", "Car" + strI);
 				if (ghost)  {  eWh->setRenderQueueGroup(g);  eWh->setCastShadows(false);  }
 				ndWh[w] = mSceneMgr->getRootSceneNode()->createChildSceneNode();
 				ndWh[w]->attachObject(eWh);  eWh->setVisibilityFlags(RV_Car);
 			}else
-			if (FileExists(sCar + "_wheel_rear.mesh"))
+			if (FileExists(sCar2 + "_wheel_rear.mesh"))
 			{
 				Entity* eWh = mSceneMgr->createEntity(siw, sDirname + "_" + "wheel_rear.mesh", "Car" + strI);
 				if (ghost)  {  eWh->setRenderQueueGroup(g);  eWh->setCastShadows(false);  }
@@ -550,12 +574,12 @@ void CarModel::Create(int car)
 		
 		// brake mesh.. only on rear wheels
 		//! todo: add a param to car file to control which wheels have brakes
-		if (FileExists(sCar + "_brake.mesh"))
+		if (FileExists(sCar2 + "_brake.mesh"))
 		{
 			Entity* eBrake = mSceneMgr->createEntity(siw + "_brake", sDirname + "_brake.mesh", "Car" + strI);
 			if (ghost)  {  eBrake->setRenderQueueGroup(g);  eBrake->setCastShadows(false);  }
-			SceneNode* node = ndWh[w]->createChildSceneNode("brake_node" + toStr(iIndex) + "_" + toStr(w));
-			node->attachObject(eBrake);
+			ndBrake[w] = ndWh[w]->createChildSceneNode();
+			ndBrake[w]->attachObject(eBrake);
 		}
 	}
 

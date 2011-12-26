@@ -305,7 +305,6 @@ void CARDYNAMICS::UpdateBody(T dt, T drive_torque[])
 	{
 		boostFuel += dt * gfBoostFuelAddSec;
 		if (boostFuel > gfBoostFuelMax)  boostFuel = gfBoostFuelMax;
-		// todo: val on hud..
 	}
 	//LogO(toStr(boostFuel));
 	///***  -------------------------------------------------------------
@@ -347,7 +346,7 @@ void CARDYNAMICS::Tick(T dt)
 	// has to happen before UpdateDriveline, overrides clutch, throttle
 	UpdateTransmission(dt);
 
-	const int num_repeats = 30;  ///~ 30+  o:10
+	const int num_repeats = pSet->dyn_iter;  ///~ 30+  o:10
 	const float internal_dt = dt / num_repeats;
 	for(int i = 0; i < num_repeats; ++i)
 	{

@@ -103,7 +103,7 @@ void App::updateGameInfo()
 		sListTrack = track;
 	}
 	// FIXME: These should not modify global settings, only for one game
-	pSet->car_collis = netGameInfo.collisions;
+	pSet->collis_cars = netGameInfo.collisions;
 	pSet->num_laps = netGameInfo.laps;
 	updateGameInfoGUI();
 }
@@ -129,7 +129,7 @@ void App::uploadGameInfo()
 	std::memcpy(game.name, gamename.c_str(), 32);
 	std::memcpy(game.track, trackname.c_str(), 32);
 	game.players = mClient->getPeerCount()+1;
-	game.collisions = pSet->car_collis;
+	game.collisions = pSet->collis_cars;
 	game.laps = pSet->num_laps;
 	game.port = pSet->local_port;
 	game.locked = false;
@@ -394,8 +394,8 @@ void App::chkGear(WP wp){		ChkEv(autoshift);	if (pGame)  pGame->ProcessNewSettin
 void App::chkRear(WP wp){		ChkEv(autorear);	if (pGame)  pGame->ProcessNewSettings();	}
 void App::chkRearInv(WP wp){	ChkEv(rear_inv);	if (pGame)  pGame->ProcessNewSettings();	}
 //    [Game]
-void App::chkVegetCollis(WP wp){	ChkEv(veget_collis);	}
-void App::chkCarCollis(WP wp){		ChkEv(car_collis);		}
+void App::chkVegetCollis(WP wp){	ChkEv(collis_veget);	}
+void App::chkCarCollis(WP wp){		ChkEv(collis_cars);		}
 
 //  boost, flip
 void App::comboBoost(CMB)
