@@ -297,8 +297,8 @@ void App::evBtnNetDirect(WP)
 {
 	popup.Show(newDelegate(this, &App::evBtnNetDirectClose),
 		TR("#{NetDirectConnect}"), true,
-		TR("#{NetMasterIp}"), TR("#{NetMasterPort}"), "", "",
-		"localhost","4243", "","",  //pSet-> ..
+		TR("#{NetAddress}"), TR("#{NetPort}"), "", "",
+		"localhost", toStr(protocol::DEFAULT_PORT), "","",
 		TR("#{MessageBox_Ok}"),	TR("#{MessageBox_Cancel}"), "", "");
 }
 
@@ -306,14 +306,7 @@ void App::evBtnNetDirectClose()
 {
 	popup.Hide();
 	if (popup.btnResult != 0)  return;
-	
-	Message::createMessageBox(
-		"Message", TR("#{NetDirectConnect}"),
-		//toStr(popup.btnResult)+"\n"+
-		popup.edit0+"\n"+popup.edit1+"\n"+popup.edit2+"\n"+popup.edit3,
-		MessageBoxStyle::IconInfo | MessageBoxStyle::Ok);
-
-	//join(edit0, edit1);  // host, port
+	join(popup.edit0, popup.edit1);  // host, port
 }
 
 void App::evBtnNetReady(WP)
