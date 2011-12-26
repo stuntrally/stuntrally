@@ -191,25 +191,37 @@ void App::LoadGame()  // 2
 	// will create vdrift cars, actual car loading will be done later in LoadCar()
 	// this is just here because vdrift car has to be created first
 	std::list<Camera*>::iterator camIt = mSplitMgr->mCameras.begin();
-	int numCars = (mClient ? mClient->getPeerCount()+1 : mSplitMgr->mNumViewports);
+	
+	int numCars = (mClient ? mClient->getPeerCount()+1 : mSplitMgr->mNumViewports);  // networked or splitscreen
 	int i;
-	for (i = 0; i < numCars; ++i) {
+	for (i = 0; i < numCars; ++i)
+	{
 		// TODO: This only handles one local player
 		CarModel::eCarType et = CarModel::CT_LOCAL;
 		int startpos_index = i;
-		std::string carName = pSet->car[i];
-		if (mClient) {
+		std::string carName = pSet->car[i], nick = "";
+		if (mClient)
+		{
 			// FIXME: Various places assume carModels[0] is local
 			// so we swap 0 and local's id but preserve starting position
-			if (i == 0) startpos_index = mClient->getId();
-			else et = CarModel::CT_REMOTE;
-			if (i == mClient->getId()) startpos_index = 0;
-			if (i != 0) carName = mClient->getPeer(startpos_index).car;
+			if (i == 0)  startpos_index = mClient->getId();
+			else  et = CarModel::CT_REMOTE;
+
+			if (i == mClient->getId())  startpos_index = 0;
+			if (i != 0)  carName = mClient->getPeer(startpos_index).car;
+
+			//  get nick name
+			if (i == 0)  nick = pSet->nickname;
+			else  mClient->getPeer(startpos_index).name;
 		}
 		Camera* cam = (et == CarModel::CT_LOCAL ? *camIt : 0);
 		CarModel* car = new CarModel(i, et, carName, mSceneMgr, pSet, pGame, &sc, cam, this, startpos_index);
 		carModels.push_back(car);
-		if (et == CarModel::CT_LOCAL) ++camIt;
+		
+		if (et == CarModel::CT_LOCAL)  ++camIt;
+		
+		if (nick != "")  // set remote nickname
+			car->sDispName = nick;
 	}
 
 	/// ghost car
