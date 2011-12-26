@@ -516,7 +516,7 @@
 							<Property key="Caption" value="#{Track}:"/>
 							<Property key="TextColour" value="0.4 1.0 0.5"/>
 						</Widget>
-						<Widget type="EditBox" skin="WordWrapEmpty" position="452 318 256 104" name="edNetTrackInfo">
+						<Widget type="EditBox" skin="WordWrapEmpty" position="452 318 256 66" name="edNetTrackInfo">
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 							<Property key="Caption" value="Track info text"/>
 							<Property key="TextColour" value="0.6 1.0 0.8"/>
