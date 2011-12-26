@@ -212,7 +212,7 @@ void App::LoadGame()  // 2
 
 			//  get nick name
 			if (i == 0)  nick = pSet->nickname;
-			else  mClient->getPeer(startpos_index).name;
+			else  nick = mClient->getPeer(startpos_index).name;
 		}
 		Camera* cam = (et == CarModel::CT_LOCAL ? *camIt : 0);
 		CarModel* car = new CarModel(i, et, carName, mSceneMgr, pSet, pGame, &sc, cam, this, startpos_index);
