@@ -226,6 +226,7 @@ void App::join(std::string host, std::string port)
 	tabsNet->setIndexSelected(1);
 	panelNetServer->setVisible(true);
 	panelNetGame->setVisible(false);
+	panelNetTrack->setVisible(true);
 
 }
 
@@ -273,6 +274,7 @@ void App::evBtnNetCreate(WP)
 		tabsNet->setIndexSelected(1);
 		panelNetServer->setVisible(true);
 		panelNetGame->setVisible(false);
+		panelNetTrack->setVisible(false);
 		boost::mutex::scoped_lock lock(netGuiMutex);
 		sChatBuffer = TR("Listening on port ")  + boost::lexical_cast<std::string>(pSet->local_port) + "...\n";
 	}
@@ -288,6 +290,7 @@ void App::evBtnNetLeave(WP)
 	tabsNet->setIndexSelected(0);
 	panelNetServer->setVisible(false);
 	panelNetGame->setVisible(true);
+	panelNetTrack->setVisible(false);
 }
 
 void App::evBtnNetDirect(WP)
