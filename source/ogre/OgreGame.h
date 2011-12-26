@@ -364,13 +364,13 @@ protected:
 	void evBtnNetReady(WP),evBtnNetLeave(WP);
 
 	MyGUI::StaticImagePtr imgNetTrack;
-	MyGUI::StaticTextPtr valNetGames, valNetGameName, valNetChat, valNetTrack;
+	MyGUI::StaticTextPtr valNetGames, valNetGameName, valNetChat, valNetTrack, valNetPassword;
 	MyGUI::ButtonPtr btnNetSendMsg;  void chatSendMsg();
-	MyGUI::EditPtr edNetGameName, edNetChatMsg, edNetTrackInfo,
+	MyGUI::EditPtr edNetGameName, edNetChatMsg, edNetTrackInfo, edNetPassword,
 		edNetNick, edNetServerIP, edNetServerPort, edNetLocalPort;
-	void evEdNetGameName(MyGUI::EditPtr),
-		evEdNetNick(MyGUI::EditPtr),evEdNetServerIP(MyGUI::EditPtr),
-		evEdNetServerPort(MyGUI::EditPtr),evEdNetLocalPort(MyGUI::EditPtr);
+	void evEdNetGameName(MyGUI::EditPtr), evEdNetPassword(MyGUI::EditPtr),
+		evEdNetNick(MyGUI::EditPtr), evEdNetServerIP(MyGUI::EditPtr),
+		evEdNetServerPort(MyGUI::EditPtr), evEdNetLocalPort(MyGUI::EditPtr);
 };
 
 #endif

@@ -461,6 +461,16 @@
 							<Property key="Colour" value="0.6 0.8 1"/>
 							<Property key="TextColour" value="0.6 0.8 1"/>
 						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="480 387 124 24" name="valNetPassword">
+							<UserString key="RelativeTo" value="OptionsWnd"/>
+							<Property key="Caption" value="#{NetPassword}:"/>
+							<Property key="TextColour" value="0.6 0.9 1"/>
+						</Widget>
+						<Widget type="EditBox" skin="EditBox" position="596 385 124 24" name="edNetPassword">
+							<UserString key="RelativeTo" value="OptionsWnd"/>
+							<Property key="Colour" value="0.6 0.8 1"/>
+							<Property key="TextColour" value="0.5 0.1 0.1"/>
+						</Widget>
 						<Widget type="Button" skin="Button" position="596 426 124 32" name="btnNetReady">
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 							<Property key="Caption" value="#{NetReady}"/>

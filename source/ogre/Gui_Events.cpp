@@ -142,6 +142,9 @@ void App::uploadGameInfo()
 void App::setNetGuiHosting(bool enabled)
 {
 	edNetGameName->setEnabled(enabled);
+	edNetPassword->setEnabled(enabled);
+	edNetPassword->setVisible(enabled);
+	valNetPassword->setVisible(enabled);
 	btnNetReady->setEnabled(!enabled);
 	btnNetReady->setCaption(enabled ? TR("#{NetStart}") : TR("#{NetReady}"));
 }
@@ -369,6 +372,11 @@ void App::evEdNetGameName(EditPtr ed)
 	// game name text changed
 	if (mLobbyState != HOSTING || !mMasterClient || !mClient) return;
 	uploadGameInfo();
+}
+
+void App::evEdNetPassword(EditPtr ed)
+{
+	// TODO: Password changed
 }
 
 //  net settings

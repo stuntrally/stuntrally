@@ -251,16 +251,16 @@ void App::InitGui()
 	Chk("chkSplitVertically", chkSplitVert, pSet->split_vertically);
 
 	///  Multiplayer
-    //------------------------------------------------------------------------
-    mWndTabs->setIndexSelected(2);  //- auto switch at start
+	//------------------------------------------------------------------------
+	mWndTabs->setIndexSelected(2);  //- auto switch at start
 	tabsNet = mGUI->findWidget<Tab>("tabsNet");
 		//TabItem* t1 = tabsNet->getItemAt(0);
 		//t1->setEnabled(0);
 	//int num = tabsNet ? tabsNet->getItemCount() : 0;
 	//tabsNet->setIndexSelected( (tabsNet->getIndexSelected() - 1 + num) % num );
 	
-    //  server, games
-    valNetGames = mGUI->findWidget<StaticText>("valNetGames");
+	//  server, games
+	valNetGames = mGUI->findWidget<StaticText>("valNetGames");
 	listServers = mGUI->findWidget<MultiList>("MListServers");
 	if (listServers)
 	{	listServers->addColumn("Game name", 180);
@@ -282,6 +282,12 @@ void App::InitGui()
 	if (edNetGameName)
 		edNetGameName->eventEditTextChange += newDelegate(this, &App::evEdNetGameName);
 	
+	//  password
+	valNetPassword = mGUI->findWidget<StaticText>("valNetPassword");
+	edNetPassword = mGUI->findWidget<Edit>("edNetPassword");
+	if (edNetPassword)
+		edNetPassword->eventEditTextChange += newDelegate(this, &App::evEdNetPassword);
+
 	listPlayers = mGUI->findWidget<MultiList>("MListPlayers");
 	if (listPlayers)
 	{	listPlayers->addColumn("Player", 140);
