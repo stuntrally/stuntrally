@@ -603,6 +603,7 @@
 	<Tag name="NetLeaveGame">Leave game</Tag>
 	<Tag name="NetServer">Server</Tag>
 	<Tag name="NetNickname">Nickname</Tag>
+	<Tag name="NetPassword">Password</Tag>
 	<Tag name="NetSettings">Settings</Tag>
 	<Tag name="NetRefreshList">Get/refresh list</Tag>
 	<Tag name="NetStart">Start</Tag>
@@ -611,6 +612,7 @@
 	<Tag name="NetGameName">Game Name</Tag>
 	<Tag name="NetGamesAvail">Available games</Tag>
 	<Tag name="Yes">Yes</Tag>
+	<Tag name="NetJoinLocked">Protected game</Tag>
 	<Tag name="NetLocalPort">Local Port</Tag>
 	<Tag name="NetAddress">Address</Tag>
 	<Tag name="NetCreateGame">Create game</Tag>

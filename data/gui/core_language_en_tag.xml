@@ -110,10 +110,12 @@
 	<Tag name="NetGamesAvail">Available games</Tag>
 	<Tag name="NetRefreshList">Get/refresh list</Tag>
 	<Tag name="NetJoinGame">Join game</Tag>
+	<Tag name="NetJoinLocked">Protected game</Tag>
 	<Tag name="NetCreateGame">Create game</Tag>
 	<Tag name="NetDirectConnect">Direct connect</Tag>
 	<Tag name="NetAddress">Address</Tag>
 	<Tag name="NetPort">Port</Tag>
+	<Tag name="NetPassword">Password</Tag>
 	<!-- Game -->
 	<Tag name="NetGame">Game</Tag>
 	<Tag name="NetGameName">Game Name</Tag>

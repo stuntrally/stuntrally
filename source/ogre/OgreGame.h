@@ -340,7 +340,7 @@ protected:
 	void peerState(PeerInfo peer, uint8_t state);
 	void gameInfo(protocol::GameInfo game);
 	void error(std::string what);
-	void join(std::string host, std::string port);
+	void join(std::string host, std::string port, std::string password);
 
 	mutable boost::mutex netGuiMutex;
 	MyGUI::UString sChatBuffer;
@@ -357,7 +357,10 @@ protected:
 
 	MyGUI::ButtonPtr btnNetRefresh,btnNetJoin,btnNetCreate,btnNetDirect;
 	MyGUI::ButtonPtr btnNetReady,btnNetLeave;
-	void evBtnNetRefresh(WP),evBtnNetJoin(WP),evBtnNetCreate(WP),evBtnNetDirect(WP),evBtnNetDirectClose();
+	void evBtnNetRefresh(WP);
+	void evBtnNetJoin(WP), evBtnNetJoinLockedClose();
+	void evBtnNetCreate(WP);
+	void evBtnNetDirect(WP),evBtnNetDirectClose();
 	void evBtnNetReady(WP),evBtnNetLeave(WP);
 
 	MyGUI::StaticImagePtr imgNetTrack;

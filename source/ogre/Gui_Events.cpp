@@ -208,7 +208,7 @@ void App::error(string what)
 	sChatBuffer = sChatBuffer + "ERROR! " + what + "\n";
 }
 
-void App::join(std::string host, std::string port)
+void App::join(std::string host, std::string port, std::string password)
 {
 	try {
 		mClient.reset(new P2PGameClient(this, pSet->local_port));
@@ -242,13 +242,33 @@ void App::evBtnNetJoin(WP)
 {
 	//  join selected game
 	if (!listServers || !pSet) return;
+	size_t i = listServers->getIndexSelected();
+	if (i == ITEM_NONE) return;
 
+	// TODO: Comparing against localized string is EVIL!
+	if (listServers->getSubItemNameAt(4, i) == TR("#{No}")) {
+		std::string host = listServers->getSubItemNameAt(5, i);
+		std::string port = listServers->getSubItemNameAt(6, i);
+		join(host, port, "");
+	} else {
+		popup.Show(newDelegate(this, &App::evBtnNetJoinLockedClose),
+			TR("#{NetJoinLocked}"), true,
+			TR("#{NetPassword}"), "", "", "",
+			"", "", "","",
+			TR("#{MessageBox_Ok}"), TR("#{MessageBox_Cancel}"), "", "");
+	}
+}
+
+void App::evBtnNetJoinLockedClose()
+{
+	popup.Hide();
+	if (popup.btnResult != 0 || !listServers || !pSet)  return;
 	size_t i = listServers->getIndexSelected();
 	if (i == ITEM_NONE) return;
 
 	std::string host = listServers->getSubItemNameAt(5, i);
 	std::string port = listServers->getSubItemNameAt(6, i);
-	join(host, port);
+	join(host, port, popup.edit0);  // host, port, password
 }
 
 void App::evBtnNetCreate(WP)
@@ -298,16 +318,16 @@ void App::evBtnNetDirect(WP)
 {
 	popup.Show(newDelegate(this, &App::evBtnNetDirectClose),
 		TR("#{NetDirectConnect}"), true,
-		TR("#{NetAddress}"), TR("#{NetPort}"), "", "",
+		TR("#{NetAddress}"), TR("#{NetPort}"), TR("#{NetPassword}"), "",
 		"localhost", toStr(protocol::DEFAULT_PORT), "","",
-		TR("#{MessageBox_Ok}"),	TR("#{MessageBox_Cancel}"), "", "");
+		TR("#{MessageBox_Ok}"), TR("#{MessageBox_Cancel}"), "", "");
 }
 
 void App::evBtnNetDirectClose()
 {
 	popup.Hide();
 	if (popup.btnResult != 0)  return;
-	join(popup.edit0, popup.edit1);  // host, port
+	join(popup.edit0, popup.edit1, popup.edit2);  // host, port, password
 }
 
 void App::evBtnNetReady(WP)
