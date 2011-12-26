@@ -268,11 +268,15 @@ void App::CreateMinimap()
 	ndMap->attachObject(m);
 	
 	//  car pos dot
+	vMoPos.clear();
+	vNdPos.clear();
 	for (int i=0; i < pSet->local_players; ++i)
-	{	mpos[i] = Create2D("hud/CarPos", mSplitMgr->mGuiSceneMgr, 0.4f, true, true);
-		ndPos[i] = ndMap->createChildSceneNode();
-		ndPos[i]->scale(fHudSize*1.5f, fHudSize*1.5f, 1);
-		ndPos[i]->attachObject(mpos[i]);  /*ndPos[i]->setVisible(false);  */}
+	{	vMoPos.push_back(0);
+		vMoPos[i] = Create2D("hud/CarPos", mSplitMgr->mGuiSceneMgr, 0.4f, true, true);
+		vNdPos.push_back(0);
+		vNdPos[i] = ndMap->createChildSceneNode();
+		vNdPos[i]->scale(fHudSize*1.5f, fHudSize*1.5f, 1);
+		vNdPos[i]->attachObject(vMoPos[i]);  /*ndPos[i]->setVisible(false);  */}
 	ndMap->setVisible(pSet->trackmap);
 }
 

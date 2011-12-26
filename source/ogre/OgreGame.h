@@ -98,19 +98,23 @@ protected:
 	float asp,  xcRpm, ycRpm, xcVel, ycVel,
 		fMiniX,fMiniY, scX,scY, ofsX,ofsY, minX,maxX, minY,maxY;  // minimap
 
-	Ogre::SceneNode *nrpmB, *nvelBk,*nvelBm, *nrpm, *nvel;  // gauges
-	Ogre::SceneNode *ndPos[5], *ndMap, *ndLine;  // car pos on minimap
-	Ogre::ManualObject* mrpm, *mvel, *mpos[5], *miniC;
+	Ogre::SceneNode *nrpm, *nvel, *nrpmB, *nvelBk,*nvelBm;  // gauges
+	Ogre::ManualObject* mrpm, *mvel, *miniC;
+	Ogre::SceneNode *ndMap, *ndLine;  // vdr minimap-
+	// car pos on minimap
+	std::vector<Ogre::SceneNode*> vNdPos;
+	std::vector<Ogre::ManualObject*> vMoPos;
 	Ogre::ManualObject* Create2D(const Ogre::String& mat, Ogre::SceneManager* sceneMgr,
 		Ogre::Real size, bool dyn = false, bool clr = false);
 
 	Ogre::OverlayElement* hudGear,*hudVel,*hudBoost, *ovL[5],*ovR[5],*ovS[5],*ovU[5],
-		*hudAbs,*hudTcs, *hudTimes, *hudWarnChk,*hudWonPlace;
+		*hudAbs,*hudTcs, *hudTimes, *hudWarnChk,*hudWonPlace, *hudOpp,*hudOppB;
 	Ogre::Overlay* ovGear,*ovVel,*ovBoost, *ovAbsTcs,*ovCarDbg,*ovCarDbgTxt,
-		*ovCam, *ovTimes, *ovWarnWin;
+		*ovCam, *ovTimes, *ovWarnWin, *ovOpp;
 
 	Ogre::String GetTimeString(float time) const;
 	void CreateHUD(), ShowHUD(bool hideAll=false), UpdMiniTer();
+	Ogre::Vector2 projectPoint(Ogre::Viewport* vp, const Ogre::Vector3& pos);
 
 	//  create  . . . . . . . . . . . . . . . . . . . . . . . . 
 	Ogre::String resCar, resTrk, resDrv;
@@ -262,7 +266,8 @@ protected:
 	//  checks
 	void chkFps(WP), chkGauges(WP),	chkArrow(WP), chkDigits(WP),
 		chkMinimap(WP), chkMiniZoom(WP), chkMiniRot(WP), chkMiniTer(WP),  // view
-		chkCamInfo(WP), chkTimes(WP), chkCarDbgBars(WP), chkCarDbgTxt(WP), chkBltDebug(WP), chkBltProfilerTxt(WP),
+		chkCamInfo(WP), chkTimes(WP), chkOpponents(WP),
+		chkCarDbgBars(WP), chkCarDbgTxt(WP), chkBltDebug(WP), chkBltProfilerTxt(WP),
 		chkReverse(WP), chkParticles(WP), chkTrails(WP),
 		chkAbs(WP), chkTcs(WP), chkGear(WP), chkRear(WP), chkRearInv(WP),  // car
 		chkOgreDialog(WP), chkAutoStart(WP), chkEscQuits(WP), chkBltLines(WP), chkLoadPics(WP),  // startup
@@ -272,7 +277,8 @@ protected:
 
 	void imgBtnCarClr(WP), btnCarClrRandom(WP);
 	MyGUI::ButtonPtr bRkmh, bRmph;  void radKmh(WP), radMph(WP);
-	MyGUI::ButtonPtr chDbgT,chDbgB, chBlt,chBltTxt, chFps, chTimes,chMinimp;
+	MyGUI::ButtonPtr chDbgT,chDbgB, chBlt,chBltTxt, chFps,
+		chTimes,chMinimp,chOpponents;
 
 	///  replay  -----------------------------
 	MyGUI::StaticTextPtr valRplPerc, valRplCur, valRplLen,

@@ -52,6 +52,8 @@ public:
 	
 	~CarModel();
 	
+	Ogre::String sDispName;  // diplay name in opponents list (nick for CT_REMOTE)
+	
 	
 	//  Create car (also calls CreateReflection)
 	void Create(int car);

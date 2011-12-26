@@ -246,6 +246,7 @@
 	<Tag name="MinimapRotate">Rotate</Tag>
 	<Tag name="MinimapTerrain">Terrain</Tag>
 	<Tag name="TimesBar">Times bar</Tag>
+	<Tag name="OpponentsList">Opponents List</Tag>
 	<Tag name="CameraInfo">Camera info</Tag>
 	<Tag name="CheckArrow">Checkpoint Arrow</Tag>
 

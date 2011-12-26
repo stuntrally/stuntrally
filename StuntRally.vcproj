@@ -58,7 +58,7 @@
 				AssemblerListingLocation=".\Debug/"
 				ObjectFile=".\Debug/"
 				ProgramDataBaseFileName=".\Debug/"
-				WarningLevel="3"
+				WarningLevel="1"
 				SuppressStartupBanner="true"
 				DebugInformationFormat="3"
 				DisableSpecificWarnings="4103;4305;4244;"
@@ -1043,6 +1043,10 @@
 				</File>
 				<File
 					RelativePath=".\source\ogre\Gui_Replay.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\data\hud\Hud.overlay"
 					>
 				</File>
 				<File
