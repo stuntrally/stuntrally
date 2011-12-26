@@ -215,10 +215,6 @@ void App::listTrackChng(MultiList2* li, size_t pos)
 	sListTrack = s;
 	bListTrackU = s1 != s ? 1 : 0;
 
-	//  won't refresh if same-...  road disappears if not found...
-	if (imgPrv)  imgPrv->setImageTexture(sListTrack+".jpg");
-	if (imgTer)  imgTer->setImageTexture(sListTrack+"_ter.jpg");
-	if (imgMini)  imgMini->setImageTexture(sListTrack+"_mini.png");
 	ReadTrkStats();
 }
 
@@ -364,6 +360,12 @@ void App::ReadTrkStats()
 
 void App::UpdGuiRdStats(const SplineRoad* rd, const Scene& sc, float time)
 {
+	//  won't refresh if same-...  road disappears if not found...
+	if (imgPrv)  imgPrv->setImageTexture(sListTrack+".jpg");
+	if (imgTer)  imgTer->setImageTexture(sListTrack+"_ter.jpg");
+	if (imgMini)  imgMini->setImageTexture(sListTrack+"_mini.png");
+
+
 	Fmt(s, "%5.3f km", sc.td.fTerWorldSize / 1000.f);	if (stTrk[1])  stTrk[1]->setCaption(s);
 	if (!rd)  return;
 	Fmt(s, "%5.3f km", rd->st.Length / 1000.f);			if (stTrk[0])  stTrk[0]->setCaption(s);

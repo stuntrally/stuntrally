@@ -101,6 +101,7 @@ void App::updateGameInfo()
 	if (netGameInfo.track) {
 		std::string track(netGameInfo.track);
 		sListTrack = track;
+		ReadTrkStats();
 	}
 	// FIXME: These should not modify global settings, only for one game
 	pSet->collis_cars = netGameInfo.collisions;
@@ -115,8 +116,8 @@ void App::updateGameInfoGUI()
 		valNetTrack->setCaption("Track: " + sListTrack);
 	if (imgNetTrack)
 		imgNetTrack->setImageTexture(sListTrack+".jpg");
-	if (edNetTrackInfo)
-		edNetTrackInfo->setCaption("Lorem ipsum");
+	if (edNetTrackInfo && trkDesc)
+		edNetTrackInfo->setCaption(trkDesc->getCaption());
 }
 
 void App::uploadGameInfo()
