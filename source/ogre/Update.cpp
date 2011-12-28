@@ -617,7 +617,7 @@ void App::updatePoses(float time)
 
 //  Update HUD rotated elems
 //---------------------------------------------------------------------------------------------------------------
-void App::UpdHUDRot(int carId, CarModel* pCarM, float vel, float rpm)
+void App::UpdHUDRot(int carId, CarModel* pCarM, float vel, float rpm, bool miniOnly)
 {
 	/// TODO: rpm vel needle angles,aspect are wrong [all from the last car when bloom is on (any effects)], hud vals are ok
 	//if (!pCarM || carId == -1)  return;
@@ -641,11 +641,12 @@ void App::UpdHUDRot(int carId, CarModel* pCarM, float vel, float rpm)
     const static Real ang[4] = {0.f,90.f,270.f,180.f};
 
     float rx[4],ry[4], vx[4],vy[4], px[4],py[4], cx[4],cy[4];  // rpm,vel, pos,crc
-    for (int i=0; i<4; i++)  // 4 verts, each+90deg
+    for (int i=0; i<4; ++i)  // 4 verts, each+90deg
     {
 		float ia = 45.f + ang[i];  //float(i)*90.f;
+		if (!miniOnly)  {
 		float r = -(angrmp + ia) * d2r;		rx[i] = sx*cosf(r);  ry[i] =-sy*sinf(r);
-		float v = -(angvel + ia) * d2r;		vx[i] = sx*cosf(v);  vy[i] =-sy*sinf(v);
+		float v = -(angvel + ia) * d2r;		vx[i] = sx*cosf(v);  vy[i] =-sy*sinf(v);  }
 		float p = -(angrot + ia) * d2r;		float cp = cosf(p), sp = sinf(p);
 
 		if (pSet->mini_rotated && pSet->mini_zoomed)
@@ -659,13 +660,15 @@ void App::UpdHUDRot(int carId, CarModel* pCarM, float vel, float rpm)
     }
     
     //  rpm needle
-    if (mrpm)  {	mrpm->beginUpdate(0);
-		for (int p=0;p<4;++p)  {  mrpm->position(rx[p],ry[p], 0);  mrpm->textureCoord(tc[p][0], tc[p][1]);  }	mrpm->end();  }
+    if (!miniOnly)
+    {
+		if (mrpm)  {	mrpm->beginUpdate(0);
+			for (int p=0;p<4;++p)  {  mrpm->position(rx[p],ry[p], 0);  mrpm->textureCoord(tc[p][0], tc[p][1]);  }	mrpm->end();  }
 
-	//  vel needle
-	if (mvel)  {	mvel->beginUpdate(0);
-		for (int p=0;p<4;++p)  {  mvel->position(vx[p],vy[p], 0);  mvel->textureCoord(tc[p][0], tc[p][1]);  }	mvel->end();  }
-
+		//  vel needle
+		if (mvel)  {	mvel->beginUpdate(0);
+			for (int p=0;p<4;++p)  {  mvel->position(vx[p],vy[p], 0);  mvel->textureCoord(tc[p][0], tc[p][1]);  }	mvel->end();  }
+	}
 		
 	//  minimap car pos-es
 	int c = carId;

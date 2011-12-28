@@ -603,7 +603,7 @@ void CarModel::Create(int car)
 				// no exhaust pos in car file, guess from bounding box
 				Vector3 bsize = (bodyBox.getMaximum() - bodyBox.getMinimum())*0.5,
 					bcenter = bodyBox.getMaximum() + bodyBox.getMinimum();
-				LogO("Car body bbox :  size " + toStr(bsize) + ",  center " + toStr(bcenter));
+				//LogO("Car body bbox :  size " + toStr(bsize) + ",  center " + toStr(bcenter));
 				SceneNode* nb = pMainNode->createChildSceneNode(bcenter+
 					Vector3(bsize.x * 0.97, bsize.y * 0.65, bsize.z * 0.65 * (i==0 ? 1 : -1) ));
 					//Vector3(1.9 /*back*/, 0.1 /*up*/, 0.6 * (i==0 ? 1 : -1)/*sides*/ ));

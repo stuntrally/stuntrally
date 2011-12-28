@@ -307,7 +307,7 @@ void App::UpdateHUD(int carId, CarModel* pCarM, CAR* pCar, float time, Viewport*
 	if (carId == 0 && !pSet->mini_rotated && !pSet->mini_zoomed)  // the only fall that works
 	for (int i=0; i < carModels.size(); ++i)
 		if (carModels[i]->eType != CarModel::CT_LOCAL && carModels[i]->eType != CarModel::CT_REPLAY)
-			UpdHUDRot(i, carModels[i], 0.f, 0.f);
+			UpdHUDRot(i, carModels[i], 0.f, 0.f, true);
 
 	///  opponents list  ------------------
 	if (ovOpp->isVisible() && pCarM && pCarM->pMainNode)
