@@ -320,7 +320,45 @@ void App::UpdateHUD(int carId, CarModel* pCarM, CAR* pCar, float time, Viewport*
 			const CarModel* cm = carModels[o];
 			if (cm->eType != CarModel::CT_REPLAY && cm->pMainNode)
 			{
-				float rChks = road ? road->mChks.size() : 1.f, perc = 100.f * cm->iNumChks / rChks;
+				float rChks = road ? road->mChks.size() + 1 : 1.f,
+					perc = 100.f * cm->iNumChks / rChks;
+				
+				//  get smooth % part
+				if (rChks > 1.f && cm->eType != CarModel::CT_GHOST)
+				{
+					const Vector3& car = cm->pMainNode->getPosition(), next = road->mChks[cm->iNextChk].pos,
+						start = cm->vStartPos, curr = road->mChks[std::max(0,cm->iCurChk)].pos;
+					float dist01 = 0.f;
+					//  start to 1st chk
+					if (/*cm->iCurChk == -1 || */cm->iNumChks == 0)
+					{
+						Vector3 curDist = car - start;
+						Vector3 chksDist = next - start;
+						dist01 = (curDist.length() /*- road->mChks[cm->iNextChk].r*/)
+								/ (chksDist.length() - road->mChks[cm->iNextChk].r);
+					}
+					//  last chk to finish
+					else if (cm->iNumChks == road->mChks.size())
+					{
+						dist01 = 0.f;
+						Vector3 curDist = start - car;
+						Vector3 chksDist = curr - start;
+						dist01 = 1.f - (curDist.length() /*- road->mChks[cm->iNextChk].r*/)
+								/ (chksDist.length() - road->mChks[cm->iNextChk].r);
+					}
+					else  // between 2 checks
+					{
+						Vector3 curDist = car - next;  // car dist to next checkpoint
+						Vector3 chksDist = curr - next;  // divide by cur and next checks distance
+
+						dist01 = 1.f - (curDist.length() - road->mChks[cm->iNextChk].r)
+								/ (chksDist.length() - road->mChks[cm->iCurChk].r);
+					}
+					
+					float percD = std::min(1.f, std::max(0.f, dist01 ));  // clamp to 0..1
+
+					perc += percD * 100.f / rChks;
+				}
 
 				if (o != carId)  // no dist to self
 				{

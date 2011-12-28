@@ -74,8 +74,21 @@ void SplineRoad::SetChecks()  // after xml load
 		}
 	}
 	int num = (int)mChks.size();
-	if (num > 0)  //1st checkpoint for reverse
-		iChkId1Rev = (iChkId1 - iDir + num) % num;
+	if (num == 0)  return;
+
+	//  1st checkpoint for reverse
+	iChkId1Rev = (iChkId1 - iDir + num) % num;
+
+
+	//  dist between checks  todo ....
+	if (num == 1)  mChks[0].dist = 10.f;  //
+
+	for (int i=0; i < num; ++i)
+	{
+		int i1 = (i+1) % num;
+		Vector3 vd = mChks[i].pos - mChks[i1].pos;
+		mChks[i].dist = vd.length() + mChks[i].r;
+	}
 }
 
 	

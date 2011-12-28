@@ -37,6 +37,7 @@ class CheckSphere
 public:
 	Ogre::Vector3 pos;
 	Ogre::Real r,r2;  // radius, r*r
+	Ogre::Real dist;  // distance to next (for smooth %, drive progress)
 };
 
 
