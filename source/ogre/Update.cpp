@@ -643,10 +643,11 @@ void App::UpdHUDRot(int carId, CarModel* pCarM, float vel, float rpm, bool miniO
     float rx[4],ry[4], vx[4],vy[4], px[4],py[4], cx[4],cy[4];  // rpm,vel, pos,crc
     for (int i=0; i<4; ++i)  // 4 verts, each+90deg
     {
-		float ia = 45.f + ang[i];  //float(i)*90.f;
-		if (!miniOnly)  {
-		float r = -(angrmp + ia) * d2r;		rx[i] = sx*cosf(r);  ry[i] =-sy*sinf(r);
-		float v = -(angvel + ia) * d2r;		vx[i] = sx*cosf(v);  vy[i] =-sy*sinf(v);  }
+		float ia = 45.f + ang[i];  //i*90.f;
+		if (!miniOnly)
+		{	float r = -(angrmp + ia) * d2r;		rx[i] = sx*cosf(r);  ry[i] =-sy*sinf(r);
+			float v = -(angvel + ia) * d2r;		vx[i] = sx*cosf(v);  vy[i] =-sy*sinf(v);
+		}
 		float p = -(angrot + ia) * d2r;		float cp = cosf(p), sp = sinf(p);
 
 		if (pSet->mini_rotated && pSet->mini_zoomed)
