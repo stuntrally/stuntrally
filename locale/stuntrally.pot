@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION"
 "Report-Msgid-Bugs-To: "
-"POT-Creation-Date: 2011-12-20 22:27+0100"
+"POT-Creation-Date: 2011-12-29 17:36+0100"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>"
 "Language-Team: LANGUAGE <LL@li.org>"
@@ -83,6 +83,10 @@ msgstr ""
 
 msgctxt "ViewDist"
 msgid "View distance"
+msgstr ""
+
+msgctxt "OpponentsList"
+msgid "Opponents List"
 msgstr ""
 
 msgctxt "RplParticles"
@@ -2383,6 +2387,10 @@ msgstr ""
 
 msgctxt "Color"
 msgid "color"
+msgstr ""
+
+msgctxt "GraphicsAll_VeryHigh"
+msgid "Very High"
 msgstr ""
 
 msgctxt "TipTerLAngMax"
