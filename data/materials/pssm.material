@@ -13,6 +13,22 @@ vertex_program PSSM/shadow_caster_vs cg
 		//param_named_auto optimalAdustFactor	custom 0
 	}
 }
+vertex_program PSSM/shadow_caster_wind_vs cg
+{
+	source pssm.cg
+	profiles vs_4_0 vs_1_1 arbvp1
+	entry_point shadow_caster_wind_vs
+
+	default_params
+	{
+		param_named_auto wvpMat worldviewproj_matrix
+		// this is the scene's depth range
+		//param_named_auto depthRange			scene_depth_range
+		//param_named_auto optimalAdustFactor	custom 0
+		//param_named enableWind float 1.0
+		param_named_auto time time
+	}
+}
 
 fragment_program PSSM/shadow_caster_ps cg
 {
@@ -80,6 +96,25 @@ material PSSM/shadow_caster_nocull
 		{
 			cull_hardware none
 			vertex_program_ref PSSM/shadow_caster_vs
+			{
+			}
+
+			fragment_program_ref PSSM/shadow_caster_ps
+			{
+			}
+		}
+	}
+}
+
+material PSSM/shadow_caster_wind
+{
+	technique
+	{
+		// all this will do is write depth and depth² to red and green
+		pass
+		{
+			cull_hardware none
+			vertex_program_ref PSSM/shadow_caster_wind_vs
 			{
 			}
 
