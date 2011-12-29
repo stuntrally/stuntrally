@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION"
 "Report-Msgid-Bugs-To: "
-"POT-Creation-Date: 2011-11-17 21:09+0100"
+"POT-Creation-Date: 2011-12-29 17:36+0100"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>"
 "Language-Team: LANGUAGE <LL@li.org>"
@@ -85,6 +85,10 @@ msgctxt "ViewDist"
 msgid "View distance"
 msgstr ""
 
+msgctxt "OpponentsList"
+msgid "Opponents List"
+msgstr ""
+
 msgctxt "RplParticles"
 msgid "Particles (for not transparent ghost)"
 msgstr ""
@@ -97,8 +101,8 @@ msgctxt "TipLTrMinTerH"
 msgid "Terrain height below which model won't appear."
 msgstr ""
 
-msgctxt "Sky"
-msgid "Sky"
+msgctxt "TreeDens"
+msgid "Trees   density"
 msgstr ""
 
 msgctxt "TerNormal"
@@ -197,8 +201,8 @@ msgctxt "TerGenOfsY"
 msgid "Offset Y"
 msgstr ""
 
-msgctxt "MinimapRotate"
-msgid "Rotate"
+msgctxt "FuelBoost"
+msgid "Boost Fuel"
 msgstr ""
 
 msgctxt "pipes"
@@ -251,6 +255,10 @@ msgstr ""
 
 msgctxt "Light"
 msgid "Light"
+msgstr ""
+
+msgctxt "Flip"
+msgid "Flip"
 msgstr ""
 
 msgctxt "DistToRoad"
@@ -529,8 +537,8 @@ msgctxt "InputMinVal"
 msgid "Min. Value"
 msgstr ""
 
-msgctxt "max"
-msgid "max"
+msgctxt "Always"
+msgid "Always"
 msgstr ""
 
 msgctxt "TipSunDirYaw"
@@ -629,6 +637,10 @@ msgctxt "UseImposters"
 msgid "Use Imposters"
 msgstr ""
 
+msgctxt "MinimapRotate"
+msgid "Rotate"
+msgstr ""
+
 msgctxt "TipModelMaxScale"
 msgid "Model maximal scale."
 msgstr ""
@@ -667,6 +679,10 @@ msgstr ""
 
 msgctxt "Car"
 msgid "Car"
+msgstr ""
+
+msgctxt "FuelLap"
+msgid "Fuel each lap"
 msgstr ""
 
 msgctxt "TipSkyMats"
@@ -821,6 +837,10 @@ msgctxt "ssao"
 msgid "SSAO"
 msgstr ""
 
+msgctxt "max"
+msgid "max"
+msgstr ""
+
 msgctxt "MessageBox_Abort"
 msgid "Abort"
 msgstr ""
@@ -863,6 +883,10 @@ msgstr ""
 
 msgctxt "InputFluidsRot"
 msgid "MMB - rotate yaw"
+msgstr ""
+
+msgctxt "InputRoadChkFirst"
+msgid "0   - set checkpoint as first"
 msgstr ""
 
 msgctxt "TipModelPageLength"
@@ -959,6 +983,10 @@ msgstr ""
 
 msgctxt "Screen"
 msgid "Screen"
+msgstr ""
+
+msgctxt "FuelTime"
+msgid "Fuel over time"
 msgstr ""
 
 msgctxt "InputRoadMostSel"
@@ -1241,8 +1269,8 @@ msgctxt "TipGrassSwaySpd"
 msgid "Grass sway effect speed."
 msgstr ""
 
-msgctxt "TreeDens"
-msgid "Trees   density"
+msgctxt "Sky"
+msgid "Sky"
 msgstr ""
 
 msgctxt "TCS"
@@ -1397,8 +1425,8 @@ msgctxt "trailColor"
 msgid "trail color"
 msgstr ""
 
-msgctxt "InputRoadChkFirst"
-msgid "0   - set checkpoint as first"
+msgctxt "Boost"
+msgid "Boost"
 msgstr ""
 
 msgctxt "NumLocalPlayers"
@@ -2049,6 +2077,10 @@ msgctxt "InputRoadAltLMB"
 msgid "alt-LMB (or 1,2)"
 msgstr ""
 
+msgctxt "TrackDifficulties"
+msgid "Various Track Difficulties"
+msgstr ""
+
 msgctxt "TipModelPrev"
 msgid "Model preview image."
 msgstr ""
@@ -2139,10 +2171,6 @@ msgstr ""
 
 msgctxt "Environment"
 msgid "Environment"
-msgstr ""
-
-msgctxt "BoostAndFlip"
-msgid "Boost and flip"
 msgstr ""
 
 msgctxt "GraphicsAll_High"
@@ -2237,10 +2265,6 @@ msgctxt "TipLTrMaxTerAng"
 msgid "Terrain angle above which model won't appear."
 msgstr ""
 
-msgctxt "NewDup"
-msgid "New (Duplicate)"
-msgstr ""
-
 msgctxt "Resolution"
 msgid "Resolution"
 msgstr ""
@@ -2297,6 +2321,10 @@ msgctxt "InputRoadSelectMany"
 msgid "Select (many)"
 msgstr ""
 
+msgctxt "Never"
+msgid "Never"
+msgstr ""
+
 msgctxt "TerGenOct"
 msgid "Octaves"
 msgstr ""
@@ -2325,8 +2353,8 @@ msgctxt "InputSaveTrack"
 msgid "F4 - save track"
 msgstr ""
 
-msgctxt "TrackDifficulties"
-msgid "Various Track Difficulties"
+msgctxt "NewDup"
+msgid "New (Duplicate)"
 msgstr ""
 
 msgctxt "InputMapShiftDown"
@@ -2359,6 +2387,10 @@ msgstr ""
 
 msgctxt "Color"
 msgid "color"
+msgstr ""
+
+msgctxt "GraphicsAll_VeryHigh"
+msgid "Very High"
 msgstr ""
 
 msgctxt "TipTerLAngMax"

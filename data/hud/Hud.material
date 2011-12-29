@@ -9,6 +9,7 @@ vertex_program Ogre/Needle_vp cg
 		param_named_auto worldViewProj worldviewproj_matrix
 	}
 }
+
 material hud/needle
 {
 	receive_shadows off
@@ -130,32 +131,6 @@ material hud/Minimap
 	}
 }
 
-material hud/CarDot
-{
-	receive_shadows off
-	technique
-	{
-		pass
-		{
-			lighting off
-			depth_check off
-			depth_write off
-			scene_blend alpha_blend
-			cull_hardware none
-			vertex_program_ref Ogre/Compositor/StdQuad_Cg_vp
-			{
-			}
-			fragment_program_ref Ogre/Compositor/StdQuad_fp
-			{
-			} 
-			texture_unit
-			{
-				texture cardot0.png
-			}
-		}
-	}
-}
-
 material hud/CarPos
 {
 	receive_shadows off
@@ -205,6 +180,32 @@ material hud/Times
 			texture_unit tex1
 			{
 				texture border_rect.png
+			}
+		}
+	}
+}
+
+material hud/Opponents
+{
+	receive_shadows off
+	technique
+	{
+		pass
+		{
+			lighting off
+			depth_check off
+			scene_blend alpha_blend
+			cull_hardware none
+			
+			vertex_program_ref Ogre/Needle_vp
+			{
+			}
+			fragment_program_ref Ogre/Compositor/StdQuad_fp
+			{
+			} 
+			texture_unit tex1
+			{
+				texture opp_rect.png
 			}
 		}
 	}

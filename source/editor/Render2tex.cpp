@@ -51,6 +51,7 @@ void App::Rnd2TexSetup()
 			rvp->setClearEveryFrame(true);   rvp->setBackgroundColour(ColourValue(0,0,0,0));
 			rvp->setOverlaysEnabled(false);  rvp->setSkiesEnabled(full);
 			rvp->setVisibilityMask(visMask[i]);
+			rvp->setShadowsEnabled(false);
 		}
 		///  minimap  . . . . . . . . . . . . . . . . . . . . . . . . . . . 
 		if (r.ndMini)  mSceneMgr->destroySceneNode(r.ndMini);
@@ -122,6 +123,7 @@ void App::SaveGrassDens()
 		mask[m] = v;  ff += v;
 	}
 	ff = 2.f / ff;  // normally would be 1.f - but road needs to stay black and be smooth outside
+	//  change smooth to distance from road fade ?
 		
 	///  road - rotate, smooth  -----------
 	for (y = f; y < h-f; ++y) {  a = y*w +f;
@@ -139,7 +141,7 @@ void App::SaveGrassDens()
 		gd[a] = 0xFF000000 + 0x010101 * v;  // write
 	}	}
 
-	v = 0xFFFFFFFF;  //  frame f []  get from rd[b] not clear..
+	v = 0xFFFFFFFF;  //  frame f []  todo: get from rd[b] not clear..
 	for (y = 0;  y <= f; ++y)	for (x=0; x < w; ++x)	gd[y*w+x] = v;  // - up
 	for (y=h-f-1; y < h; ++y)	for (x=0; x < w; ++x)	gd[y*w+x] = v;  // - down
 	for (x = 0;  x <= f; ++x)	for (y=0; y < h; ++y)	gd[y*w+x] = v;  // | left
@@ -182,6 +184,7 @@ void App::preRenderTargetUpdate(const RenderTargetEvent &evt)
 {
 	const String& s = evt.source->getName();
 	int num = atoi(s.substr(s.length()-1, s.length()-1).c_str());
+	mSceneMgr->setShadowTechnique(SHADOWTYPE_NONE);
 	
 	if (num == 3)  // full
 	{

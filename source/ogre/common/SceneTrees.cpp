@@ -9,7 +9,7 @@
 	#include "../vdrift/game.h"
 	#include "../ogre/SplitScreen.h"
 #endif
-#include "../vdrift/pathmanager.h"
+#include "../../vdrift/pathmanager.h"
 #include "../../paged-geom/GrassLoader.h"
 #include "../../paged-geom/BatchPage.h"
 #include "../../paged-geom/WindBatchPage.h"
@@ -18,7 +18,6 @@
 #include "BltObjects.h"
 
 #include <boost/filesystem.hpp>
-
 #include <OgreTerrain.h>
 using namespace Ogre;
 
@@ -102,12 +101,8 @@ void App::CreateTrees()
 		#endif
 		
 		// create dir if not exist
-		#ifndef ROAD_EDITOR
-		boost::filesystem::create_directory(PATHMANAGER::GetCacheDir() + "/" + toStr(sceneryId));
-		grass->setTempDir(PATHMANAGER::GetCacheDir() + "/" + toStr(sceneryId) + "/");
-		#else
-		grass->setTempDir(PATHMANAGER::GetCacheDir());
-		#endif
+		boost::filesystem::create_directory(PATHMANAGER::GetCacheDir() + "/" + toStr(sc.sceneryId));
+		grass->setTempDir(PATHMANAGER::GetCacheDir() + "/" + toStr(sc.sceneryId) + "/");
 		
 		grass->addDetailLevel<GrassPage>(sc.grDist * pSet->grass_dist);
 
@@ -147,13 +142,9 @@ void App::CreateTrees()
 		trees = new PagedGeometry(mCamera, sc.trPage);
 		#endif
 		
-		#ifndef ROAD_EDITOR
 		// create dir if not exist
-		boost::filesystem::create_directory(PATHMANAGER::GetCacheDir() + "/" + toStr(sceneryId));
-		trees->setTempDir(PATHMANAGER::GetCacheDir() + "/" + toStr(sceneryId) + "/");
-		#else
-		trees->setTempDir(PATHMANAGER::GetCacheDir());
-		#endif
+		boost::filesystem::create_directory(PATHMANAGER::GetCacheDir() + "/" + toStr(sc.sceneryId));
+		trees->setTempDir(PATHMANAGER::GetCacheDir() + "/" + toStr(sc.sceneryId) + "/");
 
 		if (bWind)
 			 trees->addDetailLevel<WindBatchPage>(sc.trDist * pSet->trees_dist, 0);
@@ -244,7 +235,7 @@ void App::CreateTrees()
 				
 				///  add to bullet world
 				#ifndef ROAD_EDITOR  //  in Game
-				if (pSet->veget_collis && col)
+				if (pSet->collis_veget && col)
 				for (int c=0; c < col->shapes.size(); ++c)  // all shapes
 				{
 					const BltShape* shp = &col->shapes[c];

@@ -138,13 +138,13 @@ void SplitScreenManager::Align()
 		
 		// Create viewport
 		// use i as Z order
-		mViewports.push_back(mWindow->addViewport( mCameras.back(), i, dims[0], dims[1], dims[2], dims[3]));
+		mViewports.push_back(mWindow->addViewport( mCameras.back(), i+5, dims[0], dims[1], dims[2], dims[3]));
 		
 		// HUD viewport
-		mHUDViewports.push_back(mWindow->addViewport( mHUDCamera, i+5, dims[0], dims[1], dims[2], dims[3]));
-		mHUDViewports.back()->setClearEveryFrame(true, FBT_DEPTH);
-		mHUDViewports.back()->setOverlaysEnabled(false);
-		mHUDViewports.back()->setBackgroundColour(ColourValue(0.0, 0.0, 0.0, 0.0));
+		//mHUDViewports.push_back(mWindow->addViewport( mHUDCamera, i, dims[0], dims[1], dims[2], dims[3]));
+		//mHUDViewports.back()->setClearEveryFrame(true, FBT_DEPTH);
+		//mHUDViewports.back()->setOverlaysEnabled(false);
+		//mHUDViewports.back()->setBackgroundColour(ColourValue(0.0, 0.0, 0.0, 0.0));
 	}
 	
 	// Create gui viewport if not already existing
@@ -160,6 +160,8 @@ void SplitScreenManager::Align()
 			mShaderGenerator->addSceneManager(mSceneMgr);
 		}
 	}
+	
+	mHUDSceneMgr = mSceneMgr;
 	
 	AdjustRatio();
 	
@@ -190,58 +192,48 @@ void SplitScreenManager::AdjustRatio()
 //------------------------------------------------------------------------------------------------------------------
 void SplitScreenManager::preViewportUpdate(const Ogre::RenderTargetViewportEvent& evt)
 {
-	if (!pApp)  return;
-	if (pApp->bLoading)  return;
+	if (!pApp || pApp->bLoading)  return;
 
 	//  What kind of viewport is being updated?
-	//LogO(evt.source->getCamera()->getName());
+	const String& vpName = evt.source->getCamera()->getName();
+	//*H*/LogO(vpName);  //GuiCam1  PlayerCamera0,1..
+	
 	if (evt.source != mGuiViewport)
 	{
 		// 3d scene viewport
 		//  get number of viewport
-		bool hudVp = false;
+		/*bool hudVp = false;
 		std::list<Ogre::Viewport*>::iterator vpIt = mViewports.begin();
 		std::list<Ogre::Viewport*>::iterator hudVpIt = mHUDViewports.begin();
 		int i = 0;
-		while (evt.source != *vpIt && evt.source != *hudVpIt)	{	i++;  vpIt++; hudVpIt++;	}
-		if (evt.source == *hudVpIt) hudVp = true;
+		if (vpIt != mViewports.end() && hudVpIt != mHUDViewports.end())
+		{
+			while (evt.source != *vpIt && evt.source != *hudVpIt)	{	i++;  vpIt++; hudVpIt++;	}
+			if (evt.source == *hudVpIt) hudVp = true;
+		}*/
 
 		//  get car for this viewport
-		int carId = 0;
-		std::vector<CarModel*>::iterator carIt = pApp->carModels.begin();
-		if (pApp->carModels.size() > 0)
-		{
-			int j = 0;
-			while (j <= i)
-			{
-				if ((*carIt)->eType == CarModel::CT_REMOTE)
-					j--;
-				else
-					if (j == i)
-						break;
-				j++;
-				carIt++;
-			}
-			carId = j;
-		}
+		int carId = 0;  //-1
+		sscanf(vpName.c_str(), "PlayerCamera%d", &carId);
+		
+		CarModel* pCarM = NULL;
+		if (pApp->carModels.size() > carId)
+			pCarM = pApp->carModels[carId];
+		
+		if (!pCarM) return;
 			
 		//  Size HUD
 		pApp->SizeHUD(true, evt.source, carId);
 
-		//LogO("VP car "+toStr(carId)+" "+toStr(i)+"---------------");
 		//  Update HUD for this car
-		if (pApp->carModels.size() > 0 && *carIt && (*carIt)->pCar/**/)
-		{
-			pApp->UpdateHUD( carId, *carIt, (*carIt)->pCar, 1.0f / mWindow->getLastFPS(), evt.source );
-		}else{
-			//LogO("VP car "+toStr(carId)+" "+toStr(i));
-			//pApp->UpdateHUD( carId, NULL, NULL, 1.0f / mWindow->getLastFPS(), evt.source );
-		}
+		//*H*/LogO("VP car "+toStr(carId)+" "+toStr(i)+"---------------");
+		pApp->UpdateHUD( carId, pCarM, pCarM->pCar, 1.0f / mWindow->getLastFPS(), evt.source );
 		
-		if (hudVp) return;
+		//if (hudVp) return;  // ?..
 
 
 		///  Set skybox pos to camera  - TODO: fix, sky is center only for last player ...
+		//  idea: with compositor this needs separate sky nodes (own sky for each player) and showing 1 sky for 1 player
 		if (pApp->ndSky)
 			pApp->ndSky->setPosition(evt.source->getCamera()->getPosition());
 			
@@ -255,6 +247,7 @@ void SplitScreenManager::preViewportUpdate(const Ogre::RenderTargetViewportEvent
 		}
 		
 		//  Update rain/snow - depends on camera
+		//  todo: every player/viewport needs own weather particles  pr[carId]
 		if (pSet->particles)
 		{	
 			const Vector3& pos = evt.source->getCamera()->getPosition();
@@ -279,9 +272,9 @@ void SplitScreenManager::preViewportUpdate(const Ogre::RenderTargetViewportEvent
 	else
 	{
 		//  Gui viewport - hide stuff we don't want
-		pApp->UpdateHUD( 0, NULL, NULL, mWindow->getLastFPS() );
-		//LogO("VP gui --------------------------------------");
+		//*H*/LogO("VP gui --------------------------------------");
 
+		pApp->UpdateHUD(-1, NULL, NULL, mWindow->getLastFPS() );
 		pApp->SizeHUD(false);
 		
 		// no mouse in key capture mode

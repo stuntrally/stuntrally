@@ -38,9 +38,19 @@ void App::chkGear(WP wp){		ChkEv(autoshift);	if (pGame)  pGame->ProcessNewSettin
 void App::chkRear(WP wp){		ChkEv(autorear);	if (pGame)  pGame->ProcessNewSettings();	}
 void App::chkRearInv(WP wp){	ChkEv(rear_inv);	if (pGame)  pGame->ProcessNewSettings();	}
 //    [Game]
-void App::chkVegetCollis(WP wp){	ChkEv(veget_collis);	}
-void App::chkCarCollis(WP wp){		ChkEv(car_collis);		}
+void App::chkVegetCollis(WP wp){	ChkEv(collis_veget);	}
+void App::chkCarCollis(WP wp){		ChkEv(collis_cars);		}
 
+//  boost, flip
+void App::comboBoost(CMB)
+{
+	pSet->boost_type = val;  ShowHUD();
+}
+void App::comboFlip(CMB)
+{
+	pSet->flip_type = val;
+}
+	
 void App::btnNumPlayers(WP wp)
 {
 	if      (wp->getName() == "btnPlayers1")  pSet->local_players = 1;
@@ -292,6 +302,7 @@ void App::chkMiniZoom(WP wp){		ChkEv(mini_zoomed);		}
 void App::chkMiniRot(WP wp){		ChkEv(mini_rotated);	}
 void App::chkMiniTer(WP wp){		ChkEv(mini_terrain);	UpdMiniTer();  }
 void App::chkTimes(WP wp){			ChkEv(show_times);	ShowHUD();	}
+void App::chkOpponents(WP wp){		ChkEv(show_opponents);	ShowHUD();	}
 
 //void App::chkRacingLine(WP wp){		ChkEv(racingline);	if (ndLine)  ndLine->setVisible(pSet->racingline);	}
 void App::chkCamInfo(WP wp){		ChkEv(show_cam);	ShowHUD();	}
@@ -463,6 +474,9 @@ bool App::keyPressed( const OIS::KeyEvent &arg )
 
 
 			case KC_F7:		// Times
+			if (shift)
+			{	WP wp = chOpponents;  ChkEv(show_opponents);  ShowHUD();  }
+			else
 			{	WP wp = chTimes;  ChkEv(show_times);  ShowHUD();  }
 				return false;
 				

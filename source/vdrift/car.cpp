@@ -22,7 +22,8 @@ CAR::CAR() :
 	last_steer(0),
 	debug_wheel_draw(false),
 	sector(-1),
-	iCamNext(0), bLastChk(0)
+	iCamNext(0), bLastChk(0),
+	fluidHitOld(0)
 {
 	//dynamics.pCar = this;
 	vInteriorOffset[0]=0;
@@ -129,11 +130,18 @@ bool CAR::Load(class App* pApp1,
 		has2exhausts = false;
 
 	///-  custom car collision params
-	dynamics.coll_R = 0.3f;  dynamics.coll_Hofs = 0.f;
+	dynamics.coll_R = 0.3f;  dynamics.coll_H = 0.45f;  dynamics.coll_W = 0.5f;
+	dynamics.coll_Lofs = 0.f;  dynamics.coll_Wofs = 0.f;  dynamics.coll_Hofs = 0.f;
 	dynamics.coll_manual = false;  // normally auto
+
 	if (carconf.GetParam("collision.manual", dynamics.coll_manual))
 	{
 		carconf.GetParam("collision.radius", dynamics.coll_R);
+		carconf.GetParam("collision.width", dynamics.coll_W);
+		carconf.GetParam("collision.height", dynamics.coll_H);
+
+		carconf.GetParam("collision.offsetL", dynamics.coll_Lofs);
+		carconf.GetParam("collision.offsetW", dynamics.coll_Wofs);
 		carconf.GetParam("collision.offsetH", dynamics.coll_Hofs);
 	}
 	
@@ -157,8 +165,16 @@ bool CAR::Load(class App* pApp1,
 	// load driver
 	{
 		float pos[3];
-		if (!carconf.GetParam("driver.position", pos, error_output)) return false;
+		if (!carconf.GetParam("driver.view-position", pos, error_output)) return false;
 		if (version == 2) COORDINATESYSTEMS::ConvertCarCoordinateSystemV2toV1(pos[0], pos[1], pos[2]);
+		
+		driver_view_position.Set(pos[0], pos[1], pos[2]);
+		
+		if (!carconf.GetParam("driver.hood-mounted-view-position", pos, error_output)) return false;
+		if (version == 2) COORDINATESYSTEMS::ConvertCarCoordinateSystemV2toV1(pos[0], pos[1], pos[2]);
+		
+		hood_view_position.Set(pos[0], pos[1], pos[2]);
+		
 		/*if (drivernode) //move the driver model to the coordinates given
 		{
 			MATHVECTOR <float, 3> floatpos;
@@ -390,6 +406,57 @@ bool CAR::LoadSounds(
 		roadnoise.SetPitch(1.0);	roadnoise.Play();
 	}
 
+	//set up  fluid sounds
+	for (int i = 0; i < Nwatersounds; ++i)
+	{
+		char name[16];
+		sprintf(name, "water%d", i+1);
+		const SOUNDBUFFER * buf = soundbufferlibrary.GetBuffer(name);
+		if (!buf)
+		{	error_output << "Can't load water sound: " << name << std::endl;	return false;
+		}
+		watersnd[i].SetBuffer(*buf);	watersnd[i].Set3DEffects(true);
+		watersnd[i].SetLoop(false);		watersnd[i].SetGain(0);
+	}
+	{
+		const SOUNDBUFFER * buf = soundbufferlibrary.GetBuffer("mud1");
+		if (!buf)
+		{	error_output << "Can't load mud sound " << std::endl;	return false;
+		}
+		mudsnd.SetBuffer(*buf);		mudsnd.Set3DEffects(true);
+		mudsnd.SetLoop(false);		mudsnd.SetGain(0);
+	}
+	//set up fluid cont. sounds
+	{
+		const SOUNDBUFFER * buf = soundbufferlibrary.GetBuffer("mud_cont");
+		if (!buf)
+		{	error_output << "Can't load mud_cont sound" << std::endl;	return false;
+		}
+		mud_cont.SetBuffer(*buf);	mud_cont.Set3DEffects(true);
+		mud_cont.SetLoop(true);		mud_cont.SetGain(0);
+		mud_cont.SetPitch(1.0);		mud_cont.Play();
+	}
+	{
+		const SOUNDBUFFER * buf = soundbufferlibrary.GetBuffer("water_cont");
+		if (!buf)
+		{	error_output << "Can't load water_cont sound" << std::endl;	return false;
+		}
+		water_cont.SetBuffer(*buf);	water_cont.Set3DEffects(true);
+		water_cont.SetLoop(true);	water_cont.SetGain(0);
+		water_cont.SetPitch(1.0);	water_cont.Play();
+	}
+	
+	//set up boost sound
+	{
+		const SOUNDBUFFER * buf = soundbufferlibrary.GetBuffer("boost");
+		if (!buf)
+		{	error_output << "Can't load boost sound" << std::endl;	return false;
+		}
+		boostsnd.SetBuffer(*buf);	boostsnd.Set3DEffects(true);
+		boostsnd.SetLoop(true);		boostsnd.SetGain(0);
+		boostsnd.SetPitch(1.0);		boostsnd.Play();
+	}
+
 	return true;
 }
 
@@ -431,20 +498,26 @@ void CAR::Update(double dt)
 
 void CAR::GetSoundList(std::list <SOUNDSOURCE *> & outputlist)
 {
-	for (std::list <std::pair <ENGINESOUNDINFO, SOUNDSOURCE> >::iterator i =
-		enginesounds.begin(); i != enginesounds.end(); ++i)
-	{
+	for (std::list <std::pair <ENGINESOUNDINFO, SOUNDSOURCE> >::iterator
+		i = enginesounds.begin(); i != enginesounds.end(); ++i)
 		outputlist.push_back(&i->second);
-	}
 
-	for (int i = 0; i < 4; i++)	outputlist.push_back(&tiresqueal[i]);
-	for (int i = 0; i < 4; i++)	outputlist.push_back(&grasssound[i]);
-	for (int i = 0; i < 4; i++)	outputlist.push_back(&gravelsound[i]);
-	for (int i = 0; i < 4; i++)	outputlist.push_back(&tirebump[i]);
+	for (int i = 0; i < 4; i++)  outputlist.push_back(&tiresqueal[i]);
+	for (int i = 0; i < 4; i++)  outputlist.push_back(&grasssound[i]);
+	for (int i = 0; i < 4; i++)  outputlist.push_back(&gravelsound[i]);
+	for (int i = 0; i < 4; i++)  outputlist.push_back(&tirebump[i]);
 
 	for (int i = 0; i < Ncrashsounds; ++i)
 		outputlist.push_back(&crashsound[i]);
 	outputlist.push_back(&roadnoise);
+	outputlist.push_back(&boostsnd);
+
+	for (int i = 0; i < Nwatersounds; ++i)
+		outputlist.push_back(&watersnd[i]);
+	outputlist.push_back(&mudsnd);
+	
+	outputlist.push_back(&mud_cont);
+	outputlist.push_back(&water_cont);
 }
 
 void CAR::GetEngineSoundList(std::list <SOUNDSOURCE *> & outputlist)
@@ -522,6 +595,7 @@ void CAR::UpdateSounds(float dt)
 	MATHVECTOR <float,3> engPos, whPos[4];  // engine, wheels pos
 	TRACKSURFACE::TYPE surfType[4];
 	float squeal[4],whVel[4], suspVel[4],suspDisp[4];
+	float whH_all = 0.f;  bool mud = false;
 	
 	///  replay play  ------------------------------------------
 	if (pApp->bRplPlay)
@@ -542,6 +616,8 @@ void CAR::UpdateSounds(float dt)
 			//  susp
 			suspVel[w] = pApp->fr.suspVel[w];
 			suspDisp[w] = pApp->fr.suspDisp[w];
+			//  TODO fluids snd & par in replays...
+			//whH_all
 		}
 	}
 	else  /// game  ------------------------------------------
@@ -551,7 +627,7 @@ void CAR::UpdateSounds(float dt)
 		engPos = dynamics.GetEnginePosition();
 		speed = GetSpeed();
 		dynVel = dynamics.GetVelocity().Magnitude();
-
+		
 		for (int w=0; w<4; ++w)
 		{
 			WHEEL_POSITION wp = WHEEL_POSITION(w);
@@ -565,6 +641,9 @@ void CAR::UpdateSounds(float dt)
 			//  susp
 			suspVel[w] = dynamics.GetSuspension(wp).GetVelocity();
 			suspDisp[w] = dynamics.GetSuspension(wp).GetDisplacementPercent();
+			//  fluids
+			whH_all += dynamics.whH[w];
+			if (dynamics.whP[w] >= 1)  mud = true;
 		}
 	}
 	///  ------------------------------------------
@@ -687,7 +766,62 @@ void CAR::UpdateSounds(float dt)
 			}
 		}
 	}
+	
+	//update fluids sound - hit
+	bool fluidHit = whH_all > 1.f;
+	//LogO(toStr(whH_all) + "  v "+ toStr(dynVel));
 
+	if (fluidHit && !fluidHitOld)
+	//if (dynVel > 10.f && whH_all > 1.f && )
+	{
+		int i = std::min(Nwatersounds-1, (int)(dynVel / 15.f));
+		float gain = std::min(3.0f, 0.3f + dynVel / 30.f);
+		SOUNDSOURCE& snd = /*mud ? mudsnd : */watersnd[i];
+		
+		//LogO("fluid hit i"+toStr(i)+" g"+toStr(gain)+" "+(mud?"mud":"wtr"));
+		if (!snd.Audible())
+		{
+			snd.SetGain(gain * pSet->vol_env);
+			snd.SetPosition(engPos[0], engPos[1], engPos[2]);
+			snd.Stop();
+			snd.Play();
+		}
+
+		if (mud)  {
+		SOUNDSOURCE& snd = mudsnd;
+		if (!snd.Audible())
+		{
+			snd.SetGain(gain * pSet->vol_env);
+			snd.SetPosition(engPos[0], engPos[1], engPos[2]);
+			snd.Stop();
+			snd.Play();
+		}	}
+	}
+	fluidHitOld = fluidHit;
+
+	//update fluids sound - continuous
+	{
+		float vel = mud && whH_all > 0.1f ?
+			whMudSpin * 2.5f : 0.f;
+		mud_cont.SetGain(std::min(1.f, vel) * pSet->vol_env);
+		mud_cont.SetPitch(std::max(0.7f, std::min(3.f, vel * 0.35f)));
+		mud_cont.SetPosition(engPos[0], engPos[1], engPos[2]);
+	}
+	{
+		float vel = !mud && whH_all > 0.1f && whH_all < 3.9f ?
+			dynVel / 30.f : 0.f;
+		water_cont.SetGain(std::min(1.f, vel * 1.5f) * pSet->vol_env);
+		water_cont.SetPitch(std::max(0.7f, std::min(1.3f, vel)));
+		water_cont.SetPosition(engPos[0], engPos[1], engPos[2]);
+	}
+	
+	//update boost sound
+	{
+		float gain = dynamics.boostVal;
+		boostsnd.SetGain(gain * 0.57f * pSet->vol_engine);
+		boostsnd.SetPosition(engPos[0], engPos[1], engPos[2]); //back?-
+	}
+	
 	//update crash sound
 	#if 0
 	if (dynamics.bHitSnd)// && dynamics.sndHitN >= 0)
@@ -744,7 +878,6 @@ void CAR::UpdateSounds(float dt)
 		}
 	}
 	//#endif
-
 
 	//  time played
 	for (int i=0; i < Ncrashsounds; ++i)
@@ -827,6 +960,8 @@ void CAR::ResetPos(bool fromStart)
 	dynamics.chassis->setAngularVelocity(btVector3(0,0,0));
 
 	dynamics.SynchronizeBody();  // set body from chassis
+	if (fromStart)  // restore boost fuel
+		dynamics.boostFuel = gfBoostFuelStart;
 
 	//  engine, wheels
 	dynamics.engine.SetInitialConditions();
@@ -836,6 +971,7 @@ void CAR::ResetPos(bool fromStart)
 		dynamics.wheel[w].SetAngularVelocity(0);
 		//dynamics.wheel_velocity[w] = zero;
 	}
+	crashdetection.Update(0.f, 0.1f);  //prevent car hit sound
 
 	//dynamics.SynchronizeChassis();
 	dynamics.UpdateWheelContacts();

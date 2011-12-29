@@ -9,6 +9,15 @@ exhaust-y = 0.45
 exhaust-z = -0.42
 exhaust-mirror-second = 0
 
+[ collision ]
+manual = 1
+radius = 0.39
+width = 0.52
+height = 0.45
+offsetL = -0.04
+offsetW = -0.03
+offsetH = 0.727
+
 [ engine ]
 position = 1.42, 0.0, -0.44
 mass = 80.0
@@ -218,8 +227,8 @@ handbrake = 1.0
 [ driver ]
 position = 0, 0.37, -0.03
 mass = 90.0
-view-position = -0.02, 0.37, 0.35
-hood-mounted-view-position = 0.88, 0, 0.21
+view-position = -0.3, -0.4, 0.4
+hood-mounted-view-position = 0, 0.8, 0.3
 
 [ drag ]
 position = 0.0, 0.0, 0.2

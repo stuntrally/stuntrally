@@ -12,7 +12,7 @@
 #include "CarReflection.h"
 #include "../road/Road.h"
 #include "common/RenderConst.h"
-#include "common/MaterialFactory.h"
+#include "common/MaterialGen/MaterialFactory.h"
 
 #include "boost/filesystem.hpp"
 #define  FileExists(s)  boost::filesystem::exists(s)
@@ -34,16 +34,19 @@ CarModel::CarModel(unsigned int index, eCarType type, const std::string name,
 	Ogre::SceneManager* sceneMgr, SETTINGS* set, GAME* game, Scene* s, Ogre::Camera* cam, App* app) :
 	fCam(0), pMainNode(0), pCar(0), terrain(0), resCar(""), mCamera(0), pReflect(0), pApp(app), color(1,0,0),
 	bLightMapEnabled(true), bBraking(false),
-	iCamNextOld(0), bLastChkOld(0), bWrongChk(0)
+	iCamNextOld(0), bLastChkOld(0), bWrongChk(0), angCarY(0)
 {
-	iIndex = index;  sDirname = name;  pSceneMgr = sceneMgr;
+	iIndex = index;  sDirname = name;  mSceneMgr = sceneMgr;
 	pSet = set;  pGame = game;  sc = s;  mCamera = cam;  eType = type;
 	bGetStPos = true;  fChkTime = 0.f;  iChkWrong = -1;  iWonPlace = 0;
 	iCurChk = -1;  iNumChks = 0;  //ResetChecks();  // road isnt yet
+
+	if (type == CT_GHOST)		sDispName = "Ghost";
+	else if (type == CT_LOCAL)	sDispName = "Player"+toStr(iIndex+1);
 	
 	if (type != CT_GHOST)  // ghost has pCar, dont create
 	{
-		int i = set->car_collis ? iIndex : 0;  //  offset car start pos when cars collide
+		int i = set->collis_cars ? iIndex : 0;  //  offset car start pos when cars collide
 		MATHVECTOR<float, 3> pos(0,10,0);
 		QUATERNION<float> rot;
 		pos = pGame->track.GetStart(i).first;
@@ -60,6 +63,7 @@ CarModel::CarModel(unsigned int index, eCarType type, const std::string name,
 	{	ps[w] = 0;  pm[w] = 0;  pd[w] = 0;
 		pflW[w] = 0;  pflM[w] = 0;  pflMs[w] = 0;
 		ndWh[w] = 0;  ndWhE[w] = 0; whTrl[w] = 0;
+		ndBrake[w] = 0;
 		wht[w] = 0.f;  whTerMtr[w] = 0;  whRoadMtr[w] = 0;  }
 	for (int i=0; i < 2; i++)
 		pb[i] = 0;
@@ -71,7 +75,7 @@ CarModel::~CarModel()
 	delete pReflect;  pReflect = 0;
 	
 	delete fCam;  fCam = 0;
-	pSceneMgr->destroyCamera("CarCamera" + toStr(iIndex));
+	mSceneMgr->destroyCamera("CarCamera" + toStr(iIndex));
 	
 	//  hide trails
 	for (int w=0; w<4; ++w)  if (whTrl[w])  {	wht[w] = 0.f;
@@ -83,17 +87,19 @@ CarModel::~CarModel()
 	
 	// Destroy par sys
 	for (int w=0; w < 4; w++)  {
-		if (ps[w]) {  pSceneMgr->destroyParticleSystem(ps[w]);   ps[w]=0;  }
-		if (pm[w]) {  pSceneMgr->destroyParticleSystem(pm[w]);   pm[w]=0;  }
-		if (pd[w]) {  pSceneMgr->destroyParticleSystem(pd[w]);   pd[w]=0;  }
-		if (pflW[w]) {  pSceneMgr->destroyParticleSystem(pflW[w]);   pflW[w]=0;  }
-		if (pflM[w]) {  pSceneMgr->destroyParticleSystem(pflM[w]);   pflM[w]=0;  }
-		if (pflMs[w]) {  pSceneMgr->destroyParticleSystem(pflMs[w]);   pflMs[w]=0;  }  }
+		if (ps[w]) {  mSceneMgr->destroyParticleSystem(ps[w]);   ps[w]=0;  }
+		if (pm[w]) {  mSceneMgr->destroyParticleSystem(pm[w]);   pm[w]=0;  }
+		if (pd[w]) {  mSceneMgr->destroyParticleSystem(pd[w]);   pd[w]=0;  }
+		if (pflW[w]) {  mSceneMgr->destroyParticleSystem(pflW[w]);   pflW[w]=0;  }
+		if (pflM[w]) {  mSceneMgr->destroyParticleSystem(pflM[w]);   pflM[w]=0;  }
+		if (pflMs[w]) {  mSceneMgr->destroyParticleSystem(pflMs[w]);   pflMs[w]=0;  }  
+		if (ndBrake[w]) mSceneMgr->destroySceneNode(ndBrake[w]);
+	}
 	for (int i=0; i < 2; i++)
-		if (pb[i]) {  pSceneMgr->destroyParticleSystem(pb[i]);   pb[i]=0;  }
-	if (ph)  {  pSceneMgr->destroyParticleSystem(ph);   ph=0;  }
+		if (pb[i]) {  mSceneMgr->destroyParticleSystem(pb[i]);   pb[i]=0;  }
+	if (ph)  {  mSceneMgr->destroyParticleSystem(ph);   ph=0;  }
 						
-	if (pMainNode) pSceneMgr->destroySceneNode(pMainNode);
+	if (pMainNode) mSceneMgr->destroySceneNode(pMainNode);
 	
 	// Destroy resource group, will also destroy all resources in it
 	if (Ogre::ResourceGroupManager::getSingleton().resourceGroupExists("Car" + toStr(iIndex)))
@@ -129,6 +135,10 @@ void CarModel::Update(PosInfo& posInfo, float time)
 	//  car pos and rot
 	pMainNode->setPosition(posInfo.pos);
 	pMainNode->setOrientation(posInfo.rot);
+
+	//  upd rotY for minimap
+	Quaternion q = posInfo.rot * Quaternion(Degree(90),Vector3(0,1,0));
+	angCarY = q.getYaw().valueDegrees() + 90.f;
 	
 	//  brake state
 	//  trigger when any wheel is braking
@@ -203,6 +213,7 @@ void CarModel::Update(PosInfo& posInfo, float time)
 	}
 	
 	//  wheels  ------------------------------------------------------------------------
+	float whMudSpin = 0.f;
 	for (int w=0; w < 4; w++)
 	{
 		float wR = posInfo.whR[w];
@@ -298,19 +309,19 @@ void CarModel::Update(PosInfo& posInfo, float time)
 			}
 			if (pflM[w])  //  Mud ^
 			{
-				float vel = Math::Abs(pCar->dynamics.wheel[w].GetAngularVelocity());
+				float vel = Math::Abs(cd.wheel[w].GetAngularVelocity());
 				bool e = idPar == 2 &&  vel > 30.f;
-				float emitM = e ?  cd.whH[w] * std::min(80.f, 1.5f * vel)  : 0.f;
+				float emitM = e ?  cd.whH[w] * std::min(80.f, 1.5f * vel)  : 0.f;  whMudSpin += emitM / 80.f;
 				ParticleEmitter* pe = pflM[w]->getEmitter(0);
 				pe->setPosition(vpos + posInfo.carY * wR*0.51f);
 				pe->setDirection(-posInfo.carY);	pe->setEmissionRate(emitM * pSet->particles_len);
 			}
 			if (pflMs[w])  //  Mud soft ^
 			{
-				float vel = Math::Abs(pCar->dynamics.wheel[w].GetAngularVelocity());
+				float vel = Math::Abs(cd.wheel[w].GetAngularVelocity());
 				
 				bool e = idPar == 1 &&  vel > 30.f;
-				float emitM = e ?  cd.whH[w] * std::min(160.f, 3.f * vel)  : 0.f;
+				float emitM = e ?  cd.whH[w] * std::min(160.f, 3.f * vel)  : 0.f;  whMudSpin += emitM / 80.f;
 				ParticleEmitter* pe = pflMs[w]->getEmitter(0);
 				pe->setPosition(vpos + posInfo.carY * wR*0.51f);
 				pe->setDirection(-posInfo.carY);	pe->setEmissionRate(emitM * pSet->particles_len);
@@ -332,12 +343,39 @@ void CarModel::Update(PosInfo& posInfo, float time)
 				lay.tclr.r,lay.tclr.g,lay.tclr.b, lay.tclr.a * al/**/);
 		}
 	}
+	//pCar->whMudSpin = whMudSpin;  // for snd, move to posInfo..
+	pCar->whMudSpin += (whMudSpin - pCar->whMudSpin)*0.3f;  //_every 2nd val=0 why?
+	//LogO(toStr(pCar->whMudSpin));
 
 	// Reflection
 	pReflect->camPosition = pMainNode->getPosition();
 	
 	// blendmaps
 	UpdWhTerMtr();
+	
+	//  update brake meshes orientation
+	for (int i=0; i<4; ++i)
+	{
+		if (ndBrake[i])
+		{
+			ndBrake[i]->_setDerivedOrientation( pMainNode->getOrientation() );
+			
+			// this transformation code is just so the brake mesh can have the same alignment as the wheel mesh
+			ndBrake[i]->yaw(Ogre::Degree(-90), Node::TS_LOCAL);
+			if (i%2 == 1)
+				ndBrake[i]->setScale(-1, 1, 1);
+				
+			ndBrake[i]->pitch(Ogre::Degree(180), Node::TS_LOCAL);
+			
+			if (i==0 || i==1) // turn only front wheels
+			{
+				if (eType != CT_GHOST)
+					ndBrake[i]->yaw(-Degree(pCar->dynamics.wheel[i].GetSteerAngle()));
+				else 
+					ndBrake[i]->yaw(-Degree(pApp->ghostFrame.steer * pCar->dynamics.GetMaxSteeringAngle()));
+			}
+		}
+	}
 	
 	UpdateKeys();
 }
@@ -399,13 +437,13 @@ void CarModel::Create(int car)
 	//  Resource locations -----------------------------------------
 	/// Add a resource group for this car
 	Ogre::ResourceGroupManager::getSingleton().createResourceGroup("Car" + strI);
-	Ogre::Root::getSingletonPtr()->addResourceLocation(PATHMANAGER::GetCacheDir(), "FileSystem");
 	resCar = PATHMANAGER::GetCarPath() + "/" + sDirname + "/textures";
-	Ogre::Root::getSingletonPtr()->addResourceLocation(resCar, "FileSystem", "Car" + strI);
+	Ogre::Root::getSingletonPtr()->addResourceLocation(PATHMANAGER::GetCarPath() + "/" + sDirname, "FileSystem", "Car" + strI);
+	Ogre::Root::getSingletonPtr()->addResourceLocation(PATHMANAGER::GetCarPath() + "/" + sDirname + "/textures", "FileSystem", "Car" + strI);
 	
 	String sCar = resCar + "/" + sDirname;
 	
-	pMainNode = pSceneMgr->getRootSceneNode()->createChildSceneNode();
+	pMainNode = mSceneMgr->getRootSceneNode()->createChildSceneNode();
 
 	//  --------  Follow Camera  --------
 	if (mCamera)
@@ -413,6 +451,21 @@ void CarModel::Create(int car)
 		fCam = new FollowCamera(mCamera);
 		fCam->mGoalNode = pMainNode;
 		fCam->loadCameras();
+		
+		//  set in-car camera position to driver position
+		Ogre::Vector3 driver_view_position = Vector3(pCar->driver_view_position[0], pCar->driver_view_position[2], -pCar->driver_view_position[1]);
+		
+		Ogre::Vector3 hood_view_position = Vector3(pCar->hood_view_position[0], pCar->hood_view_position[2], -pCar->hood_view_position[1]);
+		
+		for (std::vector<CameraAngle*>::iterator it=fCam->mCameraAngles.begin();
+			it!=fCam->mCameraAngles.end(); ++it)
+		{
+			if ( (*it)->mName == "Car driver" )
+				(*it)->mOffset = driver_view_position;
+				
+			if ( (*it)->mName == "Car bonnet" )
+				(*it)->mOffset = hood_view_position;
+		}
 	}
 	
 	RecreateMaterials();
@@ -424,21 +477,23 @@ void CarModel::Create(int car)
 	//vis flags:  2 not rendered in reflections  16 off by in-car camera
 	SceneNode* ncart = pMainNode->createChildSceneNode();
 	
-	//  body  ----------------------
 	Ogre::Vector3 vPofs(0,0,0);
 	AxisAlignedBox bodyBox;  Ogre::uint8 g = RQG_CarGhost;
+	
+	//  body  ----------------------
 
 	sCar = resCar + "/" + sDirname;
-	if (FileExists(sCar + "_body.mesh"))
+	String sCar2 = PATHMANAGER::GetCarPath() + "/" + sDirname + "/" + sDirname;
+	if (FileExists(sCar2 + "_body.mesh"))
 	{
-		Entity* eCar = pSceneMgr->createEntity("Car"+ strI, sDirname + "_" + "body.mesh", "Car" + strI);
+		Entity* eCar = mSceneMgr->createEntity("Car"+ strI, sDirname + "_" + "body.mesh", "Car" + strI);
 
 		//eCar->setCastShadows(false);
 		bodyBox = eCar->getBoundingBox();
 		if (ghost)  {  eCar->setRenderQueueGroup(g);  eCar->setCastShadows(false);  }
 		ncart->attachObject(eCar);  eCar->setVisibilityFlags(RV_Car);
 	}else{
-		ManualObject* mCar = CreateModel(pSceneMgr, sMtr[Mtr_CarBody], &pCar->bodymodel.mesh, vPofs, false, false, "Car"+strI);
+		ManualObject* mCar = CreateModel(mSceneMgr, sMtr[Mtr_CarBody], &pCar->bodymodel.mesh, vPofs, false, false, "Car"+strI);
 		bodyBox = mCar->getBoundingBox();
 		if (mCar){	if (ghost)  {  mCar->setRenderQueueGroup(g);  mCar->setCastShadows(false);  }
 			ncart->attachObject(mCar);  mCar->setVisibilityFlags(RV_Car);  }
@@ -448,14 +503,14 @@ void CarModel::Create(int car)
 	vPofs = Vector3(pCar->vInteriorOffset[0],pCar->vInteriorOffset[1],pCar->vInteriorOffset[2]);  //x+ back y+ down z+ right
 
 	if (!ghost)
-	if (FileExists(sCar + "_interior.mesh"))
+	if (FileExists(sCar2 + "_interior.mesh"))
 	{
-		Entity* eInter = pSceneMgr->createEntity("Car.interior"+ strI, sDirname + "_" + "interior.mesh", "Car" + strI);
+		Entity* eInter = mSceneMgr->createEntity("Car.interior"+ strI, sDirname + "_" + "interior.mesh", "Car" + strI);
 		//eInter->setCastShadows(false);
 		if (ghost)  {  eInter->setRenderQueueGroup(g);  eInter->setCastShadows(false);  }
 		ncart->attachObject(eInter);  eInter->setVisibilityFlags(RV_Car);
 	}else{
-		ManualObject* mInter = CreateModel(pSceneMgr, sMtr[Mtr_CarInterior],&pCar->interiormodel.mesh, vPofs, false, false, "Car.interior"+strI);
+		ManualObject* mInter = CreateModel(mSceneMgr, sMtr[Mtr_CarInterior],&pCar->interiormodel.mesh, vPofs, false, false, "Car.interior"+strI);
 		//mInter->setCastShadows(false);
 		if (mInter){  if (ghost)  {  mInter->setRenderQueueGroup(g);  mInter->setCastShadows(false);  }
 			ncart->attachObject(mInter);  mInter->setVisibilityFlags(RV_Car);  }
@@ -464,14 +519,14 @@ void CarModel::Create(int car)
 	//  glass  ----------------------
 	vPofs = Vector3(0,0,0);
 
-	if (FileExists(sCar + "_glass.mesh"))
+	if (FileExists(sCar2 + "_glass.mesh"))
 	{
-		Entity* eGlass = pSceneMgr->createEntity("Car.glass"+ strI, sDirname + "_" + "glass.mesh", "Car" + strI);
+		Entity* eGlass = mSceneMgr->createEntity("Car.glass"+ strI, sDirname + "_" + "glass.mesh", "Car" + strI);
 		if (ghost)  {  eGlass->setRenderQueueGroup(g);  eGlass->setCastShadows(false);  }  else
 			eGlass->setRenderQueueGroup(RQG_CarGlass);  eGlass->setVisibilityFlags(RV_CarGlass);
 		ncart->attachObject(eGlass);
 	}else{
-		ManualObject* mGlass = CreateModel(pSceneMgr, sMtr[Mtr_CarGlass], &pCar->glassmodel.mesh, vPofs, false, false, "Car.glass"+strI);
+		ManualObject* mGlass = CreateModel(mSceneMgr, sMtr[Mtr_CarGlass], &pCar->glassmodel.mesh, vPofs, false, false, "Car.glass"+strI);
 		if (mGlass){  mGlass->setRenderQueueGroup(ghost ? g : RQG_CarGlass);  if (ghost)  mGlass->setCastShadows(false);
 			ncart->attachObject(mGlass);  mGlass->setVisibilityFlags(RV_CarGlass);  }
 	}
@@ -487,35 +542,45 @@ void CarModel::Create(int car)
 	{
 		// only 1 mesh for both?
 		String siw = "Wheel"+ strI + "_" +toStr(w);
-		if (FileExists(sCar + "_wheel.mesh"))
+		if (FileExists(sCar2 + "_wheel.mesh"))
 		{
-			Entity* eWh = pSceneMgr->createEntity(siw, sDirname + "_wheel.mesh", "Car" + strI);
+			Entity* eWh = mSceneMgr->createEntity(siw, sDirname + "_wheel.mesh", "Car" + strI);
 			if (ghost)  {  eWh->setRenderQueueGroup(g);  eWh->setCastShadows(false);  }
-			ndWh[w] = pSceneMgr->getRootSceneNode()->createChildSceneNode();
+			ndWh[w] = mSceneMgr->getRootSceneNode()->createChildSceneNode();
 			ndWh[w]->attachObject(eWh);  eWh->setVisibilityFlags(RV_Car);
 		}else{
-			if (w < 2 && FileExists(sCar + "_wheel_front.mesh"))
+			if (w < 2 && FileExists(sCar2 + "_wheel_front.mesh"))
 			{
-				Entity* eWh = pSceneMgr->createEntity(siw, sDirname + "_" + "wheel_front.mesh", "Car" + strI);
+				Entity* eWh = mSceneMgr->createEntity(siw, sDirname + "_" + "wheel_front.mesh", "Car" + strI);
 				if (ghost)  {  eWh->setRenderQueueGroup(g);  eWh->setCastShadows(false);  }
-				ndWh[w] = pSceneMgr->getRootSceneNode()->createChildSceneNode();
+				ndWh[w] = mSceneMgr->getRootSceneNode()->createChildSceneNode();
 				ndWh[w]->attachObject(eWh);  eWh->setVisibilityFlags(RV_Car);
 			}else
-			if (FileExists(sCar + "_wheel_rear.mesh"))
+			if (FileExists(sCar2 + "_wheel_rear.mesh"))
 			{
-				Entity* eWh = pSceneMgr->createEntity(siw, sDirname + "_" + "wheel_rear.mesh", "Car" + strI);
+				Entity* eWh = mSceneMgr->createEntity(siw, sDirname + "_" + "wheel_rear.mesh", "Car" + strI);
 				if (ghost)  {  eWh->setRenderQueueGroup(g);  eWh->setCastShadows(false);  }
-				ndWh[w] = pSceneMgr->getRootSceneNode()->createChildSceneNode();
+				ndWh[w] = mSceneMgr->getRootSceneNode()->createChildSceneNode();
 				ndWh[w]->attachObject(eWh);  eWh->setVisibilityFlags(RV_Car);
 			}else{
 				ManualObject* mWh;
-				if (w < 2)	mWh = CreateModel(pSceneMgr, sMtr[Mtr_CarTireFront], &pCar->wheelmodelfront.mesh, vPofs, true, false, siw);
-				else		mWh = CreateModel(pSceneMgr, sMtr[Mtr_CarTireRear],  &pCar->wheelmodelrear.mesh, vPofs, true, false, siw);
+				if (w < 2)	mWh = CreateModel(mSceneMgr, sMtr[Mtr_CarTireFront], &pCar->wheelmodelfront.mesh, vPofs, true, false, siw);
+				else		mWh = CreateModel(mSceneMgr, sMtr[Mtr_CarTireRear],  &pCar->wheelmodelrear.mesh, vPofs, true, false, siw);
 				if (mWh)  {
 				if (ghost)  {  mWh->setRenderQueueGroup(g);  mWh->setCastShadows(false);  }
-				ndWh[w] = pSceneMgr->getRootSceneNode()->createChildSceneNode();
+				ndWh[w] = mSceneMgr->getRootSceneNode()->createChildSceneNode();
 				ndWh[w]->attachObject(mWh);  mWh->setVisibilityFlags(RV_Car);  }
 			}
+		}
+		
+		// brake mesh.. only on rear wheels
+		//! todo: add a param to car file to control which wheels have brakes
+		if (FileExists(sCar2 + "_brake.mesh"))
+		{
+			Entity* eBrake = mSceneMgr->createEntity(siw + "_brake", sDirname + "_brake.mesh", "Car" + strI);
+			if (ghost)  {  eBrake->setRenderQueueGroup(g);  eBrake->setCastShadows(false);  }
+			ndBrake[w] = ndWh[w]->createChildSceneNode();
+			ndBrake[w]->attachObject(eBrake);
 		}
 	}
 
@@ -523,8 +588,8 @@ void CarModel::Create(int car)
 	///  world hit sparks  ------------------------
 	//if (!ghost)//-
 	if (!ph)  {
-		ph = pSceneMgr->createParticleSystem("Hit"+strI, "Sparks");
-		pSceneMgr->getRootSceneNode()->createChildSceneNode()->attachObject(ph);
+		ph = mSceneMgr->createParticleSystem("Hit"+strI, "Sparks");
+		mSceneMgr->getRootSceneNode()->createChildSceneNode()->attachObject(ph);
 		ph->getEmitter(0)->setEmissionRate(0);  }
 
 	///  boost emitters  ------------------------
@@ -532,13 +597,13 @@ void CarModel::Create(int car)
 	{
 		String si = strI + "_" +toStr(i);
 		if (!pb[i])  {
-			pb[i] = pSceneMgr->createParticleSystem("Boost"+si, "Boost");
-			if (1/*!pCar->manualExhaustPos*/)
+			pb[i] = mSceneMgr->createParticleSystem("Boost"+si, "Boost");
+			if (!pSet->boostFromExhaust || !pCar->manualExhaustPos)
 			{
 				// no exhaust pos in car file, guess from bounding box
 				Vector3 bsize = (bodyBox.getMaximum() - bodyBox.getMinimum())*0.5,
 					bcenter = bodyBox.getMaximum() + bodyBox.getMinimum();
-				LogO("Car body bbox :  size " + toStr(bsize) + ",  center " + toStr(bcenter));
+				//LogO("Car body bbox :  size " + toStr(bsize) + ",  center " + toStr(bcenter));
 				SceneNode* nb = pMainNode->createChildSceneNode(bcenter+
 					Vector3(bsize.x * 0.97, bsize.y * 0.65, bsize.z * 0.65 * (i==0 ? 1 : -1) ));
 					//Vector3(1.9 /*back*/, 0.1 /*up*/, 0.6 * (i==0 ? 1 : -1)/*sides*/ ));
@@ -566,37 +631,37 @@ void CarModel::Create(int car)
 	{
 		String siw = strI + "_" +toStr(w);
 		if (!ps[w])  {
-			ps[w] = pSceneMgr->createParticleSystem("Smoke"+siw, sc->sParSmoke);
-			pSceneMgr->getRootSceneNode()->createChildSceneNode()->attachObject(ps[w]);		ps[w]->getEmitter(0)->setEmissionRate(0);  }
+			ps[w] = mSceneMgr->createParticleSystem("Smoke"+siw, sc->sParSmoke);
+			mSceneMgr->getRootSceneNode()->createChildSceneNode()->attachObject(ps[w]);		ps[w]->getEmitter(0)->setEmissionRate(0);  }
 		if (!pm[w])  {
-			pm[w] = pSceneMgr->createParticleSystem("Mud"+siw, sc->sParMud);
-			pSceneMgr->getRootSceneNode()->createChildSceneNode()->attachObject(pm[w]);		pm[w]->getEmitter(0)->setEmissionRate(0);  }
+			pm[w] = mSceneMgr->createParticleSystem("Mud"+siw, sc->sParMud);
+			mSceneMgr->getRootSceneNode()->createChildSceneNode()->attachObject(pm[w]);		pm[w]->getEmitter(0)->setEmissionRate(0);  }
 		if (!pd[w])  {
-			pd[w] = pSceneMgr->createParticleSystem("Dust"+siw, sc->sParDust);
-			pSceneMgr->getRootSceneNode()->createChildSceneNode()->attachObject(pd[w]);		pd[w]->getEmitter(0)->setEmissionRate(0);  }
+			pd[w] = mSceneMgr->createParticleSystem("Dust"+siw, sc->sParDust);
+			mSceneMgr->getRootSceneNode()->createChildSceneNode()->attachObject(pd[w]);		pd[w]->getEmitter(0)->setEmissionRate(0);  }
 
 		if (!pflW[w])  {
-			pflW[w] = pSceneMgr->createParticleSystem("FlWater"+siw, "FluidWater");
-			pSceneMgr->getRootSceneNode()->createChildSceneNode()->attachObject(pflW[w]);	pflW[w]->getEmitter(0)->setEmissionRate(0);  }
+			pflW[w] = mSceneMgr->createParticleSystem("FlWater"+siw, "FluidWater");
+			mSceneMgr->getRootSceneNode()->createChildSceneNode()->attachObject(pflW[w]);	pflW[w]->getEmitter(0)->setEmissionRate(0);  }
 		if (!pflM[w])  {
-			pflM[w] = pSceneMgr->createParticleSystem("FlMud"+siw, "FluidMud");
-			pSceneMgr->getRootSceneNode()->createChildSceneNode()->attachObject(pflM[w]);	pflM[w]->getEmitter(0)->setEmissionRate(0);  }
+			pflM[w] = mSceneMgr->createParticleSystem("FlMud"+siw, "FluidMud");
+			mSceneMgr->getRootSceneNode()->createChildSceneNode()->attachObject(pflM[w]);	pflM[w]->getEmitter(0)->setEmissionRate(0);  }
 		if (!pflMs[w])  {
-			pflMs[w] = pSceneMgr->createParticleSystem("FlMudS"+siw, "FluidMudSoft");
-			pSceneMgr->getRootSceneNode()->createChildSceneNode()->attachObject(pflMs[w]);	pflMs[w]->getEmitter(0)->setEmissionRate(0);  }
+			pflMs[w] = mSceneMgr->createParticleSystem("FlMudS"+siw, "FluidMudSoft");
+			mSceneMgr->getRootSceneNode()->createChildSceneNode()->attachObject(pflMs[w]);	pflMs[w]->getEmitter(0)->setEmissionRate(0);  }
 
 		//  trails
 		if (!ndWhE[w])
-			ndWhE[w] = pSceneMgr->getRootSceneNode()->createChildSceneNode();
+			ndWhE[w] = mSceneMgr->getRootSceneNode()->createChildSceneNode();
 
 		if (!whTrl[w])  {
 			NameValuePairList params;
 			params["numberOfChains"] = "1";
 			params["maxElements"] = toStr(320 * pSet->trails_len);  //80
 
-			whTrl[w] = (RibbonTrail*)pSceneMgr->createMovableObject("RibbonTrail", &params);
+			whTrl[w] = (RibbonTrail*)mSceneMgr->createMovableObject("RibbonTrail", &params);
 			whTrl[w]->setInitialColour(0, 0.1,0.1,0.1, 0);
-			pSceneMgr->getRootSceneNode()->attachObject(whTrl[w]);
+			mSceneMgr->getRootSceneNode()->attachObject(whTrl[w]);
 			whTrl[w]->setMaterialName("TireTrail");
 			whTrl[w]->setCastShadows(false);
 			whTrl[w]->addNode(ndWhE[w]);
@@ -709,9 +774,7 @@ void CarModel::RecreateMaterials()
 			Ogre::MaterialManager::getSingleton().remove(sMtr[i] + strI);
 		mat->clone(sMtr[i] + strI, false);
 		sMtr[i] = sMtr[i] + strI;
-		// Change color here - cache has to be created before loading model
-		ChangeClr(iIndex);
-
+		
 		//LogO(" === New car mtr name: " + sMtr[i]);
 	}
 	
@@ -742,23 +805,12 @@ void CarModel::RecreateMaterials()
 							tus->setTextureName("wheel.png");
 						}
 						
-						if (tus->getTextureName() == "body_light.png")
-						{
-							tus->setTextureName(sCar + "_body00_red.png");
-						}
-						else if (tus->getTextureName() == "body_blend.png")
-						{
-							tus->setTextureName(sCar + "_body00_add.png");
-						}
-						else
-						{
-							if (!(StringUtil::startsWith(tus->getTextureName(), "ReflectionCube") ||
-								tus->getTextureName() == "ReflectionCube" ||
-								StringUtil::startsWith(tus->getName(), "shadowmap") ||
-								StringUtil::startsWith(tus->getName(), "terrainlightmap") ||
-								StringUtil::startsWith(tus->getTextureName(), "flat_n")))
-							tus->setTextureName(sDirname + "_" + tus->getTextureName());
-						}
+						if (!(StringUtil::startsWith(tus->getTextureName(), "ReflectionCube") ||
+							tus->getTextureName() == "ReflectionCube" ||
+							StringUtil::startsWith(tus->getName(), "shadowmap") ||
+							StringUtil::startsWith(tus->getName(), "terrainlightmap") ||
+							StringUtil::startsWith(tus->getTextureName(), "flat_n")))
+						tus->setTextureName(sDirname + "_" + tus->getTextureName());
 		}	}	}	}
 		if (pSet->shadow_type == 3)
 		{
@@ -769,37 +821,42 @@ void CarModel::RecreateMaterials()
 			MaterialFactory::getSingleton().terrainLightMapMtrs.push_back(mtr->getName());
 		}
 	}
+	
+	ChangeClr(iIndex);
 }
 
 void CarModel::setMtrName(const String& entName, const String& mtrName)
 {
 	Ogre::Entity* ent; Ogre::ManualObject* manual;
 
-	if (pSceneMgr->hasEntity(entName))
+	if (mSceneMgr->hasEntity(entName))
 	{
-		pSceneMgr->getEntity(entName)->setMaterialName(mtrName);
+		mSceneMgr->getEntity(entName)->setMaterialName(mtrName);
 	}
-	else if (pSceneMgr->hasManualObject(entName))
+	else if (mSceneMgr->hasManualObject(entName))
 	{
-		pSceneMgr->getManualObject(entName)->setMaterialName(0, mtrName);
+		mSceneMgr->getManualObject(entName)->setMaterialName(0, mtrName);
 	}
 }
 
 void CarModel::setMtrNames()
 {
 	if (FileExists(resCar + "/" + sDirname + "_body00_add.png")
-	 && FileExists(resCar + "/" + sDirname + "_body00_red.png"))
+	 || FileExists(resCar + "/" + sDirname + "_body00_red.png"))
 		setMtrName("Car"+toStr(iIndex), sMtr[Mtr_CarBody]);
 	setMtrName("Car.interior"+toStr(iIndex), sMtr[Mtr_CarInterior]);
 	setMtrName("Car.glass"+toStr(iIndex), sMtr[Mtr_CarGlass]);
 	for (int w=0; w<4; ++w)
+	{
 		setMtrName("Wheel"+toStr(iIndex)+"_"+toStr(w), w < 2 ? sMtr[Mtr_CarTireFront] : sMtr[Mtr_CarTireRear]);
+		setMtrName("Wheel"+toStr(iIndex)+"_"+toStr(w)+"_brake", w < 2 ? sMtr[Mtr_CarTireFront] : sMtr[Mtr_CarTireRear]);
+	}
 }
 
 //  ----------------- Reflection ------------------------
 void CarModel::CreateReflection()
 {
-	pReflect = new CarReflection(pSet, pSceneMgr, iIndex);
+	pReflect = new CarReflection(pSet, mSceneMgr, iIndex);
 	for (int i=0; i<NumMaterials; i++)
 		pReflect->sMtr[i] = sMtr[i];
 

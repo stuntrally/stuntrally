@@ -21,11 +21,13 @@ CARDYNAMICS::CARDYNAMICS() :
 	abs(false), tcs(false),
 	maxangle(45.0),
 	bTerrain(false), pSet(0), pScene(0),
-	doBoost(0), doFlip(0), fHitTime(0), fParIntens(0), bHitSnd(0)
+	doBoost(0), doFlip(0), boostVal(0),
+	fHitTime(0), fParIntens(0), bHitSnd(0)
 {
 	for (int i=0; i<4; ++i)
 	{	bWhOnRoad[i]=0;
 		terSurf[i]=0;  }
+	boostFuel = gfBoostFuelStart;
 
 	suspension.resize ( WHEEL_POSITION_SIZE );
 	wheel.resize ( WHEEL_POSITION_SIZE );
@@ -678,33 +680,40 @@ void CARDYNAMICS::Init(
 		tr.setOrigin(origin + btVector3(0,0,0.2));
 		chassisShape->addChildShape(tr, hull);
 	#else
-	///  from car.xml ....
-		// y| x- z^h
-		//btScalar h = size.getX()*0.3, r = size.getZ()*0.4, zh = 0.3;
-		btScalar h = size.getX()*0.4, r = size.getZ()*0.3, zh = 0.45;  //0.4 CT  0.5 3S -r*0.2;  h 1.33  r 0.4
+	/// todo: all spheres? from car.xml / all params..
+		// y| length  x- width  z^ height
+		btScalar w = size.getX()*0.2, r = size.getZ()*0.3, h = 0.45;
 
 		///  spheres
-		btScalar h0 = 0.f;
+		btScalar l0 = 0.f, w0 = 0.f, h0 = 0.f;
 		if (coll_manual)  // define collision manually
 		{
-			r = coll_R;  h0 = coll_Hofs;
+			if (coll_R > 0.f)  r = coll_R;  l0 = coll_Lofs;
+			if (coll_W > 0.f)  w = coll_W;  w0 = coll_Wofs;
+			if (coll_H > 0.f)  h = coll_H;	h0 = coll_Hofs;
+			origin = btVector3(l0, w0, h0);
 		}
-		const int numSph = 14;  h *= 0.5f;  int i = 0;
+		//LogO("Car shape dims:  r="+toStr(r)+"  w="+toStr(w)+"  h="+toStr(h)+"  h0="+toStr(h0));
+		//LogO("Car offset:  x="+toStr(origin.x())+"  y="+toStr(origin.y())+"  z="+toStr(origin.z()));
+
+		const int numSph = 14;  int i = 0;
 		btScalar rad[numSph];  btVector3 pos[numSph];
-		pos[i] = origin + btVector3( 1.8,-h,h0 + -zh);  rad[i] = r*0.6;  ++i;  // front
-		pos[i] = origin + btVector3( 1.8, h,h0 + -zh);  rad[i] = r*0.6;  ++i;
-		pos[i] = origin + btVector3( 0.9,-h,h0 + -zh);  rad[i] = r;  ++i;	// front near
-		pos[i] = origin + btVector3( 0.9, h,h0 + -zh);  rad[i] = r;  ++i;
-		pos[i] = origin + btVector3(-0.9,-h,h0 + -zh);  rad[i] = r;  ++i;	// rear near
-		pos[i] = origin + btVector3(-0.9, h,h0 + -zh);  rad[i] = r;  ++i;
-		pos[i] = origin + btVector3(-1.9,-h,h0 + -zh);  rad[i] = r*0.6;  ++i;  // rear
-		pos[i] = origin + btVector3(-1.9, h,h0 + -zh);  rad[i] = r*0.6;  ++i;
-		pos[i] = origin + btVector3( 0.4,-h*0.8,h0 + zh*0.2);  rad[i] = r*0.6;  ++i;  // top
-		pos[i] = origin + btVector3( 0.4, h*0.8,h0 + zh*0.2);  rad[i] = r*0.6;  ++i;
-		pos[i] = origin + btVector3(-0.3,-h*0.8,h0 + zh*0.4);  rad[i] = r*0.6;  ++i;
-		pos[i] = origin + btVector3(-0.3, h*0.8,h0 + zh*0.4);  rad[i] = r*0.6;  ++i;
-		pos[i] = origin + btVector3(-1.1,-h*0.8,h0 + zh*0.2);  rad[i] = r*0.6;  ++i;  // top rear
-		pos[i] = origin + btVector3(-1.1, h*0.8,h0 + zh*0.2);  rad[i] = r*0.6;  ++i;
+		pos[i] = btVector3( 1.8, -w,    -h);    	rad[i] = r*0.6;  ++i;  // front
+		pos[i] = btVector3( 1.8,  w,    -h);    	rad[i] = r*0.6;  ++i;
+		pos[i] = btVector3( 0.9, -w,    -h);    	rad[i] = r;		 ++i;  // front near
+		pos[i] = btVector3( 0.9,  w,    -h);    	rad[i] = r;		 ++i;
+		pos[i] = btVector3(-0.9, -w,    -h);    	rad[i] = r;		 ++i;  // rear near
+		pos[i] = btVector3(-0.9,  w,    -h);    	rad[i] = r;		 ++i;
+		pos[i] = btVector3(-1.9, -w,    -h);    	rad[i] = r*0.6;  ++i;  // rear
+		pos[i] = btVector3(-1.9,  w,    -h);    	rad[i] = r*0.6;  ++i;
+		pos[i] = btVector3( 0.4, -w*0.8, h*0.2);	rad[i] = r*0.6;  ++i;  // top
+		pos[i] = btVector3( 0.4,  w*0.8, h*0.2);	rad[i] = r*0.6;  ++i;
+		pos[i] = btVector3(-0.3, -w*0.8, h*0.4);	rad[i] = r*0.6;  ++i;
+		pos[i] = btVector3(-0.3,  w*0.8, h*0.4);	rad[i] = r*0.6;  ++i;
+		pos[i] = btVector3(-1.1, -w*0.8, h*0.2);	rad[i] = r*0.6;  ++i;  // top rear
+		pos[i] = btVector3(-1.1,  w*0.8, h*0.2);	rad[i] = r*0.6;  ++i;
+		for (i=0; i < numSph; ++i)
+			pos[i] += origin;
 		btMultiSphereShape* chassisShape = new btMultiSphereShape(pos, rad, numSph);
 	#endif
 
@@ -724,7 +733,7 @@ void CARDYNAMICS::Init(
 	info.m_restitution = 0.0;  //...
 	info.m_friction = 0.7;  /// 0.4~ 0.75
 	///  chasis^
-	chassis = world.AddRigidBody(info, true, pSet->car_collis);
+	chassis = world.AddRigidBody(info, true, pSet->collis_cars);
 	chassis->setActivationState(DISABLE_DEACTIVATION);
 	chassis->setUserPointer(new ShapeData(ST_Car, this, 0));  ///~~
 	

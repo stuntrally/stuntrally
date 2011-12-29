@@ -19,32 +19,30 @@ void SETTINGS::Serialize(bool w, CONFIGFILE & c)
 {
 	c.bFltFull = false;
 	Param(c,w, "game.track", track);						Param(c,w, "game.track_user", track_user);
-	Param(c,w, "game.language", language);
 
-	Param(c,w, "display_show.fps", show_fps);
-	Param(c,w, "display_show.trackmap", trackmap);			Param(c,w, "display_size.minimap", size_minimap);
-	Param(c,w, "display_show.mini_num", num_mini);			Param(c,w, "display_show.brushpreview", brush_prv);
-	Param(c,w, "display_show.tracks_view", tracks_view);
-	Param(c,w, "display_show.tracks_sort", tracks_sort);	Param(c,w, "display_show.tracks_sortup", tracks_sortup);
+	Param(c,w, "hud_show.fps", show_fps);
+	Param(c,w, "hud_show.trackmap", trackmap);				Param(c,w, "hud_size.minimap", size_minimap);
+	Param(c,w, "hud_show.mini_num", num_mini);				Param(c,w, "hud_show.brushpreview", brush_prv);
+	Param(c,w, "hud_show.tracks_view", tracks_view);
+	Param(c,w, "hud_show.tracks_sort", tracks_sort);		Param(c,w, "hud_show.tracks_sortup", tracks_sortup);
 
-	Param(c,w, "display_par.anisotropy", anisotropy);		Param(c,w, "display_par.view_dist", view_distance);
-	Param(c,w, "display_par.ter_detail", terdetail);		Param(c,w, "display_par.ter_dist", terdist);
-	Param(c,w, "display_par.road_dist", road_dist);			Param(c,w, "display_par.tex_size", tex_size);
-	Param(c,w, "display_par.ter_mtr", ter_mtr);
+	Param(c,w, "graph_detail.anisotropy", anisotropy);		Param(c,w, "graph_detail.view_dist", view_distance);
+	Param(c,w, "graph_detail.ter_detail", terdetail);		Param(c,w, "graph_detail.ter_dist", terdist);
+	Param(c,w, "graph_detail.road_dist", road_dist);		Param(c,w, "graph_detail.tex_size", tex_size);
+	Param(c,w, "graph_detail.ter_mtr", ter_mtr);
 
-	Param(c,w, "display_adv.trees", trees);					Param(c,w, "display_adv.grass", grass);
-	Param(c,w, "display_adv.trees_dist", trees_dist);		Param(c,w, "display_adv.grass_dist", grass_dist);
-	Param(c,w, "display_adv.use_imposters", use_imposters);
+	Param(c,w, "graph_shadow.dist", shadow_dist);			Param(c,w, "graph_shadow.size", shadow_size);
+	Param(c,w, "graph_shadow.count",shadow_count);			Param(c,w, "graph_shadow.type", shadow_type);
+	Param(c,w, "graph_shadow.shaders", shaders);			Param(c,w, "graph_shadow.lightmap_size", lightmap_size);
 
-	Param(c,w, "shadow.dist", shadow_dist);			Param(c,w, "shadow.size", shadow_size);
-	Param(c,w, "shadow.count",shadow_count);		Param(c,w, "shadow.type", shadow_type);
-	Param(c,w, "shadow.shaders", shaders);			Param(c,w, "shadow.lightmap_size", lightmap_size);
+	Param(c,w, "graph_veget.trees", trees);					Param(c,w, "graph_veget.grass", grass);
+	Param(c,w, "graph_veget.trees_dist", trees_dist);		Param(c,w, "graph_veget.grass_dist", grass_dist);
+	Param(c,w, "graph_veget.use_imposters", use_imposters);
 	
-	Param(c,w, "input.x11_capture_mouse", x11_capture_mouse);
-
+	Param(c,w, "misc.allow_save", allow_save);
 	Param(c,w, "misc.version", version);			Param(c,w, "misc.autostart", autostart);
 	Param(c,w, "misc.ogredialog", ogre_dialog);		Param(c,w, "misc.escquit", escquit);
-	Param(c,w, "misc.allow_save", allow_save);
+	Param(c,w, "misc.language", language);			Param(c,w, "misc.x11_capture_mouse", x11_capture_mouse);
 	
 	Param(c,w, "set_cam.px",cam_x);  Param(c,w, "set_cam.py",cam_y);  Param(c,w, "set_cam.pz",cam_z);
 	Param(c,w, "set_cam.dx",cam_dx); Param(c,w, "set_cam.dy",cam_dy); Param(c,w, "set_cam.dz",cam_dz);

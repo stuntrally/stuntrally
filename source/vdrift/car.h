@@ -296,6 +296,9 @@ public:
 	
 	MODEL_JOE03 drivermodel;
 	
+	MATHVECTOR<float, 3> driver_view_position; 
+	MATHVECTOR<float, 3> hood_view_position;
+	
 	SUSPENSIONBUMPDETECTION suspbump[4];
 	CRASHDETECTION crashdetection;
 
@@ -314,9 +317,9 @@ public:
 	SOUNDSOURCE gravelsound[4];
 	SOUNDSOURCE crashsound[Ncrashsounds];
 	float crashsoundtime[Ncrashsounds];
-	SOUNDSOURCE roadnoise;
-	
-	//CAMERA_SYSTEM cameras;
+	SOUNDSOURCE roadnoise,boostsnd;
+	SOUNDSOURCE mudsnd, watersnd[Nwatersounds], mud_cont,water_cont;  // fluids
+	bool fluidHitOld;  float whMudSpin;  //new vars
 	
 	//internal variables that might change during driving (so, they need to be serialized)
 	float last_steer;

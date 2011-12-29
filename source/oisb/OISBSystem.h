@@ -65,7 +65,7 @@ namespace OISB
              */
             inline static System* getSingletonPtr()
             {
-                assert(msSingleton);
+                //assert(msSingleton);
 
                 return msSingleton;
             }

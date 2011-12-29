@@ -170,6 +170,8 @@ namespace OISB
  
 	void System::process(Real delta)
 	{
+		if (!mInitialized) return;
+		
 		mOISMouse->capture();
 		mOISKeyboard->capture();
 		for(unsigned int i=0; i < mOISJoysticks.size(); i++)

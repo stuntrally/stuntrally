@@ -24,7 +24,7 @@
 #include "common/MyGUI_D3D11.h"
 
 #include <OgreRTShaderSystem.h>
-#include "common/MaterialGenerator.h"
+#include "common/MaterialGen/MaterialGenerator.h"
 using namespace Ogre;
 
 
@@ -638,7 +638,7 @@ bool BaseApp::setup()
 	// -------------------------------------------------------
 		
 	mPlatform->getRenderManagerPtr()->setSceneManager(mSplitMgr->mGuiSceneMgr);
-	mPlatform->getRenderManagerPtr()->setActiveViewport(mSplitMgr->mNumViewports*2);
+	mPlatform->getRenderManagerPtr()->setActiveViewport(mSplitMgr->mNumViewports);
 	
 	// After having initialised mygui, we can set translated strings
 	setTranslations();

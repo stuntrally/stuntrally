@@ -5,7 +5,7 @@
 #include "../paged-geom/PagedGeometry.h"
 #include "../ogre/common/Gui_Def.h"
 #include "../ogre/common/MultiList2.h"
-#include "../ogre/common/MaterialFactory.h"
+#include "../ogre/common/MaterialGen/MaterialFactory.h"
 using namespace Ogre;
 
 
@@ -602,11 +602,11 @@ bool App::frameStarted(const Ogre::FrameEvent& evt)
 	
 	if (bGuiReinit)  // after language change from combo
 	{	bGuiReinit = false;
-		mGUI->destroyWidgets(vwGui);  bnQuit=0;mWndOpts=0;  //todo: rest too..
+		mGUI->destroyWidgets(vwGui);  bnQuit=0;mWndOpts=0;trkMList=0; //todo: rest too..
 		InitGui();
 		SetGuiFromXmls();
 		bWindowResized = true;
-		mWndTabs->setIndexSelected(8);  // switch back to view tab
+		mWndTabs->setIndexSelected(10);  // switch back to view tab
 	}
 
 	if (bWindowResized)

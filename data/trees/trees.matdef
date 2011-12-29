@@ -1,5 +1,4 @@
 ; can't use depth shadows with alpha_rejection, so only tree trunks have shadow
-
 ; --------- gum tree ----------
 [gum_branch]
 	diffuseMap_512 = gum_branch.png
@@ -117,8 +116,19 @@
 
 ; ---------------------------------
 
+[palm2]
+	transparent = true
+	wind = 2
+	terrainLightMap = true
+	alphaRejectFunc = greater
+	alphaRejectValue = 128
+	diffuseMap_1024 = palm2_diffuse.png
+	normalMap_1024 = palm2_normal.png
+	specMap_1024 = palm2_specular.png
+	specular = 0.5 0.5 0.5 32
+	cullHardware = none
+
 [Palm]
-	shadowPriority = 0.1
 	diffuseMap_512 = palm.png
 	alphaRejectFunc = greater
 	alphaRejectValue = 79

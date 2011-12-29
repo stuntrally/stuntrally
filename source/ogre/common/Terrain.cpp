@@ -2,7 +2,7 @@
 #include "../Defines.h"
 #include "../common/RenderConst.h"
 #include "../../road/Road.h"
-#include "../common/TerrainMaterialGen.h"
+#include "../common/MaterialGen/TerrainMaterialGen.h"
 
 #ifdef ROAD_EDITOR
 	#include "../../editor/OgreApp.h"
@@ -457,15 +457,11 @@ inline ColourValue Clr3(const Vector3& v)
 
 void App::UpdFog(bool bForce)
 {
-	//  fog  directx has 4x denser fog, why ???-
-	//  reverted - custom shaders
-	bool dx = false;  //strncmp(mRoot->getRenderSystem()->getName().c_str(), "Direct", 6)==0;
-	Real mul = dx ? 0.25f : 1.f;  // sc.fogExp
 	ColourValue clr = Clr3(sc.fogClr);
 	if (!pSet->bFog || bForce)
-		mSceneMgr->setFog(sc.fogMode, clr, mul, sc.fogStart, sc.fogEnd);
+		mSceneMgr->setFog(sc.fogMode, clr, 1.f, sc.fogStart, sc.fogEnd);
 	else
-		mSceneMgr->setFog(sc.fogMode, clr, mul, 3000, 3200);
+		mSceneMgr->setFog(sc.fogMode, clr, 1.f, 3000, 3200);
 }
 
 void App::UpdSun()

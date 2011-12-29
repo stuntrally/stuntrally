@@ -4,7 +4,7 @@
 #include "configfile.h"
 
 
-#define SET_VER  1350  // 1.4
+#define SET_VER  1380  // 1.4
 
 
 class SETTINGS
@@ -20,7 +20,7 @@ public:
 	//  show
 	bool show_fps, show_gauges, check_arrow, trackmap,
 		mini_zoomed, mini_rotated, mini_terrain,
-		show_cam, show_times, show_digits,
+		show_cam, show_times, show_digits, show_opponents,
 		car_dbgbars, car_dbgtxt, ogre_dialog;
 	float size_gauges, size_minimap, size_arrow, zoom_minimap;
 	int tracks_view, tracks_sort;  bool tracks_sortup;
@@ -43,6 +43,7 @@ public:
 	//  game
 	bool trackreverse;	int local_players, num_laps;
 	bool split_vertically;  std::string language;
+	int boost_type, flip_type;  float boost_power;
 
 	//  other
 	float vol_master, vol_engine, vol_tires, vol_env;
@@ -51,9 +52,8 @@ public:
 	bool loadingbackground;
 	
 	//  sim freq (1/interval timestep)
-	float game_fq, blt_fq;  int blt_iter;
-	int mult_thr;
-	bool veget_collis, car_collis;
+	float game_fq, blt_fq;  int blt_iter, dyn_iter, multi_thr;
+	bool collis_veget, collis_cars;
 	
 	//  compositor
 	bool bloom, hdr, motionblur, all_effects;
@@ -69,6 +69,9 @@ public:
 	//  replay
 	bool rpl_rec, rpl_ghost, rpl_bestonly;
 	bool rpl_alpha, rpl_ghostpar;  int rpl_listview;
+	
+	// not in gui
+	bool boostFromExhaust;
 	
 //------------------------------------------
 	SETTINGS();

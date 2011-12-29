@@ -84,7 +84,7 @@ public:
 
 /// custom collision params
 	bool coll_manual;  // define collision manually
-	float coll_R, coll_Hofs;
+	float coll_R, coll_W, coll_H, coll_Hofs, coll_Wofs, coll_Lofs;
 
 // driveline
 	// driveline input
@@ -157,7 +157,8 @@ public:
 	btRigidBody * chassis, * whTrigs;
 
 	///  for buoyancy
-	float whH[4];
+	float whH[4];  // wheel submerge 0..1
+	int whP[4];  // fluid particles id
 	struct Polyhedron* poly;
 	float body_mass;  btVector3 body_inertia;
 
@@ -166,10 +167,8 @@ public:
 	MATHVECTOR <T, 3> chassisCenterOfMass;
 	QUATERNION <T> chassisRotation;
 	
-	// manual flip over
-	float doFlip;
-	// rocket boost
-	float doBoost;
+	// manual flip over, rocket boost
+	float doFlip, doBoost, boostFuel, boostVal;
 
 	std::list<FluidBox*> inFluids,inFluidsWh[4];  /// list of fluids this car is in (if any)
 	Ogre::Vector3 vHitPos,vHitNorm;  // world hit data

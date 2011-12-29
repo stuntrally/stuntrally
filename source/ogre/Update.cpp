@@ -5,7 +5,8 @@
 #include "../road/Road.h"
 #include "../vdrift/game.h"
 #include "../paged-geom/PagedGeometry.h"
-#include "../ogre/common/MaterialFactory.h"
+#include "../ogre/common/MaterialGen/MaterialFactory.h"
+#include "../oisb/OISBSystem.h"
 
 #include <OgreParticleSystem.h>
 #include <OgreManualObject.h>
@@ -25,7 +26,7 @@ void App::UpdThr()
 	{
 		///  step Game  **
 		//  separate thread
-		if (pSet->mult_thr == 1 && !bLoading)
+		if (pSet->multi_thr == 1 && !bLoading)
 		{
 			bool ret = pGame->OneLoop();
 
@@ -130,18 +131,22 @@ bool App::frameStart(Real time)
 		pGame->pause = bRplPlay ? (bRplPause || isFocGui) : isFocGui;
 
 
+		// input
+		OISB::System::getSingleton().process(time);
+
 		///  step Game  *******
 		//  single thread, sim on draw
 		bool ret = true;
-		if (pSet->mult_thr != 1)
+		if (pSet->multi_thr != 1)
 		{
 			ret = pGame->OneLoop();
 			if (!ret)  mShutDown = true;
+			updatePoses(time);  //pGame->framerate
 		}
-		updatePoses(time);  //pGame->framerate
+		
 
 		//  multi thread
-		if (pSet->mult_thr == 1)
+		if (pSet->multi_thr == 1)
 		{
 			/// ???? ---------
 			static QTimer gtim;
@@ -152,29 +157,31 @@ bool App::frameStart(Real time)
 			for (std::vector<CarModel*>::iterator it=carModels.begin(); it!=carModels.end(); it++)
 				if ((*it)->fCam)
 					(*it)->fCam->update(pGame->framerate);
+					
+			updatePoses(time);  //pGame->framerate
 		}
 		
 		// align checkpoint arrow
 		// move in front of camera
 		if (pSet->check_arrow && arrowNode && !bRplPlay)
 		{
-			Ogre::Vector3 camPos = carModels.front()->fCam->mCamera->getPosition();
-			Ogre::Vector3 dir = carModels.front()->fCam->mCamera->getDirection();
+			Vector3 camPos = carModels.front()->fCam->mCamera->getPosition();
+			Vector3 dir = carModels.front()->fCam->mCamera->getDirection();
 			dir.normalise();
-			Ogre::Vector3 up = carModels.front()->fCam->mCamera->getUp();
+			Vector3 up = carModels.front()->fCam->mCamera->getUp();
 			up.normalise();
-			Ogre::Vector3 arrowPos = camPos + 10.0f * dir + 3.5f*up;
+			Vector3 arrowPos = camPos + 10.0f * dir + 3.5f*up;
 			arrowNode->setPosition(arrowPos);
 			
 			// animate
 			if (bFirstFrame) // 1st frame: dont animate
 				arrowAnimCur = arrowAnimEnd;
 			else
-				arrowAnimCur = Ogre::Quaternion::Slerp(time*5, arrowAnimStart, arrowAnimEnd, true);
+				arrowAnimCur = Quaternion::Slerp(time*5, arrowAnimStart, arrowAnimEnd, true);
 			arrowRotNode->setOrientation(arrowAnimCur);
 			
 			// look down -y a bit so we can see the arrow better
-			arrowRotNode->pitch(Ogre::Degree(-20), Ogre::SceneNode::TS_LOCAL); 
+			arrowRotNode->pitch(Degree(-20), SceneNode::TS_LOCAL); 
 		}
 
 		//  update all cube maps
@@ -265,20 +272,21 @@ void App::newPoses()
 		///-----------------------------------------------------------------------
 		if (bGhost)
 		{
-			ReplayFrame fr;
-			bool ok = ghplay.GetFrame(lapTime, &fr, 0);
+			ReplayFrame frame;
+			bool ok = ghplay.GetFrame(lapTime, &frame, 0);
 			//  car
-			pos = fr.pos;  rot = fr.rot;
+			pos = frame.pos;  rot = frame.rot;
 			//  wheels
 			for (int w=0; w < 4; ++w)
 			{
-				whPos[w] = fr.whPos[w];  whRot[w] = fr.whRot[w];
-				posInfo.whVel[w] = fr.whVel[w];
-				posInfo.whSlide[w] = fr.slide[w];  posInfo.whSqueal[w] = fr.squeal[w];
+				whPos[w] = frame.whPos[w];  whRot[w] = frame.whRot[w];
+				posInfo.whVel[w] = frame.whVel[w];
+				posInfo.whSlide[w] = frame.slide[w];  posInfo.whSqueal[w] = frame.squeal[w];
 				posInfo.whR[w] = replay.header.whR[iCarNum][w];//
-				posInfo.whTerMtr[w] = fr.whTerMtr[w];  posInfo.whRoadMtr[w] = fr.whRoadMtr[w];
-				posInfo.fboost = fr.fboost;
+				posInfo.whTerMtr[w] = frame.whTerMtr[w];  posInfo.whRoadMtr[w] = frame.whRoadMtr[w];
+				posInfo.fboost = frame.fboost;
 			}
+			ghostFrame = frame;
 		}
 		else if (bRplPlay)
 		{
@@ -316,8 +324,8 @@ void App::newPoses()
 				posInfo.whSlide[w] = -1.f;  posInfo.whSqueal[w] = pCar->GetTireSquealAmount(wp, &posInfo.whSlide[w]);
 				posInfo.whR[w] = pCar->GetTireRadius(wp);//
 				posInfo.whTerMtr[w] = carM->whTerMtr[w];  posInfo.whRoadMtr[w] = carM->whRoadMtr[w];
-				posInfo.fboost = pCar->dynamics.doBoost;
 			}
+			posInfo.fboost = pCar->dynamics.boostVal;
 		}
 		
 
@@ -344,7 +352,7 @@ void App::newPoses()
 		///  sound listener  - - - - -
 		if (!bGhost)
 		{
-			if (pGame->sound.Enabled())  // todo: set from camera, for each player? ..
+			if (pGame->sound.Enabled())  // TODO: set from camera, for each player? ..
 			{
 				pGame->sound.SetListener(
 					MATHVECTOR <float,3> (pos[0], pos[1], pos[2]),
@@ -436,7 +444,7 @@ void App::newPoses()
 				bool noAnim = carM->iNumChks == 0;
 				
 				// get vector from camera to checkpoint
-				Ogre::Vector3 chkPos = road->mChks[std::max(0, std::min((int)road->mChks.size()-1, carM->iNextChk))].pos;
+				Vector3 chkPos = road->mChks[std::max(0, std::min((int)road->mChks.size()-1, carM->iNextChk))].pos;
 					
 				// workaround for last checkpoint
 				if (carM->iNumChks == road->mChks.size())
@@ -445,11 +453,11 @@ void App::newPoses()
 					chkPos = carM->vStartPos;
 				}
 				
-				//const Ogre::Vector3& playerPos = carM->fCam->mCamera->getPosition();
-				const Ogre::Vector3& playerPos = carM->pMainNode->getPosition();
-				Ogre::Vector3 dir = chkPos - playerPos;
+				//const Vector3& playerPos = carM->fCam->mCamera->getPosition();
+				const Vector3& playerPos = carM->pMainNode->getPosition();
+				Vector3 dir = chkPos - playerPos;
 				dir[1] = 0; // only x and z rotation
-				Ogre::Quaternion quat = Vector3::UNIT_Z.getRotationTo(-dir); // convert to quaternion
+				Quaternion quat = Vector3::UNIT_Z.getRotationTo(-dir); // convert to quaternion
 
 				const bool valid = !quat.isNaN();
 				if (valid) {
@@ -463,7 +471,7 @@ void App::newPoses()
 					MaterialPtr arrowMat = MaterialManager::getSingleton().getByName("Arrow");
 					if (arrowMat->getTechnique(0)->getPass(1)->hasFragmentProgram())
 					{
-						Ogre::GpuProgramParametersSharedPtr fparams = arrowMat->getTechnique(0)->getPass(1)->getFragmentProgramParameters();
+						GpuProgramParametersSharedPtr fparams = arrowMat->getTechnique(0)->getPass(1)->getFragmentProgramParameters();
 						// green: 0.0 1.0 0.0     0.0 0.4 0.0
 						// red:   1.0 0.0 0.0     0.4 0.0 0.0
 						Vector3 col1 = angle * Vector3(0.0, 1.0, 0.0) + (1-angle) * Vector3(1.0, 0.0, 0.0);
@@ -504,6 +512,9 @@ void App::newPoses()
 						ghost.Clear();
 						
 						carM->ResetChecks();
+						//  restore boost fuel, each lap
+						if (pSet->boost_type == 1 && carM->pCar)
+							carM->pCar->dynamics.boostFuel = gfBoostFuelStart;
 
 						///  winner places  for local players > 1
 						if (carM->iWonPlace == 0 && pGame->timer.GetCurrentLap(iCarNum) >= pSet->num_laps)
@@ -554,28 +565,37 @@ void App::updatePoses(float time)
 		PosInfo newPosInfo = *newPosIt;
 		
 		//  hide ghost when empty
-		bool bGhost = carM->eType == CarModel::CT_GHOST;
+		bool bGhost = carM->eType == CarModel::CT_GHOST,
+			bGhostVis = (ghplay.GetNumFrames() > 0) && pSet->rpl_ghost;
 		if (bGhost)
 		{
-			carM->setVisible((ghplay.GetNumFrames() > 0) && pSet->rpl_ghost);
+			carM->setVisible(bGhostVis);
 			
-			//  hide ghost car when close to player car
-			CarModel* playerCar = carModels.front();
-			
-			float distance = carM->pMainNode->getPosition().squaredDistance(playerCar->pMainNode->getPosition());
-			if (distance < 16.f) carM->setVisible(false);
+			//  hide ghost car when close to player car (only when not transparent)
+			if (!pSet->rpl_alpha)
+			{
+				CarModel* playerCar = carModels.front();
+				float distance = carM->pMainNode->getPosition().squaredDistance(playerCar->pMainNode->getPosition());
+				if (distance < 16.f)
+					carM->setVisible(false);
+			}
 		}
 		
 		carM->Update(newPosInfo, time);
 		
+		//  nick text 3d pos
+		//projectPoint()
+		
 		//  pos on minimap  x,y = -1..1
-		if (!bGhost)
+		//if (!bGhost)
 		{	float xp =(-newPosInfo.pos[2] - minX)*scX*2-1,
 				  yp =-(newPosInfo.pos[0] - minY)*scY*2+1;
 			newPosInfos[i].miniPos = Vector2(xp,yp);
-			if (ndPos[i])
-				if (pSet->mini_zoomed)	ndPos[i]->setPosition(0,0,0);
-				else					ndPos[i]->setPosition(xp,yp,0);
+			
+			if (vNdPos[i])
+				if (bGhost && !bGhostVis)  vNdPos[i]->setPosition(-100,0,0);  //hide
+				else if (pSet->mini_zoomed)  vNdPos[i]->setPosition(0,0,0);
+				else					vNdPos[i]->setPosition(xp,yp,0);
 		}
 		carIt++;  newPosIt++;  i++;
 	}
@@ -597,22 +617,21 @@ void App::updatePoses(float time)
 
 //  Update HUD rotated elems
 //---------------------------------------------------------------------------------------------------------------
-void App::UpdHUDRot(int carId, CarModel* pCarM, float vel)
+void App::UpdHUDRot(int carId, CarModel* pCarM, float vel, float rpm, bool miniOnly)
 {
 	/// TODO: rpm vel needle angles,aspect are wrong [all from the last car when bloom is on (any effects)], hud vals are ok
-	if (!pCarM)  return;
+	//if (!pCarM || carId == -1)  return;
+	//pCarM = carModels[carId];
+	// todo:  poses when mini rotated or zoomed ..
+
     const float rsc = -180.f/6000.f, rmin = 0.f;  //rmp
-    float angrmp = fr.rpm*rsc + rmin;
+    float angrmp = rpm*rsc + rmin;
     float vsc = pSet->show_mph ? -180.f/100.f : -180.f/160.f, vmin = 0.f;  //vel
     float angvel = abs(vel)*vsc + vmin;
-    float angrot=0.f;  int i=0;
+    float angrot = 0.f;  int i=0;
+	if (pCarM)	angrot = pCarM->angCarY;
 
-	//pCarM = carModels[carId];
-	if (pCarM && pCarM->pMainNode)
-	{	Quaternion q = pCarM->pMainNode->getOrientation() * Quaternion(Degree(90),Vector3(0,1,0));
-		angrot = q.getYaw().valueDegrees() + 90.f;
-	}
-	//LogO(String("car: ") + toStr(carId) + " " + toStr(pCarM) + "  v " + toStr(vel) + "  r " + toStr(angrot));
+	//*H*/LogO(String("caR: ") + toStr(carId) + /*/" " + toStr(pCarM) +*/ "  vel " + toStr(vel) + "  rpm " + toStr(rpm) + "  a " + toStr(angrot));
     float sx = 1.4f, sy = sx*asp;  // *par len
     float psx = 2.1f * pSet->size_minimap, psy = psx;  // *par len
 
@@ -621,12 +640,14 @@ void App::UpdHUDRot(int carId, CarModel* pCarM, float vel)
     const static float d2r = PI_d/180.f;
     const static Real ang[4] = {0.f,90.f,270.f,180.f};
 
-    static float rx[4],ry[4], vx[4],vy[4], px[4],py[4], cx[4],cy[4];  // rpm,vel, pos,crc
-    for (int i=0; i<4; i++)  // 4 verts, each+90deg
+    float rx[4],ry[4], vx[4],vy[4], px[4],py[4], cx[4],cy[4];  // rpm,vel, pos,crc
+    for (int i=0; i<4; ++i)  // 4 verts, each+90deg
     {
-		float ia = 45.f + ang[i];  //float(i)*90.f;
-		float r = -(angrmp + ia) * d2r;		rx[i] = sx*cosf(r);  ry[i] =-sy*sinf(r);
-		float v = -(angvel + ia) * d2r;		vx[i] = sx*cosf(v);  vy[i] =-sy*sinf(v);
+		float ia = 45.f + ang[i];  //i*90.f;
+		if (!miniOnly)
+		{	float r = -(angrmp + ia) * d2r;		rx[i] = sx*cosf(r);  ry[i] =-sy*sinf(r);
+			float v = -(angvel + ia) * d2r;		vx[i] = sx*cosf(v);  vy[i] =-sy*sinf(v);
+		}
 		float p = -(angrot + ia) * d2r;		float cp = cosf(p), sp = sinf(p);
 
 		if (pSet->mini_rotated && pSet->mini_zoomed)
@@ -640,22 +661,25 @@ void App::UpdHUDRot(int carId, CarModel* pCarM, float vel)
     }
     
     //  rpm needle
-    if (mrpm)  {	mrpm->beginUpdate(0);
-		for (int p=0;p<4;++p)  {  mrpm->position(rx[p],ry[p], 0);  mrpm->textureCoord(tc[p][0], tc[p][1]);  }	mrpm->end();  }
+    if (!miniOnly)
+    {
+		if (mrpm)  {	mrpm->beginUpdate(0);
+			for (int p=0;p<4;++p)  {  mrpm->position(rx[p],ry[p], 0);  mrpm->textureCoord(tc[p][0], tc[p][1]);  }	mrpm->end();  }
 
-	//  vel needle
-	if (mvel)  {	mvel->beginUpdate(0);
-		for (int p=0;p<4;++p)  {  mvel->position(vx[p],vy[p], 0);  mvel->textureCoord(tc[p][0], tc[p][1]);  }	mvel->end();  }
-
-	//LogO(String("  vel ") + toStr(vel) + " ang" + toStr(angrmp));
+		//  vel needle
+		if (mvel)  {	mvel->beginUpdate(0);
+			for (int p=0;p<4;++p)  {  mvel->position(vx[p],vy[p], 0);  mvel->textureCoord(tc[p][0], tc[p][1]);  }	mvel->end();  }
+	}
 		
 	//  minimap car pos-es
 	int c = carId;
-	if (mpos[c])  {  mpos[c]->beginUpdate(0);
-		for (int p=0;p<4;++p)  {  mpos[c]->position(px[p],py[p], 0);
-			mpos[c]->textureCoord(tc[p][0], tc[p][1]);	if (pCarM)  mpos[c]->colour(pCarM->color);  }
-		mpos[c]->end();  }
-		
+	//for (int c=0; c < pSet->local_players; ++c)
+	if (vMoPos[c])  {  vMoPos[c]->beginUpdate(0);
+		for (int p=0;p<4;++p)  {  vMoPos[c]->position(px[p],py[p], 0);
+			vMoPos[c]->textureCoord(tc[p][0], tc[p][1]);	if (pCarM)  vMoPos[c]->colour(pCarM->color);  }
+		vMoPos[c]->end();  }
+
+	
 	//  minimap circle/rect
 	if (miniC && pSet->trackmap)
 	{	const Vector2& v = newPosInfos[carId].miniPos;
@@ -668,4 +692,16 @@ void App::UpdHUDRot(int carId, CarModel* pCarM, float vel)
 			for (int p=0;p<4;++p)  {  miniC->position(tp[p][0],tp[p][1], 0);
 				miniC->textureCoord(cx[p]+xc, -cy[p]-yc);  miniC->colour(tc[p][0],tc[p][1], 1);  }
 		miniC->end();  }
+}
+
+//  util
+Vector2 App::projectPoint(Viewport* vp, const Vector3& pos)
+{
+	Camera* cam = vp->getCamera();
+	Vector3 pos2D = cam->getProjectionMatrix() * (cam->getViewMatrix() * pos);
+
+	Real x =       ((pos2D.x * 0.5f) + 0.5f);
+	Real y = 1.f - ((pos2D.y * 0.5f) + 0.5f);
+
+	return Vector2(x * vp->getWidth(), y * vp->getHeight());
 }

@@ -115,7 +115,16 @@
 
 	<Tag name="VegetCol">Vegetation collision</Tag>
 	<Tag name="CarCollis">Cars collision</Tag>
-	<Tag name="BoostAndFlip">Boost and flip</Tag>
+
+	<Tag name="Boost">Boost</Tag>
+	<Tag name="Flip">Flip</Tag>
+
+	<Tag name="Never">Never</Tag>
+	<Tag name="Always">Always</Tag>
+
+	<Tag name="FuelLap">Fuel each lap</Tag>
+	<Tag name="FuelTime">Fuel over time</Tag>
+	<Tag name="FuelBoost">Boost Fuel</Tag>
 
 	<Tag name="NumLocalPlayers">Number of local players</Tag>
 	<Tag name="SplitVertically">Split Vertically</Tag>
@@ -167,6 +176,7 @@
 	<Tag name="GraphicsAll_Low">Low</Tag>
 	<Tag name="GraphicsAll_Medium">Medium</Tag>
 	<Tag name="GraphicsAll_High">High</Tag>
+	<Tag name="GraphicsAll_VeryHigh">Very High</Tag>
 	<Tag name="GraphicsAll_Ultra">Ultra</Tag>
 
 	<Tag name="Effects">Effects</Tag>
@@ -237,6 +247,7 @@
 	<Tag name="MinimapRotate">Rotate</Tag>
 	<Tag name="MinimapTerrain">Terrain</Tag>
 	<Tag name="TimesBar">Times bar</Tag>
+	<Tag name="OpponentsList">Opponents List</Tag>
 	<Tag name="CameraInfo">Camera info</Tag>
 	<Tag name="CheckArrow">Checkpoint Arrow</Tag>
 

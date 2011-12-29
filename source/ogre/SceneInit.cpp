@@ -7,7 +7,7 @@
 #include "../road/Road.h"
 #include "SplitScreen.h"
 #include "common/RenderConst.h"
-#include "common/MaterialFactory.h"
+#include "common/MaterialGen/MaterialFactory.h"
 
 #include "../btOgre/BtOgrePG.h"
 #include "../btOgre/BtOgreGP.h"
@@ -179,7 +179,7 @@ void App::LoadGame()  // 2
 	//  viewports
 	mSplitMgr->mNumViewports = bRplPlay ? replay.header.numPlayers : pSet->local_players;  // set num players
 	mSplitMgr->Align();
-	mPlatform->getRenderManagerPtr()->setActiveViewport(mSplitMgr->mNumViewports*2);
+	mPlatform->getRenderManagerPtr()->setActiveViewport(mSplitMgr->mNumViewports);
 	
 	pGame->NewGameDoCleanup();
 	pGame->NewGameDoLoadTrack();
@@ -195,11 +195,11 @@ void App::LoadGame()  // 2
 	for (i=0; i < mSplitMgr->mNumViewports; i++,camIt++)
 		carModels.push_back( new CarModel(i, CarModel::CT_LOCAL, pSet->car[i], mSceneMgr, pSet, pGame, &sc, (*camIt), this ) );
 
-	/// ghost car  load if exists
+	/// ghost car
 	ghplay.Clear();
-	if (!bRplPlay && pSet->rpl_ghost)  // load ghost play if exists
+	if (!bRplPlay && pSet->rpl_ghost)
 	{
-		/*if (*/ghplay.LoadFile(GetGhostFile());
+		ghplay.LoadFile(GetGhostFile());  // loads ghost play if exists
 		//  always because ghplay can appear during play after best lap
 		CarModel* c = new CarModel(i, CarModel::CT_GHOST, pSet->car[0], mSceneMgr, pSet, pGame, &sc, 0, this );
 		c->pCar = (*carModels.begin())->pCar;  // based on 1st car
@@ -215,10 +215,7 @@ void App::LoadScene()  // 3
 {
 	bool ter = IsTerTrack();
 	if (ter)  // load scene
-	{
 		sc.LoadXml(TrkDir()+"scene.xml");
-		sceneryId = sc.sceneryId;
-	}
 	else
 	{	sc.Default();  sc.td.hfHeight = NULL;  sc.td.hfAngle = NULL;  }
 	
@@ -261,12 +258,21 @@ void App::LoadCar()  // 4
 
 		//  restore which cam view
 		if (c->fCam && carsCamNum[i] != 0)
+		{
 			c->fCam->setCamera(carsCamNum[i] -1);
+			
+			int visMask = 255;
+			visMask = c->fCam->ca->mHideGlass ? RV_MaskAll-RV_CarGlass : RV_MaskAll;
+			for (std::list<Viewport*>::iterator it = mSplitMgr->mViewports.begin();
+				it != mSplitMgr->mViewports.end(); ++it)
+				(*it)->setVisibilityMask(visMask);
+		}
 
 		//  Reserve an entry in newPosInfos
 		PosInfo carPosInfo;  carPosInfo.bNew = false;  //-
 		newPosInfos.push_back(carPosInfo);
 	}
+	
 	
 	///  Init Replay  once
 	///=================----------------
@@ -334,6 +340,9 @@ void App::LoadMisc()  // 7 last
 	// immediately hide it
 	ShowHUD(true);
 	
+	if (hudOppB)  // resize opp list
+		hudOppB->setHeight(carModels.size() * 20 + 10);
+	
 	// Camera settings
 	for (std::vector<CarModel*>::iterator it=carModels.begin(); it!=carModels.end(); it++)
 		if ((*it)->fCam)
@@ -347,7 +356,7 @@ void App::LoadMisc()  // 7 last
 
 /* Actual loading procedure that gets called every frame during load. Performs a single loading step. */
 void App::NewGameDoLoad()
-{	
+{
 	if (currentLoadingState == loadingStates.end())
 	{
 		// Loading finished.

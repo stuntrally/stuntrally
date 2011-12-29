@@ -835,8 +835,8 @@ void SplineRoad::RebuildRoadInt()
 //  add triangle
 void SplineRoad::addTri(int f1, int f2, int f3, int i)
 {
-	bool ok = true;  int fmax = 65530; //16bit
-	/*if (f1 >= at_size || f1 > fmax)  {  LogRE("idx too big: "+toStr(f1)+" >= "+toStr(at_size));  ok = 0;  }
+	bool ok = true;  /*const int fmax = 65530; //16bit
+	if (f1 >= at_size || f1 > fmax)  {  LogRE("idx too big: "+toStr(f1)+" >= "+toStr(at_size));  ok = 0;  }
 	if (f2 >= at_size || f2 > fmax)  {  LogRE("idx too big: "+toStr(f2)+" >= "+toStr(at_size));  ok = 0;  }
 	if (f3 >= at_size || f3 > fmax)  {  LogRE("idx too big: "+toStr(f3)+" >= "+toStr(at_size));  ok = 0;  }
 	if (!ok)  return;/**/

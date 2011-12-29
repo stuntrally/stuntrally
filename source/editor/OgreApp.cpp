@@ -5,7 +5,7 @@
 #include "../vdrift/pathmanager.h"
 #include "../paged-geom/PagedGeometry.h"
 #include "../ogre/common/RenderConst.h"
-#include "../ogre/common/MaterialFactory.h"
+#include "../ogre/common/MaterialGen/MaterialFactory.h"
 
 #if OGRE_PLATFORM != OGRE_PLATFORM_WIN32
 	// dir listing
@@ -58,6 +58,8 @@ App::App()  //  gui wigdets--
 	,grass(0), trees(0), sun(0), terMaxAng(0.f)
 	,eTrkEvent(TE_None), bNewHmap(0), bTrGrUpd(0)
 	,iFlCur(0), bRecreateFluids(0)
+	
+	,materialFactory(0)
 {
 	pathTrk[0] = PATHMANAGER::GetTrackPath() + "/";      pathTrkPrv[0] = pathTrk[0] + "_previews/";  resTrk = "";
 	pathTrk[1] = PATHMANAGER::GetTrackPathUser() + "/";  pathTrkPrv[1] = pathTrk[1] + "_previews/";

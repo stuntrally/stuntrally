@@ -50,13 +50,13 @@ public:
 	//  replay - full, user saves
 	//  ghost - saved when best lap,  ghplay - ghost ride replay, loaded if was on disk
 	Replay replay, ghost, ghplay;  ReplayFrame fr;
+	ReplayFrame ghostFrame;
 	const Ogre::String& GetGhostFile();
 
 	Scene sc;  /// scene.xml
 	FluidsXml fluidsXml;  /// fluid params xml
 	BltObjects objs;  // veget collision in bullet
 	Ogre::Light* sun;  void UpdFog(bool bForce=false), UpdSun();
-	int sceneryId;  // from scene
 	
 	// Rain, snow
 	Ogre::ParticleSystem *pr,*pr2;
@@ -70,7 +70,7 @@ public:
 		
 	void UpdateHUD(int carId, class CarModel* pCarM, class CAR* pCar,
 		float time, Ogre::Viewport* vp=NULL), SizeHUD(bool full, Ogre::Viewport* vp=NULL, int carId=-1);
-	void UpdHUDRot(int carId, CarModel* pCarM, float vel);
+	void UpdHUDRot(int carId, CarModel* pCarM, float vel, float rpm, bool miniOnly=false);
 	
 	MaterialFactory* materialFactory; // material generation
 	void recreateCarMtr();
@@ -98,19 +98,23 @@ protected:
 	float asp,  xcRpm, ycRpm, xcVel, ycVel,
 		fMiniX,fMiniY, scX,scY, ofsX,ofsY, minX,maxX, minY,maxY;  // minimap
 
-	Ogre::SceneNode *nrpmB, *nvelBk,*nvelBm, *nrpm, *nvel;  // gauges
-	Ogre::SceneNode *ndPos[5], *ndMap, *ndLine;  // car pos on minimap
-	Ogre::ManualObject* mrpm, *mvel, *mpos[5], *miniC;
+	Ogre::SceneNode *nrpm, *nvel, *nrpmB, *nvelBk,*nvelBm;  // gauges
+	Ogre::ManualObject* mrpm, *mvel, *miniC;
+	Ogre::SceneNode *ndMap, *ndLine;  // vdr minimap-
+	// car pos on minimap
+	std::vector<Ogre::SceneNode*> vNdPos;
+	std::vector<Ogre::ManualObject*> vMoPos;
 	Ogre::ManualObject* Create2D(const Ogre::String& mat, Ogre::SceneManager* sceneMgr,
 		Ogre::Real size, bool dyn = false, bool clr = false);
 
-	Ogre::OverlayElement* hudGear,*hudVel, *ovL[5],*ovR[5],*ovS[5],*ovU[5],
-		*hudAbs,*hudTcs, *hudTimes, *hudWarnChk,*hudWonPlace;
-	Ogre::Overlay* ovGear,*ovVel, *ovAbsTcs,*ovCarDbg,*ovCarDbgTxt,
-		*ovCam, *ovTimes, *ovWarnWin;
+	Ogre::OverlayElement* hudGear,*hudVel,*hudBoost, *ovL[5],*ovR[5],*ovS[5],*ovU[5],
+		*hudAbs,*hudTcs, *hudTimes, *hudWarnChk,*hudWonPlace, *hudOpp[5][3],*hudOppB;
+	Ogre::Overlay* ovGear,*ovVel,*ovBoost, *ovAbsTcs,*ovCarDbg,*ovCarDbgTxt,
+		*ovCam, *ovTimes, *ovWarnWin, *ovOpp;
 
 	Ogre::String GetTimeString(float time) const;
 	void CreateHUD(), ShowHUD(bool hideAll=false), UpdMiniTer();
+	Ogre::Vector2 projectPoint(Ogre::Viewport* vp, const Ogre::Vector3& pos);
 
 	//  create  . . . . . . . . . . . . . . . . . . . . . . . . 
 	Ogre::String resCar, resTrk, resDrv;
@@ -262,7 +266,8 @@ protected:
 	//  checks
 	void chkFps(WP), chkGauges(WP),	chkArrow(WP), chkDigits(WP),
 		chkMinimap(WP), chkMiniZoom(WP), chkMiniRot(WP), chkMiniTer(WP),  // view
-		chkCamInfo(WP), chkTimes(WP), chkCarDbgBars(WP), chkCarDbgTxt(WP), chkBltDebug(WP), chkBltProfilerTxt(WP),
+		chkCamInfo(WP), chkTimes(WP), chkOpponents(WP),
+		chkCarDbgBars(WP), chkCarDbgTxt(WP), chkBltDebug(WP), chkBltProfilerTxt(WP),
 		chkReverse(WP), chkParticles(WP), chkTrails(WP),
 		chkAbs(WP), chkTcs(WP), chkGear(WP), chkRear(WP), chkRearInv(WP),  // car
 		chkOgreDialog(WP), chkAutoStart(WP), chkEscQuits(WP), chkBltLines(WP), chkLoadPics(WP),  // startup
@@ -273,7 +278,8 @@ protected:
 
 	void imgBtnCarClr(WP), btnCarClrRandom(WP);
 	MyGUI::ButtonPtr bRkmh, bRmph;  void radKmh(WP), radMph(WP);
-	MyGUI::ButtonPtr chDbgT,chDbgB, chBlt,chBltTxt, chFps, chTimes,chMinimp;
+	MyGUI::ButtonPtr chDbgT,chDbgB, chBlt,chBltTxt, chFps,
+		chTimes,chMinimp,chOpponents;
 
 	///  replay  -----------------------------
 	MyGUI::StaticTextPtr valRplPerc, valRplCur, valRplLen,
@@ -316,7 +322,8 @@ protected:
 	Ogre::String PathListTrk(int user=-1);//, PathListTrkPrv(int user=-1);
 
 	MyGUI::StaticImagePtr imgCar;	MyGUI::StaticTextPtr valCar;
-
+	void comboBoost(CMB), comboFlip(CMB);
+	
 	char s[512];
 };
 
