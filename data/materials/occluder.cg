@@ -1,0 +1,98 @@
+void occluder_vs(
+    in float4 p : POSITION, in float3 n : NORMAL,
+    out float4 cp : POSITION,
+    out float4 vp : TEXCOORD0, // view-space position
+    out float4 vn : TEXCOORD1,
+    uniform float4x4 wvpMat, uniform float4x4 wvMat)
+{
+    cp = mul(wvpMat, p);
+    vp = mul(wvMat, p);
+    vn = mul(wvMat, float4(n, 0));
+}
+
+void occluder_coord_vs(
+    in float4 p : POSITION, in float3 n : NORMAL,
+	in float2 uv : TEXCOORD0,
+    out float4 cp : POSITION,
+    out float4 vp : TEXCOORD0, // view-space position
+    out float4 vn : TEXCOORD1,
+    out float2 ouv : TEXCOORD2,
+    uniform float4x4 wvpMat, uniform float4x4 wvMat)
+{
+    cp = mul(wvpMat, p);
+    vp = mul(wvMat, p);
+    vn = mul(wvMat, float4(n, 0));
+	ouv=uv;
+}
+
+struct geomOut
+{
+    float4 c : COLOR0;
+};
+
+geomOut occluder_ps(in float4 iPosition : POSITION,
+in float4 vp : TEXCOORD0, in float4 vn : TEXCOORD1,
+  uniform float far)
+{
+    geomOut OUT;
+    OUT.c = float4(0,0,0,1);
+    return OUT;
+}
+
+geomOut occluder_alpha_ps(in float4 iPosition : POSITION,
+	in float4 vp : TEXCOORD0, in float4 vn : TEXCOORD1,
+	in float2 uv : TEXCOORD2,
+	uniform sampler2D diffuseMap : register(s0),
+	uniform float far)
+{
+    geomOut OUT;
+	OUT.c =  float4(0,0,0,1);
+	OUT.c.a=OUT.c.a*tex2D(diffuseMap, uv).a;
+    clip( OUT.c.a > 0.5f ? 1:-1);
+	return OUT;
+}
+
+void occluder_terrain_vs(
+    in float4 p : POSITION,
+    in float2 uv : TEXCOORD0, 
+    in float2 delta : TEXCOORD1, 
+	uniform float2   lodMorph,
+    out float4 cp : POSITION,
+    out float4 vp : TEXCOORD0, // view-space position
+    out float2 uvOut : TEXCOORD1,
+    uniform float4x4 vpMat,uniform float4x4 vMat, uniform float4x4 wMat)
+{
+	float4 worldPos = mul(wMat, p);
+	vp=mul(vMat, worldPos);
+	float toMorph = -min(0, sign(delta.y - lodMorph.y));
+	worldPos.y += delta.x * toMorph * lodMorph.x;
+	cp = mul(vpMat, worldPos);
+	uvOut=uv;
+}
+
+float4 expand(float4 v)
+{ 
+	return v * 2 - 1;
+}
+geomOut occluder_terrain_ps(in float4 iPosition : POSITION,
+	in float4 vp : TEXCOORD0, in float2 uvMisc : TEXCOORD1,
+	uniform sampler2D globalNormal : register(s0),
+	uniform float far,uniform float4x4 wvMat)
+{
+    geomOut OUT;
+//	float2 uv = uvMisc.xy;	
+//	float4 vn = float4(expand(tex2D(globalNormal, uv)).rgb,0);	
+//	vn = mul(wvMat, vn);
+//    OUT.c = float4(length(vp.xyz) / far,normalize(vn.xyz).xyz);
+    OUT.c = float4(0,0,0,1);
+    return OUT;
+}
+
+geomOut occluder_white_ps(in float4 iPosition : POSITION,in float4 vp : TEXCOORD0, in float4 uvMisc : TEXCOORD1,
+	uniform sampler2D globalNormal : register(s0))
+{
+    geomOut OUT;
+    OUT.c = float4(0,0,0,0);
+    clip(-1);
+	return OUT;
+}

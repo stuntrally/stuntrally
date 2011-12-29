@@ -287,6 +287,18 @@ namespace Ogre
 		tu->setTextureName(terrain->getTerrainNormalMap()->getName());
 		tu->setTextureAddressingMode(TextureUnitState::TAM_CLAMP);
 
+		//add occluder technique
+		Technique* occludertech = mat->createTechnique();
+		occludertech->setName("occluder");
+		occludertech->setSchemeName("occluder");
+		// Only supporting one pass
+		Pass* occluderpass = occludertech->createPass();
+
+		HighLevelGpuProgramPtr occludervprog = hmgr.getByName("occluder_terrain_vs");
+		HighLevelGpuProgramPtr occluderfprog = hmgr.getByName("occluder_terrain_ps");
+		occluderpass->setVertexProgram(occludervprog->getName());
+		occluderpass->setFragmentProgram(occluderfprog->getName());
+	
 		return mat;
 
 	}

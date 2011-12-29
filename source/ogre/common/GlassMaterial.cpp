@@ -157,7 +157,8 @@ void GlassMaterialGenerator::generate(bool fixedFunction)
 	// ----------------------------------------------------------------------- //
 	
 	createSSAOTechnique();
-	
+	createOccluderTechnique();
+
 	// indicate that we need the pssm split points
 	if (needShadows())
 		mParent->splitMtrs.push_back( mDef->getName() );

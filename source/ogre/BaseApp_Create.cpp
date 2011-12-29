@@ -189,6 +189,7 @@ void BaseApp::refreshCompositor(bool disableAll)
 		{
 			CompositorManager::getSingleton().setCompositorEnabled((*it), "ssaoNoMRT", false);
 		}
+		CompositorManager::getSingleton().setCompositorEnabled((*it), "GodRays", false);
 		CompositorManager::getSingleton().setCompositorEnabled((*it), "Motion Blur", false);
 		CompositorManager::getSingleton().setCompositorEnabled((*it), "SSAA", false);
 	}
@@ -239,6 +240,8 @@ void BaseApp::refreshCompositor(bool disableAll)
 		{
 			CompositorManager::getSingleton().setCompositorEnabled((*it), "ssaoNoMRT", pSet->ssao);
 		}
+		CompositorManager::getSingleton().setCompositorEnabled((*it), "GodRays", pSet->godrays);
+		
 	}
 }
 
@@ -261,6 +264,7 @@ void BaseApp::recreateCompositor()
 		mRoot->addResourceLocation(sPath + "/motionblur", "FileSystem", "Effects");
 		mRoot->addResourceLocation(sPath + "/ssaa", "FileSystem", "Effects");
 		mRoot->addResourceLocation(sPath + "/ssao", "FileSystem", "Effects");
+		mRoot->addResourceLocation(sPath + "/godrays", "FileSystem", "Effects");
 		ResourceGroupManager::getSingleton().initialiseResourceGroup("Effects");
 	}
 
@@ -284,6 +288,12 @@ void BaseApp::recreateCompositor()
 			CompositorManager::getSingleton().registerCompositorLogic("ssaoNoMRT", mSSAOLogic);
 		}
 
+	}
+	if (!mGodRaysLogic) 
+	{
+		mGodRaysLogic = new GodRaysLogic();
+		mGodRaysLogic->setApp(this);
+		CompositorManager::getSingleton().registerCompositorLogic("GodRays", mGodRaysLogic);
 	}
 
 	if (CompositorManager::getSingleton().getByName("Motion Blur").isNull())
@@ -383,6 +393,7 @@ void BaseApp::recreateCompositor()
 		{
 			CompositorManager::getSingleton().addCompositor((*it), "ssaoNoMRT");
 		}
+		CompositorManager::getSingleton().addCompositor((*it), "GodRays");
 		CompositorManager::getSingleton().addCompositor((*it), "Bloom");
 		CompositorManager::getSingleton().addCompositor((*it), "Motion Blur");
 		CompositorManager::getSingleton().addCompositor((*it), "SSAA");
@@ -409,6 +420,7 @@ void BaseApp::Run( bool showDialog )
 //-------------------------------------------------------------------------------------
 BaseApp::BaseApp()
 	:mRoot(0), mSceneMgr(0), mWindow(0), mHDRLogic(0), mMotionBlurLogic(0),mSSAOLogic(0)
+	,mGodRaysLogic(0)
 	,mShaderGenerator(0),mMaterialMgrListener(0)
 	,mShowDialog(1), mShutDown(false), bWindowResized(0), bFirstRenderFrame(true)
 	,mInputManager(0), mMouse(0), mKeyboard(0), mOISBsys(0)

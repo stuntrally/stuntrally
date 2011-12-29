@@ -339,7 +339,10 @@ void App::chkVidSSAO(WP wp)
 {		
 	ChkEv(ssao);  refreshCompositor();
 }
-
+void App::chkVidGodRays(WP wp)
+{		
+	ChkEv(godrays);  refreshCompositor();
+}
 void App::slBloomInt(SL)
 {
 	Real v = val/res;  if (bGI)  pSet->bloomintensity = v;

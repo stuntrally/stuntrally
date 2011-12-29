@@ -138,7 +138,8 @@ void MaterialGenerator::generate(bool fixedFunction)
 	// ----------------------------------------------------------------------- //
 	
 	createSSAOTechnique();
-	
+	createOccluderTechnique();
+
 	// indicate that we need the pssm split points
 	if (needShadows())
 		mParent->splitMtrs.push_back( mDef->getName() );
@@ -332,6 +333,63 @@ void MaterialGenerator::createSSAOTechnique()
 		ssaopass->setCullingMode( CULL_NONE );
 		ssaopass->setAlphaRejectSettings(CMPF_GREATER_EQUAL, 128);
 		ssaopass->createTextureUnitState( mDiffuseMap );
+	}
+}
+
+//----------------------------------------------------------------------------------------
+
+void MaterialGenerator::createOccluderTechnique()
+{
+	Technique* occluderpasstech = mMaterial->createTechnique();
+	occluderpasstech->setName("occluder");
+	occluderpasstech->setSchemeName("occluder");
+	Pass* occluderpass = occluderpasstech->createPass();
+
+	HighLevelGpuProgramManager& hmgr = HighLevelGpuProgramManager::getSingleton();
+	
+	
+	// choose vertex program
+	std::string vprogname = "occluder_vs";
+	if ( mDef->mProps->transparent )
+		vprogname = "occluder_coord_vs";
+
+	//TODO:this is a workaround until a valid sun material is available to be used.
+	if(StringUtil::startsWith(this->mDef->getName(), "sky/"))
+	{
+		//use the sky object as the sun 
+		vprogname = mVertexProgram->getName();
+	}
+	// choose fragment program
+	std::string fprogname = "occluder_ps";
+	if ( mDef->mProps->transparent )
+		fprogname = "occluder_alpha_ps";
+	//TODO:this is a workaround until a valid sun material is available to be used.
+	if(StringUtil::startsWith(this->mDef->getName(), "sky/"))
+	{
+		//use the sky object as the sun 
+		fprogname = mFragmentProgram->getName();
+	}
+	
+	occluderpass->setVertexProgram(vprogname);
+	occluderpass->setFragmentProgram(fprogname);
+	
+	if (mDef->mProps->alphaRejectValue  > 0)
+		occluderpass->setAlphaRejectSettings(mDef->mProps->alphaRejectFunc, mDef->mProps->alphaRejectValue);
+	
+	if ( !mDef->mProps->transparent ) 
+	{
+		occluderpass->setCullingMode( chooseCullingMode() );
+		if(StringUtil::startsWith(this->mDef->getName(), "sky/"))
+		{
+			//Set the sky object as the sun 
+			occluderpass->createTextureUnitState( mDiffuseMap );
+		}
+	}
+	else
+	{
+		occluderpass->setCullingMode( CULL_NONE );
+		occluderpass->setAlphaRejectSettings(CMPF_GREATER_EQUAL, 128);
+		occluderpass->createTextureUnitState( mDiffuseMap );
 	}
 }
 
@@ -552,7 +610,11 @@ Ogre::String MaterialGenerator::chooseShadowCasterMaterial()
 		if(mParent->getShadowsDepth())
 		{
 			Ogre::CullingMode cmode = chooseCullingMode();
-			if(cmode == Ogre::CULL_NONE)
+			if(mShader->wind == 2)
+			{
+				shadowCasterMaterial = "PSSM/shadow_caster_wind";				
+			}
+			else if(cmode == Ogre::CULL_NONE)
 			{
 				shadowCasterMaterial = "PSSM/shadow_caster_nocull";				
 			}

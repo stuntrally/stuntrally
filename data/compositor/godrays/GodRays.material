@@ -1,0 +1,65 @@
+vertex_program GodRays_VS cg
+{
+	source GodRays.cg
+	profiles vs_4_0 vs_1_1 arbvp1
+	entry_point GodRays_VS
+	
+	default_params
+    {
+		param_named lightPosition float4 512 512 512 0
+    }
+}
+
+fragment_program GodRays_FP cg
+{
+	source GodRays.cg
+	profiles ps_4_0 ps_3_0 arbfp1
+	entry_point GodRays_FP
+}
+
+material Compositor/GodRaysFinal
+{
+	technique
+	{
+        pass
+        {
+			scene_blend add
+            vertex_program_ref GodRays_VS
+            {
+            }
+
+            fragment_program_ref GodRays_FP
+            {
+            }
+			
+			texture_unit
+			{
+				tex_coord_set 0
+				tex_address_mode clamp
+			}
+        }
+	}
+}
+
+material Compositor/GodRays
+{
+	technique
+	{
+        pass
+        {
+            vertex_program_ref GodRays_VS
+            {
+            }
+
+            fragment_program_ref GodRays_FP
+            {
+            }
+			
+			texture_unit
+			{
+				tex_coord_set 0
+				tex_address_mode clamp
+			}
+        }
+	}
+}

@@ -129,7 +129,7 @@ SETTINGS::SETTINGS() :  ///  Defaults
 	//  video
 	bloom(false), bloomintensity(0.2), bloomorig(1.0), hdr(false),
 	motionblur(false), motionblurintensity(0.3),
-	all_effects(false), ssaa(true), ssao(false),
+	all_effects(false), ssaa(true), ssao(false), godrays(false),
 	windowx(800), windowy(600), fullscreen(false), fsaa(0), vsync(false),
 	buffer("FBO"), rendersystem("OpenGL Rendering Subsystem"),
 	//  input

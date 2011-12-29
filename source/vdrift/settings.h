@@ -60,7 +60,7 @@ public:
 	float bloomintensity, bloomorig, motionblurintensity;
 	//  video
 	int windowx, windowy, fsaa;
-	bool fullscreen, vsync, ssaa, ssao;
+	bool fullscreen, vsync, ssaa, ssao, godrays;
 	std::string buffer, rendersystem;
 	
 	//  input

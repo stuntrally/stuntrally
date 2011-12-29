@@ -111,7 +111,8 @@ void WaterMaterialGenerator::generate(bool fixedFunction)
 	// ----------------------------------------------------------------------- //
 	
 	createSSAOTechnique();
-	
+	createOccluderTechnique();
+
 	// indicate we need 'time' parameter set every frame
 	mParent->timeMtrs.push_back(mDef->getName());
 	

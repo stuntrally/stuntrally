@@ -66,6 +66,7 @@ protected:
 	
 	// techniques
 	virtual void createSSAOTechnique();
+	virtual void createOccluderTechnique();
 	
 	// vertex program
 	virtual Ogre::HighLevelGpuProgramPtr createVertexProgram();

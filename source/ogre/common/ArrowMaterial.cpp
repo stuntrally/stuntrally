@@ -46,6 +46,7 @@ void ArrowMaterialGenerator::generate(bool fixedFunction)
 	// ----------------------------------------------------------------------- //
 	
 	createSSAOTechnique();
+	createOccluderTechnique();
 }
 
 //----------------------------------------------------------------------------------------

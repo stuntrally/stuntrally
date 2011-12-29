@@ -62,4 +62,15 @@ public:
 private:
 	BaseApp * mApp;
 };
+
+// The compositor logic for the GodRay compositor
+class GodRaysLogic : public ListenerFactoryLogic
+{
+protected:
+	virtual Ogre::CompositorInstance::Listener* createListener(Ogre::CompositorInstance* instance);
+public:
+	void setApp(BaseApp* app);
+private:
+	BaseApp * mApp;
+};
 #endif

@@ -280,3 +280,96 @@ void SSAOListener::notifyMaterialRender(Ogre::uint32 pass_id, Ogre::MaterialPtr 
         if (params->_findNamedConstantDefinition("far"))
             params->setNamedConstant("far", cam->getFarClipDistance());
 }
+
+
+
+class GodRaysListener: public Ogre::CompositorInstance::Listener
+{
+protected:
+public:
+	GodRaysListener(BaseApp * app);
+	virtual ~GodRaysListener();
+	BaseApp * mApp;
+	virtual void notifyMaterialSetup(Ogre::uint32 pass_id, Ogre::MaterialPtr &mat);
+	virtual void notifyMaterialRender(Ogre::uint32 pass_id, Ogre::MaterialPtr &mat);
+
+	Ogre::Vector4 SunScreenSpacePosition;
+private:
+	Ogre::GpuProgramParametersSharedPtr params1;
+	Ogre::GpuProgramParametersSharedPtr params2;
+	Ogre::GpuProgramParametersSharedPtr params3;
+
+};
+
+Ogre::CompositorInstance::Listener* GodRaysLogic::createListener(Ogre::CompositorInstance* instance)
+{
+	GodRaysListener* listener = new GodRaysListener(mApp);
+	Ogre::Viewport* vp = instance->getChain()->getViewport();
+	return listener;
+}
+
+void GodRaysLogic::setApp(BaseApp* app)
+{
+	mApp = app;
+}
+
+
+GodRaysListener::GodRaysListener(BaseApp* app)
+	:mApp(app)
+{
+	SunScreenSpacePosition = Ogre::Vector4(0,0,0,1);
+}
+GodRaysListener::~GodRaysListener()
+{
+}
+
+void GodRaysListener::notifyMaterialSetup(Ogre::uint32 pass_id, Ogre::MaterialPtr &mat)
+{
+	if (pass_id == 1)
+		params1 = mat->getTechnique(0)->getPass(0)->getVertexProgramParameters();
+	else if (pass_id == 2)
+		params2 = mat->getTechnique(0)->getPass(0)->getVertexProgramParameters();
+	if (pass_id == 3)
+		params3 = mat->getTechnique(0)->getPass(0)->getVertexProgramParameters();
+
+}
+void clamp(Ogre::Vector2 &v)  {
+	v.x = v.x < -1 ? -1 : (v.x > 1 ? 1 : v.x);
+	v.y = v.y < -1 ? -1 : (v.y > 1 ? 1 : v.y);
+}
+
+void GodRaysListener::notifyMaterialRender(Ogre::uint32 pass_id, Ogre::MaterialPtr &mat)
+{
+
+	 // this is the camera you're using
+    #ifndef ROAD_EDITOR
+	Ogre::Camera *cam = mApp->mSplitMgr->mCameras.front();
+	#else
+	Ogre::Camera *cam = mApp->mCamera;
+	#endif
+
+	//update the sun position
+	Ogre::Light* sun =((App*)mApp)->sun;
+	if(sun != NULL)
+	{
+		Ogre::Vector3 sunPosition = sun->getDirection() *100;//sun->_getDerivedOrientation() * sun->_getDerivedPosition();
+		//if(cam->getPointExtrusionDistance(sun) > 0)
+		{
+			Ogre::Vector3 worldViewPosition = cam->getViewMatrix() * sunPosition;
+			Ogre::Vector3 hcsPosition = cam->getProjectionMatrix() * worldViewPosition;
+			Ogre::Vector2 sunScreenSpacePosition = Ogre::Vector2(0.5f + (0.5f * hcsPosition.x), 0.5f + (0.5f * -hcsPosition.y));
+			clamp(sunScreenSpacePosition);
+			SunScreenSpacePosition = Ogre::Vector4 ( sunScreenSpacePosition.x, sunScreenSpacePosition.y, 0, 1 );
+		}
+	//	else
+		{
+			//SunScreenSpacePosition =Ogre::Vector4 ( 0, 0, 0, 1 );
+		}
+	}
+	if (pass_id == 1)
+		params1->setNamedConstant("lightPosition", SunScreenSpacePosition);
+	else if (pass_id == 2)
+		params2->setNamedConstant("lightPosition", SunScreenSpacePosition);
+	if (pass_id == 3)
+		params3->setNamedConstant("lightPosition", SunScreenSpacePosition);	 
+}

@@ -1,0 +1,64 @@
+compositor GodRays
+{
+    technique
+    {
+		compositor_logic GodRays
+		texture rt0 target_width target_height PF_R8G8B8
+		texture rt1 target_width target_height PF_R8G8B8
+		
+	//	target rt1
+	//	{
+	//		input previous
+	//	}
+	
+	    //occluder pass
+	    target rt1
+        {
+			input none      
+			material_scheme occluder
+            pass clear
+            {
+            }         
+            pass render_scene
+            {
+            }
+        }
+
+		target rt0
+        {
+            input previous
+
+            pass render_quad
+            {
+				identifier 1
+                material Compositor/GodRays
+				input 0 rt1
+            }
+        }
+
+		
+		target rt1
+        {
+            input previous
+
+            pass render_quad
+            {
+				identifier 2
+                material Compositor/GodRays
+				input 0 rt0
+            }
+        }
+		
+		target_output
+        {
+            input previous
+
+            pass render_quad
+            {
+				identifier 3
+                material Compositor/GodRaysFinal
+				input 0 rt1
+            }
+        }
+    }
+}
