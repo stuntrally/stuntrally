@@ -323,18 +323,21 @@ void App::UpdateHUD(int carId, CarModel* pCarM, CAR* pCar, float time, Viewport*
 				cm->UpdTrackPercent();
 				float perc = cm->trackPercent;  //todo: sort based on perc..
 
-				if (o != carId)  // no dist to self
-				{
-					Vector3 v = carModels[o]->pMainNode->getPosition() - pCarM->pMainNode->getPosition();
+				bool bGhost = cm->eType == CarModel::CT_GHOST;
+				bool bGhostVis = (ghplay.GetNumFrames() > 0) && pSet->rpl_ghost;
+
+				if (o == carId || bGhost && !bGhostVis)  // no dist to self or to empty ghost
+					hudOpp[o][1]->setCaption("");
+				else
+				{	Vector3 v = carModels[o]->pMainNode->getPosition() - pCarM->pMainNode->getPosition();
 					float dist = v.length();  // meters, mph:feet?
 					//  dist m
 					sprintf(ss, "%3.0fm", dist);		hudOpp[o][1]->setCaption(ss);
 					Real h = std::min(60.f, dist) / 60.f;
 					c.setHSB(0.5f - h * 0.4f, 1,1);		hudOpp[o][1]->setColour(c);
 				}
-				else  hudOpp[o][1]->setCaption("");
 					
-				if (cm->eType != CarModel::CT_GHOST)  // todo, save perc for ghost/replay ..
+				if (!bGhost)  // todo, save perc for ghost/replay ..
 				{	//  percent %
 					sprintf(ss, "%3.0f%%", perc);		hudOpp[o][0]->setCaption(ss);
 					c.setHSB(perc*0.01f*0.4f, 0.7f,1);	hudOpp[o][0]->setColour(c);
