@@ -42,6 +42,7 @@ void CarModel::setVisible(bool vis)
 void CarModel::ResetChecks(bool bDist)  // needs to be done after road load!
 {
 	iCurChk = -1;  iNumChks = 0;  // reset lap, chk vars
+	trackPercent = 0.f;
 	if (!pApp || !pApp->road)  return;
 	
 	const SplineRoad* road = pApp->road;
@@ -115,7 +116,8 @@ void CarModel::UpdTrackPercent()
 		}
 		perc = 100.f * dist / distTotal;
 	}
-	trackPercent = perc;
+	if (perc > trackPercent)
+		trackPercent = perc;
 }
 
 
