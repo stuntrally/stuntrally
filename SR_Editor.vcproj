@@ -805,6 +805,14 @@
 				>
 			</File>
 			<File
+				RelativePath=".\source\ogre\common\MaterialGen\MaterialGeneratorFrag.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\source\ogre\common\MaterialGen\MaterialGeneratorVert.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\source\ogre\common\MaterialGen\MaterialProperties.cpp"
 				>
 			</File>
