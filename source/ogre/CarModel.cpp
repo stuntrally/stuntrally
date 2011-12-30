@@ -39,11 +39,24 @@ CarModel::CarModel(unsigned int index, eCarType type, const std::string name,
 	iIndex = index;  sDirname = name;  mSceneMgr = sceneMgr;
 	pSet = set;  pGame = game;  sc = s;  mCamera = cam;  eType = type;
 	bGetStPos = true;  fChkTime = 0.f;  iChkWrong = -1;  iWonPlace = 0;
-	iCurChk = -1;  iNumChks = 0;  //ResetChecks();  // road isnt yet
+	iCurChk = -1;  iNumChks = 0;  iNextChk = 0;  //ResetChecks();  // road isnt yet
+	distFirst = 1.f;  distLast = 1.f;  distTotal = 10.f;  trackPercent = 0.f;
 
+	for (int w = 0; w < 4; ++w)
+	{	ps[w] = 0;  pm[w] = 0;  pd[w] = 0;
+		pflW[w] = 0;  pflM[w] = 0;  pflMs[w] = 0;
+		ndWh[w] = 0;  ndWhE[w] = 0; whTrl[w] = 0;
+		ndBrake[w] = 0;
+		wht[w] = 0.f;  whTerMtr[w] = 0;  whRoadMtr[w] = 0;  }
+	for (int i=0; i < 2; i++)
+		pb[i] = 0;
+	ph = 0;
+
+	//  names for local play
 	if (type == CT_GHOST)		sDispName = "Ghost";
 	else if (type == CT_LOCAL)	sDispName = "Player"+toStr(iIndex+1);
 	
+	//  get car start pos from track  ------
 	if (type != CT_GHOST)  // ghost has pCar, dont create
 	{
 		int i = set->collis_cars ? iIndex : 0;  //  offset car start pos when cars collide
@@ -58,16 +71,6 @@ CarModel::CarModel(unsigned int index, eCarType type, const std::string name,
 		pCar = pGame->LoadCar(sDirname, pos, rot, true, false);
 		if (!pCar)  LogO("Error creating car " + sDirname);
 	}
-	
-	for (int w = 0; w < 4; ++w)
-	{	ps[w] = 0;  pm[w] = 0;  pd[w] = 0;
-		pflW[w] = 0;  pflM[w] = 0;  pflMs[w] = 0;
-		ndWh[w] = 0;  ndWhE[w] = 0; whTrl[w] = 0;
-		ndBrake[w] = 0;
-		wht[w] = 0.f;  whTerMtr[w] = 0;  whRoadMtr[w] = 0;  }
-	for (int i=0; i < 2; i++)
-		pb[i] = 0;
-	ph = 0;
 }
 
 CarModel::~CarModel()
@@ -115,11 +118,86 @@ void CarModel::setVisible(bool vis)
 	UpdParsTrails(vis);
 }
 
-void CarModel::ResetChecks()  // needs to be done after road load!
+void CarModel::ResetChecks(bool bDist)  // needs to be done after road load!
 {
 	iCurChk = -1;  iNumChks = 0;  // reset lap, chk vars
-	if (pApp && pApp->road)
-		iNextChk = pSet->trackreverse ? pApp->road->iChkId1Rev : pApp->road->iChkId1;
+	if (!pApp || !pApp->road)  return;
+	
+	const SplineRoad* road = pApp->road;
+	iNextChk = pSet->trackreverse ? road->iChkId1Rev : road->iChkId1;
+
+	//  percent const  ------
+	if (bDist && road->mChks.size() > 0)
+	{
+		const Vector3& firstC = road->mChks[road->iChkId1].pos, lastC = road->mChks[road->iChkId1Rev].pos;
+
+		Vector3 vFirst = vStartPos - firstC;  distFirst = vFirst.length();
+		Vector3 vLast  = lastC - vStartPos;   distLast = vLast.length();
+		distTotal = distFirst + distLast + road->chksRoadLen;
+		/*C*
+		LogO("chk first: "+toStr(distFirst));
+		LogO("chk last: "+toStr(distLast));
+		LogO("chk total: "+toStr(distTotal));/**/
+	}
+}
+
+//  get track driven dist part in %
+//--------------------------------------------------------------------------------------------------------
+void CarModel::UpdTrackPercent()
+{
+	if (!pApp || !pApp->road)  return;
+	const SplineRoad* road = pApp->road;
+	
+	float perc = 0.f;
+	if (road && road->mChks.size() > 0 && eType != CarModel::CT_GHOST)
+	{
+		const Vector3& car = pMainNode->getPosition(), next = road->mChks[iNextChk].pos,
+			start = vStartPos, curr = road->mChks[std::max(0,iCurChk)].pos;
+		bool bRev = pSet->trackreverse;
+		Real firstD = bRev ? distLast : distFirst;
+		Real nextR = road->mChks[iNextChk].r;  // chk .r radius to tweak when entering chk..
+
+		Real dist = 0.f;
+		if (iNumChks > 0)  dist = firstD;  // already after 1st chk
+		if (iNumChks > 1)  dist +=  // after 1st to 2nd chk or more
+			road->mChks[iNumChks-2].dist[bRev ? 1 : 0];
+							
+		
+		float dist01 = 0.f;  // smooth dist part
+		//  start to 1st chk
+		if (iNumChks == 0)
+		{
+			Vector3 curDist  = car - start;
+			Vector3 chksDist = next - start;  // first
+			dist01 = (curDist.length() /*- nextR*/) / (chksDist.length() - nextR);
+
+			float percD = std::min(1.f, std::max(0.f, dist01 ));  // clamp to 0..1
+			dist += percD * firstD;
+		}
+		//  last chk to finish
+		else if (iNumChks == road->mChks.size())
+		{
+			Vector3 curDist  = start - car;
+			Vector3 chksDist = curr - start;  // last
+			dist01 = 1.f - (curDist.length() /*- nextR*/) / (chksDist.length() - nextR);
+
+			float percD = std::min(1.f, std::max(0.f, dist01 ));  // clamp to 0..1
+			dist += percD * (bRev ? distFirst : distLast);  //lastD;
+		}
+		else  // between 2 checks
+		{
+			Vector3 curDist  = car  - next;   // car dist to next checkpoint
+			Vector3 chksDist = curr - next;  // divide by (cur to next) checks distance
+			Real ckD = chksDist.length();
+
+			dist01 = 1.f - (curDist.length() - nextR) / (ckD - road->mChks[iCurChk].r);
+
+			float percD = std::min(1.f, std::max(0.f, dist01 ));  // clamp to 0..1
+			dist += percD * (ckD + road->mChks[iCurChk].r*0.8f);  //road->mChks[iNumChks-1].dist;
+		}
+		perc = 100.f * dist / distTotal;
+	}
+	trackPercent = perc;
 }
 
 
