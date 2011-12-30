@@ -978,11 +978,15 @@
 				Name="Scene"
 				>
 				<File
-					RelativePath=".\source\ogre\CarModel.cpp"
+					RelativePath=".\source\ogre\CarModel.h"
 					>
 				</File>
 				<File
-					RelativePath=".\source\ogre\CarModel.h"
+					RelativePath=".\source\ogre\CarModel_Create.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\source\ogre\CarModel_Update.cpp"
 					>
 				</File>
 				<File
