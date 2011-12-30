@@ -55,10 +55,7 @@ void CarModel::ResetChecks(bool bDist)  // needs to be done after road load!
 		Vector3 vFirst = vStartPos - firstC;  distFirst = vFirst.length();
 		Vector3 vLast  = lastC - vStartPos;   distLast = vLast.length();
 		distTotal = distFirst + distLast + road->chksRoadLen;
-		/*C*
-		LogO("chk first: "+toStr(distFirst));
-		LogO("chk last: "+toStr(distLast));
-		LogO("chk total: "+toStr(distTotal));/**/
+		//LogO("Chk first: "+toStr(distFirst)+" last: "+toStr(distLast)+" total: "+toStr(distTotal));
 	}
 }
 

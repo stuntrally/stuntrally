@@ -85,39 +85,34 @@ void SplineRoad::SetChecks()  // after xml load
 	if (num == 1)  {
 		mChks[0].dist[0] = 10.f;  mChks[0].dist[1] = 10.f;  }
 
-	LogO("----  chks norm  ----");
+	//LogO("----  chks norm  ----");
 	int i = iChkId1;  Real sum = 0.f;
 	for (int n=0; n < num; ++n)
 	{
 		int i1 = (i + iDir + num) % num;
 		Vector3 vd = mChks[i].pos - mChks[i1].pos;
-		Real dist = vd.length() + mChks[n].r;
-			if (n == num-1)  dist = 0;  // not last pair
-		sum += dist;
-		mChks[n].dist[0] = sum;
-		//mChks[n].dist = dist;  sum += dist;
-		LogO("Chk " + toStr(i) +"-"+ toStr(i1) + " dist:" + toStr(dist) + " sum:" + toStr(mChks[n].dist[0]));
+		Real dist = (n == num-1) ? 0.f :  vd.length() + mChks[n].r;  // not last pair
+		sum += dist;  mChks[n].dist[0] = sum;
+		//LogO("Chk " + toStr(i) +"-"+ toStr(i1) + " dist:" + toStr(dist) + " sum:" + toStr(mChks[n].dist[0]));
 		i = i1;
 	}
 	chksRoadLen = sum;
-	LogO("chksRoadLen: "+toStr(sum));
-	LogO("chk 1st: "+toStr(iChkId1) + " last: "+toStr(iChkId1Rev) + " dir: "+toStr(iDir));
 
-	LogO("----  chks rev  ----");
+	//LogO("----  chks rev  ----");
 	i = iChkId1Rev;  sum = 0.f;
 	for (int n=0; n < num; ++n)
 	{
 		int i1 = (i - iDir + num) % num;
 		Vector3 vd = mChks[i].pos - mChks[i1].pos;
-		Real dist = vd.length() + mChks[n].r;
-			if (n == num-1)  dist = 0;  // not last pair
-		sum += dist;
-		mChks[n].dist[1] = sum;
-		//mChks[n].dist = dist;  sum += dist;
-		LogO("Chk " + toStr(i) +"-"+ toStr(i1) + " dist:" + toStr(dist) + " sum:" + toStr(mChks[n].dist[1]));
+		Real dist = (n == num-1) ? 0.f :  vd.length() + mChks[n].r;  // not last pair
+		sum += dist;  mChks[n].dist[1] = sum;
+		//LogO("Chk " + toStr(i) +"-"+ toStr(i1) + " dist:" + toStr(dist) + " sum:" + toStr(mChks[n].dist[1]));
 		i = i1;
 	}
-	LogO("----");
+	//LogO("----");
+	//LogO("chksRoadLen: "+toStr(sum));
+	//LogO("chk 1st: "+toStr(iChkId1) + " last: "+toStr(iChkId1Rev) + " dir: "+toStr(iDir));
+	//LogO("----");
 }
 
 	
