@@ -306,7 +306,7 @@ void App::editScaleAllMul(EditPtr)
 //-----------------------------------------------------------------------------------------------------------
 
 ///  New (duplicate)
-void App::btnTrackNew(WP)  //- ..
+void App::btnTrackNew(WP)
 {
 	String name = trkName->getCaption();
 	name = StringUtil::replaceAll(name, "*", "");
@@ -326,11 +326,12 @@ void App::btnTrackNew(WP)  //- ..
 	Copy(pathTrkPrv[bListTrackU] + sListTrack + "_ter.jpg", pathTrkPrv[1] + name + "_ter.jpg");
 
 	sListTrack = name;  pSet->track = name;  pSet->track_user = 1;  UpdWndTitle();
+	FillTrackLists();
 	TrackListUpd();
 }
 
 ///  Rename
-void App::btnTrackRename(WP)  // ?...
+void App::btnTrackRename(WP)
 {
 	String name = trkName->getCaption();
 
@@ -355,6 +356,7 @@ void App::btnTrackRename(WP)  // ?...
 		Rename(from + "_ter.jpg", to + "_ter.jpg");
 		
 		sListTrack = name;  pSet->track = sListTrack;  pSet->track_user = 1;/**/  UpdWndTitle();
+		FillTrackLists();
 		TrackListUpd();  //listTrackChng(trkList,0);
 	}
 }
@@ -382,6 +384,7 @@ void App::msgTrackDel(Message* sender, MessageBoxStyle result)
 	Delete(pathTrkPrv[bListTrackU] + sListTrack + "_ter.jpg");
 
 	String st = pSet->track;
+	FillTrackLists();
 	TrackListUpd();
 	if (st != pSet->track)
 		LoadTrack();  //load 1st if deleted cur
