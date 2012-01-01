@@ -553,7 +553,9 @@ void App::newPoses()
 //  updatePoses - Set car pos for Ogre nodes, update particles, trails
 //---------------------------------------------------------------------------------------------------------------
 void App::updatePoses(float time)
-{	
+{
+	if (carModels.size() == 0)  return;
+	
 	//  Update all carmodels with their newPosInfo
 	int i = 0;
 	const CarModel* playerCar = carModels.front();
