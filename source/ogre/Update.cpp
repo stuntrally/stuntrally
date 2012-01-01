@@ -553,9 +553,14 @@ void App::newPoses()
 //  updatePoses - Set car pos for Ogre nodes, update particles, trails
 //---------------------------------------------------------------------------------------------------------------
 void App::updatePoses(float time)
-{	
+{
+	if (carModels.size() == 0)  return;
+	
 	//  Update all carmodels with their newPosInfo
-	int i=0;
+	int i = 0;
+	const CarModel* playerCar = carModels.front();
+	const PosInfo& playerPos = newPosInfos.front();
+
 	std::vector<CarModel*>::iterator carIt = carModels.begin();
 	std::vector<PosInfo>::iterator newPosIt = newPosInfos.begin();
 	while (carIt != carModels.end())
@@ -574,7 +579,6 @@ void App::updatePoses(float time)
 			//  hide ghost car when close to player car (only when not transparent)
 			if (!pSet->rpl_alpha)
 			{
-				CarModel* playerCar = carModels.front();
 				float distance = carM->pMainNode->getPosition().squaredDistance(playerCar->pMainNode->getPosition());
 				if (distance < 16.f)
 					carM->setVisible(false);
@@ -586,18 +590,34 @@ void App::updatePoses(float time)
 		//  nick text 3d pos
 		//projectPoint()
 		
-		//  pos on minimap  x,y = -1..1
-		//if (!bGhost)
-		{	float xp =(-newPosInfo.pos[2] - minX)*scX*2-1,
-				  yp =-(newPosInfo.pos[0] - minY)*scY*2+1;
+		///  pos on minimap  x,y = -1..1
+		{
+			Vector2 mp(-newPosInfo.pos[2],newPosInfo.pos[0]);
+			Vector2 plr(-playerPos.pos[2],playerPos.pos[0]);
+
+			//  other cars in player's car space
+			if (i > 0 && pSet->mini_zoomed)
+			{
+				mp -= plr;  mp *= pSet->zoom_minimap;
+
+				if (pSet->mini_rotated)
+				{
+					float a = playerCar->angCarY * PI_d/180.f;  Vector2 np;
+					np.x = mp.x*cosf(a) - mp.y*sinf(a);  // rotate
+					np.y = mp.x*sinf(a) + mp.y*cosf(a);  mp = -np;
+  				}
+			}
+
+			float xp = std::min(1.f, std::max(-1.f,  (mp.x - minX)*scX*2.f-1.f )),
+				  yp = std::min(1.f, std::max(-1.f, -(mp.y - minY)*scY*2.f+1.f ));
 			newPosInfos[i].miniPos = Vector2(xp,yp);
-			
+						
 			if (vNdPos[i])
 				if (bGhost && !bGhostVis)  vNdPos[i]->setPosition(-100,0,0);  //hide
-				else if (pSet->mini_zoomed)  vNdPos[i]->setPosition(0,0,0);
+				else if (pSet->mini_zoomed && i==0)  vNdPos[i]->setPosition(0,0,0);
 				else					vNdPos[i]->setPosition(xp,yp,0);
 		}
-		carIt++;  newPosIt++;  i++;
+		++carIt;  ++newPosIt;  ++i;
 	}
 	
 	///  Replay info
@@ -622,7 +642,6 @@ void App::UpdHUDRot(int carId, CarModel* pCarM, float vel, float rpm, bool miniO
 	/// TODO: rpm vel needle angles,aspect are wrong [all from the last car when bloom is on (any effects)], hud vals are ok
 	//if (!pCarM || carId == -1)  return;
 	//pCarM = carModels[carId];
-	// todo:  poses when mini rotated or zoomed ..
 
     const float rsc = -180.f/6000.f, rmin = 0.f;  //rmp
     float angrmp = rpm*rsc + rmin;
@@ -652,7 +671,7 @@ void App::UpdHUDRot(int carId, CarModel* pCarM, float vel, float rpm, bool miniO
 
 		if (pSet->mini_rotated && pSet->mini_zoomed)
 			{  px[i] = psx*tp[i][0];  py[i] = psy*tp[i][1];  }
-		else{  px[i] = psx*cp*1.4f;     py[i] =-psy*sp*1.4f;  }
+		else{  px[i] = psx*cp*1.4f;   py[i] =-psy*sp*1.4f;  }
 
 		float z = pSet->mini_rotated ? 0.70f/pSet->zoom_minimap : 0.5f/pSet->zoom_minimap;
 		if (!pSet->mini_rotated)

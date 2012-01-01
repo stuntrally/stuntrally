@@ -158,7 +158,7 @@
 				AssemblerListingLocation=""
 				ObjectFile=".\Release/"
 				ProgramDataBaseFileName=".\Release/"
-				WarningLevel="2"
+				WarningLevel="1"
 				SuppressStartupBanner="true"
 				CallingConvention="0"
 				DisableSpecificWarnings="4103;4305;4244;"
@@ -272,11 +272,11 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="SDL.lib libvorbisfile.lib OgreMain.lib OIS.lib OgreTerrain.lib OgrePaging.lib MyGUIEngine.lib MyGUI.OgrePlatform.lib"
+				AdditionalDependencies="SDL.lib libvorbisfile.lib OgreMain.lib OIS.lib OgreTerrain.lib OgrePaging.lib OgreRTShaderSystem.lib MyGUIEngine.lib MyGUI.OgrePlatform.lib"
 				OutputFile="StuntRally_rd.exe"
 				LinkIncremental="1"
 				SuppressStartupBanner="true"
-				AdditionalLibraryDirectories="e:\v\ogre171\lib\Release;e:\v\ogre171\Dependencies\lib\Release;e:\v\ogre171\MyGUI3.0\lib\Release"
+				AdditionalLibraryDirectories="e:\v\ogre171\lib\Release;e:\v\ogre171\Dependencies\lib\Release;&quot;e:\v\MyGUI-3.2\trunk\bin\lib\Release&quot;"
 				IgnoreDefaultLibraryNames=""
 				GenerateDebugInformation="true"
 				ProgramDatabaseFile="StuntRally_rd.pdb"
@@ -978,11 +978,15 @@
 				Name="Scene"
 				>
 				<File
-					RelativePath=".\source\ogre\CarModel.cpp"
+					RelativePath=".\source\ogre\CarModel.h"
 					>
 				</File>
 				<File
-					RelativePath=".\source\ogre\CarModel.h"
+					RelativePath=".\source\ogre\CarModel_Create.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\source\ogre\CarModel_Update.cpp"
 					>
 				</File>
 				<File
@@ -1507,6 +1511,14 @@
 				</File>
 				<File
 					RelativePath=".\source\ogre\common\MaterialGen\MaterialGenerator.h"
+					>
+				</File>
+				<File
+					RelativePath=".\source\ogre\common\MaterialGen\MaterialGeneratorFrag.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\source\ogre\common\MaterialGen\MaterialGeneratorVert.cpp"
 					>
 				</File>
 				<File

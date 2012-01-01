@@ -103,13 +103,15 @@ public:
 	CAR* pCar;
 	
 	float angCarY;  // car yaw angle for minimap
+	float distFirst, distLast, distTotal;  // checks const distances set at start
+	float trackPercent;  void UpdTrackPercent();  // % of track driven
 
 	//  start pos, lap  checkpoint vars
 	bool bGetStPos;  Ogre::Matrix4 matStPos;  Ogre::Vector4 vStDist;
 	int iInChk, iCurChk, iNextChk, iNumChks, iWonPlace;  // cur checkpoint -1 at start
 	bool bInSt, bWrongChk;  float fChkTime;  int iChkWrong;
 	//bool Checkpoint(const PosInfo& posInfo, class SplineRoad* road);  // update
-	Ogre::Vector3 vStartPos;  void ResetChecks();
+	Ogre::Vector3 vStartPos;  void ResetChecks(bool bDist=false);
 	
 private:
 	Ogre::Camera* mCamera;
