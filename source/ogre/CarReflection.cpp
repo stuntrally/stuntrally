@@ -79,6 +79,7 @@ void CarReflection::Create()
 			Viewport* vp = mRT->addViewport(mCam);
 			vp->setOverlaysEnabled(false);
 			vp->setVisibilityMask(RV_MaskReflect);
+			vp->setShadowsEnabled(false);
 			mRT->setAutoUpdated(false);
 			//mRT->addListener(this);  //-
 			mCam->setPosition(Vector3::ZERO);
