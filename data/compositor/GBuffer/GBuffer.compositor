@@ -1,0 +1,22 @@
+compositor gbuffer
+{
+    technique
+    {
+		//compositor_logic gbuffer
+		
+        // temporary textures
+		texture mrt_output target_width target_height PF_FLOAT16_RGBA PF_FLOAT16_RGBA chain_scope
+		
+        // the scene we want to modulate
+        target mrt_output
+        {
+			input none
+			pass clear 
+			{
+			}
+			pass render_scene
+			{
+			}
+		}
+    }
+}

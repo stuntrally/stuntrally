@@ -180,6 +180,10 @@ void BaseApp::refreshCompositor(bool disableAll)
 {
 	for (std::list<Viewport*>::iterator it=mSplitMgr->mViewports.begin(); it!=mSplitMgr->mViewports.end(); it++)
 	{
+		if(MaterialGenerator::MRTSupported())
+		{
+			CompositorManager::getSingleton().setCompositorEnabled((*it), "gbuffer", false);
+		}
 		CompositorManager::getSingleton().setCompositorEnabled((*it), "Bloom", false);
 		CompositorManager::getSingleton().setCompositorEnabled((*it), "HDR", false);
 		if(MaterialGenerator::MRTSupported())
@@ -229,6 +233,11 @@ void BaseApp::refreshCompositor(bool disableAll)
 
 	for (std::list<Viewport*>::iterator it=mSplitMgr->mViewports.begin(); it!=mSplitMgr->mViewports.end(); it++)
 	{
+		if(MaterialGenerator::MRTSupported())
+		{
+			//the condition here is any compositor needing the gbuffers like ssao ,soft particles
+			CompositorManager::getSingleton().setCompositorEnabled((*it), "gbuffer", pSet->ssao);
+		}
 		CompositorManager::getSingleton().setCompositorEnabled((*it), "Bloom", pSet->bloom);
 		CompositorManager::getSingleton().setCompositorEnabled((*it), "HDR", pSet->hdr);
 		CompositorManager::getSingleton().setCompositorEnabled((*it), "Motion Blur", pSet->motionblur);
@@ -260,6 +269,7 @@ void BaseApp::recreateCompositor()
 	{
 		std::string sPath = PATHMANAGER::GetDataPath() + "/compositor";
 		mRoot->addResourceLocation(sPath, "FileSystem", "Effects");
+		mRoot->addResourceLocation(sPath + "/gbuffer", "FileSystem", "Effects");
 		mRoot->addResourceLocation(sPath + "/bloom", "FileSystem", "Effects");
 		mRoot->addResourceLocation(sPath + "/hdr", "FileSystem", "Effects");
 		mRoot->addResourceLocation(sPath + "/motionblur", "FileSystem", "Effects");
@@ -385,6 +395,10 @@ void BaseApp::recreateCompositor()
 		// remove old comp. first
 		CompositorManager::getSingleton().removeCompositorChain( (*it ));
 		
+		if (MaterialGenerator::MRTSupported())
+		{
+			CompositorManager::getSingleton().addCompositor((*it), "gbuffer");
+		}
 		CompositorManager::getSingleton().addCompositor((*it), "HDR");
 		if (MaterialGenerator::MRTSupported())
 		{

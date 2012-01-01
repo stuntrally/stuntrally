@@ -115,23 +115,10 @@ compositor ssao
     {
 		compositor_logic ssao
 		
-        texture scene target_width target_height PF_FLOAT16_RGBA PF_FLOAT16_RGBA
+        texture_ref scene gbuffer mrt_output
         texture ssao target_width_scaled 0.5 target_height_scaled 0.5 PF_R8G8B8
         texture ssaoBlurX target_width target_height PF_R8G8B8
         texture ssaoBlurY target_width target_height PF_R8G8B8
-
-        // the scene we want to modulate
-        target scene
-        {
-			input none
-			pass clear 
-			{
-		//		buffers colour depth stencil
-			}
-			pass render_scene
-			{
-			}
-		}
 
         target ssao
         {
