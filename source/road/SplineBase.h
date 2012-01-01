@@ -34,10 +34,13 @@ public:
 
 class CheckSphere
 {
-public:
+public:  // for car checking
 	Ogre::Vector3 pos;
 	Ogre::Real r,r2;  // radius, r*r
-	Ogre::Real dist;  // distance to next (for smooth %, drive progress)
+	
+	//  for drive progress %
+	Ogre::Real dist[2];  // summed distances (cur to next)
+		// [0] normal, [1] reversed track
 };
 
 

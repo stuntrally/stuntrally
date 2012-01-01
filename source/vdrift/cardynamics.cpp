@@ -815,7 +815,7 @@ void CARDYNAMICS::UpdateTransmission(T dt)
 	{
 		int gear = NextGear();
 		
-		///  auto Rear gear  -todo inv thr-brk
+		///  auto Rear gear
 		if (autorear)
 		{
 			T gas = engine.GetThrottle();

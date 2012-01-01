@@ -184,7 +184,6 @@ void App::preRenderTargetUpdate(const RenderTargetEvent &evt)
 {
 	const String& s = evt.source->getName();
 	int num = atoi(s.substr(s.length()-1, s.length()-1).c_str());
-	mSceneMgr->setShadowTechnique(SHADOWTYPE_NONE);
 	
 	if (num == 3)  // full
 	{
