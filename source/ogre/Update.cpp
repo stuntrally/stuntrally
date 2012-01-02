@@ -642,6 +642,8 @@ void App::UpdHUDRot(int carId, CarModel* pCarM, float vel, float rpm, bool miniO
 	/// TODO: rpm vel needle angles,aspect are wrong [all from the last car when bloom is on (any effects)], hud vals are ok
 	//if (!pCarM || carId == -1)  return;
 	//pCarM = carModels[carId];
+	bool ghost = false;
+	if (pCarM && pCarM->eType == CarModel::CT_GHOST)  ghost = true;
 
     const float rsc = -180.f/6000.f, rmin = 0.f;  //rmp
     float angrmp = rpm*rsc + rmin;
@@ -649,6 +651,8 @@ void App::UpdHUDRot(int carId, CarModel* pCarM, float vel, float rpm, bool miniO
     float angvel = abs(vel)*vsc + vmin;
     float angrot = 0.f;  int i=0;
 	if (pCarM)	angrot = pCarM->angCarY;
+	if (ghost && pSet->mini_rotated && pSet->mini_zoomed)
+		angrot -= carModels[0]->angCarY+180.f;
 
 	//*H*/LogO(String("caR: ") + toStr(carId) + /*/" " + toStr(pCarM) +*/ "  vel " + toStr(vel) + "  rpm " + toStr(rpm) + "  a " + toStr(angrot));
     float sx = 1.4f, sy = sx*asp;  // *par len
@@ -663,13 +667,13 @@ void App::UpdHUDRot(int carId, CarModel* pCarM, float vel, float rpm, bool miniO
     for (int i=0; i<4; ++i)  // 4 verts, each+90deg
     {
 		float ia = 45.f + ang[i];  //i*90.f;
-		if (!miniOnly)
+		if (!miniOnly && !ghost)
 		{	float r = -(angrmp + ia) * d2r;		rx[i] = sx*cosf(r);  ry[i] =-sy*sinf(r);
 			float v = -(angvel + ia) * d2r;		vx[i] = sx*cosf(v);  vy[i] =-sy*sinf(v);
 		}
 		float p = -(angrot + ia) * d2r;		float cp = cosf(p), sp = sinf(p);
 
-		if (pSet->mini_rotated && pSet->mini_zoomed)
+		if (pSet->mini_rotated && pSet->mini_zoomed && !ghost)
 			{  px[i] = psx*tp[i][0];  py[i] = psy*tp[i][1];  }
 		else{  px[i] = psx*cp*1.4f;   py[i] =-psy*sp*1.4f;  }
 
@@ -680,7 +684,7 @@ void App::UpdHUDRot(int carId, CarModel* pCarM, float vel, float rpm, bool miniO
     }
     
     //  rpm needle
-    if (!miniOnly)
+    if (!miniOnly && !ghost)
     {
 		if (mrpm)  {	mrpm->beginUpdate(0);
 			for (int p=0;p<4;++p)  {  mrpm->position(rx[p],ry[p], 0);  mrpm->textureCoord(tc[p][0], tc[p][1]);  }	mrpm->end();  }
@@ -700,7 +704,7 @@ void App::UpdHUDRot(int carId, CarModel* pCarM, float vel, float rpm, bool miniO
 
 	
 	//  minimap circle/rect
-	if (miniC && pSet->trackmap)
+	if (miniC && pSet->trackmap && !ghost)
 	{	const Vector2& v = newPosInfos[carId].miniPos;
 		float xc = (v.x+1.f)*0.5f, yc = (v.y+1.f)*0.5f;
 		miniC->beginUpdate(0);
