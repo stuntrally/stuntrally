@@ -128,6 +128,8 @@ void CarModel::Update(PosInfo& posInfo, float time)
 {	
 	if (!posInfo.bNew)  return;  // new only
 	posInfo.bNew = false;
+	///DONT get anything from car or car.dynamics here
+	///all must be read from posInfo (it's filled from car or from replay)
 	
 	if (!pMainNode) return;
 	//  car pos and rot
@@ -212,7 +214,7 @@ void CarModel::Update(PosInfo& posInfo, float time)
 	
 	//  wheels  ------------------------------------------------------------------------
 	float whMudSpin = 0.f;
-	for (int w=0; w < 4; w++)
+	for (int w=0; w < 4; ++w)
 	{
 		float wR = posInfo.whR[w];
 		ndWh[w]->setPosition(posInfo.whPos[w]);
@@ -249,6 +251,8 @@ void CarModel::Update(PosInfo& posInfo, float time)
 			if (w < 2)  pb[w]->setSpeedFactor(0.f);  }
 			if (pflW[w])  {
 				pflW[w]->setSpeedFactor(0.f);  pflM[w]->setSpeedFactor(0.f);  pflMs[w]->setSpeedFactor(0.f);  }
+			//if (whTrl[w])
+			//	whTrl[w]->setFade 0
 		}
 		Real sizeD = (0.3f + 1.1f * std::min(140.f, whVel) / 140.f) * (w < 2 ? 0.5f : 1.f);
 
@@ -290,36 +294,33 @@ void CarModel::Update(PosInfo& posInfo, float time)
 			}
 
 			//  fluids .::.
-			bool inFl = cd.inFluidsWh[w].size() > 0 && !ghost;  //dis for ghost
-			int idPar = -1;
-			if (inFl)
-			{	const FluidBox* fb = *cd.inFluidsWh[w].begin();
-				idPar = fb->idParticles;
-			}
+			int idPar = posInfo.whP[w];
 			if (pflW[w])  //  Water ~
 			{
-				float vel = pCar->GetSpeed();  // depth.. only on surface?
+				float vel = posInfo.speed;  // depth.. only on surface?
 				bool e = idPar == 0 &&  vel > 10.f && cd.whH[w] < 1.f;
 				float emitW = e ?  std::min(80.f, 3.0f * vel)  : 0.f;
+
 				ParticleEmitter* pe = pflW[w]->getEmitter(0);
 				pe->setPosition(vpos + posInfo.carY * wR*0.51f);
 				pe->setDirection(-posInfo.carY);	pe->setEmissionRate(emitW * pSet->particles_len);
 			}
 			if (pflM[w])  //  Mud ^
 			{
-				float vel = Math::Abs(cd.wheel[w].GetAngularVelocity());
+				float vel = Math::Abs(posInfo.whAngVel[w]);
 				bool e = idPar == 2 &&  vel > 30.f;
-				float emitM = e ?  cd.whH[w] * std::min(80.f, 1.5f * vel)  : 0.f;  whMudSpin += emitM / 80.f;
+				float emitM = e ?  posInfo.whH[w] * std::min(80.f, 1.5f * vel)  : 0.f;  whMudSpin += emitM / 80.f;
+
 				ParticleEmitter* pe = pflM[w]->getEmitter(0);
 				pe->setPosition(vpos + posInfo.carY * wR*0.51f);
 				pe->setDirection(-posInfo.carY);	pe->setEmissionRate(emitM * pSet->particles_len);
 			}
 			if (pflMs[w])  //  Mud soft ^
 			{
-				float vel = Math::Abs(cd.wheel[w].GetAngularVelocity());
-				
+				float vel = Math::Abs(posInfo.whAngVel[w]);
 				bool e = idPar == 1 &&  vel > 30.f;
-				float emitM = e ?  cd.whH[w] * std::min(160.f, 3.f * vel)  : 0.f;  whMudSpin += emitM / 80.f;
+				float emitM = e ?  posInfo.whH[w] * std::min(160.f, 3.f * vel)  : 0.f;  whMudSpin += emitM / 80.f;
+
 				ParticleEmitter* pe = pflMs[w]->getEmitter(0);
 				pe->setPosition(vpos + posInfo.carY * wR*0.51f);
 				pe->setDirection(-posInfo.carY);	pe->setEmissionRate(emitM * pSet->particles_len);
@@ -341,7 +342,7 @@ void CarModel::Update(PosInfo& posInfo, float time)
 				lay.tclr.r,lay.tclr.g,lay.tclr.b, lay.tclr.a * al/**/);
 		}
 	}
-	//pCar->whMudSpin = whMudSpin;  // for snd, move to posInfo..
+	//pCar->whMudSpin = whMudSpin;  // for snd
 	pCar->whMudSpin += (whMudSpin - pCar->whMudSpin)*0.3f;  //_every 2nd val=0 why?
 	//LogO(toStr(pCar->whMudSpin));
 
@@ -352,26 +353,21 @@ void CarModel::Update(PosInfo& posInfo, float time)
 	UpdWhTerMtr();
 	
 	//  update brake meshes orientation
-	for (int i=0; i<4; ++i)
+	for (int w=0; w<4; ++w)
 	{
-		if (ndBrake[i])
+		if (ndBrake[w])
 		{
-			ndBrake[i]->_setDerivedOrientation( pMainNode->getOrientation() );
+			ndBrake[w]->_setDerivedOrientation( pMainNode->getOrientation() );
 			
 			// this transformation code is just so the brake mesh can have the same alignment as the wheel mesh
-			ndBrake[i]->yaw(Ogre::Degree(-90), Node::TS_LOCAL);
-			if (i%2 == 1)
-				ndBrake[i]->setScale(-1, 1, 1);
+			ndBrake[w]->yaw(Ogre::Degree(-90), Node::TS_LOCAL);
+			if (w%2 == 1)
+				ndBrake[w]->setScale(-1, 1, 1);
 				
-			ndBrake[i]->pitch(Ogre::Degree(180), Node::TS_LOCAL);
+			ndBrake[w]->pitch(Ogre::Degree(180), Node::TS_LOCAL);
 			
-			if (i==0 || i==1) // turn only front wheels
-			{
-				if (eType != CT_GHOST)
-					ndBrake[i]->yaw(-Degree(pCar->dynamics.wheel[i].GetSteerAngle()));
-				else 
-					ndBrake[i]->yaw(-Degree(pApp->ghostFrame.steer * pCar->dynamics.GetMaxSteeringAngle()));
-			}
+			if (w < 2)  // turn only front wheels
+				ndBrake[w]->yaw(-Degree(posInfo.whSteerAng[w]));
 		}
 	}
 	
@@ -482,13 +478,13 @@ void CarModel::RefreshBrakingMaterial()
 void CarModel::UpdParsTrails(bool visible)
 {
 	bool vis = visible && pSet->particles;
-	for (int w=0; w < 4; w++)
+	for (int w=0; w < 4; ++w)
 	{
 		Ogre::uint8 grp = RQG_CarTrails;  //9=road  after glass
 		if (w < 2 &&
 			pb[w])	{	pb[w]->setVisible(vis);  pb[w]->setRenderQueueGroup(grp);  }
-		if (whTrl[w]){  whTrl[w]->setVisible(visible && pSet->trails);  whTrl[w]->setRenderQueueGroup(grp);  }  grp = RQG_CarParticles;
-
+		if (whTrl[w]){  whTrl[w]->setVisible(visible && pSet->trails);  whTrl[w]->setRenderQueueGroup(grp);  }
+		grp = RQG_CarParticles;
 		if (ps[w])	{	ps[w]->setVisible(vis);  ps[w]->setRenderQueueGroup(grp);  }  // vdr only && !sc.ter
 		if (pm[w])	{	pm[w]->setVisible(vis);  pm[w]->setRenderQueueGroup(grp);  }
 		if (pd[w])	{	pd[w]->setVisible(vis);  pd[w]->setRenderQueueGroup(grp);  }

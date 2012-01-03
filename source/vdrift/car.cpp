@@ -616,8 +616,10 @@ void CAR::UpdateSounds(float dt)
 			//  susp
 			suspVel[w] = pApp->fr.suspVel[w];
 			suspDisp[w] = pApp->fr.suspDisp[w];
-			//  TODO fluids snd & par in replays...
-			//whH_all
+			//  fluids
+			whH_all += pApp->fr.whH[w];
+			if (pApp->fr.whP[w] >= 1)  mud = true;
+			//?- whMudSpin = pApp->fr.whMudSpin;
 		}
 	}
 	else  /// game  ------------------------------------------

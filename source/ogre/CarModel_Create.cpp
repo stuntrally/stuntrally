@@ -91,7 +91,7 @@ CarModel::~CarModel()
 		Ogre::MaterialManager::getSingleton().remove(sMtr[i]);
 	
 	// Destroy par sys
-	for (int w=0; w < 4; w++)  {
+	for (int w=0; w < 4; ++w)  {
 		if (ps[w]) {  mSceneMgr->destroyParticleSystem(ps[w]);   ps[w]=0;  }
 		if (pm[w]) {  mSceneMgr->destroyParticleSystem(pm[w]);   pm[w]=0;  }
 		if (pd[w]) {  mSceneMgr->destroyParticleSystem(pd[w]);   pd[w]=0;  }
@@ -226,7 +226,7 @@ void CarModel::Create(int car)
 
 
 	//  wheels  ----------------------
-	for (int w=0; w < 4; w++)
+	for (int w=0; w < 4; ++w)
 	{
 		// only 1 mesh for both?
 		String siw = "Wheel"+ strI + "_" +toStr(w);
@@ -315,7 +315,7 @@ void CarModel::Create(int car)
 
 	///  wheel emitters  ------------------------
 	if (!ghost)
-	for (int w=0; w < 4; w++)
+	for (int w=0; w < 4; ++w)
 	{
 		String siw = strI + "_" +toStr(w);
 		if (!ps[w])  {

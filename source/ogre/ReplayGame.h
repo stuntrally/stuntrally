@@ -56,8 +56,14 @@ struct ReplayFrame
 	
 	float fboost;  // input, particles
 	char whRoadMtr[4];
-	// todo: float wh[4] particles water,mud,
+	
+	//  fluids
+	float whH[4], whAngVel[4];  // submerge height
+	char whP[4];  //particle type
+	float whSteerAng[2];
+
 	// todo: sparks hit emit,pos,vel?
+	// note: add always at end of this struct (backward compatibility)
 
 	/// sizeof:  tm 8 car 12*5 wh 16*5 h 16 snd 16 12 whtr 8 16*5
 	/// = 280 Bytes per frame

@@ -275,7 +275,8 @@ void App::newPoses()
 			ReplayFrame frame;
 			bool ok = ghplay.GetFrame(lapTime, &frame, 0);
 			//  car
-			pos = frame.pos;  rot = frame.rot;
+			pos = frame.pos;  rot = frame.rot;  posInfo.speed = frame.speed;
+			posInfo.fboost = frame.fboost;  posInfo.steer = frame.steer;
 			//  wheels
 			for (int w=0; w < 4; ++w)
 			{
@@ -284,9 +285,10 @@ void App::newPoses()
 				posInfo.whSlide[w] = frame.slide[w];  posInfo.whSqueal[w] = frame.squeal[w];
 				posInfo.whR[w] = replay.header.whR[iCarNum][w];//
 				posInfo.whTerMtr[w] = frame.whTerMtr[w];  posInfo.whRoadMtr[w] = frame.whRoadMtr[w];
-				posInfo.fboost = frame.fboost;
+				posInfo.whH[w] = frame.whH[w];  posInfo.whP[w] = frame.whP[w];
+				posInfo.whAngVel[w] = frame.whAngVel[w];
+				if (w < 2)  posInfo.whSteerAng[w] = frame.whSteerAng[w];
 			}
-			ghostFrame = frame;
 		}
 		else if (bRplPlay)
 		{
@@ -295,7 +297,8 @@ void App::newPoses()
 				if (!ok)	pGame->timer.RestartReplay();
 			
 			//  car
-			pos = fr.pos;  rot = fr.rot;
+			pos = fr.pos;  rot = fr.rot;  posInfo.speed = fr.speed;
+			posInfo.fboost = fr.fboost;  posInfo.steer = fr.steer;
 			//  wheels
 			for (int w=0; w < 4; ++w)
 			{
@@ -304,7 +307,9 @@ void App::newPoses()
 				posInfo.whSlide[w] = fr.slide[w];  posInfo.whSqueal[w] = fr.squeal[w];
 				posInfo.whR[w] = replay.header.whR[iCarNum][w];//
 				posInfo.whTerMtr[w] = fr.whTerMtr[w];  posInfo.whRoadMtr[w] = fr.whRoadMtr[w];
-				posInfo.fboost = fr.fboost;
+				posInfo.whH[w] = fr.whH[w];  posInfo.whP[w] = fr.whP[w];
+				posInfo.whAngVel[w] = fr.whAngVel[w];
+				if (w < 2)  posInfo.whSteerAng[w] = fr.whSteerAng[w];
 			}
 		}
 		else
@@ -312,20 +317,24 @@ void App::newPoses()
 		//-----------------------------------------------------------------------
 		if (pCar)
 		{
-			pos = pCar->dynamics.GetPosition();
-			rot = pCar->dynamics.GetOrientation();
+			const CARDYNAMICS& cd = pCar->dynamics;
+			pos = cd.GetPosition();  rot = cd.GetOrientation();
+			posInfo.fboost = cd.boostVal;
+			//posInfo.steer = cd.steer;
+			posInfo.speed = pCar->GetSpeed();
 			
 			for (int w=0; w < 4; ++w)
 			{	WHEEL_POSITION wp = WHEEL_POSITION(w);
-				whPos[w] = pCar->dynamics.GetWheelPosition(wp);
-				whRot[w] = pCar->dynamics.GetWheelOrientation(wp);
+				whPos[w] = cd.GetWheelPosition(wp);  whRot[w] = cd.GetWheelOrientation(wp);
 				//float wR = pCar->GetTireRadius(wp);
-				posInfo.whVel[w] = pCar->dynamics.GetWheelVelocity(wp).Magnitude();
+				posInfo.whVel[w] = cd.GetWheelVelocity(wp).Magnitude();
 				posInfo.whSlide[w] = -1.f;  posInfo.whSqueal[w] = pCar->GetTireSquealAmount(wp, &posInfo.whSlide[w]);
 				posInfo.whR[w] = pCar->GetTireRadius(wp);//
 				posInfo.whTerMtr[w] = carM->whTerMtr[w];  posInfo.whRoadMtr[w] = carM->whRoadMtr[w];
+				posInfo.whH[w] = cd.whH[w];  posInfo.whP[w] = cd.whP[w];
+				posInfo.whAngVel[w] = cd.wheel[w].GetAngularVelocity();
+				if (w < 2)  posInfo.whSteerAng[w] = cd.wheel[w].GetSteerAngle();
 			}
-			posInfo.fboost = pCar->dynamics.boostVal;
 		}
 		
 
@@ -339,7 +348,7 @@ void App::newPoses()
 		Vector3 vcx,vcz;  q1.ToAxes(vcx,posInfo.carY,vcz);
 
 		if (!isnan(whPos[0][0]))
-		for (int w=0; w < 4; w++)
+		for (int w=0; w < 4; ++w)
 		{
 			posInfo.whPos[w] = Vector3(whPos[w][0],whPos[w][2],-whPos[w][1]);
 			Quaternion q(whRot[w][0],whRot[w][1],whRot[w][2],whRot[w][3]), q1;
@@ -378,35 +387,48 @@ void App::newPoses()
 			//static int ii = 0;
 			//if (ii++ >= 0)	// 1 half game framerate
 			{	//ii = 0;
+				const CARDYNAMICS& cd = pCar->dynamics;
 				ReplayFrame fr;
 				fr.time = rplTime;  //  time  from start
 				fr.pos = pos;  fr.rot = rot;  //  car
 				//  wheels
-				for (int w=0; w < 4; w++)
+				for (int w=0; w < 4; ++w)
 				{	fr.whPos[w] = whPos[w];  fr.whRot[w] = whRot[w];
 
 					WHEEL_POSITION wp = WHEEL_POSITION(w);
-					const TRACKSURFACE* surface = pCar->dynamics.GetWheelContact(wp).GetSurfacePtr();
+					const TRACKSURFACE* surface = cd.GetWheelContact(wp).GetSurfacePtr();
 					fr.surfType[w] = !surface ? TRACKSURFACE::NONE : surface->type;
 					//  squeal
 					fr.slide[w] = -1.f;  fr.squeal[w] = pCar->GetTireSquealAmount(wp, &fr.slide[w]);
-					fr.whVel[w] = pCar->dynamics.GetWheelVelocity(wp).Magnitude();
+					fr.whVel[w] = cd.GetWheelVelocity(wp).Magnitude();
 					//  susp
-					fr.suspVel[w] = pCar->dynamics.GetSuspension(wp).GetVelocity();
-					fr.suspDisp[w] = pCar->dynamics.GetSuspension(wp).GetDisplacementPercent();
+					fr.suspVel[w] = cd.GetSuspension(wp).GetVelocity();
+					fr.suspDisp[w] = cd.GetSuspension(wp).GetDisplacementPercent();
+					if (w < 2)
+						fr.whSteerAng[w] = cd.wheel[w].GetSteerAngle();
 					//replay.header.whR[w] = pCar->GetTireRadius(wp);//
 					fr.whTerMtr[w] = carM->whTerMtr[w];  fr.whRoadMtr[w] = carM->whRoadMtr[w];
+					//  fluids
+					fr.whH[w] = cd.whH[w];  fr.whP[w] = cd.whP[w];
+					fr.whAngVel[w] = cd.wheel[w].GetAngularVelocity();
+					bool inFl = cd.inFluidsWh[w].size() > 0;
+					int idPar = -1;
+					if (inFl)
+					{	const FluidBox* fb = *cd.inFluidsWh[w].begin();
+						idPar = fb->idParticles;  }
+					fr.whP[w] = idPar;
+					if (w < 2)  posInfo.whSteerAng[w] = cd.wheel[w].GetSteerAngle();
 				}
 				//  hud
 				fr.vel = pCar->GetSpeedometer();  fr.rpm = pCar->GetEngineRPM();
 				fr.gear = pCar->GetGear();  fr.clutch = pCar->GetClutch();
-				fr.throttle = pCar->dynamics.GetEngine().GetThrottle();
+				fr.throttle = cd.GetEngine().GetThrottle();
 				fr.steer = pCar->GetLastSteer();
-				fr.fboost = pCar->dynamics.doBoost;
+				fr.fboost = cd.doBoost;
 				//  eng snd
-				fr.posEngn = pCar->dynamics.GetEnginePosition();
+				fr.posEngn = cd.GetEnginePosition();
 				fr.speed = pCar->GetSpeed();
-				fr.dynVel = pCar->dynamics.GetVelocity().Magnitude();
+				fr.dynVel = cd.GetVelocity().Magnitude();
 				
 				replay.AddFrame(fr, iCarNum);  // rec replay
 				if (iCarNum==0)  /// rec ghost lap
@@ -501,12 +523,13 @@ void App::newPoses()
 				if (ncs > 0)
 				{	if (carM->bInSt && carM->iNumChks == ncs && carM->iCurChk != -1)  // finish
 					{
-						bool best = pGame->timer.Lap(iCarNum, 0,0, true, pSet->trackreverse);  //pGame->cartimerids[pCar] ?
+						bool best = pGame->timer.Lap(iCarNum, 0,0, true,
+							pSet->trackreverse/*<, pSet->boost_type*/);  //pGame->cartimerids[pCar] ?
 
 						if (!pSet->rpl_bestonly || best)  ///  new best lap, save ghost
 						if (iCarNum==0 && pSet->rpl_rec)  // for many, only 1st-
 						{
-							ghost.SaveFile(GetGhostFile());
+							ghost.SaveFile(GetGhostFile());  /*< boost_type*/
 							ghplay.CopyFrom(ghost);
 						}
 						ghost.Clear();
