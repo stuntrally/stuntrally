@@ -265,7 +265,8 @@ void CarModel::Update(PosInfo& posInfo, float time)
 		if (cd.inFluidsWh[w].size() > 0)  emitD = 0;  // no dust in fluids
 
 		bool ghost = eType == CT_GHOST;  // opt dis for ghost
-		if (ghost && !pSet->rpl_ghostpar)
+		bool ghPar = !(ghost && !pSet->rpl_ghostpar);
+		if (!ghPar)
 		{	emitD = 0.f;  emitM = 0.f;  emitS = 0.f;  }
 
 		///  emit particles
@@ -298,7 +299,7 @@ void CarModel::Update(PosInfo& posInfo, float time)
 			if (pflW[w])  //  Water ~
 			{
 				float vel = posInfo.speed;  // depth.. only on surface?
-				bool e = idPar == 0 &&  vel > 10.f && cd.whH[w] < 1.f;
+				bool e = idPar == 0 && ghPar &&  vel > 10.f && cd.whH[w] < 1.f;
 				float emitW = e ?  std::min(80.f, 3.0f * vel)  : 0.f;
 
 				ParticleEmitter* pe = pflW[w]->getEmitter(0);
@@ -308,7 +309,7 @@ void CarModel::Update(PosInfo& posInfo, float time)
 			if (pflM[w])  //  Mud ^
 			{
 				float vel = Math::Abs(posInfo.whAngVel[w]);
-				bool e = idPar == 2 &&  vel > 30.f;
+				bool e = idPar == 2 && ghPar &&  vel > 30.f;
 				float emitM = e ?  posInfo.whH[w] * std::min(80.f, 1.5f * vel)  : 0.f;  whMudSpin += emitM / 80.f;
 
 				ParticleEmitter* pe = pflM[w]->getEmitter(0);
@@ -318,7 +319,7 @@ void CarModel::Update(PosInfo& posInfo, float time)
 			if (pflMs[w])  //  Mud soft ^
 			{
 				float vel = Math::Abs(posInfo.whAngVel[w]);
-				bool e = idPar == 1 &&  vel > 30.f;
+				bool e = idPar == 1 && ghPar &&  vel > 30.f;
 				float emitM = e ?  posInfo.whH[w] * std::min(160.f, 3.f * vel)  : 0.f;  whMudSpin += emitM / 80.f;
 
 				ParticleEmitter* pe = pflMs[w]->getEmitter(0);
