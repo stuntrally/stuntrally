@@ -12,10 +12,12 @@
 #include "performance_testing.h"
 #include "quickprof.h"
 #include "tracksurface.h"
+#include "forcefeedback.h"
 #include "../ogre/QTimer.h"
 #include "../ogre/OgreGame.h"
 #include "../ogre/FollowCamera.h"
 #include "../oisb/OISBSystem.h"
+
 
 #define M_PI  3.14159265358979323846
 
@@ -52,7 +54,7 @@ void GAME::Start(std::list <string> & args)
 
 	//initialize force feedback
 	#ifdef ENABLE_FORCE_FEEDBACK
-	forcefeedback.reset(new FORCEFEEDBACK(settings->GetFFDevice(), error_output, info_output));
+	forcefeedback.reset(new FORCEFEEDBACK(settings->ff_device, error_output, info_output));
 		ff_update_time = 0;
 	#endif
 
@@ -389,7 +391,7 @@ void GAME::AdvanceGameLogic()
 		}
 	}
 
-	//UpdateForceFeedback(TickPeriod());
+	UpdateForceFeedback(TickPeriod());
 }
 
 ///process inputs used only for higher level game functions
@@ -770,11 +772,11 @@ void GAME::UpdateForceFeedback(float dt)
 			//double center = sin( timefactor * 2 * M_PI * motion_frequency ) * motion_amplitude;
 			double force = feedback;
 
-			//std::cout << "ff_update_time: " << ff_update_time << " force: " << force << endl;
+			//std::cout << "ff_update_time: " << ff_update_time << " force: " << force << std::endl;
 			forcefeedback->update(force, &feedback, ffdt, error_output);
 		}
 	}
-	
+
 	if (pause && dt == 0)
 	{
 		double pos=0;

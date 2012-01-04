@@ -54,7 +54,12 @@ if (oneAxis)
 	inputs[CARINPUT::BRAKE]    = val < 0.f ? -val : 0.f;
 }else{
 	inputs[CARINPUT::THROTTLE] = analogAction(sPlr+"Throttle");
-	inputs[CARINPUT::BRAKE]    = analogAction(sPlr+"Brake");
+	
+	// sensible deadzone for braking
+	// inaccuracies are caused by floating point precision in OISB
+	const float val = analogAction(sPlr+"Brake");
+	const float deadzone = 0.0001;
+	inputs[CARINPUT::BRAKE]    = (val < deadzone) ? 0 : val;  
 }
 
 	//  steering
