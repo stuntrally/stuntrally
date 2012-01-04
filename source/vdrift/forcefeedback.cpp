@@ -1,14 +1,13 @@
-#include "pch.h"
+#define ENABLE_FORCE_FEEDBACK
 
 #ifdef ENABLE_FORCE_FEEDBACK
 
 #include "forcefeedback.h"
 
-//#include <cstring>
+#include <cstring>
+#include <string>
 
-//#include <string>
 using std::string;
-
 using std::endl;
 
 //#define TEST_BIT(bit,bits) (((bits[bit>>5]>>(bit&0x1f))&1)!=0)
@@ -165,7 +164,7 @@ FORCEFEEDBACK::FORCEFEEDBACK( string device, std::ostream & error_output, std::o
 
 void FORCEFEEDBACK::update(double force, double * position, double dt, std::ostream & error_output)
 {
-	if( !enabled )
+	if ( !enabled )
 		return;
 
 	struct input_event event;
@@ -184,8 +183,7 @@ void FORCEFEEDBACK::update(double force, double * position, double dt, std::ostr
         // Set force
 	if (force>1.0) force=1.0;
 	if (force<-1.0) force=-1.0;
-	//effect.direction=0xC000;
-	effect.direction=0;
+	effect.direction=0xC000;
 	//force = -1.0;
 	effect.u.constant.level=(short)(force*32767.0); /* only to be safe */
 	effect.u.constant.envelope.attack_level=effect.u.constant.level;
@@ -196,7 +194,7 @@ void FORCEFEEDBACK::update(double force, double * position, double dt, std::ostr
 	//effect.u.constant.envelope.attack_level=(short)(force*32767.0);*/
 
 	lastforce = force;
-	
+
         // Upload effect
 	if (ioctl(device_handle,EVIOCSFF,&effect)==-1)
 	{

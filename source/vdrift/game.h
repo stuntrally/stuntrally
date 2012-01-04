@@ -100,6 +100,12 @@ public:
 	std::list <CAR> cars;
 	std::map <CAR*, int> cartimerids;
 	std::pair <CAR*, CARCONTROLMAP_LOCAL> carcontrols_local;
+	
+#ifdef ENABLE_FORCE_FEEDBACK
+	std::auto_ptr <FORCEFEEDBACK> forcefeedback;
+	double ff_update_time;
+#endif
+	
 public:
 	COLLISION_WORLD collision;
 	
