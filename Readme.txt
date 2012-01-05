@@ -1,7 +1,7 @@
 ----------------------------------------------------------------------------------
 
     Stunt Rally - game based on VDrift and OGRE, with Track Editor
-    Copyright (C) 2011  Crystal Hammer
+    Copyright (C) 2012  Crystal Hammer
 
     Project's Homepage:  (all links, Issue tracker, Wiki pages, old Windows releases)
             http://code.google.com/p/vdrift-ogre/
@@ -37,7 +37,7 @@
 
 Description
 
-This game features 57 tracks in 9 sceneries and 8 drivable cars.
+This game features 71 tracks in 11 sceneries and 10 drivable cars.
 The Track Editor allows modifying and creating tracks.
 Both run on Windows and Linux.
 
