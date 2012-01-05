@@ -3,6 +3,8 @@
 
 #include <MyGUI.h>
 
+#include <MyGUI_OgrePlatform.h>
+#include "MyGUI_D3D11.h"
 
 typedef MyGUI::delegates::CMultiDelegate0 PopupDelegates;
 typedef MyGUI::delegates::CMultiDelegate0::IDelegate PopupDelegate;
@@ -38,7 +40,15 @@ public:
 	void Hide();		// call this in callback to close popup
 
 	GuiPopup();
+	
 	MyGUI::Gui* mGUI;
+	
+	#if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
+	MyGUI::OgreD3D11Platform* mPlatform;
+	#else
+	MyGUI::OgrePlatform* mPlatform;
+	#endif
+	
 protected:
 	void ButtonClick(MyGUI::WidgetPtr);
 	MyGUI::WindowPtr mWnd;

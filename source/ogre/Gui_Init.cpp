@@ -23,6 +23,7 @@ void App::InitGui()
 	//  change skin
 	if (!mGUI)  return;
 	popup.mGUI = mGUI;
+	popup.mPlatform = mPlatform;
 	QTimer ti;  ti.update();  /// time
 
 	//  load Options layout

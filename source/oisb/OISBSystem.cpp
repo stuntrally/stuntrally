@@ -43,7 +43,6 @@ restrictions:
 
 #include "boost/filesystem.hpp"
 
-#include <strstream>
 #include <fstream>
 #include <iostream>
 #include <cstring>

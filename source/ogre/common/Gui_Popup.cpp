@@ -28,7 +28,7 @@ bool GuiPopup::Show(
 	if (!text0.empty())  ++numEdits;  if (!text1.empty())  ++numEdits;
 	if (!text2.empty())  ++numEdits;  if (!text3.empty())  ++numEdits;
 
-	int scr_w = mGUI->getViewSize().width, scr_h = mGUI->getViewSize().height;
+	int scr_w = mPlatform->getRenderManagerPtr()->getViewSize().width, scr_h = mPlatform->getRenderManagerPtr()->getViewSize().height;
 	int wnd_w = 392, wnd_h = 140 + numEdits * 80,
 		wnd_x = (scr_w - wnd_w)/2, wnd_y = (scr_h - wnd_h)/2;  // center
 
