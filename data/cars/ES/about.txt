@@ -1,4 +1,6 @@
 ES
-Model by VeTi (wklimas.weebly.com)
-import, settings & textures by scrawl
-Tire texture made by .endo. ( http://www.gtapex.com/forum/index.php?topic=486.new )
+
+Model by VeTi (wklimas.weebly.com), published on blendswap.com under CC-BY-SA
+	http://www.blendswap.com/3D-models/vehicles/mitsubshi-lancer-evo-9/
+	
+retopology, import, settings & textures by scrawl
