@@ -30,6 +30,7 @@
 using namespace Ogre;
 
 
+//  Init  ---------------------------------------------------
 CarModel::CarModel(unsigned int index, eCarType type, const std::string name,
 	Ogre::SceneManager* sceneMgr, SETTINGS* set, GAME* game, Scene* s,
 	Ogre::Camera* cam, App* app, int startpos_index) :
@@ -40,11 +41,24 @@ CarModel::CarModel(unsigned int index, eCarType type, const std::string name,
 	iIndex = index;  sDirname = name;  mSceneMgr = sceneMgr;
 	pSet = set;  pGame = game;  sc = s;  mCamera = cam;  eType = type;
 	bGetStPos = true;  fChkTime = 0.f;  iChkWrong = -1;  iWonPlace = 0;
-	iCurChk = -1;  iNumChks = 0;  //ResetChecks();  // road isnt yet
+	iCurChk = -1;  iNumChks = 0;  iNextChk = 0;  //ResetChecks();  // road isnt yet
+	distFirst = 1.f;  distLast = 1.f;  distTotal = 10.f;  trackPercent = 0.f;
 
+	for (int w = 0; w < 4; ++w)
+	{	ps[w] = 0;  pm[w] = 0;  pd[w] = 0;
+		pflW[w] = 0;  pflM[w] = 0;  pflMs[w] = 0;
+		ndWh[w] = 0;  ndWhE[w] = 0; whTrl[w] = 0;
+		ndBrake[w] = 0;
+		wht[w] = 0.f;  whTerMtr[w] = 0;  whRoadMtr[w] = 0;  }
+	for (int i=0; i < 2; i++)
+		pb[i] = 0;
+	ph = 0;
+
+	//  names for local play
 	if (type == CT_GHOST)		sDispName = "Ghost";
 	else if (type == CT_LOCAL)	sDispName = "Player"+toStr(iIndex+1);
 	
+	//  get car start pos from track  ------
 	if (type != CT_GHOST)  // ghost has pCar, dont create
 	{
 		if (startpos_index == -1) startpos_index = iIndex;
@@ -60,18 +74,9 @@ CarModel::CarModel(unsigned int index, eCarType type, const std::string name,
 		pCar = pGame->LoadCar(sDirname, pos, rot, true, false);
 		if (!pCar)  LogO("Error creating car " + sDirname);
 	}
-	
-	for (int w = 0; w < 4; ++w)
-	{	ps[w] = 0;  pm[w] = 0;  pd[w] = 0;
-		pflW[w] = 0;  pflM[w] = 0;  pflMs[w] = 0;
-		ndWh[w] = 0;  ndWhE[w] = 0; whTrl[w] = 0;
-		ndBrake[w] = 0;
-		wht[w] = 0.f;  whTerMtr[w] = 0;  whRoadMtr[w] = 0;  }
-	for (int i=0; i < 2; i++)
-		pb[i] = 0;
-	ph = 0;
 }
 
+//  Destroy  ---------------------------------------------------
 CarModel::~CarModel()
 {
 	delete pReflect;  pReflect = 0;
@@ -88,7 +93,7 @@ CarModel::~CarModel()
 		Ogre::MaterialManager::getSingleton().remove(sMtr[i]);
 	
 	// Destroy par sys
-	for (int w=0; w < 4; w++)  {
+	for (int w=0; w < 4; ++w)  {
 		if (ps[w]) {  mSceneMgr->destroyParticleSystem(ps[w]);   ps[w]=0;  }
 		if (pm[w]) {  mSceneMgr->destroyParticleSystem(pm[w]);   pm[w]=0;  }
 		if (pd[w]) {  mSceneMgr->destroyParticleSystem(pd[w]);   pd[w]=0;  }
@@ -106,323 +111,6 @@ CarModel::~CarModel()
 	// Destroy resource group, will also destroy all resources in it
 	if (Ogre::ResourceGroupManager::getSingleton().resourceGroupExists("Car" + toStr(iIndex)))
 		Ogre::ResourceGroupManager::getSingleton().destroyResourceGroup("Car" + toStr(iIndex));
-}
-
-void CarModel::setVisible(bool vis)
-{
-	//if (pMainNode->getVisible() == vis)  return;  //opt..
-	pMainNode->setVisible(vis);
-	for (int w=0; w < 4; ++w)
-		ndWh[w]->setVisible(vis);
-	UpdParsTrails(vis);
-}
-
-void CarModel::ResetChecks()  // needs to be done after road load!
-{
-	iCurChk = -1;  iNumChks = 0;  // reset lap, chk vars
-	if (pApp && pApp->road)
-		iNextChk = pSet->trackreverse ? pApp->road->iChkId1Rev : pApp->road->iChkId1;
-}
-
-
-//-------------------------------------------------------------------------------------------------------
-//  Update
-//-------------------------------------------------------------------------------------------------------
-void CarModel::Update(PosInfo& posInfo, float time)
-{	
-	if (!posInfo.bNew)  return;  // new only
-	posInfo.bNew = false;
-	
-	if (!pMainNode) return;
-	//  car pos and rot
-	pMainNode->setPosition(posInfo.pos);
-	pMainNode->setOrientation(posInfo.rot);
-
-	//  upd rotY for minimap
-	Quaternion q = posInfo.rot * Quaternion(Degree(90),Vector3(0,1,0));
-	angCarY = q.getYaw().valueDegrees() + 90.f;
-	
-	//  brake state
-	//  trigger when any wheel is braking
-	bool braking = false;
-	if (eType == CT_LOCAL)
-	for (int w=0; w<4; ++w)
-	{
-		if (pCar->dynamics.GetBrake(static_cast<WHEEL_POSITION>(w)).GetBrakeFactor() > 0
-		 || pCar->dynamics.GetBrake(static_cast<WHEEL_POSITION>(w)).GetHandbrakeFactor() > 0)
-			braking = true;
-	}
-	if (bBraking != braking)
-	{
-		bBraking = braking;
-		RefreshBrakingMaterial();
-	}
-	
-	//  terrain lightmap enable/disable (depending on distance to terrain)
-	#define MAX_TERRAIN_DIST 2.0 // meters
-	bool changed = false;
-	if (terrain)
-	{
-		Ogre::Vector3 carPos = pMainNode->getPosition();
-		float terrainHeight = terrain->getHeightAtWorldPosition(carPos);
-		float diff = std::abs(carPos.y - terrainHeight);
-		if (diff > MAX_TERRAIN_DIST)
-		{
-			if (bLightMapEnabled)
-			{
-				changed = true;
-				bLightMapEnabled = false;
-			}
-		}
-		else if (!bLightMapEnabled)
-		{
-			changed = true;
-			bLightMapEnabled = true;
-		}
-	}
-	//  if no terrain, disable
-	else if (bLightMapEnabled)
-	{
-		changed = true; bLightMapEnabled = false;
-	}
-	
-	if (changed)
-		UpdateLightMap();
-		
-
-	//  update particle emitters
-	//  boost
-	if (pSet->particles)
-	for (int i=0; i < 2; i++)
-	if (pb[i])
-	{
-		float emitB = posInfo.fboost * 40.f;  // par
-		ParticleEmitter* pe = pb[i]->getEmitter(0);
-		pe->setEmissionRate(emitB);
-	}
-
-	//  world hit
-	CARDYNAMICS& cd = pCar->dynamics;
-	if (ph && cd.fHitTime > 0.f && pSet->particles)
-	{
-		ParticleEmitter* pe = ph->getEmitter(0);
-		pe->setPosition(cd.vHitPos);
-		pe->setDirection(cd.vHitNorm);
-
-		cd.fHitTime -= time*2;
-		pe->setEmissionRate(cd.fHitTime > 0.f ? pSet->particles_len * std::min(160.f, cd.fParIntens) * cd.fHitTime : 0);
-		pe->setParticleVelocity(cd.fParVel);
-	}
-	
-	//  wheels  ------------------------------------------------------------------------
-	float whMudSpin = 0.f;
-	for (int w=0; w < 4; w++)
-	{
-		float wR = posInfo.whR[w];
-		ndWh[w]->setPosition(posInfo.whPos[w]);
-		ndWh[w]->setOrientation(posInfo.whRot[w]);
-
-		int whMtr = posInfo.whTerMtr[w];
-		int whRd = posInfo.whRoadMtr[w];
-		float whVel = posInfo.whVel[w] * 3.6f;  //kmh
-		float slide = posInfo.whSlide[w], squeal = posInfo.whSqueal[w];
-		float onGr = slide < 0.f ? 0.f : 1.f;
-
-		//  wheel temp
-		wht[w] += squeal * time * 7;
-		wht[w] -= time*6;  if (wht[w] < 0.f)  wht[w] = 0.f;
-
-		///  emit rates +
-		Real emitS = 0.f, emitM = 0.f, emitD = 0.f;  //paused
-
-		if (!pGame->pause)
-		{
-			Real sq = squeal* std::min(1.f, wht[w]), l = pSet->particles_len * onGr;
-			emitS = sq * (whVel * 30) * l *0.3f;  //..
-			emitM = slide < 1.4f ? 0.f :  (8.f * sq * std::min(5.f, slide) * l);
-			emitD = (std::min(140.f, whVel) / 3.5f + slide * 1.f ) * l;  
-
-			if (pd[w])  {	//  resume
-				pd[w]->setSpeedFactor(1.f);  ps[w]->setSpeedFactor(1.f);  pm[w]->setSpeedFactor(1.f);
-			if (w < 2)  pb[w]->setSpeedFactor(1.f);  }
-			if (pflW[w])  {
-				pflW[w]->setSpeedFactor(1.f);  pflM[w]->setSpeedFactor(1.f);  pflMs[w]->setSpeedFactor(1.f);  }
-		}else{
-			if (pd[w])  {	//  stop par sys
-				pd[w]->setSpeedFactor(0.f);  ps[w]->setSpeedFactor(0.f);  pm[w]->setSpeedFactor(0.f);
-			if (w < 2)  pb[w]->setSpeedFactor(0.f);  }
-			if (pflW[w])  {
-				pflW[w]->setSpeedFactor(0.f);  pflM[w]->setSpeedFactor(0.f);  pflMs[w]->setSpeedFactor(0.f);  }
-		}
-		Real sizeD = (0.3f + 1.1f * std::min(140.f, whVel) / 140.f) * (w < 2 ? 0.5f : 1.f);
-
-		//  ter mtr factors
-		int mtr = std::max(0, std::min(whMtr-1, (int)(sc->td.layers.size()-1)));
-		TerLayer& lay = whMtr==0 ? sc->td.layerRoad : sc->td.layersAll[sc->td.layers[mtr]];
-		emitD *= lay.dust;  emitM *= lay.mud;  sizeD *= lay.dustS;  emitS *= lay.smoke;
-
-		if (whRd == 2)  emitD = 0;  // no dust in pipes
-		if (cd.inFluidsWh[w].size() > 0)  emitD = 0;  // no dust in fluids
-
-		bool ghost = eType == CT_GHOST;  // opt dis for ghost
-		if (ghost && !pSet->rpl_ghostpar)
-		{	emitD = 0.f;  emitM = 0.f;  emitS = 0.f;  }
-
-		///  emit particles
-		Vector3 vpos = posInfo.whPos[w];
-		if (pSet->particles)
-		{
-			if (ps[w] && sc->td.layerRoad.smoke > 0.f/*&& !sc->ter*/)  // only at vdr road
-			{			//  smoke
-				ParticleEmitter* pe = ps[w]->getEmitter(0);
-				pe->setPosition(vpos + posInfo.carY * wR*0.7f);
-				/**/ps[w]->getAffector(0)->setParameter("alpha", toStr(-0.4f - 0.07f/2.4f * whVel));
-				/**/pe->setTimeToLive( std::max(0.1, 2 - whVel/2.4f * 0.04) );  // fade,live
-				pe->setDirection(-posInfo.carY);	pe->setEmissionRate(emitS);
-			}
-			if (pm[w])	//  mud
-			{	ParticleEmitter* pe = pm[w]->getEmitter(0);
-				//pe->setDimensions(sizeM,sizeM);
-				pe->setPosition(vpos + posInfo.carY * wR*0.7f);
-				pe->setDirection(-posInfo.carY);	pe->setEmissionRate(emitM);
-			}
-			if (pd[w])	//  dust
-			{	pd[w]->setDefaultDimensions(sizeD,sizeD);
-				ParticleEmitter* pe = pd[w]->getEmitter(0);
-				pe->setPosition(vpos + posInfo.carY * wR*0.51f);
-				pe->setDirection(-posInfo.carY);	pe->setEmissionRate(emitD);
-			}
-
-			//  fluids .::.
-			bool inFl = cd.inFluidsWh[w].size() > 0 && !ghost;  //dis for ghost
-			int idPar = -1;
-			if (inFl)
-			{	const FluidBox* fb = *cd.inFluidsWh[w].begin();
-				idPar = fb->idParticles;
-			}
-			if (pflW[w])  //  Water ~
-			{
-				float vel = pCar->GetSpeed();  // depth.. only on surface?
-				bool e = idPar == 0 &&  vel > 10.f && cd.whH[w] < 1.f;
-				float emitW = e ?  std::min(80.f, 3.0f * vel)  : 0.f;
-				ParticleEmitter* pe = pflW[w]->getEmitter(0);
-				pe->setPosition(vpos + posInfo.carY * wR*0.51f);
-				pe->setDirection(-posInfo.carY);	pe->setEmissionRate(emitW * pSet->particles_len);
-			}
-			if (pflM[w])  //  Mud ^
-			{
-				float vel = Math::Abs(cd.wheel[w].GetAngularVelocity());
-				bool e = idPar == 2 &&  vel > 30.f;
-				float emitM = e ?  cd.whH[w] * std::min(80.f, 1.5f * vel)  : 0.f;  whMudSpin += emitM / 80.f;
-				ParticleEmitter* pe = pflM[w]->getEmitter(0);
-				pe->setPosition(vpos + posInfo.carY * wR*0.51f);
-				pe->setDirection(-posInfo.carY);	pe->setEmissionRate(emitM * pSet->particles_len);
-			}
-			if (pflMs[w])  //  Mud soft ^
-			{
-				float vel = Math::Abs(cd.wheel[w].GetAngularVelocity());
-				
-				bool e = idPar == 1 &&  vel > 30.f;
-				float emitM = e ?  cd.whH[w] * std::min(160.f, 3.f * vel)  : 0.f;  whMudSpin += emitM / 80.f;
-				ParticleEmitter* pe = pflMs[w]->getEmitter(0);
-				pe->setPosition(vpos + posInfo.carY * wR*0.51f);
-				pe->setDirection(-posInfo.carY);	pe->setEmissionRate(emitM * pSet->particles_len);
-			}
-		}
-
-		//  update trails h+
-		if (pSet->trails)  {
-			if (ndWhE[w])
-			{	Vector3 vp = vpos + posInfo.carY * wR*0.72f;  // 0.22
-				if (terrain && whMtr > 0)
-					vp.y = terrain->getHeightAtWorldPosition(vp) + 0.05f;
-					//if (/*whOnRoad[w]*/whMtr > 0 && road)  // on road, add ofs
-					//	vp.y += road->fHeight;	}/**/
-				ndWhE[w]->setPosition(vp);
-			}
-			float al = 0.5f * /*squeal*/ std::min(1.f, 0.7f * wht[w]) * onGr;  // par+
-			if (whTrl[w])	whTrl[w]->setInitialColour(0,
-				lay.tclr.r,lay.tclr.g,lay.tclr.b, lay.tclr.a * al/**/);
-		}
-	}
-	//pCar->whMudSpin = whMudSpin;  // for snd, move to posInfo..
-	pCar->whMudSpin += (whMudSpin - pCar->whMudSpin)*0.3f;  //_every 2nd val=0 why?
-	//LogO(toStr(pCar->whMudSpin));
-
-	// Reflection
-	pReflect->camPosition = pMainNode->getPosition();
-	
-	// blendmaps
-	UpdWhTerMtr();
-	
-	//  update brake meshes orientation
-	for (int i=0; i<4; ++i)
-	{
-		if (ndBrake[i])
-		{
-			ndBrake[i]->_setDerivedOrientation( pMainNode->getOrientation() );
-			
-			// this transformation code is just so the brake mesh can have the same alignment as the wheel mesh
-			ndBrake[i]->yaw(Ogre::Degree(-90), Node::TS_LOCAL);
-			if (i%2 == 1)
-				ndBrake[i]->setScale(-1, 1, 1);
-				
-			ndBrake[i]->pitch(Ogre::Degree(180), Node::TS_LOCAL);
-			
-			if (i==0 || i==1) // turn only front wheels
-			{
-				if (eType != CT_GHOST)
-					ndBrake[i]->yaw(-Degree(pCar->dynamics.wheel[i].GetSteerAngle()));
-				else 
-					ndBrake[i]->yaw(-Degree(pApp->ghostFrame.steer * pCar->dynamics.GetMaxSteeringAngle()));
-			}
-		}
-	}
-	
-	UpdateKeys();
-}
-
-
-void CarModel::UpdateKeys()
-{
-	if (!pCar)  return;
-
-	///  go to last checkp.
-	if (pCar->bLastChk && !bLastChkOld)
-	{
-		pCar->ResetPos(false);
-		if (fCam)
-			fCam->first = true;
-		else
-			LogO("no fCam");
-	}
-	bLastChkOld = pCar->bLastChk;
-
-	///  change Cameras  ---------------------------------
-	//if (!pApp->isFocGui)
-	if (pCar->iCamNext != 0 && iCamNextOld == 0)
-	{
-		//  with ctrl - change current camera car index  (mouse move camera for many players)
-		if (pApp->ctrl && iIndex == 0)
-			pApp->iCurCam = (pApp->iCurCam + pCar->iCamNext + pSet->local_players) % pSet->local_players;
-		else
-		{
-			int visMask = 255;
-			pApp->roadUpCnt = 0;
-
-			if (fCam)
-			{	fCam->Next(pCar->iCamNext < 0, pApp->shift);
-				pApp->carsCamNum[iIndex] = fCam->miCurrent +1;  // save for pSet
-				visMask = fCam->ca->mHideGlass ? RV_MaskAll-RV_CarGlass : RV_MaskAll;
-				for (std::list<Viewport*>::iterator it = pApp->mSplitMgr->mViewports.begin();
-					it != pApp->mSplitMgr->mViewports.end(); ++it)
-					(*it)->setVisibilityMask(visMask);
-			}
-
-
-		}
-	}
-	iCamNextOld = pCar->iCamNext;
 }
 
 
@@ -540,7 +228,7 @@ void CarModel::Create(int car)
 
 
 	//  wheels  ----------------------
-	for (int w=0; w < 4; w++)
+	for (int w=0; w < 4; ++w)
 	{
 		// only 1 mesh for both?
 		String siw = "Wheel"+ strI + "_" +toStr(w);
@@ -605,7 +293,7 @@ void CarModel::Create(int car)
 				// no exhaust pos in car file, guess from bounding box
 				Vector3 bsize = (bodyBox.getMaximum() - bodyBox.getMinimum())*0.5,
 					bcenter = bodyBox.getMaximum() + bodyBox.getMinimum();
-				LogO("Car body bbox :  size " + toStr(bsize) + ",  center " + toStr(bcenter));
+				//LogO("Car body bbox :  size " + toStr(bsize) + ",  center " + toStr(bcenter));
 				SceneNode* nb = pMainNode->createChildSceneNode(bcenter+
 					Vector3(bsize.x * 0.97, bsize.y * 0.65, bsize.z * 0.65 * (i==0 ? 1 : -1) ));
 					//Vector3(1.9 /*back*/, 0.1 /*up*/, 0.6 * (i==0 ? 1 : -1)/*sides*/ ));
@@ -629,7 +317,7 @@ void CarModel::Create(int car)
 
 	///  wheel emitters  ------------------------
 	if (!ghost)
-	for (int w=0; w < 4; w++)
+	for (int w=0; w < 4; ++w)
 	{
 		String siw = strI + "_" +toStr(w);
 		if (!ps[w])  {
@@ -692,60 +380,8 @@ void CarModel::Create(int car)
 
 
 //-------------------------------------------------------------------------------------------------------
-//  utility
+//  materials
 //-------------------------------------------------------------------------------------------------------
-void CarModel::UpdateLightMap()
-{
-	MaterialPtr mtr;
-	for (int i=0; i < NumMaterials; i++)
-	{
-		mtr = MaterialManager::getSingleton().getByName(sMtr[i]);
-		if (!mtr.isNull())
-		{	Material::TechniqueIterator techIt = mtr->getTechniqueIterator();
-			while (techIt.hasMoreElements())
-			{	Technique* tech = techIt.getNext();
-				Technique::PassIterator passIt = tech->getPassIterator();
-				while (passIt.hasMoreElements())
-				{
-					Pass* pass = passIt.getNext();
-
-					if (pass->hasFragmentProgram())
-					{
-						GpuProgramParametersSharedPtr params = pass->getFragmentProgramParameters();
-						params->setIgnoreMissingParams(true); // don't throw exception if material doesnt use lightmap
-						params->setNamedConstant("enableTerrainLightMap", bLightMapEnabled ? Real(1) : Real(0));
-					}
-	}	}	}	}
-}
-
-void CarModel::RefreshBrakingMaterial()
-{
-	std::string texName;
-	if (bBraking)
-	texName = sDirname + "_body00_brake.png";
-	else
-		texName = sDirname + "_body00_add.png";
-	MaterialPtr mtr;
-	for (int i=0; i < NumMaterials; i++)
-	{
-		mtr = MaterialManager::getSingleton().getByName(sMtr[i]);
-		if (!mtr.isNull())
-		{	Material::TechniqueIterator techIt = mtr->getTechniqueIterator();
-			while (techIt.hasMoreElements())
-			{	Technique* tech = techIt.getNext();
-				Technique::PassIterator passIt = tech->getPassIterator();
-				while (passIt.hasMoreElements())
-				{	Pass* pass = passIt.getNext();
-					Pass::TextureUnitStateIterator tusIt = pass->getTextureUnitStateIterator();
-					while (tusIt.hasMoreElements())
-					{
-						TextureUnitState* tus = tusIt.getNext();
-
-						if (tus->getName() == "blendMap")
-							tus->setTextureName( texName );
-	}	}	}	}	}
-}
-
 void CarModel::RecreateMaterials()
 {
 	String strI = toStr(iIndex);
@@ -866,82 +502,10 @@ void CarModel::CreateReflection()
 }
 
 
-void CarModel::UpdParsTrails(bool visible)
-{
-	bool vis = visible && pSet->particles;
-	for (int w=0; w < 4; w++)
-	{
-		Ogre::uint8 grp = RQG_CarTrails;  //9=road  after glass
-		if (w < 2 &&
-			pb[w])	{	pb[w]->setVisible(vis);  pb[w]->setRenderQueueGroup(grp);  }
-		if (whTrl[w]){  whTrl[w]->setVisible(visible && pSet->trails);  whTrl[w]->setRenderQueueGroup(grp);  }  grp = RQG_CarParticles;
-
-		if (ps[w])	{	ps[w]->setVisible(vis);  ps[w]->setRenderQueueGroup(grp);  }  // vdr only && !sc.ter
-		if (pm[w])	{	pm[w]->setVisible(vis);  pm[w]->setRenderQueueGroup(grp);  }
-		if (pd[w])	{	pd[w]->setVisible(vis);  pd[w]->setRenderQueueGroup(grp);  }
-
-		if (pflW[w]){	pflW[w]->setVisible(vis);  pflW[w]->setRenderQueueGroup(grp);  }
-		if (pflM[w]){	pflM[w]->setVisible(vis);  pflM[w]->setRenderQueueGroup(grp);  }
-		if (pflMs[w]){	pflMs[w]->setVisible(vis);  pflMs[w]->setRenderQueueGroup(grp);  }
-		if (ph)		{	ph->setVisible(vis);     ph->setRenderQueueGroup(grp);     }
-	}
-}
-
-
-///  terrain mtr from blend maps
+//  utility - create VDrift model in Ogre
 //-------------------------------------------------------------------------------------------------------
-void CarModel::UpdWhTerMtr()
-{
-	if (!pCar || !ndWh[0])  return;
-	if (!terrain || !blendMtr)	// vdr trk
-	{
-		for (int i=0; i<4; ++i)  // for particles/trails only
-		{	whTerMtr[i] = pCar->dynamics.bWhOnRoad[i] ? 0 : 1;
-			whRoadMtr[i] = pCar->dynamics.bWhOnRoad[i];  }
-		return;
-	}
-	// if whTerMtr == 0 wheel is on road and mtr is in whRoadMtr (now only for road/pipe)
-	// TODO: road has only 1 surface, extend to 4, editor tabs, surfaces.txt, alpha transition?...
-
-	int t = blendMapSize;
-	Real tws = sc->td.fTerWorldSize;
-
-	//  wheels
-	for (int i=0; i<4; ++i)
-	{
-		Vector3 w = ndWh[i]->getPosition();
-		int mx = (w.x + 0.5*tws)/tws*t, my = (w.z + 0.5*tws)/tws*t;
-		mx = std::max(0,std::min(t-1, mx)), my = std::max(0,std::min(t-1, my));
-
-		int mtr = pCar->dynamics.bWhOnRoad[i] ? 0 : blendMtr[my*t + mx];
-		whTerMtr[i] = mtr;
-		whRoadMtr[i] = pCar->dynamics.bWhOnRoad[i];
-
-		///  vdr set surface for wheel
-		TRACKSURFACE* tsu = &pGame->track.tracksurfaces[mtr];
-		pCar->dynamics.terSurf[i] = tsu;
-		pCar->dynamics.bTerrain = true;
-	}
-}
-
-
-//-------------------------------------------------------------------------------------------------------
-//  utils
-//-------------------------------------------------------------------------------------------------------
-
-void CarModel::ChangeClr(int car)
-{
-	float c_h = pSet->car_hue[car], c_s = pSet->car_sat[car], c_v = pSet->car_val[car];
-	color.setHSB(1-c_h,c_s,c_v);  //set, mini pos clr
-	MaterialPtr mtr = MaterialManager::getSingleton().getByName(sMtr[Mtr_CarBody]);
-	if (!mtr.isNull())
-	{
-		mtr->setDiffuse(color);
-	}
-}
-
-
-ManualObject* CarModel::CreateModel(SceneManager* sceneMgr, const String& mat, class VERTEXARRAY* a, Vector3 vPofs, bool flip, bool track, const String& name)
+ManualObject* CarModel::CreateModel(SceneManager* sceneMgr, const String& mat,
+	class VERTEXARRAY* a, Vector3 vPofs, bool flip, bool track, const String& name)
 {
 	int verts = a->vertices.size();
 	if (verts == 0)  return NULL;

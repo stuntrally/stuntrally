@@ -22,7 +22,8 @@ SplineRoad::SplineRoad(GAME* pgame) : pGame(pgame),
 	lastNdSel(0),lastNdChosen(0), iSelPoint(-1), iChosen(-1),
 	posHit(Vector3::UNIT_SCALE), bHitTer(0), bSelChng(0),
 	rebuild(false), iDirtyId(-1), idStr(0),
-	fMarkerScale(1.f), fLodBias(1.f), bForceShadowCaster(0)
+	fMarkerScale(1.f), fLodBias(1.f), bForceShadowCaster(0),
+	chksRoadLen(1.f)
 {
 	Defaults();  iTexSize = 1;
 	iMrgSegs = 0;  segsMrg = 0;  iOldHide = -1;
@@ -74,8 +75,44 @@ void SplineRoad::SetChecks()  // after xml load
 		}
 	}
 	int num = (int)mChks.size();
-	if (num > 0)  //1st checkpoint for reverse
-		iChkId1Rev = (iChkId1 - iDir + num) % num;
+	if (num == 0)  return;
+
+	//  1st checkpoint for reverse (= last chk)
+	iChkId1Rev = (iChkId1 - iDir + num) % num;
+
+
+	//  dist between checks
+	if (num == 1)  {
+		mChks[0].dist[0] = 10.f;  mChks[0].dist[1] = 10.f;  }
+
+	//LogO("----  chks norm  ----");
+	int i = iChkId1;  Real sum = 0.f;
+	for (int n=0; n < num; ++n)
+	{
+		int i1 = (i + iDir + num) % num;
+		Vector3 vd = mChks[i].pos - mChks[i1].pos;
+		Real dist = (n == num-1) ? 0.f :  vd.length() + mChks[n].r;  // not last pair
+		sum += dist;  mChks[n].dist[0] = sum;
+		//LogO("Chk " + toStr(i) +"-"+ toStr(i1) + " dist:" + toStr(dist) + " sum:" + toStr(mChks[n].dist[0]));
+		i = i1;
+	}
+	chksRoadLen = sum;
+
+	//LogO("----  chks rev  ----");
+	i = iChkId1Rev;  sum = 0.f;
+	for (int n=0; n < num; ++n)
+	{
+		int i1 = (i - iDir + num) % num;
+		Vector3 vd = mChks[i].pos - mChks[i1].pos;
+		Real dist = (n == num-1) ? 0.f :  vd.length() + mChks[n].r;  // not last pair
+		sum += dist;  mChks[n].dist[1] = sum;
+		//LogO("Chk " + toStr(i) +"-"+ toStr(i1) + " dist:" + toStr(dist) + " sum:" + toStr(mChks[n].dist[1]));
+		i = i1;
+	}
+	//LogO("----");
+	//LogO("chksRoadLen: "+toStr(sum));
+	//LogO("chk 1st: "+toStr(iChkId1) + " last: "+toStr(iChkId1Rev) + " dir: "+toStr(iDir));
+	//LogO("----");
 }
 
 	

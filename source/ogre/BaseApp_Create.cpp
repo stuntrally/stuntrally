@@ -10,6 +10,7 @@
 #include "Localization.h"
 #include "SplitScreen.h"
 #include "CarModel.h"
+#include "QTimer.h"
 
 #include <OgreFontManager.h>
 #include <OgreLogManager.h>
@@ -504,6 +505,9 @@ bool BaseApp::configure()
 //-------------------------------------------------------------------------------------
 bool BaseApp::setup()
 {
+	QTimer ti;  ti.update();  /// time
+	QTimer ti2;  ti2.update();  /// time2
+
 	if (pSet->rendersystem == "Default")
 	{
 		#if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
@@ -515,6 +519,7 @@ bool BaseApp::setup()
 	
 	// Dynamic plugin loading
 	mRoot = OGRE_NEW Root("", PATHMANAGER::GetUserConfigDir() + "/ogreset.cfg", PATHMANAGER::GetLogDir() + "/ogre.log");
+	LogO("*** start setup ***");
 
 	#ifdef _DEBUG
 	#define D_SUFFIX "_d"
@@ -598,6 +603,10 @@ bool BaseApp::setup()
 
 	TextureManager::getSingleton().setDefaultNumMipmaps(5);
 
+		ti.update();	/// time
+		float dt = ti.dt * 1000.f;
+		LogO(String(":::: Time setup vp: ") + toStr(dt) + " ms");
+
 	//  Gui
 	#if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
 	mPlatform = new MyGUI::OgreD3D11Platform();
@@ -661,21 +670,44 @@ bool BaseApp::setup()
 		baseWhiteNoLighting->getTechnique(1)->getPass(0)->getFragmentProgram()->getName());
 
 	}
+		ti.update();	/// time
+		dt = ti.dt * 1000.f;
+		LogO(String(":::: Time setup gui: ") + toStr(dt) + " ms");
+
 	createResourceListener();
 	loadResources();
+
+		ti.update();	/// time
+		dt = ti.dt * 1000.f;
+		LogO(String(":::: Time resources: ") + toStr(dt) + " ms");
 
 	LogDbg("*** createFrameListener ***");
 	createFrameListener();
 
+		ti.update();	/// time
+		dt = ti.dt * 1000.f;
+		LogO(String(":::: Time createFrameListener: ") + toStr(dt) + " ms");
+
 	LogDbg("*** createScene ***");
 	createScene();//^before
 
+		ti.update();	/// time
+		dt = ti.dt * 1000.f;
+		LogO(String(":::: Time createScene: ") + toStr(dt) + " ms");
+
 	LogDbg("*** recreateCompositor ***");
 	recreateCompositor();
-	
 
 	postInit();
 	LogDbg("*** end setup ***");
+
+		ti.update();	/// time
+		dt = ti.dt * 1000.f;
+		LogO(String(":::: Time post, mat factory: ") + toStr(dt) + " ms");
+
+	ti2.update();	/// time2
+	dt = ti2.dt * 1000.f;
+	LogO(String(":::: Time setup total: ") + toStr(dt) + " ms");
 	
 	return true;
 };

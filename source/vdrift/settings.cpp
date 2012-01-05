@@ -37,6 +37,11 @@ void SETTINGS::Serialize(bool w, CONFIGFILE & c)
 	Param(c,w, "game.trk_reverse", trackreverse);
 	Param(c,w, "game.local_players", local_players);	Param(c,w, "game.split_vertically", split_vertically);
 	Param(c,w, "game.num_laps", num_laps);
+	
+	//  joystick
+	Param(c,w, "joystick.ff_device", ff_device);
+	Param(c,w, "joystick.ff_gain", ff_gain);
+	Param(c,w, "joystick.ff_invert", ff_invert);
 
 	//  hud
 	Param(c,w, "hud_show.fps", show_fps);				Param(c,w, "hud_show.mph", show_mph);
@@ -140,6 +145,10 @@ SETTINGS::SETTINGS() :  ///  Defaults
 	local_players(1), num_laps(2),
 	split_vertically(true), language(""), // "" = autodetect lang
 	boost_type(2), flip_type(1), boost_power(1.f),
+	//  joystick
+	ff_device("/dev/input/event0"),
+	ff_gain(1.0),
+	ff_invert(false),
 	//  misc
 	autostart(0), ogre_dialog(0), escquit(0),
 	bltDebug(0), bltLines(1),  bltProfilerTxt(0),

@@ -17,6 +17,7 @@
 	<Tag name="UnitKmh">km/h</Tag>
 	<Tag name="InputRoadPickOne">Alege (una)</Tag>
 	<Tag name="ViewDist">Distanță de vedere</Tag>
+	<Tag name="OpponentsList">Opponents List</Tag>
 	<Tag name="RplParticles">Particles (for not transparent ghost)</Tag>
 	<Tag name="TipRoadDist2">Additional distance to road.</Tag>
 	<Tag name="TipLTrMinTerH">Terrain height below which model won't appear.</Tag>
@@ -591,6 +592,7 @@
 	<Tag name="TipLTrMaxTerAng">Terrain angle above which model won't appear.</Tag>
 	<Tag name="TipFogEndDist">Fog end distance [meters].</Tag>
 	<Tag name="Color">culoare</Tag>
+	<Tag name="GraphicsAll_VeryHigh">Very High</Tag>
 	<Tag name="TipTerLAngMax">Ending terrain angle for layer.</Tag>
 	<Tag name="Pitch">gudron</Tag>
 	<Tag name="InputNextOptTab">F2,F3 - fila de opțiuni precedentă,următoare</Tag>
@@ -623,7 +625,6 @@
 	<Tag name="NetWaiting">Waiting...</Tag>
 	<Tag name="NetJoinGame">Join game</Tag>
 	<Tag name="NetChat">Chat</Tag>
-	<Tag name="GraphicsAll_VeryHigh">Very High</Tag>
 	<Tag name="GameVersion">1.4</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 

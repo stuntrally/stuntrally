@@ -806,8 +806,11 @@ bool App::keyPressed( const OIS::KeyEvent &arg )
 				if (carModels[c]->pCar)  carModels[c]->pCar->ResetPos(true);
 				if (carModels[c]->fCam)  carModels[c]->fCam->first = true;
 				carModels[c]->ResetChecks();
+				carModels[c]->iWonPlace = 0;
 			}
 			pGame->timer.Reset(0);
+			carIdWin = 1;  //
+			ghost.Clear(); //
 		}
 	}
 	

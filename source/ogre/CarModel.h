@@ -22,15 +22,26 @@ namespace Ogre {  class SceneNode;  class Terrain;  class Camera;  class SceneMa
 
 
 // Stores all the needed information about car coming from vdrift
+// position+rotation of car and wheels
+// and all data needed to update particles emitting rates and sounds
+// todo? remove PosInfo use ReplayFrame?
 struct PosInfo
 {
+	bool bNew;  //  new posinfo available for Update
+	//  car
 	Ogre::Vector3 pos, carY;  Ogre::Vector2 miniPos;
+	//  wheel
 	Ogre::Vector3 whPos[4];  Ogre::Quaternion rot, whRot[4];  float whR[4];
 	float whVel[4], whSlide[4], whSqueal[4];
-	int whTerMtr[4],whRoadMtr[4];  float fboost;
-	bool bNew;  //  new posinfo available for Update
+	int whTerMtr[4],whRoadMtr[4];
 
-	PosInfo() : bNew(false), pos(0,0,0), miniPos(0,0)  // not inited
+	float fboost,steer;
+
+	//  fluids
+	float whH[4],whAngVel[4], speed, whSteerAng[4];
+	int whP[4];
+
+	PosInfo() : bNew(false), pos(0,-200,0), miniPos(0,0)  // not inited
 	{}
 };
 
@@ -104,13 +115,15 @@ public:
 	CAR* pCar;
 	
 	float angCarY;  // car yaw angle for minimap
+	float distFirst, distLast, distTotal;  // checks const distances set at start
+	float trackPercent;  void UpdTrackPercent();  // % of track driven
 
 	//  start pos, lap  checkpoint vars
 	bool bGetStPos;  Ogre::Matrix4 matStPos;  Ogre::Vector4 vStDist;
 	int iInChk, iCurChk, iNextChk, iNumChks, iWonPlace;  // cur checkpoint -1 at start
 	bool bInSt, bWrongChk;  float fChkTime;  int iChkWrong;
 	//bool Checkpoint(const PosInfo& posInfo, class SplineRoad* road);  // update
-	Ogre::Vector3 vStartPos;  void ResetChecks();
+	Ogre::Vector3 vStartPos;  void ResetChecks(bool bDist=false);
 	
 private:
 	Ogre::Camera* mCamera;

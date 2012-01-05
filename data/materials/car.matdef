@@ -51,7 +51,7 @@
 	receivesDepthShadows = true
 	terrainLightMap = true
 	shadowPriority = 0.3
-	normalMapPriority = 0.3
+	normalMapPriority = 0.5
 
 [cartire_front]
 	ambient = 1.0 1.0 1.0

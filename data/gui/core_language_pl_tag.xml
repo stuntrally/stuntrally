@@ -17,6 +17,7 @@
 	<Tag name="UnitKmh">km/h</Tag>
 	<Tag name="InputRoadPickOne">Wybierz (jeden)</Tag>
 	<Tag name="ViewDist">Dalekość widzenia</Tag>
+	<Tag name="OpponentsList">Lista przeciwników</Tag>
 	<Tag name="RplParticles">Cząsteczki (dla ducha nieprzeźroczystego)</Tag>
 	<Tag name="TipRoadDist2">Dodatkowa odległość od drogi.</Tag>
 	<Tag name="TipLTrMinTerH">Wyoskość terenu poniżej której model nie występuje.</Tag>
@@ -591,6 +592,7 @@
 	<Tag name="TipLTrMaxTerAng">Kąt terenu powyżej którego brak modeli.</Tag>
 	<Tag name="TipFogEndDist">Odległość końcowa mgły [metr].</Tag>
 	<Tag name="Color">kolor</Tag>
+	<Tag name="GraphicsAll_VeryHigh">Bardzo wysokie</Tag>
 	<Tag name="TipTerLAngMax">Końcowy kąt terenu dla warstwy</Tag>
 	<Tag name="Pitch">nachylenie</Tag>
 	<Tag name="InputNextOptTab">F2,F3 - poprz,nast zakładka Opcji</Tag>
@@ -623,7 +625,6 @@
 	<Tag name="NetWaiting">Waiting...</Tag>
 	<Tag name="NetJoinGame">Join game</Tag>
 	<Tag name="NetChat">Chat</Tag>
-	<Tag name="GraphicsAll_VeryHigh">Very High</Tag>
 	<Tag name="GameVersion">1.4</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 

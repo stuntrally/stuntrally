@@ -1,14 +1,20 @@
+#include <OgrePlatform.h>
+
+// force feedback is only supported on linux.
+#if OGRE_PLATFORM == OGRE_PLATFORM_LINUX
+	#define ENABLE_FORCE_FEEDBACK
+#endif
+
 #ifdef ENABLE_FORCE_FEEDBACK
 #ifndef _FORCEFEEDBACK_H
 #define _FORCEFEEDBACK_H
 
-//#include <linux/input.h>
-//#include <fcntl.h>
-//#include <unistd.h>
-//#include <errno.h>
-
-//#include <string>
-//#include <iostream>
+#include <linux/input.h>
+#include <fcntl.h>
+#include <unistd.h>
+#include <errno.h>
+#include <string>
+#include <iostream>
 
 class FORCEFEEDBACK
 {

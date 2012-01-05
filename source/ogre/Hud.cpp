@@ -263,6 +263,11 @@ void App::UpdMiniTer()
 
 //  Update HUD
 ///---------------------------------------------------------------------------------------------------------------
+bool SortPerc(const CarModel* cm2, const CarModel* cm1)
+{
+	return cm1->trackPercent < cm2->trackPercent;
+}
+
 void App::UpdateHUD(int carId, CarModel* pCarM, CAR* pCar, float time, Viewport* vp)
 {
 	if (bSizeHUD)
@@ -304,85 +309,90 @@ void App::UpdateHUD(int carId, CarModel* pCarM, CAR* pCar, float time, Viewport*
 
 
 	///  update remote players  -----------
-	if (carId == 0 && !pSet->mini_rotated && !pSet->mini_zoomed)  // the only fall that works
 	for (int i=0; i < carModels.size(); ++i)
+	{
+		if (carModels[i]->eType == CarModel::CT_GHOST)
+			UpdHUDRot(i, carModels[i], 0.f, 0.f, true);
+		else
+		if (carId == 0 && !pSet->mini_rotated && !pSet->mini_zoomed)  // the only fall that works
 		if (carModels[i]->eType != CarModel::CT_LOCAL && carModels[i]->eType != CarModel::CT_REPLAY)
-			UpdHUDRot(i, carModels[i], 0.f, 0.f);
+			UpdHUDRot(i, carModels[i], 0.f, 0.f, true);
+		
+	}
+			
 
-	///  opponents list  ------------------
+	///  opponents list
+	//------------------------------------------------------------------------
 	if (ovOpp->isVisible() && pCarM && pCarM->pMainNode)
 	{
-		ColourValue c;  char ss[128];
-
+		std::list<CarModel*> cms;  // sorted list
 		for (int o=0; o < carModels.size(); ++o)
+			cms.push_back(carModels[o]);
+		cms.sort(SortPerc);
+
+		ColourValue c;  char ss[128];
+		int o = 0;
+		for (std::list<CarModel*>::const_iterator it = cms.begin(); it != cms.end(); ++it, ++o)
 		if (hudOpp[o][0])
 		{
-			const CarModel* cm = carModels[o];
+			CarModel* cm = *it;
 			if (cm->eType != CarModel::CT_REPLAY && cm->pMainNode)
 			{
-				float rChks = road ? road->mChks.size() : 1.f, perc = 100.f * cm->iNumChks / rChks;
+				cm->UpdTrackPercent();
 
-				if (o != carId)  // no dist to self
-				{
-					Vector3 v = carModels[o]->pMainNode->getPosition() - pCarM->pMainNode->getPosition();
+				bool bGhost = cm->eType == CarModel::CT_GHOST;
+				bool bGhostVis = (ghplay.GetNumFrames() > 0) && pSet->rpl_ghost;
+
+				if (cm == pCarM || bGhost && !bGhostVis)  // no dist to self or to empty ghost
+					hudOpp[o][1]->setCaption("");
+				else
+				{	Vector3 v = cm->pMainNode->getPosition() - pCarM->pMainNode->getPosition();
 					float dist = v.length();  // meters, mph:feet?
 					//  dist m
 					sprintf(ss, "%3.0fm", dist);		hudOpp[o][1]->setCaption(ss);
 					Real h = std::min(60.f, dist) / 60.f;
 					c.setHSB(0.5f - h * 0.4f, 1,1);		hudOpp[o][1]->setColour(c);
 				}
-				else  hudOpp[o][1]->setCaption("");
 					
-				if (cm->eType != CarModel::CT_GHOST)  // todo, save perc for ghost/replay ..
+				if (!bGhost)  // todo: save perc for ghost/replay or upd it as for regular car..
 				{	//  percent %
-					sprintf(ss, "%3.0f%%", perc);		hudOpp[o][0]->setCaption(ss);
-					c.setHSB(perc*0.01f*0.4f, 0.7f,1);	hudOpp[o][0]->setColour(c);
+					sprintf(ss, "%3.0f%%", cm->trackPercent);		hudOpp[o][0]->setCaption(ss);
+					c.setHSB(cm->trackPercent*0.01f*0.4f, 0.7f,1);	hudOpp[o][0]->setColour(c);
 				}
 				else  hudOpp[o][0]->setCaption("");
 				
-				//  name once in CreateHUD
+				hudOpp[o][2]->setCaption(cm->sDispName);  // cant sort if-, name once in CreateHUD
 				hudOpp[o][2]->setColour(cm->color);
 			}
 		}
 	}
-	///------------------------------------
 
 
-	///   Set motion blur intensity for this viewport, depending on car's linear velocity
+	//   Set motion blur intensity for this viewport, depending on car's linear velocity
+	// -----------------------------------------------------------------------------------
 	if (pSet->motionblur)
 	{
 		// use velocity squared to achieve an exponential motion blur - and its faster too - wow :)
 		float speed = pCar->GetVelocity().MagnitudeSquared();
 		
 		// peak at 250 kmh (=69 m/s), 69² = 4761
-		// motion blur slider: 1.0 = peak at 100 km/h
-		// 					   0.0 = peak at 400 km/h
-		//                  -> 0.5 = peak at 250 km/h
+		// motion blur slider: 1.0 = peak at 100 km/h   0.0 = peak at 400 km/h   -> 0.5 = peak at 250 km/h
 		// lerp(100, 400, 1-motionBlurIntensity)
 		float peakSpeed = 100 + (1-pSet->motionblurintensity) * (400-100);
 		float motionBlurAmount = std::abs(speed) / pow((peakSpeed/3.6f), 2);
 		
-		// higher fps = less perceived motion blur
-		// time a frame will be still visible on screen:
+		// higher fps = less perceived motion blur time a frame will be still visible on screen:
 		// each frame, 1-motionBlurAmount of the original image is lost
 		// example (motionBlurAmount = 0.7):
-		// frame 1: full img
-		// frame 2: 0.7  * image
-		// frame 3: 0.7² * image
-		// frame 4: 0.7³ * image
-		// portion of image visible after 'n' frames:
-		// pow(motionBlurAmount, n);
-		
-		// example 1: 60 fps
-		// 0.7³ image after 4 frames: 0.066 sec
-		// example 2: 120 fps
-		// 0.7³ image after 4 frames: 0.033 sec
-		
+		//	   frame 1: full img		   frame 2: 0.7  * image
+		//	   frame 3: 0.7² * image	   frame 4: 0.7³ * image
+		// portion of image visible after 'n' frames: pow(motionBlurAmount, n);
+		//	   example 1: 60 fps	   0.7³ image after 4 frames: 0.066 sec
+		//	   example 2: 120 fps	   0.7³ image after 4 frames: 0.033 sec
 		// now: need to achieve *same* time for both fps values
 		// to do this, adjust motionBlurAmount
 		// (1.0/fps) * pow(motionBlurAmount, n) == (1.0/fps2) * pow(motionBlurAmount2, n)
-		// set n=4
-		// motionBlurAmount_new = sqrt(sqrt((motionBlurAmount^4 * fpsReal/desiredFps))
+		// set n=4  motionBlurAmount_new = sqrt(sqrt((motionBlurAmount^4 * fpsReal/desiredFps))
 		motionBlurAmount = sqrt(sqrt( pow(motionBlurAmount, 4) * ((1.0f/time) / 120.0f) ));
 			
 		// clamp to 0.9f
@@ -390,7 +400,6 @@ void App::UpdateHUD(int carId, CarModel* pCarM, CAR* pCar, float time, Viewport*
 		
 		motionBlurIntensity = motionBlurAmount;
 	}
-	/// -----------------------------------------------------------------------------------
 
 
 	//  gear, vel texts  -----------------------------
@@ -478,9 +487,9 @@ void App::UpdateHUD(int carId, CarModel* pCarM, CAR* pCar, float time, Viewport*
 				String(TR("\n#{TBBest} ")) + GetTimeString(tim.GetBestLap(pSet->trackreverse)) );
 	}
 
-	//-----------------------------------------------------------------------------------------------
+	//-------------------------------------------------------------------------------------------------------------------
 	///  debug infos
-	//-----------------------------------------------------------------------------------------------
+	//-------------------------------------------------------------------------------------------------------------------
 
 	//  car debug text  --------
 	static bool oldCarTxt = false;
@@ -567,9 +576,9 @@ void App::UpdateHUD(int carId, CarModel* pCarM, CAR* pCar, float time, Viewport*
 		//	"ghost:  "  + GetTimeString(ghost.GetTimeLength()) + "  "  + toStr(ghost.GetNumFrames()) + "\n" +
 		//	"ghplay: " + GetTimeString(ghplay.GetTimeLength()) + "  " + toStr(ghplay.GetNumFrames()) + "\n" +
 		{	sprintf(s, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n"
-				"         st %d in%2d  |  cur%2d > next %d  |  Num %d / All %d  T= %4.2f"
+				"         st %d in%2d  |  cur%2d > next %d  |  Num %d / All %d"
 			,pCarM->bInSt ? 1:0, pCarM->iInChk, pCarM->iCurChk, pCarM->iNextChk
-			,pCarM->iNumChks, road->mChks.size(), pCarM->fChkTime);
+			,pCarM->iNumChks, road->mChks.size());
 			ovU[0]->setCaption(s);
 		}	/**/
 

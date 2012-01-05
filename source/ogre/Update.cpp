@@ -325,7 +325,8 @@ void App::newPoses()
 			ReplayFrame frame;
 			bool ok = ghplay.GetFrame(lapTime, &frame, 0);
 			//  car
-			pos = frame.pos;  rot = frame.rot;
+			pos = frame.pos;  rot = frame.rot;  posInfo.speed = frame.speed;
+			posInfo.fboost = frame.fboost;  posInfo.steer = frame.steer;
 			//  wheels
 			for (int w=0; w < 4; ++w)
 			{
@@ -334,9 +335,10 @@ void App::newPoses()
 				posInfo.whSlide[w] = frame.slide[w];  posInfo.whSqueal[w] = frame.squeal[w];
 				posInfo.whR[w] = replay.header.whR[iCarNum][w];//
 				posInfo.whTerMtr[w] = frame.whTerMtr[w];  posInfo.whRoadMtr[w] = frame.whRoadMtr[w];
-				posInfo.fboost = frame.fboost;
+				posInfo.whH[w] = frame.whH[w];  posInfo.whP[w] = frame.whP[w];
+				posInfo.whAngVel[w] = frame.whAngVel[w];
+				if (w < 2)  posInfo.whSteerAng[w] = frame.whSteerAng[w];
 			}
-			ghostFrame = frame;
 		}
 		else if (bRplPlay)
 		{
@@ -345,7 +347,8 @@ void App::newPoses()
 				if (!ok)	pGame->timer.RestartReplay();
 			
 			//  car
-			pos = fr.pos;  rot = fr.rot;
+			pos = fr.pos;  rot = fr.rot;  posInfo.speed = fr.speed;
+			posInfo.fboost = fr.fboost;  posInfo.steer = fr.steer;
 			//  wheels
 			for (int w=0; w < 4; ++w)
 			{
@@ -354,7 +357,9 @@ void App::newPoses()
 				posInfo.whSlide[w] = fr.slide[w];  posInfo.whSqueal[w] = fr.squeal[w];
 				posInfo.whR[w] = replay.header.whR[iCarNum][w];//
 				posInfo.whTerMtr[w] = fr.whTerMtr[w];  posInfo.whRoadMtr[w] = fr.whRoadMtr[w];
-				posInfo.fboost = fr.fboost;
+				posInfo.whH[w] = fr.whH[w];  posInfo.whP[w] = fr.whP[w];
+				posInfo.whAngVel[w] = fr.whAngVel[w];
+				if (w < 2)  posInfo.whSteerAng[w] = fr.whSteerAng[w];
 			}
 		}
 		else
@@ -362,20 +367,24 @@ void App::newPoses()
 		//-----------------------------------------------------------------------
 		if (pCar)
 		{
-			pos = pCar->dynamics.GetPosition();
-			rot = pCar->dynamics.GetOrientation();
+			const CARDYNAMICS& cd = pCar->dynamics;
+			pos = cd.GetPosition();  rot = cd.GetOrientation();
+			posInfo.fboost = cd.boostVal;
+			//posInfo.steer = cd.steer;
+			posInfo.speed = pCar->GetSpeed();
 			
 			for (int w=0; w < 4; ++w)
 			{	WHEEL_POSITION wp = WHEEL_POSITION(w);
-				whPos[w] = pCar->dynamics.GetWheelPosition(wp);
-				whRot[w] = pCar->dynamics.GetWheelOrientation(wp);
+				whPos[w] = cd.GetWheelPosition(wp);  whRot[w] = cd.GetWheelOrientation(wp);
 				//float wR = pCar->GetTireRadius(wp);
-				posInfo.whVel[w] = pCar->dynamics.GetWheelVelocity(wp).Magnitude();
+				posInfo.whVel[w] = cd.GetWheelVelocity(wp).Magnitude();
 				posInfo.whSlide[w] = -1.f;  posInfo.whSqueal[w] = pCar->GetTireSquealAmount(wp, &posInfo.whSlide[w]);
 				posInfo.whR[w] = pCar->GetTireRadius(wp);//
 				posInfo.whTerMtr[w] = carM->whTerMtr[w];  posInfo.whRoadMtr[w] = carM->whRoadMtr[w];
+				posInfo.whH[w] = cd.whH[w];  posInfo.whP[w] = cd.whP[w];
+				posInfo.whAngVel[w] = cd.wheel[w].GetAngularVelocity();
+				if (w < 2)  posInfo.whSteerAng[w] = cd.wheel[w].GetSteerAngle();
 			}
-			posInfo.fboost = pCar->dynamics.boostVal;
 		}
 		
 
@@ -389,7 +398,7 @@ void App::newPoses()
 		Vector3 vcx,vcz;  q1.ToAxes(vcx,posInfo.carY,vcz);
 
 		if (!isnan(whPos[0][0]))
-		for (int w=0; w < 4; w++)
+		for (int w=0; w < 4; ++w)
 		{
 			posInfo.whPos[w] = Vector3(whPos[w][0],whPos[w][2],-whPos[w][1]);
 			Quaternion q(whRot[w][0],whRot[w][1],whRot[w][2],whRot[w][3]), q1;
@@ -428,35 +437,48 @@ void App::newPoses()
 			//static int ii = 0;
 			//if (ii++ >= 0)	// 1 half game framerate
 			{	//ii = 0;
+				const CARDYNAMICS& cd = pCar->dynamics;
 				ReplayFrame fr;
 				fr.time = rplTime;  //  time  from start
 				fr.pos = pos;  fr.rot = rot;  //  car
 				//  wheels
-				for (int w=0; w < 4; w++)
+				for (int w=0; w < 4; ++w)
 				{	fr.whPos[w] = whPos[w];  fr.whRot[w] = whRot[w];
 
 					WHEEL_POSITION wp = WHEEL_POSITION(w);
-					const TRACKSURFACE* surface = pCar->dynamics.GetWheelContact(wp).GetSurfacePtr();
+					const TRACKSURFACE* surface = cd.GetWheelContact(wp).GetSurfacePtr();
 					fr.surfType[w] = !surface ? TRACKSURFACE::NONE : surface->type;
 					//  squeal
 					fr.slide[w] = -1.f;  fr.squeal[w] = pCar->GetTireSquealAmount(wp, &fr.slide[w]);
-					fr.whVel[w] = pCar->dynamics.GetWheelVelocity(wp).Magnitude();
+					fr.whVel[w] = cd.GetWheelVelocity(wp).Magnitude();
 					//  susp
-					fr.suspVel[w] = pCar->dynamics.GetSuspension(wp).GetVelocity();
-					fr.suspDisp[w] = pCar->dynamics.GetSuspension(wp).GetDisplacementPercent();
+					fr.suspVel[w] = cd.GetSuspension(wp).GetVelocity();
+					fr.suspDisp[w] = cd.GetSuspension(wp).GetDisplacementPercent();
+					if (w < 2)
+						fr.whSteerAng[w] = cd.wheel[w].GetSteerAngle();
 					//replay.header.whR[w] = pCar->GetTireRadius(wp);//
 					fr.whTerMtr[w] = carM->whTerMtr[w];  fr.whRoadMtr[w] = carM->whRoadMtr[w];
+					//  fluids
+					fr.whH[w] = cd.whH[w];  fr.whP[w] = cd.whP[w];
+					fr.whAngVel[w] = cd.wheel[w].GetAngularVelocity();
+					bool inFl = cd.inFluidsWh[w].size() > 0;
+					int idPar = -1;
+					if (inFl)
+					{	const FluidBox* fb = *cd.inFluidsWh[w].begin();
+						idPar = fb->idParticles;  }
+					fr.whP[w] = idPar;
+					if (w < 2)  posInfo.whSteerAng[w] = cd.wheel[w].GetSteerAngle();
 				}
 				//  hud
 				fr.vel = pCar->GetSpeedometer();  fr.rpm = pCar->GetEngineRPM();
 				fr.gear = pCar->GetGear();  fr.clutch = pCar->GetClutch();
-				fr.throttle = pCar->dynamics.GetEngine().GetThrottle();
+				fr.throttle = cd.GetEngine().GetThrottle();
 				fr.steer = pCar->GetLastSteer();
-				fr.fboost = pCar->dynamics.doBoost;
+				fr.fboost = cd.doBoost;
 				//  eng snd
-				fr.posEngn = pCar->dynamics.GetEnginePosition();
+				fr.posEngn = cd.GetEnginePosition();
 				fr.speed = pCar->GetSpeed();
-				fr.dynVel = pCar->dynamics.GetVelocity().Magnitude();
+				fr.dynVel = cd.GetVelocity().Magnitude();
 				
 				replay.AddFrame(fr, iCarNum);  // rec replay
 				if (iCarNum==0)  /// rec ghost lap
@@ -552,12 +574,13 @@ void App::newPoses()
 				if (ncs > 0)
 				{	if (carM->bInSt && carM->iNumChks == ncs && carM->iCurChk != -1)  // finish
 					{
-						bool best = pGame->timer.Lap(iCarNum, 0,0, true, pSet->trackreverse);  //pGame->cartimerids[pCar] ?
+						bool best = pGame->timer.Lap(iCarNum, 0,0, true,
+							pSet->trackreverse/*<, pSet->boost_type*/);  //pGame->cartimerids[pCar] ?
 
 						if (!pSet->rpl_bestonly || best)  ///  new best lap, save ghost
 						if (iCarNum==0 && pSet->rpl_rec)  // for many, only 1st-
 						{
-							ghost.SaveFile(GetGhostFile());
+							ghost.SaveFile(GetGhostFile());  /*< boost_type*/
 							ghplay.CopyFrom(ghost);
 						}
 						ghost.Clear();
@@ -604,9 +627,14 @@ void App::newPoses()
 //  updatePoses - Set car pos for Ogre nodes, update particles, trails
 //---------------------------------------------------------------------------------------------------------------
 void App::updatePoses(float time)
-{	
+{
+	if (carModels.size() == 0)  return;
+	
 	//  Update all carmodels with their newPosInfo
-	int i=0;
+	int i = 0;
+	const CarModel* playerCar = carModels.front();
+	const PosInfo& playerPos = newPosInfos.front();
+
 	std::vector<CarModel*>::iterator carIt = carModels.begin();
 	std::vector<PosInfo>::iterator newPosIt = newPosInfos.begin();
 	while (carIt != carModels.end())
@@ -625,7 +653,6 @@ void App::updatePoses(float time)
 			//  hide ghost car when close to player car (only when not transparent)
 			if (!pSet->rpl_alpha)
 			{
-				CarModel* playerCar = carModels.front();
 				float distance = carM->pMainNode->getPosition().squaredDistance(playerCar->pMainNode->getPosition());
 				if (distance < 16.f)
 					carM->setVisible(false);
@@ -637,18 +664,34 @@ void App::updatePoses(float time)
 		//  nick text 3d pos
 		//projectPoint()
 		
-		//  pos on minimap  x,y = -1..1
-		//if (!bGhost)
-		{	float xp =(-newPosInfo.pos[2] - minX)*scX*2-1,
-				  yp =-(newPosInfo.pos[0] - minY)*scY*2+1;
+		///  pos on minimap  x,y = -1..1
+		{
+			Vector2 mp(-newPosInfo.pos[2],newPosInfo.pos[0]);
+			Vector2 plr(-playerPos.pos[2],playerPos.pos[0]);
+
+			//  other cars in player's car space
+			if (i > 0 && pSet->mini_zoomed)
+			{
+				mp -= plr;  mp *= pSet->zoom_minimap;
+
+				if (pSet->mini_rotated)
+				{
+					float a = playerCar->angCarY * PI_d/180.f;  Vector2 np;
+					np.x = mp.x*cosf(a) - mp.y*sinf(a);  // rotate
+					np.y = mp.x*sinf(a) + mp.y*cosf(a);  mp = -np;
+  				}
+			}
+
+			float xp = std::min(1.f, std::max(-1.f,  (mp.x - minX)*scX*2.f-1.f )),
+				  yp = std::min(1.f, std::max(-1.f, -(mp.y - minY)*scY*2.f+1.f ));
 			newPosInfos[i].miniPos = Vector2(xp,yp);
-			
+						
 			if (vNdPos[i])
 				if (bGhost && !bGhostVis)  vNdPos[i]->setPosition(-100,0,0);  //hide
-				else if (pSet->mini_zoomed)  vNdPos[i]->setPosition(0,0,0);
+				else if (pSet->mini_zoomed && i==0)  vNdPos[i]->setPosition(0,0,0);
 				else					vNdPos[i]->setPosition(xp,yp,0);
 		}
-		carIt++;  newPosIt++;  i++;
+		++carIt;  ++newPosIt;  ++i;
 	}
 	
 	///  Replay info
@@ -668,12 +711,13 @@ void App::updatePoses(float time)
 
 //  Update HUD rotated elems
 //---------------------------------------------------------------------------------------------------------------
-void App::UpdHUDRot(int carId, CarModel* pCarM, float vel, float rpm)
+void App::UpdHUDRot(int carId, CarModel* pCarM, float vel, float rpm, bool miniOnly)
 {
 	/// TODO: rpm vel needle angles,aspect are wrong [all from the last car when bloom is on (any effects)], hud vals are ok
 	//if (!pCarM || carId == -1)  return;
 	//pCarM = carModels[carId];
-	// todo:  poses when mini rotated or zoomed ..
+	bool ghost = false;
+	if (pCarM && pCarM->eType == CarModel::CT_GHOST)  ghost = true;
 
     const float rsc = -180.f/6000.f, rmin = 0.f;  //rmp
     float angrmp = rpm*rsc + rmin;
@@ -681,6 +725,8 @@ void App::UpdHUDRot(int carId, CarModel* pCarM, float vel, float rpm)
     float angvel = abs(vel)*vsc + vmin;
     float angrot = 0.f;  int i=0;
 	if (pCarM)	angrot = pCarM->angCarY;
+	if (ghost && pSet->mini_rotated && pSet->mini_zoomed)
+		angrot -= carModels[0]->angCarY+180.f;
 
 	//*H*/LogO(String("caR: ") + toStr(carId) + /*/" " + toStr(pCarM) +*/ "  vel " + toStr(vel) + "  rpm " + toStr(rpm) + "  a " + toStr(angrot));
     float sx = 1.4f, sy = sx*asp;  // *par len
@@ -692,16 +738,18 @@ void App::UpdHUDRot(int carId, CarModel* pCarM, float vel, float rpm)
     const static Real ang[4] = {0.f,90.f,270.f,180.f};
 
     float rx[4],ry[4], vx[4],vy[4], px[4],py[4], cx[4],cy[4];  // rpm,vel, pos,crc
-    for (int i=0; i<4; i++)  // 4 verts, each+90deg
+    for (int i=0; i<4; ++i)  // 4 verts, each+90deg
     {
-		float ia = 45.f + ang[i];  //float(i)*90.f;
-		float r = -(angrmp + ia) * d2r;		rx[i] = sx*cosf(r);  ry[i] =-sy*sinf(r);
-		float v = -(angvel + ia) * d2r;		vx[i] = sx*cosf(v);  vy[i] =-sy*sinf(v);
+		float ia = 45.f + ang[i];  //i*90.f;
+		if (!miniOnly && !ghost)
+		{	float r = -(angrmp + ia) * d2r;		rx[i] = sx*cosf(r);  ry[i] =-sy*sinf(r);
+			float v = -(angvel + ia) * d2r;		vx[i] = sx*cosf(v);  vy[i] =-sy*sinf(v);
+		}
 		float p = -(angrot + ia) * d2r;		float cp = cosf(p), sp = sinf(p);
 
-		if (pSet->mini_rotated && pSet->mini_zoomed)
+		if (pSet->mini_rotated && pSet->mini_zoomed && !ghost)
 			{  px[i] = psx*tp[i][0];  py[i] = psy*tp[i][1];  }
-		else{  px[i] = psx*cp*1.4f;     py[i] =-psy*sp*1.4f;  }
+		else{  px[i] = psx*cp*1.4f;   py[i] =-psy*sp*1.4f;  }
 
 		float z = pSet->mini_rotated ? 0.70f/pSet->zoom_minimap : 0.5f/pSet->zoom_minimap;
 		if (!pSet->mini_rotated)
@@ -710,13 +758,15 @@ void App::UpdHUDRot(int carId, CarModel* pCarM, float vel, float rpm)
     }
     
     //  rpm needle
-    if (mrpm)  {	mrpm->beginUpdate(0);
-		for (int p=0;p<4;++p)  {  mrpm->position(rx[p],ry[p], 0);  mrpm->textureCoord(tc[p][0], tc[p][1]);  }	mrpm->end();  }
+    if (!miniOnly && !ghost)
+    {
+		if (mrpm)  {	mrpm->beginUpdate(0);
+			for (int p=0;p<4;++p)  {  mrpm->position(rx[p],ry[p], 0);  mrpm->textureCoord(tc[p][0], tc[p][1]);  }	mrpm->end();  }
 
-	//  vel needle
-	if (mvel)  {	mvel->beginUpdate(0);
-		for (int p=0;p<4;++p)  {  mvel->position(vx[p],vy[p], 0);  mvel->textureCoord(tc[p][0], tc[p][1]);  }	mvel->end();  }
-
+		//  vel needle
+		if (mvel)  {	mvel->beginUpdate(0);
+			for (int p=0;p<4;++p)  {  mvel->position(vx[p],vy[p], 0);  mvel->textureCoord(tc[p][0], tc[p][1]);  }	mvel->end();  }
+	}
 		
 	//  minimap car pos-es
 	int c = carId;
@@ -728,7 +778,7 @@ void App::UpdHUDRot(int carId, CarModel* pCarM, float vel, float rpm)
 
 	
 	//  minimap circle/rect
-	if (miniC && pSet->trackmap)
+	if (miniC && pSet->trackmap && !ghost)
 	{	const Vector2& v = newPosInfos[carId].miniPos;
 		float xc = (v.x+1.f)*0.5f, yc = (v.y+1.f)*0.5f;
 		miniC->beginUpdate(0);

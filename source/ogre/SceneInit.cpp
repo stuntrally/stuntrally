@@ -452,7 +452,7 @@ void App::CreateRoad()
 	
 	//  after road load we have iChk1 so set it for carModels
 	for (int i=0; i < carModels.size(); ++i)
-		carModels[i]->ResetChecks();
+		carModels[i]->ResetChecks(true);
 
 	UpdPSSMMaterials();  ///+~-
 }
