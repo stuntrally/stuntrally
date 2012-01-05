@@ -2,6 +2,7 @@
 #define _OgreGame_h_
 
 #include "BaseApp.h"
+#include "common/Gui_Popup.h"
 #include "common/SceneXml.h"
 #include "common/BltObjects.h"
 #include "common/TracksXml.h"
@@ -26,7 +27,8 @@ namespace OISB   {  class AnalogAxisAction;  }
 class MaterialFactory;
 
 
-class App : public BaseApp //, public RenderTargetListener
+
+class App : public BaseApp, public GameClientCallback, public MasterClientCallback //, public RenderTargetListener
 {
 public:
 	App();  virtual ~App();
@@ -298,7 +300,7 @@ protected:
 	
 	void btnNumPlayers(WP);  void chkSplitVert(WP);
 	MyGUI::StaticTextPtr valLocPlayers;
-		
+
 public:
 	bool bRplPlay,bRplPause, bRplRec, bRplWnd;  //  game
 	int carIdWin, iCurCar;
@@ -323,6 +325,57 @@ protected:
 	void comboBoost(CMB), comboFlip(CMB);
 	
 	char s[512];
+
+	GuiPopup popup;
+	///---------------------------------------
+
+	//  multiplayer
+
+	void rebuildGameList();
+	void rebuildPlayerList();
+	void updateGameInfo();
+	void updateGameInfoGUI();
+	void uploadGameInfo();
+	void setNetGuiHosting(bool enabled);
+	void gameListChanged(protocol::GameList list);
+	void peerConnected(PeerInfo peer);
+	void peerDisconnected(PeerInfo peer);
+	void peerInfo(PeerInfo peer);
+	void peerMessage(PeerInfo peer, std::string msg);
+	void peerState(PeerInfo peer, uint8_t state);
+	void gameInfo(protocol::GameInfo game);
+	void error(std::string what);
+	void join(std::string host, std::string port, std::string password);
+
+	mutable boost::mutex netGuiMutex;
+	MyGUI::UString sChatBuffer;
+	protocol::GameInfo netGameInfo;
+	bool bRebuildPlayerList;
+	bool bRebuildGameList;
+	bool bUpdateGameInfo;
+	bool bStartGame;
+
+	MyGUI::TabPtr tabsNet;  //void tabNet(TabPtr tab, size_t id);
+	MyGUI::WidgetPtr panelNetServer,panelNetGame,panelNetTrack;
+	MyGUI::MultiListPtr listServers, listPlayers;
+	MyGUI::EditPtr edNetChat;  // chat area, set text through sChatBuffer
+
+	MyGUI::ButtonPtr btnNetRefresh,btnNetJoin,btnNetCreate,btnNetDirect;
+	MyGUI::ButtonPtr btnNetReady,btnNetLeave;
+	void evBtnNetRefresh(WP);
+	void evBtnNetJoin(WP), evBtnNetJoinLockedClose();
+	void evBtnNetCreate(WP);
+	void evBtnNetDirect(WP),evBtnNetDirectClose();
+	void evBtnNetReady(WP),evBtnNetLeave(WP);
+
+	MyGUI::StaticImagePtr imgNetTrack;
+	MyGUI::StaticTextPtr valNetGames, valNetGameName, valNetChat, valNetTrack, valNetPassword;
+	MyGUI::ButtonPtr btnNetSendMsg;  void chatSendMsg();
+	MyGUI::EditPtr edNetGameName, edNetChatMsg, edNetTrackInfo, edNetPassword,
+		edNetNick, edNetServerIP, edNetServerPort, edNetLocalPort;
+	void evEdNetGameName(MyGUI::EditPtr), evEdNetPassword(MyGUI::EditPtr),
+		evEdNetNick(MyGUI::EditPtr), evEdNetServerIP(MyGUI::EditPtr),
+		evEdNetServerPort(MyGUI::EditPtr), evEdNetLocalPort(MyGUI::EditPtr);
 };
 
 #endif

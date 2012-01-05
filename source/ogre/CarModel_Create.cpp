@@ -32,7 +32,8 @@ using namespace Ogre;
 
 //  Init  ---------------------------------------------------
 CarModel::CarModel(unsigned int index, eCarType type, const std::string name,
-	Ogre::SceneManager* sceneMgr, SETTINGS* set, GAME* game, Scene* s, Ogre::Camera* cam, App* app) :
+	Ogre::SceneManager* sceneMgr, SETTINGS* set, GAME* game, Scene* s,
+	Ogre::Camera* cam, App* app, int startpos_index) :
 	fCam(0), pMainNode(0), pCar(0), terrain(0), resCar(""), mCamera(0), pReflect(0), pApp(app), color(1,0,0),
 	bLightMapEnabled(true), bBraking(false),
 	iCamNextOld(0), bLastChkOld(0), bWrongChk(0), angCarY(0)
@@ -60,7 +61,8 @@ CarModel::CarModel(unsigned int index, eCarType type, const std::string name,
 	//  get car start pos from track  ------
 	if (type != CT_GHOST)  // ghost has pCar, dont create
 	{
-		int i = set->collis_cars ? iIndex : 0;  //  offset car start pos when cars collide
+		if (startpos_index == -1) startpos_index = iIndex;
+		int i = set->collis_cars ? startpos_index : 0;  //  offset car start pos when cars collide
 		MATHVECTOR<float, 3> pos(0,10,0);
 		QUATERNION<float> rot;
 		pos = pGame->track.GetStart(i).first;

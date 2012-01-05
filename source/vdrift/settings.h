@@ -75,6 +75,12 @@ public:
 	bool rpl_rec, rpl_ghost, rpl_bestonly;
 	bool rpl_alpha, rpl_ghostpar;  int rpl_listview;
 	
+	// network
+	std::string nickname;
+	std::string master_server_address;
+	int master_server_port;
+	int local_port;
+
 	// not in gui
 	bool boostFromExhaust;
 	

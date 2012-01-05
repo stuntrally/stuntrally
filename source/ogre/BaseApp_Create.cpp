@@ -408,6 +408,7 @@ void BaseApp::Run( bool showDialog )
 
 //  ctor
 //-------------------------------------------------------------------------------------
+
 BaseApp::BaseApp()
 	:mRoot(0), mSceneMgr(0), mWindow(0), mHDRLogic(0), mMotionBlurLogic(0),mSSAOLogic(0)
 	,mShaderGenerator(0),mMaterialMgrListener(0)
@@ -418,7 +419,7 @@ BaseApp::BaseApp()
 	,isFocGui(0),isFocRpl(0), mGUI(0), mPlatform(0)
 	,mWndOpts(0), mWndTabs(0), mWndRpl(0)
 	,bSizeHUD(true), bLoading(false), bAssignKey(false)
-
+	,mMasterClient(), mClient(), mLobbyState(DISCONNECTED)
 	,mDebugOverlay(0), mFpsOverlay(0), mOvrFps(0), mOvrTris(0), mOvrBat(0), mOvrDbg(0)
 	,mbShowCamPos(0), ndSky(0),	mbWireFrame(0)
 	,iCurCam(0), mSplitMgr(0), motionBlurIntensity(0.9)

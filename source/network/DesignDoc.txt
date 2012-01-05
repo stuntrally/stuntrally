@@ -1,0 +1,41 @@
+Networking Design Doc
+=====================
+
+Introduction
+------------
+
+This document describes the architecture of Stunt Rally's networking features. It shall not go deep into implementation details, but rather stay on a higher level. The purpose is to educate other developers, list some general goals and stuff.
+
+Usage notes and more detailed and lower-level information can be found by reading the comments in the header files.
+
+
+High-level architecture
+-----------------------
+
+Client networking is split into two parts - low-level, rather abstract and general purpose networking classes that directly interface with the actual networking library, and Stunt Rally specific part, which interfaces with the low level stuff and implements the SR specific parts, like the SR application protocol and serializing state data. Rationale for this split is that the networking library can be easily swapped (if necessary) without modifying any SR-specific code and also allows to easily reuse the same lower-level code somewhere else.
+
+The first part is implemented in enet-wrapper.hpp, and the SR stuff in the other files in this network-directory.
+
+The networking itself works in peer-to-peer fashion, so there is no server. Each peer must be connected to each other. Initially, a new peer needs to only know the address of one other - all addresses known to any one peer are continuosly synced to everyone else during the joining period.
+
+Each peer is authoritative about its own car. Later on we can introduce anti-cheat features where a peer is disqualified if other peers' estimation about the car's position is too much off.
+
+
+Anti-lag
+--------
+
+The state data transmitted through the network is used to update the physics engine, which in turn provides excellent state interpolation for the time when waiting for the next update. Although simply feeding values to the engine should provide very smooth result, it is still behind the actual action, so lag should be compensated in the received state.
+
+
+Master server
+-------------
+
+Master server is a rather simple application that keeps track of games. It's tasks are:
+
+	* Provide list of joinable games when asked
+	* Add a game to the list when one is provided
+	* Update a game when client asks to
+	* Delete a game that has not been updated for a while
+	* Delete a game that is reported as started
+	* Provide stats when asked
+

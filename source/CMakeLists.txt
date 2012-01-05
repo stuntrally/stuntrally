@@ -1,27 +1,26 @@
 cmake_minimum_required(VERSION 2.8)
 
-# Allow disabling game building
-option(BUILD_GAME      "Build the game binary."     ON)
-# Allow disabling editor building
-option(BUILD_EDITOR    "Build the track editor."    ON)
-
 # Linux prefers lower-case exe names
 if(WIN32 OR APPLE)
 	set(GAME_EXE StuntRally)
 	set(EDITOR_EXE SR-Editor)
+	set(SERVER_EXE SR-MasterServer)
 else()
 	set(GAME_EXE stuntrally)
 	set(EDITOR_EXE sr-editor)
+	set(SERVER_EXE sr-masterserver)
 endif()
 
 # Search include files from all source sub directories
 include_directories(btOgre bullet ogre ogre/common paged-geom road tinyxml vdrift)
 
 # Compile our libraries
-foreach(ourlib   tinyxml bullet oisb paged-geom)
-	add_subdirectory(${ourlib})
-	list(APPEND OURLIBS ${ourlib})
-endforeach()
+if (BUILD_GAME OR BUILD_EDITOR)
+	foreach(ourlib   tinyxml bullet oisb paged-geom)
+		add_subdirectory(${ourlib})
+		list(APPEND OURLIBS ${ourlib})
+	endforeach()
+endif()
 
 # Game executable
 if(BUILD_GAME)
@@ -33,6 +32,8 @@ if(BUILD_GAME)
 		ogre/*/*.cpp
 		ogre/*/*/*.cpp
 		road/*.cpp
+		network/*.cpp
+		network/*.hpp # For some IDE project files
 	)
 	if (MSVC)
 		add_executable(${GAME_EXE} WIN32 ${GAME_SOURCES})
@@ -61,6 +62,18 @@ if(BUILD_EDITOR)
 	target_link_libraries(${EDITOR_EXE} ${OURLIBS} ${LIBS})
 	install(TARGETS ${EDITOR_EXE} DESTINATION bin)
 endif()
+
+# Master server
+if(BUILD_MASTER_SERVER)
+	file(GLOB SERVER_SOURCES network/master-server/main.cpp) # Glob .cpp files needed for the server
+	add_executable(${SERVER_EXE} ${SERVER_SOURCES})
+	target_link_libraries(${SERVER_EXE} ${SERVER_LIBS})
+	install(TARGETS ${SERVER_EXE} DESTINATION bin)
+	# Debug test client, not to be installed
+	add_executable(bogus-client network/master-server/bogus-client.cpp network/masterclient.cpp)
+	target_link_libraries(bogus-client ${SERVER_LIBS})
+endif()
+
 
 if (MSVC)
 	file(GLOB GAME_SOURCES

@@ -401,6 +401,186 @@
 					</Widget>
 				</Widget>
 			</Widget>
+			<Widget type="TabItem" skin="" position="4 26 787 531">
+				<UserString key="RelativeTo" value="OptionsWnd"/>
+				<Property key="Caption" value="#{Multiplayer}"/>
+				<Widget type="Tab" skin="Tab" position="16 15 744 497" name="tabsNet">
+					<UserString key="RelativeTo" value="OptionsWnd"/>
+					<Property key="ButtonAutoWidth" value="false"/>
+					<Property key="Colour" value="0.73 0.88 1"/>
+					<Property key="ButtonWidth" value="100"/>
+					<Widget type="TabItem" skin="" position="4 26 735 465">
+						<UserString key="RelativeTo" value="OptionsWnd"/>
+						<Property key="Caption" value="#{NetServer}"/>
+						<Widget type="MultiListBox" skin="MultiListBox" position="20 54 696 338" name="MListServers">
+							<UserString key="RelativeTo" value="OptionsWnd"/>
+							<Property key="Colour" value="0.6 1 0.6"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="20 22 224 24" name="valNetGames">
+							<UserString key="RelativeTo" value="OptionsWnd"/>
+							<Property key="Caption" value="#{NetGamesAvail}"/>
+							<Property key="TextColour" value="1 1 0.3"/>
+						</Widget>
+						<Widget type="Button" skin="Button" position="20 406 164 40" name="btnNetRefresh">
+							<UserString key="RelativeTo" value="OptionsWnd"/>
+							<Property key="Caption" value="#{NetRefreshList}"/>
+							<Property key="Colour" value="0.6 1 0.2"/>
+						</Widget>
+						<Widget type="Button" skin="Button" position="374 406 164 40" name="btnNetJoin">
+							<UserString key="RelativeTo" value="OptionsWnd"/>
+							<Property key="Caption" value="#{NetJoinGame}"/>
+							<Property key="Colour" value="1 1 0.2"/>
+						</Widget>
+						<Widget type="Button" skin="Button" position="552 406 164 40" name="btnNetCreate">
+							<UserString key="RelativeTo" value="OptionsWnd"/>
+							<Property key="Caption" value="#{NetCreateGame}"/>
+							<Property key="Colour" value="0.6 1 1"/>
+						</Widget>
+						<Widget type="Button" skin="Button" position="198 406 164 40" name="btnNetDirect">
+							<UserString key="RelativeTo" value="OptionsWnd"/>
+							<Property key="Colour" value="1 0.8 0.5"/>
+							<Property key="Caption" value="#{NetDirectConnect}"/>
+						</Widget>
+						<Widget type="Widget" skin="PanelSkin" position="0 0 800 500" layer="Popup" name="panelNetServer">
+							<UserString key="RelativeTo" value="OptionsWnd"/>
+							<Property key="Colour" value="0.8 0.96 1"/>
+							<Property key="Alpha" value="0.8"/>
+						</Widget>
+					</Widget>
+					<Widget type="TabItem" skin="" position="4 26 735 465">
+						<UserString key="RelativeTo" value="OptionsWnd"/>
+						<Property key="Caption" value="#{NetGame}"/>
+						<Widget type="TextBox" skin="TextBox" position="20 22 136 24" name="valNetGameName">
+							<UserString key="RelativeTo" value="OptionsWnd"/>
+							<Property key="Caption" value="#{NetGameName}:"/>
+							<Property key="TextColour" value="0.6 0.9 1"/>
+						</Widget>
+						<Widget type="EditBox" skin="EditBox" position="164 22 268 24" name="edNetGameName">
+							<UserString key="RelativeTo" value="OptionsWnd"/>
+							<Property key="Caption" value="Stunt Rally Race"/>
+							<Property key="Colour" value="0.6 0.8 1"/>
+							<Property key="TextColour" value="0.6 0.8 1"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="480 387 124 24" name="valNetPassword">
+							<UserString key="RelativeTo" value="OptionsWnd"/>
+							<Property key="Caption" value="#{NetPassword}:"/>
+							<Property key="TextColour" value="0.6 0.9 1"/>
+						</Widget>
+						<Widget type="EditBox" skin="EditBox" position="596 385 124 24" name="edNetPassword">
+							<UserString key="RelativeTo" value="OptionsWnd"/>
+							<Property key="Colour" value="0.6 0.8 1"/>
+							<Property key="TextColour" value="0.5 0.1 0.1"/>
+						</Widget>
+						<Widget type="Button" skin="Button" position="596 426 124 32" name="btnNetReady">
+							<UserString key="RelativeTo" value="OptionsWnd"/>
+							<Property key="Caption" value="#{NetReady}"/>
+							<Property key="Colour" value="0.6 1 .0.6"/>
+						</Widget>
+						<Widget type="Button" skin="Button" position="452 426 124 32" name="btnNetLeave">
+							<UserString key="RelativeTo" value="OptionsWnd"/>
+							<Property key="Caption" value="#{NetLeaveGame}"/>
+							<Property key="Colour" value="1. 0.6 0.3"/>
+						</Widget>
+						<Widget type="MultiListBox" skin="MultiListBox" position="20 56 412 146" name="MListPlayers">
+							<UserString key="RelativeTo" value="OptionsWnd"/>
+							<Property key="Colour" value="0.4 1 0.4"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="22 214 210 24" name="valNetChat">
+							<UserString key="RelativeTo" value="OptionsWnd"/>
+							<Property key="Caption" value="#{NetChat}"/>
+							<Property key="TextColour" value="0.6 0.8 1"/>
+						</Widget>
+						<Widget type="Widget" skin="PanelSkin" position="20 236 412 182">
+							<UserString key="RelativeTo" value="OptionsWnd"/>
+							<Property key="Colour" value="0.8 0.96 1"/>
+							<Property key="Alpha" value="0.8"/>
+							<Widget type="EditBox" skin="WordWrapEmpty" position="1 1 407 180" name="edNetChat">
+								<UserString key="RelativeTo" value="OptionsWnd"/>
+								<Property key="WordWrap" value="true"/>
+								<Property key="VisibleVScroll" value="true"/>
+								<Property key="TextColour" value="0.9 0.96 1"/>
+								<Property key="ReadOnly" value="true"/>
+								<Property key="MultiLine" value="true"/>
+								<Property key="MaxTextLength" value="120000"/>
+							</Widget>
+						</Widget>
+						<Widget type="EditBox" skin="EditBox" position="20 430 412 24" name="edNetChatMsg">
+							<UserString key="RelativeTo" value="OptionsWnd"/>
+							<Property key="Colour" value="0.6 0.8 1"/>
+						</Widget>
+						<Widget type="ImageBox" skin="ImageBox" position="452 54 256 256" name="imgNetTrack">
+							<UserString key="RelativeTo" value="OptionsWnd"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="452 22 260 24" name="valNetTrack">
+							<UserString key="RelativeTo" value="OptionsWnd"/>
+							<Property key="Caption" value="#{Track}:"/>
+							<Property key="TextColour" value="0.4 1.0 0.5"/>
+						</Widget>
+						<Widget type="EditBox" skin="WordWrapEmpty" position="452 318 256 66" name="edNetTrackInfo">
+							<UserString key="RelativeTo" value="OptionsWnd"/>
+							<Property key="Caption" value="Track info text"/>
+							<Property key="TextColour" value="0.6 1.0 0.8"/>
+						</Widget>
+						<Widget type="Widget" skin="PanelSkin" position="0 0 800 500" layer="Popup" name="panelNetGame">
+							<UserString key="RelativeTo" value="OptionsWnd"/>
+							<Property key="Colour" value="0.8 0.96 1"/>
+							<Property key="Alpha" value="0.8"/>
+						</Widget>
+					</Widget>
+					<Widget type="TabItem" skin="" position="4 26 735 465">
+						<UserString key="RelativeTo" value="OptionsWnd"/>
+						<Property key="Caption" value="#{NetSettings}"/>
+						<Widget type="TextBox" skin="TextBox" position="20 24 128 24">
+							<UserString key="RelativeTo" value="OptionsWnd"/>
+							<Property key="Caption" value="#{NetNickname}"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="20 62 144 24">
+							<UserString key="RelativeTo" value="OptionsWnd"/>
+							<Property key="Caption" value="#{NetMasterIp}"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="20 94 144 24">
+							<UserString key="RelativeTo" value="OptionsWnd"/>
+							<Property key="Caption" value="#{NetMasterPort}"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="20 126 144 24">
+							<UserString key="RelativeTo" value="OptionsWnd"/>
+							<Property key="Caption" value="#{NetLocalPort}"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="20 158 144 24">
+							<UserString key="RelativeTo" value="OptionsWnd"/>
+						</Widget>
+						<Widget type="EditBox" skin="EditBox" position="180 24 136 24" name="edNetNick">
+							<UserString key="RelativeTo" value="OptionsWnd"/>
+							<Property key="Colour" value="0.7 0.9 1"/>
+							<Property key="Caption" value="StuntMan"/>
+						</Widget>
+						<Widget type="EditBox" skin="EditBox" position="180 62 136 26" name="edNetServerIP">
+							<UserString key="RelativeTo" value="OptionsWnd"/>
+							<Property key="Colour" value="0.8 0.9 1"/>
+							<Property key="Caption" value="127.0.0.1"/>
+						</Widget>
+						<Widget type="EditBox" skin="EditBox" position="180 94 136 24" name="edNetServerPort">
+							<UserString key="RelativeTo" value="OptionsWnd"/>
+							<Property key="Colour" value="0.8 0.9 1"/>
+						</Widget>
+						<Widget type="EditBox" skin="EditBox" position="180 126 136 24" name="edNetLocalPort">
+							<UserString key="RelativeTo" value="OptionsWnd"/>
+							<Property key="Colour" value="0.7 0.8 1"/>
+						</Widget>
+						<!-- wordwrap hack -->
+						<Widget type="EditBox" skin="WordWrapEmpty" position="20 190 300 96" name="RouterTip">
+							<UserString key="RelativeTo" value="OptionsWnd"/>
+							<Property key="ReadOnly" value="true"/>
+							<Property key="MultiLine" value="true"/>
+							<Property key="WordWrap" value="true"/>
+							<Property key="VisibleHScroll" value="false"/>
+							<Property key="VisibleVScroll" value="true"/>
+							<Property key="TextColour" value="0.7 0.6 0.5"/>
+							<Property key="Caption" value="#{NetRouterTip}"/>
+						</Widget>
+					</Widget>
+				</Widget>
+			</Widget>
 			<Widget type="TabItem" skin="" position="2 24 794 572">
 				<Property key="Caption" value="#{Setup}"/>
 				<UserString key="RelativeTo" value="OptionsWnd"/>

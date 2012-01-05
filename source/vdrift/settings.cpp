@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "settings.h"
+#include "../network/protocol.hpp"
 #include <stdio.h>
 
 
@@ -86,6 +87,11 @@ void SETTINGS::Serialize(bool w, CONFIGFILE & c)
 	Param(c,w, "misc.language", language);			Param(c,w, "misc.loadingback", loadingbackground);
 	Param(c,w, "misc.version", version);			Param(c,w, "misc.x11_capture_mouse", x11_capture_mouse);
 
+	Param(c,w, "network.nickname", nickname);
+	Param(c,w, "network.master_server_address", master_server_address);
+	Param(c,w, "network.master_server_port", master_server_port);
+	Param(c,w, "network.local_port", local_port);
+
 	Param(c,w, "replay.rec", rpl_rec);				Param(c,w, "replay.ghost", rpl_ghost);
 	Param(c,w, "replay.bestonly", rpl_bestonly);	Param(c,w, "replay.listview", rpl_listview);
 	Param(c,w, "replay.alpha", rpl_alpha);			Param(c,w, "replay.ghostpar", rpl_ghostpar);
@@ -148,6 +154,11 @@ SETTINGS::SETTINGS() :  ///  Defaults
 	bltDebug(0), bltLines(1),  bltProfilerTxt(0),
 	loadingbackground(true), x11_capture_mouse(false),
 	boostFromExhaust(0),
+	//  network
+	nickname("StuntMan"),
+	master_server_address("localhost"),
+	master_server_port(protocol::DEFAULT_PORT),
+	local_port(protocol::DEFAULT_PORT),
 	//  replay
 	rpl_rec(1), rpl_ghost(1), rpl_bestonly(1),
 	rpl_alpha(0), rpl_ghostpar(0), rpl_listview(0),

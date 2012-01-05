@@ -93,7 +93,8 @@ bool App::frameStart(Real time)
 	{
 		bool bFirstFrame = (carModels.size()>0 && carModels.front()->bGetStPos) ? true : false;
 		
-		if (isFocGui && mWndTabs->getIndexSelected() == 7)
+		//FIXME getIndexSelected() doesn't return the proper value here.. might be connected to the fact that network branch switches to network tab at startup
+		if (isFocGui /*&& mWndTabs->getIndexSelected() == 7*/)
 			UpdateInputBars();
 		
 		//  keys dn/up - trklist, carlist
@@ -108,6 +109,26 @@ bool App::frameStart(Real time)
 			if (dirD > 0.0f) {  carLNext(-d);  trkLNext(-d);  rplLNext(-d);  dirD = -0.12f;  }
 		}
 		
+		// Gui updates from networking
+		// We do them here so that they are handled in the main thread as MyGUI is not thread-safe
+		if (isFocGui)
+		{
+			boost::mutex::scoped_lock lock(netGuiMutex);
+			if (bRebuildGameList) { rebuildGameList(); bRebuildGameList = false; }
+			if (bRebuildPlayerList) { rebuildPlayerList(); bRebuildPlayerList = false; }
+			if (bUpdateGameInfo) { updateGameInfo(); bUpdateGameInfo = false; }
+			if (sChatBuffer != edNetChat->getCaption()) edNetChat->setCaption(sChatBuffer);
+			if (bStartGame) {
+				// TODO: Probably some more stuff here...
+				mMasterClient.reset();
+				mClient->startGame();
+				btnNewGameStart(NULL);
+				bStartGame = false;
+			}
+		}
+
+		//bool oldFocRpl = isFocRpl;
+
 		//  replay forward,backward keys
 		if (bRplPlay)
 		{
@@ -128,13 +149,42 @@ bool App::frameStart(Real time)
 
 		if (!pGame)
 			return false;
-		pGame->pause = bRplPlay ? (bRplPause || isFocGui) : isFocGui;
+
+		bool doNetworking = (mClient && mClient->getState() == P2PGameClient::GAME);
+		// Note that there is no pause when in networked game
+		pGame->pause = bRplPlay ? (bRplPause || isFocGui) : (isFocGui && !doNetworking);
 
 
 		// input
 		OISB::System::getSingleton().process(time);
 
 		///  step Game  *******
+
+		//  handle networking stuff
+		if (doNetworking) {
+			//  update the local car's state to the client
+			protocol::CarStatePackage cs;
+			// FIXME: Handles only one local car
+			for (CarModels::const_iterator it = carModels.begin(); it != carModels.end(); ++it) {
+				if ((*it)->eType == CarModel::CT_LOCAL) {
+					cs = (*it)->pCar->GetCarStatePackage();
+					break;
+				}
+			}
+			mClient->setLocalCarState(cs);
+
+			// check for new car states
+			protocol::CarStates states = mClient->getReceivedCarStates();
+			for (protocol::CarStates::const_iterator it = states.begin(); it != states.end(); ++it) {
+				int8_t id = it->first; // Car number
+				// FIXME: Various places assume carModels[0] is local...
+				if (id == 0) id = mClient->getId();
+				CarModel* cm = carModels[id];
+				if (cm && cm->pCar)
+					cm->pCar->UpdateCarState(it->second);
+			}
+		}
+
 		//  single thread, sim on draw
 		bool ret = true;
 		if (pSet->multi_thr != 1)
@@ -457,7 +507,8 @@ void App::newPoses()
 		else
 		{
 			// checkpoint arrow
-			if (pSet->check_arrow && !bRplPlay && arrowNode && road && road->mChks.size()>0)
+			if (pSet->check_arrow && carM->eType == CarModel::CT_LOCAL
+			  && !bRplPlay && arrowNode && road && road->mChks.size()>0)
 			{
 				// set animation start to old orientation
 				arrowAnimStart = arrowAnimCur;

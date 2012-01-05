@@ -59,7 +59,8 @@ public:
 
 
 	CarModel( unsigned int index, eCarType type, const std::string name,
-		Ogre::SceneManager* sceneMgr, SETTINGS* set, GAME* game, Scene* sc, Ogre::Camera* cam, App* app);
+		Ogre::SceneManager* sceneMgr, SETTINGS* set, GAME* game, Scene* sc,
+		Ogre::Camera* cam, App* app, int startpos_index = -1);
 	
 	~CarModel();
 	

@@ -76,7 +76,6 @@ void App::InitGui()
 	ButtonPtr btn, bchk;  ComboBoxPtr combo;  // for defines
 	ScrollBar* sl;  size_t v;
 
-
 	///  [Graphics]
 	//------------------------------------------------------------------------
 	GuiInitGraphics();
