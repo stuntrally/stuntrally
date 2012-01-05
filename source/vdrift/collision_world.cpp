@@ -490,7 +490,8 @@ void COLLISION_WORLD::Clear()
 		}
 		world->removeCollisionObject(obj);
 
-		delete obj->getUserPointer();  // ShapeData
+		// fix warning: deleting ‘void*’ is undefined
+		//delete obj->getUserPointer();  // ShapeData
 		delete obj;
 	}
 	
