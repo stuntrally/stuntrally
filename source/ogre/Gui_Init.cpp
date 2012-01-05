@@ -253,7 +253,6 @@ void App::InitGui()
 
 	///  Multiplayer
 	//------------------------------------------------------------------------
-	mWndTabs->setIndexSelected(2);  //- auto switch at start
 	tabsNet = mGUI->findWidget<Tab>("tabsNet");
 		//TabItem* t1 = tabsNet->getItemAt(0);
 		//t1->setEnabled(0);
