@@ -25,8 +25,9 @@ CARDYNAMICS::CARDYNAMICS() :
 	fHitTime(0), fParIntens(0), bHitSnd(0)
 {
 	for (int i=0; i<4; ++i)
-	{	bWhOnRoad[i]=0;
-		terSurf[i]=0;  }
+	{	bWhOnRoad[i]=0;  terSurf[i]=0;
+		whH[i]=0.f;  whP[i]=-1;
+	}
 	boostFuel = gfBoostFuelStart;
 
 	suspension.resize ( WHEEL_POSITION_SIZE );
