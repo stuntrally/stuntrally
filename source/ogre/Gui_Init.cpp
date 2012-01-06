@@ -5,6 +5,8 @@
 #include "../road/Road.h"
 #include "OgreGame.h"
 
+#include <boost/filesystem.hpp>
+
 #include <OgreRoot.h>
 #include <OgreRenderWindow.h>
 #include <OgreOverlay.h>
@@ -347,8 +349,7 @@ void App::InitGui()
 		PATHMANAGER::GetFolderIndex(PATHMANAGER::GetCarPath(), li);
 		for (strlist::iterator i = li.begin(); i != li.end(); ++i)
 		{
-			std::ifstream check((PATHMANAGER::GetCarPath() + "/" + *i + "/about.txt").c_str());
-			if (check)  {
+			if (boost::filesystem::exists(PATHMANAGER::GetCarPath() + "/" + *i + "/about.txt"))  {
 				carList->addItem(*i);
 				if (*i == pSet->car[0]) {  carList->setIndexSelected(ii);  bFound = true;  }
 				ii++;  }
