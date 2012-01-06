@@ -155,7 +155,9 @@ private:
 	Ogre::SceneNode *ndWh[4], *ndWhE[4], *ndBrake[4];
 	
 	//  Dir name of car (e.g. ES)
+public:
 	std::string sDirname;
+private:
 	
 	//  Path to car textures, e.g. /usr/share/stuntrally/data/cars/CT/textures
 	std::string resCar;

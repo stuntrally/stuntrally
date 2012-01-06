@@ -153,7 +153,7 @@ void App::LoadCleanUp()  // 1 first
 
 	///  destroy all  TODO ...
 	///!  remove this crap and destroy everything with* manually  destroyCar, destroyScene
-	///!  check if scene (track), car, color changed, omit creating the same if not
+	///!  check if scene (track), car changed, omit creating the same if not
 	//mSceneMgr->getRootSceneNode()->removeAndDestroyAllChildren();  // destroy all scenenodes
 	mSceneMgr->destroyAllManualObjects();
 	mSceneMgr->destroyAllEntities();
@@ -192,7 +192,7 @@ void App::LoadGame()  // 2
 	// this is just here because vdrift car has to be created first
 	std::list<Camera*>::iterator camIt = mSplitMgr->mCameras.begin();
 	
-	int numCars = (mClient ? mClient->getPeerCount()+1 : mSplitMgr->mNumViewports);  // networked or splitscreen
+	int numCars = mClient ? mClient->getPeerCount()+1 : mSplitMgr->mNumViewports;  // networked or splitscreen
 	int i;
 	for (i = 0; i < numCars; ++i)
 	{
@@ -224,7 +224,7 @@ void App::LoadGame()  // 2
 			car->sDispName = nick;
 	}
 
-	/// ghost car
+	/// ghost car - last in carModels
 	ghplay.Clear();
 	if (!bRplPlay && pSet->rpl_ghost && !mClient)
 	{
@@ -303,22 +303,37 @@ void App::LoadCar()  // 4
 	}
 	
 	
-	///  Init Replay  once
+	///  Init Replay  header, once
 	///=================----------------
 	replay.InitHeader(pSet->track.c_str(), pSet->track_user, pSet->car[0].c_str(), !bRplPlay);
-	replay.header.numPlayers = pSet->local_players;
+	replay.header.numPlayers = mClient ? mClient->getPeerCount()+1 : pSet->local_players;  // networked or splitscreen
 	replay.header.hue[0] = pSet->car_hue[0];  replay.header.sat[0] = pSet->car_sat[0];  replay.header.val[0] = pSet->car_val[0];
+	strcpy(replay.header.nicks[0], carModels[0]->sDispName.c_str());  // player's nick
 
 	ghost.InitHeader(pSet->track.c_str(), pSet->track_user, pSet->car[0].c_str(), !bRplPlay);
 	ghost.header.numPlayers = 1;  // ghost always 1 car
 	ghost.header.hue[0] = pSet->car_hue[0];  ghost.header.sat[0] = pSet->car_sat[0];  ghost.header.val[0] = pSet->car_val[0];
 
-	//if (pSet->local_players > 1)  // save other car names
-	for (int p=1; p < pSet->local_players; ++p)
-	{	strcpy(replay.header.cars[p-1], pSet->car[p].c_str());
-		replay.header.hue[p] = pSet->car_hue[p];  replay.header.sat[p] = pSet->car_sat[p];
-		replay.header.val[p] = pSet->car_val[p];  }
-	
+	//  fill other cars (names, nicks, colors)
+	if (mClient)  // networked
+	{
+		int cars = std::min(4, (int)mClient->getPeerCount()+1);  // replay has max 4
+		for (int p = 1; p < cars; ++p)  // 0 is local car
+		{
+			CarModel* cm = carModels[p];
+			strcpy(replay.header.cars[p-1], cm->sDirname.c_str());
+			strcpy(replay.header.nicks[p], cm->sDispName.c_str());
+			replay.header.hue[p] = pSet->car_hue[p];  replay.header.sat[p] = pSet->car_sat[p];  replay.header.val[p] = pSet->car_val[p];
+		}
+	}
+	else  // splitscreen
+	for (int p = 1; p < pSet->local_players; ++p)
+	{
+		strcpy(replay.header.cars[p-1], pSet->car[p].c_str());
+		strcpy(replay.header.nicks[p], carModels[p]->sDispName.c_str());
+		replay.header.hue[p] = pSet->car_hue[p];  replay.header.sat[p] = pSet->car_sat[p];  replay.header.val[p] = pSet->car_val[p];
+	}
+
 	int c = 0;  // copy wheels R
 	for (std::list <CAR>::const_iterator it = pGame->cars.begin(); it != pGame->cars.end(); it++,c++)
 		for (int w=0; w<4; ++w)

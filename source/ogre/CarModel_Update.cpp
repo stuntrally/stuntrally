@@ -544,7 +544,5 @@ void CarModel::ChangeClr(int car)
 	color.setHSB(1-c_h,c_s,c_v);  //set, mini pos clr
 	MaterialPtr mtr = MaterialManager::getSingleton().getByName(sMtr[Mtr_CarBody]);
 	if (!mtr.isNull())
-	{
 		mtr->setDiffuse(color);
-	}
 }
