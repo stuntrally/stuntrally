@@ -11,6 +11,7 @@
 #include <OgreCamera.h>
 #include <OgreGpuProgramParams.h>
 #include "SplitScreen.h"
+#include "common/MaterialGen/MaterialFactory.h"
 
 class MotionBlurListener : public Ogre::CompositorInstance::Listener
 {
@@ -372,4 +373,97 @@ void GodRaysListener::notifyMaterialRender(Ogre::uint32 pass_id, Ogre::MaterialP
 		params2->setNamedConstant("lightPosition", SunScreenSpacePosition);
 	if (pass_id == 3)
 		params3->setNamedConstant("lightPosition", SunScreenSpacePosition);	 
+}
+
+class GBufferListener: public Ogre::CompositorInstance::Listener
+{
+protected:
+public:
+	GBufferListener(BaseApp * app);
+	virtual ~GBufferListener();
+	virtual void notifyMaterialSetup(Ogre::uint32 pass_id, Ogre::MaterialPtr &mat);
+	virtual void notifyMaterialRender(Ogre::uint32 pass_id, Ogre::MaterialPtr &mat);
+
+private:
+
+};
+
+Ogre::CompositorInstance::Listener* GBufferLogic::createListener(Ogre::CompositorInstance* instance)
+{
+	GBufferListener* listener = new GBufferListener(mApp);
+	Ogre::Viewport* vp = instance->getChain()->getViewport();
+	return listener;
+}
+
+GBufferListener::GBufferListener(BaseApp* app)
+{
+}
+GBufferListener::~GBufferListener()
+{
+}
+
+void GBufferLogic::setApp(BaseApp* app)
+{
+	mApp = app;
+}
+
+
+void GBufferListener::notifyMaterialSetup(Ogre::uint32 pass_id, Ogre::MaterialPtr &mat)
+{
+
+}
+
+
+void GBufferListener::notifyMaterialRender(Ogre::uint32 pass_id, Ogre::MaterialPtr &mat)
+{
+	 
+}
+
+
+class SoftParticlesListener: public Ogre::CompositorInstance::Listener
+{
+protected:
+public:
+	SoftParticlesListener(BaseApp * app);
+	virtual ~SoftParticlesListener();
+	virtual void notifyMaterialSetup(Ogre::uint32 pass_id, Ogre::MaterialPtr &mat);
+	virtual void notifyMaterialRender(Ogre::uint32 pass_id, Ogre::MaterialPtr &mat);
+	BaseApp * mApp;
+	
+private:
+
+};
+
+Ogre::CompositorInstance::Listener* SoftParticlesLogic::createListener(Ogre::CompositorInstance* instance)
+{
+	SoftParticlesListener* listener = new SoftParticlesListener(mApp);
+	Ogre::Viewport* vp = instance->getChain()->getViewport();
+
+	return listener;
+}
+
+SoftParticlesListener::SoftParticlesListener(BaseApp* app)
+{
+	mApp = app;
+	
+}
+SoftParticlesListener::~SoftParticlesListener()
+{
+}
+
+void SoftParticlesLogic::setApp(BaseApp* app)
+{
+	mApp = app;
+}
+
+
+void SoftParticlesListener::notifyMaterialSetup(Ogre::uint32 pass_id, Ogre::MaterialPtr &mat)
+{
+
+}
+
+
+void SoftParticlesListener::notifyMaterialRender(Ogre::uint32 pass_id, Ogre::MaterialPtr &mat)
+{
+
 }

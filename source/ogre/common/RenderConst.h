@@ -20,10 +20,10 @@ const Ogre::uint8
 	RQG_CarGlass     = Ogre::RENDER_QUEUE_7,
 	
 	RQG_CarTrails    = Ogre::RENDER_QUEUE_8,	//trails after glass
-	RQG_CarParticles = Ogre::RENDER_QUEUE_8+2,	//particles after trails
 	
+	RQG_PipeGlass    = Ogre::RENDER_QUEUE_8+2,	// glass pipe road`
+	RQG_CarParticles = Ogre::RENDER_QUEUE_8+3,	//particles after trails
 	RQG_Weather      = Ogre::RENDER_QUEUE_8+5,
-	RQG_PipeGlass    = Ogre::RENDER_QUEUE_8+5,	// glass pipe road`
 	
 	RQG_CarGhost     = Ogre::RENDER_QUEUE_8+7,
 
@@ -40,6 +40,7 @@ const Ogre::uint32
 	RV_Terrain = 4,	// terrain and fluids, for terrain texture
 	RV_Vegetation = 8,  // vegetation, paged geom
 	RV_Sky = 32,	// sky, editor only
+	RV_Particles = 64,	// particles
 
 	RV_Car = 2,			// car,tires in game, (hide in reflection render)
 	RV_CarGlass = 16,	// car glass in game, (hide for in car camera)

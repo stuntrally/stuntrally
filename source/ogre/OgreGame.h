@@ -272,7 +272,7 @@ protected:
 		chkAbs(WP), chkTcs(WP), chkGear(WP), chkRear(WP), chkRearInv(WP),  // car
 		chkOgreDialog(WP), chkAutoStart(WP), chkEscQuits(WP), chkBltLines(WP), chkLoadPics(WP),  // startup
 		chkVidEffects(WP), chkVidBloom(WP), chkVidHDR(WP), chkVidBlur(WP), UpdBloomVals(), chkVidSSAO(WP), // video
-		chkVidGodRays(WP),
+		chkVidSoftParticles(WP),chkVidGodRays(WP),
 		chkVegetCollis(WP), chkCarCollis(WP);  //car
 	void chkUseImposters(WP wp);
 

@@ -7,6 +7,7 @@
 #include "../vdrift/settings.h"
 #include "../road/Road.h"
 #include "MyGUI_PointerManager.h"
+#include "common/MaterialGen/MaterialFactory.h"
 
 #include <OgreRoot.h>
 #include <OgreViewport.h>
@@ -268,6 +269,22 @@ void SplitScreenManager::preViewportUpdate(const Ogre::RenderTargetViewportEvent
 				pe->setEmissionRate(pApp->sc.rain2Emit);
 			}
 		}
+
+		//update soft particle Depth Target
+		MaterialFactory::getSingletonPtr()->setSoftParticles(pApp->pSet->softparticles);
+		if(pApp->pSet->softparticles)
+		{
+			Ogre::CompositorInstance  *compositor= Ogre::CompositorManager::getSingleton().getCompositorChain(evt.source)->getCompositor("gbuffer");
+			if(compositor!=NULL)
+			{
+				Ogre::TexturePtr depthTexture =	compositor->getTextureInstance("mrt_output",2);
+				if(!depthTexture.isNull())
+				{
+					MaterialFactory::getSingletonPtr()->setSoftParticleDepth(depthTexture);
+				}
+			}
+		}
+
 	}
 	else
 	{

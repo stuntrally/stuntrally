@@ -3,7 +3,7 @@
 	ssaoReject = true
 	lighting = false
 	depthWrite = false
-	sceneBlend = add
+	sceneBlend = alpha
 	diffuseMap_1 = spark.png
 	vertexColour = true
 	fog = false
@@ -12,7 +12,7 @@
 	ssao = false
 	ssaoReject = true
 	lighting = false
-	sceneBlend = add
+	sceneBlend = alpha
 	depthWrite = false
 	vertexColour = true
 	textureAddressMode = clamp

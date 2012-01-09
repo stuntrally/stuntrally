@@ -73,4 +73,26 @@ public:
 private:
 	BaseApp * mApp;
 };
+
+// The compositor logic for the gbuffer compositor
+class GBufferLogic : public ListenerFactoryLogic
+{
+protected:
+	virtual Ogre::CompositorInstance::Listener* createListener(Ogre::CompositorInstance* instance);
+public:
+	void setApp(BaseApp* app);
+private:
+	BaseApp * mApp;
+};
+
+// The compositor logic for the softparticle compositor
+class SoftParticlesLogic : public ListenerFactoryLogic
+{
+protected:
+	virtual Ogre::CompositorInstance::Listener* createListener(Ogre::CompositorInstance* instance);
+public:
+	void setApp(BaseApp* app);
+private:
+	BaseApp * mApp;
+};
 #endif

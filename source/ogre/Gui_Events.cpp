@@ -350,6 +350,10 @@ void App::chkVidSSAO(WP wp)
 {		
 	ChkEv(ssao);  refreshCompositor();
 }
+void App::chkVidSoftParticles(WP wp)
+{		
+	ChkEv(softparticles);  refreshCompositor();
+}
 void App::chkVidGodRays(WP wp)
 {		
 	ChkEv(godrays);  refreshCompositor();

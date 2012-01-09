@@ -47,6 +47,8 @@ public:
 	class HDRLogic* mHDRLogic; class MotionBlurLogic* mMotionBlurLogic;
 	class SSAOLogic* mSSAOLogic;
 	class GodRaysLogic* mGodRaysLogic;
+	class SoftParticlesLogic* mSoftParticlesLogic;
+	class GBufferLogic* mGBufferLogic;
 	void recreateCompositor();
 	
 	// motion blur

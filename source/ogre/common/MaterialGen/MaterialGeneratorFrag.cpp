@@ -255,8 +255,8 @@ void MaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::StrStrea
 
 	if (vpNeedWvMat()) outStream <<
 		"	uniform float4x4 wvMat, \n";
-	if (fpNeedWMat()) outStream <<
-		"	uniform float4x4 wMat, \n";
+
+	outStream <<	"	uniform float4x4 wMat, \n";
 
 	if (needFresnel()) outStream <<
 		"	uniform float fresnelBias, \n"
@@ -327,7 +327,9 @@ void MaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::StrStrea
 	{
 		outStream << "	out float4 oColor : COLOR0, \n";
 		outStream << "	out float4 oColor1 : COLOR1, \n";
-		outStream << "	uniform float far \n";
+		outStream << "	out float4 oColor2 : COLOR2, \n";
+		outStream << "	uniform float far, \n";
+		outStream << "	uniform float4 cameraPositionWorldSpace \n";
 	}
 	else
 	{
@@ -520,6 +522,10 @@ void MaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::StrStrea
 			// mutiply the diffuse texture alpha
 			outStream << "oColor1 = oColor1 * tex2D(diffuseMap, texCoord.xy).a;";    
 		}
+		outStream <<  "float4 worldPosition = mul(wMat, float4(position.xyz,1.0)); \n";
+		outStream <<  "	float depth = saturate(length(worldPosition.xyz - cameraPositionWorldSpace.xyz) / far);";
+		outStream <<  "oColor2 = float4(depth); \n";
+		
 	}
 	outStream << 
 		"} \n";
@@ -549,7 +555,9 @@ void MaterialGenerator::fragmentProgramParams(HighLevelGpuProgramPtr program)
 
 	if(MRTSupported())
 	{
+		params->setNamedAutoConstant("wMat", GpuProgramParameters::ACT_WORLD_MATRIX);
 		params->setNamedAutoConstant("far", GpuProgramParameters::ACT_FAR_CLIP_DISTANCE);
+		params->setNamedAutoConstant("cameraPositionWorldSpace", GpuProgramParameters::ACT_CAMERA_POSITION);
 	}
 		
 	if (needTerrainLightMap())

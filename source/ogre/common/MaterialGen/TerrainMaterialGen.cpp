@@ -598,6 +598,8 @@ namespace Ogre
 		{
 			params->setNamedAutoConstant("worldViewMatrix", GpuProgramParameters::ACT_WORLDVIEW_MATRIX);
 			params->setNamedAutoConstant("far", GpuProgramParameters::ACT_FAR_CLIP_DISTANCE);
+			params->setNamedAutoConstant("cameraPositionWorldSpace", GpuProgramParameters::ACT_CAMERA_POSITION);
+			params->setNamedAutoConstant("wMat", GpuProgramParameters::ACT_WORLD_MATRIX);
 		}
 		if (prof->isShadowingEnabled(tt, terrain))
 		{
@@ -1071,6 +1073,8 @@ namespace Ogre
 		{
 			outStream << ",	uniform float far \n";	
 			outStream << ",	uniform float4x4 worldViewMatrix \n";
+		
+			outStream << ",	uniform float4x4 wMat \n";	
 		}
 		if (prof->isShadowingEnabled(tt, terrain))
 		{
@@ -1090,8 +1094,9 @@ namespace Ogre
 
 		if(MaterialGenerator::MRTSupported())
 		{
-			outStream << 
-				",out float4 oColor1 : COLOR1  \n";
+			outStream << ",out float4 oColor1 : COLOR1  \n";
+			outStream << ",out float4 oColor2 : COLOR2  \n";
+			outStream << ",uniform float4 cameraPositionWorldSpace \n";
 		}
 		outStream << 
 			") \n";
@@ -1369,6 +1374,11 @@ namespace Ogre
 			//ssao
 			outStream <<  "float4 mviewnormal = mul(worldViewMatrix, float4(normal, 0));\n";
 			outStream <<  "oColor1 = float4(length(viewPosition.xyz) / far, normalize(mviewnormal.xyz).xyz); \n";
+			//softparticles depth
+			outStream <<  "float4 worldPosition = mul(wMat, float4(position.xyz,1.0)); \n";
+			outStream <<  "	float depth = saturate(length(worldPosition.xyz - cameraPositionWorldSpace.xyz) / far);";
+			outStream <<  "oColor2 = float4(depth); \n";
+	
 		}
 		// Final return
 		outStream << "	oColor = outputCol;\n"

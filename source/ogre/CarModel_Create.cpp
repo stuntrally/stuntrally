@@ -318,25 +318,49 @@ void CarModel::Create(int car)
 	for (int w=0; w < 4; w++)
 	{
 		String siw = strI + "_" +toStr(w);
-		if (!ps[w])  {
+		if (!ps[w])  
+		{
 			ps[w] = mSceneMgr->createParticleSystem("Smoke"+siw, sc->sParSmoke);
-			mSceneMgr->getRootSceneNode()->createChildSceneNode()->attachObject(ps[w]);		ps[w]->getEmitter(0)->setEmissionRate(0);  }
-		if (!pm[w])  {
+			mSceneMgr->getRootSceneNode()->createChildSceneNode()->attachObject(ps[w]);
+			ps[w]->getEmitter(0)->setEmissionRate(0); 
+			ps[w]->setVisibilityFlags( RV_Particles );
+		}
+		if (!pm[w])  
+		{
 			pm[w] = mSceneMgr->createParticleSystem("Mud"+siw, sc->sParMud);
-			mSceneMgr->getRootSceneNode()->createChildSceneNode()->attachObject(pm[w]);		pm[w]->getEmitter(0)->setEmissionRate(0);  }
-		if (!pd[w])  {
+			mSceneMgr->getRootSceneNode()->createChildSceneNode()->attachObject(pm[w]);
+			pm[w]->getEmitter(0)->setEmissionRate(0);  
+			pm[w]->setVisibilityFlags( RV_Particles );
+		}
+		if (!pd[w])  
+		{
 			pd[w] = mSceneMgr->createParticleSystem("Dust"+siw, sc->sParDust);
-			mSceneMgr->getRootSceneNode()->createChildSceneNode()->attachObject(pd[w]);		pd[w]->getEmitter(0)->setEmissionRate(0);  }
+			mSceneMgr->getRootSceneNode()->createChildSceneNode()->attachObject(pd[w]);
+			pd[w]->getEmitter(0)->setEmissionRate(0);  
+			pd[w]->setVisibilityFlags( RV_Particles );
+		}
 
-		if (!pflW[w])  {
+		if (!pflW[w])  
+		{
 			pflW[w] = mSceneMgr->createParticleSystem("FlWater"+siw, "FluidWater");
-			mSceneMgr->getRootSceneNode()->createChildSceneNode()->attachObject(pflW[w]);	pflW[w]->getEmitter(0)->setEmissionRate(0);  }
-		if (!pflM[w])  {
+			mSceneMgr->getRootSceneNode()->createChildSceneNode()->attachObject(pflW[w]);
+			pflW[w]->getEmitter(0)->setEmissionRate(0);  
+			pflW[w]->setVisibilityFlags( RV_Particles );
+		}
+		if (!pflM[w])  
+		{
 			pflM[w] = mSceneMgr->createParticleSystem("FlMud"+siw, "FluidMud");
-			mSceneMgr->getRootSceneNode()->createChildSceneNode()->attachObject(pflM[w]);	pflM[w]->getEmitter(0)->setEmissionRate(0);  }
-		if (!pflMs[w])  {
+			mSceneMgr->getRootSceneNode()->createChildSceneNode()->attachObject(pflM[w]);
+			pflM[w]->getEmitter(0)->setEmissionRate(0);  
+			pflM[w]->setVisibilityFlags( RV_Particles );
+		}
+		if (!pflMs[w])  
+		{
 			pflMs[w] = mSceneMgr->createParticleSystem("FlMudS"+siw, "FluidMudSoft");
-			mSceneMgr->getRootSceneNode()->createChildSceneNode()->attachObject(pflMs[w]);	pflMs[w]->getEmitter(0)->setEmissionRate(0);  }
+			mSceneMgr->getRootSceneNode()->createChildSceneNode()->attachObject(pflMs[w]);
+			pflMs[w]->getEmitter(0)->setEmissionRate(0);  
+			pflMs[w]->setVisibilityFlags( RV_Particles );
+		}
 
 		//  trails
 		if (!ndWhE[w])

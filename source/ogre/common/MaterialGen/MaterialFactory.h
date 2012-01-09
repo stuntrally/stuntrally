@@ -42,7 +42,9 @@ public:
 	/// settings that can change runtime
 	void setFog(bool fog);
 	void setWind(bool wind);
-	
+	void setSoftParticleDepth(Ogre::TexturePtr depthtexture);
+	void setSoftParticles(bool bEnable);
+
 	
 	/// user settings get/set ---------------------------------------------
 	#define setIfChanged(s) if (p != s) { s = p; bSettingsChanged = true; }
@@ -71,7 +73,8 @@ public:
 	std::vector<std::string> fogMtrs; // materials that involve fog
 	std::vector<std::string> windMtrs; // wind == 2
 	std::vector<std::string> timeMtrs; // for animated materials
-	
+	std::vector<std::string> softMtrs; // for soft particle materials
+
 	shaderMap* getShaderCache() { return &mShaderCache; };
 	
 	App* pApp;

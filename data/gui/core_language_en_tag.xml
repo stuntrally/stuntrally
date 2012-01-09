@@ -188,6 +188,7 @@
 	<Tag name="MotionBlur">Motion Blur</Tag>
 	<Tag name="ssao">SSAO</Tag>
   <Tag name="godrays">God Rays</Tag>
+  <Tag name="softparticles">Soft Particles</Tag>
 
 	
 	<!--  Graphics  -->

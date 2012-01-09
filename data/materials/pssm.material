@@ -26,7 +26,7 @@ vertex_program PSSM/shadow_caster_wind_vs cg
 		//param_named_auto depthRange			scene_depth_range
 		//param_named_auto optimalAdustFactor	custom 0
 		//param_named enableWind float 1.0
-		param_named_auto time time
+		//param_named_auto time time
 	}
 }
 

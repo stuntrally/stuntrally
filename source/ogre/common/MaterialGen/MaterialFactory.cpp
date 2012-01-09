@@ -11,6 +11,7 @@
 #include "ArrowMaterial.h"
 #include "WaterMaterial.h"
 #include "ImpostorMaterial.h"
+#include "ParticleMaterial.h"
 
 #ifndef ROAD_EDITOR
 	#include "../../OgreGame.h"
@@ -108,6 +109,10 @@ MaterialFactory::MaterialFactory() :
 	impostor->mParent = this;
 	mCustomGenerators.push_back(impostor);
 	
+	MaterialGenerator* particle = static_cast<MaterialGenerator*>(new ParticleMaterialGenerator());
+	particle->mParent = this;
+	mCustomGenerators.push_back(particle);
+	
 	ti.update(); /// time
 	float dt = ti.dt * 1000.f;
 	LogO(String("::: Time loading material definitions: ") + toStr(dt) + " ms");
@@ -171,6 +176,38 @@ void MaterialFactory::setWind(bool wind)
 		}
 	}
 }
+
+//----------------------------------------------------------------------------------------
+void MaterialFactory::setSoftParticleDepth(TexturePtr depthtexture)
+{
+	if(MaterialGenerator::MRTSupported())
+	{
+		for (std::vector<std::string>::iterator it=softMtrs.begin();
+			it != softMtrs.end(); ++it)
+		{
+			MaterialPtr mat = MaterialManager::getSingleton().getByName( (*it) );
+			TextureUnitState* tus =mat->getTechnique(0)->getPass(0)->getTextureUnitState("depthMap");
+			tus->setTexture(depthtexture);
+		}
+	}
+}
+void MaterialFactory::setSoftParticles(bool bEnable)
+{
+	if(MaterialGenerator::MRTSupported())
+	{
+		for (std::vector<std::string>::iterator it=softMtrs.begin();
+			it != softMtrs.end(); ++it)
+		{
+			MaterialPtr mat = MaterialManager::getSingleton().getByName( (*it) );
+			if (mat->getTechnique(0)->getPass(0)->hasFragmentProgram())
+			{
+				GpuProgramParametersSharedPtr vparams = mat->getTechnique(0)->getPass(0)->getFragmentProgramParameters();
+				vparams->setNamedConstant("useSoftParticles", bEnable ? 1.0f: -1.0f);
+			}
+		}
+	}
+}
+
 
 //----------------------------------------------------------------------------------------
 
@@ -287,6 +324,7 @@ void MaterialFactory::generate()
 		terrainLightMapMtrs.clear();
 		timeMtrs.clear();
 		windMtrs.clear();
+		softMtrs.clear();
 		
 		for (std::vector<MaterialDefinition*>::iterator it=mDefinitions.begin();
 			it!=mDefinitions.end(); ++it)

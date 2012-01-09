@@ -169,6 +169,7 @@ void App::InitGui()
 	//Chk("HDR", chkVidHDR, pSet->hdr);
 	Chk("MotionBlur", chkVidBlur, pSet->motionblur);
 	Chk("ssao", chkVidSSAO, pSet->ssao);
+	Chk("softparticles", chkVidSoftParticles, pSet->softparticles);
 	Chk("godrays", chkVidGodRays, pSet->godrays);
 
 	Slv(BloomInt,	pSet->bloomintensity);

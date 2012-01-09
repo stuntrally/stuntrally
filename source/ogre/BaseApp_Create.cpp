@@ -189,6 +189,7 @@ void BaseApp::refreshCompositor(bool disableAll)
 		if(MaterialGenerator::MRTSupported())
 		{
 			CompositorManager::getSingleton().setCompositorEnabled((*it), "ssao", false);
+			CompositorManager::getSingleton().setCompositorEnabled((*it), "SoftParticles", false);
 		}
 		else
 		{
@@ -236,7 +237,7 @@ void BaseApp::refreshCompositor(bool disableAll)
 		if(MaterialGenerator::MRTSupported())
 		{
 			//the condition here is any compositor needing the gbuffers like ssao ,soft particles
-			CompositorManager::getSingleton().setCompositorEnabled((*it), "gbuffer", pSet->ssao);
+			CompositorManager::getSingleton().setCompositorEnabled((*it), "gbuffer", pSet->ssao || pSet->softparticles);
 		}
 		CompositorManager::getSingleton().setCompositorEnabled((*it), "Bloom", pSet->bloom);
 		CompositorManager::getSingleton().setCompositorEnabled((*it), "HDR", pSet->hdr);
@@ -245,6 +246,7 @@ void BaseApp::refreshCompositor(bool disableAll)
 		if(MaterialGenerator::MRTSupported())
 		{
 			CompositorManager::getSingleton().setCompositorEnabled((*it), "ssao", pSet->ssao);
+			CompositorManager::getSingleton().setCompositorEnabled((*it), "SoftParticles", pSet->softparticles);
 		}
 		else
 		{
@@ -275,6 +277,7 @@ void BaseApp::recreateCompositor()
 		mRoot->addResourceLocation(sPath + "/motionblur", "FileSystem", "Effects");
 		mRoot->addResourceLocation(sPath + "/ssaa", "FileSystem", "Effects");
 		mRoot->addResourceLocation(sPath + "/ssao", "FileSystem", "Effects");
+		mRoot->addResourceLocation(sPath + "/softparticles", "FileSystem", "Effects");
 		mRoot->addResourceLocation(sPath + "/godrays", "FileSystem", "Effects");
 		ResourceGroupManager::getSingleton().initialiseResourceGroup("Effects");
 	}
@@ -305,6 +308,18 @@ void BaseApp::recreateCompositor()
 		mGodRaysLogic = new GodRaysLogic();
 		mGodRaysLogic->setApp(this);
 		CompositorManager::getSingleton().registerCompositorLogic("GodRays", mGodRaysLogic);
+	}
+	if (!mSoftParticlesLogic) 
+	{
+		mSoftParticlesLogic = new SoftParticlesLogic();
+		mSoftParticlesLogic->setApp(this);
+		CompositorManager::getSingleton().registerCompositorLogic("SoftParticles", mSoftParticlesLogic);
+	}
+	if (!mGBufferLogic) 
+	{
+		mGBufferLogic = new GBufferLogic();
+		mGBufferLogic->setApp(this);
+		CompositorManager::getSingleton().registerCompositorLogic("GBuffer", mGBufferLogic);
 	}
 
 	if (CompositorManager::getSingleton().getByName("Motion Blur").isNull())
@@ -403,6 +418,7 @@ void BaseApp::recreateCompositor()
 		if (MaterialGenerator::MRTSupported())
 		{
 			CompositorManager::getSingleton().addCompositor((*it), "ssao");
+			CompositorManager::getSingleton().addCompositor((*it), "SoftParticles");
 		}
 		else
 		{
@@ -435,7 +451,7 @@ void BaseApp::Run( bool showDialog )
 //-------------------------------------------------------------------------------------
 BaseApp::BaseApp()
 	:mRoot(0), mSceneMgr(0), mWindow(0), mHDRLogic(0), mMotionBlurLogic(0),mSSAOLogic(0)
-	,mGodRaysLogic(0)
+	,mGodRaysLogic(0), mSoftParticlesLogic(0), mGBufferLogic(0)
 	,mShaderGenerator(0),mMaterialMgrListener(0)
 	,mShowDialog(1), mShutDown(false), bWindowResized(0), bFirstRenderFrame(true)
 	,mInputManager(0), mMouse(0), mKeyboard(0), mOISBsys(0)
