@@ -1017,11 +1017,6 @@ namespace Ogre
 				// pack scale, bias and specular
 				"uniform float4 scaleBiasSpecular,\n";
 		}
-		else
-		{
-			outStream <<
-				"uniform float3 ambient,\n";
-		}
 		
 		if (tt != LOW_LOD && tt != RENDER_COMPOSITE_MAP)
 		{

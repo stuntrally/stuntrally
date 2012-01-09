@@ -255,9 +255,12 @@ void MaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::StrStrea
 
 	if (vpNeedWvMat()) outStream <<
 		"	uniform float4x4 wvMat, \n";
-
-	outStream <<	"	uniform float4x4 wMat, \n";
-
+	
+	if(MRTSupported())
+	{
+		outStream <<	"	uniform float4x4 wMat, \n";
+	}
+	
 	if (needFresnel()) outStream <<
 		"	uniform float fresnelBias, \n"
 		"	uniform float fresnelScale, \n"

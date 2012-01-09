@@ -138,7 +138,6 @@ HighLevelGpuProgramPtr ParticleMaterialGenerator::createSoftParticleVertexProgra
 	"	out float4 oWorldPosition				: TEXCOORD3,  \n"
 	"	uniform float enableFog,  \n"
 	"	uniform float4 fogParams,  \n"
-	"	uniform float4x4 wITMat,  \n"
 	"	uniform float4x4 wvpMat,  \n"
 	"	uniform float4x4 wMat  \n"
 	")  \n"
@@ -202,11 +201,17 @@ HighLevelGpuProgramPtr ParticleMaterialGenerator::createSoftParticleFragmentProg
 	
 	sourceStr <<
 	"	out float4 oColor : COLOR0,  \n"
-	"	uniform float3 fogColor,  \n"
-	"	uniform float4x4 wMat, \n"
-	"	uniform	float4 viewportSize, \n"
-	"	uniform float4 cameraPositionWorld,	//world space \n"
-	"	uniform float far  \n"		
+	"	uniform float3 fogColor  \n";
+	
+	if(MRTSupported())
+	{
+		sourceStr <<
+		",	uniform	float4 viewportSize \n"
+		",	uniform float4 cameraPositionWorld	//world space \n"
+		",	uniform float far  \n"		;
+	}
+	
+	sourceStr <<
 	")  \n"
 	"{  \n"
 	"	float4 diffuseTex = tex2D(diffuseMap, texCoord.xy);  \n"
