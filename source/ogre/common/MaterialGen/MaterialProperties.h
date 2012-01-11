@@ -113,6 +113,7 @@ struct MaterialProperties
 	 * - object space normal maps (useful for meshes with mirrored UVs)
 	 * - ambient occlusion map (pre-baked, seperate map) - this map would only be used when SSAO effect is off
 	 * - diffuseSpec map (specular intensity in diffuse map alpha) 
+	 * - seperate ambient map (instead of using the diffuse map for ambient color)
 	 * - parallax mapping, normalHeight map (height in normal map alpha)
 	 * - displacement mapping
 	 * 
@@ -124,6 +125,7 @@ struct MaterialProperties
 	 * 
 	 * other:
 	 * - make it easier to add custom shaders
+	 * - shader cache on disk
 	 */
 	
 	MaterialProperties(); // constructor with sensible default values
