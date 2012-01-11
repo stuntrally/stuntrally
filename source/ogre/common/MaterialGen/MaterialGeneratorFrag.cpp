@@ -239,12 +239,17 @@ void MaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::StrStrea
 			}
 		}
 	}
-	if (fpNeedTangentToCube()) 
+	if (needNormalMap()) 
 	{
 		outStream << "	in float4 tangentToCubeSpace0 : TEXCOORD"+ toStr( mTexCoord_i++ ) +", \n";
 		outStream << "	in float4 tangentToCubeSpace1 : TEXCOORD"+ toStr( mTexCoord_i++ ) +", \n";
 		outStream << "	in float4 tangentToCubeSpace2 : TEXCOORD"+ toStr( mTexCoord_i++ ) +", \n";
 	}
+	else if (fpNeedEyeVector()) 
+	{
+		outStream << "	in float3 tangentToCubeSpace : TEXCOORD"+ toStr( mTexCoord_i++ ) +", \n";
+	}
+
 	if (MRTSupported()) 
 	{
 		if(!UsePerPixelNormals())
@@ -344,13 +349,14 @@ void MaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::StrStrea
 	// calc shadowing
 	fpCalcShadowSource(outStream);
 	
-	if (fpNeedEyeVector()) outStream <<
-		"	float3 eyeVector = normalize(float3(tangentToCubeSpace0.w, tangentToCubeSpace1.w, tangentToCubeSpace2.w)); \n";
+	if (fpNeedEyeVector() && !needNormalMap()) outStream <<
+		"	float3 eyeVector = normalize(float3(tangentToCubeSpace.x, tangentToCubeSpace.y, tangentToCubeSpace.z)); \n";
 	if (fpNeedWsNormal())
 	{
 		outStream <<
 		"	float3 normal;";
 		if (needNormalMap()) outStream <<
+			"	float3 eyeVector = normalize(float3(tangentToCubeSpace0.w, tangentToCubeSpace1.w, tangentToCubeSpace2.w)); \n"
 			"	float4 tsNormal = (tex2D( normalMap, texCoord.xy) * 2.0 - 1.0 ); \n" // fetch tangent space normal and decompress from range-compressed
 			"	normal.x = dot( tangentToCubeSpace0.xyz, tsNormal.xyz ); \n"
 			"	normal.y = dot( tangentToCubeSpace1.xyz, tsNormal.xyz ); \n"

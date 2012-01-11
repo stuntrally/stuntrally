@@ -208,7 +208,8 @@ HighLevelGpuProgramPtr ParticleMaterialGenerator::createSoftParticleFragmentProg
 		sourceStr <<
 		",	uniform	float4 viewportSize \n"
 		",	uniform float4 cameraPositionWorld	//world space \n"
-		",	uniform float far  \n"		;
+		",	uniform float far  \n"	
+		",  uniform half flip \n";
 	}
 	
 	sourceStr <<
@@ -227,7 +228,8 @@ HighLevelGpuProgramPtr ParticleMaterialGenerator::createSoftParticleFragmentProg
 		"	float2 depthTexCoord = float2(positionScreen) * float2(0.5f, -0.5f) + float2(0.5f, 0.5f); \n"
 		"	float2 uvOffset= (viewportSize.zw)*0.5; \n"
 		"	depthTexCoord += uvOffset; \n"
-		"	float depth = tex2D(depthMap, depthTexCoord).x; \n"
+		"	depthTexCoord.y =(1-saturate(flip))+flip*depthTexCoord.y; \n"
+        "	float depth = tex2D(depthMap, depthTexCoord).x; \n"
 		"	if(useSoftParticles > 0) \n"	
 		"	{ \n"	
 		"	float distanceToPixel = length(positionWorld.xyz-cameraPositionWorld.xyz); \n"	
@@ -240,7 +242,7 @@ HighLevelGpuProgramPtr ParticleMaterialGenerator::createSoftParticleFragmentProg
 		//"	depthAlpha*=depthAlpha; \n"
 		//"	//modify depth to get a good looking fog effect \n"
 		//"	depthAlpha = log(depthAlpha) * 0.7f; \n"
-		//"	oColor = float4(depth,depth,depth,1); \n"
+		//"	oColor = float4(depth/20,depth/20,depth/20,1); \n"
 		//"	oColor = float4(distanceToPixel,distanceToPixel,distanceToPixel,1); \n"
 		//"	oColor = float4(depthAlpha,depthAlpha,depthAlpha,1); \n"
 		"	oColor.a *=depthAlpha; \n"
@@ -259,6 +261,7 @@ HighLevelGpuProgramPtr ParticleMaterialGenerator::createSoftParticleFragmentProg
 	if(MRTSupported())
 	{
 		params->setNamedAutoConstant("far", GpuProgramParameters::ACT_FAR_CLIP_DISTANCE);
+		params->setNamedAutoConstant("flip", GpuProgramParameters::ACT_RENDER_TARGET_FLIPPING);
 		//depth
 		params->setNamedAutoConstant("viewportSize", GpuProgramParameters::ACT_VIEWPORT_SIZE);
 		//depthAlpha

@@ -71,3 +71,75 @@ compositor SoftParticles
         }
     }
 }
+
+compositor SoftParticlesDebug
+{
+    technique
+    {
+		compositor_logic SoftParticles
+		
+        texture_ref scene gbuffer mrt_output
+        texture softparticle target_width target_height PF_R8G8B8A8 depth_pool 2
+		texture softparticle target_width target_height PF_R8G8B8A8 depth_pool 2
+		texture previousscene target_width target_height PF_R8G8B8A8
+     
+		target previousscene 
+		{
+			input previous
+		}
+        target softparticle
+      	{
+            input none
+
+            pass clear
+            {
+				clear
+				{
+	  				buffers colour
+					colour_value 0 0 0 0
+            	}
+			}
+					  
+	        pass render_scene
+            {
+                // particles render queue
+	      		first_render_queue 83
+	    		last_render_queue 83
+            }
+
+        }
+
+        
+        target_output
+        {
+            input none
+
+			pass clear
+            {
+            }
+			
+            pass render_quad
+            {
+                material ShowDepth
+                input 0 scene 2
+            }
+			
+			pass clear
+			{
+				clear
+				{
+	  				buffers depth
+            	}
+			}
+
+
+			pass render_scene
+            {
+                // everything after particles render queue
+	      		first_render_queue 84
+	    		last_render_queue 100
+            }
+			
+        }
+    }
+}

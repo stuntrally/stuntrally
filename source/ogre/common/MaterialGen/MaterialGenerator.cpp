@@ -294,7 +294,10 @@ void MaterialGenerator::createSSAOTechnique()
 	ssaopasstech->setName("geom");
 	ssaopasstech->setSchemeName("geom");
 	Pass* ssaopass = ssaopasstech->createPass();
-
+	
+	ssaopass->setDepthWriteEnabled( mDef->mProps->depthWrite );	
+	ssaopass->setDepthCheckEnabled( mDef->mProps->depthCheck );
+	
 	HighLevelGpuProgramManager& hmgr = HighLevelGpuProgramManager::getSingleton();
 	
 	// choose vertex program
@@ -526,7 +529,7 @@ bool MaterialGenerator::MRTSupported()
 		const RenderSystemCapabilities *caps = Root::getSingleton().getRenderSystem()->getCapabilities();
 		if(caps->isShaderProfileSupported("ps_3_0") 
 		//	|| caps->isShaderProfileSupported("ps_4_0")
-		//	|| caps->isShaderProfileSupported("fp40")
+			|| caps->isShaderProfileSupported("fp40")
 			)
 		{
 			bUseMRT=true;

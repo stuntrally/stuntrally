@@ -149,12 +149,18 @@ void MaterialGenerator::generateVertexProgramSource(Ogre::StringUtil::StrStreamT
 	if (needNormalMap()) outStream <<
 		"	uniform float bumpScale, \n";
 		
-	if (fpNeedTangentToCube()) 
+	if (needNormalMap()) 
 	{
 		 outStream <<"	out	float4	oTangentToCubeSpace0	: TEXCOORD"+ toStr( mTexCoord_i++ ) +", \n"; // tangent to cube (world) space
 		 outStream <<"	out	float4	oTangentToCubeSpace1	: TEXCOORD"+ toStr( mTexCoord_i++ ) +", \n";
 		 outStream <<"	out	float4	oTangentToCubeSpace2	: TEXCOORD"+ toStr( mTexCoord_i++ ) +", \n";
 	}
+	else if (fpNeedEyeVector()) 
+	{
+		outStream <<"	out	float3	oTangentToCubeSpace	: TEXCOORD"+ toStr( mTexCoord_i++ ) +", \n";
+	
+	}
+	
 	if(MRTSupported())
 	{
 		if(!UsePerPixelNormals())
@@ -232,10 +238,10 @@ void MaterialGenerator::generateVertexProgramSource(Ogre::StringUtil::StrStreamT
 	"	float4 worldPosition = mul(wMat, position); \n";
 	
 	if (fpNeedEyeVector()) outStream <<
-		"	float3 eyeVector = worldPosition.xyz - eyePosition; \n" // transform eye into view space
-		"	oTangentToCubeSpace0.xyzw = eyeVector.xxxx; \n"
-		"	oTangentToCubeSpace1.xyzw = eyeVector.yyyy; \n"
-		"	oTangentToCubeSpace2.xyzw = eyeVector.zzzz; \n";
+		"	float3 eyeVector = worldPosition.xyz - eyePosition; \n"; // transform eye into view space
+	
+	if (fpNeedEyeVector() && !needNormalMap()) outStream <<
+		"	oTangentToCubeSpace = eyeVector.xyz; \n";
 
 	if (needNormalMap()) outStream <<
 	"	float3 binormal = cross(tangent, normal); \n"	// calculate binormal
@@ -244,9 +250,9 @@ void MaterialGenerator::generateVertexProgramSource(Ogre::StringUtil::StrStreamT
 	"										normal ); \n"
 	"	float3x3 tbnInv = transpose(tbn); \n" // transpose TBN to get inverse rotation to obj space
 	"	float3x3 tmp = mul( (float3x3) wITMat, tbnInv ); \n" // concatenate with the upper-left 3x3 of inverse transpose world matrix 
-	"	oTangentToCubeSpace0.xyz = tmp[0]; \n" // store in tangentToCubeSpace to pass this on to fragment shader
-	"	oTangentToCubeSpace1.xyz = tmp[1]; \n"
-	"	oTangentToCubeSpace2.xyz = tmp[2]; \n";
+	"	oTangentToCubeSpace0.xyzw = float4(tmp[0],eyeVector.x); \n" // store in tangentToCubeSpace to pass this on to fragment shader
+	"	oTangentToCubeSpace1.xyzw = float4(tmp[1],eyeVector.y); \n"
+	"	oTangentToCubeSpace2.xyzw = float4(tmp[2],eyeVector.z); \n";
 		
 	if (needShadows())
 	{

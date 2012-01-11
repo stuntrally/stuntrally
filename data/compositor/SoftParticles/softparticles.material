@@ -17,6 +17,15 @@ fragment_program SoftParticlesBlend_ps cg
     {
     }
 }
+fragment_program ShowDepth_ps cg
+{
+    source SoftParticles.cg
+    entry_point ShowDepth_ps
+    profiles ps_4_0 ps_2_x arbfp1
+    default_params
+    {
+    }
+}
 material RenderScene
 {
 	technique
@@ -74,6 +83,33 @@ material SoftParticlesBlend
                  texture white.png
                 filtering bilinear
             }
+			
+        }
+    }
+}
+
+material ShowDepth
+{
+    technique
+    {
+        pass
+        {
+			vertex_program_ref SoftParticlesBlend_vs
+            {
+            }
+        
+		    fragment_program_ref ShowDepth_ps
+            {
+			    param_named_auto far far_clip_distance
+            }
+
+            texture_unit tex1
+            {
+				//depth
+                texture white.png
+                filtering bilinear
+            }
+		
 			
         }
     }
