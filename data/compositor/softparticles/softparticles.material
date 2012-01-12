@@ -1,6 +1,6 @@
 vertex_program SoftParticlesBlend_vs cg
 {
-    source SoftParticles.cg
+    source softparticles.cg
     profiles vs_4_0 vs_1_1 arbvp1
     entry_point SoftParticlesBlend_vs
     default_params
@@ -10,7 +10,7 @@ vertex_program SoftParticlesBlend_vs cg
 }
 fragment_program SoftParticlesBlend_ps cg
 {
-    source SoftParticles.cg
+    source softparticles.cg
     entry_point SoftParticlesBlend_ps
     profiles ps_4_0 ps_2_x arbfp1
     default_params
@@ -19,7 +19,7 @@ fragment_program SoftParticlesBlend_ps cg
 }
 fragment_program ShowDepth_ps cg
 {
-    source SoftParticles.cg
+    source softparticles.cg
     entry_point ShowDepth_ps
     profiles ps_4_0 ps_2_x arbfp1
     default_params
