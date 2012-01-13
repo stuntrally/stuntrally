@@ -1,4 +1,4 @@
-compositor SoftParticles
+compositor SoftParticles1
 {
     technique
     {
@@ -72,7 +72,7 @@ compositor SoftParticles
     }
 }
 
-compositor SoftParticlesDebug
+compositor SoftParticles
 {
     technique
     {
