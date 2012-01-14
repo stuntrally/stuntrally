@@ -59,3 +59,20 @@ ambient = 0.4 0.5 0.5
 diffuse = 0.4 0.6 0.63
 specular = 0.32 0.39 0.41 64
 lightingAlpha = 0.3 0.3 0.4 1.0
+
+[pipeAsphaltRed]
+ambient = 1.0 0.8 0.7
+diffuse = 1.0 0.6 0.5
+specular = 0.4 0.35 0.3 24
+depthBias = 3
+diffuseMap_512 = roadAsphalt_s.jpg
+diffuseMap_2048 = roadAsphalt.jpg
+cullHardware = none
+receivesShadows = true
+
+[pipeGlassOrange]
+parent = pipeGlass
+ambient = 0.8 0.4 0.1
+diffuse = 0.6 0.3 0.1
+specular = 0.6 0.5 0.4 64
+lightingAlpha = 0.1 0.2 0.3 1.0
