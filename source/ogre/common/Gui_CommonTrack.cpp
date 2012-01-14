@@ -194,7 +194,7 @@ void App::GuiInitTrack()
 	trkMList->mSortColumnIndex = pSet->tracks_sort;  // from set
 	trkMList->mSortUp = pSet->tracks_sortup;
 
-    TrackListUpd();  //upd
+    TrackListUpd(true);  //upd
 	listTrackChng(trkMList,0);
 
 	ChangeTrackView(pSet->tracks_view);
