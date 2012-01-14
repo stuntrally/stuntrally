@@ -513,6 +513,7 @@
 	<Tag name="GrTerMaxAngle">Grass Max. Terrain Angle</Tag>
 	<Tag name="LTrMaxTerAng">max terrain Angle</Tag>
 	<Tag name="LTrMinTerH">min terrain Height</Tag>
+	<Tag name="LTrMaxTerH">max terrain Height</Tag>
 
 
 	<!--  Road  -->
@@ -813,5 +814,6 @@
 	<Tag name="TipModelPrev">Model preview image.</Tag>
 	<Tag name="TipLTrMaxTerAng">Terrain angle above which model won't appear.</Tag>
 	<Tag name="TipLTrMinTerH">Terrain height below which model won't appear.</Tag>
+	<Tag name="TipLTrMaxTerH">Terrain height above which model won't appear.</Tag>
 
 </MyGUI>

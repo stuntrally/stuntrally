@@ -239,7 +239,7 @@ void App::btnTerGenerate(WP)
 
 void App::slTerGenScale(SL)
 {
-	float v = 60.f * powf(val/res, 2.f);	if (bGI)  pSet->gen_scale = v;
+	float v = 160.f * powf(val/res, 2.f);	if (bGI)  pSet->gen_scale = v;
 	if (valTerGenScale){	Fmt(s, "%4.2f", v);  valTerGenScale->setCaption(s);  }
 }
 void App::slTerGenOfsX(SL)
@@ -500,6 +500,7 @@ void App::tabPgLayers(TabPtr wp, size_t id)
 	Slv(LTrWindFy, powf(lay.windFy /12.0f, 1.f/3.f));
 	Slv(LTrMaxTerAng, powf(lay.maxTerAng /90.0f, 1.f/2.f));
 	if (edLTrMinTerH)  edLTrMinTerH->setCaption(toStr(lay.minTerH));
+	if (edLTrMaxTerH)  edLTrMaxTerH->setCaption(toStr(lay.maxTerH));
 }
 
 void App::chkPgLayOn(WP wp)
@@ -560,6 +561,10 @@ void App::slLTrMaxTerAng(SL)
 void App::editLTrMinTerH(EditPtr ed)
 {
 	sc.pgLayersAll[idPgLay].minTerH = s2r(ed->getCaption());
+}
+void App::editLTrMaxTerH(EditPtr ed)
+{
+	sc.pgLayersAll[idPgLay].maxTerH = s2r(ed->getCaption());
 }
 
 
