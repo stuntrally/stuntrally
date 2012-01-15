@@ -1,0 +1,25 @@
+material RenderScene
+{
+	technique
+    {
+        pass
+        {
+			vertex_program_ref Ogre/Compositor/StdQuad_vp
+			{
+			}
+        
+			fragment_program_ref Ogre/Compositor/StdQuad_fp
+			{
+			}
+
+			texture_unit tex1
+			{
+				//scenebuffer
+				texture white.png
+				filtering bilinear
+			}
+		}
+	}
+}
+
+

@@ -6,7 +6,6 @@ compositor SoftParticles
 		
         texture_ref scene gbuffer mrt_output
         texture softparticle target_width target_height PF_R8G8B8A8 depth_pool 2
-		texture softparticle target_width target_height PF_R8G8B8A8 depth_pool 2
 		texture previousscene target_width target_height PF_R8G8B8A8
      
 		target previousscene 
@@ -25,6 +24,7 @@ compositor SoftParticles
 					colour_value 0 0 0 0
             	}
 			}
+			shadows off
 					  
 	        pass render_scene
             {
@@ -48,25 +48,15 @@ compositor SoftParticles
             {
                 material SoftParticlesBlend
                 input 0 previousscene
-                input 1 scene 0
-                input 2 softparticle
+                input 1 softparticle
             }
 			
-			pass clear
-			{
-				clear
-				{
-	  				buffers depth
-            	}
-			}
-
-
-			pass render_scene
-            {
-                // everything after particles render queue
-	      		first_render_queue 84
-	    		last_render_queue 100
-            }
+	//		pass render_scene
+    //        {
+    //            // everything after particles render queue
+	//      		first_render_queue 84
+	//    		last_render_queue 100
+    //        }
 			
         }
     }
@@ -80,7 +70,6 @@ compositor SoftParticles1
 		
         texture_ref scene gbuffer mrt_output
         texture softparticle target_width target_height PF_R8G8B8A8 depth_pool 2
-		texture softparticle target_width target_height PF_R8G8B8A8 depth_pool 2
 		texture previousscene target_width target_height PF_R8G8B8A8
      
 		target previousscene 
@@ -124,21 +113,21 @@ compositor SoftParticles1
                 input 0 scene 2
             }
 			
-			pass clear
-			{
-				clear
-				{
-	  				buffers depth
-            	}
-			}
+//			pass clear
+//			{
+//				clear
+//				{
+//	  				buffers depth
+//            	}
+//			}
 
 
-			pass render_scene
-            {
-                // everything after particles render queue
-	      		first_render_queue 84
-	    		last_render_queue 100
-            }
+//			pass render_scene
+ //           {
+  //              // everything after particles render queue
+	//      		first_render_queue 84
+	//    		last_render_queue 100
+   //         }
 			
         }
     }

@@ -13,13 +13,11 @@ void SoftParticlesBlend_vs(in float4 position : POSITION
 void SoftParticlesBlend_ps(in float4 position : POSITION
 	,in float2 uv :TEXCOORD0
 	,uniform sampler2D tex1 : TEXUNIT0, uniform sampler2D tex2 : TEXUNIT1
-	,uniform sampler2D tex3 : TEXUNIT2
 	,out float4 oColor : COLOR)
 {
-	float4 particlecolor = tex2D(tex3, uv);
+	float4 particlecolor = tex2D(tex2, uv);
 
-	float4 previous=tex2D(tex1, uv);
-	float4 scene =tex2D(tex2, uv);
+	float4 scene =tex2D(tex1, uv);
 	
 	//alpha blend the particle over the scene
 //	oColor =  particlecolor*particlecolor.a+(1-particlecolor.a)*scene;

@@ -23,5 +23,111 @@ compositor gbuffer
 			}
 
 		}
+
+		target_output
+        {
+            input none
+
+			pass render_quad
+            {
+                material RenderScene
+                input 0 mrt_output 0
+          }
+		}
+    }
+}
+
+
+compositor gbufferFinalizerNoParticles
+{
+    technique
+    {
+		target_output
+        {
+            input previous
+
+			shadows off
+			pass render_scene
+            {
+                // everything after particles render queue
+	      		first_render_queue 84
+	    		last_render_queue 100
+            }
+			
+		}
+    }
+}
+
+compositor gbufferFinalizer1
+{
+    technique
+    {
+		target_output
+        {
+            input previous
+
+			shadows off
+			pass render_scene
+            {
+                // everything after particles render queue
+	      		first_render_queue 84
+	    		last_render_queue 100
+            }
+			
+		}
+    }
+}
+compositor gbufferFinalizer
+{
+		
+    technique
+    {
+	//	texture_ref scene gbuffer mrt_output
+	    texture hardparticles target_width target_height PF_R8G8B8A8 depth_pool 2
+		texture previousscene target_width target_height PF_R8G8B8A8
+     
+		target previousscene 
+		{
+			input previous
+		}
+		target hardparticles
+        {
+            input none
+			shadows off
+			pass clear
+            {
+				clear
+				{
+					buffers colour
+					colour_value 0 0 0 0
+            	}
+           }
+			pass render_scene
+            {
+                // everything after particles render queue
+	      		first_render_queue 83
+	    		last_render_queue 83
+            }
+			
+		}
+		target_output
+        {
+            input none
+			pass clear
+            {
+           }
+			pass render_quad
+            {
+                material SoftParticlesBlend
+                input 0 previousscene
+                input 1 hardparticles
+            }
+			pass render_scene
+            {
+                // everything after particles render queue
+	      		first_render_queue 84
+	    		last_render_queue 100
+            }
+		}
     }
 }

@@ -190,6 +190,8 @@ void BaseApp::refreshCompositor(bool disableAll)
 		{
 			CompositorManager::getSingleton().setCompositorEnabled((*it), "ssao", false);
 			CompositorManager::getSingleton().setCompositorEnabled((*it), "SoftParticles", false);
+			CompositorManager::getSingleton().setCompositorEnabled((*it), "gbufferFinalizer", false);
+			CompositorManager::getSingleton().setCompositorEnabled((*it), "gbufferFinalizerNoParticles", false);
 		}
 		else
 		{
@@ -247,6 +249,8 @@ void BaseApp::refreshCompositor(bool disableAll)
 		{
 			CompositorManager::getSingleton().setCompositorEnabled((*it), "ssao", pSet->ssao);
 			CompositorManager::getSingleton().setCompositorEnabled((*it), "SoftParticles", pSet->softparticles);
+			CompositorManager::getSingleton().setCompositorEnabled((*it), "gbufferFinalizer", pSet->ssao && !pSet->softparticles);
+			CompositorManager::getSingleton().setCompositorEnabled((*it), "gbufferFinalizerNoParticles", pSet->softparticles);
 		}
 		else
 		{
@@ -419,6 +423,8 @@ void BaseApp::recreateCompositor()
 		{
 			CompositorManager::getSingleton().addCompositor((*it), "ssao");
 			CompositorManager::getSingleton().addCompositor((*it), "SoftParticles");
+			CompositorManager::getSingleton().addCompositor((*it), "gbufferFinalizer");
+			CompositorManager::getSingleton().addCompositor((*it), "gbufferFinalizerNoParticles");
 		}
 		else
 		{

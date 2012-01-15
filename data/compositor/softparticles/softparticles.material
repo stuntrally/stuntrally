@@ -70,12 +70,6 @@ material SoftParticlesBlend
                 texture white.png
                 filtering bilinear
             }
-			texture_unit tex1
-            {
-				//scenebuffer
-                texture white.png
-                filtering bilinear
-            }
 
             texture_unit tex2
             {

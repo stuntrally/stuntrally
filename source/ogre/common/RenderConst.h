@@ -28,8 +28,8 @@ const Ogre::uint8
 	RQG_CarGhost     = Ogre::RENDER_QUEUE_8+7,
 
 	RQG_Hud1         = Ogre::RENDER_QUEUE_OVERLAY-5,	// 95
-	RQG_Hud2         = Ogre::RENDER_QUEUE_OVERLAY-1,
-	RQG_Hud3         = Ogre::RENDER_QUEUE_OVERLAY;		// 100
+	RQG_Hud2         = Ogre::RENDER_QUEUE_OVERLAY-2,
+	RQG_Hud3         = Ogre::RENDER_QUEUE_OVERLAY-1;		// 99
 
 
 //  Visibility Flags used  //search for setVisibility

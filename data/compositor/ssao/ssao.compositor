@@ -124,10 +124,6 @@ compositor ssao
         {
             input none
 
-            pass clear
-            {
-            }
-
             pass render_quad
             {
                 // our SSAO listener number
@@ -143,10 +139,6 @@ compositor ssao
         {
             input none
 
-            pass clear
-            {
-            }
-
             pass render_quad
             {
                 identifier 43
@@ -161,9 +153,6 @@ compositor ssao
         {
             input none
 
-            pass clear
-            {
-            }
 
             pass render_quad
             {
@@ -190,6 +179,7 @@ compositor ssao
                 input 1 ssaoBlurY
                 //input 1 ssao
             }
+
         }
     }
 }
