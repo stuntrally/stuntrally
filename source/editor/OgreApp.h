@@ -226,7 +226,7 @@ protected:
 	TracksXml tracksXml;  void btnTrkView1(WP),btnTrkView2(WP),ChangeTrackView(bool full),updTrkListDim();
 	const static int TcolW[32];
 
-	void edTrkFind(MyGUI::EditPtr);  Ogre::String sTrkFind;
+	void edTrkFind(MyGUI::EditPtr);  Ogre::String sTrkFind;  MyGUI::EditPtr edFind;
 	strlist liTracks,liTracksUser;  void FillTrackLists();
 	std::list<TrkL> liTrk;
 

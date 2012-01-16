@@ -48,7 +48,7 @@ App::App()  //  gui wigdets--
 	,edRdTcMul(0),edRdLenDim(0),edRdWidthSteps(0),edRdHeightOfs(0)  // road
 	,edRdSkirtLen(0),edRdSkirtH(0), edRdMergeLen(0),edRdLodPLen(0)
 	,edRdColN(0),edRdColR(0), edRdPwsM(0),edRdPlsM(0)
-	,imgPrv(0),imgMini(0),imgTer(0), imgTrkIco1(0),imgTrkIco2(0)
+	,imgPrv(0),imgMini(0),imgTer(0), imgTrkIco1(0),imgTrkIco2(0), edFind(0)
 	,trkMList(0),trkDesc(0),trkName(0),bListTrackU(0)  // track
 
 	,mTerrainGroup(0), mTerrainPaging(0), mPageManager(0), mTerrainGlobals(0)

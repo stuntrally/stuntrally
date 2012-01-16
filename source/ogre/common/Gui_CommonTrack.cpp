@@ -148,7 +148,11 @@ void App::GuiInitTrack()
 	MyGUI::FactoryManager::getInstance().registerFactory<MultiList2>("Widget");
 	//MyGUI::FactoryManager::getInstance().unregisterFactory<MultiList2>("Widget");
 
+	#ifdef ROAD_EDITOR
 	TabItem* trktab = (TabItem*)mWndOpts->findWidget("TabTrack");
+	#else
+	TabItem* trktab = (TabItem*)mWndGame->findWidget("TabTrack");
+	#endif
 	MultiList2* li = trktab->createWidget<MultiList2>("MultiListBox",0,0,600,300, Align::Left | Align::VStretch);
 	//li->setUserString("RelativeTo", "OptionsWnd");
 	//*li->setAlpha(0.8);*/  li->setInheritsAlpha(false);
@@ -169,8 +173,7 @@ void App::GuiInitTrack()
 	for (int i=0; i < InfTrk; ++i)
 		infTrk[i] = mGUI->findWidget<StaticText>("ti"+toStr(i+1), false);
 		
-	EditPtr edit;
-	Edt(edit, "TrackFind", edTrkFind);
+	Edt(edFind, "TrackFind", edTrkFind);
 
 	ButtonPtr btn;
 	Btn("TrkView1", btnTrkView1);	Btn("TrkView2", btnTrkView2);

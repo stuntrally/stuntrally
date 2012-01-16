@@ -107,8 +107,8 @@ void App::createScene()
 void App::NewGame()
 {
 	// actual loading isn't done here
-	isFocGui = true;
-	toggleGui();  // hide gui
+	isFocGui = false;
+	toggleGui(false);  // hide gui
 
 	bLoading = true;
 	carIdWin = 1;

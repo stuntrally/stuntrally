@@ -40,10 +40,11 @@ public:
 	bool abs, tcs, autoshift, autorear, rear_inv, show_mph;
 	float car_hue[4], car_sat[4], car_val[4];  int cam_view[4];
 
-	//  game
+	//  game  todo:.. actual game copy in other class
 	bool trackreverse;	int local_players, num_laps;
 	bool split_vertically;  std::string language;
 	int boost_type, flip_type;  float boost_power;
+	bool isMain;  int inMenu;  // last menu
 	
 	//  joystick
 	std::string ff_device;

@@ -30,6 +30,7 @@ void SETTINGS::Serialize(bool w, CONFIGFILE & c)
 	Param(c,w, "car1.abs", abs);				Param(c,w, "car1.tcs", tcs);
 
 	//  game
+	Param(c,w, "game.in_menu", inMenu);			Param(c,w, "game.in_main", isMain);
 	Param(c,w, "game.boost_type", boost_type);			Param(c,w, "game.flip_type", flip_type);
 	Param(c,w, "game.boost_power", boost_power);
 	Param(c,w, "game.collis_cars", collis_cars);		Param(c,w, "game.collis_veget", collis_veget);
@@ -39,8 +40,7 @@ void SETTINGS::Serialize(bool w, CONFIGFILE & c)
 	Param(c,w, "game.num_laps", num_laps);
 	
 	//  joystick
-	Param(c,w, "joystick.ff_device", ff_device);
-	Param(c,w, "joystick.ff_gain", ff_gain);
+	Param(c,w, "joystick.ff_device", ff_device);		Param(c,w, "joystick.ff_gain", ff_gain);
 	Param(c,w, "joystick.ff_invert", ff_invert);
 
 	//  hud
@@ -141,6 +141,7 @@ SETTINGS::SETTINGS() :  ///  Defaults
 	//  car
 	abs(0), tcs(0), autoshift(1), autorear(1), rear_inv(1), show_mph(0),
 	//  game
+	isMain(1), inMenu(0),
 	collis_veget(true), collis_cars(false),
 	local_players(1), num_laps(2),
 	split_vertically(true), language(""), // "" = autodetect lang

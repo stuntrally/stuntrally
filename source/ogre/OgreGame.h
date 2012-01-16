@@ -219,7 +219,7 @@ protected:
 	TracksXml tracksXml;  void btnTrkView1(WP),btnTrkView2(WP),ChangeTrackView(bool full),updTrkListDim();
 	const static int TcolW[32];
 
-	void edTrkFind(MyGUI::EditPtr);  Ogre::String sTrkFind;
+	void edTrkFind(MyGUI::EditPtr);  Ogre::String sTrkFind;  MyGUI::EditPtr edFind;
 	strlist liTracks,liTracksUser;  void FillTrackLists();
 	std::list<TrkL> liTrk;
 
@@ -233,9 +233,10 @@ protected:
 		
 	///-----------------------------------------
 
-	void toggleGui();
+	void toggleGui(bool toggle=true);
 	void UpdCarClrSld(bool upd=true);  bool bUpdCarClr;
-
+	void MainMenuBtn(MyGUI::WidgetPtr);
+	
 
 	///  input tab
 	void InitInputGui(), inputBindBtnClicked(WP);
@@ -314,8 +315,7 @@ protected:
 	void listRplChng(MyGUI::List* li, size_t pos);
 	void listCarChng(MyGUI::List* li, size_t pos),  btnChgCar(WP), btnChgTrack(WP);
 	int LNext(MyGUI::MultiList2* lp, int rel), LNext(MyGUI::ListPtr lp, int rel);  // util next in list
-	void trkLNext(int rel), carLNext(int rel), rplLNext(int rel);
-	void tabPlayer(MyGUI::TabPtr wp, size_t id);
+	void LNext(int rel);  void tabPlayer(MyGUI::TabPtr wp, size_t id);
 
 	Ogre::String sListCar,sListTrack;  int bListTrackU;
 	Ogre::String pathTrk[2];  Ogre::String TrkDir();

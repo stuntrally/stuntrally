@@ -61,7 +61,7 @@ bool App::frameStart(Real time)
 		mGUI->destroyWidgets(vwGui);  bnQuit=0;mWndOpts=0;  //todo: rest too..
 		InitGui();
 		bWindowResized = true;
-		mWndTabs->setIndexSelected(6);  // switch back to view tab
+		//mWndTabs->setIndexSelected(6);  // switch back to view tab
 	}
 
 	if (bWindowResized)
@@ -100,13 +100,13 @@ bool App::frameStart(Real time)
 		//  keys dn/up - trklist, carlist
 		#define isKey(a)  mKeyboard->isKeyDown(OIS::a)
 		static float dirU = 0.f,dirD = 0.f;
-		if (isFocGui)
+		if (isFocGui && !pSet->isMain)
 		{	if (isKey(KC_UP)  ||isKey(KC_NUMPAD8))	dirD += time;  else
 			if (isKey(KC_DOWN)||isKey(KC_NUMPAD2))	dirU += time;  else
 			{	dirU = 0.f;  dirD = 0.f;  }
 			int d = ctrl ? 4 : 1;
-			if (dirU > 0.0f) {  carLNext( d);  trkLNext( d);  rplLNext( d);  dirU = -0.12f;  }
-			if (dirD > 0.0f) {  carLNext(-d);  trkLNext(-d);  rplLNext(-d);  dirD = -0.12f;  }
+			if (dirU > 0.0f) {  LNext( d);  dirU = -0.12f;  }
+			if (dirD > 0.0f) {  LNext(-d);  dirD = -0.12f;  }
 		}
 		
 		// Gui updates from networking

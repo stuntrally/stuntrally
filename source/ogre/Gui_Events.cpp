@@ -784,15 +784,24 @@ bool App::keyPressed( const OIS::KeyEvent &arg )
 	if (!bAssignKey)
 	{
 		//  change gui tabs
-		if (mWndTabs && isFocGui)
-		{	int num = mWndTabs->getItemCount();
-			if (action("PrevTab")) {		mWndTabs->setIndexSelected( (mWndTabs->getIndexSelected() - 1 + num) % num ); return true;	}
-			else if (action("NextTab")) {	mWndTabs->setIndexSelected( (mWndTabs->getIndexSelected() + 1) % num );	      return true;	}
+		if (isFocGui && !pSet->isMain)
+		{
+			MyGUI::TabPtr tab = 0;
+			switch (pSet->inMenu)
+			{
+				case WND_Game:  tab = mWndTabsGame;  break;
+				case WND_Options:  tab = mWndTabsOpts;  break;
+			}
+			if (tab)
+			{	int num = tab->getItemCount();
+				if (action("PrevTab")) {		tab->setIndexSelected( (tab->getIndexSelected() - 1 + num) % num );  return true;	}
+				else if (action("NextTab")) {	tab->setIndexSelected( (tab->getIndexSelected() + 1) % num );	     return true;	}
+			}
 		}
 		
 		//  gui on/off
 		if (action("ShowOptions"))
-		{	toggleGui();  return false;  }
+		{	toggleGui(true);  return false;  }
 	
 		//  new game - reload
 		if (action("RestartGame"))
@@ -815,28 +824,58 @@ bool App::keyPressed( const OIS::KeyEvent &arg )
 	}
 	
 	using namespace OIS;
-	if (!bAssignKey)
+
+
+	//  main menu keys
+	if (!bAssignKey && pSet->isMain)
 	{
 		switch (arg.key)
 		{
-			case KC_ESCAPE:
-				if (pSet->escquit)
-					mShutDown = true;	// quit
+		case KC_UP:  case KC_NUMPAD8:
+			pSet->inMenu = (pSet->inMenu-1+WND_ALL)%WND_ALL;
+			toggleGui(false);  return true;
+
+		case KC_DOWN:  case KC_NUMPAD2:
+			pSet->inMenu = (pSet->inMenu+1)%WND_ALL;
+			toggleGui(false);  return true;
+
+		case KC_RETURN:
+			pSet->isMain = false;
+			toggleGui(false);  return true;
+		}
+	}
+
+	//  esc
+	if (!bAssignKey && arg.key == KC_ESCAPE)
+	{
+		if (pSet->escquit)
+			mShutDown = true;	// quit
+		else
+			toggleGui(true);	// gui on/off
+		return true;
+	}
+
+	//  not main menus
+	if (!bAssignKey && !pSet->isMain)
+	{
+		switch (arg.key)
+		{
+			case KC_BACK:
+				if (isFocGui)
+				{	pSet->isMain = true;  toggleGui(false);  }
 				else
-					toggleGui();		// gui on/off
-				return true;
-
-
-			case KC_BACK:	// replay controls
-				if (mWndRpl && !isFocGui)
-				{	//mWndRpl->setVisible(!mWndRpl->isVisible());
-					bRplWnd = !bRplWnd;  // ^set in sizehud
-					return true;  }
-				break;
+					if (mWndRpl && !isFocGui)	bRplWnd = !bRplWnd;  // replay controls
+				return true;				
 
 			case KC_P:		// replay play/pause
 				if (bRplPlay && !isFocGui)
 				{	bRplPause = !bRplPause;  UpdRplPlayBtn();
+					return true;  }
+				break;
+				
+			case KC_F:  // focus on find edit
+				if (edFind && isFocGui && !pSet->isMain && pSet->inMenu == WND_Game && mWndTabsGame == 0)
+				{	edFind->_riseKeySetFocus(mWndTabsGame);  //?
 					return true;  }
 				break;
 				
@@ -877,21 +916,24 @@ bool App::keyPressed( const OIS::KeyEvent &arg )
 			}	break;
 			
 			case KC_RETURN:	//  chng trk + new game  after up/dn
-			if (isFocGui)
-			{	size_t tab = mWndTabs->getIndexSelected();
-				switch (tab)
+			if (isFocGui && !pSet->isMain)
+			{
+				if (pSet->inMenu == WND_Replays)
+					btnRplLoad(0);
+				else
+				if (pSet->inMenu == WND_Game)
 				{
-				case 0:
-					btnChgTrack(0);
-					btnNewGame(0);  break;
-				case 1:
-					btnChgCar(0);
-					btnNewGame(0);  break;
-				case 2:
-					chatSendMsg();  break;
-				case 3:
-					btnRplLoad(0);  break;
-			}	}
+					switch (mWndTabsGame->getIndexSelected())
+					{
+					case 0:
+						btnChgTrack(0);
+						btnNewGame(0);  break;
+					case 1:
+						btnChgCar(0);
+						btnNewGame(0);  break;
+					case 2:
+						chatSendMsg();  break;
+			}	}	}
 			return false;
 		}
 	}
@@ -905,12 +947,38 @@ bool App::keyPressed( const OIS::KeyEvent &arg )
 }
 
 
-void App::toggleGui()
+//  Menu
+//---------------------------------------------------------------------
+
+void App::toggleGui(bool toggle)
 {
 	if (alt)  return;
-	isFocGui = !isFocGui;
-	if (mWndOpts)	mWndOpts->setVisible(isFocGui);
+	if (toggle)
+		isFocGui = !isFocGui;
+
+	bool notMain = isFocGui && !pSet->isMain;
+	if (mWndMain)	mWndMain->setVisible(isFocGui && pSet->isMain);
+	if (mWndGame)	mWndGame->setVisible(notMain  && pSet->inMenu == WND_Game);
+	if (mWndChamp)	mWndChamp->setVisible(notMain && pSet->inMenu == WND_Champ);
+	if (mWndReplays) mWndReplays->setVisible(notMain && pSet->inMenu == WND_Replays);
+	if (mWndOpts)	mWndOpts->setVisible(notMain  && pSet->inMenu == WND_Options);
+
 	if (bnQuit)  bnQuit->setVisible(isFocGui);
 	if (mGUI)	PointerManager::getInstance().setVisible(isFocGuiOrRpl());
 	if (!isFocGui)  mToolTip->setVisible(false);
+
+	for (int i=0; i < WND_ALL; ++i)
+		mWndMainPanels[i]->setVisible(pSet->inMenu == i);
+}
+
+void App::MainMenuBtn(MyGUI::WidgetPtr wp)
+{
+	for (int i=0; i < WND_ALL; ++i)
+		if (wp == mWndMainBtns[i])
+		{
+			pSet->isMain = false;
+			pSet->inMenu = i;
+			toggleGui(false);
+			return;
+		}
 }

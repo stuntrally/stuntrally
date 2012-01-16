@@ -35,12 +35,16 @@
 	<Tag name="TBLap">Lap</Tag>
 	<Tag name="TBPlace">Place</Tag>
 	<Tag name="CamInfoStrings">Type,Yaw,Pitch,Dist,Height,Speed,Offset,LEFT,RIGHT,Middle,Wheel,shift,Rotate,reset,move,H,Pos</Tag>
-
-	<Tag name="Options">Options</Tag>
-	<Tag name="Settings">Settings</Tag>
-	<Tag name="Quit">Quit</Tag>
 	
 <!--  ............................................................................................................................  -->
+
+
+	<!--  Main  -->
+	<Tag name="SingleRace">Single Race</Tag>
+	<Tag name="Championship">Championship</Tag>
+	<Tag name="ReplaysMenu">Replays</Tag>
+	<Tag name="Options">Options</Tag>
+	<Tag name="Quit">Quit</Tag>
 
 
 	<!--  Track  -->
@@ -102,10 +106,11 @@
 	<Tag name="TipChangeBright">Change car color brightness (dark-light).</Tag>
 	<Tag name="CarClrRandom">Random</Tag>
 
+
 	<!--  Multiplayer  -->
 	<Tag name="Multiplayer">Multiplayer</Tag>
 	
-	<!--  Server -->
+	<!-- Server -->
 	<Tag name="NetServer">Server</Tag>
 	<Tag name="NetGamesAvail">Available games</Tag>
 	<Tag name="NetRefreshList">Get/refresh list</Tag>
@@ -131,6 +136,7 @@
 	<Tag name="NetMasterPort">Master Server Port</Tag>
 	<Tag name="NetLocalPort">Local Port</Tag>
 	<Tag name="NetRouterTip">Router port forwarding configuration might be required in order to allow peers to connect to the local port.</Tag>
+
 
 	<!--  Setup  -->
 	<Tag name="Game">Game</Tag>
@@ -382,7 +388,7 @@
 	<Tag name="BasedOn">based on</Tag>
 	<Tag name="AndUsing">and using</Tag>
 	<Tag name="ProjectPage">project&apos;s page:</Tag>
-	<Tag name="GameVersion">1.4</Tag>
+	<Tag name="GameVersion">1.5</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 		
 	
@@ -550,6 +556,7 @@
 
 
 	<!--  Settings  -->
+	<Tag name="Settings">Settings</Tag>
 	<Tag name="SREditorVersion">Stunt Rally - Track Editor - version</Tag>
 	<Tag name="TrackAutoLoad">Auto Load track</Tag>
 	<Tag name="MinimapAndSize">Minimap, size</Tag>

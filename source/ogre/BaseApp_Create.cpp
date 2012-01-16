@@ -417,7 +417,8 @@ BaseApp::BaseApp()
 	,alt(0), ctrl(0), shift(0), roadUpCnt(0)
 	,mbLeft(0), mbRight(0), mbMiddle(0)
 	,isFocGui(0),isFocRpl(0), mGUI(0), mPlatform(0)
-	,mWndOpts(0), mWndTabs(0), mWndRpl(0)
+	,mWndTabsGame(0),mWndTabsOpts(0)
+	,mWndMain(0),mWndGame(0),mWndChamp(0),mWndReplays(0),mWndOpts(0), mWndRpl(0)
 	,bSizeHUD(true), bLoading(false), bAssignKey(false)
 	,mMasterClient(), mClient(), mLobbyState(DISCONNECTED)
 	,mDebugOverlay(0), mFpsOverlay(0), mOvrFps(0), mOvrTris(0), mOvrBat(0), mOvrDbg(0)
@@ -429,10 +430,9 @@ BaseApp::BaseApp()
 
 BaseApp::~BaseApp()
 {
-	if(mSplitMgr)
-	{
+	if (mSplitMgr)
 		refreshCompositor(false);
-	}
+
 	CompositorManager::getSingleton().removeAll();
 	delete mLoadingBar;
 	delete mSplitMgr;

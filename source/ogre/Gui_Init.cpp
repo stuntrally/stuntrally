@@ -30,17 +30,32 @@ void App::InitGui()
 
 	//  load Options layout
 	vwGui = LayoutManager::getInstance().loadLayout("Options.layout");
-	mLayout = vwGui.at(0);
+	//mLayout = vwGui.at(0);
 
 	//  window
-	mWndOpts = mLayout->findWidget("OptionsWnd");
-	if (mWndOpts)  {
-		mWndOpts->setVisible(isFocGui);
+	mWndMain = mGUI->findWidget<Window>("MainMenuWnd",false);
+	mWndGame = mGUI->findWidget<Window>("GameWnd",false);
+	mWndChamp = mGUI->findWidget<Window>("ChampWnd",false);
+	mWndReplays = mGUI->findWidget<Window>("ReplaysWnd",false);
+	mWndOpts = mGUI->findWidget<Window>("OptionsWnd",false);
+
+	for (int i=0; i < WND_ALL; ++i)
+	{
+		const String s = toStr(i);
+		mWndMainPanels[i] = mWndMain->findWidget("PanMenu"+s);
+		mWndMainBtns[i] = (ButtonPtr)mWndMain->findWidget("BtnMenu"+s);
+		mWndMainBtns[i]->eventMouseButtonClick += newDelegate(this, &App::MainMenuBtn);
+	}
+
+	/*if (mWndOpts)*/  {
+		//mWndOpts->setVisible(isFocGui);
 		int sx = mWindow->getWidth(), sy = mWindow->getHeight();
-		IntSize w = mWndOpts->getSize();  // center
-		mWndOpts->setPosition((sx-w.width)*0.5f, (sy-w.height)*0.5f);  }
+		IntSize w = mWndMain->getSize();  // center
+		mWndMain->setPosition((sx-w.width)*0.5f, (sy-w.height)*0.5f);  }/**/
+	
 	PointerManager::getInstance().setVisible(isFocGui);
-	mWndTabs = mGUI->findWidget<Tab>("TabWnd");
+	mWndTabsGame = mGUI->findWidget<Tab>("TabWndGame");
+	mWndTabsOpts = mGUI->findWidget<Tab>("TabWndOptions");
 	
 	//  tooltip  ------
 	for (VectorWidgetPtr::iterator it = vwGui.begin(); it != vwGui.end(); ++it)
@@ -55,6 +70,8 @@ void App::InitGui()
 	GuiInitTooltip();
 		
 	GuiCenterMouse();
+
+	toggleGui(false);
 
 
 	//  assign controls
@@ -442,14 +459,18 @@ int App::LNext(MyGUI::ListPtr lp, int rel)
 	return i;
 }
 
-void App::trkLNext(int rel)	{
-	if (!(isFocGui && mWndTabs->getIndexSelected() == 0))  return;
-	listTrackChng(trkMList,LNext(trkMList, rel));  }
-
-void App::carLNext(int rel)	{
-	if (!(isFocGui && mWndTabs->getIndexSelected() == 1))  return;
-	listCarChng(carList,  LNext(carList, rel));  }
-
-void App::rplLNext(int rel)	{
-	if (!(isFocGui && mWndTabs->getIndexSelected() == 3))  return;
-	listRplChng(rplList,  LNext(rplList, rel));  }
+void App::LNext(int rel)
+{
+	//if (!isFocGui || pSet->isMain)  return;
+	switch (pSet->inMenu)
+	{
+	case WND_Game:
+		switch (mWndTabsGame->getIndexSelected())	{
+			case 0:  listTrackChng(trkMList,LNext(trkMList, rel));  return;
+			case 1:	 listCarChng(carList,  LNext(carList, rel));  return;	}
+		break;
+	case WND_Replays:
+		listRplChng(rplList,  LNext(rplList, rel));
+		break;
+	}
+}
