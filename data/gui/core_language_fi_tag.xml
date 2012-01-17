@@ -625,7 +625,12 @@
 	<Tag name="InputNextOptTab">F2,F3 - prev,next Options tab</Tag>
 	<Tag name="RollingDrag">Rolling Drag</Tag>
 	<Tag name="RplAll">All</Tag>
-	<Tag name="GameVersion">1.4</Tag>
+	<Tag name="Championship">Championship</Tag>
+	<Tag name="LTrMaxTerH">max terrain Height</Tag>
+	<Tag name="SingleRace">Single Race</Tag>
+	<Tag name="ReplaysMenu">Replays</Tag>
+	<Tag name="TipLTrMaxTerH">Terrain height above which model won't appear.</Tag>
+	<Tag name="GameVersion">1.5</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 
 </MyGUI>
