@@ -47,15 +47,17 @@ void App::InitGui()
 		mWndMainBtns[i]->eventMouseButtonClick += newDelegate(this, &App::MainMenuBtn);
 	}
 
-	/*if (mWndOpts)*/  {
-		//mWndOpts->setVisible(isFocGui);
-		int sx = mWindow->getWidth(), sy = mWindow->getHeight();
-		IntSize w = mWndMain->getSize();  // center
-		mWndMain->setPosition((sx-w.width)*0.5f, (sy-w.height)*0.5f);  }/**/
-	
 	PointerManager::getInstance().setVisible(isFocGui);
-	mWndTabsGame = mGUI->findWidget<Tab>("TabWndGame");
-	mWndTabsOpts = mGUI->findWidget<Tab>("TabWndOptions");
+	//mWndOpts->setVisible(isFocGui);
+	int sx = mWindow->getWidth(), sy = mWindow->getHeight();
+	IntSize w = mWndMain->getSize();  // center
+	mWndMain->setPosition((sx-w.width)*0.5f, (sy-w.height)*0.5f);
+
+	TabPtr tab;
+	tab = mGUI->findWidget<Tab>("TabWndGame");    tab->setIndexSelected(1);  mWndTabsGame = tab;	tab->eventTabChangeSelect += newDelegate(this, &App::MenuTabChg);
+	tab = mGUI->findWidget<Tab>("TabWndChamp");   tab->setIndexSelected(1);							tab->eventTabChangeSelect += newDelegate(this, &App::MenuTabChg);
+	tab = mGUI->findWidget<Tab>("TabWndReplays"); tab->setIndexSelected(1);							tab->eventTabChangeSelect += newDelegate(this, &App::MenuTabChg);
+	tab = mGUI->findWidget<Tab>("TabWndOptions"); tab->setIndexSelected(1);  mWndTabsOpts = tab;	tab->eventTabChangeSelect += newDelegate(this, &App::MenuTabChg);
 	
 	//  tooltip  ------
 	for (VectorWidgetPtr::iterator it = vwGui.begin(); it != vwGui.end(); ++it)

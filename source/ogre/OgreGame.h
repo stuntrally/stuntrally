@@ -236,6 +236,7 @@ protected:
 	void toggleGui(bool toggle=true);
 	void UpdCarClrSld(bool upd=true);  bool bUpdCarClr;
 	void MainMenuBtn(MyGUI::WidgetPtr);
+	void MenuTabChg(MyGUI::TabPtr, size_t);
 	
 
 	///  input tab

@@ -793,9 +793,11 @@ bool App::keyPressed( const OIS::KeyEvent &arg )
 				case WND_Options:  tab = mWndTabsOpts;  break;
 			}
 			if (tab)
-			{	int num = tab->getItemCount();
-				if (action("PrevTab")) {		tab->setIndexSelected( (tab->getIndexSelected() - 1 + num) % num );  return true;	}
-				else if (action("NextTab")) {	tab->setIndexSelected( (tab->getIndexSelected() + 1) % num );	     return true;	}
+			{	int num = tab->getItemCount()-1, i = 0;
+				if (action("PrevTab")) {		i = tab->getIndexSelected();  if (i==1)  i = num;  else  --i;
+					tab->setIndexSelected(i);  MenuTabChg(tab,i);  return true;  }
+				else if (action("NextTab")) {	i = tab->getIndexSelected();  if (i==num)  i = 1;  else  ++i;
+					tab->setIndexSelected(i);  MenuTabChg(tab,i);  return true;  }
 			}
 		}
 		
@@ -981,4 +983,12 @@ void App::MainMenuBtn(MyGUI::WidgetPtr wp)
 			toggleGui(false);
 			return;
 		}
+}
+
+void App::MenuTabChg(MyGUI::TabPtr tab, size_t id)
+{
+	if (id != 0)  return;
+	tab->setIndexSelected(1);  // dont switch to 0
+	pSet->isMain = true;
+	toggleGui(false);  // back to main
 }
