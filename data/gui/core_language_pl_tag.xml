@@ -59,7 +59,7 @@
 	<Tag name="TipParType1">typ 3 cząstek z opon (dla trasy)</Tag>
 	<Tag name="GrassDens">Gęstość trawy</Tag>
 	<Tag name="RoadParams">Parametry drogi</Tag>
-	<Tag name="NetDirectConnect">Direct connect</Tag>
+	<Tag name="NetDirectConnect">Połącz bezpośrednio</Tag>
 	<Tag name="Light">Światło</Tag>
 	<Tag name="Flip">Odwracanie</Tag>
 	<Tag name="DistToRoad">odl. do drogi</Tag>
@@ -80,16 +80,16 @@
 	<Tag name="TipChangeCar">Wybierz auto z listy, naciśnij [Nowa Gra] by jechać.</Tag>
 	<Tag name="TreeMult">Mnożnik drzew</Tag>
 	<Tag name="TipGrDensSmooth">Mapa gęstości trawy - rozmiar wygładzenia</Tag>
-	<Tag name="NetGame">Game</Tag>
+	<Tag name="NetGame">Gra</Tag>
 	<Tag name="InputRoadNew">ctrl-Space - ustaw wartości nowego punktu z wybranego</Tag>
 	<Tag name="InputFluidsMode">W - edytuj ciecze</Tag>
 	<Tag name="Top">Góra</Tag>
 	<Tag name="TerUpdSkip">Pominięć odśw. terenu</Tag>
 	<Tag name="Input">Wejście</Tag>
-	<Tag name="NetReady">Ready</Tag>
+	<Tag name="NetReady">Gotowy</Tag>
 	<Tag name="InputNoJS">Brak joystick</Tag>
 	<Tag name="InputRoadAngType">5,6 - typ kątów</Tag>
-	<Tag name="NetMasterPort">Master Server Port</Tag>
+	<Tag name="NetMasterPort">Port serwera</Tag>
 	<Tag name="InpSet_KeyHalf">Klawisz, połowa</Tag>
 	<Tag name="CopySource">Wybierz jako źródło kopiowania</Tag>
 	<Tag name="TipDisableFog">Wyłącz mgłę gdy edycja z dystansu.</Tag>
@@ -101,7 +101,7 @@
 	<Tag name="UnitKm">km</Tag>
 	<Tag name="SplitVertically">Podziel pionowo</Tag>
 	<Tag name="BasedOn">na podstawie</Tag>
-	<Tag name="NetLeaveGame">Leave game</Tag>
+	<Tag name="NetLeaveGame">Opuść grę</Tag>
 	<Tag name="banked">pochyłe</Tag>
 	<Tag name="frenzy">krętość (drogi)</Tag>
 	<Tag name="InputRoadChkRadius">K,L - promień checkpoint (chkR 0 - brak)</Tag>
@@ -122,7 +122,7 @@
 	<Tag name="Wireframe">Szkielet</Tag>
 	<Tag name="ChangeTrack">Zmień trasę</Tag>
 	<Tag name="TerrainSize">Rozmiar terenu</Tag>
-	<Tag name="NetServer">Server</Tag>
+	<Tag name="NetServer">Serwer</Tag>
 	<Tag name="InputRoadWidth">- zmień szerokość drogi</Tag>
 	<Tag name="InputMapSteering">Sterowanie</Tag>
 	<Tag name="AutoRear">Automatyczny wsteczny</Tag>
@@ -153,14 +153,14 @@
 	<Tag name="TipRoadStats">Statystyki całej drogi.</Tag>
 	<Tag name="MaxScale">maks. skala</Tag>
 	<Tag name="Fluids">Ciecze</Tag>
-	<Tag name="NetNickname">Nickname</Tag>
-	<Tag name="NetPassword">Password</Tag>
+	<Tag name="NetNickname">Pseudonim</Tag>
+	<Tag name="NetPassword">Hasło</Tag>
 	<Tag name="UseImposters">Użyj atrap</Tag>
-	<Tag name="NetSettings">Settings</Tag>
+	<Tag name="NetSettings">Ustawienia</Tag>
 	<Tag name="TipModelMaxScale">Maksymalna skala modelu.</Tag>
 	<Tag name="TerrainError">Bład terenu</Tag>
 	<Tag name="InputRoadMerge">M - przełącz łączenie segm. (dla testu)</Tag>
-	<Tag name="No">No</Tag>
+	<Tag name="No">Nie</Tag>
 	<Tag name="InputStartDir">Space - zmień kierunek drogi (+ lub -)</Tag>
 	<Tag name="Effects">Efekty</Tag>
 	<Tag name="WidthSteps">Kroków szerokości</Tag>
@@ -178,7 +178,7 @@
 	<Tag name="TipCopySource">Wybierz trasę jako źródło skąd kopiować, używane w zakładce [Narzędzia].</Tag>
 	<Tag name="InputMapNextTab">Następna zakładka</Tag>
 	<Tag name="Layer">Warstwa</Tag>
-	<Tag name="NetLocalPort">Local Port</Tag>
+	<Tag name="NetLocalPort">Port lokany</Tag>
 	<Tag name="EscQuit">Esc wychodzi</Tag>
 	<Tag name="Gauges">Liczniki (obroty, szybkość)</Tag>
 	<Tag name="LengthDim">Wymiar długości</Tag>
@@ -211,7 +211,7 @@
 	<Tag name="Vegetation">Wegetacja</Tag>
 	<Tag name="ssao">SSAO</Tag>
 	<Tag name="Always">Zawsze</Tag>
-	<Tag name="NetRefreshList">Get/refresh list</Tag>
+	<Tag name="NetRefreshList">Odśwież listę</Tag>
 	<Tag name="TerGenPow">Potęga (kształt)</Tag>
 	<Tag name="MessageBox_Abort">Przerwij</Tag>
 	<Tag name="InputMapFlip">Odwróć</Tag>
@@ -336,13 +336,13 @@
 	<Tag name="GrassSway">Kołysanie trawy</Tag>
 	<Tag name="Right">Prawo</Tag>
 	<Tag name="LODPointsDist">Odl. punktów LOD.</Tag>
-	<Tag name="NetWaiting">Waiting...</Tag>
+	<Tag name="NetWaiting">Oczekiwanie...</Tag>
 	<Tag name="MotionBlur">Rozmycie ruchem</Tag>
 	<Tag name="MinimapAndSize">Minimapa, rozmiar</Tag>
 	<Tag name="TipChangeHue">Zmień kolor auta (odcień)</Tag>
 	<Tag name="InputMapPlayer4">Gracz 4</Tag>
 	<Tag name="Intensity">Intensywność</Tag>
-	<Tag name="NetGameName">Game Name</Tag>
+	<Tag name="NetGameName">Nazwa gry</Tag>
 	<Tag name="TexSize">Rozmiar tekstur</Tag>
 	<Tag name="TipSunAmbient">Kolor słońca stały, rozproszony.. R G B składowe 0 do 1 (np. 0.4 0.4 0.4)</Tag>
 	<Tag name="ChngTrkTab">zmiana w zakładce [Trasa]</Tag>
@@ -384,12 +384,12 @@
 	<Tag name="TerHQDist">Odl. terenu HQ</Tag>
 	<Tag name="TrackArea">Obszar</Tag>
 	<Tag name="FacesOnce">Boków na raz</Tag>
-	<Tag name="NetGamesAvail">Available games</Tag>
+	<Tag name="NetGamesAvail">Dostępne gry</Tag>
 	<Tag name="ViewLeft">Widok lewy</Tag>
 	<Tag name="ViewFront">Widok przód</Tag>
 	<Tag name="RplTime">Czas</Tag>
 	<Tag name="MinimapRotate">Obrót</Tag>
-	<Tag name="Yes">Yes</Tag>
+	<Tag name="Yes">Tak</Tag>
 	<Tag name="TipNewDup">Stwórz nową trasę przez zduplikowanie wybranej, używając nowej nazwy (wprować nazwę najpierw).</Tag>
 	<Tag name="TerGenPers">Szum</Tag>
 	<Tag name="SunDir">Kierunek słońca</Tag>
@@ -408,7 +408,7 @@
 	<Tag name="RplRename">Zmień nazwę</Tag>
 	<Tag name="EnterSave">Enter - zapisz</Tag>
 	<Tag name="InputMapLastChk">Start od poprzedniego punktu kontrolnego</Tag>
-	<Tag name="NetJoinLocked">Protected game</Tag>
+	<Tag name="NetJoinLocked">Gra chroniona</Tag>
 	<Tag name="Properties">Ustawienia</Tag>
 	<Tag name="TipBumpFreq">Częstotliwość dodatkowych wybojów na powierzchni (odległość między nimi).</Tag>
 	<Tag name="InputRoadDel">Del - zmaż wybrany</Tag>
@@ -458,7 +458,7 @@
 	<Tag name="TrackWidthAvg">Śred. szer.</Tag>
 	<Tag name="About">O grze</Tag>
 	<Tag name="TrackPipes">Rury</Tag>
-	<Tag name="NetAddress">Address</Tag>
+	<Tag name="NetAddress">Adres</Tag>
 	<Tag name="AutoLoad">Autom. wczytywanie trasy</Tag>
 	<Tag name="Distance">Odległość</Tag>
 	<Tag name="RplGhost">Pokaż przejazd ducha</Tag>
@@ -474,7 +474,7 @@
 	<Tag name="Track">Trasa</Tag>
 	<Tag name="RoadStats">Stat. drogi</Tag>
 	<Tag name="Tools">Narzędzia</Tag>
-	<Tag name="NetCreateGame">Create game</Tag>
+	<Tag name="NetCreateGame">Stwórz grę</Tag>
 	<Tag name="TipGrassSwaySpd">Efekt kołysania trawy, szybkość.</Tag>
 	<Tag name="FrictionTread">Tarcie</Tag>
 	<Tag name="InputMapShiftDown">Poprzedni bieg</Tag>
@@ -491,7 +491,7 @@
 	<Tag name="RplGhosts">Duchy</Tag>
 	<Tag name="RplBestOnly">Zapisuj ducha tylko dla lepszych czasów</Tag>
 	<Tag name="Front">Przód</Tag>
-	<Tag name="NetMasterIp">Master Server IP</Tag>
+	<Tag name="NetMasterIp">IP serwera</Tag>
 	<Tag name="TipSurfFrict2">Nie używane.</Tag>
 	<Tag name="Change">Zmień</Tag>
 	<Tag name="Reset">Przywróć</Tag>
@@ -547,7 +547,7 @@
 	<Tag name="AllEffects">Efekty włączone</Tag>
 	<Tag name="CarCollis">Kolizja aut</Tag>
 	<Tag name="CameraInfo">Info kamery</Tag>
-	<Tag name="NetRouterTip">Router port forwarding configuration might be required in order to allow peers to connect to the local port.</Tag>
+	<Tag name="NetRouterTip">Przekierowanie portów routera może być wymagane aby inni mogli się połaczyć do lokalnego portu.</Tag>
 	<Tag name="NewGame">Nowa Gra</Tag>
 	<Tag name="page">strona</Tag>
 	<Tag name="Replay">Powtórka</Tag>
@@ -585,7 +585,7 @@
 	<Tag name="TipResizeTer">Przeskaluj dany teren z nowymi wartościami.</Tag>
 	<Tag name="DistMult">Mnożnik odl.</Tag>
 	<Tag name="InputStartWidth">; &apos; - dostosuj szerokość startu</Tag>
-	<Tag name="Error">Error</Tag>
+	<Tag name="Error">Błąd</Tag>
 	<Tag name="Resolution">Rozdzielczość</Tag>
 	<Tag name="GrassSize">Wielkość trawy</Tag>
 	<Tag name="Left">Lewo</Tag>
@@ -611,10 +611,10 @@
 	<Tag name="TrackDifficulties">Różne trudności trasy</Tag>
 	<Tag name="TipSurfFrict">Tarcie powierzchni (np. 1.0 asfalt, 0.7 szuter, 0.5 lód).</Tag>
 	<Tag name="FPS">Klatek na sek, trójkątów, wsadów</Tag>
-	<Tag name="NetJoinGame">Join game</Tag>
+	<Tag name="NetJoinGame">Dołącz do gry</Tag>
 	<Tag name="InputMapBoost">Dopalacz</Tag>
 	<Tag name="TipTerLAngMin">Kąt początkowy terenu dla warstwy.</Tag>
-	<Tag name="NetChat">Chat</Tag>
+	<Tag name="NetChat">Rozmowa</Tag>
 	<Tag name="InputStart">Start</Tag>
 	<Tag name="TipLTrMaxTerAng">Kąt terenu powyżej którego brak modeli.</Tag>
 	<Tag name="TipFogEndDist">Odległość końcowa mgły [metr].</Tag>
@@ -625,7 +625,12 @@
 	<Tag name="InputNextOptTab">F2,F3 - poprz,nast zakładka Opcji</Tag>
 	<Tag name="RollingDrag">Opór toczenia</Tag>
 	<Tag name="RplAll">Wszystkie</Tag>
-	<Tag name="GameVersion">1.4</Tag>
+	<Tag name="Championship">Championship</Tag>
+	<Tag name="LTrMaxTerH">max terrain Height</Tag>
+	<Tag name="SingleRace">Single Race</Tag>
+	<Tag name="ReplaysMenu">Replays</Tag>
+	<Tag name="TipLTrMaxTerH">Terrain height above which model won't appear.</Tag>
+	<Tag name="GameVersion">1.5</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 
 </MyGUI>

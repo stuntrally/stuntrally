@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION"
 "Report-Msgid-Bugs-To: "
-"POT-Creation-Date: 2012-01-06 22:57+0100"
+"POT-Creation-Date: 2012-01-17 11:46+0200"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>"
 "Language-Team: LANGUAGE <LL@li.org>"
@@ -59,6 +59,10 @@ msgstr ""
 
 msgctxt "AndUsing"
 msgid "and using"
+msgstr ""
+
+msgctxt "Championship"
+msgid "Championship"
 msgstr ""
 
 msgctxt "ColumnRadius"
@@ -309,8 +313,8 @@ msgctxt "TipGrTerMaxAngle"
 msgid "Terrain angle above which there won't be any grass."
 msgstr ""
 
-msgctxt "RestartApply"
-msgid "Restart game, to apply *changes."
+msgctxt "Materials"
+msgid "Materials"
 msgstr ""
 
 msgctxt "InputMapResetGame"
@@ -669,8 +673,8 @@ msgctxt "TerrainError"
 msgid "Terrain error"
 msgstr ""
 
-msgctxt "InputFluidsDel"
-msgid "Del - delete current"
+msgctxt "LTrMaxTerH"
+msgid "max terrain Height"
 msgstr ""
 
 msgctxt "InputRoadRebuild"
@@ -705,8 +709,8 @@ msgctxt "RoadPointSize"
 msgid "Road points size"
 msgstr ""
 
-msgctxt "auto"
-msgid "Auto"
+msgctxt "Car"
+msgid "Car"
 msgstr ""
 
 msgctxt "FuelLap"
@@ -859,6 +863,10 @@ msgstr ""
 
 msgctxt "InputPressButtonTip"
 msgid "Press a button to see its number"
+msgstr ""
+
+msgctxt "SingleRace"
+msgid "Single Race"
 msgstr ""
 
 msgctxt "TipNewGameCar"
@@ -1071,6 +1079,10 @@ msgstr ""
 
 msgctxt "RollingDrag"
 msgid "Rolling Drag"
+msgstr ""
+
+msgctxt "InputFluidsDel"
+msgid "Del - delete current"
 msgstr ""
 
 msgctxt "InputMinimapType"
@@ -1777,6 +1789,10 @@ msgctxt "Reset"
 msgid "Reset"
 msgstr ""
 
+msgctxt "ReplaysMenu"
+msgid "Replays"
+msgstr ""
+
 msgctxt "InputSlowFast"
 msgid "shift - slow   ctrl - fast"
 msgstr ""
@@ -1837,8 +1853,8 @@ msgctxt "set2"
 msgid "set2"
 msgstr ""
 
-msgctxt "Car"
-msgid "Car"
+msgctxt "auto"
+msgid "Auto"
 msgstr ""
 
 msgctxt "TipWindInflH"
@@ -2173,6 +2189,10 @@ msgctxt "TerLayers"
 msgid "Terrain Layers"
 msgstr ""
 
+msgctxt "TipLTrMaxTerH"
+msgid "Terrain height above which model won't appear."
+msgstr ""
+
 msgctxt "TipModelPrev"
 msgid "Model preview image."
 msgstr ""
@@ -2193,8 +2213,8 @@ msgctxt "TipFluidsWnd"
 msgid "Fluid parameters window."
 msgstr ""
 
-msgctxt "Materials"
-msgid "Materials"
+msgctxt "RestartApply"
+msgid "Restart game, to apply *changes."
 msgstr ""
 
 msgctxt "InputMultiplier"
