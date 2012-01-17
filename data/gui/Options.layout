@@ -85,7 +85,7 @@
 			<Property key="ButtonAutoWidth" value="true"/>
 			<UserString key="RelativeTo" value="GameWnd"/>
 			<Widget type="TabItem" skin="" position="2 24 794 572">
-				<Property key="Caption" value="&lt;#{Back}"/>
+				<Property key="Caption" value="&lt;#{BackMenu}"/>
 				<UserString key="RelativeTo" value="GameWnd"/>
 				<Property key="Colour" value="1 0.6 0.2"/>
 			</Widget>
@@ -801,7 +801,7 @@
 			<Property key="ButtonAutoWidth" value="true"/>
 			<UserString key="RelativeTo" value="ChampWnd"/>
 			<Widget type="TabItem" skin="" position="2 24 794 572">
-				<Property key="Caption" value="&lt;#{Back}"/>
+				<Property key="Caption" value="&lt;#{BackMenu}"/>
 				<UserString key="RelativeTo" value="ChampWnd"/>
 				<Property key="Colour" value="1 0.6 0.2"/>
 			</Widget>
@@ -824,7 +824,7 @@
 			<Property key="ButtonAutoWidth" value="true"/>
 			<UserString key="RelativeTo" value="ReplaysWnd"/>
 			<Widget type="TabItem" skin="" position="2 24 794 572">
-				<Property key="Caption" value="&lt;#{Back}"/>
+				<Property key="Caption" value="&lt;#{BackMenu}"/>
 				<UserString key="RelativeTo" value="ReplaysWnd"/>
 				<Property key="Colour" value="1 0.6 0.2"/>
 			</Widget>
@@ -938,7 +938,7 @@
 			<Property key="ButtonAutoWidth" value="true"/>
 			<UserString key="RelativeTo" value="OptionsWnd"/>
 			<Widget type="TabItem" skin="" position="2 24 794 572">
-				<Property key="Caption" value="&lt;#{Back}"/>
+				<Property key="Caption" value="&lt;#{BackMenu}"/>
 				<UserString key="RelativeTo" value="OptionsWnd"/>
 				<Property key="Colour" value="1 0.6 0.2"/>
 			</Widget>
