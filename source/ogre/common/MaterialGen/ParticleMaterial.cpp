@@ -16,7 +16,7 @@ ParticleMaterialGenerator::ParticleMaterialGenerator()
 	mName = "Particle";
 }
 
-void ParticleMaterialGenerator::generate(bool fixedFunction)
+void ParticleMaterialGenerator::generate()
 {
 	mMaterial = prepareMaterial(mDef->getName());
 	

@@ -10,7 +10,7 @@ class ParticleMaterialGenerator : public MaterialGenerator
 public:
 	ParticleMaterialGenerator();
 
-	virtual void generate(bool fixedFunction=false);
+	virtual void generate();
 	
 protected:
 	virtual Ogre::HighLevelGpuProgramPtr createSoftParticleFragmentProgram(); // ambient pass fragment program
