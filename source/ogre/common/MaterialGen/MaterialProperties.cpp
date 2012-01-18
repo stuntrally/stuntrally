@@ -13,7 +13,7 @@ MaterialProperties::MaterialProperties() :
 	abstract(false),
 	envMap(""), reflAmount(0.2), bumpScale(1.0), cullHardware(CULL_HW_CLOCKWISE),
 	hasFresnel(false), fresnelBias(0), fresnelScale(0), fresnelPower(0),
-	receivesShadows(false), receivesDepthShadows(false), shaders(true), transparent(false),
+	receivesShadows(false), receivesDepthShadows(false), transparent(false),
 	ambient(1.0, 1.0, 1.0), diffuse(1.0, 1.0, 1.0), specular(0.0, 0.0, 0.0, 0.0),
 	depthBias(0), depthCheck(true), transparentSorting(true), lightingAlpha(0.0, 0.0, 0.0, 0.0),
 	sceneBlend(SBM_DEFAULT), depthWrite(true), alphaRejectFunc(CMPF_ALWAYS_PASS), alphaRejectValue(0.0),
@@ -100,7 +100,6 @@ void MaterialProperties::setProperty(const std::string& prop, const std::string&
 	else if (prop == "depthBias") depthBias = str2int(value);
 	else if (prop == "depthCheck") depthCheck = str2bool(value);
 	else if (prop == "transparentSorting") transparentSorting = str2bool(value);
-	else if (prop == "shaders") shaders = str2bool(value);
 	else if (prop == "transparent") transparent = str2bool(value);
 	else if (prop == "bumpScale") bumpScale = str2float(value);
 	else if (prop == "hasFresnel") hasFresnel = str2bool(value);

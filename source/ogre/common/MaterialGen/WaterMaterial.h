@@ -10,7 +10,7 @@ class WaterMaterialGenerator : public MaterialGenerator
 public:
 	WaterMaterialGenerator();
 
-	virtual void generate(bool fixedFunction=false);
+	virtual void generate();
 	
 protected:
 	// vertex program

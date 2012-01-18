@@ -26,7 +26,7 @@ public:
 	Ogre::HighLevelGpuProgramPtr mVertexProgram;
 	Ogre::HighLevelGpuProgramPtr mFragmentProgram;
 	
-	virtual void generate(bool fixedFunction=false); // craft material
+	virtual void generate(); // craft material
 
 	//MRT
 	static bool bUseMRT;
@@ -59,7 +59,7 @@ protected:
 	std::string mReflMap;
 	virtual void chooseTextures();
 	virtual void resetTexUnitCounter();
-	virtual void createTexUnits(Ogre::Pass* pass, bool shaders);
+	virtual void createTexUnits(Ogre::Pass* pass);
 	
 	// material
 	Ogre::MaterialPtr mMaterial;
@@ -90,7 +90,6 @@ protected:
 	virtual void fpShadowingParams(Ogre::StringUtil::StrStreamType& outStream);
 	
 	
-	virtual bool needShaders();
 	virtual bool needShadows();
 	
 	// textures

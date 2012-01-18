@@ -10,7 +10,7 @@ class GlassMaterialGenerator : public MaterialGenerator
 public:
 	GlassMaterialGenerator();
 
-	virtual void generate(bool fixedFunction=false);
+	virtual void generate();
 	
 protected:
 	virtual Ogre::HighLevelGpuProgramPtr createAmbientFragmentProgram(); // ambient pass fragment program

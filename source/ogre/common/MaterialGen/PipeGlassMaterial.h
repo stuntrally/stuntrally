@@ -11,7 +11,7 @@ class PipeGlassMaterialGenerator : public MaterialGenerator
 public:
 	PipeGlassMaterialGenerator();
 
-	virtual void generate(bool fixedFunction=false);
+	virtual void generate();
 	
 protected:
 	virtual Ogre::HighLevelGpuProgramPtr createPipeFragmentProgram();

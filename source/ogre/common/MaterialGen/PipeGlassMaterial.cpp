@@ -18,7 +18,7 @@ PipeGlassMaterialGenerator::PipeGlassMaterialGenerator()
 
 //----------------------------------------------------------------------------------------
 
-void PipeGlassMaterialGenerator::generate(bool fixedFunction)
+void PipeGlassMaterialGenerator::generate()
 {
 	mMaterial = prepareMaterial(mDef->getName());
 	

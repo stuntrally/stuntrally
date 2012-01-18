@@ -29,9 +29,6 @@ struct MaterialProperties
 	// set this to 'true' if the material is never used (only a base material that other materials have as parent)
 	bool abstract;
 	
-	// use shaders (there is no reason to set this to false, the fixed function support is very limited and most likely broken)
-	bool shaders;
-	
 	// --------- textures -----------------------
 	// textureMap: map of textures and their size
 	

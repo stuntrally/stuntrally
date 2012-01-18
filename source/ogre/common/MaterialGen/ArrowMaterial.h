@@ -10,7 +10,7 @@ class ArrowMaterialGenerator : public MaterialGenerator
 public:
 	ArrowMaterialGenerator();
 
-	virtual void generate(bool fixedFunction=false);
+	virtual void generate();
 	
 protected:
 	virtual Ogre::HighLevelGpuProgramPtr createVertexProgram();
