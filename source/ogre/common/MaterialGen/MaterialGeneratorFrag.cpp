@@ -530,6 +530,10 @@ void MaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::StrStrea
 void MaterialGenerator::fragmentProgramParams(HighLevelGpuProgramPtr program)
 {
 	GpuProgramParametersSharedPtr params = program->getDefaultParameters();
+	
+	#ifndef _DEBUG
+	params->setIgnoreMissingParams(true);
+	#endif
 
 	if (fpNeedLighting())
 	{
@@ -562,6 +566,10 @@ void MaterialGenerator::fragmentProgramParams(HighLevelGpuProgramPtr program)
 
 void MaterialGenerator::individualFragmentProgramParams(Ogre::GpuProgramParametersSharedPtr params)
 {
+	#ifndef _DEBUG
+	params->setIgnoreMissingParams(true);
+	#endif
+	
 	if (needEnvMap() && !needFresnel())
 	{
 		params->setNamedConstant("reflAmount", mDef->mProps->reflAmount);
