@@ -802,11 +802,123 @@
 			<UserString key="RelativeTo" value="ChampWnd"/>
 			<Widget type="TabItem" skin="" position="2 24 794 572">
 				<Property key="Caption" value="&lt;#{BackMenu}"/>
-				<UserString key="RelativeTo" value="ChampWnd"/>
 				<Property key="Colour" value="1 0.6 0.2"/>
+				<UserString key="RelativeTo" value="ChampWnd"/>
 			</Widget>
 			<Widget type="TabItem" skin="" position="2 24 794 572">
-				<Property key="Caption" value="#{Championship}"/>
+                <Property key="Caption" value="#{Championship}"/>
+				<UserString key="RelativeTo" value="ChampWnd"/>
+                <Widget type="MultiListBox" skin="MultiListBox" position="32 48 368 344" name="MListChamps">
+					<UserString key="RelativeTo" value="ChampWnd"/>
+                    <Widget type="MultiListItem" skin="" position="0 0 43 315">
+                        <Property key="Caption" value="N"/>
+                        <Property key="ItemWidth" value="30"/>
+                        <Property key="ItemResizingPolicy" value="Fixed"/>
+                    </Widget>
+                    <Widget type="MultiListItem" skin="" position="0 0 43 315">
+                        <Property key="Caption" value="Name"/>
+                        <Property key="ItemWidth" value="200"/>
+                        <Property key="ItemResizingPolicy" value="Fixed"/>
+                    </Widget>
+                    <Widget type="MultiListItem" skin="" position="43 0 64 315">
+                        <Property key="Caption" value="Difficulty"/>
+                    </Widget>
+                    <Widget type="MultiListItem" skin="" position="107 0 76 315">
+                        <Property key="Caption" value="Completed"/>
+                    </Widget>
+                    <Widget type="MultiListItem" skin="" position="183 0 40 315">
+                        <Property key="Caption" value="Score"/>
+                    </Widget>
+                </Widget>
+                <Widget type="Button" skin="Button" position="256 440 144 40">
+                    <Property key="Caption" value="Start"/>
+					<UserString key="RelativeTo" value="ChampWnd"/>
+                </Widget>
+                <Widget type="Button" skin="Button" position="440 440 144 40">
+                    <Property key="Caption" value="Continue"/>
+					<UserString key="RelativeTo" value="ChampWnd"/>
+                </Widget>
+                <Widget type="EditBox" skin="EditBoxEmpty" position="416 168 320 88">
+                    <Property key="Caption" value="Championship description"/>
+					<UserString key="RelativeTo" value="ChampWnd"/>
+                </Widget>
+            </Widget>
+            <Widget type="TabItem" skin="" position="2 24 794 572">
+                <Property key="Caption" value="Stages"/>
+				<UserString key="RelativeTo" value="ChampWnd"/>
+                <Widget type="MultiListBox" skin="MultiListBox" position="32 48 368 232" name="MListStages">
+					<UserString key="RelativeTo" value="ChampWnd"/>
+                    <Widget type="MultiListItem" skin="" position="0 0 14 203">
+                        <Property key="Caption" value="N"/>
+                        <Property key="ItemWidth" value="30"/>
+                        <Property key="ItemResizingPolicy" value="Fixed"/>
+                    </Widget>
+                    <Widget type="MultiListItem" skin="" position="14 0 39 203">
+                        <Property key="Caption" value="Track"/>
+                        <Property key="ItemWidth" value="200"/>
+                        <Property key="ItemResizingPolicy" value="Fixed"/>
+                    </Widget>
+                    <Widget type="MultiListItem" skin="" position="53 0 56 203">
+                        <Property key="Caption" value="Scenery"/>
+                    </Widget>
+                    <Widget type="MultiListItem" skin="" position="109 0 28 203">
+                        <Property key="Caption" value="Diff"/>
+                    </Widget>
+                    <Widget type="MultiListItem" skin="" position="137 0 51 203">
+                        <Property key="Caption" value="Length"/>
+                    </Widget>
+                    <Widget type="MultiListItem" skin="" position="188 0 40 203">
+                        <Property key="Caption" value="Score"/>
+                    </Widget>
+                </Widget>
+                <Widget type="TextBox" skin="TextBox" position="456 48 136 24">
+                    <Property key="Caption" value="Difficulty"/>
+					<UserString key="RelativeTo" value="ChampWnd"/>
+                </Widget>
+                <Widget type="TextBox" skin="TextBox" position="616 48 80 24">
+					<UserString key="RelativeTo" value="ChampWnd"/>
+                </Widget>
+                <Widget type="TextBox" skin="TextBox" position="456 80 136 24">
+                    <Property key="Caption" value="Tracks"/>
+					<UserString key="RelativeTo" value="ChampWnd"/>
+                </Widget>
+                <Widget type="TextBox" skin="TextBox" position="616 80 80 24">
+					<UserString key="RelativeTo" value="ChampWnd"/>
+                </Widget>
+                <Widget type="TextBox" skin="TextBox" position="456 112 136 24">
+                    <Property key="Caption" value="Distance"/>
+					<UserString key="RelativeTo" value="ChampWnd"/>
+                </Widget>
+                <Widget type="TextBox" skin="TextBox" position="616 112 80 24">
+					<UserString key="RelativeTo" value="ChampWnd"/>
+                </Widget>
+                <Widget type="TextBox" skin="TextBox" position="456 144 136 24">
+                    <Property key="Caption" value="Time"/>
+					<UserString key="RelativeTo" value="ChampWnd"/>
+                </Widget>
+                <Widget type="TextBox" skin="TextBox" position="616 144 80 24">
+					<UserString key="RelativeTo" value="ChampWnd"/>
+                </Widget>
+                <Widget type="TextBox" skin="TextBox" position="456 176 136 24">
+                    <Property key="Caption" value="Progress"/>
+					<UserString key="RelativeTo" value="ChampWnd"/>
+                </Widget>
+                <Widget type="TextBox" skin="TextBox" position="616 176 80 24">
+					<UserString key="RelativeTo" value="ChampWnd"/>
+                </Widget>
+                <Widget type="TextBox" skin="TextBox" position="456 208 136 24">
+                    <Property key="Caption" value="Score"/>
+					<UserString key="RelativeTo" value="ChampWnd"/>
+                </Widget>
+                <Widget type="TextBox" skin="TextBox" position="616 208 80 24">
+					<UserString key="RelativeTo" value="ChampWnd"/>
+                </Widget>
+                <Widget type="TextBox" skin="TextBox" position="456 240 136 24">
+					<UserString key="RelativeTo" value="ChampWnd"/>
+                </Widget>
+                <Widget type="TextBox" skin="TextBox" position="616 240 80 24">
+					<UserString key="RelativeTo" value="ChampWnd"/>
+                </Widget>
 			</Widget>
 		</Widget>
 	</Widget>
@@ -825,8 +937,8 @@
 			<UserString key="RelativeTo" value="ReplaysWnd"/>
 			<Widget type="TabItem" skin="" position="2 24 794 572">
 				<Property key="Caption" value="&lt;#{BackMenu}"/>
-				<UserString key="RelativeTo" value="ReplaysWnd"/>
 				<Property key="Colour" value="1 0.6 0.2"/>
+				<UserString key="RelativeTo" value="ReplaysWnd"/>
 			</Widget>
 			<Widget type="TabItem" skin="" position="2 24 794 572">
 				<Property key="Caption" value="#{Replay}"/>

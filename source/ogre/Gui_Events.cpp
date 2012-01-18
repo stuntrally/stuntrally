@@ -790,6 +790,7 @@ bool App::keyPressed( const OIS::KeyEvent &arg )
 			switch (pSet->inMenu)
 			{
 				case WND_Game:  tab = mWndTabsGame;  break;
+				case WND_Champ:  tab = mWndTabsChamp;  break;
 				case WND_Options:  tab = mWndTabsOpts;  break;
 			}
 			if (tab)

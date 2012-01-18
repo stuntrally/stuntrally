@@ -55,7 +55,7 @@ void App::InitGui()
 
 	TabPtr tab;
 	tab = mGUI->findWidget<Tab>("TabWndGame");    tab->setIndexSelected(1);  mWndTabsGame = tab;	tab->eventTabChangeSelect += newDelegate(this, &App::MenuTabChg);
-	tab = mGUI->findWidget<Tab>("TabWndChamp");   tab->setIndexSelected(1);							tab->eventTabChangeSelect += newDelegate(this, &App::MenuTabChg);
+	tab = mGUI->findWidget<Tab>("TabWndChamp");   tab->setIndexSelected(1);  mWndTabsChamp = tab;	tab->eventTabChangeSelect += newDelegate(this, &App::MenuTabChg);
 	tab = mGUI->findWidget<Tab>("TabWndReplays"); tab->setIndexSelected(1);							tab->eventTabChangeSelect += newDelegate(this, &App::MenuTabChg);
 	tab = mGUI->findWidget<Tab>("TabWndOptions"); tab->setIndexSelected(1);  mWndTabsOpts = tab;	tab->eventTabChangeSelect += newDelegate(this, &App::MenuTabChg);
 	
@@ -423,6 +423,21 @@ void App::InitGui()
 		if (btnNewG)  btnNewG->eventMouseButtonClick += newDelegate(this, &App::btnNewGame);
 	}
 	
+
+    ///  championships
+    //------------------------------------------------------------------------
+	MultiListBox* li = mGUI->findWidget<MultiListBox>("MListChamps");
+	li->removeAllItems();
+	{
+		int n = 1;
+		li->addItem(toStr(n/10)+toStr(n%10), 0);  int l = li->getItemCount()-1;
+		li->setSubItemNameAt(1,l, "Basic");
+		li->setSubItemNameAt(2,l, "Easy");
+		li->setSubItemNameAt(3,l, "50%");
+		li->setSubItemNameAt(4,l, "90");
+	}
+
+	
 	bGI = true;  // gui inited, gui events can now save vals
 
 	ti.update();	/// time
@@ -449,7 +464,7 @@ void App::UpdCarClrSld(bool upd)
 int App::LNext(MyGUI::MultiList2* lp, int rel)
 {
 	int i = std::max(0, std::min((int)lp->getItemCount()-1, (int)lp->getIndexSelected()+rel ));
-	lp->setIndexSelected(i);  //not sorted !..
+	lp->setIndexSelected(i);
 	lp->beginToItemAt(std::max(0, i-11));  // center
 	return i;
 }
@@ -468,8 +483,11 @@ void App::LNext(int rel)
 	{
 	case WND_Game:
 		switch (mWndTabsGame->getIndexSelected())	{
-			case 0:  listTrackChng(trkMList,LNext(trkMList, rel));  return;
-			case 1:	 listCarChng(carList,  LNext(carList, rel));  return;	}
+			case 1:  listTrackChng(trkMList,LNext(trkMList, rel));  return;
+			case 2:	 listCarChng(carList,  LNext(carList, rel));  return;	}
+		break;
+	case WND_Champ:
+		
 		break;
 	case WND_Replays:
 		listRplChng(rplList,  LNext(rplList, rel));
