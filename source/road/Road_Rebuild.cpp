@@ -178,12 +178,12 @@ void SplineRoad::RebuildRoadInt()
 
 			//-  Merge length
 			sumLenMrg += len;
-			// mtr hidden changes
-			bool hid = mP[seg].idMtr < 0, hid1 = mP[seg1].idMtr < 0, hid0 = mP[seg0].idMtr < 0;
+			//  mtr changes
+			int hid = mP[seg].idMtr, hid1 = mP[seg1].idMtr, hid0 = mP[seg0].idMtr;
 
 			//  merge road and pipe segs, don't merge transitions
 			LogR(toStr(sp0) + "  " + toStr(sp) + "  " + toStr(sp1));
-			if (sp != sp1 || sp != sp0  ||  hid != hid1 || hid || hid0)
+			if (sp != sp1 || sp != sp0  ||  hid != hid1 || hid != hid0)
 			{	sumLenMrg = 0.f;  ++mrgGrp;
 				vbSegMrg.push_back(1);
 			}

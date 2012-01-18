@@ -398,30 +398,29 @@ void App::msgTrackDel(Message* sender, MessageBoxStyle result)
 
 bool App::LoadSurf()
 {
-	std::string path = "surfaces.txt";
+	std::string path = TrkDir()+"surfaces.txt";
 	Ogre::ConfigFile cf;
-	try { cf.load(path); } catch (Ogre::Exception&) { LogO("Can't find surfaces configfile: " + path);  return false; }
+	try {  cf.load(path);  }
+	catch (Ogre::Exception&){  LogO("Can't find surfaces configfile: " + path);  return false;  }
 	
 	Ogre::ConfigFile::SectionIterator seci = cf.getSectionIterator();
 	Ogre::String secName, key, value;
 
 	while (seci.hasMoreElements())
-	{
-		TRACKSURFACE surf;
-		
+	{		
 		secName = seci.peekNextKey();
-		if (secName == Ogre::StringUtil::BLANK) { seci.getNext(); continue; }
-		
+		if (secName == Ogre::StringUtil::BLANK)
+		{	seci.getNext();  continue;  }
+
+		TRACKSURFACE surf;  // default
 		int l;
-		if (StringUtil::startsWith(secName, "l_"))
-		{
-			l = secName[2]-'0';  // saved ter layers by editor, all + road
-		}else
-		{
-			l = secName[0]-'B';  // A is road, B-F ter layers - used only
+		if (secName[1]=='L')		// " L_0 " to " L_6 " for editor
+			l = secName[3]-'0';		// 6 road, 0-5 layers
+		else						// " A_ " to " F_ " for game
+		{	l = secName[0]-'B';		// A road, B-F layers - used only
 			if (l < 0)  l = 6;
 		}
-		if (l < 0) l = 0; if (l > 7) l = 7;
+		if (l < 0)  l = 0;  if (l > 7)  l = 7;
 		
 		su[l] = surf;
 		
@@ -429,13 +428,13 @@ bool App::LoadSurf()
 		Ogre::ConfigFile::SettingsMultiMap::iterator i;
 		for (i = settings->begin(); i != settings->end(); ++i)
 		{
-			if (i->first == "ID") su[l].setType( s2i(i->second) );
-			else if (i->first == "BumpWaveLength") su[l].bumpWaveLength = s2r(i->second);
-			else if (i->first == "BumpAmplitude") su[l].bumpAmplitude = s2r(i->second);
-			else if (i->first == "FrictionNonTread") su[l].frictionNonTread = s2r(i->second);
-			else if (i->first == "FrictionTread") su[l].frictionTread = s2r(i->second);
-			else if (i->first == "RollResistanceCoefficient") su[l].rollResistanceCoefficient = s2r(i->second);
-			else if (i->first == "RollingDrag") su[l].rollingDrag = s2r(i->second);
+				 if (i->first == "ID")							su[l].setType( s2i(i->second) );
+			else if (i->first == "BumpWaveLength")				su[l].bumpWaveLength = s2r(i->second);
+			else if (i->first == "BumpAmplitude")				su[l].bumpAmplitude = s2r(i->second);
+			else if (i->first == "FrictionNonTread")			su[l].frictionNonTread = s2r(i->second);
+			else if (i->first == "FrictionTread")				su[l].frictionTread = s2r(i->second);
+			else if (i->first == "RollResistanceCoefficient")	su[l].rollResistanceCoefficient = s2r(i->second);
+			else if (i->first == "RollingDrag")					su[l].rollingDrag = s2r(i->second);
 		}
 	}
 

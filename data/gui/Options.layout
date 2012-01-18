@@ -1,121 +1,198 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <MyGUI type="Layout" version="3.2.0">
-	<Widget type="Window" skin="WindowC" position="584 232 800 600" align="Center" layer="Overlapped" name="OptionsWnd">
+
+    <Widget type="Window" skin="WindowC" position="704 136 400 500" align="Center" layer="Overlapped" name="MainMenuWnd">
 		<Property key="MinSize" value="500 400"/>
 		<Property key="MaxSize" value="2560 1600"/>
-		<Property key="Caption" value="#{Options}"/>
+		<Property key="Caption" value="Stunt Rally"/>
+        <Property key="Alpha" value="0.6"/>
+		<Property key="Snap" value="true"/>
+
+		<!--<Widget type="ImageBox" skin="ImageBox" position="16 0 400 100">
+			<Property key="ImageCoord" value="0 0 744 186"/>
+			<Property key="ImageTexture" value="stuntrally-logo.png"/>
+			<UserString key="RelativeTo" value="MainMenuWnd"/>
+		</Widget>-->
+
+        <Widget type="Widget" skin="PanelSkin" position="110 120 556 76" name="PanMenu0">
+			<Property key="Colour" value="1.0 0.9 0.6"/>
+	        <Property key="Alpha" value="0.7"/>
+			<Property key="InheritsAlpha" value="false"/>
+			<UserString key="RelativeTo" value="MainMenuWnd"/>
+		</Widget>
+        <Widget type="Button" skin="Button" position="138 133 500 50" name="BtnMenu0">
+			<Property key="Caption" value="#{SingleRace}"/>
+			<Property key="Colour" value="1.0 0.9 0.6"/>
+			<Property key="TextColour" value="1.0 0.9 0.6"/>
+			<UserString key="RelativeTo" value="MainMenuWnd"/>
+			<Property key="InheritsAlpha" value="false"/>
+		</Widget>
+
+        <Widget type="Widget" skin="PanelSkin" position="110 195 556 76" name="PanMenu1">
+			<Property key="Colour" value="0.6 1 0.6"/>
+	        <Property key="Alpha" value="0.7"/>
+			<Property key="InheritsAlpha" value="false"/>
+			<UserString key="RelativeTo" value="MainMenuWnd"/>
+		</Widget>
+        <Widget type="Button" skin="Button" position="138 208 500 50" name="BtnMenu1">
+			<Property key="Caption" value="#{Championship}"/>
+			<Property key="Colour" value="0.6 1 0.6"/>
+			<Property key="TextColour" value="0.6 1 0.6"/>
+			<UserString key="RelativeTo" value="MainMenuWnd"/>
+	        <Property key="Alpha" value="0.6"/>
+			<Property key="InheritsAlpha" value="false"/>
+		</Widget>
+
+        <Widget type="Widget" skin="PanelSkin" position="110 270 556 76" name="PanMenu2">
+			<Property key="Colour" value="0.6 0.6 1"/>
+	        <Property key="Alpha" value="0.7"/>
+			<Property key="InheritsAlpha" value="false"/>
+			<UserString key="RelativeTo" value="MainMenuWnd"/>
+		</Widget>
+        <Widget type="Button" skin="Button" position="138 283 500 50" name="BtnMenu2">
+			<Property key="Caption" value="#{ReplaysMenu}"/>
+			<Property key="Colour" value="0.6 0.6 1"/>
+			<Property key="TextColour" value="0.6 0.6 1"/>
+			<UserString key="RelativeTo" value="MainMenuWnd"/>
+			<Property key="InheritsAlpha" value="false"/>
+		</Widget>
+
+        <Widget type="Widget" skin="PanelSkin" position="110 345 556 76" name="PanMenu3">
+			<Property key="Colour" value="0.7 0.85 1"/>
+	        <Property key="Alpha" value="0.7"/>
+			<Property key="InheritsAlpha" value="false"/>
+			<UserString key="RelativeTo" value="MainMenuWnd"/>
+		</Widget>
+        <Widget type="Button" skin="Button" position="138 358 500 50" name="BtnMenu3">
+			<Property key="Caption" value="#{Options}"/>
+			<Property key="Colour" value="0.7 0.85 1"/>
+			<Property key="TextColour" value="0.7 0.85 1"/>
+			<UserString key="RelativeTo" value="MainMenuWnd"/>
+			<Property key="InheritsAlpha" value="false"/>
+		</Widget>
+	</Widget>
+
+	<Widget type="Window" skin="WindowC" position="584 232 800 600" align="Center" layer="Overlapped" name="GameWnd">
+		<Property key="MinSize" value="500 400"/>
+		<Property key="MaxSize" value="2560 1600"/>
+		<Property key="Caption" value="#{SingleRace}"/>
 		<Property key="Alpha" value="0.3"/>
 		<Property key="Snap" value="true"/>
-		<Widget type="TabControl" skin="TabControl" position="0 0 800 600" align="Default" layer="Back" name="TabWnd">
+		<Widget type="TabControl" skin="TabControl" position="0 0 800 600" align="Default" layer="Back" name="TabWndGame">
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="ButtonWidth" value="86"/>
 			<Property key="Colour" value="0.7 0.85 1"/>
 			<Property key="ButtonAutoWidth" value="true"/>
-			<UserString key="RelativeTo" value="OptionsWnd"/>
+			<UserString key="RelativeTo" value="GameWnd"/>
+			<Widget type="TabItem" skin="" position="2 24 794 572">
+				<Property key="Caption" value="&lt;#{BackMenu}"/>
+				<UserString key="RelativeTo" value="GameWnd"/>
+				<Property key="Colour" value="1 0.6 0.2"/>
+			</Widget>
 			<Widget type="TabItem" skin="" position="2 24 794 572" name="TabTrack">
 				<Property key="Caption" value="#{Track}"/>
-				<UserString key="RelativeTo" value="OptionsWnd"/>
+				<UserString key="RelativeTo" value="GameWnd"/>
 				<Widget type="TextBox" skin="TextBox" position="176 456 200 24" name="TrackText">
 					<Property key="InheritsAlpha" value="true"/>
 					<Property key="Colour" value="0 0 0"/>
 					<Property key="Caption" value="#{Track}"/>
 					<Property key="TextColour" value="0.4 1.0 0.5"/>
-					<UserString key="RelativeTo" value="OptionsWnd"/>
+					<UserString key="RelativeTo" value="GameWnd"/>
 				</Widget>
 				<Widget type="Button" skin="Button" position="176 488 127 32" name="ChangeTrack">
 					<Property key="Caption" value="#{ChangeTrack}"/>
 					<Property key="Colour" value="0.7 1 0.85"/>
 					<Property key="TextColour" value="0.6 1 0.8"/>
-					<UserString key="RelativeTo" value="OptionsWnd"/>
+					<UserString key="RelativeTo" value="GameWnd"/>
 					<UserString key="tip" value="#{TipChangeTrack}"/>
 				</Widget>
 				<Widget type="Button" skin="CheckBox" position="400 456 120 24" name="ReverseOn">
 					<Property key="Caption" value="#{Reverse}"/>
 					<Property key="Colour" value="0.8 1 0.6"/>
 					<Property key="TextColour" value="0.8 1 0.5"/>
-					<UserString key="RelativeTo" value="OptionsWnd"/>
+					<UserString key="RelativeTo" value="GameWnd"/>
 					<UserString key="tip" value="#{TipReverse}"/>
 				</Widget>
 				<Widget type="Button" skin="Button" position="368 488 127 32" name="NewGame1">
 					<Property key="Caption" value="#{NewGame}"/>
 					<Property key="Colour" value="0.6 1.0 0.3"/>
 					<Property key="TextColour" value="0.3 1 0.2"/>
-					<UserString key="RelativeTo" value="OptionsWnd"/>
+					<UserString key="RelativeTo" value="GameWnd"/>
 					<UserString key="tip" value="#{TipNewGame}"/>
 				</Widget>
 				<Widget type="ImageBox" skin="ImageBox" position="174 15 336 334" name="TrackImg">
-					<UserString key="RelativeTo" value="OptionsWnd"/>
+					<UserString key="RelativeTo" value="GameWnd"/>
 					<UserString key="tip" value="#{TipTrackImg}"/>
 				</Widget>
 				<Widget type="ImageBox" skin="ImageBox" position="528 280 240 240" name="TrkTerImg">
-					<UserString key="RelativeTo" value="OptionsWnd"/>
+					<UserString key="RelativeTo" value="GameWnd"/>
 					<UserString key="tip" value="#{TipTrkTerImg}"/>
 				</Widget>
 				<Widget type="ImageBox" skin="ImageBox" position="527 280 240 238" name="TrackMap">
-					<UserString key="RelativeTo" value="OptionsWnd"/>
+					<UserString key="RelativeTo" value="GameWnd"/>
 					<UserString key="tip" value="#{TipTrackMap}"/>
 				</Widget>
 				<Widget type="TextBox" skin="TextBox" position="532 70 100 18" name="i1">
 					<Property key="Caption" value="#{TrackLength}"/>
 					<Property key="TextColour" value="0.4 0.8 1.0"/>
-					<UserString key="RelativeTo" value="OptionsWnd"/>
+					<UserString key="RelativeTo" value="GameWnd"/>
 				</Widget>
 				<Widget type="TextBox" skin="TextBox" position="638 70 90 18" name="iv1">
 					<Property key="Caption" value="#{UnitKm}"/>
 					<Property key="TextColour" value="0.4 0.8 1.0"/>
-					<UserString key="RelativeTo" value="OptionsWnd"/>
+					<UserString key="RelativeTo" value="GameWnd"/>
 				</Widget>
 				<Widget type="TextBox" skin="TextBox" position="532 90 100 18" name="i2">
 					<Property key="TextColour" value="0.4 0.8 1.0"/>
 					<Property key="Caption" value="#{TrackArea}"/>
-					<UserString key="RelativeTo" value="OptionsWnd"/>
+					<UserString key="RelativeTo" value="GameWnd"/>
 				</Widget>
 				<Widget type="TextBox" skin="TextBox" position="638 90 90 18" name="iv2">
 					<Property key="Caption" value="#{UnitM}"/>
 					<Property key="TextColour" value="0.4 0.8 1.0"/>
-					<UserString key="RelativeTo" value="OptionsWnd"/>
+					<UserString key="RelativeTo" value="GameWnd"/>
 				</Widget>
 				<Widget type="TextBox" skin="TextBox" position="566 120 82 18" name="iv3">
 					<Property key="Caption" value="#{UnitM}"/>
 					<Property key="TextColour" value="0.6 0.75 0.9"/>
-					<UserString key="RelativeTo" value="OptionsWnd"/>
+					<UserString key="RelativeTo" value="GameWnd"/>
 					<UserString key="tip" value="#{TrackWidthAvg}"/>
 				</Widget>
 				<Widget type="TextBox" skin="TextBox" position="566 140 82 18" name="iv4">
 					<Property key="Caption" value="#{UnitM}"/>
 					<Property key="TextColour" value="0.6 0.75 0.9"/>
-					<UserString key="RelativeTo" value="OptionsWnd"/>
+					<UserString key="RelativeTo" value="GameWnd"/>
 					<UserString key="tip" value="#{TrackHeightDiff}"/>
 				</Widget>
 				<Widget type="TextBox" skin="TextBox" position="702 120 82 18" name="iv5">
 					<Property key="Caption" value="%"/>
 					<Property key="TextColour" value="0.5 0.9 0.9"/>
-					<UserString key="RelativeTo" value="OptionsWnd"/>
+					<UserString key="RelativeTo" value="GameWnd"/>
 					<UserString key="tip" value="#{TrackInAir}"/>
 				</Widget>
 				<Widget type="TextBox" skin="TextBox" position="702 140 82 18" name="iv6">
 					<Property key="Caption" value="%"/>
 					<Property key="TextColour" value="0.9 0.9 0.5"/>
-					<UserString key="RelativeTo" value="OptionsWnd"/>
+					<UserString key="RelativeTo" value="GameWnd"/>
 					<UserString key="tip" value="#{TrackPipes}"/>
 				</Widget>
 				<Widget type="TextBox" skin="TextBox" position="532 20 100 18" name="i7">
 					<Property key="Caption" value="#{TrackBestTime}"/>
 					<Property key="TextColour" value="0.7 0.86 1.0"/>
-					<UserString key="RelativeTo" value="OptionsWnd"/>
+					<UserString key="RelativeTo" value="GameWnd"/>
 				</Widget>
 				<Widget type="TextBox" skin="TextBox" position="638 20 90 18" name="iv7">
 					<Property key="TextColour" value="0.7 0.86 1.0"/>
-					<UserString key="RelativeTo" value="OptionsWnd"/>
+					<UserString key="RelativeTo" value="GameWnd"/>
 				</Widget>
 				<Widget type="TextBox" skin="TextBox" position="532 40 100 18" name="i8">
 					<Property key="Caption" value="#{TrackAvgSpeed}"/>
 					<Property key="TextColour" value="0.7 0.86 1.0"/>
-					<UserString key="RelativeTo" value="OptionsWnd"/>
+					<UserString key="RelativeTo" value="GameWnd"/>
 				</Widget>
 				<Widget type="TextBox" skin="TextBox" position="638 40 90 18" name="iv8">
 					<Property key="TextColour" value="0.7 0.86 1.0"/>
-					<UserString key="RelativeTo" value="OptionsWnd"/>
+					<UserString key="RelativeTo" value="GameWnd"/>
 				</Widget>
 				<Widget type="EditBox" skin="WordWrapEmpty" position="176 367 336 75" name="TrackDesc">
 					<Property key="ReadOnly" value="true"/>
@@ -125,121 +202,121 @@
 					<Property key="VisibleVScroll" value="true"/>
 					<Property key="TextColour" value="0.6 1.0 0.8"/>
 					<Property key="Colour" value="0.4 1 0.7"/>
-					<UserString key="RelativeTo" value="OptionsWnd"/>
+					<UserString key="RelativeTo" value="GameWnd"/>
 					<UserString key="tip" value="#{TipTrackDesc}"/>
 				</Widget>
 				<Widget type="ImageBox" skin="ImageBox" position="528 120 32 40" name="trkst1">
 					<Property key="ImageCoord" value="0 32 32 40"/>
 					<Property key="ImageTexture" value="track_icons.png"/>
-					<UserString key="RelativeTo" value="OptionsWnd"/>
+					<UserString key="RelativeTo" value="GameWnd"/>
 				</Widget>
 				<Widget type="ImageBox" skin="ImageBox" position="664 120 32 40" name="trkst2">
 					<Property key="ImageCoord" value="32 32 32 40"/>
 					<Property key="ImageTexture" value="track_icons.png"/>
-					<UserString key="RelativeTo" value="OptionsWnd"/>
+					<UserString key="RelativeTo" value="GameWnd"/>
 				</Widget>
 				<Widget type="ImageBox" skin="ImageBox" position="528 172 256 32" name="trkinf7">
 					<Property key="ImageTexture" value="track_icons.png"/>
 					<Property key="ImageCoord" value="0 0 256 32"/>
-					<UserString key="RelativeTo" value="OptionsWnd"/>
+					<UserString key="RelativeTo" value="GameWnd"/>
 					<UserString key="tip" value="#{TrackDifficulties}"/>
 				</Widget>
 				<Widget type="ImageBox" skin="ImageBox" position="528 226 64 32" name="trkinf2">
 					<Property key="ImageTexture" value="track_icons.png"/>
 					<Property key="ImageCoord" value="64 32 64 32"/>
-					<UserString key="RelativeTo" value="OptionsWnd"/>
+					<UserString key="RelativeTo" value="GameWnd"/>
 				</Widget>
 				<Widget type="TextBox" skin="TextBox" position="540 204 32 24" name="ti1">
 					<Property key="TextColour" value="0.5 0.8 1.0"/>
-					<UserString key="RelativeTo" value="OptionsWnd"/>
+					<UserString key="RelativeTo" value="GameWnd"/>
 					<UserString key="tip" value="#{fluids}"/>
 				</Widget>
 				<Widget type="TextBox" skin="TextBox" position="572 204 32 24" name="ti2">
 					<Property key="TextColour" value="0.5 1.0 0.4"/>
-					<UserString key="RelativeTo" value="OptionsWnd"/>
+					<UserString key="RelativeTo" value="GameWnd"/>
 					<UserString key="tip" value="#{bumps}"/>
 				</Widget>
 				<Widget type="TextBox" skin="TextBox" position="604 204 32 24" name="ti3">
 					<Property key="TextColour" value="1.0 0.6 0.3"/>
-					<UserString key="RelativeTo" value="OptionsWnd"/>
+					<UserString key="RelativeTo" value="GameWnd"/>
 					<UserString key="tip" value="#{jumps}"/>
 				</Widget>
 				<Widget type="TextBox" skin="TextBox" position="636 204 32 24" name="ti4">
 					<Property key="TextColour" value="0.3 0.9 1.0"/>
-					<UserString key="RelativeTo" value="OptionsWnd"/>
+					<UserString key="RelativeTo" value="GameWnd"/>
 					<UserString key="tip" value="#{loops}"/>
 				</Widget>
 				<Widget type="TextBox" skin="TextBox" position="668 204 32 24" name="ti5">
 					<Property key="TextColour" value="0.9 0.9 0.3"/>
-					<UserString key="RelativeTo" value="OptionsWnd"/>
+					<UserString key="RelativeTo" value="GameWnd"/>
 					<UserString key="tip" value="#{pipes}"/>
 				</Widget>
 				<Widget type="TextBox" skin="TextBox" position="700 204 32 24" name="ti6">
 					<Property key="TextColour" value="0.8 0.8 0.8"/>
-					<UserString key="RelativeTo" value="OptionsWnd"/>
+					<UserString key="RelativeTo" value="GameWnd"/>
 					<UserString key="tip" value="#{banked}"/>
 				</Widget>
 				<Widget type="TextBox" skin="TextBox" position="732 204 32 24" name="ti7">
 					<Property key="TextColour" value="0.8 0.8 1.0"/>
-					<UserString key="RelativeTo" value="OptionsWnd"/>
+					<UserString key="RelativeTo" value="GameWnd"/>
 					<UserString key="tip" value="#{frenzy}"/>
 				</Widget>
 				<Widget type="TextBox" skin="TextBox" position="764 204 32 24" name="ti8">
 					<Property key="TextColour" value="1.0 0.8 0.8"/>
-					<UserString key="RelativeTo" value="OptionsWnd"/>
+					<UserString key="RelativeTo" value="GameWnd"/>
 					<UserString key="tip" value="#{long}"/>
 				</Widget>
 				<Widget type="TextBox" skin="TextBox" position="540 254 32 24" name="ti9">
 					<Property key="TextColour" value="0.8 0.9 1.0"/>
-					<UserString key="RelativeTo" value="OptionsWnd"/>
+					<UserString key="RelativeTo" value="GameWnd"/>
 					<UserString key="tip" value="#{difficulty}"/>
 				</Widget>
 				<Widget type="TextBox" skin="TextBox" position="572 254 32 24" name="ti10">
 					<Property key="TextColour" value="0.86 0.93 1.0"/>
-					<UserString key="RelativeTo" value="OptionsWnd"/>
+					<UserString key="RelativeTo" value="GameWnd"/>
 					<UserString key="tip" value="#{rating}"/>
 				</Widget>
 				<Widget type="ImageBox" skin="ImageBox" position="256 6 48 24" name="TrkView2icons1">
 					<Property key="ImageTexture" value="track_icons.png"/>
 					<Property key="ImageCoord" value="64 32 64 32"/>
-					<UserString key="RelativeTo" value="OptionsWnd"/>
+					<UserString key="RelativeTo" value="GameWnd"/>
 				</Widget>
 				<Widget type="ImageBox" skin="ImageBox" position="304 6 192 24" name="TrkView2icons2">
 					<Property key="ImageTexture" value="track_icons.png"/>
 					<Property key="ImageCoord" value="0 0 256 32"/>
-					<UserString key="RelativeTo" value="OptionsWnd"/>
+					<UserString key="RelativeTo" value="GameWnd"/>
 				</Widget>
 				<Widget type="Button" skin="Button" position="16 7 40 24" name="TrkView1">
 					<Property key="Caption" value="|"/>
 					<Property key="Alpha" value="0.8"/>
 					<Property key="Colour" value="0.6 0.8 1.0"/>
 					<Property key="TextColour" value="0.45 0.58 0.8"/>
-					<UserString key="RelativeTo" value="OptionsWnd"/>
+					<UserString key="RelativeTo" value="GameWnd"/>
 				</Widget>
 				<Widget type="Button" skin="Button" position="64 7 40 24" name="TrkView2">
 					<Property key="Caption" value="|||"/>
 					<Property key="Alpha" value="0.8"/>
 					<Property key="Colour" value="0.6 0.8 1.0"/>
 					<Property key="TextColour" value="0.45 0.58 0.8"/>
-					<UserString key="RelativeTo" value="OptionsWnd"/>
+					<UserString key="RelativeTo" value="GameWnd"/>
 				</Widget>
 				<Widget type="TextBox" skin="TextBox" position="16 458 72 24">
 					<Property key="Caption" value="#{Find}:"/>
 					<Property key="TextColour" value="0.7 0.8 0.9"/>
-					<UserString key="RelativeTo" value="OptionsWnd"/>
+					<UserString key="RelativeTo" value="GameWnd"/>
 				</Widget>
 				<Widget type="EditBox" skin="EditBox" position="16 482 88 24" name="TrackFind">
 					<Property key="Colour" value="0.7 0.8 0.9"/>
 					<Property key="MaxTextLength" value="20"/>
 					<Property key="TextColour" value="0.8 0.9 1.0"/>
-					<UserString key="RelativeTo" value="OptionsWnd"/>
+					<UserString key="RelativeTo" value="GameWnd"/>
 				</Widget>
 			</Widget>
 			<Widget type="TabItem" skin="" position="2 24 794 572">
 				<Property key="Caption" value="#{Car}"/>
-				<UserString key="RelativeTo" value="OptionsWnd"/>
+				<UserString key="RelativeTo" value="GameWnd"/>
 				<Widget type="ListBox" skin="ListBox" position="14 32 148 304" name="CarList">
-					<UserString key="RelativeTo" value="OptionsWnd"/>
+					<UserString key="RelativeTo" value="GameWnd"/>
 					<UserString key="tip" value="#{TipCarsList}"/>
 				</Widget>
 				<Widget type="TextBox" skin="TextBox" position="176 456 200 24" name="CarText">
@@ -247,380 +324,623 @@
 					<Property key="Caption" value="#{Car}"/>
 					<Property key="Colour" value="0 0 0"/>
 					<Property key="TextColour" value="0.65 0.88 1.0"/>
-					<UserString key="RelativeTo" value="OptionsWnd"/>
+					<UserString key="RelativeTo" value="GameWnd"/>
 				</Widget>
 				<Widget type="Button" skin="Button" position="176 488 127 32" name="ChangeCar">
 					<Property key="TextColour" value="0.4 0.8 1"/>
 					<Property key="Caption" value="#{ChangeCar}"/>
 					<Property key="Colour" value="0.5 0.8 1"/>
-					<UserString key="RelativeTo" value="OptionsWnd"/>
+					<UserString key="RelativeTo" value="GameWnd"/>
 					<UserString key="tip" value="#{TipChangeCar}"/>
 				</Widget>
 				<Widget type="Button" skin="Button" position="312 488 127 32" name="NewGame2">
 					<Property key="Caption" value="#{NewGame}"/>
 					<Property key="Colour" value="0.6 1.0 0.3"/>
 					<Property key="TextColour" value="0.3 1 0.2"/>
-					<UserString key="RelativeTo" value="OptionsWnd"/>
+					<UserString key="RelativeTo" value="GameWnd"/>
 					<UserString key="tip" value="#{TipNewGameCar}"/>
 				</Widget>
 				<Widget type="ImageBox" skin="ImageBox" position="448 200 320 320" name="CarImg">
-					<UserString key="RelativeTo" value="OptionsWnd"/>
+					<UserString key="RelativeTo" value="GameWnd"/>
 				</Widget>
 				<Widget type="ScrollBar" skin="ScrollBarH" position="320 74 448 18" name="CarClrH">
 					<Property key="Range" value="1000001"/>
 					<Property key="MoveToClick" value="true"/>
-					<UserString key="RelativeTo" value="OptionsWnd"/>
+					<UserString key="RelativeTo" value="GameWnd"/>
 					<UserString key="tip" value="#{TipChangeHue}"/>
 				</Widget>
 				<Widget type="TextBox" skin="TextBox" position="270 74 42 24" name="CarClrHVal">
 					<Property key="TextColour" value="0.8 0.9 1.0"/>
-					<UserString key="RelativeTo" value="OptionsWnd"/>
+					<UserString key="RelativeTo" value="GameWnd"/>
 				</Widget>
 				<Widget type="ScrollBar" skin="ScrollBarH" position="320 104 448 18" name="CarClrS">
 					<Property key="Range" value="1000001"/>
 					<Property key="MoveToClick" value="true"/>
-					<UserString key="RelativeTo" value="OptionsWnd"/>
+					<UserString key="RelativeTo" value="GameWnd"/>
 					<UserString key="tip" value="#{TipChangeSat}"/>
 				</Widget>
 				<Widget type="TextBox" skin="TextBox" position="270 104 42 24" name="CarClrSVal">
 					<Property key="TextColour" value="0.8 0.9 1.0"/>
-					<UserString key="RelativeTo" value="OptionsWnd"/>
+					<UserString key="RelativeTo" value="GameWnd"/>
 				</Widget>
 				<Widget type="ScrollBar" skin="ScrollBarH" position="320 134 448 18" name="CarClrV">
 					<Property key="Range" value="1000001"/>
 					<Property key="MoveToClick" value="true"/>
-					<UserString key="RelativeTo" value="OptionsWnd"/>
+					<UserString key="RelativeTo" value="GameWnd"/>
 					<UserString key="tip" value="#{TipChangeBright}"/>
 				</Widget>
 				<Widget type="TextBox" skin="TextBox" position="270 134 42 24" name="CarClrVVal">
 					<Property key="TextColour" value="0.8 0.9 1.0"/>
-					<UserString key="RelativeTo" value="OptionsWnd"/>
+					<UserString key="RelativeTo" value="GameWnd"/>
 				</Widget>
 				<Widget type="TextBox" skin="TextBox" position="176 74 88 24">
 					<Property key="Caption" value="#{ColHue}"/>
 					<Property key="TextColour" value="0.5 0.8 1.0"/>
-					<UserString key="RelativeTo" value="OptionsWnd"/>
+					<UserString key="RelativeTo" value="GameWnd"/>
 				</Widget>
 				<Widget type="TextBox" skin="TextBox" position="176 104 88 24">
 					<Property key="TextColour" value="0.7 0.8 0.9"/>
 					<Property key="Caption" value="#{ColSat}"/>
-					<UserString key="RelativeTo" value="OptionsWnd"/>
+					<UserString key="RelativeTo" value="GameWnd"/>
 				</Widget>
 				<Widget type="TextBox" skin="TextBox" position="176 134 88 24">
 					<Property key="TextColour" value="0.5 0.7 0.9"/>
 					<Property key="Caption" value="#{ColBright}"/>
-					<UserString key="RelativeTo" value="OptionsWnd"/>
+					<UserString key="RelativeTo" value="GameWnd"/>
 				</Widget>
 				<Widget type="ImageBox" skin="ImageBox" position="336 54 511 10">
 					<Property key="ImageTexture" value="hue_bar.png"/>
-					<UserString key="RelativeTo" value="OptionsWnd"/>
+					<UserString key="RelativeTo" value="GameWnd"/>
 				</Widget>
 				<Widget type="ImageBox" skin="ImageBox" position="176 200 40 40" name="carClr0">
 					<Property key="ImageTexture" value="white.png"/>
-					<UserString key="RelativeTo" value="OptionsWnd"/>
+					<UserString key="RelativeTo" value="GameWnd"/>
 				</Widget>
 				<Widget type="ImageBox" skin="ImageBox" position="224 200 40 40" name="carClr1">
 					<Property key="ImageTexture" value="white.png"/>
-					<UserString key="RelativeTo" value="OptionsWnd"/>
+					<UserString key="RelativeTo" value="GameWnd"/>
 				</Widget>
 				<Widget type="ImageBox" skin="ImageBox" position="272 200 40 40" name="carClr2">
 					<Property key="ImageTexture" value="white.png"/>
-					<UserString key="RelativeTo" value="OptionsWnd"/>
+					<UserString key="RelativeTo" value="GameWnd"/>
 				</Widget>
 				<Widget type="ImageBox" skin="ImageBox" position="320 200 40 41" name="carClr3">
 					<Property key="ImageTexture" value="white.png"/>
-					<UserString key="RelativeTo" value="OptionsWnd"/>
+					<UserString key="RelativeTo" value="GameWnd"/>
 				</Widget>
 				<Widget type="ImageBox" skin="ImageBox" position="368 200 40 40" name="carClr4">
 					<Property key="ImageTexture" value="white.png"/>
-					<UserString key="RelativeTo" value="OptionsWnd"/>
+					<UserString key="RelativeTo" value="GameWnd"/>
 				</Widget>
 				<Widget type="ImageBox" skin="ImageBox" position="176 248 40 40" name="carClr5">
 					<Property key="ImageTexture" value="white.png"/>
-					<UserString key="RelativeTo" value="OptionsWnd"/>
+					<UserString key="RelativeTo" value="GameWnd"/>
 				</Widget>
 				<Widget type="ImageBox" skin="ImageBox" position="224 248 40 40" name="carClr6">
 					<Property key="ImageTexture" value="white.png"/>
-					<UserString key="RelativeTo" value="OptionsWnd"/>
+					<UserString key="RelativeTo" value="GameWnd"/>
 				</Widget>
 				<Widget type="ImageBox" skin="ImageBox" position="272 248 40 40" name="carClr7">
 					<Property key="ImageTexture" value="white.png"/>
-					<UserString key="RelativeTo" value="OptionsWnd"/>
+					<UserString key="RelativeTo" value="GameWnd"/>
 				</Widget>
 				<Widget type="ImageBox" skin="ImageBox" position="320 248 40 40" name="carClr8">
 					<Property key="ImageTexture" value="white.png"/>
-					<UserString key="RelativeTo" value="OptionsWnd"/>
+					<UserString key="RelativeTo" value="GameWnd"/>
 				</Widget>
 				<Widget type="ImageBox" skin="ImageBox" position="368 248 40 40" name="carClr9">
 					<Property key="ImageTexture" value="white.png"/>
-					<UserString key="RelativeTo" value="OptionsWnd"/>
+					<UserString key="RelativeTo" value="GameWnd"/>
 				</Widget>
 				<Widget type="ImageBox" skin="ImageBox" position="176 296 40 40" name="carClr10">
 					<Property key="ImageTexture" value="white.png"/>
-					<UserString key="RelativeTo" value="OptionsWnd"/>
+					<UserString key="RelativeTo" value="GameWnd"/>
 				</Widget>
 				<Widget type="ImageBox" skin="ImageBox" position="224 296 40 40" name="carClr11">
 					<Property key="ImageTexture" value="white.png"/>
-					<UserString key="RelativeTo" value="OptionsWnd"/>
+					<UserString key="RelativeTo" value="GameWnd"/>
 				</Widget>
 				<Widget type="ImageBox" skin="ImageBox" position="272 296 40 40" name="carClr12">
 					<Property key="ImageTexture" value="white.png"/>
-					<UserString key="RelativeTo" value="OptionsWnd"/>
+					<UserString key="RelativeTo" value="GameWnd"/>
 				</Widget>
 				<Widget type="ImageBox" skin="ImageBox" position="320 296 40 40" name="carClr13">
 					<Property key="ImageTexture" value="white.png"/>
-					<UserString key="RelativeTo" value="OptionsWnd"/>
+					<UserString key="RelativeTo" value="GameWnd"/>
 				</Widget>
 				<Widget type="ImageBox" skin="ImageBox" position="368 296 40 40" name="carClr14">
 					<Property key="ImageTexture" value="white.png"/>
-					<UserString key="RelativeTo" value="OptionsWnd"/>
+					<UserString key="RelativeTo" value="GameWnd"/>
 				</Widget>
 				<Widget type="Button" skin="Button" position="176 353 136 32" name="CarClrRandom">
 					<Property key="Caption" value="#{CarClrRandom}"/>
 					<Property key="Colour" value="1 0.8 0.5"/>
 					<Property key="TextColour" value="1 0.7 0.6"/>
-					<UserString key="RelativeTo" value="OptionsWnd"/>
+					<UserString key="RelativeTo" value="GameWnd"/>
 				</Widget>
 				<Widget type="TabControl" skin="TabControl" position="176 16 568 20" name="tabPlayer">
-					<UserString key="RelativeTo" value="OptionsWnd"/>
+					<UserString key="RelativeTo" value="GameWnd"/>
 					<Widget type="TabItem" skin="" position="2 24 562 -8">
 						<Property key="Caption" value="#{InputMapPlayer1}"/>
-						<UserString key="RelativeTo" value="OptionsWnd"/>
+						<UserString key="RelativeTo" value="GameWnd"/>
 					</Widget>
 					<Widget type="TabItem" skin="" position="2 24 562 -8">
 						<Property key="Caption" value="#{InputMapPlayer2}"/>
-						<UserString key="RelativeTo" value="OptionsWnd"/>
+						<UserString key="RelativeTo" value="GameWnd"/>
 					</Widget>
 					<Widget type="TabItem" skin="" position="2 24 562 -8">
 						<Property key="Caption" value="#{InputMapPlayer3}"/>
-						<UserString key="RelativeTo" value="OptionsWnd"/>
+						<UserString key="RelativeTo" value="GameWnd"/>
 					</Widget>
 					<Widget type="TabItem" skin="" position="2 24 562 -8">
 						<Property key="Caption" value="#{InputMapPlayer4}"/>
-						<UserString key="RelativeTo" value="OptionsWnd"/>
+						<UserString key="RelativeTo" value="GameWnd"/>
+					</Widget>
+				</Widget>
+			</Widget>
+			<Widget type="TabItem" skin="" position="4 26 787 531">
+				<UserString key="RelativeTo" value="GameWnd"/>
+				<Property key="Caption" value="#{Multiplayer}"/>
+				<Widget type="Tab" skin="Tab" position="16 15 744 497" name="tabsNet">
+					<UserString key="RelativeTo" value="GameWnd"/>
+					<Property key="ButtonAutoWidth" value="false"/>
+					<Property key="Colour" value="0.73 0.88 1"/>
+					<Property key="ButtonWidth" value="100"/>
+					<Widget type="TabItem" skin="" position="4 26 735 465">
+						<UserString key="RelativeTo" value="GameWnd"/>
+						<Property key="Caption" value="#{NetServer}"/>
+						<Widget type="MultiListBox" skin="MultiListBox" position="20 54 696 338" name="MListServers">
+							<UserString key="RelativeTo" value="GameWnd"/>
+							<Property key="Colour" value="0.6 1 0.6"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="20 22 224 24" name="valNetGames">
+							<UserString key="RelativeTo" value="GameWnd"/>
+							<Property key="Caption" value="#{NetGamesAvail}"/>
+							<Property key="TextColour" value="1 1 0.3"/>
+						</Widget>
+						<Widget type="Button" skin="Button" position="20 406 164 40" name="btnNetRefresh">
+							<UserString key="RelativeTo" value="GameWnd"/>
+							<Property key="Caption" value="#{NetRefreshList}"/>
+							<Property key="Colour" value="0.6 1 0.2"/>
+						</Widget>
+						<Widget type="Button" skin="Button" position="374 406 164 40" name="btnNetJoin">
+							<UserString key="RelativeTo" value="GameWnd"/>
+							<Property key="Caption" value="#{NetJoinGame}"/>
+							<Property key="Colour" value="1 1 0.2"/>
+						</Widget>
+						<Widget type="Button" skin="Button" position="552 406 164 40" name="btnNetCreate">
+							<UserString key="RelativeTo" value="GameWnd"/>
+							<Property key="Caption" value="#{NetCreateGame}"/>
+							<Property key="Colour" value="0.6 1 1"/>
+						</Widget>
+						<Widget type="Button" skin="Button" position="198 406 164 40" name="btnNetDirect">
+							<UserString key="RelativeTo" value="GameWnd"/>
+							<Property key="Colour" value="1 0.8 0.5"/>
+							<Property key="Caption" value="#{NetDirectConnect}"/>
+						</Widget>
+						<Widget type="Widget" skin="PanelSkin" position="0 0 800 500" layer="Popup" name="panelNetServer">
+							<UserString key="RelativeTo" value="GameWnd"/>
+							<Property key="Colour" value="0.8 0.96 1"/>
+							<Property key="Alpha" value="0.8"/>
+						</Widget>
+					</Widget>
+					<Widget type="TabItem" skin="" position="4 26 735 465">
+						<UserString key="RelativeTo" value="GameWnd"/>
+						<Property key="Caption" value="#{NetGame}"/>
+						<Widget type="TextBox" skin="TextBox" position="20 22 136 24" name="valNetGameName">
+							<UserString key="RelativeTo" value="GameWnd"/>
+							<Property key="Caption" value="#{NetGameName}:"/>
+							<Property key="TextColour" value="0.6 0.9 1"/>
+						</Widget>
+						<Widget type="EditBox" skin="EditBox" position="164 22 268 24" name="edNetGameName">
+							<UserString key="RelativeTo" value="GameWnd"/>
+							<Property key="Caption" value="Stunt Rally Race"/>
+							<Property key="Colour" value="0.6 0.8 1"/>
+							<Property key="TextColour" value="0.6 0.8 1"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="480 387 124 24" name="valNetPassword">
+							<UserString key="RelativeTo" value="GameWnd"/>
+							<Property key="Caption" value="#{NetPassword}:"/>
+							<Property key="TextColour" value="0.6 0.9 1"/>
+						</Widget>
+						<Widget type="EditBox" skin="EditBox" position="596 385 124 24" name="edNetPassword">
+							<UserString key="RelativeTo" value="GameWnd"/>
+							<Property key="Colour" value="0.6 0.8 1"/>
+							<Property key="TextColour" value="0.5 0.1 0.1"/>
+						</Widget>
+						<Widget type="Button" skin="Button" position="596 426 124 32" name="btnNetReady">
+							<UserString key="RelativeTo" value="GameWnd"/>
+							<Property key="Caption" value="#{NetReady}"/>
+							<Property key="Colour" value="0.6 1 .0.6"/>
+						</Widget>
+						<Widget type="Button" skin="Button" position="452 426 124 32" name="btnNetLeave">
+							<UserString key="RelativeTo" value="GameWnd"/>
+							<Property key="Caption" value="#{NetLeaveGame}"/>
+							<Property key="Colour" value="1. 0.6 0.3"/>
+						</Widget>
+						<Widget type="MultiListBox" skin="MultiListBox" position="20 56 412 146" name="MListPlayers">
+							<UserString key="RelativeTo" value="GameWnd"/>
+							<Property key="Colour" value="0.4 1 0.4"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="22 214 210 24" name="valNetChat">
+							<UserString key="RelativeTo" value="GameWnd"/>
+							<Property key="Caption" value="#{NetChat}"/>
+							<Property key="TextColour" value="0.6 0.8 1"/>
+						</Widget>
+						<Widget type="Widget" skin="PanelSkin" position="20 236 412 182">
+							<UserString key="RelativeTo" value="GameWnd"/>
+							<Property key="Colour" value="0.8 0.96 1"/>
+							<Property key="Alpha" value="0.8"/>
+							<Widget type="EditBox" skin="WordWrapEmpty" position="1 1 407 180" name="edNetChat">
+								<UserString key="RelativeTo" value="GameWnd"/>
+								<Property key="WordWrap" value="true"/>
+								<Property key="VisibleVScroll" value="true"/>
+								<Property key="TextColour" value="0.9 0.96 1"/>
+								<Property key="ReadOnly" value="true"/>
+								<Property key="MultiLine" value="true"/>
+								<Property key="MaxTextLength" value="120000"/>
+							</Widget>
+						</Widget>
+						<Widget type="EditBox" skin="EditBox" position="20 430 412 24" name="edNetChatMsg">
+							<UserString key="RelativeTo" value="GameWnd"/>
+							<Property key="Colour" value="0.6 0.8 1"/>
+						</Widget>
+						<Widget type="ImageBox" skin="ImageBox" position="452 54 256 256" name="imgNetTrack">
+							<UserString key="RelativeTo" value="GameWnd"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="452 22 260 24" name="valNetTrack">
+							<UserString key="RelativeTo" value="GameWnd"/>
+							<Property key="Caption" value="#{Track}:"/>
+							<Property key="TextColour" value="0.4 1.0 0.5"/>
+						</Widget>
+						<Widget type="EditBox" skin="WordWrapEmpty" position="452 318 256 66" name="edNetTrackInfo">
+							<UserString key="RelativeTo" value="GameWnd"/>
+							<Property key="Caption" value="Track info text"/>
+							<Property key="TextColour" value="0.6 1.0 0.8"/>
+						</Widget>
+						<Widget type="Widget" skin="PanelSkin" position="0 0 800 500" layer="Popup" name="panelNetGame">
+							<UserString key="RelativeTo" value="GameWnd"/>
+							<Property key="Colour" value="0.8 0.96 1"/>
+							<Property key="Alpha" value="0.8"/>
+						</Widget>
+					</Widget>
+					<Widget type="TabItem" skin="" position="4 26 735 465">
+						<UserString key="RelativeTo" value="GameWnd"/>
+						<Property key="Caption" value="#{NetSettings}"/>
+						<Widget type="TextBox" skin="TextBox" position="20 24 128 24">
+							<UserString key="RelativeTo" value="GameWnd"/>
+							<Property key="Caption" value="#{NetNickname}"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="20 62 144 24">
+							<UserString key="RelativeTo" value="GameWnd"/>
+							<Property key="Caption" value="#{NetMasterIp}"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="20 94 144 24">
+							<UserString key="RelativeTo" value="GameWnd"/>
+							<Property key="Caption" value="#{NetMasterPort}"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="20 126 144 24">
+							<UserString key="RelativeTo" value="GameWnd"/>
+							<Property key="Caption" value="#{NetLocalPort}"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="20 158 144 24">
+							<UserString key="RelativeTo" value="GameWnd"/>
+						</Widget>
+						<Widget type="EditBox" skin="EditBox" position="180 24 136 24" name="edNetNick">
+							<UserString key="RelativeTo" value="GameWnd"/>
+							<Property key="Colour" value="0.7 0.9 1"/>
+							<Property key="Caption" value="StuntMan"/>
+						</Widget>
+						<Widget type="EditBox" skin="EditBox" position="180 62 136 26" name="edNetServerIP">
+							<UserString key="RelativeTo" value="GameWnd"/>
+							<Property key="Colour" value="0.8 0.9 1"/>
+							<Property key="Caption" value="127.0.0.1"/>
+						</Widget>
+						<Widget type="EditBox" skin="EditBox" position="180 94 136 24" name="edNetServerPort">
+							<UserString key="RelativeTo" value="GameWnd"/>
+							<Property key="Colour" value="0.8 0.9 1"/>
+						</Widget>
+						<Widget type="EditBox" skin="EditBox" position="180 126 136 24" name="edNetLocalPort">
+							<UserString key="RelativeTo" value="GameWnd"/>
+							<Property key="Colour" value="0.7 0.8 1"/>
+						</Widget>
+						<!-- wordwrap hack -->
+						<Widget type="EditBox" skin="WordWrapEmpty" position="20 190 300 96" name="RouterTip">
+							<UserString key="RelativeTo" value="GameWnd"/>
+							<Property key="ReadOnly" value="true"/>
+							<Property key="MultiLine" value="true"/>
+							<Property key="WordWrap" value="true"/>
+							<Property key="VisibleHScroll" value="false"/>
+							<Property key="VisibleVScroll" value="true"/>
+							<Property key="TextColour" value="0.7 0.6 0.5"/>
+							<Property key="Caption" value="#{NetRouterTip}"/>
+						</Widget>
 					</Widget>
 				</Widget>
 			</Widget>
 			<Widget type="TabItem" skin="" position="2 24 794 572">
 				<Property key="Caption" value="#{Setup}"/>
-				<UserString key="RelativeTo" value="OptionsWnd"/>
+				<UserString key="RelativeTo" value="GameWnd"/>
 				<Widget type="Widget" skin="PanelSkin" position="304 256 464 232">
 					<Property key="Alpha" value="0.3"/>
 					<Property key="Colour" value="0.4 0.5 0.6"/>
-					<UserString key="RelativeTo" value="OptionsWnd"/>
+					<UserString key="RelativeTo" value="GameWnd"/>
 				</Widget>
 				<Widget type="Button" skin="CheckBox" position="32 80 256 24" name="CarABS">
 					<Property key="Caption" value="#{ABS}"/>
 					<Property key="TextColour" value="1 1 0.7"/>
-					<UserString key="RelativeTo" value="OptionsWnd"/>
+					<UserString key="RelativeTo" value="GameWnd"/>
 					<UserString key="tip" value="#{TipABS}"/>
 				</Widget>
 				<Widget type="Button" skin="CheckBox" position="32 120 256 24" name="CarTCS">
 					<Property key="Caption" value="#{TCS}"/>
 					<Property key="TextColour" value="0.7 1 1"/>
-					<UserString key="RelativeTo" value="OptionsWnd"/>
+					<UserString key="RelativeTo" value="GameWnd"/>
 					<UserString key="tip" value="#{TipTCS}"/>
 				</Widget>
 				<Widget type="Button" skin="CheckBox" position="32 280 256 24" name="CarRearThrInv">
 					<Property key="Caption" value="#{RearThrottleInverse}"/>
 					<Property key="TextColour" value="0.65 0.8 0.9"/>
-					<UserString key="RelativeTo" value="OptionsWnd"/>
+					<UserString key="RelativeTo" value="GameWnd"/>
 					<UserString key="tip" value="#{TipRearThrottleInverse}"/>
 				</Widget>
 				<Widget type="Button" skin="CheckBox" position="32 200 256 24" name="CarGear">
 					<Property key="Caption" value="#{AutoGearbox}"/>
 					<Property key="TextColour" value="0.8 0.9 1"/>
-					<UserString key="RelativeTo" value="OptionsWnd"/>
+					<UserString key="RelativeTo" value="GameWnd"/>
 					<UserString key="tip" value="#{TipAutoGearbox}"/>
 				</Widget>
 				<Widget type="Button" skin="CheckBox" position="32 240 256 24" name="CarRear">
 					<Property key="Caption" value="#{AutoRear}"/>
 					<Property key="TextColour" value="0.65 0.8 0.9"/>
-					<UserString key="RelativeTo" value="OptionsWnd"/>
+					<UserString key="RelativeTo" value="GameWnd"/>
 					<UserString key="tip" value="#{TipAutoRear}"/>
 				</Widget>
 				<Widget type="Button" skin="CheckBox" position="312 80 216 24" name="VegetCollis">
 					<Property key="Caption" value="#{VegetCol}"/>
 					<Property key="TextColour" value="0.6 0.8 0.8"/>
-					<UserString key="RelativeTo" value="OptionsWnd"/>
+					<UserString key="RelativeTo" value="GameWnd"/>
 				</Widget>
 				<Widget type="Button" skin="CheckBox" position="312 120 216 24" name="CarCollis">
 					<Property key="Caption" value="#{CarCollis}"/>
 					<Property key="TextColour" value="0.6 0.8 0.8"/>
-					<UserString key="RelativeTo" value="OptionsWnd"/>
+					<UserString key="RelativeTo" value="GameWnd"/>
 				</Widget>
 				<Widget type="Button" skin="CheckBox" position="312 352 256 25" name="chkSplitVertically">
 					<Property key="Caption" value="#{SplitVertically}"/>
 					<Property key="TextColour" value="0.8 0.9 1.0"/>
-					<UserString key="RelativeTo" value="OptionsWnd"/>
+					<UserString key="RelativeTo" value="GameWnd"/>
 				</Widget>
 				<Widget type="Button" skin="Button" position="312 296 80 33" name="btnPlayers1">
 					<Property key="Caption" value="1"/>
 					<Property key="Colour" value="0.4 0.8 1"/>
-					<UserString key="RelativeTo" value="OptionsWnd"/>
+					<UserString key="RelativeTo" value="GameWnd"/>
 				</Widget>
 				<Widget type="Button" skin="Button" position="408 296 80 33" name="btnPlayers2">
 					<Property key="Caption" value="2"/>
 					<Property key="Colour" value="0.4 1 0.4"/>
-					<UserString key="RelativeTo" value="OptionsWnd"/>
+					<UserString key="RelativeTo" value="GameWnd"/>
 				</Widget>
 				<Widget type="Button" skin="Button" position="504 296 80 33" name="btnPlayers3">
 					<Property key="Caption" value="3"/>
 					<Property key="Colour" value="1 0.8 0.4"/>
-					<UserString key="RelativeTo" value="OptionsWnd"/>
+					<UserString key="RelativeTo" value="GameWnd"/>
 				</Widget>
 				<Widget type="Button" skin="Button" position="600 296 80 33" name="btnPlayers4">
 					<Property key="Caption" value="4"/>
 					<Property key="Colour" value="1 0.5 0.5"/>
-					<UserString key="RelativeTo" value="OptionsWnd"/>
+					<UserString key="RelativeTo" value="GameWnd"/>
 				</Widget>
 				<Widget type="TextBox" skin="TextBox" position="312 264 176 24">
 					<Property key="Caption" value="#{NumLocalPlayers}"/>
 					<Property key="TextColour" value="0.7 0.9 1"/>
-					<UserString key="RelativeTo" value="OptionsWnd"/>
+					<UserString key="RelativeTo" value="GameWnd"/>
 				</Widget>
 				<Widget type="TextBox" skin="TextBox" position="496 264 64 24" name="valLocPlayers">
 					<Property key="TextColour" value="0.8 0.92 1"/>
-					<UserString key="RelativeTo" value="OptionsWnd"/>
+					<UserString key="RelativeTo" value="GameWnd"/>
 				</Widget>
 				<Widget type="TextBox" skin="TextBox" position="32 23 120 24">
 					<Property key="Caption" value="#{Car}"/>
-					<UserString key="RelativeTo" value="OptionsWnd"/>
+					<UserString key="RelativeTo" value="GameWnd"/>
 				</Widget>
 				<Widget type="TextBox" skin="TextBox" position="312 23 136 24">
 					<Property key="Caption" value="#{Game}"/>
-					<UserString key="RelativeTo" value="OptionsWnd"/>
+					<UserString key="RelativeTo" value="GameWnd"/>
 				</Widget>
 				<Widget type="TextBox" skin="TextBox" position="312 416 176 24">
 					<Property key="Caption" value="#{NumLaps}"/>
 					<Property key="TextColour" value="0.7 0.9 1"/>
-					<UserString key="RelativeTo" value="OptionsWnd"/>
+					<UserString key="RelativeTo" value="GameWnd"/>
 				</Widget>
 				<Widget type="TextBox" skin="TextBox" position="496 416 64 24" name="NumLapsVal">
 					<Property key="TextColour" value="0.8 0.95 1"/>
-					<UserString key="RelativeTo" value="OptionsWnd"/>
+					<UserString key="RelativeTo" value="GameWnd"/>
 				</Widget>
 				<Widget type="ScrollBar" skin="ScrollBarH" position="312 448 408 18" name="NumLaps">
 					<Property key="Range" value="1000001"/>
 					<Property key="MoveToClick" value="true"/>
-					<UserString key="RelativeTo" value="OptionsWnd"/>
+					<UserString key="RelativeTo" value="GameWnd"/>
 				</Widget>
 				<Widget type="TextBox" skin="TextBox" position="312 160 152 24">
 					<Property key="TextColour" value="0.55 0.75 1"/>
 					<Property key="Caption" value="#{Boost}"/>
-					<UserString key="RelativeTo" value="OptionsWnd"/>
+					<UserString key="RelativeTo" value="GameWnd"/>
 				</Widget>
 				<Widget type="TextBox" skin="TextBox" position="312 200 152 24">
 					<Property key="Caption" value="#{Flip}"/>
 					<Property key="TextColour" value="0.55 0.75 1"/>
-					<UserString key="RelativeTo" value="OptionsWnd"/>
+					<UserString key="RelativeTo" value="GameWnd"/>
 				</Widget>
 				<Widget type="ComboBox" skin="ComboBox" position="440 160 160 24" name="CmbBoost">
 					<Property key="Colour" value="0.55 0.75 1"/>
 					<Property key="TextColour" value="0.6 0.8 1"/>
 					<Property key="ReadOnly" value="true"/>
-					<UserString key="RelativeTo" value="OptionsWnd"/>
+					<UserString key="RelativeTo" value="GameWnd"/>
 				</Widget>
 				<Widget type="ComboBox" skin="ComboBox" position="440 200 160 24" name="CmbFlip">
 					<Property key="Colour" value="0.55 0.75 1"/>
 					<Property key="TextColour" value="0.6 0.8 1"/>
 					<Property key="ReadOnly" value="true"/>
-					<UserString key="RelativeTo" value="OptionsWnd"/>
+					<UserString key="RelativeTo" value="GameWnd"/>
 				</Widget>
+			</Widget>
+		</Widget>
+	</Widget>
+
+	<Widget type="Window" skin="WindowC" position="584 232 800 600" align="Center" layer="Overlapped" name="ChampWnd">
+		<Property key="MinSize" value="500 400"/>
+		<Property key="MaxSize" value="2560 1600"/>
+		<Property key="Caption" value="#{Championship}"/>
+		<Property key="Alpha" value="0.3"/>
+		<Property key="Snap" value="true"/>
+		<Widget type="TabControl" skin="TabControl" position="0 0 800 600" align="Default" layer="Back" name="TabWndChamp">
+			<Property key="InheritsAlpha" value="false"/>
+			<Property key="ButtonWidth" value="86"/>
+			<Property key="Colour" value="0.7 0.85 1"/>
+			<Property key="ButtonAutoWidth" value="true"/>
+			<UserString key="RelativeTo" value="ChampWnd"/>
+			<Widget type="TabItem" skin="" position="2 24 794 572">
+				<Property key="Caption" value="&lt;#{BackMenu}"/>
+				<UserString key="RelativeTo" value="ChampWnd"/>
+				<Property key="Colour" value="1 0.6 0.2"/>
+			</Widget>
+			<Widget type="TabItem" skin="" position="2 24 794 572">
+				<Property key="Caption" value="#{Championship}"/>
+			</Widget>
+		</Widget>
+	</Widget>
+
+	<Widget type="Window" skin="WindowC" position="584 232 800 600" align="Center" layer="Overlapped" name="ReplaysWnd">
+		<Property key="MinSize" value="500 400"/>
+		<Property key="MaxSize" value="2560 1600"/>
+		<Property key="Caption" value="#{ReplaysMenu}"/>
+		<Property key="Alpha" value="0.3"/>
+		<Property key="Snap" value="true"/>
+		<Widget type="TabControl" skin="TabControl" position="0 0 800 600" align="Default" layer="Back" name="TabWndReplays">
+			<Property key="InheritsAlpha" value="false"/>
+			<Property key="ButtonWidth" value="86"/>
+			<Property key="Colour" value="0.7 0.85 1"/>
+			<Property key="ButtonAutoWidth" value="true"/>
+			<UserString key="RelativeTo" value="ReplaysWnd"/>
+			<Widget type="TabItem" skin="" position="2 24 794 572">
+				<Property key="Caption" value="&lt;#{BackMenu}"/>
+				<UserString key="RelativeTo" value="ReplaysWnd"/>
+				<Property key="Colour" value="1 0.6 0.2"/>
 			</Widget>
 			<Widget type="TabItem" skin="" position="2 24 794 572">
 				<Property key="Caption" value="#{Replay}"/>
-				<UserString key="RelativeTo" value="OptionsWnd"/>
+				<UserString key="RelativeTo" value="ReplaysWnd"/>
 				<Widget type="ListBox" skin="ListBox" position="14 16 186 504" name="RplList">
-					<UserString key="RelativeTo" value="OptionsWnd"/>
+					<UserString key="RelativeTo" value="ReplaysWnd"/>
 				</Widget>
 				<Widget type="Button" skin="CheckBox" position="424 295 280 24" name="RplChkGhost">
 					<Property key="TextColour" value="0.76 0.9 1"/>
 					<Property key="Caption" value="#{RplGhost}"/>
-					<UserString key="RelativeTo" value="OptionsWnd"/>
+					<UserString key="RelativeTo" value="ReplaysWnd"/>
 				</Widget>
 				<Widget type="Button" skin="CheckBox" position="424 335 280 24" name="RplChkAutoRec">
 					<Property key="Caption" value="#{RplAutoRec}"/>
 					<Property key="TextColour" value="0.5 0.7 0.9"/>
-					<UserString key="RelativeTo" value="OptionsWnd"/>
+					<UserString key="RelativeTo" value="ReplaysWnd"/>
 				</Widget>
 				<Widget type="Button" skin="CheckBox" position="424 375 280 24" name="RplChkBestOnly">
 					<Property key="TextColour" value="0.5 0.7 0.9"/>
 					<Property key="Caption" value="#{RplBestOnly}"/>
-					<UserString key="RelativeTo" value="OptionsWnd"/>
+					<UserString key="RelativeTo" value="ReplaysWnd"/>
 				</Widget>
 				<Widget type="Button" skin="RadioButton" position="224 311 160 24" name="RplBtnAll">
 					<Property key="Colour" value="0.6 0.8 1"/>
 					<Property key="TextColour" value="0.6 0.8 1"/>
 					<Property key="Caption" value="#{RplAll}"/>
-					<UserString key="RelativeTo" value="OptionsWnd"/>
+					<UserString key="RelativeTo" value="ReplaysWnd"/>
 				</Widget>
 				<Widget type="Button" skin="RadioButton" position="224 351 160 24" name="RplBtnCur">
 					<Property key="Colour" value="0.6 0.8 1"/>
 					<Property key="TextColour" value="0.5 0.7 0.9"/>
 					<Property key="Caption" value="#{RplCurrent}"/>
-					<UserString key="RelativeTo" value="OptionsWnd"/>
+					<UserString key="RelativeTo" value="ReplaysWnd"/>
 				</Widget>
 				<Widget type="Button" skin="RadioButton" position="224 391 160 24" name="RplBtnGhosts">
 					<Property key="Colour" value="0.6 0.8 1"/>
 					<Property key="TextColour" value="0.6 0.8 1"/>
 					<Property key="Caption" value="#{RplGhosts}"/>
-					<UserString key="RelativeTo" value="OptionsWnd"/>
+					<UserString key="RelativeTo" value="ReplaysWnd"/>
 				</Widget>
 				<Widget type="Button" skin="Button" position="224 220 152 32" name="RplSave">
 					<Property key="Caption" value="#{RplSave}"/>
 					<Property key="TextColour" value="0.8 1 1"/>
 					<Property key="Colour" value="0.4 0.8 1"/>
-					<UserString key="RelativeTo" value="OptionsWnd"/>
+					<UserString key="RelativeTo" value="ReplaysWnd"/>
 				</Widget>
 				<Widget type="Button" skin="Button" position="224 98 152 32" name="RplLoad">
 					<Property key="Caption" value="#{RplLoad}"/>
 					<Property key="TextColour" value="0.8 1 1"/>
 					<Property key="Colour" value="0.6 0.6 1"/>
-					<UserString key="RelativeTo" value="OptionsWnd"/>
+					<UserString key="RelativeTo" value="ReplaysWnd"/>
 				</Widget>
 				<Widget type="Button" skin="Button" position="424 102 128 24" name="RplDelete">
 					<Property key="Colour" value="1 0.4 0"/>
 					<Property key="Caption" value="#{RplDelete}"/>
 					<Property key="TextColour" value="1 0.4 0.4"/>
-					<UserString key="RelativeTo" value="OptionsWnd"/>
+					<UserString key="RelativeTo" value="ReplaysWnd"/>
 				</Widget>
 				<Widget type="Button" skin="Button" position="424 220 128 32" name="RplRename">
 					<Property key="TextColour" value="1 0.8 0.4"/>
 					<Property key="Colour" value="1 0.8 0.4"/>
 					<Property key="Caption" value="#{RplRename}"/>
-					<UserString key="RelativeTo" value="OptionsWnd"/>
+					<UserString key="RelativeTo" value="ReplaysWnd"/>
 				</Widget>
 				<Widget type="TextBox" skin="TextBox" position="224 16 184 24" name="RplName">
 					<Property key="TextColour" value="0.84 0.8 1"/>
-					<UserString key="RelativeTo" value="OptionsWnd"/>
+					<UserString key="RelativeTo" value="ReplaysWnd"/>
 				</Widget>
 				<Widget type="TextBox" skin="TextBox" position="224 40 184 44" name="RplInfo">
 					<Property key="TextColour" value="0.9 0.9 1"/>
-					<UserString key="RelativeTo" value="OptionsWnd"/>
+					<UserString key="RelativeTo" value="ReplaysWnd"/>
 				</Widget>
 				<Widget type="TextBox" skin="TextBox" position="408 40 216 44" name="RplInfo2">
 					<Property key="TextColour" value="0.76 0.76 0.82"/>
-					<UserString key="RelativeTo" value="OptionsWnd"/>
+					<UserString key="RelativeTo" value="ReplaysWnd"/>
 				</Widget>
 				<Widget type="TextBox" skin="TextBox" position="224 160 416 24" name="RplName2">
 					<Property key="TextColour" value="1 0.8 0.6"/>
-					<UserString key="RelativeTo" value="OptionsWnd"/>
+					<UserString key="RelativeTo" value="ReplaysWnd"/>
 				</Widget>
 				<Widget type="EditBox" skin="EditBox" position="224 184 240 24" name="RplNameEdit">
 					<Property key="Colour" value="0.8 0.9 1"/>
-					<UserString key="RelativeTo" value="OptionsWnd"/>
+					<UserString key="RelativeTo" value="ReplaysWnd"/>
 				</Widget>
 				<Widget type="Button" skin="CheckBox" position="424 415 280 24" name="RplChkAlpha">
 					<Property key="TextColour" value="0.76 0.9 1"/>
 					<Property key="Caption" value="#{RplAlpha}*"/>
-					<UserString key="RelativeTo" value="OptionsWnd"/>
+					<UserString key="RelativeTo" value="ReplaysWnd"/>
 				</Widget>
 				<Widget type="Button" skin="CheckBox" position="424 455 280 24" name="RplChkParticles">
 					<Property key="TextColour" value="0.6 0.8 1"/>
 					<Property key="Caption" value="#{RplParticles}"/>
-					<UserString key="RelativeTo" value="OptionsWnd"/>
+					<UserString key="RelativeTo" value="ReplaysWnd"/>
 				</Widget>
+			</Widget>
+		</Widget>
+	</Widget>
+
+	<Widget type="Window" skin="WindowC" position="584 232 800 600" align="Center" layer="Overlapped" name="OptionsWnd">
+		<Property key="MinSize" value="500 400"/>
+		<Property key="MaxSize" value="2560 1600"/>
+		<Property key="Caption" value="#{Options}"/>
+		<Property key="Alpha" value="0.3"/>
+		<Property key="Snap" value="true"/>
+		<Widget type="TabControl" skin="TabControl" position="0 0 800 600" align="Default" layer="Back" name="TabWndOptions">
+			<Property key="InheritsAlpha" value="false"/>
+			<Property key="ButtonWidth" value="86"/>
+			<Property key="Colour" value="0.7 0.85 1"/>
+			<Property key="ButtonAutoWidth" value="true"/>
+			<UserString key="RelativeTo" value="OptionsWnd"/>
+			<Widget type="TabItem" skin="" position="2 24 794 572">
+				<Property key="Caption" value="&lt;#{BackMenu}"/>
+				<UserString key="RelativeTo" value="OptionsWnd"/>
+				<Property key="Colour" value="1 0.6 0.2"/>
 			</Widget>
 			<Widget type="TabItem" skin="" position="2 24 794 572">
 				<Property key="Caption" value="#{Screen}"/>

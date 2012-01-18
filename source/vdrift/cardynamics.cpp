@@ -85,6 +85,12 @@ MATHVECTOR <T, 3> CARDYNAMICS::GetVelocity() const
 	//return ToMathVector<T>(chassis->getLinearVelocity());
 }
 
+MATHVECTOR <T, 3> CARDYNAMICS::GetAngularVelocity() const
+{
+	return body.GetAngularVelocity();
+	//return ToMathVector<T>(chassis->getAngularVelocity());
+}
+
 MATHVECTOR <T, 3> CARDYNAMICS::GetEnginePosition() const
 {
 	MATHVECTOR <T, 3> offset = engine.GetPosition();

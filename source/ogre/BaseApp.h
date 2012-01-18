@@ -13,6 +13,9 @@
 #include <MyGUI_Widget.h>
 #include <MyGUI_OgrePlatform.h>
 
+#include "../network/masterclient.hpp"
+#include "../network/gameclient.hpp"
+
 namespace MyGUI { class OgreD3D11Platform; }
 namespace Ogre 
 {  
@@ -30,13 +33,15 @@ class BaseApp :
 {
 	friend class CarModel;
 public:
-	BaseApp();	virtual ~BaseApp();
+	BaseApp();
+	virtual ~BaseApp();
 	virtual void Run( bool showDialog );
 	
 	bool bLoading;
 	
 	// has to be in baseApp to switch camera on C press
-	std::vector<class CarModel*> carModels;
+	typedef std::vector<class CarModel*> CarModels;
+	CarModels carModels;
 	
 	// stuff to be executed in App after BaseApp init
 	virtual void postInit() = 0;
@@ -114,6 +119,8 @@ public:
 	// this is set to true when the user is asked to assign a new key
 	bool bAssignKey;
 	MyGUI::Widget* pressedKeySender;
+
+	bool isFocGuiOrRpl()  {  return isFocGui || isFocRpl;  }
 protected:
 
 	///  overlay
@@ -127,7 +134,6 @@ protected:
 	int iCurCam;
 
 	///  Gui
-	bool isFocGuiOrRpl()  {  return isFocGui || isFocRpl;  }
 	bool isFocGui,isFocRpl;  // gui shown
 	MyGUI::Gui* mGUI;
 	
@@ -137,9 +143,15 @@ protected:
 	MyGUI::OgrePlatform* mPlatform;
 	#endif
 	
-	MyGUI::WidgetPtr mLayout, mWndOpts, mWndRpl;  // options window
-	MyGUI::TabPtr mWndTabs;
-	MyGUI::VectorWidgetPtr vwGui;
+	enum {  WND_Game=0, WND_Champ, WND_Replays, WND_Options, WND_ALL  };  // pSet->inMenu
+	MyGUI::WidgetPtr mWndMain,mWndGame,mWndChamp,mWndReplays,mWndOpts,  mWndRpl;  // options window, rpl controls
+	MyGUI::TabPtr mWndTabsGame,mWndTabsOpts;  MyGUI::VectorWidgetPtr vwGui;
+	MyGUI::WidgetPtr mWndMainPanels[WND_ALL];  MyGUI::ButtonPtr mWndMainBtns[WND_ALL];
+
+	///  networking
+	boost::scoped_ptr<MasterClient> mMasterClient;
+	boost::scoped_ptr<P2PGameClient> mClient;
+	enum LobbyState { DISCONNECTED, HOSTING, JOINED } mLobbyState;
 };
 
 #endif

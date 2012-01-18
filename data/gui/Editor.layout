@@ -1680,6 +1680,17 @@
 							<Property key="TextColour" value="0.6 0.9 0.9"/>
 							<UserString key="tip" value="#{TipLTrMinTerH}"/>
 						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="16 360 112 24">
+							<UserString key="RelativeTo" value="OptionsWnd"/>
+							<Property key="TextColour" value="0.6 0.9 0.9"/>
+							<Property key="Caption" value="#{LTrMaxTerH}"/>
+						</Widget>
+						<Widget type="EditBox" skin="EditBox" position="128 357 64 24" name="LTrMaxTerH">
+							<UserString key="RelativeTo" value="OptionsWnd"/>
+							<Property key="Colour" value="0.6 0.9 0.9"/>
+							<Property key="TextColour" value="0.6 0.9 0.9"/>
+							<UserString key="tip" value="#{TipLTrMaxTerH}"/>
+						</Widget>
 					</Widget>
 				</Widget>
 			</Widget>

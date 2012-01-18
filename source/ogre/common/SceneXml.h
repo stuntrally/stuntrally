@@ -57,7 +57,7 @@ public:
 	Ogre::Real windFx, windFy;
 	int addTrRdDist;  // dist to road
 	Ogre::Real minScale, maxScale, ofsY;
-	Ogre::Real maxTerAng, minTerH;  // terrain
+	Ogre::Real maxTerAng, minTerH, maxTerH;  // terrain
 	
 	PagedLayer();
 };

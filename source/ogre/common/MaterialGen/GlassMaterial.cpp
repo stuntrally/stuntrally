@@ -16,7 +16,7 @@ GlassMaterialGenerator::GlassMaterialGenerator()
 	mName = "Glass";
 }
 
-void GlassMaterialGenerator::generate(bool fixedFunction)
+void GlassMaterialGenerator::generate()
 {
 	mMaterial = prepareMaterial(mDef->getName());
 	
@@ -77,16 +77,8 @@ void GlassMaterialGenerator::generate(bool fixedFunction)
 	
 	pass->setDiffuse( mDef->mProps->diffuse.x, mDef->mProps->diffuse.y, mDef->mProps->diffuse.z, 1.0 );
 	
-	if (!needShaders() || fixedFunction)
-	{
-		pass->setSpecular(mDef->mProps->specular.x, mDef->mProps->specular.y, mDef->mProps->specular.z, 1.0 );
-		pass->setShininess(mDef->mProps->specular.w);
-	}
-	else
-	{
-		// shader assumes shininess in specular w component
-		pass->setSpecular(mDef->mProps->specular.x, mDef->mProps->specular.y, mDef->mProps->specular.z, mDef->mProps->specular.w);
-	}
+	// shader assumes shininess in specular w component
+	pass->setSpecular(mDef->mProps->specular.x, mDef->mProps->specular.y, mDef->mProps->specular.z, mDef->mProps->specular.w);
 	
 	pass->setCullingMode(CULL_NONE);
 	
@@ -106,53 +98,48 @@ void GlassMaterialGenerator::generate(bool fixedFunction)
 	if (mDef->mProps->depthBias != 0.f)
 		pass->setDepthBias( mDef->mProps->depthBias );
 	
-	if (!needShaders() || fixedFunction)
-		createTexUnits(pass, false);
-	else
+	createTexUnits(pass);
+	
+	// create shaders		
+	if (!mShaderCached)
 	{
-		createTexUnits(pass, true);
-		
-		// create shaders		
-		if (!mShaderCached)
+		try
 		{
-			try
-			{
-				mVertexProgram = createVertexProgram();
-				mFragmentProgram = createFragmentProgram();
-			}
-			catch (Ogre::Exception& e) {
-				LogO(e.getFullDescription());
-			}
+			mVertexProgram = createVertexProgram();
+			mFragmentProgram = createFragmentProgram();
+		}
+		catch (Ogre::Exception& e) {
+			LogO(e.getFullDescription());
+		}
+		
+		if (mFragmentProgram.isNull() || mVertexProgram.isNull() || 
+			!mFragmentProgram->isSupported() || !mVertexProgram->isSupported())
+		{
+			LogO("[MaterialFactory] WARNING: shader for material '" + mDef->getName()
+				+ "' is not supported");
+								
+			LogO("[MaterialFactory] Vertex program source: ");
+			StringUtil::StrStreamType vSourceStr;
+			generateVertexProgramSource(vSourceStr);
+			LogO(vSourceStr.str());
+			LogO("[MaterialFactory] Fragment program source: ");
+			StringUtil::StrStreamType fSourceStr;
+			generateFragmentProgramSource(fSourceStr);
+			LogO(fSourceStr.str());
 			
-			if (mFragmentProgram.isNull() || mVertexProgram.isNull() || 
-				!mFragmentProgram->isSupported() || !mVertexProgram->isSupported())
-			{
-				LogO("[MaterialFactory] WARNING: shader for material '" + mDef->getName()
-					+ "' is not supported, falling back to fixed-function");
-				LogO("[MaterialFactory] Vertex program source: ");
-				StringUtil::StrStreamType vSourceStr;
-				generateVertexProgramSource(vSourceStr);
-				LogO(vSourceStr.str());
-				LogO("[MaterialFactory] Fragment program source: ");
-				StringUtil::StrStreamType fSourceStr;
-				generateFragmentProgramSource(fSourceStr);
-				LogO(fSourceStr.str());
-				
-				mVertexProgram.setNull(); mFragmentProgram.setNull();
-				generate(true);
-				return;
-			}
+			mVertexProgram.setNull(); mFragmentProgram.setNull();
+			return;
 		}
-		
-		pass->setVertexProgram(mVertexProgram->getName());
-		pass->setFragmentProgram(mFragmentProgram->getName());
-		
-		if (mShaderCached)
-		{
-			// set individual material shader params
-			individualVertexProgramParams(pass->getVertexProgramParameters());
-			individualFragmentProgramParams(pass->getFragmentProgramParameters());
-		}
+	}
+	
+	pass->setVertexProgram(mVertexProgram->getName());
+	pass->setFragmentProgram(mFragmentProgram->getName());
+	
+	if (mShaderCached)
+	{
+		// set individual material shader params
+		individualVertexProgramParams(pass->getVertexProgramParameters());
+		individualFragmentProgramParams(pass->getFragmentProgramParameters());
 	}
 	// ----------------------------------------------------------------------- //
 	

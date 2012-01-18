@@ -16,7 +16,7 @@ void ReplayHeader::Default()
 	memset(track, 0, sizeof(track));  track_user = 0;
 	memset(car, 0, sizeof(car));
 
-	ver = 4;  /// todo: if <= 3 car colors from -1..1 to 0..1
+	ver = 5;  /// todo: if <= 3 car colors from -1..1 to 0..1
 	frameSize = sizeof(ReplayFrame);
 	numPlayers = 1;
 
@@ -142,10 +142,7 @@ void Replay::CopyFrom(const Replay& rpl)
 const float Replay::GetTimeLength(int carNum) const
 {
 	int s = frames[carNum].size();
-	if (s > 0)
-		return frames[carNum][s-1].time;
-	else
-		return 0.f;
+	return s > 0 ? frames[carNum][s-1].time : 0.f;
 }
 
 ///  get (Play)

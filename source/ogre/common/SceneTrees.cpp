@@ -224,7 +224,7 @@ void App::CreateTrees()
 
 				//  check ter height  ------------
 				pos.y = terrain->getHeightAtWorldPosition(pos.x, 0, pos.z);
-				if (pos.y < pg.minTerH)
+				if (pos.y < pg.minTerH || pos.y > pg.maxTerH)
 					add = false;				
 				
 				if (!add)  continue;

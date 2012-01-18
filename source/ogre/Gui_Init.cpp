@@ -5,6 +5,8 @@
 #include "../road/Road.h"
 #include "OgreGame.h"
 
+#include <boost/filesystem.hpp>
+
 #include <OgreRoot.h>
 #include <OgreRenderWindow.h>
 #include <OgreOverlay.h>
@@ -17,25 +19,45 @@ using namespace Ogre;
 ///  Gui Init
 //-------------------------------------------------------------------------------------
 
+
 void App::InitGui()
 {
 	//  change skin
 	if (!mGUI)  return;
+	popup.mGUI = mGUI;
+	popup.mPlatform = mPlatform;
 	QTimer ti;  ti.update();  /// time
 
 	//  load Options layout
 	vwGui = LayoutManager::getInstance().loadLayout("Options.layout");
-	mLayout = vwGui.at(0);
+	//mLayout = vwGui.at(0);
 
 	//  window
-	mWndOpts = mLayout->findWidget("OptionsWnd");
-	if (mWndOpts)  {
-		mWndOpts->setVisible(isFocGui);
-		int sx = mWindow->getWidth(), sy = mWindow->getHeight();
-		IntSize w = mWndOpts->getSize();  // center
-		mWndOpts->setPosition((sx-w.width)*0.5f, (sy-w.height)*0.5f);  }
+	mWndMain = mGUI->findWidget<Window>("MainMenuWnd",false);
+	mWndGame = mGUI->findWidget<Window>("GameWnd",false);
+	mWndChamp = mGUI->findWidget<Window>("ChampWnd",false);
+	mWndReplays = mGUI->findWidget<Window>("ReplaysWnd",false);
+	mWndOpts = mGUI->findWidget<Window>("OptionsWnd",false);
+
+	for (int i=0; i < WND_ALL; ++i)
+	{
+		const String s = toStr(i);
+		mWndMainPanels[i] = mWndMain->findWidget("PanMenu"+s);
+		mWndMainBtns[i] = (ButtonPtr)mWndMain->findWidget("BtnMenu"+s);
+		mWndMainBtns[i]->eventMouseButtonClick += newDelegate(this, &App::MainMenuBtn);
+	}
+
 	PointerManager::getInstance().setVisible(isFocGui);
-	mWndTabs = mGUI->findWidget<Tab>("TabWnd");
+	//mWndOpts->setVisible(isFocGui);
+	int sx = mWindow->getWidth(), sy = mWindow->getHeight();
+	IntSize w = mWndMain->getSize();  // center
+	mWndMain->setPosition((sx-w.width)*0.5f, (sy-w.height)*0.5f);
+
+	TabPtr tab;
+	tab = mGUI->findWidget<Tab>("TabWndGame");    tab->setIndexSelected(1);  mWndTabsGame = tab;	tab->eventTabChangeSelect += newDelegate(this, &App::MenuTabChg);
+	tab = mGUI->findWidget<Tab>("TabWndChamp");   tab->setIndexSelected(1);							tab->eventTabChangeSelect += newDelegate(this, &App::MenuTabChg);
+	tab = mGUI->findWidget<Tab>("TabWndReplays"); tab->setIndexSelected(1);							tab->eventTabChangeSelect += newDelegate(this, &App::MenuTabChg);
+	tab = mGUI->findWidget<Tab>("TabWndOptions"); tab->setIndexSelected(1);  mWndTabsOpts = tab;	tab->eventTabChangeSelect += newDelegate(this, &App::MenuTabChg);
 	
 	//  tooltip  ------
 	for (VectorWidgetPtr::iterator it = vwGui.begin(); it != vwGui.end(); ++it)
@@ -50,6 +72,8 @@ void App::InitGui()
 	GuiInitTooltip();
 		
 	GuiCenterMouse();
+
+	toggleGui(false);
 
 
 	//  assign controls
@@ -176,8 +200,10 @@ void App::InitGui()
 	Slv(BloomOrig,	pSet->bloomorig);
 	Slv(BlurIntens, pSet->motionblurintensity);
 	
+	Chk("FullScreen", chkVidFullscr, pSet->fullscreen);
+	Chk("VSync", chkVidVSync, pSet->vsync);
+
 	//todo: button_ramp, speed_sens..
-	
 
 	//  replays  ------------------------------------------------------------
 	Btn("RplLoad", btnRplLoad);  Btn("RplSave", btnRplSave);
@@ -243,8 +269,93 @@ void App::InitGui()
 	TabPtr tPlr = mGUI->findWidget<Tab>("tabPlayer");
 	if (tPlr)  tPlr->eventTabChangeSelect += newDelegate(this, &App::tabPlayer);
 	
+	Btn("btnPlayers1", btnNumPlayers);
+	Btn("btnPlayers2", btnNumPlayers);
+	Btn("btnPlayers3", btnNumPlayers);
+	Btn("btnPlayers4", btnNumPlayers);
+	Chk("chkSplitVertically", chkSplitVert, pSet->split_vertically);
+
+	///  Multiplayer
+	//------------------------------------------------------------------------
+	tabsNet = mGUI->findWidget<Tab>("tabsNet");
+		//TabItem* t1 = tabsNet->getItemAt(0);
+		//t1->setEnabled(0);
+	//int num = tabsNet ? tabsNet->getItemCount() : 0;
+	//tabsNet->setIndexSelected( (tabsNet->getIndexSelected() - 1 + num) % num );
 	
-	///  input tab
+	//  server, games
+	valNetGames = mGUI->findWidget<StaticText>("valNetGames");
+	listServers = mGUI->findWidget<MultiList>("MListServers");
+	if (listServers)
+	{	listServers->addColumn("Game name", 180);
+		listServers->addColumn("Track", 120);
+		listServers->addColumn("Players", 70);
+		listServers->addColumn("Collisions", 70);
+		listServers->addColumn("Locked", 70);
+		listServers->addColumn("Host", 130);
+		listServers->addColumn("Port", 80);
+	}
+	Btn("btnNetRefresh", evBtnNetRefresh);  btnNetRefresh = btn;
+	Btn("btnNetJoin", evBtnNetJoin);  btnNetJoin = btn;
+	Btn("btnNetCreate", evBtnNetCreate);  btnNetCreate = btn;
+	Btn("btnNetDirect", evBtnNetDirect);  btnNetDirect = btn;
+
+	//  game, players
+	valNetGameName = mGUI->findWidget<StaticText>("valNetGameName");
+	edNetGameName = mGUI->findWidget<Edit>("edNetGameName");
+	if (edNetGameName)
+		edNetGameName->eventEditTextChange += newDelegate(this, &App::evEdNetGameName);
+	
+	//  password
+	valNetPassword = mGUI->findWidget<StaticText>("valNetPassword");
+	edNetPassword = mGUI->findWidget<Edit>("edNetPassword");
+	if (edNetPassword)
+		edNetPassword->eventEditTextChange += newDelegate(this, &App::evEdNetPassword);
+
+	listPlayers = mGUI->findWidget<MultiList>("MListPlayers");
+	if (listPlayers)
+	{	listPlayers->addColumn("Player", 140);
+		listPlayers->addColumn("Car", 60);
+		listPlayers->addColumn("Peers", 60);
+		listPlayers->addColumn("Ping", 60);
+		listPlayers->addColumn("Ready", 60);
+	}
+	Btn("btnNetReady", evBtnNetReady);  btnNetReady = btn;
+	Btn("btnNetLeave", evBtnNetLeave);	btnNetLeave = btn;
+
+	//  panels to hide tabs
+	panelNetServer = mGUI->findWidget<Widget>("panelNetServer");
+	panelNetGame = mGUI->findWidget<Widget>("panelNetGame");
+	//panelNetTrack = mGUI->findWidget<Widget>("panelNetTrack",false);
+	panelNetServer->setVisible(false);
+	panelNetGame->setVisible(true);
+
+    //  chat
+    valNetChat = mGUI->findWidget<StaticText>("valNetChat");
+    edNetChat = mGUI->findWidget<Edit>("edNetChat");  // chat area
+    edNetChatMsg = mGUI->findWidget<Edit>("edNetChatMsg");  // user text
+    
+    //  track
+    imgNetTrack = mGUI->findWidget<StaticImage>("imgNetTrack");
+    valNetTrack = mGUI->findWidget<StaticText>("valNetTrack");
+    edNetTrackInfo = mGUI->findWidget<Edit>("edNetTrackInfo");
+
+	//  settings
+	edNetNick = mGUI->findWidget<Edit>("edNetNick");
+	edNetServerIP = mGUI->findWidget<Edit>("edNetServerIP");
+	edNetServerPort = mGUI->findWidget<Edit>("edNetServerPort");
+	edNetLocalPort = mGUI->findWidget<Edit>("edNetLocalPort");
+	if (edNetNick)		{	edNetNick->setCaption(pSet->nickname);						
+		edNetNick->eventEditTextChange += newDelegate(this, &App::evEdNetNick);	}
+	if (edNetServerIP)	{	edNetServerIP->setCaption(pSet->master_server_address);
+		edNetServerIP->eventEditTextChange += newDelegate(this, &App::evEdNetServerIP);	}
+	if (edNetServerPort){	edNetServerPort->setCaption(toStr(pSet->master_server_port));
+		edNetServerPort->eventEditTextChange += newDelegate(this, &App::evEdNetServerPort);	}
+	if (edNetLocalPort)	{	edNetLocalPort->setCaption(toStr(pSet->local_port));
+		edNetLocalPort->eventEditTextChange += newDelegate(this, &App::evEdNetLocalPort);	}
+
+
+	///  input tab  -------
 	InitInputGui();
 	
 	InitGuiScrenRes();
@@ -255,13 +366,11 @@ void App::InitGui()
     carList = mGUI->findWidget<List>("CarList");
     if (carList)
     {	carList->removeAllItems();  int ii = 0;  bool bFound = false;
-
 		strlist li;
 		PATHMANAGER::GetFolderIndex(PATHMANAGER::GetCarPath(), li);
 		for (strlist::iterator i = li.begin(); i != li.end(); ++i)
 		{
-			std::ifstream check((PATHMANAGER::GetCarPath() + "/" + *i + "/about.txt").c_str());
-			if (check)  {
+			if (boost::filesystem::exists(PATHMANAGER::GetCarPath() + "/" + *i + "/about.txt"))  {
 				carList->addItem(*i);
 				if (*i == pSet->car[0]) {  carList->setIndexSelected(ii);  bFound = true;  }
 				ii++;  }
@@ -292,6 +401,20 @@ void App::InitGui()
 		valTrk->setCaption(TR("#{Track}: " + pSet->track));  sListTrack = pSet->track;
 
     GuiInitTrack();
+
+	//if (!panelNetTrack)
+	{
+		TabItem* trkTab = mGUI->findWidget<TabItem>("TabTrack");
+		trkTab->setColour(Colour(0.8f,0.96f,1.f));
+		const IntCoord& tc = trkTab->getCoord();
+
+		panelNetTrack = trkTab->createWidget<Widget>(
+			"PanelSkin", 0,0,tc.width*0.66f,tc.height, Align::Default/*, "Popup", "panelNetTrack"*/);
+		panelNetTrack->setColour(Colour(0.8f,0.96f,1.f));
+		panelNetTrack->setAlpha(0.8f);
+		panelNetTrack->setVisible(false);
+		//<UserString key="RelativeTo" value="OptionsWnd"/>
+	}
 
     ButtonPtr btnTrk = mGUI->findWidget<Button>("ChangeTrack");
     if (btnTrk)  btnTrk->eventMouseButtonClick += newDelegate(this, &App::btnChgTrack);
@@ -340,14 +463,18 @@ int App::LNext(MyGUI::ListPtr lp, int rel)
 	return i;
 }
 
-void App::trkLNext(int rel)	{
-	if (!(isFocGui && mWndTabs->getIndexSelected() == 0))  return;
-	listTrackChng(trkMList,LNext(trkMList, rel));  }
-
-void App::carLNext(int rel)	{
-	if (!(isFocGui && mWndTabs->getIndexSelected() == 1))  return;
-	listCarChng(carList,  LNext(carList, rel));  }
-
-void App::rplLNext(int rel)	{
-	if (!(isFocGui && mWndTabs->getIndexSelected() == 3))  return;
-	listRplChng(rplList,  LNext(rplList, rel));  }
+void App::LNext(int rel)
+{
+	//if (!isFocGui || pSet->isMain)  return;
+	switch (pSet->inMenu)
+	{
+	case WND_Game:
+		switch (mWndTabsGame->getIndexSelected())	{
+			case 0:  listTrackChng(trkMList,LNext(trkMList, rel));  return;
+			case 1:	 listCarChng(carList,  LNext(carList, rel));  return;	}
+		break;
+	case WND_Replays:
+		listRplChng(rplList,  LNext(rplList, rel));
+		break;
+	}
+}

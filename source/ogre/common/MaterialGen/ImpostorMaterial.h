@@ -8,7 +8,7 @@ class ImpostorMaterialGenerator : public MaterialGenerator
 public:
 	ImpostorMaterialGenerator();
 	
-	virtual void generate(bool fixedFunction=false);
+	virtual void generate();
 
 };
 

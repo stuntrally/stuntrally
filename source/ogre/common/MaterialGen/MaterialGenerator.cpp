@@ -26,7 +26,7 @@ using namespace Ogre;
 bool MaterialGenerator::bUseMRT=false;	
 
 
-void MaterialGenerator::generate(bool fixedFunction)
+void MaterialGenerator::generate()
 {	
 	mMaterial = prepareMaterial(mDef->getName());
 	
@@ -45,16 +45,8 @@ void MaterialGenerator::generate(bool fixedFunction)
 	pass->setAmbient( mDef->mProps->ambient.x, mDef->mProps->ambient.y, mDef->mProps->ambient.z );
 	pass->setDiffuse( mDef->mProps->diffuse.x, mDef->mProps->diffuse.y, mDef->mProps->diffuse.z, 1.0 );
 	
-	if (!needShaders() || fixedFunction)
-	{
-		pass->setSpecular(mDef->mProps->specular.x, mDef->mProps->specular.y, mDef->mProps->specular.z, 1.0 );
-		pass->setShininess(mDef->mProps->specular.w);
-	}
-	else
-	{
-		// shader assumes shininess in specular w component
-		pass->setSpecular(mDef->mProps->specular.x, mDef->mProps->specular.y, mDef->mProps->specular.z, mDef->mProps->specular.w);
-	}
+	// shader assumes shininess in specular w component
+	pass->setSpecular(mDef->mProps->specular.x, mDef->mProps->specular.y, mDef->mProps->specular.z, mDef->mProps->specular.w);
 	
 	pass->setCullingMode(chooseCullingMode());
 	
@@ -85,55 +77,51 @@ void MaterialGenerator::generate(bool fixedFunction)
 	if (mDef->mProps->depthBias != 0.f)
 		pass->setDepthBias( mDef->mProps->depthBias );
 	
-	if (!needShaders() || fixedFunction)
-		createTexUnits(pass, false);
-	else
+	createTexUnits(pass);
+	
+	// create shaders		
+	if (!mShaderCached)
 	{
-		createTexUnits(pass, true);
-		
-		// create shaders		
-		if (!mShaderCached)
+		try
 		{
-			try
-			{
-				mVertexProgram = createVertexProgram();
-				mFragmentProgram = createFragmentProgram();
-			}
-			catch (Ogre::Exception& e) {
-				LogO(e.getFullDescription());
-			}
-			
-			if (mFragmentProgram.isNull() || mVertexProgram.isNull() || 
-				!mFragmentProgram->isSupported() || !mVertexProgram->isSupported())
-			{
-				LogO("[MaterialFactory] WARNING: shader for material '" + mDef->getName()
-					+ "' is not supported, falling back to fixed-function");
-				LogO("[MaterialFactory] Vertex program source: ");
-				StringUtil::StrStreamType vSourceStr;
-				generateVertexProgramSource(vSourceStr);
-				LogO(vSourceStr.str());
-				LogO("[MaterialFactory] Fragment program source: ");
-				StringUtil::StrStreamType fSourceStr;
-				generateFragmentProgramSource(fSourceStr);
-				LogO(fSourceStr.str());
+			mVertexProgram = createVertexProgram();
+			mFragmentProgram = createFragmentProgram();
+		}
+		catch (Ogre::Exception& e) {
+			LogO(e.getFullDescription());
+		}
+		
+		//!todo put this code into a function for reusability in other material generators
+		if (mFragmentProgram.isNull() || mVertexProgram.isNull() || 
+			!mFragmentProgram->isSupported() || !mVertexProgram->isSupported())
+		{
+			LogO("[MaterialFactory] WARNING: shader for material '" + mDef->getName()
+				+ "' is not supported");
 				
-				mVertexProgram.setNull(); mFragmentProgram.setNull();
-				generate(true);
-				return;
-			}
+			LogO("[MaterialFactory] Vertex program source: ");
+			StringUtil::StrStreamType vSourceStr;
+			generateVertexProgramSource(vSourceStr);
+			LogO(vSourceStr.str());
+			LogO("[MaterialFactory] Fragment program source: ");
+			StringUtil::StrStreamType fSourceStr;
+			generateFragmentProgramSource(fSourceStr);
+			LogO(fSourceStr.str());
+			
+			mVertexProgram.setNull(); mFragmentProgram.setNull();
+			return;
 		}
-		
-		pass->setVertexProgram(mVertexProgram->getName());
-		pass->setFragmentProgram(mFragmentProgram->getName());
-		
-		//set shadow caster
-		technique->setShadowCasterMaterial(chooseShadowCasterMaterial());
-		if (mShaderCached)
-		{
-			// set individual material shader params
-			individualVertexProgramParams(pass->getVertexProgramParameters());
-			individualFragmentProgramParams(pass->getFragmentProgramParameters());
-		}
+	}
+	
+	pass->setVertexProgram(mVertexProgram->getName());
+	pass->setFragmentProgram(mFragmentProgram->getName());
+	
+	//set shadow caster
+	technique->setShadowCasterMaterial(chooseShadowCasterMaterial());
+	if (mShaderCached)
+	{
+		// set individual material shader params
+		individualVertexProgramParams(pass->getVertexProgramParameters());
+		individualFragmentProgramParams(pass->getFragmentProgramParameters());
 	}
 	// ----------------------------------------------------------------------- //
 	
@@ -153,7 +141,7 @@ void MaterialGenerator::generate(bool fixedFunction)
 		mParent->fogMtrs.push_back( mDef->getName() );
 		
 	// indicate we need enable/disable wind parameter
-	// only needed for trees (wind == 2) because they have impostors
+	// only needed for trees (wind == 2) because the wind effect has to be disabled before rendering impostors
 	if (mShader->wind == 2)
 		mParent->windMtrs.push_back( mDef->getName() );
 	
@@ -167,7 +155,7 @@ void MaterialGenerator::generate(bool fixedFunction)
 	
 	/// uncomment to see full shader source code in log
 	/*
-	if (mDef->getName() == "Particles/Spark")
+	if (mDef->getName() == "grass")
 	{
 		LogO("[MaterialFactory] Vertex program source: ");
 		StringUtil::StrStreamType vSourceStr;
@@ -183,7 +171,7 @@ void MaterialGenerator::generate(bool fixedFunction)
 
 //----------------------------------------------------------------------------------------
 
-void MaterialGenerator::createTexUnits(Ogre::Pass* pass, bool shaders)
+void MaterialGenerator::createTexUnits(Ogre::Pass* pass)
 {
 	Ogre::TextureUnitState* tu;
 	
@@ -418,11 +406,6 @@ MaterialPtr MaterialGenerator::prepareMaterial(const std::string& name)
 
 //----------------------------------------------------------------------------------------
 
-bool MaterialGenerator::needShaders()
-{
-	return mParent->getShaders() && mDef->mProps->shaders;
-}
-
 bool MaterialGenerator::needShadows()
 {
 	return mShader->shadows;
@@ -508,21 +491,24 @@ bool MaterialGenerator::vpNeedWMat()
 {
 	return fpNeedEyeVector() || needTerrainLightMap();
 }
+
 bool MaterialGenerator::fpNeedWMat()
 {
 	return UsePerPixelNormals();
 }
+
 bool MaterialGenerator::vpNeedWvMat()
 {
 	return MRTSupported();
 }
+
 bool MaterialGenerator::UsePerPixelNormals()
 {
 	return false;//this is not working at the moment
 }
+
 bool MaterialGenerator::MRTSupported()
-{
-	
+{	
 	static bool bMRTSupportCalculated=false;
 	if(!bMRTSupportCalculated)
 	{

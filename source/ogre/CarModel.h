@@ -22,15 +22,26 @@ namespace Ogre {  class SceneNode;  class Terrain;  class Camera;  class SceneMa
 
 
 // Stores all the needed information about car coming from vdrift
+// position+rotation of car and wheels
+// and all data needed to update particles emitting rates and sounds
+// todo? remove PosInfo use ReplayFrame?
 struct PosInfo
 {
+	bool bNew;  //  new posinfo available for Update
+	//  car
 	Ogre::Vector3 pos, carY;  Ogre::Vector2 miniPos;
+	//  wheel
 	Ogre::Vector3 whPos[4];  Ogre::Quaternion rot, whRot[4];  float whR[4];
 	float whVel[4], whSlide[4], whSqueal[4];
-	int whTerMtr[4],whRoadMtr[4];  float fboost;
-	bool bNew;  //  new posinfo available for Update
+	int whTerMtr[4],whRoadMtr[4];
 
-	PosInfo() : bNew(false), pos(0,0,0), miniPos(0,0)  // not inited
+	float fboost,steer;
+
+	//  fluids
+	float whH[4],whAngVel[4], speed, whSteerAng[4];
+	int whP[4];
+
+	PosInfo() : bNew(false), pos(0,-200,0), miniPos(0,0)  // not inited
 	{}
 };
 
@@ -48,7 +59,8 @@ public:
 
 
 	CarModel( unsigned int index, eCarType type, const std::string name,
-		Ogre::SceneManager* sceneMgr, SETTINGS* set, GAME* game, Scene* sc, Ogre::Camera* cam, App* app);
+		Ogre::SceneManager* sceneMgr, SETTINGS* set, GAME* game, Scene* sc,
+		Ogre::Camera* cam, App* app, int startpos_index = -1);
 	
 	~CarModel();
 	
@@ -143,7 +155,9 @@ private:
 	Ogre::SceneNode *ndWh[4], *ndWhE[4], *ndBrake[4];
 	
 	//  Dir name of car (e.g. ES)
+public:
 	std::string sDirname;
+private:
 	
 	//  Path to car textures, e.g. /usr/share/stuntrally/data/cars/CT/textures
 	std::string resCar;

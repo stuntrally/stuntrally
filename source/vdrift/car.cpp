@@ -9,6 +9,7 @@
 #include "settings.h"
 #include "../ogre/OgreGame.h"  //+ replay
 #include "../ogre/Defines.h"
+#include "../network/protocol.hpp"
 #include "tobullet.h"
 #include <OgreLogManager.h>
 
@@ -535,6 +536,9 @@ void CAR::GetEngineSoundList(std::list <SOUNDSOURCE *> & outputlist)
 void CAR::HandleInputs(const std::vector <float> & inputs, float dt)
 {
 	assert(inputs.size() == CARINPUT::ALL); //-
+	if (pApp && pApp->isFocGuiOrRpl())
+		return;
+
 	dynamics.inputsCopy = inputs;
 
 	int cur_gear = dynamics.GetTransmission().GetGear();
@@ -616,8 +620,10 @@ void CAR::UpdateSounds(float dt)
 			//  susp
 			suspVel[w] = pApp->fr.suspVel[w];
 			suspDisp[w] = pApp->fr.suspDisp[w];
-			//  TODO fluids snd & par in replays...
-			//whH_all
+			//  fluids
+			whH_all += pApp->fr.whH[w];
+			if (pApp->fr.whP[w] >= 1)  mud = true;
+			//?- whMudSpin = pApp->fr.whMudSpin;
 		}
 	}
 	else  /// game  ------------------------------------------
@@ -943,6 +949,46 @@ bool CAR::Serialize(joeserialize::Serializer & s)
 	return true;
 }
 
+protocol::CarStatePackage CAR::GetCarStatePackage() const
+{
+	protocol::CarStatePackage csp;
+	csp.pos = ToMathVector<float>(dynamics.chassis->getCenterOfMassPosition());
+	csp.rot = ToMathQuaternion<float>(dynamics.chassis->getCenterOfMassTransform().getRotation());
+	csp.linearVel = GetVelocity();
+	csp.angularVel = GetAngularVelocity();
+	return csp;
+}
+
+void CAR::UpdateCarState(const protocol::CarStatePackage& state)
+{
+	// Velocity based estimation from physics engine works rather well
+	// for a while, so we use pos/rot only for lazy corrections
+	MATHVECTOR<float,3> curpos = ToMathVector<float>(dynamics.chassis->getCenterOfMassPosition());
+	MATHVECTOR<float,3> errorvec = state.pos - curpos;
+	MATHVECTOR<float,3> newpos = curpos + (errorvec * 0.05f);
+	QUATERNION<float> currot = ToMathQuaternion<float>(dynamics.chassis->getCenterOfMassTransform().getRotation());
+	QUATERNION<float> newrot = currot.QuatSlerp(state.rot, 0.5f);
+
+	// If the estimate drifts too far for some reason, do a quick correction
+	if (errorvec.MagnitudeSquared() > 9.0f) {
+		newpos = state.pos;
+		newrot = state.rot;
+	}
+
+	SetPosition(newpos);
+
+	btTransform transform;
+	transform.setOrigin(ToBulletVector(newpos));
+	transform.setRotation(ToBulletQuaternion(newrot));
+	dynamics.chassis->setWorldTransform(transform);
+
+	// No interpolation in velocities
+	dynamics.chassis->setLinearVelocity(ToBulletVector(state.linearVel));
+	dynamics.chassis->setAngularVelocity(ToBulletVector(state.angularVel));
+
+	dynamics.SynchronizeBody();  // set body from chassis
+	dynamics.UpdateWheelContacts();
+}
 
 ///  reset car, pos and state
 void CAR::ResetPos(bool fromStart)

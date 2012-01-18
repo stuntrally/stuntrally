@@ -7,6 +7,7 @@
 #include "../vdrift/logging.h"
 #include "../vdrift/pathmanager.h"
 #include "../vdrift/settings.h"
+#include "../network/enet-wrapper.hpp"
 
 #include <string>
 #include <sstream>
@@ -43,14 +44,13 @@ void VprThread(App* pA)
 #else
 	int main(int argc, char* argv[])
 #endif
-{	
+{
 	setlocale(LC_NUMERIC, "C");
 
 	std::stringstream dummy;
 	PATHMANAGER::Init(dummy, dummy);
 
-	///  open Log file
-	//----------------------------------------------------------------
+	// Open the log file
 	std::string logfilename = PATHMANAGER::GetLogDir() + "/log.txt";
 	std::ofstream logfile(logfilename.c_str());
 	if (!logfile)
@@ -59,17 +59,22 @@ void VprThread(App* pA)
 		return EXIT_FAILURE;
 	}
 	
-	//  set up logging arrangement
+	// Set up logging arrangement
 	logging::splitterstreambuf infosplitter(std::cout, logfile);	std::ostream infosplitterstream(&infosplitter);
 	logging::splitterstreambuf errorsplitter(std::cerr, logfile);	std::ostream errorsplitterstream(&errorsplitter);
 	logging::logstreambuf infolog("INFO: ", infosplitterstream);	//logstreambuf infolog("INFO: ", logfile);
 	logging::logstreambuf errorlog("ERROR: ", errorsplitterstream);
 
-	//  primary logging ostreams
+	// Primary logging ostreams
 	std::ostream info_output(&infolog);
 	std::ostream error_output(&errorlog);/**/
 
-	
+	// HACK: We initialize paths a second time now that we have the output streams
+	PATHMANAGER::Init(info_output, error_output);
+
+	// Initialize networking
+	net::ENetContainer enet;
+
 	///  Load Settings
 	//----------------------------------------------------------------
 	SETTINGS* settings = new SETTINGS();

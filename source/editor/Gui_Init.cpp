@@ -76,7 +76,6 @@ void App::InitGui()
 	ButtonPtr btn, bchk;  ComboBoxPtr combo;  // for defines
 	ScrollBar* sl;  size_t v;
 
-
 	///  [Graphics]
 	//------------------------------------------------------------------------
 	GuiInitGraphics();
@@ -130,7 +129,7 @@ void App::InitGui()
 	Btn("TerrainNew", btnTerrainNew);
 	Btn("TerrainGenerate", btnTerGenerate);
 
-	Slv(TerGenScale,powf(pSet->gen_scale   /60.f, 1.f/2.f));  // generate
+	Slv(TerGenScale,powf(pSet->gen_scale   /160.f, 1.f/2.f));  // generate
 	Slv(TerGenOfsX, (pSet->gen_ofsx+2.f) /4.f);
 	Slv(TerGenOfsY, (pSet->gen_ofsy+2.f) /4.f);
 	Slv(TerGenOct,  Real(pSet->gen_oct)	/res);
@@ -176,7 +175,7 @@ void App::InitGui()
 	Slv(LTrDens, 0);	Slv(LTrRdDist, 0);
 	Slv(LTrMinSc, 0);	Slv(LTrMaxSc, 0);
 	Slv(LTrWindFx, 0);	Slv(LTrWindFy, 0);
-	Slv(LTrMaxTerAng, 0);  Ed(LTrMinTerH, editLTrMinTerH);
+	Slv(LTrMaxTerAng, 0);  Ed(LTrMinTerH, editLTrMinTerH);  Ed(LTrMaxTerH, editLTrMaxTerH);
 	
 	
 	///  [Road]  ------------------------------------

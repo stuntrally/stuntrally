@@ -148,7 +148,11 @@ void App::GuiInitTrack()
 	MyGUI::FactoryManager::getInstance().registerFactory<MultiList2>("Widget");
 	//MyGUI::FactoryManager::getInstance().unregisterFactory<MultiList2>("Widget");
 
+	#ifdef ROAD_EDITOR
 	TabItem* trktab = (TabItem*)mWndOpts->findWidget("TabTrack");
+	#else
+	TabItem* trktab = (TabItem*)mWndGame->findWidget("TabTrack");
+	#endif
 	MultiList2* li = trktab->createWidget<MultiList2>("MultiListBox",0,0,600,300, Align::Left | Align::VStretch);
 	//li->setUserString("RelativeTo", "OptionsWnd");
 	//*li->setAlpha(0.8);*/  li->setInheritsAlpha(false);
@@ -169,8 +173,7 @@ void App::GuiInitTrack()
 	for (int i=0; i < InfTrk; ++i)
 		infTrk[i] = mGUI->findWidget<StaticText>("ti"+toStr(i+1), false);
 		
-	EditPtr edit;
-	Edt(edit, "TrackFind", edTrkFind);
+	Edt(edFind, "TrackFind", edTrkFind);
 
 	ButtonPtr btn;
 	Btn("TrkView1", btnTrkView1);	Btn("TrkView2", btnTrkView2);
@@ -194,7 +197,7 @@ void App::GuiInitTrack()
 	trkMList->mSortColumnIndex = pSet->tracks_sort;  // from set
 	trkMList->mSortUp = pSet->tracks_sortup;
 
-    TrackListUpd();  //upd
+    TrackListUpd(true);  //upd
 	listTrackChng(trkMList,0);
 
 	ChangeTrackView(pSet->tracks_view);
@@ -215,10 +218,6 @@ void App::listTrackChng(MultiList2* li, size_t pos)
 	sListTrack = s;
 	bListTrackU = s1 != s ? 1 : 0;
 
-	//  won't refresh if same-...  road disappears if not found...
-	if (imgPrv)  imgPrv->setImageTexture(sListTrack+".jpg");
-	if (imgTer)  imgTer->setImageTexture(sListTrack+"_ter.jpg");
-	if (imgMini)  imgMini->setImageTexture(sListTrack+"_mini.png");
 	ReadTrkStats();
 }
 
@@ -283,6 +282,13 @@ void App::updTrkListDim()
 	imgTrkIco1->setCoord(xt + xico1+2, yico, 2*wico, wico);
 	imgTrkIco2->setCoord(xt + xico2+2, yico, 8*wico, wico);
 	trkMList->setVisible(true);
+	
+	#ifndef ROAD_EDITOR
+	if (panelNetTrack)  {
+		TabItem* trkTab = mGUI->findWidget<TabItem>("TabTrack");
+		const IntCoord& tc = trkTab->getCoord();
+		panelNetTrack->setCoord(0,0,tc.width*0.66f,tc.height);  }
+	#endif
 }
 
 
@@ -359,6 +365,12 @@ void App::ReadTrkStats()
 
 void App::UpdGuiRdStats(const SplineRoad* rd, const Scene& sc, float time)
 {
+	//  won't refresh if same-...  road disappears if not found...
+	if (imgPrv)  imgPrv->setImageTexture(sListTrack+".jpg");
+	if (imgTer)  imgTer->setImageTexture(sListTrack+"_ter.jpg");
+	if (imgMini)  imgMini->setImageTexture(sListTrack+"_mini.png");
+
+
 	Fmt(s, "%5.3f km", sc.td.fTerWorldSize / 1000.f);	if (stTrk[1])  stTrk[1]->setCaption(s);
 	if (!rd)  return;
 	Fmt(s, "%5.3f km", rd->st.Length / 1000.f);			if (stTrk[0])  stTrk[0]->setCaption(s);

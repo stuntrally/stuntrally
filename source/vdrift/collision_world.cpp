@@ -490,7 +490,8 @@ void COLLISION_WORLD::Clear()
 		}
 		world->removeCollisionObject(obj);
 
-		delete obj->getUserPointer();  // ShapeData
+		ShapeData* sd = (ShapeData*)obj->getUserPointer();
+		delete sd;
 		delete obj;
 	}
 	

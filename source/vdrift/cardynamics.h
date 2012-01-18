@@ -80,6 +80,7 @@ public:
 	float GetMass() const;
 	T GetSpeed() const;
 	MATHVECTOR <T, 3> GetVelocity() const;
+	MATHVECTOR <T, 3> GetAngularVelocity() const;
 	MATHVECTOR <T, 3> GetEnginePosition() const;
 
 /// custom collision params

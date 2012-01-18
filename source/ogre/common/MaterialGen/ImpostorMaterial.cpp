@@ -25,7 +25,7 @@ ImpostorMaterialGenerator::ImpostorMaterialGenerator()
 
 //----------------------------------------------------------------------------------------
 
-void ImpostorMaterialGenerator::generate(bool fixedFunction)
+void ImpostorMaterialGenerator::generate()
 {
 	//!
 	// note that we only create the shaders (Sprite_vp, Sprite_fp) here. 

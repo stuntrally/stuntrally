@@ -49,7 +49,6 @@ public:
 	/// user settings get/set ---------------------------------------------
 	#define setIfChanged(s) if (p != s) { s = p; bSettingsChanged = true; }
 	
-	void setShaders(bool p) { setIfChanged(bShaders) };
 	void setNormalMap(bool p) { setIfChanged(bNormalMap) };
 	void setEnvMap(bool p) { setIfChanged(bEnvMap) };
 	void setShadows(bool p) { setIfChanged(bShadows) };
@@ -58,7 +57,6 @@ public:
 	void setNumShadowTex(unsigned int p) { setIfChanged(iNumShadowTex) };
 	void setShaderQuality(float p) { setIfChanged(fShaderQuality) };
 	
-	const bool getShaders() { return bShaders; };
 	const bool getNormalMap() { return bNormalMap; };
 	const bool getEnvMap() { return bEnvMap; };
 	const bool getShadows() { return bShadows; };
@@ -81,7 +79,7 @@ public:
 
 private:
 	/// user settings definition ---------------------------------
-	bool bShaders, bNormalMap, bEnvMap, bShadows, bShadowsDepth;
+	bool bNormalMap, bEnvMap, bShadows, bShadowsDepth;
 	unsigned int iTexSize; unsigned int iNumShadowTex;
 	float fShaderQuality;
 	/// -------------------------------------------------------

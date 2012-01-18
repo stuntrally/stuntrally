@@ -63,7 +63,7 @@ MaterialFactory& MaterialFactory::getSingleton(void)
 //----------------------------------------------------------------------------------------
 
 MaterialFactory::MaterialFactory() : 
-	bShaders(1), bNormalMap(1), bEnvMap(1), bShadows(1), bShadowsDepth(1),
+	bNormalMap(1), bEnvMap(1), bShadows(1), bShadowsDepth(1),
 	iTexSize(4096), iNumShadowTex(3), fShaderQuality(0.5),
 	bSettingsChanged(1) // always have to generate at start
 {
@@ -253,6 +253,10 @@ void MaterialFactory::loadDefsFromFile(const std::string& file)
 		// it's important to note that ogre's ConfigFile loads sections
 		// in alphabetical order, so really the only good option is to
 		// have derived material definitions in seperate files.
+		
+		//!todo
+		// parse "parent" attribute regardless of the material order in the file
+		// (i.e. add materials that have a parent that isn't created yet into a queue, to process later)
 		
 		if (mFile.getSetting("parent", secName) != Ogre::StringUtil::BLANK)
 		{

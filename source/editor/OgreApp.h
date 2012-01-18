@@ -226,7 +226,7 @@ protected:
 	TracksXml tracksXml;  void btnTrkView1(WP),btnTrkView2(WP),ChangeTrackView(bool full),updTrkListDim();
 	const static int TcolW[32];
 
-	void edTrkFind(MyGUI::EditPtr);  Ogre::String sTrkFind;
+	void edTrkFind(MyGUI::EditPtr);  Ogre::String sTrkFind;  MyGUI::EditPtr edFind;
 	strlist liTracks,liTracksUser;  void FillTrackLists();
 	std::list<TrkL> liTrk;
 
@@ -324,7 +324,8 @@ protected:
 	SLV(LTrDens);	SLV(LTrRdDist);
 	SLV(LTrMinSc);	SLV(LTrMaxSc);	SLV(LTrWindFx);	SLV(LTrWindFy);
 	SLV(LTrMaxTerAng);
-	MyGUI::EditPtr edLTrMinTerH;  void editLTrMinTerH(MyGUI::EditPtr);
+	MyGUI::EditPtr edLTrMinTerH,edLTrMaxTerH;
+	void editLTrMinTerH(MyGUI::EditPtr),editLTrMaxTerH(MyGUI::EditPtr);
 	
 	
 	//  [Road]  ----

@@ -25,7 +25,7 @@ WaterMaterialGenerator::WaterMaterialGenerator()
 
 //----------------------------------------------------------------------------------------
 
-void WaterMaterialGenerator::generate(bool fixedFunction)
+void WaterMaterialGenerator::generate()
 {
 	mMaterial = prepareMaterial(mDef->getName());
 	

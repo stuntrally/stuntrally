@@ -16,7 +16,7 @@ ArrowMaterialGenerator::ArrowMaterialGenerator()
 	mName = "Arrow";
 }
 
-void ArrowMaterialGenerator::generate(bool fixedFunction)
+void ArrowMaterialGenerator::generate()
 {
 	mMaterial = prepareMaterial(mDef->getName());
 	

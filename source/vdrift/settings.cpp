@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "settings.h"
+#include "../network/protocol.hpp"
 #include <stdio.h>
 
 
@@ -29,6 +30,7 @@ void SETTINGS::Serialize(bool w, CONFIGFILE & c)
 	Param(c,w, "car1.abs", abs);				Param(c,w, "car1.tcs", tcs);
 
 	//  game
+	Param(c,w, "game.in_menu", inMenu);			Param(c,w, "game.in_main", isMain);
 	Param(c,w, "game.boost_type", boost_type);			Param(c,w, "game.flip_type", flip_type);
 	Param(c,w, "game.boost_power", boost_power);
 	Param(c,w, "game.collis_cars", collis_cars);		Param(c,w, "game.collis_veget", collis_veget);
@@ -36,6 +38,10 @@ void SETTINGS::Serialize(bool w, CONFIGFILE & c)
 	Param(c,w, "game.trk_reverse", trackreverse);
 	Param(c,w, "game.local_players", local_players);	Param(c,w, "game.split_vertically", split_vertically);
 	Param(c,w, "game.num_laps", num_laps);
+	
+	//  joystick
+	Param(c,w, "joystick.ff_device", ff_device);		Param(c,w, "joystick.ff_gain", ff_gain);
+	Param(c,w, "joystick.ff_invert", ff_invert);
 
 	//  hud
 	Param(c,w, "hud_show.fps", show_fps);				Param(c,w, "hud_show.mph", show_mph);
@@ -80,6 +86,11 @@ void SETTINGS::Serialize(bool w, CONFIGFILE & c)
 	Param(c,w, "misc.bulletProfilerTxt", bltProfilerTxt);
 	Param(c,w, "misc.language", language);			Param(c,w, "misc.loadingback", loadingbackground);
 	Param(c,w, "misc.version", version);			Param(c,w, "misc.x11_capture_mouse", x11_capture_mouse);
+
+	Param(c,w, "network.nickname", nickname);
+	Param(c,w, "network.master_server_address", master_server_address);
+	Param(c,w, "network.master_server_port", master_server_port);
+	Param(c,w, "network.local_port", local_port);
 
 	Param(c,w, "replay.rec", rpl_rec);				Param(c,w, "replay.ghost", rpl_ghost);
 	Param(c,w, "replay.bestonly", rpl_bestonly);	Param(c,w, "replay.listview", rpl_listview);
@@ -132,15 +143,25 @@ SETTINGS::SETTINGS() :  ///  Defaults
 	//  car
 	abs(0), tcs(0), autoshift(1), autorear(1), rear_inv(1), show_mph(0),
 	//  game
+	isMain(1), inMenu(0),
 	collis_veget(true), collis_cars(false),
 	local_players(1), num_laps(2),
 	split_vertically(true), language(""), // "" = autodetect lang
 	boost_type(2), flip_type(1), boost_power(1.f),
+	//  joystick
+	ff_device("/dev/input/event0"),
+	ff_gain(1.0),
+	ff_invert(false),
 	//  misc
 	autostart(0), ogre_dialog(0), escquit(0),
 	bltDebug(0), bltLines(1),  bltProfilerTxt(0),
 	loadingbackground(true), x11_capture_mouse(false),
 	boostFromExhaust(0),
+	//  network
+	nickname("StuntMan"),
+	master_server_address("localhost"),
+	master_server_port(protocol::DEFAULT_PORT),
+	local_port(protocol::DEFAULT_PORT),
 	//  replay
 	rpl_rec(1), rpl_ghost(1), rpl_bestonly(1),
 	rpl_alpha(0), rpl_ghostpar(0), rpl_listview(0),

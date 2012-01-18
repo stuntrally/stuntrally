@@ -1,5 +1,10 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <MyGUI>
+	<!-- General -->
+	<Tag name="Yes">Yes</Tag>
+	<Tag name="No">No</Tag>
+	<Tag name="Error">Error</Tag>
+	
 	<!--  MsgBox  -->
 	<Tag name="MessageBox_Ok">Ok</Tag>
 	<Tag name="MessageBox_Yes">Yes</Tag>
@@ -30,12 +35,17 @@
 	<Tag name="TBLap">Lap</Tag>
 	<Tag name="TBPlace">Place</Tag>
 	<Tag name="CamInfoStrings">Type,Yaw,Pitch,Dist,Height,Speed,Offset,LEFT,RIGHT,Middle,Wheel,shift,Rotate,reset,move,H,Pos</Tag>
-
-	<Tag name="Options">Options</Tag>
-	<Tag name="Settings">Settings</Tag>
-	<Tag name="Quit">Quit</Tag>
 	
 <!--  ............................................................................................................................  -->
+
+
+	<!--  Main  -->
+	<Tag name="SingleRace">Single Race</Tag>
+	<Tag name="Championship">Championship</Tag>
+	<Tag name="ReplaysMenu">Replays</Tag>
+	<Tag name="Options">Options</Tag>
+	<Tag name="Quit">Quit</Tag>
+	<Tag name="BackMenu">Back</Tag>
 
 
 	<!--  Track  -->
@@ -96,6 +106,38 @@
 	<Tag name="TipChangeSat">Change car color saturation (white-black).</Tag>
 	<Tag name="TipChangeBright">Change car color brightness (dark-light).</Tag>
 	<Tag name="CarClrRandom">Random</Tag>
+
+
+	<!--  Multiplayer  -->
+	<Tag name="Multiplayer">Multiplayer</Tag>
+	
+	<!-- Server -->
+	<Tag name="NetServer">Server</Tag>
+	<Tag name="NetGamesAvail">Available games</Tag>
+	<Tag name="NetRefreshList">Get/refresh list</Tag>
+	<Tag name="NetJoinGame">Join game</Tag>
+	<Tag name="NetJoinLocked">Protected game</Tag>
+	<Tag name="NetCreateGame">Create game</Tag>
+	<Tag name="NetDirectConnect">Direct connect</Tag>
+	<Tag name="NetAddress">Address</Tag>
+	<Tag name="NetPort">Port</Tag>
+	<Tag name="NetPassword">Password</Tag>
+	<!-- Game -->
+	<Tag name="NetGame">Game</Tag>
+	<Tag name="NetGameName">Game Name</Tag>
+	<Tag name="NetStart">Start</Tag>
+	<Tag name="NetReady">Ready</Tag>
+	<Tag name="NetWaiting">Waiting...</Tag>
+	<Tag name="NetLeaveGame">Leave game</Tag>
+	<Tag name="NetChat">Chat</Tag>
+	<!-- Settings -->
+	<Tag name="NetSettings">Settings</Tag>
+	<Tag name="NetNickname">Nickname</Tag>
+	<Tag name="NetMasterIp">Master Server IP</Tag>
+	<Tag name="NetMasterPort">Master Server Port</Tag>
+	<Tag name="NetLocalPort">Local Port</Tag>
+	<Tag name="NetRouterTip">Router port forwarding configuration might be required in order to allow peers to connect to the local port.</Tag>
+
 
 	<!--  Setup  -->
 	<Tag name="Game">Game</Tag>
@@ -349,7 +391,7 @@
 	<Tag name="BasedOn">based on</Tag>
 	<Tag name="AndUsing">and using</Tag>
 	<Tag name="ProjectPage">project&apos;s page:</Tag>
-	<Tag name="GameVersion">1.4</Tag>
+	<Tag name="GameVersion">1.5</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 		
 	
@@ -480,6 +522,7 @@
 	<Tag name="GrTerMaxAngle">Grass Max. Terrain Angle</Tag>
 	<Tag name="LTrMaxTerAng">max terrain Angle</Tag>
 	<Tag name="LTrMinTerH">min terrain Height</Tag>
+	<Tag name="LTrMaxTerH">max terrain Height</Tag>
 
 
 	<!--  Road  -->
@@ -516,6 +559,7 @@
 
 
 	<!--  Settings  -->
+	<Tag name="Settings">Settings</Tag>
 	<Tag name="SREditorVersion">Stunt Rally - Track Editor - version</Tag>
 	<Tag name="TrackAutoLoad">Auto Load track</Tag>
 	<Tag name="MinimapAndSize">Minimap, size</Tag>
@@ -780,5 +824,6 @@
 	<Tag name="TipModelPrev">Model preview image.</Tag>
 	<Tag name="TipLTrMaxTerAng">Terrain angle above which model won't appear.</Tag>
 	<Tag name="TipLTrMinTerH">Terrain height below which model won't appear.</Tag>
+	<Tag name="TipLTrMaxTerH">Terrain height above which model won't appear.</Tag>
 
 </MyGUI>

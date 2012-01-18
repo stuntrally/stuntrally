@@ -16,6 +16,10 @@
 class BEZIER;
 class PERFORMANCE_TESTING;
 
+namespace protocol {
+	struct CarStatePackage;
+}
+
 class CAR 
 {
 friend class PERFORMANCE_TESTING;
@@ -254,7 +258,14 @@ public:
 		vel = dynamics.GetVelocity();
 		return vel;
 	}
-	
+
+	MATHVECTOR <float, 3> GetAngularVelocity() const
+	{
+		MATHVECTOR <float, 3> vel;
+		vel = dynamics.GetAngularVelocity();
+		return vel;
+	}
+
 	float GetTireMaxFx(WHEEL_POSITION tire_index) const
 	{
 		return dynamics.GetTire(tire_index).GetMaximumFx(GetMass()*0.25*9.81);
@@ -281,6 +292,10 @@ public:
 	{
 		return dynamics.GetMaxSteeringAngle();
 	}
+
+	// Networking
+	protocol::CarStatePackage GetCarStatePackage() const;
+	void UpdateCarState(const protocol::CarStatePackage& state);
 
 	///  new
 	void ResetPos(bool fromStart=true);
@@ -319,7 +334,7 @@ public:
 	float crashsoundtime[Ncrashsounds];
 	SOUNDSOURCE roadnoise,boostsnd;
 	SOUNDSOURCE mudsnd, watersnd[Nwatersounds], mud_cont,water_cont;  // fluids
-	bool fluidHitOld;  float whMudSpin;  //new vars
+	bool fluidHitOld;  float whMudSpin;  //new vars, for snd
 	
 	//internal variables that might change during driving (so, they need to be serialized)
 	float last_steer;

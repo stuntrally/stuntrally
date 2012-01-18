@@ -8,7 +8,16 @@ const static int ciRplHdrSize = 1024;
 const static int cDefSize = 8*1024;
 
 
-//  replay/ghost data
+// note: add new vars always at end of
+// ReplayHeader or ReplayFrame structs (backward compatibility)
+
+// sizeof ReplayFrame
+/// = 336 Bytes per frame
+//  336 * 160 fps = 53.7 kB/s
+//  1 min = 3.22 MB, 10 min = 32.2 MB
+
+
+//  whole replay/ghost data - max 4 players
 
 struct ReplayHeader
 {
@@ -16,7 +25,7 @@ struct ReplayHeader
 
 	char track[63];   // track name  (hmap crc? diff-)
 	char track_user;  // user/original
-	char car[32];     // car name  (.car file crc?, settings diff-)
+	char car[32];     // car name  (eg. ES, .car file crc?, settings diff-)
 
 	int ver, frameSize;  // bin data format - sizeof(ReplayFrame)
 	float whR[4][4];  // cars wheels radius
@@ -24,14 +33,15 @@ struct ReplayHeader
 	int numPlayers;
 	float hue[4],sat[4],val[4];  // cars colors
 	char cars[32][3];  // car names (when numPlayers > 1)
+
+	char nicks[32][4];  // multiplayer nicks
 	char descr[128];   // description - user text
 
-	// custom replay fps 60, interpolation ...
 	ReplayHeader();  void Default();
 };
 
 
-//  bin data, for each frame
+//  car data, for each simulation frame
 
 struct ReplayFrame
 {
@@ -56,13 +66,13 @@ struct ReplayFrame
 	
 	float fboost;  // input, particles
 	char whRoadMtr[4];
-	// todo: float wh[4] particles water,mud,
-	// todo: sparks hit emit,pos,vel?
+	
+	//  fluids
+	float whH[4], whAngVel[4];  // submerge height
+	char whP[4];  //particle type
+	float whSteerAng[2];
 
-	/// sizeof:  tm 8 car 12*5 wh 16*5 h 16 snd 16 12 whtr 8 16*5
-	/// = 280 Bytes per frame
-	//  280 * 160 fps = 44.8 kB/s
-	//  1min = 2,69 MB, 10 min = 26,9 MB
+	// todo: sparks hit emit,pos,vel?
 };
 
 

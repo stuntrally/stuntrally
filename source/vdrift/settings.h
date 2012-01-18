@@ -40,10 +40,16 @@ public:
 	bool abs, tcs, autoshift, autorear, rear_inv, show_mph;
 	float car_hue[4], car_sat[4], car_val[4];  int cam_view[4];
 
-	//  game
+	//  game  todo:.. actual game copy in other class
 	bool trackreverse;	int local_players, num_laps;
 	bool split_vertically;  std::string language;
 	int boost_type, flip_type;  float boost_power;
+	bool isMain;  int inMenu;  // last menu
+	
+	//  joystick
+	std::string ff_device;
+	float ff_gain;
+	bool ff_invert;
 
 	//  other
 	float vol_master, vol_engine, vol_tires, vol_env;
@@ -70,6 +76,12 @@ public:
 	bool rpl_rec, rpl_ghost, rpl_bestonly;
 	bool rpl_alpha, rpl_ghostpar;  int rpl_listview;
 	
+	// network
+	std::string nickname;
+	std::string master_server_address;
+	int master_server_port;
+	int local_port;
+
 	// not in gui
 	bool boostFromExhaust;
 	

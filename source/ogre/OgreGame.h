@@ -2,6 +2,7 @@
 #define _OgreGame_h_
 
 #include "BaseApp.h"
+#include "common/Gui_Popup.h"
 #include "common/SceneXml.h"
 #include "common/BltObjects.h"
 #include "common/TracksXml.h"
@@ -26,7 +27,8 @@ namespace OISB   {  class AnalogAxisAction;  }
 class MaterialFactory;
 
 
-class App : public BaseApp //, public RenderTargetListener
+
+class App : public BaseApp, public GameClientCallback, public MasterClientCallback //, public RenderTargetListener
 {
 public:
 	App();  virtual ~App();
@@ -50,7 +52,6 @@ public:
 	//  replay - full, user saves
 	//  ghost - saved when best lap,  ghplay - ghost ride replay, loaded if was on disk
 	Replay replay, ghost, ghplay;  ReplayFrame fr;
-	ReplayFrame ghostFrame;
 	const Ogre::String& GetGhostFile();
 
 	Scene sc;  /// scene.xml
@@ -218,7 +219,7 @@ protected:
 	TracksXml tracksXml;  void btnTrkView1(WP),btnTrkView2(WP),ChangeTrackView(bool full),updTrkListDim();
 	const static int TcolW[32];
 
-	void edTrkFind(MyGUI::EditPtr);  Ogre::String sTrkFind;
+	void edTrkFind(MyGUI::EditPtr);  Ogre::String sTrkFind;  MyGUI::EditPtr edFind;
 	strlist liTracks,liTracksUser;  void FillTrackLists();
 	std::list<TrkL> liTrk;
 
@@ -232,9 +233,11 @@ protected:
 		
 	///-----------------------------------------
 
-	void toggleGui();
+	void toggleGui(bool toggle=true);
 	void UpdCarClrSld(bool upd=true);  bool bUpdCarClr;
-
+	void MainMenuBtn(MyGUI::WidgetPtr);
+	void MenuTabChg(MyGUI::TabPtr, size_t);
+	
 
 	///  input tab
 	void InitInputGui(), inputBindBtnClicked(WP);
@@ -300,7 +303,7 @@ protected:
 	
 	void btnNumPlayers(WP);  void chkSplitVert(WP);
 	MyGUI::StaticTextPtr valLocPlayers;
-		
+
 public:
 	bool bRplPlay,bRplPause, bRplRec, bRplWnd;  //  game
 	int carIdWin, iCurCar;
@@ -314,8 +317,7 @@ protected:
 	void listRplChng(MyGUI::List* li, size_t pos);
 	void listCarChng(MyGUI::List* li, size_t pos),  btnChgCar(WP), btnChgTrack(WP);
 	int LNext(MyGUI::MultiList2* lp, int rel), LNext(MyGUI::ListPtr lp, int rel);  // util next in list
-	void trkLNext(int rel), carLNext(int rel), rplLNext(int rel);
-	void tabPlayer(MyGUI::TabPtr wp, size_t id);
+	void LNext(int rel);  void tabPlayer(MyGUI::TabPtr wp, size_t id);
 
 	Ogre::String sListCar,sListTrack;  int bListTrackU;
 	Ogre::String pathTrk[2];  Ogre::String TrkDir();
@@ -325,6 +327,57 @@ protected:
 	void comboBoost(CMB), comboFlip(CMB);
 	
 	char s[512];
+
+	GuiPopup popup;
+	///---------------------------------------
+
+	//  multiplayer
+
+	void rebuildGameList();
+	void rebuildPlayerList();
+	void updateGameInfo();
+	void updateGameInfoGUI();
+	void uploadGameInfo();
+	void setNetGuiHosting(bool enabled);
+	void gameListChanged(protocol::GameList list);
+	void peerConnected(PeerInfo peer);
+	void peerDisconnected(PeerInfo peer);
+	void peerInfo(PeerInfo peer);
+	void peerMessage(PeerInfo peer, std::string msg);
+	void peerState(PeerInfo peer, uint8_t state);
+	void gameInfo(protocol::GameInfo game);
+	void error(std::string what);
+	void join(std::string host, std::string port, std::string password);
+
+	mutable boost::mutex netGuiMutex;
+	MyGUI::UString sChatBuffer;
+	protocol::GameInfo netGameInfo;
+	bool bRebuildPlayerList;
+	bool bRebuildGameList;
+	bool bUpdateGameInfo;
+	bool bStartGame;
+
+	MyGUI::TabPtr tabsNet;  //void tabNet(TabPtr tab, size_t id);
+	MyGUI::WidgetPtr panelNetServer,panelNetGame,panelNetTrack;
+	MyGUI::MultiListPtr listServers, listPlayers;
+	MyGUI::EditPtr edNetChat;  // chat area, set text through sChatBuffer
+
+	MyGUI::ButtonPtr btnNetRefresh,btnNetJoin,btnNetCreate,btnNetDirect;
+	MyGUI::ButtonPtr btnNetReady,btnNetLeave;
+	void evBtnNetRefresh(WP);
+	void evBtnNetJoin(WP), evBtnNetJoinLockedClose();
+	void evBtnNetCreate(WP);
+	void evBtnNetDirect(WP),evBtnNetDirectClose();
+	void evBtnNetReady(WP),evBtnNetLeave(WP);
+
+	MyGUI::StaticImagePtr imgNetTrack;
+	MyGUI::StaticTextPtr valNetGames, valNetGameName, valNetChat, valNetTrack, valNetPassword;
+	MyGUI::ButtonPtr btnNetSendMsg;  void chatSendMsg();
+	MyGUI::EditPtr edNetGameName, edNetChatMsg, edNetTrackInfo, edNetPassword,
+		edNetNick, edNetServerIP, edNetServerPort, edNetLocalPort;
+	void evEdNetGameName(MyGUI::EditPtr), evEdNetPassword(MyGUI::EditPtr),
+		evEdNetNick(MyGUI::EditPtr), evEdNetServerIP(MyGUI::EditPtr),
+		evEdNetServerPort(MyGUI::EditPtr), evEdNetLocalPort(MyGUI::EditPtr);
 };
 
 #endif

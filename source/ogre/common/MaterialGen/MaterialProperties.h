@@ -29,9 +29,6 @@ struct MaterialProperties
 	// set this to 'true' if the material is never used (only a base material that other materials have as parent)
 	bool abstract;
 	
-	// use shaders (there is no reason to set this to false, the fixed function support is very limited and most likely broken)
-	bool shaders;
-	
 	// --------- textures -----------------------
 	// textureMap: map of textures and their size
 	
@@ -113,6 +110,7 @@ struct MaterialProperties
 	 * - object space normal maps (useful for meshes with mirrored UVs)
 	 * - ambient occlusion map (pre-baked, seperate map) - this map would only be used when SSAO effect is off
 	 * - diffuseSpec map (specular intensity in diffuse map alpha) 
+	 * - seperate ambient map (instead of using the diffuse map for ambient color)
 	 * - parallax mapping, normalHeight map (height in normal map alpha)
 	 * - displacement mapping
 	 * 
@@ -124,6 +122,7 @@ struct MaterialProperties
 	 * 
 	 * other:
 	 * - make it easier to add custom shaders
+	 * - shader cache on disk
 	 */
 	
 	MaterialProperties(); // constructor with sensible default values

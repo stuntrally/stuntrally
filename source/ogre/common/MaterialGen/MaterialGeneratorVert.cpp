@@ -309,6 +309,10 @@ void MaterialGenerator::vertexProgramParams(HighLevelGpuProgramPtr program)
 {
 	GpuProgramParametersSharedPtr params = program->getDefaultParameters();
 	
+	#ifndef _DEBUG
+	params->setIgnoreMissingParams(true);
+	#endif
+		
 	if (vpNeedWMat())
 		params->setNamedAutoConstant("wMat", GpuProgramParameters::ACT_WORLD_MATRIX);
 	params->setNamedAutoConstant("wvpMat", GpuProgramParameters::ACT_WORLDVIEWPROJ_MATRIX);
@@ -334,6 +338,10 @@ void MaterialGenerator::vertexProgramParams(HighLevelGpuProgramPtr program)
 
 void MaterialGenerator::individualVertexProgramParams(GpuProgramParametersSharedPtr params)
 {
+	#ifndef _DEBUG
+	params->setIgnoreMissingParams(true);
+	#endif
+	
 	if (needNormalMap())
 		params->setNamedConstant("bumpScale", mDef->mProps->bumpScale);
 	

@@ -20,10 +20,13 @@
 [car_glass]
 	customGenerator = Glass
 	envMap = ReflectionCube
+	fresnelScale = 0.65
+	fresnelBias = 0.15
+	fresnelPower = 4
 	reflAmount = 0.2
 	ambient = 0.8 0.8 0.8
 	diffuse = 0.9 0.9 0.9
-	specular = 1.0 1.0 1.0 128
+	specular = 0.7 0.7 0.7 128
 	diffuseMap_1024 = glass.png
 	transparent = true
 	receivesDepthShadows = true
