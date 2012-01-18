@@ -117,7 +117,6 @@ void App::AddTrkL(std::string name, int user, const TrackInfo* ti)
 
 	MultiList2* li = trkMList;
 	li->addItem(name, 0);
-	// todo: repair N, scenery, ver sorting since it got broken from #colors
 
 	if (!ti)  return;  //  details
 	int l = li->getItemCount()-1;
