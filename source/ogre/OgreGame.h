@@ -238,7 +238,9 @@ protected:
 	void UpdCarClrSld(bool upd=true);  bool bUpdCarClr;
 	void MainMenuBtn(MyGUI::WidgetPtr);
 	void MenuTabChg(MyGUI::TabPtr, size_t);
+
 	ChampsXml champs;  ProgressXml progress;  // for championships
+	void listChampChng(MyGUI::MultiListBox* li, size_t pos);
 	
 
 	///  input tab

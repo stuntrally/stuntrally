@@ -47,9 +47,9 @@ bool ChampsXml::LoadXml(std::string file)
 		while (eTr)
 		{
 			ChampTrack t;	//name="S4-Hills" laps="1" factor="0.1"
-			a = eCh->Attribute("name");		if (a)  t.name = std::string(a);
-			a = eCh->Attribute("laps");		if (a)  t.laps = s2i(a);
-			a = eCh->Attribute("factor");	if (a)  t.factor = s2r(a);
+			a = eTr->Attribute("name");		if (a)  t.name = std::string(a);
+			a = eTr->Attribute("laps");		if (a)  t.laps = s2i(a);
+			a = eTr->Attribute("factor");	if (a)  t.factor = s2r(a);
 			
 			c.trks.push_back(t);
 			eTr = eTr->NextSiblingElement("track");

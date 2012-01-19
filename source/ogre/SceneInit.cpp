@@ -46,6 +46,7 @@ void App::createScene()
 	//  championships.xml, progress.xml
 	champs.LoadXml(PATHMANAGER::GetGameConfigDir() + "/championships.xml");
 	progress.LoadXml(PATHMANAGER::GetUserConfigDir() + "/progress.xml");
+	//if progress empty or size diff than champs upd progress....
 
 	//  fluids.xml
 	fluidsXml.LoadXml(PATHMANAGER::GetDataPath() + "/materials/fluids.xml");

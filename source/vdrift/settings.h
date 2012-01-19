@@ -10,7 +10,6 @@
 class SETTINGS
 {
 public:
-///  params
 //------------------------------------------
 	int version;  // file version
 
@@ -40,33 +39,38 @@ public:
 	bool abs, tcs, autoshift, autorear, rear_inv, show_mph;
 	float car_hue[4], car_sat[4], car_val[4];  int cam_view[4];
 
-	//  current game settings, changed only on new game
-	/*class GameSet
+	//---------------  current game config, changed only on new game
+	class GameSet
 	{
-		//  car, track
-		std::string car[4], track;  bool track_user;
+		//  track
+		std::string track;  bool track_user, trackreverse;
+		//  cars
+		std::string car[4];
 		float car_hue[4], car_sat[4], car_val[4];  //int cam_view[4];
-		bool trackreverse;	int local_players, num_laps;
+		//  game split
+		int local_players, num_laps;
+		//  game setup
 		int boost_type, flip_type;  float boost_power;
 		bool rpl_rec;
-	}  game;*/
+		//  champ
+		int numChamp;  // -1 none
+	}  game;
+	//---------------
 	
-	//  game  todo:.. actual game copy in other class
+	//  game
 	bool trackreverse;	int local_players, num_laps;
 	bool split_vertically;  std::string language;
 	int boost_type, flip_type;  float boost_power;
 	bool isMain;  int inMenu;  // last menu
 	
-	//  joystick
-	std::string ff_device;
-	float ff_gain;
-	bool ff_invert;
+	//  joystick ff
+	std::string ff_device;	float ff_gain;	bool ff_invert;
 
 	//  other
 	float vol_master, vol_engine, vol_tires, vol_env;
 	bool autostart, escquit;
 	bool bltDebug, bltLines, bltProfilerTxt;
-	bool loadingbackground;
+	bool loadingbackground, x11_capture_mouse;
 	
 	//  sim freq (1/interval timestep)
 	float game_fq, blt_fq;  int blt_iter, dyn_iter, multi_thr;
@@ -79,9 +83,6 @@ public:
 	int windowx, windowy, fsaa;
 	bool fullscreen, vsync, ssaa, ssao;
 	std::string buffer, rendersystem;
-	
-	//  input
-	bool x11_capture_mouse;
 	
 	//  replay
 	bool rpl_rec, rpl_ghost, rpl_bestonly;
