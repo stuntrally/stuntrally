@@ -5,7 +5,7 @@ compositor SoftParticles
 		compositor_logic SoftParticles
 		
         texture_ref scene gbuffer mrt_output
-        texture softparticle target_width target_height PF_R8G8B8A8 depth_pool 2
+        texture softparticle target_width target_height PF_R8G8B8A8 depth_pool 2 no_fsaa
 		texture previousscene target_width target_height PF_R8G8B8A8
      
 		target previousscene 

@@ -26,6 +26,9 @@ void SoftParticlesBlend_ps(in float4 position : POSITION
 //	test -only show particles
 //	oColor =  particlecolor;
 
+//	test -only scene
+//	oColor =  scene;
+
 	return;
 }
 

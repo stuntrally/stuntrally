@@ -1,14 +1,33 @@
+vertex_program RenderGBuffer_vp cg
+{
+    source renderscene.cg
+    profiles vs_4_0 vs_1_1 arbvp1
+    entry_point RenderScene_vs
+    default_params
+    {
+        param_named_auto wvp worldviewproj_matrix
+    }
+}
+fragment_program RenderGBuffer_ps cg
+{
+    source renderscene.cg
+    entry_point RenderScene_ps
+    profiles ps_4_0 ps_2_x arbfp1
+    default_params
+    {
+    }
+}
 material RenderScene
 {
 	technique
     {
         pass
         {
-			vertex_program_ref Ogre/Compositor/StdQuad_vp
+			vertex_program_ref RenderGBuffer_vp
 			{
 			}
         
-			fragment_program_ref Ogre/Compositor/StdQuad_fp
+			fragment_program_ref RenderGBuffer_ps
 			{
 			}
 
