@@ -555,6 +555,14 @@
 				>
 			</File>
 			<File
+				RelativePath=".\source\ogre\ChampsXml.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\source\ogre\ChampsXml.h"
+				>
+			</File>
+			<File
 				RelativePath=".\Source\vdrift\configfile.cpp"
 				>
 			</File>

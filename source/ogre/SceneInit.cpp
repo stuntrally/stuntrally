@@ -42,7 +42,10 @@ void App::createScene()
 
 	//  tracks.xml
 	tracksXml.LoadXml(PATHMANAGER::GetGameConfigDir() + "/tracks.xml");
-	//tracksXml.SaveXml(PATHMANAGER::GetGameConfigDir() + "/tracks2.xml");
+
+	//  championships.xml, progress.xml
+	champs.LoadXml(PATHMANAGER::GetGameConfigDir() + "/championships.xml");
+	progress.LoadXml(PATHMANAGER::GetUserConfigDir() + "/progress.xml");
 
 	//  fluids.xml
 	fluidsXml.LoadXml(PATHMANAGER::GetDataPath() + "/materials/fluids.xml");

@@ -40,6 +40,17 @@ public:
 	bool abs, tcs, autoshift, autorear, rear_inv, show_mph;
 	float car_hue[4], car_sat[4], car_val[4];  int cam_view[4];
 
+	//  current game settings, changed only on new game
+	/*class GameSet
+	{
+		//  car, track
+		std::string car[4], track;  bool track_user;
+		float car_hue[4], car_sat[4], car_val[4];  //int cam_view[4];
+		bool trackreverse;	int local_players, num_laps;
+		int boost_type, flip_type;  float boost_power;
+		bool rpl_rec;
+	}  game;*/
+	
 	//  game  todo:.. actual game copy in other class
 	bool trackreverse;	int local_players, num_laps;
 	bool split_vertically;  std::string language;

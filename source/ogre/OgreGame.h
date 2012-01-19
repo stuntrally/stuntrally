@@ -7,6 +7,7 @@
 #include "common/BltObjects.h"
 #include "common/TracksXml.h"
 #include "common/FluidsXml.h"
+#include "ChampsXml.h"
 
 #include "ReplayGame.h"
 #include "CarModel.h"
@@ -237,6 +238,7 @@ protected:
 	void UpdCarClrSld(bool upd=true);  bool bUpdCarClr;
 	void MainMenuBtn(MyGUI::WidgetPtr);
 	void MenuTabChg(MyGUI::TabPtr, size_t);
+	ChampsXml champs;  ProgressXml progress;  // for championships
 	
 
 	///  input tab
