@@ -252,6 +252,9 @@ void MaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::StrStrea
 			outStream << "	in float4 viewNormal : TEXCOORD"+ toStr( mTexCoord_i++ ) +", \n";
 		}
 	}
+	
+	outStream <<
+	"	in float fogAmount : FOG, \n";
 
 	if (vpNeedWvMat()) outStream <<
 		"	uniform float4x4 wvMat, \n";
@@ -333,6 +336,7 @@ void MaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::StrStrea
 	{
 			outStream << "	out float4 oColor : COLOR \n";
 	}
+	
 	outStream << 	") \n"
 		"{ \n";
 	
@@ -455,7 +459,7 @@ void MaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::StrStrea
 	
 	// add fog
 	outStream <<
-		"	oColor = lerp(color1, float4(fogColor,1), position.w); \n";
+		"	oColor = lerp(color1, float4(fogColor,1), fogAmount); \n";
 	
 	// debug colour output  ------------------------------------------
 	
