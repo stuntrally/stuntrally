@@ -400,6 +400,51 @@ void App::LoadMisc()  // 7 last
 			(*it)->fCam->mWorld = &(pGame->collision);
 			#endif
 		}
+	
+	
+	/// rendertextures debug
+	#if 0
+	// init overlay elements
+	OverlayManager& mgr = OverlayManager::getSingleton();
+	Overlay* overlay;
+	// destroy if already exists
+	if (overlay = mgr.getByName("DebugOverlay"))
+		mgr.destroy(overlay);
+	overlay = mgr.create("DebugOverlay");
+	Ogre::CompositorInstance  *compositor= CompositorManager::getSingleton().getCompositorChain(mSplitMgr->mViewports.front())->getCompositor("gbuffer");
+	for (int i=0; i<3; ++i)
+	{
+		// Set up a debug panel
+		if (MaterialManager::getSingleton().resourceExists("Ogre/DebugTexture" + toStr(i)))
+			MaterialManager::getSingleton().remove("Ogre/DebugTexture" + toStr(i));
+		MaterialPtr debugMat = MaterialManager::getSingleton().create(
+			"Ogre/DebugTexture" + toStr(i), 
+			ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME);
+		debugMat->getTechnique(0)->getPass(0)->setLightingEnabled(false);
+		TexturePtr depthTexture = compositor->getTextureInstance("mrt_output",i);
+		TextureUnitState *t = debugMat->getTechnique(0)->getPass(0)->createTextureUnitState(depthTexture->getName());
+		t->setTextureAddressingMode(TextureUnitState::TAM_CLAMP);
+		OverlayContainer* debugPanel;
+		// destroy container if exists
+		try
+		{
+			if (debugPanel = 
+				static_cast<OverlayContainer*>(
+					mgr.getOverlayElement("Ogre/DebugTexPanel" + toStr(i)
+				)))
+				mgr.destroyOverlayElement(debugPanel);
+		}
+		catch (Ogre::Exception&) {}
+		debugPanel = (OverlayContainer*)
+			(OverlayManager::getSingleton().createOverlayElement("Panel", "Ogre/DebugTexPanel" + StringConverter::toString(i)));
+		debugPanel->_setPosition(0.67, i*0.33);
+		debugPanel->_setDimensions(0.33, 0.33);
+		debugPanel->setMaterialName(debugMat->getName());
+		debugPanel->show();
+		overlay->add2D(debugPanel);
+		overlay->show();
+	}
+	#endif
 }
 
 /* Actual loading procedure that gets called every frame during load. Performs a single loading step. */
