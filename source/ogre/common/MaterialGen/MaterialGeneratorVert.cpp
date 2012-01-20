@@ -139,8 +139,6 @@ void MaterialGenerator::generateVertexProgramSource(Ogre::StringUtil::StrStreamT
 			outStream <<"	out float4 oNormal  				: TEXCOORD"+toStr(mTexCoord_i++)+", \n";	
 		}
 	}
-	if (needNormalMap()) outStream <<
-		"	uniform float bumpScale, \n";
 	
 	if (fpNeedEyeVector()) outStream <<
 		"	out float4 oEyeVector : TEXCOORD"+toStr(mTexCoord_i++)+", \n";
@@ -317,9 +315,6 @@ void MaterialGenerator::individualVertexProgramParams(GpuProgramParametersShared
 	#ifndef _DEBUG
 	params->setIgnoreMissingParams(true);
 	#endif
-	
-	if (needNormalMap())
-		params->setNamedConstant("bumpScale", mDef->mProps->bumpScale);
 	
 	if (needShadows())
 	for (int i=0; i<mParent->getNumShadowTex(); ++i)

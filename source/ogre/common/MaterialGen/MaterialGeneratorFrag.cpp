@@ -237,8 +237,8 @@ void MaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::StrStrea
 		"	in float4 inEyeVector : TEXCOORD"+toStr(mTexCoord_i++)+", \n";
 		
 	if (needNormalMap()) outStream <<
-		"	in float4 tangent : TEXCOORD"+toStr(mTexCoord_i++)+", \n";
-	
+		"	in float4 tangent : TEXCOORD"+toStr(mTexCoord_i++)+", \n"
+		"	uniform float bumpScale, \n";
 
 	if (MRTSupported()) 
 	{
@@ -356,7 +356,7 @@ void MaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::StrStrea
 		if (needNormalMap()) outStream <<
 			"	float4 normalTex = tex2D(normalMap, texCoord.xy); \n"
 			"	float3 binormal = cross(tangent.xyz, iNormal.xyz); \n"
-			"	float3x3 tbn = float3x3(tangent.xyz, binormal, iNormal.xyz); \n"
+			"	float3x3 tbn = float3x3(tangent.xyz*bumpScale, binormal*bumpScale, iNormal.xyz); \n"
 			"	normal = mul(transpose(tbn), normalTex.xyz * 2.f - 1.f); \n"
 			"	normal = mul((float3x3)wITMat, normal); \n";
 		else outStream <<
@@ -598,6 +598,9 @@ void MaterialGenerator::individualFragmentProgramParams(Ogre::GpuProgramParamete
 		params->setNamedConstant("fresnelBias", mDef->mProps->fresnelBias);
 		params->setNamedConstant("fresnelPower", mDef->mProps->fresnelPower);
 	}
+	
+	if (needNormalMap())
+		params->setNamedConstant("bumpScale", mDef->mProps->bumpScale);
 	
 	if (mDef->mProps->transparent)
 		params->setNamedConstant("alphaRejectValue", Real(float(mDef->mProps->alphaRejectValue)/float(256.0f)));

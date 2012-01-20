@@ -187,7 +187,7 @@ void MaterialFactory::setSoftParticleDepth(TexturePtr depthtexture)
 		{
 			MaterialPtr mat = MaterialManager::getSingleton().getByName( (*it) );
 			TextureUnitState* tus =mat->getTechnique(0)->getPass(0)->getTextureUnitState("depthMap");
-			tus->setTexture(depthtexture);
+			tus->setTextureName(depthtexture->getName());
 		}
 	}
 }
