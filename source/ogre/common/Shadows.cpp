@@ -210,6 +210,7 @@ void App::changeShadows()
 					Technique::PassIterator passIt = tech->getPassIterator();
 					while (passIt.hasMoreElements())
 					{	Pass* pass = passIt.getNext();
+						if (!pass->hasFragmentProgram()) continue;
 						Pass::TextureUnitStateIterator tusIt = pass->getTextureUnitStateIterator();
 						while (tusIt.hasMoreElements())
 						{

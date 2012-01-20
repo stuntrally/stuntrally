@@ -89,7 +89,7 @@ void MaterialGenerator::generateVertexProgramSource(Ogre::StringUtil::StrStreamT
 		"void main_vp( "
 		"	float4 position 					: POSITION, \n";
 	
-	if (fpNeedWsNormal()) 
+	if (fpNeedNormal()) 
 	{
 		outStream <<"	float3 normal			 			: NORMAL, \n";
 	}
@@ -128,7 +128,7 @@ void MaterialGenerator::generateVertexProgramSource(Ogre::StringUtil::StrStreamT
 		"	float4 originPos 	: TEXCOORD2, \n";
 	}
 
-	if (fpNeedWsNormal()) 
+	if (fpNeedNormal()) 
 	{
 		if(UsePerPixelNormals())
 		{
@@ -136,25 +136,18 @@ void MaterialGenerator::generateVertexProgramSource(Ogre::StringUtil::StrStreamT
 		}
 		else
 		{
-			if(MRTSupported())
-			{
-				outStream <<"	out float4 oWsNormal  				: COLOR1, \n";
-			}
-			else
-			{
-				outStream <<"	out float4 oWsNormal  				: TEXCOORD"+toStr(mTexCoord_i++)+", \n";	
-			}
+			outStream <<"	out float4 oNormal  				: TEXCOORD"+toStr(mTexCoord_i++)+", \n";	
 		}
 	}
 	if (needNormalMap()) outStream <<
 		"	uniform float bumpScale, \n";
-		
-	if (fpNeedTangentToCube()) 
-	{
-		 outStream <<"	out	float4	oTangentToCubeSpace0	: TEXCOORD"+ toStr( mTexCoord_i++ ) +", \n"; // tangent to cube (world) space
-		 outStream <<"	out	float4	oTangentToCubeSpace1	: TEXCOORD"+ toStr( mTexCoord_i++ ) +", \n";
-		 outStream <<"	out	float4	oTangentToCubeSpace2	: TEXCOORD"+ toStr( mTexCoord_i++ ) +", \n";
-	}
+	
+	if (fpNeedEyeVector()) outStream <<
+		"	out float4 oEyeVector : TEXCOORD"+toStr(mTexCoord_i++)+", \n";
+	
+	if (needNormalMap()) outStream <<
+		"	out float4 oTangent : TEXCOORD"+toStr(mTexCoord_i++)+", \n";
+	
 	if(MRTSupported())
 	{
 		if(!UsePerPixelNormals())
@@ -172,8 +165,6 @@ void MaterialGenerator::generateVertexProgramSource(Ogre::StringUtil::StrStreamT
 		
 	vpShadowingParams(outStream);
 
-	if (vpNeedWITMat()) outStream <<
-		"	uniform float4x4 wITMat, \n";
 	if (vpNeedWvMat()) outStream <<
 		"	uniform float4x4 wvMat, \n";
 	if (vpNeedWMat()) outStream <<
@@ -233,21 +224,10 @@ void MaterialGenerator::generateVertexProgramSource(Ogre::StringUtil::StrStreamT
 	"	float4 worldPosition = mul(wMat, position); \n";
 	
 	if (fpNeedEyeVector()) outStream <<
-		"	float3 eyeVector = worldPosition.xyz - eyePosition; \n" // transform eye into view space
-		"	oTangentToCubeSpace0.xyzw = eyeVector.xxxx; \n"
-		"	oTangentToCubeSpace1.xyzw = eyeVector.yyyy; \n"
-		"	oTangentToCubeSpace2.xyzw = eyeVector.zzzz; \n";
+		"	oEyeVector.xyz = worldPosition.xyz - eyePosition.xyz; \n"; // transform eye into view space
 
 	if (needNormalMap()) outStream <<
-	"	float3 binormal = cross(tangent, normal); \n"	// calculate binormal
-	"	float3x3 tbn = float3x3( tangent * bumpScale, \n"			// build TBN
-	"										binormal * bumpScale, \n"
-	"										normal ); \n"
-	"	float3x3 tbnInv = transpose(tbn); \n" // transpose TBN to get inverse rotation to obj space
-	"	float3x3 tmp = mul( (float3x3) wITMat, tbnInv ); \n" // concatenate with the upper-left 3x3 of inverse transpose world matrix 
-	"	oTangentToCubeSpace0.xyz = tmp[0]; \n" // store in tangentToCubeSpace to pass this on to fragment shader
-	"	oTangentToCubeSpace1.xyz = tmp[1]; \n"
-	"	oTangentToCubeSpace2.xyz = tmp[2]; \n";
+		"	oTangent.xyz = tangent.xyz; \n";
 		
 	if (needShadows())
 	{
@@ -273,7 +253,7 @@ void MaterialGenerator::generateVertexProgramSource(Ogre::StringUtil::StrStreamT
 	outStream <<
 	"	fogAmount = enableFog * saturate(fogParams.x * (oPosition.z - fogParams.y) * fogParams.w); \n";
 	
-	if (fpNeedWsNormal())
+	if (fpNeedNormal())
 	{
 		if(UsePerPixelNormals())
 		{
@@ -281,10 +261,10 @@ void MaterialGenerator::generateVertexProgramSource(Ogre::StringUtil::StrStreamT
 		}
 		else
 		{
-			std::string wsNormalW = "1";
-			if (needTerrainLightMap()) wsNormalW = "worldPosition.x";
+			std::string normalW = "1";
+			if (needTerrainLightMap()) normalW = "worldPosition.x";
 			outStream <<
-			"	oWsNormal = float4(mul( (float3x3) wITMat, normal ), "+wsNormalW+"); \n";
+			"	oNormal = float4(normal.xyz, "+normalW+"); \n";
 		}
 
 	}
@@ -316,8 +296,6 @@ void MaterialGenerator::vertexProgramParams(HighLevelGpuProgramPtr program)
 	params->setNamedAutoConstant("wvpMat", GpuProgramParameters::ACT_WORLDVIEWPROJ_MATRIX);
 	if (vpNeedWvMat())
 		params->setNamedAutoConstant("wvMat", GpuProgramParameters::ACT_WORLDVIEW_MATRIX);
-	if (fpNeedWsNormal())
-		params->setNamedAutoConstant("wITMat", GpuProgramParameters::ACT_INVERSE_TRANSPOSE_WORLD_MATRIX);
 	if (fpNeedEyeVector())
 		params->setNamedAutoConstant("eyePosition", GpuProgramParameters::ACT_CAMERA_POSITION);
 	

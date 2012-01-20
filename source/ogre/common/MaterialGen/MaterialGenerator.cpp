@@ -154,7 +154,7 @@ void MaterialGenerator::generate()
 	
 	/// uncomment to see full shader source code in log
 	/*
-	if (mDef->getName() == "grass")
+	if (mDef->getName() == "car_body")
 	{
 		LogO("[MaterialFactory] Vertex program source: ");
 		StringUtil::StrStreamType vSourceStr;
@@ -411,7 +411,7 @@ bool MaterialGenerator::fpNeedLighting()
 	return mShader->lighting;
 }
 
-bool MaterialGenerator::fpNeedWsNormal()
+bool MaterialGenerator::fpNeedNormal()
 {
 	return needEnvMap() || needNormalMap() || fpNeedLighting() || needTerrainLightMap() || MRTSupported();
 }
@@ -447,7 +447,7 @@ bool MaterialGenerator::UsePerPixelNormals()
 }
 
 bool MaterialGenerator::MRTSupported()
-{	
+{
 	static bool bMRTSupportCalculated=false;
 	if(!bMRTSupportCalculated)
 	{
@@ -466,12 +466,7 @@ bool MaterialGenerator::MRTSupported()
 
 bool MaterialGenerator::vpNeedWITMat()
 {
-	return fpNeedWsNormal();
-}
-
-bool MaterialGenerator::fpNeedTangentToCube()
-{
-	return (needNormalMap() || fpNeedEyeVector());
+	return fpNeedNormal();
 }
 
 std::string MaterialGenerator::getChannel(unsigned int n)
