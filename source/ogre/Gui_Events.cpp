@@ -1000,3 +1000,42 @@ void App::MenuTabChg(MyGUI::TabPtr tab, size_t id)
 	pSet->isMain = true;
 	toggleGui(false);  // back to main
 }
+
+
+//  Champs list
+//---------------------------------------------------------------------
+void App::listChampChng(MyGUI::MultiListBox* chlist, size_t pos)
+{
+	if (pos < 0)  return;
+	if (pos >= champs.champs.size())  {  LogO("Error champ sel > size.");  return;  }
+	//if (pos >= progress.champs.size())  {  LogO("Error progres sel > size.");  return;  }
+	
+	//  update champ stages
+	MultiListBox* li = mGUI->findWidget<MultiListBox>("MListStages");
+	li->removeAllItems();
+	const Champ& ch = champs.champs[pos];
+	for (int i=0; i < ch.trks.size(); ++i)
+	{
+		const ChampTrack& tr = ch.trks[i];
+		li->addItem(toStr(i/10)+toStr(i%10), 0);  int l = li->getItemCount()-1;
+		li->setSubItemNameAt(1,l, tr.name.c_str());
+		li->setSubItemNameAt(2,l, "-");
+		li->setSubItemNameAt(3,l, "-");  //scenery..
+		li->setSubItemNameAt(4,l, toStr(tr.laps));
+		li->setSubItemNameAt(5,l, "0");
+	}
+	//  update champ details
+	TextBox* txt;
+	txt = mGUI->findWidget<TextBox>("valChDiff");
+	if (txt)  txt->setCaption(toStr(ch.diff));
+	txt = mGUI->findWidget<TextBox>("valChTracks");
+	if (txt)  txt->setCaption(toStr(ch.trks.size()));
+	txt = mGUI->findWidget<TextBox>("valChDist");
+	if (txt)  txt->setCaption(toStr(ch.length));  // sum from find tracks..
+	txt = mGUI->findWidget<TextBox>("valChTime");
+	if (txt)  txt->setCaption(toStr(ch.time));    // sum champs.trkTimes..
+	/*txt = mGUI->findWidget<TextBox>("valChProgress");
+	if (txt)  txt->setCaption(toStr(progress.champs[pos].curTrack));
+	txt = mGUI->findWidget<TextBox>("valChScore");
+	if (txt)  txt->setCaption(toStr(progress.champs[pos].score));*/
+}

@@ -430,14 +430,16 @@ void App::InitGui()
     //------------------------------------------------------------------------
 	MultiListBox* li = mGUI->findWidget<MultiListBox>("MListChamps");
 	li->removeAllItems();
+	for (int i=0; i < champs.champs.size(); ++i)
 	{
-		int n = 1;
-		li->addItem(toStr(n/10)+toStr(n%10), 0);  int l = li->getItemCount()-1;
-		li->setSubItemNameAt(1,l, "Basic");
-		li->setSubItemNameAt(2,l, "Easy");
-		li->setSubItemNameAt(3,l, "50%");
-		li->setSubItemNameAt(4,l, "90");
+		const Champ& ch = champs.champs[i];
+		li->addItem(toStr(i/10)+toStr(i%10), 0);  int l = li->getItemCount()-1;
+		li->setSubItemNameAt(1,l, ch.name.c_str());
+		li->setSubItemNameAt(2,l, toStr(ch.diff) /*"Easy"*/);
+		li->setSubItemNameAt(3,l, "0%");  //length,time;  bool tutorial;
+		li->setSubItemNameAt(4,l, toStr(ch.trks.size()));  //"90");
 	}
+	li->eventListChangePosition += newDelegate(this, &App::listChampChng);
 
 	
 	bGI = true;  // gui inited, gui events can now save vals

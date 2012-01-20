@@ -16,12 +16,12 @@
 	</championship>
 	<championship name="Bridges" ver="1" difficulty="1" length="3" time="134" tutorial="1" 
 			descr="Easy, medium lenght tutorial on tracks with bridges and bumpy terrain. One lap on each track.">
-		<track name="D4-SZ" laps="1" factor="0.1" />
+		<track name="D4-SZ" laps="2" factor="0.1" />
 		<track name="S4-Hills" laps="1" factor="0.1" />
 	</championship>
 	<championship name="Jumps" ver="1" difficulty="3" length="3" time="134" tutorial="1" 
 			descr="Tutorial on jumps in tracks. One lap on each. Lets you get to know with different road surfaces.">
-		<track name="D6-jmp0-high" laps="1" factor="0.1" />
+		<track name="D6-jmp0-high" laps="2" factor="0.1" />
 		<track name="D8-HHY" laps="1" factor="0.1" />
 	</championship>
 	<championship name="Loops" ver="1" difficulty="4" length="3" time="134" tutorial="1" 
@@ -31,7 +31,7 @@
 	</championship>
 	<championship name="Pipes" ver="1" difficulty="5" length="3" time="134" tutorial="1" 
 			descr="Tutorial on tracks with pipes.">
-		<track name="J5-Pipes" laps="1" factor="0.1" />
+		<track name="J5-Pipes" laps="2" factor="0.1" />
 		<track name="S10-Pipe88" laps="1" factor="0.2" />
 		<track name="S6-PipeCrazy" laps="1" factor="0.2" />
 	</championship>

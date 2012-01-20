@@ -832,14 +832,19 @@
                 </Widget>
                 <Widget type="Button" skin="Button" position="256 440 144 40">
                     <Property key="Caption" value="Start"/>
+					<Property key="Colour" value="0.6 0.6 1"/>
+					<Property key="TextColour" value="0.9 0.9 1"/>
 					<UserString key="RelativeTo" value="ChampWnd"/>
                 </Widget>
                 <Widget type="Button" skin="Button" position="440 440 144 40">
                     <Property key="Caption" value="Continue"/>
+					<Property key="Colour" value="0.6 0.8 1"/>
+					<Property key="TextColour" value="0.8 0.9 1"/>
 					<UserString key="RelativeTo" value="ChampWnd"/>
                 </Widget>
-                <Widget type="EditBox" skin="EditBoxEmpty" position="416 168 320 88">
+                <Widget type="EditBox" skin="EditBoxEmpty" position="466 48 320 88">
                     <Property key="Caption" value="Championship description"/>
+					<Property key="TextColour" value="0.6 0.9 1.0"/>
 					<UserString key="RelativeTo" value="ChampWnd"/>
                 </Widget>
             </Widget>
@@ -871,49 +876,61 @@
                         <Property key="Caption" value="Score"/>
                     </Widget>
                 </Widget>
-                <Widget type="TextBox" skin="TextBox" position="456 48 136 24">
+                <Widget type="TextBox" skin="TextBox" position="496 48 136 24">
                     <Property key="Caption" value="Difficulty"/>
+					<Property key="TextColour" value="0.9 0.4 0.4"/>
 					<UserString key="RelativeTo" value="ChampWnd"/>
                 </Widget>
-                <Widget type="TextBox" skin="TextBox" position="616 48 80 24">
+                <Widget type="TextBox" skin="TextBox" position="616 48 80 24" name="valChDiff">
+					<Property key="TextColour" value="1.0 0.5 0.5"/>
 					<UserString key="RelativeTo" value="ChampWnd"/>
                 </Widget>
-                <Widget type="TextBox" skin="TextBox" position="456 80 136 24">
+                <Widget type="TextBox" skin="TextBox" position="496 80 136 24">
                     <Property key="Caption" value="Tracks"/>
+					<Property key="TextColour" value="0.9 0.9 0.1"/>
 					<UserString key="RelativeTo" value="ChampWnd"/>
                 </Widget>
-                <Widget type="TextBox" skin="TextBox" position="616 80 80 24">
+                <Widget type="TextBox" skin="TextBox" position="616 80 80 24" name="valChTracks">
+					<Property key="TextColour" value="1.0 1.0 0.3"/>
 					<UserString key="RelativeTo" value="ChampWnd"/>
                 </Widget>
-                <Widget type="TextBox" skin="TextBox" position="456 112 136 24">
+                <Widget type="TextBox" skin="TextBox" position="496 112 136 24">
                     <Property key="Caption" value="Distance"/>
+					<Property key="TextColour" value="0.2 0.9 0.2"/>
 					<UserString key="RelativeTo" value="ChampWnd"/>
                 </Widget>
-                <Widget type="TextBox" skin="TextBox" position="616 112 80 24">
+                <Widget type="TextBox" skin="TextBox" position="616 112 80 24" name="valChDist">
+					<Property key="TextColour" value="0.4 1.0 0.4"/>
 					<UserString key="RelativeTo" value="ChampWnd"/>
                 </Widget>
-                <Widget type="TextBox" skin="TextBox" position="456 144 136 24">
+                <Widget type="TextBox" skin="TextBox" position="496 144 136 24">
                     <Property key="Caption" value="Time"/>
+					<Property key="TextColour" value="0.5 0.9 0.8"/>
 					<UserString key="RelativeTo" value="ChampWnd"/>
                 </Widget>
-                <Widget type="TextBox" skin="TextBox" position="616 144 80 24">
+                <Widget type="TextBox" skin="TextBox" position="616 144 80 24" name="valChTime">
+					<Property key="TextColour" value="0.75 1.0 0.92"/>
 					<UserString key="RelativeTo" value="ChampWnd"/>
                 </Widget>
-                <Widget type="TextBox" skin="TextBox" position="456 176 136 24">
+                <Widget type="TextBox" skin="TextBox" position="496 176 136 24">
                     <Property key="Caption" value="Progress"/>
+					<Property key="TextColour" value="0.6 0.75 0.9"/>
 					<UserString key="RelativeTo" value="ChampWnd"/>
                 </Widget>
-                <Widget type="TextBox" skin="TextBox" position="616 176 80 24">
+                <Widget type="TextBox" skin="TextBox" position="616 176 80 24" name="valChProgress">
+					<Property key="TextColour" value="0.7 0.85 1.0"/>
 					<UserString key="RelativeTo" value="ChampWnd"/>
                 </Widget>
-                <Widget type="TextBox" skin="TextBox" position="456 208 136 24">
+                <Widget type="TextBox" skin="TextBox" position="496 208 136 24">
                     <Property key="Caption" value="Score"/>
+					<Property key="TextColour" value="0.8 0.7 1"/>
 					<UserString key="RelativeTo" value="ChampWnd"/>
                 </Widget>
-                <Widget type="TextBox" skin="TextBox" position="616 208 80 24">
+                <Widget type="TextBox" skin="TextBox" position="616 208 80 24" name="valChScore">
+					<Property key="TextColour" value="0.9 0.8 1"/>
 					<UserString key="RelativeTo" value="ChampWnd"/>
                 </Widget>
-                <Widget type="TextBox" skin="TextBox" position="456 240 136 24">
+                <Widget type="TextBox" skin="TextBox" position="496 240 136 24">
 					<UserString key="RelativeTo" value="ChampWnd"/>
                 </Widget>
                 <Widget type="TextBox" skin="TextBox" position="616 240 80 24">
