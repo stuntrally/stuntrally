@@ -108,8 +108,7 @@ protected:
 	
 	// passtrough (vertex to fragment)
 	virtual bool fpNeedWMat();
-	virtual bool fpNeedTangentToCube();
-	virtual bool fpNeedWsNormal();
+	virtual bool fpNeedNormal();
 	virtual bool fpNeedEyeVector();
 	 
 	//MRT

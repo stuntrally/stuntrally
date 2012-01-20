@@ -184,7 +184,7 @@ void MaterialGenerator::fpCalcShadowSource(Ogre::StringUtil::StrStreamType& outS
 	{
 		outStream <<
 		"	float shadowingLM; \n"
-		"	float2 worldPos = float2(wsNormal.w, texCoord.w); \n" // get world position
+		"	float2 worldPos = float2(iNormal.w, texCoord.w); \n" // get world position
 		"	float2 lmTexCoord = (worldPos / terrainWorldSize) + 0.5; \n" // convert to image space 0..1
 		"	shadowingLM = tex2D(terrainLightMap, lmTexCoord).x; \n" // fetch texture r channel
 		"	if (enableTerrainLightMap == 0.f) shadowingLM = 1.f; \n";
@@ -221,7 +221,7 @@ void MaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::StrStrea
 	if (mShader->wind == 1) outStream <<
 		"	in float alphaFade : TEXCOORD"+toStr(mTexCoord_i++)+", \n";
 	
-	if (fpNeedWsNormal()) 
+	if (fpNeedNormal()) 
 	{
 		if(UsePerPixelNormals())
 		{
@@ -229,26 +229,16 @@ void MaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::StrStrea
 		}
 		else
 		{
-			if(MRTSupported())
-			{
-				outStream <<"	in float4 wsNormal : COLOR1, \n";
-			}
-			else
-			{
-				outStream <<"	in float4 wsNormal : TEXCOORD"+toStr(mTexCoord_i++)+", \n";
-			}
+			outStream <<"	in float4 iNormal : TEXCOORD"+toStr(mTexCoord_i++)+", \n";
 		}
 	}
-	if (needNormalMap()) 
-	{
-		outStream << "	in float4 tangentToCubeSpace0 : TEXCOORD"+ toStr( mTexCoord_i++ ) +", \n";
-		outStream << "	in float4 tangentToCubeSpace1 : TEXCOORD"+ toStr( mTexCoord_i++ ) +", \n";
-		outStream << "	in float4 tangentToCubeSpace2 : TEXCOORD"+ toStr( mTexCoord_i++ ) +", \n";
-	}
-	else if (fpNeedEyeVector()) 
-	{
-		outStream << "	in float3 tangentToCubeSpace : TEXCOORD"+ toStr( mTexCoord_i++ ) +", \n";
-	}
+	
+	if (fpNeedEyeVector()) outStream <<
+		"	in float4 inEyeVector : TEXCOORD"+toStr(mTexCoord_i++)+", \n";
+		
+	if (needNormalMap()) outStream <<
+		"	in float4 tangent : TEXCOORD"+toStr(mTexCoord_i++)+", \n";
+	
 
 	if (MRTSupported()) 
 	{
@@ -257,6 +247,9 @@ void MaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::StrStrea
 			outStream << "	in float4 viewNormal : TEXCOORD"+ toStr( mTexCoord_i++ ) +", \n";
 		}
 	}
+	
+	outStream <<
+	"	in float fogAmount : FOG, \n";
 
 	if (vpNeedWvMat()) outStream <<
 		"	uniform float4x4 wvMat, \n";
@@ -266,6 +259,9 @@ void MaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::StrStrea
 		outStream <<	"	uniform float4x4 wMat, \n";
 	}
 	
+	if (fpNeedNormal()) outStream <<
+		"	uniform float4x4 wITMat, \n";
+
 	if (needFresnel()) outStream <<
 		"	uniform float fresnelBias, \n"
 		"	uniform float fresnelScale, \n"
@@ -343,26 +339,28 @@ void MaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::StrStrea
 	{
 			outStream << "	out float4 oColor : COLOR \n";
 	}
+	
 	outStream << 	") \n"
 		"{ \n";
 	
 	// calc shadowing
 	fpCalcShadowSource(outStream);
 	
-	if (fpNeedEyeVector() && !needNormalMap()) outStream <<
-		"	float3 eyeVector = normalize(float3(tangentToCubeSpace.x, tangentToCubeSpace.y, tangentToCubeSpace.z)); \n";
-	if (fpNeedWsNormal())
+	if (fpNeedEyeVector()) outStream <<
+		"	float3 eyeVector = normalize(inEyeVector.xyz); \n"; // normalize in the pixel shader for higher accuracy (inaccuracies would be caused by vertex interpolation)
+	if (fpNeedNormal())
 	{
 		outStream <<
 		"	float3 normal;";
+		
 		if (needNormalMap()) outStream <<
-			"	float3 eyeVector = normalize(float3(tangentToCubeSpace0.w, tangentToCubeSpace1.w, tangentToCubeSpace2.w)); \n"
-			"	float4 tsNormal = (tex2D( normalMap, texCoord.xy) * 2.0 - 1.0 ); \n" // fetch tangent space normal and decompress from range-compressed
-			"	normal.x = dot( tangentToCubeSpace0.xyz, tsNormal.xyz ); \n"
-			"	normal.y = dot( tangentToCubeSpace1.xyz, tsNormal.xyz ); \n"
-			"	normal.z = dot( tangentToCubeSpace2.xyz, tsNormal.xyz ); \n";
+			"	float4 normalTex = tex2D(normalMap, texCoord.xy); \n"
+			"	float3 binormal = cross(tangent.xyz, iNormal.xyz); \n"
+			"	float3x3 tbn = float3x3(tangent.xyz, binormal, iNormal.xyz); \n"
+			"	normal = mul(transpose(tbn), normalTex.xyz * 2.f - 1.f); \n"
+			"	normal = mul((float3x3)wITMat, normal); \n";
 		else outStream <<
-			"	normal = wsNormal; \n";
+			"	normal = mul((float3x3)wITMat, iNormal.xyz); \n";
 		
 		outStream << 
 		"	normal = normalize(normal); \n";
@@ -466,17 +464,17 @@ void MaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::StrStrea
 	
 	// add fog
 	outStream <<
-		"	oColor = lerp(color1, float4(fogColor,1), position.w); \n";
+		"	oColor = lerp(color1, float4(fogColor,1), fogAmount); \n";
 	
 	// debug colour output  ------------------------------------------
 	
 	// world position (for lightmap)
 	//if (needTerrainLightMap()) outStream <<
-	//	"	oColor = oColor*float4(texCoord.w, wsNormal.w, 1, 1); \n";
+	//	"	oColor = oColor*float4(texCoord.w, iNormal.w, 1, 1); \n";
 	
 	// normal
-	//outStream <<
-	//"	oColor = oColor * float4(normal.x, normal.y, normal.z, 1); \n";
+	// if (fpNeedNormal()) outStream <<
+	//"	oColor = oColor*0.00001 + 0.99999*float4(normal.x, normal.y, normal.z, 1); \n";
 	
 	// spec
 	//outStream <<
@@ -565,6 +563,9 @@ void MaterialGenerator::fragmentProgramParams(HighLevelGpuProgramPtr program)
 	
 	if (vpNeedWvMat())
 		params->setNamedAutoConstant("wvMat", GpuProgramParameters::ACT_WORLDVIEW_MATRIX);
+		
+	if (fpNeedNormal())
+		params->setNamedAutoConstant("wITMat", GpuProgramParameters::ACT_INVERSE_TRANSPOSE_WORLD_MATRIX);
 
 	if(MRTSupported())
 	{
