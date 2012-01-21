@@ -94,6 +94,7 @@ void App::rebuildPlayerList()
 
 void App::updateGameInfo()
 {
+	//  set game config
 	if (netGameInfo.name && edNetGameName) {
 		std::string name(netGameInfo.name);
 		edNetGameName->setCaption(name);
@@ -103,9 +104,10 @@ void App::updateGameInfo()
 		sListTrack = track;
 		ReadTrkStats();
 	}
-	// FIXME: These should not modify global settings, only for one game
-	pSet->collis_cars = netGameInfo.collisions;
-	pSet->num_laps = netGameInfo.laps;
+	pSet->game.collis_cars = netGameInfo.collisions;
+	pSet->game.collis_veget = true;
+	pSet->game.num_laps = netGameInfo.laps;
+	//todo:	int boost_type, flip_type;  float boost_power;
 	updateGameInfoGUI();
 }
 
@@ -130,8 +132,10 @@ void App::uploadGameInfo()
 	std::memcpy(game.name, gamename.c_str(), 32);
 	std::memcpy(game.track, trackname.c_str(), 32);
 	game.players = mClient->getPeerCount()+1;
-	game.collisions = pSet->collis_cars;
-	game.laps = pSet->num_laps;
+
+	game.collisions = pSet->gui.collis_cars;  // game set
+	game.laps = pSet->gui.num_laps;
+
 	game.port = pSet->local_port;
 	game.locked = false;
 	mMasterClient->updateGame(game); // Upload to master server
@@ -419,26 +423,26 @@ void App::chkGear(WP wp){		ChkEv(autoshift);	if (pGame)  pGame->ProcessNewSettin
 void App::chkRear(WP wp){		ChkEv(autorear);	if (pGame)  pGame->ProcessNewSettings();	}
 void App::chkRearInv(WP wp){	ChkEv(rear_inv);	if (pGame)  pGame->ProcessNewSettings();	}
 //    [Game]
-void App::chkVegetCollis(WP wp){	ChkEv(collis_veget);	}
-void App::chkCarCollis(WP wp){		ChkEv(collis_cars);		}
+void App::chkVegetCollis(WP wp){	ChkEv(gui.collis_veget);	}
+void App::chkCarCollis(WP wp){		ChkEv(gui.collis_cars);		}
 
 //  boost, flip
 void App::comboBoost(CMB)
 {
-	pSet->boost_type = val;  ShowHUD();
+	pSet->gui.boost_type = val;  ShowHUD();
 }
 void App::comboFlip(CMB)
 {
-	pSet->flip_type = val;
+	pSet->gui.flip_type = val;
 }
 	
 void App::btnNumPlayers(WP wp)
 {
-	if      (wp->getName() == "btnPlayers1")  pSet->local_players = 1;
-	else if (wp->getName() == "btnPlayers2")  pSet->local_players = 2;
-	else if (wp->getName() == "btnPlayers3")  pSet->local_players = 3;
-	else if (wp->getName() == "btnPlayers4")  pSet->local_players = 4;
-	if (valLocPlayers)  valLocPlayers->setCaption(toStr(pSet->local_players));
+	if      (wp->getName() == "btnPlayers1")  pSet->gui.local_players = 1;
+	else if (wp->getName() == "btnPlayers2")  pSet->gui.local_players = 2;
+	else if (wp->getName() == "btnPlayers3")  pSet->gui.local_players = 3;
+	else if (wp->getName() == "btnPlayers4")  pSet->gui.local_players = 4;
+	if (valLocPlayers)  valLocPlayers->setCaption(toStr(pSet->gui.local_players));
 }
 void App::chkSplitVert(WP wp)
 {
@@ -447,7 +451,7 @@ void App::chkSplitVert(WP wp)
 
 void App::slNumLaps(SL)
 {
-	int v = 20.f * val/res + 1;  if (bGI)  pSet->num_laps = v;
+	int v = 20.f * val/res + 1;  if (bGI)  pSet->gui.num_laps = v;
 	if (valNumLaps){  Fmt(s, "%d", v);	valNumLaps->setCaption(s);  }
 }
 
@@ -455,7 +459,7 @@ void App::tabPlayer(TabPtr wp, size_t id)
 {
 	iCurCar = id;
 	//  update gui for this car (color h,s,v, name, img)
-	size_t i = carList->findItemIndexWith(pSet->car[iCurCar]);
+	size_t i = carList->findItemIndexWith(pSet->gui.car[iCurCar]);
 	if (i != ITEM_NONE)
 	{	carList->setIndexSelected(i);
 		listCarChng(carList, i);
@@ -466,21 +470,21 @@ void App::tabPlayer(TabPtr wp, size_t id)
 //  car color
 void App::slCarClrH(SL)
 {
-	Real v = val/res;  if (bGI)  pSet->car_hue[iCurCar] = v;
+	Real v = val/res;  if (bGI)  pSet->gui.car_hue[iCurCar] = v;
 	if (valCarClrH){	Fmt(s, "%4.2f", v);	valCarClrH->setCaption(s);  }
 	if (iCurCar < carModels.size() && bUpdCarClr && bGI)
 		carModels[iCurCar]->ChangeClr(iCurCar);
 }
 void App::slCarClrS(SL)
 {
-	Real v = val/res;  if (bGI)  pSet->car_sat[iCurCar] = v;
+	Real v = val/res;  if (bGI)  pSet->gui.car_sat[iCurCar] = v;
 	if (valCarClrS){	Fmt(s, "%4.2f", v);	valCarClrS->setCaption(s);  }
 	if (iCurCar < carModels.size() && bUpdCarClr && bGI)
 		carModels[iCurCar]->ChangeClr(iCurCar);
 }
 void App::slCarClrV(SL)
 {
-	Real v = val/res;  if (bGI)  pSet->car_val[iCurCar] = v;
+	Real v = val/res;  if (bGI)  pSet->gui.car_val[iCurCar] = v;
 	if (valCarClrV){	Fmt(s, "%4.2f", v);	valCarClrV->setCaption(s);  }
 	if (iCurCar < carModels.size() && bUpdCarClr && bGI)
 		carModels[iCurCar]->ChangeClr(iCurCar);
@@ -488,16 +492,16 @@ void App::slCarClrV(SL)
 
 void App::imgBtnCarClr(WP img)
 {
-	pSet->car_hue[iCurCar] = s2r(img->getUserString("h"));
-	pSet->car_sat[iCurCar] = s2r(img->getUserString("s"));
-	pSet->car_val[iCurCar] = s2r(img->getUserString("v"));
+	pSet->gui.car_hue[iCurCar] = s2r(img->getUserString("h"));
+	pSet->gui.car_sat[iCurCar] = s2r(img->getUserString("s"));
+	pSet->gui.car_val[iCurCar] = s2r(img->getUserString("v"));
 	UpdCarClrSld();
 }
 void App::btnCarClrRandom(WP)
 {
-	pSet->car_hue[iCurCar] = Math::UnitRandom();
-	pSet->car_sat[iCurCar] = Math::UnitRandom();
-	pSet->car_val[iCurCar] = Math::UnitRandom();
+	pSet->gui.car_hue[iCurCar] = Math::UnitRandom();
+	pSet->gui.car_sat[iCurCar] = Math::UnitRandom();
+	pSet->gui.car_val[iCurCar] = Math::UnitRandom();
 	UpdCarClrSld();
 }
 
@@ -629,14 +633,14 @@ void App::listCarChng(List* li, size_t pos)
 }
 void App::btnChgCar(WP)
 {
-	if (valCar){  valCar->setCaption(TR("#{Car}: ") + sListCar);	pSet->car[iCurCar] = sListCar;  }
+	if (valCar){  valCar->setCaption(TR("#{Car}: ") + sListCar);	pSet->gui.car[iCurCar] = sListCar;  }
 }
 
 //  track
 void App::btnChgTrack(WP)
 {
-	pSet->track = sListTrack;
-	pSet->track_user = bListTrackU;
+	pSet->gui.track = sListTrack;
+	pSet->gui.track_user = bListTrackU;
 	if (valTrk)  valTrk->setCaption(TR("#{Track}: ") + sListTrack);
 
 	if (mMasterClient) {
@@ -666,7 +670,7 @@ void App::btnNewGameStart(WP wp)
 
 void App::chkDigits(WP wp){ 		ChkEv(show_digits); ShowHUD();   }
 
-void App::chkReverse(WP wp){		ChkEv(trackreverse);	ReadTrkStats();  }
+void App::chkReverse(WP wp){		ChkEv(gui.trackreverse);	ReadTrkStats();  }
 
 void App::chkParticles(WP wp)
 {		

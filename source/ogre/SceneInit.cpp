@@ -119,6 +119,8 @@ void App::NewGame()
 
 	bRplPlay = 0;
 	pSet->rpl_rec = bRplRec;  // changed only at new game
+	pSet->game = pSet->gui;  // copy game config from gui
+	
 	if (mWndRpl)  mWndRpl->setVisible(false);
 
 	LoadingOn();
@@ -181,7 +183,7 @@ void App::LoadCleanUp()  // 1 first
 void App::LoadGame()  // 2
 {
 	//  viewports
-	mSplitMgr->mNumViewports = bRplPlay ? replay.header.numPlayers : pSet->local_players;  // set num players
+	mSplitMgr->mNumViewports = bRplPlay ? replay.header.numPlayers : pSet->game.local_players;  // set num players
 	mSplitMgr->Align();
 	mPlatform->getRenderManagerPtr()->setActiveViewport(mSplitMgr->mNumViewports);
 	
@@ -203,7 +205,7 @@ void App::LoadGame()  // 2
 		// TODO: This only handles one local player
 		CarModel::eCarType et = CarModel::CT_LOCAL;
 		int startpos_index = i;
-		std::string carName = pSet->car[i], nick = "";
+		std::string carName = pSet->game.car[i], nick = "";
 		if (mClient)
 		{
 			// FIXME: Various places assume carModels[0] is local
@@ -234,7 +236,7 @@ void App::LoadGame()  // 2
 	{
 		ghplay.LoadFile(GetGhostFile());  // loads ghost play if exists
 		//  always because ghplay can appear during play after best lap
-		CarModel* c = new CarModel(i, CarModel::CT_GHOST, pSet->car[0], mSceneMgr, pSet, pGame, &sc, 0, this );
+		CarModel* c = new CarModel(i, CarModel::CT_GHOST, pSet->game.car[0], mSceneMgr, pSet, pGame, &sc, 0, this );
 		c->pCar = (*carModels.begin())->pCar;  // based on 1st car
 		carModels.push_back(c);
 	}
@@ -309,14 +311,14 @@ void App::LoadCar()  // 4
 	
 	///  Init Replay  header, once
 	///=================----------------
-	replay.InitHeader(pSet->track.c_str(), pSet->track_user, pSet->car[0].c_str(), !bRplPlay);
-	replay.header.numPlayers = mClient ? mClient->getPeerCount()+1 : pSet->local_players;  // networked or splitscreen
-	replay.header.hue[0] = pSet->car_hue[0];  replay.header.sat[0] = pSet->car_sat[0];  replay.header.val[0] = pSet->car_val[0];
+	replay.InitHeader(pSet->game.track.c_str(), pSet->game.track_user, pSet->game.car[0].c_str(), !bRplPlay);
+	replay.header.numPlayers = mClient ? mClient->getPeerCount()+1 : pSet->game.local_players;  // networked or splitscreen
+	replay.header.hue[0] = pSet->game.car_hue[0];  replay.header.sat[0] = pSet->game.car_sat[0];  replay.header.val[0] = pSet->game.car_val[0];
 	strcpy(replay.header.nicks[0], carModels[0]->sDispName.c_str());  // player's nick
 
-	ghost.InitHeader(pSet->track.c_str(), pSet->track_user, pSet->car[0].c_str(), !bRplPlay);
+	ghost.InitHeader(pSet->game.track.c_str(), pSet->game.track_user, pSet->game.car[0].c_str(), !bRplPlay);
 	ghost.header.numPlayers = 1;  // ghost always 1 car
-	ghost.header.hue[0] = pSet->car_hue[0];  ghost.header.sat[0] = pSet->car_sat[0];  ghost.header.val[0] = pSet->car_val[0];
+	ghost.header.hue[0] = pSet->game.car_hue[0];  ghost.header.sat[0] = pSet->game.car_sat[0];  ghost.header.val[0] = pSet->game.car_val[0];
 
 	//  fill other cars (names, nicks, colors)
 	if (mClient)  // networked
@@ -327,15 +329,15 @@ void App::LoadCar()  // 4
 			CarModel* cm = carModels[p];
 			strcpy(replay.header.cars[p-1], cm->sDirname.c_str());
 			strcpy(replay.header.nicks[p], cm->sDispName.c_str());
-			replay.header.hue[p] = pSet->car_hue[p];  replay.header.sat[p] = pSet->car_sat[p];  replay.header.val[p] = pSet->car_val[p];
+			replay.header.hue[p] = pSet->game.car_hue[p];  replay.header.sat[p] = pSet->game.car_sat[p];  replay.header.val[p] = pSet->game.car_val[p];
 		}
 	}
 	else  // splitscreen
-	for (int p = 1; p < pSet->local_players; ++p)
+	for (int p = 1; p < pSet->game.local_players; ++p)
 	{
-		strcpy(replay.header.cars[p-1], pSet->car[p].c_str());
+		strcpy(replay.header.cars[p-1], pSet->game.car[p].c_str());
 		strcpy(replay.header.nicks[p], carModels[p]->sDispName.c_str());
-		replay.header.hue[p] = pSet->car_hue[p];  replay.header.sat[p] = pSet->car_sat[p];  replay.header.val[p] = pSet->car_val[p];
+		replay.header.hue[p] = pSet->game.car_hue[p];  replay.header.sat[p] = pSet->game.car_sat[p];  replay.header.val[p] = pSet->game.car_val[p];
 	}
 
 	int c = 0;  // copy wheels R
@@ -381,8 +383,8 @@ void App::LoadTrack()  // 6
 
 void App::LoadMisc()  // 7 last
 {
-	if (pGame && pGame->cars.size() > 0)
-		UpdGuiRdStats(road, sc, pGame->timer.GetBestLap(pSet->trackreverse));  // current
+	if (pGame && pGame->cars.size() > 0)  //todo: move this into gui track tab chg evt, for cur game type
+		UpdGuiRdStats(road, sc, pGame->timer.GetBestLap(pSet->game.trackreverse));  // current
 
 	CreateHUD();
 	// immediately hide it

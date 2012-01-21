@@ -170,7 +170,7 @@ void BaseApp::createFrameListener()
 
 void BaseApp::createViewports()
 {
-	mSplitMgr->mNumViewports = pSet->local_players;
+	mSplitMgr->mNumViewports = pSet->gui.local_players;
 	mSplitMgr->Align();
 }
 

@@ -13,9 +13,6 @@ public:
 //------------------------------------------
 	int version;  // file version
 
-	//  car, track
-	std::string car[4], track;  bool track_user;
-
 	//  show
 	bool show_fps, show_gauges, check_arrow, trackmap,
 		mini_zoomed, mini_rotated, mini_terrain,
@@ -37,31 +34,31 @@ public:
 
 	//  car
 	bool abs, tcs, autoshift, autorear, rear_inv, show_mph;
-	float car_hue[4], car_sat[4], car_val[4];  int cam_view[4];
+	int cam_view[4];//
 
-	//---------------  current game config, changed only on new game
+	//---------------  game config
 	class GameSet
 	{
-		//  track
+	public:
 		std::string track;  bool track_user, trackreverse;
-		//  cars
 		std::string car[4];
-		float car_hue[4], car_sat[4], car_val[4];  //int cam_view[4];
-		//  game split
-		int local_players, num_laps;
+		float car_hue[4], car_sat[4], car_val[4];
+
+		int local_players, num_laps;  // split
 		//  game setup
+		bool collis_veget, collis_cars;
 		int boost_type, flip_type;  float boost_power;
+		
 		bool rpl_rec;
 		//  champ
 		int numChamp;  // -1 none
-	}  game;
+	}  game,  // current game, changed only on new game start
+		gui;  // gui only config
 	//---------------
 	
-	//  game
-	bool trackreverse;	int local_players, num_laps;
+	//  misc
 	bool split_vertically;  std::string language;
-	int boost_type, flip_type;  float boost_power;
-	bool isMain;  int inMenu;  // last menu
+	bool isMain;  int inMenu;  // last menu id
 	
 	//  joystick ff
 	std::string ff_device;	float ff_gain;	bool ff_invert;
@@ -74,7 +71,7 @@ public:
 	
 	//  sim freq (1/interval timestep)
 	float game_fq, blt_fq;  int blt_iter, dyn_iter, multi_thr;
-	bool collis_veget, collis_cars;
+	//bool collis_veget, collis_cars;
 	
 	//  compositor
 	bool bloom, hdr, motionblur, all_effects;

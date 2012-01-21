@@ -270,7 +270,7 @@ void App::CreateMinimap()
 	//  car pos dot
 	vMoPos.clear();
 	vNdPos.clear();
-	for (int i=0; i < pSet->local_players; ++i)
+	for (int i=0; i < pSet->game.local_players; ++i)
 	{	vMoPos.push_back(0);
 		vMoPos[i] = Create2D("hud/CarPos", mSplitMgr->mGuiSceneMgr, 0.4f, true, true);
 		vNdPos.push_back(0);

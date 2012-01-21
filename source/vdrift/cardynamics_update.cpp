@@ -263,13 +263,13 @@ void CARDYNAMICS::UpdateBody(T dt, T drive_torque[])
 
 	///***  manual car flip over  ---------------------------------------
 	if ((doFlip > 0.01f || doFlip < -0.01f) &&
-		pSet->flip_type > 0)
+		pSet->game.flip_type > 0)
 	{
 		MATRIX3 <T> inertia = body.GetInertia();
 		btVector3 inrt(inertia[0], inertia[4], inertia[8]);
 		float t = inrt[inrt.maxAxis()] * doFlip * 12.f;  // strength
 
-		if (pSet->flip_type == 1)  // fuel dec
+		if (pSet->game.flip_type == 1)  // fuel dec
 		{
 			boostFuel -= doFlip > 0.f ? doFlip * dt : -doFlip * dt;
 			if (boostFuel < 0.f)  boostFuel = 0.f;
@@ -281,10 +281,10 @@ void CARDYNAMICS::UpdateBody(T dt, T drive_torque[])
 	}
 
 	///***  boost  ------------------------------------------------------
-	if (doBoost > 0.01f	&& pSet->boost_type > 0)
+	if (doBoost > 0.01f	&& pSet->game.boost_type > 0)
 	{
 		boostVal = doBoost;
-		if (pSet->boost_type == 1 || pSet->boost_type == 2)  // fuel dec
+		if (pSet->game.boost_type == 1 || pSet->game.boost_type == 2)  // fuel dec
 		{
 			boostFuel -= doBoost * dt;
 			if (boostFuel < 0.f)  boostFuel = 0.f;
@@ -292,7 +292,7 @@ void CARDYNAMICS::UpdateBody(T dt, T drive_torque[])
 		}
 		if (boostVal > 0.01f)
 		{
-			float f = body.GetMass() * boostVal * 16.f * pSet->boost_power;  // power
+			float f = body.GetMass() * boostVal * 16.f * pSet->game.boost_power;  // power
 			MATHVECTOR <T, 3> v(f,0,0);
 			Orientation().RotateVector(v);
 			ApplyForce(v);
@@ -301,7 +301,7 @@ void CARDYNAMICS::UpdateBody(T dt, T drive_torque[])
 		boostVal = 0.f;
 		
 	//  add fuel over time
-	if (pSet->boost_type == 2)
+	if (pSet->game.boost_type == 2)
 	{
 		boostFuel += dt * gfBoostFuelAddSec;
 		if (boostFuel > gfBoostFuelMax)  boostFuel = gfBoostFuelMax;

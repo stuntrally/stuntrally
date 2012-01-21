@@ -235,7 +235,7 @@ void App::CreateTrees()
 				
 				///  add to bullet world
 				#ifndef ROAD_EDITOR  //  in Game
-				if (pSet->collis_veget && col)
+				if (pSet->game.collis_veget && col)
 				for (int c=0; c < col->shapes.size(); ++c)  // all shapes
 				{
 					const BltShape* shp = &col->shapes[c];

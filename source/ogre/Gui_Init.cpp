@@ -119,7 +119,7 @@ void App::InitGui()
 	bnQuit = mGUI->findWidget<Button>("Quit");
 	if (bnQuit)  {  bnQuit->eventMouseButtonClick += newDelegate(this, &App::btnQuit);  bnQuit->setVisible(isFocGui);  }
 	Chk("SSAA", chkVidSSAA, pSet->ssaa);
-	Chk("ReverseOn", chkReverse, pSet->trackreverse);
+	//Chk("ReverseOn", chkReverse, pSet->trackreverse);
 	Chk("ParticlesOn", chkParticles, pSet->particles);	Chk("TrailsOn", chkTrails, pSet->trails);
 
 	Chk("Fps", chkFps, pSet->show_fps);	chFps = mGUI->findWidget<Button>("Fps");
@@ -146,8 +146,8 @@ void App::InitGui()
 	Chk("CarGear", chkGear, pSet->autoshift);	Chk("CarRear", chkRear, pSet->autorear);
 	Chk("CarRearThrInv", chkRearInv, pSet->rear_inv);
 	//  game
-	Chk("VegetCollis", chkVegetCollis, pSet->collis_veget);
-	Chk("CarCollis", chkCarCollis, pSet->collis_cars);
+	//Chk("VegetCollis", chkVegetCollis, pSet->collis_veget);
+	//Chk("CarCollis", chkCarCollis, pSet->collis_cars);
 	//  boost, flip combos
 	Cmb(combo, "CmbBoost", comboBoost);
 	if (combo)
@@ -156,7 +156,7 @@ void App::InitGui()
 		combo->addItem(TR("#{FuelLap}"));
 		combo->addItem(TR("#{FuelTime}"));
 		combo->addItem(TR("#{Always}"));
-		combo->setIndexSelected(pSet->boost_type);
+		//combo->setIndexSelected(pSet->boost_type);
 	}
 	Cmb(combo, "CmbFlip", comboFlip);
 	if (combo)
@@ -164,14 +164,14 @@ void App::InitGui()
 		combo->addItem(TR("#{Never}"));
 		combo->addItem(TR("#{FuelBoost}"));
 		combo->addItem(TR("#{Always}"));
-		combo->setIndexSelected(pSet->flip_type);
+		//combo->setIndexSelected(pSet->flip_type);
 	}
 
 	Btn("btnPlayers1", btnNumPlayers);	Btn("btnPlayers2", btnNumPlayers);
 	Btn("btnPlayers3", btnNumPlayers);	Btn("btnPlayers4", btnNumPlayers);
 	Chk("chkSplitVertically", chkSplitVert, pSet->split_vertically);
 	valLocPlayers = mGUI->findWidget<StaticText>("valLocPlayers");
-	if (valLocPlayers)  valLocPlayers->setCaption(toStr(pSet->local_players));
+	//if (valLocPlayers)  valLocPlayers->setCaption(toStr(pSet->local_players));
 	
 	//  kmh/mph radio
 	bRkmh = mGUI->findWidget<Button>("kmh");
@@ -262,7 +262,7 @@ void App::InitGui()
 		img->setUserString("v", toStr(v));
 	}
 	Btn("CarClrRandom", btnCarClrRandom);
-	Slv(NumLaps, (pSet->num_laps - 1) / 20.f);
+	//Slv(NumLaps, (pSet->num_laps - 1) / 20.f);
 	
 	TabPtr tPlr = mGUI->findWidget<Tab>("tabPlayer");
 	if (tPlr)  tPlr->eventTabChangeSelect += newDelegate(this, &App::tabPlayer);
@@ -370,17 +370,17 @@ void App::InitGui()
 		{
 			if (boost::filesystem::exists(PATHMANAGER::GetCarPath() + "/" + *i + "/about.txt"))  {
 				carList->addItem(*i);
-				if (*i == pSet->car[0]) {  carList->setIndexSelected(ii);  bFound = true;  }
+				if (*i == pSet->gui.car[0]) {  carList->setIndexSelected(ii);  bFound = true;  }
 				ii++;  }
 		}
 		if (!bFound)
-			pSet->car[0] = *li.begin();
+			pSet->gui.car[0] = *li.begin();
 		carList->eventListChangePosition += newDelegate(this, &App::listCarChng);
     }
 
 	//  cars text, chg btn
     valCar = mGUI->findWidget<StaticText>("CarText");
-	valCar->setCaption(TR("#{Car}: ") + pSet->car[0]);  sListCar = pSet->car[0];
+	valCar->setCaption(TR("#{Car}: ") + pSet->gui.car[0]);  sListCar = pSet->gui.car[0];
 
     ButtonPtr btnCar = mGUI->findWidget<Button>("ChangeCar");
     if (btnCar)  btnCar->eventMouseButtonClick += newDelegate(this, &App::btnChgCar);
@@ -396,7 +396,7 @@ void App::InitGui()
 	trkDesc = mGUI->findWidget<Edit>("TrackDesc");
     valTrk = mGUI->findWidget<StaticText>("TrackText");
     if (valTrk)
-		valTrk->setCaption(TR("#{Track}: " + pSet->track));  sListTrack = pSet->track;
+		valTrk->setCaption(TR("#{Track}: " + pSet->gui.track));  sListTrack = pSet->gui.track;
 
     GuiInitTrack();
 
@@ -456,9 +456,9 @@ void App::UpdCarClrSld(bool upd)
 	//bUpdCarClr = false;
 	// car color update is instant now anyway.
 	
-	Slv(CarClrH, pSet->car_hue[iCurCar]);
-	Slv(CarClrS, pSet->car_sat[iCurCar]);  if (upd)  bUpdCarClr = true;
-	Slv(CarClrV, pSet->car_val[iCurCar]);  bUpdCarClr = true;
+	Slv(CarClrH, pSet->gui.car_hue[iCurCar]);
+	Slv(CarClrS, pSet->gui.car_sat[iCurCar]);  if (upd)  bUpdCarClr = true;
+	Slv(CarClrV, pSet->gui.car_val[iCurCar]);  bUpdCarClr = true;
 }
 
 

@@ -46,7 +46,7 @@ void CarModel::ResetChecks(bool bDist)  // needs to be done after road load!
 	if (!pApp || !pApp->road)  return;
 	
 	const SplineRoad* road = pApp->road;
-	iNextChk = pSet->trackreverse ? road->iChkId1Rev : road->iChkId1;
+	iNextChk = pSet->game.trackreverse ? road->iChkId1Rev : road->iChkId1;
 
 	//  percent const  ------
 	if (bDist && road->mChks.size() > 0)
@@ -72,7 +72,7 @@ void CarModel::UpdTrackPercent()
 	{
 		const Vector3& car = pMainNode->getPosition(), next = road->mChks[iNextChk].pos,
 			start = vStartPos, curr = road->mChks[std::max(0,iCurChk)].pos;
-		bool bRev = pSet->trackreverse;
+		bool bRev = pSet->game.trackreverse;
 		Real firstD = bRev ? distLast : distFirst;
 		Real nextR = road->mChks[iNextChk].r;  // chk .r radius to tweak when entering chk..
 
@@ -397,7 +397,7 @@ void CarModel::UpdateKeys()
 	{
 		//  with ctrl - change current camera car index  (mouse move camera for many players)
 		if (pApp->ctrl && iIndex == 0)
-			pApp->iCurCam = (pApp->iCurCam + pCar->iCamNext + pSet->local_players) % pSet->local_players;
+			pApp->iCurCam = (pApp->iCurCam + pCar->iCamNext + pSet->game.local_players) % pSet->game.local_players;
 		else
 		{
 			int visMask = 255;
@@ -540,7 +540,7 @@ void CarModel::UpdWhTerMtr()
 
 void CarModel::ChangeClr(int car)
 {
-	float c_h = pSet->car_hue[car], c_s = pSet->car_sat[car], c_v = pSet->car_val[car];
+	float c_h = pSet->gui.car_hue[car], c_s = pSet->gui.car_sat[car], c_v = pSet->gui.car_val[car];
 	color.setHSB(1-c_h,c_s,c_v);  //set, mini pos clr
 	MaterialPtr mtr = MaterialManager::getSingleton().getByName(sMtr[Mtr_CarBody]);
 	if (!mtr.isNull())

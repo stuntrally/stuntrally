@@ -84,7 +84,7 @@ App::App()
 }
 
 String App::TrkDir() {
-	int u = pSet->track_user ? 1 : 0;			return pathTrk[u] + pSet->track + "/";  }
+	int u = pSet->game.track_user ? 1 : 0;		return pathTrk[u] + pSet->game.track + "/";  }
 
 String App::PathListTrk(int user) {
 	int u = user == -1 ? bListTrackU : user;	return pathTrk[u] + sListTrack;  }
@@ -210,7 +210,7 @@ const String& App::GetGhostFile()
 {
 	static String file;
 	file = PATHMANAGER::GetGhostsPath() + "/"
-		+ pSet->track + (pSet->track_user ? "_u" : "") + (pSet->trackreverse ? "_r" : "")
-		+ "_" + pSet->car[0] + ".rpl";
+		+ pSet->game.track + (pSet->game.track_user ? "_u" : "") + (pSet->game.trackreverse ? "_r" : "")
+		+ "_" + pSet->game.car[0] + ".rpl";
 	return file;
 }
