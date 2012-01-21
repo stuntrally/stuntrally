@@ -2050,6 +2050,14 @@
 					>
 				</File>
 				<File
+					RelativePath=".\source\ogre\common\MaterialGen\ParticleMaterial.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\source\ogre\common\MaterialGen\ParticleMaterial.h"
+					>
+				</File>
+				<File
 					RelativePath=".\source\ogre\common\MaterialGen\PipeGlassMaterial.cpp"
 					>
 				</File>
