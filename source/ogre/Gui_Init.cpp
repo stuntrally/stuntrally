@@ -457,8 +457,12 @@ void App::UpdCarClrSld(bool upd)
 	// car color update is instant now anyway.
 	
 	Slv(CarClrH, pSet->gui.car_hue[iCurCar]);
-	Slv(CarClrS, pSet->gui.car_sat[iCurCar]);  if (upd)  bUpdCarClr = true;
-	Slv(CarClrV, pSet->gui.car_val[iCurCar]);  bUpdCarClr = true;
+	Slv(CarClrS, pSet->gui.car_sat[iCurCar]);  //if (upd)  bUpdCarClr = true;
+	Slv(CarClrV, pSet->gui.car_val[iCurCar]);
+	pSet->game.car_hue[iCurCar] = pSet->gui.car_hue[iCurCar];  // copy color, to apply change
+	pSet->game.car_sat[iCurCar] = pSet->gui.car_sat[iCurCar];
+	pSet->game.car_val[iCurCar] = pSet->gui.car_val[iCurCar];
+	bUpdCarClr = true;
 }
 
 

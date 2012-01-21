@@ -119,9 +119,11 @@ void App::NewGame()
 
 	bRplPlay = 0;
 	pSet->rpl_rec = bRplRec;  // changed only at new game
-	pSet->game = pSet->gui;  // copy game config from gui
+	if (!newGameRpl)  // if from replay, dont
+		pSet->game = pSet->gui;  // copy game config from gui
+	newGameRpl = false;
 	
-	if (mWndRpl)  mWndRpl->setVisible(false);
+	if (mWndRpl)  mWndRpl->setVisible(false);  // hide rpl ctrl
 
 	LoadingOn();
 	ShowHUD(true);  // hide HUD

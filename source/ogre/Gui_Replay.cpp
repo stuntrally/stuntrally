@@ -54,6 +54,7 @@ void App::btnRplLoad(WP)  // Load
 		{	pSet->game.car[p] = replay.header.cars[p-1];
 			pSet->game.car_hue[p] = replay.header.hue[p];  pSet->game.car_sat[p] = replay.header.sat[p];  pSet->game.car_val[p] = replay.header.val[p];
 		}
+		newGameRpl = true;
 		btnNewGame(0);
 		bRplPlay = 1;
 	}
