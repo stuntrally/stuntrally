@@ -1521,7 +1521,7 @@
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
 						<Widget type="ScrollBar" skin="ScrollBarH" position="248 50 320 16" name="ShadowType">
-							<Property key="Range" value="4"/>
+							<Property key="Range" value="5"/>
 							<Property key="MoveToClick" value="true"/>
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
