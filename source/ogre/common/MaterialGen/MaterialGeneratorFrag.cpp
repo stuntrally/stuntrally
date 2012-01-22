@@ -470,15 +470,15 @@ void MaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::StrStrea
 	
 	// world position
 	//if (fpNeedWPos()) outStream <<
-	//	"	oColor = oColor*float4(worldPosition.xyz, 1); \n";
+	//"	oColor = float4(worldPosition.x, 1, worldPosition.z, 1); \n";
 	
 	// normal
 	// if (fpNeedNormal()) outStream <<
-	//"	oColor = oColor*0.00001 + 0.99999*float4(normal.x, normal.y, normal.z, 1); \n";
+	//"	oColor = float4(normal.x, normal.y, normal.z, 1); \n";
 	
 	// spec
 	//outStream <<
-	//"	oColor = oColor * float4(specularLight, 0.0, 0.0, 1.0); \n";
+	//"	oColor = float4(specularLight, 0.0, 0.0, 1.0); \n";
 	
 	// ---------------------------------------------------------------
 		
