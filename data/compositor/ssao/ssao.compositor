@@ -123,7 +123,6 @@ compositor ssao
         target ssao
         {
             input none
-
             pass render_quad
             {
                 // our SSAO listener number
@@ -138,7 +137,6 @@ compositor ssao
         target ssaoBlurX
         {
             input none
-
             pass render_quad
             {
                 identifier 43
@@ -152,7 +150,6 @@ compositor ssao
         target ssaoBlurY
         {
             input none
-
 
             pass render_quad
             {

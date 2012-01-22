@@ -152,6 +152,7 @@ void MaterialGenerator::generateVertexProgramSource(Ogre::StringUtil::StrStreamT
 		{
 			//view space normal 
 			outStream << "	out	float4	oViewNormal	: TEXCOORD"+ toStr( mTexCoord_i++ ) +", \n";
+			outStream << "	out	float4	oViewPosition	: TEXCOORD"+ toStr( mTexCoord_i++ ) +", \n";
 		}
 	}
 
@@ -273,6 +274,8 @@ void MaterialGenerator::generateVertexProgramSource(Ogre::StringUtil::StrStreamT
 		{
 			//view space normal 			
 			outStream << " oViewNormal = mul(wvMat, float4(normal, 0)); \n";
+			outStream << " oViewPosition = mul(wvMat, position); \n";
+
 		}
 	}
 	outStream <<

@@ -422,8 +422,11 @@ void App::LoadMisc()  // 7 last
 			ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME);
 		debugMat->getTechnique(0)->getPass(0)->setLightingEnabled(false);
 		TexturePtr depthTexture = compositor->getTextureInstance("mrt_output",i);
-		TextureUnitState *t = debugMat->getTechnique(0)->getPass(0)->createTextureUnitState(depthTexture->getName());
-		t->setTextureAddressingMode(TextureUnitState::TAM_CLAMP);
+		if(!depthTexture.isNull())
+		{
+			TextureUnitState *t = debugMat->getTechnique(0)->getPass(0)->createTextureUnitState(depthTexture->getName());
+			t->setTextureAddressingMode(TextureUnitState::TAM_CLAMP);
+		}
 		OverlayContainer* debugPanel;
 		// destroy container if exists
 		try

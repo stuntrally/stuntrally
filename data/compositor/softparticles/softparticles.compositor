@@ -28,11 +28,10 @@ compositor SoftParticles
 					  
 	        pass render_scene
             {
-                // particles render queue
-	      		first_render_queue 83
+                // render alpha queues including particles
+	      		first_render_queue 70
 	    		last_render_queue 83
             }
-
         }
 
         
@@ -40,24 +39,13 @@ compositor SoftParticles
         {
             input none
 
-			pass clear
-            {
-            }
 			
             pass render_quad
             {
                 material SoftParticlesBlend
                 input 0 previousscene
                 input 1 softparticle
-            }
-			
-	//		pass render_scene
-    //        {
-    //            // everything after particles render queue
-	//      		first_render_queue 84
-	//    		last_render_queue 100
-    //        }
-			
+            }			
         }
     }
 }
@@ -112,23 +100,7 @@ compositor SoftParticles1
                 material ShowDepth
                 input 0 scene 2
             }
-			
-//			pass clear
-//			{
-//				clear
-//				{
-//	  				buffers depth
-//            	}
-//			}
-
-
-//			pass render_scene
- //           {
-  //              // everything after particles render queue
-	//      		first_render_queue 84
-	//    		last_render_queue 100
-   //         }
-			
+						
         }
     }
 }

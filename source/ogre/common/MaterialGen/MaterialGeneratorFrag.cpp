@@ -65,7 +65,7 @@ void MaterialGenerator::fpRealtimeShadowHelperSource(Ogre::StringUtil::StrStream
 	/// shadow helper functions
 	// 2x2 pcf
 	outStream <<
-	"float shadowPCF(sampler2D shadowMap, float4 shadowMapPos, float2 offset) \n"
+	"float shadowPCF(sampler2D shadowMap, float4 shadowMapPos, float2 offset,float shadowSample) \n"
 	"{ \n"
 	"	shadowMapPos = shadowMapPos / shadowMapPos.w; \n"
 	"	float2 uv = shadowMapPos.xy; \n"
@@ -245,6 +245,7 @@ void MaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::StrStrea
 		if(!UsePerPixelNormals())
 		{
 			outStream << "	in float4 viewNormal : TEXCOORD"+ toStr( mTexCoord_i++ ) +", \n";
+			outStream << "	in float4 viewPosition : TEXCOORD"+ toStr( mTexCoord_i++ ) +", \n";
 		}
 	}
 	
@@ -518,7 +519,7 @@ void MaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::StrStrea
 	
 	if(MRTSupported())
 	{
-		outStream <<  "float4 viewPosition = mul(wvMat, float4(position.xyz,1.0)); \n";
+		//outStream <<  "float4 viewPosition = mul(wvMat, float4(position.xyz,1.0)); \n";
 		if(UsePerPixelNormals())
 		{
 			outStream <<  "float4 viewNormal = mul(wvMat, pNormal); \n";
@@ -526,7 +527,7 @@ void MaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::StrStrea
 		outStream <<  "oColor1 = float4(length(viewPosition.xyz) / far, normalize(viewNormal.xyz).xyz); \n";
 		if(mDef->mProps->transparent)
 		{
-			// mutiply the diffuse texture alpha
+			// multiply the diffuse texture alpha
 			outStream << "oColor1 = oColor1 * tex2D(diffuseMap, texCoord.xy).a;";    
 		}
 		outStream <<  "float4 worldPosition = mul(wMat, float4(position.xyz,1.0)); \n";

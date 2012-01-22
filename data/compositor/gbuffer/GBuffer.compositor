@@ -18,8 +18,7 @@ compositor gbuffer
 			{
 				//anything before objects with alpha (ex.particles)
 				first_render_queue 0
-				last_render_queue 82
-          
+				last_render_queue 69         
 			}
 
 		}
@@ -82,8 +81,7 @@ compositor gbufferFinalizer
 		
     technique
     {
-	//	texture_ref scene gbuffer mrt_output
-	    texture hardparticles target_width target_height PF_R8G8B8A8 depth_pool 2
+	    texture hardparticles target_width target_height PF_R8G8B8A8 depth_pool 2 no_fsaa
 		texture previousscene target_width target_height PF_R8G8B8A8
      
 		target previousscene 
@@ -105,10 +103,9 @@ compositor gbufferFinalizer
 			pass render_scene
             {
                 // everything after particles render queue
-	      		first_render_queue 83
+	      		first_render_queue 70
 	    		last_render_queue 83
-            }
-			
+            }			
 		}
 		target_output
         {
