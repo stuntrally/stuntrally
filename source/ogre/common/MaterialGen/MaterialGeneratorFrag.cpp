@@ -65,7 +65,7 @@ void MaterialGenerator::fpRealtimeShadowHelperSource(Ogre::StringUtil::StrStream
 	/// shadow helper functions
 	// 2x2 pcf
 	outStream <<
-	"float shadowPCF(sampler2D shadowMap, float4 shadowMapPos, float2 offset,float shadowSample) \n"
+	"float shadowPCF(sampler2D shadowMap, float4 shadowMapPos, float2 offset) \n"
 	"{ \n"
 	"	shadowMapPos = shadowMapPos / shadowMapPos.w; \n"
 	"	float2 uv = shadowMapPos.xy; \n"
