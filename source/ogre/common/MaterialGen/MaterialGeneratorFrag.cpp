@@ -184,7 +184,7 @@ void MaterialGenerator::fpCalcShadowSource(Ogre::StringUtil::StrStreamType& outS
 	{
 		outStream <<
 		"	float shadowingLM; \n"
-		"	float2 worldPos = float2(worldPosition.x, worldPosition.z); \n" // get world position
+		"	float2 worldPos = float2(texCoord.w, iNormal.w); \n" // get world position
 		"	float2 lmTexCoord = (worldPos / terrainWorldSize) + 0.5; \n" // convert to image space 0..1
 		"	shadowingLM = tex2D(terrainLightMap, lmTexCoord).x; \n" // fetch texture r channel
 		"	if (enableTerrainLightMap == 0.f) shadowingLM = 1.f; \n";

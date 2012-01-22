@@ -244,8 +244,11 @@ void MaterialGenerator::generateVertexProgramSource(Ogre::StringUtil::StrStreamT
 	std::string texCoordZ = "1";
 	if (needShadows()) texCoordZ = "oPosition.z";
 	
+	std::string texCoordW = "1";
+	if (needTerrainLightMap()) texCoordW = "worldPosition.x";
+	
 	outStream <<
-	"	oTexCoord = float4(texCoord.x, texCoord.y, "+texCoordZ+", 1); \n";
+	"	oTexCoord = float4(texCoord.x, texCoord.y, "+texCoordZ+", "+texCoordW+"); \n";
 	
 	// fog amount
 	outStream <<
@@ -259,8 +262,10 @@ void MaterialGenerator::generateVertexProgramSource(Ogre::StringUtil::StrStreamT
 		}
 		else
 		{
+			std::string normalW = "1";
+			if (needTerrainLightMap()) normalW = "worldPosition.z";
 			outStream <<
-			"	oNormal = float4(normal.xyz, 1); \n";
+			"	oNormal = float4(normal.xyz, "+normalW+"); \n";
 		}
 
 	}
