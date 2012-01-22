@@ -104,9 +104,11 @@ protected:
 	virtual bool vpNeedTangent();
 	virtual bool vpNeedWMat();
 	virtual bool vpNeedWITMat();
+	virtual bool vpCalcWPos();
 	
 	// passtrough (vertex to fragment)
 	virtual bool fpNeedWMat();
+	virtual bool fpNeedWPos();
 	virtual bool fpNeedNormal();
 	virtual bool fpNeedEyeVector();
 	 

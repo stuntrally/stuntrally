@@ -218,7 +218,8 @@ void App::changeShadows()
 							if (tus->getName() == "terrainLightMap")
 							{
 								tus->setTextureName( terrain->getLightmap()->getName() );
-								pass->getFragmentProgramParameters()->setNamedConstant( "terrainWorldSize", Real( sc.td.fTerWorldSize ) );
+								if (pass->hasFragmentProgram() && pass->getFragmentProgramParameters()->_findNamedConstantDefinition("terrainWorldSize", false))
+									pass->getFragmentProgramParameters()->setNamedConstant( "terrainWorldSize", Real( sc.td.fTerWorldSize ) );
 							}
 						}
 			}	}	}

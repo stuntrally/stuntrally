@@ -82,7 +82,6 @@ void MaterialGenerator::vpShadowingParams(Ogre::StringUtil::StrStreamType& outSt
 
 void MaterialGenerator::generateVertexProgramSource(Ogre::StringUtil::StrStreamType& outStream)
 {
-	// note: world position xz for fragment is stored in oTexCoord.w, oWsNormal.w
 	mTexCoord_i=0;
 	
 	outStream << 
@@ -96,14 +95,18 @@ void MaterialGenerator::generateVertexProgramSource(Ogre::StringUtil::StrStreamT
 	if (vpNeedTangent()) outStream <<
 		"	float3 tangent						: TANGENT, \n";
 	outStream << 
-		"	float2 texCoord 					: TEXCOORD0, \n";
+	"	float2 texCoord 					: TEXCOORD0, \n";
 	
 	if (fpNeedEyeVector()) outStream <<
 		"	uniform float4 eyePosition,	 \n";
 	outStream <<
-		"	out float4 oPosition			 	: POSITION, \n"
-		"	out float4 objectPos				: COLOR, \n" // running out of texcoords so putting this in COLOR since its unused.
-		"	out float4 oTexCoord				: TEXCOORD"+toStr(mTexCoord_i++)+", \n";
+	"	out float4 oPosition			 	: POSITION, \n";
+		
+	if (fpNeedWPos()) outStream <<
+		"	out float4 oWorldPosition				: COLOR, \n";
+		
+	outStream <<
+	"	out float4 oTexCoord				: TEXCOORD"+toStr(mTexCoord_i++)+", \n";
 		
 	if (mShader->vertexColour) outStream <<
 		"	float4 color 						: COLOR, \n"
@@ -150,16 +153,16 @@ void MaterialGenerator::generateVertexProgramSource(Ogre::StringUtil::StrStreamT
 	{
 		if(!UsePerPixelNormals())
 		{
-			//view space normal 
+			// view space normal 
 			outStream << "	out	float4	oViewNormal	: TEXCOORD"+ toStr( mTexCoord_i++ ) +", \n";
 		}
 	}
 
 	// fog
 	outStream <<
-		"	uniform float enableFog, \n"
-		"	uniform float4 fogParams, \n"
-		"	out float fogAmount : FOG, \n";
+	"	uniform float enableFog, \n"
+	"	uniform float4 fogParams, \n"
+	"	out float fogAmount : FOG, \n";
 		
 	vpShadowingParams(outStream);
 
@@ -218,11 +221,14 @@ void MaterialGenerator::generateVertexProgramSource(Ogre::StringUtil::StrStreamT
 	
 	outStream <<
 	"	oPosition = mul(wvpMat, position); \n";
-	if (vpNeedWMat()) outStream <<
+	if (vpCalcWPos()) outStream <<
 	"	float4 worldPosition = mul(wMat, position); \n";
 	
 	if (fpNeedEyeVector()) outStream <<
 		"	oEyeVector.xyz = worldPosition.xyz - eyePosition.xyz; \n"; // transform eye into view space
+		
+	if (fpNeedWPos()) outStream <<
+		"	oWorldPosition = worldPosition; \n";
 
 	if (needNormalMap()) outStream <<
 		"	oTangent.xyz = tangent.xyz; \n";
@@ -235,17 +241,14 @@ void MaterialGenerator::generateVertexProgramSource(Ogre::StringUtil::StrStreamT
 		}
 	}
 	
-	std::string texCoordW = "1";
-	if (needTerrainLightMap()) texCoordW = "worldPosition.z";
-	
 	std::string texCoordZ = "1";
 	if (needShadows()) texCoordZ = "oPosition.z";
 	
+	std::string texCoordW = "1";
+	if (needTerrainLightMap()) texCoordW = "worldPosition.x";
+	
 	outStream <<
 	"	oTexCoord = float4(texCoord.x, texCoord.y, "+texCoordZ+", "+texCoordW+"); \n";
-		
-	outStream <<
-	"	objectPos = position; \n";
 	
 	// fog amount
 	outStream <<
@@ -260,7 +263,7 @@ void MaterialGenerator::generateVertexProgramSource(Ogre::StringUtil::StrStreamT
 		else
 		{
 			std::string normalW = "1";
-			if (needTerrainLightMap()) normalW = "worldPosition.x";
+			if (needTerrainLightMap()) normalW = "worldPosition.z";
 			outStream <<
 			"	oNormal = float4(normal.xyz, "+normalW+"); \n";
 		}
