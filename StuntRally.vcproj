@@ -1558,6 +1558,10 @@
 					>
 				</File>
 				<File
+					RelativePath=".\source\ogre\Gui_Network.cpp"
+					>
+				</File>
+				<File
 					RelativePath=".\source\ogre\Gui_Replay.cpp"
 					>
 				</File>

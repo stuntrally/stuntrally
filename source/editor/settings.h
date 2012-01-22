@@ -14,9 +14,6 @@ public:
 //------------------------------------------
 	int version;  // file version
 
-	//  track
-	std::string track;  bool track_user;
-
 	//  show
 	bool show_fps, trackmap, brush_prv;  int num_mini;
 	float size_minimap;
@@ -29,6 +26,13 @@ public:
 	float shadow_dist;  int shadow_size, lightmap_size, shadow_count, shadow_type;
 	float trees, grass, trees_dist, grass_dist;
 	bool use_imposters;
+
+	class GameSet
+	{
+	public:
+		//  track
+		std::string track;  bool track_user;
+	} gui;
 	
 	//  startup
 	bool autostart, escquit, ogre_dialog, allow_save;

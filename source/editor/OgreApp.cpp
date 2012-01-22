@@ -148,19 +148,6 @@ ManualObject* App::Create2D(const String& mat, Real s, bool dyn)
 	m->position( s, s*asp, 0);  m->textureCoord(1, 0);
 	m->end();
  
-	//TODO:replace OT_TRIANGLE_FAN with a more friendly version for D3D11 as it is not supported
-	/*
-	m->estimateVertexCount(6);
-	m->begin(mat, RenderOperation::OT_TRIANGLE_LIST);
-
-	m->position(-s,-s*asp, 0);  m->textureCoord(0, 1);
-	m->position( s,-s*asp, 0);  m->textureCoord(1, 1);
-	m->position( s, s*asp, 0);  m->textureCoord(1, 0);
-	m->position(-s, s*asp, 0);  m->textureCoord(0, 0);
-	m->position(-s,-s*asp, 0);  m->textureCoord(0, 1);
-	m->position( s, s*asp, 0);  m->textureCoord(1, 0);
-	m->end();
-	*/
 	AxisAlignedBox aabInf;	aabInf.setInfinite();
 	m->setBoundingBox(aabInf);  // always visible
 	m->setRenderQueueGroup(RQG_Hud2);

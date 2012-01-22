@@ -45,7 +45,7 @@ App::App()
 	,valCar(0),valTrk(0),trkDesc(0), valLocPlayers(0)
 	,valRplPerc(0), valRplCur(0), valRplLen(0), slRplPos(0), rplList(0)
 	,valRplName(0),valRplInfo(0),valRplName2(0),valRplInfo2(0), edRplName(0), edRplDesc(0)
-	,rbRplCur(0), rbRplAll(0), rbRplGhosts(0), bRplBack(0),bRplFwd(0)
+	,rbRplCur(0), rbRplAll(0), rbRplGhosts(0), bRplBack(0),bRplFwd(0), newGameRpl(0)
 	,bRplPlay(0), bRplPause(0), bRplRec(0), bRplWnd(1), bGuiReinit(0)
 	// gui multiplayer
 	,netGuiMutex(), sChatBuffer(), netGameInfo()
@@ -84,7 +84,7 @@ App::App()
 }
 
 String App::TrkDir() {
-	int u = pSet->track_user ? 1 : 0;			return pathTrk[u] + pSet->track + "/";  }
+	int u = pSet->game.track_user ? 1 : 0;		return pathTrk[u] + pSet->game.track + "/";  }
 
 String App::PathListTrk(int user) {
 	int u = user == -1 ? bListTrackU : user;	return pathTrk[u] + sListTrack;  }
@@ -210,7 +210,7 @@ const String& App::GetGhostFile()
 {
 	static String file;
 	file = PATHMANAGER::GetGhostsPath() + "/"
-		+ pSet->track + (pSet->track_user ? "_u" : "") + (pSet->trackreverse ? "_r" : "")
-		+ "_" + pSet->car[0] + ".rpl";
+		+ pSet->game.track + (pSet->game.track_user ? "_u" : "") + (pSet->game.trackreverse ? "_r" : "")
+		+ "_" + pSet->game.car[0] + ".rpl";
 	return file;
 }

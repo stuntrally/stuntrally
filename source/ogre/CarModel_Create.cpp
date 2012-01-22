@@ -62,7 +62,7 @@ CarModel::CarModel(unsigned int index, eCarType type, const std::string name,
 	if (type != CT_GHOST)  // ghost has pCar, dont create
 	{
 		if (startpos_index == -1) startpos_index = iIndex;
-		int i = set->collis_cars ? startpos_index : 0;  //  offset car start pos when cars collide
+		int i = set->game.collis_cars ? startpos_index : 0;  //  offset car start pos when cars collide
 		MATHVECTOR<float, 3> pos(0,10,0);
 		QUATERNION<float> rot;
 		pos = pGame->track.GetStart(i).first;

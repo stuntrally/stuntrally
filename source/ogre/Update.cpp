@@ -251,7 +251,7 @@ bool App::frameStart(Real time)
 			road->RebuildRoadInt();
 
 			//  more than 1 in pre viewport, each frame
-			if (pSet->local_players == 1)
+			if (pSet->game.local_players == 1)
 			{
 				if (roadUpCnt <= 0)
 				{
@@ -575,7 +575,7 @@ void App::newPoses()
 				{	if (carM->bInSt && carM->iNumChks == ncs && carM->iCurChk != -1)  // finish
 					{
 						bool best = pGame->timer.Lap(iCarNum, 0,0, true,
-							pSet->trackreverse/*<, pSet->boost_type*/);  //pGame->cartimerids[pCar] ?
+							pSet->game.trackreverse/*<, pSet->boost_type*/);  //pGame->cartimerids[pCar] ?
 
 						if (!pSet->rpl_bestonly || best)  ///  new best lap, save ghost
 						if (iCarNum==0 && pSet->rpl_rec)  // for many, only 1st-
@@ -587,11 +587,11 @@ void App::newPoses()
 						
 						carM->ResetChecks();
 						//  restore boost fuel, each lap
-						if (pSet->boost_type == 1 && carM->pCar)
+						if (pSet->game.boost_type == 1 && carM->pCar)
 							carM->pCar->dynamics.boostFuel = gfBoostFuelStart;
 
 						///  winner places  for local players > 1
-						if (carM->iWonPlace == 0 && pGame->timer.GetCurrentLap(iCarNum) >= pSet->num_laps)
+						if (carM->iWonPlace == 0 && pGame->timer.GetCurrentLap(iCarNum) >= pSet->game.num_laps)
 							carM->iWonPlace = carIdWin++;
 					}
 					for (int i=0; i < ncs; ++i)
@@ -605,7 +605,7 @@ void App::newPoses()
 							if (i == carM->iNextChk && carM->iNumChks < ncs)
 							{
 								carM->iCurChk = i;  carM->iNumChks++;
-								int ii = (pSet->trackreverse ? -1 : 1) * road->iDir;
+								int ii = (pSet->game.trackreverse ? -1 : 1) * road->iDir;
 								carM->iNextChk = (carM->iCurChk + ii + ncs) % ncs;
 								//  save car pos and rot
 								carM->pCar->SavePosAtCheck();

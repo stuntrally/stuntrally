@@ -436,7 +436,7 @@ void GAME::UpdateTimer()
 		{
 		    // only count it if the car's current sector isn't -1
 		    // which is the default value when the car is loaded
-			timer.Lap(carid, i->GetSector(), nextsector, (i->GetSector() >= 0), settings->trackreverse); 
+			timer.Lap(carid, i->GetSector(), nextsector, (i->GetSector() >= 0), settings->game.trackreverse); 
 			i->SetSector(nextsector);
 		}
 
@@ -522,8 +522,8 @@ bool GAME::NewGameDoCleanup()
 
 bool GAME::NewGameDoLoadTrack()
 {
-	if (!LoadTrack(settings->track))
-		error_output << "Error during track loading: " << settings->track << endl;
+	if (!LoadTrack(settings->game.track))
+		error_output << "Error during track loading: " << settings->game.track << endl;
 
 	return true;
 }
@@ -549,7 +549,7 @@ bool GAME::NewGameDoLoadMisc()
 	float pretime = 0.0f;
 	if (race_laps > 0)
         pretime = 3.0f;
-	if (!timer.Load(PATHMANAGER::GetTrackRecordsPath()+"/"+settings->track+".txt", pretime, error_output))
+	if (!timer.Load(PATHMANAGER::GetTrackRecordsPath()+"/"+settings->game.track+".txt", pretime, error_output))
 		return false;
 
 	//add cars to the timer system
@@ -650,8 +650,8 @@ bool GAME::LoadTrack(const string & trackname)
 
 	//load the track
 	if (!track.DeferredLoad(
-			(settings->track_user ? PATHMANAGER::GetTrackPathUser() : PATHMANAGER::GetTrackPath()) + "/" + trackname,
-			settings->trackreverse,
+			(settings->game.track_user ? PATHMANAGER::GetTrackPathUser() : PATHMANAGER::GetTrackPath()) + "/" + trackname,
+			settings->game.trackreverse,
 			/**/0, "large", true, false))
 	{
 		error_output << "Error loading track: " << trackname << endl;
@@ -728,7 +728,6 @@ void GAME::ProcessNewSettings()
 		carcontrols_local.first->SetTCS(settings->tcs);
 		carcontrols_local.first->SetAutoShift(settings->autoshift);
 		carcontrols_local.first->SetAutoRear(settings->autorear);
-		//todo: rear throttle brake inversee:  settings->rear_inv 
 		//carcontrols_local.first->SetAutoClutch(settings->rear_inv);
 	}
 

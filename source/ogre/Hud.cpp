@@ -94,9 +94,9 @@ void App::CreateHUD()
 		MaterialPtr mm = MaterialManager::getSingleton().getByName(sMat);
 		Pass* pass = mm->getTechnique(0)->getPass(0);
 		TextureUnitState* tus = pass->getTextureUnitState(0);
-		if (tus)  tus->setTextureName(pSet->track + "_mini.png");
+		if (tus)  tus->setTextureName(pSet->game.track + "_mini.png");
 		tus = pass->getTextureUnitState(2);
-		if (tus)  tus->setTextureName(pSet->track + "_ter.jpg");
+		if (tus)  tus->setTextureName(pSet->game.track + "_ter.jpg");
 		UpdMiniTer();
 		
 
@@ -222,7 +222,7 @@ void App::ShowHUD(bool hideAll)
 		if (nrpm)	nrpm->setVisible(show);		if (nvel)	nvel->setVisible(show);
 		if (ovGear)	{  if (1||show)  ovGear->show();  else  ovGear->hide();  }
 		if (ovVel)	{  if (1||show)  ovVel->show();   else  ovVel->hide();   }
-		if (ovBoost){  if (show && (pSet->boost_type == 1 || pSet->boost_type == 2))
+		if (ovBoost){  if (show && (pSet->game.boost_type == 1 || pSet->game.boost_type == 2))
 									ovBoost->show();    else  ovBoost->hide();  }
 		if (ovAbsTcs){ if (show)  ovAbsTcs->show();   else  ovAbsTcs->hide(); }
 		if (hudGear){  if (pSet->show_digits)  hudGear->show(); else  hudGear->hide();  }
@@ -460,10 +460,10 @@ void App::UpdateHUD(int carId, CarModel* pCarM, CAR* pCar, float time, Viewport*
 		tim.SetPlayerCarID(carId);
 		s[0]=0;
 		
-		if (pCarM->bWrongChk || pSet->local_players > 1 && pCarM->iWonPlace > 0)
+		if (pCarM->bWrongChk || pSet->game.local_players > 1 && pCarM->iWonPlace > 0)
 			ovWarnWin->show();  else  ovWarnWin->hide();  //ov
 			
-		if (pSet->local_players > 1)  // lap num for many
+		if (pSet->game.local_players > 1)  // lap num for many
 		{
 			if (pCarM->iWonPlace > 0 && hudWonPlace)
 			{	sprintf(s, String(TR("---  %d #{TBPlace}  ---")).c_str(), pCarM->iWonPlace );
@@ -472,7 +472,7 @@ void App::UpdateHUD(int carId, CarModel* pCarM, CAR* pCar, float time, Viewport*
 					ColourValue(0.4,1,0.2), ColourValue(1,1,0.3), ColourValue(1,0.7,0.2), ColourValue(1,0.5,0.2) };
 				hudWonPlace->setColour(clrPlace[pCarM->iWonPlace-1]);
 			}
-			sprintf(s, String(TR("#{TBLap}  %d/%d")).c_str(), tim.GetCurrentLap(carId)+1, pSet->num_laps );
+			sprintf(s, String(TR("#{TBLap}  %d/%d")).c_str(), tim.GetCurrentLap(carId)+1, pSet->game.num_laps );
 		}else
 		{	if (!road)  // score on vdr track
 			if (tim.GetIsDrifting(0))
@@ -484,7 +484,7 @@ void App::UpdateHUD(int carId, CarModel* pCarM, CAR* pCar, float time, Viewport*
 			hudTimes->setCaption(String(s) +
 				String(TR("\n#{TBTime} ")) + GetTimeString(tim.GetPlayerTime())+
 				String(TR("\n#{TBLast} ")) + GetTimeString(tim.GetLastLap())+
-				String(TR("\n#{TBBest} ")) + GetTimeString(tim.GetBestLap(pSet->trackreverse)) );
+				String(TR("\n#{TBBest} ")) + GetTimeString(tim.GetBestLap(pSet->game.trackreverse)) );
 	}
 
 	//-------------------------------------------------------------------------------------------------------------------
@@ -587,7 +587,7 @@ void App::UpdateHUD(int carId, CarModel* pCarM, CAR* pCar, float time, Viewport*
 		int show = pCarM->fChkTime > 0.f ? 1 : 0;
 		if (show)  pCarM->fChkTime -= time;
 		//if (show != pCarM->iChkWrong)  //-
-		bool place = pSet->local_players > 1, won = pCarM->iWonPlace > 0;
+		bool place = pSet->game.local_players > 1, won = pCarM->iWonPlace > 0;
 			if (show)  {  hudWarnChk->show();  if (place && !won)  hudWonPlace->hide();  }
 			else  {       hudWarnChk->hide();  if (place && won)  hudWonPlace->show();  }
 		pCarM->iChkWrong = show;

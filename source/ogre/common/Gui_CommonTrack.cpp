@@ -72,7 +72,7 @@ void App::TrackListUpd(bool resetNotFound)
 			if (sTrkFind == "" || strstr(nlow.c_str(), sTrkFind.c_str()) != 0)
 			{
 				AddTrkL(name, 0, (*i).ti);
-				if (!pSet->track_user && name == pSet->track)  {  si = ii;
+				if (!pSet->gui.track_user && name == pSet->gui.track)  {  si = ii;
 					trkMList->setIndexSelected(si);
 					bFound = true;  bListTrackU = 0;  }
 				ii++;
@@ -84,7 +84,7 @@ void App::TrackListUpd(bool resetNotFound)
 			if (sTrkFind == "" || strstr(nlow.c_str(), sTrkFind.c_str()) != 0)
 			{
 				AddTrkL("*" + (*i) + "*", 1, 0);
-				if (pSet->track_user && name == pSet->track)  {  si = ii;
+				if (pSet->gui.track_user && name == pSet->gui.track)  {  si = ii;
 					trkMList->setIndexSelected(si);
 					bFound = true;  bListTrackU = 1;  }
 				ii++;
@@ -92,7 +92,7 @@ void App::TrackListUpd(bool resetNotFound)
 
 		//  not found last track, set 1st  .. only 
 		if (resetNotFound && !bFound && !liTracks.empty())
-		{	pSet->track = *liTracks.begin();  pSet->track_user = 0;
+		{	pSet->gui.track = *liTracks.begin();  pSet->gui.track_user = 0;
 			#ifdef ROAD_EDITOR
 			UpdWndTitle();
 			#endif
@@ -355,7 +355,7 @@ void App::ReadTrkStats()
 	SplineRoad rd(pGame);  rd.LoadFile(sRd,false);  // load
 	TIMER tim;  tim.Load(PATHMANAGER::GetTrackRecordsPath()+"/"+sListTrack+".txt", 0.f, pGame->error_output);
 	tim.AddCar(sListCar);  tim.SetPlayerCarID(0);
-	UpdGuiRdStats(&rd,sc, tim.GetBestLap(pSet->trackreverse));
+	UpdGuiRdStats(&rd,sc, tim.GetBestLap(pSet->gui.trackreverse));
 #else
 	SplineRoad rd;  rd.LoadFile(sRd,false);  // load
 	UpdGuiRdStats(&rd,sc, 0.f);

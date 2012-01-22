@@ -21,8 +21,8 @@ void SETTINGS::Serialize(bool w, CONFIGFILE & c)
 	for (int i=0; i < 4; ++i)
 	{
 		char ss[64];  sprintf(ss, "car%d.", i+1);   std::string s = ss;
-		Param(c,w, s+"car", car[i]);				Param(c,w, s+"clr_hue", car_hue[i]);
-		Param(c,w, s+"clr_sat", car_sat[i]);		Param(c,w, s+"clr_val", car_val[i]);
+		Param(c,w, s+"car", gui.car[i]);				Param(c,w, s+"clr_hue", gui.car_hue[i]);
+		Param(c,w, s+"clr_sat", gui.car_sat[i]);		Param(c,w, s+"clr_val", gui.car_val[i]);
 		Param(c,w, s+"camera", cam_view[i]);
 	}
 	Param(c,w, "car1.autotrans", autoshift);	//todo: this for all 4 cars..
@@ -31,13 +31,13 @@ void SETTINGS::Serialize(bool w, CONFIGFILE & c)
 
 	//  game
 	Param(c,w, "game.in_menu", inMenu);			Param(c,w, "game.in_main", isMain);
-	Param(c,w, "game.boost_type", boost_type);			Param(c,w, "game.flip_type", flip_type);
-	Param(c,w, "game.boost_power", boost_power);
-	Param(c,w, "game.collis_cars", collis_cars);		Param(c,w, "game.collis_veget", collis_veget);
-	Param(c,w, "game.track", track);					Param(c,w, "game.track_user", track_user);
-	Param(c,w, "game.trk_reverse", trackreverse);
-	Param(c,w, "game.local_players", local_players);	Param(c,w, "game.split_vertically", split_vertically);
-	Param(c,w, "game.num_laps", num_laps);
+	Param(c,w, "game.boost_type", gui.boost_type);		Param(c,w, "game.flip_type", gui.flip_type);
+	Param(c,w, "game.boost_power", gui.boost_power);
+	Param(c,w, "game.collis_cars", gui.collis_cars);	Param(c,w, "game.collis_veget", gui.collis_veget);
+	Param(c,w, "game.track", gui.track);				Param(c,w, "game.track_user", gui.track_user);
+	Param(c,w, "game.trk_reverse", gui.trackreverse);
+	Param(c,w, "game.local_players", gui.local_players); Param(c,w, "game.num_laps", gui.num_laps);
+	Param(c,w, "game.split_vertically", split_vertically);
 	
 	//  joystick
 	Param(c,w, "joystick.ff_device", ff_device);		Param(c,w, "joystick.ff_gain", ff_gain);
@@ -123,8 +123,6 @@ void SETTINGS::Serialize(bool w, CONFIGFILE & c)
 
 SETTINGS::SETTINGS() :  ///  Defaults
 	version(100),  // old
-	//  track
-	track("J1-T"), track_user(false), trackreverse(false),
 	//  hud
 	show_fps(1), show_gauges(1), trackmap(1),
 	show_cam(1), show_times(0), show_digits(1), show_opponents(1),
@@ -142,12 +140,9 @@ SETTINGS::SETTINGS() :  ///  Defaults
 	particles(true), trails(true), particles_len(1.f), trails_len(1.f),
 	//  car
 	abs(0), tcs(0), autoshift(1), autorear(1), rear_inv(1), show_mph(0),
-	//  game
+	//  misc
 	isMain(1), inMenu(0),
-	collis_veget(true), collis_cars(false),
-	local_players(1), num_laps(2),
 	split_vertically(true), language(""), // "" = autodetect lang
-	boost_type(2), flip_type(1), boost_power(1.f),
 	//  joystick
 	ff_device("/dev/input/event0"),
 	ff_gain(1.0),
@@ -163,7 +158,7 @@ SETTINGS::SETTINGS() :  ///  Defaults
 	master_server_port(protocol::DEFAULT_PORT),
 	local_port(protocol::DEFAULT_PORT),
 	//  replay
-	rpl_rec(1), rpl_ghost(1), rpl_bestonly(1),
+	rpl_ghost(1), rpl_bestonly(1),
 	rpl_alpha(0), rpl_ghostpar(0), rpl_listview(0),
 	//  sim
 	game_fq(82.f), blt_fq(160.f), blt_iter(24), dyn_iter(30), multi_thr(0),
@@ -180,6 +175,18 @@ SETTINGS::SETTINGS() :  ///  Defaults
 	motionblur(false), motionblurintensity(0.3),
 	ssao(false),softparticles(false)
 {
+	//  track
+	gui.track = "J1-T";
+	gui.track_user = false;
+	gui.trackreverse = false;
+	//  cars
 	for (int i=0; i < 4; ++i)
-	{	car[i] = "ES";  car_hue[i] = 0.4f+0.2f*i;  car_sat[i] = 1.f;  car_val[i] = 1.f;  cam_view[0] = 9;  }
+	{	gui.car[i] = "ES";  gui.car_hue[i] = 0.4f+0.2f*i;  gui.car_sat[i] = 1.f;  gui.car_val[i] = 1.f;  cam_view[0] = 9;  }
+	//  game
+	gui.local_players = 1;  gui.num_laps = 2;
+	gui.collis_veget = true;  gui.collis_cars = false;
+	gui.boost_type = 2;  gui.flip_type = 1;  gui.boost_power = 1.f;
+	//
+	gui.rpl_rec = 1;
+	gui.numChamp = -1;
 }

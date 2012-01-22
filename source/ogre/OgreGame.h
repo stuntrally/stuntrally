@@ -126,7 +126,7 @@ protected:
 	void GetTerAngles(int xb,int yb, int xe,int ye);
 	void CreateTrees(), CreateRoad(), CreateProps(), CreateFluids();
 	void CreateSkyDome(Ogre::String sMater, Ogre::Vector3 scale);
-	void NewGame();  void NewGameDoLoad(); bool IsTerTrack();
+	void NewGame();  void NewGameDoLoad();  bool IsTerTrack();  bool newGameRpl;
 	
 	// Loading
 	void LoadCleanUp(), LoadGame(), LoadScene(), LoadCar(), LoadTerrain(), LoadTrack(), LoadMisc();

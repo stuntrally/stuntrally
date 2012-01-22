@@ -47,12 +47,14 @@ void App::btnRplLoad(WP)  // Load
 		string car = replay.header.car, trk = replay.header.track;
 		bool usr = replay.header.track_user == 1;
 
-		pSet->car[0] = car;  pSet->track = trk;  pSet->track_user = usr;
-		pSet->car_hue[0] = replay.header.hue[0];  pSet->car_sat[0] = replay.header.sat[0];  pSet->car_val[0] = replay.header.val[0];
+		//  set game config from replay
+		pSet->game.car[0] = car;  pSet->game.track = trk;  pSet->game.track_user = usr;
+		pSet->game.car_hue[0] = replay.header.hue[0];  pSet->game.car_sat[0] = replay.header.sat[0];  pSet->game.car_val[0] = replay.header.val[0];
 		for (int p=1; p < replay.header.numPlayers; ++p)
-		{	pSet->car[p] = replay.header.cars[p-1];
-			pSet->car_hue[p] = replay.header.hue[p];  pSet->car_sat[p] = replay.header.sat[p];  pSet->car_val[p] = replay.header.val[p];
+		{	pSet->game.car[p] = replay.header.cars[p-1];
+			pSet->game.car_hue[p] = replay.header.hue[p];  pSet->game.car_sat[p] = replay.header.sat[p];  pSet->game.car_val[p] = replay.header.val[p];
 		}
+		newGameRpl = true;
 		btnNewGame(0);
 		bRplPlay = 1;
 	}
@@ -61,7 +63,7 @@ void App::btnRplLoad(WP)  // Load
 void App::btnRplSave(WP)  // Save
 {
 	String edit = edRplName->getCaption();
-	String file = PATHMANAGER::GetReplayPath() + "/" + pSet->track + "_" + edit + ".rpl";
+	String file = PATHMANAGER::GetReplayPath() + "/" + pSet->game.track + "_" + edit + ".rpl";
 	///  save
 	if (boost::filesystem::exists(file.c_str()))
 	{
@@ -207,7 +209,7 @@ void App::updReplaysList()
 	if (StringUtil::endsWith(*i, ".rpl"))
 	{
 		String s = *i;  s = StringUtil::replaceAll(s,".rpl","");
-		if (pSet->rpl_listview != 1 || StringUtil::startsWith(s,pSet->track, false))
+		if (pSet->rpl_listview != 1 || StringUtil::startsWith(s,pSet->game.track, false))
 			rplList->addItem(s);
 	}
 }

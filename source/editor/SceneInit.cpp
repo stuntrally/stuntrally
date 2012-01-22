@@ -182,8 +182,8 @@ void App::UpdWndTitle()
 #if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
 	HWND hwnd = 0;  // update wnd title
 	mWindow->getCustomAttribute("WINDOW", (void*)&hwnd); 
-	String s = String("SR Editor  track: ") + pSet->track;
-	if (pSet->track_user)  s += "  *user*";
+	String s = String("SR Editor  track: ") + pSet->gui.track;
+	if (pSet->gui.track_user)  s += "  *user*";
 	SetWindowText(hwnd, s.c_str());
 #endif
 	// TODO: Window title for linux
@@ -191,7 +191,7 @@ void App::UpdWndTitle()
 }
 
 String App::TrkDir() {
-	int u = pSet->track_user ? 1 : 0;			return pathTrk[u] + pSet->track + "/";  }
+	int u = pSet->gui.track_user ? 1 : 0;		return pathTrk[u] + pSet->gui.track + "/";  }
 
 String App::PathListTrk(int user) {
 	int u = user == -1 ? bListTrackU : user;	return pathTrk[u] + sListTrack;  }
@@ -208,7 +208,7 @@ String App::PathCopyTrk(int user){
 void App::SaveTrack()
 {
 	if (!pSet->allow_save)  // could force it when in writable location
-	if (!pSet->track_user)
+	if (!pSet->gui.track_user)
 	{	MyGUI::Message::createMessageBox(
 			"Message", "Save Track", "Can't save original track. Duplicate it first.",
 			MyGUI::MessageBoxStyle::IconWarning | MyGUI::MessageBoxStyle::Ok);
