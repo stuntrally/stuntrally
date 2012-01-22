@@ -428,12 +428,22 @@ bool MaterialGenerator::vpNeedTangent()
 
 bool MaterialGenerator::vpNeedWMat()
 {
-	return fpNeedEyeVector() || needTerrainLightMap();
+	return vpCalcWPos();
 }
 
 bool MaterialGenerator::fpNeedWMat()
 {
 	return UsePerPixelNormals();
+}
+
+bool MaterialGenerator::fpNeedWPos()
+{
+	return (needTerrainLightMap() || fpNeedLighting());
+}
+
+bool MaterialGenerator::vpCalcWPos()
+{
+	return (fpNeedWPos() || fpNeedEyeVector());
 }
 
 bool MaterialGenerator::vpNeedWvMat()

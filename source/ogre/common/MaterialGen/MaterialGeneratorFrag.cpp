@@ -184,7 +184,7 @@ void MaterialGenerator::fpCalcShadowSource(Ogre::StringUtil::StrStreamType& outS
 	{
 		outStream <<
 		"	float shadowingLM; \n"
-		"	float2 worldPos = float2(iNormal.w, texCoord.w); \n" // get world position
+		"	float2 worldPos = float2(worldPosition.x, worldPosition.z); \n" // get world position
 		"	float2 lmTexCoord = (worldPos / terrainWorldSize) + 0.5; \n" // convert to image space 0..1
 		"	shadowingLM = tex2D(terrainLightMap, lmTexCoord).x; \n" // fetch texture r channel
 		"	if (enableTerrainLightMap == 0.f) shadowingLM = 1.f; \n";
@@ -211,8 +211,12 @@ void MaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::StrStrea
 	mTexCoord_i=0;
 	outStream <<
 		"void main_fp("
-		"	in float4 iPosition : POSITION, \n"
-		"	in float4 position : COLOR, \n"
+		"	in float4 iPosition : POSITION, \n";
+		
+	if (fpNeedWPos()) outStream <<
+		"	in float4 worldPosition : COLOR, \n";
+		
+	outStream <<
 		"	in float4 texCoord : TEXCOORD"+toStr(mTexCoord_i++)+", \n";
 	
 	if (mShader->vertexColour) outStream <<
@@ -242,6 +246,8 @@ void MaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::StrStrea
 
 	if (MRTSupported()) 
 	{
+		outStream <<
+		"	uniform float4x4 vMat; \n";
 		if(!UsePerPixelNormals())
 		{
 			outStream << "	in float4 viewNormal : TEXCOORD"+ toStr( mTexCoord_i++ ) +", \n";
@@ -377,7 +383,7 @@ void MaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::StrStrea
 	{
 		outStream <<	
 		// compute the diffuse term
-		"	float3 lightDir = normalize(lightPosition.xyz - (position.xyz * lightPosition.w)); \n"
+		"	float3 lightDir = normalize(lightPosition.xyz - (worldPosition.xyz * lightPosition.w)); \n"
 		"	float diffuseLight = max(dot(lightDir, normal), 0); \n";
 		
 		if ((needLightMap() && needBlendMap())) outStream <<
@@ -462,9 +468,9 @@ void MaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::StrStrea
 	
 	// debug colour output  ------------------------------------------
 	
-	// world position (for lightmap)
-	//if (needTerrainLightMap()) outStream <<
-	//	"	oColor = oColor*float4(texCoord.w, iNormal.w, 1, 1); \n";
+	// world position
+	//if (fpNeedWPos()) outStream <<
+	//	"	oColor = oColor*float4(worldPosition.xyz, 1); \n";
 	
 	// normal
 	// if (fpNeedNormal()) outStream <<
@@ -512,7 +518,7 @@ void MaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::StrStrea
 	
 	if(MRTSupported())
 	{
-		outStream <<  "float4 viewPosition = mul(wvMat, float4(position.xyz,1.0)); \n";
+		outStream <<  "float4 viewPosition = mul(vMat, float4(worldPosition.xyz,1.0)); \n";
 		if(UsePerPixelNormals())
 		{
 			outStream <<  "float4 viewNormal = mul(wvMat, pNormal); \n";
@@ -559,6 +565,7 @@ void MaterialGenerator::fragmentProgramParams(HighLevelGpuProgramPtr program)
 
 	if(MRTSupported())
 	{
+		params->setNamedAutoConstant("vMat", GpuProgramParameters::ACT_VIEW_MATRIX);
 		params->setNamedAutoConstant("far", GpuProgramParameters::ACT_FAR_CLIP_DISTANCE);
 	}
 		
