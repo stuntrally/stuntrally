@@ -84,8 +84,8 @@ void App::SetGuiFromXmls()
 void App::btnNewGame(WP)
 {
 	if (trkName)  trkName->setCaption(sListTrack.c_str());
-	pSet->track = sListTrack;
-	pSet->track_user = bListTrackU;  //UpdWndTitle();//? load
+	pSet->gui.track = sListTrack;
+	pSet->gui.track_user = bListTrackU;  //UpdWndTitle();//? load
 	LoadTrack();
 }
 
@@ -117,7 +117,7 @@ bool App::ChkTrkCopy()
 			MessageBoxStyle::IconWarning | MessageBoxStyle::Ok);
 		return false;
 	}
-	if (sCopyTrack == pSet->track && bCopyTrackU == (pSet->track_user ? 1 : 0))
+	if (sCopyTrack == pSet->gui.track && bCopyTrackU == (pSet->gui.track_user ? 1 : 0))
 	{
 		Message::createMessageBox(
 			"Message", "Copy Track", "Source track and current track are the same.",
@@ -325,7 +325,7 @@ void App::btnTrackNew(WP)
 	Copy(pathTrkPrv[bListTrackU] + sListTrack + "_mini.png", pathTrkPrv[1] + name + "_mini.png");
 	Copy(pathTrkPrv[bListTrackU] + sListTrack + "_ter.jpg", pathTrkPrv[1] + name + "_ter.jpg");
 
-	sListTrack = name;  pSet->track = name;  pSet->track_user = 1;  UpdWndTitle();
+	sListTrack = name;  pSet->gui.track = name;  pSet->gui.track_user = 1;  UpdWndTitle();
 	FillTrackLists();
 	TrackListUpd();
 }
@@ -355,7 +355,7 @@ void App::btnTrackRename(WP)
 		Rename(from + "_mini.png", to + "_mini.png");
 		Rename(from + "_ter.jpg", to + "_ter.jpg");
 		
-		sListTrack = name;  pSet->track = sListTrack;  pSet->track_user = 1;/**/  UpdWndTitle();
+		sListTrack = name;  pSet->gui.track = sListTrack;  pSet->gui.track_user = 1;/**/  UpdWndTitle();
 		FillTrackLists();
 		TrackListUpd();  //listTrackChng(trkList,0);
 	}
@@ -383,10 +383,10 @@ void App::msgTrackDel(Message* sender, MessageBoxStyle result)
 	Delete(pathTrkPrv[bListTrackU] + sListTrack + "_mini.png");
 	Delete(pathTrkPrv[bListTrackU] + sListTrack + "_ter.jpg");
 
-	String st = pSet->track;
+	String st = pSet->gui.track;
 	FillTrackLists();
 	TrackListUpd();
-	if (st != pSet->track)
+	if (st != pSet->gui.track)
 		LoadTrack();  //load 1st if deleted cur
 }
 

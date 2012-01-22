@@ -119,7 +119,7 @@ void App::InitGui()
 	bnQuit = mGUI->findWidget<Button>("Quit");
 	if (bnQuit)  {  bnQuit->eventMouseButtonClick += newDelegate(this, &App::btnQuit);  bnQuit->setVisible(isFocGui);  }
 	Chk("SSAA", chkVidSSAA, pSet->ssaa);
-	//Chk("ReverseOn", chkReverse, pSet->trackreverse);
+	Chk("ReverseOn", chkReverse, pSet->gui.trackreverse);
 	Chk("ParticlesOn", chkParticles, pSet->particles);	Chk("TrailsOn", chkTrails, pSet->trails);
 
 	Chk("Fps", chkFps, pSet->show_fps);	chFps = mGUI->findWidget<Button>("Fps");
@@ -146,8 +146,8 @@ void App::InitGui()
 	Chk("CarGear", chkGear, pSet->autoshift);	Chk("CarRear", chkRear, pSet->autorear);
 	Chk("CarRearThrInv", chkRearInv, pSet->rear_inv);
 	//  game
-	//Chk("VegetCollis", chkVegetCollis, pSet->collis_veget);
-	//Chk("CarCollis", chkCarCollis, pSet->collis_cars);
+	Chk("VegetCollis", chkVegetCollis, pSet->gui.collis_veget);
+	Chk("CarCollis", chkCarCollis, pSet->gui.collis_cars);
 	//  boost, flip combos
 	Cmb(combo, "CmbBoost", comboBoost);
 	if (combo)
@@ -156,7 +156,7 @@ void App::InitGui()
 		combo->addItem(TR("#{FuelLap}"));
 		combo->addItem(TR("#{FuelTime}"));
 		combo->addItem(TR("#{Always}"));
-		//combo->setIndexSelected(pSet->boost_type);
+		combo->setIndexSelected(pSet->gui.boost_type);
 	}
 	Cmb(combo, "CmbFlip", comboFlip);
 	if (combo)
@@ -164,14 +164,14 @@ void App::InitGui()
 		combo->addItem(TR("#{Never}"));
 		combo->addItem(TR("#{FuelBoost}"));
 		combo->addItem(TR("#{Always}"));
-		//combo->setIndexSelected(pSet->flip_type);
+		combo->setIndexSelected(pSet->gui.flip_type);
 	}
 
 	Btn("btnPlayers1", btnNumPlayers);	Btn("btnPlayers2", btnNumPlayers);
 	Btn("btnPlayers3", btnNumPlayers);	Btn("btnPlayers4", btnNumPlayers);
 	Chk("chkSplitVertically", chkSplitVert, pSet->split_vertically);
 	valLocPlayers = mGUI->findWidget<StaticText>("valLocPlayers");
-	//if (valLocPlayers)  valLocPlayers->setCaption(toStr(pSet->local_players));
+	if (valLocPlayers)  valLocPlayers->setCaption(toStr(pSet->gui.local_players));
 	
 	//  kmh/mph radio
 	bRkmh = mGUI->findWidget<Button>("kmh");
@@ -262,7 +262,7 @@ void App::InitGui()
 		img->setUserString("v", toStr(v));
 	}
 	Btn("CarClrRandom", btnCarClrRandom);
-	//Slv(NumLaps, (pSet->num_laps - 1) / 20.f);
+	Slv(NumLaps, (pSet->gui.num_laps - 1) / 20.f);
 	
 	TabPtr tPlr = mGUI->findWidget<Tab>("tabPlayer");
 	if (tPlr)  tPlr->eventTabChangeSelect += newDelegate(this, &App::tabPlayer);
@@ -451,15 +451,10 @@ void App::InitGui()
 void App::UpdCarClrSld(bool upd)
 {
 	ScrollBar* sl;  size_t v;
-	
-	// this causes problems (color not applied)
-	//bUpdCarClr = false;
-	// car color update is instant now anyway.
-	
 	Slv(CarClrH, pSet->gui.car_hue[iCurCar]);
-	Slv(CarClrS, pSet->gui.car_sat[iCurCar]);  //if (upd)  bUpdCarClr = true;
+	Slv(CarClrS, pSet->gui.car_sat[iCurCar]);
 	Slv(CarClrV, pSet->gui.car_val[iCurCar]);
-	pSet->game.car_hue[iCurCar] = pSet->gui.car_hue[iCurCar];  // copy color, to apply change
+	pSet->game.car_hue[iCurCar] = pSet->gui.car_hue[iCurCar];  // copy to apply
 	pSet->game.car_sat[iCurCar] = pSet->gui.car_sat[iCurCar];
 	pSet->game.car_val[iCurCar] = pSet->gui.car_val[iCurCar];
 	bUpdCarClr = true;

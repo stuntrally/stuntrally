@@ -205,8 +205,9 @@ void App::InitGui()
 	Cmb(cmbSky, "SkyCombo", comboSky);
 
 	GetMaterialsFromDef("skies.matdef");
-	for (size_t i=0; i < vsMaterials.size(); ++i)  {
-		String s = vsMaterials[i];  cmbSky->addItem(s);  //LogO(s);
+	for (size_t i=0; i < vsMaterials.size(); ++i)
+	{	const String& s = vsMaterials[i];
+		if (s != "")  cmbSky->addItem(s);  //LogO(s);
 	}
 	//---------------------  WEATHER  ---------------------
 	Cmb(cmbRain1, "Rain1Cmb", comboRain1);  cmbRain1->addItem("");
@@ -214,7 +215,7 @@ void App::InitGui()
 
 	GetMaterials("weather.particle", true, "particle_system");
 	for (size_t i=0; i < vsMaterials.size(); ++i)
-	{	String s = vsMaterials[i];
+	{	const String& s = vsMaterials[i];
 		cmbRain1->addItem(s);  cmbRain2->addItem(s);
 	}	
 
@@ -241,7 +242,7 @@ void App::InitGui()
 	//  particles
 	GetMaterials("tires.particle", true, "particle_system");
 	for (size_t i=0; i < vsMaterials.size(); ++i)
-	{	String s = vsMaterials[i];
+	{	const String& s = vsMaterials[i];
 		cmbParDust->addItem(s);  cmbParMud->addItem(s);  cmbParSmoke->addItem(s);
 	}
 	
@@ -280,15 +281,15 @@ void App::InitGui()
 
 	///  [Track]
 	//------------------------------------------------------------------------
-	sListTrack = pSet->track;  //! set last
-	bListTrackU = pSet->track_user;
+	sListTrack = pSet->gui.track;  //! set last
+	bListTrackU = pSet->gui.track_user;
 	sCopyTrack = "";  //! none
 	bCopyTrackU = 0;
 	
 	//  text desc
 	Edt(trkDesc, "TrackDesc", editTrkDesc);
 	trkName = mGUI->findWidget<Edit>("TrackName");
-	if (trkName)  trkName->setCaption(pSet->track);
+	if (trkName)  trkName->setCaption(pSet->gui.track);
 
 	GuiInitTrack();
 	

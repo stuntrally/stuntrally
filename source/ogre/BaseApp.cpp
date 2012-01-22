@@ -156,7 +156,7 @@ void BaseApp::updateStats()
 			mDebugText = String( s );
 		}/**/
 	}
-	try {  // TODO: tri & bat vals when bloom ...
+	try {  // TODO: tri & bat vals when compositor !...
 		const RenderTarget::FrameStats& stats = mWindow->getStatistics();
 		//char s[20];
 		sprintf(s, "%5.1f", stats.lastFPS );	mOvrFps->setCaption( s );

@@ -18,7 +18,7 @@ void SETTINGS::Save(std::string sfile)
 void SETTINGS::Serialize(bool w, CONFIGFILE & c)
 {
 	c.bFltFull = false;
-	Param(c,w, "game.track", track);						Param(c,w, "game.track_user", track_user);
+	Param(c,w, "game.track", gui.track);					Param(c,w, "game.track_user", gui.track_user);
 
 	Param(c,w, "hud_show.fps", show_fps);
 	Param(c,w, "hud_show.trackmap", trackmap);				Param(c,w, "hud_size.minimap", size_minimap);
@@ -65,8 +65,6 @@ void SETTINGS::Serialize(bool w, CONFIGFILE & c)
 
 SETTINGS::SETTINGS() :  ///  Defaults
 	version(100),  // old
-	//  track
-	track("J1-T"), track_user(false), allow_save(0),
 	//  show
 	show_fps(1), trackmap(1), size_minimap(0.5), num_mini(0), brush_prv(1),
 	tracks_view(0), tracks_sort(0), tracks_sortup(0),
@@ -76,7 +74,7 @@ SETTINGS::SETTINGS() :  ///  Defaults
 	shadow_dist(2000), shadow_size(2), lightmap_size(0), shadow_count(3), shadow_type(2),  /*<+*/
 	shaders(0.5),  trees(1.f), grass(1.f), trees_dist(1.f), grass_dist(1.f),use_imposters(false),
 	//  startup
-	autostart(0), ogre_dialog(1), escquit(0), language(""),
+	autostart(0), ogre_dialog(1), escquit(0), language(""), allow_save(0),
 	//  settings
 	cam_x(0), cam_y(50),cam_z(-120),  cam_dx(0), cam_dy(0), cam_dz(1),
 	bFog(0), bTrees(0),
@@ -87,4 +85,7 @@ SETTINGS::SETTINGS() :  ///  Defaults
 	//  ter gen
 	gen_scale(20.f), gen_freq(0.2f), gen_oct(3), gen_persist(0.4f),
 	gen_pow(1.5f), gen_ofsx(0.f), gen_ofsy(0.f)
-{	}
+{
+	gui.track = "J1-T";
+	gui.track_user = false;
+}

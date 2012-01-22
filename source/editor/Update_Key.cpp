@@ -46,7 +46,7 @@ void App::UpdEditWnds()
 void App::UpdVisGui()
 {
 	if (mWndOpts)  mWndOpts->setVisible(bGuiFocus);
-	if (bnQuit)  bnQuit->setVisible(bGuiFocus);  //TODO: ?crash from lang change combo
+	if (bnQuit)  bnQuit->setVisible(bGuiFocus);
 	if (mGUI)  PointerManager::getInstance().setVisible(bGuiFocus || !bMoveCam);
 	if (road)  road->SetTerHitVis(bEdit());
 	if (!bGuiFocus && mToolTip)  mToolTip->setVisible(false);
@@ -131,7 +131,7 @@ bool App::KeyPress(const CmdKey &arg)
 			case KC_F7:  togPrvCam();  break;
 
 			case KC_RETURN:  // save screen
-				rt[RTs-1].rndTex->writeContentsToFile(pathTrkPrv[1] + pSet->track + ".jpg");  //U
+				rt[RTs-1].rndTex->writeContentsToFile(pathTrkPrv[1] + pSet->gui.track + ".jpg");  //U
 				listTrackChng(trkMList,0);  // upd gui img
 				Status("Preview saved", 1,1,0);
 				break;

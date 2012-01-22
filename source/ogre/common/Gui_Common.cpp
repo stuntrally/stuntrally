@@ -668,7 +668,6 @@ void App::ResizeOptWnd()
 void App::chkVidFullscr(WP wp)
 {
 	ChkEv(fullscreen);
-	//TODO: got broken, crashes on win,  need to change res 1st then fullscr..
 	mWindow->setFullscreen(pSet->fullscreen, pSet->windowx, pSet->windowy);
 	mWindow->resize(pSet->windowx, pSet->windowy);
 }
