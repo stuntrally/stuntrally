@@ -26,7 +26,7 @@ void MasterClient::refreshList()
 	}
 	protocol::GameInfo game;
 	game.packet_type = protocol::GAME_LIST;
-	m_client.broadcast(game, net::PACKET_RELIABLE);
+	m_client.broadcast(net::convert(game), net::PACKET_RELIABLE);
 	// Callback for cleared list in order to show the user something happened
 	if (m_callback) m_callback->gameListChanged(m_games);
 }
@@ -57,7 +57,7 @@ void MasterClient::gameInfoSenderThread()
 	while (m_sendUpdates) {
 		// Broadcast info
 		boost::mutex::scoped_lock lock(m_mutex);
-		m_client.broadcast(m_game, net::PACKET_RELIABLE);
+		m_client.broadcast(net::convert(m_game), net::PACKET_RELIABLE);
 		// Wait some
 		m_cond.timed_wait(lock, now() + (m_updateInterval / 1000.0));
 	}

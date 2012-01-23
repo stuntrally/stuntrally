@@ -8,6 +8,8 @@
 #include "SplitScreen.h"
 #include "common/Gui_Def.h"
 #include "common/RenderConst.h"
+#include "../network/masterclient.hpp"
+#include "../network/gameclient.hpp"
 
 #include <MyGUI_PointerManager.h>
 #include <OIS/OIS.h>
@@ -489,16 +491,21 @@ bool App::keyPressed( const OIS::KeyEvent &arg )
 	}
 
 	//  not main menus
-	if (!bAssignKey && !pSet->isMain)
+	if (!bAssignKey /*&& !pSet->isMain*/)
 	{
+		Widget* wf = MyGUI::InputManager::getInstance().getKeyFocusWidget();
+		bool edFoc = wf && wf->getTypeName() == "EditBox";
+		//if (wf)  LogO(wf->getTypeName()+" " +toStr(edFoc));
 		switch (arg.key)
 		{
 			case KC_BACK:
+				if (pSet->isMain)  break;
 				if (isFocGui)
-				{	pSet->isMain = true;  toggleGui(false);  }
+				{	if (edFoc)  break;
+					pSet->isMain = true;  toggleGui(false);  }
 				else
 					if (mWndRpl && !isFocGui)	bRplWnd = !bRplWnd;  // replay controls
-				return true;				
+				return true;
 
 			case KC_P:		// replay play/pause
 				if (bRplPlay && !isFocGui)
@@ -506,9 +513,12 @@ bool App::keyPressed( const OIS::KeyEvent &arg )
 					return true;  }
 				break;
 				
-			case KC_F:  // focus on find edit
-				if (edFind && isFocGui && !pSet->isMain && pSet->inMenu == WND_Game && mWndTabsGame == 0)
-				{	edFind->_riseKeySetFocus(mWndTabsGame);  //?
+			case KC_F:		// focus on find edit
+				if ((alt || ctrl) && edFind && isFocGui &&
+					!pSet->isMain && pSet->inMenu == WND_Game && mWndTabsGame->getIndexSelected() == 1)
+				{
+					MyGUI::InputManager::getInstance().resetKeyFocusWidget();
+					MyGUI::InputManager::getInstance().setKeyFocusWidget(edFind);
 					return true;  }
 				break;
 				
@@ -558,13 +568,13 @@ bool App::keyPressed( const OIS::KeyEvent &arg )
 				{
 					switch (mWndTabsGame->getIndexSelected())
 					{
-					case 0:
+					case 1:
 						btnChgTrack(0);
 						btnNewGame(0);  break;
-					case 1:
+					case 2:
 						btnChgCar(0);
 						btnNewGame(0);  break;
-					case 2:
+					case 3:
 						chatSendMsg();  break;
 			}	}	}
 			return false;

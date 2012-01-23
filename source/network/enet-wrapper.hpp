@@ -29,11 +29,8 @@
 #include <boost/lexical_cast.hpp>
 #include <enet/enet.h>
 
-#ifdef _WIN32
-#include <SDL.h> // FIXME: for uint*_t
-#else
-#include <stdint.h>
-#endif
+#include "address.hpp"
+#include "types.hpp"
 
 // Version check
 #if ENET_VERSION < ENET_VERSION_CREATE(1,3,0)
@@ -53,13 +50,6 @@ namespace net {
 		PACKET_UNSEQUENCED = 2
 	};
 
-	/// Convert integer IPv4 address to dot-notation
-	inline std::string IPv4(uint32_t i) {
-		std::ostringstream oss;
-		oss << (i & 0xFF) << "." << ((i >> 8) & 0xFF) << "." << ((i >> 16) & 0xFF) << "." << ((i >> 24) & 0xFF);
-		return oss.str();
-	}
-
 	/**
 	 * RAII Wrapper for the library
 	 *
@@ -72,26 +62,15 @@ namespace net {
 		~ENetContainer() { enet_deinitialize(); }
 	};
 
-	/// Internet address struct
-	struct Address {
-		uint32_t host; ///< IPv4 address
-		uint16_t port; ///< Port number
+	/// Convert ENetPeer to net::Address
+	inline Address convert(const ENetPeer* peer) {
+		if (peer) return Address(peer->address.host, peer->address.port);
+		else return Address();
+	}
 
-		Address(const ENetPeer* peer = NULL) {
-			if (peer) { host = peer->address.host; port = peer->address.port; }
-			else { host = 0; port = 0; }
-		}
-
-		Address(const ENetAddress addr): host(addr.host), port(addr.port) { }
-
-		operator std::string() const { return IPv4(host)+":"+boost::lexical_cast<std::string>(port); }
-		bool operator==(const Address& other) { return host == other.host && port == other.port; }
-		bool operator!=(const Address& other) { return !(*this == other); }
-		operator bool() { return port > 0; }
-	};
-
-	inline std::ostream& operator<< (std::ostream& out, const Address& addr) {
-		out << static_cast<std::string>(addr); return out;
+	/// Convert ENetAddress to net::Address
+	inline Address convert(const ENetAddress addr) {
+		return Address(addr.host, addr.port);
 	}
 
 	/// Network traffic container
@@ -100,7 +79,7 @@ namespace net {
 			peer_id(0), peer_address(), peer_data(NULL), packet_data(pckd),
 			packet_length(pckl), ping(0), event_data(evdata) {}
 		NetworkTraffic(ENetPeer* peer, void* dptr, const enet_uint8* pckd = NULL, size_t pckl = 0, enet_uint32 evdata = 0):
-			peer_id(peer->incomingPeerID), peer_address(peer), peer_data(dptr), packet_data(pckd),
+			peer_id(peer->incomingPeerID), peer_address(convert(peer)), peer_data(dptr), packet_data(pckd),
 			packet_length(pckl), ping(peer->roundTripTime), event_data(evdata) {}
 		peer_id_t peer_id; ///< Peer ID assigned by the library
 		Address peer_address; ///< Address from which the peer connected
@@ -111,14 +90,27 @@ namespace net {
 		enet_uint32 event_data; ///< Data associated with the event
 	};
 
-	/// Inherit this to easily convert simple structs to NetworkTraffic
-	template <class T>
-	struct SimpleSerializer {
-		operator enet_uint8*() { return reinterpret_cast<enet_uint8*>(this); }
-		operator enet_uint8 const*() const { return reinterpret_cast<enet_uint8 const*>(this); }
-		operator NetworkTraffic() { return NetworkTraffic(reinterpret_cast<enet_uint8*>(this), sizeof(T)); }
-		operator const NetworkTraffic() const { return NetworkTraffic(reinterpret_cast<enet_uint8 const*>(this), sizeof(T)); }
-	};
+	// Serialization functions
+
+	/*template <typename T>
+	enet_uint8* convert(T& obj) {
+		return reinterpret_cast<enet_uint8*>(&obj);
+	}*/
+
+	/*template <typename T>
+	enet_uint8 const* convert(const T& obj) {
+		return reinterpret_cast<enet_uint8 const*>(&obj);
+	}*/
+
+	template <typename T>
+	NetworkTraffic convert(T& obj) {
+		return NetworkTraffic(reinterpret_cast<enet_uint8*>(&obj), sizeof(T));
+	}
+
+	/*template <typename T>
+	const NetworkTraffic convert(const T& obj) {
+		return NetworkTraffic(reinterpret_cast<enet_uint8 const*>(&obj), sizeof(T));
+	}*/
 
 	/**
 	 * @brief Callback class prototype
@@ -310,7 +302,7 @@ namespace net {
 		/// Get address of the local host
 		Address getAddress() const {
 			boost::mutex::scoped_lock lock(m_mutex);
-			return Address(m_address);
+			return convert(m_address);
 		}
 
 		/// Terminate the network thread. Automatically called upon destruction.

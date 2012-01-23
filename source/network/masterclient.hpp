@@ -1,4 +1,5 @@
 #pragma once
+
 /**
  * @file
  * Communication with the master server.
@@ -7,19 +8,7 @@
 #include <boost/thread/condition.hpp>
 #include "enet-wrapper.hpp"
 #include "protocol.hpp"
-
-/**
- * @brief Callback class for MasterClient events.
- *
- * Inherit and implement this to get events about arriving game
- * info. Pass the implementation instance to the MasterClient.
- */
-struct MasterClientCallback {
-	/// Called when the list has changed
-	/// @param list how the complete list looks now after the change
-	virtual void gameListChanged(protocol::GameList list) {}
-};
-
+#include "networkcallbacks.hpp"
 
 /**
  * @brief Client for connecting to the master server.
