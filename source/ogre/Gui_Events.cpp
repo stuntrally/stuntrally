@@ -561,13 +561,13 @@ bool App::keyPressed( const OIS::KeyEvent &arg )
 				{
 					switch (mWndTabsGame->getIndexSelected())
 					{
-					case 0:
+					case 1:
 						btnChgTrack(0);
 						btnNewGame(0);  break;
-					case 1:
+					case 2:
 						btnChgCar(0);
 						btnNewGame(0);  break;
-					case 2:
+					case 3:
 						chatSendMsg();  break;
 			}	}	}
 			return false;
