@@ -2,6 +2,8 @@
 #include "Defines.h"
 #include "OgreGame.h"
 #include "../vdrift/settings.h"
+#include "../network/masterclient.hpp"
+#include "../network/gameclient.hpp"
 //#include "common/Gui_Def.h"
 //#include "common/RenderConst.h"
 

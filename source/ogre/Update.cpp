@@ -7,6 +7,8 @@
 #include "../paged-geom/PagedGeometry.h"
 #include "../ogre/common/MaterialGen/MaterialFactory.h"
 #include "../oisb/OISBSystem.h"
+#include "../network/masterclient.hpp"
+#include "../network/gameclient.hpp"
 
 #include <OgreParticleSystem.h>
 #include <OgreManualObject.h>

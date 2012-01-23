@@ -105,10 +105,10 @@ void P2PGameClient::senderThread() {
 		{
 			// Broadcast local player's meta info
 			protocol::PlayerInfoPacket pip = (protocol::PlayerInfoPacket)m_playerInfo;
-			m_client.broadcast(pip);
+			m_client.broadcast(net::convert(pip));
 			// If game info is set, broadcast it
 			if (m_game.packet_type == protocol::GAME_STATUS)
-				m_client.broadcast(m_game);
+				m_client.broadcast(net::convert(m_game));
 			// Loop all peers
 			for (PeerMap::iterator it = m_peers.begin(); it != m_peers.end(); ++it) {
 				PeerInfo& pi = it->second;
@@ -121,7 +121,7 @@ void P2PGameClient::senderThread() {
 				}
 				// Broadcast peer's info
 				protocol::PeerAddressPacket pap(it->second.address);
-				m_client.broadcast(pap);
+				m_client.broadcast(net::convert(pap));
 			}
 			// Wait some
 			m_cond.timed_wait(lock, now() + 2.0);
@@ -130,7 +130,7 @@ void P2PGameClient::senderThread() {
 		{
 			// Broadcast car state
 			if ((bool)m_carState)
-				m_client.broadcast(m_carState);
+				m_client.broadcast(net::convert(m_carState));
 			// Wait some
 			m_cond.timed_wait(lock, now() + 0.050); // 20 FPS
 		}

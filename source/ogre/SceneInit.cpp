@@ -8,6 +8,7 @@
 #include "SplitScreen.h"
 #include "common/RenderConst.h"
 #include "common/MaterialGen/MaterialFactory.h"
+#include "../network/gameclient.hpp"
 
 #include "../btOgre/BtOgrePG.h"
 #include "../btOgre/BtOgreGP.h"

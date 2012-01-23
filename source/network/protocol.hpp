@@ -11,9 +11,10 @@
  */
 
 #include <boost/lexical_cast.hpp>
-#include "enet-wrapper.hpp"
 #include "../vdrift/mathvector.h"
 #include "../vdrift/quaternion.h"
+#include "types.hpp"
+#include "address.hpp"
 
 namespace protocol {
 
@@ -47,7 +48,7 @@ enum PacketType {
 /**
  * @brief Contains information about one game that is available for joining.
  */
-struct GameInfo: public net::SimpleSerializer<GameInfo> {
+struct GameInfo {
 	uint8_t packet_type;
 	uint32_t id;        // Set by server
 	uint32_t address;   // Set by server
@@ -74,7 +75,7 @@ typedef std::map<uint32_t, protocol::GameInfo> GameList;
  * @brief Contains the address of a peer to connect.
  * These structs are passed around to create the complete network topography.
  */
-struct PeerAddressPacket: public net::SimpleSerializer<PeerAddressPacket> {
+struct PeerAddressPacket {
 	uint8_t packet_type;
 	net::Address address;
 
@@ -89,7 +90,7 @@ struct PeerAddressPacket: public net::SimpleSerializer<PeerAddressPacket> {
  * @brief Contains player info.
  * These structs are passed around to update player information.
  */
-struct PlayerInfoPacket: public net::SimpleSerializer<PlayerInfoPacket> {
+struct PlayerInfoPacket {
 	uint8_t packet_type;
 	int32_t random_id;
 	char name[16];
@@ -106,7 +107,7 @@ struct PlayerInfoPacket: public net::SimpleSerializer<PlayerInfoPacket> {
  * @brief Contains the car state.
  * These structs are passed around to update car position etc.
  */
-struct CarStatePackage: public net::SimpleSerializer<CarStatePackage> {
+struct CarStatePackage {
 	uint8_t packet_type;
 	MATHVECTOR<float,3> pos;
 	QUATERNION<float> rot;
