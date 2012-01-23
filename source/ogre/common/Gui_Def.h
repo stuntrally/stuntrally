@@ -28,7 +28,7 @@ const static float res = 1000000.f;  //float slider int res
 		bchk->setStateSelected(var);  }
 
 #define Edt(edit, name, event)  \
-	edit = (EditPtr)mWndOpts->findWidget(name);  \
+	edit = mGUI->findWidget<EditBox>(name);  \
 	if (edit && edit->eventEditTextChange.empty())  edit->eventEditTextChange += newDelegate(this, &App::event);		
 
 #define Ed(name, evt)  Edt(ed##name, #name, evt)

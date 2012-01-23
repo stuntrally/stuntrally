@@ -126,6 +126,7 @@ bool ProgressXml::LoadXml(std::string file)
 		champs.push_back(pc);
 		eCh = eCh->NextSiblingElement("championship");
 	}
+	return true;
 }
 
 //  Save progress
