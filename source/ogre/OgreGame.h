@@ -16,6 +16,8 @@
 #include "common/MessageBox/MessageBox.h"
 #include "common/MessageBox/MessageBoxStyle.h"
 
+#include "../network/networkcallbacks.hpp"
+
 #include <MyGUI.h>
 #include <OgreShadowCameraSetup.h>
 
