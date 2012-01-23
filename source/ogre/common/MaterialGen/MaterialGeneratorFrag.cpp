@@ -247,7 +247,7 @@ void MaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::StrStrea
 	if (MRTSupported()) 
 	{
 		outStream <<
-		"	uniform float4x4 vMat; \n";
+		"	uniform float4x4 vMat, \n";
 		if(!UsePerPixelNormals())
 		{
 			outStream << "	in float4 viewNormal : TEXCOORD"+ toStr( mTexCoord_i++ ) +", \n";
