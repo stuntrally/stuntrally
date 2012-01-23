@@ -13,18 +13,18 @@
 #include <MyGUI_Widget.h>
 #include <MyGUI_OgrePlatform.h>
 
-#include "../network/masterclient.hpp"
-#include "../network/gameclient.hpp"
+#include <boost/scoped_ptr.hpp>
 
 namespace MyGUI { class OgreD3D11Platform; }
 namespace Ogre 
 {  
 	class SceneNode;  class Root;  class SceneManager;  class RenderWindow;
-	namespace RTShader{ class ShaderGenerator; };
+	namespace RTShader{ class ShaderGenerator; }
 }
 namespace OIS  {  class InputManager;  class Mouse;  class Keyboard;  }
-namespace OISB {  class System;  };
+namespace OISB {  class System;  }
 class ShaderGeneratorTechniqueResolverListener;
+class MasterClient; class P2PGameClient;
 
 
 class BaseApp :
