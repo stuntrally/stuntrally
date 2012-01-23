@@ -13,6 +13,7 @@
 	<Tag name="InputHeaderTxt2">Binding</Tag>
 	<Tag name="InputHeaderTxt3">Value</Tag>
 	<Tag name="AndUsing">and using</Tag>
+	<Tag name="Championship">Championship</Tag>
 	<Tag name="ColumnRadius">Pylvään säde</Tag>
 	<Tag name="InputKeyUnassigned">-- Ei mitään --</Tag>
 	<Tag name="UnitKmh">km/h</Tag>
@@ -74,7 +75,7 @@
 	<Tag name="bumps">bumps (bumpy terrain)</Tag>
 	<Tag name="TipDiffusePrev">Diffuse texture preview image.</Tag>
 	<Tag name="TipGrTerMaxAngle">Terrain angle above which there won't be any grass.</Tag>
-	<Tag name="Materials">Materials</Tag>
+	<Tag name="RestartApply">Restart game, to apply *changes.</Tag>
 	<Tag name="InputMapResetGame">Reset game</Tag>
 	<Tag name="smoke">savu</Tag>
 	<Tag name="TipChangeCar">Vaihda listan valinta nykyiseksi autoksi ja paina [Uusi peli] ajaaksesi sillä.</Tag>
@@ -138,7 +139,7 @@
 	<Tag name="InpSet_AxisHalf">Axis Half</Tag>
 	<Tag name="PipeLStepsMul">Pipe L steps mul.</Tag>
 	<Tag name="View">Näkymä</Tag>
-	<Tag name="TriSize">Kolmiokoko</Tag>
+	<Tag name="TipModelRoadDist">Distance from road to models (global, added to each models own value).</Tag>
 	<Tag name="TerLAngSm">Angle smooth</Tag>
 	<Tag name="InputAfterChanges">(maaston/kasvillisuuden muutoksien jälkeen)</Tag>
 	<Tag name="SkirtLength">Skirt Length</Tag>
@@ -159,7 +160,7 @@
 	<Tag name="NetSettings">Settings</Tag>
 	<Tag name="TipModelMaxScale">Model maximal scale.</Tag>
 	<Tag name="TerrainError">Maaston virhe</Tag>
-	<Tag name="InputRoadMerge">M - toggle road merge segs (for test)</Tag>
+	<Tag name="LTrMaxTerH">max terrain Height</Tag>
 	<Tag name="No">No</Tag>
 	<Tag name="InputStartDir">Space  -  change road direction (+ or -)</Tag>
 	<Tag name="Effects">Tehosteet</Tag>
@@ -168,12 +169,13 @@
 	<Tag name="Sound">Äänet</Tag>
 	<Tag name="InputFluidsIns">Ins - insert new, default fluid at cursor</Tag>
 	<Tag name="RoadPointSize">Tien pisteiden koko</Tag>
-	<Tag name="auto">Auto</Tag>
+	<Tag name="Car">Auto</Tag>
 	<Tag name="FuelLap">Fuel each lap</Tag>
 	<Tag name="TipSkyMats">Sky material names (from SkyDome.material).</Tag>
+	<Tag name="InputRoadMerge">M - toggle road merge segs (for test)</Tag>
 	<Tag name="VolMaster">Pääkanava</Tag>
 	<Tag name="NumLaps">Number of laps</Tag>
-	<Tag name="InputRoadYaw">- rotate yaw</Tag>
+	<Tag name="TriSize">Kolmiokoko</Tag>
 	<Tag name="ReflMode">Mode</Tag>
 	<Tag name="TipCopySource">Pick selected track for copy source, used in [Tools] tab.</Tag>
 	<Tag name="InputMapNextTab">Seuraava välilehti</Tag>
@@ -205,6 +207,7 @@
 	<Tag name="NetStart">Start</Tag>
 	<Tag name="InputMinVal">Min. Value</Tag>
 	<Tag name="InputPressButtonTip">Press a button to see its number</Tag>
+	<Tag name="SingleRace">Single Race</Tag>
 	<Tag name="TipNewGameCar">Käynnistä peli uudelleen (auton vaihdon jälkeen).</Tag>
 	<Tag name="InputWheelForce">[,]  (or shift-Wheel)  -  Force (intensity)</Tag>
 	<Tag name="TipGrassPatchLengthMax">Maximal grass patch length.</Tag>
@@ -250,7 +253,6 @@
 	<Tag name="InputRoadMostSel">most work also on selection</Tag>
 	<Tag name="InputTerHeight">E - Height set (RMB change height value)</Tag>
 	<Tag name="InputStartPos">Q - muokkaa auton aloituspistettä</Tag>
-	<Tag name="TipModelRoadDist">Distance from road to models (global, added to each models own value).</Tag>
 	<Tag name="TireTrails">Rengasjäljet</Tag>
 	<Tag name="InputBrushParams">Siveltimen parametrit</Tag>
 	<Tag name="InputMapShowOptions">Näytä valinnat</Tag>
@@ -263,7 +265,7 @@
 	<Tag name="distance">etäisyys</Tag>
 	<Tag name="TrackAutoLoad">Auto Load track</Tag>
 	<Tag name="DustSize">pölyn koko</Tag>
-	<Tag name="InputRoadMove">- liikuta pistettä</Tag>
+	<Tag name="InputMapPlayer4">Pelaaja 4</Tag>
 	<Tag name="InputMapPlayer1">Pelaaja 1</Tag>
 	<Tag name="InputMapPlayer2">Pelaaja 2</Tag>
 	<Tag name="InputMapPlayer3">Pelaaja 3</Tag>
@@ -340,7 +342,7 @@
 	<Tag name="MotionBlur">Liikesumennus</Tag>
 	<Tag name="MinimapAndSize">Minimap, size</Tag>
 	<Tag name="TipChangeHue">Change car color (hue).</Tag>
-	<Tag name="InputMapPlayer4">Pelaaja 4</Tag>
+	<Tag name="InputRoadMove">- liikuta pistettä</Tag>
 	<Tag name="Intensity">Voimakkuus</Tag>
 	<Tag name="NetGameName">Game Name</Tag>
 	<Tag name="TexSize">Texture size</Tag>
@@ -430,6 +432,7 @@
 	<Tag name="TipTrackDescEditor">Track description text (click to edit).</Tag>
 	<Tag name="Size">Size</Tag>
 	<Tag name="AutoGearbox">Auto gearbox</Tag>
+	<Tag name="ReplaysMenu">Replays</Tag>
 	<Tag name="InputSlowFast">shift - slow   ctrl - fast</Tag>
 	<Tag name="MessageBox_Cancel">Cancel</Tag>
 	<Tag name="GrassMult">Grass mul</Tag>
@@ -448,7 +451,7 @@
 	<Tag name="InputFluidsDel">Del - delete current</Tag>
 	<Tag name="set1">set1</Tag>
 	<Tag name="set2">set2</Tag>
-	<Tag name="Car">Auto</Tag>
+	<Tag name="auto">Auto</Tag>
 	<Tag name="TipWindInflH">Wind influence on model, height scale.</Tag>
 	<Tag name="Copy">Copy</Tag>
 	<Tag name="InputStartLMB">LMB - move  RMB - height</Tag>
@@ -476,6 +479,7 @@
 	<Tag name="Tools">Tools</Tag>
 	<Tag name="NetCreateGame">Create game</Tag>
 	<Tag name="TipGrassSwaySpd">Grass sway effect speed.</Tag>
+	<Tag name="TipTerLHMin">Starting terrain height for layer.</Tag>
 	<Tag name="FrictionTread">FrictionTread</Tag>
 	<Tag name="InputMapShiftDown">Shift down</Tag>
 	<Tag name="HeightmapSize">Korkeuskartan koko</Tag>
@@ -487,7 +491,7 @@
 	<Tag name="CamInertia">Camera inertia</Tag>
 	<Tag name="TipTerSize">Resulting area in meters (side length). Equals vertex count multipled by triangle size.</Tag>
 	<Tag name="speed">speed</Tag>
-	<Tag name="TipTerLHMin">Starting terrain height for layer.</Tag>
+	<Tag name="InputRoadYaw">- rotate yaw</Tag>
 	<Tag name="RplGhosts">Ghosts</Tag>
 	<Tag name="RplBestOnly">Save ghost only for best time</Tag>
 	<Tag name="Front">Front</Tag>
@@ -536,12 +540,13 @@
 	<Tag name="TerLNoise">Noise</Tag>
 	<Tag name="InputRoadAltLMB">alt-LMB (or 1,2)</Tag>
 	<Tag name="TerLayers">Maaston kerrokset</Tag>
+	<Tag name="TipLTrMaxTerH">Terrain height above which model won't appear.</Tag>
 	<Tag name="TipModelPrev">Model preview image.</Tag>
 	<Tag name="InputRoadEdit">R - edit road mode</Tag>
 	<Tag name="jumps">jumps</Tag>
 	<Tag name="TBBest">Best</Tag>
 	<Tag name="TipFluidsWnd">Fluid parameters window.</Tag>
-	<Tag name="RestartApply">Restart game, to apply *changes.</Tag>
+	<Tag name="Materials">Materials</Tag>
 	<Tag name="InputMultiplier">Multiplier</Tag>
 	<Tag name="InputUndo">(one time undo)</Tag>
 	<Tag name="AllEffects">Effects Enabled</Tag>
@@ -625,11 +630,7 @@
 	<Tag name="InputNextOptTab">F2,F3 - prev,next Options tab</Tag>
 	<Tag name="RollingDrag">Rolling Drag</Tag>
 	<Tag name="RplAll">All</Tag>
-	<Tag name="Championship">Championship</Tag>
-	<Tag name="LTrMaxTerH">max terrain Height</Tag>
-	<Tag name="SingleRace">Single Race</Tag>
-	<Tag name="ReplaysMenu">Replays</Tag>
-	<Tag name="TipLTrMaxTerH">Terrain height above which model won't appear.</Tag>
+	<Tag name="BackMenu">Back</Tag>
 	<Tag name="GameVersion">1.5</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 
