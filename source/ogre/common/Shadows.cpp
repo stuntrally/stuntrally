@@ -38,7 +38,8 @@ void App::changeShadows()
 	
 	//  get settings
 	bool enabled = pSet->shadow_type != 0;
-	bool bDepth = pSet->shadow_type == 3;
+	bool bDepth = pSet->shadow_type >= 3;
+	bool bSoft = pSet->shadow_type == 4;
 	
 	pSet->shadow_size = std::max(0,std::min(ciShadowNumSizes-1, pSet->shadow_size));
 	int fTex = /*2048*/ ciShadowSizesA[pSet->shadow_size], fTex2 = fTex/2;
@@ -122,12 +123,24 @@ void App::changeShadows()
 		mSceneMgr->setShadowTextureCount(num);
 		for (int i=0; i < num; ++i)
 		{	int size = i==0 ? fTex : fTex2;
-			mSceneMgr->setShadowTextureConfig(i, size, size, bDepth ? PF_FLOAT32_R : PF_X8B8G8R8);
+		
+			PixelFormat pf;
+			if (bDepth && !bSoft) pf = PF_FLOAT32_R;
+			else if (bSoft) pf = PF_FLOAT16_RGB;
+			else pf = PF_X8B8G8R8;
+			
+			mSceneMgr->setShadowTextureConfig(i, size, size, pf);
 		}
 		
 		mSceneMgr->setShadowTextureSelfShadow(bDepth ? true : false);  //-?
-		mSceneMgr->setShadowCasterRenderBackFaces(bDepth ? true : false);
-		mSceneMgr->setShadowTextureCasterMaterial(bDepth ? "PSSM/shadow_caster" : StringUtil::BLANK);
+		mSceneMgr->setShadowCasterRenderBackFaces((bDepth && !bSoft) ? true : false);
+		
+		String shadowCasterMat;
+		if (bDepth && !bSoft) shadowCasterMat = "PSSM/shadow_caster";
+		else if (bSoft) shadowCasterMat = "PSVSM/shadow_caster";
+		else shadowCasterMat = StringUtil::BLANK;
+		
+		mSceneMgr->setShadowTextureCasterMaterial(shadowCasterMat);
 
 		if (matProfile && terrain)  {
 			matProfile->setReceiveDynamicShadowsDepth(bDepth);
@@ -138,57 +151,58 @@ void App::changeShadows()
 
 		}
 		
-		#if 0	// shadow tex overlay
-		// add the overlay elements to show the shadow maps:
-		// init overlay elements
-		OverlayManager& mgr = OverlayManager::getSingleton();
-		Overlay* overlay;
-		
-		// destroy if already exists
-		if (overlay = mgr.getByName("DebugOverlay"))
-			mgr.destroy(overlay);
-			
-		overlay = mgr.create("DebugOverlay");
-		
-		for (size_t i = 0; i < num; ++i) {
-			TexturePtr tex = mSceneMgr->getShadowTexture(i);
-
-			// Set up a debug panel to display the shadow
-			
-			if (MaterialManager::getSingleton().resourceExists("Ogre/DebugTexture" + toStr(i)))
-				MaterialManager::getSingleton().remove("Ogre/DebugTexture" + toStr(i));
-			MaterialPtr debugMat = MaterialManager::getSingleton().create(
-				"Ogre/DebugTexture" + toStr(i), 
-				ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME);
-				
-			debugMat->getTechnique(0)->getPass(0)->setLightingEnabled(false);
-			TextureUnitState *t = debugMat->getTechnique(0)->getPass(0)->createTextureUnitState(tex->getName());
-			t->setTextureAddressingMode(TextureUnitState::TAM_CLAMP);
-
-			OverlayContainer* debugPanel;
-			
-			// destroy container if exists
-			try
-			{
-				if (debugPanel = 
-					static_cast<OverlayContainer*>(
-						mgr.getOverlayElement("Ogre/DebugTexPanel" + toStr(i)
-					)))
-					mgr.destroyOverlayElement(debugPanel);
-			}
-			catch (Ogre::Exception&) {}
-			
-			debugPanel = (OverlayContainer*)
-				(OverlayManager::getSingleton().createOverlayElement("Panel", "Ogre/DebugTexPanel" + StringConverter::toString(i)));
-			debugPanel->_setPosition(0.8, i*0.25);
-			debugPanel->_setDimensions(0.2, 0.24);
-			debugPanel->setMaterialName(debugMat->getName());
-			debugPanel->show();
-			overlay->add2D(debugPanel);
-			overlay->show();
-		}
-		#endif
 	}
+	
+	#if 0	// shadow tex overlay
+	// add the overlay elements to show the shadow maps:
+	// init overlay elements
+	OverlayManager& mgr = OverlayManager::getSingleton();
+	Overlay* overlay;
+	
+	// destroy if already exists
+	if (overlay = mgr.getByName("DebugOverlay"))
+		mgr.destroy(overlay);
+		
+	overlay = mgr.create("DebugOverlay");
+	
+	for (size_t i = 0; i < num; ++i) {
+		TexturePtr tex = mSceneMgr->getShadowTexture(i);
+
+		// Set up a debug panel to display the shadow
+		
+		if (MaterialManager::getSingleton().resourceExists("Ogre/DebugTexture" + toStr(i)))
+			MaterialManager::getSingleton().remove("Ogre/DebugTexture" + toStr(i));
+		MaterialPtr debugMat = MaterialManager::getSingleton().create(
+			"Ogre/DebugTexture" + toStr(i), 
+			ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME);
+			
+		debugMat->getTechnique(0)->getPass(0)->setLightingEnabled(false);
+		TextureUnitState *t = debugMat->getTechnique(0)->getPass(0)->createTextureUnitState(tex->getName());
+		t->setTextureAddressingMode(TextureUnitState::TAM_CLAMP);
+
+		OverlayContainer* debugPanel;
+		
+		// destroy container if exists
+		try
+		{
+			if (debugPanel = 
+				static_cast<OverlayContainer*>(
+					mgr.getOverlayElement("Ogre/DebugTexPanel" + toStr(i)
+				)))
+				mgr.destroyOverlayElement(debugPanel);
+		}
+		catch (Ogre::Exception&) {}
+		
+		debugPanel = (OverlayContainer*)
+			(OverlayManager::getSingleton().createOverlayElement("Panel", "Ogre/DebugTexPanel" + StringConverter::toString(i)));
+		debugPanel->_setPosition(0.8, i*0.25);
+		debugPanel->_setDimensions(0.2, 0.24);
+		debugPanel->setMaterialName(debugMat->getName());
+		debugPanel->show();
+		overlay->add2D(debugPanel);
+		overlay->show();
+	}
+	#endif
 	
 	materialFactory->setNumShadowTex(num);
 	materialFactory->setShadows(pSet->shadow_type != 0);
@@ -241,6 +255,7 @@ void App::changeShadows()
 	}
 	
 	// trees are more complicated since they are cloned
+	//!todo this doesn't work (tree material does not update immediately)
 	if(trees)
 	{
 		trees->reloadGeometry();
