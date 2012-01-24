@@ -268,7 +268,7 @@ void CarModel::Create(int car)
 		if (FileExists(sCar2 + "_brake.mesh"))
 		{
 			Entity* eBrake = mSceneMgr->createEntity(siw + "_brake", sDirname + "_brake.mesh", "Car" + strI);
-			if (ghost)  {  eBrake->setRenderQueueGroup(g);  eBrake->setCastShadows(false);  }
+			if (ghost)  {  eBrake->setRenderQueueGroup(g);  eBrake->setCastShadows(false); eBrake->setVisibilityFlags(RV_Car); }
 			ndBrake[w] = ndWh[w]->createChildSceneNode();
 			ndBrake[w]->attachObject(eBrake);
 		}
