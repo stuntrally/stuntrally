@@ -539,6 +539,9 @@ Ogre::CullingMode MaterialGenerator::chooseCullingMode()
 
 Ogre::String MaterialGenerator::chooseShadowCasterMaterial()
 {
+	String type = "PSSM/"; if (mParent->getShadowsSoft()) type = "PSVSM/";
+	
+	
 	Ogre::String shadowCasterMaterial = StringUtil::BLANK;
 	if(!mDef->mProps->transparent)
 	{
@@ -547,14 +550,15 @@ Ogre::String MaterialGenerator::chooseShadowCasterMaterial()
 			Ogre::CullingMode cmode = chooseCullingMode();
 			if(cmode == Ogre::CULL_NONE)
 			{
-				shadowCasterMaterial = "PSSM/shadow_caster_nocull";				
+				shadowCasterMaterial = type+"shadow_caster_nocull";				
 			}
 			else
 			{
-				shadowCasterMaterial = "PSSM/shadow_caster_noalpha";
+				shadowCasterMaterial = type+"shadow_caster_noalpha";
 			}
 		}
 	}
+	
 	return shadowCasterMaterial;
 }
 

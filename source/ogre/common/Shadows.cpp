@@ -207,6 +207,7 @@ void App::changeShadows()
 	materialFactory->setNumShadowTex(num);
 	materialFactory->setShadows(pSet->shadow_type != 0);
 	materialFactory->setShadowsDepth(bDepth);
+	materialFactory->setShadowsSoft(bSoft);
 	materialFactory->generate();
 	
 	// set terrain lightmap texture and terrainWorldSize for all materials that need it
