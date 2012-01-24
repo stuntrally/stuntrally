@@ -51,6 +51,7 @@ public:
 	void setEnvMap(bool p) { setIfChanged(bEnvMap) };
 	void setShadows(bool p) { setIfChanged(bShadows) };
 	void setShadowsDepth(bool p) { setIfChanged(bShadowsDepth) };
+	void setShadowsSoft(bool p) { setIfChanged(bShadowsSoft) };
 	void setTexSize(unsigned int p) { setIfChanged(iTexSize) };
 	void setNumShadowTex(unsigned int p) { setIfChanged(iNumShadowTex) };
 	void setShaderQuality(float p) { setIfChanged(fShaderQuality) };
@@ -59,6 +60,7 @@ public:
 	const bool getEnvMap() { return bEnvMap; };
 	const bool getShadows() { return bShadows; };
 	const bool getShadowsDepth() { return bShadowsDepth; };
+	const bool getShadowsSoft() { return bShadowsSoft; };
 	const unsigned int getTexSize() { return iTexSize; };
 	const unsigned int getNumShadowTex() { return iNumShadowTex; };
 	const float getShaderQuality() { return fShaderQuality; };
@@ -76,7 +78,7 @@ public:
 
 private:
 	/// user settings definition ---------------------------------
-	bool bNormalMap, bEnvMap, bShadows, bShadowsDepth;
+	bool bNormalMap, bEnvMap, bShadows, bShadowsDepth, bShadowsSoft;
 	unsigned int iTexSize; unsigned int iNumShadowTex;
 	float fShaderQuality;
 	/// -------------------------------------------------------
