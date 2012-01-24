@@ -574,14 +574,42 @@ void btGeneric6DofConstraint::getInfo1NonVirtual (btConstraintInfo1* info)
 
 void btGeneric6DofConstraint::getInfo2 (btConstraintInfo2* info)
 {
-	getInfo2NonVirtual(info,m_rbA.getCenterOfMassTransform(),m_rbB.getCenterOfMassTransform(), m_rbA.getLinearVelocity(),m_rbB.getLinearVelocity(),m_rbA.getAngularVelocity(), m_rbB.getAngularVelocity());
+	btAssert(!m_useSolveConstraintObsolete);
+
+	const btTransform& transA = m_rbA.getCenterOfMassTransform();
+	const btTransform& transB = m_rbB.getCenterOfMassTransform();
+	const btVector3& linVelA = m_rbA.getLinearVelocity();
+	const btVector3& linVelB = m_rbB.getLinearVelocity();
+	const btVector3& angVelA = m_rbA.getAngularVelocity();
+	const btVector3& angVelB = m_rbB.getAngularVelocity();
+
+	if(m_useOffsetForConstraintFrame)
+	{ // for stability better to solve angular limits first
+		int row = setAngularLimits(info, 0,transA,transB,linVelA,linVelB,angVelA,angVelB);
+		setLinearLimits(info, row, transA,transB,linVelA,linVelB,angVelA,angVelB);
+	}
+	else
+	{ // leave old version for compatibility
+		int row = setLinearLimits(info, 0, transA,transB,linVelA,linVelB,angVelA,angVelB);
+		setAngularLimits(info, row,transA,transB,linVelA,linVelB,angVelA,angVelB);
+	}
+
 }
+
 
 void btGeneric6DofConstraint::getInfo2NonVirtual (btConstraintInfo2* info, const btTransform& transA,const btTransform& transB,const btVector3& linVelA,const btVector3& linVelB,const btVector3& angVelA,const btVector3& angVelB)
 {
+	
 	btAssert(!m_useSolveConstraintObsolete);
 	//prepare constraint
 	calculateTransforms(transA,transB);
+
+	int i;
+	for (i=0;i<3 ;i++ )
+	{
+		testAngularLimitMotor(i);
+	}
+
 	if(m_useOffsetForConstraintFrame)
 	{ // for stability better to solve angular limits first
 		int row = setAngularLimits(info, 0,transA,transB,linVelA,linVelB,angVelA,angVelB);
@@ -682,6 +710,15 @@ void	btGeneric6DofConstraint::updateRHS(btScalar	timeStep)
 {
 	(void)timeStep;
 
+}
+
+
+void btGeneric6DofConstraint::setFrames(const btTransform& frameA, const btTransform& frameB)
+{
+	m_frameInA = frameA;
+	m_frameInB = frameB;
+	buildJacobian();
+	calculateTransforms();
 }
 
 
@@ -1009,4 +1046,25 @@ btScalar btGeneric6DofConstraint::getParam(int num, int axis) const
 		btAssertConstrParams(0);
 	}
 	return retVal;
+}
+
+ 
+
+void btGeneric6DofConstraint::setAxis(const btVector3& axis1,const btVector3& axis2)
+{
+	btVector3 zAxis = axis1.normalized();
+	btVector3 yAxis = axis2.normalized();
+	btVector3 xAxis = yAxis.cross(zAxis); // we want right coordinate system
+	
+	btTransform frameInW;
+	frameInW.setIdentity();
+	frameInW.getBasis().setValue(	xAxis[0], yAxis[0], zAxis[0],	
+	                                xAxis[1], yAxis[1], zAxis[1],
+	                               xAxis[2], yAxis[2], zAxis[2]);
+	
+	// now get constraint frame in local coordinate systems
+	m_frameInA = m_rbA.getCenterOfMassTransform().inverse() * frameInW;
+	m_frameInB = m_rbB.getCenterOfMassTransform().inverse() * frameInW;
+	
+	calculateTransforms();
 }

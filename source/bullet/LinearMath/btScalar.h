@@ -14,8 +14,8 @@ subject to the following restrictions:
 
 
 
-#ifndef SIMD___SCALAR_H
-#define SIMD___SCALAR_H
+#ifndef BT_SCALAR_H
+#define BT_SCALAR_H
 
 #ifdef BT_MANAGED_CODE
 //Aligned data types not supported in managed code
@@ -25,12 +25,10 @@ subject to the following restrictions:
 
 #include <math.h>
 #include <stdlib.h>//size_t for MSVC 6.0
-#include <cstdlib>
-#include <cfloat>
 #include <float.h>
 
 /* SVN $Revision$ on $Date$ from http://bullet.googlecode.com*/
-#define BT_BULLET_VERSION 276
+#define BT_BULLET_VERSION 279
 
 inline int	btGetVersion()
 {
@@ -93,7 +91,7 @@ inline int	btGetVersion()
 #else
 	
 #if defined	(__CELLOS_LV2__)
-		#define SIMD_FORCE_INLINE inline
+		#define SIMD_FORCE_INLINE inline __attribute__((always_inline))
 		#define ATTRIBUTE_ALIGNED16(a) a __attribute__ ((aligned (16)))
 		#define ATTRIBUTE_ALIGNED64(a) a __attribute__ ((aligned (64)))
 		#define ATTRIBUTE_ALIGNED128(a) a __attribute__ ((aligned (128)))
@@ -101,7 +99,14 @@ inline int	btGetVersion()
 		#include <assert.h>
 		#endif
 #ifdef BT_DEBUG
-		#define btAssert assert
+#ifdef __SPU__
+#include <spu_printf.h>
+#define printf spu_printf
+	#define btAssert(x) {if(!(x)){printf("Assert "__FILE__ ":%u ("#x")\n", __LINE__);spu_hcmpeq(0,0);}}
+#else
+	#define btAssert assert
+#endif
+	
 #else
 		#define btAssert(x)
 #endif
@@ -246,7 +251,7 @@ SIMD_FORCE_INLINE btScalar btSqrt(btScalar y)
 	tempf = y;
 	*tfptr = (0xbfcdd90a - *tfptr)>>1; /* estimate of 1/sqrt(y) */
 	x =  tempf;
-	z =  y*btScalar(0.5);                        /* hoist out the “/2”    */
+	z =  y*btScalar(0.5);
 	x = (btScalar(1.5)*x)-(x*x)*(x*z);         /* iteration formula     */
 	x = (btScalar(1.5)*x)-(x*x)*(x*z);
 	x = (btScalar(1.5)*x)-(x*x)*(x*z);
@@ -514,4 +519,4 @@ struct btTypedObject
 		return m_objectType;
 	}
 };
-#endif //SIMD___SCALAR_H
+#endif //BT_SCALAR_H

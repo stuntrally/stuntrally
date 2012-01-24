@@ -52,6 +52,7 @@ void	btCompoundShape::addChildShape(const btTransform& localTransform,btCollisio
 	//m_childTransforms.push_back(localTransform);
 	//m_childShapes.push_back(shape);
 	btCompoundShapeChild child;
+	child.m_node = 0;
 	child.m_transform = localTransform;
 	child.m_childShape = shape;
 	child.m_childShapeType = shape->getShapeType();
@@ -84,7 +85,7 @@ void	btCompoundShape::addChildShape(const btTransform& localTransform,btCollisio
 
 }
 
-void	btCompoundShape::updateChildTransform(int childIndex, const btTransform& newChildTransform)
+void	btCompoundShape::updateChildTransform(int childIndex, const btTransform& newChildTransform,bool shouldRecalculateLocalAabb)
 {
 	m_children[childIndex].m_transform = newChildTransform;
 
@@ -98,7 +99,10 @@ void	btCompoundShape::updateChildTransform(int childIndex, const btTransform& ne
 		m_dynamicAabbTree->update(m_children[childIndex].m_node,bounds);
 	}
 
-	recalculateLocalAabb();
+	if (shouldRecalculateLocalAabb)
+	{
+		recalculateLocalAabb();
+	}
 }
 
 void btCompoundShape::removeChildShapeByIndex(int childShapeIndex)
@@ -110,6 +114,8 @@ void btCompoundShape::removeChildShapeByIndex(int childShapeIndex)
 		m_dynamicAabbTree->remove(m_children[childShapeIndex].m_node);
 	}
 	m_children.swap(childShapeIndex,m_children.size()-1);
+    if (m_dynamicAabbTree) 
+		m_children[childShapeIndex].m_node->dataAsInt = childShapeIndex;
 	m_children.pop_back();
 
 }
@@ -217,9 +223,13 @@ void btCompoundShape::calculatePrincipalAxisTransform(btScalar* masses, btTransf
 
 	for (k = 0; k < n; k++)
 	{
+		btAssert(masses[k]>0);
 		center += m_children[k].m_transform.getOrigin() * masses[k];
 		totalMass += masses[k];
 	}
+
+	btAssert(totalMass>0);
+
 	center /= totalMass;
 	principal.setOrigin(center);
 
@@ -276,13 +286,36 @@ void btCompoundShape::setLocalScaling(const btVector3& scaling)
 		childScale = childScale * scaling / m_localScaling;
 		m_children[i].m_childShape->setLocalScaling(childScale);
 		childTrans.setOrigin((childTrans.getOrigin())*scaling);
-		updateChildTransform(i, childTrans);
-		recalculateLocalAabb();
+		updateChildTransform(i, childTrans,false);
 	}
+	
 	m_localScaling = scaling;
+	recalculateLocalAabb();
+
 }
 
 
+void btCompoundShape::createAabbTreeFromChildren()
+{
+    if ( !m_dynamicAabbTree )
+    {
+        void* mem = btAlignedAlloc(sizeof(btDbvt),16);
+        m_dynamicAabbTree = new(mem) btDbvt();
+        btAssert(mem==m_dynamicAabbTree);
+
+        for ( int index = 0; index < m_children.size(); index++ )
+        {
+            btCompoundShapeChild &child = m_children[index];
+
+            //extend the local aabbMin/aabbMax
+            btVector3 localAabbMin,localAabbMax;
+            child.m_childShape->getAabb(child.m_transform,localAabbMin,localAabbMax);
+
+            const btDbvtVolume  bounds=btDbvtVolume::FromMM(localAabbMin,localAabbMax);
+            child.m_node = m_dynamicAabbTree->insert(bounds,(void*)index);
+        }
+    }
+}
 
 
 ///fills the dataBuffer and returns the struct name (and 0 on failure)

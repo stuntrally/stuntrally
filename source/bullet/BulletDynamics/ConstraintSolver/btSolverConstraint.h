@@ -59,12 +59,12 @@ ATTRIBUTE_ALIGNED64 (struct)	btSolverConstraint
 	union
 	{
 		btRigidBody*	m_solverBodyA;
-		btScalar	m_unusedPadding2;
+		int				m_companionIdA;
 	};
 	union
 	{
 		btRigidBody*	m_solverBodyB;
-		btScalar	m_unusedPadding3;
+		int				m_companionIdB;
 	};
 	
 	union

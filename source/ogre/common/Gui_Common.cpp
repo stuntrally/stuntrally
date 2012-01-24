@@ -196,7 +196,7 @@ void App::slShadowCount(SL)
 
 void App::slShadowSize(SL)
 {
-	int v = std::max( 0.0f, std::min((float) ciShadowNumSizes-1, ciShadowNumSizes * val/res));
+	int v = max( 0.0f, min((float) ciShadowNumSizes-1, ciShadowNumSizes * val/res));
 	if (bGI)  pSet->shadow_size = v;
 	if (valShadowSize)  valShadowSize->setCaption(toStr(ciShadowSizesA[v]));
 }
@@ -569,7 +569,7 @@ void App::btnResChng(WP)
 	{
 	#ifdef _WIN32
 		int sx = GetSystemMetrics(SM_CXSCREEN), sy = GetSystemMetrics(SM_CYSCREEN);
-		int cx = std::max(0,(sx - pSet->windowx) / 2), cy = std::max(0,(sy - pSet->windowy) / 2);
+		int cx = max(0,(sx - pSet->windowx) / 2), cy = max(0,(sy - pSet->windowy) / 2);
 		mWindow->reposition(cx,cy);
 	#else
 		//mWindow->reposition(0,0);  //TODO: linux window size,center ?..

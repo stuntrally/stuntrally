@@ -59,7 +59,7 @@ void App::TrackListUpd(bool resetNotFound)
 		int ii = 0, si = -1;  bool bFound = false;
 
 		//  sort
-		int numFunc = std::min(allSortFunc-1, (int)trkMList->mSortColumnIndex);
+		int numFunc = min(allSortFunc-1, (int)trkMList->mSortColumnIndex);
 		std::list<TrkL> liTrk2 = liTrk;  // copy
 		//liTrk2.sort(TrkSort[0]);
 		liTrk2.sort(TrkSort[numFunc]);
@@ -98,7 +98,7 @@ void App::TrackListUpd(bool resetNotFound)
 			#endif
 		}
 		if (si > -1)  // center
-			trkMList->beginToItemAt(std::max(0, si-11));
+			trkMList->beginToItemAt(max(0, si-11));
 	}
 }
 

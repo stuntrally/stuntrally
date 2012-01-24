@@ -13,8 +13,8 @@ subject to the following restrictions:
 3. This notice may not be removed or altered from any source distribution.
 */
 
-#ifndef COLLISION_OBJECT_H
-#define COLLISION_OBJECT_H
+#ifndef BT_COLLISION_OBJECT_H
+#define BT_COLLISION_OBJECT_H
 
 #include "LinearMath/btTransform.h"
 
@@ -67,6 +67,8 @@ protected:
 
 	btBroadphaseProxy*		m_broadphaseHandle;
 	btCollisionShape*		m_collisionShape;
+	///m_extensionPointer is used by some internal low-level Bullet extensions.
+	void*					m_extensionPointer;
 	
 	///m_rootCollisionShape is temporarily used to store the original collision shape
 	///The m_collisionShape might be temporarily replaced by a child collision shape during collision detection purposes
@@ -126,12 +128,13 @@ public:
 	enum	CollisionObjectTypes
 	{
 		CO_COLLISION_OBJECT =1,
-		CO_RIGID_BODY,
+		CO_RIGID_BODY=2,
 		///CO_GHOST_OBJECT keeps track of all objects overlapping its AABB and that pass its collision filter
 		///It is useful for collision sensors, explosion objects, character controller etc.
-		CO_GHOST_OBJECT,
-		CO_SOFT_BODY,
-		CO_HF_FLUID
+		CO_GHOST_OBJECT=4,
+		CO_SOFT_BODY=8,
+		CO_HF_FLUID=16,
+		CO_USER_TYPE=32
 	};
 
 	SIMD_FORCE_INLINE bool mergesSimulationIslands() const
@@ -219,6 +222,19 @@ public:
 	void	internalSetTemporaryCollisionShape(btCollisionShape* collisionShape)
 	{
 		m_collisionShape = collisionShape;
+	}
+
+	///Avoid using this internal API call, the extension pointer is used by some Bullet extensions. 
+	///If you need to store your own user pointer, use 'setUserPointer/getUserPointer' instead.
+	void*		internalGetExtensionPointer() const
+	{
+		return m_extensionPointer;
+	}
+	///Avoid using this internal API call, the extension pointer is used by some Bullet extensions
+	///If you need to store your own user pointer, use 'setUserPointer/getUserPointer' instead.
+	void	internalSetExtensionPointer(void* pointer)
+	{
+		m_extensionPointer = pointer;
 	}
 
 	SIMD_FORCE_INLINE	int	getActivationState() const { return m_activationState1;}
@@ -505,4 +521,4 @@ SIMD_FORCE_INLINE	int	btCollisionObject::calculateSerializeBufferSize() const
 
 
 
-#endif //COLLISION_OBJECT_H
+#endif //BT_COLLISION_OBJECT_H

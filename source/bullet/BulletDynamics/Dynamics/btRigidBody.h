@@ -13,8 +13,8 @@ subject to the following restrictions:
 3. This notice may not be removed or altered from any source distribution.
 */
 
-#ifndef RIGIDBODY_H
-#define RIGIDBODY_H
+#ifndef BT_RIGIDBODY_H
+#define BT_RIGIDBODY_H
 
 #include "LinearMath/btAlignedObjectArray.h"
 #include "LinearMath/btTransform.h"
@@ -89,7 +89,7 @@ class btRigidBody  : public btCollisionObject
 	int				m_rigidbodyFlags;
 	
 	int				m_debugBodyId;
-
+	
 
 protected:
 
@@ -188,13 +188,13 @@ public:
 	///but a rigidbody is derived from btCollisionObject, so we can safely perform an upcast
 	static const btRigidBody*	upcast(const btCollisionObject* colObj)
 	{
-		if (colObj->getInternalType()==btCollisionObject::CO_RIGID_BODY)
+		if (colObj->getInternalType()&btCollisionObject::CO_RIGID_BODY)
 			return (const btRigidBody*)colObj;
 		return 0;
 	}
 	static btRigidBody*	upcast(btCollisionObject* colObj)
 	{
-		if (colObj->getInternalType()==btCollisionObject::CO_RIGID_BODY)
+		if (colObj->getInternalType()&btCollisionObject::CO_RIGID_BODY)
 			return (btRigidBody*)colObj;
 		return 0;
 	}
@@ -270,12 +270,12 @@ public:
 		m_totalForce += force*m_linearFactor;
 	}
 
-	const btVector3& getTotalForce()
+	const btVector3& getTotalForce() const
 	{
 		return m_totalForce;
 	};
 
-	const btVector3& getTotalTorque()
+	const btVector3& getTotalTorque() const
 	{
 		return m_totalTorque;
 	};
@@ -504,7 +504,7 @@ public:
 		return m_constraintRefs[index];
 	}
 
-	int getNumConstraintRefs()
+	int getNumConstraintRefs() const
 	{
 		return m_constraintRefs.size();
 	}
@@ -517,6 +517,26 @@ public:
 	int getFlags() const
 	{
 		return m_rigidbodyFlags;
+	}
+
+	const btVector3& getDeltaLinearVelocity() const
+	{
+		return m_deltaLinearVelocity;
+	}
+
+	const btVector3& getDeltaAngularVelocity() const
+	{
+		return m_deltaAngularVelocity;
+	}
+
+	const btVector3& getPushVelocity() const 
+	{
+		return m_pushVelocity;
+	}
+
+	const btVector3& getTurnVelocity() const 
+	{
+		return m_turnVelocity;
 	}
 
 
@@ -589,14 +609,15 @@ public:
 		{
 			setLinearVelocity(getLinearVelocity()+ m_deltaLinearVelocity);
 			setAngularVelocity(getAngularVelocity()+m_deltaAngularVelocity);
-			m_deltaLinearVelocity.setZero();
-			m_deltaAngularVelocity .setZero();
+			//m_deltaLinearVelocity.setZero();
+			//m_deltaAngularVelocity .setZero();
 			//m_originalBody->setCompanionId(-1);
 		}
 	}
 
 
 	void	internalWritebackVelocity(btScalar timeStep);
+
 	
 
 	///////////////////////////////////////////////
@@ -666,5 +687,5 @@ struct	btRigidBodyDoubleData
 
 
 
-#endif
+#endif //BT_RIGIDBODY_H
 

@@ -14,8 +14,8 @@ subject to the following restrictions:
 
 
 
-#ifndef SIMD__VECTOR3_H
-#define SIMD__VECTOR3_H
+#ifndef BT_VECTOR3_H
+#define BT_VECTOR3_H
 
 
 #include "btScalar.h"
@@ -148,6 +148,19 @@ public:
    * This is symantically treating the vector like a point */
 	SIMD_FORCE_INLINE btScalar distance(const btVector3& v) const;
 
+	SIMD_FORCE_INLINE btVector3& safeNormalize() 
+	{
+		btVector3 absVec = this->absolute();
+		int maxIndex = absVec.maxAxis();
+		if (absVec[maxIndex]>0)
+		{
+			*this /= absVec[maxIndex];
+			return *this /= length();
+		}
+		setValue(1,0,0);
+		return *this;
+	}
+
   /**@brief Normalize this vector 
    * x^2 + y^2 + z^2 = 1 */
 	SIMD_FORCE_INLINE btVector3& normalize() 
@@ -158,10 +171,10 @@ public:
   /**@brief Return a normalized version of this vector */
 	SIMD_FORCE_INLINE btVector3 normalized() const;
 
-  /**@brief Rotate this vector 
+  /**@brief Return a rotated version of this vector
    * @param wAxis The axis to rotate about 
    * @param angle The angle to rotate by */
-	SIMD_FORCE_INLINE btVector3 rotate( const btVector3& wAxis, const btScalar angle );
+	SIMD_FORCE_INLINE btVector3 rotate( const btVector3& wAxis, const btScalar angle ) const;
 
   /**@brief Return the angle between this and another vector
    * @param v The other vector */
@@ -478,7 +491,7 @@ SIMD_FORCE_INLINE btVector3 btVector3::normalized() const
 	return *this / length();
 } 
 
-SIMD_FORCE_INLINE btVector3 btVector3::rotate( const btVector3& wAxis, const btScalar angle )
+SIMD_FORCE_INLINE btVector3 btVector3::rotate( const btVector3& wAxis, const btScalar angle ) const
 {
 	// wAxis must be a unit lenght vector
 
@@ -667,23 +680,32 @@ SIMD_FORCE_INLINE void	btUnSwapVector3Endian(btVector3& vector)
 	vector = swappedVec;
 }
 
-SIMD_FORCE_INLINE void btPlaneSpace1 (const btVector3& n, btVector3& p, btVector3& q)
+template <class T>
+SIMD_FORCE_INLINE void btPlaneSpace1 (const T& n, T& p, T& q)
 {
-  if (btFabs(n.z()) > SIMDSQRT12) {
+  if (btFabs(n[2]) > SIMDSQRT12) {
     // choose p in y-z plane
     btScalar a = n[1]*n[1] + n[2]*n[2];
     btScalar k = btRecipSqrt (a);
-    p.setValue(0,-n[2]*k,n[1]*k);
+    p[0] = 0;
+	p[1] = -n[2]*k;
+	p[2] = n[1]*k;
     // set q = n x p
-    q.setValue(a*k,-n[0]*p[2],n[0]*p[1]);
+    q[0] = a*k;
+	q[1] = -n[0]*p[2];
+	q[2] = n[0]*p[1];
   }
   else {
     // choose p in x-y plane
-    btScalar a = n.x()*n.x() + n.y()*n.y();
+    btScalar a = n[0]*n[0] + n[1]*n[1];
     btScalar k = btRecipSqrt (a);
-    p.setValue(-n.y()*k,n.x()*k,0);
+    p[0] = -n[1]*k;
+	p[1] = n[0]*k;
+	p[2] = 0;
     // set q = n x p
-    q.setValue(-n.z()*p.y(),n.z()*p.x(),a*k);
+    q[0] = -n[2]*p[1];
+	q[1] = n[2]*p[0];
+	q[2] = a*k;
   }
 }
 
@@ -741,4 +763,4 @@ SIMD_FORCE_INLINE void	btVector3::deSerialize(const struct	btVector3Data& dataIn
 }
 
 
-#endif //SIMD__VECTOR3_H
+#endif //BT_VECTOR3_H

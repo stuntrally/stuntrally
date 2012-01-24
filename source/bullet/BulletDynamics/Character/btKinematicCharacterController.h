@@ -13,8 +13,9 @@ subject to the following restrictions:
 3. This notice may not be removed or altered from any source distribution.
 */
 
-#ifndef KINEMATIC_CHARACTER_CONTROLLER_H
-#define KINEMATIC_CHARACTER_CONTROLLER_H
+
+#ifndef BT_KINEMATIC_CHARACTER_CONTROLLER_H
+#define BT_KINEMATIC_CHARACTER_CONTROLLER_H
 
 #include "LinearMath/btVector3.h"
 
@@ -41,9 +42,14 @@ protected:
 	btPairCachingGhostObject* m_ghostObject;
 	btConvexShape*	m_convexShape;//is also in m_ghostObject, but it needs to be convex, so we store it here to avoid upcast
 	
+	btScalar m_verticalVelocity;
+	btScalar m_verticalOffset;
 	btScalar m_fallSpeed;
 	btScalar m_jumpSpeed;
 	btScalar m_maxJumpHeight;
+	btScalar m_maxSlopeRadians; // Slope angle that is set (used for returning the exact value)
+	btScalar m_maxSlopeCosine;  // Cosine equivalent of m_maxSlopeRadians (calculated once when set, for optimization)
+	btScalar m_gravity;
 
 	btScalar m_turnAngle;
 	
@@ -66,6 +72,8 @@ protected:
 	bool m_touchingContact;
 	btVector3 m_touchingNormal;
 
+	bool  m_wasOnGround;
+	bool  m_wasJumping;
 	bool	m_useGhostObjectSweepTest;
 	bool	m_useWalkDirection;
 	btScalar	m_velocityTimeInterval;
@@ -108,14 +116,14 @@ public:
 
 	/// This should probably be called setPositionIncrementPerSimulatorStep.
 	/// This is neither a direction nor a velocity, but the amount to
-	///   increment the position each simulation iteration, regardless
-	///   of dt.
+	///	increment the position each simulation iteration, regardless
+	///	of dt.
 	/// This call will reset any velocity set by setVelocityForTimeInterval().
 	virtual void	setWalkDirection(const btVector3& walkDirection);
 
 	/// Caller provides a velocity with which the character should move for
-	///   the given time period.  After the time period, velocity is reset
-	///   to zero.
+	///	the given time period.  After the time period, velocity is reset
+	///	to zero.
 	/// This call will reset any walk direction set by setWalkDirection().
 	/// Negative time intervals will result in no motion.
 	virtual void setVelocityForTimeInterval(const btVector3& velocity,
@@ -131,7 +139,16 @@ public:
 	void setJumpSpeed (btScalar jumpSpeed);
 	void setMaxJumpHeight (btScalar maxJumpHeight);
 	bool canJump () const;
+
 	void jump ();
+
+	void setGravity(btScalar gravity);
+	btScalar getGravity() const;
+
+	/// The max slope determines the maximum angle that the controller can walk up.
+	/// The slope angle is measured in radians.
+	void setMaxSlope(btScalar slopeRadians);
+	btScalar getMaxSlope() const;
 
 	btPairCachingGhostObject* getGhostObject();
 	void	setUseGhostSweepTest(bool useGhostObjectSweepTest)
@@ -142,4 +159,4 @@ public:
 	bool onGround () const;
 };
 
-#endif // KINEMATIC_CHARACTER_CONTROLLER_H
+#endif // BT_KINEMATIC_CHARACTER_CONTROLLER_H

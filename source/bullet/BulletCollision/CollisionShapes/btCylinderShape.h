@@ -13,8 +13,8 @@ subject to the following restrictions:
 3. This notice may not be removed or altered from any source distribution.
 */
 
-#ifndef CYLINDER_MINKOWSKI_H
-#define CYLINDER_MINKOWSKI_H
+#ifndef BT_CYLINDER_MINKOWSKI_H
+#define BT_CYLINDER_MINKOWSKI_H
 
 #include "btBoxShape.h"
 #include "BulletCollision/BroadphaseCollision/btBroadphaseProxy.h" // for the types
@@ -100,6 +100,18 @@ public:
 		return getHalfExtentsWithMargin().getX();
 	}
 
+	virtual void	setLocalScaling(const btVector3& scaling)
+	{
+		btVector3 oldMargin(getMargin(),getMargin(),getMargin());
+		btVector3 implicitShapeDimensionsWithMargin = m_implicitShapeDimensions+oldMargin;
+		btVector3 unScaledImplicitShapeDimensionsWithMargin = implicitShapeDimensionsWithMargin / m_localScaling;
+
+		btConvexInternalShape::setLocalScaling(scaling);
+
+		m_implicitShapeDimensions = (unScaledImplicitShapeDimensionsWithMargin * m_localScaling) - oldMargin;
+
+	}
+
 	//debugging
 	virtual const char*	getName()const
 	{
@@ -142,10 +154,6 @@ public:
 	virtual btVector3	localGetSupportingVertexWithoutMargin(const btVector3& vec)const;
 	virtual void	batchedUnitVectorGetSupportingVertexWithoutMargin(const btVector3* vectors,btVector3* supportVerticesOut,int numVectors) const;
 
-	virtual int	getUpAxis() const
-	{
-		return 2;
-	}
 		//debugging
 	virtual const char*	getName()const
 	{
@@ -188,5 +196,5 @@ SIMD_FORCE_INLINE	const char*	btCylinderShape::serialize(void* dataBuffer, btSer
 
 
 
-#endif //CYLINDER_MINKOWSKI_H
+#endif //BT_CYLINDER_MINKOWSKI_H
 

@@ -443,7 +443,7 @@ void COLLISION_WORLD::Update(float dt, bool profiling)
 		if (profiling)
 		{
 			std::stringstream os;
-			CProfileManager::dumpAll(os);
+		//	CProfileManager::dumpAll(os);
 			bltProfiling = os.str();
 		}
 	}
