@@ -574,7 +574,9 @@ void App::newPoses()
 				carM->iInChk = -1;  carM->bWrongChk = false;
 				int ncs = road->mChks.size();
 				if (ncs > 0)
-				{	if (carM->bInSt && carM->iNumChks == ncs && carM->iCurChk != -1)  // finish
+				{
+					//  Finish
+					if (carM->bInSt && carM->iNumChks == ncs && carM->iCurChk != -1)
 					{
 						bool best = pGame->timer.Lap(iCarNum, 0,0, true,
 							pSet->game.trackreverse/*<, pSet->boost_type*/);  //pGame->cartimerids[pCar] ?
@@ -595,7 +597,10 @@ void App::newPoses()
 						///  winner places  for local players > 1
 						if (carM->iWonPlace == 0 && pGame->timer.GetCurrentLap(iCarNum) >= pSet->game.num_laps)
 							carM->iWonPlace = carIdWin++;
+
+						//... champ
 					}
+					//  checkpoints
 					for (int i=0; i < ncs; ++i)
 					{
 						const CheckSphere& cs = road->mChks[i];
