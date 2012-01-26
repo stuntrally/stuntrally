@@ -237,6 +237,64 @@ void App::btnTerGenerate(WP)
 	bNewHmap = true;	UpdateTrack();
 }
 
+//  Terrain  half  --------------------------------
+void App::btnTerrainHalf(WP)
+{
+	const char* str = tabsHmap->getItemSelected()->getCaption().asUTF8_c_str();  int size = atoi(str) / 2;
+	if (valTerTriSize){  Fmt(s, "%4.2f", sc.td.fTriangleSize * size);	valTerTriSize->setCaption(s);  }
+
+	int halfSize = (sc.td.iVertsX-1) / 2 +1;
+	float* hfData = new float[halfSize * halfSize];
+	int siz = halfSize * halfSize * sizeof(float);
+	String name = TrkDir() + "heightmap-new.f32";
+
+	//  resize Hmap by half
+	for (int j=0; j < halfSize; ++j)
+	{
+		int a = j * halfSize, a2 = j*2 * sc.td.iVertsX;
+		for (int i=0; i < halfSize; ++i,++a)
+		{	hfData[a] = sc.td.hfHeight[a2];  a2+=2;  }
+	}
+	std::ofstream of;
+	of.open(name.c_str(), std::ios_base::binary);
+	of.write((const char*)&hfData[0], siz);
+	of.close();
+	delete[] hfData;
+
+	sc.td.fTriangleSize *= 2.f;
+	sc.td.iVertsX = halfSize;  sc.td.UpdVals();
+	bNewHmap = true;	UpdateTrack();
+}
+
+//  Terrain  height scale  --------------------------------
+void App::btnScaleTerH(WP)
+{
+	if (!edScaleTerHMul || !road)  return;
+	Real sf = std::max(0.1f, s2r(edScaleTerHMul->getCaption()) );  // scale mul
+
+	float* hfData = new float[sc.td.iVertsX * sc.td.iVertsY];
+	int siz = sc.td.iVertsX * sc.td.iVertsY * sizeof(float);
+	String name = TrkDir() + "heightmap-new.f32";
+
+	//  generate Hmap
+	for (int j=0; j < sc.td.iVertsY; ++j)
+	{
+		int a = j * sc.td.iVertsX;
+		for (int i=0; i < sc.td.iVertsX; ++i,++a)
+			hfData[a] = sc.td.hfHeight[a] * sf;
+	}
+	std::ofstream of;
+	of.open(name.c_str(), std::ios_base::binary);
+	of.write((const char*)&hfData[0], siz);
+	of.close();
+
+	delete[] hfData;
+	bNewHmap = true;	UpdateTrack();
+	// !onTer road points..
+}
+//-----------------------------------------------------
+
+
 void App::slTerGenScale(SL)
 {
 	float v = 160.f * powf(val/res, 2.f);	if (bGI)  pSet->gen_scale = v;
