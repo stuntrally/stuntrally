@@ -240,19 +240,21 @@ private:
 	bool loaded;
 	CONFIGFILE trackrecords; //the track records configfile
 	std::string trackrecordsfile; //the filename for the track records
-	float pretime; //amount of time left in staging
 	unsigned int carId; //the index for the player's car; defaults to zero
 
 public:
-	TIMER() : loaded(false),pretime(0.0),carId(0) {}
+	TIMER() : loaded(false),pretime(0.0),carId(0),waiting(false) {}
 	~TIMER() {Unload();}
+
+	float pretime; // amount of time left in staging
+	bool waiting;  // for other players in multi or in champs to close info wnd
 
 	bool Load(const std::string & trackrecordspath, float stagingtime, std::ostream & error_output);
 	///add a car of the given type and return the integer identifier that the track system will use
 	int AddCar(const std::string & cartype) {  car.push_back(LAPINFO(cartype));  return car.size()-1;  }
 	void SetPlayerCarID(int newid) {carId = newid;}
 	void Unload();
-	bool Staging() const {return (pretime > 0);}
+	//bool Staging() const {return (pretime > 0);}
 	void Tick(float dt);
 	bool Lap(const unsigned int carid, const int prevsector, const int nextsector, const bool countit, bool bTrackReverse);
 	void UpdateDistance(const unsigned int carid, const double newdistance)
@@ -313,7 +315,7 @@ public:
 	}
 	int GetPlayerCurrentLap() {return GetCurrentLap(carId);}
 	int GetCurrentLap(unsigned int index) {assert(index<car.size());return car[index].GetCurrentLap();}
-	float GetStagingTimeLeft() const {return pretime;}
+	//float GetStagingTimeLeft() const {return pretime;}
 
 	///return the place (first element) out of total (second element)
 	std::pair <int, int> GetCarPlace(int index);

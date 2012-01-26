@@ -244,7 +244,8 @@ void App::LoadGame()  // 2
 		carModels.push_back(c);
 	}
 	
-	pGame->NewGameDoLoadMisc();
+	float pretime = mClient ? 2.0f : pSet->game.pre_time;  // same for all multi players
+	pGame->NewGameDoLoadMisc(pretime);
 	bool ter = IsTerTrack();
 	sc.ter = ter;
 }

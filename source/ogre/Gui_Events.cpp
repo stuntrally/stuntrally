@@ -446,6 +446,7 @@ bool App::keyPressed( const OIS::KeyEvent &arg )
 				carModels[c]->iWonPlace = 0;
 			}
 			pGame->timer.Reset(0);
+			pGame->timer.pretime = mClient ? 2.0f : pSet->game.pre_time;  // same for all multi players
 			carIdWin = 1;  //
 			ghost.Clear(); //
 		}

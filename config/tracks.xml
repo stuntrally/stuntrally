@@ -110,8 +110,8 @@
 	<track n="70" name="S13-Hole"		created="06-11-11" crtver="1.4" modified="07-11-11" scenery="Savanna" 	author="CH" fluids="1" bumps="0" jumps="0" loops="0" pipes="0" banked="5" frenzy="3" long="3" diff="5" rating="2" />
 	<track n="71" name="0W9-IceFrenzy"	created="07-11-11" crtver="1.4" modified="12-11-11" scenery="Winter" 	author="CH" fluids="1" bumps="0" jumps="0" loops="0" pipes="0" banked="3" frenzy="2" long="4" diff="3" rating="3" />
 
-	<track n="71" name="TestC6-temp"	created="20-10-11" crtver="1.4" modified="30-12-11" scenery="Savanna" 	author="CH" fluids="0" bumps="0" jumps="0" loops="0" pipes="0" banked="0" frenzy="1" long="0" diff="0" rating="0" />
-	<track n="71" name="TestC7-oc"		created="30-08-11" crtver="1.4" modified="30-12-11" scenery="Jungle" 	author="CH" fluids="3" bumps="0" jumps="0" loops="0" pipes="0" banked="0" frenzy="0" long="0" diff="0" rating="0" />
+	<track n="71" name="TestC6-temp"	created="20-10-11" crtver="1.4" modified="30-12-11" scenery="Jungle" 	author="CH" fluids="0" bumps="0" jumps="0" loops="0" pipes="0" banked="0" frenzy="1" long="0" diff="0" rating="0" />
+	<track n="71" name="TestC7-oc"		created="30-08-11" crtver="1.4" modified="30-12-11" scenery="Savanna" 	author="CH" fluids="3" bumps="0" jumps="0" loops="0" pipes="0" banked="0" frenzy="0" long="0" diff="0" rating="0" />
 <!--71-->
 	<track n="72" name="J15-Swamp"		created="12-01-12" crtver="1.5" modified="13-01-12" scenery="Jungle" 	author="CH" fluids="3" bumps="4" jumps="0" loops="0" pipes="0" banked="1" frenzy="1" long="3" diff="3" rating="3" />
 	<track n="73" name="A4-Snake"		created="12-01-12" crtver="1.5" modified="14-01-12" scenery="Australia" author="CH" fluids="0" bumps="0" jumps="0" loops="0" pipes="3" banked="3" frenzy="4" long="2" diff="5" rating="3" />

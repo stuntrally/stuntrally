@@ -51,7 +51,7 @@ public:
 	bool NewGameDoCleanup();  // call in this order
 	bool NewGameDoLoadTrack();
 	/// ---  create cars here
-	bool NewGameDoLoadMisc();
+	bool NewGameDoLoadMisc(float pre_time);
 	
 	
 	void LeaveGame();

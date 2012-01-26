@@ -499,10 +499,10 @@ void GAME::UpdateCar(CAR & car, int i, double dt)
 void GAME::UpdateCarInputs(CAR & car, int i)
 {
     std::vector <float> carinputs(CARINPUT::ALL, 0.0f);
+	bool forceBrake = timer.waiting || timer.pretime > 0.f;  // race countdown
+    carinputs = carcontrols_local.second.ProcessInput(i,forceBrake);
 
-    carinputs = carcontrols_local.second.ProcessInput(i);
-
-    // mult_thr __ ??
+    // multi_thr __ ??
 #if 0
     std::vector <float> carinputs2(CARINPUT::INVALID, 0.0f);
     for (int i=0; i < carinputs.size(); ++i)
@@ -528,7 +528,7 @@ bool GAME::NewGameDoLoadTrack()
 	return true;
 }
 
-bool GAME::NewGameDoLoadMisc()
+bool GAME::NewGameDoLoadMisc(float pre_time)
 {
     //race_laps = num_laps;
     ///-----
@@ -546,10 +546,7 @@ bool GAME::NewGameDoLoadMisc()
 	}
 
 	//load the timer
-	float pretime = 0.0f;
-	if (race_laps > 0)
-        pretime = 3.0f;
-	if (!timer.Load(PATHMANAGER::GetTrackRecordsPath()+"/"+settings->game.track+".txt", pretime, error_output))
+	if (!timer.Load(PATHMANAGER::GetTrackRecordsPath()+"/"+settings->game.track+".txt", pre_time, error_output))
 		return false;
 
 	//add cars to the timer system
