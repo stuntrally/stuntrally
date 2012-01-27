@@ -51,7 +51,7 @@ public:
 		
 		bool rpl_rec;
 		//  champ
-		int numChamp;  // -1 none
+		int champ_num;  // -1 none
 		float pre_time;
 	}  game,  // current game, changed only on new game start
 		gui;  // gui only config

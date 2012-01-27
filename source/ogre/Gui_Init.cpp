@@ -424,20 +424,23 @@ void App::InitGui()
 	}
 	
 
-    ///  championships
+    ///  championships gui list
     //------------------------------------------------------------------------
-	MultiListBox* li = mGUI->findWidget<MultiListBox>("MListChamps");
-	li->removeAllItems();
+	liChamps = mGUI->findWidget<MultiListBox>("MListChamps");
+	liChamps->removeAllItems();
 	for (int i=0; i < champs.champs.size(); ++i)
 	{
 		const Champ& ch = champs.champs[i];
-		li->addItem(toStr(i/10)+toStr(i%10), 0);  int l = li->getItemCount()-1;
-		li->setSubItemNameAt(1,l, ch.name.c_str());
-		li->setSubItemNameAt(2,l, toStr(ch.diff) /*"Easy"*/);
-		li->setSubItemNameAt(3,l, "0%");  //length,time;  bool tutorial;
-		li->setSubItemNameAt(4,l, toStr(ch.trks.size()));  //"90");
+		liChamps->addItem(toStr(i/10)+toStr(i%10), 0);  int l = liChamps->getItemCount()-1;
+		liChamps->setSubItemNameAt(1,l, ch.name.c_str());
+		liChamps->setSubItemNameAt(2,l, toStr(ch.diff) /*"Easy"*/);
+		liChamps->setSubItemNameAt(3,l, toStr(progress.champs[i].curTrack));  //0%  length,time;  bool tutorial;
+		liChamps->setSubItemNameAt(4,l, toStr(ch.trks.size()));  //"90");
 	}
-	li->eventListChangePosition += newDelegate(this, &App::listChampChng);
+	liChamps->eventListChangePosition += newDelegate(this, &App::listChampChng);
+
+	Btn("btnChampStart", btnChampStart);
+	//Btn("btnChampContinue", btnChampContinue);
 
 	
 	bGI = true;  // gui inited, gui events can now save vals

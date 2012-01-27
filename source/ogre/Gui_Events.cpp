@@ -629,7 +629,7 @@ void App::MenuTabChg(MyGUI::TabPtr tab, size_t id)
 }
 
 
-//  Champs list
+///  Championships list  sel changed
 //---------------------------------------------------------------------
 void App::listChampChng(MyGUI::MultiListBox* chlist, size_t pos)
 {
@@ -651,18 +651,32 @@ void App::listChampChng(MyGUI::MultiListBox* chlist, size_t pos)
 		li->setSubItemNameAt(4,l, toStr(tr.laps));
 		li->setSubItemNameAt(5,l, "0");
 	}
-	//  update champ details
+	//  descr
+	EditBox* ed = mGUI->findWidget<EditBox>("ChampDescr");
+	if (ed)  ed->setCaption(ch.descr);
+
+	//  update champ details (on stages tab)
 	TextBox* txt;
 	txt = mGUI->findWidget<TextBox>("valChDiff");
 	if (txt)  txt->setCaption(toStr(ch.diff));
 	txt = mGUI->findWidget<TextBox>("valChTracks");
 	if (txt)  txt->setCaption(toStr(ch.trks.size()));
+
 	txt = mGUI->findWidget<TextBox>("valChDist");
 	if (txt)  txt->setCaption(toStr(ch.length));  // sum from find tracks..
 	txt = mGUI->findWidget<TextBox>("valChTime");
 	if (txt)  txt->setCaption(toStr(ch.time));    // sum champs.trkTimes..
-	/*txt = mGUI->findWidget<TextBox>("valChProgress");
-	if (txt)  txt->setCaption(toStr(progress.champs[pos].curTrack));
+
+	txt = mGUI->findWidget<TextBox>("valChProgress");
+	if (txt)  txt->setCaption(toStr(100.f * progress.champs[pos].curTrack / champs.champs[pos].trks.size())+" %");
 	txt = mGUI->findWidget<TextBox>("valChScore");
-	if (txt)  txt->setCaption(toStr(progress.champs[pos].score));*/
+	if (txt)  txt->setCaption(toStr(progress.champs[pos].score));
+}
+
+///  champ start
+void App::btnChampStart(WP)
+{
+	pSet->gui.champ_num = liChamps->getIndexSelected();
+	LogO("Starting champ: "+toStr(pSet->gui.champ_num));
+	btnNewGame(0);
 }

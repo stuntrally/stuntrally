@@ -578,6 +578,7 @@ void App::newPoses()
 					//  Finish
 					if (carM->bInSt && carM->iNumChks == ncs && carM->iCurChk != -1)
 					{
+						float timeCur = pGame->timer.GetPlayerTime();
 						bool best = pGame->timer.Lap(iCarNum, 0,0, true,
 							pSet->game.trackreverse/*<, pSet->boost_type*/);  //pGame->cartimerids[pCar] ?
 
@@ -595,10 +596,48 @@ void App::newPoses()
 							carM->pCar->dynamics.boostFuel = gfBoostFuelStart;
 
 						///  winner places  for local players > 1
-						if (carM->iWonPlace == 0 && pGame->timer.GetCurrentLap(iCarNum) >= pSet->game.num_laps)
-							carM->iWonPlace = carIdWin++;
+						bool finished = pGame->timer.GetCurrentLap(iCarNum) >= pSet->game.num_laps;
+						if (finished)
+						{
+							if (pSet->game.champ_num < 0)
+							{
+								if (carM->iWonPlace == 0)	//  split screen winners
+									carM->iWonPlace = carIdWin++;
+							}else
+							{	///  championship advance  -------------------------------------------------------
+								int chId = pSet->game.champ_num;
+								ProgressChamp& pc = progress.champs[chId];
+								const Champ& ch = champs.champs[chId];
+								LogO("|| --- Champ end: " + ch.name);
 
-						//... champ
+								//  compute track score
+								const std::string& trkName = ch.trks[pc.curTrack].name;
+								float timeBest = champs.trkTimes[trkName];
+								LogO("|| Track: " + trkName);
+								LogO("|| Best time: " + toStr(timeBest) + "  your time: " + toStr(timeCur));
+								float score = timeCur/timeBest * 100.f;
+								//float score = (timeBest-timeCur)/timeBest * 100.f;  //..
+								LogO("|| Score: " + toStr(score));
+								pc.trks[pc.curTrack].score = score;
+
+								//  next track
+								bool last = pc.curTrack+1 == ch.trks.size();
+								LogO("|| This was stage " + toStr(pc.curTrack+1) + "/" + toStr(ch.trks.size()));
+								if (last)
+								{
+									pc.score = 100.f;
+									LogO("|| Champ finished");
+									LogO("|| Total score: " + toStr(score));  //..
+									progress.SaveXml(PATHMANAGER::GetUserConfigDir() + "/progress.xml");
+								}else
+								{
+									pc.curTrack++;
+									LogO("|| Loading next stage: " + ch.trks[pc.curTrack].name);
+									progress.SaveXml(PATHMANAGER::GetUserConfigDir() + "/progress.xml");
+									btnNewGame(0);
+								}
+							}
+						}
 					}
 					//  checkpoints
 					for (int i=0; i < ncs; ++i)

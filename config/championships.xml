@@ -1,13 +1,14 @@
 <championships>
 	<championship name="Test-1" ver="1" difficulty="0" length="1" time="6" tutorial="1" descr="Fastest 1 track, to test logic.">
-		<track name="TestC6-temp" laps="1" factor="0.1" />
+		<track name="TestC6-temp" laps="2" factor="0.1" />
 	</championship>
 	<championship name="Test-3" ver="1" difficulty="1" length="2" time="24" tutorial="1" descr="Fastest 3 tracks, to test logic.">
-		<track name="TestC6-temp" laps="1" factor="0.1" />
+		<track name="TestC6-temp" reversed="1" laps="1" factor="0.1" />
 		<track name="TestC4-ow" laps="1" factor="0.1" />
 	<!--<track name="TestC7-oc" laps="1" factor="0.1" />-->
 		<track name="TestC1-circle" laps="1" factor="0.1" />
 	</championship>
+
 	<championship name="Basic" ver="1" difficulty="0" length="3" time="134" tutorial="1" 
 			descr="Basic tutorial on simplest tracks. One lap on each track. To learn different road surfaces.">
 		<track name="J3-S" laps="1" factor="0.1" />
@@ -46,7 +47,8 @@
 
 	<times>
 		<track name="TestC4-ow" time="12.1"/>
-		<track name="TestC7-oc" time="7.1"/>
+		<track name="TestC6-temp" time="7.1"/>
+		<track name="TestC7-oc" time="22.1"/>
 		<track name="TestC1-circle" time="14.1"/>
 	<!--
 		<track name="zandvoort"		time="61"/>

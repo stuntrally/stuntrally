@@ -63,6 +63,7 @@ App::App()
 	,pr(0),pr2(0), sun(0), carIdWin(-1), iCurCar(0), bUpdCarClr(1)
 	,lastAxis(-1), axisCnt(0), txtJAxis(0), txtJBtn(0), txtInpDetail(0)
 	,edInputMin(0), edInputMax(0), edInputMul(0), actDetail(0), cmbInpDetSet(0)
+	,liChamps(0)
 {
 	pathTrk[0] = PATHMANAGER::GetTrackPath() + "/";
 	pathTrk[1] = PATHMANAGER::GetTrackPathUser() + "/";

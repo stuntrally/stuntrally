@@ -240,8 +240,11 @@ protected:
 	void MainMenuBtn(MyGUI::WidgetPtr);
 	void MenuTabChg(MyGUI::TabPtr, size_t);
 
-	ChampsXml champs;  ProgressXml progress;  // for championships
+	//  championships
+	ChampsXml champs;  ProgressXml progress;
+	MyGUI::MultiListBox* liChamps;
 	void listChampChng(MyGUI::MultiListBox* li, size_t pos);
+	void btnChampStart(WP);
 	
 
 	///  input tab
@@ -333,9 +336,9 @@ protected:
 	char s[512];
 
 	GuiPopup popup;
-	///---------------------------------------
 
-	//  multiplayer
+	///  multiplayer
+	///---------------------------------------
 
 	void rebuildGameList();
 	void rebuildPlayerList();

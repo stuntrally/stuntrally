@@ -32,6 +32,7 @@ void SETTINGS::Serialize(bool w, CONFIGFILE & c)
 	//  game
 	Param(c,w, "game.in_menu", inMenu);			Param(c,w, "game.in_main", isMain);
 	Param(c,w, "game.pre_time", gui.pre_time);
+	Param(c,w, "game.champ_num", gui.champ_num);
 	Param(c,w, "game.boost_type", gui.boost_type);		Param(c,w, "game.flip_type", gui.flip_type);
 	Param(c,w, "game.boost_power", gui.boost_power);
 	Param(c,w, "game.collis_cars", gui.collis_cars);	Param(c,w, "game.collis_veget", gui.collis_veget);
@@ -187,5 +188,5 @@ SETTINGS::SETTINGS() :  ///  Defaults
 	gui.boost_type = 2;  gui.flip_type = 1;  gui.boost_power = 1.f;
 	//
 	gui.rpl_rec = 1;
-	gui.numChamp = -1;  gui.pre_time = 2.f;
+	gui.champ_num = -1;  gui.pre_time = 2.f;
 }

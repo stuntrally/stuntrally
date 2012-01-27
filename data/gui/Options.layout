@@ -1,11 +1,11 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <MyGUI type="Layout" version="3.2.0">
 
-    <Widget type="Window" skin="WindowC" position="704 136 400 500" align="Center" layer="Overlapped" name="MainMenuWnd">
+	<Widget type="Window" skin="WindowC" position="704 136 400 500" align="Center" layer="Overlapped" name="MainMenuWnd">
 		<Property key="MinSize" value="500 400"/>
 		<Property key="MaxSize" value="2560 1600"/>
 		<Property key="Caption" value="Stunt Rally"/>
-        <Property key="Alpha" value="0.6"/>
+		<Property key="Alpha" value="0.6"/>
 		<Property key="Snap" value="true"/>
 
 		<!--<Widget type="ImageBox" skin="ImageBox" position="16 0 400 100">
@@ -14,13 +14,13 @@
 			<UserString key="RelativeTo" value="MainMenuWnd"/>
 		</Widget>-->
 
-        <Widget type="Widget" skin="PanelSkin" position="110 120 556 76" name="PanMenu0">
+		<Widget type="Widget" skin="PanelSkin" position="110 120 556 76" name="PanMenu0">
 			<Property key="Colour" value="1.0 0.9 0.6"/>
-	        <Property key="Alpha" value="0.7"/>
+			<Property key="Alpha" value="0.7"/>
 			<Property key="InheritsAlpha" value="false"/>
 			<UserString key="RelativeTo" value="MainMenuWnd"/>
 		</Widget>
-        <Widget type="Button" skin="Button" position="138 133 500 50" name="BtnMenu0">
+		<Widget type="Button" skin="Button" position="138 133 500 50" name="BtnMenu0">
 			<Property key="Caption" value="#{SingleRace}"/>
 			<Property key="Colour" value="1.0 0.9 0.6"/>
 			<Property key="TextColour" value="1.0 0.9 0.6"/>
@@ -28,28 +28,28 @@
 			<Property key="InheritsAlpha" value="false"/>
 		</Widget>
 
-        <Widget type="Widget" skin="PanelSkin" position="110 195 556 76" name="PanMenu1">
+		<Widget type="Widget" skin="PanelSkin" position="110 195 556 76" name="PanMenu1">
 			<Property key="Colour" value="0.6 1 0.6"/>
-	        <Property key="Alpha" value="0.7"/>
+			<Property key="Alpha" value="0.7"/>
 			<Property key="InheritsAlpha" value="false"/>
 			<UserString key="RelativeTo" value="MainMenuWnd"/>
 		</Widget>
-        <Widget type="Button" skin="Button" position="138 208 500 50" name="BtnMenu1">
+		<Widget type="Button" skin="Button" position="138 208 500 50" name="BtnMenu1">
 			<Property key="Caption" value="#{Championship}"/>
 			<Property key="Colour" value="0.6 1 0.6"/>
 			<Property key="TextColour" value="0.6 1 0.6"/>
 			<UserString key="RelativeTo" value="MainMenuWnd"/>
-	        <Property key="Alpha" value="0.6"/>
+			<Property key="Alpha" value="0.6"/>
 			<Property key="InheritsAlpha" value="false"/>
 		</Widget>
 
-        <Widget type="Widget" skin="PanelSkin" position="110 270 556 76" name="PanMenu2">
+		<Widget type="Widget" skin="PanelSkin" position="110 270 556 76" name="PanMenu2">
 			<Property key="Colour" value="0.6 0.6 1"/>
-	        <Property key="Alpha" value="0.7"/>
+			<Property key="Alpha" value="0.7"/>
 			<Property key="InheritsAlpha" value="false"/>
 			<UserString key="RelativeTo" value="MainMenuWnd"/>
 		</Widget>
-        <Widget type="Button" skin="Button" position="138 283 500 50" name="BtnMenu2">
+		<Widget type="Button" skin="Button" position="138 283 500 50" name="BtnMenu2">
 			<Property key="Caption" value="#{ReplaysMenu}"/>
 			<Property key="Colour" value="0.6 0.6 1"/>
 			<Property key="TextColour" value="0.6 0.6 1"/>
@@ -57,13 +57,13 @@
 			<Property key="InheritsAlpha" value="false"/>
 		</Widget>
 
-        <Widget type="Widget" skin="PanelSkin" position="110 345 556 76" name="PanMenu3">
+		<Widget type="Widget" skin="PanelSkin" position="110 345 556 76" name="PanMenu3">
 			<Property key="Colour" value="0.7 0.85 1"/>
-	        <Property key="Alpha" value="0.7"/>
+			<Property key="Alpha" value="0.7"/>
 			<Property key="InheritsAlpha" value="false"/>
 			<UserString key="RelativeTo" value="MainMenuWnd"/>
 		</Widget>
-        <Widget type="Button" skin="Button" position="138 358 500 50" name="BtnMenu3">
+		<Widget type="Button" skin="Button" position="138 358 500 50" name="BtnMenu3">
 			<Property key="Caption" value="#{Options}"/>
 			<Property key="Colour" value="0.7 0.85 1"/>
 			<Property key="TextColour" value="0.7 0.85 1"/>
@@ -806,136 +806,136 @@
 				<UserString key="RelativeTo" value="ChampWnd"/>
 			</Widget>
 			<Widget type="TabItem" skin="" position="2 24 794 572">
-                <Property key="Caption" value="#{Championship}"/>
+				<Property key="Caption" value="#{Championship}"/>
 				<UserString key="RelativeTo" value="ChampWnd"/>
-                <Widget type="MultiListBox" skin="MultiListBox" position="32 48 368 344" name="MListChamps">
+				<Widget type="MultiListBox" skin="MultiListBox" position="32 48 368 344" name="MListChamps">
 					<UserString key="RelativeTo" value="ChampWnd"/>
-                    <Widget type="MultiListItem" skin="" position="0 0 43 315">
-                        <Property key="Caption" value="N"/>
-                        <Property key="ItemWidth" value="30"/>
-                        <Property key="ItemResizingPolicy" value="Fixed"/>
-                    </Widget>
-                    <Widget type="MultiListItem" skin="" position="0 0 43 315">
-                        <Property key="Caption" value="Name"/>
-                        <Property key="ItemWidth" value="200"/>
-                        <Property key="ItemResizingPolicy" value="Fixed"/>
-                    </Widget>
-                    <Widget type="MultiListItem" skin="" position="43 0 64 315">
-                        <Property key="Caption" value="Difficulty"/>
-                    </Widget>
-                    <Widget type="MultiListItem" skin="" position="107 0 76 315">
-                        <Property key="Caption" value="Completed"/>
-                    </Widget>
-                    <Widget type="MultiListItem" skin="" position="183 0 40 315">
-                        <Property key="Caption" value="Score"/>
-                    </Widget>
-                </Widget>
-                <Widget type="Button" skin="Button" position="256 440 144 40">
-                    <Property key="Caption" value="Start"/>
+					<Widget type="MultiListItem" skin="" position="0 0 43 315">
+						<Property key="Caption" value="N"/>
+						<Property key="ItemWidth" value="30"/>
+						<Property key="ItemResizingPolicy" value="Fixed"/>
+					</Widget>
+					<Widget type="MultiListItem" skin="" position="0 0 43 315">
+						<Property key="Caption" value="Name"/>
+						<Property key="ItemWidth" value="200"/>
+						<Property key="ItemResizingPolicy" value="Fixed"/>
+					</Widget>
+					<Widget type="MultiListItem" skin="" position="43 0 64 315">
+						<Property key="Caption" value="Difficulty"/>
+					</Widget>
+					<Widget type="MultiListItem" skin="" position="107 0 76 315">
+						<Property key="Caption" value="Completed"/>
+					</Widget>
+					<Widget type="MultiListItem" skin="" position="183 0 40 315">
+						<Property key="Caption" value="Score"/>
+					</Widget>
+				</Widget>
+				<Widget type="Button" skin="Button" position="256 440 144 40" name="btnChampStart">
+					<Property key="Caption" value="Start"/>
 					<Property key="Colour" value="0.6 0.6 1"/>
 					<Property key="TextColour" value="0.9 0.9 1"/>
 					<UserString key="RelativeTo" value="ChampWnd"/>
-                </Widget>
-                <Widget type="Button" skin="Button" position="440 440 144 40">
-                    <Property key="Caption" value="Continue"/>
+				</Widget>
+				<!--<Widget type="Button" skin="Button" position="440 440 144 40" name="btnChampContinue">
+					<Property key="Caption" value="Continue"/>
 					<Property key="Colour" value="0.6 0.8 1"/>
 					<Property key="TextColour" value="0.8 0.9 1"/>
 					<UserString key="RelativeTo" value="ChampWnd"/>
-                </Widget>
-                <Widget type="EditBox" skin="EditBoxEmpty" position="466 48 320 88">
-                    <Property key="Caption" value="Championship description"/>
+				</Widget>-->
+				<Widget type="EditBox" skin="EditBoxEmpty" position="466 48 320 88" name="ChampDescr">
+					<Property key="Caption" value="Championship description"/>
 					<Property key="TextColour" value="0.6 0.9 1.0"/>
 					<UserString key="RelativeTo" value="ChampWnd"/>
-                </Widget>
-            </Widget>
-            <Widget type="TabItem" skin="" position="2 24 794 572">
-                <Property key="Caption" value="Stages"/>
+				</Widget>
+			</Widget>
+			<Widget type="TabItem" skin="" position="2 24 794 572">
+				<Property key="Caption" value="Stages"/>
 				<UserString key="RelativeTo" value="ChampWnd"/>
-                <Widget type="MultiListBox" skin="MultiListBox" position="32 48 368 232" name="MListStages">
+				<Widget type="MultiListBox" skin="MultiListBox" position="32 48 368 232" name="MListStages">
 					<UserString key="RelativeTo" value="ChampWnd"/>
-                    <Widget type="MultiListItem" skin="" position="0 0 14 203">
-                        <Property key="Caption" value="N"/>
-                        <Property key="ItemWidth" value="30"/>
-                        <Property key="ItemResizingPolicy" value="Fixed"/>
-                    </Widget>
-                    <Widget type="MultiListItem" skin="" position="14 0 39 203">
-                        <Property key="Caption" value="Track"/>
-                        <Property key="ItemWidth" value="200"/>
-                        <Property key="ItemResizingPolicy" value="Fixed"/>
-                    </Widget>
-                    <Widget type="MultiListItem" skin="" position="53 0 56 203">
-                        <Property key="Caption" value="Scenery"/>
-                    </Widget>
-                    <Widget type="MultiListItem" skin="" position="109 0 28 203">
-                        <Property key="Caption" value="Diff"/>
-                    </Widget>
-                    <Widget type="MultiListItem" skin="" position="137 0 51 203">
-                        <Property key="Caption" value="Length"/>
-                    </Widget>
-                    <Widget type="MultiListItem" skin="" position="188 0 40 203">
-                        <Property key="Caption" value="Score"/>
-                    </Widget>
-                </Widget>
-                <Widget type="TextBox" skin="TextBox" position="496 48 136 24">
-                    <Property key="Caption" value="Difficulty"/>
+					<Widget type="MultiListItem" skin="" position="0 0 14 203">
+						<Property key="Caption" value="N"/>
+						<Property key="ItemWidth" value="30"/>
+						<Property key="ItemResizingPolicy" value="Fixed"/>
+					</Widget>
+					<Widget type="MultiListItem" skin="" position="14 0 39 203">
+						<Property key="Caption" value="Track"/>
+						<Property key="ItemWidth" value="200"/>
+						<Property key="ItemResizingPolicy" value="Fixed"/>
+					</Widget>
+					<Widget type="MultiListItem" skin="" position="53 0 56 203">
+						<Property key="Caption" value="Scenery"/>
+					</Widget>
+					<Widget type="MultiListItem" skin="" position="109 0 28 203">
+						<Property key="Caption" value="Diff"/>
+					</Widget>
+					<Widget type="MultiListItem" skin="" position="137 0 51 203">
+						<Property key="Caption" value="Length"/>
+					</Widget>
+					<Widget type="MultiListItem" skin="" position="188 0 40 203">
+						<Property key="Caption" value="Score"/>
+					</Widget>
+				</Widget>
+				<Widget type="TextBox" skin="TextBox" position="496 48 136 24">
+					<Property key="Caption" value="Difficulty"/>
 					<Property key="TextColour" value="0.9 0.4 0.4"/>
 					<UserString key="RelativeTo" value="ChampWnd"/>
-                </Widget>
-                <Widget type="TextBox" skin="TextBox" position="616 48 80 24" name="valChDiff">
+				</Widget>
+				<Widget type="TextBox" skin="TextBox" position="616 48 80 24" name="valChDiff">
 					<Property key="TextColour" value="1.0 0.5 0.5"/>
 					<UserString key="RelativeTo" value="ChampWnd"/>
-                </Widget>
-                <Widget type="TextBox" skin="TextBox" position="496 80 136 24">
-                    <Property key="Caption" value="Tracks"/>
+				</Widget>
+				<Widget type="TextBox" skin="TextBox" position="496 80 136 24">
+					<Property key="Caption" value="Tracks"/>
 					<Property key="TextColour" value="0.9 0.9 0.1"/>
 					<UserString key="RelativeTo" value="ChampWnd"/>
-                </Widget>
-                <Widget type="TextBox" skin="TextBox" position="616 80 80 24" name="valChTracks">
+				</Widget>
+				<Widget type="TextBox" skin="TextBox" position="616 80 80 24" name="valChTracks">
 					<Property key="TextColour" value="1.0 1.0 0.3"/>
 					<UserString key="RelativeTo" value="ChampWnd"/>
-                </Widget>
-                <Widget type="TextBox" skin="TextBox" position="496 112 136 24">
-                    <Property key="Caption" value="Distance"/>
+				</Widget>
+				<Widget type="TextBox" skin="TextBox" position="496 112 136 24">
+					<Property key="Caption" value="Distance"/>
 					<Property key="TextColour" value="0.2 0.9 0.2"/>
 					<UserString key="RelativeTo" value="ChampWnd"/>
-                </Widget>
-                <Widget type="TextBox" skin="TextBox" position="616 112 80 24" name="valChDist">
+				</Widget>
+				<Widget type="TextBox" skin="TextBox" position="616 112 80 24" name="valChDist">
 					<Property key="TextColour" value="0.4 1.0 0.4"/>
 					<UserString key="RelativeTo" value="ChampWnd"/>
-                </Widget>
-                <Widget type="TextBox" skin="TextBox" position="496 144 136 24">
-                    <Property key="Caption" value="Time"/>
+				</Widget>
+				<Widget type="TextBox" skin="TextBox" position="496 144 136 24">
+					<Property key="Caption" value="Time"/>
 					<Property key="TextColour" value="0.5 0.9 0.8"/>
 					<UserString key="RelativeTo" value="ChampWnd"/>
-                </Widget>
-                <Widget type="TextBox" skin="TextBox" position="616 144 80 24" name="valChTime">
+				</Widget>
+				<Widget type="TextBox" skin="TextBox" position="616 144 80 24" name="valChTime">
 					<Property key="TextColour" value="0.75 1.0 0.92"/>
 					<UserString key="RelativeTo" value="ChampWnd"/>
-                </Widget>
-                <Widget type="TextBox" skin="TextBox" position="496 176 136 24">
-                    <Property key="Caption" value="Progress"/>
+				</Widget>
+				<Widget type="TextBox" skin="TextBox" position="496 176 136 24">
+					<Property key="Caption" value="Progress"/>
 					<Property key="TextColour" value="0.6 0.75 0.9"/>
 					<UserString key="RelativeTo" value="ChampWnd"/>
-                </Widget>
-                <Widget type="TextBox" skin="TextBox" position="616 176 80 24" name="valChProgress">
+				</Widget>
+				<Widget type="TextBox" skin="TextBox" position="616 176 80 24" name="valChProgress">
 					<Property key="TextColour" value="0.7 0.85 1.0"/>
 					<UserString key="RelativeTo" value="ChampWnd"/>
-                </Widget>
-                <Widget type="TextBox" skin="TextBox" position="496 208 136 24">
-                    <Property key="Caption" value="Score"/>
+				</Widget>
+				<Widget type="TextBox" skin="TextBox" position="496 208 136 24">
+					<Property key="Caption" value="Score"/>
 					<Property key="TextColour" value="0.8 0.7 1"/>
 					<UserString key="RelativeTo" value="ChampWnd"/>
-                </Widget>
-                <Widget type="TextBox" skin="TextBox" position="616 208 80 24" name="valChScore">
+				</Widget>
+				<Widget type="TextBox" skin="TextBox" position="616 208 80 24" name="valChScore">
 					<Property key="TextColour" value="0.9 0.8 1"/>
 					<UserString key="RelativeTo" value="ChampWnd"/>
-                </Widget>
-                <Widget type="TextBox" skin="TextBox" position="496 240 136 24">
+				</Widget>
+				<Widget type="TextBox" skin="TextBox" position="496 240 136 24">
 					<UserString key="RelativeTo" value="ChampWnd"/>
-                </Widget>
-                <Widget type="TextBox" skin="TextBox" position="616 240 80 24">
+				</Widget>
+				<Widget type="TextBox" skin="TextBox" position="616 240 80 24">
 					<UserString key="RelativeTo" value="ChampWnd"/>
-                </Widget>
+				</Widget>
 			</Widget>
 		</Widget>
 	</Widget>
