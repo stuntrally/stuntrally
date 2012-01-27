@@ -5,9 +5,9 @@
 	#include "../../editor/OgreApp.h"
 #else
 	#include "../OgreGame.h"
-	#include "../vdrift/settings.h"
-	#include "../vdrift/game.h"
-	#include "../ogre/SplitScreen.h"
+	#include "../../vdrift/settings.h"
+	#include "../../vdrift/game.h"
+	#include "../SplitScreen.h"
 #endif
 #include "../../vdrift/pathmanager.h"
 #include "../../paged-geom/GrassLoader.h"

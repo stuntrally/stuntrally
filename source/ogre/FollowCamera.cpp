@@ -5,8 +5,8 @@
 #include "../vdrift/pathmanager.h"
 #include "../vdrift/mathvector.h"
 #include "../vdrift/collision_contact.h"
-#include "../bullet/btBulletCollisionCommon.h"
 #include "../btOgre/BtOgreDebug.h"
+#include "btBulletCollisionCommon.h"
 
 #include <OgreCamera.h>
 #include <OgreSceneNode.h>

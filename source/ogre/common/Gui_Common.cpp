@@ -18,7 +18,7 @@
 #include "Gui_Def.h"
 using namespace MyGUI;
 using namespace Ogre;
-
+using namespace std;
 // MyGUI 3.2 has no Align::Relative
 #define ALIGN Align::Default
 

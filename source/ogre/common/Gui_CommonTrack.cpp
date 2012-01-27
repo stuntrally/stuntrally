@@ -19,7 +19,7 @@
 #include <boost/filesystem.hpp>
 using namespace MyGUI;
 using namespace Ogre;
-
+using namespace std;
 
 //  sort	 . . . . . . . . . . . . . . . . . . . . . . 
 //-----------------------------------------------------------------------------------------------------------
