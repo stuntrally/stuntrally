@@ -862,7 +862,7 @@
 			<Widget type="TabItem" skin="" position="2 24 794 572">
 				<Property key="Caption" value="#{Championship}"/>
 				<UserString key="RelativeTo" value="ChampWnd"/>
-				<Widget type="MultiListBox" skin="MultiListBox" position="32 48 400 344" name="MListChamps">
+				<Widget type="MultiListBox" skin="MultiListBox" position="32 48 400 360" name="MListChamps">
 					<UserString key="RelativeTo" value="ChampWnd"/>
 					<Widget type="MultiListItem" skin="" position="0 0 30 315">
 						<Property key="Caption" value="N"/>
@@ -896,11 +896,11 @@
 					</Widget>
 					<Widget type="MultiListItem" skin="" position="570 0 40 315">
 						<Property key="Caption" value=" "/>
-						<Property key="ItemWidth" value="60"/>
+						<Property key="ItemWidth" value="40"/>
 						<Property key="ItemResizingPolicy" value="Fixed"/>
 					</Widget>
 				</Widget>
-				<Widget type="Button" skin="Button" position="256 440 144 40" name="btnChampStart">
+				<Widget type="Button" skin="Button" position="320 460 144 40" name="btnChampStart">
 					<Property key="Caption" value="#{ChampStart}"/>
 					<Property key="Colour" value="0.6 0.6 1"/>
 					<Property key="TextColour" value="0.9 0.9 1"/>
@@ -917,7 +917,7 @@
 			<Widget type="TabItem" skin="" position="2 24 794 572">
 				<Property key="Caption" value="#{Stages}"/>
 				<UserString key="RelativeTo" value="ChampWnd"/>
-				<Widget type="MultiListBox" skin="MultiListBox" position="32 48 408 344" name="MListStages">
+				<Widget type="MultiListBox" skin="MultiListBox" position="32 48 400 360" name="MListStages">
 					<UserString key="RelativeTo" value="ChampWnd"/>
 					<Widget type="MultiListItem" skin="" position="0 0 30 203">
 						<Property key="Caption" value="N"/>
@@ -978,7 +978,7 @@
 					<UserString key="RelativeTo" value="ChampWnd"/>
 				</Widget>
 				<Widget type="TextBox" skin="TextBox" position="496 144 136 24">
-					<Property key="Caption" value="#{Time}"/>
+					<Property key="Caption" value="#{Time} [m:s.]"/>
 					<Property key="TextColour" value="0.5 0.9 0.8"/>
 					<UserString key="RelativeTo" value="ChampWnd"/>
 				</Widget>
