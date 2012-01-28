@@ -141,20 +141,20 @@ void App::listChampChng(MyGUI::MultiListBox* chlist, size_t pos)
 
 	//  update champ details (on stages tab)
 	TextBox* txt;
-	txt = mGUI->findWidget<TextBox>("valChDiff");
+	txt = (TextBox*)mWndChamp->findWidget("valChDiff");
 	if (txt)  txt->setCaption(TR("#{Diff"+toStr(ch.diff)+"}"));
-	txt = mGUI->findWidget<TextBox>("valChTracks");
+	txt = (TextBox*)mWndChamp->findWidget("valChTracks");
 	if (txt)  txt->setCaption(toStr(ch.trks.size()));
 
-	txt = mGUI->findWidget<TextBox>("valChDist");
+	txt = (TextBox*)mWndChamp->findWidget("valChDist");
 	if (txt)  txt->setCaption(toStr(ch.length));  // sum from find tracks..
-	txt = mGUI->findWidget<TextBox>("valChTime");
+	txt = (TextBox*)mWndChamp->findWidget("valChTime");
 	if (txt)  txt->setCaption(toStr(ch.time));    // sum champs.trkTimes..
 
-	txt = mGUI->findWidget<TextBox>("valChProgress");
+	txt = (TextBox*)mWndChamp->findWidget("valChProgress");
 	sprintf(ss, "%5.1f %%", 100.f * progress.champs[pos].curTrack / champs.champs[pos].trks.size());
 	if (txt)  txt->setCaption(ss);
-	txt = mGUI->findWidget<TextBox>("valChScore");
+	txt = (TextBox*)mWndChamp->findWidget("valChScore");
 	sprintf(ss, "%5.1f", progress.champs[pos].score);
 	if (txt)  txt->setCaption(ss);
 }
@@ -197,7 +197,7 @@ void App::btnChampStageStart(WP)
 	ProgressChamp& pc = progress.champs[chId];
 	const Champ& ch = champs.champs[chId];
 	bool last = pc.curTrack == ch.trks.size();
-	LogO("|| This was stage 2 close" + toStr(pc.curTrack) + "/" + toStr(ch.trks.size()));
+	LogO("|| This was stage " + toStr(pc.curTrack) + "/" + toStr(ch.trks.size()) + " btn");
 	if (last)
 	{	//  show end window
 		mWndChampStage->setVisible(false);
@@ -208,7 +208,7 @@ void App::btnChampStageStart(WP)
 	bool finished = pGame->timer.GetLastLap() > 0.f;  //?-
 	if (finished)
 	{
-		LogO("|| Loading next stage: "/* + ch.trks[pc.curTrack].name*/);
+		LogO("|| Loading next stage.");
 		mWndChampStage->setVisible(false);
 		btnNewGame(0);
 	}else
@@ -303,6 +303,7 @@ void App::ChampionshipAdvance(float timeCur)
 			sum += pc.trks[t].score;
 
 		pc.curTrack++;  // end = 100 %
+		float old = pc.score;  // .. save only higher ?
 		pc.score = sum / ntrk;  // average from all tracks
 		ProgressSave();
 

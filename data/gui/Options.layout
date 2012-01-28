@@ -902,7 +902,6 @@
 					<UserString key="RelativeTo" value="ChampWnd"/>
 				</Widget>
 				<Widget type="EditBox" skin="EditBoxEmpty" position="466 48 300 88" name="ChampDescr">
-					<Property key="Caption" value="Championship description"/>
 					<Property key="TextColour" value="0.6 0.9 1.0"/>
 					<Property key="ReadOnly" value="true"/>
 					<Property key="MultiLine" value="true"/>
@@ -913,7 +912,7 @@
 			<Widget type="TabItem" skin="" position="2 24 794 572">
 				<Property key="Caption" value="#{Stages}"/>
 				<UserString key="RelativeTo" value="ChampWnd"/>
-				<Widget type="MultiListBox" skin="MultiListBox" position="32 48 368 232" name="MListStages">
+				<Widget type="MultiListBox" skin="MultiListBox" position="32 48 408 344" name="MListStages">
 					<UserString key="RelativeTo" value="ChampWnd"/>
 					<Widget type="MultiListItem" skin="" position="0 0 30 203">
 						<Property key="Caption" value="N"/>
@@ -922,20 +921,28 @@
 					</Widget>
 					<Widget type="MultiListItem" skin="" position="30 0 200 203">
 						<Property key="Caption" value="#{Track}"/>
-						<Property key="ItemWidth" value="200"/>
+						<Property key="ItemWidth" value="180"/>
 						<Property key="ItemResizingPolicy" value="Fixed"/>
 					</Widget>
 					<Widget type="MultiListItem" skin="" position="230 0 56 203">
 						<Property key="Caption" value="#{Scenery}"/>
+						<Property key="ItemWidth" value="100"/>
+						<Property key="ItemResizingPolicy" value="Fixed"/>
 					</Widget>
 					<Widget type="MultiListItem" skin="" position="286 0 28 203">
 						<Property key="Caption" value="#{Difficulty}"/>
+						<Property key="ItemWidth" value="90"/>
+						<Property key="ItemResizingPolicy" value="Fixed"/>
 					</Widget>
 					<Widget type="MultiListItem" skin="" position="314 0 51 203">
 						<Property key="Caption" value="#{Length}"/>
+						<Property key="ItemWidth" value="60"/>
+						<Property key="ItemResizingPolicy" value="Fixed"/>
 					</Widget>
 					<Widget type="MultiListItem" skin="" position="365 0 40 203">
 						<Property key="Caption" value="#{Score}"/>
+						<Property key="ItemWidth" value="70"/>
+						<Property key="ItemResizingPolicy" value="Fixed"/>
 					</Widget>
 				</Widget>
 				<Widget type="TextBox" skin="TextBox" position="496 48 136 24">

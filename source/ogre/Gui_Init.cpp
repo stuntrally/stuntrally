@@ -429,9 +429,10 @@ void App::InitGui()
 	//  championships
 	//------------------------------------------------------------------------
 	liChamps = mGUI->findWidget<MultiListBox>("MListChamps");
-	ChampsListUpdate();
 	liChamps->eventListChangePosition += newDelegate(this, &App::listChampChng);
 	liStages = mGUI->findWidget<MultiListBox>("MListStages");
+	ChampsListUpdate();
+	listChampChng(liChamps, liChamps->getIndexSelected());
 	//liChamps->eventListChangePosition += newDelegate(this, &App::listStagesChng);
 	//^ Track tab for details ...
 
