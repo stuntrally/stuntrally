@@ -20,9 +20,10 @@ void App::ChampsXmlLoad()
 
 	int pcs = progress.champs.size(), chs = champs.champs.size();
 	//  progress empty, fill with 0s
-	if (pcs == 0)
+	if (pcs == 0 || pcs != chs)
 	{
 		LogO(String("|| No progress found - saving empty with 0s."));
+		progress.champs.clear();
 		for (int i=0; i < chs; ++i)
 		{
 			const Champ& ch = champs.champs[i];
@@ -44,6 +45,7 @@ void App::ChampsXmlLoad()
 		}
 		//  check ver, name, trks size, if different reset that champ only ...
 		//for (int i=0; i < pcs; ++i)
+		ProgressSave(false);
 	}
 }
 
@@ -273,7 +275,8 @@ void App::ChampionshipAdvance(float timeCur)
 	LogO("|| Best time: " + toStr(timeBest));
 
 	float score = timeCur / timeBest * 100.f;	//(timeBest-timeCur)/timeBest * 100.f;  //-
-	LogO("|| Score: " + toStr(score));
+	bool passed = true;  // score < trk.passScore;  // didnt qualify, repeat current stage
+	LogO("|| Score: " + toStr(score) + "  Passed: " + (passed ? "yes":"no"));
 	pc.trks[pc.curTrack].score = score;
 
 	//  --------------  advance  --------------
@@ -288,7 +291,8 @@ void App::ChampionshipAdvance(float timeCur)
 		ChampFillStageInfo(true);  // cur track
 		mWndChampStage->setVisible(true);
 		
-		pc.curTrack++;  // next stage
+		if (passed)
+			pc.curTrack++;  // next stage
 		ProgressSave();
 	}else
 	{
@@ -328,21 +332,22 @@ void App::ChampFillStageInfo(bool finished)
 	int chId = pSet->game.champ_num;
 	ProgressChamp& pc = progress.champs[chId];
 	const Champ& ch = champs.champs[chId];
-	const std::string& trkName = ch.trks[pc.curTrack].name;
+	const ChampTrack& trk = ch.trks[pc.curTrack];
 
 	String s;  char ss[64];
 	s = TR("#{Championship}") + ": " + ch.name + "\n" +
 		TR("#{Stage}") + ": " + toStr(pc.curTrack+1) + "/" + toStr(ch.trks.size()) + "\n" +
-		TR("#{Track}") + ": " + trkName + "\n\n" /*+
-		"Difficulty: " + tracksXml. + "\n"*/;
+		TR("#{Track}") + ": " + trk.name + "\n\n";
+		//+"Difficulty: " + tracksXml. + "\n";
 
 	if (finished)
 	{
 		sprintf(ss, "%5.1f", pc.trks[pc.curTrack].score);
 		s += TR("#{Finished}") + ".\n" +
 			TR("#{Score}") + ": " + ss + "\n";
+		//trk.passScore;
 	}
 	edChampStage->setCaption(s);
 	
-	imgChampStage->setImageTexture(trkName+".jpg");
+	imgChampStage->setImageTexture(trk.name+".jpg");
 }

@@ -894,6 +894,11 @@
 						<Property key="ItemWidth" value="60"/>
 						<Property key="ItemResizingPolicy" value="Fixed"/>
 					</Widget>
+					<Widget type="MultiListItem" skin="" position="570 0 40 315">
+						<Property key="Caption" value=" "/>
+						<Property key="ItemWidth" value="60"/>
+						<Property key="ItemResizingPolicy" value="Fixed"/>
+					</Widget>
 				</Widget>
 				<Widget type="Button" skin="Button" position="256 440 144 40" name="btnChampStart">
 					<Property key="Caption" value="#{ChampStart}"/>
