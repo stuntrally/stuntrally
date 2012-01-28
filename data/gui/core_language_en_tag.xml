@@ -64,6 +64,7 @@
 
 	<Tag name="Name">Name</Tag>
 	<Tag name="Tracks">Tracks</Tag>
+	<Tag name="Stage">Stage</Tag>
 	<Tag name="Stages">Stages</Tag>
 	<Tag name="Scenery">Scenery</Tag>
 	<Tag name="Length">Length</Tag>
@@ -72,6 +73,8 @@
 	<Tag name="Time">Time</Tag>
 	<Tag name="Progress">Progress</Tag>
 	<Tag name="Score">Score</Tag>
+	<Tag name="TotalScore">Total score</Tag>
+	<Tag name="Finished">Finished</Tag>
 
 
 	<!--  Track  -->

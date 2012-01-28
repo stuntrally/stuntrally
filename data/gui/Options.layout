@@ -820,6 +820,9 @@
         <Widget type="EditBox" skin="EditBoxEmpty" position="24 264 480 80" name="ChampEndText">
 			<Property key="TextColour" value="0.6 0.9 1.0"/>
 			<Property key="InheritsAlpha" value="false"/>
+			<Property key="ReadOnly" value="true"/>
+			<Property key="MultiLine" value="true"/>
+			<Property key="WordWrap" value="true"/>
 			<!--<UserString key="RelativeTo" value="WndChampEnd"/>-->
 		</Widget>
 		<Widget type="TextBox" skin="TextBox" position="24 56 480 32">

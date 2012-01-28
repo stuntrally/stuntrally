@@ -444,6 +444,13 @@ void App::InitGui()
 	edChampEnd = (EditBox*)mWndChampEnd->findWidget("ChampEndText");
 	imgChampStage = (ImageBox*)mWndChampStage->findWidget("ChampStageImg");
 
+	tab = mWndTabsGame;
+	//tab->getItemAt(2)->setVisible(false);
+	//tab->getItemAt(2)->setEnabledSilent(false);
+	//tab->updateBar();
+	tab->setButtonWidthAt(2,0);
+	//tab->removeItemAt(2);
+
 
 	bGI = true;  // gui inited, gui events can now save vals
 

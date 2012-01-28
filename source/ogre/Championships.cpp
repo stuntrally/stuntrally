@@ -312,8 +312,9 @@ void App::ChampionshipAdvance(float timeCur)
 		//  upd champ end [window]
 		char ss[64];
 		sprintf(ss, "%5.1f", score);
-		String s = "Championship: " + ch.name + "\n" +
-			"Total score: " + ss;
+		String s;
+		s = TR("#{Championship}") + ": " + ch.name + "\n" +
+			TR("#{TotalScore}") + ": " + ss;
 		edChampEnd->setCaption(s);
 		//mWndChampEnd->setVisible(true);  // show after stage end
 	}
@@ -327,16 +328,16 @@ void App::ChampFillStageInfo(bool finished)
 	const std::string& trkName = ch.trks[pc.curTrack].name;
 
 	String s;  char ss[64];
-	s = "Championship: " + ch.name + "\n" +
-		"Stage: " + toStr(pc.curTrack+1) + "/" + toStr(ch.trks.size()) + "\n" +
-		"Track: " + trkName + "\n\n" /*+
+	s = TR("#{Championship}") + ": " + ch.name + "\n" +
+		TR("#{Stage}") + ": " + toStr(pc.curTrack+1) + "/" + toStr(ch.trks.size()) + "\n" +
+		TR("#{Track}") + ": " + trkName + "\n\n" /*+
 		"Difficulty: " + tracksXml. + "\n"*/;
 
 	if (finished)
 	{
 		sprintf(ss, "%5.1f", pc.trks[pc.curTrack].score);
-		s += String("Finished.\n") +
-			"Score: " + ss + "\n";
+		s += TR("#{Finished}") + ".\n" +
+			TR("#{Score}") + ": " + ss + "\n";
 	}
 	edChampStage->setCaption(s);
 	
