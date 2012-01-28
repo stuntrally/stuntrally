@@ -55,7 +55,8 @@ public:
 	class SoftParticlesLogic* mSoftParticlesLogic;
 	class GBufferLogic* mGBufferLogic;
 	void recreateCompositor();
-	
+	bool AnyEffectEnabled();
+	bool NeedMRTBuffer();
 	// motion blur
 	float motionBlurIntensity;
 	

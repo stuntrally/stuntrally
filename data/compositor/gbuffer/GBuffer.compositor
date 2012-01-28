@@ -1,3 +1,10 @@
+//index ,this will need to change if any of the render queue groups ranges are changing,we should have a way to set this @runtime
+//0-69 scenes without alpha (trees are there for somereason)
+//70-83 alpha objects including particles
+//84-95 environment objects(weather ) .also ghost(we may change this part later)
+//95-98 UI overlays
+//99 needles (because they are manual objects they intersect with depth by default ,need to clear buffer before rendering them)
+
 compositor gbuffer
 {
     technique
@@ -50,7 +57,7 @@ compositor gbufferFinalizerNoParticles
             {
                 // everything after particles render queue
 	      		first_render_queue 84
-	    		last_render_queue 100
+	    		last_render_queue 94
             }
 			
 		}
@@ -121,8 +128,60 @@ compositor gbufferFinalizer
             }
 			pass render_scene
             {
-                // everything after particles render queue
+                // everything after particles render queue until the UI
 	      		first_render_queue 84
+	    		last_render_queue 94
+            }
+		}
+    }
+}
+
+compositor gbufferNoMRT
+{
+    technique
+    {
+		target_output
+        {
+            input none
+
+			pass clear 
+			{
+			}
+		
+			pass render_scene
+            {
+                // render UI objects
+				first_render_queue 0
+	    		last_render_queue 94
+            }
+		}
+    }
+}
+compositor gbufferUIRender
+{
+    technique
+    {
+		target_output
+        {
+            input previous
+
+			pass render_scene
+            {
+                // render UI objects
+				first_render_queue 95
+	    		last_render_queue 98
+            }
+			pass clear
+            {
+				clear
+				{
+					buffers depth
+            	}
+            }
+			pass render_scene
+            {
+                // render UI objects
+				first_render_queue 99
 	    		last_render_queue 100
             }
 		}

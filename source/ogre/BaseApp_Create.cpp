@@ -186,6 +186,7 @@ void BaseApp::refreshCompositor(bool disableAll)
 		{
 			CompositorManager::getSingleton().setCompositorEnabled((*it), "gbuffer", false);
 		}
+		CompositorManager::getSingleton().setCompositorEnabled((*it), "gbufferNoMRT", false);
 		CompositorManager::getSingleton().setCompositorEnabled((*it), "Bloom", false);
 		CompositorManager::getSingleton().setCompositorEnabled((*it), "HDR", false);
 		if(MaterialGenerator::MRTSupported())
@@ -202,6 +203,7 @@ void BaseApp::refreshCompositor(bool disableAll)
 		CompositorManager::getSingleton().setCompositorEnabled((*it), "GodRays", false);
 		CompositorManager::getSingleton().setCompositorEnabled((*it), "Motion Blur", false);
 		CompositorManager::getSingleton().setCompositorEnabled((*it), "SSAA", false);
+		CompositorManager::getSingleton().setCompositorEnabled((*it), "gbufferUIRender", false);
 	}
 
 	if (!pSet->all_effects || disableAll)
@@ -241,8 +243,10 @@ void BaseApp::refreshCompositor(bool disableAll)
 		if(MaterialGenerator::MRTSupported())
 		{
 			//the condition here is any compositor needing the gbuffers like ssao ,soft particles
-			CompositorManager::getSingleton().setCompositorEnabled((*it), "gbuffer", pSet->ssao || pSet->softparticles);
+			CompositorManager::getSingleton().setCompositorEnabled((*it), "gbuffer", NeedMRTBuffer());
 		}
+		CompositorManager::getSingleton().setCompositorEnabled((*it), "gbufferNoMRT",!NeedMRTBuffer());
+
 		CompositorManager::getSingleton().setCompositorEnabled((*it), "Bloom", pSet->bloom);
 		CompositorManager::getSingleton().setCompositorEnabled((*it), "HDR", pSet->hdr);
 		CompositorManager::getSingleton().setCompositorEnabled((*it), "Motion Blur", pSet->motionblur);
@@ -259,10 +263,21 @@ void BaseApp::refreshCompositor(bool disableAll)
 			CompositorManager::getSingleton().setCompositorEnabled((*it), "ssaoNoMRT", pSet->ssao);
 		}
 		CompositorManager::getSingleton().setCompositorEnabled((*it), "GodRays", pSet->godrays);
+		CompositorManager::getSingleton().setCompositorEnabled((*it), "gbufferUIRender", AnyEffectEnabled());
 		
 	}
 }
-
+//-------------------------------------------------------------------------------------
+bool BaseApp::AnyEffectEnabled()
+{
+	//any new effect need to be added here to have UI Rendered on it
+	return pSet->all_effects || pSet->softparticles || pSet->bloom || pSet->hdr || pSet->motionblur || pSet->ssaa || pSet->ssao || pSet->godrays;
+}
+//-------------------------------------------------------------------------------------
+bool BaseApp::NeedMRTBuffer()
+{
+	return pSet->ssao || pSet->softparticles;
+}
 //-------------------------------------------------------------------------------------
 void BaseApp::recreateCompositor()
 {
@@ -420,6 +435,7 @@ void BaseApp::recreateCompositor()
 		{
 			CompositorManager::getSingleton().addCompositor((*it), "gbuffer");
 		}
+		CompositorManager::getSingleton().addCompositor((*it), "gbufferNoMRT");
 		CompositorManager::getSingleton().addCompositor((*it), "HDR");
 		if (MaterialGenerator::MRTSupported())
 		{
@@ -436,6 +452,7 @@ void BaseApp::recreateCompositor()
 		CompositorManager::getSingleton().addCompositor((*it), "Bloom");
 		CompositorManager::getSingleton().addCompositor((*it), "Motion Blur");
 		CompositorManager::getSingleton().addCompositor((*it), "SSAA");
+		CompositorManager::getSingleton().addCompositor((*it), "gbufferUIRender");
 	}
 	
 	refreshCompositor();
