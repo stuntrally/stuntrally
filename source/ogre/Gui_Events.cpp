@@ -273,6 +273,9 @@ void App::btnChgTrack(WP)
 //  new game
 void App::btnNewGame(WP)
 {
+	if (mWndGame->isVisible())
+		pSet->gui.champ_num = -1;  /// champ, back to single race
+	
 	NewGame();  isFocGui = false;  // off gui
 	if (mWndOpts)  mWndOpts->setVisible(isFocGui);
 	if (mWndRpl)  mWndRpl->setVisible(false);//
@@ -493,6 +496,9 @@ bool App::keyPressed( const OIS::KeyEvent &arg )
 		switch (arg.key)
 		{
 			case KC_BACK:
+				if (mWndChampStage->isVisible())
+					btnChampStageBack(0);
+				else
 				if (pSet->isMain)  break;
 				if (isFocGui)
 				{	if (edFoc)  break;
@@ -548,11 +554,15 @@ bool App::keyPressed( const OIS::KeyEvent &arg )
 			}	return false;
 			
 			case KC_F5:		//  new game
-			//if (ctrl)
 			{	NewGame();  return false;
 			}	break;
 			
-			case KC_RETURN:	//  chng trk + new game  after up/dn
+			case KC_RETURN:
+			///  close champ wnds
+			if (mWndChampStage->isVisible())
+			{
+				btnChampStageStart(0);
+			}				//  chng trk/car + new game  after up/dn
 			if (isFocGui && !pSet->isMain)
 			{
 				if (pSet->inMenu == WND_Replays)
@@ -626,57 +636,4 @@ void App::MenuTabChg(MyGUI::TabPtr tab, size_t id)
 	tab->setIndexSelected(1);  // dont switch to 0
 	pSet->isMain = true;
 	toggleGui(false);  // back to main
-}
-
-
-///  Championships list  sel changed
-//---------------------------------------------------------------------
-void App::listChampChng(MyGUI::MultiListBox* chlist, size_t pos)
-{
-	if (pos < 0)  return;
-	if (pos >= champs.champs.size())  {  LogO("Error champ sel > size.");  return;  }
-	//if (pos >= progress.champs.size())  {  LogO("Error progres sel > size.");  return;  }
-	
-	//  update champ stages
-	MultiListBox* li = mGUI->findWidget<MultiListBox>("MListStages");
-	li->removeAllItems();
-	const Champ& ch = champs.champs[pos];
-	for (int i=0; i < ch.trks.size(); ++i)
-	{
-		const ChampTrack& tr = ch.trks[i];
-		li->addItem(toStr(i/10)+toStr(i%10), 0);  int l = li->getItemCount()-1;
-		li->setSubItemNameAt(1,l, tr.name.c_str());
-		li->setSubItemNameAt(2,l, "-");
-		li->setSubItemNameAt(3,l, "-");  //scenery..
-		li->setSubItemNameAt(4,l, toStr(tr.laps));
-		li->setSubItemNameAt(5,l, "0");
-	}
-	//  descr
-	EditBox* ed = mGUI->findWidget<EditBox>("ChampDescr");
-	if (ed)  ed->setCaption(ch.descr);
-
-	//  update champ details (on stages tab)
-	TextBox* txt;
-	txt = mGUI->findWidget<TextBox>("valChDiff");
-	if (txt)  txt->setCaption(toStr(ch.diff));
-	txt = mGUI->findWidget<TextBox>("valChTracks");
-	if (txt)  txt->setCaption(toStr(ch.trks.size()));
-
-	txt = mGUI->findWidget<TextBox>("valChDist");
-	if (txt)  txt->setCaption(toStr(ch.length));  // sum from find tracks..
-	txt = mGUI->findWidget<TextBox>("valChTime");
-	if (txt)  txt->setCaption(toStr(ch.time));    // sum champs.trkTimes..
-
-	txt = mGUI->findWidget<TextBox>("valChProgress");
-	if (txt)  txt->setCaption(toStr(100.f * progress.champs[pos].curTrack / champs.champs[pos].trks.size())+" %");
-	txt = mGUI->findWidget<TextBox>("valChScore");
-	if (txt)  txt->setCaption(toStr(progress.champs[pos].score));
-}
-
-///  champ start
-void App::btnChampStart(WP)
-{
-	pSet->gui.champ_num = liChamps->getIndexSelected();
-	LogO("Starting champ: "+toStr(pSet->gui.champ_num));
-	btnNewGame(0);
 }

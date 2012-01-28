@@ -51,7 +51,7 @@ void TIMER::Tick(float dt)
 
 	//assert(elapsed_time >= 0);
 
-	if (pretime > 0.f)
+	if (pretime > 0.f && !waiting)
 	{	pretime -= dt;
 		dt = 0.f;  }
 	if (waiting)

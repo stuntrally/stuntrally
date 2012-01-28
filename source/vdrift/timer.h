@@ -134,9 +134,9 @@ private:
 		private:
 			double time_rpl;  // time from race start (for replay)
 			double time;      // running time for this lap
-			LAPTIME lastlap;  // last lap time for player & opponents
-			LAPTIME bestlap;  // best lap time for player & opponents
-			double totaltime; // total time of a race for player & opponents
+			LAPTIME lastlap;  // last lap time
+			LAPTIME bestlap;  // best lap time
+			double totaltime; // total time of a race (>=1 laps)
 			int num_laps;     // current lap
 			std::string cartype;
 			double lapdistance; // total track distance driven this lap in meters
@@ -198,6 +198,11 @@ private:
 			double GetTime() const
 			{
 				return time;
+			}
+			
+			double GetTimeTotal() const
+			{
+				return totaltime;
 			}
 
 			double GetLastLap() const
@@ -270,6 +275,7 @@ public:
 			car[i].DebugPrint(out);
 		}
 	}
+	double GetPlayerTimeTot() {	assert(carId<car.size());	return car[carId].GetTimeTotal();	}
 	double GetPlayerTime() {	assert(carId<car.size());	return car[carId].GetTime();	}
 	double GetReplayTime() {	assert(carId<car.size());	return car[carId].GetTimeReplay();  }  // replay
 	void SetReplayTime(double t){assert(carId<car.size());	return car[carId].SetTimeReplay(t);  }

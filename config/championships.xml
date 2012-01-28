@@ -64,7 +64,6 @@
 		<track name="S3-Loops"		time="61"/>
 	--><!--5--><!--
 		<track name="D2-Mntn"		time="61"/>
-		<track name="J2-T-bumps"	time="61"/>
 		<track name="D3-P"			time="61"/>
 		<track name="J3-S"			time="61"/>
 		<track name="S4-Hills"		time="61"/>
@@ -84,14 +83,11 @@
 		<track name="F1-Cc"			time="61"/>
 		<track name="F3-osso"		time="61"/>
 	--><!--18--><!--
-		<track name="F2-Cc-pipe"	time="61"/>
-
 		<track name="D5-jmp8-low"	time="61"/>
 		<track name="D6-jmp0-high"	time="61"/>
 		<track name="S5-LoopBasic"	time="61"/>
 
 		<track name="F4-o4H"		time="61"/>
-		<track name="F5-o4H-pipe"	time="61"/>
 		<track name="F6-DC3"		time="61"/>
 		<track name="D7-hh"			time="61"/>
 
@@ -103,7 +99,6 @@
 		<track name="0W4-ice-blur"	time="61"/>
 		<track name="0W5-O4"		time="61"/>
 	--><!--32--><!--
-		<track name="S7-HighMadWide" time="61"/>
 		<track name="J6-80fun"		time="61"/>
 		<track name="I1-star3"		time="61"/>
 		<track name="S9-demo"		time="61"/>
@@ -123,7 +118,6 @@
 		<track name="0W8-pipe8x8"	time="61"/>
 
 		<track name="S10-Pipe88"	time="61"/>
-		<track name="S11-Twist8"	time="61"/>
 		<track name="S12-Infinity"	time="61"/>
 	--><!--49--><!--
 		<track name="M1-Hills"		time="61"/>

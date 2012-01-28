@@ -90,7 +90,7 @@ void App::CreateTrees()
 	bool bWind = 1;	 /// WIND
 
 	Real fGrass = pSet->grass * sc.densGrass * 3.0f;  // std::min(pSet->grass, 
-	Real fTrees = pSet->trees * sc.densTrees;
+	Real fTrees = pSet->game.trees * sc.densTrees;
 	
 	if (fGrass > 0.f)
 	{

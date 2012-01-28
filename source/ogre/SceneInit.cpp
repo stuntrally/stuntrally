@@ -44,23 +44,8 @@ void App::createScene()
 	//  tracks.xml
 	tracksXml.LoadXml(PATHMANAGER::GetGameConfigDir() + "/tracks.xml");
 
-	///  championships.xml, progress.xml
-	champs.LoadXml(PATHMANAGER::GetGameConfigDir() + "/championships.xml");
-	progress.LoadXml(PATHMANAGER::GetUserConfigDir() + "/progress.xml");
-	//  if progress empty (?or size differs than champs) update progress
-	if (progress.champs.size() == 0)
-	{
-		for (int i=0; i < champs.champs.size(); ++i)
-		{
-			ProgressChamp pc;
-			ProgressTrack pt;  // empty 0 progress
-			for (int t=0; t < champs.champs[i].trks.size(); ++t)
-				pc.trks.push_back(pt);
-			//check ver or trks size, if diff reset
-			progress.champs.push_back(pc);
-		}
-		progress.SaveXml(PATHMANAGER::GetUserConfigDir() + "/progress.xml");
-	}
+	//  championships.xml, progress.xml
+	ChampsXmlLoad();
 
 	//  fluids.xml
 	fluidsXml.LoadXml(PATHMANAGER::GetDataPath() + "/materials/fluids.xml");
@@ -137,23 +122,7 @@ void App::NewGame()
 	if (!newGameRpl)  // if from replay, dont
 	{
 		pSet->game = pSet->gui;  // copy game config from gui
-
-		///  championship load track
-		if (pSet->game.champ_num >= champs.champs.size())
-			pSet->game.champ_num = -1;  //0 range
-		
-		int chId = pSet->game.champ_num;
-		if (chId >= 0)
-		{
-			//  champ stage, current track
-			const ProgressChamp& pc = progress.champs[chId];
-			const Champ& ch = champs.champs[chId];
-			const ChampTrack& trk = ch.trks[pc.curTrack];
-			pSet->game.track = trk.name;
-			pSet->game.track_user = 0;
-			pSet->game.trackreverse = trk.reversed;
-			pSet->game.num_laps = trk.laps;
-		}
+		ChampNewGame();
 	}
 	newGameRpl = false;
 	
@@ -168,6 +137,7 @@ void App::NewGame()
 }
 
 /* *  Loading steps (in this order)  * */
+//---------------------------------------------------------------------------------------------------------------
 
 void App::LoadCleanUp()  // 1 first
 {
@@ -442,6 +412,7 @@ void App::LoadMisc()  // 7 last
 }
 
 /* Actual loading procedure that gets called every frame during load. Performs a single loading step. */
+//---------------------------------------------------------------------------------------------------------------
 void App::NewGameDoLoad()
 {
 	if (currentLoadingState == loadingStates.end())
@@ -449,10 +420,13 @@ void App::NewGameDoLoad()
 		// Loading finished.
 		bLoading = false;
 		LoadingOff();
+				
 		ShowHUD();
 		if (pSet->show_fps)
 			mFpsOverlay->show();
 		mSplitMgr->mGuiViewport->setClearEveryFrame(true, FBT_DEPTH);
+
+		ChampLoadEnd();
 		return;
 	}
 	// Do the next loading step.

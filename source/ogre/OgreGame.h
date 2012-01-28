@@ -235,19 +235,24 @@ protected:
 		
 	///-----------------------------------------
 
+	//  main menu
 	void toggleGui(bool toggle=true);
 	void UpdCarClrSld(bool upd=true);  bool bUpdCarClr;
 	void MainMenuBtn(MyGUI::WidgetPtr);
 	void MenuTabChg(MyGUI::TabPtr, size_t);
 
-	//  championships
+	///  championships
 	ChampsXml champs;  ProgressXml progress;
+	void ChampsXmlLoad(), ProgressSave();
+	void ChampNewGame(), ChampLoadEnd(), ChampFillStageInfo(), ChampionshipAdvance(float timeCur);
+
 	MyGUI::MultiListBox* liChamps;
 	void listChampChng(MyGUI::MultiListBox* li, size_t pos);
-	void btnChampStart(WP);
+	void btnChampStart(WP), btnChampStageBack(WP), btnChampStageStart(WP), btnChampEndClose(WP);
+	MyGUI::EditBox* edChampStage, *edChampEnd;
 	
 
-	///  input tab
+	///  input tab  -----------------------------------------
 	void InitInputGui(), inputBindBtnClicked(WP);
 	void InputBind(int key, int button=-1, int axis=-1);
 
@@ -265,7 +270,7 @@ protected:
 	MyGUI::ComboBox* cmbInpDetSet;  void comboInputPreset(CMB);
 
 
-	//  sliders
+	//  sliders  -----------------------------------------
 	SLV(Particles);  SLV(Trails);
 	SLV(ReflSkip);  SLV(ReflSize);  SLV(ReflFaces);  SLV(ReflDist);  SLV(ReflMode); // refl
 	SLV(SizeGaug);  SLV(SizeMinimap);  SLV(SizeArrow);  SLV(ZoomMinimap);  // view

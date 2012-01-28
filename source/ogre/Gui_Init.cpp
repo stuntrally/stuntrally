@@ -38,6 +38,8 @@ void App::InitGui()
 	mWndChamp = mGUI->findWidget<Window>("ChampWnd",false);
 	mWndReplays = mGUI->findWidget<Window>("ReplaysWnd",false);
 	mWndOpts = mGUI->findWidget<Window>("OptionsWnd",false);
+	mWndChampStage = mGUI->findWidget<Window>("WndChampStage",false);  mWndChampStage->setVisible(false);
+	mWndChampEnd = mGUI->findWidget<Window>("WndChampEnd",false);  mWndChampEnd->setVisible(false);
 
 	for (int i=0; i < WND_ALL; ++i)
 	{
@@ -433,16 +435,22 @@ void App::InitGui()
 		const Champ& ch = champs.champs[i];
 		liChamps->addItem(toStr(i/10)+toStr(i%10), 0);  int l = liChamps->getItemCount()-1;
 		liChamps->setSubItemNameAt(1,l, ch.name.c_str());
-		liChamps->setSubItemNameAt(2,l, toStr(ch.diff) /*"Easy"*/);
+		liChamps->setSubItemNameAt(2,l, TR("#{Diff"+toStr(ch.diff)+"}"));
 		liChamps->setSubItemNameAt(3,l, toStr(progress.champs[i].curTrack));  //0%  length,time;  bool tutorial;
 		liChamps->setSubItemNameAt(4,l, toStr(ch.trks.size()));  //"90");
 	}
 	liChamps->eventListChangePosition += newDelegate(this, &App::listChampChng);
+	liChamps->setIndexSelected(pSet->gui.champ_num);  //range
 
 	Btn("btnChampStart", btnChampStart);
-	//Btn("btnChampContinue", btnChampContinue);
+	Btn("btnChampStageBack", btnChampStageBack);
+	Btn("btnChampStageStart", btnChampStageStart);
+	Btn("btnChampEndClose", btnChampEndClose);
+	edChampStage = (EditBox*)mWndChampStage->findWidget("ChampStageText");
+	edChampEnd = (EditBox*)mWndChampEnd->findWidget("ChampEndText");
+	//<Widget type="ImageBox" skin="ImageBox" position="368 8 256 256" name="ChampStageImg">
 
-	
+
 	bGI = true;  // gui inited, gui events can now save vals
 
 	ti.update();	/// time

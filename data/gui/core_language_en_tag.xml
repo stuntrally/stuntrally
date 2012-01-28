@@ -48,6 +48,20 @@
 	<Tag name="BackMenu">Back</Tag>
 
 
+	<!--  Championship  -->
+	<Tag name="ChampEndCongrats">Congratulations !</Tag>
+	<Tag name="ChampEndFinished">You have finished this championship.</Tag>
+	<Tag name="Start">Start</Tag>
+	<Tag name="Diff0">Test Easy</Tag>
+	<Tag name="Diff1">Very Easy</Tag>
+	<Tag name="Diff2">Easy</Tag>
+	<Tag name="Diff3">Medium</Tag>
+	<Tag name="Diff4">Hard</Tag>
+	<Tag name="Diff5">Very Hard</Tag>
+	<Tag name="Diff6">Extreme</Tag>
+	<Tag name="Diff7">Ultra</Tag>
+
+
 	<!--  Track  -->
 	<Tag name="ChangeTrack">Change Track</Tag>
 	<Tag name="Track">Track</Tag>
