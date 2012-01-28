@@ -86,7 +86,7 @@ ProgressTrack::ProgressTrack() :
 {	}
 
 ProgressChamp::ProgressChamp() :
-	curTrack(0), score(0.f)
+	curTrack(0), score(0.f), ver(0)
 {	}
 
 
@@ -109,9 +109,10 @@ bool ProgressXml::LoadXml(std::string file)
 	{
 		ProgressChamp pc;
 		int curTrack;  float score;
-		//a = eCh->Attribute("name");			if (a)  pc.name = std::string(a);
-		a = eCh->Attribute("curTrack");			if (a)  pc.curTrack = s2i(a);
-		a = eCh->Attribute("score");			if (a)  pc.score = s2r(a);
+		a = eCh->Attribute("curTrack");		if (a)  pc.curTrack = s2i(a);
+		a = eCh->Attribute("score");		if (a)  pc.score = s2r(a);
+		a = eCh->Attribute("name");			if (a)  pc.name = std::string(a);
+		a = eCh->Attribute("ver");			if (a)  pc.ver = s2i(a);
 		
 		//  tracks
 		TiXmlElement* eTr = eCh->FirstChildElement("track");
@@ -141,12 +142,14 @@ bool ProgressXml::SaveXml(std::string file)
 		TiXmlElement eCh("champ");
 			eCh.SetAttribute("curTrack",	toStrC( pc.curTrack ));
 			eCh.SetAttribute("score",		toStrC( pc.score ));
+			eCh.SetAttribute("name",		pc.name.c_str() );
+			eCh.SetAttribute("ver",			toStrC( pc.ver ));
 
 			for (int i=0; i < pc.trks.size(); ++i)
 			{
 				const ProgressTrack& pt = pc.trks[i];
 				TiXmlElement eTr("track");
-				eTr.SetAttribute("score",		toStrC( pt.score ));
+				eTr.SetAttribute("score",	toStrC( pt.score ));
 				eCh.InsertEndChild(eTr);
 			}
 		root.InsertEndChild(eCh);

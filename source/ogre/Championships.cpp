@@ -10,6 +10,7 @@ using namespace MyGUI;
 
 
 ///  Load  championships.xml, progress.xml (once)
+//---------------------------------------------------------------------
 void App::ChampsXmlLoad()
 {
 	champs.LoadXml(PATHMANAGER::GetGameConfigDir() + "/championships.xml");
@@ -17,23 +18,37 @@ void App::ChampsXmlLoad()
 	
 	progress.LoadXml(PATHMANAGER::GetUserConfigDir() + "/progress.xml");
 
-	//  if progress empty (?or size differs than champs) update progress
-	if (progress.champs.size() == 0)
+	int pcs = progress.champs.size(), chs = champs.champs.size();
+	//  progress empty, fill with 0s
+	if (pcs == 0)
 	{
-		for (int i=0; i < champs.champs.size(); ++i)
+		LogO(String("|| No progress found - saving empty with 0s."));
+		for (int i=0; i < chs; ++i)
 		{
+			const Champ& ch = champs.champs[i];
 			ProgressChamp pc;
+			pc.name = ch.name;  // save for ver check
+			pc.ver = ch.ver;
 			ProgressTrack pt;  // empty, 0 progress
 			for (int t=0; t < champs.champs[i].trks.size(); ++t)
 				pc.trks.push_back(pt);
 			progress.champs.push_back(pc);
 		}
-		ProgressSave();
+		ProgressSave(false);  //will be later in guiInit
+	}else
+	{
+		if (pcs != chs)
+		{
+			// add new champs to progress ...
+			//for (int i=0; i < chs; ++i)
+		}
+		//  check ver, name, trks size, if different reset that champ only ...
+		//for (int i=0; i < pcs; ++i)
 	}
-	//TODO: check ver or trks size, if different reset that champ only ...
 }
 
 ///  load championship track
+//---------------------------------------------------------------------
 void App::ChampNewGame()
 {
 	if (pSet->game.champ_num >= champs.champs.size())
@@ -67,6 +82,34 @@ void App::ChampNewGame()
 
 ///  Championships list  sel changed
 //---------------------------------------------------------------------
+void App::ChampsListUpdate()
+{
+	const char clrT[3][8] = {"#A0F0FF", "#FFFFB0", "#FFA0A0"};
+	const static char clrDiff[8][8] =  // track difficulty colors
+		{"#60C0FF", "#00FF00", "#60FF00", "#C0FF00", "#FFFF00", "#FFC000", "#FF6000", "#FF4040"};
+
+	liChamps->removeAllItems();  char ss[64];
+	for (int i=0; i < champs.champs.size(); ++i)
+	{
+		const Champ& ch = champs.champs[i];
+		const ProgressChamp& pc = progress.champs[i];
+		int ntrks = pc.trks.size();
+		const String& clr = clrT[ch.tutorial];
+		liChamps->addItem(toStr(i/10)+toStr(i%10), 0);  int l = liChamps->getItemCount()-1;
+		liChamps->setSubItemNameAt(1,l, clr+ ch.name.c_str());
+		liChamps->setSubItemNameAt(2,l, clrDiff[ch.diff]+ TR("#{Diff"+toStr(ch.diff)+"}"));
+		liChamps->setSubItemNameAt(3,l, clrDiff[std::min(7,ntrks*2/3+1)]+ toStr(ntrks));
+		sprintf(ss, "%3.0f %%", 100.f * pc.curTrack / ntrks);
+		liChamps->setSubItemNameAt(4,l, clr+ ss);
+		sprintf(ss, "%5.1f", pc.score);
+		liChamps->setSubItemNameAt(5,l, clr+ ss);
+		//length,time;
+	}
+	liChamps->setIndexSelected(pSet->gui.champ_num);  //range..
+}
+
+///  Championships list  sel changed
+//---------------------------------------------------------------------
 void App::listChampChng(MyGUI::MultiListBox* chlist, size_t pos)
 {
 	if (pos < 0)  return;
@@ -74,18 +117,23 @@ void App::listChampChng(MyGUI::MultiListBox* chlist, size_t pos)
 	//if (pos >= progress.champs.size())  {  LogO("Error progres sel > size.");  return;  }
 	
 	//  update champ stages
-	MultiListBox* li = mGUI->findWidget<MultiListBox>("MListStages");
-	li->removeAllItems();
+	liStages->removeAllItems();  char ss[64];
 	const Champ& ch = champs.champs[pos];
 	for (int i=0; i < ch.trks.size(); ++i)
 	{
-		const ChampTrack& tr = ch.trks[i];
-		li->addItem(toStr(i/10)+toStr(i%10), 0);  int l = li->getItemCount()-1;
-		li->setSubItemNameAt(1,l, tr.name.c_str());
-		li->setSubItemNameAt(2,l, "-");
-		li->setSubItemNameAt(3,l, "-");  //scenery..
-		li->setSubItemNameAt(4,l, toStr(tr.laps));
-		li->setSubItemNameAt(5,l, "0");
+		const ChampTrack& trk = ch.trks[i];
+		liStages->addItem(toStr(i/10)+toStr(i%10), 0);  int l = liStages->getItemCount()-1;
+		liStages->setSubItemNameAt(1,l, trk.name.c_str());
+
+		int id = tracksXml.trkmap[trk.name];
+		const TrackInfo& ti = tracksXml.trks[id-1];
+
+		liStages->setSubItemNameAt(2,l, ti.scenery);
+		liStages->setSubItemNameAt(3,l, toStr(ti.diff));
+
+		liStages->setSubItemNameAt(4,l, toStr(trk.laps));
+		sprintf(ss, "%5.1f", progress.champs[pos].trks[i].score);
+		liStages->setSubItemNameAt(5,l, ss);
 	}
 	//  descr
 	EditBox* ed = mGUI->findWidget<EditBox>("ChampDescr");
@@ -104,10 +152,14 @@ void App::listChampChng(MyGUI::MultiListBox* chlist, size_t pos)
 	if (txt)  txt->setCaption(toStr(ch.time));    // sum champs.trkTimes..
 
 	txt = mGUI->findWidget<TextBox>("valChProgress");
-	if (txt)  txt->setCaption(toStr(100.f * progress.champs[pos].curTrack / champs.champs[pos].trks.size())+" %");
+	sprintf(ss, "%5.1f %%", 100.f * progress.champs[pos].curTrack / champs.champs[pos].trks.size());
+	if (txt)  txt->setCaption(ss);
 	txt = mGUI->findWidget<TextBox>("valChScore");
-	if (txt)  txt->setCaption(toStr(progress.champs[pos].score));
+	sprintf(ss, "%5.1f", progress.champs[pos].score);
+	if (txt)  txt->setCaption(ss);
 }
+//---------------------------------------------------------------------
+
 
 ///  champ start  -----
 void App::btnChampStart(WP)
@@ -115,11 +167,15 @@ void App::btnChampStart(WP)
 	pSet->gui.champ_num = liChamps->getIndexSelected();
 	LogO("|| Starting champ: "+toStr(pSet->gui.champ_num));
 
-	// if already finished, restart - will loose progress and score ..
+	//  if already finished, restart - will loose progress and scores ..
 	int chId = pSet->gui.champ_num;
 	ProgressChamp& pc = progress.champs[chId];
 	if (pc.curTrack == pc.trks.size())
+	{
+		LogO("|| Was at 100%, restarting progress.");
 		pc.curTrack = 0;
+		//pc.score = 0.f;
+	}
 
 	btnNewGame(0);
 }
@@ -132,7 +188,8 @@ void App::btnChampStageBack(WP)
 	toggleGui(false);
 }
 
-///  stage start / end  -----
+///  stage start / end
+//---------------------------------------------------------------------
 void App::btnChampStageStart(WP)
 {
 	//  check if champ ended
@@ -179,9 +236,14 @@ void App::ChampLoadEnd()
 	}
 }
 
-void App::ProgressSave()
+///  save progress and update it on gui
+void App::ProgressSave(bool upgGui)
 {
 	progress.SaveXml(PATHMANAGER::GetUserConfigDir() + "/progress.xml");
+	if (!upgGui)
+		return;
+	ChampsListUpdate();
+	listChampChng(liChamps, liChamps->getIndexSelected());
 }
 
 
@@ -195,14 +257,14 @@ void App::ChampionshipAdvance(float timeCur)
 	const ChampTrack& trk = ch.trks[pc.curTrack];
 	LogO("|| --- Champ end: " + ch.name);
 
-	///  compute track :score:
+	///  compute track :score:  --------------
 	float timeBest = champs.trkTimes[trk.name];
 	if (timeBest < 1.f)
 	{	LogO("|| Error: Track has no best time !");  timeBest = 10.f;	}
 	timeBest *= trk.laps;
 	timeBest += 2;  // first lap longer, time at start spent to gain car valocity
 	float factor = ch.trks[pc.curTrack].factor;  // how close to best you need to be
-	timeBest *= 1.0f + factor;
+	timeBest *= 1.0f - factor;
 
 	LogO("|| Track: " + trk.name);
 	LogO("|| Your time: " + toStr(timeCur));
@@ -212,12 +274,12 @@ void App::ChampionshipAdvance(float timeCur)
 	LogO("|| Score: " + toStr(score));
 	pc.trks[pc.curTrack].score = score;
 
-	//  advance
+	//  --------------  advance  --------------
 	bool last = pc.curTrack+1 == ch.trks.size();
 	LogO("|| This was stage " + toStr(pc.curTrack+1) + "/" + toStr(ch.trks.size()));
 	if (!last)
 	{
-		//  show stage end window
+		//  show stage end [window]
 		pGame->pause = true;
 		pGame->timer.waiting = true;
 
@@ -227,26 +289,31 @@ void App::ChampionshipAdvance(float timeCur)
 		pc.curTrack++;  // next stage
 		ProgressSave();
 	}else
-	{	//  champ ended
+	{
+		//  champ ended
 		pGame->pause = true;
 		pGame->timer.waiting = true;
 
 		ChampFillStageInfo(true);  // cur track
 		mWndChampStage->setVisible(true);
 
-		///  compute champ :score:
+		///  compute champ :score:  --------------
 		int ntrk = pc.trks.size();  float sum = 0.f;
 		for (int t=0; t < ntrk; ++t)
 			sum += pc.trks[t].score;
 
-		pc.curTrack++;  // = end 100 %
+		pc.curTrack++;  // end = 100 %
 		pc.score = sum / ntrk;  // average from all tracks
 		ProgressSave();
+
 		LogO("|| Champ finished");
 		LogO("|| Total score: " + toStr(score));  //..
 		
-		//  show end window
-		String s = "Total score: " + toStr(score);
+		//  upd champ end [window]
+		char ss[64];
+		sprintf(ss, "%5.1f", score);
+		String s = "Championship: " + ch.name + "\n" +
+			"Total score: " + ss;
 		edChampEnd->setCaption(s);
 		//mWndChampEnd->setVisible(true);  // show after stage end
 	}
@@ -259,14 +326,18 @@ void App::ChampFillStageInfo(bool finished)
 	const Champ& ch = champs.champs[chId];
 	const std::string& trkName = ch.trks[pc.curTrack].name;
 
-	String s;
-	s = "Champ: " + ch.name + "\n" +
+	String s;  char ss[64];
+	s = "Championship: " + ch.name + "\n" +
 		"Stage: " + toStr(pc.curTrack+1) + "/" + toStr(ch.trks.size()) + "\n" +
 		"Track: " + trkName + "\n\n" /*+
 		"Difficulty: " + tracksXml. + "\n"*/;
+
 	if (finished)
-	s += String("Finished.\n") +
-		"Score: " + toStr(pc.trks[pc.curTrack].score) + "\n";
+	{
+		sprintf(ss, "%5.1f", pc.trks[pc.curTrack].score);
+		s += String("Finished.\n") +
+			"Score: " + ss + "\n";
+	}
 	edChampStage->setCaption(s);
 	
 	imgChampStage->setImageTexture(trkName+".jpg");

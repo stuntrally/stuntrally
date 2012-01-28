@@ -775,7 +775,7 @@
 	</Widget>
 	<Widget type="Window" skin="WindowC" position="576 328 648 440" align="Center" layer="Popup" name="WndChampStage">
 		<Property key="Caption" value="#{Championship}"/>
-		<Property key="Alpha" value="0.7"/>
+		<Property key="Alpha" value="0.8"/>
 		<Property key="Colour" value="0 1 0.1"/>
 		<Widget type="Button" skin="Button" position="160 344 144 40" name="btnChampStageBack">
 			<Property key="Colour" value="0.47 0.47 0.47"/>
@@ -794,7 +794,7 @@
 			<Property key="WordWrap" value="true"/>
 			<!--<UserString key="RelativeTo" value="WndChampStage"/>-->
 		</Widget>
-		<Widget type="EditBox" skin="EditBoxEmpty" position="24 8 328 288" name="ChampStageText">
+		<Widget type="EditBox" skin="EditBoxEmpty" position="32 24 328 288" name="ChampStageText">
 			<Property key="TextColour" value="0.6 0.8 1.0"/>
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="ReadOnly" value="true"/>
@@ -802,7 +802,7 @@
 			<Property key="WordWrap" value="true"/>
 			<!--<UserString key="RelativeTo" value="WndChampStage"/>-->
 		</Widget>
-		<Widget type="ImageBox" skin="ImageBox" position="368 8 256 256" name="ChampStageImg">
+		<Widget type="ImageBox" skin="ImageBox" position="348 24 256 256" name="ChampStageImg">
 			<!--<UserString key="RelativeTo" value="WndChampStage"/>-->
 		</Widget>
 	</Widget>

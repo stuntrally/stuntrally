@@ -243,11 +243,11 @@ protected:
 
 	///  championships
 	ChampsXml champs;  ProgressXml progress;
-	void ChampsXmlLoad(), ProgressSave();
-	void ChampNewGame(), ChampLoadEnd(),
+	void ChampsXmlLoad(), ProgressSave(bool upgGui=true);
+	void ChampNewGame(), ChampLoadEnd(), ChampsListUpdate(),
 		ChampFillStageInfo(bool finished), ChampionshipAdvance(float timeCur);
 
-	MyGUI::MultiListBox* liChamps;
+	MyGUI::MultiListBox* liChamps, *liStages;
 	void listChampChng(MyGUI::MultiListBox* li, size_t pos);
 	void btnChampStart(WP), btnChampStageBack(WP), btnChampStageStart(WP), btnChampEndClose(WP);
 	MyGUI::EditBox* edChampStage, *edChampEnd;  MyGUI::ImageBox * imgChampStage;
@@ -329,7 +329,8 @@ protected:
 	MyGUI::ListPtr carList, rplList;  void updReplaysList();
 	void listRplChng(MyGUI::List* li, size_t pos);
 	void listCarChng(MyGUI::List* li, size_t pos),  btnChgCar(WP), btnChgTrack(WP);
-	int LNext(MyGUI::MultiList2* lp, int rel), LNext(MyGUI::ListPtr lp, int rel);  // util next in list
+	int LNext(MyGUI::MultiList2* lp, int rel), LNext(MyGUI::ListPtr lp, int rel),
+		LNext(MyGUI::MultiList* lp, int rel);  // util next in list
 	void LNext(int rel);  void tabPlayer(MyGUI::TabPtr wp, size_t id);
 
 	Ogre::String sListCar,sListTrack;  int bListTrackU;

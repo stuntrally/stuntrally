@@ -58,6 +58,11 @@ class ProgressChamp
 public:
 	int curTrack;  // index to current track, in trks
 	float score;
+	
+	//  for ver changed checking..
+	std::string name;
+	int ver;
+	
 	std::vector<ProgressTrack> trks;
 	ProgressChamp();
 };
