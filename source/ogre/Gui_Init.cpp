@@ -428,16 +428,25 @@ void App::InitGui()
 
     ///  championships gui list
     //------------------------------------------------------------------------
+	const char clrT[3][8] = {"#A0F0FF", "#FFFFB0", "#FFA0A0"};
+	const static char clrDiff[8][8] =  // track difficulty colors
+		{"#60C0FF", "#00FF00", "#60FF00", "#C0FF00", "#FFFF00", "#FFC000", "#FF6000", "#FF4040"};
+
 	liChamps = mGUI->findWidget<MultiListBox>("MListChamps");
 	liChamps->removeAllItems();
 	for (int i=0; i < champs.champs.size(); ++i)
 	{
 		const Champ& ch = champs.champs[i];
+		const ProgressChamp& pc = progress.champs[i];
+		int ntrks = pc.trks.size();
+		const String& clr = clrT[ch.tutorial];
 		liChamps->addItem(toStr(i/10)+toStr(i%10), 0);  int l = liChamps->getItemCount()-1;
-		liChamps->setSubItemNameAt(1,l, ch.name.c_str());
-		liChamps->setSubItemNameAt(2,l, TR("#{Diff"+toStr(ch.diff)+"}"));
-		liChamps->setSubItemNameAt(3,l, toStr(progress.champs[i].curTrack));  //0%  length,time;  bool tutorial;
-		liChamps->setSubItemNameAt(4,l, toStr(ch.trks.size()));  //"90");
+		liChamps->setSubItemNameAt(1,l, clr+ ch.name.c_str());
+		liChamps->setSubItemNameAt(2,l, clrDiff[ch.diff]+ TR("#{Diff"+toStr(ch.diff)+"}"));
+		liChamps->setSubItemNameAt(3,l, clrDiff[std::min(7,ntrks*2/3+1)]+ toStr(ntrks));
+		liChamps->setSubItemNameAt(4,l, clr+ toStr(100.f * pc.curTrack / ntrks));
+		liChamps->setSubItemNameAt(5,l, clr+ toStr(pc.score));
+		//length,time;
 	}
 	liChamps->eventListChangePosition += newDelegate(this, &App::listChampChng);
 	liChamps->setIndexSelected(pSet->gui.champ_num);  //range
@@ -448,7 +457,7 @@ void App::InitGui()
 	Btn("btnChampEndClose", btnChampEndClose);
 	edChampStage = (EditBox*)mWndChampStage->findWidget("ChampStageText");
 	edChampEnd = (EditBox*)mWndChampEnd->findWidget("ChampEndText");
-	//<Widget type="ImageBox" skin="ImageBox" position="368 8 256 256" name="ChampStageImg">
+	imgChampStage = (ImageBox*)mWndChampStage->findWidget("ChampStageImg");
 
 
 	bGI = true;  // gui inited, gui events can now save vals

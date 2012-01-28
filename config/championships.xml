@@ -1,21 +1,21 @@
 <championships>
-	<championship name="Test-1" ver="1" difficulty="0" length="1" time="6" tutorial="1" descr="Fastest 1 track, to test logic.">
-		<track name="TestC6-temp" laps="2" factor="0.1" />
+	<championship name="Test-1" ver="1" difficulty="0" length="1" time="6" tutorial="2" descr="Fastest 1 track, to test logic.">
+		<track name="TestC6-temp" laps="1" factor="0.1" />
 	</championship>
-	<championship name="Test-3" ver="1" difficulty="1" length="2" time="24" tutorial="1" descr="Fastest 3 tracks, to test logic.">
-		<track name="TestC6-temp" reversed="1" laps="1" factor="0.1" />
+	<championship name="Test-3" ver="1" difficulty="1" length="2" time="24" tutorial="2" descr="Fastest 3 tracks, to test logic.">
+		<track name="TestC6-temp" reversed="0" laps="1" factor="0.1" />
 		<track name="TestC4-ow" laps="1" factor="0.1" />
 	<!--<track name="TestC7-oc" laps="1" factor="0.1" />-->
 		<track name="TestC1-circle" laps="1" factor="0.1" />
 	</championship>
 
-	<championship name="Basic" ver="1" difficulty="0" length="3" time="134" tutorial="1" 
+	<championship name="Basic" ver="1" difficulty="1" length="3" time="134" tutorial="0" 
 			descr="Basic tutorial on simplest tracks. One lap on each track. To learn different road surfaces.">
 		<track name="J3-S" laps="1" factor="0.1" />
 		<track name="F1-Cc" laps="1" factor="0.1" />
 		<track name="0W1-cross" laps="1" factor="0.1" />
 	</championship>
-	<championship name="Bridges" ver="1" difficulty="1" length="3" time="134" tutorial="1" 
+	<championship name="Bridges" ver="1" difficulty="2" length="3" time="134" tutorial="1" 
 			descr="Easy, medium lenght tutorial on tracks with bridges and bumpy terrain. One lap on each track.">
 		<track name="D4-SZ" laps="2" factor="0.1" />
 		<track name="S4-Hills" laps="1" factor="0.1" />
@@ -46,7 +46,7 @@
 	6 mntn tracks, etc.-->
 
 	<times>
-		<track name="TestC4-ow" time="12.1"/>
+		<track name="TestC4-ow" time="11.1"/>
 		<track name="TestC6-temp" time="7.1"/>
 		<track name="TestC7-oc" time="22.1"/>
 		<track name="TestC1-circle" time="14.1"/>

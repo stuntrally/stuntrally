@@ -432,7 +432,8 @@ bool App::keyPressed( const OIS::KeyEvent &arg )
 		
 		//  gui on/off
 		if (action("ShowOptions"))
-		{	toggleGui(true);  return false;  }
+		{	if (mWndChampEnd->isVisible())  mWndChampEnd->setVisible(false);  // hide champs end
+			toggleGui(true);  return false;  }
 	
 		//  new game - reload
 		if (action("RestartGame"))
@@ -497,8 +498,7 @@ bool App::keyPressed( const OIS::KeyEvent &arg )
 		{
 			case KC_BACK:
 				if (mWndChampStage->isVisible())
-					btnChampStageBack(0);
-				else
+				{	btnChampStageBack(0);  return true;  }
 				if (pSet->isMain)  break;
 				if (isFocGui)
 				{	if (edFoc)  break;
@@ -560,17 +560,17 @@ bool App::keyPressed( const OIS::KeyEvent &arg )
 			case KC_RETURN:
 			///  close champ wnds
 			if (mWndChampStage->isVisible())
-			{
 				btnChampStageStart(0);
-			}				//  chng trk/car + new game  after up/dn
+			else			//  chng trk/car + new game  after up/dn
 			if (isFocGui && !pSet->isMain)
-			{
-				if (pSet->inMenu == WND_Replays)
-					btnRplLoad(0);
-				else
-				if (pSet->inMenu == WND_Game)
+				switch (pSet->inMenu)
 				{
-					switch (mWndTabsGame->getIndexSelected())
+				case WND_Replays:
+					btnRplLoad(0);  break;
+				case WND_Champ:
+					btnChampStart(0);  break;
+				case WND_Game:
+				{	switch (mWndTabsGame->getIndexSelected())
 					{
 					case 1:
 						btnChgTrack(0);
@@ -580,7 +580,8 @@ bool App::keyPressed( const OIS::KeyEvent &arg )
 						btnNewGame(0);  break;
 					case 3:
 						chatSendMsg();  break;
-			}	}	}
+				}	break;
+			}	}
 			return false;
 		}
 	}

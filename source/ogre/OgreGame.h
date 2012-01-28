@@ -244,12 +244,13 @@ protected:
 	///  championships
 	ChampsXml champs;  ProgressXml progress;
 	void ChampsXmlLoad(), ProgressSave();
-	void ChampNewGame(), ChampLoadEnd(), ChampFillStageInfo(), ChampionshipAdvance(float timeCur);
+	void ChampNewGame(), ChampLoadEnd(),
+		ChampFillStageInfo(bool finished), ChampionshipAdvance(float timeCur);
 
 	MyGUI::MultiListBox* liChamps;
 	void listChampChng(MyGUI::MultiListBox* li, size_t pos);
 	void btnChampStart(WP), btnChampStageBack(WP), btnChampStageStart(WP), btnChampEndClose(WP);
-	MyGUI::EditBox* edChampStage, *edChampEnd;
+	MyGUI::EditBox* edChampStage, *edChampEnd;  MyGUI::ImageBox * imgChampStage;
 	
 
 	///  input tab  -----------------------------------------

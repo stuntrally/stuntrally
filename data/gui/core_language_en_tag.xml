@@ -52,6 +52,7 @@
 	<Tag name="ChampEndCongrats">Congratulations !</Tag>
 	<Tag name="ChampEndFinished">You have finished this championship.</Tag>
 	<Tag name="Start">Start</Tag>
+
 	<Tag name="Diff0">Test Easy</Tag>
 	<Tag name="Diff1">Very Easy</Tag>
 	<Tag name="Diff2">Easy</Tag>

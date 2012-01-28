@@ -94,7 +94,7 @@ void App::listChampChng(MyGUI::MultiListBox* chlist, size_t pos)
 	//  update champ details (on stages tab)
 	TextBox* txt;
 	txt = mGUI->findWidget<TextBox>("valChDiff");
-	if (txt)  txt->setCaption(toStr(ch.diff));
+	if (txt)  txt->setCaption(TR("#{Diff"+toStr(ch.diff)+"}"));
 	txt = mGUI->findWidget<TextBox>("valChTracks");
 	if (txt)  txt->setCaption(toStr(ch.trks.size()));
 
@@ -109,11 +109,17 @@ void App::listChampChng(MyGUI::MultiListBox* chlist, size_t pos)
 	if (txt)  txt->setCaption(toStr(progress.champs[pos].score));
 }
 
-///  champ start
+///  champ start  -----
 void App::btnChampStart(WP)
 {
 	pSet->gui.champ_num = liChamps->getIndexSelected();
 	LogO("|| Starting champ: "+toStr(pSet->gui.champ_num));
+
+	// if already finished, restart - will loose progress and score ..
+	int chId = pSet->gui.champ_num;
+	ProgressChamp& pc = progress.champs[chId];
+	if (pc.curTrack == pc.trks.size())
+		pc.curTrack = 0;
 
 	btnNewGame(0);
 }
@@ -122,25 +128,45 @@ void App::btnChampStart(WP)
 void App::btnChampStageBack(WP)
 {
 	mWndChampStage->setVisible(false);
-	//pGame->pause = false;  //-
-	//pGame->timer.waiting = false;
+	isFocGui = true;  // show back gui
+	toggleGui(false);
 }
 
-//  stage start
+///  stage start / end  -----
 void App::btnChampStageStart(WP)
 {
-	LogO("|| Starting stage.");
-	mWndChampStage->setVisible(false);
-	pGame->pause = false;
-	pGame->timer.waiting = false;
+	//  check if champ ended
+	int chId = pSet->game.champ_num;
+	ProgressChamp& pc = progress.champs[chId];
+	const Champ& ch = champs.champs[chId];
+	bool last = pc.curTrack == ch.trks.size();
+	LogO("|| This was stage 2 close" + toStr(pc.curTrack) + "/" + toStr(ch.trks.size()));
+	if (last)
+	{	//  show end window
+		mWndChampStage->setVisible(false);
+		mWndChampEnd->setVisible(true);
+		return;
+	}
+
+	bool finished = pGame->timer.GetLastLap() > 0.f;  //?-
+	if (finished)
+	{
+		LogO("|| Loading next stage: "/* + ch.trks[pc.curTrack].name*/);
+		mWndChampStage->setVisible(false);
+		btnNewGame(0);
+	}else
+	{
+		LogO("|| Starting stage.");
+		mWndChampStage->setVisible(false);
+		pGame->pause = false;
+		pGame->timer.waiting = false;
+	}
 }
 
 //  champ end
 void App::btnChampEndClose(WP)
 {
 	mWndChampEnd->setVisible(false);
-	//pGame->pause = false;
-	//pGame->timer.waiting = false;
 }
 
 //  stage loaded
@@ -148,6 +174,7 @@ void App::ChampLoadEnd()
 {
 	if (pSet->game.champ_num >= 0)
 	{
+		ChampFillStageInfo(false);
 		mWndChampStage->setVisible(true);
 	}
 }
@@ -165,67 +192,82 @@ void App::ChampionshipAdvance(float timeCur)
 	int chId = pSet->game.champ_num;
 	ProgressChamp& pc = progress.champs[chId];
 	const Champ& ch = champs.champs[chId];
+	const ChampTrack& trk = ch.trks[pc.curTrack];
 	LogO("|| --- Champ end: " + ch.name);
 
 	///  compute track :score:
-	const std::string& trkName = ch.trks[pc.curTrack].name;
-	float timeBest = champs.trkTimes[trkName];
-	LogO("|| Track: " + trkName);
-	LogO("|| Best time: " + toStr(timeBest) + "  your time: " + toStr(timeCur));
+	float timeBest = champs.trkTimes[trk.name];
+	if (timeBest < 1.f)
+	{	LogO("|| Error: Track has no best time !");  timeBest = 10.f;	}
+	timeBest *= trk.laps;
+	timeBest += 2;  // first lap longer, time at start spent to gain car valocity
+	float factor = ch.trks[pc.curTrack].factor;  // how close to best you need to be
+	timeBest *= 1.0f + factor;
 
-	float score = timeCur/timeBest * 100.f;
-	//ch.trks[pc.curTrack].factor
-	//1st lap -10% ? more laps total time ...
-	//float score = (timeBest-timeCur)/timeBest * 100.f;  //ch. ..
+	LogO("|| Track: " + trk.name);
+	LogO("|| Your time: " + toStr(timeCur));
+	LogO("|| Best time: " + toStr(timeBest));
+
+	float score = timeCur / timeBest * 100.f;	//(timeBest-timeCur)/timeBest * 100.f;  //-
 	LogO("|| Score: " + toStr(score));
 	pc.trks[pc.curTrack].score = score;
 
-	//  next track
+	//  advance
 	bool last = pc.curTrack+1 == ch.trks.size();
 	LogO("|| This was stage " + toStr(pc.curTrack+1) + "/" + toStr(ch.trks.size()));
 	if (!last)
 	{
-		pc.curTrack++;
-		ProgressSave();
-		LogO("|| Loading next stage: " + ch.trks[pc.curTrack].name);
-		
 		//  show stage end window
-		//mWndChampStage->setVisible(true);
-		//mWndChampStageEnd->setVisible(true);
-		//ChampFillStageInfo();
+		pGame->pause = true;
+		pGame->timer.waiting = true;
+
+		ChampFillStageInfo(true);  // cur track
+		mWndChampStage->setVisible(true);
 		
-		btnNewGame(0);
+		pc.curTrack++;  // next stage
+		ProgressSave();
 	}else
 	{	//  champ ended
+		pGame->pause = true;
+		pGame->timer.waiting = true;
+
+		ChampFillStageInfo(true);  // cur track
+		mWndChampStage->setVisible(true);
+
 		///  compute champ :score:
 		int ntrk = pc.trks.size();  float sum = 0.f;
 		for (int t=0; t < ntrk; ++t)
 			sum += pc.trks[t].score;
-			
+
+		pc.curTrack++;  // = end 100 %
 		pc.score = sum / ntrk;  // average from all tracks
 		ProgressSave();
 		LogO("|| Champ finished");
 		LogO("|| Total score: " + toStr(score));  //..
-
-		pGame->pause = true;
-		pGame->timer.waiting = true;
 		
 		//  show end window
 		String s = "Total score: " + toStr(score);
 		edChampEnd->setCaption(s);
-		mWndChampEnd->setVisible(true);
+		//mWndChampEnd->setVisible(true);  // show after stage end
 	}
 }
 
-void App::ChampFillStageInfo()
+void App::ChampFillStageInfo(bool finished)
 {
 	int chId = pSet->game.champ_num;
 	ProgressChamp& pc = progress.champs[chId];
 	const Champ& ch = champs.champs[chId];
+	const std::string& trkName = ch.trks[pc.curTrack].name;
 
-	String s = "Champ: " + ch.name + "\n" +
+	String s;
+	s = "Champ: " + ch.name + "\n" +
 		"Stage: " + toStr(pc.curTrack+1) + "/" + toStr(ch.trks.size()) + "\n" +
 		"Track: " + trkName + "\n\n" /*+
 		"Difficulty: " + tracksXml. + "\n"*/;
+	if (finished)
+	s += String("Finished.\n") +
+		"Score: " + toStr(pc.trks[pc.curTrack].score) + "\n";
 	edChampStage->setCaption(s);
+	
+	imgChampStage->setImageTexture(trkName+".jpg");
 }

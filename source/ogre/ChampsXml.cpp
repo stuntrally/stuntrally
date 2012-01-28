@@ -40,7 +40,7 @@ bool ChampsXml::LoadXml(std::string file)
 		a = eCh->Attribute("difficulty");	if (a)  c.diff = s2i(a);
 		a = eCh->Attribute("length");		if (a)  c.length = s2r(a);
 		a = eCh->Attribute("time");			if (a)  c.time = s2r(a);
-		a = eCh->Attribute("tutorial");		if (a)  c.tutorial = s2i(a) == 1;
+		a = eCh->Attribute("tutorial");		if (a)  c.tutorial = s2i(a);
 		
 		//  tracks
 		TiXmlElement* eTr = eCh->FirstChildElement("track");

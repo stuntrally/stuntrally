@@ -24,7 +24,7 @@ public:
 	int diff;  // difficulty
 	int ver;  // ver, if changed reset progress..
 	float length, time;  // stats to display
-	bool tutorial;  // tutorial / championship
+	int tutorial;  // test2 / tutorial1 / championship0
 
 	std::vector<ChampTrack> trks;
 	Champ();

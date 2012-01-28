@@ -440,7 +440,7 @@ void App::UpdateHUD(int carId, CarModel* pCarM, CAR* pCar, float time, Viewport*
 	//  race countdown  -----------------------------
 	if (hudCountdown)
 	{
-		if (pGame->timer.pretime > 0.f)
+		if (pGame->timer.pretime > 0.f && !pGame->timer.waiting)
 		{
 			sprintf(sb, "%3.1f", pGame->timer.pretime);
 			hudCountdown->setCaption(String(sb));
