@@ -133,7 +133,7 @@ void App::AddTrkL(std::string name, int user, const TrackInfo* ti)
 	li->setSubItemNameAt(4,l, toS("#C0D0FF",ti->diff));   li->setSubItemNameAt(5,l, toS("#C0E0FF",ti->rating));  //rateuser="0" drivenlaps="0"
 	li->setSubItemNameAt(6,l, toS("#80C0FF",ti->fluids));
 	li->setSubItemNameAt(7,l, toS("#40FF00",ti->bumps));  li->setSubItemNameAt(8,l, toS("#FFA030",ti->jumps));
-	li->setSubItemNameAt(9,l, toS("#00FFFF",ti->loops));  li->setSubItemNameAt(10,l, toS("#FFFF00",ti->pipes));
+	li->setSubItemNameAt(9,l, toS("#00FFFF",ti->loops));  li->setSubItemNameAt(10,l,toS("#FFFF00",ti->pipes));
 	li->setSubItemNameAt(11,l,toS("#C0C0C0",ti->banked)); li->setSubItemNameAt(12,l,toS("#C080FF",ti->frenzy));
 	li->setSubItemNameAt(13,l,toS("#FFA0A0",ti->longn));
 }

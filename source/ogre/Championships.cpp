@@ -89,7 +89,7 @@ const static char clrDiff[8][8] =  // track difficulty colors
 
 void App::ChampsListUpdate()
 {
-	const char clrT[3][8] = {"#A0F0FF", "#FFFFB0", "#FFA0A0"};
+	const char clrT[4][8] = {"#A0F0FF", "#FFFFB0", "#FFA0A0", "#80FF80"};
 
 	liChamps->removeAllItems();  char ss[64];
 	for (int i=0; i < champs.champs.size(); ++i)
