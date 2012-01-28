@@ -438,7 +438,7 @@ bool MaterialGenerator::fpNeedWMat()
 
 bool MaterialGenerator::fpNeedWPos()
 {
-	return (needTerrainLightMap() || fpNeedLighting());
+	return (needTerrainLightMap() || fpNeedLighting() || MRTSupported());
 }
 
 bool MaterialGenerator::vpCalcWPos()
