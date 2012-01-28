@@ -273,7 +273,7 @@ void App::btnChgTrack(WP)
 //  new game
 void App::btnNewGame(WP)
 {
-	if (mWndGame->isVisible())
+	if (mWndGame->getVisible())
 		pSet->gui.champ_num = -1;  /// champ, back to single race
 	
 	NewGame();  isFocGui = false;  // off gui
@@ -432,7 +432,7 @@ bool App::keyPressed( const OIS::KeyEvent &arg )
 		
 		//  gui on/off
 		if (action("ShowOptions"))
-		{	if (mWndChampEnd->isVisible())  mWndChampEnd->setVisible(false);  // hide champs end
+		{	if (mWndChampEnd->getVisible())  mWndChampEnd->setVisible(false);  // hide champs end
 			toggleGui(true);  return false;  }
 	
 		//  new game - reload
@@ -497,7 +497,7 @@ bool App::keyPressed( const OIS::KeyEvent &arg )
 		switch (arg.key)
 		{
 			case KC_BACK:
-				if (mWndChampStage->isVisible())
+				if (mWndChampStage->getVisible())
 				{	btnChampStageBack(0);  return true;  }
 				if (pSet->isMain)  break;
 				if (isFocGui)
@@ -559,7 +559,7 @@ bool App::keyPressed( const OIS::KeyEvent &arg )
 			
 			case KC_RETURN:
 			///  close champ wnds
-			if (mWndChampStage->isVisible())
+			if (mWndChampStage->getVisible())
 				btnChampStageStart(0);
 			else			//  chng trk/car + new game  after up/dn
 			if (isFocGui && !pSet->isMain)

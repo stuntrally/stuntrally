@@ -100,7 +100,7 @@
 	<Tag name="ViewRight">View Right</Tag>
 	<Tag name="Count">Lukumäärä</Tag>
 	<Tag name="UnitKm">km</Tag>
-	<Tag name="SplitVertically">Split Vertically</Tag>
+	<Tag name="BackMenu">Back</Tag>
 	<Tag name="BasedOn">pohjautuen</Tag>
 	<Tag name="NetLeaveGame">Leave game</Tag>
 	<Tag name="banked">banked</Tag>
@@ -240,6 +240,7 @@
 	<Tag name="Yaw">yaw</Tag>
 	<Tag name="Detail">Yksityiskohdat</Tag>
 	<Tag name="InputMoveAxisTip">Move an axis to see its number</Tag>
+	<Tag name="SplitVertically">Split Vertically</Tag>
 	<Tag name="Start">alku</Tag>
 	<Tag name="InputRoadShiftReverse">shift-Ins - paste   shift-ctrl-Ins - reversed</Tag>
 	<Tag name="MinScale">minimi skaalaus</Tag>
@@ -444,7 +445,6 @@
 	<Tag name="TipModelDens">How often model will appear on track area.</Tag>
 	<Tag name="InputMain">Main</Tag>
 	<Tag name="TipVegetGroups">Vegetation model groups (recommended use 4-6), affects performance.</Tag>
-	<Tag name="NewTerFlat">New flat</Tag>
 	<Tag name="ColSat">Saturation</Tag>
 	<Tag name="TipTCS">Prevents wheel spinning when accelerating (default: off).</Tag>
 	<Tag name="InputRoadColumn">End - on/off column</Tag>
@@ -525,7 +525,6 @@
 	<Tag name="InputHelp">Input/help</Tag>
 	<Tag name="Sun">Sun</Tag>
 	<Tag name="InputMapShiftUp">Shift up</Tag>
-	<Tag name="NewTerGenerate">New Generate</Tag>
 	<Tag name="LS_SCENE">Loading scene</Tag>
 	<Tag name="OgreDialog">Show Ogre dialog</Tag>
 	<Tag name="Editor">Editor</Tag>
@@ -567,7 +566,6 @@
 	<Tag name="Environment">Environment</Tag>
 	<Tag name="GraphicsAll_High">High</Tag>
 	<Tag name="End">loppu</Tag>
-	<Tag name="TipNewTer">Create new, flat terrain.</Tag>
 	<Tag name="TipRoadParams">Tien pisteen parametrit.</Tag>
 	<Tag name="SpeedUnit">Speed unit</Tag>
 	<Tag name="ChangeCar">Change Car</Tag>
@@ -587,7 +585,6 @@
 	<Tag name="TrackLength">Length</Tag>
 	<Tag name="InputStartAltMMB">alt-MMB - reset rotation</Tag>
 	<Tag name="TipRoadDist">How far from road will the model appear.</Tag>
-	<Tag name="TipResizeTer">Resize current terrain with new values.</Tag>
 	<Tag name="DistMult">Distance mul</Tag>
 	<Tag name="InputStartWidth">; &apos;  -  adjust start box width (for road width)</Tag>
 	<Tag name="Error">Error</Tag>
@@ -630,7 +627,22 @@
 	<Tag name="InputNextOptTab">F2,F3 - prev,next Options tab</Tag>
 	<Tag name="RollingDrag">Rolling Drag</Tag>
 	<Tag name="RplAll">All</Tag>
-	<Tag name="BackMenu">Back</Tag>
+	<Tag name="ChampEndFinished">You have finished this championship.</Tag>
+	<Tag name="TipNewTerrainFlat">Create new, flat terrain.</Tag>
+	<Tag name="TipTerrainHalf">Resize current terrain heightmap by half (use only for reducing file size).</Tag>
+	<Tag name="NewTerrainFlat">New flat</Tag>
+	<Tag name="TerrainHalf">Half</Tag>
+	<Tag name="ChampEndCongrats">Congratulations !</Tag>
+	<Tag name="Diff5">Very Hard</Tag>
+	<Tag name="TipTerrainGenerate">Generates new terrain from noise functions using all parameters below.</Tag>
+	<Tag name="Diff2">Easy</Tag>
+	<Tag name="Diff3">Medium</Tag>
+	<Tag name="Diff0">Test Easy</Tag>
+	<Tag name="Diff1">Very Easy</Tag>
+	<Tag name="Diff6">Extreme</Tag>
+	<Tag name="Diff7">Ultra</Tag>
+	<Tag name="Diff4">Hard</Tag>
+	<Tag name="NewTerrainGenerate">New Generate</Tag>
 	<Tag name="GameVersion">1.5</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 
