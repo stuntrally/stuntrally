@@ -98,14 +98,14 @@ void MaterialGenerator::generate()
 			LogO("[MaterialFactory] WARNING: shader for material '" + mDef->getName()
 				+ "' is not supported");
 				
-			//LogO("[MaterialFactory] Vertex program source: ");
+			LogO("[MaterialFactory] Vertex program source: ");
 			StringUtil::StrStreamType vSourceStr;
 			generateVertexProgramSource(vSourceStr);
-			//LogO(vSourceStr.str());
-			//LogO("[MaterialFactory] Fragment program source: ");
+			LogO(vSourceStr.str());
+			LogO("[MaterialFactory] Fragment program source: ");
 			StringUtil::StrStreamType fSourceStr;
 			generateFragmentProgramSource(fSourceStr);
-			//LogO(fSourceStr.str());
+			LogO(fSourceStr.str());
 			
 			mVertexProgram.setNull(); mFragmentProgram.setNull();
 			return;
@@ -154,8 +154,8 @@ void MaterialGenerator::generate()
 	*/
 	
 	/// uncomment to see full shader source code in log
-	
-	if (mDef->getName() == "grass")
+	/*
+	if (mDef->getName() == "car_body")
 	{
 		LogO("[MaterialFactory] Vertex program source: ");
 		StringUtil::StrStreamType vSourceStr;
@@ -166,7 +166,7 @@ void MaterialGenerator::generate()
 		generateFragmentProgramSource(fSourceStr);
 		LogO(fSourceStr.str());
 	}
-	
+	*/
 }
 
 //----------------------------------------------------------------------------------------
