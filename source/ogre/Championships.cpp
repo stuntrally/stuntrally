@@ -322,7 +322,7 @@ void App::ChampionshipAdvance(float timeCur)
 		
 		//  upd champ end [window]
 		char ss[64];
-		sprintf(ss, "%5.1f", score);
+		sprintf(ss, "%5.1f", pc.score);
 		String s;
 		s = TR("#{Championship}") + ": " + ch.name + "\n" +
 			TR("#{TotalScore}") + ": " + ss;
