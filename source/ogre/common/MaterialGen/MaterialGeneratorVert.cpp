@@ -88,10 +88,9 @@ void MaterialGenerator::generateVertexProgramSource(Ogre::StringUtil::StrStreamT
 		"void main_vp( "
 		"	float4 position 					: POSITION, \n";
 	
-	if (fpNeedNormal()) 
-	{
-		outStream <<"	float3 normal			 			: NORMAL, \n";
-	}
+	if (vpNeedNormal()) outStream <<
+		"	float3 normal			 			: NORMAL, \n";
+	
 	if (vpNeedTangent()) outStream <<
 		"	float3 tangent						: TANGENT, \n";
 	outStream << 
@@ -155,7 +154,7 @@ void MaterialGenerator::generateVertexProgramSource(Ogre::StringUtil::StrStreamT
 		{
 			// view space normal 
 			outStream << "	out	float4	oViewNormal	: TEXCOORD"+ toStr( mTexCoord_i++ ) +", \n";
-			outStream << "	out	float4	oViewPosition	: TEXCOORD"+ toStr( mTexCoord_i++ ) +", \n";
+			//outStream << "	out	float4	oViewPosition	: TEXCOORD"+ toStr( mTexCoord_i++ ) +", \n";
 		}
 	}
 
@@ -276,9 +275,18 @@ void MaterialGenerator::generateVertexProgramSource(Ogre::StringUtil::StrStreamT
 		if(!UsePerPixelNormals())
 		{
 			//view space normal 			
-			outStream << " oViewNormal = mul(wvMat, float4(normal, 0)); \n";
-			outStream << " oViewPosition = mul(wvMat, position); \n";
-
+			outStream <<
+			"	oViewNormal = mul(wvMat, float4(normal, 0)); \n"
+			"	float3 viewPosition = mul(wvMat, position).xyz; \n";
+			
+			if (!mShader->vertexColour) outStream <<
+				"	oEyeVector.w = viewPosition.x; \n";
+			else outStream <<
+				"	oVertexColour.w = viewPosition.x; \n";
+				
+			outStream <<
+			"	oWorldPosition.w = viewPosition.y; \n"
+			"	oViewNormal.w = viewPosition.z; \n";
 		}
 	}
 	outStream <<

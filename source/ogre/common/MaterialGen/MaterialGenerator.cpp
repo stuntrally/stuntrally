@@ -154,8 +154,8 @@ void MaterialGenerator::generate()
 	*/
 	
 	/// uncomment to see full shader source code in log
-	/*
-	if (mDef->getName() == "car_body")
+	
+	if (mDef->getName() == "grass")
 	{
 		LogO("[MaterialFactory] Vertex program source: ");
 		StringUtil::StrStreamType vSourceStr;
@@ -166,7 +166,7 @@ void MaterialGenerator::generate()
 		generateFragmentProgramSource(fSourceStr);
 		LogO(fSourceStr.str());
 	}
-	*/
+	
 }
 
 //----------------------------------------------------------------------------------------
@@ -474,12 +474,12 @@ bool MaterialGenerator::fpNeedLighting()
 
 bool MaterialGenerator::fpNeedNormal()
 {
-	return needEnvMap() || needNormalMap() || fpNeedLighting() || needTerrainLightMap() || MRTSupported();
+	return needEnvMap() || needNormalMap() || fpNeedLighting() || needTerrainLightMap();
 }
 
 bool MaterialGenerator::fpNeedEyeVector()
 {
-	return needEnvMap() || fpNeedLighting();
+	return needEnvMap() || fpNeedLighting() || (MRTSupported() && !mShader->vertexColour);
 }
 
 bool MaterialGenerator::vpNeedTangent()
@@ -490,6 +490,11 @@ bool MaterialGenerator::vpNeedTangent()
 bool MaterialGenerator::vpNeedWMat()
 {
 	return vpCalcWPos();
+}
+
+bool MaterialGenerator::vpNeedNormal()
+{
+	return fpNeedNormal() || MRTSupported();
 }
 
 bool MaterialGenerator::fpNeedWMat()
