@@ -1214,16 +1214,17 @@
 							<Property key="TextColour" value="0.6 1 0.3"/>
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
-            <Widget type="Button" skin="CheckBox" position="40 285 300 24" name="godrays">
-							<UserString key="RelativeTo" value="OptionsWnd"/>
-							<Property key="Caption" value="#{godrays}"/>
-							<Property key="TextColour" value="0.6 1 0.3"/>
-						</Widget>
-			      <Widget type="Button" skin="CheckBox" position="40 320 300 24" name="softparticles">
+			      <Widget type="Button" skin="CheckBox" position="40 285 300 24" name="softparticles">
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 							<Property key="Caption" value="#{softparticles}"/>
 							<Property key="TextColour" value="0.6 1 0.3"/>
 						</Widget>
+         <!--   <Widget type="Button" skin="CheckBox" position="40 320 300 24" name="godrays">
+							<UserString key="RelativeTo" value="OptionsWnd"/>
+							<Property key="Caption" value="#{godrays}"/>
+							<Property key="TextColour" value="0.6 1 0.3"/>
+						</Widget>
+            -->
 					</Widget>
 				</Widget>
 				<Widget type="TextBox" skin="TextBox" position="32 488 300 24">

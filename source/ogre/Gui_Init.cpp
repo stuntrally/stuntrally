@@ -194,7 +194,7 @@ void App::InitGui()
 	Chk("MotionBlur", chkVidBlur, pSet->motionblur);
 	Chk("ssao", chkVidSSAO, pSet->ssao);
 	Chk("softparticles", chkVidSoftParticles, pSet->softparticles);
-	Chk("godrays", chkVidGodRays, pSet->godrays);
+//	Chk("godrays", chkVidGodRays, pSet->godrays);
 
 	Slv(BloomInt,	pSet->bloomintensity);
 	Slv(BloomOrig,	pSet->bloomorig);
