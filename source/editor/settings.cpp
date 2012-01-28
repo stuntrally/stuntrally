@@ -35,7 +35,7 @@ void SETTINGS::Serialize(bool w, CONFIGFILE & c)
 	Param(c,w, "graph_shadow.count",shadow_count);			Param(c,w, "graph_shadow.type", shadow_type);
 	Param(c,w, "graph_shadow.shaders", shaders);			Param(c,w, "graph_shadow.lightmap_size", lightmap_size);
 
-	Param(c,w, "graph_veget.trees", trees);					Param(c,w, "graph_veget.grass", grass);
+	Param(c,w, "graph_veget.trees", gui.trees);				Param(c,w, "graph_veget.grass", grass);
 	Param(c,w, "graph_veget.trees_dist", trees_dist);		Param(c,w, "graph_veget.grass_dist", grass_dist);
 	Param(c,w, "graph_veget.use_imposters", use_imposters);
 	
@@ -71,8 +71,9 @@ SETTINGS::SETTINGS() :  ///  Defaults
 	//  graphics
 	anisotropy(8),	view_distance(3600),
 	terdetail(1.57), terdist(300), road_dist(1.0), tex_size(1), ter_mtr(2),
-	shadow_dist(2000), shadow_size(2), lightmap_size(0), shadow_count(3), shadow_type(2),  /*<+*/
-	shaders(0.5),  trees(1.f), grass(1.f), trees_dist(1.f), grass_dist(1.f),use_imposters(false),
+	shadow_dist(2000), shadow_size(2), shadow_count(3), shadow_type(2),  /*<+*/
+	shaders(0.5), lightmap_size(0),
+	grass(1.f), trees_dist(1.f), grass_dist(1.f),use_imposters(false),
 	//  startup
 	autostart(0), ogre_dialog(1), escquit(0), language(""), allow_save(0),
 	//  settings
@@ -88,4 +89,5 @@ SETTINGS::SETTINGS() :  ///  Defaults
 {
 	gui.track = "J1-T";
 	gui.track_user = false;
+	gui.trees = 1.f;
 }

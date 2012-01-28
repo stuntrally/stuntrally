@@ -104,7 +104,7 @@ bool ProgressXml::LoadXml(std::string file)
 	champs.clear();
 
 	const char* a;
-	TiXmlElement* eCh = root->FirstChildElement("championship");
+	TiXmlElement* eCh = root->FirstChildElement("champ");
 	while (eCh)
 	{
 		ProgressChamp pc;
@@ -125,7 +125,7 @@ bool ProgressXml::LoadXml(std::string file)
 		}
 
 		champs.push_back(pc);
-		eCh = eCh->NextSiblingElement("championship");
+		eCh = eCh->NextSiblingElement("champ");
 	}
 	return true;
 }

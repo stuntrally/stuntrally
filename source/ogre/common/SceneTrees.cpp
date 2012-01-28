@@ -90,7 +90,11 @@ void App::CreateTrees()
 	bool bWind = 1;	 /// WIND
 
 	Real fGrass = pSet->grass * sc.densGrass * 3.0f;  // std::min(pSet->grass, 
+	#ifdef ROAD_EDITOR
+	Real fTrees = pSet->gui.trees * sc.densTrees;
+	#else
 	Real fTrees = pSet->game.trees * sc.densTrees;
+	#endif
 	
 	if (fGrass > 0.f)
 	{
