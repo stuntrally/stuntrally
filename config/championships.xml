@@ -9,7 +9,7 @@
 		<track name="TestC1-circle" laps="1" factor="0.1" />
 	</championship>
 
-	<championship name="Basic" ver="1" difficulty="1" length="3" time="134" tutorial="0" 
+	<championship name="Basic" ver="1" difficulty="1" length="3" time="134" tutorial="1" 
 			descr="Basic tutorial on simplest tracks. One lap on each track. To learn different road surfaces.">
 		<track name="J3-S" laps="1" factor="0.1" />
 		<track name="F1-Cc" laps="1" factor="0.1" />

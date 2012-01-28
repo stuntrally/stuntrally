@@ -51,7 +51,7 @@
 	<!--  Championship  -->
 	<Tag name="ChampEndCongrats">Congratulations !</Tag>
 	<Tag name="ChampEndFinished">You have finished this championship.</Tag>
-	<Tag name="Start">Start</Tag>
+	<Tag name="ChampStart">Start</Tag>
 
 	<Tag name="Diff0">Test Easy</Tag>
 	<Tag name="Diff1">Very Easy</Tag>
@@ -61,6 +61,17 @@
 	<Tag name="Diff5">Very Hard</Tag>
 	<Tag name="Diff6">Extreme</Tag>
 	<Tag name="Diff7">Ultra</Tag>
+
+	<Tag name="Name">Name</Tag>
+	<Tag name="Tracks">Tracks</Tag>
+	<Tag name="Stages">Stages</Tag>
+	<Tag name="Scenery">Scenery</Tag>
+	<Tag name="Length">Length</Tag>
+	<Tag name="Difficulty">Difficulty</Tag>
+	<Tag name="Distance">Distance</Tag>
+	<Tag name="Time">Time</Tag>
+	<Tag name="Progress">Progress</Tag>
+	<Tag name="Score">Score</Tag>
 
 
 	<!--  Track  -->
