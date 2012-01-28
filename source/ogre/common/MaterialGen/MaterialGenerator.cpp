@@ -98,14 +98,14 @@ void MaterialGenerator::generate()
 			LogO("[MaterialFactory] WARNING: shader for material '" + mDef->getName()
 				+ "' is not supported");
 				
-			LogO("[MaterialFactory] Vertex program source: ");
+			//LogO("[MaterialFactory] Vertex program source: ");
 			StringUtil::StrStreamType vSourceStr;
 			generateVertexProgramSource(vSourceStr);
-			LogO(vSourceStr.str());
-			LogO("[MaterialFactory] Fragment program source: ");
+			//LogO(vSourceStr.str());
+			//LogO("[MaterialFactory] Fragment program source: ");
 			StringUtil::StrStreamType fSourceStr;
 			generateFragmentProgramSource(fSourceStr);
-			LogO(fSourceStr.str());
+			//LogO(fSourceStr.str());
 			
 			mVertexProgram.setNull(); mFragmentProgram.setNull();
 			return;
@@ -600,6 +600,9 @@ Ogre::CullingMode MaterialGenerator::chooseCullingMode()
 
 Ogre::String MaterialGenerator::chooseShadowCasterMaterial()
 {
+	String type = "PSSM/"; if (mParent->getShadowsSoft()) type = "PSVSM/";
+	
+	
 	Ogre::String shadowCasterMaterial = StringUtil::BLANK;
 	if(!mDef->mProps->transparent)
 	{
@@ -612,14 +615,15 @@ Ogre::String MaterialGenerator::chooseShadowCasterMaterial()
 			}
 			else if(cmode == Ogre::CULL_NONE)
 			{
-				shadowCasterMaterial = "PSSM/shadow_caster_nocull";				
+				shadowCasterMaterial = type+"shadow_caster_nocull";				
 			}
 			else
 			{
-				shadowCasterMaterial = "PSSM/shadow_caster_noalpha";
+				shadowCasterMaterial = type+"shadow_caster_noalpha";
 			}
 		}
 	}
+	
 	return shadowCasterMaterial;
 }
 

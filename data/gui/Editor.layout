@@ -688,16 +688,24 @@
 				<Widget type="Button" skin="Button" position="304 103 104 32" name="TerrainNew">
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 					<Property key="Colour" value="0.2 1 0.5"/>
-					<Property key="Caption" value="#{NewTerFlat}"/>
+					<Property key="Caption" value="#{NewTerrainFlat}"/>
 					<Property key="TextColour" value="0.7 1 0.8"/>
-					<UserString key="tip" value="#{TipNewTer}"/>
+					<UserString key="tip" value="#{TipNewTerrainFlat}"/>
+				</Widget>
+				<Widget type="Button" skin="Button" position="604 108 84 24" name="TerrainHalf">
+					<UserString key="RelativeTo" value="OptionsWnd"/>
+					<Property key="Colour" value="0.2 0.7 0.1"/>
+					<Property key="Alpha" value="0.8"/>
+					<Property key="Caption" value="#{TerrainHalf}"/>
+					<Property key="TextColour" value="0.2 0.7 0.1"/>
+					<UserString key="tip" value="#{TipTerrainHalf}"/>
 				</Widget>
 				<Widget type="Button" skin="Button" position="304 159 104 32" name="TerrainGenerate">
 					<UserString key="RelativeTo" value="OptionsWnd"/>
-					<Property key="Colour" value="0.2 0.6 0.4"/>
-					<Property key="Caption" value="#{NewTerGenerate}"/>
-					<Property key="TextColour" value="0.4 0.8 0.6"/>
-					<UserString key="tip" value="#{TipResizeTer}"/>
+					<Property key="Colour" value="0.7 1.0 0.8"/>
+					<Property key="Caption" value="#{NewTerrainGenerate}"/>
+					<Property key="TextColour" value="0.7 1.0 0.8"/>
+					<UserString key="tip" value="#{TipTerrainGenerate}"/>
 				</Widget>
 				<Widget type="TabControl" skin="TabControl" position="160 38 340 20" name="TabHMapSize">
 					<UserString key="RelativeTo" value="OptionsWnd"/>

@@ -128,6 +128,7 @@ void App::InitGui()
 	Slv(TerLScale, 0);
 	Btn("TerrainNew", btnTerrainNew);
 	Btn("TerrainGenerate", btnTerGenerate);
+	Btn("TerrainHalf", btnTerrainHalf);
 
 	Slv(TerGenScale,powf(pSet->gen_scale   /160.f, 1.f/2.f));  // generate
 	Slv(TerGenOfsX, (pSet->gen_ofsx+2.f) /4.f);
@@ -192,8 +193,9 @@ void App::InitGui()
 	Btn("CopySun", btnCopySun);				Btn("CopyTerHmap", btnCopyTerHmap);
 	Btn("CopyTerLayers", btnCopyTerLayers);	Btn("CopyVeget", btnCopyVeget);
 	Btn("CopyRoad", btnCopyRoad);			Btn("CopyRoadPars", btnCopyRoadPars);
-	Btn("DeleteRoad", btnDeleteRoad);		Btn("ScaleAll", btnScaleAll);
-	Ed(ScaleAllMul, editScaleAllMul);
+	Btn("DeleteRoad", btnDeleteRoad);
+	Btn("ScaleAll", btnScaleAll);	Ed(ScaleAllMul, editScaleAllMul);
+	Btn("ScaleTerH", btnScaleTerH);	Ed(ScaleTerHMul, editScaleTerHMul);
 	
 
 	///  Fill Combo boxes  . . . . . . .

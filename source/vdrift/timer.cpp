@@ -40,20 +40,25 @@ void TIMER::Unload()
 
 void TIMER::Tick(float dt)
 {
-	float elapsed_time = dt;
+	//float elapsed_time = dt;
 
-    pretime -= dt;
+	//pretime -= dt;
+	//if (pretime > 0)
+	//	elapsed_time -= dt;
 
-	if (pretime > 0)
-		elapsed_time -= dt;
+	//if (pretime < 0)
+	//	elapsed_time += -pretime;
 
-	/*if (pretime < 0)
-		elapsed_time += -pretime;*/
+	//assert(elapsed_time >= 0);
 
-	assert(elapsed_time >= 0);
+	if (pretime > 0.f && !waiting)
+	{	pretime -= dt;
+		dt = 0.f;  }
+	if (waiting)
+		dt = 0.f;
 
 	for (std::vector <LAPINFO>::iterator i = car.begin(); i != car.end(); ++i)
-		i->Tick(elapsed_time);
+		i->Tick(dt);
 }
 
 bool TIMER::Lap(const unsigned int carid, const int prevsector, const int nextsector, const bool countit, bool bTrackReverse)

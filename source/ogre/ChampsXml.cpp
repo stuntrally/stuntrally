@@ -7,7 +7,7 @@ using namespace Ogre;
 
 
 ChampTrack::ChampTrack() :
-	laps(0), factor(1.f)
+	laps(0), factor(1.f), reversed(0)
 {	}
 
 Champ::Champ() :
@@ -40,7 +40,7 @@ bool ChampsXml::LoadXml(std::string file)
 		a = eCh->Attribute("difficulty");	if (a)  c.diff = s2i(a);
 		a = eCh->Attribute("length");		if (a)  c.length = s2r(a);
 		a = eCh->Attribute("time");			if (a)  c.time = s2r(a);
-		a = eCh->Attribute("tutorial");		if (a)  c.tutorial = s2i(a) == 1;
+		a = eCh->Attribute("tutorial");		if (a)  c.tutorial = s2i(a);
 		
 		//  tracks
 		TiXmlElement* eTr = eCh->FirstChildElement("track");
@@ -50,6 +50,7 @@ bool ChampsXml::LoadXml(std::string file)
 			a = eTr->Attribute("name");		if (a)  t.name = std::string(a);
 			a = eTr->Attribute("laps");		if (a)  t.laps = s2i(a);
 			a = eTr->Attribute("factor");	if (a)  t.factor = s2r(a);
+			a = eTr->Attribute("reversed");	if (a)  t.reversed = s2i(a) > 0;
 			
 			c.trks.push_back(t);
 			eTr = eTr->NextSiblingElement("track");
@@ -85,7 +86,7 @@ ProgressTrack::ProgressTrack() :
 {	}
 
 ProgressChamp::ProgressChamp() :
-	curTrack(0), score(0.f)
+	curTrack(0), score(0.f), ver(0)
 {	}
 
 
@@ -103,14 +104,15 @@ bool ProgressXml::LoadXml(std::string file)
 	champs.clear();
 
 	const char* a;
-	TiXmlElement* eCh = root->FirstChildElement("championship");
+	TiXmlElement* eCh = root->FirstChildElement("champ");
 	while (eCh)
 	{
 		ProgressChamp pc;
 		int curTrack;  float score;
-		//a = eCh->Attribute("name");			if (a)  pc.name = std::string(a);
-		a = eCh->Attribute("curTrack");			if (a)  pc.curTrack = s2i(a);
-		a = eCh->Attribute("score");			if (a)  pc.score = s2r(a);
+		a = eCh->Attribute("curTrack");		if (a)  pc.curTrack = s2i(a);
+		a = eCh->Attribute("score");		if (a)  pc.score = s2r(a);
+		a = eCh->Attribute("name");			if (a)  pc.name = std::string(a);
+		a = eCh->Attribute("ver");			if (a)  pc.ver = s2i(a);
 		
 		//  tracks
 		TiXmlElement* eTr = eCh->FirstChildElement("track");
@@ -124,7 +126,7 @@ bool ProgressXml::LoadXml(std::string file)
 		}
 
 		champs.push_back(pc);
-		eCh = eCh->NextSiblingElement("championship");
+		eCh = eCh->NextSiblingElement("champ");
 	}
 	return true;
 }
@@ -140,12 +142,14 @@ bool ProgressXml::SaveXml(std::string file)
 		TiXmlElement eCh("champ");
 			eCh.SetAttribute("curTrack",	toStrC( pc.curTrack ));
 			eCh.SetAttribute("score",		toStrC( pc.score ));
+			eCh.SetAttribute("name",		pc.name.c_str() );
+			eCh.SetAttribute("ver",			toStrC( pc.ver ));
 
 			for (int i=0; i < pc.trks.size(); ++i)
 			{
 				const ProgressTrack& pt = pc.trks[i];
 				TiXmlElement eTr("track");
-				eTr.SetAttribute("score",		toStrC( pt.score ));
+				eTr.SetAttribute("score",	toStrC( pt.score ));
 				eCh.InsertEndChild(eTr);
 			}
 		root.InsertEndChild(eCh);

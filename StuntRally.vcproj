@@ -1530,6 +1530,10 @@
 				Name="Gui"
 				>
 				<File
+					RelativePath=".\source\ogre\Championships.cpp"
+					>
+				</File>
+				<File
 					RelativePath=".\data\gui\core_language_en_tag.xml"
 					>
 				</File>

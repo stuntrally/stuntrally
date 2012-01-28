@@ -95,8 +95,7 @@ bool App::frameStart(Real time)
 	{
 		bool bFirstFrame = (carModels.size()>0 && carModels.front()->bGetStPos) ? true : false;
 		
-		//FIXME getIndexSelected() doesn't return the proper value here.. might be connected to the fact that network branch switches to network tab at startup
-		if (isFocGui /*&& mWndTabs->getIndexSelected() == 7*/)
+		if (isFocGui && mWndTabsOpts->getIndexSelected() == 4 && pSet->inMenu == WND_Options && !pSet->isMain)
 			UpdateInputBars();
 		
 		//  keys dn/up - trklist, carlist
@@ -116,12 +115,12 @@ bool App::frameStart(Real time)
 		if (isFocGui)
 		{
 			boost::mutex::scoped_lock lock(netGuiMutex);
-			if (bRebuildGameList) { rebuildGameList(); bRebuildGameList = false; }
-			if (bRebuildPlayerList) { rebuildPlayerList(); bRebuildPlayerList = false; }
-			if (bUpdateGameInfo) { updateGameInfo(); bUpdateGameInfo = false; }
-			if (sChatBuffer != edNetChat->getCaption()) edNetChat->setCaption(sChatBuffer);
-			if (bStartGame) {
-				// TODO: Probably some more stuff here...
+			if (bRebuildGameList) {  rebuildGameList();  bRebuildGameList = false;  }
+			if (bRebuildPlayerList) {  rebuildPlayerList();  bRebuildPlayerList = false;  }
+			if (bUpdateGameInfo) {  updateGameInfo();  bUpdateGameInfo = false;  }
+			if (sChatBuffer != edNetChat->getCaption())  edNetChat->setCaption(sChatBuffer);
+			if (bStartGame)
+			{	// TODO: Probably some more stuff here...
 				mMasterClient.reset();
 				mClient->startGame();
 				btnNewGameStart(NULL);
@@ -574,8 +573,11 @@ void App::newPoses()
 				carM->iInChk = -1;  carM->bWrongChk = false;
 				int ncs = road->mChks.size();
 				if (ncs > 0)
-				{	if (carM->bInSt && carM->iNumChks == ncs && carM->iCurChk != -1)  // finish
+				{
+					//  Finish
+					if (carM->bInSt && carM->iNumChks == ncs && carM->iCurChk != -1)
 					{
+						float timeCur = pGame->timer.GetPlayerTime();
 						bool best = pGame->timer.Lap(iCarNum, 0,0, true,
 							pSet->game.trackreverse/*<, pSet->boost_type*/);  //pGame->cartimerids[pCar] ?
 
@@ -593,9 +595,18 @@ void App::newPoses()
 							carM->pCar->dynamics.boostFuel = gfBoostFuelStart;
 
 						///  winner places  for local players > 1
-						if (carM->iWonPlace == 0 && pGame->timer.GetCurrentLap(iCarNum) >= pSet->game.num_laps)
-							carM->iWonPlace = carIdWin++;
+						bool finished = pGame->timer.GetCurrentLap(iCarNum) >= pSet->game.num_laps;
+						if (finished)
+						{
+							if (pSet->game.champ_num < 0)
+							{
+								if (carM->iWonPlace == 0)	//  split screen winners
+									carM->iWonPlace = carIdWin++;
+							}else
+								ChampionshipAdvance(timeCur);
+						}
 					}
+					//  checkpoints
 					for (int i=0; i < ncs; ++i)
 					{
 						const CheckSphere& cs = road->mChks[i];

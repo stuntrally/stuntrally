@@ -38,6 +38,8 @@ void App::InitGui()
 	mWndChamp = mGUI->findWidget<Window>("ChampWnd",false);
 	mWndReplays = mGUI->findWidget<Window>("ReplaysWnd",false);
 	mWndOpts = mGUI->findWidget<Window>("OptionsWnd",false);
+	mWndChampStage = mGUI->findWidget<Window>("WndChampStage",false);  mWndChampStage->setVisible(false);
+	mWndChampEnd = mGUI->findWidget<Window>("WndChampEnd",false);  mWndChampEnd->setVisible(false);
 
 	for (int i=0; i < WND_ALL; ++i)
 	{
@@ -426,22 +428,33 @@ void App::InitGui()
 	}
 	
 
-    ///  championships
-    //------------------------------------------------------------------------
-	MultiListBox* li = mGUI->findWidget<MultiListBox>("MListChamps");
-	li->removeAllItems();
-	for (int i=0; i < champs.champs.size(); ++i)
-	{
-		const Champ& ch = champs.champs[i];
-		li->addItem(toStr(i/10)+toStr(i%10), 0);  int l = li->getItemCount()-1;
-		li->setSubItemNameAt(1,l, ch.name.c_str());
-		li->setSubItemNameAt(2,l, toStr(ch.diff) /*"Easy"*/);
-		li->setSubItemNameAt(3,l, "0%");  //length,time;  bool tutorial;
-		li->setSubItemNameAt(4,l, toStr(ch.trks.size()));  //"90");
-	}
-	li->eventListChangePosition += newDelegate(this, &App::listChampChng);
+	//  championships
+	//------------------------------------------------------------------------
+	liChamps = mGUI->findWidget<MultiListBox>("MListChamps");
+	liChamps->eventListChangePosition += newDelegate(this, &App::listChampChng);
+	liStages = mGUI->findWidget<MultiListBox>("MListStages");
+	ChampsListUpdate();
+	listChampChng(liChamps, liChamps->getIndexSelected());
+	//liChamps->eventListChangePosition += newDelegate(this, &App::listStagesChng);
+	//^ Track tab for details ...
 
-	
+	Btn("btnChampStart", btnChampStart);
+	Btn("btnChampStageBack", btnChampStageBack);
+	Btn("btnChampStageStart", btnChampStageStart);
+	Btn("btnChampEndClose", btnChampEndClose);
+
+	edChampStage = (EditBox*)mWndChampStage->findWidget("ChampStageText");
+	edChampEnd = (EditBox*)mWndChampEnd->findWidget("ChampEndText");
+	imgChampStage = (ImageBox*)mWndChampStage->findWidget("ChampStageImg");
+
+	tab = mWndTabsGame;
+	//tab->getItemAt(2)->setVisible(false);
+	//tab->getItemAt(2)->setEnabledSilent(false);
+	//tab->updateBar();
+	tab->setButtonWidthAt(2,0);
+	//tab->removeItemAt(2);
+
+
 	bGI = true;  // gui inited, gui events can now save vals
 
 	ti.update();	/// time
@@ -471,6 +484,13 @@ int App::LNext(MyGUI::MultiList2* lp, int rel)
 	lp->beginToItemAt(std::max(0, i-11));  // center
 	return i;
 }
+int App::LNext(MyGUI::MultiList* lp, int rel)
+{
+	int i = std::max(0, std::min((int)lp->getItemCount()-1, (int)lp->getIndexSelected()+rel ));
+	lp->setIndexSelected(i);
+	//lp->beginToItemAt(std::max(0, i-11));  // center
+	return i;
+}
 int App::LNext(MyGUI::ListPtr lp, int rel)
 {
 	int i = std::max(0, std::min((int)lp->getItemCount()-1, (int)lp->getIndexSelected()+rel ));
@@ -487,10 +507,12 @@ void App::LNext(int rel)
 	case WND_Game:
 		switch (mWndTabsGame->getIndexSelected())	{
 			case 1:  listTrackChng(trkMList,LNext(trkMList, rel));  return;
-			case 2:	 listCarChng(carList,  LNext(carList, rel));  return;	}
+			case 2:	 listCarChng(carList,   LNext(carList, rel));  return;	}
 		break;
 	case WND_Champ:
-		
+		switch (mWndTabsChamp->getIndexSelected())	{
+			case 1:  listChampChng(liChamps,LNext(liChamps, rel));  return;
+			case 2:	 /*listCarChng(carList,  LNext(carList, rel));*/  return;	}
 		break;
 	case WND_Replays:
 		listRplChng(rplList,  LNext(rplList, rel));

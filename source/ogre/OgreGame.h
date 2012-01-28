@@ -111,9 +111,9 @@ protected:
 	Ogre::ManualObject* Create2D(const Ogre::String& mat, Ogre::SceneManager* sceneMgr,
 		Ogre::Real size, bool dyn = false, bool clr = false);
 
-	Ogre::OverlayElement* hudGear,*hudVel,*hudBoost, *ovL[5],*ovR[5],*ovS[5],*ovU[5],
+	Ogre::OverlayElement* hudGear,*hudVel,*hudBoost,*hudCountdown, *ovL[5],*ovR[5],*ovS[5],*ovU[5],
 		*hudAbs,*hudTcs, *hudTimes, *hudWarnChk,*hudWonPlace, *hudOpp[5][3],*hudOppB;
-	Ogre::Overlay* ovGear,*ovVel,*ovBoost, *ovAbsTcs,*ovCarDbg,*ovCarDbgTxt,
+	Ogre::Overlay* ovGear,*ovVel,*ovBoost,*ovCountdown, *ovAbsTcs,*ovCarDbg,*ovCarDbgTxt,
 		*ovCam, *ovTimes, *ovWarnWin, *ovOpp;
 
 	Ogre::String GetTimeString(float time) const;
@@ -122,8 +122,7 @@ protected:
 
 	//  create  . . . . . . . . . . . . . . . . . . . . . . . . 
 	Ogre::String resCar, resTrk, resDrv;
-	void CreateCar();
-	void CreateTrack(), CreateRacingLine(), CreateMinimap(), CreateRoadBezier();
+	void CreateCar(), CreateTrack(), CreateRacingLine(), CreateMinimap(), CreateRoadBezier();
 	void CreateTerrain(bool bNewHmap=false, bool bTer=true), CreateBltTerrain();
 	void GetTerAngles(int xb,int yb, int xe,int ye);
 	void CreateTrees(), CreateRoad(), CreateProps(), CreateFluids();
@@ -236,16 +235,25 @@ protected:
 		
 	///-----------------------------------------
 
+	//  main menu
 	void toggleGui(bool toggle=true);
 	void UpdCarClrSld(bool upd=true);  bool bUpdCarClr;
 	void MainMenuBtn(MyGUI::WidgetPtr);
 	void MenuTabChg(MyGUI::TabPtr, size_t);
 
-	ChampsXml champs;  ProgressXml progress;  // for championships
+	///  championships
+	ChampsXml champs;  ProgressXml progress;
+	void ChampsXmlLoad(), ProgressSave(bool upgGui=true);
+	void ChampNewGame(), ChampLoadEnd(), ChampsListUpdate(),
+		ChampFillStageInfo(bool finished), ChampionshipAdvance(float timeCur);
+
+	MyGUI::MultiListBox* liChamps, *liStages;
 	void listChampChng(MyGUI::MultiListBox* li, size_t pos);
+	void btnChampStart(WP), btnChampStageBack(WP), btnChampStageStart(WP), btnChampEndClose(WP);
+	MyGUI::EditBox* edChampStage, *edChampEnd;  MyGUI::ImageBox * imgChampStage;
 	
 
-	///  input tab
+	///  input tab  -----------------------------------------
 	void InitInputGui(), inputBindBtnClicked(WP);
 	void InputBind(int key, int button=-1, int axis=-1);
 
@@ -263,7 +271,7 @@ protected:
 	MyGUI::ComboBox* cmbInpDetSet;  void comboInputPreset(CMB);
 
 
-	//  sliders
+	//  sliders  -----------------------------------------
 	SLV(Particles);  SLV(Trails);
 	SLV(ReflSkip);  SLV(ReflSize);  SLV(ReflFaces);  SLV(ReflDist);  SLV(ReflMode); // refl
 	SLV(SizeGaug);  SLV(SizeMinimap);  SLV(SizeArrow);  SLV(ZoomMinimap);  // view
@@ -322,7 +330,8 @@ protected:
 	MyGUI::ListPtr carList, rplList;  void updReplaysList();
 	void listRplChng(MyGUI::List* li, size_t pos);
 	void listCarChng(MyGUI::List* li, size_t pos),  btnChgCar(WP), btnChgTrack(WP);
-	int LNext(MyGUI::MultiList2* lp, int rel), LNext(MyGUI::ListPtr lp, int rel);  // util next in list
+	int LNext(MyGUI::MultiList2* lp, int rel), LNext(MyGUI::ListPtr lp, int rel),
+		LNext(MyGUI::MultiList* lp, int rel);  // util next in list
 	void LNext(int rel);  void tabPlayer(MyGUI::TabPtr wp, size_t id);
 
 	Ogre::String sListCar,sListTrack;  int bListTrackU;
@@ -335,9 +344,9 @@ protected:
 	char s[512];
 
 	GuiPopup popup;
-	///---------------------------------------
 
-	//  multiplayer
+	///  multiplayer
+	///---------------------------------------
 
 	void rebuildGameList();
 	void rebuildPlayerList();

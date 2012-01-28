@@ -144,7 +144,8 @@ protected:
 	#endif
 	
 	enum {  WND_Game=0, WND_Champ, WND_Replays, WND_Options, WND_ALL  };  // pSet->inMenu
-	MyGUI::WidgetPtr mWndMain,mWndGame,mWndChamp,mWndReplays,mWndOpts,  mWndRpl;  // options window, rpl controls
+	MyGUI::WidgetPtr mWndMain,mWndGame,mWndChamp,mWndReplays,mWndOpts,  // menu,options windows
+		mWndRpl, mWndChampStage,mWndChampEnd;  // rpl controls, champ wnds
 	MyGUI::TabPtr mWndTabsGame,mWndTabsChamp,mWndTabsOpts;  MyGUI::VectorWidgetPtr vwGui;
 	MyGUI::WidgetPtr mWndMainPanels[WND_ALL];  MyGUI::ButtonPtr mWndMainBtns[WND_ALL];
 

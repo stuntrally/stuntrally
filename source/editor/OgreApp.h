@@ -289,7 +289,7 @@ protected:
 	SLV(TerTriSize);  SLV(TerLScale);
 	MyGUI::EditPtr edTerTriSize, edTerLScale;
 	void editTerTriSize(MyGUI::EditPtr), editTerLScale(MyGUI::EditPtr);
-	void btnTerrainNew(WP), btnTerGenerate(WP);
+	void btnTerrainNew(WP), btnTerGenerate(WP), btnTerrainHalf(WP);
 	MyGUI::StaticTextPtr valTerLAll;
 	
 	//  ter blendmap
@@ -342,8 +342,9 @@ protected:
 	void btnTrkCopySel(WP);  bool ChkTrkCopy();
 	void btnCopySun(WP), btnCopyTerHmap(WP), btnCopyTerLayers(WP),
 		btnCopyVeget(WP), btnCopyRoad(WP), btnCopyRoadPars(WP);
-	void btnScaleAll(WP), btnDeleteRoad(WP);
+	void btnScaleAll(WP), btnDeleteRoad(WP), btnScaleTerH(WP);
 	MyGUI::EditPtr edScaleAllMul;  void editScaleAllMul(MyGUI::EditPtr);
+	MyGUI::EditPtr edScaleTerHMul;  void editScaleTerHMul(MyGUI::EditPtr);
 
 
 	//  [Track]  ----

@@ -28,7 +28,7 @@ public:
 	float shadow_dist;  int shadow_size, lightmap_size, shadow_count, shadow_type;
 	int refl_skip, refl_faces, refl_size;  float refl_dist;
 	std::string refl_mode; // static, single, full [explanation: see CarReflection.h] 
-	bool particles, trails;  float trees, grass, trees_dist, grass_dist;
+	bool particles, trails;  float grass, trees_dist, grass_dist;
 	bool use_imposters;
 	float particles_len, trails_len;
 
@@ -48,10 +48,12 @@ public:
 		//  game setup
 		bool collis_veget, collis_cars;
 		int boost_type, flip_type;  float boost_power;
+		float trees;
 		
 		bool rpl_rec;
 		//  champ
-		int numChamp;  // -1 none
+		int champ_num;  // -1 none
+		float pre_time;
 	}  game,  // current game, changed only on new game start
 		gui;  // gui only config
 	//---------------

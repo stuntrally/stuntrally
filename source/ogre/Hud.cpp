@@ -160,8 +160,9 @@ void App::CreateHUD()
 	ovBoost = ovr.getByName("Hud/Boost");	hudBoost = ovr.getOverlayElement("Hud/BoostText");
 	ovAbsTcs = ovr.getByName("Hud/AbsTcs");	hudAbs = ovr.getOverlayElement("Hud/AbsText");
 	ovCarDbg = ovr.getByName("Car/Stats");	hudTcs = ovr.getOverlayElement("Hud/TcsText");
-	ovTimes = ovr.getByName("Hud/Times");	hudTimes = ovr.getOverlayElement("Hud/TimesText");
 
+	ovCountdown = ovr.getByName("Hud/Countdown");	hudCountdown = ovr.getOverlayElement("Hud/CountdownText");
+	ovTimes = ovr.getByName("Hud/Times");	hudTimes = ovr.getOverlayElement("Hud/TimesText");
 	ovOpp = ovr.getByName("Hud/Opponents"); hudOppB = ovr.getOverlayElement("Hud/OpponentsPanel");
 	for (int o=0; o < 5; ++o)  for (int c=0; c < 3; ++c)  {
 		hudOpp[o][c] = ovr.getOverlayElement("Hud/OppText"+toStr(o)+"_"+toStr(c));  hudOpp[o][c]->setCaption("");  }
@@ -184,7 +185,7 @@ void App::CreateHUD()
 	//  dbg lines
 	ovCarDbgTxt = ovr.getByName("Car/StatsTxt");  //ovCarDbgTxt->show();
 	ovCarDbg = ovr.getByName("Car/Stats");  //ovCarDbg->show();  // bars
-	for (int i=0; i < 5; i++)
+	for (int i=0; i < 5; ++i)
 	{	ovL[i] = ovr.getOverlayElement("L_"+toStr(i+1));
 		ovR[i] = ovr.getOverlayElement("R_"+toStr(i+1));
 		ovS[i] = ovr.getOverlayElement("S_"+toStr(i+1));
@@ -205,6 +206,7 @@ void App::ShowHUD(bool hideAll)
 		if (ovGear)	  ovGear->hide();		if (ovVel)	  ovVel->hide();
 		if (ovAbsTcs) ovAbsTcs->hide();
 		if (ovBoost)  ovBoost->hide();		//if (hudBoost)  hudBoost->hide();
+		if (ovCountdown)  ovCountdown->hide();
 		if (hudGear)  hudGear->hide();		if (hudVel)   hudVel->hide();
 		if (ovCarDbg)  ovCarDbg->hide();	if (ovCarDbgTxt)  ovCarDbgTxt->hide();
 
@@ -224,6 +226,7 @@ void App::ShowHUD(bool hideAll)
 		if (ovVel)	{  if (1||show)  ovVel->show();   else  ovVel->hide();   }
 		if (ovBoost){  if (show && (pSet->game.boost_type == 1 || pSet->game.boost_type == 2))
 									ovBoost->show();    else  ovBoost->hide();  }
+		if (ovCountdown)  if (show)  ovCountdown->show();  else  ovCountdown->hide();
 		if (ovAbsTcs){ if (show)  ovAbsTcs->show();   else  ovAbsTcs->hide(); }
 		if (hudGear){  if (pSet->show_digits)  hudGear->show(); else  hudGear->hide();  }
 		if (hudVel) {  if (pSet->show_digits)  hudVel->show();  else  hudVel->hide();  }
@@ -284,6 +287,7 @@ void App::UpdateHUD(int carId, CarModel* pCarM, CAR* pCar, float time, Viewport*
 		if (hudGear)  hudGear->hide();		if (hudVel)  hudVel->hide();		if (ovBoost)  ovBoost->hide();
 		if (ovTimes)  ovTimes->hide();		if (ovWarnWin)  ovWarnWin->hide();	if (ovOpp)  ovOpp->hide();
 		if (ovCarDbg)  ovCarDbg->hide();	if (ovCarDbgTxt)  ovCarDbgTxt->hide();
+		if (ovCountdown)  ovCountdown->hide();
 	}else{
 		/// for render viewport ---------
 		if (ovCam)  ovCam->hide();
@@ -402,7 +406,7 @@ void App::UpdateHUD(int carId, CarModel* pCarM, CAR* pCar, float time, Viewport*
 	}
 
 
-	//  gear, vel texts  -----------------------------
+	///  gear, vel texts  -----------------------------
 	if (hudGear && hudVel && pCar)
 	{
 		char cg[132],sv[132];  cg[0]='1'; cg[1]=0; sv[1]=0;
@@ -424,16 +428,34 @@ void App::UpdateHUD(int carId, CarModel* pCarM, CAR* pCar, float time, Viewport*
 		#define m01(x)  std::min(1.0, std::max(0.0, (double) x))
 		hudVel->setColour(ColourValue(m01(k*2), m01(0.5+k*1.5-k*k*2.5), m01(1+k*0.8-k*k*3.5)));
 	}
+
+	//  boost fuel (time)  -----------------------------
+	char sb[132];
 	if (hudBoost && pCar && hudBoost->isVisible())
 	{
-		char sb[132];
 		sprintf(sb, "%3.1f", pCar->dynamics.boostFuel);
 		hudBoost->setCaption(String(sb));
 	}
+
+	//  race countdown  -----------------------------
+	if (hudCountdown)
+	{
+		if (pGame->timer.pretime > 0.f && !pGame->timer.waiting)
+		{
+			sprintf(sb, "%3.1f", pGame->timer.pretime);
+			hudCountdown->setCaption(String(sb));
+			hudCountdown->show();
+		}else
+			hudCountdown->hide();
+	}
 	
-	//  abs, tcs on  --------
+	//  abs, tcs on  -----------------------------
 	if (hudAbs && hudTcs)
 	{
+		// hide on gui vp
+		if (!vp)
+		{	hudAbs->hide();  hudTcs->hide();  }
+		else
 		if (pCar)
 		{
 			if (pCar->GetABSEnabled())
@@ -448,12 +470,9 @@ void App::UpdateHUD(int carId, CarModel* pCarM, CAR* pCar, float time, Viewport*
 			}else
 				hudTcs->hide();
 		}
-
-		// hide on gui vp
-		if (!vp) { hudAbs->hide(); hudTcs->hide(); }
 	}
 	
-	//  times, score  --------
+	///  times, score  -----------------------------
 	if (pSet->show_times && pCar)
 	{
 		TIMER& tim = pGame->timer;	//car[playercarindex].
@@ -463,7 +482,8 @@ void App::UpdateHUD(int carId, CarModel* pCarM, CAR* pCar, float time, Viewport*
 		if (pCarM->bWrongChk || pSet->game.local_players > 1 && pCarM->iWonPlace > 0)
 			ovWarnWin->show();  else  ovWarnWin->hide();  //ov
 			
-		if (pSet->game.local_players > 1)  // lap num for many
+		//  lap num (for many or champ)
+		if (pSet->game.local_players > 1 || pSet->game.champ_num >= 0)
 		{
 			if (pCarM->iWonPlace > 0 && hudWonPlace)
 			{	sprintf(s, String(TR("---  %d #{TBPlace}  ---")).c_str(), pCarM->iWonPlace );
