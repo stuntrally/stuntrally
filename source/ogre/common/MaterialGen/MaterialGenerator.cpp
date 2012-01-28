@@ -474,12 +474,12 @@ bool MaterialGenerator::fpNeedLighting()
 
 bool MaterialGenerator::fpNeedNormal()
 {
-	return needEnvMap() || needNormalMap() || fpNeedLighting() || needTerrainLightMap();
+	return (needEnvMap() || needNormalMap() || fpNeedLighting() || needTerrainLightMap());
 }
 
 bool MaterialGenerator::fpNeedEyeVector()
 {
-	return needEnvMap() || fpNeedLighting() || (MRTSupported() && !mShader->vertexColour);
+	return needEnvMap() || fpNeedLighting() || (MRTSupported() && !(fpNeedNormal() && (!(needEnvMap() || needNormalMap() || fpNeedLighting()))));
 }
 
 bool MaterialGenerator::vpNeedTangent()

@@ -527,10 +527,10 @@ void MaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::StrStrea
 	{
 		//outStream <<  "float4 viewPosition = mul(vMat, float4(worldPosition.xyz,1.0)); \n";
 		
-		if (!mShader->vertexColour) outStream <<
-			"	float3 viewPosition = float3(inEyeVector.w, worldPosition.w, viewNormal.w); \n";
+		if (fpNeedNormal() && (!(needEnvMap() || needNormalMap() || fpNeedLighting()))) outStream <<
+			"	float3 viewPosition = float3(iNormal.z, worldPosition.w, viewNormal.w); \n";
 		else outStream <<
-			"	float3 viewPosition = float3(vertexColour.w, worldPosition.w, viewNormal.w); \n";
+			"	float3 viewPosition = float3(inEyeVector.w, worldPosition.w, viewNormal.w); \n";
 			
 		if(UsePerPixelNormals())
 		{

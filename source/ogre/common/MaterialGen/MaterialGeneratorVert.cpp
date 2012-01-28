@@ -279,10 +279,10 @@ void MaterialGenerator::generateVertexProgramSource(Ogre::StringUtil::StrStreamT
 			"	oViewNormal = mul(wvMat, float4(normal, 0)); \n"
 			"	float3 viewPosition = mul(wvMat, position).xyz; \n";
 			
+			if (fpNeedNormal() && (!(needEnvMap() || needNormalMap() || fpNeedLighting()))) outStream <<
+				"	oNormal.z = viewPosition.x; \n";
 			if (!mShader->vertexColour) outStream <<
 				"	oEyeVector.w = viewPosition.x; \n";
-			else outStream <<
-				"	oVertexColour.w = viewPosition.x; \n";
 				
 			outStream <<
 			"	oWorldPosition.w = viewPosition.y; \n"
