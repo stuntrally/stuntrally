@@ -80,13 +80,14 @@ void App::ChampNewGame()
 	}
 }
 
-///  Championships list  sel changed
+///  Championships list  fill
 //---------------------------------------------------------------------
+const static char clrDiff[8][8] =  // track difficulty colors
+	{"#60C0FF", "#00FF00", "#60FF00", "#C0FF00", "#FFFF00", "#FFC000", "#FF6000", "#FF4040"};
+
 void App::ChampsListUpdate()
 {
 	const char clrT[3][8] = {"#A0F0FF", "#FFFFB0", "#FFA0A0"};
-	const static char clrDiff[8][8] =  // track difficulty colors
-		{"#60C0FF", "#00FF00", "#60FF00", "#C0FF00", "#FFFF00", "#FFC000", "#FF6000", "#FF4040"};
 
 	liChamps->removeAllItems();  char ss[64];
 	for (int i=0; i < champs.champs.size(); ++i)
@@ -108,7 +109,7 @@ void App::ChampsListUpdate()
 	liChamps->setIndexSelected(pSet->gui.champ_num);  //range..
 }
 
-///  Championships list  sel changed
+///  Championships list  sel changed,  fill stages list
 //---------------------------------------------------------------------
 void App::listChampChng(MyGUI::MultiListBox* chlist, size_t pos)
 {
@@ -122,14 +123,15 @@ void App::listChampChng(MyGUI::MultiListBox* chlist, size_t pos)
 	for (int i=0; i < ch.trks.size(); ++i)
 	{
 		const ChampTrack& trk = ch.trks[i];
-		liStages->addItem(toStr(i/10)+toStr(i%10), 0);  int l = liStages->getItemCount()-1;
-		liStages->setSubItemNameAt(1,l, trk.name.c_str());
+		String clr = GetSceneryColor(trk.name);
+		liStages->addItem(clr+ toStr(i/10)+toStr(i%10), 0);  int l = liStages->getItemCount()-1;
+		liStages->setSubItemNameAt(1,l, clr+ trk.name.c_str());
 
 		int id = tracksXml.trkmap[trk.name];
 		const TrackInfo& ti = tracksXml.trks[id-1];
 
-		liStages->setSubItemNameAt(2,l, ti.scenery);
-		liStages->setSubItemNameAt(3,l, toStr(ti.diff));
+		liStages->setSubItemNameAt(2,l, clr+ ti.scenery);
+		liStages->setSubItemNameAt(3,l, clrDiff[ch.diff]+ TR("#{Diff"+toStr(ch.diff)+"}"));
 
 		liStages->setSubItemNameAt(4,l, toStr(trk.laps));
 		sprintf(ss, "%5.1f", progress.champs[pos].trks[i].score);

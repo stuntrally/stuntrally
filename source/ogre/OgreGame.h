@@ -208,6 +208,7 @@ protected:
 	//  init
 	void InitGui();  bool bGI;
 	void GuiCenterMouse(),GuiInitTooltip(),GuiInitLang(), GuiInitGraphics(),GuiInitTrack();
+	Ogre::String GetSceneryColor(Ogre::String name);
 	void AddTrkL(std::string name, int user, const class TrackInfo* ti);
 
 	//  track

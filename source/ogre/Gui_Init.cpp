@@ -510,7 +510,7 @@ void App::LNext(int rel)
 	case WND_Champ:
 		switch (mWndTabsChamp->getIndexSelected())	{
 			case 1:  listChampChng(liChamps,LNext(liChamps, rel));  return;
-			case 2:	 /*listCarChng(carList,  LNext(carList, rel));*/  return;	}
+			case 2:	 /*listStagesChng(carList, LNext(listStagesChng, rel));*/  return;	}
 		break;
 	case WND_Replays:
 		listRplChng(rplList,  LNext(rplList, rel));

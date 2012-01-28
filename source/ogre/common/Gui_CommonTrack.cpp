@@ -104,7 +104,7 @@ void App::TrackListUpd(bool resetNotFound)
 
 //  add track item to gui list
 //-----------------------------------------------------------------------------------------------------------
-void App::AddTrkL(std::string name, int user, const TrackInfo* ti)
+String App::GetSceneryColor(String name)
 {
 	String c = "#FFFFFF";  char ch = name.c_str()[0];
 	switch (ch)  {
@@ -114,6 +114,11 @@ void App::AddTrkL(std::string name, int user, const TrackInfo* ti)
 		case 'F':  c = "#A0D000";  break;   case 'S':  c = "#D0FF00";  break;
 		case 'G':  c = "#C0FF00";  break;   case 'T':  c = "#A0A0A0";  break;
 		case 'V':  c = "#202008";  break;   case 'X':  c = "#5858C0";  break;  }
+	return c;
+}
+void App::AddTrkL(std::string name, int user, const TrackInfo* ti)
+{
+	String c = GetSceneryColor(name);
 
 	MultiList2* li = trkMList;
 	li->addItem(name, 0);
@@ -180,8 +185,8 @@ void App::GuiInitTrack()
 	imgTrkIco2 = mGUI->findWidget<StaticImage>("TrkView2icons2");
 	
 	li->removeAllColumns();  int c=0;
-	li->addColumn("Name", TcolW[c++]);  li->addColumn("N", TcolW[c++]);
-	  li->addColumn("Scenery", TcolW[c++]);
+	li->addColumn(TR("#{Name}"), TcolW[c++]);  li->addColumn("N", TcolW[c++]);
+	  li->addColumn(TR("#{Scenery}"), TcolW[c++]);
 	li->addColumn("ver", TcolW[c++]);  // created  modified  author-
 	li->addColumn("diff", TcolW[c++]);  li->addColumn("*", TcolW[c++]);
 	// rateuser  drivenlaps ..
