@@ -251,7 +251,7 @@ void MaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::StrStrea
 		if(!UsePerPixelNormals())
 		{
 			outStream << "	in float4 viewNormal : TEXCOORD"+ toStr( mTexCoord_i++ ) +", \n";
-			outStream << "	in float4 viewPosition : TEXCOORD"+ toStr( mTexCoord_i++ ) +", \n";
+			//outStream << "	in float4 viewPosition : TEXCOORD"+ toStr( mTexCoord_i++ ) +", \n";
 		}
 	}
 	
@@ -526,11 +526,17 @@ void MaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::StrStrea
 	if(MRTSupported())
 	{
 		//outStream <<  "float4 viewPosition = mul(vMat, float4(worldPosition.xyz,1.0)); \n";
+		
+		if (!mShader->vertexColour) outStream <<
+			"	float3 viewPosition = float3(inEyeVector.w, worldPosition.w, viewNormal.w); \n";
+		else outStream <<
+			"	float3 viewPosition = float3(vertexColour.w, worldPosition.w, viewNormal.w); \n";
+			
 		if(UsePerPixelNormals())
 		{
 			outStream <<  "float4 viewNormal = mul(wvMat, pNormal); \n";
 		}
-		outStream <<  "oColor1 = float4(length(viewPosition.xyz) / far, normalize(viewNormal.xyz).xyz); \n";
+		outStream <<  "oColor1 = float4(length(viewPosition) / far, normalize(viewNormal.xyz).xyz); \n";
 		if(mDef->mProps->transparent)
 		{
 			// multiply the diffuse texture alpha
