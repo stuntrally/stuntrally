@@ -1,6 +1,5 @@
 #include "pch.h"
-#include "Defines.h"
-#include "../vdrift/pathmanager.h"
+#include "Defines.h"			 #include "../vdrift/pathmanager.h"
 #include "../vdrift/game.h"
 #include "OgreGame.h"
 
@@ -16,37 +15,57 @@ void App::ChampsXmlLoad()
 	champs.LoadXml(PATHMANAGER::GetGameConfigDir() + "/championships.xml");
 	LogO(String("**** Loaded Championships: ") + toStr(champs.champs.size()));
 	
-	progress.LoadXml(PATHMANAGER::GetUserConfigDir() + "/progress.xml");
+	ProgressXml oldprog;
+	oldprog.LoadXml(PATHMANAGER::GetUserConfigDir() + "/progress.xml");
 
-	int pcs = progress.champs.size(), chs = champs.champs.size();
-	//  progress empty, fill with 0s
-	if (pcs == 0 || pcs != chs)
+	int chs = champs.champs.size(), pcs = progress.champs.size();
+	
+	///  this is for old progress ver loading, from game with newer champs
+	///  it resets progress only for champs which ver has changed (or track count)
+	//  fill progress
+	progress.champs.clear();
+	for (int c=0; c < chs; ++c)
 	{
-		LogO(String("|| No progress found - saving empty with 0s."));
-		progress.champs.clear();
-		for (int i=0; i < chs; ++i)
+		const Champ& ch = champs.champs[c];
+		
+		//  find this champ in loaded progress
+		bool found = false;  int p = 0;
+		ProgressChamp* opc = 0;
+		while (!found && p < oldprog.champs.size())
 		{
-			const Champ& ch = champs.champs[i];
-			ProgressChamp pc;
-			pc.name = ch.name;  // save for ver check
-			pc.ver = ch.ver;
-			ProgressTrack pt;  // empty, 0 progress
-			for (int t=0; t < champs.champs[i].trks.size(); ++t)
-				pc.trks.push_back(pt);
-			progress.champs.push_back(pc);
+			opc = &oldprog.champs[p];
+			//  same name, ver and trks count
+			if (opc->name == ch.name && opc->ver == ch.ver &&
+				opc->trks.size() == ch.trks.size())
+				found = true;
+			++p;
 		}
-		ProgressSave(false);  //will be later in guiInit
-	}else
-	{
-		if (pcs != chs)
+		if (!found)
+			LogO("|| reset progress for champ: " + ch.name);
+		
+		ProgressChamp pc;
+		pc.name = ch.name;  pc.ver = ch.ver;
+
+		if (found)  //  found progress, score
+		{	pc.curTrack = opc->curTrack;
+			pc.score = opc->score;
+		}
+
+		//  fill tracks
+		for (int t=0; t < ch.trks.size(); ++t)
 		{
-			// add new champs to progress ...
-			//for (int i=0; i < chs; ++i)
+			ProgressTrack pt;
+			if (found)  // found track score
+				pt.score = opc->trks[t].score;
+			pc.trks.push_back(pt);
 		}
-		//  check ver, name, trks size, if different reset that champ only ...
-		//for (int i=0; i < pcs; ++i)
-		ProgressSave(false);
+
+		progress.champs.push_back(pc);
 	}
+	ProgressSave(false);  //will be later in guiInit
+	
+	if (progress.champs.size() != champs.champs.size())
+		LogO("|| ERROR: champs and progress sizes differ !");
 }
 
 ///  load championship track
@@ -346,7 +365,7 @@ void App::ChampFillStageInfo(bool finished)
 	const ChampTrack& trk = ch.trks[pc.curTrack];
 
 	String s;  char ss[64];
-	s = TR("#{Championship}") + ": " + ch.name + "\n" +
+	s = /*TR("#{Championship}") + ": " +*/ ch.name + "\n" +
 		TR("#{Stage}") + ": " + toStr(pc.curTrack+1) + "/" + toStr(ch.trks.size()) + "\n" +
 		TR("#{Track}") + ": " + trk.name + "\n\n";
 		//+"Difficulty: " + tracksXml. + "\n";
