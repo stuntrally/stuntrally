@@ -271,9 +271,9 @@ void SplitScreenManager::preViewportUpdate(const Ogre::RenderTargetViewportEvent
 		}
 
 		//update soft particle Depth Target
-		MaterialFactory::getSingletonPtr()->setSoftParticles(pApp->pSet->softparticles);
-		if(pApp->pSet->softparticles)
+		if(pApp->pSet->softparticles && pApp->pSet->all_effects)
 		{
+			MaterialFactory::getSingletonPtr()->setSoftParticles(true);
 			Ogre::CompositorInstance  *compositor= Ogre::CompositorManager::getSingleton().getCompositorChain(evt.source)->getCompositor("gbuffer");
 			if(compositor!=NULL)
 			{
@@ -284,6 +284,7 @@ void SplitScreenManager::preViewportUpdate(const Ogre::RenderTargetViewportEvent
 				}
 			}
 		}
+		else MaterialFactory::getSingletonPtr()->setSoftParticles(false);
 
 	}
 	else
