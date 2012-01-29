@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <MyGUI>
-	<Tag name="TipNewGame">Pornește joc pe traseu nou sau repornește pe cel curent.</Tag>
 	<Tag name="TipTreeDens">Câte modele(pomi,pietre, etc.) vor fi pe traseu</Tag>
 	<Tag name="CamSpeed">Viteza camerei</Tag>
 	<Tag name="Density">Densitatea</Tag>
@@ -62,6 +61,7 @@
 	<Tag name="RoadParams">Parametrii drumului</Tag>
 	<Tag name="NetDirectConnect">Direct connect</Tag>
 	<Tag name="Light">Lumină</Tag>
+	<Tag name="RoadPointSize">Mărime puncte drum</Tag>
 	<Tag name="Flip">Flip</Tag>
 	<Tag name="DistToRoad">Distanța față de drum</Tag>
 	<Tag name="TBPlace">Place</Tag>
@@ -82,6 +82,7 @@
 	<Tag name="TreeMult">Trees multiplier</Tag>
 	<Tag name="TipGrDensSmooth">Grass density map - smooth size</Tag>
 	<Tag name="NetGame">Game</Tag>
+	<Tag name="TipNewTerrainFlat">Create new, flat terrain.</Tag>
 	<Tag name="InputRoadNew">ctrl-Space - set new point's values from picked</Tag>
 	<Tag name="InputFluidsMode">W - edit fluids</Tag>
 	<Tag name="Top">Deasupra</Tag>
@@ -116,7 +117,8 @@
 	<Tag name="Video">Video</Tag>
 	<Tag name="ViewStart">Vizualizează startul</Tag>
 	<Tag name="TipGrassDens">Cât de densă/rară va fi iarba pe teren.</Tag>
-	<Tag name="Digits">Cifre (treapta de viteză,viteza)</Tag>
+	<Tag name="Shadows">Umbre</Tag>
+	<Tag name="InputRoadYaw">- rotate yaw</Tag>
 	<Tag name="MessageBox_Try">Try</Tag>
 	<Tag name="TerLHSm">Height smooth</Tag>
 	<Tag name="InputAssignKey">&lt;Press a key&gt;</Tag>
@@ -139,7 +141,7 @@
 	<Tag name="InpSet_AxisHalf">Axis Half</Tag>
 	<Tag name="PipeLStepsMul">Multiplicare pași L conductă</Tag>
 	<Tag name="View">Vizualizează</Tag>
-	<Tag name="TipModelRoadDist">Distanța de la drum la modele (globală,adăugată la fiecare valoare de modele proprii)</Tag>
+	<Tag name="TriSize">Mărimea triunghiului</Tag>
 	<Tag name="TerLAngSm">Angle smooth</Tag>
 	<Tag name="InputAfterChanges">(după schimbarea terenului/vegetației)</Tag>
 	<Tag name="SkirtLength">Lungime fustă drum</Tag>
@@ -149,8 +151,10 @@
 	<Tag name="InputRoadSel">Backspace - adaugă sau elimină din selecţie</Tag>
 	<Tag name="LTrMaxTerAng">max terrain Angle</Tag>
 	<Tag name="RplAlpha">Transparent ghost</Tag>
+	<Tag name="TipTerrainHalf">Resize current terrain heightmap by half (use only for reducing file size).</Tag>
 	<Tag name="wind">Vânt</Tag>
 	<Tag name="TipTerLHMax">Ending terrain height for layer.</Tag>
+	<Tag name="ChampEndCongrats">Congratulations !</Tag>
 	<Tag name="TipRoadStats">Statistici tot drumul</Tag>
 	<Tag name="MaxScale">scala maximă</Tag>
 	<Tag name="Fluids">Fluids</Tag>
@@ -168,14 +172,14 @@
 	<Tag name="Diffuse">Difuză</Tag>
 	<Tag name="Sound">Sunet</Tag>
 	<Tag name="InputFluidsIns">Ins - insert new, default fluid at cursor</Tag>
-	<Tag name="RoadPointSize">Mărime puncte drum</Tag>
+	<Tag name="TipVegetGroups">Vegetation model groups (recommended use 4-6), affects performance.</Tag>
 	<Tag name="Car">Mașină</Tag>
 	<Tag name="FuelLap">Fuel each lap</Tag>
 	<Tag name="TipSkyMats">Nume material cer (din SkyDome.material).</Tag>
 	<Tag name="InputRoadMerge">M - toggle road merge segs (for test)</Tag>
 	<Tag name="VolMaster">Principal</Tag>
 	<Tag name="NumLaps">Number of laps</Tag>
-	<Tag name="TriSize">Mărimea triunghiului</Tag>
+	<Tag name="TipNewGame">Pornește joc pe traseu nou sau repornește pe cel curent.</Tag>
 	<Tag name="ReflMode">Mod</Tag>
 	<Tag name="TipCopySource">Alege traseul selectat pentru sursă de copiere,folosit in tab-ul [Instrumente]</Tag>
 	<Tag name="InputMapNextTab">Next tab</Tag>
@@ -186,6 +190,7 @@
 	<Tag name="LengthDim">Dimensiune lungime</Tag>
 	<Tag name="Bloom">Încețoșare</Tag>
 	<Tag name="TipRenameTrk">Redenumește traseul selectat.</Tag>
+	<Tag name="TerrainHalf">Half</Tag>
 	<Tag name="TipBumpAmp">Amplitudinea denivelărilor suplimentare pe suprafaţă (cât de mare).</Tag>
 	<Tag name="InputFluidsMove">LMB - move   RMB - height</Tag>
 	<Tag name="TipNormalTex">Texturi normale(înalțimea în alpha)</Tag>
@@ -254,6 +259,8 @@
 	<Tag name="InputRoadMostSel">majoritatea merg de asemenea selectând</Tag>
 	<Tag name="InputTerHeight">E - Height set (RMB change height value)</Tag>
 	<Tag name="InputStartPos">Q - modifică pozițiile de start</Tag>
+	<Tag name="ChampEndFinished">You have finished this championship.</Tag>
+	<Tag name="TipModelRoadDist">Distanța de la drum la modele (globală,adăugată la fiecare valoare de modele proprii)</Tag>
 	<Tag name="TireTrails">Tire Trails</Tag>
 	<Tag name="InputBrushParams">Parametri pensulei</Tag>
 	<Tag name="InputMapShowOptions">Arată opțiunile</Tag>
@@ -329,7 +336,7 @@
 	<Tag name="NetPort">Port</Tag>
 	<Tag name="InputFluidsSize">alt-LMB - size   alt-RMB - depth</Tag>
 	<Tag name="TexCoordMul">Tex Coord mul.</Tag>
-	<Tag name="Shadows">Umbre</Tag>
+	<Tag name="Digits">Cifre (treapta de viteză,viteza)</Tag>
 	<Tag name="ShowPictures">Arată imagini cât timp încarcă</Tag>
 	<Tag name="TrackAvgSpeed">Viteza medie</Tag>
 	<Tag name="PreviewCam">Preview Camera</Tag>
@@ -406,7 +413,7 @@
 	<Tag name="TipTerVertCount">Terrain vertex count on one side (squares). Apply with buttons [New Flat] or [Resize].</Tag>
 	<Tag name="RplCurrent">Current</Tag>
 	<Tag name="InputCamControl2">LMB - rotate  RMB - move  MMB - zoom</Tag>
-	<Tag name="ColBright">Luminozitate</Tag>
+	<Tag name="Diff5">Very Hard</Tag>
 	<Tag name="LS_CLEANUP">Curățare</Tag>
 	<Tag name="RplRename">Rename</Tag>
 	<Tag name="EnterSave">Enter - salvare</Tag>
@@ -444,7 +451,7 @@
 	<Tag name="TipChangeTrack">Sets current track to that selected in list. Press [New Game] to start it after.</Tag>
 	<Tag name="TipModelDens">How often model will appear on track area.</Tag>
 	<Tag name="InputMain">Main</Tag>
-	<Tag name="TipVegetGroups">Vegetation model groups (recommended use 4-6), affects performance.</Tag>
+	<Tag name="NewTerrainFlat">New flat</Tag>
 	<Tag name="ColSat">Saturation</Tag>
 	<Tag name="TipTCS">Prevents wheel spinning when accelerating (default: off).</Tag>
 	<Tag name="InputRoadColumn">End - on/off column</Tag>
@@ -479,7 +486,6 @@
 	<Tag name="Tools">Tools</Tag>
 	<Tag name="NetCreateGame">Create game</Tag>
 	<Tag name="TipGrassSwaySpd">Grass sway effect speed.</Tag>
-	<Tag name="TipTerLHMin">Starting terrain height for layer.</Tag>
 	<Tag name="FrictionTread">FrictionTread</Tag>
 	<Tag name="InputMapShiftDown">Shift down</Tag>
 	<Tag name="HeightmapSize">Heightmap size</Tag>
@@ -491,7 +497,7 @@
 	<Tag name="CamInertia">Camera inertia</Tag>
 	<Tag name="TipTerSize">Resulting area in meters (side length). Equals vertex count multipled by triangle size.</Tag>
 	<Tag name="speed">speed</Tag>
-	<Tag name="InputRoadYaw">- rotate yaw</Tag>
+	<Tag name="TipTerLHMin">Starting terrain height for layer.</Tag>
 	<Tag name="RplGhosts">Ghosts</Tag>
 	<Tag name="RplBestOnly">Save ghost only for best time</Tag>
 	<Tag name="Front">Front</Tag>
@@ -533,6 +539,7 @@
 	<Tag name="Reverse">Reverse</Tag>
 	<Tag name="scale">Scale</Tag>
 	<Tag name="UnitMph">mph</Tag>
+	<Tag name="ColBright">Luminozitate</Tag>
 	<Tag name="ColHue">Color - Hue</Tag>
 	<Tag name="fluids">fluids (water or mud)</Tag>
 	<Tag name="TipLoadTrkEditor">Încarcă traseul (după schimbare) sau reîncarcă traseul curent.</Tag>
@@ -581,6 +588,7 @@
 	<Tag name="ScaleTerHeight">Terrain Height</Tag>
 	<Tag name="TipTerLHSm">Height smooth range (transition).</Tag>
 	<Tag name="TBTime">Time</Tag>
+	<Tag name="TipTerrainGenerate">Generates new terrain from noise functions using all parameters below.</Tag>
 	<Tag name="TipRainSnowInt">Rain/Snow intensity (eg. 1000)</Tag>
 	<Tag name="TrackLength">Length</Tag>
 	<Tag name="InputStartAltMMB">alt-MMB - resetează rotația</Tag>
@@ -594,7 +602,15 @@
 	<Tag name="TipDustInt">Intensitate particule praf.</Tag>
 	<Tag name="Startup">Startup</Tag>
 	<Tag name="distribution">distribution</Tag>
+	<Tag name="Diff2">Easy</Tag>
+	<Tag name="Diff3">Medium</Tag>
+	<Tag name="Diff0">Test Easy</Tag>
+	<Tag name="Diff1">Very Easy</Tag>
+	<Tag name="Diff6">Extreme</Tag>
+	<Tag name="Diff7">Ultra</Tag>
+	<Tag name="Diff4">Hard</Tag>
 	<Tag name="SkirtHeight">Skirt Height</Tag>
+	<Tag name="NewTerrainGenerate">New Generate</Tag>
 	<Tag name="InputWheelSize">,=  (or Wheel)  -  Size</Tag>
 	<Tag name="BulletDebug">Bullet debug</Tag>
 	<Tag name="InputRoadHeight">- change height</Tag>
@@ -627,22 +643,18 @@
 	<Tag name="InputNextOptTab">F2,F3 - fila de opțiuni precedentă,următoare</Tag>
 	<Tag name="RollingDrag">Învârtire mașină</Tag>
 	<Tag name="RplAll">Toate</Tag>
-	<Tag name="ChampEndFinished">You have finished this championship.</Tag>
-	<Tag name="TipNewTerrainFlat">Create new, flat terrain.</Tag>
-	<Tag name="TipTerrainHalf">Resize current terrain heightmap by half (use only for reducing file size).</Tag>
-	<Tag name="NewTerrainFlat">New flat</Tag>
-	<Tag name="TerrainHalf">Half</Tag>
-	<Tag name="ChampEndCongrats">Congratulations !</Tag>
-	<Tag name="Diff5">Very Hard</Tag>
-	<Tag name="TipTerrainGenerate">Generates new terrain from noise functions using all parameters below.</Tag>
-	<Tag name="Diff2">Easy</Tag>
-	<Tag name="Diff3">Medium</Tag>
-	<Tag name="Diff0">Test Easy</Tag>
-	<Tag name="Diff1">Very Easy</Tag>
-	<Tag name="Diff6">Extreme</Tag>
-	<Tag name="Diff7">Ultra</Tag>
-	<Tag name="Diff4">Hard</Tag>
-	<Tag name="NewTerrainGenerate">New Generate</Tag>
+	<Tag name="Progress">Progress</Tag>
+	<Tag name="Time">Time</Tag>
+	<Tag name="Score">Score</Tag>
+	<Tag name="Stage">Stage</Tag>
+	<Tag name="Stages">Stages</Tag>
+	<Tag name="Finished">Finished</Tag>
+	<Tag name="Name">Name</Tag>
+	<Tag name="Tracks">Tracks</Tag>
+	<Tag name="Difficulty">Difficulty</Tag>
+	<Tag name="TotalScore">Total score</Tag>
+	<Tag name="ChampStart">Start</Tag>
+	<Tag name="Scenery">Scenery</Tag>
 	<Tag name="GameVersion">1.5</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 

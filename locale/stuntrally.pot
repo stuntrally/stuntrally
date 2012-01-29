@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION"
 "Report-Msgid-Bugs-To: "
-"POT-Creation-Date: 2012-01-28 18:43+0200"
+"POT-Creation-Date: 2012-01-29 09:25+0200"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>"
 "Language-Team: LANGUAGE <LL@li.org>"
@@ -29,12 +29,20 @@ msgctxt "Fullscreen"
 msgid "Fullscreen"
 msgstr ""
 
+msgctxt "TipDustSize"
+msgid "Dust particles size."
+msgstr ""
+
 msgctxt "TipGrassSwayDistr"
 msgid "Grass sway effect distribution (how random)."
 msgstr ""
 
 msgctxt "InpSet_AxisFull"
 msgid "Axis Full"
+msgstr ""
+
+msgctxt "Progress"
+msgid "Progress"
 msgstr ""
 
 msgctxt "InputStartMeet"
@@ -457,8 +465,8 @@ msgctxt "InputRoadChkRadius"
 msgid "K,L   - checkpoint radius (chkR 0 - none)"
 msgstr ""
 
-msgctxt "TipDustSize"
-msgid "Dust particles size."
+msgctxt "Time"
+msgid "Time"
 msgstr ""
 
 msgctxt "InputRoadInsAlt"
@@ -479,10 +487,6 @@ msgstr ""
 
 msgctxt "InputMapPrevCamera"
 msgid "Previous Camera"
-msgstr ""
-
-msgctxt "InputFluidsSize"
-msgid "alt-LMB - size   alt-RMB - depth"
 msgstr ""
 
 msgctxt "InputMapBrake"
@@ -523,6 +527,10 @@ msgstr ""
 
 msgctxt "ChangeTrack"
 msgid "Change Track"
+msgstr ""
+
+msgctxt "Score"
+msgid "Score"
 msgstr ""
 
 msgctxt "TerrainSize"
@@ -909,6 +917,10 @@ msgctxt "max"
 msgid "max"
 msgstr ""
 
+msgctxt "Stage"
+msgid "Stage"
+msgstr ""
+
 msgctxt "NetRefreshList"
 msgid "Get/refresh list"
 msgstr ""
@@ -939,6 +951,10 @@ msgstr ""
 
 msgctxt "RplVersion"
 msgid "Version"
+msgstr ""
+
+msgctxt "Stages"
+msgid "Stages"
 msgstr ""
 
 msgctxt "Options"
@@ -1185,8 +1201,8 @@ msgctxt "Multiplayer"
 msgid "Multiplayer"
 msgstr ""
 
-msgctxt "VegetCol"
-msgid "Vegetation collision"
+msgctxt "InputToggleVeget"
+msgid "V - Disable / enable vegetation"
 msgstr ""
 
 msgctxt "Particles"
@@ -1197,8 +1213,8 @@ msgctxt "Other"
 msgid "Other"
 msgstr ""
 
-msgctxt "TipTerLAngSm"
-msgid "Angle smooth range (transition)."
+msgctxt "TrackPipes"
+msgid "Pipes"
 msgstr ""
 
 msgctxt "InputRoadNext"
@@ -1229,6 +1245,10 @@ msgctxt "InputRoadPipeAngle"
 msgid "[,]   - pipe angle (no pipe when 0)"
 msgstr ""
 
+msgctxt "Finished"
+msgid "Finished"
+msgstr ""
+
 msgctxt "LTrMaxTerAng"
 msgid "max terrain Angle"
 msgstr ""
@@ -1255,6 +1275,10 @@ msgstr ""
 
 msgctxt "InputWheelShape"
 msgid "K,L  -  Brush shape"
+msgstr ""
+
+msgctxt "Name"
+msgid "Name"
 msgstr ""
 
 msgctxt "RplSize"
@@ -1287,6 +1311,10 @@ msgstr ""
 
 msgctxt "GameBy"
 msgid "A game by"
+msgstr ""
+
+msgctxt "TrackWidthAvg"
+msgid "Width avg."
 msgstr ""
 
 msgctxt "SunWeather"
@@ -1385,8 +1413,12 @@ msgctxt "TipTerSize"
 msgid "Resulting area in meters (side length). Equals vertex count multipled by triangle size."
 msgstr ""
 
-msgctxt "InputToggleVeget"
-msgid "V - Disable / enable vegetation"
+msgctxt "Tracks"
+msgid "Tracks"
+msgstr ""
+
+msgctxt "InputFluidsSize"
+msgid "alt-LMB - size   alt-RMB - depth"
 msgstr ""
 
 msgctxt "TexCoordMul"
@@ -1427,6 +1459,10 @@ msgstr ""
 
 msgctxt "Right"
 msgid "Right"
+msgstr ""
+
+msgctxt "TipTerLAngSm"
+msgid "Angle smooth range (transition)."
 msgstr ""
 
 msgctxt "LODPointsDist"
@@ -1709,6 +1745,10 @@ msgctxt "LS_CLEANUP"
 msgid "Cleaning up"
 msgstr ""
 
+msgctxt "Difficulty"
+msgid "Difficulty"
+msgstr ""
+
 msgctxt "RplRename"
 msgid "Rename"
 msgstr ""
@@ -1901,8 +1941,8 @@ msgctxt "InputFluidsType"
 msgid "-,=  - change fluid type (water,mud,etc.)"
 msgstr ""
 
-msgctxt "TrackWidthAvg"
-msgid "Width avg."
+msgctxt "Distance"
+msgid "Distance"
 msgstr ""
 
 msgctxt "About"
@@ -1919,10 +1959,6 @@ msgstr ""
 
 msgctxt "AutoLoad"
 msgid "Auto Load track"
-msgstr ""
-
-msgctxt "Distance"
-msgid "Distance"
 msgstr ""
 
 msgctxt "RplGhost"
@@ -1961,8 +1997,8 @@ msgctxt "TipDiffuseTex"
 msgid "Diffuse texture (Specular in alpha)."
 msgstr ""
 
-msgctxt "Length"
-msgid "Length"
+msgctxt "VegetCol"
+msgid "Vegetation collision"
 msgstr ""
 
 msgctxt "AntiAliasing"
@@ -2073,8 +2109,8 @@ msgctxt "ReflMode_full"
 msgid "Full"
 msgstr ""
 
-msgctxt "TrackPipes"
-msgid "Pipes"
+msgctxt "Length"
+msgid "Length"
 msgstr ""
 
 msgctxt "Specular"
@@ -2217,6 +2253,10 @@ msgctxt "TipLTrMaxTerH"
 msgid "Terrain height above which model won't appear."
 msgstr ""
 
+msgctxt "TotalScore"
+msgid "Total score"
+msgstr ""
+
 msgctxt "TipModelPrev"
 msgid "Model preview image."
 msgstr ""
@@ -2271,6 +2311,10 @@ msgstr ""
 
 msgctxt "page"
 msgid "page"
+msgstr ""
+
+msgctxt "ChampStart"
+msgid "Start"
 msgstr ""
 
 msgctxt "InputMapSteering"
@@ -2483,6 +2527,10 @@ msgstr ""
 
 msgctxt "ColSat"
 msgid "Saturation"
+msgstr ""
+
+msgctxt "Scenery"
+msgid "Scenery"
 msgstr ""
 
 msgctxt "Track"
