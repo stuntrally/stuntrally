@@ -163,6 +163,8 @@ void App::slReflDist(SL)
 {
 	float v = 20.f + 1480.f * powf(val/res, 2.f);	if (bGI)  pSet->refl_dist = v;
 	if (valReflDist){	Fmt(s, "%4.0f m", v);	valReflDist->setCaption(s);  }
+	
+	recreateReflections();
 }
 void App::slReflMode(SL)
 {
