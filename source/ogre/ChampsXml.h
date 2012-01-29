@@ -23,7 +23,7 @@ public:
 	std::string name, descr;  // champ description
 	int diff;  // difficulty
 	int ver;  // ver, if changed reset progress..
-	float length, time;  // stats to display
+	float length;  // stats to display
 	int tutorial;  // test2 / tutorial1 / championship0
 
 	std::vector<ChampTrack> trks;

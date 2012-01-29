@@ -940,8 +940,8 @@
 						<Property key="ItemResizingPolicy" value="Fixed"/>
 					</Widget>
 					<Widget type="MultiListItem" skin="" position="314 0 51 203">
-						<Property key="Caption" value="#{Length}"/>
-						<Property key="ItemWidth" value="60"/>
+						<Property key="Caption" value="#{Time}"/>
+						<Property key="ItemWidth" value="80"/>
 						<Property key="ItemResizingPolicy" value="Fixed"/>
 					</Widget>
 					<Widget type="MultiListItem" skin="" position="365 0 40 203">

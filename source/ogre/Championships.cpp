@@ -111,7 +111,7 @@ void App::ChampsListUpdate()
 	liChamps->setIndexSelected(pSet->gui.champ_num);  //range..
 }
 
-///  Championships list  sel changed,  fill stages list
+///  Championships list  sel changed,  fill Stages list
 //---------------------------------------------------------------------
 void App::listChampChng(MyGUI::MultiListBox* chlist, size_t pos)
 {
@@ -133,15 +133,15 @@ void App::listChampChng(MyGUI::MultiListBox* chlist, size_t pos)
 		int id = tracksXml.trkmap[trk.name];  // if (id > 0)
 		const TrackInfo& ti = tracksXml.trks[id-1];
 
+		float time = (champs.trkTimes[trk.name] * trk.laps + 2) * (1.f - trk.factor);
+		allTime += time;  // sum trk time, total champ time
+
 		liStages->setSubItemNameAt(2,l, clr+ ti.scenery);
 		liStages->setSubItemNameAt(3,l, clrDiff[ti.diff]+ TR("#{Diff"+toStr(ti.diff)+"}"));
 
-		liStages->setSubItemNameAt(4,l, toStr(trk.laps));
-		sprintf(ss, "%5.1f", progress.champs[pos].trks[i].score);
+		liStages->setSubItemNameAt(4,l, "#80C0F0"+GetTimeString(time));  //toStr(trk.laps)
+		sprintf(ss, "#E0F0FF%5.1f", progress.champs[pos].trks[i].score);
 		liStages->setSubItemNameAt(5,l, ss);
-
-		//  sum trk time, total champ time
-		allTime += (champs.trkTimes[trk.name] * trk.laps + 2) * (1.f - trk.factor);
 	}
 	//  descr
 	EditBox* ed = mGUI->findWidget<EditBox>("ChampDescr");
