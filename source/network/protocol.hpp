@@ -41,7 +41,8 @@ enum PacketType {
 	GAME_LIST,          // Client requests master server to list games
 	GAME_ACCEPTED,      // Master server sends response for newly accepted games
 	GAME_STATUS,        // An available game (either client updates, or server reports)
-	START_GAME
+	START_GAME,         // Signal to start loading the game
+	START_COUNTDOWN     // Signal that loading has finished, start race
 };
 
 

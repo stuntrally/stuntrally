@@ -52,6 +52,9 @@ public:
 	/// @param broadcast set to true if the state change should be broadcasted to peers
 	void startGame(bool broadcast = true);
 
+	/// Signal that loading has finished
+	void loadingFinished();
+
 	/// Thread that periodically broadcasts peer and game state info, don't call directly
 	void senderThread();
 

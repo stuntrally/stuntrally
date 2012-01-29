@@ -21,6 +21,7 @@ struct PeerInfo {
 	std::string password; ///< Password for connecting
 	short peers; ///< Amount of peers connected
 	bool ready; ///< Ready state
+	bool loaded; ///< Can start race?
 	unsigned ping; ///< Average packet round-trip time
 	enum ConnectionState { DISCONNECTED = 0, CONNECTING = 1, CONNECTED = 2 } connection; ///< Connection state
 
