@@ -279,7 +279,7 @@ void App::ChampionshipAdvance(float timeCur)
 	LogO("|| Best time: " + toStr(timeBest));
 
 	const float decFactor = 1.5f;  // more means score will drop faster for longer times
-	/**  // test score +-10 sec diff
+	/**/  // test score +-10 sec diff
 	for (int i=-10; i <= 10; ++i)
 	{
 		float score = (1.f + (timeBest-timeCur-i)/timeBest * decFactor) * 100.f;

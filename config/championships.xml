@@ -114,10 +114,6 @@
 		<track name="A4-Snake"		laps="1" factor="0.1" />
 	</championship>
 
-<!--1 Easy (beginner) - eg. 3 short tracks
-	2 Medium - eg. 5 normal tracks 0W5-O4
-	3 Long eg. 3 long tracks and 5 normal-->
-
 <!--  Senery Championships  -->
 	<championship name="Desert scenery" ver="1" difficulty="2" length="3" tutorial="3" 
 			descr="Desert championship. All tracks for this scenery in their appearance order.">
@@ -303,7 +299,7 @@
 		<track name="0W8-pipe8x8"	time="61.1"/>
 
 		<track name="S10-Pipe88"	time="67.3"/>
-		<track name="S12-Infinity"	time="94.0"/>
+		<track name="S12-Infinity"	time="103.0"/>
 		<!--49-->
 		<track name="M1-Hills"		time="34.2"/>
 		<track name="M2-Bumps"		time="60.5"/>
@@ -313,7 +309,7 @@
 		<track name="G1-Long"		time="315.3"/>
 		<track name="F10-MntnTrail"	time="161.3"/>
 		<!--55-->
-		<track name="A2-PipeCoil"	time="47.5"/>
+		<track name="A2-PipeCoil"	time="50.5"/>
 		<track name="I3-Islands"	time="110.5"/>
 		<!--57-->
 		<track name="J11-Temple"	time="46.0"/>
