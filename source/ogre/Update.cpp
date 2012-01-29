@@ -577,9 +577,9 @@ void App::newPoses()
 					//  Finish
 					if (carM->bInSt && carM->iNumChks == ncs && carM->iCurChk != -1)
 					{
-						float timeCur = pGame->timer.GetPlayerTime();
 						bool best = pGame->timer.Lap(iCarNum, 0,0, true,
 							pSet->game.trackreverse/*<, pSet->boost_type*/);  //pGame->cartimerids[pCar] ?
+						float timeCur = pGame->timer.GetPlayerTimeTot();  //GetPlayerTime();
 
 						if (!pSet->rpl_bestonly || best)  ///  new best lap, save ghost
 						if (iCarNum==0 && pSet->rpl_rec)  // for many, only 1st-

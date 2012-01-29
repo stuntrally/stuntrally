@@ -91,14 +91,14 @@ void App::ChampsListUpdate()
 {
 	const char clrT[4][8] = {"#A0F0FF", "#FFFFB0", "#FFA0A0", "#80FF80"};
 
-	liChamps->removeAllItems();  char ss[64];
-	for (int i=0; i < champs.champs.size(); ++i)
+	liChamps->removeAllItems();  char ss[64];  int n=1;
+	for (int i=0; i < champs.champs.size(); ++i,++n)
 	{
 		const Champ& ch = champs.champs[i];
 		const ProgressChamp& pc = progress.champs[i];
 		int ntrks = pc.trks.size();
 		const String& clr = clrT[ch.tutorial];
-		liChamps->addItem(toStr(i/10)+toStr(i%10), 0);  int l = liChamps->getItemCount()-1;
+		liChamps->addItem(toStr(n/10)+toStr(n%10), 0);  int l = liChamps->getItemCount()-1;
 		liChamps->setSubItemNameAt(1,l, clr+ ch.name.c_str());
 		liChamps->setSubItemNameAt(2,l, clrDiff[ch.diff]+ TR("#{Diff"+toStr(ch.diff)+"}"));
 		liChamps->setSubItemNameAt(3,l, clrDiff[std::min(7,ntrks*2/3+1)]+ toStr(ntrks));
@@ -121,23 +121,27 @@ void App::listChampChng(MyGUI::MultiListBox* chlist, size_t pos)
 	
 	//  update champ stages
 	liStages->removeAllItems();  char ss[64];
+	float allTime = 0.f;  int n=1;
 	const Champ& ch = champs.champs[pos];
-	for (int i=0; i < ch.trks.size(); ++i)
+	for (int i=0; i < ch.trks.size(); ++i,++n)
 	{
 		const ChampTrack& trk = ch.trks[i];
 		String clr = GetSceneryColor(trk.name);
-		liStages->addItem(clr+ toStr(i/10)+toStr(i%10), 0);  int l = liStages->getItemCount()-1;
+		liStages->addItem(clr+ toStr(n/10)+toStr(n%10), 0);  int l = liStages->getItemCount()-1;
 		liStages->setSubItemNameAt(1,l, clr+ trk.name.c_str());
 
-		int id = tracksXml.trkmap[trk.name];
+		int id = tracksXml.trkmap[trk.name];  // if (id > 0)
 		const TrackInfo& ti = tracksXml.trks[id-1];
 
 		liStages->setSubItemNameAt(2,l, clr+ ti.scenery);
-		liStages->setSubItemNameAt(3,l, clrDiff[ch.diff]+ TR("#{Diff"+toStr(ch.diff)+"}"));
+		liStages->setSubItemNameAt(3,l, clrDiff[ti.diff]+ TR("#{Diff"+toStr(ti.diff)+"}"));
 
 		liStages->setSubItemNameAt(4,l, toStr(trk.laps));
 		sprintf(ss, "%5.1f", progress.champs[pos].trks[i].score);
 		liStages->setSubItemNameAt(5,l, ss);
+
+		//  sum trk time, total champ time
+		allTime += (champs.trkTimes[trk.name] * trk.laps + 2) * (1.f - trk.factor);
 	}
 	//  descr
 	EditBox* ed = mGUI->findWidget<EditBox>("ChampDescr");
@@ -151,9 +155,9 @@ void App::listChampChng(MyGUI::MultiListBox* chlist, size_t pos)
 	if (txt)  txt->setCaption(toStr(ch.trks.size()));
 
 	txt = (TextBox*)mWndChamp->findWidget("valChDist");
-	if (txt)  txt->setCaption(toStr(ch.length));  // sum from find tracks..
+	if (txt)  txt->setCaption(/*toStr(ch.length)*/"-");  // sum from find tracks..
 	txt = (TextBox*)mWndChamp->findWidget("valChTime");
-	if (txt)  txt->setCaption(toStr(ch.time));    // sum champs.trkTimes..
+	if (txt)  txt->setCaption(GetTimeString(allTime));
 
 	txt = (TextBox*)mWndChamp->findWidget("valChProgress");
 	sprintf(ss, "%5.1f %%", 100.f * progress.champs[pos].curTrack / champs.champs[pos].trks.size());
@@ -165,7 +169,7 @@ void App::listChampChng(MyGUI::MultiListBox* chlist, size_t pos)
 //---------------------------------------------------------------------
 
 
-///  champ start  -----
+///  champ start
 void App::btnChampStart(WP)
 {
 	pSet->gui.champ_num = liChamps->getIndexSelected();
@@ -314,11 +318,11 @@ void App::ChampionshipAdvance(float timeCur)
 		ProgressSave();
 
 		LogO("|| Champ finished");
-		LogO("|| Total score: " + toStr(score));  //..
+		LogO("|| Total score: " + toStr(score));
 		
 		//  upd champ end [window]
 		char ss[64];
-		sprintf(ss, "%5.1f", score);
+		sprintf(ss, "%5.1f", pc.score);
 		String s;
 		s = TR("#{Championship}") + ": " + ch.name + "\n" +
 			TR("#{TotalScore}") + ": " + ss;
@@ -345,7 +349,7 @@ void App::ChampFillStageInfo(bool finished)
 		sprintf(ss, "%5.1f", pc.trks[pc.curTrack].score);
 		s += TR("#{Finished}") + ".\n" +
 			TR("#{Score}") + ": " + ss + "\n";
-		//trk.passScore;
+		//trk.passScore;  //..
 	}
 	edChampStage->setCaption(s);
 	
