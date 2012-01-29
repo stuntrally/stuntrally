@@ -2,7 +2,7 @@
 <!--  Test  -->
 	<championship name="Test-1" ver="1" difficulty="0" length="1" time="6" tutorial="2"
 			descr="Fastest 1 track, to test logic.">
-		<track name="TestC6-temp" laps="2" factor="0.1" />
+		<track name="TestC6-temp" laps="1" factor="0.1" />
 	</championship>
 	<championship name="Test-3" ver="1" difficulty="0" length="2" time="24" tutorial="2"
 			descr="Fastest 3 tracks, to test logic.">

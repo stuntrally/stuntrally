@@ -272,13 +272,20 @@ void App::ChampionshipAdvance(float timeCur)
 	timeBest *= trk.laps;
 	timeBest += 2;  // first lap longer, time at start spent to gain car valocity
 	float factor = ch.trks[pc.curTrack].factor;  // how close to best you need to be
-	timeBest *= 1.0f - factor;
+	timeBest *= 1.0f + factor;
 
 	LogO("|| Track: " + trk.name);
 	LogO("|| Your time: " + toStr(timeCur));
 	LogO("|| Best time: " + toStr(timeBest));
 
-	float score = timeCur / timeBest * 100.f;	//(timeBest-timeCur)/timeBest * 100.f;  //-
+	const float decFactor = 1.5f;  // more means score will drop faster for longer times
+	/**  // test score +-10 sec diff
+	for (int i=-10; i <= 10; ++i)
+	{
+		float score = (1.f + (timeBest-timeCur-i)/timeBest * decFactor) * 100.f;
+		LogO("|| var, add time: "+toStr(i)+" sec, score: "+toStr(score));
+	}/**/
+	float score = (1.f + (timeBest-timeCur)/timeBest * decFactor) * 100.f;
 	bool passed = true;  // score < trk.passScore;  // didnt qualify, repeat current stage
 	LogO("|| Score: " + toStr(score) + "  Passed: " + (passed ? "yes":"no"));
 	pc.trks[pc.curTrack].score = score;
