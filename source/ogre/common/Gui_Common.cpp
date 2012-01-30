@@ -662,7 +662,10 @@ void App::ResizeOptWnd()
 	if (bnQuit)  //  reposition Quit btn
 		bnQuit->setCoord(wx - 0.09*wx, 0, 0.09*wx, 0.03*wy);
 
-	updTrkListDim();  updChampListDim();  // resize lists
+	updTrkListDim();
+	#ifndef ROAD_EDITOR
+	updChampListDim();  // resize lists
+	#endif
 }
 
 void App::chkVidFullscr(WP wp)

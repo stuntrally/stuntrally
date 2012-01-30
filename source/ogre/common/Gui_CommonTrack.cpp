@@ -143,9 +143,10 @@ void App::AddTrkL(std::string name, int user, const TrackInfo* ti)
 //  column widths on tabs: tracks, champs, stages
 const int wi = 32;
 const int App::TcolW[32] = {150, 32, 80, 40, wi, wi, wi, wi, wi, wi, wi, wi, wi, wi, 20};
+#ifndef ROAD_EDITOR
 const int App::ChColW[8] = {30, 180, 100, 60, 80, 60, 40};
 const int App::StColW[8] = {30, 180, 100, 90, 80, 70};
-			    
+#endif
 
 //  done once with init gui
 //-----------------------------------------------------------------------------------------------------------
