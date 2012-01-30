@@ -3,12 +3,14 @@
 	<Tag name="TipTreeDens">Objektien (puut, kivet, jne.) määrä.</Tag>
 	<Tag name="CamSpeed">Kameran nopeus</Tag>
 	<Tag name="Density">Tiheys</Tag>
+	<Tag name="TipDustSize">Pölyhiukkasten koko.</Tag>
 	<Tag name="TipGrassSwayDistr">Ruohikon huojunnan jakauma (satunnaisuus)</Tag>
 	<Tag name="InpSet_AxisFull">Axis Full</Tag>
+	<Tag name="Progress">Progress</Tag>
 	<Tag name="TipSunDirYaw">Sun direction - yaw angle.</Tag>
 	<Tag name="InputStartMeet">car will meet (next+ / prev-) point numbers</Tag>
 	<Tag name="TipAutoGearbox">Poista valinta saadaksesi manuaali vaihteet.</Tag>
-	<Tag name="InputHeaderTxt1">Action</Tag>
+	<Tag name="LS_MISC">Finishing</Tag>
 	<Tag name="InputHeaderTxt2">Binding</Tag>
 	<Tag name="InputHeaderTxt3">Value</Tag>
 	<Tag name="AndUsing">and using</Tag>
@@ -50,7 +52,7 @@
 	<Tag name="FuelBoost">Boost Fuel</Tag>
 	<Tag name="pipes">pipes</Tag>
 	<Tag name="InputFluidsTile">[,]  - change texture tiling</Tag>
-	<Tag name="LS_MISC">Finishing</Tag>
+	<Tag name="InputHeaderTxt1">Action</Tag>
 	<Tag name="InputReloadTrack">F5 - lataa rata uudelleen</Tag>
 	<Tag name="Game">Game</Tag>
 	<Tag name="TipTerLNoiseOnly">Use only noise (no angle or height ranges)</Tag>
@@ -107,7 +109,7 @@
 	<Tag name="banked">banked</Tag>
 	<Tag name="frenzy">frenzy (curly road)</Tag>
 	<Tag name="InputRoadChkRadius">K,L   - checkpoint radius (chkR 0 - none)</Tag>
-	<Tag name="TipDustSize">Pölyhiukkasten koko.</Tag>
+	<Tag name="Time">Time</Tag>
 	<Tag name="InputRoadInsAlt">alt-shift - at start   alt-ctrl - at end</Tag>
 	<Tag name="RearThrottleInverse">Rear throttle inverse</Tag>
 	<Tag name="MessageBox_Yes">Yes</Tag>
@@ -124,6 +126,7 @@
 	<Tag name="InputAssignKey">&lt;Paina näppäintä&gt;</Tag>
 	<Tag name="Wireframe">Rautalankamalli</Tag>
 	<Tag name="ChangeTrack">Vaihda rataa</Tag>
+	<Tag name="Score">Score</Tag>
 	<Tag name="TerrainSize">Maaston koko</Tag>
 	<Tag name="NetServer">Server</Tag>
 	<Tag name="InputRoadWidth">- vaihda tien leveyttä</Tag>
@@ -136,6 +139,7 @@
 	<Tag name="max">maksimi</Tag>
 	<Tag name="TipTerTriSize">Terrain triangle size in [meters] (recommended: 1 - 2, use more for big track area). Changed after Update (F8).</Tag>
 	<Tag name="MessageBox_No">No</Tag>
+	<Tag name="Length">Pituus</Tag>
 	<Tag name="TipCarsList">Cars list, click to select (and see image). Press [Change car] and then [New Game] to drive with it.</Tag>
 	<Tag name="Model">Malli</Tag>
 	<Tag name="InpSet_AxisHalf">Axis Half</Tag>
@@ -155,7 +159,7 @@
 	<Tag name="wind">tuuli</Tag>
 	<Tag name="TipTerLHMax">Ending terrain height for layer.</Tag>
 	<Tag name="ChampEndCongrats">Congratulations !</Tag>
-	<Tag name="TipRoadStats">Whole road statistics.</Tag>
+	<Tag name="LS_CAR">Latadaan autoa</Tag>
 	<Tag name="MaxScale">maksimi skaalaus</Tag>
 	<Tag name="Fluids">Fluids</Tag>
 	<Tag name="NetNickname">Nickname</Tag>
@@ -219,6 +223,7 @@
 	<Tag name="Vegetation">Vegetation</Tag>
 	<Tag name="ssao">SSAO</Tag>
 	<Tag name="Always">Always</Tag>
+	<Tag name="Stage">Stage</Tag>
 	<Tag name="NetRefreshList">Get/refresh list</Tag>
 	<Tag name="TerGenPow">Power (shape)</Tag>
 	<Tag name="MessageBox_Abort">Abort</Tag>
@@ -228,6 +233,7 @@
 	<Tag name="Used">Used</Tag>
 	<Tag name="TipMinimapScrnEditor">Minimap of selected track, view from top.</Tag>
 	<Tag name="RplVersion">Versio</Tag>
+	<Tag name="Stages">Stages</Tag>
 	<Tag name="Options">Valinnat</Tag>
 	<Tag name="Delete">Poista</Tag>
 	<Tag name="Rename">Nimeä uudelleen</Tag>
@@ -285,7 +291,7 @@
 	<Tag name="ApplyShadows">Käytä varjoja</Tag>
 	<Tag name="TipFogEndClr">Fog end color. R G B components 0 to 1 (eg. 0.7 0.8 0.9)</Tag>
 	<Tag name="Multiplayer">Multiplayer</Tag>
-	<Tag name="InputToggleVeget">V - Disable / enable vegetation</Tag>
+	<Tag name="VegetCol">Kasvillisuuden törmäystunnistus</Tag>
 	<Tag name="Particles">Hiukkaset</Tag>
 	<Tag name="Other">Muu</Tag>
 	<Tag name="TipTerLAngSm">Angle smooth range (transition).</Tag>
@@ -295,6 +301,7 @@
 	<Tag name="min">minimi</Tag>
 	<Tag name="BumpWavelen">Bump:  WaveLen</Tag>
 	<Tag name="InputRoadPipeAngle">[,]   - pipe angle (no pipe when 0)</Tag>
+	<Tag name="Finished">Finished</Tag>
 	<Tag name="Weather">Sää</Tag>
 	<Tag name="InputMapRestartGame">Uusi peli</Tag>
 	<Tag name="Graphics">Grafiikat</Tag>
@@ -302,6 +309,7 @@
 	<Tag name="CarClrRandom">Random</Tag>
 	<Tag name="CarDebugText">Car debug text </Tag>
 	<Tag name="InputWheelShape">K,L  -  Brush shape</Tag>
+	<Tag name="Name">Name</Tag>
 	<Tag name="RplSize">koko</Tag>
 	<Tag name="TipMudInt">Mud particles intensity.</Tag>
 	<Tag name="Mode">tila</Tag>
@@ -330,10 +338,11 @@
 	<Tag name="WrongChk">Väärä tarkistuspiste</Tag>
 	<Tag name="DisableEdit">Disable for edit</Tag>
 	<Tag name="MinimapUpdSkip">Minimap update skip</Tag>
-	<Tag name="LS_CAR">Latadaan autoa</Tag>
+	<Tag name="TipRoadStats">Whole road statistics.</Tag>
 	<Tag name="GraphicsAllSettings">Change all graphics settings to preset:</Tag>
 	<Tag name="InputTerPaint">A - Paint Textures (layers)</Tag>
 	<Tag name="NetPort">Port</Tag>
+	<Tag name="Tracks">Tracks</Tag>
 	<Tag name="InputFluidsSize">alt-LMB - size   alt-RMB - depth</Tag>
 	<Tag name="TexCoordMul">Tex Coord mul.</Tag>
 	<Tag name="Digits">Numerot (vaihde, nopeus)</Tag>
@@ -415,6 +424,7 @@
 	<Tag name="InputCamControl2">LMB - rotate  RMB - move  MMB - zoom</Tag>
 	<Tag name="Diff5">Very Hard</Tag>
 	<Tag name="LS_CLEANUP">Siistitään</Tag>
+	<Tag name="Difficulty">Difficulty</Tag>
 	<Tag name="RplRename">Muuta nimeä</Tag>
 	<Tag name="EnterSave">Enter - tallenna</Tag>
 	<Tag name="InputMapLastChk">Go to last checkp.</Tag>
@@ -467,7 +477,6 @@
 	<Tag name="InputFluidsType">-,=  - change fluid type (water,mud,etc.)</Tag>
 	<Tag name="TrackWidthAvg">Width avg.</Tag>
 	<Tag name="About">About</Tag>
-	<Tag name="TrackPipes">Pipes</Tag>
 	<Tag name="NetAddress">Address</Tag>
 	<Tag name="AutoLoad">Auto Load track</Tag>
 	<Tag name="Distance">Distance</Tag>
@@ -480,7 +489,7 @@
 	<Tag name="TipTerLNoise">Factor of additional noise.</Tag>
 	<Tag name="InputTerDeform">D - Deform  (LMB up, RMB down)</Tag>
 	<Tag name="TipDiffuseTex">Diffuse texture (Specular in alpha).</Tag>
-	<Tag name="VegetCol">Kasvillisuuden törmäystunnistus</Tag>
+	<Tag name="InputToggleVeget">V - Disable / enable vegetation</Tag>
 	<Tag name="Track">Track</Tag>
 	<Tag name="RoadStats">Road Stats</Tag>
 	<Tag name="Tools">Tools</Tag>
@@ -510,7 +519,7 @@
 	<Tag name="DeleteRoad">Delete Road</Tag>
 	<Tag name="Setup">Setup</Tag>
 	<Tag name="ReflMode_full">Full</Tag>
-	<Tag name="Length">Pituus</Tag>
+	<Tag name="TrackPipes">Pipes</Tag>
 	<Tag name="Specular">Specular</Tag>
 	<Tag name="HeightOffset">Height offset</Tag>
 	<Tag name="Amplitude">Amplitude</Tag>
@@ -547,6 +556,7 @@
 	<Tag name="InputRoadAltLMB">alt-LMB (or 1,2)</Tag>
 	<Tag name="TerLayers">Maaston kerrokset</Tag>
 	<Tag name="TipLTrMaxTerH">Terrain height above which model won't appear.</Tag>
+	<Tag name="TotalScore">Total score</Tag>
 	<Tag name="TipModelPrev">Model preview image.</Tag>
 	<Tag name="InputRoadEdit">R - edit road mode</Tag>
 	<Tag name="jumps">jumps</Tag>
@@ -561,6 +571,7 @@
 	<Tag name="NetRouterTip">Router port forwarding configuration might be required in order to allow peers to connect to the local port.</Tag>
 	<Tag name="NewGame">New Game</Tag>
 	<Tag name="page">page</Tag>
+	<Tag name="ChampStart">Start</Tag>
 	<Tag name="Replay">Replay</Tag>
 	<Tag name="InputDetailsFor">Details for</Tag>
 	<Tag name="GraphicsAll_Ultra">Ultra</Tag>
@@ -616,6 +627,7 @@
 	<Tag name="InputRoadHeight">- muuta korkeutta</Tag>
 	<Tag name="TipSunSpecular">Sun light specular (shiny) color. R G B components 0 to 1 (eg. 0.6 0.6 0.6)</Tag>
 	<Tag name="LS_TER">Ladataan maastoa</Tag>
+	<Tag name="Scenery">Scenery</Tag>
 	<Tag name="AntiAliasing">Antialiasing</Tag>
 	<Tag name="ScaleMul">Scale multiplier</Tag>
 	<Tag name="Never">Never</Tag>
@@ -643,18 +655,6 @@
 	<Tag name="InputNextOptTab">F2,F3 - prev,next Options tab</Tag>
 	<Tag name="RollingDrag">Rolling Drag</Tag>
 	<Tag name="RplAll">All</Tag>
-	<Tag name="Progress">Progress</Tag>
-	<Tag name="Time">Time</Tag>
-	<Tag name="Score">Score</Tag>
-	<Tag name="Stage">Stage</Tag>
-	<Tag name="Stages">Stages</Tag>
-	<Tag name="Finished">Finished</Tag>
-	<Tag name="Name">Name</Tag>
-	<Tag name="Tracks">Tracks</Tag>
-	<Tag name="Difficulty">Difficulty</Tag>
-	<Tag name="TotalScore">Total score</Tag>
-	<Tag name="ChampStart">Start</Tag>
-	<Tag name="Scenery">Scenery</Tag>
 	<Tag name="GameVersion">1.5</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 
