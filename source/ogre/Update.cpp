@@ -70,7 +70,7 @@ bool App::frameStart(Real time)
 	{	bWindowResized = false;
 		ResizeOptWnd();
 		SizeGUI();
-		updTrkListDim();
+		updTrkListDim();  updChampListDim();  // resize lists
 		bSizeHUD = true;
 	}
 		

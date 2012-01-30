@@ -428,13 +428,44 @@ void App::InitGui()
 
 	//  championships
 	//------------------------------------------------------------------------
-	liChamps = mGUI->findWidget<MultiListBox>("MListChamps");
-	liChamps->eventListChangePosition += newDelegate(this, &App::listChampChng);
-	liStages = mGUI->findWidget<MultiListBox>("MListStages");
+	//  champs list
+	MyGUI::MultiList2* li;
+	TabItem* trktab = (TabItem*)mWndChamp->findWidget("TabChamps");
+	li = trktab->createWidget<MultiList2>("MultiListBox",0,0,400,300, Align::Left | Align::VStretch);
+	li->eventListChangePosition += newDelegate(this, &App::listChampChng);
+   	li->setVisible(false);
+	
+	li->removeAllColumns();  int c=0;
+	li->addColumn("N", ChColW[c++]);
+	li->addColumn(TR("#{Name}"), ChColW[c++]);
+	li->addColumn(TR("#{Difficulty}"), ChColW[c++]);
+	li->addColumn(TR("#{Tracks}"), ChColW[c++]);
+	li->addColumn(TR("#{Progress}"), ChColW[c++]);
+	li->addColumn(TR("#{Score}"), ChColW[c++]);
+	li->addColumn(" ", ChColW[c++]);
+	liChamps = li;
+
+	//  stages list
+	trktab = (TabItem*)mWndChamp->findWidget("TabStages");
+	li = trktab->createWidget<MultiList2>("MultiListBox",0,0,400,300, Align::Left | Align::VStretch);
+	//li->eventListChangePosition += newDelegate(this, &App::listChampChng);
+   	li->setVisible(false);
+	
+	li->removeAllColumns();  c=0;
+	li->addColumn("N", StColW[c++]);
+	li->addColumn(TR("#{Track}"), StColW[c++]);
+	li->addColumn(TR("#{Scenery}"), StColW[c++]);
+	li->addColumn(TR("#{Difficulty}"), StColW[c++]);
+	li->addColumn(TR("#{Time}"), StColW[c++]);
+	li->addColumn(TR("#{Score}"), StColW[c++]);
+	li->addColumn(" ", StColW[c++]);
+	liStages = li;
+
+	updChampListDim();
 	ChampsListUpdate();
 	listChampChng(liChamps, liChamps->getIndexSelected());
-	//liChamps->eventListChangePosition += newDelegate(this, &App::listStagesChng);
-	//^ Track tab for details ...
+	//^ Track tab for details TODO...
+
 
 	Btn("btnChampStart", btnChampStart);
 	Btn("btnChampStageBack", btnChampStageBack);
@@ -445,12 +476,12 @@ void App::InitGui()
 	edChampEnd = (EditBox*)mWndChampEnd->findWidget("ChampEndText");
 	imgChampStage = (ImageBox*)mWndChampStage->findWidget("ChampStageImg");
 
-	tab = mWndTabsGame;
+	//tab = mWndTabsGame;  // test hiding tabs
 	//tab->getItemAt(2)->setVisible(false);
 	//tab->getItemAt(2)->setEnabledSilent(false);
 	//tab->updateBar();
-	tab->setButtonWidthAt(2,0);
-	//tab->removeItemAt(2);
+	//tab->setButtonWidthAt(2,0);
+	//tab->removeItemAt(2);  // works only ?
 
 
 	bGI = true;  // gui inited, gui events can now save vals

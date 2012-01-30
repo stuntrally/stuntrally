@@ -662,7 +662,7 @@ void App::ResizeOptWnd()
 	if (bnQuit)  //  reposition Quit btn
 		bnQuit->setCoord(wx - 0.09*wx, 0, 0.09*wx, 0.03*wy);
 
-	updTrkListDim();
+	updTrkListDim();  updChampListDim();  // resize lists
 }
 
 void App::chkVidFullscr(WP wp)

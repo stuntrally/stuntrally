@@ -776,7 +776,7 @@
 	<Widget type="Window" skin="WindowC" position="576 328 648 440" align="Center" layer="Popup" name="WndChampStage">
 		<Property key="Caption" value="#{Championship}"/>
 		<Property key="Alpha" value="0.8"/>
-		<Property key="Colour" value="0 1 0.1"/>
+		<Property key="Colour" value="0.4 1 0.4"/>
 		<Widget type="Button" skin="Button" position="160 344 144 40" name="btnChampStageBack">
 			<Property key="Colour" value="0.47 0.47 0.47"/>
 			<Property key="TextColour" value="0.9 0.9 1"/>
@@ -785,7 +785,7 @@
 			<!--<UserString key="RelativeTo" value="WndChampStage"/>-->
 		</Widget>
 		<Widget type="Button" skin="Button" position="344 344 144 40" name="btnChampStageStart">
-			<Property key="Caption" value="#{Start}"/>
+			<Property key="Caption" value="#{ChampStart}"/>
 			<Property key="Colour" value="0.6 0.8 1"/>
 			<Property key="TextColour" value="0.8 0.9 1"/>
 			<Property key="InheritsAlpha" value="false"/>
@@ -859,54 +859,17 @@
 				<Property key="Colour" value="1 0.6 0.2"/>
 				<UserString key="RelativeTo" value="ChampWnd"/>
 			</Widget>
-			<Widget type="TabItem" skin="" position="2 24 794 572">
+			<Widget type="TabItem" skin="" position="2 24 794 572" name="TabChamps">
 				<Property key="Caption" value="#{Championship}"/>
 				<UserString key="RelativeTo" value="ChampWnd"/>
-				<Widget type="MultiListBox" skin="MultiListBox" position="32 48 400 360" name="MListChamps">
-					<UserString key="RelativeTo" value="ChampWnd"/>
-					<Widget type="MultiListItem" skin="" position="0 0 30 315">
-						<Property key="Caption" value="N"/>
-						<Property key="ItemWidth" value="30"/>
-						<Property key="ItemResizingPolicy" value="Fixed"/>
-					</Widget>
-					<Widget type="MultiListItem" skin="" position="30 0 160 315">
-						<Property key="Caption" value="#{Name}"/>
-						<Property key="ItemWidth" value="180"/>
-						<Property key="ItemResizingPolicy" value="Fixed"/>
-					</Widget>
-					<Widget type="MultiListItem" skin="" position="190 0 140 315">
-						<Property key="Caption" value="#{Difficulty}"/>
-						<Property key="ItemWidth" value="100"/>
-						<Property key="ItemResizingPolicy" value="Fixed"/>
-					</Widget>
-					<Widget type="MultiListItem" skin="" position="330 0 64 315">
-						<Property key="Caption" value="#{Tracks}"/>
-						<Property key="ItemWidth" value="60"/>
-						<Property key="ItemResizingPolicy" value="Fixed"/>
-					</Widget>
-					<Widget type="MultiListItem" skin="" position="394 0 76 315">
-						<Property key="Caption" value="#{Progress}"/>
-						<Property key="ItemWidth" value="80"/>
-						<Property key="ItemResizingPolicy" value="Fixed"/>
-					</Widget>
-					<Widget type="MultiListItem" skin="" position="470 0 40 315">
-						<Property key="Caption" value="#{Score}"/>
-						<Property key="ItemWidth" value="60"/>
-						<Property key="ItemResizingPolicy" value="Fixed"/>
-					</Widget>
-					<Widget type="MultiListItem" skin="" position="570 0 40 315">
-						<Property key="Caption" value=" "/>
-						<Property key="ItemWidth" value="40"/>
-						<Property key="ItemResizingPolicy" value="Fixed"/>
-					</Widget>
-				</Widget>
+				<UserString key="RelativeTo" value="ChampWnd"/>
 				<Widget type="Button" skin="Button" position="320 460 144 40" name="btnChampStart">
 					<Property key="Caption" value="#{ChampStart}"/>
 					<Property key="Colour" value="0.6 0.6 1"/>
 					<Property key="TextColour" value="0.9 0.9 1"/>
 					<UserString key="RelativeTo" value="ChampWnd"/>
 				</Widget>
-				<Widget type="EditBox" skin="EditBoxEmpty" position="466 48 300 88" name="ChampDescr">
+				<Widget type="EditBox" skin="EditBoxEmpty" position="476 48 280 88" name="ChampDescr">
 					<Property key="TextColour" value="0.6 0.9 1.0"/>
 					<Property key="ReadOnly" value="true"/>
 					<Property key="MultiLine" value="true"/>
@@ -914,42 +877,9 @@
 					<UserString key="RelativeTo" value="ChampWnd"/>
 				</Widget>
 			</Widget>
-			<Widget type="TabItem" skin="" position="2 24 794 572">
+			<Widget type="TabItem" skin="" position="2 24 794 572" name="TabStages">
 				<Property key="Caption" value="#{Stages}"/>
 				<UserString key="RelativeTo" value="ChampWnd"/>
-				<Widget type="MultiListBox" skin="MultiListBox" position="32 48 400 360" name="MListStages">
-					<UserString key="RelativeTo" value="ChampWnd"/>
-					<Widget type="MultiListItem" skin="" position="0 0 30 203">
-						<Property key="Caption" value="N"/>
-						<Property key="ItemWidth" value="30"/>
-						<Property key="ItemResizingPolicy" value="Fixed"/>
-					</Widget>
-					<Widget type="MultiListItem" skin="" position="30 0 200 203">
-						<Property key="Caption" value="#{Track}"/>
-						<Property key="ItemWidth" value="180"/>
-						<Property key="ItemResizingPolicy" value="Fixed"/>
-					</Widget>
-					<Widget type="MultiListItem" skin="" position="230 0 56 203">
-						<Property key="Caption" value="#{Scenery}"/>
-						<Property key="ItemWidth" value="100"/>
-						<Property key="ItemResizingPolicy" value="Fixed"/>
-					</Widget>
-					<Widget type="MultiListItem" skin="" position="286 0 28 203">
-						<Property key="Caption" value="#{Difficulty}"/>
-						<Property key="ItemWidth" value="90"/>
-						<Property key="ItemResizingPolicy" value="Fixed"/>
-					</Widget>
-					<Widget type="MultiListItem" skin="" position="314 0 51 203">
-						<Property key="Caption" value="#{Time}"/>
-						<Property key="ItemWidth" value="80"/>
-						<Property key="ItemResizingPolicy" value="Fixed"/>
-					</Widget>
-					<Widget type="MultiListItem" skin="" position="365 0 40 203">
-						<Property key="Caption" value="#{Score}"/>
-						<Property key="ItemWidth" value="70"/>
-						<Property key="ItemResizingPolicy" value="Fixed"/>
-					</Widget>
-				</Widget>
 				<Widget type="TextBox" skin="TextBox" position="496 48 136 24">
 					<Property key="Caption" value="#{Difficulty}"/>
 					<Property key="TextColour" value="0.9 0.4 0.4"/>

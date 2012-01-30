@@ -219,8 +219,9 @@ protected:
 	MyGUI::StaticTextPtr valTrk, stTrk[StTrk], infTrk[InfTrk];
 
 	void listTrackChng(MyGUI::MultiList2* li, size_t pos), TrackListUpd(bool resetNotFound=false);
-	TracksXml tracksXml;  void btnTrkView1(WP),btnTrkView2(WP),ChangeTrackView(bool full),updTrkListDim();
-	const static int TcolW[32];
+	TracksXml tracksXml;  void btnTrkView1(WP),btnTrkView2(WP),ChangeTrackView(bool full);
+	void updTrkListDim(),updChampListDim();
+	const static int TcolW[32],ChColW[8],StColW[8];
 
 	void edTrkFind(MyGUI::EditPtr);  Ogre::String sTrkFind;  MyGUI::EditPtr edFind;
 	strlist liTracks,liTracksUser;  void FillTrackLists();
@@ -248,8 +249,8 @@ protected:
 	void ChampNewGame(), ChampLoadEnd(), ChampsListUpdate(),
 		ChampFillStageInfo(bool finished), ChampionshipAdvance(float timeCur);
 
-	MyGUI::MultiListBox* liChamps, *liStages;
-	void listChampChng(MyGUI::MultiListBox* li, size_t pos);
+	MyGUI::MultiList2* liChamps, *liStages;
+	void listChampChng(MyGUI::MultiList2* li, size_t pos);
 	void btnChampStart(WP), btnChampStageBack(WP), btnChampStageStart(WP), btnChampEndClose(WP);
 	MyGUI::EditBox* edChampStage, *edChampEnd;  MyGUI::ImageBox * imgChampStage;
 	

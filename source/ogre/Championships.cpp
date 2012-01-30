@@ -1,7 +1,9 @@
 #include "pch.h"
-#include "Defines.h"			 #include "../vdrift/pathmanager.h"
+#include "Defines.h"
+#include "../vdrift/pathmanager.h"
 #include "../vdrift/game.h"
 #include "OgreGame.h"
+#include "common/MultiList2.h"
 
 using namespace std;
 using namespace Ogre;
@@ -132,11 +134,10 @@ void App::ChampsListUpdate()
 
 ///  Championships list  sel changed,  fill Stages list
 //---------------------------------------------------------------------
-void App::listChampChng(MyGUI::MultiListBox* chlist, size_t pos)
+void App::listChampChng(MyGUI::MultiList2* chlist, size_t pos)
 {
 	if (pos < 0)  return;
 	if (pos >= champs.champs.size())  {  LogO("Error champ sel > size.");  return;  }
-	//if (pos >= progress.champs.size())  {  LogO("Error progres sel > size.");  return;  }
 	
 	//  update champ stages
 	liStages->removeAllItems();  char ss[64];
@@ -365,7 +366,7 @@ void App::ChampFillStageInfo(bool finished)
 	const ChampTrack& trk = ch.trks[pc.curTrack];
 
 	String s;  char ss[64];
-	s = /*TR("#{Championship}") + ": " +*/ ch.name + "\n" +
+	s = /*TR("#{Championship}") + ": " +*/ ch.name + "\n\n" +
 		TR("#{Stage}") + ": " + toStr(pc.curTrack+1) + "/" + toStr(ch.trks.size()) + "\n" +
 		TR("#{Track}") + ": " + trk.name + "\n\n";
 		//+"Difficulty: " + tracksXml. + "\n";
