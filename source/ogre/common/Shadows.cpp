@@ -11,8 +11,8 @@
 	#include "../QTimer.h"
 #else
 	#include "../OgreGame.h"
-	#include "../vdrift/settings.h"
-	#include "../road/Road.h"
+	#include "../../vdrift/settings.h"
+	#include "../../road/Road.h"
 	#include "../SplitScreen.h"
 	#include "../QTimer.h"
 #endif
