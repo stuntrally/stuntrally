@@ -90,6 +90,8 @@ protected:
 	virtual bool keyPressed( const OIS::KeyEvent &arg );
 		
 	BtOgre::DebugDrawer *dbgdraw;  /// blt dbg
+	void bltDumpRecursive(class CProfileIterator* profileIterator, int spacing, std::stringstream& os);
+	void bltDumpAll(std::stringstream& os);
 
 	//  mtr reload
 	enum eMaterials {

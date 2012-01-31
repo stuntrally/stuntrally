@@ -537,12 +537,20 @@ void App::UpdateHUD(int carId, CarModel* pCarM, CAR* pCar, float time, Viewport*
 		//ovU[3]->setCaption("carm: " + toStr(carModels.size()) + " newp: " + toStr((*newPosInfos.begin()).pos));
 	}
 
-	//  bullet profiling text  --------
+	///  bullet profiling text  --------
 	static bool oldBltTxt = false;
 	if (ovU[1])
 	{
 		if (pSet->bltProfilerTxt)
-			ovU[1]->setCaption(pGame->collision.bltProfiling);
+		{
+			static int cc = 0;  cc++;
+			if (cc > 40)
+			{	cc = 0;
+				std::stringstream os;
+				bltDumpAll(os);
+				ovU[1]->setCaption(os.str());
+			}
+		}
 		else
 		if (pSet->bltProfilerTxt != oldBltTxt)
 			ovU[1]->setCaption("");
@@ -703,4 +711,67 @@ void App::UpdateHUD(int carId, CarModel* pCarM, CAR* pCar, float time, Viewport*
 			ovS[4]->setCaption(ss);  }
 	}
 	#endif
+}
+
+
+///  Bullet profiling text
+//--------------------------------------------------------------------------------------------------------------
+
+void App::bltDumpRecursive(CProfileIterator* profileIterator, int spacing, std::stringstream& os)
+{
+	static char s[256];
+	profileIterator->First();
+	if (profileIterator->Is_Done())
+		return;
+
+	float accumulated_time=0,parent_time = profileIterator->Is_Root() ? CProfileManager::Get_Time_Since_Reset() : profileIterator->Get_Current_Parent_Total_Time();
+	int i,j;
+	int frames_since_reset = CProfileManager::Get_Frame_Count_Since_Reset();
+	for (i=0;i<spacing;i++)	os << ".";
+	os << "----------------------------------\n";
+	for (i=0;i<spacing;i++)	os << ".";
+	sprintf(s,"Profiling: %s (total running time: %.3f ms) ---\n",	profileIterator->Get_Current_Parent_Name(), parent_time );
+	os << s;
+	float totalTime = 0.f;
+
+	int numChildren = 0;
+	
+	for (i = 0; !profileIterator->Is_Done(); i++,profileIterator->Next())
+	{
+		numChildren++;
+		float current_total_time = profileIterator->Get_Current_Total_Time();
+		accumulated_time += current_total_time;
+		float fraction = parent_time > SIMD_EPSILON ? (current_total_time / parent_time) * 100 : 0.f;
+
+		for (j=0;j<spacing;j++)	os << ".";
+		sprintf(s,"%d -- %s (%.2f %%) :: %.3f ms / frame (%d calls)\n",i, profileIterator->Get_Current_Name(), fraction,(current_total_time / (double)frames_since_reset),profileIterator->Get_Current_Total_Calls());
+		os << s;
+		totalTime += current_total_time;
+		//recurse into children
+	}
+
+	if (parent_time < accumulated_time)
+	{
+		os << "what's wrong\n";
+	}
+	for (i=0;i<spacing;i++)	os << ".";
+	sprintf(s,"%s (%.3f %%) :: %.3f ms\n", "Unaccounted:",parent_time > SIMD_EPSILON ? ((parent_time - accumulated_time) / parent_time) * 100 : 0.f, parent_time - accumulated_time);
+	os << s;
+	
+	for (i=0;i<numChildren;i++)
+	{
+		profileIterator->Enter_Child(i);
+		bltDumpRecursive(profileIterator, spacing+3, os);
+		profileIterator->Enter_Parent();
+	}
+}
+
+void App::bltDumpAll(std::stringstream& os)
+{
+	CProfileIterator* profileIterator = 0;
+	profileIterator = CProfileManager::Get_Iterator();
+
+	bltDumpRecursive(profileIterator, 0, os);
+
+	CProfileManager::Release_Iterator(profileIterator);
 }
