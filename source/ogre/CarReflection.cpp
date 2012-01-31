@@ -4,6 +4,8 @@
 #include "../vdrift/settings.h"
 #include "../ogre/common/RenderConst.h"
 
+#include "OgreGame.h"
+
 #include <OgreSceneManager.h>
 #include <OgreLogManager.h>
 #include <OgreTextureManager.h>
@@ -12,10 +14,11 @@
 using namespace Ogre;
 
 
-CarReflection::CarReflection(SETTINGS* set, SceneManager* sceneMgr, unsigned int index) :
+CarReflection::CarReflection(SETTINGS* set, App* app, SceneManager* sceneMgr, unsigned int index) :
 	bFirstFrame(true), iCam(0), iCounter(0)
 {
 	pSet = set;
+	pApp = app;
 	iIndex = index;
 	pSceneMgr = sceneMgr;
 	iCounter = pSet->refl_skip;
@@ -71,7 +74,7 @@ void CarReflection::Create()
 			Camera* mCam = pSceneMgr->createCamera("Reflect_" + toStr(iIndex) + "_" + toStr(face));
 			mCam->setAspectRatio(1.0f);  mCam->setFOVy(Degree(90));
 			mCam->setNearClipDistance(0.1);
-			//mCam->setFarClipDistance(pSet->refl_dist);  //sky-
+			mCam->setFarClipDistance(pSet->refl_dist * 1.1f);
 
 			RenderTarget* mRT = cubetex->getBuffer(face)->getRenderTarget();
 			//LogO( "rt face Name: " + mRT->getName() );
@@ -138,11 +141,33 @@ void CarReflection::Update()
 
 			Camera* cam = pCams[iCam];
 			RenderTarget* rt = pRTs[iCam];
-
-			if (cam) cam->setPosition ( camPosition );
+			
+			Vector3 origScale, origPos;
+			
+			if (cam)
+			{	
+				cam->setPosition ( camPosition );
+				
+				// Set skydome position to camera
+				if (pApp->ndSky)
+				{
+					origScale = pApp->ndSky->getScale();
+					origPos = pApp->ndSky->getPosition();
+					
+					pApp->ndSky->setScale(pSet->refl_dist * Vector3::UNIT_SCALE);
+					pApp->ndSky->setPosition(camPosition);
+				}
+			}
 				//else  LogO("upd cam 0");
 			if (rt)  rt->update();
 				//else  LogO("upd rt 0");
+				
+			// restore previous skydome position
+			if (pApp->ndSky)
+			{				
+				pApp->ndSky->setScale(origScale);
+				pApp->ndSky->setPosition(origPos);
+			}
 		}
 	}
 

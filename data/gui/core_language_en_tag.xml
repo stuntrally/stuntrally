@@ -48,6 +48,35 @@
 	<Tag name="BackMenu">Back</Tag>
 
 
+	<!--  Championship  -->
+	<Tag name="ChampEndCongrats">Congratulations !</Tag>
+	<Tag name="ChampEndFinished">You have finished this championship.</Tag>
+	<Tag name="ChampStart">Start</Tag>
+
+	<Tag name="Diff0">Test Easy</Tag>
+	<Tag name="Diff1">Very Easy</Tag>
+	<Tag name="Diff2">Easy</Tag>
+	<Tag name="Diff3">Medium</Tag>
+	<Tag name="Diff4">Hard</Tag>
+	<Tag name="Diff5">Very Hard</Tag>
+	<Tag name="Diff6">Extreme</Tag>
+	<Tag name="Diff7">Ultra</Tag>
+
+	<Tag name="Name">Name</Tag>
+	<Tag name="Tracks">Tracks</Tag>
+	<Tag name="Stage">Stage</Tag>
+	<Tag name="Stages">Stages</Tag>
+	<Tag name="Scenery">Scenery</Tag>
+	<Tag name="Length">Length</Tag>
+	<Tag name="Difficulty">Difficulty</Tag>
+	<Tag name="Distance">Distance</Tag>
+	<Tag name="Time">Time</Tag>
+	<Tag name="Progress">Progress</Tag>
+	<Tag name="Score">Score</Tag>
+	<Tag name="TotalScore">Total score</Tag>
+	<Tag name="Finished">Finished</Tag>
+
+
 	<!--  Track  -->
 	<Tag name="ChangeTrack">Change Track</Tag>
 	<Tag name="Track">Track</Tag>
@@ -445,8 +474,10 @@
 	<Tag name="HeightmapSize">Heightmap size</Tag>
 	<Tag name="TriSize">Triangle size</Tag>
 	<Tag name="TerrainSize">Terrain size</Tag>
-	<Tag name="NewTerFlat">New flat</Tag>
-	<Tag name="NewTerGenerate">New Generate</Tag>
+	<Tag name="NewTerrainFlat">New flat</Tag>
+	<Tag name="NewTerrainGenerate">New Generate</Tag>
+	<Tag name="TerrainHalf">Half</Tag>
+	
 	<Tag name="Enabled">Enabled</Tag>
 	<Tag name="Used">Used</Tag>
 	<Tag name="Layer">Layer</Tag>
@@ -748,8 +779,10 @@
 	<!--  Terrain  -->
 	<Tag name="TipTerTriSize">Terrain triangle size in [meters] (recommended: 1 - 2, use more for big track area). Changed after Update (F8).</Tag>
 	<Tag name="TipTerSize">Resulting area in meters (side length). Equals vertex count multipled by triangle size.</Tag>
-	<Tag name="TipNewTer">Create new, flat terrain.</Tag>
-	<Tag name="TipResizeTer">Resize current terrain with new values.</Tag>
+	<Tag name="TipNewTerrainFlat">Create new, flat terrain.</Tag>
+	<Tag name="TipTerrainGenerate">Generates new terrain from noise functions using all parameters below.</Tag>
+	<Tag name="TipTerrainHalf">Resize current terrain heightmap by half (use only for reducing file size).</Tag>
+	
 	<Tag name="TipToggleLayer">Turn on/off chosen texture layer.</Tag>
 	<Tag name="TipTerLayers">Terrain texture layers (recommended 2-3, significantly affects Fps). *Auto blendmap supports max 4.</Tag>
 	<Tag name="TipTerVertCount">Terrain vertex count on one side (squares). Apply with buttons [New Flat] or [Resize].</Tag>

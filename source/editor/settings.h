@@ -24,7 +24,7 @@ public:
 	float shaders;
 	float view_distance, terdetail,terdist, road_dist;
 	float shadow_dist;  int shadow_size, lightmap_size, shadow_count, shadow_type;
-	float trees, grass, trees_dist, grass_dist;
+	float grass, trees_dist, grass_dist;
 	bool use_imposters;
 
 	class GameSet
@@ -32,6 +32,7 @@ public:
 	public:
 		//  track
 		std::string track;  bool track_user;
+		float trees;
 	} gui;
 	
 	//  startup

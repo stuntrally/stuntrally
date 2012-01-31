@@ -55,6 +55,9 @@ struct GameClientCallback {
 	/// @param peer the updated peer
 	virtual void gameInfo(protocol::GameInfo game) {}
 
+	/// Called when all peers have finished loading and are ready to start racing
+	virtual void startRace() {}
+
 	/// Called when an error occured
 	/// @param what the error description
 	virtual void error(std::string what) {}

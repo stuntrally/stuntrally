@@ -104,7 +104,7 @@ void App::TrackListUpd(bool resetNotFound)
 
 //  add track item to gui list
 //-----------------------------------------------------------------------------------------------------------
-void App::AddTrkL(std::string name, int user, const TrackInfo* ti)
+String App::GetSceneryColor(String name)
 {
 	String c = "#FFFFFF";  char ch = name.c_str()[0];
 	switch (ch)  {
@@ -114,6 +114,11 @@ void App::AddTrkL(std::string name, int user, const TrackInfo* ti)
 		case 'F':  c = "#A0D000";  break;   case 'S':  c = "#D0FF00";  break;
 		case 'G':  c = "#C0FF00";  break;   case 'T':  c = "#A0A0A0";  break;
 		case 'V':  c = "#202008";  break;   case 'X':  c = "#5858C0";  break;  }
+	return c;
+}
+void App::AddTrkL(std::string name, int user, const TrackInfo* ti)
+{
+	String c = GetSceneryColor(name);
 
 	MultiList2* li = trkMList;
 	li->addItem(name, 0);
@@ -128,15 +133,20 @@ void App::AddTrkL(std::string name, int user, const TrackInfo* ti)
 	li->setSubItemNameAt(4,l, toS("#C0D0FF",ti->diff));   li->setSubItemNameAt(5,l, toS("#C0E0FF",ti->rating));  //rateuser="0" drivenlaps="0"
 	li->setSubItemNameAt(6,l, toS("#80C0FF",ti->fluids));
 	li->setSubItemNameAt(7,l, toS("#40FF00",ti->bumps));  li->setSubItemNameAt(8,l, toS("#FFA030",ti->jumps));
-	li->setSubItemNameAt(9,l, toS("#00FFFF",ti->loops));  li->setSubItemNameAt(10,l, toS("#FFFF00",ti->pipes));
+	li->setSubItemNameAt(9,l, toS("#00FFFF",ti->loops));  li->setSubItemNameAt(10,l,toS("#FFFF00",ti->pipes));
 	li->setSubItemNameAt(11,l,toS("#C0C0C0",ti->banked)); li->setSubItemNameAt(12,l,toS("#C080FF",ti->frenzy));
 	li->setSubItemNameAt(13,l,toS("#FFA0A0",ti->longn));
 }
 
 
 //  Gui Init  [Track]  . . . . . . . . . . . . . . . . . . . 
-const int wi = 32;  const int App::TcolW[32] = {
-	150, 32, 80, 40, wi, wi, wi, wi, wi, wi, wi, wi, wi, wi, 20};
+//  column widths on tabs: tracks, champs, stages
+const int wi = 32;
+const int App::TcolW[32] = {150, 32, 80, 40, wi, wi, wi, wi, wi, wi, wi, wi, wi, wi, 20};
+#ifndef ROAD_EDITOR
+const int App::ChColW[8] = {30, 180, 100, 60, 80, 60, 40};
+const int App::StColW[8] = {30, 180, 100, 90, 80, 70};
+#endif
 
 //  done once with init gui
 //-----------------------------------------------------------------------------------------------------------
@@ -152,7 +162,7 @@ void App::GuiInitTrack()
 	#else
 	TabItem* trktab = (TabItem*)mWndGame->findWidget("TabTrack");
 	#endif
-	MultiList2* li = trktab->createWidget<MultiList2>("MultiListBox",0,0,600,300, Align::Left | Align::VStretch);
+	MultiList2* li = trktab->createWidget<MultiList2>("MultiListBox",0,0,500,300, Align::Left | Align::VStretch);
 	//li->setUserString("RelativeTo", "OptionsWnd");
 	//*li->setAlpha(0.8);*/  li->setInheritsAlpha(false);
 	
@@ -180,8 +190,8 @@ void App::GuiInitTrack()
 	imgTrkIco2 = mGUI->findWidget<StaticImage>("TrkView2icons2");
 	
 	li->removeAllColumns();  int c=0;
-	li->addColumn("Name", TcolW[c++]);  li->addColumn("N", TcolW[c++]);
-	  li->addColumn("Scenery", TcolW[c++]);
+	li->addColumn(TR("#{Name}"), TcolW[c++]);  li->addColumn("N", TcolW[c++]);
+	  li->addColumn(TR("#{Scenery}"), TcolW[c++]);
 	li->addColumn("ver", TcolW[c++]);  // created  modified  author-
 	li->addColumn("diff", TcolW[c++]);  li->addColumn("*", TcolW[c++]);
 	// rateuser  drivenlaps ..
@@ -252,9 +262,10 @@ void App::ChangeTrackView(bool full)
 	imgTrkIco1->setVisible(full);
 	imgTrkIco2->setVisible(full);
 
-	updTrkListDim();
+	updTrkListDim();  // change size, columns
 }
 
+//  adjust list size, columns
 void App::updTrkListDim()
 {
 	if (!trkMList)  return;
@@ -289,6 +300,43 @@ void App::updTrkListDim()
 		panelNetTrack->setCoord(0,0,tc.width*0.66f,tc.height);  }
 	#endif
 }
+
+#ifndef ROAD_EDITOR
+///  champ lists
+void App::updChampListDim()
+{
+	if (!liChamps)  return;
+	const IntCoord& wi = mWndChamp->getCoord();
+
+	int sum = 0, cnt = liChamps->getColumnCount(), sw = 0;
+	for (int c=0; c < cnt; ++c)  sum += ChColW[c];
+	for (int c=0; c < cnt; ++c)
+	{
+		int w = c==cnt-1 ? 18 : float(ChColW[c]) / sum * 0.57/*width*/ * wi.width * 0.97/*frame*/;
+		liChamps->setColumnWidthAt(c, w);
+		sw += w;
+	}
+
+	int xt = 0.032*wi.width, yt = 0.036*wi.height;  // pos
+	liChamps->setCoord(xt, yt, sw + 8/*frame*/, 0.60/*height*/*wi.height);
+	liChamps->setVisible(true);
+
+	//  Stages
+	if (!liStages)  return;
+
+	sum = 0;  cnt = liStages->getColumnCount();  sw = 0;
+	for (int c=0; c < cnt; ++c)  sum += StColW[c];  sum += 43;//-
+	for (int c=0; c < cnt; ++c)
+	{
+		int w = c==cnt-1 ? 18 : float(StColW[c]) / sum * 0.57/*width*/ * wi.width * 0.97/*frame*/;
+		liStages->setColumnWidthAt(c, w);
+		sw += w;
+	}
+
+	liStages->setCoord(xt, yt, sw + 8/*frame*/, 0.60/*height*/*wi.height);
+	liStages->setVisible(true);
+}
+#endif
 
 
 //  done once to fill tracks list from dirs

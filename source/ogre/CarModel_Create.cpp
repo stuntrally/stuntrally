@@ -268,7 +268,7 @@ void CarModel::Create(int car)
 		if (FileExists(sCar2 + "_brake.mesh"))
 		{
 			Entity* eBrake = mSceneMgr->createEntity(siw + "_brake", sDirname + "_brake.mesh", "Car" + strI);
-			if (ghost)  {  eBrake->setRenderQueueGroup(g);  eBrake->setCastShadows(false);  }
+			if (ghost)  {  eBrake->setRenderQueueGroup(g);  eBrake->setCastShadows(false); eBrake->setVisibilityFlags(RV_Car); }
 			ndBrake[w] = ndWh[w]->createChildSceneNode();
 			ndBrake[w]->attachObject(eBrake);
 		}
@@ -279,6 +279,7 @@ void CarModel::Create(int car)
 	//if (!ghost)//-
 	if (!ph)  {
 		ph = mSceneMgr->createParticleSystem("Hit"+strI, "Sparks");
+		ph->setVisibilityFlags(RV_Particles);
 		mSceneMgr->getRootSceneNode()->createChildSceneNode()->attachObject(ph);
 		ph->getEmitter(0)->setEmissionRate(0);  }
 
@@ -288,6 +289,7 @@ void CarModel::Create(int car)
 		String si = strI + "_" +toStr(i);
 		if (!pb[i])  {
 			pb[i] = mSceneMgr->createParticleSystem("Boost"+si, "Boost");
+			pb[i]->setVisibilityFlags(RV_Particles);
 			if (!pSet->boostFromExhaust || !pCar->manualExhaustPos)
 			{
 				// no exhaust pos in car file, guess from bounding box
@@ -322,22 +324,28 @@ void CarModel::Create(int car)
 		String siw = strI + "_" +toStr(w);
 		if (!ps[w])  {
 			ps[w] = mSceneMgr->createParticleSystem("Smoke"+siw, sc->sParSmoke);
+			ps[w]->setVisibilityFlags(RV_Particles);
 			mSceneMgr->getRootSceneNode()->createChildSceneNode()->attachObject(ps[w]);		ps[w]->getEmitter(0)->setEmissionRate(0);  }
 		if (!pm[w])  {
 			pm[w] = mSceneMgr->createParticleSystem("Mud"+siw, sc->sParMud);
+			pm[w]->setVisibilityFlags(RV_Particles);
 			mSceneMgr->getRootSceneNode()->createChildSceneNode()->attachObject(pm[w]);		pm[w]->getEmitter(0)->setEmissionRate(0);  }
 		if (!pd[w])  {
 			pd[w] = mSceneMgr->createParticleSystem("Dust"+siw, sc->sParDust);
+			pd[w]->setVisibilityFlags(RV_Particles);
 			mSceneMgr->getRootSceneNode()->createChildSceneNode()->attachObject(pd[w]);		pd[w]->getEmitter(0)->setEmissionRate(0);  }
 
 		if (!pflW[w])  {
 			pflW[w] = mSceneMgr->createParticleSystem("FlWater"+siw, "FluidWater");
+			pflW[w]->setVisibilityFlags(RV_Particles);
 			mSceneMgr->getRootSceneNode()->createChildSceneNode()->attachObject(pflW[w]);	pflW[w]->getEmitter(0)->setEmissionRate(0);  }
 		if (!pflM[w])  {
 			pflM[w] = mSceneMgr->createParticleSystem("FlMud"+siw, "FluidMud");
+			pflM[w]->setVisibilityFlags(RV_Particles);
 			mSceneMgr->getRootSceneNode()->createChildSceneNode()->attachObject(pflM[w]);	pflM[w]->getEmitter(0)->setEmissionRate(0);  }
 		if (!pflMs[w])  {
 			pflMs[w] = mSceneMgr->createParticleSystem("FlMudS"+siw, "FluidMudSoft");
+			pflMs[w]->setVisibilityFlags(RV_Particles);
 			mSceneMgr->getRootSceneNode()->createChildSceneNode()->attachObject(pflMs[w]);	pflMs[w]->getEmitter(0)->setEmissionRate(0);  }
 
 		//  trails
@@ -494,7 +502,7 @@ void CarModel::setMtrNames()
 //  ----------------- Reflection ------------------------
 void CarModel::CreateReflection()
 {
-	pReflect = new CarReflection(pSet, mSceneMgr, iIndex);
+	pReflect = new CarReflection(pSet, pApp, mSceneMgr, iIndex);
 	for (int i=0; i<NumMaterials; i++)
 		pReflect->sMtr[i] = sMtr[i];
 

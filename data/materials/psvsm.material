@@ -1,0 +1,128 @@
+
+vertex_program PSVSM/shadow_caster_vs cg
+{
+	source psvsm.cg
+	profiles vs_4_0 vs_1_1 arbvp1
+	entry_point shadow_caster_vs
+
+	default_params
+	{
+		param_named_auto wvpMat worldviewproj_matrix
+		// this is the scene's depth range
+		//param_named_auto depthRange			scene_depth_range
+		//param_named_auto optimalAdustFactor	custom 0
+	}
+}
+vertex_program PSVSM/shadow_caster_wind_vs cg
+{
+	source psvsm.cg
+	profiles vs_4_0 vs_1_1 arbvp1
+	entry_point shadow_caster_wind_vs
+
+	default_params
+	{
+		param_named_auto wvpMat worldviewproj_matrix
+		// this is the scene's depth range
+		//param_named_auto depthRange			scene_depth_range
+		//param_named_auto optimalAdustFactor	custom 0
+		//param_named enableWind float 1.0
+		//param_named_auto time time
+	}
+}
+
+fragment_program PSVSM/shadow_caster_ps cg
+{
+	source psvsm.cg
+	profiles ps_4_0 ps_2_0 arbfp1
+	entry_point shadow_caster_ps
+
+	default_params
+	{
+	    param_named_auto depthRange scene_depth_range
+    
+	}
+}
+fragment_program PSVSM/shadow_caster_alpha_ps cg
+{
+	source psvsm.cg
+	profiles ps_4_0 ps_2_0 arbfp1
+	entry_point shadow_caster_alpha_ps
+
+	default_params
+	{
+	}
+}
+
+material PSVSM/shadow_caster
+{
+	technique
+	{
+		// all this will do is write depth and depth² to red and green
+		pass
+		{
+			vertex_program_ref PSVSM/shadow_caster_vs
+			{
+			}
+
+			fragment_program_ref PSVSM/shadow_caster_alpha_ps
+			{
+			}
+		}
+	}
+}
+
+material PSVSM/shadow_caster_noalpha
+{
+	technique
+	{
+		// all this will do is write depth and depth² to red and green
+		pass
+		{
+			vertex_program_ref PSVSM/shadow_caster_vs
+			{
+			}
+
+			fragment_program_ref PSVSM/shadow_caster_ps
+			{
+			}
+		}
+	}
+}
+
+material PSVSM/shadow_caster_nocull
+{
+	technique
+	{
+		// all this will do is write depth and depth² to red and green
+		pass
+		{
+			cull_hardware none
+			vertex_program_ref PSVSM/shadow_caster_vs
+			{
+			}
+
+			fragment_program_ref PSVSM/shadow_caster_ps
+			{
+			}
+		}
+	}
+}
+
+material PSVSM/shadow_caster_wind
+{
+	technique
+	{
+		// all this will do is write depth and depth² to red and green
+		pass
+		{
+			cull_hardware none
+			vertex_program_ref PSVSM/shadow_caster_wind_vs
+			{
+			}
+
+			fragment_program_ref PSVSM/shadow_caster_ps
+			{
+			}
+		}
+	}
+}

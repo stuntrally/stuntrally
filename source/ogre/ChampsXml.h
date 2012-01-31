@@ -6,27 +6,33 @@
 #include <map>
 
 
+//  single track on championship
 class ChampTrack
 {
 public:
-	std::string name;
-	int laps;  float factor;
-
+	std::string name;  bool reversed;  // track
+	int laps;  // number of laps
+	float factor;  // time factor (difficulty) - how near to best time you need to drive
 	ChampTrack();
 };
 
+//  one championship data
 class Champ
 {
 public:
-	std::string name, descr;  int ver;
-	int diff;  float length,time;  bool tutorial;
+	std::string name, descr;  // champ description
+	int diff;  // difficulty
+	int ver;  // ver, if changed reset progress..
+	float length;  // stats to display
+	int tutorial;  // test2 / tutorial1 / championship0
 
 	std::vector<ChampTrack> trks;
 	Champ();
 };
 
 
-//  all championships and tutorials
+///  all championships and tutorials
+//
 class ChampsXml
 {
 public:
@@ -38,7 +44,7 @@ public:
 };
 
 
-//  progress on champs,tuts and their tracks
+//  progress on single track
 class ProgressTrack
 {
 public:
@@ -46,14 +52,23 @@ public:
 	ProgressTrack();
 };
 
+//  progress on championship
 class ProgressChamp
 {
 public:
-	int curTrack;  float score;
+	int curTrack;  // index to current track, in trks
+	float score;
+	
+	//  for ver changed checking..
+	std::string name;
+	int ver;
+	
 	std::vector<ProgressTrack> trks;
 	ProgressChamp();
 };
 
+///  progress on champs,tuts and their tracks
+//
 class ProgressXml
 {
 public:

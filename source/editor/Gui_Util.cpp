@@ -245,7 +245,7 @@ void App::btnCopyRoadPars(WP)
 }
 
 
-///  track 	. . . . . . . . . . . . . . . . . . . .	. . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+///  tools 	. . . . . . . . . . . . . . . . . . . .	. . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
 void App::btnDeleteRoad(WP)
 {
@@ -298,7 +298,10 @@ void App::btnScaleAll(WP)
 }
 
 void App::editScaleAllMul(EditPtr)
-{	}  // not used
+{	}
+
+void App::editScaleTerHMul(EditPtr)
+{	}
 
 
 

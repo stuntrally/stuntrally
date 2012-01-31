@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION"
 "Report-Msgid-Bugs-To: "
-"POT-Creation-Date: 2012-01-22 23:51+0200"
+"POT-Creation-Date: 2012-01-30 16:21+0200"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>"
 "Language-Team: LANGUAGE <LL@li.org>"
@@ -29,12 +29,20 @@ msgctxt "Fullscreen"
 msgid "Fullscreen"
 msgstr ""
 
+msgctxt "TipDustSize"
+msgid "Dust particles size."
+msgstr ""
+
 msgctxt "TipGrassSwayDistr"
 msgid "Grass sway effect distribution (how random)."
 msgstr ""
 
 msgctxt "InpSet_AxisFull"
 msgid "Axis Full"
+msgstr ""
+
+msgctxt "Progress"
+msgid "Progress"
 msgstr ""
 
 msgctxt "InputStartMeet"
@@ -109,6 +117,10 @@ msgctxt "TreeDens"
 msgid "Trees   density"
 msgstr ""
 
+msgctxt "TipVegetGroups"
+msgid "Vegetation model groups (recommended use 4-6), affects performance."
+msgstr ""
+
 msgctxt "TerNormal"
 msgid "Normal"
 msgstr ""
@@ -165,8 +177,8 @@ msgctxt "TipPrevWind"
 msgid "Preview camera window."
 msgstr ""
 
-msgctxt "InputPaintColor"
-msgid "C - Paint Color"
+msgctxt "ChampEndFinished"
+msgid "You have finished this championship."
 msgstr ""
 
 msgctxt "Version"
@@ -345,6 +357,10 @@ msgctxt "NetGame"
 msgid "Game"
 msgstr ""
 
+msgctxt "TipNewTerrainFlat"
+msgid "Create new, flat terrain."
+msgstr ""
+
 msgctxt "InputRoadNew"
 msgid "ctrl-Space - set new point's values from picked"
 msgstr ""
@@ -449,8 +465,8 @@ msgctxt "InputRoadChkRadius"
 msgid "K,L   - checkpoint radius (chkR 0 - none)"
 msgstr ""
 
-msgctxt "TipDustSize"
-msgid "Dust particles size."
+msgctxt "Time"
+msgid "Time"
 msgstr ""
 
 msgctxt "InputRoadInsAlt"
@@ -473,10 +489,6 @@ msgctxt "InputMapPrevCamera"
 msgid "Previous Camera"
 msgstr ""
 
-msgctxt "InputFluidsSize"
-msgid "alt-LMB - size   alt-RMB - depth"
-msgstr ""
-
 msgctxt "InputMapBrake"
 msgid "Brake"
 msgstr ""
@@ -497,10 +509,6 @@ msgctxt "Digits"
 msgid "Digits (gear, speed)"
 msgstr ""
 
-msgctxt "InputRoadYaw"
-msgid "- rotate yaw"
-msgstr ""
-
 msgctxt "MessageBox_Try"
 msgid "Try"
 msgstr ""
@@ -519,6 +527,10 @@ msgstr ""
 
 msgctxt "ChangeTrack"
 msgid "Change Track"
+msgstr ""
+
+msgctxt "Score"
+msgid "Score"
 msgstr ""
 
 msgctxt "TerrainSize"
@@ -597,8 +609,8 @@ msgctxt "View"
 msgid "View"
 msgstr ""
 
-msgctxt "TipModelRoadDist"
-msgid "Distance from road to models (global, added to each models own value)."
+msgctxt "TriSize"
+msgid "Triangle size"
 msgstr ""
 
 msgctxt "TerLAngSm"
@@ -631,6 +643,10 @@ msgstr ""
 
 msgctxt "Weather"
 msgid "Weather"
+msgstr ""
+
+msgctxt "TipTerrainHalf"
+msgid "Resize current terrain heightmap by half (use only for reducing file size)."
 msgstr ""
 
 msgctxt "wind"
@@ -709,8 +725,8 @@ msgctxt "InputFluidsIns"
 msgid "Ins - insert new, default fluid at cursor"
 msgstr ""
 
-msgctxt "RoadPointSize"
-msgid "Road points size"
+msgctxt "NewTerrainFlat"
+msgid "New flat"
 msgstr ""
 
 msgctxt "Car"
@@ -737,8 +753,8 @@ msgctxt "TerGenFreq"
 msgid "Freq. zoom"
 msgstr ""
 
-msgctxt "TriSize"
-msgid "Triangle size"
+msgctxt "TipNewGame"
+msgid "Start game on new track or Restart on current."
 msgstr ""
 
 msgctxt "ReflMode"
@@ -775,6 +791,10 @@ msgstr ""
 
 msgctxt "TipRenameTrk"
 msgid "Rename selected track with new name (change name first)."
+msgstr ""
+
+msgctxt "TerrainHalf"
+msgid "Half"
 msgstr ""
 
 msgctxt "TipBumpAmp"
@@ -897,6 +917,10 @@ msgctxt "max"
 msgid "max"
 msgstr ""
 
+msgctxt "Stage"
+msgid "Stage"
+msgstr ""
+
 msgctxt "NetRefreshList"
 msgid "Get/refresh list"
 msgstr ""
@@ -927,6 +951,10 @@ msgstr ""
 
 msgctxt "RplVersion"
 msgid "Version"
+msgstr ""
+
+msgctxt "Stages"
+msgid "Stages"
 msgstr ""
 
 msgctxt "Options"
@@ -989,10 +1017,6 @@ msgctxt "InputFluidsPrevNext"
 msgid "PgUp,PgDn (or Wheel) - previous/next fluid"
 msgstr ""
 
-msgctxt "RplCurrent"
-msgid "Current"
-msgstr ""
-
 msgctxt "Yaw"
 msgid "yaw"
 msgstr ""
@@ -1011,6 +1035,10 @@ msgstr ""
 
 msgctxt "Start"
 msgid "start"
+msgstr ""
+
+msgctxt "SkirtHeight"
+msgid "Skirt Height"
 msgstr ""
 
 msgctxt "InputRoadShiftReverse"
@@ -1059,6 +1087,14 @@ msgstr ""
 
 msgctxt "InputStartPos"
 msgid "Q - edit car start pos"
+msgstr ""
+
+msgctxt "InputPaintColor"
+msgid "C - Paint Color"
+msgstr ""
+
+msgctxt "TipModelRoadDist"
+msgid "Distance from road to models (global, added to each models own value)."
 msgstr ""
 
 msgctxt "InputRplCtrl1"
@@ -1165,8 +1201,8 @@ msgctxt "Multiplayer"
 msgid "Multiplayer"
 msgstr ""
 
-msgctxt "VegetCol"
-msgid "Vegetation collision"
+msgctxt "InputToggleVeget"
+msgid "V - Disable / enable vegetation"
 msgstr ""
 
 msgctxt "Particles"
@@ -1177,8 +1213,8 @@ msgctxt "Other"
 msgid "Other"
 msgstr ""
 
-msgctxt "TipTerLAngSm"
-msgid "Angle smooth range (transition)."
+msgctxt "TrackPipes"
+msgid "Pipes"
 msgstr ""
 
 msgctxt "InputRoadNext"
@@ -1209,6 +1245,10 @@ msgctxt "InputRoadPipeAngle"
 msgid "[,]   - pipe angle (no pipe when 0)"
 msgstr ""
 
+msgctxt "Finished"
+msgid "Finished"
+msgstr ""
+
 msgctxt "LTrMaxTerAng"
 msgid "max terrain Angle"
 msgstr ""
@@ -1235,6 +1275,10 @@ msgstr ""
 
 msgctxt "InputWheelShape"
 msgid "K,L  -  Brush shape"
+msgstr ""
+
+msgctxt "Name"
+msgid "Name"
 msgstr ""
 
 msgctxt "RplSize"
@@ -1267,6 +1311,10 @@ msgstr ""
 
 msgctxt "GameBy"
 msgid "A game by"
+msgstr ""
+
+msgctxt "TrackWidthAvg"
+msgid "Width avg."
 msgstr ""
 
 msgctxt "SunWeather"
@@ -1365,8 +1413,12 @@ msgctxt "TipTerSize"
 msgid "Resulting area in meters (side length). Equals vertex count multipled by triangle size."
 msgstr ""
 
-msgctxt "InputToggleVeget"
-msgid "V - Disable / enable vegetation"
+msgctxt "Tracks"
+msgid "Tracks"
+msgstr ""
+
+msgctxt "InputFluidsSize"
+msgid "alt-LMB - size   alt-RMB - depth"
 msgstr ""
 
 msgctxt "TexCoordMul"
@@ -1407,6 +1459,10 @@ msgstr ""
 
 msgctxt "Right"
 msgid "Right"
+msgstr ""
+
+msgctxt "TipTerLAngSm"
+msgid "Angle smooth range (transition)."
 msgstr ""
 
 msgctxt "LODPointsDist"
@@ -1549,8 +1605,8 @@ msgctxt "TipGrassVisDist"
 msgid "Visibility distance for grass pages."
 msgstr ""
 
-msgctxt "TipModelVisDist"
-msgid "Visibility distance for model pages."
+msgctxt "TipNewDup"
+msgid "Create a new track by duplicating the selected track and using new name (change name first)."
 msgstr ""
 
 msgctxt "NumLocalPlayers"
@@ -1625,8 +1681,8 @@ msgctxt "Yes"
 msgid "Yes"
 msgstr ""
 
-msgctxt "TipNewDup"
-msgid "Create a new track by duplicating the selected track and using new name (change name first)."
+msgctxt "ChampEndCongrats"
+msgid "Congratulations !"
 msgstr ""
 
 msgctxt "RoadStats"
@@ -1673,20 +1729,24 @@ msgctxt "TipTerVertCount"
 msgid "Terrain vertex count on one side (squares). Apply with buttons [New Flat] or [Resize]."
 msgstr ""
 
-msgctxt "HeightmapSize"
-msgid "Heightmap size"
+msgctxt "RplCurrent"
+msgid "Current"
 msgstr ""
 
 msgctxt "InputCamControl2"
 msgid "LMB - rotate  RMB - move  MMB - zoom"
 msgstr ""
 
-msgctxt "SkirtHeight"
-msgid "Skirt Height"
+msgctxt "Diff5"
+msgid "Very Hard"
 msgstr ""
 
 msgctxt "LS_CLEANUP"
 msgid "Cleaning up"
+msgstr ""
+
+msgctxt "Difficulty"
+msgid "Difficulty"
 msgstr ""
 
 msgctxt "RplRename"
@@ -1829,12 +1889,8 @@ msgctxt "InputMain"
 msgid "Main"
 msgstr ""
 
-msgctxt "TipVegetGroups"
-msgid "Vegetation model groups (recommended use 4-6), affects performance."
-msgstr ""
-
-msgctxt "NewTerFlat"
-msgid "New flat"
+msgctxt "RoadPointSize"
+msgid "Road points size"
 msgstr ""
 
 msgctxt "TipTCS"
@@ -1885,12 +1941,16 @@ msgctxt "InputFluidsType"
 msgid "-,=  - change fluid type (water,mud,etc.)"
 msgstr ""
 
-msgctxt "TrackWidthAvg"
-msgid "Width avg."
+msgctxt "Distance"
+msgid "Distance"
 msgstr ""
 
 msgctxt "About"
 msgid "About"
+msgstr ""
+
+msgctxt "TipModelVisDist"
+msgid "Visibility distance for model pages."
 msgstr ""
 
 msgctxt "NetAddress"
@@ -1899,10 +1959,6 @@ msgstr ""
 
 msgctxt "AutoLoad"
 msgid "Auto Load track"
-msgstr ""
-
-msgctxt "Distance"
-msgid "Distance"
 msgstr ""
 
 msgctxt "RplGhost"
@@ -1941,8 +1997,8 @@ msgctxt "TipDiffuseTex"
 msgid "Diffuse texture (Specular in alpha)."
 msgstr ""
 
-msgctxt "Length"
-msgid "Length"
+msgctxt "VegetCol"
+msgid "Vegetation collision"
 msgstr ""
 
 msgctxt "AntiAliasing"
@@ -1967,6 +2023,10 @@ msgstr ""
 
 msgctxt "FrictionTread"
 msgid "FrictionTread"
+msgstr ""
+
+msgctxt "HeightmapSize"
+msgid "Heightmap size"
 msgstr ""
 
 msgctxt "TipToggleLayer"
@@ -2001,8 +2061,8 @@ msgctxt "speed"
 msgid "speed"
 msgstr ""
 
-msgctxt "TipNewGame"
-msgid "Start game on new track or Restart on current."
+msgctxt "InputRoadYaw"
+msgid "- rotate yaw"
 msgstr ""
 
 msgctxt "RplGhosts"
@@ -2049,8 +2109,8 @@ msgctxt "ReflMode_full"
 msgid "Full"
 msgstr ""
 
-msgctxt "TrackPipes"
-msgid "Pipes"
+msgctxt "Length"
+msgid "Length"
 msgstr ""
 
 msgctxt "Specular"
@@ -2141,10 +2201,6 @@ msgctxt "InputMapShiftUp"
 msgid "Shift up"
 msgstr ""
 
-msgctxt "NewTerGenerate"
-msgid "New Generate"
-msgstr ""
-
 msgctxt "SpeedUnit"
 msgid "Speed unit"
 msgstr ""
@@ -2195,6 +2251,10 @@ msgstr ""
 
 msgctxt "TipLTrMaxTerH"
 msgid "Terrain height above which model won't appear."
+msgstr ""
+
+msgctxt "TotalScore"
+msgid "Total score"
 msgstr ""
 
 msgctxt "TipModelPrev"
@@ -2253,6 +2313,10 @@ msgctxt "page"
 msgid "page"
 msgstr ""
 
+msgctxt "ChampStart"
+msgid "Start"
+msgstr ""
+
 msgctxt "InputMapSteering"
 msgid "Steering"
 msgstr ""
@@ -2295,10 +2359,6 @@ msgstr ""
 
 msgctxt "GraphicsAll_High"
 msgid "High"
-msgstr ""
-
-msgctxt "TipNewTer"
-msgid "Create new, flat terrain."
 msgstr ""
 
 msgctxt "Vegetation"
@@ -2357,6 +2417,10 @@ msgctxt "TipTerLHSm"
 msgid "Height smooth range (transition)."
 msgstr ""
 
+msgctxt "TipTerrainGenerate"
+msgid "Generates new terrain from noise functions using all parameters below."
+msgstr ""
+
 msgctxt "TipRainSnowInt"
 msgid "Rain/Snow intensity (eg. 1000)"
 msgstr ""
@@ -2371,10 +2435,6 @@ msgstr ""
 
 msgctxt "TipRoadDist"
 msgid "How far from road will the model appear."
-msgstr ""
-
-msgctxt "TipResizeTer"
-msgid "Resize current terrain with new values."
 msgstr ""
 
 msgctxt "DistMult"
@@ -2413,8 +2473,40 @@ msgctxt "distribution"
 msgid "distribution"
 msgstr ""
 
+msgctxt "Diff2"
+msgid "Easy"
+msgstr ""
+
+msgctxt "Diff3"
+msgid "Medium"
+msgstr ""
+
+msgctxt "Diff0"
+msgid "Test Easy"
+msgstr ""
+
+msgctxt "Diff1"
+msgid "Very Easy"
+msgstr ""
+
+msgctxt "Diff6"
+msgid "Extreme"
+msgstr ""
+
+msgctxt "Diff7"
+msgid "Ultra"
+msgstr ""
+
+msgctxt "Diff4"
+msgid "Hard"
+msgstr ""
+
 msgctxt "ColBright"
 msgid "Brightness"
+msgstr ""
+
+msgctxt "NewTerrainGenerate"
+msgid "New Generate"
 msgstr ""
 
 msgctxt "InputWheelSize"
@@ -2435,6 +2527,10 @@ msgstr ""
 
 msgctxt "ColSat"
 msgid "Saturation"
+msgstr ""
+
+msgctxt "Scenery"
+msgid "Scenery"
 msgstr ""
 
 msgctxt "Track"

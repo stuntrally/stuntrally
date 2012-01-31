@@ -92,7 +92,7 @@ void App::slRoadDist(SL)
 //  trees/grass
 void App::slTrees(SL)
 {
-	Real v = 4.f * powf(val/res, 2.f);  if (bGI)  pSet->trees = v;
+	Real v = 4.f * powf(val/res, 2.f);  if (bGI)  pSet->gui.trees = v;
 	if (valTrees){	Fmt(s, "%4.2f", v);	valTrees->setCaption(s);  }
 }
 void App::slGrass(SL)
@@ -229,7 +229,7 @@ void App::GuiInitGraphics()
 	Slv(TerMtr,		pSet->ter_mtr /res);
 
 	//  trees/grass
-	Slv(Trees,		powf(pSet->trees /4.f, 0.5f));
+	Slv(Trees,		powf(pSet->gui.trees /4.f, 0.5f));
 	Slv(Grass,		powf(pSet->grass /4.f, 0.5f));
 	Slv(TreesDist,	powf((pSet->trees_dist-0.5f) /6.5f, 0.5f));
 	Slv(GrassDist,	powf((pSet->grass_dist-0.5f) /6.5f, 0.5f));
@@ -663,6 +663,9 @@ void App::ResizeOptWnd()
 		bnQuit->setCoord(wx - 0.09*wx, 0, 0.09*wx, 0.03*wy);
 
 	updTrkListDim();
+	#ifndef ROAD_EDITOR
+	updChampListDim();  // resize lists
+	#endif
 }
 
 void App::chkVidFullscr(WP wp)
@@ -696,74 +699,74 @@ void App::comboGraphicsAll(ComboBoxPtr cmb, size_t val)
 		s.anisotropy = 0;  s.view_distance = 1000;  s.terdetail = 2.0f;  s.terdist = 0.f;  s.road_dist = 1.0;
 		s.tex_size = 0;  s.ter_mtr = 0;  s.shaders = 0;  s.use_imposters = 0;
 		s.shadow_type = 0;  s.shadow_size = 0;  s.shadow_count = 3;  s.shadow_dist = 1000;
-		s.trees = 0.f;  s.grass = 0.f;  s.trees_dist = 1.f;  s.grass_dist = 1.f;	break;
+		s.gui.trees = 0.f;  s.grass = 0.f;  s.trees_dist = 1.f;  s.grass_dist = 1.f;	break;
 
 	case 1:  // Low  -------------
 		s.anisotropy = 0;  s.view_distance = 1500;  s.terdetail = 1.7f;  s.terdist = 40.f;  s.road_dist = 1.2;
 		s.tex_size = 0;  s.ter_mtr = 1;  s.shaders = 0.25;  s.use_imposters = 0;
 		s.shadow_type = 0;  s.shadow_size = 0;  s.shadow_count = 3;  s.shadow_dist = 1000;
-		s.trees = 0.f;  s.grass = 0.f;  s.trees_dist = 1.f;  s.grass_dist = 1.f;	break;
+		s.gui.trees = 0.f;  s.grass = 0.f;  s.trees_dist = 1.f;  s.grass_dist = 1.f;	break;
 
 	case 2:  // Medium  -------------
 		s.anisotropy = 4;  s.view_distance = 2500;  s.terdetail = 1.5f;  s.terdist = 80.f;  s.road_dist = 1.4;
 		s.tex_size = 1;  s.ter_mtr = 1;  s.shaders = 0.5;  s.use_imposters = 1;
 		s.shadow_type = 2;  s.shadow_size = 1;  s.shadow_count = 3;  s.shadow_dist = 3000;
-		s.trees = 0.5f;  s.grass = 0.f;  s.trees_dist = 1.f;  s.grass_dist = 1.f;	break;
+		s.gui.trees = 0.5f;  s.grass = 0.f;  s.trees_dist = 1.f;  s.grass_dist = 1.f;	break;
 
 	case 3:  // High  -------------
 		s.anisotropy = 8;  s.view_distance = 6000;  s.terdetail = 1.3f;  s.terdist = 200.f;  s.road_dist = 1.6;
 		s.tex_size = 1;  s.ter_mtr = 2;  s.shaders = 0.75;  s.use_imposters = 1;
 		s.shadow_type = 2;  s.shadow_size = 2;  s.shadow_count = 3;  s.shadow_dist = 3000;
-		s.trees = 1.f;  s.grass = 1.f;  s.trees_dist = 1.f;  s.grass_dist = 1.f;	break;
+		s.gui.trees = 1.f;  s.grass = 1.f;  s.trees_dist = 1.f;  s.grass_dist = 1.f;	break;
 
 	case 4:  // Very High  -------------
 		s.anisotropy = 16;  s.view_distance = 8000;  s.terdetail = 1.2f;  s.terdist = 400.f;  s.road_dist = 2.0;
 		s.tex_size = 1;  s.ter_mtr = 3;  s.shaders = 1;  s.use_imposters = 1;
 		s.shadow_type = 3;  s.shadow_size = 3;  s.shadow_count = 3;  s.shadow_dist = 3000;
-		s.trees = 1.5f;  s.grass = 1.f;  s.trees_dist = 1.f;  s.grass_dist = 1.5f;	break;
+		s.gui.trees = 1.5f;  s.grass = 1.f;  s.trees_dist = 1.f;  s.grass_dist = 1.5f;	break;
 
 	case 5:  // Ultra  -------------
 		s.anisotropy = 16;  s.view_distance = 20000;  s.terdetail = 1.0f;  s.terdist = 1000.f;  s.road_dist = 3.0;
 		s.tex_size = 1;  s.ter_mtr = 3;  s.shaders = 1;  s.use_imposters = 1;
 		s.shadow_type = 3;  s.shadow_size = 4;  s.shadow_count = 3;  s.shadow_dist = 3000;
-		s.trees = 2.f;  s.grass = 2.f;  s.trees_dist = 2.f;  s.grass_dist = 2.f;	break;
+		s.gui.trees = 2.f;  s.grass = 2.f;  s.trees_dist = 2.f;  s.grass_dist = 2.f;	break;
 	}
 #ifndef ROAD_EDITOR  /// game only
 	switch (val)
 	{
 	case 0:  // Lowest  -------------
 		s.particles = false;  s.trails = false;  s.particles_len = 1.f;  s.trails_len = 1.f;
-		s.refl_mode = "static";  s.refl_skip = 500;  s.refl_faces = 1;  s.refl_size = 0;  s.refl_dist = 100.f;
+		s.refl_mode = "static";  s.refl_skip = 100;  s.refl_faces = 1;  s.refl_size = 0;  s.refl_dist = 20.f;
 		s.all_effects = false;  s.bloom = false;  s.hdr = false;  s.motionblur = false;
 		s.rpl_rec = 0;  s.rpl_ghost = 0;  s.rpl_alpha = 1;	break;
 
 	case 1:  // Low  -------------
 		s.particles = true;  s.trails = true;  s.particles_len = 1.f;  s.trails_len = 1.f;
-		s.refl_mode = "static";  s.refl_skip = 300;  s.refl_faces = 1;  s.refl_size = 0;  s.refl_dist = 200.f;
+		s.refl_mode = "static";  s.refl_skip = 100;  s.refl_faces = 1;  s.refl_size = 0;  s.refl_dist = 1500.f;
 		s.all_effects = false;  s.bloom = false;  s.hdr = false;  s.motionblur = false;
 		s.rpl_rec = 1;  s.rpl_ghost = 1;  s.rpl_alpha = 1;  break;
 
 	case 2:  // Medium  -------------
 		s.particles = true;  s.trails = true;  s.particles_len = 1.f;  s.trails_len = 1.5f;
-		s.refl_mode = "single";  s.refl_skip = 200;  s.refl_faces = 1;  s.refl_size = 1;  s.refl_dist = 500.f;
+		s.refl_mode = "single";  s.refl_skip = 50;  s.refl_faces = 1;  s.refl_size = 0;  s.refl_dist = 100.f;
 		s.all_effects = false;  s.bloom = false;  s.hdr = false;  s.motionblur = false;
 		s.rpl_rec = 1;  s.rpl_ghost = 1;  s.rpl_alpha = 1;	break;
 
 	case 3:  // High  -------------
 		s.particles = true;  s.trails = true;  s.particles_len = 1.2f;  s.trails_len = 2.f;
-		s.refl_mode = "single";    s.refl_skip = 80;  s.refl_faces = 1;  s.refl_size = 1;  s.refl_dist = 1000.f;
+		s.refl_mode = "single";    s.refl_skip = 10;  s.refl_faces = 1;  s.refl_size = 0;  s.refl_dist = 150.f;
 		s.all_effects = true;  s.bloom = true;  s.hdr = false;  s.motionblur = false;
 		s.rpl_rec = 1;  s.rpl_ghost = 1;  s.rpl_alpha = 0;	break;
 
 	case 4:  // Very High  -------------
 		s.particles = true;  s.trails = true;  s.particles_len = 1.5f;  s.trails_len = 3.f;
-		s.refl_mode = "single";    s.refl_skip = 40;  s.refl_faces = 1;  s.refl_size = 2;  s.refl_dist = 1000.f;
+		s.refl_mode = "single";    s.refl_skip = 0;  s.refl_faces = 1;  s.refl_size = 0;  s.refl_dist = 200.f;
 		s.all_effects = true;  s.bloom = true;  s.hdr = false;  s.motionblur = true;
 		s.rpl_rec = 1;  s.rpl_ghost = 1;  s.rpl_alpha = 0;	break;
 
 	case 5:  // Ultra  -------------
 		s.particles = true;  s.trails = true;  s.particles_len = 1.5f;  s.trails_len = 4.f;
-		s.refl_mode = "single";    s.refl_skip = 10;  s.refl_faces = 1;  s.refl_size = 3;  s.refl_dist = 1500.f;
+		s.refl_mode = "single";    s.refl_skip = 1;  s.refl_faces = 3;  s.refl_size = 0;  s.refl_dist = 400.f;
 		s.all_effects = true;  s.bloom = true;  s.hdr = false;  s.motionblur = true;
 		s.rpl_rec = 1;  s.rpl_ghost = 1;  s.rpl_alpha = 0;	break;
 	}

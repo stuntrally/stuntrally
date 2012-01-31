@@ -45,9 +45,7 @@ void App::createScene()
 	tracksXml.LoadXml(PATHMANAGER::GetGameConfigDir() + "/tracks.xml");
 
 	//  championships.xml, progress.xml
-	champs.LoadXml(PATHMANAGER::GetGameConfigDir() + "/championships.xml");
-	progress.LoadXml(PATHMANAGER::GetUserConfigDir() + "/progress.xml");
-	//if progress empty or size diff than champs upd progress....
+	ChampsXmlLoad();
 
 	//  fluids.xml
 	fluidsXml.LoadXml(PATHMANAGER::GetDataPath() + "/materials/fluids.xml");
@@ -120,8 +118,12 @@ void App::NewGame()
 
 	bRplPlay = 0;
 	pSet->rpl_rec = bRplRec;  // changed only at new game
+	
 	if (!newGameRpl)  // if from replay, dont
+	{
 		pSet->game = pSet->gui;  // copy game config from gui
+		ChampNewGame();
+	}
 	newGameRpl = false;
 	
 	if (mWndRpl)  mWndRpl->setVisible(false);  // hide rpl ctrl
@@ -135,6 +137,7 @@ void App::NewGame()
 }
 
 /* *  Loading steps (in this order)  * */
+//---------------------------------------------------------------------------------------------------------------
 
 void App::LoadCleanUp()  // 1 first
 {
@@ -244,7 +247,9 @@ void App::LoadGame()  // 2
 		carModels.push_back(c);
 	}
 	
-	pGame->NewGameDoLoadMisc();
+	float pretime = mClient ? 2.0f : pSet->game.pre_time;  // same for all multi players
+	if (mClient) pGame->timer.waiting = true;
+	pGame->NewGameDoLoadMisc(pretime);
 	bool ter = IsTerTrack();
 	sc.ter = ter;
 }
@@ -262,12 +267,14 @@ void App::LoadScene()  // 3
 	//  rain  -----
 	if (!pr && sc.rainEmit > 0)  {
 		pr = mSceneMgr->createParticleSystem("Rain", sc.rainName);
+		pr->setVisibilityFlags(RV_Particles);
 		mSceneMgr->getRootSceneNode()->createChildSceneNode()->attachObject(pr);
 		pr->setRenderQueueGroup(RQG_Weather);
 		pr->getEmitter(0)->setEmissionRate(0);  }
 	//  rain2  =====
 	if (!pr2 && sc.rain2Emit > 0)  {
 		pr2 = mSceneMgr->createParticleSystem("Rain2", sc.rain2Name);
+		pr2->setVisibilityFlags(RV_Particles);
 		mSceneMgr->getRootSceneNode()->createChildSceneNode()->attachObject(pr2);
 		pr2->setRenderQueueGroup(RQG_Weather);
 		pr2->getEmitter(0)->setEmissionRate(0);  }
@@ -408,6 +415,7 @@ void App::LoadMisc()  // 7 last
 }
 
 /* Actual loading procedure that gets called every frame during load. Performs a single loading step. */
+//---------------------------------------------------------------------------------------------------------------
 void App::NewGameDoLoad()
 {
 	if (currentLoadingState == loadingStates.end())
@@ -415,10 +423,15 @@ void App::NewGameDoLoad()
 		// Loading finished.
 		bLoading = false;
 		LoadingOff();
+				
 		ShowHUD();
 		if (pSet->show_fps)
 			mFpsOverlay->show();
 		mSplitMgr->mGuiViewport->setClearEveryFrame(true, FBT_DEPTH);
+
+		ChampLoadEnd();
+		//boost::this_thread::sleep(boost::posix_time::milliseconds(6000 * mClient->getId())); // Test loading syncronization
+		if (mClient) mClient->loadingFinished(); // Signal loading finished to the peers
 		return;
 	}
 	// Do the next loading step.

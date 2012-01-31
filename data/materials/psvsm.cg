@@ -1,0 +1,86 @@
+void shadow_caster_vs(
+	float4 position : POSITION,
+	float2 uv : TEXCOORD0,
+	
+	out float4 oPosition : POSITION,
+	out float4 oDepth : TEXCOORD0,
+	out float2 oUv : TEXCOORD1,
+	
+	uniform float4x4 wvpMat)
+{
+	// this is the view space position
+	oPosition = mul(wvpMat, position);
+
+	// depth info for the fragment.
+	oDepth = oPosition;
+	
+	// clamp z to zero. seem to do the trick. :-/
+	oPosition.z = max(oPosition.z, 0);
+	
+	oUv = uv;
+}
+
+void shadow_caster_wind_vs(
+	float4 position : POSITION,
+	float2 uv : TEXCOORD0,
+	float4 windParams 	: TEXCOORD1,
+	float4 originPos 	: TEXCOORD2,
+	uniform float time,
+	out float4 oPosition : POSITION,
+	out float4 oDepth : TEXCOORD0,
+	out float2 oUv : TEXCOORD1,
+	
+	uniform float4x4 wvpMat)
+{
+	float radiusCoeff = 1;//windParams.x;
+	float heightCoeff = normalize(position.z) ;//windParams.y;
+	float factorX = 1;//windParams.z;
+	float factorY = 1;//windParams.w;
+	float sinval = sin(time + originPos.z );
+//	position.y += sinval * radiusCoeff * radiusCoeff * factorY;
+//	position.x += sinval * heightCoeff * heightCoeff * factorX ;
+	
+	// this is the view space position
+	oPosition = mul(wvpMat, position);
+
+	// depth info for the fragment.
+	oDepth = oPosition;
+
+	// clamp z to zero. seem to do the trick. :-/
+	oPosition.z = max(oPosition.z, 0);
+	
+	oUv = uv;
+}
+void shadow_caster_ps(
+	float4 position : POSITION,
+	float4 depth : TEXCOORD0,
+	float2 uv : TEXCOORD1,
+	
+	out float4 oColour : COLOR,
+	uniform float4 pssmSplitPoints
+	,uniform float4 depthRange)
+{
+//	float finalDepth = depth.z / depth.w;
+	
+//	oColour = float4(finalDepth, finalDepth, finalDepth, 1);
+
+   float d = (length(depth.xyz) - depthRange.x) * depthRange.w;
+   oColour = float4(d, d * d, 1, 1);
+
+}
+
+void shadow_caster_alpha_ps(
+	float4 position : POSITION,
+	float4 depth : TEXCOORD0,
+	float2 uv : TEXCOORD1,
+	
+	out float4 oColour : COLOR,
+	uniform sampler2D alphaMap : TEXUNIT0,
+	uniform float4 pssmSplitPoints)
+{
+	float finalDepth = depth.z / depth.w;
+	float4 trans = tex2D(alphaMap, uv);
+
+	oColour = float4(finalDepth, finalDepth, finalDepth, trans.w);
+	clip( oColour.a > 0.5 ? 1:-1);
+}

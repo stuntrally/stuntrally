@@ -163,6 +163,8 @@ void App::slReflDist(SL)
 {
 	float v = 20.f + 1480.f * powf(val/res, 2.f);	if (bGI)  pSet->refl_dist = v;
 	if (valReflDist){	Fmt(s, "%4.0f m", v);	valReflDist->setCaption(s);  }
+	
+	recreateReflections();
 }
 void App::slReflMode(SL)
 {
@@ -273,6 +275,9 @@ void App::btnChgTrack(WP)
 //  new game
 void App::btnNewGame(WP)
 {
+	if (mWndGame->getVisible())
+		pSet->gui.champ_num = -1;  /// champ, back to single race
+	
 	NewGame();  isFocGui = false;  // off gui
 	if (mWndOpts)  mWndOpts->setVisible(isFocGui);
 	if (mWndRpl)  mWndRpl->setVisible(false);//
@@ -429,7 +434,8 @@ bool App::keyPressed( const OIS::KeyEvent &arg )
 		
 		//  gui on/off
 		if (action("ShowOptions"))
-		{	toggleGui(true);  return false;  }
+		{	if (mWndChampEnd->getVisible())  mWndChampEnd->setVisible(false);  // hide champs end
+			toggleGui(true);  return false;  }
 	
 		//  new game - reload
 		if (action("RestartGame"))
@@ -446,6 +452,7 @@ bool App::keyPressed( const OIS::KeyEvent &arg )
 				carModels[c]->iWonPlace = 0;
 			}
 			pGame->timer.Reset(0);
+			pGame->timer.pretime = mClient ? 2.0f : pSet->game.pre_time;  // same for all multi players
 			carIdWin = 1;  //
 			ghost.Clear(); //
 		}
@@ -492,6 +499,8 @@ bool App::keyPressed( const OIS::KeyEvent &arg )
 		switch (arg.key)
 		{
 			case KC_BACK:
+				if (mWndChampStage->getVisible())
+				{	btnChampStageBack(0);  return true;  }
 				if (pSet->isMain)  break;
 				if (isFocGui)
 				{	if (edFoc)  break;
@@ -547,19 +556,23 @@ bool App::keyPressed( const OIS::KeyEvent &arg )
 			}	return false;
 			
 			case KC_F5:		//  new game
-			//if (ctrl)
 			{	NewGame();  return false;
 			}	break;
 			
-			case KC_RETURN:	//  chng trk + new game  after up/dn
+			case KC_RETURN:
+			///  close champ wnds
+			if (mWndChampStage->getVisible())
+				btnChampStageStart(0);
+			else			//  chng trk/car + new game  after up/dn
 			if (isFocGui && !pSet->isMain)
-			{
-				if (pSet->inMenu == WND_Replays)
-					btnRplLoad(0);
-				else
-				if (pSet->inMenu == WND_Game)
+				switch (pSet->inMenu)
 				{
-					switch (mWndTabsGame->getIndexSelected())
+				case WND_Replays:
+					btnRplLoad(0);  break;
+				case WND_Champ:
+					btnChampStart(0);  break;
+				case WND_Game:
+				{	switch (mWndTabsGame->getIndexSelected())
 					{
 					case 1:
 						btnChgTrack(0);
@@ -569,7 +582,8 @@ bool App::keyPressed( const OIS::KeyEvent &arg )
 						btnNewGame(0);  break;
 					case 3:
 						chatSendMsg();  break;
-			}	}	}
+				}	break;
+			}	}
 			return false;
 		}
 	}
@@ -625,43 +639,4 @@ void App::MenuTabChg(MyGUI::TabPtr tab, size_t id)
 	tab->setIndexSelected(1);  // dont switch to 0
 	pSet->isMain = true;
 	toggleGui(false);  // back to main
-}
-
-
-//  Champs list
-//---------------------------------------------------------------------
-void App::listChampChng(MyGUI::MultiListBox* chlist, size_t pos)
-{
-	if (pos < 0)  return;
-	if (pos >= champs.champs.size())  {  LogO("Error champ sel > size.");  return;  }
-	//if (pos >= progress.champs.size())  {  LogO("Error progres sel > size.");  return;  }
-	
-	//  update champ stages
-	MultiListBox* li = mGUI->findWidget<MultiListBox>("MListStages");
-	li->removeAllItems();
-	const Champ& ch = champs.champs[pos];
-	for (int i=0; i < ch.trks.size(); ++i)
-	{
-		const ChampTrack& tr = ch.trks[i];
-		li->addItem(toStr(i/10)+toStr(i%10), 0);  int l = li->getItemCount()-1;
-		li->setSubItemNameAt(1,l, tr.name.c_str());
-		li->setSubItemNameAt(2,l, "-");
-		li->setSubItemNameAt(3,l, "-");  //scenery..
-		li->setSubItemNameAt(4,l, toStr(tr.laps));
-		li->setSubItemNameAt(5,l, "0");
-	}
-	//  update champ details
-	TextBox* txt;
-	txt = mGUI->findWidget<TextBox>("valChDiff");
-	if (txt)  txt->setCaption(toStr(ch.diff));
-	txt = mGUI->findWidget<TextBox>("valChTracks");
-	if (txt)  txt->setCaption(toStr(ch.trks.size()));
-	txt = mGUI->findWidget<TextBox>("valChDist");
-	if (txt)  txt->setCaption(toStr(ch.length));  // sum from find tracks..
-	txt = mGUI->findWidget<TextBox>("valChTime");
-	if (txt)  txt->setCaption(toStr(ch.time));    // sum champs.trkTimes..
-	/*txt = mGUI->findWidget<TextBox>("valChProgress");
-	if (txt)  txt->setCaption(toStr(progress.champs[pos].curTrack));
-	txt = mGUI->findWidget<TextBox>("valChScore");
-	if (txt)  txt->setCaption(toStr(progress.champs[pos].score));*/
 }

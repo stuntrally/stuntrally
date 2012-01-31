@@ -15,7 +15,7 @@
 #include <OgreTexture.h>
 
 
-class SETTINGS;
+class SETTINGS; class App;
 namespace Ogre {  class Camera;  class SceneManager;  }
 
 
@@ -27,7 +27,7 @@ class CarReflection
 {
 public:
 	// Constructor, assign members.
-	CarReflection(SETTINGS* set, Ogre::SceneManager* sceneMgr, unsigned int index);
+	CarReflection(SETTINGS* set, App* app, Ogre::SceneManager* sceneMgr, unsigned int index);
 	
 	// Destructor, will delete the texture, and cameras / render targets.
 	~CarReflection();
@@ -87,6 +87,8 @@ private:
 
 	// Settings, needed to get the user settings for cube maps
 	SETTINGS* pSet;
+	
+	App* pApp;
 };
 
 #endif

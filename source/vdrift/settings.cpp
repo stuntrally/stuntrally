@@ -31,6 +31,8 @@ void SETTINGS::Serialize(bool w, CONFIGFILE & c)
 
 	//  game
 	Param(c,w, "game.in_menu", inMenu);			Param(c,w, "game.in_main", isMain);
+	Param(c,w, "game.pre_time", gui.pre_time);
+	Param(c,w, "game.champ_num", gui.champ_num);
 	Param(c,w, "game.boost_type", gui.boost_type);		Param(c,w, "game.flip_type", gui.flip_type);
 	Param(c,w, "game.boost_power", gui.boost_power);
 	Param(c,w, "game.collis_cars", gui.collis_cars);	Param(c,w, "game.collis_veget", gui.collis_veget);
@@ -75,7 +77,7 @@ void SETTINGS::Serialize(bool w, CONFIGFILE & c)
 	Param(c,w, "graph_shadow.count",shadow_count);			Param(c,w, "graph_shadow.type", shadow_type);
 	Param(c,w, "graph_shadow.shaders", shaders);			Param(c,w, "graph_shadow.lightmap_size", lightmap_size);
 
-	Param(c,w, "graph_veget.trees", trees);					Param(c,w, "graph_veget.grass", grass);
+	Param(c,w, "graph_veget.trees", gui.trees);				Param(c,w, "graph_veget.grass", grass);
 	Param(c,w, "graph_veget.trees_dist", trees_dist);		Param(c,w, "graph_veget.grass_dist", grass_dist);
 	Param(c,w, "graph_veget.use_imposters", use_imposters);
 
@@ -134,7 +136,7 @@ SETTINGS::SETTINGS() :  ///  Defaults
 	terdetail(2), terdist(100), road_dist(1.0), tex_size(1), ter_mtr(2), shaders(0.5),
 	refl_skip(200), refl_faces(1), refl_size(0), refl_dist(500.f), refl_mode("single"),
 	shadow_type(2), shadow_size(2), shadow_count(3), shadow_dist(3000), lightmap_size(0),
-	trees(1.f), grass(1.f), trees_dist(1.f), grass_dist(1.f), use_imposters(true),
+	grass(1.f), trees_dist(1.f), grass_dist(1.f), use_imposters(true),
 	particles(true), trails(true), particles_len(1.f), trails_len(1.f),
 	//  car
 	abs(0), tcs(0), autoshift(1), autorear(1), rear_inv(1), show_mph(0),
@@ -184,7 +186,8 @@ SETTINGS::SETTINGS() :  ///  Defaults
 	gui.local_players = 1;  gui.num_laps = 2;
 	gui.collis_veget = true;  gui.collis_cars = false;
 	gui.boost_type = 2;  gui.flip_type = 1;  gui.boost_power = 1.f;
+	gui.trees = 1.f;
 	//
 	gui.rpl_rec = 1;
-	gui.numChamp = -1;
+	gui.champ_num = -1;  gui.pre_time = 2.f;
 }

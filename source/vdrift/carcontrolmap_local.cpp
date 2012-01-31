@@ -28,7 +28,7 @@ bool action(const std::string& name)
 
 
 ///  Process Input
-const std::vector <float> & CARCONTROLMAP_LOCAL::ProcessInput(int player)
+const std::vector <float> & CARCONTROLMAP_LOCAL::ProcessInput(int player, bool forceBrake)
 {
 	assert(inputs.size() == CARINPUT::ALL);
 
@@ -49,21 +49,18 @@ const std::vector <float> & CARCONTROLMAP_LOCAL::ProcessInput(int player)
 
 if (oneAxis)
 {
-	const float val = analogAction(sPlr+"Throttle", true);
+	const float val = forceBrake ? 0.f : analogAction(sPlr+"Throttle", true);
 	inputs[CARINPUT::THROTTLE] = val > 0.f ?  val : 0.f;
 	inputs[CARINPUT::BRAKE]    = val < 0.f ? -val : 0.f;
 }else{
-	inputs[CARINPUT::THROTTLE] = analogAction(sPlr+"Throttle");
-	
-	// sensible deadzone for braking
-	// inaccuracies are caused by floating point precision in OISB
-	const float val = analogAction(sPlr+"Brake");
-	const float deadzone = 0.0001;
-	inputs[CARINPUT::BRAKE]    = (val < deadzone) ? 0 : val;  
+	inputs[CARINPUT::THROTTLE] = forceBrake ? 0.f : analogAction(sPlr+"Throttle");
+	const float val = forceBrake ? 0.f : analogAction(sPlr+"Brake");
+	const float deadzone = 0.0001f;  // sensible deadzone for braking
+	inputs[CARINPUT::BRAKE]    = (val < deadzone) ? 0.f : val;  
 }
 
 	//  steering
-	const float val = analogAction(sPlr+"Steering", true);
+	const float val = forceBrake ? 0.f : analogAction(sPlr+"Steering", true);
 	inputs[CARINPUT::STEER_RIGHT] = val > 0.f ?  val : 0.f;
 	inputs[CARINPUT::STEER_LEFT]  = val < 0.f ? -val : 0.f;
 	
@@ -74,15 +71,15 @@ if (oneAxis)
 	grUpOld[player] = grUp;  grDnOld[player] = grDn;
 	
 	//  other
-	inputs[CARINPUT::HANDBRAKE] = analogAction(sPlr+"HandBrake");
-	inputs[CARINPUT::BOOST]     = analogAction(sPlr+"Boost");
-	inputs[CARINPUT::FLIP]      = analogAction(sPlr+"Flip", true);
+	inputs[CARINPUT::HANDBRAKE] = forceBrake ? 1.f : analogAction(sPlr+"HandBrake");
+	inputs[CARINPUT::BOOST]     = forceBrake ? 0.f : analogAction(sPlr+"Boost");
+	inputs[CARINPUT::FLIP]      = forceBrake ? 0.f : analogAction(sPlr+"Flip", true);
 	
 	//  cam
 	inputs[CARINPUT::PREV_CAM]	= action(sPlr+"PrevCamera");
 	inputs[CARINPUT::NEXT_CAM]	= action(sPlr+"NextCamera");
 	//  last chk
-	inputs[CARINPUT::LAST_CHK]	= action(sPlr+"LastChk");
+	inputs[CARINPUT::LAST_CHK]	= forceBrake ? false : action(sPlr+"LastChk");
 
 	return inputs;
 }

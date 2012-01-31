@@ -85,17 +85,32 @@ void P2PGameClient::startGame(bool broadcast)
 		PeerMap::iterator it = m_peers.begin();
 		while (it != m_peers.end()) {
 			PeerInfo& pi = it->second;
+			pi.loaded = false; // Reset loading status to be sure
 			// Check condition
 			if (pi.connection != PeerInfo::CONNECTED || pi.name.empty())
 				m_peers.erase(it++);
 			else ++it;
 		}
+		m_playerInfo.loaded = false;
 		// Assign id numbers
 		recountPeersAndAssignIds(true);
 	}
 	// Send notification
 	if (broadcast)
 		m_client.broadcast(char(protocol::START_GAME) + std::string(" "), net::PACKET_RELIABLE);
+}
+
+void P2PGameClient::loadingFinished()
+{
+	m_client.broadcast(char(protocol::START_COUNTDOWN) + std::string(" "), net::PACKET_RELIABLE);
+	boost::mutex::scoped_lock lock(m_mutex);
+	m_playerInfo.loaded = true;
+	// Check for callback, because we might be the last one to finish loading
+	if (!m_callback) return;
+	for (PeerMap::const_iterator it = m_peers.begin(); it != m_peers.end(); ++it)
+		if (!it->second.loaded) return;
+	lock.unlock(); // Mutex unlocked in callback to avoid dead-locks
+	m_callback->startRace();
 }
 
 void P2PGameClient::senderThread() {
@@ -299,6 +314,20 @@ void P2PGameClient::receiveEvent(net::NetworkTraffic const& e)
 				PeerInfo picopy = pi;
 				lock.unlock(); // Mutex unlocked in callback to avoid dead-locks
 				m_callback->peerState(picopy, e.packet_data[0]);
+			}
+			break;
+		}
+		case protocol::START_COUNTDOWN: {
+			if (m_callback) {
+				boost::mutex::scoped_lock lock(m_mutex);
+				PeerInfo& pi = m_peers[e.peer_address];
+				pi.ping = e.ping;
+				pi.loaded = true;
+				if (!m_playerInfo.loaded) break;
+				for (PeerMap::const_iterator it = m_peers.begin(); it != m_peers.end(); ++it)
+					if (!it->second.loaded) break;
+				lock.unlock(); // Mutex unlocked in callback to avoid dead-locks
+				m_callback->startRace();
 			}
 			break;
 		}
