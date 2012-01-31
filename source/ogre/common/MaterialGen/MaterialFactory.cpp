@@ -426,26 +426,6 @@ referenced by material '" + (*it)->getName() + "' not found. Using default gener
 
 void MaterialFactory::update()
 {
-	for (std::vector<std::string>::const_iterator it = timeMtrs.begin();
-		it != timeMtrs.end(); ++it)
-	{
-		MaterialPtr mtr = MaterialManager::getSingleton().getByName( (*it) );
-		
-		if (!mtr.isNull())
-		{	Material::TechniqueIterator techIt = mtr->getTechniqueIterator();
-			while (techIt.hasMoreElements())
-			{	Technique* tech = techIt.getNext();
-				Technique::PassIterator passIt = tech->getPassIterator();
-				while (passIt.hasMoreElements())
-				{	Pass* pass = passIt.getNext();
-					
-					// time
-					if (pass->hasFragmentProgram() && pass->getFragmentProgramParameters()->_findNamedConstantDefinition("time"))
-						pass->getFragmentProgramParameters()->setNamedConstantFromTime( "time", 1 );
-				}
-			}	
-		}	
-	}
 }
 
 //----------------------------------------------------------------------------------------

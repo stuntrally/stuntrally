@@ -131,7 +131,7 @@ bool App::KeyPress(const CmdKey &arg)
 			case KC_F7:  togPrvCam();  break;
 
 			case KC_RETURN:  // save screen
-				rt[RTs-1].rndTex->writeContentsToFile(pathTrkPrv[1] + pSet->gui.track + ".jpg");  //U
+				rt[RTs-1].rndTex->writeContentsToFile(pathTrkPrv[1] + pSet->gui.track + SECONDARY_TEXTURE_EXTENSION);  //U
 				listTrackChng(trkMList,0);  // upd gui img
 				Status("Preview saved", 1,1,0);
 				break;
@@ -171,7 +171,7 @@ bool App::KeyPress(const CmdKey &arg)
 			bGuiFocus = !bGuiFocus;  UpdVisGui();  }  return true;
 
 		case KC_SYSRQ:
-			mWindow->writeContentsToTimestampedFile(PATHMANAGER::GetScreenShotDir() + "/", ".jpg");
+			mWindow->writeContentsToTimestampedFile(PATHMANAGER::GetScreenShotDir() + "/", SECONDARY_TEXTURE_EXTENSION);
 			return true;
 
 		//  save, reload, update

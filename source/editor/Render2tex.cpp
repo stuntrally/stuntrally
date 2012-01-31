@@ -167,14 +167,14 @@ void App::SaveGrassDens()
 
 	Image im;
 	im.loadDynamicImage((uchar*)gd, w,h,1, PF_BYTE_RGBA);
-	im.save(TrkDir()+"objects/grassDensity.png");
+	im.save(TrkDir()+"objects/grassDensity"+DEFAULT_TEXTURE_EXTENSION);
 
 	delete[] rd;  delete[] gd;  delete[] mask;
 
 	//  road  ----------------
-	rt[0].rndTex->writeContentsToFile(pathTrkPrv[1] + pSet->gui.track + "_mini.png");
+	rt[0].rndTex->writeContentsToFile(pathTrkPrv[1] + pSet->gui.track + "_mini"+DEFAULT_TEXTURE_EXTENSION);
 	//  terrain
-	rt[2].rndTex->writeContentsToFile(pathTrkPrv[1] + pSet->gui.track + "_ter.jpg");
+	rt[2].rndTex->writeContentsToFile(pathTrkPrv[1] + pSet->gui.track + "_ter"+SECONDARY_TEXTURE_EXTENSION);
 }
 
 

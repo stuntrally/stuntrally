@@ -68,9 +68,11 @@ void App::initBlendMaps(Ogre::Terrain* terrain)
 
 	//#define sin_(a)  sinf(a)
 	//#define cos_(a)  sinf(a)
-	/**/Math* pM = new Math();
-	#define sin_(a)  Math::Sin(a,true)
-	#define cos_(a)  Math::Cos(a,true)
+	/**/
+	
+	Math math;
+	#define sin_(a)  math.Sin(a,true)
+	#define cos_(a)  math.Cos(a,true)
 	#define m01(v)  std::max(0.f, std::min(1.f, v ))
 	
 	//  params from layers
@@ -119,19 +121,21 @@ void App::initBlendMaps(Ogre::Terrain* terrain)
 	
 	for (i=0; i < b; ++i)  {
 		//bMap[i]->dirtyRect();
-		bMap[i]->dirty();  bMap[i]->update();  }
-
-	delete pM;
+		bMap[i]->dirty();  bMap[i]->update();  
+//		bMap[i]->
+	}
+	
 	/**/
 	iBlendMaps = b+1;  blendMapSize = t;
+	//terrain->getLayerBlendTexture(
 	
 	//bMap[i]->loadImage();
-	//bMap[0]->loadImage("blendmap.png", ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME);
-	//bMap[0]->loadImage("mapB.jpg", ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME);
+	//bMap[0]->loadImage("blendmap"+DEFAULT_TEXTURE_EXTENSION, ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME);
+	//bMap[0]->loadImage("mapB"+SECONDARY_TEXTURE_EXTENSION, ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME);
 	//bMap[0]->dirty();  bMap[0]->update();
 	/*Image bl0;  // ?-
 	terrain->getLayerBlendTexture(0)->convertToImage(bl0);
-	bl0.save("blendmap.png");/**/
+	bl0.save("blendmap"+DEFAULT_TEXTURE_EXTENSION);/**/
 	//terrain->getCompositeMapMaterial
 	
 	/*// set up a colour map
@@ -139,7 +143,7 @@ void App::initBlendMaps(Ogre::Terrain* terrain)
 	{
 		terrain->setGlobalColourMapEnabled(true);
 		Image colourMap;
-		colourMap.load("testcolourmap.jpg", ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME);
+		colourMap.load("testcolourmap"+SECONDARY_TEXTURE_EXTENSION, ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME);
 		terrain->getGlobalColourMap()->loadImage(colourMap);
 	}
 	*/

@@ -70,7 +70,7 @@ void WaterMaterialGenerator::generate()
 			skyTexName = tusSky->getTextureName();
 		}
 	}
-	else skyTexName = "white.png";
+	else skyTexName = String("white")+DEFAULT_TEXTURE_EXTENSION;
 	
 	tu = pass->createTextureUnitState( skyTexName );
 	tu->setName("skyMap");
@@ -350,7 +350,7 @@ void WaterMaterialGenerator::fragmentProgramParams(Ogre::HighLevelGpuProgramPtr 
 	params->setNamedAutoConstant("lightPos0", GpuProgramParameters::ACT_LIGHT_POSITION, 0);
 	params->setNamedAutoConstant("camPos", GpuProgramParameters::ACT_CAMERA_POSITION);
 	params->setNamedAutoConstant("time", GpuProgramParameters::ACT_TIME);
-	
+	params->setNamedConstantFromTime("time", 1);
 	individualFragmentProgramParams(params);
 }
 

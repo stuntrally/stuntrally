@@ -264,7 +264,7 @@ bool TRACK::CreateRacingLines(
 	/*if (!racingline_texture.Loaded())
 	{
 		TEXTUREINFO tex; 
-		tex.SetName(texturepath + "/racingline.png");
+		tex.SetName(texturepath + "/racingline"+DEFAULT_TEXTURE_EXTENSION);
 		if (!racingline_texture.Load(tex, error_output, texsize))
 			return false;
 	}*/

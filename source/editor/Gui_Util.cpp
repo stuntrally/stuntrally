@@ -96,7 +96,7 @@ void App::btnNewGame(WP)
 
 //  track files
 const int cnTrkF = 5, cnTrkFd = 2, cnTrkFo = 3;
-const Ogre::String csTrkFo[cnTrkFo] = {"/grass1.png", "/grassColor.png", "/grassDensity.png"},
+const Ogre::String csTrkFo[cnTrkFo] = {"/grass1"+DEFAULT_TEXTURE_EXTENSION, "/grassColor"+DEFAULT_TEXTURE_EXTENSION, "/grassDensity"+DEFAULT_TEXTURE_EXTENSION},
 	csTrkF[cnTrkF] = {"/heightmap.f32", "/road.xml", "/scene.xml", "/surfaces.txt", "/track.txt"},  // copy, new
 	csTrkFd[cnTrkFd] = {"/heightmap-new.f32", "/records.txt"};  // del
 
@@ -203,7 +203,7 @@ void App::btnCopyVeget(WP)
 	for (int i=0; i < sc.ciNumPgLay; ++i)
 		sc.pgLayersAll[i] = sF.pgLayersAll[i];
 
-	//  copy grass1.png grassColor.png
+	//  copy grass1 ,grassColor
 	String sto = from + "/objects";  // from
 	String to = TrkDir() + "objects";  // to, new
 	for (int i=0; i < 2; ++i)  Copy(sto + csTrkFo[i], to + csTrkFo[i]);
@@ -324,9 +324,9 @@ void App::btnTrackNew(WP)
 	CreateDir(t);  CreateDir(to);
 	for (int i=0; i < cnTrkFo; ++i)  Copy(sto + csTrkFo[i], to + csTrkFo[i]);
 	for (int i=0; i < cnTrkF; ++i)   Copy(st + csTrkF[i], t + csTrkF[i]);
-	//Copy(pathTrkPrv + sListTrack + ".jpg");  // no preview
-	Copy(pathTrkPrv[bListTrackU] + sListTrack + "_mini.png", pathTrkPrv[1] + name + "_mini.png");
-	Copy(pathTrkPrv[bListTrackU] + sListTrack + "_ter.jpg", pathTrkPrv[1] + name + "_ter.jpg");
+	//Copy(pathTrkPrv + sListTrack + SECONDARY_TEXTURE_EXTENSION);  // no preview
+	Copy(pathTrkPrv[bListTrackU] + sListTrack + "_mini"+DEFAULT_TEXTURE_EXTENSION, pathTrkPrv[1] + name + "_mini"+DEFAULT_TEXTURE_EXTENSION);
+	Copy(pathTrkPrv[bListTrackU] + sListTrack + "_ter"+SECONDARY_TEXTURE_EXTENSION, pathTrkPrv[1] + name + "_ter"+SECONDARY_TEXTURE_EXTENSION);
 
 	sListTrack = name;  pSet->gui.track = name;  pSet->gui.track_user = 1;  UpdWndTitle();
 	FillTrackLists();
@@ -354,9 +354,9 @@ void App::btnTrackRename(WP)
 		Rename(pathTrk[bListTrackU] + sListTrack, pathTrk[/*1*/bListTrackU] + name);
 		//  preview shot, minimap
 		String from = pathTrkPrv[bListTrackU] + sListTrack, to = pathTrkPrv[/*1*/bListTrackU] + name;
-		Rename(from + ".jpg", to + ".jpg");
-		Rename(from + "_mini.png", to + "_mini.png");
-		Rename(from + "_ter.jpg", to + "_ter.jpg");
+		Rename(from + SECONDARY_TEXTURE_EXTENSION, to + SECONDARY_TEXTURE_EXTENSION);
+		Rename(from + "_mini"+DEFAULT_TEXTURE_EXTENSION, to + "_mini"+DEFAULT_TEXTURE_EXTENSION);
+		Rename(from + "_ter"+SECONDARY_TEXTURE_EXTENSION, to + "_ter"+SECONDARY_TEXTURE_EXTENSION);
 		
 		sListTrack = name;  pSet->gui.track = sListTrack;  pSet->gui.track_user = 1;/**/  UpdWndTitle();
 		FillTrackLists();
@@ -382,9 +382,9 @@ void App::msgTrackDel(Message* sender, MessageBoxStyle result)
 	for (int i=0; i < cnTrkF; ++i)   Delete(t + csTrkF[i]);
 	for (int i=0; i < cnTrkFd; ++i)   Delete(t + csTrkFd[i]);
 	DeleteDir(to);  DeleteDir(t);
-	Delete(pathTrkPrv[bListTrackU] + sListTrack + ".jpg");
-	Delete(pathTrkPrv[bListTrackU] + sListTrack + "_mini.png");
-	Delete(pathTrkPrv[bListTrackU] + sListTrack + "_ter.jpg");
+	Delete(pathTrkPrv[bListTrackU] + sListTrack + SECONDARY_TEXTURE_EXTENSION);
+	Delete(pathTrkPrv[bListTrackU] + sListTrack + "_mini"+DEFAULT_TEXTURE_EXTENSION);
+	Delete(pathTrkPrv[bListTrackU] + sListTrack + "_ter"+SECONDARY_TEXTURE_EXTENSION);
 
 	String st = pSet->gui.track;
 	FillTrackLists();

@@ -451,9 +451,9 @@ void CarModel::RefreshBrakingMaterial()
 {
 	std::string texName;
 	if (bBraking)
-	texName = sDirname + "_body00_brake.png";
+	texName = sDirname + "_body00_brake"+DEFAULT_TEXTURE_EXTENSION;
 	else
-		texName = sDirname + "_body00_add.png";
+		texName = sDirname + "_body00_add"+DEFAULT_TEXTURE_EXTENSION;
 	MaterialPtr mtr;
 	for (int i=0; i < NumMaterials; i++)
 	{

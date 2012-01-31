@@ -14,7 +14,7 @@
 #include <MyGUI.h>
 #include <MyGUI_OgrePlatform.h>
 using namespace Ogre;
-
+#include "OgreGame.h"
 
 //  rendering
 //-------------------------------------------------------------------------------------
@@ -102,7 +102,7 @@ bool BaseApp::keyPressed( const OIS::KeyEvent &arg )
 		
 		//  Screen Shot  PtrScr -slow
 		case KC_SYSRQ:
-			mWindow->writeContentsToTimestampedFile(PATHMANAGER::GetScreenShotDir() + "/", ".jpg");	return false;
+			mWindow->writeContentsToTimestampedFile(PATHMANAGER::GetScreenShotDir() + "/", SECONDARY_TEXTURE_EXTENSION);	return false;
 	}
 
 

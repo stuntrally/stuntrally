@@ -224,7 +224,7 @@ void App::InitGui()
 
 	//---------------------  TERRAIN  ---------------------
 	Cmb(cmbTexDiff, "TexDiffuse", comboTexDiff);
-	Cmb(cmbTexNorm, "TexNormal", comboTexNorm);  cmbTexNorm->addItem("flat_n.png");
+	Cmb(cmbTexNorm, "TexNormal", comboTexNorm);  cmbTexNorm->addItem("flat_n"+DEFAULT_TEXTURE_EXTENSION);
 
 	strlist li;
 	GetFolderIndex(PATHMANAGER::GetDataPath() + "/terrain", li);

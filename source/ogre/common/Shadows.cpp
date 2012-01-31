@@ -232,7 +232,10 @@ void App::changeShadows()
 							TextureUnitState* tus = tusIt.getNext();
 							if (tus->getName() == "terrainLightMap")
 							{
-								tus->setTextureName( terrain->getLightmap()->getName() );
+								if(!terrain->getLightmap().isNull())
+								{
+									tus->setTextureName( terrain->getLightmap()->getName() );
+								}
 								if (pass->hasFragmentProgram() && pass->getFragmentProgramParameters()->_findNamedConstantDefinition("terrainWorldSize", false))
 									pass->getFragmentProgramParameters()->setNamedConstant( "terrainWorldSize", Real( sc.td.fTerWorldSize ) );
 							}

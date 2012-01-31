@@ -29,7 +29,8 @@ namespace MyGUI  {  class MultiList2;  }
 namespace OISB   {  class AnalogAxisAction;  }
 class MaterialFactory;
 
-
+#define DEFAULT_TEXTURE_EXTENSION ".png"
+#define SECONDARY_TEXTURE_EXTENSION ".jpg"
 
 class App : public BaseApp, public GameClientCallback, public MasterClientCallback //, public RenderTargetListener
 {

@@ -208,7 +208,7 @@ void App::InitInputGui()
 					x2 + (button2 ? 0 : 64), y+4, button2 ? 128 : 64, 16, ALIGN,
 					"bar_" + sAct + "_" + sPlr);
 				setOrigPos(bar);
-				bar->setImageTexture("input_bar.png");  bar->setImageCoord(IntCoord(0,0,128,16));
+				bar->setImageTexture(String("input_bar")+DEFAULT_TEXTURE_EXTENSION);  bar->setImageCoord(IntCoord(0,0,128,16));
 			}
 
 			//  detail btn  ----------------

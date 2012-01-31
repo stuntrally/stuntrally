@@ -82,7 +82,7 @@ namespace Ogre
 		, mLayerParallaxMappingEnabled(true)
 		, mLayerSpecularMappingEnabled(true)
 		, mGlobalColourMapEnabled(true)
-		, mLightmapEnabled(true)
+		, mLightmapEnabled(false)
 		, mCompositeMapEnabled(true)
 		, mReceiveDynamicShadows(true)
 		, mPSSM(0)
@@ -101,7 +101,8 @@ namespace Ogre
 	{
 		terrain->_setMorphRequired(true);
 		terrain->_setNormalMapRequired(true);
-		terrain->_setLightMapRequired(mLightmapEnabled, true);
+//		terrain->_setLightMapRequired(mLightmapEnabled, true);
+		terrain->_setLightMapRequired(false, true);
 		terrain->_setCompositeMapRequired(mCompositeMapEnabled);
 	}
 	//---------------------------------------------------------------------

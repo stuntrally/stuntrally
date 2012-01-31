@@ -288,7 +288,7 @@ void BaseApp::recreateCompositor()
 	}
 	
 	//  add when needed
-	//if (!ResourceGroupManager::getSingleton().isResourceGroupInitialised("Effects"))
+	if (!ResourceGroupManager::getSingleton().resourceGroupExists("Effects"))
 	{
 		std::string sPath = PATHMANAGER::GetDataPath() + "/compositor";
 		mRoot->addResourceLocation(sPath, "FileSystem", "Effects");
@@ -782,6 +782,11 @@ bool BaseApp::setup()
 
 void BaseApp::destroyScene()
 {
+	Ogre::String microcodeCacheFileName =PATHMANAGER::GetCacheDir() + "/" + "shadercache.txt";
+	std::fstream inp;
+	inp.open(microcodeCacheFileName.c_str(), std::ios::out | std::ios::binary);
+	Ogre::DataStreamPtr shaderCache (OGRE_NEW FileStreamDataStream(microcodeCacheFileName, &inp, false));
+	GpuProgramManager::getSingleton().saveMicrocodeCache(shaderCache);
 }
 
 //  Resources
@@ -810,6 +815,7 @@ void BaseApp::setupResources()
 				PATHMANAGER::GetDataPath() + "/" + archName, typeName, secName);
 		}
 	}
+
 }
 
 void BaseApp::createResourceListener()
@@ -819,6 +825,18 @@ void BaseApp::loadResources()
 {
 	const bool bar = true;
 	if (bar)  LoadingOn();
+	
+	bool bCache=false;
+	GpuProgramManager::getSingletonPtr()->setSaveMicrocodesToCache(bCache);
+	Ogre::String microcodeCacheFileName =PATHMANAGER::GetCacheDir() + "/" + "shadercache.txt";
+	if(boost::filesystem::exists(microcodeCacheFileName))
+	{
+		std::ifstream inp;
+		inp.open(microcodeCacheFileName.c_str(), std::ios::in | std::ios::binary);
+		Ogre::DataStreamPtr shaderCache (OGRE_NEW FileStreamDataStream(microcodeCacheFileName, &inp, false));
+		GpuProgramManager::getSingleton().loadMicrocodeCache(shaderCache);
+	}
+
 	ResourceGroupManager::getSingleton().initialiseAllResourceGroups();
 	if (bar)  LoadingOff();
 }

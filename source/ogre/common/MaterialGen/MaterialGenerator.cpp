@@ -219,7 +219,7 @@ void MaterialGenerator::createTexUnits(Ogre::Pass* pass)
 	// global terrain lightmap (static)
 	if (needTerrainLightMap())
 	{
-		tu = pass->createTextureUnitState("white.png"); // texture name set later (in changeShadows)
+		tu = pass->createTextureUnitState(String("white")+DEFAULT_TEXTURE_EXTENSION); // texture name set later (in changeShadows)
 		tu->setName("terrainLightMap");
 		mTerrainLightTexUnit = mTexUnit_i; mTexUnit_i++;
 	}
