@@ -539,8 +539,8 @@ void MaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::StrStrea
 		outStream <<  "oColor1 = float4(length(viewPosition) / far, normalize(viewNormal.xyz).xyz); \n";
 		if(mDef->mProps->transparent)
 		{
-			// multiply the diffuse texture alpha
-			outStream << "oColor1 = oColor1 * tex2D(diffuseMap, texCoord.xy).a;";    
+			// multiply alpha
+			outStream << "oColor1 = oColor1 * alpha;";    
 		}
 		outStream <<  "	float depth = saturate(length(worldPosition.xyz - cameraPositionWorldSpace.xyz) / far);";
 		outStream <<  "oColor2 = float4(depth); \n";
