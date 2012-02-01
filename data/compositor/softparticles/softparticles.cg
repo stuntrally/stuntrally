@@ -21,14 +21,13 @@ void SoftParticlesBlend_ps(in float4 position : POSITION
 	
 	//alpha blend the particle over the scene
 //	oColor =  particlecolor*particlecolor.a+(1-particlecolor.a)*scene;
-	oColor =  particlecolor+(1-particlecolor.a)*scene;
-
+//	oColor =  particlecolor+(1-particlecolor.a)*scene;
 //	test -only show particles
 //	oColor =  particlecolor;
 
 //	test -only scene
 //	oColor =  scene;
-
+oColor =  particlecolor;
 	return;
 }
 
@@ -41,7 +40,7 @@ void ShowDepth_ps(in float4 position : POSITION
 
 	float4 color=tex2D(tex1, uv);
 	color=float4(color.x*far/20,color.x*far/20,color.x*far/20,1);
-
+color=sqrt(color);
 //	test -only show particles
 	oColor =  color;
 

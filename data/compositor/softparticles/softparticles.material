@@ -49,7 +49,30 @@ material RenderScene
 		}
 	}
 }
+material SceneRenderNoDepth
+{
+	technique
+    {
+        pass
+        {
+			depth_write off
+			vertex_program_ref Ogre/Compositor/StdQuad_vp
+			{
+			}
+        
+			fragment_program_ref Ogre/Compositor/StdQuad_fp
+			{
+			}
 
+			texture_unit tex1
+			{
+				//scenebuffer
+				texture white.png
+				filtering bilinear
+			}
+		}
+	}
+}
 material SoftParticlesBlend
 {
     technique

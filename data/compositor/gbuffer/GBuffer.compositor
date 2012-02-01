@@ -107,12 +107,17 @@ compositor gbufferFinalizer
 					colour_value 0 0 0 0
             	}
            }
-			pass render_scene
-            {
-                // everything after particles render queue
-	      		first_render_queue 70
-	    		last_render_queue 83
-            }			
+		   pass render_quad
+           {
+               material SceneRenderNoDepth
+               input 0 previousscene
+           }	
+		   pass render_scene
+           {
+               // everything after particles render queue
+	      	   first_render_queue 70
+	    	   last_render_queue 83
+           }			
 		}
 		target_output
         {

@@ -25,7 +25,11 @@ compositor SoftParticles
             	}
 			}
 			shadows off
-					  
+			pass render_quad
+            {
+                material SceneRenderNoDepth
+                input 0 previousscene
+            }		  
 	        pass render_scene
             {
                 // render alpha queues including particles
