@@ -56,20 +56,20 @@ material SceneRenderNoDepth
         pass
         {
 			depth_write off
-			vertex_program_ref Ogre/Compositor/StdQuad_vp
-			{
-			}
+			vertex_program_ref SoftParticlesBlend_vs
+            {
+            }
         
-			fragment_program_ref Ogre/Compositor/StdQuad_fp
-			{
-			}
+		    fragment_program_ref SoftParticlesBlend_ps
+            {
+            }
 
-			texture_unit tex1
-			{
-				//scenebuffer
-				texture white.png
-				filtering bilinear
-			}
+            texture_unit tex1
+            {
+				//previous scene
+                texture white.png
+                filtering bilinear
+            }
 		}
 	}
 }

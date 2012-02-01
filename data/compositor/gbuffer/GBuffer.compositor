@@ -127,9 +127,8 @@ compositor gbufferFinalizer
            }
 			pass render_quad
             {
-                material SoftParticlesBlend
-                input 0 previousscene
-                input 1 hardparticles
+                material SceneRenderNoDepth
+                input 0 hardparticles
             }
 			pass render_scene
             {

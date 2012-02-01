@@ -46,9 +46,8 @@ compositor SoftParticles
 			
             pass render_quad
             {
-                material SoftParticlesBlend
-                input 0 previousscene
-                input 1 softparticle
+                material SceneRenderNoDepth
+                input 0 softparticle
             }			
         }
     }
