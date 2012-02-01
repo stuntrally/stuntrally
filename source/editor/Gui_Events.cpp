@@ -116,7 +116,7 @@ void App::tabTerLayer(TabPtr wp, size_t id)
 		bool bAuto = sTex + "_nh" == sNorm;
 		chkTexNormAuto->setStateSelected(bAuto);
 		//  tex image
-	    imgTexDiff->setImageTexture(sTex + "_prv"+DEFAULT_TEXTURE_EXTENSION);
+	    imgTexDiff->setImageTexture(sTex + "_prv.png");
 	    scale = lay->tiling;
 
 		//  Ter Blendmap
@@ -371,7 +371,7 @@ void App::comboTexDiff(ComboBoxPtr cmb, size_t val)
 		if (bTerLay)  sc.td.layersAll[idTerLay].texNorm = sNorm;  }
 	    
 	//  tex image
-    imgTexDiff->setImageTexture(sTex + "_prv"+DEFAULT_TEXTURE_EXTENSION);
+    imgTexDiff->setImageTexture(sTex + "_prv.png");
 }
 
 void App::comboTexNorm(ComboBoxPtr cmb, size_t val)
@@ -543,7 +543,7 @@ void App::tabPgLayers(TabPtr wp, size_t id)
 
 	chkPgLay->setStateSelected(lay.on);
 	cmbPgLay->setIndexSelected( cmbPgLay->findItemIndexWith(lay.name) );
-	if (imgPaged)	imgPaged->setImageTexture(lay.name + DEFAULT_TEXTURE_EXTENSION);
+	if (imgPaged)	imgPaged->setImageTexture(lay.name + ".png");
 	if (valLTrAll)
 		valLTrAll->setCaption("Used: "+toStr(sc.pgLayers.size()));
 
@@ -575,7 +575,7 @@ void App::comboPgLay(ComboBoxPtr cmb, size_t val)
 {
 	String s = cmb->getItemNameAt(val);
 	sc.pgLayersAll[idPgLay].name = s;
-	if (imgPaged)	imgPaged->setImageTexture(s + DEFAULT_TEXTURE_EXTENSION);
+	if (imgPaged)	imgPaged->setImageTexture(s + ".png");
 }
 
 void App::slLTrDens(SL)  //  sliders

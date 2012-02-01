@@ -342,5 +342,5 @@ void App::ChampFillStageInfo(bool finished)
 	}
 	edChampStage->setCaption(s);
 	
-	imgChampStage->setImageTexture(trkName+SECONDARY_TEXTURE_EXTENSION);
+	imgChampStage->setImageTexture(trkName+".jpg");
 }

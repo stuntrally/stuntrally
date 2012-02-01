@@ -130,12 +130,12 @@ void App::initBlendMaps(Ogre::Terrain* terrain)
 	//terrain->getLayerBlendTexture(
 	
 	//bMap[i]->loadImage();
-	//bMap[0]->loadImage("blendmap"+DEFAULT_TEXTURE_EXTENSION, ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME);
-	//bMap[0]->loadImage("mapB"+SECONDARY_TEXTURE_EXTENSION, ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME);
+	//bMap[0]->loadImage("blendmap.png", ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME);
+	//bMap[0]->loadImage("mapB.jpg", ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME);
 	//bMap[0]->dirty();  bMap[0]->update();
 	/*Image bl0;  // ?-
 	terrain->getLayerBlendTexture(0)->convertToImage(bl0);
-	bl0.save("blendmap"+DEFAULT_TEXTURE_EXTENSION);/**/
+	bl0.save("blendmap.png");/**/
 	//terrain->getCompositeMapMaterial
 	
 	/*// set up a colour map
@@ -143,7 +143,7 @@ void App::initBlendMaps(Ogre::Terrain* terrain)
 	{
 		terrain->setGlobalColourMapEnabled(true);
 		Image colourMap;
-		colourMap.load("testcolourmap"+SECONDARY_TEXTURE_EXTENSION, ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME);
+		colourMap.load("testcolourmap.jpg", ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME);
 		terrain->getGlobalColourMap()->loadImage(colourMap);
 	}
 	*/

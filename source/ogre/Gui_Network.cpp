@@ -109,7 +109,7 @@ void App::updateGameInfoGUI()
 	if (valNetTrack)
 		valNetTrack->setCaption("Track: " + sListTrack);
 	if (imgNetTrack)
-		imgNetTrack->setImageTexture(sListTrack+SECONDARY_TEXTURE_EXTENSION);
+		imgNetTrack->setImageTexture(sListTrack+".jpg");
 	if (edNetTrackInfo && trkDesc)
 		edNetTrackInfo->setCaption(trkDesc->getCaption());
 }

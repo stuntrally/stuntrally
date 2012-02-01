@@ -13,7 +13,7 @@
 #include <cstdio>
 
 #include "unittest.h"
-#include "..\ogre\OgreGame.h"
+#include "../ogre/OgreGame.h"
 
 using std::cout;
 using std::cerr;
@@ -604,7 +604,7 @@ class TEST_SETTINGS
 		std::string datapath;
 		std::string filename;
 		
-		TEST_SETTINGS() : datapath("data/"), filename(string("image")+DEFAULT_TEXTURE_EXTENSION) {}
+		TEST_SETTINGS() : datapath("data/"), filename(string("image.png")) {}
 		
 		bool Serialize(joeserialize::Serializer & s)
 		{
@@ -624,13 +624,13 @@ QT_TEST(serialization_high_level_object_read_write_test)
 		settings.filename = "";
 		joeserialize::LoadObjectFromFileOrCreateDefault("test.txt", settings, nullout);
 		QT_CHECK_EQUAL(settings.datapath,"data/");
-		QT_CHECK_EQUAL(settings.filename,string("image")+DEFAULT_TEXTURE_EXTENSION);
+		QT_CHECK_EQUAL(settings.filename,string("image.png"));
 		joeserialize::WriteObjectToFile("test.txt", settings, nullout);
 	}
 	
 	{
 		ofstream f("test.txt");
-		f << string("filename = customfile")+DEFAULT_TEXTURE_EXTENSION;
+		f << string("filename = customfile.png");
 	}
 	
 	{
@@ -639,7 +639,7 @@ QT_TEST(serialization_high_level_object_read_write_test)
 		settings.filename = "";
 		joeserialize::LoadObjectFromFileOrCreateDefault("test.txt", settings, nullout);
 		QT_CHECK_EQUAL(settings.datapath,"data/");
-		QT_CHECK_EQUAL(settings.filename,string("customfile")+DEFAULT_TEXTURE_EXTENSION);
+		QT_CHECK_EQUAL(settings.filename,string("customfile.png"));
 	}
 	
 	remove("test.txt");

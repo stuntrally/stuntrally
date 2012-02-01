@@ -102,7 +102,7 @@ bool BaseApp::keyPressed( const OIS::KeyEvent &arg )
 		
 		//  Screen Shot  PtrScr -slow
 		case KC_SYSRQ:
-			mWindow->writeContentsToTimestampedFile(PATHMANAGER::GetScreenShotDir() + "/", SECONDARY_TEXTURE_EXTENSION);	return false;
+			mWindow->writeContentsToTimestampedFile(PATHMANAGER::GetScreenShotDir() + "/", ".jpg");	return false;
 	}
 
 

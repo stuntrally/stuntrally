@@ -70,7 +70,7 @@ void WaterMaterialGenerator::generate()
 			skyTexName = tusSky->getTextureName();
 		}
 	}
-	else skyTexName = String("white")+DEFAULT_TEXTURE_EXTENSION;
+	else skyTexName = String("white.png");
 	
 	tu = pass->createTextureUnitState( skyTexName );
 	tu->setName("skyMap");

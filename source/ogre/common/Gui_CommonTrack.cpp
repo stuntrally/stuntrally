@@ -365,9 +365,9 @@ void App::ReadTrkStats()
 void App::UpdGuiRdStats(const SplineRoad* rd, const Scene& sc, float time)
 {
 	//  won't refresh if same-...  road disappears if not found...
-	if (imgPrv)  imgPrv->setImageTexture(sListTrack+SECONDARY_TEXTURE_EXTENSION);
-	if (imgTer)  imgTer->setImageTexture(sListTrack+"_ter"+SECONDARY_TEXTURE_EXTENSION);
-	if (imgMini)  imgMini->setImageTexture(sListTrack+"_mini"+DEFAULT_TEXTURE_EXTENSION);
+	if (imgPrv)  imgPrv->setImageTexture(sListTrack+".jpg");
+	if (imgTer)  imgTer->setImageTexture(sListTrack+"_ter.jpg");
+	if (imgMini)  imgMini->setImageTexture(sListTrack+"_mini.png");
 
 
 	Fmt(s, "%5.3f km", sc.td.fTerWorldSize / 1000.f);	if (stTrk[1])  stTrk[1]->setCaption(s);

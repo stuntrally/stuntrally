@@ -392,10 +392,10 @@ void CarModel::Create(int car)
 	
 	//  this snippet makes sure the brake texture is pre-loaded.
 	//  since it is not used until you actually brake, we have to explicitely declare it
-	if (FileExists(sCar + "_body00_brake"+DEFAULT_TEXTURE_EXTENSION))
-		ResourceGroupManager::getSingleton().declareResource(sDirname + "_body00_brake"+DEFAULT_TEXTURE_EXTENSION, "Texture", "Car" + strI);
-	if (FileExists(sCar + "_body00_add"+DEFAULT_TEXTURE_EXTENSION))
-		ResourceGroupManager::getSingleton().declareResource(sDirname + "_body00_add"+DEFAULT_TEXTURE_EXTENSION, "Texture", "Car" + strI);
+	if (FileExists(sCar + "_body00_brake.png"))
+		ResourceGroupManager::getSingleton().declareResource(sDirname + "_body00_brake.png", "Texture", "Car" + strI);
+	if (FileExists(sCar + "_body00_add.png"))
+		ResourceGroupManager::getSingleton().declareResource(sDirname + "_body00_add.png", "Texture", "Car" + strI);
 	
 	//  now just preload the whole resource group
 	ResourceGroupManager::getSingleton().initialiseResourceGroup("Car" + strI);
@@ -461,10 +461,10 @@ void CarModel::RecreateMaterials()
 						// only 1 tire mesh?
 						if ( (i == Mtr_CarTireFront || i == Mtr_CarTireRear) 
 							&& FileExists(sCar + "_wheel.mesh") 
-							&& (tus->getTextureName() == String("wheel_front")+DEFAULT_TEXTURE_EXTENSION || tus->getTextureName() == String("wheel_rear")+DEFAULT_TEXTURE_EXTENSION) )
+							&& (tus->getTextureName() == String("wheel_front.png") || tus->getTextureName() == String("wheel_rear.png")) )
 						{
 							// set same texture for both
-							tus->setTextureName(String("wheel")+DEFAULT_TEXTURE_EXTENSION);
+							tus->setTextureName(String("wheel.png"));
 						}
 						
 						if (!(StringUtil::startsWith(tus->getTextureName(), "ReflectionCube") ||
@@ -503,8 +503,8 @@ void CarModel::setMtrName(const String& entName, const String& mtrName)
 
 void CarModel::setMtrNames()
 {
-	if (FileExists(resCar + "/" + sDirname + "_body00_add"+DEFAULT_TEXTURE_EXTENSION)
-	 || FileExists(resCar + "/" + sDirname + "_body00_red"+DEFAULT_TEXTURE_EXTENSION))
+	if (FileExists(resCar + "/" + sDirname + "_body00_add.png")
+	 || FileExists(resCar + "/" + sDirname + "_body00_red.png"))
 		setMtrName("Car"+toStr(iIndex), sMtr[Mtr_CarBody]);
 	setMtrName("Car.interior"+toStr(iIndex), sMtr[Mtr_CarInterior]);
 	setMtrName("Car.glass"+toStr(iIndex), sMtr[Mtr_CarGlass]);

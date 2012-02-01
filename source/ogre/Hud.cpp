@@ -94,9 +94,9 @@ void App::CreateHUD()
 		MaterialPtr mm = MaterialManager::getSingleton().getByName(sMat);
 		Pass* pass = mm->getTechnique(0)->getPass(0);
 		TextureUnitState* tus = pass->getTextureUnitState(0);
-		if (tus)  tus->setTextureName(pSet->game.track + "_mini"+DEFAULT_TEXTURE_EXTENSION);
+		if (tus)  tus->setTextureName(pSet->game.track + "_mini.png");
 		tus = pass->getTextureUnitState(2);
-		if (tus)  tus->setTextureName(pSet->game.track + "_ter"+SECONDARY_TEXTURE_EXTENSION);
+		if (tus)  tus->setTextureName(pSet->game.track + "_ter.jpg");
 		UpdMiniTer();
 		
 

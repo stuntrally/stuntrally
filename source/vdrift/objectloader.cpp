@@ -6,7 +6,7 @@
 #include "texture.h"
 #include "reseatable_reference.h"
 #include "track.h"
-#include "..\ogre\OgreGame.h"
+#include "../ogre/OgreGame.h"
 
 OBJECTLOADER::OBJECTLOADER(
 	const std::string & ntrackpath,
@@ -217,7 +217,7 @@ std::pair <bool,bool> OBJECTLOADER::ContinueObjectLoad(	TRACK* track,
 	{
 		reseatable_reference <TEXTURE_GL> miscmap1;
 		std::string miscmap1_texture_name = diffuse_texture_name.substr(0,std::max(0,(int)diffuse_texture_name.length()-4));
-		miscmap1_texture_name += std::string("-misc1")+DEFAULT_TEXTURE_EXTENSION;
+		miscmap1_texture_name += std::string("-misc1.png");
 		if (texture_library.find(miscmap1_texture_name) == texture_library.end())
 		{
 			TEXTUREINFO texinfo;

@@ -63,12 +63,12 @@ void App::CreateTrees()
 	gTerrain = terrain;
 	
 	//-------------------------------------- Grass --------------------------------------
-	TexturePtr grassTex = Ogre::TextureManager::getSingleton().getByName(String("grass1")+DEFAULT_TEXTURE_EXTENSION);
+	TexturePtr grassTex = Ogre::TextureManager::getSingleton().getByName(String("grass1.png"));
 	if (!grassTex.isNull())
 		grassTex->reload();
 		
 	int imgRoadSize = 0;
-	Image imgRoad;  imgRoad.load(String("grassDensity")+DEFAULT_TEXTURE_EXTENSION,"General");
+	Image imgRoad;  imgRoad.load(String("grassDensity.png"),"General");
 	imgRoadSize = imgRoad.getWidth();  // square[]
 		
 	// remove old BinFolder's (paged geom temp resource groups)
@@ -126,8 +126,8 @@ void App::CreateTrees()
 		l->setRenderTechnique(/*GRASSTECH_SPRITE*/GRASSTECH_CROSSQUADS);
 		l->setFadeTechnique(FADETECH_ALPHA/*FADETECH_GROW*/);
 
-		l->setColorMap(String("grassColor")+DEFAULT_TEXTURE_EXTENSION);
-		l->setDensityMap(String("grassDensity")+DEFAULT_TEXTURE_EXTENSION);
+		l->setColorMap(String("grassColor.png"));
+		l->setDensityMap(String("grassDensity.png"));
 		l->setMapBounds(tbnd);
 		grass->setShadersEnabled(true);//`
 	}

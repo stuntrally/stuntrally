@@ -249,7 +249,7 @@ void App::listCarChng(List* li, size_t pos)
 	size_t i = li->getIndexSelected();  if (i==ITEM_NONE)  return;
 	const UString& sl = li->getItemNameAt(i);	sListCar = sl;
 
-	if (imgCar)  imgCar->setImageTexture(sListCar+SECONDARY_TEXTURE_EXTENSION);
+	if (imgCar)  imgCar->setImageTexture(sListCar+".jpg");
 	if (mClient) mClient->updatePlayerInfo(pSet->nickname, sListCar);
 }
 void App::btnChgCar(WP)
