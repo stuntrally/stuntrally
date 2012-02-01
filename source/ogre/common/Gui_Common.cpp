@@ -654,7 +654,6 @@ void App::ResizeOptWnd()
 
 	#ifndef ROAD_EDITOR
 	mWndGame->setCoord(xm, ym, xo, yo);
-	mWndChamp->setCoord(xm, ym, xo, yo);
 	mWndReplays->setCoord(xm, ym, xo, yo);
 	#endif
 	mWndOpts->setCoord(xm, ym, xo, yo);

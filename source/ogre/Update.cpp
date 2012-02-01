@@ -63,7 +63,7 @@ bool App::frameStart(Real time)
 		mGUI->destroyWidgets(vwGui);  bnQuit=0;mWndOpts=0;  //todo: rest too..
 		InitGui();
 		bWindowResized = true;
-		//mWndTabs->setIndexSelected(6);  // switch back to view tab
+		mWndTabsOpts->setIndexSelected(3);  // switch back to view tab
 	}
 
 	if (bWindowResized)

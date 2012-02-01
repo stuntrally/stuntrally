@@ -163,6 +163,9 @@ bool Replay::GetFrame(double time, ReplayFrame* pFr, int carNum)
 	//  search down
 	while (ic > 0     && frames[carNum][ic].time > time)  --ic;
 
+	if (ic < 0 || ic >= frames[carNum].size())
+		return false;  //-
+
 	/*for (i=0; i < s-1; ++i)  // easiest, bad--
 		if (frames[i+1].time > time)
 		{	ic = i;  break;  }/**/

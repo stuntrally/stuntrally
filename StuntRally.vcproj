@@ -762,38 +762,6 @@
 		<Filter
 			Name="Collis"
 			>
-			<File
-				RelativePath=".\Source\vdrift\collision_world.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\Source\vdrift\collision_world.h"
-				>
-			</File>
-			<File
-				RelativePath=".\Source\vdrift\coordinatesystems.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\Source\vdrift\coordinatesystems.h"
-				>
-			</File>
-			<File
-				RelativePath=".\Source\vdrift\crashdetection.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\Source\vdrift\crashdetection.h"
-				>
-			</File>
-			<File
-				RelativePath=".\Source\vdrift\suspensionbumpdetection.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\Source\vdrift\suspensionbumpdetection.h"
-				>
-			</File>
 			<Filter
 				Name="road"
 				>
@@ -1157,6 +1125,14 @@
 					RelativePath=".\Source\vdrift\sound.h"
 					>
 				</File>
+				<File
+					RelativePath=".\Source\vdrift\timer.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\Source\vdrift\timer.h"
+					>
+				</File>
 				<Filter
 					Name="Game2"
 					>
@@ -1389,14 +1365,6 @@
 						>
 					</File>
 					<File
-						RelativePath=".\Source\vdrift\timer.cpp"
-						>
-					</File>
-					<File
-						RelativePath=".\Source\vdrift\timer.h"
-						>
-					</File>
-					<File
 						RelativePath=".\Source\vdrift\toggle.cpp"
 						>
 					</File>
@@ -1529,10 +1497,6 @@
 			<Filter
 				Name="Gui"
 				>
-				<File
-					RelativePath=".\source\ogre\Championships.cpp"
-					>
-				</File>
 				<File
 					RelativePath=".\data\gui\core_language_en_tag.xml"
 					>
@@ -1945,6 +1909,10 @@
 			<Filter
 				Name="Game"
 				>
+				<File
+					RelativePath=".\source\ogre\Championships.cpp"
+					>
+				</File>
 				<File
 					RelativePath=".\source\ogre\Compositor.cpp"
 					>

@@ -306,7 +306,7 @@ void App::updTrkListDim()
 void App::updChampListDim()
 {
 	if (!liChamps)  return;
-	const IntCoord& wi = mWndChamp->getCoord();
+	const IntCoord& wi = mWndGame->getCoord();
 
 	int sum = 0, cnt = liChamps->getColumnCount(), sw = 0;
 	for (int c=0; c < cnt; ++c)  sum += ChColW[c];

@@ -169,20 +169,20 @@ void App::listChampChng(MyGUI::MultiList2* chlist, size_t pos)
 
 	//  update champ details (on stages tab)
 	TextBox* txt;
-	txt = (TextBox*)mWndChamp->findWidget("valChDiff");
+	txt = (TextBox*)mWndGame->findWidget("valChDiff");
 	if (txt)  txt->setCaption(TR("#{Diff"+toStr(ch.diff)+"}"));
-	txt = (TextBox*)mWndChamp->findWidget("valChTracks");
+	txt = (TextBox*)mWndGame->findWidget("valChTracks");
 	if (txt)  txt->setCaption(toStr(ch.trks.size()));
 
-	txt = (TextBox*)mWndChamp->findWidget("valChDist");
+	txt = (TextBox*)mWndGame->findWidget("valChDist");
 	if (txt)  txt->setCaption(/*toStr(ch.length)*/"-");  // sum from find tracks..
-	txt = (TextBox*)mWndChamp->findWidget("valChTime");
+	txt = (TextBox*)mWndGame->findWidget("valChTime");
 	if (txt)  txt->setCaption(GetTimeString(allTime));
 
-	txt = (TextBox*)mWndChamp->findWidget("valChProgress");
+	txt = (TextBox*)mWndGame->findWidget("valChProgress");
 	sprintf(ss, "%5.1f %%", 100.f * progress.champs[pos].curTrack / champs.champs[pos].trks.size());
 	if (txt)  txt->setCaption(ss);
-	txt = (TextBox*)mWndChamp->findWidget("valChScore");
+	txt = (TextBox*)mWndGame->findWidget("valChScore");
 	sprintf(ss, "%5.1f", progress.champs[pos].score);
 	if (txt)  txt->setCaption(ss);
 }

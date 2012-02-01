@@ -275,7 +275,7 @@ void App::btnChgTrack(WP)
 //  new game
 void App::btnNewGame(WP)
 {
-	if (mWndGame->getVisible())
+	if (mWndGame->getVisible() && mWndTabsGame->getIndexSelected() < 5)
 		pSet->gui.champ_num = -1;  /// champ, back to single race
 	
 	NewGame();  isFocGui = false;  // off gui
@@ -419,8 +419,7 @@ bool App::keyPressed( const OIS::KeyEvent &arg )
 			MyGUI::TabPtr tab = 0;
 			switch (pSet->inMenu)
 			{
-				case WND_Game:  tab = mWndTabsGame;  break;
-				case WND_Champ:  tab = mWndTabsChamp;  break;
+				case WND_Game:  case WND_Champ:		tab = mWndTabsGame;  break;
 				case WND_Options:  tab = mWndTabsOpts;  break;
 			}
 			if (tab)
@@ -486,7 +485,10 @@ bool App::keyPressed( const OIS::KeyEvent &arg )
 		if (pSet->escquit)
 			mShutDown = true;	// quit
 		else
-			toggleGui(true);	// gui on/off
+			if (mWndChampStage->getVisible())  ///  close champ wnds
+				btnChampStageStart(0);
+			else
+				toggleGui(true);	// gui on/off
 		return true;
 	}
 
@@ -558,9 +560,9 @@ bool App::keyPressed( const OIS::KeyEvent &arg )
 			case KC_F5:		//  new game
 			{	NewGame();  return false;
 			}	break;
-			
-			case KC_RETURN:
-			///  close champ wnds
+
+
+			case KC_RETURN:		///  close champ wnds
 			if (mWndChampStage->getVisible())
 				btnChampStageStart(0);
 			else			//  chng trk/car + new game  after up/dn
@@ -569,9 +571,7 @@ bool App::keyPressed( const OIS::KeyEvent &arg )
 				{
 				case WND_Replays:
 					btnRplLoad(0);  break;
-				case WND_Champ:
-					btnChampStart(0);  break;
-				case WND_Game:
+				case WND_Game:  case WND_Champ:
 				{	switch (mWndTabsGame->getIndexSelected())
 					{
 					case 1:
@@ -582,6 +582,8 @@ bool App::keyPressed( const OIS::KeyEvent &arg )
 						btnNewGame(0);  break;
 					case 3:
 						chatSendMsg();  break;
+					case 5:
+						btnChampStart(0);  break;
 				}	break;
 			}	}
 			return false;
@@ -606,12 +608,18 @@ void App::toggleGui(bool toggle)
 	if (toggle)
 		isFocGui = !isFocGui;
 
-	bool notMain = isFocGui && !pSet->isMain;
+	bool notMain = isFocGui && !pSet->isMain, game = pSet->inMenu == WND_Game, champ = pSet->inMenu == WND_Champ, gc = game || champ;
 	if (mWndMain)	mWndMain->setVisible(isFocGui && pSet->isMain);
-	if (mWndGame)	mWndGame->setVisible(notMain  && pSet->inMenu == WND_Game);
-	if (mWndChamp)	mWndChamp->setVisible(notMain && pSet->inMenu == WND_Champ);
+	if (mWndGame)	mWndGame->setVisible(notMain  && gc);
 	if (mWndReplays) mWndReplays->setVisible(notMain && pSet->inMenu == WND_Replays);
 	if (mWndOpts)	mWndOpts->setVisible(notMain  && pSet->inMenu == WND_Options);
+	if (notMain && gc)  // show hide champs,stages
+	{
+		size_t id = mWndTabsGame->getIndexSelected();
+		mWndTabsGame->setButtonWidthAt(4,champ ? 1 : -1);  if (id == 4 && champ)  mWndTabsGame->setIndexSelected(5);
+		mWndTabsGame->setButtonWidthAt(5,champ ? -1 : 1);  if (id == 5 && !champ)  mWndTabsGame->setIndexSelected(1);
+		mWndTabsGame->setButtonWidthAt(6,champ ? -1 : 1);  if (id == 6 && !champ)  mWndTabsGame->setIndexSelected(1);
+	}
 
 	if (bnQuit)  bnQuit->setVisible(isFocGui);
 	if (mGUI)	PointerManager::getInstance().setVisible(isFocGuiOrRpl());
