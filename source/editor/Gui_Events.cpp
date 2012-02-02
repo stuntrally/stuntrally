@@ -496,7 +496,7 @@ void App::comboParDust(ComboBoxPtr cmb, size_t val)
 void App::comboSurfType(ComboBoxPtr cmb, size_t val)
 {
 	int i = idTerLay;  //bTerLay ? idTerLay+1 : 0;  // road at 0
-	su[i].setType(i);
+	su[i].setType(val);
 }
 
 void App::editSurf(EditPtr ed)
