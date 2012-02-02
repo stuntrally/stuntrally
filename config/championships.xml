@@ -26,8 +26,9 @@
 		<track name="S4-Hills" laps="1" factor="0.1" />
 	</championship>
 
-	<championship name="Tutorial Jumps" ver="1" difficulty="3" length="3" tutorial="1" 
+	<championship name="Tutorial Jumps" ver="2" difficulty="3" length="3" tutorial="1" 
 			descr="Tutorial on jumps in tracks, for training jumping. Car velocity before jump is most important.">
+		<track name="D5-jmp8-low"  laps="2" factor="0.1" />
 		<track name="D6-jmp0-high" laps="2" factor="0.1" />
 		<track name="D8-HHY" laps="1" factor="0.1" />
 	</championship>
@@ -264,7 +265,7 @@
 		<track name="F1-Cc"			time="48.5"/>
 		<track name="F3-osso"		time="38.5"/>
 		<!--18-->
-		<track name="D5-jmp8-low"	time="45.7"/>
+		<track name="D5-jmp8-low"	time="37.5"/>
 		<track name="D6-jmp0-high"	time="35.6"/>
 		<track name="S5-LoopBasic"	time="72.4"/>
 
