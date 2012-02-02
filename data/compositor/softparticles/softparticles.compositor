@@ -34,7 +34,7 @@ compositor SoftParticles
             {
                 // render alpha queues including particles
 	      		first_render_queue 70
-	    		last_render_queue 83
+	    		last_render_queue 94
             }
         }
 

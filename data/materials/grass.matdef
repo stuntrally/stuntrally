@@ -7,7 +7,6 @@
 	sceneBlend = alpha
 	lighting = false
 	receivesShadows = true
-	transparent = true
 	wind = 1
 	terrainLightMap = true
 	vertexColour = true
