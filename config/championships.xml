@@ -28,8 +28,8 @@
 
 	<championship name="Tutorial Jumps" ver="2" difficulty="3" length="3" tutorial="1" 
 			descr="Tutorial on jumps in tracks, for training jumping. Car velocity before jump is most important.">
-		<track name="D5-jmp8-low"  laps="2" factor="0.1" />
-		<track name="D6-jmp0-high" laps="2" factor="0.1" />
+		<track name="D5-jmp8-low"  laps="1" factor="0.1" />
+		<track name="D6-jmp0-high" laps="1" factor="0.1" />
 		<track name="D8-HHY" laps="1" factor="0.1" />
 	</championship>
 
