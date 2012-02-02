@@ -53,15 +53,15 @@ void App::changeShadows()
 	if (mTerrainGlobals)
 	{
 		matProfile = (TerrainMaterialGeneratorB::SM2Profile*) mTerrainGlobals->getDefaultMaterialGenerator()->getActiveProfile();
-				
-		matProfile->setReceiveDynamicShadowsEnabled(enabled);
-		matProfile->setReceiveDynamicShadowsLowLod(true);
-		matProfile->setGlobalColourMapEnabled(false);
+		if (matProfile)
+		{	matProfile->setReceiveDynamicShadowsEnabled(enabled);
+			matProfile->setReceiveDynamicShadowsLowLod(true);
+			matProfile->setGlobalColourMapEnabled(false);
 
-		matProfile->setLayerSpecularMappingEnabled(pSet->ter_mtr >= 1);  // ter mtr
-		matProfile->setLayerNormalMappingEnabled(  pSet->ter_mtr >= 2);
-		matProfile->setLayerParallaxMappingEnabled(pSet->ter_mtr >= 3);
-	}
+			matProfile->setLayerSpecularMappingEnabled(pSet->ter_mtr >= 1);  // ter mtr
+			matProfile->setLayerNormalMappingEnabled(  pSet->ter_mtr >= 2);
+			matProfile->setLayerParallaxMappingEnabled(pSet->ter_mtr >= 3);
+	}	}
 	
 	//  shadows old-
 	if (pSet->shadow_type == 1)
