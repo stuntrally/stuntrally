@@ -145,6 +145,7 @@ protected:
 		mWndRpl, mWndChampStage,mWndChampEnd;  // rpl controls, champ wnds
 	MyGUI::TabPtr mWndTabsGame,mWndTabsOpts;
 	MyGUI::WidgetPtr mWndMainPanels[WND_ALL];  MyGUI::ButtonPtr mWndMainBtns[WND_ALL];
+	MyGUI::VectorWidgetPtr vwGui;
 
 	///  networking
 	boost::scoped_ptr<MasterClient> mMasterClient;
