@@ -186,7 +186,7 @@ void GrassLoader::loadPage(PageInfo &page)
 			//Add the mesh to PagedGeometry
 			Entity *entity = geom->getCamera()->getSceneManager()->createEntity(getUniqueID(), mesh->getName());
 			entity->setRenderQueueGroup(renderQueue);
-			entity->setVisibilityFlags(RV_Vegetation);  ///T  disable in render targets
+			entity->setVisibilityFlags(RV_VegetGrass);  ///T  disable in render targets
 			entity->setCastShadows(false);
 			addEntity(entity, page.centerPoint, Quaternion::IDENTITY, Vector3::UNIT_SCALE);
 

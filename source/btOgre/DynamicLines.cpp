@@ -14,7 +14,8 @@ using namespace Ogre;
 //  DynamicRenderable
 //=============================================================================================
 
-DynamicRenderable::DynamicRenderable()
+DynamicRenderable::DynamicRenderable() :
+	mVertexBufferCapacity(0), mIndexBufferCapacity(0)
 {
 }
 DynamicRenderable::~DynamicRenderable()

@@ -39,6 +39,7 @@ const Ogre::uint32
 	RV_Hud = 2,		// hud and markers
 	RV_Terrain = 4,	// terrain and fluids, for terrain texture
 	RV_Vegetation = 8,  // vegetation, paged geom
+	RV_VegetGrass = 64,  // vegetation, paged geom
 	RV_Sky = 32,	// sky, editor only
 
 	RV_Car = 2,			// car,tires in game, (hide in reflection render)
