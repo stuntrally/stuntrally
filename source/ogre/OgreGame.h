@@ -205,7 +205,7 @@ protected:
 	//  language
 	void comboLanguage(CMB);
 	std::map<std::string, std::string> languages; // <short name, display name>
-	bool bGuiReinit;  MyGUI::VectorWidgetPtr vwGui;
+	bool bGuiReinit;
 
 	//  init
 	void InitGui();  bool bGI;
