@@ -12,3 +12,7 @@
 	terrainLightMap = true
 	vertexColour = true
 	shadowPriority = 0.3
+
+[grassJungle]
+	parent = grass
+	diffuseMap_1 = grassJungle.png

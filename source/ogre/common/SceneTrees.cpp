@@ -116,20 +116,21 @@ void App::CreateTrees()
 
 		//  Add grass
 		GrassLayer *l = grassLoader->addLayer("grass");
+//>		GrassLayer *l = grassLoader->addLayer(sc.grassMtr);
 		l->setMinimumSize(sc.grMinSx, sc.grMinSy);
 		l->setMaximumSize(sc.grMaxSx, sc.grMaxSy);
 		l->setDensity(fGrass);  l->setSwayDistribution(sc.grSwayDistr);
 		l->setSwayLength(sc.grSwayLen);  l->setSwaySpeed(sc.grSwaySpeed);
 
-		l->setAnimationEnabled(true);
-		//l->setLightingEnabled(true);  //!
-		l->setRenderTechnique(/*GRASSTECH_SPRITE*/GRASSTECH_CROSSQUADS);
-		l->setFadeTechnique(FADETECH_ALPHA/*FADETECH_GROW*/);
+		l->setAnimationEnabled(true);  //l->setLightingEnabled(true);
+		l->setRenderTechnique(GRASSTECH_CROSSQUADS);  //GRASSTECH_SPRITE-
+		l->setFadeTechnique(FADETECH_ALPHA);  //FADETECH_GROW-
 
 		l->setColorMap("grassColor.png");
+//>		l->setColorMap(sc.grassColorMap);
 		l->setDensityMap("grassDensity.png");
 		l->setMapBounds(tbnd);
-		grass->setShadersEnabled(true);//`
+		grass->setShadersEnabled(true);
 	}
 	ti.update();  /// time
 	float dt = ti.dt * 1000.f;
