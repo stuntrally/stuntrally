@@ -555,6 +555,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\config\championships.xml"
+				>
+			</File>
+			<File
 				RelativePath=".\source\ogre\ChampsXml.cpp"
 				>
 			</File>
