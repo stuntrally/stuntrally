@@ -228,6 +228,7 @@ void App::InitGui()
 
 	strlist li;
 	GetFolderIndex(PATHMANAGER::GetDataPath() + "/terrain", li);
+	GetFolderIndex(PATHMANAGER::GetDataPath() + "/terrain2", li);
 	for (strlist::iterator i = li.begin(); i != li.end(); ++i)
 		if (StringUtil::endsWith(*i,".txt"))
 			i = li.erase(i);
