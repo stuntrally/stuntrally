@@ -1144,8 +1144,8 @@ void GrassLayer::_updateShaders()
 			const String vsName = tmpName.str();
 
 			//Generate a string ID that identifies the material combined with the vertex shader
-			///T we use our own material (only one) so we want static material name
-			const String matName = "grass";
+			///T use material name, //old:we use our own material (only one) so we want static material name
+			const String matName = material->getName();  //old "grass"
 
 			//Check if the desired material already exists (if not, create it)
 			MaterialPtr tmpMat = MaterialManager::getSingleton().getByName(matName);

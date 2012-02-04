@@ -298,7 +298,9 @@ void App::setMtrSplits(String sMtrName)
 		} catch(...) { }
 		
 		#ifdef ROAD_EDITOR
-		//  create selected mtr
+		//  create selected materials for road
+		if (StringUtil::startsWith(sMtrName,"road",false) || StringUtil::startsWith(sMtrName,"pipe",false) )
+		{
 		String selName = sMtrName + "_sel";
 		MaterialPtr selMtr = MaterialManager::getSingleton().getByName(selName);
 		if (selMtr.isNull())  {  // once
@@ -310,7 +312,7 @@ void App::setMtrSplits(String sMtrName)
 			p->setDepthCheckEnabled(false);  p->setDepthWriteEnabled(true);
 			p->setCullingMode(CULL_NONE);
 			p->setFragmentProgram("sel_ps");  //p->setSelfIllumination(0,0.1,0.2);
-		}
+		}	}
 		#endif
 	}
 }

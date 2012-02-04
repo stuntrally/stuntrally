@@ -63,10 +63,6 @@ void App::CreateTrees()
 	gTerrain = terrain;
 	
 	//-------------------------------------- Grass --------------------------------------
-	TexturePtr grassTex = Ogre::TextureManager::getSingleton().getByName("grass1.png");
-	if (!grassTex.isNull())
-		grassTex->reload();
-		
 	int imgRoadSize = 0;
 	Image imgRoad;  imgRoad.load("grassDensity.png","General");
 	imgRoadSize = imgRoad.getWidth();  // square[]
@@ -115,8 +111,7 @@ void App::CreateTrees()
 		grassLoader->setHeightFunction(&getTerrainHeight);
 
 		//  Add grass
-		GrassLayer *l = grassLoader->addLayer("grass");
-//>		GrassLayer *l = grassLoader->addLayer(sc.grassMtr);
+		GrassLayer *l = grassLoader->addLayer(sc.grassMtr);
 		l->setMinimumSize(sc.grMinSx, sc.grMinSy);
 		l->setMaximumSize(sc.grMaxSx, sc.grMaxSy);
 		l->setDensity(fGrass);  l->setSwayDistribution(sc.grSwayDistr);
@@ -126,8 +121,7 @@ void App::CreateTrees()
 		l->setRenderTechnique(GRASSTECH_CROSSQUADS);  //GRASSTECH_SPRITE-
 		l->setFadeTechnique(FADETECH_ALPHA);  //FADETECH_GROW-
 
-		l->setColorMap("grassColor.png");
-//>		l->setColorMap(sc.grassColorMap);
+		l->setColorMap(sc.grassColorMap);
 		l->setDensityMap("grassDensity.png");
 		l->setMapBounds(tbnd);
 		grass->setShadersEnabled(true);

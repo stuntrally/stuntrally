@@ -1,3 +1,6 @@
+[impostor]
+	customGenerator = Impostor
+
 ; can't use depth shadows with alpha_rejection, so only tree trunks have shadow
 ; --------- gum tree ----------
 [gum_branch]
