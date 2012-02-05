@@ -249,7 +249,6 @@ void MaterialGenerator::createTexUnits(Ogre::Pass* pass)
 		mEnvTexUnit = mTexUnit_i; mTexUnit_i++;
 	}
 
-	
 	// realtime shadow maps
 	if (needShadows())
 	{
@@ -434,7 +433,7 @@ bool MaterialGenerator::needLightMap()
 bool MaterialGenerator::needTerrainLightMap()
 {
 	// temporary workaround. terrain lightmap is broken when depth shadows off (texture not found).
-	return mShader->terrainLightMap && mParent->getShadowsDepth();
+	return mShader->terrainLightMap && mParent->getShadowsDepth() && mParent->getTerrain();
 }
 
 bool MaterialGenerator::needBlendMap()

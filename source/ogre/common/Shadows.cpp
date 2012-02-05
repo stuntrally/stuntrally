@@ -44,7 +44,7 @@ void App::changeShadows()
 	pSet->shadow_size = std::max(0,std::min(ciShadowNumSizes-1, pSet->shadow_size));
 	int fTex = /*2048*/ ciShadowSizesA[pSet->shadow_size], fTex2 = fTex/2;
 	int num = /*3*/ pSet->shadow_count;
-	
+		
 	// disable 4 shadow textures (does not work because no texcoord's left in shader)
 	if (num == 4) num = 3;
 
@@ -116,6 +116,7 @@ void App::changeShadows()
 				const Real cAdjfA[5] = {2, 1, 0.5, 0.25, 0.125};
 				pssmSetup->setOptimalAdjustFactor(i, cAdjfA[std::min(i, 4)]);
 			}
+			materialFactory->setPSSMCameraSetup(pssmSetup);
 			mPSSMSetup.bind(pssmSetup);
 		}
 		mSceneMgr->setShadowCameraSetup(mPSSMSetup);
@@ -204,45 +205,12 @@ void App::changeShadows()
 	}
 	#endif
 	
+	materialFactory->setTerrain(terrain);
 	materialFactory->setNumShadowTex(num);
 	materialFactory->setShadows(pSet->shadow_type != 0);
 	materialFactory->setShadowsDepth(bDepth);
 	materialFactory->setShadowsSoft(bSoft);
 	materialFactory->generate();
-	
-	// set terrain lightmap texture and terrainWorldSize for all materials that need it
-	if (terrain) // naive check if a game has been started already
-	{
-		for (std::vector<std::string>::const_iterator it = materialFactory->terrainLightMapMtrs.begin();
-			it != materialFactory->terrainLightMapMtrs.end(); ++it)
-		{
-			MaterialPtr mtr = MaterialManager::getSingleton().getByName( (*it) );
-			
-			if (!mtr.isNull())
-			{	Material::TechniqueIterator techIt = mtr->getTechniqueIterator();
-				while (techIt.hasMoreElements())
-				{	Technique* tech = techIt.getNext();
-					Technique::PassIterator passIt = tech->getPassIterator();
-					while (passIt.hasMoreElements())
-					{	Pass* pass = passIt.getNext();
-						if (!pass->hasFragmentProgram()) continue;
-						Pass::TextureUnitStateIterator tusIt = pass->getTextureUnitStateIterator();
-						while (tusIt.hasMoreElements())
-						{
-							TextureUnitState* tus = tusIt.getNext();
-							if (tus->getName() == "terrainLightMap")
-							{
-								if(!terrain->getLightmap().isNull())
-								{
-									tus->setTextureName( terrain->getLightmap()->getName() );
-								}
-								if (pass->hasFragmentProgram() && pass->getFragmentProgramParameters()->_findNamedConstantDefinition("terrainWorldSize", false))
-									pass->getFragmentProgramParameters()->setNamedConstant( "terrainWorldSize", Real( sc.td.fTerWorldSize ) );
-							}
-						}
-			}	}	}
-		}
-	}
 	
 	// -------------------   update the paged-geom materials
 	
@@ -339,11 +307,4 @@ void App::UpdPSSMMaterials()	/// . . . . . . . .
 		recreateCarMtr();
 	}
 	#endif
-	
-	for (std::vector<std::string>::iterator it = materialFactory->splitMtrs.begin();
-		it != materialFactory->splitMtrs.end(); ++it)
-	{
-		//LogO("Set splits: " + (*it) );
-		setMtrSplits( (*it) );
-	}
 }

@@ -152,7 +152,8 @@ void MaterialGenerator::fpShadowingParams(Ogre::StringUtil::StrStreamType& outSt
 			outStream << "uniform float4 invShadowMapSize"+toStr(i)+", \n";
 		outStream << "\n";
 		outStream << 
-		"	uniform float4 pssmSplitPoints, \n";
+		"	uniform float4 pssmSplitPoints, \n"
+		"	uniform float3 fadeStart_farDist, \n";
 	}
 }
 
@@ -178,6 +179,13 @@ void MaterialGenerator::fpCalcShadowSource(Ogre::StringUtil::StrStreamType& outS
 		
 		outStream <<
 		"pssmSplitPoints, texCoord.z); \n";
+		
+		if (mParent->getShadowsFade() && mParent->getSceneManager()->getShadowFarDistance() > 0) outStream <<
+			"	float fadestart = fadeStart_farDist.x; \n"
+			"	float fardist = fadeStart_farDist.y; \n"
+			"	float fade = saturate(((texCoord.z/fardist) - (1-(fadestart)))/(fadestart));"
+			"	shadowingRT = lerp(shadowingRT, 1, fade * fadeStart_farDist.z); \n";
+		
 	}
 	
 	if (needTerrainLightMap())

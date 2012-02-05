@@ -26,12 +26,18 @@
 #include <OgreMaterialManager.h>
 #include <OgreTechnique.h>
 #include <OgrePass.h>
+#include <OgreSceneManager.h>
+#include <OgreShadowCameraSetupPSSM.h>
+#include <OgreTerrain.h>
 using namespace Ogre;
 
 // use shader cache
 // if you disable it, startup time will be A LOT longer...
 // so the only reason you would disable this is to trace down a bug
 #define USE_CACHE
+
+// are we using a customized terrain material generator?
+#define USE_CUSTOM_TERRAIN_MATERIAL
 
 //----------------------------------------------------------------------------------------
 
@@ -63,9 +69,11 @@ MaterialFactory& MaterialFactory::getSingleton(void)
 //----------------------------------------------------------------------------------------
 
 MaterialFactory::MaterialFactory() : 
-	bNormalMap(1), bEnvMap(1), bShadows(1), bShadowsDepth(1), bShadowsSoft(1),
-	iTexSize(4096), iNumShadowTex(3), fShaderQuality(0.5),
-	bSettingsChanged(1) // always have to generate at start
+	bNormalMap(1), bEnvMap(1), bShadows(1), bShadowsDepth(1), bShadowsSoft(1), bShadowsFade(0),
+	iTexSize(4096), iNumShadowTex(3), fShaderQuality(0.5), fShadowsFadeDistance(20.f),
+	bSettingsChanged(1), // always have to generate at start
+	
+	mSceneMgr(0), mTerrain(0), mPSSM(0)
 {
 	QTimer ti;  ti.update(); /// time
 	
@@ -133,6 +141,33 @@ MaterialFactory::~MaterialFactory()
 	std::vector<MaterialGenerator*>::iterator gIt;
 	for (gIt = mCustomGenerators.begin(); gIt != mCustomGenerators.end(); ++gIt)
 		delete (*gIt);
+}
+
+//----------------------------------------------------------------------------------------
+
+void MaterialFactory::setSceneManager(SceneManager* pSceneMgr)
+{
+	mSceneMgr = pSceneMgr;
+}
+
+SceneManager* MaterialFactory::getSceneManager()
+{
+	return mSceneMgr;
+}
+
+void MaterialFactory::setTerrain(Terrain* pTerrain)
+{
+	mTerrain = pTerrain;
+}
+
+Terrain* MaterialFactory::getTerrain()
+{
+	return mTerrain;
+}
+
+void MaterialFactory::setPSSMCameraSetup(PSSMShadowCameraSetup* setup)
+{
+	mPSSM = setup;
 }
 
 //----------------------------------------------------------------------------------------
@@ -215,7 +250,7 @@ void MaterialFactory::loadDefsFromFile(const std::string& file)
 {
 	try
 	{
-		mFile.load(file, Ogre::ResourceGroupManager::AUTODETECT_RESOURCE_GROUP_NAME, 
+		mFile.load(file, ResourceGroupManager::AUTODETECT_RESOURCE_GROUP_NAME, 
 			"\t:=", /* seperator */
 			true    /* trimWhitespace */
 		);
@@ -230,13 +265,13 @@ void MaterialFactory::loadDefsFromFile(const std::string& file)
 	int defI = 0; // counter for num def's.
 	
 	// go through all sections (in this case mat def's) in this file
-	Ogre::ConfigFile::SectionIterator seci = mFile.getSectionIterator();
-	Ogre::String secName, key, value;
+	ConfigFile::SectionIterator seci = mFile.getSectionIterator();
+	String secName, key, value;
 
 	while (seci.hasMoreElements())
 	{
 		secName = seci.peekNextKey();
-		if (secName == Ogre::StringUtil::BLANK) { seci.getNext(); continue; }
+		if (secName == StringUtil::BLANK) { seci.getNext(); continue; }
 		
 		MaterialProperties* newProps;
 
@@ -258,7 +293,7 @@ void MaterialFactory::loadDefsFromFile(const std::string& file)
 		// parse "parent" attribute regardless of the material order in the file
 		// (i.e. add materials that have a parent that isn't created yet into a queue, to process later)
 		
-		if (mFile.getSetting("parent", secName) != Ogre::StringUtil::BLANK)
+		if (mFile.getSetting("parent", secName) != StringUtil::BLANK)
 		{
 			// has parent
 			const std::string parent = mFile.getSetting("parent", secName);
@@ -298,8 +333,8 @@ void MaterialFactory::loadDefsFromFile(const std::string& file)
 		
 		// now, loop through all settings (=properties) in this section (=mat. definition)
 		// and save the property from file in our MaterialProperties.
-		Ogre::ConfigFile::SettingsMultiMap *settings = seci.getNext();
-		Ogre::ConfigFile::SettingsMultiMap::iterator i;
+		ConfigFile::SettingsMultiMap *settings = seci.getNext();
+		ConfigFile::SettingsMultiMap::iterator i;
 		for (i = settings->begin(); i != settings->end(); ++i)
 			newProps->setProperty(i->first, i->second);
 		
@@ -311,6 +346,72 @@ void MaterialFactory::loadDefsFromFile(const std::string& file)
 	}
 	
 	LogO("[MaterialFactory] loaded " + toStr(defI) + " definitions from " + file);
+}
+
+//----------------------------------------------------------------------------------------
+
+void MaterialFactory::setShaderParams(MaterialPtr mat)
+{
+	if (mat.isNull()) return;
+		
+	Material::TechniqueIterator techIt = mat->getTechniqueIterator();
+	while (techIt.hasMoreElements())
+	{
+		Technique* tech = techIt.getNext();
+		Technique::PassIterator passIt = tech->getPassIterator();
+		while (passIt.hasMoreElements())
+		{
+			Pass* pass = passIt.getNext();
+								
+			if (pass->hasFragmentProgram())
+			{
+				// shadow fading parameters
+				if ( getShadowsFade()
+					&& pass->getFragmentProgramParameters()->_findNamedConstantDefinition("fadeStart_farDist", false)
+					&& mSceneMgr
+				)
+				{
+					float fadeDist;
+					if (mSceneMgr->getShadowFarDistance() != 0)
+						fadeDist = getShadowsFadeDistance()/mSceneMgr->getShadowFarDistance();
+					else
+						fadeDist = 0.f;
+														
+					pass->getFragmentProgramParameters()->setNamedConstant("fadeStart_farDist", Vector3(
+						fadeDist,
+						mSceneMgr->getShadowFarDistance(),
+						float(getShadowsFade())
+					));
+				}
+				// terrain lightmap name & size
+				if ( mTerrain && !mTerrain->getLightmap().isNull() )
+				{
+					if (pass->getFragmentProgramParameters()->_findNamedConstantDefinition("terrainWorldSize", false))
+						pass->getFragmentProgramParameters()->setNamedConstant( "terrainWorldSize", Real( mTerrain->getWorldSize() ) );
+					
+					Pass::TextureUnitStateIterator tusIt = pass->getTextureUnitStateIterator();
+					while (tusIt.hasMoreElements())
+					{
+						TextureUnitState* tus = tusIt.getNext();
+						if (tus->getName() == "terrainLightMap")
+						{
+							tus->setTextureName( mTerrain->getLightmap()->getName() );
+						}
+					}
+				}
+				// pssm split points
+				if ( pass->getFragmentProgramParameters()->_findNamedConstantDefinition("pssmSplitPoints", false) && mPSSM)
+				{
+					const PSSMShadowCameraSetup::SplitPointList& splitPointList = mPSSM->getSplitPoints();
+					Vector4 splitPoints;
+					for (size_t i = 0; i < splitPointList.size(); ++i)
+						splitPoints[i] = splitPointList[i];
+						
+					pass->getFragmentProgramParameters()->setNamedConstant("pssmSplitPoints", splitPoints);
+				}
+			}
+		}
+	}
 }
 
 //----------------------------------------------------------------------------------------
@@ -335,9 +436,7 @@ void MaterialFactory::generate()
 		{
 			// don't generate abstract materials
 			if ((*it)->getProps()->abstract) continue;
-			
-			//LogO("generating " + (*it)->getName());
-			
+						
 			// find an appropriate generator
 			MaterialGenerator* generator;
 			if ((*it)->getProps()->customGenerator == "")
@@ -420,12 +519,74 @@ referenced by material '" + (*it)->getName() + "' not found. Using default gener
 	else
 		LogO("[MaterialFactory] settings not changed, using old materials");
 		
+	
+	// update params	
+	for (std::vector<MaterialDefinition*>::iterator it=mDefinitions.begin();
+		it!=mDefinitions.end(); ++it)
+	{
+		MaterialPtr mat = MaterialManager::getSingleton().getByName( (*it)->getName() );
+		setShaderParams(mat);
+	}
+	
+	#ifdef USE_CUSTOM_TERRAIN_MATERIAL
+	// update terrain params
+	if (!mTerrain) return;
+	MaterialPtr terrainMat = mTerrain->_getMaterial();
+	if (!terrainMat.isNull())
+	{
+		Material::TechniqueIterator techIt = terrainMat->getTechniqueIterator();
+		while (techIt.hasMoreElements())
+		{
+			Technique* tech = techIt.getNext();
+			Technique::PassIterator passIt = tech->getPassIterator();
+			while (passIt.hasMoreElements())
+			{
+				Pass* pass = passIt.getNext();
+				
+				if (!pass->hasFragmentProgram()
+				 || !pass->getFragmentProgramParameters()->_findNamedConstantDefinition("fadeStart_farDist", false)) continue;
+				
+				float fadeDist;
+				if (mSceneMgr->getShadowFarDistance() != 0)
+					fadeDist = getShadowsFadeDistance()/mSceneMgr->getShadowFarDistance();
+				else
+					fadeDist = 0.f;
+																
+				pass->getFragmentProgramParameters()->setNamedConstant("fadeStart_farDist", Vector3(
+					fadeDist,
+					mSceneMgr->getShadowFarDistance(),
+					float(getShadowsFade())
+				));
+			}
+		}
+	}
+	#endif
 }
 
 //----------------------------------------------------------------------------------------
 
 void MaterialFactory::update()
 {
+	for (std::vector<std::string>::const_iterator it = timeMtrs.begin();
+		it != timeMtrs.end(); ++it)
+	{
+		MaterialPtr mtr = MaterialManager::getSingleton().getByName( (*it) );
+
+		if (!mtr.isNull())
+		{	Material::TechniqueIterator techIt = mtr->getTechniqueIterator();
+			while (techIt.hasMoreElements())
+			{	Technique* tech = techIt.getNext();
+				Technique::PassIterator passIt = tech->getPassIterator();
+				while (passIt.hasMoreElements())
+				{	Pass* pass = passIt.getNext();
+
+					// time
+					if (pass->hasFragmentProgram() && pass->getFragmentProgramParameters()->_findNamedConstantDefinition("time", false))
+						pass->getFragmentProgramParameters()->setNamedConstantFromTime( "time", 1 );
+				}
+			}	
+		}	
+	}
 }
 
 //----------------------------------------------------------------------------------------

@@ -38,6 +38,7 @@ THE SOFTWARE.
 #include "OgreShadowCameraSetupPSSM.h"
 #include "../../Defines.h"
 #include "MaterialGenerator.h"
+#include "MaterialFactory.h"
 // depth shadows: use terrain receiver shader or use custom shader (pssm.cg)
 #define CUSTOM_RECEIVER_SHADER
 
@@ -1538,7 +1539,6 @@ namespace Ogre
 				}
 				outStream <<
 					"	} \n";
-
 			}
 
 			outStream << "  return shadow;";
@@ -1635,6 +1635,8 @@ namespace Ogre
 					", uniform float inverseShadowmapSize" << i << " \n";
 			//}
 		}
+		outStream <<
+		", uniform float3 fadeStart_farDist \n";
 
 	}
 	//---------------------------------------------------------------------
@@ -1686,6 +1688,13 @@ namespace Ogre
 					"	float rtshadow = calcSimpleShadow(shadowMap0, lightSpacePos0);";
 			}
 		}
+		
+		MaterialFactory* factory = MaterialFactory::getSingletonPtr();
+		if (factory->getShadowsFade() && factory->getSceneManager()->getShadowFarDistance() > 0) outStream <<
+			"	float fadestart = fadeStart_farDist.x; \n"
+			"	float fardist = fadeStart_farDist.y; \n"
+			"	float fade = saturate(((camDepth/fardist) - (1-(fadestart)))/(fadestart));"
+			"	rtshadow = lerp(rtshadow, 1, fade * fadeStart_farDist.z); \n";
 
 		outStream << 
 			"	shadow = min(shadow, rtshadow);\n";

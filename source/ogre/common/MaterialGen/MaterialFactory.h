@@ -5,6 +5,9 @@
 
 class App;  class MaterialDefinition;  class MaterialGenerator;  struct ShaderProperties;
 
+namespace Ogre { class SceneManager; class Terrain; class PSSMShadowCameraSetup; };
+
+#include <OgreMaterial.h>
 #include <OgreConfigFile.h>
 #include <OgreHighLevelGpuProgram.h>
 #include <OgreSingleton.h>
@@ -39,21 +42,38 @@ public:
 	// per-frame updates
 	void update();
 	
+	// force re-generating shaders when generate() will be run the next time
+	void markDirty() { bSettingsChanged = true; };
+	
+	void setSceneManager(Ogre::SceneManager* pSceneMgr);
+	Ogre::SceneManager* getSceneManager();
+	
+	void setTerrain(Ogre::Terrain* pTerrain);
+	Ogre::Terrain* getTerrain();
+	
+	// set necessary shader parameters for a given material that was created by the material factory.
+	// this method does NOT have to be called from outside, except when you've cloned a material.
+	// in that case, call this method for all materials that you've cloned
+	void setShaderParams(Ogre::MaterialPtr);
+	
 	/// settings that can change runtime
 	void setFog(bool fog);
 	void setWind(bool wind);
 	void setSoftParticleDepth(Ogre::TexturePtr depthtexture);
 	void setSoftParticles(bool bEnable);
-
 	
 	/// user settings get/set ---------------------------------------------
-	#define setIfChanged(s) if (p != s) { s = p; bSettingsChanged = true; }
+	#define setIfChanged(s) if (p != s) { s = p; bSettingsChanged = true; } // changes shader source ( need recompile)
+	#define setIfChangedP(s) if (p != s) { s = p; } // only changes uniform param value
 	
 	void setNormalMap(bool p) { setIfChanged(bNormalMap) };
 	void setEnvMap(bool p) { setIfChanged(bEnvMap) };
 	void setShadows(bool p) { setIfChanged(bShadows) };
 	void setShadowsDepth(bool p) { setIfChanged(bShadowsDepth) };
 	void setShadowsSoft(bool p) { setIfChanged(bShadowsSoft) };
+	void setShadowsFade(bool p) { setIfChanged(bShadowsFade) };
+	void setShadowsFadeDistance(float p) { setIfChangedP(fShadowsFadeDistance) };
+	void setPSSMCameraSetup(Ogre::PSSMShadowCameraSetup*);
 	void setTexSize(unsigned int p) { setIfChanged(iTexSize) };
 	void setNumShadowTex(unsigned int p) { setIfChanged(iNumShadowTex) };
 	void setShaderQuality(float p) { setIfChanged(fShaderQuality) };
@@ -63,6 +83,8 @@ public:
 	const bool getShadows() { return bShadows; };
 	const bool getShadowsDepth() { return bShadowsDepth; };
 	const bool getShadowsSoft() { return bShadowsSoft; };
+	const bool getShadowsFade() { return bShadowsFade; };
+	const float getShadowsFadeDistance() { return fShadowsFadeDistance; };
 	const unsigned int getTexSize() { return iTexSize; };
 	const unsigned int getNumShadowTex() { return iNumShadowTex; };
 	const float getShaderQuality() { return fShaderQuality; };
@@ -76,15 +98,19 @@ public:
 	std::vector<std::string> softMtrs; // for soft particle materials
 
 	shaderMap* getShaderCache() { return &mShaderCache; };
-	
+			
 	App* pApp;
 
 private:
 	/// user settings definition ---------------------------------
-	bool bNormalMap, bEnvMap, bShadows, bShadowsDepth, bShadowsSoft;
+	bool bNormalMap, bEnvMap, bShadows, bShadowsDepth, bShadowsSoft, bShadowsFade;
 	unsigned int iTexSize; unsigned int iNumShadowTex;
-	float fShaderQuality;
+	float fShaderQuality, fShadowsFadeDistance;
 	/// -------------------------------------------------------
+
+	Ogre::SceneManager* mSceneMgr; // scene manager (used for e.g. retrieving shadow settings)
+	Ogre::Terrain* mTerrain; // terrain (used for retrieving the lightmap as well as updating shadow fade parameter)
+	Ogre::PSSMShadowCameraSetup* mPSSM;
 
 	std::vector<MaterialDefinition*> mDefinitions;
 	
@@ -98,7 +124,7 @@ private:
 
 	// if false, generate() doesn't do anything
 	bool bSettingsChanged;
-	
+		
 	void loadDefsFromFile(const std::string& file); // load MaterialDefinition's from file (can be multiple in 1 file)
 };
 
