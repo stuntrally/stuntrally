@@ -61,7 +61,10 @@ void App::SetGuiFromXmls()
 	_Ed(GrSwayLen, sc.grSwayLen);	_Ed(GrSwaySpd, sc.grSwaySpeed);
 	_Ed(TrRdDist, sc.trRdDist);		_Ed(TrImpDist, sc.trDistImp);
 	_Ed(GrTerMaxAngle, sc.grTerMaxAngle);
+	_Ed(SceneryId, sc.sceneryId);
 	tabPgLayers(tabsPgLayers, 0);
+	_Cmb(cmbGrassMtr,sc.grassMtr);
+	_Cmb(cmbGrassClr,sc.grassColorMap);
 	//MeshPtr mp = MeshManager::load(sc.pgLayersAll[0].name);
 	//mp->getSubMesh(0)->
 

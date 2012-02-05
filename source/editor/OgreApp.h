@@ -310,12 +310,15 @@ protected:
 	void editSurf(MyGUI::EditPtr);
 	
 
-	//  [Vegetation]  ----
+	///  [Vegetation]  ----
 	MyGUI::EditPtr edGrassDens,edTreesDens, edGrPage,edGrDist, edTrPage,edTrDist,
 		edGrMinX,edGrMaxX, edGrMinY,edGrMaxY,
 		edGrSwayDistr, edGrSwayLen, edGrSwaySpd, edTrRdDist, edTrImpDist,
-		edGrDensSmooth, edGrTerMaxAngle;
+		edGrDensSmooth, edGrTerMaxAngle, edSceneryId;
+	MyGUI::ComboBoxPtr cmbGrassMtr;  void comboGrassMtr(CMB);
+	MyGUI::ComboBoxPtr cmbGrassClr;  void comboGrassClr(CMB);
 	void editTrGr(MyGUI::EditPtr);
+
 	//  paged layers
 	MyGUI::ComboBoxPtr cmbPgLay;  void comboPgLay(CMB);
 	MyGUI::ButtonPtr chkPgLay;  void chkPgLayOn(WP);
@@ -329,7 +332,7 @@ protected:
 	void editLTrMinTerH(MyGUI::EditPtr),editLTrMaxTerH(MyGUI::EditPtr);
 	
 	
-	//  [Road]  ----
+	///  [Road]  ----
 	MyGUI::ComboBoxPtr cmbRoadMtr[4],cmbPipeMtr[4];
 	void comboRoadMtr(CMB),comboPipeMtr(CMB);
 	MyGUI::EditPtr edRdTcMul,edRdLenDim,edRdWidthSteps,edRdHeightOfs,

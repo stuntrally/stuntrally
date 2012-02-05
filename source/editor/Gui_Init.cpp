@@ -168,8 +168,11 @@ void App::InitGui()
 	Ed(GrSwayDistr, editTrGr);  Ed(GrSwayLen, editTrGr);  Ed(GrSwaySpd, editTrGr);
 	Ed(TrRdDist, editTrGr);  Ed(TrImpDist, editTrGr);
 	Ed(GrDensSmooth, editTrGr);  Ed(GrTerMaxAngle, editTrGr);
-	imgPaged = mGUI->findWidget<StaticImage>("ImgPaged");
+	Ed(SceneryId, editTrGr);
+	Cmb(cmbGrassMtr, "CmbGrMtr", comboGrassMtr);
+	Cmb(cmbGrassClr, "CmbGrClr", comboGrassClr);
 
+	imgPaged = mGUI->findWidget<StaticImage>("ImgPaged");
 	Chk("LTrEnabled", chkPgLayOn, 1);  chkPgLay = bchk;
 	valLTrAll = mGUI->findWidget<StaticText>("LTrAll");
 	Tab(tabsPgLayers, "LTrNumTab", tabPgLayers);
@@ -177,7 +180,7 @@ void App::InitGui()
 	Slv(LTrMinSc, 0);	Slv(LTrMaxSc, 0);
 	Slv(LTrWindFx, 0);	Slv(LTrWindFy, 0);
 	Slv(LTrMaxTerAng, 0);  Ed(LTrMinTerH, editLTrMinTerH);  Ed(LTrMaxTerH, editLTrMaxTerH);
-	
+
 	
 	///  [Road]  ------------------------------------
 	Ed(RdTcMul, editRoad);  Ed(RdLenDim, editRoad);  Ed(RdWidthSteps,editRoad);
@@ -253,13 +256,28 @@ void App::InitGui()
 	for (int i=0; i < TRACKSURFACE::NumTypes; ++i)
 		cmbSurfType->addItem(csTRKsurf[i]);
 
-	
+
+	//---------------------  GRASS  ---------------------
+	GetMaterialsFromDef("grass.matdef");
+	for (size_t i=0; i < vsMaterials.size(); ++i)
+	{	String s = vsMaterials[i];
+		if (s.length() > 5)  //!= "grass")
+			cmbGrassMtr->addItem(s);
+	}
+	GetFolderIndex(PATHMANAGER::GetDataPath() + "/materials", li);
+	for (strlist::iterator i = li.begin(); i != li.end(); ++i)
+	{
+		if (StringUtil::startsWith(*i, "grClr", false))
+			cmbGrassClr->addItem(*i);
+	}
+
 	//---------------------  TREES  ---------------------
 	Cmb(cmbPgLay, "LTrCombo", comboPgLay);
 	strlist lt;
 	GetFolderIndex(PATHMANAGER::GetDataPath() + "/trees", lt);
 	for (strlist::iterator i = lt.begin(); i != lt.end(); ++i)
 		if (StringUtil::endsWith(*i,".mesh"))  cmbPgLay->addItem(*i);
+
 
 	//---------------------  ROADS  ---------------------
 	GetMaterialsFromDef("road.matdef");
