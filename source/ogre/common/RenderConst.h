@@ -11,6 +11,7 @@ const Ogre::uint8
 	RQG_Sky = Ogre::RENDER_QUEUE_SKIES_EARLY,	// 5
 	
 	RQG_BatchOpaque  = Ogre::RENDER_QUEUE_MAIN,	// 50  paged geom
+	RQG_BatchAlpha   = Ogre::RENDER_QUEUE_6,	// 60  paged geom transparent
 
 	RQG_Fluid        = Ogre::RENDER_QUEUE_6+4,
 
@@ -22,7 +23,6 @@ const Ogre::uint8
 	
 	RQG_PipeGlass    = Ogre::RENDER_QUEUE_8+2,	// glass pipe road`
 	RQG_CarParticles = Ogre::RENDER_QUEUE_8+3,	//particles after trails
-	RQG_BatchAlpha   = Ogre::RENDER_QUEUE_8+4,	// paged geom transparent
 	RQG_Weather      = Ogre::RENDER_QUEUE_8+5,
 	
 	RQG_CarGhost     = Ogre::RENDER_QUEUE_8+7,
@@ -41,10 +41,9 @@ const Ogre::uint32
 	RV_Vegetation = 8,  // vegetation, paged geom
 	RV_VegetGrass = 64,  // vegetation, paged geom
 	RV_Sky = 32,	// sky, editor only
-	RV_Particles = 64,	// particles
 
 	RV_Car = 2,			// car,tires in game, (hide in reflection render)
-	RV_Particles = RV_Car, // particles, hidden in reflection
+	RV_Particles = RV_Car,
 	RV_CarGlass = 16,	// car glass in game, (hide for in car camera)
 	RV_MaskReflect = RV_Road + RV_Terrain + RV_Vegetation,  // hide 2: hud, car,glass,tires
 
