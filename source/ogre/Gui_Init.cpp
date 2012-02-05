@@ -4,6 +4,7 @@
 #include "../vdrift/game.h"
 #include "../road/Road.h"
 #include "OgreGame.h"
+#include "common/MaterialGen/MaterialGenerator.h"
 
 #include <boost/filesystem.hpp>
 
@@ -196,6 +197,8 @@ void App::InitGui()
 	Chk("MotionBlur", chkVidBlur, pSet->motionblur);
 	Chk("ssao", chkVidSSAO, pSet->ssao);
 	Chk("softparticles", chkVidSoftParticles, pSet->softparticles);
+	if (!MaterialGenerator::MRTSupported())
+		mGUI->findWidget<Button>("softparticles")->setEnabled(false);
 //	Chk("godrays", chkVidGodRays, pSet->godrays);
 
 	Slv(BloomInt,	pSet->bloomintensity);
