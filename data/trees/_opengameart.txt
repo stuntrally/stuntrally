@@ -9,3 +9,9 @@ Url: 		http://opengameart.org/content/palm-tree-v2
 Artist:		yughues (OpenGameArt.org user)
 License(s):	CC0 (Public Domain)
 Date:		23/12/2011
+
+Model:		fern.mesh
+Url: 		http://opengameart.org/content/fern-v21-double-sided-pack
+Artist:		yughues (OpenGameArt.org user)
+License(s):	CC0 (Public Domain)
+Date:		01/05/12
