@@ -216,3 +216,14 @@
 	terrainLightMap = true
 	wind = 2
 
+[fern_v2]
+	transparent = true
+	wind = 2
+	terrainLightMap = true
+	alphaRejectFunc = greater
+	alphaRejectValue = 128
+	diffuseMap_512 = fern.png
+	normalMap_512 = fern_normal.png
+	specMap_512 = fern_spec.png
+	specular = 0.5 0.5 0.5 32
+	cullHardware = none
