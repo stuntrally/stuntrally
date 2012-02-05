@@ -496,7 +496,7 @@ void App::comboParDust(ComboBoxPtr cmb, size_t val)
 void App::comboSurfType(ComboBoxPtr cmb, size_t val)
 {
 	int i = idTerLay;  //bTerLay ? idTerLay+1 : 0;  // road at 0
-	su[i].setType(i);
+	su[i].setType(val);
 }
 
 void App::editSurf(EditPtr ed)
@@ -532,7 +532,20 @@ void App::editTrGr(EditPtr ed)
 	else if (n=="TrRdDist")  sc.trRdDist = r;	else if (n=="TrImpDist")  sc.trDistImp = r;
 	else if (n=="GrDensSmooth")  sc.grDensSmooth = r;
 	else if (n=="GrTerMaxAngle")  sc.grTerMaxAngle = r;
+	else if (n=="SceneryId")  sc.sceneryId = r;
 }
+
+void App::comboGrassMtr(ComboBoxPtr cmb, size_t val)
+{
+	String s = cmb->getItemNameAt(val);
+	sc.grassMtr = s;
+}
+void App::comboGrassClr(ComboBoxPtr cmb, size_t val)
+{
+	String s = cmb->getItemNameAt(val);
+	sc.grassColorMap = s;
+}
+
 
 ///  Vegetation layers  -----------------------------
 

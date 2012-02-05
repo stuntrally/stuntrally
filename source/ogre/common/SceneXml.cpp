@@ -33,6 +33,7 @@ void Scene::Default()
 	td.layerRoad.smoke = !ter ? 1.f : 0.f;  //`
 
 	densTrees=0;  densGrass=0;  grDensSmooth=6;
+	grassMtr = "grassJungle";  grassColorMap = "grClrJungle.png";
 	grPage = 80;  grDist = 80;
 	grMinSx = 0.6f;  grMinSy = 0.6f;  grMaxSx = 0.85f;  grMaxSy = 0.9f;
 	grSwayDistr = 4.0f;  grSwayLen = 0.2f;  grSwaySpeed = 0.5f;
@@ -223,6 +224,9 @@ bool Scene::LoadXml(String file)
 		a = ePgd->Attribute("densTrees");	if (a)  densTrees = s2r(a);
 		a = ePgd->Attribute("densGrass");	if (a)  densGrass = s2r(a);
 		//  grass
+		a = ePgd->Attribute("grMtr");		if (a)  grassMtr = String(a);
+		a = ePgd->Attribute("grClr");		if (a)  grassColorMap = String(a);
+		//  grass par
 		a = ePgd->Attribute("grPage");		if (a)  grPage = s2r(a);
 		a = ePgd->Attribute("grDist");		if (a)  grDist = s2r(a);
 
@@ -385,6 +389,9 @@ bool Scene::SaveXml(String file)
 		pgd.SetAttribute("densGrass",	toStrC( densGrass ));
 		pgd.SetAttribute("densTrees",	toStrC( densTrees ));
 		//  grass
+		pgd.SetAttribute("grMtr",		grassMtr.c_str());
+		pgd.SetAttribute("grClr",		grassColorMap.c_str());
+		//  grass par
 		pgd.SetAttribute("grPage",		toStrC( grPage ));
 		pgd.SetAttribute("grDist",		toStrC( grDist ));
 

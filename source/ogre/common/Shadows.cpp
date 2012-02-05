@@ -11,8 +11,8 @@
 	#include "../QTimer.h"
 #else
 	#include "../OgreGame.h"
-	#include "../vdrift/settings.h"
-	#include "../road/Road.h"
+	#include "../../vdrift/settings.h"
+	#include "../../road/Road.h"
 	#include "../SplitScreen.h"
 	#include "../QTimer.h"
 #endif
@@ -53,15 +53,15 @@ void App::changeShadows()
 	if (mTerrainGlobals)
 	{
 		matProfile = (TerrainMaterialGeneratorB::SM2Profile*) mTerrainGlobals->getDefaultMaterialGenerator()->getActiveProfile();
-				
-		matProfile->setReceiveDynamicShadowsEnabled(enabled);
-		matProfile->setReceiveDynamicShadowsLowLod(true);
-		matProfile->setGlobalColourMapEnabled(false);
+		if (matProfile)
+		{	matProfile->setReceiveDynamicShadowsEnabled(enabled);
+			matProfile->setReceiveDynamicShadowsLowLod(true);
+			matProfile->setGlobalColourMapEnabled(false);
 
-		matProfile->setLayerSpecularMappingEnabled(pSet->ter_mtr >= 1);  // ter mtr
-		matProfile->setLayerNormalMappingEnabled(  pSet->ter_mtr >= 2);
-		matProfile->setLayerParallaxMappingEnabled(pSet->ter_mtr >= 3);
-	}
+			matProfile->setLayerSpecularMappingEnabled(pSet->ter_mtr >= 1);  // ter mtr
+			matProfile->setLayerNormalMappingEnabled(  pSet->ter_mtr >= 2);
+			matProfile->setLayerParallaxMappingEnabled(pSet->ter_mtr >= 3);
+	}	}
 	
 	//  shadows old-
 	if (pSet->shadow_type == 1)
@@ -301,7 +301,9 @@ void App::setMtrSplits(String sMtrName)
 		} catch(...) { }
 		
 		#ifdef ROAD_EDITOR
-		//  create selected mtr
+		//  create selected materials for road
+		if (StringUtil::startsWith(sMtrName,"road",false) || StringUtil::startsWith(sMtrName,"pipe",false) )
+		{
 		String selName = sMtrName + "_sel";
 		MaterialPtr selMtr = MaterialManager::getSingleton().getByName(selName);
 		if (selMtr.isNull())  {  // once
@@ -313,7 +315,7 @@ void App::setMtrSplits(String sMtrName)
 			p->setDepthCheckEnabled(false);  p->setDepthWriteEnabled(true);
 			p->setCullingMode(CULL_NONE);
 			p->setFragmentProgram("sel_ps");  //p->setSelfIllumination(0,0.1,0.2);
-		}
+		}	}
 		#endif
 	}
 }

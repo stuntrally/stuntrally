@@ -248,6 +248,7 @@ void App::LoadGame()  // 2
 	}
 	
 	float pretime = mClient ? 2.0f : pSet->game.pre_time;  // same for all multi players
+	if (mClient) pGame->timer.waiting = true;
 	pGame->NewGameDoLoadMisc(pretime);
 	bool ter = IsTerTrack();
 	sc.ter = ter;
@@ -266,12 +267,14 @@ void App::LoadScene()  // 3
 	//  rain  -----
 	if (!pr && sc.rainEmit > 0)  {
 		pr = mSceneMgr->createParticleSystem("Rain", sc.rainName);
+		pr->setVisibilityFlags(RV_Particles);
 		mSceneMgr->getRootSceneNode()->createChildSceneNode()->attachObject(pr);
 		pr->setRenderQueueGroup(RQG_Weather);
 		pr->getEmitter(0)->setEmissionRate(0);  }
 	//  rain2  =====
 	if (!pr2 && sc.rain2Emit > 0)  {
 		pr2 = mSceneMgr->createParticleSystem("Rain2", sc.rain2Name);
+		pr2->setVisibilityFlags(RV_Particles);
 		mSceneMgr->getRootSceneNode()->createChildSceneNode()->attachObject(pr2);
 		pr2->setRenderQueueGroup(RQG_Weather);
 		pr2->getEmitter(0)->setEmissionRate(0);  }
@@ -475,6 +478,8 @@ void App::NewGameDoLoad()
 		mSplitMgr->mGuiViewport->setClearEveryFrame(true, FBT_DEPTH);
 
 		ChampLoadEnd();
+		//boost::this_thread::sleep(boost::posix_time::milliseconds(6000 * mClient->getId())); // Test loading syncronization
+		if (mClient) mClient->loadingFinished(); // Signal loading finished to the peers
 		return;
 	}
 	// Do the next loading step.

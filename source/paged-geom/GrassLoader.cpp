@@ -108,25 +108,28 @@ void GrassLoader::frameUpdate()
 		GrassLayer *layer = *it;
 
 		layer->_updateShaders();
+		
+		if (layer->material->getTechnique(0)->getPass(0)->hasVertexProgram())
+		{
+			GpuProgramParametersSharedPtr params = layer->material->getTechnique(0)->getPass(0)->getVertexProgramParameters();
+			///T don't crash
+			params->setIgnoreMissingParams(true);
+			if (layer->animate){
+				//Increment animation frame
+				layer->waveCount += ellapsed * (layer->animSpeed * Math::PI);
+				if (layer->waveCount > Math::PI*2) layer->waveCount -= Math::PI*2;
 
-		GpuProgramParametersSharedPtr params = layer->material->getTechnique(0)->getPass(0)->getVertexProgramParameters();
-		///T don't crash
-		params->setIgnoreMissingParams(true);
-		if (layer->animate){
-			//Increment animation frame
-			layer->waveCount += ellapsed * (layer->animSpeed * Math::PI);
-			if (layer->waveCount > Math::PI*2) layer->waveCount -= Math::PI*2;
+				//Set vertex shader parameters
+				if(params->_findNamedConstantDefinition("time",false))
+					params->setNamedConstant("time", layer->waveCount);
+				if(params->_findNamedConstantDefinition("frequency",false))
+					params->setNamedConstant("frequency", layer->animFreq);
 
-			//Set vertex shader parameters
-			if(params->_findNamedConstantDefinition("time",false))
-				params->setNamedConstant("time", layer->waveCount);
-			if(params->_findNamedConstantDefinition("frequency",false))
-				params->setNamedConstant("frequency", layer->animFreq);
+				Vector3 direction = windDir * layer->animMag;
+				if(params->_findNamedConstantDefinition("direction",false))
+					params->setNamedConstant("direction", Vector4(direction.x, direction.y, direction.z, 0));
 
-			Vector3 direction = windDir * layer->animMag;
-			if(params->_findNamedConstantDefinition("direction",false))
-				params->setNamedConstant("direction", Vector4(direction.x, direction.y, direction.z, 0));
-
+			}
 		}
 	}
 }
@@ -183,7 +186,7 @@ void GrassLoader::loadPage(PageInfo &page)
 			//Add the mesh to PagedGeometry
 			Entity *entity = geom->getCamera()->getSceneManager()->createEntity(getUniqueID(), mesh->getName());
 			entity->setRenderQueueGroup(renderQueue);
-			entity->setVisibilityFlags(RV_Vegetation);  ///T  disable in render targets
+			entity->setVisibilityFlags(RV_VegetGrass);  ///T  disable in render targets
 			entity->setCastShadows(false);
 			addEntity(entity, page.centerPoint, Quaternion::IDENTITY, Vector3::UNIT_SCALE);
 
@@ -1141,8 +1144,8 @@ void GrassLayer::_updateShaders()
 			const String vsName = tmpName.str();
 
 			//Generate a string ID that identifies the material combined with the vertex shader
-			///T we use our own material (only one) so we want static material name
-			const String matName = "grass";
+			///T use material name, //old:we use our own material (only one) so we want static material name
+			const String matName = material->getName();  //old "grass"
 
 			//Check if the desired material already exists (if not, create it)
 			MaterialPtr tmpMat = MaterialManager::getSingleton().getByName(matName);
@@ -1187,8 +1190,10 @@ void GrassLayer::_updateShaders()
 			//Now the material (tmpMat) has either been found or just created (depending on whether or not it was already
 			//created). The appropriate vertex shader should be applied and the material is ready for use.
 			
+			if (tmpMat->getTechnique(0)->getPass(0)->hasVertexProgram()) {
 			if (tmpMat->getTechnique(0)->getPass(0)->getVertexProgramParameters()->_findNamedConstantDefinition("fadeRange", false))
 				tmpMat->getTechnique(0)->getPass(0)->getVertexProgramParameters()->setNamedConstant("fadeRange", fadeRange);
+			}
 
 			//Apply the new material
 			material = tmpMat;

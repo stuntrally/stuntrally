@@ -2,6 +2,7 @@
 #include "Defines.h"
 #include "OgreGame.h"
 #include "../vdrift/settings.h"
+#include "../vdrift/game.h"
 #include "../network/masterclient.hpp"
 #include "../network/gameclient.hpp"
 //#include "common/Gui_Def.h"
@@ -199,6 +200,11 @@ void App::gameInfo(protocol::GameInfo game)
 	boost::mutex::scoped_lock lock(netGuiMutex);
 	netGameInfo = game;
 	bUpdateGameInfo = true;
+}
+
+void App::startRace()
+{
+	pGame->timer.waiting = false;
 }
 
 void App::error(string what)

@@ -139,6 +139,7 @@ protected:
 	MyGUI::WidgetPtr mWndOpts, mWndBrush, mWndCam,
 		mWndRoadCur, mWndRoadStats, mWndFluids;  // gui windows
 	MyGUI::TabPtr mWndTabs;
+	MyGUI::VectorWidgetPtr vwGui;
 	
 public:
 	inline bool bCam()  {  return  bMoveCam && !bGuiFocus;  }

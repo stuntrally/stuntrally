@@ -6,7 +6,7 @@
     Project's Homepage:  (all links, Issue tracker, Wiki pages, old Windows releases)
             http://code.google.com/p/vdrift-ogre/
 
-    Windows installers and source packs:
+    Releases (Windows, Linux, source packs):
             https://sourceforge.net/projects/stuntrally/files/
     Linux packages info:
             http://code.google.com/p/vdrift-ogre/wiki/Packages
@@ -105,7 +105,8 @@ Car simulation is done by VDrift, a great game by itself (also using Bullet).
 Rendering is done by OGRE, trees/grass by PagedGeometry, Gui by MyGUI.
 
 -- Currently these are used (and need to build before game):
-OGRE 1.7 + Dependencies, with plugins:
+newer versions can be used
+OGRE 1.7 with plugins:
     RenderSystem_GL, RenderSystem_Direct3D9
     OgreTerrain, OgrePaging
     Plugin_ParticleFX
@@ -113,15 +114,16 @@ OGRE 1.7 + Dependencies, with plugins:
     OIS
 MyGUI 3.2
     MyGUIEngine, MyGUI.OgrePlatform
-Boost 1.43+
+Boost 1.43
     headers, thread, filesystem
-
+Bullet 2.76
+	BulletCollision, BulletDynamics, LinearMath
+	
 -- And for VDrift:
 SDL-1.2.14
 libvorbis-1.2.3, libogg-1.1.4
 
 -- These are included in Source (and compiled with project):
-Bullet 2.76
 BtOgre *
 OISB *
 PagedGeometry 1.1.0 *

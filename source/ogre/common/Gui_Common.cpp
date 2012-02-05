@@ -18,7 +18,7 @@
 #include "Gui_Def.h"
 using namespace MyGUI;
 using namespace Ogre;
-
+using namespace std;
 // MyGUI 3.2 has no Align::Relative
 #define ALIGN Align::Default
 
@@ -196,7 +196,7 @@ void App::slShadowCount(SL)
 
 void App::slShadowSize(SL)
 {
-	int v = std::max( 0.0f, std::min((float) ciShadowNumSizes-1, ciShadowNumSizes * val/res));
+	int v = max( 0.0f, min((float) ciShadowNumSizes-1, ciShadowNumSizes * val/res));
 	if (bGI)  pSet->shadow_size = v;
 	if (valShadowSize)  valShadowSize->setCaption(toStr(ciShadowSizesA[v]));
 }
@@ -569,7 +569,7 @@ void App::btnResChng(WP)
 	{
 	#ifdef _WIN32
 		int sx = GetSystemMetrics(SM_CXSCREEN), sy = GetSystemMetrics(SM_CYSCREEN);
-		int cx = std::max(0,(sx - pSet->windowx) / 2), cy = std::max(0,(sy - pSet->windowy) / 2);
+		int cx = max(0,(sx - pSet->windowx) / 2), cy = max(0,(sy - pSet->windowy) / 2);
 		mWindow->reposition(cx,cy);
 	#else
 		//mWindow->reposition(0,0);  //TODO: linux window size,center ?..
@@ -654,7 +654,6 @@ void App::ResizeOptWnd()
 
 	#ifndef ROAD_EDITOR
 	mWndGame->setCoord(xm, ym, xo, yo);
-	mWndChamp->setCoord(xm, ym, xo, yo);
 	mWndReplays->setCoord(xm, ym, xo, yo);
 	#endif
 	mWndOpts->setCoord(xm, ym, xo, yo);
@@ -663,6 +662,9 @@ void App::ResizeOptWnd()
 		bnQuit->setCoord(wx - 0.09*wx, 0, 0.09*wx, 0.03*wy);
 
 	updTrkListDim();
+	#ifndef ROAD_EDITOR
+	updChampListDim();  // resize lists
+	#endif
 }
 
 void App::chkVidFullscr(WP wp)
@@ -733,37 +735,37 @@ void App::comboGraphicsAll(ComboBoxPtr cmb, size_t val)
 	{
 	case 0:  // Lowest  -------------
 		s.particles = false;  s.trails = false;  s.particles_len = 1.f;  s.trails_len = 1.f;
-		s.refl_mode = "static";  s.refl_skip = 500;  s.refl_faces = 1;  s.refl_size = 0;  s.refl_dist = 100.f;
+		s.refl_mode = "static";  s.refl_skip = 100;  s.refl_faces = 1;  s.refl_size = 0;  s.refl_dist = 20.f;
 		s.all_effects = false;  s.bloom = false;  s.hdr = false;  s.motionblur = false;
 		s.rpl_rec = 0;  s.rpl_ghost = 0;  s.rpl_alpha = 1;	break;
 
 	case 1:  // Low  -------------
 		s.particles = true;  s.trails = true;  s.particles_len = 1.f;  s.trails_len = 1.f;
-		s.refl_mode = "static";  s.refl_skip = 300;  s.refl_faces = 1;  s.refl_size = 0;  s.refl_dist = 200.f;
+		s.refl_mode = "static";  s.refl_skip = 100;  s.refl_faces = 1;  s.refl_size = 0;  s.refl_dist = 1500.f;
 		s.all_effects = false;  s.bloom = false;  s.hdr = false;  s.motionblur = false;
 		s.rpl_rec = 1;  s.rpl_ghost = 1;  s.rpl_alpha = 1;  break;
 
 	case 2:  // Medium  -------------
 		s.particles = true;  s.trails = true;  s.particles_len = 1.f;  s.trails_len = 1.5f;
-		s.refl_mode = "single";  s.refl_skip = 200;  s.refl_faces = 1;  s.refl_size = 1;  s.refl_dist = 500.f;
+		s.refl_mode = "single";  s.refl_skip = 50;  s.refl_faces = 1;  s.refl_size = 0;  s.refl_dist = 100.f;
 		s.all_effects = false;  s.bloom = false;  s.hdr = false;  s.motionblur = false;
 		s.rpl_rec = 1;  s.rpl_ghost = 1;  s.rpl_alpha = 1;	break;
 
 	case 3:  // High  -------------
 		s.particles = true;  s.trails = true;  s.particles_len = 1.2f;  s.trails_len = 2.f;
-		s.refl_mode = "single";    s.refl_skip = 80;  s.refl_faces = 1;  s.refl_size = 1;  s.refl_dist = 1000.f;
+		s.refl_mode = "single";    s.refl_skip = 10;  s.refl_faces = 1;  s.refl_size = 0;  s.refl_dist = 150.f;
 		s.all_effects = true;  s.bloom = true;  s.hdr = false;  s.motionblur = false;
 		s.rpl_rec = 1;  s.rpl_ghost = 1;  s.rpl_alpha = 0;	break;
 
 	case 4:  // Very High  -------------
 		s.particles = true;  s.trails = true;  s.particles_len = 1.5f;  s.trails_len = 3.f;
-		s.refl_mode = "single";    s.refl_skip = 40;  s.refl_faces = 1;  s.refl_size = 2;  s.refl_dist = 1000.f;
+		s.refl_mode = "single";    s.refl_skip = 0;  s.refl_faces = 1;  s.refl_size = 0;  s.refl_dist = 200.f;
 		s.all_effects = true;  s.bloom = true;  s.hdr = false;  s.motionblur = true;
 		s.rpl_rec = 1;  s.rpl_ghost = 1;  s.rpl_alpha = 0;	break;
 
 	case 5:  // Ultra  -------------
 		s.particles = true;  s.trails = true;  s.particles_len = 1.5f;  s.trails_len = 4.f;
-		s.refl_mode = "single";    s.refl_skip = 10;  s.refl_faces = 1;  s.refl_size = 3;  s.refl_dist = 1500.f;
+		s.refl_mode = "single";    s.refl_skip = 1;  s.refl_faces = 3;  s.refl_size = 0;  s.refl_dist = 400.f;
 		s.all_effects = true;  s.bloom = true;  s.hdr = false;  s.motionblur = true;
 		s.rpl_rec = 1;  s.rpl_ghost = 1;  s.rpl_alpha = 0;	break;
 	}

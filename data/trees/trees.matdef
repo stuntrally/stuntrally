@@ -1,3 +1,6 @@
+[impostor]
+	customGenerator = Impostor
+
 ; can't use depth shadows with alpha_rejection, so only tree trunks have shadow
 ; --------- gum tree ----------
 [gum_branch]
@@ -127,6 +130,7 @@
 	specMap_1024 = palm2_specular.png
 	specular = 0.5 0.5 0.5 32
 	cullHardware = none
+	normalMapPriority = 0.2
 
 [Palm]
 	diffuseMap_512 = palm.png
@@ -213,3 +217,41 @@
 	terrainLightMap = true
 	wind = 2
 
+[fern_v2]
+	transparent = true
+	wind = 2
+	terrainLightMap = true
+	alphaRejectFunc = greater
+	alphaRejectValue = 128
+	diffuseMap_512 = fern.png
+	normalMap_512 = fern_normal.png
+	specMap_512 = fern_spec.png
+	specular = 0.5 0.5 0.5 32
+	cullHardware = none
+	normalMapPriority = 0.2
+	
+[fern2]
+	transparent = true
+	wind = 2
+	terrainLightMap = true
+	alphaRejectFunc = greater
+	alphaRejectValue = 128
+	diffuseMap_512 = fern2.png
+	normalMap_512 = fern2_normal.png
+	specMap_512 = fern2_spec.png
+	specular = 0.5 0.5 0.5 32
+	cullHardware = none
+	normalMapPriority = 0.2
+	
+[palm_plant]
+	transparent = true
+	wind = 2
+	terrainLightMap = true
+	alphaRejectFunc = greater
+	alphaRejectValue = 128
+	diffuseMap_512 = palm_plant.png
+	normalMap_512 = palm_plant_normal.png
+	specMap_512 = palm_plant_spec.png
+	specular = 0.5 0.5 0.5 32
+	cullHardware = none
+	normalMapPriority = 0.2

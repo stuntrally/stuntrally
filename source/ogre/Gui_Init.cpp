@@ -17,7 +17,7 @@ using namespace Ogre;
 
 
 ///  Gui Init
-//-------------------------------------------------------------------------------------
+//---------------------------------------------------------------------------------------------------------------------
 
 
 void App::InitGui()
@@ -35,7 +35,6 @@ void App::InitGui()
 	//  window
 	mWndMain = mGUI->findWidget<Window>("MainMenuWnd",false);
 	mWndGame = mGUI->findWidget<Window>("GameWnd",false);
-	mWndChamp = mGUI->findWidget<Window>("ChampWnd",false);
 	mWndReplays = mGUI->findWidget<Window>("ReplaysWnd",false);
 	mWndOpts = mGUI->findWidget<Window>("OptionsWnd",false);
 	mWndChampStage = mGUI->findWidget<Window>("WndChampStage",false);  mWndChampStage->setVisible(false);
@@ -57,10 +56,10 @@ void App::InitGui()
 
 	TabPtr tab;
 	tab = mGUI->findWidget<Tab>("TabWndGame");    tab->setIndexSelected(1);  mWndTabsGame = tab;	tab->eventTabChangeSelect += newDelegate(this, &App::MenuTabChg);
-	tab = mGUI->findWidget<Tab>("TabWndChamp");   tab->setIndexSelected(1);  mWndTabsChamp = tab;	tab->eventTabChangeSelect += newDelegate(this, &App::MenuTabChg);
 	tab = mGUI->findWidget<Tab>("TabWndReplays"); tab->setIndexSelected(1);							tab->eventTabChangeSelect += newDelegate(this, &App::MenuTabChg);
 	tab = mGUI->findWidget<Tab>("TabWndOptions"); tab->setIndexSelected(1);  mWndTabsOpts = tab;	tab->eventTabChangeSelect += newDelegate(this, &App::MenuTabChg);
-	
+	if (pSet->inMenu == WND_Champ)  mWndTabsGame->setIndexSelected(5);
+
 	//  tooltip  ------
 	for (VectorWidgetPtr::iterator it = vwGui.begin(); it != vwGui.end(); ++it)
 	{
@@ -72,7 +71,7 @@ void App::InitGui()
 	if (mWndRpl)  mWndRpl->setVisible(false);
 
 	GuiInitTooltip();
-		
+
 	GuiCenterMouse();
 
 	toggleGui(false);
@@ -94,6 +93,7 @@ void App::InitGui()
 	Slv(SizeMinimap,(pSet->size_minimap-0.05f) /0.25f);
 	Slv(SizeArrow,  (pSet->size_arrow));
 	Slv(ZoomMinimap,powf((pSet->zoom_minimap-1.0f) /9.f, 0.5f));
+	Slv(CountdownTime,  pSet->gui.pre_time / 0.5f /res);
 	
 	//  particles/trails
 	Slv(Particles,	powf(pSet->particles_len /4.f, 0.5f));
@@ -130,7 +130,7 @@ void App::InitGui()
 	Chk("Digits", chkDigits, pSet->show_digits);
 	Chk("Gauges", chkGauges, pSet->show_gauges);  ShowHUD();//
 	Chk("Arrow", chkArrow, pSet->check_arrow);
-
+	
 	Chk("Minimap", chkMinimap, pSet->trackmap);	chMinimp = bchk;
 	Chk("MiniZoom", chkMiniZoom, pSet->mini_zoomed);  Chk("MiniRot", chkMiniRot, pSet->mini_rotated);
 	Chk("MiniTer", chkMiniTer, pSet->mini_terrain);
@@ -142,7 +142,7 @@ void App::InitGui()
 	Chk("CarDbgTxt", chkCarDbgTxt, pSet->car_dbgtxt);		chDbgT = bchk;
 	Chk("BulletDebug", chkBltDebug, pSet->bltDebug);	chBlt = bchk;
 	Chk("BulletProfilerTxt", chkBltProfilerTxt, pSet->bltProfilerTxt);	chBltTxt = bchk;
-	
+
 	//  car setup  todo: for each player ..
 	Chk("CarABS",  chkAbs, pSet->abs);			Chk("CarTCS", chkTcs, pSet->tcs);
 	Chk("CarGear", chkGear, pSet->autoshift);	Chk("CarRear", chkRear, pSet->autorear);
@@ -174,7 +174,7 @@ void App::InitGui()
 	Chk("chkSplitVertically", chkSplitVert, pSet->split_vertically);
 	valLocPlayers = mGUI->findWidget<StaticText>("valLocPlayers");
 	if (valLocPlayers)  valLocPlayers->setCaption(toStr(pSet->gui.local_players));
-	
+
 	//  kmh/mph radio
 	bRkmh = mGUI->findWidget<Button>("kmh");
 	bRmph = mGUI->findWidget<Button>("mph");
@@ -356,7 +356,7 @@ void App::InitGui()
 	if (edNetLocalPort)	{	edNetLocalPort->setCaption(toStr(pSet->local_port));
 		edNetLocalPort->eventEditTextChange += newDelegate(this, &App::evEdNetLocalPort);	}
 
-
+	
 	///  input tab  -------
 	InitInputGui();
 	
@@ -430,13 +430,44 @@ void App::InitGui()
 
 	//  championships
 	//------------------------------------------------------------------------
-	liChamps = mGUI->findWidget<MultiListBox>("MListChamps");
-	liChamps->eventListChangePosition += newDelegate(this, &App::listChampChng);
-	liStages = mGUI->findWidget<MultiListBox>("MListStages");
+	//  champs list
+	MyGUI::MultiList2* li;
+	TabItem* trktab = (TabItem*)mWndGame->findWidget("TabChamps");
+	li = trktab->createWidget<MultiList2>("MultiListBox",0,0,400,300, Align::Left | Align::VStretch);
+	li->eventListChangePosition += newDelegate(this, &App::listChampChng);
+   	li->setVisible(false);
+	
+	li->removeAllColumns();  int c=0;
+	li->addColumn("N", ChColW[c++]);
+	li->addColumn(TR("#{Name}"), ChColW[c++]);
+	li->addColumn(TR("#{Difficulty}"), ChColW[c++]);
+	li->addColumn(TR("#{Tracks}"), ChColW[c++]);
+	li->addColumn(TR("#{Progress}"), ChColW[c++]);
+	li->addColumn(TR("#{Score}"), ChColW[c++]);
+	li->addColumn(" ", ChColW[c++]);
+	liChamps = li;
+
+	//  stages list
+	trktab = (TabItem*)mWndGame->findWidget("TabStages");
+	li = trktab->createWidget<MultiList2>("MultiListBox",0,0,400,300, Align::Left | Align::VStretch);
+	//li->eventListChangePosition += newDelegate(this, &App::listChampChng);
+   	li->setVisible(false);
+	
+	li->removeAllColumns();  c=0;
+	li->addColumn("N", StColW[c++]);
+	li->addColumn(TR("#{Track}"), StColW[c++]);
+	li->addColumn(TR("#{Scenery}"), StColW[c++]);
+	li->addColumn(TR("#{Difficulty}"), StColW[c++]);
+	li->addColumn(TR("#{Time}"), StColW[c++]);
+	li->addColumn(TR("#{Score}"), StColW[c++]);
+	li->addColumn(" ", StColW[c++]);
+	liStages = li;
+
+	updChampListDim();
 	ChampsListUpdate();
 	listChampChng(liChamps, liChamps->getIndexSelected());
-	//liChamps->eventListChangePosition += newDelegate(this, &App::listStagesChng);
-	//^ Track tab for details ...
+	//^ Track tab for details TODO...
+
 
 	Btn("btnChampStart", btnChampStart);
 	Btn("btnChampStageBack", btnChampStageBack);
@@ -447,21 +478,17 @@ void App::InitGui()
 	edChampEnd = (EditBox*)mWndChampEnd->findWidget("ChampEndText");
 	imgChampStage = (ImageBox*)mWndChampStage->findWidget("ChampStageImg");
 
-	tab = mWndTabsGame;
-	//tab->getItemAt(2)->setVisible(false);
-	//tab->getItemAt(2)->setEnabledSilent(false);
-	//tab->updateBar();
-	tab->setButtonWidthAt(2,0);
-	//tab->removeItemAt(2);
-
 
 	bGI = true;  // gui inited, gui events can now save vals
-
+	
 	ti.update();	/// time
 	float dt = ti.dt * 1000.f;
 	LogO(String("::: Time Init Gui: ") + toStr(dt) + " ms");
 }
 
+
+//  utility
+//---------------------------------------------------------------------------------------------------------------------
 
 void App::UpdCarClrSld(bool upd)
 {
@@ -504,15 +531,12 @@ void App::LNext(int rel)
 	//if (!isFocGui || pSet->isMain)  return;
 	switch (pSet->inMenu)
 	{
-	case WND_Game:
+	case WND_Game: case WND_Champ:
 		switch (mWndTabsGame->getIndexSelected())	{
 			case 1:  listTrackChng(trkMList,LNext(trkMList, rel));  return;
-			case 2:	 listCarChng(carList,   LNext(carList, rel));  return;	}
-		break;
-	case WND_Champ:
-		switch (mWndTabsChamp->getIndexSelected())	{
-			case 1:  listChampChng(liChamps,LNext(liChamps, rel));  return;
-			case 2:	 /*listCarChng(carList,  LNext(carList, rel));*/  return;	}
+			case 2:	 listCarChng(carList,   LNext(carList, rel));  return;
+			case 5:  listChampChng(liChamps,LNext(liChamps, rel));  return;
+			case 6:	 /*listStagesChng(carList, LNext(listStagesChng, rel));*/  return;	}
 		break;
 	case WND_Replays:
 		listRplChng(rplList,  LNext(rplList, rel));

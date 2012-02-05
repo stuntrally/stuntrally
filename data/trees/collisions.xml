@@ -54,6 +54,10 @@
 		<shape type="capsZ" ofs="0 0 1.4" r="0.4" h="3.0" frict="0.7" restit="0.9" />
 	</object>
 	
+	<object mesh= "palm2.mesh">
+		<shape type="capsZ" ofs="-0.2 0 0.4" r="0.2" h="3.0" frict="0.7" restit="0.9" />
+	</object>
+	
 	<object mesh= "gum_tree.mesh">
 		<shape type="capsZ" ofs="-0.1 0.3 4" r="0.35" h="9.0" frict="0.7" restit="0.9" />
 	</object>

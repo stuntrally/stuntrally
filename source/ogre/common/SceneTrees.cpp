@@ -5,9 +5,9 @@
 	#include "../../editor/OgreApp.h"
 #else
 	#include "../OgreGame.h"
-	#include "../vdrift/settings.h"
-	#include "../vdrift/game.h"
-	#include "../ogre/SplitScreen.h"
+	#include "../../vdrift/settings.h"
+	#include "../../vdrift/game.h"
+	#include "../SplitScreen.h"
 #endif
 #include "../../vdrift/pathmanager.h"
 #include "../../paged-geom/GrassLoader.h"
@@ -63,10 +63,6 @@ void App::CreateTrees()
 	gTerrain = terrain;
 	
 	//-------------------------------------- Grass --------------------------------------
-	TexturePtr grassTex = Ogre::TextureManager::getSingleton().getByName(String("grass1.png"));
-	if (!grassTex.isNull())
-		grassTex->reload();
-		
 	int imgRoadSize = 0;
 	Image imgRoad;  imgRoad.load(String("grassDensity.png"),"General");
 	imgRoadSize = imgRoad.getWidth();  // square[]
@@ -115,21 +111,20 @@ void App::CreateTrees()
 		grassLoader->setHeightFunction(&getTerrainHeight);
 
 		//  Add grass
-		GrassLayer *l = grassLoader->addLayer("grass");
+		GrassLayer *l = grassLoader->addLayer(sc.grassMtr);
 		l->setMinimumSize(sc.grMinSx, sc.grMinSy);
 		l->setMaximumSize(sc.grMaxSx, sc.grMaxSy);
 		l->setDensity(fGrass);  l->setSwayDistribution(sc.grSwayDistr);
 		l->setSwayLength(sc.grSwayLen);  l->setSwaySpeed(sc.grSwaySpeed);
 
-		l->setAnimationEnabled(true);
-		//l->setLightingEnabled(true);  //!
-		l->setRenderTechnique(/*GRASSTECH_SPRITE*/GRASSTECH_CROSSQUADS);
-		l->setFadeTechnique(FADETECH_ALPHA/*FADETECH_GROW*/);
+		l->setAnimationEnabled(true);  //l->setLightingEnabled(true);
+		l->setRenderTechnique(GRASSTECH_CROSSQUADS);  //GRASSTECH_SPRITE-
+		l->setFadeTechnique(FADETECH_ALPHA);  //FADETECH_GROW-
 
-		l->setColorMap(String("grassColor.png"));
-		l->setDensityMap(String("grassDensity.png"));
+		l->setColorMap(sc.grassColorMap);
+		l->setDensityMap("grassDensity.png");
 		l->setMapBounds(tbnd);
-		grass->setShadersEnabled(true);//`
+		grass->setShadersEnabled(true);
 	}
 	ti.update();  /// time
 	float dt = ti.dt * 1000.f;

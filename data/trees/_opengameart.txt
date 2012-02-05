@@ -8,4 +8,22 @@ Model:		palm2.mesh
 Url: 		http://opengameart.org/content/palm-tree-v2
 Artist:		yughues (OpenGameArt.org user)
 License(s):	CC0 (Public Domain)
-Date:		23/12/2011
+Date:		12/23/2011
+
+Model:		fern.mesh
+Url: 		http://opengameart.org/content/fern-v21-double-sided-pack
+Artist:		yughues (OpenGameArt.org user)
+License(s):	CC0 (Public Domain)
+Date:		02/04/2012
+
+Model:		fern2.mesh
+Url:		http://opengameart.org/content/fern-pack
+Artist:		yughues (OpenGameArt.org user)
+License(s):	CC0 (Public Domain)
+Date:		02/05/2012
+
+Model:		palm_plant.mesh
+Url:		http://opengameart.org/content/palm-plant
+Artist:		yughues (OpenGameArt.org user)
+License(s):	CC0 (Public Domain)
+Date:		02/05/2012

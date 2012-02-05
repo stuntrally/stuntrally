@@ -88,6 +88,8 @@ protected:
 	virtual bool keyPressed( const OIS::KeyEvent &arg );
 		
 	BtOgre::DebugDrawer *dbgdraw;  /// blt dbg
+	void bltDumpRecursive(class CProfileIterator* profileIterator, int spacing, std::stringstream& os);
+	void bltDumpAll(std::stringstream& os);
 
 	//  mtr reload
 	enum eMaterials {
@@ -201,11 +203,12 @@ protected:
 	//  language
 	void comboLanguage(CMB);
 	std::map<std::string, std::string> languages; // <short name, display name>
-	bool bGuiReinit;  MyGUI::VectorWidgetPtr vwGui;
+	bool bGuiReinit;
 
 	//  init
 	void InitGui();  bool bGI;
 	void GuiCenterMouse(),GuiInitTooltip(),GuiInitLang(), GuiInitGraphics(),GuiInitTrack();
+	Ogre::String GetSceneryColor(Ogre::String name);
 	void AddTrkL(std::string name, int user, const class TrackInfo* ti);
 
 	//  track
@@ -216,8 +219,9 @@ protected:
 	MyGUI::StaticTextPtr valTrk, stTrk[StTrk], infTrk[InfTrk];
 
 	void listTrackChng(MyGUI::MultiList2* li, size_t pos), TrackListUpd(bool resetNotFound=false);
-	TracksXml tracksXml;  void btnTrkView1(WP),btnTrkView2(WP),ChangeTrackView(bool full),updTrkListDim();
-	const static int TcolW[32];
+	TracksXml tracksXml;  void btnTrkView1(WP),btnTrkView2(WP),ChangeTrackView(bool full);
+	void updTrkListDim(),updChampListDim();
+	const static int TcolW[32],ChColW[8],StColW[8];
 
 	void edTrkFind(MyGUI::EditPtr);  Ogre::String sTrkFind;  MyGUI::EditPtr edFind;
 	strlist liTracks,liTracksUser;  void FillTrackLists();
@@ -245,8 +249,8 @@ protected:
 	void ChampNewGame(), ChampLoadEnd(), ChampsListUpdate(),
 		ChampFillStageInfo(bool finished), ChampionshipAdvance(float timeCur);
 
-	MyGUI::MultiListBox* liChamps, *liStages;
-	void listChampChng(MyGUI::MultiListBox* li, size_t pos);
+	MyGUI::MultiList2* liChamps, *liStages;
+	void listChampChng(MyGUI::MultiList2* li, size_t pos);
 	void btnChampStart(WP), btnChampStageBack(WP), btnChampStageStart(WP), btnChampEndClose(WP);
 	MyGUI::EditBox* edChampStage, *edChampEnd;  MyGUI::ImageBox * imgChampStage;
 	
@@ -272,7 +276,7 @@ protected:
 	//  sliders  -----------------------------------------
 	SLV(Particles);  SLV(Trails);
 	SLV(ReflSkip);  SLV(ReflSize);  SLV(ReflFaces);  SLV(ReflDist);  SLV(ReflMode); // refl
-	SLV(SizeGaug);  SLV(SizeMinimap);  SLV(SizeArrow);  SLV(ZoomMinimap);  // view
+	SLV(SizeGaug);  SLV(SizeMinimap);  SLV(SizeArrow);  SLV(ZoomMinimap);  SLV(CountdownTime);  // view
 	SLV(VolMaster);  SLV(VolEngine);  SLV(VolTires);  SLV(VolEnv);
 	SLV(CarClrH);  SLV(CarClrS);  SLV(CarClrV);  // car clr
 	SLV(BloomInt);  SLV(BloomOrig);  SLV(BlurIntens);  // video
@@ -359,6 +363,7 @@ protected:
 	void peerMessage(PeerInfo peer, std::string msg);
 	void peerState(PeerInfo peer, uint8_t state);
 	void gameInfo(protocol::GameInfo game);
+	void startRace();
 	void error(std::string what);
 	void join(std::string host, std::string port, std::string password);
 

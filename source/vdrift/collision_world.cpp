@@ -434,19 +434,6 @@ void COLLISION_WORLD::Update(float dt, bool profiling)
 		}
 	}
 	world->vHits.clear();//+
-
-
-	///+  bullet profiling info
-	static int cc = 0;  cc++;
-	if (cc > 40)
-	{	cc = 0;
-		if (profiling)
-		{
-			std::stringstream os;
-			CProfileManager::dumpAll(os);
-			bltProfiling = os.str();
-		}
-	}
 }
 //-------------------------------------------------------------------------------------------------------------------------------
 
