@@ -130,6 +130,7 @@
 	specMap_1024 = palm2_specular.png
 	specular = 0.5 0.5 0.5 32
 	cullHardware = none
+	normalMapPriority = 0.2
 
 [Palm]
 	diffuseMap_512 = palm.png
@@ -227,3 +228,17 @@
 	specMap_512 = fern_spec.png
 	specular = 0.5 0.5 0.5 32
 	cullHardware = none
+	normalMapPriority = 0.2
+	
+[fern2]
+	transparent = true
+	wind = 2
+	terrainLightMap = true
+	alphaRejectFunc = greater
+	alphaRejectValue = 128
+	diffuseMap_512 = fern2.png
+	normalMap_512 = fern2_normal.png
+	specMap_512 = fern2_spec.png
+	specular = 0.5 0.5 0.5 32
+	cullHardware = none
+	normalMapPriority = 0.2
