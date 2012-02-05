@@ -320,6 +320,7 @@
 	<Tag name="OpponentsList">Opponents List</Tag>
 	<Tag name="CameraInfo">Camera info</Tag>
 	<Tag name="CheckArrow">Checkpoint Arrow</Tag>
+	<Tag name="CountdownTime">Race countdown time</Tag>
 
 	<Tag name="Other">Other</Tag>
 	<Tag name="Development">Development</Tag>

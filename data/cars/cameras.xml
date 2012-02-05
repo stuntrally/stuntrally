@@ -15,7 +15,7 @@
         <Camera on="1" name="Car right"         type="3"  offset=" 1.7 0.25 3.1" />
 
         
-        <Camera on="2" name="Ext close"         type="4"  pitch="11"  dist="7.0" offset="0 1.1 0" speed="6" default="0" />
+        <Camera on="1" name="Ext close"         type="4"  pitch="11"  dist="7.0" offset="0 1.1 0" speed="6" default="0" />
         <Camera on="1" name="Ext near"          type="4"  pitch="15"  dist="8.5" offset="0 1.1 0" speed="9" />
 
         <Camera on="2" name="Follow close"      type="0"  pitch="11"  dist="6.2" offset="0 1.1 0" speed="20" default="1" />

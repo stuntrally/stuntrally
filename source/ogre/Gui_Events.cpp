@@ -207,6 +207,13 @@ void App::slSizeArrow(SL)
 	if (valSizeArrow){	Fmt(s, "%4.3f", v);	valSizeArrow->setCaption(s);  }
 	if (arrowNode) arrowRotNode->setScale(v/2.f, v/2.f, v/2.f);
 }
+
+void App::slCountdownTime(SL)
+{
+	float v = val * 0.5f;	if (bGI)  {  pSet->gui.pre_time = v;  }
+	if (valCountdownTime){	Fmt(s, "%4.1f", v);	valCountdownTime->setCaption(s);  }
+}
+
 //  minimap
 void App::slSizeMinimap(SL)
 {

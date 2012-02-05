@@ -90,7 +90,8 @@
 		<track name="J11-Temple"	laps="1" factor="0.1" />
 		<track name="J12-Fog"		laps="1" factor="0.1" />
 		<track name="J14-Muddy"		laps="1" factor="0.1" />
-		<track name="J15-Swamp"		laps="1" factor="0.1" />
+		<track name="J15-Swamp"		laps="1" factor="0.15" />
+		<track name="D10-MudBath"	laps="1" factor="0.15" />
 	</championship>
 
 	<championship name="Mountain adventure" ver="1" difficulty="4" length="3" tutorial="0" 
@@ -127,6 +128,7 @@
 		<track name="D7-hh"			laps="1" factor="0.1" /><!---->
 		<track name="D8-HHY"		laps="1" factor="0.1" />
 		<track name="D9-Mud"		laps="1" factor="0.1" />
+		<track name="D10-MudBath"	laps="1" factor="0.15" />
 	</championship>
 	<championship name="Jungle scenery" ver="1" difficulty="4" length="3" tutorial="3" 
 			descr="Jungle championship. All tracks for this scenery in their appearance order.">
@@ -341,5 +343,6 @@
 		<track name="A4-Snake"		time="103.3"/>
 		<track name="X2-Swirl"		time="94.5"/>
 		<track name="F12-HighPeaks"	time="310.1"/>
+		<track name="D10-MudBath"	time="126.0"/>
 	</times>
 </championships>
