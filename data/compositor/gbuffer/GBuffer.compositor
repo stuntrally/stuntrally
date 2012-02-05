@@ -44,26 +44,6 @@ compositor gbuffer
 }
 
 
-compositor gbufferFinalizerNoParticles
-{
-    technique
-    {
-		target_output
-        {
-            input previous
-
-			shadows off
-			pass render_scene
-            {
-                // everything after particles render queue
-	      		first_render_queue 84
-	    		last_render_queue 94
-            }
-			
-		}
-    }
-}
-
 compositor gbufferFinalizer1
 {
     technique
@@ -116,7 +96,7 @@ compositor gbufferFinalizer
            {
                // everything after particles render queue
 	      	   first_render_queue 70
-	    	   last_render_queue 83
+	    	   last_render_queue 94
            }			
 		}
 		target_output
@@ -129,12 +109,6 @@ compositor gbufferFinalizer
             {
                 material SceneRenderNoDepth
                 input 0 hardparticles
-            }
-			pass render_scene
-            {
-                // everything after particles render queue until the UI
-	      		first_render_queue 84
-	    		last_render_queue 94
             }
 		}
     }

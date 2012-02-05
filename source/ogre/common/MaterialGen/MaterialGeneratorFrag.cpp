@@ -537,11 +537,11 @@ void MaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::StrStrea
 			outStream <<  "float4 viewNormal = mul(wvMat, pNormal); \n";
 		}
 		outStream <<  "oColor1 = float4(length(viewPosition) / far, normalize(viewNormal.xyz).xyz); \n";
-		if(mDef->mProps->transparent)
-		{
+		//if(mDef->mProps->transparent)
+		//{
 			// multiply alpha
-			outStream << "oColor1 = oColor1 * alpha;";    
-		}
+		//	outStream << "oColor1 = oColor1 * alpha;";    
+		//}
 		outStream <<  "	float depth = saturate(length(worldPosition.xyz - cameraPositionWorldSpace.xyz) / far);";
 		outStream <<  "oColor2 = float4(depth); \n";
 		
