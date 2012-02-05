@@ -242,3 +242,16 @@
 	specular = 0.5 0.5 0.5 32
 	cullHardware = none
 	normalMapPriority = 0.2
+	
+[palm_plant]
+	transparent = true
+	wind = 2
+	terrainLightMap = true
+	alphaRejectFunc = greater
+	alphaRejectValue = 128
+	diffuseMap_512 = palm_plant.png
+	normalMap_512 = palm_plant_normal.png
+	specMap_512 = palm_plant_spec.png
+	specular = 0.5 0.5 0.5 32
+	cullHardware = none
+	normalMapPriority = 0.2
