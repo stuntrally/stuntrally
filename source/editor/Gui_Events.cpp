@@ -532,7 +532,20 @@ void App::editTrGr(EditPtr ed)
 	else if (n=="TrRdDist")  sc.trRdDist = r;	else if (n=="TrImpDist")  sc.trDistImp = r;
 	else if (n=="GrDensSmooth")  sc.grDensSmooth = r;
 	else if (n=="GrTerMaxAngle")  sc.grTerMaxAngle = r;
+	else if (n=="SceneryId")  sc.sceneryId = r;
 }
+
+void App::comboGrassMtr(ComboBoxPtr cmb, size_t val)
+{
+	String s = cmb->getItemNameAt(val);
+	sc.grassMtr = s;
+}
+void App::comboGrassClr(ComboBoxPtr cmb, size_t val)
+{
+	String s = cmb->getItemNameAt(val);
+	sc.grassColorMap = s;
+}
+
 
 ///  Vegetation layers  -----------------------------
 
