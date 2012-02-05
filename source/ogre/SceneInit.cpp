@@ -180,6 +180,7 @@ void App::LoadCleanUp()  // 1 first
 	if (pr2) {  mSceneMgr->destroyParticleSystem(pr2);  pr2=0;  }
 
 	terrain = 0;
+	materialFactory->setTerrain(0);
 	if (mTerrainGroup)
 		mTerrainGroup->removeAllTerrains();
 	if (road)

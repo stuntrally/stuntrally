@@ -421,11 +421,8 @@ void CarModel::RecreateMaterials()
 			Ogre::MaterialManager::getSingleton().remove(sMtr[i] + strI);
 		mat->clone(sMtr[i] + strI, false);
 		sMtr[i] = sMtr[i] + strI;
-		
-		//LogO(" === New car mtr name: " + sMtr[i]);
 	}
 	
-	// iterate through all cloned car materials and set correct texture names
 	if (!ghost)
 	for (int i=0; i < NumMaterials; i++)
 	{
@@ -459,14 +456,9 @@ void CarModel::RecreateMaterials()
 							StringUtil::startsWith(tus->getTextureName(), "flat_n")))
 						tus->setTextureName(sDirname + "_" + tus->getTextureName());
 		}	}	}	}
-		if (pSet->shadow_type == 3)
-		{
-			// pssm split
-			pApp->setMtrSplits(mtr->getName());
-			
-			// terrain lightmap
-			MaterialFactory::getSingleton().terrainLightMapMtrs.push_back(mtr->getName());
-		}
+		
+		// set shader params of the cloned material
+		MaterialFactory::getSingleton().setShaderParams(mtr);
 	}
 	
 	ChangeClr(iIndex);

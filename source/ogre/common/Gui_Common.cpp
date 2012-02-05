@@ -3,7 +3,6 @@
 #include "../../road/Road.h"
 #include "../../vdrift/pathmanager.h"
 #include "MaterialGen/MaterialFactory.h"
-#include "MaterialGen/TerrainMaterialGen.h"
 #ifndef ROAD_EDITOR
 	#include "../../vdrift/game.h"
 	#include "../OgreGame.h"
