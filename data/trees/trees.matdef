@@ -255,3 +255,17 @@
 	specular = 0.5 0.5 0.5 32
 	cullHardware = none
 	normalMapPriority = 0.2
+	
+[jungle_tree]
+	transparent = true
+	wind = 2
+	terrainLightMap = true
+	alphaRejectFunc = greater
+	alphaRejectValue = 128
+	diffuseMap_512 = jungle_tree.png
+	normalMap_512 = jungle_tree_normal.png
+	specMap_512 = jungle_tree_spec.png
+	specular = 0.5 0.5 0.5 32
+	cullHardware = none
+	normalMapPriority = 0.2
+
