@@ -151,8 +151,14 @@ void App::changeShadows()
 			//LogO(String("Ter mtr: ") + mtr->getName());
 
 		}
-		
 	}
+	
+	materialFactory->setTerrain(terrain);
+	materialFactory->setNumShadowTex(num);
+	materialFactory->setShadows(pSet->shadow_type != 0);
+	materialFactory->setShadowsDepth(bDepth);
+	materialFactory->setShadowsSoft(bSoft);
+	materialFactory->generate();
 	
 	#if 0	// shadow tex overlay
 	// add the overlay elements to show the shadow maps:
@@ -204,13 +210,6 @@ void App::changeShadows()
 		overlay->show();
 	}
 	#endif
-	
-	materialFactory->setTerrain(terrain);
-	materialFactory->setNumShadowTex(num);
-	materialFactory->setShadows(pSet->shadow_type != 0);
-	materialFactory->setShadowsDepth(bDepth);
-	materialFactory->setShadowsSoft(bSoft);
-	materialFactory->generate();
 	
 	// -------------------   update the paged-geom materials
 	

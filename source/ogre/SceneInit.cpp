@@ -414,6 +414,8 @@ void App::LoadMisc()  // 7 last
 			#endif
 		}
 	
+	// make sure all shader params are loaded
+	materialFactory->generate();
 	
 	/// rendertextures debug
 	#if 0
