@@ -72,7 +72,7 @@ SETTINGS::SETTINGS() :  ///  Defaults
 	//  graphics
 	anisotropy(8),	view_distance(3600),
 	terdetail(1.57), terdist(300), road_dist(1.0), tex_size(1), ter_mtr(2),
-	shadow_dist(2000), shadow_size(2), shadow_count(3), shadow_type(2), shadow_filter(0),  /*<+*/
+	shadow_dist(2000), shadow_size(2), shadow_count(3), shadow_type(2), shadow_filter(1),  /*<+*/
 	shaders(0.5), lightmap_size(0),
 	grass(1.f), trees_dist(1.f), grass_dist(1.f),use_imposters(false),
 	//  startup
