@@ -62,34 +62,65 @@ HighLevelGpuProgramPtr MaterialGenerator::createFragmentProgram()
 
 void MaterialGenerator::fpRealtimeShadowHelperSource(Ogre::StringUtil::StrStreamType& outStream)
 {
-	/// shadow helper functions
-	// 2x2 pcf
+	// use tex2Dlod on ps3 and up because its faster
+	if (MRTSupported()) outStream <<
+	"float TEX2DLOD(sampler2D map, float2 uv) \n"
+	"{ \n"
+	"	return tex2Dlod(map, float4(uv.xy, 0, 0)).r; \n"
+	"} \n";
+	else outStream <<
+	"float TEX2DLOD(sampler2D map, float2 uv) \n"
+	"{ \n"
+	"	return tex2D(map, uv).r; \n"
+	"} \n";
+	
 	outStream <<
 	"float shadowPCF(sampler2D shadowMap, float4 shadowMapPos, float2 offset) \n"
 	"{ \n"
 	"	shadowMapPos = shadowMapPos / shadowMapPos.w; \n"
 	"	float2 uv = shadowMapPos.xy; \n"
-	"	float3 o = float3(offset, -offset.x) * 0.3f; \n";
-
-	if(MRTSupported())
-	{
-		outStream <<
-			"	float c =	(shadowMapPos.z <= tex2Dlod(shadowMap,  float4(uv.xy - o.xy,0,0)).r) ? 1 : 0; \n"
-			"	c +=		(shadowMapPos.z <= tex2Dlod(shadowMap,  float4(uv.xy + o.xy,0,0)).r) ? 1 : 0; \n"
-			"	c +=		(shadowMapPos.z <= tex2Dlod(shadowMap,  float4(uv.xy + o.zy,0,0)).r) ? 1 : 0; \n"
-			"	c +=		(shadowMapPos.z <= tex2Dlod(shadowMap,  float4(uv.xy - o.zy,0,0)).r) ? 1 : 0; \n";
-	}
-	else
-	{
-		outStream <<
-			"	float c =	(shadowMapPos.z <= tex2D(shadowMap, uv.xy - o.xy).r) ? 1 : 0; \n"
-			"	c +=		(shadowMapPos.z <= tex2D(shadowMap, uv.xy + o.xy).r) ? 1 : 0; \n"
-			"	c +=		(shadowMapPos.z <= tex2D(shadowMap, uv.xy + o.zy).r) ? 1 : 0; \n"
-			"	c +=		(shadowMapPos.z <= tex2D(shadowMap, uv.xy - o.zy).r) ? 1 : 0; \n";
-	}	
+	//"	float3 o = float3(offset, -offset.x); \n";
+	"float3 o = float3(0.0005, 0.0005, 0.0005); \n";
+	
+	if (mParent->getShadowsFilterSize() == 2) outStream << // 2x2 offsets 0.5
+		"	o *= 0.5; \n"
+		"	float c =	(shadowMapPos.z <= TEX2DLOD(shadowMap,  uv.xy - o.xy)) ? 1 : 0; \n"
+		"	c +=		(shadowMapPos.z <= TEX2DLOD(shadowMap,  uv.xy + o.xy)) ? 1 : 0; \n"
+		"	c +=		(shadowMapPos.z <= TEX2DLOD(shadowMap,  uv.xy + o.zy)) ? 1 : 0; \n"
+		"	c +=		(shadowMapPos.z <= TEX2DLOD(shadowMap,  uv.xy - o.zy)) ? 1 : 0; \n";
+	else if (mParent->getShadowsFilterSize() == 3) outStream << // 3x3 offsets 1, 0
+		"	float c =	(shadowMapPos.z <= TEX2DLOD(shadowMap,  uv.xy)) ? 1 : 0; \n" // center
+		"	c +=		(shadowMapPos.z <= TEX2DLOD(shadowMap,  uv.xy + o.xy)) ? 1 : 0; \n" // bottom right
+		"	c +=		(shadowMapPos.z <= TEX2DLOD(shadowMap,  uv.xy + float2(0, o.y))) ? 1 : 0; \n" // bottom
+		"	c +=		(shadowMapPos.z <= TEX2DLOD(shadowMap,  uv.xy + o.zy)) ? 1 : 0; \n" // bottom left
+		"	c +=		(shadowMapPos.z <= TEX2DLOD(shadowMap,  uv.xy + float2(o.z, 0))) ? 1 : 0; \n" // left
+		"	c +=		(shadowMapPos.z <= TEX2DLOD(shadowMap,  uv.xy + float2(o.x, 0))) ? 1 : 0; \n" // right
+		"	c +=		(shadowMapPos.z <= TEX2DLOD(shadowMap,  uv.xy - float2(0, o.y))) ? 1 : 0; \n" // top
+		"	c +=		(shadowMapPos.z <= TEX2DLOD(shadowMap,  uv.xy - o.xy)) ? 1 : 0; \n" // top left
+		"	c +=		(shadowMapPos.z <= TEX2DLOD(shadowMap,  uv.xy - o.zy)) ? 1 : 0; \n"; // top right
+	else if (mParent->getShadowsFilterSize() == 4) outStream << // 4x4 offsets 1.5, 0.5
+		"	o *= 0.5; \n"
+		"	float c =	(shadowMapPos.z <= TEX2DLOD(shadowMap,  uv.xy - 3*o.xy)) ? 1 : 0; \n" // top left *2
+		"	c +=	(shadowMapPos.z <= TEX2DLOD(shadowMap,  uv.xy - o.xy)) ? 1 : 0; \n" // top left
+		"	c +=	(shadowMapPos.z <= TEX2DLOD(shadowMap,  uv.xy - 3*o.zy)) ? 1 : 0; \n" // top right *2
+		"	c +=	(shadowMapPos.z <= TEX2DLOD(shadowMap,  uv.xy - o.zy)) ? 1 : 0; \n" // top right
+		"	c +=	(shadowMapPos.z <= TEX2DLOD(shadowMap,  uv.xy + 3*o.zy)) ? 1 : 0; \n" // bottom left *2
+		"	c +=	(shadowMapPos.z <= TEX2DLOD(shadowMap,  uv.xy + o.zy)) ? 1 : 0; \n" // bottom left
+		"	c +=	(shadowMapPos.z <= TEX2DLOD(shadowMap,  uv.xy + 3*o.xy)) ? 1 : 0; \n" // bottom right *2
+		"	c +=	(shadowMapPos.z <= TEX2DLOD(shadowMap,  uv.xy + o.xy)) ? 1 : 0; \n" // bottom right
+		"	c +=	(shadowMapPos.z <= TEX2DLOD(shadowMap,  uv.xy - float2(1,3)*o.xy)) ? 1 : 0; \n" // top*2 left
+		"	c +=	(shadowMapPos.z <= TEX2DLOD(shadowMap,  uv.xy - float2(1,3)*o.zy)) ? 1 : 0; \n" // top*2 right
+		"	c +=	(shadowMapPos.z <= TEX2DLOD(shadowMap,  uv.xy + float2(1,3)*o.zy)) ? 1 : 0; \n" // bottom*2 left
+		"	c +=	(shadowMapPos.z <= TEX2DLOD(shadowMap,  uv.xy + float2(1,3)*o.xy)) ? 1 : 0; \n" // bottom*2 right
+		"	c +=	(shadowMapPos.z <= TEX2DLOD(shadowMap,  uv.xy + float2(3,1)*o.zy)) ? 1 : 0; \n" // left*2 bottom
+		"	c +=	(shadowMapPos.z <= TEX2DLOD(shadowMap,  uv.xy - float2(3,1)*o.xy)) ? 1 : 0; \n" // left*2 top
+		"	c +=	(shadowMapPos.z <= TEX2DLOD(shadowMap,  uv.xy + float2(3,1)*o.xy)) ? 1 : 0; \n" // right*2 bottom
+		"	c +=	(shadowMapPos.z <= TEX2DLOD(shadowMap,  uv.xy - float2(3,1)*o.zy)) ? 1 : 0; \n"; // right*2 top
+	else outStream << // no filter
+	"	float c = (shadowMapPos.z <= TEX2DLOD(shadowMap,  uv.xy)) ? 1 : 0; \n";
 	
 	outStream <<
-		"	return c / 4;  \n"
+		"	return c / "<< mParent->getShadowsFilterSize() * mParent->getShadowsFilterSize() << ";  \n"
 		"} \n";
 	
 	// pssm

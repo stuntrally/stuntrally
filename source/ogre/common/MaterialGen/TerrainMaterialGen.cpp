@@ -39,8 +39,6 @@ THE SOFTWARE.
 #include "../../Defines.h"
 #include "MaterialGenerator.h"
 #include "MaterialFactory.h"
-// depth shadows: use terrain receiver shader or use custom shader (pssm.cg)
-#define CUSTOM_RECEIVER_SHADER
 
 namespace Ogre
 {
@@ -1390,63 +1388,69 @@ namespace Ogre
 	void TerrainMaterialGeneratorB::SM2Profile::ShaderHelperCg::generateFpDynamicShadowsHelpers(
 		const SM2Profile* prof, const Terrain* terrain, TechniqueType tt, StringUtil::StrStreamType& outStream)
 	{
-		#ifndef CUSTOM_RECEIVER_SHADER
-		// TODO make filtering configurable
+		// use tex2Dlod on ps3 and up because its faster
+		if (MaterialGenerator::MRTSupported()) outStream <<
+		"float TEX2DLOD(sampler2D map, float2 uv) \n"
+		"{ \n"
+		"	return tex2Dlod(map, float4(uv.xy, 0, 0)).r; \n"
+		"} \n";
+		else outStream <<
+		"float TEX2DLOD(sampler2D map, float2 uv) \n"
+		"{ \n"
+		"	return tex2D(map, uv).r; \n"
+		"} \n";
+			
+		outStream << 
+		"float shadowPCF(sampler2D shadowMap, float4 shadowMapPos, float2 offset)\n"
+		"{\n"
+			"shadowMapPos = shadowMapPos / shadowMapPos.w;\n"
+			"float2 uv = shadowMapPos.xy;\n"
+			//"float3 o = float3(offset, -offset.x);\n";
+			"float3 o = float3(0.0005, 0.0005, 0.0005); \n";
+
+			
+		if (MaterialFactory::getSingleton().getShadowsFilterSize() == 2) outStream << // 2x2
+			"	o *= 0.5; \n"
+			"	float c =	(shadowMapPos.z <= TEX2DLOD(shadowMap,  uv.xy - o.xy)) ? 1 : 0; \n"
+			"	c +=		(shadowMapPos.z <= TEX2DLOD(shadowMap,  uv.xy + o.xy)) ? 1 : 0; \n"
+			"	c +=		(shadowMapPos.z <= TEX2DLOD(shadowMap,  uv.xy + o.zy)) ? 1 : 0; \n"
+			"	c +=		(shadowMapPos.z <= TEX2DLOD(shadowMap,  uv.xy - o.zy)) ? 1 : 0; \n";
+		else if (MaterialFactory::getSingleton().getShadowsFilterSize() == 3) outStream << // 3x3
+			"	float c =	(shadowMapPos.z <= TEX2DLOD(shadowMap,  uv.xy)) ? 1 : 0; \n" // center
+			"	c +=		(shadowMapPos.z <= TEX2DLOD(shadowMap,  uv.xy + o.xy)) ? 1 : 0; \n" // bottom right
+			"	c +=		(shadowMapPos.z <= TEX2DLOD(shadowMap,  uv.xy + float2(0, o.y))) ? 1 : 0; \n" // bottom
+			"	c +=		(shadowMapPos.z <= TEX2DLOD(shadowMap,  uv.xy + o.zy)) ? 1 : 0; \n" // bottom left
+			"	c +=		(shadowMapPos.z <= TEX2DLOD(shadowMap,  uv.xy + float2(o.z, 0))) ? 1 : 0; \n" // left
+			"	c +=		(shadowMapPos.z <= TEX2DLOD(shadowMap,  uv.xy + float2(o.x, 0))) ? 1 : 0; \n" // right
+			"	c +=		(shadowMapPos.z <= TEX2DLOD(shadowMap,  uv.xy - float2(0, o.y))) ? 1 : 0; \n" // top
+			"	c +=		(shadowMapPos.z <= TEX2DLOD(shadowMap,  uv.xy - o.xy)) ? 1 : 0; \n" // top left
+			"	c +=		(shadowMapPos.z <= TEX2DLOD(shadowMap,  uv.xy - o.zy)) ? 1 : 0; \n"; // top right
+		else if (MaterialFactory::getSingleton().getShadowsFilterSize() == 4) outStream << // 4x4
+			"	o *= 0.5; \n"
+			"	float c =	(shadowMapPos.z <= TEX2DLOD(shadowMap,  uv.xy - 3*o.xy)) ? 1 : 0; \n" // top left *2
+			"	c +=	(shadowMapPos.z <= TEX2DLOD(shadowMap,  uv.xy - o.xy)) ? 1 : 0; \n" // top left
+			"	c +=	(shadowMapPos.z <= TEX2DLOD(shadowMap,  uv.xy - 3*o.zy)) ? 1 : 0; \n" // top right *2
+			"	c +=	(shadowMapPos.z <= TEX2DLOD(shadowMap,  uv.xy - o.zy)) ? 1 : 0; \n" // top right
+			"	c +=	(shadowMapPos.z <= TEX2DLOD(shadowMap,  uv.xy + 3*o.zy)) ? 1 : 0; \n" // bottom left *2
+			"	c +=	(shadowMapPos.z <= TEX2DLOD(shadowMap,  uv.xy + o.zy)) ? 1 : 0; \n" // bottom left
+			"	c +=	(shadowMapPos.z <= TEX2DLOD(shadowMap,  uv.xy + 3*o.xy)) ? 1 : 0; \n" // bottom right *2
+			"	c +=	(shadowMapPos.z <= TEX2DLOD(shadowMap,  uv.xy + o.xy)) ? 1 : 0; \n" // bottom right
+			"	c +=	(shadowMapPos.z <= TEX2DLOD(shadowMap,  uv.xy - float2(1,3)*o.xy)) ? 1 : 0; \n" // top*2 left
+			"	c +=	(shadowMapPos.z <= TEX2DLOD(shadowMap,  uv.xy - float2(1,3)*o.zy)) ? 1 : 0; \n" // top*2 right
+			"	c +=	(shadowMapPos.z <= TEX2DLOD(shadowMap,  uv.xy + float2(1,3)*o.zy)) ? 1 : 0; \n" // bottom*2 left
+			"	c +=	(shadowMapPos.z <= TEX2DLOD(shadowMap,  uv.xy + float2(1,3)*o.xy)) ? 1 : 0; \n" // bottom*2 right
+			"	c +=	(shadowMapPos.z <= TEX2DLOD(shadowMap,  uv.xy + float2(3,1)*o.zy)) ? 1 : 0; \n" // left*2 bottom
+			"	c +=	(shadowMapPos.z <= TEX2DLOD(shadowMap,  uv.xy - float2(3,1)*o.xy)) ? 1 : 0; \n" // left*2 top
+			"	c +=	(shadowMapPos.z <= TEX2DLOD(shadowMap,  uv.xy + float2(3,1)*o.xy)) ? 1 : 0; \n" // right*2 bottom
+			"	c +=	(shadowMapPos.z <= TEX2DLOD(shadowMap,  uv.xy - float2(3,1)*o.zy)) ? 1 : 0; \n"; // right*2 top
+		else outStream << // no filter
+		"	float c = (shadowMapPos.z <= TEX2DLOD(shadowMap,  uv.xy)) ? 1 : 0; \n";
+			
 		outStream <<
-			"// Simple PCF \n"
-			"// Number of samples in one dimension (square for total samples) \n"
-			"#define NUM_SHADOW_SAMPLES_1D 2.0 \n"
-			"#define SHADOW_FILTER_SCALE 1 \n"
-
-			"#define SHADOW_SAMPLES NUM_SHADOW_SAMPLES_1D*NUM_SHADOW_SAMPLES_1D \n"
-			"float4 offsetSample(float4 uv, float2 offset, float invMapSize) \n"
-			"{ \n"
-			"	return float4(uv.xy + offset * invMapSize * uv.w, uv.z, uv.w); \n"
-			"} \n";
-
-		if (prof->getReceiveDynamicShadowsDepth())
-		{
-			outStream << 
-				"float calcDepthShadow(sampler2D shadowMap, float4 uv, float invShadowMapSize) \n"
-				"{ \n"
-				"	// 4-sample PCF \n"
-					
-				"	float shadow = 0.0; \n"
-				"	float offset = (NUM_SHADOW_SAMPLES_1D/2 - 0.5) * SHADOW_FILTER_SCALE; \n"
-				"	for (float y = -offset; y <= offset; y += SHADOW_FILTER_SCALE) \n"
-				"		for (float x = -offset; x <= offset; x += SHADOW_FILTER_SCALE) \n"
-				"		{ \n"
-				"			float4 newUV = offsetSample(uv, float2(x, y), invShadowMapSize);\n"
-				"			// manually project and assign derivatives \n"
-				"			// to avoid gradient issues inside loops \n"
-				"			newUV = newUV / newUV.w; \n"
-				"			float depth = tex2D(shadowMap, newUV.xy, 1, 1).x; \n"
-				"			if (depth >= 1 || depth >= uv.z)\n"
-				"				shadow += 1.0;\n"
-				"		} \n"
-
-				"	shadow /= SHADOW_SAMPLES; \n"
-				//" return 1;\n"
-				"	return shadow; \n"
-				//" if (shadow == 0) return 0.3; else return 1;\n"
-				"} \n";
-		}
-		#else
-			outStream << 
-			"float shadowPCF(sampler2D shadowMap, float4 shadowMapPos, float2 offset)\n"
-			"{\n"
-				"shadowMapPos = shadowMapPos / shadowMapPos.w;\n"
-				"float2 uv = shadowMapPos.xy;\n"
-				"float3 o = float3(offset, -offset.x) * 0.3f;\n"
-				"float c =	(shadowMapPos.z <= tex2D(shadowMap, uv.xy - o.xy).r) ? 1 : 0;\n"
-				"c +=		(shadowMapPos.z <= tex2D(shadowMap, uv.xy + o.xy).r) ? 1 : 0;\n"
-				"c +=		(shadowMapPos.z <= tex2D(shadowMap, uv.xy + o.zy).r) ? 1 : 0;\n"
-				"c +=		(shadowMapPos.z <= tex2D(shadowMap, uv.xy - o.zy).r) ? 1 : 0;\n"
-				"return c / 4;\n"
-			"}\n";
-			if (prof->getReceiveDynamicShadowsDepth()) {}
-		#endif
-		
+			"return c / " << MaterialFactory::getSingleton().getShadowsFilterSize() * MaterialFactory::getSingleton().getShadowsFilterSize() << ";\n"
+		"}\n";
+			
+		if (prof->getReceiveDynamicShadowsDepth()) {}
 		else
 		{
 			GpuProgramManager& gmgr = GpuProgramManager::getSingleton();
@@ -1495,15 +1499,9 @@ namespace Ogre
 				outStream << "float4 lsPos" << i << ", ";
 			//if (prof->getReceiveDynamicShadowsDepth())
 			//{
-				#ifndef CUSTOM_RECEIVER_SHADER
-				outStream << "\n	";
-				for (uint i = 0; i < numTextures; ++i)
-					outStream << "float invShadowmapSize" << i << ", ";
-				#else
 				outStream << "\n	";
 				for (uint i = 0; i < numTextures; ++i)
 					outStream << "float4 invShadowmapSize" << i << ", ";
-				#endif
 			//}
 			outStream << "\n"
 				"	float4 pssmSplitPoints, float camDepth) \n"
@@ -1524,13 +1522,8 @@ namespace Ogre
 					"	{ \n";
 				if (prof->getReceiveDynamicShadowsDepth())
 				{
-					#ifndef CUSTOM_RECEIVER_SHADER
-					outStream <<
-						"		shadow = calcDepthShadow(shadowMap" << i << ", lsPos" << i << ", invShadowmapSize" << i << "); \n";
-					#else
 					outStream <<
 						"		shadow = shadowPCF(shadowMap" << i << ", lsPos" << i << ", invShadowmapSize" << i << ".xy); \n";
-					#endif
 				}
 				else
 				{

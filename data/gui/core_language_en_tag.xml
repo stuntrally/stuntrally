@@ -298,6 +298,7 @@
 	<Tag name="Shaders">Shaders</Tag>
 	<Tag name="Size">Size</Tag>
 	<Tag name="TexSize">Texture size</Tag>
+	<Tag name="ShadowFilter">Filter</Tag>
 	<Tag name="Count">Count</Tag>
 	<Tag name="ApplyShadows">Apply Shadows</Tag>
 	<Tag name="LightmapSize">Lightmap size</Tag>

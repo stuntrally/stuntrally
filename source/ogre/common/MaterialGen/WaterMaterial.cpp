@@ -361,6 +361,8 @@ void WaterMaterialGenerator::individualFragmentProgramParams(Ogre::GpuProgramPar
 	// can't set a vector2, need to pack it in vector3
 	#define _vec3(prop) Vector3(prop.x, prop.y, 1.0)
 	
+	params->setIgnoreMissingParams(true);
+	
 	params->setNamedConstant("waveBump", _vec3(mDef->mProps->waveBump));
 	params->setNamedConstant("waveHighFreq", Real(mDef->mProps->waveHighFreq));
 	params->setNamedConstant("waveSpecular", Real(mDef->mProps->waveSpecular));

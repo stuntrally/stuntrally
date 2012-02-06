@@ -23,7 +23,7 @@ public:
 	int anisotropy, tex_size, ter_mtr;
 	float shaders;
 	float view_distance, terdetail,terdist, road_dist;
-	float shadow_dist;  int shadow_size, lightmap_size, shadow_count, shadow_type;
+	float shadow_dist;  int shadow_size, lightmap_size, shadow_count, shadow_type, shadow_filter;
 	float grass, trees_dist, grass_dist;
 	bool use_imposters;
 

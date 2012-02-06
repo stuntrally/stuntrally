@@ -1485,7 +1485,7 @@
 					<Widget type="TabItem" skin="" position="2 24 738 372">
 						<Property key="Caption" value="#{Shadows}"/>
 						<UserString key="RelativeTo" value="OptionsWnd"/>
-						<Widget type="Button" skin="Button" position="32 176 200 26" layer="Back" name="Apply">
+						<Widget type="Button" skin="Button" position="32 206 200 26" layer="Back" name="Apply">
 							<Property key="Caption" value="#{ApplyShadows}"/>
 							<Property key="Colour" value="0.7 0.85 1.0"/>
 							<UserString key="RelativeTo" value="OptionsWnd"/>
@@ -1514,6 +1514,12 @@
 							<Property key="TextColour" value="0.7 0.8 0.9"/>
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="32 170 144 24">
+							<Property key="Caption" value="#{ShadowFilter}"/>
+							<Property key="Colour" value="0 0 0"/>
+							<Property key="TextColour" value="0.7 0.8 0.9"/>
+							<UserString key="RelativeTo" value="OptionsWnd"/>
+						</Widget>
 						<Widget type="ScrollBar" skin="ScrollBarH" position="248 50 320 16" name="ShadowType">
 							<Property key="Range" value="5"/>
 							<Property key="MoveToClick" value="true"/>
@@ -1534,6 +1540,11 @@
 							<Property key="MoveToClick" value="true"/>
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
+						<Widget type="ScrollBar" skin="ScrollBarH" position="248 170 320 18" name="ShadowFilter">
+							<Property key="Range" value="4"/>
+							<Property key="MoveToClick" value="true"/>
+							<UserString key="RelativeTo" value="OptionsWnd"/>
+						</Widget>
 						<Widget type="TextBox" skin="TextBox" position="180 50 60 24" name="ShadowTypeVal">
 							<Property key="TextColour" value="0.5 0.8 1"/>
 							<UserString key="RelativeTo" value="OptionsWnd"/>
@@ -1547,6 +1558,10 @@
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
 						<Widget type="TextBox" skin="TextBox" position="180 140 60 24" name="ShadowDistVal">
+							<Property key="TextColour" value="0.7 0.8 0.9"/>
+							<UserString key="RelativeTo" value="OptionsWnd"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="180 170 60 24" name="ShadowFilterVal">
 							<Property key="TextColour" value="0.7 0.8 0.9"/>
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>

@@ -70,7 +70,7 @@ MaterialFactory& MaterialFactory::getSingleton(void)
 
 MaterialFactory::MaterialFactory() : 
 	bNormalMap(1), bEnvMap(1), bShadows(1), bShadowsDepth(1), bShadowsSoft(1), bShadowsFade(0),
-	iTexSize(4096), iNumShadowTex(3), fShaderQuality(0.5), fShadowsFadeDistance(20.f),
+	iTexSize(4096), iNumShadowTex(3), iShadowsFilterSize(4), fShaderQuality(0.5), fShadowsFadeDistance(20.f),
 	bSettingsChanged(1), // always have to generate at start
 	
 	mSceneMgr(0), mTerrain(0), mPSSM(0)

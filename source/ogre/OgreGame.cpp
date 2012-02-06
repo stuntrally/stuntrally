@@ -30,14 +30,14 @@ App::App()
 	,fMiniX(0),fMiniY(0), scX(1),scY(1), ofsX(0),ofsY(0), minX(0),maxX(0), minY(0),maxY(0)
 	,arrowNode(0)
 	// ter
-	,mTerrainGlobals(0), mTerrainGroup(0), mPaging(false)
+	,mTerrainGlobals(0), mTerrainGroup(0), terrain(0), mPaging(false)
 	,mTerrainPaging(0), mPageManager(0), materialFactory(0)
 	// gui
 	,mToolTip(0), mToolTipTxt(0), carList(0), trkMList(0), resList(0), btRplPl(0)
 	,valAnisotropy(0), valViewDist(0), valTerDetail(0), valTerDist(0), valRoadDist(0)  // detail
 	,valTrees(0), valGrass(0), valTreesDist(0), valGrassDist(0)  // paged
 	,valReflSkip(0), valReflSize(0), valReflFaces(0), valReflDist(0)  // refl
-	,valShaders(0), valShadowType(0), valShadowCount(0), valShadowSize(0), valShadowDist(0)  // shadow
+	,valShaders(0), valShadowType(0), valShadowCount(0), valShadowSize(0), valShadowDist(0), valShadowFilter(0)  // shadow
 	,valSizeGaug(0), valSizeMinimap(0), valZoomMinimap(0), valCountdownTime(0)  // view
 	,bRkmh(0),bRmph(0), chDbgT(0),chDbgB(0), chBlt(0),chBltTxt(0), chFps(0)
 	,chTimes(0),chMinimp(0),chOpponents(0), bnQuit(0)
@@ -115,6 +115,7 @@ void App::postInit()
 	materialFactory->setShadows(pSet->shadow_type >= 2);
 	materialFactory->setShadowsDepth(pSet->shadow_type == 3);
 	materialFactory->setShaderQuality(pSet->shaders);
+	materialFactory->setShadowsFilterSize(pSet->shadow_filter);
 	if (pSet->tex_size == 0)
 		materialFactory->setTexSize(0);
 	else if (pSet->tex_size == 1)

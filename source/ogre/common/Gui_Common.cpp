@@ -207,6 +207,13 @@ void App::slShadowDist(SL)
 	if (valShadowDist){  Fmt(s, "%4.1f km", v*0.001f);	valShadowDist->setCaption(s);  }
 }
 
+void App::slShadowFilter(SL)
+{
+	int v = val+1; if (bGI) pSet->shadow_filter = v;
+	if (materialFactory) materialFactory->setShadowsFilterSize(v);
+	if (valShadowFilter) valShadowFilter->setCaption(toStr(v));
+}
+
 
 //  init  common
 //----------------------------------------------------------------------------------------------------------------
@@ -255,6 +262,7 @@ void App::GuiInitGraphics()
 	//  shadows
 	Slv(ShadowType,	pSet->shadow_type /res);
 	Slv(ShadowCount,(pSet->shadow_count-2) /2.f);
+	Slv(ShadowFilter, pSet->shadow_filter-1 /res);
 	Slv(ShadowSize,	pSet->shadow_size /float(ciShadowNumSizes));
 	Slv(ShadowDist,	powf((pSet->shadow_dist -50.f)/4750.f, 0.5f));
 	Btn("Apply", btnShadows);
