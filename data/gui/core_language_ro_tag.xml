@@ -655,6 +655,15 @@
 	<Tag name="InputNextOptTab">F2,F3 - fila de opțiuni precedentă,următoare</Tag>
 	<Tag name="RollingDrag">Învârtire mașină</Tag>
 	<Tag name="RplAll">Toate</Tag>
+	<Tag name="softparticles">Soft Particles</Tag>
+	<Tag name="GrColorMap">Grass color map</Tag>
+	<Tag name="CountdownTime">Race countdown time</Tag>
+	<Tag name="TipGrassColorMap">Grass colormap for scenery, usually same choice as for grass material. Additional grass coloring.</Tag>
+	<Tag name="godrays">God Rays</Tag>
+	<Tag name="SceneryId">Scenery Id</Tag>
+	<Tag name="TipSceneryId">Scenery id (numeric value 0-20) for identifying unique lightings group on track. Used for impostors generation.</Tag>
+	<Tag name="TipGrassMaterial">Grass material, chosen to match track's scenery.</Tag>
+	<Tag name="GrMaterial">Grass Material</Tag>
 	<Tag name="GameVersion">1.5</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 

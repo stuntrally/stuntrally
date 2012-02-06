@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION"
 "Report-Msgid-Bugs-To: "
-"POT-Creation-Date: 2012-01-30 16:21+0200"
+"POT-Creation-Date: 2012-02-06 01:07+0100"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>"
 "Language-Team: LANGUAGE <LL@li.org>"
@@ -577,6 +577,10 @@ msgctxt "Always"
 msgid "Always"
 msgstr ""
 
+msgctxt "softparticles"
+msgid "Soft Particles"
+msgstr ""
+
 msgctxt "TipSunDirYaw"
 msgid "Sun direction - yaw angle."
 msgstr ""
@@ -797,6 +801,10 @@ msgctxt "TerrainHalf"
 msgid "Half"
 msgstr ""
 
+msgctxt "GrColorMap"
+msgid "Grass color map"
+msgstr ""
+
 msgctxt "TipBumpAmp"
 msgid "Amplitude of additional bumps on surface (how high)."
 msgstr ""
@@ -809,8 +817,8 @@ msgctxt "TipNormalTex"
 msgid "Normal texture (Height in alpha)."
 msgstr ""
 
-msgctxt "PipeMaterials"
-msgid "Pipe materials"
+msgctxt "CountdownTime"
+msgid "Race countdown time"
 msgstr ""
 
 msgctxt "InputRoadSelectMany"
@@ -1009,6 +1017,10 @@ msgctxt "Shaders"
 msgid "Shaders"
 msgstr ""
 
+msgctxt "PipeMaterials"
+msgid "Pipe materials"
+msgstr ""
+
 msgctxt "Exponent"
 msgid "exponent"
 msgstr ""
@@ -1197,6 +1209,10 @@ msgctxt "TipFogEndClr"
 msgid "Fog end color. R G B components 0 to 1 (eg. 0.7 0.8 0.9)"
 msgstr ""
 
+msgctxt "TipGrassColorMap"
+msgid "Grass colormap for scenery, usually same choice as for grass material. Additional grass coloring."
+msgstr ""
+
 msgctxt "Multiplayer"
 msgid "Multiplayer"
 msgstr ""
@@ -1217,8 +1233,16 @@ msgctxt "TrackPipes"
 msgid "Pipes"
 msgstr ""
 
+msgctxt "godrays"
+msgid "God Rays"
+msgstr ""
+
 msgctxt "InputRoadNext"
 msgid "PgUp,PgDn (or Wheel) - previous/next point"
+msgstr ""
+
+msgctxt "SceneryId"
+msgid "Scenery Id"
 msgstr ""
 
 msgctxt "TipTerTriSize"
@@ -1781,12 +1805,20 @@ msgctxt "InputFluidsTileY"
 msgid "; &apos;  - change texture tiling, one coord. only"
 msgstr ""
 
+msgctxt "TipSceneryId"
+msgid "Scenery id (numeric value 0-20) for identifying unique lightings group on track. Used for impostors generation."
+msgstr ""
+
 msgctxt "InputUpdate"
 msgid "F8 - update track"
 msgstr ""
 
 msgctxt "InputToggleGUIMode"
 msgid "F1 or ` - GUI mode (toggle Options)"
+msgstr ""
+
+msgctxt "TipGrassMaterial"
+msgid "Grass material, chosen to match track's scenery."
 msgstr ""
 
 msgctxt "TipRearThrottleInverse"
@@ -2463,6 +2495,10 @@ msgstr ""
 
 msgctxt "InputStartDir"
 msgid "Space  -  change road direction (+ or -)"
+msgstr ""
+
+msgctxt "GrMaterial"
+msgid "Grass Material"
 msgstr ""
 
 msgctxt "Startup"
