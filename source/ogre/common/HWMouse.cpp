@@ -1,22 +1,29 @@
-#include <OgrePlatform.h>
-#if OGRE_PLATFORM == OGRE_PLATFORM_LINUX
-
 #include "HWMouse.h"
 
 #include <OgreImage.h>
 #include <OgreColourValue.h>
 #include <OgreResourceGroupManager.h>
 
-#include <X11/Xlib.h>
-#include <X11/Xcursor/Xcursor.h>
+#include <OgrePlatform.h>
+#if OGRE_PLATFORM == OGRE_PLATFORM_LINUX
+	#include <X11/Xlib.h>
+	#include <X11/Xcursor/Xcursor.h>
+#endif
 
 using namespace Ogre;
 
-HWMouse::HWMouse(size_t windowID, const int xhot, const int yhot, const std::string& filename)
+#if OGRE_PLATFORM == OGRE_PLATFORM_LINUX
+	static Window x11Window;
+	static Display* x11Display;
+	static Cursor x11Cursor;
+	static Cursor x11Cursor_hidden; // hidden, empty cursor
+#endif
+	
+HWMouse::HWMouse(size_t windowID, const int xhot, const int yhot, const std::string& filename) :
+	mVisible(0)
 {
-	Window x11Window;
-	Display* x11Display;
-	Cursor x11Cursor;
+#if OGRE_PLATFORM == OGRE_PLATFORM_LINUX
+
 	
 	x11Window = windowID;
 	x11Display = XOpenDisplay(0);
@@ -45,16 +52,45 @@ HWMouse::HWMouse(size_t windowID, const int xhot, const int yhot, const std::str
 	x11Cursor = XcursorImageLoadCursor(x11Display, cursorImage);
 	XcursorImageDestroy(cursorImage);
 	
-	XDefineCursor(x11Display, x11Window, x11Cursor);
-    
-    XFlush(x11Display);
+	// Create a blank cursor
+	Pixmap bm_no;
+	XColor black, dummy;
+	Colormap colormap;
+	static char no_data[] = { 0,0,0,0,0,0,0,0 };
+	colormap = DefaultColormap( x11Display, DefaultScreen(x11Display) );
+	XAllocNamedColor( x11Display, colormap, "black", &black, &dummy );
+	bm_no = XCreateBitmapFromData( x11Display, x11Window, no_data, 8, 8 );
+	x11Cursor_hidden = XCreatePixmapCursor( x11Display, bm_no, bm_no, &black, &black, 0, 0 );
+	
+	show();
+#endif
 }
 
 HWMouse::~HWMouse()
 {
+#if OGRE_PLATFORM == OGRE_PLATFORM_LINUX
 	//XUndefineCursor(x11Display, x11Cursor);
 	//XFreeCursor(x11Display, x11Cursor);
 	//XCloseDisplay(x11Display);
+#endif
 }
 
+void HWMouse::show()
+{
+	if (mVisible) return;
+#if OGRE_PLATFORM == OGRE_PLATFORM_LINUX
+	XDefineCursor(x11Display, x11Window, x11Cursor);
+	XFlush(x11Display);
 #endif
+	mVisible = true;
+}
+
+void HWMouse::hide()
+{
+	if (!mVisible) return;
+#if OGRE_PLATFORM == OGRE_PLATFORM_LINUX
+	XDefineCursor(x11Display, x11Window, x11Cursor_hidden);
+	XFlush(x11Display);
+#endif
+	mVisible = false;
+}

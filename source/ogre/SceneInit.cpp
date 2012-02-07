@@ -131,7 +131,7 @@ void App::NewGame()
 	LoadingOn();
 	ShowHUD(true);  // hide HUD
 	mFpsOverlay->hide();  // hide FPS
-	PointerManager::getInstance().setVisible(false);
+	hideMouse();
 
 	currentLoadingState = loadingStates.begin();
 }
@@ -141,7 +141,10 @@ void App::NewGame()
 
 void App::LoadCleanUp()  // 1 first
 {
-	if (mGUI)	PointerManager::getInstance().setVisible(isFocGui);
+	if (mGUI)	{
+		if (isFocGui) showMouse(); 
+		else hideMouse();
+	}
 	// rem old track
 	if (resTrk != "")  Ogre::Root::getSingletonPtr()->removeResourceLocation(resTrk);
 	resTrk = TrkDir() + "objects";

@@ -289,7 +289,10 @@ void App::btnNewGame(WP)
 	if (mWndOpts)  mWndOpts->setVisible(isFocGui);
 	if (mWndRpl)  mWndRpl->setVisible(false);//
 	if (bnQuit)  bnQuit->setVisible(isFocGui);
-	PointerManager::getInstance().setVisible(isFocGuiOrRpl());
+	
+	if (isFocGuiOrRpl()) showMouse();
+	else hideMouse();
+	
 	mToolTip->setVisible(false);
 }
 void App::btnNewGameStart(WP wp)
@@ -636,7 +639,10 @@ void App::toggleGui(bool toggle)
 	}
 
 	if (bnQuit)  bnQuit->setVisible(isFocGui);
-	if (mGUI)	PointerManager::getInstance().setVisible(isFocGuiOrRpl());
+	if (mGUI) {
+		if (isFocGuiOrRpl()) showMouse();
+		else hideMouse();
+	}
 	if (!isFocGui)  mToolTip->setVisible(false);
 
 	for (int i=0; i < WND_ALL; ++i)

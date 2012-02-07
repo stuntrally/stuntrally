@@ -19,7 +19,6 @@
 /// translation
 #define TR(s)  MyGUI::LanguageManager::getInstance().replaceTags(s)
 
-
 //  info for collision shapes  (hit, triggers)
 enum EShapeType
 {

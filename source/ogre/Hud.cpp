@@ -214,7 +214,7 @@ void App::ShowHUD(bool hideAll)
 		if (ovWarnWin)  ovWarnWin->hide();	if (ovOpp)  ovOpp->hide();
 		if (mFpsOverlay)  mFpsOverlay->hide();
 		if (ndMap)  ndMap->setVisible(false);
-		if (mGUI)	PointerManager::getInstance().setVisible(false);
+		if (mGUI)	hideMouse();
 		if (mWndRpl)  mWndRpl->setVisible(false);
 	}else{
 		bool show = pSet->show_gauges;
@@ -244,7 +244,10 @@ void App::ShowHUD(bool hideAll)
 		if (ovWarnWin){  if (pSet->show_times)  ovWarnWin->show();  else  ovWarnWin->hide();  }
 		if (mFpsOverlay) { if (pSet->show_fps) mFpsOverlay->show(); else mFpsOverlay->hide(); }
 		if (ndMap)  ndMap->setVisible(pSet->trackmap);
-		if (mGUI)	PointerManager::getInstance().setVisible(isFocGuiOrRpl());
+		if (mGUI)	{
+			if (isFocGuiOrRpl()) showMouse();
+			else hideMouse();
+		}
 		if (mWndRpl && !bLoading)  mWndRpl->setVisible(bRplPlay && bRplWnd);  //
 	}
 }

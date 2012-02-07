@@ -159,10 +159,7 @@ void BaseApp::createFrameListener()
 	mMouse->capture();
 	mKeyboard->capture();
 	
-	#if OGRE_PLATFORM == OGRE_PLATFORM_LINUX
-		size_t wnd; mWindow->getCustomAttribute("WINDOW", &wnd);
-		mHWMouse = new HWMouse(wnd, 8, 8, "pointer.png");
-	#endif
+	mHWMouse = new HWMouse(windowHnd, 8, 8, "pointer.png");
 	
 	// add listener for all joysticks
 	for (std::vector<OISB::JoyStick*>::iterator it=mOISBsys->mJoysticks.begin();
@@ -510,9 +507,7 @@ BaseApp::~BaseApp()
 	delete mLoadingBar;
 	delete mSplitMgr;
 	
-	#if OGRE_PLATFORM == OGRE_PLATFORM_LINUX
 	delete mHWMouse;
-	#endif
 	
 	if (mGUI)  {
 		mGUI->shutdown();	delete mGUI;	mGUI = 0;  }
@@ -701,9 +696,7 @@ bool BaseApp::setup()
 	#if OGRE_PLATFORM == OGRE_PLATFORM_LINUX
 	MyGUI::PointerManager::getInstance().setPointer("blank");
 	#endif
-	
-	MyGUI::PointerManager::getInstance().setVisible(false);
-	
+		
 	// ------------------------- lang ------------------------
 	if (pSet->language == "") // autodetect
 	{	pSet->language = getSystemLanguage();
@@ -976,4 +969,13 @@ void BaseApp::windowClosed(RenderWindow* rw)
 		delete mOISBsys;  mOISBsys = 0;
 		mInputManager = 0;
 	}
+}
+
+void BaseApp::showMouse()
+{
+	mHWMouse->show(); MyGUI::PointerManager::getInstance().setVisible(true);
+}
+void BaseApp::hideMouse()
+{
+	mHWMouse->hide(); MyGUI::PointerManager::getInstance().setVisible(false);
 }

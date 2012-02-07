@@ -43,6 +43,8 @@ public:
 	typedef std::vector<class CarModel*> CarModels;
 	CarModels carModels;
 	
+	void showMouse(); void hideMouse();
+	
 	// stuff to be executed in App after BaseApp init
 	virtual void postInit() = 0;
 	
@@ -78,9 +80,7 @@ protected:
 	
 	bool bFirstRenderFrame;
 	
-	#if OGRE_PLATFORM == OGRE_PLATFORM_LINUX
 	class HWMouse* mHWMouse;
-	#endif
 
 	///  create
 	virtual void createScene() = 0;

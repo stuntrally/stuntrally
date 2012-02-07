@@ -239,14 +239,14 @@ void App::inputBindBtnClicked(WP sender)
 	bAssignKey = true;
 	pressedKeySender = sender;
 	axisCnt = 0;
-	MyGUI::PointerManager::getInstance().setVisible(false);
+	hideMouse();
 }
 
 void App::InputBind(int key, int button, int axis)
 {
 	if (!bAssignKey)  return;
 	bAssignKey = false;
-	MyGUI::PointerManager::getInstance().setVisible(true);
+	showMouse();
 
 	//  cancel (unbind) on Backspace or Escape
 	bool cancel = key == OIS::KC_BACK || key == OIS::KC_ESCAPE;
