@@ -7,6 +7,7 @@
 #include "../vdrift/settings.h"
 #include "../network/masterclient.hpp"
 #include "../network/gameclient.hpp"
+#include "common/HWMouse.h"
 
 #include "Compositor.h"
 #include "Localization.h"
@@ -133,7 +134,7 @@ void BaseApp::createFrameListener()
     if (!pSet->x11_capture_mouse)
     {
 		pl.insert(std::make_pair(std::string("x11_mouse_grab"), std::string("false")));
-		pl.insert(std::make_pair(std::string("x11_mouse_hide"), std::string("true")));
+		pl.insert(std::make_pair(std::string("x11_mouse_hide"), std::string("false")));
 		pl.insert(std::make_pair(std::string("x11_keyboard_grab"), std::string("false")));
 	}
     pl.insert(std::make_pair(std::string("XAutoRepeatOn"), std::string("true")));
@@ -155,6 +156,13 @@ void BaseApp::createFrameListener()
 
 	mMouse->setEventCallback(this);
 	mKeyboard->setEventCallback(this);
+	mMouse->capture();
+	mKeyboard->capture();
+	
+	#if OGRE_PLATFORM == OGRE_PLATFORM_LINUX
+		size_t wnd; mWindow->getCustomAttribute("WINDOW", &wnd);
+		mHWMouse = new HWMouse(wnd, 8, 8, "pointer.png");
+	#endif
 	
 	// add listener for all joysticks
 	for (std::vector<OISB::JoyStick*>::iterator it=mOISBsys->mJoysticks.begin();
@@ -502,6 +510,10 @@ BaseApp::~BaseApp()
 	delete mLoadingBar;
 	delete mSplitMgr;
 	
+	#if OGRE_PLATFORM == OGRE_PLATFORM_LINUX
+	delete mHWMouse;
+	#endif
+	
 	if (mGUI)  {
 		mGUI->shutdown();	delete mGUI;	mGUI = 0;  }
 	if (mPlatform)  {
@@ -686,6 +698,10 @@ bool BaseApp::setup()
 	
 	MyGUI::ResourceManager::getInstance().load("MessageBoxResources.xml");
 
+	#if OGRE_PLATFORM == OGRE_PLATFORM_LINUX
+	MyGUI::PointerManager::getInstance().setPointer("blank");
+	#endif
+	
 	MyGUI::PointerManager::getInstance().setVisible(false);
 	
 	// ------------------------- lang ------------------------

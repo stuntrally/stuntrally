@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <MyGUI type="Resource" version="1.1">
+	<Resource type="ResourceImageSetPointer" name="blank">
+		<Property key="Point" value="1 1"/>
+		<Property key="Size" value="1 1"/>
+		<Property key="Resource" value="BlankPointerImage"/>
+	</Resource>
 	<Resource type="ResourceImageSetPointer" name="arrow">
 		<Property key="Point" value="1 1"/>
 		<Property key="Size" value="32 32"/>

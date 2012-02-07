@@ -12,6 +12,13 @@
 			</Index>
 		</Group>
 	</Resource>
+	<Resource type="ResourceImageSet" name="BlankPointerImage">
+		<Group name="Pointer" texture="core_pointer.png" size="1 1">
+			<Index name="Pointer" >
+				<Frame point="0 0"/>
+			</Index>
+		</Group>
+	</Resource>
 	<Resource type="ResourceImageSet" name="BeamPointerImage">
 		<Group name="Pointer" texture="core_pointer.png" size="32 32">
 			<Index name="Pointer" >

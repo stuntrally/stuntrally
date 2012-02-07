@@ -77,6 +77,10 @@ protected:
 	bool setup(), configure();  void updateStats();
 	
 	bool bFirstRenderFrame;
+	
+	#if OGRE_PLATFORM == OGRE_PLATFORM_LINUX
+	class HWMouse* mHWMouse;
+	#endif
 
 	///  create
 	virtual void createScene() = 0;
