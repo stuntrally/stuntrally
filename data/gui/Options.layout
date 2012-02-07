@@ -598,7 +598,7 @@
 				<Widget type="Tab" skin="Tab" position="16 15 744 497" name="tabsNet">
 					<Property key="ButtonAutoWidth" value="false"/>
 					<Property key="Colour" value="0.73 0.88 1"/>
-					<Property key="ButtonWidth" value="100"/>
+					<Property key="ButtonWidth" value="160"/>
 					<UserString key="RelativeTo" value="GameWnd"/>
 					<Widget type="TabItem" skin="" position="2 24 738 469">
 						<Property key="Caption" value="#{NetServer}"/>

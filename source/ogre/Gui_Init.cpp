@@ -40,7 +40,7 @@ void App::InitGui()
 	mWndOpts = mGUI->findWidget<Window>("OptionsWnd",false);
 	mWndChampStage = mGUI->findWidget<Window>("WndChampStage",false);  mWndChampStage->setVisible(false);
 	mWndChampEnd = mGUI->findWidget<Window>("WndChampEnd",false);  mWndChampEnd->setVisible(false);
-
+	
 	for (int i=0; i < WND_ALL; ++i)
 	{
 		const String s = toStr(i);
@@ -56,10 +56,14 @@ void App::InitGui()
 	mWndMain->setPosition((sx-w.width)*0.5f, (sy-w.height)*0.5f);
 
 	TabPtr tab;
-	tab = mGUI->findWidget<Tab>("TabWndGame");    tab->setIndexSelected(1);  mWndTabsGame = tab;	tab->eventTabChangeSelect += newDelegate(this, &App::MenuTabChg);
-	tab = mGUI->findWidget<Tab>("TabWndReplays"); tab->setIndexSelected(1);							tab->eventTabChangeSelect += newDelegate(this, &App::MenuTabChg);
-	tab = mGUI->findWidget<Tab>("TabWndOptions"); tab->setIndexSelected(1);  mWndTabsOpts = tab;	tab->eventTabChangeSelect += newDelegate(this, &App::MenuTabChg);
+	tab = mGUI->findWidget<Tab>("TabWndGame");    tab->setIndexSelected(1);  mWndTabsGame = tab;		tab->eventTabChangeSelect += newDelegate(this, &App::MenuTabChg);
+	tab = mGUI->findWidget<Tab>("TabWndReplays"); tab->setIndexSelected(1);	tab->setSmoothShow(false);	tab->eventTabChangeSelect += newDelegate(this, &App::MenuTabChg);
+	tab = mGUI->findWidget<Tab>("TabWndOptions"); tab->setIndexSelected(1);  mWndTabsOpts = tab;		tab->eventTabChangeSelect += newDelegate(this, &App::MenuTabChg);
 	if (pSet->inMenu == WND_Champ)  mWndTabsGame->setIndexSelected(5);
+	
+	mWndTabsGame->setSmoothShow(false);
+	mWndTabsOpts->setSmoothShow(false);
+
 
 	//  tooltip  ------
 	for (VectorWidgetPtr::iterator it = vwGui.begin(); it != vwGui.end(); ++it)
