@@ -973,7 +973,13 @@ void BaseApp::windowClosed(RenderWindow* rw)
 
 void BaseApp::showMouse()
 {
-	mHWMouse->show(); MyGUI::PointerManager::getInstance().setVisible(true);
+	mHWMouse->show();
+	
+	#if OGRE_PLATFORM == OGRE_PLATFORM_LINUX
+	MyGUI::PointerManager::getInstance().setVisible(false);
+	#else
+	MyGUI::PointerManager::getInstance().setVisible(true);
+	#endif
 }
 void BaseApp::hideMouse()
 {

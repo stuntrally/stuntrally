@@ -21,7 +21,8 @@ MaterialProperties::MaterialProperties() :
 	terrainLightMap(false), ssao(true), ssaoReject(false), customGenerator(""), wind(0), vertexColour(false),
 	waveBump(0.5, 1.0), waveHighFreq(0.0), waveSpecular(1.0),
 	envMapPriority(0.5), shadowPriority(0.5), normalMapPriority(0.5),
-	deepColour(0.0, 0.3, 0.5, 1.0), shallowColour(0.0, 0.9, 1.0, 0.3), reflectionColour(0.9, 1.0, 1.0, 1.0)
+	deepColour(0.0, 0.3, 0.5, 1.0), shallowColour(0.0, 0.9, 1.0, 0.3), reflectionColour(0.9, 1.0, 1.0, 1.0),
+	parallax(false)
 {}
 
 //----------------------------------------------------------------------------------------
@@ -112,6 +113,7 @@ void MaterialProperties::setProperty(const std::string& prop, const std::string&
 	else if (prop == "ambient") ambient = str2vec3(value);
 	else if (prop == "diffuse") diffuse = str2vec3(value);
 	else if (prop == "specular") specular = str2vec4(value);
+	else if (prop == "parallax") parallax = str2bool(value);
 	
 	// tex size in prop string
 	else if (Ogre::StringUtil::startsWith(prop, "diffuseMap_", false))

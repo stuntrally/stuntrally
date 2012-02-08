@@ -38,6 +38,7 @@ struct MaterialProperties
 	// tangent space normal map
 	textureMap normalMaps;
 	float bumpScale; // default = 1; decrease or increase this to change effect of normal map
+	bool parallax; // parallax effect (uses height from diffuse texture alpha)
 	
 	// this is an alternative to diffuse maps that can be used to 
 	// change the color of certain parts of a material on-the-fly.

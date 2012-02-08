@@ -26,6 +26,7 @@ ShaderProperties::ShaderProperties( MaterialProperties* props, MaterialFactory* 
 	reflectivityMap = (props->reflectivityMaps.size() > 0) && envMap;
 	normalMap = ((props->normalMaps.size() > 0) && parent->getNormalMap())
 		&& (1-props->normalMapPriority <= parent->getShaderQuality());
+	parallax = props->parallax && parent->getShaderQuality() > 0.6;
 	lighting = props->lighting;
 	shadows = ( (props->receivesShadows && parent->getShadows()) 
 			||  (props->receivesDepthShadows && parent->getShadowsDepth())
@@ -57,6 +58,7 @@ bool ShaderProperties::isEqual( ShaderProperties* other )
 	if (other->customGenerator != customGenerator) return false;
 	if (other->wind != wind) return false;
 	if (other->vertexColour != vertexColour) return false;
+	if (other->parallax != parallax) return false;
 	
 	return true;
 }

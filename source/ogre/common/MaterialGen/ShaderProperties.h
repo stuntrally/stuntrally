@@ -14,6 +14,7 @@ struct ShaderProperties
 	bool blendMap;
 	bool specMap;
 	bool normalMap;
+	bool parallax;
 	bool lighting;
 	bool shadows;
 	bool transparent; bool lightingAlpha; // transparency

@@ -356,6 +356,9 @@ void MaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::StrStrea
 	if (needReflectivityMap()) outStream <<
 		"	uniform sampler2D reflectivityMap : TEXUNIT"+toStr(mReflTexUnit)+", \n";
 	
+	if (mShader->parallax) outStream <<
+		"	uniform float4 cameraPositionObjSpace, \n";
+	
 	fpShadowingParams(outStream);
 		
 	// lighting params
@@ -390,8 +393,7 @@ void MaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::StrStrea
 		outStream << "	out float4 oColor : COLOR0, \n";
 		outStream << "	out float4 oColor1 : COLOR1, \n";
 		outStream << "	out float4 oColor2 : COLOR2, \n";
-		outStream << "	uniform float far, \n";
-		outStream << "	uniform float4 cameraPositionWorldSpace \n";
+		outStream << "	uniform float far \n";
 	}
 	else
 	{
@@ -404,6 +406,38 @@ void MaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::StrStrea
 	// calc shadowing
 	fpCalcShadowSource(outStream);
 	
+	// fetch diffuse texture
+	if (needDiffuseMap()) outStream <<
+		"	float4 diffuseTex = tex2D(diffuseMap, texCoord.xy); \n";
+	else if (needLightMap() && needBlendMap())
+	{
+		outStream <<
+		"	float3 lightTex = tex2D(lightMap, texCoord.xy).x * matDiffuse.xyz; \n"
+		"	float4 blendTex = tex2D(blendMap, texCoord.xy); \n"
+		"	float4 diffuseTex = float4( lerp(lightTex.xyz, blendTex.xyz, blendTex.a), 1 ); \n";
+	}
+		
+	// get TBN matrix for normal / parallax mapping
+	if (needNormalMap() || mShader->parallax) outStream <<
+		"	float3 binormal = cross(tangent.xyz, iNormal.xyz); \n"
+		"	float3x3 tbn = float3x3(tangent.xyz*bumpScale, binormal*bumpScale, iNormal.xyz); \n";
+		
+	if (mShader->parallax && needDiffuseMap())
+	{
+		outStream <<
+		// convert view vector to tangent space using TBN matrix
+		"	float3 tsViewVec = normalize(mul(tbn, cameraPositionObjSpace.xyz)); \n"
+		// this parameter defines the strength of the parallax effect
+		"	float parallaxHeight = 0.035f; \n"
+		// fetch height and unpack to -1..1 range (to distribute parallax effect equally towards/away from viewer)
+		"	float height = diffuseTex.a; \n"
+		"	float offset = parallaxHeight * ( 2.0f * height - 1.0f); \n"
+		// shift UV
+		"	texCoord.xy += offset * tsViewVec.xy; \n"
+		// re-fetch diffuse texture using the modulated UV
+		"	diffuseTex = tex2D(diffuseMap, texCoord.xy); \n";
+	}
+	
 	if (fpNeedEyeVector()) outStream <<
 		"	float3 eyeVector = normalize(inEyeVector.xyz); \n"; // normalize in the pixel shader for higher accuracy (inaccuracies would be caused by vertex interpolation)
 	if (fpNeedNormal())
@@ -413,8 +447,6 @@ void MaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::StrStrea
 		
 		if (needNormalMap()) outStream <<
 			"	float4 normalTex = tex2D(normalMap, texCoord.xy); \n"
-			"	float3 binormal = cross(tangent.xyz, iNormal.xyz); \n"
-			"	float3x3 tbn = float3x3(tangent.xyz*bumpScale, binormal*bumpScale, iNormal.xyz); \n"
 			"	normal = mul(transpose(tbn), normalTex.xyz * 2.f - 1.f); \n"
 			"	normal = mul((float3x3)wITMat, normal); \n";
 		else outStream <<
@@ -422,18 +454,6 @@ void MaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::StrStrea
 		
 		outStream << 
 		"	normal = normalize(normal); \n";
-	}
-	
-	// fetch diffuse texture
-	if (needDiffuseMap()) outStream <<
-		"	float4 diffuseTex = tex2D(diffuseMap, texCoord.xy); \n";
-	
-	else if (needLightMap() && needBlendMap())
-	{
-		outStream <<
-		"	float3 lightTex = tex2D(lightMap, texCoord.xy).x * matDiffuse.xyz; \n"
-		"	float4 blendTex = tex2D(blendMap, texCoord.xy); \n"
-		"	float4 diffuseTex = float4( lerp(lightTex.xyz, blendTex.xyz, blendTex.a), 1 ); \n";
 	}
 
 	// calculate lighting (per-pixel)
@@ -593,7 +613,7 @@ void MaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::StrStrea
 			// multiply alpha
 		//	outStream << "oColor1 = oColor1 * alpha;";    
 		//}
-		outStream <<  "	float depth = saturate(length(worldPosition.xyz - cameraPositionWorldSpace.xyz) / far);";
+		outStream <<  "	float depth = texCoord.z / far; \n";
 		outStream <<  "oColor2 = float4(depth); \n";
 		
 	}
@@ -630,11 +650,13 @@ void MaterialGenerator::fragmentProgramParams(HighLevelGpuProgramPtr program)
 	if (fpNeedNormal())
 		params->setNamedAutoConstant("wITMat", GpuProgramParameters::ACT_INVERSE_TRANSPOSE_WORLD_MATRIX);
 
+	if (mShader->parallax)
+		params->setNamedAutoConstant("cameraPositionObjSpace", GpuProgramParameters::ACT_CAMERA_POSITION_OBJECT_SPACE);
+
 	if(MRTSupported())
 	{
 		//params->setNamedAutoConstant("vMat", GpuProgramParameters::ACT_VIEW_MATRIX);
 		params->setNamedAutoConstant("far", GpuProgramParameters::ACT_FAR_CLIP_DISTANCE);
-		params->setNamedAutoConstant("cameraPositionWorldSpace", GpuProgramParameters::ACT_CAMERA_POSITION);
 	}
 		
 	if (needTerrainLightMap())

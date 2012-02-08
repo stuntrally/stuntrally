@@ -242,7 +242,7 @@ void MaterialGenerator::generateVertexProgramSource(Ogre::StringUtil::StrStreamT
 	}
 	
 	std::string texCoordZ = "1";
-	if (needShadows()) texCoordZ = "oPosition.z";
+	if (needShadows() || MRTSupported()) texCoordZ = "oPosition.z";
 	
 	std::string texCoordW = "1";
 	if (needTerrainLightMap()) texCoordW = "worldPosition.x";

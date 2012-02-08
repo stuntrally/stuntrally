@@ -503,7 +503,7 @@ bool MaterialGenerator::fpNeedWMat()
 
 bool MaterialGenerator::fpNeedWPos()
 {
-	return (needTerrainLightMap() || fpNeedLighting() || MRTSupported());
+	return (needTerrainLightMap() || fpNeedLighting() || MRTSupported() || mShader->parallax);
 }
 
 bool MaterialGenerator::vpCalcWPos()
