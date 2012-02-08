@@ -788,11 +788,13 @@ bool BaseApp::setup()
 
 void BaseApp::destroyScene()
 {
+	#if OGRE_VERSION_MINOR >= 8
 	Ogre::String microcodeCacheFileName =PATHMANAGER::GetCacheDir() + "/" + "shadercache.txt";
 	std::fstream inp;
 	inp.open(microcodeCacheFileName.c_str(), std::ios::out | std::ios::binary);
 	Ogre::DataStreamPtr shaderCache (OGRE_NEW FileStreamDataStream(microcodeCacheFileName, &inp, false));
 	GpuProgramManager::getSingleton().saveMicrocodeCache(shaderCache);
+	#endif
 }
 
 //  Resources
@@ -832,6 +834,7 @@ void BaseApp::loadResources()
 	const bool bar = true;
 	if (bar)  LoadingOn();
 	
+	#if OGRE_VERSION_MINOR >= 8
 	bool bCache=false;
 	GpuProgramManager::getSingletonPtr()->setSaveMicrocodesToCache(bCache);
 	Ogre::String microcodeCacheFileName =PATHMANAGER::GetCacheDir() + "/" + "shadercache.txt";
@@ -842,6 +845,7 @@ void BaseApp::loadResources()
 		Ogre::DataStreamPtr shaderCache (OGRE_NEW FileStreamDataStream(microcodeCacheFileName, &inp, false));
 		GpuProgramManager::getSingleton().loadMicrocodeCache(shaderCache);
 	}
+	#endif
 
 	ResourceGroupManager::getSingleton().initialiseAllResourceGroups();
 	if (bar)  LoadingOff();
