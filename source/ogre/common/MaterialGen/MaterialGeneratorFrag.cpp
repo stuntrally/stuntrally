@@ -357,7 +357,8 @@ void MaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::StrStrea
 		"	uniform sampler2D reflectivityMap : TEXUNIT"+toStr(mReflTexUnit)+", \n";
 	
 	if (mShader->parallax) outStream <<
-		"	uniform float4 cameraPositionObjSpace, \n";
+		"	uniform float4 cameraPositionObjSpace, \n"
+		"	uniform float parallaxHeight, \n";
 	
 	fpShadowingParams(outStream);
 		
@@ -427,13 +428,14 @@ void MaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::StrStrea
 		outStream <<
 		// convert view vector to tangent space using TBN matrix
 		"	float3 tsViewVec = normalize(mul(tbn, cameraPositionObjSpace.xyz)); \n"
-		// this parameter defines the strength of the parallax effect
-		"	float parallaxHeight = 0.035f; \n"
-		// fetch height and unpack to -1..1 range (to distribute parallax effect equally towards/away from viewer)
+		"	float clamp = 2.f; \n"
 		"	float height = diffuseTex.a; \n"
-		"	float offset = parallaxHeight * ( 2.0f * height - 1.0f); \n"
+		"	float offset = parallaxHeight * height; \n"
+		"	float  ParallaxLength    = length   (tsViewVec.xy) / (length(tsViewVec.z)); \n"
+		"	float2 ParallaxDirection = normalize(tsViewVec.xy); \n"
+		"	ParallaxDirection = ParallaxDirection * parallaxHeight * min( ParallaxLength, clamp ); \n"
 		// shift UV
-		"	texCoord.xy += offset * tsViewVec.xy; \n"
+		"	texCoord.xy += offset * ParallaxDirection; \n"
 		// re-fetch diffuse texture using the modulated UV
 		"	diffuseTex = tex2D(diffuseMap, texCoord.xy); \n";
 	}
@@ -695,6 +697,9 @@ void MaterialGenerator::individualFragmentProgramParams(Ogre::GpuProgramParamete
 		
 	if (fpNeedLighting())
 		params->setNamedConstant("lightSpecular", mDef->mProps->specular);
+		
+	if (mShader->parallax)
+		params->setNamedConstant("parallaxHeight", mDef->mProps->parallaxHeight);
 	
 	if (needShadows())
 	{

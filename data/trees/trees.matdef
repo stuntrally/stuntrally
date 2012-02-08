@@ -162,6 +162,14 @@
 
 [rock.07.mat/SOLID/TEX/rock.05.png]
 	parent = rock.05.mat/SOLID/TEX/rock.05.png
+	
+[rock1]
+	parallax = true
+	diffuseMap_1024 = rock1.png
+	normalMap_1024 = rock1_normal.png
+	receivesDepthShadows = true
+	terrainLightMap = true
+	parallaxHeight = 0.2
 
 
 ; ---------- jungle trees ----------------

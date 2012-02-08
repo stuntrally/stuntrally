@@ -27,3 +27,10 @@ Url:		http://opengameart.org/content/palm-plant
 Artist:		yughues (OpenGameArt.org user)
 License(s):	CC0 (Public Domain)
 Date:		02/05/2012
+
+Model:		rock.mesh
+Url:		http://www.blendswap.com/blends/landscapes/toddmcintosh_nature_rocks2/
+Artist:		tmcintosh (blendswap user)
+License(s):	CC-BY
+Date:		02/08/2012
+Notes:		Texture by yughues (OpenGameArt.org user) [under CC0]
