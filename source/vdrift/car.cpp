@@ -536,7 +536,7 @@ void CAR::GetEngineSoundList(std::list <SOUNDSOURCE *> & outputlist)
 void CAR::HandleInputs(const std::vector <float> & inputs, float dt)
 {
 	assert(inputs.size() == CARINPUT::ALL); //-
-	if (pApp && pApp->isFocGuiOrRpl())
+	if (pApp && pApp->IsFocGuiInput())
 		return;
 
 	dynamics.inputsCopy = inputs;

@@ -43,7 +43,7 @@ public:
 	typedef std::vector<class CarModel*> CarModels;
 	CarModels carModels;
 	
-	void showMouse(); void hideMouse();
+	void showMouse(), hideMouse(), updMouse();
 	
 	// stuff to be executed in App after BaseApp init
 	virtual void postInit() = 0;
@@ -125,7 +125,10 @@ public:
 	bool bAssignKey;
 	MyGUI::Widget* pressedKeySender;
 
-	bool isFocGuiOrRpl()  {  return isFocGui || isFocRpl;  }
+	bool IsFocGuiInput()  {  return isFocGui || isFocRpl;  }
+	bool IsFocGui()  {  return isFocGui || isFocRpl ||
+		(mWndChampStage && mWndChampStage->getVisible()) ||
+		(mWndChampEnd && mWndChampEnd->getVisible());  }
 protected:
 
 	///  overlay

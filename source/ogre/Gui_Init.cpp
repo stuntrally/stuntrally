@@ -49,8 +49,7 @@ void App::InitGui()
 		mWndMainBtns[i]->eventMouseButtonClick += newDelegate(this, &App::MainMenuBtn);
 	}
 
-	if (isFocGui) showMouse();
-	else hideMouse();
+	updMouse();
 	
 	//mWndOpts->setVisible(isFocGui);
 	int sx = mWindow->getWidth(), sy = mWindow->getHeight();

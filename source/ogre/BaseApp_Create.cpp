@@ -895,7 +895,7 @@ bool BaseApp::keyReleased( const OIS::KeyEvent &arg )
 bool BaseApp::mouseMoved( const OIS::MouseEvent &arg )
 {
 	if (bAssignKey) return true;
-	if (isFocGuiOrRpl() && mGUI)  {
+	if (IsFocGui() && mGUI)  {
 		MyGUI::InputManager::getInstance().injectMouseMove(arg.state.X.abs, arg.state.Y.abs, arg.state.Z.abs);
 		return true;  }
 
@@ -915,7 +915,7 @@ using namespace OIS;
 bool BaseApp::mousePressed( const OIS::MouseEvent &arg, OIS::MouseButtonID id )
 {
 	if (bAssignKey) return true;
-	if (isFocGuiOrRpl() && mGUI)  {
+	if (IsFocGui() && mGUI)  {
 		MyGUI::InputManager::getInstance().injectMousePress(arg.state.X.abs, arg.state.Y.abs, MyGUI::MouseButton::Enum(id));
 		return true;  }
 
@@ -928,7 +928,7 @@ bool BaseApp::mousePressed( const OIS::MouseEvent &arg, OIS::MouseButtonID id )
 bool BaseApp::mouseReleased( const OIS::MouseEvent &arg, OIS::MouseButtonID id )
 {
 	if (bAssignKey) return true;
-	if (isFocGuiOrRpl() && mGUI)  {
+	if (IsFocGui() && mGUI)  {
 		MyGUI::InputManager::getInstance().injectMouseRelease(arg.state.X.abs, arg.state.Y.abs, MyGUI::MouseButton::Enum(id));
 		return true;  }
 
@@ -975,8 +975,10 @@ void BaseApp::windowClosed(RenderWindow* rw)
 	}
 }
 
+//  mouse cursor
 void BaseApp::showMouse()
 {
+	if (!mGUI)  return;
 	mHWMouse->show();
 	
 	#if OGRE_PLATFORM == OGRE_PLATFORM_LINUX
@@ -987,5 +989,15 @@ void BaseApp::showMouse()
 }
 void BaseApp::hideMouse()
 {
-	mHWMouse->hide(); MyGUI::PointerManager::getInstance().setVisible(false);
+	if (!mGUI)  return;
+	mHWMouse->hide();
+	MyGUI::PointerManager::getInstance().setVisible(false);
+}
+
+void BaseApp::updMouse()
+{
+	if (IsFocGui())
+		showMouse();
+	else
+		hideMouse();
 }

@@ -141,10 +141,8 @@ void App::NewGame()
 
 void App::LoadCleanUp()  // 1 first
 {
-	if (mGUI)	{
-		if (isFocGui) showMouse(); 
-		else hideMouse();
-	}
+	updMouse();
+
 	// rem old track
 	if (resTrk != "")  Ogre::Root::getSingletonPtr()->removeResourceLocation(resTrk);
 	resTrk = TrkDir() + "objects";

@@ -81,8 +81,9 @@ void App::ChampNewGame()
 	if (chId >= 0)
 	{
 		//  champ stage, current track
-		const ProgressChamp& pc = progress.champs[chId];
+		ProgressChamp& pc = progress.champs[chId];
 		const Champ& ch = champs.champs[chId];
+		if (pc.curTrack >= ch.trks.size())  pc.curTrack = 0;  // restart
 		const ChampTrack& trk = ch.trks[pc.curTrack];
 		pSet->game.track = trk.name;
 		pSet->game.track_user = 0;
