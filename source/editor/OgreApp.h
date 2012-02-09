@@ -217,7 +217,7 @@ protected:
 	void AddTrkL(std::string name, int user, const class TrackInfo* ti);
 	
 	//  track
-	void UpdGuiRdStats(const SplineRoad* rd, const Scene& sc, float time, bool champ=false), ReadTrkStats();
+	void UpdGuiRdStats(const SplineRoad* rd, const Scene& sc, const Ogre::String& sTrack, float time, bool champ=false), ReadTrkStats();
 	MyGUI::MultiList2* trkMList;  MyGUI::EditPtr trkDesc[1];
 	MyGUI::StaticImagePtr imgPrv[1],imgMini[1],imgTer[1], imgTrkIco1,imgTrkIco2;
 	const static int StTrk = 12, InfTrk = 10;
