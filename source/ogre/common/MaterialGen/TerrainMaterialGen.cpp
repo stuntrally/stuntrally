@@ -603,6 +603,7 @@ namespace Ogre
 		}
 		if (prof->isShadowingEnabled(tt, terrain))
 		{
+			params->setNamedConstant("enableShadows", 1.f);
 			uint numTextures = 1;
 			if (prof->getReceiveDynamicShadowsPSSM())
 			{
@@ -1640,6 +1641,7 @@ namespace Ogre
 			//}
 		}
 		outStream <<
+		", uniform float enableShadows \n"
 		", uniform float3 fadeStart_farDist \n";
 
 	}
@@ -1692,6 +1694,9 @@ namespace Ogre
 					"	float rtshadow = calcSimpleShadow(shadowMap0, lightSpacePos0);";
 			}
 		}
+		
+		outStream <<
+			"	rtshadow = 1- ((1-rtshadow)*enableShadows); \n";
 		
 		MaterialFactory* factory = MaterialFactory::getSingletonPtr();
 		if (factory->getShadowsFade() && factory->getSceneManager()->getShadowFarDistance() > 0) outStream <<
