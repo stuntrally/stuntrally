@@ -110,6 +110,8 @@ void P2PGameClient::loadingFinished()
 	for (PeerMap::const_iterator it = m_peers.begin(); it != m_peers.end(); ++it)
 		if (!it->second.loaded) return;
 	lock.unlock(); // Mutex unlocked in callback to avoid dead-locks
+	// Wait a tiny bit to give the network some time
+	boost::this_thread::sleep(boost::posix_time::milliseconds(50));
 	m_callback->startRace();
 }
 
