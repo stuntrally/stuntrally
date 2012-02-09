@@ -283,6 +283,10 @@ bool App::frameStart(Real time)
 		
 		materialFactory->update();
 		
+		// We put this here, because first render frame is rather heavy
+		if (mClient && bFirstFrame)
+			mClient->loadingFinished(); // Signal loading finished to the peers
+
 		bFirstRenderFrame = false;
 		
 		return ret;

@@ -96,6 +96,7 @@
 	<Tag name="NetMasterPort">Port serwera</Tag>
 	<Tag name="InpSet_KeyHalf">Klawisz, połowa</Tag>
 	<Tag name="CopySource">Wybierz jako źródło kopiowania</Tag>
+	<Tag name="rating">ocena</Tag>
 	<Tag name="TipDisableFog">Wyłącz mgłę gdy edycja z dystansu.</Tag>
 	<Tag name="GraphicsAll_Medium">Ś</Tag>
 	<Tag name="NeedReload">* potrzeba przeładowania</Tag>
@@ -137,6 +138,7 @@
 	<Tag name="ReflMode_single">Pojedyncze</Tag>
 	<Tag name="SetCamTo">Ustaw kamerę na</Tag>
 	<Tag name="max">maks</Tag>
+	<Tag name="softparticles">Soft Particles</Tag>
 	<Tag name="TipTerTriSize">Rozmiar trójkąta terenu w [metrach] (zalecany: 1 - 2, większy dla dużych tras). Zmieniany po Odśwież (F8).</Tag>
 	<Tag name="MessageBox_No">Nie</Tag>
 	<Tag name="Length">Długość</Tag>
@@ -195,12 +197,13 @@
 	<Tag name="Bloom">Poświata</Tag>
 	<Tag name="TipRenameTrk">Zmień nazwę wybranej trasy (zmień nazwę w polu).</Tag>
 	<Tag name="TerrainHalf">Połowa</Tag>
+	<Tag name="GrColorMap">Grass color map</Tag>
 	<Tag name="TipBumpAmp">Amplituda wybojów nawierzchni (wysokość)</Tag>
 	<Tag name="InputFluidsMove">LMB - przesuń RMB - wysokość</Tag>
 	<Tag name="TipNormalTex">Tekstura normalna (wysokość w alpha)</Tag>
-	<Tag name="PipeMaterials">Materiały rur</Tag>
+	<Tag name="CountdownTime">Race countdown time</Tag>
 	<Tag name="CamInfoStrings">Typ,Kąt,Nachyl,Odl,Wysok,Szybk,Przesun,LEWY,PRAWY,Środkowy,Kółko,shift,Obróć,reset,ruch,Wys,Pozycja</Tag>
-	<Tag name="rating">ocena</Tag>
+	<Tag name="End">koniec</Tag>
 	<Tag name="HDR">HDR</Tag>
 	<Tag name="TipABS">Zapobiega blokadzie kół przy hamowaniu (domyślnie: wył.)</Tag>
 	<Tag name="TipGrassPatchHeightMin">Minimalna wysokość trawy.</Tag>
@@ -246,6 +249,7 @@
 	<Tag name="ColumnNSides">Boków kolumny</Tag>
 	<Tag name="RplAutoRec">Autom. nagrywanie powtórki</Tag>
 	<Tag name="Reflections">Odbicia</Tag>
+	<Tag name="PipeMaterials">Materiały rur</Tag>
 	<Tag name="Exponent">wykładnik</Tag>
 	<Tag name="InputFluidsPrevNext">PgUp,PgDn (lub kółko) - poprz./następna ciecz</Tag>
 	<Tag name="Yaw">obrót</Tag>
@@ -290,12 +294,15 @@
 	<Tag name="InputRoadNotOnTer">gdy nie na terenie</Tag>
 	<Tag name="ApplyShadows">Zmień cienie</Tag>
 	<Tag name="TipFogEndClr">Kolor mgły. R G B składowe 0 to 1 (np. 0.7 0.8 0.9)</Tag>
+	<Tag name="TipGrassColorMap">Grass colormap for scenery, usually same choice as for grass material. Additional grass coloring.</Tag>
 	<Tag name="Multiplayer">Multiplayer</Tag>
 	<Tag name="VegetCol">Kolizja z wegetacją</Tag>
 	<Tag name="Particles">Cząstki</Tag>
 	<Tag name="Other">Inne</Tag>
 	<Tag name="TipTerLAngSm">Kąt zakres przejściowy</Tag>
+	<Tag name="godrays">God Rays</Tag>
 	<Tag name="InputRoadNext">PgUp,PgDn (lub kółko) - poprz./nast. punkt</Tag>
+	<Tag name="SceneryId">Scenery Id</Tag>
 	<Tag name="Development">Narzędzia</Tag>
 	<Tag name="InputRoadIns">Ins - wstaw nowy (za wybranym, alt - przed)</Tag>
 	<Tag name="min">min.</Tag>
@@ -433,8 +440,10 @@
 	<Tag name="TipBumpFreq">Częstotliwość dodatkowych wybojów na powierzchni (odległość między nimi).</Tag>
 	<Tag name="InputRoadDel">Del - zmaż wybrany</Tag>
 	<Tag name="InputFluidsTileY">; &apos; - skala tekstury, tylko jedna współrz.</Tag>
+	<Tag name="TipSceneryId">Scenery id (numeric value 0-20) for identifying unique lightings group on track. Used for impostors generation.</Tag>
 	<Tag name="InputUpdate">F8 - odśwież trasę</Tag>
 	<Tag name="InputToggleGUIMode">F1 lub ` - tryb GUI (Opcje)</Tag>
+	<Tag name="TipGrassMaterial">Grass material, chosen to match track's scenery.</Tag>
 	<Tag name="TipRearThrottleInverse">Odwróć funkcję gazu i hamulca na wstecznym biegu.</Tag>
 	<Tag name="RoadPoint">Punkt drogi</Tag>
 	<Tag name="TerLHMax">Wysokość Max</Tag>
@@ -583,7 +592,6 @@
 	<Tag name="RplSave">Zapisz</Tag>
 	<Tag name="Environment">Środowisko</Tag>
 	<Tag name="GraphicsAll_High">Wysokie</Tag>
-	<Tag name="End">koniec</Tag>
 	<Tag name="TipRoadParams">Parametry punktów drogi.</Tag>
 	<Tag name="SpeedUnit">Jednostka</Tag>
 	<Tag name="ChangeCar">Zmień auto</Tag>
@@ -611,6 +619,7 @@
 	<Tag name="GrassSize">Wielkość trawy</Tag>
 	<Tag name="Left">Lewo</Tag>
 	<Tag name="TipDustInt">Intensywność cząstek kurzu.</Tag>
+	<Tag name="GrMaterial">Grass Material</Tag>
 	<Tag name="Startup">Przy starcie</Tag>
 	<Tag name="distribution">rozkład</Tag>
 	<Tag name="Diff2">Łatwy</Tag>
@@ -655,15 +664,7 @@
 	<Tag name="InputNextOptTab">F2,F3 - poprz,nast zakładka Opcji</Tag>
 	<Tag name="RollingDrag">Opór toczenia</Tag>
 	<Tag name="RplAll">Wszystkie</Tag>
-	<Tag name="softparticles">Soft Particles</Tag>
-	<Tag name="GrColorMap">Grass color map</Tag>
-	<Tag name="CountdownTime">Race countdown time</Tag>
-	<Tag name="TipGrassColorMap">Grass colormap for scenery, usually same choice as for grass material. Additional grass coloring.</Tag>
-	<Tag name="godrays">God Rays</Tag>
-	<Tag name="SceneryId">Scenery Id</Tag>
-	<Tag name="TipSceneryId">Scenery id (numeric value 0-20) for identifying unique lightings group on track. Used for impostors generation.</Tag>
-	<Tag name="TipGrassMaterial">Grass material, chosen to match track's scenery.</Tag>
-	<Tag name="GrMaterial">Grass Material</Tag>
+	<Tag name="ShadowFilter">Filter</Tag>
 	<Tag name="GameVersion">1.5</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 
