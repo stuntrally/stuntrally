@@ -268,8 +268,8 @@ void MaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::StrStrea
 		"void main_fp("
 		"	in float4 iPosition : POSITION, \n";
 		
-	if (fpNeedWPos()) outStream <<
-		"	in float4 worldPosition : COLOR, \n";
+	if (fpNeedPos()) outStream <<
+		"	in float4 position : COLOR, \n";
 		
 	outStream <<
 		"	in float4 texCoord : TEXCOORD"+toStr(mTexCoord_i++)+", \n";
@@ -431,15 +431,12 @@ void MaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::StrStrea
 	{
 		outStream <<
 		// convert view vector to tangent space using TBN matrix
-		"	float3 tsViewVec = normalize(mul(tbn, cameraPositionObjSpace.xyz)); \n"
+		"	float3 tsViewVec = normalize(mul(tbn, inEyeVector.xyz)); \n"
 		"	float clamp = 2.f; \n"
 		"	float height = diffuseTex.a; \n"
 		"	float offset = parallaxHeight * height; \n"
-		"	float  ParallaxLength    = length   (tsViewVec.xy) / (length(tsViewVec.z)); \n"
-		"	float2 ParallaxDirection = normalize(tsViewVec.xy); \n"
-		"	ParallaxDirection = ParallaxDirection * parallaxHeight * min( ParallaxLength, clamp ); \n"
 		// shift UV
-		"	texCoord.xy += offset * ParallaxDirection; \n"
+		"	texCoord.xy += offset * tsViewVec.xy; \n"
 		// re-fetch diffuse texture using the modulated UV
 		"	diffuseTex = tex2D(diffuseMap, texCoord.xy); \n";
 	}
@@ -467,7 +464,7 @@ void MaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::StrStrea
 	{
 		outStream <<	
 		// compute the diffuse term
-		"	float3 lightDir = normalize(lightPosition.xyz - (worldPosition.xyz * lightPosition.w)); \n"
+		"	float3 lightDir = normalize(lightPosition.xyz); \n"
 		"	float diffuseLight = max(dot(lightDir, normal), 0); \n";
 		
 		if ((needLightMap() && needBlendMap())) outStream <<
@@ -486,8 +483,7 @@ void MaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::StrStrea
 			"	float3 matSpec = matSpecular.xyz; \n"
 			"	float shininess = matSpecular.w; \n";
 		outStream <<
-		"	float3 viewVec = -eyeVector; \n"
-		"	float3 half = normalize(lightDir + viewVec); \n"
+		"	float3 half = normalize(lightDir - eyeVector); \n"
 		"	float specularLight = pow(max(dot(normal, half), 0), shininess); \n"
 		"	if (matSpec.x == 0 && matSpec.y == 0 && matSpec.z == 0) specularLight = 0; \n"
 		"	if (diffuseLight <= 0) specularLight = 0; \n"
@@ -511,7 +507,7 @@ void MaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::StrStrea
 		if (needFresnel())
 		{
 			outStream <<
-			"	float facing = 1.0 - max(abs(dot(eyeVector, normal)), 0); \n";
+			"	float facing = 1.0 - max(abs(dot(-eyeVector, normal)), 0); \n";
 			if (!needReflectivityMap()) outStream <<
 				"	float reflectionFactor = saturate(fresnelBias + fresnelScale * pow(facing, fresnelPower)); \n";
 			else outStream <<
@@ -553,7 +549,7 @@ void MaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::StrStrea
 	// debug colour output  ------------------------------------------
 	
 	// world position
-	//if (fpNeedWPos()) outStream <<
+	//if (fpNeedPos()) outStream <<
 	//"	oColor = float4(worldPosition.x, 1, worldPosition.z, 1); \n";
 	
 	// normal
@@ -605,9 +601,9 @@ void MaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::StrStrea
 		//outStream <<  "float4 viewPosition = mul(vMat, float4(worldPosition.xyz,1.0)); \n";
 		
 		if (fpNeedNormal() && (!(needEnvMap() || needNormalMap() || fpNeedLighting()))) outStream <<
-			"	float3 viewPosition = float3(iNormal.z, worldPosition.w, viewNormal.w); \n";
+			"	float3 viewPosition = float3(iNormal.z, position.w, viewNormal.w); \n";
 		else outStream <<
-			"	float3 viewPosition = float3(inEyeVector.w, worldPosition.w, viewNormal.w); \n";
+			"	float3 viewPosition = float3(inEyeVector.w, position.w, viewNormal.w); \n";
 			
 		if(UsePerPixelNormals())
 		{
@@ -655,9 +651,6 @@ void MaterialGenerator::fragmentProgramParams(HighLevelGpuProgramPtr program)
 		
 	if (fpNeedNormal())
 		params->setNamedAutoConstant("wITMat", GpuProgramParameters::ACT_INVERSE_TRANSPOSE_WORLD_MATRIX);
-
-	if (mShader->parallax)
-		params->setNamedAutoConstant("cameraPositionObjSpace", GpuProgramParameters::ACT_CAMERA_POSITION_OBJECT_SPACE);
 
 	if(MRTSupported())
 	{

@@ -501,14 +501,14 @@ bool MaterialGenerator::fpNeedWMat()
 	return UsePerPixelNormals();
 }
 
-bool MaterialGenerator::fpNeedWPos()
+bool MaterialGenerator::fpNeedPos()
 {
 	return (needTerrainLightMap() || fpNeedLighting() || MRTSupported() || mShader->parallax);
 }
 
 bool MaterialGenerator::vpCalcWPos()
 {
-	return (fpNeedWPos() || fpNeedEyeVector());
+	return (fpNeedPos() || fpNeedEyeVector());
 }
 
 bool MaterialGenerator::vpNeedWvMat()

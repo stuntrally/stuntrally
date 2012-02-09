@@ -110,7 +110,7 @@ protected:
 	
 	// passtrough (vertex to fragment)
 	virtual bool fpNeedWMat();
-	virtual bool fpNeedWPos();
+	virtual bool fpNeedPos();
 	virtual bool fpNeedNormal();
 	virtual bool fpNeedEyeVector();
 	 

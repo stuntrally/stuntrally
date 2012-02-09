@@ -101,8 +101,8 @@ void MaterialGenerator::generateVertexProgramSource(Ogre::StringUtil::StrStreamT
 	outStream <<
 	"	out float4 oPosition			 	: POSITION, \n";
 		
-	if (fpNeedWPos()) outStream <<
-		"	out float4 oWorldPosition				: COLOR, \n";
+	if (fpNeedPos()) outStream <<
+		"	out float4 oObjPosition				: COLOR, \n";
 		
 	outStream <<
 	"	out float4 oTexCoord				: TEXCOORD"+toStr(mTexCoord_i++)+", \n";
@@ -116,7 +116,7 @@ void MaterialGenerator::generateVertexProgramSource(Ogre::StringUtil::StrStreamT
 		outStream <<
 		"	uniform float time, \n"
 		"	uniform float frequency, \n"
-		"	uniform float3 objSpaceCam, \n"
+		//"	uniform float3 objSpaceCam, \n"
 		"	uniform float fadeRange, \n"
 		"	uniform float4 direction, \n"
 		"	out float alphaFade : TEXCOORD"+toStr(mTexCoord_i++)+", \n";
@@ -190,7 +190,7 @@ void MaterialGenerator::generateVertexProgramSource(Ogre::StringUtil::StrStreamT
 		"	} \n"
 		
 		// fade
-		"	float dist = distance(objSpaceCam.xz, position.xz); \n"
+		"	float dist = distance(eyePosition.xz, position.xz); \n"
 		"	alphaFade = (2.0f - (2.0f * dist / (fadeRange))); \n";
 	}
 	else if (mShader->wind == 2)
@@ -221,14 +221,15 @@ void MaterialGenerator::generateVertexProgramSource(Ogre::StringUtil::StrStreamT
 	
 	outStream <<
 	"	oPosition = mul(wvpMat, position); \n";
-	if (vpCalcWPos()) outStream <<
-	"	float4 worldPosition = mul(wMat, position); \n";
-	
-	if (fpNeedEyeVector()) outStream <<
-		"	oEyeVector.xyz = worldPosition.xyz - eyePosition.xyz; \n"; // transform eye into view space
 		
-	if (fpNeedWPos()) outStream <<
-		"	oWorldPosition = worldPosition; \n";
+	if (fpNeedPos()) outStream <<
+		"	oObjPosition = position; \n";
+		
+	if (vpCalcWPos()) outStream <<
+		"	float4 worldPosition = mul(wMat, position); \n";
+		
+	if (fpNeedEyeVector()) outStream <<
+		"	oEyeVector.xyz = worldPosition.xyz - eyePosition.xyz; \n";
 
 	if (needNormalMap()) outStream <<
 		"	oTangent.xyz = tangent.xyz; \n";
@@ -285,7 +286,7 @@ void MaterialGenerator::generateVertexProgramSource(Ogre::StringUtil::StrStreamT
 				"	oEyeVector.w = viewPosition.x; \n";
 				
 			outStream <<
-			"	oWorldPosition.w = viewPosition.y; \n"
+			"	oObjPosition.w = viewPosition.y; \n"
 			"	oViewNormal.w = viewPosition.z; \n";
 		}
 	}
@@ -308,15 +309,12 @@ void MaterialGenerator::vertexProgramParams(HighLevelGpuProgramPtr program)
 	params->setNamedAutoConstant("wvpMat", GpuProgramParameters::ACT_WORLDVIEWPROJ_MATRIX);
 	if (vpNeedWvMat())
 		params->setNamedAutoConstant("wvMat", GpuProgramParameters::ACT_WORLDVIEW_MATRIX);
-	if (fpNeedEyeVector())
+	if (fpNeedEyeVector() || mShader->wind == 1)
 		params->setNamedAutoConstant("eyePosition", GpuProgramParameters::ACT_CAMERA_POSITION);
 	
 	params->setNamedAutoConstant("fogParams", GpuProgramParameters::ACT_FOG_PARAMS);
-		
-	if (mShader->wind == 1)
-		params->setNamedAutoConstant("objSpaceCam", GpuProgramParameters::ACT_CAMERA_POSITION_OBJECT_SPACE);
-	
-	else if (mShader->wind == 2)
+			
+	if (mShader->wind == 2)
 		params->setNamedConstant("enableWind", Real(1.0));
 		
 	individualVertexProgramParams(params);
