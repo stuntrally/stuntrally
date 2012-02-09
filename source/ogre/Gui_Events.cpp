@@ -509,6 +509,25 @@ bool App::keyPressed( const OIS::KeyEvent &arg )
 		return true;
 	}
 
+	//  shortcut keys for gui access (alt-T,H,S,G,V,.. )
+	if (!bAssignKey && alt)
+		switch (arg.key)
+		{
+			case KC_T:	GuiShortcut(WND_Game, 1);	return true;  // Track
+			case KC_C:	GuiShortcut(WND_Game, 2);	return true;  // Car
+			case KC_H:	GuiShortcut(WND_Champ, 4);	return true;  // Champs
+
+			case KC_R:	GuiShortcut(WND_Replays, 1);	return true;  // [Replays]
+
+			case KC_S:	GuiShortcut(WND_Options, 1);	return true;  // Screen
+			case KC_E:	GuiShortcut(WND_Options, 1);	return true;  // -Effects
+			case KC_G:	GuiShortcut(WND_Options, 2);	return true;  // Graphics
+
+			case KC_V:	GuiShortcut(WND_Options, 3);	return true;  // View
+			case KC_O:	GuiShortcut(WND_Options, 3);	return true;  // -Other
+			case KC_I:	GuiShortcut(WND_Options, 4);	return true;  // Input
+		}
+
 	//  not main menus
 	if (!bAssignKey /*&& !pSet->isMain*/)
 	{
@@ -535,7 +554,7 @@ bool App::keyPressed( const OIS::KeyEvent &arg )
 				break;
 				
 			case KC_F:		// focus on find edit
-				if ((alt || ctrl) && edFind && isFocGui &&
+				if (ctrl && edFind && isFocGui &&
 					!pSet->isMain && pSet->inMenu == WND_Game && mWndTabsGame->getIndexSelected() == 1)
 				{
 					MyGUI::InputManager::getInstance().resetKeyFocusWidget();
@@ -621,13 +640,13 @@ bool App::keyPressed( const OIS::KeyEvent &arg )
 
 void App::toggleGui(bool toggle)
 {
-	if (alt)  return;
 	if (toggle)
 		isFocGui = !isFocGui;
 
 	bool notMain = isFocGui && !pSet->isMain, game = pSet->inMenu == WND_Game, champ = pSet->inMenu == WND_Champ, gc = game || champ;
 	if (mWndMain)	mWndMain->setVisible(isFocGui && pSet->isMain);
-	if (mWndGame)	mWndGame->setVisible(notMain  && gc);
+	if (mWndGame){  mWndGame->setVisible(notMain  && gc);
+		mWndGame->setCaption(champ ? TR("#{Championship}") : TR("#{SingleRace}"));  }
 	if (mWndReplays) mWndReplays->setVisible(notMain && pSet->inMenu == WND_Replays);
 	if (mWndOpts)	mWndOpts->setVisible(notMain  && pSet->inMenu == WND_Options);
 	if (notMain && gc)  // show hide champs,stages
@@ -667,4 +686,17 @@ void App::MenuTabChg(MyGUI::TabPtr tab, size_t id)
 	tab->setIndexSelected(1);  // dont switch to 0
 	pSet->isMain = true;
 	toggleGui(false);  // back to main
+}
+
+void App::GuiShortcut(WND_Types wnd, int tab)
+{
+	isFocGui = true;
+	pSet->isMain = false;  pSet->inMenu = wnd;
+	switch (wnd)
+	{	case WND_Champ:
+		case WND_Game:		mWndTabsGame->setIndexSelected(tab);  break;
+		//case WND_Replays:	mWndTabs->setIndexSelected(tab);  break;
+		case WND_Options:	mWndTabsOpts->setIndexSelected(tab);  break;
+	}
+	toggleGui(false);
 }
