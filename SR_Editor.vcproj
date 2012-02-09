@@ -517,6 +517,14 @@
 				>
 			</File>
 			<File
+				RelativePath=".\source\ogre\common\HWMouse.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\source\ogre\common\HWMouse.h"
+				>
+			</File>
+			<File
 				RelativePath=".\source\ogre\common\MyGUI_D3D11.cpp"
 				>
 			</File>
@@ -818,6 +826,14 @@
 			</File>
 			<File
 				RelativePath=".\source\ogre\common\MaterialGen\MaterialProperties.h"
+				>
+			</File>
+			<File
+				RelativePath=".\source\ogre\common\MaterialGen\ParticleMaterial.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\source\ogre\common\MaterialGen\ParticleMaterial.h"
 				>
 			</File>
 			<File

@@ -1558,6 +1558,14 @@
 					>
 				</File>
 				<File
+					RelativePath=".\source\ogre\common\HWMouse.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\source\ogre\common\HWMouse.h"
+					>
+				</File>
+				<File
 					RelativePath=".\data\gui\Options.layout"
 					>
 				</File>

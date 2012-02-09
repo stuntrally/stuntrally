@@ -1,3 +1,4 @@
+#include "pch.h"
 #include "HWMouse.h"
 
 #include <OgreImage.h>
