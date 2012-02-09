@@ -126,9 +126,7 @@ public:
 	MyGUI::Widget* pressedKeySender;
 
 	bool IsFocGuiInput()  {  return isFocGui || isFocRpl;  }
-	bool IsFocGui()  {  return isFocGui || isFocRpl ||
-		(mWndChampStage && mWndChampStage->getVisible()) ||
-		(mWndChampEnd && mWndChampEnd->getVisible());  }
+	bool IsFocGui();
 protected:
 
 	///  overlay

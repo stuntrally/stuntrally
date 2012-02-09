@@ -323,3 +323,10 @@ void BaseApp::InitKeyNamesMap()
 	kcMap[KC_MAIL        ] = "MAIL";  //  0xEC,    // Mail
 	kcMap[KC_MEDIASELECT ] = "MEDIASELECT";  //  0xED     // Media Select
 }
+
+bool BaseApp::IsFocGui()
+{
+	return isFocGui || isFocRpl ||
+		(mWndChampStage && mWndChampStage->getVisible()) ||
+		(mWndChampEnd && mWndChampEnd->getVisible());
+}
