@@ -6,52 +6,65 @@
 		<Property key="Caption" value="Stunt Rally"/>
 		<Property key="Alpha" value="0.6"/>
 		<Property key="Snap" value="true"/>
-		<Widget type="Widget" skin="PanelSkin" position="110 120 556 76" name="PanMenu0">
+		<Widget type="Widget" skin="PanelSkin" position="110 90 556 76" name="PanMenu0">
 			<Property key="Colour" value="1.0 0.9 0.6"/>
 			<Property key="Alpha" value="0.7"/>
 			<Property key="InheritsAlpha" value="false"/>
 			<UserString key="RelativeTo" value="MainMenuWnd"/>
 		</Widget>
-		<Widget type="Button" skin="Button" position="138 133 500 50" name="BtnMenu0">
+		<Widget type="Button" skin="Button" position="138 103 500 50" name="BtnMenu0">
 			<Property key="Caption" value="#{SingleRace}"/>
 			<Property key="Colour" value="1.0 0.9 0.6"/>
 			<Property key="TextColour" value="1.0 0.9 0.6"/>
 			<Property key="InheritsAlpha" value="false"/>
 			<UserString key="RelativeTo" value="MainMenuWnd"/>
 		</Widget>
-		<Widget type="Widget" skin="PanelSkin" position="110 195 556 76" name="PanMenu1">
+		<Widget type="Widget" skin="PanelSkin" position="110 165 556 76" name="PanMenu1">
 			<Property key="Colour" value="0.6 1 0.6"/>
 			<Property key="Alpha" value="0.7"/>
 			<Property key="InheritsAlpha" value="false"/>
 			<UserString key="RelativeTo" value="MainMenuWnd"/>
 		</Widget>
-		<Widget type="Button" skin="Button" position="138 208 500 50" name="BtnMenu1">
+		<Widget type="Button" skin="Button" position="138 178 500 50" name="BtnMenu1">
 			<Property key="Caption" value="#{Championship}"/>
 			<Property key="Colour" value="0.6 1 0.6"/>
 			<Property key="TextColour" value="0.6 1 0.6"/>
 			<Property key="InheritsAlpha" value="false"/>
 			<UserString key="RelativeTo" value="MainMenuWnd"/>
 		</Widget>
-		<Widget type="Widget" skin="PanelSkin" position="110 270 556 76" name="PanMenu2">
+		<Widget type="Widget" skin="PanelSkin" position="110 240 556 76" name="PanMenu2">
 			<Property key="Colour" value="0.7 0.7 1"/>
 			<Property key="Alpha" value="0.7"/>
 			<Property key="InheritsAlpha" value="false"/>
 			<UserString key="RelativeTo" value="MainMenuWnd"/>
 		</Widget>
-		<Widget type="Button" skin="Button" position="138 283 500 50" name="BtnMenu2">
+		<Widget type="Button" skin="Button" position="138 253 500 50" name="BtnMenu2">
 			<Property key="Caption" value="#{ReplaysMenu}"/>
 			<Property key="Colour" value="0.7 0.7 1"/>
 			<Property key="TextColour" value="0.8 0.8 1"/>
 			<Property key="InheritsAlpha" value="false"/>
 			<UserString key="RelativeTo" value="MainMenuWnd"/>
 		</Widget>
-		<Widget type="Widget" skin="PanelSkin" position="110 345 556 76" name="PanMenu3">
+		<Widget type="Widget" skin="PanelSkin" position="110 315 556 76" name="PanMenu3">
+			<Property key="Colour" value="0.6 0.8 1"/>
+			<Property key="Alpha" value="0.7"/>
+			<Property key="InheritsAlpha" value="false"/>
+			<UserString key="RelativeTo" value="MainMenuWnd"/>
+		</Widget>
+		<Widget type="Button" skin="Button" position="138 328 500 50" name="BtnMenu3">
+			<Property key="Caption" value="#{Help}"/>
+			<Property key="Colour" value="0.6 0.8 1"/>
+			<Property key="TextColour" value="0.8 0.9 1"/>
+			<Property key="InheritsAlpha" value="false"/>
+			<UserString key="RelativeTo" value="MainMenuWnd"/>
+		</Widget>
+		<Widget type="Widget" skin="PanelSkin" position="110 390 556 76" name="PanMenu4">
 			<Property key="Colour" value="0.4 0.7 1"/>
 			<Property key="Alpha" value="0.7"/>
 			<Property key="InheritsAlpha" value="false"/>
 			<UserString key="RelativeTo" value="MainMenuWnd"/>
 		</Widget>
-		<Widget type="Button" skin="Button" position="138 358 500 50" name="BtnMenu3">
+		<Widget type="Button" skin="Button" position="138 403 500 50" name="BtnMenu4">
 			<Property key="Caption" value="#{Options}"/>
 			<Property key="Colour" value="0.4 0.7 1"/>
 			<Property key="TextColour" value="0.75 0.9 1"/>
@@ -1204,6 +1217,97 @@
 			</Widget>
 		</Widget>
 	</Widget>
+	<Widget type="Window" skin="WindowC" position="552 640 800 600" align="Center" layer="Overlapped" name="HelpWnd">
+		<Property key="MinSize" value="500 400"/>
+		<Property key="MaxSize" value="2560 1600"/>
+		<Property key="Caption" value="#{Options}"/>
+		<Property key="Alpha" value="0.3"/>
+		<Property key="Snap" value="true"/>
+		<Widget type="TabControl" skin="TabControl" position="0 0 800 600" align="Default" layer="Back" name="TabWndHelp">
+			<Property key="InheritsAlpha" value="false"/>
+			<Property key="ButtonWidth" value="86"/>
+			<Property key="Colour" value="0.7 0.85 1"/>
+			<Property key="ButtonAutoWidth" value="true"/>
+			<UserString key="RelativeTo" value="HelpWnd"/>
+			<Widget type="TabItem" skin="" position="2 24 794 572">
+				<Property key="Caption" value="&lt;#{BackMenu}"/>
+				<Property key="Colour" value="1 0.6 0.2"/>
+				<UserString key="RelativeTo" value="HelpWnd"/>
+			</Widget>
+			<Widget type="TabItem" skin="" position="2 24 794 572">
+				<Property key="Caption" value="#{Help}"/>
+				<UserString key="RelativeTo" value="HelpWnd"/>
+			</Widget>
+			<Widget type="TabItem" skin="" position="2 24 794 572">
+				<Property key="Caption" value="#{Readme}"/>
+				<UserString key="RelativeTo" value="HelpWnd"/>
+				<Widget type="EditBox" skin="EditBoxStretch" position="32 16 600 480" name="Readme">
+					<Property key="ReadOnly" value="true"/>
+					<Property key="MultiLine" value="true"/>
+					<Property key="WordWrap" value="true"/>
+					<Property key="VisibleHScroll" value="false"/>
+					<Property key="VisibleVScroll" value="true"/>
+                    <Property key="MaxTextLength" value="8000"/>
+					<Property key="TextColour" value="0.8 0.9 1.0"/>
+					<Property key="Colour" value="0.8 0.9 1"/>
+					<UserString key="RelativeTo" value="HelpWnd"/>
+				</Widget>
+			</Widget>
+			<Widget type="TabItem" skin="" position="2 24 794 572">
+				<Property key="Caption" value="#{About}"/>
+				<UserString key="RelativeTo" value="HelpWnd"/>
+				<Widget type="TextBox" skin="TextBox" position="24 194 168 24">
+					<Property key="Caption" value="#{Version} #{GameVersion}"/>
+					<Property key="TextColour" value="0.7 1 0.5"/>
+					<UserString key="RelativeTo" value="HelpWnd"/>
+				</Widget>
+				<Widget type="TextBox" skin="TextBox" position="144 248 144 24">
+					<Property key="Caption" value="#{GameBy}"/>
+					<Property key="TextColour" value="0.7 0.86 1"/>
+					<Property key="TextAlign" value="Right Top"/>
+					<UserString key="RelativeTo" value="HelpWnd"/>
+				</Widget>
+				<Widget type="TextBox" skin="TextBox" position="520 248 160 24">
+					<Property key="Caption" value="#{AndContributors}"/>
+					<Property key="TextColour" value="0.7 0.86 1"/>
+					<UserString key="RelativeTo" value="HelpWnd"/>
+				</Widget>
+				<Widget type="TextBox" skin="TextBox" position="172 416 150 24">
+					<Property key="Caption" value="#{BasedOn}"/>
+					<Property key="TextColour" value="0.85 0.85 0.85"/>
+					<UserString key="RelativeTo" value="HelpWnd"/>
+				</Widget>
+				<Widget type="TextBox" skin="TextBox" position="594 416 150 24">
+					<Property key="Caption" value="#{AndUsing}"/>
+					<Property key="TextColour" value="0.8 1 0.8"/>
+					<UserString key="RelativeTo" value="HelpWnd"/>
+				</Widget>
+				<Widget type="ImageBox" skin="ImageBox" position="274 208 256 256">
+					<Property key="ImageTexture" value="_ch-logo.png"/>
+					<UserString key="RelativeTo" value="HelpWnd"/>
+				</Widget>
+				<Widget type="ImageBox" skin="ImageBox" position="14 434 376 94">
+					<Property key="ImageTexture" value="vdrift-logo.png"/>
+					<UserString key="RelativeTo" value="HelpWnd"/>
+					<UserString key="tip" value="vdrift.net"/>
+				</Widget>
+				<Widget type="ImageBox" skin="ImageBox" position="528 440 256 128">
+					<Property key="ImageTexture" value="ogre-logo.png"/>
+					<UserString key="RelativeTo" value="HelpWnd"/>
+					<UserString key="tip" value="www.ogre3d.org"/>
+				</Widget>
+				<Widget type="TextBox" skin="TextBox" position="24 160 440 24">
+					<Property key="Caption" value="#{ProjectPage}     #{PageURL}"/>
+					<Property key="TextColour" value="0.7 0.86 1.0"/>
+					<UserString key="RelativeTo" value="HelpWnd"/>
+				</Widget>
+				<Widget type="ImageBox" skin="ImageBox" position="16 -1 744 186">
+					<Property key="ImageTexture" value="stuntrally-logo.png"/>
+					<UserString key="RelativeTo" value="HelpWnd"/>
+				</Widget>
+			</Widget>
+		</Widget>
+	</Widget>
 	<Widget type="Window" skin="WindowC" position="552 640 800 600" align="Center" layer="Overlapped" name="OptionsWnd">
 		<Property key="MinSize" value="500 400"/>
 		<Property key="MaxSize" value="2560 1600"/>
@@ -2207,59 +2311,6 @@
 				</Widget>
 				<Widget type="TextBox" skin="TextBox" position="180 220 60 24" name="VolEnvVal">
 					<Property key="TextColour" value="0.6 0.75 1.0"/>
-					<UserString key="RelativeTo" value="OptionsWnd"/>
-				</Widget>
-			</Widget>
-			<Widget type="TabItem" skin="" position="2 24 794 572">
-				<Property key="Caption" value="#{About}"/>
-				<UserString key="RelativeTo" value="OptionsWnd"/>
-				<Widget type="TextBox" skin="TextBox" position="24 194 168 24">
-					<Property key="Caption" value="#{Version} #{GameVersion}"/>
-					<Property key="TextColour" value="0.7 1 0.5"/>
-					<UserString key="RelativeTo" value="OptionsWnd"/>
-				</Widget>
-				<Widget type="TextBox" skin="TextBox" position="144 248 144 24">
-					<Property key="Caption" value="#{GameBy}"/>
-					<Property key="TextColour" value="0.7 0.86 1"/>
-					<Property key="TextAlign" value="Right Top"/>
-					<UserString key="RelativeTo" value="OptionsWnd"/>
-				</Widget>
-				<Widget type="TextBox" skin="TextBox" position="520 248 160 24">
-					<Property key="Caption" value="#{AndContributors}"/>
-					<Property key="TextColour" value="0.7 0.86 1"/>
-					<UserString key="RelativeTo" value="OptionsWnd"/>
-				</Widget>
-				<Widget type="TextBox" skin="TextBox" position="172 416 150 24">
-					<Property key="Caption" value="#{BasedOn}"/>
-					<Property key="TextColour" value="0.85 0.85 0.85"/>
-					<UserString key="RelativeTo" value="OptionsWnd"/>
-				</Widget>
-				<Widget type="TextBox" skin="TextBox" position="594 416 150 24">
-					<Property key="Caption" value="#{AndUsing}"/>
-					<Property key="TextColour" value="0.8 1 0.8"/>
-					<UserString key="RelativeTo" value="OptionsWnd"/>
-				</Widget>
-				<Widget type="ImageBox" skin="ImageBox" position="274 208 256 256">
-					<Property key="ImageTexture" value="_ch-logo.png"/>
-					<UserString key="RelativeTo" value="OptionsWnd"/>
-				</Widget>
-				<Widget type="ImageBox" skin="ImageBox" position="14 434 376 94">
-					<Property key="ImageTexture" value="vdrift-logo.png"/>
-					<UserString key="RelativeTo" value="OptionsWnd"/>
-					<UserString key="tip" value="vdrift.net"/>
-				</Widget>
-				<Widget type="ImageBox" skin="ImageBox" position="528 440 256 128">
-					<Property key="ImageTexture" value="ogre-logo.png"/>
-					<UserString key="RelativeTo" value="OptionsWnd"/>
-					<UserString key="tip" value="www.ogre3d.org"/>
-				</Widget>
-				<Widget type="TextBox" skin="TextBox" position="24 160 440 24">
-					<Property key="Caption" value="#{ProjectPage}     #{PageURL}"/>
-					<Property key="TextColour" value="0.7 0.86 1.0"/>
-					<UserString key="RelativeTo" value="OptionsWnd"/>
-				</Widget>
-				<Widget type="ImageBox" skin="ImageBox" position="16 -1 744 186">
-					<Property key="ImageTexture" value="stuntrally-logo.png"/>
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 				</Widget>
 			</Widget>

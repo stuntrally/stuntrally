@@ -46,6 +46,8 @@
 	<Tag name="Options">Options</Tag>
 	<Tag name="Quit">Quit</Tag>
 	<Tag name="BackMenu">Back</Tag>
+	<Tag name="Help">Help</Tag>
+	<Tag name="Readme">Readme</Tag>
 
 
 	<!--  Championship  -->

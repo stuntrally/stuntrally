@@ -37,6 +37,7 @@ void App::InitGui()
 	mWndMain = mGUI->findWidget<Window>("MainMenuWnd",false);
 	mWndGame = mGUI->findWidget<Window>("GameWnd",false);
 	mWndReplays = mGUI->findWidget<Window>("ReplaysWnd",false);
+	mWndHelp = mGUI->findWidget<Window>("HelpWnd",false);
 	mWndOpts = mGUI->findWidget<Window>("OptionsWnd",false);
 	mWndChampStage = mGUI->findWidget<Window>("WndChampStage",false);  mWndChampStage->setVisible(false);
 	mWndChampEnd = mGUI->findWidget<Window>("WndChampEnd",false);  mWndChampEnd->setVisible(false);
@@ -57,13 +58,11 @@ void App::InitGui()
 	mWndMain->setPosition((sx-w.width)*0.5f, (sy-w.height)*0.5f);
 
 	TabPtr tab;
-	tab = mGUI->findWidget<Tab>("TabWndGame");    tab->setIndexSelected(1);  mWndTabsGame = tab;		tab->eventTabChangeSelect += newDelegate(this, &App::MenuTabChg);
-	tab = mGUI->findWidget<Tab>("TabWndReplays"); tab->setIndexSelected(1);	tab->setSmoothShow(false);	tab->eventTabChangeSelect += newDelegate(this, &App::MenuTabChg);
-	tab = mGUI->findWidget<Tab>("TabWndOptions"); tab->setIndexSelected(1);  mWndTabsOpts = tab;		tab->eventTabChangeSelect += newDelegate(this, &App::MenuTabChg);
+	tab = mGUI->findWidget<Tab>("TabWndGame");    tab->setIndexSelected(1); tab->setSmoothShow(false);	mWndTabsGame = tab;		tab->eventTabChangeSelect += newDelegate(this, &App::MenuTabChg);
+	tab = mGUI->findWidget<Tab>("TabWndReplays"); tab->setIndexSelected(1);	tab->setSmoothShow(false);							tab->eventTabChangeSelect += newDelegate(this, &App::MenuTabChg);
+	tab = mGUI->findWidget<Tab>("TabWndHelp");    tab->setIndexSelected(1);	tab->setSmoothShow(false);							tab->eventTabChangeSelect += newDelegate(this, &App::MenuTabChg);
+	tab = mGUI->findWidget<Tab>("TabWndOptions"); tab->setIndexSelected(1); tab->setSmoothShow(false);	mWndTabsOpts = tab;		tab->eventTabChangeSelect += newDelegate(this, &App::MenuTabChg);
 	if (pSet->inMenu == WND_Champ)  mWndTabsGame->setIndexSelected(5);
-	
-	mWndTabsGame->setSmoothShow(false);
-	mWndTabsOpts->setSmoothShow(false);
 
 
 	//  tooltip  ------
@@ -215,6 +214,7 @@ void App::InitGui()
 
 	//todo: button_ramp, speed_sens..
 
+	
 	//  replays  ------------------------------------------------------------
 	Btn("RplLoad", btnRplLoad);  Btn("RplSave", btnRplSave);
 	Btn("RplDelete", btnRplDelete);  Btn("RplRename", btnRplRename);

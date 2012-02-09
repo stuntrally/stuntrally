@@ -644,28 +644,32 @@ void App::toggleGui(bool toggle)
 	bool notMain = isFocGui && !pSet->isMain;
 	if (mWndMain)	mWndMain->setVisible(isFocGui && pSet->isMain);
 	if (mWndReplays) mWndReplays->setVisible(notMain && pSet->inMenu == WND_Replays);
-	if (mWndOpts)	mWndOpts->setVisible(notMain  && pSet->inMenu == WND_Options);
+	if (mWndHelp)	mWndHelp->setVisible(notMain && pSet->inMenu == WND_Help);
+	if (mWndOpts)	mWndOpts->setVisible(notMain && pSet->inMenu == WND_Options);
+	
+	//  fill Readme editbox from file
+	static bool first = true;
+	if (mWndHelp && mWndHelp->getVisible() && first)
+	{
+		first = false;
+		EditBox* edit = mGUI->findWidget<EditBox>("Readme");
+		if (edit)
+		{	std::string path = PATHMANAGER::GetDataPath()+"/../Readme.txt", text;
+			std::ifstream fi(path.c_str());
+			while (!fi.eof())
+			{
+				char buf[4*4096];
+				fi.read(buf,sizeof(buf));
+				text += buf;
+			}
+			edit->setCaption(UString(text));
+			edit->setVScrollPosition(0);
+	}	}
 
 	///  update track tab, for champs wnd
 	bool game = pSet->inMenu == WND_Game, champ = pSet->inMenu == WND_Champ, gc = game || champ;
 	if (mWndGame)
-	{
-		/*bool Track1 = mWndTabsGame->getItemAt(1)->getUserString("empty").empty();
-		if (Track1 && champ || !Track1 && !champ)
-		{
-			//  hide controls on track tab but not for champs
-			if (trkMList)  trkMList->setVisible(!Track1);
-			if (edFind)  edFind->setVisible(!Track1);
-			ChangeTrackView();  // forced view short list
-
-			//  move Track tab to end
-			mWndTabsGame->swapItems(1,7);
-				size_t t = mWndTabsGame->getIndexSelected();
-				mWndTabsGame->setIndexSelected(1);  mWndTabsGame->setIndexSelected(7);
-				mWndTabsGame->setIndexSelected(t);  // to refresh if were on 1 or 7
-		}*/
-
-		mWndGame->setVisible(notMain  && gc);
+	{	mWndGame->setVisible(notMain  && gc);
 		if (mWndGame->getVisible())
 			mWndGame->setCaption(champ ? TR("#{Championship}") : TR("#{SingleRace}"));
 	}
