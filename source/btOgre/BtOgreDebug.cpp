@@ -39,6 +39,7 @@ DebugDrawer::DebugDrawer(Ogre::SceneNode *node, btDynamicsWorld *world) :
 	mat->setLightingEnabled(false);
 	//mat->setSelfIllumination(1,1,1);
 	mLineDrawer->setMaterial("BtOgre/DebugLines");/**/  //crash debug..
+	mLineDrawer->setVisibilityFlags(2/*RV_Hud*/);  // not in reflection
 }
 
 DebugDrawer::~DebugDrawer() 
@@ -79,7 +80,7 @@ void DebugDrawer::drawContactPoint(const btVector3& PointOnB, const btVector3& n
 }
 
 //  draw sphere
-void DebugDrawer::drawSphere(btScalar radius, const btTransform& transform, const btVector3& color, int half)
+void DebugDrawer::drawSphere(btScalar radius, const btTransform& transform, const btVector3& color/*, int half*/)
 {
 	btVector3 p = transform.getOrigin();
 	const btMatrix3x3& m = transform.getBasis();
@@ -87,23 +88,25 @@ void DebugDrawer::drawSphere(btScalar radius, const btTransform& transform, cons
 	const btVector3 x = m * btVector3(radius,0,0);
 	const btVector3 y = m * btVector3(0,radius,0);
 	const btVector3 z = m * btVector3(0,0,radius);
+	btVector3 clr = color;  if (clr.getY() <= 0.1f)  {  clr.setZ(1.f);  clr.setY(1.f);  }  // blue to white
 
-	const float PI2 = 2*M_PI, ad = M_PI/15.f;
+	//TODO: render solid sphere mesh not this (instancing ?)...
+	const float PI2 = 2*M_PI, ad = M_PI/9.f;  //steps-quality
 	{
 		btVector3 p1, p1o = p + y, p2o = p + x, p3o = p + y;
 		for (float a = ad; a <= PI2+ad; a += ad)
 		{
 			float s = sinf(a), c = cosf(a);
-			p1 = p - s*x + c*y;  drawLine(p1o, p1, color);	p1o = p1;
-			p1 = p - s*z + c*x;  drawLine(p2o, p1, color);	p2o = p1;
-			p1 = p - s*z + c*y;  drawLine(p3o, p1, color);	p3o = p1;
+			p1 = p - s*x + c*y;  drawLine(p1o, p1, clr);	p1o = p1;
+			p1 = p - s*z + c*x;  drawLine(p2o, p1, clr);	p2o = p1;
+			p1 = p - s*z + c*y;  drawLine(p3o, p1, clr);	p3o = p1;
 		}
 	}
 }
 
 void DebugDrawer::drawCircleZ(btScalar radius, const btVector3& p, const btVector3& x, const btVector3& y, const btVector3& color)
 {
-	const float PI2 = 2*M_PI, ad = M_PI/15.f;
+	const float PI2 = 2*M_PI, ad = M_PI/9.f;
 	btVector3 p1, p1o = p + y;
 	for (float a = ad; a <= PI2+ad; a += ad)
 	{
@@ -125,6 +128,8 @@ void DebugDrawer::draw3dText(const btVector3& location,const char* textString)
 void DebugDrawer::setDebugMode(int debugMode)
 {
 	m_debugMode = debugMode;
+	//if (mWorld && mWorld->getDebugDrawer())
+	//	mWorld->getDebugDrawer()->setDebugMode(debugMode);	
 	if (m_debugMode==0)
 		mLineDrawer->clear();
 }

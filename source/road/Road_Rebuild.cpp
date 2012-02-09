@@ -770,13 +770,23 @@ void SplineRoad::RebuildRoadInt()
 					// if (cols)  // add columns^..
 					
 					//  Road  ~
-					btCollisionShape* trimeshShape = new btBvhTriangleMeshShape(trimesh, true);
-					trimeshShape->setUserPointer(isPipe(seg) ? (void*)7788 : (void*)7777);  // mark as road,  + mtrId..
+					btCollisionShape* shape = new btBvhTriangleMeshShape(trimesh, true);
+					shape->setUserPointer(isPipe(seg) ? (void*)7788 : (void*)7777);  // mark as road,  + mtrId..
 					
-					btRigidBody::btRigidBodyConstructionInfo infoT(0.f, 0, trimeshShape);
-					infoT.m_restitution = 0.0f;
-					infoT.m_friction = 0.8f;  // 1 like terrain
-					pGame->collision.AddRigidBody(infoT);
+					//btRigidBody::btRigidBodyConstructionInfo infoT(0.f, 0, shape);
+					//infoT.m_restitution = 0.0f;
+					//infoT.m_friction = 0.8f;  // 1 like terrain
+					//pGame->collision.AddRigidBody(infoT);  // old
+
+					btCollisionObject* bco = new btCollisionObject();
+					btTransform tr;  tr.setIdentity();  //tr.setOrigin(pc);
+					bco->setActivationState(DISABLE_SIMULATION);
+					bco->setCollisionShape(shape);	bco->setWorldTransform(tr);
+					bco->setFriction(0.8f);  bco->setRestitution(0.f);  //`
+					bco->setCollisionFlags(bco->getCollisionFlags() |
+						btCollisionObject::CF_STATIC_OBJECT | btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT/**/);
+					pGame->collision.world->addCollisionObject(bco);
+					pGame->collision.shapes.push_back(shape);
 					
 					//  Wall  ]
 					if (wall)
@@ -792,13 +802,22 @@ void SplineRoad::RebuildRoadInt()
 							addTriB(posW[f+0], posW[f1+0], posW[f1+1]);
 						}	}
 						
-						btCollisionShape* trimeshShape = new btBvhTriangleMeshShape(trimesh, true);
-						trimeshShape->setUserPointer((void*)7777);  //-
+						btCollisionShape* shape = new btBvhTriangleMeshShape(trimesh, true);
+						shape->setUserPointer((void*)7777);  //-
 						
-						btRigidBody::btRigidBodyConstructionInfo infoW(0.f, 0, trimeshShape);
-						infoW.m_restitution = 0.0f;
-						infoW.m_friction = 0.1f;  // 0 for wall
-						pGame->collision.AddRigidBody(infoW);
+						//btRigidBody::btRigidBodyConstructionInfo infoW(0.f, 0, shape);
+						//infoW.m_restitution = 0.0f;
+						//infoW.m_friction = 0.1f;  // 0 for wall
+						//pGame->collision.AddRigidBody(infoW);  // old
+
+						btCollisionObject* bco = new btCollisionObject();
+						bco->setActivationState(DISABLE_SIMULATION);
+						bco->setCollisionShape(shape);	bco->setWorldTransform(tr);
+						bco->setFriction(0.1f);  bco->setRestitution(0.f);  //`
+						bco->setCollisionFlags(bco->getCollisionFlags() |
+							btCollisionObject::CF_STATIC_OBJECT | btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT/**/);
+						pGame->collision.world->addCollisionObject(bco);
+						pGame->collision.shapes.push_back(shape);
 					}
 				}
 				#endif

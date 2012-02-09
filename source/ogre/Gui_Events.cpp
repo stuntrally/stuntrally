@@ -428,57 +428,56 @@ bool App::keyPressed( const OIS::KeyEvent &arg )
 	// action key == pressed key
 	#define action(s)  actionIsActive(s, mKeyboard->getAsString(arg.key))
 
-	if (!bAssignKey)
+if (!bAssignKey)
+{
+	//  change gui tabs
+	if (isFocGui && !pSet->isMain)
 	{
-		//  change gui tabs
-		if (isFocGui && !pSet->isMain)
+		MyGUI::TabPtr tab = 0;
+		switch (pSet->inMenu)
 		{
-			MyGUI::TabPtr tab = 0;
-			switch (pSet->inMenu)
-			{
-				case WND_Game:  case WND_Champ:		tab = mWndTabsGame;  break;
-				case WND_Options:  tab = mWndTabsOpts;  break;
-			}
-			if (tab)
-			{	int num = tab->getItemCount()-1, i = 0;
-				if (action("PrevTab")) {		i = tab->getIndexSelected();  if (i==1)  i = num;  else  --i;
-					tab->setIndexSelected(i);  MenuTabChg(tab,i);  return true;  }
-				else if (action("NextTab")) {	i = tab->getIndexSelected();  if (i==num)  i = 1;  else  ++i;
-					tab->setIndexSelected(i);  MenuTabChg(tab,i);  return true;  }
-			}
+			case WND_Game:  case WND_Champ:		tab = mWndTabsGame;  break;
+			case WND_Options:  tab = mWndTabsOpts;  break;
 		}
-		
-		//  gui on/off
-		if (action("ShowOptions"))
-		{	if (mWndChampEnd->getVisible())  mWndChampEnd->setVisible(false);  // hide champs end
-			toggleGui(true);  return false;  }
+		if (tab)
+		{	int num = tab->getItemCount()-1, i = 0;
+			if (action("PrevTab")) {		i = tab->getIndexSelected();  if (i==1)  i = num;  else  --i;
+				tab->setIndexSelected(i);  MenuTabChg(tab,i);  return true;  }
+			else if (action("NextTab")) {	i = tab->getIndexSelected();  if (i==num)  i = 1;  else  ++i;
+				tab->setIndexSelected(i);  MenuTabChg(tab,i);  return true;  }
+		}
+	}
 	
-		//  new game - reload
-		if (action("RestartGame"))
-		{	NewGame();  return false;	}
+	//  gui on/off
+	if (action("ShowOptions"))
+	{	if (mWndChampEnd->getVisible())  mWndChampEnd->setVisible(false);  // hide champs end
+		toggleGui(true);  return false;  }
 
-		//  new game - fast (same track & cars)
-		if (action("ResetGame"))
+	//  new game - reload
+	if (action("RestartGame"))
+	{	NewGame();  return false;	}
+
+	//  new game - fast (same track & cars)
+	if (action("ResetGame"))
+	{
+		for (int c=0; c < carModels.size(); ++c)
 		{
-			for (int c=0; c < carModels.size(); ++c)
-			{
-				if (carModels[c]->pCar)  carModels[c]->pCar->ResetPos(true);
-				if (carModels[c]->fCam)  carModels[c]->fCam->first = true;
-				carModels[c]->ResetChecks();
-				carModels[c]->iWonPlace = 0;
-			}
-			pGame->timer.Reset(0);
-			pGame->timer.pretime = mClient ? 2.0f : pSet->game.pre_time;  // same for all multi players
-			carIdWin = 1;  //
-			ghost.Clear(); //
+			if (carModels[c]->pCar)  carModels[c]->pCar->ResetPos(true);
+			if (carModels[c]->fCam)  carModels[c]->fCam->first = true;
+			carModels[c]->ResetChecks();
+			carModels[c]->iWonPlace = 0;
 		}
+		pGame->timer.Reset(0);
+		pGame->timer.pretime = mClient ? 2.0f : pSet->game.pre_time;  // same for all multi players
+		carIdWin = 1;  //
+		ghost.Clear(); //
 	}
 	
 	using namespace OIS;
 
 
 	//  main menu keys
-	if (!bAssignKey && pSet->isMain)
+	if (pSet->isMain)
 	{
 		switch (arg.key)
 		{
@@ -497,7 +496,7 @@ bool App::keyPressed( const OIS::KeyEvent &arg )
 	}
 
 	//  esc
-	if (!bAssignKey && arg.key == KC_ESCAPE)
+	if (arg.key == KC_ESCAPE)
 	{
 		if (pSet->escquit)
 			mShutDown = true;	// quit
@@ -510,7 +509,7 @@ bool App::keyPressed( const OIS::KeyEvent &arg )
 	}
 
 	//  shortcut keys for gui access (alt-T,H,S,G,V,.. )
-	if (!bAssignKey && alt)
+	if (alt)
 		switch (arg.key)
 		{
 			case KC_T:	GuiShortcut(WND_Game, 1);	return true;  // Track
@@ -529,7 +528,7 @@ bool App::keyPressed( const OIS::KeyEvent &arg )
 		}
 
 	//  not main menus
-	if (!bAssignKey /*&& !pSet->isMain*/)
+	//if (/*&& !pSet->isMain*/)
 	{
 		Widget* wf = MyGUI::InputManager::getInstance().getKeyFocusWidget();
 		bool edFoc = wf && wf->getTypeName() == "EditBox";
@@ -625,7 +624,7 @@ bool App::keyPressed( const OIS::KeyEvent &arg )
 			return false;
 		}
 	}
-
+}
 	InputBind(arg.key);
 	
 	if (!BaseApp::keyPressed(arg))

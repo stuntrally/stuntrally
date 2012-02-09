@@ -264,9 +264,10 @@ bool App::frameStart(Real time)
 		}
 
 		//**  bullet bebug draw
-		if (dbgdraw)  {
-			dbgdraw->setDebugMode(pSet->bltDebug ? /*255*/1: 0);
+		if (dbgdraw)  {							// DBG_DrawWireframe
+			dbgdraw->setDebugMode(pSet->bltDebug ? 1 /*+(1<<13) 255*/ : 0);
 			dbgdraw->step();  }
+
 
 		///  terrain mtr from blend maps
 		// now in CarModel::Update

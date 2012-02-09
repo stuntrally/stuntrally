@@ -379,6 +379,8 @@ void App::CreateBltTerrain()
 	//col->setWorldTransform(tr);
 	col->setFriction(0.9);
 	col->setRestitution(0.5);
+	col->setCollisionFlags(col->getCollisionFlags() |
+		btCollisionObject::CF_STATIC_OBJECT | btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT/**/);
 	pGame->collision.world->addCollisionObject(col);
 	pGame->collision.shapes.push_back(hfShape);/**/
 
