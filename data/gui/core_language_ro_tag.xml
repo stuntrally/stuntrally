@@ -96,6 +96,7 @@
 	<Tag name="NetMasterPort">Master Server Port</Tag>
 	<Tag name="InpSet_KeyHalf">Key Half</Tag>
 	<Tag name="CopySource">Setează ca sursă copiată</Tag>
+	<Tag name="rating">rating</Tag>
 	<Tag name="TipDisableFog">Disable fog when editing road from distance.</Tag>
 	<Tag name="GraphicsAll_Medium">Medium</Tag>
 	<Tag name="NeedReload">* trebuie reîncărcat</Tag>
@@ -137,6 +138,7 @@
 	<Tag name="ReflMode_single">Singur</Tag>
 	<Tag name="SetCamTo">Setează camera la</Tag>
 	<Tag name="max">max</Tag>
+	<Tag name="softparticles">Soft Particles</Tag>
 	<Tag name="TipTerTriSize">Mărime triunghiuri teren în [metri](recomandat: 1 - 2,  folosește mai multe pentru zone ale terenului mai mari).Se schimbă după Actualizare(F8).</Tag>
 	<Tag name="MessageBox_No">No</Tag>
 	<Tag name="Length">Lungimea</Tag>
@@ -195,12 +197,13 @@
 	<Tag name="Bloom">Încețoșare</Tag>
 	<Tag name="TipRenameTrk">Redenumește traseul selectat.</Tag>
 	<Tag name="TerrainHalf">Half</Tag>
+	<Tag name="GrColorMap">Grass color map</Tag>
 	<Tag name="TipBumpAmp">Amplitudinea denivelărilor suplimentare pe suprafaţă (cât de mare).</Tag>
 	<Tag name="InputFluidsMove">LMB - move   RMB - height</Tag>
 	<Tag name="TipNormalTex">Texturi normale(înalțimea în alpha)</Tag>
-	<Tag name="PipeMaterials">Materiale tub</Tag>
+	<Tag name="CountdownTime">Race countdown time</Tag>
 	<Tag name="CamInfoStrings">Tipul,girația,tangaj,distanța,înălțime,viteză,compensare,STÂNGA,DREAPTA,Mijloc,roata,schimbător,rotire,resetare,mișcă,H,Pos</Tag>
-	<Tag name="rating">rating</Tag>
+	<Tag name="End">sfârșit</Tag>
 	<Tag name="HDR">HDR</Tag>
 	<Tag name="TipABS">Previne blocarea roții la frânare (implicit: oprit)</Tag>
 	<Tag name="TipGrassPatchHeightMin">Înălțime minimă patch iarbă</Tag>
@@ -246,6 +249,7 @@
 	<Tag name="ColumnNSides">Fețele coloanei N</Tag>
 	<Tag name="RplAutoRec">Autoînregistrare reluare</Tag>
 	<Tag name="Reflections">Reflections</Tag>
+	<Tag name="PipeMaterials">Materiale tub</Tag>
 	<Tag name="Exponent">exponent</Tag>
 	<Tag name="InputFluidsPrevNext">PgUp,PgDn (or Wheel) - previous/next fluid</Tag>
 	<Tag name="Yaw">rotire</Tag>
@@ -290,12 +294,15 @@
 	<Tag name="InputRoadNotOnTer">when not on terrain</Tag>
 	<Tag name="ApplyShadows">Aplică umbre</Tag>
 	<Tag name="TipFogEndClr">Fog end color. R G B components 0 to 1 (eg. 0.7 0.8 0.9)</Tag>
+	<Tag name="TipGrassColorMap">Grass colormap for scenery, usually same choice as for grass material. Additional grass coloring.</Tag>
 	<Tag name="Multiplayer">Multiplayer</Tag>
 	<Tag name="VegetCol">Vegetation collision</Tag>
 	<Tag name="Particles">Particule</Tag>
 	<Tag name="Other">Alte</Tag>
 	<Tag name="TipTerLAngSm">Angle smooth range (transition).</Tag>
+	<Tag name="godrays">God Rays</Tag>
 	<Tag name="InputRoadNext">PgUp,PgDn (or Wheel) - previous/next point</Tag>
+	<Tag name="SceneryId">Scenery Id</Tag>
 	<Tag name="Development">Dezvoltare</Tag>
 	<Tag name="InputRoadIns">Ins - insert new (after picked, alt - before)</Tag>
 	<Tag name="min">min</Tag>
@@ -433,8 +440,10 @@
 	<Tag name="TipBumpFreq">Frequency of additional bumps on surface (distance between them).</Tag>
 	<Tag name="InputRoadDel">Del - delete picked</Tag>
 	<Tag name="InputFluidsTileY">; &apos;  - change texture tiling, one coord. only</Tag>
+	<Tag name="TipSceneryId">Scenery id (numeric value 0-20) for identifying unique lightings group on track. Used for impostors generation.</Tag>
 	<Tag name="InputUpdate">F8 - update track</Tag>
 	<Tag name="InputToggleGUIMode">F1 or ` - GUI mode (toggle Options)</Tag>
+	<Tag name="TipGrassMaterial">Grass material, chosen to match track's scenery.</Tag>
 	<Tag name="TipRearThrottleInverse">Inverse throttle and brake function in rear gear.</Tag>
 	<Tag name="RoadPoint">Road Point</Tag>
 	<Tag name="TerLHMax">Height Max</Tag>
@@ -583,7 +592,6 @@
 	<Tag name="RplSave">Save</Tag>
 	<Tag name="Environment">Environment</Tag>
 	<Tag name="GraphicsAll_High">High</Tag>
-	<Tag name="End">sfârșit</Tag>
 	<Tag name="TipRoadParams">Parametri punct drum</Tag>
 	<Tag name="SpeedUnit">Speed unit</Tag>
 	<Tag name="ChangeCar">Change Car</Tag>
@@ -611,6 +619,7 @@
 	<Tag name="GrassSize">Mărimea ierbii</Tag>
 	<Tag name="Left">Left</Tag>
 	<Tag name="TipDustInt">Intensitate particule praf.</Tag>
+	<Tag name="GrMaterial">Grass Material</Tag>
 	<Tag name="Startup">Startup</Tag>
 	<Tag name="distribution">distribution</Tag>
 	<Tag name="Diff2">Easy</Tag>
@@ -655,15 +664,7 @@
 	<Tag name="InputNextOptTab">F2,F3 - fila de opțiuni precedentă,următoare</Tag>
 	<Tag name="RollingDrag">Învârtire mașină</Tag>
 	<Tag name="RplAll">Toate</Tag>
-	<Tag name="softparticles">Soft Particles</Tag>
-	<Tag name="GrColorMap">Grass color map</Tag>
-	<Tag name="CountdownTime">Race countdown time</Tag>
-	<Tag name="TipGrassColorMap">Grass colormap for scenery, usually same choice as for grass material. Additional grass coloring.</Tag>
-	<Tag name="godrays">God Rays</Tag>
-	<Tag name="SceneryId">Scenery Id</Tag>
-	<Tag name="TipSceneryId">Scenery id (numeric value 0-20) for identifying unique lightings group on track. Used for impostors generation.</Tag>
-	<Tag name="TipGrassMaterial">Grass material, chosen to match track's scenery.</Tag>
-	<Tag name="GrMaterial">Grass Material</Tag>
+	<Tag name="ShadowFilter">Filter</Tag>
 	<Tag name="GameVersion">1.5</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 

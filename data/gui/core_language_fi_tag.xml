@@ -96,6 +96,7 @@
 	<Tag name="NetMasterPort">Pääpalvelimen portti</Tag>
 	<Tag name="InpSet_KeyHalf">Key Half</Tag>
 	<Tag name="CopySource">Aseta kopiointilähteeksi</Tag>
+	<Tag name="rating">arvostelu</Tag>
 	<Tag name="TipDisableFog">Disable fog when editing road from distance.</Tag>
 	<Tag name="GraphicsAll_Medium">Keskitaso</Tag>
 	<Tag name="NeedReload">* vaatii uudelleen latauksen</Tag>
@@ -137,6 +138,7 @@
 	<Tag name="ReflMode_single">Yksittäinen</Tag>
 	<Tag name="SetCamTo">Set camera to</Tag>
 	<Tag name="max">maksimi</Tag>
+	<Tag name="softparticles">Soft Particles</Tag>
 	<Tag name="TipTerTriSize">Terrain triangle size in [meters] (recommended: 1 - 2, use more for big track area). Changed after Update (F8).</Tag>
 	<Tag name="MessageBox_No">Ei</Tag>
 	<Tag name="Length">Pituus</Tag>
@@ -195,12 +197,13 @@
 	<Tag name="Bloom">Bloom-tehoste</Tag>
 	<Tag name="TipRenameTrk">Rename selected track with new name (change name first).</Tag>
 	<Tag name="TerrainHalf">Puolikas</Tag>
+	<Tag name="GrColorMap">Grass color map</Tag>
 	<Tag name="TipBumpAmp">Amplitude of additional bumps on surface (how high).</Tag>
 	<Tag name="InputFluidsMove">LMB - move   RMB - height</Tag>
 	<Tag name="TipNormalTex">Normaalitekstuuri (korkeus alpha-kanavassa).</Tag>
-	<Tag name="PipeMaterials">Putkimateriaalit</Tag>
+	<Tag name="CountdownTime">Race countdown time</Tag>
 	<Tag name="CamInfoStrings">Type,Yaw,Pitch,Dist,Height,Speed,Offset,LEFT,RIGHT,Middle,Wheel,shift,Rotate,reset,move,H,Pos</Tag>
-	<Tag name="rating">arvostelu</Tag>
+	<Tag name="End">loppu</Tag>
 	<Tag name="HDR">HDR-tehoste</Tag>
 	<Tag name="TipABS">Estää jarrujen lukkiutumisen (oletus: pois)</Tag>
 	<Tag name="TipGrassPatchHeightMin">Minimal grass patch height.</Tag>
@@ -246,6 +249,7 @@
 	<Tag name="ColumnNSides">Column N sides</Tag>
 	<Tag name="RplAutoRec">Nauhoita uusinta automaattisesti</Tag>
 	<Tag name="Reflections">Heijastukset</Tag>
+	<Tag name="PipeMaterials">Putkimateriaalit</Tag>
 	<Tag name="Exponent">exponentti</Tag>
 	<Tag name="InputFluidsPrevNext">PgUp,PgDn (or Wheel) - previous/next fluid</Tag>
 	<Tag name="Yaw">kallistus</Tag>
@@ -290,12 +294,15 @@
 	<Tag name="InputRoadNotOnTer">when not on terrain</Tag>
 	<Tag name="ApplyShadows">Käytä varjoja</Tag>
 	<Tag name="TipFogEndClr">Fog end color. R G B components 0 to 1 (eg. 0.7 0.8 0.9)</Tag>
+	<Tag name="TipGrassColorMap">Grass colormap for scenery, usually same choice as for grass material. Additional grass coloring.</Tag>
 	<Tag name="Multiplayer">Moninpeli</Tag>
 	<Tag name="VegetCol">Kasvillisuuden törmäystunnistus</Tag>
 	<Tag name="Particles">Hiukkaset</Tag>
 	<Tag name="Other">Muu</Tag>
 	<Tag name="TipTerLAngSm">Angle smooth range (transition).</Tag>
+	<Tag name="godrays">God Rays</Tag>
 	<Tag name="InputRoadNext">PgUp,PgDn (or Wheel) - previous/next point</Tag>
+	<Tag name="SceneryId">Scenery Id</Tag>
 	<Tag name="Development">Kehitys</Tag>
 	<Tag name="InputRoadIns">Ins - insert new (after picked, alt - before)</Tag>
 	<Tag name="min">minimi</Tag>
@@ -433,8 +440,10 @@
 	<Tag name="TipBumpFreq">Frequency of additional bumps on surface (distance between them).</Tag>
 	<Tag name="InputRoadDel">Del - delete picked</Tag>
 	<Tag name="InputFluidsTileY">; &apos;  - change texture tiling, one coord. only</Tag>
+	<Tag name="TipSceneryId">Scenery id (numeric value 0-20) for identifying unique lightings group on track. Used for impostors generation.</Tag>
 	<Tag name="InputUpdate">F8 - update track</Tag>
 	<Tag name="InputToggleGUIMode">F1 or ` - GUI mode (toggle Options)</Tag>
+	<Tag name="TipGrassMaterial">Grass material, chosen to match track's scenery.</Tag>
 	<Tag name="TipRearThrottleInverse">Inverse throttle and brake function in rear gear.</Tag>
 	<Tag name="RoadPoint">Tiepiste</Tag>
 	<Tag name="TerLHMax">Maksimikorkeus</Tag>
@@ -583,7 +592,6 @@
 	<Tag name="RplSave">Tallenna</Tag>
 	<Tag name="Environment">Ympäristö</Tag>
 	<Tag name="GraphicsAll_High">Korkea</Tag>
-	<Tag name="End">loppu</Tag>
 	<Tag name="TipRoadParams">Tien pisteen parametrit.</Tag>
 	<Tag name="SpeedUnit">Nopeusyksikkö</Tag>
 	<Tag name="ChangeCar">Vaihda auto</Tag>
@@ -611,6 +619,7 @@
 	<Tag name="GrassSize">Ruohikon koko</Tag>
 	<Tag name="Left">Vasen</Tag>
 	<Tag name="TipDustInt">Pölyhiukkasten voimakkuus.</Tag>
+	<Tag name="GrMaterial">Grass Material</Tag>
 	<Tag name="Startup">Käynnistys</Tag>
 	<Tag name="distribution">distribution</Tag>
 	<Tag name="Diff2">Helppo</Tag>
@@ -655,15 +664,7 @@
 	<Tag name="InputNextOptTab">F2,F3 - prev,next Options tab</Tag>
 	<Tag name="RollingDrag">Rolling Drag</Tag>
 	<Tag name="RplAll">Kaikki</Tag>
-	<Tag name="softparticles">Soft Particles</Tag>
-	<Tag name="GrColorMap">Grass color map</Tag>
-	<Tag name="CountdownTime">Race countdown time</Tag>
-	<Tag name="TipGrassColorMap">Grass colormap for scenery, usually same choice as for grass material. Additional grass coloring.</Tag>
-	<Tag name="godrays">God Rays</Tag>
-	<Tag name="SceneryId">Scenery Id</Tag>
-	<Tag name="TipSceneryId">Scenery id (numeric value 0-20) for identifying unique lightings group on track. Used for impostors generation.</Tag>
-	<Tag name="TipGrassMaterial">Grass material, chosen to match track's scenery.</Tag>
-	<Tag name="GrMaterial">Grass Material</Tag>
+	<Tag name="ShadowFilter">Filter</Tag>
 	<Tag name="GameVersion">1.5</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 
