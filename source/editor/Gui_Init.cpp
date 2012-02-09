@@ -125,7 +125,6 @@ void App::InitGui()
 	Edt(edTerTriSize, "edTerTriSize", editTerTriSize);
 	Edt(edTerLScale, "edTerLScale", editTerLScale);
 	Slv(TerTriSize,	powf((sc.td.fTriangleSize -0.1f)/5.9f, 0.5f));
-	//slTerLScale = mGUI->findWidget<ScrollBar>("TerLScale");
 	Slv(TerLScale, 0);
 	Btn("TerrainNew", btnTerrainNew);
 	Btn("TerrainGenerate", btnTerGenerate);
