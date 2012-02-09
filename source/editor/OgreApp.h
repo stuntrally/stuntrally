@@ -217,14 +217,14 @@ protected:
 	void AddTrkL(std::string name, int user, const class TrackInfo* ti);
 	
 	//  track
-	void UpdGuiRdStats(const SplineRoad* rd, const Scene& sc, float time), ReadTrkStats();
-	MyGUI::MultiList2* trkMList;  MyGUI::EditPtr trkDesc;
-	MyGUI::StaticImagePtr imgPrv,imgMini,imgTer, imgTrkIco1,imgTrkIco2;
+	void UpdGuiRdStats(const SplineRoad* rd, const Scene& sc, float time, bool champ=false), ReadTrkStats();
+	MyGUI::MultiList2* trkMList;  MyGUI::EditPtr trkDesc[1];
+	MyGUI::StaticImagePtr imgPrv[1],imgMini[1],imgTer[1], imgTrkIco1,imgTrkIco2;
 	const static int StTrk = 12, InfTrk = 10;
-	MyGUI::StaticTextPtr valTrk, stTrk[StTrk], infTrk[InfTrk];
+	MyGUI::StaticTextPtr valTrk[1], stTrk[1][StTrk], infTrk[1][InfTrk];  // [1] 2nd is in game (common code)
 
 	void listTrackChng(MyGUI::MultiList2* li, size_t pos), TrackListUpd(bool resetNotFound=false);
-	TracksXml tracksXml;  void btnTrkView1(WP),btnTrkView2(WP),ChangeTrackView(bool full),updTrkListDim();
+	TracksXml tracksXml;  void btnTrkView1(WP),btnTrkView2(WP),ChangeTrackView(),updTrkListDim();
 	const static int TcolW[32];
 
 	void edTrkFind(MyGUI::EditPtr);  Ogre::String sTrkFind;  MyGUI::EditPtr edFind;

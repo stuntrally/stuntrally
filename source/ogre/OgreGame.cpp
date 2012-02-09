@@ -41,8 +41,8 @@ App::App()
 	,valSizeGaug(0), valSizeMinimap(0), valZoomMinimap(0), valCountdownTime(0)  // view
 	,bRkmh(0),bRmph(0), chDbgT(0),chDbgB(0), chBlt(0),chBltTxt(0), chFps(0)
 	,chTimes(0),chMinimp(0),chOpponents(0), bnQuit(0)
-	,imgCar(0),imgPrv(0),imgMini(0),imgTer(0), imgTrkIco1(0),imgTrkIco2(0), edFind(0)
-	,valCar(0),valTrk(0),trkDesc(0), valLocPlayers(0)
+	,imgCar(0), imgTrkIco1(0),imgTrkIco2(0)
+	,valCar(0), valLocPlayers(0), edFind(0)
 	,valRplPerc(0), valRplCur(0), valRplLen(0), slRplPos(0), rplList(0)
 	,valRplName(0),valRplInfo(0),valRplName2(0),valRplInfo2(0), edRplName(0), edRplDesc(0)
 	,rbRplCur(0), rbRplAll(0), rbRplGhosts(0), bRplBack(0),bRplFwd(0), newGameRpl(0)
@@ -65,16 +65,22 @@ App::App()
 	,edInputMin(0), edInputMax(0), edInputMul(0), actDetail(0), cmbInpDetSet(0)
 	,liChamps(0),liStages(0), edChampStage(0),edChampEnd(0), imgChampStage(0)
 {
+	int i;
+	for (int c=0; c < 2; ++c)
+	{
+		trkDesc[c]=0;  valTrk[c]=0;  imgPrv[c]=0; imgMini[c]=0; imgTer[c]=0;
+		for (i=0; i < StTrk;  ++i)  stTrk[c][i] = 0;
+		for (i=0; i < InfTrk; ++i)  infTrk[c][i] = 0;
+	}	
 	pathTrk[0] = PATHMANAGER::GetTrackPath() + "/";
 	pathTrk[1] = PATHMANAGER::GetTrackPathUser() + "/";
 	resCar = "";  resTrk = "";  resDrv = "";
-	int i;
+
 	for (int o=0; o < 5; ++o)  for (int c=0; c < 3; ++c)
 		hudOpp[o][c] = 0;
 		
 	for (i=0; i < 5; ++i)
 	{	ovL[i]=0;  ovR[i]=0;  ovS[i]=0;  ovU[i]=0;  }
-	for (i=0; i < StTrk; ++i)  stTrk[i] = 0;
 	
 	//  util for update rot
 	Quaternion qr;  {

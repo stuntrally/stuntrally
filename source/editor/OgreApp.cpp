@@ -48,8 +48,8 @@ App::App()  //  gui wigdets--
 	,edRdTcMul(0),edRdLenDim(0),edRdWidthSteps(0),edRdHeightOfs(0)  // road
 	,edRdSkirtLen(0),edRdSkirtH(0), edRdMergeLen(0),edRdLodPLen(0)
 	,edRdColN(0),edRdColR(0), edRdPwsM(0),edRdPlsM(0)
-	,imgPrv(0),imgMini(0),imgTer(0), imgTrkIco1(0),imgTrkIco2(0), edFind(0)
-	,trkMList(0),trkDesc(0),trkName(0),bListTrackU(0)  // track
+	,imgTrkIco1(0),imgTrkIco2(0), edFind(0)
+	,trkMList(0),trkName(0),bListTrackU(0)  // track
 
 	,mTerrainGroup(0), mTerrainPaging(0), mPageManager(0), mTerrainGlobals(0)
 	,bTerUpd(0), curBr(2), bGuiReinit(0), noBlendUpd(0), bGI(0), resList(0)
@@ -61,6 +61,8 @@ App::App()  //  gui wigdets--
 	
 	,materialFactory(0)
 {
+	imgPrv[0]=0; imgMini[0]=0; imgTer[0]=0;  trkDesc[0]=0;
+	
 	pathTrk[0] = PATHMANAGER::GetTrackPath() + "/";      pathTrkPrv[0] = pathTrk[0] + "_previews/";  resTrk = "";
 	pathTrk[1] = PATHMANAGER::GetTrackPathUser() + "/";  pathTrkPrv[1] = pathTrk[1] + "_previews/";
 	strFSerrors = "";
@@ -81,7 +83,7 @@ App::App()  //  gui wigdets--
 	for (int i=0; i<RDS_TXT; ++i)  rdTxtSt[i]=0;
 	for (int i=0; i<FL_TXT; ++i)  flTxt[i]=0;
 	
-	for (int i=0; i < StTrk; ++i)  stTrk[i] = 0;
+	for (int i=0; i < StTrk; ++i)  stTrk[0][i] = 0;
 	for (int i=0; i < 4; ++i)  {  cmbRoadMtr[i]=0;  cmbPipeMtr[i]=0;  }
 }
 

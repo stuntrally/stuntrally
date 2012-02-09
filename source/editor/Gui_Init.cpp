@@ -308,7 +308,7 @@ void App::InitGui()
 	bCopyTrackU = 0;
 	
 	//  text desc
-	Edt(trkDesc, "TrackDesc", editTrkDesc);
+	Edt(trkDesc[0], "TrackDesc", editTrkDesc);
 	trkName = mGUI->findWidget<Edit>("TrackName");
 	if (trkName)  trkName->setCaption(pSet->gui.track);
 

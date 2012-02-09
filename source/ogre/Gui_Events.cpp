@@ -271,7 +271,7 @@ void App::btnChgTrack(WP)
 {
 	pSet->gui.track = sListTrack;
 	pSet->gui.track_user = bListTrackU;
-	if (valTrk)  valTrk->setCaption(TR("#{Track}: ") + sListTrack);
+	if (valTrk[0])  valTrk[0]->setCaption(TR("#{Track}: ") + sListTrack);
 
 	if (mMasterClient) {
 		uploadGameInfo();
@@ -578,7 +578,7 @@ if (!bAssignKey)
 			{	WP wp = chBltTxt;  ChkEv(bltProfilerTxt);  return false;  }
 			else if (ctrl)
 			{	WP wp = chBlt;  ChkEv(bltDebug);  return false;  }
-			break;
+				break;
 
 			case KC_F7:		// Times
 			if (shift)
@@ -641,18 +641,42 @@ void App::toggleGui(bool toggle)
 	if (toggle)
 		isFocGui = !isFocGui;
 
-	bool notMain = isFocGui && !pSet->isMain, game = pSet->inMenu == WND_Game, champ = pSet->inMenu == WND_Champ, gc = game || champ;
+	bool notMain = isFocGui && !pSet->isMain;
 	if (mWndMain)	mWndMain->setVisible(isFocGui && pSet->isMain);
-	if (mWndGame){  mWndGame->setVisible(notMain  && gc);
-		mWndGame->setCaption(champ ? TR("#{Championship}") : TR("#{SingleRace}"));  }
 	if (mWndReplays) mWndReplays->setVisible(notMain && pSet->inMenu == WND_Replays);
 	if (mWndOpts)	mWndOpts->setVisible(notMain  && pSet->inMenu == WND_Options);
+
+	///  update track tab, for champs wnd
+	bool game = pSet->inMenu == WND_Game, champ = pSet->inMenu == WND_Champ, gc = game || champ;
+	if (mWndGame)
+	{
+		/*bool Track1 = mWndTabsGame->getItemAt(1)->getUserString("empty").empty();
+		if (Track1 && champ || !Track1 && !champ)
+		{
+			//  hide controls on track tab but not for champs
+			if (trkMList)  trkMList->setVisible(!Track1);
+			if (edFind)  edFind->setVisible(!Track1);
+			ChangeTrackView();  // forced view short list
+
+			//  move Track tab to end
+			mWndTabsGame->swapItems(1,7);
+				size_t t = mWndTabsGame->getIndexSelected();
+				mWndTabsGame->setIndexSelected(1);  mWndTabsGame->setIndexSelected(7);
+				mWndTabsGame->setIndexSelected(t);  // to refresh if were on 1 or 7
+		}*/
+
+		mWndGame->setVisible(notMain  && gc);
+		if (mWndGame->getVisible())
+			mWndGame->setCaption(champ ? TR("#{Championship}") : TR("#{SingleRace}"));
+	}
 	if (notMain && gc)  // show hide champs,stages
 	{
 		size_t id = mWndTabsGame->getIndexSelected();
+		mWndTabsGame->setButtonWidthAt(1,champ ? 1 : -1);  if (id == 1 && champ)  mWndTabsGame->setIndexSelected(5);
 		mWndTabsGame->setButtonWidthAt(4,champ ? 1 : -1);  if (id == 4 && champ)  mWndTabsGame->setIndexSelected(5);
 		mWndTabsGame->setButtonWidthAt(5,champ ? -1 : 1);  if (id == 5 && !champ)  mWndTabsGame->setIndexSelected(1);
 		mWndTabsGame->setButtonWidthAt(6,champ ? -1 : 1);  if (id == 6 && !champ)  mWndTabsGame->setIndexSelected(1);
+		mWndTabsGame->setButtonWidthAt(7,champ ? -1 : 1);  if (id == 7 && !champ)  mWndTabsGame->setIndexSelected(1);
 	}
 
 	if (bnQuit)  bnQuit->setVisible(isFocGui);

@@ -98,7 +98,7 @@ bool App::frameStart(Real time)
 		if (isFocGui && mWndTabsOpts->getIndexSelected() == 4 && pSet->inMenu == WND_Options && !pSet->isMain)
 			UpdateInputBars();
 		
-		//  keys dn/up - trklist, carlist
+		//  keys up/dn, for lists
 		#define isKey(a)  mKeyboard->isKeyDown(OIS::a)
 		static float dirU = 0.f,dirD = 0.f;
 		if (isFocGui && !pSet->isMain)

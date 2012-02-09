@@ -172,15 +172,15 @@ void App::GuiInitTrack()
    	trkMList->setVisible(false);
 	
 	//  preview images
-	imgPrv = mGUI->findWidget<StaticImage>("TrackImg");
-	imgTer = mGUI->findWidget<StaticImage>("TrkTerImg");
-	imgMini = mGUI->findWidget<StaticImage>("TrackMap");
+	imgPrv[0] = mGUI->findWidget<StaticImage>("TrackImg");
+	imgTer[0] = mGUI->findWidget<StaticImage>("TrkTerImg");
+	imgMini[0] = mGUI->findWidget<StaticImage>("TrackMap");
+
 	//  stats text
 	for (int i=0; i < StTrk; ++i) //!
-		stTrk[i] = mGUI->findWidget<StaticText>("iv"+toStr(i+1), false);
-		
+		stTrk[0][i] = mGUI->findWidget<StaticText>("iv"+toStr(i+1), false);
 	for (int i=0; i < InfTrk; ++i)
-		infTrk[i] = mGUI->findWidget<StaticText>("ti"+toStr(i+1), false);
+		infTrk[0][i] = mGUI->findWidget<StaticText>("ti"+toStr(i+1), false);
 		
 	Edt(edFind, "TrackFind", edTrkFind);
 
@@ -209,7 +209,7 @@ void App::GuiInitTrack()
     TrackListUpd(true);  //upd
 	listTrackChng(trkMList,0);
 
-	ChangeTrackView(pSet->tracks_view);
+	ChangeTrackView();
 }
 
 
@@ -248,17 +248,20 @@ void App::edTrkFind(EditPtr ed)
 //-----------------------------------------------------------------------------------------------------------
 void App::btnTrkView1(WP wp)
 {
-	pSet->tracks_view = 0;  ChangeTrackView(pSet->tracks_view);
+	pSet->tracks_view = 0;  ChangeTrackView();
 }
 void App::btnTrkView2(WP wp)
 {
-	pSet->tracks_view = 1;  ChangeTrackView(pSet->tracks_view);
+	pSet->tracks_view = 1;  ChangeTrackView();
 }
 
-void App::ChangeTrackView(bool full)
+void App::ChangeTrackView()
 {
-	imgPrv->setVisible(!full);
-	trkDesc->setVisible(!full);
+	bool full = pSet->tracks_view;
+
+	if (!imgPrv[0])  return;
+	imgPrv[0]->setVisible(!full);
+	trkDesc[0]->setVisible(!full);
 	imgTrkIco1->setVisible(full);
 	imgTrkIco2->setVisible(full);
 
@@ -269,13 +272,14 @@ void App::ChangeTrackView(bool full)
 void App::updTrkListDim()
 {
 	if (!trkMList)  return;
-	const IntCoord& wi = mWndOpts->getCoord();
 	bool full = pSet->tracks_view;
 
 	int sum = 0, cnt = trkMList->getColumnCount();
 	for (int c=0; c < cnt; ++c)  sum += TcolW[c];
-	
+
+	const IntCoord& wi = mWndOpts->getCoord();
 	int sw = 0, xico1 = 0, xico2 = 0, wico = 0;
+
 	for (int c=0; c < cnt; ++c)
 	{
 		int w = c==cnt-1 ? 18 : (full || c==0 || c==cnt-1 ?
@@ -297,7 +301,7 @@ void App::updTrkListDim()
 	if (panelNetTrack)  {
 		TabItem* trkTab = mGUI->findWidget<TabItem>("TabTrack");
 		const IntCoord& tc = trkTab->getCoord();
-		panelNetTrack->setCoord(0,0,tc.width*0.66f,tc.height);  }
+		panelNetTrack->setCoord(0,0, tc.width*0.66f, tc.height);  }
 	#endif
 }
 
@@ -401,68 +405,84 @@ void App::ReadTrkStats()
 	Scene sc;  sc.LoadXml(sSc);  // fails to defaults
 #ifndef ROAD_EDITOR  // game
 	SplineRoad rd(pGame);  rd.LoadFile(sRd,false);  // load
+
 	TIMER tim;  tim.Load(PATHMANAGER::GetTrackRecordsPath()+"/"+sListTrack+".txt", 0.f, pGame->error_output);
 	tim.AddCar(sListCar);  tim.SetPlayerCarID(0);
-	UpdGuiRdStats(&rd,sc, tim.GetBestLap(pSet->gui.trackreverse));
+
+	UpdGuiRdStats(&rd,sc, sListTrack, tim.GetBestLap(pSet->gui.trackreverse));
 #else
 	SplineRoad rd;  rd.LoadFile(sRd,false);  // load
-	UpdGuiRdStats(&rd,sc, 0.f);
+	UpdGuiRdStats(&rd,sc, sListTrack, 0.f);
 #endif
 }
 
-void App::UpdGuiRdStats(const SplineRoad* rd, const Scene& sc, float time)
+#ifndef ROAD_EDITOR  // game
+void App::ReadTrkStatsChamp(String track, bool reverse)
 {
-	//  won't refresh if same-...  road disappears if not found...
-	if (imgPrv)  imgPrv->setImageTexture(sListTrack+".jpg");
-	if (imgTer)  imgTer->setImageTexture(sListTrack+"_ter.jpg");
-	if (imgMini)  imgMini->setImageTexture(sListTrack+"_mini.png");
+	String sRd = pathTrk[0] + track + "/road.xml";
+	String sSc = pathTrk[0] + track + "/scene.xml";
 
+	Scene sc;  sc.LoadXml(sSc);  // fails to defaults
+	SplineRoad rd(pGame);  rd.LoadFile(sRd,false);  // load
 
-	Fmt(s, "%5.3f km", sc.td.fTerWorldSize / 1000.f);	if (stTrk[1])  stTrk[1]->setCaption(s);
-	if (!rd)  return;
-	Fmt(s, "%5.3f km", rd->st.Length / 1000.f);			if (stTrk[0])  stTrk[0]->setCaption(s);
+	TIMER tim;  tim.Load(PATHMANAGER::GetTrackRecordsPath()+"/"+track+".txt", 0.f, pGame->error_output);
+	tim.AddCar(sListCar);  tim.SetPlayerCarID(0);
 
-	Fmt(s, "%4.2f m", rd->st.WidthAvg);		if (stTrk[2])  stTrk[2]->setCaption(s);
-	Fmt(s, "%3.1f m", rd->st.HeightDiff);	if (stTrk[3])  stTrk[3]->setCaption(s);
+	UpdGuiRdStats(&rd,sc, track, tim.GetBestLap(reverse), true);
+}
+#endif
 
-	Fmt(s, "%3.1f%%", rd->st.OnTer);	if (stTrk[4])  stTrk[4]->setCaption(s);
-	Fmt(s, "%3.1f%%", rd->st.Pipes);	if (stTrk[5])  stTrk[5]->setCaption(s);
-					
-	//Fmt(s, "%4.2f%%", rd->st.Yaw);	if (stTrk[6])  stTrk[6]->setCaption(s);
-	//Fmt(s, "%4.2f%%", rd->st.Pitch);	if (stTrk[7])  stTrk[7]->setCaption(s);
-	//Fmt(s, "%4.2f%%", rd->st.Roll);	if (stTrk[8])  stTrk[8]->setCaption(s);
+void App::UpdGuiRdStats(const SplineRoad* rd, const Scene& sc, const String& sTrack, float time, bool champ)
+{
+	int ch = champ ? 1 : 0;
 	
-	int id = tracksXml.trkmap[sListTrack];
+	//  won't refresh if same-...  road disappears if not found...
+	if (imgPrv[ch])  imgPrv[ch]->setImageTexture(sTrack+".jpg");
+	if (imgTer[ch])  imgTer[ch]->setImageTexture(sTrack+"_ter.jpg");
+	if (imgMini[ch])  imgMini[ch]->setImageTexture(sTrack+"_mini.png");
+
+
+	Fmt(s, "%5.3f km", sc.td.fTerWorldSize / 1000.f);	if (stTrk[ch][1])  stTrk[ch][1]->setCaption(s);
+	if (!rd)  return;
+	Fmt(s, "%5.3f km", rd->st.Length / 1000.f);			if (stTrk[ch][0])  stTrk[ch][0]->setCaption(s);
+
+	Fmt(s, "%4.2f m", rd->st.WidthAvg);		if (stTrk[ch][2])  stTrk[ch][2]->setCaption(s);
+	Fmt(s, "%3.1f m", rd->st.HeightDiff);	if (stTrk[ch][3])  stTrk[ch][3]->setCaption(s);
+
+	Fmt(s, "%3.1f%%", rd->st.OnTer);		if (stTrk[ch][4])  stTrk[ch][4]->setCaption(s);
+	Fmt(s, "%3.1f%%", rd->st.Pipes);		if (stTrk[ch][5])  stTrk[ch][5]->setCaption(s);
+					
+	int id = tracksXml.trkmap[sTrack];
 	for (int i=0; i < InfTrk; ++i)
-		if (infTrk[i])  infTrk[i]->setCaption("");
+		if (infTrk[ch][i])  infTrk[ch][i]->setCaption("");
 	if (id > 0)
 	{	const TrackInfo& ti = tracksXml.trks[id-1];
 		#define str0(v)  ((v)==0 ? "" : toStr(v))
-		if (infTrk[0])  infTrk[0]->setCaption(str0(ti.fluids));
-		if (infTrk[1])  infTrk[1]->setCaption(str0(ti.bumps));		if (infTrk[2])  infTrk[2]->setCaption(str0(ti.jumps));
-		if (infTrk[3])  infTrk[3]->setCaption(str0(ti.loops));		if (infTrk[4])  infTrk[4]->setCaption(str0(ti.pipes));
-		if (infTrk[5])  infTrk[5]->setCaption(str0(ti.banked));		if (infTrk[6])  infTrk[6]->setCaption(str0(ti.frenzy));
-		if (infTrk[7])  infTrk[7]->setCaption(str0(ti.longn));
-		if (infTrk[8])  infTrk[8]->setCaption(toStr(ti.diff));		if (infTrk[9])  infTrk[9]->setCaption(toStr(ti.rating));
+		if (infTrk[ch][0])  infTrk[ch][0]->setCaption(str0(ti.fluids));
+		if (infTrk[ch][1])  infTrk[ch][1]->setCaption(str0(ti.bumps));		if (infTrk[ch][2])  infTrk[ch][2]->setCaption(str0(ti.jumps));
+		if (infTrk[ch][3])  infTrk[ch][3]->setCaption(str0(ti.loops));		if (infTrk[ch][4])  infTrk[ch][4]->setCaption(str0(ti.pipes));
+		if (infTrk[ch][5])  infTrk[ch][5]->setCaption(str0(ti.banked));		if (infTrk[ch][6])  infTrk[ch][6]->setCaption(str0(ti.frenzy));
+		if (infTrk[ch][7])  infTrk[ch][7]->setCaption(str0(ti.longn));
+		if (infTrk[ch][8])  infTrk[ch][8]->setCaption(toStr(ti.diff));		if (infTrk[ch][9])  infTrk[ch][9]->setCaption(toStr(ti.rating));
 	}
 
 #ifndef ROAD_EDITOR  // game
 	//  best time, avg vel,
 	if (time < 0.1f)
-	{	Fmt(s, "%s", GetTimeString(0.f).c_str());	if (stTrk[6])  stTrk[6]->setCaption(s);
+	{	Fmt(s, "%s", GetTimeString(0.f).c_str());	if (stTrk[ch][6])  stTrk[ch][6]->setCaption(s);
 		if (pSet->show_mph)	Fmt(s, "0 mph");
-		else				Fmt(s, "0 km/h");		if (stTrk[7])  stTrk[7]->setCaption(s);
+		else				Fmt(s, "0 km/h");		if (stTrk[ch][7])  stTrk[ch][7]->setCaption(s);
 	}else
-	{	Fmt(s, "%s", GetTimeString(time).c_str());	if (stTrk[6])  stTrk[6]->setCaption(s);
-		if (pSet->show_mph)	Fmt(s, "%4.1f mph", rd->st.Length / time * 2.23693629f);
+	{	Fmt(s, "%s", GetTimeString(time).c_str());	if (stTrk[ch][6])  stTrk[ch][6]->setCaption(s);
+		if (pSet->show_mph)	Fmt(s, "%4.1f mph",  rd->st.Length / time * 2.23693629f);
 		else				Fmt(s, "%4.1f km/h", rd->st.Length / time * 3.6f);
-		if (stTrk[7])  stTrk[7]->setCaption(s);
-		//Fmt(s, "%4.2f%%", rd->st.Pitch);	if (stTrk[8])  stTrk[8]->setCaption(s);
+		if (stTrk[ch][7])  stTrk[ch][7]->setCaption(s);
+		//Fmt(s, "%4.2f%%", rd->st.Pitch);	if (stTrk[ch][8])  stTrk[ch][8]->setCaption(s);
 	}
 #else
-	if (trkName)  //?.
-		trkName->setCaption(sListTrack.c_str());
+	if (trkName)  //
+		trkName->setCaption(sTrack.c_str());
 #endif
-	if (trkDesc)  // desc
-		trkDesc->setCaption(rd->sTxtDesc.c_str());
+	if (trkDesc[ch])  // desc
+		trkDesc[ch]->setCaption(rd->sTxtDesc.c_str());
 }

@@ -112,7 +112,7 @@ void App::updateGameInfoGUI()
 	if (imgNetTrack)
 		imgNetTrack->setImageTexture(sListTrack+".jpg");
 	if (edNetTrackInfo && trkDesc)
-		edNetTrackInfo->setCaption(trkDesc->getCaption());
+		edNetTrackInfo->setCaption(trkDesc[0]->getCaption());
 }
 
 void App::uploadGameInfo()

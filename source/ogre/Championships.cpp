@@ -137,7 +137,7 @@ void App::ChampsListUpdate()
 //---------------------------------------------------------------------
 void App::listChampChng(MyGUI::MultiList2* chlist, size_t pos)
 {
-	if (pos < 0)  return;
+	if (pos==ITEM_NONE)  return;
 	if (pos >= champs.champs.size())  {  LogO("Error champ sel > size.");  return;  }
 	
 	//  update champ stages
@@ -186,6 +186,23 @@ void App::listChampChng(MyGUI::MultiList2* chlist, size_t pos)
 	txt = (TextBox*)mWndGame->findWidget("valChScore");
 	sprintf(ss, "%5.1f", progress.champs[pos].score);
 	if (txt)  txt->setCaption(ss);
+}
+
+///  Stages list  sel changed,  update Track info
+//---------------------------------------------------------------------
+void App::listStageChng(MyGUI::MultiList2* li, size_t pos)
+{
+	if (pos==ITEM_NONE)  return;
+	int nch = liChamps->getIndexSelected();
+	if (nch >= champs.champs.size())  {  LogO("Error champ sel > size.");  return;  }
+
+	const Champ& ch = champs.champs[nch];
+	if (pos >= ch.trks.size())  {  LogO("Error stagh sel > tracks.");  return;  }
+	const string& trkName = ch.trks[pos].name;
+	bool reversed = ch.trks[pos].reversed;
+
+	if (valTrk[1])  valTrk[1]->setCaption(TR("#{Track}: ") + trkName);
+	ReadTrkStatsChamp(trkName, reversed);
 }
 //---------------------------------------------------------------------
 

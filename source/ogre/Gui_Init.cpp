@@ -405,10 +405,10 @@ void App::InitGui()
     //------------------------------------------------------------------------
 
 	//  track text, chg btn
-	trkDesc = mGUI->findWidget<Edit>("TrackDesc");
-    valTrk = mGUI->findWidget<StaticText>("TrackText");
-    if (valTrk)
-		valTrk->setCaption(TR("#{Track}: " + pSet->gui.track));  sListTrack = pSet->gui.track;
+	trkDesc[0] = mGUI->findWidget<Edit>("TrackDesc");
+    valTrk[0] = mGUI->findWidget<StaticText>("TrackText");
+    if (valTrk[0])
+		valTrk[0]->setCaption(TR("#{Track}: " + pSet->gui.track));  sListTrack = pSet->gui.track;
 
     GuiInitTrack();
 
@@ -438,6 +438,20 @@ void App::InitGui()
 
 	//  championships
 	//------------------------------------------------------------------------
+	//  track stats 2nd set
+	trkDesc[1] = mGUI->findWidget<Edit>("TrackDesc2");
+    valTrk[1] = mGUI->findWidget<StaticText>("TrackText2");
+	//  preview images
+	imgPrv[1] = mGUI->findWidget<StaticImage>("TrackImg2");
+	imgTer[1] = mGUI->findWidget<StaticImage>("TrkTerImg2");
+	imgMini[1] = mGUI->findWidget<StaticImage>("TrackMap2");
+	//  stats text
+	for (int i=0; i < StTrk; ++i)
+		stTrk[1][i] = mGUI->findWidget<StaticText>("2iv"+toStr(i+1), false);
+	for (int i=0; i < InfTrk; ++i)
+		infTrk[1][i] = mGUI->findWidget<StaticText>("2ti"+toStr(i+1), false);
+
+
 	//  champs list
 	MyGUI::MultiList2* li;
 	TabItem* trktab = (TabItem*)mWndGame->findWidget("TabChamps");
@@ -449,7 +463,7 @@ void App::InitGui()
 	li->addColumn("N", ChColW[c++]);
 	li->addColumn(TR("#{Name}"), ChColW[c++]);
 	li->addColumn(TR("#{Difficulty}"), ChColW[c++]);
-	li->addColumn(TR("#{Tracks}"), ChColW[c++]);
+	li->addColumn(TR("#{Stages}"), ChColW[c++]);
 	li->addColumn(TR("#{Progress}"), ChColW[c++]);
 	li->addColumn(TR("#{Score}"), ChColW[c++]);
 	li->addColumn(" ", ChColW[c++]);
@@ -458,7 +472,7 @@ void App::InitGui()
 	//  stages list
 	trktab = (TabItem*)mWndGame->findWidget("TabStages");
 	li = trktab->createWidget<MultiList2>("MultiListBox",0,0,400,300, Align::Left | Align::VStretch);
-	//li->eventListChangePosition += newDelegate(this, &App::listChampChng);
+	li->eventListChangePosition += newDelegate(this, &App::listStageChng);
    	li->setVisible(false);
 	
 	li->removeAllColumns();  c=0;
@@ -544,7 +558,7 @@ void App::LNext(int rel)
 			case 1:  listTrackChng(trkMList,LNext(trkMList, rel));  return;
 			case 2:	 listCarChng(carList,   LNext(carList, rel));  return;
 			case 5:  listChampChng(liChamps,LNext(liChamps, rel));  return;
-			case 6:	 /*listStagesChng(carList, LNext(listStagesChng, rel));*/  return;	}
+			case 6:	 listStageChng(liStages, LNext(liStages, rel));  return;	}
 		break;
 	case WND_Replays:
 		listRplChng(rplList,  LNext(rplList, rel));

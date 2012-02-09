@@ -212,14 +212,15 @@ protected:
 	void AddTrkL(std::string name, int user, const class TrackInfo* ti);
 
 	//  track
-	void UpdGuiRdStats(const SplineRoad* rd, const Scene& sc, float time), ReadTrkStats();
-	MyGUI::MultiList2* trkMList;  MyGUI::EditPtr trkDesc;
-	MyGUI::StaticImagePtr imgPrv,imgMini,imgTer, imgTrkIco1,imgTrkIco2;
+	void UpdGuiRdStats(const SplineRoad* rd, const Scene& sc, const Ogre::String& sTrack, float time, bool champ=false),
+		ReadTrkStats(), ReadTrkStatsChamp(Ogre::String track,bool reverse);
+	MyGUI::MultiList2* trkMList;  MyGUI::EditPtr trkDesc[2];
+	MyGUI::StaticImagePtr imgPrv[2],imgMini[2],imgTer[2], imgTrkIco1,imgTrkIco2;
 	const static int StTrk = 12, InfTrk = 10;
-	MyGUI::StaticTextPtr valTrk, stTrk[StTrk], infTrk[InfTrk];
+	MyGUI::StaticTextPtr valTrk[2], stTrk[2][StTrk], infTrk[2][InfTrk];  // [2] 2nd set is for champs
 
 	void listTrackChng(MyGUI::MultiList2* li, size_t pos), TrackListUpd(bool resetNotFound=false);
-	TracksXml tracksXml;  void btnTrkView1(WP),btnTrkView2(WP),ChangeTrackView(bool full);
+	TracksXml tracksXml;  void btnTrkView1(WP),btnTrkView2(WP),ChangeTrackView();
 	void updTrkListDim(),updChampListDim();
 	const static int TcolW[32],ChColW[8],StColW[8];
 
@@ -250,7 +251,7 @@ protected:
 		ChampFillStageInfo(bool finished), ChampionshipAdvance(float timeCur);
 
 	MyGUI::MultiList2* liChamps, *liStages;
-	void listChampChng(MyGUI::MultiList2* li, size_t pos);
+	void listChampChng(MyGUI::MultiList2* li, size_t pos), listStageChng(MyGUI::MultiList2* li, size_t pos);
 	void btnChampStart(WP), btnChampStageBack(WP), btnChampStageStart(WP), btnChampEndClose(WP);
 	MyGUI::EditBox* edChampStage, *edChampEnd;  MyGUI::ImageBox * imgChampStage;
 	
