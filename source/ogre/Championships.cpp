@@ -324,14 +324,14 @@ void App::ChampionshipAdvance(float timeCur)
 		LogO("|| var, add time: "+toStr(i)+" sec, score: "+toStr(score));
 	}/**/
 	float score = (1.f + (timeBest-timeCur)/timeBest * decFactor) * 100.f;
-	bool passed = true;  // score < trk.passScore;  // didnt qualify, repeat current stage
+	bool passed = score >= trk.passScore;  // didnt qualify, repeat current stage
 	LogO("|| Score: " + toStr(score) + "  Passed: " + (passed ? "yes":"no"));
 	pc.trks[pc.curTrack].score = score;
 
 	//  --------------  advance  --------------
 	bool last = pc.curTrack+1 == ch.trks.size();
 	LogO("|| This was stage " + toStr(pc.curTrack+1) + "/" + toStr(ch.trks.size()));
-	if (!last)
+	if (!last || (last && !passed))
 	{
 		//  show stage end [window]
 		pGame->pause = true;
@@ -384,17 +384,25 @@ void App::ChampFillStageInfo(bool finished)
 	const ChampTrack& trk = ch.trks[pc.curTrack];
 
 	String s;  char ss[64];
-	s = /*TR("#{Championship}") + ": " +*/ ch.name + "\n\n" +
-		TR("#{Stage}") + ": " + toStr(pc.curTrack+1) + "/" + toStr(ch.trks.size()) + "\n" +
-		TR("#{Track}") + ": " + trk.name + "\n\n";
-		//+"Difficulty: " + tracksXml. + "\n";
+	s = "#80FFE0"+ ch.name + "\n\n" +
+		"#80FFC0"+TR("#{Stage}") + ": " + toStr(pc.curTrack+1) + "/" + toStr(ch.trks.size()) + "\n" +
+		"#80FF80"+TR("#{Track}") + ": " + trk.name + "\n\n";
 
 	if (finished)
 	{
-		sprintf(ss, "%5.1f", pc.trks[pc.curTrack].score);
-		s += TR("#{Finished}") + ".\n" +
-			TR("#{Score}") + ": " + ss + "\n";
-		//trk.passScore;  //..
+		float score = pc.trks[pc.curTrack].score;
+		sprintf(ss, "%5.1f", score);
+		s += "#80C0FF"+TR("#{Finished}") + ".\n" +
+			"#FFFF60"+TR("#{Score}") + ": " + ss + "\n";
+
+		sprintf(ss, "%5.1f", trk.passScore); //-
+		s += "#80C0FF"+TR("#{ScoreNeeded}") + ": " + ss + "\n\n";
+		
+		bool passed = score >= trk.passScore;
+		if (passed)
+			s += "#00FF00"+TR("#{Passed}")+".\n"+TR("#{NextStage}.");
+		else
+			s += "#FF8000"+TR("#{DintPass}")+".\n"+TR("#{RepeatStage}.");
 	}
 	edChampStage->setCaption(s);
 	

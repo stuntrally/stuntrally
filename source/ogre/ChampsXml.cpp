@@ -7,7 +7,7 @@ using namespace Ogre;
 
 
 ChampTrack::ChampTrack() :
-	laps(0), factor(1.f), reversed(0)
+	laps(0), factor(1.f), reversed(0), passScore(80.f)  // default
 {	}
 
 Champ::Champ() :
@@ -50,6 +50,7 @@ bool ChampsXml::LoadXml(std::string file)
 			a = eTr->Attribute("laps");		if (a)  t.laps = s2i(a);
 			a = eTr->Attribute("factor");	if (a)  t.factor = s2r(a);
 			a = eTr->Attribute("reversed");	if (a)  t.reversed = s2i(a) > 0;
+			a = eTr->Attribute("passScore");if (a)  t.passScore = s2r(a);
 			
 			c.trks.push_back(t);
 			eTr = eTr->NextSiblingElement("track");

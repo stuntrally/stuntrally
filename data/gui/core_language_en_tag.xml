@@ -74,7 +74,14 @@
 	<Tag name="Progress">Progress</Tag>
 	<Tag name="Score">Score</Tag>
 	<Tag name="TotalScore">Total score</Tag>
+	<Tag name="ScoreNeeded">Score needed</Tag>
 	<Tag name="Finished">Finished</Tag>
+
+	<Tag name="ScoreNeeded">Score needed</Tag>
+	<Tag name="Passed">Passed</Tag>
+	<Tag name="DintPass">Din't pass</Tag>
+	<Tag name="NextStage">Continuing to next stage</Tag>
+	<Tag name="RepeatStage">Repeating stage</Tag>
 
 
 	<!--  Track  -->
