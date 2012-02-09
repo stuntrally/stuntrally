@@ -4,6 +4,7 @@
 //#include <OgreHardwarePixelBuffer.h>
 #include "../road/Road.h"
 #include "../ogre/common/RenderConst.h"
+#include "../ogre/common/MaterialGen/MaterialFactory.h"
 using namespace Ogre;
 
 
@@ -192,6 +193,7 @@ void App::preRenderTargetUpdate(const RenderTargetEvent &evt)
 				terrainMaterial->getTechnique(i)->getPass(0)->getFragmentProgramParameters()->setNamedConstant("enableShadows", 0.f);
 		}
 	}
+	if (materialFactory) materialFactory->setShadowsEnabled(false);
 	
 	const String& s = evt.source->getName();
 	int num = atoi(s.substr(s.length()-1, s.length()-1).c_str());
@@ -220,6 +222,7 @@ void App::postRenderTargetUpdate(const RenderTargetEvent &evt)
 				terrainMaterial->getTechnique(i)->getPass(0)->getFragmentProgramParameters()->setNamedConstant("enableShadows", 1.f);
 		}
 	}
+	if (materialFactory) materialFactory->setShadowsEnabled(true);
 	
 	const String& s = evt.source->getName();
 	int num = atoi(s.substr(s.length()-1, s.length()-1).c_str());

@@ -196,7 +196,8 @@ void MaterialGenerator::fpShadowingParams(Ogre::StringUtil::StrStreamType& outSt
 		outStream << "\n";
 		outStream << 
 		"	uniform float4 pssmSplitPoints, \n"
-		"	uniform float3 fadeStart_farDist, \n";
+		"	uniform float3 fadeStart_farDist, \n"
+		"	uniform float enableShadows, \n";
 	}
 }
 
@@ -228,6 +229,9 @@ void MaterialGenerator::fpCalcShadowSource(Ogre::StringUtil::StrStreamType& outS
 			"	float fardist = fadeStart_farDist.y; \n"
 			"	float fade = saturate(((texCoord.z/fardist) - (1-(fadestart)))/(fadestart));"
 			"	shadowingRT = lerp(shadowingRT, 1, fade * fadeStart_farDist.z); \n";
+			
+		outStream <<
+		"	shadowingRT = 1-(1-shadowingRT)*enableShadows; \n";
 		
 	}
 	
@@ -703,6 +707,7 @@ void MaterialGenerator::individualFragmentProgramParams(Ogre::GpuProgramParamete
 	
 	if (needShadows())
 	{
+		params->setNamedConstant("enableShadows", 1.f);
 		params->setNamedConstant("pssmSplitPoints", mParent->pApp->splitPoints);
 		for (int i=0; i<mParent->getNumShadowTex(); ++i)
 			params->setNamedAutoConstant("invShadowMapSize"+toStr(i), GpuProgramParameters::ACT_INVERSE_TEXTURE_SIZE, i+mShadowTexUnit_start);

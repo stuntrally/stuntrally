@@ -213,6 +213,7 @@ void MaterialFactory::setWind(bool wind)
 }
 
 //----------------------------------------------------------------------------------------
+
 void MaterialFactory::setSoftParticleDepth(TexturePtr depthtexture)
 {
 	if(MaterialGenerator::MRTSupported())
@@ -226,6 +227,9 @@ void MaterialFactory::setSoftParticleDepth(TexturePtr depthtexture)
 		}
 	}
 }
+
+//----------------------------------------------------------------------------------------
+
 void MaterialFactory::setSoftParticles(bool bEnable)
 {
 	if(MaterialGenerator::MRTSupported())
@@ -243,6 +247,36 @@ void MaterialFactory::setSoftParticles(bool bEnable)
 	}
 }
 
+//----------------------------------------------------------------------------------------
+
+void MaterialFactory::setShadowsEnabled(bool bEnable)
+{
+	for (std::vector<MaterialDefinition*>::iterator it=mDefinitions.begin();
+		it!=mDefinitions.end(); ++it)
+	{
+		MaterialPtr mat = MaterialManager::getSingleton().getByName( (*it)->getName() );
+			
+		if (mat.isNull()) continue;
+		
+		Material::TechniqueIterator techIt = mat->getTechniqueIterator();
+		while (techIt.hasMoreElements())
+		{
+			Technique* tech = techIt.getNext();
+			Technique::PassIterator passIt = tech->getPassIterator();
+			while (passIt.hasMoreElements())
+			{
+				Pass* pass = passIt.getNext();
+									
+				if (pass->hasFragmentProgram())
+				{
+					if ( pass->getFragmentProgramParameters()->_findNamedConstantDefinition("enableShadows", false))
+						pass->getFragmentProgramParameters()->setNamedConstant("enableShadows", Real(bEnable));
+				}
+			}
+		}
+		
+	}
+}
 
 //----------------------------------------------------------------------------------------
 
