@@ -676,11 +676,11 @@ void App::toggleGui(bool toggle)
 	if (notMain && gc)  // show hide champs,stages
 	{
 		size_t id = mWndTabsGame->getIndexSelected();
-		mWndTabsGame->setButtonWidthAt(1,champ ? 1 : -1);  if (id == 1 && champ)  mWndTabsGame->setIndexSelected(5);
-		mWndTabsGame->setButtonWidthAt(4,champ ? 1 : -1);  if (id == 4 && champ)  mWndTabsGame->setIndexSelected(5);
-		mWndTabsGame->setButtonWidthAt(5,champ ? -1 : 1);  if (id == 5 && !champ)  mWndTabsGame->setIndexSelected(1);
-		mWndTabsGame->setButtonWidthAt(6,champ ? -1 : 1);  if (id == 6 && !champ)  mWndTabsGame->setIndexSelected(1);
-		mWndTabsGame->setButtonWidthAt(7,champ ? -1 : 1);  if (id == 7 && !champ)  mWndTabsGame->setIndexSelected(1);
+		mWndTabsGame->setButtonWidthAt(1,champ ? 1 :-1);  if (id == 1 && champ)  mWndTabsGame->setIndexSelected(5);
+		mWndTabsGame->setButtonWidthAt(4,champ ? 1 :-1);  if (id == 4 && champ)  mWndTabsGame->setIndexSelected(5);
+		mWndTabsGame->setButtonWidthAt(5,champ ?-1 : 1);  if (id == 5 && !champ)  mWndTabsGame->setIndexSelected(1);
+		mWndTabsGame->setButtonWidthAt(6,champ ?-1 : 1);  if (id == 6 && !champ)  mWndTabsGame->setIndexSelected(1);
+		mWndTabsGame->setButtonWidthAt(7,champ ?-1 : 1);  if (id == 7 && !champ)  mWndTabsGame->setIndexSelected(1);
 	}
 
 	if (bnQuit)  bnQuit->setVisible(isFocGui);

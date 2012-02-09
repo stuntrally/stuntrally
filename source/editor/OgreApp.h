@@ -79,7 +79,7 @@ protected:
 	//  create  . . . . . . . . . . . . . . . . . . . . . . . . 
 	bool bNewHmap, bTrGrUpd;  Ogre::Real terMaxAng;
 	Ogre::String resTrk;  void NewCommon(), UpdTrees();
-	void CreateTerrain(bool bNewHmap=false, bool bTer=true);
+	void CreateTerrain(bool bNewHmap=false, bool bTer=true), CreateBltTerrain();
 	void GetTerAngles(int xb,int yb,int xe,int ye);
 	void CreateTrees(), CreateFluids(), DestroyFluids();
 	void CreateSkyDome(Ogre::String sMater, Ogre::Vector3 scale);
@@ -164,6 +164,7 @@ protected:
 
 	//  road  -in base
 	void SaveGrassDens();  int iSnap;  Ogre::Real angSnap;
+	void SaveWaterDepth();  class btDiscreteDynamicsWorld* world;
 
 	//  car starts
 	bool LoadStartPos(),SaveStartPos(std::string path);  void UpdStartPos();

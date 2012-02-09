@@ -1,9 +1,11 @@
 #include "pch.h"
 #include "Defines.h"
 #include "OgreApp.h"
-//#include <OgreHardwarePixelBuffer.h>
 #include "../road/Road.h"
 #include "../ogre/common/RenderConst.h"
+
+#include "btBulletCollisionCommon.h"
+#include "btBulletDynamicsCommon.h"
 using namespace Ogre;
 
 
@@ -185,6 +187,8 @@ void App::preRenderTargetUpdate(const RenderTargetEvent &evt)
 	const String& s = evt.source->getName();
 	int num = atoi(s.substr(s.length()-1, s.length()-1).c_str());
 	
+	//terrain->setVisibilityFlags(0);
+	
 	if (num == 3)  // full
 	{
 		rt[3].rndCam->setPosition(mCameraT->getPosition());
@@ -213,4 +217,59 @@ void App::postRenderTargetUpdate(const RenderTargetEvent &evt)
 	//mCamera->setFarClipDistance(pSet->view_distance*1.1f);
 	//mCamera->setNearClipDistance(0.1f);
 	//UpdPSSMMaterials();
+}
+
+
+///  save water depth map
+//-----------------------------------------------------------------------------------------------------------
+void App::SaveWaterDepth()
+{
+	btDefaultCollisionConfiguration* config;
+	btCollisionDispatcher* dispatcher;
+	bt32BitAxisSweep3* broadphase;
+	btSequentialImpulseConstraintSolver* solver;
+	//btDiscreteDynamicsWorld* world;
+
+	config = new btDefaultCollisionConfiguration();
+	dispatcher = new btCollisionDispatcher(config);
+
+	broadphase = new bt32BitAxisSweep3(btVector3(-5000, -5000, -5000), btVector3(5000, 5000, 5000));
+	solver = new btSequentialImpulseConstraintSolver();
+	world = new btDiscreteDynamicsWorld(dispatcher, broadphase, solver, config);
+
+	world->setGravity(btVector3(0.0, 0.0, -9.81)); ///~
+	world->getSolverInfo().m_restitution = 0.0f;
+	world->getDispatchInfo().m_enableSPU = true;
+	world->setForceUpdateAllAabbs(false);  //+
+	
+
+	//  scene
+	//CreateBltTerrain();
+	// get ter height, compare with ray to blt fluids only
+	
+	//world->castRay()
+	//world->rayTest(from, to, rayCallback);
+	
+	
+	//  Clear
+	for(int i = world->getNumCollisionObjects() - 1; i >= 0; i--)
+	{
+		btCollisionObject* obj = world->getCollisionObjectArray()[i];
+		btRigidBody* body = btRigidBody::upcast(obj);
+		if (body && body->getMotionState())
+		{
+			delete body->getMotionState();
+		}
+		world->removeCollisionObject(obj);
+
+		//ShapeData* sd = (ShapeData*)obj->getUserPointer();
+		//delete sd;
+		delete obj;
+	}
+
+	delete world;  world = 0;
+	delete solver;
+	delete broadphase;
+	delete dispatcher;
+	delete config;
 }

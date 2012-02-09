@@ -57,7 +57,7 @@ App::App()  //  gui wigdets--
 	,ndCar(0),entCar(0),ndStBox(0),entStBox(0)
 	,grass(0), trees(0), sun(0), terMaxAng(0.f)
 	,eTrkEvent(TE_None), bNewHmap(0), bTrGrUpd(0)
-	,iFlCur(0), bRecreateFluids(0)
+	,iFlCur(0), bRecreateFluids(0), world(0)
 	
 	,materialFactory(0)
 {

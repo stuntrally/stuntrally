@@ -7,6 +7,7 @@
 #ifdef ROAD_EDITOR
 	#include "../../editor/OgreApp.h"
 	#include "../../editor/settings.h"
+	#include "BulletDynamics/Dynamics/btDiscreteDynamicsWorld.h"
 #else
 	#include "../OgreGame.h"
 	#include "../../vdrift/game.h"
@@ -15,8 +16,10 @@
 	#include "../../btOgre/BtOgrePG.h"
 	#include "../../btOgre/BtOgreGP.h"
 	//#include "BtOgreDebug.h"
-	#include "BulletCollision/CollisionShapes/btHeightfieldTerrainShape.h"
 #endif
+#include "BulletCollision/CollisionDispatch/btCollisionObject.h"
+#include "BulletCollision/CollisionShapes/btHeightfieldTerrainShape.h"
+
 #include <OgreRoot.h>
 #include <OgreTerrain.h>
 #include <OgreTerrainGroup.h>
@@ -356,7 +359,6 @@ void App::CreateTerrain(bool bNewHmap, bool bTer)
 
 //  Bullet Terrain
 //---------------------------------------------------------------------------------------------------------------
-#ifndef ROAD_EDITOR
 void App::CreateBltTerrain()
 {
 	btHeightfieldTerrainShape* hfShape = new btHeightfieldTerrainShape(
@@ -381,10 +383,14 @@ void App::CreateBltTerrain()
 	col->setRestitution(0.5);
 	col->setCollisionFlags(col->getCollisionFlags() |
 		btCollisionObject::CF_STATIC_OBJECT | btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT/**/);
-	pGame->collision.world->addCollisionObject(col);
-	pGame->collision.shapes.push_back(hfShape);/**/
-
+	#ifndef ROAD_EDITOR  // game
+		pGame->collision.world->addCollisionObject(col);
+		pGame->collision.shapes.push_back(hfShape);/**/
+	#else
+		world->addCollisionObject(col);
+	#endif
 	
+	#ifndef ROAD_EDITOR
 	///  border planes []
 	const float px[4] = {-1, 1, 0, 0};
 	const float py[4] = { 0, 0,-1, 1};
@@ -402,8 +408,8 @@ void App::CreateBltTerrain()
 		btRigidBody::btRigidBodyConstructionInfo rbInfo(0.f,ms,shp);
 		pGame->collision.AddRigidBody(rbInfo);
 	}
+	#endif
 }
-#endif
 
 
 //  Sky Dome

@@ -119,7 +119,7 @@
 				Optimization="2"
 				EnableIntrinsicFunctions="true"
 				WholeProgramOptimization="false"
-				AdditionalIncludeDirectories="&quot;e:\v\MyGUI-3.2\trunk\MyGUIEngine\include&quot;;&quot;e:\v\MyGUI-3.2\trunk\Platforms\Ogre\OgrePlatform\include&quot;"
+				AdditionalIncludeDirectories="&quot;e:\v\bullet\bullet-2.79\src&quot;;&quot;e:\v\MyGUI-3.2\trunk\MyGUIEngine\include&quot;;&quot;e:\v\MyGUI-3.2\trunk\Platforms\Ogre\OgrePlatform\include&quot;"
 				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;ROAD_EDITOR;NOMINMAX;"
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="true"
@@ -140,10 +140,10 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="OgreMain.lib ois.lib OgreTerrain.lib OgrePaging.lib OgreRTShaderSystem.lib MyGUIEngine.lib MyGUI.OgrePlatform.lib"
+				AdditionalDependencies="OgreMain.lib ois.lib OgreTerrain.lib OgrePaging.lib OgreRTShaderSystem.lib MyGUIEngine.lib MyGUI.OgrePlatform.lib BulletCollision.lib BulletDynamics.lib LinearMath.lib"
 				OutputFile="$(ProjectName).exe"
 				LinkIncremental="1"
-				AdditionalLibraryDirectories="e:\v\ogre171\lib\Release;e:\v\ogre171\Dependencies\lib\Release;&quot;e:\v\MyGUI-3.2\trunk\bin\lib\Release&quot;"
+				AdditionalLibraryDirectories="e:\v\ogre171\lib\Release;e:\v\ogre171\Dependencies\lib\Release;&quot;e:\v\MyGUI-3.2\trunk\bin\lib\Release&quot;;&quot;e:\v\bullet\bullet-2.79\bin\lib\Release&quot;"
 				GenerateDebugInformation="true"
 				SubSystem="2"
 				OptimizeReferences="2"

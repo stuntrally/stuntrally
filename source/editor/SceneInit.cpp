@@ -242,6 +242,7 @@ void App::SaveTrackEv()
 	SaveSurf(TrkDir()+"surfaces.txt");
 
 	SaveGrassDens();
+	SaveWaterDepth();
 	SaveStartPos(TrkDir()+"track.txt");  //..load/save inside
 	Status("Saved", 1,0.6,0.2);
 }
