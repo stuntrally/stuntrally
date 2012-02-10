@@ -79,7 +79,7 @@ void WaterMaterialGenerator::generate()
 	
 	//  waterDepth
 	tu = pass->createTextureUnitState( "waterDepth.png" );
-	tu->setName("waterDepth");
+	tu->setName("depthMap");
 	tu->setTextureAddressingMode(TextureUnitState::TAM_BORDER);
 	tu->setTextureBorderColour(ColourValue::White);  // outside tex water always visible
 	mWaterDepthUnit = mTexUnit_i;  mTexUnit_i++;
