@@ -77,6 +77,13 @@ void WaterMaterialGenerator::generate()
 	tu->setTextureAddressingMode(TextureUnitState::TAM_MIRROR);
 	mEnvTexUnit = mTexUnit_i; mTexUnit_i++;
 	
+	//  waterDepth
+	tu = pass->createTextureUnitState( "waterDepth.png" );
+	tu->setName("waterDepth");
+	tu->setTextureAddressingMode(TextureUnitState::TAM_BORDER);
+	tu->setTextureBorderColour(ColourValue::White);  // outside tex water always visible
+	mWaterDepthUnit = mTexUnit_i;  mTexUnit_i++;
+	
 	// realtime shadow maps
 	if (needShadows())
 	{
@@ -91,14 +98,6 @@ void WaterMaterialGenerator::generate()
 			mTexUnit_i++;
 		}
 	}
-
-	//  waterDepth
-	tu = pass->createTextureUnitState( "waterDepth.png" );
-	tu->setName("waterDepth");
-	tu->setTextureAddressingMode(TextureUnitState::TAM_BORDER);
-	tu->setTextureBorderColour(ColourValue::White);  // outside tex water always visible
-	mWaterDepthUnit = mTexUnit_i;  mTexUnit_i++;
-
 	
 	// shader
 	if (!mShaderCached)
@@ -133,6 +132,8 @@ void WaterMaterialGenerator::generate()
 		mParent->terrainLightMapMtrs.push_back(mDef->getName());
 	 
 	// mParent->fogMtrs.... // not important, only for impostors
+	
+	
 }
 
 //----------------------------------------------------------------------------------------
@@ -267,8 +268,6 @@ void WaterMaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::Str
 	"	uniform float2 reflAndWaterAmounts, \n"
 	"	uniform float2 fresnelPowerBias, \n";
 	
-	fpShadowingParams(outStream);
-	
 	outStream <<
 	"	uniform sampler2D normalMap : TEXUNIT"+toStr(mNormalTexUnit)+", \n";
 	if (needTerrainLightMap())
@@ -279,6 +278,9 @@ void WaterMaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::Str
 	}
 	outStream <<
 	"	uniform sampler2D depthMap : TEXUNIT"+toStr(mWaterDepthUnit)+", \n";
+	
+	fpShadowingParams(outStream);
+	
 	outStream <<
 	"	uniform sampler2D skyMap : TEXUNIT"+toStr(mEnvTexUnit)+"): COLOR0 \n"
 	"{ \n";
@@ -362,6 +364,8 @@ void WaterMaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::Str
 void WaterMaterialGenerator::fragmentProgramParams(Ogre::HighLevelGpuProgramPtr program)
 {
 	GpuProgramParametersSharedPtr params = program->getDefaultParameters();
+	
+	params->setIgnoreMissingParams(true);
 
 	params->setNamedAutoConstant("iTWMat", GpuProgramParameters::ACT_INVERSE_TRANSPOSE_WORLD_MATRIX);
 	params->setNamedAutoConstant("fogColor", GpuProgramParameters::ACT_FOG_COLOUR);
@@ -382,6 +386,7 @@ void WaterMaterialGenerator::individualFragmentProgramParams(Ogre::GpuProgramPar
 	
 	params->setIgnoreMissingParams(true);
 	
+	params->setNamedConstant("enableShadows", Real(1.f));
 	params->setNamedConstant("waveBump", _vec3(mDef->mProps->waveBump));
 	params->setNamedConstant("waveHighFreq", Real(mDef->mProps->waveHighFreq));
 	params->setNamedConstant("waveSpecular", Real(mDef->mProps->waveSpecular));
@@ -393,7 +398,6 @@ void WaterMaterialGenerator::individualFragmentProgramParams(Ogre::GpuProgramPar
 	params->setNamedConstant("fresnelPowerBias", Vector3(mDef->mProps->fresnelPower, mDef->mProps->fresnelBias, 0));
 
 	params->setNamedConstant("terSize", 1.f / Real(mParent->pApp->sc.td.fTerWorldSize));
-	//LogO("TER SIZE: "+toStr(mParent->pApp->sc.td.fTerWorldSize));
 	
 	if (needShadows())
 	{
