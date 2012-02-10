@@ -150,6 +150,7 @@
 	receivesDepthShadows = true
 	terrainLightMap = true
 	shadowPriority = 0.4
+	specular = 0.5 0.5 0.5 32
 
 [rock.07.mat/SOLID/TEX/rockW05.png]
 	parent = rock.05.mat/SOLID/TEX/rockW05.png
@@ -159,6 +160,7 @@
 	receivesDepthShadows = true
 	terrainLightMap = true
 	shadowPriority = 0.4
+	specular = 0.5 0.5 0.5 32
 
 [rock.07.mat/SOLID/TEX/rock.05.png]
 	parent = rock.05.mat/SOLID/TEX/rock.05.png
@@ -169,7 +171,8 @@
 	normalMap_1024 = rock1_normal.png
 	receivesDepthShadows = true
 	terrainLightMap = true
-	parallaxHeight = 0.2
+	parallaxHeight = 0.035
+	specular = 0.5 0.5 0.5 32
 
 
 ; ---------- jungle trees ----------------

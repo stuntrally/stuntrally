@@ -6,6 +6,8 @@
 
 #include "btBulletCollisionCommon.h"
 #include "btBulletDynamicsCommon.h"
+
+#include "../ogre/common/MaterialGen/MaterialFactory.h"
 using namespace Ogre;
 
 
@@ -184,6 +186,18 @@ void App::SaveGrassDens()
 //-----------------------------------------------------------------------------------------------------------
 void App::preRenderTargetUpdate(const RenderTargetEvent &evt)
 {
+	if (!terrain) return;
+	MaterialPtr terrainMaterial = terrain->_getMaterial();
+	if (!terrainMaterial.isNull())
+	{
+		for (int i=0; i<terrainMaterial->getNumTechniques(); ++i)
+		{
+			if (terrainMaterial->getTechnique(i)->getPass(0)->getFragmentProgramParameters()->_findNamedConstantDefinition("enableShadows"))
+				terrainMaterial->getTechnique(i)->getPass(0)->getFragmentProgramParameters()->setNamedConstant("enableShadows", 0.f);
+		}
+	}
+	if (materialFactory) materialFactory->setShadowsEnabled(false);
+	
 	const String& s = evt.source->getName();
 	int num = atoi(s.substr(s.length()-1, s.length()-1).c_str());
 	
@@ -203,6 +217,18 @@ void App::preRenderTargetUpdate(const RenderTargetEvent &evt)
 
 void App::postRenderTargetUpdate(const RenderTargetEvent &evt)
 {
+	if (!terrain) return;
+	MaterialPtr terrainMaterial = terrain->_getMaterial();
+	if (!terrainMaterial.isNull())
+	{
+		for (int i=0; i<terrainMaterial->getNumTechniques(); ++i)
+		{
+			if (terrainMaterial->getTechnique(i)->getPass(0)->getFragmentProgramParameters()->_findNamedConstantDefinition("enableShadows"))
+				terrainMaterial->getTechnique(i)->getPass(0)->getFragmentProgramParameters()->setNamedConstant("enableShadows", 1.f);
+		}
+	}
+	if (materialFactory) materialFactory->setShadowsEnabled(true);
+	
 	const String& s = evt.source->getName();
 	int num = atoi(s.substr(s.length()-1, s.length()-1).c_str());
 
@@ -224,6 +250,8 @@ void App::postRenderTargetUpdate(const RenderTargetEvent &evt)
 //-----------------------------------------------------------------------------------------------------------
 void App::SaveWaterDepth()
 {
+	QTimer ti;  ti.update();  ///T  /// time
+
 	btDefaultCollisionConfiguration* config;
 	btCollisionDispatcher* dispatcher;
 	bt32BitAxisSweep3* broadphase;
@@ -250,6 +278,35 @@ void App::SaveWaterDepth()
 	//world->castRay()
 	//world->rayTest(from, to, rayCallback);
 	
+
+	int w = 1024, h = w;
+	using Ogre::uint;
+	uint *wd = new uint[w*h];   // water depth
+	register int v,x, a,y;  float f;
+	
+	float wh = 0.f;
+	if (sc.fluids.size() > 0)
+		wh = sc.fluids[0].pos.y;
+		
+	///  write to img  -----------
+	for (y = 0; y < h; ++y) {  a = y*w;
+	for (x = 0; x < w; ++x, ++a)
+	{	//b = x*w + (h-y);  // rot 90 ccw  b=a
+		//v = (rd[d] >> 16) & 0xFF;
+		f = -wh + terrain->getHeightAtTerrainPosition(float(y)/float(h-1), float(x)/float(w-1));
+		f = f * 8.f * -255.f;
+
+		v = std::max(0, std::min(255, (int)f ));  // clamp
+		
+		wd[a] = 0xFF000000 + 0x010101 * v;  // write
+	}	}
+
+	Image im;
+	im.loadDynamicImage((uchar*)wd, w,h,1, PF_BYTE_RGBA);
+	im.save(TrkDir()+"objects/waterDepth.png");
+	delete[] wd;
+
+
 	
 	//  Clear
 	for(int i = world->getNumCollisionObjects() - 1; i >= 0; i--)
@@ -272,4 +329,8 @@ void App::SaveWaterDepth()
 	delete broadphase;
 	delete dispatcher;
 	delete config;
+
+	ti.update();	///T  /// time
+	float dt = ti.dt * 1000.f;
+	LogO(String("::: Time WaterDepth: ") + toStr(dt) + " ms.");
 }

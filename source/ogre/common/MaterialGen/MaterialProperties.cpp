@@ -22,7 +22,7 @@ MaterialProperties::MaterialProperties() :
 	waveBump(0.5, 1.0), waveHighFreq(0.0), waveSpecular(1.0),
 	envMapPriority(0.5), shadowPriority(0.5), normalMapPriority(0.5),
 	deepColour(0.0, 0.3, 0.5, 1.0), shallowColour(0.0, 0.9, 1.0, 0.3), reflectionColour(0.9, 1.0, 1.0, 1.0),
-	parallax(false), parallaxHeight(0.1f)
+	parallax(false), parallaxHeight(0.035f)
 {}
 
 //----------------------------------------------------------------------------------------

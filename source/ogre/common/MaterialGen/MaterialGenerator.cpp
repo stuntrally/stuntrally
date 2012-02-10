@@ -144,17 +144,19 @@ void MaterialGenerator::generate()
 	// only needed for trees (wind == 2) because the wind effect has to be disabled before rendering impostors
 	if (mShader->wind == 2)
 		mParent->windMtrs.push_back( mDef->getName() );
+
 	
-	// uncomment to export to .material
-	/*
-	if (mDef->getName() == "pipeGlass") {
-	MaterialSerializer serializer;
-	serializer.exportMaterial(mMaterial, "test.material");
+	/// uncomment to export to .material
+	/**
+	if (mDef->getName() == "pipeGlass")
+	{
+		MaterialSerializer serializer;
+		serializer.exportMaterial(mMaterial, "water.material");
 	}
-	*/
+	/**/
 	
 	/// uncomment to see full shader source code in log
-	/*
+	/**
 	if (mDef->getName() == "car_body")
 	{
 		LogO("[MaterialFactory] Vertex program source: ");
@@ -166,7 +168,7 @@ void MaterialGenerator::generate()
 		generateFragmentProgramSource(fSourceStr);
 		LogO(fSourceStr.str());
 	}
-	*/
+	/**/
 }
 
 //----------------------------------------------------------------------------------------
@@ -501,14 +503,14 @@ bool MaterialGenerator::fpNeedWMat()
 	return UsePerPixelNormals();
 }
 
-bool MaterialGenerator::fpNeedWPos()
+bool MaterialGenerator::fpNeedPos()
 {
 	return (needTerrainLightMap() || fpNeedLighting() || MRTSupported() || mShader->parallax);
 }
 
 bool MaterialGenerator::vpCalcWPos()
 {
-	return (fpNeedWPos() || fpNeedEyeVector());
+	return (fpNeedPos() || fpNeedEyeVector());
 }
 
 bool MaterialGenerator::vpNeedWvMat()

@@ -61,6 +61,7 @@ public:
 	void setWind(bool wind);
 	void setSoftParticleDepth(Ogre::TexturePtr depthtexture);
 	void setSoftParticles(bool bEnable);
+	void setShadowsEnabled(bool bEnable);
 	
 	/// user settings get/set ---------------------------------------------
 	#define setIfChanged(s) if (p != s) { s = p; bSettingsChanged = true; } // changes shader source ( need recompile)
