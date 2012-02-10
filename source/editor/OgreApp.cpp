@@ -93,7 +93,8 @@ void App::postInit()
 	materialFactory->pApp = this;
 	materialFactory->setSceneManager(mSceneMgr);
 	materialFactory->setShadows(pSet->shadow_type >= 2);
-	materialFactory->setShadowsDepth(pSet->shadow_type == 3);
+	materialFactory->setShadowsDepth(pSet->shadow_type >= 3);
+	materialFactory->setShadowsSoft(pSet->shadow_type == 4);
 	materialFactory->setShaderQuality(pSet->shaders);
 	materialFactory->setShadowsFilterSize(pSet->shadow_filter);
 	if (pSet->tex_size == 0)
