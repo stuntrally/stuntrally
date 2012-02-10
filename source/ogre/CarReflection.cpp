@@ -1,5 +1,5 @@
 #include "pch.h"
-#include "Defines.h"
+#include "common/Defines.h"
 #include "CarReflection.h"
 #include "../vdrift/settings.h"
 #include "../ogre/common/RenderConst.h"

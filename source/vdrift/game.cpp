@@ -13,7 +13,7 @@
 #include "quickprof.h"
 #include "tracksurface.h"
 #include "forcefeedback.h"
-#include "../ogre/QTimer.h"
+#include "../ogre/common/QTimer.h"
 #include "../ogre/OgreGame.h"
 #include "../ogre/FollowCamera.h"
 #include "../oisb/OISBSystem.h"

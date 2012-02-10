@@ -1,5 +1,5 @@
 #include "pch.h"
-#include "Defines.h"
+#include "common/Defines.h"
 #include "SplitScreen.h"
 
 #include "OgreGame.h"

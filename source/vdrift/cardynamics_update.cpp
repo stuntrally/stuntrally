@@ -5,7 +5,7 @@
 #include "tobullet.h"
 #include "../ogre/OgreGame.h"
 #include "Buoyancy.h"
-#include "../ogre/Defines.h"
+#include "../ogre/common/Defines.h"
 #include "../ogre/common/SceneXml.h"
 
 typedef CARDYNAMICS::T T;

@@ -1,5 +1,5 @@
 #include "pch.h"
-#include "Defines.h"
+#include "common/Defines.h"
 #include "LoadingBar.h"
 #include <time.h>  // for random
 

@@ -1,5 +1,5 @@
 #include "pch.h"
-#include "Defines.h"
+#include "common/Defines.h"
 #include "FollowCamera.h"
 #include "../tinyxml/tinyxml.h"
 #include "../vdrift/pathmanager.h"

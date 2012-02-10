@@ -1,5 +1,5 @@
 #include "pch.h"
-#include "Defines.h"
+#include "../ogre/common/Defines.h"
 #include "OgreApp.h"
 #include <OgreHardwarePixelBuffer.h>
 //#include "../vdrift/settings.h"

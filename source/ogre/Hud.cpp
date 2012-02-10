@@ -1,5 +1,5 @@
 #include "pch.h"
-#include "Defines.h"
+#include "common/Defines.h"
 #include "OgreGame.h"
 #include "../vdrift/game.h"
 #include "../road/Road.h"

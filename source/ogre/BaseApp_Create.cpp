@@ -1,5 +1,5 @@
 #include "pch.h"
-#include "Defines.h"
+#include "common/Defines.h"
 #include "BaseApp.h"
 #include "LoadingBar.h"
 #include "FollowCamera.h"
@@ -13,7 +13,7 @@
 #include "Localization.h"
 #include "SplitScreen.h"
 #include "CarModel.h"
-#include "QTimer.h"
+#include "common/QTimer.h"
 
 #include <OgreFontManager.h>
 #include <OgreLogManager.h>

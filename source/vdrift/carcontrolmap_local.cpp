@@ -1,5 +1,5 @@
 #include "pch.h"
-#include "../ogre/Defines.h"
+#include "../ogre/common/Defines.h"
 #include "carcontrolmap_local.h"
 #include "../ogre/OgreGame.h"
 #include "../oisb/OISBSystem.h"

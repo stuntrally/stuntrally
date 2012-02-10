@@ -18,7 +18,7 @@
 #include "forcefeedback.h"
 #include "ai.h"
 
-#include "../ogre/QTimer.h"
+#include "../ogre/common/QTimer.h"
 
 
 class GAME

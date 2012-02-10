@@ -5,7 +5,7 @@
 #include "tobullet.h"
 #include "model.h"
 #include "settings.h"
-#include "../ogre/Defines.h"
+#include "../ogre/common/Defines.h"
 #include "Buoyancy.h"
 
 typedef CARDYNAMICS::T T;

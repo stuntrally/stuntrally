@@ -1,5 +1,5 @@
 #include "pch.h"
-#include "Defines.h"
+#include "../ogre/common/Defines.h"
 #include "OgreApp.h"
 #include "../vdrift/pathmanager.h"
 //#include "../road/Road.h"

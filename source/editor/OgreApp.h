@@ -163,8 +163,8 @@ protected:
 	class Forests::PagedGeometry *trees, *grass;
 
 	//  road  -in base
-	void SaveGrassDens();  int iSnap;  Ogre::Real angSnap;
-	void SaveWaterDepth();  class btDiscreteDynamicsWorld* world;
+	void SaveGrassDens(), SaveWaterDepth(), AlignTerToRoad();
+	class btDiscreteDynamicsWorld* world;  int iSnap;  Ogre::Real angSnap;
 
 	//  car starts
 	bool LoadStartPos(),SaveStartPos(std::string path);  void UpdStartPos();

@@ -8,7 +8,7 @@
 #include "configfile.h"
 #include "settings.h"
 #include "../ogre/OgreGame.h"  //+ replay
-#include "../ogre/Defines.h"
+#include "../ogre/common/Defines.h"
 #include "../network/protocol.hpp"
 #include "tobullet.h"
 #include <OgreLogManager.h>
