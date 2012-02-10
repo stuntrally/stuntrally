@@ -1,5 +1,5 @@
 #include "pch.h"
-#include "Defines.h"
+#include "../ogre/common/Defines.h"
 #include "settings.h"
 #include "../vdrift/tracksurface.h"
 
