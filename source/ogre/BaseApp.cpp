@@ -158,10 +158,10 @@ void BaseApp::updateStats()
 	}
 	try {  // TODO: tri & bat vals when compositor !...
 		const RenderTarget::FrameStats& stats = mWindow->getStatistics();
-		//char s[20];
-		sprintf(s, "%5.1f", stats.lastFPS );	mOvrFps->setCaption( s );
-		sprintf(s, "%5.1fk", Real(stats.triangleCount)/1000.f );	mOvrTris->setCaption( s );
-		sprintf(s, "%3lu", stats.batchCount );	mOvrBat->setCaption( s );
+		
+		mOvrFps->setCaption( fToStr(stats.lastFPS, 1) );
+		mOvrTris->setCaption( fToStr(Real(stats.triangleCount)/1000.f, 1)+"k");
+		mOvrBat->setCaption( toStr(stats.batchCount) );
 
 		mOvrDbg->setCaption( mFilText + "  " + mDebugText );
 	}

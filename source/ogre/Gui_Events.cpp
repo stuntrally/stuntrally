@@ -73,7 +73,7 @@ void App::chkSplitVert(WP wp)
 void App::slNumLaps(SL)
 {
 	int v = 20.f * val/res + 1;  if (bGI)  pSet->gui.num_laps = v;
-	if (valNumLaps){  Fmt(s, "%d", v);	valNumLaps->setCaption(s);  }
+	if (valNumLaps){  valNumLaps->setCaption(toStr(v));  }
 }
 
 void App::tabPlayer(TabPtr wp, size_t id)
@@ -92,21 +92,21 @@ void App::tabPlayer(TabPtr wp, size_t id)
 void App::slCarClrH(SL)
 {
 	Real v = val/res;  if (bGI)  pSet->gui.car_hue[iCurCar] = v;
-	if (valCarClrH){	Fmt(s, "%4.2f", v);	valCarClrH->setCaption(s);  }
+	if (valCarClrH){	valCarClrH->setCaption(fToStr(v,2,4));  }
 	if (iCurCar < carModels.size() && bUpdCarClr && bGI)
 		carModels[iCurCar]->ChangeClr(iCurCar);
 }
 void App::slCarClrS(SL)
 {
 	Real v = val/res;  if (bGI)  pSet->gui.car_sat[iCurCar] = v;
-	if (valCarClrS){	Fmt(s, "%4.2f", v);	valCarClrS->setCaption(s);  }
+	if (valCarClrS){	valCarClrS->setCaption(fToStr(v,2,4));  }
 	if (iCurCar < carModels.size() && bUpdCarClr && bGI)
 		carModels[iCurCar]->ChangeClr(iCurCar);
 }
 void App::slCarClrV(SL)
 {
 	Real v = val/res;  if (bGI)  pSet->gui.car_val[iCurCar] = v;
-	if (valCarClrV){	Fmt(s, "%4.2f", v);	valCarClrV->setCaption(s);  }
+	if (valCarClrV){	valCarClrV->setCaption(fToStr(v,2,4));  }
 	if (iCurCar < carModels.size() && bUpdCarClr && bGI)
 		carModels[iCurCar]->ChangeClr(iCurCar);
 }
@@ -134,12 +134,12 @@ void App::btnCarClrRandom(WP)
 void App::slParticles(SL)
 {
 	Real v = 4.f * powf(val/res, 2.f);  if (bGI)  pSet->particles_len = v;
-	if (valParticles){	Fmt(s, "%4.2f", v);	valParticles->setCaption(s);  }
+	if (valParticles){	valParticles->setCaption(fToStr(v,2,4));  }
 }
 void App::slTrails(SL)
 {
 	Real v = 4.f * powf(val/res, 2.f);  if (bGI)  pSet->trails_len = v;
-	if (valTrails){	Fmt(s, "%4.2f", v);	valTrails->setCaption(s);  }
+	if (valTrails){		valTrails->setCaption(fToStr(v,2,4));  }
 }
 
 //  reflect
@@ -162,7 +162,7 @@ void App::slReflFaces(SL)
 void App::slReflDist(SL)
 {
 	float v = 20.f + 1480.f * powf(val/res, 2.f);	if (bGI)  pSet->refl_dist = v;
-	if (valReflDist){	Fmt(s, "%4.0f m", v);	valReflDist->setCaption(s);  }
+	if (valReflDist){	valReflDist->setCaption(fToStr(v,0,4)+" m");  }
 	
 	recreateReflections();
 }
@@ -199,31 +199,31 @@ void App::recreateReflections()
 void App::slSizeGaug(SL)
 {
 	float v = 0.1f + 0.15f * val/res;	if (bGI)  {  pSet->size_gauges = v;  SizeHUD(true);  }
-	if (valSizeGaug){	Fmt(s, "%4.3f", v);	valSizeGaug->setCaption(s);  }
+	if (valSizeGaug){	valSizeGaug->setCaption(fToStr(v,3,4));  }
 }
 void App::slSizeArrow(SL)
 {
 	float v = val/res;	if (bGI)  {  pSet->size_arrow = v;  }
-	if (valSizeArrow){	Fmt(s, "%4.3f", v);	valSizeArrow->setCaption(s);  }
+	if (valSizeArrow){	valSizeArrow->setCaption(fToStr(v,3,4));  }
 	if (arrowNode) arrowRotNode->setScale(v/2.f, v/2.f, v/2.f);
 }
 
 void App::slCountdownTime(SL)
 {
 	float v = val * 0.5f;	if (bGI)  {  pSet->gui.pre_time = v;  }
-	if (valCountdownTime){	Fmt(s, "%4.1f", v);	valCountdownTime->setCaption(s);  }
+	if (valCountdownTime){	valCountdownTime->setCaption(fToStr(v,1,4));  }
 }
 
 //  minimap
 void App::slSizeMinimap(SL)
 {
 	float v = 0.05f + 0.25f * val/res;	if (bGI)  {  pSet->size_minimap = v;  SizeHUD(true);  }
-	if (valSizeMinimap){	Fmt(s, "%4.3f", v);	valSizeMinimap->setCaption(s);  }
+	if (valSizeMinimap){	valSizeMinimap->setCaption(fToStr(v,3,4));  }
 }
 void App::slZoomMinimap(SL)
 {
 	float v = 1.f + 9.f * powf(val/res, 2.f);	if (bGI)  {  pSet->zoom_minimap = v;  SizeHUD(true);  }
-	if (valZoomMinimap){	Fmt(s, "%4.3f", v);	valZoomMinimap->setCaption(s);  }
+	if (valZoomMinimap){	valZoomMinimap->setCaption(fToStr(v,3,4));  }
 }
 
 
@@ -231,22 +231,22 @@ void App::slZoomMinimap(SL)
 void App::slVolMaster(SL)
 {
 	Real v = 1.6f * val/res;	if (bGI)  {  pSet->vol_master = v;  pGame->ProcessNewSettings();  }
-	if (valVolMaster){  Fmt(s, "%4.2f", v);	valVolMaster->setCaption(s);  }
+	if (valVolMaster){  valVolMaster->setCaption(fToStr(v,2,4));  }
 }
 void App::slVolEngine(SL)
 {
 	Real v = 1.4f * val/res;	if (bGI)  pSet->vol_engine = v;
-	if (valVolEngine){  Fmt(s, "%4.2f", v);	valVolEngine->setCaption(s);  }
+	if (valVolEngine){  valVolEngine->setCaption(fToStr(v,2,4));  }
 }
 void App::slVolTires(SL)
 {
 	Real v = 1.4f * val/res;	if (bGI)  pSet->vol_tires = v;
-	if (valVolTires){  Fmt(s, "%4.2f", v);	valVolTires->setCaption(s);  }
+	if (valVolTires){  valVolTires->setCaption(fToStr(v,2,4));  }
 }
 void App::slVolEnv(SL)
 {
 	Real v = 1.4f * val/res;	if (bGI)  pSet->vol_env = v;
-	if (valVolEnv){  Fmt(s, "%4.2f", v);	valVolEnv->setCaption(s);  }
+	if (valVolEnv){  valVolEnv->setCaption(fToStr(v,2,4));  }
 }
 
 
@@ -388,19 +388,19 @@ void App::chkVidGodRays(WP wp)
 void App::slBloomInt(SL)
 {
 	Real v = val/res;  if (bGI)  pSet->bloomintensity = v;
-	if (valBloomInt){	Fmt(s, "%4.2f", v);	valBloomInt->setCaption(s);  }
+	if (valBloomInt){	valBloomInt->setCaption(fToStr(v,2,4));  }
 	if (bGI)  refreshCompositor();
 }
 void App::slBloomOrig(SL)
 {
 	Real v = val/res;  if (bGI)  pSet->bloomorig = v;
-	if (valBloomOrig){	Fmt(s, "%4.2f", v);	valBloomOrig->setCaption(s);  }
+	if (valBloomOrig){	valBloomOrig->setCaption(fToStr(v,2,4));  }
 	if (bGI)  refreshCompositor();
 }
 void App::slBlurIntens(SL)
 {
 	Real v = val/res;  if (bGI)  pSet->motionblurintensity = v;
-	if (valBlurIntens){	Fmt(s, "%4.2f", v);	valBlurIntens->setCaption(s);  }
+	if (valBlurIntens){	valBlurIntens->setCaption(fToStr(v,2,4));  }
 	// if (bGI)  refreshCompositor();   // intensity is set every frame in UpdateHUD
 }
 

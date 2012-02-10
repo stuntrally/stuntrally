@@ -208,8 +208,8 @@ String App::GetTimeString(float time) const
 
 	if (time != 0.0)
 	{
-		char ss[128];
-		sprintf(ss, "%d:%05.2f", min, secs);  //"%d:%06.3f"
+		String ss;
+		ss = toStr(min)+":"+fToStr(secs,2,5,'0');
 		return ss;
 	}else
 		return "-:--.---";

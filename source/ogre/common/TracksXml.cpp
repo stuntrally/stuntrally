@@ -21,9 +21,7 @@ Date s2dt(const char* a)
 }
 std::string dt2s(const Date& dt)
 {
-	static char s[256];
-	sprintf(s,"%02d-%02d-%02d",dt.day,dt.month,dt.year);
-	return std::string(s);
+	return toStr(dt.day)+"-"+toStr(dt.month)+"-"+toStr(dt.year);
 }
 
 

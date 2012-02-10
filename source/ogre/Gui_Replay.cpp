@@ -106,8 +106,7 @@ void App::listRplChng(List* li, size_t pos)
 		valRplInfo->setCaption(ss);
 
 		int size = boost::filesystem::file_size(file);
-		sprintf(s, "%5.2f", float(size)/1000000.f);
-		ss = String(TR("#{RplFileSize}:")) + s + TR(" #{UnitMB}\n") +
+		ss = String(TR("#{RplFileSize}:")) + fToStr( float(size)/1000000.f, 2 ) + TR(" #{UnitMB}\n") +
 			TR("#{RplVersion}: ") + toStr(rpl.header.ver) + "     " + toStr(rpl.header.frameSize) + "B";
 		if (valRplInfo2)  valRplInfo2->setCaption(ss);
 	}

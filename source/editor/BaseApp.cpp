@@ -4,13 +4,6 @@
 #include "../road/Road.h"
 using namespace Ogre;
 
-Ogre::String fToStr(const float v, unsigned short precision)
-{
-	std::ostringstream s;
-	s << std::fixed << std::setprecision(precision) << v;
-	return s.str();
-} 
-
 ///  Fps stats
 //------------------------------------------------------------------------
 void BaseApp::updateStats()

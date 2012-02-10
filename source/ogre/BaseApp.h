@@ -14,6 +14,7 @@
 #include <MyGUI_OgrePlatform.h>
 
 #include <boost/scoped_ptr.hpp>
+#include <boost/thread.hpp>
 
 namespace MyGUI { class OgreD3D11Platform; }
 namespace Ogre 

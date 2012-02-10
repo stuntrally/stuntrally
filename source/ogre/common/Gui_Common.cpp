@@ -53,7 +53,7 @@ void App::slViewDist(SL)
 	else  if (ndSky)  ndSky->setScale(sc);
 
 	if (bGI)  pSet->view_distance = v;
-	if (valViewDist){	Fmt(s, "%4.1f km", v*0.001f);	valViewDist->setCaption(s);  }
+	if (valViewDist){	valViewDist->setCaption(fToStr(v*0.001f, 1,4)+" km");  }
 
 	// Set new far clip distance for all cams
 	#ifndef ROAD_EDITOR
@@ -69,7 +69,7 @@ void App::slTerDetail(SL)
 	Real v = 20.f * powf(val/res, 2.f);  if (bGI)  {  pSet->terdetail = v;
 		if (mTerrainGlobals)
 			mTerrainGlobals->setMaxPixelError(v);  }
-	if (valTerDetail){	Fmt(s, "%4.1f %%", v);	valTerDetail->setCaption(s);  }
+	if (valTerDetail){	valTerDetail->setCaption(fToStr(v, 1,4)+" %");  }
 }
 
 //  ter dist
@@ -78,14 +78,14 @@ void App::slTerDist(SL)
 	Real v = 2000.f * powf(val/res, 2.f);  if (bGI)  {  pSet->terdist = v;
 		if (mTerrainGlobals)
 			mTerrainGlobals->setCompositeMapDistance(v);  }
-	if (valTerDist){	Fmt(s, "%4.0f m", v);	valTerDist->setCaption(s);  }
+	if (valTerDist){	valTerDist->setCaption(fToStr(v,0,4)+" m");  }
 }
 
 //  road dist
 void App::slRoadDist(SL)
 {
 	Real v = 4.f * powf(val/res, 2.f);  if (bGI)  pSet->road_dist = v;
-	if (valRoadDist){	Fmt(s, "%5.2f", v);	valRoadDist->setCaption(s);  }
+	if (valRoadDist){	valRoadDist->setCaption(fToStr(v,2,5));  }
 }
 
 
@@ -93,23 +93,23 @@ void App::slRoadDist(SL)
 void App::slTrees(SL)
 {
 	Real v = 4.f * powf(val/res, 2.f);  if (bGI)  pSet->gui.trees = v;
-	if (valTrees){	Fmt(s, "%4.2f", v);	valTrees->setCaption(s);  }
+	if (valTrees){	valTrees->setCaption(fToStr(v,2,4));  }
 }
 void App::slGrass(SL)
 {
 	Real v = 4.f * powf(val/res, 2.f);  if (bGI)  pSet->grass = v;
-	if (valGrass){	Fmt(s, "%4.2f", v);	valGrass->setCaption(s);  }
+	if (valGrass){	valGrass->setCaption(fToStr(v,2,4));  }
 }
 
 void App::slTreesDist(SL)
 {
 	Real v = 0.5f + 6.5f * powf(val/res, 2.f);  if (bGI)  pSet->trees_dist = v;
-	if (valTreesDist){	Fmt(s, "%4.2f", v);	valTreesDist->setCaption(s);  }
+	if (valTreesDist){	valTreesDist->setCaption(fToStr(v,2,4));  }
 }
 void App::slGrassDist(SL)
 {
 	Real v = 0.5f + 6.5f * powf(val/res, 2.f);  if (bGI)  pSet->grass_dist = v;
-	if (valGrassDist){	Fmt(s, "%4.2f", v);	valGrassDist->setCaption(s);  }
+	if (valGrassDist){	valGrassDist->setCaption(fToStr(v,2,4));  }
 }
 
 void App::btnTrGrReset(WP wp)
@@ -204,7 +204,7 @@ void App::slShadowSize(SL)
 void App::slShadowDist(SL)
 {
 	Real v = 50.f + 4750.f * powf(val/res, 2.f);	if (bGI)  pSet->shadow_dist = v;
-	if (valShadowDist){  Fmt(s, "%4.1f km", v*0.001f);	valShadowDist->setCaption(s);  }
+	if (valShadowDist){  valShadowDist->setCaption(fToStr(v*0.001f,1,4)+" km");  }
 }
 
 void App::slShadowFilter(SL)
@@ -555,7 +555,7 @@ void App::slAntiAliasing(SL)
 	}
 	if (bGI)  pSet->fsaa = v;
 	
-	if (valAntiAliasing){  Fmt(s, "%4.0f", v); valAntiAliasing->setCaption(s);  }
+	if (valAntiAliasing){  valAntiAliasing->setCaption(fToStr(v,0,4));  }
 }
 
 ///  resolutions

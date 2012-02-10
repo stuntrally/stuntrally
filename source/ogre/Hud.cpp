@@ -477,34 +477,36 @@ void App::UpdateHUD(int carId, CarModel* pCarM, CAR* pCar, float time, Viewport*
 	{
 		TIMER& tim = pGame->timer;	//car[playercarindex].
 		tim.SetPlayerCarID(carId);
-		s[0]=0;
 		
 		if (pCarM->bWrongChk || pSet->game.local_players > 1 && pCarM->iWonPlace > 0)
 			ovWarnWin->show();  else  ovWarnWin->hide();  //ov
 			
 		//  lap num (for many or champ)
+		std::string times;
 		if (pSet->game.local_players > 1 || pSet->game.champ_num >= 0)
 		{
 			if (pCarM->iWonPlace > 0 && hudWonPlace)
-			{	sprintf(s, String(TR("---  %d #{TBPlace}  ---")).c_str(), pCarM->iWonPlace );
+			{	
+				std::string s = String(TR("---  "+toStr(pCarM->iWonPlace)+" #{TBPlace}  ---"));
 				hudWonPlace->setCaption(s);  hudWonPlace->show();
 				const static ColourValue clrPlace[4] = {
 					ColourValue(0.4,1,0.2), ColourValue(1,1,0.3), ColourValue(1,0.7,0.2), ColourValue(1,0.5,0.2) };
 				hudWonPlace->setColour(clrPlace[pCarM->iWonPlace-1]);
 			}
-			sprintf(s, String(TR("#{TBLap}  %d/%d")).c_str(), tim.GetCurrentLap(carId)+1, pSet->game.num_laps );
+			times = String(TR("#{TBLap}  "+toStr(tim.GetCurrentLap(carId)+1)+"/"+toStr(pSet->game.num_laps)));
 		}else
 		{	if (!road)  // score on vdr track
 			if (tim.GetIsDrifting(0))
-				sprintf(s, String(TR("#{TBScore}  %3.0f+%2.0f")).c_str(), tim.GetDriftScore(0), tim.GetThisDriftScore(0) );
+				times += String(TR("#{TBScore}  "+fToStr(tim.GetDriftScore(0),0)+"+"+fToStr(tim.GetThisDriftScore(0),0)));
 			else
-				sprintf(s, String(TR("#{TBScore}  %3.0f")).c_str(), tim.GetDriftScore(0) );
+				times += String(TR("#{TBScore}  "+fToStr(tim.GetDriftScore(0),0)));
 		}		
-		if (hudTimes)
-			hudTimes->setCaption(String(s) +
+		if (hudTimes) {
+			hudTimes->setCaption(times +
 				String(TR("\n#{TBTime} ")) + GetTimeString(tim.GetPlayerTime())+
 				String(TR("\n#{TBLast} ")) + GetTimeString(tim.GetLastLap())+
 				String(TR("\n#{TBBest} ")) + GetTimeString(tim.GetBestLap(pSet->game.trackreverse)) );
+		}
 	}
 
 	//-------------------------------------------------------------------------------------------------------------------
@@ -719,7 +721,6 @@ void App::UpdateHUD(int carId, CarModel* pCarM, CAR* pCar, float time, Viewport*
 
 void App::bltDumpRecursive(CProfileIterator* profileIterator, int spacing, std::stringstream& os)
 {
-	static char s[256];
 	profileIterator->First();
 	if (profileIterator->Is_Done())
 		return;
@@ -730,7 +731,7 @@ void App::bltDumpRecursive(CProfileIterator* profileIterator, int spacing, std::
 	for (i=0;i<spacing;i++)	os << ".";
 	os << "----------------------------------\n";
 	for (i=0;i<spacing;i++)	os << ".";
-	sprintf(s,"Profiling: %s (total running time: %.3f ms) ---\n",	profileIterator->Get_Current_Parent_Name(), parent_time );
+	std::string s = "Profiling: "+String(profileIterator->Get_Current_Parent_Name())+" (total running time: "+fToStr(parent_time,3)+" ms) ---\n";
 	os << s;
 	float totalTime = 0.f;
 
@@ -744,7 +745,8 @@ void App::bltDumpRecursive(CProfileIterator* profileIterator, int spacing, std::
 		float fraction = parent_time > SIMD_EPSILON ? (current_total_time / parent_time) * 100 : 0.f;
 
 		for (j=0;j<spacing;j++)	os << ".";
-		sprintf(s,"%d -- %s (%.2f %%) :: %.3f ms / frame (%d calls)\n",i, profileIterator->Get_Current_Name(), fraction,(current_total_time / (double)frames_since_reset),profileIterator->Get_Current_Total_Calls());
+		double ms = (current_total_time / (double)frames_since_reset);
+		s = toStr(i)+" -- "+profileIterator->Get_Current_Name()+" ("+fToStr(fraction,2)+" %) :: "+fToStr(ms,3)+" ms / frame ("+toStr(profileIterator->Get_Current_Total_Calls())+" calls)\n";
 		os << s;
 		totalTime += current_total_time;
 		//recurse into children
@@ -755,7 +757,8 @@ void App::bltDumpRecursive(CProfileIterator* profileIterator, int spacing, std::
 		os << "what's wrong\n";
 	}
 	for (i=0;i<spacing;i++)	os << ".";
-	sprintf(s,"%s (%.3f %%) :: %.3f ms\n", "Unaccounted:",parent_time > SIMD_EPSILON ? ((parent_time - accumulated_time) / parent_time) * 100 : 0.f, parent_time - accumulated_time);
+	double unaccounted=  parent_time > SIMD_EPSILON ? ((parent_time - accumulated_time) / parent_time) * 100 : 0.f;
+	s = "Unaccounted: ("+fToStr(unaccounted,3)+" %) :: "+fToStr(parent_time - accumulated_time, 3)+" ms\n";
 	os << s;
 	
 	for (i=0;i<numChildren;i++)

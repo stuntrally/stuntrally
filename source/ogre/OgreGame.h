@@ -343,8 +343,6 @@ protected:
 
 	MyGUI::StaticImagePtr imgCar;	MyGUI::StaticTextPtr valCar;
 	void comboBoost(CMB), comboFlip(CMB);
-	
-	char s[512];
 
 	GuiPopup popup;
 

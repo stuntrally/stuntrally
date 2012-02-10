@@ -442,15 +442,15 @@ void App::UpdGuiRdStats(const SplineRoad* rd, const Scene& sc, const String& sTr
 	if (imgMini[ch])  imgMini[ch]->setImageTexture(sTrack+"_mini.png");
 
 
-	Fmt(s, "%5.3f km", sc.td.fTerWorldSize / 1000.f);	if (stTrk[ch][1])  stTrk[ch][1]->setCaption(s);
+	if (stTrk[ch][1])  stTrk[ch][1]->setCaption(fToStr(sc.td.fTerWorldSize/1000.f,3,5)+" km");
 	if (!rd)  return;
-	Fmt(s, "%5.3f km", rd->st.Length / 1000.f);			if (stTrk[ch][0])  stTrk[ch][0]->setCaption(s);
+	if (stTrk[ch][0])  stTrk[ch][0]->setCaption(fToStr(rd->st.Length/1000.f,3,5)+" km");
 
-	Fmt(s, "%4.2f m", rd->st.WidthAvg);		if (stTrk[ch][2])  stTrk[ch][2]->setCaption(s);
-	Fmt(s, "%3.1f m", rd->st.HeightDiff);	if (stTrk[ch][3])  stTrk[ch][3]->setCaption(s);
+	if (stTrk[ch][2])  stTrk[ch][2]->setCaption(fToStr(rd->st.WidthAvg,2,4)+" m");
+	if (stTrk[ch][3])  stTrk[ch][3]->setCaption(fToStr(rd->st.HeightDiff,1,3)+" m");
 
-	Fmt(s, "%3.1f%%", rd->st.OnTer);		if (stTrk[ch][4])  stTrk[ch][4]->setCaption(s);
-	Fmt(s, "%3.1f%%", rd->st.Pipes);		if (stTrk[ch][5])  stTrk[ch][5]->setCaption(s);
+	if (stTrk[ch][4])  stTrk[ch][4]->setCaption(fToStr(rd->st.OnTer,1,3)+"%");
+	if (stTrk[ch][5])  stTrk[ch][5]->setCaption(fToStr(rd->st.Pipes,1,3)+"%");
 					
 	int id = tracksXml.trkmap[sTrack];
 	for (int i=0; i < InfTrk; ++i)
@@ -468,16 +468,18 @@ void App::UpdGuiRdStats(const SplineRoad* rd, const Scene& sc, const String& sTr
 
 #ifndef ROAD_EDITOR  // game
 	//  best time, avg vel,
+	std::string unit = pSet->show_mph ? "mph" : "km/h";
 	if (time < 0.1f)
-	{	Fmt(s, "%s", GetTimeString(0.f).c_str());	if (stTrk[ch][6])  stTrk[ch][6]->setCaption(s);
-		if (pSet->show_mph)	Fmt(s, "0 mph");
-		else				Fmt(s, "0 km/h");		if (stTrk[ch][7])  stTrk[ch][7]->setCaption(s);
+	{
+		if (stTrk[ch][6])  stTrk[ch][6]->setCaption(GetTimeString(0.f));
+		if (stTrk[ch][7])  stTrk[ch][7]->setCaption("0 "+unit);
 	}else
-	{	Fmt(s, "%s", GetTimeString(time).c_str());	if (stTrk[ch][6])  stTrk[ch][6]->setCaption(s);
-		if (pSet->show_mph)	Fmt(s, "%4.1f mph",  rd->st.Length / time * 2.23693629f);
-		else				Fmt(s, "%4.1f km/h", rd->st.Length / time * 3.6f);
-		if (stTrk[ch][7])  stTrk[ch][7]->setCaption(s);
-		//Fmt(s, "%4.2f%%", rd->st.Pitch);	if (stTrk[ch][8])  stTrk[ch][8]->setCaption(s);
+	{	
+		if (stTrk[ch][6])  stTrk[ch][6]->setCaption(GetTimeString(time));
+		std::string speed = pSet->show_mph ? fToStr(rd->st.Length / time * 2.23693629f, 1, 4)+" mph"
+										   : fToStr(rd->st.Length / time * 3.6f, 1, 4)+" km/h";
+		if (stTrk[ch][7])  stTrk[ch][7]->setCaption(speed);
+		if (stTrk[ch][8])  stTrk[ch][8]->setCaption(fToStr(rd->st.Pitch,2,4)+"%");
 	}
 #else
 	if (trkName)  //

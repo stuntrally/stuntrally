@@ -496,7 +496,7 @@ void App::newPoses()
 				if (valRplName2)  // recorded info
 				{
 					int size = replay.GetNumFrames() * sizeof(ReplayFrame);
-					sprintf(s, "%5.2f", float(size)/1000000.f);
+					std::string s = fToStr( float(size)/1000000.f, 2 );
 					String ss = String( TR("#{RplRecTime}: ")) + GetTimeString(replay.GetTimeLength()) + TR("   #{RplSize}: ") + s + TR(" #{UnitMB}");
 					valRplName2->setCaption(ss);
 				}
@@ -717,7 +717,7 @@ void App::updatePoses(float time)
 	{
 		double pos = pGame->timer.GetPlayerTime();
 		float len = replay.GetTimeLength();
-		if (valRplPerc){  sprintf(s, "%4.1f %%", pos/len * 100.f);  valRplPerc->setCaption(s);  }
+		if (valRplPerc){  valRplPerc->setCaption(fToStr(pos/len*100.f, 1,4)+" %");  }
 		if (valRplCur)  valRplCur->setCaption(GetTimeString(pos));
 		if (valRplLen)  valRplLen->setCaption(GetTimeString(len));
 
