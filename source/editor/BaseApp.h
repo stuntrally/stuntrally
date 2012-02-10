@@ -60,7 +60,7 @@ protected:
 	bool setup(), configure();  void updateStats();
 	
 	bool bFirstRenderFrame;
-
+	
 	///  create
 	virtual void createScene() = 0;
 	virtual void destroyScene();

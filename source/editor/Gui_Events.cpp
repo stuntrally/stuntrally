@@ -33,33 +33,33 @@ void App::comboRain2(ComboBoxPtr cmb, size_t val)
 void App::slRain1Rate(SL)  // rain rates
 {
 	float v = 6000.f * val/res;		sc.rainEmit = v;
-	if (valRain1Rate){	Fmt(s, "%4.0f", v);	valRain1Rate->setCaption(s);  }	UpdSun();
+	if (valRain1Rate){	valRain1Rate->setCaption(fToStr(v,0,4));  }	UpdSun();
 }
 void App::slRain2Rate(SL)
 {
 	float v = 6000.f * val/res;		sc.rain2Emit = v;
-	if (valRain2Rate){	Fmt(s, "%4.0f", v);	valRain2Rate->setCaption(s);  }	UpdSun();
+	if (valRain2Rate){	valRain2Rate->setCaption(fToStr(v,0,4));  }	UpdSun();
 }
 
 void App::slSunPitch(SL)  // sun pitch, yaw
 {
 	float v = 90.f * val/res;	sc.ldPitch = v;
-	if (valSunPitch){	Fmt(s, "%4.1f", v);	valSunPitch->setCaption(s);  }	UpdSun();
+	if (valSunPitch){	valSunPitch->setCaption(fToStr(v,1,4));  }	UpdSun();
 }
 void App::slSunYaw(SL)
 {
 	float v = -180.f + 360.f * val/res;  sc.ldYaw = v;
-	if (valSunYaw){	Fmt(s, "%4.1f", v);	valSunYaw->setCaption(s);  }  UpdSun();
+	if (valSunYaw){	valSunYaw->setCaption(fToStr(v,1,4));  }  UpdSun();
 }
 void App::slFogStart(SL)  // fog start, end
 {
 	float v = 2000.f * powf(val/res, 2.f);		sc.fogStart = v;  UpdFog();
-	if (valFogStart){	Fmt(s, "%3.0f", v);	valFogStart->setCaption(s);  }
+	if (valFogStart){	valFogStart->setCaption(fToStr(v,0,3));  }
 }
 void App::slFogEnd(SL)
 {
 	float v = 2000.f * powf(val/res, 2.f);		sc.fogEnd = v;    UpdFog();
-	if (valFogEnd){		Fmt(s, "%3.0f", v);	valFogEnd->setCaption(s);  }
+	if (valFogEnd){	 valFogEnd->setCaption(fToStr(v,0,3));  }
 }
 
 void App::chkFogDisable(WP wp)  // chk fog disable
@@ -162,7 +162,7 @@ void App::editTerTriSize(EditPtr ed)
 	if (sl)  sl->setScrollPosition(v);
 	// result val text
 	const char* str = tabsHmap->getItemSelected()->getCaption().asUTF8_c_str();  int size = atoi(str);
-	if (valTerTriSize){  Fmt(s, "%4.2f", sc.td.fTriangleSize * size);	valTerTriSize->setCaption(s);  }
+	if (valTerTriSize){  valTerTriSize->setCaption(fToStr(sc.td.fTriangleSize * size,2,4));  }
 }
 // |
 void App::slTerTriSize(SL)
@@ -172,19 +172,19 @@ void App::slTerTriSize(SL)
 	if (edTerTriSize)  edTerTriSize->setCaption(toStr(v));  // set edit
 	// result val text
 	const char* str = tabsHmap->getItemSelected()->getCaption().asUTF8_c_str();  int size = atoi(str);
-	if (valTerTriSize){  Fmt(s, "%4.2f", sc.td.fTriangleSize * size);	valTerTriSize->setCaption(s);  }
+	if (valTerTriSize){  valTerTriSize->setCaption(fToStr(sc.td.fTriangleSize * size,2,4));  }
 }
 
 void App::tabHmap(TabPtr wp, size_t id)
 {
 	const char* str = tabsHmap->getItemSelected()->getCaption().asUTF8_c_str();  int size = atoi(str);
-	if (valTerTriSize){  Fmt(s, "%4.2f", sc.td.fTriangleSize * size);	valTerTriSize->setCaption(s);  }
+	if (valTerTriSize){  valTerTriSize->setCaption(fToStr(sc.td.fTriangleSize * size,2,4));  }
 }
 
 void App::btnTerrainNew(WP)
 {
 	const char* str = tabsHmap->getItemSelected()->getCaption().asUTF8_c_str();  int size = atoi(str);
-	if (valTerTriSize){  Fmt(s, "%4.2f", sc.td.fTriangleSize * size);	valTerTriSize->setCaption(s);  }
+	if (valTerTriSize){  valTerTriSize->setCaption(fToStr(sc.td.fTriangleSize * size,2,4));  }
 
 	sc.td.iVertsX = size+1;  sc.td.UpdVals();  // new hf
 
@@ -241,7 +241,7 @@ void App::btnTerGenerate(WP)
 void App::btnTerrainHalf(WP)
 {
 	const char* str = tabsHmap->getItemSelected()->getCaption().asUTF8_c_str();  int size = atoi(str) / 2;
-	if (valTerTriSize){  Fmt(s, "%4.2f", sc.td.fTriangleSize * size);	valTerTriSize->setCaption(s);  }
+	if (valTerTriSize){ valTerTriSize->setCaption(fToStr(sc.td.fTriangleSize * size,2,4));  }
 
 	int halfSize = (sc.td.iVertsX-1) / 2 +1;
 	float* hfData = new float[halfSize * halfSize];
@@ -298,38 +298,38 @@ void App::btnScaleTerH(WP)
 void App::slTerGenScale(SL)
 {
 	float v = 160.f * powf(val/res, 2.f);	if (bGI)  pSet->gen_scale = v;
-	if (valTerGenScale){	Fmt(s, "%4.2f", v);  valTerGenScale->setCaption(s);  }
+	if (valTerGenScale){	valTerGenScale->setCaption(fToStr(v,2,4));  }
 }
 void App::slTerGenOfsX(SL)
 {
 	float v = -2.f + 4.f * val/res;		if (bGI)  pSet->gen_ofsx = v;
-	if (valTerGenOfsX){	Fmt(s, "%5.3f", v);  valTerGenOfsX->setCaption(s);  }
+	if (valTerGenOfsX){	valTerGenOfsX->setCaption(fToStr(v,3,5));  }
 }
 void App::slTerGenOfsY(SL)
 {
 	float v = -2.f + 4.f * val/res;		if (bGI)  pSet->gen_ofsy = v;
-	if (valTerGenOfsY){	Fmt(s, "%5.3f", v);  valTerGenOfsY->setCaption(s);  }
+	if (valTerGenOfsY){	valTerGenOfsY->setCaption(fToStr(v,3,5));  }
 }
 
 void App::slTerGenFreq(SL)
 {
 	float v = 0.7f * val/res;	if (bGI)  pSet->gen_freq = v;
-	if (valTerGenFreq){	Fmt(s, "%5.3f", v);  valTerGenFreq->setCaption(s);  }
+	if (valTerGenFreq){	valTerGenFreq->setCaption(fToStr(v,3,5));  }
 }
 void App::slTerGenOct(SL)
 {
 	if (bGI)  pSet->gen_oct = val;
-	if (valTerGenOct){	Fmt(s, "%lu", val);  valTerGenOct->setCaption(s);  }
+	if (valTerGenOct){	valTerGenOct->setCaption(toStr(val));  }
 }
 void App::slTerGenPers(SL)
 {
 	float v = 0.7f * val/res;	if (bGI)  pSet->gen_persist = v;
-	if (valTerGenPers){	Fmt(s, "%5.3f", v);  valTerGenPers->setCaption(s);  }
+	if (valTerGenPers){	valTerGenPers->setCaption(fToStr(v,3,5));  }
 }
 void App::slTerGenPow(SL)
 {
 	float v = 6.f * powf(val/res, 2.f);		if (bGI)  pSet->gen_pow = v;
-	if (valTerGenPow){	Fmt(s, "%5.3f", v);  valTerGenPow->setCaption(s);  }
+	if (valTerGenPow){	valTerGenPow->setCaption(fToStr(v,3,5));  }
 }
 
 
@@ -404,21 +404,21 @@ void App::slTerLAngMin(SL)
 {
 	float v = 90.f * val/res;
 	if (bTerLay && bGI)  sc.td.layersAll[idTerLay].angMin = v;
-	if (valTerLAngMin){	Fmt(s, "%4.0f", v);  valTerLAngMin->setCaption(s);  }
+	if (valTerLAngMin){	valTerLAngMin->setCaption(fToStr(v,0,4));  }
 	if (terrain && bGI && !noBlendUpd)  bTerUpdBlend = true;  //initBlendMaps(terrain);
 }
 void App::slTerLAngMax(SL)
 {
 	float v = 90.f * val/res;
 	if (bTerLay && bGI)  sc.td.layersAll[idTerLay].angMax = v;
-	if (valTerLAngMax){	Fmt(s, "%4.0f", v);  valTerLAngMax->setCaption(s);  }
+	if (valTerLAngMax){	valTerLAngMax->setCaption(fToStr(v,0,4));  }
 	if (terrain && bGI && !noBlendUpd)  bTerUpdBlend = true;
 }
 void App::slTerLAngSm(SL)
 {
 	float v = 90.f * val/res;
 	if (bTerLay && bGI)  sc.td.layersAll[idTerLay].angSm = v;
-	if (valTerLAngSm){	Fmt(s, "%4.0f", v);  valTerLAngSm->setCaption(s);  }
+	if (valTerLAngSm){	valTerLAngSm->setCaption(fToStr(v,0,4));  }
 	if (terrain && bGI && !noBlendUpd)  bTerUpdBlend = true;
 }
 
@@ -426,21 +426,21 @@ void App::slTerLHMin(SL)
 {
 	float v = -300.f + 600.f * val/res;
 	if (bTerLay && bGI)  sc.td.layersAll[idTerLay].hMin = v;
-	if (valTerLHMin){	Fmt(s, "%4.0f", v);  valTerLHMin->setCaption(s);  }
+	if (valTerLHMin){	valTerLHMin->setCaption(fToStr(v,0,4));  }
 	if (terrain && bGI && !noBlendUpd)  bTerUpdBlend = true;
 }
 void App::slTerLHMax(SL)
 {
 	float v = -300.f + 600.f * val/res;
 	if (bTerLay && bGI)  sc.td.layersAll[idTerLay].hMax = v;
-	if (valTerLHMax){	Fmt(s, "%4.0f", v);  valTerLHMax->setCaption(s);  }
+	if (valTerLHMax){	valTerLHMax->setCaption(fToStr(v,0,4));  }
 	if (terrain && bGI && !noBlendUpd)  bTerUpdBlend = true;
 }
 void App::slTerLHSm(SL)
 {
 	float v = 200.f * val/res;
 	if (bTerLay && bGI)  sc.td.layersAll[idTerLay].hSm = v;
-	if (valTerLHSm){	Fmt(s, "%4.0f", v);  valTerLHSm->setCaption(s);  }
+	if (valTerLHSm){	valTerLHSm->setCaption(fToStr(v,0,4));  }
 	if (terrain && bGI && !noBlendUpd)  bTerUpdBlend = true;
 }
 
@@ -448,7 +448,7 @@ void App::slTerLNoise(SL)
 {
 	float v = -2.f + 4.f * val/res;
 	if (bTerLay && bGI)  sc.td.layersAll[idTerLay].noise = v;
-	if (valTerLNoise){	Fmt(s, "%4.2f", v);  valTerLNoise->setCaption(s);  }
+	if (valTerLNoise){	valTerLNoise->setCaption(fToStr(v,2,4));  }
 	if (terrain && bGI && !noBlendUpd)  bTerUpdBlend = true;
 }
 
@@ -594,7 +594,7 @@ void App::comboPgLay(ComboBoxPtr cmb, size_t val)
 void App::slLTrDens(SL)  //  sliders
 {
 	Real v = 0.001f + 1.0f * powf(val/res, 2.f);  sc.pgLayersAll[idPgLay].dens = v;
-	if (valLTrDens){  Fmt(s, "%5.3f", v);  valLTrDens->setCaption(s);  }
+	if (valLTrDens){  valLTrDens->setCaption(fToStr(v,3,5));  }
 }
 void App::slLTrRdDist(SL)
 {
@@ -605,29 +605,29 @@ void App::slLTrRdDist(SL)
 void App::slLTrMinSc(SL)
 {
 	Real v = 6.0f * powf(val/res, 3.f);		sc.pgLayersAll[idPgLay].minScale = v;
-	if (valLTrMinSc){  Fmt(s, "%5.3f", v);  valLTrMinSc->setCaption(s);  }
+	if (valLTrMinSc){  valLTrMinSc->setCaption(fToStr(v,3,5));  }
 }
 void App::slLTrMaxSc(SL)
 {
 	Real v = 6.0f * powf(val/res, 3.f);		sc.pgLayersAll[idPgLay].maxScale = v;
-	if (valLTrMaxSc){  Fmt(s, "%5.3f", v);  valLTrMaxSc->setCaption(s);  }
+	if (valLTrMaxSc){  valLTrMaxSc->setCaption(fToStr(v,3,5));  }
 }
 
 void App::slLTrWindFx(SL)
 {
 	Real v = 12.0f * powf(val/res, 3.f);	sc.pgLayersAll[idPgLay].windFx = v;
-	if (valLTrWindFx){  Fmt(s, "%5.3f", v);  valLTrWindFx->setCaption(s);  }
+	if (valLTrWindFx){  valLTrWindFx->setCaption(fToStr(v,3,5));  }
 }
 void App::slLTrWindFy(SL)
 {
 	Real v = 12.0f * powf(val/res, 3.f);	sc.pgLayersAll[idPgLay].windFy = v;
-	if (valLTrWindFy){  Fmt(s, "%5.3f", v);  valLTrWindFy->setCaption(s);  }
+	if (valLTrWindFy){  valLTrWindFy->setCaption(fToStr(v,3,5));  }
 }
 
 void App::slLTrMaxTerAng(SL)
 {
 	Real v = 90.0f * powf(val/res, 2.f);	sc.pgLayersAll[idPgLay].maxTerAng = v;
-	if (valLTrMaxTerAng){  Fmt(s, "%5.1f", v);  valLTrMaxTerAng->setCaption(s);  }
+	if (valLTrMaxTerAng){  valLTrMaxTerAng->setCaption(fToStr(v,1,5));  }
 }
 void App::editLTrMinTerH(EditPtr ed)
 {
@@ -693,13 +693,13 @@ void App::chkEscQuits(WP wp){		ChkEv(escquit);		}
 void App::slMiniUpd(SL)
 {
 	pSet->mini_skip = val;
-	if (valMiniUpd){	Fmt(s, "%lu", val);	valMiniUpd->setCaption(s);  }
+	if (valMiniUpd){	valMiniUpd->setCaption(toStr(val));  }
 }
 
 void App::slSizeRoadP(SL)
 {
 	Real v = 0.1f + 11.9f * val/res;  pSet->road_sphr = v;
-	if (valSizeRoadP){	Fmt(s, "%4.2f", v);	valSizeRoadP->setCaption(s);  }
+	if (valSizeRoadP){	valSizeRoadP->setCaption(fToStr(v,2,4));  }
 	if (road)
 	{	road->fMarkerScale = v;
 		road->UpdAllMarkers();  }
@@ -708,24 +708,24 @@ void App::slSizeRoadP(SL)
 void App::slCamInert(SL)
 {
 	Real v = val/res;  pSet->cam_inert = v;
-	if (valCamInert){	Fmt(s, "%4.2f", v);	valCamInert->setCaption(s);  }
+	if (valCamInert){	valCamInert->setCaption(fToStr(v,2,4));  }
 }
 void App::slCamSpeed(SL)
 {
 	Real v = 0.1f + 3.9f * powf(val/res, 1.f);  pSet->cam_speed = v;
-	if (valCamSpeed){	Fmt(s, "%4.2f", v);	valCamSpeed->setCaption(s);  }
+	if (valCamSpeed){	valCamSpeed->setCaption(fToStr(v,2,4));  }
 }
 
 void App::slTerUpd(SL)
 {
 	pSet->ter_skip = val;
-	if (valTerUpd){	Fmt(s, "%lu", val);	valTerUpd->setCaption(s);  }
+	if (valTerUpd){	valTerUpd->setCaption(toStr(val));  }
 }
 
 void App::slSizeMinmap(SL)
 {
 	float v = 0.15f + 1.85f * val/res;	pSet->size_minimap = v;
-	if (valSizeMinmap){	Fmt(s, "%4.3f", v);	valSizeMinmap->setCaption(s);  }
+	if (valSizeMinmap){	valSizeMinmap->setCaption(fToStr(v,3,4));  }
 	Real sz = pSet->size_minimap;  //int all = 0;
 	xm1 = 1-sz/asp, ym1 = -1+sz, xm2 = 1.0, ym2 = -1.0;
 	for (int i=0; i < RTs+1; ++i)  if (i != RTs)  {

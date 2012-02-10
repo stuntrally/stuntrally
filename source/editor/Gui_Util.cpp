@@ -460,11 +460,12 @@ bool App::SaveSurf(const std::string& path)
 		//  1st A-F sorted for game, 2nd L_ - read by editor
 		for (int j=0; j < n; ++j)
 		{
-			if (j==0)	sprintf(s, "L_%d", i);  // editor
-			else  if (i==6){  s[0] = 'A';  s[1]=0;  }  // used
-				  else  {  s[0] = u+'B';  s[1]=0;  u++;  }  // used
+			std::string ss;
+			if (j==0)	ss = "L_"+toStr(i); // editor
+			else  if (i==6){  ss = "A";  }  // used
+			else  {  ss = "B";  u++;  }  // used
 
-			const TRACKSURFACE& surf = su[i];  std::string ss = s;
+			const TRACKSURFACE& surf = su[i];
 			cf.SetParam(ss + ".ID", surf.type);
 			cf.SetParam(ss + ".BumpWaveLength", surf.bumpWaveLength);
 			cf.SetParam(ss + ".BumpAmplitude", surf.bumpAmplitude);

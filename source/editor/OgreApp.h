@@ -75,8 +75,6 @@ protected:
 	bool KeyPress(const CmdKey &arg);  void trkListNext(int rel);
 	Ogre::Vector3 vNew;	void editMouse();
 	
-	char s[512];
-
 	//  create  . . . . . . . . . . . . . . . . . . . . . . . . 
 	bool bNewHmap, bTrGrUpd;  Ogre::Real terMaxAng;
 	Ogre::String resTrk;  void NewCommon(), UpdTrees();

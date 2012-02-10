@@ -108,51 +108,54 @@ bool App::frameRenderingQueued(const FrameEvent& evt)
 		int ic = road->iChosen;  bool bCur = ic >= 0;
 		SplinePoint& sp = bCur ? road->getPoint(ic) : road->newP;
 
+		std::string s;
+
 		//  road point  --------------------------------
-		if (rdTxt[0]){	if (sp.onTer)	Fmt(s, "On Terrain");
-					else Fmt(s, "Height  %5.2f", sp.pos.y );  rdTxt[0]->setCaption(s);  }
-		if (rdTxt[1]){  Fmt(s, "Width  %5.2f", sp.width);  rdTxt[1]->setCaption(s);  }
+		if (rdTxt[0]){	if (sp.onTer)	s = "On Terrain";
+					else s = "Height "+fToStr(sp.pos.y,2,5); rdTxt[0]->setCaption(s);  }
+		if (rdTxt[1]){  rdTxt[1]->setCaption("Width  "+fToStr(sp.width,2,5));  }
 
-		if (rdTxt[2]){  Fmt(s, "yaw   %5.1f",  sp.aYaw);    rdTxt[2]->setCaption(s);  }
-		if (rdTxt[3]){  Fmt(s, "roll  %5.1f", sp.aRoll);   rdTxt[3]->setCaption(s);  }
+		if (rdTxt[2]){  rdTxt[2]->setCaption("yaw   "+fToStr(sp.aYaw,1,5));  }
+		if (rdTxt[3]){  rdTxt[3]->setCaption("roll  "+fToStr(sp.aRoll,1,5));  }
 
-		if (rdTxt[4]){  Fmt(s, "%d %s", sp.aType, csAngType[sp.aType].c_str());   rdTxt[4]->setCaption(s);  }
-		if (rdTxt[13]){  Fmt(s, "%3.0f", angSnap);   rdTxt[13]->setCaption(s);  }
+		if (rdTxt[4]){  rdTxt[4]->setCaption(toStr(sp.aType)+" "+csAngType[sp.aType]);  }
+		if (rdTxt[13]){  rdTxt[13]->setCaption(fToStr(angSnap,0,3));  }
 
-		if (rdTxt[5]){	if (sp.pipe==0.f)	s[0]=0;
-					else Fmt(s, "Pipe  %5.2f", sp.pipe);   rdTxt[5]->setCaption(s);  }
-		if (rdTxt[6]){	if (sp.onTer)	s[0]=0;
-					else Fmt(s, "column  %2d", sp.cols);   rdTxt[6]->setCaption(s);  }
-		if (rdTxt[7]){  Fmt(s, "%d %s", sp.idMtr, road->getMtrStr(ic).c_str());   rdTxt[7]->setCaption(s);  }
+		if (rdTxt[5]){	if (sp.pipe==0.f) s = "";
+					else s = "Pipe  "+fToStr(sp.pipe,2,5);  rdTxt[5]->setCaption(s);  }
+		if (rdTxt[6]){	if (sp.onTer) s = "";
+					else s = "column  "+fToStr(sp.cols,0,2);  rdTxt[6]->setCaption(s);  }
+		if (rdTxt[7]){  rdTxt[7]->setCaption(toStr(sp.idMtr)+" "+road->getMtrStr(ic));  }
 
-		if (rdTxt[8]){	if (sp.chkR == 0.f)  s[0]=0;
-					else Fmt(s, "chkR  %4.2f  %s", sp.chkR, road->iP1 == ic ? "<1>":"");   rdTxt[8]->setCaption(s);  }
+		if (rdTxt[8]){	if (sp.chkR == 0.f) s = "";
+					else s = "chkR  "+fToStr(sp.chkR,2,4)+"  "+ (road->iP1 == ic ? "<1>":"");   rdTxt[8]->setCaption(s);  }
 
 		if (rdTxt[9]){
-			if (road->vSel.size() > 0)  Fmt(s, "sel: %lu", road->vSel.size());
-			else	Fmt(s, "%2d/%lu", road->iChosen+1, road->vSegs.size());   rdTxt[9]->setCaption(s);  }
+			if (road->vSel.size() > 0)  s = "sel: "+toStr(road->vSel.size());
+			else	s = fToStr(road->iChosen+1,0,2)+"/"+toStr(road->vSegs.size()); rdTxt[9]->setCaption(s);  }
 
 		if (rdTxt[11]){  rdTxt[11]->setCaption(bCur ? "Cur" : "New");
 			rdTxt[11]->setTextColour(bCur ? MyGUI::Colour(0.85,0.75,1) : MyGUI::Colour(0.3,1,0.1));  }
 		if (rdTxt[12]){  rdTxt[12]->setCaption(road->bMerge ? "Mrg":"");	}
 
 		//  road stats  --------------------------------
-		if (rdTxtSt[0]){  Fmt(s, "Length  %4.0f", road->st.Length);		rdTxtSt[0]->setCaption(s);  }
-		if (rdTxtSt[1]){  Fmt(s, "Width   %5.2f", road->st.WidthAvg);	rdTxtSt[1]->setCaption(s);  }
-		if (rdTxtSt[2]){  Fmt(s, "Height   %5.2f", road->st.HeightDiff);rdTxtSt[2]->setCaption(s);  }
+		if (rdTxtSt[0]){  rdTxtSt[0]->setCaption("Length  "+fToStr(road->st.Length,0,4));  }
+		if (rdTxtSt[1]){  rdTxtSt[1]->setCaption("Width   "+fToStr(road->st.WidthAvg,2,5));  }
+		if (rdTxtSt[2]){  rdTxtSt[2]->setCaption("Height   "+fToStr(road->st.HeightDiff,2,5));  }
 
-		if (rdTxtSt[3]){  Fmt(s, "In air   %4.1f%%", road->st.OnTer);	rdTxtSt[3]->setCaption(s);  }
-		if (rdTxtSt[4]){  Fmt(s, "Pipes   %4.1f%%", road->st.Pipes);	rdTxtSt[4]->setCaption(s);  }
+		if (rdTxtSt[3]){  rdTxtSt[3]->setCaption("In air   "+fToStr(road->st.OnTer,1,4)+"%");  }
+		if (rdTxtSt[4]){  rdTxtSt[4]->setCaption("Pipes   "+fToStr(road->st.Pipes,1,4)+"%");  }
 
 		int lp = !bCur ? -1 : road->vSegs[road->iChosen].lpos.size();
-		if (rdTxtSt[5]){  Fmt(s, "lod pnt:  %d", lp);					rdTxtSt[5]->setCaption(s);  }
-		if (rdTxtSt[6]){  Fmt(s, "segs Mrg:  %2d", road->segsMrg+1);	rdTxtSt[6]->setCaption(s);  }
-		if (rdTxtSt[7]){  Fmt(s, "vis:  %2d", road->iVis);				rdTxtSt[7]->setCaption(s);  }
-		if (rdTxtSt[8]){  Fmt(s, "tri:  %4.1fk", road->iTris/1000.f);	rdTxtSt[8]->setCaption(s);  }
+		if (rdTxtSt[5]){  rdTxtSt[5]->setCaption("lod pnt:  "+toStr(lp));  }
+		if (rdTxtSt[6]){  rdTxtSt[6]->setCaption("segs Mrg:  "+fToStr(road->segsMrg+1,0,2));  }
+		if (rdTxtSt[7]){  rdTxtSt[7]->setCaption("vis:  "+fToStr(road->iVis,0,2));  }
+		if (rdTxtSt[8]){  rdTxtSt[8]->setCaption("tri:  "+fToStr(road->iTris/1000.f,1,4)+"k");  }
 
 		//if (rdTxtSt[5]){  Fmt(s, "Pitch  %5.2f", road->st.Pitch);  rdTxtSt[5]->setCaption(s);  }
 		//if (rdTxtSt[6]){  Fmt(s, "Yaw   %5.2f", road->st.Yaw);    rdTxtSt[6]->setCaption(s);  }
 		//if (rdTxtSt[7]){  Fmt(s, "Roll  %5.2f", road->st.Roll);   rdTxtSt[7]->setCaption(s);  }
+		//!  ^  fToStr
 
 	///  Modify  . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  
 		//  road point
@@ -177,10 +180,10 @@ bool App::frameRenderingQueued(const FrameEvent& evt)
 		//  start, box, dir
 		//----------------------------------------------------------------
 		Vector3 p;  if (ndCar)  p = ndCar->getPosition();
-		Fmt(s, "%4.1f %4.1f %4.1f", p.x,p.y,p.z);	if (brTxt[0])	brTxt[0]->setCaption(/*s*/"");
-		Fmt(s, "width %4.1f", road->vStBoxDim.z);	if (brTxt[1])	brTxt[1]->setCaption(s);
-		Fmt(s, "height %4.1f",road->vStBoxDim.y);	if (brTxt[2])	brTxt[2]->setCaption(s);
-		Fmt(s, "road dir %+d", road->iDir);			if (brTxt[3])	brTxt[3]->setCaption(s);
+		/*Fmt(s, "%4.1f %4.1f %4.1f", p.x,p.y,p.z);*/	if (brTxt[0])	brTxt[0]->setCaption(/*s*/"");
+		if (brTxt[1])	brTxt[1]->setCaption("width "+fToStr(road->vStBoxDim.z,1,4));
+		if (brTxt[2])	brTxt[2]->setCaption("height "+fToStr(road->vStBoxDim.y,1,4));
+		if (brTxt[3])	brTxt[3]->setCaption("road dir "+ (road->iDir == 1 ? String("+1") : String("-1")) );
 
 		if (isKey(LBRACKET))	{  road->AddBoxH(-q*0.2);  UpdStartPos();  }
 		if (isKey(SEMICOLON ))	{  road->AddBoxW(-q*0.2);  UpdStartPos();  }
@@ -190,12 +193,12 @@ bool App::frameRenderingQueued(const FrameEvent& evt)
 	}
 	else if (edMode == ED_Fluids && sc.fluids.size() > 0)
 	{
-		FluidBox& fb = sc.fluids[iFlCur];									if (flTxt[1])	flTxt[1]->setCaption(fb.name.c_str());
-		Fmt(s, "Cur/All:  %d/%lu", iFlCur+1, sc.fluids.size());				if (flTxt[0])	flTxt[0]->setCaption(s);
-		Fmt(s, "Pos:  %4.1f %4.1f %4.1f", fb.pos.x, fb.pos.y, fb.pos.z);	if (flTxt[2])	flTxt[2]->setCaption(s);
-		Fmt(s, "Rot:  %4.1f", fb.rot.x);									if (flTxt[3])	flTxt[3]->setCaption(s);
-		Fmt(s, "Size:  %4.1f %4.1f %4.1f", fb.size.x, fb.size.y, fb.size.z); if (flTxt[4])	flTxt[4]->setCaption(s);
-		Fmt(s, "Tile:  %5.3f %5.3f", fb.tile.x, fb.tile.y);					if (flTxt[5])	flTxt[5]->setCaption(s);
+		FluidBox& fb = sc.fluids[iFlCur];									if (flTxt[1])	flTxt[1]->setCaption(fb.name);
+		if (flTxt[0])	flTxt[0]->setCaption("Cur/All:  "+toStr(iFlCur+1)+"/"+toStr(sc.fluids.size()));
+		if (flTxt[2])	flTxt[2]->setCaption("Pos:  "+fToStr(fb.pos.x,1,4)+" "+fToStr(fb.pos.y,1,4)+" "+fToStr(fb.pos.z,1,4));
+		if (flTxt[3])	flTxt[3]->setCaption("Rot:  "+fToStr(fb.rot.x,1,4));
+		if (flTxt[4])	flTxt[4]->setCaption("Pos:  "+fToStr(fb.size.x,1,4)+" "+fToStr(fb.size.y,1,4)+" "+fToStr(fb.size.z,1,4));
+		if (flTxt[5])	flTxt[5]->setCaption("Tile:  "+fToStr(fb.tile.x,3,5)+" "+fToStr(fb.tile.y,3,5));
 
 		if (isKey(LBRACKET)){	fb.tile   *= 1.f - 0.04f*q;  bRecreateFluids = true;  }  //
 		if (isKey(RBRACKET)){	fb.tile   *= 1.f + 0.04f*q;  bRecreateFluids = true;  }
@@ -210,25 +213,25 @@ bool App::frameRenderingQueued(const FrameEvent& evt)
 	{
 		//  brush params
 		//----------------------------------------------------------------
-		if (brTxt[0]){	Fmt(s, "Size:	 %4.1f   - =", mBrSize[curBr]);		brTxt[0]->setCaption(s);	}
-		if (brTxt[1]){	Fmt(s, "Force:   %4.1f   [ ]", mBrIntens[curBr]);	brTxt[1]->setCaption(s);	}
-		if (brTxt[2]){	Fmt(s, "Power:   %4.2f   ; \'", mBrPow[curBr]);		brTxt[2]->setCaption(s);	}
-		if (brTxt[3]){	Fmt(s, "Shape: %s", csBrShape[mBrShape[curBr]].c_str());	brTxt[3]->setCaption(s);	}
+		if (brTxt[0]){	brTxt[0]->setCaption("Size:    "+fToStr(mBrSize[curBr],1,4)+"   - =");	}
+		if (brTxt[1]){	brTxt[1]->setCaption("Force:   "+fToStr(mBrIntens[curBr],1,4)+"   [ ]");	}
+		if (brTxt[2]){	brTxt[2]->setCaption("Power:   "+fToStr(mBrPow[curBr],2,4)+"   ; \'");	}
+		if (brTxt[3]){	brTxt[3]->setCaption("Shape: "+csBrShape[mBrShape[curBr]]);	}
 
 		bool brNoise = mBrShape[curBr] == BRS_Noise;
 		if (brTxt[4])
 		if (edMode == ED_Height)
-		{	Fmt(s, "Height: %4.1f", terSetH);	brTxt[4]->setCaption(s);	}
+		{	brTxt[4]->setCaption("Height: "+fToStr(terSetH,1,4));	}
 		else if (brNoise)
-		{	Fmt(s, "Freq: %4.2f  O P", mBrFq[curBr]);	brTxt[4]->setCaption(s);	}
+		{	brTxt[4]->setCaption("Freq: "+fToStr(mBrFq[curBr],2,4)+"  O P");	}
 		else
 			brTxt[4]->setCaption("");
 
 		if (brTxt[5])
 		if (edMode == ED_Height && road && road->bHitTer)
-		{	Fmt(s, "Curr.H: %4.1f", road->posHit.y);	brTxt[5]->setCaption(s);	}
+		{	brTxt[5]->setCaption("Curr.H: "+fToStr(road->posHit.y,1,4));	}
 		else if (brNoise)
-		{	Fmt(s, "Octaves: %d  , .", mBrOct[curBr]);	brTxt[5]->setCaption(s);	}
+		{	brTxt[5]->setCaption("Octaves: "+toStr(mBrOct[curBr])+"  , .");	}
 		else
 			brTxt[5]->setCaption("");
 
