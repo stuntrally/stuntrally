@@ -188,18 +188,21 @@ void App::SaveGrassDens()
 //-----------------------------------------------------------------------------------------------------------
 void App::preRenderTargetUpdate(const RenderTargetEvent &evt)
 {
-	if (!terrain)  return;
-	MaterialPtr terrainMaterial = terrain->_getMaterial();
-	if (!terrainMaterial.isNull())
+	if (evt.source->getViewport(0)->getCamera()->getName() !=  "RttCam3")
 	{
-		for (int i=0; i < terrainMaterial->getNumTechniques(); ++i)
+		if (!terrain)  return;
+		MaterialPtr terrainMaterial = terrain->_getMaterial();
+		if (!terrainMaterial.isNull())
 		{
-			if (terrainMaterial->getTechnique(i)->getPass(0)->getFragmentProgramParameters()->_findNamedConstantDefinition("enableShadows"))
-				terrainMaterial->getTechnique(i)->getPass(0)->getFragmentProgramParameters()->setNamedConstant("enableShadows", 0.f);
+			for (int i=0; i < terrainMaterial->getNumTechniques(); ++i)
+			{
+				if (terrainMaterial->getTechnique(i)->getPass(0)->getFragmentProgramParameters()->_findNamedConstantDefinition("enableShadows"))
+					terrainMaterial->getTechnique(i)->getPass(0)->getFragmentProgramParameters()->setNamedConstant("enableShadows", 0.f);
+			}
 		}
+		if (materialFactory)
+			materialFactory->setShadowsEnabled(false);
 	}
-	if (materialFactory)
-		materialFactory->setShadowsEnabled(false);
 	
 	const String& s = evt.source->getName();
 	int num = atoi(s.substr(s.length()-1, s.length()-1).c_str());
@@ -220,18 +223,21 @@ void App::preRenderTargetUpdate(const RenderTargetEvent &evt)
 
 void App::postRenderTargetUpdate(const RenderTargetEvent &evt)
 {
-	if (!terrain)  return;
-	MaterialPtr terrainMaterial = terrain->_getMaterial();
-	if (!terrainMaterial.isNull())
+	if (evt.source->getViewport(0)->getCamera()->getName() !=  "RttCam3")
 	{
-		for (int i=0; i < terrainMaterial->getNumTechniques(); ++i)
+		if (!terrain)  return;
+		MaterialPtr terrainMaterial = terrain->_getMaterial();
+		if (!terrainMaterial.isNull())
 		{
-			if (terrainMaterial->getTechnique(i)->getPass(0)->getFragmentProgramParameters()->_findNamedConstantDefinition("enableShadows"))
-				terrainMaterial->getTechnique(i)->getPass(0)->getFragmentProgramParameters()->setNamedConstant("enableShadows", 1.f);
+			for (int i=0; i < terrainMaterial->getNumTechniques(); ++i)
+			{
+				if (terrainMaterial->getTechnique(i)->getPass(0)->getFragmentProgramParameters()->_findNamedConstantDefinition("enableShadows"))
+					terrainMaterial->getTechnique(i)->getPass(0)->getFragmentProgramParameters()->setNamedConstant("enableShadows", 1.f);
+			}
 		}
+		if (materialFactory)
+			materialFactory->setShadowsEnabled(true);
 	}
-	if (materialFactory)
-		materialFactory->setShadowsEnabled(true);
 	
 	const String& s = evt.source->getName();
 	int num = atoi(s.substr(s.length()-1, s.length()-1).c_str());
