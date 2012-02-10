@@ -9,6 +9,7 @@
 
 #include "../vdrift/pathmanager.h"
 #include "../ogre/Localization.h"
+#include "../ogre/common/HWMouse.h"
 
 #include <OgreConfigFile.h>
 #include <OISInputManager.h>
@@ -98,6 +99,10 @@ void BaseApp::createFrameListener()
 
 	mMouse->setEventCallback(this);
 	mKeyboard->setEventCallback(this);
+	
+	//mMouse->capture();
+	//mKeyboard->capture();
+	//mHWMouse = new HWMouse(windowHnd, 8, 8, "pointer.png");
 
 	windowResized(mWindow);
 	WindowEventUtilities::addWindowEventListener(mWindow, this);
@@ -106,8 +111,7 @@ void BaseApp::createFrameListener()
 
 	///  timer thread - input, camera
 	/**/timer.iv = 0.005;  ///par 
-	boost::thread t(TimThread, this);
-
+	mThread = new boost::thread(TimThread, this);
 }
 
 void BaseApp::destroyScene()
@@ -171,12 +175,8 @@ BaseApp::BaseApp()
 
 BaseApp::~BaseApp()
 {
-	delete[] cmdKeyPress;
-	delete[] cmdKeyRel;
-	delete[] cmdMouseMove;
-	delete[] cmdMousePress;
-	delete[] cmdMouseRel;
-
+	//delete mHWMouse;
+	
 	if (mGUI)  {
 		mGUI->shutdown();	delete mGUI;	mGUI = 0;  }
 	if (mPlatform)  {
@@ -185,6 +185,12 @@ BaseApp::~BaseApp()
 	WindowEventUtilities::removeWindowEventListener(mWindow, this);
 	windowClosed(mWindow);
 	OGRE_DELETE mRoot;
+	
+	delete[] cmdKeyPress;
+	delete[] cmdKeyRel;
+	delete[] cmdMouseMove;
+	delete[] cmdMousePress;
+	delete[] cmdMouseRel;
 }
 
 //  config
@@ -423,6 +429,8 @@ void BaseApp::windowResized(RenderWindow* rw)
 void BaseApp::windowClosed(RenderWindow* rw)
 {
 	inputThreadRunning = false;
+	mThread->join();
+	
 	if (rw == mWindow)
 	if (mInputManager)
 	{

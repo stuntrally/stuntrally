@@ -31,7 +31,9 @@ struct RoadSeg
 {
 	struct SegData {
 		Ogre::SceneNode* node;  Ogre::Entity* ent;
-		Ogre::MeshPtr mesh;  Ogre::String smesh;  };
+		Ogre::MeshPtr mesh;  Ogre::String smesh;
+		SegData() : node(0), ent(0), smesh("") {}
+	};
 	
 	SegData road[LODs], wall[LODs], col;
 	Ogre::String sMtrRd,sMtrWall;  int mtrId;
@@ -40,7 +42,9 @@ struct RoadSeg
 	int nTri[LODs], mrgLod;
 
 	bool empty;
-	RoadSeg() : empty(true), mrgLod(0) {  }
+	RoadSeg() : empty(true), mrgLod(0), mtrId(0) { 
+		for (int i=0;i<LODs;++i) nTri[i] = 0;
+	}
 };
 
 //  insert before first, after chosen, after last

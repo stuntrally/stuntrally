@@ -4,6 +4,12 @@
 #include "../road/Road.h"
 using namespace Ogre;
 
+Ogre::String fToStr(const float v, unsigned short precision)
+{
+	std::ostringstream s;
+	s << std::fixed << std::setprecision(precision) << v;
+	return s.str();
+} 
 
 ///  Fps stats
 //------------------------------------------------------------------------
@@ -31,17 +37,23 @@ void BaseApp::updateStats()
 		const Vector3& pos = /*road ? road->posHit :*/ mCamera->getDerivedPosition();
 		//const Quaternion& rot = mCamera->getDerivedOrientation();
 
-		sprintf(s, "Pos: %5.1f %5.1f %5.1f", //  |  Rot: %6.3f %6.3f %6.3f %6.3f",
-						pos.x, pos.y, pos.z/*,  rot.x, rot.y, rot.z, rot.w*/ );
-		ovPos->setCaption( String(s) + "  " + mFilText );
+		//sprintf(s, "Pos: %5.1f %5.1f %5.1f", //  |  Rot: %6.3f %6.3f %6.3f %6.3f",
+						//pos.x, pos.y, pos.z/*,  rot.x, rot.y, rot.z, rot.w*/ );
+		//ovPos->setCaption( String(s) + "  " + mFilText );
+		String s = "Pos: "+fToStr(pos.x,1)+" " + fToStr(pos.y,1) + " " + fToStr(pos.z,1) 
+					//+", // | Rot: " +fToStr(rot.x,3) + " "+fToStr(rot.y,3)+" "+fToStr(rot.z,3)+" "+fToStr(rot.w,3)
+		; ovPos->setCaption(s + "  " + mFilText);
 	}
 
 	{//  Fps, Tri, Bat
 		const RenderTarget::FrameStats& stats = mWindow->getStatistics();
 
-		sprintf(s, "%5.1f", stats.lastFPS );	ovFps->setCaption( s );
-		sprintf(s, "%5.1fk", Real(stats.triangleCount)/1000.f );	ovTri->setCaption( s );
-		sprintf(s, "%4lu", stats.batchCount );	ovBat->setCaption( s );
+		ovFps->setCaption( fToStr(stats.lastFPS,1) );
+		ovTri->setCaption( toStr(int(stats.triangleCount/1000.f))+"k" );
+		ovBat->setCaption( toStr(stats.batchCount) );
+		//sprintf(s, "%5.1f", stats.lastFPS );	ovFps->setCaption( s );
+		//sprintf(s, "%5.1fk", Real(stats.triangleCount)/1000.f );	ovTri->setCaption( s );
+		//sprintf(s, "%4lu", stats.batchCount );	ovBat->setCaption( s );
 	}
 }
 

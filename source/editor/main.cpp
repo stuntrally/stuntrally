@@ -4,6 +4,9 @@
 #include "../vdrift/pathmanager.h"
 #include <locale.h>
 
+#if OGRE_PLATFORM == OGRE_PLATFORM_LINUX
+//#include <X11/Xlib.h>
+#endif
 
 //  load settings from default file
 void LoadDefaultSet(SETTINGS* settings, std::string setFile)
@@ -20,6 +23,10 @@ void LoadDefaultSet(SETTINGS* settings, std::string setFile)
 	int main(int argc, char* argv[])
 #endif
 {
+#if OGRE_PLATFORM == OGRE_PLATFORM_LINUX
+	//XInitThreads();
+#endif
+	
 	setlocale(LC_NUMERIC, "C");
 
 	PATHMANAGER::Init(std::cout, std::cerr);
@@ -41,6 +48,9 @@ void LoadDefaultSet(SETTINGS* settings, std::string setFile)
 		LoadDefaultSet(settings,setFile);
 		settings->Load(setFile);  // LOAD
 	}
+	
+	#include <iostream>
+	std::cout << sizeof(BaseApp) << std::endl;
 
 
 	//  Start

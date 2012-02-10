@@ -21,6 +21,8 @@
 #include <MyGUI.h>
 #include <MyGUI_OgrePlatform.h>
 
+namespace boost { class thread; }
+
 
 class BaseApp :
 		public Ogre::FrameListener, public Ogre::WindowEventListener,
@@ -50,6 +52,10 @@ public:
 	bool mShutDown;
 	bool inputThreadRunning;
 protected:
+	boost::thread* mThread;
+	
+	//class HWMouse* mHWMouse;
+
 	bool mShowDialog;//, mShutDown;
 	bool setup(), configure();  void updateStats();
 	
@@ -82,8 +88,8 @@ protected:
 	struct CmdKey {  public:
 		OIS::KeyCode key;
 		unsigned int text;  bool gui;
-		CmdKey() : key(OIS::KC_UNASSIGNED), text(0) {  }
-		CmdKey(const OIS::KeyEvent& k) : key(k.key), text(k.text) {  }
+		CmdKey() : key(OIS::KC_UNASSIGNED), text(0), gui(true) {  }
+		CmdKey(const OIS::KeyEvent& k) : key(k.key), text(k.text), gui(true) {  }
 	};
 	struct CmdMouseMove {  public:
 		OIS::MouseState ms;
@@ -122,8 +128,6 @@ protected:
 	bool mbLeft, mbRight, mbMiddle;  // mouse buttons
 	Ogre::String  mDebugText, mFilText;	// info texts
 	bool mbWireFrame, mShowCamPos, mStatsOn;
-	char s[512];
-
 
 	///  camera upd
 	bool bMoveCam;	int mx,my,mz;  double mDTime;

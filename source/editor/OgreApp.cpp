@@ -59,7 +59,7 @@ App::App()  //  gui wigdets--
 	,eTrkEvent(TE_None), bNewHmap(0), bTrGrUpd(0)
 	,iFlCur(0), bRecreateFluids(0), world(0)
 	
-	,materialFactory(0)
+	,materialFactory(0), bTerUpdBlend(1)
 {
 	imgPrv[0]=0; imgMini[0]=0; imgTer[0]=0;  trkDesc[0]=0;
 	
