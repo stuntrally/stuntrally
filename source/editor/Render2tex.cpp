@@ -313,6 +313,11 @@ void App::SaveWaterDepth()
 	delete[] wd;
 
 
+	TexturePtr tex = TextureManager::getSingleton().getByName("waterDepth.png");
+	if (!tex.isNull())
+		tex->reload();
+
+
 	ti.update();	///T  /// time
 	float dt = ti.dt * 1000.f;
 	LogO(String("::: Time WaterDepth: ") + toStr(dt) + " ms");
