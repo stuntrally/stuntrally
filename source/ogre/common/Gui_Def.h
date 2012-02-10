@@ -15,7 +15,7 @@ const static float res = 1000000.f;  //float slider int res
 #define Slv(name, vset)  \
 	sl = mGUI->findWidget<ScrollBar>(#name);  \
 	if (sl && sl->eventScrollChangePosition.empty())  sl->eventScrollChangePosition += newDelegate(this, &App::sl##name);  \
-	if (val##name)  val##name = mGUI->findWidget<StaticText>(#name"Val");  \
+	val##name = mGUI->findWidget<StaticText>(#name"Val",false);  \
 	v = vset*res;  if (sl)  sl->setScrollPosition(v);	sl##name(sl, v);
 
 #define Btn(name, event)  \

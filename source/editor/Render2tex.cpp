@@ -275,7 +275,6 @@ void App::SaveWaterDepth()
 	//CreateBltTerrain();
 	// get ter height, compare with ray to blt fluids only
 	
-	//world->castRay()
 	//world->rayTest(from, to, rayCallback);
 	
 
