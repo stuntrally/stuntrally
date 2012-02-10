@@ -511,7 +511,7 @@ bool MaterialGenerator::fpNeedPos()
 
 bool MaterialGenerator::vpCalcWPos()
 {
-	return (fpNeedPos() || fpNeedEyeVector());
+	return (fpNeedPos() || fpNeedEyeVector() || mShader->wind == 1);
 }
 
 bool MaterialGenerator::vpNeedWvMat()

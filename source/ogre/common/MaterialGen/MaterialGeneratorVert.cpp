@@ -177,6 +177,9 @@ void MaterialGenerator::generateVertexProgramSource(Ogre::StringUtil::StrStreamT
 	
 	if (mShader->vertexColour) outStream <<
 		"	oVertexColour = color; \n";
+		
+	if (vpCalcWPos()) outStream <<
+		"	float4 worldPosition = mul(wMat, position); \n";
 	
 	if (mShader->wind == 1)
 	{
@@ -190,8 +193,8 @@ void MaterialGenerator::generateVertexProgramSource(Ogre::StringUtil::StrStreamT
 		"	} \n"
 		
 		// fade
-		"	float dist = distance(eyePosition.xz, position.xz); \n"
-		"	alphaFade = (2.0f * dist / (fadeRange)); \n";
+		"	float dist = distance(eyePosition.xz, worldPosition.xz); \n"
+		"	alphaFade = (2.0f - (2.0f * dist / (fadeRange))); \n";
 	}
 	else if (mShader->wind == 2)
 	{
@@ -224,9 +227,6 @@ void MaterialGenerator::generateVertexProgramSource(Ogre::StringUtil::StrStreamT
 		
 	if (fpNeedPos()) outStream <<
 		"	oObjPosition = position; \n";
-		
-	if (vpCalcWPos()) outStream <<
-		"	float4 worldPosition = mul(wMat, position); \n";
 		
 	if (fpNeedEyeVector()) outStream <<
 		"	oEyeVector.xyz = worldPosition.xyz - eyePosition.xyz; \n";

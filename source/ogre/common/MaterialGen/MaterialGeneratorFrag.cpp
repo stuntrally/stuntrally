@@ -361,7 +361,6 @@ void MaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::StrStrea
 		"	uniform sampler2D reflectivityMap : TEXUNIT"+toStr(mReflTexUnit)+", \n";
 	
 	if (mShader->parallax) outStream <<
-		"	uniform float4 cameraPositionObjSpace, \n"
 		"	uniform float parallaxHeight, \n";
 	
 	fpShadowingParams(outStream);
