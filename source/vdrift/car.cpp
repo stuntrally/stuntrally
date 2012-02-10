@@ -410,8 +410,7 @@ bool CAR::LoadSounds(
 	//set up  fluid sounds
 	for (int i = 0; i < Nwatersounds; ++i)
 	{
-		char name[16];
-		sprintf(name, "water%d", i+1);
+		std::string name = "water"+toStr(i+1);
 		const SOUNDBUFFER * buf = soundbufferlibrary.GetBuffer(name);
 		if (!buf)
 		{	error_output << "Can't load water sound: " << name << std::endl;	return false;

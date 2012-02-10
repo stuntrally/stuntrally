@@ -3,7 +3,6 @@
 
 
 const static float res = 1000000.f;  //float slider int res
-#define Fmt  sprintf
 
 
 //  Gui Shortcuts: find control, assign event, set value

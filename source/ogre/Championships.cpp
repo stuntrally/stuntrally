@@ -113,7 +113,7 @@ void App::ChampsListUpdate()
 {
 	const char clrT[4][8] = {"#A0F0FF", "#FFFFB0", "#FFA0A0", "#80FF80"};
 
-	liChamps->removeAllItems();  char ss[64];  int n=1;
+	liChamps->removeAllItems();  int n=1;
 	for (int i=0; i < champs.champs.size(); ++i,++n)
 	{
 		const Champ& ch = champs.champs[i];
@@ -124,10 +124,8 @@ void App::ChampsListUpdate()
 		liChamps->setSubItemNameAt(1,l, clr+ ch.name.c_str());
 		liChamps->setSubItemNameAt(2,l, clrDiff[ch.diff]+ TR("#{Diff"+toStr(ch.diff)+"}"));
 		liChamps->setSubItemNameAt(3,l, clrDiff[std::min(7,ntrks*2/3+1)]+ toStr(ntrks));
-		sprintf(ss, "%3.0f %%", 100.f * pc.curTrack / ntrks);
-		liChamps->setSubItemNameAt(4,l, clr+ ss);
-		sprintf(ss, "%5.1f", pc.score);
-		liChamps->setSubItemNameAt(5,l, clr+ ss);
+		liChamps->setSubItemNameAt(4,l, clr+ fToStr(100.f * pc.curTrack / ntrks,0,3)+" %");
+		liChamps->setSubItemNameAt(5,l, clr+ fToStr(pc.score,1,5));
 		//length,time;
 	}
 	liChamps->setIndexSelected(pSet->gui.champ_num);  //range..
@@ -141,7 +139,7 @@ void App::listChampChng(MyGUI::MultiList2* chlist, size_t pos)
 	if (pos >= champs.champs.size())  {  LogO("Error champ sel > size.");  return;  }
 	
 	//  update champ stages
-	liStages->removeAllItems();  char ss[64];
+	liStages->removeAllItems();
 	float allTime = 0.f;  int n=1;
 	const Champ& ch = champs.champs[pos];
 	for (int i=0; i < ch.trks.size(); ++i,++n)
@@ -161,8 +159,7 @@ void App::listChampChng(MyGUI::MultiList2* chlist, size_t pos)
 		liStages->setSubItemNameAt(3,l, clrDiff[ti.diff]+ TR("#{Diff"+toStr(ti.diff)+"}"));
 
 		liStages->setSubItemNameAt(4,l, "#80C0F0"+GetTimeString(time));  //toStr(trk.laps)
-		sprintf(ss, "#E0F0FF%5.1f", progress.champs[pos].trks[i].score);
-		liStages->setSubItemNameAt(5,l, ss);
+		liStages->setSubItemNameAt(5,l, "#E0F0FF"+fToStr(progress.champs[pos].trks[i].score,1,5));
 	}
 	//  descr
 	EditBox* ed = mGUI->findWidget<EditBox>("ChampDescr");
@@ -181,11 +178,9 @@ void App::listChampChng(MyGUI::MultiList2* chlist, size_t pos)
 	if (txt)  txt->setCaption(GetTimeString(allTime));
 
 	txt = (TextBox*)mWndGame->findWidget("valChProgress");
-	sprintf(ss, "%5.1f %%", 100.f * progress.champs[pos].curTrack / champs.champs[pos].trks.size());
-	if (txt)  txt->setCaption(ss);
+	if (txt)  txt->setCaption(fToStr(100.f * progress.champs[pos].curTrack / champs.champs[pos].trks.size(),1,5));
 	txt = (TextBox*)mWndGame->findWidget("valChScore");
-	sprintf(ss, "%5.1f", progress.champs[pos].score);
-	if (txt)  txt->setCaption(ss);
+	if (txt)  txt->setCaption(fToStr(progress.champs[pos].score,1,5));
 }
 
 ///  Stages list  sel changed,  update Track info
@@ -366,11 +361,9 @@ void App::ChampionshipAdvance(float timeCur)
 		LogO("|| Total score: " + toStr(score));
 		
 		//  upd champ end [window]
-		char ss[64];
-		sprintf(ss, "%5.1f", pc.score);
-		String s;
-		s = TR("#{Championship}") + ": " + ch.name + "\n" +
-			TR("#{TotalScore}") + ": " + ss;
+		String s = 
+			TR("#{Championship}") + ": " + ch.name + "\n" +
+			TR("#{TotalScore}") + ": " + fToStr(pc.score,1,5);
 		edChampEnd->setCaption(s);
 		//mWndChampEnd->setVisible(true);  // show after stage end
 	}
@@ -383,7 +376,7 @@ void App::ChampFillStageInfo(bool finished)
 	const Champ& ch = champs.champs[chId];
 	const ChampTrack& trk = ch.trks[pc.curTrack];
 
-	String s;  char ss[64];
+	String s;
 	s = "#80FFE0"+ ch.name + "\n\n" +
 		"#80FFC0"+TR("#{Stage}") + ": " + toStr(pc.curTrack+1) + "/" + toStr(ch.trks.size()) + "\n" +
 		"#80FF80"+TR("#{Track}") + ": " + trk.name + "\n\n";
@@ -391,12 +384,9 @@ void App::ChampFillStageInfo(bool finished)
 	if (finished)
 	{
 		float score = pc.trks[pc.curTrack].score;
-		sprintf(ss, "%5.1f", score);
 		s += "#80C0FF"+TR("#{Finished}") + ".\n" +
-			"#FFFF60"+TR("#{Score}") + ": " + ss + "\n";
-
-		sprintf(ss, "%5.1f", trk.passScore); //-
-		s += "#80C0FF"+TR("#{ScoreNeeded}") + ": " + ss + "\n\n";
+			"#FFFF60"+TR("#{Score}") + ": " + fToStr(score,1,5) + "\n";
+		s += "#80C0FF"+TR("#{ScoreNeeded}") + ": " + fToStr(trk.passScore,1,5) + "\n\n";
 		
 		bool passed = score >= trk.passScore;
 		if (passed)
