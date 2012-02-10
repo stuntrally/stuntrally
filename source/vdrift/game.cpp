@@ -13,6 +13,7 @@
 #include "quickprof.h"
 #include "tracksurface.h"
 #include "forcefeedback.h"
+#include "../ogre/common/Defines.h"
 #include "../ogre/common/QTimer.h"
 #include "../ogre/OgreGame.h"
 #include "../ogre/FollowCamera.h"
@@ -89,9 +90,7 @@ bool GAME::InitializeSound()
 		}
 		for (int i = 0; i < Nwatersounds; ++i)
 		{
-			char name[16];
-			sprintf(name, "water%d", i+1);
-			if (!generic_sounds.Load(name, sound.GetDeviceInfo(), error_output))  return false;
+			if (!generic_sounds.Load("water"+toStr(i+1), sound.GetDeviceInfo(), error_output))  return false;
 		}
 		if (!generic_sounds.Load("mud1", sound.GetDeviceInfo(), error_output))  return false;
 		if (!generic_sounds.Load("mud_cont", sound.GetDeviceInfo(), error_output))  return false;

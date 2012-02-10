@@ -445,9 +445,7 @@ bool App::axisMoved( const OIS::JoyStickEvent &e, int axis )
 	if (txtJAxis)
 	{	int iv = e.state.mAxes[axis].abs;
 		float val = iv >= 0 ? iv / 32767.f : iv / 32768.f;
-		static char ss[128];
-		sprintf(ss, "Moved axis: %d     val: %7.4f", axis, val);
-		txtJAxis->setCaption(ss);
+		txtJAxis->setCaption("Moved axis: "+toStr(axis)+"     val: "+fToStr(val,4,7));
 	}	
 	if (lastAxis != axis)
 	{	lastAxis = axis;

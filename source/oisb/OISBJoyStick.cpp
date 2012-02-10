@@ -21,6 +21,7 @@ restrictions:
     3. This notice may not be removed or altered from any source distribution.
 */
 
+#include "../ogre/common/Defines.h"
 #include "OISBJoyStick.h"
 #include "OISBAnalogAxisState.h"
 #include "OISBDigitalState.h"
@@ -45,34 +46,26 @@ namespace OISB
 		int num_axis = mJoyStick->getNumberOfComponents(OIS::OIS_Axis);
 		for(int a = 0; a<num_axis; a++)
 		{
-			char tmp[255]="";
-			sprintf(tmp, "Axis %d", a);
-			axis.push_back(new AnalogAxisState(this, String(tmp)));
+			axis.push_back(new AnalogAxisState(this, "Axis "+toStr(a)));
 		}
 
 		int num_buttons = mJoyStick->getNumberOfComponents(OIS::OIS_Button);
 		for(int a = 0; a<num_buttons; a++)
 		{
-			char tmp[255]="";
-			sprintf(tmp, "Button %d", a);
-			buttons.push_back(new DigitalState(this, String(tmp)));
+			buttons.push_back(new DigitalState(this, "Button "+toStr(a)));
 		}
 
 		int num_slider = mJoyStick->getNumberOfComponents(OIS::OIS_Slider);
 		for(int a = 0; a<num_slider; a++)
 		{
-			char tmp[255]="";
-			sprintf(tmp, "Slider %d", a);
-			axis.push_back(new AnalogAxisState(this, String(tmp)));
+			axis.push_back(new AnalogAxisState(this, "Slider "+toStr(a)));
 		}
 
 		int num_pov = mJoyStick->getNumberOfComponents(OIS::OIS_POV);
 		for(int a = 0; a<num_pov; a++)
 		{
-			char tmp[255]="";
-			sprintf(tmp, "POV %d", a);
 			// TODO: fix POV
-			buttons.push_back(new DigitalState(this, String(tmp)));
+			buttons.push_back(new DigitalState(this, "POV "+toStr(a)));
 		}
 
 		// now add the states

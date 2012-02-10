@@ -334,7 +334,7 @@ void App::UpdateHUD(int carId, CarModel* pCarM, CAR* pCar, float time, Viewport*
 			cms.push_back(carModels[o]);
 		cms.sort(SortPerc);
 
-		ColourValue c;  char ss[128];
+		ColourValue c;
 		int o = 0;
 		for (std::list<CarModel*>::const_iterator it = cms.begin(); it != cms.end(); ++it, ++o)
 		if (hudOpp[o][0])
@@ -353,14 +353,14 @@ void App::UpdateHUD(int carId, CarModel* pCarM, CAR* pCar, float time, Viewport*
 				{	Vector3 v = cm->pMainNode->getPosition() - pCarM->pMainNode->getPosition();
 					float dist = v.length();  // meters, mph:feet?
 					//  dist m
-					sprintf(ss, "%3.0fm", dist);		hudOpp[o][1]->setCaption(ss);
+					hudOpp[o][1]->setCaption(fToStr(dist,0,3)+"m");
 					Real h = std::min(60.f, dist) / 60.f;
 					c.setHSB(0.5f - h * 0.4f, 1,1);		hudOpp[o][1]->setColour(c);
 				}
 					
 				if (!bGhost)  // todo: save perc for ghost/replay or upd it as for regular car..
 				{	//  percent %
-					sprintf(ss, "%3.0f%%", cm->trackPercent);		hudOpp[o][0]->setCaption(ss);
+					hudOpp[o][0]->setCaption(fToStr(cm->trackPercent,0,3)+"%");
 					c.setHSB(cm->trackPercent*0.01f*0.4f, 0.7f,1);	hudOpp[o][0]->setColour(c);
 				}
 				else  hudOpp[o][0]->setCaption("");
@@ -409,18 +409,15 @@ void App::UpdateHUD(int carId, CarModel* pCarM, CAR* pCar, float time, Viewport*
 	///  gear, vel texts  -----------------------------
 	if (hudGear && hudVel && pCar)
 	{
-		char cg[132],sv[132];  cg[0]='1'; cg[1]=0; sv[1]=0;
 		float cl = fr.clutch*0.8f + 0.2f;
 		if (fr.gear == -1)
-		{	cg[0]='R';  hudGear->setColour(ColourValue(0.3,1,1,cl));	}
+		{	hudGear->setCaption("R");  hudGear->setColour(ColourValue(0.3,1,1,cl));	}
 		else if (fr.gear == 0)
-		{	cg[0]='N';  hudGear->setColour(ColourValue(0.3,1,0.3,cl));	}
+		{	hudGear->setCaption("N");  hudGear->setColour(ColourValue(0.3,1,0.3,cl));	}
 		else if (fr.gear > 0 && fr.gear < 8)
-		{	cg[0]='0'+fr.gear;  hudGear->setColour(ColourValue(1,1-fr.gear*0.1,0.2,cl));	}
+		{	hudGear->setCaption(toStr(fr.gear));  hudGear->setColour(ColourValue(1,1-fr.gear*0.1,0.2,cl));	}
 
-		sprintf(sv, "%3.0f", std::abs(vel));
-		hudGear->setCaption(String(cg));
-		hudVel->setCaption(String(sv));  int w = mWindow->getWidth();
+		hudVel->setCaption(fToStr(std::abs(vel),0,3));  int w = mWindow->getWidth();
 		hudVel->setPosition(-0.055 + w/1600.f*0.045,-0.01);
 		//hudVel->setPosition(-0.1 + (w-1024.f)/1600.f*0.07/*0.11*/,-0.01);
 
@@ -430,11 +427,9 @@ void App::UpdateHUD(int carId, CarModel* pCarM, CAR* pCar, float time, Viewport*
 	}
 
 	//  boost fuel (time)  -----------------------------
-	char sb[132];
 	if (hudBoost && pCar && hudBoost->isVisible())
 	{
-		sprintf(sb, "%3.1f", pCar->dynamics.boostFuel);
-		hudBoost->setCaption(String(sb));
+		hudBoost->setCaption(fToStr(pCar->dynamics.boostFuel,1,3));
 	}
 
 	//  race countdown  -----------------------------
@@ -442,8 +437,7 @@ void App::UpdateHUD(int carId, CarModel* pCarM, CAR* pCar, float time, Viewport*
 	{
 		if (pGame->timer.pretime > 0.f && !pGame->timer.waiting)
 		{
-			sprintf(sb, "%3.1f", pGame->timer.pretime);
-			hudCountdown->setCaption(String(sb));
+			hudCountdown->setCaption(fToStr(pGame->timer.pretime,1,3));
 			hudCountdown->show();
 		}else
 			hudCountdown->hide();
@@ -758,7 +752,7 @@ void App::bltDumpRecursive(CProfileIterator* profileIterator, int spacing, std::
 	}
 	for (i=0;i<spacing;i++)	os << ".";
 	double unaccounted=  parent_time > SIMD_EPSILON ? ((parent_time - accumulated_time) / parent_time) * 100 : 0.f;
-	s = "Unaccounted: ("+fToStr(unaccounted,3)+" %) :: "+fToStr(parent_time - accumulated_time, 3)+" ms\n";
+	s = "Unaccounted: ("+fToStr(unaccounted,3)+" %) :: "+fToStr(parent_time - accumulated_time,3)+" ms\n";
 	os << s;
 	
 	for (i=0;i<numChildren;i++)
