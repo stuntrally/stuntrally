@@ -205,10 +205,6 @@
 			Name="main"
 			>
 			<File
-				RelativePath=".\source\editor\Defines.h"
-				>
-			</File>
-			<File
 				RelativePath=".\Source\Editor\main.cpp"
 				>
 			</File>
@@ -401,23 +397,11 @@
 			Name="materials"
 			>
 			<File
-				RelativePath=".\data\trees\collisions.xml"
-				>
-			</File>
-			<File
 				RelativePath=".\data\editor\editor.matdef"
 				>
 			</File>
 			<File
-				RelativePath=".\data\materials\fluids.cg"
-				>
-			</File>
-			<File
-				RelativePath=".\data\materials\fluids.material"
-				>
-			</File>
-			<File
-				RelativePath=".\data\materials\fluids.program"
+				RelativePath=".\data\materials\fluids.matdef"
 				>
 			</File>
 			<File
@@ -425,15 +409,7 @@
 				>
 			</File>
 			<File
-				RelativePath=".\data\materials\general.cg"
-				>
-			</File>
-			<File
-				RelativePath=".\data\materials\general.material"
-				>
-			</File>
-			<File
-				RelativePath=".\data\materials\general.program"
+				RelativePath=".\data\materials\grass.matdef"
 				>
 			</File>
 			<File
@@ -461,10 +437,6 @@
 				>
 			</File>
 			<File
-				RelativePath=".\data\editor\road_ed.material"
-				>
-			</File>
-			<File
 				RelativePath=".\data\materials\road_pipe.matdef"
 				>
 			</File>
@@ -481,7 +453,19 @@
 			Name="Cfg,Gui"
 			>
 			<File
+				RelativePath=".\config\championships.xml"
+				>
+			</File>
+			<File
+				RelativePath=".\data\trees\collisions.xml"
+				>
+			</File>
+			<File
 				RelativePath=".\data\gui\core_language_en_tag.xml"
+				>
+			</File>
+			<File
+				RelativePath="C:\Documents and Settings\ryhu25\Application Data\stuntrally\editor.cfg"
 				>
 			</File>
 			<File
@@ -530,6 +514,10 @@
 			</File>
 			<File
 				RelativePath=".\source\ogre\common\MyGUI_D3D11.h"
+				>
+			</File>
+			<File
+				RelativePath="C:\Documents and Settings\ryhu25\Application Data\stuntrally\ogre_ed.log"
 				>
 			</File>
 			<File
