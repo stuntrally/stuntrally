@@ -1,11 +1,12 @@
 #include "pch.h"
-#include "Defines.h"
+#include "../ogre/common/Defines.h"
 #include "OgreApp.h"
 #include "../road/Road.h"
 #include "../ogre/common/RenderConst.h"
 
 #include "btBulletCollisionCommon.h"
 #include "btBulletDynamicsCommon.h"
+#include "BulletCollision/CollisionDispatch/btCollisionWorld.h"
 
 #include "../ogre/common/MaterialGen/MaterialFactory.h"
 using namespace Ogre;
@@ -250,8 +251,18 @@ void App::postRenderTargetUpdate(const RenderTargetEvent &evt)
 //-----------------------------------------------------------------------------------------------------------
 void App::SaveWaterDepth()
 {
+	if (sc.fluids.size() == 0)
+	{
+		// save white texture
+		//copy data/materials/white.png
+		return;
+	}
+	
 	QTimer ti;  ti.update();  ///T  /// time
 
+	//  setup bullet world
+	//#define BltRay
+	#ifdef BltRay
 	btDefaultCollisionConfiguration* config;
 	btCollisionDispatcher* dispatcher;
 	bt32BitAxisSweep3* broadphase;
@@ -270,44 +281,86 @@ void App::SaveWaterDepth()
 	world->getDispatchInfo().m_enableSPU = true;
 	world->setForceUpdateAllAabbs(false);  //+
 	
-
 	//  scene
-	//CreateBltTerrain();
-	// get ter height, compare with ray to blt fluids only
-	
-	//world->rayTest(from, to, rayCallback);
-	
+	CreateBltFluids();
+	//-CreateBltTerrain();  // from terrain->, faster?
+	#endif	
 
-	int w = 1024, h = w;
+
+	//  2048 for bigger terrains ?
+	int w = 1024, h = w;  float fh = h-1, fw = w-1;
 	using Ogre::uint;
 	uint *wd = new uint[w*h];   // water depth
-	register int v,x, a,y;  float f;
+	register int ia,id,x,y,a;  float fa,fd, fx,fz, wx,wz;
 	
-	float wh = 0.f;
-	if (sc.fluids.size() > 0)
-		wh = sc.fluids[0].pos.y;
+	//float wh = 0.f;
+	//if (sc.fluids.size() > 0)
+	//	wh = sc.fluids[0].pos.y;
+	btVector3 from(0,0,0), to = from;
+	btCollisionWorld::ClosestRayResultCallback rayRes(from, to);
 		
 	///  write to img  -----------
+	//  get ter height, compare with ray cast to bullet fluids only
 	for (y = 0; y < h; ++y) {  a = y*w;
 	for (x = 0; x < w; ++x, ++a)
-	{	//b = x*w + (h-y);  // rot 90 ccw  b=a
-		//v = (rd[d] >> 16) & 0xFF;
-		f = -wh + terrain->getHeightAtTerrainPosition(float(y)/float(h-1), float(x)/float(w-1));
-		f = f * 8.f * -255.f;
+	{
+		//  pos 0..1
+		float fx = float(y)/fh, fz = float(x)/fw;
+		//  pos on ter  -terSize..terSize
+		float wx = (fx-0.5f) * sc.td.fTerWorldSize, wz = -(fz-0.5f) * sc.td.fTerWorldSize;
+		//if (x==0 && y==0 || x==w-1 && y==h-1)  // check
+		//	LogO(toStr(fx)+","+toStr(fz)+" "+toStr(wx)+","+toStr(wz));
 
-		v = std::max(0, std::min(255, (int)f ));  // clamp
+		// optymized
+		fa = 0.f;  // fluid y pos
+		for (int i=0; i < sc.fluids.size(); ++i)
+		{
+			const FluidBox& fb = sc.fluids[i];
+			const float sizex = fb.size.x*0.5f, sizez = fb.size.z*0.5f;
+			//  check rect 2d - no rot !  todo: make 2nd type circle..
+			if (wx > fb.pos.x - sizex && wx < fb.pos.x + sizex &&
+				wz > fb.pos.z - sizez && wz < fb.pos.z + sizez)
+			{
+				float f = fb.pos.y - terrain->getHeightAtTerrainPosition(fx,fz);
+				if (f > fa)  fa = f;
+			}
+		}
+		fd = fa * 0.4f * 255.f;  // depth far
+		fa = fa * 8.f * 255.f;  // alpha near
+
+		#ifdef BltRay
+		//  ray pos,to
+		btVector3 from(wx,wz,300), to = from;
+		to.setZ(to.getZ() - 600);  // max range
+		//  cast  -------
+		rayRes.m_rayFromWorld = from;
+		rayRes.m_rayToWorld = to;
+		world->rayTest(from, to, rayRes);
+		if (rayRes.hasHit())
+			fa = rayRes.m_hitPointWorld.getZ() *10.01f;  //..
+		else  fa = 0.f;  // no fluids
+		#endif
+
+		//if (sc.fluids.size() > 0)  // 1 big fluid
+		//	wh = sc.fluids[0].pos.y;
+		//fa = -wh + terrain->getHeightAtTerrainPosition(fx,fz);
+		//fd = fa * 0.4f * -255.f;  // depth far
+		//fa = fa * 8.f * -255.f;  // alpha near
+
+		ia = std::max(0, std::min(255, (int)fa ));  // clamp
+		id = std::max(0, std::min(255, (int)fd ));
 		
-		wd[a] = 0xFF000000 + 0x010101 * v;  // write
+		wd[a] = 0xFF000000 + /*0x01 */ ia + 0x0100 * id;  // write
 	}	}
 
-	Image im;
+	Image im;  // save img
 	im.loadDynamicImage((uchar*)wd, w,h,1, PF_BYTE_RGBA);
 	im.save(TrkDir()+"objects/waterDepth.png");
 	delete[] wd;
 
 
-	
-	//  Clear
+	#ifdef BltRay
+	//  clear
 	for(int i = world->getNumCollisionObjects() - 1; i >= 0; i--)
 	{
 		btCollisionObject* obj = world->getCollisionObjectArray()[i];
@@ -318,18 +371,15 @@ void App::SaveWaterDepth()
 		}
 		world->removeCollisionObject(obj);
 
-		//ShapeData* sd = (ShapeData*)obj->getUserPointer();
-		//delete sd;
+		ShapeData* sd = (ShapeData*)obj->getUserPointer();
+		delete sd;
 		delete obj;
 	}
-
 	delete world;  world = 0;
-	delete solver;
-	delete broadphase;
-	delete dispatcher;
-	delete config;
+	delete solver;	delete broadphase;	delete dispatcher;	delete config;
+	#endif
 
 	ti.update();	///T  /// time
 	float dt = ti.dt * 1000.f;
-	LogO(String("::: Time WaterDepth: ") + toStr(dt) + " ms.");
+	LogO(String("::: Time WaterDepth: ") + toStr(dt) + " ms");
 }

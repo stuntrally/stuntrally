@@ -1,5 +1,5 @@
 #include "pch.h"
-#include "../ogre/Defines.h"
+#include "../ogre/common/Defines.h"
 #include "Road.h"
 
 #include <OgreCamera.h>

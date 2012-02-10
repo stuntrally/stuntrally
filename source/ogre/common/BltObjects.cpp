@@ -1,5 +1,5 @@
 #include "pch.h"
-#include "../Defines.h"
+#include "Defines.h"
 #include "BltObjects.h"
 #include "../../vdrift/pathmanager.h"
 #include "tinyxml.h"

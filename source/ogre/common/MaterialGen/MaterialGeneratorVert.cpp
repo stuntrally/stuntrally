@@ -1,5 +1,5 @@
 #include "pch.h"
-#include "../../Defines.h"
+#include "../Defines.h"
 
 #include "MaterialGenerator.h"
 #include "MaterialDefinition.h"
@@ -96,7 +96,7 @@ void MaterialGenerator::generateVertexProgramSource(Ogre::StringUtil::StrStreamT
 	outStream << 
 	"	float2 texCoord 					: TEXCOORD0, \n";
 	
-	if (fpNeedEyeVector()) outStream <<
+	if (fpNeedEyeVector() || mShader->wind == 1) outStream <<
 		"	uniform float4 eyePosition,	 \n";
 	outStream <<
 	"	out float4 oPosition			 	: POSITION, \n";
@@ -191,7 +191,7 @@ void MaterialGenerator::generateVertexProgramSource(Ogre::StringUtil::StrStreamT
 		
 		// fade
 		"	float dist = distance(eyePosition.xz, position.xz); \n"
-		"	alphaFade = (2.0f - (2.0f * dist / (fadeRange))); \n";
+		"	alphaFade = (2.0f * dist / (fadeRange)); \n";
 	}
 	else if (mShader->wind == 2)
 	{

@@ -1,14 +1,15 @@
 #include "pch.h"
-#include "../Defines.h"
 #include "../common/RenderConst.h"
 #include "../../road/Road.h"
 #include "../common/MaterialGen/TerrainMaterialGen.h"
 
 #ifdef ROAD_EDITOR
+	#include "../common/Defines.h"
 	#include "../../editor/OgreApp.h"
 	#include "../../editor/settings.h"
 	#include "BulletDynamics/Dynamics/btDiscreteDynamicsWorld.h"
 #else
+	#include "../common/Defines.h"
 	#include "../OgreGame.h"
 	#include "../../vdrift/game.h"
 	#include "../../vdrift/settings.h"
@@ -19,6 +20,7 @@
 #endif
 #include "BulletCollision/CollisionDispatch/btCollisionObject.h"
 #include "BulletCollision/CollisionShapes/btHeightfieldTerrainShape.h"
+#include "BulletCollision/CollisionShapes/btBoxShape.h"
 
 #include <OgreRoot.h>
 #include <OgreTerrain.h>
@@ -532,9 +534,18 @@ void App::CreateFluids()
 		vFlSMesh.push_back(smesh);  vFlEnt.push_back(efl);  vFlNd.push_back(nfl);
 		#endif
 
-		
+		#ifndef ROAD_EDITOR  // game
+		CreateBltFluids();
+		#endif
+	}		
+}
+
+void App::CreateBltFluids()
+{
+	for (int i=0; i < sc.fluids.size(); i++)
+	{
+		FluidBox& fb = sc.fluids[i];
 		///  add bullet trigger box   . . . . . . . . .
-		#ifndef ROAD_EDITOR
 		btVector3 pc(fb.pos.x, -fb.pos.z, fb.pos.y - fb.size.y);  // center
 		btTransform tr;  tr.setIdentity();  tr.setOrigin(pc);
 		tr.setRotation(btQuaternion(0, 0, fb.rot.x*PI_d/180.f));
@@ -551,10 +562,12 @@ void App::CreateFluids()
 			/*btCollisionObject::CF_STATIC_OBJECT |*/ btCollisionObject::CF_NO_CONTACT_RESPONSE/**/);
 		
 		bco->setUserPointer(new ShapeData(ST_Fluid, 0, &fb));  ///~~
+		#ifndef ROAD_EDITOR
 		pGame->collision.world->addCollisionObject(bco);
-		//pGame->collision.world->contactPairTest
 		pGame->collision.shapes.push_back(bshp);
 		fb.cobj = bco;
+		#else
+		world->addCollisionObject(bco);
 		#endif
 	}
 }

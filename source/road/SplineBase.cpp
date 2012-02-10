@@ -1,5 +1,5 @@
 #include "pch.h"
-#include "../ogre/Defines.h"
+#include "../ogre/common/Defines.h"
 #include "SplineBase.h"
 #include <OgreVector4.h>
 #include <OgreLogManager.h>

@@ -1,5 +1,6 @@
 #include "pch.h"
-#include "../Defines.h"
+#include "../common/Defines.h"
+#include "../common/QTimer.h"
 #include "../common/MaterialGen/TerrainMaterialGen.h"
 #include "../common/MaterialGen/MaterialFactory.h"
 
@@ -8,13 +9,11 @@
 	#include "../../editor/OgreApp.h"
 	#include "../../editor/settings.h"
 	#include "../../road/Road.h"
-	#include "../QTimer.h"
 #else
 	#include "../OgreGame.h"
 	#include "../../vdrift/settings.h"
 	#include "../../road/Road.h"
 	#include "../SplitScreen.h"
-	#include "../QTimer.h"
 #endif
 	#include "../../paged-geom/PagedGeometry.h"
 	#include "../../paged-geom/GrassLoader.h"

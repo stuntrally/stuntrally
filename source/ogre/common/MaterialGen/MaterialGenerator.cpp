@@ -1,5 +1,5 @@
 #include "pch.h"
-#include "../../Defines.h"
+#include "../Defines.h"
 
 #include "MaterialGenerator.h"
 #include "MaterialDefinition.h"
@@ -147,9 +147,10 @@ void MaterialGenerator::generate()
 
 	
 	/// uncomment to export to .material
+	//LogO(mDef->getName());
 	/**
-	if (mDef->getName() == "pipeGlass")
-	{
+	//if (mDef->getName() == "Water_cyan")
+	/*{
 		MaterialSerializer serializer;
 		serializer.exportMaterial(mMaterial, "water.material");
 	}
@@ -157,7 +158,7 @@ void MaterialGenerator::generate()
 	
 	/// uncomment to see full shader source code in log
 	/**
-	if (mDef->getName() == "car_body")
+	//if (mDef->getName() == "Water_cyan")
 	{
 		LogO("[MaterialFactory] Vertex program source: ");
 		StringUtil::StrStreamType vSourceStr;
@@ -272,7 +273,7 @@ void MaterialGenerator::createTexUnits(Ogre::Pass* pass)
 void MaterialGenerator::resetTexUnitCounter()
 {
 	mDiffuseTexUnit = 0; mNormalTexUnit = 0; mEnvTexUnit = 0; mAlphaTexUnit = 0;
-	mShadowTexUnit_start = 0; mTerrainLightTexUnit = 0; mTexUnit_i = 0;
+	mShadowTexUnit_start = 0; mTerrainLightTexUnit = 0; mTexUnit_i = 0; mWaterDepthUnit = 0;
 }
 
 //----------------------------------------------------------------------------------------

@@ -1,5 +1,5 @@
 #include "pch.h"
-#include "../../Defines.h"
+#include "../Defines.h"
 
 #include "MaterialFactory.h"
 #include "MaterialDefinition.h"
@@ -16,7 +16,7 @@
 #ifndef ROAD_EDITOR
 	#include "../../OgreGame.h"
 #endif
-#include "../../QTimer.h"
+#include "../QTimer.h"
 
 #include <OgreConfigFile.h>
 #include <OgreResourceGroupManager.h>

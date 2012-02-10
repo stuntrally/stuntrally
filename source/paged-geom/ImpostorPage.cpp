@@ -25,10 +25,10 @@ Permission is granted to anyone to use this software for any purpose, including 
 #include "ImpostorPage.h"
 #include "StaticBillboardSet.h"
 
-#include "../ogre/Defines.h"
+#include "../ogre/common/Defines.h"
 #include "../ogre/common/MaterialGen/MaterialFactory.h"
 #include "../vdrift/pathmanager.h"
-#include "../ogre/QTimer.h"
+#include "../ogre/common/QTimer.h"
 
 namespace Forests {
 

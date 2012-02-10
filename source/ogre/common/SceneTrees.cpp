@@ -1,5 +1,5 @@
 #include "pch.h"
-#include "../Defines.h"
+#include "../common/Defines.h"
 #include "RenderConst.h"
 #ifdef ROAD_EDITOR
 	#include "../../editor/OgreApp.h"

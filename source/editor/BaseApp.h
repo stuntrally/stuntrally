@@ -1,7 +1,7 @@
 #ifndef _BaseApp_h_
 #define _BaseApp_h_
 
-#include "../ogre/QTimer.h"
+#include "../ogre/common/QTimer.h"
 #include "settings.h"
 
 /*#include <OgreVector3.h>

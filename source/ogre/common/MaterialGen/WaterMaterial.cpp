@@ -1,5 +1,5 @@
 #include "pch.h"
-#include "../../Defines.h"
+#include "../Defines.h"
 
 #include "WaterMaterial.h"
 #include "MaterialDefinition.h"
@@ -91,6 +91,14 @@ void WaterMaterialGenerator::generate()
 			mTexUnit_i++;
 		}
 	}
+
+	//  waterDepth
+	tu = pass->createTextureUnitState( "waterDepth.png" );
+	tu->setName("waterDepth");
+	tu->setTextureAddressingMode(TextureUnitState::TAM_BORDER);
+	tu->setTextureBorderColour(ColourValue::White);  // outside tex water always visible
+	mWaterDepthUnit = mTexUnit_i;  mTexUnit_i++;
+
 	
 	// shader
 	if (!mShaderCached)
@@ -254,6 +262,7 @@ void WaterMaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::Str
 	"	uniform float2 waveBump, \n"
 	"	uniform float waveHighFreq, uniform float waveSpecular, \n"
 	"	uniform float time, \n"
+	"	uniform float terSize, \n"
 	"	uniform float4 deepColor,  uniform float4 shallowColor,  uniform float4 reflectionColor, \n"
 	"	uniform float2 reflAndWaterAmounts, \n"
 	"	uniform float2 fresnelPowerBias, \n";
@@ -268,6 +277,8 @@ void WaterMaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::Str
 		"	uniform sampler2D terrainLightMap : TEXUNIT"+toStr(mTerrainLightTexUnit)+", \n"
 		"	uniform float terrainWorldSize, \n";
 	}
+	outStream <<
+	"	uniform sampler2D depthMap : TEXUNIT"+toStr(mWaterDepthUnit)+", \n";
 	outStream <<
 	"	uniform sampler2D skyMap : TEXUNIT"+toStr(mEnvTexUnit)+"): COLOR0 \n"
 	"{ \n";
@@ -295,10 +306,12 @@ void WaterMaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::Str
 	"		(tex2D(normalMap, IN.uv.xy*2 + uv1).rgb * 2.0 - 1.0) * w2 + \n"
 	"		(tex2D(normalMap, IN.uv.xy*2 + uv2).rgb * 2.0 - 1.0) * w2); \n"
 	"	normalTex = lerp(normalTex, float3(0,0,1), waveBump.x); \n"
+
 		//  normal to object space
 	"	float3x3 tbn = float3x3(IN.t, IN.b, IN.n); \n"
 	"	float3 normal = mul(transpose(tbn), normalTex.xyz); \n"
 	"	normal = normalize(mul((float3x3)iTWMat, normal)); \n"
+
 		//  diffuse, specular
 	"	float3 ldir = normalize(lightPos0.xyz - (lightPos0.w * IN.wp.xyz)); \n"
 	"	float3 camDir = normalize(camPos - IN.wp.xyz); \n"
@@ -309,6 +322,11 @@ void WaterMaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::Str
 		"	float3 specC = specular * lightSpec0 * matSpec.rgb * shadowing; \n";
 	else outStream <<
 		"	float3 specC = specular * lightSpec0 * matSpec.rgb; \n";
+
+	//  depthMap for alpha near terrain
+	outStream <<
+	"	float2 uva = float2(IN.wp.z * -terSize + 0.5f, IN.wp.x * terSize + 0.5f); \n"
+	"	float2 aa = tex2D(depthMap, uva).rg; \n";
 		
 	outStream <<
 	"	float3 clrSUM = /*diffC +*/ specC; \n"
@@ -320,11 +338,12 @@ void WaterMaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::Str
 	"	refl2.x = 1 - refl2.x / (2*PI); \n"  // yaw 0..1
 	"	refl2.y = 1 - asin(refl.y) / PI*2; \n" //pitch 0..1
 	"	float4 reflection = tex2D(skyMap, refl2) * reflectionColor; \n"
+
 		//  fresnel
 	"	float facing = 1.0 - max(abs(dot(camDir, normal)), 0); \n"
 	"	float fresnel = saturate(fresnelPowerBias.y + pow(facing, fresnelPowerBias.x)); \n"
 		//  water color
-	"	float4 waterClr = lerp(shallowColor, deepColor, facing); \n"
+	"	float4 waterClr = lerp( lerp(shallowColor, deepColor, facing), deepColor, aa.g); \n"
 	"	float4 reflClr = lerp(waterClr, reflection, fresnel); \n"
 	"	float3 clr = clrSUM.rgb * waveSpecular + waterClr.rgb * reflAndWaterAmounts.y + reflClr.rgb * reflAndWaterAmounts.x; \n";
 	
@@ -332,9 +351,10 @@ void WaterMaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::Str
 		"	clr = lerp(clr*(0.7+0.3*shadowing), fogColor, /*IN.fogVal*/IN.wp.w); \n";
 	else outStream <<
 		"	clr = lerp(clr, fogColor, /*IN.fogVal*/IN.wp.w); \n";
-	
+
 	outStream <<
-		"	return float4(clr, waterClr.a + clrSUM.r); \n"
+		//"	return float4(clr*0.01f + aa, (waterClr.a + clrSUM.r) ); \n"  // test depth
+		"	return float4(clr, aa.g * 0.3f + aa.r * (waterClr.a + clrSUM.r) ); \n"
 	"} \n";
 }
 
@@ -372,6 +392,9 @@ void WaterMaterialGenerator::individualFragmentProgramParams(Ogre::GpuProgramPar
 	params->setNamedConstant("matSpec", mDef->mProps->specular);
 	params->setNamedConstant("reflAndWaterAmounts", Vector3(mDef->mProps->reflAmount, 1-mDef->mProps->reflAmount, 0));
 	params->setNamedConstant("fresnelPowerBias", Vector3(mDef->mProps->fresnelPower, mDef->mProps->fresnelBias, 0));
+
+	params->setNamedConstant("terSize", 1.f / Real(mParent->pApp->sc.td.fTerWorldSize));
+	//LogO("TER SIZE: "+toStr(mParent->pApp->sc.td.fTerWorldSize));
 	
 	if (needShadows())
 	{

@@ -1,5 +1,5 @@
 #include "pch.h"
-#include "../ogre/Defines.h"
+#include "../ogre/common/Defines.h"
 #include "../ogre/common/RenderConst.h"
 #include "Road.h"
 #ifndef ROAD_EDITOR
@@ -12,7 +12,7 @@
 #define LogR(a)
 #endif
 
-#include "../ogre/QTimer.h"
+#include "../ogre/common/QTimer.h"
 #include <OgreTerrain.h>
 #include <OgreMeshManager.h>
 #include <OgreEntity.h>

@@ -1,5 +1,5 @@
 #include "pch.h"
-#include "../Defines.h"
+#include "../common/Defines.h"
 #include "../../road/Road.h"
 #include "../../vdrift/pathmanager.h"
 #include "MaterialGen/MaterialFactory.h"

@@ -36,7 +36,7 @@ THE SOFTWARE.
 #include "OgreHighLevelGpuProgramManager.h"
 #include "OgreHardwarePixelBuffer.h"
 #include "OgreShadowCameraSetupPSSM.h"
-#include "../../Defines.h"
+#include "../Defines.h"
 #include "MaterialGenerator.h"
 #include "MaterialFactory.h"
 
