@@ -100,7 +100,10 @@ void App::updateGameInfo()
 	pSet->game.collis_cars = netGameInfo.collisions;
 	pSet->game.collis_veget = true;
 	pSet->game.num_laps = netGameInfo.laps;
-	//todo:	int boost_type, flip_type;  float boost_power;
+	pSet->game.flip_type = netGameInfo.flip_type;
+	pSet->game.boost_type = netGameInfo.boost_type;
+	pSet->game.boost_power = netGameInfo.boost_power;
+	pSet->game.trackreverse = netGameInfo.reversed;
 	updateGameInfoGUI();
 }
 
@@ -128,6 +131,10 @@ void App::uploadGameInfo()
 
 	game.collisions = pSet->gui.collis_cars;  // game set
 	game.laps = pSet->gui.num_laps;
+	game.flip_type = pSet->game.flip_type;
+	game.boost_type = pSet->game.boost_type;
+	game.boost_power = pSet->game.boost_power;
+	game.reversed = pSet->game.trackreverse;
 
 	game.port = pSet->local_port;
 	game.locked = !edNetPassword->getCaption().empty();

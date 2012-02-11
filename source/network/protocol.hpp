@@ -21,7 +21,7 @@ namespace protocol {
 // Note that in many cases, you need to bump both version when making changes.
 // Example: PacketType enum is used by both master server and game clients.
 const uint32_t GAME_PROTOCOL_VERSION = 1;
-const uint32_t MASTER_PROTOCOL_VERSION = 1;
+const uint32_t MASTER_PROTOCOL_VERSION = 2;
 
 const unsigned DEFAULT_PORT = 4243;
 
@@ -87,6 +87,10 @@ struct GameInfo {
 	uint8_t collisions; // Set by client
 	uint8_t laps;       // Set by client
 	uint8_t locked;     // Set by client
+	uint8_t reversed;   // Set by client
+	uint8_t flip_type;  // Set by client
+	uint8_t boost_type; // Set by client
+	float boost_power;  // Set by client
 	char name[32];      // Set by client
 	char track[32];     // Set by client
 
