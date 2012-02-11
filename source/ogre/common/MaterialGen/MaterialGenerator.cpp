@@ -127,24 +127,12 @@ void MaterialGenerator::generate()
 	
 	createSSAOTechnique();
 	createOccluderTechnique();
-
-	// indicate that we need the pssm split points
-	if (needShadows())
-		mParent->splitMtrs.push_back( mDef->getName() );
-		
-	// indicate that we need terrain lightmap texture and terrainWorldSize
-	if (needTerrainLightMap())
-		mParent->terrainLightMapMtrs.push_back( mDef->getName() );
-		
-	// indicate we need enable/disable fog parameter
-	if (mDef->mProps->fog)
-		mParent->fogMtrs.push_back( mDef->getName() );
 		
 	// indicate we need enable/disable wind parameter
 	// only needed for trees (wind == 2) because the wind effect has to be disabled before rendering impostors
 	if (mShader->wind == 2)
 		mParent->windMtrs.push_back( mDef->getName() );
-
+	
 	
 	/// uncomment to export to .material
 	//LogO(mDef->getName());

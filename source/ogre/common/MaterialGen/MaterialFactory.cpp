@@ -464,11 +464,8 @@ void MaterialFactory::generate()
 		LogO("[MaterialFactory] generating new materials...");
 		
 		deleteShaderCache();
-		splitMtrs.clear();
 		fogMtrs.clear();
-		terrainLightMapMtrs.clear();
 		timeMtrs.clear();
-		windMtrs.clear();
 		softMtrs.clear();
 		
 		for (std::vector<MaterialDefinition*>::iterator it=mDefinitions.begin();

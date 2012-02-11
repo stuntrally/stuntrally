@@ -94,14 +94,6 @@ void ParticleMaterialGenerator::generate()
 	createSSAOTechnique();
 	createOccluderTechnique();
 
-	// indicate we need enable/disable fog parameter
-	if (mDef->mProps->fog)
-		mParent->fogMtrs.push_back( mDef->getName() );
-
-	// indicate that we need the pssm split points
-	if (needShadows())
-		mParent->splitMtrs.push_back( mDef->getName() );
-
 	// indicate we need depth buffer set every frame
 	mParent->softMtrs.push_back(mDef->getName());
 	

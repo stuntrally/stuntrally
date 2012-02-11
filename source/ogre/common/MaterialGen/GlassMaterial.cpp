@@ -145,14 +145,6 @@ void GlassMaterialGenerator::generate()
 	
 	createSSAOTechnique();
 	createOccluderTechnique();
-
-	// indicate that we need the pssm split points
-	if (needShadows())
-		mParent->splitMtrs.push_back( mDef->getName() );
-		
-	// indicate that we need terrain lightmap texture and terrainWorldSize
-	if (needTerrainLightMap())
-		mParent->terrainLightMapMtrs.push_back( mDef->getName() );
 }
 
 //----------------------------------------------------------------------------------------
