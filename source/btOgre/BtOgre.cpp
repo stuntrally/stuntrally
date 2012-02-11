@@ -255,19 +255,19 @@ void RigidBodyState::setWorldTransform(const btTransform &in)
 	}
 	
 	//------------------------------------------------------------------------------------------------
-	const Ogre::Vector3* VertexIndexToShape::getVertices()
+	const Ogre::Vector3* VertexIndexToShape::getVertices() const
 	{
 		return mVertexBuffer;
 	}
-	unsigned int VertexIndexToShape::getVertexCount()
+	unsigned int VertexIndexToShape::getVertexCount() const
 	{
 		return mVertexCount;
 	}
-	const unsigned int* VertexIndexToShape::getIndices()
+	const unsigned int* VertexIndexToShape::getIndices() const
 	{
 		return mIndexBuffer;
 	}
-	unsigned int VertexIndexToShape::getIndexCount()
+	unsigned int VertexIndexToShape::getIndexCount() const
 	{
 		return mIndexCount;
 	}

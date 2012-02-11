@@ -42,28 +42,28 @@ SplitScreenManager::~SplitScreenManager()
 
 void SplitScreenManager::SetBackground(const Ogre::ColourValue& value)
 {
-	for (std::list<Ogre::Viewport*>::iterator vpIt=mViewports.begin(); vpIt != mViewports.end(); vpIt++)
+	for (std::list<Ogre::Viewport*>::iterator vpIt=mViewports.begin(); vpIt != mViewports.end(); ++vpIt)
 		(*vpIt)->setBackgroundColour(value);
 }
 
 void SplitScreenManager::UpdateCamDist()
 {
-	for (std::list<Ogre::Camera*>::iterator it=mCameras.begin(); it != mCameras.end(); it++)
+	for (std::list<Ogre::Camera*>::iterator it=mCameras.begin(); it != mCameras.end(); ++it)
 		(*it)->setFarClipDistance(pSet->view_distance*1.1f);
 }
 
 //  CleanUp
 void SplitScreenManager::CleanUp()
 {
-	for (std::list<Ogre::Viewport*>::iterator vpIt=mViewports.begin(); vpIt != mViewports.end(); vpIt++)
+	for (std::list<Ogre::Viewport*>::iterator vpIt=mViewports.begin(); vpIt != mViewports.end(); ++vpIt)
 		mWindow->removeViewport( (*vpIt)->getZOrder() );
 	mViewports.clear();
 	
-	for (std::list<Ogre::Viewport*>::iterator vpIt=mHUDViewports.begin(); vpIt != mHUDViewports.end(); vpIt++)
+	for (std::list<Ogre::Viewport*>::iterator vpIt=mHUDViewports.begin(); vpIt != mHUDViewports.end(); ++vpIt)
 		mWindow->removeViewport( (*vpIt)->getZOrder() );
 	mHUDViewports.clear();
 
-	for (std::list<Ogre::Camera*>::iterator it=mCameras.begin(); it != mCameras.end(); it++)
+	for (std::list<Ogre::Camera*>::iterator it=mCameras.begin(); it != mCameras.end(); ++it)
 		mSceneMgr->destroyCamera(*it);
 	mCameras.clear();
 }
@@ -175,13 +175,13 @@ void SplitScreenManager::AdjustRatio()
 {
 	// Go through all viewports & cameras and adjust camera aspect ratio so that it fits to the viewport.
 	std::list<Ogre::Camera*>::iterator camIt = mCameras.begin();
-	for (std::list<Ogre::Viewport*>::iterator vpIt = mViewports.begin(); vpIt != mViewports.end(); vpIt++)
+	for (std::list<Ogre::Viewport*>::iterator vpIt = mViewports.begin(); vpIt != mViewports.end(); ++vpIt)
 	{
 		(*camIt)->setAspectRatio( float((*vpIt)->getActualWidth()) / float((*vpIt)->getActualHeight()) );
-		camIt++;
+		++camIt;
 	}
 	
-	if (mHUDViewports.size() > 0)
+	if (!mHUDViewports.empty())
 	{
 		Ogre::Viewport* firstHUDvp = mHUDViewports.front();
 		mHUDCamera->setAspectRatio( float(firstHUDvp->getActualWidth()) / float(firstHUDvp->getActualHeight()) );

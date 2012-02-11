@@ -150,7 +150,6 @@ void App::CreateRacingLine()
 			if (verts == 0)  continue;
 			int faces = a->faces.size();
 
-			int t = 0;
 			for (int v = 0; v < verts; v += 3)
 				m->position(a->vertices[v+0], a->vertices[v+2], -a->vertices[v+1]);
 
@@ -305,8 +304,8 @@ void App::CreateRoadBezier()
 				const MATHVECTOR <float, 3>& vec = (*i).GetPatch().GetPoint(x,y);
 				p[a][0] = vec[2];  p[a][1] = vec[1];  p[a][2] = -vec[0];  a++;
 
-				float fx = (x+1)/4.f, fy = (y+1)/4.f;
-				const float s = 0.82f;
+				//float fx = (x+1)/4.f, fy = (y+1)/4.f;
+				//const float s = 0.82f;
 			}
 			a=0;
 

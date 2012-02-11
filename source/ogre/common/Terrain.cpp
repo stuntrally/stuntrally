@@ -41,7 +41,7 @@ inline float linRange(const float& x, const float& xa, const float& xb, const fl
 //0__./     \.___
 //   xa-s    xb+s
 {
-	float r = std::max(0.1f, xb-xa);  // range
+	//float r = std::max(0.1f, xb-xa);  // range
 	if (x <= xa-s || x >= xb+s)  return 0.f;
 	if (x >= xa && x <= xb)  return 1.f;
 	if (x < xa)  return (x-xa)/s+1;

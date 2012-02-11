@@ -108,7 +108,6 @@ bool ProgressXml::LoadXml(std::string file)
 	while (eCh)
 	{
 		ProgressChamp pc;
-		int curTrack;  float score;
 		a = eCh->Attribute("curTrack");		if (a)  pc.curTrack = s2i(a);
 		a = eCh->Attribute("score");		if (a)  pc.score = s2r(a);
 		a = eCh->Attribute("name");			if (a)  pc.name = std::string(a);

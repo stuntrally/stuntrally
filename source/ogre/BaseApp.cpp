@@ -94,7 +94,7 @@ bool BaseApp::keyPressed( const OIS::KeyEvent &arg )
 				refreshCompositor();
 				
 			if (mSplitMgr)
-			for (std::list<Camera*>::iterator it=mSplitMgr->mCameras.begin(); it!=mSplitMgr->mCameras.end(); it++)
+			for (std::list<Camera*>::iterator it=mSplitMgr->mCameras.begin(); it!=mSplitMgr->mCameras.end(); ++it)
 				(*it)->setPolygonMode(mode);
 			
 			if (ndSky)	ndSky->setVisible(!mbWireFrame);  // hide sky
@@ -143,19 +143,15 @@ void BaseApp::updateStats()
 {
 	// Print camera pos, rot
 	
-	static char s[128];
 	// Only for 1 local player
-	if (mSplitMgr && mSplitMgr->mNumViewports == 1)
+	/*if (mSplitMgr && mSplitMgr->mNumViewports == 1 && mbShowCamPos)
 	{
-		/*if (mbShowCamPos)
-		{
-			const Vector3& pos = (*mSplitMgr->mCameras.begin())->getDerivedPosition();
-			const Quaternion& rot = (*mSplitMgr->mCameras.begin())->getDerivedOrientation();
-			sprintf(s, "Pos: %5.1f %5.1f %5.1f", //  Rot: %6.3f %6.3f %6.3f %6.3f",
-							pos.x, pos.y, pos.z,  rot.x, rot.y, rot.z, rot.w );
-			mDebugText = String( s );
-		}/**/
-	}
+		const Vector3& pos = (*mSplitMgr->mCameras.begin())->getDerivedPosition();
+		const Quaternion& rot = (*mSplitMgr->mCameras.begin())->getDerivedOrientation();
+		mDebugText = "Pos: "+fToStr(pos.x,1,5)+" "+fToStr(pos.y,1,5)+" "+fToStr(pos.z,1,5);
+		mDebugText += "  Rot: "+fToStr(rot.x,3,6)+" "+fToStr(rot.y,3,6)+" "+fToStr(rot.z,3,6)+" "+fToStr(rot.w,3,6);
+	}/**/
+
 	try {  // TODO: tri & bat vals when compositor !...
 		const RenderTarget::FrameStats& stats = mWindow->getStatistics();
 		

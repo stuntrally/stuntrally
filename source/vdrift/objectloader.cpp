@@ -266,7 +266,7 @@ std::pair <bool,bool> OBJECTLOADER::ContinueObjectLoad(	TRACK* track,
 			{
 				assert(surface_type >= 0 && surface_type < (int)surfaces.size());
 				std::vector<TRACKSURFACE>::iterator it = surfaces.begin();
-				while(surface_type-- > 0) it++;
+				while(surface_type-- > 0) ++it;
 				surfacePtr = &*it;
 			}
 			else

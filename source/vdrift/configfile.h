@@ -30,7 +30,7 @@ public:
 	float val_v[3];
 	bool val_b;
 
-	CONFIGVARIABLE * next;
+	//CONFIGVARIABLE * next;
 
 	void Set(std::string newval);
 
@@ -41,7 +41,7 @@ public:
 	std::string strTrim(std::string instr);
 	std::string strLCase(std::string instr);
 
-	bool written;
+	//bool written;
 };
 
 static bool operator<(const CONFIGVARIABLE & first, const CONFIGVARIABLE & other)

@@ -355,7 +355,7 @@ void App::LoadCar()  // 4
 	}
 
 	int c = 0;  // copy wheels R
-	for (std::list <CAR>::const_iterator it = pGame->cars.begin(); it != pGame->cars.end(); it++,c++)
+	for (std::list <CAR>::const_iterator it = pGame->cars.begin(); it != pGame->cars.end(); ++it,++c)
 		for (int w=0; w<4; ++w)
 			replay.header.whR[c][w] = (*it).GetTireRadius(WHEEL_POSITION(w));
 }
@@ -406,7 +406,7 @@ void App::LoadMisc()  // 7 last
 		hudOppB->setHeight(carModels.size() * 20 + 10);
 	
 	// Camera settings
-	for (std::vector<CarModel*>::iterator it=carModels.begin(); it!=carModels.end(); it++)
+	for (std::vector<CarModel*>::iterator it=carModels.begin(); it!=carModels.end(); ++it)
 		if ((*it)->fCam)
 		{	(*it)->fCam->first = true;
 			(*it)->fCam->mTerrain = mTerrainGroup;
@@ -511,7 +511,7 @@ void App::NewGameDoLoad()
 	mLoadingBar->mLoadingBarElement->setWidth( mLoadingBar->mProgressBarMaxSize * (perc/100.0) );
 
 	// Go to next loading step.
-	currentLoadingState++;
+	++currentLoadingState;
 }
 
 //---------------------------------------------------------------------------------------------------------------

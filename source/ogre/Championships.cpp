@@ -20,7 +20,7 @@ void App::ChampsXmlLoad()
 	ProgressXml oldprog;
 	oldprog.LoadXml(PATHMANAGER::GetUserConfigDir() + "/progress.xml");
 
-	int chs = champs.champs.size(), pcs = progress.champs.size();
+	int chs = champs.champs.size();
 	
 	///  this is for old progress ver loading, from game with newer champs
 	///  it resets progress only for champs which ver has changed (or track count)
@@ -353,7 +353,7 @@ void App::ChampionshipAdvance(float timeCur)
 			sum += pc.trks[t].score;
 
 		pc.curTrack++;  // end = 100 %
-		float old = pc.score;  // .. save only higher ?
+		//float old = pc.score;  // .. save only higher ?
 		pc.score = sum / ntrk;  // average from all tracks
 		ProgressSave();
 

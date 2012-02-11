@@ -134,7 +134,7 @@ class AABB_SPACE_PARTITIONING_NODE
 			{
 				for (typename childrenlist_type::iterator i = children.begin(); i != children.end(); ++i)
 				{
-					for (typename objectlist_type::iterator n = i->objects.begin(); n != i->objects.end(); n++)
+					for (typename objectlist_type::iterator n = i->objects.begin(); n != i->objects.end(); ++n)
 					{
 						Add(n->first, n->second);
 					}

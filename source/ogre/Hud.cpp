@@ -564,7 +564,6 @@ void App::UpdateHUD(int carId, CarModel* pCarM, CAR* pCar, float time, Viewport*
 	if (pSet->car_dbgbars && pCar)
 	{
 		const Real xp = 80, yp = -530, ln = 20, y4 = 104;
-		static char ss[256];
 		//const static char swh[4][6] = {"F^L<","F^R>","RvL<","RvR>"};
 		for (int w=0; w < 4; ++w)
 		if (ovL[3-w] && ovR[3-w] && ovS[3-w])
@@ -576,6 +575,7 @@ void App::UpdateHUD(int carId, CarModel* pCarM, CAR* pCar, float time, Viewport*
 			//float whVel = vwhVel.Magnitude() * 3.6f;
 
 			/**  //  info
+			static char ss[256];
 			sprintf(ss, "%s %6.3f %6.3f  %6.3f %6.3f\n", swh[w],
 				sLong/4.f, sLat/3.f, slide, squeal);
 			ColourValue clr;  clr.setHSB( slide/20.f, 0.8f, 1.f );  //clr.a = min(0.f, slide/2.f);
@@ -601,15 +601,15 @@ void App::UpdateHUD(int carId, CarModel* pCarM, CAR* pCar, float time, Viewport*
 
 	//  checkpoint warning  --------
 	if (road && hudWarnChk && pCarM)
-	{	/* checks info *
-		if (ovU[0])
-		//	"ghost:  "  + GetTimeString(ghost.GetTimeLength()) + "  "  + toStr(ghost.GetNumFrames()) + "\n" +
-		//	"ghplay: " + GetTimeString(ghplay.GetTimeLength()) + "  " + toStr(ghplay.GetNumFrames()) + "\n" +
-		{	sprintf(s, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n"
-				"         st %d in%2d  |  cur%2d > next %d  |  Num %d / All %d"
-			,pCarM->bInSt ? 1:0, pCarM->iInChk, pCarM->iCurChk, pCarM->iNextChk
-			,pCarM->iNumChks, road->mChks.size());
-			ovU[0]->setCaption(s);
+	{
+		/* checks info *
+		if (ovU[0])  {
+			//"ghost:  "  + GetTimeString(ghost.GetTimeLength()) + "  "  + toStr(ghost.GetNumFrames()) + "\n" +
+			//"ghplay: " + GetTimeString(ghplay.GetTimeLength()) + "  " + toStr(ghplay.GetNumFrames()) + "\n" +
+			ovU[0]->setCaption("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n" +
+				"         st " + toStr(pCarM->bInSt ? 1:0) + " in" + toStr(pCarM->iInChk) +
+				"  |  cur" + toStr(pCarM->iCurChk) + " > next " + toStr(pCarM->iNextChk) +
+				"  |  Num " + toStr(pCarM->iNumChks) + " / All " + toStr(road->mChks.size()));
 		}	/**/
 
 		if (pCarM->bWrongChk)
@@ -733,7 +733,7 @@ void App::bltDumpRecursive(CProfileIterator* profileIterator, int spacing, std::
 	for (i=0;i<spacing;i++)	os << ".";
 	std::string s = "Profiling: "+String(profileIterator->Get_Current_Parent_Name())+" (total running time: "+fToStr(parent_time,3)+" ms) ---\n";
 	os << s;
-	float totalTime = 0.f;
+	//float totalTime = 0.f;
 
 	int numChildren = 0;
 	
@@ -748,7 +748,7 @@ void App::bltDumpRecursive(CProfileIterator* profileIterator, int spacing, std::
 		double ms = (current_total_time / (double)frames_since_reset);
 		s = toStr(i)+" -- "+profileIterator->Get_Current_Name()+" ("+fToStr(fraction,2)+" %) :: "+fToStr(ms,3)+" ms / frame ("+toStr(profileIterator->Get_Current_Total_Calls())+" calls)\n";
 		os << s;
-		totalTime += current_total_time;
+		//totalTime += current_total_time;
 		//recurse into children
 	}
 

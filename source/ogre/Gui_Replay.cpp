@@ -199,7 +199,7 @@ void App::UpdRplPlayBtn()
 void App::updReplaysList()
 {
 	if (!rplList)  return;
-	rplList->removeAllItems();  int ii = 0;  bool bFound = false;
+	rplList->removeAllItems();
 
 	strlist li;
 	PATHMANAGER::GetFolderIndex((pSet->rpl_listview == 2 ? PATHMANAGER::GetGhostsPath() : PATHMANAGER::GetReplayPath()), li, "rpl");

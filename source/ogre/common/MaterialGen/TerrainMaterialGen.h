@@ -160,7 +160,7 @@ namespace Ogre
 			class  ShaderHelper : public TerrainAlloc
 			{
 			public:
-				ShaderHelper() {}
+				ShaderHelper() : mShadowSamplerStartHi(1),mShadowSamplerStartLo(0)  {	}
 				virtual ~ShaderHelper() {}
 				virtual HighLevelGpuProgramPtr generateVertexProgram(const SM2Profile* prof, const Terrain* terrain, TechniqueType tt);
 				virtual HighLevelGpuProgramPtr generateFragmentProgram(const SM2Profile* prof, const Terrain* terrain, TechniqueType tt);

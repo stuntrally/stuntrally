@@ -109,7 +109,6 @@ void App::SaveGrassDens()
 	}
 
 	int w = rt[1].rndTex->getWidth(), h = rt[1].rndTex->getHeight();
-	int txy = sc.td.iVertsX*sc.td.iVertsY-1;
 	using Ogre::uint;
 	uint *rd = new uint[w*h];   // road render
 	uint *gd = new uint[w*h];   // grass dens
@@ -274,7 +273,7 @@ void App::SaveWaterDepth()
 	using Ogre::uint;
 	uint *wd = new uint[w*h];   // water depth
 	register int x,y,a,i,ia,id;
-	register float fa,fd, fx,fz, wx,wz;
+	register float fa,fd;
 	
 	btVector3 from(0,0,0), to = from;
 	btCollisionWorld::ClosestRayResultCallback rayRes(from, to);
@@ -366,7 +365,7 @@ void App::AlignTerToRoad()
 	int w = 1024, h = w;  float fh = h-1, fw = w-1;
 	using Ogre::uint;
 	uint *wd = new uint[w*h];   // water depth
-	register int x,y,a,i,ia,id;
+	register int x,y,a,ia,id;
 	register float fa,fd, fx,fz, wx,wz;
 	
 	btVector3 from(0,0,0), to = from;
@@ -378,9 +377,9 @@ void App::AlignTerToRoad()
 	for (x = 0; x < w; ++x, ++a)
 	{
 		//  pos 0..1
-		float fx = float(y)/fh, fz = float(x)/fw;
+		fx = float(y)/fh;  fz = float(x)/fw;
 		//  pos on ter  -terSize..terSize
-		float wx = (fx-0.5f) * sc.td.fTerWorldSize, wz = -(fz-0.5f) * sc.td.fTerWorldSize;
+		wx = (fx-0.5f) * sc.td.fTerWorldSize;  wz = -(fz-0.5f) * sc.td.fTerWorldSize;
 		//if (x==0 && y==0 || x==w-1 && y==h-1)  // check
 		//	LogO(toStr(fx)+","+toStr(fz)+" "+toStr(wx)+","+toStr(wz));
 

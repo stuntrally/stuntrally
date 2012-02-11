@@ -7,7 +7,7 @@
 struct Date
 {
 	int day,month,year;
-	bool operator < (const Date& d)
+	bool operator < (const Date& d) const
 	{
 		return year < d.year && month < d.month && day < d.day;
 	}

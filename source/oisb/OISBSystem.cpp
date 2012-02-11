@@ -292,7 +292,7 @@ namespace OISB
 				if ((*ait).second->getActionType() == AT_ANALOG_AXIS)
 				{
 					// bindings
-					for (std::vector<Binding*>::const_iterator bit=(*ait).second->mBindings.begin(); bit!=(*ait).second->mBindings.end(); bit++)
+					for (std::vector<Binding*>::const_iterator bit=(*ait).second->mBindings.begin(); bit!=(*ait).second->mBindings.end(); ++bit)
 					{
 						rapidxml::xml_node<>* bindingNode = doc.allocate_node(node_element, "binding");
 						if ((*bit)->mOptional) {
@@ -301,7 +301,7 @@ namespace OISB
 						}
 						
 						// binds
-						for (std::vector<std::pair<String, Bindable*> >::iterator bnit=(*bit)->mBindables.begin(); bnit!=(*bit)->mBindables.end(); bnit++)
+						for (std::vector<std::pair<String, Bindable*> >::iterator bnit=(*bit)->mBindables.begin(); bnit!=(*bit)->mBindables.end(); ++bnit)
 						{
 							rapidxml::xml_node<>* bindNode = doc.allocate_node(node_element, "bind");
 							
@@ -329,7 +329,7 @@ namespace OISB
 				else
 				{
 					// bindings
-					for (std::vector<Binding*>::const_iterator bit=(*ait).second->mBindings.begin(); bit!=(*ait).second->mBindings.end(); bit++)
+					for (std::vector<Binding*>::const_iterator bit=(*ait).second->mBindings.begin(); bit!=(*ait).second->mBindings.end(); ++bit)
 					{
 						rapidxml::xml_node<>* bindingNode = doc.allocate_node(node_element, "binding");
 						if ((*bit)->mOptional) {
@@ -338,7 +338,7 @@ namespace OISB
 						}
 						
 						// binds
-						for (std::vector<std::pair<String, Bindable*> >::iterator bnit=(*bit)->mBindables.begin(); bnit!=(*bit)->mBindables.end(); bnit++)
+						for (std::vector<std::pair<String, Bindable*> >::iterator bnit=(*bit)->mBindables.begin(); bnit!=(*bit)->mBindables.end(); ++bnit)
 						{
 							rapidxml::xml_node<>* bindNode = doc.allocate_node(node_element, "bind");
 							

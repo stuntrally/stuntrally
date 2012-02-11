@@ -96,7 +96,7 @@ void SplineRoad::RebuildRoadInt()
 	if (segs > 2)
 	for (int seg=0; seg < segs; ++seg)
 	{
-		int seg1 = (seg+1) % segs;  // next
+		//int seg1 = (seg+1) % segs;  // next
 		int seg0 = (seg-1+segs) % segs;  // prev
 				
 		if (mP[seg].aType == AT_Manual)
@@ -287,7 +287,7 @@ void SplineRoad::RebuildRoadInt()
 		int iLmrg = 0, iLmrgW = 0, iLmrgC = 0;
 		Vector3 vlOld;
 
-		int sNum = sMax - sMin, segM = sMin, sNumO = sNum;
+		int sNum = sMax - sMin, segM = sMin;//, sNumO = sNum;
 		while (sNum > 0)
 		{
 			int seg = (segM + segs) % segs;  // iterator
@@ -547,7 +547,7 @@ void SplineRoad::RebuildRoadInt()
 			//---------------------------------------------------------------------------------------------------------
 			///  create mesh  indices
 			//---------------------------------------------------------------------------------------------------------
-			if (bNxt && pos.size() > 0)  /*Merging*/
+			if (bNxt && !pos.empty())  /*Merging*/
 			{
 				String sEnd = toStr(idStr);  ++idStr;
 				String sMesh = "rd.mesh." + sEnd, sMeshW = sMesh + "W", sMeshC = sMesh + "C";
@@ -632,17 +632,17 @@ void SplineRoad::RebuildRoadInt()
 				CreateMesh(sm, aabox, pos,norm,clr,tcs, idx, rs.sMtrRd);
 
 				MeshPtr meshW, meshC;  // ] |
-				bool wall = posW.size() > 0;
+				bool wall = !posW.empty();
 				if (wall)
 				{
 					meshW = MeshManager::getSingleton().createManual(sMeshW,"General");
-					SubMesh* sm = meshW->createSubMesh();
+					/*SubMesh* sm =*/ meshW->createSubMesh();
 				}
-				bool cols = (posC.size() > 0) && (lod == 0);  // cols have no lods
+				bool cols = !posC.empty() && lod == 0;  // cols have no lods
 				if (cols)
 				{
 					meshC = MeshManager::getSingleton().createManual(sMeshC,"General");
-					SubMesh* sm = meshC->createSubMesh();
+					/*SubMesh* sm =*/ meshC->createSubMesh();
 				}
 				//*=*/wall = 0;  cols = 0;  // test
 
@@ -677,8 +677,8 @@ void SplineRoad::RebuildRoadInt()
 
 					sm = meshW->getSubMesh(0);   // for glass only..
 					rs.sMtrWall = !wPglass ? sMtrWall : sMtrWallPipe;
-					if (posW.size() > 0)
-					CreateMesh(sm, aabox, posW,normW,clr0,tcsW, idx, rs.sMtrWall);
+					if (!posW.empty())
+						CreateMesh(sm, aabox, posW,normW,clr0,tcsW, idx, rs.sMtrWall);
 				}
 				
 				
@@ -700,7 +700,7 @@ void SplineRoad::RebuildRoadInt()
 					vSegs[seg].nTri[lod] += idx.size()/3;
 
 					sm = meshC->getSubMesh(0);
-					//if (posC.size() > 0)
+					//if (!posC.empty())
 					CreateMesh(sm, aabox, posC,normC,clr0,tcsC, idx, sMtrCol);
 				}
 				
@@ -713,10 +713,10 @@ void SplineRoad::RebuildRoadInt()
 					ent->setRenderQueueGroup(RQG_PipeGlass);
 					//ent->setCastShadows(true);
 				}
-				if (wall /*&& posW.size() > 0*/)
+				if (wall /*&& !posW.empty()*/)
 				{	AddMesh(meshW, sMeshW, aabox, &entW, &nodeW, "W."+sEnd);
 					entW->setCastShadows(true);  }  // only cast
-				if (cols /*&& posC.size() > 0*/)
+				if (cols /*&& !posC.empty()*/)
 				{	AddMesh(meshC, sMeshC, aabox, &entC, &nodeC, "C."+sEnd);
 					entC->setVisible(true);  
 					if (bForceShadowCaster)
@@ -854,7 +854,7 @@ void SplineRoad::RebuildRoadInt()
 //  add triangle
 void SplineRoad::addTri(int f1, int f2, int f3, int i)
 {
-	bool ok = true;  /*const int fmax = 65530; //16bit
+	/*bool ok = true;  const int fmax = 65530; //16bit
 	if (f1 >= at_size || f1 > fmax)  {  LogRE("idx too big: "+toStr(f1)+" >= "+toStr(at_size));  ok = 0;  }
 	if (f2 >= at_size || f2 > fmax)  {  LogRE("idx too big: "+toStr(f2)+" >= "+toStr(at_size));  ok = 0;  }
 	if (f3 >= at_size || f3 > fmax)  {  LogRE("idx too big: "+toStr(f3)+" >= "+toStr(at_size));  ok = 0;  }

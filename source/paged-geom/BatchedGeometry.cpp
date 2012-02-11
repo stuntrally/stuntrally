@@ -249,7 +249,7 @@ void BatchedGeometry::extractVertexDataFromShared(const Ogre::MeshPtr &mesh)
 
          // Copy vertices from shared vertex buffer into nonshared vertex buffer
          std::map<uint32, uint32>::iterator i, iend = indicesMap.end();
-         for (i = indicesMap.begin(); i != iend; i++) {
+         for (i = indicesMap.begin(); i != iend; ++i) {
             memcpy(newLock + vertexSize * i->second, oldLock + vertexSize * i->first, vertexSize);
          }
 
@@ -268,7 +268,7 @@ void BatchedGeometry::extractVertexDataFromShared(const Ogre::MeshPtr &mesh)
                uint16 *data = (uint16*)indexData->indexBuffer->lock(indexData->indexStart * sizeof(uint16), 
                   indexData->indexCount * sizeof(uint16), HardwareBuffer::HBL_NORMAL);
 
-               for (uint32 i = 0; i < indexData->indexCount; i++) {
+               for (uint32 i = 0; i < indexData->indexCount; ++i) {
                   data[i] = (uint16)indicesMap[data[i]];
                }
 
@@ -281,7 +281,7 @@ void BatchedGeometry::extractVertexDataFromShared(const Ogre::MeshPtr &mesh)
                uint32 *data = (uint32*)indexData->indexBuffer->lock(indexData->indexStart * sizeof(uint32), 
                   indexData->indexCount * sizeof(uint32), HardwareBuffer::HBL_NORMAL);
 
-               for (uint32 i = 0; i < indexData->indexCount; i++) {
+               for (uint32 i = 0; i < indexData->indexCount; ++i) {
                   data[i] = (uint32)indicesMap[data[i]];
                }
 

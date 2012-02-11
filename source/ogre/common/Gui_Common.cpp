@@ -486,7 +486,7 @@ void App::GuiInitLang()
 	if (!combo)  return;
 	combo->eventComboChangePosition += newDelegate(this, &App::comboLanguage);
 	for (std::map<std::string, std::string>::const_iterator it = languages.begin();
-		it != languages.end(); it++)
+		it != languages.end(); ++it)
 	{
 		combo->addItem(it->second);
 		if (it->first == pSet->language)
@@ -501,7 +501,7 @@ void App::comboLanguage(MyGUI::ComboBox* wp, size_t val)
 	std::string sel = cmb->getItemNameAt(val);
 	
 	for (std::map<std::string, std::string>::const_iterator it = languages.begin();
-		it != languages.end(); it++)
+		it != languages.end(); ++it)
 	{
 		if (it->second == sel)
 			pSet->language = it->first;

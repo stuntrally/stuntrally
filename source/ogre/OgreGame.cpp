@@ -145,7 +145,7 @@ void App::setTranslations()
 
 void App::recreateCarMtr()
 {
-	for (std::vector<CarModel*>::iterator it=carModels.begin(); it!=carModels.end(); it++) {
+	for (std::vector<CarModel*>::iterator it=carModels.begin(); it!=carModels.end(); ++it) {
 		(*it)->RecreateMaterials(); (*it)->setMtrNames();
 	}
 }
@@ -156,7 +156,7 @@ void App::destroyScene()
 		pSet->cam_view[i] = carsCamNum[i];
 
 	// Delete all cars
-	for (std::vector<CarModel*>::iterator it=carModels.begin(); it!=carModels.end(); it++)
+	for (std::vector<CarModel*>::iterator it=carModels.begin(); it!=carModels.end(); ++it)
 		delete (*it);
 
 	carModels.clear();

@@ -40,7 +40,7 @@ bool CONFIGFILE::GetParam(string param, int & outvar) const
 	{
 		if (param.substr(0, ppos).empty())
 		{
-			ppos++;
+			++ppos;
 			param = param.substr(ppos, param.length() - ppos);
 		}
 	}
@@ -63,7 +63,7 @@ bool CONFIGFILE::GetParam(string param, bool & outvar) const
 	{
 		if (param.substr(0, ppos).empty())
 		{
-			ppos++;
+			++ppos;
 			param = param.substr(ppos, param.length() - ppos);
 		}
 	}
@@ -86,7 +86,7 @@ bool CONFIGFILE::GetParam(string param, float & outvar) const
 	{
 		if (param.substr(0, ppos).empty())
 		{
-			ppos++;
+			++ppos;
 			param = param.substr(ppos, param.length() - ppos);
 		}
 	}
@@ -109,7 +109,7 @@ bool CONFIGFILE::GetParam(string param, float * outvar) const
 	{
 		if (param.substr(0, ppos).empty())
 		{
-			ppos++;
+			++ppos;
 			param = param.substr(ppos, param.length() - ppos);
 		}
 	}
@@ -119,7 +119,7 @@ bool CONFIGFILE::GetParam(string param, float * outvar) const
 	if (!v)
 		return false;
 	
-	for (int i = 0; i < 3; i++)
+	for (int i = 0; i < 3; ++i)
 		outvar[i] = v->val_v[i];
 	
 	return true;
@@ -133,7 +133,7 @@ bool CONFIGFILE::GetParam(string param, string & outvar) const
 	{
 		if (param.substr(0, ppos).empty())
 		{
-			ppos++;
+			++ppos;
 			param = param.substr(ppos, param.length() - ppos);
 		}
 	}
@@ -152,7 +152,7 @@ void CONFIGFILE::GetPoints(const std::string & sectionname, const std::string & 
 {
 	std::list <std::string> params;
 	GetParamList(params, sectionname);
-	for (std::list <std::string>::iterator i = params.begin(); i != params.end(); i++)
+	for (std::list <std::string>::iterator i = params.begin(); i != params.end(); ++i)
 	{
 		if (i->find(paramprefix) == 0)
 		{
@@ -183,10 +183,10 @@ CONFIGVARIABLE::CONFIGVARIABLE()
 	val_f = 0;
 	val_b = false;
 	int i;
-	for (i = 0; i < 3; i++)
+	for (i = 0; i < 3; ++i)
 		val_v[i] = 0;
 	
-	next = NULL;
+	//next = NULL;
 }
 
 const string CONFIGVARIABLE::GetFullName() const
@@ -228,7 +228,7 @@ void CONFIGVARIABLE::Set(string newval)
 		val_v[arraypos] = atof(frag.c_str());
 		
 		pos = nextpos+1;
-		arraypos++;
+		++arraypos;
 		nextpos = newval.find(",", pos);
 	}
 	
@@ -339,7 +339,7 @@ void CONFIGFILE::ProcessLine(string & cursection, string linestr)
 			//find the name part
 			string::size_type equalpos = linestr.find("=", 0);
 			string name = linestr.substr(0, equalpos);
-			equalpos++;
+			++equalpos;
 			string val = linestr.substr(equalpos, linestr.length() - equalpos);
 			name = Trim(name);
 			val = Trim(val);
@@ -386,7 +386,7 @@ string CONFIGFILE::Strip(string instr, char stripchar)
 		}
 		//	outstr = outstr + instr.substr(pos, 1);
 		
-		pos++;
+		++pos;
 	}
 	if(pos > 0)
 	{
@@ -447,7 +447,7 @@ string CONFIGVARIABLE::strLCase(string instr)
 		else
 			outstr = outstr + instr.substr(pos, 1);
 		
-		pos++;
+		++pos;
 	}
 	
 	return outstr;
@@ -518,7 +518,7 @@ bool CONFIGFILE::SetParam(string param, string invar)
 	if (ppos < param.length())
 	{
 		newvar.section = param.substr(0, ppos);
-		ppos++;
+		++ppos;
 		newvar.name = param.substr(ppos, param.length() - ppos);
 	}
 	
@@ -659,7 +659,7 @@ CONFIGVARIABLE & CONFIGVARIABLE::CopyFrom(const CONFIGVARIABLE & other)
 	val_f = other.val_f;
 	val_b = other.val_b;
 	
-	for (int i = 0; i < 3; i++)
+	for (int i = 0; i < 3; ++i)
 		val_v[i] = other.val_v[i];
 	
 	return *this;
@@ -740,13 +740,13 @@ QT_TEST(configfile_test)
 		slist.sort();
 		std::list <string>::iterator i = slist.begin();
 		QT_CHECK_EQUAL(*i, "");
-		i++;
+		++i;
 		QT_CHECK_EQUAL(*i, "section    dos??");
-		i++;
+		++i;
 		QT_CHECK_EQUAL(*i, "test section numero UNO");
-		i++;
+		++i;
 		QT_CHECK_EQUAL(*i, "what about");
-		i++;
+		++i;
 		QT_CHECK(i == slist.end());
 	}
 	
@@ -756,10 +756,9 @@ QT_TEST(configfile_test)
 		slist.sort();
 		std::list <string>::iterator i = slist.begin();
 		QT_CHECK_EQUAL(*i, "i'm so great");
-		i++;
+		++i;
 		QT_CHECK_EQUAL(*i, "look at me");
-		i++;
+		++i;
 		QT_CHECK(i == slist.end());
 	}
 }
-

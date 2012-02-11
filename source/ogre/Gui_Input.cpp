@@ -160,7 +160,7 @@ void App::InitInputGui()
 			//  bound key(s)
 			bool analog = act->getActionType() == OISB::AT_ANALOG_AXIS;
 			bool button2 = act->getName() == "Steering" || act->getName() == "Flip";  // full
-			if (act->mBindings.size() > 0 && act->mBindings.front()->getNumBindables() > 0 &&
+			if (!act->mBindings.empty() && act->mBindings.front()->getNumBindables() > 0 &&
 				act->mBindings.front()->getBindable(0) && act->mBindings.front()->getBindable(0) != (OISB::Bindable*)1)
 				if (act->getActionType() == OISB::AT_TRIGGER)
 				{
@@ -265,7 +265,7 @@ void App::InputBind(int key, int button, int axis)
 	
 	OISB::ActionSchema* schema = OISB::System::getSingleton().mActionSchemas[schemaName];  if (!schema)  return;//
 	OISB::Action* action = schema->mActions[actionName];  if (!action)  return;//
-	if (action->mBindings.size() == 0)
+	if (action->mBindings.empty())
 		action->createBinding();
 	OISB::Binding* binding = action->mBindings.front();  if (!binding)  return;//
 

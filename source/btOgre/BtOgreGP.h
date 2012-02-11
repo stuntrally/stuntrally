@@ -44,10 +44,10 @@ public:
 	btCylinderShape* createCylinder();
 	btConvexHullShape* createConvex();
 
-	const Ogre::Vector3* getVertices();
-	unsigned int getVertexCount();
-	const unsigned int* getIndices();
-	unsigned int getIndexCount();
+	const Ogre::Vector3* getVertices() const;
+	unsigned int getVertexCount() const;
+	const unsigned int* getIndices() const;
+	unsigned int getIndexCount() const;
 
 protected:
 	void addStaticVertexData(const Ogre::VertexData *vertex_data);

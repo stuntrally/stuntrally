@@ -89,7 +89,7 @@ void SplineRoad::Scale1(int id, Real posMul)
 
 void SplineRoad::Move(Vector3 relPos)
 {
-	if (vSel.size() > 0)  // move sel
+	if (!vSel.empty())  // move sel
 	{	for (std::set<int>::const_iterator it = vSel.begin(); it != vSel.end(); ++it)
 			Move1(*it, relPos);
 		bSelChng = true;
@@ -106,7 +106,7 @@ void SplineRoad::Move(Vector3 relPos)
 ///-------------------------------------------------------------------------------------
 void SplineRoad::RotateSel(Real relA)
 {
-	if (vSel.size() == 0)  return;
+	if (vSel.empty())  return;
 
 	Vector3 pos0(0,0,0);
 	if (iChosen == -1)	{	// geom center
@@ -258,7 +258,7 @@ std::deque<SplinePoint> SplineRoad::mPc;  // copy points
 
 bool SplineRoad::CopySel()
 {
-	if (vSel.size()==0)  return false;
+	if (vSel.empty())  return false;
 	
 	mPc.clear();
 	for (std::set<int>::const_iterator it = vSel.begin(); it != vSel.end(); ++it)
@@ -291,7 +291,7 @@ void SplineRoad::Paste(bool reverse)
 
 void SplineRoad::DelSel()
 {
-	if (vSel.size()==0)  return;
+	if (vSel.empty())  return;
 	for (std::set<int>::reverse_iterator it = vSel.rbegin(); it != vSel.rend(); ++it)
 	{
 		iChosen = *it;
@@ -401,7 +401,7 @@ void SplineRoad::AddBoxH(Real rel)
 
 void SplineRoad::AddWidth(Real relW)     ///  Width
 {
-	if (vSel.size() > 0) {  // sel
+	if (!vSel.empty()) {  // sel
 		for (std::set<int>::const_iterator it = vSel.begin(); it != vSel.end(); ++it)
 			mP[*it].width += relW;
 		bSelChng = true;	return;	}	
@@ -416,7 +416,7 @@ void SplineRoad::AddWidth(Real relW)     ///  Width
 
 void SplineRoad::AddYaw(Real relA, Real snapA)    ///  Yaw
 {	
-	if (vSel.size() > 0) {  // rotate sel
+	if (!vSel.empty()) {  // rotate sel
 		RotateSel(snapA==0.f ? relA : snapA);  return;	}	
 
 	if (iChosen == -1)  {	newP.mYaw += relA;  return;  }
@@ -430,7 +430,7 @@ void SplineRoad::AddYaw(Real relA, Real snapA)    ///  Yaw
 
 void SplineRoad::AddRoll(Real relA, Real snapA)   ///  Roll
 {
-	if (vSel.size() > 0) {  // scale sel
+	if (!vSel.empty()) {  // scale sel
 		for (std::set<int>::const_iterator it = vSel.begin(); it != vSel.end(); ++it)
 			Scale1(*it, relA * 0.02f/*snapA==0.f ? relA * 0.02f : snapA*/);
 		bSelChng = true;	return;  }	
@@ -446,7 +446,7 @@ void SplineRoad::AddRoll(Real relA, Real snapA)   ///  Roll
 
 void SplineRoad::ToggleOnTerrain()   ///  On Ter
 {
-	if (vSel.size() > 0) {  // sel
+	if (!vSel.empty()) {  // sel
 		for (std::set<int>::const_iterator it = vSel.begin(); it != vSel.end(); ++it)
 			mP[*it].onTer = !mP[*it].onTer;
 		bSelChng = true;	return;  }
@@ -461,7 +461,7 @@ void SplineRoad::ToggleOnTerrain()   ///  On Ter
 
 void SplineRoad::ToggleColums()      ///  Column
 {
-	if (vSel.size() > 0) {  // sel
+	if (!vSel.empty()) {  // sel
 		for (std::set<int>::const_iterator it = vSel.begin(); it != vSel.end(); ++it)
 			mP[*it].cols = 1-mP[*it].cols;
 		bSelChng = true;	return;  }
@@ -475,7 +475,7 @@ void SplineRoad::ToggleColums()      ///  Column
 
 void SplineRoad::AddPipe(Real relP)    ///  Pipe
 {
-	if (vSel.size() > 0) {  // sel
+	if (!vSel.empty()) {  // sel
 		for (std::set<int>::const_iterator it = vSel.begin(); it != vSel.end(); ++it)
 			mP[*it].pipe = std::max(0.f, std::min(1.f, mP[*it].pipe + relP));
 		bSelChng = true;	return;  }
@@ -489,7 +489,7 @@ void SplineRoad::AddPipe(Real relP)    ///  Pipe
 
 void SplineRoad::ChgMtrId(int relId)   ///  Mtr Id
 {
-	if (vSel.size() > 0) {  // sel
+	if (!vSel.empty()) {  // sel
 		for (std::set<int>::const_iterator it = vSel.begin(); it != vSel.end(); ++it)
 			mP[*it].idMtr = std::max(-1, std::min(MTRs-1, mP[*it].idMtr + relId));
 		bSelChng = true;	return;  }
@@ -503,7 +503,7 @@ void SplineRoad::ChgMtrId(int relId)   ///  Mtr Id
 
 void SplineRoad::ChgAngType(int relId)   ///  Ang Type
 {
-	if (vSel.size() > 0) {  // sel
+	if (!vSel.empty()) {  // sel
 		for (std::set<int>::const_iterator it = vSel.begin(); it != vSel.end(); ++it)
 			mP[*it].aType = (AngType)std::max(0, std::min(AT_ALL-1, mP[*it].aType + relId));
 		bSelChng = true;	return;  }
@@ -517,7 +517,7 @@ void SplineRoad::ChgAngType(int relId)   ///  Ang Type
 
 void SplineRoad::AngZero()   ///  Angles set 0
 {
-	if (vSel.size() > 0) {  // sel
+	if (!vSel.empty()) {  // sel
 		for (std::set<int>::const_iterator it = vSel.begin(); it != vSel.end(); ++it)
 		{	mP[*it].mYaw = 0;  mP[*it].mRoll = 0;	}
 		bSelChng = true;	return;  }

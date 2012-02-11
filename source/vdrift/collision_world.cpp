@@ -108,7 +108,7 @@ void COLLISION_WORLD::SetTrack(TRACK * t)
 	trackMesh = new btTriangleIndexVertexArray();
 	trackSurface.resize(0);
 	const std::list<TRACK_OBJECT> & objects = track->GetTrackObjects();
-	for(std::list<TRACK_OBJECT>::const_iterator ob = objects.begin(); ob != objects.end(); ob++)
+	for(std::list<TRACK_OBJECT>::const_iterator ob = objects.begin(); ob != objects.end(); ++ob)
 	{
 		if(ob->GetSurface() != NULL)
 		{
@@ -174,7 +174,7 @@ btCollisionShape * COLLISION_WORLD::AddMeshShape(const MODEL & model)
 struct MyRayResultCallback : public btCollisionWorld::RayResultCallback
 {
 	MyRayResultCallback(const btVector3 & rayFromWorld, const btVector3 & rayToWorld, const btCollisionObject * exclude)
-	:m_rayFromWorld(rayFromWorld), m_rayToWorld(rayToWorld), m_exclude(exclude)
+	:m_rayFromWorld(rayFromWorld), m_rayToWorld(rayToWorld), m_exclude(exclude), m_shapeId(0)
 	{	}
 
 	btVector3	m_rayFromWorld;//used to calculate hitPointWorld from hitFraction

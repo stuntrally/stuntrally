@@ -31,7 +31,7 @@ using namespace Ogre;
 
 
 //  Init  ---------------------------------------------------
-CarModel::CarModel(unsigned int index, eCarType type, const std::string name,
+CarModel::CarModel(unsigned int index, eCarType type, const std::string& name,
 	Ogre::SceneManager* sceneMgr, SETTINGS* set, GAME* game, Scene* s,
 	Ogre::Camera* cam, App* app, int startpos_index) :
 	fCam(0), pMainNode(0), pCar(0), terrain(0), resCar(""), mCamera(0), pReflect(0), pApp(app), color(1,0,0),

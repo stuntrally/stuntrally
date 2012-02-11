@@ -163,7 +163,7 @@ void BaseApp::createFrameListener()
 	
 	// add listener for all joysticks
 	for (std::vector<OISB::JoyStick*>::iterator it=mOISBsys->mJoysticks.begin();
-		it!=mOISBsys->mJoysticks.end(); it++)
+		it!=mOISBsys->mJoysticks.end(); ++it)
 	{
 		(*it)->getOISJoyStick()->setEventCallback(this);
 	}
@@ -185,7 +185,7 @@ void BaseApp::createViewports()
 //-------------------------------------------------------------------------------------
 void BaseApp::refreshCompositor(bool disableAll)
 {
-	for (std::list<Viewport*>::iterator it=mSplitMgr->mViewports.begin(); it!=mSplitMgr->mViewports.end(); it++)
+	for (std::list<Viewport*>::iterator it=mSplitMgr->mViewports.begin(); it!=mSplitMgr->mViewports.end(); ++it)
 	{
 		if(MaterialGenerator::MRTSupported())
 		{
@@ -242,7 +242,7 @@ void BaseApp::refreshCompositor(bool disableAll)
 	//{	LogO("!!! Failed to set blur shader params.");  }
 	
 
-	for (std::list<Viewport*>::iterator it=mSplitMgr->mViewports.begin(); it!=mSplitMgr->mViewports.end(); it++)
+	for (std::list<Viewport*>::iterator it=mSplitMgr->mViewports.begin(); it!=mSplitMgr->mViewports.end(); ++it)
 	{
 		if(MaterialGenerator::MRTSupported())
 		{
@@ -429,7 +429,7 @@ void BaseApp::recreateCompositor()
 	}
 
 
-	for (std::list<Viewport*>::iterator it=mSplitMgr->mViewports.begin(); it!=mSplitMgr->mViewports.end(); it++)
+	for (std::list<Viewport*>::iterator it=mSplitMgr->mViewports.begin(); it!=mSplitMgr->mViewports.end(); ++it)
 	{
 		// remove old comp. first
 		CompositorManager::getSingleton().removeCompositorChain( (*it ));
@@ -901,7 +901,7 @@ bool BaseApp::mouseMoved( const OIS::MouseEvent &arg )
 
 	///  Follow Camera Controls
 	int i = 0;
-	for (std::vector<CarModel*>::iterator it=carModels.begin(); it!=carModels.end(); it++, i++)
+	for (std::vector<CarModel*>::iterator it=carModels.begin(); it!=carModels.end(); ++it,++i)
 	if (i == iCurCam)
 	{
 		if ((*it)->fCam)

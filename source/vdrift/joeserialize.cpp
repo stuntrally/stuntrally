@@ -183,7 +183,7 @@ QT_TEST(TextSerializer_test)
 		std::list <int>::iterator n;
 		for (i = player2.simplelist.begin(),
 			 n = local_simplelist.begin();
-			 i != player2.simplelist.end() && n != local_simplelist.end(); i++,n++)
+			 i != player2.simplelist.end() && n != local_simplelist.end(); ++i,++n)
 		{
 			QT_CHECK_EQUAL(*i,*n);
 		}
@@ -198,7 +198,7 @@ QT_TEST(TextSerializer_test)
 		for (i = player2.complexlist.begin(),
 			 n = local_complexlist.begin(),
 										 count = 0;
-										 i != player2.complexlist.end() && n != local_complexlist.end(); i++,n++,count++)
+										 i != player2.complexlist.end() && n != local_complexlist.end(); ++i,++n,++count)
 		{
 			QT_CHECK_EQUAL(*i,*n);
 		}
@@ -279,7 +279,7 @@ QT_TEST(BinarySerializer_test)
 		std::list <int>::iterator n;
 		for (i = player2.simplelist.begin(),
 			 n = local_simplelist.begin();
-			 i != player2.simplelist.end() && n != local_simplelist.end(); i++,n++)
+			 i != player2.simplelist.end() && n != local_simplelist.end(); ++i,++n)
 		{
 			QT_CHECK_EQUAL(*i,*n);
 		}
@@ -294,7 +294,7 @@ QT_TEST(BinarySerializer_test)
 		for (i = player2.complexlist.begin(),
 			 n = local_complexlist.begin(),
 										 count = 0;
-										 i != player2.complexlist.end() && n != local_complexlist.end(); i++,n++,count++)
+										 i != player2.complexlist.end() && n != local_complexlist.end(); ++i,++n,++count)
 		{
 			QT_CHECK_EQUAL(*i,*n);
 		}
@@ -400,7 +400,7 @@ QT_TEST(ReflectionSerializer_test)
 		std::list <int>::iterator n;
 		for ( i = player2.simplelist.begin(),
 		        n = local_simplelist.begin();
-		        i != player2.simplelist.end() && n != local_simplelist.end(); i++,n++ )
+		        i != player2.simplelist.end() && n != local_simplelist.end(); ++i,++n )
 		{
 			QT_CHECK_EQUAL ( *i,*n );
 		}
@@ -415,7 +415,7 @@ QT_TEST(ReflectionSerializer_test)
 		for ( i = player2.complexlist.begin(),
 		        n = local_complexlist.begin(),
 		        count = 0;
-		        i != player2.complexlist.end() && n != local_complexlist.end(); i++,n++,count++ )
+		        i != player2.complexlist.end() && n != local_complexlist.end(); ++i,++n,++count )
 		{
 			QT_CHECK_EQUAL ( *i,*n );
 		}
@@ -483,7 +483,7 @@ QT_TEST(serialization_test_bin_compatibility)
 		std::list <int>::iterator n;
 		for (i = player2.simplelist.begin(),
 			 n = local_simplelist.begin();
-			 i != player2.simplelist.end() && n != local_simplelist.end(); i++,n++)
+			 i != player2.simplelist.end() && n != local_simplelist.end(); ++i,++n)
 		{
 			QT_CHECK_EQUAL(*i,*n);
 		}
@@ -498,7 +498,7 @@ QT_TEST(serialization_test_bin_compatibility)
 		for (i = player2.complexlist.begin(),
 			 n = local_complexlist.begin(),
 										 count = 0;
-										 i != player2.complexlist.end() && n != local_complexlist.end(); i++,n++,count++)
+										 i != player2.complexlist.end() && n != local_complexlist.end(); ++i,++n,++count)
 		{
 			QT_CHECK_EQUAL(*i,*n);
 		}

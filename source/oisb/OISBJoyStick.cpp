@@ -69,21 +69,21 @@ namespace OISB
 		}
 
 		// now add the states
-		for(std::vector<AnalogAxisState*>::iterator it = axis.begin(); it != axis.end(); it++)
+		for(std::vector<AnalogAxisState*>::iterator it = axis.begin(); it != axis.end(); ++it)
 			addState(*it);
-		for(std::vector<DigitalState*>::iterator it = buttons.begin(); it != buttons.end(); it++)
+		for(std::vector<DigitalState*>::iterator it = buttons.begin(); it != buttons.end(); ++it)
 			addState(*it);
 	}
 			
 	JoyStick::~JoyStick()
 	{
-		for(std::vector<AnalogAxisState*>::iterator it = axis.begin(); it != axis.end(); it++)
+		for(std::vector<AnalogAxisState*>::iterator it = axis.begin(); it != axis.end(); ++it)
 		{
 			removeState(*it);
 			delete(*it);
 		}
 		axis.clear();
-		for(std::vector<DigitalState*>::iterator it = buttons.begin(); it != buttons.end(); it++)
+		for(std::vector<DigitalState*>::iterator it = buttons.begin(); it != buttons.end(); ++it)
 		{
 			removeState(*it);
 			delete(*it);

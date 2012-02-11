@@ -289,7 +289,7 @@ bool CAR::LoadSounds(
 
 				//set end blend
 				std::list <ENGINESOUNDINFO>::iterator inext = i;
-				inext++;
+				++inext;
 				if (inext == (*cursounds).end())
 					i->fullgainrpmend = i->maxrpm;
 				else

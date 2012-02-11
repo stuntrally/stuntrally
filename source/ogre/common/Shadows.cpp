@@ -111,7 +111,7 @@ void App::changeShadows()
 			pssmSetup->calculateSplitPoints(num, mCamera->getNearClipDistance(), mSceneMgr->getShadowFarDistance());
 			#endif
 			for (int i=0; i < num; ++i)
-			{	int size = i==0 ? fTex : fTex2;
+			{	//int size = i==0 ? fTex : fTex2;
 				const Real cAdjfA[5] = {2, 1, 0.5, 0.25, 0.125};
 				pssmSetup->setOptimalAdjustFactor(i, cAdjfA[std::min(i, 4)]);
 			}

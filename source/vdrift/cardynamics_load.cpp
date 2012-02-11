@@ -292,7 +292,7 @@ bool CARDYNAMICS::Load(CONFIGFILE & c, std::ostream & error_output)
 				posr = REAR_RIGHT;
 			}
 
-			float spring_constant, bounce, rebound, travel, camber, caster, toe, anti_roll, maxcompvel;
+			float spring_constant, bounce, rebound, travel, camber, caster, toe, anti_roll;//, maxcompvel;
 			float hinge[3];
 			MATHVECTOR <double, 3> tempvec;
 

@@ -117,7 +117,7 @@ void CARDYNAMICS::UpdateBuoyancy()
 
 				if (fp.bWhForce)
 				{
-					bool inAir = GetWheelContact(wp).col == NULL;
+					//bool inAir = GetWheelContact(wp).col == NULL;
 
 					//  bump, adds some noise
 					MATHVECTOR <T, 3> whPos = GetWheelPosition(wp) - chassisPosition;

@@ -26,7 +26,8 @@ class CARTRANSMISSION
 		
 	public:
 		//default constructor makes an S2000-like car
-		CARTRANSMISSION() : gear(0), driveshaft_rpm(0), crankshaft_rpm(0) {gear_ratios [0] = 0.0;}
+		CARTRANSMISSION() : gear(0), driveshaft_rpm(0), crankshaft_rpm(0), forward_gears(1), reverse_gears(0)
+		{	gear_ratios [0] = 0.0;	}
 
 		void DebugPrint(std::ostream & out)
 		{

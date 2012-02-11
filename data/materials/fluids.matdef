@@ -77,7 +77,7 @@
 	waveBump = 0.0 0.8
 	waveHighFreq = 0.1
 	waveSpecular = 1.1
-	depthPars = 0.1 0.1 0.1
+	depthPars = 0.3 0.2 0.2
 	depthColour = 0.1 0.3 0.4 1.0
 	deepColour = 0.1 0.3 0.4 1.0
 	shallowColour = 0.21 0.5 0.7 0.6
@@ -92,12 +92,12 @@
 	specular = 0.65 0.67 0.7 4
 	waveBump = 0.2 0.8
 	waveHighFreq = 0.3
-	depthPars = 0.1 0.1 0.1
-	depthColour = 0.26 0.32 0.43 1.0
-	deepColour = 0.26 0.32 0.43 1.0
-	shallowColour = 0.21 0.35 0.45 0.6
+	depthPars = 0.6 0.3 0.3
+	depthColour = 0.16 0.22 0.33 1.0
+	deepColour = 0.26 0.32 0.43 0.8
+	shallowColour = 0.21 0.35 0.45 0.4
 	reflectionColour = 0.6 0.65 0.68 1.0
-	reflAmount = 0.8 0.2
+	reflAmount = 0.8
 	normalMap_1 = water_nh.png
 	
 
@@ -108,7 +108,7 @@
 	waveBump = 0.0 0.8
 	waveHighFreq = 0.1
 	waveSpecular = 0.7
-	depthPars = 0.1 0.1 0.1
+	depthPars = 0.3 0.2 0.2
 	depthColour = 0.06 0.14 0.2 0.8
 	deepColour = 0.06 0.14 0.2 0.8
 	shallowColour = 0.11 0.15 0.17 1.0

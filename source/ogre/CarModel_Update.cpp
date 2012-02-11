@@ -49,7 +49,7 @@ void CarModel::ResetChecks(bool bDist)  // needs to be done after road load!
 	iNextChk = pSet->game.trackreverse ? road->iChkId1Rev : road->iChkId1;
 
 	//  percent const  ------
-	if (bDist && road->mChks.size() > 0)
+	if (bDist && !road->mChks.empty())
 	{
 		const Vector3& firstC = road->mChks[road->iChkId1].pos, lastC = road->mChks[road->iChkId1Rev].pos;
 
@@ -68,7 +68,7 @@ void CarModel::UpdTrackPercent()
 	const SplineRoad* road = pApp->road;
 	
 	float perc = 0.f;
-	if (road && road->mChks.size() > 0 && eType != CarModel::CT_GHOST)
+	if (road && !road->mChks.empty() && eType != CarModel::CT_GHOST)
 	{
 		const Vector3& car = pMainNode->getPosition(), next = road->mChks[iNextChk].pos,
 			start = vStartPos, curr = road->mChks[std::max(0,iCurChk)].pos;

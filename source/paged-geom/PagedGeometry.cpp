@@ -1051,6 +1051,7 @@ void GeometryPageManager::_scrollGridPages(int shiftX, int shiftZ)
 GeometryPage::GeometryPage()
 {
 	_visible = _fadeEnable = _pending = _pending = _loaded = _needsUnload = false;
+	_keepLoaded = false;
 	_trueBoundsUndefined = true;
 	_inactiveTime = 0; _xIndex = _zIndex = 0; 
 	_centerPoint = Ogre::Vector3::ZERO; 
