@@ -51,7 +51,7 @@ void VprThread(App* pA)
 	PATHMANAGER::Init(dummy, dummy);
 
 	// Open the log file
-	std::string logfilename = PATHMANAGER::GetLogDir() + "/log.txt";
+	std::string logfilename = PATHMANAGER::GetUserConfigDir() + "/log.txt";
 	std::ofstream logfile(logfilename.c_str());
 	if (!logfile)
 	{
@@ -70,7 +70,7 @@ void VprThread(App* pA)
 	std::ostream error_output(&errorlog);/**/
 
 	// HACK: We initialize paths a second time now that we have the output streams
-	PATHMANAGER::Init(info_output, error_output);
+	PATHMANAGER::Init(info_output, error_output, false);  // false - same paths, dont log
 
 	// Initialize networking
 	net::ENetContainer enet;
