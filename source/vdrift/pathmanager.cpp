@@ -43,7 +43,7 @@ std::string PATHMANAGER::ogre_plugin_dir, PATHMANAGER::home_dir,
 	PATHMANAGER::cache_dir, PATHMANAGER::profile_suffix;
 
 
-void PATHMANAGER::Init(std::ostream & info_output, std::ostream & error_output)
+void PATHMANAGER::Init(std::ostream & info_output, std::ostream & error_output, bool log_paths)
 {
 	typedef std::vector<fs::path> Paths;
 
@@ -211,18 +211,19 @@ void PATHMANAGER::Init(std::ostream & info_output, std::ostream & error_output)
 	CreateDir(GetShaderCacheDir(), error_output);
 
 	// Print diagnostic info
-	std::stringstream out;
-	out << "--- Directories: ---" << ogre_plugin_dir << std::endl;
-	out << "Ogre plugin:  " << ogre_plugin_dir << std::endl;
-	out << "Home:         " << home_dir << std::endl;
-	out << "Default cfg:  " << GetGameConfigDir() << std::endl;
-	out << "User cfg:     " << GetUserConfigDir() << std::endl;
-	out << "Data:         " << GetDataPath() << std::endl;
-	out << "User data:    " << GetUserDataDir() << std::endl;
-	out << "Cache:        " << GetCacheDir() << std::endl;
-	out << "Shader cache: " << GetShaderCacheDir() << std::endl;
-	out << "Log:          " << GetLogDir() << std::endl;
-	info_output << out.str();
+	if (log_paths)
+	{
+		std::stringstream out;
+		out << "--- Directories: ---" << ogre_plugin_dir << std::endl;
+		out << "Ogre plugin:  " << ogre_plugin_dir << std::endl;
+		out << "Data:         " << GetDataPath() << std::endl;
+		out << "Default cfg:  " << GetGameConfigDir() << std::endl;
+		//out << "Home:         " << home_dir << std::endl;
+		out << "User cfg,log: " << GetUserConfigDir() << std::endl;
+		//out << "User data:    " << GetUserDataDir() << std::endl;
+		//out << "Cache:        " << GetCacheDir() << std::endl;
+		info_output << out.str();
+	}
 }
 
 bool PATHMANAGER::FileExists(const std::string & filename)

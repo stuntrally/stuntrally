@@ -262,8 +262,9 @@ void App::SaveWaterDepth()
 {
 	if (sc.fluids.empty())
 	{
+		Delete(TrkDir()+"objects/waterDepth.png");  // no tex if no fluids
 		// save white texture, copy white.png
-		Copy(TrkDir()+"objects/waterDepth.png",PATHMANAGER::GetDataPath()+"/materials/white.png");
+		//Copy(PATHMANAGER::GetDataPath()+"/materials/white.png",TrkDir()+"objects/waterDepth.png");
 		return;
 	}
 	QTimer ti;  ti.update();  ///T  /// time
@@ -290,7 +291,6 @@ void App::SaveWaterDepth()
 		//if (x==0 && y==0 || x==w-1 && y==h-1)  // check
 		//	LogO(toStr(fx)+","+toStr(fz)+" "+toStr(wx)+","+toStr(wz));
 
-		// optymized
 		fa = 0.f;  // fluid y pos
 		for (i=0; i < sc.fluids.size(); ++i)
 		{
@@ -318,10 +318,11 @@ void App::SaveWaterDepth()
 	im.save(TrkDir()+"objects/waterDepth.png");
 	delete[] wd;
 
-
+	try {
 	TexturePtr tex = TextureManager::getSingleton().getByName("waterDepth.png");
 	if (!tex.isNull())
 		tex->reload();
+	} catch(...) {  }
 
 
 	ti.update();	///T  /// time

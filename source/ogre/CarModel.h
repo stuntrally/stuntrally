@@ -35,13 +35,13 @@ struct PosInfo
 	float whVel[4], whSlide[4], whSqueal[4];
 	int whTerMtr[4],whRoadMtr[4];
 
-	float fboost,steer;
+	float fboost,steer, percent;
 
 	//  fluids
 	float whH[4],whAngVel[4], speed, whSteerAng[4];
 	int whP[4];
 
-	PosInfo() : bNew(false), pos(0,-200,0), miniPos(0,0)  // not inited
+	PosInfo() : bNew(false), pos(0,-200,0), miniPos(0,0), percent(0.f)  // not inited
 	{}
 };
 

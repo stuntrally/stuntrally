@@ -98,8 +98,8 @@ void App::btnNewGame(WP)
 /// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
 //  track files
-const int cnTrkF = 5, cnTrkFd = 2, cnTrkFo = 3;
-const Ogre::String csTrkFo[cnTrkFo] = {"/grass1.png", "/grassColor.png", "/grassDensity.png"},
+const int cnTrkF = 5, cnTrkFd = 2, cnTrkFo = 2;
+const Ogre::String csTrkFo[cnTrkFo] = {"/grassDensity.png", "/waterDepth.png"},
 	csTrkF[cnTrkF] = {"/heightmap.f32", "/road.xml", "/scene.xml", "/surfaces.txt", "/track.txt"},  // copy, new
 	csTrkFd[cnTrkFd] = {"/heightmap-new.f32", "/records.txt"};  // del
 
@@ -178,10 +178,10 @@ void App::btnCopyTerLayers(WP)
 	sc.sParSmoke = sF.sParSmoke;
 	sc.td.UpdLayers();
 
-	//  copy surfaces.txt
+	//  copy grass dens only
 	String sto = from + "/objects";  // from
 	String to = TrkDir() + "objects";  // to, new
-	for (int i=0; i < 2; ++i)  Copy(sto + csTrkFo[i], to + csTrkFo[i]);
+	Copy(sto + csTrkFo[0], to + csTrkFo[0]);
 
 	SetGuiFromXmls();	UpdateTrack();
 }
@@ -202,14 +202,10 @@ void App::btnCopyVeget(WP)
 	sc.grSwaySpeed = sF.grSwaySpeed;
 	sc.grTerMaxAngle = sF.grTerMaxAngle;
 	sc.trRdDist = sF.trRdDist;  sc.trDistImp = sF.trDistImp;
+	sc.grassMtr = sF.grassMtr;  sc.grassColorMap = sF.grassColorMap;
 
 	for (int i=0; i < sc.ciNumPgLay; ++i)
 		sc.pgLayersAll[i] = sF.pgLayersAll[i];
-
-	//  copy grass1 ,grassColor
-	String sto = from + "/objects";  // from
-	String to = TrkDir() + "objects";  // to, new
-	for (int i=0; i < 2; ++i)  Copy(sto + csTrkFo[i], to + csTrkFo[i]);
 
 	SetGuiFromXmls();	UpdateTrack();
 }

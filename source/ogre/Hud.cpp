@@ -336,18 +336,20 @@ void App::UpdateHUD(int carId, CarModel* pCarM, CAR* pCar, float time, Viewport*
 
 		ColourValue c;
 		int o = 0;
+		if (carModels.size() == newPosInfos.size())  //-
 		for (std::list<CarModel*>::const_iterator it = cms.begin(); it != cms.end(); ++it, ++o)
 		if (hudOpp[o][0])
 		{
 			CarModel* cm = *it;
-			if (cm->eType != CarModel::CT_REPLAY && cm->pMainNode)
+			if (cm->pMainNode)
 			{
 				cm->UpdTrackPercent();
 
 				bool bGhost = cm->eType == CarModel::CT_GHOST;
 				bool bGhostVis = (ghplay.GetNumFrames() > 0) && pSet->rpl_ghost;
+				bool bGhEmpty = bGhost && !bGhostVis;
 
-				if (cm == pCarM || bGhost && !bGhostVis)  // no dist to self or to empty ghost
+				if (cm == pCarM || bGhEmpty)  // no dist to self or to empty ghost
 					hudOpp[o][1]->setCaption("");
 				else
 				{	Vector3 v = cm->pMainNode->getPosition() - pCarM->pMainNode->getPosition();
@@ -358,12 +360,16 @@ void App::UpdateHUD(int carId, CarModel* pCarM, CAR* pCar, float time, Viewport*
 					c.setHSB(0.5f - h * 0.4f, 1,1);		hudOpp[o][1]->setColour(c);
 				}
 					
-				if (!bGhost)  // todo: save perc for ghost/replay or upd it as for regular car..
-				{	//  percent %
-					hudOpp[o][0]->setCaption(fToStr(cm->trackPercent,0,3)+"%");
-					c.setHSB(cm->trackPercent*0.01f*0.4f, 0.7f,1);	hudOpp[o][0]->setColour(c);
+				if (bGhEmpty)
+					hudOpp[o][0]->setCaption("");
+				else
+				{	//  percent % val
+					float perc = newPosInfos[o].percent;  //cm->trackPercent;
+					if (bGhost && pGame->timer.GetPlayerTime() > ghplay.GetTimeLength())
+						perc = 100.f;  // force 100 at ghost end
+					hudOpp[o][0]->setCaption(fToStr(perc,0,3)+"%");
+					c.setHSB(perc*0.01f*0.4f, 0.7f,1);	hudOpp[o][0]->setColour(c);
 				}
-				else  hudOpp[o][0]->setCaption("");
 				
 				hudOpp[o][2]->setCaption(cm->sDispName);  // cant sort if-, name once in CreateHUD
 				hudOpp[o][2]->setColour(cm->color);
@@ -491,9 +497,9 @@ void App::UpdateHUD(int carId, CarModel* pCarM, CAR* pCar, float time, Viewport*
 		}else
 		{	if (!road)  // score on vdr track
 			if (tim.GetIsDrifting(0))
-				times += String(TR("#{TBScore}  "+fToStr(tim.GetDriftScore(0),0)+"+"+fToStr(tim.GetThisDriftScore(0),0)));
+				times += String(TR("#{TBScore}  "+fToStr(tim.GetDriftScore(0),0,3)+"+"+fToStr(tim.GetThisDriftScore(0),0,2)));
 			else
-				times += String(TR("#{TBScore}  "+fToStr(tim.GetDriftScore(0),0)));
+				times += String(TR("#{TBScore}  "+fToStr(tim.GetDriftScore(0),0,3)));
 		}		
 		if (hudTimes) {
 			hudTimes->setCaption(times +

@@ -452,7 +452,7 @@ void MaterialFactory::setShaderParams(MaterialPtr mat)
 
 void MaterialFactory::generate()
 {
-	if (bSettingsChanged)
+	if (/*1||*/bSettingsChanged)
 	{
 		QTimer ti;  ti.update(); /// time
 		LogO("[MaterialFactory] generating new materials...");
@@ -489,8 +489,8 @@ void MaterialFactory::generate()
 				}
 				if (gIt == mCustomGenerators.end())
 				{
-					LogO("[MaterialFactory] WARNING: Custom generator '" + (*it)->getProps()->customGenerator + "' \
-referenced by material '" + (*it)->getName() + "' not found. Using default generator.");
+					LogO("[MaterialFactory] WARNING: Custom generator '" + (*it)->getProps()->customGenerator +
+						"' referenced by material '" + (*it)->getName() + "' not found. Using default generator.");
 					generator = mGenerator; 
 				}
 			}
@@ -551,7 +551,54 @@ referenced by material '" + (*it)->getName() + "' not found. Using default gener
 		#endif
 	}
 	else
+	{
 		LogO("[MaterialFactory] settings not changed, using old materials");
+/**
+		for (std::vector<MaterialDefinition*>::iterator it=mDefinitions.begin();
+			it!=mDefinitions.end(); ++it)
+		{
+			// don't generate abstract materials
+			if ((*it)->getProps()->abstract) continue;
+						
+			// find an appropriate generator
+			MaterialGenerator* generator;
+			if ((*it)->getProps()->customGenerator == "")
+				generator = mGenerator; // default
+			else
+			{
+				// iterate through custom generators
+				std::vector<MaterialGenerator*>::iterator gIt;
+				for (gIt = mCustomGenerators.begin(); gIt != mCustomGenerators.end(); ++gIt)
+				{
+					if ( (*gIt)->mName == (*it)->getProps()->customGenerator)
+					{
+						generator = (*gIt);
+						break;
+					}
+				}
+				if (gIt == mCustomGenerators.end())
+				{
+					LogO("[MaterialFactory] WARNING: Custom generator '" + (*it)->getProps()->customGenerator +
+						"' referenced by material '" + (*it)->getName() + "' not found. Using default generator.");
+					generator = mGenerator;
+				}
+			}
+						
+			generator->mDef = (*it);
+			//generator->mShader = shaderProps;
+			try
+			{
+				if (!generator->mMaterial.isNull())
+				{
+					GpuProgramParametersSharedPtr prog = generator->mMaterial->getTechnique(0)->getPass(0)->getFragmentProgramParameters();
+					generator->individualParamsAlways(prog);
+				}
+			}
+			catch(...){}
+			//generator->generate();
+		}
+/**/
+	}
 		
 	
 	// update params	
