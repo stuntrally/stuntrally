@@ -448,7 +448,7 @@ if (!bAssignKey)
 	}
 	
 	//  gui on/off
-	if (action("ShowOptions"))
+	if (action("ShowOptions") && !alt)
 	{	if (mWndChampEnd->getVisible())  mWndChampEnd->setVisible(false);  // hide champs end
 		toggleGui(true);  return false;  }
 

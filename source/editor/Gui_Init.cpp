@@ -57,6 +57,14 @@ void App::InitGui()
 		IntSize w = mWndOpts->getSize();  // center
 		mWndOpts->setPosition((sx-w.width)*0.5f, (sy-w.height)*0.5f);
 		mWndTabs = mGUI->findWidget<Tab>("TabWnd");
+		//  get sub tabs
+		vSubTabs.clear();
+		for (size_t i=0; i < mWndTabs->getItemCount(); ++i)
+		{
+			MyGUI::TabPtr sub = (TabPtr)mWndTabs->getItemAt(i)->findWidget("SubTab");
+			vSubTabs.push_back(sub);  // 0 for not found
+			//LogO(toStr(i)+" = "+toStr((int)(sub ? sub->getItemCount() : -1)));
+		}
 		//mWndTabs->setIndexSelected(3);  //default*--
 		ResizeOptWnd();
 	}
