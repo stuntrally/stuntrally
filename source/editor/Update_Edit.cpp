@@ -191,7 +191,7 @@ bool App::frameRenderingQueued(const FrameEvent& evt)
 		if (isKey(APOSTROPHE))	{  road->AddBoxW( q*0.2);  UpdStartPos();  }
 		//if (mz > 0)	// snap rot by 15 deg ..
 	}
-	else if (edMode == ED_Fluids && sc.fluids.size() > 0)
+	else if (edMode == ED_Fluids && !sc.fluids.empty())
 	{
 		FluidBox& fb = sc.fluids[iFlCur];									if (flTxt[1])	flTxt[1]->setCaption(fb.name);
 		if (flTxt[0])	flTxt[0]->setCaption("Cur/All:  "+toStr(iFlCur+1)+"/"+toStr(sc.fluids.size()));
@@ -279,14 +279,14 @@ bool App::frameRenderingQueued(const FrameEvent& evt)
 //---------------------------------------------------------------------------------------------------------------
 void App::processMouse()  //! from Thread, cam vars only
 {
-	double m_interval = timer.iv;
-	static double m_sumTime = 0.0;
-	m_sumTime += mDTime;  int num = 0;
+	//double m_interval = timer.iv;
+	//static double m_sumTime = 0.0;
+	//m_sumTime += mDTime;  int num = 0;
 	//while (m_sumTime > m_interval)
 	{
-		num++;
-		m_sumTime -= m_interval;
-		Real fDT = m_interval;  //mDTime;
+		//num++;
+		//m_sumTime -= m_interval;
+		Real fDT = timer.iv;  //mDTime;
 		
 		//  static vars are smoothed
 		Vector3 vInpC(0,0,0),vInp;  //static Vector3 vNew(0,0,0);
@@ -417,7 +417,7 @@ void App::editMouse()
 	}
 
 	///  edit fluids . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
-	if (bEdit() && edMode == ED_Fluids && sc.fluids.size() > 0)
+	if (bEdit() && edMode == ED_Fluids && !sc.fluids.empty())
 	{
 		FluidBox& fb = sc.fluids[iFlCur];
 		const Real fMove(0.5f), fRot(1.5f);  //par speed
