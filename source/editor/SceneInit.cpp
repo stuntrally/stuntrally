@@ -96,9 +96,6 @@ void App::NewCommon()
 	if (resTrk != "")  mRoot->removeResourceLocation(resTrk);
 		resTrk = TrkDir() + "objects";
 	mRoot->addResourceLocation(resTrk, "FileSystem");
-
-	/// generate materials
-	materialFactory->generate();
 }
 //---------------------------------------------------------------------------------------------------------------
 void App::LoadTrack()
@@ -117,6 +114,10 @@ void App::LoadTrackEv()
 	// load scene
 	sc.ter = true;
 	sc.LoadXml(TrkDir()+"scene.xml");
+	
+	/// generate materials
+	materialFactory->generate();
+
 	LoadSurf();
 	UpdWndTitle();
 
@@ -142,6 +143,11 @@ void App::LoadTrackEv()
 	Rnd2TexSetup();
 	UpdVisGui();
 	LoadStartPos();
+
+	TexturePtr tex = TextureManager::getSingleton().getByName("waterDepth.png");
+	if (!tex.isNull())
+		tex->reload();
+
 
 	Status("Loaded", 0.5,0.7,1.0);
 

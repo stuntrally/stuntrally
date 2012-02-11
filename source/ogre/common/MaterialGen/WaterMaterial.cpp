@@ -115,6 +115,9 @@ void WaterMaterialGenerator::generate()
 		individualVertexProgramParams(pass->getFragmentProgramParameters());
 	}
 
+	pass->getFragmentProgramParameters()->setNamedConstant("terSize", 1.f / Real(mParent->pApp->sc.td.fTerWorldSize));
+	LogO("TER size--: "+toStr(mParent->pApp->sc.td.fTerWorldSize));
+
 	// ----------------------------------------------------------------------- //
 	
 	createSSAOTechnique();
@@ -355,7 +358,7 @@ void WaterMaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::Str
 		"	clr = lerp(clr, fogColor, /*IN.fogVal*/IN.wp.w); \n";
 
 	outStream <<
-		"	return float4(clr, aa.g * 0.2f + aa.r * (waterClr.a + clrSUM.r) ); \n"
+		"	return float4(clr*0.01f + float3(aa,1), 1.f + aa.g * 0.2f + aa.r * (waterClr.a + clrSUM.r) ); \n"
 	"} \n";							  //^par
 }
 
@@ -396,8 +399,6 @@ void WaterMaterialGenerator::individualFragmentProgramParams(Ogre::GpuProgramPar
 	params->setNamedConstant("matSpec", mDef->mProps->specular);
 	params->setNamedConstant("reflAndWaterAmounts", Vector3(mDef->mProps->reflAmount, 1-mDef->mProps->reflAmount, 0));
 	params->setNamedConstant("fresnelPowerBias", Vector3(mDef->mProps->fresnelPower, mDef->mProps->fresnelBias, 0));
-
-	params->setNamedConstant("terSize", 1.f / Real(mParent->pApp->sc.td.fTerWorldSize));
 	
 	if (needShadows())
 	{
@@ -405,6 +406,14 @@ void WaterMaterialGenerator::individualFragmentProgramParams(Ogre::GpuProgramPar
 		for (int i=0; i<mParent->getNumShadowTex(); ++i)
 			params->setNamedAutoConstant("invShadowMapSize"+toStr(i), GpuProgramParameters::ACT_INVERSE_TEXTURE_SIZE, i+mShadowTexUnit_start);
 	}
+}
+
+//----------------------------------------------------------------------------------------
+
+void WaterMaterialGenerator::individualParamsAlways(Ogre::GpuProgramParametersSharedPtr params)
+{
+	params->setNamedConstant("terSize", 1.f / Real(mParent->pApp->sc.td.fTerWorldSize));
+	LogO("TER size: "+toStr(mParent->pApp->sc.td.fTerWorldSize));
 }
 
 //----------------------------------------------------------------------------------------
