@@ -345,7 +345,7 @@ void WaterMaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::Str
 	"	float facing = 1.0 - max(abs(dot(camDir, normal)), 0); \n"
 	"	float fresnel = saturate(fresnelPowerBias.y + pow(facing, fresnelPowerBias.x)); \n"
 		//  water color
-	"	float4 waterClr = lerp( lerp(shallowColor, deepColor, facing), deepColor, aa.g); \n"
+	"	float4 waterClr = lerp( lerp(shallowColor, deepColor, facing), deepColor, aa.g * 0.2f); \n"  // <par
 	"	float4 reflClr = lerp(waterClr, reflection, fresnel); \n"
 	"	float3 clr = clrSUM.rgb * waveSpecular + waterClr.rgb * reflAndWaterAmounts.y + reflClr.rgb * reflAndWaterAmounts.x; \n";
 	
@@ -355,7 +355,7 @@ void WaterMaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::Str
 		"	clr = lerp(clr, fogColor, /*IN.fogVal*/IN.wp.w); \n";
 
 	outStream <<
-		"	return float4(clr, aa.g * 0.3f + aa.r * (waterClr.a + clrSUM.r) ); \n"
+		"	return float4(clr, aa.g * 0.2f + aa.r * (waterClr.a + clrSUM.r) ); \n"
 	"} \n";							  //^par
 }
 

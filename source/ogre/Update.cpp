@@ -496,7 +496,7 @@ void App::newPoses()
 				if (valRplName2)  // recorded info
 				{
 					int size = replay.GetNumFrames() * sizeof(ReplayFrame);
-					std::string s = fToStr( float(size)/1000000.f, 2 );
+					std::string s = fToStr( float(size)/1000000.f, 2,5);
 					String ss = String( TR("#{RplRecTime}: ")) + GetTimeString(replay.GetTimeLength()) + TR("   #{RplSize}: ") + s + TR(" #{UnitMB}");
 					valRplName2->setCaption(ss);
 				}

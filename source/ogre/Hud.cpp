@@ -491,9 +491,9 @@ void App::UpdateHUD(int carId, CarModel* pCarM, CAR* pCar, float time, Viewport*
 		}else
 		{	if (!road)  // score on vdr track
 			if (tim.GetIsDrifting(0))
-				times += String(TR("#{TBScore}  "+fToStr(tim.GetDriftScore(0),0)+"+"+fToStr(tim.GetThisDriftScore(0),0)));
+				times += String(TR("#{TBScore}  "+fToStr(tim.GetDriftScore(0),0,3)+"+"+fToStr(tim.GetThisDriftScore(0),0,2)));
 			else
-				times += String(TR("#{TBScore}  "+fToStr(tim.GetDriftScore(0),0)));
+				times += String(TR("#{TBScore}  "+fToStr(tim.GetDriftScore(0),0,3)));
 		}		
 		if (hudTimes) {
 			hudTimes->setCaption(times +
