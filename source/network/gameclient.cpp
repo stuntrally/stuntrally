@@ -13,7 +13,8 @@ namespace {
 
 
 P2PGameClient::P2PGameClient(GameClientCallback* callback, int port)
-	: m_callback(callback), m_client(*this, port), m_state(DISCONNECTED), m_mutex(), m_cond(), m_playerInfo(), m_game(), m_carState()
+	: m_callback(callback), m_client(*this, port), m_state(DISCONNECTED),
+	m_mutex(), m_cond(), m_playerInfo(), m_game(), m_carState()
 {
 	m_playerInfo.random_id = std::rand(); // Client id is based on this
 	m_game.packet_type = -1; // Invalidate until set
@@ -119,6 +120,12 @@ void P2PGameClient::loadingFinished()
 	// Wait a tiny bit to give the network some time
 	boost::this_thread::sleep(boost::posix_time::milliseconds(50));
 	m_callback->startRace();
+}
+
+void P2PGameClient::lap(uint8_t num, double time)
+{
+	protocol::TimeInfoPackage tip(num, time);
+	m_client.broadcast(net::convert(tip), net::PACKET_RELIABLE);
 }
 
 void P2PGameClient::senderThread() {

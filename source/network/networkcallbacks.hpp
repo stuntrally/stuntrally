@@ -58,6 +58,9 @@ struct GameClientCallback {
 	/// Called when all peers have finished loading and are ready to start racing
 	virtual void startRace() {}
 
+	/// Called when timing info has arrived
+	virtual void timeInfo(ClientID id, uint8_t lap, float time) {}
+
 	/// Called when an error occured
 	/// @param what the error description
 	virtual void error(std::string what) {}

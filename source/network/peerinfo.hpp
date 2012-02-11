@@ -29,7 +29,7 @@ struct PeerInfo {
 
 	PeerInfo(net::Address addr = net::Address()):
 		id(-1), random_id(-1), peer_id(0), address(addr), name(), car(), peers(), ready(),
-		ping(0), authenticated(), connection(DISCONNECTED) {}
+		loaded(), ping(0), authenticated(), connection(DISCONNECTED) {}
 
 	PeerInfo& operator=(const protocol::PlayerInfoPacket& pip) {
 		random_id = pip.random_id;

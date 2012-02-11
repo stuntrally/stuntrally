@@ -58,6 +58,9 @@ public:
 	/// Signal that loading has finished
 	void loadingFinished();
 
+	/// Signal a lap with time
+	void lap(uint8_t num, double time);
+
 	/// Thread that periodically broadcasts peer and game state info, don't call directly
 	void senderThread();
 
