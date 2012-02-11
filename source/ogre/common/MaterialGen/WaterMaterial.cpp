@@ -122,18 +122,6 @@ void WaterMaterialGenerator::generate()
 
 	// indicate we need 'time' parameter set every frame
 	mParent->timeMtrs.push_back(mDef->getName());
-	
-	// indicate shadow
-	if (needShadows())
-		mParent->splitMtrs.push_back(mDef->getName());
-	
-	// indicate lightmap
-	if (needTerrainLightMap())
-		mParent->terrainLightMapMtrs.push_back(mDef->getName());
-	 
-	// mParent->fogMtrs.... // not important, only for impostors
-	
-	
 }
 
 //----------------------------------------------------------------------------------------

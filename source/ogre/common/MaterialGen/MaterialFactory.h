@@ -33,8 +33,8 @@ public:
     static MaterialFactory& getSingleton(void);
     static MaterialFactory* getSingletonPtr(void);
 	
-	// maximum of 4 shadow textures
-	static const unsigned int SHADOWTEX_NUM_MAX = 4;
+	// maximum of 3 shadow textures
+	static const unsigned int SHADOWTEX_NUM_MAX = 3;
 	
 	// once at start (or after settings changed)
 	void generate();
@@ -77,7 +77,7 @@ public:
 	void setShadowsFadeDistance(float p) { setIfChangedP(fShadowsFadeDistance) };
 	void setPSSMCameraSetup(Ogre::PSSMShadowCameraSetup*);
 	void setTexSize(unsigned int p) { setIfChanged(iTexSize) };
-	void setNumShadowTex(unsigned int p) { setIfChanged(iNumShadowTex) };
+	void setNumShadowTex(unsigned int p) { if(p> SHADOWTEX_NUM_MAX) { p=SHADOWTEX_NUM_MAX; } else { setIfChanged(iNumShadowTex) } };
 	void setShaderQuality(float p) { setIfChanged(fShaderQuality) };
 	
 	const bool getNormalMap() { return bNormalMap; };
@@ -93,8 +93,6 @@ public:
 	const float getShaderQuality() { return fShaderQuality; };
 	///--------------------------------------------------------------------
 	
-	std::vector<std::string> splitMtrs; // materials that need pssm split points
-	std::vector<std::string> terrainLightMapMtrs; // materials that need terrain lightmap texture and terrainWorldSize
 	std::vector<std::string> fogMtrs; // materials that involve fog
 	std::vector<std::string> windMtrs; // wind == 2
 	std::vector<std::string> timeMtrs; // for animated materials
