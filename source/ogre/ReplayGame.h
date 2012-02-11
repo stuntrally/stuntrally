@@ -71,6 +71,8 @@ struct ReplayFrame
 	float whH[4], whAngVel[4];  // submerge height
 	char whP[4];  //particle type
 	float whSteerAng[2];
+	
+	float percent;  // track % val
 
 	// todo: sparks hit emit,pos,vel?
 };
