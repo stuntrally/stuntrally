@@ -264,6 +264,8 @@ void WaterMaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::Str
 	"	uniform float waveHighFreq, uniform float waveSpecular, \n"
 	"	uniform float time, \n"
 	"	uniform float invTerSize, \n"
+	"	uniform float2 depthPars, \n"  // from waterDepth tex
+	"	uniform float4 depthColor, \n"
 	"	uniform float4 deepColor,  uniform float4 shallowColor,  uniform float4 reflectionColor, \n"
 	"	uniform float2 reflAndWaterAmounts, \n"
 	"	uniform float2 fresnelPowerBias, \n";
@@ -345,7 +347,7 @@ void WaterMaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::Str
 	"	float facing = 1.0 - max(abs(dot(camDir, normal)), 0); \n"
 	"	float fresnel = saturate(fresnelPowerBias.y + pow(facing, fresnelPowerBias.x)); \n"
 		//  water color
-	"	float4 waterClr = lerp( lerp(shallowColor, deepColor, facing), deepColor, aa.g * 0.2f); \n"  // <par
+	"	float4 waterClr = lerp( lerp(shallowColor, deepColor, facing), depthColor, aa.g * depthPars.x); \n"
 	"	float4 reflClr = lerp(waterClr, reflection, fresnel); \n"
 	"	float3 clr = clrSUM.rgb * waveSpecular + waterClr.rgb * reflAndWaterAmounts.y + reflClr.rgb * reflAndWaterAmounts.x; \n";
 	
@@ -356,8 +358,8 @@ void WaterMaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::Str
 
 	outStream <<
 		//"	return float4(clr*0.01f + float3(aa,1), 1.f + aa.g * 0.2f + aa.r * (waterClr.a + clrSUM.r) ); \n"
-		"	return float4(clr, aa.g * 0.2f + aa.r * (waterClr.a + clrSUM.r) ); \n"
-	"} \n";							  //^par
+		"	return float4(clr, aa.g * depthPars.y + aa.r * (waterClr.a + clrSUM.r) ); \n"
+	"} \n";
 }
 
 //----------------------------------------------------------------------------------------
@@ -391,6 +393,8 @@ void WaterMaterialGenerator::individualFragmentProgramParams(Ogre::GpuProgramPar
 	params->setNamedConstant("waveBump", _vec3(mDef->mProps->waveBump));
 	params->setNamedConstant("waveHighFreq", Real(mDef->mProps->waveHighFreq));
 	params->setNamedConstant("waveSpecular", Real(mDef->mProps->waveSpecular));
+	params->setNamedConstant("depthPars", _vec3(mDef->mProps->depthPars));
+	params->setNamedConstant("depthColor", mDef->mProps->depthColour);
 	params->setNamedConstant("deepColor", mDef->mProps->deepColour);
 	params->setNamedConstant("shallowColor", mDef->mProps->shallowColour);
 	params->setNamedConstant("reflectionColor", mDef->mProps->reflectionColour);

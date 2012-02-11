@@ -280,7 +280,7 @@ void App::SaveWaterDepth()
 	btCollisionWorld::ClosestRayResultCallback rayRes(from, to);
 		
 	///  write to img  -----------
-	//  get ter height, compare with ray cast to bullet fluids only
+	//  get ter height to fluid height difference for below
 	for (y = 0; y < h; ++y) {  a = y*w;
 	for (x = 0; x < w; ++x, ++a)
 	{
@@ -288,8 +288,6 @@ void App::SaveWaterDepth()
 		float fx = float(y)/fh, fz = float(x)/fw;
 		//  pos on ter  -terSize..terSize
 		float wx = (fx-0.5f) * sc.td.fTerWorldSize, wz = -(fz-0.5f) * sc.td.fTerWorldSize;
-		//if (x==0 && y==0 || x==w-1 && y==h-1)  // check
-		//	LogO(toStr(fx)+","+toStr(fz)+" "+toStr(wx)+","+toStr(wz));
 
 		fa = 0.f;  // fluid y pos
 		for (i=0; i < sc.fluids.size(); ++i)

@@ -89,10 +89,9 @@ struct MaterialProperties
 	
 	
 	// water
-	Ogre::Vector2 waveBump;
-	float waveHighFreq;
-	float waveSpecular;
-	Ogre::Vector4 deepColour, shallowColour, reflectionColour;
+	Ogre::Vector2 waveBump, depthPars;
+	float waveHighFreq, waveSpecular;
+	Ogre::Vector4 deepColour, shallowColour, reflectionColour, depthColour;
 	
 	// priority for various properties (for 'Shader quality' slider)
 	// 0 ... 1, default: 0.5

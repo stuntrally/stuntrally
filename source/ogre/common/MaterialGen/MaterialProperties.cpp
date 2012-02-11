@@ -22,6 +22,7 @@ MaterialProperties::MaterialProperties() :
 	waveBump(0.5, 1.0), waveHighFreq(0.0), waveSpecular(1.0),
 	envMapPriority(0.5), shadowPriority(0.5), normalMapPriority(0.5),
 	deepColour(0.0, 0.3, 0.5, 1.0), shallowColour(0.0, 0.9, 1.0, 0.3), reflectionColour(0.9, 1.0, 1.0, 1.0),
+	depthColour(0.0, 0.15, 0.3, 1.0), depthPars(0.1f,0.1f),
 	parallax(false), parallaxHeight(0.035f)
 {}
 
@@ -161,11 +162,13 @@ void MaterialProperties::setProperty(const std::string& prop, const std::string&
 	}
 
 	// water
-	else if (prop == "waveBump") waveBump = str2vec2(value);
-	else if (prop == "waveHighFreq") waveHighFreq = str2float(value);
-	else if (prop == "waveSpecular") waveSpecular = str2float(value);
-	else if (prop == "deepColour") deepColour = str2vec4(value);
-	else if (prop == "shallowColour") shallowColour = str2vec4(value);
+	else if (prop == "waveBump")		waveBump = str2vec2(value);
+	else if (prop == "waveHighFreq")	waveHighFreq = str2float(value);
+	else if (prop == "waveSpecular")	waveSpecular = str2float(value);
+	else if (prop == "depthPars")		depthPars = str2vec2(value);
+	else if (prop == "depthColour")		depthColour = str2vec4(value);
+	else if (prop == "deepColour")		deepColour = str2vec4(value);
+	else if (prop == "shallowColour")	shallowColour = str2vec4(value);
 	else if (prop == "reflectionColour") reflectionColour = str2vec4(value);
 
 	// not found
