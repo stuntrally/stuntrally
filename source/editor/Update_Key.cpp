@@ -182,14 +182,32 @@ bool App::KeyPress(const CmdKey &arg)
 		case KC_F9:  bTerUpdBlend = true;  return true;
 
    		case KC_F2:  // +-rt num
-   			if (alt) {	pSet->num_mini = (pSet->num_mini - 1 + RTs+2) % (RTs+2);  UpdMiniVis();  }
-   			else if (bGuiFocus)  // prev gui tab
-   				mWndTabs->setIndexSelected( (mWndTabs->getIndexSelected() - 1 + num) % num );
+   			if (alt)
+   			{	pSet->num_mini = (pSet->num_mini - 1 + RTs+2) % (RTs+2);  UpdMiniVis();  }
+   			else
+   			if (bGuiFocus)
+   				if (shift)  // prev gui subtab
+   				{
+   					MyGUI::TabControl* sub = vSubTabs[mWndTabs->getIndexSelected()];
+   					if (sub)  {  int num = sub->getItemCount();
+   						sub->setIndexSelected( (sub->getIndexSelected() - 1 + num) % num );  }
+	   			}
+   				else	// prev gui tab
+	   				mWndTabs->setIndexSelected( (mWndTabs->getIndexSelected() - 1 + num) % num );
    			break;
    		case KC_F3:
-   			if (alt) {	pSet->num_mini = (pSet->num_mini + 1) % (RTs+2);  UpdMiniVis();  }
-   			else if (bGuiFocus)  // next gui tab
-   				mWndTabs->setIndexSelected( (mWndTabs->getIndexSelected() + 1) % num );
+   			if (alt)
+   			{	pSet->num_mini = (pSet->num_mini + 1) % (RTs+2);  UpdMiniVis();  }
+   			else
+   			if (bGuiFocus)
+   				if (shift)  // next gui subtab
+   				{
+   					MyGUI::TabControl* sub = vSubTabs[mWndTabs->getIndexSelected()];
+   					if (sub)  {  int num = sub->getItemCount();
+   						sub->setIndexSelected( (sub->getIndexSelected() + 1) % num );  }
+	   			}
+	   			else	// next gui tab
+   					mWndTabs->setIndexSelected( (mWndTabs->getIndexSelected() + 1) % num );
    			break;
    			
    		case KC_RETURN:  // load track
@@ -361,6 +379,16 @@ bool App::KeyPress(const CmdKey &arg)
 	}
 
 	///  Common Keys  * * * * * * * * * * * * *
+	/*if (alt)  // doesnt work why?
+	switch (arg.key)
+	{
+		case KC_Q:	mWndTabs->setIndexSelected(0);  break;
+		case KC_W:	mWndTabs->setIndexSelected(1);  break;
+		case KC_E:	mWndTabs->setIndexSelected(2);  break;
+		case KC_R:	mWndTabs->setIndexSelected(3);  break;
+		case KC_T:	mWndTabs->setIndexSelected(4);  break;
+	}
+	else*/
 	switch (arg.key)
 	{
 		case KC_TAB:	//  Camera / Edit mode

@@ -178,6 +178,7 @@ protected:
 	///-----------------------------------------------------------------------------------------------------------------	
 	//  size
 	void SizeGUI(); void doSizeGUI(MyGUI::EnumeratorWidgetPtr);
+	std::vector<MyGUI::TabControl*> vSubTabs;
 
 	//  shortcuts
 	typedef MyGUI::WidgetPtr WP;

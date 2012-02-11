@@ -944,7 +944,7 @@
 					<Property key="Range" value="1000001"/>
 					<UserString key="tip" value="#{TipTexTiling}"/>
 				</Widget>
-				<Widget type="TabControl" skin="TabControl" position="24 200 736 320">
+				<Widget type="TabControl" skin="TabControl" position="24 200 736 320" name="SubTab">
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 					<Property key="ButtonAutoWidth" value="true"/>
 					<Property key="Colour" value="0.73 0.88 1"/>
@@ -1264,7 +1264,7 @@
 			<Widget type="TabItem" skin="" position="4 26 787 531">
 				<UserString key="RelativeTo" value="OptionsWnd"/>
 				<Property key="Caption" value="#{Vegetation}"/>
-				<Widget type="TabControl" skin="TabControl" position="16 15 752 497">
+				<Widget type="TabControl" skin="TabControl" position="16 15 752 497" name="SubTab">
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 					<Property key="ButtonWidth" value="180"/>
 					<Property key="Colour" value="0.73 0.88 1"/>
@@ -2125,7 +2125,7 @@
 					<Property key="Colour" value="0.6 0.9 1"/>
 					<Property key="TextColour" value="0.9 0.97 1"/>
 				</Widget>
-				<Widget type="TabControl" skin="TabControl" position="16 65 744 400">
+				<Widget type="TabControl" skin="TabControl" position="16 65 744 400" name="SubTab">
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 					<Property key="ButtonAutoWidth" value="true"/>
 					<Property key="Colour" value="0.73 0.88 1"/>
@@ -2452,7 +2452,7 @@
 			<Widget type="TabItem" skin="" position="4 26 787 531">
 				<UserString key="RelativeTo" value="OptionsWnd"/>
 				<Property key="Caption" value="#{InputHelp}"/>
-				<Widget type="TabControl" skin="TabControl" position="30 24 720 479">
+				<Widget type="TabControl" skin="TabControl" position="30 24 720 479" name="SubTab">
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 					<Property key="Colour" value="0.73 0.88 1"/>
 					<Property key="ButtonWidth" value="140"/>
