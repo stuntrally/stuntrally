@@ -21,7 +21,7 @@ namespace protocol {
 // Note that in many cases, you need to bump both version when making changes.
 // Example: PacketType enum is used by both master server and game clients.
 const uint32_t GAME_PROTOCOL_VERSION = 1;
-const uint32_t MASTER_PROTOCOL_VERSION = 1;
+const uint32_t MASTER_PROTOCOL_VERSION = 2;
 
 const unsigned DEFAULT_PORT = 4243;
 
@@ -47,6 +47,34 @@ enum PacketType {
 
 
 /**
+ * @brief Contains error codes that tell the reason of disconnecting.
+ */
+enum ErrorCodes {
+	WRONG_PASSWORD = 1,
+	INCOMPATIBLE_GAME_PROTOCOL,
+	INCOMPATIBLE_MASTER_PROTOCOL
+};
+
+/**
+ * @brief Contains authentication etc. info that needs to be validated
+ * before accepting a new connection as a peer.
+ */
+struct HandshakePackage {
+	uint8_t packet_type;
+	uint32_t master_protocol_version;
+	uint32_t game_protocol_version;
+	char password[16];
+	HandshakePackage(std::string passwd = ""):
+		packet_type(HANDSHAKE),
+		master_protocol_version(MASTER_PROTOCOL_VERSION),
+		game_protocol_version(GAME_PROTOCOL_VERSION)
+	{
+		std::memcpy(password, passwd.c_str(), 16);
+	}
+};
+
+
+/**
  * @brief Contains information about one game that is available for joining.
  */
 struct GameInfo {
@@ -59,6 +87,10 @@ struct GameInfo {
 	uint8_t collisions; // Set by client
 	uint8_t laps;       // Set by client
 	uint8_t locked;     // Set by client
+	uint8_t reversed;   // Set by client
+	uint8_t flip_type;  // Set by client
+	uint8_t boost_type; // Set by client
+	float boost_power;  // Set by client
 	char name[32];      // Set by client
 	char track[32];     // Set by client
 
@@ -100,7 +132,11 @@ struct PlayerInfoPacket {
 	uint8_t peers;
 	uint8_t ready;
 
-	PlayerInfoPacket(): packet_type(PLAYER_INFO), random_id(-1), ready(), peers() {}
+	PlayerInfoPacket(): packet_type(PLAYER_INFO), random_id(-1), ready(), peers() {
+		memset(name, 0, sizeof(name));
+		memset(car, 0, sizeof(car));
+		memset(password, 0, sizeof(password));
+	}
 };
 
 

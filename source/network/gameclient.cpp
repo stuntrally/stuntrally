@@ -4,7 +4,7 @@
 namespace {
 	std::string formulateProtocolVersionError(uint32_t remote_version) {
 		std::ostringstream oss;
-		oss << "Peer attempting to connect has incompatible protocol version "
+		oss << "Connection refused due to incompatible protocol versions "
 			<< "(my: " << protocol::GAME_PROTOCOL_VERSION
 			<< " hers: " << remote_version << ")!";
 		return oss.str();
@@ -30,12 +30,9 @@ P2PGameClient::~P2PGameClient()
 
 void P2PGameClient::connect(const std::string& address, int port, std::string password)
 {
-	{
-		boost::mutex::scoped_lock lock(m_mutex);
-		m_playerInfo.password = password;
-	}
+	setPassword(password);
 	startLobby();
-	m_client.connect(address, port, NULL, protocol::GAME_PROTOCOL_VERSION);
+	m_client.connect(address, port, NULL);
 }
 
 void P2PGameClient::updatePlayerInfo(const std::string& name, const std::string& car)
@@ -44,6 +41,12 @@ void P2PGameClient::updatePlayerInfo(const std::string& name, const std::string&
 	m_playerInfo.name = name;
 	m_playerInfo.car = car;
 	m_playerInfo.address = m_client.getAddress();
+}
+
+void P2PGameClient::setPassword(const std::string& password)
+{
+	boost::mutex::scoped_lock lock(m_mutex);
+	m_playerInfo.password = password;
 }
 
 void P2PGameClient::toggleReady()
@@ -87,8 +90,11 @@ void P2PGameClient::startGame(bool broadcast)
 			PeerInfo& pi = it->second;
 			pi.loaded = false; // Reset loading status to be sure
 			// Check condition
-			if (pi.connection != PeerInfo::CONNECTED || pi.name.empty())
+			if (pi.connection != PeerInfo::CONNECTED || pi.name.empty() || !pi.authenticated) {
+				if (pi.peer_id != 0)
+					m_client.disconnect(pi.peer_id, true);
 				m_peers.erase(it++);
+			}
 			else ++it;
 		}
 		m_playerInfo.loaded = false;
@@ -122,10 +128,10 @@ void P2PGameClient::senderThread() {
 		{
 			// Broadcast local player's meta info
 			protocol::PlayerInfoPacket pip = (protocol::PlayerInfoPacket)m_playerInfo;
-			m_client.broadcast(net::convert(pip));
+			broadcastToAuthed(net::convert(pip));
 			// If game info is set, broadcast it
 			if (m_game.packet_type == protocol::GAME_STATUS)
-				m_client.broadcast(net::convert(m_game));
+				broadcastToAuthed(net::convert(m_game));
 			// Loop all peers
 			for (PeerMap::iterator it = m_peers.begin(); it != m_peers.end(); ++it) {
 				PeerInfo& pi = it->second;
@@ -134,11 +140,11 @@ void P2PGameClient::senderThread() {
 				if (pi.connection == PeerInfo::DISCONNECTED) {
 					std::cout << "Connecting to " << pi.address << std::endl;
 					pi.connection = PeerInfo::CONNECTING;
-					m_client.connect(pi.address, NULL, protocol::GAME_PROTOCOL_VERSION);
+					m_client.connect(pi.address, NULL);
 				}
 				// Broadcast peer's info
 				protocol::PeerAddressPacket pap(it->second.address);
-				m_client.broadcast(net::convert(pap));
+				broadcastToAuthed(net::convert(pap));
 			}
 			// Wait some
 			m_cond.timed_wait(lock, now() + 2.0);
@@ -200,7 +206,10 @@ void P2PGameClient::recountPeersAndAssignIds(bool validate)
 	IDSorter idsorter;
 	idsorter[m_playerInfo.random_id] = &m_playerInfo;
 	for (PeerMap::iterator it = m_peers.begin(); it != m_peers.end(); ++it) {
-		if (it->second.connection == PeerInfo::CONNECTED && !it->second.name.empty()) {
+		if (it->second.connection == PeerInfo::CONNECTED
+			&& !it->second.name.empty()
+			&& it->second.authenticated)
+		{
 			idsorter[it->second.random_id] = &it->second;
 			++m_playerInfo.peers;
 		}
@@ -218,30 +227,36 @@ void P2PGameClient::recountPeersAndAssignIds(bool validate)
 			throw std::runtime_error("Unassigned or duplicate client ID!");
 }
 
+// Mutex should be already locked when this is called
+void P2PGameClient::broadcastToAuthed(net::NetworkTraffic const& msg, int flags)
+{
+	for (PeerMap::const_iterator it = m_peers.begin(); it != m_peers.end(); ++it)
+		if (it->second.authenticated) m_client.send(it->second.peer_id, msg, flags);
+}
+
 void P2PGameClient::connectionEvent(net::NetworkTraffic const& e)
 {
-	if (e.event_data && e.event_data != protocol::GAME_PROTOCOL_VERSION) {
-		if (m_callback)
-			m_callback->error(formulateProtocolVersionError(e.event_data));
-		// We force the disconnection, so that no local event is generated
-		m_client.disconnect(e.peer_id, true, protocol::GAME_PROTOCOL_VERSION);
-		return;
-	}
-	std::cout << "Connection from " << e.peer_address << std::endl;
+	std::cout << "Connected " << e.peer_address << std::endl;
 	if (m_state == LOBBY) {
 		boost::mutex::scoped_lock lock(m_mutex);
 		PeerInfo& pi = m_peers[e.peer_address];
 		pi.address = e.peer_address;
+		pi.peer_id = e.peer_id;
 		pi.connection = PeerInfo::CONNECTED;
 		pi.ping = e.ping;
+		protocol::HandshakePackage hp(m_playerInfo.password);
+		m_client.send(e.peer_id, net::convert(hp), net::PACKET_RELIABLE);
 		// No connection callback here, because player info is not yet received
 	}
-	// We'll send the peer info periodically, so no need to do it here
 }
 
 void P2PGameClient::disconnectEvent(net::NetworkTraffic const& e)
 {
 	std::cout << "Disconnected " << e.peer_address << std::endl;
+	if (m_callback && e.event_data == protocol::INCOMPATIBLE_GAME_PROTOCOL)
+		m_callback->error(formulateProtocolVersionError(e.event_data));
+	if (m_callback && e.event_data == protocol::WRONG_PASSWORD)
+		m_callback->error("Wrong password.");
 	PeerInfo picopy;
 	{
 		boost::mutex::scoped_lock lock(m_mutex);
@@ -251,9 +266,7 @@ void P2PGameClient::disconnectEvent(net::NetworkTraffic const& e)
 		picopy = m_peers[e.peer_address];
 		recountPeersAndAssignIds();
 	}
-	// Callbacks (mutex unlocked to avoid dead-locks)
-	if (m_callback && e.event_data && e.event_data != protocol::GAME_PROTOCOL_VERSION)
-		m_callback->error(formulateProtocolVersionError(e.event_data));
+	// Callback (mutex unlocked to avoid dead-locks)
 	if (m_callback) m_callback->peerDisconnected(picopy);
 }
 
@@ -261,6 +274,24 @@ void P2PGameClient::receiveEvent(net::NetworkTraffic const& e)
 {
 	if (e.packet_length <= 0 || !e.packet_data) return;
 	switch (e.packet_data[0]) {
+		case protocol::HANDSHAKE: {
+			if (m_state != LOBBY) break;
+			protocol::HandshakePackage hp = *reinterpret_cast<protocol::HandshakePackage const*>(e.packet_data);
+			if (hp.game_protocol_version != protocol::GAME_PROTOCOL_VERSION) {
+				m_client.disconnect(e.peer_id, false, protocol::INCOMPATIBLE_GAME_PROTOCOL);
+				if (m_callback) m_callback->error(formulateProtocolVersionError(e.event_data));
+				break;
+			}
+			boost::mutex::scoped_lock lock(m_mutex);
+			if (std::string(m_playerInfo.password) != std::string(hp.password)) {
+				m_client.disconnect(e.peer_id, false, protocol::WRONG_PASSWORD);
+				break;
+			}
+			PeerInfo& pi = m_peers[e.peer_address];
+			pi.authenticated = true;
+			pi.ping = e.ping;
+			break;
+		}
 		case protocol::PEER_ADDRESS: {
 			if (m_state != LOBBY) break;
 			protocol::PeerAddressPacket pap = *reinterpret_cast<protocol::PeerAddressPacket const*>(e.packet_data);
@@ -292,13 +323,7 @@ void P2PGameClient::receiveEvent(net::NetworkTraffic const& e)
 			// Callback
 			if (m_callback) {
 				PeerInfo picopy = pi;
-				if (isNew) {
-					// TODO: Check for password and disconnect if fail
-					// If it's done here, we need to figure out a way to not send
-					// peer info during the time between connection and this message
-
-					recountPeersAndAssignIds();
-				}
+				if (isNew) recountPeersAndAssignIds();
 				lock.unlock(); // Mutex unlocked in callback to avoid dead-locks
 				// First info means completed connection
 				if (isNew) m_callback->peerConnected(picopy);

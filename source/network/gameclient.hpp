@@ -35,7 +35,10 @@ public:
 
 	/// Updates the player info
 	void updatePlayerInfo(const std::string& name, const std::string& car);
-	
+
+	/// Updates password (for host)
+	void setPassword(const std::string& password);
+
 	/// Toggles the ready switch
 	void toggleReady();
 
@@ -94,6 +97,9 @@ public:
 private:
 	/// Check how many connected and introduced peers there are and assign ids
 	void recountPeersAndAssignIds(bool validate = false);
+
+	/// Send something but only to authed peers
+	void broadcastToAuthed(net::NetworkTraffic const& msg, int flags = 0);
 
 	GameClientCallback* m_callback;
 	net::NetworkObject m_client;

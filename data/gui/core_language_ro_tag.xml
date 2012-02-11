@@ -75,7 +75,7 @@
 	<Tag name="GrDensSmooth">Smooth grass dens.</Tag>
 	<Tag name="TerHeightMap">Înăltimea terenului</Tag>
 	<Tag name="bumps">bumps (bumpy terrain)</Tag>
-	<Tag name="TipDiffusePrev">Textură difuză a previzualizării.</Tag>
+	<Tag name="ShadowFilter">Filter</Tag>
 	<Tag name="TipGrTerMaxAngle">Terrain angle above which there won't be any grass.</Tag>
 	<Tag name="RestartApply">Restart game, to apply *changes.</Tag>
 	<Tag name="InputMapResetGame">Reset game</Tag>
@@ -120,6 +120,7 @@
 	<Tag name="Video">Video</Tag>
 	<Tag name="ViewStart">Vizualizează startul</Tag>
 	<Tag name="TipGrassDens">Cât de densă/rară va fi iarba pe teren.</Tag>
+	<Tag name="RplRecTime">Recorded   time</Tag>
 	<Tag name="Shadows">Umbre</Tag>
 	<Tag name="InputRoadYaw">- rotate yaw</Tag>
 	<Tag name="MessageBox_Try">Try</Tag>
@@ -465,7 +466,7 @@
 	<Tag name="GrassMult">Grass mul</Tag>
 	<Tag name="UnitMB">MB</Tag>
 	<Tag name="Back">Înapoi</Tag>
-	<Tag name="RplRecTime">Recorded   time</Tag>
+	<Tag name="TipDiffusePrev">Textură difuză a previzualizării.</Tag>
 	<Tag name="InputTerSmooth">S - Smooth</Tag>
 	<Tag name="TipChangeTrack">Sets current track to that selected in list. Press [New Game] to start it after.</Tag>
 	<Tag name="TipModelDens">How often model will appear on track area.</Tag>
@@ -664,7 +665,13 @@
 	<Tag name="InputNextOptTab">F2,F3 - fila de opțiuni precedentă,următoare</Tag>
 	<Tag name="RollingDrag">Învârtire mașină</Tag>
 	<Tag name="RplAll">Toate</Tag>
-	<Tag name="ShadowFilter">Filter</Tag>
+	<Tag name="ScoreNeeded">Score needed</Tag>
+	<Tag name="DintPass">Din't pass</Tag>
+	<Tag name="Passed">Passed</Tag>
+	<Tag name="Readme">Readme</Tag>
+	<Tag name="Help">Help</Tag>
+	<Tag name="RepeatStage">Repeating stage</Tag>
+	<Tag name="NextStage">Continuing to next stage</Tag>
 	<Tag name="GameVersion">1.5</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 

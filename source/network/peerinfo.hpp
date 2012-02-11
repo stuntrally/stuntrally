@@ -14,6 +14,7 @@ typedef int8_t ClientID;
  */
 struct PeerInfo {
 	ClientID id; ///< ID number, used with car state updates
+	uint16_t peer_id; ///< ID associated by ENet
 	int32_t random_id; ///< random number used to determine id
 	net::Address address; ///< Address
 	std::string name; ///< Nickname
@@ -23,9 +24,12 @@ struct PeerInfo {
 	bool ready; ///< Ready state
 	bool loaded; ///< Can start race?
 	unsigned ping; ///< Average packet round-trip time
+	bool authenticated; ///< Handshaking completed?
 	enum ConnectionState { DISCONNECTED = 0, CONNECTING = 1, CONNECTED = 2 } connection; ///< Connection state
 
-	PeerInfo(net::Address addr = net::Address()): id(-1), random_id(-1), address(addr), name(), car(), peers(), ready(), ping(0), connection(DISCONNECTED) {}
+	PeerInfo(net::Address addr = net::Address()):
+		id(-1), random_id(-1), peer_id(0), address(addr), name(), car(), peers(), ready(),
+		ping(0), authenticated(), connection(DISCONNECTED) {}
 
 	PeerInfo& operator=(const protocol::PlayerInfoPacket& pip) {
 		random_id = pip.random_id;
