@@ -5,7 +5,7 @@
 	waveBump = 0.5 1.0
 	waveHighFreq = 0.0
 	waveSpecular = 1.0
-	depthPars = 0.6 0.1
+	depthPars = 0.6 0.1 0.2
 	depthColour = 0.15 0.25 0.3 1.0
 	deepColour = 0.1 0.3 0.5 1.0
 	shallowColour = 0.0 0.9 1.0 0.3
@@ -30,7 +30,7 @@
 	parent = Base_water
 	specular = 0.9 1.0 0.95 64
 	waveBump = 0.2 1.0
-	depthPars = 0.2 0.2
+	depthPars = 0.2 0.2 0.2
 	depthColour = 0.2 0.6 0.4 0.9
 	deepColour = 0.1 0.3 0.2 0.9
 	shallowColour = 0.4 0.9 0.6 0.6
@@ -45,7 +45,7 @@
 	waveBump = 0.1 1.2
 	waveHighFreq = 0.1
 	waveSpecular = 1.2
-	depthPars = 0.8 0.2
+	depthPars = 0.8 0.2 0.2
 	depthColour = 0.13 0.16 0.06 0.95
 	deepColour = 0.19 0.22 0.06 0.95
 	shallowColour = 0.21 0.35 0.0 0.6
@@ -60,11 +60,11 @@
 	specular = 0.96 1.0 1.0 128
 	waveBump = 0.4 0.8
 	waveHighFreq = -0.1
-	depthPars = 0.7 0.1
+	depthPars = 0.7 0.1 0.2
 	deepColour = 0.36 0.59 0.6 1.0
 	deepColour = 0.6 0.79 0.8 1.0
 	shallowColour = 0.45 0.78 0.8 0.85
-	reflectionColour = 0.9 1.0 0.97 1.0
+	reflectionColour = 0.9 0.97 1.0 1.0
 	reflAmount = 0.9
 	fresnelPower = 2.0
 	normalMap_1 = water_nh.png
@@ -77,7 +77,8 @@
 	waveBump = 0.0 0.8
 	waveHighFreq = 0.1
 	waveSpecular = 1.1
-	depthPars = 0.1 0.1
+	depthPars = 0.1 0.1 0.1
+	depthColour = 0.1 0.3 0.4 1.0
 	deepColour = 0.1 0.3 0.4 1.0
 	shallowColour = 0.21 0.5 0.7 0.6
 	reflectionColour = 0.8 0.65 0.5 1.0
@@ -91,7 +92,8 @@
 	specular = 0.65 0.67 0.7 4
 	waveBump = 0.2 0.8
 	waveHighFreq = 0.3
-	depthPars = 0.1 0.1
+	depthPars = 0.1 0.1 0.1
+	depthColour = 0.26 0.32 0.43 1.0
 	deepColour = 0.26 0.32 0.43 1.0
 	shallowColour = 0.21 0.35 0.45 0.6
 	reflectionColour = 0.6 0.65 0.68 1.0
@@ -106,7 +108,8 @@
 	waveBump = 0.0 0.8
 	waveHighFreq = 0.1
 	waveSpecular = 0.7
-	depthPars = 0.1 0.1
+	depthPars = 0.1 0.1 0.1
+	depthColour = 0.06 0.14 0.2 0.8
 	deepColour = 0.06 0.14 0.2 0.8
 	shallowColour = 0.11 0.15 0.17 1.0
 	reflectionColour = 0.8 0.65 0.5 1.0
@@ -120,7 +123,8 @@
 	specular = 0.4 0.8 1.0 96
 	waveBump = 0.4 0.2
 	waveHighFreq = -0.2
-	depthPars = 0.1 0.1
+	depthPars = 0.1 0.1 0.1
+	depthColour = 0.26 0.2 0.4 0.9
 	deepColour = 0.26 0.2 0.4 0.9
 	shallowColour = 0.21 0.22 0.48 0.95
 	reflectionColour = 0.3 0.3 0.6 1.0
@@ -135,7 +139,8 @@
 	waveBump = 0.6 1.0
 	waveHighFreq = -0.1
 	waveSpecular = 1.0
-	depthPars = 0.1 0.1
+	depthPars = 0.3 0.3 0.3
+	depthColour = 0.55 0.56 0.3 0.95
 	deepColour = 0.55 0.56 0.3 0.95
 	shallowColour = 0.5 0.6 0.1 0.7
 	reflectionColour = 0.4 0.5 0.2 1.0
@@ -149,7 +154,8 @@
 	specular = 0.4 0.4 0.3 64
 	waveBump = 0.6 1.0
 	waveHighFreq = -0.1
-	depthPars = 0.1 0.1
+	depthPars = 0.3 0.3 0.3
+	depthColour = 0.7 0.7 0.2 0.95
 	deepColour = 0.7 0.7 0.2 0.95
 	shallowColour = 0.9 1.0 0.3 0.7
 	reflectionColour = 0.75 0.8 0.4 1.0
@@ -163,7 +169,8 @@
 	specular = 0.4 0.4 0.3 32
 	waveBump = 0.8 0.3
 	waveHighFreq = -0.1
-	depthPars = 0.1 0.1
+	depthPars = 0.5 0.3 0.3
+	depthColour = 0.6 0.4 0.1 1.0
 	deepColour = 0.6 0.4 0.1 1.0
 	shallowColour = 0.45 0.3 0.1 0.7
 	reflectionColour = 0.5 0.45 0.15 1.0
@@ -177,7 +184,8 @@
 	specular = 0.4 0.4 0.3 128
 	waveBump = 0.4 0.1
 	waveHighFreq = 0.1
-	depthPars = 0.1 0.1
+	depthPars = 0.5 0.3 0.3
+	depthColour = 0.4 0.34 0.1 1.0
 	deepColour = 0.4 0.34 0.1 1.0
 	shallowColour = 0.4 0.2 0.1 0.9
 	reflectionColour = 0.5 0.4 0.1 1.0
@@ -192,7 +200,8 @@
 	specular = 0.4 0.4 0.3 96
 	waveBump = 0.3 0.04
 	waveHighFreq = 0.4
-	depthPars = 0.1 0.1
+	depthPars = 0.5 0.3 0.3
+	depthColour = 0.2 0.17 0.05 1.0
 	deepColour = 0.2 0.17 0.05 1.0
 	shallowColour = 0.2 0.14 0.05 1.0
 	reflectionColour = 0.4 0.33 0.1 1.0

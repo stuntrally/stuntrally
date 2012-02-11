@@ -252,7 +252,7 @@ void WaterMaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::Str
 	"	uniform float waveHighFreq, uniform float waveSpecular, \n"
 	"	uniform float time, \n"
 	"	uniform float invTerSize, \n"
-	"	uniform float2 depthPars, \n"  // from waterDepth tex
+	"	uniform float3 depthPars, \n"  // from waterDepth tex
 	"	uniform float4 depthColor, \n"
 	"	uniform float4 deepColor,  uniform float4 shallowColor,  uniform float4 reflectionColor, \n"
 	"	uniform float2 reflAndWaterAmounts, \n"
@@ -336,7 +336,7 @@ void WaterMaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::Str
 	"	float fresnel = saturate(fresnelPowerBias.y + pow(facing, fresnelPowerBias.x)); \n"
 		//  water color
 	"	float4 waterClr = lerp( lerp(shallowColor, deepColor, facing), depthColor, aa.g * depthPars.x); \n"
-	"	float4 reflClr = lerp(waterClr, reflection, fresnel); \n"
+	"	float4 reflClr  = lerp( lerp(waterClr, reflection, fresnel),   depthColor, aa.g * depthPars.z); \n"
 	"	float3 clr = clrSUM.rgb * waveSpecular + waterClr.rgb * reflAndWaterAmounts.y + reflClr.rgb * reflAndWaterAmounts.x; \n";
 	
 	if (needShadows() || needTerrainLightMap()) outStream <<
@@ -381,7 +381,7 @@ void WaterMaterialGenerator::individualFragmentProgramParams(Ogre::GpuProgramPar
 	params->setNamedConstant("waveBump", _vec3(mDef->mProps->waveBump));
 	params->setNamedConstant("waveHighFreq", Real(mDef->mProps->waveHighFreq));
 	params->setNamedConstant("waveSpecular", Real(mDef->mProps->waveSpecular));
-	params->setNamedConstant("depthPars", _vec3(mDef->mProps->depthPars));
+	params->setNamedConstant("depthPars", mDef->mProps->depthPars);
 	params->setNamedConstant("depthColor", mDef->mProps->depthColour);
 	params->setNamedConstant("deepColor", mDef->mProps->deepColour);
 	params->setNamedConstant("shallowColor", mDef->mProps->shallowColour);

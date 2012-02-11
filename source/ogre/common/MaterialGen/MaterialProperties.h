@@ -89,7 +89,7 @@ struct MaterialProperties
 	
 	
 	// water
-	Ogre::Vector2 waveBump, depthPars;
+	Ogre::Vector2 waveBump;  Ogre::Vector3 depthPars;
 	float waveHighFreq, waveSpecular;
 	Ogre::Vector4 deepColour, shallowColour, reflectionColour, depthColour;
 	

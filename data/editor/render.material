@@ -56,9 +56,9 @@ material car_body
 	{
 		pass
 		{
-			ambient = 0.5 0.5 0.5
-			diffuse = 1.0 1.0 1.0
-			specular = 0.7 0.7 0.7 32
+			ambient 0.5 0.5 0.5
+			diffuse 1.0 1.0 1.0
+			specular 0.7 0.7 0.7 32
 		
 			texture_unit diffuseMap
 			{
