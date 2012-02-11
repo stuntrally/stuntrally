@@ -75,7 +75,7 @@
 	<Tag name="GrDensSmooth">Smooth grass dens.</Tag>
 	<Tag name="TerHeightMap">Maaston korkeuskartta</Tag>
 	<Tag name="bumps">töyssyt</Tag>
-	<Tag name="TipDiffusePrev">Diffuse texture preview image.</Tag>
+	<Tag name="ShadowFilter">Filter</Tag>
 	<Tag name="TipGrTerMaxAngle">Terrain angle above which there won't be any grass.</Tag>
 	<Tag name="RestartApply">Restart game, to apply *changes.</Tag>
 	<Tag name="InputMapResetGame">Reset game</Tag>
@@ -120,6 +120,7 @@
 	<Tag name="Video">Kuva</Tag>
 	<Tag name="ViewStart">Näytä alku</Tag>
 	<Tag name="TipGrassDens">Kuinka tiheää/harvinaista ruohikko on maastossa.</Tag>
+	<Tag name="RplRecTime">Kirjattu aika</Tag>
 	<Tag name="Shadows">Varjot</Tag>
 	<Tag name="InputRoadYaw">- rotate yaw</Tag>
 	<Tag name="MessageBox_Try">Kokeile</Tag>
@@ -465,7 +466,7 @@
 	<Tag name="GrassMult">Grass mul</Tag>
 	<Tag name="UnitMB">Mt</Tag>
 	<Tag name="Back">Takaisin</Tag>
-	<Tag name="RplRecTime">Kirjattu aika</Tag>
+	<Tag name="TipDiffusePrev">Diffuse texture preview image.</Tag>
 	<Tag name="InputTerSmooth">S - Smooth</Tag>
 	<Tag name="TipChangeTrack">Sets current track to that selected in list. Press [New Game] to start it after.</Tag>
 	<Tag name="TipModelDens">How often model will appear on track area.</Tag>
@@ -661,10 +662,16 @@
 	<Tag name="GraphicsAll_VeryHigh">Erittäin korkea</Tag>
 	<Tag name="TipTerLAngMax">Ending terrain angle for layer.</Tag>
 	<Tag name="Pitch">pitch</Tag>
-	<Tag name="InputNextOptTab">F2,F3 - prev,next Options tab</Tag>
+	<Tag name="InputNextOptTab">F2,F3 - prev,next Options tab (shift - sub tab)</Tag>
 	<Tag name="RollingDrag">Rolling Drag</Tag>
 	<Tag name="RplAll">Kaikki</Tag>
-	<Tag name="ShadowFilter">Filter</Tag>
+	<Tag name="ScoreNeeded">Score needed</Tag>
+	<Tag name="DintPass">Din't pass</Tag>
+	<Tag name="Passed">Passed</Tag>
+	<Tag name="Readme">Readme</Tag>
+	<Tag name="Help">Help</Tag>
+	<Tag name="RepeatStage">Repeating stage</Tag>
+	<Tag name="NextStage">Continuing to next stage</Tag>
 	<Tag name="GameVersion">1.5</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 

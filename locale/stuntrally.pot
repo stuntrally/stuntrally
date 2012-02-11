@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION"
 "Report-Msgid-Bugs-To: "
-"POT-Creation-Date: 2012-02-09 19:31+0200"
+"POT-Creation-Date: 2012-02-11 21:07+0200"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>"
 "Language-Team: LANGUAGE <LL@li.org>"
@@ -195,6 +195,10 @@ msgstr ""
 
 msgctxt "LTrMinTerH"
 msgid "min terrain Height"
+msgstr ""
+
+msgctxt "ScoreNeeded"
+msgid "Score needed"
 msgstr ""
 
 msgctxt "HUD"
@@ -697,6 +701,10 @@ msgctxt "TerrainError"
 msgid "Terrain error"
 msgstr ""
 
+msgctxt "DintPass"
+msgid "Din't pass"
+msgstr ""
+
 msgctxt "LTrMaxTerH"
 msgid "max terrain Height"
 msgstr ""
@@ -863,6 +871,10 @@ msgstr ""
 
 msgctxt "TipSunDirPitch"
 msgid "Sun direction - pitch angle."
+msgstr ""
+
+msgctxt "Passed"
+msgid "Passed"
 msgstr ""
 
 msgctxt "InputMapHandBrake"
@@ -1041,8 +1053,8 @@ msgctxt "Detail"
 msgid "Detail"
 msgstr ""
 
-msgctxt "InputMoveAxisTip"
-msgid "Move an axis to see its number"
+msgctxt "AllEffects"
+msgid "Effects Enabled"
 msgstr ""
 
 msgctxt "Start"
@@ -1051,6 +1063,10 @@ msgstr ""
 
 msgctxt "SkirtHeight"
 msgid "Skirt Height"
+msgstr ""
+
+msgctxt "Readme"
+msgid "Readme"
 msgstr ""
 
 msgctxt "InputRoadShiftReverse"
@@ -1487,6 +1503,10 @@ msgstr ""
 
 msgctxt "Right"
 msgid "Right"
+msgstr ""
+
+msgctxt "Help"
+msgid "Help"
 msgstr ""
 
 msgctxt "TipTerLAngSm"
@@ -2097,6 +2117,10 @@ msgctxt "speed"
 msgid "speed"
 msgstr ""
 
+msgctxt "InputMoveAxisTip"
+msgid "Move an axis to see its number"
+msgstr ""
+
 msgctxt "InputRoadYaw"
 msgid "- rotate yaw"
 msgstr ""
@@ -2325,12 +2349,12 @@ msgctxt "InputUndo"
 msgid "(one time undo)"
 msgstr ""
 
-msgctxt "AllEffects"
-msgid "Effects Enabled"
-msgstr ""
-
 msgctxt "CarCollis"
 msgid "Cars collision"
+msgstr ""
+
+msgctxt "RepeatStage"
+msgid "Repeating stage"
 msgstr ""
 
 msgctxt "banked"
@@ -2601,6 +2625,10 @@ msgctxt "TipSurfType"
 msgid "Type of surface, determines sound."
 msgstr ""
 
+msgctxt "NextStage"
+msgid "Continuing to next stage"
+msgstr ""
+
 msgctxt "NetWaiting"
 msgid "Waiting..."
 msgstr ""
@@ -2670,7 +2698,7 @@ msgid "pitch"
 msgstr ""
 
 msgctxt "InputNextOptTab"
-msgid "F2,F3 - prev,next Options tab"
+msgid "F2,F3 - prev,next Options tab (shift - sub tab)"
 msgstr ""
 
 msgctxt "RplAll"

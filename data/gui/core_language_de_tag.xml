@@ -75,7 +75,7 @@
 	<Tag name="GrDensSmooth">Grasvert. glätten</Tag>
 	<Tag name="TerHeightMap">Terrain-Heightmap</Tag>
 	<Tag name="bumps">Bodenwellen</Tag>
-	<Tag name="TipDiffusePrev">Vorschaubild der Textur.</Tag>
+	<Tag name="ShadowFilter">Filter</Tag>
 	<Tag name="TipGrTerMaxAngle">Terrain-Winkel, bei dem gerade noch Gras platziert wird.</Tag>
 	<Tag name="RestartApply">Spiel neustarten, um *Änderungen anzuwenden.</Tag>
 	<Tag name="InputMapResetGame">Spiel zurücksetzen</Tag>
@@ -120,6 +120,7 @@
 	<Tag name="Video">Bildschirm</Tag>
 	<Tag name="ViewStart">Ans. Start</Tag>
 	<Tag name="TipGrassDens">Hohes oder niedrige Anzahl von Gras auf dem Boden.</Tag>
+	<Tag name="RplRecTime">Aufgenommen</Tag>
 	<Tag name="Shadows">Schatten</Tag>
 	<Tag name="InputRoadYaw">- gieren</Tag>
 	<Tag name="MessageBox_Try">Versuchen</Tag>
@@ -465,7 +466,7 @@
 	<Tag name="GrassMult">Grasmult.</Tag>
 	<Tag name="UnitMB">MB</Tag>
 	<Tag name="Back">Hinten</Tag>
-	<Tag name="RplRecTime">Aufgenommen</Tag>
+	<Tag name="TipDiffusePrev">Vorschaubild der Textur.</Tag>
 	<Tag name="InputTerSmooth">S - glätten</Tag>
 	<Tag name="TipChangeTrack">Ändert die aktuelle Strecke. Danach [Neues Spiel] drücken um darauf zu Fahren.</Tag>
 	<Tag name="TipModelDens">Wie oft das Modell auf der Strecke erscheint.</Tag>
@@ -664,7 +665,13 @@
 	<Tag name="InputNextOptTab">F2,F3 - vorheriger/nächster Tab</Tag>
 	<Tag name="RollingDrag">Rollwiderstand</Tag>
 	<Tag name="RplAll">Alle</Tag>
-	<Tag name="ShadowFilter">Filter</Tag>
+	<Tag name="ScoreNeeded">Score needed</Tag>
+	<Tag name="DintPass">Din't pass</Tag>
+	<Tag name="Passed">Passed</Tag>
+	<Tag name="Readme">Readme</Tag>
+	<Tag name="Help">Help</Tag>
+	<Tag name="RepeatStage">Repeating stage</Tag>
+	<Tag name="NextStage">Continuing to next stage</Tag>
 	<Tag name="GameVersion">1.5</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 
