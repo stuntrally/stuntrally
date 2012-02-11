@@ -214,7 +214,7 @@ void App::startRace()
 	pGame->timer.waiting = false;
 }
 
-void App::timeInfo(ClientID id, uint8_t lap, float time)
+void App::timeInfo(ClientID id, uint8_t lap, double time)
 {
 	// TODO: Do something with this
 }

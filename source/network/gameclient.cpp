@@ -376,9 +376,18 @@ void P2PGameClient::receiveEvent(net::NetworkTraffic const& e)
 			break;
 		}
 		case protocol::GAME_STATUS: {
-			if (m_state != LOBBY) break;
+			if (m_state != LOBBY || !m_callback) break;
 			protocol::GameInfo game = *reinterpret_cast<protocol::GameInfo const*>(e.packet_data);
-			if (m_callback) m_callback->gameInfo(game);
+			m_callback->gameInfo(game);
+			break;
+		}
+		case protocol::TIME_INFO: {
+			if (m_state != GAME || !m_callback) break;
+			protocol::TimeInfoPackage time = *reinterpret_cast<protocol::TimeInfoPackage const*>(e.packet_data);
+			boost::mutex::scoped_lock lock(m_mutex);
+			ClientID id = m_peers[e.peer_address].id;
+			lock.unlock(); // Mutex unlocked in callback to avoid dead-locks
+			m_callback->timeInfo(id, time.lap, time.time);
 			break;
 		}
 		default: {
