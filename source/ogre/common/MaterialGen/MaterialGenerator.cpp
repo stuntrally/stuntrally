@@ -427,7 +427,7 @@ bool MaterialGenerator::needLightMap()
 bool MaterialGenerator::needTerrainLightMap()
 {
 	// temporary workaround. terrain lightmap is broken when depth shadows off (texture not found).
-	return mShader->terrainLightMap && mParent->getShadowsDepth() && mParent->getTerrain();
+	return mShader->terrainLightMap && mParent->getShadowsDepth();
 }
 
 bool MaterialGenerator::needBlendMap()
