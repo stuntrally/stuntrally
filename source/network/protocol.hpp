@@ -47,6 +47,34 @@ enum PacketType {
 
 
 /**
+ * @brief Contains error codes that tell the reason of disconnecting.
+ */
+enum ErrorCodes {
+	WRONG_PASSWORD = 1,
+	INCOMPATIBLE_GAME_PROTOCOL,
+	INCOMPATIBLE_MASTER_PROTOCOL
+};
+
+/**
+ * @brief Contains authentication etc. info that needs to be validated
+ * before accepting a new connection as a peer.
+ */
+struct HandshakePackage {
+	uint8_t packet_type;
+	uint32_t master_protocol_version;
+	uint32_t game_protocol_version;
+	char password[16];
+	HandshakePackage(std::string passwd = ""):
+		packet_type(HANDSHAKE),
+		master_protocol_version(MASTER_PROTOCOL_VERSION),
+		game_protocol_version(GAME_PROTOCOL_VERSION)
+	{
+		std::memcpy(password, passwd.c_str(), 16);
+	}
+};
+
+
+/**
  * @brief Contains information about one game that is available for joining.
  */
 struct GameInfo {
@@ -100,7 +128,11 @@ struct PlayerInfoPacket {
 	uint8_t peers;
 	uint8_t ready;
 
-	PlayerInfoPacket(): packet_type(PLAYER_INFO), random_id(-1), ready(), peers() {}
+	PlayerInfoPacket(): packet_type(PLAYER_INFO), random_id(-1), ready(), peers() {
+		memset(name, 0, sizeof(name));
+		memset(car, 0, sizeof(car));
+		memset(password, 0, sizeof(password));
+	}
 };
 
 

@@ -130,7 +130,7 @@ void App::uploadGameInfo()
 	game.laps = pSet->gui.num_laps;
 
 	game.port = pSet->local_port;
-	game.locked = false;
+	game.locked = !edNetPassword->getCaption().empty();
 	mMasterClient->updateGame(game); // Upload to master server
 	if (mClient) // Send to peers
 		mClient->broadcastGameInfo(game);
@@ -218,7 +218,7 @@ void App::join(std::string host, std::string port, std::string password)
 	try {
 		mClient.reset(new P2PGameClient(this, pSet->local_port));
 		mClient->updatePlayerInfo(pSet->nickname, sListCar);
-		mClient->connect(host, boost::lexical_cast<int>(port)); // Lobby phase started automatically
+		mClient->connect(host, boost::lexical_cast<int>(port), password); // Lobby phase started automatically
 		boost::mutex::scoped_lock lock(netGuiMutex);
 		sChatBuffer = TR("Connecting to ") + host + ":" + port + "\n";
 	} catch (...) {
@@ -369,16 +369,19 @@ void App::chatSendMsg()
 	edNetChatMsg->setCaption("");
 }
 
-void App::evEdNetGameName(EditPtr ed)
+void App::evEdNetGameName(EditPtr)
 {
 	// game name text changed
 	if (mLobbyState != HOSTING || !mMasterClient || !mClient) return;
 	uploadGameInfo();
 }
 
-void App::evEdNetPassword(EditPtr ed)
+void App::evEdNetPassword(EditPtr)
 {
-	// TODO: Password changed
+	// password changed
+	if (mLobbyState != HOSTING || !mMasterClient || !mClient) return;
+	mClient->setPassword(edNetPassword->getCaption());
+	uploadGameInfo();
 }
 
 //  net settings
