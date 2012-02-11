@@ -418,9 +418,11 @@ void App::LoadMisc()  // 7 last
 	// make sure all shader params are loaded
 	materialFactory->generate();
 
+	try {
 	TexturePtr tex = Ogre::TextureManager::getSingleton().getByName("waterDepth.png");
 	if (!tex.isNull())
 		tex->reload();
+	} catch(...) {  }
 	
 	/// rendertextures debug
 	#if 0

@@ -241,7 +241,7 @@ bool BaseApp::setup()
 	}
 	
 	// Dynamic plugin loading
-	mRoot = OGRE_NEW Root("", PATHMANAGER::GetUserConfigDir() + "/ogreset_ed.cfg", PATHMANAGER::GetLogDir() + "/ogre_ed.log");
+	mRoot = OGRE_NEW Root("", PATHMANAGER::GetUserConfigDir() + "/ogreset_ed.cfg", PATHMANAGER::GetUserConfigDir() + "/ogre_ed.log");
 
 	#ifdef _DEBUG
 		#define D_SUFFIX "_d"
@@ -286,7 +286,7 @@ bool BaseApp::setup()
 
 	//  Gui
 	mPlatform = new MyGUI::OgrePlatform();
-	mPlatform->initialise(mWindow, mSceneMgr, "General", PATHMANAGER::GetLogDir() + "/MyGUI.log");
+	mPlatform->initialise(mWindow, mSceneMgr, "General", PATHMANAGER::GetUserConfigDir() + "/MyGUI.log");
 	mGUI = new MyGUI::Gui();
 	mGUI->initialise("core.xml");
 	

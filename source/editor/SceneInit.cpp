@@ -144,9 +144,11 @@ void App::LoadTrackEv()
 	UpdVisGui();
 	LoadStartPos();
 
+	try {
 	TexturePtr tex = TextureManager::getSingleton().getByName("waterDepth.png");
 	if (!tex.isNull())
 		tex->reload();
+	} catch(...) {  }
 
 
 	Status("Loaded", 0.5,0.7,1.0);
