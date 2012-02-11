@@ -133,7 +133,7 @@ void MaterialGenerator::generate()
 	if (mShader->wind == 2)
 		mParent->windMtrs.push_back( mDef->getName() );
 		
-	if (mShader->wind == 2)
+	if (mDef->mProps->fog)
 		mParent->fogMtrs.push_back( mDef->getName() );
 	
 	
