@@ -132,6 +132,9 @@ void MaterialGenerator::generate()
 	// only needed for trees (wind == 2) because the wind effect has to be disabled before rendering impostors
 	if (mShader->wind == 2)
 		mParent->windMtrs.push_back( mDef->getName() );
+		
+	if (mShader->wind == 2)
+		mParent->fogMtrs.push_back( mDef->getName() );
 	
 	
 	/// uncomment to export to .material
