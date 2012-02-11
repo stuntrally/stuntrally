@@ -17,7 +17,8 @@ private:
 	unsigned int samples, frequency, bytespersample, channels;
 	
 public:
-	SOUNDINFO(unsigned int numsamples, unsigned int freq, unsigned int chan, unsigned int bytespersamp) : samples(numsamples), frequency(freq), bytespersample(bytespersamp), channels(chan) { }
+	SOUNDINFO(unsigned int numsamples, unsigned int freq, unsigned int chan, unsigned int bytespersamp)
+		: samples(numsamples), frequency(freq), bytespersample(bytespersamp), channels(chan) { }
 	void DebugPrint(std::ostream & out) const
 	{
 		out << "Samples: " << samples << std::endl;
@@ -30,7 +31,9 @@ public:
 	inline int GetChannels() const {return channels;}
 	inline int GetBytesPerSample() const {return bytespersample;}
 	
-	bool operator==(const SOUNDINFO & other) const {return (samples == other.samples && frequency == other.frequency && channels == other.channels && bytespersample == other.bytespersample);}
+	bool operator==(const SOUNDINFO & other) const {
+		return (samples == other.samples && frequency == other.frequency && channels == other.channels && bytespersample == other.bytespersample);
+	}
 };
 
 class SOUNDBUFFER
@@ -46,7 +49,7 @@ private:
 	bool LoadOGG(const std::string & filename, const SOUNDINFO & sound_device_info, std::ostream & error_output);
 
 public:
-	SOUNDBUFFER() : info(0,0,0,0),loaded(false),sound_buffer(NULL) {}
+	SOUNDBUFFER() : info(0,0,0,0),loaded(false),sound_buffer(NULL),size(0) {}
 	~SOUNDBUFFER() {Unload();}
 	
 	bool Load(const std::string & filename, const SOUNDINFO & sound_device_info, std::ostream & error_output)
@@ -138,9 +141,15 @@ private:
 	float statey[2][MAX_FILTER_ORDER+1];
 
 public:
-	SOUNDFILTER() : order(0) {ClearState();}
+	SOUNDFILTER() : order(0) {  ClearState();  }
 	
-	void ClearState() {for (int c = 0; c < 2; c++) for (int i = 0; i < MAX_FILTER_ORDER; i++) {statex[c][i] = 0.0;statey[c][i] = 0.0;}}
+	void ClearState() {
+		for (int i = 0; i < MAX_FILTER_ORDER+1; ++i)
+		{	xc[i] = 0.f;  yc[i] = 0.f;  }
+		for (int c = 0; c < 2; ++c)
+		for (int i = 0; i < MAX_FILTER_ORDER+1; ++i)
+		{	statex[c][i] = 0.f;  statey[c][i] = 0.f;  }
+	}
 	void SetFilter(const int neworder, const float * xcoeff, const float * ycoeff); //the coefficients are arrays like xcoeff[neworder+1], note ycoeff[0] is ignored
 	void Filter(int * chan1, int * chan2, const int len);
 	void SetFilterOrder1(float xc0, float xc1, float yc1); //yc0 is ignored

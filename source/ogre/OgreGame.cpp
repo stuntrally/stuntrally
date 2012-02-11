@@ -28,7 +28,7 @@ App::App()
 	// hud
 	,asp(1),  xcRpm(0), ycRpm(0), xcVel(0), ycVel(0)
 	,fMiniX(0),fMiniY(0), scX(1),scY(1), ofsX(0),ofsY(0), minX(0),maxX(0), minY(0),maxY(0)
-	,arrowNode(0)
+	,arrowNode(0),arrowRotNode(0)
 	// ter
 	,mTerrainGlobals(0), mTerrainGroup(0), terrain(0), mPaging(false)
 	,mTerrainPaging(0), mPageManager(0), materialFactory(0)
@@ -58,7 +58,7 @@ App::App()
     ,edNetGameName(0), edNetChatMsg(0), edNetTrackInfo(0), edNetPassword(0)
     ,edNetNick(0), edNetServerIP(0), edNetServerPort(0), edNetLocalPort(0)
 	// game
-	,blendMtr(0), iBlendMaps(0), dbgdraw(0), noBlendUpd(0)
+	,blendMtr(0), iBlendMaps(0), dbgdraw(0), noBlendUpd(0), blendMapSize(513), bListTrackU(0)
 	,grass(0), trees(0), road(0), miniC(0)
 	,pr(0),pr2(0), sun(0), carIdWin(-1), iCurCar(0), bUpdCarClr(1)
 	,lastAxis(-1), axisCnt(0), txtJAxis(0), txtJBtn(0), txtInpDetail(0)
@@ -75,6 +75,7 @@ App::App()
 	pathTrk[0] = PATHMANAGER::GetTrackPath() + "/";
 	pathTrk[1] = PATHMANAGER::GetTrackPathUser() + "/";
 	resCar = "";  resTrk = "";  resDrv = "";
+	sListCar = "";  sListTrack = "";
 
 	for (int o=0; o < 5; ++o)  for (int c=0; c < 3; ++c)
 		hudOpp[o][c] = 0;

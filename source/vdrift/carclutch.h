@@ -30,7 +30,8 @@ class CARCLUTCH
 	public:
 		//default constructor makes an S2000-like car
 		CARCLUTCH() : sliding_friction(0.27), radius(0.15), area(0.75), max_pressure(11079.26), 
-			  threshold(0.001), clutch_position(0.0), locked(false){}
+			  threshold(0.001), clutch_position(0.0), locked(false), last_torque(0.f), engine_speed(0.f), drive_speed(0.f)
+		{	}
 
 		void DebugPrint(std::ostream & out)
 		{

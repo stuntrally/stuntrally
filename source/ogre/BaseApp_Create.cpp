@@ -493,7 +493,7 @@ BaseApp::BaseApp()
 	,mMasterClient(), mClient(), mLobbyState(DISCONNECTED)
 	,mDebugOverlay(0), mFpsOverlay(0), mOvrFps(0), mOvrTris(0), mOvrBat(0), mOvrDbg(0)
 	,mbShowCamPos(0), ndSky(0),	mbWireFrame(0)
-	,iCurCam(0), mSplitMgr(0), motionBlurIntensity(0.9)
+	,iCurCam(0), mSplitMgr(0), motionBlurIntensity(0.9), pressedKeySender(0)
 {
 	mLoadingBar = new LoadingBar();
 }

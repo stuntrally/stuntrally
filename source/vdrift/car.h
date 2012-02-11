@@ -3,7 +3,6 @@
 
 #include "cardynamics.h"
 #include "model_joe03.h"
-#include "texture.h"
 
 #include "cardefs.h"
 #include "sound.h"
