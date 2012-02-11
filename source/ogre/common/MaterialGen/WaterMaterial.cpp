@@ -115,9 +115,6 @@ void WaterMaterialGenerator::generate()
 		individualVertexProgramParams(pass->getFragmentProgramParameters());
 	}
 
-	pass->getFragmentProgramParameters()->setNamedConstant("terSize", 1.f / Real(mParent->pApp->sc.td.fTerWorldSize));
-	LogO("TER size--: "+toStr(mParent->pApp->sc.td.fTerWorldSize));
-
 	// ----------------------------------------------------------------------- //
 	
 	createSSAOTechnique();
@@ -266,7 +263,7 @@ void WaterMaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::Str
 	"	uniform float2 waveBump, \n"
 	"	uniform float waveHighFreq, uniform float waveSpecular, \n"
 	"	uniform float time, \n"
-	"	uniform float terSize, \n"
+	"	uniform float invTerSize, \n"
 	"	uniform float4 deepColor,  uniform float4 shallowColor,  uniform float4 reflectionColor, \n"
 	"	uniform float2 reflAndWaterAmounts, \n"
 	"	uniform float2 fresnelPowerBias, \n";
@@ -330,7 +327,7 @@ void WaterMaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::Str
 
 	//  depthMap for alpha near terrain
 	outStream <<
-	"	float2 uva = float2(IN.wp.z * -terSize + 0.5f, IN.wp.x * terSize + 0.5f); \n"
+	"	float2 uva = float2(IN.wp.z * -invTerSize + 0.5f, IN.wp.x * invTerSize + 0.5f); \n"
 	"	float2 aa = tex2D(depthMap, uva).rg; \n";
 		
 	outStream <<
@@ -406,14 +403,6 @@ void WaterMaterialGenerator::individualFragmentProgramParams(Ogre::GpuProgramPar
 		for (int i=0; i<mParent->getNumShadowTex(); ++i)
 			params->setNamedAutoConstant("invShadowMapSize"+toStr(i), GpuProgramParameters::ACT_INVERSE_TEXTURE_SIZE, i+mShadowTexUnit_start);
 	}
-}
-
-//----------------------------------------------------------------------------------------
-
-void WaterMaterialGenerator::individualParamsAlways(Ogre::GpuProgramParametersSharedPtr params)
-{
-	params->setNamedConstant("terSize", 1.f / Real(mParent->pApp->sc.td.fTerWorldSize));
-	LogO("TER size: "+toStr(mParent->pApp->sc.td.fTerWorldSize));
 }
 
 //----------------------------------------------------------------------------------------

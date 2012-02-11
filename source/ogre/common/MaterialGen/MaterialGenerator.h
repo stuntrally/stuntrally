@@ -85,7 +85,6 @@ protected:
 	virtual void generateFragmentProgramSource(Ogre::StringUtil::StrStreamType& outStream);
 	virtual void fragmentProgramParams(Ogre::HighLevelGpuProgramPtr program);
 	virtual void individualFragmentProgramParams(Ogre::GpuProgramParametersSharedPtr params);
-	virtual void individualParamsAlways(Ogre::GpuProgramParametersSharedPtr params);
 	
 	// source generation helpers
 	virtual void vpShadowingParams(Ogre::StringUtil::StrStreamType& outStream);
