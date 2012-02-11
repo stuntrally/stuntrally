@@ -18,7 +18,6 @@ protected:
 	virtual void generateVertexProgramSource(Ogre::StringUtil::StrStreamType& outStream);
 	virtual void vertexProgramParams(Ogre::HighLevelGpuProgramPtr program);
 	virtual void individualVertexProgramParams(Ogre::GpuProgramParametersSharedPtr params);
-	virtual void individualParamsAlways(Ogre::GpuProgramParametersSharedPtr params);
 			
 	// fragment program
 	virtual Ogre::HighLevelGpuProgramPtr createFragmentProgram();

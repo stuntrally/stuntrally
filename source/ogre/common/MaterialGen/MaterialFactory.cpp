@@ -15,6 +15,8 @@
 
 #ifndef ROAD_EDITOR
 	#include "../../OgreGame.h"
+#else
+	#include "../../../editor/OgreApp.h"
 #endif
 #include "../QTimer.h"
 
@@ -433,6 +435,10 @@ void MaterialFactory::setShaderParams(MaterialPtr mat)
 						}
 					}
 				}
+				
+				if (pass->getFragmentProgramParameters()->_findNamedConstantDefinition("invTerSize", false))
+					pass->getFragmentProgramParameters()->setNamedConstant("invTerSize", 1.f / Real(pApp->sc.td.fTerWorldSize));
+
 				// pssm split points
 				if ( pass->getFragmentProgramParameters()->_findNamedConstantDefinition("pssmSplitPoints", false) && mPSSM)
 				{
@@ -553,51 +559,6 @@ void MaterialFactory::generate()
 	else
 	{
 		LogO("[MaterialFactory] settings not changed, using old materials");
-/**
-		for (std::vector<MaterialDefinition*>::iterator it=mDefinitions.begin();
-			it!=mDefinitions.end(); ++it)
-		{
-			// don't generate abstract materials
-			if ((*it)->getProps()->abstract) continue;
-						
-			// find an appropriate generator
-			MaterialGenerator* generator;
-			if ((*it)->getProps()->customGenerator == "")
-				generator = mGenerator; // default
-			else
-			{
-				// iterate through custom generators
-				std::vector<MaterialGenerator*>::iterator gIt;
-				for (gIt = mCustomGenerators.begin(); gIt != mCustomGenerators.end(); ++gIt)
-				{
-					if ( (*gIt)->mName == (*it)->getProps()->customGenerator)
-					{
-						generator = (*gIt);
-						break;
-					}
-				}
-				if (gIt == mCustomGenerators.end())
-				{
-					LogO("[MaterialFactory] WARNING: Custom generator '" + (*it)->getProps()->customGenerator +
-						"' referenced by material '" + (*it)->getName() + "' not found. Using default generator.");
-					generator = mGenerator;
-				}
-			}
-						
-			generator->mDef = (*it);
-			//generator->mShader = shaderProps;
-			try
-			{
-				if (!generator->mMaterial.isNull())
-				{
-					GpuProgramParametersSharedPtr prog = generator->mMaterial->getTechnique(0)->getPass(0)->getFragmentProgramParameters();
-					generator->individualParamsAlways(prog);
-				}
-			}
-			catch(...){}
-			//generator->generate();
-		}
-/**/
 	}
 		
 	

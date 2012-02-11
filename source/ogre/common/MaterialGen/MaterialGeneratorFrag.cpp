@@ -665,10 +665,6 @@ void MaterialGenerator::fragmentProgramParams(HighLevelGpuProgramPtr program)
 
 //----------------------------------------------------------------------------------------
 
-void MaterialGenerator::individualParamsAlways(Ogre::GpuProgramParametersSharedPtr params)
-{
-}
-
 void MaterialGenerator::individualFragmentProgramParams(Ogre::GpuProgramParametersSharedPtr params)
 {
 	#ifndef _DEBUG

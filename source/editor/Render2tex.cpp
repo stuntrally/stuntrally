@@ -260,7 +260,7 @@ void App::postRenderTargetUpdate(const RenderTargetEvent &evt)
 //-----------------------------------------------------------------------------------------------------------
 void App::SaveWaterDepth()
 {
-	if (sc.fluids.size() == 0)
+	if (sc.fluids.empty())
 	{
 		Delete(TrkDir()+"objects/waterDepth.png");  // no tex if no fluids
 		// save white texture, copy white.png
@@ -422,7 +422,7 @@ void App::AlignTerToRoad()
 
 		world->removeCollisionObject(obj);
 
-		ShapeData* sd = (ShapeData*)obj->getUserPointer();
+		ShapeData* sd = static_cast<ShapeData*>(obj->getUserPointer());
 		delete sd;
 		delete obj;
 	}

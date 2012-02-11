@@ -164,6 +164,7 @@ BaseApp::BaseApp()
 	,i_cmdMouseRel(0), cmdMouseRel(0)
 	
 	,pSet(0), bMoveCam(0), mDTime(0), edMode(ED_Deform), edModeOld(ED_Deform), bGuiFocus(0)
+	,mThread(0)
 {
 	inputThreadRunning = true;
 	cmdKeyPress = new CmdKey[cmd_Max];
