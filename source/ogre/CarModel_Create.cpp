@@ -184,8 +184,8 @@ void CarModel::Create(int car)
 		ncart->attachObject(eCar);  eCar->setVisibilityFlags(RV_Car);
 	}else{
 		ManualObject* mCar = CreateModel(mSceneMgr, sMtr[Mtr_CarBody], &pCar->bodymodel.mesh, vPofs, false, false, "Car"+strI);
-		bodyBox = mCar->getBoundingBox();
-		if (mCar){	if (ghost)  {  mCar->setRenderQueueGroup(g);  mCar->setCastShadows(false);  }
+		if (mCar){	bodyBox = mCar->getBoundingBox();
+			if (ghost)  {  mCar->setRenderQueueGroup(g);  mCar->setCastShadows(false);  }
 			ncart->attachObject(mCar);  mCar->setVisibilityFlags(RV_Car);  }
 	}
 

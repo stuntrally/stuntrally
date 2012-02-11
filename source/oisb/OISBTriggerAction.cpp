@@ -29,7 +29,7 @@ namespace OISB
     ActionType TriggerAction::ACTION_TYPE = AT_TRIGGER;
 
 	TriggerAction::TriggerAction(ActionSchema* parent, const String& name):
-		Action(parent, name)
+		Action(parent, name), mValue(false)
 	{}
 	
 	TriggerAction::~TriggerAction()

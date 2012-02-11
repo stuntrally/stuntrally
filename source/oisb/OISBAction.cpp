@@ -34,8 +34,8 @@ namespace OISB
 	Action::Action(ActionSchema* parent, const String& name):
 		mParent(parent),
 		mName(name),
-		
-		mIsActive(false)
+		mIsActive(false),
+		mChanged(false)
 	{}
 	
 	Action::~Action()

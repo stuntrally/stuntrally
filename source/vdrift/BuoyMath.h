@@ -25,7 +25,7 @@ misrepresented as being the original software.
 
 struct Vec3
 {
-	Vec3() {}
+	Vec3() : x(0.f),y(0.f),z(0.f) {}
 	Vec3(float x, float y, float z) : x(x), y(y), z(z) {}
 
 	void SetZero() { x = y = z = 0.0f; }
@@ -95,7 +95,7 @@ inline Vec3 operator % (const Vec3& a, const Vec3& b)
 
 struct Quat
 {
-	Quat() {}
+	Quat() : x(0.f),y(0.f),z(0.f),w(0.f) {}
 	Quat(float x, float y, float z, float w) : x(x), y(y), z(z), w(w) {}
 
 	Quat& operator += (const Quat& q)

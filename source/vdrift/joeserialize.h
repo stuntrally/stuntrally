@@ -1058,7 +1058,11 @@ class BinaryInputSerializer : public SerializerInput
 			char * inbuffer = new char[strlen+1];
 			inbuffer[strlen] = '\0';
 			in_.read(inbuffer,strlen*sizeof(char));
-			if (in_.fail() || in_.gcount() != (int)(strlen*sizeof(char))) return false;
+			if (in_.fail() || in_.gcount() != (int)(strlen*sizeof(char)))
+			{
+				delete [] inbuffer;
+				return false;
+			}
 			i.clear();
 			for (int n = 0; n < strlen; n++)
 			{

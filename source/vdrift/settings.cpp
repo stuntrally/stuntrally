@@ -144,7 +144,7 @@ SETTINGS::SETTINGS() :  ///  Defaults
 	//  car
 	abs(0), tcs(0), autoshift(1), autorear(1), rear_inv(1), show_mph(0),
 	//  misc
-	isMain(1), inMenu(0),
+	isMain(1), inMenu(0), rpl_rec(0),
 	split_vertically(true), language(""), // "" = autodetect lang
 	//  joystick
 	ff_device("/dev/input/event0"),

@@ -11,6 +11,7 @@ struct Date
 	{
 		return year < d.year && month < d.month && day < d.day;
 	}
+	Date() : day(1),month(1),year(10) {  }
 };
 
 

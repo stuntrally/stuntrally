@@ -44,7 +44,7 @@ restrictions:
 namespace OISB
 {
 	Binding::Binding(Action* parent):
-		mParent(parent), mOptional(false)
+		mParent(parent), mOptional(false), mIsActive(false)
 	{}
 	
 	Binding::~Binding()

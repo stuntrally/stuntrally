@@ -8,7 +8,7 @@ using namespace MyGUI;
 
 ///----------------------------------------------------------------------------------------------------------------
 GuiPopup::GuiPopup()
-	:mGUI(0), mWnd(0)
+	:mGUI(0), mWnd(0), mPlatform(0)
 	,isVisible(false), btnResult(-1)
 {	}
 

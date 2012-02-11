@@ -25,9 +25,9 @@ void ReplayHeader::Default()
 		for (int w=0; w<4; ++w)
 			whR[c][w] = 0.3f;
 		hue[c] = 0.45f;  sat[c] = 0.035f;  val[c] = -0.07f;
-		if (c < 3)
-			memset(cars[c], 0, sizeof(car));
 	}
+	memset(cars, 0, sizeof(cars));
+	memset(nicks, 0, sizeof(nicks));		
 	memset(descr, 0, sizeof(descr));
 }
 

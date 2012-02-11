@@ -42,34 +42,34 @@ bool SOUNDBUFFER::LoadWAV(const string & filename, const SOUNDINFO & sound_devic
 	{
 		char id[5]; //four bytes to hold 'RIFF'
 
-		if (fread(id,sizeof(char),4,fp) != 4) return false; //read in first four bytes
+		if (fread(id,sizeof(char),4,fp) != 4)  goto error; //read in first four bytes
 		id[4] = '\0';
 		if (!strcmp(id,"RIFF"))
 		{ //we had 'RIFF' let's continue
-			if (fread(&size,sizeof(unsigned int),1,fp) != 1) return false; //read in 32bit size value
+			if (fread(&size,sizeof(unsigned int),1,fp) != 1)  goto error; //read in 32bit size value
 			size = ENDIAN_SWAP_32(size);
-			if (fread(id,sizeof(char),4,fp)!= 4) return false; //read in 4 byte string now
+			if (fread(id,sizeof(char),4,fp)!= 4)  goto error; //read in 4 byte string now
 			if (!strcmp(id,"WAVE"))
 			{ //this is probably a wave file since it contained "WAVE"
-				if (fread(id,sizeof(char),4,fp)!= 4) return false; //read in 4 bytes "fmt ";
+				if (fread(id,sizeof(char),4,fp)!= 4)  goto error; //read in 4 bytes "fmt ";
 				if (!strcmp(id,"fmt "))
 				{
 					unsigned int format_length, sample_rate, avg_bytes_sec;
 					short format_tag, channels, block_align, bits_per_sample;
 
-					if (fread(&format_length, sizeof(unsigned int),1,fp) != 1) return false;
+					if (fread(&format_length, sizeof(unsigned int),1,fp) != 1)  goto error;
 					format_length = ENDIAN_SWAP_32(format_length);
-					if (fread(&format_tag, sizeof(short), 1, fp) != 1) return false;
+					if (fread(&format_tag, sizeof(short), 1, fp) != 1)  goto error;
 					format_tag = ENDIAN_SWAP_16(format_tag);
-					if (fread(&channels, sizeof(short),1,fp) != 1) return false;
+					if (fread(&channels, sizeof(short),1,fp) != 1)  goto error;
 					channels = ENDIAN_SWAP_16(channels);
-					if (fread(&sample_rate, sizeof(unsigned int), 1, fp) != 1) return false;
+					if (fread(&sample_rate, sizeof(unsigned int), 1, fp) != 1)  goto error;
 					sample_rate = ENDIAN_SWAP_32(sample_rate);
-					if (fread(&avg_bytes_sec, sizeof(unsigned int), 1, fp) != 1) return false;
+					if (fread(&avg_bytes_sec, sizeof(unsigned int), 1, fp) != 1)  goto error;
 					avg_bytes_sec = ENDIAN_SWAP_32(avg_bytes_sec);
-					if (fread(&block_align, sizeof(short), 1, fp) != 1) return false;
+					if (fread(&block_align, sizeof(short), 1, fp) != 1)  goto error;
 					block_align = ENDIAN_SWAP_16(block_align);
-					if (fread(&bits_per_sample, sizeof(short), 1, fp) != 1) return false;
+					if (fread(&bits_per_sample, sizeof(short), 1, fp) != 1)  goto error;
 					bits_per_sample = ENDIAN_SWAP_16(bits_per_sample);
 
 
@@ -81,8 +81,8 @@ bool SOUNDBUFFER::LoadWAV(const string & filename, const SOUNDINFO & sound_devic
 					while (!found_data_chunk && chunknum < 10)
 					{
 						fseek(fp, filepos, SEEK_SET); //seek to the next chunk
-						if (fread(id, sizeof(char), 4, fp) != 4) return false; //read in 'data'
-						if (fread(&size, sizeof(unsigned int), 1, fp) != 1) return false; //how many bytes of sound data we have
+						if (fread(id, sizeof(char), 4, fp) != 4)  goto error; //read in 'data'
+						if (fread(&size, sizeof(unsigned int), 1, fp) != 1)  goto error; //how many bytes of sound data we have
 						size = ENDIAN_SWAP_32(size);
 						if (!strcmp(id,"data"))
 						{
@@ -100,12 +100,12 @@ bool SOUNDBUFFER::LoadWAV(const string & filename, const SOUNDINFO & sound_devic
 					{
 						//cerr << __FILE__ << "," << __LINE__ << ": Sound file contains more than 10 chunks before the data chunk: " + filename << endl;
 						error_output << "Couldn't find wave data in first 10 chunks of " << filename << endl;
-						return false;
+						goto error;
 					}
 
 					sound_buffer = new char[size];
 
-					if (fread(sound_buffer, sizeof(char), size, fp) != size) return false; //read in our whole sound data chunk
+					if (fread(sound_buffer, sizeof(char), size, fp) != size)  goto error; //read in our whole sound data chunk
 
 #if SDL_BYTEORDER == SDL_BIG_ENDIAN
 					if (bits_per_sample == 16)
@@ -126,7 +126,7 @@ bool SOUNDBUFFER::LoadWAV(const string & filename, const SOUNDINFO & sound_devic
 					else
 					{
 						error_output << "Sound file with " << bits_per_sample << " bits per sample not supported" << endl;
-						return false;
+						goto error;
 					}
 #endif
 
@@ -149,7 +149,7 @@ bool SOUNDBUFFER::LoadWAV(const string & filename, const SOUNDINFO & sound_devic
 						//throw EXCEPTION(__FILE__, __LINE__, "Sound file isn't in desired format: " + filename);
 						//cerr << __FILE__ << "," << __LINE__ << ": Sound file isn't in desired format: " + filename << endl;
 						error_output << "Sound file isn't in desired format: "+filename << endl;
-						return false;
+						goto error;
 					}
 				}
 				else
@@ -157,7 +157,7 @@ bool SOUNDBUFFER::LoadWAV(const string & filename, const SOUNDINFO & sound_devic
 					//throw EXCEPTION(__FILE__, __LINE__, "Sound file doesn't have \"fmt \" header: " + filename);
 					//cerr << __FILE__ << "," << __LINE__ << ": Sound file doesn't have \"fmt \" header: " + filename << endl;
 					error_output << "Sound file doesn't have \"fmt\" header: "+filename << endl;
-					return false;
+					goto error;
 				}
 			}
 			else
@@ -165,7 +165,7 @@ bool SOUNDBUFFER::LoadWAV(const string & filename, const SOUNDINFO & sound_devic
 				//throw EXCEPTION(__FILE__, __LINE__, "Sound file doesn't have WAVE header: " + filename);
 				//cerr << __FILE__ << "," << __LINE__ << ": Sound file doesn't have WAVE header: " + filename << endl;
 				error_output << "Sound file doesn't have WAVE header: "+filename << endl;
-				return false;
+				goto error;
 			}
 		}
 		else
@@ -173,7 +173,7 @@ bool SOUNDBUFFER::LoadWAV(const string & filename, const SOUNDINFO & sound_devic
 			//throw EXCEPTION(__FILE__, __LINE__, "Sound file doesn't have RIFF header: " + filename);
 			//cerr << __FILE__ << "," << __LINE__ << ": Sound file doesn't have WAVE header: " + filename << endl;
 			error_output << "Sound file doesn't have RIFF header: "+filename << endl;
-			return false;
+			goto error;
 		}
 	}
 	else
@@ -181,11 +181,14 @@ bool SOUNDBUFFER::LoadWAV(const string & filename, const SOUNDINFO & sound_devic
 		//throw EXCEPTION(__FILE__, __LINE__, "Can't open sound file: " + filename);
 		//cerr << __FILE__ << "," << __LINE__ << ": Can't open sound file: " + filename << endl;
 		error_output << "Can't open sound file: "+filename << endl;
-		return false;
+		goto error;
 	}
 
 	//cout << size << endl;
 	return true;
+error:
+	fclose(fp);
+	return false;
 }
 
 bool SOUNDBUFFER::LoadOGG(const string & filename, const SOUNDINFO & sound_device_info, std::ostream & error_output)
