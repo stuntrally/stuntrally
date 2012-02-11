@@ -146,6 +146,7 @@ void App::LoadCleanUp()  // 1 first
 	// rem old track
 	if (resTrk != "")  Ogre::Root::getSingletonPtr()->removeResourceLocation(resTrk);
 	resTrk = TrkDir() + "objects";
+	mRoot->addResourceLocation(resTrk, "FileSystem");
 	
 	//  Delete all cars
 	for (int i=0; i < carModels.size(); i++)
@@ -197,10 +198,7 @@ void App::LoadGame()  // 2
 	
 	pGame->NewGameDoCleanup();
 	pGame->NewGameDoLoadTrack();
-	
-	/// generate materials
-	materialFactory->generate();
-	
+		
 	/// init car models
 	// will create vdrift cars, actual car loading will be done later in LoadCar()
 	// this is just here because vdrift car has to be created first
@@ -263,7 +261,11 @@ void App::LoadScene()  // 3
 		sc.LoadXml(TrkDir()+"scene.xml");
 	else
 	{	sc.Default();  sc.td.hfHeight = NULL;  sc.td.hfAngle = NULL;  }
-	
+
+	/// generate materials
+	materialFactory->generate();
+
+	//  fluids
 	CreateFluids();
 
 	//  rain  -----
@@ -374,8 +376,6 @@ void App::LoadTerrain()  // 5
 
 void App::LoadTrack()  // 6
 {
-	mRoot->addResourceLocation(resTrk, "FileSystem");
-
 	bool ter = IsTerTrack();
 	if (!ter)	//  track
 	{
@@ -417,6 +417,10 @@ void App::LoadMisc()  // 7 last
 	
 	// make sure all shader params are loaded
 	materialFactory->generate();
+
+	TexturePtr tex = Ogre::TextureManager::getSingleton().getByName("waterDepth.png");
+	if (!tex.isNull())
+		tex->reload();
 	
 	/// rendertextures debug
 	#if 0
