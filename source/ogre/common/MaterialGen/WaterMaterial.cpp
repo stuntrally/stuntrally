@@ -358,7 +358,8 @@ void WaterMaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::Str
 		"	clr = lerp(clr, fogColor, /*IN.fogVal*/IN.wp.w); \n";
 
 	outStream <<
-		"	return float4(clr*0.01f + float3(aa,1), 1.f + aa.g * 0.2f + aa.r * (waterClr.a + clrSUM.r) ); \n"
+		//"	return float4(clr*0.01f + float3(aa,1), 1.f + aa.g * 0.2f + aa.r * (waterClr.a + clrSUM.r) ); \n"
+		"	return float4(clr, aa.g * 0.2f + aa.r * (waterClr.a + clrSUM.r) ); \n"
 	"} \n";							  //^par
 }
 
