@@ -1707,8 +1707,7 @@ namespace Ogre
 			"	rtshadow = lerp(rtshadow, 1, fade * fadeStart_farDist.z); \n";
 
 		outStream << 
-			"	if (enableShadows == 1.f) \n"
-			"		shadow = min(shadow, rtshadow);\n";
+			"	shadow = min(shadow, rtshadow);\n";
 		
 	}
 	//---------------------------------------------------------------------
