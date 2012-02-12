@@ -58,6 +58,7 @@ public:
 	int addTrRdDist;  // dist to road
 	Ogre::Real minScale, maxScale, ofsY;
 	Ogre::Real maxTerAng, minTerH, maxTerH;  // terrain
+	Ogre::Real maxDepth;  // in fluid
 	
 	PagedLayer();
 };

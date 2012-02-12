@@ -213,6 +213,7 @@ void App::CreateTrees()
 							std::max(0,std::min(r-1, my+jj)), 0).g < 0.5f)  //par-
 								add = false;
 				}
+				if (!add)  continue;  //?faster
 
 				//  check ter angle  ------------
 				int mx = (pos.x + 0.5*tws)/tws*sc.td.iVertsX,
@@ -221,10 +222,34 @@ void App::CreateTrees()
 				if (sc.td.hfAngle[a] > pg.maxTerAng)
 					add = false;
 
+				if (!add)  continue;  //
+
 				//  check ter height  ------------
 				pos.y = terrain->getHeightAtWorldPosition(pos.x, 0, pos.z);
 				if (pos.y < pg.minTerH || pos.y > pg.maxTerH)
 					add = false;				
+				
+				if (!add)  continue;  //
+				
+				//  check if in fluids  ------------
+				float fa = 0.f;  // depth
+				for (int fi=0; fi < sc.fluids.size(); ++fi)
+				{
+					const FluidBox& fb = sc.fluids[fi];
+					if (fb.pos.y - pos.y > 0.f)  // dont check when above fluid, ..or below its size-
+					{
+						const float sizex = fb.size.x*0.5f, sizez = fb.size.z*0.5f;
+						//  check rect 2d - no rot !
+						if (pos.x > fb.pos.x - sizex && pos.x < fb.pos.x + sizex &&
+							pos.z > fb.pos.z - sizez && pos.z < fb.pos.z + sizez)
+						{
+							float f = fb.pos.y - pos.y;
+							if (f > fa)  fa = f;
+						}
+					}
+				}
+				if (fa > pg.maxDepth)
+					add = false;
 				
 				if (!add)  continue;
 

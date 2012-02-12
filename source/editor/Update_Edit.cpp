@@ -193,12 +193,12 @@ bool App::frameRenderingQueued(const FrameEvent& evt)
 	}
 	else if (edMode == ED_Fluids && !sc.fluids.empty())
 	{
-		FluidBox& fb = sc.fluids[iFlCur];									if (flTxt[1])	flTxt[1]->setCaption(fb.name);
+		FluidBox& fb = sc.fluids[iFlCur];	if (flTxt[1])	flTxt[1]->setCaption(fb.name);
 		if (flTxt[0])	flTxt[0]->setCaption("Cur/All:  "+toStr(iFlCur+1)+"/"+toStr(sc.fluids.size()));
 		if (flTxt[2])	flTxt[2]->setCaption("Pos:  "+fToStr(fb.pos.x,1,4)+" "+fToStr(fb.pos.y,1,4)+" "+fToStr(fb.pos.z,1,4));
-		if (flTxt[3])	flTxt[3]->setCaption("Rot:  "+fToStr(fb.rot.x,1,4));
-		if (flTxt[4])	flTxt[4]->setCaption("Pos:  "+fToStr(fb.size.x,1,4)+" "+fToStr(fb.size.y,1,4)+" "+fToStr(fb.size.z,1,4));
-		if (flTxt[5])	flTxt[5]->setCaption("Tile:  "+fToStr(fb.tile.x,3,5)+" "+fToStr(fb.tile.y,3,5));
+		//if (flTxt[3])	flTxt[3]->setCaption(""/*"Rot:  "+fToStr(fb.rot.x,1,4)*/);
+		if (flTxt[3])	flTxt[3]->setCaption("Size:  "+fToStr(fb.size.x,1,4)+" "+fToStr(fb.size.y,1,4)+" "+fToStr(fb.size.z,1,4));
+		if (flTxt[4])	flTxt[4]->setCaption("Tile:  "+fToStr(fb.tile.x,3,5)+" "+fToStr(fb.tile.y,3,5));
 
 		if (isKey(LBRACKET)){	fb.tile   *= 1.f - 0.04f*q;  bRecreateFluids = true;  }  //
 		if (isKey(RBRACKET)){	fb.tile   *= 1.f + 0.04f*q;  bRecreateFluids = true;  }
@@ -436,13 +436,15 @@ void App::editMouse()
 				Real ym = -vNew.y * fMove * moveMul;
 				fb.pos.y += ym;
 				vFlNd[iFlCur]->setPosition(fb.pos);
-			}else
+			}
+			// rot not supported (bullet trigger isnt working, trees check & waterDepth is a lot simpler)
+			/*else
 			if (mbMiddle)  // rot yaw
 			{
 				Real xm = vNew.x * fRot * moveMul;
 				fb.rot.x += xm;
 				vFlNd[iFlCur]->setOrientation(Quaternion(Degree(fb.rot.x),Vector3::UNIT_Y));
-			}
+			}/**/
 		}else
 		{
 			if (mbLeft)  // size xz

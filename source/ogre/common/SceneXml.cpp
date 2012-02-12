@@ -51,6 +51,7 @@ PagedLayer::PagedLayer()
 	windFx = 0.0f;  windFy = 0.0f;  addTrRdDist = 0;
 	minScale = 0.1f;  maxScale = 0.25f;  ofsY = 0.f;
 	maxTerAng = 50.f;  minTerH = -100.f;  maxTerH = 100.f;
+	maxDepth = 5.f;
 }
 
 FluidBox::FluidBox()
@@ -264,6 +265,7 @@ bool Scene::LoadXml(String file)
 			a = ePgL->Attribute("maxTerAng");	if (a)  l.maxTerAng = s2r(a);
 			a = ePgL->Attribute("minTerH");		if (a)  l.minTerH = s2r(a);
 			a = ePgL->Attribute("maxTerH");		if (a)  l.maxTerH = s2r(a);
+			a = ePgL->Attribute("maxDepth");	if (a)  l.maxDepth = s2r(a);
 
 			pgLayersAll[pgl++] = l;
 			ePgL = ePgL->NextSiblingElement("layer");
@@ -428,6 +430,7 @@ bool Scene::SaveXml(String file)
 			pgl.SetAttribute("maxTerAng",	toStrC( l.maxTerAng ));
 			pgl.SetAttribute("minTerH",		toStrC( l.minTerH ));
 			pgl.SetAttribute("maxTerH",		toStrC( l.maxTerH ));
+			pgl.SetAttribute("maxDepth",	toStrC( l.maxDepth ));
 			pgd.InsertEndChild(pgl);
 		}
 	root.InsertEndChild(pgd);
