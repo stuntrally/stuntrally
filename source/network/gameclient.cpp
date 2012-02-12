@@ -246,7 +246,7 @@ void P2PGameClient::connectionEvent(net::NetworkTraffic const& e)
 	std::cout << "Connected " << e.peer_address << std::endl;
 	if (m_state == LOBBY) {
 		boost::mutex::scoped_lock lock(m_mutex);
-		PeerInfo& pi = m_peers[e.peer_address];
+		PeerInfo& pi = m_peers[e.peer_address.str()];
 		pi.address = e.peer_address;
 		pi.peer_id = e.peer_id;
 		pi.connection = PeerInfo::CONNECTED;
@@ -269,8 +269,8 @@ void P2PGameClient::disconnectEvent(net::NetworkTraffic const& e)
 		boost::mutex::scoped_lock lock(m_mutex);
 		// We probably don't want to delete it right away,
 		// since we could try reconnecting
-		m_peers[e.peer_address].connection = PeerInfo::DISCONNECTED;
-		picopy = m_peers[e.peer_address];
+		m_peers[e.peer_address.str()].connection = PeerInfo::DISCONNECTED;
+		picopy = m_peers[e.peer_address.str()];
 		recountPeersAndAssignIds();
 	}
 	// Callback (mutex unlocked to avoid dead-locks)
@@ -294,7 +294,7 @@ void P2PGameClient::receiveEvent(net::NetworkTraffic const& e)
 				m_client.disconnect(e.peer_id, false, protocol::WRONG_PASSWORD);
 				break;
 			}
-			PeerInfo& pi = m_peers[e.peer_address];
+			PeerInfo& pi = m_peers[e.peer_address.str()];
 			pi.authenticated = true;
 			pi.ping = e.ping;
 			break;
@@ -303,8 +303,8 @@ void P2PGameClient::receiveEvent(net::NetworkTraffic const& e)
 			if (m_state != LOBBY) break;
 			protocol::PeerAddressPacket pap = *reinterpret_cast<protocol::PeerAddressPacket const*>(e.packet_data);
 			boost::mutex::scoped_lock lock(m_mutex);
-			m_peers[pap.address].address = pap.address;
-			m_peers[e.peer_address].ping = e.ping;
+			m_peers[pap.address.str()].address = pap.address;
+			m_peers[e.peer_address.str()].ping = e.ping;
 			break;
 		}
 		case protocol::TEXT_MESSAGE: {
@@ -312,7 +312,7 @@ void P2PGameClient::receiveEvent(net::NetworkTraffic const& e)
 			std::cout << "Text message received: " << msg << std::endl;
 			if (m_callback) {
 				boost::mutex::scoped_lock lock(m_mutex);
-				PeerInfo& pi = m_peers[e.peer_address];
+				PeerInfo& pi = m_peers[e.peer_address.str()];
 				pi.ping = e.ping;
 				PeerInfo picopy = pi;
 				lock.unlock(); // Mutex unlocked in callback to avoid dead-locks
@@ -323,7 +323,7 @@ void P2PGameClient::receiveEvent(net::NetworkTraffic const& e)
 		case protocol::PLAYER_INFO: {
 			protocol::PlayerInfoPacket pip = *reinterpret_cast<protocol::PlayerInfoPacket const*>(e.packet_data);
 			boost::mutex::scoped_lock lock(m_mutex);
-			PeerInfo& pi = m_peers[e.peer_address];
+			PeerInfo& pi = m_peers[e.peer_address.str()];
 			bool isNew = pi.name.empty();
 			pi = pip;
 			pi.ping = e.ping;
@@ -343,7 +343,7 @@ void P2PGameClient::receiveEvent(net::NetworkTraffic const& e)
 			startGame(false);
 			if (m_callback) {
 				boost::mutex::scoped_lock lock(m_mutex);
-				PeerInfo& pi = m_peers[e.peer_address];
+				PeerInfo& pi = m_peers[e.peer_address.str()];
 				pi.ping = e.ping;
 				PeerInfo picopy = pi;
 				lock.unlock(); // Mutex unlocked in callback to avoid dead-locks
@@ -354,7 +354,7 @@ void P2PGameClient::receiveEvent(net::NetworkTraffic const& e)
 		case protocol::START_COUNTDOWN: {
 			if (m_callback) {
 				boost::mutex::scoped_lock lock(m_mutex);
-				PeerInfo& pi = m_peers[e.peer_address];
+				PeerInfo& pi = m_peers[e.peer_address.str()];
 				pi.ping = e.ping;
 				pi.loaded = true;
 				if (!m_playerInfo.loaded) break;
@@ -369,7 +369,7 @@ void P2PGameClient::receiveEvent(net::NetworkTraffic const& e)
 			if (m_state != GAME) break;
 			protocol::CarStatePackage csp = *reinterpret_cast<protocol::CarStatePackage const*>(e.packet_data);
 			boost::mutex::scoped_lock lock(m_mutex);
-			PeerInfo& pi = m_peers[e.peer_address];
+			PeerInfo& pi = m_peers[e.peer_address.str()];
 			pi.ping = e.ping;
 			if (pi.id < 0) break;
 			m_receivedCarStates[pi.id] = csp;
@@ -385,7 +385,7 @@ void P2PGameClient::receiveEvent(net::NetworkTraffic const& e)
 			if (m_state != GAME || !m_callback) break;
 			protocol::TimeInfoPackage time = *reinterpret_cast<protocol::TimeInfoPackage const*>(e.packet_data);
 			boost::mutex::scoped_lock lock(m_mutex);
-			ClientID id = m_peers[e.peer_address].id;
+			ClientID id = m_peers[e.peer_address.str()].id;
 			lock.unlock(); // Mutex unlocked in callback to avoid dead-locks
 			m_callback->timeInfo(id, time.lap, time.time);
 			break;

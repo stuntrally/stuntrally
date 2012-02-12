@@ -22,14 +22,14 @@ namespace net {
 		uint32_t host; ///< IPv4 address
 		uint16_t port; ///< Port number
 		Address(uint32_t initHost = 0, uint16_t initPort = 0): host(initHost), port(initPort) { }
-		operator std::string() const { return IPv4(host)+":"+boost::lexical_cast<std::string>(port); }
+		std::string str() const { return IPv4(host)+":"+boost::lexical_cast<std::string>(port); }
 		bool operator==(const Address& other) { return host == other.host && port == other.port; }
 		bool operator!=(const Address& other) { return !(*this == other); }
 		operator bool() { return port > 0; }
 	};
 
 	inline std::ostream& operator<< (std::ostream& out, const Address& addr) {
-		out << static_cast<std::string>(addr); return out;
+		out << addr.str(); return out;
 	}
 
 }
