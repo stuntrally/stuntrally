@@ -71,9 +71,9 @@ protected:
 	virtual bool frameEnded(const Ogre::FrameEvent& evt);
 
 	virtual void processMouse();
-	//virtual bool keyPressed( const OIS::KeyEvent &arg );
 	bool KeyPress(const CmdKey &arg);  void trkListNext(int rel);
 	Ogre::Vector3 vNew;	void editMouse();
+	void GuiShortcut(int tab, int subtab=-1);
 	
 	//  create  . . . . . . . . . . . . . . . . . . . . . . . . 
 	bool bNewHmap, bTrGrUpd;  Ogre::Real terMaxAng;

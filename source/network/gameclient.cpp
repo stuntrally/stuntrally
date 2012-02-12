@@ -13,7 +13,8 @@ namespace {
 
 
 P2PGameClient::P2PGameClient(GameClientCallback* callback, int port)
-	: m_callback(callback), m_client(*this, port), m_state(DISCONNECTED), m_mutex(), m_cond(), m_playerInfo(), m_game(), m_carState()
+	: m_callback(callback), m_client(*this, port), m_state(DISCONNECTED),
+	m_mutex(), m_cond(), m_playerInfo(), m_game(), m_carState()
 {
 	m_playerInfo.random_id = std::rand(); // Client id is based on this
 	m_game.packet_type = -1; // Invalidate until set
@@ -119,6 +120,12 @@ void P2PGameClient::loadingFinished()
 	// Wait a tiny bit to give the network some time
 	boost::this_thread::sleep(boost::posix_time::milliseconds(50));
 	m_callback->startRace();
+}
+
+void P2PGameClient::lap(uint8_t num, double time)
+{
+	protocol::TimeInfoPackage tip(num, time);
+	m_client.broadcast(net::convert(tip), net::PACKET_RELIABLE);
 }
 
 void P2PGameClient::senderThread() {
@@ -369,9 +376,18 @@ void P2PGameClient::receiveEvent(net::NetworkTraffic const& e)
 			break;
 		}
 		case protocol::GAME_STATUS: {
-			if (m_state != LOBBY) break;
+			if (m_state != LOBBY || !m_callback) break;
 			protocol::GameInfo game = *reinterpret_cast<protocol::GameInfo const*>(e.packet_data);
-			if (m_callback) m_callback->gameInfo(game);
+			m_callback->gameInfo(game);
+			break;
+		}
+		case protocol::TIME_INFO: {
+			if (m_state != GAME || !m_callback) break;
+			protocol::TimeInfoPackage time = *reinterpret_cast<protocol::TimeInfoPackage const*>(e.packet_data);
+			boost::mutex::scoped_lock lock(m_mutex);
+			ClientID id = m_peers[e.peer_address].id;
+			lock.unlock(); // Mutex unlocked in callback to avoid dead-locks
+			m_callback->timeInfo(id, time.lap, time.time);
 			break;
 		}
 		default: {

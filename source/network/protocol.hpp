@@ -42,7 +42,8 @@ enum PacketType {
 	GAME_ACCEPTED,      // Master server sends response for newly accepted games
 	GAME_STATUS,        // An available game (either client updates, or server reports)
 	START_GAME,         // Signal to start loading the game
-	START_COUNTDOWN     // Signal that loading has finished, start race
+	START_COUNTDOWN,    // Signal that loading has finished, start race
+	TIME_INFO           // Lap / race time info
 };
 
 
@@ -156,5 +157,18 @@ struct CarStatePackage {
 };
 
 typedef std::map<int8_t, CarStatePackage> CarStates;
+
+
+/**
+ * @brief Contains lap / race timing info.
+ */
+struct TimeInfoPackage {
+	uint8_t packet_type;
+	uint8_t lap; // 0 for total time
+	double time;
+	TimeInfoPackage(uint8_t initLap, double initTime):
+		packet_type(TIME_INFO), lap(initLap), time(initTime) {}
+};
+
 
 } // namespace protocol

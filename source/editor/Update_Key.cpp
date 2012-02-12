@@ -107,8 +107,7 @@ void App::togPrvCam()
 }
 
 
-//  Key Press
-//---------------------------------------------------------------------------------------------------------------
+//  key util
 void App::trkListNext(int rel)
 {
 	if (!(bGuiFocus && mWndTabs->getIndexSelected() == 0))  return;
@@ -118,6 +117,32 @@ void App::trkListNext(int rel)
 	listTrackChng(trkMList,i);
 }
 
+void App::GuiShortcut(int tab, int subtab)
+{
+	if (!bGuiFocus)
+	if (edMode != ED_PrvCam)  {
+		bGuiFocus = !bGuiFocus;  UpdVisGui();  subtab = -2;  }
+
+	size_t t = mWndTabs->getIndexSelected();
+	mWndTabs->setIndexSelected(tab);
+
+	MyGUI::TabControl* tc = vSubTabs[t];  if (!tc)  return;
+	int  cnt = tc->getItemCount();
+
+	if (t == tab && subtab == -1)  // cycle subpages if same tab
+	{	if (shift)
+			tc->setIndexSelected( (tc->getIndexSelected()-1+cnt) % cnt );
+		else
+			tc->setIndexSelected( (tc->getIndexSelected()+1) % cnt );
+	}else
+	if (subtab > -1)
+		tc->setIndexSelected( std::min(cnt-1, subtab) );
+}
+
+
+//---------------------------------------------------------------------------------------------------------------
+//  Key Press
+//---------------------------------------------------------------------------------------------------------------
 bool App::KeyPress(const CmdKey &arg)
 {	
 	using namespace OIS;
@@ -131,10 +156,11 @@ bool App::KeyPress(const CmdKey &arg)
 			case KC_F7:  togPrvCam();  break;
 
 			case KC_RETURN:  // save screen
-				rt[RTs-1].rndTex->writeContentsToFile(pathTrkPrv[1] + pSet->gui.track + ".jpg");  //U
+			{	int u = pSet->allow_save ? 0 : 1;
+				rt[RTs-1].rndTex->writeContentsToFile(pathTrkPrv[u] + pSet->gui.track + ".jpg");
 				listTrackChng(trkMList,0);  // upd gui img
 				Status("Preview saved", 1,1,0);
-				break;
+			}	break;
 		}
 		return true;  //!
 	}
@@ -145,7 +171,7 @@ bool App::KeyPress(const CmdKey &arg)
 	switch (arg.key)  //  global keys  ---------------------
 	{
 		//  Show Stats  I
-   		case KC_I:  if (alt)
+   		case KC_I:  if (ctrl)
 		{	mStatsOn = !mStatsOn;	
 			if (mStatsOn)  mDebugOverlay->show();  else  mDebugOverlay->hide();
 			return true;
@@ -217,9 +243,10 @@ bool App::KeyPress(const CmdKey &arg)
    			break;
 	}
 
-	if (bGuiFocus && mGUI)  //  GUI  ---------------------
+	//  keys in edits
+	if (bGuiFocus && mGUI && !alt && !ctrl)  //  GUI  ---------------------
 	{
-		MyGUI::Char text = arg.text;
+		MyGUI::Char text = arg.text;  bool found = false;
 		if (shift)	// shift-letters,numbers dont work ??
 		{
 			const static int num = 21;
@@ -227,15 +254,16 @@ bool App::KeyPress(const CmdKey &arg)
 				{'0',')'},{'1','!'},{'2','@'},{'3','#'},{'4','$'},{'5','%'},{'6','^'},{'7','&'},{'8','*'},{'9','('},
 				{'`','~'},{'-','_'},{'=','+'},{'[','{'},{']','}'},{'\\','|'},{';',':'},{'\'','\"'},{',','<'},{'.','>'},{'/','?'}};
 			if (text >= 'a' && text <= 'z')
-				text += 'A'-'a';
+			{	text += 'A'-'a';  found = true;  }
 			else
 			for (int i=0; i < num; ++i)
 				if (text == chT[i][0])
-				{	text = chT[i][1];  break;	}
+				{	text = chT[i][1];  found = true;  break;	}
 		}
 		if (arg.key == KC_ESCAPE || arg.key == KC_BACK)
-			text = 0;
-		MyGUI::InputManager::getInstance().injectKeyPress(MyGUI::KeyCode::Enum(arg.key), text);
+		{	text = 0;  found = true;  }
+		//if (found)
+			MyGUI::InputManager::getInstance().injectKeyPress(MyGUI::KeyCode::Enum(arg.key), text);
 		return true;
 	}
 
@@ -313,7 +341,7 @@ bool App::KeyPress(const CmdKey &arg)
 	}
 
 	//  ter brush shape
-	if (edMode < ED_Road)
+	if (edMode < ED_Road && !alt)
 	switch (arg.key)
 	{
 		case KC_K:	mBrShape[curBr] = (EBrShape)((mBrShape[curBr]-1 + BRS_ALL) % BRS_ALL);  updBrush();  break;
@@ -379,16 +407,30 @@ bool App::KeyPress(const CmdKey &arg)
 	}
 
 	///  Common Keys  * * * * * * * * * * * * *
-	/*if (alt)  // doesnt work why?
+	if (alt)
 	switch (arg.key)
 	{
-		case KC_Q:	mWndTabs->setIndexSelected(0);  break;
-		case KC_W:	mWndTabs->setIndexSelected(1);  break;
-		case KC_E:	mWndTabs->setIndexSelected(2);  break;
-		case KC_R:	mWndTabs->setIndexSelected(3);  break;
-		case KC_T:	mWndTabs->setIndexSelected(4);  break;
+		case KC_Q:	GuiShortcut(0);  return true;  // Q Track
+		case KC_S:	GuiShortcut(1);  return true;  // S Sun
+
+		case KC_H:	GuiShortcut(2);  return true;  // H Terrain (Heightmap)
+		case KC_T:	GuiShortcut(3);  return true;  // T Layers (Terrain)
+		 case KC_B:	GuiShortcut(3,0);  return true;  //  B -Blendmap
+		 case KC_P:	GuiShortcut(3,1);  return true;  //  P -Particles
+		 case KC_U:	GuiShortcut(3,2);  return true;  //  U -Surfaces
+
+		case KC_V:	GuiShortcut(4);  return true;  // V Vegetation
+		 case KC_M:	GuiShortcut(4,1);  return true;  //  M -Models
+
+		case KC_R:	GuiShortcut(5);  return true;  // R Road
+		case KC_O:	GuiShortcut(6);  return true;  // O Tools
+
+		case KC_C:	GuiShortcut(7);  return true;  // S Screen
+		case KC_G:	GuiShortcut(8);  return true;  // G Graphics
+		case KC_I:	GuiShortcut(9);  return true;  // I Input/help
+		case KC_E:	GuiShortcut(10);  return true;  // E Settings
 	}
-	else*/
+	else
 	switch (arg.key)
 	{
 		case KC_TAB:	//  Camera / Edit mode
@@ -398,6 +440,15 @@ bool App::KeyPress(const CmdKey &arg)
 				ShowCursor(0);  //?- cursor after alt-tab
 			#endif
 			bMoveCam = !bMoveCam;  UpdVisGui();  }	break;
+
+		//  focus on find edit
+		case KC_F:
+			if (ctrl && edFind && bGuiFocus && mWndTabs->getIndexSelected() == 0)
+			{
+				MyGUI::InputManager::getInstance().resetKeyFocusWidget();
+				MyGUI::InputManager::getInstance().setKeyFocusWidget(edFind);
+				return true;  }
+			break;
 
 		//  fog
 		case KC_G:  {
@@ -428,5 +479,6 @@ bool App::KeyPress(const CmdKey &arg)
 			
 		case KC_F7:  togPrvCam();  break;
 	}
+
 	return true;
 }

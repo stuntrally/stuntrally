@@ -587,7 +587,10 @@ void App::newPoses()
 					{
 						bool best = pGame->timer.Lap(iCarNum, 0,0, true,
 							pSet->game.trackreverse/*<, pSet->boost_type*/);  //pGame->cartimerids[pCar] ?
-						float timeCur = pGame->timer.GetPlayerTimeTot();  //GetPlayerTime();
+						double timeCur = pGame->timer.GetPlayerTimeTot();  //GetPlayerTime();
+
+						if (mClient && iCarNum == 0) // Network notification
+							mClient->lap(pGame->timer.GetCurrentLap(iCarNum), timeCur);
 
 						if (!pSet->rpl_bestonly || best)  ///  new best lap, save ghost
 						if (iCarNum==0 && pSet->rpl_rec)  // for many, only 1st-
