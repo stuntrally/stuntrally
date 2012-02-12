@@ -417,12 +417,16 @@ bool App::LoadSurf()
 		TRACKSURFACE surf;  // default
 		int l;
 		if (secName[1]=='L')		// " L_0 " to " L_6 " for editor
-			l = secName[3]-'0';		// 6 road, 0-5 layers
-		else						// " A_ " to " F_ " for game
-		{	l = secName[0]-'B';		// A road, B-F layers - used only
-			if (l < 0)  l = 6;
+		{	l = secName[3]-'0';		// 6 road, 0-5 layers
+			//LogO(String("Surf load: ")+secName[1]+" "+toStr(l));
 		}
-		if (l < 0)  l = 0;  if (l > 7)  l = 7;
+		else						// " A_ " to " F_ " for game
+		{	l = secName[1]-'B';		// A road, B-F layers - used only
+			if (l < 0)  l = 6;
+			//LogO(String("Surf load: ")+secName[1]+" "+toStr(l));
+		}
+		// if no L_ were there then A-F may have wrong indexes on used layers (old tracks)...
+		if (l < 0)  l = 0;  if (l > 7)  l = 7;  // shouldnt be needed
 		
 		su[l] = surf;
 		
@@ -446,20 +450,22 @@ bool App::LoadSurf()
 bool App::SaveSurf(const std::string& path)
 {
 	CONFIGFILE cf;
-	int u=0;
+	int u = 0;  // used cnt
 	for (int i=0; i < 7; ++i)  // 6 ter layers + road in [6]
 	{
-		int n = 1;  // not used
-		if (i==6 || (i < 6 && sc.td.layersAll[i].on))
+		int n = 1;  // not used, L only
+		if (i==6 || (i < 6 && sc.td.layersAll[i].on))  // road always
 			n = 2;  // used - write twice
+		//LogO(String("Surf save: ") + toStr(i) +" x"+ toStr(n));
 		
 		//  1st A-F sorted for game, 2nd L_ - read by editor
-		for (int j=0; j < n; ++j)
+		for (int nn=0; nn < n; ++nn)
 		{
 			std::string ss;
-			if (j==0)	ss = "L_"+toStr(i); // editor
-			else  if (i==6){  ss = "A";  }  // used
-			else  {  ss = "B";  u++;  }  // used
+			if (nn==0)	ss = "L_"+toStr(i); // editor all
+			else  if (i==6){  ss = "A";  }  // used road
+			else  {  ss = 'B'+u;  u++;  }  // used ter
+			//LogO(String("Surf save: ") + toStr(i) +" x"+ toStr(n)+"-"+toStr(nn) +" "+ ss);
 
 			const TRACKSURFACE& surf = su[i];
 			cf.SetParam(ss + ".ID", surf.type);
