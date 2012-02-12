@@ -414,22 +414,33 @@ bool App::LoadSurf()
 		if (secName == Ogre::StringUtil::BLANK)
 		{	seci.getNext();  continue;  }
 
-		TRACKSURFACE surf;  // default
-		int l;
-		if (secName[1]=='L')		// " L_0 " to " L_6 " for editor
-		{	l = secName[3]-'0';		// 6 road, 0-5 layers
+		int l = -1;
+		if (secName[1] == 'L')		// " L_0 " to " L_6 " from editor
+		{
+			l = secName[3]-'0';		// 0..5 ter layers, 6 road
 			//LogO(String("Surf load: ")+secName[1]+" "+toStr(l));
 		}
-		else						// " A_ " to " F_ " for game
-		{	l = secName[1]-'B';		// A road, B-F layers - used only
-			if (l < 0)  l = 6;
+		else	// " A " to " G " from game  (L read after for both)
+		{
+			if (secName[1] == 'A')  // A  road
+				l = 6;
+			else	// B..G  ter layers - used only
+			{
+				int il = secName[1]-'B', im = sc.td.layers.size();
+				if (il < 0) {	LogO("Surf load error: < 0");
+					l = 5;  }  // use 5 - last ter layer
+				else
+				if (il > im-1){	LogO("Surf load error: surf > used, ignoring.  "+toStr(il)+">"+toStr(im-1));
+					l = 5;  }
+				else
+					l = sc.td.layers[il];  // ok
+			}
 			//LogO(String("Surf load: ")+secName[1]+" "+toStr(l));
 		}
-		// if no L_ were there then A-F may have wrong indexes on used layers (old tracks)...
-		if (l < 0)  l = 0;  if (l > 7)  l = 7;  // shouldnt be needed
-		
+		if (l == -1)  {  l = 0;  LogO("Surf load error: -1");  }
+
+		TRACKSURFACE surf;  // assign default, read params
 		su[l] = surf;
-		
 		Ogre::ConfigFile::SettingsMultiMap *settings = seci.getNext();
 		Ogre::ConfigFile::SettingsMultiMap::iterator i;
 		for (i = settings->begin(); i != settings->end(); ++i)
@@ -443,31 +454,31 @@ bool App::LoadSurf()
 			else if (i->first == "RollingDrag")					su[l].rollingDrag = s2r(i->second);
 		}
 	}
-
 	return true;
 }
 
 bool App::SaveSurf(const std::string& path)
 {
 	CONFIGFILE cf;
-	int u = 0;  // used cnt
+	int u = 0;  // used counter
 	for (int i=0; i < 7; ++i)  // 6 ter layers + road in [6]
 	{
 		int n = 1;  // not used, L only
 		if (i==6 || (i < 6 && sc.td.layersAll[i].on))  // road always
-			n = 2;  // used - write twice
+			n = 2;  // used (on)	- write twice
 		//LogO(String("Surf save: ") + toStr(i) +" x"+ toStr(n));
 		
-		//  1st A-F sorted for game, 2nd L_ - read by editor
+		//    A .. G    used only, for game (A-road)
+		//  L_0 .. L_6  all, for editor (6-road)
 		for (int nn=0; nn < n; ++nn)
 		{
 			std::string ss;
 			if (nn==0)	ss = "L_"+toStr(i); // editor all
-			else  if (i==6){  ss = "A";  }  // used road
-			else  {  ss = 'B'+u;  u++;  }  // used ter
+			else  if (i==6)  ss = "A";      // used road
+			else  {  ss = 'B'+u;  u++;  }   // used ter
 			//LogO(String("Surf save: ") + toStr(i) +" x"+ toStr(n)+"-"+toStr(nn) +" "+ ss);
 
-			const TRACKSURFACE& surf = su[i];
+			const TRACKSURFACE& surf = su[i];  // read and set params
 			cf.SetParam(ss + ".ID", surf.type);
 			cf.SetParam(ss + ".BumpWaveLength", surf.bumpWaveLength);
 			cf.SetParam(ss + ".BumpAmplitude", surf.bumpAmplitude);
