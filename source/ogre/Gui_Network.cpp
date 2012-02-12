@@ -214,6 +214,11 @@ void App::startRace()
 	pGame->timer.waiting = false;
 }
 
+void App::timeInfo(ClientID id, uint8_t lap, double time)
+{
+	// TODO: Do something with this
+}
+
 void App::error(string what)
 {
 	boost::mutex::scoped_lock lock(netGuiMutex);

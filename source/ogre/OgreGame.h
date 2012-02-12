@@ -363,6 +363,7 @@ protected:
 	void peerState(PeerInfo peer, uint8_t state);
 	void gameInfo(protocol::GameInfo game);
 	void startRace();
+	void timeInfo(ClientID id, uint8_t lap, double time);
 	void error(std::string what);
 	void join(std::string host, std::string port, std::string password);
 
