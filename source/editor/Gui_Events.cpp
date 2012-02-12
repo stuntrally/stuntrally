@@ -572,6 +572,7 @@ void App::tabPgLayers(TabPtr wp, size_t id)
 	Slv(LTrMaxTerAng, powf(lay.maxTerAng /90.0f, 1.f/2.f));
 	if (edLTrMinTerH)  edLTrMinTerH->setCaption(toStr(lay.minTerH));
 	if (edLTrMaxTerH)  edLTrMaxTerH->setCaption(toStr(lay.maxTerH));
+	if (edLTrFlDepth)  edLTrFlDepth->setCaption(toStr(lay.maxDepth));
 }
 
 void App::chkPgLayOn(WP wp)
@@ -637,7 +638,10 @@ void App::editLTrMaxTerH(EditPtr ed)
 {
 	sc.pgLayersAll[idPgLay].maxTerH = s2r(ed->getCaption());
 }
-
+void App::editLTrFlDepth(EditPtr ed)
+{
+	sc.pgLayersAll[idPgLay].maxDepth = s2r(ed->getCaption());
+}
 
 
 //  [Road]

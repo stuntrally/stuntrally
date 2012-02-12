@@ -565,6 +565,7 @@
 	<Tag name="LTrMaxTerAng">max terrain Angle</Tag>
 	<Tag name="LTrMinTerH">min terrain Height</Tag>
 	<Tag name="LTrMaxTerH">max terrain Height</Tag>
+	<Tag name="LTrFlDepth">max Depth in fluid</Tag>
 	<Tag name="SceneryId">Scenery Id</Tag>
 	<Tag name="GrMaterial">Grass Material</Tag>
 	<Tag name="GrColorMap">Grass color map</Tag>
@@ -875,5 +876,6 @@
 	<Tag name="TipLTrMaxTerAng">Terrain angle above which model won't appear.</Tag>
 	<Tag name="TipLTrMinTerH">Terrain height below which model won't appear.</Tag>
 	<Tag name="TipLTrMaxTerH">Terrain height above which model won't appear.</Tag>
+	<Tag name="TipLTrFlDepth">Maximal depth in fluid allowed (set 0 to exclude from fluids).</Tag>
 
 </MyGUI>
