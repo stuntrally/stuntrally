@@ -612,11 +612,11 @@ Ogre::String MaterialGenerator::chooseShadowCasterMaterial()
 		if(mParent->getShadowsDepth())
 		{
 			Ogre::CullingMode cmode = chooseCullingMode();
-			if(mShader->wind == 2)
+			/*if(mShader->wind == 2)
 			{
 				shadowCasterMaterial = "PSSM/shadow_caster_wind";				
 			}
-			else if(cmode == Ogre::CULL_NONE)
+			else*/ if(cmode == Ogre::CULL_NONE)
 			{
 				shadowCasterMaterial = type+"shadow_caster_nocull";				
 			}
