@@ -147,7 +147,7 @@ void P2PGameClient::senderThread() {
 				if (pi.connection == PeerInfo::DISCONNECTED) {
 					std::cout << "Connecting to " << pi.address << std::endl;
 					pi.connection = PeerInfo::CONNECTING;
-					m_client.connect(pi.address, NULL, 0, 0);
+					m_client.connect(pi.address, NULL);
 				}
 				// Broadcast peer's info
 				protocol::PeerAddressPacket pap(it->second.address);
