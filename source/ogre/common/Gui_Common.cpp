@@ -298,7 +298,7 @@ void App::GuiInitGraphics()
 		{
 			combo->addItem(rs[i]);
 			if (pSet->rendersystem == rs[i])
-				combo->setIndexSelected(combo->getItemCount()-1);
+				combo->setIndexSelected(combo->findItemIndexWith(rs[i]));
 		}
 		//const RenderSystemList& rsl = Ogre::Root::getSingleton().getAvailableRenderers();
 		//for (int i=0; i < rsl.size(); ++i)
