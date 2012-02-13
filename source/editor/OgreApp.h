@@ -8,6 +8,7 @@
 #include "../ogre/common/FluidsXml.h"
 #include "../ogre/common/MessageBox/MessageBox.h"
 #include "../ogre/common/MessageBox/MessageBoxStyle.h"
+#include "../ogre/common/WaterRTT.h"
 
 #include "../vdrift/mathvector.h"
 #include "../vdrift/quaternion.h"
@@ -130,6 +131,7 @@ public:
 protected:
 	Ogre::ShadowCameraSetupPtr mPSSMSetup;
 
+	WaterRTT mWaterRTT;
 
 	//  ter circle mesh
 	Ogre::ManualObject* moTerC;  Ogre::SceneNode* ndTerC;

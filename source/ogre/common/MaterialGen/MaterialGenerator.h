@@ -45,7 +45,6 @@ protected:
 	unsigned int mReflTexUnit;
 	unsigned int mTerrainLightTexUnit; // global terrain lightmap
 	unsigned int mShadowTexUnit_start; // start offset for shadow tex units
-	unsigned int mWaterDepthUnit;
 	
 	// count
 	unsigned int mTexUnit_i;

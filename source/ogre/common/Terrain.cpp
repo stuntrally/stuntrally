@@ -2,6 +2,7 @@
 #include "../common/RenderConst.h"
 #include "../../road/Road.h"
 #include "../common/MaterialGen/TerrainMaterialGen.h"
+#include "../common/MaterialGen/MaterialFactory.h"
 
 #ifdef ROAD_EDITOR
 	#include "../common/Defines.h"
@@ -225,7 +226,7 @@ void App::configureTerrainDefaults(Light* l)
 	mTerrainGlobals->setCompositeMapSize(sc.td.iTerSize-1);  // par,..  1k
 	mTerrainGlobals->setCompositeMapDistance(pSet->terdist);  //100
 	mTerrainGlobals->setLightMapSize(ciShadowSizesA[pSet->lightmap_size]);  //256, 2k
-	mTerrainGlobals->setSkirtSize(1);  //`
+	mTerrainGlobals->setSkirtSize(MaterialFactory::getSingleton().getReflect() ? 0.1 : 1);  //`
 	//matProfile->setLightmapEnabled(false);
 
 	// Configure default import settings for if we use imported image
@@ -496,6 +497,10 @@ void App::CreateFluids()
 	#ifdef ROAD_EDITOR
 	vFlNd.clear();  vFlEnt.clear();  vFlSMesh.clear();
 	#endif
+	SceneNode* flRoot;
+	if (!mSceneMgr->hasSceneNode("FluidsRootNode")) flRoot = mSceneMgr->getRootSceneNode()->createChildSceneNode("FluidsRootNode");
+	else flRoot = mSceneMgr->getSceneNode("FluidsRootNode");
+	
 	for (int i=0; i < sc.fluids.size(); i++)
 	{
 		FluidBox& fb = sc.fluids[i];
@@ -522,12 +527,12 @@ void App::CreateFluids()
 
 			Pass* pass = mtr->getTechnique(0)->getPass(0);
 			TextureUnitState* tus = pass->getTextureUnitState(1);
-			if (tus)  tus->setTextureName(tusSky->getTextureName());
+			if (tus->getName() == "skyMap")  tus->setTextureName(tusSky->getTextureName());
 		}
 		efl->setMaterial(mtr);  efl->setCastShadows(false);
 		efl->setRenderQueueGroup(RQG_Fluid);  efl->setVisibilityFlags(RV_Terrain);
 
-		SceneNode* nfl = mSceneMgr->getRootSceneNode()->createChildSceneNode(
+		SceneNode* nfl = flRoot->createChildSceneNode(
 			fb.pos/*, Quaternion(Degree(fb.rot.x),Vector3::UNIT_Y)*/);
 		nfl->attachObject(efl);
 		#ifdef ROAD_EDITOR

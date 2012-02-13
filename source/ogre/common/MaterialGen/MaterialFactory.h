@@ -80,6 +80,8 @@ public:
 	void setNumShadowTex(unsigned int p) { if(p> SHADOWTEX_NUM_MAX) { p=SHADOWTEX_NUM_MAX; } else { setIfChanged(iNumShadowTex) } };
 	void setShaderQuality(float p) { setIfChanged(fShaderQuality) };
 	
+	const bool getReflect() { return false; };
+	const bool getRefract() { return false; };
 	const bool getNormalMap() { return bNormalMap; };
 	const bool getEnvMap() { return bEnvMap; };
 	const bool getShadows() { return bShadows; };

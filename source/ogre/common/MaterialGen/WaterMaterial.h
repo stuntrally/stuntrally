@@ -13,6 +13,10 @@ public:
 	virtual void generate();
 	
 protected:
+	unsigned int mWaterDepthUnit;
+	unsigned int mScreenReflUnit;
+	unsigned int mScreenRefrUnit;
+
 	// vertex program
 	virtual Ogre::HighLevelGpuProgramPtr createVertexProgram();
 	virtual void generateVertexProgramSource(Ogre::StringUtil::StrStreamType& outStream);

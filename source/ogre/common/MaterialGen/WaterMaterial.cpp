@@ -56,26 +56,42 @@ void WaterMaterialGenerator::generate()
 		mTerrainLightTexUnit = mTexUnit_i; mTexUnit_i++;
 	}
 
-	// env map
-	// retrieve sky texture name from scene
-	std::string skyTexName;
-	if (mParent->pApp->terrain)
+	if (MaterialFactory::getSingleton().getRefract())
 	{
-		MaterialPtr mtrSky = MaterialManager::getSingleton().getByName(mParent->pApp->sc.skyMtr);
-		if(!mtrSky.isNull())
-		{
-			Pass* passSky = mtrSky->getTechnique(0)->getPass(0);
-			TextureUnitState* tusSky = passSky->getTextureUnitState(0);
-
-			skyTexName = tusSky->getTextureName();
-		}
+		tu = pass->createTextureUnitState( "PlaneRefraction" );
+		tu->setName("refractionMap");
+		tu->setTextureAddressingMode(TextureUnitState::TAM_CLAMP);
+		mScreenRefrUnit = mTexUnit_i++;
 	}
-	else skyTexName = String("white.png");
-	
-	tu = pass->createTextureUnitState( skyTexName );
-	tu->setName("skyMap");
-	tu->setTextureAddressingMode(TextureUnitState::TAM_MIRROR);
-	mEnvTexUnit = mTexUnit_i; mTexUnit_i++;
+	if (MaterialFactory::getSingleton().getReflect())
+	{
+		tu = pass->createTextureUnitState( "PlaneRefraction" );
+		tu->setName("reflectionMap");
+		tu->setTextureAddressingMode(TextureUnitState::TAM_CLAMP);
+		mScreenReflUnit = mTexUnit_i++;
+	}
+	else
+	{
+		// retrieve sky texture name from scene
+		std::string skyTexName;
+		if (mParent->pApp->terrain)
+		{
+			MaterialPtr mtrSky = MaterialManager::getSingleton().getByName(mParent->pApp->sc.skyMtr);
+			if(!mtrSky.isNull())
+			{
+				Pass* passSky = mtrSky->getTechnique(0)->getPass(0);
+				TextureUnitState* tusSky = passSky->getTextureUnitState(0);
+
+				skyTexName = tusSky->getTextureName();
+			}
+		}
+		else skyTexName = String("white.png");
+		
+		tu = pass->createTextureUnitState( skyTexName );
+		tu->setName("skyMap");
+		tu->setTextureAddressingMode(TextureUnitState::TAM_MIRROR);
+		mEnvTexUnit = mTexUnit_i++;
+	}
 	
 	//  waterDepth
 	tu = pass->createTextureUnitState( "waterDepth.png" );
@@ -83,6 +99,7 @@ void WaterMaterialGenerator::generate()
 	tu->setTextureAddressingMode(TextureUnitState::TAM_BORDER);
 	tu->setTextureBorderColour(ColourValue::White);  // outside tex water always visible
 	mWaterDepthUnit = mTexUnit_i;  mTexUnit_i++;
+	
 	
 	// realtime shadow maps
 	if (needShadows())
@@ -122,6 +139,19 @@ void WaterMaterialGenerator::generate()
 
 	// indicate we need 'time' parameter set every frame
 	mParent->timeMtrs.push_back(mDef->getName());
+	/*
+	if (mDef->getName() == "Grease_jelly")
+	{
+		LogO("[MaterialFactory] Vertex program source: ");
+		StringUtil::StrStreamType vSourceStr;
+		generateVertexProgramSource(vSourceStr);
+		LogO(vSourceStr.str());
+		LogO("[MaterialFactory] Fragment program source: ");
+		StringUtil::StrStreamType fSourceStr;
+		generateFragmentProgramSource(fSourceStr);
+		LogO(fSourceStr.str());
+	}
+	/**/
 }
 
 //----------------------------------------------------------------------------------------
@@ -138,7 +168,7 @@ void WaterMaterialGenerator::generateVertexProgramSource(Ogre::StringUtil::StrSt
 	"struct VOut \n"
 	"{ \n"
 	"	float4 p : POSITION;	float3 uv : TEXCOORD0;	float4 wp : TEXCOORD1; \n"
-	"	float3 n : TEXCOORD2;	float3 t  : TEXCOORD3;	float3 b  : TEXCOORD4; \n"
+	"	float4 n : TEXCOORD2;	float4 t  : TEXCOORD3;	float4 b  : TEXCOORD4; \n"
 	"}; \n"
 	"VOut main_vp(VIn IN, \n"
 	"	uniform float4x4 wMat,  uniform float4x4 wvpMat, \n";
@@ -150,8 +180,18 @@ void WaterMaterialGenerator::generateVertexProgramSource(Ogre::StringUtil::StrSt
 	"{ \n"
 	"	VOut OUT; \n"
 	"	OUT.wp = mul(wMat, IN.p); \n"
-	"	OUT.p = mul(wvpMat, IN.p); \n"
-	"	OUT.n = IN.n;  OUT.t = IN.t;  OUT.b = cross(IN.t, IN.n); \n"
+	"	OUT.p = mul(wvpMat, IN.p); \n";
+	
+	if (MaterialFactory::getSingleton().getReflect() || MaterialFactory::getSingleton().getRefract()) outStream <<
+	"	float4x4 scalemat = float4x4(0.5,   0,   0, 0.5, "
+	"                              	 0,		-0.5,   0, 0.5, "
+	"							  	 0,  	0, 	 0.5, 0.5, "
+	"							  	 0,  	0,   0,   1); \n"
+	"	float4 texcoordProj = mul(scalemat, OUT.p); \n"
+	"	OUT.n.w = texcoordProj.x; OUT.t.w = texcoordProj.y; OUT.b.w = texcoordProj.w; \n";
+	
+	outStream <<
+	"	OUT.n.xyz = IN.n;  OUT.t.xyz = IN.t;  OUT.b.xyz = cross(IN.t, IN.n); \n"
 	"	OUT.wp.w = saturate(fogParams.x * (OUT.p.z - fogParams.y) * fogParams.w); \n"
 	"	OUT.uv.xyz = float3(IN.uv.x, IN.uv.y, OUT.p.z); \n";
 	
@@ -173,6 +213,8 @@ void WaterMaterialGenerator::generateVertexProgramSource(Ogre::StringUtil::StrSt
 void WaterMaterialGenerator::vertexProgramParams(Ogre::HighLevelGpuProgramPtr program)
 {
 	GpuProgramParametersSharedPtr params = program->getDefaultParameters();
+	
+	params->setIgnoreMissingParams(true);
 
 	params->setNamedAutoConstant("wMat", GpuProgramParameters::ACT_WORLD_MATRIX);
 	params->setNamedAutoConstant("wvpMat", GpuProgramParameters::ACT_WORLDVIEWPROJ_MATRIX);
@@ -241,22 +283,9 @@ void WaterMaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::Str
 	outStream <<
 	"struct PIn \n"
 	"{	float4 p : POSITION;	float3 uv : TEXCOORD0;	float4 wp : TEXCOORD1; \n"
-	"	float3 n : TEXCOORD2;	float3 t  : TEXCOORD3;	float3 b  : TEXCOORD4; \n"
+	"	float4 n : TEXCOORD2;	float4 t  : TEXCOORD3;	float4 b  : TEXCOORD4; \n" // projective texcoords packed in (n.w, t.w, b.w)
 	"}; \n"
-	"float4 main_fp(PIn IN,  \n"      ///  _water_
-	"   uniform float3 lightSpec0, \n"
-	"	uniform float4 matSpec,	\n"
-	"	uniform float3 fogColor, \n"
-	"	uniform float4 lightPos0,  uniform float3 camPos,	uniform float4x4 iTWMat, \n"
-	"	uniform float2 waveBump, \n"
-	"	uniform float waveHighFreq, uniform float waveSpecular, \n"
-	"	uniform float time, \n"
-	"	uniform float invTerSize, \n"
-	"	uniform float3 depthPars, \n"  // from waterDepth tex
-	"	uniform float4 depthColor, \n"
-	"	uniform float4 deepColor,  uniform float4 shallowColor,  uniform float4 reflectionColor, \n"
-	"	uniform float2 reflAndWaterAmounts, \n"
-	"	uniform float2 fresnelPowerBias, \n";
+	"float4 main_fp(PIn IN,  \n";      ///  _water_
 	
 	outStream <<
 	"	uniform sampler2D normalMap : TEXUNIT"+toStr(mNormalTexUnit)+", \n";
@@ -271,8 +300,30 @@ void WaterMaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::Str
 	
 	fpShadowingParams(outStream);
 	
+	if (MaterialFactory::getSingleton().getRefract()) outStream <<
+		"	uniform sampler2D refractionMap : TEXUNIT"+toStr(mScreenRefrUnit)+", \n";
+	
+	if (MaterialFactory::getSingleton().getReflect()) outStream <<
+		"	uniform sampler2D reflectionMap : TEXUNIT"+toStr(mScreenReflUnit)+", \n";
+	else outStream <<
+		"	uniform sampler2D skyMap : TEXUNIT"+toStr(mEnvTexUnit)+", \n";
+	
+	
 	outStream <<
-	"	uniform sampler2D skyMap : TEXUNIT"+toStr(mEnvTexUnit)+"): COLOR0 \n"
+	"   uniform float3 lightSpec0, \n"
+	"	uniform float4 matSpec,	\n"
+	"	uniform float3 fogColor, \n"
+	"	uniform float4 lightPos0,  uniform float3 camPos,	uniform float4x4 iTWMat, \n"
+	"	uniform float2 waveBump, \n"
+	"	uniform float waveHighFreq, uniform float waveSpecular, \n"
+	"	uniform float time, \n"
+	"	uniform float invTerSize, \n"
+	"	uniform float3 depthPars, \n"  // from waterDepth tex
+	"	uniform float4 depthColor, \n"
+	"	uniform float4 deepColor,  uniform float4 shallowColor,  uniform float4 reflectionColor, \n"
+	"	uniform float2 reflAndWaterAmounts, \n"
+	"	uniform float2 fresnelPowerBias \n"
+	"): COLOR0 \n"
 	"{ \n";
 		
 	if (needTerrainLightMap()) outStream <<
@@ -300,7 +351,7 @@ void WaterMaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::Str
 	"	normalTex = lerp(normalTex, float3(0,0,1), waveBump.x); \n"
 
 		//  normal to object space
-	"	float3x3 tbn = float3x3(IN.t, IN.b, IN.n); \n"
+	"	float3x3 tbn = float3x3(IN.t.xyz, IN.b.xyz, IN.n.xyz); \n"
 	"	float3 normal = mul(transpose(tbn), normalTex.xyz); \n"
 	"	normal = normalize(mul((float3x3)iTWMat, normal)); \n"
 
@@ -321,16 +372,34 @@ void WaterMaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::Str
 	"	float2 aa = tex2D(depthMap, uva).rg; \n";
 		
 	outStream <<
-	"	float3 clrSUM = /*diffC +*/ specC; \n"
-		//  reflection  3D vec to sky dome map 2D uv
-	"	float3 refl = reflect(-camDir, normal); \n"
-	"	const float PI = 3.14159265358979323846; \n"
-	"	float2 refl2; \n"
-	"	refl2.x = /*(refl.x == 0) ? 0 :*/ ( (refl.z < 0.0) ? atan2(-refl.z, refl.x) : (2*PI - atan2(refl.z, refl.x)) ); \n"
-	"	refl2.x = 1 - refl2.x / (2*PI); \n"  // yaw 0..1
-	"	refl2.y = 1 - asin(refl.y) / PI*2; \n" //pitch 0..1
-	"	float4 reflection = tex2D(skyMap, refl2) * reflectionColor; \n"
+	"	float3 clrSUM = /*diffC +*/ specC; \n";
+	
+	if (MaterialFactory::getSingleton().getRefract() || MaterialFactory::getSingleton().getReflect()) outStream <<
+		"	float3 projCoord = float3(IN.n.w, IN.t.w, IN.b.w); \n"
+		"	float2 projUV = projCoord.xy / projCoord.z; \n";
+	
+	/*if (MaterialFactory::getSingleton().getRefract())
+	{
+		//!todo distort refraction based on normal
+		float3 refractColour = 
+	}*/
+	
+	if (MaterialFactory::getSingleton().getReflect())
+	{
+		outStream <<
+		"	float4 reflection = tex2D(reflectionMap, projUV); \n";
+	}
+	else outStream <<
+			//  reflection  3D vec to sky dome map 2D uv
+		"	float3 refl = reflect(-camDir, normal); \n"
+		"	const float PI = 3.14159265358979323846; \n"
+		"	float2 refl2; \n"
+		"	refl2.x = /*(refl.x == 0) ? 0 :*/ ( (refl.z < 0.0) ? atan2(-refl.z, refl.x) : (2*PI - atan2(refl.z, refl.x)) ); \n"
+		"	refl2.x = 1 - refl2.x / (2*PI); \n"  // yaw 0..1
+		"	refl2.y = 1 - asin(refl.y) / PI*2; \n" //pitch 0..1
+		"	float4 reflection = tex2D(skyMap, refl2) * reflectionColor; \n";
 
+	outStream <<
 		//  fresnel
 	"	float facing = 1.0 - max(abs(dot(camDir, normal)), 0); \n"
 	"	float fresnel = saturate(fresnelPowerBias.y + pow(facing, fresnelPowerBias.x)); \n"
@@ -340,9 +409,9 @@ void WaterMaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::Str
 	"	float3 clr = clrSUM.rgb * waveSpecular + waterClr.rgb * reflAndWaterAmounts.y + reflClr.rgb * reflAndWaterAmounts.x; \n";
 	
 	if (needShadows() || needTerrainLightMap()) outStream <<
-		"	clr = lerp(clr*(0.7+0.3*shadowing), fogColor, /*IN.fogVal*/IN.wp.w); \n";
+		"	clr = lerp(clr*(0.7+0.3*shadowing), fogColor, /*IN.fogVal*//*IN.wp.w*/ 0); \n";
 	else outStream <<
-		"	clr = lerp(clr, fogColor, /*IN.fogVal*/IN.wp.w); \n";
+		"	clr = lerp(clr, fogColor, /*IN.fogVal*/IN.wp.w ); \n";
 
 	outStream <<
 		//"	return float4(clr*0.01f + float3(aa,1), 1.f + aa.g * 0.2f + aa.r * (waterClr.a + clrSUM.r) ); \n"

@@ -159,7 +159,7 @@ void App::changeShadows()
 	materialFactory->setShadowsSoft(bSoft);
 	materialFactory->generate();
 	
-	#if 0	// shadow tex overlay
+	#if 1	// shadow tex overlay
 	// add the overlay elements to show the shadow maps:
 	// init overlay elements
 	OverlayManager& mgr = OverlayManager::getSingleton();
@@ -171,9 +171,12 @@ void App::changeShadows()
 		
 	overlay = mgr.create("DebugOverlay");
 	
-	for (size_t i = 0; i < num; ++i) {
-		TexturePtr tex = mSceneMgr->getShadowTexture(i);
-
+	TexturePtr tex;
+	for (size_t i = 0; i < 2; ++i) {
+		//TexturePtr tex = mSceneMgr->getShadowTexture(i);
+		if (i == 0) tex = TextureManager::getSingleton().getByName("PlaneReflection"); 
+		else tex = TextureManager::getSingleton().getByName("PlaneRefraction"); 
+		
 		// Set up a debug panel to display the shadow
 		
 		if (MaterialManager::getSingleton().resourceExists("Ogre/DebugTexture" + toStr(i)))

@@ -115,6 +115,13 @@ void App::LoadTrackEv()
 	sc.ter = true;
 	sc.LoadXml(TrkDir()+"scene.xml");
 	
+	//  water RTT
+	mWaterRTT.setViewerCamera(mCamera);
+	mWaterRTT.setRTTSize(512);
+	mWaterRTT.mSceneMgr = mSceneMgr;
+	mWaterRTT.recreate();
+	mWaterRTT.setActive(MaterialFactory::getSingleton().getReflect());
+	
 	/// generate materials
 	materialFactory->generate();
 

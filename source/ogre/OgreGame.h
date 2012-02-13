@@ -7,6 +7,7 @@
 #include "common/BltObjects.h"
 #include "common/TracksXml.h"
 #include "common/FluidsXml.h"
+#include "common/WaterRTT.h"
 #include "ChampsXml.h"
 
 #include "ReplayGame.h"
@@ -80,6 +81,8 @@ public:
 	Ogre::SceneManager* sceneMgr() { return mSceneMgr; };
 
 protected:
+	WaterRTT mWaterRTT;
+
 	virtual void createScene();
 	virtual void destroyScene();
 

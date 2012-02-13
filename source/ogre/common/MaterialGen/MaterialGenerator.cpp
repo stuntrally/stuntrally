@@ -264,7 +264,7 @@ void MaterialGenerator::createTexUnits(Ogre::Pass* pass)
 void MaterialGenerator::resetTexUnitCounter()
 {
 	mDiffuseTexUnit = 0; mNormalTexUnit = 0; mEnvTexUnit = 0; mAlphaTexUnit = 0;
-	mShadowTexUnit_start = 0; mTerrainLightTexUnit = 0; mTexUnit_i = 0; mWaterDepthUnit = 0;
+	mShadowTexUnit_start = 0; mTerrainLightTexUnit = 0; mTexUnit_i = 0;
 }
 
 //----------------------------------------------------------------------------------------

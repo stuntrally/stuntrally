@@ -262,11 +262,19 @@ void App::LoadScene()  // 3
 	else
 	{	sc.Default();  sc.td.hfHeight = NULL;  sc.td.hfAngle = NULL;  }
 
+	//  water RTT
+	mWaterRTT.setViewerCamera(mSplitMgr->mCameras.front());
+	mWaterRTT.setRTTSize(512);
+	mWaterRTT.mSceneMgr = mSceneMgr;
+	mWaterRTT.recreate();
+	mWaterRTT.setActive(MaterialFactory::getSingleton().getReflect());
+
 	/// generate materials
 	materialFactory->generate();
 
 	//  fluids
 	CreateFluids();
+
 
 	//  rain  -----
 	if (!pr && sc.rainEmit > 0)  {
