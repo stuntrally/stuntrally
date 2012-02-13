@@ -1165,6 +1165,14 @@
 					RelativePath=".\Source\ogre\TrackVdr.cpp"
 					>
 				</File>
+				<File
+					RelativePath=".\source\ogre\common\WaterRTT.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\source\ogre\common\WaterRTT.h"
+					>
+				</File>
 			</Filter>
 			<Filter
 				Name="Gui"

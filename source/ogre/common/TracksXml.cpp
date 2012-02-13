@@ -16,7 +16,7 @@ TrackInfo::TrackInfo()
 Date s2dt(const char* a)
 {
 	Date d;  d.day=0; d.month=0; d.year=0;
-	sscanf(a,"%2d-%2d-%2d",&d.day,&d.month,&d.year);
+	TIXML_SSCANF(a,"%2d-%2d-%2d",&d.day,&d.month,&d.year);
 	return d;
 }
 std::string dt2s(const Date& dt)
