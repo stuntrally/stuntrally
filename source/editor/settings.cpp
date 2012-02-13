@@ -35,6 +35,8 @@ void SETTINGS::Serialize(bool w, CONFIGFILE & c)
 	Param(c,w, "graph_shadow.count",shadow_count);			Param(c,w, "graph_shadow.type", shadow_type);
 	Param(c,w, "graph_shadow.shaders", shaders);			Param(c,w, "graph_shadow.lightmap_size", lightmap_size);
 	Param(c,w, "graph_shadow.filter", shadow_filter);
+	
+	Param(c,w, "graph_reflect.water_reflect", water_reflect); Param(c,w, "graph_reflect.water_refract", water_refract);
 
 	Param(c,w, "graph_veget.trees", gui.trees);				Param(c,w, "graph_veget.grass", grass);
 	Param(c,w, "graph_veget.trees_dist", trees_dist);		Param(c,w, "graph_veget.grass_dist", grass_dist);
@@ -75,6 +77,7 @@ SETTINGS::SETTINGS() :  ///  Defaults
 	shadow_dist(2000), shadow_size(2), shadow_count(3), shadow_type(2), shadow_filter(1),  /*<+*/
 	shaders(0.5), lightmap_size(0),
 	grass(1.f), trees_dist(1.f), grass_dist(1.f),use_imposters(false),
+	water_reflect(0), water_refract(0),
 	//  startup
 	autostart(0), ogre_dialog(1), escquit(0), language(""), allow_save(0),
 	//  settings

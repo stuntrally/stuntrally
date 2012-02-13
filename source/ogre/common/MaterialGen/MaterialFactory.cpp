@@ -73,9 +73,10 @@ MaterialFactory& MaterialFactory::getSingleton(void)
 MaterialFactory::MaterialFactory() : 
 	bNormalMap(1), bEnvMap(1), bShadows(1), bShadowsDepth(1), bShadowsSoft(1), bShadowsFade(0),
 	iTexSize(4096), iNumShadowTex(3), iShadowsFilterSize(4), fShaderQuality(0.5), fShadowsFadeDistance(20.f),
+	bReflect(0), bRefract(0),
 	bSettingsChanged(1), // always have to generate at start
 	
-	mSceneMgr(0), mTerrain(0), mPSSM(0), mAspect(1.6)
+	mSceneMgr(0), mTerrain(0), mPSSM(0)
 {
 	QTimer ti;  ti.update(); /// time
 	

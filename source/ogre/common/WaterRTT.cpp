@@ -93,10 +93,10 @@ void WaterRTT::preRenderTargetUpdate(const RenderTargetEvent& evt)
 	
 	if (mSceneMgr->hasSceneNode("FluidsRootNode")) mSceneMgr->getSceneNode("FluidsRootNode")->setVisible(false);
 	
-	mCamera->enableCustomNearClipPlane(mWaterPlane);
 	
 	if (evt.source == mReflectionTarget)
 	{
+		mCamera->enableCustomNearClipPlane(mWaterPlane);
 		mCamera->enableReflection(mWaterPlane);
 	}
 }
@@ -104,11 +104,10 @@ void WaterRTT::preRenderTargetUpdate(const RenderTargetEvent& evt)
 void WaterRTT::postRenderTargetUpdate(const RenderTargetEvent& evt)
 {
 	if (mSceneMgr->hasSceneNode("FluidsRootNode")) mSceneMgr->getSceneNode("FluidsRootNode")->setVisible(true);
-
-	mCamera->disableCustomNearClipPlane();
 	
 	if (evt.source == mReflectionTarget)
 	{
 		mCamera->disableReflection();
+		mCamera->disableCustomNearClipPlane();
 	}
 }

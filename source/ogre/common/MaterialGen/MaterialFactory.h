@@ -69,6 +69,8 @@ public:
 	
 	void setNormalMap(const bool p) { setIfChanged(bNormalMap) };
 	void setEnvMap(const bool p) { setIfChanged(bEnvMap) };
+	void setReflect(const bool p) { setIfChanged(bReflect) };
+	void setRefract(const bool p) { setIfChanged(bRefract) };
 	void setShadows(const bool p) { setIfChanged(bShadows) };
 	void setShadowsFilterSize(const unsigned int p) { setIfChanged(iShadowsFilterSize) };
 	void setShadowsDepth(const bool p) { setIfChanged(bShadowsDepth) };
@@ -79,12 +81,9 @@ public:
 	void setTexSize(const unsigned int p) { setIfChanged(iTexSize) };
 	void setNumShadowTex(const unsigned int p) { if(p> SHADOWTEX_NUM_MAX) { iNumShadowTex=SHADOWTEX_NUM_MAX; } else { setIfChanged(iNumShadowTex) } };
 	void setShaderQuality(const float p) { setIfChanged(fShaderQuality) };
-	
-	void setAspectRatio(const float aspect) { mAspect = aspect; }; // X / Y
-	const float getAspectRatio() { return mAspect; };
-	
-	const bool getReflect() { return false; };
-	const bool getRefract() { return false; };
+		
+	const bool getReflect() { return bReflect; };
+	const bool getRefract() { return bRefract; };
 	const bool getNormalMap() { return bNormalMap; };
 	const bool getEnvMap() { return bEnvMap; };
 	const bool getShadows() { return bShadows; };
@@ -112,10 +111,9 @@ private:
 	bool bNormalMap, bEnvMap, bShadows, bShadowsDepth, bShadowsSoft, bShadowsFade;
 	unsigned int iTexSize; unsigned int iNumShadowTex; unsigned int iShadowsFilterSize;
 	float fShaderQuality, fShadowsFadeDistance;
+	bool bReflect, bRefract;
 	/// -------------------------------------------------------
 	
-	float mAspect; // aspect ratio of viewport
-
 	Ogre::SceneManager* mSceneMgr; // scene manager (used for e.g. retrieving shadow settings)
 	Ogre::Terrain* mTerrain; // terrain (used for retrieving the lightmap as well as updating shadow fade parameter)
 	Ogre::PSSMShadowCameraSetup* mPSSM;

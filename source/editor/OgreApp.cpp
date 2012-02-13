@@ -97,6 +97,8 @@ void App::postInit()
 	materialFactory->setShadowsSoft(pSet->shadow_type == 4);
 	materialFactory->setShaderQuality(pSet->shaders);
 	materialFactory->setShadowsFilterSize(pSet->shadow_filter);
+	materialFactory->setReflect(pSet->water_reflect);
+	materialFactory->setRefract(pSet->water_refract);
 	if (pSet->tex_size == 0)
 		materialFactory->setTexSize(0);
 	else if (pSet->tex_size == 1)

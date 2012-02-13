@@ -376,12 +376,11 @@ void WaterMaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::Str
 	
 	if (mParent->getRefract() || mParent->getReflect())
 	{
-		const float distort_scale = 0.08;
-		const float aspect = mParent->getAspectRatio();
+		const float distort_scale = 0.05;
 		 outStream <<
 		"	float4 projCoord = float4(IN.n.w, IN.t.w, 1, IN.b.w); \n"
-		"	float2 projUV = projCoord.xy / projCoord.w; \n";
-		//"	projUV += (normal.xy * float2(1,"<<aspect<<") * "<<distort_scale<<"; \n";
+		"	float2 projUV = projCoord.xy / projCoord.w; \n"
+		"	projUV += normalTex.yx * "<<distort_scale<<"; \n";
 	}
 	
 	if (MaterialFactory::getSingleton().getRefract())
