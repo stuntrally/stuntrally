@@ -159,7 +159,7 @@ void App::changeShadows()
 	materialFactory->setShadowsSoft(bSoft);
 	materialFactory->generate();
 	
-	#if 1	// shadow tex overlay
+	#if 0	// shadow tex overlay
 	// add the overlay elements to show the shadow maps:
 	// init overlay elements
 	OverlayManager& mgr = OverlayManager::getSingleton();
