@@ -13,7 +13,7 @@ WaterRTT::WaterRTT() :
 	mRTTSize(512), mReflect(true), mRefract(true),
 	mViewerCamera(0), mChangedSettings(1)
 {
-	
+	mWaterPlane = Plane(Vector3::UNIT_Y, 0);
 }
 
 void WaterRTT::create()
@@ -23,9 +23,8 @@ void WaterRTT::create()
 	{
 		mCamera->setFarClipDistance(mViewerCamera->getFarClipDistance());
 		mCamera->setNearClipDistance(mViewerCamera->getNearClipDistance());
+		mCamera->setAspectRatio(mViewerCamera->getAspectRatio());
 	}
-	
-	mWaterPlane = Plane(Vector3::UNIT_Y, 0);
 	
 	for (unsigned int i = 0; i < 2; ++i)
 	{
@@ -36,11 +35,11 @@ void WaterRTT::create()
 		Viewport* vp = rtt->addViewport(mCamera);
 		vp->setOverlaysEnabled(false);
 		vp->setShadowsEnabled(false);
-		vp->setVisibilityMask(RV_WaterReflect);
+		vp->setVisibilityMask( i == 0 ? RV_WaterReflect : RV_WaterRefract);
 		rtt->addListener(this);
 
-		if (i == 0) mRefractionTarget = rtt;
-		else mReflectionTarget = rtt;
+		if (i == 0) mReflectionTarget = rtt;
+		else mRefractionTarget = rtt;
 	}
 }
 
@@ -50,8 +49,8 @@ void WaterRTT::setViewerCamera(Ogre::Camera* cam)
 	if (mCamera)
 	{
 		mCamera->setFarClipDistance(mViewerCamera->getFarClipDistance());
-		//mCamera->setNearClipDistance(mViewerCamera->getNearClipDistance());
-		mCamera->setNearClipDistance(10.f); // Need to set this bit higher to hide terrain skirts
+		mCamera->setNearClipDistance(mViewerCamera->getNearClipDistance());
+		mCamera->setAspectRatio(mViewerCamera->getAspectRatio());
 	}
 }
 
@@ -90,7 +89,10 @@ void WaterRTT::preRenderTargetUpdate(const RenderTargetEvent& evt)
 	if (mSceneMgr->hasSceneNode("FluidsRootNode")) mSceneMgr->getSceneNode("FluidsRootNode")->setVisible(false);
 	
 	if (evt.source == mReflectionTarget)
+	{
 		mCamera->enableReflection(mWaterPlane);
+		mCamera->enableCustomNearClipPlane(mWaterPlane);
+	}
 }
 
 void WaterRTT::postRenderTargetUpdate(const RenderTargetEvent& evt)
@@ -99,5 +101,8 @@ void WaterRTT::postRenderTargetUpdate(const RenderTargetEvent& evt)
 
 	
 	if (evt.source == mReflectionTarget)
+	{
 		mCamera->disableReflection();
+		mCamera->disableCustomNearClipPlane();
+	}
 }

@@ -47,7 +47,8 @@ const Ogre::uint32
 	RV_CarGlass = 16,	// car glass in game, (hide for in car camera)
 	RV_MaskReflect = RV_Road + RV_Terrain + RV_Vegetation,  // hide 2: hud, car,glass,tires
 	
-	RV_WaterReflect = RV_Terrain + RV_Vegetation,
+	RV_WaterReflect = RV_Terrain + RV_Vegetation + RV_Road,
+	RV_WaterRefract = RV_Terrain + RV_Vegetation + RV_Road + RV_Car,
 
 	RV_MaskAll = 255,
 	RV_MaskPrvCam = 256;

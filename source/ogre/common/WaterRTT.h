@@ -1,4 +1,4 @@
-
+#include <OgrePlane.h>
 #include <OgreRenderTargetListener.h>
 #include <OgreRenderTarget.h>
 
@@ -24,6 +24,7 @@ public:
 	void setRefract(const bool refract) { if (mRefract != refract) { mChangedSettings=true; mRefract = refract; } };
 	
 	void setActive(const bool active);
+	void setPlane(const Ogre::Plane& plane) { mWaterPlane = plane; };
 	
 	void setViewerCamera(Ogre::Camera* cam);
 	

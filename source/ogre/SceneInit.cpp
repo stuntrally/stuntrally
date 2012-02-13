@@ -266,6 +266,8 @@ void App::LoadScene()  // 3
 	mWaterRTT.setViewerCamera(mSplitMgr->mCameras.front());
 	mWaterRTT.setRTTSize(512);
 	mWaterRTT.mSceneMgr = mSceneMgr;
+	if (!sc.fluids.empty())
+		mWaterRTT.setPlane(Plane(Vector3::UNIT_Y, sc.fluids.front().pos.y));
 	mWaterRTT.recreate();
 	mWaterRTT.setActive(MaterialFactory::getSingleton().getReflect());
 

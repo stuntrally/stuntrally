@@ -65,7 +65,7 @@ void WaterMaterialGenerator::generate()
 	}
 	if (mParent->getReflect())
 	{
-		tu = pass->createTextureUnitState( "PlaneRefraction" );
+		tu = pass->createTextureUnitState( "PlaneReflection" );
 		tu->setName("reflectionMap");
 		tu->setTextureAddressingMode(TextureUnitState::TAM_CLAMP);
 		mScreenReflUnit = mTexUnit_i++;
@@ -376,19 +376,19 @@ void WaterMaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::Str
 	
 	if (mParent->getRefract() || mParent->getReflect())
 	{
-		const float distort_scale = 0.05;
+		const float distort_scale = 0.08;
 		const float aspect = mParent->getAspectRatio();
 		 outStream <<
-		"	float3 projCoord = float3(IN.n.w, IN.t.w, IN.b.w); \n"
-		"	float2 projUV = projCoord.xy / projCoord.z; \n"
-		"	projUV += normal.xy * float2(1,"<<aspect<<") * "<<distort_scale<<"; \n";
+		"	float4 projCoord = float4(IN.n.w, IN.t.w, 1, IN.b.w); \n"
+		"	float2 projUV = projCoord.xy / projCoord.w; \n";
+		//"	projUV += (normal.xy * float2(1,"<<aspect<<") * "<<distort_scale<<"; \n";
 	}
 	
-	/*if (MaterialFactory::getSingleton().getRefract())
+	if (MaterialFactory::getSingleton().getRefract())
 	{
-		//!todo distort refraction based on normal
-		float3 refractColour = 
-	}*/
+		outStream <<
+		"	float4 refraction = tex2D(refractionMap, projUV); \n";
+	}
 	
 	if (mParent->getReflect())
 	{
@@ -418,10 +418,15 @@ void WaterMaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::Str
 		"	clr = lerp(clr*(0.7+0.3*shadowing), fogColor, /*IN.fogVal*//*IN.wp.w*/ 0); \n";
 	else outStream <<
 		"	clr = lerp(clr, fogColor, /*IN.fogVal*/IN.wp.w ); \n";
-
-	outStream <<
+	
+	if (!mParent->getRefract()) outStream <<
 		//"	return float4(clr*0.01f + float3(aa,1), 1.f + aa.g * 0.2f + aa.r * (waterClr.a + clrSUM.r) ); \n"
-		"	return float4(clr, aa.g * depthPars.y + aa.r * (waterClr.a + clrSUM.r) ); \n"
+		"	return float4(clr, aa.g * depthPars.y + aa.r * (waterClr.a + clrSUM.r) ); \n";
+	else outStream <<
+		"	float alpha = aa.g * depthPars.y + aa.r * (waterClr.a + clrSUM.r); \n"
+		"	return float4(clr*alpha + refraction*(1-alpha), 1 ); \n";
+		
+	outStream <<
 	"} \n";
 }
 
