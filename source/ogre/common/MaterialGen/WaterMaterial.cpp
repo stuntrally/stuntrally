@@ -414,18 +414,26 @@ void WaterMaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::Str
 	"	float4 reflClr  = lerp( lerp(waterClr, reflection, fresnel),   depthColor, aa.g * depthPars.z); \n"
 	"	float3 clr = clrSUM.rgb * waveSpecular + waterClr.rgb * reflAndWaterAmounts.y + reflClr.rgb * reflAndWaterAmounts.x; \n";
 	
+	// shadow
 	if (needShadows() || needTerrainLightMap()) outStream <<
-		"	clr = lerp(clr*(0.7+0.3*shadowing), fogColor, /*IN.fogVal*//*IN.wp.w*/ 0); \n";
-	else outStream <<
-		"	clr = lerp(clr, fogColor, /*IN.fogVal*/IN.wp.w ); \n";
+		"	clr = clr*(0.7+0.3*shadowing); \n";
 	
-	if (!mParent->getRefract()) outStream <<
-		//"	return float4(clr*0.01f + float3(aa,1), 1.f + aa.g * 0.2f + aa.r * (waterClr.a + clrSUM.r) ); \n"
-		"	return float4(clr, aa.g * depthPars.y + aa.r * (waterClr.a + clrSUM.r) ); \n";
-	else outStream <<
-		"	float alpha = aa.g * depthPars.y + aa.r * (waterClr.a + clrSUM.r); \n"
-		"	return float4(clr*alpha + refraction*(1-alpha), 1 ); \n";
+	// fog
+	// NB we apply fog before adding refraction, since the refracted part already has fog from the RTT
+	outStream <<
+	"	clr = lerp(clr, fogColor, /*IN.fogVal*/IN.wp.w ); \n";
+
+	
+	outStream <<
+	"	float alpha = aa.g * depthPars.y + aa.r * (waterClr.a + clrSUM.r); \n";
+	if (mParent->getRefract()) outStream << 
+		"	clr = float3(clr*alpha + refraction*(1-alpha)); \n"
+		"	alpha = 1.f; \n";
 		
+	outStream <<
+		//"	return float4(clr*0.01f + float3(aa,1), 1.f + aa.g * 0.2f + aa.r * (waterClr.a + clrSUM.r) ); \n"
+		"	return float4(clr, alpha); \n";
+	
 	outStream <<
 	"} \n";
 }

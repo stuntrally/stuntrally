@@ -29,6 +29,9 @@ void WaterRTT::create()
 	
 	for (unsigned int i = 0; i < 2; ++i)
 	{
+		if (i==0 && !mReflect) continue;
+		if (i==1 && !mRefract) continue;
+		
 		TexturePtr tex = TextureManager::getSingleton().createManual(i == 0 ? "PlaneReflection" : "PlaneRefraction",
 			ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME, TEX_TYPE_2D, mRTTSize, mRTTSize, 0, PF_R8G8B8, TU_RENDERTARGET);
 
