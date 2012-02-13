@@ -38,6 +38,7 @@ void WaterRTT::create()
 		RenderTarget* rtt = tex->getBuffer()->getRenderTarget();
 		Viewport* vp = rtt->addViewport(mCamera);
 		vp->setOverlaysEnabled(false);
+		vp->setBackgroundColour(ColourValue(0.f, 0.5f, 0.9f));
 		vp->setShadowsEnabled(false);
 		vp->setVisibilityMask( i == 0 ? RV_WaterReflect : RV_WaterRefract);
 		rtt->addListener(this);
@@ -92,10 +93,11 @@ void WaterRTT::preRenderTargetUpdate(const RenderTargetEvent& evt)
 	
 	if (mSceneMgr->hasSceneNode("FluidsRootNode")) mSceneMgr->getSceneNode("FluidsRootNode")->setVisible(false);
 	
+	mCamera->enableCustomNearClipPlane(mWaterPlane);
+	
 	if (evt.source == mReflectionTarget)
 	{
 		mCamera->enableReflection(mWaterPlane);
-		mCamera->enableCustomNearClipPlane(mWaterPlane);
 	}
 }
 
@@ -103,10 +105,10 @@ void WaterRTT::postRenderTargetUpdate(const RenderTargetEvent& evt)
 {
 	if (mSceneMgr->hasSceneNode("FluidsRootNode")) mSceneMgr->getSceneNode("FluidsRootNode")->setVisible(true);
 
+	mCamera->disableCustomNearClipPlane();
 	
 	if (evt.source == mReflectionTarget)
 	{
 		mCamera->disableReflection();
-		mCamera->disableCustomNearClipPlane();
 	}
 }
