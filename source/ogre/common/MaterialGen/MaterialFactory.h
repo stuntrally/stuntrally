@@ -67,18 +67,21 @@ public:
 	#define setIfChanged(s) if (p != s) { s = p; bSettingsChanged = true; } // changes shader source ( need recompile)
 	#define setIfChangedP(s) if (p != s) { s = p; } // only changes uniform param value
 	
-	void setNormalMap(bool p) { setIfChanged(bNormalMap) };
-	void setEnvMap(bool p) { setIfChanged(bEnvMap) };
-	void setShadows(bool p) { setIfChanged(bShadows) };
-	void setShadowsFilterSize(unsigned int p) { setIfChanged(iShadowsFilterSize) };
-	void setShadowsDepth(bool p) { setIfChanged(bShadowsDepth) };
-	void setShadowsSoft(bool p) { setIfChanged(bShadowsSoft) };
-	void setShadowsFade(bool p) { setIfChanged(bShadowsFade) };
-	void setShadowsFadeDistance(float p) { setIfChangedP(fShadowsFadeDistance) };
+	void setNormalMap(const bool p) { setIfChanged(bNormalMap) };
+	void setEnvMap(const bool p) { setIfChanged(bEnvMap) };
+	void setShadows(const bool p) { setIfChanged(bShadows) };
+	void setShadowsFilterSize(const unsigned int p) { setIfChanged(iShadowsFilterSize) };
+	void setShadowsDepth(const bool p) { setIfChanged(bShadowsDepth) };
+	void setShadowsSoft(const bool p) { setIfChanged(bShadowsSoft) };
+	void setShadowsFade(const bool p) { setIfChanged(bShadowsFade) };
+	void setShadowsFadeDistance(const float p) { setIfChangedP(fShadowsFadeDistance) };
 	void setPSSMCameraSetup(Ogre::PSSMShadowCameraSetup*);
-	void setTexSize(unsigned int p) { setIfChanged(iTexSize) };
-	void setNumShadowTex(unsigned int p) { if(p> SHADOWTEX_NUM_MAX) { p=SHADOWTEX_NUM_MAX; } else { setIfChanged(iNumShadowTex) } };
-	void setShaderQuality(float p) { setIfChanged(fShaderQuality) };
+	void setTexSize(const unsigned int p) { setIfChanged(iTexSize) };
+	void setNumShadowTex(const unsigned int p) { if(p> SHADOWTEX_NUM_MAX) { iNumShadowTex=SHADOWTEX_NUM_MAX; } else { setIfChanged(iNumShadowTex) } };
+	void setShaderQuality(const float p) { setIfChanged(fShaderQuality) };
+	
+	void setAspectRatio(const float aspect) { mAspect = aspect; }; // X / Y
+	const float getAspectRatio() { return mAspect; };
 	
 	const bool getReflect() { return false; };
 	const bool getRefract() { return false; };
@@ -110,6 +113,8 @@ private:
 	unsigned int iTexSize; unsigned int iNumShadowTex; unsigned int iShadowsFilterSize;
 	float fShaderQuality, fShadowsFadeDistance;
 	/// -------------------------------------------------------
+	
+	float mAspect; // aspect ratio of viewport
 
 	Ogre::SceneManager* mSceneMgr; // scene manager (used for e.g. retrieving shadow settings)
 	Ogre::Terrain* mTerrain; // terrain (used for retrieving the lightmap as well as updating shadow fade parameter)

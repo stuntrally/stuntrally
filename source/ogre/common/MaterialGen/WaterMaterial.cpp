@@ -56,14 +56,14 @@ void WaterMaterialGenerator::generate()
 		mTerrainLightTexUnit = mTexUnit_i; mTexUnit_i++;
 	}
 
-	if (MaterialFactory::getSingleton().getRefract())
+	if (mParent->getRefract())
 	{
 		tu = pass->createTextureUnitState( "PlaneRefraction" );
 		tu->setName("refractionMap");
 		tu->setTextureAddressingMode(TextureUnitState::TAM_CLAMP);
 		mScreenRefrUnit = mTexUnit_i++;
 	}
-	if (MaterialFactory::getSingleton().getReflect())
+	if (mParent->getReflect())
 	{
 		tu = pass->createTextureUnitState( "PlaneRefraction" );
 		tu->setName("reflectionMap");
@@ -182,7 +182,7 @@ void WaterMaterialGenerator::generateVertexProgramSource(Ogre::StringUtil::StrSt
 	"	OUT.wp = mul(wMat, IN.p); \n"
 	"	OUT.p = mul(wvpMat, IN.p); \n";
 	
-	if (MaterialFactory::getSingleton().getReflect() || MaterialFactory::getSingleton().getRefract()) outStream <<
+	if (mParent->getReflect() || mParent->getRefract()) outStream <<
 	"	float4x4 scalemat = float4x4(0.5,   0,   0, 0.5, "
 	"                              	 0,		-0.5,   0, 0.5, "
 	"							  	 0,  	0, 	 0.5, 0.5, "
@@ -374,9 +374,15 @@ void WaterMaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::Str
 	outStream <<
 	"	float3 clrSUM = /*diffC +*/ specC; \n";
 	
-	if (MaterialFactory::getSingleton().getRefract() || MaterialFactory::getSingleton().getReflect()) outStream <<
+	if (mParent->getRefract() || mParent->getReflect())
+	{
+		const float distort_scale = 0.05;
+		const float aspect = mParent->getAspectRatio();
+		 outStream <<
 		"	float3 projCoord = float3(IN.n.w, IN.t.w, IN.b.w); \n"
-		"	float2 projUV = projCoord.xy / projCoord.z; \n";
+		"	float2 projUV = projCoord.xy / projCoord.z; \n"
+		"	projUV += normal.xy * float2(1,"<<aspect<<") * "<<distort_scale<<"; \n";
+	}
 	
 	/*if (MaterialFactory::getSingleton().getRefract())
 	{
@@ -384,7 +390,7 @@ void WaterMaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::Str
 		float3 refractColour = 
 	}*/
 	
-	if (MaterialFactory::getSingleton().getReflect())
+	if (mParent->getReflect())
 	{
 		outStream <<
 		"	float4 reflection = tex2D(reflectionMap, projUV); \n";

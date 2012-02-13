@@ -1,5 +1,7 @@
 #include "WaterRTT.h"
 
+#include "RenderConst.h"
+
 #include <OgreSceneManager.h>
 #include <OgrePlane.h>
 #include <OgreHardwarePixelBuffer.h>
@@ -34,7 +36,7 @@ void WaterRTT::create()
 		Viewport* vp = rtt->addViewport(mCamera);
 		vp->setOverlaysEnabled(false);
 		vp->setShadowsEnabled(false);
-		//vp->setVisibilityMask(...
+		vp->setVisibilityMask(RV_WaterReflect);
 		rtt->addListener(this);
 
 		if (i == 0) mRefractionTarget = rtt;
