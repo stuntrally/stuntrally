@@ -2229,7 +2229,17 @@
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 							<Property key="TextColour" value="1.0 1.0 0.1"/>
 						</Widget>
-						<Widget type="Button" skin="Button" position="32 210 200 26" layer="Back" name="ApplyShaders">
+						<Widget type="Button" skin="CheckBox" position="32 200 200 24" name="WaterReflection">
+							<Property key="Caption" value="#{WaterReflection}"/>
+							<Property key="TextColour" value="0.6 1 0.3"/>
+							<UserString key="RelativeTo" value="OptionsWnd"/>
+						</Widget>
+						<Widget type="Button" skin="CheckBox" position="32 230 200 24" name="WaterRefraction">
+							<Property key="Caption" value="#{WaterRefraction}"/>
+							<Property key="TextColour" value="0.6 1 0.3"/>
+							<UserString key="RelativeTo" value="OptionsWnd"/>
+						</Widget>
+						<Widget type="Button" skin="Button" position="32 260 200 26" layer="Back" name="ApplyShaders">
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 							<Property key="Caption" value="#{ApplyShaders}"/>
 							<Property key="Colour" value="0.7 0.85 1.0"/>

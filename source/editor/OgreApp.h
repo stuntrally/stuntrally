@@ -201,6 +201,7 @@ protected:
 	SLV(AntiAliasing); // screen
 	void comboTexFilter(CMB), btnShadows(WP), btnShaders(WP), btnTrGrReset(WP);
 	MyGUI::ButtonPtr bnQuit;  void btnQuit(WP);
+	void chkWaterReflect(WP), chkWaterRefract(WP);
 
 	//  tooltip
 	WP mToolTip;  MyGUI::EditPtr mToolTipTxt;

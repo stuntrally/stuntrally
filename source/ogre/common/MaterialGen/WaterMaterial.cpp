@@ -39,7 +39,9 @@ void WaterMaterialGenerator::generate()
 	
 	pass->setCullingMode(CULL_NONE);
 	pass->setDepthWriteEnabled(true);
-	pass->setSceneBlending(SBT_TRANSPARENT_ALPHA);
+	
+	if (!mParent->getRefract())
+		pass->setSceneBlending(SBT_TRANSPARENT_ALPHA);
 	
 	Ogre::TextureUnitState* tu;
 	//  normal map

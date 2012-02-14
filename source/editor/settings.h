@@ -25,7 +25,7 @@ public:
 	float view_distance, terdetail,terdist, road_dist;
 	float shadow_dist;  int shadow_size, lightmap_size, shadow_count, shadow_type, shadow_filter;
 	float grass, trees_dist, grass_dist;
-	bool water_reflect, water_refract;
+	bool water_reflect, water_refract; int water_rttsize;
 	bool use_imposters;
 
 	class GameSet
