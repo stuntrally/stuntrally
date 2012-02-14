@@ -31,7 +31,7 @@ App::App()
 	,arrowNode(0),arrowRotNode(0)
 	// ter
 	,mTerrainGlobals(0), mTerrainGroup(0), terrain(0), mPaging(false)
-	,mTerrainPaging(0), mPageManager(0), materialFactory(0)
+	,mTerrainPaging(0), mPageManager(0)
 	// gui
 	,mToolTip(0), mToolTipTxt(0), carList(0), trkMList(0), resList(0), btRplPl(0)
 	,valAnisotropy(0), valViewDist(0), valTerDetail(0), valTerDist(0), valRoadDist(0)  // detail

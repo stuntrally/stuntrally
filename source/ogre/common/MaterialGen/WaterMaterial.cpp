@@ -302,6 +302,11 @@ void WaterMaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::Str
 	
 	fpShadowingParams(outStream);
 	
+	// for some reason the projective coords are y-flipped when any compositor is activated
+	// as a workaround, set this parameter to 1 when there are compositors enabled, otherwise 0
+	if (mParent->getRefract() || mParent->getReflect()) outStream <<
+		"	uniform float inverseProjection, \n"; 
+	
 	if (MaterialFactory::getSingleton().getRefract()) outStream <<
 		"	uniform sampler2D refractionMap : TEXUNIT"+toStr(mScreenRefrUnit)+", \n";
 	
@@ -382,6 +387,7 @@ void WaterMaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::Str
 		 outStream <<
 		"	float4 projCoord = float4(IN.n.w, IN.t.w, 1, IN.b.w); \n"
 		"	float2 projUV = projCoord.xy / projCoord.w; \n"
+		"	if (inverseProjection == 1) projUV.y = 1-projUV.y; \n"
 		"	projUV += normalTex.yx * "<<distort_scale<<"; \n";
 	}
 	
@@ -426,13 +432,14 @@ void WaterMaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::Str
 
 	
 	outStream <<
-	"	float alpha = aa.g * depthPars.y + aa.r * (waterClr.a + clrSUM.r); \n";
+	"	float alpha = saturate(aa.g * depthPars.y + aa.r * (waterClr.a + clrSUM.r)); \n";
 	if (mParent->getRefract()) outStream << 
 		"	clr = float3(clr*alpha + refraction*(1-alpha)); \n"
 		"	alpha = 1.f; \n";
 		
 	outStream <<
 		//"	return float4(clr*0.01f + float3(aa,1), 1.f + aa.g * 0.2f + aa.r * (waterClr.a + clrSUM.r) ); \n"
+		//"	return float4(projUV.x, projUV.y, 0, 1); \n";
 		"	return float4(clr, alpha); \n";
 	
 	outStream <<
@@ -478,6 +485,7 @@ void WaterMaterialGenerator::individualFragmentProgramParams(Ogre::GpuProgramPar
 	params->setNamedConstant("matSpec", mDef->mProps->specular);
 	params->setNamedConstant("reflAndWaterAmounts", Vector3(mDef->mProps->reflAmount, 1-mDef->mProps->reflAmount, 0));
 	params->setNamedConstant("fresnelPowerBias", Vector3(mDef->mProps->fresnelPower, mDef->mProps->fresnelBias, 0));
+	params->setNamedConstant("inverseProjection", Real(0.f));
 	
 	if (needShadows())
 	{

@@ -75,7 +75,6 @@ public:
 		float time, Ogre::Viewport* vp=NULL), SizeHUD(bool full, Ogre::Viewport* vp=NULL, int carId=-1);
 	void UpdHUDRot(int carId, CarModel* pCarM, float vel, float rpm, bool miniOnly=false);
 	
-	MaterialFactory* materialFactory; // material generation
 	void recreateCarMtr();
 	
 	Ogre::SceneManager* sceneMgr() { return mSceneMgr; };

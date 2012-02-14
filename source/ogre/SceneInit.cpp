@@ -275,6 +275,7 @@ void App::LoadScene()  // 3
 
 	/// generate materials
 	materialFactory->generate();
+	refreshCompositor();
 
 	//  fluids
 	CreateFluids();
@@ -304,7 +305,7 @@ void App::LoadScene()  // 3
 		arrowRotNode = arrowNode->createChildSceneNode();
 		arrowRotNode->attachObject(arrowEnt);
 		arrowRotNode->setScale(pSet->size_arrow/2.f, pSet->size_arrow/2.f, pSet->size_arrow/2.f);
-		arrowEnt->setVisibilityFlags(RV_Car); // hide in reflection
+		arrowEnt->setVisibilityFlags(RV_Hud); // hide in reflection
 		arrowRotNode->setVisible(pSet->check_arrow); //!
 	}
 }

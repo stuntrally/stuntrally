@@ -19,6 +19,7 @@ WaterRTT::WaterRTT() :
 
 void WaterRTT::create()
 {
+	if (!mSceneMgr) return;
 	mCamera = mSceneMgr->createCamera("PlaneReflectionRefraction");
 	if (mViewerCamera)
 	{
@@ -67,7 +68,7 @@ void WaterRTT::setActive(const bool active)
 
 void WaterRTT::destroy()
 {
-	if (mCamera) mSceneMgr->destroyCamera(mCamera);
+	if (mCamera && mSceneMgr) mSceneMgr->destroyCamera(mCamera);
 	
 	if (mReflectionTarget) TextureManager::getSingleton().remove("PlaneReflection");
 	if (mRefractionTarget) TextureManager::getSingleton().remove("PlaneRefraction");

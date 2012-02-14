@@ -8,6 +8,8 @@
 #include "../network/masterclient.hpp"
 #include "../network/gameclient.hpp"
 #include "common/HWMouse.h"
+#include "common/MaterialGen/MaterialFactory.h"
+#include "common/MaterialGen/MaterialDefinition.h"
 
 #include "Compositor.h"
 #include "Localization.h"
@@ -209,6 +211,37 @@ void BaseApp::refreshCompositor(bool disableAll)
 		CompositorManager::getSingleton().setCompositorEnabled((*it), "SSAA", false);
 		CompositorManager::getSingleton().setCompositorEnabled((*it), "gbufferUIRender", false);
 	}
+	
+	
+	// this is a hack.. somehow the projective coords are flipped when compositors are enabled, so we need to notify the shader about this
+	if (materialFactory)
+	{
+		float val = AnyEffectEnabled() ? 1.f : 0.f;
+		for (std::vector<MaterialDefinition*>::iterator it=materialFactory->mDefinitions.begin();
+			it!=materialFactory->mDefinitions.end(); ++it)
+		{
+			MaterialPtr mat = MaterialManager::getSingleton().getByName( (*it)->getName() );
+				
+			if (mat.isNull()) continue;
+			
+			Material::TechniqueIterator techIt = mat->getTechniqueIterator();
+			while (techIt.hasMoreElements())
+			{
+				Technique* tech = techIt.getNext();
+				Technique::PassIterator passIt = tech->getPassIterator();
+				while (passIt.hasMoreElements())
+				{
+					Pass* pass = passIt.getNext();
+										
+					if (pass->hasFragmentProgram())
+					{
+						if ( pass->getFragmentProgramParameters()->_findNamedConstantDefinition("inverseProjection", false))
+							pass->getFragmentProgramParameters()->setNamedConstant("inverseProjection", val);
+					}
+				}
+			}
+		}
+	}
 
 	if (!pSet->all_effects || disableAll)
 		return;
@@ -249,7 +282,7 @@ void BaseApp::refreshCompositor(bool disableAll)
 			//the condition here is any compositor needing the gbuffers like ssao ,soft particles
 			CompositorManager::getSingleton().setCompositorEnabled((*it), "gbuffer", NeedMRTBuffer());
 		}
-		CompositorManager::getSingleton().setCompositorEnabled((*it), "gbufferNoMRT",!NeedMRTBuffer());
+		CompositorManager::getSingleton().setCompositorEnabled((*it), "gbufferNoMRT",!NeedMRTBuffer() && AnyEffectEnabled());
 
 		CompositorManager::getSingleton().setCompositorEnabled((*it), "Bloom", pSet->bloom);
 		CompositorManager::getSingleton().setCompositorEnabled((*it), "HDR", pSet->hdr);
@@ -274,12 +307,12 @@ void BaseApp::refreshCompositor(bool disableAll)
 bool BaseApp::AnyEffectEnabled()
 {
 	//any new effect need to be added here to have UI Rendered on it
-	return pSet->all_effects || pSet->softparticles || pSet->bloom || pSet->hdr || pSet->motionblur || pSet->ssaa || pSet->ssao || pSet->godrays;
+	return pSet->all_effects && (pSet->softparticles || pSet->bloom || pSet->hdr || pSet->motionblur || pSet->ssaa || pSet->ssao || pSet->godrays);
 }
 //-------------------------------------------------------------------------------------
 bool BaseApp::NeedMRTBuffer()
 {
-	return pSet->ssao || pSet->softparticles;
+	return pSet->all_effects && (pSet->ssao || pSet->softparticles);
 }
 //-------------------------------------------------------------------------------------
 void BaseApp::recreateCompositor()
@@ -493,15 +526,15 @@ BaseApp::BaseApp()
 	,mMasterClient(), mClient(), mLobbyState(DISCONNECTED)
 	,mDebugOverlay(0), mFpsOverlay(0), mOvrFps(0), mOvrTris(0), mOvrBat(0), mOvrDbg(0)
 	,mbShowCamPos(0), ndSky(0),	mbWireFrame(0)
-	,iCurCam(0), mSplitMgr(0), motionBlurIntensity(0.9), pressedKeySender(0)
+	,iCurCam(0), mSplitMgr(0), motionBlurIntensity(0.9), pressedKeySender(0), materialFactory(0)
 {
 	mLoadingBar = new LoadingBar();
 }
 
 BaseApp::~BaseApp()
 {
-	if (mSplitMgr)
-		refreshCompositor(false);
+	//if (mSplitMgr)
+		//refreshCompositor(false);
 
 	CompositorManager::getSingleton().removeAll();
 	delete mLoadingBar;

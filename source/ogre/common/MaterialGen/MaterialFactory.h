@@ -118,8 +118,10 @@ private:
 	Ogre::Terrain* mTerrain; // terrain (used for retrieving the lightmap as well as updating shadow fade parameter)
 	Ogre::PSSMShadowCameraSetup* mPSSM;
 
+public:
 	std::vector<MaterialDefinition*> mDefinitions;
 	
+private:
 	MaterialGenerator* mGenerator;
 	std::vector<MaterialGenerator*> mCustomGenerators;
 	

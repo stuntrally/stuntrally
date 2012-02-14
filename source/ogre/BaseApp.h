@@ -27,6 +27,8 @@ namespace OISB {  class System;  }
 class ShaderGeneratorTechniqueResolverListener;
 class MasterClient; class P2PGameClient;
 
+class MaterialFactory;
+
 
 class BaseApp :
 		public Ogre::FrameListener, public Ogre::WindowEventListener,
@@ -64,6 +66,8 @@ public:
 	float motionBlurIntensity;
 	
 	class SETTINGS* pSet;
+	
+	MaterialFactory* materialFactory; // material generation
 	
 	//  wnd, hud, upl
 	bool bWindowResized, bSizeHUD;
