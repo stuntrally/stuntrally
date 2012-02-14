@@ -394,7 +394,7 @@ void WaterMaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::Str
 	if (mParent->getReflect())
 	{
 		outStream <<
-		"	float4 reflection = tex2D(reflectionMap, projUV); \n";
+		"	float4 reflection = tex2D(reflectionMap, projUV) * reflectionColor; \n";
 	}
 	else outStream <<
 			//  reflection  3D vec to sky dome map 2D uv
