@@ -70,8 +70,16 @@ void WaterRTT::destroy()
 {
 	if (mCamera && mSceneMgr) mSceneMgr->destroyCamera(mCamera);
 	
-	if (mReflectionTarget) TextureManager::getSingleton().remove("PlaneReflection");
-	if (mRefractionTarget) TextureManager::getSingleton().remove("PlaneRefraction");
+	if (mReflectionTarget)
+	{
+		TextureManager::getSingleton().remove("PlaneReflection");
+		mReflectionTarget = 0;
+	}
+	if (mRefractionTarget)
+	{
+		TextureManager::getSingleton().remove("PlaneRefraction");
+		mRefractionTarget = 0;
+	}
 }
 
 void WaterRTT::recreate()

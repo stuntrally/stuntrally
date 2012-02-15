@@ -99,7 +99,6 @@ String App::PathListTrk(int user) {
 
 App::~App()
 {
-	delete materialFactory;
 	delete road;
 	if (mTerrainPaging) {
 		OGRE_DELETE mTerrainPaging;

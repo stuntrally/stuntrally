@@ -533,6 +533,8 @@ BaseApp::BaseApp()
 
 BaseApp::~BaseApp()
 {
+	delete materialFactory;
+
 	//if (mSplitMgr)
 		//refreshCompositor(false);
 
