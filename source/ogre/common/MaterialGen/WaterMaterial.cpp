@@ -318,6 +318,8 @@ void WaterMaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::Str
 	
 	outStream <<
 	"   uniform float3 lightSpec0, \n"
+	"	uniform float3 lightDiff, \n"
+	"	uniform float3 ambient, \n"
 	"	uniform float4 matSpec,	\n"
 	"	uniform float3 fogColor, \n"
 	"	uniform float4 lightPos0,  uniform float3 camPos,	uniform float4x4 iTWMat, \n"
@@ -369,17 +371,16 @@ void WaterMaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::Str
 	"	float3 specular = pow(max(dot(normal, halfVec), 0), matShininess); \n";
 	
 	if (needShadows() || needTerrainLightMap()) outStream <<
-		"	float3 specC = specular * lightSpec0 * matSpec.rgb * shadowing; \n";
+		"	float3 diffC = float4(lightDiff.xyz * max(0.5,shadowing), 1); \n"
+		"	float3 specC = specular * waveSpecular * lightSpec0 * matSpec.rgb * shadowing; \n";
 	else outStream <<
-		"	float3 specC = specular * lightSpec0 * matSpec.rgb; \n";
+		"	float3 diffC = float4(lightDiff.xyz, 1); \n"
+		"	float3 specC = specular * waveSpecular * lightSpec0 * matSpec.rgb; \n";
 
 	//  depthMap for alpha near terrain
 	outStream <<
 	"	float2 uva = float2(IN.wp.z * -invTerSize + 0.5f, IN.wp.x * invTerSize + 0.5f); \n"
 	"	float2 aa = tex2D(depthMap, uva).rg; \n";
-		
-	outStream <<
-	"	float3 clrSUM = /*diffC +*/ specC; \n";
 	
 	if (mParent->getRefract() || mParent->getReflect())
 	{
@@ -391,7 +392,7 @@ void WaterMaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::Str
 		"	projUV += normalTex.yx * "<<distort_scale<<"; \n";
 	}
 	
-	if (MaterialFactory::getSingleton().getRefract())
+	if (mParent->getRefract())
 	{
 		outStream <<
 		"	float4 refraction = tex2D(refractionMap, projUV); \n";
@@ -418,28 +419,23 @@ void WaterMaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::Str
 	"	float fresnel = saturate(fresnelPowerBias.y + pow(facing, fresnelPowerBias.x)); \n"
 		//  water color
 	"	float4 waterClr = lerp( lerp(shallowColor, deepColor, facing), depthColor, aa.g * depthPars.x); \n"
+	"	waterClr.xyz = ambient * waterClr.xyz + diffC * waterClr.xyz; \n"
 	"	float4 reflClr  = lerp( lerp(waterClr, reflection, fresnel),   depthColor, aa.g * depthPars.z); \n"
-	"	float3 clr = clrSUM.rgb * waveSpecular + waterClr.rgb * reflAndWaterAmounts.y + reflClr.rgb * reflAndWaterAmounts.x; \n";
+	"	float3 clr = specC + waterClr.rgb * reflAndWaterAmounts.y + reflClr.rgb * reflAndWaterAmounts.x; \n";
 	
-	// shadow
-	if (needShadows() || needTerrainLightMap()) outStream <<
-		"	clr = clr*(0.7+0.3*shadowing); \n";
 	
 	// fog
 	// NB we apply fog before adding refraction, since the refracted part already has fog from the RTT
 	outStream <<
 	"	clr = lerp(clr, fogColor, /*IN.fogVal*/IN.wp.w ); \n";
-
 	
 	outStream <<
-	"	float alpha = saturate(aa.g * depthPars.y + aa.r * (waterClr.a + clrSUM.r)); \n";
+	"	float alpha = saturate(aa.g * depthPars.y + aa.r * (waterClr.a + specC.r)); \n";
 	if (mParent->getRefract()) outStream << 
 		"	clr = float3(clr*alpha + refraction*(1-alpha)); \n"
 		"	alpha = 1.f; \n";
 		
 	outStream <<
-		//"	return float4(clr*0.01f + float3(aa,1), 1.f + aa.g * 0.2f + aa.r * (waterClr.a + clrSUM.r) ); \n"
-		//"	return float4(projUV.x, projUV.y, 0, 1); \n";
 		"	return float4(clr, alpha); \n";
 	
 	outStream <<
@@ -460,6 +456,8 @@ void WaterMaterialGenerator::fragmentProgramParams(Ogre::HighLevelGpuProgramPtr 
 	params->setNamedAutoConstant("lightPos0", GpuProgramParameters::ACT_LIGHT_POSITION, 0);
 	params->setNamedAutoConstant("camPos", GpuProgramParameters::ACT_CAMERA_POSITION);
 	params->setNamedAutoConstant("time", GpuProgramParameters::ACT_TIME);
+	params->setNamedAutoConstant("ambient", GpuProgramParameters::ACT_AMBIENT_LIGHT_COLOUR);
+	params->setNamedAutoConstant("lightDiff", GpuProgramParameters::ACT_LIGHT_DIFFUSE_COLOUR, 0);
 	params->setNamedConstantFromTime("time", 1);
 	individualFragmentProgramParams(params);
 }
