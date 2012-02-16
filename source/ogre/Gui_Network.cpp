@@ -217,6 +217,7 @@ void App::startRace()
 void App::timeInfo(ClientID id, uint8_t lap, double time)
 {
 	// TODO: Do something with this
+	std::cout << "Lap " << (int)lap << " finished by " << (int)id << std::endl;
 }
 
 void App::error(string what)
