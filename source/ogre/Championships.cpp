@@ -392,7 +392,7 @@ void App::ChampFillStageInfo(bool finished)
 		if (passed)
 			s += "#00FF00"+TR("#{Passed}")+".\n"+TR("#{NextStage}.");
 		else
-			s += "#FF8000"+TR("#{DintPass}")+".\n"+TR("#{RepeatStage}.");
+			s += "#FF8000"+TR("#{DidntPass}")+".\n"+TR("#{RepeatStage}.");
 	}
 	edChampStage->setCaption(s);
 	

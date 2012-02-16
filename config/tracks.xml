@@ -18,7 +18,6 @@
 <!--1-->
 	<track n="01" name="J1-T"			created="06-06-10" crtver="0.2" modified="06-06-10" scenery="Jungle"	author="CH" fluids="0" bumps="1" jumps="0" loops="0" pipes="0" banked="0" frenzy="2" long="1" diff="1" rating="1" />
 	<track n="02" name="D1-simple"		created="25-07-10" crtver="0.3" modified="06-11-10" scenery="Desert"	author="CH" fluids="0" bumps="0" jumps="0" loops="0" pipes="0" banked="0" frenzy="0" long="3" diff="1" rating="0" />
-	<track n="03" name="S1-simple"		created="29-07-10" crtver="0.3" modified="29-07-10" scenery="Savanna"	author="CH" fluids="0" bumps="0" jumps="0" loops="0" pipes="0" banked="0" frenzy="0" long="3" diff="1" rating="0" />
 	<track n="04" name="S2-Frenzy"		created="31-07-10" crtver="0.3" modified="31-07-10" scenery="Savanna"	author="CH" fluids="0" bumps="0" jumps="0" loops="0" pipes="0" banked="1" frenzy="3" long="6" diff="3" rating="2" />
 	<track n="05" name="S3-Loops"		created="10-08-10" crtver="0.4" modified="18-09-10" scenery="Savanna"	author="CH" fluids="0" bumps="0" jumps="0" loops="4" pipes="0" banked="1" frenzy="2" long="2" diff="5" rating="3" />
 <!--5-->
