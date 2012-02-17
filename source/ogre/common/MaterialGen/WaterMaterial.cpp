@@ -31,6 +31,12 @@ void WaterMaterialGenerator::generate()
 	
 	resetTexUnitCounter();
 	
+	// we need a lot of uniform constants, disabling shadows reduces them significantly so that it can still run on PS2
+	const RenderSystemCapabilities *caps = Root::getSingleton().getRenderSystem()->getCapabilities();
+	if(!caps->isShaderProfileSupported("ps_4_0") || caps->isShaderProfileSupported("fp40"))
+		mDef->mProps->receivesShadows = false;
+
+	
 	// -------------------------- Main technique ----------------------------- //
 	Ogre::Technique* technique = mMaterial->createTechnique();
 

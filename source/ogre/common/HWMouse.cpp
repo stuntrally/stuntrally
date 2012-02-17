@@ -24,8 +24,6 @@ HWMouse::HWMouse(size_t windowID, const int xhot, const int yhot, const std::str
 	mVisible(0)
 {
 #if OGRE_PLATFORM == OGRE_PLATFORM_LINUX
-
-	
 	x11Window = windowID;
 	x11Display = XOpenDisplay(0);
 	
@@ -70,8 +68,14 @@ HWMouse::HWMouse(size_t windowID, const int xhot, const int yhot, const std::str
 HWMouse::~HWMouse()
 {
 #if OGRE_PLATFORM == OGRE_PLATFORM_LINUX
-	//XUndefineCursor(x11Display, x11Cursor);
-	//XFreeCursor(x11Display, x11Cursor);
+	if (mVisible)
+		XUndefineCursor(x11Display, x11Cursor);
+	else
+		XUndefineCursor(x11Display, x11Cursor_hidden);
+	XFreeCursor(x11Display, x11Cursor_hidden);
+	XFreeCursor(x11Display, x11Cursor);
+	
+	// this seems to interfere with OIS (causing a X11 BadWindow error)
 	//XCloseDisplay(x11Display);
 #endif
 }
