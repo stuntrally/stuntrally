@@ -59,7 +59,7 @@ struct GameClientCallback {
 	virtual void startRace() {}
 
 	/// Called when timing info has arrived
-	virtual void timeInfo(ClientID id, uint8_t lap, float time) {}
+	virtual void timeInfo(ClientID id, uint8_t lap, double time) {}
 
 	/// Called when an error occured
 	/// @param what the error description
