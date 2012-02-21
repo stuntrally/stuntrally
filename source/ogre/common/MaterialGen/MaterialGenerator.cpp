@@ -498,7 +498,8 @@ bool MaterialGenerator::fpNeedWMat()
 
 bool MaterialGenerator::fpNeedPos()
 {
-	return (needTerrainLightMap() || fpNeedLighting() || MRTSupported() || mShader->parallax);
+	//return (needTerrainLightMap() || fpNeedLighting() || MRTSupported() || mShader->parallax);
+        return true; // always for fog
 }
 
 bool MaterialGenerator::vpCalcWPos()
