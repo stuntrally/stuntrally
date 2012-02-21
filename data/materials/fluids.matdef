@@ -1,14 +1,21 @@
+; ---------------------------------------------------
+;	for parameter description see WaterMaterial.cpp
+;	method generateFragmentProgramSource, line 334
+; ---------------------------------------------------
+
+
+; ------------ island blue ------------
 [Base_water]
 	abstract = true
 	customGenerator = Water
 	specular = 1.0 1.0 1.0 32
 	waveBump_Speed_HighFreq_Spec = 0.5 1.0 0.0 1.0
-	depthPars = 0.6 0.1 0.2
+	depthPars = 0.6 0.1 0.4
 	depthColour = 0.15 0.25 0.3 1.0
 	deepColour = 0.1 0.3 0.5 1.0
 	shallowColour = 0.0 0.9 1.0 0.3
 	reflectionColour = 0.9 0.96 1.0 1.0
-	reflRefra = 0.7 1.0 1.0 1.0
+	reflVal_Refl2_Distort_Opacity = 0.7 1.0 0.1 1.0
 	fresnelPower = 5.0
 	fresnelBias = 0.33
 	fresnelScale = 1
@@ -16,8 +23,6 @@
 	receivesShadows = true
 	shadowPriority = 0.35
 	
-
-; ------------ island blue ------------
 [Water_blue]
 	parent = Base_water
 	normalMap_1 = waveNM.png
@@ -33,6 +38,7 @@
 	deepColour = 0.1 0.3 0.2 0.9
 	shallowColour = 0.4 0.9 0.6 0.6
 	reflectionColour = 0.6 0.8 0.7 1.0
+	reflVal_Refl2_Distort_Opacity = 0.7 1.0 0.1 0.9
 	normalMap_1 = waveNM.png
 	
 
@@ -46,7 +52,7 @@
 	deepColour = 0.19 0.22 0.06 0.95
 	shallowColour = 0.21 0.35 0.0 0.6
 	reflectionColour = 0.6 0.8 0.35 1.0
-	reflRefra = 0.65 1.0 1.0 1.0
+	reflVal_Refl2_Distort_Opacity = 0.65 1.0 0.1 0.7
 	normalMap_1 = waveNM.png
 	
 
@@ -59,8 +65,8 @@
 	deepColour = 0.36 0.59 0.6 1.0
 	deepColour = 0.6 0.79 0.8 1.0
 	shallowColour = 0.45 0.78 0.8 0.85
-	reflectionColour = 0.9 0.97 1.0 1.0
-	reflRefra = 0.9 1.0 1.0 1.0
+	reflectionColour = 0.7 0.77 0.8 1.0
+	reflVal_Refl2_Distort_Opacity = 0.9 1.0 1.0 1.0
 	fresnelPower = 2.0
 	normalMap_1 = water_nh.png
 	
@@ -75,7 +81,7 @@
 	deepColour = 0.1 0.3 0.4 1.0
 	shallowColour = 0.21 0.5 0.7 0.6
 	reflectionColour = 0.8 0.65 0.5 1.0
-	reflRefra = 0.6 1.0 1.0 1.0
+	reflVal_Refl2_Distort_Opacity = 0.6 1.0 0.1 0.9
 	normalMap_1 = water_nh.png
 	
 
@@ -89,7 +95,7 @@
 	deepColour = 0.26 0.32 0.43 0.8
 	shallowColour = 0.21 0.35 0.45 0.4
 	reflectionColour = 0.6 0.65 0.68 1.0
-	reflRefra = 0.8 1.0 1.0 1.0
+	reflVal_Refl2_Distort_Opacity = 0.8 1.0 0.1 0.8
 	normalMap_1 = water_nh.png
 	
 
@@ -103,7 +109,7 @@
 	deepColour = 0.06 0.14 0.2 0.8
 	shallowColour = 0.11 0.15 0.17 1.0
 	reflectionColour = 0.8 0.65 0.5 1.0
-	reflRefra = 0.8 1.0 1.0 1.0
+	reflVal_Refl2_Distort_Opacity = 0.8 1.0 0.1 1.0
 	normalMap_1 = water_nh.png
 	
 
@@ -117,7 +123,7 @@
 	deepColour = 0.26 0.2 0.4 0.9
 	shallowColour = 0.21 0.22 0.48 0.95
 	reflectionColour = 0.3 0.3 0.6 1.0
-	reflRefra = 0.6 1.0 1.0 1.0
+	reflVal_Refl2_Distort_Opacity = 0.6 1.0 0.1 1.0
 	normalMap_1 = waveNM.png
 	
 
@@ -131,7 +137,7 @@
 	deepColour = 0.55 0.56 0.3 0.95
 	shallowColour = 0.5 0.6 0.1 0.7
 	reflectionColour = 0.4 0.5 0.2 1.0
-	reflRefra = 0.5 1.0 1.0 1.0
+	reflVal_Refl2_Distort_Opacity = 0.5 1.0 0.1 1.0
 	normalMap_1 = waveNM.png
 	
 
@@ -145,7 +151,7 @@
 	deepColour = 0.7 0.7 0.2 0.95
 	shallowColour = 0.9 1.0 0.3 0.7
 	reflectionColour = 0.75 0.8 0.4 1.0
-	reflRefra = 0.6 1.0 1.0 1.0
+	reflVal_Refl2_Distort_Opacity = 0.6 1.0 0.1 1.0
 	normalMap_1 = waveNM.png
 	
 
@@ -159,7 +165,7 @@
 	deepColour = 0.6 0.4 0.1 1.0
 	shallowColour = 0.45 0.3 0.1 0.7
 	reflectionColour = 0.5 0.45 0.15 1.0
-	reflRefra = 0.3 1.0 1.0 1.0
+	reflVal_Refl2_Distort_Opacity = 0.3 0.35 0.5 1.0
 	normalMap_1 = waveNM.png
 	
 	
@@ -173,7 +179,7 @@
 	deepColour = 0.4 0.34 0.1 1.0
 	shallowColour = 0.4 0.2 0.1 0.9
 	reflectionColour = 0.5 0.4 0.1 1.0
-	reflRefra = 0.5 1.0 1.0 1.0
+	reflVal_Refl2_Distort_Opacity = 0.5 0.3 0.3 1.0
 	fresnelPower = 8.0
 	normalMap_1 = waveNM.png
 	
@@ -188,7 +194,7 @@
 	deepColour = 0.2 0.17 0.05 1.0
 	shallowColour = 0.2 0.14 0.05 1.0
 	reflectionColour = 0.4 0.33 0.1 1.0
-	reflRefra = 0.5 1.0 1.0 1.0
+	reflVal_Refl2_Distort_Opacity = 0.5 0.2 0.2 1.0
 	fresnelPower = 3.0
 	normalMap_1 = water_nh.png
 

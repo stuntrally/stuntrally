@@ -323,22 +323,52 @@ void WaterMaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::Str
 	
 	
 	outStream <<
-	"   uniform float3 lightSpec0, \n"
+	"	uniform float3 ambient, \n" 
 	"	uniform float3 lightDiff, \n"
-	"	uniform float3 ambient, \n"
+	"   uniform float3 lightSpec0, \n"
 	"	uniform float4 matSpec,	\n"
+	//	fog
 	"	uniform float3 fogColor, \n"
-	"	uniform float4 lightPos0,  uniform float3 camPos,	uniform float4x4 iTWMat, \n"
+	//	light dir
+	"	uniform float4 lightPos0,  uniform float3 camPos,  uniform float4x4 iTWMat, \n"
+	//	--------  water specific  --------
+	//	normal animation
+	//	waveBump - smooth/noisy surface  Speed - movement scale in time
+	//	HighFreq - small ripples/big flow ratio  Spec - specular multipler
 	"	uniform float4 waveBump_Speed_HighFreq_Spec, \n"
 	"	uniform float time, \n"
-	"	uniform float invTerSize, \n"
-	"	uniform float3 depthPars, \n"  // from waterDepth tex
+
+	//	depthMap has alpha value in .r (short depth range) for smooth terrain water transition,
+	//	and .g has depth amout (big range) for deep water
+	//	depthPars x - depthColor effect for shallow/deep (top view)  z - as x but for reflected (low angle)
+	//	y - adding color alpha for deep water
+	"	uniform float3 depthPars, \n"
+	//	color for deep water, from waterDepth tex
 	"	uniform float4 depthColor, \n"
-	"	uniform float4 deepColor,  uniform float4 shallowColor,  uniform float4 reflectionColor, \n"
-	"	uniform float4 reflRefra, \n"
-	"	uniform float2 fresnelPowerBias \n"
+	//	invTerSize scale to get depthMap uv from world pos (const for all, set at scene load)
+	"	uniform float invTerSize, \n"
+
+	//	deep (far), shallow (near), from fresnel (has nothing to do with depth)
+	"	uniform float4 deepColor, \n"
+	"	uniform float4 shallowColor, \n"
+	"	uniform float4 reflectionColor, \n"
+	//	fresnel power and bias
+	"	uniform float2 fresnelPowerBias, \n"
+
+	//	reflVal - reflClr to waterClr amout
+	//	Refl2 - 2d screen reflection amout (lerp to 3d)
+	//	Distort - amount of noise for refraction
+	//	Opacity - 2d screen refraction opacity / transparency
+	"	uniform float4 reflVal_Refl2_Distort_Opacity \n"
+
 	"): COLOR0 \n"
 	"{ \n";
+
+	//  depthMap for alpha near terrain and deep water
+	outStream <<
+	"	float2 uva = float2(IN.wp.z * -invTerSize + 0.5f, IN.wp.x * invTerSize + 0.5f); \n"
+	"	float2 aa = tex2D(depthMap, uva).rg; \n"
+	"	discard(aa.r < 0.01f); \n";  // this is water inside terrain no need to render
 		
 	if (needTerrainLightMap()) outStream <<
 		"	float4 wsNormal = float4(1.0, 1.0, 1.0, IN.wp.x); \n"
@@ -375,44 +405,40 @@ void WaterMaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::Str
 	"	float3 specular = pow(max(dot(normal, halfVec), 0), matSpec.w); \n";
 	
 	if (needShadows() || needTerrainLightMap())  outStream <<
-		"	float3 diffC = lightDiff.xyz * max(0.5,shadowing); \n"
+		"	float3 diffC = lightDiff.xyz * max(0.5, shadowing); \n"
 		"	float3 specC = specular * waveBump_Speed_HighFreq_Spec.w * lightSpec0 * matSpec.rgb * shadowing; \n";
 	else outStream <<
 		"	float3 diffC = lightDiff.xyz; \n"
 		"	float3 specC = specular * waveBump_Speed_HighFreq_Spec.w * lightSpec0 * matSpec.rgb; \n";
-
-	//  depthMap for alpha near terrain
-	outStream <<
-	"	float2 uva = float2(IN.wp.z * -invTerSize + 0.5f, IN.wp.x * invTerSize + 0.5f); \n"
-	"	float2 aa = tex2D(depthMap, uva).rg; \n";
 	
 	if (mParent->getRefract() || mParent->getReflect())
 	{
-		const float distort_scale = 0.10;
 		outStream <<
 		"	float4 projCoord = float4(IN.n.w, IN.t.w, 1, IN.b.w); \n"
 		"	float2 projUV = projCoord.xy / projCoord.w; \n"
 		"	if (inverseProjection == 1)  projUV.y = 1-projUV.y; \n"
-		"	projUV += normalTex.yx * "<<distort_scale<<"; \n";
+		"	projUV += normalTex.yx * reflVal_Refl2_Distort_Opacity.z; \n";
 	}
 	
 	if (mParent->getRefract())
 		outStream <<
 		"	float4 refraction = tex2D(refractionMap, projUV); \n";
 	
+	outStream <<
+		//  reflection  3D vec to sky dome map 2D uv
+	"	float3 refl = reflect(-camDir, normal); \n"
+	"	const float PI = 3.1415926536f; \n"
+	"	float2 refl2; \n"
+	"	refl2.x = /*(refl.x == 0) ? 0 :*/ ( (refl.z < 0.0) ? atan2(-refl.z, refl.x) : (2*PI - atan2(refl.z, refl.x)) ); \n"
+	"	refl2.x = 1 - refl2.x / (2*PI); \n"  // yaw 0..1
+	"	refl2.y = 1 - asin(refl.y) / PI*2; \n" //pitch 0..1
+	"	float4 reflection = tex2D(skyMap, refl2) * reflectionColor; \n";
+
 	if (mParent->getReflect())
+		//	2d screen reflection is lerp-ed with 3d sky reflection
 		outStream <<
-		"	float4 reflection = tex2D(reflectionMap, projUV) * reflectionColor * 1.3f; \n";  //par 1.3f
-	else
-		outStream <<
-			//  reflection  3D vec to sky dome map 2D uv
-		"	float3 refl = reflect(-camDir, normal); \n"
-		"	const float PI = 3.1415926536f; \n"
-		"	float2 refl2; \n"
-		"	refl2.x = /*(refl.x == 0) ? 0 :*/ ( (refl.z < 0.0) ? atan2(-refl.z, refl.x) : (2*PI - atan2(refl.z, refl.x)) ); \n"
-		"	refl2.x = 1 - refl2.x / (2*PI); \n"  // yaw 0..1
-		"	refl2.y = 1 - asin(refl.y) / PI*2; \n" //pitch 0..1
-		"	float4 reflection = tex2D(skyMap, refl2) * reflectionColor; \n";
+		"	float4 reflection2D = tex2D(reflectionMap, projUV) * reflectionColor * 1.3f; \n"  //par 1.3f
+		"	reflection = lerp(reflection, reflection2D, reflVal_Refl2_Distort_Opacity.y); \n";
 
 	outStream <<
 		//  fresnel
@@ -422,18 +448,17 @@ void WaterMaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::Str
 	"	float4 waterClr = lerp( lerp(shallowColor, deepColor, facing), depthColor, aa.g * depthPars.x); \n"
 	"	waterClr.xyz = ambient * waterClr.xyz + diffC * waterClr.xyz; \n"
 	"	float4 reflClr  = lerp( lerp(waterClr, reflection, fresnel),   depthColor, aa.g * depthPars.z); \n"
-	"	float3 clr = specC + lerp( reflClr.rgb, waterClr.rgb, reflRefra.x); \n";
+	"	float3 clr = /*diffC */ (specC + lerp( reflClr.rgb, waterClr.rgb, reflVal_Refl2_Distort_Opacity.x) ); \n";
 	
 	
-	// fog
-	// NB we apply fog before adding refraction, since the refracted part already has fog from the RTT
+	// fog, we apply it before adding refraction, since the refracted part already has fog from the RTT
 	outStream <<
 	"	clr = lerp(clr, fogColor, /*IN.fogVal*/IN.wp.w ); \n";
 	
 	outStream <<
 	"	float alpha = saturate(aa.g * depthPars.y + aa.r * (waterClr.a + specC.r)); \n";
 	if (mParent->getRefract())  outStream << 
-		"	clr = lerp(refraction, clr, alpha /* 0.6f*/); \n";
+		"	clr = lerp(refraction, clr, alpha * reflVal_Refl2_Distort_Opacity.w); \n";
 		
 	outStream <<
 		"	return float4(clr, alpha); \n";
@@ -481,7 +506,7 @@ void WaterMaterialGenerator::individualFragmentProgramParams(Ogre::GpuProgramPar
 	params->setNamedConstant("shallowColor", mDef->mProps->shallowColour);
 	params->setNamedConstant("reflectionColor", mDef->mProps->reflectionColour);
 	params->setNamedConstant("matSpec", mDef->mProps->specular);
-	params->setNamedConstant("reflRefra", mDef->mProps->reflRefra);
+	params->setNamedConstant("reflVal_Refl2_Distort_Opacity", mDef->mProps->reflVal_Refl2_Distort_Opacity);
 	params->setNamedConstant("fresnelPowerBias", Vector3(mDef->mProps->fresnelPower, mDef->mProps->fresnelBias, 0));
 	params->setNamedConstant("inverseProjection", Real(0.f));
 	
