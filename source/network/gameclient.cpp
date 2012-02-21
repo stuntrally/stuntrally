@@ -1,3 +1,4 @@
+#include "../ogre/common/Defines.h"
 #include "gameclient.hpp"
 #include "xtime.hpp"
 
@@ -126,6 +127,7 @@ void P2PGameClient::lap(uint8_t num, double time)
 {
 	protocol::TimeInfoPackage tip(num, time);
 	m_client.broadcast(net::convert(tip), net::PACKET_RELIABLE);
+	LogO("Lap " +toStr(num) +" finished by " +toStr(0)+ " time:"+ toStr(float(time)));
 }
 
 void P2PGameClient::senderThread() {
