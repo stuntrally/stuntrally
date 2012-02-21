@@ -173,6 +173,8 @@ void MaterialGenerator::fpRealtimeShadowHelperSource(Ogre::StringUtil::StrStream
 		outStream <<
 		"shadow = \n"
 		"	shadowPCF(shadowMap0, lsPos0, invShadowMapSize0.xy) : \n";  break;
+	case 0:
+		"shadow = 0.f; \n";
 	}
 
 	/*for (int i=0; i<mParent->getNumShadowTex(); ++i)
@@ -682,9 +684,9 @@ void MaterialGenerator::fragmentProgramParams(HighLevelGpuProgramPtr program)
 
 void MaterialGenerator::individualFragmentProgramParams(Ogre::GpuProgramParametersSharedPtr params)
 {
-	//#ifndef _DEBUG
+	#ifndef _DEBUG
 	params->setIgnoreMissingParams(true);
-	//#endif
+	#endif
 	
 	if (needEnvMap() && !needFresnel())
 	{
