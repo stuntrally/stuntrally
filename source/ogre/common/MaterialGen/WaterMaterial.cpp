@@ -329,7 +329,7 @@ void WaterMaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::Str
 	"	uniform float4 matSpec,	\n"
 	"	uniform float3 fogColor, \n"
 	"	uniform float4 lightPos0,  uniform float3 camPos,	uniform float4x4 iTWMat, \n"
-	"	uniform float4 waveBump_HighFreq_Spec, \n"
+	"	uniform float4 waveBump_Speed_HighFreq_Spec, \n"
 	"	uniform float time, \n"
 	"	uniform float invTerSize, \n"
 	"	uniform float3 depthPars, \n"  // from waterDepth tex
@@ -349,19 +349,19 @@ void WaterMaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::Str
 	fpCalcShadowSource(outStream);
 	
 	outStream <<
-	"	float t = waveBump_HighFreq_Spec.y * time; \n"
+	"	float t = waveBump_Speed_HighFreq_Spec.y * time; \n"
 		//  waves  sum 4 normal tex
 	"	float2 uv1 = float2(-sin(-0.06f * t),cos(-0.06f * t)) * 0.5f; \n"  // slow big waves
 	"	float2 uv2 = float2( cos( 0.062f* t),sin( 0.062f* t)) * 0.4f; \n"
 	"	float2 uw1 = float2(-sin(-0.11f * t),cos(-0.11f * t)) * 0.23f; \n"  // fast small waves
 	"	float2 uw2 = float2( cos( 0.112f* t),sin( 0.112f* t)) * 0.21f; \n"
-	"	const float w1 = 0.25 + waveBump_HighFreq_Spec.z, w2 = 0.25 - waveBump_HighFreq_Spec.z; \n"
+	"	const float w1 = 0.25 + waveBump_Speed_HighFreq_Spec.z, w2 = 0.25 - waveBump_Speed_HighFreq_Spec.z; \n"
 	"	float3 normalTex = ( \n"
 	"		(tex2D(normalMap, IN.uv.xy*8 - uw2).rgb * 2.0 - 1.0) * w1 + \n"
 	"		(tex2D(normalMap, IN.uv.xy*8 - uw1).rgb * 2.0 - 1.0) * w1 + \n"
 	"		(tex2D(normalMap, IN.uv.xy*2 + uv1).rgb * 2.0 - 1.0) * w2 + \n"
 	"		(tex2D(normalMap, IN.uv.xy*2 + uv2).rgb * 2.0 - 1.0) * w2); \n"
-	"	normalTex = lerp(normalTex, float3(0,0,1), waveBump_HighFreq_Spec.x); \n"
+	"	normalTex = lerp(normalTex, float3(0,0,1), waveBump_Speed_HighFreq_Spec.x); \n"
 
 		//  normal to object space
 	"	float3x3 tbn = float3x3(IN.t.xyz, IN.b.xyz, IN.n.xyz); \n"
@@ -376,10 +376,10 @@ void WaterMaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::Str
 	
 	if (needShadows() || needTerrainLightMap())  outStream <<
 		"	float3 diffC = lightDiff.xyz * max(0.5,shadowing); \n"
-		"	float3 specC = specular * waveBump_HighFreq_Spec.w * lightSpec0 * matSpec.rgb * shadowing; \n";
+		"	float3 specC = specular * waveBump_Speed_HighFreq_Spec.w * lightSpec0 * matSpec.rgb * shadowing; \n";
 	else outStream <<
 		"	float3 diffC = lightDiff.xyz; \n"
-		"	float3 specC = specular * waveBump_HighFreq_Spec.w * lightSpec0 * matSpec.rgb; \n";
+		"	float3 specC = specular * waveBump_Speed_HighFreq_Spec.w * lightSpec0 * matSpec.rgb; \n";
 
 	//  depthMap for alpha near terrain
 	outStream <<
@@ -441,7 +441,7 @@ void WaterMaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::Str
 	outStream <<
 	"} \n";
 	
-	///LogO("\n"+outStream.str());
+	LogO("\n"+outStream.str());
 }
 
 //----------------------------------------------------------------------------------------
@@ -474,7 +474,7 @@ void WaterMaterialGenerator::individualFragmentProgramParams(Ogre::GpuProgramPar
 	params->setIgnoreMissingParams(true);
 	
 	params->setNamedConstant("enableShadows", Real(1.f));
-	params->setNamedConstant("waveBump_HighFreq_Spec", mDef->mProps->waveBump_HighFreq_Spec);
+	params->setNamedConstant("waveBump_Speed_HighFreq_Spec", mDef->mProps->waveBump_Speed_HighFreq_Spec);
 	params->setNamedConstant("depthPars", mDef->mProps->depthPars);
 	params->setNamedConstant("depthColor", mDef->mProps->depthColour);
 	params->setNamedConstant("deepColor", mDef->mProps->deepColour);

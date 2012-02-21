@@ -155,9 +155,28 @@ void MaterialGenerator::fpRealtimeShadowHelperSource(Ogre::StringUtil::StrStream
 	"{ \n"
 	"	float shadow; \n";
 	
-	for (int i=0; i<mParent->getNumShadowTex(); ++i)
+	switch (mParent->getNumShadowTex())
 	{
+	case 3:
+		outStream <<
+		"shadow = (camDepth <= pssmSplitPoints.y) ? \n"
+		"	shadowPCF(shadowMap0, lsPos0, invShadowMapSize0.xy) : \n"
+		"		( (camDepth <= pssmSplitPoints.z) ? \n"
+		"	shadowPCF(shadowMap1, lsPos1, invShadowMapSize1.xy) : \n"
+		"	shadowPCF(shadowMap2, lsPos2, invShadowMapSize2.xy) ); \n";  break;
+	case 2:
+		outStream <<
+		"shadow = (camDepth <= pssmSplitPoints.y) ? \n"
+		"	shadowPCF(shadowMap0, lsPos0, invShadowMapSize0.xy) : \n"
+		"	shadowPCF(shadowMap1, lsPos1, invShadowMapSize1.xy); \n";  break;
+	case 1:
+		outStream <<
+		"shadow = \n"
+		"	shadowPCF(shadowMap0, lsPos0, invShadowMapSize0.xy) : \n";  break;
+	}
 
+	/*for (int i=0; i<mParent->getNumShadowTex(); ++i)
+	{
 		if (i==0)
 			outStream << "if (camDepth <= pssmSplitPoints.y) \n";
 		else if (i < mParent->getNumShadowTex()-1)
@@ -169,7 +188,7 @@ void MaterialGenerator::fpRealtimeShadowHelperSource(Ogre::StringUtil::StrStream
 		"{ \n"
 		"	shadow = shadowPCF(shadowMap"+toStr(i)+", lsPos"+toStr(i)+", invShadowMapSize"+toStr(i)+".xy); \n"
 		"} \n";
-	}
+	}/**/
 	
 	outStream <<
 	"	return shadow; \n"

@@ -19,7 +19,7 @@ MaterialProperties::MaterialProperties() :
 	sceneBlend(SBM_DEFAULT), depthWrite(true), alphaRejectFunc(CMPF_ALWAYS_PASS), alphaRejectValue(0.0),
 	fog(true), lighting(true), textureAddressMode(TextureUnitState::TAM_WRAP),
 	terrainLightMap(false), ssao(true), ssaoReject(false), customGenerator(""), wind(0), vertexColour(false),
-	waveBump_HighFreq_Spec(0.5, 1.0, 0.0, 1.0),
+	waveBump_Speed_HighFreq_Spec(0.5, 1.0, 0.0, 1.0),
 	envMapPriority(0.5), shadowPriority(0.5), normalMapPriority(0.5),
 	deepColour(0.0, 0.3, 0.5, 1.0), shallowColour(0.0, 0.9, 1.0, 0.3), reflectionColour(0.9, 1.0, 1.0, 1.0),
 	depthColour(0.0, 0.15, 0.3, 1.0), depthPars(0.1f,0.1f,0.1f),
@@ -162,7 +162,7 @@ void MaterialProperties::setProperty(const std::string& prop, const std::string&
 	}
 
 	// water
-	else if (prop == "waveBump_HighFreq_Spec")		waveBump_HighFreq_Spec = str2vec4(value);
+	else if (prop == "waveBump_Speed_HighFreq_Spec")		waveBump_Speed_HighFreq_Spec = str2vec4(value);
 	else if (prop == "depthPars")		depthPars = str2vec3(value);
 	else if (prop == "depthColour")		depthColour = str2vec4(value);
 	else if (prop == "deepColour")		deepColour = str2vec4(value);

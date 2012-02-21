@@ -127,7 +127,7 @@ void P2PGameClient::lap(uint8_t num, double time)
 {
 	protocol::TimeInfoPackage tip(num, time);
 	m_client.broadcast(net::convert(tip), net::PACKET_RELIABLE);
-	LogO("Lap " +toStr(num) +" finished by " +toStr(0)+ " time:"+ toStr(float(time)));
+	LogO("Lap " +toStr(num) +" finished by U time:"+ toStr(float(time)));
 }
 
 void P2PGameClient::senderThread() {

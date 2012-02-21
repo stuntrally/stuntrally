@@ -483,7 +483,7 @@ void App::UpdateHUD(int carId, CarModel* pCarM, CAR* pCar, float time, Viewport*
 			
 		//  lap num (for many or champ)
 		std::string times;
-		if (pSet->game.local_players > 1 || pSet->game.champ_num >= 0)
+		if (pSet->game.local_players > 1 || pSet->game.champ_num >= 0 || mClient)
 		{
 			if (pCarM->iWonPlace > 0 && hudWonPlace)
 			{	
