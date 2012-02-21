@@ -39,7 +39,7 @@ void WaterRTT::create()
 		RenderTarget* rtt = tex->getBuffer()->getRenderTarget();
 		Viewport* vp = rtt->addViewport(mCamera);
 		vp->setOverlaysEnabled(false);
-		vp->setBackgroundColour(ColourValue(0.f, 0.5f, 0.9f));
+		vp->setBackgroundColour(ColourValue(0.8f, 0.9f, 1.0f));
 		vp->setShadowsEnabled(false);
 		vp->setVisibilityMask( i == 0 ? RV_WaterReflect : RV_WaterRefract);
 		rtt->addListener(this);

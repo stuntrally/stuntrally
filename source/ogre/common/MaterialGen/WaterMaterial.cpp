@@ -335,7 +335,7 @@ void WaterMaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::Str
 	"	uniform float3 depthPars, \n"  // from waterDepth tex
 	"	uniform float4 depthColor, \n"
 	"	uniform float4 deepColor,  uniform float4 shallowColor,  uniform float4 reflectionColor, \n"
-	"	uniform float2 reflAndWaterAmounts, \n"
+	"	uniform float4 reflRefra, \n"
 	"	uniform float2 fresnelPowerBias \n"
 	"): COLOR0 \n"
 	"{ \n";
@@ -422,7 +422,7 @@ void WaterMaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::Str
 	"	float4 waterClr = lerp( lerp(shallowColor, deepColor, facing), depthColor, aa.g * depthPars.x); \n"
 	"	waterClr.xyz = ambient * waterClr.xyz + diffC * waterClr.xyz; \n"
 	"	float4 reflClr  = lerp( lerp(waterClr, reflection, fresnel),   depthColor, aa.g * depthPars.z); \n"
-	"	float3 clr = specC + waterClr.rgb * reflAndWaterAmounts.y + reflClr.rgb * reflAndWaterAmounts.x; \n";
+	"	float3 clr = specC + lerp( reflClr.rgb, waterClr.rgb, reflRefra.x); \n";
 	
 	
 	// fog
@@ -481,7 +481,7 @@ void WaterMaterialGenerator::individualFragmentProgramParams(Ogre::GpuProgramPar
 	params->setNamedConstant("shallowColor", mDef->mProps->shallowColour);
 	params->setNamedConstant("reflectionColor", mDef->mProps->reflectionColour);
 	params->setNamedConstant("matSpec", mDef->mProps->specular);
-	params->setNamedConstant("reflAndWaterAmounts", Vector3(mDef->mProps->reflAmount, 1-mDef->mProps->reflAmount, 0));
+	params->setNamedConstant("reflRefra", mDef->mProps->reflRefra);
 	params->setNamedConstant("fresnelPowerBias", Vector3(mDef->mProps->fresnelPower, mDef->mProps->fresnelBias, 0));
 	params->setNamedConstant("inverseProjection", Real(0.f));
 	
