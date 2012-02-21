@@ -2,9 +2,7 @@
 	abstract = true
 	customGenerator = Water
 	specular = 1.0 1.0 1.0 32
-	waveBump = 0.5 1.0
-	waveHighFreq = 0.0
-	waveSpecular = 1.0
+	waveBump_HighFreq_Spec = 0.5 1.0 0.0 1.0
 	depthPars = 0.6 0.1 0.2
 	depthColour = 0.15 0.25 0.3 1.0
 	deepColour = 0.1 0.3 0.5 1.0
@@ -29,7 +27,7 @@
 [Water_cyan]
 	parent = Base_water
 	specular = 0.9 1.0 0.95 64
-	waveBump = 0.2 1.0
+	waveBump_HighFreq_Spec = 0.2 1.0 0.0 1.0
 	depthPars = 0.2 0.2 0.2
 	depthColour = 0.2 0.6 0.4 0.9
 	deepColour = 0.1 0.3 0.2 0.9
@@ -42,9 +40,7 @@
 [Water_green]
 	parent = Base_water
 	specular = 0.32 0.4 0.25 128
-	waveBump = 0.1 1.2
-	waveHighFreq = 0.1
-	waveSpecular = 1.2
+	waveBump_HighFreq_Spec = 0.1 1.2 0.1 1.2
 	depthPars = 0.8 0.2 0.2
 	depthColour = 0.13 0.16 0.06 0.95
 	deepColour = 0.19 0.22 0.06 0.95
@@ -58,8 +54,7 @@
 [Water_white]
 	parent = Base_water
 	specular = 0.96 1.0 1.0 128
-	waveBump = 0.4 0.8
-	waveHighFreq = -0.1
+	waveBump_HighFreq_Spec = 0.4 0.8 -0.1 1.0
 	depthPars = 0.7 0.1 0.2
 	deepColour = 0.36 0.59 0.6 1.0
 	deepColour = 0.6 0.79 0.8 1.0
@@ -74,9 +69,7 @@
 [Water_sunset]
 	parent = Base_water
 	specular = 1.0 0.6 0.3 16
-	waveBump = 0.0 0.8
-	waveHighFreq = 0.1
-	waveSpecular = 1.1
+	waveBump_HighFreq_Spec = 0.0 0.8 0.1 1.1
 	depthPars = 0.3 0.2 0.2
 	depthColour = 0.1 0.3 0.4 1.0
 	deepColour = 0.1 0.3 0.4 1.0
@@ -90,8 +83,7 @@
 [Water_shore]
 	parent = Base_water
 	specular = 0.65 0.67 0.7 4
-	waveBump = 0.2 0.8
-	waveHighFreq = 0.3
+	waveBump_HighFreq_Spec = 0.2 0.8 0.3 1.0
 	depthPars = 0.6 0.3 0.3
 	depthColour = 0.16 0.22 0.33 1.0
 	deepColour = 0.26 0.32 0.43 0.8
@@ -105,9 +97,7 @@
 [Water_dark]
 	parent = Base_water
 	specular = 1.0 0.8 0.3 32
-	waveBump = 0.0 0.8
-	waveHighFreq = 0.1
-	waveSpecular = 0.7
+	waveBump_HighFreq_Spec = 0.0 0.8 0.1 0.7
 	depthPars = 0.3 0.2 0.2
 	depthColour = 0.06 0.14 0.2 0.8
 	deepColour = 0.06 0.14 0.2 0.8
@@ -121,8 +111,7 @@
 [Grease_jelly]
 	parent = Base_water
 	specular = 0.4 0.8 1.0 96
-	waveBump = 0.4 0.2
-	waveHighFreq = -0.2
+	waveBump_HighFreq_Spec = 0.4 0.2 -0.2 1.0
 	depthPars = 0.1 0.1 0.1
 	depthColour = 0.26 0.2 0.4 0.9
 	deepColour = 0.26 0.2 0.4 0.9
@@ -136,9 +125,7 @@
 [Water_light]
 	parent = Base_water
 	specular = 0.4 0.4 0.3 64
-	waveBump = 0.6 1.0
-	waveHighFreq = -0.1
-	waveSpecular = 1.0
+	waveBump_HighFreq_Spec = 0.6 1.0 -0.1 1.0
 	depthPars = 0.3 0.3 0.3
 	depthColour = 0.55 0.56 0.3 0.95
 	deepColour = 0.55 0.56 0.3 0.95
@@ -152,8 +139,7 @@
 [Water_yellow]
 	parent = Base_water
 	specular = 0.4 0.4 0.3 64
-	waveBump = 0.6 1.0
-	waveHighFreq = -0.1
+	waveBump_HighFreq_Spec = 0.6 1.0 -0.1 1.0
 	depthPars = 0.3 0.3 0.3
 	depthColour = 0.7 0.7 0.2 0.95
 	deepColour = 0.7 0.7 0.2 0.95
@@ -167,8 +153,7 @@
 [Mud_orange]
 	parent = Base_water
 	specular = 0.4 0.4 0.3 32
-	waveBump = 0.8 0.3
-	waveHighFreq = -0.1
+	waveBump_HighFreq_Spec = 0.8 0.3 -0.1 1.0
 	depthPars = 0.5 0.3 0.3
 	depthColour = 0.6 0.4 0.1 1.0
 	deepColour = 0.6 0.4 0.1 1.0
@@ -182,8 +167,7 @@
 [Mud_brown]
 	parent = Base_water
 	specular = 0.4 0.4 0.3 128
-	waveBump = 0.4 0.1
-	waveHighFreq = 0.1
+	waveBump_HighFreq_Spec = 0.4 0.1 0.1 1.0
 	depthPars = 0.5 0.3 0.3
 	depthColour = 0.4 0.34 0.1 1.0
 	deepColour = 0.4 0.34 0.1 1.0
@@ -198,8 +182,7 @@
 [Mud_dark]
 	parent = Base_water
 	specular = 0.4 0.4 0.3 96
-	waveBump = 0.3 0.04
-	waveHighFreq = 0.4
+	waveBump_HighFreq_Spec = 0.3 0.04 0.4 1.0
 	depthPars = 0.5 0.3 0.3
 	depthColour = 0.2 0.17 0.05 1.0
 	deepColour = 0.2 0.17 0.05 1.0

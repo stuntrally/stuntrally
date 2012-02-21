@@ -78,7 +78,7 @@ void WaterMaterialGenerator::generate()
 		tu->setTextureAddressingMode(TextureUnitState::TAM_CLAMP);
 		mScreenReflUnit = mTexUnit_i++;
 	}
-	else
+	//else
 	{
 		// retrieve sky texture name from scene
 		std::string skyTexName;
@@ -318,7 +318,7 @@ void WaterMaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::Str
 	
 	if (MaterialFactory::getSingleton().getReflect()) outStream <<
 		"	uniform sampler2D reflectionMap : TEXUNIT"+toStr(mScreenReflUnit)+", \n";
-	else outStream <<
+	/*else*/ outStream <<
 		"	uniform sampler2D skyMap : TEXUNIT"+toStr(mEnvTexUnit)+", \n";
 	
 	
@@ -329,8 +329,7 @@ void WaterMaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::Str
 	"	uniform float4 matSpec,	\n"
 	"	uniform float3 fogColor, \n"
 	"	uniform float4 lightPos0,  uniform float3 camPos,	uniform float4x4 iTWMat, \n"
-	"	uniform float2 waveBump, \n"
-	"	uniform float waveHighFreq, uniform float waveSpecular, \n"
+	"	uniform float4 waveBump_HighFreq_Spec, \n"
 	"	uniform float time, \n"
 	"	uniform float invTerSize, \n"
 	"	uniform float3 depthPars, \n"  // from waterDepth tex
@@ -350,20 +349,19 @@ void WaterMaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::Str
 	fpCalcShadowSource(outStream);
 	
 	outStream <<
-	"	float matShininess = matSpec.w; \n"
-	"	float t = waveBump.y * time; \n"
+	"	float t = waveBump_HighFreq_Spec.y * time; \n"
 		//  waves  sum 4 normal tex
 	"	float2 uv1 = float2(-sin(-0.06f * t),cos(-0.06f * t)) * 0.5f; \n"  // slow big waves
 	"	float2 uv2 = float2( cos( 0.062f* t),sin( 0.062f* t)) * 0.4f; \n"
 	"	float2 uw1 = float2(-sin(-0.11f * t),cos(-0.11f * t)) * 0.23f; \n"  // fast small waves
 	"	float2 uw2 = float2( cos( 0.112f* t),sin( 0.112f* t)) * 0.21f; \n"
-	"	const float w1 = 0.25 + waveHighFreq, w2 = 0.25 - waveHighFreq; \n"
+	"	const float w1 = 0.25 + waveBump_HighFreq_Spec.z, w2 = 0.25 - waveBump_HighFreq_Spec.z; \n"
 	"	float3 normalTex = ( \n"
 	"		(tex2D(normalMap, IN.uv.xy*8 - uw2).rgb * 2.0 - 1.0) * w1 + \n"
 	"		(tex2D(normalMap, IN.uv.xy*8 - uw1).rgb * 2.0 - 1.0) * w1 + \n"
 	"		(tex2D(normalMap, IN.uv.xy*2 + uv1).rgb * 2.0 - 1.0) * w2 + \n"
 	"		(tex2D(normalMap, IN.uv.xy*2 + uv2).rgb * 2.0 - 1.0) * w2); \n"
-	"	normalTex = lerp(normalTex, float3(0,0,1), waveBump.x); \n"
+	"	normalTex = lerp(normalTex, float3(0,0,1), waveBump_HighFreq_Spec.x); \n"
 
 		//  normal to object space
 	"	float3x3 tbn = float3x3(IN.t.xyz, IN.b.xyz, IN.n.xyz); \n"
@@ -374,14 +372,14 @@ void WaterMaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::Str
 	"	float3 ldir = normalize(lightPos0.xyz - (lightPos0.w * IN.wp.xyz)); \n"
 	"	float3 camDir = normalize(camPos - IN.wp.xyz); \n"
 	"	float3 halfVec = normalize(ldir + camDir); \n"
-	"	float3 specular = pow(max(dot(normal, halfVec), 0), matShininess); \n";
+	"	float3 specular = pow(max(dot(normal, halfVec), 0), matSpec.w); \n";
 	
-	if (needShadows() || needTerrainLightMap()) outStream <<
-		"	float3 diffC = float4(lightDiff.xyz * max(0.5,shadowing), 1); \n"
-		"	float3 specC = specular * waveSpecular * lightSpec0 * matSpec.rgb * shadowing; \n";
+	if (needShadows() || needTerrainLightMap())  outStream <<
+		"	float3 diffC = lightDiff.xyz * max(0.5,shadowing); \n"
+		"	float3 specC = specular * waveBump_HighFreq_Spec.w * lightSpec0 * matSpec.rgb * shadowing; \n";
 	else outStream <<
-		"	float3 diffC = float4(lightDiff.xyz, 1); \n"
-		"	float3 specC = specular * waveSpecular * lightSpec0 * matSpec.rgb; \n";
+		"	float3 diffC = lightDiff.xyz; \n"
+		"	float3 specC = specular * waveBump_HighFreq_Spec.w * lightSpec0 * matSpec.rgb; \n";
 
 	//  depthMap for alpha near terrain
 	outStream <<
@@ -390,29 +388,26 @@ void WaterMaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::Str
 	
 	if (mParent->getRefract() || mParent->getReflect())
 	{
-		const float distort_scale = 0.05;
-		 outStream <<
+		const float distort_scale = 0.10;
+		outStream <<
 		"	float4 projCoord = float4(IN.n.w, IN.t.w, 1, IN.b.w); \n"
 		"	float2 projUV = projCoord.xy / projCoord.w; \n"
-		"	if (inverseProjection == 1) projUV.y = 1-projUV.y; \n"
+		"	if (inverseProjection == 1)  projUV.y = 1-projUV.y; \n"
 		"	projUV += normalTex.yx * "<<distort_scale<<"; \n";
 	}
 	
 	if (mParent->getRefract())
-	{
 		outStream <<
 		"	float4 refraction = tex2D(refractionMap, projUV); \n";
-	}
 	
 	if (mParent->getReflect())
-	{
 		outStream <<
-		"	float4 reflection = tex2D(reflectionMap, projUV) * reflectionColor; \n";
-	}
-	else outStream <<
+		"	float4 reflection = tex2D(reflectionMap, projUV) * reflectionColor * 1.3f; \n";  //par 1.3f
+	else
+		outStream <<
 			//  reflection  3D vec to sky dome map 2D uv
 		"	float3 refl = reflect(-camDir, normal); \n"
-		"	const float PI = 3.14159265358979323846; \n"
+		"	const float PI = 3.1415926536f; \n"
 		"	float2 refl2; \n"
 		"	refl2.x = /*(refl.x == 0) ? 0 :*/ ( (refl.z < 0.0) ? atan2(-refl.z, refl.x) : (2*PI - atan2(refl.z, refl.x)) ); \n"
 		"	refl2.x = 1 - refl2.x / (2*PI); \n"  // yaw 0..1
@@ -437,15 +432,16 @@ void WaterMaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::Str
 	
 	outStream <<
 	"	float alpha = saturate(aa.g * depthPars.y + aa.r * (waterClr.a + specC.r)); \n";
-	if (mParent->getRefract()) outStream << 
-		"	clr = float3(clr*alpha + refraction*(1-alpha)); \n"
-		"	alpha = 1.f; \n";
+	if (mParent->getRefract())  outStream << 
+		"	clr = lerp(refraction, clr, alpha /* 0.6f*/); \n";
 		
 	outStream <<
 		"	return float4(clr, alpha); \n";
 	
 	outStream <<
 	"} \n";
+	
+	///LogO("\n"+outStream.str());
 }
 
 //----------------------------------------------------------------------------------------
@@ -478,9 +474,7 @@ void WaterMaterialGenerator::individualFragmentProgramParams(Ogre::GpuProgramPar
 	params->setIgnoreMissingParams(true);
 	
 	params->setNamedConstant("enableShadows", Real(1.f));
-	params->setNamedConstant("waveBump", _vec3(mDef->mProps->waveBump));
-	params->setNamedConstant("waveHighFreq", Real(mDef->mProps->waveHighFreq));
-	params->setNamedConstant("waveSpecular", Real(mDef->mProps->waveSpecular));
+	params->setNamedConstant("waveBump_HighFreq_Spec", mDef->mProps->waveBump_HighFreq_Spec);
 	params->setNamedConstant("depthPars", mDef->mProps->depthPars);
 	params->setNamedConstant("depthColor", mDef->mProps->depthColour);
 	params->setNamedConstant("deepColor", mDef->mProps->deepColour);
@@ -514,13 +508,10 @@ HighLevelGpuProgramPtr WaterMaterialGenerator::createFragmentProgram()
 			"cg", GPT_FRAGMENT_PROGRAM);
 
 	if(MRTSupported())
-	{
 		ret->setParameter("profiles", "ps_4_0 ps_3_0 fp40");
-	}
 	else
-	{
-		ret->setParameter("profiles", "ps_4_0 ps_2_x arbfp1");	
-	}
+		ret->setParameter("profiles", "ps_4_0 ps_3_0 arbfp1");	
+
 	ret->setParameter("entry_point", "main_fp");
 
 	StringUtil::StrStreamType outStream;

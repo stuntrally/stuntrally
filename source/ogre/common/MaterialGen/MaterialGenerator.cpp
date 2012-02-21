@@ -149,7 +149,8 @@ void MaterialGenerator::generate()
 	
 	/// uncomment to see full shader source code in log
 	/**
-	//if (mDef->getName() == "Water_cyan")
+	LogO(mDef->getName());
+	if (StringUtil::startsWith(mDef->getName(), "FluidWater" ))  //"water" //_cyan"
 	{
 		LogO("[MaterialFactory] Vertex program source: ");
 		StringUtil::StrStreamType vSourceStr;

@@ -459,7 +459,7 @@ void MaterialFactory::setShaderParams(MaterialPtr mat)
 
 void MaterialFactory::generate()
 {
-	if (/*1||*/bSettingsChanged)
+	if (bSettingsChanged)
 	{
 		QTimer ti;  ti.update(); /// time
 		LogO("[MaterialFactory] generating new materials...");
@@ -558,7 +558,7 @@ void MaterialFactory::generate()
 	{
 		LogO("[MaterialFactory] settings not changed, using old materials");
 	}
-		
+	
 	
 	// update params	
 	for (std::vector<MaterialDefinition*>::iterator it=mDefinitions.begin();

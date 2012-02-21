@@ -667,9 +667,9 @@ void MaterialGenerator::fragmentProgramParams(HighLevelGpuProgramPtr program)
 
 void MaterialGenerator::individualFragmentProgramParams(Ogre::GpuProgramParametersSharedPtr params)
 {
-	#ifndef _DEBUG
+	//#ifndef _DEBUG
 	params->setIgnoreMissingParams(true);
-	#endif
+	//#endif
 	
 	if (needEnvMap() && !needFresnel())
 	{
