@@ -160,9 +160,8 @@ void MaterialGenerator::generateVertexProgramSource(Ogre::StringUtil::StrStreamT
 
 	// fog
 	outStream <<
-	"	uniform float enableFog, \n"
-	"	uniform float4 fogParams, \n"
-	"	out float fogAmount : FOG, \n";
+        "	uniform float enableFog, \n"
+        "	uniform float4 fogParams, \n";
 		
 	vpShadowingParams(outStream);
 
@@ -250,11 +249,9 @@ void MaterialGenerator::generateVertexProgramSource(Ogre::StringUtil::StrStreamT
 	
 	outStream <<
 	"	oTexCoord = float4(texCoord.x, texCoord.y, "+texCoordZ+", "+texCoordW+"); \n";
-	
-	// fog amount
+		
 	outStream <<
-	"	fogAmount = enableFog * saturate(fogParams.x * (oPosition.z - fogParams.y) * fogParams.w); \n";
-	
+	"	oObjPosition.w = enableFog * saturate(fogParams.x * (oPosition.z - fogParams.y) * fogParams.w); \n"; // save fog amount in objectPos.w
 	if (fpNeedNormal())
 	{
 		if(UsePerPixelNormals())
