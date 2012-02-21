@@ -264,7 +264,7 @@ void App::LoadScene()  // 3
 
 	//  water RTT
 	mWaterRTT.setViewerCamera(mSplitMgr->mCameras.front());
-	mWaterRTT.setRTTSize(pSet->water_rttsize);
+	mWaterRTT.setRTTSize(ciShadowSizesA[pSet->water_rttsize]);
 	mWaterRTT.setReflect(MaterialFactory::getSingleton().getReflect());
 	mWaterRTT.setRefract(MaterialFactory::getSingleton().getRefract());
 	mWaterRTT.mSceneMgr = mSceneMgr;

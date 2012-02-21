@@ -441,7 +441,7 @@ void WaterMaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::Str
 	outStream <<
 	"} \n";
 	
-	LogO("\n"+outStream.str());
+	//LogO("\n"+outStream.str());
 }
 
 //----------------------------------------------------------------------------------------

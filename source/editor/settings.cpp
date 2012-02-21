@@ -78,7 +78,7 @@ SETTINGS::SETTINGS() :  ///  Defaults
 	shadow_dist(2000), shadow_size(2), shadow_count(3), shadow_type(2), shadow_filter(1),  /*<+*/
 	shaders(0.5), lightmap_size(0),
 	grass(1.f), trees_dist(1.f), grass_dist(1.f),use_imposters(false),
-	water_reflect(0), water_refract(0), water_rttsize(256),
+	water_reflect(0), water_refract(0), water_rttsize(0),
 	//  startup
 	autostart(0), ogre_dialog(1), escquit(0), language(""), allow_save(0),
 	//  settings

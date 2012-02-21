@@ -94,8 +94,8 @@
 		</Configuration>
 		<Configuration
 			Name="Release|Win32"
-			OutputDirectory="$(SolutionDir)$(ConfigurationName)Ed"
-			IntermediateDirectory="$(ConfigurationName)Ed"
+			OutputDirectory=".\ReleaseEd"
+			IntermediateDirectory=".\ReleaseEd"
 			ConfigurationType="1"
 			WholeProgramOptimization="1"
 			>
@@ -116,18 +116,23 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalOptions="-Zm1000 /MP"
-				Optimization="2"
+				AdditionalOptions="/Zm1000 /MP"
+				Optimization="3"
+				InlineFunctionExpansion="2"
 				EnableIntrinsicFunctions="true"
+				FavorSizeOrSpeed="1"
 				WholeProgramOptimization="false"
 				AdditionalIncludeDirectories="&quot;e:\v\bullet\bullet-2.79\src&quot;;&quot;e:\v\MyGUI-3.2\trunk\MyGUIEngine\include&quot;;&quot;e:\v\MyGUI-3.2\trunk\Platforms\Ogre\OgrePlatform\include&quot;"
 				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;ROAD_EDITOR;NOMINMAX;"
+				StringPooling="true"
 				RuntimeLibrary="2"
-				EnableFunctionLevelLinking="true"
+				EnableEnhancedInstructionSet="1"
 				UsePrecompiledHeader="2"
 				PrecompiledHeaderThrough="pch.h"
+				PrecompiledHeaderFile=".\ReleaseEd/StuntRally.pch"
+				ObjectFile=".\ReleaseEd/"
+				ProgramDataBaseFileName=".\ReleaseEd/"
 				WarningLevel="1"
-				DebugInformationFormat="0"
 				DisableSpecificWarnings="4995;4996;"
 			/>
 			<Tool

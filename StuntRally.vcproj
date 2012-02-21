@@ -159,7 +159,6 @@
 				ObjectFile=".\Release/"
 				ProgramDataBaseFileName=".\Release/"
 				WarningLevel="1"
-				SuppressStartupBanner="true"
 				CallingConvention="0"
 				DisableSpecificWarnings="4103;4305;4244;"
 			/>
@@ -183,8 +182,6 @@
 				AdditionalLibraryDirectories="e:\v\ogre171\lib\Release;e:\v\ogre171\Dependencies\lib\Release;e:\v\ogre171\MyGUI3.0\lib\Release;&quot;e:\v\enet-1.3.1\Release&quot;;&quot;e:\v\MyGUI-3.2\trunk\bin\lib\Release&quot;;&quot;e:\v\bullet\bullet-2.79\bin\lib\Release&quot;"
 				IgnoreDefaultLibraryNames=""
 				SubSystem="2"
-				RandomizedBaseAddress="1"
-				DataExecutionPrevention="0"
 				TargetMachine="1"
 			/>
 			<Tool

@@ -285,8 +285,6 @@
 	<Tag name="RoadQual">Road far quality</Tag>
 	<Tag name="Textures">Textures</Tag>
 	<Tag name="Anisotropy">Anisotropy</Tag>
-	<Tag name="WaterReflection">Water reflection</Tag>
-	<Tag name="WaterRefraction">Water refraction</Tag>
 
 	<Tag name="Vegetation">Vegetation</Tag>
 	<Tag name="TreeMult">Trees multiplier</Tag>
@@ -304,6 +302,10 @@
 	<Tag name="ReflMode_static">Static</Tag>
 	<Tag name="ReflMode_single">Single</Tag>
 	<Tag name="ReflMode_full">Full</Tag>
+
+	<Tag name="Water">Water</Tag>
+	<Tag name="WaterReflection">Reflection</Tag>
+	<Tag name="WaterRefraction">Refraction</Tag>
 
 	<Tag name="Shadows">Shadows</Tag>
 	<Tag name="Shaders">Shaders</Tag>

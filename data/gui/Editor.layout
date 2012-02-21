@@ -2240,21 +2240,11 @@
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 							<Property key="TextColour" value="1.0 1.0 0.1"/>
 						</Widget>
-						<Widget type="Button" skin="CheckBox" position="32 200 200 24" name="WaterReflection">
-							<Property key="Caption" value="#{WaterReflection}"/>
-							<Property key="TextColour" value="0.6 1 0.3"/>
-							<UserString key="RelativeTo" value="OptionsWnd"/>
-						</Widget>
-						<Widget type="Button" skin="CheckBox" position="32 230 200 24" name="WaterRefraction">
-							<Property key="Caption" value="#{WaterRefraction}"/>
-							<Property key="TextColour" value="0.6 1 0.3"/>
-							<UserString key="RelativeTo" value="OptionsWnd"/>
-						</Widget>
 						<Widget type="Button" skin="Button" position="32 260 200 26" layer="Back" name="ApplyShaders">
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 							<Property key="Caption" value="#{ApplyShaders}"/>
 							<Property key="Colour" value="0.7 0.85 1.0"/>
-						</Widget>	
+						</Widget>
 					</Widget>
 					<Widget type="TabItem" skin="" position="4 26 735 368">
 						<UserString key="RelativeTo" value="OptionsWnd"/>
@@ -2476,6 +2466,40 @@
 						</Widget>
 						<Widget type="TextBox" skin="TextBox" position="180 170 60 24" name="ShadowFilterVal">
 							<Property key="TextColour" value="0.7 0.8 0.9"/>
+							<UserString key="RelativeTo" value="OptionsWnd"/>
+						</Widget>
+					</Widget>
+					<Widget type="TabItem" skin="" position="2 24 738 372">
+						<Property key="Caption" value="#{Water}"/>
+						<UserString key="RelativeTo" value="OptionsWnd"/>
+						<Widget type="Button" skin="CheckBox" position="32 50 200 24" name="WaterReflection">
+							<Property key="Caption" value="#{WaterReflection}"/>
+							<Property key="TextColour" value="0.6 0.8 1"/>
+							<UserString key="RelativeTo" value="OptionsWnd"/>
+						</Widget>
+						<Widget type="Button" skin="CheckBox" position="32 80 200 24" name="WaterRefraction">
+							<Property key="Caption" value="#{WaterRefraction}"/>
+							<Property key="TextColour" value="0.6 0.8 1"/>
+							<UserString key="RelativeTo" value="OptionsWnd"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="32 110 144 24">
+							<Property key="Colour" value="0 0 0"/>
+							<Property key="Caption" value="#{Size}"/>
+							<Property key="TextColour" value="0.7 0.85 1.0"/>
+							<UserString key="RelativeTo" value="OptionsWnd"/>
+						</Widget>
+						<Widget type="ScrollBar" skin="ScrollBarH" position="248 110 320 18" name="WaterSize">
+							<Property key="Range" value="1000001"/>
+							<Property key="MoveToClick" value="true"/>
+							<UserString key="RelativeTo" value="OptionsWnd"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="180 110 60 24" name="WaterSizeVal">
+							<Property key="TextColour" value="0.7 0.85 1.0"/>
+							<UserString key="RelativeTo" value="OptionsWnd"/>
+						</Widget>
+						<Widget type="Button" skin="Button" position="32 140 200 26" layer="Back" name="ApplyShadersWater">
+							<Property key="Caption" value="#{ApplyShaders}"/>
+							<Property key="Colour" value="0.7 0.85 1.0"/>
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
 					</Widget>
