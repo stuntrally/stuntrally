@@ -175,7 +175,7 @@ void App::InitGui()
 	Ed(GrMinX, editTrGr);  Ed(GrMaxX, editTrGr);  Ed(GrMinY, editTrGr);  Ed(GrMaxY, editTrGr);
 	Ed(GrSwayDistr, editTrGr);  Ed(GrSwayLen, editTrGr);  Ed(GrSwaySpd, editTrGr);
 	Ed(TrRdDist, editTrGr);  Ed(TrImpDist, editTrGr);
-	Ed(GrDensSmooth, editTrGr);  Ed(GrTerMaxAngle, editTrGr);
+	Ed(GrDensSmooth, editTrGr);  Ed(GrTerMaxAngle, editTrGr);  Ed(GrTerMaxHeight, editTrGr);
 	Ed(SceneryId, editTrGr);
 	Cmb(cmbGrassMtr, "CmbGrMtr", comboGrassMtr);
 	Cmb(cmbGrassClr, "CmbGrClr", comboGrassClr);

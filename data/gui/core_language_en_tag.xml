@@ -564,6 +564,7 @@
 	<Tag name="GrassSway">Grass sway</Tag>
 	<Tag name="GrDensSmooth">Smooth grass dens.</Tag>
 	<Tag name="GrTerMaxAngle">Grass Max. Terrain Angle</Tag>
+	<Tag name="GrTerMaxHeight">Grass Max. Terrain Height</Tag>
 	<Tag name="LTrMaxTerAng">max terrain Angle</Tag>
 	<Tag name="LTrMinTerH">min terrain Height</Tag>
 	<Tag name="LTrMaxTerH">max terrain Height</Tag>
@@ -859,6 +860,7 @@
 	<Tag name="TipImpDist">Far distance at which models will turn into 2d impostors.</Tag>
 	<Tag name="TipGrDensSmooth">Grass density map - smooth size</Tag>
 	<Tag name="TipGrTerMaxAngle">Terrain angle above which there won't be any grass.</Tag>
+	<Tag name="TipGrTerMaxHeight">Terrain height above which there won't be any grass.</Tag>
 	<Tag name="TipSceneryId">Scenery id (numeric value 0-20) for identifying unique lightings group on track. Used for impostors generation.</Tag>
 	<Tag name="TipGrassMaterial">Grass material, chosen to match track's scenery.</Tag>
 	<Tag name="TipGrassColorMap">Grass colormap for scenery, usually same choice as for grass material. Additional grass coloring.</Tag>

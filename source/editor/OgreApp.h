@@ -318,7 +318,7 @@ protected:
 	MyGUI::EditPtr edGrassDens,edTreesDens, edGrPage,edGrDist, edTrPage,edTrDist,
 		edGrMinX,edGrMaxX, edGrMinY,edGrMaxY,
 		edGrSwayDistr, edGrSwayLen, edGrSwaySpd, edTrRdDist, edTrImpDist,
-		edGrDensSmooth, edGrTerMaxAngle, edSceneryId;
+		edGrDensSmooth, edGrTerMaxAngle,edGrTerMaxHeight, edSceneryId;
 	MyGUI::ComboBoxPtr cmbGrassMtr;  void comboGrassMtr(CMB);
 	MyGUI::ComboBoxPtr cmbGrassClr;  void comboGrassClr(CMB);
 	void editTrGr(MyGUI::EditPtr);

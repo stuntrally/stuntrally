@@ -143,7 +143,7 @@ void App::SaveGrassDens()
 
 		v = std::max(0, (int)(255.f * (1.f - v * ff) ));  // avg, inv, clamp
 		
-		gd[a] = 0xFF000000 + 0x010101 * v;  // write
+		gd[a] = 0xFF000000 + /*0x010101 */ v;  // write
 	}	}
 
 	v = 0xFFFFFFFF;  //  frame f []  todo: get from rd[b] not clear..
@@ -152,7 +152,11 @@ void App::SaveGrassDens()
 	for (x = 0;  x <= f; ++x)	for (y=0; y < h; ++y)	gd[y*w+x] = v;  // | left
 	for (x=w-f-1; x < w; ++x)	for (y=0; y < h; ++y)	gd[y*w+x] = v;  // | right
 
-	///  terrain - max angle for grass (trees read it too)  -----------
+	Image im;  // for trees, before grass angle and height
+	im.loadDynamicImage((uchar*)gd, w,h,1, PF_BYTE_RGBA);
+	im.save(TrkDir()+"objects/roadDensity.png");
+
+	///  terrain - max angle, height for grass  -----------
 	for (y = 0; y < h; ++y) {  b = y*w;
 	for (x = 0; x < w; ++x, ++b)
 	{
@@ -160,17 +164,18 @@ void App::SaveGrassDens()
 		a += x * sc.td.iVertsX / w;
 		// would be better to interpolate 4 neighbours, or smooth this map
 
-		float ad = sc.td.hfAngle[a] - sc.grTerMaxAngle;  // ang diff
-		if (ad > 0.f)
+		float ad = std::max(0.f, sc.td.hfAngle[a] - sc.grTerMaxAngle);  // ang diff
+		float hd = std::max(0.f, sc.td.hfHeight[a] - sc.grTerMaxHeight);  // height diff
+		if (ad > 0.f || hd > 0.f)
 		{
-			d = 20.f * ad;  //par mul,  smooth transition
+			d = 20.f * ad + 20.f * hd;  //par mul,  smooth transition ..
 			v = std::max(0, std::min(255, 255-d));
 			v = std::min((int)(gd[b] & 0xFF), v);  // preserve road
-			gd[b] = 0xFF000000 + 0x010101 * v;  // no grass
+			gd[b] = 0xFF000000 + /*0x010101 */ v;  // no grass
 		}
 	}	}
 
-	Image im;
+	//Image im;
 	im.loadDynamicImage((uchar*)gd, w,h,1, PF_BYTE_RGBA);
 	im.save(TrkDir()+"objects/grassDensity.png");
 

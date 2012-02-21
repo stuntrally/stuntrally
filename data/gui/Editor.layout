@@ -1468,6 +1468,17 @@
 							<Property key="TextColour" value="0.6 1 0.4"/>
 							<UserString key="tip" value="#{TipGrTerMaxAngle}"/>
                         </Widget>
+						<Widget type="TextBox" skin="TextBox" position="32 381 144 24">
+							<UserString key="RelativeTo" value="OptionsWnd"/>
+							<Property key="Caption" value="#{GrTerMaxHeight}"/>
+							<Property key="TextColour" value="0.6 1 0.4"/>
+						</Widget>
+						<Widget type="EditBox" skin="EditBox" position="178 379 64 24" name="GrTerMaxHeight">
+							<UserString key="RelativeTo" value="OptionsWnd"/>
+							<Property key="Colour" value="0.6 1 0.4"/>
+							<Property key="TextColour" value="0.6 1 0.4"/>
+							<UserString key="tip" value="#{TipGrTerMaxHeight}"/>
+                        </Widget>
                         <Widget type="ComboBox" skin="ComboBox" position="460 315 170 25" name="CmbGrMtr">
                             <Property key="TextColour" value="0.7 1 0.4"/>
                             <Property key="Colour" value="0.7 1 0.5"/>

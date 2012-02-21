@@ -64,7 +64,13 @@ void App::CreateTrees()
 	
 	//-------------------------------------- Grass --------------------------------------
 	int imgRoadSize = 0;
-	Image imgRoad;  imgRoad.load(String("grassDensity.png"),"General");
+	Image imgRoad;
+	try{
+		imgRoad.load(String("roadDensity.png"),"General");
+	}catch(...)
+	{
+		imgRoad.load(String("grassDensity.png"),"General");
+	}
 	imgRoadSize = imgRoad.getWidth();  // square[]
 		
 	// remove old BinFolder's (paged geom temp resource groups)
@@ -122,7 +128,7 @@ void App::CreateTrees()
 		l->setFadeTechnique(FADETECH_ALPHA);  //FADETECH_GROW-
 
 		l->setColorMap(sc.grassColorMap);
-		l->setDensityMap("grassDensity.png");
+		l->setDensityMap("grassDensity.png",CHANNEL_RED);
 		l->setMapBounds(tbnd);
 		grass->setShadersEnabled(true);
 	}
@@ -210,7 +216,7 @@ void App::CreateTrees()
 					for (int ii = -c; ii <= c; ++ii)
 						if (imgRoad.getColourAt(
 							std::max(0,std::min(r-1, mx+ii)),
-							std::max(0,std::min(r-1, my+jj)), 0).g < 0.5f)  //par-
+							std::max(0,std::min(r-1, my+jj)), 0).r < 0.75f)  //par-
 								add = false;
 				}
 				if (!add)  continue;  //?faster

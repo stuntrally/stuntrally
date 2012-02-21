@@ -61,6 +61,7 @@ void App::SetGuiFromXmls()
 	_Ed(GrSwayLen, sc.grSwayLen);	_Ed(GrSwaySpd, sc.grSwaySpeed);
 	_Ed(TrRdDist, sc.trRdDist);		_Ed(TrImpDist, sc.trDistImp);
 	_Ed(GrTerMaxAngle, sc.grTerMaxAngle);
+	_Ed(GrTerMaxHeight, sc.grTerMaxHeight);
 	_Ed(SceneryId, sc.sceneryId);
 	tabPgLayers(tabsPgLayers, 0);
 	_Cmb(cmbGrassMtr,sc.grassMtr);
@@ -201,6 +202,7 @@ void App::btnCopyVeget(WP)
 	sc.grSwayDistr = sF.grSwayDistr;  sc.grSwayLen = sF.grSwayLen;
 	sc.grSwaySpeed = sF.grSwaySpeed;
 	sc.grTerMaxAngle = sF.grTerMaxAngle;
+	sc.grTerMaxHeight = sF.grTerMaxHeight;
 	sc.trRdDist = sF.trRdDist;  sc.trDistImp = sF.trDistImp;
 	sc.grassMtr = sF.grassMtr;  sc.grassColorMap = sF.grassColorMap;
 

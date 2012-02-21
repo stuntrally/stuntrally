@@ -110,7 +110,7 @@ public:
 	Ogre::Real grPage, grDist;  // vis
 	Ogre::Real grMinSx,grMinSy, grMaxSx,grMaxSy;  // sizes
 	Ogre::Real grSwayDistr, grSwayLen, grSwaySpeed;  // sway
-	Ogre::Real grTerMaxAngle;
+	Ogre::Real grTerMaxAngle, grTerMaxHeight;
 	Ogre::String grassMtr, grassColorMap;
 
 	//  trees
