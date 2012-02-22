@@ -263,7 +263,7 @@ HighLevelGpuProgramPtr WaterMaterialGenerator::createVertexProgram()
 	}
 	else
 	{
-		ret->setParameter("profiles", "vs_4_0 vs_2_x arbvp1");
+		ret->setParameter("profiles", "vs_4_0 vs_2_x vp40 arbvp1");
 	}
 	ret->setParameter("entry_point", "main_vp");
 
@@ -535,7 +535,7 @@ HighLevelGpuProgramPtr WaterMaterialGenerator::createFragmentProgram()
 	if(MRTSupported())
 		ret->setParameter("profiles", "ps_4_0 ps_3_0 fp40");
 	else
-		ret->setParameter("profiles", "ps_4_0 ps_3_0 arbfp1");	
+		ret->setParameter("profiles", "ps_4_0 ps_3_0 fp40 arbfp1");	
 
 	ret->setParameter("entry_point", "main_fp");
 
