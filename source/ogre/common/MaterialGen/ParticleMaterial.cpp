@@ -148,10 +148,11 @@ HighLevelGpuProgramPtr ParticleMaterialGenerator::createSoftParticleVertexProgra
 	
 	// params
 	GpuProgramParametersSharedPtr params = ret->getDefaultParameters();
+	params->setIgnoreMissingParams(true);
 	params->setNamedAutoConstant("wvpMat", GpuProgramParameters::ACT_WORLDVIEWPROJ_MATRIX);
 	params->setNamedAutoConstant("wMat", GpuProgramParameters::ACT_WORLD_MATRIX);
-	params->setNamedConstant("enableFog", mDef->mProps->fog ? Real(1.0) : Real(0.0));
 	params->setNamedAutoConstant("fogParams", GpuProgramParameters::ACT_FOG_PARAMS);
+	params->setNamedConstant("enableFog", mDef->mProps->fog ? Real(1.0) : Real(0.0));
 	
 	return ret;
 }

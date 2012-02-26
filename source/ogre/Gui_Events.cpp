@@ -654,14 +654,14 @@ void App::toggleGui(bool toggle)
 		first = false;
 		EditBox* edit = mGUI->findWidget<EditBox>("Readme");
 		if (edit)
-		{	std::string path = PATHMANAGER::GetDataPath()+"/../Readme.txt", text;
+		{	std::string path = PATHMANAGER::GetDataPath()+"/../Readme.txt";
 			std::ifstream fi(path.c_str());
-			while (!fi.eof())
-			{
-				char buf[4*4096];
-				fi.read(buf,sizeof(buf));
-				text += buf;
-			}
+
+			static char buf[2*4096];
+			fi.read(buf,sizeof(buf));
+			String text = buf;
+
+			text = StringUtil::replaceAll(text, "#", "##");
 			edit->setCaption(UString(text));
 			edit->setVScrollPosition(0);
 	}	}

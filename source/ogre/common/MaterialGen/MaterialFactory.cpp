@@ -194,6 +194,7 @@ void MaterialFactory::setFog(bool fog)
 		if (mat->getTechnique(0)->getPass(0)->hasVertexProgram())
 		{
 			GpuProgramParametersSharedPtr vparams = mat->getTechnique(0)->getPass(0)->getVertexProgramParameters();
+			vparams->setIgnoreMissingParams(true);
 			vparams->setNamedConstant("enableFog", fog ? Real(1.0) : Real(0.0));
 		}
 	}
@@ -210,6 +211,7 @@ void MaterialFactory::setWind(bool wind)
 		if (mat->getTechnique(0)->getPass(0)->hasVertexProgram())
 		{
 			GpuProgramParametersSharedPtr vparams = mat->getTechnique(0)->getPass(0)->getVertexProgramParameters();
+			vparams->setIgnoreMissingParams(true);
 			vparams->setNamedConstant("enableWind", wind ? Real(1.0) : Real(0.0));
 		}
 	}
