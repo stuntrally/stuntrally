@@ -69,7 +69,7 @@ void PATHMANAGER::Init(std::ostream & info_output, std::ostream & error_output, 
 			dirs.push_back("/usr/local/lib32");
 			dirs.push_back("/usr/lib32");
 			#endif
-			dirs.push_back("/usr/local");
+			dirs.push_back("/usr/local/lib");
 			dirs.push_back("/usr/lib");
 			// Loop through the paths and pick the first one that contain a plugin
 			for (Paths::const_iterator p = dirs.begin(); p != dirs.end(); ++p) {
