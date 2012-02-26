@@ -45,7 +45,7 @@ HighLevelGpuProgramPtr MaterialGenerator::createFragmentProgram()
 	}
 	else
 	{
-		ret->setParameter("profiles", "ps_4_0 ps_2_x arbfp1");	
+		ret->setParameter("profiles", "ps_4_0 ps_3_0 arbfp1");	
 	}
 	ret->setParameter("entry_point", "main_fp");
 

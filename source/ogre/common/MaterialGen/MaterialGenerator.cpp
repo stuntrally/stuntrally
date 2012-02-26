@@ -519,6 +519,7 @@ bool MaterialGenerator::UsePerPixelNormals()
 
 bool MaterialGenerator::MRTSupported()
 {
+	//return false;  //!test-
 	// buffer sharing between compositors not possible in ogre 1.7, thus disable MRT
 	#if OGRE_VERSION_MINOR < 8
 	return false;

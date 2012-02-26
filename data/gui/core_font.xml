@@ -5,7 +5,7 @@
 	<!-- Main Gui Font -->
 	<Resource type="ResourceTrueTypeFont" name="font_Vera.17">
 		<Property key="Source" value="DejaVuLGCSans.ttf"/>
-		<Property key="Size" value="22"/>
+		<Property key="Size" value="26"/>
 		<Property key="Resolution" value="50"/>
 		<Property key="Antialias" value="false"/>
 		<Property key="SpaceWidth" value="4"/>

@@ -19,6 +19,7 @@ void ReplayHeader::Default()
 	ver = 5;  /// todo: if <= 3 car colors from -1..1 to 0..1
 	frameSize = sizeof(ReplayFrame);
 	numPlayers = 1;
+	trees = 1.f;
 
 	for (int c=0; c<4; ++c)
 	{

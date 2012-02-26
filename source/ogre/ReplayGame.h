@@ -36,6 +36,7 @@ struct ReplayHeader
 
 	char nicks[32][4];  // multiplayer nicks
 	char descr[128];   // description - user text
+	float trees;	// trees multipler
 
 	ReplayHeader();  void Default();
 };
