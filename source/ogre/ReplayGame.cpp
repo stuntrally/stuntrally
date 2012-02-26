@@ -16,7 +16,7 @@ void ReplayHeader::Default()
 	memset(track, 0, sizeof(track));  track_user = 0;
 	memset(car, 0, sizeof(car));
 
-	ver = 5;  /// todo: if <= 3 car colors from -1..1 to 0..1
+	ver = 6;  /// todo: if <= 3 car colors from -1..1 to 0..1
 	frameSize = sizeof(ReplayFrame);
 	numPlayers = 1;
 	trees = 1.f;

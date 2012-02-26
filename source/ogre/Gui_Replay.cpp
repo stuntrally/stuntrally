@@ -50,6 +50,7 @@ void App::btnRplLoad(WP)  // Load
 		//  set game config from replay
 		pSet->game.car[0] = car;  pSet->game.track = trk;  pSet->game.track_user = usr;
 		pSet->game.car_hue[0] = replay.header.hue[0];  pSet->game.car_sat[0] = replay.header.sat[0];  pSet->game.car_val[0] = replay.header.val[0];
+		pSet->game.trees = replay.header.ver < 6 ? 1.f : replay.header.trees;  // older didnt have trees saved, so use default 1
 		for (int p=1; p < replay.header.numPlayers; ++p)
 		{	pSet->game.car[p] = replay.header.cars[p-1];
 			pSet->game.car_hue[p] = replay.header.hue[p];  pSet->game.car_sat[p] = replay.header.sat[p];  pSet->game.car_val[p] = replay.header.val[p];
