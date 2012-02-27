@@ -1,6 +1,7 @@
 #include "../ogre/common/Defines.h"
 #include "gameclient.hpp"
 #include "xtime.hpp"
+#include <ctime>
 
 namespace {
 	std::string formulateProtocolVersionError(uint32_t remote_version) {
@@ -17,6 +18,7 @@ P2PGameClient::P2PGameClient(GameClientCallback* callback, int port)
 	: m_callback(callback), m_client(*this, port), m_state(DISCONNECTED),
 	m_mutex(), m_cond(), m_playerInfo(), m_game(), m_carState()
 {
+	std::srand(time(0));  // randomize, based on current time
 	m_playerInfo.random_id = std::rand(); // Client id is based on this
 	m_game.packet_type = -1; // Invalidate until set
 	m_carState.packet_type = -1; // Invalidate until set
