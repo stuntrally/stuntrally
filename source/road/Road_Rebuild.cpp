@@ -831,7 +831,7 @@ void SplineRoad::RebuildRoadInt()
 	
 		//#  stats
 		if (stats)
-			st.HeightDiff = std::max(0.f, stMaxH - stMinH);
+			st.HeightDiff = max(0.f, stMaxH - stMinH);
 	}
 	//  lod end
 
