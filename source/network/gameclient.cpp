@@ -311,6 +311,7 @@ void P2PGameClient::receiveEvent(net::NetworkTraffic const& e)
 		}
 		case protocol::TEXT_MESSAGE: {
 			std::string msg((const char*)e.packet_data, e.packet_length);
+			msg = msg.substr(1); // Remove the packet_type char
 			std::cout << "Text message received: " << msg << std::endl;
 			if (m_callback) {
 				boost::mutex::scoped_lock lock(m_mutex);
