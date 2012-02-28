@@ -125,11 +125,10 @@ public:
 	//bool Checkpoint(const PosInfo& posInfo, class SplineRoad* road);  // update
 	Ogre::Vector3 vStartPos;  void ResetChecks(bool bDist=false);
 	
-private:
-	Ogre::Camera* mCamera;
-
 	//  access to vdrift stuff
 	GAME* pGame;
+private:
+	Ogre::Camera* mCamera;
 	
 	//  Scene, needed to get particle settings
 	Scene* sc;
@@ -157,15 +156,15 @@ private:
 	//  Dir name of car (e.g. ES)
 public:
 	std::string sDirname;
+
+	//  index for the car (e.g. when we have 2 cars, they have indices 0 and 1)
+	//  needed for cloned materials & textures
+	int iIndex;
 private:
 	
 	//  Path to car textures, e.g. /usr/share/stuntrally/data/cars/CT/textures
 	std::string resCar;
-	
-	//  index for the car (e.g. when we have 2 cars, they have indices 0 and 1)
-	//  needed for cloned materials & textures
-	int iIndex;
-	
+		
 	//  brake state
 	bool bBraking;
 	void RefreshBrakingMaterial();

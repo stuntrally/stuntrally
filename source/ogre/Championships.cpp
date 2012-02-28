@@ -246,7 +246,7 @@ void App::btnChampStageStart(WP)
 		return;
 	}
 
-	bool finished = pGame->timer.GetLastLap() > 0.f;  //?-
+	bool finished = pGame->timer.GetLastLap(0) > 0.f;  //?-
 	if (finished)
 	{
 		LogO("|| Loading next stage.");

@@ -98,7 +98,7 @@ public:
 	TRACK track;
 
 	std::list <CAR> cars;
-	std::map <CAR*, int> cartimerids;
+	//std::map <CAR*, int> cartimerids;
 	std::pair <CAR*, CARCONTROLMAP_LOCAL> carcontrols_local;
 	
 #ifdef ENABLE_FORCE_FEEDBACK

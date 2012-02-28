@@ -466,7 +466,7 @@ if (!bAssignKey)
 			carModels[c]->ResetChecks();
 			carModels[c]->iWonPlace = 0;
 		}
-		pGame->timer.Reset(0);
+		pGame->timer.Reset(-1);
 		pGame->timer.pretime = mClient ? 2.0f : pSet->game.pre_time;  // same for all multi players
 		carIdWin = 1;  //
 		ghost.Clear(); //

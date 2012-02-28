@@ -411,7 +411,7 @@ void App::LoadTrack()  // 6
 void App::LoadMisc()  // 7 last
 {
 	if (pGame && pGame->cars.size() > 0)  //todo: move this into gui track tab chg evt, for cur game type
-		UpdGuiRdStats(road, sc, sListTrack, pGame->timer.GetBestLap(pSet->game.trackreverse));  // current
+		UpdGuiRdStats(road, sc, sListTrack, pGame->timer.GetBestLap(0, pSet->game.trackreverse));  // current
 
 	CreateHUD();
 	// immediately hide it

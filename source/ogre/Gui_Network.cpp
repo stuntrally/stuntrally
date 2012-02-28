@@ -116,6 +116,7 @@ void App::updateGameInfoGUI()
 		imgNetTrack->setImageTexture(sListTrack+".jpg");
 	if (edNetTrackInfo && trkDesc)
 		edNetTrackInfo->setCaption(trkDesc[0]->getCaption());
+	// todo: probably should also update on gui collis,boost,reverse,... (but not in pSet.gui)
 }
 
 void App::uploadGameInfo()
@@ -216,9 +217,14 @@ void App::startRace()
 
 void App::timeInfo(ClientID id, uint8_t lap, double time)
 {
-	// TODO: Do something with this
-	//std::cout << "Lap " << (int)lap << " finished by " << (int)id << std::endl;
+	//if (!mClient)  return;
+	if (id == 0)  id = mClient->getId();
 	LogO("Lap " +toStr(lap) +" finished by " +toStr(id)+ " time:"+ toStr(float(time)));
+	if (id >= carModels.size() || id < 0)
+	{	LogO("Lap id wrong !" );  return;  }
+	
+	//pGame->timer.Lap(id, 0,0, true, pSet->game.trackreverse/*<, pSet->boost_type*/);  //pGame->cartimerids[pCar] ?
+	pGame->timer.LapNetworkTime(id, time);  // is the same as above but sets client's time
 }
 
 void App::error(string what)

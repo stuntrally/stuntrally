@@ -848,7 +848,7 @@ void CARDYNAMICS::UpdateTransmission(T dt)
 		if (!engine.GetCombustion())
 		{
 		    engine.StartEngine();
-		    std::cout << "start engine" << std::endl;
+		    //std::cout << "start engine" << std::endl;
 		}
 
 		T throttle = engine.GetThrottle();

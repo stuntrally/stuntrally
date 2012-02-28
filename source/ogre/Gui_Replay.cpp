@@ -17,9 +17,9 @@ using namespace MyGUI;
 void App::slRplPosEv(SL)  // change play pos
 {
 	if (!bRplPlay)  return;
-	double oldt = pGame->timer.GetReplayTime();
+	double oldt = pGame->timer.GetReplayTime(0);
 	double v = val/res;  v = std::max(0.0, std::min(1.0, v));  v *= replay.GetTimeLength();
-	pGame->timer.SetReplayTime(v);
+	pGame->timer.SetReplayTime(0, v);
 
 	FollowCamera* fCam = (*carModels.begin())->fCam;
 	fCam->first = true;  // instant change
@@ -171,7 +171,7 @@ void App::btnRplGhosts(WP)
 
 void App::btnRplToStart(WP)
 {
-	pGame->timer.RestartReplay();
+	pGame->timer.RestartReplay(0);
 }
 
 void App::btnRplToEnd(WP)
