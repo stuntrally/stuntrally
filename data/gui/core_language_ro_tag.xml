@@ -44,6 +44,7 @@
 	<Tag name="InputRoadOnTer">Home - activează lipirea de drum</Tag>
 	<Tag name="TipSunDiffuse">Difuziune culoare lumina soarelui (normală).Componente R G B de la 0 la 1 (ex. 0.9 0.9 0.9)</Tag>
 	<Tag name="LTrMinTerH">min terrain Height</Tag>
+	<Tag name="ScoreNeeded">Score needed</Tag>
 	<Tag name="HUD">HUD</Tag>
 	<Tag name="InputCamControl">W,S A,D Q,E - mișcă săgețile - rotește</Tag>
 	<Tag name="TipTrackMap">Mini-harta traseului selectat,văzut de deasupra.</Tag>
@@ -212,6 +213,7 @@
 	<Tag name="InputDetailPreset">Set from preset</Tag>
 	<Tag name="InputStartHeight">[,] - ajustează înălțimea casetei de start (mai mare pentru conducte)</Tag>
 	<Tag name="TipSunDirPitch">Direcția soarelui - unghiul de tangaj</Tag>
+	<Tag name="Passed">Passed</Tag>
 	<Tag name="InputMapHandBrake">Frână de mână</Tag>
 	<Tag name="loops">loops</Tag>
 	<Tag name="ProjectPage">project&apos;s page:</Tag>
@@ -255,9 +257,10 @@
 	<Tag name="InputFluidsPrevNext">PgUp,PgDn (or Wheel) - previous/next fluid</Tag>
 	<Tag name="Yaw">rotire</Tag>
 	<Tag name="Detail">Detalii</Tag>
-	<Tag name="InputMoveAxisTip">Move an axis to see its number</Tag>
+	<Tag name="AllEffects">Effects Enabled</Tag>
 	<Tag name="SplitVertically">Split Vertically</Tag>
 	<Tag name="Start">start</Tag>
+	<Tag name="Readme">Readme</Tag>
 	<Tag name="InputRoadShiftReverse">shift-Ins - paste   shift-ctrl-Ins - reversed</Tag>
 	<Tag name="MinScale">scala minimă</Tag>
 	<Tag name="MergeLength">Îmbină lungimea</Tag>
@@ -362,6 +365,7 @@
 	<Tag name="TipVegetModels">Models (meshes) for vegetation. Found in data/trees/.</Tag>
 	<Tag name="GrassSway">Grass sway</Tag>
 	<Tag name="Right">Dreapta</Tag>
+	<Tag name="Help">Help</Tag>
 	<Tag name="LODPointsDist">LOD points dist.</Tag>
 	<Tag name="NetWaiting">Waiting...</Tag>
 	<Tag name="MotionBlur">Estompare în mișcare</Tag>
@@ -516,6 +520,7 @@
 	<Tag name="CamInertia">Camera inertia</Tag>
 	<Tag name="TipTerSize">Resulting area in meters (side length). Equals vertex count multipled by triangle size.</Tag>
 	<Tag name="speed">speed</Tag>
+	<Tag name="InputMoveAxisTip">Move an axis to see its number</Tag>
 	<Tag name="TipTerLHMin">Starting terrain height for layer.</Tag>
 	<Tag name="RplGhosts">Ghosts</Tag>
 	<Tag name="RplBestOnly">Save ghost only for best time</Tag>
@@ -575,8 +580,8 @@
 	<Tag name="Materials">Materials</Tag>
 	<Tag name="InputMultiplier">Multiplier</Tag>
 	<Tag name="InputUndo">(one time undo)</Tag>
-	<Tag name="AllEffects">Effects Enabled</Tag>
 	<Tag name="CarCollis">Cars collision</Tag>
+	<Tag name="RepeatStage">Repeating stage</Tag>
 	<Tag name="CameraInfo">Camera info</Tag>
 	<Tag name="NetRouterTip">Router port forwarding configuration might be required in order to allow peers to connect to the local port.</Tag>
 	<Tag name="NewGame">New Game</Tag>
@@ -645,6 +650,7 @@
 	<Tag name="Volume">Volume</Tag>
 	<Tag name="TipTerLayers">Terrain texture layers (recommended 2-3, significantly affects Fps). *Auto blendmap supports max 4.</Tag>
 	<Tag name="TipSurfType">Type of surface, determines sound.</Tag>
+	<Tag name="NextStage">Continuing to next stage</Tag>
 	<Tag name="CheckArrow">Checkpoint Arrow</Tag>
 	<Tag name="InputRoadAltMMB">alt-RMB (or 3,4)</Tag>
 	<Tag name="InputSaveTrack">F4 - save track</Tag>
@@ -662,16 +668,17 @@
 	<Tag name="GraphicsAll_VeryHigh">Very High</Tag>
 	<Tag name="TipTerLAngMax">Ending terrain angle for layer.</Tag>
 	<Tag name="Pitch">gudron</Tag>
-	<Tag name="InputNextOptTab">F2,F3 - fila de opțiuni precedentă,următoare</Tag>
+	<Tag name="InputNextOptTab">F2,F3 - prev,next Options tab (shift - sub tab)</Tag>
 	<Tag name="RollingDrag">Învârtire mașină</Tag>
 	<Tag name="RplAll">Toate</Tag>
-	<Tag name="ScoreNeeded">Score needed</Tag>
-	<Tag name="DintPass">Din't pass</Tag>
-	<Tag name="Passed">Passed</Tag>
-	<Tag name="Readme">Readme</Tag>
-	<Tag name="Help">Help</Tag>
-	<Tag name="RepeatStage">Repeating stage</Tag>
-	<Tag name="NextStage">Continuing to next stage</Tag>
+	<Tag name="TipLTrFlDepth">Maximal depth in fluid allowed (set 0 to exclude from fluids).</Tag>
+	<Tag name="TipGrTerMaxHeight">Terrain height above which there won't be any grass.</Tag>
+	<Tag name="DidntPass">Didn't pass</Tag>
+	<Tag name="LTrFlDepth">max Depth in fluid</Tag>
+	<Tag name="WaterReflection">Reflection</Tag>
+	<Tag name="Water">Water</Tag>
+	<Tag name="WaterRefraction">Refraction</Tag>
+	<Tag name="GrTerMaxHeight">Grass Max. Terrain Height</Tag>
 	<Tag name="GameVersion">1.5</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 

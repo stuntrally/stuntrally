@@ -44,6 +44,7 @@
 	<Tag name="InputRoadOnTer">Pos1 - über dem Boden an/aus</Tag>
 	<Tag name="TipSunDiffuse">Farbe des Sonnenlichts. R G B Komponenten von 0 bis 1 (z.B. 0.9 0.9 0.9)</Tag>
 	<Tag name="LTrMinTerH">min. Terrain-Höhe</Tag>
+	<Tag name="ScoreNeeded">Score needed</Tag>
 	<Tag name="HUD">HUD</Tag>
 	<Tag name="InputCamControl">W,S A,D Q,E - Pfeiltasten - drehen</Tag>
 	<Tag name="TipTrackMap">Minikarte der ausgewählten Strecke, Sicht von oben.</Tag>
@@ -212,6 +213,7 @@
 	<Tag name="InputDetailPreset">Voreinstellung</Tag>
 	<Tag name="InputStartHeight">[,] - Starthöhe verändern (größer für Röhren)</Tag>
 	<Tag name="TipSunDirPitch">Richtung der Sonne - Neigung.</Tag>
+	<Tag name="Passed">Passed</Tag>
 	<Tag name="InputMapHandBrake">Handbremse</Tag>
 	<Tag name="loops">loopings</Tag>
 	<Tag name="ProjectPage">Projektseite:</Tag>
@@ -220,7 +222,7 @@
 	<Tag name="NetStart">Start</Tag>
 	<Tag name="InputMinVal">Min. Wert</Tag>
 	<Tag name="InputPressButtonTip">Taste drücken, um die Nummer zu sehen</Tag>
-	<Tag name="SingleRace">Einzelspieler</Tag>
+	<Tag name="SingleRace">Schnelles Spiel</Tag>
 	<Tag name="TipNewGameCar">Neu starten (nachdem neues Auto ausgewählt wurde)</Tag>
 	<Tag name="InputWheelForce">[,] (oder shift-Mausrad)</Tag>
 	<Tag name="TipGrassPatchLengthMax">Maximale Länge des Grasflecks.</Tag>
@@ -255,9 +257,10 @@
 	<Tag name="InputFluidsPrevNext">Bild auf/ab (oder Mausrad) - Gewässer vor/zurück</Tag>
 	<Tag name="Yaw">gieren</Tag>
 	<Tag name="Detail">Detail</Tag>
-	<Tag name="InputMoveAxisTip">Achse bewegen, um die Nummer zu sehen</Tag>
+	<Tag name="AllEffects">Effekte aktivieren</Tag>
 	<Tag name="SplitVertically">Senkrecht teilen</Tag>
 	<Tag name="Start">Start</Tag>
+	<Tag name="Readme">Readme</Tag>
 	<Tag name="InputRoadShiftReverse">Shift-Einfg - Einfügen Shift-Strg-Einfg - umgekehrt</Tag>
 	<Tag name="MinScale">min. Skal.</Tag>
 	<Tag name="MergeLength">Zusammenf. L.</Tag>
@@ -362,6 +365,7 @@
 	<Tag name="TipVegetModels">Modelle für die Vegetation. Zu finden in data/trees/.</Tag>
 	<Tag name="GrassSway">Grasschwingung</Tag>
 	<Tag name="Right">Rechts</Tag>
+	<Tag name="Help">Help</Tag>
 	<Tag name="LODPointsDist">LOD Punkte Dist.</Tag>
 	<Tag name="NetWaiting">Waiting...</Tag>
 	<Tag name="MotionBlur">Bewegungsunschärfe</Tag>
@@ -516,6 +520,7 @@
 	<Tag name="CamInertia">Kameraträgheit</Tag>
 	<Tag name="TipTerSize">Resultierende Seitenlänge in Metern. Entspricht der Vertexanzahl multipliziert mit Triangle-Größe.</Tag>
 	<Tag name="speed">Geschw.</Tag>
+	<Tag name="InputMoveAxisTip">Achse bewegen, um die Nummer zu sehen</Tag>
 	<Tag name="TipTerLHMin">Minimale Terrainhöhe der Ebene.</Tag>
 	<Tag name="RplGhosts">Geister</Tag>
 	<Tag name="RplBestOnly">Geist nur für beste Zeit speichern</Tag>
@@ -575,8 +580,8 @@
 	<Tag name="Materials">Materialien</Tag>
 	<Tag name="InputMultiplier">Faktor</Tag>
 	<Tag name="InputUndo">(rückgängig)</Tag>
-	<Tag name="AllEffects">Effekte aktivieren</Tag>
 	<Tag name="CarCollis">Autokollision</Tag>
+	<Tag name="RepeatStage">Repeating stage</Tag>
 	<Tag name="CameraInfo">Kamerainfo</Tag>
 	<Tag name="NetRouterTip">Router port forwarding configuration might be required in order to allow peers to connect to the local port.</Tag>
 	<Tag name="NewGame">Neues Spiel</Tag>
@@ -645,6 +650,7 @@
 	<Tag name="Volume">Lautstärke</Tag>
 	<Tag name="TipTerLayers">Terrain Texturlayer (empfohlen 2-3, großer Einfluss auf die Leistung). *Auto blendmap unterstützt max. 4.</Tag>
 	<Tag name="TipSurfType">Typ der Oberfläche, bestimmt den Sound.</Tag>
+	<Tag name="NextStage">Continuing to next stage</Tag>
 	<Tag name="CheckArrow">Wegpunkt-Pfeil</Tag>
 	<Tag name="InputRoadAltMMB">Alt-RMB (oder 3,4)</Tag>
 	<Tag name="InputSaveTrack">F4 - Strecke speichern</Tag>
@@ -662,16 +668,17 @@
 	<Tag name="GraphicsAll_VeryHigh">Sehr hoch</Tag>
 	<Tag name="TipTerLAngMax">Maximaler Winkel für den Terrain-Layer.</Tag>
 	<Tag name="Pitch">neigen</Tag>
-	<Tag name="InputNextOptTab">F2,F3 - vorheriger/nächster Tab</Tag>
+	<Tag name="InputNextOptTab">F2,F3 - prev,next Options tab (shift - sub tab)</Tag>
 	<Tag name="RollingDrag">Rollwiderstand</Tag>
 	<Tag name="RplAll">Alle</Tag>
-	<Tag name="ScoreNeeded">Score needed</Tag>
-	<Tag name="DintPass">Din't pass</Tag>
-	<Tag name="Passed">Passed</Tag>
-	<Tag name="Readme">Readme</Tag>
-	<Tag name="Help">Help</Tag>
-	<Tag name="RepeatStage">Repeating stage</Tag>
-	<Tag name="NextStage">Continuing to next stage</Tag>
+	<Tag name="TipLTrFlDepth">Maximal depth in fluid allowed (set 0 to exclude from fluids).</Tag>
+	<Tag name="TipGrTerMaxHeight">Terrain height above which there won't be any grass.</Tag>
+	<Tag name="DidntPass">Didn't pass</Tag>
+	<Tag name="LTrFlDepth">max Depth in fluid</Tag>
+	<Tag name="WaterReflection">Reflection</Tag>
+	<Tag name="Water">Water</Tag>
+	<Tag name="WaterRefraction">Refraction</Tag>
+	<Tag name="GrTerMaxHeight">Grass Max. Terrain Height</Tag>
 	<Tag name="GameVersion">1.5</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 

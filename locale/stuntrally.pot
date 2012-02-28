@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION"
 "Report-Msgid-Bugs-To: "
-"POT-Creation-Date: 2012-02-11 21:07+0200"
+"POT-Creation-Date: 2012-02-27 18:47+0200"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>"
 "Language-Team: LANGUAGE <LL@li.org>"
@@ -107,6 +107,10 @@ msgstr ""
 
 msgctxt "TipRoadDist2"
 msgid "Additional distance to road."
+msgstr ""
+
+msgctxt "TipLTrFlDepth"
+msgid "Maximal depth in fluid allowed (set 0 to exclude from fluids)."
 msgstr ""
 
 msgctxt "TipLTrMinTerH"
@@ -309,8 +313,8 @@ msgctxt "TipGrassDens"
 msgid "How dense/rare will the grass be on terrain."
 msgstr ""
 
-msgctxt "LoadTrack"
-msgid "Load Track"
+msgctxt "TipTrackList"
+msgid "Tracks list, click to select (and see info). Press Enter to drive on it. (or [Change track] and then [New Game])"
 msgstr ""
 
 msgctxt "GrDensSmooth"
@@ -363,6 +367,10 @@ msgstr ""
 
 msgctxt "TipNewTerrainFlat"
 msgid "Create new, flat terrain."
+msgstr ""
+
+msgctxt "TipGrTerMaxHeight"
+msgid "Terrain height above which there won't be any grass."
 msgstr ""
 
 msgctxt "InputRoadNew"
@@ -457,8 +465,8 @@ msgctxt "TipDustInt"
 msgid "Dust particles intensity."
 msgstr ""
 
-msgctxt "CameraInfo"
-msgid "Camera info"
+msgctxt "banked"
+msgid "banked"
 msgstr ""
 
 msgctxt "frenzy"
@@ -551,6 +559,10 @@ msgstr ""
 
 msgctxt "Replay"
 msgid "Replay"
+msgstr ""
+
+msgctxt "NewDup"
+msgid "New (Duplicate)"
 msgstr ""
 
 msgctxt "AutoRear"
@@ -701,10 +713,6 @@ msgctxt "TerrainError"
 msgid "Terrain error"
 msgstr ""
 
-msgctxt "DintPass"
-msgid "Din't pass"
-msgstr ""
-
 msgctxt "LTrMaxTerH"
 msgid "max terrain Height"
 msgstr ""
@@ -781,8 +789,8 @@ msgctxt "Layer"
 msgid "Layer"
 msgstr ""
 
-msgctxt "Copy"
-msgid "Copy"
+msgctxt "NetLocalPort"
+msgid "Local Port"
 msgstr ""
 
 msgctxt "EscQuit"
@@ -1053,8 +1061,8 @@ msgctxt "Detail"
 msgid "Detail"
 msgstr ""
 
-msgctxt "AllEffects"
-msgid "Effects Enabled"
+msgctxt "InputMoveAxisTip"
+msgid "Move an axis to see its number"
 msgstr ""
 
 msgctxt "Start"
@@ -1149,8 +1157,8 @@ msgctxt "RollingDrag"
 msgid "Rolling Drag"
 msgstr ""
 
-msgctxt "InputFluidsDel"
-msgid "Del - delete current"
+msgctxt "DidntPass"
+msgid "Didn't pass"
 msgstr ""
 
 msgctxt "InputMinimapType"
@@ -1393,8 +1401,8 @@ msgctxt "MinimapTerrain"
 msgid "Terrain"
 msgstr ""
 
-msgctxt "NewDup"
-msgid "New (Duplicate)"
+msgctxt "MinimapRotate"
+msgid "Rotate"
 msgstr ""
 
 msgctxt "TrackHeightDiff"
@@ -1461,6 +1469,10 @@ msgctxt "Tracks"
 msgid "Tracks"
 msgstr ""
 
+msgctxt "LTrFlDepth"
+msgid "max Depth in fluid"
+msgstr ""
+
 msgctxt "InputFluidsSize"
 msgid "alt-LMB - size   alt-RMB - depth"
 msgstr ""
@@ -1487,6 +1499,10 @@ msgstr ""
 
 msgctxt "TipModelMinScale"
 msgid "Model minimal scale."
+msgstr ""
+
+msgctxt "InputFluidsDel"
+msgid "Del - delete current"
 msgstr ""
 
 msgctxt "Leave"
@@ -1573,6 +1589,10 @@ msgctxt "TipGrassPatchLengthMin"
 msgid "Minimal grass patch length."
 msgstr ""
 
+msgctxt "WaterReflection"
+msgid "Reflection"
+msgstr ""
+
 msgctxt "intensity"
 msgid "intensity"
 msgstr ""
@@ -1631,6 +1651,10 @@ msgstr ""
 
 msgctxt "NeedRestart"
 msgid "* need restart"
+msgstr ""
+
+msgctxt "Water"
+msgid "Water"
 msgstr ""
 
 msgctxt "mud"
@@ -1719,10 +1743,6 @@ msgstr ""
 
 msgctxt "RplTime"
 msgid "Time"
-msgstr ""
-
-msgctxt "MinimapRotate"
-msgid "Rotate"
 msgstr ""
 
 msgctxt "Yes"
@@ -1873,8 +1893,8 @@ msgctxt "Tires"
 msgid "Tires"
 msgstr ""
 
-msgctxt "TipTrackList"
-msgid "Tracks list, click to select (and see info). Press Enter to drive on it. (or [Change track] and then [New Game])"
+msgctxt "LoadTrack"
+msgid "Load Track"
 msgstr ""
 
 msgctxt "TipTrkNameEditor"
@@ -1977,8 +1997,8 @@ msgctxt "TipWindInflH"
 msgid "Wind influence on model, height scale."
 msgstr ""
 
-msgctxt "NetLocalPort"
-msgid "Local Port"
+msgctxt "WaterRefraction"
+msgid "Refraction"
 msgstr ""
 
 msgctxt "Bloom"
@@ -2117,12 +2137,12 @@ msgctxt "speed"
 msgid "speed"
 msgstr ""
 
-msgctxt "InputMoveAxisTip"
-msgid "Move an axis to see its number"
-msgstr ""
-
 msgctxt "InputRoadYaw"
 msgid "- rotate yaw"
+msgstr ""
+
+msgctxt "GrTerMaxHeight"
+msgid "Grass Max. Terrain Height"
 msgstr ""
 
 msgctxt "RplGhosts"
@@ -2281,6 +2301,10 @@ msgctxt "InputCameraTxt1"
 msgid "with shift - main cameras only"
 msgstr ""
 
+msgctxt "Copy"
+msgid "Copy"
+msgstr ""
+
 msgctxt "scale"
 msgid "Scale"
 msgstr ""
@@ -2349,6 +2373,10 @@ msgctxt "InputUndo"
 msgid "(one time undo)"
 msgstr ""
 
+msgctxt "AllEffects"
+msgid "Effects Enabled"
+msgstr ""
+
 msgctxt "CarCollis"
 msgid "Cars collision"
 msgstr ""
@@ -2357,8 +2385,8 @@ msgctxt "RepeatStage"
 msgid "Repeating stage"
 msgstr ""
 
-msgctxt "banked"
-msgid "banked"
+msgctxt "CameraInfo"
+msgid "Camera info"
 msgstr ""
 
 msgctxt "NetRouterTip"

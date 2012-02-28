@@ -1,6 +1,7 @@
 #include "../ogre/common/Defines.h"
 #include "gameclient.hpp"
 #include "xtime.hpp"
+#include <ctime>
 
 namespace {
 	std::string formulateProtocolVersionError(uint32_t remote_version) {
@@ -17,6 +18,7 @@ P2PGameClient::P2PGameClient(GameClientCallback* callback, int port)
 	: m_callback(callback), m_client(*this, port), m_state(DISCONNECTED),
 	m_mutex(), m_cond(), m_playerInfo(), m_game(), m_carState()
 {
+	std::srand(time(0));  // randomize, based on current time
 	m_playerInfo.random_id = std::rand(); // Client id is based on this
 	m_game.packet_type = -1; // Invalidate until set
 	m_carState.packet_type = -1; // Invalidate until set
@@ -311,6 +313,7 @@ void P2PGameClient::receiveEvent(net::NetworkTraffic const& e)
 		}
 		case protocol::TEXT_MESSAGE: {
 			std::string msg((const char*)e.packet_data, e.packet_length);
+			msg = msg.substr(1); // Remove the packet_type char
 			std::cout << "Text message received: " << msg << std::endl;
 			if (m_callback) {
 				boost::mutex::scoped_lock lock(m_mutex);
