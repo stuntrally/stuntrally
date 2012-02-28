@@ -42,9 +42,6 @@
     <ClCompile Include="Source\Editor\settings.cpp">
       <Filter>Base,Set</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Editor\main.cpp">
-      <Filter>main</Filter>
-    </ClCompile>
     <ClCompile Include="source\vdrift\pathmanager.cpp">
       <Filter>main</Filter>
     </ClCompile>
@@ -222,6 +219,7 @@
     <ClCompile Include="source\ogre\common\WaterRTT.cpp" />
     <ClCompile Include="source\ogre\common\QTimer.cpp" />
     <ClCompile Include="source\ogre\common\MaterialGen\ParticleMaterial.cpp" />
+    <ClCompile Include="Source\Editor\main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Editor\BaseApp.h">

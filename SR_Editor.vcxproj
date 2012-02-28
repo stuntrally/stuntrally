@@ -110,8 +110,8 @@
   <ItemGroup>
     <ClCompile Include="Source\Editor\BaseApp.cpp" />
     <ClCompile Include="Source\Editor\BaseApp_Create.cpp" />
-    <ClCompile Include="Source\Editor\settings.cpp" />
     <ClCompile Include="Source\Editor\main.cpp" />
+    <ClCompile Include="Source\Editor\settings.cpp" />
     <ClCompile Include="source\ogre\common\FluidsXml.cpp" />
     <ClCompile Include="source\ogre\common\MaterialGen\ArrowMaterial.cpp" />
     <ClCompile Include="source\ogre\common\MaterialGen\GlassMaterial.cpp" />
