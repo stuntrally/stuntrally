@@ -626,8 +626,8 @@ namespace Ogre
 				size_t samplerOffset = (tt == HIGH_LOD) ? mShadowSamplerStartHi : mShadowSamplerStartLo;
 				for (uint i = 0; i < numTextures; ++i)
 				{
-					params->setNamedAutoConstant("inverseShadowmapSize" + StringConverter::toString(i), 
-						GpuProgramParameters::ACT_INVERSE_TEXTURE_SIZE, i + samplerOffset);
+				//	params->setNamedAutoConstant("inverseShadowmapSize" + StringConverter::toString(i), 
+				//		GpuProgramParameters::ACT_INVERSE_TEXTURE_SIZE, i + samplerOffset);
 				}
 			//}
 		}
@@ -797,9 +797,9 @@ namespace Ogre
 		}
 		
 		if(prof->isLayerNormalMappingEnabled() || prof->isLayerParallaxMappingEnabled())
-			ret->setParameter("profiles", "ps_4_0 ps_2_x fp40 arbfp1");  /// removed ps_3_0  to work with depth shadow on dx
+			ret->setParameter("profiles", "ps_4_0 ps_3_0 ps_2_x fp40 arbfp1");  /// removed ps_3_0  to work with depth shadow on dx
 		else
-			ret->setParameter("profiles", "ps_4_0 ps_2_0 fp40 fp30 arbfp1");  /// removed ps_3_0  
+			ret->setParameter("profiles", "ps_4_0 ps_3_0 ps_2_0 fp40 fp30 arbfp1");  /// removed ps_3_0  
 		ret->setParameter("entry_point", "main_fp");
 
 		return ret;
@@ -1637,13 +1637,19 @@ namespace Ogre
 			*texCoord = *texCoord + 1;
 			//if (prof->getReceiveDynamicShadowsDepth())
 			//{
-				outStream <<
-					", uniform float inverseShadowmapSize" << i << " \n";
+			//	outStream <<
+			//		", uniform float inverseShadowmapSize" << i << " \n";
 			//}
 		}
 		outStream <<
-		", uniform float enableShadows \n"
-		", uniform float3 fadeStart_farDist \n";
+		", uniform float enableShadows \n";
+		
+		MaterialFactory* factory = MaterialFactory::getSingletonPtr();
+		if (factory->getShadowsFade() && factory->getSceneManager()->getShadowFarDistance() > 0)
+		{
+			outStream <<
+			", uniform float3 fadeStart_farDist \n";
+		}
 
 	}
 	//---------------------------------------------------------------------
@@ -1655,7 +1661,10 @@ namespace Ogre
 			uint numTextures = prof->getReceiveDynamicShadowsPSSM()->getSplitCount();
 			outStream << 
 				"	float camDepth = uvMisc.z;\n";
-
+			outStream << "\n		";
+			for (uint i = 0; i < numTextures; ++i)
+				outStream << "float4 inverseShadowmapSize" << i << "; ";
+			
 			if (prof->getReceiveDynamicShadowsDepth())
 			{
 				outStream << 
