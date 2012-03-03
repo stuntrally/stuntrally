@@ -1,6 +1,5 @@
 #include "pch.h"
 #include "../common/Defines.h"
-#include "../common/QTimer.h"
 #include "../common/MaterialGen/TerrainMaterialGen.h"
 #include "../common/MaterialGen/MaterialFactory.h"
 
@@ -24,6 +23,7 @@
 #include <OgreOverlay.h>
 #include <OgreOverlayContainer.h>
 #include <OgreOverlayManager.h>
+#include "../common/QTimer.h"
 
 using namespace Ogre;
 using namespace Forests;

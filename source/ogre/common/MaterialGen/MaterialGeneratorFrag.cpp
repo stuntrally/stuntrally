@@ -212,13 +212,15 @@ void MaterialGenerator::fpShadowingParams(Ogre::StringUtil::StrStreamType& outSt
 		for (int i=0; i<mParent->getNumShadowTex(); ++i)
 			outStream << "in float4 lightPosition"+toStr(i)+" : TEXCOORD"+toStr(mTexCoord_i++)+", \n";
 		outStream << "\n";
-		for (int i=0; i<mParent->getNumShadowTex(); ++i)
-			outStream << "uniform float4 invShadowMapSize"+toStr(i)+", \n";
-		outStream << "\n";
 		outStream << 
 		"	uniform float4 pssmSplitPoints, \n"
-		"	uniform float3 fadeStart_farDist, \n"
 		"	uniform float enableShadows, \n";
+		
+		if (mParent->getShadowsFade() && mParent->getSceneManager()->getShadowFarDistance() > 0) 
+		{
+			outStream << 
+				"	uniform float3 fadeStart_farDist, \n";
+		}
 	}
 }
 
@@ -233,7 +235,13 @@ void MaterialGenerator::fpCalcShadowSource(Ogre::StringUtil::StrStreamType& outS
 	if (needShadows())
 	{
 		outStream <<
-		"	float shadowingRT;"
+		"	float shadowingRT;";
+		
+		outStream << "\n		";
+		for (uint i = 0; i < mParent->getNumShadowTex(); ++i)
+			outStream << "float4 invShadowMapSize" << i << "; ";
+			
+		outStream <<
 		"	shadowingRT = calcPSSMShadow(";
 		for (int i=0; i<mParent->getNumShadowTex(); ++i)
 			outStream << "shadowMap"+toStr(i)+", ";
@@ -330,6 +338,9 @@ void MaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::StrStrea
 			//outStream << "	in float4 viewPosition : TEXCOORD"+ toStr( mTexCoord_i++ ) +", \n";
 		}
 	}
+
+	outStream <<
+	"	in float fogAmount : FOG, \n";
 
 	if (vpNeedWvMat()) outStream <<
 		"	uniform float4x4 wvMat, \n";
@@ -560,7 +571,7 @@ void MaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::StrStrea
 	
 	// add fog
 	outStream <<
-		"	oColor = lerp(color1, float4(fogColor,1), position.w); \n";
+		"	oColor = lerp(color1, float4(fogColor,1), fogAmount); \n";
 	
 	// debug colour output  ------------------------------------------
 	
@@ -718,8 +729,8 @@ void MaterialGenerator::individualFragmentProgramParams(Ogre::GpuProgramParamete
 	{
 		params->setNamedConstant("enableShadows", 1.f);
 		params->setNamedConstant("pssmSplitPoints", mParent->pApp->splitPoints);
-		for (int i=0; i<mParent->getNumShadowTex(); ++i)
-			params->setNamedAutoConstant("invShadowMapSize"+toStr(i), GpuProgramParameters::ACT_INVERSE_TEXTURE_SIZE, i+mShadowTexUnit_start);
+		//for (int i=0; i<mParent->getNumShadowTex(); ++i)
+		//	params->setNamedAutoConstant("invShadowMapSize"+toStr(i), GpuProgramParameters::ACT_INVERSE_TEXTURE_SIZE, i+mShadowTexUnit_start);
 	}
 	
 	if (needTerrainLightMap())
