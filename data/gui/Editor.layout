@@ -2981,27 +2981,32 @@
 					<Property key="Caption" value="#{SREditorVersion} #{GameVersion}"/>
 					<Property key="TextColour" value="0.8 0.9 0.7"/>
 				</Widget>
-				<Widget type="TextBox" skin="TextBox" position="616 343 128 24">
+				<Widget type="TextBox" skin="TextBox" position="616 322 128 24">
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 					<Property key="TextColour" value="0.75 0.85 0.95"/>
 					<Property key="Caption" value="#{Startup}"/>
 				</Widget>
-				<Widget type="Button" skin="CheckBox" position="616 376 160 24" name="OgreDialog">
+				<Widget type="Button" skin="CheckBox" position="616 354 160 24" name="MouseCapture">
+					<UserString key="RelativeTo" value="OptionsWnd"/>
+					<Property key="TextColour" value="0.7 0.8 0.9"/>
+					<Property key="Caption" value="#{MouseCapture}"/>
+				</Widget>
+				<Widget type="Button" skin="CheckBox" position="616 386 160 24" name="OgreDialog">
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 					<Property key="TextColour" value="0.7 0.8 0.9"/>
 					<Property key="Caption" value="#{OgreDialog}"/>
 				</Widget>
-				<Widget type="Button" skin="CheckBox" position="616 408 160 24" name="AutoStart">
+				<Widget type="Button" skin="CheckBox" position="616 418 160 24" name="AutoStart">
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 					<Property key="TextColour" value="0.7 0.8 0.9"/>
 					<Property key="Caption" value="#{TrackAutoLoad}"/>
 				</Widget>
-				<Widget type="Button" skin="CheckBox" position="616 440 160 24" name="EscQuits">
+				<Widget type="Button" skin="CheckBox" position="616 450 160 24" name="EscQuits">
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 					<Property key="TextColour" value="0.7 0.8 0.9"/>
 					<Property key="Caption" value="#{EscQuit}"/>
 				</Widget>
-				<Widget type="Button" skin="CheckBox" position="616 472 160 24" name="Wireframe">
+				<Widget type="Button" skin="CheckBox" position="616 482 160 24" name="Wireframe">
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 					<Property key="TextColour" value="0.7 0.8 0.9"/>
 					<Property key="Caption" value="#{Wireframe} F10, F"/>

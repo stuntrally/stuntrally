@@ -343,6 +343,7 @@ void App::radKmh(WP wp){	bRkmh->setStateSelected(true);  bRmph->setStateSelected
 void App::radMph(WP wp){	bRkmh->setStateSelected(false);  bRmph->setStateSelected(true);  pSet->show_mph = true;   ShowHUD();  }
 
 //  Startup
+void App::chkMouseCapture(WP wp){	ChkEv(x11_capture_mouse);	}
 void App::chkOgreDialog(WP wp){		ChkEv(ogre_dialog);	}
 void App::chkAutoStart(WP wp){		ChkEv(autostart);	}
 void App::chkEscQuits(WP wp){		ChkEv(escquit);		}

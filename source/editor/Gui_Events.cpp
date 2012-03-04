@@ -691,6 +691,7 @@ void App::editRoad(EditPtr ed)
 //  [Settings]  . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
 //  Startup
+void App::chkMouseCapture(WP wp){	ChkEv(x11_capture_mouse);	}
 void App::chkOgreDialog(WP wp){		ChkEv(ogre_dialog);	}
 void App::chkAutoStart(WP wp){		ChkEv(autostart);	}
 void App::chkEscQuits(WP wp){		ChkEv(escquit);		}

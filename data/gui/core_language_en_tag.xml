@@ -348,6 +348,7 @@
 	<Tag name="CarDebugText">Car debug text </Tag>
 
 	<Tag name="Startup">Startup</Tag>
+	<Tag name="MouseCapture">Capture mouse</Tag>
 	<Tag name="OgreDialog">Show Ogre dialog</Tag>
 	<Tag name="AutoLoad">Auto Load track</Tag>
 	<Tag name="EscQuit">Esc quits</Tag>

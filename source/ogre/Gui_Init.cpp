@@ -201,6 +201,7 @@ void App::InitGui()
 		bRmph->eventMouseButtonClick += newDelegate(this, &App::radMph);  }
 
 	//  startup
+	Chk("MouseCapture", chkMouseCapture, pSet->x11_capture_mouse);
 	Chk("OgreDialog", chkOgreDialog, pSet->ogre_dialog);
 	Chk("AutoStart", chkAutoStart, pSet->autostart);
 	Chk("EscQuits", chkEscQuits, pSet->escquit);
@@ -216,7 +217,7 @@ void App::InitGui()
 	Chk("softparticles", chkVidSoftParticles, pSet->softparticles);
 	if (!MaterialGenerator::MRTSupported())
 		mGUI->findWidget<Button>("softparticles")->setEnabled(false);
-//	Chk("godrays", chkVidGodRays, pSet->godrays);
+	//Chk("godrays", chkVidGodRays, pSet->godrays);
 
 	Slv(BloomInt,	pSet->bloomintensity);
 	Slv(BloomOrig,	pSet->bloomorig);
