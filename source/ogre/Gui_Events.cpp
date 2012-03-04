@@ -435,14 +435,21 @@ if (!bAssignKey)
 		MyGUI::TabPtr tab = 0;
 		switch (pSet->inMenu)
 		{
-			case WND_Game:  case WND_Champ:		tab = mWndTabsGame;  break;
+			case WND_Game:  case WND_Champ:  tab = mWndTabsGame;  break;
+			case WND_Help:  tab = mWndTabsHelp;  break;
 			case WND_Options:  tab = mWndTabsOpts;  break;
 		}
 		if (tab)
-		{	int num = tab->getItemCount()-1, i = 0;
-			if (action("PrevTab")) {		i = tab->getIndexSelected();  if (i==1)  i = num;  else  --i;
+		{	int num = tab->getItemCount()-1, i = 0, n = 0;
+			if (action("PrevTab")) {
+				i = tab->getIndexSelected();
+				do{  if (i==1)  i = num;  else  --i;  ++n;  }
+				while (n < num && tab->getButtonWidthAt(i) == 1);
 				tab->setIndexSelected(i);  MenuTabChg(tab,i);  return true;  }
-			else if (action("NextTab")) {	i = tab->getIndexSelected();  if (i==num)  i = 1;  else  ++i;
+			else if (action("NextTab")) {
+				i = tab->getIndexSelected();
+				do{  if (i==num)  i = 1;  else  ++i;  ++n;  }
+				while (n < num && tab->getButtonWidthAt(i) == 1);
 				tab->setIndexSelected(i);  MenuTabChg(tab,i);  return true;  }
 		}
 	}
@@ -718,8 +725,9 @@ void App::GuiShortcut(WND_Types wnd, int tab)
 	switch (wnd)
 	{	case WND_Champ:
 		case WND_Game:		mWndTabsGame->setIndexSelected(tab);  break;
-		//case WND_Replays:	mWndTabs->setIndexSelected(tab);  break;
 		case WND_Options:	mWndTabsOpts->setIndexSelected(tab);  break;
+		case WND_Help:		mWndTabsHelp->setIndexSelected(tab);  break;
+		//case WND_Replays:	mWndTabs->setIndexSelected(tab);  break;
 	}
 	toggleGui(false);
 }
