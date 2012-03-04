@@ -273,7 +273,7 @@ protected:
     virtual bool buttonReleased( const OIS::JoyStickEvent &e, int button );
 	MyGUI::StaticTextPtr txtJAxis, txtJBtn, txtInpDetail;
 	int lastAxis, axisCnt;  std::string joyName;  class OISB::AnalogAxisAction* actDetail;
-	MyGUI::EditPtr edInputMin, edInputMax, edInputMul;  void editInput(MyGUI::EditPtr);
+	MyGUI::EditPtr edInputMin, edInputMax, edInputMul, edInputReturn, edInputIncrease;  void editInput(MyGUI::EditPtr);
 	MyGUI::ComboBox* cmbInpDetSet;  void comboInputPreset(CMB);
 
 

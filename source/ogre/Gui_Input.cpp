@@ -62,6 +62,7 @@ void App::InitInputGui()
 
 	//  details edits
 	Ed(InputMin, editInput);  Ed(InputMax, editInput);  Ed(InputMul, editInput);
+	Ed(InputReturn, editInput);  Ed(InputIncrease, editInput);
 
 	//  preset combo
 	ComboBoxPtr combo;
@@ -342,6 +343,8 @@ void App::inputDetailBtn(WP sender)
 	if (edInputMin)  edInputMin->setCaption(toStr(act->getProperty<OISB::Real>("MinValue")));
 	if (edInputMax)  edInputMax->setCaption(toStr(act->getProperty<OISB::Real>("MaxValue")));
 	if (edInputMul)  edInputMul->setCaption(toStr(act->getProperty<OISB::Real>("InverseMul")));
+	if (edInputReturn)      edInputReturn->setCaption(toStr(act->getProperty<OISB::Real>("IncSpeed")));        // =DecSpeed
+	if (edInputIncrease)  edInputIncrease->setCaption(toStr(act->getProperty<OISB::Real>("ReturnIncSpeed")));  // =ReturnDecSpeed
 	if (cmbInpDetSet)  cmbInpDetSet->setIndexSelected(0);
 }
 
@@ -354,6 +357,10 @@ void App::editInput(MyGUI::EditPtr ed)
 	actDetail->setProperty("MinValue",vMin);
 	actDetail->setProperty("MaxValue",vMax);
 	actDetail->setProperty("InverseMul",vMul);
+	Real vRet = s2r(edInputReturn->getCaption());  // keyboard only
+	Real vInc = s2r(edInputIncrease->getCaption());
+	actDetail->setProperty("ReturnDecSpeed",vRet);	actDetail->setProperty("DecSpeed",vInc);
+	actDetail->setProperty("ReturnIncSpeed",vRet);	actDetail->setProperty("IncSpeed",vInc);
 	if (cmbInpDetSet)  cmbInpDetSet->setIndexSelected(0);
 }
 
