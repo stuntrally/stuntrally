@@ -1079,7 +1079,7 @@
 			<Property key="InheritsAlpha" value="false"/>
 			<!--<UserString key="RelativeTo" value="WndChampEnd"/>-->
 		</Widget>
-        <Widget type="EditBox" skin="EditBoxEmpty" position="24 264 480 80" name="ChampEndText">
+		<Widget type="EditBox" skin="EditBoxEmpty" position="24 264 480 80" name="ChampEndText">
 			<Property key="TextColour" value="0.6 0.9 1.0"/>
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="ReadOnly" value="true"/>
@@ -1099,7 +1099,7 @@
 			<Property key="Caption" value="#{ChampEndCongrats}"/>
 			<!--<UserString key="RelativeTo" value="WndChampEnd"/>-->
 		</Widget>
-        <Widget type="ImageBox" skin="ImageBox" position="208 112 128 128">
+		<Widget type="ImageBox" skin="ImageBox" position="208 112 128 128">
 			<Property key="ImageTexture" value="ico_champ.png"/>
 			<!--<UserString key="RelativeTo" value="WndChampEnd"/>-->
 		</Widget>
@@ -1247,7 +1247,7 @@
 					<Property key="WordWrap" value="true"/>
 					<Property key="VisibleHScroll" value="false"/>
 					<Property key="VisibleVScroll" value="true"/>
-                    <Property key="MaxTextLength" value="8000"/>
+					<Property key="MaxTextLength" value="8000"/>
 					<Property key="TextColour" value="0.8 0.9 1.0"/>
 					<Property key="Colour" value="0.8 0.9 1"/>
 					<UserString key="RelativeTo" value="HelpWnd"/>
@@ -1328,7 +1328,7 @@
 			<Widget type="TabItem" skin="" position="2 24 794 572">
 				<Property key="Caption" value="#{Screen}"/>
 				<UserString key="RelativeTo" value="OptionsWnd"/>
-				<Widget type="TabControl" skin="TabControl" position="16 15 744 460">
+				<Widget type="TabControl" skin="TabControl" position="16 15 744 460" name="SubTab">
 					<Property key="ButtonAutoWidth" value="false"/>
 					<Property key="Colour" value="0.73 0.88 1"/>
 					<Property key="ButtonWidth" value="100"/>
@@ -1468,17 +1468,16 @@
 							<Property key="TextColour" value="0.6 1 0.3"/>
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
-			      <Widget type="Button" skin="CheckBox" position="40 285 300 24" name="softparticles">
+						<Widget type="Button" skin="CheckBox" position="40 285 300 24" name="softparticles">
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 							<Property key="Caption" value="#{softparticles}"/>
 							<Property key="TextColour" value="0.6 1 0.3"/>
 						</Widget>
-         <!--   <Widget type="Button" skin="CheckBox" position="40 320 300 24" name="godrays">
+						<!--<Widget type="Button" skin="CheckBox" position="40 320 300 24" name="godrays">
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 							<Property key="Caption" value="#{godrays}"/>
 							<Property key="TextColour" value="0.6 1 0.3"/>
-						</Widget>
-            -->
+						</Widget>-->
 					</Widget>
 				</Widget>
 				<Widget type="TextBox" skin="TextBox" position="32 488 300 24">
@@ -1514,7 +1513,7 @@
 					<Property key="TextColour" value="0.9 0.97 1"/>
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 				</Widget>
-				<Widget type="TabControl" skin="TabControl" position="16 65 744 400">
+				<Widget type="TabControl" skin="TabControl" position="16 65 744 400" name="SubTab">
 					<Property key="ButtonAutoWidth" value="true"/>
 					<Property key="Colour" value="0.73 0.88 1"/>
 					<UserString key="RelativeTo" value="OptionsWnd"/>
@@ -1999,7 +1998,7 @@
 					<Property key="TextColour" value="0.6 0.8 1"/>
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 				</Widget>
-				<Widget type="TabControl" skin="TabControl" position="16 15 744 460">
+				<Widget type="TabControl" skin="TabControl" position="16 15 744 460" name="SubTab">
 					<Property key="ButtonAutoWidth" value="false"/>
 					<Property key="Colour" value="0.73 0.88 1"/>
 					<Property key="ButtonWidth" value="100"/>

@@ -177,6 +177,7 @@ protected:
 	///-----------------------------------------------------------------------------------------------------------------
 	//  size
 	void SizeGUI(); void doSizeGUI(MyGUI::EnumeratorWidgetPtr);
+	std::vector<MyGUI::TabControl*> vSubTabsGame,vSubTabsOpts;
 
 	//  shortcuts
 	typedef MyGUI::WidgetPtr WP;
@@ -241,7 +242,7 @@ protected:
 	///-----------------------------------------
 
 	//  main menu
-	void toggleGui(bool toggle=true), GuiShortcut(WND_Types wnd, int tab);
+	void toggleGui(bool toggle=true), GuiShortcut(WND_Types wnd, int tab, int subtab=-1);
 	void UpdCarClrSld(bool upd=true);  bool bUpdCarClr;
 	void MainMenuBtn(MyGUI::WidgetPtr);
 	void MenuTabChg(MyGUI::TabPtr, size_t);
