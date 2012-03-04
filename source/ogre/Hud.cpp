@@ -419,7 +419,7 @@ void App::UpdateHUD(int carId, CarModel* pCarM, CAR* pCar, float time, Viewport*
 				}
 				
 				///  Lap Time ... (1) pos
-				if (1||mClient)
+				//if (1||mClient)
 				{
 					float t = 0.f;  int lap = -1;
 					if (!bGhost)
@@ -428,12 +428,14 @@ void App::UpdateHUD(int carId, CarModel* pCarM, CAR* pCar, float time, Viewport*
 						t = pGame->timer.GetLastLap(cm->iIndex);  // GetPlayerTimeTot
 						lap = pGame->timer.GetPlayerCurrentLap(cm->iIndex);  // not o, sorted index
 					}
-					hudOpp[o][2]->setCaption(cm->sDispName
-						+ "   " + toStr(lap) + " " + GetTimeString(t)
-						+ "  ("+ (pGame->timer.GetCurrentLap(cm->iIndex) >= pSet->game.num_laps ? toStr(cm->iWonPlace) : "-") +")");
+					bool end = pGame->timer.GetCurrentLap(cm->iIndex) >= pSet->game.num_laps;
+					hudOpp[o][2]->setCaption(//cm->sDispName
+						//+ "   " + toStr(lap) + " " + GetTimeString(t)  // too ?
+						//+ "  (" + (end ? toStr(cm->iWonPlace) : "-") +")");
+						+ end ? cm->sDispName + "  (" + toStr(cm->iWonPlace) + ")" : cm->sDispName);
 				}
-				else
-					hudOpp[o][2]->setCaption(cm->sDispName);
+				//else
+				//	hudOpp[o][2]->setCaption(cm->sDispName);
 				hudOpp[o][2]->setColour(cm->color);
 			}
 		}
