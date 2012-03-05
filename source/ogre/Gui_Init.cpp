@@ -379,6 +379,13 @@ void App::InitGui()
 		edNetLocalPort->eventEditTextChange += newDelegate(this, &App::evEdNetLocalPort);	}
 
 	
+	//  quick help text
+	MyGUI::EditPtr edHelp = mGUI->findWidget<Edit>("QuickHelpText");
+	String s = TR("#{QuickHelpText}");
+	s = StringUtil::replaceAll(s, "@", "\n");
+	edHelp->setCaption(s);
+
+
 	///  input tab  -------
 	InitInputGui();
 	

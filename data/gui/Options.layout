@@ -1237,6 +1237,18 @@
 			<Widget type="TabItem" skin="" position="2 24 794 572">
 				<Property key="Caption" value="#{Help}"/>
 				<UserString key="RelativeTo" value="HelpWnd"/>
+				<Widget type="EditBox" skin="EditBoxStretch" position="32 16 600 480" name="QuickHelpText">
+					<!--<Property key="Caption" value="#{QuickHelpText}"/>-->
+					<Property key="ReadOnly" value="true"/>
+					<Property key="MultiLine" value="true"/>
+					<Property key="WordWrap" value="true"/>
+					<Property key="VisibleHScroll" value="false"/>
+					<Property key="VisibleVScroll" value="true"/>
+					<Property key="MaxTextLength" value="8000"/>
+					<Property key="TextColour" value="0.8 0.9 1.0"/>
+					<Property key="Colour" value="0.8 0.9 1"/>
+					<UserString key="RelativeTo" value="HelpWnd"/>
+				</Widget>
 			</Widget>
 			<Widget type="TabItem" skin="" position="2 24 794 572">
 				<Property key="Caption" value="#{Readme}"/>
