@@ -136,9 +136,9 @@ void BaseApp::createFrameListener()
     if (!pSet->x11_capture_mouse)
     {
 		pl.insert(std::make_pair(std::string("x11_mouse_grab"), std::string("false")));
-		pl.insert(std::make_pair(std::string("x11_mouse_hide"), std::string("false")));
 		pl.insert(std::make_pair(std::string("x11_keyboard_grab"), std::string("false")));
-	}
+    }
+    pl.insert(std::make_pair(std::string("x11_mouse_hide"), std::string("true")));
     pl.insert(std::make_pair(std::string("XAutoRepeatOn"), std::string("true")));
     #endif
 
@@ -161,7 +161,7 @@ void BaseApp::createFrameListener()
 	mMouse->capture();
 	mKeyboard->capture();
 	
-	mHWMouse = new HWMouse(windowHnd, 8, 8, "pointer.png");
+	//mHWMouse = new HWMouse(windowHnd, 8, 8, "pointer.png");
 	
 	// add listener for all joysticks
 	for (std::vector<OISB::JoyStick*>::iterator it=mOISBsys->mJoysticks.begin();
@@ -542,7 +542,7 @@ BaseApp::~BaseApp()
 	delete mLoadingBar;
 	delete mSplitMgr;
 	
-	delete mHWMouse;
+	//delete mHWMouse;
 	
 	if (mGUI)  {
 		mGUI->shutdown();	delete mGUI;	mGUI = 0;  }
@@ -729,7 +729,7 @@ bool BaseApp::setup()
 	MyGUI::ResourceManager::getInstance().load("MessageBoxResources.xml");
 
 	#if OGRE_PLATFORM == OGRE_PLATFORM_LINUX
-	MyGUI::PointerManager::getInstance().setPointer("blank");
+	//MyGUI::PointerManager::getInstance().setPointer("blank");
 	#endif
 		
 	// ------------------------- lang ------------------------
@@ -1014,18 +1014,18 @@ void BaseApp::windowClosed(RenderWindow* rw)
 void BaseApp::showMouse()
 {
 	if (!mGUI)  return;
-	mHWMouse->show();
+	//mHWMouse->show();
 	
-	#if OGRE_PLATFORM == OGRE_PLATFORM_LINUX
-	MyGUI::PointerManager::getInstance().setVisible(false);
-	#else
+	//#if OGRE_PLATFORM == OGRE_PLATFORM_LINUX
+	//MyGUI::PointerManager::getInstance().setVisible(false);
+	//#else
 	MyGUI::PointerManager::getInstance().setVisible(true);
-	#endif
+	//#endif
 }
 void BaseApp::hideMouse()
 {
 	if (!mGUI)  return;
-	mHWMouse->hide();
+	//mHWMouse->hide();
 	MyGUI::PointerManager::getInstance().setVisible(false);
 }
 
