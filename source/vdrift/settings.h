@@ -70,7 +70,9 @@ public:
 	float vol_master, vol_engine, vol_tires, vol_env;
 	bool autostart, escquit;
 	bool bltDebug, bltLines, bltProfilerTxt;
-	bool loadingbackground, x11_capture_mouse;
+	bool loadingbackground;
+
+        bool x11_capture_mouse, x11_hwmouse;
 	
 	//  sim freq (1/interval timestep)
 	float game_fq, blt_fq;  int blt_iter, dyn_iter, multi_thr;

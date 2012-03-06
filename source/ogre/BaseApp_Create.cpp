@@ -138,7 +138,11 @@ void BaseApp::createFrameListener()
 		pl.insert(std::make_pair(std::string("x11_mouse_grab"), std::string("false")));
 		pl.insert(std::make_pair(std::string("x11_keyboard_grab"), std::string("false")));
     }
-    pl.insert(std::make_pair(std::string("x11_mouse_hide"), std::string("true")));
+
+    if (pSet->x11_hwmouse)
+        pl.insert(std::make_pair(std::string("x11_mouse_hide"), std::string("false")));
+    else
+        pl.insert(std::make_pair(std::string("x11_mouse_hide"), std::string("true")));
     pl.insert(std::make_pair(std::string("XAutoRepeatOn"), std::string("true")));
     #endif
 
@@ -160,8 +164,9 @@ void BaseApp::createFrameListener()
 	mKeyboard->setEventCallback(this);
 	mMouse->capture();
 	mKeyboard->capture();
-	
-	//mHWMouse = new HWMouse(windowHnd, 8, 8, "pointer.png");
+
+        if (pSet->x11_hwmouse)
+                mHWMouse = new HWMouse(windowHnd, 8, 8, "pointer.png");
 	
 	// add listener for all joysticks
 	for (std::vector<OISB::JoyStick*>::iterator it=mOISBsys->mJoysticks.begin();
@@ -541,8 +546,9 @@ BaseApp::~BaseApp()
 	CompositorManager::getSingleton().removeAll();
 	delete mLoadingBar;
 	delete mSplitMgr;
-	
-	//delete mHWMouse;
+
+        if (pSet->x11_hwmouse)
+                delete mHWMouse;
 	
 	if (mGUI)  {
 		mGUI->shutdown();	delete mGUI;	mGUI = 0;  }
@@ -1014,18 +1020,26 @@ void BaseApp::windowClosed(RenderWindow* rw)
 void BaseApp::showMouse()
 {
 	if (!mGUI)  return;
-	//mHWMouse->show();
+
+        if (pSet->x11_hwmouse)
+                mHWMouse->show();
 	
-	//#if OGRE_PLATFORM == OGRE_PLATFORM_LINUX
-	//MyGUI::PointerManager::getInstance().setVisible(false);
-	//#else
+	#if OGRE_PLATFORM == OGRE_PLATFORM_LINUX
+        if (pSet->x11_hwmouse)
+                MyGUI::PointerManager::getInstance().setVisible(false);
+        else
+                MyGUI::PointerManager::getInstance().setVisible(true);
+	#else
 	MyGUI::PointerManager::getInstance().setVisible(true);
-	//#endif
+	#endif
 }
 void BaseApp::hideMouse()
 {
 	if (!mGUI)  return;
-	//mHWMouse->hide();
+
+        if (pSet->x11_hwmouse)
+                mHWMouse->hide();
+                
 	MyGUI::PointerManager::getInstance().setVisible(false);
 }
 
