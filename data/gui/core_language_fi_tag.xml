@@ -23,6 +23,7 @@
 	<Tag name="OpponentsList">Kilpailijalista</Tag>
 	<Tag name="RplParticles">Hiukkaset (epäläpinäkyville haamuille)</Tag>
 	<Tag name="TipRoadDist2">Additional distance to road.</Tag>
+	<Tag name="TipLTrFlDepth">Maximal depth in fluid allowed (set 0 to exclude from fluids).</Tag>
 	<Tag name="TipLTrMinTerH">Maaston korkeus jonka alla objekti ei näy.</Tag>
 	<Tag name="Sky">Taivas</Tag>
 	<Tag name="TerNormal">Normaali</Tag>
@@ -72,7 +73,7 @@
 	<Tag name="TBLast">Viimeinen</Tag>
 	<Tag name="InputMaxVal">Maksimi arvo</Tag>
 	<Tag name="TipRollDrag">Drag for wheels, bigger will make them slow down faster (eg. 140 for snow, 80 for grass).</Tag>
-	<Tag name="LoadTrack">Lataa rata</Tag>
+	<Tag name="TipTrackList">Ratalista, klikkaa valitaksesi (ja nähdäksesi tietoja). Paina Enter ajaaksesi (tai [Vaihda rataa] ja sitten [Uusi peli]).</Tag>
 	<Tag name="GrDensSmooth">Smooth grass dens.</Tag>
 	<Tag name="TerHeightMap">Maaston korkeuskartta</Tag>
 	<Tag name="bumps">töyssyt</Tag>
@@ -108,7 +109,7 @@
 	<Tag name="BackMenu">Takaisin</Tag>
 	<Tag name="BasedOn">pohjautuen</Tag>
 	<Tag name="NetLeaveGame">Poistu pelistä</Tag>
-	<Tag name="banked">banked</Tag>
+	<Tag name="CameraInfo">Kamera info</Tag>
 	<Tag name="frenzy">frenzy (curly road)</Tag>
 	<Tag name="InputRoadChkRadius">K,L   - checkpoint radius (chkR 0 - none)</Tag>
 	<Tag name="Time">Aika</Tag>
@@ -117,12 +118,13 @@
 	<Tag name="MessageBox_Yes">Kyllä</Tag>
 	<Tag name="BlendMap">Blendmap</Tag>
 	<Tag name="InputMapPrevCamera">Previous Camera</Tag>
+	<Tag name="Shadows">Varjot</Tag>
 	<Tag name="InputMapBrake">Jarru</Tag>
 	<Tag name="Video">Kuva</Tag>
 	<Tag name="ViewStart">Näytä alku</Tag>
 	<Tag name="TipGrassDens">Kuinka tiheää/harvinaista ruohikko on maastossa.</Tag>
 	<Tag name="RplRecTime">Kirjattu aika</Tag>
-	<Tag name="Shadows">Varjot</Tag>
+	<Tag name="TipGrTerMaxHeight">Terrain height above which there won't be any grass.</Tag>
 	<Tag name="InputRoadYaw">- rotate yaw</Tag>
 	<Tag name="MessageBox_Try">Kokeile</Tag>
 	<Tag name="TerLHSm">Korkeus pehmennys</Tag>
@@ -192,7 +194,7 @@
 	<Tag name="TipCopySource">Pick selected track for copy source, used in [Tools] tab.</Tag>
 	<Tag name="InputMapNextTab">Seuraava välilehti</Tag>
 	<Tag name="Layer">Taso</Tag>
-	<Tag name="NetLocalPort">Paikallinen portti</Tag>
+	<Tag name="WaterRefraction">Refraction</Tag>
 	<Tag name="EscQuit">Esc lopettaa</Tag>
 	<Tag name="Gauges">Mittarit (moottorin kierrosmäärä, nopeus)</Tag>
 	<Tag name="LengthDim">Length dim.</Tag>
@@ -257,7 +259,7 @@
 	<Tag name="InputFluidsPrevNext">PgUp,PgDn (or Wheel) - previous/next fluid</Tag>
 	<Tag name="Yaw">kallistus</Tag>
 	<Tag name="Detail">Yksityiskohdat</Tag>
-	<Tag name="AllEffects">Tehosteet aktivoitu</Tag>
+	<Tag name="InputMoveAxisTip">Move an axis to see its number</Tag>
 	<Tag name="SplitVertically">Jaa pystysuunnassa</Tag>
 	<Tag name="Start">alku</Tag>
 	<Tag name="Readme">Readme</Tag>
@@ -281,6 +283,7 @@
 	<Tag name="InputCameraMode">Kameramoodi</Tag>
 	<Tag name="Enabled">Käytössä</Tag>
 	<Tag name="TipReverse">Reverse track direction.</Tag>
+	<Tag name="DidntPass">Didn't pass</Tag>
 	<Tag name="InputMinimapType">alt-F2,F3 - Prev,next minimap type</Tag>
 	<Tag name="TipGrassPatchLengthMin">Minimal grass patch length.</Tag>
 	<Tag name="Road">Tie</Tag>
@@ -354,6 +357,7 @@
 	<Tag name="InputTerPaint">A - Paint Textures (layers)</Tag>
 	<Tag name="NetPort">Portti</Tag>
 	<Tag name="Tracks">Radat</Tag>
+	<Tag name="LTrFlDepth">max Depth in fluid</Tag>
 	<Tag name="InputFluidsSize">alt-LMB - size   alt-RMB - depth</Tag>
 	<Tag name="TexCoordMul">Tex Coord mul.</Tag>
 	<Tag name="Digits">Numerot (vaihde, nopeus)</Tag>
@@ -382,6 +386,7 @@
 	<Tag name="InputRplCtrl0">Uusinta:</Tag>
 	<Tag name="InputRplCtrl1">Backspace - show/hide controls (hold ctrl to use mouse)</Tag>
 	<Tag name="TipGrassSwayLen">Grass sway effect length (scale).</Tag>
+	<Tag name="WaterReflection">Reflection</Tag>
 	<Tag name="intensity">voimakkuus</Tag>
 	<Tag name="Fog">Sumu</Tag>
 	<Tag name="InputCameraTxt2">with ctrl - switch current car when many</Tag>
@@ -397,6 +402,7 @@
 	<Tag name="InputRoadLMB">LMB (or Arrows)</Tag>
 	<Tag name="TCS">TCS (luistonesto)</Tag>
 	<Tag name="NeedRestart">* vaatii uudelleenkäynnistyksen</Tag>
+	<Tag name="Water">Water</Tag>
 	<Tag name="mud">muta</Tag>
 	<Tag name="TipTerWind">Terrain brush window.</Tag>
 	<Tag name="InputMapThrottle">Kiihdytys</Tag>
@@ -456,7 +462,7 @@
 	<Tag name="TipGrassPatchHeightMax">Maximal grass patch height.</Tag>
 	<Tag name="TerLAngMin">Minimikulma</Tag>
 	<Tag name="Tires">Renkaat</Tag>
-	<Tag name="TipTrackList">Ratalista, klikkaa valitaksesi (ja nähdäksesi tietoja). Paina Enter ajaaksesi (tai [Vaihda rataa] ja sitten [Uusi peli]).</Tag>
+	<Tag name="LoadTrack">Lataa rata</Tag>
 	<Tag name="TipTrkNameEditor">Selected track name, used also for renaming track and as new track name.</Tag>
 	<Tag name="InputRoadStats">T - road stats window</Tag>
 	<Tag name="VSync">VSync</Tag>
@@ -484,7 +490,7 @@
 	<Tag name="set2">set2</Tag>
 	<Tag name="auto">Autom.</Tag>
 	<Tag name="TipWindInflH">Wind influence on model, height scale.</Tag>
-	<Tag name="Copy">Kopio</Tag>
+	<Tag name="NetLocalPort">Paikallinen portti</Tag>
 	<Tag name="InputStartLMB">LMB - move  RMB - height</Tag>
 	<Tag name="TipWindInflL">Wind influence on model, length scale.</Tag>
 	<Tag name="InputRoadCopySel">ctrl-Ins - copy selection   ctrl-Del - delete sel.</Tag>
@@ -520,8 +526,8 @@
 	<Tag name="CamInertia">Kameran inertia</Tag>
 	<Tag name="TipTerSize">Resulting area in meters (side length). Equals vertex count multipled by triangle size.</Tag>
 	<Tag name="speed">nopeus</Tag>
-	<Tag name="InputMoveAxisTip">Move an axis to see its number</Tag>
 	<Tag name="TipTerLHMin">Starting terrain height for layer.</Tag>
+	<Tag name="GrTerMaxHeight">Grass Max. Terrain Height</Tag>
 	<Tag name="RplGhosts">Haamut</Tag>
 	<Tag name="RplBestOnly">Save ghost only for best time</Tag>
 	<Tag name="Front">Front</Tag>
@@ -560,6 +566,7 @@
 	<Tag name="Editor">Editori</Tag>
 	<Tag name="AndContributors">ja avustajat.</Tag>
 	<Tag name="InputRoadSelectMany">Select (many)</Tag>
+	<Tag name="Copy">Kopio</Tag>
 	<Tag name="Reverse">Reverse</Tag>
 	<Tag name="scale">Skaala</Tag>
 	<Tag name="UnitMph">mph</Tag>
@@ -580,9 +587,10 @@
 	<Tag name="Materials">Materiaalit</Tag>
 	<Tag name="InputMultiplier">Kerroin</Tag>
 	<Tag name="InputUndo">(one time undo)</Tag>
+	<Tag name="AllEffects">Tehosteet aktivoitu</Tag>
 	<Tag name="CarCollis">Autojen törmäystunnistus</Tag>
 	<Tag name="RepeatStage">Repeating stage</Tag>
-	<Tag name="CameraInfo">Kamera info</Tag>
+	<Tag name="banked">banked</Tag>
 	<Tag name="NetRouterTip">Reitittimen porttien edelleenohjaus asetusten säätäminen saattaa olla tarpeellista, jotta muut pelaajat voivat yhdistää paikalliseen porttiin.</Tag>
 	<Tag name="NewGame">Uusi peli</Tag>
 	<Tag name="page">sivu</Tag>
@@ -671,14 +679,12 @@
 	<Tag name="InputNextOptTab">F2,F3 - prev,next Options tab (shift - sub tab)</Tag>
 	<Tag name="RollingDrag">Rolling Drag</Tag>
 	<Tag name="RplAll">Kaikki</Tag>
-	<Tag name="TipLTrFlDepth">Maximal depth in fluid allowed (set 0 to exclude from fluids).</Tag>
-	<Tag name="TipGrTerMaxHeight">Terrain height above which there won't be any grass.</Tag>
-	<Tag name="DidntPass">Didn't pass</Tag>
-	<Tag name="LTrFlDepth">max Depth in fluid</Tag>
-	<Tag name="WaterReflection">Reflection</Tag>
-	<Tag name="Water">Water</Tag>
-	<Tag name="WaterRefraction">Refraction</Tag>
-	<Tag name="GrTerMaxHeight">Grass Max. Terrain Height</Tag>
+	<Tag name="InputKeyboardEmulation">Keyboard Emulation</Tag>
+	<Tag name="MouseCapture">Capture mouse</Tag>
+	<Tag name="QuickHelpText">
+</Tag>
+	<Tag name="InputIncreaseSensitivity">Sensitivity</Tag>
+	<Tag name="InputReturnDelay">Return speed</Tag>
 	<Tag name="GameVersion">1.5</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 
