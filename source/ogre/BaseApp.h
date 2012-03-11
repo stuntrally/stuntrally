@@ -58,6 +58,7 @@ public:
 	class SSAOLogic* mSSAOLogic;
 	class GodRaysLogic* mGodRaysLogic;
 	class SoftParticlesLogic* mSoftParticlesLogic;
+	class DepthOfFieldLogic* mDepthOfFieldLogic;
 	class GBufferLogic* mGBufferLogic;
 	void recreateCompositor();
 	bool AnyEffectEnabled();

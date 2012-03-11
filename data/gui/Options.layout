@@ -1473,6 +1473,11 @@
 							<Property key="Caption" value="#{softparticles}"/>
 							<Property key="TextColour" value="0.6 1 0.3"/>
 						</Widget>
+            <Widget type="Button" skin="CheckBox" position="40 320 300 24" name="DepthOfField">
+							<UserString key="RelativeTo" value="OptionsWnd"/>
+							<Property key="Caption" value="#{DepthOfField}"/>
+							<Property key="TextColour" value="0.6 1 0.3"/>
+						</Widget>
          <!--   <Widget type="Button" skin="CheckBox" position="40 320 300 24" name="godrays">
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 							<Property key="Caption" value="#{godrays}"/>

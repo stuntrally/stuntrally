@@ -269,6 +269,7 @@
 	<Tag name="ssao">SSAO</Tag>
 	<Tag name="godrays">God Rays</Tag>
 	<Tag name="softparticles">Soft Particles</Tag>
+	<Tag name="DepthOfField">Depth of Field</Tag>
 
 	
 	<!--  Graphics  -->

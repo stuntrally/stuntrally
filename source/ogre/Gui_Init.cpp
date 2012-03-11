@@ -203,7 +203,10 @@ void App::InitGui()
 	Chk("softparticles", chkVidSoftParticles, pSet->softparticles);
 	if (!MaterialGenerator::MRTSupported())
 		mGUI->findWidget<Button>("softparticles")->setEnabled(false);
-//	Chk("godrays", chkVidGodRays, pSet->godrays);
+	Chk("DepthOfField", chkVidDepthOfField, pSet->dof);
+	if (!MaterialGenerator::MRTSupported())
+		mGUI->findWidget<Button>("DepthOfField")->setEnabled(false);
+	//	Chk("godrays", chkVidGodRays, pSet->godrays);
 
 	Slv(BloomInt,	pSet->bloomintensity);
 	Slv(BloomOrig,	pSet->bloomorig);

@@ -116,6 +116,7 @@ void SETTINGS::Serialize(bool w, CONFIGFILE & c)
 	Param(c,w, "video_eff.ssao", ssao);
 	Param(c,w, "video_eff.godrays", godrays);
 	Param(c,w, "video_eff.softparticles", softparticles);
+	Param(c,w, "video_eff.dof", dof);
 
 	Param(c,w, "video.windowx", windowx);			Param(c,w, "video.windowy", windowy);
 	Param(c,w, "video.fullscreen", fullscreen);		Param(c,w, "video.vsync", vsync);
@@ -179,7 +180,7 @@ SETTINGS::SETTINGS() :  ///  Defaults
 	all_effects(false), godrays(false),
 	bloom(false), bloomintensity(0.13), bloomorig(0.9), hdr(false),
 	motionblur(false), motionblurintensity(0.3),
-	ssao(false),softparticles(false)
+	ssao(false),softparticles(false),dof(false)
 {
 	//  track
 	gui.track = "J1-T";

@@ -467,3 +467,88 @@ void SoftParticlesListener::notifyMaterialRender(Ogre::uint32 pass_id, Ogre::Mat
 {
 
 }
+
+
+class DepthOfFieldListener: public Ogre::CompositorInstance::Listener
+{
+protected:
+public:
+	DepthOfFieldListener(BaseApp * app);
+	virtual ~DepthOfFieldListener();
+	virtual void notifyMaterialSetup(Ogre::uint32 pass_id, Ogre::MaterialPtr &mat);
+	virtual void notifyMaterialRender(Ogre::uint32 pass_id, Ogre::MaterialPtr &mat);
+	BaseApp * mApp;
+	int mViewportWidth,mViewportHeight;
+private:
+
+};
+
+Ogre::CompositorInstance::Listener* DepthOfFieldLogic::createListener(Ogre::CompositorInstance* instance)
+{
+	DepthOfFieldListener* listener = new DepthOfFieldListener(mApp);
+	Ogre::Viewport* vp = instance->getChain()->getViewport();
+	listener->mViewportWidth = vp->getActualWidth();
+	listener->mViewportHeight = vp->getActualHeight();
+	return listener;
+}
+
+DepthOfFieldListener::DepthOfFieldListener(BaseApp* app)
+{
+	mApp = app;
+	
+}
+DepthOfFieldListener::~DepthOfFieldListener()
+{
+}
+
+void DepthOfFieldLogic::setApp(BaseApp* app)
+{
+	mApp = app;
+}
+
+
+void DepthOfFieldListener::notifyMaterialSetup(Ogre::uint32 pass_id, Ogre::MaterialPtr &mat)
+{
+	if(pass_id == 1)
+	{
+		float blurScale =.5f;
+
+		Ogre::Vector4 pixelSize(1.0f / (mViewportWidth * blurScale), 1.0f / (mViewportHeight * blurScale), 0.0f, 0.0f);
+		
+		mat->load();
+		Ogre::Pass *pass = mat->getBestTechnique()->getPass(0);
+        Ogre::GpuProgramParametersSharedPtr params = pass->getFragmentProgramParameters();
+    
+	   if (params->_findNamedConstantDefinition("pixelSize"))
+			params->setNamedConstant("pixelSize", pixelSize);
+     
+	}
+	else if(pass_id == 2)
+	{
+		float blurScale =.5f;
+		Ogre::Vector4  pixelSize(1.0f / mViewportWidth, 1.0f / mViewportHeight,1.0f / (mViewportWidth * blurScale), 1.0f / (mViewportHeight * blurScale) );
+
+		Ogre::Pass *pass = mat->getBestTechnique()->getPass(0);
+        Ogre::GpuProgramParametersSharedPtr params = pass->getFragmentProgramParameters();
+    
+	   	if (params->_findNamedConstantDefinition("pixelSize"))
+			params->setNamedConstant("pixelSize", pixelSize);
+
+	      // this is the camera you're using
+        #ifndef ROAD_EDITOR
+		Ogre::Camera *cam = mApp->mSplitMgr->mCameras.front();
+		#else
+		Ogre::Camera *cam = mApp->mCamera;
+		#endif
+       
+		if (params->_findNamedConstantDefinition("far"))
+            params->setNamedConstant("far", cam->getFarClipDistance());
+
+     }
+}
+
+
+void DepthOfFieldListener::notifyMaterialRender(Ogre::uint32 pass_id, Ogre::MaterialPtr &mat)
+{
+
+}

@@ -381,6 +381,10 @@ void App::chkVidSoftParticles(WP wp)
 {		
 	ChkEv(softparticles);  refreshCompositor();
 }
+void App::chkVidDepthOfField(WP wp)
+{		
+	ChkEv(dof);  refreshCompositor();
+}
 void App::chkVidGodRays(WP wp)
 {		
 	ChkEv(godrays);  refreshCompositor();
