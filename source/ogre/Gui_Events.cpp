@@ -282,7 +282,7 @@ void App::btnChgTrack(WP)
 //  new game
 void App::btnNewGame(WP)
 {
-	if (mWndGame->getVisible() && mWndTabsGame->getIndexSelected() < 5)
+	if (mWndGame->getVisible() && mWndTabsGame->getIndexSelected() < 5  || mClient)
 		pSet->gui.champ_num = -1;  /// champ, back to single race
 	
 	NewGame();  isFocGui = false;  // off gui

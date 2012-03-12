@@ -123,6 +123,8 @@ void App::NewGame()
 	{
 		pSet->game = pSet->gui;  // copy game config from gui
 		ChampNewGame();
+		if (mClient && mLobbyState != HOSTING)
+			updateGameSet();  // override gameset params for networked game (from host gameset)
 	}
 	newGameRpl = false;
 	

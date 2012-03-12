@@ -173,8 +173,8 @@ btCollisionShape * COLLISION_WORLD::AddMeshShape(const MODEL & model)
 
 struct MyRayResultCallback : public btCollisionWorld::RayResultCallback
 {
-	MyRayResultCallback(const btVector3 & rayFromWorld, const btVector3 & rayToWorld, const btCollisionObject * exclude)
-	:m_rayFromWorld(rayFromWorld), m_rayToWorld(rayToWorld), m_exclude(exclude), m_shapeId(0)
+	MyRayResultCallback(const btVector3 & rayFromWorld, const btVector3 & rayToWorld, const btCollisionObject * exclude, bool ignoreCars)
+		: m_rayFromWorld(rayFromWorld), m_rayToWorld(rayToWorld), m_exclude(exclude), m_shapeId(0), bIgnoreCars(ignoreCars)
 	{	}
 
 	btVector3	m_rayFromWorld;//used to calculate hitPointWorld from hitFraction
@@ -185,21 +185,31 @@ struct MyRayResultCallback : public btCollisionWorld::RayResultCallback
 	
 	int m_shapeId;
 	const btCollisionObject * m_exclude;
+	bool bIgnoreCars;
 		
 	virtual	btScalar	addSingleResult(btCollisionWorld::LocalRayResult& rayResult, bool normalInWorldSpace)
 	{
-		if (rayResult.m_collisionObject == m_exclude)
+		btCollisionObject* obj = rayResult.m_collisionObject;
+		if (obj == m_exclude)
 			return 1.0;
 			
+		//  no other cars collision (for wheel raycasts)
+		if (bIgnoreCars)
+		{
+			ShapeData* sd = (ShapeData*)obj->getUserPointer();
+			if (sd && sd->type == ST_Car)
+				return 1.0;
+		}
+			
 		//  fluid triggers - no collision
-		if (rayResult.m_collisionObject->getCollisionFlags() & btCollisionObject::CF_NO_CONTACT_RESPONSE)
+		if (obj->getCollisionFlags() & btCollisionObject::CF_NO_CONTACT_RESPONSE)
 			return 1.0;
 		
 		//caller already does the filter on the m_closestHitFraction
 		btAssert(rayResult.m_hitFraction <= m_closestHitFraction);
 		
 		m_closestHitFraction = rayResult.m_hitFraction;
-		m_collisionObject = rayResult.m_collisionObject;
+		m_collisionObject = obj;
 
 		if (!rayResult.m_localShapeInfo)
 			m_shapeId = 0;  //crash hf-
@@ -229,11 +239,11 @@ bool COLLISION_WORLD::CastRay(
 	const float length,
 	const btCollisionObject * caster,
 	COLLISION_CONTACT & contact,
-	int* pOnRoad) const
+	int* pOnRoad, bool ignoreCars) const
 {
 	btVector3 from = ToBulletVector(origin);
 	btVector3 to = ToBulletVector(origin + direction * length);
-	MyRayResultCallback rayCallback(from, to, caster);
+	MyRayResultCallback rayCallback(from, to, caster, ignoreCars);
 	
 	MATHVECTOR <float, 3> p, n;  float d;
 	const TRACKSURFACE * s = TRACKSURFACE::None();

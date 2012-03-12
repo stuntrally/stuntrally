@@ -11,6 +11,8 @@ void SETTINGS::Load(std::string sfile)
 }
 void SETTINGS::Save(std::string sfile)
 {
+	if (net_local_plr > 0)  // save only for host for many local games
+		return;
 	CONFIGFILE c;  c.Load(sfile);  version = SET_VER;
 	Serialize(true, c);  c.Write();
 }

@@ -355,6 +355,7 @@ protected:
 	void rebuildGameList();
 	void rebuildPlayerList();
 	void updateGameInfo();
+	void updateGameSet();
 	void updateGameInfoGUI();
 	void uploadGameInfo();
 	void setNetGuiHosting(bool enabled);

@@ -401,7 +401,7 @@ void CARDYNAMICS::UpdateWheelContacts()
 		//vRayStarts[i] = raystart;  // info
 		//vRayDirs[i] = raystart + raydir * raylen;
 		
-		world->CastRay(raystart, raydir, raylen, chassis, wheelContact, /*R+*/&bWhOnRoad[i]);
+		world->CastRay(raystart, raydir, raylen, chassis, wheelContact, /*R+*/&bWhOnRoad[i], !pSet->game.collis_cars);
 		if (bTerrain)  ///  terrain surf from blendmap
 			wheelContact.SetSurface(terSurf[i]);
 	}
