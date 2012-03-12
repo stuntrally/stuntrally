@@ -631,7 +631,9 @@ bool BaseApp::setup()
 	}
 	
 	// Dynamic plugin loading
-	mRoot = OGRE_NEW Root("", PATHMANAGER::GetUserConfigDir() + "/ogreset.cfg", PATHMANAGER::GetUserConfigDir() + "/ogre.log");
+	int net = pSet->net_local_plr;
+	mRoot = OGRE_NEW Root("", PATHMANAGER::GetUserConfigDir() + "/ogreset.cfg",
+		PATHMANAGER::GetUserConfigDir() + "/ogre" + (net >= 0 ? toStr(net) : "") + ".log");
 	LogO("*** start setup ***");
 
 	#ifdef _DEBUG

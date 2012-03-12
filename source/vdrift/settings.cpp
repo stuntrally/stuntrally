@@ -181,7 +181,8 @@ SETTINGS::SETTINGS() :  ///  Defaults
 	all_effects(false), godrays(false),
 	bloom(false), bloomintensity(0.13), bloomorig(0.9), hdr(false),
 	motionblur(false), motionblurintensity(0.3),
-	ssao(false),softparticles(false)
+	ssao(false),softparticles(false),
+	net_local_plr(-1)
 {
 	//  track
 	gui.track = "J1-T";

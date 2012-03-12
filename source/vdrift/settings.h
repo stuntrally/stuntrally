@@ -97,7 +97,7 @@ public:
 	int local_port;
 
 	// not in gui
-	bool boostFromExhaust;
+	bool boostFromExhaust;  int net_local_plr;
 	
 //------------------------------------------
 	SETTINGS();
