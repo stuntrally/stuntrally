@@ -33,6 +33,12 @@
 #include "common/MaterialGen/MaterialGenerator.h"
 using namespace Ogre;
 
+#if OGRE_VERSION_MINOR >= 8
+        #define UI_RENDER "gbufferUIRender"
+#else
+        #define UI_RENDER "gbufferUIRender17"
+#endif
+
 
 //#define LogDbg(s)
 #define LogDbg(s)  LogO(s)
@@ -214,7 +220,7 @@ void BaseApp::refreshCompositor(bool disableAll)
 		CompositorManager::getSingleton().setCompositorEnabled((*it), "GodRays", false);
 		CompositorManager::getSingleton().setCompositorEnabled((*it), "Motion Blur", false);
 		CompositorManager::getSingleton().setCompositorEnabled((*it), "SSAA", false);
-		CompositorManager::getSingleton().setCompositorEnabled((*it), "gbufferUIRender", false);
+		CompositorManager::getSingleton().setCompositorEnabled((*it), UI_RENDER, false);
 	}
 
 	if (!pSet->all_effects || disableAll)
@@ -273,8 +279,8 @@ void BaseApp::refreshCompositor(bool disableAll)
 			CompositorManager::getSingleton().setCompositorEnabled((*it), "ssaoNoMRT", pSet->ssao);
 		}
 		CompositorManager::getSingleton().setCompositorEnabled((*it), "GodRays", pSet->godrays);
-		CompositorManager::getSingleton().setCompositorEnabled((*it), "gbufferUIRender", AnyEffectEnabled());
-		
+
+                CompositorManager::getSingleton().setCompositorEnabled((*it), UI_RENDER, AnyEffectEnabled());
 	}
 }
 //-------------------------------------------------------------------------------------
@@ -461,7 +467,7 @@ void BaseApp::recreateCompositor()
 		CompositorManager::getSingleton().addCompositor((*it), "Bloom");
 		CompositorManager::getSingleton().addCompositor((*it), "Motion Blur");
 		CompositorManager::getSingleton().addCompositor((*it), "SSAA");
-		CompositorManager::getSingleton().addCompositor((*it), "gbufferUIRender");
+		CompositorManager::getSingleton().addCompositor((*it), UI_RENDER);
 	}
 	
 	refreshCompositor();
