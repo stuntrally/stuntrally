@@ -216,37 +216,6 @@ void BaseApp::refreshCompositor(bool disableAll)
 		CompositorManager::getSingleton().setCompositorEnabled((*it), "SSAA", false);
 		CompositorManager::getSingleton().setCompositorEnabled((*it), "gbufferUIRender", false);
 	}
-	
-	
-	// this is a hack.. somehow the projective coords are flipped when compositors are enabled, so we need to notify the shader about this
-	if (materialFactory)
-	{
-		float val = AnyEffectEnabled() ? 1.f : 0.f;
-		for (std::vector<MaterialDefinition*>::iterator it=materialFactory->mDefinitions.begin();
-			it!=materialFactory->mDefinitions.end(); ++it)
-		{
-			MaterialPtr mat = MaterialManager::getSingleton().getByName( (*it)->getName() );
-				
-			if (mat.isNull()) continue;
-			
-			Material::TechniqueIterator techIt = mat->getTechniqueIterator();
-			while (techIt.hasMoreElements())
-			{
-				Technique* tech = techIt.getNext();
-				Technique::PassIterator passIt = tech->getPassIterator();
-				while (passIt.hasMoreElements())
-				{
-					Pass* pass = passIt.getNext();
-										
-					if (pass->hasFragmentProgram())
-					{
-						if ( pass->getFragmentProgramParameters()->_findNamedConstantDefinition("inverseProjection", false))
-							pass->getFragmentProgramParameters()->setNamedConstant("inverseProjection", val);
-					}
-				}
-			}
-		}
-	}
 
 	if (!pSet->all_effects || disableAll)
 		return;

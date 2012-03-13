@@ -416,7 +416,7 @@ void WaterMaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::Str
 		outStream <<
 		"	float4 projCoord = float4(IN.n.w, IN.t.w, 1, IN.b.w); \n"
 		"	float2 projUV = projCoord.xy / projCoord.w; \n"
-		"	if (inverseProjection == 1)  projUV.y = 1-projUV.y; \n"
+		"	if (inverseProjection == -1)  projUV.y = 1-projUV.y; \n"
 		"	projUV += normalTex.yx * reflVal_Refl2_Distort_Opacity.z; \n";
 	}
 	
@@ -485,6 +485,7 @@ void WaterMaterialGenerator::fragmentProgramParams(Ogre::HighLevelGpuProgramPtr 
 	params->setNamedAutoConstant("time", GpuProgramParameters::ACT_TIME);
 	params->setNamedAutoConstant("ambient", GpuProgramParameters::ACT_AMBIENT_LIGHT_COLOUR);
 	params->setNamedAutoConstant("lightDiff", GpuProgramParameters::ACT_LIGHT_DIFFUSE_COLOUR, 0);
+	params->setNamedAutoConstant("inverseProjection", GpuProgramParameters::ACT_RENDER_TARGET_FLIPPING);
 	params->setNamedConstantFromTime("time", 1);
 	individualFragmentProgramParams(params);
 }
@@ -508,7 +509,6 @@ void WaterMaterialGenerator::individualFragmentProgramParams(Ogre::GpuProgramPar
 	params->setNamedConstant("matSpec", mDef->mProps->specular);
 	params->setNamedConstant("reflVal_Refl2_Distort_Opacity", mDef->mProps->reflVal_Refl2_Distort_Opacity);
 	params->setNamedConstant("fresnelPowerBias", Vector3(mDef->mProps->fresnelPower, mDef->mProps->fresnelBias, 0));
-	params->setNamedConstant("inverseProjection", Real(0.f));
 	
 	if (needShadows())
 	{
