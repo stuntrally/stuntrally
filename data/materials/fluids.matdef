@@ -9,13 +9,13 @@
 	abstract = true
 	customGenerator = Water
 	specular = 1.0 1.0 1.0 32
-	waveBump_Speed_HighFreq_Spec = 0.5 1.0 0.0 1.0
-	depthPars = 0.6 0.1 0.4
+	waveBump_Speed_HighFreq_Spec = 0.4 1.0 0.0 1.0
+	depthPars = 0.5 0.1 0.4
 	depthColour = 0.15 0.25 0.3 1.0
-	deepColour = 0.1 0.3 0.5 1.0
-	shallowColour = 0.0 0.9 1.0 0.3
+	deepColour = 0.15 0.35 0.52 1.0
+	shallowColour = 0.3 0.9 1.0 0.4
 	reflectionColour = 0.9 0.96 1.0 1.0
-	reflVal_Refl2_Distort_Opacity = 0.7 1.0 0.1 1.0
+	reflVal_Refl2_Distort_Opacity = 0.5 1.0 0.1 1.0
 	fresnelPower = 5.0
 	fresnelBias = 0.33
 	fresnelScale = 1
@@ -66,7 +66,7 @@
 	deepColour = 0.6 0.79 0.8 1.0
 	shallowColour = 0.45 0.78 0.8 0.85
 	reflectionColour = 0.7 0.77 0.8 1.0
-	reflVal_Refl2_Distort_Opacity = 0.9 1.0 1.0 1.0
+	reflVal_Refl2_Distort_Opacity = 0.9 1.0 0.1 1.0
 	fresnelPower = 2.0
 	normalMap_1 = water_nh.png
 	
@@ -91,8 +91,8 @@
 	specular = 0.65 0.67 0.7 4
 	waveBump_Speed_HighFreq_Spec = 0.2 0.8 0.3 1.0
 	depthPars = 0.6 0.3 0.3
-	depthColour = 0.16 0.22 0.33 1.0
-	deepColour = 0.26 0.32 0.43 0.8
+	depthColour = 0.21 0.25 0.3 1.0
+	deepColour = 0.33 0.37 0.4 0.8
 	shallowColour = 0.21 0.35 0.45 0.4
 	reflectionColour = 0.6 0.65 0.68 1.0
 	reflVal_Refl2_Distort_Opacity = 0.8 1.0 0.1 0.8
@@ -159,13 +159,13 @@
 [Mud_orange]
 	parent = Base_water
 	specular = 0.4 0.4 0.3 32
-	waveBump_Speed_HighFreq_Spec = 0.8 0.3 -0.1 1.0
+	waveBump_Speed_HighFreq_Spec = 0.6 0.3 -0.1 1.0
 	depthPars = 0.5 0.3 0.3
 	depthColour = 0.6 0.4 0.1 1.0
 	deepColour = 0.6 0.4 0.1 1.0
 	shallowColour = 0.45 0.3 0.1 0.7
 	reflectionColour = 0.5 0.45 0.15 1.0
-	reflVal_Refl2_Distort_Opacity = 0.3 0.35 0.0 1.0
+	reflVal_Refl2_Distort_Opacity = 0.3 0.2 -0.2 1.0
 	normalMap_1 = waveNM.png
 	
 	
@@ -179,7 +179,7 @@
 	deepColour = 0.4 0.34 0.1 1.0
 	shallowColour = 0.4 0.2 0.1 0.9
 	reflectionColour = 0.5 0.4 0.1 1.0
-	reflVal_Refl2_Distort_Opacity = 0.5 0.3 0.0 1.0
+	reflVal_Refl2_Distort_Opacity = 0.5 0.3 -0.1 1.0
 	fresnelPower = 8.0
 	normalMap_1 = waveNM.png
 	
@@ -194,7 +194,7 @@
 	deepColour = 0.2 0.17 0.05 1.0
 	shallowColour = 0.2 0.14 0.05 1.0
 	reflectionColour = 0.4 0.33 0.1 1.0
-	reflVal_Refl2_Distort_Opacity = 0.5 0.2 0.0 1.0
+	reflVal_Refl2_Distort_Opacity = 0.5 0.2 -0.1 1.0
 	fresnelPower = 3.0
 	normalMap_1 = water_nh.png
 

@@ -417,12 +417,14 @@ void WaterMaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::Str
 		"	float4 projCoord = float4(IN.n.w, IN.t.w, 1, IN.b.w); \n"
 		"	float2 projUV = projCoord.xy / projCoord.w; \n"
 		"	if (inverseProjection == -1)  projUV.y = 1-projUV.y; \n"
-		"	projUV += normalTex.yx * reflVal_Refl2_Distort_Opacity.z; \n";
+		"	float2 projUV_refra = projUV; \n"
+		"	projUV += normalTex.yx * reflVal_Refl2_Distort_Opacity.z; \n"
+		"	projUV_refra += normalTex.yx * max(0, reflVal_Refl2_Distort_Opacity.z); \n";
 	}
 	
 	if (mParent->getRefract())
 		outStream <<
-		"	float4 refraction = tex2D(refractionMap, projUV); \n";
+		"	float4 refraction = tex2D(refractionMap, projUV_refra); \n";
 	
 	outStream <<
 		//  reflection  3D vec to sky dome map 2D uv
