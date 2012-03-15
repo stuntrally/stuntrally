@@ -855,6 +855,7 @@ void App::comboGraphicsAll(ComboBoxPtr cmb, size_t val)
 	//Chk("HDR", chkVidHDR, pSet->hdr);
 	Chk("MotionBlur", chkVidBlur, pSet->motionblur);
 	Chk("ssao", chkVidSSAO, pSet->ssao);
+	Chk("dof", chkVidDepthOfField, pSet->dof);
 	//Chk("godrays", chkVidGodRays, pSet->godrays);
 
 	Chk("RplChkAutoRec", chkRplAutoRec, pSet->rpl_rec);
