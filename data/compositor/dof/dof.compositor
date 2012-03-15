@@ -1,0 +1,38 @@
+compositor DepthOfField
+{
+    technique
+    {
+		compositor_logic DepthOfField
+		
+        texture_ref scene gbuffer mrt_output
+        texture blur target_width_scaled 0.5 target_height_scaled 0.5 PF_R8G8B8
+		texture previousscene target_width target_height PF_R8G8B8A8
+     
+		target previousscene 
+		{
+			input previous
+		}
+		target blur
+      	{
+			input none
+			pass render_quad
+            {
+                identifier 1
+				material DoF_Gaussian3x3
+                input 0 previousscene
+            }	
+		}
+		target_output
+        {
+            input none		
+            pass render_quad
+            {
+                identifier 2
+				material DoF_DepthOfField
+                input 0 previousscene
+                input 1 scene 2
+                input 2 blur
+            }			
+        }
+    }
+}
