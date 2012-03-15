@@ -200,7 +200,7 @@ void CarModel::Update(PosInfo& posInfo, float time)
 		pe->setEmissionRate(emitB);
 	}
 
-	//  world hit
+	//  world hit  (todo: in replays, use posInfo..)
 	CARDYNAMICS& cd = pCar->dynamics;
 	if (ph)  {
 	ParticleEmitter* pe = ph->getEmitter(0);
@@ -215,6 +215,7 @@ void CarModel::Update(PosInfo& posInfo, float time)
 	}else
 		pe->setEmissionRate(0.f);	}
 	
+
 	//  wheels  ------------------------------------------------------------------------
 	float whMudSpin = 0.f;
 	for (int w=0; w < 4; ++w)
@@ -265,7 +266,7 @@ void CarModel::Update(PosInfo& posInfo, float time)
 		emitD *= lay.dust;  emitM *= lay.mud;  sizeD *= lay.dustS;  emitS *= lay.smoke;
 
 		if (whRd == 2)  emitD = 0;  // no dust in pipes
-		if (cd.inFluidsWh[w].size() > 0)  emitD = 0;  // no dust in fluids
+		if (cd.inFluidsWh[w].size() > 0)  emitD = 0;  // no dust in fluids  (todo: move to posInfo)
 
 		bool ghost = eType == CT_GHOST;  // opt dis for ghost
 		bool ghPar = !(ghost && !pSet->rpl_ghostpar);
@@ -302,7 +303,7 @@ void CarModel::Update(PosInfo& posInfo, float time)
 			if (pflW[w])  //  Water ~
 			{
 				float vel = posInfo.speed;  // depth.. only on surface?
-				bool e = idPar == 0 && ghPar &&  vel > 10.f && cd.whH[w] < 1.f;
+				bool e = idPar == 0 && ghPar &&  vel > 10.f && posInfo.whH[w] < 1.f;
 				float emitW = e ?  std::min(80.f, 3.0f * vel)  : 0.f;
 
 				ParticleEmitter* pe = pflW[w]->getEmitter(0);
