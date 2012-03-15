@@ -367,14 +367,16 @@ void App::UpdateHUD(int carId, CarModel* pCarM, CAR* pCar, float time, Viewport*
 		std::list<CarModel*> cms;  // sorted list
 		for (int o=0; o < carModels.size(); ++o)
 		{	// cars only
-			if (carModels[o]->eType == CarModel::CT_GHOST || carModels[o]->eType == CarModel::CT_REPLAY)
+			if (carModels[o]->eType == CarModel::CT_GHOST /*|| carModels[o]->eType == CarModel::CT_REPLAY*/)
 			{}else
-				cms.push_back(carModels[o]);
+			{	if (bRplPlay)
+					carModels[o]->trackPercent = newPosInfos[o].percent;
+				cms.push_back(carModels[o]);	}
 		}
 		cms.sort(SortPerc);  // todo: if gui chkbox..
 		for (int o=0; o < carModels.size(); ++o)
 		{	// add ghost last
-			if (carModels[o]->eType == CarModel::CT_GHOST || carModels[o]->eType == CarModel::CT_REPLAY)
+			if (carModels[o]->eType == CarModel::CT_GHOST /*|| carModels[o]->eType == CarModel::CT_REPLAY*/)
 			{	carModels[o]->trackPercent = newPosInfos[o].percent;  // ghost,rpl
 				cms.push_back(carModels[o]);	}
 		}
@@ -388,11 +390,14 @@ void App::UpdateHUD(int carId, CarModel* pCarM, CAR* pCar, float time, Viewport*
 			CarModel* cm = *it;
 			if (cm->pMainNode)
 			{
-				cm->UpdTrackPercent();
-
 				bool bGhost = cm->eType == CarModel::CT_GHOST;
 				bool bGhostVis = (ghplay.GetNumFrames() > 0) && pSet->rpl_ghost;
 				bool bGhEmpty = bGhost && !bGhostVis;
+
+				if (bGhost /*|| cm->eType == CarModel::CT_REPLAY*/)
+				{}//	cm->trackPercent = newPosInfos[o].percent;  // ghost,rpl
+				else
+					cm->UpdTrackPercent();
 
 				if (cm == pCarM || bGhEmpty)  // no dist to self or to empty ghost
 					hudOpp[o][1]->setCaption("");
@@ -412,13 +417,13 @@ void App::UpdateHUD(int carId, CarModel* pCarM, CAR* pCar, float time, Viewport*
 					//float perc = newPosInfos[o].percent;  //cm->trackPercent;
 					//float perc = bGhost ? newPosInfos[cm->iIndex].percent : cm->trackPercent;
 					float perc = cm->trackPercent;
-					if (bGhost && pGame->timer.GetPlayerTime(o) > ghplay.GetTimeLength())
+					if (bGhost && pGame->timer.GetPlayerTime(0) > ghplay.GetTimeLength())
 						perc = 100.f;  // force 100 at ghost end
 					hudOpp[o][0]->setCaption(fToStr(perc,0,3)+"%");
 					c.setHSB(perc*0.01f*0.4f, 0.7f,1);	hudOpp[o][0]->setColour(c);
 				}
 				
-				///  Lap Time ... (1) pos
+				///  Lap Time  pos (1)
 				//if (1||mClient)
 				{
 					float t = 0.f;  int lap = -1;

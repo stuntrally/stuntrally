@@ -115,9 +115,10 @@ void CarModel::UpdTrackPercent()
 			dist += percD * (ckD + road->mChks[iCurChk].r*0.8f);  //road->mChks[iNumChks-1].dist;
 		}
 		perc = 100.f * dist / distTotal;
+
+		if (perc > trackPercent)
+			trackPercent = perc;
 	}
-	if (perc > trackPercent)
-		trackPercent = perc;
 }
 
 
