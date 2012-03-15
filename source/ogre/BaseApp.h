@@ -158,7 +158,7 @@ protected:
 	enum WND_Types {  WND_Game=0, WND_Champ, WND_Replays, WND_Help, WND_Options, WND_ALL  };  // pSet->inMenu
 	MyGUI::WindowPtr mWndMain,mWndGame,mWndReplays,mWndHelp,mWndOpts,  // menu, windows
 		mWndRpl, mWndChampStage,mWndChampEnd;  // rpl controls, champ wnds
-	MyGUI::TabPtr mWndTabsGame,mWndTabsOpts;
+	MyGUI::TabPtr mWndTabsGame,mWndTabsOpts,mWndTabsHelp,mWndTabsRpl;
 	MyGUI::WidgetPtr mWndMainPanels[WND_ALL];  MyGUI::ButtonPtr mWndMainBtns[WND_ALL];
 	MyGUI::VectorWidgetPtr vwGui;
 

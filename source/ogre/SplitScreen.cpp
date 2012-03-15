@@ -228,7 +228,7 @@ void SplitScreenManager::preViewportUpdate(const Ogre::RenderTargetViewportEvent
 
 		//  Update HUD for this car
 		//*H*/LogO("VP car "+toStr(carId)+" "+toStr(i)+"---------------");
-		pApp->UpdateHUD( carId, pCarM, pCarM->pCar, 1.0f / mWindow->getLastFPS(), evt.source );
+		pApp->UpdateHUD( carId, pCarM, pCarM->pCar, 1.f / mWindow->getLastFPS(), evt.source );
 		
 		//if (hudVp) return;  // ?..
 
@@ -292,7 +292,7 @@ void SplitScreenManager::preViewportUpdate(const Ogre::RenderTargetViewportEvent
 		//  Gui viewport - hide stuff we don't want
 		//*H*/LogO("VP gui --------------------------------------");
 
-		pApp->UpdateHUD(-1, NULL, NULL, mWindow->getLastFPS() );
+		pApp->UpdateHUD(-1, NULL, NULL, 1.f / mWindow->getLastFPS() );
 		pApp->SizeHUD(false);
 		
 		// no mouse in key capture mode

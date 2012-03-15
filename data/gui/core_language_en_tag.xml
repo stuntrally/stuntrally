@@ -349,6 +349,7 @@
 	<Tag name="CarDebugText">Car debug text </Tag>
 
 	<Tag name="Startup">Startup</Tag>
+	<Tag name="MouseCapture">Capture mouse</Tag>
 	<Tag name="OgreDialog">Show Ogre dialog</Tag>
 	<Tag name="AutoLoad">Auto Load track</Tag>
 	<Tag name="EscQuit">Esc quits</Tag>
@@ -375,17 +376,23 @@
 	<Tag name="InputHeaderTxt2">Binding</Tag>
 	<Tag name="InputHeaderTxt3">Value</Tag>
 
+	<!--  Input  Detail  -->
 	<Tag name="InputControllers">Controllers</Tag>
 	<Tag name="InputDetailPreset">Set from preset</Tag>
 	<Tag name="InputDetailsFor">Details for</Tag>
 	<Tag name="InputMinVal">Min. Value</Tag>
 	<Tag name="InputMaxVal">Max. Value</Tag>
 	<Tag name="InputMultiplier">Multiplier</Tag>
+
 	<Tag name="InpSet_KeyHalf">Key Half</Tag>
 	<Tag name="InpSet_KeyFull">Key Full</Tag>
 	<Tag name="InpSet_AxisHalf">Axis Half</Tag>
 	<Tag name="InpSet_AxisHalfInv">Axis Half Inversed</Tag>
 	<Tag name="InpSet_AxisFull">Axis Full</Tag>
+
+	<Tag name="InputKeyboardEmulation">Keyboard Emulation</Tag>
+	<Tag name="InputIncreaseSensitivity">Sensitivity</Tag>
+	<Tag name="InputReturnDelay">Return speed</Tag>
 
 	<!--  Input  Map  player  -->
 	<Tag name="InputMapThrottle">Throttle</Tag>
@@ -884,5 +891,7 @@
 	<Tag name="TipLTrMinTerH">Terrain height below which model won't appear.</Tag>
 	<Tag name="TipLTrMaxTerH">Terrain height above which model won't appear.</Tag>
 	<Tag name="TipLTrFlDepth">Maximal depth in fluid allowed (set 0 to exclude from fluids).</Tag>
+
+	<Tag name="QuickHelpText">----  Quick help  ----@@Use mouse or Up,Down,Enter,Backspace to navigate through menu.@@To adjust resolution go to Options tab Screen,@use Graphics presets to quickly adjust graphics to your hardware.@@To see all keys used in game and configure input goto Options, tab Input.@If you have a game controller see:@http://code.google.com/p/vdrift-ogre/wiki/Running##Controllers@@Hosting a multiplayer game requires port forwarding.@Connecting to existing game doesn't need it, provided other players have it.@@If you have problems or suggestions report an issue on (or reply to existing one):@http://code.google.com/p/vdrift-ogre/issues/list@@For more info see Readme and our project's Wiki pages.@</Tag>
 
 </MyGUI>

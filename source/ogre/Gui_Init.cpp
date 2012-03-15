@@ -49,7 +49,7 @@ void App::InitGui()
 		mWndMainBtns[i] = (ButtonPtr)mWndMain->findWidget("BtnMenu"+s);
 		mWndMainBtns[i]->eventMouseButtonClick += newDelegate(this, &App::MainMenuBtn);
 	}
-
+		
 	updMouse();
 	
 	//mWndOpts->setVisible(isFocGui);
@@ -59,11 +59,24 @@ void App::InitGui()
 
 	TabPtr tab;
 	tab = mGUI->findWidget<Tab>("TabWndGame");    tab->setIndexSelected(1); tab->setSmoothShow(false);	mWndTabsGame = tab;		tab->eventTabChangeSelect += newDelegate(this, &App::MenuTabChg);
-	tab = mGUI->findWidget<Tab>("TabWndReplays"); tab->setIndexSelected(1);	tab->setSmoothShow(false);							tab->eventTabChangeSelect += newDelegate(this, &App::MenuTabChg);
-	tab = mGUI->findWidget<Tab>("TabWndHelp");    tab->setIndexSelected(1);	tab->setSmoothShow(false);							tab->eventTabChangeSelect += newDelegate(this, &App::MenuTabChg);
+	tab = mGUI->findWidget<Tab>("TabWndReplays"); tab->setIndexSelected(1);	tab->setSmoothShow(false);	mWndTabsRpl = tab;		tab->eventTabChangeSelect += newDelegate(this, &App::MenuTabChg);
+	tab = mGUI->findWidget<Tab>("TabWndHelp");    tab->setIndexSelected(1);	tab->setSmoothShow(false);	mWndTabsHelp = tab;		tab->eventTabChangeSelect += newDelegate(this, &App::MenuTabChg);
 	tab = mGUI->findWidget<Tab>("TabWndOptions"); tab->setIndexSelected(1); tab->setSmoothShow(false);	mWndTabsOpts = tab;		tab->eventTabChangeSelect += newDelegate(this, &App::MenuTabChg);
 	if (pSet->inMenu == WND_Champ)  mWndTabsGame->setIndexSelected(5);
 
+	//  get sub tabs
+	vSubTabsGame.clear();
+	for (size_t i=0; i < mWndTabsGame->getItemCount(); ++i)
+	{
+		MyGUI::TabPtr sub = (TabPtr)mWndTabsGame->getItemAt(i)->findWidget(i==4 ? "tabsNet" : "tabPlayer!");//car tab wrong-
+		vSubTabsGame.push_back(sub);  // 0 for not found
+	}
+	vSubTabsOpts.clear();
+	for (size_t i=0; i < mWndTabsOpts->getItemCount(); ++i)
+	{
+		MyGUI::TabPtr sub = (TabPtr)mWndTabsOpts->getItemAt(i)->findWidget(i==4 ? "InputTab" : "SubTab");
+		vSubTabsOpts.push_back(sub);
+	}
 
 	//  tooltip  ------
 	for (VectorWidgetPtr::iterator it = vwGui.begin(); it != vwGui.end(); ++it)
@@ -188,6 +201,7 @@ void App::InitGui()
 		bRmph->eventMouseButtonClick += newDelegate(this, &App::radMph);  }
 
 	//  startup
+	Chk("MouseCapture", chkMouseCapture, pSet->x11_capture_mouse);
 	Chk("OgreDialog", chkOgreDialog, pSet->ogre_dialog);
 	Chk("AutoStart", chkAutoStart, pSet->autostart);
 	Chk("EscQuits", chkEscQuits, pSet->escquit);
@@ -203,10 +217,7 @@ void App::InitGui()
 	Chk("softparticles", chkVidSoftParticles, pSet->softparticles);
 	if (!MaterialGenerator::MRTSupported())
 		mGUI->findWidget<Button>("softparticles")->setEnabled(false);
-	Chk("DepthOfField", chkVidDepthOfField, pSet->dof);
-	if (!MaterialGenerator::MRTSupported())
-		mGUI->findWidget<Button>("DepthOfField")->setEnabled(false);
-	//	Chk("godrays", chkVidGodRays, pSet->godrays);
+	//Chk("godrays", chkVidGodRays, pSet->godrays);
 
 	Slv(BloomInt,	pSet->bloomintensity);
 	Slv(BloomOrig,	pSet->bloomorig);
@@ -368,6 +379,13 @@ void App::InitGui()
 		edNetLocalPort->eventEditTextChange += newDelegate(this, &App::evEdNetLocalPort);	}
 
 	
+	//  quick help text
+	MyGUI::EditPtr edHelp = mGUI->findWidget<Edit>("QuickHelpText");
+	String s = TR("#{QuickHelpText}");
+	s = StringUtil::replaceAll(s, "@", "\n");
+	edHelp->setCaption(s);
+
+
 	///  input tab  -------
 	InitInputGui();
 	

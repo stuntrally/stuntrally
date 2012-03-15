@@ -256,7 +256,7 @@ protected:
 
 
 	//  checks
-	void chkOgreDialog(WP), chkAutoStart(WP), chkEscQuits(WP);  // startup
+	void chkMouseCapture(WP), chkOgreDialog(WP), chkAutoStart(WP), chkEscQuits(WP);  // startup
 	void chkUseImposters(WP wp);
 
 	//  [settings]

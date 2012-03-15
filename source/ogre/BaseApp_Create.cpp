@@ -33,6 +33,12 @@
 #include "common/MaterialGen/MaterialGenerator.h"
 using namespace Ogre;
 
+#if OGRE_VERSION_MINOR >= 8
+        #define UI_RENDER "gbufferUIRender"
+#else
+        #define UI_RENDER "gbufferUIRender17"
+#endif
+
 
 //#define LogDbg(s)
 #define LogDbg(s)  LogO(s)
@@ -136,9 +142,13 @@ void BaseApp::createFrameListener()
     if (!pSet->x11_capture_mouse)
     {
 		pl.insert(std::make_pair(std::string("x11_mouse_grab"), std::string("false")));
-		pl.insert(std::make_pair(std::string("x11_mouse_hide"), std::string("false")));
 		pl.insert(std::make_pair(std::string("x11_keyboard_grab"), std::string("false")));
-	}
+    }
+
+    if (pSet->x11_hwmouse)
+        pl.insert(std::make_pair(std::string("x11_mouse_hide"), std::string("false")));
+    else
+        pl.insert(std::make_pair(std::string("x11_mouse_hide"), std::string("true")));
     pl.insert(std::make_pair(std::string("XAutoRepeatOn"), std::string("true")));
     #endif
 
@@ -160,8 +170,9 @@ void BaseApp::createFrameListener()
 	mKeyboard->setEventCallback(this);
 	mMouse->capture();
 	mKeyboard->capture();
-	
-	mHWMouse = new HWMouse(windowHnd, 8, 8, "pointer.png");
+
+        if (pSet->x11_hwmouse)
+                mHWMouse = new HWMouse(windowHnd, 8, 8, "pointer.png");
 	
 	// add listener for all joysticks
 	for (std::vector<OISB::JoyStick*>::iterator it=mOISBsys->mJoysticks.begin();
@@ -210,38 +221,7 @@ void BaseApp::refreshCompositor(bool disableAll)
 		CompositorManager::getSingleton().setCompositorEnabled((*it), "GodRays", false);
 		CompositorManager::getSingleton().setCompositorEnabled((*it), "Motion Blur", false);
 		CompositorManager::getSingleton().setCompositorEnabled((*it), "SSAA", false);
-		CompositorManager::getSingleton().setCompositorEnabled((*it), "gbufferUIRender", false);
-	}
-	
-	
-	// this is a hack.. somehow the projective coords are flipped when compositors are enabled, so we need to notify the shader about this
-	if (materialFactory)
-	{
-		float val = AnyEffectEnabled() ? 1.f : 0.f;
-		for (std::vector<MaterialDefinition*>::iterator it=materialFactory->mDefinitions.begin();
-			it!=materialFactory->mDefinitions.end(); ++it)
-		{
-			MaterialPtr mat = MaterialManager::getSingleton().getByName( (*it)->getName() );
-				
-			if (mat.isNull()) continue;
-			
-			Material::TechniqueIterator techIt = mat->getTechniqueIterator();
-			while (techIt.hasMoreElements())
-			{
-				Technique* tech = techIt.getNext();
-				Technique::PassIterator passIt = tech->getPassIterator();
-				while (passIt.hasMoreElements())
-				{
-					Pass* pass = passIt.getNext();
-										
-					if (pass->hasFragmentProgram())
-					{
-						if ( pass->getFragmentProgramParameters()->_findNamedConstantDefinition("inverseProjection", false))
-							pass->getFragmentProgramParameters()->setNamedConstant("inverseProjection", val);
-					}
-				}
-			}
-		}
+		CompositorManager::getSingleton().setCompositorEnabled((*it), UI_RENDER, false);
 	}
 
 	if (!pSet->all_effects || disableAll)
@@ -301,8 +281,8 @@ void BaseApp::refreshCompositor(bool disableAll)
 			CompositorManager::getSingleton().setCompositorEnabled((*it), "ssaoNoMRT", pSet->ssao);
 		}
 		CompositorManager::getSingleton().setCompositorEnabled((*it), "GodRays", pSet->godrays);
-		CompositorManager::getSingleton().setCompositorEnabled((*it), "gbufferUIRender", AnyEffectEnabled());
-		
+
+                CompositorManager::getSingleton().setCompositorEnabled((*it), UI_RENDER, AnyEffectEnabled());
 	}
 }
 //-------------------------------------------------------------------------------------
@@ -497,7 +477,7 @@ void BaseApp::recreateCompositor()
 		CompositorManager::getSingleton().addCompositor((*it), "Bloom");
 		CompositorManager::getSingleton().addCompositor((*it), "Motion Blur");
 		CompositorManager::getSingleton().addCompositor((*it), "SSAA");
-		CompositorManager::getSingleton().addCompositor((*it), "gbufferUIRender");
+		CompositorManager::getSingleton().addCompositor((*it), UI_RENDER);
 	}
 	
 	refreshCompositor();
@@ -530,7 +510,7 @@ BaseApp::BaseApp()
 	,alt(0), ctrl(0), shift(0), roadUpCnt(0)
 	,mbLeft(0), mbRight(0), mbMiddle(0)
 	,isFocGui(0),isFocRpl(0), mGUI(0), mPlatform(0)
-	,mWndTabsGame(0),mWndTabsOpts(0)
+	,mWndTabsGame(0),mWndTabsOpts(0),mWndTabsHelp(0),mWndTabsRpl(0)
 	,mWndMain(0),mWndGame(0),mWndReplays(0),mWndHelp(0),mWndOpts(0)
 	,mWndRpl(0), mWndChampStage(0),mWndChampEnd(0)
 	,bSizeHUD(true), bLoading(false), bAssignKey(false)
@@ -552,8 +532,9 @@ BaseApp::~BaseApp()
 	CompositorManager::getSingleton().removeAll();
 	delete mLoadingBar;
 	delete mSplitMgr;
-	
-	delete mHWMouse;
+
+        if (pSet->x11_hwmouse)
+                delete mHWMouse;
 	
 	if (mGUI)  {
 		mGUI->shutdown();	delete mGUI;	mGUI = 0;  }
@@ -636,7 +617,9 @@ bool BaseApp::setup()
 	}
 	
 	// Dynamic plugin loading
-	mRoot = OGRE_NEW Root("", PATHMANAGER::GetUserConfigDir() + "/ogreset.cfg", PATHMANAGER::GetUserConfigDir() + "/ogre.log");
+	int net = pSet->net_local_plr;
+	mRoot = OGRE_NEW Root("", PATHMANAGER::GetUserConfigDir() + "/ogreset.cfg",
+		PATHMANAGER::GetUserConfigDir() + "/ogre" + (net >= 0 ? toStr(net) : "") + ".log");
 	LogO("*** start setup ***");
 
 	#ifdef _DEBUG
@@ -740,7 +723,7 @@ bool BaseApp::setup()
 	MyGUI::ResourceManager::getInstance().load("MessageBoxResources.xml");
 
 	#if OGRE_PLATFORM == OGRE_PLATFORM_LINUX
-	MyGUI::PointerManager::getInstance().setPointer("blank");
+	//MyGUI::PointerManager::getInstance().setPointer("blank");
 	#endif
 		
 	// ------------------------- lang ------------------------
@@ -1025,10 +1008,15 @@ void BaseApp::windowClosed(RenderWindow* rw)
 void BaseApp::showMouse()
 {
 	if (!mGUI)  return;
-	mHWMouse->show();
+
+        if (pSet->x11_hwmouse)
+                mHWMouse->show();
 	
 	#if OGRE_PLATFORM == OGRE_PLATFORM_LINUX
-	MyGUI::PointerManager::getInstance().setVisible(false);
+        if (pSet->x11_hwmouse)
+                MyGUI::PointerManager::getInstance().setVisible(false);
+        else
+                MyGUI::PointerManager::getInstance().setVisible(true);
 	#else
 	MyGUI::PointerManager::getInstance().setVisible(true);
 	#endif
@@ -1036,7 +1024,10 @@ void BaseApp::showMouse()
 void BaseApp::hideMouse()
 {
 	if (!mGUI)  return;
-	mHWMouse->hide();
+
+        if (pSet->x11_hwmouse)
+                mHWMouse->hide();
+                
 	MyGUI::PointerManager::getInstance().setVisible(false);
 }
 

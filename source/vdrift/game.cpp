@@ -408,10 +408,11 @@ void GAME::ProcessGameInputs()
 
 void GAME::UpdateTimer()
 {
-	//check for cars doing a lap
-	for (std::list <CAR>::iterator i = cars.begin(); i != cars.end(); ++i)
+	//check for cars doing a lap - only on VDrift tracks (mostly unused)
+	int carId=0;
+	for (std::list <CAR>::iterator i = cars.begin(); i != cars.end(); ++i,++carId)
 	{
-	    int carid = cartimerids[&(*i)];
+	    //int carid = cartimerids[&(*i)];
 
 		bool advance = false;
 		int nextsector = 0;
@@ -435,7 +436,7 @@ void GAME::UpdateTimer()
 		{
 		    // only count it if the car's current sector isn't -1
 		    // which is the default value when the car is loaded
-			timer.Lap(carid, i->GetSector(), nextsector, (i->GetSector() >= 0), settings->game.trackreverse); 
+			timer.Lap(carId, i->GetSector(), nextsector, (i->GetSector() >= 0), settings->game.trackreverse); 
 			i->SetSector(nextsector);
 		}
 
@@ -470,7 +471,7 @@ void GAME::UpdateTimer()
 			if (forwardvec.Magnitude() > 0.0001)
 				dist_from_back = relative_pos.dot(forwardvec.Normalize());
 
-			timer.UpdateDistance(carid, curpatch->GetDistFromStart() + dist_from_back);
+			timer.UpdateDistance(carId, curpatch->GetDistFromStart() + dist_from_back);
 			//std::cout << curpatch->GetDistFromStart() << ", " << dist_from_back << endl;
 			//std::cout << curpatch->GetDistFromStart() + dist_from_back << endl;
         }
@@ -549,14 +550,9 @@ bool GAME::NewGameDoLoadMisc(float pre_time)
 		return false;
 
 	//add cars to the timer system
-	int count = 0;
 	for (std::list <CAR>::iterator i = cars.begin(); i != cars.end(); ++i)
-	{
-		cartimerids[&(*i)] = timer.AddCar(i->GetCarType());
-		if (carcontrols_local.first == &(*i))
-			timer.SetPlayerCarID(count);
-		count++;
-	}
+		timer.AddCar(i->GetCarType());
+	timer.AddCar("ghost");
 
 	return true;
 }
@@ -793,6 +789,7 @@ void GAME::UpdateDriftScore(CAR & car, double dt)
 	}
 
 	bool on_track = ( wheel_count > 1 );
+	int carId = 0;  //cartimerids[&car]
 
 	//car's direction on the horizontal plane
 	MATHVECTOR <float, 3> car_orientation(1,0,0);
@@ -818,7 +815,7 @@ void GAME::UpdateDriftScore(CAR & car, double dt)
 	}
 	
 	assert(car_angle == car_angle); //assert that car_angle isn't NAN
-	assert(cartimerids.find(&car) != cartimerids.end()); //assert that the car is registered with the timer system
+	//assert(cartimerids.find(&car) != cartimerids.end()); //assert that the car is registered with the timer system
 
 	if ( on_track )
 	{
@@ -828,7 +825,7 @@ void GAME::UpdateDriftScore(CAR & car, double dt)
 			//drift starts when the angle > 0.2 (around 11.5 degrees)
 			//drift ends when the angle < 0.1 (aournd 5.7 degrees)
 			float angle_threshold(0.2);
-			if ( timer.GetIsDrifting(cartimerids[&car]) ) angle_threshold = 0.1;
+			if ( timer.GetIsDrifting(carId) ) angle_threshold = 0.1;
 
 			is_drifting = ( car_angle > angle_threshold && car_angle <= M_PI/2.0 );
 			spin_out = ( car_angle > M_PI/2.0 );
@@ -839,17 +836,17 @@ void GAME::UpdateDriftScore(CAR & car, double dt)
 	if ( is_drifting )
 	{
 		//base score is the drift distance
-		timer.IncrementThisDriftScore(cartimerids[&car], dt * car_speed);
+		timer.IncrementThisDriftScore(carId, dt * car_speed);
 
 		//bonus score calculation is now done in TIMER
-		timer.UpdateMaxDriftAngleSpeed(cartimerids[&car], car_angle, car_speed);
+		timer.UpdateMaxDriftAngleSpeed(carId, car_angle, car_speed);
 		
-		//std::cout << timer.GetDriftScore(cartimerids[&car]) << " + " << timer.GetThisDriftScore(cartimerids[&car]) << endl;
+		//std::cout << timer.GetDriftScore(carId) << " + " << timer.GetThisDriftScore(carId) << endl;
 	}
 
 	//if (settings,
 	if (settings->multi_thr != 1) // cartimerids.size() > 0)
-	timer.SetIsDrifting(cartimerids[&car], is_drifting, on_track && !spin_out);
+	timer.SetIsDrifting(carId, is_drifting, on_track && !spin_out);
 	
 	//std::cout << is_drifting << ", " << on_track << ", " << car_angle << endl;
 }

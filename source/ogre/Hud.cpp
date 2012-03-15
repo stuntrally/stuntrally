@@ -268,7 +268,22 @@ void App::UpdMiniTer()
 ///---------------------------------------------------------------------------------------------------------------
 bool SortPerc(const CarModel* cm2, const CarModel* cm1)
 {
-	return cm1->trackPercent < cm2->trackPercent;
+	int l1 = cm1->pGame->timer.GetCurrentLap(cm1->iIndex);
+	int l2 = cm2->pGame->timer.GetCurrentLap(cm2->iIndex);
+	float p1 = cm1->trackPercent;
+	float p2 = cm2->trackPercent;
+	if (l1 == l2)  return p1 < p2;
+	return l1 < l2;
+}
+
+bool SortWin(const CarModel* cm2, const CarModel* cm1)
+{
+	int l1 = cm1->pGame->timer.GetCurrentLap(cm1->iIndex);
+	int l2 = cm2->pGame->timer.GetCurrentLap(cm2->iIndex);
+	float t1 = cm1->pGame->timer.GetPlayerTimeTot(cm1->iIndex);
+	float t2 = cm2->pGame->timer.GetPlayerTimeTot(cm2->iIndex);
+	if (l1 == l2)  return t1 > t2;
+	return l1 < l2;
 }
 
 void App::UpdateHUD(int carId, CarModel* pCarM, CAR* pCar, float time, Viewport* vp)
@@ -324,6 +339,26 @@ void App::UpdateHUD(int carId, CarModel* pCarM, CAR* pCar, float time, Viewport*
 		
 	}
 			
+	///  sort winners in networked multiplayer
+	static float tm = 0.f;  tm += time;
+	if (tm > 0.2f && mClient)  //  not every frame, each 0.2s
+	{	tm = 0.f;
+
+		std::list<CarModel*> cms;  // sorted list
+		for (int o=0; o < carModels.size(); ++o)
+			cms.push_back(carModels[o]);
+
+		cms.sort(SortWin);
+		
+		int place = 1;  // assing places
+		for (std::list<CarModel*>::iterator it = cms.begin(); it != cms.end(); ++it)
+		{
+			CarModel* cm = *it;
+			bool end = pGame->timer.GetCurrentLap(cm->iIndex) >= pSet->game.num_laps;
+			cm->iWonPlace = end ? place++ : 0;  // when ended race
+		}
+	}
+
 
 	///  opponents list
 	//------------------------------------------------------------------------
@@ -331,11 +366,21 @@ void App::UpdateHUD(int carId, CarModel* pCarM, CAR* pCar, float time, Viewport*
 	{
 		std::list<CarModel*> cms;  // sorted list
 		for (int o=0; o < carModels.size(); ++o)
-			cms.push_back(carModels[o]);
-		cms.sort(SortPerc);
+		{	// cars only
+			if (carModels[o]->eType == CarModel::CT_GHOST || carModels[o]->eType == CarModel::CT_REPLAY)
+			{}else
+				cms.push_back(carModels[o]);
+		}
+		cms.sort(SortPerc);  // todo: if gui chkbox..
+		for (int o=0; o < carModels.size(); ++o)
+		{	// add ghost last
+			if (carModels[o]->eType == CarModel::CT_GHOST || carModels[o]->eType == CarModel::CT_REPLAY)
+			{	carModels[o]->trackPercent = newPosInfos[o].percent;  // ghost,rpl
+				cms.push_back(carModels[o]);	}
+		}
 
 		ColourValue c;
-		int o = 0;
+		int o = 0;  //carId
 		if (carModels.size() == newPosInfos.size())  //-
 		for (std::list<CarModel*>::const_iterator it = cms.begin(); it != cms.end(); ++it, ++o)
 		if (hudOpp[o][0])
@@ -364,14 +409,33 @@ void App::UpdateHUD(int carId, CarModel* pCarM, CAR* pCar, float time, Viewport*
 					hudOpp[o][0]->setCaption("");
 				else
 				{	//  percent % val
-					float perc = newPosInfos[o].percent;  //cm->trackPercent;
-					if (bGhost && pGame->timer.GetPlayerTime() > ghplay.GetTimeLength())
+					//float perc = newPosInfos[o].percent;  //cm->trackPercent;
+					//float perc = bGhost ? newPosInfos[cm->iIndex].percent : cm->trackPercent;
+					float perc = cm->trackPercent;
+					if (bGhost && pGame->timer.GetPlayerTime(o) > ghplay.GetTimeLength())
 						perc = 100.f;  // force 100 at ghost end
 					hudOpp[o][0]->setCaption(fToStr(perc,0,3)+"%");
 					c.setHSB(perc*0.01f*0.4f, 0.7f,1);	hudOpp[o][0]->setColour(c);
 				}
 				
-				hudOpp[o][2]->setCaption(cm->sDispName);  // cant sort if-, name once in CreateHUD
+				///  Lap Time ... (1) pos
+				//if (1||mClient)
+				{
+					float t = 0.f;  int lap = -1;
+					if (!bGhost)
+					{
+						TIMER& tim = pGame->timer;
+						t = pGame->timer.GetLastLap(cm->iIndex);  // GetPlayerTimeTot
+						lap = pGame->timer.GetPlayerCurrentLap(cm->iIndex);  // not o, sorted index
+					}
+					bool end = pGame->timer.GetCurrentLap(cm->iIndex) >= pSet->game.num_laps;
+					hudOpp[o][2]->setCaption(//cm->sDispName
+						//+ "   " + toStr(lap) + " " + GetTimeString(t)  // too ?
+						//+ "  (" + (end ? toStr(cm->iWonPlace) : "-") +")");
+						+ end ? cm->sDispName + "  (" + toStr(cm->iWonPlace) + ")" : cm->sDispName);
+				}
+				//else
+				//	hudOpp[o][2]->setCaption(cm->sDispName);
 				hudOpp[o][2]->setColour(cm->color);
 			}
 		}
@@ -476,9 +540,8 @@ void App::UpdateHUD(int carId, CarModel* pCarM, CAR* pCar, float time, Viewport*
 	if (pSet->show_times && pCar)
 	{
 		TIMER& tim = pGame->timer;	//car[playercarindex].
-		tim.SetPlayerCarID(carId);
 		
-		if (pCarM->bWrongChk || pSet->game.local_players > 1 && pCarM->iWonPlace > 0)
+		if (pCarM->bWrongChk || pCarM->iWonPlace > 0 && (pSet->game.local_players > 1 || mClient))
 			ovWarnWin->show();  else  ovWarnWin->hide();  //ov
 			
 		//  lap num (for many or champ)
@@ -503,9 +566,9 @@ void App::UpdateHUD(int carId, CarModel* pCarM, CAR* pCar, float time, Viewport*
 		}		
 		if (hudTimes) {
 			hudTimes->setCaption(times +
-				String(TR("\n#{TBTime} ")) + GetTimeString(tim.GetPlayerTime())+
-				String(TR("\n#{TBLast} ")) + GetTimeString(tim.GetLastLap())+
-				String(TR("\n#{TBBest} ")) + GetTimeString(tim.GetBestLap(pSet->game.trackreverse)) );
+				String(TR("\n#{TBTime} ")) + GetTimeString(tim.GetPlayerTime(carId))+
+				String(TR("\n#{TBLast} ")) + GetTimeString(tim.GetLastLap(carId))+
+				String(TR("\n#{TBBest} ")) + GetTimeString(tim.GetBestLap(carId, pSet->game.trackreverse)) );
 		}
 	}
 
@@ -617,7 +680,7 @@ void App::UpdateHUD(int carId, CarModel* pCarM, CAR* pCar, float time, Viewport*
 		int show = pCarM->fChkTime > 0.f ? 1 : 0;
 		if (show)  pCarM->fChkTime -= time;
 		//if (show != pCarM->iChkWrong)  //-
-		bool place = pSet->game.local_players > 1, won = pCarM->iWonPlace > 0;
+		bool place = pSet->game.local_players > 1 || mClient, won = pCarM->iWonPlace > 0;
 			if (show)  {  hudWarnChk->show();  if (place && !won)  hudWonPlace->hide();  }
 			else  {       hudWarnChk->hide();  if (place && won)  hudWonPlace->show();  }
 		pCarM->iChkWrong = show;

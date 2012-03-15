@@ -140,11 +140,11 @@ bool App::frameStart(Real time)
 			{	double tadd = ta;
 				tadd *= (shift ? 0.2 : 1) * (ctrlN ? 4 : 1) * (alt ? 8 : 1);  // multipliers
 				if (!bRplPause)  tadd -= 1;  // play compensate
-				double t = pGame->timer.GetReplayTime(), len = replay.GetTimeLength();
+				double t = pGame->timer.GetReplayTime(0), len = replay.GetTimeLength();
 				t += tadd * time;  // add
 				if (t < 0.0)  t += len;  // cycle
 				if (t > len)  t -= len;
-				pGame->timer.SetReplayTime(t);
+				pGame->timer.SetReplayTime(0, t);
 			}
 		}
 
@@ -304,16 +304,16 @@ void App::newPoses()
 {
 	if (!pGame)  return;
 	if (pGame->cars.size() == 0)  return;
-	double rplTime = pGame->timer.GetReplayTime();
-	double lapTime = pGame->timer.GetPlayerTime();
+	double rplTime = pGame->timer.GetReplayTime(0);
+	double lapTime = pGame->timer.GetPlayerTime(0);
 
 	// Iterate through all car models and get new pos info
-	int iCarNum = 0;  CarModel* carM0 = 0;
+	int carId = 0;  CarModel* carM0 = 0;
 	std::vector<CarModel*>::iterator carMIt = carModels.begin();
 	std::vector<PosInfo>::iterator newPosIt = newPosInfos.begin();
 	while (carMIt != carModels.end())
 	{
-		CarModel* carM = *carMIt;  if (iCarNum==0)  carM0 = carM;
+		CarModel* carM = *carMIt;  if (carId==0)  carM0 = carM;
 		CAR* pCar = carM->pCar;
 		PosInfo posInfo;
 		bool bGhost = carM->eType == CarModel::CT_GHOST;
@@ -340,7 +340,7 @@ void App::newPoses()
 				whPos[w] = frame.whPos[w];  whRot[w] = frame.whRot[w];
 				posInfo.whVel[w] = frame.whVel[w];
 				posInfo.whSlide[w] = frame.slide[w];  posInfo.whSqueal[w] = frame.squeal[w];
-				posInfo.whR[w] = replay.header.whR[iCarNum][w];//
+				posInfo.whR[w] = replay.header.whR[carId][w];//
 				posInfo.whTerMtr[w] = frame.whTerMtr[w];  posInfo.whRoadMtr[w] = frame.whRoadMtr[w];
 				posInfo.whH[w] = frame.whH[w];  posInfo.whP[w] = frame.whP[w];
 				posInfo.whAngVel[w] = frame.whAngVel[w];
@@ -350,8 +350,8 @@ void App::newPoses()
 		else if (bRplPlay)
 		{
 			//  time  from start
-			bool ok = replay.GetFrame(rplTime, &fr, iCarNum);
-				if (!ok)	pGame->timer.RestartReplay();
+			bool ok = replay.GetFrame(rplTime, &fr, carId);
+				if (!ok)	pGame->timer.RestartReplay(0);  //?..
 			
 			//  car
 			pos = fr.pos;  rot = fr.rot;  posInfo.speed = fr.speed;
@@ -363,7 +363,7 @@ void App::newPoses()
 				whPos[w] = fr.whPos[w];  whRot[w] = fr.whRot[w];
 				posInfo.whVel[w] = fr.whVel[w];
 				posInfo.whSlide[w] = fr.slide[w];  posInfo.whSqueal[w] = fr.squeal[w];
-				posInfo.whR[w] = replay.header.whR[iCarNum][w];//
+				posInfo.whR[w] = replay.header.whR[carId][w];//
 				posInfo.whTerMtr[w] = fr.whTerMtr[w];  posInfo.whRoadMtr[w] = fr.whRoadMtr[w];
 				posInfo.whH[w] = fr.whH[w];  posInfo.whP[w] = fr.whP[w];
 				posInfo.whAngVel[w] = fr.whAngVel[w];
@@ -489,8 +489,8 @@ void App::newPoses()
 				fr.speed = pCar->GetSpeed();
 				fr.dynVel = cd.GetVelocity().Magnitude();
 				
-				replay.AddFrame(fr, iCarNum);  // rec replay
-				if (iCarNum==0)  /// rec ghost lap
+				replay.AddFrame(fr, carId);  // rec replay
+				if (carId==0)  /// rec ghost lap
 				{
 					fr.time = lapTime;
 					ghost.AddFrame(fr, 0);
@@ -583,17 +583,18 @@ void App::newPoses()
 				if (ncs > 0)
 				{
 					//  Finish
-					if (carM->bInSt && carM->iNumChks == ncs && carM->iCurChk != -1)
+					if (carM->bInSt && carM->iNumChks == ncs && carM->iCurChk != -1
+						&& carM->eType == CarModel::CT_LOCAL)  // only local car(s)
 					{
-						bool best = pGame->timer.Lap(iCarNum, 0,0, true,
+						bool best = pGame->timer.Lap(carId, 0,0, true,
 							pSet->game.trackreverse/*<, pSet->boost_type*/);  //pGame->cartimerids[pCar] ?
-						double timeCur = pGame->timer.GetPlayerTimeTot();  //GetPlayerTime();
+						double timeCur = pGame->timer.GetPlayerTimeTot(carId);  //GetPlayerTime();
 
-						if (mClient && iCarNum == 0) // Network notification
-							mClient->lap(pGame->timer.GetCurrentLap(iCarNum), timeCur);
+						if (mClient && carId == 0)  // Network notification, send: car id, lap time
+							mClient->lap(pGame->timer.GetCurrentLap(carId), pGame->timer.GetLastLap(carId)/*timeCur*/);
 
 						if (!pSet->rpl_bestonly || best)  ///  new best lap, save ghost
-						if (iCarNum==0 && pSet->rpl_rec)  // for many, only 1st-
+						if (carId==0 && pSet->rpl_rec)  // for many, only 1st-
 						{
 							ghost.SaveFile(GetGhostFile());  /*< boost_type*/
 							ghplay.CopyFrom(ghost);
@@ -606,8 +607,8 @@ void App::newPoses()
 							carM->pCar->dynamics.boostFuel = gfBoostFuelStart;
 
 						///  winner places  for local players > 1
-						bool finished = pGame->timer.GetCurrentLap(iCarNum) >= pSet->game.num_laps;
-						if (finished)
+						bool finished = pGame->timer.GetCurrentLap(carId) >= pSet->game.num_laps;
+						if (finished && !mClient)
 						{
 							if (pSet->game.champ_num < 0)
 							{
@@ -643,7 +644,7 @@ void App::newPoses()
 		}	}
 
 		(*newPosIt) = posInfo;
-		carMIt++;  newPosIt++;  iCarNum++;  // next
+		carMIt++;  newPosIt++;  carId++;  // next
 	}
 }
 
@@ -721,7 +722,7 @@ void App::updatePoses(float time)
 	///  Replay info
 	if (bRplPlay && pGame->cars.size() > 0)
 	{
-		double pos = pGame->timer.GetPlayerTime();
+		double pos = pGame->timer.GetPlayerTime(0);
 		float len = replay.GetTimeLength();
 		if (valRplPerc){  valRplPerc->setCaption(fToStr(pos/len*100.f, 1,4)+" %");  }
 		if (valRplCur)  valRplCur->setCaption(GetTimeString(pos));

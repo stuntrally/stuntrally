@@ -97,14 +97,19 @@ void App::updateGameInfo()
 		sListTrack = track;
 		ReadTrkStats();
 	}
+	updateGameSet();
+	updateGameInfoGUI();
+}
+
+void App::updateGameSet()
+{
 	pSet->game.collis_cars = netGameInfo.collisions;
 	pSet->game.collis_veget = true;
-	pSet->game.num_laps = netGameInfo.laps;
+	pSet->game.num_laps = netGameInfo.laps;		//LogO("Netw laps num: " + toStr(pSet->game.num_laps));
 	pSet->game.flip_type = netGameInfo.flip_type;
 	pSet->game.boost_type = netGameInfo.boost_type;
 	pSet->game.boost_power = netGameInfo.boost_power;
 	pSet->game.trackreverse = netGameInfo.reversed;
-	updateGameInfoGUI();
 }
 
 void App::updateGameInfoGUI()
@@ -116,6 +121,7 @@ void App::updateGameInfoGUI()
 		imgNetTrack->setImageTexture(sListTrack+".jpg");
 	if (edNetTrackInfo && trkDesc)
 		edNetTrackInfo->setCaption(trkDesc[0]->getCaption());
+	// todo: probably should also update on gui collis,boost,reverse,... (but not in pSet.gui)
 }
 
 void App::uploadGameInfo()
@@ -130,11 +136,11 @@ void App::uploadGameInfo()
 	game.players = mClient->getPeerCount()+1;
 
 	game.collisions = pSet->gui.collis_cars;  // game set
-	game.laps = pSet->gui.num_laps;
-	game.flip_type = pSet->game.flip_type;
-	game.boost_type = pSet->game.boost_type;
-	game.boost_power = pSet->game.boost_power;
-	game.reversed = pSet->game.trackreverse;
+	game.laps = pSet->gui.num_laps;				//LogO("Up Netw laps num: " + toStr(pSet->gui.num_laps));
+	game.flip_type = pSet->gui.flip_type;
+	game.boost_type = pSet->gui.boost_type;
+	game.boost_power = pSet->gui.boost_power;
+	game.reversed = pSet->gui.trackreverse;
 
 	game.port = pSet->local_port;
 	game.locked = !edNetPassword->getCaption().empty();
@@ -216,9 +222,14 @@ void App::startRace()
 
 void App::timeInfo(ClientID id, uint8_t lap, double time)
 {
-	// TODO: Do something with this
-	//std::cout << "Lap " << (int)lap << " finished by " << (int)id << std::endl;
+	//if (!mClient)  return;
+	if (id == 0)  id = mClient->getId();
 	LogO("Lap " +toStr(lap) +" finished by " +toStr(id)+ " time:"+ toStr(float(time)));
+	if (id >= carModels.size() || id < 0)
+	{	LogO("Lap id wrong !" );  return;  }
+	
+	//pGame->timer.Lap(id, 0,0, true, pSet->game.trackreverse/*<, pSet->boost_type*/);  //pGame->cartimerids[pCar] ?
+	pGame->timer.LapNetworkTime(id, time);  // is the same as above but sets client's time
 }
 
 void App::error(string what)

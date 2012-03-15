@@ -62,7 +62,7 @@ App::App()
 	,grass(0), trees(0), road(0), miniC(0)
 	,pr(0),pr2(0), sun(0), carIdWin(-1), iCurCar(0), bUpdCarClr(1)
 	,lastAxis(-1), axisCnt(0), txtJAxis(0), txtJBtn(0), txtInpDetail(0)
-	,edInputMin(0), edInputMax(0), edInputMul(0), actDetail(0), cmbInpDetSet(0)
+	,edInputMin(0), edInputMax(0), edInputMul(0), edInputReturn(0), edInputIncrease(0), actDetail(0), cmbInpDetSet(0)
 	,liChamps(0),liStages(0), edChampStage(0),edChampEnd(0), imgChampStage(0)
 {
 	int i;

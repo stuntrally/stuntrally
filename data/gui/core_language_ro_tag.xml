@@ -23,6 +23,7 @@
 	<Tag name="OpponentsList">Opponents List</Tag>
 	<Tag name="RplParticles">Particles (for not transparent ghost)</Tag>
 	<Tag name="TipRoadDist2">Additional distance to road.</Tag>
+	<Tag name="TipLTrFlDepth">Maximal depth in fluid allowed (set 0 to exclude from fluids).</Tag>
 	<Tag name="TipLTrMinTerH">Terrain height below which model won't appear.</Tag>
 	<Tag name="Sky">Cer</Tag>
 	<Tag name="TerNormal">Normală</Tag>
@@ -72,7 +73,7 @@
 	<Tag name="TBLast">Ultimul</Tag>
 	<Tag name="InputMaxVal">Max. Value</Tag>
 	<Tag name="TipRollDrag">Drag pentru roți,valori mari va face să încetinească mai rapid(ex.140 pentru zăpadă, 80 pentru iarbă ).</Tag>
-	<Tag name="LoadTrack">Load Track</Tag>
+	<Tag name="TipTrackList">Lista traseelor,click pentru a selecta(și pentru a vedea informațiile).Apasă Enter pentru a conduce pe ele. (sau [Schimbă traseul] apoi [Joc nou])</Tag>
 	<Tag name="GrDensSmooth">Smooth grass dens.</Tag>
 	<Tag name="TerHeightMap">Înăltimea terenului</Tag>
 	<Tag name="bumps">bumps (bumpy terrain)</Tag>
@@ -108,7 +109,7 @@
 	<Tag name="BackMenu">Back</Tag>
 	<Tag name="BasedOn">bazat pe</Tag>
 	<Tag name="NetLeaveGame">Leave game</Tag>
-	<Tag name="banked">banked</Tag>
+	<Tag name="CameraInfo">Camera info</Tag>
 	<Tag name="frenzy">frenzy (curly road)</Tag>
 	<Tag name="InputRoadChkRadius">K,L   - checkpoint radius (chkR 0 - none)</Tag>
 	<Tag name="Time">Time</Tag>
@@ -117,12 +118,13 @@
 	<Tag name="MessageBox_Yes">Yes</Tag>
 	<Tag name="BlendMap">Blendmap</Tag>
 	<Tag name="InputMapPrevCamera">Previous Camera</Tag>
+	<Tag name="Shadows">Umbre</Tag>
 	<Tag name="InputMapBrake">Brake</Tag>
 	<Tag name="Video">Video</Tag>
 	<Tag name="ViewStart">Vizualizează startul</Tag>
 	<Tag name="TipGrassDens">Cât de densă/rară va fi iarba pe teren.</Tag>
 	<Tag name="RplRecTime">Recorded   time</Tag>
-	<Tag name="Shadows">Umbre</Tag>
+	<Tag name="TipGrTerMaxHeight">Terrain height above which there won't be any grass.</Tag>
 	<Tag name="InputRoadYaw">- rotate yaw</Tag>
 	<Tag name="MessageBox_Try">Try</Tag>
 	<Tag name="TerLHSm">Height smooth</Tag>
@@ -192,7 +194,7 @@
 	<Tag name="TipCopySource">Alege traseul selectat pentru sursă de copiere,folosit in tab-ul [Instrumente]</Tag>
 	<Tag name="InputMapNextTab">Next tab</Tag>
 	<Tag name="Layer">Strat</Tag>
-	<Tag name="NetLocalPort">Local Port</Tag>
+	<Tag name="WaterRefraction">Refraction</Tag>
 	<Tag name="EscQuit">Esc iese din joc</Tag>
 	<Tag name="Gauges">Indicatoare (rpm,viteză)</Tag>
 	<Tag name="LengthDim">Dimensiune lungime</Tag>
@@ -257,7 +259,7 @@
 	<Tag name="InputFluidsPrevNext">PgUp,PgDn (or Wheel) - previous/next fluid</Tag>
 	<Tag name="Yaw">rotire</Tag>
 	<Tag name="Detail">Detalii</Tag>
-	<Tag name="AllEffects">Effects Enabled</Tag>
+	<Tag name="InputMoveAxisTip">Move an axis to see its number</Tag>
 	<Tag name="SplitVertically">Split Vertically</Tag>
 	<Tag name="Start">start</Tag>
 	<Tag name="Readme">Readme</Tag>
@@ -281,6 +283,7 @@
 	<Tag name="InputCameraMode">Modul cameră</Tag>
 	<Tag name="Enabled">Activat</Tag>
 	<Tag name="TipReverse">Direcția traseului inversă</Tag>
+	<Tag name="DidntPass">Didn't pass</Tag>
 	<Tag name="InputMinimapType">alt-F2,F3 - Prev,next minimap type</Tag>
 	<Tag name="TipGrassPatchLengthMin">Minimal grass patch length.</Tag>
 	<Tag name="Road">Drum</Tag>
@@ -354,6 +357,7 @@
 	<Tag name="InputTerPaint">A - Colorează texturile (straturi)</Tag>
 	<Tag name="NetPort">Port</Tag>
 	<Tag name="Tracks">Tracks</Tag>
+	<Tag name="LTrFlDepth">max Depth in fluid</Tag>
 	<Tag name="InputFluidsSize">alt-LMB - size   alt-RMB - depth</Tag>
 	<Tag name="TexCoordMul">Tex Coord mul.</Tag>
 	<Tag name="Digits">Cifre (treapta de viteză,viteza)</Tag>
@@ -382,6 +386,7 @@
 	<Tag name="InputRplCtrl0">Replay:</Tag>
 	<Tag name="InputRplCtrl1">Backspace - show/hide controls (hold ctrl to use mouse)</Tag>
 	<Tag name="TipGrassSwayLen">Grass sway effect length (scale).</Tag>
+	<Tag name="WaterReflection">Reflection</Tag>
 	<Tag name="intensity">intensitate</Tag>
 	<Tag name="Fog">Ceață</Tag>
 	<Tag name="InputCameraTxt2">with ctrl - switch current car when many</Tag>
@@ -397,6 +402,7 @@
 	<Tag name="InputRoadLMB">LMB (or Arrows)</Tag>
 	<Tag name="TCS">TCS (controlul tracțiunii)</Tag>
 	<Tag name="NeedRestart">* need restart</Tag>
+	<Tag name="Water">Water</Tag>
 	<Tag name="mud">noroi</Tag>
 	<Tag name="TipTerWind">Terrain brush window.</Tag>
 	<Tag name="InputMapThrottle">Throttle</Tag>
@@ -456,7 +462,7 @@
 	<Tag name="TipGrassPatchHeightMax">Maximal grass patch height.</Tag>
 	<Tag name="TerLAngMin">Angle Min</Tag>
 	<Tag name="Tires">Tires</Tag>
-	<Tag name="TipTrackList">Lista traseelor,click pentru a selecta(și pentru a vedea informațiile).Apasă Enter pentru a conduce pe ele. (sau [Schimbă traseul] apoi [Joc nou])</Tag>
+	<Tag name="LoadTrack">Load Track</Tag>
 	<Tag name="TipTrkNameEditor">Selected track name, used also for renaming track and as new track name.</Tag>
 	<Tag name="InputRoadStats">T - road stats window</Tag>
 	<Tag name="VSync">VSync</Tag>
@@ -484,7 +490,7 @@
 	<Tag name="set2">set2</Tag>
 	<Tag name="auto">Auto</Tag>
 	<Tag name="TipWindInflH">Wind influence on model, height scale.</Tag>
-	<Tag name="Copy">Copy</Tag>
+	<Tag name="NetLocalPort">Local Port</Tag>
 	<Tag name="InputStartLMB">LMB - mișcă RMB - înalță</Tag>
 	<Tag name="TipWindInflL">Wind influence on model, length scale.</Tag>
 	<Tag name="InputRoadCopySel">ctrl-Ins - copy selection   ctrl-Del - delete sel.</Tag>
@@ -520,8 +526,8 @@
 	<Tag name="CamInertia">Camera inertia</Tag>
 	<Tag name="TipTerSize">Resulting area in meters (side length). Equals vertex count multipled by triangle size.</Tag>
 	<Tag name="speed">speed</Tag>
-	<Tag name="InputMoveAxisTip">Move an axis to see its number</Tag>
 	<Tag name="TipTerLHMin">Starting terrain height for layer.</Tag>
+	<Tag name="GrTerMaxHeight">Grass Max. Terrain Height</Tag>
 	<Tag name="RplGhosts">Ghosts</Tag>
 	<Tag name="RplBestOnly">Save ghost only for best time</Tag>
 	<Tag name="Front">Front</Tag>
@@ -560,6 +566,7 @@
 	<Tag name="Editor">Editor</Tag>
 	<Tag name="AndContributors">and contributors.</Tag>
 	<Tag name="InputRoadSelectMany">Select (many)</Tag>
+	<Tag name="Copy">Copy</Tag>
 	<Tag name="Reverse">Reverse</Tag>
 	<Tag name="scale">Scale</Tag>
 	<Tag name="UnitMph">mph</Tag>
@@ -580,9 +587,10 @@
 	<Tag name="Materials">Materials</Tag>
 	<Tag name="InputMultiplier">Multiplier</Tag>
 	<Tag name="InputUndo">(one time undo)</Tag>
+	<Tag name="AllEffects">Effects Enabled</Tag>
 	<Tag name="CarCollis">Cars collision</Tag>
 	<Tag name="RepeatStage">Repeating stage</Tag>
-	<Tag name="CameraInfo">Camera info</Tag>
+	<Tag name="banked">banked</Tag>
 	<Tag name="NetRouterTip">Router port forwarding configuration might be required in order to allow peers to connect to the local port.</Tag>
 	<Tag name="NewGame">New Game</Tag>
 	<Tag name="page">page</Tag>
@@ -671,14 +679,11 @@
 	<Tag name="InputNextOptTab">F2,F3 - prev,next Options tab (shift - sub tab)</Tag>
 	<Tag name="RollingDrag">Învârtire mașină</Tag>
 	<Tag name="RplAll">Toate</Tag>
-	<Tag name="TipLTrFlDepth">Maximal depth in fluid allowed (set 0 to exclude from fluids).</Tag>
-	<Tag name="TipGrTerMaxHeight">Terrain height above which there won't be any grass.</Tag>
-	<Tag name="DidntPass">Didn't pass</Tag>
-	<Tag name="LTrFlDepth">max Depth in fluid</Tag>
-	<Tag name="WaterReflection">Reflection</Tag>
-	<Tag name="Water">Water</Tag>
-	<Tag name="WaterRefraction">Refraction</Tag>
-	<Tag name="GrTerMaxHeight">Grass Max. Terrain Height</Tag>
+	<Tag name="InputKeyboardEmulation">Keyboard Emulation</Tag>
+	<Tag name="MouseCapture">Capture mouse</Tag>
+	<Tag name="QuickHelpText">----  Quick help  ----@@Use mouse or Up,Down,Enter,Backspace to navigate through menu.@@To adjust resolution go to Options tab Screen,@use Graphics presets to quickly adjust graphics to your hardware.@@To see all keys used in game and configure input goto Options, tab Input.@If you have a game controller see:@http://code.google.com/p/vdrift-ogre/wiki/Running##Controllers@@Hosting a multiplayer game requires port forwarding.@Connecting to existing game doesn't need it, provided other players have it.@@If you have problems or suggestions report an issue on (or reply to existing one):@http://code.google.com/p/vdrift-ogre/issues/list@@For more info see Readme and our project's Wiki pages.@</Tag>
+	<Tag name="InputIncreaseSensitivity">Sensitivity</Tag>
+	<Tag name="InputReturnDelay">Return speed</Tag>
 	<Tag name="GameVersion">1.5</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 

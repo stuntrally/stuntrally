@@ -282,7 +282,7 @@ void App::btnChgTrack(WP)
 //  new game
 void App::btnNewGame(WP)
 {
-	if (mWndGame->getVisible() && mWndTabsGame->getIndexSelected() < 5)
+	if (mWndGame->getVisible() && mWndTabsGame->getIndexSelected() < 5  || mClient)
 		pSet->gui.champ_num = -1;  /// champ, back to single race
 	
 	NewGame();  isFocGui = false;  // off gui
@@ -343,6 +343,7 @@ void App::radKmh(WP wp){	bRkmh->setStateSelected(true);  bRmph->setStateSelected
 void App::radMph(WP wp){	bRkmh->setStateSelected(false);  bRmph->setStateSelected(true);  pSet->show_mph = true;   ShowHUD();  }
 
 //  Startup
+void App::chkMouseCapture(WP wp){	ChkEv(x11_capture_mouse);	}
 void App::chkOgreDialog(WP wp){		ChkEv(ogre_dialog);	}
 void App::chkAutoStart(WP wp){		ChkEv(autostart);	}
 void App::chkEscQuits(WP wp){		ChkEv(escquit);		}
@@ -436,17 +437,33 @@ if (!bAssignKey)
 	//  change gui tabs
 	if (isFocGui && !pSet->isMain)
 	{
-		MyGUI::TabPtr tab = 0;
+		MyGUI::TabPtr tab = 0;  MyGUI::TabControl* sub = 0;
 		switch (pSet->inMenu)
-		{
-			case WND_Game:  case WND_Champ:		tab = mWndTabsGame;  break;
-			case WND_Options:  tab = mWndTabsOpts;  break;
+		{	case WND_Game:
+			case WND_Champ:  tab = mWndTabsGame;  sub = vSubTabsGame[tab->getIndexSelected()];  break;
+			case WND_Help:  tab = mWndTabsHelp;  break;
+			case WND_Options:  tab = mWndTabsOpts;  sub = vSubTabsOpts[tab->getIndexSelected()];  break;
+			//case WND_Replays:  tab = mWndTabsRpl;  break;
 		}
 		if (tab)
-		{	int num = tab->getItemCount()-1, i = 0;
-			if (action("PrevTab")) {		i = tab->getIndexSelected();  if (i==1)  i = num;  else  --i;
+		if (shift)
+		{	if (action("PrevTab")) {  // prev gui subtab
+				if (sub)  {  int num = sub->getItemCount();
+					sub->setIndexSelected( (sub->getIndexSelected() - 1 + num) % num );  }	}
+			else if (action("NextTab")) {  // next gui subtab
+				if (sub)  {  int num = sub->getItemCount();
+					sub->setIndexSelected( (sub->getIndexSelected() + 1) % num );  }  }
+		}else
+		{	int num = tab->getItemCount()-1, i = 0, n = 0;
+			if (action("PrevTab")) {
+				i = tab->getIndexSelected();
+				do{  if (i==1)  i = num;  else  --i;  ++n;  }
+				while (n < num && tab->getButtonWidthAt(i) == 1);
 				tab->setIndexSelected(i);  MenuTabChg(tab,i);  return true;  }
-			else if (action("NextTab")) {	i = tab->getIndexSelected();  if (i==num)  i = 1;  else  ++i;
+			else if (action("NextTab")) {
+				i = tab->getIndexSelected();
+				do{  if (i==num)  i = 1;  else  ++i;  ++n;  }
+				while (n < num && tab->getButtonWidthAt(i) == 1);
 				tab->setIndexSelected(i);  MenuTabChg(tab,i);  return true;  }
 		}
 	}
@@ -470,7 +487,7 @@ if (!bAssignKey)
 			carModels[c]->ResetChecks();
 			carModels[c]->iWonPlace = 0;
 		}
-		pGame->timer.Reset(0);
+		pGame->timer.Reset(-1);
 		pGame->timer.pretime = mClient ? 2.0f : pSet->game.pre_time;  // same for all multi players
 		carIdWin = 1;  //
 		ghost.Clear(); //
@@ -514,20 +531,23 @@ if (!bAssignKey)
 	//  shortcut keys for gui access (alt-T,H,S,G,V,.. )
 	if (alt)
 		switch (arg.key)
-		{
-			case KC_T:	GuiShortcut(WND_Game, 1);	return true;  // Track
-			case KC_C:	GuiShortcut(WND_Game, 2);	return true;  // Car
-			case KC_H:	GuiShortcut(WND_Champ, 4);	return true;  // Champs
+		{	case KC_Q:
+			case KC_T:	GuiShortcut(WND_Game, 1);	return true;  // Q,T Track
+			case KC_C:	GuiShortcut(WND_Game, 2);	return true;  // C Car
+			case KC_H:	GuiShortcut(WND_Champ, 5);	return true;  // H Champs
+			case KC_U:	GuiShortcut(WND_Game, 4);	return true;  // U Multiplayer
 
-			case KC_R:	GuiShortcut(WND_Replays, 1);	return true;  // [Replays]
+			case KC_R:	GuiShortcut(WND_Replays, 1);	return true;  // R Replays
 
-			case KC_S:	GuiShortcut(WND_Options, 1);	return true;  // Screen
-			case KC_E:	GuiShortcut(WND_Options, 1);	return true;  // -Effects
-			case KC_G:	GuiShortcut(WND_Options, 2);	return true;  // Graphics
+			case KC_S:	GuiShortcut(WND_Options, 1);	return true;  // S Screen
+			 case KC_E:	GuiShortcut(WND_Options, 1,1);	return true;  // E -Effects
+			case KC_G:	GuiShortcut(WND_Options, 2);	return true;  // G Graphics
+			 case KC_N:	GuiShortcut(WND_Options, 2,2);	return true;  // N -Vegetation
 
-			case KC_V:	GuiShortcut(WND_Options, 3);	return true;  // View
-			case KC_O:	GuiShortcut(WND_Options, 3);	return true;  // -Other
-			case KC_I:	GuiShortcut(WND_Options, 4);	return true;  // Input
+			case KC_V:	GuiShortcut(WND_Options, 3);	return true;  // V View
+			 case KC_M:	GuiShortcut(WND_Options, 3,1);	return true;  // M -Minimap
+			 case KC_O:	GuiShortcut(WND_Options, 3,2);	return true;  // O -Other
+			case KC_I:	GuiShortcut(WND_Options, 4);	return true;  // I Input
 		}
 
 	//  not main menus
@@ -715,15 +735,40 @@ void App::MenuTabChg(MyGUI::TabPtr tab, size_t id)
 	toggleGui(false);  // back to main
 }
 
-void App::GuiShortcut(WND_Types wnd, int tab)
+void App::GuiShortcut(WND_Types wnd, int tab, int subtab)
 {
 	isFocGui = true;
 	pSet->isMain = false;  pSet->inMenu = wnd;
+	
+	MyGUI::TabPtr mWndTabs = 0;
+	std::vector<MyGUI::TabControl*>* subt = 0;
+	
 	switch (wnd)
 	{	case WND_Champ:
-		case WND_Game:		mWndTabsGame->setIndexSelected(tab);  break;
-		//case WND_Replays:	mWndTabs->setIndexSelected(tab);  break;
-		case WND_Options:	mWndTabsOpts->setIndexSelected(tab);  break;
+		case WND_Game:		mWndTabs = mWndTabsGame;  subt = &vSubTabsGame;  break;
+		case WND_Replays:	mWndTabs = mWndTabsRpl;  break;
+		case WND_Help:		mWndTabs = mWndTabsHelp;  break;
+		case WND_Options:	mWndTabs = mWndTabsOpts;  subt = &vSubTabsOpts;  break;
 	}
 	toggleGui(false);
+
+	//if (!bGuiFocus)
+	//if (edMode != ED_PrvCam)  {
+	//	bGuiFocus = !bGuiFocus;  UpdVisGui();  subtab = -2;  }
+
+	size_t t = mWndTabs->getIndexSelected();
+	mWndTabs->setIndexSelected(tab);
+
+	if (!subt)  return;
+	MyGUI::TabControl* tc = (*subt)[t];  if (!tc)  return;
+	int  cnt = tc->getItemCount();
+
+	if (t == tab && subtab == -1)  // cycle subpages if same tab
+	{	if (shift)
+			tc->setIndexSelected( (tc->getIndexSelected()-1+cnt) % cnt );
+		else
+			tc->setIndexSelected( (tc->getIndexSelected()+1) % cnt );
+	}else
+	if (subtab > -1)
+		tc->setIndexSelected( std::min(cnt-1, subtab) );
 }

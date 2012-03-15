@@ -177,6 +177,7 @@ protected:
 	///-----------------------------------------------------------------------------------------------------------------
 	//  size
 	void SizeGUI(); void doSizeGUI(MyGUI::EnumeratorWidgetPtr);
+	std::vector<MyGUI::TabControl*> vSubTabsGame,vSubTabsOpts;
 
 	//  shortcuts
 	typedef MyGUI::WidgetPtr WP;
@@ -241,7 +242,7 @@ protected:
 	///-----------------------------------------
 
 	//  main menu
-	void toggleGui(bool toggle=true), GuiShortcut(WND_Types wnd, int tab);
+	void toggleGui(bool toggle=true), GuiShortcut(WND_Types wnd, int tab, int subtab=-1);
 	void UpdCarClrSld(bool upd=true);  bool bUpdCarClr;
 	void MainMenuBtn(MyGUI::WidgetPtr);
 	void MenuTabChg(MyGUI::TabPtr, size_t);
@@ -272,7 +273,7 @@ protected:
     virtual bool buttonReleased( const OIS::JoyStickEvent &e, int button );
 	MyGUI::StaticTextPtr txtJAxis, txtJBtn, txtInpDetail;
 	int lastAxis, axisCnt;  std::string joyName;  class OISB::AnalogAxisAction* actDetail;
-	MyGUI::EditPtr edInputMin, edInputMax, edInputMul;  void editInput(MyGUI::EditPtr);
+	MyGUI::EditPtr edInputMin, edInputMax, edInputMul, edInputReturn, edInputIncrease;  void editInput(MyGUI::EditPtr);
 	MyGUI::ComboBox* cmbInpDetSet;  void comboInputPreset(CMB);
 
 
@@ -292,7 +293,7 @@ protected:
 		chkCarDbgBars(WP), chkCarDbgTxt(WP), chkBltDebug(WP), chkBltProfilerTxt(WP),
 		chkReverse(WP), chkParticles(WP), chkTrails(WP),
 		chkAbs(WP), chkTcs(WP), chkGear(WP), chkRear(WP), chkRearInv(WP),  // car
-		chkOgreDialog(WP), chkAutoStart(WP), chkEscQuits(WP), chkBltLines(WP), chkLoadPics(WP),  // startup
+		chkMouseCapture(WP), chkOgreDialog(WP), chkAutoStart(WP), chkEscQuits(WP), chkBltLines(WP), chkLoadPics(WP),  // startup
 		chkVidEffects(WP), chkVidBloom(WP), chkVidHDR(WP), chkVidBlur(WP), UpdBloomVals(), chkVidSSAO(WP), // video
 		chkVidSoftParticles(WP),chkVidGodRays(WP), chkWaterReflect(WP), chkWaterRefract(WP),
 		chkVidDepthOfField(WP),
@@ -355,6 +356,7 @@ protected:
 	void rebuildGameList();
 	void rebuildPlayerList();
 	void updateGameInfo();
+	void updateGameSet();
 	void updateGameInfoGUI();
 	void uploadGameInfo();
 	void setNetGuiHosting(bool enabled);

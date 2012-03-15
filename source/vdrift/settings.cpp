@@ -11,6 +11,8 @@ void SETTINGS::Load(std::string sfile)
 }
 void SETTINGS::Save(std::string sfile)
 {
+	if (net_local_plr > 0)  // save only for host for many local games
+		return;
 	CONFIGFILE c;  c.Load(sfile);  version = SET_VER;
 	Serialize(true, c);  c.Write();
 }
@@ -91,6 +93,7 @@ void SETTINGS::Serialize(bool w, CONFIGFILE & c)
 	Param(c,w, "misc.bulletProfilerTxt", bltProfilerTxt);
 	Param(c,w, "misc.language", language);			Param(c,w, "misc.loadingback", loadingbackground);
 	Param(c,w, "misc.version", version);			Param(c,w, "misc.x11_capture_mouse", x11_capture_mouse);
+        Param(c,w, "misc.x11_hwmouse", x11_hwmouse);
 
 	Param(c,w, "network.nickname", nickname);
 	Param(c,w, "network.master_server_address", master_server_address);
@@ -116,7 +119,6 @@ void SETTINGS::Serialize(bool w, CONFIGFILE & c)
 	Param(c,w, "video_eff.ssao", ssao);
 	Param(c,w, "video_eff.godrays", godrays);
 	Param(c,w, "video_eff.softparticles", softparticles);
-	Param(c,w, "video_eff.dof", dof);
 
 	Param(c,w, "video.windowx", windowx);			Param(c,w, "video.windowy", windowy);
 	Param(c,w, "video.fullscreen", fullscreen);		Param(c,w, "video.vsync", vsync);
@@ -158,6 +160,7 @@ SETTINGS::SETTINGS() :  ///  Defaults
 	autostart(0), ogre_dialog(0), escquit(0),
 	bltDebug(0), bltLines(1),  bltProfilerTxt(0),
 	loadingbackground(true), x11_capture_mouse(false),
+        x11_hwmouse(false),
 	boostFromExhaust(0),
 	//  network
 	nickname("StuntMan"),
@@ -180,7 +183,8 @@ SETTINGS::SETTINGS() :  ///  Defaults
 	all_effects(false), godrays(false),
 	bloom(false), bloomintensity(0.13), bloomorig(0.9), hdr(false),
 	motionblur(false), motionblurintensity(0.3),
-	ssao(false),softparticles(false),dof(false)
+	ssao(false),softparticles(false),
+	net_local_plr(-1)
 {
 	//  track
 	gui.track = "J1-T";

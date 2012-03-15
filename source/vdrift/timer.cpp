@@ -61,44 +61,51 @@ void TIMER::Tick(float dt)
 		i->Tick(dt);
 }
 
-bool TIMER::Lap(const unsigned int carid, const int prevsector, const int nextsector, const bool countit, bool bTrackReverse)
+bool TIMER::Lap(const int carId, const int prevsector, const int nextsector, const bool countit, bool bTrackReverse)
 {
-	//assert(carid < car.size());
-	if (carid >= car.size())  return false;  //-
+	//assert(carId < car.size());
+	if (carId >= car.size())  return false;  //-
 	bool newbest = false;  // new lap best time
 
-	if (countit && carid == carId)
+	if (countit)
 	{
 		std::stringstream secstr;
 		secstr << "sector " << nextsector;
 		string lastcar;
 		/*if (trackrecords.GetParam("last.car", lastcar))
 		{
-			if (lastcar != car[carid].GetCarType()) //clear last lap time
+			if (lastcar != car[carId].GetCarType()) //clear last lap time
 			trackrecords.SetParam("last.sector 0", (float)0.0);
 		}*/
-		trackrecords.SetParam(string(bTrackReverse ? "rev_" : "") + "last." + secstr.str(), (float) car[carid].GetTime());
-		trackrecords.SetParam(string(bTrackReverse ? "rev_" : "") + "last.car", car[carid].GetCarType());
+		trackrecords.SetParam(string(bTrackReverse ? "rev_" : "") + "last." + secstr.str(), (float) car[carId].GetTime());
+		trackrecords.SetParam(string(bTrackReverse ? "rev_" : "") + "last.car", car[carId].GetCarType());
 
 		float prevbest = 0;
 		bool haveprevbest = trackrecords.GetParam(
-				car[carid].GetCarType() + (bTrackReverse ? "_rev" : "") + "." + secstr.str(), prevbest);
-		if (car[carid].GetTime() < prevbest || !haveprevbest)
+				car[carId].GetCarType() + (bTrackReverse ? "_rev" : "") + "." + secstr.str(), prevbest);
+		if (car[carId].GetTime() < prevbest || !haveprevbest)
 		{
 			trackrecords.SetParam(
-				car[carid].GetCarType() + (bTrackReverse ? "_rev" : "") + "." + secstr.str(), (float) car[carid].GetTime());
+				car[carId].GetCarType() + (bTrackReverse ? "_rev" : "") + "." + secstr.str(), (float) car[carId].GetTime());
 			newbest = true;
 		}
 	}
 
 	if (nextsector == 0)
 	{
-		car[carid].Lap(countit);
+		car[carId].Lap(countit);
 		if (loaded)
 			trackrecords.Write(true, trackrecordsfile);
 	}
 	return newbest;
 }
+
+bool TIMER::LapNetworkTime(const int carId, const double curtime)
+{
+	car[carId].LapWithTime(true, curtime);
+	return false;
+}
+
 
 class PLACE
 {

@@ -15,6 +15,7 @@
 #include <ostream>
 
 #include <OgrePlatform.h>
+#include <OgreStringConverter.h>
 #include <boost/thread.hpp>
 #include <boost/filesystem.hpp>
 #include <locale.h>
@@ -75,6 +76,7 @@ void VprThread(App* pA)
 	// Initialize networking
 	net::ENetContainer enet;
 
+
 	///  Load Settings
 	//----------------------------------------------------------------
 	SETTINGS* settings = new SETTINGS();
@@ -95,6 +97,23 @@ void VprThread(App* pA)
 	
 	// HACK: we initialize paths a second time now that we have the output streams
 	PATHMANAGER::Init(info_output, error_output);
+	
+	//  helper for testing networked game on 1 computer
+	//  use number > 0 in command parameter,  uses own ogre.log and adds it to nick and port
+	int num = -1;
+	#if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
+	if (lpCmdLine)
+		num = Ogre::StringConverter::parseInt(lpCmdLine);
+	#else
+	if (argc > 1)
+		num = Ogre::StringConverter::parseInt(argv[1]);
+	#endif
+	if (num > 0)
+	{
+		settings->net_local_plr = num;
+		settings->local_port += num;
+		settings->nickname += Ogre::StringConverter::toString(num);
+	}
 
 
 	///  Game start

@@ -427,6 +427,8 @@ bool App::KeyPress(const CmdKey &arg)
 
 		case KC_C:	GuiShortcut(7);  return true;  // S Screen
 		case KC_G:	GuiShortcut(8);  return true;  // G Graphics
+		 case KC_N:	GuiShortcut(8,2);  return true;  // N -Vegetation
+
 		case KC_I:	GuiShortcut(9);  return true;  // I Input/help
 		case KC_E:	GuiShortcut(10);  return true;  // E Settings
 	}

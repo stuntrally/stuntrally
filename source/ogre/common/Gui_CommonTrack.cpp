@@ -407,9 +407,9 @@ void App::ReadTrkStats()
 	SplineRoad rd(pGame);  rd.LoadFile(sRd,false);  // load
 
 	TIMER tim;  tim.Load(PATHMANAGER::GetTrackRecordsPath()+"/"+sListTrack+".txt", 0.f, pGame->error_output);
-	tim.AddCar(sListCar);  tim.SetPlayerCarID(0);
+	tim.AddCar(sListCar);
 
-	UpdGuiRdStats(&rd,sc, sListTrack, tim.GetBestLap(pSet->gui.trackreverse));
+	UpdGuiRdStats(&rd,sc, sListTrack, tim.GetBestLap(0, pSet->gui.trackreverse));
 #else
 	SplineRoad rd;  rd.LoadFile(sRd,false);  // load
 	UpdGuiRdStats(&rd,sc, sListTrack, 0.f);
@@ -426,9 +426,9 @@ void App::ReadTrkStatsChamp(String track, bool reverse)
 	SplineRoad rd(pGame);  rd.LoadFile(sRd,false);  // load
 
 	TIMER tim;  tim.Load(PATHMANAGER::GetTrackRecordsPath()+"/"+track+".txt", 0.f, pGame->error_output);
-	tim.AddCar(sListCar);  tim.SetPlayerCarID(0);
+	tim.AddCar(sListCar);
 
-	UpdGuiRdStats(&rd,sc, track, tim.GetBestLap(reverse), true);
+	UpdGuiRdStats(&rd,sc, track, tim.GetBestLap(0, reverse), true);
 }
 #endif
 

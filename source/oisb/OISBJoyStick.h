@@ -57,6 +57,7 @@ namespace OISB
 			OIS::JoyStick* mJoyStick;
 			
 			unsigned int mID;
+			String mName;
 		
 		public:
 			std::vector<AnalogAxisState*> axis;

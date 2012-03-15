@@ -42,7 +42,9 @@ namespace OISB
 		mJoyStick(joy)
 	{
 		mID = joystick_count; joystick_count++;
-		
+		// unique name for each JS
+		mName = mJoyStick->vendor() + "_" + boost::lexical_cast<std::string>(mID);
+
 		int num_axis = mJoyStick->getNumberOfComponents(OIS::OIS_Axis);
 		for(int a = 0; a<num_axis; a++)
 		{
@@ -93,10 +95,7 @@ namespace OISB
 
 	const String& JoyStick::getName() const
 	{
-		// unique name for each JS
-		static String name = mJoyStick->vendor() + "_" + boost::lexical_cast<std::string>(mID);
-		
-		return name;
+		return mName;
 	}
 
 	void JoyStick::process(Real delta)

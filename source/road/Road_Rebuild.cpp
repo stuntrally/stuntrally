@@ -217,7 +217,7 @@ void SplineRoad::RebuildRoadInt()
 				
 			///  normal <dir>  /
 			if (lod == 0)
-			{	Vector3 vn = vl.crossProduct(vw);  //vn.normalise();
+			{	Vector3 vn = vl.crossProduct(vw);  vn.normalise();
 				//if (vn.y < 0.f)  vn = -vn;  // always up y+
 				vnSeg0.push_back(vn);  }
 

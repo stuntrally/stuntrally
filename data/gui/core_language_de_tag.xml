@@ -23,6 +23,7 @@
 	<Tag name="OpponentsList">Gegner-Anzeige</Tag>
 	<Tag name="RplParticles">Partikel (für undurchsichtigen Geist)</Tag>
 	<Tag name="TipRoadDist2">Zusätzlicher Abstand zur Strecke.</Tag>
+	<Tag name="TipLTrFlDepth">Maximal depth in fluid allowed (set 0 to exclude from fluids).</Tag>
 	<Tag name="TipLTrMinTerH">Minimale Terrain-Höhe, bei der Modelle noch platziert werden</Tag>
 	<Tag name="Sky">Himmel</Tag>
 	<Tag name="TerNormal">Normal</Tag>
@@ -72,7 +73,7 @@
 	<Tag name="TBLast">Letzte</Tag>
 	<Tag name="InputMaxVal">Max. Wert</Tag>
 	<Tag name="TipRollDrag">Reifenwiderstand, größerer Wert bremst diese stärker ab (z.B. 140 für Schnee, 80 für Gras)</Tag>
-	<Tag name="LoadTrack">Strecke laden</Tag>
+	<Tag name="TipTrackList">Streckenauswahl - klicken, um auswählen; Enter, um darauf zu fahren. (oder [Strecke wechseln] und dann [Neues Spiel])</Tag>
 	<Tag name="GrDensSmooth">Grasvert. glätten</Tag>
 	<Tag name="TerHeightMap">Terrain-Heightmap</Tag>
 	<Tag name="bumps">Bodenwellen</Tag>
@@ -108,7 +109,7 @@
 	<Tag name="BackMenu">Zurück</Tag>
 	<Tag name="BasedOn">basiert auf</Tag>
 	<Tag name="NetLeaveGame">Spiel verlassen</Tag>
-	<Tag name="banked">überhöht</Tag>
+	<Tag name="CameraInfo">Kamerainfo</Tag>
 	<Tag name="frenzy">viele Kurven</Tag>
 	<Tag name="InputRoadChkRadius">K,L - Wegpunkt-Radius (chkR 0 - keiner)</Tag>
 	<Tag name="Time">Zeit</Tag>
@@ -117,12 +118,13 @@
 	<Tag name="MessageBox_Yes">Ja</Tag>
 	<Tag name="BlendMap">Blendmap</Tag>
 	<Tag name="InputMapPrevCamera">Vorherige Kamera</Tag>
+	<Tag name="Shadows">Schatten</Tag>
 	<Tag name="InputMapBrake">Bremsen</Tag>
 	<Tag name="Video">Bildschirm</Tag>
 	<Tag name="ViewStart">Ans. Start</Tag>
 	<Tag name="TipGrassDens">Hohes oder niedrige Anzahl von Gras auf dem Boden.</Tag>
 	<Tag name="RplRecTime">Aufgenommen</Tag>
-	<Tag name="Shadows">Schatten</Tag>
+	<Tag name="TipGrTerMaxHeight">Terrain height above which there won't be any grass.</Tag>
 	<Tag name="InputRoadYaw">- gieren</Tag>
 	<Tag name="MessageBox_Try">Versuchen</Tag>
 	<Tag name="TerLHSm">Höhenglättung</Tag>
@@ -192,7 +194,7 @@
 	<Tag name="TipCopySource">Strecke als Kopierquelle für den [Werkzeuge] Tab auswählen.</Tag>
 	<Tag name="InputMapNextTab">Nächster Tab</Tag>
 	<Tag name="Layer">Layer</Tag>
-	<Tag name="NetLocalPort">Local Port</Tag>
+	<Tag name="WaterRefraction">Refraction</Tag>
 	<Tag name="EscQuit">Beenden mit Esc</Tag>
 	<Tag name="Gauges">Tacho</Tag>
 	<Tag name="LengthDim">Längen dim.</Tag>
@@ -257,7 +259,7 @@
 	<Tag name="InputFluidsPrevNext">Bild auf/ab (oder Mausrad) - Gewässer vor/zurück</Tag>
 	<Tag name="Yaw">gieren</Tag>
 	<Tag name="Detail">Detail</Tag>
-	<Tag name="AllEffects">Effekte aktivieren</Tag>
+	<Tag name="InputMoveAxisTip">Achse bewegen, um die Nummer zu sehen</Tag>
 	<Tag name="SplitVertically">Senkrecht teilen</Tag>
 	<Tag name="Start">Start</Tag>
 	<Tag name="Readme">Readme</Tag>
@@ -281,6 +283,7 @@
 	<Tag name="InputCameraMode">Kameramodus</Tag>
 	<Tag name="Enabled">Aktiviert</Tag>
 	<Tag name="TipReverse">Streckenrichtung umkehren.</Tag>
+	<Tag name="DidntPass">Didn't pass</Tag>
 	<Tag name="InputMinimapType">Alt-F2,F3 - Minikartentyp</Tag>
 	<Tag name="TipGrassPatchLengthMin">Minimale Länge des Grasflecks.</Tag>
 	<Tag name="Road">Straße</Tag>
@@ -354,6 +357,7 @@
 	<Tag name="InputTerPaint">A - Anstrichtextur (Layer)</Tag>
 	<Tag name="NetPort">Port</Tag>
 	<Tag name="Tracks">Tracks</Tag>
+	<Tag name="LTrFlDepth">max Depth in fluid</Tag>
 	<Tag name="InputFluidsSize">alt-LMB Größe, alt-RMB Tiefe</Tag>
 	<Tag name="TexCoordMul">Tex Coord mul.</Tag>
 	<Tag name="Digits">Ziffern</Tag>
@@ -382,6 +386,7 @@
 	<Tag name="InputRplCtrl0">Wiederholung:</Tag>
 	<Tag name="InputRplCtrl1">Backspace - Steuerung zeigen/verbergen (Ctrl für Maus)</Tag>
 	<Tag name="TipGrassSwayLen">Grasschwingungslänge (Skal.)</Tag>
+	<Tag name="WaterReflection">Reflection</Tag>
 	<Tag name="intensity">Intensität</Tag>
 	<Tag name="Fog">Nebel</Tag>
 	<Tag name="InputCameraTxt2">Mit Strg - Auto für Kameraänderung wechseln</Tag>
@@ -397,6 +402,7 @@
 	<Tag name="InputRoadLMB">LMB (oder Pfeiltasten)</Tag>
 	<Tag name="TCS">TCS (Traction Control System)</Tag>
 	<Tag name="NeedRestart">* Neustart erforderl.</Tag>
+	<Tag name="Water">Water</Tag>
 	<Tag name="mud">Schlamm</Tag>
 	<Tag name="TipTerWind">Terrain Pinsel-Fenster</Tag>
 	<Tag name="InputMapThrottle">Gas</Tag>
@@ -456,7 +462,7 @@
 	<Tag name="TipGrassPatchHeightMax">Maximale Höhe des Grasflecks.</Tag>
 	<Tag name="TerLAngMin">Winkel min.</Tag>
 	<Tag name="Tires">Reifen</Tag>
-	<Tag name="TipTrackList">Streckenauswahl - klicken, um auswählen; Enter, um darauf zu fahren. (oder [Strecke wechseln] und dann [Neues Spiel])</Tag>
+	<Tag name="LoadTrack">Strecke laden</Tag>
 	<Tag name="TipTrkNameEditor">Name der ausgewählten Strecke, wird auch zum Umbenennen und als neuer Streckenname benutzt.</Tag>
 	<Tag name="InputRoadStats">T - Straßenstatistiken</Tag>
 	<Tag name="VSync">VSync</Tag>
@@ -484,7 +490,7 @@
 	<Tag name="set2">set2</Tag>
 	<Tag name="auto">Auto</Tag>
 	<Tag name="TipWindInflH">Einfluss des Winds auf das Modell, Höhenskalierung.</Tag>
-	<Tag name="Copy">Kopieren</Tag>
+	<Tag name="NetLocalPort">Local Port</Tag>
 	<Tag name="InputStartLMB">LMB - bewegen RMB - Höhe</Tag>
 	<Tag name="TipWindInflL">Einfluss des Winds auf das Modell, Längenskalierung.</Tag>
 	<Tag name="InputRoadCopySel">Strg-Einfg - Ausw. kopieren Strg-Entf - Ausw. löschen</Tag>
@@ -520,8 +526,8 @@
 	<Tag name="CamInertia">Kameraträgheit</Tag>
 	<Tag name="TipTerSize">Resultierende Seitenlänge in Metern. Entspricht der Vertexanzahl multipliziert mit Triangle-Größe.</Tag>
 	<Tag name="speed">Geschw.</Tag>
-	<Tag name="InputMoveAxisTip">Achse bewegen, um die Nummer zu sehen</Tag>
 	<Tag name="TipTerLHMin">Minimale Terrainhöhe der Ebene.</Tag>
+	<Tag name="GrTerMaxHeight">Grass Max. Terrain Height</Tag>
 	<Tag name="RplGhosts">Geister</Tag>
 	<Tag name="RplBestOnly">Geist nur für beste Zeit speichern</Tag>
 	<Tag name="Front">Vorne</Tag>
@@ -560,6 +566,7 @@
 	<Tag name="Editor">Editor</Tag>
 	<Tag name="AndContributors">und Mitwirkenden.</Tag>
 	<Tag name="InputRoadSelectMany">Auswahl (viele)</Tag>
+	<Tag name="Copy">Kopieren</Tag>
 	<Tag name="Reverse">Rückwärts</Tag>
 	<Tag name="scale">Skalieren</Tag>
 	<Tag name="UnitMph">mph</Tag>
@@ -580,9 +587,10 @@
 	<Tag name="Materials">Materialien</Tag>
 	<Tag name="InputMultiplier">Faktor</Tag>
 	<Tag name="InputUndo">(rückgängig)</Tag>
+	<Tag name="AllEffects">Effekte aktivieren</Tag>
 	<Tag name="CarCollis">Autokollision</Tag>
 	<Tag name="RepeatStage">Repeating stage</Tag>
-	<Tag name="CameraInfo">Kamerainfo</Tag>
+	<Tag name="banked">überhöht</Tag>
 	<Tag name="NetRouterTip">Router port forwarding configuration might be required in order to allow peers to connect to the local port.</Tag>
 	<Tag name="NewGame">Neues Spiel</Tag>
 	<Tag name="page">Page</Tag>
@@ -671,14 +679,11 @@
 	<Tag name="InputNextOptTab">F2,F3 - prev,next Options tab (shift - sub tab)</Tag>
 	<Tag name="RollingDrag">Rollwiderstand</Tag>
 	<Tag name="RplAll">Alle</Tag>
-	<Tag name="TipLTrFlDepth">Maximal depth in fluid allowed (set 0 to exclude from fluids).</Tag>
-	<Tag name="TipGrTerMaxHeight">Terrain height above which there won't be any grass.</Tag>
-	<Tag name="DidntPass">Didn't pass</Tag>
-	<Tag name="LTrFlDepth">max Depth in fluid</Tag>
-	<Tag name="WaterReflection">Reflection</Tag>
-	<Tag name="Water">Water</Tag>
-	<Tag name="WaterRefraction">Refraction</Tag>
-	<Tag name="GrTerMaxHeight">Grass Max. Terrain Height</Tag>
+	<Tag name="InputKeyboardEmulation">Keyboard Emulation</Tag>
+	<Tag name="MouseCapture">Capture mouse</Tag>
+	<Tag name="QuickHelpText">----  Quick help  ----@@Use mouse or Up,Down,Enter,Backspace to navigate through menu.@@To adjust resolution go to Options tab Screen,@use Graphics presets to quickly adjust graphics to your hardware.@@To see all keys used in game and configure input goto Options, tab Input.@If you have a game controller see:@http://code.google.com/p/vdrift-ogre/wiki/Running##Controllers@@Hosting a multiplayer game requires port forwarding.@Connecting to existing game doesn't need it, provided other players have it.@@If you have problems or suggestions report an issue on (or reply to existing one):@http://code.google.com/p/vdrift-ogre/issues/list@@For more info see Readme and our project's Wiki pages.@</Tag>
+	<Tag name="InputIncreaseSensitivity">Sensitivity</Tag>
+	<Tag name="InputReturnDelay">Return speed</Tag>
 	<Tag name="GameVersion">1.5</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 
