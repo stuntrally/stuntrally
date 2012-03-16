@@ -5,8 +5,6 @@
 #include "../vdrift/game.h"
 #include "../network/masterclient.hpp"
 #include "../network/gameclient.hpp"
-//#include "common/Gui_Def.h"
-//#include "common/RenderConst.h"
 
 #include <OIS/OIS.h>
 #include "../oisb/OISB.h"
@@ -172,7 +170,7 @@ void App::peerConnected(PeerInfo peer)
 	if (mLobbyState == HOSTING) uploadGameInfo();
 	// Schedule Gui updates
 	boost::mutex::scoped_lock lock(netGuiMutex);
-	sChatBuffer = sChatBuffer + "Connected: " + peer.name + "\n";
+	sChatBuffer = sChatBuffer + "#00FF00" + "Connected: " + peer.name + "\n";
 	bRebuildPlayerList = true;
 }
 
@@ -183,7 +181,7 @@ void App::peerDisconnected(PeerInfo peer)
 	if (mLobbyState == HOSTING) uploadGameInfo();
 	// Schedule Gui updates
 	boost::mutex::scoped_lock lock(netGuiMutex);
-	sChatBuffer = sChatBuffer + "Disconnected: " + peer.name + "\n";
+	sChatBuffer = sChatBuffer + "#FF8000" + "Disconnected: " + peer.name + "\n";
 	bRebuildPlayerList = true;
 }
 
@@ -197,7 +195,16 @@ void App::peerInfo(PeerInfo peer)
 void App::peerMessage(PeerInfo peer, std::string msg)
 {
 	boost::mutex::scoped_lock lock(netGuiMutex);
-	sChatBuffer = sChatBuffer + peer.name + ": " + msg + "\n";
+
+	int hc = 0;  // color from name
+	int len = peer.name.length();
+	hc += len;  hc += peer.name[0];
+	const static int num = 16;
+	const static char sclr[num][8] = {
+	"#80FFC0","#B0FF40","#FF80C0","#C0FF80","#40FFFF","#FF4080","#8080FF","#FF80FF",
+	"#3050FF","#80C0FF","#E0F0FF","#FFFFFF","#C080FF","#FFFF40","#FFC040","#FF8080"};
+
+	sChatBuffer = sChatBuffer + sclr[hc % num] + peer.name + ": " + msg + "\n";
 	bRebuildPlayerList = true; // For ping updates in the list
 }
 
@@ -235,7 +242,7 @@ void App::timeInfo(ClientID id, uint8_t lap, double time)
 void App::error(string what)
 {
 	boost::mutex::scoped_lock lock(netGuiMutex);
-	sChatBuffer = sChatBuffer + "ERROR! " + what + "\n";
+	sChatBuffer = sChatBuffer + "#FF3030" + "ERROR! " + what + "\n";
 }
 
 void App::join(std::string host, std::string port, std::string password)
@@ -245,7 +252,7 @@ void App::join(std::string host, std::string port, std::string password)
 		mClient->updatePlayerInfo(pSet->nickname, sListCar);
 		mClient->connect(host, boost::lexical_cast<int>(port), password); // Lobby phase started automatically
 		boost::mutex::scoped_lock lock(netGuiMutex);
-		sChatBuffer = TR("Connecting to ") + host + ":" + port + "\n";
+		sChatBuffer = "#00FFFF" + TR("Connecting to ") + host + ":" + port + "\n";
 	} catch (...) {
 		raiseError(TR("Failed to initialize networking.\nTry different local port and make sure your firewall is properly configured."), TR("Network Error"));
 		return;
@@ -327,7 +334,7 @@ void App::evBtnNetCreate(WP)
 		panelNetGame->setVisible(false);
 		panelNetTrack->setVisible(false);
 		boost::mutex::scoped_lock lock(netGuiMutex);
-		sChatBuffer = TR("Listening on port ")  + boost::lexical_cast<std::string>(pSet->local_port) + "...\n";
+		sChatBuffer = "#00FFC0" + TR("Listening on port ")  + boost::lexical_cast<std::string>(pSet->local_port) + "...\n";
 	}
 }
 
