@@ -112,7 +112,8 @@ void App::NewGame()
 	// actual loading isn't done here
 	isFocGui = false;
 	toggleGui(false);  // hide gui
-
+	mWndNetEnd->setVisible(false);
+ 
 	bLoading = true;
 	carIdWin = 1;
 

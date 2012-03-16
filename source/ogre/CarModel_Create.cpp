@@ -40,7 +40,7 @@ CarModel::CarModel(unsigned int index, eCarType type, const std::string& name,
 {
 	iIndex = index;  sDirname = name;  mSceneMgr = sceneMgr;
 	pSet = set;  pGame = game;  sc = s;  mCamera = cam;  eType = type;
-	bGetStPos = true;  fChkTime = 0.f;  iChkWrong = -1;  iWonPlace = 0;
+	bGetStPos = true;  fChkTime = 0.f;  iChkWrong = -1;  iWonPlace = 0;  iWonPlaceOld = 0;
 	iCurChk = -1;  iNumChks = 0;  iNextChk = 0;  //ResetChecks();  // road isnt yet
 	distFirst = 1.f;  distLast = 1.f;  distTotal = 10.f;  trackPercent = 0.f;
 

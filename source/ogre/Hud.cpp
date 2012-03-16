@@ -5,6 +5,7 @@
 #include "../road/Road.h"
 #include "SplitScreen.h"
 #include "common/RenderConst.h"
+#include "common/MultiList2.h"
 
 #include <OgreRenderWindow.h>
 #include <OgreSceneNode.h>
@@ -162,6 +163,7 @@ void App::CreateHUD()
 	ovCarDbg = ovr.getByName("Car/Stats");	hudTcs = ovr.getOverlayElement("Hud/TcsText");
 
 	ovCountdown = ovr.getByName("Hud/Countdown");	hudCountdown = ovr.getOverlayElement("Hud/CountdownText");
+	ovNetMsg = ovr.getByName("Hud/NetMessages");	hudNetMsg = ovr.getOverlayElement("Hud/NetMessagesText");
 	ovTimes = ovr.getByName("Hud/Times");	hudTimes = ovr.getOverlayElement("Hud/TimesText");
 	ovOpp = ovr.getByName("Hud/Opponents"); hudOppB = ovr.getOverlayElement("Hud/OpponentsPanel");
 	for (int o=0; o < 5; ++o)  for (int c=0; c < 3; ++c)  {
@@ -207,6 +209,7 @@ void App::ShowHUD(bool hideAll)
 		if (ovAbsTcs) ovAbsTcs->hide();
 		if (ovBoost)  ovBoost->hide();		//if (hudBoost)  hudBoost->hide();
 		if (ovCountdown)  ovCountdown->hide();
+		if (ovNetMsg)  ovNetMsg->hide();
 		if (hudGear)  hudGear->hide();		if (hudVel)   hudVel->hide();
 		if (ovCarDbg)  ovCarDbg->hide();	if (ovCarDbgTxt)  ovCarDbgTxt->hide();
 
@@ -227,6 +230,7 @@ void App::ShowHUD(bool hideAll)
 		if (ovBoost){  if (show && (pSet->game.boost_type == 1 || pSet->game.boost_type == 2))
 									ovBoost->show();    else  ovBoost->hide();  }
 		if (ovCountdown)  if (show)  ovCountdown->show();  else  ovCountdown->hide();
+		if (ovNetMsg)	if (show)  ovNetMsg->show();  else  ovNetMsg->hide();
 		if (ovAbsTcs){ if (show)  ovAbsTcs->show();   else  ovAbsTcs->hide(); }
 		if (hudGear){  if (pSet->show_digits)  hudGear->show(); else  hudGear->hide();  }
 		if (hudVel) {  if (pSet->show_digits)  hudVel->show();  else  hudVel->hide();  }
@@ -302,7 +306,7 @@ void App::UpdateHUD(int carId, CarModel* pCarM, CAR* pCar, float time, Viewport*
 		if (hudGear)  hudGear->hide();		if (hudVel)  hudVel->hide();		if (ovBoost)  ovBoost->hide();
 		if (ovTimes)  ovTimes->hide();		if (ovWarnWin)  ovWarnWin->hide();	if (ovOpp)  ovOpp->hide();
 		if (ovCarDbg)  ovCarDbg->hide();	if (ovCarDbgTxt)  ovCarDbgTxt->hide();
-		if (ovCountdown)  ovCountdown->hide();
+		if (ovCountdown)  ovCountdown->hide();  if (ovNetMsg)  ovNetMsg->hide();
 	}else{
 		/// for render viewport ---------
 		if (ovCam)  ovCam->hide();
@@ -336,32 +340,77 @@ void App::UpdateHUD(int carId, CarModel* pCarM, CAR* pCar, float time, Viewport*
 		if (carId == 0 && !pSet->mini_rotated && !pSet->mini_zoomed)  // the only fall that works
 		if (carModels[i]->eType != CarModel::CT_LOCAL && carModels[i]->eType != CarModel::CT_REPLAY)
 			UpdHUDRot(i, carModels[i], 0.f, 0.f, true);
-		
 	}
 			
-	///  sort winners in networked multiplayer
+	///  multiplayer
+	// -----------------------------------------------------------------------------------
 	static float tm = 0.f;  tm += time;
-	if (tm > 0.2f && mClient)  //  not every frame, each 0.2s
-	{	tm = 0.f;
-
+	if (tm > 0.2f /**&& mClient/**/)  //  not every frame, each 0.2s
+	// if (pSet->game.isNetw) ..
+	{
 		std::list<CarModel*> cms;  // sorted list
 		for (int o=0; o < carModels.size(); ++o)
 			cms.push_back(carModels[o]);
 
-		cms.sort(SortWin);
+		cms.sort(SortWin);  // sort winners
 		
+		String msg = "";
 		int place = 1;  // assing places
 		for (std::list<CarModel*>::iterator it = cms.begin(); it != cms.end(); ++it)
 		{
 			CarModel* cm = *it;
 			bool end = pGame->timer.GetCurrentLap(cm->iIndex) >= pSet->game.num_laps;
 			cm->iWonPlace = end ? place++ : 0;  // when ended race
+
+			//  detect change (won),  can happen more than once, if time diff < ping delay
+			if (cm->iWonPlace != cm->iWonPlaceOld)
+			{	cm->iWonPlaceOld = cm->iWonPlace;
+				cm->iWonMsgTime = 4.f;  //par in sec
+				if (cm->iIndex == 0)  // for local player, show end wnd
+					mWndNetEnd->setVisible(true);
+			}
+			if (cm->iWonMsgTime > 0.f)
+			{	cm->iWonMsgTime -= tm;
+				msg += cm->sDispName + " finished, place: " + toStr(cm->iWonPlace) + "\n";
+			}
 		}
+		if (mClient && pGame->timer.pretime <= 0.f && pGame->timer.waiting)
+			msg += "Waiting for others...\n";
+			
+		//  upd won msgs
+		if (hudNetMsg)
+		{	
+			hudNetMsg->setCaption(msg);
+			ovNetMsg->show();
+		}
+
+		//  upd list
+		if (liNetEnd->isVisible())
+		{	liNetEnd->removeAllItems();  int i=1;
+			for (std::list<CarModel*>::iterator it = cms.begin(); it != cms.end(); ++it,++i)
+			{
+				CarModel* cm = *it;
+				//String clr = "#E0F0FF";
+				std::stringstream ss;  // car color to hex str
+				ss << std::hex << std::setfill('0');
+				ss << (cm->color.getAsARGB() & 0xFFFFFF);
+				String clr = "#"+ss.str();
+
+				liNetEnd->addItem(""/*clr+ toStr(i)*/, 0);  int l = liNetEnd->getItemCount()-1;
+				liNetEnd->setSubItemNameAt(1,l, clr+ (cm->iWonPlace == 0 ? "--" : toStr(cm->iWonPlace)));
+				liNetEnd->setSubItemNameAt(2,l, clr+ cm->sDispName);
+				liNetEnd->setSubItemNameAt(3,l, clr+ GetTimeString( pGame->timer.GetPlayerTimeTot(cm->iIndex) ));
+				//todo: best time from this play only..
+				//liNetEnd->setSubItemNameAt(4,l, clr+ fToStr(cm->iWonMsgTime,1,3));
+				//liNetEnd->setSubItemNameAt(4,l, clr+ GetTimeString( pGame->timer.GetBestLap(cm->iIndex, pSet->game.trackreverse) ));
+				liNetEnd->setSubItemNameAt(5,l, clr+ toStr( pGame->timer.GetCurrentLap(cm->iIndex) ));
+		}	}
+		tm = 0.f;
 	}
 
 
 	///  opponents list
-	//------------------------------------------------------------------------
+	// -----------------------------------------------------------------------------------
 	if (ovOpp->isVisible() && pCarM && pCarM->pMainNode)
 	{
 		std::list<CarModel*> cms;  // sorted list
@@ -414,8 +463,6 @@ void App::UpdateHUD(int carId, CarModel* pCarM, CAR* pCar, float time, Viewport*
 					hudOpp[o][0]->setCaption("");
 				else
 				{	//  percent % val
-					//float perc = newPosInfos[o].percent;  //cm->trackPercent;
-					//float perc = bGhost ? newPosInfos[cm->iIndex].percent : cm->trackPercent;
 					float perc = cm->trackPercent;
 					if (bGhost && pGame->timer.GetPlayerTime(0) > ghplay.GetTimeLength())
 						perc = 100.f;  // force 100 at ghost end

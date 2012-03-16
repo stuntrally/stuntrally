@@ -464,10 +464,17 @@ if (!bAssignKey)
 		}
 	}
 	
-	//  gui on/off
+	//  gui on/off  or close wnds
 	if (action("ShowOptions") && !alt)
-	{	if (mWndChampEnd->getVisible())  mWndChampEnd->setVisible(false);  // hide champs end
-		toggleGui(true);  return false;  }
+	{
+		if (mWndNetEnd->getVisible())  {  mWndNetEnd->setVisible(false);  // hide netw end
+			return false;	}
+		else
+		{
+			if (mWndChampEnd->getVisible())  mWndChampEnd->setVisible(false);  // hide champs end
+			toggleGui(true);  return false;
+		}
+	}
 
 	//  new game - reload
 	if (action("RestartGame"))
@@ -481,7 +488,8 @@ if (!bAssignKey)
 			if (carModels[c]->pCar)  carModels[c]->pCar->ResetPos(true);
 			if (carModels[c]->fCam)  carModels[c]->fCam->first = true;
 			carModels[c]->ResetChecks();
-			carModels[c]->iWonPlace = 0;
+			carModels[c]->iWonPlace = 0;  carModels[c]->iWonPlaceOld = 0;
+			carModels[c]->iWonMsgTime = 0.f;
 		}
 		pGame->timer.Reset(-1);
 		pGame->timer.pretime = mClient ? 2.0f : pSet->game.pre_time;  // same for all multi players
@@ -650,6 +658,15 @@ if (!bAssignKey)
 		return true;
 
 	return true;
+}
+
+
+//  close netw end
+void App::btnNetEndClose(WP)
+{
+	mWndNetEnd->setVisible(false);
+	isFocGui = true;  // show back gui
+	toggleGui(false);
 }
 
 

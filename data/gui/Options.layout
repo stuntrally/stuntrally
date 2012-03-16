@@ -1068,6 +1068,19 @@
 			<!--<UserString key="RelativeTo" value="WndChampStage"/>-->
 		</Widget>
 	</Widget>
+	<Widget type="Window" skin="WindowC" position="576 328 648 540" align="Center" layer="Popup" name="WndNetEnd">
+		<Property key="Caption" value="#{Multiplayer}"/>
+		<Property key="Alpha" value="0.8"/>
+		<Property key="Colour" value="0.7 0.7 0"/>
+        <Widget type="Button" skin="Button" position="248 444 144 40" name="btnNetEndClose">
+			<Property key="Colour" value="0.47 0.47 0.47"/>
+			<Property key="TextColour" value="0.9 0.9 1"/>
+			<Property key="InheritsAlpha" value="false"/>
+			<Property key="Caption" value="#{BackMenu}"/>
+			<!--<UserString key="RelativeTo" value="WndNetEnd"/>-->
+		</Widget>
+        <Widget type="TextBox" skin="TextBox" position="20 12 588 32" name="WndNetText"/>
+	</Widget>
 	<Widget type="Window" skin="WindowC" position="640 312 536 456" align="Center" layer="Popup" name="WndChampEnd">
 		<Property key="Caption" value="#{Championship}"/>
 		<Property key="Alpha" value="0.8"/>

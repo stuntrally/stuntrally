@@ -582,21 +582,25 @@ void App::newPoses()
 				int ncs = road->mChks.size();
 				if (ncs > 0)
 				{
-					//  Finish
+					//  Finish  --------------------------------------
 					if (carM->bInSt && carM->iNumChks == ncs && carM->iCurChk != -1
 						&& carM->eType == CarModel::CT_LOCAL)  // only local car(s)
 					{
-						bool best = pGame->timer.Lap(carId, 0,0, true,
-							pSet->game.trackreverse/*<, pSet->boost_type*/);  //pGame->cartimerids[pCar] ?
-						double timeCur = pGame->timer.GetPlayerTimeTot(carId);  //GetPlayerTime();
+						///  Lap
+						bool finished = pGame->timer.GetCurrentLap(carId) >= pSet->game.num_laps;
+						bool best = finished ? false :  // dont inc laps when race over
+							pGame->timer.Lap(carId, 0,0, !finished, pSet->game.trackreverse);  //,boost_type?
+						double timeCur = pGame->timer.GetPlayerTimeTot(carId);
 
-						if (mClient && carId == 0)  // Network notification, send: car id, lap time
-							mClient->lap(pGame->timer.GetCurrentLap(carId), pGame->timer.GetLastLap(carId)/*timeCur*/);
+						//  Network notification, send: car id, lap time
+						if (mClient && carId == 0 && !finished)
+							mClient->lap(pGame->timer.GetCurrentLap(carId), pGame->timer.GetLastLap(carId));
 
-						if (!pSet->rpl_bestonly || best)  ///  new best lap, save ghost
+						///  new best lap, save ghost
+						if (!pSet->rpl_bestonly || best)
 						if (carId==0 && pSet->rpl_rec)  // for many, only 1st-
 						{
-							ghost.SaveFile(GetGhostFile());  /*< boost_type*/
+							ghost.SaveFile(GetGhostFile());  //,boost_type?
 							ghplay.CopyFrom(ghost);
 						}
 						ghost.Clear();
@@ -607,7 +611,7 @@ void App::newPoses()
 							carM->pCar->dynamics.boostFuel = gfBoostFuelStart;
 
 						///  winner places  for local players > 1
-						bool finished = pGame->timer.GetCurrentLap(carId) >= pSet->game.num_laps;
+						finished = pGame->timer.GetCurrentLap(carId) >= pSet->game.num_laps;
 						if (finished && !mClient)
 						{
 							if (pSet->game.champ_num < 0)
@@ -618,7 +622,7 @@ void App::newPoses()
 								ChampionshipAdvance(timeCur);
 						}
 					}
-					//  checkpoints
+					//  checkpoints  --------------------------------------
 					for (int i=0; i < ncs; ++i)
 					{
 						const CheckSphere& cs = road->mChks[i];

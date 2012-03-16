@@ -120,7 +120,8 @@ public:
 
 	//  start pos, lap  checkpoint vars
 	bool bGetStPos;  Ogre::Matrix4 matStPos;  Ogre::Vector4 vStDist;
-	int iInChk, iCurChk, iNextChk, iNumChks, iWonPlace;  // cur checkpoint -1 at start
+	int iInChk, iCurChk, iNextChk, iNumChks,  // cur checkpoint -1 at start
+		iWonPlace, iWonPlaceOld;  float iWonMsgTime;
 	bool bInSt, bWrongChk;  float fChkTime;  int iChkWrong;
 	//bool Checkpoint(const PosInfo& posInfo, class SplineRoad* road);  // update
 	Ogre::Vector3 vStartPos;  void ResetChecks(bool bDist=false);

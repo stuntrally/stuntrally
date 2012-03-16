@@ -323,6 +323,7 @@ void BaseApp::InitKeyNamesMap()
 bool BaseApp::IsFocGui()
 {
 	return isFocGui || isFocRpl ||
-		(mWndChampStage && mWndChampStage->getVisible()) ||
-		(mWndChampEnd && mWndChampEnd->getVisible());
+		mWndChampStage->getVisible() ||
+		mWndChampEnd->getVisible() ||
+		mWndNetEnd->getVisible();
 }

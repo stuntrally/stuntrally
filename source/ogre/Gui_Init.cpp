@@ -41,6 +41,7 @@ void App::InitGui()
 	mWndOpts = mGUI->findWidget<Window>("OptionsWnd",false);
 	mWndChampStage = mGUI->findWidget<Window>("WndChampStage",false);  mWndChampStage->setVisible(false);
 	mWndChampEnd = mGUI->findWidget<Window>("WndChampEnd",false);  mWndChampEnd->setVisible(false);
+	mWndNetEnd = mGUI->findWidget<Window>("WndNetEnd",false);  mWndNetEnd->setVisible(false);
 	
 	for (int i=0; i < WND_ALL; ++i)
 	{
@@ -521,6 +522,19 @@ void App::InitGui()
 	edChampEnd = (EditBox*)mWndChampEnd->findWidget("ChampEndText");
 	imgChampStage = (ImageBox*)mWndChampStage->findWidget("ChampStageImg");
 
+
+	//  netw end list
+	Btn("btnNetEndClose", btnNetEndClose);
+	li = mWndNetEnd->createWidget<MultiList2>("MultiListBox",4,42,632,360, Align::Left | Align::VStretch);
+	li->removeAllColumns();
+	li->addColumn("", 40);  //N
+	li->addColumn(TR("#{TBPlace}"), 60);
+	li->addColumn(TR("#{NetNickname}"), 180);
+	li->addColumn(TR("#{TBTime}"), 120);
+	li->addColumn(TR("#{TBBest}"), 120);
+	li->addColumn(TR("#{TBLap}"), 60);
+	liNetEnd = li;
+	
 
 	bGI = true;  // gui inited, gui events can now save vals
 	

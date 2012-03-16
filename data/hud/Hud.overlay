@@ -138,6 +138,30 @@ Hud/Countdown
 }
 
 
+Hud/NetMessages
+{
+	zorder 500
+	container BorderPanel(Hud/NetMessagesPanel)
+	{
+		//metrics_mode pixels
+		vert_align top
+		horz_align left
+		left  0.36
+		top	0.01
+		width  0.15
+		height	0.1
+
+		element TextArea(Hud/NetMessagesText)
+		{
+			font_name Vera
+			char_height 0.03
+			colour_top    0.0 0.0 0.0
+			colour_bottom 0.4 0.2 0.0
+		}
+	}
+}
+
+
 Hud/Times
 {
 	zorder 500
