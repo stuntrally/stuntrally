@@ -3,6 +3,7 @@
 #include "OgreApp.h"
 #include "../vdrift/pathmanager.h"
 #include <locale.h>
+#include <boost/filesystem.hpp>
 
 #if OGRE_PLATFORM == OGRE_PLATFORM_LINUX
 //#include <X11/Xlib.h>
@@ -45,6 +46,7 @@ void LoadDefaultSet(SETTINGS* settings, std::string setFile)
 	if (settings->version != SET_VER)  // loaded older, use default
 	{
 		std::cout << "Settings found, but older version - loading defaults." << std::endl;
+		boost::filesystem::rename(setFile, PATHMANAGER::GetUserConfigDir() + "/editor_old.cfg");
 		LoadDefaultSet(settings,setFile);
 		settings->Load(setFile);  // LOAD
 	}

@@ -27,8 +27,9 @@ void LoadDefaultSet(SETTINGS* settings, std::string setFile)
 	settings->Load(PATHMANAGER::GetGameConfigDir() + "/game-default.cfg");
 	settings->Save(setFile);
 	//  delete old keys.xml too
-	if (boost::filesystem::exists(PATHMANAGER::GetUserConfigDir() + "/keys.xml"))
-		boost::filesystem::remove(PATHMANAGER::GetUserConfigDir() + "/keys.xml");
+	std::string sKeys = PATHMANAGER::GetUserConfigDir() + "/keys.xml";
+	if (boost::filesystem::exists(sKeys))
+		boost::filesystem::rename(sKeys, PATHMANAGER::GetUserConfigDir() + "/keys_old.xml");
 }
 
 
@@ -91,12 +92,14 @@ void VprThread(App* pA)
 	if (settings->version != SET_VER)  // loaded older, use default
 	{
 		info_output << "Settings found, but older version - loading defaults." << std::endl;
+		boost::filesystem::rename(setFile, PATHMANAGER::GetUserConfigDir() + "/game_old.cfg");
 		LoadDefaultSet(settings,setFile);
 		settings->Load(setFile);  // LOAD
 	}
 	
 	// HACK: we initialize paths a second time now that we have the output streams
 	PATHMANAGER::Init(info_output, error_output);
+
 	
 	//  helper for testing networked game on 1 computer
 	//  use number > 0 in command parameter,  uses own ogre.log and adds it to nick and port

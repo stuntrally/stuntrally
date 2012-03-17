@@ -4,7 +4,7 @@
 #include "configfile.h"
 
 
-#define SET_VER  1380  // 1.4
+#define SET_VER  1500  // 1.5
 
 
 class SETTINGS

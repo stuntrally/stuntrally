@@ -44,15 +44,4 @@
 		bWhForce="1" whMaxAngVel="70" whSpinDamp="20"  whForceLong="70" whForceUp="50"
 		bumpFqX="10.2" bumpFqY="10.5" bumpAmp="0.2" bumpAngle="0" whSteerMul="3" idParticles="-1" />
 
-	<!--materials   particles..
-		Water_blue  island blue
-		Water_cyan  greece cyan +
-		Water_green  jungle green +
-		Water_light  light light green -
-		Water_yellow  yellow light -->
-	<!--density = 1400.0f;  angularDrag = 1.0f;  linearDrag = 0.5f;  // mud hard too springy- 
-		density = 2000.0f;  angularDrag = 2.2f;  linearDrag = 0.6f;  // mud hard~
-		density = 1000.0f;  angularDrag = 1.8f;  linearDrag = 0.5f;  // mud hard~
-		density = 600.0f;  angularDrag = 1.0f;  linearDrag = 0.2f;  // water slow sink~ 
-		density = 200.0f;  angularDrag = 0.7f;  linearDrag = 0.2f;  // water soft~ -->
 </fluids>
