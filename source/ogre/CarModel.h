@@ -19,6 +19,7 @@ class SETTINGS;  class GAME;  class CAR;  class Scene;  class App;  class Follow
 
 namespace Ogre {  class SceneNode;  class Terrain;  class Camera;  class SceneManager;
 	class ParticleSystem;  class Entity;  class RibbonTrail;  class ManualObject;  }
+namespace MyGUI {  class TextBox;  }
 
 
 // Stores all the needed information about car coming from vdrift
@@ -65,6 +66,7 @@ public:
 	~CarModel();
 	
 	Ogre::String sDispName;  // diplay name in opponents list (nick for CT_REMOTE)
+	MyGUI::TextBox* pNickTxt;  // multiplayer nick above car
 	
 	
 	//  Create car (also calls CreateReflection)

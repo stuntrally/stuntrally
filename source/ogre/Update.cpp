@@ -15,7 +15,9 @@
 #include <OgreMaterialManager.h>
 #include "common/Gui_Def.h"
 #include "common/MultiList2.h"
+#include <MyGUI.h>
 using namespace Ogre;
+using namespace MyGUI;
 
 
 //---------------------------------------------------------------------------------------------------------------
@@ -688,8 +690,15 @@ void App::updatePoses(float time)
 		
 		carM->Update(newPosInfo, time);
 		
-		//  nick text 3d pos
-		//projectPoint()
+
+		//  nick text pos upd
+		if (carM->pNickTxt && carM->pMainNode)
+		{
+			Camera* cam = playerCar->fCam->mCamera;  //above car 1m
+			Vector3 p = projectPoint(cam, carM->pMainNode->getPosition() + Vector3(0,1.f,0));
+			carM->pNickTxt->setPosition(p.x-40, p.y-16);  //center doesnt work
+			carM->pNickTxt->setVisible(p.z > 0.f);
+		}
 		
 		///  pos on minimap  x,y = -1..1
 		{
@@ -819,13 +828,26 @@ void App::UpdHUDRot(int carId, CarModel* pCarM, float vel, float rpm, bool miniO
 }
 
 //  util
-Vector2 App::projectPoint(Viewport* vp, const Vector3& pos)
+Vector3 App::projectPoint(const Camera* cam, const Vector3& pos)
 {
-	Camera* cam = vp->getCamera();
 	Vector3 pos2D = cam->getProjectionMatrix() * (cam->getViewMatrix() * pos);
 
-	Real x =       ((pos2D.x * 0.5f) + 0.5f);
-	Real y = 1.f - ((pos2D.y * 0.5f) + 0.5f);
+	//Real x = std::min(1.f, std::max(0.f,  pos2D.x * 0.5f + 0.5f ));  // leave on screen edges -center broken
+	//Real y = std::min(1.f, std::max(0.f, -pos2D.y * 0.5f + 0.5f ));
+	Real x =  pos2D.x * 0.5f + 0.5f;
+	Real y = -pos2D.y * 0.5f + 0.5f;
+	bool out = x < 0.f || x > 1.f || y < 0.f || y > 1.f;  // check dot too (cam dir, pos diff)..
 
-	return Vector2(x * vp->getWidth(), y * vp->getHeight());
+	return Vector3(x * mWindow->getWidth(), y * mWindow->getHeight(), out ? -1.f : 1.f);
+}
+
+TextBox* App::CreateNickText(int carId, String text)
+{
+	TextBox* txt = mGUI->createWidget<TextBox>("TextBox",
+		100,100, 360,32, Align::Center, "Back", "NickTxt"+toStr(carId));
+	txt->setVisible(false);
+	txt->setFontHeight(28);  //par 24..32
+	txt->setTextShadow(true);  txt->setTextShadowColour(Colour::Black);
+	txt->setCaption(text);
+	return txt;
 }

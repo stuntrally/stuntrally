@@ -549,4 +549,7 @@ void CarModel::ChangeClr(int car)
 	MaterialPtr mtr = MaterialManager::getSingleton().getByName(sMtr[Mtr_CarBody]);
 	if (!mtr.isNull())
 		mtr->setDiffuse(color);
+
+	if (pNickTxt)
+		pNickTxt->setTextColour(MyGUI::Colour(color.r,color.g,color.b));
 }

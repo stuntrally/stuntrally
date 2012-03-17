@@ -293,11 +293,10 @@ void App::InitGui()
 	TabPtr tPlr = mGUI->findWidget<Tab>("tabPlayer");
 	if (tPlr)  tPlr->eventTabChangeSelect += newDelegate(this, &App::tabPlayer);
 	
-	Btn("btnPlayers1", btnNumPlayers);
-	Btn("btnPlayers2", btnNumPlayers);
-	Btn("btnPlayers3", btnNumPlayers);
-	Btn("btnPlayers4", btnNumPlayers);
+	Btn("btnPlayers1", btnNumPlayers);	Btn("btnPlayers2", btnNumPlayers);
+	Btn("btnPlayers3", btnNumPlayers);	Btn("btnPlayers4", btnNumPlayers);
 	Chk("chkSplitVertically", chkSplitVert, pSet->split_vertically);
+
 
 	///  Multiplayer
 	//------------------------------------------------------------------------

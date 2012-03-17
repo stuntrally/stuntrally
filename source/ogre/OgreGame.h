@@ -120,7 +120,8 @@ protected:
 
 	Ogre::String GetTimeString(float time) const;
 	void CreateHUD(), ShowHUD(bool hideAll=false), UpdMiniTer();
-	Ogre::Vector2 projectPoint(Ogre::Viewport* vp, const Ogre::Vector3& pos);
+	Ogre::Vector3 projectPoint(const Ogre::Camera* cam, const Ogre::Vector3& pos);  // 2d xy, z - out info
+	MyGUI::TextBox* CreateNickText(int carId, Ogre::String text);
 
 	//  create  . . . . . . . . . . . . . . . . . . . . . . . . 
 	Ogre::String resCar, resTrk, resDrv;

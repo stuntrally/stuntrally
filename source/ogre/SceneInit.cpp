@@ -167,6 +167,7 @@ void App::LoadCleanUp()  // 1 first
 			if (i < 4)
 				pSet->cam_view[i] = carsCamNum[i];
 		}
+		if (c->pNickTxt)  {  mGUI->destroyWidget(c->pNickTxt);  c->pNickTxt = 0;  }
 		delete c;
 	}
 	carModels.clear();  newPosInfos.clear();
@@ -242,7 +243,10 @@ void App::LoadGame()  // 2
 		if (et == CarModel::CT_LOCAL)  ++camIt;
 		
 		if (nick != "")  // set remote nickname
-			car->sDispName = nick;
+		{	car->sDispName = nick;
+			if (i != 0)  // not for local
+				car->pNickTxt = CreateNickText(i, car->sDispName);
+		}
 	}
 
 	/// ghost car - last in carModels
@@ -251,9 +255,10 @@ void App::LoadGame()  // 2
 	{
 		ghplay.LoadFile(GetGhostFile());  // loads ghost play if exists
 		//  always because ghplay can appear during play after best lap
-		CarModel* c = new CarModel(i, CarModel::CT_GHOST, pSet->game.car[0], mSceneMgr, pSet, pGame, &sc, 0, this );
+		CarModel* c = new CarModel(i, CarModel::CT_GHOST, pSet->game.car[0], mSceneMgr, pSet, pGame, &sc, 0, this);
 		c->pCar = (*carModels.begin())->pCar;  // based on 1st car
 		carModels.push_back(c);
+		///c->pNickTxt = CreateNickText(i, c->sDispName);  //for ghost too ?
 	}
 	
 	float pretime = mClient ? 2.0f : pSet->game.pre_time;  // same for all multi players
