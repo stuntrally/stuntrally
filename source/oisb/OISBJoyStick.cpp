@@ -43,7 +43,7 @@ namespace OISB
 	{
 		mID = joystick_count; joystick_count++;
 		// unique name for each JS
-		mName = mJoyStick->vendor() + "_" + boost::lexical_cast<std::string>(mID);
+		mName = mJoyStick->vendor() + "_" + toStr(mID);
 
 		int num_axis = mJoyStick->getNumberOfComponents(OIS::OIS_Axis);
 		for(int a = 0; a<num_axis; a++)

@@ -135,7 +135,8 @@ private:
 			double time_rpl;  // time from race start (for replay)
 			double time;      // running time for this lap
 			LAPTIME lastlap;  // last lap time
-			LAPTIME bestlap;  // best lap time
+			LAPTIME bestlap;  // best lap time (also from local records)
+			LAPTIME bestlapRace;  // best lap time, for current race only
 			double totaltime; // total time of a race (>=1 laps)
 			int num_laps;     // current lap
 			std::string cartype;
@@ -150,6 +151,7 @@ private:
 				time = totaltime = time_rpl = 0.0;
 				lastlap.Reset();
 				bestlap.Reset();
+				bestlapRace.Reset();
 				num_laps = 0;
 			}
 
@@ -164,6 +166,7 @@ private:
 				{
 					lastlap.Set(time);
 					bestlap.SetIfFaster(time);
+					bestlapRace.SetIfFaster(time);
 				}
 
 				totaltime += time;
@@ -177,6 +180,7 @@ private:
 				{
 					lastlap.Set(curtime);
 					bestlap.SetIfFaster(curtime);
+					bestlapRace.SetIfFaster(time);
 				}
 
 				totaltime += curtime;
@@ -226,6 +230,11 @@ private:
 			double GetBestLap() const
 			{
 				return bestlap.GetTimeInSeconds();
+			}
+
+			double GetBestLapRace() const
+			{
+				return bestlapRace.GetTimeInSeconds();
 			}
 
 			int GetCurrentLap() const
@@ -310,6 +319,7 @@ public:
 	}
 	
 	float GetLastLap(const int carId) {		assert(carId<car.size());		return car[carId].GetLastLap();  }
+	float GetBestLapRace(const int carId)	{	assert(carId<car.size());	return car[carId].GetBestLapRace();		}
 	float GetBestLap(const int carId, bool bTrackReverse)
 	{
 		assert(carId<car.size());

@@ -476,12 +476,12 @@ if (!bAssignKey)
 		}
 	}
 
-	//  new game - reload
-	if (action("RestartGame"))
+	//  new game - reload   not in multiplayer
+	if (action("RestartGame") && !mClient)
 	{	NewGame();  return false;	}
 
 	//  new game - fast (same track & cars)
-	if (action("ResetGame"))
+	if (action("ResetGame") && !mClient)
 	{
 		for (int c=0; c < carModels.size(); ++c)
 		{

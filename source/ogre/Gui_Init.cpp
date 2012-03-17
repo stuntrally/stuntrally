@@ -310,15 +310,17 @@ void App::InitGui()
 	
 	//  server, games
 	valNetGames = mGUI->findWidget<StaticText>("valNetGames");
-	listServers = mGUI->findWidget<MultiList>("MListServers");
+	listServers = mGUI->findWidget<MultiList>("MListServers");  int c=0;
 	if (listServers)
-	{	listServers->addColumn("Game name", 180);
-		listServers->addColumn("Track", 120);
-		listServers->addColumn("Players", 70);
-		listServers->addColumn("Collisions", 70);
-		listServers->addColumn("Locked", 70);
-		listServers->addColumn("Host", 130);
-		listServers->addColumn("Port", 80);
+	{	listServers->addColumn("#C0FFC0""Game name", 180);  ++c;  // todo: TR( ..
+		listServers->addColumn("#50FF50"+TR("#{Track}"), 140);  ++c;
+		listServers->addColumn("#80FFC0""Laps", 70);  ++c;
+		listServers->addColumn("#FFFF00""Players", 70);  ++c;
+		listServers->addColumn("#80FFFF""Collis.", 80);  ++c;
+		listServers->addColumn("#A0D0FF""Boost", 100);  ++c;
+		listServers->addColumn("#FF6060""Locked", 70);  iColLock = c;  ++c;
+		listServers->addColumn("#FF9000""Host", 130);  iColHost = c;  ++c;
+		listServers->addColumn("#FFB000""Port", 80);  iColPort = c;  ++c;
 	}
 	Btn("btnNetRefresh", evBtnNetRefresh);  btnNetRefresh = btn;
 	Btn("btnNetJoin", evBtnNetJoin);  btnNetJoin = btn;
@@ -339,11 +341,11 @@ void App::InitGui()
 
 	listPlayers = mGUI->findWidget<MultiList>("MListPlayers");
 	if (listPlayers)
-	{	listPlayers->addColumn("Player", 140);
-		listPlayers->addColumn("Car", 60);
-		listPlayers->addColumn("Peers", 60);
-		listPlayers->addColumn("Ping", 60);
-		listPlayers->addColumn("Ready", 60);
+	{	listPlayers->addColumn("#C0E0FF""Player", 140);  // todo: TR( ..
+		listPlayers->addColumn("#80FFFF"+TR("#{Car}"), 60);
+		listPlayers->addColumn("#C0C0FF""Peers", 60);
+		listPlayers->addColumn("#C0FFFF""Ping", 60);
+		listPlayers->addColumn("#C0FF80""Ready", 60);
 	}
 	Btn("btnNetReady", evBtnNetReady);  btnNetReady = btn;
 	Btn("btnNetLeave", evBtnNetLeave);	btnNetLeave = btn;
@@ -481,7 +483,7 @@ void App::InitGui()
 	li->eventListChangePosition += newDelegate(this, &App::listChampChng);
    	li->setVisible(false);
 	
-	li->removeAllColumns();  int c=0;
+	li->removeAllColumns();  c=0;
 	li->addColumn("N", ChColW[c++]);
 	li->addColumn(TR("#{Name}"), ChColW[c++]);
 	li->addColumn(TR("#{Difficulty}"), ChColW[c++]);

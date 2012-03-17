@@ -57,6 +57,7 @@ App::App()
     ,valNetGames(0), valNetGameName(0), valNetChat(0), valNetTrack(0), valNetPassword(0)
     ,edNetGameName(0), edNetChatMsg(0), edNetTrackInfo(0), edNetPassword(0)
     ,edNetNick(0), edNetServerIP(0), edNetServerPort(0), edNetLocalPort(0)
+    ,iColLock(0),iColHost(0),iColPort(0)
 	// game
 	,blendMtr(0), iBlendMaps(0), dbgdraw(0), noBlendUpd(0), blendMapSize(513), bListTrackU(0)
 	,grass(0), trees(0), road(0), miniC(0)

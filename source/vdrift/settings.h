@@ -71,8 +71,8 @@ public:
 	bool autostart, escquit;
 	bool bltDebug, bltLines, bltProfilerTxt;
 	bool loadingbackground;
-
-        bool x11_capture_mouse, x11_hwmouse;
+	bool x11_capture_mouse, x11_hwmouse;
+	bool opplist_sort;
 	
 	//  sim freq (1/interval timestep)
 	float game_fq, blt_fq;  int blt_iter, dyn_iter, multi_thr;

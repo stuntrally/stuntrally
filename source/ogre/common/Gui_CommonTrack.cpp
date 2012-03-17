@@ -126,15 +126,20 @@ void App::AddTrkL(std::string name, int user, const TrackInfo* ti)
 	if (!ti)  return;  //  details
 	int l = li->getItemCount()-1;
 	
-	li->setSubItemNameAt(1,l, c+toStr(ti->n/10)+toStr(ti->n%10));  li->setSubItemNameAt(2,l, c+ti->scenery);
+	li->setSubItemNameAt(1,l, c+toStr(ti->n/10)+toStr(ti->n%10));
+	li->setSubItemNameAt(2,l, c+ti->scenery);
 	li->setSubItemNameAt(3,l, c+toStr(ti->crtver));
 	//list->setSubItemNameAt(4,l, ti->created);  list->setSubItemNameAt(5,l, ti->modified);
 	#define toS(clr,v)  (v > 0) ? (clr "  "+toStr(v)) : " "
-	li->setSubItemNameAt(4,l, toS("#C0D0FF",ti->diff));   li->setSubItemNameAt(5,l, toS("#C0E0FF",ti->rating));  //rateuser="0" drivenlaps="0"
+	li->setSubItemNameAt(4,l, toS("#C0D0FF",ti->diff));
+	li->setSubItemNameAt(5,l, toS("#C0E0FF",ti->rating));  //rateuser="0" drivenlaps="0"
 	li->setSubItemNameAt(6,l, toS("#80C0FF",ti->fluids));
-	li->setSubItemNameAt(7,l, toS("#40FF00",ti->bumps));  li->setSubItemNameAt(8,l, toS("#FFA030",ti->jumps));
-	li->setSubItemNameAt(9,l, toS("#00FFFF",ti->loops));  li->setSubItemNameAt(10,l,toS("#FFFF00",ti->pipes));
-	li->setSubItemNameAt(11,l,toS("#C0C0C0",ti->banked)); li->setSubItemNameAt(12,l,toS("#C080FF",ti->frenzy));
+	li->setSubItemNameAt(7,l, toS("#40FF00",ti->bumps));
+	li->setSubItemNameAt(8,l, toS("#FFA030",ti->jumps));
+	li->setSubItemNameAt(9,l, toS("#00FFFF",ti->loops));
+	li->setSubItemNameAt(10,l,toS("#FFFF00",ti->pipes));
+	li->setSubItemNameAt(11,l,toS("#C0C0C0",ti->banked));
+	li->setSubItemNameAt(12,l,toS("#C080FF",ti->frenzy));
 	li->setSubItemNameAt(13,l,toS("#FFA0A0",ti->longn));
 }
 
@@ -190,16 +195,21 @@ void App::GuiInitTrack()
 	imgTrkIco2 = mGUI->findWidget<StaticImage>("TrkView2icons2");
 	
 	li->removeAllColumns();  int c=0;
-	li->addColumn(TR("#{Name}"), TcolW[c++]);  li->addColumn("N", TcolW[c++]);
-	  li->addColumn(TR("#{Scenery}"), TcolW[c++]);
-	li->addColumn("ver", TcolW[c++]);  // created  modified  author-
-	li->addColumn("diff", TcolW[c++]);  li->addColumn("*", TcolW[c++]);
-	// rateuser  drivenlaps ..
-	li->addColumn("f", TcolW[c++]);
-	li->addColumn("B", TcolW[c++]);  li->addColumn("J", TcolW[c++]);
-	li->addColumn("L", TcolW[c++]);  li->addColumn("P", TcolW[c++]);
-	li->addColumn("b", TcolW[c++]);  li->addColumn("f", TcolW[c++]);
-	li->addColumn("l", TcolW[c++]);  li->addColumn(" ", TcolW[c++]);
+	li->addColumn("#E0FFE0"+TR("#{Name}"), TcolW[c++]);
+	li->addColumn("#80FF80""N", TcolW[c++]);
+	li->addColumn("#80FF80"+TR("#{Scenery}"), TcolW[c++]);
+	li->addColumn("#80FF80""ver", TcolW[c++]);  // created  modified  author-
+	li->addColumn("#C0D0FF""diff", TcolW[c++]);
+	li->addColumn("#C0E0FF""*", TcolW[c++]);  // rateuser  drivenlaps ..
+	li->addColumn("#80C0FF""f", TcolW[c++]);
+	li->addColumn("#40FF00""B", TcolW[c++]);
+	li->addColumn("#FFA030""J", TcolW[c++]);
+	li->addColumn("#00FFFF""L", TcolW[c++]);
+	li->addColumn("#FFFF00""P", TcolW[c++]);
+	li->addColumn("#C0C0C0""b", TcolW[c++]);
+	li->addColumn("#C080FF""f", TcolW[c++]);
+	li->addColumn("#FFA0A0""l", TcolW[c++]);
+	li->addColumn(" ", TcolW[c++]);
 
 	FillTrackLists();  //once
 

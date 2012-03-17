@@ -124,8 +124,14 @@ void App::NewGame()
 	{
 		pSet->game = pSet->gui;  // copy game config from gui
 		ChampNewGame();
-		if (mClient && mLobbyState != HOSTING)
+
+		if (mClient && mLobbyState != HOSTING)  // all but host
 			updateGameSet();  // override gameset params for networked game (from host gameset)
+		if (mClient)  // for all, including host
+		{	pSet->game.collis_veget = true;
+			pSet->game.trees = 1.f;  // force same val,  send and use host's value ?
+			pSet->game.local_players = 1;
+		}
 	}
 	newGameRpl = false;
 	

@@ -400,9 +400,8 @@ void App::UpdateHUD(int carId, CarModel* pCarM, CAR* pCar, float time, Viewport*
 				liNetEnd->setSubItemNameAt(1,l, clr+ (cm->iWonPlace == 0 ? "--" : toStr(cm->iWonPlace)));
 				liNetEnd->setSubItemNameAt(2,l, clr+ cm->sDispName);
 				liNetEnd->setSubItemNameAt(3,l, clr+ GetTimeString( pGame->timer.GetPlayerTimeTot(cm->iIndex) ));
-				//todo: best time from this play only..
 				//liNetEnd->setSubItemNameAt(4,l, clr+ fToStr(cm->iWonMsgTime,1,3));
-				//liNetEnd->setSubItemNameAt(4,l, clr+ GetTimeString( pGame->timer.GetBestLap(cm->iIndex, pSet->game.trackreverse) ));
+				liNetEnd->setSubItemNameAt(4,l, clr+ GetTimeString( pGame->timer.GetBestLapRace(cm->iIndex) ));
 				liNetEnd->setSubItemNameAt(5,l, clr+ toStr( pGame->timer.GetCurrentLap(cm->iIndex) ));
 		}	}
 		tm = 0.f;

@@ -383,6 +383,7 @@ protected:
 	MyGUI::WidgetPtr panelNetServer,panelNetGame,panelNetTrack;
 	MyGUI::MultiListPtr listServers, listPlayers;
 	MyGUI::EditPtr edNetChat;  // chat area, set text through sChatBuffer
+	int iColLock,iColHost,iColPort;  //ids of columns in listServers, set in gui init
 
 	MyGUI::ButtonPtr btnNetRefresh,btnNetJoin,btnNetCreate,btnNetDirect;
 	MyGUI::ButtonPtr btnNetReady,btnNetLeave;
