@@ -64,17 +64,25 @@ void App::InitInputGui()
 	Ed(InputMin, editInput);  Ed(InputMax, editInput);  Ed(InputMul, editInput);
 	Ed(InputReturn, editInput);  Ed(InputIncrease, editInput);
 
-	//  preset combo
+	//  analog presets combo
 	ComboBoxPtr combo;
 	Cmb(combo, "CmbInputDetPreset", comboInputPreset);  cmbInpDetSet = combo;
-	if (combo)  {
-		combo->removeAllItems();  combo->addItem("");
+	if (combo)
+	{	combo->removeAllItems();  combo->addItem("");
 		combo->addItem(TR("#{InpSet_KeyHalf}"));
 		combo->addItem(TR("#{InpSet_KeyFull}"));
 		combo->addItem(TR("#{InpSet_AxisHalf}"));
 		combo->addItem(TR("#{InpSet_AxisHalfInv}"));
 		combo->addItem(TR("#{InpSet_AxisFull}"));
     }
+	//  key emul presets combo
+	Cmb(combo, "CmbInputKeysAllPreset", comboInputKeyAllPreset);
+	if (combo)
+	{	combo->removeAllItems();  combo->addItem("");
+		combo->addItem(TR("#{InpSet_Slow}"));
+		combo->addItem(TR("#{InpSet_Medium}"));
+		combo->addItem(TR("#{InpSet_Fast}"));
+	}
 
 
 	///  insert a tab item for every schema (4players,global)
@@ -83,6 +91,7 @@ void App::InitInputGui()
 	{
 		const OISB::String& sPlr = (*it).first;
 		TabItemPtr tabitem = inputTab->addItem( TR("#{InputMap" + sPlr + "}") );
+		bool playerTab = Ogre::StringUtil::startsWith( sPlr, "player");
 
 		// use for widgets that should have relative size
 		#define setOrigPos(widget) \
@@ -102,10 +111,12 @@ void App::InitInputGui()
 		//  button size and columns positon
 		const int sx = 130, sy = 24, x0 = 20, x1 = 140, x2 = 285, x3 = 430;
 
-		///  Headers (Key 1, Key 2)
-		CreateText(x0,12, sx,sy, "hdrTxt1_" + sPlr, TR("#90B0FF#{InputHeaderTxt1}"));
-		CreateText(x1,12, sx,sy, "hdrTxt2_" + sPlr, TR("#A0C0FF#{InputHeaderTxt2}"));
-		CreateText(x2,12, sx,sy, "hdrTxt3_" + sPlr, TR("#90B0FF#{InputHeaderTxt3}"));
+		///  Headers  action, binding, value
+		CreateText(x0,12, sx,sy, "hdrTxt1_"+sPlr, TR("#90B0F0#{InputHeaderTxt1}"));
+		CreateText(x1,12, sx,sy, "hdrTxt2_"+sPlr, TR("#A0C0FF#{InputHeaderTxt2}"));
+		if (playerTab)  {
+			CreateText(x2,12, sx,sy, "hdrTxt3_"+sPlr, TR("#90B0F0#{InputHeaderTxt3}"));
+			CreateText(x3,12, sx,sy, "hdrTxt4_"+sPlr, TR("#80A0E0#{InputHeaderTxt4}"));  }
 		
 		///  ------ custom action sorting ----------------
 		int i = 0, y = 0, ya = 26 / 2, yc=0;
@@ -122,7 +133,6 @@ void App::InitInputGui()
 		yRow["RestartGame"] = y; y+=2;
 		yRow["ResetGame"] = y;   y+=2+1;	yc = 40 + ya * y;
 
-		bool playerTab = Ogre::StringUtil::startsWith( sPlr, "player");
 		if (!playerTab)
 		{	y = yc+2*ya;  //  camera infos
 			CreateText(20,y, 280,24, "txtcam1", TR("#B0D8F8#{InputMapNextCamera} / #{InputMapPrevCamera}"));  y+=2*ya;
@@ -333,7 +343,7 @@ void App::inputDetailBtn(WP sender)
 {
 	Ogre::vector<String>::type ss = StringUtil::split(sender->getName(), "_");
 	std::string actionName = ss[1], schemaName = ss[2], index = ss[3];
-	if (txtInpDetail)  txtInpDetail->setCaption(TR("#{InputDetailsFor}")+": "+schemaName+" " +actionName);
+	if (txtInpDetail)  txtInpDetail->setCaption(TR("#{InputDetailsFor}")+":  "+schemaName+"  "+actionName);
 
 	OISB::ActionSchema* schema = OISB::System::getSingleton().mActionSchemas[schemaName];  if (!schema)  return;//
 	OISB::Action* action = schema->mActions[actionName];  if (!action)  return;//
@@ -378,6 +388,33 @@ void App::comboInputPreset(MyGUI::ComboBoxPtr cmb, size_t val)
 	actDetail->setProperty("MinValue",vMin);
 	actDetail->setProperty("MaxValue",vMax);
 	actDetail->setProperty("InverseMul",vMul);
+}
+
+void App::comboInputKeyAllPreset(MyGUI::ComboBoxPtr cmb, size_t val)
+{
+	if (val == 0)  return;
+	TabPtr tPlr = mGUI->findWidget<Tab>("InputTab",false);  if (!tPlr)  return;
+	int id = tPlr->getIndexSelected();  if (id == 0)  return;
+	String schemaName = "Player"+toStr(id);
+
+	const int numActs = 6;  // these actions have key emul params (analog)
+	const std::string keyActs[numActs] = {"Boost","Brake","Flip","HandBrake","Steering","Throttle"};
+	const Real speeds[3] = {3,4,5},  // presets
+			speedsRet[3] = {3,4,5};
+	Real vInc = speeds[val-1], vRet = speedsRet[val-1];
+	//edInputReturn->setCaption(toStr(vRet));  //?
+	//edInputIncrease->setCaption(toStr(vInc));
+
+	OISB::ActionSchema* schema = OISB::System::getSingleton().mActionSchemas[schemaName];  if (!schema)  return;
+	for (int i=0; i < numActs; ++i)
+	{
+		OISB::Action* action = schema->mActions[keyActs[i]];  if (!action)  continue;
+		OISB::AnalogAxisAction* act = (OISB::AnalogAxisAction*)action;  if (!act)  continue;
+
+		act->setProperty("ReturnDecSpeed",vRet);	act->setProperty("DecSpeed",vInc);
+		act->setProperty("ReturnIncSpeed",vRet);	act->setProperty("IncSpeed",vInc);
+	}
+	cmb->setIndexSelected(0);
 }
 
 

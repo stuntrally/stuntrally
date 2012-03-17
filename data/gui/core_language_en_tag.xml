@@ -378,6 +378,7 @@
 	<Tag name="InputHeaderTxt1">Action</Tag>
 	<Tag name="InputHeaderTxt2">Binding</Tag>
 	<Tag name="InputHeaderTxt3">Value</Tag>
+	<Tag name="InputHeaderTxt4">Edit</Tag>
 
 	<!--  Input  Detail  -->
 	<Tag name="InputControllers">Controllers</Tag>
@@ -396,6 +397,11 @@
 	<Tag name="InputKeyboardEmulation">Keyboard Emulation</Tag>
 	<Tag name="InputIncreaseSensitivity">Sensitivity</Tag>
 	<Tag name="InputReturnDelay">Return speed</Tag>
+
+	<Tag name="InputKeyAllPreset">Set all from preset</Tag>
+	<Tag name="InpSet_Slow">Slow</Tag>
+	<Tag name="InpSet_Medium">Medium</Tag>
+	<Tag name="InpSet_Fast">Fast</Tag>
 
 	<!--  Input  Map  player  -->
 	<Tag name="InputMapThrottle">Throttle</Tag>

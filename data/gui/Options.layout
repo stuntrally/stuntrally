@@ -1072,14 +1072,14 @@
 		<Property key="Caption" value="#{Multiplayer}"/>
 		<Property key="Alpha" value="0.8"/>
 		<Property key="Colour" value="0.7 0.7 0"/>
-        <Widget type="Button" skin="Button" position="248 444 144 40" name="btnNetEndClose">
+		<Widget type="Button" skin="Button" position="248 444 144 40" name="btnNetEndClose">
 			<Property key="Colour" value="0.47 0.47 0.47"/>
 			<Property key="TextColour" value="0.9 0.9 1"/>
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="Caption" value="#{BackMenu}"/>
 			<!--<UserString key="RelativeTo" value="WndNetEnd"/>-->
 		</Widget>
-        <Widget type="TextBox" skin="TextBox" position="20 12 588 32" name="WndNetText"/>
+		<Widget type="TextBox" skin="TextBox" position="20 12 588 32" name="WndNetText"/>
 	</Widget>
 	<Widget type="Window" skin="WindowC" position="640 312 536 456" align="Center" layer="Popup" name="WndChampEnd">
 		<Property key="Caption" value="#{Championship}"/>
@@ -1333,7 +1333,7 @@
 			</Widget>
 		</Widget>
 	</Widget>
-	<Widget type="Window" skin="WindowC" position="552 640 800 600" align="Center" layer="Overlapped" name="OptionsWnd">
+    <Widget type="Window" skin="WindowC" position="584 260 800 600" align="Center" layer="Overlapped" name="OptionsWnd">
 		<Property key="MinSize" value="500 400"/>
 		<Property key="MaxSize" value="2560 1600"/>
 		<Property key="Caption" value="#{Options}"/>
@@ -2241,13 +2241,13 @@
 			<Widget type="TabItem" skin="" position="2 24 794 572" name="InputTabAll">
 				<Property key="Caption" value="#{Input}"/>
 				<UserString key="RelativeTo" value="OptionsWnd"/>
-				<Widget type="Widget" skin="PanelSkin" position="532 96 236 240" name="PanMenu2">
+				<Widget type="Widget" skin="PanelSkin" position="532 88 236 204" name="PanMenu2">
 					<Property key="Colour" value="0.6 0.8 1"/>
 					<Property key="Alpha" value="0.55"/>
 					<Property key="InheritsAlpha" value="false"/>
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 				</Widget>
-				<Widget type="Widget" skin="PanelSkin" position="532 336 236 120" name="PanMenu2">
+                <Widget type="Widget" skin="PanelSkin" position="532 298 236 176" name="PanMenu2">
 					<Property key="Colour" value="0.7 1 0.7"/>
 					<Property key="Alpha" value="0.45"/>
 					<Property key="InheritsAlpha" value="false"/>
@@ -2260,12 +2260,12 @@
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 				</Widget>
 				<Widget type="TextBox" skin="TextBox" position="548 490 244 20" name="axisOutput">
-					<Property key="TextColour" value="0.75 0.85 0.95"/>
+					<Property key="TextColour" value="0.5 0.65 0.8"/>
 					<Property key="Caption" value="#{InputMoveAxisTip}"/>
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 				</Widget>
 				<Widget type="TextBox" skin="TextBox" position="548 510 244 20" name="buttonOutput">
-					<Property key="TextColour" value="0.75 0.85 0.95"/>
+					<Property key="TextColour" value="0.5 0.65 0.8"/>
 					<Property key="Caption" value="#{InputPressButtonTip}"/>
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 				</Widget>
@@ -2281,76 +2281,88 @@
 					<Property key="TextColour" value="0.9 0.97 1"/>
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 				</Widget>
-				<Widget type="TextBox" skin="TextBox" position="548 114 236 20" name="InputDetail">
+                <Widget type="TextBox" skin="TextBox" position="548 104 216 20" name="InputDetail">
 					<Property key="TextColour" value="0.8 0.9 1.0"/>
 					<Property key="Caption" value="#{InputDetailsFor}"/>
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 				</Widget>
-				<Widget type="TextBox" skin="TextBox" position="548 216 236 20">
+				<Widget type="TextBox" skin="TextBox" position="548 204 132 20">
 					<Property key="TextColour" value="0.6 0.8 1.0"/>
 					<Property key="Caption" value="#{InputMinVal}"/>
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 				</Widget>
-				<Widget type="EditBox" skin="EditBox" position="548 239 80 20" name="InputMin">
+				<Widget type="EditBox" skin="EditBox" position="684 202 48 20" name="InputMin">
 					<Property key="TextColour" value="0.6 0.8 1"/>
 					<Property key="Colour" value="0.6 0.8 1"/>
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 				</Widget>
-				<Widget type="TextBox" skin="TextBox" position="648 216 236 20">
+				<Widget type="TextBox" skin="TextBox" position="548 228 132 20">
 					<Property key="TextColour" value="1.0 0.7 0.5"/>
 					<Property key="Caption" value="#{InputMaxVal}"/>
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 				</Widget>
-				<Widget type="EditBox" skin="EditBox" position="648 239 80 20" name="InputMax">
+				<Widget type="EditBox" skin="EditBox" position="684 226 48 20" name="InputMax">
 					<Property key="TextColour" value="1 0.7 0.4"/>
 					<Property key="Colour" value="1 0.7 0.4"/>
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 				</Widget>
-				<Widget type="TextBox" skin="TextBox" position="548 271 236 20">
+				<Widget type="TextBox" skin="TextBox" position="548 252 132 20">
 					<Property key="TextColour" value="0.8 0.8 1.0"/>
 					<Property key="Caption" value="#{InputMultiplier}"/>
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 				</Widget>
-				<Widget type="EditBox" skin="EditBox" position="548 294 80 20" name="InputMul">
+				<Widget type="EditBox" skin="EditBox" position="684 250 48 20" name="InputMul">
 					<Property key="TextColour" value="0.8 0.8 1.0"/>
 					<Property key="Colour" value="0.8 0.8 1.0"/>
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 				</Widget>
-				<Widget type="TextBox" skin="TextBox" position="548 354 236 20">
+                <Widget type="TextBox" skin="TextBox" position="548 316 216 20">
 					<Property key="TextColour" value="0.8 1.0 0.8"/>
 					<Property key="Caption" value="#{InputKeyboardEmulation}"/>
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 				</Widget>
-				<Widget type="TextBox" skin="TextBox" position="548 386 236 20">
-					<Property key="TextColour" value="0.6 1.0 0.8"/>
+                <Widget type="TextBox" skin="TextBox" position="548 348 148 20">
+					<Property key="TextColour" value="0.5 0.9 0.7"/>
 					<Property key="Caption" value="#{InputIncreaseSensitivity}"/>
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 				</Widget>
-				<Widget type="EditBox" skin="EditBox" position="548 419 80 20" name="InputIncrease">
+                <Widget type="EditBox" skin="EditBox" position="684 348 48 20" name="InputIncrease">
 					<Property key="TextColour" value="0.6 1.0 0.8"/>
 					<Property key="Colour" value="0.6 1.0 0.8"/>
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 				</Widget>
-				<Widget type="TextBox" skin="TextBox" position="648 386 236 20">
-					<Property key="TextColour" value="0.8 1.0 0.6"/>
+                <Widget type="TextBox" skin="TextBox" position="548 372 148 20">
+					<Property key="TextColour" value="0.7 0.9 0.5"/>
 					<Property key="Caption" value="#{InputReturnDelay}"/>
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 				</Widget>
-				<Widget type="EditBox" skin="EditBox" position="648 419 80 20" name="InputReturn">
+                <Widget type="EditBox" skin="EditBox" position="684 372 48 20" name="InputReturn">
 					<Property key="TextColour" value="0.8 1.0 0.6"/>
 					<Property key="Colour" value="0.8 1.0 0.6"/>
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 				</Widget>
-				<Widget type="TextBox" skin="TextBox" position="548 154 236 20">
+                <Widget type="TextBox" skin="TextBox" position="548 144 216 20">
 					<Property key="TextColour" value="0.7 0.9 0.9"/>
 					<Property key="Caption" value="#{InputDetailPreset}"/>
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 				</Widget>
-				<Widget type="ComboBox" skin="ComboBox" position="548 176 160 26" name="CmbInputDetPreset">
+				<Widget type="ComboBox" skin="ComboBox" position="548 166 160 24" name="CmbInputDetPreset">
 					<Property key="Static" value="true"/>
 					<Property key="ReadOnly" value="true"/>
 					<Property key="Colour" value="0.6 0.9 1"/>
 					<Property key="TextColour" value="0.7 0.9 1"/>
+					<UserString key="RelativeTo" value="OptionsWnd"/>
+				</Widget>
+                <Widget type="TextBox" skin="TextBox" position="548 412 184 20">
+					<Property key="TextColour" value="0.6 1.0 0.6"/>
+					<Property key="Caption" value="#{InputKeyAllPreset}"/>
+					<UserString key="RelativeTo" value="OptionsWnd"/>
+				</Widget>
+                <Widget type="ComboBox" skin="ComboBox" position="548 434 156 24" name="CmbInputKeysAllPreset">
+					<Property key="Static" value="true"/>
+					<Property key="ReadOnly" value="true"/>
+					<Property key="Colour" value="0.7 1.0 0.7"/>
+					<Property key="TextColour" value="0.7 1.0 0.7"/>
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 				</Widget>
 			</Widget>

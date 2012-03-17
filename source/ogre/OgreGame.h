@@ -274,7 +274,7 @@ protected:
 	MyGUI::StaticTextPtr txtJAxis, txtJBtn, txtInpDetail;
 	int lastAxis, axisCnt;  std::string joyName;  class OISB::AnalogAxisAction* actDetail;
 	MyGUI::EditPtr edInputMin, edInputMax, edInputMul, edInputReturn, edInputIncrease;  void editInput(MyGUI::EditPtr);
-	MyGUI::ComboBox* cmbInpDetSet;  void comboInputPreset(CMB);
+	MyGUI::ComboBox* cmbInpDetSet;  void comboInputPreset(CMB), comboInputKeyAllPreset(CMB);
 
 
 	//  sliders  -----------------------------------------
