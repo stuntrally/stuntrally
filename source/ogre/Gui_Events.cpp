@@ -564,8 +564,8 @@ if (!bAssignKey)
 		switch (arg.key)
 		{
 			case KC_BACK:
-				if (mClient && !isFocGui && !mWndNetEnd->getVisible())
-				{	mWndNetEnd->setVisible(true);  return true;  }  // show net wnd
+				if (mClient && !isFocGui)  // show/hide players net wnd
+				{	mWndNetEnd->setVisible(!mWndNetEnd->getVisible());  return true;  }
 					
 				if (mWndChampStage->getVisible())	// back from champs stage wnd
 				{	btnChampStageBack(0);  return true;  }
