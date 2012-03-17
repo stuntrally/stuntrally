@@ -345,17 +345,17 @@ void App::UpdateHUD(int carId, CarModel* pCarM, CAR* pCar, float time, Viewport*
 	///  multiplayer
 	// -----------------------------------------------------------------------------------
 	static float tm = 0.f;  tm += time;
-	if (tm > 0.2f /**/&& mClient/**/)  //  not every frame, each 0.2s
+	if (tm > 0.2f /**/&& mClient/**/)  // not every frame, each 0.2s
 	// if (pSet->game.isNetw) ..
 	{
-		std::list<CarModel*> cms;  // sorted list
+		//  sort winners
+		std::list<CarModel*> cms;
 		for (int o=0; o < carModels.size(); ++o)
 			cms.push_back(carModels[o]);
 
-		cms.sort(SortWin);  // sort winners
+		cms.sort(SortWin);
 		
-		String msg = "";
-		int place = 1;  // assing places
+		String msg = "";  int place = 1;  // assing places
 		for (std::list<CarModel*>::iterator it = cms.begin(); it != cms.end(); ++it)
 		{
 			CarModel* cm = *it;
@@ -371,21 +371,33 @@ void App::UpdateHUD(int carId, CarModel* pCarM, CAR* pCar, float time, Viewport*
 			}
 			if (cm->iWonMsgTime > 0.f)
 			{	cm->iWonMsgTime -= tm;
-				msg += cm->sDispName + " " + TR("#{FinishedCommaPlace}") + ": " + toStr(cm->iWonPlace) + "\n";
+				if (cm->iWonPlace != 0)
+					msg += cm->sDispName + " " + TR("#{FinishedCommaPlace}") + ": " + toStr(cm->iWonPlace) + "\n";
 			}
 		}
 		if (mClient && pGame->timer.pretime <= 0.f && pGame->timer.waiting)
 			msg += TR("#{NetWaitingForOthers}")+"...\n";
 			
-		//  upd won msgs
+		//  chat 2 last lines
+		if (sChatLast1 != "")	msg += sChatLast1 + "\n";
+		if (sChatLast2 != "")	msg += sChatLast2;
+			
+		++iChatMove;
+		if (iChatMove >= 10)  //par 2sec
+		{	iChatMove = 0;
+			sChatLast1 = sChatLast2;
+			sChatLast2 = "";
+		}
+		
+		//  upd hud msgs
 		if (hudNetMsg)
 		{	
 			hudNetMsg->setCaption(msg);
 			ovNetMsg->show();
 		}
 
-		//  upd list
-		if (liNetEnd->isVisible())
+		//  upd end list
+		if (mWndNetEnd->getVisible())
 		{	liNetEnd->removeAllItems();  int i=1;
 			for (std::list<CarModel*>::iterator it = cms.begin(); it != cms.end(); ++it,++i)
 			{

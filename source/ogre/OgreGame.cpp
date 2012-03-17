@@ -48,7 +48,7 @@ App::App()
 	,rbRplCur(0), rbRplAll(0), rbRplGhosts(0), bRplBack(0),bRplFwd(0), newGameRpl(0)
 	,bRplPlay(0), bRplPause(0), bRplRec(0), bRplWnd(1), bGuiReinit(0)
 	// gui multiplayer
-	,netGuiMutex(), sChatBuffer(), netGameInfo()
+	,netGuiMutex(), sChatBuffer(), netGameInfo(), bUpdChat(false), iChatMove(0)
 	,bRebuildPlayerList(), bRebuildGameList(), bUpdateGameInfo(), bStartGame()
 	,tabsNet(0), panelNetServer(0), panelNetGame(0), panelNetTrack(0)
 	,listServers(0), listPlayers(0), edNetChat(0), imgNetTrack(0)

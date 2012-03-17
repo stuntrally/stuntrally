@@ -349,19 +349,13 @@ protected:
 
 	GuiPopup popup;
 
-	///  multiplayer
-	///---------------------------------------
-
-	void rebuildGameList();
-	void rebuildPlayerList();
-	void updateGameInfo();
-	void updateGameSet();
-	void updateGameInfoGUI();
-	void uploadGameInfo();
+	///  multiplayer  ---------------------------------------
+	void rebuildGameList(), rebuildPlayerList();
+	void updateGameInfo(), updateGameSet(), updateGameInfoGUI();
 	void setNetGuiHosting(bool enabled);
 	void gameListChanged(protocol::GameList list);
-	void peerConnected(PeerInfo peer);
-	void peerDisconnected(PeerInfo peer);
+
+	void peerConnected(PeerInfo peer), peerDisconnected(PeerInfo peer);
 	void peerInfo(PeerInfo peer);
 	void peerMessage(PeerInfo peer, std::string msg);
 	void peerState(PeerInfo peer, uint8_t state);
@@ -370,15 +364,17 @@ protected:
 	void timeInfo(ClientID id, uint8_t lap, double time);
 	void error(std::string what);
 	void join(std::string host, std::string port, std::string password);
+	void uploadGameInfo();
 
 	mutable boost::mutex netGuiMutex;
-	MyGUI::UString sChatBuffer;
+	MyGUI::UString sChatBuffer,sChatLast1,sChatLast2;  int iChatMove;
+	void AddChatMsg(const MyGUI::UString& clr, const MyGUI::UString& msg);
 	protocol::GameInfo netGameInfo;
-	bool bRebuildPlayerList;
-	bool bRebuildGameList;
-	bool bUpdateGameInfo;
-	bool bStartGame;
 
+	bool bRebuildPlayerList, bRebuildGameList;
+	bool bUpdateGameInfo, bStartGame, bUpdChat;
+
+	///  multiplayer gui  --------------------
 	MyGUI::TabPtr tabsNet;  //void tabNet(TabPtr tab, size_t id);
 	MyGUI::WidgetPtr panelNetServer,panelNetGame,panelNetTrack;
 	MyGUI::MultiListPtr listServers, listPlayers;

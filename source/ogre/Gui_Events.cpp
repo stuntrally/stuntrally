@@ -564,8 +564,12 @@ if (!bAssignKey)
 		switch (arg.key)
 		{
 			case KC_BACK:
-				if (mWndChampStage->getVisible())
+				if (mClient && !isFocGui && !mWndNetEnd->getVisible())
+				{	mWndNetEnd->setVisible(true);  return true;  }  // show net wnd
+					
+				if (mWndChampStage->getVisible())	// back from champs stage wnd
 				{	btnChampStageBack(0);  return true;  }
+
 				if (pSet->isMain)  break;
 				if (isFocGui)
 				{	if (edFoc)  break;
