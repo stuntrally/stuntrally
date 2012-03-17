@@ -408,8 +408,18 @@ void App::slBlurIntens(SL)
 	if (valBlurIntens){	valBlurIntens->setCaption(fToStr(v,2,4));  }
 	// if (bGI)  refreshCompositor();   // intensity is set every frame in UpdateHUD
 }
-
-
+void App::slDepthOfFieldFocus(SL)
+{
+	Real v = val;  if (bGI)  pSet->depthOfFieldFocus = v;
+	if (valDepthOfFieldFocus){	valDepthOfFieldFocus->setCaption(fToStr(v,0,4));  }
+	// if (bGI)  refreshCompositor();   // intensity is set every frame in UpdateHUD
+}
+void App::slDepthOfFieldFar(SL)
+{
+	Real v = val;  if (bGI)  pSet->depthOfFieldFar = v;
+	if (valDepthOfFieldFar){	valDepthOfFieldFar->setCaption(fToStr(v,0,4));  }
+	// if (bGI)  refreshCompositor();   // intensity is set every frame in UpdateHUD
+}
 
 //-----------------------------------------------------------------------------------------------------------
 //  Key pressed

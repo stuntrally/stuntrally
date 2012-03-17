@@ -12,6 +12,7 @@
 #include <OgreGpuProgramParams.h>
 #include "SplitScreen.h"
 #include "common/MaterialGen/MaterialFactory.h"
+#include "../../vdrift/settings.h"
 
 class MotionBlurListener : public Ogre::CompositorInstance::Listener
 {
@@ -552,7 +553,12 @@ void DepthOfFieldListener::notifyMaterialSetup(Ogre::uint32 pass_id, Ogre::Mater
        
 		if (params->_findNamedConstantDefinition("far"))
             params->setNamedConstant("far", cam->getFarClipDistance());
-
+		
+		if (params->_findNamedConstantDefinition("dofparams"))
+		{
+			Ogre::Vector4 dofParams(0.0f,mApp->pSet->depthOfFieldFocus,mApp->pSet->depthOfFieldFar,1.0);
+			params->setNamedConstant("dofparams", dofParams);
+		}
      }
 }
 

@@ -284,6 +284,7 @@ protected:
 	SLV(VolMaster);  SLV(VolEngine);  SLV(VolTires);  SLV(VolEnv);
 	SLV(CarClrH);  SLV(CarClrS);  SLV(CarClrV);  // car clr
 	SLV(BloomInt);  SLV(BloomOrig);  SLV(BlurIntens);  // video
+	SLV(DepthOfFieldFocus);SLV(DepthOfFieldFar); //depth of field
 	SLV(NumLaps);  // setup
 	
 	//  checks

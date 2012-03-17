@@ -1490,7 +1490,37 @@
 							<Property key="Caption" value="#{DepthOfField}"/>
 							<Property key="TextColour" value="0.6 1 0.3"/>
 						</Widget>
-						<Widget type="Button" skin="CheckBox" position="40 355 300 24" name="godrays">
+            <Widget type="TextBox" skin="TextBox" position="66 355 118 24">
+							<Property key="Caption" value="#{Near}"/>
+							<Property key="TextColour" value="0.7 1 0.4"/>
+							<UserString key="RelativeTo" value="OptionsWnd"/>
+						</Widget>
+            <Widget type="TextBox" skin="TextBox" position="184 355 60 26" name="DepthOfFieldFocusVal">
+							<Property key="TextColour" value="1.0 1 0.2"/>
+							<UserString key="RelativeTo" value="OptionsWnd"/>
+						</Widget>
+            <Widget type="ScrollBar" skin="ScrollBarH" position="248 355 300 18" name="DepthOfFieldFocus">
+							<Property key="MoveToClick" value="true"/>
+							<Property key="Range" value="1000"/>
+							<Property key="MoveToClick" value="true"/>
+							<UserString key="RelativeTo" value="OptionsWnd"/>
+						</Widget>
+            <Widget type="TextBox" skin="TextBox" position="66 390 118 24">
+							<Property key="Caption" value="#{Far}"/>
+							<Property key="TextColour" value="0.7 1 0.4"/>
+							<UserString key="RelativeTo" value="OptionsWnd"/>
+						</Widget>
+             <Widget type="TextBox" skin="TextBox" position="184 390 60 26" name="DepthOfFieldFarVal">
+							<Property key="TextColour" value="1.0 1 0.2"/>
+							<UserString key="RelativeTo" value="OptionsWnd"/>
+						</Widget>
+            <Widget type="ScrollBar" skin="ScrollBarH" position="248 390 300 18" name="DepthOfFieldFar">
+							<Property key="MoveToClick" value="true"/>
+							<Property key="Range" value="1000"/>
+							<Property key="MoveToClick" value="true"/>
+							<UserString key="RelativeTo" value="OptionsWnd"/>
+						</Widget>
+						<Widget type="Button" skin="CheckBox" position="40 425 300 24" name="godrays">
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 							<Property key="Caption" value="#{godrays}"/>
 							<Property key="TextColour" value="0.6 1 0.3"/>

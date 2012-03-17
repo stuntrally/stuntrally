@@ -10,14 +10,12 @@ struct VOut
 {
     float4 p   : POSITION;
     float2 uv  : TEXCOORD0;
-    float3 ray : TEXCOORD1;
 };
 
 struct PIn
 {
 	float4 p   : POSITION; 
     float2 uv  : TEXCOORD0;
-    float3 ray : TEXCOORD1;
 };
 
 VOut dof_vs(VIn IN, uniform float4x4 wvp, uniform float3 farCorner)
@@ -29,9 +27,7 @@ VOut dof_vs(VIn IN, uniform float4x4 wvp, uniform float3 farCorner)
     // convert to image space
     uv = (float2(uv.x, -uv.y) + 1.0) * 0.5;
     OUT.uv = uv;
-    // calculate the correct ray (modify XY parameters based on screen-space quad XY)
-    OUT.ray = farCorner * float3(sign(IN.p.xy), 1);
-    return OUT;
+     return OUT;
 }
 
 float4 Gaussian3x3_ps(
@@ -65,10 +61,9 @@ PIn IN
   return sum;
 }
 
-float ConvertDepth(float d, float3 ray,float far)
+float ConvertDepth(float d, float far,float4 dofParams)
 {
-	float4 dofParams = float4(.001,100,1000,1.0);
-	//float4 dofParams =float4(.010,.10,.19,1.0);
+//	float4 dofParams = float4(.001,100,1000,1.0);
 	//float3 viewPos = d ;
 	float depth = d*far;//viewPos.z;
 	float depthResult;
@@ -99,7 +94,8 @@ PIn IN
 ,uniform sampler2D depthTex: TEXUNIT1                // full resolution image with depth values
 ,uniform sampler2D blurTex: TEXUNIT2                 // downsampled and blurred image
 ,uniform float4 pixelSize
-,uniform float far          
+,uniform float far
+,uniform float4 dofparams          
 ) : COLOR0
 {
 	float2 poisson[12];               // containts poisson-distributed positions on the unit circle
@@ -126,7 +122,7 @@ float2 pixelSizeBlur = pixelSize.zw;// pixel size of downsampled and blurred ima
   radiusScale = 0.4;
 
   // Get depth of center tap and convert it into blur radius in pixels
-  float centerDepth = ConvertDepth(tex2D(depthTex, IN.uv).r, IN.ray,far);
+  float centerDepth = ConvertDepth(tex2D(depthTex, IN.uv).r, far,dofparams);
  // return float4(centerDepth,centerDepth,centerDepth,1);
   float discRadiusScene = abs(centerDepth * maxCoC.y - maxCoC.x);
   float discRadiusBlur = discRadiusScene * radiusScale; // radius on low res. image
@@ -141,7 +137,7 @@ float2 pixelSizeBlur = pixelSize.zw;// pixel size of downsampled and blurred ima
   
     // fetch taps and depth
     float4 tapScene = tex2D(sceneTex, coordScene);
-    float tapDepth = ConvertDepth(tex2D(depthTex, coordScene).r ,IN.ray,far);
+    float tapDepth = ConvertDepth(tex2D(depthTex, coordScene).r ,far,dofparams);
     float4 tapBlur = tex2D(blurTex, coordBlur);
     
     // mix low and high res. taps based on tap blurriness

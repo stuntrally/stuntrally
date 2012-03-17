@@ -65,7 +65,7 @@ public:
 	bool NeedMRTBuffer();
 	// motion blur
 	float motionBlurIntensity;
-	
+
 	class SETTINGS* pSet;
 	
 	MaterialFactory* materialFactory; // material generation
