@@ -21,6 +21,11 @@
 				<bind role="">Keyboard/63</bind>
 			</binding>
 		</action>
+		<action name="Screenshot" type="Trigger">
+			<binding>
+				<bind role="">Keyboard/183</bind>
+			</binding>
+		</action>
 		<action name="ShowOptions" type="Trigger">
 			<binding>
 				<bind role="">Keyboard/15</bind>

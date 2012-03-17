@@ -10,8 +10,7 @@
 using namespace MyGUI;
 using namespace Ogre;
 
-// MyGUI 3.2 has no Align::Relative
-#define ALIGN Align::Default
+#define ALIGN  Align::Default  // MyGUI 3.2 has no Align::Relative
 
 
 ///  Gui Init - input tab
@@ -130,8 +129,8 @@ void App::InitInputGui()
 		y = 0;  // general
 		yRow["ShowOptions"] = y; y+=2+1;
 		yRow["PrevTab"] = y;     y+=2;	yRow["NextTab"] = y;    y+=2+1;
-		yRow["RestartGame"] = y; y+=2;
-		yRow["ResetGame"] = y;   y+=2+1;	yc = 40 + ya * y;
+		yRow["RestartGame"] = y; y+=2;	yRow["ResetGame"] = y;  y+=2+1;
+		yRow["Screenshot"] = y;  y+=2;	yc = 40 + ya * y;
 
 		if (!playerTab)
 		{	y = yc+2*ya;  //  camera infos

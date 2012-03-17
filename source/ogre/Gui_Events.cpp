@@ -465,6 +465,7 @@ if (!bAssignKey)
 		}
 	}
 	
+
 	//  gui on/off  or close wnds
 	if (action("ShowOptions") && !alt)
 	{
@@ -497,6 +498,14 @@ if (!bAssignKey)
 		carIdWin = 1;  //
 		ghost.Clear(); //
 	}
+
+
+	//  Screen shot
+	//if (action("Screenshot"))  //isnt working
+	const OISB::Action* act = OISB::System::getSingleton().lookupAction("General/Screenshot",false);
+	if (act && act->isActive())
+	{	mWindow->writeContentsToTimestampedFile(PATHMANAGER::GetScreenShotDir() + "/", ".jpg");
+		return false;	}
 	
 	using namespace OIS;
 
@@ -611,7 +620,18 @@ if (!bAssignKey)
 			{	WP wp = chBltTxt;  ChkEv(bltProfilerTxt);  return false;  }
 			else if (ctrl)
 			{	WP wp = chBlt;  ChkEv(bltDebug);  return false;  }
-				break;
+			else
+			{	mbWireFrame = !mbWireFrame;
+				///  Set for all cameras
+				PolygonMode mode = mbWireFrame ? PM_WIREFRAME : PM_SOLID;
+				
+				refreshCompositor(mode == PM_WIREFRAME);  // disable effects
+				if (mSplitMgr)
+				for (std::list<Camera*>::iterator it=mSplitMgr->mCameras.begin(); it!=mSplitMgr->mCameras.end(); ++it)
+					(*it)->setPolygonMode(mode);
+				
+				if (ndSky)	ndSky->setVisible(!mbWireFrame);  // hide sky
+			}	return false;
 
 			case KC_F7:		// Times
 			if (shift)
@@ -625,8 +645,7 @@ if (!bAssignKey)
 			}	return false;
 			
 			case KC_F5:		//  new game
-			{	NewGame();  return false;
-			}	break;
+				NewGame();  return false;
 
 
 			case KC_RETURN:		///  close champ wnds
@@ -659,8 +678,12 @@ if (!bAssignKey)
 }
 	InputBind(arg.key);
 	
-	if (!BaseApp::keyPressed(arg))
-		return true;
+
+	if (isFocGui && mGUI)	// gui
+	{
+		MyGUI::InputManager::getInstance().injectKeyPress(MyGUI::KeyCode::Enum(arg.key), arg.text);
+		return false;
+	}
 
 	return true;
 }

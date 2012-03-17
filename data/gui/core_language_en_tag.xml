@@ -429,6 +429,7 @@
 	<Tag name="InputMapNextTab">Next tab</Tag>
 	<Tag name="InputMapRestartGame">New game</Tag>
 	<Tag name="InputMapResetGame">Reset game</Tag>
+	<Tag name="InputMapScreenshot">Screenshot</Tag>
 
 	<Tag name="InputCameraTxt1">with shift - main cameras only</Tag>
 	<Tag name="InputCameraTxt2">with ctrl - switch current car when many</Tag>
