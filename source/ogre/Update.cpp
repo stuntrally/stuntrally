@@ -832,11 +832,11 @@ Vector3 App::projectPoint(const Camera* cam, const Vector3& pos)
 {
 	Vector3 pos2D = cam->getProjectionMatrix() * (cam->getViewMatrix() * pos);
 
-	//Real x = std::min(1.f, std::max(0.f,  pos2D.x * 0.5f + 0.5f ));  // leave on screen edges -center broken
+	//Real x = std::min(1.f, std::max(0.f,  pos2D.x * 0.5f + 0.5f ));  // leave on screen edges
 	//Real y = std::min(1.f, std::max(0.f, -pos2D.y * 0.5f + 0.5f ));
 	Real x =  pos2D.x * 0.5f + 0.5f;
 	Real y = -pos2D.y * 0.5f + 0.5f;
-	bool out = x < 0.f || x > 1.f || y < 0.f || y > 1.f;  // check dot too (cam dir, pos diff)..
+	bool out = !cam->isVisible(pos);
 
 	return Vector3(x * mWindow->getWidth(), y * mWindow->getHeight(), out ? -1.f : 1.f);
 }
