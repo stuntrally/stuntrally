@@ -67,7 +67,7 @@ PIn IN
 
 float ConvertDepth(float d, float3 ray,float far)
 {
-	float4 dofParams = float4(.001,10,30,1.0);
+	float4 dofParams = float4(.001,100,1000,1.0);
 	//float4 dofParams =float4(.010,.10,.19,1.0);
 	//float3 viewPos = d ;
 	float depth = d*far;//viewPos.z;
@@ -76,19 +76,22 @@ float ConvertDepth(float d, float3 ray,float far)
     {
        // scale depth value between near blur distance and focal distance to
        // [-1, 0] range
-       depthResult = (depth - dofParams.y) / (dofParams.y - dofParams.x);
-    }
+     //  depthResult = (depth - dofParams.y) / (dofParams.y - dofParams.x);
+	 depthResult=0;
+     }
     else
     {
        // scale depth value between focal distance and far blur distance to
        // [0, 1] range
        depthResult = (depth - dofParams.y) / (dofParams.z - dofParams.y);
        // clamp the far blur to a maximum blurriness
-       depthResult = clamp(depth, 0.0, dofParams.w);
+       depthResult = clamp(depthResult, 0.0, dofParams.w);
+	
+
     }
     // scale and bias into [0, 1] range
 	depthResult = 0.5f*depthResult + 0.5f;
-    return depthResult;
+	return depthResult;
 }
 float4 DepthOfField_ps(
 PIn IN

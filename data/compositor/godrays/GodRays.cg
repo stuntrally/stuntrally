@@ -4,7 +4,7 @@ void GodRays_VS(
 	out float4 oPos		    : POSITION,
 	out float2 oTexCoord	: TEXCOORD0,
 	out float2 oLightPos    : TEXCOORD1,
-	uniform float4 lightPosition
+  	uniform float4 lightPosition
 ) {
     oPos = float4(position.xy, 0, 1);
 	oTexCoord = uv;
@@ -17,6 +17,7 @@ void GodRays_FP(
 	 float2 uv			: TEXCOORD0,
 	float2 lightPosition : TEXCOORD1,
 	uniform sampler2D frame : register(s0),
+	uniform float enableEffect,
     out float4 color		: COLOR
 ) {
 	const float density = 0.2;
@@ -39,5 +40,40 @@ void GodRays_FP(
 		illuminationDecay *= decay;
 	}
 	
-	color = float4(col * 0.04, 1);
+	color = float4(col * 0.04, 1) *enableEffect;
+}
+
+
+
+void GodRaysOcclude_FP(
+     float4 iPos		    : POSITION,
+	 float2 uv			: TEXCOORD0,
+	float2 lightPosition : TEXCOORD1,
+	uniform sampler2D frame : register(s0),
+	uniform float enableEffect,
+    out float4 color		: COLOR
+) {
+	const float density = 0.2;
+	const int samples = 16;
+	const float weight = 0.8;
+	const float decay = 1.05;
+	
+	float2 deltaTexCoord = (uv - lightPosition);
+	
+	deltaTexCoord *= 1.0f / samples * density;
+	
+	//the MRT green channel include the luminance info
+	float3 raysColor =float3(1.0,1.0,1.0);
+	float3 col = tex2D(frame, uv).g *raysColor;
+	float illuminationDecay = 1.0f;
+	
+	for (int i = 0; i < samples; i++) {
+		uv -= deltaTexCoord;
+		float3 sample = tex2D(frame, uv).g*raysColor;
+		sample *= illuminationDecay * weight;
+		col += sample;
+		illuminationDecay *= decay;
+	}
+	
+	color = float4(col * 0.04, 1) *enableEffect;
 }

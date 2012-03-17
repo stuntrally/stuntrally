@@ -212,13 +212,13 @@ void BaseApp::refreshCompositor(bool disableAll)
 			CompositorManager::getSingleton().setCompositorEnabled((*it), "ssao", false);
 			CompositorManager::getSingleton().setCompositorEnabled((*it), "SoftParticles", false);
 			CompositorManager::getSingleton().setCompositorEnabled((*it), "DepthOfField", false);
+			CompositorManager::getSingleton().setCompositorEnabled((*it), "GodRays", false);
 			CompositorManager::getSingleton().setCompositorEnabled((*it), "gbufferFinalizer", false);
 		}
 		else
 		{
 			CompositorManager::getSingleton().setCompositorEnabled((*it), "ssaoNoMRT", false);
 		}
-		CompositorManager::getSingleton().setCompositorEnabled((*it), "GodRays", false);
 		CompositorManager::getSingleton().setCompositorEnabled((*it), "Motion Blur", false);
 		CompositorManager::getSingleton().setCompositorEnabled((*it), "SSAA", false);
 		CompositorManager::getSingleton().setCompositorEnabled((*it), UI_RENDER, false);
@@ -274,13 +274,13 @@ void BaseApp::refreshCompositor(bool disableAll)
 			CompositorManager::getSingleton().setCompositorEnabled((*it), "ssao", pSet->ssao);
 			CompositorManager::getSingleton().setCompositorEnabled((*it), "SoftParticles", pSet->softparticles);
 			CompositorManager::getSingleton().setCompositorEnabled((*it), "DepthOfField", pSet->dof);
+			CompositorManager::getSingleton().setCompositorEnabled((*it), "GodRays", pSet->godrays);
 			CompositorManager::getSingleton().setCompositorEnabled((*it), "gbufferFinalizer", NeedMRTBuffer() && !pSet->softparticles);
 		}
 		else
 		{
 			CompositorManager::getSingleton().setCompositorEnabled((*it), "ssaoNoMRT", pSet->ssao);
 		}
-		CompositorManager::getSingleton().setCompositorEnabled((*it), "GodRays", pSet->godrays);
 
                 CompositorManager::getSingleton().setCompositorEnabled((*it), UI_RENDER, AnyEffectEnabled());
 	}
@@ -294,7 +294,7 @@ bool BaseApp::AnyEffectEnabled()
 //-------------------------------------------------------------------------------------
 bool BaseApp::NeedMRTBuffer()
 {
-	return pSet->all_effects && (pSet->ssao || pSet->softparticles || pSet->dof);
+	return pSet->all_effects && (pSet->ssao || pSet->softparticles || pSet->dof || pSet->godrays);
 }
 //-------------------------------------------------------------------------------------
 void BaseApp::recreateCompositor()

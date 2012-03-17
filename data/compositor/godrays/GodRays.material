@@ -9,7 +9,12 @@ vertex_program GodRays_VS cg
 		param_named lightPosition float4 512 512 512 0
     }
 }
-
+fragment_program GodRaysOcclude_FP cg
+{
+	source GodRays.cg
+	profiles ps_4_0 ps_3_0 arbfp1
+	entry_point GodRaysOcclude_FP
+}
 fragment_program GodRays_FP cg
 {
 	source GodRays.cg
@@ -52,6 +57,29 @@ material Compositor/GodRays
             }
 
             fragment_program_ref GodRays_FP
+            {
+            }
+			
+			texture_unit
+			{
+				tex_coord_set 0
+				tex_address_mode clamp
+			}
+        }
+	}
+}
+
+material Compositor/GodRaysOcclude
+{
+	technique
+	{
+        pass
+        {
+            vertex_program_ref GodRays_VS
+            {
+            }
+
+            fragment_program_ref GodRaysOcclude_FP
             {
             }
 			
