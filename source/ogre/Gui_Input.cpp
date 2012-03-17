@@ -86,12 +86,12 @@ void App::InitInputGui()
 
 
 	///  insert a tab item for every schema (4players,global)
-	std::map<OISB::String, OISB::ActionSchema*> schemas = sys.mActionSchemas;
-	for (std::map<OISB::String, OISB::ActionSchema*>::const_iterator it = schemas.begin(); it != schemas.end(); it++)
+	std::map<OISB::String, OISB::ActionSchema*> schemas = sys.mActionSchemas;  int i=0;
+	for (std::map<OISB::String, OISB::ActionSchema*>::const_iterator it = schemas.begin(); it != schemas.end(); ++it,++i)
 	{
 		const OISB::String& sPlr = (*it).first;
-		TabItemPtr tabitem = inputTab->addItem( TR("#{InputMap" + sPlr + "}") );
 		bool playerTab = Ogre::StringUtil::startsWith( sPlr, "player");
+		TabItemPtr tabitem = inputTab->addItem(!playerTab ? TR("#{InputMapGeneral}") : (TR("#{Player} ") + toStr(i)));
 
 		// use for widgets that should have relative size
 		#define setOrigPos(widget) \

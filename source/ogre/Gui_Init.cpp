@@ -228,8 +228,6 @@ void App::InitGui()
 	Chk("FullScreen", chkVidFullscr, pSet->fullscreen);
 	Chk("VSync", chkVidVSync, pSet->vsync);
 
-	//todo: button_ramp, speed_sens..
-
 	
 	//  replays  ------------------------------------------------------------
 	Btn("RplLoad", btnRplLoad);  Btn("RplSave", btnRplSave);
@@ -313,15 +311,15 @@ void App::InitGui()
 	valNetGames = mGUI->findWidget<StaticText>("valNetGames");
 	listServers = mGUI->findWidget<MultiList>("MListServers");  int c=0;
 	if (listServers)
-	{	listServers->addColumn("#C0FFC0""Game name", 180);  ++c;  // todo: TR( ..
+	{	listServers->addColumn("#C0FFC0"+TR("#{Game name}"), 180);  ++c;
 		listServers->addColumn("#50FF50"+TR("#{Track}"), 140);  ++c;
-		listServers->addColumn("#80FFC0""Laps", 70);  ++c;
-		listServers->addColumn("#FFFF00""Players", 70);  ++c;
-		listServers->addColumn("#80FFFF""Collis.", 80);  ++c;
-		listServers->addColumn("#A0D0FF""Boost", 100);  ++c;
-		listServers->addColumn("#FF6060""Locked", 70);  iColLock = c;  ++c;
-		listServers->addColumn("#FF9000""Host", 130);  iColHost = c;  ++c;
-		listServers->addColumn("#FFB000""Port", 80);  iColPort = c;  ++c;
+		listServers->addColumn("#80FFC0"+TR("#{Laps}"), 70);  ++c;
+		listServers->addColumn("#FFFF00"+TR("#{Players}"), 70);  ++c;
+		listServers->addColumn("#80FFFF"+TR("#{Collis.}"), 80);  ++c;
+		listServers->addColumn("#A0D0FF"+TR("#{Boost}"), 100);  ++c;
+		listServers->addColumn("#FF6060"+TR("#{Locked}"), 70);  iColLock = c;  ++c;
+		listServers->addColumn("#FF9000"+TR("#{NetHost}"), 130);  iColHost = c;  ++c;
+		listServers->addColumn("#FFB000"+TR("#{NetPort}"), 80);  iColPort = c;  ++c;
 	}
 	Btn("btnNetRefresh", evBtnNetRefresh);  btnNetRefresh = btn;
 	Btn("btnNetJoin", evBtnNetJoin);  btnNetJoin = btn;
@@ -342,11 +340,11 @@ void App::InitGui()
 
 	listPlayers = mGUI->findWidget<MultiList>("MListPlayers");
 	if (listPlayers)
-	{	listPlayers->addColumn("#C0E0FF""Player", 140);  // todo: TR( ..
+	{	listPlayers->addColumn("#C0E0FF"+TR("#{Player}"), 140);
 		listPlayers->addColumn("#80FFFF"+TR("#{Car}"), 60);
-		listPlayers->addColumn("#C0C0FF""Peers", 60);
-		listPlayers->addColumn("#C0FFFF""Ping", 60);
-		listPlayers->addColumn("#C0FF80""Ready", 60);
+		listPlayers->addColumn("#C0C0FF"+TR("#{Peers}"), 60);
+		listPlayers->addColumn("#C0FFFF"+TR("#{Ping}"), 60);
+		listPlayers->addColumn("#C0FF80"+TR("#{NetReady}"), 60);
 	}
 	Btn("btnNetReady", evBtnNetReady);  btnNetReady = btn;
 	Btn("btnNetLeave", evBtnNetLeave);	btnNetLeave = btn;

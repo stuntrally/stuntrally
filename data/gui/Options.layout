@@ -461,19 +461,19 @@
 				<Widget type="TabControl" skin="TabControl" position="176 16 568 20" name="tabPlayer">
 					<UserString key="RelativeTo" value="GameWnd"/>
 					<Widget type="TabItem" skin="" position="2 24 562 -8">
-						<Property key="Caption" value="#{InputMapPlayer1}"/>
+						<Property key="Caption" value="#{Player} 1"/>
 						<UserString key="RelativeTo" value="GameWnd"/>
 					</Widget>
 					<Widget type="TabItem" skin="" position="2 24 562 -8">
-						<Property key="Caption" value="#{InputMapPlayer2}"/>
+						<Property key="Caption" value="#{Player} 2"/>
 						<UserString key="RelativeTo" value="GameWnd"/>
 					</Widget>
 					<Widget type="TabItem" skin="" position="2 24 562 -8">
-						<Property key="Caption" value="#{InputMapPlayer3}"/>
+						<Property key="Caption" value="#{Player} 3"/>
 						<UserString key="RelativeTo" value="GameWnd"/>
 					</Widget>
 					<Widget type="TabItem" skin="" position="2 24 562 -8">
-						<Property key="Caption" value="#{InputMapPlayer4}"/>
+						<Property key="Caption" value="#{Player} 4"/>
 						<UserString key="RelativeTo" value="GameWnd"/>
 					</Widget>
 				</Widget>

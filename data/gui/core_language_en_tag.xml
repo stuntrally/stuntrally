@@ -148,6 +148,14 @@
 
 	<!--  Multiplayer  -->
 	<Tag name="Multiplayer">Multiplayer</Tag>
+	<Tag name="Game name">Game name</Tag>
+	<Tag name="Laps">Laps</Tag>
+	<Tag name="Player">Player</Tag>
+	<Tag name="Players">Players</Tag>
+	<Tag name="Collis.">Collis.</Tag>
+	<Tag name="Locked">Locked</Tag>
+	<Tag name="Peers">Peers</Tag>
+	<Tag name="Ping">Ping</Tag>
 	
 	<!-- Server -->
 	<Tag name="NetServer">Server</Tag>
@@ -158,6 +166,7 @@
 	<Tag name="NetCreateGame">Create game</Tag>
 	<Tag name="NetDirectConnect">Direct connect</Tag>
 	<Tag name="NetAddress">Address</Tag>
+	<Tag name="NetHost">Host</Tag>
 	<Tag name="NetPort">Port</Tag>
 	<Tag name="NetPassword">Password</Tag>
 	<!-- Game -->
@@ -369,12 +378,7 @@
 	<Tag name="InputMoveAxisTip">Move an axis to see its number</Tag>
 	<Tag name="InputPressButtonTip">Press a button to see its number</Tag>
 
-	<Tag name="InputMapPlayer1">Player 1</Tag>
-	<Tag name="InputMapPlayer2">Player 2</Tag>
-	<Tag name="InputMapPlayer3">Player 3</Tag>
-	<Tag name="InputMapPlayer4">Player 4</Tag>
 	<Tag name="InputMapGeneral">General</Tag>
-
 	<Tag name="InputHeaderTxt1">Action</Tag>
 	<Tag name="InputHeaderTxt2">Binding</Tag>
 	<Tag name="InputHeaderTxt3">Value</Tag>
