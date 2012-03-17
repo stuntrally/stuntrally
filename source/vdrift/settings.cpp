@@ -56,6 +56,7 @@ void SETTINGS::Serialize(bool w, CONFIGFILE & c)
 	Param(c,w, "hud_show.tracks_view", tracks_view);
 	Param(c,w, "hud_show.tracks_sort", tracks_sort);	Param(c,w, "hud_show.tracks_sortup", tracks_sortup);
 	Param(c,w, "hud_show.check_arrow", check_arrow);	Param(c,w, "hud_show.opponents", show_opponents);
+	Param(c,w, "hud_show.opplist_sort", opplist_sort);
 
 	Param(c,w, "hud_size.gauges", size_gauges);			Param(c,w, "hud_size.minimap", size_minimap);
 	Param(c,w, "hud_size.mini_zoom", zoom_minimap);		Param(c,w, "hud_size.mini_zoomed", mini_zoomed);
@@ -92,13 +93,11 @@ void SETTINGS::Serialize(bool w, CONFIGFILE & c)
 	Param(c,w, "misc.bulletDebug", bltDebug);		Param(c,w, "misc.bulletLines", bltLines);
 	Param(c,w, "misc.bulletProfilerTxt", bltProfilerTxt);
 	Param(c,w, "misc.language", language);			Param(c,w, "misc.loadingback", loadingbackground);
-	Param(c,w, "misc.version", version);			Param(c,w, "misc.x11_capture_mouse", x11_capture_mouse);
-        Param(c,w, "misc.x11_hwmouse", x11_hwmouse);
+	Param(c,w, "misc.version", version);
+	Param(c,w, "misc.x11_hwmouse", x11_hwmouse);	Param(c,w, "misc.x11_capture_mouse", x11_capture_mouse);
 
-	Param(c,w, "network.nickname", nickname);
-	Param(c,w, "network.master_server_address", master_server_address);
-	Param(c,w, "network.master_server_port", master_server_port);
-	Param(c,w, "network.local_port", local_port);
+	Param(c,w, "network.nickname", nickname);		Param(c,w, "network.master_server_address", master_server_address);
+	Param(c,w, "network.local_port", local_port);	Param(c,w, "network.master_server_port", master_server_port);
 
 	Param(c,w, "replay.rec", rpl_rec);				Param(c,w, "replay.ghost", rpl_ghost);
 	Param(c,w, "replay.bestonly", rpl_bestonly);	Param(c,w, "replay.listview", rpl_listview);
@@ -116,9 +115,8 @@ void SETTINGS::Serialize(bool w, CONFIGFILE & c)
 	Param(c,w, "video_eff.bloom", bloom);				Param(c,w, "video_eff.bloomintensity", bloomintensity);
 	Param(c,w, "video_eff.bloomorig", bloomorig);		Param(c,w, "video_eff.hdr", hdr);
 	Param(c,w, "video_eff.motionblur", motionblur);		Param(c,w, "video_eff.motionblurintensity", motionblurintensity);
-	Param(c,w, "video_eff.ssao", ssao);
+	Param(c,w, "video_eff.ssao", ssao);					Param(c,w, "video_eff.softparticles", softparticles);
 	Param(c,w, "video_eff.godrays", godrays);
-	Param(c,w, "video_eff.softparticles", softparticles);
 
 	Param(c,w, "video.windowx", windowx);			Param(c,w, "video.windowy", windowy);
 	Param(c,w, "video.fullscreen", fullscreen);		Param(c,w, "video.vsync", vsync);
@@ -133,7 +131,7 @@ SETTINGS::SETTINGS() :  ///  Defaults
 	version(100),  // old
 	//  hud
 	show_fps(1), show_gauges(1), trackmap(1),
-	show_cam(1), show_times(0), show_digits(1), show_opponents(1),
+	show_cam(1), show_times(0), show_digits(1), show_opponents(1), opplist_sort(true),
 	car_dbgtxt(0), car_dbgbars(0),
 	size_gauges(0.18), size_minimap(0.2), zoom_minimap(1.0),
 	mini_zoomed(0), mini_rotated(1), mini_terrain(0),
@@ -161,7 +159,6 @@ SETTINGS::SETTINGS() :  ///  Defaults
 	bltDebug(0), bltLines(1),  bltProfilerTxt(0),
 	loadingbackground(true),
 	x11_capture_mouse(false), x11_hwmouse(false),
-	opplist_sort(true),
 	//  network
 	nickname("StuntMan"),
 	master_server_address("localhost"),

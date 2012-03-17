@@ -337,6 +337,7 @@
 	<Tag name="MinimapTerrain">Terrain</Tag>
 	<Tag name="TimesBar">Times bar</Tag>
 	<Tag name="OpponentsList">Opponents List</Tag>
+	<Tag name="OpponentsSorted">Opponents Sorted</Tag>
 	<Tag name="CameraInfo">Camera info</Tag>
 	<Tag name="CheckArrow">Checkpoint Arrow</Tag>
 	<Tag name="CountdownTime">Race countdown time</Tag>

@@ -2054,6 +2054,18 @@
 							<Property key="TextColour" value="0.9 0.96 1.0"/>
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="232 98 64 24">
+							<Property key="Caption" value="#{Size}"/>
+							<UserString key="RelativeTo" value="OptionsWnd"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="296 98 48 24" name="SizeGaugVal">
+							<UserString key="RelativeTo" value="OptionsWnd"/>
+						</Widget>
+						<Widget type="ScrollBar" skin="ScrollBarH" position="344 100 320 18" name="SizeGaug">
+							<Property key="Range" value="1000001"/>
+							<Property key="MoveToClick" value="true"/>
+							<UserString key="RelativeTo" value="OptionsWnd"/>
+						</Widget>
 						<Widget type="Button" skin="CheckBox" position="32 156 184 24" name="Times">
 							<Property key="Caption" value="#{TimesBar} F7"/>
 							<Property key="TextColour" value="0.8 0.9 1.0"/>
@@ -2064,49 +2076,42 @@
 							<Property key="TextColour" value="0.8 0.9 1.0"/>
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
+						<Widget type="Button" skin="CheckBox" position="432 156 184 24" name="OpponentsSort">
+							<Property key="Caption" value="#{OpponentsSorted}"/>
+							<Property key="TextColour" value="0.8 0.9 1.0"/>
+							<UserString key="RelativeTo" value="OptionsWnd"/>
+						</Widget>
 						<Widget type="Button" skin="CheckBox" position="32 196 184 24" name="CamInfo">
 							<Property key="Caption" value="#{CameraInfo}"/>
 							<Property key="TextColour" value="0.7 0.8 0.9"/>
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
-						<Widget type="Button" skin="CheckBox" position="32 236 184 24" name="Arrow">
+						<Widget type="Button" skin="CheckBox" position="32 256 184 24" name="Arrow">
 							<Property key="Caption" value="#{CheckArrow}"/>
 							<Property key="TextColour" value="0.7 0.8 0.9"/>
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
-						<Widget type="ScrollBar" skin="ScrollBarH" position="344 240 320 18" name="SizeArrow">
+						<Widget type="TextBox" skin="TextBox" position="296 258 48 24" name="SizeArrowVal">
+							<UserString key="RelativeTo" value="OptionsWnd"/>
+						</Widget>
+						<Widget type="ScrollBar" skin="ScrollBarH" position="344 260 320 18" name="SizeArrow">
 							<Property key="Range" value="1000001"/>
 							<Property key="MoveToClick" value="true"/>
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
-						<Widget type="ScrollBar" skin="ScrollBarH" position="344 100 320 18" name="SizeGaug">
-							<Property key="Range" value="1000001"/>
-							<Property key="MoveToClick" value="true"/>
-							<UserString key="RelativeTo" value="OptionsWnd"/>
-						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="296 238 48 24" name="SizeArrowVal">
-							<UserString key="RelativeTo" value="OptionsWnd"/>
-						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="296 98 48 24" name="SizeGaugVal">
-							<UserString key="RelativeTo" value="OptionsWnd"/>
-						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="232 238 64 24">
+						<Widget type="TextBox" skin="TextBox" position="232 258 64 24">
 							<Property key="Caption" value="#{Size}"/>
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="232 98 64 24">
-							<Property key="Caption" value="#{Size}"/>
-							<UserString key="RelativeTo" value="OptionsWnd"/>
-						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="32 278 184 24">
+						<Widget type="TextBox" skin="TextBox" position="32 298 184 24">
 							<Property key="Caption" value="#{CountdownTime}"/>
 							<Property key="TextColour" value="0.8 0.9 1.0"/>
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="296 278 48 24" name="CountdownTimeVal">
+						<Widget type="TextBox" skin="TextBox" position="296 298 48 24" name="CountdownTimeVal">
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
-						<Widget type="ScrollBar" skin="ScrollBarH" position="344 278 320 18" name="CountdownTime">
+						<Widget type="ScrollBar" skin="ScrollBarH" position="344 298 320 18" name="CountdownTime">
 							<Property key="Range" value="7"/>
 							<Property key="MoveToClick" value="true"/>
 							<UserString key="RelativeTo" value="OptionsWnd"/>

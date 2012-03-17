@@ -421,7 +421,9 @@ void App::UpdateHUD(int carId, CarModel* pCarM, CAR* pCar, float time, Viewport*
 					carModels[o]->trackPercent = newPosInfos[o].percent;
 				cms.push_back(carModels[o]);	}
 		}
-		cms.sort(SortPerc);  // todo: if gui chkbox..
+		if (pSet->opplist_sort)
+			cms.sort(SortPerc);
+		
 		for (int o=0; o < carModels.size(); ++o)
 		{	// add ghost last
 			if (carModels[o]->eType == CarModel::CT_GHOST /*|| carModels[o]->eType == CarModel::CT_REPLAY*/)

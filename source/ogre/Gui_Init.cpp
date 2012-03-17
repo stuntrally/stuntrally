@@ -156,6 +156,7 @@ void App::InitGui()
 	Chk("Times", chkTimes, pSet->show_times);	chTimes  = bchk;
 	Chk("CamInfo", chkCamInfo, pSet->show_cam);
 	Chk("Opponents", chkOpponents, pSet->show_opponents);  chOpponents = bchk;
+	Chk("OpponentsSort", chkOpponentsSort, pSet->opplist_sort);
 
 	Chk("CarDbgBars", chkCarDbgBars, pSet->car_dbgbars);	chDbgB = bchk;
 	Chk("CarDbgTxt", chkCarDbgTxt, pSet->car_dbgtxt);		chDbgT = bchk;

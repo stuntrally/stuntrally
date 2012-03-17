@@ -330,6 +330,7 @@ void App::chkMiniRot(WP wp){		ChkEv(mini_rotated);	}
 void App::chkMiniTer(WP wp){		ChkEv(mini_terrain);	UpdMiniTer();  }
 void App::chkTimes(WP wp){			ChkEv(show_times);	ShowHUD();	}
 void App::chkOpponents(WP wp){		ChkEv(show_opponents);	ShowHUD();	}
+void App::chkOpponentsSort(WP wp){	ChkEv(opplist_sort);	}
 
 //void App::chkRacingLine(WP wp){		ChkEv(racingline);	if (ndLine)  ndLine->setVisible(pSet->racingline);	}
 void App::chkCamInfo(WP wp){		ChkEv(show_cam);	ShowHUD();	}
