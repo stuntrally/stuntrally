@@ -345,7 +345,7 @@ void App::UpdateHUD(int carId, CarModel* pCarM, CAR* pCar, float time, Viewport*
 	///  multiplayer
 	// -----------------------------------------------------------------------------------
 	static float tm = 0.f;  tm += time;
-	if (tm > 0.2f /**&& mClient/**/)  //  not every frame, each 0.2s
+	if (tm > 0.2f /**/&& mClient/**/)  //  not every frame, each 0.2s
 	// if (pSet->game.isNetw) ..
 	{
 		std::list<CarModel*> cms;  // sorted list
@@ -371,11 +371,11 @@ void App::UpdateHUD(int carId, CarModel* pCarM, CAR* pCar, float time, Viewport*
 			}
 			if (cm->iWonMsgTime > 0.f)
 			{	cm->iWonMsgTime -= tm;
-				msg += cm->sDispName + " finished, place: " + toStr(cm->iWonPlace) + "\n";
+				msg += cm->sDispName + " " + TR("#{FinishedCommaPlace}") + ": " + toStr(cm->iWonPlace) + "\n";
 			}
 		}
 		if (mClient && pGame->timer.pretime <= 0.f && pGame->timer.waiting)
-			msg += "Waiting for others...\n";
+			msg += TR("#{NetWaitingForOthers}")+"...\n";
 			
 		//  upd won msgs
 		if (hudNetMsg)

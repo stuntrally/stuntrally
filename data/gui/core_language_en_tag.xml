@@ -168,6 +168,9 @@
 	<Tag name="NetWaiting">Waiting...</Tag>
 	<Tag name="NetLeaveGame">Leave game</Tag>
 	<Tag name="NetChat">Chat</Tag>
+	<Tag name="FinishedCommaPlace">finished, place</Tag>
+	<Tag name="NetWaitingForOthers">Waiting for others</Tag>
+
 	<!-- Settings -->
 	<Tag name="NetSettings">Settings</Tag>
 	<Tag name="NetNickname">Nickname</Tag>
