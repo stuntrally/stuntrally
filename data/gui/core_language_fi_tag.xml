@@ -70,6 +70,7 @@
 	<Tag name="DistToRoad">etäisyys tiehen</Tag>
 	<Tag name="TBPlace">Place</Tag>
 	<Tag name="MessageBox_Retry">Yritä uudelleen</Tag>
+	<Tag name="InputKeyboardEmulation">Keyboard Emulation</Tag>
 	<Tag name="TBLast">Viimeinen</Tag>
 	<Tag name="InputMaxVal">Maksimi arvo</Tag>
 	<Tag name="TipRollDrag">Drag for wheels, bigger will make them slow down faster (eg. 140 for snow, 80 for grass).</Tag>
@@ -83,7 +84,7 @@
 	<Tag name="InputMapResetGame">Reset game</Tag>
 	<Tag name="smoke">savu</Tag>
 	<Tag name="TipChangeCar">Vaihda listan valinta nykyiseksi autoksi ja paina [Uusi peli] ajaaksesi sillä.</Tag>
-	<Tag name="TreeMult">Trees multiplier</Tag>
+	<Tag name="MouseCapture">Capture mouse</Tag>
 	<Tag name="TipGrDensSmooth">Grass density map - smooth size</Tag>
 	<Tag name="NetGame">Peli</Tag>
 	<Tag name="TipNewTerrainFlat">Luo uusi, tasainen maasto.</Tag>
@@ -266,6 +267,7 @@
 	<Tag name="InputRoadShiftReverse">shift-Ins - paste   shift-ctrl-Ins - reversed</Tag>
 	<Tag name="MinScale">minimi skaalaus</Tag>
 	<Tag name="MergeLength">Yhdistä pituus</Tag>
+	<Tag name="QuickHelpText">----  Quick help  ----@@Use mouse or Up,Down,Enter,Backspace to navigate through menu.@@To adjust resolution go to Options tab Screen,@use Graphics presets to quickly adjust graphics to your hardware.@@To see all keys used in game and configure input goto Options, tab Input.@If you have a game controller see:@http://code.google.com/p/vdrift-ogre/wiki/Running##Controllers@@Hosting a multiplayer game requires port forwarding.@Connecting to existing game doesn't need it, provided other players have it.@@If you have problems or suggestions report an issue on (or reply to existing one):@http://code.google.com/p/vdrift-ogre/issues/list@@For more info see Readme and our project's Wiki pages.@</Tag>
 	<Tag name="InputRoadPitch">- rotate pitch* / scale sel.</Tag>
 	<Tag name="TimesBar">Times bar</Tag>
 	<Tag name="Screenshot">kuvankaappaus</Tag>
@@ -290,10 +292,6 @@
 	<Tag name="distance">etäisyys</Tag>
 	<Tag name="TrackAutoLoad">Auto Load track</Tag>
 	<Tag name="DustSize">pölyn koko</Tag>
-	<Tag name="InputMapPlayer4">Pelaaja 4</Tag>
-	<Tag name="InputMapPlayer1">Pelaaja 1</Tag>
-	<Tag name="InputMapPlayer2">Pelaaja 2</Tag>
-	<Tag name="InputMapPlayer3">Pelaaja 3</Tag>
 	<Tag name="TerLHMin">Minimi korkeus</Tag>
 	<Tag name="Ambient">Ambient</Tag>
 	<Tag name="BulletProfilerTxt">Bullet Profiler Times</Tag>
@@ -334,7 +332,7 @@
 	<Tag name="GameBy">Pelin tarjoaa</Tag>
 	<Tag name="SunWeather">Aurinko ja sää</Tag>
 	<Tag name="GrTerMaxAngle">Grass Max. Terrain Angle</Tag>
-	<Tag name="TipTrkScreenEditor">Kuvankaappaus pelitilanteesta valitulla radalla.</Tag>
+	<Tag name="RollingDrag">Rolling Drag</Tag>
 	<Tag name="RplDelete">Poista</Tag>
 	<Tag name="TipAutoRear">Uncheck for manual Rear gear changing.</Tag>
 	<Tag name="TipToggleModel">Enable or disable this model.</Tag>
@@ -352,7 +350,7 @@
 	<Tag name="WrongChk">Väärä tarkistuspiste</Tag>
 	<Tag name="DisableEdit">Disable for edit</Tag>
 	<Tag name="MinimapUpdSkip">Minimap update skip</Tag>
-	<Tag name="TipRoadStats">Whole road statistics.</Tag>
+	<Tag name="InputIncreaseSensitivity">Sensitivity</Tag>
 	<Tag name="GraphicsAllSettings">Vaihda kaikki grafiikka-asetukset esiasetukseen:</Tag>
 	<Tag name="InputTerPaint">A - Paint Textures (layers)</Tag>
 	<Tag name="NetPort">Portti</Tag>
@@ -452,6 +450,8 @@
 	<Tag name="InputRoadDel">Del - delete picked</Tag>
 	<Tag name="InputFluidsTileY">; &apos;  - change texture tiling, one coord. only</Tag>
 	<Tag name="TipSceneryId">Scenery id (numeric value 0-20) for identifying unique lightings group on track. Used for impostors generation.</Tag>
+	<Tag name="TreeMult">Trees multiplier</Tag>
+	<Tag name="TipRoadStats">Whole road statistics.</Tag>
 	<Tag name="InputUpdate">F8 - update track</Tag>
 	<Tag name="InputToggleGUIMode">F1 or ` - GUI mode (toggle Options)</Tag>
 	<Tag name="TipGrassMaterial">Grass material, chosen to match track's scenery.</Tag>
@@ -529,6 +529,7 @@
 	<Tag name="TipTerLHMin">Starting terrain height for layer.</Tag>
 	<Tag name="GrTerMaxHeight">Grass Max. Terrain Height</Tag>
 	<Tag name="RplGhosts">Haamut</Tag>
+	<Tag name="InputReturnDelay">Return speed</Tag>
 	<Tag name="RplBestOnly">Save ghost only for best time</Tag>
 	<Tag name="Front">Front</Tag>
 	<Tag name="NetMasterIp">Pääpalvelimen IP-osoite</Tag>
@@ -645,6 +646,7 @@
 	<Tag name="Diff4">Vaikea</Tag>
 	<Tag name="SkirtHeight">Skirt Height</Tag>
 	<Tag name="NewTerrainGenerate">New Generate</Tag>
+	<Tag name="TipTrkScreenEditor">Kuvankaappaus pelitilanteesta valitulla radalla.</Tag>
 	<Tag name="InputWheelSize">,=  (or Wheel)  -  Size</Tag>
 	<Tag name="BulletDebug">Bullet debug</Tag>
 	<Tag name="InputRoadHeight">- muuta korkeutta</Tag>
@@ -677,13 +679,28 @@
 	<Tag name="TipTerLAngMax">Ending terrain angle for layer.</Tag>
 	<Tag name="Pitch">pitch</Tag>
 	<Tag name="InputNextOptTab">F2,F3 - prev,next Options tab (shift - sub tab)</Tag>
-	<Tag name="RollingDrag">Rolling Drag</Tag>
 	<Tag name="RplAll">Kaikki</Tag>
-	<Tag name="InputKeyboardEmulation">Keyboard Emulation</Tag>
-	<Tag name="MouseCapture">Capture mouse</Tag>
-	<Tag name="QuickHelpText">----  Quick help  ----@@Use mouse or Up,Down,Enter,Backspace to navigate through menu.@@To adjust resolution go to Options tab Screen,@use Graphics presets to quickly adjust graphics to your hardware.@@To see all keys used in game and configure input goto Options, tab Input.@If you have a game controller see:@http://code.google.com/p/vdrift-ogre/wiki/Running##Controllers@@Hosting a multiplayer game requires port forwarding.@Connecting to existing game doesn't need it, provided other players have it.@@If you have problems or suggestions report an issue on (or reply to existing one):@http://code.google.com/p/vdrift-ogre/issues/list@@For more info see Readme and our project's Wiki pages.@</Tag>
-	<Tag name="InputIncreaseSensitivity">Sensitivity</Tag>
-	<Tag name="InputReturnDelay">Return speed</Tag>
+	<Tag name="InputMapScreenshot">Screenshot</Tag>
+	<Tag name="InputHeaderTxt4">Edit</Tag>
+	<Tag name="Game name">Game name</Tag>
+	<Tag name="DepthOfField">Depth of Field</Tag>
+	<Tag name="Locked">Locked</Tag>
+	<Tag name="NetWaitingForOthers">Waiting for others</Tag>
+	<Tag name="InputKeyAllPreset">Set all from preset</Tag>
+	<Tag name="InpSet_Slow">Slow</Tag>
+	<Tag name="Players">Players</Tag>
+	<Tag name="Player">Player</Tag>
+	<Tag name="InpSet_Medium">Medium</Tag>
+	<Tag name="OpponentsSorted">Opponents Sorted</Tag>
+	<Tag name="Laps">Laps</Tag>
+	<Tag name="InpSet_Fast">Fast</Tag>
+	<Tag name="FinishedCommaPlace">finished, place</Tag>
+	<Tag name="Ping">Ping</Tag>
+	<Tag name="Far">Far</Tag>
+	<Tag name="NetHost">Host</Tag>
+	<Tag name="Near">Near</Tag>
+	<Tag name="Collis.">Collis.</Tag>
+	<Tag name="Peers">Peers</Tag>
 	<Tag name="GameVersion">1.5</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 

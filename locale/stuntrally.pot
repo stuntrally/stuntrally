@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION"
 "Report-Msgid-Bugs-To: "
-"POT-Creation-Date: 2012-03-12 12:51+0100"
+"POT-Creation-Date: 2012-03-18 13:05+0100"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>"
 "Language-Team: LANGUAGE <LL@li.org>"
@@ -29,6 +29,10 @@ msgctxt "Fullscreen"
 msgid "Fullscreen"
 msgstr ""
 
+msgctxt "InputMapScreenshot"
+msgid "Screenshot"
+msgstr ""
+
 msgctxt "TipDustSize"
 msgid "Dust particles size."
 msgstr ""
@@ -39,6 +43,10 @@ msgstr ""
 
 msgctxt "InpSet_AxisFull"
 msgid "Axis Full"
+msgstr ""
+
+msgctxt "InputHeaderTxt4"
+msgid "Edit"
 msgstr ""
 
 msgctxt "Progress"
@@ -205,6 +213,10 @@ msgctxt "ScoreNeeded"
 msgid "Score needed"
 msgstr ""
 
+msgctxt "Game name"
+msgid "Game name"
+msgstr ""
+
 msgctxt "HUD"
 msgid "HUD"
 msgstr ""
@@ -241,8 +253,8 @@ msgctxt "InputHeaderTxt1"
 msgid "Action"
 msgstr ""
 
-msgctxt "InputReloadTrack"
-msgid "F5 - reload track"
+msgctxt "DepthOfField"
+msgid "Depth of Field"
 msgstr ""
 
 msgctxt "Game"
@@ -271,6 +283,10 @@ msgstr ""
 
 msgctxt "GrassDens"
 msgid "Grass   density"
+msgstr ""
+
+msgctxt "Locked"
+msgid "Locked"
 msgstr ""
 
 msgctxt "RoadParams"
@@ -369,6 +385,10 @@ msgctxt "NetGame"
 msgid "Game"
 msgstr ""
 
+msgctxt "NetWaitingForOthers"
+msgid "Waiting for others"
+msgstr ""
+
 msgctxt "TipNewTerrainFlat"
 msgid "Create new, flat terrain."
 msgstr ""
@@ -415,6 +435,10 @@ msgstr ""
 
 msgctxt "InpSet_KeyHalf"
 msgid "Key Half"
+msgstr ""
+
+msgctxt "TerLHSm"
+msgid "Height smooth"
 msgstr ""
 
 msgctxt "CopySource"
@@ -529,8 +553,12 @@ msgctxt "MessageBox_Try"
 msgid "Try"
 msgstr ""
 
-msgctxt "TerLHSm"
-msgid "Height smooth"
+msgctxt "InputKeyAllPreset"
+msgid "Set all from preset"
+msgstr ""
+
+msgctxt "InpSet_Slow"
+msgid "Slow"
 msgstr ""
 
 msgctxt "InputAssignKey"
@@ -561,8 +589,8 @@ msgctxt "InputRoadWidth"
 msgid "- change road width"
 msgstr ""
 
-msgctxt "Replay"
-msgid "Replay"
+msgctxt "InputMapSteering"
+msgid "Steering"
 msgstr ""
 
 msgctxt "NewDup"
@@ -585,10 +613,6 @@ msgctxt "ReflMode_single"
 msgid "Single"
 msgstr ""
 
-msgctxt "Friction"
-msgid "Friction"
-msgstr ""
-
 msgctxt "InputMinVal"
 msgid "Min. Value"
 msgstr ""
@@ -605,6 +629,10 @@ msgctxt "TipSunDirYaw"
 msgid "Sun direction - yaw angle."
 msgstr ""
 
+msgctxt "Players"
+msgid "Players"
+msgstr ""
+
 msgctxt "TipGrDensSmooth"
 msgid "Grass density map - smooth size"
 msgstr ""
@@ -615,6 +643,10 @@ msgstr ""
 
 msgctxt "TipCarsList"
 msgid "Cars list, click to select (and see image). Press [Change car] and then [New Game] to drive with it."
+msgstr ""
+
+msgctxt "InputMapNextCamera"
+msgid "Next Camera"
 msgstr ""
 
 msgctxt "Model"
@@ -661,12 +693,20 @@ msgctxt "MessageBox_Continue"
 msgid "Continue"
 msgstr ""
 
+msgctxt "Player"
+msgid "Player"
+msgstr ""
+
 msgctxt "InputRoadSel"
 msgid "Backspace - add to or remove from selection"
 msgstr ""
 
 msgctxt "Weather"
 msgid "Weather"
+msgstr ""
+
+msgctxt "InpSet_Medium"
+msgid "Medium"
 msgstr ""
 
 msgctxt "TipTerrainHalf"
@@ -793,6 +833,10 @@ msgctxt "TipCopySource"
 msgid "Pick selected track for copy source, used in [Tools] tab."
 msgstr ""
 
+msgctxt "InputMapNextTab"
+msgid "Next tab"
+msgstr ""
+
 msgctxt "Layer"
 msgid "Layer"
 msgstr ""
@@ -909,8 +953,8 @@ msgctxt "Type"
 msgid "Type"
 msgstr ""
 
-msgctxt "Engine"
-msgid "Engine"
+msgctxt "NetWaiting"
+msgid "Waiting..."
 msgstr ""
 
 msgctxt "MergeLength"
@@ -1019,6 +1063,10 @@ msgstr ""
 
 msgctxt "LightmapSize"
 msgid "Lightmap size"
+msgstr ""
+
+msgctxt "OpponentsSorted"
+msgid "Opponents Sorted"
 msgstr ""
 
 msgctxt "RoadQual"
@@ -1137,8 +1185,8 @@ msgctxt "InputStartPos"
 msgid "Q - edit car start pos"
 msgstr ""
 
-msgctxt "InputPaintColor"
-msgid "C - Paint Color"
+msgctxt "InputRplCtrl0"
+msgid "Replay:"
 msgstr ""
 
 msgctxt "TipModelRoadDist"
@@ -1153,8 +1201,8 @@ msgctxt "InputBrushParams"
 msgid "Brush parameters"
 msgstr ""
 
-msgctxt "InputMapShowOptions"
-msgid "Show options"
+msgctxt "ReflMode_static"
+msgid "Static"
 msgstr ""
 
 msgctxt "InputCameraMode"
@@ -1197,24 +1245,16 @@ msgctxt "DustSize"
 msgid "dust size"
 msgstr ""
 
-msgctxt "InputMapPlayer4"
-msgid "Player 4"
+msgctxt "InputUpdBlendmap"
+msgid "F9 - update terrain blendmap"
 msgstr ""
 
 msgctxt "TipDisableFog"
 msgid "Disable fog when editing road from distance."
 msgstr ""
 
-msgctxt "InputMapPlayer1"
-msgid "Player 1"
-msgstr ""
-
-msgctxt "InputMapPlayer2"
-msgid "Player 2"
-msgstr ""
-
-msgctxt "InputMapPlayer3"
-msgid "Player 3"
+msgctxt "Friction"
+msgid "Friction"
 msgstr ""
 
 msgctxt "TerLHMin"
@@ -1325,16 +1365,16 @@ msgctxt "Graphics"
 msgid "Graphics"
 msgstr ""
 
-msgctxt "ReflMode_static"
-msgid "Static"
+msgctxt "InputMapShowOptions"
+msgid "Show options"
 msgstr ""
 
 msgctxt "CarClrRandom"
 msgid "Random"
 msgstr ""
 
-msgctxt "CarDebugText"
-msgid "Car debug text "
+msgctxt "SpeedUnit"
+msgid "Speed unit"
 msgstr ""
 
 msgctxt "InputWheelShape"
@@ -1457,6 +1497,10 @@ msgctxt "LS_TER"
 msgid "Loading terrain"
 msgstr ""
 
+msgctxt "InputReloadTrack"
+msgid "F5 - reload track"
+msgstr ""
+
 msgctxt "InputIncreaseSensitivity"
 msgid "Sensitivity"
 msgstr ""
@@ -1521,8 +1565,12 @@ msgctxt "Leave"
 msgid "Leave (exit)"
 msgstr ""
 
-msgctxt "InputRoadMove"
-msgid "- move point"
+msgctxt "TipVegetModels"
+msgid "Models (meshes) for vegetation. Found in data/trees/."
+msgstr ""
+
+msgctxt "Engine"
+msgid "Engine"
 msgstr ""
 
 msgctxt "TerGenPers"
@@ -1557,8 +1605,8 @@ msgctxt "TipChangeHue"
 msgid "Change car color (hue)."
 msgstr ""
 
-msgctxt "InputUpdBlendmap"
-msgid "F9 - update terrain blendmap"
+msgctxt "InputRoadMove"
+msgid "- move point"
 msgstr ""
 
 msgctxt "Intensity"
@@ -1589,8 +1637,8 @@ msgctxt "InputRplCtrl3"
 msgid "[ , ] - wind backwards/forwards (shift - slow, ctrl,alt - fast)"
 msgstr ""
 
-msgctxt "InputRplCtrl0"
-msgid "Replay:"
+msgctxt "Laps"
+msgid "Laps"
 msgstr ""
 
 msgctxt "TireTrails"
@@ -1617,8 +1665,8 @@ msgctxt "BulletProfilerTxt"
 msgid "Bullet Profiler Times"
 msgstr ""
 
-msgctxt "InputMapNextTab"
-msgid "Next tab"
+msgctxt "InpSet_Fast"
+msgid "Fast"
 msgstr ""
 
 msgctxt "FrameSkip"
@@ -2093,8 +2141,12 @@ msgctxt "VegetCol"
 msgid "Vegetation collision"
 msgstr ""
 
-msgctxt "AntiAliasing"
-msgid "Antialiasing"
+msgctxt "Track"
+msgid "Track"
+msgstr ""
+
+msgctxt "FinishedCommaPlace"
+msgid "finished, place"
 msgstr ""
 
 msgctxt "Tools"
@@ -2129,8 +2181,8 @@ msgctxt "TipTrkListEditor"
 msgid "Tracks list, click to select (for Rename or Duplicate). Press [Load track] to change current track in editor."
 msgstr ""
 
-msgctxt "InputMapNextCamera"
-msgid "Next Camera"
+msgctxt "Ping"
+msgid "Ping"
 msgstr ""
 
 msgctxt "GraphicsAll_Lowest"
@@ -2155,6 +2207,10 @@ msgstr ""
 
 msgctxt "InputRoadYaw"
 msgid "- rotate yaw"
+msgstr ""
+
+msgctxt "Far"
+msgid "Far"
 msgstr ""
 
 msgctxt "GrTerMaxHeight"
@@ -2257,6 +2313,10 @@ msgctxt "SourceTrack"
 msgid "Source track"
 msgstr ""
 
+msgctxt "NetHost"
+msgid "Host"
+msgstr ""
+
 msgctxt "ImpostorDist"
 msgid "Impostors dist."
 msgstr ""
@@ -2285,14 +2345,6 @@ msgctxt "InputHelp"
 msgid "Input/help"
 msgstr ""
 
-msgctxt "TipVegetModels"
-msgid "Models (meshes) for vegetation. Found in data/trees/."
-msgstr ""
-
-msgctxt "CheckArrow"
-msgid "Checkpoint Arrow"
-msgstr ""
-
 msgctxt "Sun"
 msgid "Sun"
 msgstr ""
@@ -2301,8 +2353,8 @@ msgctxt "InputMapShiftUp"
 msgid "Shift up"
 msgstr ""
 
-msgctxt "SpeedUnit"
-msgid "Speed unit"
+msgctxt "CarDebugText"
+msgid "Car debug text "
 msgstr ""
 
 msgctxt "OgreDialog"
@@ -2381,6 +2433,10 @@ msgctxt "TipFluidsWnd"
 msgid "Fluid parameters window."
 msgstr ""
 
+msgctxt "Near"
+msgid "Near"
+msgstr ""
+
 msgctxt "RestartApply"
 msgid "Restart game, to apply *changes."
 msgstr ""
@@ -2425,8 +2481,8 @@ msgctxt "ChampStart"
 msgid "Start"
 msgstr ""
 
-msgctxt "InputMapSteering"
-msgid "Steering"
+msgctxt "Replay"
+msgid "Replay"
 msgstr ""
 
 msgctxt "InputDetailsFor"
@@ -2641,12 +2697,16 @@ msgctxt "ColSat"
 msgid "Saturation"
 msgstr ""
 
+msgctxt "Collis."
+msgid "Collis."
+msgstr ""
+
 msgctxt "Scenery"
 msgid "Scenery"
 msgstr ""
 
-msgctxt "Track"
-msgid "Track"
+msgctxt "AntiAliasing"
+msgid "Antialiasing"
 msgstr ""
 
 msgctxt "ScaleMul"
@@ -2669,6 +2729,10 @@ msgctxt "TipTerLayers"
 msgid "Terrain texture layers (recommended 2-3, significantly affects Fps). *Auto blendmap supports max 4."
 msgstr ""
 
+msgctxt "InputPaintColor"
+msgid "C - Paint Color"
+msgstr ""
+
 msgctxt "TipSurfType"
 msgid "Type of surface, determines sound."
 msgstr ""
@@ -2677,8 +2741,12 @@ msgctxt "NextStage"
 msgid "Continuing to next stage"
 msgstr ""
 
-msgctxt "NetWaiting"
-msgid "Waiting..."
+msgctxt "CheckArrow"
+msgid "Checkpoint Arrow"
+msgstr ""
+
+msgctxt "Peers"
+msgid "Peers"
 msgstr ""
 
 msgctxt "Reverse"

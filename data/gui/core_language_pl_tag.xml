@@ -70,6 +70,7 @@
 	<Tag name="DistToRoad">odl. do drogi</Tag>
 	<Tag name="TBPlace">Miejsce</Tag>
 	<Tag name="MessageBox_Retry">Ponów</Tag>
+	<Tag name="InputKeyboardEmulation">Emulacja klawiatury</Tag>
 	<Tag name="TBLast">Ostatni</Tag>
 	<Tag name="InputMaxVal">Max. Wartość</Tag>
 	<Tag name="TipRollDrag">Opór dla kół, większy spowoduje szybsze zwalnianie (np. 140 dla śniegu, 80 dla trawy).</Tag>
@@ -83,7 +84,7 @@
 	<Tag name="InputMapResetGame">Graj od nowa</Tag>
 	<Tag name="smoke">dym</Tag>
 	<Tag name="TipChangeCar">Wybierz auto z listy, naciśnij [Nowa Gra] by jechać.</Tag>
-	<Tag name="TreeMult">Mnożnik drzew</Tag>
+	<Tag name="MouseCapture">Przejmij mysz</Tag>
 	<Tag name="TipGrDensSmooth">Mapa gęstości trawy - rozmiar wygładzenia</Tag>
 	<Tag name="NetGame">Gra</Tag>
 	<Tag name="TipNewTerrainFlat">Stwórz nowy, płaski teren.</Tag>
@@ -266,6 +267,7 @@
 	<Tag name="InputRoadShiftReverse">shift-Ins - wstaw shift-ctrl-Ins - odwrotnie</Tag>
 	<Tag name="MinScale">min. skala</Tag>
 	<Tag name="MergeLength">odległość złączania</Tag>
+	<Tag name="QuickHelpText">---- Szybka pomoc ----@@Użyj myszy lub Góra,Lewo,Enter,Backspace do nawigacji po menu.@@Aby dostosować rozdzielczość wejdź do Opcji na zakładkę Ekran,@użyj zestawów Ustawień grafiki by szybko dostosować grafikę do swojego sprzętu.@@Wszystkie klawisze używane w grze można zmienić w Opcjach, na zakładce Wejście.@Jeśli posiadasz kontroler gry zobacz:@http://code.google.com/p/vdrift-ogre/wiki/Running##Controllers@@Stworzenie gry muliplayer wymaga przekierowanych portów.@Dołączenie do istniejącej gry, nie wymaga, pod warunkiem że inni mają.@@Jeśli posiadasz problemy lub sugestie, zgłoś issue (in English, lub odpowiedz do istniejącego) pod:@http://code.google.com/p/vdrift-ogre/issues/list@@Więcej informacji w Czytaj, i na stronach Wiki projektu.@</Tag>
 	<Tag name="InputRoadPitch">- obróć nachylenie* / skaluj wybrane</Tag>
 	<Tag name="TimesBar">Czasy</Tag>
 	<Tag name="Screenshot">zrzut ekranu</Tag>
@@ -290,10 +292,6 @@
 	<Tag name="distance">odległość</Tag>
 	<Tag name="TrackAutoLoad">Autom. wczytywanie trasy</Tag>
 	<Tag name="DustSize">rozmiar kurzu</Tag>
-	<Tag name="InputMapPlayer4">Gracz 4</Tag>
-	<Tag name="InputMapPlayer1">Gracz 1</Tag>
-	<Tag name="InputMapPlayer2">Gracz 2</Tag>
-	<Tag name="InputMapPlayer3">Gracz 3</Tag>
 	<Tag name="TerLHMin">Wysokość Min</Tag>
 	<Tag name="Ambient">Ambient</Tag>
 	<Tag name="BulletProfilerTxt">Czasy profilera Bullet</Tag>
@@ -334,7 +332,7 @@
 	<Tag name="GameBy">Gra przez</Tag>
 	<Tag name="SunWeather">Słońce i Pogoda</Tag>
 	<Tag name="GrTerMaxAngle">Trawa max kąt terenu</Tag>
-	<Tag name="TipTrkScreenEditor">Zrzut z gry dla wybranej trasy.</Tag>
+	<Tag name="RollingDrag">Opór toczenia</Tag>
 	<Tag name="RplDelete">Usuń</Tag>
 	<Tag name="TipAutoRear">Odznacz dla ręcznej zmiany wstecznego.</Tag>
 	<Tag name="TipToggleModel">Włącz / wyłącz ten model.</Tag>
@@ -352,7 +350,7 @@
 	<Tag name="WrongChk">Zły punkt kontrolny</Tag>
 	<Tag name="DisableEdit">Wyłącz do edycji</Tag>
 	<Tag name="MinimapUpdSkip">Pominięć odśw. minimapy</Tag>
-	<Tag name="TipRoadStats">Statystyki całej drogi.</Tag>
+	<Tag name="InputIncreaseSensitivity">Czułość</Tag>
 	<Tag name="GraphicsAllSettings">Zmień wszystkie ustawienia na zestaw:</Tag>
 	<Tag name="InputTerPaint">A - maluj tekstury (warstwy)</Tag>
 	<Tag name="NetPort">Port</Tag>
@@ -452,6 +450,8 @@
 	<Tag name="InputRoadDel">Del - zmaż wybrany</Tag>
 	<Tag name="InputFluidsTileY">; &apos; - skala tekstury, tylko jedna współrz.</Tag>
 	<Tag name="TipSceneryId">Id sceny (numer od 0-20) do identyfikowania podobnych grup oświetlenia tras. Używany do generacji atrap.</Tag>
+	<Tag name="TreeMult">Mnożnik drzew</Tag>
+	<Tag name="TipRoadStats">Statystyki całej drogi.</Tag>
 	<Tag name="InputUpdate">F8 - odśwież trasę</Tag>
 	<Tag name="InputToggleGUIMode">F1 lub ` - tryb GUI (Opcje)</Tag>
 	<Tag name="TipGrassMaterial">Materiał trawy, dopasowywany do scenerii trasy.</Tag>
@@ -529,6 +529,7 @@
 	<Tag name="TipTerLHMin">Początkowa wysokość terenu dla warstwy.</Tag>
 	<Tag name="GrTerMaxHeight">Trawa max. wysokość terenu</Tag>
 	<Tag name="RplGhosts">Duchy</Tag>
+	<Tag name="InputReturnDelay">Szybk. powrotu</Tag>
 	<Tag name="RplBestOnly">Zapisuj ducha tylko dla lepszych czasów</Tag>
 	<Tag name="Front">Przód</Tag>
 	<Tag name="NetMasterIp">IP serwera</Tag>
@@ -645,6 +646,7 @@
 	<Tag name="Diff4">Trudny</Tag>
 	<Tag name="SkirtHeight">Wysokość łaty</Tag>
 	<Tag name="NewTerrainGenerate">Generuj nowy</Tag>
+	<Tag name="TipTrkScreenEditor">Zrzut z gry dla wybranej trasy.</Tag>
 	<Tag name="InputWheelSize">,= (lub kółko) - rozmiar</Tag>
 	<Tag name="BulletDebug">debug Bullet</Tag>
 	<Tag name="InputRoadHeight">- zmień wysokość</Tag>
@@ -677,13 +679,28 @@
 	<Tag name="TipTerLAngMax">Końcowy kąt terenu dla warstwy</Tag>
 	<Tag name="Pitch">nachylenie</Tag>
 	<Tag name="InputNextOptTab">F2,F3 - poprz./nast. zakładka Opcji (shift - podzakładka)</Tag>
-	<Tag name="RollingDrag">Opór toczenia</Tag>
 	<Tag name="RplAll">Wszystkie</Tag>
-	<Tag name="InputKeyboardEmulation">Keyboard Emulation</Tag>
-	<Tag name="MouseCapture">Capture mouse</Tag>
-	<Tag name="QuickHelpText">----  Quick help  ----@@Use mouse or Up,Down,Enter,Backspace to navigate through menu.@@To adjust resolution go to Options tab Screen,@use Graphics presets to quickly adjust graphics to your hardware.@@To see all keys used in game and configure input goto Options, tab Input.@If you have a game controller see:@http://code.google.com/p/vdrift-ogre/wiki/Running##Controllers@@Hosting a multiplayer game requires port forwarding.@Connecting to existing game doesn't need it, provided other players have it.@@If you have problems or suggestions report an issue on (or reply to existing one):@http://code.google.com/p/vdrift-ogre/issues/list@@For more info see Readme and our project's Wiki pages.@</Tag>
-	<Tag name="InputIncreaseSensitivity">Sensitivity</Tag>
-	<Tag name="InputReturnDelay">Return speed</Tag>
+	<Tag name="InputMapScreenshot">Screenshot</Tag>
+	<Tag name="InputHeaderTxt4">Edit</Tag>
+	<Tag name="Game name">Game name</Tag>
+	<Tag name="DepthOfField">Depth of Field</Tag>
+	<Tag name="Locked">Locked</Tag>
+	<Tag name="NetWaitingForOthers">Waiting for others</Tag>
+	<Tag name="InputKeyAllPreset">Set all from preset</Tag>
+	<Tag name="InpSet_Slow">Slow</Tag>
+	<Tag name="Players">Players</Tag>
+	<Tag name="Player">Player</Tag>
+	<Tag name="InpSet_Medium">Medium</Tag>
+	<Tag name="OpponentsSorted">Opponents Sorted</Tag>
+	<Tag name="Laps">Laps</Tag>
+	<Tag name="InpSet_Fast">Fast</Tag>
+	<Tag name="FinishedCommaPlace">finished, place</Tag>
+	<Tag name="Ping">Ping</Tag>
+	<Tag name="Far">Far</Tag>
+	<Tag name="NetHost">Host</Tag>
+	<Tag name="Near">Near</Tag>
+	<Tag name="Collis.">Collis.</Tag>
+	<Tag name="Peers">Peers</Tag>
 	<Tag name="GameVersion">1.5</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 
