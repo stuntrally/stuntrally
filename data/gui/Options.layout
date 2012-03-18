@@ -787,7 +787,6 @@
 			<Widget type="TabItem" skin="" position="2 24 794 572" name="TabChamps">
 				<Property key="Caption" value="#{Championship}"/>
 				<UserString key="RelativeTo" value="GameWnd"/>
-				<UserString key="RelativeTo" value="GameWnd"/>
 				<Widget type="Button" skin="Button" position="320 460 144 40" name="btnChampStart">
 					<Property key="Caption" value="#{ChampStart}"/>
 					<Property key="Colour" value="0.6 0.6 1"/>
@@ -1415,115 +1414,110 @@
 					<Widget type="TabItem" skin="" position="2 24 738 432">
 						<Property key="Caption" value="#{Effects}"/>
 						<UserString key="RelativeTo" value="OptionsWnd"/>
-						<Widget type="Button" skin="CheckBox" position="40 30 300 24" name="AllEffects">
+						<Widget type="Button" skin="CheckBox" position="28 20 252 24" name="AllEffects">
 							<Property key="Caption" value="#{AllEffects}"/>
 							<Property key="TextColour" value="1.0 1.0 0.85"/>
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
-						<Widget type="Button" skin="CheckBox" position="40 75 300 24" name="Bloom">
+						<Widget type="Button" skin="CheckBox" position="28 60 164 24" name="Bloom">
 							<Property key="Caption" value="#{Bloom}"/>
 							<Property key="TextColour" value="1 1 0.5"/>
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="66 110 118 24">
+						<Widget type="TextBox" skin="TextBox" position="196 60 128 24">
 							<Property key="Caption" value="#{Intensity}"/>
 							<Property key="TextColour" value="1.0 0.9 0.0"/>
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
-						<Widget type="Button" skin="CheckBox" position="40 180 300 24" name="MotionBlur">
+						<Widget type="Button" skin="CheckBox" position="28 120 164 24" name="MotionBlur">
 							<Property key="Caption" value="#{MotionBlur}"/>
 							<Property key="TextColour" value="0.6 1 0.3"/>
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
-						<Widget type="ScrollBar" skin="ScrollBarH" position="248 215 320 18" name="BlurIntens">
-							<Property key="MoveToClick" value="true"/>
+						<Widget type="ScrollBar" skin="ScrollBarH" position="392 120 320 18" name="BlurIntens">
 							<Property key="Range" value="1000001"/>
 							<Property key="MoveToClick" value="true"/>
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="66 215 118 24">
+						<Widget type="TextBox" skin="TextBox" position="196 120 128 24">
 							<Property key="Caption" value="#{Intensity}"/>
 							<Property key="TextColour" value="0.7 1 0.4"/>
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
-						<Widget type="ScrollBar" skin="ScrollBarH" position="248 110 320 18" name="BloomInt">
-							<Property key="MoveToClick" value="true"/>
+						<Widget type="ScrollBar" skin="ScrollBarH" position="392 60 320 18" name="BloomInt">
 							<Property key="Range" value="1000001"/>
 							<Property key="MoveToClick" value="true"/>
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="66 140 120 24">
+						<Widget type="TextBox" skin="TextBox" position="196 88 128 24">
 							<Property key="Caption" value="#{OrigImage}"/>
 							<Property key="TextColour" value="1 1 0.5"/>
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
-						<Widget type="ScrollBar" skin="ScrollBarH" position="248 140 320 18" name="BloomOrig">
-							<Property key="MoveToClick" value="true"/>
+						<Widget type="ScrollBar" skin="ScrollBarH" position="392 88 320 18" name="BloomOrig">
 							<Property key="Range" value="1000001"/>
 							<Property key="MoveToClick" value="true"/>
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="184 110 60 26" name="BloomIntVal">
+						<Widget type="TextBox" skin="TextBox" position="328 60 60 26" name="BloomIntVal">
 							<Property key="TextColour" value="1.0 1 0.2"/>
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="184 140 60 24" name="BloomOrigVal">
+						<Widget type="TextBox" skin="TextBox" position="328 88 60 24" name="BloomOrigVal">
 							<Property key="TextColour" value="1 1 0.5"/>
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="184 215 60 24" name="BlurIntensVal">
+						<Widget type="TextBox" skin="TextBox" position="328 120 60 24" name="BlurIntensVal">
 							<Property key="TextColour" value="0.7 1 0.4"/>
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
-						<Widget type="Button" skin="CheckBox" position="40 250 300 24" name="ssao">
+						<Widget type="Button" skin="CheckBox" position="28 156 256 24" name="ssao">
 							<Property key="Caption" value="#{ssao}"/>
 							<Property key="TextColour" value="0.6 1 0.3"/>
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
-						<Widget type="Button" skin="CheckBox" position="40 285 300 24" name="softparticles">
-							<UserString key="RelativeTo" value="OptionsWnd"/>
+						<Widget type="Button" skin="CheckBox" position="28 188 256 24" name="softparticles">
 							<Property key="Caption" value="#{softparticles}"/>
 							<Property key="TextColour" value="0.6 1 0.3"/>
-						</Widget>
-            <Widget type="Button" skin="CheckBox" position="40 320 300 24" name="DepthOfField">
 							<UserString key="RelativeTo" value="OptionsWnd"/>
+						</Widget>
+						<Widget type="Button" skin="CheckBox" position="28 220 148 24" name="DepthOfField">
 							<Property key="Caption" value="#{DepthOfField}"/>
 							<Property key="TextColour" value="0.6 1 0.3"/>
+							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
-            <Widget type="TextBox" skin="TextBox" position="66 355 118 24">
+						<Widget type="TextBox" skin="TextBox" position="196 220 118 24">
 							<Property key="Caption" value="#{Near}"/>
 							<Property key="TextColour" value="0.7 1 0.4"/>
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
-            <Widget type="TextBox" skin="TextBox" position="184 355 60 26" name="DepthOfFieldFocusVal">
+						<Widget type="TextBox" skin="TextBox" position="328 220 60 24" name="DepthOfFieldFocusVal">
 							<Property key="TextColour" value="1.0 1 0.2"/>
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
-            <Widget type="ScrollBar" skin="ScrollBarH" position="248 355 300 18" name="DepthOfFieldFocus">
-							<Property key="MoveToClick" value="true"/>
-							<Property key="Range" value="1000"/>
+						<Widget type="ScrollBar" skin="ScrollBarH" position="392 220 320 18" name="DepthOfFieldFocus">
+							<Property key="Range" value="1000001"/>
 							<Property key="MoveToClick" value="true"/>
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
-            <Widget type="TextBox" skin="TextBox" position="66 390 118 24">
+						<Widget type="TextBox" skin="TextBox" position="196 248 118 24">
 							<Property key="Caption" value="#{Far}"/>
 							<Property key="TextColour" value="0.7 1 0.4"/>
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
-             <Widget type="TextBox" skin="TextBox" position="184 390 60 26" name="DepthOfFieldFarVal">
+						<Widget type="TextBox" skin="TextBox" position="328 248 60 24" name="DepthOfFieldFarVal">
 							<Property key="TextColour" value="1.0 1 0.2"/>
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
-            <Widget type="ScrollBar" skin="ScrollBarH" position="248 390 300 18" name="DepthOfFieldFar">
-							<Property key="MoveToClick" value="true"/>
-							<Property key="Range" value="1000"/>
+						<Widget type="ScrollBar" skin="ScrollBarH" position="392 248 320 18" name="DepthOfFieldFar">
+							<Property key="Range" value="1000001"/>
 							<Property key="MoveToClick" value="true"/>
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
-						<Widget type="Button" skin="CheckBox" position="40 425 300 24" name="godrays">
-							<UserString key="RelativeTo" value="OptionsWnd"/>
+						<Widget type="Button" skin="CheckBox" position="28 272 152 24" name="godrays">
 							<Property key="Caption" value="#{godrays}"/>
 							<Property key="TextColour" value="0.6 1 0.3"/>
+							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
 					</Widget>
 				</Widget>

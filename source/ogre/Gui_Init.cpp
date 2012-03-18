@@ -226,8 +226,8 @@ void App::InitGui()
 
 	Slv(BloomInt,	pSet->bloomintensity);
 	Slv(BloomOrig,	pSet->bloomorig);
-	Slv(DepthOfFieldFocus, pSet->depthOfFieldFocus);
-	Slv(DepthOfFieldFar, pSet->depthOfFieldFar);
+	Slv(DepthOfFieldFocus, powf(pSet->depthOfFieldFocus/2000.f, 0.5f));
+	Slv(DepthOfFieldFar,   powf(pSet->depthOfFieldFar/2000.f, 0.5f));
 	
 	Chk("FullScreen", chkVidFullscr, pSet->fullscreen);
 	Chk("VSync", chkVidVSync, pSet->vsync);

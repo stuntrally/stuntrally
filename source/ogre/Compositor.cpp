@@ -12,7 +12,7 @@
 #include <OgreGpuProgramParams.h>
 #include "SplitScreen.h"
 #include "common/MaterialGen/MaterialFactory.h"
-#include "../../vdrift/settings.h"
+#include "../vdrift/settings.h"
 
 class MotionBlurListener : public Ogre::CompositorInstance::Listener
 {
