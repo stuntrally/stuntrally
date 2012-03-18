@@ -125,8 +125,8 @@ public:
 				out(VERBOSE) << "Game list request received from " << e.peer_address << std::endl;
 				protocol::GameList games = m_glm.getGames();
 				// Send an info packet for each game
-				for (protocol::GameList::const_iterator it = games.begin(); it != games.end(); ++it) {
-					m_client.send(e.peer_id, it->second, net::PACKET_RELIABLE);
+				for (protocol::GameList::iterator it = games.begin(); it != games.end(); ++it) {
+					m_client.send(e.peer_id, net::convert(it->second), net::PACKET_RELIABLE);
 				}
 				break;
 			}
@@ -143,7 +143,7 @@ public:
 				m_glm.updateGame(game);
 				// Send confirmation (and id in case of new game)
 				game.packet_type = protocol::GAME_ACCEPTED;
-				m_client.send(e.peer_id, game, net::PACKET_RELIABLE);
+				m_client.send(e.peer_id, net::convert(game), net::PACKET_RELIABLE);
 				break;
 			}
 			default: {
