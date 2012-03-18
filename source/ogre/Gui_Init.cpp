@@ -228,6 +228,7 @@ void App::InitGui()
 
 	Slv(BloomInt,	pSet->bloomintensity);
 	Slv(BloomOrig,	pSet->bloomorig);
+	Slv(BlurIntens, pSet->motionblurintensity);
 	Slv(DepthOfFieldFocus, powf(pSet->depthOfFieldFocus/2000.f, 0.5f));
 	Slv(DepthOfFieldFar,   powf(pSet->depthOfFieldFar/2000.f, 0.5f));
 	
