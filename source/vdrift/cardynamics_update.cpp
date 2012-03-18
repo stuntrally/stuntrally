@@ -182,6 +182,7 @@ void CARDYNAMICS::DebugPrint ( std::ostream & out, bool p1, bool p2, bool p3, bo
 				" wh: " << inFluidsWh[0].size() << inFluidsWh[1].size() << inFluidsWh[2].size() << inFluidsWh[3].size() << std::endl;
 		out.precision(2);
 		out << "wh fl H: " << whH[0] << " " << whH[1] << " " << whH[2] << " " << whH[3] << " " << std::endl;
+		out.precision(4);
 		out << std::endl;
 	#endif
 

@@ -427,8 +427,7 @@ void App::UpdateHUD(int carId, CarModel* pCarM, CAR* pCar, float time, Viewport*
 		std::list<CarModel*> cms;  // sorted list
 		for (int o=0; o < carModels.size(); ++o)
 		{	// cars only
-			if (carModels[o]->eType == CarModel::CT_GHOST /*|| carModels[o]->eType == CarModel::CT_REPLAY*/)
-			{}else
+			if (carModels[o]->eType != CarModel::CT_GHOST)
 			{	if (bRplPlay)
 					carModels[o]->trackPercent = newPosInfos[o].percent;
 				cms.push_back(carModels[o]);	}
@@ -438,7 +437,7 @@ void App::UpdateHUD(int carId, CarModel* pCarM, CAR* pCar, float time, Viewport*
 		
 		for (int o=0; o < carModels.size(); ++o)
 		{	// add ghost last
-			if (carModels[o]->eType == CarModel::CT_GHOST /*|| carModels[o]->eType == CarModel::CT_REPLAY*/)
+			if (carModels[o]->eType == CarModel::CT_GHOST)
 			{	carModels[o]->trackPercent = newPosInfos[o].percent;  // ghost,rpl
 				cms.push_back(carModels[o]);	}
 		}
@@ -456,9 +455,7 @@ void App::UpdateHUD(int carId, CarModel* pCarM, CAR* pCar, float time, Viewport*
 				bool bGhostVis = (ghplay.GetNumFrames() > 0) && pSet->rpl_ghost;
 				bool bGhEmpty = bGhost && !bGhostVis;
 
-				if (bGhost /*|| cm->eType == CarModel::CT_REPLAY*/)
-				{}//	cm->trackPercent = newPosInfos[o].percent;  // ghost,rpl
-				else
+				if (!bGhost)
 					cm->UpdTrackPercent();
 
 				if (cm == pCarM || bGhEmpty)  // no dist to self or to empty ghost
@@ -484,7 +481,7 @@ void App::UpdateHUD(int carId, CarModel* pCarM, CAR* pCar, float time, Viewport*
 				}
 				
 				///  Lap Time  pos (1)
-				//if (1||mClient)
+				//if (mClient)
 				{
 					float t = 0.f;  int lap = -1;
 					if (!bGhost)
@@ -494,9 +491,8 @@ void App::UpdateHUD(int carId, CarModel* pCarM, CAR* pCar, float time, Viewport*
 						lap = pGame->timer.GetPlayerCurrentLap(cm->iIndex);  // not o, sorted index
 					}
 					bool end = pGame->timer.GetCurrentLap(cm->iIndex) >= pSet->game.num_laps;
-					hudOpp[o][2]->setCaption(//cm->sDispName
-						//+ "   " + toStr(lap) + " " + GetTimeString(t)  // too ?
-						//+ "  (" + (end ? toStr(cm->iWonPlace) : "-") +")");
+					hudOpp[o][2]->setCaption(
+						//+ "   " + toStr(lap) + " " + GetTimeString(t)
 						+ end ? cm->sDispName + "  (" + toStr(cm->iWonPlace) + ")" : cm->sDispName);
 				}
 				//else

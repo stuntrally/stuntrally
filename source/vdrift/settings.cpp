@@ -160,7 +160,7 @@ SETTINGS::SETTINGS() :  ///  Defaults
 	loadingbackground(true),
 	x11_capture_mouse(false), x11_hwmouse(false),
 	//  network
-	nickname("StuntMan"),
+	nickname("Player"),
 	master_server_address("localhost"),
 	master_server_port(protocol::DEFAULT_PORT),
 	local_port(protocol::DEFAULT_PORT),
