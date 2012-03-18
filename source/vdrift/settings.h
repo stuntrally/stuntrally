@@ -81,9 +81,10 @@ public:
 	//  compositor
 	bool bloom, hdr, motionblur, all_effects;
 	float bloomintensity, bloomorig, motionblurintensity;
+	float depthOfFieldFocus, depthOfFieldFar;
 	//  video
 	int windowx, windowy, fsaa;
-	bool fullscreen, vsync, ssaa, ssao, godrays, softparticles;
+	bool fullscreen, vsync, ssaa, ssao, godrays, softparticles, dof;
 	std::string buffer, rendersystem;
 	
 	//  replay

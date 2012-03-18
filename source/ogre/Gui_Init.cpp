@@ -219,11 +219,17 @@ void App::InitGui()
 	Chk("softparticles", chkVidSoftParticles, pSet->softparticles);
 	if (!MaterialGenerator::MRTSupported())
 		mGUI->findWidget<Button>("softparticles")->setEnabled(false);
-	//Chk("godrays", chkVidGodRays, pSet->godrays);
+	Chk("DepthOfField", chkVidDepthOfField, pSet->dof);
+	if (!MaterialGenerator::MRTSupported())
+		mGUI->findWidget<Button>("DepthOfField")->setEnabled(false);
+	Chk("godrays", chkVidGodRays, pSet->godrays);
+	if (!MaterialGenerator::MRTSupported())
+		mGUI->findWidget<Button>("godrays")->setEnabled(false);
 
 	Slv(BloomInt,	pSet->bloomintensity);
 	Slv(BloomOrig,	pSet->bloomorig);
-	Slv(BlurIntens, pSet->motionblurintensity);
+	Slv(DepthOfFieldFocus, powf(pSet->depthOfFieldFocus/2000.f, 0.5f));
+	Slv(DepthOfFieldFar,   powf(pSet->depthOfFieldFar/2000.f, 0.5f));
 	
 	Chk("FullScreen", chkVidFullscr, pSet->fullscreen);
 	Chk("VSync", chkVidVSync, pSet->vsync);

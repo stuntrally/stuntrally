@@ -211,13 +211,14 @@ void BaseApp::refreshCompositor(bool disableAll)
 		{
 			CompositorManager::getSingleton().setCompositorEnabled((*it), "ssao", false);
 			CompositorManager::getSingleton().setCompositorEnabled((*it), "SoftParticles", false);
+			CompositorManager::getSingleton().setCompositorEnabled((*it), "DepthOfField", false);
+			CompositorManager::getSingleton().setCompositorEnabled((*it), "GodRays", false);
 			CompositorManager::getSingleton().setCompositorEnabled((*it), "gbufferFinalizer", false);
 		}
 		else
 		{
 			CompositorManager::getSingleton().setCompositorEnabled((*it), "ssaoNoMRT", false);
 		}
-		CompositorManager::getSingleton().setCompositorEnabled((*it), "GodRays", false);
 		CompositorManager::getSingleton().setCompositorEnabled((*it), "Motion Blur", false);
 		CompositorManager::getSingleton().setCompositorEnabled((*it), "SSAA", false);
 		CompositorManager::getSingleton().setCompositorEnabled((*it), UI_RENDER, false);
@@ -272,13 +273,14 @@ void BaseApp::refreshCompositor(bool disableAll)
 		{
 			CompositorManager::getSingleton().setCompositorEnabled((*it), "ssao", pSet->ssao);
 			CompositorManager::getSingleton().setCompositorEnabled((*it), "SoftParticles", pSet->softparticles);
-			CompositorManager::getSingleton().setCompositorEnabled((*it), "gbufferFinalizer", pSet->ssao && !pSet->softparticles);
+			CompositorManager::getSingleton().setCompositorEnabled((*it), "DepthOfField", pSet->dof);
+			CompositorManager::getSingleton().setCompositorEnabled((*it), "GodRays", pSet->godrays);
+			CompositorManager::getSingleton().setCompositorEnabled((*it), "gbufferFinalizer", NeedMRTBuffer() && !pSet->softparticles);
 		}
 		else
 		{
 			CompositorManager::getSingleton().setCompositorEnabled((*it), "ssaoNoMRT", pSet->ssao);
 		}
-		CompositorManager::getSingleton().setCompositorEnabled((*it), "GodRays", pSet->godrays);
 
                 CompositorManager::getSingleton().setCompositorEnabled((*it), UI_RENDER, AnyEffectEnabled());
 	}
@@ -287,12 +289,12 @@ void BaseApp::refreshCompositor(bool disableAll)
 bool BaseApp::AnyEffectEnabled()
 {
 	//any new effect need to be added here to have UI Rendered on it
-	return pSet->all_effects && (pSet->softparticles || pSet->bloom || pSet->hdr || pSet->motionblur || pSet->ssaa || pSet->ssao || pSet->godrays);
+	return pSet->all_effects && (pSet->softparticles || pSet->bloom || pSet->hdr || pSet->motionblur || pSet->ssaa || pSet->ssao || pSet->godrays || pSet->dof);
 }
 //-------------------------------------------------------------------------------------
 bool BaseApp::NeedMRTBuffer()
 {
-	return pSet->all_effects && (pSet->ssao || pSet->softparticles);
+	return pSet->all_effects && (pSet->ssao || pSet->softparticles || pSet->dof || pSet->godrays);
 }
 //-------------------------------------------------------------------------------------
 void BaseApp::recreateCompositor()
@@ -315,6 +317,7 @@ void BaseApp::recreateCompositor()
 		mRoot->addResourceLocation(sPath + "/ssaa", "FileSystem", "Effects");
 		mRoot->addResourceLocation(sPath + "/ssao", "FileSystem", "Effects");
 		mRoot->addResourceLocation(sPath + "/softparticles", "FileSystem", "Effects");
+		mRoot->addResourceLocation(sPath + "/dof", "FileSystem", "Effects");
 		mRoot->addResourceLocation(sPath + "/godrays", "FileSystem", "Effects");
 		ResourceGroupManager::getSingleton().initialiseResourceGroup("Effects");
 	}
@@ -351,6 +354,12 @@ void BaseApp::recreateCompositor()
 		mSoftParticlesLogic = new SoftParticlesLogic();
 		mSoftParticlesLogic->setApp(this);
 		CompositorManager::getSingleton().registerCompositorLogic("SoftParticles", mSoftParticlesLogic);
+	}
+	if (!mDepthOfFieldLogic) 
+	{
+		mDepthOfFieldLogic = new DepthOfFieldLogic();
+		mDepthOfFieldLogic->setApp(this);
+		CompositorManager::getSingleton().registerCompositorLogic("DepthOfField", mDepthOfFieldLogic);
 	}
 	if (!mGBufferLogic) 
 	{
@@ -457,6 +466,7 @@ void BaseApp::recreateCompositor()
 		{
 			CompositorManager::getSingleton().addCompositor((*it), "ssao");
 			CompositorManager::getSingleton().addCompositor((*it), "SoftParticles");
+			CompositorManager::getSingleton().addCompositor((*it), "DepthOfField");
 			CompositorManager::getSingleton().addCompositor((*it), "gbufferFinalizer");
 		}
 		else
@@ -493,6 +503,7 @@ void BaseApp::Run( bool showDialog )
 BaseApp::BaseApp()
 	:mRoot(0), mSceneMgr(0), mWindow(0), mHDRLogic(0), mMotionBlurLogic(0),mSSAOLogic(0)
 	,mGodRaysLogic(0), mSoftParticlesLogic(0), mGBufferLogic(0)
+	,mDepthOfFieldLogic(0)
 	,mShaderGenerator(0),mMaterialMgrListener(0)
 	,mShowDialog(1), mShutDown(false), bWindowResized(0), bFirstRenderFrame(true)
 	,mInputManager(0), mMouse(0), mKeyboard(0), mOISBsys(0)

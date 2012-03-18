@@ -643,8 +643,16 @@ void MaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::StrStrea
 		//	outStream << "oColor1 = oColor1 * alpha;";    
 		//}
 		outStream <<  "	float depth = texCoord.z / far; \n";
-		outStream <<  "oColor2 = float4(depth); \n";
-		
+		//oColor2.y is occluders for godrays
+		if(StringUtil::startsWith(this->mDef->getName(), "sky/"))
+		{
+			outStream <<  "float Luminance = (0.2126*diffuseTex.r) + (0.7152*diffuseTex.g) + (0.0722*diffuseTex.b); \n";	
+			outStream <<  "oColor2 = float4(depth,Luminance*0.3,1,1); \n";	
+		}
+		else
+		{
+			outStream <<  "oColor2 = float4(depth,0,1,1); \n";
+		}
 	}
 	outStream << 
 		"} \n";

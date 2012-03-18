@@ -12,11 +12,11 @@
 #define LogR(a)
 #endif
 
-#include "../ogre/common/QTimer.h"
 #include <OgreTerrain.h>
 #include <OgreMeshManager.h>
 #include <OgreEntity.h>
 using namespace Ogre;
+#include "../ogre/common/QTimer.h"
 
 
 //---------------------------------------------------------------------------------------------------------------

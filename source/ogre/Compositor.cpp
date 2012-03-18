@@ -12,6 +12,7 @@
 #include <OgreGpuProgramParams.h>
 #include "SplitScreen.h"
 #include "common/MaterialGen/MaterialFactory.h"
+#include "../vdrift/settings.h"
 
 class MotionBlurListener : public Ogre::CompositorInstance::Listener
 {
@@ -295,10 +296,6 @@ public:
 	virtual void notifyMaterialRender(Ogre::uint32 pass_id, Ogre::MaterialPtr &mat);
 
 	Ogre::Vector4 SunScreenSpacePosition;
-private:
-	Ogre::GpuProgramParametersSharedPtr params1;
-	Ogre::GpuProgramParametersSharedPtr params2;
-	Ogre::GpuProgramParametersSharedPtr params3;
 
 };
 
@@ -326,13 +323,13 @@ GodRaysListener::~GodRaysListener()
 
 void GodRaysListener::notifyMaterialSetup(Ogre::uint32 pass_id, Ogre::MaterialPtr &mat)
 {
-	if (pass_id == 1)
+/*	if (pass_id == 1)
 		params1 = mat->getTechnique(0)->getPass(0)->getVertexProgramParameters();
 	else if (pass_id == 2)
 		params2 = mat->getTechnique(0)->getPass(0)->getVertexProgramParameters();
 	if (pass_id == 3)
 		params3 = mat->getTechnique(0)->getPass(0)->getVertexProgramParameters();
-
+*/
 }
 void clamp(Ogre::Vector2 &v)  {
 	v.x = v.x < -1 ? -1 : (v.x > 1 ? 1 : v.x);
@@ -341,7 +338,13 @@ void clamp(Ogre::Vector2 &v)  {
 
 void GodRaysListener::notifyMaterialRender(Ogre::uint32 pass_id, Ogre::MaterialPtr &mat)
 {
-
+	if(pass_id !=1 
+		&& pass_id !=2
+		&& pass_id !=3
+		)
+	{
+		return ;
+	}
 	 // this is the camera you're using
     #ifndef ROAD_EDITOR
 	Ogre::Camera *cam = mApp->mSplitMgr->mCameras.front();
@@ -351,28 +354,35 @@ void GodRaysListener::notifyMaterialRender(Ogre::uint32 pass_id, Ogre::MaterialP
 
 	//update the sun position
 	Ogre::Light* sun =((App*)mApp)->sun;
+	Ogre::GpuProgramParametersSharedPtr params= mat->getTechnique(0)->getPass(0)->getVertexProgramParameters();
+	Ogre::GpuProgramParametersSharedPtr fparams= mat->getTechnique(0)->getPass(0)->getFragmentProgramParameters();
+	//disable god rays when the sun is not facing us
+	float enable=0.0f;
 	if(sun != NULL)
 	{
-		Ogre::Vector3 sunPosition = sun->getDirection() *100;//sun->_getDerivedOrientation() * sun->_getDerivedPosition();
-		//if(cam->getPointExtrusionDistance(sun) > 0)
+		Ogre::Vector3 sunPosition = sun->getDirection() *100;
+		Ogre::Vector3 worldViewPosition = cam->getViewMatrix() * sunPosition;
+		Ogre::Vector3 hcsPosition = cam->getProjectionMatrix() * worldViewPosition;
+		if((hcsPosition.x>1 && hcsPosition.y>1)
+			|| (hcsPosition.x<-1 && hcsPosition.y<-1)
+			|| (hcsPosition.z<1.0f))
 		{
-			Ogre::Vector3 worldViewPosition = cam->getViewMatrix() * sunPosition;
-			Ogre::Vector3 hcsPosition = cam->getProjectionMatrix() * worldViewPosition;
-			Ogre::Vector2 sunScreenSpacePosition = Ogre::Vector2(0.5f + (0.5f * hcsPosition.x), 0.5f + (0.5f * -hcsPosition.y));
-			clamp(sunScreenSpacePosition);
-			SunScreenSpacePosition = Ogre::Vector4 ( sunScreenSpacePosition.x, sunScreenSpacePosition.y, 0, 1 );
+			SunScreenSpacePosition =Ogre::Vector4 ( 0, 0, 0, 1 );
 		}
-	//	else
+		else
 		{
-			//SunScreenSpacePosition =Ogre::Vector4 ( 0, 0, 0, 1 );
+				
+			
+		Ogre::Vector2 sunScreenSpacePosition = Ogre::Vector2(0.5f + (0.5f * hcsPosition.x), 0.5f + (0.5f * -hcsPosition.y));
+		clamp(sunScreenSpacePosition);
+		SunScreenSpacePosition = Ogre::Vector4 ( sunScreenSpacePosition.x, sunScreenSpacePosition.y, 0, 1 );
+		enable=1.0;
+			
 		}
 	}
-	if (pass_id == 1)
-		params1->setNamedConstant("lightPosition", SunScreenSpacePosition);
-	else if (pass_id == 2)
-		params2->setNamedConstant("lightPosition", SunScreenSpacePosition);
-	if (pass_id == 3)
-		params3->setNamedConstant("lightPosition", SunScreenSpacePosition);	 
+	params->setNamedConstant("lightPosition", SunScreenSpacePosition);
+	fparams->setNamedConstant("enableEffect", enable);
+	
 }
 
 class GBufferListener: public Ogre::CompositorInstance::Listener
@@ -466,4 +476,117 @@ void SoftParticlesListener::notifyMaterialSetup(Ogre::uint32 pass_id, Ogre::Mate
 void SoftParticlesListener::notifyMaterialRender(Ogre::uint32 pass_id, Ogre::MaterialPtr &mat)
 {
 
+}
+
+
+class DepthOfFieldListener: public Ogre::CompositorInstance::Listener
+{
+protected:
+public:
+	DepthOfFieldListener(BaseApp * app);
+	virtual ~DepthOfFieldListener();
+	virtual void notifyMaterialSetup(Ogre::uint32 pass_id, Ogre::MaterialPtr &mat);
+	virtual void notifyMaterialRender(Ogre::uint32 pass_id, Ogre::MaterialPtr &mat);
+	BaseApp * mApp;
+	int mViewportWidth,mViewportHeight;
+private:
+
+};
+
+Ogre::CompositorInstance::Listener* DepthOfFieldLogic::createListener(Ogre::CompositorInstance* instance)
+{
+	DepthOfFieldListener* listener = new DepthOfFieldListener(mApp);
+	Ogre::Viewport* vp = instance->getChain()->getViewport();
+	listener->mViewportWidth = vp->getActualWidth();
+	listener->mViewportHeight = vp->getActualHeight();
+	return listener;
+}
+
+DepthOfFieldListener::DepthOfFieldListener(BaseApp* app)
+{
+	mApp = app;
+	
+}
+DepthOfFieldListener::~DepthOfFieldListener()
+{
+}
+
+void DepthOfFieldLogic::setApp(BaseApp* app)
+{
+	mApp = app;
+}
+
+
+void DepthOfFieldListener::notifyMaterialSetup(Ogre::uint32 pass_id, Ogre::MaterialPtr &mat)
+{
+	if(pass_id == 1)
+	{
+		float blurScale =.5f;
+
+		Ogre::Vector4 pixelSize(1.0f / (mViewportWidth * blurScale), 1.0f / (mViewportHeight * blurScale), 0.0f, 0.0f);
+		
+		mat->load();
+		Ogre::Pass *pass = mat->getBestTechnique()->getPass(0);
+        Ogre::GpuProgramParametersSharedPtr params = pass->getFragmentProgramParameters();
+    
+	   if (params->_findNamedConstantDefinition("pixelSize"))
+			params->setNamedConstant("pixelSize", pixelSize);
+     
+	}
+	else if(pass_id == 2)
+	{
+		float blurScale =.5f;
+		Ogre::Vector4  pixelSize(1.0f / mViewportWidth, 1.0f / mViewportHeight,1.0f / (mViewportWidth * blurScale), 1.0f / (mViewportHeight * blurScale) );
+
+		Ogre::Pass *pass = mat->getBestTechnique()->getPass(0);
+        Ogre::GpuProgramParametersSharedPtr params = pass->getFragmentProgramParameters();
+    
+	   	if (params->_findNamedConstantDefinition("pixelSize"))
+			params->setNamedConstant("pixelSize", pixelSize);
+
+	      // this is the camera you're using
+        #ifndef ROAD_EDITOR
+		Ogre::Camera *cam = mApp->mSplitMgr->mCameras.front();
+		#else
+		Ogre::Camera *cam = mApp->mCamera;
+		#endif
+       
+		if (params->_findNamedConstantDefinition("far"))
+            params->setNamedConstant("far", cam->getFarClipDistance());
+		
+		if (params->_findNamedConstantDefinition("dofparams"))
+		{
+			Ogre::Vector4 dofParams(0.0f,mApp->pSet->depthOfFieldFocus,mApp->pSet->depthOfFieldFar,1.0);
+			params->setNamedConstant("dofparams", dofParams);
+		}
+     }
+}
+
+
+void DepthOfFieldListener::notifyMaterialRender(Ogre::uint32 pass_id, Ogre::MaterialPtr &mat)
+{
+    if(pass_id == 2)
+	{
+		float blurScale =.5f;
+		Ogre::Vector4  pixelSize(1.0f / mViewportWidth, 1.0f / mViewportHeight,1.0f / (mViewportWidth * blurScale), 1.0f / (mViewportHeight * blurScale) );
+
+		Ogre::Pass *pass = mat->getBestTechnique()->getPass(0);
+        Ogre::GpuProgramParametersSharedPtr params = pass->getFragmentProgramParameters();
+    
+	   	if (params->_findNamedConstantDefinition("pixelSize"))
+			params->setNamedConstant("pixelSize", pixelSize);
+
+	    // this is the camera you're using
+        #ifndef ROAD_EDITOR
+		Ogre::Camera *cam = mApp->mSplitMgr->mCameras.front();
+		#else
+		Ogre::Camera *cam = mApp->mCamera;
+		#endif
+       		
+		if (params->_findNamedConstantDefinition("dofparams"))
+		{
+			Ogre::Vector4 dofParams(0.0f,mApp->pSet->depthOfFieldFocus,mApp->pSet->depthOfFieldFar,1.0);
+			params->setNamedConstant("dofparams", dofParams);
+		}
+     }
 }

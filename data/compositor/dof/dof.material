@@ -1,0 +1,85 @@
+
+vertex_program dof_vs cg
+{
+    source dof.cg
+    profiles vs_4_0 vs_1_1 arbvp1
+    entry_point dof_vs
+    default_params
+    {
+        param_named_auto wvp worldviewproj_matrix
+    }
+}
+
+fragment_program DoF_Gaussian3x3FP cg
+{
+  source dof.cg
+  entry_point Gaussian3x3_ps
+	profiles ps_4_0 ps_2_x arbfp1
+}
+
+fragment_program DoF_DepthOfFieldFP cg
+{
+  source dof.cg
+  entry_point DepthOfField_ps
+  profiles ps_4_0 ps_3_0 arbfp1
+}
+
+material DoF_Gaussian3x3
+{
+  technique HLSL
+  {
+    pass
+    {
+      vertex_program_ref dof_vs
+      {
+      }
+	  fragment_program_ref DoF_Gaussian3x3FP
+      {
+      }
+
+      texture_unit sourceTex
+      {
+       texture white.png
+				 tex_address_mode clamp
+           filtering bilinear
+           }
+    }
+  }
+}
+
+material DoF_DepthOfField
+{
+  technique
+  {
+    pass
+    {
+      vertex_program_ref dof_vs
+      {
+      }
+      fragment_program_ref DoF_DepthOfFieldFP
+      {
+      }
+
+      texture_unit sceneTex
+      {
+       texture white.png
+				 tex_address_mode clamp
+           filtering bilinear
+           }
+
+      texture_unit depthTex
+      {
+        texture white.png
+				tex_address_mode clamp
+           filtering bilinear
+           }
+
+      texture_unit blurTex
+      {
+       texture white.png
+				 tex_address_mode clamp
+           filtering bilinear
+           }
+    }
+  }
+}

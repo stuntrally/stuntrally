@@ -383,6 +383,10 @@ void App::chkVidSoftParticles(WP wp)
 {		
 	ChkEv(softparticles);  refreshCompositor();
 }
+void App::chkVidDepthOfField(WP wp)
+{		
+	ChkEv(dof);  refreshCompositor();
+}
 void App::chkVidGodRays(WP wp)
 {		
 	ChkEv(godrays);  refreshCompositor();
@@ -405,8 +409,18 @@ void App::slBlurIntens(SL)
 	if (valBlurIntens){	valBlurIntens->setCaption(fToStr(v,2,4));  }
 	// if (bGI)  refreshCompositor();   // intensity is set every frame in UpdateHUD
 }
-
-
+void App::slDepthOfFieldFocus(SL)
+{
+	Real v = 2000.f * powf(val/res, 2.f);  if (bGI)  pSet->depthOfFieldFocus = v;
+	if (valDepthOfFieldFocus)	valDepthOfFieldFocus->setCaption(fToStr(v,0,4));
+	// if (bGI)  refreshCompositor();   // intensity is set every frame in UpdateHUD
+}
+void App::slDepthOfFieldFar(SL)
+{
+	Real v = 2000.f * powf(val/res, 2.f);  if (bGI)  pSet->depthOfFieldFar = v;
+	if (valDepthOfFieldFar)		valDepthOfFieldFar->setCaption(fToStr(v,0,4));
+	// if (bGI)  refreshCompositor();   // intensity is set every frame in UpdateHUD
+}
 
 //-----------------------------------------------------------------------------------------------------------
 //  Key pressed

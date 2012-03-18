@@ -58,13 +58,14 @@ public:
 	class SSAOLogic* mSSAOLogic;
 	class GodRaysLogic* mGodRaysLogic;
 	class SoftParticlesLogic* mSoftParticlesLogic;
+	class DepthOfFieldLogic* mDepthOfFieldLogic;
 	class GBufferLogic* mGBufferLogic;
 	void recreateCompositor();
 	bool AnyEffectEnabled();
 	bool NeedMRTBuffer();
 	// motion blur
 	float motionBlurIntensity;
-	
+
 	class SETTINGS* pSet;
 	
 	MaterialFactory* materialFactory; // material generation

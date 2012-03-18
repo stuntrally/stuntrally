@@ -20,7 +20,7 @@
 	You should have received a copy of the GNU Lesser General Public License
 	along with MyGUI.  If not, see <http://www.gnu.org/licenses/>.
 */
-
+#include "pch.h"
 #include "MyGUI_Precompiled.h"
 #include "MultiList2.h"
 #include "MyGUI_MultiListItem.h"

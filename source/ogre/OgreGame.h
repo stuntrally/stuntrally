@@ -285,6 +285,7 @@ protected:
 	SLV(VolMaster);  SLV(VolEngine);  SLV(VolTires);  SLV(VolEnv);
 	SLV(CarClrH);  SLV(CarClrS);  SLV(CarClrV);  // car clr
 	SLV(BloomInt);  SLV(BloomOrig);  SLV(BlurIntens);  // video
+	SLV(DepthOfFieldFocus);  SLV(DepthOfFieldFar);  // dof
 	SLV(NumLaps);  // setup
 	
 	//  checks
@@ -297,6 +298,7 @@ protected:
 		chkMouseCapture(WP), chkOgreDialog(WP), chkAutoStart(WP), chkEscQuits(WP), chkBltLines(WP), chkLoadPics(WP),  // startup
 		chkVidEffects(WP), chkVidBloom(WP), chkVidHDR(WP), chkVidBlur(WP), UpdBloomVals(), chkVidSSAO(WP), // video
 		chkVidSoftParticles(WP),chkVidGodRays(WP), chkWaterReflect(WP), chkWaterRefract(WP),
+		chkVidDepthOfField(WP),
 		chkVegetCollis(WP), chkCarCollis(WP);  //car
 	void chkUseImposters(WP wp);
 

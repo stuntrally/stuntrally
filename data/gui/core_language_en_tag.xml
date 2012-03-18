@@ -281,9 +281,12 @@
 	<Tag name="ssao">SSAO</Tag>
 	<Tag name="godrays">God Rays</Tag>
 	<Tag name="softparticles">Soft Particles</Tag>
+	<Tag name="DepthOfField">Depth of Field</Tag>
+  <Tag name="Near">Near</Tag>
+  <Tag name="Far">Far</Tag>
 
-	
-	<!--  Graphics  -->
+
+  <!--  Graphics  -->
 	<Tag name="Graphics">Graphics</Tag>
 	<Tag name="NeedNewGame">* need New Game</Tag>
 	<Tag name="RestartApply">Restart game, to apply *changes.</Tag>

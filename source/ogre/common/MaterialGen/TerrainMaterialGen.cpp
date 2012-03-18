@@ -1378,7 +1378,7 @@ namespace Ogre
 			//softparticles depth
 			outStream <<  "float4 worldPosition = mul(wMat, float4(position.xyz,1.0)); \n";
 			outStream <<  "	float depth = saturate(length(worldPosition.xyz - cameraPositionWorldSpace.xyz) / far);";
-			outStream <<  "oColor2 = float4(depth); \n";
+			outStream <<  "oColor2 = float4(depth,0,1,1); \n";
 	
 		}
 		// Final return
