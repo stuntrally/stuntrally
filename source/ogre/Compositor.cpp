@@ -565,5 +565,28 @@ void DepthOfFieldListener::notifyMaterialSetup(Ogre::uint32 pass_id, Ogre::Mater
 
 void DepthOfFieldListener::notifyMaterialRender(Ogre::uint32 pass_id, Ogre::MaterialPtr &mat)
 {
+    if(pass_id == 2)
+	{
+		float blurScale =.5f;
+		Ogre::Vector4  pixelSize(1.0f / mViewportWidth, 1.0f / mViewportHeight,1.0f / (mViewportWidth * blurScale), 1.0f / (mViewportHeight * blurScale) );
 
+		Ogre::Pass *pass = mat->getBestTechnique()->getPass(0);
+        Ogre::GpuProgramParametersSharedPtr params = pass->getFragmentProgramParameters();
+    
+	   	if (params->_findNamedConstantDefinition("pixelSize"))
+			params->setNamedConstant("pixelSize", pixelSize);
+
+	    // this is the camera you're using
+        #ifndef ROAD_EDITOR
+		Ogre::Camera *cam = mApp->mSplitMgr->mCameras.front();
+		#else
+		Ogre::Camera *cam = mApp->mCamera;
+		#endif
+       		
+		if (params->_findNamedConstantDefinition("dofparams"))
+		{
+			Ogre::Vector4 dofParams(0.0f,mApp->pSet->depthOfFieldFocus,mApp->pSet->depthOfFieldFar,1.0);
+			params->setNamedConstant("dofparams", dofParams);
+		}
+     }
 }
