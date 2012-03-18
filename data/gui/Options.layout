@@ -1631,7 +1631,7 @@
 							<Property key="TextColour" value="1.0 1.0 0.1"/>
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
-						<Widget type="Button" skin="Button" position="32 260 200 26" layer="Back" name="ApplyShaders">
+						<Widget type="Button" skin="Button" position="32 210 200 26" layer="Back" name="ApplyShaders">
 							<Property key="Caption" value="#{ApplyShaders}"/>
 							<Property key="Colour" value="0.7 0.85 1.0"/>
 							<UserString key="RelativeTo" value="OptionsWnd"/>
@@ -1780,7 +1780,7 @@
 					<Widget type="TabItem" skin="" position="2 24 738 372">
 						<Property key="Caption" value="#{Shadows}"/>
 						<UserString key="RelativeTo" value="OptionsWnd"/>
-						<Widget type="Button" skin="Button" position="32 206 200 26" layer="Back" name="Apply">
+						<Widget type="Button" skin="Button" position="32 210 200 26" layer="Back" name="Apply">
 							<Property key="Caption" value="#{ApplyShadows}"/>
 							<Property key="Colour" value="0.7 0.85 1.0"/>
 							<UserString key="RelativeTo" value="OptionsWnd"/>
@@ -1968,7 +1968,7 @@
 							<Property key="TextColour" value="0.7 0.85 1.0"/>
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
-						<Widget type="Button" skin="Button" position="32 140 200 26" layer="Back" name="ApplyShadersWater">
+						<Widget type="Button" skin="Button" position="32 150 200 26" layer="Back" name="ApplyShadersWater">
 							<Property key="Caption" value="#{ApplyShaders}"/>
 							<Property key="Colour" value="0.7 0.85 1.0"/>
 							<UserString key="RelativeTo" value="OptionsWnd"/>
@@ -1987,12 +1987,12 @@
 							<Property key="MoveToClick" value="true"/>
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
-						<Widget type="Button" skin="CheckBox" position="30 50 146 24" name="ParticlesOn">
+						<Widget type="Button" skin="CheckBox" position="32 50 146 24" name="ParticlesOn">
 							<Property key="Caption" value="#{Particles}"/>
 							<Property key="TextColour" value="1 0.9 0"/>
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
-						<Widget type="Button" skin="CheckBox" position="30 80 146 24" name="TrailsOn">
+						<Widget type="Button" skin="CheckBox" position="32 80 146 24" name="TrailsOn">
 							<Property key="Caption" value="#{TireTrails}*"/>
 							<Property key="TextColour" value="1.0 0.8 0.6"/>
 							<UserString key="RelativeTo" value="OptionsWnd"/>

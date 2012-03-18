@@ -12,14 +12,14 @@ using namespace Ogre;
 WaterRTT::WaterRTT() : 
 	mCamera(0), mReflectionTarget(0), mRefractionTarget(0),
 	mRTTSize(512), mReflect(true), mRefract(true),
-	mViewerCamera(0), mChangedSettings(1)
+	mViewerCamera(0), mChangedSettings(1), mSceneMgr(0)
 {
 	mWaterPlane = Plane(Vector3::UNIT_Y, 0);
 }
 
 void WaterRTT::create()
 {
-	if (!mSceneMgr) return;
+	if (!mSceneMgr)  return;
 	mCamera = mSceneMgr->createCamera("PlaneReflectionRefraction");
 	if (mViewerCamera)
 	{
