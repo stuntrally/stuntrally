@@ -261,6 +261,7 @@ void App::timeInfo(ClientID id, uint8_t lap, double time)
 	
 	//pGame->timer.Lap(id, 0,0, true, pSet->game.trackreverse/*<, pSet->boost_type*/);  //pGame->cartimerids[pCar] ?
 	pGame->timer.LapNetworkTime(id, time);  // is the same as above but sets client's time
+	carModels[id]->trackPercent = 0.f;
 	newPosInfos[id].percent = 0.f;
 }
 
