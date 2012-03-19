@@ -36,6 +36,7 @@ SplitScreenManager::SplitScreenManager(Ogre::SceneManager* sceneMgr, Ogre::Rende
 
 SplitScreenManager::~SplitScreenManager()
 {
+	delete mHUD;  mHUD = 0;
 	CleanUp();
 	mWindow->removeListener(this);
 }

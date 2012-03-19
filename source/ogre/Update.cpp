@@ -91,6 +91,7 @@ bool App::frameStart(Real time)
 	}
 
 	
+	#if 0
 	static Real ti = 0.f;  ti += time;
 	if (mSplitMgr && mSplitMgr->mHUD && !bLoading)
 	{
@@ -108,6 +109,7 @@ bool App::frameStart(Real time)
 			r1,	ColourValue(0,0.5,1),
 			r2,	ti * 40, Vector2(-1,-1));
 	}
+	#endif
 
 	if (bGuiReinit)  // after language change from combo
 	{	bGuiReinit = false;

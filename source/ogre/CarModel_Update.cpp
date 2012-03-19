@@ -136,7 +136,7 @@ void CarModel::Update(PosInfo& posInfo, float time)
 	//  car pos and rot
 	pMainNode->setPosition(posInfo.pos);
 	pMainNode->setOrientation(posInfo.rot);
-	if (fCam)
+	if (fCam && pSet->multi_thr == 1)
 		fCam->update(time, &posInfo);
 
 	//  upd rotY for minimap
