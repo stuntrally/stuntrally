@@ -363,10 +363,15 @@ void P2PGameClient::receiveEvent(net::NetworkTraffic const& e)
 				pi.ping = e.ping;
 				pi.loaded = true;
 				if (!m_playerInfo.loaded) break;
-				for (PeerMap::const_iterator it = m_peers.begin(); it != m_peers.end(); ++it)
-					if (!it->second.loaded) break;
+				bool start = true;
+				for (PeerMap::const_iterator it = m_peers.begin(); it != m_peers.end(); ++it) {
+					if (!it->second.loaded) {
+						start = false;
+						break;
+					}
+				}
 				lock.unlock(); // Mutex unlocked in callback to avoid dead-locks
-				m_callback->startRace();
+				if (start) m_callback->startRace();
 			}
 			break;
 		}
