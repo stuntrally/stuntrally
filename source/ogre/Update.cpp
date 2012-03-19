@@ -15,6 +15,8 @@
 #include <OgreMaterialManager.h>
 #include "common/Gui_Def.h"
 #include "common/MultiList2.h"
+#include "SplitScreen.h"
+#include "OgreRenderer2D.h"
 #include <MyGUI.h>
 using namespace Ogre;
 using namespace MyGUI;
@@ -41,17 +43,8 @@ void App::UpdThr()
 
 			if (!ret)
 				mShutDown = true;
-		#if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
-			Sleep(0);  // par
-		#endif
 		}
-		/*else
-		{	//  2nd test --
-			if (road) {  //--
-				if (grass)  grass->update();
-				if (trees)  trees->update();  }
-			Sleep(0);  // par
-		}/**/
+		boost::this_thread::sleep(boost::posix_time::milliseconds(5));  //par!?
 	}
 }
 
@@ -59,6 +52,63 @@ void App::UpdThr()
 
 bool App::frameStart(Real time)
 {
+	//  multi thread
+	if (pSet->multi_thr == 1 && pGame && !bLoading)
+	{
+		/// ???? ---------
+		static QTimer gtim;
+		gtim.update();
+		double dt = gtim.dt;
+		
+		/**/boost::mutex::scoped_lock(pGame->carposMutex);///
+		updatePoses(time);  //pGame->framerate
+
+		// Update cameras for all cars
+		for (int i=0; i < carModels.size(); ++i)
+		{
+			CarModel* cm = carModels[i];
+			//if (cm->fCam)
+			//	cm->fCam->update(/*pGame->framerate*//*dt*/
+			//		time, &newPosInfos[i]);
+		}
+
+		#if 0
+		if (carModels.size()>0 && carModels[0]->pMainNode)
+		{
+			static Vector3 old(0,0,0);
+			//Vector3 pos = carModels[0]->pMainNode->getPosition();
+			//Vector3 pos = carModels[0]->mCamera->getPosition();
+			//Vector3 pos = newPosInfos[0].pos;
+			Vector3 pos = (carModels[0]->pMainNode->getPosition() - carModels[0]->mCamera->getPosition())*20;
+			bool b = pos.x < -2.f;//pos.x < old.x;
+			String s=" ";
+			for (int i=0; i < (pos.x+2)*10; ++i)  s += "   ";
+			s += "|";
+			LogO("x= "+fToStr(pos.x,3,6)+/*"  z= "+fToStr(pos.z,3,6)+*/s+(b?" ################":""));
+			old = pos;
+		}
+		#endif
+	}
+
+	
+	static Real ti = 0.f;  ti += time;
+	if (mSplitMgr && mSplitMgr->mHUD && !bLoading)
+	{
+		//mSplitMgr->mHUD->drawLine(false,
+		//	Vector2(Math::RangeRandom(0,100),Math::RangeRandom(0,100)),
+		//	Vector2(Math::RangeRandom(200,300),Math::RangeRandom(200,300)), ColourValue(0,1,1,1), 1);
+
+		Rect r1(100,100,200,200), r2(0,0,10,10);
+		mSplitMgr->mHUD->drawImage(false, "carpos0.png", //"circleMini.png",
+			Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME,
+			r1,	ColourValue::White,
+			r2,	ti * 90, Vector2(-1,-1));
+		mSplitMgr->mHUD->drawImage(false, "carpos0.png",
+			Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME,
+			r1,	ColourValue(0,0.5,1),
+			r2,	ti * 40, Vector2(-1,-1));
+	}
+
 	if (bGuiReinit)  // after language change from combo
 	{	bGuiReinit = false;
 
@@ -195,22 +245,7 @@ bool App::frameStart(Real time)
 			updatePoses(time);  //pGame->framerate
 		}
 		
-
-		//  multi thread
-		if (pSet->multi_thr == 1)
-		{
-			/// ???? ---------
-			static QTimer gtim;
-			gtim.update();
-			double dt = gtim.dt;
-			
-			// Update cameras for all cars
-			for (std::vector<CarModel*>::iterator it=carModels.begin(); it!=carModels.end(); it++)
-				if ((*it)->fCam)
-					(*it)->fCam->update(pGame->framerate);
-					
-			updatePoses(time);  //pGame->framerate
-		}
+		///
 		
 		// align checkpoint arrow
 		// move in front of camera
@@ -304,6 +339,9 @@ void App::newPoses()
 {
 	if (!pGame)  return;
 	if (pGame->cars.size() == 0)  return;
+
+	/**/boost::mutex::scoped_lock(pGame->carposMutex);///
+
 	double rplTime = pGame->timer.GetReplayTime(0);
 	double lapTime = pGame->timer.GetPlayerTime(0);
 
@@ -647,7 +685,11 @@ void App::newPoses()
 				}	}
 		}	}
 
-		(*newPosIt) = posInfo;
+		
+		{
+			//**/boost::mutex::scoped_lock(pGame->carposMutex);///
+			(*newPosIt) = posInfo;
+		}
 		carMIt++;  newPosIt++;  carId++;  // next
 	}
 }
@@ -658,6 +700,7 @@ void App::newPoses()
 void App::updatePoses(float time)
 {
 	if (carModels.size() == 0)  return;
+	//**/boost::mutex::scoped_lock(pGame->carposMutex);///
 	
 	//  Update all carmodels with their newPosInfo
 	int i = 0;

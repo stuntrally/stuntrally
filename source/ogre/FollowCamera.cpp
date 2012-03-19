@@ -7,6 +7,7 @@
 #include "../vdrift/collision_contact.h"
 #include "../btOgre/BtOgreDebug.h"
 #include "btBulletCollisionCommon.h"
+#include "CarModel.h"
 
 #include <OgreCamera.h>
 #include <OgreSceneNode.h>
@@ -21,12 +22,14 @@ using namespace Ogre;
 ///  Update
 //-----------------------------------------------------------------------------------------------------
 
-void FollowCamera::update( Real time )
+void FollowCamera::update( Real time, PosInfo* posInf )
 {
 	if (!mGoalNode || !ca || !mCamera)  return;
 
-	Vector3 posGoal = mGoalNode ? mGoalNode->getPosition() : Vector3::UNIT_Y;
-	Quaternion orientGoal = mGoalNode ? mGoalNode->getOrientation() : Quaternion::IDENTITY;
+	//	  Vector3 posGoal = mGoalNode ? mGoalNode->getPosition() : Vector3::UNIT_Y;
+	//Quaternion orientGoal = mGoalNode ? mGoalNode->getOrientation() : Quaternion::IDENTITY;
+		  Vector3 posGoal = posInf ? posInf->pos : Vector3::UNIT_Y;
+	Quaternion orientGoal = posInf ? posInf->rot : Quaternion::IDENTITY;
 
 	const static Quaternion  qO = Quaternion(Degree(180),Vector3::UNIT_Z) * Quaternion(Degree(-90),Vector3::UNIT_Y),
 		qR = Quaternion(Degree(90),Vector3(0,1,0));

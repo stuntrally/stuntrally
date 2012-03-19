@@ -34,6 +34,7 @@ public:
 
 
 namespace Ogre {  class TerrainGroup;  class Camera;  class OverlayElement;  class SceneNode;  }
+class PosInfo;
 
 //#define CAM_BLT
 
@@ -62,7 +63,7 @@ public:
 	#endif
 	
 
-	void update(Ogre::Real time), updInfo(Ogre::Real time = 0);
+	void update(Ogre::Real time, PosInfo* pos), updInfo(Ogre::Real time = 0);
 	void Move( bool mbLeft, bool mbRight, bool mbMiddle, bool shift, Ogre::Real mx, Ogre::Real my, Ogre::Real mz );
 	Ogre::Real fMoveTime;
 

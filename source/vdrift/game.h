@@ -19,6 +19,7 @@
 #include "ai.h"
 
 #include "../ogre/common/QTimer.h"
+#include <boost/thread.hpp>
 
 
 class GAME
@@ -116,6 +117,8 @@ public:
 	GAME(std::ostream & info_out, std::ostream & err_out, SETTINGS* pSettings);
 
 	void Start(std::list <std::string> & args);
+
+	mutable boost::mutex carposMutex;
 };
 
 #endif

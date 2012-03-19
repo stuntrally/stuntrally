@@ -22,6 +22,7 @@
 #include <MyGUI.h>
 #include <OgreShadowCameraSetup.h>
 
+
 namespace Ogre {  class SceneNode;  class Root;  class SceneManager;  class RenderWindow;  class Viewport;  class Light;
 	class Terrain;  class TerrainGlobalOptions;  class TerrainGroup;  class TerrainPaging;  class PageManager;  }
 namespace Forests {  class PagedGeometry;  }
@@ -29,6 +30,7 @@ namespace BtOgre  {  class DebugDrawer;  }
 namespace MyGUI  {  class MultiList2;  }
 namespace OISB   {  class AnalogAxisAction;  }
 class MaterialFactory;
+
 
 class App : public BaseApp, public GameClientCallback, public MasterClientCallback //, public RenderTargetListener
 {

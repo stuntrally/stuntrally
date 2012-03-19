@@ -17,14 +17,14 @@
 #include <OgreLogManager.h>
 #include <OgreParticleSystem.h>
 #include <OgreParticleEmitter.h>
-
 #include <OgreRTShaderSystem.h>
+#include "OgreRenderer2D.h"
 
 using namespace Ogre;
 
 
 SplitScreenManager::SplitScreenManager(Ogre::SceneManager* sceneMgr, Ogre::RenderWindow* window, SETTINGS* set) :
-	pApp(0), mGuiViewport(0), mGuiSceneMgr(0), mHUDSceneMgr(0)
+	pApp(0), mGuiViewport(0), mGuiSceneMgr(0), mHUDSceneMgr(0), mHUD(0)
 {
 	mWindow = window;
 	mSceneMgr = sceneMgr;
@@ -154,6 +154,9 @@ void SplitScreenManager::Align()
 		mGuiSceneMgr = Ogre::Root::getSingleton().createSceneManager(ST_GENERIC);
 		Ogre::Camera* guiCam = mGuiSceneMgr->createCamera("GuiCam1");  // todo destroy !..
 		mGuiViewport = mWindow->addViewport(guiCam, 100);
+
+		if (!mHUD)
+			mHUD = new Renderer2D(mGuiViewport);
 
 		Ogre::RTShader::ShaderGenerator *mShaderGenerator = Ogre::RTShader::ShaderGenerator::getSingletonPtr();
 		if(mShaderGenerator != NULL)

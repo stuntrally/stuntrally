@@ -1223,6 +1223,14 @@
 					>
 				</File>
 				<File
+					RelativePath=".\source\ogre\OgreRenderer2D.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\source\ogre\OgreRenderer2D.h"
+					>
+				</File>
+				<File
 					RelativePath=".\data\gui\Options.layout"
 					>
 				</File>

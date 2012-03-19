@@ -483,11 +483,11 @@ if (!bAssignKey)
 	//  gui on/off  or close wnds
 	if (action("ShowOptions") && !alt)
 	{
-		if (mWndNetEnd->getVisible())  {  mWndNetEnd->setVisible(false);  // hide netw end
+		if (mWndNetEnd && mWndNetEnd->getVisible())  {  mWndNetEnd->setVisible(false);  // hide netw end
 			return false;	}
 		else
 		{
-			if (mWndChampEnd->getVisible())  mWndChampEnd->setVisible(false);  // hide champs end
+			if (mWndChampEnd && mWndChampEnd->getVisible())  mWndChampEnd->setVisible(false);  // hide champs end
 			toggleGui(true);  return false;
 		}
 	}

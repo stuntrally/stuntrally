@@ -35,6 +35,7 @@ public:
 	// Gui viewport & scene manager
 	Ogre::SceneManager* mGuiSceneMgr;
 	Ogre::Viewport* mGuiViewport;
+	class Renderer2D* mHUD;
 	
 	// Hud viewports & scene manager & cameras
 	std::list<Ogre::Viewport*> mHUDViewports;

@@ -130,8 +130,8 @@ public:
 	
 	//  access to vdrift stuff
 	GAME* pGame;
-private:
 	Ogre::Camera* mCamera;
+private:
 	
 	//  Scene, needed to get particle settings
 	Scene* sc;

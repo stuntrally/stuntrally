@@ -17,6 +17,7 @@
 #include <OgreSceneManager.h>
 #include <OgreOverlayManager.h>
 #include <OgreOverlayElement.h>
+#include "OgreRenderer2D.h"
 using namespace Ogre;
 
 #include <MyGUI_PointerManager.h>
