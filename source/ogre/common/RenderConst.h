@@ -11,13 +11,13 @@ const Ogre::uint8
 	RQG_Sky = Ogre::RENDER_QUEUE_SKIES_EARLY,	// 5
 	
 	RQG_BatchOpaque  = Ogre::RENDER_QUEUE_MAIN,	// 50  paged geom
-	RQG_BatchAlpha   = Ogre::RENDER_QUEUE_6,	// 60  paged geom transparent
+	RQG_BatchAlpha   = Ogre::RENDER_QUEUE_7,	// 70  paged geom transparent
 
-	RQG_Fluid        = Ogre::RENDER_QUEUE_6+4,
+	RQG_Fluid        = Ogre::RENDER_QUEUE_7+1,
 
-	RQG_RoadMarkers  = Ogre::RENDER_QUEUE_7,
+	RQG_RoadMarkers  = Ogre::RENDER_QUEUE_7+2,
 
-	RQG_CarGlass     = Ogre::RENDER_QUEUE_7,
+	RQG_CarGlass     = Ogre::RENDER_QUEUE_7+3,
 	
 	RQG_CarTrails    = Ogre::RENDER_QUEUE_8,	//trails after glass
 	
