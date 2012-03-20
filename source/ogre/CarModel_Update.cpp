@@ -137,7 +137,10 @@ void CarModel::Update(PosInfo& posInfo, float time)
 	pMainNode->setPosition(posInfo.pos);
 	pMainNode->setOrientation(posInfo.rot);
 	if (fCam && pSet->multi_thr == 1)
-		fCam->update(time, &posInfo);
+	{
+		//fCam->update(time, &posInfo);
+		fCam->Apply();
+	}
 
 	//  upd rotY for minimap
 	Quaternion q = posInfo.rot * Quaternion(Degree(90),Vector3(0,1,0));

@@ -64,6 +64,10 @@ public:
 	
 
 	void update(Ogre::Real time, PosInfo* pos), updInfo(Ogre::Real time = 0);
+	Ogre::Vector3 camPosFinal, camLookFinal;  Ogre::Quaternion camRotFinal;  // update fills this, but doesn't apply
+	bool manualOrient;
+	void Apply();  // apply sets mCamera's pos and rot
+
 	void Move( bool mbLeft, bool mbRight, bool mbMiddle, bool shift, Ogre::Real mx, Ogre::Real my, Ogre::Real mz );
 	Ogre::Real fMoveTime;
 

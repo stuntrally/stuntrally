@@ -24,7 +24,8 @@ using namespace Ogre;
 
 void FollowCamera::update( Real time, PosInfo* posInf )
 {
-	if (!mGoalNode || !ca || !mCamera)  return;
+	//if (!mGoalNode || !ca || !mCamera)  return;
+	if (!ca)  return;
 
 	//	  Vector3 posGoal = mGoalNode ? mGoalNode->getPosition() : Vector3::UNIT_Y;
 	//Quaternion orientGoal = mGoalNode ? mGoalNode->getOrientation() : Quaternion::IDENTITY;
@@ -38,15 +39,15 @@ void FollowCamera::update( Real time, PosInfo* posInf )
 	
     if (ca->mType == CAM_Car)	/* 3 Car - car pos & rot full */
     {
-		mCamera->setPosition( goalLook );
-		mCamera->setOrientation( orient );
+		camPosFinal = goalLook;
+		camRotFinal = orient;
 		updInfo(time);
 		return;
 	}
     if (ca->mType == CAM_Follow)  ofs = ca->mOffset;
     
 	Vector3  pos,goalPos;
-	pos     = mCamera->getPosition() - ofs;
+	pos     = camPosFinal - ofs;
 	goalPos = posGoal;
 	
 	Vector3  xyz;
@@ -59,7 +60,7 @@ void FollowCamera::update( Real time, PosInfo* posInf )
 		xyz = Vector3(x,y,z);  xyz *= ca->mDist;
 	}
 	
-	bool manualOrient = false;
+	manualOrient = false;
 	switch (ca->mType)
 	{
 		case CAM_Arena:		/* 2 Arena - free pos & rot */
@@ -98,8 +99,8 @@ void FollowCamera::update( Real time, PosInfo* posInf )
 			Quaternion  qy = Quaternion(ca->mYaw,Vector3(0,1,0));
 			goalPos += qq * (xyz + ca->mOffset);
 			
-			mCamera->setPosition( goalPos );
-			mCamera->setOrientation( qq * qy * Quaternion(Degree(-ca->mPitch),Vector3(1,0,0)) );
+			camPosFinal = goalPos;
+			camRotFinal = qq * qy * Quaternion(Degree(-ca->mPitch),Vector3(1,0,0));
 			manualOrient = true;
 		}	break;
 	}
@@ -111,16 +112,15 @@ void FollowCamera::update( Real time, PosInfo* posInf )
 		if (ca->mType ==  CAM_Arena)
 		{
 			Vector3  Pos(0,0,0), goalPos = ca->mOffset;
-			Pos = mCamera->getPosition();
+			Pos = camPosFinal;
 			Pos += (goalPos - Pos) * dtmul;
 			
 			static Radian  pitch(0), yaw(0);
 			pitch += (ca->mPitch - pitch) * dtmul;  yaw += (ca->mYaw - yaw) * dtmul;
 			
 			if (first)  {  Pos = goalPos;  pitch = ca->mPitch;  yaw = ca->mYaw;  first = false;  }
-			mCamera->setPosition( Pos );
-			mCamera->setOrientation(Quaternion::IDENTITY);
-			mCamera->pitch(pitch);  mCamera->yaw(yaw);
+			camPosFinal = Pos;
+			camRotFinal = Quaternion(Degree(pitch),Vector3(1,0,0)) * Quaternion(Degree(yaw),Vector3(0,1,0));
 			manualOrient = true;
 		}
 		else
@@ -130,7 +130,7 @@ void FollowCamera::update( Real time, PosInfo* posInf )
 			addPos = (goalPos - pos).normalisedCopy() * (goalPos - pos).length() * dtmul;
 			if (addPos.squaredLength() > (goalPos - pos).squaredLength())  addPos = goalPos - pos;
 			pos += addPos;
-			mCamera->setPosition( pos + ofs );
+			camPosFinal = pos + ofs;
 		
 			if (mGoalNode)  goalLook = posGoal + ofs;
 			if (first)	{	mLook = goalLook;  first = false;  }
@@ -167,10 +167,38 @@ void FollowCamera::update( Real time, PosInfo* posInf )
 	}
 	#endif
 	
-	moveAboveTerrain();
-	if (!manualOrient)
-		mCamera->lookAt( mLook );
+	//moveAboveTerrain();
+	//if (!manualOrient)
+	//	mCamera->lookAt( mLook );
+	camLookFinal = mLook;
 	updInfo(time);
+}
+
+
+//  prevent camera from going under ground.
+//-----------------------------------------------------------------------------------------------------
+void FollowCamera::moveAboveTerrain()
+{
+	if (!mTerrain || !mCamera)  return;
+
+	const static Real terOfs = 0.2f;  //  minimum distance above ground
+	Vector3 camPos = mCamera->getPosition();  // = camPosFinal ...
+	float h = mTerrain->getHeightAtWorldPosition(camPos);
+	if (h != 0.f)  // out of terrain
+	if (h + terOfs > camPos.y)
+		mCamera->setPosition(camPos.x, h + terOfs, camPos.z);  // camPosFinal = 
+}
+
+
+void FollowCamera::Apply()
+{
+	mCamera->setPosition(camPosFinal);
+	//mCamera->setOrientation(camRotFinal);
+	moveAboveTerrain();//
+	if (!manualOrient)
+		mCamera->lookAt( camLookFinal );
+	else
+		mCamera->setOrientation(camRotFinal);
 }
 
 
@@ -288,21 +316,6 @@ void FollowCamera::Move( bool mbLeft, bool mbRight, bool mbMiddle, bool shift, R
 			ca->mDist = 1.5;
 	}
 	ca->mDist  *= 1.0 - mzH * 0.1;
-}
-
-
-//  prevent camera from going under ground.
-//-----------------------------------------------------------------------------------------------------
-void FollowCamera::moveAboveTerrain()
-{
-	if (!mTerrain || !mCamera)  return;
-
-	const static Real terOfs = 0.2f;  //  minimum distance above ground
-	Vector3 camPos = mCamera->getPosition();
-	float h = mTerrain->getHeightAtWorldPosition(camPos);
-	if (h != 0.f)  // out of terrain
-	if (h + terOfs > camPos.y)
-		mCamera->setPosition(camPos.x, h + terOfs, camPos.z);
 }
 
 

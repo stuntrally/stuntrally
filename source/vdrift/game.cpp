@@ -330,9 +330,11 @@ void GAME::Tick(float deltat)
 		{
 			pOgreGame->newPoses();
 
-			if (settings->multi_thr != 1)  // == 0
-			{	//  single thread
-				pOgreGame->updatePoses(deltat);
+			//if (settings->multi_thr != 1)  // == 0
+			{
+				//  single thread
+				if (settings->multi_thr != 1)
+					pOgreGame->updatePoses(deltat);
 				
 				/// update all cameras
 				if (pOgreGame->carModels.size() > 0 && (!pause || pOgreGame->bRplPlay))  // replay can be paused and needs cam upd
@@ -342,7 +344,11 @@ void GAME::Tick(float deltat)
 					{
 						CarModel* cm = pOgreGame->carModels[i];
 						if (cm->fCam)
+						{
 							cm->fCam->update(framerate, &pOgreGame->newPosInfos[i]);
+							if (settings->multi_thr != 1)
+								cm->fCam->Apply();
+						}
 					}
 				}
 			}
