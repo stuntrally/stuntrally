@@ -373,7 +373,9 @@ void App::newPoses()
 			//  car
 			pos = frame.pos;  rot = frame.rot;  posInfo.speed = frame.speed;
 			posInfo.fboost = frame.fboost;  posInfo.steer = frame.steer;
-			posInfo.percent = frame.percent;  posInfo.braking = false;//
+			posInfo.percent = frame.percent;  posInfo.braking = frame.braking;
+			posInfo.fHitTime = frame.fHitTime;	posInfo.fParIntens = frame.fParIntens;	posInfo.fParVel = frame.fParVel;
+			posInfo.vHitPos = frame.vHitPos;	posInfo.vHitNorm = frame.vHitNorm;
 			//  wheels
 			for (int w=0; w < 4; ++w)
 			{
@@ -387,7 +389,7 @@ void App::newPoses()
 				if (w < 2)  posInfo.whSteerAng[w] = frame.whSteerAng[w];
 			}
 		}
-		else if (bRplPlay)
+		else if (bRplPlay)  // class member fr - used for sounds in car.cpp
 		{
 			//  time  from start
 			bool ok = replay.GetFrame(rplTime, &fr, carId);
@@ -396,7 +398,9 @@ void App::newPoses()
 			//  car
 			pos = fr.pos;  rot = fr.rot;  posInfo.speed = fr.speed;
 			posInfo.fboost = fr.fboost;  posInfo.steer = fr.steer;
-			posInfo.percent = fr.percent;  posInfo.braking = false;//
+			posInfo.percent = fr.percent;  posInfo.braking = fr.braking;
+			posInfo.fHitTime = fr.fHitTime;	posInfo.fParIntens = fr.fParIntens;	posInfo.fParVel = fr.fParVel;
+			posInfo.vHitPos = fr.vHitPos;	posInfo.vHitNorm = fr.vHitNorm;
 			//  wheels
 			for (int w=0; w < 4; ++w)
 			{
@@ -417,11 +421,13 @@ void App::newPoses()
 		{
 			const CARDYNAMICS& cd = pCar->dynamics;
 			pos = cd.GetPosition();  rot = cd.GetOrientation();
+			//  car
 			posInfo.fboost = cd.boostVal;	//posInfo.steer = cd.steer;
 			posInfo.speed = pCar->GetSpeed();
-			posInfo.percent = carM->trackPercent;
-			posInfo.braking = cd.IsBraking();
-			
+			posInfo.percent = carM->trackPercent;	posInfo.braking = cd.IsBraking();
+			posInfo.fHitTime = cd.fHitTime;	posInfo.fParIntens = cd.fParIntens;	posInfo.fParVel = cd.fParVel;
+			posInfo.vHitPos = cd.vHitPos;	posInfo.vHitNorm = cd.vHitNorm;
+			//  wheels
 			for (int w=0; w < 4; ++w)
 			{	WHEEL_POSITION wp = WHEEL_POSITION(w);
 				whPos[w] = cd.GetWheelPosition(wp);  whRot[w] = cd.GetWheelOrientation(wp);
@@ -523,12 +529,16 @@ void App::newPoses()
 				fr.gear = pCar->GetGear();  fr.clutch = pCar->GetClutch();
 				fr.throttle = cd.GetEngine().GetThrottle();
 				fr.steer = pCar->GetLastSteer();
-				fr.fboost = cd.doBoost;
-				fr.percent = carM->trackPercent;
+				fr.fboost = cd.doBoost;		fr.percent = carM->trackPercent;
 				//  eng snd
 				fr.posEngn = cd.GetEnginePosition();
 				fr.speed = pCar->GetSpeed();
 				fr.dynVel = cd.GetVelocity().Magnitude();
+				fr.braking = cd.IsBraking();  //// from posInfo?, todo: simplify this code here ^^
+				//  hit sparks
+				fr.fHitTime = cd.fHitTime;	fr.fParIntens = cd.fParIntens;	fr.fParVel = cd.fParVel;
+				fr.vHitPos = cd.vHitPos;	fr.vHitNorm = cd.vHitNorm;
+				fr.whMudSpin = pCar->whMudSpin;
 				
 				replay.AddFrame(fr, carId);  // rec replay
 				if (carId==0)  /// rec ghost lap

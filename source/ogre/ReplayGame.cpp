@@ -16,7 +16,7 @@ void ReplayHeader::Default()
 	memset(track, 0, sizeof(track));  track_user = 0;
 	memset(car, 0, sizeof(car));
 
-	ver = 6;  /// todo: if <= 3 car colors from -1..1 to 0..1
+	ver = 7;  /// todo: if <= 3 car colors from -1..1 to 0..1
 	frameSize = sizeof(ReplayFrame);
 	numPlayers = 1;
 	trees = 1.f;
@@ -31,6 +31,34 @@ void ReplayHeader::Default()
 	memset(nicks, 0, sizeof(nicks));		
 	memset(descr, 0, sizeof(descr));
 }
+
+ReplayFrame::ReplayFrame() :
+	//:time(0.0)
+	//MATHVECTOR <float,3> pos, whPos[4];
+	//QUATERNION <float> rot, whRot[4];
+	//float rpm,vel, clutch;  int gear;
+	throttle(0)//, steer
+	//MATHVECTOR <float,3> posEngn;
+	//float speed, dynVel;
+	//char surfType[4], whTerMtr[4];  //TRACKSURFACE::TYPE
+	//float squeal[4], slide[4], whVel[4];
+	//float suspVel[4], suspDisp[4];
+	,fboost(0)
+	,percent(0.f)
+	,braking(false)
+	,fHitTime(0.f), fParIntens(0.f),fParVel(0.f)
+	//Vector3 vHitPos,vHitNorm;
+	,whMudSpin(0.f)
+{
+	pos[0]=0.f;  pos[1]=0.f;  pos[2]=0.f;
+	whSteerAng[0]=whSteerAng[1]=0.f;
+	for (int w=0; w<4; ++w)
+	{
+		whH[w] = 0.f;  whAngVel[w] = 0.f;  whP[w] = 0;
+		whRoadMtr[w] = 0;
+	}	
+}	
+
 
 Replay::Replay()
 {

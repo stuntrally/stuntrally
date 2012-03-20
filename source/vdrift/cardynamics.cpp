@@ -1149,7 +1149,7 @@ void CARDYNAMICS::AddAerodynamicDevice (
 	                          lift_coefficient, lift_efficiency );
 }
 
-bool CARDYNAMICS::IsBraking() const
+char CARDYNAMICS::IsBraking() const
 {
 	//  true when any wheel is braking
 	for (int w=0; w<4; ++w)
@@ -1157,7 +1157,7 @@ bool CARDYNAMICS::IsBraking() const
 		WHEEL_POSITION wp = (WHEEL_POSITION)w;
 		if (GetBrake(wp).GetBrakeFactor() > 0
 		 || GetBrake(wp).GetHandbrakeFactor() > 0)
-			return true;
+			return 1;
 	}
-	return false;
+	return 0;
 }

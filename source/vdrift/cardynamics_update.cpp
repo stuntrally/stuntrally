@@ -364,6 +364,9 @@ void CARDYNAMICS::Tick(T dt)
 
 	fuel_tank.Consume(engine.FuelRate() * dt);
 	//engine.SetOutOfGas(fuel_tank.Empty());
+	
+	if (fHitTime > 0.f)
+		fHitTime -= dt * 2.f;
 
 	const float tacho_factor = 0.1;
 	tacho_rpm = engine.GetRPM() * tacho_factor + tacho_rpm * (1.0 - tacho_factor);

@@ -608,6 +608,7 @@ void CAR::UpdateSounds(float dt)
 		engPos = pApp->fr.posEngn;  // _/could be from car pos,rot and engine offset--
 		speed = pApp->fr.speed;
 		dynVel = pApp->fr.dynVel;
+		whMudSpin = pApp->fr.whMudSpin;
 
 		for (int w=0; w<4; ++w)
 		{
@@ -622,7 +623,6 @@ void CAR::UpdateSounds(float dt)
 			//  fluids
 			whH_all += pApp->fr.whH[w];
 			if (pApp->fr.whP[w] >= 1)  mud = true;
-			//?- whMudSpin = pApp->fr.whMudSpin;
 		}
 	}
 	else  /// game  ------------------------------------------
@@ -650,6 +650,19 @@ void CAR::UpdateSounds(float dt)
 			whH_all += dynamics.whH[w];
 			if (dynamics.whP[w] >= 1)  mud = true;
 		}
+
+		//  wheels in mud, spinning intensity
+		float mudSpin = 0.f;
+		for (int w=0; w < 4; ++w)
+		{
+			float vel = std::abs(dynamics.wheel[w].GetAngularVelocity());
+			if (vel <= 30.f)  continue;
+			if (dynamics.whP[w] == 2)
+				mudSpin += dynamics.whH[w] * std::min(80.f, 1.5f * vel) / 80.f;
+			else if (dynamics.whP[w] == 1)
+				mudSpin += dynamics.whH[w] * std::min(160.f, 3.f * vel) / 80.f;
+		}
+		whMudSpin = mudSpin * 0.5f;
 	}
 	///  ------------------------------------------
 
@@ -827,7 +840,7 @@ void CAR::UpdateSounds(float dt)
 		boostsnd.SetPosition(engPos[0], engPos[1], engPos[2]); //back?-
 	}
 	
-	//update crash sound
+	//update crash sound  todo: crash info,force from bullet
 	#if 0
 	if (dynamics.bHitSnd)// && dynamics.sndHitN >= 0)
 	{

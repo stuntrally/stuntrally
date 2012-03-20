@@ -22,10 +22,10 @@ namespace Ogre {  class SceneNode;  class Terrain;  class Camera;  class SceneMa
 namespace MyGUI {  class TextBox;  }
 
 
-// Stores all the needed information about car coming from vdrift
-// position+rotation of car and wheels
-// and all data needed to update particles emitting rates and sounds
-// todo? remove PosInfo use ReplayFrame?
+//  Stores all the needed information about car coming from vdrift
+//  position,rotation of car and wheels
+//  and all data needed to update particles emitting rates and sounds
+//  todo? remove PosInfo use ReplayFrame?
 struct PosInfo
 {
 	bool bNew;  //  new posinfo available for Update
@@ -39,13 +39,14 @@ struct PosInfo
 	float fboost,steer, percent;  bool braking;
 
 	//  fluids
-	float whH[4],whAngVel[4], speed, whSteerAng[4];
-	int whP[4];
+	float whH[4],whAngVel[4], speed, whSteerAng[4];  int whP[4];
 	
-	
-	
+	//  hit sparks
+	float fHitTime, fParIntens,fParVel;//, fSndForce, fNormVel;
+	Ogre::Vector3 vHitPos,vHitNorm;  // world hit data
 
-	PosInfo() : bNew(false), pos(0,-200,0), miniPos(0,0), percent(0.f), braking(false)  // not inited
+	PosInfo() : bNew(false),  // not inited
+		pos(0,-200,0), miniPos(0,0), percent(0.f), braking(false)
 	{}
 };
 

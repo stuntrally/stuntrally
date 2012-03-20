@@ -74,8 +74,14 @@ struct ReplayFrame
 	float whSteerAng[2];
 	
 	float percent;  // track % val
+	char braking;  // for rear car lights (bool)
 
-	// todo: sparks hit emit,pos,vel?
+	//  hit sparks
+	float fHitTime, fParIntens,fParVel;//, fSndForce, fNormVel;
+	Ogre::Vector3 vHitPos,vHitNorm;  // world hit data
+	float whMudSpin;
+	
+	ReplayFrame();
 };
 
 

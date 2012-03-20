@@ -129,8 +129,8 @@ void CarModel::Update(PosInfo& posInfo, float time)
 {	
 	if (!posInfo.bNew)  return;  // new only
 	posInfo.bNew = false;
-	///DONT get anything from car or car.dynamics here
-	///all must be read from posInfo (it is filled from vdrift car or from replay)
+	/// dont get anything from pCar or car.dynamics here
+	/// all must be read from posInfo (it is filled from vdrift car or from replay)
 	
 	if (!pMainNode) return;
 	//  car pos and rot
@@ -196,22 +196,19 @@ void CarModel::Update(PosInfo& posInfo, float time)
 
 	//  world hit  (todo: in replays, use posInfo..)
 	if (ph)
-	{	CARDYNAMICS& cd = pCar->dynamics;
-		ParticleEmitter* pe = ph->getEmitter(0);
-		if (cd.fHitTime > 0.f && pSet->particles)
+	{	ParticleEmitter* pe = ph->getEmitter(0);
+		if (posInfo.fHitTime > 0.f && pSet->particles)
 		{
-			pe->setPosition(cd.vHitPos);
-			pe->setDirection(cd.vHitNorm);
+			pe->setPosition(posInfo.vHitPos);
+			pe->setDirection(posInfo.vHitNorm);
 
-			cd.fHitTime -= time*2;
-			pe->setEmissionRate(cd.fHitTime > 0.f ? pSet->particles_len * std::min(160.f, cd.fParIntens) * cd.fHitTime : 0);
-			pe->setParticleVelocity(cd.fParVel);
+			pe->setEmissionRate(pSet->particles_len * std::min(160.f, posInfo.fParIntens) * posInfo.fHitTime);
+			pe->setParticleVelocity(posInfo.fParVel);
 		}else
 			pe->setEmissionRate(0.f);
 	}
 
 	//  wheels  ------------------------------------------------------------------------
-	float whMudSpin = 0.f;
 	for (int w=0; w < 4; ++w)
 	{
 		float wR = posInfo.whR[w];
@@ -308,7 +305,7 @@ void CarModel::Update(PosInfo& posInfo, float time)
 			{
 				float vel = Math::Abs(posInfo.whAngVel[w]);
 				bool e = idPar == 2 && ghPar &&  vel > 30.f;
-				float emitM = e ?  posInfo.whH[w] * std::min(80.f, 1.5f * vel)  : 0.f;  whMudSpin += emitM / 80.f;
+				float emitM = e ?  posInfo.whH[w] * std::min(80.f, 1.5f * vel)  : 0.f;
 
 				ParticleEmitter* pe = pflM[w]->getEmitter(0);
 				pe->setPosition(vpos + posInfo.carY * wR*0.51f);
@@ -318,7 +315,7 @@ void CarModel::Update(PosInfo& posInfo, float time)
 			{
 				float vel = Math::Abs(posInfo.whAngVel[w]);
 				bool e = idPar == 1 && ghPar &&  vel > 30.f;
-				float emitM = e ?  posInfo.whH[w] * std::min(160.f, 3.f * vel)  : 0.f;  whMudSpin += emitM / 80.f;
+				float emitM = e ?  posInfo.whH[w] * std::min(160.f, 3.f * vel)  : 0.f;
 
 				ParticleEmitter* pe = pflMs[w]->getEmitter(0);
 				pe->setPosition(vpos + posInfo.carY * wR*0.51f);
@@ -341,9 +338,6 @@ void CarModel::Update(PosInfo& posInfo, float time)
 				lay.tclr.r,lay.tclr.g,lay.tclr.b, lay.tclr.a * al/**/);
 		}
 	}
-	//pCar->whMudSpin = whMudSpin;  // for snd
-	pCar->whMudSpin += (whMudSpin - pCar->whMudSpin)*0.3f;  //_every 2nd val=0 why?
-	//LogO(toStr(pCar->whMudSpin));
 
 	// Reflection
 	pReflect->camPosition = pMainNode->getPosition();

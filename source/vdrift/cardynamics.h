@@ -173,7 +173,7 @@ public:
 
 	std::list<FluidBox*> inFluids,inFluidsWh[4];  /// list of fluids this car is in (if any)
 	Ogre::Vector3 vHitPos,vHitNorm;  // world hit data
-	float fHitTime, fParIntens,fParVel, fSndForce, fNormVel;
+	float fHitTime, fParIntens,fParVel;//, fSndForce, fNormVel;
 	//bool bHitSnd;  int sndHitN;
 	btVector3 velPrev;
 	
@@ -330,7 +330,7 @@ public:
 		T lift_coefficient,
 		T lift_efficiency);
 		
-	bool IsBraking() const;
+	char IsBraking() const;
 };
 
 #endif
