@@ -433,8 +433,8 @@ void COLLISION_WORLD::Update(float dt, bool profiling)
 
 		//if (vlen > 2.f)// && car)  //par
 		{
-			cd->fSndForce = normvel*0.02 + 0.02*vlen;  //hit.force;
-			cd->fHitTime = 1.f;  cd->fNormVel = normvel;
+			//cd->fSndForce = normvel*0.02 + 0.02*vlen;  //hit.force;
+			cd->fHitTime = 1.f;  //cd->fNormVel = normvel;
 			///LogO("upd sf " + toStr(cd->fSndForce) + " force " + toStr(hit.force) + " vel " + toStr(vlen) + " Nvel " + toStr(normvel));
 
 			//int f = (normvel*0.02f + 0.02f*vlen) * Ncrashsounds;

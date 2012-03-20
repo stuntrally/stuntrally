@@ -130,7 +130,7 @@ void CarModel::Update(PosInfo& posInfo, float time)
 	if (!posInfo.bNew)  return;  // new only
 	posInfo.bNew = false;
 	///DONT get anything from car or car.dynamics here
-	///all must be read from posInfo (it's filled from car or from replay)
+	///all must be read from posInfo (it is filled from vdrift car or from replay)
 	
 	if (!pMainNode) return;
 	//  car pos and rot
@@ -144,15 +144,7 @@ void CarModel::Update(PosInfo& posInfo, float time)
 	angCarY = q.getYaw().valueDegrees() + 90.f;
 	
 	//  brake state
-	//  trigger when any wheel is braking
-	bool braking = false;
-	if (eType == CT_LOCAL)
-	for (int w=0; w<4; ++w)
-	{
-		if (pCar->dynamics.GetBrake(static_cast<WHEEL_POSITION>(w)).GetBrakeFactor() > 0
-		 || pCar->dynamics.GetBrake(static_cast<WHEEL_POSITION>(w)).GetHandbrakeFactor() > 0)
-			braking = true;
-	}
+	bool braking = eType == CT_REMOTE ? false : posInfo.braking;  //todo: send braking for netw players
 	if (bBraking != braking)
 	{
 		bBraking = braking;
@@ -203,20 +195,20 @@ void CarModel::Update(PosInfo& posInfo, float time)
 	}
 
 	//  world hit  (todo: in replays, use posInfo..)
-	CARDYNAMICS& cd = pCar->dynamics;
-	if (ph)  {
-	ParticleEmitter* pe = ph->getEmitter(0);
-	if (cd.fHitTime > 0.f && pSet->particles)
-	{
-		pe->setPosition(cd.vHitPos);
-		pe->setDirection(cd.vHitNorm);
+	if (ph)
+	{	CARDYNAMICS& cd = pCar->dynamics;
+		ParticleEmitter* pe = ph->getEmitter(0);
+		if (cd.fHitTime > 0.f && pSet->particles)
+		{
+			pe->setPosition(cd.vHitPos);
+			pe->setDirection(cd.vHitNorm);
 
-		cd.fHitTime -= time*2;
-		pe->setEmissionRate(cd.fHitTime > 0.f ? pSet->particles_len * std::min(160.f, cd.fParIntens) * cd.fHitTime : 0);
-		pe->setParticleVelocity(cd.fParVel);
-	}else
-		pe->setEmissionRate(0.f);	}
-	
+			cd.fHitTime -= time*2;
+			pe->setEmissionRate(cd.fHitTime > 0.f ? pSet->particles_len * std::min(160.f, cd.fParIntens) * cd.fHitTime : 0);
+			pe->setParticleVelocity(cd.fParVel);
+		}else
+			pe->setEmissionRate(0.f);
+	}
 
 	//  wheels  ------------------------------------------------------------------------
 	float whMudSpin = 0.f;
@@ -268,7 +260,7 @@ void CarModel::Update(PosInfo& posInfo, float time)
 		emitD *= lay.dust;  emitM *= lay.mud;  sizeD *= lay.dustS;  emitS *= lay.smoke;
 
 		if (whRd == 2)  emitD = 0;  // no dust in pipes
-		if (cd.inFluidsWh[w].size() > 0)  emitD = 0;  // no dust in fluids  (todo: move to posInfo)
+		if (posInfo.whH[w] > 0.1f)  emitD = 0;  // no dust in fluids
 
 		bool ghost = eType == CT_GHOST;  // opt dis for ghost
 		bool ghPar = !(ghost && !pSet->rpl_ghostpar);

@@ -373,7 +373,7 @@ void App::newPoses()
 			//  car
 			pos = frame.pos;  rot = frame.rot;  posInfo.speed = frame.speed;
 			posInfo.fboost = frame.fboost;  posInfo.steer = frame.steer;
-			posInfo.percent = frame.percent;
+			posInfo.percent = frame.percent;  posInfo.braking = false;//
 			//  wheels
 			for (int w=0; w < 4; ++w)
 			{
@@ -396,7 +396,7 @@ void App::newPoses()
 			//  car
 			pos = fr.pos;  rot = fr.rot;  posInfo.speed = fr.speed;
 			posInfo.fboost = fr.fboost;  posInfo.steer = fr.steer;
-			posInfo.percent = fr.percent;
+			posInfo.percent = fr.percent;  posInfo.braking = false;//
 			//  wheels
 			for (int w=0; w < 4; ++w)
 			{
@@ -420,6 +420,7 @@ void App::newPoses()
 			posInfo.fboost = cd.boostVal;	//posInfo.steer = cd.steer;
 			posInfo.speed = pCar->GetSpeed();
 			posInfo.percent = carM->trackPercent;
+			posInfo.braking = cd.IsBraking();
 			
 			for (int w=0; w < 4; ++w)
 			{	WHEEL_POSITION wp = WHEEL_POSITION(w);

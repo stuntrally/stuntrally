@@ -22,7 +22,7 @@ CARDYNAMICS::CARDYNAMICS() :
 	maxangle(45.0),
 	bTerrain(false), pSet(0), pScene(0),
 	doBoost(0), doFlip(0), boostVal(0),
-	fHitTime(0), fParIntens(0), bHitSnd(0)
+	fHitTime(0), fParIntens(0)//, bHitSnd(0)
 {
 	for (int i=0; i<4; ++i)
 	{	bWhOnRoad[i]=0;  terSurf[i]=0;

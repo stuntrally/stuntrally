@@ -1148,3 +1148,16 @@ void CARDYNAMICS::AddAerodynamicDevice (
 	aerodynamics.back().Set ( newpos, drag_frontal_area, drag_coefficient, lift_surface_area,
 	                          lift_coefficient, lift_efficiency );
 }
+
+bool CARDYNAMICS::IsBraking() const
+{
+	//  true when any wheel is braking
+	for (int w=0; w<4; ++w)
+	{
+		WHEEL_POSITION wp = (WHEEL_POSITION)w;
+		if (GetBrake(wp).GetBrakeFactor() > 0
+		 || GetBrake(wp).GetHandbrakeFactor() > 0)
+			return true;
+	}
+	return false;
+}
