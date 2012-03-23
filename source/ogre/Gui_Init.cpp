@@ -209,6 +209,7 @@ void App::InitGui()
 	Chk("EscQuits", chkEscQuits, pSet->escquit);
 	Chk("BltLines", chkBltLines, pSet->bltLines);
 	Chk("ShowPictures", chkLoadPics, pSet->loadingbackground);
+	Chk("MultiThread", chkMultiThread, pSet->multi_thr > 0);
 	
 	//  effects
 	Chk("AllEffects", chkVidEffects, pSet->all_effects);

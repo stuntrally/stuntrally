@@ -2264,6 +2264,11 @@
 							<Property key="Caption" value="#{BulletLines}*"/>
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
+						<Widget type="Button" skin="CheckBox" position="352 270 256 24" name="MultiThread">
+							<Property key="TextColour" value="0.7 0.8 0.9"/>
+							<Property key="Caption" value="#{MultiThread}*"/>
+							<UserString key="RelativeTo" value="OptionsWnd"/>
+						</Widget>
 					</Widget>
 				</Widget>
 			</Widget>
