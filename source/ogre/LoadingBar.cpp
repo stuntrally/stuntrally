@@ -113,9 +113,9 @@ void LoadingBar::resourceGroupScriptingEnded(const String& groupName)
 
 void LoadingBar::scriptParseStarted(const String& scriptName, bool& skipThisScript)
 {
-	mLoadingCommentElement->setCaption(scriptName);
+	//mLoadingCommentElement->setCaption(scriptName);
 	mLoadingDescriptionElement->setCaption(String(TR("#{LoadingDesc}")));
-	mWindow->update();
+	//mWindow->update();
 }
 
 void LoadingBar::scriptParseEnded(const String& scriptName, bool skipped)
@@ -140,7 +140,7 @@ void LoadingBar::resourceGroupLoadEnded(const String& groupName)
 //  resourceLoad
 void LoadingBar::resourceLoadStarted(const ResourcePtr& resource)
 {
-	mLoadingCommentElement->setCaption(resource->getName());
+	//mLoadingCommentElement->setCaption(resource->getName());
 	mWindow->update();
 }
 
