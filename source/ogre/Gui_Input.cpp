@@ -108,21 +108,21 @@ void App::InitInputGui()
 			if (txt)  txt->setCaption(text);  }
 		
 		//  button size and columns positon
-		const int sx = 130, sy = 24, x0 = 20, x1 = 140, x2 = 285, x3 = 430;
+		const int sx = 130, sy = 24, x0 = 20, x1 = 140, x2 = 285, x3 = 430, yh = 20;
 
 		///  Headers  action, binding, value
-		CreateText(x0,12, sx,sy, "hdrTxt1_"+sPlr, TR("#90B0F0#{InputHeaderTxt1}"));
-		CreateText(x1,12, sx,sy, "hdrTxt2_"+sPlr, TR("#A0C0FF#{InputHeaderTxt2}"));
+		CreateText(x0,yh, sx,sy, "hdrTxt1_"+sPlr, TR("#90B0F0#{InputHeaderTxt1}"));
+		CreateText(x1,yh, sx,sy, "hdrTxt2_"+sPlr, TR("#A0C0FF#{InputHeaderTxt2}"));
 		if (playerTab)  {
-			CreateText(x2,12, sx,sy, "hdrTxt3_"+sPlr, TR("#90B0F0#{InputHeaderTxt3}"));
-			CreateText(x3,12, sx,sy, "hdrTxt4_"+sPlr, TR("#80A0E0#{InputHeaderTxt4}"));  }
+			CreateText(x2,yh, sx,sy, "hdrTxt3_"+sPlr, TR("#90B0F0#{InputHeaderTxt3}"));
+			CreateText(x3,yh, sx,sy, "hdrTxt4_"+sPlr, TR("#80A0E0#{InputHeaderTxt4}"));  }
 		
 		///  ------ custom action sorting ----------------
-		int i = 0, y = 0, ya = 26 / 2, yc=0;
+		int i = 0, y = 0, ya = 26 / 2, yc=0, y0 = yh + 28;
 		std::map <std::string, int> yRow;
 		// player
-		yRow["Throttle"] = y;	y+=2;	yRow["Brake"] = y;	y+=2;	yRow["Steering"] = y;	y+=2+1 +2;
-		yRow["HandBrake"] = y;	y+=2;	yRow["Boost"] = y;	y+=2;	yRow["Flip"] = y;		y+=2+1 +2;
+		yRow["Throttle"] = y;	y+=2;	yRow["Brake"] = y;	y+=2;	yRow["Steering"] = y;	y+=2+2 +1;
+		yRow["HandBrake"] = y;	y+=2;	yRow["Boost"] = y;	y+=2;	yRow["Flip"] = y;		y+=2+2 +2;
 		yRow["ShiftUp"] = y;	y+=2;	yRow["ShiftDown"] = y;	y+=2 +1;
 		yRow["PrevCamera"] = y; y+=2;	yRow["NextCamera"] = y; y+=2+1;  //yc = 40 + ya * y;
 		yRow["LastChk"] = y;	y+=2;
@@ -130,7 +130,7 @@ void App::InitInputGui()
 		yRow["ShowOptions"] = y; y+=2+1;
 		yRow["PrevTab"] = y;     y+=2;	yRow["NextTab"] = y;    y+=2+1;
 		yRow["RestartGame"] = y; y+=2;	yRow["ResetGame"] = y;  y+=2+1;
-		yRow["Screenshot"] = y;  y+=2;	yc = 40 + ya * y;
+		yRow["Screenshot"] = y;  y+=2;	yc = y0 + ya * y;
 
 		if (!playerTab)
 		{	y = yc+2*ya;  //  camera infos
@@ -153,7 +153,7 @@ void App::InitInputGui()
 			OISB::Action* act = (*ait).second;
 
 			const String& name = (*ait).second->getName();
-			y = 40 + ya * yRow[name];
+			y = y0 + ya * yRow[name];
 
 			//  description label
 			StaticTextPtr desc = tabitem->createWidget<TextBox>("TextBox",
