@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "common/Defines.h"
+#include "common/RenderConst.h"
 #include "SplitScreen.h"
 
 #include "OgreGame.h"
@@ -18,25 +19,20 @@
 #include <OgreParticleSystem.h>
 #include <OgreParticleEmitter.h>
 #include <OgreRTShaderSystem.h>
-#include "OgreRenderer2D.h"
 
 using namespace Ogre;
 
 
 SplitScreenManager::SplitScreenManager(Ogre::SceneManager* sceneMgr, Ogre::RenderWindow* window, SETTINGS* set) :
-	pApp(0), mGuiViewport(0), mGuiSceneMgr(0), mHUDSceneMgr(0), mHUD(0)
+	pApp(0), mGuiViewport(0), mGuiSceneMgr(0),
+	mWindow(window), mSceneMgr(sceneMgr), pSet(set)
 {
-	mWindow = window;
-	mSceneMgr = sceneMgr;
-	pSet = set;
-	
 	// Add window listener
 	mWindow->addListener(this);
 }
 
 SplitScreenManager::~SplitScreenManager()
 {
-	delete mHUD;  mHUD = 0;
 	CleanUp();
 	mWindow->removeListener(this);
 }
@@ -60,10 +56,6 @@ void SplitScreenManager::CleanUp()
 		mWindow->removeViewport( (*vpIt)->getZOrder() );
 	mViewports.clear();
 	
-	for (std::list<Ogre::Viewport*>::iterator vpIt=mHUDViewports.begin(); vpIt != mHUDViewports.end(); ++vpIt)
-		mWindow->removeViewport( (*vpIt)->getZOrder() );
-	mHUDViewports.clear();
-
 	for (std::list<Ogre::Camera*>::iterator it=mCameras.begin(); it != mCameras.end(); ++it)
 		mSceneMgr->destroyCamera(*it);
 	mCameras.clear();
@@ -75,21 +67,17 @@ void SplitScreenManager::CleanUp()
 void SplitScreenManager::Align()
 {
 	CleanUp();
+	LogO("-- Screen Align");
 	
-	//  Create HUD scene manager & camera if they dont exist already
-	if (!mHUDSceneMgr)
-	{
-		mHUDSceneMgr = Root::getSingleton().createSceneManager(ST_GENERIC);
-		mHUDCamera = mHUDSceneMgr->createCamera("HUDCamera"); //!todo destroy
-	}
+	for (int i=0; i < 4; ++i)
+		mDims[i].Default();
 
 	//  Create the viewports (sets of 3d render & hud viewports) based on mNumViewports = numPlayers
 	for (int i=0; i < mNumViewports; i++)
 	{
 		//  set dimensions for the viewports
-		float dims[4];
-		
-		#define dim_(l,t,w,h)  dims[0]=l;  dims[1]=t;  dims[2]=w;  dims[3]=h
+		float dims[4];  // left,top, width,height
+		#define dim_(l,t,w,h)  {  dims[0]=l;  dims[1]=t;  dims[2]=w;  dims[3]=h;  }
 		
 		if (mNumViewports == 1)
 		{
@@ -98,31 +86,31 @@ void SplitScreenManager::Align()
 		else if (mNumViewports == 2)
 		{
 			if (!pSet->split_vertically)
-			{	if (i == 0)		{	dim_(0.0, 0.0, 1.0, 0.5);	}
-				else if (i == 1){	dim_(0.0, 0.5, 1.0, 0.5);	}
+			{	if (i == 0)	dim_(0.0, 0.0, 1.0, 0.5)
+				else		dim_(0.0, 0.5, 1.0, 0.5)
 			}else{
-				if (i == 0) {		dim_(0.0, 0.0, 0.5, 1.0);	}
-				else if (i == 1) {	dim_(0.5, 0.0, 0.5, 1.0);	}	}
+				if (i == 0) dim_(0.0, 0.0, 0.5, 1.0)
+				else		dim_(0.5, 0.0, 0.5, 1.0)	}
 		}
 		else if (mNumViewports == 3)
 		{
 			if (!pSet->split_vertically)
 			{
-				if (i == 0)		{	dim_(0.0, 0.0, 0.5, 0.5);	}
-				else if (i == 1){	dim_(0.5, 0.0, 0.5, 0.5);	}
-				else if (i == 2){	dim_(0.0, 0.5, 1.0, 0.5);	}
+				if (i == 0)			dim_(0.0, 0.0, 0.5, 0.5)
+				else if (i == 1)	dim_(0.5, 0.0, 0.5, 0.5)
+				else if (i == 2)	dim_(0.0, 0.5, 1.0, 0.5)
 			}else{
-				if (i == 0)		{	dim_(0.0, 0.0, 0.5, 1.0);	}
-				else if (i == 1){	dim_(0.5, 0.0, 0.5, 0.5);	}
-				else if (i == 2){	dim_(0.5, 0.5, 0.5, 0.5);	}
+				if (i == 0)			dim_(0.0, 0.0, 0.5, 1.0)
+				else if (i == 1)	dim_(0.5, 0.0, 0.5, 0.5)
+				else if (i == 2)	dim_(0.5, 0.5, 0.5, 0.5)
 			}
 		}
 		else if (mNumViewports == 4)
 		{
-			if (i == 0)		{	dim_(0.0, 0.0, 0.5, 0.5);	}
-			else if (i == 1){	dim_(0.5, 0.0, 0.5, 0.5);	}
-			else if (i == 2){	dim_(0.0, 0.5, 0.5, 0.5);	}
-			else if (i == 3){	dim_(0.5, 0.5, 0.5, 0.5);	}
+			if (i == 0)			dim_(0.0, 0.0, 0.5, 0.5)
+			else if (i == 1)	dim_(0.5, 0.0, 0.5, 0.5)
+			else if (i == 2)	dim_(0.0, 0.5, 0.5, 0.5)
+			else if (i == 3)	dim_(0.5, 0.5, 0.5, 0.5)
 		}
 		else
 		{
@@ -131,6 +119,16 @@ void SplitScreenManager::Align()
 		}
 		#undef dim_
 
+		// save dims (for later use by Hud)
+		for (int d=0; d<4; ++d)
+		{
+			mDims[i].left = dims[0]*2-1;  mDims[i].top = dims[1]*2-1;
+			mDims[i].width = dims[2]*2;  mDims[i].height = dims[3]*2;
+			mDims[i].right = mDims[i].left + mDims[i].width;
+			mDims[i].bottom = mDims[i].top + mDims[i].height;
+			mDims[i].avgsize = (mDims[i].width + mDims[i].height) * 0.25f;
+		}
+
 		// Create camera
 		mCameras.push_back(mSceneMgr->createCamera("PlayerCamera" + toStr(i)));
 		mCameras.back()->setPosition(Vector3(0,-100,0));
@@ -138,26 +136,17 @@ void SplitScreenManager::Align()
 		mCameras.back()->setFarClipDistance(pSet->view_distance*1.1f);
 		mCameras.back()->setNearClipDistance(0.2f);
 		
-		// Create viewport
-		// use i as Z order
+		// Create viewport, use i as Z order
 		mViewports.push_back(mWindow->addViewport( mCameras.back(), i+5, dims[0], dims[1], dims[2], dims[3]));
-		
-		// HUD viewport
-		//mHUDViewports.push_back(mWindow->addViewport( mHUDCamera, i, dims[0], dims[1], dims[2], dims[3]));
-		//mHUDViewports.back()->setClearEveryFrame(true, FBT_DEPTH);
-		//mHUDViewports.back()->setOverlaysEnabled(false);
-		//mHUDViewports.back()->setBackgroundColour(ColourValue(0.0, 0.0, 0.0, 0.0));
 	}
 	
 	// Create gui viewport if not already existing
 	if (!mGuiViewport)
 	{
 		mGuiSceneMgr = Ogre::Root::getSingleton().createSceneManager(ST_GENERIC);
-		Ogre::Camera* guiCam = mGuiSceneMgr->createCamera("GuiCam1");  // todo destroy !..
+		Ogre::Camera* guiCam = mGuiSceneMgr->createCamera("GuiCam1");
 		mGuiViewport = mWindow->addViewport(guiCam, 100);
-
-		if (!mHUD)
-			mHUD = new Renderer2D(mGuiViewport);
+		mGuiViewport->setVisibilityMask(RV_Hud);
 
 		Ogre::RTShader::ShaderGenerator *mShaderGenerator = Ogre::RTShader::ShaderGenerator::getSingletonPtr();
 		if(mShaderGenerator != NULL)
@@ -165,8 +154,6 @@ void SplitScreenManager::Align()
 			mShaderGenerator->addSceneManager(mSceneMgr);
 		}
 	}
-	
-	mHUDSceneMgr = mSceneMgr;
 	
 	AdjustRatio();
 	
@@ -184,12 +171,6 @@ void SplitScreenManager::AdjustRatio()
 		(*camIt)->setAspectRatio( float((*vpIt)->getActualWidth()) / float((*vpIt)->getActualHeight()) );
 		++camIt;
 	}
-	
-	if (!mHUDViewports.empty())
-	{
-		Ogre::Viewport* firstHUDvp = mHUDViewports.front();
-		mHUDCamera->setAspectRatio( float(firstHUDvp->getActualWidth()) / float(firstHUDvp->getActualHeight()) );
-	}
 }
 
 
@@ -205,36 +186,14 @@ void SplitScreenManager::preViewportUpdate(const Ogre::RenderTargetViewportEvent
 	
 	if (evt.source != mGuiViewport)
 	{
-		// 3d scene viewport
-		//  get number of viewport
-		/*bool hudVp = false;
-		std::list<Ogre::Viewport*>::iterator vpIt = mViewports.begin();
-		std::list<Ogre::Viewport*>::iterator hudVpIt = mHUDViewports.begin();
-		int i = 0;
-		if (vpIt != mViewports.end() && hudVpIt != mHUDViewports.end())
-		{
-			while (evt.source != *vpIt && evt.source != *hudVpIt)	{	i++;  vpIt++; hudVpIt++;	}
-			if (evt.source == *hudVpIt) hudVp = true;
-		}*/
-
+		//  scene viewport
 		//  get car for this viewport
-		int carId = 0;  //-1
+		int carId = 0;
 		sscanf(vpName.c_str(), "PlayerCamera%d", &carId);
-		
-		CarModel* pCarM = NULL;
-		if (pApp->carModels.size() > carId)
-			pCarM = pApp->carModels[carId];
-		
-		if (!pCarM) return;
-			
-		//  Size HUD
-		pApp->SizeHUD(true, evt.source, carId);
 
 		//  Update HUD for this car
-		//*H*/LogO("VP car "+toStr(carId)+" "+toStr(i)+"---------------");
-		pApp->UpdateHUD( carId, pCarM, pCarM->pCar, 1.f / mWindow->getLastFPS(), evt.source );
-		
-		//if (hudVp) return;  // ?..
+		pApp->ShowHUDvp(true);
+		pApp->UpdateHUD(carId, 1.f / mWindow->getLastFPS());
 
 
 		///  Set skybox pos to camera  - TODO: fix, sky is center only for last player ...
@@ -287,17 +246,14 @@ void SplitScreenManager::preViewportUpdate(const Ogre::RenderTargetViewportEvent
 					MaterialFactory::getSingletonPtr()->setSoftParticleDepth(depthTexture);
 				}
 			}
-		}
-		else MaterialFactory::getSingletonPtr()->setSoftParticles(false);
-
+		}else
+			MaterialFactory::getSingletonPtr()->setSoftParticles(false);
 	}
 	else
 	{
 		//  Gui viewport - hide stuff we don't want
-		//*H*/LogO("VP gui --------------------------------------");
-
-		pApp->UpdateHUD(-1, NULL, NULL, 1.f / mWindow->getLastFPS() );
-		pApp->SizeHUD(false);
+		pApp->UpdateHUD(-1, 1.f / mWindow->getLastFPS());  //-1, NULL, NULL, 1.f / mWindow->getLastFPS() );
+		pApp->ShowHUDvp(false);
 		
 		// no mouse in key capture mode
 		//if (pApp->bAssignKey)  hideMouse();

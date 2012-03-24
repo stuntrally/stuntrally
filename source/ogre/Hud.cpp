@@ -17,67 +17,63 @@
 #include <OgreSceneManager.h>
 #include <OgreOverlayManager.h>
 #include <OgreOverlayElement.h>
-#include "OgreRenderer2D.h"
 using namespace Ogre;
 
-#include <MyGUI_PointerManager.h>
-using namespace MyGUI;
+
+///  HUD resize
+void App::SizeHUD(bool full, Viewport* vp, int carId)
+{
+	asp = float(mWindow->getWidth())/float(mWindow->getHeight());
+	//  for each car
+	for (int c=0; c < pSet->game.local_players; ++c)
+	{
+		//  gauges
+		if (ndRpmBk[c] && ndVelBk[c] && ndVelBm[c] && ndRpm[c] && ndVel[c])
+		{
+			Real fHudScale = pSet->size_gauges * mSplitMgr->mDims[c].avgsize;
+			Real spx = fHudScale *1.1f, spy = spx*asp;
+			Real xcRpm, ycRpm, xcVel, ycVel;
+			xcRpm = mSplitMgr->mDims[c].left + spx;   ycRpm =-mSplitMgr->mDims[c].bottom + spy;
+			xcVel = mSplitMgr->mDims[c].right - spx;  ycVel =-mSplitMgr->mDims[c].bottom + spy;
+
+			Vector3 sca(fHudScale,fHudScale*asp,1), sc(fHudScale,fHudScale,1);
+			ndRpmBk[c]->setScale(sca);	ndVelBk[c]->setScale(sca);  ndVelBm[c]->setScale(sca);
+			ndRpm[c]->setScale(sc); 	ndVel[c]->setScale(sc);
+
+			Vector3 vr(xcRpm,ycRpm,0.f), vv(xcVel,ycVel,0.f);
+			ndRpmBk[c]->setPosition(vr); ndVelBk[c]->setPosition(vv);  ndVelBm[c]->setPosition(vv);
+			ndRpm[c]->setPosition(vr);	ndVel[c]->setPosition(vv);
+			//LogO("-- Size  r "+toStr(vr)+"  v "+toStr(vv)+"  s "+toStr(sca));
+		}
+		//  minimap
+		if (ndMap[c])
+		{
+			Real fHudSize = pSet->size_minimap * mSplitMgr->mDims[c].avgsize;
+			ndMap[c]->setScale(fHudSize,fHudSize*asp,1);
+
+			const Real marg = 1.f + 0.05f;  // from border
+			Real fMiniX = mSplitMgr->mDims[c].right - fHudSize * marg;
+			Real fMiniY =-mSplitMgr->mDims[c].top - fHudSize*asp * marg;
+
+			ndMap[c]->setPosition(Vector3(fMiniX,fMiniY,0.f));
+			//LogO("-- Size car:"+toStr(c)+"  x:"+fToStr(fMiniX,2,4)+" y:"+fToStr(fMiniY,2,4)+"  s:"+fToStr(fHudSize,2,4));
+		}
+	}
+}
 
 
 ///---------------------------------------------------------------------------------------------------------------
 ///  HUD create  rpm, vel
 ///---------------------------------------------------------------------------------------------------------------
 
-void App::SizeHUD(bool full, Viewport* vp, int carId)
-{
-	// half size for 3 players top and 2 players in -horizontal-
-	float mult = 1.f;
-	if (mSplitMgr && !pSet->split_vertically &&
-		mSplitMgr->mNumViewports == 2 || mSplitMgr->mNumViewports == 3 && carId == 2)
-		mult = 0.5f;
-
-	float fHudScale = pSet->size_gauges * mult;
-	if (vp)
-		asp = float(vp->getActualWidth())/float(vp->getActualHeight());
-	else
-		asp = float(mWindow->getWidth())/float(mWindow->getHeight());
-	
-	Real spx = fHudScale*1.1, spy = spx*asp;
-	xcRpm = -1 + spx;  ycRpm = -1 + spy;
-	xcVel =  1 - spx;  ycVel = -1 + spy;
-
-	if (!full)
-		return;
-	if (nrpmB && nvelBk && nvelBm && nrpm &&nvel)
-	{
-		Vector3 sca(fHudScale,fHudScale*asp,1), sc(fHudScale,fHudScale,1);
-		nrpmB->setScale(sca);	nvelBk->setScale(sca);  nvelBm->setScale(sca);
-		nrpm->setScale(sc); 	nvel->setScale(sc);
-
-		Vector3 vr(xcRpm,ycRpm,0), vv(xcVel,ycVel,0);
-		nrpmB->setPosition(vr);	nvelBk->setPosition(vv);  nvelBm->setPosition(vv);
-		nrpm->setPosition(vr);	nvel->setPosition(vv);
-	}
-	if (ndMap)
-	{
-		float fHudSize = pSet->size_minimap * mult;
-		ndMap->setScale(fHudSize,fHudSize*asp,1);
-
-		const float marg = 1.f + 0.05f;  // from border
-		fMiniX = 1 - fHudSize * marg, fMiniY = 1 - fHudSize*asp * marg;
-
-		ndMap->setPosition(Vector3(fMiniX,fMiniY,0));
-	}
-}
-
-
 void App::CreateHUD()
 {	
 	//  minimap from road img
+	LogO("-- Create Hud");
 	asp = 1.f;
 	if (terrain)
+	for (int c=0; c < pSet->game.local_players; ++c)  // for each car
 	{
-		ofsX=0; ofsY=0;
 		float t = sc.td.fTerWorldSize*0.5;
 		minX = -t;  minY = -t;  maxX = t;  maxY = t;
 
@@ -85,10 +81,9 @@ void App::CreateHUD()
 		float size = std::max(fMapSizeX, fMapSizeY*asp);
 		scX = 1.f / size;  scY = 1.f / size;
 
-		//for (int c=0; c<2; ++c)
 		String sMat = "circle_minimap";  //*/"road_minimap_inv";
 		asp = 1.f;  //_temp
-		ManualObject* m = Create2D(sMat,mSplitMgr->mHUDSceneMgr,1,true,true);  miniC = m;
+		ManualObject* m = Create2D(sMat,mSplitMgr->mGuiSceneMgr,1,true,true);  moMap[c] = m;
 		//asp = float(mWindow->getWidth())/float(mWindow->getHeight());
 		m->setVisibilityFlags(RV_Hud);  m->setRenderQueueGroup(RQG_Hud1);
 		
@@ -102,55 +97,50 @@ void App::CreateHUD()
 		UpdMiniTer();
 		
 
-		float fHudSize = pSet->size_minimap;
-		const float marg = 1.f + 0.05f;  // from border
-		fMiniX = 1 - fHudSize * marg, fMiniY = 1 - fHudSize*asp * marg;
-
-		ndMap = mSplitMgr->mHUDSceneMgr->getRootSceneNode()->createChildSceneNode(Vector3(fMiniX,fMiniY,0));
-		ndMap->scale(fHudSize, fHudSize*asp, 1);
-		ndMap->attachObject(m);
+		float fHudSize = pSet->size_minimap * mSplitMgr->mDims[c].avgsize;
+		ndMap[c] = mSplitMgr->mGuiSceneMgr->getRootSceneNode()->createChildSceneNode(Vector3(0,0,0));
+		ndMap[c]->attachObject(m);
 		
-		//  car pos dot - for all carModels (ghost and remote too)
-		vMoPos.clear();
-		vNdPos.clear();
-		for (int i=0; i < /*pSet->local_players*/carModels.size(); ++i)
-		{	vMoPos.push_back(0);
-			vMoPos[i] = Create2D("hud/CarPos", mSplitMgr->mHUDSceneMgr, 0.4f, true, true);
-			vMoPos[i]->setVisibilityFlags(RV_Hud);  vMoPos[i]->setRenderQueueGroup(RQG_Hud3);
-			vNdPos.push_back(0);
-			vNdPos[i] = ndMap->createChildSceneNode();
-			vNdPos[i]->scale(fHudSize*1.5f, fHudSize*1.5f, 1);
-			vNdPos[i]->attachObject(vMoPos[i]);  /*vNdPos[i]->setVisible(false);  */}
-		ndMap->setVisible(false/*pSet->trackmap*/);
+		//  car pos tri - for all carModels (ghost and remote too)
+		for (int i=0; i < carModels.size(); ++i)
+		{
+			vMoPos[c][i] = Create2D("hud/CarPos", mSplitMgr->mGuiSceneMgr, 0.4f, true, true);
+			vMoPos[c][i]->setVisibilityFlags(RV_Hud);  vMoPos[c][i]->setRenderQueueGroup(RQG_Hud3);
+				  
+			vNdPos[c][i] = ndMap[c]->createChildSceneNode();
+			vNdPos[c][i]->scale(fHudSize*1.5f, fHudSize*1.5f, 1);
+			vNdPos[c][i]->attachObject(vMoPos[c][i]);  //vNdPos[i]->setVisible(false);
+		}
+		ndMap[c]->setVisible(false/*pSet->trackmap*/);
+
+	
+		//  backgr  gauges
+		ManualObject* mrpmB = Create2D("hud/rpm",mSplitMgr->mGuiSceneMgr,1);	mrpmB->setVisibilityFlags(RV_Hud);
+		mrpmB->setRenderQueueGroup(RQG_Hud1);
+		ndRpmBk[c] = mSplitMgr->mGuiSceneMgr->getRootSceneNode()->createChildSceneNode();
+		ndRpmBk[c]->attachObject(mrpmB);	ndRpmBk[c]->setScale(0,0,0);  ndRpmBk[c]->setVisible(false);
+
+		ManualObject* mvelBk = Create2D("hud/kmh",mSplitMgr->mGuiSceneMgr,1);	mvelBk->setVisibilityFlags(RV_Hud);
+		mvelBk->setRenderQueueGroup(RQG_Hud1);
+		ndVelBk[c] = mSplitMgr->mGuiSceneMgr->getRootSceneNode()->createChildSceneNode();
+		ndVelBk[c]->attachObject(mvelBk);	ndVelBk[c]->setScale(0,0,0);  mvelBk->setVisible(false);
+			
+		ManualObject* mvelBm = Create2D("hud/mph",mSplitMgr->mGuiSceneMgr,1);	mvelBm->setVisibilityFlags(RV_Hud);
+		mvelBm->setRenderQueueGroup(RQG_Hud1);
+		ndVelBm[c] = mSplitMgr->mGuiSceneMgr->getRootSceneNode()->createChildSceneNode();
+		ndVelBm[c]->attachObject(mvelBm);	ndVelBm[c]->setScale(0,0,0);  mvelBm->setVisible(false);
+			
+		//  needles
+		moRpm[c] = Create2D("hud/needle",mSplitMgr->mGuiSceneMgr,1,true);  moRpm[c]->setVisibilityFlags(RV_Hud);
+		moRpm[c]->setRenderQueueGroup(RQG_Hud3);
+		ndRpm[c] = mSplitMgr->mGuiSceneMgr->getRootSceneNode()->createChildSceneNode();
+		ndRpm[c]->attachObject(moRpm[c]);	ndRpm[c]->setScale(0,0,0);	ndRpm[c]->setVisible(false);
+		
+		moVel[c] = Create2D("hud/needle",mSplitMgr->mGuiSceneMgr,1,true);  moVel[c]->setVisibilityFlags(RV_Hud);
+		moVel[c]->setRenderQueueGroup(RQG_Hud3);
+		ndVel[c] = mSplitMgr->mGuiSceneMgr->getRootSceneNode()->createChildSceneNode();
+		ndVel[c]->attachObject(moVel[c]);	ndVel[c]->setScale(0,0,0);	ndVel[c]->setVisible(false);
 	}
-
-	
-	//  backgr  gauges
-	ManualObject* mrpmB = Create2D("hud/rpm",mSplitMgr->mHUDSceneMgr,1);	mrpmB->setVisibilityFlags(RV_Hud);
-	mrpmB->setRenderQueueGroup(RQG_Hud1);
-	nrpmB = mSplitMgr->mHUDSceneMgr->getRootSceneNode()->createChildSceneNode();
-	nrpmB->attachObject(mrpmB);	nrpmB->setScale(0,0,0);  nrpmB->setVisible(false);
-
-	ManualObject* mvelBk = Create2D("hud/kmh",mSplitMgr->mHUDSceneMgr,1);	mvelBk->setVisibilityFlags(RV_Hud);
-	mvelBk->setRenderQueueGroup(RQG_Hud1);
-	nvelBk = mSplitMgr->mHUDSceneMgr->getRootSceneNode()->createChildSceneNode();
-	nvelBk->attachObject(mvelBk);	nvelBk->setScale(0,0,0);  mvelBk->setVisible(false);
-		
-	ManualObject* mvelBm = Create2D("hud/mph",mSplitMgr->mHUDSceneMgr,1);	mvelBm->setVisibilityFlags(RV_Hud);
-	mvelBm->setRenderQueueGroup(RQG_Hud1);
-	nvelBm = mSplitMgr->mHUDSceneMgr->getRootSceneNode()->createChildSceneNode();
-	nvelBm->attachObject(mvelBm);	nvelBm->setScale(0,0,0);  mvelBm->setVisible(false);
-		
-	//  needles
-	mrpm = Create2D("hud/needle",mSplitMgr->mHUDSceneMgr,1,true);  mrpm->setVisibilityFlags(RV_Hud);
-	mrpm->setRenderQueueGroup(RQG_Hud3);
-	nrpm = mSplitMgr->mHUDSceneMgr->getRootSceneNode()->createChildSceneNode();
-	nrpm->attachObject(mrpm);	nrpm->setScale(0,0,0);	nrpm->setVisible(false);
-	
-	mvel = Create2D("hud/needle",mSplitMgr->mHUDSceneMgr,1,true);  mvel->setVisibilityFlags(RV_Hud);
-	mvel->setRenderQueueGroup(RQG_Hud3);
-	nvel = mSplitMgr->mHUDSceneMgr->getRootSceneNode()->createChildSceneNode();
-	nvel->attachObject(mvel);	nvel->setScale(0,0,0);	nvel->setVisible(false);
 
 
 	//  overlays
@@ -203,12 +193,9 @@ void App::CreateHUD()
 void App::ShowHUD(bool hideAll)
 {
 	if (hideAll)
-	{	if (nrpmB)  nrpmB->setVisible(false);
-		if (nvelBk)	nvelBk->setVisible(false);	if (nvelBm)	nvelBm->setVisible(false);
-		if (nrpm)	nrpm->setVisible(false);	if (nvel)	nvel->setVisible(false);
+	{
 		if (ovGear)	  ovGear->hide();		if (ovVel)	  ovVel->hide();
-		if (ovAbsTcs) ovAbsTcs->hide();
-		if (ovBoost)  ovBoost->hide();		//if (hudBoost)  hudBoost->hide();
+		if (ovAbsTcs) ovAbsTcs->hide();		if (ovBoost)  ovBoost->hide();
 		if (ovCountdown)  ovCountdown->hide();
 		if (ovNetMsg)  ovNetMsg->hide();
 		if (hudGear)  hudGear->hide();		if (hudVel)   hudVel->hide();
@@ -217,15 +204,20 @@ void App::ShowHUD(bool hideAll)
 		if (ovCam)	 ovCam->hide();			if (ovTimes)  ovTimes->hide();
 		if (ovWarnWin)  ovWarnWin->hide();	if (ovOpp)  ovOpp->hide();
 		if (mFpsOverlay)  mFpsOverlay->hide();
-		if (ndMap)  ndMap->setVisible(false);
+
+		for (int c=0; c < 4; ++c)
+		{
+			if (ndRpmBk[c])  ndRpmBk[c]->setVisible(false);
+			if (ndVelBk[c])	ndVelBk[c]->setVisible(false);	if (ndVelBm[c])	ndVelBm[c]->setVisible(false);
+			if (ndRpm[c])	ndRpm[c]->setVisible(false);	if (ndVel[c])	ndVel[c]->setVisible(false);
+			if (ndMap[c])  ndMap[c]->setVisible(false);
+		}
 		hideMouse();
 		if (mWndRpl)  mWndRpl->setVisible(false);
-	}else{	//this goes each frame..
+	}
+	else
+	{	//this goes each frame..
 		bool show = pSet->show_gauges;
-		if (nrpmB)  nrpmB->setVisible(show);
-		if (nvelBk)	nvelBk->setVisible(show && !pSet->show_mph);
-		if (nvelBm)	nvelBm->setVisible(show && pSet->show_mph);
-		if (nrpm)	nrpm->setVisible(show);		if (nvel)	nvel->setVisible(show);
 		if (ovGear)	{  if (1||show)  ovGear->show();  else  ovGear->hide();  }
 		if (ovVel)	{  if (1||show)  ovVel->show();   else  ovVel->hide();   }
 		if (ovBoost){  if (show && (pSet->game.boost_type == 1 || pSet->game.boost_type == 2))
@@ -248,7 +240,16 @@ void App::ShowHUD(bool hideAll)
 		if (ovOpp)  {  if (pSet->show_opponents && road && road->getNumPoints() > 0)  ovOpp->show();  else  ovOpp->hide();   }
 		if (ovWarnWin){  if (pSet->show_times)  ovWarnWin->show();  else  ovWarnWin->hide();  }
 		if (mFpsOverlay) { if (pSet->show_fps) mFpsOverlay->show(); else mFpsOverlay->hide(); }
-		if (ndMap)  ndMap->setVisible(pSet->trackmap);
+
+		show = pSet->show_gauges;
+		for (int c=0; c < 4; ++c)
+		{
+			if (ndRpmBk[c])  ndRpmBk[c]->setVisible(show);
+			if (ndVelBk[c])	ndVelBk[c]->setVisible(show && !pSet->show_mph);
+			if (ndVelBm[c])	ndVelBm[c]->setVisible(show && pSet->show_mph);
+			if (ndRpm[c])	ndRpm[c]->setVisible(show);		if (ndVel[c])	ndVel[c]->setVisible(show);
+			if (ndMap[c])  ndMap[c]->setVisible(pSet->trackmap);
+		}
 		updMouse();
 		if (mWndRpl && !bLoading)  mWndRpl->setVisible(bRplPlay && bRplWnd);  //
 	}
@@ -291,12 +292,9 @@ bool SortWin(const CarModel* cm2, const CarModel* cm1)
 	return l1 < l2;
 }
 
-void App::UpdateHUD(int carId, CarModel* pCarM, CAR* pCar, float time, Viewport* vp)
+	
+void App::ShowHUDvp(bool vp)	// todo: use vis mask ..
 {
-	if (bSizeHUD)
-	{	bSizeHUD = false;  // split x num plr ?..
-		SizeHUD(true);	}
-		
 	// show/hide for render viewport / gui viewport
 	// first show everything
 	ShowHUD(false);
@@ -308,41 +306,57 @@ void App::UpdateHUD(int carId, CarModel* pCarM, CAR* pCar, float time, Viewport*
 		if (ovTimes)  ovTimes->hide();		if (ovWarnWin)  ovWarnWin->hide();	if (ovOpp)  ovOpp->hide();
 		if (ovCarDbg)  ovCarDbg->hide();	if (ovCarDbgTxt)  ovCarDbgTxt->hide();
 		if (ovCountdown)  ovCountdown->hide();  if (ovNetMsg)  ovNetMsg->hide();
+		if (hudAbs)  hudAbs->hide();		if (hudTcs)  hudTcs->hide();
 	}else{
 		/// for render viewport ---------
 		if (ovCam)  ovCam->hide();
 		if (mFpsOverlay)  mFpsOverlay->hide();
 	}
-	//*H*/LogO(String("car: ") + toStr(carId) +" "+ (!pCarM ? toStr(pCarM) : pCarM->sDirname) +" "+ (vp?"v+":"v-") +" "+ (pCar?"c+":"c-") +" "+ (pCarM?"m+":"m-"));
-	if (!pCar)  return;  //-1 for ^above hiding in gui vp
+}
 
-			
-	///  hud rpm,vel  --------------------------------
-	if (pCar && !bRplPlay)  // for local cars only..
-	{	fr.vel = pCar->GetSpeedometer();
-		fr.rpm = pCar->GetEngineRPM();
-		fr.gear = pCar->GetGear();
-		fr.clutch = pCar->GetClutch();
-		//fr.throttle = pCar->dynamics.GetEngine().GetThrottle();  // not on hud
-	}
-
-    float vel = fr.vel * (pSet->show_mph ? 2.23693629f : 3.6f);
-    float rpm = fr.rpm;
-	//*H*/LogO(String("car: ") + toStr(carId) + "  vel: "+ toStr(vel) +"  rpm: "+ toStr(rpm));
-	UpdHUDRot(carId, pCarM, vel, rpm);
-
-
-	///  update remote players  -----------
-	for (int i=0; i < carModels.size(); ++i)
+void App::UpdateHUD(int carId, float time)
+{
+	if (bSizeHUD)	// update sizes once after change
+	{	bSizeHUD = false;
+		SizeHUD(true);	}
+		
+	
+	//  update HUD elements for all cars that have a viewport (local or replay)
+	//-----------------------------------------------------------------------------------
+	if (carId == -1)  // gui vp - once for all
+	for (int c = 0; c < carModels.size(); ++c)
+	if (carModels[c]->eType == CarModel::CT_LOCAL)
 	{
-		if (carModels[i]->eType == CarModel::CT_GHOST)
-			UpdHUDRot(i, carModels[i], 0.f, 0.f, true);
-		else
-		if (carId == 0 && !pSet->mini_rotated && !pSet->mini_zoomed)  // the only fall that works
-		if (carModels[i]->eType != CarModel::CT_LOCAL && carModels[i]->eType != CarModel::CT_REPLAY)
-			UpdHUDRot(i, carModels[i], 0.f, 0.f, true);
+		CarModel* pCarM = carModels[c];
+		CAR* pCar = pCarM ? pCarM->pCar : 0;
+
+		//  hud rpm,vel  --------------------------------
+		float vel=0.f, rpm=0.f, clutch=1.f;  int gear=1;
+		if (pCar && !bRplPlay && pCarM->eType != CarModel::CT_GHOST)
+		{	vel = pCar->GetSpeedometer() * (pSet->show_mph ? 2.23693629f : 3.6f);
+			rpm = pCar->GetEngineRPM();
+			gear = pCar->GetGear();
+			clutch = 1.f;  //pCar->GetClutch();  // todo: problems in multi thr1
+		}
+		
+		//  update pos tri on minimap  (all)
+		for (int i=0; i < carModels.size(); ++i)
+			UpdHUDRot(c, i, vel, rpm);
 	}
-			
+
+	if (carId == -1)  return;
+	CarModel* pCarM = carModels[carId];
+	CAR* pCar = pCarM ? pCarM->pCar : 0;
+
+		float vel=0.f, rpm=0.f, clutch=1.f;  int gear=1;
+		if (pCar && !bRplPlay && pCarM->eType != CarModel::CT_GHOST)
+		{	vel = pCar->GetSpeedometer() * (pSet->show_mph ? 2.23693629f : 3.6f);
+			rpm = pCar->GetEngineRPM();
+			gear = pCar->GetGear();
+			clutch = 1.f;  //pCar->GetClutch();  // todo: problems in multi thr1
+		}
+
+
 	///  multiplayer
 	// -----------------------------------------------------------------------------------
 	static float tm = 0.f;  tm += time;
@@ -423,7 +437,8 @@ void App::UpdateHUD(int carId, CarModel* pCarM, CAR* pCar, float time, Viewport*
 
 	///  opponents list
 	// -----------------------------------------------------------------------------------
-	if (ovOpp->isVisible() && pCarM && pCarM->pMainNode)
+	if (/*pSet->show_opponents && road && road->getNumPoints() > 0*/  ovOpp->isVisible()
+		&& pCarM && pCarM->pMainNode)
 	{
 		std::list<CarModel*> cms;  // sorted list
 		for (int o=0; o < carModels.size(); ++o)
@@ -541,13 +556,13 @@ void App::UpdateHUD(int carId, CarModel* pCarM, CAR* pCar, float time, Viewport*
 	///  gear, vel texts  -----------------------------
 	if (hudGear && hudVel && pCar)
 	{
-		float cl = fr.clutch*0.8f + 0.2f;
-		if (fr.gear == -1)
+		float cl = clutch*0.8f + 0.2f;
+		if (gear == -1)
 		{	hudGear->setCaption("R");  hudGear->setColour(ColourValue(0.3,1,1,cl));	}
-		else if (fr.gear == 0)
+		else if (gear == 0)
 		{	hudGear->setCaption("N");  hudGear->setColour(ColourValue(0.3,1,0.3,cl));	}
-		else if (fr.gear > 0 && fr.gear < 8)
-		{	hudGear->setCaption(toStr(fr.gear));  hudGear->setColour(ColourValue(1,1-fr.gear*0.1,0.2,cl));	}
+		else if (gear > 0 && gear < 8)
+		{	hudGear->setCaption(toStr(gear));  hudGear->setColour(ColourValue(1,1-gear*0.1,0.2,cl));	}
 
 		hudVel->setCaption(fToStr(std::abs(vel),0,3));  int w = mWindow->getWidth();
 		hudVel->setPosition(-0.055 + w/1600.f*0.045,-0.01);
@@ -578,10 +593,6 @@ void App::UpdateHUD(int carId, CarModel* pCarM, CAR* pCar, float time, Viewport*
 	//  abs, tcs on  -----------------------------
 	if (hudAbs && hudTcs)
 	{
-		// hide on gui vp
-		if (!vp)
-		{	hudAbs->hide();  hudTcs->hide();  }
-		else
 		if (pCar)
 		{
 			if (pCar->GetABSEnabled())
@@ -601,7 +612,7 @@ void App::UpdateHUD(int carId, CarModel* pCarM, CAR* pCar, float time, Viewport*
 	///  times, score  -----------------------------
 	if (pSet->show_times && pCar)
 	{
-		TIMER& tim = pGame->timer;	//car[playercarindex].
+		TIMER& tim = pGame->timer;
 		
 		if (pCarM->bWrongChk || pCarM->iWonPlace > 0 && (pSet->game.local_players > 1 || mClient))
 			ovWarnWin->show();  else  ovWarnWin->hide();  //ov

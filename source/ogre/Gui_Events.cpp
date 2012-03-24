@@ -324,7 +324,10 @@ void App::chkFps(WP wp){			ChkEv(show_fps);	if (pSet->show_fps)  mFpsOverlay->sh
 
 void App::chkGauges(WP wp){			ChkEv(show_gauges);	ShowHUD();	}
 void App::chkArrow(WP wp){			ChkEv(check_arrow); if (arrowRotNode) arrowRotNode->setVisible(pSet->check_arrow);  }
-void App::chkMinimap(WP wp){		ChkEv(trackmap);	if (ndMap)  ndMap->setVisible(pSet->trackmap);	}
+void App::chkMinimap(WP wp){		ChkEv(trackmap);
+	for (int c=0; c < 4; ++c)
+		if (ndMap[c])  ndMap[c]->setVisible(pSet->trackmap);
+}
 void App::chkMiniZoom(WP wp){		ChkEv(mini_zoomed);		}
 void App::chkMiniRot(WP wp){		ChkEv(mini_rotated);	}
 void App::chkMiniTer(WP wp){		ChkEv(mini_terrain);	UpdMiniTer();  }
@@ -565,6 +568,7 @@ if (!bAssignKey)
 			case KC_C:	GuiShortcut(WND_Game, 2);	return true;  // C Car
 			case KC_H:	GuiShortcut(WND_Champ, 5);	return true;  // H Champs
 			case KC_U:	GuiShortcut(WND_Game, 4);	return true;  // U Multiplayer
+			case KC_W:	GuiShortcut(WND_Game, 3);	return true;  // W Setup
 
 			case KC_R:	GuiShortcut(WND_Replays, 1);	return true;  // R Replays
 
@@ -656,7 +660,9 @@ if (!bAssignKey)
 				return false;
 				
 			case KC_F8:		// Minimap
-			{	WP wp = chMinimp;  ChkEv(trackmap);  if (ndMap)  ndMap->setVisible(pSet->trackmap);
+			{	WP wp = chMinimp;  ChkEv(trackmap);
+				for (int c=0; c < 4; ++c)
+					if (ndMap[c])  ndMap[c]->setVisible(pSet->trackmap);
 			}	return false;
 			
 			case KC_F5:		//  new game

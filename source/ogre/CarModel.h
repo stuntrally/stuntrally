@@ -30,7 +30,7 @@ struct PosInfo
 {
 	bool bNew;  //  new posinfo available for Update
 	//  car
-	Ogre::Vector3 pos, carY;  Ogre::Vector2 miniPos;
+	Ogre::Vector3 pos, carY;
 	//  wheel
 	Ogre::Vector3 whPos[4];  Ogre::Quaternion rot, whRot[4];  float whR[4];
 	float whVel[4], whSlide[4], whSqueal[4];
@@ -46,7 +46,7 @@ struct PosInfo
 	Ogre::Vector3 vHitPos,vHitNorm;  // world hit data
 
 	PosInfo() : bNew(false),  // not inited
-		pos(0,-200,0), miniPos(0,0), percent(0.f), braking(false)
+		pos(0,-200,0), percent(0.f), braking(false)
 	{}
 };
 

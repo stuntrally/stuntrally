@@ -175,7 +175,6 @@ void App::CreateRacingLine()
 void App::CreateMinimap()
 {
 	asp = float(mWindow->getWidth())/float(mWindow->getHeight());
-	ofsX=0; ofsY=0;
 
 	//  get track sizes
 	minX=FLT_MAX; maxX=FLT_MIN;  minY=FLT_MAX; maxY=FLT_MIN;
@@ -201,8 +200,6 @@ void App::CreateMinimap()
 	float fMapSizeX = maxX - minX, fMapSizeY = maxY - minY;  // map size
 	float size = std::max(fMapSizeX, fMapSizeY);
 	scX = 1.f / size;  scY = 1.f / size;
-	//scX = 1.f / fMapSizeX;  scY = 1.f / fMapSizeY;
-	//Vector3 vLi(1,20,1);  vLi.normalise();  //par shade
 
 	ManualObject* m = mSceneMgr->createManualObject();
 	m->begin("hud/Minimap", RenderOperation::OT_TRIANGLE_LIST);
@@ -260,23 +257,22 @@ void App::CreateMinimap()
 
 	float fHudSize = pSet->size_minimap;
 	float marg = 1.f + 0.1f;  // from border
-	fMiniX = 1 - fHudSize * marg, fMiniY = 1 - fHudSize*asp * marg;
+	float fMiniX = 1 - fHudSize * marg, fMiniY = 1 - fHudSize*asp * marg;
 
-	ndMap = mSceneMgr->getRootSceneNode()->createChildSceneNode(Vector3(fMiniX,fMiniY,0));
-	ndMap->scale(fHudSize, fHudSize*asp, 1);
-	ndMap->attachObject(m);
+	//for [4]...
+	ndMap[0] = mSceneMgr->getRootSceneNode()->createChildSceneNode(Vector3(fMiniX,fMiniY,0));
+	ndMap[0]->scale(fHudSize, fHudSize*asp, 1);
+	ndMap[0]->attachObject(m);
 	
-	//  car pos dot
-	vMoPos.clear();
-	vNdPos.clear();
-	for (int i=0; i < pSet->game.local_players; ++i)
-	{	vMoPos.push_back(0);
-		vMoPos[i] = Create2D("hud/CarPos", mSplitMgr->mGuiSceneMgr, 0.4f, true, true);
-		vNdPos.push_back(0);
-		vNdPos[i] = ndMap->createChildSceneNode();
-		vNdPos[i]->scale(fHudSize*1.5f, fHudSize*1.5f, 1);
-		vNdPos[i]->attachObject(vMoPos[i]);  /*ndPos[i]->setVisible(false);  */}
-	ndMap->setVisible(pSet->trackmap);
+	//  car pos tri
+	for (int c=0; c < 5; ++c)
+	{
+		vMoPos[0][c] = Create2D("hud/CarPos", mSplitMgr->mGuiSceneMgr, 0.4f, true, true);
+		vNdPos[0][c] = ndMap[0]->createChildSceneNode();
+		vNdPos[0][c]->scale(fHudSize*1.5f, fHudSize*1.5f, 1);
+		vNdPos[0][c]->attachObject(vMoPos[0][c]);  //ndPos[i]->setVisible(false);
+	}
+	ndMap[0]->setVisible(pSet->trackmap);
 }
 
 

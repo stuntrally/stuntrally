@@ -18,16 +18,15 @@ using namespace Ogre;
 
 //  ctors  -----------------------------------------------
 App::App()
-	:pGame(0), ndMap(0), ndLine(0), bGI(0)
-	,nrpmB(0),nvelBk(0),nvelBm(0), nrpm(0),nvel(0), mrpm(0),mvel(0)
+	:pGame(0), ndLine(0), bGI(0)
 	// ovr
 	,hudGear(0),hudVel(0),hudBoost(0),hudCountdown(0),hudNetMsg(0), hudAbs(0),hudTcs(0)
 	,hudTimes(0), hudWarnChk(0),hudWonPlace(0), hudOppB(0)
 	,ovGear(0),ovVel(0),ovBoost(0),ovCountdown(0),ovNetMsg(0), ovAbsTcs(0), ovCarDbg(0),ovCarDbgTxt(0)
 	,ovCam(0), ovTimes(0), ovWarnWin(0), ovOpp(0)
 	// hud
-	,asp(1),  xcRpm(0), ycRpm(0), xcVel(0), ycVel(0)
-	,fMiniX(0),fMiniY(0), scX(1),scY(1), ofsX(0),ofsY(0), minX(0),maxX(0), minY(0),maxY(0)
+	,asp(1)//,  xcRpm(0), ycRpm(0), xcVel(0), ycVel(0)
+	,scX(1),scY(1), minX(0),maxX(0), minY(0),maxY(0)
 	,arrowNode(0),arrowRotNode(0)
 	// ter
 	,mTerrainGlobals(0), mTerrainGroup(0), terrain(0), mPaging(false)
@@ -60,14 +59,20 @@ App::App()
     ,iColLock(0),iColHost(0),iColPort(0)
 	// game
 	,blendMtr(0), iBlendMaps(0), dbgdraw(0), noBlendUpd(0), blendMapSize(513), bListTrackU(0)
-	,grass(0), trees(0), road(0), miniC(0)
+	,grass(0), trees(0), road(0)
 	,pr(0),pr2(0), sun(0), carIdWin(-1), iCurCar(0), bUpdCarClr(1)
 	,lastAxis(-1), axisCnt(0), txtJAxis(0), txtJBtn(0), txtInpDetail(0)
 	,edInputMin(0), edInputMax(0), edInputMul(0), edInputReturn(0), edInputIncrease(0), actDetail(0), cmbInpDetSet(0)
 	,liChamps(0),liStages(0), edChampStage(0),edChampEnd(0), imgChampStage(0), liNetEnd(0)
 {
-	int i;
-	for (int c=0; c < 2; ++c)
+	int i,c;
+	for (i=0; i < 4; ++i)
+	{	ndMap[i]=0;  moMap[i]=0;  moRpm[i]=0;  moVel[i]=0;
+		ndRpmBk[i]=0;  ndVelBk[i]=0;  ndVelBm[i]=0;  ndRpm[i]=0;  ndVel[i]=0;
+		for (c=0; c < 5; ++c)
+		{	vNdPos[i][c]=0;  vMoPos[i][c]=0;  }
+	}
+	for (c=0; c < 2; ++c)
 	{
 		trkDesc[c]=0;  valTrk[c]=0;  imgPrv[c]=0; imgMini[c]=0; imgTer[c]=0;
 		for (i=0; i < StTrk;  ++i)  stTrk[c][i] = 0;
@@ -78,7 +83,7 @@ App::App()
 	resCar = "";  resTrk = "";  resDrv = "";
 	sListCar = "";  sListTrack = "";
 
-	for (int o=0; o < 5; ++o)  for (int c=0; c < 3; ++c)
+	for (int o=0; o < 5; ++o)  for (c=0; c < 3; ++c)
 		hudOpp[o][c] = 0;
 		
 	for (i=0; i < 5; ++i)

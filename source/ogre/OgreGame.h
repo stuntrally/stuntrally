@@ -32,7 +32,7 @@ namespace OISB   {  class AnalogAxisAction;  }
 class MaterialFactory;
 
 
-class App : public BaseApp, public GameClientCallback, public MasterClientCallback //, public RenderTargetListener
+class App : public BaseApp, public GameClientCallback, public MasterClientCallback
 {
 public:
 	App();  virtual ~App();
@@ -73,9 +73,9 @@ public:
 	Ogre::SceneNode* arrowRotNode; // seperate node for rotation
 	Ogre::Quaternion arrowAnimStart, arrowAnimEnd, arrowAnimCur; // smooth animation
 		
-	void UpdateHUD(int carId, class CarModel* pCarM, class CAR* pCar,
-		float time, Ogre::Viewport* vp=NULL), SizeHUD(bool full, Ogre::Viewport* vp=NULL, int carId=-1);
-	void UpdHUDRot(int carId, CarModel* pCarM, float vel, float rpm, bool miniOnly=false);
+	void UpdateHUD(int carId, float time), ShowHUDvp(bool vp),
+		SizeHUD(bool full, Ogre::Viewport* vp=NULL, int carId=-1);
+	void UpdHUDRot(int baseCarId, int carId, float vel, float rpm);
 	
 	void recreateCarMtr();
 	
@@ -102,30 +102,32 @@ protected:
 		Mtr_Road,  NumMaterials  };
 	Ogre::String sMtr[NumMaterials];
 
-	//  2D, hud  ----
-	float asp,  xcRpm, ycRpm, xcVel, ycVel,
-		fMiniX,fMiniY, scX,scY, ofsX,ofsY, minX,maxX, minY,maxY;  // minimap
+	///  HUD, 2D  ------------
+	float asp, scX,scY, minX,maxX, minY,maxY;  // minimap visible range
+	//  gauges
+	Ogre::SceneNode *ndRpm[4], *ndVel[4], *ndRpmBk[4], *ndVelBk[4],*ndVelBm[4];
+	Ogre::ManualObject* moRpm[4], *moVel[4];
+	//  miniap
+	Ogre::ManualObject* moMap[4];
+	Ogre::SceneNode *ndMap[4], *ndLine;
+	Ogre::SceneNode* vNdPos[4][5];  // car pos tris on minimap +1ghost
+	Ogre::ManualObject* vMoPos[4][5];
 
-	Ogre::SceneNode *nrpm, *nvel, *nrpmB, *nvelBk,*nvelBm;  // gauges
-	Ogre::ManualObject* mrpm, *mvel, *miniC;
-	Ogre::SceneNode *ndMap, *ndLine;  // vdr minimap-
-	// car pos on minimap
-	std::vector<Ogre::SceneNode*> vNdPos;
-	std::vector<Ogre::ManualObject*> vMoPos;
 	Ogre::ManualObject* Create2D(const Ogre::String& mat, Ogre::SceneManager* sceneMgr,
 		Ogre::Real size, bool dyn = false, bool clr = false);
 
 	Ogre::OverlayElement* hudGear,*hudVel,*hudBoost,*hudCountdown,*hudNetMsg, *ovL[5],*ovR[5],*ovS[5],*ovU[5],
 		*hudAbs,*hudTcs, *hudTimes, *hudWarnChk,*hudWonPlace, *hudOpp[5][3],*hudOppB;
-	Ogre::Overlay* ovGear,*ovVel,*ovBoost,*ovCountdown,*ovNetMsg, *ovAbsTcs,*ovCarDbg,*ovCarDbgTxt,
-		*ovCam, *ovTimes, *ovWarnWin, *ovOpp;
+	Ogre::Overlay* ovGear,*ovVel,*ovBoost,*ovCountdown,*ovNetMsg,
+		*ovAbsTcs, *ovTimes, *ovCarDbg,*ovCarDbgTxt, *ovCam, *ovWarnWin, *ovOpp;
 
 	Ogre::String GetTimeString(float time) const;
 	void CreateHUD(), ShowHUD(bool hideAll=false), UpdMiniTer();
 	Ogre::Vector3 projectPoint(const Ogre::Camera* cam, const Ogre::Vector3& pos);  // 2d xy, z - out info
 	MyGUI::TextBox* CreateNickText(int carId, Ogre::String text);
 
-	//  create  . . . . . . . . . . . . . . . . . . . . . . . . 
+
+	///  create  . . . . . . . . . . . . . . . . . . . . . . . . 
 	Ogre::String resCar, resTrk, resDrv;
 	void CreateCar(), CreateTrack(), CreateRacingLine(), CreateMinimap(), CreateRoadBezier();
 	void CreateTerrain(bool bNewHmap=false, bool bTer=true), CreateBltTerrain();

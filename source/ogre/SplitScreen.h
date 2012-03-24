@@ -35,16 +35,17 @@ public:
 	// Gui viewport & scene manager
 	Ogre::SceneManager* mGuiSceneMgr;
 	Ogre::Viewport* mGuiViewport;
-	class Renderer2D* mHUD;
-	
-	// Hud viewports & scene manager & cameras
-	std::list<Ogre::Viewport*> mHUDViewports;
-	Ogre::Camera* mHUDCamera;
-	Ogre::SceneManager* mHUDSceneMgr;
 	
 	// This method should always be called after mNumPlayers is changed.
 	// It will create new viewports and cameras and arrange them.
 	void Align();
+	
+	// dimensions for the viewport of each player [4]
+	struct VPDims
+	{	Ogre::Real top,left, width,height, right,bottom, avgsize;
+		void Default() {  top=0.f; left=0.f;  width=1.f; height=1.f;  right=1.f; bottom=1.f;  avgsize=1.f;  }
+		VPDims() {  Default();  }
+	} mDims[4];
 	
 	// Destroy viewports & cameras
 	void CleanUp();

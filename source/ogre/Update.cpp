@@ -16,7 +16,6 @@
 #include "common/Gui_Def.h"
 #include "common/MultiList2.h"
 #include "SplitScreen.h"
-#include "OgreRenderer2D.h"
 #include <MyGUI.h>
 using namespace Ogre;
 using namespace MyGUI;
@@ -52,14 +51,14 @@ void App::UpdThr()
 
 bool App::frameStart(Real time)
 {
+	/// ???? ---------
+	static QTimer gtim;
+	gtim.update();
+	double dt = gtim.dt;
+
 	//  multi thread
 	if (pSet->multi_thr == 1 && pGame && !bLoading)
 	{
-		/// ???? ---------
-		static QTimer gtim;
-		gtim.update();
-		double dt = gtim.dt;
-		
 		/**/boost::mutex::scoped_lock(pGame->carposMutex);///
 		updatePoses(time);  //pGame->framerate
 
@@ -93,12 +92,12 @@ bool App::frameStart(Real time)
 	
 	#if 0
 	static Real ti = 0.f;  ti += time;
-	if (mSplitMgr && mSplitMgr->mHUD && !bLoading)
+	if (mSplitMgr && !bLoading)
 	{
 		//mSplitMgr->mHUD->drawLine(false,
 		//	Vector2(Math::RangeRandom(0,100),Math::RangeRandom(0,100)),
 		//	Vector2(Math::RangeRandom(200,300),Math::RangeRandom(200,300)), ColourValue(0,1,1,1), 1);
-
+		/*
 		Rect r1(100,100,200,200), r2(0,0,10,10);
 		mSplitMgr->mHUD->drawImage(false, "carpos0.png", //"circleMini.png",
 			Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME,
@@ -108,6 +107,41 @@ bool App::frameStart(Real time)
 			Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME,
 			r1,	ColourValue(0,0.5,1),
 			r2,	ti * 40, Vector2(-1,-1));
+		/**/
+
+		///  graph test
+		#if 0
+		static int t=0;  ++t;
+		static std::vector<Vector2> vpos,vpos2;
+		if (t==1)
+			for (int i=0; i < 1000; ++i)
+			{
+				vpos.push_back(Vector2(i+150,150+200));
+				vpos2.push_back(Vector2(i+150,150+200));
+			}
+
+		for (int i=0; i < 1000-1; ++i)
+			vpos[i].y = vpos[i+1].y;
+
+		int i = 1000-1;
+		if (carModels.size() > 0)
+		vpos[i].y = //sin(i*0.1+t*0.1)*cos(i*0.11+t*0.11)*150+200;
+			//350 - time * 10000.f;
+			//350.f - newPosInfos[0].miniPos.x * 100.f;
+			//350.f - newPosInfos[0].pos.x * 10.f;
+			350.f - carModels[0]->pCar->dynamics.GetSuspension((WHEEL_POSITION )0).GetVelocity() * 100.f;
+
+		//for (int i=90; i < 1000; ++i)
+		//	vpos[i] = Vector2(i+150,
+		//		sin(i*0.1+t*0.1)*cos(i*0.11+t*0.11)*150+200
+		//		);
+
+		for (int i=0; i < 1000; ++i)
+			vpos2[i].y = vpos[i].y+1;
+
+		mSplitMgr->mHUD->drawLines(false, vpos, ColourValue(0.2,0.1,0));
+		mSplitMgr->mHUD->drawLines(false, vpos2, ColourValue(1.0,0.6,0.3));
+		#endif
 	}
 	#endif
 
@@ -164,7 +198,7 @@ bool App::frameStart(Real time)
 			if (dirD > 0.0f) {  LNext(-d);  dirD = -0.12f;  }
 		}
 		
-		//  Gui updates from networking
+		///  Gui updates from networking
 		//  We do them here so that they are handled in the main thread as MyGUI is not thread-safe
 		if (isFocGui)
 		{
@@ -246,8 +280,6 @@ bool App::frameStart(Real time)
 			if (!ret)  mShutDown = true;
 			updatePoses(time);  //pGame->framerate
 		}
-		
-		///
 		
 		// align checkpoint arrow
 		// move in front of camera
@@ -756,33 +788,6 @@ void App::updatePoses(float time)
 			carM->pNickTxt->setVisible(p.z > 0.f);
 		}
 		
-		///  pos on minimap  x,y = -1..1
-		{
-			Vector2 mp(-newPosInfo.pos[2],newPosInfo.pos[0]);
-			Vector2 plr(-playerPos.pos[2],playerPos.pos[0]);
-
-			//  other cars in player's car space
-			if (i > 0 && pSet->mini_zoomed)
-			{
-				mp -= plr;  mp *= pSet->zoom_minimap;
-
-				if (pSet->mini_rotated)
-				{
-					float a = playerCar->angCarY * PI_d/180.f;  Vector2 np;
-					np.x = mp.x*cosf(a) - mp.y*sinf(a);  // rotate
-					np.y = mp.x*sinf(a) + mp.y*cosf(a);  mp = -np;
-  				}
-			}
-
-			float xp = std::min(1.f, std::max(-1.f,  (mp.x - minX)*scX*2.f-1.f )),
-				  yp = std::min(1.f, std::max(-1.f, -(mp.y - minY)*scY*2.f+1.f ));
-			newPosInfos[i].miniPos = Vector2(xp,yp);
-						
-			if (vNdPos[i])
-				if (bGhost && !bGhostVis)  vNdPos[i]->setPosition(-100,0,0);  //hide
-				else if (pSet->mini_zoomed && i==0)  vNdPos[i]->setPosition(0,0,0);
-				else					vNdPos[i]->setPosition(xp,yp,0);
-		}
 		++carIt;  ++newPosIt;  ++i;
 	}
 	
@@ -801,87 +806,120 @@ void App::updatePoses(float time)
 }
 
 
-//  Update HUD rotated elems
+//  Update HUD rotated elems - for carId, in baseCarId's space
 //---------------------------------------------------------------------------------------------------------------
-void App::UpdHUDRot(int carId, CarModel* pCarM, float vel, float rpm, bool miniOnly)
+void App::UpdHUDRot(int baseCarId, int carId, float vel, float rpm)
 {
-	/// TODO: rpm vel needle angles,aspect are wrong [all from the last car when bloom is on (any effects)], hud vals are ok
 	//if (!pCarM || carId == -1)  return;
-	//pCarM = carModels[carId];
-	bool ghost = false;
-	if (pCarM && pCarM->eType == CarModel::CT_GHOST)  ghost = true;
+	//CarModel* pCarM = carModels[b];
+	int b = baseCarId, c = carId;
+	bool main = b == c;
+	float angBase = carModels[b]->angCarY;
 
-    const float rsc = -180.f/6000.f, rmin = 0.f;  //rmp
-    float angrmp = rpm*rsc + rmin;
-    float vsc = pSet->show_mph ? -180.f/100.f : -180.f/160.f, vmin = 0.f;  //vel
-    float angvel = abs(vel)*vsc + vmin;
-    float angrot = 0.f;  int i=0;
-	if (pCarM)	angrot = pCarM->angCarY;
-	if (ghost && pSet->mini_rotated && pSet->mini_zoomed)
-		angrot -= carModels[0]->angCarY+180.f;
+	const float rsc = -180.f/6000.f, rmin = 0.f;  //rmp
+	float angrmp = rpm*rsc + rmin;
+	const float vsc = pSet->show_mph ? -180.f/100.f : -180.f/160.f, vmin = 0.f;  //vel
+	float angvel = abs(vel)*vsc + vmin;
+	float angrot = carModels[c]->angCarY;
+	if (pSet->mini_rotated && pSet->mini_zoomed && !main)
+		angrot -= angBase-180.f;
 
-	//*H*/LogO(String("caR: ") + toStr(carId) + /*/" " + toStr(pCarM) +*/ "  vel " + toStr(vel) + "  rpm " + toStr(rpm) + "  a " + toStr(angrot));
-    float sx = 1.4f, sy = sx*asp;  // *par len
-    float psx = 2.1f * pSet->size_minimap, psy = psx;  // *par len
+	float sx = 1.4f, sy = sx*asp;  // *par len
+	float psx = 2.1f * pSet->size_minimap, psy = psx;  // *par len
 
-    const static Real tc[4][2] = {{0,1}, {1,1}, {0,0}, {1,0}};  // defaults, no rot
-    const static Real tp[4][2] = {{-1,-1}, {1,-1}, {-1,1}, {1,1}};
-    const static float d2r = PI_d/180.f;
-    const static Real ang[4] = {0.f,90.f,270.f,180.f};
+	const static Real tc[4][2] = {{0,1}, {1,1}, {0,0}, {1,0}};  // defaults, no rot
+	const static Real tp[4][2] = {{-1,-1}, {1,-1}, {-1,1}, {1,1}};
+	const static float d2r = PI_d/180.f;
+	const static Real ang[4] = {0.f,90.f,270.f,180.f};
 
-    float rx[4],ry[4], vx[4],vy[4], px[4],py[4], cx[4],cy[4];  // rpm,vel, pos,crc
-    for (int i=0; i<4; ++i)  // 4 verts, each+90deg
-    {
-		float ia = 45.f + ang[i];  //i*90.f;
-		if (!miniOnly && !ghost)
-		{	float r = -(angrmp + ia) * d2r;		rx[i] = sx*cosf(r);  ry[i] =-sy*sinf(r);
-			float v = -(angvel + ia) * d2r;		vx[i] = sx*cosf(v);  vy[i] =-sy*sinf(v);
+	float rx[4],ry[4], vx[4],vy[4], px[4],py[4], cx[4],cy[4];  // rpm,vel, pos,crc
+	for (int i=0; i<4; ++i)  // 4 verts, each +90deg
+	{
+		float ia = 45.f + ang[i];
+		if (main)
+		{	float r = -(angrmp + ia) * d2r;   rx[i] = sx*cosf(r);  ry[i] =-sy*sinf(r);
+			float v = -(angvel + ia) * d2r;   vx[i] = sx*cosf(v);  vy[i] =-sy*sinf(v);
 		}
-		float p = -(angrot + ia) * d2r;		float cp = cosf(p), sp = sinf(p);
+		float p = -(angrot + ia) * d2r;	  float cp = cosf(p), sp = sinf(p);
 
-		if (pSet->mini_rotated && pSet->mini_zoomed && !ghost)
+		if (pSet->mini_rotated && pSet->mini_zoomed && main)
 			{  px[i] = psx*tp[i][0];  py[i] = psy*tp[i][1];  }
-		else{  px[i] = psx*cp*1.4f;   py[i] =-psy*sp*1.4f;  }
+		else{  px[i] = psx*cp*1.4f;   py[i] =-psy*sp*1.4f;   }
 
 		float z = pSet->mini_rotated ? 0.70f/pSet->zoom_minimap : 0.5f/pSet->zoom_minimap;
 		if (!pSet->mini_rotated)
 			{  cx[i] = tp[i][0]*z;  cy[i] = tp[i][1]*z-1.f;  }
 		else{  cx[i] =       cp*z;  cy[i] =      -sp*z-1.f;  }
-    }
+	}
     
-    //  rpm needle
-    if (!miniOnly && !ghost)
-    {
-		if (mrpm)  {	mrpm->beginUpdate(0);
-			for (int p=0;p<4;++p)  {  mrpm->position(rx[p],ry[p], 0);  mrpm->textureCoord(tc[p][0], tc[p][1]);  }	mrpm->end();  }
-
-		//  vel needle
-		if (mvel)  {	mvel->beginUpdate(0);
-			for (int p=0;p<4;++p)  {  mvel->position(vx[p],vy[p], 0);  mvel->textureCoord(tc[p][0], tc[p][1]);  }	mvel->end();  }
+    //  rpm,vel needles
+	if (main)
+	{
+		if (moRpm[b])  {	moRpm[b]->beginUpdate(0);
+			for (int p=0;p<4;++p)  {  moRpm[b]->position(rx[p],ry[p], 0);
+				moRpm[b]->textureCoord(tc[p][0], tc[p][1]);  }	moRpm[b]->end();  }
+		if (moVel[b])  {	moVel[b]->beginUpdate(0);
+			for (int p=0;p<4;++p)  {  moVel[b]->position(vx[p],vy[p], 0);
+				moVel[b]->textureCoord(tc[p][0], tc[p][1]);  }	moVel[b]->end();  }
 	}
 		
-	//  minimap car pos-es
-	int c = carId;
-	//for (int c=0; c < pSet->local_players; ++c)
-	if (vMoPos[c])  {  vMoPos[c]->beginUpdate(0);
-		for (int p=0;p<4;++p)  {  vMoPos[c]->position(px[p],py[p], 0);
-			vMoPos[c]->textureCoord(tc[p][0], tc[p][1]);	if (pCarM)  vMoPos[c]->colour(pCarM->color);  }
-		vMoPos[c]->end();  }
-
+	///  minimap car pos-es rot
+	if (vMoPos[b][c])
+	{	vMoPos[b][c]->beginUpdate(0);
+		for (int p=0;p<4;++p)  {
+			vMoPos[b][c]->position(px[p],py[p], 0);
+			vMoPos[b][c]->textureCoord(tc[p][0], tc[p][1]);
+			vMoPos[b][c]->colour(carModels[c]->color);  }
+		vMoPos[b][c]->end();
+	}
 	
-	//  minimap circle/rect
-	if (miniC && pSet->trackmap && !ghost)
-	{	const Vector2& v = newPosInfos[carId].miniPos;
-		float xc = (v.x+1.f)*0.5f, yc = (v.y+1.f)*0.5f;
-		miniC->beginUpdate(0);
+	//  minimap circle/rect rot
+	if (moMap[b] && pSet->trackmap && main)
+	{
+		moMap[b]->beginUpdate(0);
 		if (!pSet->mini_zoomed)
-			for (int p=0;p<4;++p)  {  miniC->position(tp[p][0],tp[p][1], 0);
-				miniC->textureCoord(tc[p][0], tc[p][1]);  miniC->colour(tc[p][0],tc[p][1], 0);  }
+			for (int p=0;p<4;++p)  {  moMap[b]->position(tp[p][0],tp[p][1], 0);
+				moMap[b]->textureCoord(tc[p][0], tc[p][1]);  moMap[b]->colour(tc[p][0],tc[p][1], 0);  }
 		else
-			for (int p=0;p<4;++p)  {  miniC->position(tp[p][0],tp[p][1], 0);
-				miniC->textureCoord(cx[p]+xc, -cy[p]-yc);  miniC->colour(tc[p][0],tc[p][1], 1);  }
-		miniC->end();  }
+		{	Vector2 mp(-newPosInfos[b].pos[2],newPosInfos[b].pos[0]);
+			float xc =  (mp.x - minX)*scX,
+				  yc = -(mp.y - minY)*scY+1.f;
+
+			for (int p=0;p<4;++p)  {  moMap[b]->position(tp[p][0],tp[p][1], 0);
+				moMap[b]->textureCoord(cx[p]+xc, -cy[p]-yc);  moMap[b]->colour(tc[p][0],tc[p][1], 1);  }
+		}
+		moMap[b]->end();
+	}
+
+	///  minimap car pos  x,y = -1..1
+	Vector2 mp(-newPosInfos[c].pos[2],newPosInfos[c].pos[0]);
+
+	//  other cars in player's car view space
+	if (!main && pSet->mini_zoomed)
+	{
+		Vector2 plr(-newPosInfos[b].pos[2],newPosInfos[b].pos[0]);
+		mp -= plr;  mp *= pSet->zoom_minimap;
+
+		if (pSet->mini_rotated)
+		{
+			float a = angBase * PI_d/180.f;  Vector2 np;
+			np.x = mp.x*cosf(a) - mp.y*sinf(a);  // rotate
+			np.y = mp.x*sinf(a) + mp.y*cosf(a);  mp = -np;
+		}
+	}
+	float xp = std::min(1.f, std::max(-1.f,  (mp.x - minX)*scX*2.f-1.f )),
+		  yp = std::min(1.f, std::max(-1.f, -(mp.y - minY)*scY*2.f+1.f ));
+	
+	bool bGhost = carModels[c]->eType == CarModel::CT_GHOST,
+		bGhostVis = (ghplay.GetNumFrames() > 0) && pSet->rpl_ghost;
+
+	if (vNdPos[b][c])
+		if (bGhost && !bGhostVis)  vNdPos[c][b]->setPosition(-100,0,0);  //hide
+		else if (pSet->mini_zoomed && main)
+			 vNdPos[b][c]->setPosition(0,0,0);
+		else vNdPos[b][c]->setPosition(xp,yp,0);
 }
+
 
 //  util
 Vector3 App::projectPoint(const Camera* cam, const Vector3& pos)
