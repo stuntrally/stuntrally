@@ -294,9 +294,8 @@ bool GAME::OneLoop()
 		//if (OISB::System::getSingletonPtr() != NULL)
 			//OISB::System::getSingleton().process(dt);
 
-		Tick(dt);  // do CPU intensive stuff in parallel with the GPU
-
-		//FinishDraw();  // sync CPU and GPU (flip the page)
+		//if (!pOgreGame->bLoading && !timer.waiting)
+		Tick(pOgreGame->bLoading ? 0.0 : dt);  // do CPU intensive stuff in parallel with the GPU
 		
 		PROFILER.endCycle();
 		

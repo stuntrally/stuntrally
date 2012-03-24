@@ -36,6 +36,7 @@ class App : public BaseApp, public GameClientCallback, public MasterClientCallba
 {
 public:
 	App();  virtual ~App();
+	void NullHUD();
 	
 	class GAME* pGame;  ///*
 	void updatePoses(float time), newPoses();

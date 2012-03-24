@@ -150,6 +150,7 @@ void App::NewGame()
 
 void App::LoadCleanUp()  // 1 first
 {
+	/**/boost::mutex::scoped_lock(pGame->carposMutex);///
 	updMouse();
 
 	// rem old track
@@ -176,7 +177,7 @@ void App::LoadCleanUp()  // 1 first
 	if (trees) {  delete trees->getPageLoader();  delete trees;  trees=0;   }
 
 	///  destroy all  TODO ...
-	///!  remove this crap and destroy everything with* manually  destroyCar, destroyScene
+	///!  remove this crap and destroy everything with* manually  destroyCar, destroyScene, destroyHud
 	///!  check if scene (track), car changed, omit creating the same if not
 	//mSceneMgr->getRootSceneNode()->removeAndDestroyAllChildren();  // destroy all scenenodes
 	mSceneMgr->destroyAllManualObjects();
@@ -185,6 +186,7 @@ void App::LoadCleanUp()  // 1 first
 	//mSceneMgr->destroyAllParticleSystems();
 	mSceneMgr->destroyAllRibbonTrails();
 	mSplitMgr->mGuiSceneMgr->destroyAllManualObjects(); // !?..
+	NullHUD();
 	MeshManager::getSingleton().removeAll();  // destroy all meshes
 
 	//  rain/snow
@@ -327,6 +329,8 @@ void App::LoadScene()  // 3
 
 void App::LoadCar()  // 4
 {
+	/**/boost::mutex::scoped_lock(pGame->carposMutex);///
+
 	//  Create all cars
 	for (int i=0; i < carModels.size(); ++i)
 	{

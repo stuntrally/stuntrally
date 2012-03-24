@@ -344,7 +344,7 @@ void App::UpdateHUD(int carId, float time)
 			UpdHUDRot(c, i, vel, rpm);
 	}
 
-	if (carId == -1)  return;
+	if (carId == -1 || carModels.size()==0)  return;
 	CarModel* pCarM = carModels[carId];
 	CAR* pCar = pCarM ? pCarM->pCar : 0;
 

@@ -66,12 +66,8 @@ App::App()
 	,liChamps(0),liStages(0), edChampStage(0),edChampEnd(0), imgChampStage(0), liNetEnd(0)
 {
 	int i,c;
-	for (i=0; i < 4; ++i)
-	{	ndMap[i]=0;  moMap[i]=0;  moRpm[i]=0;  moVel[i]=0;
-		ndRpmBk[i]=0;  ndVelBk[i]=0;  ndVelBm[i]=0;  ndRpm[i]=0;  ndVel[i]=0;
-		for (c=0; c < 5; ++c)
-		{	vNdPos[i][c]=0;  vMoPos[i][c]=0;  }
-	}
+	NullHUD();
+
 	for (c=0; c < 2; ++c)
 	{
 		trkDesc[c]=0;  valTrk[c]=0;  imgPrv[c]=0; imgMini[c]=0; imgTer[c]=0;
@@ -96,6 +92,18 @@ App::App()
 	QUATERNION <double> fix;  fix.Rotate(PI_d/2, 0, 1, 0);
 	qr.w = fix.w();  qr.x = fix.x();  qr.y = fix.y();  qr.z = fix.z();  qFixWh = qr;
 }
+
+void App::NullHUD()
+{
+	int i,c;
+	for (i=0; i < 4; ++i)
+	{	ndMap[i]=0;  moMap[i]=0;  moRpm[i]=0;  moVel[i]=0;
+		ndRpmBk[i]=0;  ndVelBk[i]=0;  ndVelBm[i]=0;  ndRpm[i]=0;  ndVel[i]=0;
+		for (c=0; c < 5; ++c)
+		{	vNdPos[i][c]=0;  vMoPos[i][c]=0;  }
+	}
+}
+
 
 String App::TrkDir() {
 	int u = pSet->game.track_user ? 1 : 0;		return pathTrk[u] + pSet->game.track + "/";  }

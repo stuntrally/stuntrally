@@ -371,10 +371,9 @@ bool App::frameEnd(Real time)
 //---------------------------------------------------------------------------------------------------------------
 void App::newPoses()
 {
-	if (!pGame)  return;
-	if (pGame->cars.size() == 0)  return;
-
+	if (!pGame || bLoading)  return;
 	/**/boost::mutex::scoped_lock(pGame->carposMutex);///
+	if (pGame->cars.size() == 0 || newPosInfos.size() == 0)  return;
 
 	double rplTime = pGame->timer.GetReplayTime(0);
 	double lapTime = pGame->timer.GetPlayerTime(0);
@@ -914,7 +913,7 @@ void App::UpdHUDRot(int baseCarId, int carId, float vel, float rpm)
 		bGhostVis = (ghplay.GetNumFrames() > 0) && pSet->rpl_ghost;
 
 	if (vNdPos[b][c])
-		if (bGhost && !bGhostVis)  vNdPos[c][b]->setPosition(-100,0,0);  //hide
+		if (bGhost && !bGhostVis)  vNdPos[b][c]->setPosition(-100,0,0);  //hide
 		else if (pSet->mini_zoomed && main)
 			 vNdPos[b][c]->setPosition(0,0,0);
 		else vNdPos[b][c]->setPosition(xp,yp,0);
