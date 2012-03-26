@@ -246,6 +246,7 @@ void App::gameInfo(protocol::GameInfo game)
 
 void App::startRace()
 {
+	LogO("== Netw: game start");
 	pGame->timer.waiting = false;
 }
 

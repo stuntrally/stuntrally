@@ -651,7 +651,7 @@ void App::UpdateHUD(int carId, float time)
 
 	//  car debug text  --------
 	static bool oldCarTxt = false;
-	if (pCar && ovU[0])
+	if (pCar && ovU[0] && 0) ///!-
 	{
 		if (pSet->car_dbgtxt)
 		{	std::stringstream s1,s2,s3,s4;
@@ -667,10 +667,10 @@ void App::UpdateHUD(int carId, float time)
 	
 
 	//  profiling times -
-	if (pGame && pGame->profilingmode && ovU[3])
+	if (pGame && pGame->profilingmode && ovU[1])
 	{
-		if (pSet->multi_thr != 1) //! this one is causing a crash sometimes with multithreading.. maybe need a mutex? i have no idea..
-			ovU[3]->setCaption(pGame->strProfInfo);
+		//if (pSet->multi_thr != 1) //! this one is causing a crash sometimes with multithreading.. maybe need a mutex? i have no idea..
+			ovU[1]->setCaption(pGame->strProfInfo);
 		//if (newPosInfos.size() > 0)
 		//ovU[3]->setCaption("carm: " + toStr(carModels.size()) + " newp: " + toStr((*newPosInfos.begin()).pos));
 	}

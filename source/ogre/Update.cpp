@@ -40,11 +40,53 @@ void App::UpdThr()
 			//	mFCam->update(pGame->framerate/**/);
 			//if (ndSky)  ///o-
 			//	ndSky->setPosition(GetCamera()->getPosition());
+			
+			DoNetworking();
 
 			if (!ret)
 				mShutDown = true;
 		}
 		boost::this_thread::sleep(boost::posix_time::milliseconds(5));  //par!?
+	}
+}
+
+		
+void App::DoNetworking()
+{
+	bool doNetworking = (mClient && mClient->getState() == P2PGameClient::GAME);
+	// Note that there is no pause when in networked game
+	pGame->pause = bRplPlay ? (bRplPause || isFocGui) : (isFocGui && !doNetworking);
+
+
+	///  step Game  *******
+
+	//  handle networking stuff
+	if (doNetworking) {
+		/**/boost::mutex::scoped_lock(pGame->carposMutex);///
+
+		PROFILER.beginBlock("networking");
+		//  update the local car's state to the client
+		protocol::CarStatePackage cs;
+		// FIXME: Handles only one local car
+		for (CarModels::const_iterator it = carModels.begin(); it != carModels.end(); ++it) {
+			if ((*it)->eType == CarModel::CT_LOCAL) {
+				cs = (*it)->pCar->GetCarStatePackage();
+				break;
+			}
+		}
+		mClient->setLocalCarState(cs);
+
+		// check for new car states
+		protocol::CarStates states = mClient->getReceivedCarStates();
+		for (protocol::CarStates::const_iterator it = states.begin(); it != states.end(); ++it) {
+			int8_t id = it->first; // Car number
+			// FIXME: Various places assume carModels[0] is local...
+			if (id == 0) id = mClient->getId();
+			CarModel* cm = carModels[id];
+			if (cm && cm->pCar)
+				cm->pCar->UpdateCarState(it->second);
+		}
+		PROFILER.endBlock("networking");
 	}
 }
 
@@ -240,44 +282,15 @@ bool App::frameStart(Real time)
 		if (!pGame)
 			return false;
 
-		bool doNetworking = (mClient && mClient->getState() == P2PGameClient::GAME);
-		// Note that there is no pause when in networked game
-		pGame->pause = bRplPlay ? (bRplPause || isFocGui) : (isFocGui && !doNetworking);
-
-
 		// input
 		PROFILER.beginBlock("OISB process input");
 		OISB::System::getSingleton().process(time);
 		PROFILER.endBlock("OISB process input");
 
-		///  step Game  *******
 
-		//  handle networking stuff
-		if (doNetworking) {
-			PROFILER.beginBlock("networking");
-			//  update the local car's state to the client
-			protocol::CarStatePackage cs;
-			// FIXME: Handles only one local car
-			for (CarModels::const_iterator it = carModels.begin(); it != carModels.end(); ++it) {
-				if ((*it)->eType == CarModel::CT_LOCAL) {
-					cs = (*it)->pCar->GetCarStatePackage();
-					break;
-				}
-			}
-			mClient->setLocalCarState(cs);
+		if (pSet->multi_thr == 0)
+			DoNetworking();
 
-			// check for new car states
-			protocol::CarStates states = mClient->getReceivedCarStates();
-			for (protocol::CarStates::const_iterator it = states.begin(); it != states.end(); ++it) {
-				int8_t id = it->first; // Car number
-				// FIXME: Various places assume carModels[0] is local...
-				if (id == 0) id = mClient->getId();
-				CarModel* cm = carModels[id];
-				if (cm && cm->pCar)
-					cm->pCar->UpdateCarState(it->second);
-			}
-			PROFILER.endBlock("networking");
-		}
 
 		//  single thread, sim on draw
 		bool ret = true;

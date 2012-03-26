@@ -88,7 +88,7 @@ protected:
 	virtual void createScene();
 	virtual void destroyScene();
 
-	virtual bool frameStart(Ogre::Real time);
+	virtual bool frameStart(Ogre::Real time);  void DoNetworking();
 	virtual bool frameEnd(Ogre::Real time);
 	virtual bool keyPressed( const OIS::KeyEvent &arg );
 		
