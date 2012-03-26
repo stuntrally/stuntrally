@@ -4,6 +4,7 @@
 #include "FollowCamera.h"
 #include "../road/Road.h"
 #include "../vdrift/game.h"
+#include "../vdrift/quickprof.h"
 #include "../paged-geom/PagedGeometry.h"
 #include "../ogre/common/MaterialGen/MaterialFactory.h"
 #include "../oisb/OISBSystem.h"
@@ -60,7 +61,9 @@ bool App::frameStart(Real time)
 	if (pSet->multi_thr == 1 && pGame && !bLoading)
 	{
 		/**/boost::mutex::scoped_lock(pGame->carposMutex);///
+		PROFILER.beginBlock("updatePoses-mt");
 		updatePoses(time);  //pGame->framerate
+		PROFILER.endBlock("updatePoses-mt");
 
 		// Update cameras for all cars
 		for (int i=0; i < carModels.size(); ++i)
@@ -243,12 +246,15 @@ bool App::frameStart(Real time)
 
 
 		// input
+		PROFILER.beginBlock("OISB process input");
 		OISB::System::getSingleton().process(time);
+		PROFILER.endBlock("OISB process input");
 
 		///  step Game  *******
 
 		//  handle networking stuff
 		if (doNetworking) {
+			PROFILER.beginBlock("networking");
 			//  update the local car's state to the client
 			protocol::CarStatePackage cs;
 			// FIXME: Handles only one local car
@@ -270,15 +276,18 @@ bool App::frameStart(Real time)
 				if (cm && cm->pCar)
 					cm->pCar->UpdateCarState(it->second);
 			}
+			PROFILER.endBlock("networking");
 		}
 
 		//  single thread, sim on draw
 		bool ret = true;
 		if (pSet->multi_thr != 1)
 		{
+			PROFILER.beginBlock("OneLoop + updatePoses");
 			ret = pGame->OneLoop();
 			if (!ret)  mShutDown = true;
 			updatePoses(time);  //pGame->framerate
+			PROFILER.endBlock("OneLoop + updatePoses");
 		}
 		
 		// align checkpoint arrow
@@ -305,19 +314,24 @@ bool App::frameStart(Real time)
 		}
 
 		//  update all cube maps
+		PROFILER.beginBlock("cubemaps");
 		for (std::vector<CarModel*>::iterator it=carModels.begin(); it!=carModels.end(); it++)
 		if ((*it)->eType != CarModel::CT_GHOST && (*it)->pReflect)
 			(*it)->pReflect->Update();
+		PROFILER.endBlock("cubemaps");
 
 		//  trees
+		PROFILER.beginBlock("vegetation");
 		//if (pSet->mult_thr != 2)
 		if (road) {
 			if (grass)  grass->update();
 			if (trees)  trees->update();  }
+		PROFILER.endBlock("vegetation");
 
 		//  road upd lods
 		if (road)
 		{
+			PROFILER.beginBlock("road");
 			road->RebuildRoadInt();
 
 			//  more than 1 in pre viewport, each frame
@@ -330,6 +344,7 @@ bool App::frameStart(Real time)
 				}
 				roadUpCnt--;/**/
 			}
+			PROFILER.endBlock("road");
 		}
 
 		//**  bullet bebug draw
