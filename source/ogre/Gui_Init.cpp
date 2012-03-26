@@ -226,7 +226,8 @@ void App::InitGui()
 	Chk("godrays", chkVidGodRays, pSet->godrays);
 	if (!MaterialGenerator::MRTSupported())
 		mGUI->findWidget<Button>("godrays")->setEnabled(false);
-
+	Chk("filmgrain", chkVidFilmGrain, pSet->filmgrain);
+	
 	Slv(BloomInt,	pSet->bloomintensity);
 	Slv(BloomOrig,	pSet->bloomorig);
 	Slv(BlurIntens, pSet->motionblurintensity);

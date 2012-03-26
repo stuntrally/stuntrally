@@ -119,7 +119,8 @@ void SETTINGS::Serialize(bool w, CONFIGFILE & c)
 	Param(c,w, "video_eff.godrays", godrays);
 	Param(c,w, "video_eff.dof", dof);
 	Param(c,w, "video_eff.dof_focus", depthOfFieldFocus);	Param(c,w, "video_eff.dof_far", depthOfFieldFar);
-
+	Param(c,w, "video_eff.filmgrain", filmgrain);
+	
 	Param(c,w, "video.windowx", windowx);			Param(c,w, "video.windowy", windowy);
 	Param(c,w, "video.fullscreen", fullscreen);		Param(c,w, "video.vsync", vsync);
 	Param(c,w, "video.fsaa", fsaa);					Param(c,w, "video.ssaa", ssaa);
@@ -179,7 +180,7 @@ SETTINGS::SETTINGS() :  ///  Defaults
 	rendersystem("OpenGL Rendering Subsystem"),
 	buffer("FBO"), fsaa(0), ssaa(true),
 	//  video eff
-	all_effects(false), godrays(false),
+	all_effects(false), godrays(false), filmgrain(false),
 	bloom(false), bloomintensity(0.13), bloomorig(0.9), hdr(false),
 	motionblur(false), motionblurintensity(0.3),
 	depthOfFieldFocus(100), depthOfFieldFar(1000),

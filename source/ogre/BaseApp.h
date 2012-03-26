@@ -60,6 +60,7 @@ public:
 	class SoftParticlesLogic* mSoftParticlesLogic;
 	class DepthOfFieldLogic* mDepthOfFieldLogic;
 	class GBufferLogic* mGBufferLogic;
+	class FilmGrainLogic* mFilmGrainLogic;
 	void recreateCompositor();
 	bool AnyEffectEnabled();
 	bool NeedMRTBuffer();

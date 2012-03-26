@@ -84,7 +84,7 @@ public:
 	float depthOfFieldFocus, depthOfFieldFar;
 	//  video
 	int windowx, windowy, fsaa;
-	bool fullscreen, vsync, ssaa, ssao, godrays, softparticles, dof;
+	bool fullscreen, vsync, ssaa, ssao, godrays, softparticles, dof, filmgrain;
 	std::string buffer, rendersystem;
 	
 	//  replay

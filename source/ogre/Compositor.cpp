@@ -590,3 +590,65 @@ void DepthOfFieldListener::notifyMaterialRender(Ogre::uint32 pass_id, Ogre::Mate
 		}
      }
 }
+
+
+
+
+class FilmGrainListener: public Ogre::CompositorInstance::Listener
+{
+protected:
+public:
+	FilmGrainListener(BaseApp * app);
+	virtual ~FilmGrainListener();
+	BaseApp * mApp;
+	virtual void notifyMaterialSetup(Ogre::uint32 pass_id, Ogre::MaterialPtr &mat);
+	virtual void notifyMaterialRender(Ogre::uint32 pass_id, Ogre::MaterialPtr &mat);
+	int mViewportWidth,mViewportHeight;
+
+};
+
+Ogre::CompositorInstance::Listener* FilmGrainLogic::createListener(Ogre::CompositorInstance* instance)
+{
+	FilmGrainListener* listener = new FilmGrainListener(mApp);
+	Ogre::Viewport* vp = instance->getChain()->getViewport();
+	listener->mViewportWidth = vp->getActualWidth();
+	listener->mViewportHeight = vp->getActualHeight();
+	return listener;
+}
+
+void FilmGrainLogic::setApp(BaseApp* app)
+{
+	mApp = app;
+}
+
+
+FilmGrainListener::FilmGrainListener(BaseApp* app)
+	:mApp(app)
+{
+}
+FilmGrainListener::~FilmGrainListener()
+{
+}
+
+void FilmGrainListener::notifyMaterialSetup(Ogre::uint32 pass_id, Ogre::MaterialPtr &mat)
+{
+	if(pass_id == 1)
+	{
+		float noiseIntensity = 0.1f;
+		float exposure = 0.1f;
+		Ogre::Vector4  grainparams(1.0f / mViewportWidth, 1.0f / mViewportHeight, noiseIntensity, exposure);
+
+		Ogre::Pass *pass = mat->getBestTechnique()->getPass(0);
+        Ogre::GpuProgramParametersSharedPtr params = pass->getFragmentProgramParameters();
+    
+	   	if (params->_findNamedConstantDefinition("grainparams"))
+			params->setNamedConstant("grainparams", grainparams);
+	 }
+}
+
+
+void FilmGrainListener::notifyMaterialRender(Ogre::uint32 pass_id, Ogre::MaterialPtr &mat)
+{
+	
+	
+}

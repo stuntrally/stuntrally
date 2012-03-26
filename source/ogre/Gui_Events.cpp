@@ -395,6 +395,10 @@ void App::chkVidGodRays(WP wp)
 {		
 	ChkEv(godrays);  refreshCompositor();
 }
+void App::chkVidFilmGrain(WP wp)
+{		
+	ChkEv(filmgrain);  refreshCompositor();
+}
 void App::slBloomInt(SL)
 {
 	Real v = val/res;  if (bGI)  pSet->bloomintensity = v;

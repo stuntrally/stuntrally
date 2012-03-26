@@ -1,0 +1,27 @@
+compositor FilmGrain
+{
+    technique
+    {
+		compositor_logic FilmGrain
+		// Temporary textures
+        texture rt_output target_width target_height PF_R8G8B8
+        
+		target rt_output
+        {
+            // Render output from previous compositor (or original scene)
+            input previous
+        }
+
+		target_output
+        {
+            input none
+
+            pass render_quad
+            {
+				identifier 1
+                material Compositor/FilmGrain
+				input 0 rt_output
+            }
+        }
+    }
+}

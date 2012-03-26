@@ -304,6 +304,7 @@ protected:
 		chkBltLines(WP), chkLoadPics(WP), chkMultiThread(WP),  // startup
 		chkVidEffects(WP), chkVidBloom(WP), chkVidHDR(WP), chkVidBlur(WP), UpdBloomVals(), chkVidSSAO(WP), // video
 		chkVidSoftParticles(WP),chkVidGodRays(WP), chkWaterReflect(WP), chkWaterRefract(WP), chkVidDepthOfField(WP),
+		chkVidFilmGrain(WP),
 		chkVegetCollis(WP), chkCarCollis(WP);  //car
 	void chkUseImposters(WP wp);
 

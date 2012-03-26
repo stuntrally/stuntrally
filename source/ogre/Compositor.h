@@ -106,4 +106,15 @@ public:
 private:
 	BaseApp * mApp;
 };
+
+// The compositor logic for the FilmGrain compositor
+class FilmGrainLogic : public ListenerFactoryLogic
+{
+protected:
+	virtual Ogre::CompositorInstance::Listener* createListener(Ogre::CompositorInstance* instance);
+public:
+	void setApp(BaseApp* app);
+private:
+	BaseApp * mApp;
+};
 #endif

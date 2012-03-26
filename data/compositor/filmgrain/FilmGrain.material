@@ -1,0 +1,44 @@
+vertex_program FilmGrain_VS cg
+{
+	source FilmGrain.cg
+	profiles vs_4_0 vs_1_1 arbvp1
+	entry_point FilmGrain_VS
+}
+
+fragment_program FilmGrain_FP cg
+{
+	source FilmGrain.cg
+	profiles ps_4_0 ps_3_0 arbfp1
+	entry_point FilmGrain_FP
+
+	default_params
+	{
+		param_named_auto time time 1
+	}
+}
+
+material Compositor/FilmGrain
+{
+	technique
+	{
+        pass
+        {
+			 vertex_program_ref FilmGrain_VS
+            {
+            }
+
+            fragment_program_ref FilmGrain_FP
+            {
+            }
+			
+			texture_unit frame
+			{
+				tex_address_mode clamp
+			}
+			texture_unit noiseTex
+			{
+				texture noise.dds 3d
+			}
+        }
+	}
+}
