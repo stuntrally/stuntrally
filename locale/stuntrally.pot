@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION"
 "Report-Msgid-Bugs-To: "
-"POT-Creation-Date: 2012-03-18 13:05+0100"
+"POT-Creation-Date: 2012-03-26 14:17+0300"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>"
 "Language-Team: LANGUAGE <LL@li.org>"
@@ -587,6 +587,10 @@ msgstr ""
 
 msgctxt "InputRoadWidth"
 msgid "- change road width"
+msgstr ""
+
+msgctxt "filmgrain"
+msgid "Film Grain"
 msgstr ""
 
 msgctxt "InputMapSteering"
@@ -2359,6 +2363,10 @@ msgstr ""
 
 msgctxt "OgreDialog"
 msgid "Show Ogre dialog"
+msgstr ""
+
+msgctxt "MultiThread"
+msgid "Multi Threaded"
 msgstr ""
 
 msgctxt "Editor"
