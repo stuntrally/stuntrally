@@ -784,6 +784,7 @@
 	<Tag name="InputFluidsType">-,=  - change fluid type (water,mud,etc.)</Tag>
 	<Tag name="InputFluidsTile">[,]  - change texture tiling</Tag>
 	<Tag name="InputFluidsTileY">; &apos;  - change texture tiling, one coord. only</Tag>
+	<Tag name="InputFluidsUpdate">F10  - update depth map, after terrain deform near shore</Tag>
 	
 		
 <!--  ............................................................................................................................  -->

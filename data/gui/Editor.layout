@@ -2664,7 +2664,7 @@
 							<Property key="Caption" value="#{InputBrushParams}"/>
 							<Property key="TextColour" value="0.5 1.0 0.3"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="32 218 312 20">
+						<Widget type="TextBox" skin="TextBox" position="32 230 312 20">
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 							<Property key="Caption" value="#{InputUpdBlendmap}"/>
 							<Property key="TextColour" value="0.7 0.9 0.1"/>
@@ -2970,6 +2970,11 @@
 							<Property key="TextColour" value="0.8 0.9 1.0"/>
 							<Property key="Caption" value="#{InputFluidsRot}"/>
 						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="32 214 420 20">
+							<UserString key="RelativeTo" value="OptionsWnd"/>
+							<Property key="TextColour" value="0.4 0.7 1.0"/>
+							<Property key="Caption" value="#{InputFluidsUpdate}"/>
+						</Widget>
 					</Widget>
 				</Widget>
 			</Widget>
@@ -3009,7 +3014,7 @@
 				<Widget type="Button" skin="CheckBox" position="616 482 160 24" name="Wireframe">
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 					<Property key="TextColour" value="0.7 0.8 0.9"/>
-					<Property key="Caption" value="#{Wireframe} F10, F"/>
+					<Property key="Caption" value="#{Wireframe} F11"/>
 				</Widget>
 				<Widget type="Button" skin="CheckBox" position="32 200 144 24" name="Minimap">
 					<UserString key="RelativeTo" value="OptionsWnd"/>

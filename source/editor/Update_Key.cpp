@@ -177,8 +177,8 @@ bool App::KeyPress(const CmdKey &arg)
 			return true;
 		}	break;
 
-		//  Wire Frame  F10
-		case KC_F10:
+		//  Wire Frame  F11
+		case KC_F11:
 		{	mbWireFrame = !mbWireFrame;
 			mCamera->setPolygonMode(mbWireFrame ? PM_WIREFRAME : PM_SOLID);
 			if (ndSky)	ndSky->setVisible(!mbWireFrame);  // hide sky
@@ -475,6 +475,7 @@ bool App::KeyPress(const CmdKey &arg)
 		case KC_Q:	if (bEdit()){  edMode = ED_Start;  UpdEditWnds();  }   break;
 		//  fluids
 		case KC_W:	if (bEdit()){  edMode = ED_Fluids;  UpdEditWnds();  }   break;
+		case KC_F10:	SaveWaterDepth();   break;
 		
 		case KC_SPACE:
 			if (edMode == ED_Start && road)  road->iDir *= -1;  break;
