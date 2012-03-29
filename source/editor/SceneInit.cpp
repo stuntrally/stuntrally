@@ -128,6 +128,7 @@ void App::LoadTrackEv()
 	
 	/// generate materials
 	materialFactory->generate();
+	CreateRoadSelMtrs();
 
 	LoadSurf();
 	UpdWndTitle();

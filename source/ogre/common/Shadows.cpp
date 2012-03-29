@@ -256,20 +256,20 @@ void App::changeShadows()
 }
 
 
-void App::setMtrSplits(String sMtrName)
+#ifdef ROAD_EDITOR
+void App::createRoadSelMtr(String sMtrName)
 {
 	MaterialPtr mat = MaterialManager::getSingleton().getByName(sMtrName);
 	if (!mat.isNull() && mat->getNumTechniques()>0)
 	{
-		unsigned short np = mat->getTechnique(0)->getNumPasses()-1;  // last  unsigned!
+		/*unsigned short np = mat->getTechnique(0)->getNumPasses()-1;  // last  unsigned!
 		try {
 			if (mat->getTechnique(0)->getPass(np)->hasFragmentProgram() 
 				&& mat->getTechnique(0)->getPass(np)->getFragmentProgramParameters()->_findNamedConstantDefinition("pssmSplitPoints",false)
 				)
 				mat->getTechnique(0)->getPass(np)->getFragmentProgramParameters()->setNamedConstant("pssmSplitPoints", splitPoints);
-		} catch(...) { }
+		} catch(...) { }*/
 		
-		#ifdef ROAD_EDITOR
 		//  create selected materials for road
 		if (StringUtil::startsWith(sMtrName,"road",false) || StringUtil::startsWith(sMtrName,"pipe",false) )
 		{
@@ -279,15 +279,15 @@ void App::setMtrSplits(String sMtrName)
 			LogO("new sel mtr: " +selName);
 			MaterialPtr sel = mat->clone(selName);
 			Technique* tech = sel->getTechnique(0);  Pass* p = tech->createPass();
-			p->setSceneBlending(SBT_ADD);  p->setDepthBias(13.f);//
+			p->setSceneBlending(SBT_ADD);  p->setDepthBias(3.f);//
 			p->setAmbient(0,0,0);  p->setDiffuse(0,0,0,0);  p->setSpecular(0,0,0,0);
 			p->setDepthCheckEnabled(false);  p->setDepthWriteEnabled(true);
 			p->setCullingMode(CULL_NONE);
 			p->setFragmentProgram("sel_ps");  //p->setSelfIllumination(0,0.1,0.2);
 		}	}
-		#endif
 	}
 }
+#endif
 
 void App::UpdPSSMMaterials()	/// . . . . . . . . 
 {

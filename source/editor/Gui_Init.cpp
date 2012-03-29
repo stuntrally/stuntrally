@@ -340,3 +340,12 @@ void App::InitGui()
 	float dt = ti.dt * 1000.f;
 	LogO(String("::: Time Init Gui: ") + toStr(dt) + " ms");
 }
+
+
+void App::CreateRoadSelMtrs()
+{
+	GetMaterialsFromDef("road.matdef");
+	GetMaterialsFromDef("road_pipe.matdef", false);
+	for (size_t i=0; i < vsMaterials.size(); ++i)
+		createRoadSelMtr(vsMaterials[i]);
+}

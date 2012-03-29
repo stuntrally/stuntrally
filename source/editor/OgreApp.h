@@ -127,7 +127,7 @@ protected:
 		
 	void changeShadows(), UpdPSSMMaterials();
 public:
-	Ogre::Vector4 splitPoints; void setMtrSplits(Ogre::String sMtrName);
+	Ogre::Vector4 splitPoints; void createRoadSelMtr(Ogre::String sMtrName), CreateRoadSelMtrs();
 protected:
 	Ogre::ShadowCameraSetupPtr mPSSMSetup;
 
