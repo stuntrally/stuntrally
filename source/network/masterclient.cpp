@@ -1,10 +1,13 @@
 #include "masterclient.hpp"
 #include "xtime.hpp"
+#include "../ogre/common/Defines.h"
+
+#include <MyGUI_LanguageManager.h>
 
 
 MasterClient::MasterClient(MasterClientCallback* callback, int updateInterval)
 	: m_callback(callback), m_mutex(), m_cond(), m_client(*this), m_game(),
-	m_password(), m_error(), m_updateInterval(updateInterval), m_sendUpdates()
+	m_password(), m_error(), m_updateInterval(updateInterval), m_sendUpdates(), m_connectionOk()
 {
 	m_game.packet_type = protocol::GAME_STATUS;
 }
@@ -21,6 +24,8 @@ void MasterClient::connect(const std::string& address, int port)
 
 void MasterClient::refreshList()
 {
+	if (!m_connectionOk)
+		return;
 	{
 		boost::mutex::scoped_lock lock(m_mutex);
 		m_games.clear();
@@ -58,7 +63,8 @@ void MasterClient::gameInfoSenderThread()
 	while (m_sendUpdates) {
 		// Broadcast info
 		boost::mutex::scoped_lock lock(m_mutex);
-		m_client.broadcast(net::convert(m_game), net::PACKET_RELIABLE);
+		if (m_connectionOk)
+			m_client.broadcast(net::convert(m_game), net::PACKET_RELIABLE);
 		// Wait some
 		m_cond.timed_wait(lock, now() + (m_updateInterval / 1000.0));
 	}
@@ -74,20 +80,30 @@ std::string MasterClient::getError()
 
 void MasterClient::connectionEvent(net::NetworkTraffic const& e)
 {
-	std::cout << "Connection to master server established" << std::endl;
-	// Send refresh request automatically after connection is established
-	refreshList();
+	LogO("== Netw Connection to master server established");
+	// We send any requests only after master server acknowledges protocol version
 }
 
 void MasterClient::disconnectEvent(net::NetworkTraffic const& e)
 {
-	std::cout << "Disconnected from master server" << std::endl;
+	if (e.event_data == protocol::INCOMPATIBLE_MASTER_PROTOCOL) {
+		boost::mutex::scoped_lock lock(m_mutex);
+		m_error = TR("#{NetMasterProtocolError}");
+	}
+	LogO("== Netw Disconnected from master server");
 }
 
 void MasterClient::receiveEvent(net::NetworkTraffic const& e)
 {
 	if (e.packet_length <= 0 || !e.packet_data) return;
 	switch (e.packet_data[0]) {
+		case protocol::HANDSHAKE: {
+			// Handshake means everything is ok
+			m_connectionOk = true; // This should be atomic
+			LogO("== Netw Master server connection accepted");
+			refreshList(); // Auto-request new list
+			break;
+		}
 		case protocol::GAME_STATUS: {
 			// Update a game in the list
 			protocol::GameInfo game = *reinterpret_cast<protocol::GameInfo const*>(e.packet_data);

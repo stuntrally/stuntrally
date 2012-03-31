@@ -1,6 +1,8 @@
-#include "../ogre/common/Defines.h"
 #include "gameclient.hpp"
 #include "xtime.hpp"
+#include "../ogre/common/Defines.h"
+
+#include <MyGUI_LanguageManager.h>
 #include <ctime>
 
 
@@ -307,9 +309,9 @@ void P2PGameClient::disconnectEvent(net::NetworkTraffic const& e)
 {
 	LogO("== Netw  Disconnected "+e.peer_address.str());
 	if (m_callback && e.event_data == protocol::INCOMPATIBLE_GAME_PROTOCOL)
-		m_callback->error("#{NetGameProtocolError}");
+		m_callback->error(TR("#{NetGameProtocolError}"));
 	if (m_callback && e.event_data == protocol::WRONG_PASSWORD)
-		m_callback->error("#{NetWrongPassword}");
+		m_callback->error(TR("#{NetWrongPassword}"));
 	PeerInfo picopy;
 	{
 		boost::mutex::scoped_lock lock(m_mutex);
@@ -344,7 +346,7 @@ void P2PGameClient::receiveEvent(net::NetworkTraffic const& e)
 			{
 				m_client.disconnect(e.peer_id, false, protocol::INCOMPATIBLE_GAME_PROTOCOL);
 				if (m_callback)
-					m_callback->error("#{NetGameProtocolError}");
+					m_callback->error(TR("#{NetGameProtocolError}"));
 				LogO("== Netw HANDSHAKE  WRONG protocol ver");
 				break;
 			}

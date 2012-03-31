@@ -21,7 +21,7 @@ namespace protocol {
 // Note that in many cases, you need to bump both version when making changes.
 // Example: PacketType enum is used by both master server and game clients.
 const uint32_t GAME_PROTOCOL_VERSION = 1;
-const uint32_t MASTER_PROTOCOL_VERSION = 2;
+const uint32_t MASTER_PROTOCOL_VERSION = 3;
 
 const unsigned DEFAULT_PORT = 4243;
 

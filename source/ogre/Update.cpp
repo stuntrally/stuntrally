@@ -250,7 +250,7 @@ bool App::frameStart(Real time)
 			if (mMasterClient) {
 				std::string error = mMasterClient->getError();
 				if (!error.empty())
-					Message::createMessageBox("Message", "#{Error}", error,
+					Message::createMessageBox("Message", TR("#{Error}"), error,
 						MessageBoxStyle::IconError | MessageBoxStyle::Ok);
 			}
 			boost::mutex::scoped_lock lock(netGuiMutex);

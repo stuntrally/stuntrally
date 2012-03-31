@@ -1,4 +1,4 @@
-// Copyright Tapio Vierros 2011
+// Copyright Tapio Vierros 2011-2012
 // Licensed under GPLv3 or later.
 // See License.txt for more info on licensing.
 
@@ -12,12 +12,12 @@
 #include <unistd.h> // for daemon()
 #endif
 
-#define VERSIONSTRING "0.3"
+#define VERSIONSTRING "0.4"
 
 #define DEFAULT_ZOMBIE_TIMEOUT 5
 unsigned g_zombietimeout = DEFAULT_ZOMBIE_TIMEOUT;  // How many seconds without update until a game becomes zombie
 
-// TODO: syslog support for daemon
+// TODO: Linux syslog support for daemon
 
 enum LogLevel {
 	ERROR   = 0,
@@ -106,10 +106,11 @@ public:
 			out(VERBOSE) << "Incompatible protocol versions "
 				<< "(my: " << protocol::MASTER_PROTOCOL_VERSION
 				<< " hers: " << e.event_data << ")!" << std::endl;
-			// TODO: Send error packet?
-			m_client.disconnect(e.peer_id, false, protocol::MASTER_PROTOCOL_VERSION);
+			m_client.disconnect(e.peer_id, false, protocol::INCOMPATIBLE_MASTER_PROTOCOL);
 			return;
 		}
+		protocol::HandshakePackage handshake = protocol::HandshakePackage();
+		m_client.send(e.peer_id, net::convert(handshake), net::PACKET_RELIABLE);
 	}
 
 	void disconnectEvent(net::NetworkTraffic const& e)

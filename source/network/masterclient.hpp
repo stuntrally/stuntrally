@@ -27,7 +27,7 @@
  */
 class MasterClient: public net::NetworkListener {
 public:
-	MasterClient(MasterClientCallback* callback = NULL, int updateInterval = 2500);
+	MasterClient(MasterClientCallback* callback = NULL, int updateInterval = 2000);
 
 	~MasterClient();
 
@@ -73,4 +73,5 @@ private:
 	std::string m_error;
 	int m_updateInterval;
 	bool m_sendUpdates;
+	volatile bool m_connectionOk;
 };
