@@ -2,6 +2,7 @@
 #include "common/Defines.h"
 #include "OgreGame.h"
 #include "../vdrift/game.h"
+#include "../vdrift/quickprof.h"
 #include "../road/Road.h"
 #include "SplitScreen.h"
 #include "common/RenderConst.h"
@@ -316,6 +317,8 @@ void App::ShowHUDvp(bool vp)	// todo: use vis mask ..
 
 void App::UpdateHUD(int carId, float time)
 {
+	PROFILER.beginBlock("g.hud");
+
 	if (bSizeHUD)	// update sizes once after change
 	{	bSizeHUD = false;
 		SizeHUD(true);	}
@@ -344,7 +347,11 @@ void App::UpdateHUD(int carId, float time)
 			UpdHUDRot(c, i, vel, rpm);
 	}
 
-	if (carId == -1 || carModels.size()==0)  return;
+	if (carId == -1 || carModels.size()==0)
+	{
+		PROFILER.endBlock("g.hud");
+		return;
+	}
 	CarModel* pCarM = carModels[carId];
 	CAR* pCar = pCarM ? pCarM->pCar : 0;
 
@@ -849,6 +856,7 @@ void App::UpdateHUD(int carId, float time)
 			ovS[4]->setCaption(ss);  }
 	}
 	#endif
+	PROFILER.endBlock("g.hud");
 }
 
 

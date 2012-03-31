@@ -281,10 +281,11 @@ void GAME::Test()
 ///the main game loop
 bool GAME::OneLoop()
 {
+	PROFILER.beginBlock(" oneLoop");
 	bool ret = true;  //!eventsystem.GetQuit() && !benchmode;
 	if (ret)
 	{
-		if (profilingmode && frame % 20 == 0)
+		if (profilingmode && frame % 10 == 0)  //par
 			strProfInfo = PROFILER.getAvgSummary(quickprof::MILLISECONDS);
 
 		qtim.update();
@@ -301,6 +302,7 @@ bool GAME::OneLoop()
 		
 		displayframe++;
 	}
+	PROFILER.endBlock(" oneLoop");
 	return ret;
 }
 
@@ -376,7 +378,7 @@ void GAME::AdvanceGameLogic()
 			//ai.update(TickPeriod(), &track, cars); //-
 			//PROFILER.endBlock("ai");
 			
-			PROFILER.beginBlock("physics");
+			PROFILER.beginBlock("-physics");
 			///~~  clear fluids for each car
 			for (std::list <CAR>::iterator i = cars.begin(); i != cars.end(); ++i)
 			{
@@ -387,13 +389,13 @@ void GAME::AdvanceGameLogic()
 			}
 
 			collision.Update(TickPeriod(), settings->bltProfilerTxt);
-			PROFILER.endBlock("physics");
+			PROFILER.endBlock("-physics");
 			
-			PROFILER.beginBlock("car");
+			PROFILER.beginBlock("-car-sim");
 			int i = 0;
 			for (std::list <CAR>::iterator it = cars.begin(); it != cars.end(); ++it, ++i)
 				UpdateCar(*it, i, TickPeriod());
-			PROFILER.endBlock("car");
+			PROFILER.endBlock("-car-sim");
 			
 			//PROFILER.beginBlock("timer");
 			UpdateTimer();

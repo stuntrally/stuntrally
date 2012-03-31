@@ -61,10 +61,11 @@ void App::DoNetworking()
 	///  step Game  *******
 
 	//  handle networking stuff
-	if (doNetworking) {
+	if (doNetworking)
+	{
+		PROFILER.beginBlock("-network");
 		/**/boost::mutex::scoped_lock(pGame->carposMutex);///
 
-		PROFILER.beginBlock("networking");
 		//  update the local car's state to the client
 		protocol::CarStatePackage cs;
 		// FIXME: Handles only one local car
@@ -86,7 +87,7 @@ void App::DoNetworking()
 			if (cm && cm->pCar)
 				cm->pCar->UpdateCarState(it->second);
 		}
-		PROFILER.endBlock("networking");
+		PROFILER.endBlock("-network");
 	}
 }
 
@@ -94,6 +95,7 @@ void App::DoNetworking()
 
 bool App::frameStart(Real time)
 {
+	PROFILER.beginBlock(" frameSt");
 	/// ???? ---------
 	static QTimer gtim;
 	gtim.update();
@@ -103,10 +105,9 @@ bool App::frameStart(Real time)
 	if (pSet->multi_thr == 1 && pGame && !bLoading)
 	{
 		/**/boost::mutex::scoped_lock(pGame->carposMutex);///
-		PROFILER.beginBlock("updatePoses-mt");
 		updatePoses(time);  //pGame->framerate
-		PROFILER.endBlock("updatePoses-mt");
 
+		#if 0
 		// Update cameras for all cars
 		for (int i=0; i < carModels.size(); ++i)
 		{
@@ -115,6 +116,7 @@ bool App::frameStart(Real time)
 			//	cm->fCam->update(/*pGame->framerate*//*dt*/
 			//		time, &newPosInfos[i]);
 		}
+		#endif
 
 		#if 0
 		if (carModels.size()>0 && carModels[0]->pMainNode)
@@ -222,6 +224,7 @@ bool App::frameStart(Real time)
 	if (bLoading)
 	{
 		NewGameDoLoad();
+		PROFILER.endBlock(" frameSt");
 		return true;
 	}
 	else 
@@ -286,12 +289,15 @@ bool App::frameStart(Real time)
 		}
 
 		if (!pGame)
+		{
+			PROFILER.endBlock(" frameSt");
 			return false;
+		}
 
 		// input
-		PROFILER.beginBlock("input");
+		//PROFILER.beginBlock("input");  // below 0.0 ms
 		OISB::System::getSingleton().process(time);
-		PROFILER.endBlock("input");
+		//PROFILER.endBlock("input");
 
 
 		if (pSet->multi_thr == 0)
@@ -302,11 +308,9 @@ bool App::frameStart(Real time)
 		bool ret = true;
 		if (pSet->multi_thr != 1)
 		{
-			PROFILER.beginBlock("OneLoop + updatePoses");
 			ret = pGame->OneLoop();
 			if (!ret)  mShutDown = true;
 			updatePoses(time);  //pGame->framerate
-			PROFILER.endBlock("OneLoop + updatePoses");
 		}
 		
 		// align checkpoint arrow
@@ -333,24 +337,24 @@ bool App::frameStart(Real time)
 		}
 
 		//  update all cube maps
-		PROFILER.beginBlock("cubemaps");
+		PROFILER.beginBlock("g.refl");
 		for (std::vector<CarModel*>::iterator it=carModels.begin(); it!=carModels.end(); it++)
 		if ((*it)->eType != CarModel::CT_GHOST && (*it)->pReflect)
 			(*it)->pReflect->Update();
-		PROFILER.endBlock("cubemaps");
+		PROFILER.endBlock("g.refl");
 
 		//  trees
-		PROFILER.beginBlock("vegetation");
+		PROFILER.beginBlock("g.veget");
 		//if (pSet->mult_thr != 2)
 		if (road) {
 			if (grass)  grass->update();
 			if (trees)  trees->update();  }
-		PROFILER.endBlock("vegetation");
+		PROFILER.endBlock("g.veget");
 
 		//  road upd lods
 		if (road)
 		{
-			PROFILER.beginBlock("road");
+			//PROFILER.beginBlock("g.road");  // below 0.0 ms
 			road->RebuildRoadInt();
 
 			//  more than 1 in pre viewport, each frame
@@ -363,7 +367,7 @@ bool App::frameStart(Real time)
 				}
 				roadUpCnt--;/**/
 			}
-			PROFILER.endBlock("road");
+			//PROFILER.endBlock("g.road");
 		}
 
 		//**  bullet bebug draw
@@ -393,8 +397,10 @@ bool App::frameStart(Real time)
 			mClient->loadingFinished();  // Signal loading finished to the peers
 		}
 		
+		PROFILER.endBlock(" frameSt");
 		return ret;
 	}
+	PROFILER.endBlock(" frameSt");
 }
 bool App::frameEnd(Real time)
 {
@@ -407,8 +413,11 @@ bool App::frameEnd(Real time)
 void App::newPoses()
 {
 	if (!pGame || bLoading)  return;
+	PROFILER.beginBlock(".newPos ");
 	/**/boost::mutex::scoped_lock(pGame->carposMutex);///
-	if (pGame->cars.size() == 0 || newPosInfos.size() == 0)  return;
+	if (pGame->cars.size() == 0 || newPosInfos.size() == 0) {
+		PROFILER.endBlock(".newPos ");
+		return;  }
 
 	double rplTime = pGame->timer.GetReplayTime(0);
 	double lapTime = pGame->timer.GetPlayerTime(0);
@@ -774,6 +783,7 @@ void App::newPoses()
 		}
 		carMIt++;  newPosIt++;  carId++;  // next
 	}
+	PROFILER.endBlock(".newPos ");
 }
 
 
@@ -782,6 +792,7 @@ void App::newPoses()
 void App::updatePoses(float time)
 {
 	if (carModels.size() == 0)  return;
+	PROFILER.beginBlock(".updPos ");
 	//**/boost::mutex::scoped_lock(pGame->carposMutex);///
 	
 	//  Update all carmodels with their newPosInfo
@@ -794,7 +805,9 @@ void App::updatePoses(float time)
 	while (carIt != carModels.end())
 	{
 		CarModel* carM = *carIt;
-		if (!carM)  return;
+		if (!carM)  {
+			PROFILER.endBlock(".updPos ");
+			return;  }
 		PosInfo newPosInfo = *newPosIt;
 		
 		//  hide ghost when empty
@@ -840,6 +853,7 @@ void App::updatePoses(float time)
 		if (slRplPos)
 		{	int v = pos/len * res;  slRplPos->setScrollPosition(v);  }
 	}	
+	PROFILER.endBlock(".updPos ");
 }
 
 
