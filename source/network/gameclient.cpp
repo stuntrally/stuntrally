@@ -3,16 +3,6 @@
 #include "xtime.hpp"
 #include <ctime>
 
-namespace {
-	std::string formulateProtocolVersionError(uint32_t remote_version) {
-		std::ostringstream oss;
-		oss << "Connection refused due to incompatible protocol versions "
-			<< "(my: " << protocol::GAME_PROTOCOL_VERSION
-			<< " hers: " << remote_version << ")!";
-		return oss.str();
-	}
-}
-
 
 P2PGameClient::P2PGameClient(GameClientCallback* callback, int port)
 	: m_callback(callback), m_client(*this, port), m_state(DISCONNECTED),
@@ -317,9 +307,9 @@ void P2PGameClient::disconnectEvent(net::NetworkTraffic const& e)
 {
 	LogO("== Netw  Disconnected "+e.peer_address.str());
 	if (m_callback && e.event_data == protocol::INCOMPATIBLE_GAME_PROTOCOL)
-		m_callback->error(formulateProtocolVersionError(e.event_data));
+		m_callback->error("#{NetGameProtocolError}");
 	if (m_callback && e.event_data == protocol::WRONG_PASSWORD)
-		m_callback->error("Wrong password.");
+		m_callback->error("#{NetWrongPassword}");
 	PeerInfo picopy;
 	{
 		boost::mutex::scoped_lock lock(m_mutex);

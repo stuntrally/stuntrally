@@ -7,7 +7,7 @@
 	<Tag name="TipDustSize">Staubpartikelgröße.</Tag>
 	<Tag name="TipGrassSwayDistr">Grasschwingungsverteilung (wie zufällig)</Tag>
 	<Tag name="InpSet_AxisFull">Achse ganz</Tag>
-	<Tag name="InputHeaderTxt4">Edit</Tag>
+	<Tag name="InputHeaderTxt4">Ändern</Tag>
 	<Tag name="Progress">Fortschritt</Tag>
 	<Tag name="TipSunDirYaw">Richtung der Sonne - Gierwinkel</Tag>
 	<Tag name="InputStartMeet">Auto wird (nächste + / vorherige -) Strecke Punkte treffen</Tag>
@@ -47,7 +47,7 @@
 	<Tag name="TipSunDiffuse">Farbe des Sonnenlichts. R G B Komponenten von 0 bis 1 (z.B. 0.9 0.9 0.9)</Tag>
 	<Tag name="LTrMinTerH">min. Terrain-Höhe</Tag>
 	<Tag name="ScoreNeeded">Punkte benötigt</Tag>
-	<Tag name="Game name">Game name</Tag>
+	<Tag name="Game name">Spielname</Tag>
 	<Tag name="HUD">HUD</Tag>
 	<Tag name="InputCamControl">W,S A,D Q,E - Pfeiltasten - drehen</Tag>
 	<Tag name="TipTrackMap">Minikarte der ausgewählten Strecke, Sicht von oben.</Tag>
@@ -57,14 +57,14 @@
 	<Tag name="pipes">röhren</Tag>
 	<Tag name="InputFluidsTile">[,] - Textur-Tiling ändern</Tag>
 	<Tag name="InputHeaderTxt1">Aktion</Tag>
-	<Tag name="DepthOfField">Depth of Field</Tag>
+	<Tag name="DepthOfField">Tiefenunschärfe</Tag>
 	<Tag name="Game">Spiel</Tag>
 	<Tag name="TipTerLNoiseOnly">Nur Rauschen (keine automatische Winkel-/Höhen Texturanpassung)</Tag>
 	<Tag name="TipParType3">Reifenpartikel Typ 3 (ganze Strecke)</Tag>
 	<Tag name="TipParType2">Reifenpartikel Typ 2 (ganze Strecke)</Tag>
 	<Tag name="TipParType1">Reifenpartikel Typ 1 (ganze Strecke)</Tag>
 	<Tag name="GrassDens">Grasdichte</Tag>
-	<Tag name="Locked">Locked</Tag>
+	<Tag name="Locked">Gesperrt</Tag>
 	<Tag name="RoadParams">Straßeneigenschaften</Tag>
 	<Tag name="NetDirectConnect">Direkte Verbindung</Tag>
 	<Tag name="Light">Licht</Tag>
@@ -90,7 +90,7 @@
 	<Tag name="MouseCapture">Maus einfangen</Tag>
 	<Tag name="TipGrDensSmooth">Grasverteilungsmap - glätten</Tag>
 	<Tag name="NetGame">Spiel</Tag>
-	<Tag name="NetWaitingForOthers">Waiting for others</Tag>
+	<Tag name="NetWaitingForOthers">Warte auf Spieler</Tag>
 	<Tag name="TipNewTerrainFlat">Neues, flaches Terrain erzeugen</Tag>
 	<Tag name="InputRoadNew">Strg-Space - Werte des neuen Punktes von ausgewähltem</Tag>
 	<Tag name="InputFluidsMode">W - Gewässer bearbeiten</Tag>
@@ -133,8 +133,8 @@
 	<Tag name="TipGrTerMaxHeight">Terrain-Höhe, ab der kein Gras mehr da ist.</Tag>
 	<Tag name="InputRoadYaw">- gieren</Tag>
 	<Tag name="MessageBox_Try">Versuchen</Tag>
-	<Tag name="InputKeyAllPreset">Set all from preset</Tag>
-	<Tag name="InpSet_Slow">Slow</Tag>
+	<Tag name="InputKeyAllPreset">Voreinstellung</Tag>
+	<Tag name="InpSet_Slow">Langsam</Tag>
 	<Tag name="InputAssignKey">&lt;Zuweisen&gt;</Tag>
 	<Tag name="Wireframe">Drahtgitter</Tag>
 	<Tag name="ChangeTrack">Strecke wechseln</Tag>
@@ -142,6 +142,7 @@
 	<Tag name="TerrainSize">Terrain-Größe</Tag>
 	<Tag name="NetServer">Server</Tag>
 	<Tag name="InputRoadWidth">- Straßenbreite</Tag>
+	<Tag name="filmgrain">Filmkörnung</Tag>
 	<Tag name="Replay">Replay</Tag>
 	<Tag name="AutoRear">Autom. Rückwärtsgang</Tag>
 	<Tag name="TerGenFreq">Frequenz-Zoom</Tag>
@@ -151,7 +152,7 @@
 	<Tag name="max">max</Tag>
 	<Tag name="softparticles">Weiche Partikel</Tag>
 	<Tag name="TipTerTriSize">Triangle-Größe des Terrains (in Metern) - empfohlen: 1-2, größerer Wert für größere Fläche). Anwenden durch Aktualisierung (F8).</Tag>
-	<Tag name="Players">Players</Tag>
+	<Tag name="Players">Spieler</Tag>
 	<Tag name="MessageBox_No">Nein</Tag>
 	<Tag name="Length">Länge</Tag>
 	<Tag name="TipCarsList">Autoauswahl, klicken um Vorschau zu sehen. [Auto wechseln] drücken und dann [Neues Spiel].</Tag>
@@ -581,6 +582,7 @@
 	<Tag name="InputMapShiftUp">Hochschalten</Tag>
 	<Tag name="LS_SCENE">Lade Szene</Tag>
 	<Tag name="OgreDialog">Ogre-Dialog anzeigen</Tag>
+	<Tag name="MultiThread">Multi Threaded</Tag>
 	<Tag name="Editor">Editor</Tag>
 	<Tag name="AndContributors">und Mitwirkenden.</Tag>
 	<Tag name="InputRoadSelectMany">Auswahl (viele)</Tag>
@@ -701,8 +703,10 @@
 	<Tag name="Pitch">neigen</Tag>
 	<Tag name="InputNextOptTab">F2,F3 - Tab vor,zurück (shift - Unter-Tab)</Tag>
 	<Tag name="RplAll">Alle</Tag>
-	<Tag name="filmgrain">Film Grain</Tag>
-	<Tag name="MultiThread">Multi Threaded</Tag>
+	<Tag name="InputFluidsUpdate">F10  - update depth map, after terrain deform near shore</Tag>
+	<Tag name="NetMasterProtocolError">Incompatible protocol version - make sure you are running latest Stunt Rally, otherwise contact the master server administrator.</Tag>
+	<Tag name="NetWrongPassword">Wrong password.</Tag>
+	<Tag name="NetGameProtocolError">Wrong protocol versions between peers, make sure everyone is using the same version of Stunt Rally.</Tag>
 	<Tag name="GameVersion">1.5</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 

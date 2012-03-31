@@ -169,6 +169,9 @@
 	<Tag name="NetHost">Host</Tag>
 	<Tag name="NetPort">Port</Tag>
 	<Tag name="NetPassword">Password</Tag>
+	<Tag name="NetWrongPassword">Wrong password.</Tag>
+	<Tag name="NetGameProtocolError">Wrong protocol versions between peers, make sure everyone is using the same version of Stunt Rally.</Tag>
+	<Tag name="NetMasterProtocolError">Incompatible protocol version - make sure you are running latest Stunt Rally, otherwise contact the master server administrator.</Tag>
 	<!-- Game -->
 	<Tag name="NetGame">Game</Tag>
 	<Tag name="NetGameName">Game Name</Tag>

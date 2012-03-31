@@ -142,6 +142,7 @@
 	<Tag name="TerrainSize">Rozmiar terenu</Tag>
 	<Tag name="NetServer">Serwer</Tag>
 	<Tag name="InputRoadWidth">- zmień szerokość drogi</Tag>
+	<Tag name="filmgrain">Film Grain</Tag>
 	<Tag name="Replay">Powtórka</Tag>
 	<Tag name="AutoRear">Automatyczny wsteczny</Tag>
 	<Tag name="TerGenFreq">Częstotliwość</Tag>
@@ -581,6 +582,7 @@
 	<Tag name="InputMapShiftUp">Następny bieg</Tag>
 	<Tag name="LS_SCENE">Wcztuję scenę</Tag>
 	<Tag name="OgreDialog">Pokazuj dialog Ogre</Tag>
+	<Tag name="MultiThread">Multi Threaded</Tag>
 	<Tag name="Editor">Edytor</Tag>
 	<Tag name="AndContributors">i współautorzy</Tag>
 	<Tag name="InputRoadSelectMany">Wybierz (wiele)</Tag>
@@ -701,8 +703,10 @@
 	<Tag name="Pitch">nachylenie</Tag>
 	<Tag name="InputNextOptTab">F2,F3 - poprz./nast. zakładka Opcji (shift - podzakładka)</Tag>
 	<Tag name="RplAll">Wszystkie</Tag>
-	<Tag name="filmgrain">Film Grain</Tag>
-	<Tag name="MultiThread">Multi Threaded</Tag>
+	<Tag name="InputFluidsUpdate">F10  - update depth map, after terrain deform near shore</Tag>
+	<Tag name="NetMasterProtocolError">Incompatible protocol version - make sure you are running latest Stunt Rally, otherwise contact the master server administrator.</Tag>
+	<Tag name="NetWrongPassword">Wrong password.</Tag>
+	<Tag name="NetGameProtocolError">Wrong protocol versions between peers, make sure everyone is using the same version of Stunt Rally.</Tag>
 	<Tag name="GameVersion">1.5</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 
