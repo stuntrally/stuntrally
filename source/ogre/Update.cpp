@@ -659,8 +659,8 @@ void App::newPoses()
 				Quaternion quat = Vector3::UNIT_Z.getRotationTo(-dir); // convert to quaternion
 
 				const bool valid = !quat.isNaN();
-				if (valid) {
-					if (noAnim) arrowAnimStart = quat;
+				if (valid)
+				{	if (noAnim) arrowAnimStart = quat;
 					arrowAnimEnd = quat;
 				
 					// set arrow color (wrong direction: red arrow)
@@ -668,16 +668,19 @@ void App::newPoses()
 					Real angle = (arrowAnimCur.zAxis().dotProduct(carM->fCam->mCamera->getOrientation().zAxis())+1)/2.0f;
 					// set color in material
 					MaterialPtr arrowMat = MaterialManager::getSingleton().getByName("Arrow");
-					if (arrowMat->getTechnique(0)->getPass(1)->hasFragmentProgram())
-					{
-						GpuProgramParametersSharedPtr fparams = arrowMat->getTechnique(0)->getPass(1)->getFragmentProgramParameters();
-						// green: 0.0 1.0 0.0     0.0 0.4 0.0
-						// red:   1.0 0.0 0.0     0.4 0.0 0.0
-						Vector3 col1 = angle * Vector3(0.0, 1.0, 0.0) + (1-angle) * Vector3(1.0, 0.0, 0.0);
-						Vector3 col2 = angle * Vector3(0.0, 0.4, 0.0) + (1-angle) * Vector3(0.4, 0.0, 0.0);
-						fparams->setNamedConstant("color1", col1);
-						fparams->setNamedConstant("color2", col2);
-					}
+					if (!arrowMat.isNull())
+					{	Technique* tech = arrowMat->getTechnique(0);
+						if (tech && tech->getNumPasses() >= 2)
+						if (tech->getPass(1)->hasFragmentProgram())
+						{
+							GpuProgramParametersSharedPtr fparams = arrowMat->getTechnique(0)->getPass(1)->getFragmentProgramParameters();
+							// green: 0.0 1.0 0.0     0.0 0.4 0.0
+							// red:   1.0 0.0 0.0     0.4 0.0 0.0
+							Vector3 col1 = angle * Vector3(0.0, 1.0, 0.0) + (1-angle) * Vector3(1.0, 0.0, 0.0);
+							Vector3 col2 = angle * Vector3(0.0, 0.4, 0.0) + (1-angle) * Vector3(0.4, 0.0, 0.0);
+							fparams->setNamedConstant("color1", col1);
+							fparams->setNamedConstant("color2", col2);
+					}	}
 				}
 			}
 			
