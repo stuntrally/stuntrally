@@ -151,6 +151,7 @@ struct CarStatePackage {
 	QUATERNION<float> rot;
 	MATHVECTOR<float,3> linearVel;
 	MATHVECTOR<float,3> angularVel;
+	// todo: track %, boost, brake state, ..
 
 	CarStatePackage(): packet_type(CAR_UPDATE) {}
 	operator bool() { return packet_type == CAR_UPDATE; }

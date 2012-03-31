@@ -605,6 +605,8 @@ bool BaseApp::configure()
 		settings.insert(std::make_pair("vsync", pSet->vsync ? "true" : "false"));
 
 		mWindow = mRoot->createRenderWindow("Stunt Rally", pSet->windowx, pSet->windowy, pSet->fullscreen, &settings);
+		//  use this in local networking tests to render when window inactive
+		//mWindow->setDeactivateOnFocusChange(false);
 	}
 	mLoadingBar->bBackgroundImage = pSet->loadingbackground;
 	return true;
