@@ -129,7 +129,7 @@ void P2PGameClient::startGame(bool broadcast)
 		LogO("== Netw startGame broadcast");
 		m_client.broadcast(char(protocol::START_GAME) + std::string(" "), net::PACKET_RELIABLE);
 	} else
-		LogO("== Netw startGame WRONG?  !broadcast");
+		LogO("== Netw startGame !broadcast");
 }
 
 void P2PGameClient::loadingFinished()
@@ -148,7 +148,7 @@ void P2PGameClient::loadingFinished()
 	for (PeerMap::const_iterator it = m_peers.begin(); it != m_peers.end(); ++it)
 		if (!it->second.loaded)
 		{
-			LogO("== Netw loadingFinished  WRONG  !it->second.loaded");
+			LogO("== Netw loadingFinished (but others not ready yet)");
 			return;
 		}
 	lock.unlock(); // Mutex unlocked in callback to avoid dead-locks
