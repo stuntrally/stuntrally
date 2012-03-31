@@ -35,7 +35,8 @@ class MaterialFactory;
 class App : public BaseApp, public GameClientCallback, public MasterClientCallback
 {
 public:
-	App();  virtual ~App();
+	App(SETTINGS* settings, GAME* game);
+	virtual ~App();
 	void NullHUD();
 	
 	class GAME* pGame;  ///*
@@ -83,6 +84,7 @@ public:
 	Ogre::SceneManager* sceneMgr() { return mSceneMgr; };
 
 protected:
+	boost::thread mThread;
 	WaterRTT mWaterRTT;
 
 	virtual void createScene();
