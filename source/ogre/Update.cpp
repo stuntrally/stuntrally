@@ -247,6 +247,12 @@ bool App::frameStart(Real time)
 		//  We do them here so that they are handled in the main thread as MyGUI is not thread-safe
 		if (isFocGui)
 		{
+			if (mMasterClient) {
+				std::string error = mMasterClient->getError();
+				if (!error.empty())
+					Message::createMessageBox("Message", "#{Error}", error,
+						MessageBoxStyle::IconError | MessageBoxStyle::Ok);
+			}
 			boost::mutex::scoped_lock lock(netGuiMutex);
 			if (bRebuildGameList) {  rebuildGameList();  bRebuildGameList = false;  }
 			if (bRebuildPlayerList) {  rebuildPlayerList();  bRebuildPlayerList = false;  }

@@ -49,6 +49,9 @@ public:
 	/// Thread that periodically broadcasts game info, don't call directly
 	void gameInfoSenderThread();
 
+	/// Get error message, if any. Clears it also.
+	std::string getError();
+
 	/// Callback from networking
 	void connectionEvent(net::NetworkTraffic const& e);
 
@@ -67,6 +70,7 @@ private:
 	protocol::GameList m_games;
 	protocol::GameInfo m_game;
 	std::string m_password;
+	std::string m_error;
 	int m_updateInterval;
 	bool m_sendUpdates;
 };

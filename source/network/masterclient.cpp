@@ -3,7 +3,8 @@
 
 
 MasterClient::MasterClient(MasterClientCallback* callback, int updateInterval)
-	: m_callback(callback), m_mutex(), m_cond(), m_client(*this), m_game(), m_updateInterval(updateInterval), m_sendUpdates()
+	: m_callback(callback), m_mutex(), m_cond(), m_client(*this), m_game(),
+	m_password(), m_error(), m_updateInterval(updateInterval), m_sendUpdates()
 {
 	m_game.packet_type = protocol::GAME_STATUS;
 }
@@ -61,6 +62,14 @@ void MasterClient::gameInfoSenderThread()
 		// Wait some
 		m_cond.timed_wait(lock, now() + (m_updateInterval / 1000.0));
 	}
+}
+
+std::string MasterClient::getError()
+{
+	boost::mutex::scoped_lock lock(m_mutex);
+	std::string error = m_error;
+	m_error = "";
+	return error;
 }
 
 void MasterClient::connectionEvent(net::NetworkTraffic const& e)
