@@ -505,13 +505,13 @@ void App::boundedMove(Widget* moving, const IntPoint& point)
 //----------------------------------------------------------------------------------------------------------------
 void App::GuiInitLang()
 {
-	languages["en"] = L"English";
-	languages["de"] = L"Deutsch";  //German
-	languages["fi"] = L"Suomi";    //Finnish
-	languages["ro"] = L"Română";   //Romanian
-	languages["pl"] = L"Polski";   //Polish
-	languages["fr"] = L"Français"; //French
-	languages["ru"] = L"Русский";  //Russian
+	languages["en"] = TR("#{LANG_EN}");  //English
+	languages["de"] = TR("#{LANG_DE}");  //German
+	languages["fi"] = TR("#{LANG_FI}");  //Finnish
+	languages["pl"] = TR("#{LANG_PL}");  //Polish
+	languages["ro"] = TR("#{LANG_RO}");  //Romanian
+	languages["fr"] = TR("#{LANG_FR}");  //French
+	languages["ru"] = TR("#{LANG_RU}");  //Russian
 	
 	ComboBoxPtr combo = mGUI->findWidget<ComboBox>("Lang");
 	if (!combo)  return;

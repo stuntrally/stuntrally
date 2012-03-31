@@ -1,5 +1,14 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <MyGUI>
+	<!-- Languages -->
+	<Tag name="LANG_EN">English</Tag>
+	<Tag name="LANG_DE">Deutsch</Tag>
+	<Tag name="LANG_FI">Suomi</Tag>
+	<Tag name="LANG_PL">Polski</Tag>
+	<Tag name="LANG_RO">Română</Tag>
+	<Tag name="LANG_FR">Français</Tag>
+	<Tag name="LANG_RU">Русский</Tag>
+
 	<!-- General -->
 	<Tag name="Yes">Yes</Tag>
 	<Tag name="No">No</Tag>
