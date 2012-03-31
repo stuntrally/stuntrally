@@ -69,9 +69,6 @@ if(BUILD_MASTER_SERVER)
 	add_executable(${SERVER_EXE} ${SERVER_SOURCES})
 	target_link_libraries(${SERVER_EXE} ${SERVER_LIBS})
 	install(TARGETS ${SERVER_EXE} DESTINATION bin)
-	# Debug test client, not to be installed
-	add_executable(bogus-client network/master-server/bogus-client.cpp network/masterclient.cpp)
-	target_link_libraries(bogus-client ${SERVER_LIBS})
 endif()
 
 
