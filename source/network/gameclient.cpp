@@ -81,7 +81,7 @@ void P2PGameClient::startLobby()
 	{
 		LogO("== Netw startLobby  WRONG already");
 		return;
-	}else
+	} else
 		m_state = LOBBY;
 
 	if (!m_senderThread.joinable())
@@ -115,7 +115,7 @@ void P2PGameClient::startGame(bool broadcast)
 				if (pi.peer_id != 0)
 					m_client.disconnect(pi.peer_id, true);
 				m_peers.erase(it++);
-			}else
+			} else
 				++it;
 		}
 		m_playerInfo.loaded = false;
@@ -128,7 +128,7 @@ void P2PGameClient::startGame(bool broadcast)
 	{
 		LogO("== Netw startGame broadcast");
 		m_client.broadcast(char(protocol::START_GAME) + std::string(" "), net::PACKET_RELIABLE);
-	}else
+	} else
 		LogO("== Netw startGame WRONG?  !broadcast");
 }
 
@@ -397,8 +397,8 @@ void P2PGameClient::receiveEvent(net::NetworkTraffic const& e)
 				PeerInfo picopy = pi;
 				lock.unlock();  // Mutex unlocked in callback to avoid dead-locks
 				m_callback->peerMessage(picopy, msg);
-			}else
-				LogO("== Netw TEXT_MESSAGE  !callback");				
+			} else
+				LogO("== Netw TEXT_MESSAGE  !callback");
 			break;
 		}
 		case protocol::PLAYER_INFO:
@@ -423,7 +423,7 @@ void P2PGameClient::receiveEvent(net::NetworkTraffic const& e)
 					m_callback->peerConnected(picopy);
 				else	// Callback regardless if the info changed in order to give ping updates
 					m_callback->peerInfo(picopy);
-			}else
+			} else
 				LogO("== Netw START_GAME  !callback");
 			break;
 		}
@@ -441,8 +441,7 @@ void P2PGameClient::receiveEvent(net::NetworkTraffic const& e)
 				lock.unlock(); // Mutex unlocked in callback to avoid dead-locks
 				m_callback->peerState(picopy, e.packet_data[0]);
 				LogO("== Netw START_GAME  end");
-			}
-			else
+			} else
 				LogO("== Netw START_GAME  WRONG !callback");
 			break;
 		}
@@ -473,8 +472,7 @@ void P2PGameClient::receiveEvent(net::NetworkTraffic const& e)
 					m_callback->startRace();
 				}
 				LogO("== Netw START_COUNTDOWN  end");
-			}
-			else
+			} else
 				LogO("== Netw START_COUNTDOWN  WRONG !callback");
 			break;
 		}
