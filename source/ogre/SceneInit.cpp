@@ -524,6 +524,7 @@ void App::NewGameDoLoad()
 
 		ChampLoadEnd();
 		//boost::this_thread::sleep(boost::posix_time::milliseconds(6000 * mClient->getId())); // Test loading syncronization
+		bLoadingEnd = true;
 		return;
 	}
 	// Do the next loading step.

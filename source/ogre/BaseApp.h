@@ -40,7 +40,7 @@ public:
 	virtual ~BaseApp();
 	virtual void Run( bool showDialog );
 	
-	bool bLoading;
+	bool bLoading,bLoadingEnd;
 	
 	// has to be in baseApp to switch camera on C press
 	typedef std::vector<class CarModel*> CarModels;
