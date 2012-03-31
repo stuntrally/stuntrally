@@ -289,9 +289,9 @@ bool App::frameStart(Real time)
 			return false;
 
 		// input
-		PROFILER.beginBlock("OISB process input");
+		PROFILER.beginBlock("input");
 		OISB::System::getSingleton().process(time);
-		PROFILER.endBlock("OISB process input");
+		PROFILER.endBlock("input");
 
 
 		if (pSet->multi_thr == 0)

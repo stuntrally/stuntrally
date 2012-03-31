@@ -78,15 +78,6 @@ void SplineRoad::Move1(int id, Vector3 relPos)
 	vMarkNodes[id]->setPosition(pos);  // upd marker
 }
 
-void SplineRoad::Scale1(int id, Real posMul)
-{
-	Vector3 pos = getPos(id) * (1.f + posMul);
-	if (mP[id].onTer)
-		pos.y = mTerrain->getHeightAtWorldPosition(pos.x, 0, pos.z) + fHeight;
-	setPos(id, pos);
-	vMarkNodes[id]->setPosition(pos);  // upd marker
-}
-
 void SplineRoad::Move(Vector3 relPos)
 {
 	if (!vSel.empty())  // move sel
@@ -102,34 +93,72 @@ void SplineRoad::Move(Vector3 relPos)
 		RebuildRoad();	}
 }
 
-//  Rotate selected 
-///-------------------------------------------------------------------------------------
-void SplineRoad::RotateSel(Real relA)
+//  Scale
+void SplineRoad::Scale1(int id, Real posMul)
 {
-	if (vSel.empty())  return;
+	Vector3 pos = getPos(id) * (1.f + posMul);
+	if (mP[id].onTer)
+		pos.y = mTerrain->getHeightAtWorldPosition(pos.x, 0, pos.z) + fHeight;
+	setPos(id, pos);
+	vMarkNodes[id]->setPosition(pos);  // upd marker
+}
 
+void SplineRoad::ScaleSel(Real posMul)
+{
+	Vector3 pos0(0,0,0);  // = getPos0() ?
+	if (iChosen != -1)  // 0 or chosen point
+		pos0 = getPos(iChosen);
+
+	for (std::set<int>::const_iterator it = vSel.begin(); it != vSel.end(); ++it)
+	{	int id = *it;
+		Vector3 pos = (getPos(id) - pos0) * (1.f + posMul) + pos0;
+		if (mP[id].onTer)
+			pos.y = mTerrain->getHeightAtWorldPosition(pos.x, 0, pos.z) + fHeight;
+		setPos(id, pos);
+		vMarkNodes[id]->setPosition(pos);  // upd marker
+	}
+}
+
+Vector3 SplineRoad::getPos0()
+{
 	Vector3 pos0(0,0,0);
-	if (iChosen == -1)	{	// geom center
+	if (iChosen == -1)  // geom center
+	{
 		for (std::set<int>::const_iterator it = vSel.begin(); it != vSel.end(); ++it)
 			pos0 += getPos(*it);
 		pos0 /= Real(vSel.size());
-	}else  // or chosen point
+	}
+	else  // or chosen point
 		pos0 = getPos(iChosen);
+		
+	return pos0;
+}
+
+//  Rotate selected
+void SplineRoad::RotateSel(Real relA, Vector3 axis, int addYawRoll)
+{
+	if (vSel.empty())  return;
+	Vector3 pos0 = getPos0();
+	
+	Matrix3 m;  m.FromAngleAxis(axis, Degree(relA));
 	
 	//  rotate 2d yaw around center
 	for (std::set<int>::const_iterator it = vSel.begin(); it != vSel.end(); ++it)
 	{
-		Vector3 pos = getPos(*it);
-		Real a = relA*PI_d/180.f, oldX = pos.x - pos0.x, oldY = pos.z - pos0.z;
-		Real newX = cos(a) * oldX - sin(a) * oldY;
-		Real newY = sin(a) * oldX + cos(a) * oldY;
-		Vector3 npos = Vector3(newX + pos0.x, pos.y, newY + pos0.z);
+		Vector3 pos = getPos(*it) - pos0;
+		Vector3 npos = pos * m + pos0;
 
 		pos = npos;
 		if (mP[*it].onTer)
 			pos.y = mTerrain->getHeightAtWorldPosition(pos.x, 0, pos.z) + fHeight;
 		setPos(*it, pos);
-		mP[*it].mYaw -= relA;  // rot point yaw
+		
+		if (addYawRoll==1)  // todo: get from axis?
+			mP[*it].mYaw -= relA;  // rot point yaw
+		else if (addYawRoll==2)
+			// todo: * mul by cos of yaw ?..
+			mP[*it].mRoll -= relA;  // rot point roll
+		
 		vMarkNodes[*it]->setPosition(pos);
 		//Move1(*it, npos);
 	}
@@ -285,7 +314,7 @@ void SplineRoad::Paste(bool reverse)
 		vSel.insert(iChosen);  // select just inserted
 	}
 	if (reverse)  // rot 180
-		RotateSel(180);
+		RotateSel(180, Vector3::UNIT_Y, 1);
 	RebuildRoad(true);
 }
 
@@ -404,7 +433,7 @@ void SplineRoad::AddWidth(Real relW)     ///  Width
 	if (!vSel.empty()) {  // sel
 		for (std::set<int>::const_iterator it = vSel.begin(); it != vSel.end(); ++it)
 			mP[*it].width += relW;
-		bSelChng = true;	return;	}	
+		bSelChng = true;	return;	}
 		
 	if (iChosen == -1)  {	// one
 		newP.width += relW;  return;  }
@@ -414,10 +443,12 @@ void SplineRoad::AddWidth(Real relW)     ///  Width
 	RebuildRoad();
 }
 
-void SplineRoad::AddYaw(Real relA, Real snapA)    ///  Yaw
+void SplineRoad::AddYaw(Real relA, Real snapA, bool alt)    ///  Yaw
 {	
 	if (!vSel.empty()) {  // rotate sel
-		RotateSel(snapA==0.f ? relA : snapA);  return;	}	
+		RotateSel(snapA==0.f ? relA : (relA > 0.f ? snapA : -snapA),
+			// todo: get Z from camera
+			alt ? Vector3::UNIT_Z : Vector3::UNIT_Y, alt ? 2 : 1);  return;  }
 
 	if (iChosen == -1)  {	newP.mYaw += relA;  return;  }
 
@@ -428,12 +459,11 @@ void SplineRoad::AddYaw(Real relA, Real snapA)    ///  Yaw
 	RebuildRoad();
 }
 
-void SplineRoad::AddRoll(Real relA, Real snapA)   ///  Roll
+void SplineRoad::AddRoll(Real relA, Real snapA, bool alt)   ///  Roll
 {
 	if (!vSel.empty()) {  // scale sel
-		for (std::set<int>::const_iterator it = vSel.begin(); it != vSel.end(); ++it)
-			Scale1(*it, relA * 0.02f/*snapA==0.f ? relA * 0.02f : snapA*/);
-		bSelChng = true;	return;  }	
+		ScaleSel(relA * 0.02f);
+		bSelChng = true;	return;  }
 
 	if (iChosen == -1)  {	newP.mRoll += relA;  return;  }
 

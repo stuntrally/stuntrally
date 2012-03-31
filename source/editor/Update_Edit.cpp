@@ -168,8 +168,8 @@ bool App::frameRenderingQueued(const FrameEvent& evt)
 		if (isKey(SUBTRACT))	road->Move(-vy*q);			if (isKey(ADD))		road->Move( vy*q);
 		if (isKey(MULTIPLY))	road->AddWidth( q*0.4f);	if (isKey(DIVIDE))	road->AddWidth(-q*0.4f);
 		if (iSnap == 0)  {
-			if (isKey(1))		road->AddYaw(-q*3,0);		if (isKey(3))		road->AddRoll(-q*3,0);
-			if (isKey(2))		road->AddYaw( q*3,0);		if (isKey(4))		road->AddRoll( q*3,0);  }
+			if (isKey(1))		road->AddYaw(-q*3,0,alt);	if (isKey(3))		road->AddRoll(-q*3,0,alt);
+			if (isKey(2))		road->AddYaw( q*3,0,alt);	if (isKey(4))		road->AddRoll( q*3,0,alt);  }
 		if (isKey(LBRACKET))	road->AddPipe(-q*0.2);	if (isKey(K ))	road->AddChkR(-q*0.2);  // chk
 		if (isKey(RBRACKET))	road->AddPipe( q*0.2);	if (isKey(L))	road->AddChkR( q*0.2);
 		if (mz > 0)			road->NextPoint();
@@ -357,9 +357,9 @@ void App::editMouse()
 		}else
 		{	//  alt
 			if (mbLeft)    // rot pitch
-				road->AddYaw(   vNew.x * fRot * moveMul,0.f);
+				road->AddYaw(   vNew.x * fRot * moveMul,0.f,alt);
 			if (mbRight)   // rot yaw
-				road->AddRoll(  vNew.y *-fRot * moveMul,0.f);
+				road->AddRoll(  vNew.y *-fRot * moveMul,0.f,alt);
 		}
 	}
 

@@ -81,12 +81,12 @@ public:
 	void Insert(eIns ins), Delete();
 
 	///  change point
-	void Move1(int id, Ogre::Vector3 relPos), Move(Ogre::Vector3 relPos);
-	void RotateSel(Ogre::Real relA), Scale1(int id, Ogre::Real posMul);
+	void Move1(int id, Ogre::Vector3 relPos), Move(Ogre::Vector3 relPos);  Ogre::Vector3 getPos0();
+	void RotateSel(Ogre::Real relA, Ogre::Vector3 axis, int addYawRoll), Scale1(int id, Ogre::Real posMul), ScaleSel(Ogre::Real posMul);
 
 	//  modify point
 	void ToggleOnTerrain(), ToggleColums();  // on chosen point
-	void AddWidth(Ogre::Real relW), AddYaw(Ogre::Real relA,Ogre::Real snapA),AddRoll(Ogre::Real relA,Ogre::Real snapA);
+	void AddWidth(Ogre::Real relW), AddYaw(Ogre::Real relA,Ogre::Real snapA, bool alt),AddRoll(Ogre::Real relA,Ogre::Real snapA, bool alt);
 	void AddPipe(Ogre::Real relP), ChgMtrId(int relId), ChgAngType(int relId), AngZero();
 	void AddChkR(Ogre::Real relR), AddBoxW(Ogre::Real rel),AddBoxH(Ogre::Real rel), Set1stChk();
 	const Ogre::String& getMtrStr(int seg);  bool isPipe(int seg);
