@@ -593,7 +593,7 @@ void MaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::StrStrea
 	if (mDef->mProps->transparent)
 	{
 		if (needAlphaMap()) outStream <<
-			"	float alpha = tex2D(alphaMap, texCoord.xy).r; \n"; // use only r channel
+			"	float alpha = tex2D(alphaMap, float2(texCoord.x,texCoord.y*0.01f)).r; \n"; // use only r channel
 		else if (needLightingAlpha())
 		{
 			if (mDef->mProps->lightingAlpha.w != 0 && needDiffuseMap()) outStream <<
