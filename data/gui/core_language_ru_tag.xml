@@ -704,9 +704,16 @@
 	<Tag name="InputNextOptTab">F2,F3 - prev,next Options tab (shift - sub tab)</Tag>
 	<Tag name="RplAll">Все</Tag>
 	<Tag name="InputFluidsUpdate">F10  - update depth map, after terrain deform near shore</Tag>
+	<Tag name="LANG_FR">Français</Tag>
+	<Tag name="LANG_EN">English</Tag>
 	<Tag name="NetMasterProtocolError">Incompatible protocol version - update Stunt Rally or contact server administrator.</Tag>
+	<Tag name="LANG_RO">Română</Tag>
+	<Tag name="LANG_RU">Русский</Tag>
 	<Tag name="NetWrongPassword">Wrong password.</Tag>
+	<Tag name="LANG_DE">Deutsch</Tag>
+	<Tag name="LANG_PL">Polski</Tag>
 	<Tag name="NetGameProtocolError">Incompatible protocol versions between peers.</Tag>
+	<Tag name="LANG_FI">Suomi</Tag>
 	<Tag name="GameVersion">1.5</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 
