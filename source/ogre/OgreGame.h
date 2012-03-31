@@ -211,7 +211,7 @@ protected:
 
 	//  language
 	void comboLanguage(CMB);
-	std::map<std::string, std::string> languages; // <short name, display name>
+	std::map<std::string, MyGUI::UString> languages; // <short name, display name>
 	bool bGuiReinit;
 
 	//  init
