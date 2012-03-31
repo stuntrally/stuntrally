@@ -17,8 +17,8 @@ using namespace Ogre;
 
 
 //  ctors  -----------------------------------------------
-App::App()
-	:pGame(0), ndLine(0), bGI(0)
+App::App(SETTINGS *settings, GAME *game)
+	:pGame(game), ndLine(0), bGI(0), mThread()
 	// ovr
 	,hudGear(0),hudVel(0),hudBoost(0),hudCountdown(0),hudNetMsg(0), hudAbs(0),hudTcs(0)
 	,hudTimes(0), hudWarnChk(0),hudWonPlace(0), hudOppB(0)
@@ -65,6 +65,7 @@ App::App()
 	,edInputMin(0), edInputMax(0), edInputMul(0), edInputReturn(0), edInputIncrease(0), actDetail(0), cmbInpDetSet(0)
 	,liChamps(0),liStages(0), edChampStage(0),edChampEnd(0), imgChampStage(0), liNetEnd(0)
 {
+	pSet = settings;
 	int i,c;
 	NullHUD();
 
@@ -91,6 +92,9 @@ App::App()
 	qr.w = fix.w();  qr.x = fix.x();  qr.y = fix.y();  qr.z = fix.z();  qFixCar = qr;  }
 	QUATERNION <double> fix;  fix.Rotate(PI_d/2, 0, 1, 0);
 	qr.w = fix.w();  qr.x = fix.x();  qr.y = fix.y();  qr.z = fix.z();  qFixWh = qr;
+
+	if (pSet->multi_thr)
+		mThread = boost::thread(boost::bind(&App::UpdThr, boost::ref(*this)));;
 }
 
 void App::NullHUD()
@@ -113,6 +117,9 @@ String App::PathListTrk(int user) {
 
 App::~App()
 {
+	mShutDown = true;
+	if (mThread.joinable())
+		mThread.join();
 	delete road;
 	if (mTerrainPaging) {
 		OGRE_DELETE mTerrainPaging;

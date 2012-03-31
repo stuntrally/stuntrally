@@ -16,7 +16,6 @@
 
 #include <OgrePlatform.h>
 #include <OgreStringConverter.h>
-#include <boost/thread.hpp>
 #include <boost/filesystem.hpp>
 #include <locale.h>
 
@@ -30,13 +29,6 @@ void LoadDefaultSet(SETTINGS* settings, std::string setFile)
 	std::string sKeys = PATHMANAGER::GetUserConfigDir() + "/keys.xml";
 	if (boost::filesystem::exists(sKeys))
 		boost::filesystem::rename(sKeys, PATHMANAGER::GetUserConfigDir() + "/keys_old.xml");
-}
-
-
-void VprThread(App* pA)
-{
-	if (pA)
-		pA->UpdThr();
 }
 
 
@@ -125,16 +117,11 @@ void VprThread(App* pA)
 	std::list <std::string> args;//(argv, argv + argc);
 	pGame->Start(args);  //game.End();
 
-	App* pApp = new App();
-	pApp->pSet = settings;
-	pApp->pGame = pGame;
+	App* pApp = new App(settings, pGame);
 	pGame->pOgreGame = pApp;
 
 	try
 	{
-		if (settings->multi_thr > 0)
-			boost::thread t(VprThread, pApp);
-
 		#if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
 			pApp->Run( settings->ogre_dialog || lpCmdLine[0]!=0 );  //Release change-
 		#else
