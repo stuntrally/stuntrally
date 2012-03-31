@@ -1,6 +1,9 @@
 #include "pch.h"
 #include "ReplayGame.h"
-//#include "../vdrift/settings.h"
+#include "common/Defines.h"
+
+//  replay load log and check
+#define LOG_RPL
 
 
 //  header
@@ -94,6 +97,18 @@ bool Replay::LoadFile(std::string file, bool onlyHdr)
 	fi.read(buf,ciRplHdrSize);
 	memcpy(&header, buf, sizeof(ReplayHeader));
 	header.numPlayers = std::max(1, std::min(4, header.numPlayers));  // range 1..4
+
+    #ifdef LOG_RPL
+	if (!onlyHdr)  LogO(">- Load replay --  file: "+file+"  players:"+toStr(header.numPlayers));
+	if (!onlyHdr)  
+	for (int p=0; p < header.numPlayers; ++p)
+	{
+		if (p==0)
+			LogO(Ogre::String(">- Load replay  nick:")+header.nicks[p]+"  car:"+header.car);
+		else
+			LogO(Ogre::String(">- Load replay  nick:")+header.nicks[p]+"  car:"+Ogre::String(&header.cars[0][p]));
+	}
+	#endif
 	
 	//  clear
 	for (int p=0; p < 4; ++p)
@@ -115,6 +130,7 @@ bool Replay::LoadFile(std::string file, bool onlyHdr)
 	}
 	
 	//  frames
+	int i=0;
 	frames[0].reserve(cDefSize);  //?
 	while (!fi.eof())
 	{
@@ -122,11 +138,23 @@ bool Replay::LoadFile(std::string file, bool onlyHdr)
 		{
 			ReplayFrame fr;
 			fi.read((char*)&fr, header.frameSize/**/);
+
+		    #ifdef LOG_RPL
+				if (i > 0 && fr.time < frames[p][i-1].time)
+					LogO(">- Load replay  BAD frame time  id:"+toStr(i)+"  plr:"+toStr(p)
+						+"  t-1:"+fToStr(frames[p][i-1].time,5,7)+" > t:"+fToStr(fr.time,5,7));
+			#endif
 			frames[p].push_back(fr);
 		}
+		++i;
 		//LogO(toStr((float)fr.time) /*+ "  p " + toStr(fr.pos)*/);
 	}
     fi.close();
+ 
+    #ifdef LOG_RPL
+		LogO(">- Load replay  first: "+fToStr(frames[0][0].time,5,7)
+			+"  time: "+fToStr(GetTimeLength(0),5,7)+"  frames: "+toStr(frames[0].size()));
+	#endif
     return true;
 }
 
