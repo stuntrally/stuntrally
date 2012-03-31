@@ -18,7 +18,7 @@ echo "Fetching new translations..."
 )
 
 echo "Generating languages..."
-LOCALES="de fi ro pl"
+LOCALES="de fi ro pl fr ru"
 for loc in $LOCALES; do
 	`which python2` ./xml_po_parser.py ./translations-export/pofiles/locale/${loc}.po ../data/gui/core_language_${loc}_tag.xml
 done

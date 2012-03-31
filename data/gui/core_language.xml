@@ -6,17 +6,23 @@
 		<Info name="en">
 			<Source>core_language_en_tag.xml</Source>
 		</Info>
+		<Info name="de">
+			<Source>core_language_de_tag.xml</Source>
+		</Info>
 		<Info name="fi">
 			<Source>core_language_fi_tag.xml</Source>
 		</Info>
-		<Info name="de">
-			<Source>core_language_de_tag.xml</Source>
+		<Info name="fr">
+			<Source>core_language_fr_tag.xml</Source>
+		</Info>
+		<Info name="pl">
+			<Source>core_language_pl_tag.xml</Source>
 		</Info>
 		<Info name="ro">
 			<Source>core_language_ro_tag.xml</Source>
 		</Info>
-		<Info name="pl">
-			<Source>core_language_pl_tag.xml</Source>
+		<Info name="ru">
+			<Source>core_language_ru_tag.xml</Source>
 		</Info>
 	</Language>
 

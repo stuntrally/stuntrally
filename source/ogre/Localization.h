@@ -28,11 +28,13 @@ std::string getSystemLanguage()
 		char buf[256];  // loc has same result?       // English name of language
 		int res = GetLocaleInfoA(LOCALE_USER_DEFAULT, LOCALE_SENGLANGUAGE, buf, sizeof(buf));
 
-			if (!strcmp(buf,"English"))		loc = "en";
-		else if (!strcmp(buf,"Polish"))		loc = "pl";
-		else if (!strcmp(buf,"German"))		loc = "de";
-		else if (!strcmp(buf,"Finnish"))	loc = "fi";
-		else if (!strcmp(buf,"Romanian"))	loc = "ro";
+			if (!strcmp(buf,"English"))    loc = "en";
+		else if (!strcmp(buf,"Polish"))    loc = "pl";
+		else if (!strcmp(buf,"German"))    loc = "de";
+		else if (!strcmp(buf,"Finnish"))   loc = "fi";
+		else if (!strcmp(buf,"Romanian"))  loc = "ro";
+		else if (!strcmp(buf,"French"))    loc = "fr";
+		else if (!strcmp(buf,"Russian"))   loc = "ru";
 	#endif
 
 	// We parse here only the first part of two part codes (e.g.fi_FI).
