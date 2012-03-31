@@ -344,7 +344,7 @@ void P2PGameClient::receiveEvent(net::NetworkTraffic const& e)
 			{
 				m_client.disconnect(e.peer_id, false, protocol::INCOMPATIBLE_GAME_PROTOCOL);
 				if (m_callback)
-					m_callback->error(formulateProtocolVersionError(e.event_data));
+					m_callback->error("#{NetGameProtocolError}");
 				LogO("== Netw HANDSHAKE  WRONG protocol ver");
 				break;
 			}
