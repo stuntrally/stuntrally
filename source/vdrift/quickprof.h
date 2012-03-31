@@ -831,6 +831,7 @@ namespace quickprof
 		}
 
 		std::ostringstream oss;
+		oss.precision(2);  //par
 		std::string suffix = getSuffixString(format);
 
 		std::map<std::string, ProfileBlock*>::iterator blocksBegin = 

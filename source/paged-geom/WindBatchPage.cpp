@@ -161,7 +161,7 @@ void WindBatchPage::_updateShaders()
 					try
 					{
 					//Setup vertex program
-						/**/  // exception in debug !_
+						/**  // exception in debug !_
 						if (pass->getVertexProgramName() == "")
 							pass->setVertexProgram(vertexProgName);/**/
 

@@ -112,7 +112,7 @@ void App::updateGameInfo()
 void App::updateGameSet()
 {
 	pSet->game.collis_cars = netGameInfo.collisions;
-	pSet->game.num_laps = netGameInfo.laps;		//LogO("Netw laps num: " + toStr(pSet->game.num_laps));
+	pSet->game.num_laps = netGameInfo.laps;		LogO("Netw laps num: " + toStr(pSet->game.num_laps));
 	pSet->game.flip_type = netGameInfo.flip_type;
 	pSet->game.boost_type = netGameInfo.boost_type;
 	pSet->game.boost_power = netGameInfo.boost_power;

@@ -15,6 +15,7 @@
 #include "../../paged-geom/WindBatchPage.h"
 #include "../../paged-geom/ImpostorPage.h"
 #include "../../paged-geom/TreeLoader2D.h"
+#include "../../paged-geom/MersenneTwister.h"
 #include "BltObjects.h"
 
 #include <boost/filesystem.hpp>
@@ -52,9 +53,6 @@ inline Real getTerrainHeightAround(const Real x, const Real z, void *userData)
 
 	return h;
 }
-
-#define getTerPos()		Math::RangeRandom(-0.5f, 0.5f) * sc.td.fTerWorldSize
-#define getRndAngle()	Degree(Math::RangeRandom(0, 360))
 
 
 void App::CreateTrees()
@@ -164,8 +162,9 @@ void App::CreateTrees()
 		tws = sc.td.fTerWorldSize;
 		int r = imgRoadSize, cntr = 0, cntshp = 0, txy = sc.td.iVertsX*sc.td.iVertsY-1;
 
-		//  set random seed
-		srand(0);  /// todo: par in scene.xml and in editor gui...
+		//  set random seed  /// todo: seed in scene.xml and in editor gui...
+		MTRand rnd((MTRand::uint32)1213);
+		#define getTerPos()		(rnd.rand()-0.5) * sc.td.fTerWorldSize
 
 		//  layers
 		for (size_t l=0; l < sc.pgLayers.size(); l++)
@@ -189,11 +188,11 @@ void App::CreateTrees()
 				#if 0  ///  for new objects - test shapes
 					yaw = Degree((i*45)%360);  // grid
 					pos.z = -100 +(i / 10) * 20;  pos.x = -100 +(i % 10) * 20;
-					Real scl = Math::RangeRandom(pg.minScale, pg.maxScale);
+					Real scl = rnd.rand() * (pg.maxScale-pg.minScale) + pg.minScale;
 				#else
-					yaw = getRndAngle();
+					yaw = Degree(rnd.rand(360.0));
 					pos.x = getTerPos();  pos.z = getTerPos();
-					Real scl = Math::RangeRandom(pg.minScale, pg.maxScale);
+					Real scl = rnd.rand() * (pg.maxScale-pg.minScale) + pg.minScale;
 				#endif
 				pos0 = pos;  // store original place
 				bool add = true;
