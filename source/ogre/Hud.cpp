@@ -64,13 +64,13 @@ void App::SizeHUD(bool full, Viewport* vp, int carId)
 
 
 ///---------------------------------------------------------------------------------------------------------------
-///  HUD create  rpm, vel
+///  HUD create
 ///---------------------------------------------------------------------------------------------------------------
 
 void App::CreateHUD()
 {	
 	//  minimap from road img
-	LogO("-- Create Hud");
+	LogO("-- Create Hud  plrs="+toStr(pSet->game.local_players));
 	asp = 1.f;
 	if (terrain)
 	for (int c=0; c < pSet->game.local_players; ++c)  // for each car
@@ -271,8 +271,8 @@ void App::UpdMiniTer()
 }
 
 
-//  Update HUD
-///---------------------------------------------------------------------------------------------------------------
+//  HUD utils
+//---------------------------------------------------------------------------------------------------------------
 bool SortPerc(const CarModel* cm2, const CarModel* cm1)
 {
 	int l1 = cm1->pGame->timer.GetCurrentLap(cm1->iIndex);
@@ -315,6 +315,26 @@ void App::ShowHUDvp(bool vp)	// todo: use vis mask ..
 	}
 }
 
+void App::GetHUDVals(int id, float* vel, float* rpm, float* clutch, int* gear)
+{
+	const CarModel* pCarM = carModels[id];
+	const CAR* pCar = pCarM ? pCarM->pCar : 0;
+
+	if (pCar && !bRplPlay && pCarM->eType != CarModel::CT_GHOST)
+	{	*vel = pCar->GetSpeedometer() * (pSet->show_mph ? 2.23693629f : 3.6f);
+		*rpm = pCar->GetEngineRPM();  *gear = pCar->GetGear();
+		//*clutch = pCar->GetClutch();  // todo: problems in multi thr1
+	}
+	if (bRplPlay)
+	{
+		*vel = frm[id].vel * (pSet->show_mph ? 2.23693629f : 3.6f);
+		*rpm = frm[id].rpm;  *gear = frm[id].gear;
+	}
+}
+
+
+//  Update HUD
+///---------------------------------------------------------------------------------------------------------------
 void App::UpdateHUD(int carId, float time)
 {
 	PROFILER.beginBlock("g.hud");
@@ -326,21 +346,13 @@ void App::UpdateHUD(int carId, float time)
 	
 	//  update HUD elements for all cars that have a viewport (local or replay)
 	//-----------------------------------------------------------------------------------
-	if (carId == -1)  // gui vp - once for all
+	if (carId == -1)  // gui vp - done once for all
 	for (int c = 0; c < carModels.size(); ++c)
 	if (carModels[c]->eType == CarModel::CT_LOCAL)
 	{
-		CarModel* pCarM = carModels[c];
-		CAR* pCar = pCarM ? pCarM->pCar : 0;
-
-		//  hud rpm,vel  --------------------------------
+		//  hud rpm,vel
 		float vel=0.f, rpm=0.f, clutch=1.f;  int gear=1;
-		if (pCar && !bRplPlay && pCarM->eType != CarModel::CT_GHOST)
-		{	vel = pCar->GetSpeedometer() * (pSet->show_mph ? 2.23693629f : 3.6f);
-			rpm = pCar->GetEngineRPM();
-			gear = pCar->GetGear();
-			clutch = 1.f;  //pCar->GetClutch();  // todo: problems in multi thr1
-		}
+		GetHUDVals(c,&vel,&rpm,&clutch,&gear);
 		
 		//  update pos tri on minimap  (all)
 		for (int i=0; i < carModels.size(); ++i)
@@ -352,16 +364,12 @@ void App::UpdateHUD(int carId, float time)
 		PROFILER.endBlock("g.hud");
 		return;
 	}
+
 	CarModel* pCarM = carModels[carId];
 	CAR* pCar = pCarM ? pCarM->pCar : 0;
 
-		float vel=0.f, rpm=0.f, clutch=1.f;  int gear=1;
-		if (pCar && !bRplPlay && pCarM->eType != CarModel::CT_GHOST)
-		{	vel = pCar->GetSpeedometer() * (pSet->show_mph ? 2.23693629f : 3.6f);
-			rpm = pCar->GetEngineRPM();
-			gear = pCar->GetGear();
-			clutch = 1.f;  //pCar->GetClutch();  // todo: problems in multi thr1
-		}
+	float vel=0.f, rpm=0.f, clutch=1.f;  int gear=1;
+	GetHUDVals(carId,&vel,&rpm,&clutch,&gear);
 
 
 	///  multiplayer
@@ -397,7 +405,7 @@ void App::UpdateHUD(int carId, float time)
 					msg += cm->sDispName + " " + TR("#{FinishedCommaPlace}") + ": " + toStr(cm->iWonPlace) + "\n";
 			}
 		}
-		if (mClient && pGame->timer.pretime <= 0.f && pGame->timer.waiting)
+		if (mClient && /*pGame->timer.pretime <= 0.f &&*/ pGame->timer.waiting)
 			msg += TR("#{NetWaitingForOthers}")+"...\n";
 			
 		//  chat 2 last lines

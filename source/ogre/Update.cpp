@@ -452,9 +452,10 @@ void App::newPoses()
 				if (w < 2)  posInfo.whSteerAng[w] = frame.whSteerAng[w];
 			}
 		}
-		else if (bRplPlay)  // class member fr - used for sounds in car.cpp
+		else if (bRplPlay)  // class member frm - used for sounds in car.cpp
 		{
 			//  time  from start
+			ReplayFrame& fr = frm[carId];
 			bool ok = replay.GetFrame(rplTime, &fr, carId);
 				if (!ok)	pGame->timer.RestartReplay(0);  //?..
 			
@@ -525,27 +526,6 @@ void App::newPoses()
 		}
 		posInfo.bNew = true;
 		
-
-		///  sound listener  - - - - -
-		if (!bGhost)
-		{
-			if (pGame->sound.Enabled())  // TODO: set from camera, for each player? ..
-			{
-				pGame->sound.SetListener(
-					MATHVECTOR <float,3> (pos[0], pos[1], pos[2]),
-					QUATERNION <float>(),
-					//QUATERNION <float> (rot.x(), rot.y(), rot.z(), rot.w()),
-					MATHVECTOR <float,3>());
-			}
-			bool incar = true;
-			if (pCar)
-			{
-				std::list <SOUNDSOURCE *> soundlist;
-				pCar->GetEngineSoundList(soundlist);
-				for (std::list <SOUNDSOURCE *>::iterator s = soundlist.begin(); s != soundlist.end(); s++)
-					(*s)->Set3DEffects(!incar);
-			}
-		}
 
 		///-----------------------------------------------------------------------
 		//  record  save data for replay

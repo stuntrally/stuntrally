@@ -363,6 +363,8 @@ void App::LoadCar()  // 4
 	replay.header.hue[0] = pSet->game.car_hue[0];  replay.header.sat[0] = pSet->game.car_sat[0];  replay.header.val[0] = pSet->game.car_val[0];
 	strcpy(replay.header.nicks[0], carModels[0]->sDispName.c_str());  // player's nick
 	replay.header.trees = pSet->game.trees;
+	replay.header.networked = mClient ? 1 : 0;
+	replay.header.num_laps = pSet->game.num_laps;
 
 	ghost.InitHeader(pSet->game.track.c_str(), pSet->game.track_user, pSet->game.car[0].c_str(), !bRplPlay);
 	ghost.header.numPlayers = 1;  // ghost always 1 car

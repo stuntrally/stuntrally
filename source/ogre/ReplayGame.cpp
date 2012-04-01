@@ -24,6 +24,7 @@ void ReplayHeader::Default()
 	frameSize = sizeof(ReplayFrame);
 	numPlayers = 1;
 	trees = 1.f;
+	num_laps = 1;  networked = 0;
 
 	for (int c=0; c<4; ++c)
 	{
@@ -94,8 +95,9 @@ void Replay::Clear()
 		frames[p].reserve(cDefSize);
 }
 
+
 ///  Load
-//----------------------------------------------------------------
+//-------------------------------------------------------------------------------------------------------------------------
 bool Replay::LoadFile(std::string file, bool onlyHdr)
 {
 	std::ifstream fi(file.c_str(), std::ios::binary | std::ios::in);
@@ -177,7 +179,7 @@ bool Replay::LoadFile(std::string file, bool onlyHdr)
 }
 
 ///  Save
-//----------------------------------------------------------------
+//-------------------------------------------------------------------------------------------------------------------------
 bool Replay::SaveFile(std::string file)
 {
 	std::ofstream of(file.c_str(), std::ios::binary | std::ios::out);

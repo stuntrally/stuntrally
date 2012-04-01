@@ -28,18 +28,20 @@ struct ReplayHeader
 
 	char track[63];   // track name  (hmap crc? diff-)
 	char track_user;  // user/original
-	ChName car;     // car name  (eg. ES, .car file crc?, settings diff-)
+	ChName car;       // car name  (eg. ES, .car file crc?, settings diff-)
 
 	int ver, frameSize;  // bin data format - sizeof(ReplayFrame)
 	float whR[4][4];  // cars wheels radius
 	
 	int numPlayers;
 	float hue[4],sat[4],val[4];  // cars colors
-	ChName cars[3];  // car names (when numPlayers > 1)
+	ChName cars[3];   // car names (when numPlayers > 1)
 
 	ChName nicks[4];  // multiplayer nicks
-	char descr[128];   // description - user text
-	float trees;	// trees multipler
+	char descr[128];  // description - user text
+	float trees;      // trees multipler
+	char num_laps;
+	char networked;   // was networked, so use nicks when playing
 
 	ReplayHeader();
 	void Default(), SafeEnd0();

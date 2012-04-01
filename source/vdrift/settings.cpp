@@ -198,7 +198,7 @@ SETTINGS::SETTINGS() :  ///  Defaults
 	for (int i=0; i < 4; ++i)
 	{	gui.car[i] = "ES";  gui.car_hue[i] = 0.4f+0.2f*i;  gui.car_sat[i] = 1.f;  gui.car_val[i] = 1.f;  cam_view[0] = 9;  }
 	//  game
-	gui.local_players = 1;  gui.num_laps = 2;
+	gui.local_players = 1;  gui.num_laps = 2;  game.num_laps = 2;
 	gui.collis_veget = true;  gui.collis_cars = false;
 	gui.boost_type = 2;  gui.flip_type = 1;  gui.boost_power = 1.f;
 	gui.trees = 1.f;

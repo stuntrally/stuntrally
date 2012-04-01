@@ -57,7 +57,8 @@ public:
 
 	//  replay - full, user saves
 	//  ghost - saved when best lap,  ghplay - ghost ride replay, loaded if was on disk
-	Replay replay, ghost, ghplay;  ReplayFrame fr;
+	//  fr - used when playing replay for hud and sounds
+	Replay replay, ghost, ghplay;  ReplayFrame frm[4];
 	const Ogre::String& GetGhostFile();
 
 	Scene sc;  /// scene.xml
@@ -78,6 +79,7 @@ public:
 	void UpdateHUD(int carId, float time), ShowHUDvp(bool vp),
 		SizeHUD(bool full, Ogre::Viewport* vp=NULL, int carId=-1);
 	void UpdHUDRot(int baseCarId, int carId, float vel, float rpm);
+	void GetHUDVals(int id, float* vel, float* rpm, float* clutch, int* gear);
 	
 	void recreateCarMtr();
 	

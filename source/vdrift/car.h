@@ -42,6 +42,7 @@ public:
 		const SOUNDBUFFERLIBRARY & soundbufferlibrary,
 		bool defaultabs, bool defaulttcs,
 		bool isRemote,
+		int idCar,
 		bool debugmode,
 		std::ostream & info_output,
 		std::ostream & error_output);
@@ -151,7 +152,7 @@ public:
 	}
 	
 	/// return the speedometer reading (based on the driveshaft speed) in m/s
-	float GetSpeedometer()
+	float GetSpeedometer() const
 	{
 		return dynamics.GetSpeedMPS();
 	}
@@ -299,6 +300,7 @@ public:
 	void UpdateCarState(const protocol::CarStatePackage& state);
 
 	///  new
+	int id;
 	void ResetPos(bool fromStart=true);
 	void SavePosAtCheck();
 

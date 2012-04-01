@@ -394,7 +394,7 @@ void GAME::AdvanceGameLogic()
 			PROFILER.beginBlock("-car-sim");
 			int i = 0;
 			for (std::list <CAR>::iterator it = cars.begin(); it != cars.end(); ++it, ++i)
-				UpdateCar(*it, i, TickPeriod());
+				UpdateCar(*it, TickPeriod());
 			PROFILER.endBlock("-car-sim");
 			
 			//PROFILER.beginBlock("timer");
@@ -500,18 +500,18 @@ void GAME::UpdateTimer()
 }
 
 ///send inputs to the car, check for collisions, and so on
-void GAME::UpdateCar(CAR & car, int i, double dt)
+void GAME::UpdateCar(CAR & car, double dt)
 {
 	car.Update(dt);
-	UpdateCarInputs(car, i);
+	UpdateCarInputs(car);
 	UpdateDriftScore(car, dt);
 }
 
-void GAME::UpdateCarInputs(CAR & car, int i)
+void GAME::UpdateCarInputs(CAR & car)
 {
     std::vector <float> carinputs(CARINPUT::ALL, 0.0f);
 	bool forceBrake = timer.waiting || timer.pretime > 0.f;  // race countdown
-    carinputs = carcontrols_local.second.ProcessInput(i,forceBrake);
+    carinputs = carcontrols_local.second.ProcessInput(car.id, forceBrake);
 
     // multi_thr __ ??
 #if 0
@@ -595,7 +595,7 @@ void GAME::LeaveGame()
 
 ///add a car, optionally controlled by the local player
 CAR* GAME::LoadCar(const string & carname, const MATHVECTOR <float, 3> & start_position,
-		   const QUATERNION <float> & start_orientation, bool islocal, bool isai, bool isRemote)
+		   const QUATERNION <float> & start_orientation, bool islocal, bool isai, bool isRemote, int idCar)
 {
 	CONFIGFILE carconf;
 	if (!carconf.Load(PATHMANAGER::GetCarPath()+"/"+carname+"/"+carname+".car"))
@@ -615,6 +615,7 @@ CAR* GAME::LoadCar(const string & carname, const MATHVECTOR <float, 3> & start_p
 		settings->abs || isai,
 		settings->tcs || isai,
 		isRemote,
+		idCar,
 		debugmode, info_output, error_output))
 	{
 		error_output << "Error loading car: " << carname << endl;

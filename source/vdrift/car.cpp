@@ -12,6 +12,7 @@
 #include "../network/protocol.hpp"
 #include "tobullet.h"
 #include <OgreLogManager.h>
+#include "game.h"  //sound
 
 #ifdef _WIN32
 bool isnan(float number) {return (number != number);}
@@ -19,7 +20,7 @@ bool isnan(double number) {return (number != number);}
 #endif
 
 CAR::CAR() :
-	pSet(0), pApp(0),
+	pSet(0), pApp(0), id(0),
 	last_steer(0),
 	debug_wheel_draw(false),
 	sector(-1),
@@ -62,6 +63,7 @@ bool CAR::Load(class App* pApp1,
 	const SOUNDBUFFERLIBRARY & soundbufferlibrary,
 	bool defaultabs, bool defaulttcs,
 	bool isRemote,
+	int idCar,
   	bool debugmode,
   	std::ostream & info_output,
   	std::ostream & error_output )
@@ -70,6 +72,7 @@ bool CAR::Load(class App* pApp1,
 	pSet = settings;
 	cartype = carname;
 	bRemoteCar = isRemote;
+	id = idCar;
 	std::stringstream nullout;
 
 	//load car body graphics
@@ -603,7 +606,8 @@ void CAR::HandleInputs(const std::vector <float> & inputs, float dt)
 void CAR::UpdateSounds(float dt)
 {
 	float rpm, throttle, speed, dynVel;
-	MATHVECTOR <float,3> engPos, whPos[4];  // engine, wheels pos
+	MATHVECTOR <float,3> pos, engPos, whPos[4];  // engine, wheels pos
+	QUATERNION <float> rot;
 	TRACKSURFACE::TYPE surfType[4];
 	float squeal[4],whVel[4], suspVel[4],suspDisp[4];
 	float whH_all = 0.f;  bool mud = false;
@@ -611,30 +615,33 @@ void CAR::UpdateSounds(float dt)
 	///  replay play  ------------------------------------------
 	if (pApp->bRplPlay)
 	{
-		rpm = pApp->fr.rpm;
-		throttle = pApp->fr.throttle;
-		engPos = pApp->fr.posEngn;  // _/could be from car pos,rot and engine offset--
-		speed = pApp->fr.speed;
-		dynVel = pApp->fr.dynVel;
-		whMudSpin = pApp->fr.whMudSpin;
+		const ReplayFrame& fr = pApp->frm[id];
+		pos = fr.pos;  rot = fr.rot;
+		rpm = fr.rpm;
+		throttle = fr.throttle;
+		engPos = fr.posEngn;  // _/could be from car pos,rot and engine offset--
+		speed = fr.speed;
+		dynVel = fr.dynVel;
+		whMudSpin = fr.whMudSpin;
 
 		for (int w=0; w<4; ++w)
 		{
-			whPos[w] = pApp->fr.whPos[w];
-			surfType[w] = (TRACKSURFACE::TYPE)pApp->fr.surfType[w];
+			whPos[w] = fr.whPos[w];
+			surfType[w] = (TRACKSURFACE::TYPE)fr.surfType[w];
 			//  squeal
-			squeal[w] = pApp->fr.squeal[w];
-			whVel[w] = pApp->fr.whVel[w];
+			squeal[w] = fr.squeal[w];
+			whVel[w] = fr.whVel[w];
 			//  susp
-			suspVel[w] = pApp->fr.suspVel[w];
-			suspDisp[w] = pApp->fr.suspDisp[w];
+			suspVel[w] = fr.suspVel[w];
+			suspDisp[w] = fr.suspDisp[w];
 			//  fluids
-			whH_all += pApp->fr.whH[w];
-			if (pApp->fr.whP[w] >= 1)  mud = true;
+			whH_all += fr.whH[w];
+			if (fr.whP[w] >= 1)  mud = true;
 		}
 	}
 	else  /// game  ------------------------------------------
 	{
+		pos = dynamics.GetPosition();  rot = dynamics.GetOrientation();
 		rpm = GetEngineRPM();
 		throttle = dynamics.GetEngine().GetThrottle();
 		engPos = dynamics.GetEnginePosition();
@@ -672,7 +679,17 @@ void CAR::UpdateSounds(float dt)
 		}
 		whMudSpin = mudSpin * 0.5f;
 	}
-	///  ------------------------------------------
+	///  listener  ------------------------------------------
+	{
+		if (pApp->pGame->sound.Enabled())
+			pApp->pGame->sound.SetListener(pos, rot, MATHVECTOR <float,3>());
+
+		bool incar = true;
+		std::list <SOUNDSOURCE *> soundlist;
+		GetEngineSoundList(soundlist);
+		for (std::list <SOUNDSOURCE *>::iterator s = soundlist.begin(); s != soundlist.end(); s++)
+			(*s)->Set3DEffects(!incar);
+	}
 
 	//update engine sounds
 	float total_gain = 0.0, loudest = 0.0;
