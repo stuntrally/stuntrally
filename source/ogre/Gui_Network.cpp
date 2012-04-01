@@ -112,7 +112,7 @@ void App::updateGameInfo()
 void App::updateGameSet()
 {
 	pSet->game.collis_cars = netGameInfo.collisions;
-	pSet->game.num_laps = netGameInfo.laps;		LogO("Netw laps num: " + toStr(pSet->game.num_laps));
+	pSet->game.num_laps = netGameInfo.laps;		LogO("== Netw laps num: " + toStr(pSet->game.num_laps));
 	pSet->game.flip_type = netGameInfo.flip_type;
 	pSet->game.boost_type = netGameInfo.boost_type;
 	pSet->game.boost_power = netGameInfo.boost_power;
@@ -143,7 +143,7 @@ void App::uploadGameInfo()
 	game.players = mClient->getPeerCount()+1;
 
 	game.collisions = pSet->gui.collis_cars;  // game set
-	game.laps = pSet->gui.num_laps;				LogO("Up Netw laps num: " + toStr(pSet->gui.num_laps));
+	game.laps = pSet->gui.num_laps;				LogO("== Netw laps num: " + toStr(pSet->gui.num_laps));
 	game.flip_type = pSet->gui.flip_type;
 	game.boost_type = pSet->gui.boost_type;
 	game.boost_power = pSet->gui.boost_power;

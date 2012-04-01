@@ -298,7 +298,7 @@ bool GAME::OneLoop()
 		//if (!pOgreGame->bLoading && !timer.waiting)
 		Tick(pOgreGame->bLoading ? 0.0 : dt);  // do CPU intensive stuff in parallel with the GPU
  		
-		//PROFILER.endCycle();
+		//PROFILER.endCycle();  // not here, in Ogre UpdateHUD
 		
 		displayframe++;
 	}

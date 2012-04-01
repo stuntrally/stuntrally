@@ -545,8 +545,11 @@ void CAR::HandleInputs(const std::vector <float> & inputs, float dt)
 	bool rear = pSet->rear_inv ? cur_gear == -1 : false;  //if (disable_auto_rear)  rear = false;
 
 	//  set brakes
-	float brake = !rear ? inputs[CARINPUT::BRAKE] : inputs[CARINPUT::THROTTLE];
-	dynamics.SetBrake(brake);
+	if (!bRemoteCar)
+	{
+		float brake = !rear ? inputs[CARINPUT::BRAKE] : inputs[CARINPUT::THROTTLE];
+		dynamics.SetBrake(brake);
+	}
 	dynamics.SetHandBrake(inputs[CARINPUT::HANDBRAKE]);
 	
 	//  boost, flip over
@@ -980,9 +983,8 @@ protocol::CarStatePackage CAR::GetCarStatePackage() const
 	//  steer
 	csp.steer = dynamics.GetSteering();
 	csp.boost = dynamics.doBoost;
-	//LogO("sending  steer: "+fToStr(csp.steer,2,4));
 	//csp.trackPercent = trackPercentCopy;  // needed from CarModel
-	//csp.brake = dynamics.GetBrake()  todo ..
+	csp.brake = (float)dynamics.IsBraking();  //GetBrake(); ?
 	return csp;
 }
 
@@ -1016,10 +1018,9 @@ void CAR::UpdateCarState(const protocol::CarStatePackage& state)
 	dynamics.UpdateWheelContacts();
 
 	//  steer
-	dynamics.SetSteering(state.steer);
-	//LogO("received steer: "+fToStr(state.steer,2,4));
-	last_steer = state.steer;
+	dynamics.SetSteering(state.steer);	last_steer = state.steer;
 	dynamics.doBoost = state.boost;
+	dynamics.SetBrake(state.brake);
 	trackPercentCopy = state.trackPercent;
 }
 
