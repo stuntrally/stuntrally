@@ -152,7 +152,11 @@ struct CarStatePackage {
 	MATHVECTOR<float,3> linearVel;
 	MATHVECTOR<float,3> angularVel;
 
-	float steer, trackPercent, boost, brake;  // boost fuel,  <- all dont need to be float could be uint8..
+	float steer;
+	uint8_t trackPercent;
+	uint8_t boost;
+	uint8_t brake;
+	// boostFuel,gear, vel,rpm for replays ?..
 
 	CarStatePackage(): packet_type(CAR_UPDATE) {}
 	operator bool() { return packet_type == CAR_UPDATE; }

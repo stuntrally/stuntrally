@@ -70,7 +70,7 @@ void App::DoNetworking()
 			if ((*it)->eType == CarModel::CT_LOCAL)
 			{
 				cs = (*it)->pCar->GetCarStatePackage();
-				cs.trackPercent = (*it)->trackPercent;
+				cs.trackPercent = uint8_t( (*it)->trackPercent / 100.f * 255.f);  // pack to uint8
 				break;
 			}
 		}

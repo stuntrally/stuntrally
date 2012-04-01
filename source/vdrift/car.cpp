@@ -982,9 +982,9 @@ protocol::CarStatePackage CAR::GetCarStatePackage() const
 
 	//  steer
 	csp.steer = dynamics.GetSteering();
-	csp.boost = dynamics.doBoost;
+	csp.boost = dynamics.doBoost * 255.f;  // pack to uint8
+	csp.brake = dynamics.IsBraking() * 255.f;
 	//csp.trackPercent = trackPercentCopy;  // needed from CarModel
-	csp.brake = (float)dynamics.IsBraking();  //GetBrake(); ?
 	return csp;
 }
 
@@ -1019,9 +1019,9 @@ void CAR::UpdateCarState(const protocol::CarStatePackage& state)
 
 	//  steer
 	dynamics.SetSteering(state.steer);	last_steer = state.steer;
-	dynamics.doBoost = state.boost;
-	dynamics.SetBrake(state.brake);
-	trackPercentCopy = state.trackPercent;
+	dynamics.doBoost = state.boost / 255.f;  // unpack from uint8
+	dynamics.SetBrake(state.brake / 255.f);
+	trackPercentCopy = state.trackPercent / 255.f * 100.f;
 }
 
 ///  reset car, pos and state

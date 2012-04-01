@@ -357,9 +357,9 @@ void App::editMouse()
 		}else
 		{	//  alt
 			if (mbLeft)    // rot pitch
-				road->AddYaw(   vNew.x * fRot * moveMul,0.f,alt);
+				road->AddYaw(   vNew.x * fRot * moveMul,0.f,false/*alt*/);
 			if (mbRight)   // rot yaw
-				road->AddRoll(  vNew.y *-fRot * moveMul,0.f,alt);
+				road->AddRoll(  vNew.y *-fRot * moveMul,0.f,false/*alt*/);
 		}
 	}
 
