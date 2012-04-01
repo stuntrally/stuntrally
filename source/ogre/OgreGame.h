@@ -379,7 +379,7 @@ protected:
 
 	mutable boost::mutex netGuiMutex;
 	MyGUI::UString sChatBuffer,sChatLast1,sChatLast2;  int iChatMove;
-	void AddChatMsg(const MyGUI::UString& clr, const MyGUI::UString& msg);
+	void AddChatMsg(const MyGUI::UString& clr, const MyGUI::UString& msg, bool add=true);
 	protocol::GameInfo netGameInfo;
 
 	bool bRebuildPlayerList, bRebuildGameList;

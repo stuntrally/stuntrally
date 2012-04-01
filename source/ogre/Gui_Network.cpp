@@ -143,7 +143,7 @@ void App::uploadGameInfo()
 	game.players = mClient->getPeerCount()+1;
 
 	game.collisions = pSet->gui.collis_cars;  // game set
-	game.laps = pSet->gui.num_laps;				//LogO("Up Netw laps num: " + toStr(pSet->gui.num_laps));
+	game.laps = pSet->gui.num_laps;				LogO("Up Netw laps num: " + toStr(pSet->gui.num_laps));
 	game.flip_type = pSet->gui.flip_type;
 	game.boost_type = pSet->gui.boost_type;
 	game.boost_power = pSet->gui.boost_power;
@@ -174,14 +174,14 @@ void App::gameListChanged(protocol::GameList list)
 }
 
 //  add new msg at end
-void App::AddChatMsg(const MyGUI::UString& clr, const MyGUI::UString& msg)
+void App::AddChatMsg(const MyGUI::UString& clr, const MyGUI::UString& msg, bool add)
 {
 	if (!isFocGui)  // if not in gui, show on hud
 	{	sChatLast1 = sChatLast2;
 		sChatLast2 = msg;
 		iChatMove = 0;
 	}
-	sChatBuffer = sChatBuffer + clr + msg + "\n";
+	sChatBuffer = add ? (sChatBuffer + clr + msg + "\n") : (clr + msg + "\n");
 	bUpdChat = true;
 }
 
@@ -260,7 +260,7 @@ void App::timeInfo(ClientID id, uint8_t lap, double time)
 	if (id >= carModels.size() || id < 0)
 	{	LogO("== Netw Lap id wrong !" );  return;  }
 	
-	//pGame->timer.Lap(id, 0,0, true, pSet->game.trackreverse/*<, pSet->boost_type*/);  //pGame->cartimerids[pCar] ?
+	//pGame->timer.Lap(id, 0,0, true, pSet->game.trackreverse/*<, pSet->boost_type*/);
 	pGame->timer.LapNetworkTime(id, time);  // is the same as above but sets client's time
 	carModels[id]->trackPercent = 0.f;
 	newPosInfos[id].percent = 0.f;
@@ -279,7 +279,7 @@ void App::join(std::string host, std::string port, std::string password)
 		mClient->updatePlayerInfo(pSet->nickname, sListCar);
 		mClient->connect(host, boost::lexical_cast<int>(port), password); // Lobby phase started automatically
 		boost::mutex::scoped_lock lock(netGuiMutex);
-		AddChatMsg("#00FFFF", TR("Connecting to ") + host + ":" + port);
+		AddChatMsg("#00FFFF", TR("Connecting to ") + host + ":" + port, false);  // clears chat
 	}catch (...)
 	{	raiseError(TR("Failed to initialize networking.\nTry different local port and make sure your firewall is properly configured."), TR("Network Error"));
 		return;
@@ -368,7 +368,7 @@ void App::evBtnNetCreate(WP)
 		panelNetTrack->setVisible(false);
 
 		boost::mutex::scoped_lock lock(netGuiMutex);
-		sChatBuffer = "#00FFC0" + TR("Listening on port ")  + toStr(pSet->local_port) + "...\n";  //clears chat
+		AddChatMsg("#00FFC0", TR("Listening on port ")  + toStr(pSet->local_port) + "...\n", false);  //clears chat
 	}
 }
 

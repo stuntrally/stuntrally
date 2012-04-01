@@ -147,7 +147,7 @@ void CarModel::Update(PosInfo& posInfo, float time)
 	angCarY = q.getYaw().valueDegrees() + 90.f;
 	
 	//  brake state
-	bool braking = eType == CT_REMOTE ? false : posInfo.braking;  //todo: send braking for netw players
+	bool braking = /*eType == CT_REMOTE ? false :*/ posInfo.braking;  //todo: send braking for netw players
 	if (bBraking != braking)
 	{
 		bBraking = braking;

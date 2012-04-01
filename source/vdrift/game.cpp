@@ -425,8 +425,6 @@ void GAME::UpdateTimer()
 	int carId=0;
 	for (std::list <CAR>::iterator i = cars.begin(); i != cars.end(); ++i,++carId)
 	{
-	    //int carid = cartimerids[&(*i)];
-
 		bool advance = false;
 		int nextsector = 0;
 		if (track.GetSectors() > 0)
@@ -796,7 +794,7 @@ void GAME::UpdateDriftScore(CAR & car, double dt)
 	}
 
 	bool on_track = ( wheel_count > 1 );
-	int carId = 0;  //cartimerids[&car]
+	int carId = 0;
 
 	//car's direction on the horizontal plane
 	MATHVECTOR <float, 3> car_orientation(1,0,0);
@@ -822,7 +820,6 @@ void GAME::UpdateDriftScore(CAR & car, double dt)
 	}
 	
 	assert(car_angle == car_angle); //assert that car_angle isn't NAN
-	//assert(cartimerids.find(&car) != cartimerids.end()); //assert that the car is registered with the timer system
 
 	if ( on_track )
 	{
@@ -851,9 +848,8 @@ void GAME::UpdateDriftScore(CAR & car, double dt)
 		//std::cout << timer.GetDriftScore(carId) << " + " << timer.GetThisDriftScore(carId) << endl;
 	}
 
-	//if (settings,
-	if (settings->multi_thr != 1) // cartimerids.size() > 0)
-	timer.SetIsDrifting(carId, is_drifting, on_track && !spin_out);
+	if (settings->multi_thr != 1)
+		timer.SetIsDrifting(carId, is_drifting, on_track && !spin_out);
 	
 	//std::cout << is_drifting << ", " << on_track << ", " << car_angle << endl;
 }

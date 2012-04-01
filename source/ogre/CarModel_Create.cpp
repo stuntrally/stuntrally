@@ -71,7 +71,7 @@ CarModel::CarModel(unsigned int index, eCarType type, const std::string& name,
 
 		//  offset car start pos when cars collide
 		MATHVECTOR<float, 3> offset(0,0,0);
-		pCar = pGame->LoadCar(sDirname, pos, rot, true, false);
+		pCar = pGame->LoadCar(sDirname, pos, rot, true, false, type == CT_REMOTE);
 		if (!pCar)  LogO("Error creating car " + sDirname);
 	}
 }

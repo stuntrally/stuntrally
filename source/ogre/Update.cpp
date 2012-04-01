@@ -225,7 +225,8 @@ bool App::frameStart(Real time)
 		#define isKey(a)  mKeyboard->isKeyDown(OIS::a)
 		static float dirU = 0.f,dirD = 0.f;
 		if (isFocGui && !pSet->isMain)
-		{	if (isKey(KC_UP)  ||isKey(KC_NUMPAD8))	dirD += time;  else
+		{
+			if (isKey(KC_UP)  ||isKey(KC_NUMPAD8))	dirD += time;  else
 			if (isKey(KC_DOWN)||isKey(KC_NUMPAD2))	dirU += time;  else
 			{	dirU = 0.f;  dirD = 0.f;  }
 			int d = ctrl ? 4 : 1;
@@ -249,7 +250,7 @@ bool App::frameStart(Real time)
 			if (bUpdateGameInfo) {  updateGameInfo();  bUpdateGameInfo = false;  }
 			if (bUpdChat)  {  edNetChat->setCaption(sChatBuffer);  bUpdChat = false;  }
 			if (bStartGame)
-			{	// TODO: Probably some more stuff here...
+			{
 				mMasterClient.reset();
 				mClient->startGame();
 				btnNewGameStart(NULL);

@@ -444,8 +444,7 @@ void App::UpdateHUD(int carId, float time)
 
 	///  opponents list
 	// -----------------------------------------------------------------------------------
-	if (/*pSet->show_opponents && road && road->getNumPoints() > 0*/  ovOpp->isVisible()
-		&& pCarM && pCarM->pMainNode)
+	if (ovOpp->isVisible() && pCarM && pCarM->pMainNode)
 	{
 		std::list<CarModel*> cms;  // sorted list
 		for (int o=0; o < carModels.size(); ++o)
@@ -658,7 +657,7 @@ void App::UpdateHUD(int carId, float time)
 
 	//  car debug text  --------
 	static bool oldCarTxt = false;
-	if (pCar && ovU[0]) ///!-
+	if (pCar && ovU[0])
 	{
 		if (pSet->car_dbgtxt)
 		{	std::stringstream s1,s2,s3,s4;
@@ -673,7 +672,7 @@ void App::UpdateHUD(int carId, float time)
 	oldCarTxt = pSet->car_dbgtxt;
 	
 
-	//  profiling times -
+	//  profiling times --------
 	if (pSet->profilerTxt && ovU[1])
 	{
 		PROFILER.endCycle();
@@ -688,7 +687,8 @@ void App::UpdateHUD(int carId, float time)
 		//ovU[3]->setCaption("carm: " + toStr(carModels.size()) + " newp: " + toStr((*newPosInfos.begin()).pos));
 	}
 
-	///  bullet profiling text  --------
+
+	//  bullet profiling text  --------
 	static bool oldBltTxt = false;
 	if (ovU[1])
 	{
