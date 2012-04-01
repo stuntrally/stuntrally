@@ -315,10 +315,9 @@ void P2PGameClient::disconnectEvent(net::NetworkTraffic const& e)
 	PeerInfo picopy;
 	{
 		boost::mutex::scoped_lock lock(m_mutex);
-		// We probably don't want to delete it right away,
-		// since we could try reconnecting
-		m_peers[e.peer_address.str()].connection = PeerInfo::DISCONNECTED;
 		picopy = m_peers[e.peer_address.str()];
+		picopy.connection = PeerInfo::DISCONNECTED;
+		m_peers.erase(e.peer_address.str());
 		recountPeersAndAssignIds();
 	}
 	// Callback (mutex unlocked to avoid dead-locks)
