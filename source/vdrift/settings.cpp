@@ -125,6 +125,7 @@ void SETTINGS::Serialize(bool w, CONFIGFILE & c)
 	Param(c,w, "video.fullscreen", fullscreen);		Param(c,w, "video.vsync", vsync);
 	Param(c,w, "video.fsaa", fsaa);					Param(c,w, "video.ssaa", ssaa);
 	Param(c,w, "video.buffer", buffer);				Param(c,w, "video.rendersystem", rendersystem);
+	Param(c,w, "video.render_not_active", renderNotActive);
 	
 	// not in gui-
 	Param(c,w, "misc.boostFromExhaust", boostFromExhaust);
@@ -186,7 +187,8 @@ SETTINGS::SETTINGS() :  ///  Defaults
 	depthOfFieldFocus(100), depthOfFieldFar(1000),
 	ssao(false),softparticles(false),
 	//  not in gui
-	boostFromExhaust(0), net_local_plr(-1)
+	boostFromExhaust(0), net_local_plr(-1),
+	renderNotActive(false)
 {
 	//  track
 	gui.track = "J1-T";

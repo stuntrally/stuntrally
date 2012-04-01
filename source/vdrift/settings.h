@@ -99,6 +99,7 @@ public:
 
 	// not in gui
 	bool boostFromExhaust;  int net_local_plr;
+	bool renderNotActive;
 	
 //------------------------------------------
 	SETTINGS();

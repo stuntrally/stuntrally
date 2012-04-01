@@ -606,7 +606,8 @@ bool BaseApp::configure()
 
 		mWindow = mRoot->createRenderWindow("Stunt Rally", pSet->windowx, pSet->windowy, pSet->fullscreen, &settings);
 		//  use this in local networking tests to render when window inactive
-		//mWindow->setDeactivateOnFocusChange(false);
+		if (pSet->renderNotActive)
+			mWindow->setDeactivateOnFocusChange(false);
 	}
 	mLoadingBar->bBackgroundImage = pSet->loadingbackground;
 	return true;
