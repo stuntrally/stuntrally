@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION"
 "Report-Msgid-Bugs-To: "
-"POT-Creation-Date: 2012-03-31 21:29+0300"
+"POT-Creation-Date: 2012-04-01 16:07+0300"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>"
 "Language-Team: LANGUAGE <LL@li.org>"
@@ -491,6 +491,10 @@ msgstr ""
 
 msgctxt "BasedOn"
 msgid "based on"
+msgstr ""
+
+msgctxt "ProfilerTxt"
+msgid "Profiler times text "
 msgstr ""
 
 msgctxt "NetLeaveGame"
@@ -1751,6 +1755,10 @@ msgstr ""
 
 msgctxt "mud"
 msgid "mud"
+msgstr ""
+
+msgctxt "NetMasterConnectionError"
+msgid "Couldn't reach the master server."
 msgstr ""
 
 msgctxt "TipTerWind"

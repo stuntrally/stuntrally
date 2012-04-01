@@ -705,11 +705,13 @@
 	<Tag name="RplAll">Kaikki</Tag>
 	<Tag name="InputFluidsUpdate">F10  - update depth map, after terrain deform near shore</Tag>
 	<Tag name="LANG_FR">Français</Tag>
+	<Tag name="ProfilerTxt">Profiler times text </Tag>
 	<Tag name="LANG_EN">English</Tag>
 	<Tag name="NetMasterProtocolError">Incompatible protocol version - update Stunt Rally or contact server administrator.</Tag>
 	<Tag name="LANG_RO">Română</Tag>
 	<Tag name="LANG_RU">Русский</Tag>
 	<Tag name="NetWrongPassword">Wrong password.</Tag>
+	<Tag name="NetMasterConnectionError">Couldn't reach the master server.</Tag>
 	<Tag name="LANG_DE">Deutsch</Tag>
 	<Tag name="LANG_PL">Polski</Tag>
 	<Tag name="NetGameProtocolError">Incompatible protocol versions between peers.</Tag>

@@ -89,6 +89,10 @@ void MasterClient::disconnectEvent(net::NetworkTraffic const& e)
 	if (e.event_data == protocol::INCOMPATIBLE_MASTER_PROTOCOL) {
 		boost::mutex::scoped_lock lock(m_mutex);
 		m_error = TR("#{NetMasterProtocolError}");
+	} else if (e.event_data == 0 && !m_connectionOk) {
+		// If we got here, we couldn't reach the master server
+		boost::mutex::scoped_lock lock(m_mutex);
+		m_error = TR("#{NetMasterConnectionError}");
 	}
 	LogO("== Netw Disconnected from master server");
 }

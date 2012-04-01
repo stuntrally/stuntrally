@@ -181,6 +181,7 @@
 	<Tag name="NetWrongPassword">Wrong password.</Tag>
 	<Tag name="NetGameProtocolError">Incompatible protocol versions between peers.</Tag>
 	<Tag name="NetMasterProtocolError">Incompatible protocol version - update Stunt Rally or contact server administrator.</Tag>
+	<Tag name="NetMasterConnectionError">Couldn't reach the master server.</Tag>
 	<!-- Game -->
 	<Tag name="NetGame">Game</Tag>
 	<Tag name="NetGameName">Game Name</Tag>
