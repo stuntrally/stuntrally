@@ -18,8 +18,7 @@
 
 namespace protocol {
 
-// Note that in many cases, you need to bump both version when making changes.
-// Example: PacketType enum is used by both master server and game clients.
+// Check the comments in the packet structs to find out which one of these they affect.
 const uint32_t GAME_PROTOCOL_VERSION = 2;
 const uint32_t MASTER_PROTOCOL_VERSION = 3;
 
@@ -29,6 +28,7 @@ const unsigned DEFAULT_PORT = 4243;
 /**
  * @brief Contains all possible message types.
  * It will be transmitted as 8-bit unsigned int.
+ * On change, bump GAME_PROTOCOL_VERSION, MASTER_PROTOCOL_VERSION
  */
 enum PacketType {
 	HANDSHAKE = 0,
@@ -57,8 +57,9 @@ enum ErrorCodes {
 };
 
 /**
- * @brief Contains authentication etc. info that needs to be validated
- * before accepting a new connection as a peer.
+ * @brief Contains authentication etc. info.
+ * This stuff needs to be validated before accepting a new connection as a peer.
+ * On change, bump GAME_PROTOCOL_VERSION
  */
 struct HandshakePackage {
 	uint8_t packet_type;
@@ -77,6 +78,7 @@ struct HandshakePackage {
 
 /**
  * @brief Contains information about one game that is available for joining.
+ * On change, bump GAME_PROTOCOL_VERSION, MASTER_PROTOCOL_VERSION
  */
 struct GameInfo {
 	uint8_t packet_type;
@@ -108,6 +110,7 @@ typedef std::map<uint32_t, protocol::GameInfo> GameList;
 /**
  * @brief Contains the address of a peer to connect.
  * These structs are passed around to create the complete network topography.
+ * On change, bump GAME_PROTOCOL_VERSION
  */
 struct PeerAddressPacket {
 	uint8_t packet_type;
@@ -123,6 +126,7 @@ struct PeerAddressPacket {
 /**
  * @brief Contains player info.
  * These structs are passed around to update player information.
+ * On change, bump GAME_PROTOCOL_VERSION
  */
 struct PlayerInfoPacket {
 	uint8_t packet_type;
@@ -144,6 +148,7 @@ struct PlayerInfoPacket {
 /**
  * @brief Contains the car state.
  * These structs are passed around to update car position etc.
+ * On change, bump GAME_PROTOCOL_VERSION
  */
 struct CarStatePackage {
 	uint8_t packet_type;
@@ -167,6 +172,7 @@ typedef std::map<int8_t, CarStatePackage> CarStates;
 
 /**
  * @brief Contains lap / race timing info.
+ * On change, bump GAME_PROTOCOL_VERSION
  */
 struct TimeInfoPackage {
 	uint8_t packet_type;
