@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "ReplayGame.h"
 #include "common/Defines.h"
+#include "common/QTimer.h"
 
 //  replay load log and check
 #define LOG_RPL
@@ -14,12 +15,12 @@ ReplayHeader::ReplayHeader()
 }
 void ReplayHeader::Default()
 {
-	head[0] = 'S';  head[1] = 'R';  head[2] = '\\';  head[3] = '_';  head[4] = ' ';
+	head[0] = 'S';  head[1] = 'R';  head[2] = '\\';  head[3] = '_';  head[4] = 0;
 
 	memset(track, 0, sizeof(track));  track_user = 0;
 	memset(car, 0, sizeof(car));
 
-	ver = 7;  /// todo: if <= 3 car colors from -1..1 to 0..1
+	ver = 8;
 	frameSize = sizeof(ReplayFrame);
 	numPlayers = 1;
 	trees = 1.f;
@@ -33,6 +34,14 @@ void ReplayHeader::Default()
 	memset(cars, 0, sizeof(cars));
 	memset(nicks, 0, sizeof(nicks));		
 	memset(descr, 0, sizeof(descr));
+}
+
+void ReplayHeader::SafeEnd0()
+{	// put 0 on last char for strings (loading older replay)
+	track[62]=0;
+	car[31]=0;      cars[0][31]=0;  cars[1][31]=0;  cars[2][31]=0;
+	nicks[0][31]=0; nicks[1][31]=0; nicks[2][31]=0; nicks[3][31]=0;
+	descr[127]=0;
 }
 
 ReplayFrame::ReplayFrame() :
@@ -91,12 +100,15 @@ bool Replay::LoadFile(std::string file, bool onlyHdr)
 {
 	std::ifstream fi(file.c_str(), std::ios::binary | std::ios::in);
 	if (!fi)  return false;
+
+	QTimer ti;  ti.update();  /// time
 	
 	//  header
 	char buf[ciRplHdrSize];  memset(buf,0,ciRplHdrSize);
 	fi.read(buf,ciRplHdrSize);
 	memcpy(&header, buf, sizeof(ReplayHeader));
 	header.numPlayers = std::max(1, std::min(4, header.numPlayers));  // range 1..4
+	header.SafeEnd0();
 
     #ifdef LOG_RPL
 	if (!onlyHdr)  LogO(">- Load replay --  file: "+file+"  players:"+toStr(header.numPlayers));
@@ -151,10 +163,16 @@ bool Replay::LoadFile(std::string file, bool onlyHdr)
 	}
     fi.close();
  
+
     #ifdef LOG_RPL
 		LogO(">- Load replay  first: "+fToStr(frames[0][0].time,5,7)
 			+"  time: "+fToStr(GetTimeLength(0),5,7)+"  frames: "+toStr(frames[0].size()));
 	#endif
+
+	ti.update();	/// time
+	float dt = ti.dt * 1000.f;
+	LogO(Ogre::String("::: Time ReplayLoad: ") + toStr(dt) + " ms");
+
     return true;
 }
 

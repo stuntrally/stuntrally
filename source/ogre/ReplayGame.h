@@ -13,10 +13,10 @@ const static int cDefSize = 8*1024;
 // note: add new vars always at end of
 // ReplayHeader or ReplayFrame structs (backward compatibility)
 
-// sizeof ReplayFrame
-/// = 336 Bytes per frame
-//  336 * 160 fps = 53.7 kB/s
-//  1 min = 3.22 MB, 10 min = 32.2 MB
+/// size of ReplayFrame
+//= 384 Bytes per frame
+//  384 * 160 fps = 61.4 kB/s
+//  1 min = 3.68 MB, 10 min = 36.8 MB
 
 
 //  whole replay/ghost data - max 4 players
@@ -24,23 +24,25 @@ const static int cDefSize = 8*1024;
 struct ReplayHeader
 {
 	char head[5];  // "SR\_ "
+	typedef char ChName[32];
 
 	char track[63];   // track name  (hmap crc? diff-)
 	char track_user;  // user/original
-	char car[32];     // car name  (eg. ES, .car file crc?, settings diff-)
+	ChName car;     // car name  (eg. ES, .car file crc?, settings diff-)
 
 	int ver, frameSize;  // bin data format - sizeof(ReplayFrame)
 	float whR[4][4];  // cars wheels radius
 	
 	int numPlayers;
 	float hue[4],sat[4],val[4];  // cars colors
-	char cars[32][3];  // car names (when numPlayers > 1)
+	ChName cars[3];  // car names (when numPlayers > 1)
 
-	char nicks[32][4];  // multiplayer nicks
+	ChName nicks[4];  // multiplayer nicks
 	char descr[128];   // description - user text
 	float trees;	// trees multipler
 
-	ReplayHeader();  void Default();
+	ReplayHeader();
+	void Default(), SafeEnd0();
 };
 
 
@@ -108,7 +110,7 @@ public:
 
 	ReplayHeader header;
 private:
-	std::vector<ReplayFrame> frames[4];
+	std::vector<ReplayFrame> frames[4];  // 4 players max
 };
 
 #endif

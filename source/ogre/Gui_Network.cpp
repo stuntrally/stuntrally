@@ -368,7 +368,7 @@ void App::evBtnNetCreate(WP)
 		panelNetTrack->setVisible(false);
 
 		boost::mutex::scoped_lock lock(netGuiMutex);
-		AddChatMsg("#00FFC0", TR("Listening on port ")  + toStr(pSet->local_port) + "...\n", false);  //clears chat
+		AddChatMsg("#00FFC0", TR("Listening on port ")  + toStr(pSet->local_port) + "...", false);  //clears chat
 	}
 }
 
