@@ -375,6 +375,7 @@
 	<Tag name="BulletDebug">Bullet debug</Tag>
 	<Tag name="BulletProfilerTxt">Bullet Profiler Times</Tag>
 	<Tag name="CarDebugText">Car debug text </Tag>
+	<Tag name="ProfilerTxt">Profiler times text </Tag>
 
 	<Tag name="Startup">Startup</Tag>
 	<Tag name="MouseCapture">Capture mouse</Tag>

@@ -91,7 +91,7 @@ void SETTINGS::Serialize(bool w, CONFIGFILE & c)
 	Param(c,w, "misc.autostartgame", autostart);
 	Param(c,w, "misc.ogredialog", ogre_dialog);		Param(c,w, "misc.escquit", escquit);
 	Param(c,w, "misc.bulletDebug", bltDebug);		Param(c,w, "misc.bulletLines", bltLines);
-	Param(c,w, "misc.bulletProfilerTxt", bltProfilerTxt);
+	Param(c,w, "misc.profilerTxt", profilerTxt);	Param(c,w, "misc.bulletProfilerTxt", bltProfilerTxt);
 	Param(c,w, "misc.language", language);			Param(c,w, "misc.loadingback", loadingbackground);
 	Param(c,w, "misc.version", version);
 	Param(c,w, "misc.x11_hwmouse", x11_hwmouse);	Param(c,w, "misc.x11_capture_mouse", x11_capture_mouse);
@@ -160,7 +160,7 @@ SETTINGS::SETTINGS() :  ///  Defaults
 	ff_invert(false),
 	//  misc
 	autostart(0), ogre_dialog(0), escquit(0),
-	bltDebug(0), bltLines(1),  bltProfilerTxt(0),
+	bltDebug(0), bltLines(1),  bltProfilerTxt(0), profilerTxt(0),
 	loadingbackground(true),
 	x11_capture_mouse(false), x11_hwmouse(false),
 	//  network

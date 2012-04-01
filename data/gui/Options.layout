@@ -2234,6 +2234,11 @@
 							<Property key="TextColour" value="0.7 0.85 1.0"/>
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
+						<Widget type="Button" skin="CheckBox" position="40 270 256 24" name="ProfilerTxt">
+							<Property key="Caption" value="#{ProfilerTxt}  ctrl-F9"/>
+							<Property key="TextColour" value="0.7 0.85 1.0"/>
+							<UserString key="RelativeTo" value="OptionsWnd"/>
+						</Widget>
 						<Widget type="TextBox" skin="TextBox" position="352 30 216 24">
 							<Property key="TextColour" value="0.75 0.85 0.95"/>
 							<Property key="Caption" value="#{Startup}"/>

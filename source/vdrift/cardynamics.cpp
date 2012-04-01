@@ -249,6 +249,7 @@ void CARDYNAMICS::AlignWithGround()
 ///set the steering angle to "value", where 1.0 is maximum right lock and -1.0 is maximum left lock.
 void CARDYNAMICS::SetSteering ( const T value )
 {
+	steerValue = value;
 	T steerangle = value * maxangle; //steering angle in degrees
 
 	//ackermann stuff

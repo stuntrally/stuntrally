@@ -57,7 +57,8 @@ public:
 	
 	void LeaveGame();
 	bool LoadTrack(const std::string & trackname);
-	CAR* LoadCar(const std::string & carname, const MATHVECTOR <float, 3> & start_position, const QUATERNION <float> & start_orientation, bool islocal, bool isai, const std::string & carfile=""); ///< carfile is a string containing an entire .car file (e.g. XS.car) and is used instead of reading from disk.  this is optional
+	CAR* LoadCar(const std::string & carname, const MATHVECTOR <float, 3> & start_position,
+		const QUATERNION <float> & start_orientation, bool islocal, bool isai, bool isRemote=false);
 
 	//void PopulateValueLists(std::map<std::string, std::list <std::pair<std::string,std::string> > > & valuelists);
 

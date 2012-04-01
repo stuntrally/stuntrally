@@ -342,6 +342,7 @@ void App::chkCarDbgBars(WP wp){		ChkEv(car_dbgbars);	ShowHUD();	}
 void App::chkCarDbgTxt(WP wp){		ChkEv(car_dbgtxt);	ShowHUD();	}
 void App::chkBltDebug(WP wp){		ChkEv(bltDebug);	}
 void App::chkBltProfilerTxt(WP wp){	ChkEv(bltProfilerTxt);	}
+void App::chkProfilerTxt(WP wp){	ChkEv(profilerTxt);	}
 
 void App::radKmh(WP wp){	bRkmh->setStateSelected(true);  bRmph->setStateSelected(false);  pSet->show_mph = false;  ShowHUD();  }
 void App::radMph(WP wp){	bRkmh->setStateSelected(false);  bRmph->setStateSelected(true);  pSet->show_mph = true;   ShowHUD();  }
@@ -626,78 +627,82 @@ if (!bAssignKey)
 				break;
 				
 
-			case KC_F9:		// car debug text/bars
-				if (shift)	{	WP wp = chDbgT;  ChkEv(car_dbgtxt);  ShowHUD();  }
-				else		{	WP wp = chDbgB;  ChkEv(car_dbgbars);   ShowHUD();  }
+			case KC_F9:
+				if (shift)		// car debug text
+				{	WP wp = chDbgT;  ChkEv(car_dbgtxt);  ShowHUD();  }
+				else if (ctrl)  // profiler times
+				{	WP wp = chProfTxt;  ChkEv(profilerTxt);  ShowHUD();  }
+				else			// car debug bars
+				{	WP wp = chDbgB;  ChkEv(car_dbgbars);   ShowHUD();  }
 				return true;
 
 			case KC_F11:	//  fps
-			if (!shift)
-			{	WP wp = chFps;  ChkEv(show_fps); 
-				if (pSet->show_fps)  mFpsOverlay->show();  else  mFpsOverlay->hide();
-				return false;
-			}	break;
+				if (!shift)
+				{	WP wp = chFps;  ChkEv(show_fps); 
+					if (pSet->show_fps)  mFpsOverlay->show();  else  mFpsOverlay->hide();
+					return false;
+				}	break;
 
 			case KC_F10:	//  blt debug, txt
-			if (shift)
-			{	WP wp = chBltTxt;  ChkEv(bltProfilerTxt);  return false;  }
-			else if (ctrl)
-			{	WP wp = chBlt;  ChkEv(bltDebug);  return false;  }
-			else
-			{	mbWireFrame = !mbWireFrame;
-				///  Set for all cameras
-				PolygonMode mode = mbWireFrame ? PM_WIREFRAME : PM_SOLID;
-				
-				refreshCompositor(mode == PM_WIREFRAME);  // disable effects
-				if (mSplitMgr)
-				for (std::list<Camera*>::iterator it=mSplitMgr->mCameras.begin(); it!=mSplitMgr->mCameras.end(); ++it)
-					(*it)->setPolygonMode(mode);
-				
-				if (ndSky)	ndSky->setVisible(!mbWireFrame);  // hide sky
-			}	return false;
+				if (shift)
+				{	WP wp = chBltTxt;  ChkEv(bltProfilerTxt);  return false;  }
+				else if (ctrl)
+				{	WP wp = chBlt;  ChkEv(bltDebug);  return false;  }
+				else
+				{	mbWireFrame = !mbWireFrame;
+					///  Set for all cameras
+					PolygonMode mode = mbWireFrame ? PM_WIREFRAME : PM_SOLID;
+					
+					refreshCompositor(mode == PM_WIREFRAME);  // disable effects
+					if (mSplitMgr)
+					for (std::list<Camera*>::iterator it=mSplitMgr->mCameras.begin(); it!=mSplitMgr->mCameras.end(); ++it)
+						(*it)->setPolygonMode(mode);
+					
+					if (ndSky)	ndSky->setVisible(!mbWireFrame);  // hide sky
+				}	return false;
 
 			case KC_F7:		// Times
-			if (shift)
-			{	WP wp = chOpponents;  ChkEv(show_opponents);  ShowHUD();  }
-			else
-			{	WP wp = chTimes;  ChkEv(show_times);  ShowHUD();  }
-				return false;
+				if (shift)
+				{	WP wp = chOpponents;  ChkEv(show_opponents);  ShowHUD();  }
+				else
+				{	WP wp = chTimes;  ChkEv(show_times);  ShowHUD();  }
+					return false;
 				
 			case KC_F8:		// Minimap
-			{	WP wp = chMinimp;  ChkEv(trackmap);
-				for (int c=0; c < 4; ++c)
-					if (ndMap[c])  ndMap[c]->setVisible(pSet->trackmap);
-			}	return false;
+				{	WP wp = chMinimp;  ChkEv(trackmap);
+					for (int c=0; c < 4; ++c)
+						if (ndMap[c])  ndMap[c]->setVisible(pSet->trackmap);
+				}	return false;
 			
 			case KC_F5:		//  new game
 				NewGame();  return false;
 
 
 			case KC_RETURN:		///  close champ wnds
-			if (mWndChampStage->getVisible())
-				btnChampStageStart(0);
-			else			//  chng trk/car + new game  after up/dn
-			if (isFocGui && !pSet->isMain)
-				switch (pSet->inMenu)
-				{
-				case WND_Replays:
-					btnRplLoad(0);  break;
-				case WND_Game:  case WND_Champ:
-				{	switch (mWndTabsGame->getIndexSelected())
+				if (mWndChampStage->getVisible())
+					btnChampStageStart(0);
+				else			//  chng trk/car + new game  after up/dn
+				if (isFocGui && !pSet->isMain)
+					switch (pSet->inMenu)
 					{
-					case 1:
-						btnChgTrack(0);
-						btnNewGame(0);  break;
-					case 2:
-						btnChgCar(0);
-						btnNewGame(0);  break;
-					case 4:
-						chatSendMsg();  break;
-					case 5:
-						btnChampStart(0);  break;
-				}	break;
-			}	}
-			return false;
+					case WND_Replays:
+						btnRplLoad(0);  break;
+					case WND_Game:  case WND_Champ:
+					{	switch (mWndTabsGame->getIndexSelected())
+						{
+						case 1:
+							btnChgTrack(0);
+							btnNewGame(0);  break;
+						case 2:
+							btnChgCar(0);
+							btnNewGame(0);  break;
+						case 4:
+							chatSendMsg();  break;
+						case 5:
+							btnChampStart(0);  break;
+					}	break;
+				}	}
+				return false;
 		}
 	}
 }

@@ -82,7 +82,7 @@ void App::CreateHUD()
 		float size = std::max(fMapSizeX, fMapSizeY*asp);
 		scX = 1.f / size;  scY = 1.f / size;
 
-		String sMat = "circle_minimap";  //*/"road_minimap_inv";
+		String sMat = "circle_minimap";
 		asp = 1.f;  //_temp
 		ManualObject* m = Create2D(sMat,mSplitMgr->mGuiSceneMgr,1,true,true);  moMap[c] = m;
 		//asp = float(mWindow->getWidth())/float(mWindow->getHeight());
@@ -183,8 +183,8 @@ void App::CreateHUD()
 	{	ovL[i] = ovr.getOverlayElement("L_"+toStr(i+1));
 		ovR[i] = ovr.getOverlayElement("R_"+toStr(i+1));
 		ovS[i] = ovr.getOverlayElement("S_"+toStr(i+1));
-		ovU[i] = ovr.getOverlayElement("U_"+toStr(i+1));	}
-		
+		ovU[i] = ovr.getOverlayElement("U_"+toStr(i+1));
+	}
 	ShowHUD();  //_
 	bSizeHUD = true;
 	//SizeHUD(true);
@@ -231,7 +231,7 @@ void App::ShowHUD(bool hideAll)
 
 		show = pSet->car_dbgbars;
 		if (ovCarDbg){  if (show)  ovCarDbg->show();  else  ovCarDbg->hide();   }
-		show = pSet->car_dbgtxt || pSet->bltProfilerTxt;
+		show = pSet->car_dbgtxt || pSet->bltProfilerTxt || pSet->profilerTxt;
 		if (ovCarDbgTxt){  if (show)  ovCarDbgTxt->show();  else  ovCarDbgTxt->hide();   }
 		//for (int i=0; i<5; ++i)
 		//{	if (ovU[i])  if (show)  ovU[i]->show();  else  ovU[i]->hide();  }
@@ -478,7 +478,7 @@ void App::UpdateHUD(int carId, float time)
 				bool bGhostVis = (ghplay.GetNumFrames() > 0) && pSet->rpl_ghost;
 				bool bGhEmpty = bGhost && !bGhostVis;
 
-				if (!bGhost)
+				if (!bGhost && cm->eType != CarModel::CT_REMOTE)
 					cm->UpdTrackPercent();
 
 				if (cm == pCarM || bGhEmpty)  // no dist to self or to empty ghost
@@ -658,26 +658,32 @@ void App::UpdateHUD(int carId, float time)
 
 	//  car debug text  --------
 	static bool oldCarTxt = false;
-	if (pCar && ovU[0] && 0) ///!-
+	if (pCar && ovU[0]) ///!-
 	{
 		if (pSet->car_dbgtxt)
 		{	std::stringstream s1,s2,s3,s4;
 			pCar->DebugPrint(s1, true, false, false, false);  ovU[0]->setCaption(s1.str());
-			pCar->DebugPrint(s2, false, true, false, false);  ovU[1]->setCaption(s2.str());
-			pCar->DebugPrint(s3, false, false, true, false);  ovU[2]->setCaption(s3.str());
-			pCar->DebugPrint(s4, false, false, false, true);  ovU[3]->setCaption(s4.str());
+			//pCar->DebugPrint(s2, false, true, false, false);  ovU[1]->setCaption(s2.str());
+			//pCar->DebugPrint(s3, false, false, true, false);  ovU[2]->setCaption(s3.str());
+			//pCar->DebugPrint(s4, false, false, false, true);  ovU[3]->setCaption(s4.str());
 		}else
 		if (pSet->car_dbgtxt != oldCarTxt)
-		{	ovU[0]->setCaption(""); ovU[1]->setCaption(""); ovU[2]->setCaption(""); ovU[3]->setCaption("");		}
+		{	ovU[0]->setCaption(""); /*ovU[1]->setCaption(""); ovU[2]->setCaption(""); ovU[3]->setCaption("");*/	}
 	}
 	oldCarTxt = pSet->car_dbgtxt;
 	
 
 	//  profiling times -
-	if (pGame && pGame->profilingmode && ovU[1])
+	if (pSet->profilerTxt && ovU[1])
 	{
-		if (pSet->multi_thr != 1)  //! this one is causing a crash sometimes with multithreading.. maybe need a mutex? i have no idea..
-			ovU[1]->setCaption(pGame->strProfInfo);
+		PROFILER.endCycle();
+		static int frame=0;  ++frame;
+
+		if (frame > 10)  //par
+		{	frame = 0;
+			std::string sProf = PROFILER.getAvgSummary(quickprof::MILLISECONDS);
+			ovU[1]->setCaption(sProf);
+		}
 		//if (newPosInfos.size() > 0)
 		//ovU[3]->setCaption("carm: " + toStr(carModels.size()) + " newp: " + toStr((*newPosInfos.begin()).pos));
 	}

@@ -126,6 +126,8 @@ public:
 
 	// set the steering angle to "value", where 1.0 is maximum right lock and -1.0 is maximum left lock.
 	void SetSteering(const T value);
+	T steerValue;  // copy from SetSteering
+	T GetSteering() const {return steerValue;}
 
 	// get the maximum steering angle in degrees
 	T GetMaxSteeringAngle() const;

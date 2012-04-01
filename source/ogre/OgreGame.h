@@ -299,7 +299,7 @@ protected:
 	void chkFps(WP), chkGauges(WP),	chkArrow(WP), chkDigits(WP),
 		chkMinimap(WP), chkMiniZoom(WP), chkMiniRot(WP), chkMiniTer(WP),  // view
 		chkCamInfo(WP), chkTimes(WP), chkOpponents(WP), chkOpponentsSort(WP),
-		chkCarDbgBars(WP), chkCarDbgTxt(WP), chkBltDebug(WP), chkBltProfilerTxt(WP),
+		chkCarDbgBars(WP), chkCarDbgTxt(WP), chkBltDebug(WP), chkBltProfilerTxt(WP), chkProfilerTxt(WP),
 		chkReverse(WP), chkParticles(WP), chkTrails(WP),
 		chkAbs(WP), chkTcs(WP), chkGear(WP), chkRear(WP), chkRearInv(WP),  // car
 		chkMouseCapture(WP), chkOgreDialog(WP), chkAutoStart(WP), chkEscQuits(WP),
@@ -312,7 +312,7 @@ protected:
 
 	void imgBtnCarClr(WP), btnCarClrRandom(WP);
 	MyGUI::ButtonPtr bRkmh, bRmph;  void radKmh(WP), radMph(WP);
-	MyGUI::ButtonPtr chDbgT,chDbgB, chBlt,chBltTxt, chFps,
+	MyGUI::ButtonPtr chDbgT,chDbgB, chBlt,chBltTxt, chFps, chProfTxt,
 		chTimes,chMinimp,chOpponents;
 
 	///  replay  -----------------------------

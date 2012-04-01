@@ -57,9 +57,6 @@ void App::DoNetworking()
 	// Note that there is no pause when in networked game
 	pGame->pause = bRplPlay ? (bRplPause || isFocGui) : (isFocGui && !doNetworking);
 
-
-	///  step Game  *******
-
 	//  handle networking stuff
 	if (doNetworking)
 	{
@@ -67,25 +64,31 @@ void App::DoNetworking()
 		/**/boost::mutex::scoped_lock(pGame->carposMutex);///
 
 		//  update the local car's state to the client
-		protocol::CarStatePackage cs;
-		// FIXME: Handles only one local car
-		for (CarModels::const_iterator it = carModels.begin(); it != carModels.end(); ++it) {
-			if ((*it)->eType == CarModel::CT_LOCAL) {
+		protocol::CarStatePackage cs;  // FIXME: Handles only one local car
+		for (CarModels::const_iterator it = carModels.begin(); it != carModels.end(); ++it)
+		{
+			if ((*it)->eType == CarModel::CT_LOCAL)
+			{
 				cs = (*it)->pCar->GetCarStatePackage();
+				cs.trackPercent = (*it)->trackPercent;
 				break;
 			}
 		}
 		mClient->setLocalCarState(cs);
 
-		// check for new car states
+		//  check for new car states
 		protocol::CarStates states = mClient->getReceivedCarStates();
-		for (protocol::CarStates::const_iterator it = states.begin(); it != states.end(); ++it) {
-			int8_t id = it->first; // Car number
-			// FIXME: Various places assume carModels[0] is local...
-			if (id == 0) id = mClient->getId();
+		for (protocol::CarStates::const_iterator it = states.begin(); it != states.end(); ++it)
+		{
+			int8_t id = it->first;  // Car number  // FIXME: Various places assume carModels[0] is local
+			if (id == 0)  id = mClient->getId();
+			
 			CarModel* cm = carModels[id];
 			if (cm && cm->pCar)
+			{
 				cm->pCar->UpdateCarState(it->second);
+				cm->trackPercent = cm->pCar->trackPercentCopy;  // got from client
+			}
 		}
 		PROFILER.endBlock("-network");
 	}
@@ -96,10 +99,10 @@ void App::DoNetworking()
 bool App::frameStart(Real time)
 {
 	PROFILER.beginBlock(" frameSt");
-	/// ???? ---------
-	static QTimer gtim;
-	gtim.update();
-	double dt = gtim.dt;
+	//---------
+	//static QTimer gtim;
+	//gtim.update();
+	//double dt = gtim.dt;
 
 	//  multi thread
 	if (pSet->multi_thr == 1 && pGame && !bLoading)
@@ -119,6 +122,7 @@ bool App::frameStart(Real time)
 		#endif
 
 		#if 0
+		//  camera jump test graph in log
 		if (carModels.size()>0 && carModels[0]->pMainNode)
 		{
 			static Vector3 old(0,0,0);
@@ -138,26 +142,10 @@ bool App::frameStart(Real time)
 
 	
 	#if 0
+	///  graph test
 	static Real ti = 0.f;  ti += time;
 	if (mSplitMgr && !bLoading)
 	{
-		//mSplitMgr->mHUD->drawLine(false,
-		//	Vector2(Math::RangeRandom(0,100),Math::RangeRandom(0,100)),
-		//	Vector2(Math::RangeRandom(200,300),Math::RangeRandom(200,300)), ColourValue(0,1,1,1), 1);
-		/*
-		Rect r1(100,100,200,200), r2(0,0,10,10);
-		mSplitMgr->mHUD->drawImage(false, "carpos0.png", //"circleMini.png",
-			Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME,
-			r1,	ColourValue::White,
-			r2,	ti * 90, Vector2(-1,-1));
-		mSplitMgr->mHUD->drawImage(false, "carpos0.png",
-			Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME,
-			r1,	ColourValue(0,0.5,1),
-			r2,	ti * 40, Vector2(-1,-1));
-		/**/
-
-		///  graph test
-		#if 0
 		static int t=0;  ++t;
 		static std::vector<Vector2> vpos,vpos2;
 		if (t==1)
@@ -180,17 +168,16 @@ bool App::frameStart(Real time)
 
 		//for (int i=90; i < 1000; ++i)
 		//	vpos[i] = Vector2(i+150,
-		//		sin(i*0.1+t*0.1)*cos(i*0.11+t*0.11)*150+200
-		//		);
+		//		sin(i*0.1+t*0.1)*cos(i*0.11+t*0.11)*150+200);
 
 		for (int i=0; i < 1000; ++i)
 			vpos2[i].y = vpos[i].y+1;
 
 		mSplitMgr->mHUD->drawLines(false, vpos, ColourValue(0.2,0.1,0));
 		mSplitMgr->mHUD->drawLines(false, vpos2, ColourValue(1.0,0.6,0.3));
-		#endif
 	}
 	#endif
+
 
 	if (bGuiReinit)  // after language change from combo
 	{	bGuiReinit = false;

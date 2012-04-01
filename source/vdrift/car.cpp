@@ -24,7 +24,8 @@ CAR::CAR() :
 	debug_wheel_draw(false),
 	sector(-1),
 	iCamNext(0), bLastChk(0),
-	fluidHitOld(0)
+	fluidHitOld(0),
+	trackPercentCopy(0), bRemoteCar(0)
 {
 	//dynamics.pCar = this;
 	vInteriorOffset[0]=0;
@@ -60,6 +61,7 @@ bool CAR::Load(class App* pApp1,
 	const SOUNDINFO & sound_device_info,
 	const SOUNDBUFFERLIBRARY & soundbufferlibrary,
 	bool defaultabs, bool defaulttcs,
+	bool isRemote,
   	bool debugmode,
   	std::ostream & info_output,
   	std::ostream & error_output )
@@ -67,6 +69,7 @@ bool CAR::Load(class App* pApp1,
 	pApp = pApp1;
 	pSet = settings;
 	cartype = carname;
+	bRemoteCar = isRemote;
 	std::stringstream nullout;
 
 	//load car body graphics
@@ -192,8 +195,6 @@ bool CAR::Load(class App* pApp1,
 	}
 
 	mz_nominalmax = (GetTireMaxMz(FRONT_LEFT) + GetTireMaxMz(FRONT_RIGHT))*0.5;
-
-	lookbehind = false;
 
 	return true;
 }
@@ -549,15 +550,19 @@ void CAR::HandleInputs(const std::vector <float> & inputs, float dt)
 	dynamics.SetHandBrake(inputs[CARINPUT::HANDBRAKE]);
 	
 	//  boost, flip over
-	dynamics.doBoost = inputs[CARINPUT::BOOST];
+	if (!bRemoteCar)
+		dynamics.doBoost = inputs[CARINPUT::BOOST];
 	dynamics.doFlip = inputs[CARINPUT::FLIP];
 
 	//  steering
-	float steer_value = inputs[CARINPUT::STEER_RIGHT];
-	if (std::abs(inputs[CARINPUT::STEER_LEFT]) > std::abs(inputs[CARINPUT::STEER_RIGHT])) //use whichever control is larger
-		steer_value = -inputs[CARINPUT::STEER_LEFT];
-	dynamics.SetSteering(steer_value);
-	last_steer = steer_value;
+	if (!bRemoteCar)
+	{
+		float steer_value = inputs[CARINPUT::STEER_RIGHT];
+		if (std::abs(inputs[CARINPUT::STEER_LEFT]) > std::abs(inputs[CARINPUT::STEER_RIGHT])) //use whichever control is larger
+			steer_value = -inputs[CARINPUT::STEER_LEFT];
+		dynamics.SetSteering(steer_value);
+		last_steer = steer_value;
+	}
 
     //start the engine if requested
 	//if (inputs[CARINPUT::START_ENGINE])
@@ -961,6 +966,9 @@ bool CAR::Serialize(joeserialize::Serializer & s)
 	return true;
 }
 
+
+//  Network CAR data send/receive
+///------------------------------------------------------------------------------------------------------------------------------
 protocol::CarStatePackage CAR::GetCarStatePackage() const
 {
 	protocol::CarStatePackage csp;
@@ -968,6 +976,13 @@ protocol::CarStatePackage CAR::GetCarStatePackage() const
 	csp.rot = ToMathQuaternion<float>(dynamics.chassis->getCenterOfMassTransform().getRotation());
 	csp.linearVel = GetVelocity();
 	csp.angularVel = GetAngularVelocity();
+
+	//  steer
+	csp.steer = dynamics.GetSteering();
+	csp.boost = dynamics.doBoost;
+	//LogO("sending  steer: "+fToStr(csp.steer,2,4));
+	//csp.trackPercent = trackPercentCopy;  // needed from CarModel
+	//csp.brake = dynamics.GetBrake()  todo ..
 	return csp;
 }
 
@@ -984,8 +999,7 @@ void CAR::UpdateCarState(const protocol::CarStatePackage& state)
 	// If the estimate drifts too far for some reason, do a quick correction
 	if (errorvec.MagnitudeSquared() > 9.0f) {
 		newpos = state.pos;
-		newrot = state.rot;
-	}
+		newrot = state.rot;  }
 
 	SetPosition(newpos);
 
@@ -1000,9 +1014,17 @@ void CAR::UpdateCarState(const protocol::CarStatePackage& state)
 
 	dynamics.SynchronizeBody();  // set body from chassis
 	dynamics.UpdateWheelContacts();
+
+	//  steer
+	dynamics.SetSteering(state.steer);
+	//LogO("received steer: "+fToStr(state.steer,2,4));
+	last_steer = state.steer;
+	dynamics.doBoost = state.boost;
+	trackPercentCopy = state.trackPercent;
 }
 
 ///  reset car, pos and state
+///------------------------------------------------------------------------------------------------------------------------------
 void CAR::ResetPos(bool fromStart)
 {
 	MATHVECTOR <float, 3> pos = fromStart ? posAtStart : posLastCheck;

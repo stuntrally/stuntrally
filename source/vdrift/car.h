@@ -41,6 +41,7 @@ public:
 		const SOUNDINFO & sound_device_info,
 		const SOUNDBUFFERLIBRARY & soundbufferlibrary,
 		bool defaultabs, bool defaulttcs,
+		bool isRemote,
 		bool debugmode,
 		std::ostream & info_output,
 		std::ostream & error_output);
@@ -72,6 +73,7 @@ public:
 		return dynamics.GetWheelContact(wheel_index);
 	}
 
+	bool bRemoteCar;
 	void HandleInputs(const std::vector <float> & inputs, float dt);
 	
 	int GetEngineRedline() const
@@ -333,12 +335,13 @@ public:
 	float crashsoundtime[Ncrashsounds];
 	SOUNDSOURCE roadnoise,boostsnd;
 	SOUNDSOURCE mudsnd, watersnd[Nwatersounds], mud_cont,water_cont;  // fluids
-	bool fluidHitOld;  float whMudSpin;  //new vars, for snd
+	bool fluidHitOld;  float whMudSpin;  ///new vars, for snd
 	
 	//internal variables that might change during driving (so, they need to be serialized)
 	float last_steer;
-	bool lookbehind;
+	//bool lookbehind;
 	bool debug_wheel_draw;
+	float trackPercentCopy;  // copy from CarModel for network
 
 	std::string cartype;
 	class SETTINGS* pSet;  // for sound vol
@@ -347,7 +350,8 @@ public:
 	
 	float mz_nominalmax; //the nominal maximum Mz force, used to scale force feedback
 
-	///take the parentnode, add a scenenode (only if output_scenenodeptr is NULL), add a drawable to the scenenode, load a model, load a texture, and set up the drawable with the model and texture.
+	/// take the parentnode, add a scenenode (only if output_scenenodeptr is NULL), add a drawable to the scenenode,
+	/// load a model, load a texture, and set up the drawable with the model and texture.
 	/// the given TEXTURE_GL textures will not be reloaded if they are already loaded
 	/// returns true if successful
 	bool LoadInto(

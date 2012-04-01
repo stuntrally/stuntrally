@@ -285,8 +285,8 @@ bool GAME::OneLoop()
 	bool ret = true;  //!eventsystem.GetQuit() && !benchmode;
 	if (ret)
 	{
-		if (profilingmode && frame % 10 == 0)  //par
-			strProfInfo = PROFILER.getAvgSummary(quickprof::MILLISECONDS);
+		//if (profilingmode && frame % 10 == 0)  //par
+		//	strProfInfo = PROFILER.getAvgSummary(quickprof::MILLISECONDS);
 
 		qtim.update();
 		double dt = qtim.dt;
@@ -297,8 +297,8 @@ bool GAME::OneLoop()
 
 		//if (!pOgreGame->bLoading && !timer.waiting)
 		Tick(pOgreGame->bLoading ? 0.0 : dt);  // do CPU intensive stuff in parallel with the GPU
-		
-		PROFILER.endCycle();
+ 		
+		//PROFILER.endCycle();
 		
 		displayframe++;
 	}
@@ -597,19 +597,12 @@ void GAME::LeaveGame()
 
 ///add a car, optionally controlled by the local player
 CAR* GAME::LoadCar(const string & carname, const MATHVECTOR <float, 3> & start_position,
-		   const QUATERNION <float> & start_orientation, bool islocal, bool isai, const string & carfile)
+		   const QUATERNION <float> & start_orientation, bool islocal, bool isai, bool isRemote)
 {
 	CONFIGFILE carconf;
-	if (carfile.empty()) //if no file is passed in, then load it from disk
-	{
-		if ( !carconf.Load ( PATHMANAGER::GetCarPath()+"/"+carname+"/"+carname+".car" ) )
-			return NULL;
-	}else{
-		std::stringstream carstream(carfile);
-		if ( !carconf.Load ( carstream ) )
-			return NULL;
-	}
-
+	if (!carconf.Load(PATHMANAGER::GetCarPath()+"/"+carname+"/"+carname+".car"))
+		return NULL;
+	
 	cars.push_back(CAR());
 
 	if (!cars.back().Load(pOgreGame, settings, 
@@ -623,6 +616,7 @@ CAR* GAME::LoadCar(const string & carname, const MATHVECTOR <float, 3> & start_p
 		generic_sounds,
 		settings->abs || isai,
 		settings->tcs || isai,
+		isRemote,
 		debugmode, info_output, error_output))
 	{
 		error_output << "Error loading car: " << carname << endl;

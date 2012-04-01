@@ -69,7 +69,7 @@ public:
 	//  other
 	float vol_master, vol_engine, vol_tires, vol_env;
 	bool autostart, escquit;
-	bool bltDebug, bltLines, bltProfilerTxt;
+	bool bltDebug, bltLines, bltProfilerTxt, profilerTxt;
 	bool loadingbackground;
 	bool x11_capture_mouse, x11_hwmouse;
 	bool opplist_sort;
