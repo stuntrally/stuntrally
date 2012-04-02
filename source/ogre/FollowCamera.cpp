@@ -120,7 +120,7 @@ void FollowCamera::update( Real time, PosInfo* posInf )
 			
 			if (first)  {  Pos = goalPos;  pitch = ca->mPitch;  yaw = ca->mYaw;  first = false;  }
 			camPosFinal = Pos;
-			camRotFinal = Quaternion(Degree(pitch),Vector3(1,0,0)) * Quaternion(Degree(yaw),Vector3(0,1,0));
+			camRotFinal = Quaternion(Degree(yaw),Vector3(0,1,0)) * Quaternion(Degree(pitch),Vector3(1,0,0));
 			manualOrient = true;
 		}
 		else
