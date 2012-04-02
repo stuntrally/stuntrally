@@ -52,7 +52,8 @@ void App::btnRplLoad(WP)  // Load
 		pSet->game.car_hue[0] = replay.header.hue[0];  pSet->game.car_sat[0] = replay.header.sat[0];  pSet->game.car_val[0] = replay.header.val[0];
 		pSet->game.trees = replay.header.ver < 6 ? 1.f : replay.header.trees;  // older didnt have trees saved, so use default 1
 		pSet->game.local_players = replay.header.numPlayers;
-		LogO("RPL btn Load  plrs: "+toStr(replay.header.numPlayers));
+		LogO("RPL btn Load  players: "+toStr(replay.header.numPlayers)+" netw:"+ toStr(replay.header.networked));
+
 		for (int p=1; p < replay.header.numPlayers; ++p)
 		{	pSet->game.car[p] = replay.header.cars[p-1];
 			pSet->game.car_hue[p] = replay.header.hue[p];  pSet->game.car_sat[p] = replay.header.sat[p];  pSet->game.car_val[p] = replay.header.val[p];
@@ -100,16 +101,15 @@ void App::listRplChng(List* li, size_t pos)
 		String ss = String(TR("#{Track}: ")) + rpl.header.track + (rpl.header.track_user ? "  *user*" : "");
 		valRplName->setCaption(ss);
 
-		ss = String(TR("#{Car}: ")) + rpl.header.car +  // #{..
-			(rpl.header.numPlayers == 1 ? "" : "       Players: " + toStr(rpl.header.numPlayers)) +
-			//(rpl.header.cars[0][0] != 0 ? " , " + rpl.header.cars[0] : "") +
+		ss = String(TR("#{Car}: ")) + rpl.header.car + "       "+
+			(rpl.header.numPlayers == 1 ? "" : (TR("#{Players}: ") + toStr(rpl.header.numPlayers))) + "  " +
+			(rpl.header.networked == 0 ? "" : "M"/*TR("#{Multiplayer}")*/) +
 			//(rpl.header.cars[0][1] != 0 ? " , " + rpl.header.cars[1] : "") +
-			//(rpl.header.cars[0][2] != 0 ? " , " + rpl.header.cars[2] : "") +
 			"\n" + TR("#{RplTime}: ") + GetTimeString(rpl.GetTimeLength());
 		valRplInfo->setCaption(ss);
 
 		int size = boost::filesystem::file_size(file);
-		ss = String(TR("#{RplFileSize}:")) + fToStr( float(size)/1000000.f, 2,5) + TR(" #{UnitMB}\n") +
+		ss = String(TR("#{RplFileSize}:")) + fToStr( float(size)/1000000.f, 2,5) + TR(" #{UnitMB}\n") +  //todo: file date..
 			TR("#{RplVersion}: ") + toStr(rpl.header.ver) + "     " + toStr(rpl.header.frameSize) + "B";
 		if (valRplInfo2)  valRplInfo2->setCaption(ss);
 	}

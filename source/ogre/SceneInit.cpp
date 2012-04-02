@@ -358,6 +358,8 @@ void App::LoadCar()  // 4
 	
 	///  Init Replay  header, once
 	///=================----------------
+	if (!bRplPlay)
+	{
 	replay.InitHeader(pSet->game.track.c_str(), pSet->game.track_user, pSet->game.car[0].c_str(), !bRplPlay);
 	replay.header.numPlayers = mClient ? mClient->getPeerCount()+1 : pSet->game.local_players;  // networked or splitscreen
 	replay.header.hue[0] = pSet->game.car_hue[0];  replay.header.sat[0] = pSet->game.car_sat[0];  replay.header.val[0] = pSet->game.car_val[0];
@@ -365,6 +367,7 @@ void App::LoadCar()  // 4
 	replay.header.trees = pSet->game.trees;
 	replay.header.networked = mClient ? 1 : 0;
 	replay.header.num_laps = pSet->game.num_laps;
+	}
 
 	ghost.InitHeader(pSet->game.track.c_str(), pSet->game.track_user, pSet->game.car[0].c_str(), !bRplPlay);
 	ghost.header.numPlayers = 1;  // ghost always 1 car
@@ -384,11 +387,22 @@ void App::LoadCar()  // 4
 		}
 	}
 	else  // splitscreen
+	if (!bRplPlay)
 	for (int p = 1; p < pSet->game.local_players; ++p)
 	{
 		strcpy(replay.header.cars[p-1], pSet->game.car[p].c_str());
 		strcpy(replay.header.nicks[p], carModels[p]->sDispName.c_str());
 		replay.header.hue[p] = pSet->game.car_hue[p];  replay.header.sat[p] = pSet->game.car_sat[p];  replay.header.val[p] = pSet->game.car_val[p];
+	}
+	//  set carModel nicks from networked replay
+	if (bRplPlay && replay.header.networked)
+	{
+		for (int p = 0; p < pSet->game.local_players; ++p)
+		{
+			CarModel* cm = carModels[p];
+			cm->sDispName = String(replay.header.nicks[p]);
+			cm->pNickTxt = CreateNickText(p, cm->sDispName);
+		}
 	}
 
 	int c = 0;  // copy wheels R

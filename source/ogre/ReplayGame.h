@@ -41,7 +41,7 @@ struct ReplayHeader
 	char descr[128];  // description - user text
 	float trees;      // trees multipler
 	char num_laps;
-	char networked;   // was networked, so use nicks when playing
+	char networked;   // if 1, was networked, so use nicks when playing
 
 	ReplayHeader();
 	void Default(), SafeEnd0();
