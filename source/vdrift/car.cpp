@@ -680,6 +680,7 @@ void CAR::UpdateSounds(float dt)
 		whMudSpin = mudSpin * 0.5f;
 	}
 	///  listener  ------------------------------------------
+	if (!bRemoteCar)
 	{
 		if (pApp->pGame->sound.Enabled())
 			pApp->pGame->sound.SetListener(pos, rot, MATHVECTOR <float,3>());
