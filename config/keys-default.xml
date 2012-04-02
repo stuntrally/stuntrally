@@ -33,23 +33,23 @@
 		</action>
 	</schema>
 	<schema name="Player1">
-		<action name="Boost" type="AnalogAxis" UseAbsoluteValues="0" MinValue="0" MaxValue="1" Sensitivity="1" InverseMul="1" AnalogEmulator="Linear" DecSpeed="3" IncSpeed="3" ReturnEnabled="1" ReturnValue="0" ReturnDecSpeed="3" ReturnIncSpeed="3">
+		<action name="Boost" type="AnalogAxis" UseAbsoluteValues="0" MinValue="0" MaxValue="1" Sensitivity="1" InverseMul="1" AnalogEmulator="Linear" DecSpeed="4" IncSpeed="4" ReturnEnabled="1" ReturnValue="0" ReturnDecSpeed="4" ReturnIncSpeed="4">
 			<binding>
 				<bind role="inc">Keyboard/29</bind>
 			</binding>
 		</action>
-		<action name="Brake" type="AnalogAxis" UseAbsoluteValues="0" MinValue="0" MaxValue="1" Sensitivity="1" InverseMul="1" AnalogEmulator="Linear" DecSpeed="3" IncSpeed="3" ReturnEnabled="1" ReturnValue="0" ReturnDecSpeed="3" ReturnIncSpeed="3">
+		<action name="Brake" type="AnalogAxis" UseAbsoluteValues="0" MinValue="0" MaxValue="1" Sensitivity="1" InverseMul="1" AnalogEmulator="Linear" DecSpeed="4" IncSpeed="4" ReturnEnabled="1" ReturnValue="0" ReturnDecSpeed="4" ReturnIncSpeed="4">
 			<binding>
 				<bind role="inc">Keyboard/208</bind>
 			</binding>
 		</action>
-		<action name="Flip" type="AnalogAxis" UseAbsoluteValues="0" MinValue="-1" MaxValue="1" Sensitivity="1" InverseMul="1" AnalogEmulator="Linear" DecSpeed="3" IncSpeed="3" ReturnEnabled="1" ReturnValue="0" ReturnDecSpeed="3" ReturnIncSpeed="3">
+		<action name="Flip" type="AnalogAxis" UseAbsoluteValues="0" MinValue="-1" MaxValue="1" Sensitivity="1" InverseMul="1" AnalogEmulator="Linear" DecSpeed="4" IncSpeed="4" ReturnEnabled="1" ReturnValue="0" ReturnDecSpeed="4" ReturnIncSpeed="4">
 			<binding>
 				<bind role="inc">Keyboard/17</bind>
 				<bind role="dec">Keyboard/16</bind>
 			</binding>
 		</action>
-		<action name="HandBrake" type="AnalogAxis" UseAbsoluteValues="0" MinValue="0" MaxValue="1" Sensitivity="1" InverseMul="1" AnalogEmulator="Linear" DecSpeed="3" IncSpeed="3" ReturnEnabled="1" ReturnValue="0" ReturnDecSpeed="3" ReturnIncSpeed="3">
+		<action name="HandBrake" type="AnalogAxis" UseAbsoluteValues="0" MinValue="0" MaxValue="1" Sensitivity="1" InverseMul="1" AnalogEmulator="Linear" DecSpeed="4" IncSpeed="4" ReturnEnabled="1" ReturnValue="0" ReturnDecSpeed="4" ReturnIncSpeed="4">
 			<binding>
 				<bind role="inc">Keyboard/57</bind>
 			</binding>
@@ -79,36 +79,36 @@
 				<bind role="">Keyboard/30</bind>
 			</binding>
 		</action>
-		<action name="Steering" type="AnalogAxis" UseAbsoluteValues="0" MinValue="-1" MaxValue="1" Sensitivity="1" InverseMul="1" AnalogEmulator="Linear" DecSpeed="3" IncSpeed="3" ReturnEnabled="1" ReturnValue="0" ReturnDecSpeed="3" ReturnIncSpeed="3">
+		<action name="Steering" type="AnalogAxis" UseAbsoluteValues="0" MinValue="-1" MaxValue="1" Sensitivity="1" InverseMul="1" AnalogEmulator="Linear" DecSpeed="4" IncSpeed="4" ReturnEnabled="1" ReturnValue="0" ReturnDecSpeed="4" ReturnIncSpeed="4">
 			<binding>
 				<bind role="inc">Keyboard/205</bind>
 				<bind role="dec">Keyboard/203</bind>
 			</binding>
 		</action>
-		<action name="Throttle" type="AnalogAxis" UseAbsoluteValues="0" MinValue="0" MaxValue="1" Sensitivity="1" InverseMul="1" AnalogEmulator="Linear" DecSpeed="3" IncSpeed="3" ReturnEnabled="1" ReturnValue="0" ReturnDecSpeed="3" ReturnIncSpeed="3">
+		<action name="Throttle" type="AnalogAxis" UseAbsoluteValues="0" MinValue="0" MaxValue="1" Sensitivity="1" InverseMul="1" AnalogEmulator="Linear" DecSpeed="4" IncSpeed="4" ReturnEnabled="1" ReturnValue="0" ReturnDecSpeed="4" ReturnIncSpeed="4">
 			<binding>
 				<bind role="inc">Keyboard/200</bind>
 			</binding>
 		</action>
 	</schema>
 	<schema name="Player2">
-		<action name="Boost" type="AnalogAxis" UseAbsoluteValues="0" MinValue="0" MaxValue="1" Sensitivity="1" InverseMul="1" AnalogEmulator="Linear" DecSpeed="3" IncSpeed="3" ReturnEnabled="1" ReturnValue="0" ReturnDecSpeed="3" ReturnIncSpeed="3">
+		<action name="Boost" type="AnalogAxis" UseAbsoluteValues="0" MinValue="0" MaxValue="1" Sensitivity="1" InverseMul="1" AnalogEmulator="Linear" DecSpeed="4" IncSpeed="4" ReturnEnabled="1" ReturnValue="0" ReturnDecSpeed="4" ReturnIncSpeed="4">
 			<binding>
 				<bind role="inc">Keyboard/36</bind>
 			</binding>
 		</action>
-		<action name="Brake" type="AnalogAxis" UseAbsoluteValues="0" MinValue="0" MaxValue="1" Sensitivity="1" InverseMul="1" AnalogEmulator="Linear" DecSpeed="3" IncSpeed="3" ReturnEnabled="1" ReturnValue="0" ReturnDecSpeed="3" ReturnIncSpeed="3">
+		<action name="Brake" type="AnalogAxis" UseAbsoluteValues="0" MinValue="0" MaxValue="1" Sensitivity="1" InverseMul="1" AnalogEmulator="Linear" DecSpeed="4" IncSpeed="4" ReturnEnabled="1" ReturnValue="0" ReturnDecSpeed="4" ReturnIncSpeed="4">
 			<binding>
 				<bind role="inc">Keyboard/50</bind>
 			</binding>
 		</action>
-		<action name="Flip" type="AnalogAxis" UseAbsoluteValues="0" MinValue="-1" MaxValue="1" Sensitivity="1" InverseMul="1" AnalogEmulator="Linear" DecSpeed="3" IncSpeed="3" ReturnEnabled="1" ReturnValue="0" ReturnDecSpeed="3" ReturnIncSpeed="3">
+		<action name="Flip" type="AnalogAxis" UseAbsoluteValues="0" MinValue="-1" MaxValue="1" Sensitivity="1" InverseMul="1" AnalogEmulator="Linear" DecSpeed="4" IncSpeed="4" ReturnEnabled="1" ReturnValue="0" ReturnDecSpeed="4" ReturnIncSpeed="4">
 			<binding>
 				<bind role="inc">Keyboard/23</bind>
 				<bind role="dec">Keyboard/21</bind>
 			</binding>
 		</action>
-		<action name="HandBrake" type="AnalogAxis" UseAbsoluteValues="0" MinValue="0" MaxValue="1" Sensitivity="1" InverseMul="1" AnalogEmulator="Linear" DecSpeed="3" IncSpeed="3" ReturnEnabled="1" ReturnValue="0" ReturnDecSpeed="3" ReturnIncSpeed="3">
+		<action name="HandBrake" type="AnalogAxis" UseAbsoluteValues="0" MinValue="0" MaxValue="1" Sensitivity="1" InverseMul="1" AnalogEmulator="Linear" DecSpeed="4" IncSpeed="4" ReturnEnabled="1" ReturnValue="0" ReturnDecSpeed="4" ReturnIncSpeed="4">
 			<binding>
 				<bind role="inc">Keyboard/49</bind>
 			</binding>
@@ -138,36 +138,36 @@
 				<bind role="">None</bind>
 			</binding>
 		</action>
-		<action name="Steering" type="AnalogAxis" UseAbsoluteValues="0" MinValue="-1" MaxValue="1" Sensitivity="1" InverseMul="1" AnalogEmulator="Linear" DecSpeed="3" IncSpeed="3" ReturnEnabled="1" ReturnValue="0" ReturnDecSpeed="3" ReturnIncSpeed="3">
+		<action name="Steering" type="AnalogAxis" UseAbsoluteValues="0" MinValue="-1" MaxValue="1" Sensitivity="1" InverseMul="1" AnalogEmulator="Linear" DecSpeed="4" IncSpeed="4" ReturnEnabled="1" ReturnValue="0" ReturnDecSpeed="4" ReturnIncSpeed="4">
 			<binding>
 				<bind role="inc">Keyboard/37</bind>
 				<bind role="dec">Keyboard/35</bind>
 			</binding>
 		</action>
-		<action name="Throttle" type="AnalogAxis" UseAbsoluteValues="0" MinValue="0" MaxValue="1" Sensitivity="1" InverseMul="1" AnalogEmulator="Linear" DecSpeed="3" IncSpeed="3" ReturnEnabled="1" ReturnValue="0" ReturnDecSpeed="3" ReturnIncSpeed="3">
+		<action name="Throttle" type="AnalogAxis" UseAbsoluteValues="0" MinValue="0" MaxValue="1" Sensitivity="1" InverseMul="1" AnalogEmulator="Linear" DecSpeed="4" IncSpeed="4" ReturnEnabled="1" ReturnValue="0" ReturnDecSpeed="4" ReturnIncSpeed="4">
 			<binding>
 				<bind role="inc">Keyboard/22</bind>
 			</binding>
 		</action>
 	</schema>
 	<schema name="Player3">
-		<action name="Boost" type="AnalogAxis" UseAbsoluteValues="0" MinValue="0" MaxValue="1" Sensitivity="1" InverseMul="1" AnalogEmulator="Linear" DecSpeed="3" IncSpeed="3" ReturnEnabled="1" ReturnValue="0" ReturnDecSpeed="3" ReturnIncSpeed="3">
+		<action name="Boost" type="AnalogAxis" UseAbsoluteValues="0" MinValue="0" MaxValue="1" Sensitivity="1" InverseMul="1" AnalogEmulator="Linear" DecSpeed="4" IncSpeed="4" ReturnEnabled="1" ReturnValue="0" ReturnDecSpeed="4" ReturnIncSpeed="4">
 			<binding>
 				<bind role="inc">Keyboard/33</bind>
 			</binding>
 		</action>
-		<action name="Brake" type="AnalogAxis" UseAbsoluteValues="0" MinValue="0" MaxValue="1" Sensitivity="1" InverseMul="1" AnalogEmulator="Linear" DecSpeed="3" IncSpeed="3" ReturnEnabled="1" ReturnValue="0" ReturnDecSpeed="3" ReturnIncSpeed="3">
+		<action name="Brake" type="AnalogAxis" UseAbsoluteValues="0" MinValue="0" MaxValue="1" Sensitivity="1" InverseMul="1" AnalogEmulator="Linear" DecSpeed="4" IncSpeed="4" ReturnEnabled="1" ReturnValue="0" ReturnDecSpeed="4" ReturnIncSpeed="4">
 			<binding>
 				<bind role="inc">Keyboard/47</bind>
 			</binding>
 		</action>
-		<action name="Flip" type="AnalogAxis" UseAbsoluteValues="0" MinValue="-1" MaxValue="1" Sensitivity="1" InverseMul="1" AnalogEmulator="Linear" DecSpeed="3" IncSpeed="3" ReturnEnabled="1" ReturnValue="0" ReturnDecSpeed="3" ReturnIncSpeed="3">
+		<action name="Flip" type="AnalogAxis" UseAbsoluteValues="0" MinValue="-1" MaxValue="1" Sensitivity="1" InverseMul="1" AnalogEmulator="Linear" DecSpeed="4" IncSpeed="4" ReturnEnabled="1" ReturnValue="0" ReturnDecSpeed="4" ReturnIncSpeed="4">
 			<binding>
 				<bind role="inc">Keyboard/20</bind>
 				<bind role="dec">Keyboard/18</bind>
 			</binding>
 		</action>
-		<action name="HandBrake" type="AnalogAxis" UseAbsoluteValues="0" MinValue="0" MaxValue="1" Sensitivity="1" InverseMul="1" AnalogEmulator="Linear" DecSpeed="3" IncSpeed="3" ReturnEnabled="1" ReturnValue="0" ReturnDecSpeed="3" ReturnIncSpeed="3">
+		<action name="HandBrake" type="AnalogAxis" UseAbsoluteValues="0" MinValue="0" MaxValue="1" Sensitivity="1" InverseMul="1" AnalogEmulator="Linear" DecSpeed="4" IncSpeed="4" ReturnEnabled="1" ReturnValue="0" ReturnDecSpeed="4" ReturnIncSpeed="4">
 			<binding>
 				<bind role="inc">Keyboard/48</bind>
 			</binding>
@@ -197,36 +197,36 @@
 				<bind role="">None</bind>
 			</binding>
 		</action>
-		<action name="Steering" type="AnalogAxis" UseAbsoluteValues="0" MinValue="-1" MaxValue="1" Sensitivity="1" InverseMul="1" AnalogEmulator="Linear" DecSpeed="3" IncSpeed="3" ReturnEnabled="1" ReturnValue="0" ReturnDecSpeed="3" ReturnIncSpeed="3">
+		<action name="Steering" type="AnalogAxis" UseAbsoluteValues="0" MinValue="-1" MaxValue="1" Sensitivity="1" InverseMul="1" AnalogEmulator="Linear" DecSpeed="4" IncSpeed="4" ReturnEnabled="1" ReturnValue="0" ReturnDecSpeed="4" ReturnIncSpeed="4">
 			<binding>
 				<bind role="inc">Keyboard/34</bind>
 				<bind role="dec">Keyboard/32</bind>
 			</binding>
 		</action>
-		<action name="Throttle" type="AnalogAxis" UseAbsoluteValues="0" MinValue="0" MaxValue="1" Sensitivity="1" InverseMul="1" AnalogEmulator="Linear" DecSpeed="3" IncSpeed="3" ReturnEnabled="1" ReturnValue="0" ReturnDecSpeed="3" ReturnIncSpeed="3">
+		<action name="Throttle" type="AnalogAxis" UseAbsoluteValues="0" MinValue="0" MaxValue="1" Sensitivity="1" InverseMul="1" AnalogEmulator="Linear" DecSpeed="4" IncSpeed="4" ReturnEnabled="1" ReturnValue="0" ReturnDecSpeed="4" ReturnIncSpeed="4">
 			<binding>
 				<bind role="inc">Keyboard/19</bind>
 			</binding>
 		</action>
 	</schema>
 	<schema name="Player4">
-		<action name="Boost" type="AnalogAxis" UseAbsoluteValues="0" MinValue="0" MaxValue="1" Sensitivity="1" InverseMul="1" AnalogEmulator="Linear" DecSpeed="3" IncSpeed="3" ReturnEnabled="1" ReturnValue="0" ReturnDecSpeed="3" ReturnIncSpeed="3">
+		<action name="Boost" type="AnalogAxis" UseAbsoluteValues="0" MinValue="0" MaxValue="1" Sensitivity="1" InverseMul="1" AnalogEmulator="Linear" DecSpeed="4" IncSpeed="4" ReturnEnabled="1" ReturnValue="0" ReturnDecSpeed="4" ReturnIncSpeed="4">
 			<binding>
 				<bind role="inc">Keyboard/39</bind>
 			</binding>
 		</action>
-		<action name="Brake" type="AnalogAxis" UseAbsoluteValues="0" MinValue="0" MaxValue="1" Sensitivity="1" InverseMul="1" AnalogEmulator="Linear" DecSpeed="3" IncSpeed="3" ReturnEnabled="1" ReturnValue="0" ReturnDecSpeed="3" ReturnIncSpeed="3">
+		<action name="Brake" type="AnalogAxis" UseAbsoluteValues="0" MinValue="0" MaxValue="1" Sensitivity="1" InverseMul="1" AnalogEmulator="Linear" DecSpeed="4" IncSpeed="4" ReturnEnabled="1" ReturnValue="0" ReturnDecSpeed="4" ReturnIncSpeed="4">
 			<binding>
 				<bind role="inc">Keyboard/53</bind>
 			</binding>
 		</action>
-		<action name="Flip" type="AnalogAxis" UseAbsoluteValues="0" MinValue="-1" MaxValue="1" Sensitivity="1" InverseMul="1" AnalogEmulator="Linear" DecSpeed="3" IncSpeed="3" ReturnEnabled="1" ReturnValue="0" ReturnDecSpeed="3" ReturnIncSpeed="3">
+		<action name="Flip" type="AnalogAxis" UseAbsoluteValues="0" MinValue="-1" MaxValue="1" Sensitivity="1" InverseMul="1" AnalogEmulator="Linear" DecSpeed="4" IncSpeed="4" ReturnEnabled="1" ReturnValue="0" ReturnDecSpeed="4" ReturnIncSpeed="4">
 			<binding>
 				<bind role="inc">Keyboard/26</bind>
 				<bind role="dec">Keyboard/24</bind>
 			</binding>
 		</action>
-		<action name="HandBrake" type="AnalogAxis" UseAbsoluteValues="0" MinValue="0" MaxValue="1" Sensitivity="1" InverseMul="1" AnalogEmulator="Linear" DecSpeed="3" IncSpeed="3" ReturnEnabled="1" ReturnValue="0" ReturnDecSpeed="3" ReturnIncSpeed="3">
+		<action name="HandBrake" type="AnalogAxis" UseAbsoluteValues="0" MinValue="0" MaxValue="1" Sensitivity="1" InverseMul="1" AnalogEmulator="Linear" DecSpeed="4" IncSpeed="4" ReturnEnabled="1" ReturnValue="0" ReturnDecSpeed="4" ReturnIncSpeed="4">
 			<binding>
 				<bind role="inc">Keyboard/52</bind>
 			</binding>
@@ -256,13 +256,13 @@
 				<bind role="">None</bind>
 			</binding>
 		</action>
-		<action name="Steering" type="AnalogAxis" UseAbsoluteValues="0" MinValue="-1" MaxValue="1" Sensitivity="1" InverseMul="1" AnalogEmulator="Linear" DecSpeed="3" IncSpeed="3" ReturnEnabled="1" ReturnValue="0" ReturnDecSpeed="3" ReturnIncSpeed="3">
+		<action name="Steering" type="AnalogAxis" UseAbsoluteValues="0" MinValue="-1" MaxValue="1" Sensitivity="1" InverseMul="1" AnalogEmulator="Linear" DecSpeed="4" IncSpeed="4" ReturnEnabled="1" ReturnValue="0" ReturnDecSpeed="4" ReturnIncSpeed="4">
 			<binding>
 				<bind role="inc">Keyboard/40</bind>
 				<bind role="dec">Keyboard/38</bind>
 			</binding>
 		</action>
-		<action name="Throttle" type="AnalogAxis" UseAbsoluteValues="0" MinValue="0" MaxValue="1" Sensitivity="1" InverseMul="1" AnalogEmulator="Linear" DecSpeed="3" IncSpeed="3" ReturnEnabled="1" ReturnValue="0" ReturnDecSpeed="3" ReturnIncSpeed="3">
+		<action name="Throttle" type="AnalogAxis" UseAbsoluteValues="0" MinValue="0" MaxValue="1" Sensitivity="1" InverseMul="1" AnalogEmulator="Linear" DecSpeed="4" IncSpeed="4" ReturnEnabled="1" ReturnValue="0" ReturnDecSpeed="4" ReturnIncSpeed="4">
 			<binding>
 				<bind role="inc">Keyboard/25</bind>
 			</binding>
