@@ -83,7 +83,7 @@ public:
 	void updAngle(), incCur(int dir);
 	void Next(bool bPrev = false, bool bMainOnly = false);
 	void setCamera(int ang);
-	Ogre::Vector3 FollowCamera::moveAboveTerrain(const Ogre::Vector3& camPos);
+	Ogre::Vector3 moveAboveTerrain(const Ogre::Vector3& camPos);
 	
 	//  info text formats
 	Ogre::String sFmt_Follow, sFmt_Free, sFmt_ExtAng, sFmt_Arena, sFmt_Car;
