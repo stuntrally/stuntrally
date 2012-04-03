@@ -139,7 +139,7 @@ void CarModel::Update(PosInfo& posInfo, float time)
 	pMainNode->setOrientation(posInfo.rot);
 
 	//  set camera view
-	if (fCam && pSet->multi_thr == 1)
+	if (fCam)
 		fCam->Apply(posInfo);
 
 
