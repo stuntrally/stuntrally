@@ -113,15 +113,14 @@ bool Replay::LoadFile(std::string file, bool onlyHdr)
 	header.SafeEnd0();
 
     #ifdef LOG_RPL
-	if (!onlyHdr)  LogO(">- Load replay --  file: "+file+"  players:"+toStr(header.numPlayers));
-	if (!onlyHdr)  
-	for (int p=0; p < header.numPlayers; ++p)
-	{
-		if (p==0)
-			LogO(Ogre::String(">- Load replay  nick:")+header.nicks[p]+"  car:"+header.car);
-		else
-			LogO(Ogre::String(">- Load replay  nick:")+header.nicks[p]+"  car:"+Ogre::String(&header.cars[0][p]));
-	}
+		if (!onlyHdr)
+			LogO(">- Load replay --  file: "+file+"  players:"+toStr(header.numPlayers));
+		/**if (!onlyHdr)  
+		for (int p=0; p < header.numPlayers; ++p)
+		{
+			if (p==0)	LogO(Ogre::String(">- Load replay  nick:")+header.nicks[p]+"  car:"+header.car);
+			else		LogO(Ogre::String(">- Load replay  nick:")+header.nicks[p]+"  car:"+Ogre::String(&header.cars[0][p]));
+		}/**/
 	#endif
 	
 	//  clear

@@ -44,6 +44,9 @@ struct PosInfo
 	//  hit sparks
 	float fHitTime, fParIntens,fParVel;//, fSndForce, fNormVel;
 	Ogre::Vector3 vHitPos,vHitNorm;  // world hit data
+	
+	//  camera view
+	Ogre::Vector3 camPos, camLook;  Ogre::Quaternion camRot;
 
 	PosInfo() : bNew(false),  // not inited
 		pos(0,-200,0), percent(0.f), braking(false)

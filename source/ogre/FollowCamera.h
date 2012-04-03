@@ -50,7 +50,7 @@ public:
 	Ogre::TerrainGroup* mTerrain;
 
 	const Ogre::SceneNode* mGoalNode;
-	Ogre::Vector3 mLook,  mPosNodeOld;  Ogre::Real mVel;
+	Ogre::Vector3 mLook, mPosNodeOld;  Ogre::Real mVel;
 	Ogre::Quaternion qq;  // for ext cam
 
     #ifdef CAM_BLT  // bullet
@@ -63,10 +63,12 @@ public:
 	#endif
 	
 
-	void update(Ogre::Real time, PosInfo* pos), updInfo(Ogre::Real time = 0);
-	Ogre::Vector3 camPosFinal, camLookFinal;  Ogre::Quaternion camRotFinal;  // update fills this, but doesn't apply
+	//  update, simulates camera
+	Ogre::Vector3 camPosFinal;  //, camLookFinal;  Ogre::Quaternion camRotFinal;
+	void update(Ogre::Real time, const PosInfo& posInPrev, PosInfo* posOut), updInfo(Ogre::Real time = 0);
 	bool manualOrient;
-	void Apply();  // apply sets mCamera's pos and rot
+	//  apply, sets mCamera's pos and rot
+	void Apply(const PosInfo& posIn);
 
 	void Move( bool mbLeft, bool mbRight, bool mbMiddle, bool shift, Ogre::Real mx, Ogre::Real my, Ogre::Real mz );
 	Ogre::Real fMoveTime;
@@ -80,7 +82,8 @@ public:
 	bool loadCameras();  void saveCamera(), Destroy();
 	void updAngle(), incCur(int dir);
 	void Next(bool bPrev = false, bool bMainOnly = false);
-	void setCamera(int ang), moveAboveTerrain();
+	void setCamera(int ang);
+	Ogre::Vector3 FollowCamera::moveAboveTerrain(const Ogre::Vector3& camPos);
 	
 	//  info text formats
 	Ogre::String sFmt_Follow, sFmt_Free, sFmt_ExtAng, sFmt_Arena, sFmt_Car;

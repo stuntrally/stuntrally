@@ -30,6 +30,7 @@ namespace BtOgre  {  class DebugDrawer;  }
 namespace MyGUI  {  class MultiList2;  }
 namespace OISB   {  class AnalogAxisAction;  }
 class MaterialFactory;
+const int CarPosCnt = 8;  // size of poses queue
 
 
 class App : public BaseApp, public GameClientCallback, public MasterClientCallback
@@ -40,7 +41,7 @@ public:
 	void NullHUD();
 	
 	class GAME* pGame;  ///*
-	void updatePoses(float time), newPoses();
+	void updatePoses(float time), newPoses(float time);
 	void UpdThr();
 	
 	// stuff to be executed after BaseApp init
@@ -49,7 +50,10 @@ public:
 	void setTranslations();
 	
 	// This list holds new positions info for every CarModel
-	std::vector<PosInfo> newPosInfos;
+	
+	/*typedef std::vector<PosInfo> CarPosQue;  // [carPosCnt]
+	std::vector<CarPosQue>*/ PosInfo carPoses[CarPosCnt][8];  // [carsNum8]
+	/*std::vector<int>*/ int iCurPoses[8];  // current index for carPoses queue
 	std::map<int,int> carsCamNum;  // picked camera number for cars
 	
 	// Utility

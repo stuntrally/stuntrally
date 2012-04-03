@@ -23,8 +23,8 @@ void App::slRplPosEv(SL)  // change play pos
 
 	FollowCamera* fCam = (*carModels.begin())->fCam;
 	fCam->first = true;  // instant change
-	for (int i=0; i < 10; ++i)
-		fCam->update(abs(v-oldt)/10.f, 0);  //..?
+	//for (int i=0; i < 10; ++i)
+	//	fCam->update(abs(v-oldt)/10.f, 0);  //..?
 }
 
 void App::btnRplLoad(WP)  // Load
@@ -52,7 +52,7 @@ void App::btnRplLoad(WP)  // Load
 		pSet->game.car_hue[0] = replay.header.hue[0];  pSet->game.car_sat[0] = replay.header.sat[0];  pSet->game.car_val[0] = replay.header.val[0];
 		pSet->game.trees = replay.header.ver < 6 ? 1.f : replay.header.trees;  // older didnt have trees saved, so use default 1
 		pSet->game.local_players = replay.header.numPlayers;
-		LogO("RPL btn Load  players: "+toStr(replay.header.numPlayers)+" netw:"+ toStr(replay.header.networked));
+		LogO("RPL btn Load  players: "+toStr(replay.header.numPlayers)+" netw: "+ toStr(replay.header.networked));
 
 		for (int p=1; p < replay.header.numPlayers; ++p)
 		{	pSet->game.car[p] = replay.header.cars[p-1];

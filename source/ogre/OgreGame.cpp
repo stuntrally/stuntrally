@@ -182,7 +182,7 @@ void App::destroyScene()
 		delete (*it);
 
 	carModels.clear();
-	newPosInfos.clear();
+	//carPoses.clear();
 	
 	mToolTip = 0;  //?
 

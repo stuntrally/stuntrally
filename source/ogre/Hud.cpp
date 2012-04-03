@@ -386,9 +386,9 @@ void App::UpdateHUD(int carId, float time)
 		cms.sort(SortWin);
 		
 		String msg = "";  int place = 1;  // assing places
-		for (std::list<CarModel*>::iterator it = cms.begin(); it != cms.end(); ++it)
+		for (int c = 0; c < carModels.size(); ++c)
 		{
-			CarModel* cm = *it;
+			CarModel* cm = carModels[c];
 			bool end = pGame->timer.GetCurrentLap(cm->iIndex) >= pSet->game.num_laps;
 			cm->iWonPlace = end ? place++ : 0;  // when ended race
 
@@ -428,17 +428,17 @@ void App::UpdateHUD(int carId, float time)
 
 		//  upd end list
 		if (mWndNetEnd->getVisible())
-		{	liNetEnd->removeAllItems();  int i=1;
-			for (std::list<CarModel*>::iterator it = cms.begin(); it != cms.end(); ++it,++i)
+		{	liNetEnd->removeAllItems();
+			for (int c = 0; c < carModels.size(); ++c)
 			{
-				CarModel* cm = *it;
+				CarModel* cm = carModels[c];
 				//String clr = "#E0F0FF";
 				std::stringstream ss;  // car color to hex str
 				ss << std::hex << std::setfill('0');
 				ss << (cm->color.getAsARGB() & 0xFFFFFF);
 				String clr = "#"+ss.str();
 
-				liNetEnd->addItem(""/*clr+ toStr(i)*/, 0);  int l = liNetEnd->getItemCount()-1;
+				liNetEnd->addItem(""/*clr+ toStr(c+1)*/, 0);  int l = liNetEnd->getItemCount()-1;
 				liNetEnd->setSubItemNameAt(1,l, clr+ (cm->iWonPlace == 0 ? "--" : toStr(cm->iWonPlace)));
 				liNetEnd->setSubItemNameAt(2,l, clr+ cm->sDispName);
 				liNetEnd->setSubItemNameAt(3,l, clr+ GetTimeString( cm->iWonPlace == 0 ? 0.f : pGame->timer.GetPlayerTimeTot(cm->iIndex) ));
@@ -458,8 +458,8 @@ void App::UpdateHUD(int carId, float time)
 		for (int o=0; o < carModels.size(); ++o)
 		{	// cars only
 			if (carModels[o]->eType != CarModel::CT_GHOST)
-			{	if (bRplPlay)
-					carModels[o]->trackPercent = newPosInfos[o].percent;
+			{	/*if (bRplPlay)
+					carModels[o]->trackPercent = carPoses[o].percent;*/
 				cms.push_back(carModels[o]);	}
 		}
 		if (pSet->opplist_sort)
@@ -468,17 +468,17 @@ void App::UpdateHUD(int carId, float time)
 		for (int o=0; o < carModels.size(); ++o)
 		{	// add ghost last
 			if (carModels[o]->eType == CarModel::CT_GHOST)
-			{	carModels[o]->trackPercent = newPosInfos[o].percent;  // ghost,rpl
+			{	//carModels[o]->trackPercent = carPoses[o].percent;  // ghost,rpl
 				cms.push_back(carModels[o]);	}
 		}
 
-		ColourValue c;
-		int o = 0;  //carId
-		if (carModels.size() == newPosInfos.size())  //-
-		for (std::list<CarModel*>::const_iterator it = cms.begin(); it != cms.end(); ++it, ++o)
+		ColourValue clr;
+		//if (carModels.size() == carPoses.size())  //-
+		for (int o = 0; o < carModels.size(); ++o)
 		if (hudOpp[o][0])
 		{
-			CarModel* cm = *it;
+			CarModel* cm = carModels[o];
+			//CarModel* cm = *it;
 			if (cm->pMainNode)
 			{
 				bool bGhost = cm->eType == CarModel::CT_GHOST;
@@ -496,7 +496,7 @@ void App::UpdateHUD(int carId, float time)
 					//  dist m
 					hudOpp[o][1]->setCaption(fToStr(dist,0,3)+"m");
 					Real h = std::min(60.f, dist) / 60.f;
-					c.setHSB(0.5f - h * 0.4f, 1,1);		hudOpp[o][1]->setColour(c);
+					clr.setHSB(0.5f - h * 0.4f, 1,1);		hudOpp[o][1]->setColour(clr);
 				}
 					
 				if (bGhEmpty)
@@ -507,7 +507,7 @@ void App::UpdateHUD(int carId, float time)
 					if (bGhost && pGame->timer.GetPlayerTime(0) > ghplay.GetTimeLength())
 						perc = 100.f;  // force 100 at ghost end
 					hudOpp[o][0]->setCaption(fToStr(perc,0,3)+"%");
-					c.setHSB(perc*0.01f*0.4f, 0.7f,1);	hudOpp[o][0]->setColour(c);
+					clr.setHSB(perc*0.01f*0.4f, 0.7f,1);	hudOpp[o][0]->setColour(clr);
 				}
 				
 				///  Lap Time  pos (1)

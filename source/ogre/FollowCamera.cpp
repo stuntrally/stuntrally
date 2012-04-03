@@ -22,18 +22,20 @@ using namespace Ogre;
 ///  Update
 //-----------------------------------------------------------------------------------------------------
 
-void FollowCamera::update( Real time, PosInfo* posInf )
+void FollowCamera::update(Real time, const PosInfo& posIn, PosInfo* posOut)
 {
-	//if (!mGoalNode || !ca || !mCamera)  return;
-	if (!ca)  return;
+	if (!ca || !posOut)  return;
 
-	//	  Vector3 posGoal = mGoalNode ? mGoalNode->getPosition() : Vector3::UNIT_Y;
-	//Quaternion orientGoal = mGoalNode ? mGoalNode->getOrientation() : Quaternion::IDENTITY;
-		  Vector3 posGoal = posInf ? posInf->pos : Vector3::UNIT_Y;
-	Quaternion orientGoal = posInf ? posInf->rot : Quaternion::IDENTITY;
+	///  input from car posInfoIn
+	Vector3 posGoal = posIn.pos;
+	Quaternion orientGoal = posIn.rot;
+	///  output saved back to car posInfoOut
+	Vector3 /*camPosFinal,*/ camLookFinal;  Quaternion camRotFinal;
 
-	const static Quaternion  qO = Quaternion(Degree(180),Vector3::UNIT_Z) * Quaternion(Degree(-90),Vector3::UNIT_Y),
+	const static Quaternion
+		qO = Quaternion(Degree(180),Vector3::UNIT_Z) * Quaternion(Degree(-90),Vector3::UNIT_Y),
 		qR = Quaternion(Degree(90),Vector3(0,1,0));
+
 	Quaternion  orient = orientGoal * qO;
 	Vector3  ofs = orient * ca->mOffset,  goalLook = posGoal + ofs;
 	
@@ -41,6 +43,11 @@ void FollowCamera::update( Real time, PosInfo* posInf )
     {
 		camPosFinal = goalLook;
 		camRotFinal = orient;
+
+		posOut->camPos = camPosFinal;  // save result in out posInfo
+		posOut->camLook = camLookFinal;
+		posOut->camRot = camRotFinal;
+
 		updInfo(time);
 		return;
 	}
@@ -112,7 +119,7 @@ void FollowCamera::update( Real time, PosInfo* posInf )
 		if (ca->mType ==  CAM_Arena)
 		{
 			Vector3  Pos(0,0,0), goalPos = ca->mOffset;
-			Pos = camPosFinal;
+			Pos = camPosFinal;  //read last state (smooth)
 			Pos += (goalPos - Pos) * dtmul;
 			
 			static Radian  pitch(0), yaw(0);
@@ -140,8 +147,25 @@ void FollowCamera::update( Real time, PosInfo* posInf )
 		}
 	}
 
+	camLookFinal = mLook;
+
+	posOut->camPos = camPosFinal;  // save result in out posInfo
+	posOut->camLook = camLookFinal;
+	posOut->camRot = camRotFinal;
+
+	updInfo(time);
+}
+
+
+//  prevent camera from going under ground.
+//-----------------------------------------------------------------------------------------------------
+Vector3 FollowCamera::moveAboveTerrain(const Vector3& camPos)
+{
+	if (!mTerrain || !mCamera)
+		return camPos;
+
 	/// cast ray from car to camera, to prevent objects blocking the camera's sight
-    #ifdef CAM_BLT
+#ifdef CAM_BLT
 	// update sphere pos
 	btVector3 carPos = BtOgre::Convert::toBullet(posGoal);
 	state->setWorldTransform( btTransform(btQuaternion(0,0,0,1), carPos ));
@@ -165,40 +189,33 @@ void FollowCamera::update( Real time, PosInfo* posInf )
 		// collision occured - update cam pos
 		mCamera->setPosition( BtOgre::Convert::toOgre( btVector3(contact.GetPosition()[0], contact.GetPosition()[1], contact.GetPosition()[2]) ) );
 	}
-	#endif
-	
-	//moveAboveTerrain();
-	//if (!manualOrient)
-	//	mCamera->lookAt( mLook );
-	camLookFinal = mLook;
-	updInfo(time);
-}
-
-
-//  prevent camera from going under ground.
-//-----------------------------------------------------------------------------------------------------
-void FollowCamera::moveAboveTerrain()
-{
-	if (!mTerrain || !mCamera)  return;
+#endif
 
 	const static Real terOfs = 0.2f;  //  minimum distance above ground
-	Vector3 camPos = mCamera->getPosition();  // = camPosFinal ...
+
 	float h = mTerrain->getHeightAtWorldPosition(camPos);
-	if (h != 0.f)  // out of terrain
-	if (h + terOfs > camPos.y)
-		mCamera->setPosition(camPos.x, h + terOfs, camPos.z);  // camPosFinal = 
+	if (h == 0.f)  // out of terrain
+		return camPos;
+
+	if (h + terOfs > camPos.y)  // move above
+		return Vector3(camPos.x, h + terOfs, camPos.z);
+	else
+		return camPos;
 }
 
 
-void FollowCamera::Apply()
+void FollowCamera::Apply(const PosInfo& posIn)
 {
-	mCamera->setPosition(camPosFinal);
-	//mCamera->setOrientation(camRotFinal);
-	moveAboveTerrain();//
+	//boost::this_thread::sleep(boost::posix_time::milliseconds(rand()%20));
+	if (!mCamera)  return;
+
+	mCamera->setPosition( moveAboveTerrain(posIn.camPos) );
+	//mCamera->setPosition( posIn.camPos );
+
 	if (!manualOrient)
-		mCamera->lookAt( camLookFinal );
+		mCamera->lookAt(posIn.camLook);
 	else
-		mCamera->setOrientation(camRotFinal);
+		mCamera->setOrientation(posIn.camRot);
 }
 
 

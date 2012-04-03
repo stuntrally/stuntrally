@@ -942,7 +942,7 @@ bool BaseApp::mouseMoved( const OIS::MouseEvent &arg )
 		return true;  }
 
 	///  Follow Camera Controls
-	int i = 0;
+	int i = 0;  //Log("cam: "+toStr(iCurCam));
 	for (std::vector<CarModel*>::iterator it=carModels.begin(); it!=carModels.end(); ++it,++i)
 	if (i == iCurCam)
 	{

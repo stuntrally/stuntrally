@@ -127,20 +127,21 @@ void CarModel::UpdTrackPercent()
 //-------------------------------------------------------------------------------------------------------
 void CarModel::Update(PosInfo& posInfo, float time)
 {	
-	if (!posInfo.bNew)  return;  // new only
-	posInfo.bNew = false;
+	//if (!posInfo.bNew)  return;  // new only ?
+	//posInfo.bNew = false;
 	/// dont get anything from pCar or car.dynamics here
 	/// all must be read from posInfo (it is filled from vdrift car or from replay)
 	
 	if (!pMainNode) return;
-	//  car pos and rot
+
+	//  set car pos and rot
 	pMainNode->setPosition(posInfo.pos);
 	pMainNode->setOrientation(posInfo.rot);
+
+	//  set camera view
 	if (fCam && pSet->multi_thr == 1)
-	{
-		//fCam->update(time, &posInfo);
-		fCam->Apply();
-	}
+		fCam->Apply(posInfo);
+
 
 	//  upd rotY for minimap
 	Quaternion q = posInfo.rot * Quaternion(Degree(90),Vector3(0,1,0));
@@ -197,7 +198,7 @@ void CarModel::Update(PosInfo& posInfo, float time)
 		pe->setEmissionRate(emitB);
 	}
 
-	//  world hit  (todo: in replays, use posInfo..)
+	//  world hit
 	if (ph)
 	{	ParticleEmitter* pe = ph->getEmitter(0);
 		if (posInfo.fHitTime > 0.f && pSet->particles)

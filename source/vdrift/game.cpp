@@ -282,28 +282,27 @@ void GAME::Test()
 bool GAME::OneLoop()
 {
 	PROFILER.beginBlock(" oneLoop");
-	bool ret = true;  //!eventsystem.GetQuit() && !benchmode;
-	if (ret)
-	{
-		//if (profilingmode && frame % 10 == 0)  //par
-		//	strProfInfo = PROFILER.getAvgSummary(quickprof::MILLISECONDS);
 
-		qtim.update();
-		double dt = qtim.dt;
+	//if (profilingmode && frame % 10 == 0)  //par
+	//	strProfInfo = PROFILER.getAvgSummary(quickprof::MILLISECONDS);
+
+	qtim.update();
+	double dt = qtim.dt;
+	if (!pOgreGame->bLoading)
 		clocktime += dt;
-		
-		//if (OISB::System::getSingletonPtr() != NULL)
-			//OISB::System::getSingleton().process(dt);
+	
+	//if (OISB::System::getSingletonPtr() != NULL)
+		//OISB::System::getSingleton().process(dt);
 
-		//if (!pOgreGame->bLoading && !timer.waiting)
-		Tick(pOgreGame->bLoading ? 0.0 : dt);  // do CPU intensive stuff in parallel with the GPU
- 		
-		//PROFILER.endCycle();  // not here, in Ogre UpdateHUD
-		
-		displayframe++;
-	}
+	//if (!pOgreGame->bLoading && !timer.waiting)
+	Tick(pOgreGame->bLoading ? 0.0 : dt);  // do CPU intensive stuff in parallel with the GPU
+	
+	//PROFILER.endCycle();  // not here, in Ogre UpdateHUD
+	
+	displayframe++;
+
 	PROFILER.endBlock(" oneLoop");
-	return ret;
+	return true;
 }
 
 ///deltat is in seconds
@@ -324,35 +323,30 @@ void GAME::Tick(float deltat)
 	while (target_time > tickperriod && curticks < maxticks)
 	{
 		frame++;
-
 		AdvanceGameLogic();
-		/*__*/
+
 		if (pOgreGame)
 		{
-			pOgreGame->newPoses();
+			pOgreGame->newPoses(/*deltat*/tickperriod);
 
-			//if (settings->multi_thr != 1)  // == 0
-			{
-				//  single thread
-				if (settings->multi_thr != 1)
-					pOgreGame->updatePoses(deltat);
+			//  single thread
+			//if (settings->multi_thr == 0)
+			//	pOgreGame->updatePoses(deltat);
 				
-				/// update all cameras
-				if (pOgreGame->carModels.size() > 0 && (!pause || pOgreGame->bRplPlay))  // replay can be paused and needs cam upd
+			/// update all cameras
+			/*if (pOgreGame->carModels.size() > 0 && (!pause || pOgreGame->bRplPlay))  // replay can be paused and needs cam upd
+			{
+				for (int i=0; i < pOgreGame->carModels.size(); ++i)
 				{
-					//carposMutex
-					for (int i=0; i < pOgreGame->carModels.size(); ++i)
+					CarModel* cm = pOgreGame->carModels[i];
+					if (cm->fCam)
 					{
-						CarModel* cm = pOgreGame->carModels[i];
-						if (cm->fCam)
-						{
-							cm->fCam->update(framerate, &pOgreGame->newPosInfos[i]);
-							if (settings->multi_thr != 1)
-								cm->fCam->Apply();
-						}
+						cm->fCam->update(framerate, &pOgreGame->carPoses[pOgreGame->iCurPoses[i]][i]);
+						if (settings->multi_thr != 1)
+							cm->fCam->Apply();
 					}
 				}
-			}
+			}/**/
 		}
 		curticks++;
 		target_time -= tickperriod;

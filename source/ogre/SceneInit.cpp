@@ -150,7 +150,6 @@ void App::NewGame()
 
 void App::LoadCleanUp()  // 1 first
 {
-	/**/boost::mutex::scoped_lock(pGame->carposMutex);///
 	updMouse();
 
 	// rem old track
@@ -171,7 +170,7 @@ void App::LoadCleanUp()  // 1 first
 		if (c->pNickTxt)  {  mGUI->destroyWidget(c->pNickTxt);  c->pNickTxt = 0;  }
 		delete c;
 	}
-	carModels.clear();  newPosInfos.clear();
+	carModels.clear();  //carPoses.clear();
 
 	if (grass) {  delete grass->getPageLoader();  delete grass;  grass=0;   }
 	if (trees) {  delete trees->getPageLoader();  delete trees;  trees=0;   }
@@ -330,8 +329,6 @@ void App::LoadScene()  // 3
 
 void App::LoadCar()  // 4
 {
-	/**/boost::mutex::scoped_lock(pGame->carposMutex);///
-
 	//  Create all cars
 	for (int i=0; i < carModels.size(); ++i)
 	{
@@ -351,8 +348,9 @@ void App::LoadCar()  // 4
 		}
 
 		//  Reserve an entry in newPosInfos
-		PosInfo carPosInfo;  carPosInfo.bNew = false;  //-
-		newPosInfos.push_back(carPosInfo);
+		//PosInfo carPosInfo;  carPosInfo.bNew = false;  //-
+		//carPoses.push_back(carPosInfo);
+		iCurPoses[i] = 0;
 	}
 	
 	
