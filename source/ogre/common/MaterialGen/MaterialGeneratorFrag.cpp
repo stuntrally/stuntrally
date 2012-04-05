@@ -681,8 +681,10 @@ void MaterialGenerator::fragmentProgramParams(HighLevelGpuProgramPtr program)
 	
 	params->setNamedAutoConstant("fogColor", GpuProgramParameters::ACT_FOG_COLOUR);
 	
+	#ifndef _DEBUG  // issue in debug
 	if (vpNeedWvMat())
 		params->setNamedAutoConstant("wvMat", GpuProgramParameters::ACT_WORLDVIEW_MATRIX);
+	#endif
 		
 	if (fpNeedNormal())
 		params->setNamedAutoConstant("wITMat", GpuProgramParameters::ACT_INVERSE_TRANSPOSE_WORLD_MATRIX);
@@ -703,9 +705,9 @@ void MaterialGenerator::fragmentProgramParams(HighLevelGpuProgramPtr program)
 
 void MaterialGenerator::individualFragmentProgramParams(Ogre::GpuProgramParametersSharedPtr params)
 {
-	#ifndef _DEBUG
+	//#ifndef _DEBUG
 	params->setIgnoreMissingParams(true);
-	#endif
+	//#endif
 	
 	if (needEnvMap() && !needFresnel())
 	{
