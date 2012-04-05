@@ -64,7 +64,7 @@ public:
 		int* pOnRoad, bool ignoreCars) const;
 	
 	// update world physics
-	void Update(float dt, bool profiling);
+	void Update(double dt, bool profiling);
 	std::string bltProfiling;  // blt debug times info
 	
 	void Draw();
@@ -75,7 +75,7 @@ public:
 	
 //private:
 public:
-	float fixedTimestep;  int maxSubsteps;
+	double fixedTimestep;  int maxSubsteps;
 	
 	// . . . bullet sim . . .
 	btDefaultCollisionConfiguration* config;

@@ -16,7 +16,7 @@
 COLLISION_WORLD::COLLISION_WORLD() :
 	config(0), dispatcher(0), broadphase(0), solver(0), world(0),
 	track(NULL), trackObject(NULL), trackMesh(NULL),
-	fixedTimestep(1.f/60.f), maxSubsteps(7)  // default, set from settings
+	fixedTimestep(1.0/60.0), maxSubsteps(7)  // default, set from settings
 {
 	config = new btDefaultCollisionConfiguration();
 	dispatcher = new btCollisionDispatcher(config);
@@ -397,7 +397,7 @@ void DynamicsWorld::solveConstraints(btContactSolverInfo& solverInfo)
 }
 
 
-void COLLISION_WORLD::Update(float dt, bool profiling)
+void COLLISION_WORLD::Update(double dt, bool profiling)
 {
 	///  Simulate
 	world->stepSimulation(dt, maxSubsteps, fixedTimestep);

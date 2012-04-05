@@ -27,8 +27,8 @@ class GAME
 //private:
 public:
 	class App* pOgreGame;
-	float TickPeriod() const {return framerate;}
-	bool OneLoop();  std::string strProfInfo;
+	double TickPeriod() const {return framerate;}
+	bool OneLoop(double dt);  std::string strProfInfo;
 	QTimer qtim;
 	
 	bool ParseArguments(std::list <std::string> & args);
@@ -36,15 +36,13 @@ public:
 	void End();
 
 	void Test();
-	void Tick(float dt);
+	void Tick(double dt);
 
-	void AdvanceGameLogic();
+	void AdvanceGameLogic(double dt);
 	void UpdateCar(CAR & car, double dt);
 	void UpdateDriftScore(CAR & car, double dt);
 	void UpdateCarInputs(CAR & car);
 	void UpdateTimer();
-
-	void ProcessGameInputs();
 
 	//bool NewGame(bool playreplay=false, bool opponents=false, int num_laps=0);
 	

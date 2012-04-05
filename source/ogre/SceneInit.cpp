@@ -601,6 +601,7 @@ void App::CreateRoad()
 		carModels[i]->ResetChecks(true);
 
 	UpdPSSMMaterials();  ///+~-
+	road->RebuildRoadInt();
 }
 
 

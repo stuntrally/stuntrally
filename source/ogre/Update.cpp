@@ -22,8 +22,7 @@ using namespace Ogre;
 using namespace MyGUI;
 
 
-//---------------------------------------------------------------------------------------------------------------
-//  Frame Start
+//  simulation (2nd) thread
 //---------------------------------------------------------------------------------------------------------------
 
 void App::UpdThr()
@@ -31,16 +30,15 @@ void App::UpdThr()
 	while (!mShutDown)
 	{
 		///  step Game  **
+
 		//  separate thread
+		pGame->qtim.update();
+		double dt = pGame->qtim.dt;
+		
 		if (pSet->multi_thr == 1 && !bLoading)
 		{
-			bool ret = pGame->OneLoop();
+			bool ret = pGame->OneLoop(dt);
 
-			//if (!pGame->pause && mFCam)
-			//	mFCam->update(pGame->framerate/**/);
-			//if (ndSky)  ///o-
-			//	ndSky->setPosition(GetCamera()->getPosition());
-			
 			DoNetworking();
 
 			if (!ret)
@@ -93,6 +91,8 @@ void App::DoNetworking()
 	}
 }
 
+
+//  Frame Start
 //---------------------------------------------------------------------------------------------------------------
 
 bool App::frameStart(Real time)
@@ -281,7 +281,8 @@ bool App::frameStart(Real time)
 
 		// input
 		//PROFILER.beginBlock("input");  // below 0.0 ms
-		OISB::System::getSingleton().process(time);
+		//if (pSet->multi_thr == 0)
+		//	OISB::System::getSingleton().process(time);  /// moved to sim thread
 		//PROFILER.endBlock("input");
 
 
@@ -293,7 +294,7 @@ bool App::frameStart(Real time)
 		bool ret = true;
 		if (pSet->multi_thr == 0)
 		{
-			ret = pGame->OneLoop();
+			ret = pGame->OneLoop(time);
 			if (!ret)  mShutDown = true;
 			updatePoses(time);
 		}
@@ -330,7 +331,6 @@ bool App::frameStart(Real time)
 
 		//  trees
 		PROFILER.beginBlock("g.veget");
-		//if (pSet->mult_thr != 2)
 		if (road) {
 			if (grass)  grass->update();
 			if (trees)  trees->update();  }
@@ -340,7 +340,6 @@ bool App::frameStart(Real time)
 		if (road)
 		{
 			//PROFILER.beginBlock("g.road");  // below 0.0 ms
-			road->RebuildRoadInt();
 
 			//  more than 1: in pre viewport, each frame
 			if (mSplitMgr->mNumViewports == 1)
