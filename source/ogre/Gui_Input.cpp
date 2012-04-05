@@ -403,8 +403,6 @@ void App::comboInputKeyAllPreset(MyGUI::ComboBoxPtr cmb, size_t val)
 	const Real speeds[3] = {3,4,5},  // presets
 			speedsRet[3] = {3,4,5};
 	Real vInc = speeds[val-1], vRet = speedsRet[val-1];
-	//edInputReturn->setCaption(toStr(vRet));  //?
-	//edInputIncrease->setCaption(toStr(vInc));
 
 	OISB::ActionSchema* schema = OISB::System::getSingleton().mActionSchemas[schemaName];  if (!schema)  return;
 	for (int i=0; i < numActs; ++i)
