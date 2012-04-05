@@ -299,7 +299,7 @@ protected:
 	SLV(CarClrH);  SLV(CarClrS);  SLV(CarClrV);  // car clr
 	SLV(BloomInt);  SLV(BloomOrig);  SLV(BlurIntens);  // video
 	SLV(DepthOfFieldFocus);  SLV(DepthOfFieldFar);  // dof
-	SLV(NumLaps);  // setup
+	SLV(NumLaps);  SLV(RplNumViewports);  // setup
 	
 	//  checks
 	void chkFps(WP), chkGauges(WP),	chkArrow(WP), chkDigits(WP),

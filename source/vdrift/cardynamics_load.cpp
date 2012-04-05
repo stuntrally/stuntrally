@@ -21,9 +21,10 @@ CARDYNAMICS::CARDYNAMICS() :
 	abs(false), tcs(false),
 	maxangle(45.0),
 	bTerrain(false), pSet(0), pScene(0),
-	doBoost(0), doFlip(0), boostVal(0),
-	fHitTime(0), fParIntens(0), //, bHitSnd(0)
-	steerValue(0.f)
+	doBoost(0), doFlip(0), boostFuel(0), boostVal(0),
+	fHitTime(0), fParIntens(0), fParVel(0), //hit
+	vHitPos(0,0,0), vHitNorm(0,0,0),
+	steerValue(0.f), velPrev(0,0,0)
 {
 	for (int i=0; i<4; ++i)
 	{	bWhOnRoad[i]=0;  terSurf[i]=0;

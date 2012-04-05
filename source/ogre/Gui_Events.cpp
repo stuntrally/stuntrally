@@ -303,10 +303,6 @@ void App::btnNewGameStart(WP wp)
 
 //  [View]  . . . . . . . . . . . . . . . . . . . .    ---- checks ----    . . . . . . . . . . . . . . . . . . . .
 
-void App::chkDigits(WP wp){ 		ChkEv(show_digits); ShowHUD();   }
-
-void App::chkReverse(WP wp){		ChkEv(gui.trackreverse);	ReadTrkStats();  }
-
 void App::chkParticles(WP wp)
 {		
 	ChkEv(particles);
@@ -321,7 +317,9 @@ void App::chkTrails(WP wp)
 		(*it)->UpdParsTrails();
 }
 void App::chkFps(WP wp){			ChkEv(show_fps);	if (pSet->show_fps)  mFpsOverlay->show();  else  mFpsOverlay->hide();	}
+void App::chkReverse(WP wp){		ChkEv(gui.trackreverse);	ReadTrkStats();  }
 
+void App::chkDigits(WP wp){ 		ChkEv(show_digits); ShowHUD();   }
 void App::chkGauges(WP wp){			ChkEv(show_gauges);	ShowHUD();	}
 void App::chkArrow(WP wp){			ChkEv(check_arrow); if (arrowRotNode) arrowRotNode->setVisible(pSet->check_arrow);  }
 void App::chkMinimap(WP wp){		ChkEv(trackmap);

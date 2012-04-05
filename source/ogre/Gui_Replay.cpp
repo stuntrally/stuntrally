@@ -92,7 +92,7 @@ void App::listRplChng(List* li, size_t pos)
 	String name = li->getItemNameAt(i);
 	string file = (pSet->rpl_listview == 2 ? PATHMANAGER::GetGhostsPath() : PATHMANAGER::GetReplayPath()) + "/" + name + ".rpl";
 	if (!valRplName)  return;  valRplName->setCaption(name);
-	if (!valRplInfo)  return;
+	if (!valRplInfo)  return;  edRplName->setCaption(name);
 	
 	//  load replay header upd text descr
 	Replay rpl;
@@ -127,24 +127,15 @@ void App::chkRplAutoRec(WP wp)
     chk->setStateSelected(bRplRec);
 }
 
-void App::chkRplChkGhost(WP wp)
-{
-	ChkEv(rpl_ghost);
-}
+void App::chkRplChkGhost(WP wp){		ChkEv(rpl_ghost);		}
+void App::chkRplChkBestOnly(WP wp){		ChkEv(rpl_bestonly);	}
+void App::chkRplChkAlpha(WP wp){		ChkEv(rpl_alpha);		}
+void App::chkRplChkPar(WP wp){			ChkEv(rpl_ghostpar);	}
 
-void App::chkRplChkBestOnly(WP wp)
+void App::slRplNumViewports(SL)
 {
-	ChkEv(rpl_bestonly);
-}
-
-void App::chkRplChkAlpha(WP wp)
-{
-	ChkEv(rpl_alpha);
-}
-
-void App::chkRplChkPar(WP wp)
-{
-	ChkEv(rpl_ghostpar);
+	int v = 1.f + 3.f * val/res;	if (bGI)  pSet->rpl_numViews = v;
+	if (valRplNumViewports)  valRplNumViewports->setCaption(toStr(v));
 }
 
 
@@ -221,21 +212,20 @@ void App::updReplaysList()
 void App::btnRplDelete(WP)
 {
 	size_t i = rplList->getIndexSelected();  if (i == ITEM_NONE)  return;
-	String name = rplList->getItemNameAt(i);
+	string name = rplList->getItemNameAt(i);
+
 	Message* message = Message::createMessageBox(
 		"Message", "Delete Replay ?", name,  // #{..
 		MessageBoxStyle::IconQuest | MessageBoxStyle::Yes | MessageBoxStyle::No);
 	message->eventMessageBoxResult += newDelegate(this, &App::msgRplDelete);
-	//message->setUserString("FileName", fileName);
 }
 void App::msgRplDelete(Message* sender, MessageBoxStyle result)
 {
-	if (result != MessageBoxStyle::Yes)
-		return;
+	if (result != MessageBoxStyle::Yes)  return;
 	size_t i = rplList->getIndexSelected();  if (i == ITEM_NONE)  return;
-	String name = rplList->getItemNameAt(i);
-	
+	string name = rplList->getItemNameAt(i);
 	string file = (pSet->rpl_listview == 2 ? PATHMANAGER::GetGhostsPath() : PATHMANAGER::GetReplayPath()) +"/"+ name + ".rpl";
+
 	if (boost::filesystem::exists(file))
 		boost::filesystem::remove(file);
 	updReplaysList();
@@ -244,6 +234,27 @@ void App::msgRplDelete(Message* sender, MessageBoxStyle result)
 //  Rename
 void App::btnRplRename(WP)
 {
-	//if (boost::filesystem::exists(from.c_str()))
-	//	boost::filesystem::rename(from.c_str(), to.c_str());
+	if (pSet->rpl_listview == 2)  return;  // cant rename ghosts
+	size_t i = rplList->getIndexSelected();  if (i == ITEM_NONE)  return;
+	string name = rplList->getItemNameAt(i);
+	string edit = edRplName->getCaption();
+
+	if (name == edit)  // same name
+	{	Message::createMessageBox(
+			"Message", "Rename Replay", "Same names.\n",  // #{..
+			MessageBoxStyle::IconInfo | MessageBoxStyle::Ok);
+		return;  }
+	
+	string file = PATHMANAGER::GetReplayPath() + "/" + name + ".rpl";
+	string fileNew = PATHMANAGER::GetReplayPath() + "/" + edit + ".rpl";
+
+	if (boost::filesystem::exists(fileNew))
+	{	Message::createMessageBox(
+			"Message", "Rename Replay", "File already exists.\n",  // #{..
+			MessageBoxStyle::IconInfo | MessageBoxStyle::Ok);
+		return;  }
+
+	if (boost::filesystem::exists(file))
+		boost::filesystem::rename(file, fileNew);
+	updReplaysList();
 }

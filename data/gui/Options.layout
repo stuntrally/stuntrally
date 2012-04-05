@@ -1139,34 +1139,19 @@
 				<Widget type="ListBox" skin="ListBox" position="14 16 186 504" name="RplList">
 					<UserString key="RelativeTo" value="ReplaysWnd"/>
 				</Widget>
-				<Widget type="Button" skin="CheckBox" position="424 295 280 24" name="RplChkGhost">
-					<Property key="TextColour" value="0.76 0.9 1"/>
-					<Property key="Caption" value="#{RplGhost}"/>
-					<UserString key="RelativeTo" value="ReplaysWnd"/>
-				</Widget>
-				<Widget type="Button" skin="CheckBox" position="424 335 280 24" name="RplChkAutoRec">
-					<Property key="Caption" value="#{RplAutoRec}"/>
-					<Property key="TextColour" value="0.5 0.7 0.9"/>
-					<UserString key="RelativeTo" value="ReplaysWnd"/>
-				</Widget>
-				<Widget type="Button" skin="CheckBox" position="424 375 280 24" name="RplChkBestOnly">
-					<Property key="TextColour" value="0.5 0.7 0.9"/>
-					<Property key="Caption" value="#{RplBestOnly}"/>
-					<UserString key="RelativeTo" value="ReplaysWnd"/>
-				</Widget>
-				<Widget type="Button" skin="RadioButton" position="224 311 160 24" name="RplBtnAll">
+                <Widget type="Button" skin="RadioButton" position="224 416 160 24" name="RplBtnAll">
 					<Property key="Colour" value="0.6 0.8 1"/>
 					<Property key="TextColour" value="0.6 0.8 1"/>
 					<Property key="Caption" value="#{RplAll}"/>
 					<UserString key="RelativeTo" value="ReplaysWnd"/>
 				</Widget>
-				<Widget type="Button" skin="RadioButton" position="224 351 160 24" name="RplBtnCur">
+                <Widget type="Button" skin="RadioButton" position="224 448 160 24" name="RplBtnCur">
 					<Property key="Colour" value="0.6 0.8 1"/>
 					<Property key="TextColour" value="0.5 0.7 0.9"/>
 					<Property key="Caption" value="#{RplCurrent}"/>
 					<UserString key="RelativeTo" value="ReplaysWnd"/>
 				</Widget>
-				<Widget type="Button" skin="RadioButton" position="224 391 160 24" name="RplBtnGhosts">
+                <Widget type="Button" skin="RadioButton" position="224 480 160 24" name="RplBtnGhosts">
 					<Property key="Colour" value="0.6 0.8 1"/>
 					<Property key="TextColour" value="0.6 0.8 1"/>
 					<Property key="Caption" value="#{RplGhosts}"/>
@@ -1216,19 +1201,52 @@
 					<Property key="Colour" value="0.8 0.9 1"/>
 					<UserString key="RelativeTo" value="ReplaysWnd"/>
 				</Widget>
-				<Widget type="Button" skin="CheckBox" position="424 415 280 24" name="RplChkAlpha">
+            </Widget>
+            <Widget type="TabItem" skin="" position="2 24 794 572">
+                <Property key="Caption" value="#{View}"/>
+				<UserString key="RelativeTo" value="ReplaysWnd"/>
+                <Widget type="Button" skin="CheckBox" position="32 60 380 24" name="RplChkGhost">
+                    <Property key="TextColour" value="0.76 0.9 1"/>
+                    <Property key="Caption" value="#{RplGhost}"/>
+                    <UserString key="RelativeTo" value="ReplaysWnd"/>
+                </Widget>
+                <Widget type="Button" skin="CheckBox" position="432 60 380 24" name="RplChkAutoRec">
+                    <Property key="Caption" value="#{RplAutoRec}"/>
+                    <Property key="TextColour" value="0.5 0.7 0.9"/>
+                    <UserString key="RelativeTo" value="ReplaysWnd"/>
+                </Widget>
+                <Widget type="Button" skin="CheckBox" position="432 100 380 24" name="RplChkBestOnly">
+                    <Property key="TextColour" value="0.5 0.7 0.9"/>
+                    <Property key="Caption" value="#{RplBestOnly}"/>
+                    <UserString key="RelativeTo" value="ReplaysWnd"/>
+                </Widget>
+				<Widget type="Button" skin="CheckBox" position="32 100 380 24" name="RplChkAlpha">
 					<Property key="TextColour" value="0.76 0.9 1"/>
 					<Property key="Caption" value="#{RplAlpha}*"/>
 					<UserString key="RelativeTo" value="ReplaysWnd"/>
 				</Widget>
-				<Widget type="Button" skin="CheckBox" position="424 455 280 24" name="RplChkParticles">
+				<Widget type="Button" skin="CheckBox" position="32 140 380 24" name="RplChkParticles">
 					<Property key="TextColour" value="0.6 0.8 1"/>
 					<Property key="Caption" value="#{RplParticles}"/>
 					<UserString key="RelativeTo" value="ReplaysWnd"/>
 				</Widget>
+                <Widget type="TextBox" skin="TextBox" position="32 216 466 20">
+					<Property key="TextColour" value="0.6 0.75 0.9"/>
+					<Property key="Caption" value="#{RplMaxNumViewports}*"/>
+					<UserString key="RelativeTo" value="ReplaysWnd"/>
+				</Widget>
+                <Widget type="TextBox" skin="TextBox" position="32 240 48 20" name="RplNumViewportsVal">
+					<Property key="TextColour" value="0.6 0.8 1"/>
+					<UserString key="RelativeTo" value="ReplaysWnd"/>
+				</Widget>
+                <Widget type="ScrollBar" skin="ScrollBarH" position="80 240 256 22" name="RplNumViewports">
+					<Property key="Range" value="1000001"/>
+					<Property key="MoveToClick" value="true"/>
+					<UserString key="RelativeTo" value="ReplaysWnd"/>
+				</Widget>
 			</Widget>
 		</Widget>
-	</Widget>
+    </Widget>
 	<Widget type="Window" skin="WindowC" position="552 640 800 600" align="Center" layer="Overlapped" name="HelpWnd">
 		<Property key="MinSize" value="500 400"/>
 		<Property key="MaxSize" value="2560 1600"/>
@@ -1386,7 +1404,6 @@
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
 						<Widget type="ScrollBar" skin="ScrollBarH" position="420 184 252 18" name="AntiAliasing">
-							<Property key="MoveToClick" value="true"/>
 							<Property key="Range" value="1000001"/>
 							<Property key="MoveToClick" value="true"/>
 							<Property key="Colour" value="0.6 0.8 1.0"/>

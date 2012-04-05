@@ -226,7 +226,7 @@ void BaseApp::InitKeyNamesMap()
 
 	kcMap[KC_NUMPADCOMMA ] = "Num .";  //  0xB3,    // , on numeric keypad (NEC PC98)
 	kcMap[KC_DIVIDE      ] = "Num /";  //  0xB5,    // / on numeric keypad
-	kcMap[KC_SYSRQ       ] = "SysRq";  //  0xB7,
+	kcMap[KC_SYSRQ       ] = "PtrScr";  //  0xB7,  // SysRq
 	kcMap[KC_RMENU       ] = "RAlt";  //  0xB8,    // right Alt
 	kcMap[KC_PAUSE       ] = "PAUSE";  //  0xC5,    // Pause
 	kcMap[KC_HOME        ] = "Home";  //  0xC7,    // Home on arrow keypad

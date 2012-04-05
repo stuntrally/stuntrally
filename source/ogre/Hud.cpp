@@ -70,10 +70,11 @@ void App::SizeHUD(bool full, Viewport* vp, int carId)
 void App::CreateHUD()
 {	
 	//  minimap from road img
-	LogO("-- Create Hud  plrs="+toStr(pSet->game.local_players));
+	int plr = mSplitMgr->mNumViewports;  // pSet->game.local_players;
+	LogO("-- Create Hud  plrs="+toStr(plr));
 	asp = 1.f;
 	if (terrain)
-	for (int c=0; c < pSet->game.local_players; ++c)  // for each car
+	for (int c=0; c < plr; ++c)  // for each car
 	{
 		float t = sc.td.fTerWorldSize*0.5;
 		minX = -t;  minY = -t;  maxX = t;  maxY = t;

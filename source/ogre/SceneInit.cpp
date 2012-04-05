@@ -203,7 +203,8 @@ void App::LoadCleanUp()  // 1 first
 void App::LoadGame()  // 2
 {
 	//  viewports
-	mSplitMgr->mNumViewports = bRplPlay ? replay.header.numPlayers : pSet->game.local_players;  // set num players
+	int numRplViews = std::max(1, std::min( replay.header.numPlayers, pSet->rpl_numViews ));
+	mSplitMgr->mNumViewports = bRplPlay ? numRplViews : pSet->game.local_players;  // set num players
 	mSplitMgr->Align();
 	mPlatform->getRenderManagerPtr()->setActiveViewport(mSplitMgr->mNumViewports);
 	
@@ -215,7 +216,7 @@ void App::LoadGame()  // 2
 	// this is just here because vdrift car has to be created first
 	std::list<Camera*>::iterator camIt = mSplitMgr->mCameras.begin();
 	
-	int numCars = mClient ? mClient->getPeerCount()+1 : mSplitMgr->mNumViewports;  // networked or splitscreen
+	int numCars = mClient ? mClient->getPeerCount()+1 : pSet->game.local_players;  // networked or splitscreen
 	int i;
 	for (i = 0; i < numCars; ++i)
 	{
@@ -237,11 +238,12 @@ void App::LoadGame()  // 2
 			if (i == 0)  nick = pSet->nickname;
 			else  nick = mClient->getPeer(startpos_index).name;
 		}
-		Camera* cam = (et == CarModel::CT_LOCAL ? *camIt : 0);
+		Camera* cam = 0;
+		if (et == CarModel::CT_LOCAL && camIt != mSplitMgr->mCameras.end())
+		{	cam = *camIt;  ++camIt;  }
+		
 		CarModel* car = new CarModel(i, et, carName, mSceneMgr, pSet, pGame, &sc, cam, this, startpos_index);
 		carModels.push_back(car);
-		
-		if (et == CarModel::CT_LOCAL)  ++camIt;
 		
 		if (nick != "")  // set remote nickname
 		{	car->sDispName = nick;

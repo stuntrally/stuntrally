@@ -247,6 +247,7 @@ void App::InitGui()
 	Chk("RplChkBestOnly", chkRplChkBestOnly, pSet->rpl_bestonly);
 	Chk("RplChkAlpha", chkRplChkAlpha, pSet->rpl_alpha);
 	Chk("RplChkParticles", chkRplChkPar, pSet->rpl_ghostpar);
+	Slv(RplNumViewports, (pSet->rpl_numViews-1) / 3.f);
 	//  radios
 	Btn("RplBtnAll", btnRplAll);  rbRplAll = btn;
 	Btn("RplBtnCur", btnRplCur);  rbRplCur = btn;
@@ -519,7 +520,6 @@ void App::InitGui()
 	updChampListDim();
 	ChampsListUpdate();
 	listChampChng(liChamps, liChamps->getIndexSelected());
-	//^ Track tab for details TODO...
 
 
 	Btn("btnChampStart", btnChampStart);
