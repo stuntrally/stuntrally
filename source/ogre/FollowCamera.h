@@ -49,7 +49,6 @@ public:
 	Ogre::Camera* mCamera;
 	Ogre::TerrainGroup* mTerrain;
 
-	const Ogre::SceneNode* mGoalNode;
 	Ogre::Vector3 mLook, mPosNodeOld;  Ogre::Real mVel;
 	Ogre::Quaternion qq;  // for ext cam
 

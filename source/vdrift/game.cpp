@@ -305,7 +305,6 @@ bool GAME::OneLoop()
 	return true;
 }
 
-///deltat is in seconds
 void GAME::Tick(float deltat)
 {
 	const float minfps = 10.0f; //this is the minimum fps the game will run at before it starts slowing down time
@@ -313,41 +312,22 @@ void GAME::Tick(float deltat)
 	const float maxtime = 1.0/minfps;
 	unsigned int curticks = 0;
 
-	//throw away wall clock time if necessary to keep the framerate above the minimum
+	//  throw away wall clock time if necessary to keep the framerate above the minimum
 	if (deltat > maxtime)
 		deltat = maxtime;
 
 	target_time += deltat;
 	float tickperriod = TickPeriod();
-	//increment game logic by however many tick periods have passed since the last GAME::Tick
+
+	//  increment game logic by however many tick periods have passed since the last GAME::Tick
 	while (target_time > tickperriod && curticks < maxticks)
 	{
 		frame++;
 		AdvanceGameLogic();
 
 		if (pOgreGame)
-		{
 			pOgreGame->newPoses(/*deltat*/tickperriod);
 
-			//  single thread
-			//if (settings->multi_thr == 0)
-			//	pOgreGame->updatePoses(deltat);
-				
-			/// update all cameras
-			/*if (pOgreGame->carModels.size() > 0 && (!pause || pOgreGame->bRplPlay))  // replay can be paused and needs cam upd
-			{
-				for (int i=0; i < pOgreGame->carModels.size(); ++i)
-				{
-					CarModel* cm = pOgreGame->carModels[i];
-					if (cm->fCam)
-					{
-						cm->fCam->update(framerate, &pOgreGame->carPoses[pOgreGame->iCurPoses[i]][i]);
-						if (settings->multi_thr != 1)
-							cm->fCam->Apply();
-					}
-				}
-			}/**/
-		}
 		curticks++;
 		target_time -= tickperriod;
 	}

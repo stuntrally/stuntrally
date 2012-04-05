@@ -24,9 +24,10 @@ CAR::CAR() :
 	last_steer(0),
 	debug_wheel_draw(false),
 	sector(-1),
-	iCamNext(0), bLastChk(0),
+	iCamNext(0), bLastChk(0),bLastChkOld(0),
 	fluidHitOld(0),
-	trackPercentCopy(0), bRemoteCar(0)
+	trackPercentCopy(0), bRemoteCar(0),
+	bResetPos(0)
 {
 	//dynamics.pCar = this;
 	vInteriorOffset[0]=0;
@@ -159,8 +160,8 @@ bool CAR::Load(class App* pApp1,
 
 		MATHVECTOR<double, 3> position;
 		QUATERNION<double> orientation;
-		position = initial_position;		posAtStart = posLastCheck = initial_position;
-		orientation = initial_orientation;	rotAtStart = rotLastCheck = initial_orientation;
+		position = initial_position;		posAtStart = posLastCheck = posLastCheck2 = initial_position;
+		orientation = initial_orientation;	rotAtStart = rotLastCheck = rotLastCheck2 = initial_orientation;
 		
 		dynamics.Init(pSet, &pApp->sc, &pApp->fluidsXml,
 			world, bodymodel, wheelmodelfront, wheelmodelrear, position, orientation);
@@ -596,9 +597,17 @@ void CAR::HandleInputs(const std::vector <float> & inputs, float dt)
 	//if (inputs[CARINPUT::ABS_TOGGLE])	dynamics.SetABS(!dynamics.GetABSEnabled());
 	//if (inputs[CARINPUT::TCS_TOGGLE])	dynamics.SetTCS(!dynamics.GetTCSEnabled());
 	
-	//  cam, chk
+	//  cam
 	iCamNext = -inputs[CARINPUT::PREV_CAM] + inputs[CARINPUT::NEXT_CAM];
+	
+	bLastChkOld = bLastChk;
 	bLastChk = inputs[CARINPUT::LAST_CHK];
+	
+	if (bResetPos)  // reset game
+	{	ResetPos(true);  bResetPos = false;  }
+	else
+	if (bLastChk && !bLastChkOld)
+		ResetPos(false);  // goto last checkpoint
 }
 
 
@@ -1080,14 +1089,8 @@ void CAR::ResetPos(bool fromStart)
 void CAR::SavePosAtCheck()
 {
 	dynamics.body.GetPosition();
+	posLastCheck2 = posLastCheck;  // 2nd last check
+	rotLastCheck2 = rotLastCheck;
 	posLastCheck = dynamics.body.GetPosition();
 	rotLastCheck = dynamics.body.GetOrientation();
-	//MATHVECTOR <float, 3> pos = fromStart ? posAtStart : posLastCheck;
-	//QUATERNION <float> rot = fromStart ? rotAtStart : rotLastCheck;
-
-	//btTransform transform;
-	//dynamics.chassis->getWorldTransform();
-	//transform.setOrigin(ToBulletVector(pos));
-	//transform.setRotation(ToBulletQuaternion(rot));
-	//dynamics.chassis->setWorldTransform(transform);
 }

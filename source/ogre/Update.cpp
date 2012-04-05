@@ -106,7 +106,7 @@ bool App::frameStart(Real time)
 	//  multi thread
 	if (pSet->multi_thr == 1 && pGame && !bLoading)
 	{
-		updatePoses(time);  //pGame->framerate
+		updatePoses(time);
 
 		#if 0
 		// Update cameras for all cars
@@ -295,7 +295,7 @@ bool App::frameStart(Real time)
 		{
 			ret = pGame->OneLoop();
 			if (!ret)  mShutDown = true;
-			updatePoses(time);  //pGame->framerate
+			updatePoses(time);
 		}
 		
 		// align checkpoint arrow
@@ -342,15 +342,15 @@ bool App::frameStart(Real time)
 			//PROFILER.beginBlock("g.road");  // below 0.0 ms
 			road->RebuildRoadInt();
 
-			//  more than 1 in pre viewport, each frame
-			if (pSet->game.local_players == 1)
+			//  more than 1: in pre viewport, each frame
+			if (mSplitMgr->mNumViewports == 1)
 			{
-				if (roadUpCnt <= 0)
+				roadUpdTm += time;
+				if (roadUpdTm > 0.1f)  // interval [sec]
 				{
-					roadUpCnt = 15;  //par upd, time..
+					roadUpdTm = 0.f;
 					road->UpdLodVis(pSet->road_dist);
 				}
-				roadUpCnt--;/**/
 			}
 			//PROFILER.endBlock("g.road");
 		}
@@ -621,8 +621,7 @@ void App::newPoses(float time)  // time only for camera update
 					chkPos = carM->vStartPos;
 				}
 				
-				//const Vector3& playerPos = carM->fCam->mCamera->getPosition();
-				const Vector3& playerPos = pi.pos;  //carM->pMainNode->getPosition();
+				const Vector3& playerPos = pi.pos;
 				Vector3 dir = chkPos - playerPos;
 				dir[1] = 0; // only x and z rotation
 				Quaternion quat = Vector3::UNIT_Z.getRotationTo(-dir); // convert to quaternion
@@ -784,8 +783,9 @@ void App::updatePoses(float time)
 		}
 		
 		int q = iCurPoses[c];
-		//PosInfo pi = carPoses[q][c];
-		carM->Update(/*pi*/carPoses[q][c], time);
+		int cc = (c + iRplCarOfs) % carModels.size();  // offset, use camera from other car
+		int qq = iCurPoses[cc];
+		carM->Update(carPoses[q][c], carPoses[qq][cc], time);
 		
 
 		//  nick text pos upd

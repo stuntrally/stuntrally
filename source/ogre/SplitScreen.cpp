@@ -139,7 +139,16 @@ void SplitScreenManager::Align()
 		// Create viewport, use i as Z order
 		mViewports.push_back(mWindow->addViewport( mCameras.back(), i+5, dims[0], dims[1], dims[2], dims[3]));
 	}
-	
+	//  always create for 4 cars (replay offset camera view)
+	for (int i=mNumViewports; i < 4; i++)
+	{
+		mCameras.push_back(mSceneMgr->createCamera("PlayerCamera" + toStr(i)));
+		mCameras.back()->setPosition(Vector3(0,-100,0));
+		mCameras.back()->lookAt(Vector3(0,-100,10));
+		mCameras.back()->setFarClipDistance(pSet->view_distance*1.1f);
+		mCameras.back()->setNearClipDistance(0.2f);
+	}
+		
 	// Create gui viewport if not already existing
 	if (!mGuiViewport)
 	{

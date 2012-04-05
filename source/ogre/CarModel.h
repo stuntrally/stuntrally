@@ -85,7 +85,7 @@ public:
 	void setMtrName(const Ogre::String& entName, const Ogre::String& mtrName);
 	
 	//  Call this every vdrift substep with new position info
-	void Update(PosInfo& newPosInfo, float time);
+	void Update(PosInfo& posInfo, PosInfo& posInfoCam, float time);
 	void UpdateKeys();  // for camera X,C, last chk F12
 	
 	//  Car color, After these values are changed, ChangeClr() should be called

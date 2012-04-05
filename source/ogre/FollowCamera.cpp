@@ -139,7 +139,7 @@ void FollowCamera::update(Real time, const PosInfo& posIn, PosInfo* posOut)
 			pos += addPos;
 			camPosFinal = pos + ofs;
 		
-			if (mGoalNode)  goalLook = posGoal + ofs;
+			goalLook = posGoal + ofs;
 			if (first)	{	mLook = goalLook;  first = false;  }
 
 			addLook = (goalLook - mLook) * dtmul;//Rot;
@@ -161,7 +161,7 @@ void FollowCamera::update(Real time, const PosInfo& posIn, PosInfo* posOut)
 //-----------------------------------------------------------------------------------------------------
 Vector3 FollowCamera::moveAboveTerrain(const Vector3& camPos)
 {
-	if (!mTerrain || !mCamera)
+	if (!mTerrain)
 		return camPos;
 
 	/// cast ray from car to camera, to prevent objects blocking the camera's sight
@@ -435,7 +435,7 @@ void FollowCamera::setCamera(int ang)
 
 FollowCamera::FollowCamera(Camera* cam) :
 	ovInfo(0),ovName(0), first(true), ca(0),
-    mCamera(cam), mGoalNode(0), mTerrain(0),
+    mCamera(cam), mTerrain(0),
     mLook(Vector3::ZERO), mPosNodeOld(Vector3::ZERO), mVel(0)
     #ifdef CAM_BLT
     ,shape(0), body(0), state(0)

@@ -73,7 +73,7 @@ public:
 	
 	//  wnd, hud, upl
 	bool bWindowResized, bSizeHUD;
-	int roadUpCnt;
+	float roadUpdTm;
 	class LoadingBar* mLoadingBar;
 	Ogre::SceneNode* ndSky;  //-
 

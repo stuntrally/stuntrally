@@ -134,14 +134,15 @@ void App::InitInputGui()
 
 		if (!playerTab)
 		{	y = yc+2*ya;  //  camera infos
-			CreateText(20,y, 280,24, "txtcam1", TR("#B0D8F8#{InputMapNextCamera} / #{InputMapPrevCamera}"));  y+=2*ya;
-			CreateText(40,y, 280,24, "txtcam2", TR("#B0D8F8#{InputCameraTxt1}"));  y+=2*ya;
-			CreateText(40,y, 280,24, "txtcam3", TR("#B0D8F8#{InputCameraTxt2}"));  y+=3*ya;
+			CreateText(20,y, 280,24, "txtcam1", TR("#A0D0F0#{InputMapNextCamera} / #{InputMapPrevCamera}"));  y+=2*ya;
+			CreateText(40,y, 280,24, "txtcam2", TR("#A0D0F0#{InputCameraTxt1}"));  y+=2*ya;
+			CreateText(40,y, 280,24, "txtcam3", TR("#A0D0F0#{InputCameraTxt2}"));  y+=3*ya;
 			//  replay controls info text
-			CreateText(20,y, 500,24, "txtrpl1", TR("#C0E0FF#{InputRplCtrl0}"));  y+=2*ya;
-			CreateText(40,y, 500,24, "txtrpl2", TR("#90C0FF#{InputRplCtrl1}"));  y+=2*ya;
-			CreateText(40,y, 500,24, "txtrpl3", TR("#90C0FF#{InputRplCtrl2}"));  y+=2*ya;
-			CreateText(40,y, 500,24, "txtrpl4", TR("#90C0FF#{InputRplCtrl3}"));  y+=2*ya;
+			CreateText(20,y, 500,24, "txtrpl1", TR("#A0D0F0#{InputRplCtrl0}"));  y+=2*ya;
+			CreateText(40,y, 500,24, "txtrpl2", TR("#80B0F0#{InputRplCtrl1}"));  y+=2*ya;
+			CreateText(40,y, 500,24, "txtrpl3", TR("#80B0F0#{InputRplCtrl2}"));  y+=2*ya;
+			CreateText(40,y, 500,24, "txtrpl4", TR("#80B0F0#{InputRplCtrl3}"));  y+=2*ya;
+			CreateText(40,y, 500,24, "txtrpl5", TR("#60A0D0#{InputRplCtrl4}"));  y+=2*ya;
 		}
 		
 		///  Actions  ------------------------------------------------

@@ -300,7 +300,8 @@ public:
 	void UpdateCarState(const protocol::CarStatePackage& state);
 
 	///  new
-	int id;
+	int id;  // index of car (same as for carModels)
+	bool bResetPos;
 	void ResetPos(bool fromStart=true);
 	void SavePosAtCheck();
 
@@ -381,12 +382,12 @@ public:
 	bool has2exhausts; // car has 2nd exhaust ; if true, mirror exhaust 1 for position
 	
 	//  for new game reset  and goto last checkp.
-	MATHVECTOR <float, 3> posAtStart, posLastCheck;
-	QUATERNION <float> rotAtStart, rotLastCheck;
+	MATHVECTOR <float, 3> posAtStart, posLastCheck,posLastCheck2;
+	QUATERNION <float> rotAtStart, rotLastCheck,rotLastCheck2;
 
 	//  car inputs  (new: cam,chk)
 	int iCamNext;
-	bool bLastChk;
+	bool bLastChk,bLastChkOld;
 };
 
 #endif

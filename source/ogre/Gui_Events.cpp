@@ -508,11 +508,12 @@ if (!bAssignKey)
 	{
 		for (int c=0; c < carModels.size(); ++c)
 		{
-			if (carModels[c]->pCar)  carModels[c]->pCar->ResetPos(true);
-			if (carModels[c]->fCam)  carModels[c]->fCam->first = true;
-			carModels[c]->ResetChecks();
-			carModels[c]->iWonPlace = 0;  carModels[c]->iWonPlaceOld = 0;
-			carModels[c]->iWonMsgTime = 0.f;
+			CarModel* cm = carModels[c];
+			if (cm->pCar)  cm->pCar->bResetPos = true;
+			if (cm->fCam)  cm->fCam->first = true;
+			cm->ResetChecks();
+			cm->iWonPlace = 0;  cm->iWonPlaceOld = 0;
+			cm->iWonMsgTime = 0.f;
 		}
 		pGame->timer.Reset(-1);
 		pGame->timer.pretime = mClient ? 2.0f : pSet->game.pre_time;  // same for all multi players
@@ -613,6 +614,13 @@ if (!bAssignKey)
 				if (bRplPlay && !isFocGui)
 				{	bRplPause = !bRplPause;  UpdRplPlayBtn();
 					return true;  }
+				break;
+				
+			case KC_K:		// replay car ofs
+				if (bRplPlay && !isFocGui)	{	--iRplCarOfs;  return true;  }
+				break;
+			case KC_L:		// replay car ofs
+				if (bRplPlay && !isFocGui)	{	++iRplCarOfs;  return true;  }
 				break;
 				
 			case KC_F:		// focus on find edit

@@ -343,7 +343,7 @@ protected:
 
 public:
 	bool bRplPlay,bRplPause, bRplRec, bRplWnd;  //  game
-	int carIdWin, iCurCar;
+	int carIdWin, iCurCar, iRplCarOfs;
 protected:
 	MyGUI::ButtonPtr btRplPl;  void UpdRplPlayBtn();
 	///---------------------------------------
