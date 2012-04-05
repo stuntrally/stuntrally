@@ -45,19 +45,20 @@ void App::btnRplLoad(WP)  // Load
 	}
 	else  // car, track change
 	{
-		string car = replay.header.car, trk = replay.header.track;
-		bool usr = replay.header.track_user == 1;
+		const ReplayHeader& h = replay.header;
+		string car = h.car, trk = h.track;
+		bool usr = h.track_user == 1;
 
 		//  set game config from replay
 		pSet->game.car[0] = car;  pSet->game.track = trk;  pSet->game.track_user = usr;
-		pSet->game.car_hue[0] = replay.header.hue[0];  pSet->game.car_sat[0] = replay.header.sat[0];  pSet->game.car_val[0] = replay.header.val[0];
-		pSet->game.trees = replay.header.ver < 6 ? 1.f : replay.header.trees;  // older didnt have trees saved, so use default 1
-		pSet->game.local_players = replay.header.numPlayers;
-		LogO("RPL btn Load  players: "+toStr(replay.header.numPlayers)+" netw: "+ toStr(replay.header.networked));
+		pSet->game.car_hue[0] = h.hue[0];  pSet->game.car_sat[0] = h.sat[0];  pSet->game.car_val[0] = h.val[0];
+		pSet->game.trees = h.ver < 6 ? 1.f : h.trees;  // older didnt have trees saved, so use default 1
+		pSet->game.local_players = h.numPlayers;
+		LogO("RPL btn Load  players: "+toStr(h.numPlayers)+" netw: "+ toStr(h.networked));
 
-		for (int p=1; p < replay.header.numPlayers; ++p)
-		{	pSet->game.car[p] = replay.header.cars[p-1];
-			pSet->game.car_hue[p] = replay.header.hue[p];  pSet->game.car_sat[p] = replay.header.sat[p];  pSet->game.car_val[p] = replay.header.val[p];
+		for (int p=1; p < h.numPlayers; ++p)
+		{	pSet->game.car[p] = h.cars[p-1];
+			pSet->game.car_hue[p] = h.hue[p];  pSet->game.car_sat[p] = h.sat[p];  pSet->game.car_val[p] = h.val[p];
 		}
 		newGameRpl = true;
 		btnNewGame(0);
@@ -118,7 +119,7 @@ void App::listRplChng(List* li, size_t pos)
 		if (!std::strftime(stm, 126, "%d.%b'%y  %a %H:%M", std::localtime(&ti)))  stm[0]=0;
 		
 		ss =/*"Time: "+*/String(stm)+"\n"+
-			String(TR("#{RplFileSize}:")) + fToStr( float(size)/1000000.f, 2,5) + TR(" #{UnitMB}\n") +
+			String(TR("#{RplFileSize}: ")) + fToStr( float(size)/1000000.f, 2,5) + TR(" #{UnitMB}\n") +
 			TR("#{RplVersion}: ") + toStr(rpl.header.ver) + "     " + toStr(rpl.header.frameSize) + "B";
 		if (valRplInfo2)  valRplInfo2->setCaption(ss);
 	}
