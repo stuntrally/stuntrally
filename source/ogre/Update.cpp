@@ -405,7 +405,7 @@ void App::newPoses(float time)  // time only for camera update
 	double lapTime = pGame->timer.GetPlayerTime(0);
 
 	// Iterate through all car models and set new pos info (from vdrift sim or replay)
-	int carId = 0;  CarModel* carM0 = carModels[0];
+	CarModel* carM0 = carModels[0];
 	for (int c = 0; c < carModels.size(); ++c)
 	{
 		CarModel* carM = carModels[c];
@@ -415,7 +415,7 @@ void App::newPoses(float time)  // time only for camera update
 		
 		//  local data  car,wheels
 		MATHVECTOR <float,3> pos, whPos[4];
-		QUATERNION <float> rot, whRot[4];  //?double
+		QUATERNION <float> rot, whRot[4];
 
 
 		///-----------------------------------------------------------------------
@@ -437,7 +437,7 @@ void App::newPoses(float time)  // time only for camera update
 				whPos[w] = rf.whPos[w];  whRot[w] = rf.whRot[w];
 				pi.whVel[w] = rf.whVel[w];
 				pi.whSlide[w] = rf.slide[w];  pi.whSqueal[w] = rf.squeal[w];
-				pi.whR[w] = replay.header.whR[carId][w];//
+				pi.whR[w] = replay.header.whR[c][w];//
 				pi.whTerMtr[w] = rf.whTerMtr[w];  pi.whRoadMtr[w] = rf.whRoadMtr[w];
 				pi.whH[w] = rf.whH[w];  pi.whP[w] = rf.whP[w];
 				pi.whAngVel[w] = rf.whAngVel[w];
@@ -447,9 +447,9 @@ void App::newPoses(float time)  // time only for camera update
 		else if (bRplPlay)  // class member frm - used for sounds in car.cpp
 		{
 			//  time  from start
-			ReplayFrame& fr = frm[carId];
-			bool ok = replay.GetFrame(rplTime, &fr, carId);
-				if (!ok)	pGame->timer.RestartReplay(0);  //?..
+			ReplayFrame& fr = frm[c];
+			bool ok = replay.GetFrame(rplTime, &fr, c);
+				if (!ok)	pGame->timer.RestartReplay(0);  //at end
 			
 			//  car
 			pos = fr.pos;  rot = fr.rot;  pi.speed = fr.speed;
@@ -463,7 +463,7 @@ void App::newPoses(float time)  // time only for camera update
 				whPos[w] = fr.whPos[w];  whRot[w] = fr.whRot[w];
 				pi.whVel[w] = fr.whVel[w];
 				pi.whSlide[w] = fr.slide[w];  pi.whSqueal[w] = fr.squeal[w];
-				pi.whR[w] = replay.header.whR[carId][w];//
+				pi.whR[w] = replay.header.whR[c][w];//
 				pi.whTerMtr[w] = fr.whTerMtr[w];  pi.whRoadMtr[w] = fr.whRoadMtr[w];
 				pi.whH[w] = fr.whH[w];  pi.whP[w] = fr.whP[w];
 				pi.whAngVel[w] = fr.whAngVel[w];
@@ -575,8 +575,8 @@ void App::newPoses(float time)  // time only for camera update
 				fr.vHitPos = cd.vHitPos;	fr.vHitNorm = cd.vHitNorm;
 				fr.whMudSpin = pCar->whMudSpin;
 				
-				replay.AddFrame(fr, carId);  // rec replay
-				if (carId==0)  /// rec ghost lap
+				replay.AddFrame(fr, c);  // rec replay
+				if (c==0)  /// rec ghost lap
 				{
 					fr.time = lapTime;
 					ghost.AddFrame(fr, 0);
@@ -676,18 +676,18 @@ void App::newPoses(float time)  // time only for camera update
 						&& carM->eType == CarModel::CT_LOCAL)  // only local car(s)
 					{
 						///  Lap
-						bool finished = pGame->timer.GetCurrentLap(carId) >= pSet->game.num_laps;
+						bool finished = pGame->timer.GetCurrentLap(c) >= pSet->game.num_laps;
 						bool best = finished ? false :  // dont inc laps when race over
-							pGame->timer.Lap(carId, 0,0, !finished, pSet->game.trackreverse);  //,boost_type?
-						double timeCur = pGame->timer.GetPlayerTimeTot(carId);
+							pGame->timer.Lap(c, 0,0, !finished, pSet->game.trackreverse);  //,boost_type?
+						double timeCur = pGame->timer.GetPlayerTimeTot(c);
 
 						//  Network notification, send: car id, lap time
-						if (mClient && carId == 0 && !finished)
-							mClient->lap(pGame->timer.GetCurrentLap(carId), pGame->timer.GetLastLap(carId));
+						if (mClient && c == 0 && !finished)
+							mClient->lap(pGame->timer.GetCurrentLap(c), pGame->timer.GetLastLap(c));
 
 						///  new best lap, save ghost
 						if (!pSet->rpl_bestonly || best)
-						if (carId==0 && pSet->rpl_rec)  // for many, only 1st-
+						if (c==0 && pSet->rpl_rec)  // for many, only 1st-
 						{
 							ghost.SaveFile(GetGhostFile());  //,boost_type?
 							ghplay.CopyFrom(ghost);
@@ -700,7 +700,7 @@ void App::newPoses(float time)  // time only for camera update
 							carM->pCar->dynamics.boostFuel = gfBoostFuelStart;
 
 						///  winner places  for local players > 1
-						finished = pGame->timer.GetCurrentLap(carId) >= pSet->game.num_laps;
+						finished = pGame->timer.GetCurrentLap(c) >= pSet->game.num_laps;
 						if (finished && !mClient)
 						{
 							if (pSet->game.champ_num < 0)
