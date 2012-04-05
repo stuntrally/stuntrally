@@ -349,6 +349,7 @@ void App::inputDetailBtn(WP sender)
 	OISB::Action* action = schema->mActions[actionName];  if (!action)  return;//
 	OISB::AnalogAxisAction* act = (OISB::AnalogAxisAction*)action;  if (!act)  return;//
 	actDetail = act;
+	if (panInputDetail)  panInputDetail->setVisible(false);
 
 	if (edInputMin)  edInputMin->setCaption(toStr(act->getProperty<OISB::Real>("MinValue")));
 	if (edInputMax)  edInputMax->setCaption(toStr(act->getProperty<OISB::Real>("MaxValue")));
@@ -392,7 +393,7 @@ void App::comboInputPreset(MyGUI::ComboBoxPtr cmb, size_t val)
 
 void App::comboInputKeyAllPreset(MyGUI::ComboBoxPtr cmb, size_t val)
 {
-	if (val == 0)  return;
+	if (val == 0)  return;  cmb->setIndexSelected(0);
 	TabPtr tPlr = mGUI->findWidget<Tab>("InputTab",false);  if (!tPlr)  return;
 	int id = tPlr->getIndexSelected();  if (id == 0)  return;
 	String schemaName = "Player"+toStr(id);
@@ -414,7 +415,9 @@ void App::comboInputKeyAllPreset(MyGUI::ComboBoxPtr cmb, size_t val)
 		act->setProperty("ReturnDecSpeed",vRet);	act->setProperty("DecSpeed",vInc);
 		act->setProperty("ReturnIncSpeed",vRet);	act->setProperty("IncSpeed",vInc);
 	}
-	cmb->setIndexSelected(0);
+	if (!actDetail)  return;  // update edit vals
+	if (edInputReturn)      edInputReturn->setCaption(toStr(actDetail->getProperty<OISB::Real>("IncSpeed")));
+	if (edInputIncrease)  edInputIncrease->setCaption(toStr(actDetail->getProperty<OISB::Real>("ReturnIncSpeed")));
 }
 
 

@@ -2302,13 +2302,13 @@
 			<Widget type="TabItem" skin="" position="2 24 794 572" name="InputTabAll">
 				<Property key="Caption" value="#{Input}"/>
 				<UserString key="RelativeTo" value="OptionsWnd"/>
-				<Widget type="Widget" skin="PanelSkin" position="532 88 236 204" name="PanMenu2">
+				<Widget type="Widget" skin="PanelSkin" position="532 88 236 204" name="PanKey1">
 					<Property key="Colour" value="0.6 0.8 1"/>
 					<Property key="Alpha" value="0.55"/>
 					<Property key="InheritsAlpha" value="false"/>
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 				</Widget>
-                <Widget type="Widget" skin="PanelSkin" position="532 298 236 176" name="PanMenu2">
+                <Widget type="Widget" skin="PanelSkin" position="532 298 236 176" name="PanKey2">
 					<Property key="Colour" value="0.7 1 0.7"/>
 					<Property key="Alpha" value="0.45"/>
 					<Property key="InheritsAlpha" value="false"/>
@@ -2424,6 +2424,12 @@
 					<Property key="ReadOnly" value="true"/>
 					<Property key="Colour" value="0.7 1.0 0.7"/>
 					<Property key="TextColour" value="0.7 1.0 0.7"/>
+					<UserString key="RelativeTo" value="OptionsWnd"/>
+				</Widget>
+				<Widget type="Widget" skin="Panel" position="532 88 236 314" name="PanInputDetail">
+					<Property key="Colour" value="0.7 0.8 0.9"/>
+					<Property key="Alpha" value="0.8"/>
+					<Property key="InheritsAlpha" value="false"/>
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 				</Widget>
 			</Widget>

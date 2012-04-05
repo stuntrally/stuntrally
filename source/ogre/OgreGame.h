@@ -285,7 +285,7 @@ protected:
 	virtual bool axisMoved( const OIS::JoyStickEvent &e, int axis );
     virtual bool buttonPressed( const OIS::JoyStickEvent &e, int button );
     virtual bool buttonReleased( const OIS::JoyStickEvent &e, int button );
-	MyGUI::StaticTextPtr txtJAxis, txtJBtn, txtInpDetail;
+	MyGUI::StaticTextPtr txtJAxis, txtJBtn, txtInpDetail;  MyGUI::WidgetPtr panInputDetail;
 	int lastAxis, axisCnt;  std::string joyName;  class OISB::AnalogAxisAction* actDetail;
 	MyGUI::EditPtr edInputMin, edInputMax, edInputMul, edInputReturn, edInputIncrease;  void editInput(MyGUI::EditPtr);
 	MyGUI::ComboBox* cmbInpDetSet;  void comboInputPreset(CMB), comboInputKeyAllPreset(CMB);

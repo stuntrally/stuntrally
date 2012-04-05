@@ -399,6 +399,7 @@ void App::InitGui()
 
 	///  input tab  -------
 	InitInputGui();
+	panInputDetail = mGUI->findWidget<Widget>("PanInputDetail");
 	
 	InitGuiScrenRes();
 	
