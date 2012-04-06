@@ -98,6 +98,7 @@ void SETTINGS::Serialize(bool w, CONFIGFILE & c)
 
 	Param(c,w, "network.nickname", nickname);		Param(c,w, "network.master_server_address", master_server_address);
 	Param(c,w, "network.local_port", local_port);	Param(c,w, "network.master_server_port", master_server_port);
+	Param(c,w, "network.game_name", netGameName);
 
 	Param(c,w, "replay.rec", rpl_rec);				Param(c,w, "replay.ghost", rpl_ghost);
 	Param(c,w, "replay.bestonly", rpl_bestonly);	Param(c,w, "replay.listview", rpl_listview);
@@ -165,7 +166,7 @@ SETTINGS::SETTINGS() :  ///  Defaults
 	loadingbackground(true),
 	x11_capture_mouse(false), x11_hwmouse(false),
 	//  network
-	nickname("Player"),
+	nickname("Player"), netGameName("Default Game"),
 	master_server_address("localhost"),
 	master_server_port(protocol::DEFAULT_PORT),
 	local_port(protocol::DEFAULT_PORT),

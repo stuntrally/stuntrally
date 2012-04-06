@@ -92,10 +92,9 @@ public:
 	bool rpl_alpha, rpl_ghostpar;  int rpl_listview, rpl_numViews;
 	
 	// network
-	std::string nickname;
+	std::string nickname, netGameName;
 	std::string master_server_address;
-	int master_server_port;
-	int local_port;
+	int master_server_port, local_port;
 
 	// not in gui
 	bool boostFromExhaust;  int net_local_plr;

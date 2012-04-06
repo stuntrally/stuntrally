@@ -339,8 +339,9 @@ void App::InitGui()
 	valNetGameName = mGUI->findWidget<StaticText>("valNetGameName");
 	edNetGameName = mGUI->findWidget<Edit>("edNetGameName");
 	if (edNetGameName)
+	{	edNetGameName->setCaption(pSet->netGameName);
 		edNetGameName->eventEditTextChange += newDelegate(this, &App::evEdNetGameName);
-	
+	}
 	//  password
 	valNetPassword = mGUI->findWidget<StaticText>("valNetPassword");
 	edNetPassword = mGUI->findWidget<Edit>("edNetPassword");

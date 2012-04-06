@@ -660,7 +660,7 @@
 							<UserString key="RelativeTo" value="GameWnd"/>
 						</Widget>
 						<Widget type="EditBox" skin="EditBox" position="164 22 268 24" name="edNetGameName">
-							<Property key="Caption" value="Stunt Rally Race"/>
+							<!--<Property key="Caption" value="Stunt Rally Race"/>-->
 							<Property key="Colour" value="0.6 0.8 1"/>
 							<Property key="TextColour" value="0.6 0.8 1"/>
 							<UserString key="RelativeTo" value="GameWnd"/>
