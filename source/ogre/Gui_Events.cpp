@@ -444,8 +444,9 @@ bool App::actionIsActive(std::string name, std::string pressed)
 
 bool App::keyPressed( const OIS::KeyEvent &arg )
 {
-	// update all keystates
-	OISB::System::getSingleton().process(0.001/*?0*/);
+	// update all keystates  (needed for all action("..") from oisb)
+	if (mOISBsys)
+		mOISBsys->process(0.0001/*?0*/);
 	
 	// action key == pressed key
 	#define action(s)  actionIsActive(s, mKeyboard->getAsString(arg.key))
@@ -459,9 +460,9 @@ if (!bAssignKey)
 		switch (pSet->inMenu)
 		{	case WND_Game:
 			case WND_Champ:  tab = mWndTabsGame;  sub = vSubTabsGame[tab->getIndexSelected()];  break;
+			case WND_Replays:  tab = mWndTabsRpl;  break;
 			case WND_Help:  tab = mWndTabsHelp;  break;
 			case WND_Options:  tab = mWndTabsOpts;  sub = vSubTabsOpts[tab->getIndexSelected()];  break;
-			//case WND_Replays:  tab = mWndTabsRpl;  break;
 		}
 		if (tab)
 		if (shift)

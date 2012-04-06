@@ -539,7 +539,7 @@ void App::NewGameDoLoad()
 		mSplitMgr->mGuiViewport->setClearEveryFrame(true, FBT_DEPTH);
 
 		ChampLoadEnd();
-		//boost::this_thread::sleep(boost::posix_time::milliseconds(6000 * mClient->getId())); // Test loading syncronization
+		//boost::this_thread::sleep(boost::posix_time::milliseconds(6000 * mClient->getId())); // Test loading synchronization
 		bLoadingEnd = true;
 		return;
 	}

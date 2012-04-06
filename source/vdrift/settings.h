@@ -75,7 +75,7 @@ public:
 	bool opplist_sort;
 	
 	//  sim freq (1/interval timestep)
-	float game_fq, blt_fq;  int blt_iter, dyn_iter, multi_thr;
+	float game_fq, blt_fq;  int blt_iter, dyn_iter, multi_thr, thread_sleep;
 	//bool collis_veget, collis_cars;
 	
 	//  compositor

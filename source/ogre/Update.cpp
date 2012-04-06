@@ -34,17 +34,19 @@ void App::UpdThr()
 		//  separate thread
 		pGame->qtim.update();
 		double dt = pGame->qtim.dt;
+
+		///if (mOISBsys)  // input update  multi thread
+		///	mOISBsys->process(dt);
 		
 		if (pSet->multi_thr == 1 && !bLoading)
 		{
 			bool ret = pGame->OneLoop(dt);
-
-			DoNetworking();
-
 			if (!ret)
 				mShutDown = true;
+
+			DoNetworking();
 		}
-		boost::this_thread::sleep(boost::posix_time::milliseconds(5));  //par!?
+		boost::this_thread::sleep(boost::posix_time::milliseconds(pSet->thread_sleep));
 	}
 }
 
@@ -281,8 +283,9 @@ bool App::frameStart(Real time)
 
 		// input
 		//PROFILER.beginBlock("input");  // below 0.0 ms
-		//if (pSet->multi_thr == 0)
-		//	OISB::System::getSingleton().process(time);  /// moved to sim thread
+		//if (pSet->multi_thr == 0)  /// move to sim thread...
+		if (mOISBsys)  // input update (old ver, in render)
+			mOISBsys->process(time);
 		//PROFILER.endBlock("input");
 
 

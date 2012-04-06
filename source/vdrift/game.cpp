@@ -171,9 +171,6 @@ bool GAME::OneLoop(double dt)
 	
 	//LogO(Ogre::String("Ld: dt ")+fToStr(dt,6,8));
 
-	//if (OISB::System::getSingletonPtr() != NULL)
-		//OISB::System::getSingleton().process(dt);
-
 	Tick(dt);  // do CPU intensive stuff in parallel with the GPU
 	
 	displayframe++;  //only for stats
@@ -243,8 +240,8 @@ void GAME::AdvanceGameLogic(double dt)
 			PROFILER.endBlock("-physics");
 			
 			PROFILER.beginBlock("-car-sim");
-			//if (settings->multi_thr == 1)
-			OISB::System::getSingleton().process(dt);  // input update
+			///if (settings->multi_thr == 0)
+			///	OISB::System::getSingleton().process(dt);  // input update  single thread
 
 			int i = 0;
 			for (std::list <CAR>::iterator it = cars.begin(); it != cars.end(); ++it, ++i)
