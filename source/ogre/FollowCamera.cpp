@@ -152,6 +152,7 @@ void FollowCamera::update(Real time, const PosInfo& posIn, PosInfo* posOut)
 	posOut->camPos = camPosFinal;  // save result in out posInfo
 	posOut->camLook = camLookFinal;
 	posOut->camRot = camRotFinal;
+	posOut->camUseRot = manualOrient;
 
 	updInfo(time);
 }
@@ -212,7 +213,7 @@ void FollowCamera::Apply(const PosInfo& posIn)
 	mCamera->setPosition( moveAboveTerrain(posIn.camPos) );
 	//mCamera->setPosition( posIn.camPos );
 
-	if (!manualOrient)
+	if (!posIn.camUseRot)
 		mCamera->lookAt(posIn.camLook);
 	else
 		mCamera->setOrientation(posIn.camRot);

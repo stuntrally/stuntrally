@@ -739,13 +739,15 @@ void App::newPoses(float time)  // time only for camera update
 
 		
 		///  store new pos info in queue  _________
-		int qn = (iCurPoses[c] + 1) % CarPosCnt;  // next index in queue
-		carPoses[qn][c] = pi;
-		//  update camera
-		if (carM->fCam)
-			carM->fCam->update(time, pi, &carPoses[qn][c]);
-		iCurPoses[c] = qn;  // atomic, set new index in queue
-
+		if (!isFocGui || mClient)  // dont if gui, but network always
+		{
+			int qn = (iCurPoses[c] + 1) % CarPosCnt;  // next index in queue
+			carPoses[qn][c] = pi;
+			//  update camera
+			if (carM->fCam)
+				carM->fCam->update(time, pi, &carPoses[qn][c]);
+			iCurPoses[c] = qn;  // atomic, set new index in queue
+		}
 	}
 	PROFILER.endBlock(".newPos ");
 }
