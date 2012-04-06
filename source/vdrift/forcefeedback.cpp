@@ -1,15 +1,16 @@
 #include "pch.h"
 
 // force feedback is only supported on linux.
-#if OGRE_PLATFORM == OGRE_PLATFORM_LINUX
-	#define ENABLE_FORCE_FEEDBACK
-#endif
+//#if OGRE_PLATFORM == OGRE_PLATFORM_LINUX
+//	#define ENABLE_FORCE_FEEDBACK
+//#endif
 
 #ifdef ENABLE_FORCE_FEEDBACK
 #include "forcefeedback.h"
 
 #include <cstring>
 #include <string>
+#include <linux/input.h>
 
 using std::string;
 using std::endl;

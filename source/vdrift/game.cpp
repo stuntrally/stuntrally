@@ -70,21 +70,12 @@ void GAME::Start(std::list <string> & args)
 	//initialize GUI
 	std::map<string, string> optionmap;
 	LoadSaveOptions(LOAD, optionmap);
-	//if (settings->mousegrab)  eventsystem.SetMouseCursorVisibility(true);
 
 	//initialize force feedback
 	#ifdef ENABLE_FORCE_FEEDBACK
 	forcefeedback.reset(new FORCEFEEDBACK(settings->ff_device, error_output, info_output));
 		ff_update_time = 0;
 	#endif
-
-	/*if (benchmode)
-	{
-		if(!NewGame(true))
-		{
-			error_output << "Error loading benchmark" << endl;
-		}
-	}*/
 }
 
 bool GAME::InitializeSound()
@@ -224,8 +215,6 @@ void GAME::Tick(double deltat)
 //----------------------------------------------------------------------------------------------------------------------------
 void GAME::AdvanceGameLogic(double dt)
 {
-	//eventsystem.ProcessEvents(); //-
-
 	if (track.Loaded())
 	{
 		if (pause && carcontrols_local.first)

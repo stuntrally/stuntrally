@@ -1,3 +1,6 @@
+#ifndef _FORCEFEEDBACK_H
+#define _FORCEFEEDBACK_H
+
 #include <OgrePlatform.h>
 
 // force feedback is only supported on linux.
@@ -6,10 +9,7 @@
 #endif
 
 #ifdef ENABLE_FORCE_FEEDBACK
-#ifndef _FORCEFEEDBACK_H
-#define _FORCEFEEDBACK_H
 
-#include <linux/input.h>
 #include <fcntl.h>
 #include <unistd.h>
 #include <errno.h>
@@ -33,5 +33,6 @@ private:
 	double lastforce;
 };
 
-#endif // _FORCEFEEDBACK_H
 #endif // ENABLE_FORCE_FEEDBACK
+
+#endif // _FORCEFEEDBACK_H
