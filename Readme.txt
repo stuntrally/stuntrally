@@ -8,8 +8,6 @@
 
     Releases (Windows, Linux, source packs):
             https://sourceforge.net/projects/stuntrally/files/
-    Linux packages info:
-            http://code.google.com/p/vdrift-ogre/wiki/Packages
     Git repositories:  (for latest sources, data, and tracks)
             https://github.com/stuntrally/
 
@@ -37,7 +35,7 @@
 
 Description
 
-This game features 71 tracks in 11 sceneries and 10 drivable cars.
+This game features 70 tracks in 11 sceneries and 10 drivable cars.
 The Track Editor allows modifying and creating tracks.
 Both run on Windows and Linux.
 
@@ -106,7 +104,7 @@ Rendering is done by OGRE, trees/grass by PagedGeometry, Gui by MyGUI.
 
 -- Currently these are used (and need to build before game):
 newer versions can be used
-OGRE 1.7 with plugins:
+OGRE 1.8 with plugins: (1.7 works but has fewer effects)
     RenderSystem_GL, RenderSystem_Direct3D9
     OgreTerrain, OgrePaging
     Plugin_ParticleFX
@@ -134,7 +132,7 @@ TinyXML
 
 Help is welcomed
 
-Currently we are 3 developers, we are looking for:
+Currently we are 4 developers, we are looking for:
 
 Track creators
     If you manage to create an interesting track,
@@ -156,4 +154,4 @@ Translators
 
 If so, let us know by posting on Issue tracker,
 or tell us on IRC at #stuntrally on freenode,
-or email me at cryham(at)gmail(dot)com.
+or email me at cryham (at) g m a i l (dot) com.
