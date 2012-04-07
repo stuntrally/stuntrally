@@ -22,7 +22,7 @@ import subprocess
 import sys
 
 app = 'StuntRally'
-version = '1.4'
+version = '1.5'
 
 if len(sys.argv) != 2:
     print >>sys.stderr, 'Usage: ' + sys.argv[0] + ' /path/to/stuntrally/installation'
