@@ -15,6 +15,7 @@
 #include <errno.h>
 #include <string>
 #include <iostream>
+#include <linux/input.h>
 
 class FORCEFEEDBACK
 {

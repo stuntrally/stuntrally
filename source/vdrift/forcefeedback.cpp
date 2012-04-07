@@ -10,7 +10,6 @@
 
 #include <cstring>
 #include <string>
-#include <linux/input.h>
 
 using std::string;
 using std::endl;
