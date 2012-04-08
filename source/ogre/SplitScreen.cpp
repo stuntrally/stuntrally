@@ -53,7 +53,10 @@ void SplitScreenManager::UpdateCamDist()
 void SplitScreenManager::CleanUp()
 {
 	for (std::list<Ogre::Viewport*>::iterator vpIt=mViewports.begin(); vpIt != mViewports.end(); ++vpIt)
+	{
+		CompositorManager::getSingleton().removeCompositorChain(*vpIt);
 		mWindow->removeViewport( (*vpIt)->getZOrder() );
+	}
 	mViewports.clear();
 	
 	for (std::list<Ogre::Camera*>::iterator it=mCameras.begin(); it != mCameras.end(); ++it)
