@@ -111,6 +111,7 @@ void App::CreateTrees()
 		grass->addDetailLevel<GrassPage>(sc.grDist * pSet->grass_dist);
 
 		GrassLoader *grassLoader = new Forests::GrassLoader(grass);
+		grassLoader->setRenderQueueGroup(RQG_BatchAlpha);
 		grass->setPageLoader(grassLoader);
 		grassLoader->setHeightFunction(&getTerrainHeight);
 
