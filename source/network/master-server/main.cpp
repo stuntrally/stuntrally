@@ -137,7 +137,8 @@ public:
 				if (!peer) return;
 				// Unserialize
 				protocol::GameInfo game = *reinterpret_cast<const protocol::GameInfo*>(e.packet_data);
-				out(VERBOSE) << "Game update received for \"" << std::string(game.name) << "\" from " << e.peer_address << std::endl;
+				if (game.id == 0)
+					out(VERBOSE) << "A game received from " << e.peer_address << std::endl;
 				// Fill in peer address
 				game.address = peer->address.host;
 				// Update game status

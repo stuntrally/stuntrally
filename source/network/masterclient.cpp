@@ -41,7 +41,9 @@ void MasterClient::updateGame(const protocol::GameInfo &game, std::string passwo
 {
 	{
 		boost::mutex::scoped_lock lock(m_mutex);
+		uint32_t id = m_game.id;
 		m_game = game;
+		m_game.id = id;
 		m_password = password;
 		m_sendUpdates = true;
 	}
