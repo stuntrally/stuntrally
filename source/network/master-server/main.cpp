@@ -106,7 +106,7 @@ private:
 class Server: public net::NetworkListener {
 public:
 	Server(GameListManager& glm, int port = protocol::DEFAULT_PORT)
-		: m_client(*this, port), m_glm(glm)
+		: m_client(*this, port, NULL, 100), m_glm(glm)
 	{
 		out(NORMAL) << "Listening on port " << port << "..." << std::endl;
 	}
