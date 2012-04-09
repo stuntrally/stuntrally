@@ -1,16 +1,4 @@
 <championships>
-<!--  Test  -->
-	<championship name="Test-1" ver="1" difficulty="0" length="1" time="6" tutorial="2"
-			descr="Fastest 1 track, to test logic.">
-		<track name="TestC6-temp" laps="1" factor="0.1" />
-	</championship>
-	<championship name="Test-3" ver="1" difficulty="0" length="2" time="24" tutorial="2"
-			descr="Fastest 3 tracks, to test logic.">
-		<track name="TestC6-temp" reversed="0" laps="1" factor="0.1" />
-		<track name="TestC4-ow" laps="1" factor="0.1" />
-	<!--<track name="TestC7-oc" laps="1" factor="0.1" />-->
-		<track name="TestC1-circle" laps="1" factor="0.1" />
-	</championship>
 
 <!--  Tutorials  -->
 	<championship name="Tutorial Basic" ver="1" difficulty="1" length="3" tutorial="1" 
@@ -210,12 +198,26 @@
 			descr="Greece championship. All tracks for this scenery in their appearance order.">
 		<track name="G1-Long"		laps="1" factor="0.1" /><!---->
 		<track name="G2-Coast"		laps="1" factor="0.1" />
+		<track name="G3-Butterfly"	laps="1" factor="0.1" />
 	</championship>
 	<championship name="Other sceneries" ver="1" difficulty="4" length="3" tutorial="3" 
 			descr="Other sceneries championship: Volcanic and Unidentified.">
 		<track name="V1-Dark"		laps="1" factor="0.1" /><!---->
 		<track name="X1-Magic"		laps="1" factor="0.1" /><!---->
 		<track name="X2-Swirl"		laps="1" factor="0.1" />
+	</championship>
+
+<!--  Test  -->
+	<championship name="Test-1" ver="1" difficulty="0" length="1" time="6" tutorial="2"
+			descr="Fastest 1 track, to test logic.">
+		<track name="TestC6-temp" laps="1" factor="0.1" />
+	</championship>
+	<championship name="Test-3" ver="1" difficulty="0" length="2" time="24" tutorial="2"
+			descr="Fastest 3 tracks, to test logic.">
+		<track name="TestC6-temp" reversed="0" laps="1" factor="0.1" />
+		<track name="TestC4-ow" laps="1" factor="0.1" />
+	<!--<track name="TestC7-oc" laps="1" factor="0.1" />-->
+		<track name="TestC1-circle" laps="1" factor="0.1" />
 	</championship>
 	<championship name="Test tracks" ver="1" difficulty="1" length="3" tutorial="2" 
 			descr="Really short and circular tracks.">
@@ -319,7 +321,6 @@
 
 		<track name="J12-Fog"		time="54.7"/>
 		<track name="J13-Tropic"	time="255.2"/>
-
 		<track name="F11-Dawn"		time="34.6"/>
 		<track name="I4-Sunset"		time="56.1"/>
 
@@ -329,11 +330,10 @@
 
 		<track name="D9-Mud"		time="40.3"/>
 		<track name="J14-Muddy"		time="45.4"/>
-
-		<track name="TestC5-egg"	time="7.2"/>
 		<track name="S13-Hole"		time="91.7"/>
 		<track name="0W9-IceFrenzy"	time="117.0"/>
 
+		<track name="TestC5-egg"	time="7.2"/>
 		<track name="TestC6-temp"	time="6.6"/>
 		<track name="TestC7-oc"		time="13.0"/>
 		<!--71-->
@@ -342,5 +342,7 @@
 		<track name="X2-Swirl"		time="94.5"/>
 		<track name="F12-HighPeaks"	time="310.1"/>
 		<track name="D10-MudBath"	time="126.0"/>
+		<!--76-->
+		<track name="G3-Butterfly"	time="43.5"/>
 	</times>
 </championships>

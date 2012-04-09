@@ -115,5 +115,7 @@
 	<track n="74" name="X2-Swirl"	created="13-01-12" crtver="1.5" modified="14-01-12" scenery="Unidentified" 	author="CH" fluids="2" bumps="0" jumps="0" loops="2" pipes="3" banked="2" frenzy="1" long="3" diff="3" rating="2" />
 	<track n="75" name="F12-HighPeaks"	created="14-01-12" crtver="1.5" modified="14-01-12" scenery="Forest" 	author="CH" fluids="1" bumps="2" jumps="0" loops="0" pipes="0" banked="2" frenzy="2" long="7" diff="3" rating="4" />
 	<track n="76" name="D10-MudBath"	created="04-02-12" crtver="1.5" modified="05-02-12" scenery="Desert"	author="CH" fluids="5" bumps="3" jumps="2" loops="0" pipes="0" banked="1" frenzy="0" long="3" diff="4" rating="3" />
+<!--76-->
+	<track n="77" name="G3-Butterfly"	created="09-04-12" crtver="1.6" modified="09-04-12" scenery="Greece" 	author="CH" fluids="0" bumps="1" jumps="0" loops="0" pipes="0" banked="0" frenzy="1" long="1" diff="2" rating="2" />
 
 </tracks>
