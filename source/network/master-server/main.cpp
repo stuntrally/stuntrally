@@ -25,8 +25,20 @@ enum LogLevel {
 	VERBOSE = 2
 } g_loglevel = NORMAL;
 
+/// This prints the current time, but only if enough seconds has passed since last time
+void handleTimePrinting(int silencetime = 60) {
+	static uint32_t logSilenceTimer = 0;
+	if ((uint32_t)std::time(NULL) > logSilenceTimer + silencetime) {
+		time_t t = std::time(NULL);
+		std::cout << "Time: " << ctime(&t); // endl comes from ctime()
+	}
+	logSilenceTimer = (uint32_t)std::time(NULL);
+}
+
+
 /// Use this function as std::cout, giving it the message's log level as parameter
 std::ostream& out(LogLevel level) {
+	if (level == VERBOSE) handleTimePrinting();
 	if (level == ERROR) return std::cerr;
 	if (g_loglevel >= level) return std::cout;
 	static std::ostringstream oss; // Sink for discarded messages
