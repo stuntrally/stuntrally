@@ -25,8 +25,20 @@ enum LogLevel {
 	VERBOSE = 2
 } g_loglevel = NORMAL;
 
+/// This prints the current time, but only if enough seconds has passed since last time
+void handleTimePrinting(int silencetime = 60) {
+	static uint32_t logSilenceTimer = 0;
+	if ((uint32_t)std::time(NULL) > logSilenceTimer + silencetime) {
+		time_t t = std::time(NULL);
+		std::cout << "Time: " << ctime(&t); // endl comes from ctime()
+	}
+	logSilenceTimer = (uint32_t)std::time(NULL);
+}
+
+
 /// Use this function as std::cout, giving it the message's log level as parameter
 std::ostream& out(LogLevel level) {
+	if (level == VERBOSE) handleTimePrinting();
 	if (level == ERROR) return std::cerr;
 	if (g_loglevel >= level) return std::cout;
 	static std::ostringstream oss; // Sink for discarded messages
@@ -94,7 +106,7 @@ private:
 class Server: public net::NetworkListener {
 public:
 	Server(GameListManager& glm, int port = protocol::DEFAULT_PORT)
-		: m_client(*this, port), m_glm(glm)
+		: m_client(*this, port, NULL, 100), m_glm(glm)
 	{
 		out(NORMAL) << "Listening on port " << port << "..." << std::endl;
 	}
@@ -137,7 +149,8 @@ public:
 				if (!peer) return;
 				// Unserialize
 				protocol::GameInfo game = *reinterpret_cast<const protocol::GameInfo*>(e.packet_data);
-				out(VERBOSE) << "Game update received for \"" << std::string(game.name) << "\" from " << e.peer_address << std::endl;
+				if (game.id == 0)
+					out(VERBOSE) << "A game received from " << e.peer_address << std::endl;
 				// Fill in peer address
 				game.address = peer->address.host;
 				// Update game status

@@ -40,7 +40,6 @@
 namespace net {
 
 	const unsigned ENetChannels = 3; // 0 = Sequenced, 1 = Reliable, 2 = Unsequenced
-	const unsigned ENetMaxConnections = 16;
 
 	typedef enet_uint16 peer_id_t;
 
@@ -154,13 +153,14 @@ namespace net {
 		 * @param listener class to receive network events
 		 * @param port the port for listening for new connections, defaults to any port
 		 * @param data optional application specific data to associate with the NetworkObject instance
+		 * @param max_connections maximum number of peers
 		 */
-		NetworkObject(NetworkListener& listener, int port = -1, void* data = NULL): m_quit(false), m_host(NULL), m_listener(listener), m_data(data)
+		NetworkObject(NetworkListener& listener, int port = -1, void* data = NULL, int max_connections = 16): m_quit(false), m_host(NULL), m_listener(listener), m_data(data)
 		{
 			m_address.host = ENET_HOST_ANY;
 			m_address.port = port < 0 ? ENET_PORT_ANY : port;
 			// Create host at address, max_conns, unlimited up/down bandwith
-			m_host = enet_host_create(&m_address, ENetMaxConnections, ENetChannels, 0, 0);
+			m_host = enet_host_create(&m_address, max_connections, ENetChannels, 0, 0);
 			if (!m_host) throw std::runtime_error("An error occurred while trying to create an ENet host.");
 			// Start listener thread
 			m_thread = boost::thread(boost::bind(&NetworkObject::listen, boost::ref(*this)));
