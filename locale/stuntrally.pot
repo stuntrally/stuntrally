@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION"
 "Report-Msgid-Bugs-To: "
-"POT-Creation-Date: 2012-04-01 16:07+0300"
+"POT-Creation-Date: 2012-04-10 23:44+0300"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>"
 "Language-Team: LANGUAGE <LL@li.org>"
@@ -43,6 +43,10 @@ msgstr ""
 
 msgctxt "TipGrassSwayDistr"
 msgid "Grass sway effect distribution (how random)."
+msgstr ""
+
+msgctxt "GraphicsAll_VeryHigh"
+msgid "Very High"
 msgstr ""
 
 msgctxt "InpSet_AxisFull"
@@ -989,8 +993,8 @@ msgctxt "SetCamTo"
 msgid "Set camera to"
 msgstr ""
 
-msgctxt "InputPressButtonTip"
-msgid "Press a button to see its number"
+msgctxt "RplMaxNumViewports"
+msgid "Max. number of viewports (see less, for more player replays)"
 msgstr ""
 
 msgctxt "SingleRace"
@@ -1202,7 +1206,7 @@ msgid "most work also on selection"
 msgstr ""
 
 msgctxt "InputTerHeight"
-msgid "E - Height set (RMB change height value)"
+msgid "E - Height set  (RMB change height value)"
 msgstr ""
 
 msgctxt "TipLTrMaxTerAng"
@@ -1679,6 +1683,10 @@ msgstr ""
 
 msgctxt "TireTrails"
 msgid "Tire Trails"
+msgstr ""
+
+msgctxt "InputRplCtrl4"
+msgid "K, L - change camera view to other player"
 msgstr ""
 
 msgctxt "TipGrassPatchLengthMin"
@@ -2561,6 +2569,10 @@ msgctxt "RplAlpha"
 msgid "Transparent ghost"
 msgstr ""
 
+msgctxt "InputTerFilter"
+msgid "F - Filter  (remove noise)"
+msgstr ""
+
 msgctxt "No"
 msgid "No"
 msgstr ""
@@ -2742,7 +2754,7 @@ msgid "Bullet debug"
 msgstr ""
 
 msgctxt "InputTerSmooth"
-msgid "S - Smooth"
+msgid "S - Smooth  (flatten)"
 msgstr ""
 
 msgctxt "TipChangeTrack"
@@ -2857,8 +2869,8 @@ msgctxt "Color"
 msgid "color"
 msgstr ""
 
-msgctxt "GraphicsAll_VeryHigh"
-msgid "Very High"
+msgctxt "InputPressButtonTip"
+msgid "Press a button to see its number"
 msgstr ""
 
 msgctxt "LANG_FI"
