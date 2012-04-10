@@ -225,7 +225,7 @@
 					<Property key="Caption" value="#{Track}"/>
 					<Property key="TextColour" value="0.4 1.0 0.5"/>
 				</Widget>
-				<Widget type="Button" skin="Button" position="368 488 128 32" name="NewGame1">
+				<Widget type="Button" skin="Button" position="368 488 140 32" name="NewGame1">
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 					<Property key="Caption" value="#{LoadTrack}"/>
 					<Property key="Colour" value="0.6 1.0 0.3"/>
@@ -386,28 +386,28 @@
 					<Property key="TextColour" value="0.8 0.8 1.0"/>
 					<UserString key="tip" value="#{TipCopySource}"/>
 				</Widget>
-				<Widget type="Button" skin="Button" position="528 495 136 25" name="TrackNew">
+				<Widget type="Button" skin="Button" position="528 495 150 25" name="TrackNew">
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 					<Property key="Caption" value="#{NewDup}"/>
 					<Property key="Colour" value="0.8 1 0.5"/>
 					<Property key="TextColour" value="0.8 1 0.5"/>
 					<UserString key="tip" value="#{TipNewDup}"/>
 				</Widget>
-				<Widget type="Button" skin="Button" position="416 457 80 24" name="TrackRename">
+				<Widget type="Button" skin="Button" position="369 457 140 24" name="TrackRename">
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 					<Property key="Caption" value="#{Rename}"/>
 					<Property key="Colour" value="1 0.9 0.4"/>
 					<Property key="TextColour" value="1 0.9 0.4"/>
 					<UserString key="tip" value="#{TipRenameTrk}"/>
 				</Widget>
-				<Widget type="EditBox" skin="EditBox" position="240 457 160 24" name="TrackName">
+				<Widget type="EditBox" skin="EditBox" position="240 457 120 24" name="TrackName">
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 					<Property key="Colour" value="0.6 1 0.8"/>
 					<Property key="TextColour" value="0.6 1 0.8"/>
 					<Property key="MaxTextLength" value="20"/>
 					<UserString key="tip" value="#{TipTrkNameEditor}"/>
 				</Widget>
-				<Widget type="Button" skin="Button" position="704 495 64 24" name="TrackDelete">
+				<Widget type="Button" skin="Button" position="684 495 84 24" name="TrackDelete">
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 					<Property key="Caption" value="#{Delete}"/>
 					<Property key="TextColour" value="1 0.6 0.3"/>
@@ -2129,7 +2129,7 @@
 					<Property key="Caption" value="#{NeedReload}:"/>
 					<Property key="TextColour" value="0.7 1 0.5"/>
 				</Widget>
-				<Widget type="Button" skin="Button" position="176 480 128 32" name="NewGame2">
+				<Widget type="Button" skin="Button" position="176 480 160 32" name="NewGame2">
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 					<Property key="Caption" value="#{LoadTrack}"/>
 					<Property key="Colour" value="0.6 1.0 0.3"/>
