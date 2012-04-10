@@ -89,8 +89,8 @@ void App::updateBrushPrv(bool first)
 	float s = BrPrvSize * 0.5f, s1 = 1.f/s,
 		fP = mBrPow[curBr], fQ = mBrFq[curBr]*5.f;  int oct = mBrOct[curBr];
 
-	const static float cf[3][3] = {  // color factors
-		{0.3, 0.8, 0.1}, {0.2, 0.8, 0.6}, {0.6, 0.9, 0.6}  };
+	const static float cf[4][3] = {  // color factors
+		{0.3, 0.8, 0.1}, {0.2, 0.8, 0.6}, {0.6, 0.9, 0.6}, {0.4, 0.7, 1.0} };
 	float fB = cf[edMode][0]*255.f, fG = cf[edMode][1]*255.f, fR = cf[edMode][2]*255.f;
 
 	switch (mBrShape[curBr])
@@ -190,6 +190,37 @@ void App::updBrush()
 				mBrushData[a] = std::max(-1.f, std::min(1.f, c ));
 		}	}	break;
 	}
+	
+	//  filter brush kernel  ------
+	if (mBrFilt != mBrFiltOld)
+	{	mBrFilt = std::max(0.f, std::min(8.f, mBrFilt));
+		mBrFiltOld = mBrFilt;
+	
+		delete[] pBrFmask;  pBrFmask = 0;
+		const float fl = mBrFilt;
+		const int f = ceil(fl);  float fd = 1.f + fl - floor(fl);
+		register int m,i,j;
+
+		//  gauss kernel for smoothing
+		const int mm = (f*2+1)*(f*2+1);
+		pBrFmask = new float[mm];  m = 0;
+
+		float fm = 0.f;  //sum
+		for (j = -f; j <= f; ++j)
+		{
+			float fj = float(j)/f;
+			for (i = -f; i <= f; ++i, ++m)
+			{
+				float fi = float(i)/f;
+				float u = std::max(0.f, fd - sqrtf(fi*fi+fj*fj) );
+				pBrFmask[m] = u;  fm += u;
+			}
+		}
+		fm = 1.f / fm;  //avg
+		for (m = 0; m < mm; ++m)
+			pBrFmask[m] *= fm;
+	}
+	
 	updateBrushPrv();  // upd skip..
 }
 
@@ -259,16 +290,7 @@ void App::height(Vector3 &pos, float dtime, float brMul)
 }
 
 
-///  |_ Filter, low pass, par: freq
-//--------------------------------------------------------------------------------------------------------------------------
-//
-
-///  \\ Ramp, par: angle, height? roll?
-//--------------------------------------------------------------------------------------------------------------------------
-//
-
-
-///  ~- Smooth
+///  ~- Smooth (Flatten)
 //--------------------------------------------------------------------------------------------------------------------------
 void App::smooth(Vector3 &pos, float dtime)
 {
@@ -336,8 +358,83 @@ void App::smoothTer(Vector3 &pos, float avg, float dtime)
 }
 
 
+///  ^v \ Filter - low pass, removes noise
+//--------------------------------------------------------------------------------------------------------------------------
+void App::filter(Vector3 &pos, float dtime, float brMul)
+{
+	Rect rcBrush, rcMap;  int cx,cy;
+	if (!getEditRect(pos, rcBrush, rcMap, sc.td.iTerSize, cx,cy))
+		return;
+	
+	float *fHmap = terrain->getHeightData();
+	
+	float its = mBrIntens[curBr] * dtime * brMul;
+	int mapPos, brPos, jj = cy,
+		ter = sc.td.iTerSize, ter2 = ter*ter, ter1 = ter+1;
 
-//-----------------------------------------------------------------------------------------
+	const float fl = mBrFilt;  const int f = ceil(fl);
+	register int x,y,m,yy,i,j;
+	
+	for (j = rcMap.top; j < rcMap.bottom; ++j,++jj)
+	{
+		mapPos = j * ter + rcMap.left;
+		brPos = jj * BrushMaxSize + cx;
+
+		for (i = rcMap.left; i < rcMap.right; ++i)
+		if (mapPos -f*ter1 >= 0 && mapPos +f*ter1 < ter2)  // ter borders
+		{
+			//  sum in kernel
+			register float s = 0.f;  m = 0;
+			for (y = -f; y <= f; ++y) {  yy = y*ter-f;
+			for (x = -f; x <= f; ++x, ++m, ++yy)
+				s += fHmap[mapPos + yy] * pBrFmask[m];  }
+				
+			fHmap[mapPos] += (s-fHmap[mapPos]) * mBrushData[brPos] * its;  // filter
+			++mapPos;  ++brPos;
+		}
+	}
+
+#if 0
+	//  no gauss kernel ver (square)
+	const float fl = mBrFilt;  const int f = ceil(fl);
+	const float ff = 1.f/((2*f+1)*(2*f+1));
+	register int x,y,m,yy;  int i,j;
+
+	for (j = rcMap.top; j < rcMap.bottom; ++j,++jj)
+	{
+		mapPos = j * ter + rcMap.left;
+		brPos = jj * BrushMaxSize + cx;
+
+		for (i = rcMap.left; i < rcMap.right; ++i)
+		//if (mapPos + yy0 >= 0 && mapPos - yy0 <= )
+		{
+			//  sum in kernel
+			float s = 0.f;  m = 0;
+			for (y = -f; y <= f; ++y) {  yy = y*ter-f;
+			for (x = -f; x <= f; ++x, ++m, ++yy)
+				s += fHmap[mapPos + yy];  }
+			s *= ff;  //avg
+				
+			fHmap[mapPos] += (s-fHmap[mapPos]) * mBrushData[brPos] * its;  // filter
+			++mapPos;  ++brPos;
+		}
+	}
+#endif
+
+	terrain->dirtyRect(rcMap);
+	GetTerAngles(rcMap.left,rcMap.top, rcMap.right,rcMap.bottom);
+	//initBlendMaps(terrain);
+	bTerUpd = true;
+}
+
+
+///  \\ Ramp, par: angle, height? roll?
+///  .. one shot brushes, geom shapes: circle,arc,rectangle,etc.
+//--------------------------------------------------------------------------------------------------------------------------
+//
+
+
+//--------------------------------------------------------------------------------------------------------------------------
 /*void OgreApp::_splat(Vector3 &pos, float dtime)
 {
 	Rect rcBrush, rcMap;

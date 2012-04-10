@@ -20,6 +20,10 @@ void App::UpdEditWnds()
 		{	static_cast<StaticTextPtr>(mWndBrush)->setCaption("Terrain Deform");  
 			mWndBrush->setColour(MyGUI::Colour(0.5f, 0.9f, 0.3f));
 			mWndBrush->setVisible(true);  }
+		else if (edMode == ED_Filter)
+		{	static_cast<StaticTextPtr>(mWndBrush)->setCaption("Terrain Filter");
+			mWndBrush->setColour(MyGUI::Colour(0.5f, 0.75f, 1.0f));
+			mWndBrush->setVisible(true);  }
 		else if (edMode == ED_Smooth)
 		{	static_cast<StaticTextPtr>(mWndBrush)->setCaption("Terrain Smooth");
 			mWndBrush->setColour(MyGUI::Colour(0.3f, 0.8f, 0.8f));
@@ -443,19 +447,9 @@ bool App::KeyPress(const CmdKey &arg)
 			#endif
 			bMoveCam = !bMoveCam;  UpdVisGui();  }	break;
 
-		//  focus on find edit
-		case KC_F:
-			if (ctrl && edFind && bGuiFocus && mWndTabs->getIndexSelected() == 0)
-			{
-				MyGUI::InputManager::getInstance().resetKeyFocusWidget();
-				MyGUI::InputManager::getInstance().setKeyFocusWidget(edFind);
-				return true;  }
-			break;
-
 		//  fog
 		case KC_G:  {
 			pSet->bFog = !pSet->bFog;  chkFog->setStateSelected(pSet->bFog);  UpdFog();  }  break;
-
 		//  trees
 		case KC_V:	bTrGrUpd = true;  break;
 
@@ -463,7 +457,14 @@ bool App::KeyPress(const CmdKey &arg)
 		case KC_D:	if (bEdit()){  edMode = ED_Deform;  curBr = 0;  updBrush();  UpdEditWnds();  }	break;
 		case KC_S:	if (bEdit()){  edMode = ED_Smooth;  curBr = 1;  updBrush();  UpdEditWnds();  }	break;
 		case KC_E:	if (bEdit()){  edMode = ED_Height;  curBr = 2;  updBrush();  UpdEditWnds();  }	break;
-		//case KC_F: TODO: ter brush  filter, ramp ...
+		case KC_F:  if (bEdit()){  edMode = ED_Filter;  curBr = 3;  updBrush();  UpdEditWnds();  }
+			else  //  focus on find edit
+			if (ctrl && edFind && bGuiFocus && mWndTabs->getIndexSelected() == 0)
+			{
+				MyGUI::InputManager::getInstance().resetKeyFocusWidget();
+				MyGUI::InputManager::getInstance().setKeyFocusWidget(edFind);
+				return true;
+			}	break;
 
 		//  road
 		case KC_R:	if (bEdit()){  edMode = ED_Road;	UpdEditWnds();  }	break;

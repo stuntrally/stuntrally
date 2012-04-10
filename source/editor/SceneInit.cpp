@@ -317,8 +317,13 @@ void App::TerCircleUpd()
 	static ED_MODE edOld = ED_ALL;
 	if (edOld != edMode)
 	{	edOld = edMode;
-		moTerC->setMaterialName(0, edMode == ED_Deform ? "circle_deform" :
-									edMode == ED_Height ? "circle_height" : "circle_smooth");
+		switch(edMode)
+		{
+		case ED_Deform: moTerC->setMaterialName(0, "circle_deform");  break;
+		case ED_Filter: moTerC->setMaterialName(0, "circle_filter");  break;
+		case ED_Smooth: moTerC->setMaterialName(0, "circle_smooth");  break;
+		case ED_Height: moTerC->setMaterialName(0, "circle_height");  break;
+		}
 	}
 	moTerC->beginUpdate(0);
 	for (int d = 0; d < divs+2; ++d)

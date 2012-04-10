@@ -702,8 +702,9 @@
 	<!--  Terrain  -->
 	<Tag name="EditTerrainMode">Edit Terrain mode</Tag>
 	<Tag name="InputTerDeform">D - Deform  (LMB up, RMB down)</Tag>
-	<Tag name="InputTerSmooth">S - Smooth</Tag>
-	<Tag name="InputTerHeight">E - Height set (RMB change height value)</Tag>
+	<Tag name="InputTerSmooth">S - Smooth  (flatten)</Tag>
+	<Tag name="InputTerHeight">E - Height set  (RMB change height value)</Tag>
+	<Tag name="InputTerFilter">F - Filter  (remove noise)</Tag>
 
 	<Tag name="InputTerPaint">A - Paint Textures (layers)</Tag>
 	<Tag name="InputPaintColor">C - Paint Color</Tag>

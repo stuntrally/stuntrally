@@ -144,21 +144,26 @@ protected:
 	///<>  terrain edit, brush
 	void updBrush();  bool bTerUpd,bTerUpdBlend;  char sBrushTest[512];  int curBr;
 	float mBrSize[ED_ALL],mBrIntens[ED_ALL], *mBrushData, terSetH,
-		mBrPow[ED_ALL],mBrFq[ED_ALL];  int mBrOct[ED_ALL];
+		mBrPow[ED_ALL],mBrFq[ED_ALL];  int mBrOct[ED_ALL];  float* pBrFmask, mBrFilt,mBrFiltOld;
 	enum EBrShape {   BRS_Triangle=0, BRS_Sinus, BRS_Noise, BRS_ALL  } mBrShape[ED_ALL];
 	const static Ogre::String csBrShape[BRS_ALL];
 
 	bool getEditRect(Ogre::Vector3& pos, Ogre::Rect& brushrect, Ogre::Rect& maprect, int size, int& cx, int& cy);
+
 	void deform(Ogre::Vector3 &pos, float dtime, float brMul);
 	void height(Ogre::Vector3 &pos, float dtime, float brMul);
-	void calcSmoothFactor(Ogre::Vector3 &pos, float& avg, int& sample_count);
+
 	void smooth(Ogre::Vector3 &pos, float dtime);
 	void smoothTer(Ogre::Vector3 &pos, float avg, float dtime);
+	void calcSmoothFactor(Ogre::Vector3 &pos, float& avg, int& sample_count);
+
+	void filter(Ogre::Vector3 &pos, float dtime, float brMul);
 
 	//void splat(Ogre::Vector3 &pos, float dtime);
 	//void paint(Ogre::Vector3 &pos, float dtime);
 	//void splatGrass(Ogre::Vector3 &pos, float dtime);
 	//bool update(float dtime);
+
 
 	//  trees
 	class Forests::PagedGeometry *trees, *grass;

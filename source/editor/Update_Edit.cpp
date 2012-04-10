@@ -213,25 +213,27 @@ bool App::frameRenderingQueued(const FrameEvent& evt)
 	{
 		//  brush params
 		//----------------------------------------------------------------
-		if (brTxt[0]){	brTxt[0]->setCaption("Size:    "+fToStr(mBrSize[curBr],1,4)+"   - =");	}
-		if (brTxt[1]){	brTxt[1]->setCaption("Force:   "+fToStr(mBrIntens[curBr],1,4)+"   [ ]");	}
-		if (brTxt[2]){	brTxt[2]->setCaption("Power:   "+fToStr(mBrPow[curBr],2,4)+"   ; \'");	}
-		if (brTxt[3]){	brTxt[3]->setCaption("Shape: "+csBrShape[mBrShape[curBr]]);	}
+		if (brTxt[0]){	brTxt[0]->setCaption("Size:      "+fToStr(mBrSize[curBr],1,4)+"   - =");  }
+		if (brTxt[1]){	brTxt[1]->setCaption("Force:   "+fToStr(mBrIntens[curBr],1,4)+"   [ ]");  }
+		if (brTxt[2]){	brTxt[2]->setCaption("Power:  "+fToStr(mBrPow[curBr],2,4)+"   ; \'");  }
+		if (brTxt[3]){	brTxt[3]->setCaption("Shape: "+csBrShape[mBrShape[curBr]]);  }
 
 		bool brNoise = mBrShape[curBr] == BRS_Noise;
 		if (brTxt[4])
 		if (edMode == ED_Height)
-		{	brTxt[4]->setCaption("Height: "+fToStr(terSetH,1,4));	}
+		{	brTxt[4]->setCaption("Height: "+fToStr(terSetH,1,4));  }
 		else if (brNoise)
-		{	brTxt[4]->setCaption("Freq: "+fToStr(mBrFq[curBr],2,4)+"  O P");	}
+		{	brTxt[4]->setCaption("Freq: "+fToStr(mBrFq[curBr],2,4)+"  O P");  }
 		else
 			brTxt[4]->setCaption("");
 
 		if (brTxt[5])
-		if (edMode == ED_Height && road && road->bHitTer)
-		{	brTxt[5]->setCaption("Curr.H: "+fToStr(road->posHit.y,1,4));	}
+		if (edMode == ED_Filter)
+		{	brTxt[5]->setCaption("Filter: "+fToStr(mBrFilt,1,3)+"    1 2");  }
+		else if (edMode == ED_Height && road && road->bHitTer)
+		{	brTxt[5]->setCaption("Curr.H: "+fToStr(road->posHit.y,1,4));  }
 		else if (brNoise)
-		{	brTxt[5]->setCaption("Octaves: "+toStr(mBrOct[curBr])+"  , .");	}
+		{	brTxt[5]->setCaption("Octaves: "+toStr(mBrOct[curBr])+"  , .");  }
 		else
 			brTxt[5]->setCaption("");
 
@@ -243,10 +245,12 @@ bool App::frameRenderingQueued(const FrameEvent& evt)
 		if (isKey(EQUALS)){		mBrSize[curBr]  *= 1.f + 0.04f*q;  updBrush();  }
 		if (isKey(LBRACKET))	mBrIntens[curBr]*= 1.f - 0.04f*q;
 		if (isKey(RBRACKET))	mBrIntens[curBr]*= 1.f + 0.04f*q;
-		if (isKey(SEMICOLON )){  mBrPow[curBr]  *= 1.f - 0.04f*q;  updBrush();  }
-		if (isKey(APOSTROPHE)){  mBrPow[curBr]  *= 1.f + 0.04f*q;  updBrush();  }
-		if (isKey(O)){			mBrFq[curBr]  *= 1.f - 0.04f*q;  updBrush();  }
-		if (isKey(P)){			mBrFq[curBr]  *= 1.f + 0.04f*q;  updBrush();  }
+		if (isKey(SEMICOLON )){ mBrPow[curBr]   *= 1.f - 0.04f*q;  updBrush();  }
+		if (isKey(APOSTROPHE)){ mBrPow[curBr]   *= 1.f + 0.04f*q;  updBrush();  }
+		if (isKey(O)){			mBrFq[curBr]    *= 1.f - 0.04f*q;  updBrush();  }
+		if (isKey(P)){			mBrFq[curBr]    *= 1.f + 0.04f*q;  updBrush();  }
+		if (isKey(1)){			mBrFilt         *= 1.f - 0.04f*q;  updBrush();  }
+		if (isKey(2)){			mBrFilt         *= 1.f + 0.04f*q;  updBrush();  }
 		
 		if (mBrIntens[curBr] < 0.1f)  mBrIntens[curBr] = 0.1;  // rest in updBrush
 	}
@@ -547,6 +551,9 @@ bool App::frameEnded(const FrameEvent& evt)
 		case ED_Deform:
 			if (mbLeft)   deform(road->posHit, dt, s);  else
 			if (mbRight)  deform(road->posHit, dt,-s);
+			break;
+		case ED_Filter:
+			if (mbLeft)   filter(road->posHit, dt, s);
 			break;
 		case ED_Smooth:
 			if (mbLeft)   smooth(road->posHit, dt);

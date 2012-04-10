@@ -34,33 +34,33 @@
 			<Property key="TextColour" value="0.66 0.86 1.0"/>
 		</Widget>
 	</Widget>
-	<Widget type="Window" skin="WindowC" position="0 64 136 160" layer="Back" name="BrushWnd">
+	<Widget type="Window" skin="WindowC" position="0 64 152 190" layer="Back" name="BrushWnd">
 		<Property key="Caption" value="#{TerrainBrush}"/>
 		<Property key="Colour" value="0.3 0.36 0.4"/>
 		<Property key="Alpha" value="0.6"/>
 		<Property key="Snap" value="true"/>
 		<UserString key="tip" value="#{TipTerWind}"/>
-		<Widget type="TextBox" skin="TextBox" position="4 0 120 20" name="brush0">
-			<Property key="InheritsAlpha" value="false"/>
-			<Property key="TextColour" value="0.8 0.9 1.0"/>
-		</Widget>
-		<Widget type="TextBox" skin="TextBox" position="4 20 120 20" name="brush1">
+		<Widget type="TextBox" skin="TextBox" position="4 5 150 20" name="brush0">
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="TextColour" value="0.7 0.86 1.0"/>
 		</Widget>
-		<Widget type="TextBox" skin="TextBox" position="4 40 120 20" name="brush2">
+		<Widget type="TextBox" skin="TextBox" position="4 25 150 20" name="brush1">
+			<Property key="InheritsAlpha" value="false"/>
+			<Property key="TextColour" value="0.6 0.8 1.0"/>
+		</Widget>
+		<Widget type="TextBox" skin="TextBox" position="4 50 150 20" name="brush2">
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="TextColour" value="0.7 0.8 0.9"/>
 		</Widget>
-		<Widget type="TextBox" skin="TextBox" position="4 60 120 20" name="brush3">
+		<Widget type="TextBox" skin="TextBox" position="4 70 150 20" name="brush3">
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="TextColour" value="0.78 0.82 0.9"/>
 		</Widget>
-		<Widget type="TextBox" skin="TextBox" position="4 80 120 20" name="brush4">
+		<Widget type="TextBox" skin="TextBox" position="4 95 150 20" name="brush4">
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="TextColour" value="0.76 0.9 1.0"/>
 		</Widget>
-		<Widget type="TextBox" skin="TextBox" position="4 100 120 20" name="brush5">
+		<Widget type="TextBox" skin="TextBox" position="4 115 150 20" name="brush5">
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="TextColour" value="0.76 0.9 1.0"/>
 		</Widget>
@@ -2631,15 +2631,20 @@
 							<Property key="Caption" value="#{InputTerDeform}"/>
 							<Property key="TextColour" value="0.5 1.0 0.3"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="32 66 312 20">
+						<Widget type="TextBox" skin="TextBox" position="32 88 312 20">
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 							<Property key="Caption" value="#{InputTerSmooth}"/>
 							<Property key="TextColour" value="0.3 0.8 0.8"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="32 88 312 20">
+						<Widget type="TextBox" skin="TextBox" position="32 66 312 20">
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 							<Property key="Caption" value="#{InputTerHeight}"/>
 							<Property key="TextColour" value="0.7 1.0 0.7"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="32 110 312 20">
+							<UserString key="RelativeTo" value="OptionsWnd"/>
+							<Property key="Caption" value="#{InputTerFilter}"/>
+							<Property key="TextColour" value="0.5 0.75 1.0"/>
 						</Widget>
 						<Widget type="TextBox" skin="TextBox" position="32 174 312 20">
 							<UserString key="RelativeTo" value="OptionsWnd"/>
