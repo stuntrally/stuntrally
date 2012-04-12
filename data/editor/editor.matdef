@@ -92,3 +92,4 @@
 	diffuseMap_1024 = body_dyn.png
 	receivesShadows = false
 	;receivesDepthShadows = false
+	cullHardware = none

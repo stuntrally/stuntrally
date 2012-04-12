@@ -182,7 +182,7 @@ void App::SaveGrassDens()
 	delete[] rd;  delete[] gd;  delete[] mask;
 
 	//  road  ----------------
-	int u = pSet->allow_save ? 0 : 1;
+	int u = pSet->allow_save ? pSet->gui.track_user : 1;
 	rt[0].rndTex->writeContentsToFile(pathTrkPrv[u] + pSet->gui.track + "_mini.png");
 	//  terrain
 	rt[2].rndTex->writeContentsToFile(pathTrkPrv[u] + pSet->gui.track + "_ter.jpg");
