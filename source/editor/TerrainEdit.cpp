@@ -394,33 +394,6 @@ void App::filter(Vector3 &pos, float dtime, float brMul)
 		}
 	}
 
-#if 0
-	//  no gauss kernel ver (square)
-	const float fl = mBrFilt;  const int f = ceil(fl);
-	const float ff = 1.f/((2*f+1)*(2*f+1));
-	register int x,y,m,yy;  int i,j;
-
-	for (j = rcMap.top; j < rcMap.bottom; ++j,++jj)
-	{
-		mapPos = j * ter + rcMap.left;
-		brPos = jj * BrushMaxSize + cx;
-
-		for (i = rcMap.left; i < rcMap.right; ++i)
-		//if (mapPos + yy0 >= 0 && mapPos - yy0 <= )
-		{
-			//  sum in kernel
-			float s = 0.f;  m = 0;
-			for (y = -f; y <= f; ++y) {  yy = y*ter-f;
-			for (x = -f; x <= f; ++x, ++m, ++yy)
-				s += fHmap[mapPos + yy];  }
-			s *= ff;  //avg
-				
-			fHmap[mapPos] += (s-fHmap[mapPos]) * mBrushData[brPos] * its;  // filter
-			++mapPos;  ++brPos;
-		}
-	}
-#endif
-
 	terrain->dirtyRect(rcMap);
 	GetTerAngles(rcMap.left,rcMap.top, rcMap.right,rcMap.bottom);
 	//initBlendMaps(terrain);
@@ -430,6 +403,7 @@ void App::filter(Vector3 &pos, float dtime, float brMul)
 
 ///  \\ Ramp, par: angle, height? roll?
 ///  .. one shot brushes, geom shapes: circle,arc,rectangle,etc.
+///  change ter roll,pitch brush
 //--------------------------------------------------------------------------------------------------------------------------
 //
 

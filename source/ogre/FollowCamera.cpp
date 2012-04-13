@@ -47,6 +47,7 @@ void FollowCamera::update(Real time, const PosInfo& posIn, PosInfo* posOut)
 		posOut->camPos = camPosFinal;  // save result in out posInfo
 		posOut->camLook = camLookFinal;
 		posOut->camRot = camRotFinal;
+		posOut->camUseRot = true;
 
 		updInfo(time);
 		return;
