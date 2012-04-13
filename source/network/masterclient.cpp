@@ -52,6 +52,12 @@ void MasterClient::updateGame(const protocol::GameInfo &game, std::string passwo
 		m_gameInfoSenderThread = boost::thread(boost::bind(&MasterClient::gameInfoSenderThread, boost::ref(*this)));
 }
 
+void MasterClient::signalStart()
+{
+	if (m_connectionOk)
+		m_client.broadcast(char(protocol::START_GAME) + std::string(" "), net::PACKET_RELIABLE);
+}
+
 void MasterClient::terminate()
 {
 	// Shuts down possibly running thread

@@ -160,6 +160,10 @@ public:
 				m_client.send(e.peer_id, net::convert(game), net::PACKET_RELIABLE);
 				break;
 			}
+			case protocol::START_GAME: {
+				out(VERBOSE) << "A game started" << std::endl;
+				break;
+			}
 			default: {
 				out(VERBOSE) << "Unknown packet type " << int(e.packet_data[0]) << " received from " << e.peer_address << std::endl;
 			}
