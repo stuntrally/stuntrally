@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION"
 "Report-Msgid-Bugs-To: "
-"POT-Creation-Date: 2012-04-14 14:57+0300"
+"POT-Creation-Date: 2012-04-14 14:00+0200"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>"
 "Language-Team: LANGUAGE <LL@li.org>"
@@ -35,10 +35,6 @@ msgstr ""
 
 msgctxt "TipDustSize"
 msgid "Dust particles size."
-msgstr ""
-
-msgctxt "InputMapShowOptions"
-msgid "Show options"
 msgstr ""
 
 msgctxt "TipGrassSwayDistr"
@@ -69,8 +65,8 @@ msgctxt "TipAutoGearbox"
 msgid "Uncheck for manual gears changing."
 msgstr ""
 
-msgctxt "InputHeaderTxt1"
-msgid "Action"
+msgctxt "LS_MISC"
+msgid "Finishing"
 msgstr ""
 
 msgctxt "InputHeaderTxt2"
@@ -261,8 +257,8 @@ msgctxt "InputFluidsUpdate"
 msgid "F10  - update depth map, after terrain deform near shore"
 msgstr ""
 
-msgctxt "LS_MISC"
-msgid "Finishing"
+msgctxt "InputHeaderTxt1"
+msgid "Action"
 msgstr ""
 
 msgctxt "DepthOfField"
@@ -485,8 +481,8 @@ msgctxt "UnitKm"
 msgid "km"
 msgstr ""
 
-msgctxt "LANG_FR"
-msgid "Français"
+msgctxt "InputRoadHeight"
+msgid "- change height"
 msgstr ""
 
 msgctxt "BackMenu"
@@ -633,10 +629,6 @@ msgctxt "ReflMode_single"
 msgid "Single"
 msgstr ""
 
-msgctxt "InputRoadHeight"
-msgid "- change height"
-msgstr ""
-
 msgctxt "InputMinVal"
 msgid "Min. Value"
 msgstr ""
@@ -667,6 +659,10 @@ msgstr ""
 
 msgctxt "TipCarsList"
 msgid "Cars list, click to select (and see image). Press [Change car] and then [New Game] to drive with it."
+msgstr ""
+
+msgctxt "InputMapNextCamera"
+msgid "Next Camera"
 msgstr ""
 
 msgctxt "Model"
@@ -777,10 +773,6 @@ msgctxt "TerrainError"
 msgid "Terrain error"
 msgstr ""
 
-msgctxt "LANG_EN"
-msgid "English"
-msgstr ""
-
 msgctxt "NetMasterProtocolError"
 msgid "Incompatible protocol version - update Stunt Rally or contact server administrator."
 msgstr ""
@@ -859,10 +851,6 @@ msgstr ""
 
 msgctxt "InputMapNextTab"
 msgid "Next tab"
-msgstr ""
-
-msgctxt "Environment"
-msgid "Environment"
 msgstr ""
 
 msgctxt "Layer"
@@ -1117,8 +1105,8 @@ msgctxt "RplAutoRec"
 msgid "Auto record replay"
 msgstr ""
 
-msgctxt "Reflections"
-msgid "Reflections"
+msgctxt "Shaders"
+msgid "Shaders"
 msgstr ""
 
 msgctxt "PipeMaterials"
@@ -1369,10 +1357,6 @@ msgctxt "min"
 msgid "min"
 msgstr ""
 
-msgctxt "LANG_RO"
-msgid "Română"
-msgstr ""
-
 msgctxt "InputStartAltMMB"
 msgid "alt-MMB - reset rotation"
 msgstr ""
@@ -1389,8 +1373,8 @@ msgctxt "Finished"
 msgid "Finished"
 msgstr ""
 
-msgctxt "LANG_RU"
-msgid "Русский"
+msgctxt "LTrMaxTerAng"
+msgid "max terrain Angle"
 msgstr ""
 
 msgctxt "InputMapRestartGame"
@@ -1401,8 +1385,8 @@ msgctxt "Graphics"
 msgid "Graphics"
 msgstr ""
 
-msgctxt "InputMapNextCamera"
-msgid "Next Camera"
+msgctxt "InputMapShowOptions"
+msgid "Show options"
 msgstr ""
 
 msgctxt "CarClrRandom"
@@ -1809,16 +1793,8 @@ msgctxt "InputToggleCam"
 msgid "Tab - camera / edit mode toggle"
 msgstr ""
 
-msgctxt "LTrMaxTerAng"
-msgid "max terrain Angle"
-msgstr ""
-
 msgctxt "InputStartAltLMB"
 msgid "alt-LMB - rotate  alt-RMB - pitch"
-msgstr ""
-
-msgctxt "LANG_DE"
-msgid "Deutsch"
 msgstr ""
 
 msgctxt "InputRoadAngSnap"
@@ -2173,8 +2149,8 @@ msgctxt "SplitVertically"
 msgid "Split Vertically"
 msgstr ""
 
-msgctxt "Shaders"
-msgid "Shaders"
+msgctxt "Reflections"
+msgid "Reflections"
 msgstr ""
 
 msgctxt "dust"
@@ -2589,8 +2565,8 @@ msgctxt "RplSave"
 msgid "Save"
 msgstr ""
 
-msgctxt "LANG_PL"
-msgid "Polski"
+msgctxt "Environment"
+msgid "Environment"
 msgstr ""
 
 msgctxt "GraphicsAll_High"
@@ -2875,10 +2851,6 @@ msgstr ""
 
 msgctxt "InputPressButtonTip"
 msgid "Press a button to see its number"
-msgstr ""
-
-msgctxt "LANG_FI"
-msgid "Suomi"
 msgstr ""
 
 msgctxt "TipTerLAngMax"

@@ -134,6 +134,7 @@ void SplitScreenManager::Align()
 
 		// Create camera
 		mCameras.push_back(mSceneMgr->createCamera("PlayerCamera" + toStr(i)));
+		mCameras.back()->setFOVy(Degree(75));
 		mCameras.back()->setPosition(Vector3(0,-100,0));
 		mCameras.back()->lookAt(Vector3(0,-100,10));
 		mCameras.back()->setFarClipDistance(pSet->view_distance*1.1f);

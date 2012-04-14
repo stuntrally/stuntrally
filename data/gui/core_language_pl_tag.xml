@@ -722,5 +722,12 @@
 	<Tag name="CameraAutoTilt">Camera auto tilt on slopes</Tag>
 	<Tag name="GameVersion">1.5</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
+	<Tag name="LANG_EN">English</Tag>
+	<Tag name="LANG_DE">Deutsch</Tag>
+	<Tag name="LANG_FI">Suomi</Tag>
+	<Tag name="LANG_PL">Polski</Tag>
+	<Tag name="LANG_RO">Română</Tag>
+	<Tag name="LANG_FR">Français</Tag>
+	<Tag name="LANG_RU">Русский</Tag>
 
 </MyGUI>
