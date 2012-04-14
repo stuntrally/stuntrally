@@ -244,7 +244,7 @@ Vector3 FollowCamera::moveAboveTerrain(const Vector3& camPos)
 	
 	// shoot our ray
 	COLLISION_CONTACT contact;
-	mWorld->CastRay( origin, direction, distance, body, contact, &pOnRoad );
+	mWorld->CastRay( origin, direction, distance, body, contact, &pOnRoad, true, true );
 	
 	if (contact.col != NULL)
 	{
