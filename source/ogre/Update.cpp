@@ -775,14 +775,22 @@ void App::updatePoses(float time)
 			bGhostVis = (ghplay.GetNumFrames() > 0) && pSet->rpl_ghost;
 		if (bGhost)
 		{
-			carM->setVisible(bGhostVis);
+			bool curVisible = carM->mbVisible;
+			bool newVisible = bGhostVis;
 			
 			//  hide ghost car when close to player car (only when not transparent)
 			if (!pSet->rpl_alpha)
 			{
 				float distance = carM->pMainNode->getPosition().squaredDistance(playerCar->pMainNode->getPosition());
 				if (distance < 16.f)
-					carM->setVisible(false);
+					newVisible = false;
+			}
+			if (curVisible == newVisible)
+				carM->hideTime = 0.f;
+			else
+			{	carM->hideTime += time;  // change vis after delay
+				if (carM->hideTime > 0.2f)  // par sec
+					carM->setVisible(newVisible);
 			}
 		}
 		

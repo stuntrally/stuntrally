@@ -110,6 +110,7 @@ public:
 	Ogre::SceneNode* pMainNode;
 	
 	void setVisible(bool visible);  // hide/show
+	bool mbVisible;  float hideTime;
 		
 	//  Handles our cube map.
 	CarReflection* pReflect;

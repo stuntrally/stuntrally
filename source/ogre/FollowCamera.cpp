@@ -65,7 +65,7 @@ void FollowCamera::update(Real time, const PosInfo& posIn, PosInfo* posOut, COLL
 		HMaxDepth = 12.f;  // how far down can the ray go
 	const static Radian r0(0.f),
 		angMin = Degree(10.f),   // below this angle, tilt has no effect - terrain bumps
-		maxDiff = Degree(1.5f);  // max diff of tilt - no sudden jumps
+		maxDiff = Degree(1.4f);  // max diff of tilt - no sudden jumps
 	const float smoothSpeed = 14.f;  // how fast to apply tilt change
 
 	Radian tilt(0.f);
@@ -85,13 +85,14 @@ void FollowCamera::update(Real time, const PosInfo& posIn, PosInfo* posOut, COLL
 		//  cast 2 rays - 2 times, average 2 angles
 		COLLISION_CONTACT ct0,ct1,ct20,ct21;  int pOnRoad;
 		MATHVECTOR<float,3> ofs(ax*0.5f,ay*0.5f,0),ofs2(ax,ay,0);
-		world->CastRay(pos+ofs, dir, HMaxDepth, NULL, ct0, &pOnRoad, true, false);
-		world->CastRay(pos-ofs, dir, HMaxDepth, NULL, ct1, &pOnRoad, true, false);
-		world->CastRay(pos+ofs2, dir, HMaxDepth, NULL, ct20, &pOnRoad, true, false);
-		world->CastRay(pos-ofs2, dir, HMaxDepth, NULL, ct21, &pOnRoad, true, false);
+		world->CastRay(pos+ofs, dir, HMaxDepth,NULL, ct0, &pOnRoad, true, false);
+		world->CastRay(pos-ofs, dir, HMaxDepth,NULL, ct1, &pOnRoad, true, false);
+		world->CastRay(pos+ofs2,dir, HMaxDepth,NULL, ct20,&pOnRoad, true, false);
+		world->CastRay(pos-ofs2,dir, HMaxDepth,NULL, ct21,&pOnRoad, true, false);
 
 		if (ct0.col && ct1.col && ct20.col && ct21.col)
-			tilt = (GetAngle(Rdist, ct1.depth - ct0.depth) + GetAngle(2.f * Rdist, ct21.depth - ct20.depth)) * 0.5f;
+			tilt = (GetAngle(Rdist, ct1.depth - ct0.depth) +
+				GetAngle(2.f*Rdist, ct21.depth-ct20.depth)) * 0.5f;
 		//else  LogO(String("no hit: ")+(ct0.col?"1":"0")+(ct1.col?" 1":" 0"));
 
 		//if (tilt < angMin && tilt > -angMin)  tilt = 0.f;

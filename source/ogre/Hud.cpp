@@ -479,7 +479,6 @@ void App::UpdateHUD(int carId, float time)
 		if (hudOpp[o][0])
 		{
 			CarModel* cm = carModels[o];
-			//CarModel* cm = *it;
 			if (cm->pMainNode)
 			{
 				bool bGhost = cm->eType == CarModel::CT_GHOST;

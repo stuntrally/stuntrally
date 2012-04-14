@@ -32,7 +32,9 @@ using namespace Ogre;
 
 void CarModel::setVisible(bool vis)
 {
+	mbVisible = vis;
 	//if (pMainNode->getVisible() == vis)  return;  //opt..
+	hideTime = 0.f;
 	pMainNode->setVisible(vis);
 	for (int w=0; w < 4; ++w)
 		ndWh[w]->setVisible(vis);

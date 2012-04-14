@@ -34,9 +34,12 @@ using namespace Ogre;
 CarModel::CarModel(unsigned int index, eCarType type, const std::string& name,
 	Ogre::SceneManager* sceneMgr, SETTINGS* set, GAME* game, Scene* s,
 	Ogre::Camera* cam, App* app, int startpos_index) :
-	fCam(0), pMainNode(0), pCar(0), terrain(0), resCar(""), mCamera(0), pReflect(0), pApp(app), color(1,1,0),
+	fCam(0), pMainNode(0), pCar(0), terrain(0), resCar(""),
+	mCamera(0), pReflect(0), pApp(app), color(1,1,0),
 	bLightMapEnabled(true), bBraking(false),
-	iCamNextOld(0), bLastChkOld(0), bWrongChk(0), angCarY(0), vStartPos(0,0,0), pNickTxt(0)
+	hideTime(1.f), mbVisible(true),
+	iCamNextOld(0), bLastChkOld(0), bWrongChk(0),
+	angCarY(0), vStartPos(0,0,0), pNickTxt(0)
 {
 	iIndex = index;  sDirname = name;  mSceneMgr = sceneMgr;
 	pSet = set;  pGame = game;  sc = s;  mCamera = cam;  eType = type;
