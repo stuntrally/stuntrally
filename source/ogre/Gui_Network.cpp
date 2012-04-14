@@ -412,6 +412,7 @@ void App::evBtnNetReady(WP)
 	{
 		if (mLobbyState == HOSTING)
 		{
+			if (mMasterClient) mMasterClient->signalStart();
 			boost::mutex::scoped_lock lock(netGuiMutex);
 			bStartGame = true;
 		}else

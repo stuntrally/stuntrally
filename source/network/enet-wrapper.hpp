@@ -172,6 +172,8 @@ namespace net {
 			// Gracefully disconnect all peers
 			boost::mutex::scoped_lock lock(m_mutex);
 			if (m_host) {
+				ENetEvent e;
+				enet_host_service(m_host, &e, 5); // Dummy service to allow for sending pending messages
 				for (size_t i = 0; i < m_host->peerCount; ++i)
 					enet_peer_disconnect(&m_host->peers[i], 0);
 				enet_host_destroy(m_host);

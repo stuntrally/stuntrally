@@ -37,6 +37,9 @@ public:
 	/// Updates the hosted game state to master server, starts updater thread if necessary
 	void updateGame(const protocol::GameInfo& game, std::string password = "");
 
+	/// Signals the server that the game has started
+	void signalStart();
+
 	/// Clears cache, requests new game listing, doesn't wait for it to arrive
 	void refreshList();
 
