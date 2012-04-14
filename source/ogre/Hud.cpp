@@ -459,8 +459,8 @@ void App::UpdateHUD(int carId, float time)
 		for (int o=0; o < carModels.size(); ++o)
 		{	// cars only
 			if (carModels[o]->eType != CarModel::CT_GHOST)
-			{	/*if (bRplPlay)
-					carModels[o]->trackPercent = carPoses[o].percent;*/
+			{	if (bRplPlay)
+					carModels[o]->trackPercent = carPoses[iCurPoses[o]][o].percent;
 				cms.push_back(carModels[o]);	}
 		}
 		if (pSet->opplist_sort)
@@ -469,7 +469,7 @@ void App::UpdateHUD(int carId, float time)
 		for (int o=0; o < carModels.size(); ++o)
 		{	// add ghost last
 			if (carModels[o]->eType == CarModel::CT_GHOST)
-			{	//carModels[o]->trackPercent = carPoses[o].percent;  // ghost,rpl
+			{	carModels[o]->trackPercent = carPoses[iCurPoses[o]][o].percent;  // ghost,rpl
 				cms.push_back(carModels[o]);	}
 		}
 
