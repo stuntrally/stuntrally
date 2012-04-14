@@ -70,7 +70,8 @@ public:
 	
 	///  update, simulates camera
 	void update(Ogre::Real time, const PosInfo& posInPrev, PosInfo* posOut, class COLLISION_WORLD* world);
-	void updInfo(Ogre::Real time = 0);
+	void updInfo(Ogre::Real time = 0);  char ss[512];
+
 	//  apply, sets mCamera's pos and rot
 	void Apply(const PosInfo& posIn);
 

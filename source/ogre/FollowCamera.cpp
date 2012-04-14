@@ -62,11 +62,11 @@ void FollowCamera::update(Real time, const PosInfo& posIn, PosInfo* posOut, COLL
 		Rdist = 1.f,     // dist from car to ray (front or back)
 		HupCar = 1.5f,	  // car up dir dist - for pipes - so pos stays inside pipe
 		Habove = 1.5f,    // up axis dist, above car - for very high terrain angles
-		HMaxDepth = 8.f;  // how far down can the ray go
-	const static Radian
-		angMin = Degree(3.f),   // below this angle, tilt has no effect - terrain bumps
-		maxDiff = Degree(4.f);  // max diff of tilt - no sudden jumps
-	const float smoothSpeed = 7.f;  // how fast to apply tilt change
+		HMaxDepth = 12.f;  // how far down can the ray go
+	const static Radian r0(0.f),
+		angMin = Degree(10.f),   // below this angle, tilt has no effect - terrain bumps
+		maxDiff = Degree(1.5f);  // max diff of tilt - no sudden jumps
+	const float smoothSpeed = 14.f;  // how fast to apply tilt change
 
 	Radian tilt(0.f);
 	if (pSet->cam_tilt)
@@ -82,16 +82,21 @@ void FollowCamera::update(Real time, const PosInfo& posIn, PosInfo* posOut, COLL
 		float ax = cosf(angCarY)*Rdist, ay = sinf(angCarY)*Rdist;
 		//LogO("pos: "+fToStr(pos[0],2,4)+" "+fToStr(pos[1],2,4)+"  a: "+fToStr(angCarY,2,4)+"  dir: "+fToStr(ax,2,4)+" "+fToStr(ay,2,4));
 		
-		//  cast 2 rays
-		COLLISION_CONTACT ct0,ct1;  int pOnRoad;
-		MATHVECTOR<float,3> ofs(ax,ay,0);
+		//  cast 2 rays - 2 times, average 2 angles
+		COLLISION_CONTACT ct0,ct1,ct20,ct21;  int pOnRoad;
+		MATHVECTOR<float,3> ofs(ax*0.5f,ay*0.5f,0),ofs2(ax,ay,0);
 		world->CastRay(pos+ofs, dir, HMaxDepth, NULL, ct0, &pOnRoad, true, false);
 		world->CastRay(pos-ofs, dir, HMaxDepth, NULL, ct1, &pOnRoad, true, false);
+		world->CastRay(pos+ofs2, dir, HMaxDepth, NULL, ct20, &pOnRoad, true, false);
+		world->CastRay(pos-ofs2, dir, HMaxDepth, NULL, ct21, &pOnRoad, true, false);
 
-		if (ct0.col && ct1.col)
-			tilt = GetAngle(2.f * Rdist, ct1.depth - ct0.depth);
+		if (ct0.col && ct1.col && ct20.col && ct21.col)
+			tilt = (GetAngle(Rdist, ct1.depth - ct0.depth) + GetAngle(2.f * Rdist, ct21.depth - ct20.depth)) * 0.5f;
 		//else  LogO(String("no hit: ")+(ct0.col?"1":"0")+(ct1.col?" 1":" 0"));
-		if (tilt < angMin && tilt > -angMin)  tilt = 0.f;
+
+		//if (tilt < angMin && tilt > -angMin)  tilt = 0.f;
+		if (tilt < r0 && tilt >-angMin) {  Radian d = tilt-angMin;  tilt = std::min(r0, tilt + d*d*5.f);  }
+		if (tilt > r0 && tilt < angMin) {  Radian d =-angMin-tilt;  tilt = std::max(r0, tilt - d*d*5.f);  }
 
 		//LogO("d  "+fToStr(ct0.depth,3,5)+" "+fToStr(ct1.depth,3,5)+"  t "+fToStr(tilt.valueDegrees(),3,5));
 	}
@@ -410,7 +415,6 @@ void FollowCamera::updInfo(Real time)
 	else
 		fMoveTime += time;
 	
-    static char ss[512];
     switch (ca->mType)
     {
 	case CAM_Follow: sprintf(ss, sFmt_Follow.c_str()
@@ -515,6 +519,7 @@ FollowCamera::FollowCamera(Camera* cam,	SETTINGS* pSet1) :
     body = new btRigidBody(mass, state, shape, inertia);  // _\ delete !...
 	#endif
 	ca = new CameraAngle();
+	ss[0]=0;
 }
 
 FollowCamera::~FollowCamera()
