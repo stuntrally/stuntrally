@@ -173,8 +173,8 @@ btCollisionShape * COLLISION_WORLD::AddMeshShape(const MODEL & model)
 
 struct MyRayResultCallback : public btCollisionWorld::RayResultCallback
 {
-	MyRayResultCallback(const btVector3 & rayFromWorld, const btVector3 & rayToWorld, const btCollisionObject * exclude, bool ignoreCars)
-		: m_rayFromWorld(rayFromWorld), m_rayToWorld(rayToWorld), m_exclude(exclude), m_shapeId(0), bIgnoreCars(ignoreCars)
+	MyRayResultCallback(const btVector3 & rayFromWorld, const btVector3 & rayToWorld, const btCollisionObject * exclude, bool ignoreCars, bool ignoreFluids)
+		: m_rayFromWorld(rayFromWorld), m_rayToWorld(rayToWorld), m_exclude(exclude), m_shapeId(0), bIgnoreCars(ignoreCars), bIgnoreFluids(ignoreFluids)
 	{	}
 
 	btVector3	m_rayFromWorld;//used to calculate hitPointWorld from hitFraction
@@ -185,7 +185,7 @@ struct MyRayResultCallback : public btCollisionWorld::RayResultCallback
 	
 	int m_shapeId;
 	const btCollisionObject * m_exclude;
-	bool bIgnoreCars;
+	bool bIgnoreCars,bIgnoreFluids;
 		
 	virtual	btScalar	addSingleResult(btCollisionWorld::LocalRayResult& rayResult, bool normalInWorldSpace)
 	{
@@ -201,8 +201,8 @@ struct MyRayResultCallback : public btCollisionWorld::RayResultCallback
 				return 1.0;
 		}
 			
-		//  fluid triggers - no collision
-		if (obj->getCollisionFlags() & btCollisionObject::CF_NO_CONTACT_RESPONSE)
+		//  fluid triggers - no collision (but collide for camera rays)
+		if (bIgnoreFluids && (obj->getCollisionFlags() & btCollisionObject::CF_NO_CONTACT_RESPONSE))
 			return 1.0;
 		
 		//caller already does the filter on the m_closestHitFraction
@@ -239,11 +239,11 @@ bool COLLISION_WORLD::CastRay(
 	const float length,
 	const btCollisionObject * caster,
 	COLLISION_CONTACT & contact,
-	int* pOnRoad, bool ignoreCars) const
+	int* pOnRoad, bool ignoreCars, bool ignoreFluids) const
 {
 	btVector3 from = ToBulletVector(origin);
 	btVector3 to = ToBulletVector(origin + direction * length);
-	MyRayResultCallback rayCallback(from, to, caster, ignoreCars);
+	MyRayResultCallback rayCallback(from, to, caster, ignoreCars, ignoreFluids);
 	
 	MATHVECTOR <float, 3> p, n;  float d;
 	const TRACKSURFACE * s = TRACKSURFACE::None();

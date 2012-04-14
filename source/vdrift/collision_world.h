@@ -61,7 +61,7 @@ public:
 	bool CastRay(
 		const MATHVECTOR <float,3> & position, const MATHVECTOR <float,3> & direction, const float length,
 		const btCollisionObject * caster, COLLISION_CONTACT & contact,
-		int* pOnRoad, bool ignoreCars) const;
+		int* pOnRoad, bool ignoreCars, bool ignoreFluids) const;
 	
 	// update world physics
 	void Update(double dt, bool profiling);

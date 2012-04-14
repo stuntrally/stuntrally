@@ -85,8 +85,8 @@ void FollowCamera::update(Real time, const PosInfo& posIn, PosInfo* posOut, COLL
 		//  cast 2 rays
 		COLLISION_CONTACT ct0,ct1;  int pOnRoad;
 		MATHVECTOR<float,3> ofs(ax,ay,0);
-		world->CastRay(pos+ofs, dir, HMaxDepth, NULL, ct0, &pOnRoad, true);
-		world->CastRay(pos-ofs, dir, HMaxDepth, NULL, ct1, &pOnRoad, true);
+		world->CastRay(pos+ofs, dir, HMaxDepth, NULL, ct0, &pOnRoad, true, false);
+		world->CastRay(pos-ofs, dir, HMaxDepth, NULL, ct1, &pOnRoad, true, false);
 
 		if (ct0.col && ct1.col)
 			tilt = GetAngle(2.f * Rdist, ct1.depth - ct0.depth);
