@@ -107,7 +107,7 @@
 	<Tag name="TerLHSm">Wysokość przejście</Tag>
 	<Tag name="CopySource">Wybierz jako źródło kopiowania</Tag>
 	<Tag name="rating">ocena</Tag>
-	<Tag name="TipDisableFog">Wyłącz mgłę gdy edycja z dystansu.</Tag>
+	<Tag name="TreeRoadDist">Odl. od drogi.</Tag>
 	<Tag name="GraphicsAll_Medium">Ś</Tag>
 	<Tag name="NeedReload">* potrzeba przeładowania</Tag>
 	<Tag name="MinimapZoom">Powiększenie</Tag>
@@ -238,7 +238,7 @@
 	<Tag name="NetWaiting">Oczekiwanie...</Tag>
 	<Tag name="NetStart">Start</Tag>
 	<Tag name="InputMinVal">Min. Wartość</Tag>
-	<Tag name="InputPressButtonTip">Naciśnij przycisk by zobaczyć</Tag>
+	<Tag name="RplMaxNumViewports">Max. number of viewports (see less, for more player replays)</Tag>
 	<Tag name="SingleRace">Pojedynczy wyścig</Tag>
 	<Tag name="TipNewGameCar">Startuj od nowa (po zmianie auta).</Tag>
 	<Tag name="InputWheelForce">[,] (lub shift-kółko) - Siła (intensywność)</Tag>
@@ -290,7 +290,7 @@
 	<Tag name="Screen">Ekran</Tag>
 	<Tag name="FuelTime">Paliwo co czas</Tag>
 	<Tag name="InputRoadMostSel">większość również dla selekcji</Tag>
-	<Tag name="InputTerHeight">E - Ustaw wysokość (RMB zmienia wartość wysokości)</Tag>
+	<Tag name="InputTerHeight">E - Height set  (RMB change height value)</Tag>
 	<Tag name="InputStartPos">Q - edytuj start auta</Tag>
 	<Tag name="Laps">Okrążenia</Tag>
 	<Tag name="TipModelRoadDist">Dystans od drogi do modeli (globalny, dodawany do wartości każdego modelu).</Tag>
@@ -308,6 +308,7 @@
 	<Tag name="TrackAutoLoad">Autom. wczytywanie trasy</Tag>
 	<Tag name="DustSize">rozmiar kurzu</Tag>
 	<Tag name="InputUpdBlendmap">F9 - odśwież przejścia terenu</Tag>
+	<Tag name="InputPressButtonTip">Naciśnij przycisk by zobaczyć</Tag>
 	<Tag name="Friction">Tarcie</Tag>
 	<Tag name="TerLHMin">Wysokość Min</Tag>
 	<Tag name="Ambient">Ambient</Tag>
@@ -402,6 +403,7 @@
 	<Tag name="InputRplCtrl3">[ , ] - przewiń do tyłu/do przodu (shift - wolno, ctrl,alt - szybko)</Tag>
 	<Tag name="InputRplCtrl0">Powtórka:</Tag>
 	<Tag name="InputRplCtrl1">Backspace - pokaż/ukryj kontrolki (przytrzymaj ctrl by użyć myszy)</Tag>
+	<Tag name="InputRplCtrl4">K, L - change camera view to other player</Tag>
 	<Tag name="TipGrassSwayLen">Efekt kołysania trawy długość (skala).</Tag>
 	<Tag name="WaterReflection">Odbicie</Tag>
 	<Tag name="intensity">Intensywność</Tag>
@@ -500,7 +502,7 @@
 	<Tag name="UnitMB">MB</Tag>
 	<Tag name="Back">Tył</Tag>
 	<Tag name="ShadowFilter">Filtr</Tag>
-	<Tag name="InputTerSmooth">S - Wygładź</Tag>
+	<Tag name="InputTerSmooth">S - Smooth  (flatten)</Tag>
 	<Tag name="TipChangeTrack">Ustawia obecną trasę na tą z listy. Naciśnij [Nowa Gra] by potem zacząć grać.</Tag>
 	<Tag name="TipModelDens">Jak często model będzie występował w obszarze trasy.</Tag>
 	<Tag name="InpSet_Fast">Szybko</Tag>
@@ -633,6 +635,7 @@
 	<Tag name="ApplyShaders">Zastosuj cieniowanie.</Tag>
 	<Tag name="CarDebug">Paski zawieszenia, poślizgu | -</Tag>
 	<Tag name="InputRoadPick">Space - wybierz/żaden</Tag>
+	<Tag name="InputTerFilter">F - Filter  (remove noise)</Tag>
 	<Tag name="InputRoadRebuild">B - przebuduj drogę (po zmianie terenu, itp.)</Tag>
 	<Tag name="MessageBox_Ok">Ok</Tag>
 	<Tag name="RplSave">Zapisz</Tag>
@@ -645,7 +648,7 @@
 	<Tag name="InputMapGeneral">Ogólne</Tag>
 	<Tag name="TipTrkTerImg">Minimapa wybranej trasy (widok z góry).</Tag>
 	<Tag name="LS_GAME">Wczytywanie gry</Tag>
-	<Tag name="TreeRoadDist">Odl. od drogi.</Tag>
+	<Tag name="TipDisableFog">Wyłącz mgłę gdy edycja z dystansu.</Tag>
 	<Tag name="long">długość</Tag>
 	<Tag name="PipeWStepsMul">Kroków szer. rury</Tag>
 	<Tag name="RplLoad">Wczytaj</Tag>
@@ -716,9 +719,7 @@
 	<Tag name="Pitch">nachylenie</Tag>
 	<Tag name="InputNextOptTab">F2,F3 - poprz./nast. zakładka Opcji (shift - podzakładka)</Tag>
 	<Tag name="TipLoadTrkEditor">Wczytaj trasę (po zmianie) lub Przeładuj obecną.</Tag>
-	<Tag name="RplMaxNumViewports">Max. number of viewports (see less, for more player replays)</Tag>
-	<Tag name="InputRplCtrl4">K, L - change camera view to other player</Tag>
-	<Tag name="InputTerFilter">F - Filter  (remove noise)</Tag>
+	<Tag name="CameraAutoTilt">Camera auto tilt on slopes</Tag>
 	<Tag name="GameVersion">1.5</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 

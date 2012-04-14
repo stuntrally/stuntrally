@@ -107,7 +107,7 @@
 	<Tag name="TerLHSm">Korkeus pehmennys</Tag>
 	<Tag name="CopySource">Aseta kopiointilähteeksi</Tag>
 	<Tag name="rating">arvostelu</Tag>
-	<Tag name="TipDisableFog">Disable fog when editing road from distance.</Tag>
+	<Tag name="TreeRoadDist">Trees to road dist.</Tag>
 	<Tag name="GraphicsAll_Medium">Keskitaso</Tag>
 	<Tag name="NeedReload">* vaatii uudelleen latauksen</Tag>
 	<Tag name="MinimapZoom">Zoom</Tag>
@@ -238,7 +238,7 @@
 	<Tag name="NetWaiting">Odotetaan...</Tag>
 	<Tag name="NetStart">Aloita</Tag>
 	<Tag name="InputMinVal">Minimiarvo</Tag>
-	<Tag name="InputPressButtonTip">Press a button to see its number</Tag>
+	<Tag name="RplMaxNumViewports">Max. number of viewports (see less, for more player replays)</Tag>
 	<Tag name="SingleRace">Yksittäinen kilpailu</Tag>
 	<Tag name="TipNewGameCar">Käynnistä peli uudelleen (auton vaihdon jälkeen).</Tag>
 	<Tag name="InputWheelForce">[,]  (or shift-Wheel)  -  Force (intensity)</Tag>
@@ -308,6 +308,7 @@
 	<Tag name="TrackAutoLoad">Auto Load track</Tag>
 	<Tag name="DustSize">pölyn koko</Tag>
 	<Tag name="InputUpdBlendmap">F9 - update terrain blendmap</Tag>
+	<Tag name="InputPressButtonTip">Press a button to see its number</Tag>
 	<Tag name="Friction">Kitka</Tag>
 	<Tag name="TerLHMin">Minimi korkeus</Tag>
 	<Tag name="Ambient">Ambient</Tag>
@@ -402,6 +403,7 @@
 	<Tag name="InputRplCtrl3">[ , ] - wind backwards/forwards (shift - slow, ctrl,alt - fast)</Tag>
 	<Tag name="InputRplCtrl0">Uusinta:</Tag>
 	<Tag name="InputRplCtrl1">Backspace - show/hide controls (hold ctrl to use mouse)</Tag>
+	<Tag name="InputRplCtrl4">K, L - change camera view to other player</Tag>
 	<Tag name="TipGrassSwayLen">Grass sway effect length (scale).</Tag>
 	<Tag name="WaterReflection">Reflection</Tag>
 	<Tag name="intensity">voimakkuus</Tag>
@@ -633,6 +635,7 @@
 	<Tag name="ApplyShaders">Käytä varjostimia</Tag>
 	<Tag name="CarDebug">Car susp, long|,lat- slips</Tag>
 	<Tag name="InputRoadPick">Space - pick one/none</Tag>
+	<Tag name="InputTerFilter">F - Filter  (remove noise)</Tag>
 	<Tag name="InputRoadRebuild">B - rebuild road (after terrain change, etc.)</Tag>
 	<Tag name="MessageBox_Ok">Ok</Tag>
 	<Tag name="RplSave">Tallenna</Tag>
@@ -645,7 +648,7 @@
 	<Tag name="InputMapGeneral">General</Tag>
 	<Tag name="TipTrkTerImg">Minimap of selected track, view from top.</Tag>
 	<Tag name="LS_GAME">Ladataan peliä</Tag>
-	<Tag name="TreeRoadDist">Trees to road dist.</Tag>
+	<Tag name="TipDisableFog">Disable fog when editing road from distance.</Tag>
 	<Tag name="long">pitkä</Tag>
 	<Tag name="PipeWStepsMul">Pipe W steps mul.</Tag>
 	<Tag name="RplLoad">Lataa</Tag>
@@ -716,9 +719,7 @@
 	<Tag name="Pitch">pitch</Tag>
 	<Tag name="InputNextOptTab">F2,F3 - prev,next Options tab (shift - sub tab)</Tag>
 	<Tag name="TipLoadTrkEditor">Lataa rata (muutoksien jälkeen) tai uudelleen lataa nykyinen rata.</Tag>
-	<Tag name="RplMaxNumViewports">Max. number of viewports (see less, for more player replays)</Tag>
-	<Tag name="InputRplCtrl4">K, L - change camera view to other player</Tag>
-	<Tag name="InputTerFilter">F - Filter  (remove noise)</Tag>
+	<Tag name="CameraAutoTilt">Camera auto tilt on slopes</Tag>
 	<Tag name="GameVersion">1.5</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 
