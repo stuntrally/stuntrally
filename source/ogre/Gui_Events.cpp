@@ -335,6 +335,7 @@ void App::chkOpponentsSort(WP wp){	ChkEv(opplist_sort);	}
 
 //void App::chkRacingLine(WP wp){		ChkEv(racingline);	if (ndLine)  ndLine->setVisible(pSet->racingline);	}
 void App::chkCamInfo(WP wp){		ChkEv(show_cam);	ShowHUD();	}
+void App::chkCamTilt(WP wp){		ChkEv(cam_tilt);	}
 
 void App::chkCarDbgBars(WP wp){		ChkEv(car_dbgbars);	ShowHUD();	}
 void App::chkCarDbgTxt(WP wp){		ChkEv(car_dbgtxt);	ShowHUD();	}

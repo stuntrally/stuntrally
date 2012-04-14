@@ -304,7 +304,7 @@ protected:
 	//  checks
 	void chkFps(WP), chkGauges(WP),	chkArrow(WP), chkDigits(WP),
 		chkMinimap(WP), chkMiniZoom(WP), chkMiniRot(WP), chkMiniTer(WP),  // view
-		chkCamInfo(WP), chkTimes(WP), chkOpponents(WP), chkOpponentsSort(WP),
+		chkCamInfo(WP), chkTimes(WP), chkOpponents(WP), chkOpponentsSort(WP), chkCamTilt(WP),
 		chkCarDbgBars(WP), chkCarDbgTxt(WP), chkBltDebug(WP), chkBltProfilerTxt(WP), chkProfilerTxt(WP),
 		chkReverse(WP), chkParticles(WP), chkTrails(WP),
 		chkAbs(WP), chkTcs(WP), chkGear(WP), chkRear(WP), chkRearInv(WP),  // car

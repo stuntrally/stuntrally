@@ -1,13 +1,17 @@
 #include "pch.h"
 #include "common/Defines.h"
 #include "FollowCamera.h"
+#include "../vdrift/settings.h"
+
 #include "../tinyxml/tinyxml.h"
 #include "../vdrift/pathmanager.h"
 #include "../vdrift/mathvector.h"
+// ray cast
 #include "../vdrift/collision_contact.h"
+#include "../vdrift/collision_world.h"
 #include "../btOgre/BtOgreDebug.h"
 #include "btBulletCollisionCommon.h"
-#include "CarModel.h"
+#include "CarModel.h"  //posInfo
 
 #include <OgreCamera.h>
 #include <OgreSceneNode.h>
@@ -19,10 +23,21 @@
 using namespace Ogre;
 
 
+static float GetAngle(float x, float y)
+{
+	if (x == 0.f && y == 0.f)
+		return 0.f;
+
+	if (y == 0.f)
+		return (x < 0.f) ? PI_d : 0.f;
+	else
+		return (y < 0.f) ? atan2f(-y, x) : (-atan2f(y, x));
+}
+
 ///  Update
 //-----------------------------------------------------------------------------------------------------
 
-void FollowCamera::update(Real time, const PosInfo& posIn, PosInfo* posOut)
+void FollowCamera::update(Real time, const PosInfo& posIn, PosInfo* posOut, COLLISION_WORLD* world)
 {
 	if (!ca || !posOut)  return;
 
@@ -38,6 +53,52 @@ void FollowCamera::update(Real time, const PosInfo& posIn, PosInfo* posOut)
 
 	Quaternion  orient = orientGoal * qO;
 	Vector3  ofs = orient * ca->mOffset,  goalLook = posGoal + ofs;
+
+
+	///  Camera Tilt from terrain/road slope under car
+	//------------------------------------------------------
+	//  params  . . .
+	const float
+		Rdist = 1.f,     // dist from car to ray (front or back)
+		HupCar = 1.5f,	  // car up dir dist - for pipes - so pos stays inside pipe
+		Habove = 1.5f,    // up axis dist, above car - for very high terrain angles
+		HMaxDepth = 8.f;  // how far down can the ray go
+	const static Radian
+		angMin = Degree(3.f),   // below this angle, tilt has no effect - terrain bumps
+		maxDiff = Degree(4.f);  // max diff of tilt - no sudden jumps
+	const float smoothSpeed = 7.f;  // how fast to apply tilt change
+
+	Radian tilt(0.f);
+	if (pSet->cam_tilt)
+	{
+		//  car pos
+		Vector3 carUp = posIn.pos - HupCar * posIn.carY;
+		MATHVECTOR<float,3> pos(carUp.x, -carUp.z, carUp.y + Habove);  // to vdr/blt
+		const static MATHVECTOR<float,3> dir(0,0,-1);  // cast rays down
+		
+		//  car rot, yaw angle
+		Quaternion q = posIn.rot * Quaternion(Degree(90),Vector3(0,1,0));
+		float angCarY = q.getYaw().valueRadians() + PI_d/2.f;
+		float ax = cosf(angCarY)*Rdist, ay = sinf(angCarY)*Rdist;
+		//LogO("pos: "+fToStr(pos[0],2,4)+" "+fToStr(pos[1],2,4)+"  a: "+fToStr(angCarY,2,4)+"  dir: "+fToStr(ax,2,4)+" "+fToStr(ay,2,4));
+		
+		//  cast 2 rays
+		COLLISION_CONTACT ct0,ct1;  int pOnRoad;
+		MATHVECTOR<float,3> ofs(ax,ay,0);
+		world->CastRay(pos+ofs, dir, HMaxDepth, NULL, ct0, &pOnRoad, true);
+		world->CastRay(pos-ofs, dir, HMaxDepth, NULL, ct1, &pOnRoad, true);
+
+		if (ct0.col && ct1.col)
+			tilt = GetAngle(2.f * Rdist, ct1.depth - ct0.depth);
+		//else  LogO(String("no hit: ")+(ct0.col?"1":"0")+(ct1.col?" 1":" 0"));
+		if (tilt < angMin && tilt > -angMin)  tilt = 0.f;
+
+		//LogO("d  "+fToStr(ct0.depth,3,5)+" "+fToStr(ct1.depth,3,5)+"  t "+fToStr(tilt.valueDegrees(),3,5));
+	}
+	//  smooth tilt angle
+	mATilt += std::min(maxDiff, std::max(-maxDiff, tilt - mATilt)) * time * smoothSpeed;
+	//------------------------------------------------------
+
 	
     if (ca->mType == CAM_Car)	/* 3 Car - car pos & rot full */
     {
@@ -62,7 +123,7 @@ void FollowCamera::update(Real time, const PosInfo& posIn, PosInfo* posOut)
 	if (ca->mType != CAM_Arena)
 	{
 		Real x,y,z,xz;   // pitch & yaw to direction vector
-		Real ap = ca->mPitch.valueRadians(), ay =  ca->mYaw.valueRadians();
+		Real ap = ca->mPitch.valueRadians() + mATilt.valueRadians(), ay =  ca->mYaw.valueRadians();
 		y = sin(ap), xz = cos(ap);
 		x = sin(ay) * xz, z = cos(ay) * xz;
 		xyz = Vector3(x,y,z);  xyz *= ca->mDist;
@@ -108,7 +169,7 @@ void FollowCamera::update(Real time, const PosInfo& posIn, PosInfo* posOut)
 			goalPos += qq * (xyz + ca->mOffset);
 			
 			camPosFinal = goalPos;
-			camRotFinal = qq * qy * Quaternion(Degree(-ca->mPitch),Vector3(1,0,0));
+			camRotFinal = qq * qy * Quaternion(Degree(-ca->mPitch - mATilt),Vector3(1,0,0));
 			manualOrient = true;
 		}	break;
 	}
@@ -123,12 +184,12 @@ void FollowCamera::update(Real time, const PosInfo& posIn, PosInfo* posOut)
 			Pos = camPosFinal;  //read last state (smooth)
 			Pos += (goalPos - Pos) * dtmul;
 			
-			static Radian  pitch(0), yaw(0);
-			pitch += (ca->mPitch - pitch) * dtmul;  yaw += (ca->mYaw - yaw) * dtmul;
+			mAPitch += (ca->mPitch - mAPitch) * dtmul;
+			mAYaw += (ca->mYaw - mAYaw) * dtmul;
 			
-			if (first)  {  Pos = goalPos;  pitch = ca->mPitch;  yaw = ca->mYaw;  first = false;  }
+			if (first)  {  Pos = goalPos;  mAPitch = ca->mPitch;  mAYaw = ca->mYaw;  first = false;  }
 			camPosFinal = Pos;
-			camRotFinal = Quaternion(Degree(yaw),Vector3(0,1,0)) * Quaternion(Degree(pitch),Vector3(1,0,0));
+			camRotFinal = Quaternion(Degree(mAYaw),Vector3(0,1,0)) * Quaternion(Degree(mAPitch),Vector3(1,0,0));
 			manualOrient = true;
 		}
 		else
@@ -435,10 +496,11 @@ void FollowCamera::setCamera(int ang)
 
 //  ctors
 
-FollowCamera::FollowCamera(Camera* cam) :
+FollowCamera::FollowCamera(Camera* cam,	SETTINGS* pSet1) :
 	ovInfo(0),ovName(0), first(true), ca(0),
-    mCamera(cam), mTerrain(0),
-    mLook(Vector3::ZERO), mPosNodeOld(Vector3::ZERO), mVel(0)
+    mCamera(cam), mTerrain(0), pSet(pSet1),
+    mLook(Vector3::ZERO), mPosNodeOld(Vector3::ZERO), mVel(0),
+    mAPitch(0.f),mAYaw(0.f), mATilt(0.f)
     #ifdef CAM_BLT
     ,shape(0), body(0), state(0)
     #endif

@@ -745,7 +745,7 @@ void App::newPoses(float time)  // time only for camera update
 			carPoses[qn][c] = pi;
 			//  update camera
 			if (carM->fCam)
-				carM->fCam->update(time, pi, &carPoses[qn][c]);
+				carM->fCam->update(time, pi, &carPoses[qn][c], &pGame->collision);
 			iCurPoses[c] = qn;  // atomic, set new index in queue
 		}
 	}

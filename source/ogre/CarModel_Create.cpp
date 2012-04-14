@@ -138,7 +138,7 @@ void CarModel::Create(int car)
 	//  --------  Follow Camera  --------
 	if (mCamera)
 	{
-		fCam = new FollowCamera(mCamera);
+		fCam = new FollowCamera(mCamera, pSet);
 		fCam->loadCameras();
 		
 		//  set in-car camera position to driver position

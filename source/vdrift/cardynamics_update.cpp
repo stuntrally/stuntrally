@@ -167,6 +167,7 @@ void CARDYNAMICS::DebugPrint ( std::ostream & out, bool p1, bool p2, bool p3, bo
 	#if 1	// body
 		out << "---Body---" << std::endl;
 		//out << "c of mass: " << center_of_mass << std::endl;
+		out << "pos: " << chassisPosition << std::endl;
 		//MATRIX3 <T> inertia = body.GetInertia();  //btVector3 chassisInertia(inertia[0], inertia[4], inertia[8]);
 		//out << "inertia:  " << inertia[0] << "  " << inertia[4] << "  " << inertia[8] << "\n";
 		out << "mass: " << body.GetMass() << std::endl << std::endl;
@@ -186,7 +187,7 @@ void CARDYNAMICS::DebugPrint ( std::ostream & out, bool p1, bool p2, bool p3, bo
 		out << std::endl;
 	#endif
 
-	#if 1
+	#if 0
 		engine.DebugPrint(out);  out << std::endl;
 		//fuel_tank.DebugPrint(out);  out << std::endl;  //mass 8- for 3S,ES,FM
 		clutch.DebugPrint(out);  out << std::endl;

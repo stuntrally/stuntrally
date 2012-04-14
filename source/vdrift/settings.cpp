@@ -52,6 +52,7 @@ void SETTINGS::Serialize(bool w, CONFIGFILE & c)
 	Param(c,w, "hud_show.gauges", show_gauges);			Param(c,w, "hud_show.show_digits", show_digits);
 	Param(c,w, "hud_show.trackmap", trackmap);
 	Param(c,w, "hud_show.caminfo", show_cam);			Param(c,w, "hud_show.times", show_times);
+	Param(c,w, "hud_show.cam_tilt", cam_tilt);
 	Param(c,w, "hud_show.car_dbgtxt", car_dbgtxt);		Param(c,w, "hud_show.show_cardbg", car_dbgbars);
 	Param(c,w, "hud_show.tracks_view", tracks_view);
 	Param(c,w, "hud_show.tracks_sort", tracks_sort);	Param(c,w, "hud_show.tracks_sortup", tracks_sortup);
@@ -137,7 +138,8 @@ SETTINGS::SETTINGS() :  ///  Defaults
 	version(100),  // old
 	//  hud
 	show_fps(1), show_gauges(1), trackmap(1),
-	show_cam(1), show_times(0), show_digits(1), show_opponents(1), opplist_sort(true),
+	show_cam(1), show_times(0), show_digits(1),
+	show_opponents(1), opplist_sort(true), cam_tilt(1),
 	car_dbgtxt(0), car_dbgbars(0),
 	size_gauges(0.18), size_minimap(0.2), zoom_minimap(1.0),
 	mini_zoomed(0), mini_rotated(1), mini_terrain(0),
@@ -188,7 +190,7 @@ SETTINGS::SETTINGS() :  ///  Defaults
 	bloom(false), bloomintensity(0.13), bloomorig(0.9), hdr(false),
 	motionblur(false), motionblurintensity(0.3),
 	depthOfFieldFocus(100), depthOfFieldFar(1000),
-	ssao(false),softparticles(false),
+	ssao(false), softparticles(false),
 	//  not in gui
 	boostFromExhaust(0), net_local_plr(-1),
 	renderNotActive(false)

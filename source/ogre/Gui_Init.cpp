@@ -155,6 +155,7 @@ void App::InitGui()
 	Chk("MiniTer", chkMiniTer, pSet->mini_terrain);
 	Chk("Times", chkTimes, pSet->show_times);	chTimes  = bchk;
 	Chk("CamInfo", chkCamInfo, pSet->show_cam);
+	Chk("CamTilt", chkCamTilt, pSet->cam_tilt);
 	Chk("Opponents", chkOpponents, pSet->show_opponents);  chOpponents = bchk;
 	Chk("OpponentsSort", chkOpponentsSort, pSet->opplist_sort);
 
