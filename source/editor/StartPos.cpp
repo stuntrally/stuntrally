@@ -77,7 +77,7 @@ void App::UpdStartPos()
 		ndCar->attachObject(entCar);
 	}
 	if (!ndStBox)
-	{ 	//  car for start pos
+	{ 	//  start pos box
 		MaterialPtr mtr = Ogre::MaterialManager::getSingleton().getByName("sphere_check");
 		if (!mtr.isNull())
  		{	ndStBox = mSceneMgr->getRootSceneNode()->createChildSceneNode();
@@ -86,6 +86,18 @@ void App::UpdStartPos()
 				entStBox->setCastShadows(true);  //`
 				entStBox->setMaterial(mtr);  entStBox->setRenderQueueGroup(RQG_CarGlass);  // after road
 			ndStBox->attachObject(entStBox);
+	}	}
+	if (!ndFluidBox)
+	{ 	//  fluid edit box
+		MaterialPtr mtr = Ogre::MaterialManager::getSingleton().getByName("fluid_box");
+		if (!mtr.isNull())
+ 		{	ndFluidBox = mSceneMgr->getRootSceneNode()->createChildSceneNode();
+			entFluidBox = mSceneMgr->createEntity("box.mesh");  // box
+			entFluidBox->setVisibilityFlags(RV_Hud);  ndFluidBox->setPosition(Vector3(0,0,0));
+				entFluidBox->setCastShadows(false);  //`
+				entFluidBox->setMaterial(mtr);  entFluidBox->setRenderQueueGroup(RQG_CarGlass);
+			ndFluidBox->attachObject(entFluidBox);
+			ndFluidBox->setVisible(false);
 	}	}
 	if (vStartPos.size() < 4 || vStartRot.size() < 4)  return;
 

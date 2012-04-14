@@ -206,7 +206,7 @@ bool App::frameRenderingQueued(const FrameEvent& evt)
 		if (isKey(APOSTROPHE)){	fb.tile.y *= 1.f + 0.04f*q;  bRecreateFluids = true;  }
 		if (mz != 0)  // wheel prev/next
 		{	int fls = sc.fluids.size();
-			if (fls > 0)  iFlCur = (iFlCur-mz+fls)%fls;
+			if (fls > 0)  {  iFlCur = (iFlCur-mz+fls)%fls;  UpdFluidBox();  }
 		}
 	}
 	else if (edMode < ED_Road)
@@ -433,13 +433,13 @@ void App::editMouse()
 				Vector3 vz = mCameraT->getDirection();  vz.y = 0;  vz.normalise();
 				Vector3 vm = (-vNew.y * vz + vNew.x * vx) * fMove * moveMul;
 				fb.pos += vm;
-				vFlNd[iFlCur]->setPosition(fb.pos);
+				vFlNd[iFlCur]->setPosition(fb.pos);  UpdFluidBox();
 			}else
 			if (mbRight)  // move y
 			{
 				Real ym = -vNew.y * fMove * moveMul;
 				fb.pos.y += ym;
-				vFlNd[iFlCur]->setPosition(fb.pos);
+				vFlNd[iFlCur]->setPosition(fb.pos);  UpdFluidBox();
 			}
 			// rot not supported (bullet trigger isnt working, trees check & waterDepth is a lot simpler)
 			/*else
@@ -636,6 +636,7 @@ bool App::frameStarted(const Ogre::FrameEvent& evt)
 	{	bRecreateFluids = false;
 		DestroyFluids();
 		CreateFluids();
+		UpdFluidBox();
 	}
 	
 	///  sort trk list

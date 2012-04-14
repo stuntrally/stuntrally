@@ -496,11 +496,11 @@ void App::CreateFluids()
 {
 	#ifdef ROAD_EDITOR
 	vFlNd.clear();  vFlEnt.clear();  vFlSMesh.clear();
+	UpdFluidBox();
 	#endif
-	SceneNode* flRoot;
-	if (!mSceneMgr->hasSceneNode("FluidsRootNode")) flRoot = mSceneMgr->getRootSceneNode()->createChildSceneNode("FluidsRootNode");
-	else flRoot = mSceneMgr->getSceneNode("FluidsRootNode");
-	
+	if (!mWaterRTT.mNdFluidsRoot)
+		mWaterRTT.mNdFluidsRoot = mSceneMgr->getRootSceneNode()->createChildSceneNode("FluidsRootNode");
+			
 	for (int i=0; i < sc.fluids.size(); i++)
 	{
 		FluidBox& fb = sc.fluids[i];
@@ -532,7 +532,7 @@ void App::CreateFluids()
 		efl->setMaterial(mtr);  efl->setCastShadows(false);
 		efl->setRenderQueueGroup(RQG_Fluid);  efl->setVisibilityFlags(RV_Terrain);
 
-		SceneNode* nfl = flRoot->createChildSceneNode(
+		SceneNode* nfl = mWaterRTT.mNdFluidsRoot->createChildSceneNode(
 			fb.pos/*, Quaternion(Degree(fb.rot.x),Vector3::UNIT_Y)*/);
 		nfl->attachObject(efl);
 		#ifdef ROAD_EDITOR
@@ -588,5 +588,22 @@ void App::DestroyFluids()
 		Ogre::MeshManager::getSingleton().remove(vFlSMesh[i]);
 	}
 	vFlNd.clear();  vFlEnt.clear();  vFlSMesh.clear();
+}
+
+void App::UpdFluidBox()
+{
+	int fls = sc.fluids.size();
+	bool bFluids = edMode == ED_Fluids && fls > 0;
+	if (fls > 0)
+		iFlCur = std::min(iFlCur, fls-1);
+
+	if (!ndFluidBox)  return;
+	ndFluidBox->setVisible(bFluids);
+	if (!bFluids)  return;
+	
+	FluidBox& fb = sc.fluids[iFlCur];
+	Vector3 p = fb.pos;  p.y -= fb.size.y*0.5f;
+	ndFluidBox->setPosition(p);
+	ndFluidBox->setScale(fb.size);
 }
 #endif

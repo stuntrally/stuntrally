@@ -29,6 +29,7 @@ public:
 	void setViewerCamera(Ogre::Camera* cam);
 	
 	Ogre::SceneManager* mSceneMgr;
+	Ogre::SceneNode* mNdFluidsRoot;
 	
 private:
 	Ogre::RenderTarget* mReflectionTarget;

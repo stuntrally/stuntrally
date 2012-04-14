@@ -81,7 +81,7 @@ protected:
 	Ogre::String resTrk;  void NewCommon(), UpdTrees();
 	void CreateTerrain(bool bNewHmap=false, bool bTer=true), CreateBltTerrain();
 	void GetTerAngles(int xb,int yb,int xe,int ye);
-	void CreateTrees(), CreateFluids(), DestroyFluids(), CreateBltFluids();
+	void CreateTrees(), CreateFluids(), DestroyFluids(), CreateBltFluids(), UpdFluidBox();
 	void CreateSkyDome(Ogre::String sMater, Ogre::Vector3 scale);
 	bool GetFolderIndex(std::string folderpath, std::list <std::string> & outputfolderlist, std::string extension="");
 
@@ -176,7 +176,8 @@ protected:
 	bool LoadStartPos(),SaveStartPos(std::string path);  void UpdStartPos();
 	std::vector <MATHVECTOR <float, 3> > vStartPos;
 	std::vector <QUATERNION <float> >    vStartRot;
-	Ogre::SceneNode* ndCar,*ndStBox;	Ogre::Entity* entCar,*entStBox;
+	Ogre::SceneNode* ndCar,*ndStBox,*ndFluidBox;
+	Ogre::Entity*  entCar,*entStBox,*entFluidBox;
 	void togPrvCam();
 
 

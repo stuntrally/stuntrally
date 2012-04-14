@@ -325,6 +325,8 @@ void App::SaveWaterDepth()
 	TexturePtr tex = TextureManager::getSingleton().getByName("waterDepth.png");
 	if (!tex.isNull())
 		tex->reload();
+	else  // 1st fluid after start, refresh matdef ?..
+		TextureManager::getSingleton().load("waterDepth.png",ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME);
 	} catch(...) {  }
 
 

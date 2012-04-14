@@ -43,7 +43,9 @@ void App::UpdEditWnds()
 	if (mWndRoadCur)  mWndRoadCur->setVisible(bRoad);
 	//if (mWndRoadStats)  mWndRoadStats->setVisible(bRoad);
 	if (mWndCam)  mWndCam->setVisible(edMode == ED_PrvCam);
+
 	if (mWndFluids)  mWndFluids->setVisible(edMode == ED_Fluids);
+	UpdFluidBox();
 	UpdStartPos();  // StBox visible
 	UpdVisGui();  //br prv..
 }
@@ -377,15 +379,15 @@ bool App::KeyPress(const CmdKey &arg)
 		{
 			//  first, last
 			case KC_HOME:  case KC_NUMPAD7:
-				iFlCur = 0;  break;
+				iFlCur = 0;  UpdFluidBox();  break;
 			case KC_END:  case KC_NUMPAD1:
-				if (fls > 0)  iFlCur = fls-1;  break;
+				if (fls > 0)  iFlCur = fls-1;  UpdFluidBox();  break;
 
 			//  prev,next
 			case KC_PGUP:	case KC_NUMPAD9:
-				if (fls > 0) {  iFlCur = (iFlCur-1+fls)%fls;	}	break;
+				if (fls > 0) {  iFlCur = (iFlCur-1+fls)%fls;  }  UpdFluidBox();  break;
 			case KC_PGDOWN:	case KC_NUMPAD3:
-				if (fls > 0) {  iFlCur = (iFlCur+1)%fls;		}	break;
+				if (fls > 0) {  iFlCur = (iFlCur+1)%fls;	  }  UpdFluidBox();  break;
 
 			//  del
 			case KC_DELETE:	case KC_DECIMAL:

@@ -12,7 +12,8 @@ using namespace Ogre;
 WaterRTT::WaterRTT() : 
 	mCamera(0), mReflectionTarget(0), mRefractionTarget(0),
 	mRTTSize(512), mReflect(true), mRefract(true),
-	mViewerCamera(0), mChangedSettings(1), mSceneMgr(0)
+	mViewerCamera(0), mChangedSettings(1), mSceneMgr(0),
+	mNdFluidsRoot(0)
 {
 	mWaterPlane = Plane(Vector3::UNIT_Y, 0);
 }
@@ -100,7 +101,7 @@ void WaterRTT::preRenderTargetUpdate(const RenderTargetEvent& evt)
 	mCamera->setOrientation(mViewerCamera->getRealOrientation());
 	mCamera->setPosition(mViewerCamera->getRealPosition());
 	
-	if (mSceneMgr->hasSceneNode("FluidsRootNode")) mSceneMgr->getSceneNode("FluidsRootNode")->setVisible(false);
+	if (mNdFluidsRoot)  mNdFluidsRoot->setVisible(false);
 	
 	
 	if (evt.source == mReflectionTarget)
@@ -112,7 +113,7 @@ void WaterRTT::preRenderTargetUpdate(const RenderTargetEvent& evt)
 
 void WaterRTT::postRenderTargetUpdate(const RenderTargetEvent& evt)
 {
-	if (mSceneMgr->hasSceneNode("FluidsRootNode")) mSceneMgr->getSceneNode("FluidsRootNode")->setVisible(true);
+	if (mNdFluidsRoot)  mNdFluidsRoot->setVisible(true);
 	
 	if (evt.source == mReflectionTarget)
 	{
