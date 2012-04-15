@@ -10,7 +10,7 @@ vertex_program Ogre/Needle_vp cg
 	}
 }
 
-material hud/needle
+material hud/needleB
 {
 	receive_shadows off
 	technique
@@ -22,12 +22,17 @@ material hud/needle
 			depth_write off
 			scene_blend alpha_blend
 			cull_hardware none
-			vertex_program_ref Ogre/Needle_vp
-			{
-			}
-			fragment_program_ref Ogre/Compositor/StdQuad_fp
-			{
-			} 
+			vertex_program_ref Ogre/Needle_vp {  }
+			fragment_program_ref Ogre/Compositor/StdQuad_fp {  } 
+		}
+	}
+}
+material hud/needle : hud/needleB
+{
+	technique
+	{
+		pass
+		{
 			texture_unit tex1
 			{
 				texture gneedle.png
@@ -49,12 +54,8 @@ material hud/rpm
 			scene_blend alpha_blend
 			cull_hardware none
 
-			vertex_program_ref Ogre/Compositor/StdQuad_Cg_vp
-			{
-			}
-			fragment_program_ref Ogre/Compositor/StdQuad_fp
-			{
-			} 
+			vertex_program_ref   Ogre/Compositor/StdQuad_Cg_vp {  }
+			fragment_program_ref Ogre/Compositor/StdQuad_fp {  } 
 			texture_unit
 			{
 				texture grpm.png
@@ -75,12 +76,8 @@ material hud/kmh
 			depth_write off
 			scene_blend alpha_blend
 			cull_hardware none
-			vertex_program_ref Ogre/Compositor/StdQuad_Cg_vp
-			{
-			}
-			fragment_program_ref Ogre/Compositor/StdQuad_fp
-			{
-			} 
+			vertex_program_ref   Ogre/Compositor/StdQuad_Cg_vp {  }
+			fragment_program_ref Ogre/Compositor/StdQuad_fp {  } 
 			texture_unit
 			{
 				texture gkmh.png
@@ -101,12 +98,8 @@ material hud/mph
 			depth_write off
 			scene_blend alpha_blend
 			cull_hardware none
-			vertex_program_ref Ogre/Compositor/StdQuad_Cg_vp
-			{
-			}
-			fragment_program_ref Ogre/Compositor/StdQuad_fp
-			{
-			} 
+			vertex_program_ref   Ogre/Compositor/StdQuad_Cg_vp {  }
+			fragment_program_ref Ogre/Compositor/StdQuad_fp {  } 
 			texture_unit
 			{
 				texture gmph.png

@@ -50,4 +50,69 @@
 		</Codes>
 	</Resource>
 	
+	<!-- HUD, gear, vel digits -->
+    <Resource type="ResourceManualFont" name="DigGear">
+        <Property key="Source" value="Digital_41.png"/>
+        <Property key="DefaultHeight" value="88"/>
+        <Codes>
+            <Code index="9" advance="112"/>
+            <Code index="32" bearing="0 44" advance="27"/>
+		<!--<Code index="33" coord="27 0 13 44" advance="13" />
+			<Code index="34" coord="40 0 12 44" advance="12" />
+			<Code index="35" coord="52 0 28 44" advance="28" />
+			<Code index="36" coord="80 0 24 44" advance="24" />
+			<Code index="37" coord="104 0 28 44" advance="28" />
+			<Code index="38" coord="132 0 26 44" advance="26" />
+			<Code index="39" coord="158 0 9 44" advance="9" />
+			<Code index="40" coord="167 0 19 44" advance="19" />
+			<Code index="41" coord="186 0 19 44" advance="19" />
+			<Code index="42" coord="205 0 22 44" advance="22" />
+			<Code index="43" coord="227 0 19 44" advance="19" />
+			<Code index="44" coord="246 0 9 44" advance="9" />
+			<Code index="45" coord="0 44 27 44" advance="27" />
+			<Code index="46" coord="27 44 8 44" advance="8" />
+			<Code index="47" coord="35 44 22 44" advance="22" />-->
+			<Code index="48" coord="57 44 27 44" advance="27" />
+			<Code index="49" coord="84 44 27 44" advance="27" />
+			<Code index="50" coord="111 44 27 44" advance="27" />
+			<Code index="51" coord="138 44 27 44" advance="27" />
+			<Code index="52" coord="165 44 27 44" advance="27" />
+			<Code index="53" coord="192 44 27 44" advance="27" />
+			<Code index="54" coord="219 44 27 44" advance="27" />
+			<Code index="55" coord="0 88 27 44" advance="27" />
+			<Code index="56" coord="27 88 27 44" advance="27" />
+			<Code index="57" coord="54 88 27 44" advance="27" />
+			<Code index="58" coord="81 88 11 44" advance="11" />
+			<Code index="59" coord="92 88 11 44" advance="11" />
+			<Code index="60" coord="103 88 13 44" advance="13" />
+			<Code index="61" coord="116 88 20 44" advance="20" />
+			<Code index="62" coord="136 88 13 44" advance="13" />
+			<Code index="63" coord="149 88 28 44" advance="28" />
+			<Code index="78" coord="177 88 27 44" advance="27" />
+			<Code index="82" coord="204 88 27 44" advance="27" />
+            <Code index="selected" coord="46 68 0 51"/>
+            <Code index="selected_back" coord="48 68 0 51"/>
+            <Code index="cursor" coord="50 68 2 51" advance="0"/>
+            <Code index="substitute" coord="23 68 22 39" bearing="2 10" advance="24"/>
+        </Codes>
+    </Resource>
+
+	<!-- HUD, gear, vel digits  0-9 N R -->
+	<!--<Resource type="ResourceTrueTypeFont" name="DigGear2">
+		<Property key="Source" value="Crysta.ttf"/>
+		<Property key="Size" value="96"/>
+		<Property key="Resolution" value="50"/>
+		<Property key="Antialias" value="false"/>
+		<Property key="SpaceWidth" value="4"/>
+		<Property key="TabWidth" value="8"/>
+		<Property key="CursorWidth" value="2"/>
+		<Property key="Distance" value="4"/>
+		<Property key="OffsetHeight" value="-1"/>
+		<Codes>
+			<Code range="48 57"/>
+			<Code range="78"/>
+			<Code range="82"/>
+		</Codes>
+	</Resource>-->
+
 </MyGUI>

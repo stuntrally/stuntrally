@@ -113,6 +113,8 @@ protected:
 
 	///  HUD, 2D  ------------
 	float asp, scX,scY, minX,maxX, minY,maxY;  // minimap visible range
+	//  gear, vel
+	MyGUI::TextBox *txGear[4],*txVel[4];
 	//  gauges
 	Ogre::SceneNode *ndRpm[4], *ndVel[4], *ndRpmBk[4], *ndVelBk[4],*ndVelBm[4];
 	Ogre::ManualObject* moRpm[4], *moVel[4];
@@ -125,9 +127,9 @@ protected:
 	Ogre::ManualObject* Create2D(const Ogre::String& mat, Ogre::SceneManager* sceneMgr,
 		Ogre::Real size, bool dyn = false, bool clr = false);
 
-	Ogre::OverlayElement* hudGear,*hudVel,*hudBoost,*hudCountdown,*hudNetMsg, *ovL[5],*ovR[5],*ovS[5],*ovU[5],
+	Ogre::OverlayElement *hudBoost,*hudCountdown,*hudNetMsg, *ovL[5],*ovR[5],*ovS[5],*ovU[5],
 		*hudAbs,*hudTcs, *hudTimes, *hudWarnChk,*hudWonPlace, *hudOpp[5][3],*hudOppB;
-	Ogre::Overlay* ovGear,*ovVel,*ovBoost,*ovCountdown,*ovNetMsg,
+	Ogre::Overlay *ovBoost,*ovCountdown,*ovNetMsg,
 		*ovAbsTcs, *ovTimes, *ovCarDbg,*ovCarDbgTxt, *ovCam, *ovWarnWin, *ovOpp;
 
 	Ogre::String GetTimeString(float time) const;

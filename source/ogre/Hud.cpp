@@ -19,21 +19,23 @@
 #include <OgreOverlayManager.h>
 #include <OgreOverlayElement.h>
 using namespace Ogre;
+using namespace MyGUI;
 
 
 ///  HUD resize
 void App::SizeHUD(bool full, Viewport* vp, int carId)
 {
-	asp = float(mWindow->getWidth())/float(mWindow->getHeight());
+	float wx = mWindow->getWidth(), wy = mWindow->getHeight();
+	asp = wx/wy;
 	//  for each car
 	for (int c=0; c < pSet->game.local_players; ++c)
 	{
 		//  gauges
+		Real xcRpm,ycRpm, xcVel,ycVel;  // -1..1
 		if (ndRpmBk[c] && ndVelBk[c] && ndVelBm[c] && ndRpm[c] && ndVel[c])
 		{
 			Real fHudScale = pSet->size_gauges * mSplitMgr->mDims[c].avgsize;
 			Real spx = fHudScale *1.1f, spy = spx*asp;
-			Real xcRpm, ycRpm, xcVel, ycVel;
 			xcRpm = mSplitMgr->mDims[c].left + spx;   ycRpm =-mSplitMgr->mDims[c].bottom + spy;
 			xcVel = mSplitMgr->mDims[c].right - spx;  ycVel =-mSplitMgr->mDims[c].bottom + spy;
 
@@ -59,6 +61,17 @@ void App::SizeHUD(bool full, Viewport* vp, int carId)
 			ndMap[c]->setPosition(Vector3(fMiniX,fMiniY,0.f));
 			//LogO("-- Size car:"+toStr(c)+"  x:"+fToStr(fMiniX,2,4)+" y:"+fToStr(fMiniY,2,4)+"  s:"+fToStr(fHudSize,2,4));
 		}
+
+		//  gear, vel texts
+		//float si = pSet->size_gauges * 256.f;
+		float sx = mSplitMgr->mDims[c].width*0.5f, sy = mSplitMgr->mDims[c].height*0.5f;
+		int gx =    (xcRpm+1.f)*0.5f*wx + 20;  //+20 -20
+		int gy = wy-(ycRpm+1.f)*0.5f*wy + 35*sx;  //+35 +50
+		txGear[c]->setPosition(gx,gy);
+		
+		int vx =    (xcVel+1.f)*0.5f*wx - 45;
+		int vy = wy-(ycVel+1.f)*0.5f*wy + 85*sx;
+		txVel[c]->setPosition(vx,vy);
 	}
 }
 
@@ -73,7 +86,12 @@ void App::CreateHUD()
 	int plr = mSplitMgr->mNumViewports;  // pSet->game.local_players;
 	LogO("-- Create Hud  plrs="+toStr(plr));
 	asp = 1.f;
-	if (terrain)
+	for (int c=0; c<4; ++c)
+	{	if (txGear[c]) {  mGUI->destroyWidget(txGear[c]);  txGear[c] = 0;  }
+		if (txVel[c])  {  mGUI->destroyWidget(txVel[c]);  txVel[c] = 0;  }
+	}
+
+	//if (terrain)
 	for (int c=0; c < plr; ++c)  // for each car
 	{
 		float t = sc.td.fTerWorldSize*0.5;
@@ -142,15 +160,28 @@ void App::CreateHUD()
 		moVel[c]->setRenderQueueGroup(RQG_Hud3);
 		ndVel[c] = mSplitMgr->mGuiSceneMgr->getRootSceneNode()->createChildSceneNode();
 		ndVel[c]->attachObject(moVel[c]);	ndVel[c]->setScale(0,0,0);	ndVel[c]->setVisible(false);
-	}
 
+
+		///  gear, vel text
+		TextBox* txt = mGUI->createWidget<TextBox>("TextBox",
+			0,1200, 160,116, Align::Left, "Back", "Gear"+toStr(c));
+		txt->setVisible(true);
+		txt->setFontName("DigGear");
+		txt->setFontHeight(126);
+		txGear[c] = txt;
+
+		txt = mGUI->createWidget<TextBox>("TextBox",
+			0,1200, 360,96, Align::Right, "Back", "Vel"+toStr(c));
+		txt->setVisible(true);
+		txt->setFontName("DigGear");
+		//txt->setFontHeight(64);
+		txVel[c] = txt;
+	}
 
 	//  overlays
 	OverlayManager& ovr = OverlayManager::getSingleton();
 	ovCam = ovr.getByName("Car/CameraOverlay");
 
-	ovGear = ovr.getByName("Hud/Gear");		hudGear = ovr.getOverlayElement("Hud/GearText");
-	ovVel = ovr.getByName("Hud/Vel");		hudVel = ovr.getOverlayElement("Hud/VelText");
 	ovBoost = ovr.getByName("Hud/Boost");	hudBoost = ovr.getOverlayElement("Hud/BoostText");
 	ovAbsTcs = ovr.getByName("Hud/AbsTcs");	hudAbs = ovr.getOverlayElement("Hud/AbsText");
 	ovCarDbg = ovr.getByName("Car/Stats");	hudTcs = ovr.getOverlayElement("Hud/TcsText");
@@ -196,11 +227,11 @@ void App::ShowHUD(bool hideAll)
 {
 	if (hideAll)
 	{
-		if (ovGear)	  ovGear->hide();		if (ovVel)	  ovVel->hide();
+		//if (ovGear)	  ovGear->hide();		if (ovVel)	  ovVel->hide();
 		if (ovAbsTcs) ovAbsTcs->hide();		if (ovBoost)  ovBoost->hide();
 		if (ovCountdown)  ovCountdown->hide();
 		if (ovNetMsg)  ovNetMsg->hide();
-		if (hudGear)  hudGear->hide();		if (hudVel)   hudVel->hide();
+		//if (hudGear)  hudGear->hide();		if (hudVel)   hudVel->hide();
 		if (ovCarDbg)  ovCarDbg->hide();	if (ovCarDbgTxt)  ovCarDbgTxt->hide();
 
 		if (ovCam)	 ovCam->hide();			if (ovTimes)  ovTimes->hide();
@@ -220,15 +251,15 @@ void App::ShowHUD(bool hideAll)
 	else
 	{	//this goes each frame..
 		bool show = pSet->show_gauges;
-		if (ovGear)	{  if (1||show)  ovGear->show();  else  ovGear->hide();  }
-		if (ovVel)	{  if (1||show)  ovVel->show();   else  ovVel->hide();   }
+		//if (ovGear)	{  if (1||show)  ovGear->show();  else  ovGear->hide();  }
+		//if (ovVel)	{  if (1||show)  ovVel->show();   else  ovVel->hide();   }
 		if (ovBoost){  if (show && (pSet->game.boost_type == 1 || pSet->game.boost_type == 2))
 									ovBoost->show();    else  ovBoost->hide();  }
 		if (ovCountdown)  if (show)  ovCountdown->show();  else  ovCountdown->hide();
 		if (ovNetMsg)	if (show)  ovNetMsg->show();  else  ovNetMsg->hide();
 		if (ovAbsTcs){ if (show)  ovAbsTcs->show();   else  ovAbsTcs->hide(); }
-		if (hudGear){  if (pSet->show_digits)  hudGear->show(); else  hudGear->hide();  }
-		if (hudVel) {  if (pSet->show_digits)  hudVel->show();  else  hudVel->hide();  }
+		//if (hudGear){  if (pSet->show_digits)  hudGear->show(); else  hudGear->hide();  }
+		//if (hudVel) {  if (pSet->show_digits)  hudVel->show();  else  hudVel->hide();  }
 
 		show = pSet->car_dbgbars;
 		if (ovCarDbg){  if (show)  ovCarDbg->show();  else  ovCarDbg->hide();   }
@@ -304,7 +335,7 @@ void App::ShowHUDvp(bool vp)	// todo: use vis mask ..
 	if (!vp)
 	{
 		/// for gui viewport ----------------------
-		if (hudGear)  hudGear->hide();		if (hudVel)  hudVel->hide();		if (ovBoost)  ovBoost->hide();
+	/*	if (hudGear)  hudGear->hide();		if (hudVel)  hudVel->hide();*/		if (ovBoost)  ovBoost->hide();
 		if (ovTimes)  ovTimes->hide();		if (ovWarnWin)  ovWarnWin->hide();	if (ovOpp)  ovOpp->hide();
 		if (ovCarDbg)  ovCarDbg->hide();	if (ovCarDbgTxt)  ovCarDbgTxt->hide();
 		if (ovCountdown)  ovCountdown->hide();  if (ovNetMsg)  ovNetMsg->hide();
@@ -568,23 +599,21 @@ void App::UpdateHUD(int carId, float time)
 
 
 	///  gear, vel texts  -----------------------------
-	if (hudGear && hudVel && pCar)
+	if (/*hudGear && hudVel &&*/ txVel[carId] && txGear[carId] && pCar)
 	{
 		float cl = clutch*0.8f + 0.2f;
 		if (gear == -1)
-		{	hudGear->setCaption("R");  hudGear->setColour(ColourValue(0.3,1,1,cl));	}
+		{	txGear[carId]->setCaption("R");  txGear[carId]->setTextColour(Colour(0.3,1,1,cl));	}
 		else if (gear == 0)
-		{	hudGear->setCaption("N");  hudGear->setColour(ColourValue(0.3,1,0.3,cl));	}
+		{	txGear[carId]->setCaption("N");  txGear[carId]->setTextColour(Colour(0.3,1,0.3,cl));	}
 		else if (gear > 0 && gear < 8)
-		{	hudGear->setCaption(toStr(gear));  hudGear->setColour(ColourValue(1,1-gear*0.1,0.2,cl));	}
+		{	txGear[carId]->setCaption(toStr(gear));  txGear[carId]->setTextColour(Colour(1,1-gear*0.1,0.2,cl));	}
 
-		hudVel->setCaption(fToStr(std::abs(vel),0,3));  int w = mWindow->getWidth();
-		hudVel->setPosition(-0.055 + w/1600.f*0.045,-0.01);
-		//hudVel->setPosition(-0.1 + (w-1024.f)/1600.f*0.07/*0.11*/,-0.01);
+		txVel[carId]->setCaption(fToStr(std::abs(vel),0,3));
 
 		float k = pCar->GetSpeedometer() * 3.6f * 0.0025f;	// vel clr
-		#define m01(x)  std::min(1.0, std::max(0.0, (double) x))
-		hudVel->setColour(ColourValue(m01(k*2), m01(0.5+k*1.5-k*k*2.5), m01(1+k*0.8-k*k*3.5)));
+		#define m01(x)  std::min(1.0f, std::max(0.0f, (float) (x) ))
+		txVel[carId]->setTextColour(Colour(m01(k*2), m01(0.5+k*1.5-k*k*2.5), m01(1+k*0.8-k*k*3.5)));
 	}
 
 	//  boost fuel (time)  -----------------------------

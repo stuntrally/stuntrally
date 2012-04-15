@@ -838,9 +838,14 @@ void App::UpdHUDRot(int baseCarId, int carId, float vel, float rpm)
 	bool main = b == c;
 	float angBase = carModels[b]->angCarY;
 
-	const float rsc = -180.f/6000.f, rmin = 0.f;  //rmp
+	//const float vsc_mph = -180.f/100.f, vsc_kmh = -180.f/160.f, vmin = 0.f;  // vel
+	//const float rsc = -180.f/6000.f, rmin = 0.f;  //rmp
+	const float vmin = -45.f, vsc_mph = -(180.f+vmin)/90.f, vsc_kmh = -(180.f+vmin)/120.f;  // vel
+	const float rmin = -45.f, rsc = -(180.f+rmin)/5000.f;  //rmp
+
+	//  angles
 	float angrmp = rpm*rsc + rmin;
-	const float vsc = pSet->show_mph ? -180.f/100.f : -180.f/160.f, vmin = 0.f;  //vel
+	float vsc = pSet->show_mph ? vsc_mph : vsc_kmh;
 	float angvel = abs(vel)*vsc + vmin;
 	float angrot = carModels[c]->angCarY;
 	if (pSet->mini_rotated && pSet->mini_zoomed && !main)
@@ -849,6 +854,7 @@ void App::UpdHUDRot(int baseCarId, int carId, float vel, float rpm)
 	float sx = 1.4f, sy = sx*asp;  // *par len
 	float psx = 2.1f * pSet->size_minimap, psy = psx;  // *par len
 
+	//  4 points, 2d pos
 	const static Real tc[4][2] = {{0,1}, {1,1}, {0,0}, {1,0}};  // defaults, no rot
 	const static Real tp[4][2] = {{-1,-1}, {1,-1}, {-1,1}, {1,1}};
 	const static float d2r = PI_d/180.f;
