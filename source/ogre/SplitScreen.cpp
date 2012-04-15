@@ -264,7 +264,7 @@ void SplitScreenManager::preViewportUpdate(const Ogre::RenderTargetViewportEvent
 	else
 	{
 		//  Gui viewport - hide stuff we don't want
-		pApp->UpdateHUD(-1, 1.f / mWindow->getLastFPS());  //-1, NULL, NULL, 1.f / mWindow->getLastFPS() );
+		pApp->UpdateHUD(-1, 1.f / mWindow->getLastFPS());
 		pApp->ShowHUDvp(false);
 		
 		// no mouse in key capture mode

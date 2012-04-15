@@ -109,6 +109,7 @@ void App::InitGui()
 	    
 	//  view sizes
 	Slv(SizeGaug,	(pSet->size_gauges-0.1f) /0.15f);
+	Slv(TypeGaug,	pSet->gauges_type /res);
 	Slv(SizeMinimap,(pSet->size_minimap-0.05f) /0.25f);
 	Slv(SizeArrow,  (pSet->size_arrow));
 	Slv(ZoomMinimap,powf((pSet->zoom_minimap-1.0f) /9.f, 0.5f));

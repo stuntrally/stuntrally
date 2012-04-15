@@ -10,6 +10,7 @@ vertex_program Ogre/Needle_vp cg
 	}
 }
 
+//  needle  -----------------------------------------------------------------
 material hud/needleB
 {
 	receive_shadows off
@@ -27,7 +28,7 @@ material hud/needleB
 		}
 	}
 }
-material hud/needle : hud/needleB
+material hud/needle0 : hud/needleB
 {
 	technique
 	{
@@ -35,58 +36,53 @@ material hud/needle : hud/needleB
 		{
 			texture_unit tex1
 			{
-				texture gneedle.png
+				texture g0needle.png
 			}
 		}
 	}
 }
-
-material hud/rpm
+material hud/needle1 : hud/needleB
 {
-	receive_shadows off
 	technique
 	{
 		pass
 		{
-			lighting off
-			depth_check off
-			depth_write off
-			scene_blend alpha_blend
-			cull_hardware none
-
-			vertex_program_ref   Ogre/Compositor/StdQuad_Cg_vp {  }
-			fragment_program_ref Ogre/Compositor/StdQuad_fp {  } 
-			texture_unit
+			texture_unit tex1
 			{
-				texture grpm.png
+				texture g1needle.png
 			}
 		}
 	}
 }
-
-material hud/kmh
+material hud/needle2 : hud/needleB
 {
-	receive_shadows off
 	technique
 	{
 		pass
 		{
-			lighting off
-			depth_check off
-			depth_write off
-			scene_blend alpha_blend
-			cull_hardware none
-			vertex_program_ref   Ogre/Compositor/StdQuad_Cg_vp {  }
-			fragment_program_ref Ogre/Compositor/StdQuad_fp {  } 
-			texture_unit
+			texture_unit tex1
 			{
-				texture gkmh.png
+				texture g2needle.png
+			}
+		}
+	}
+}
+material hud/needle3 : hud/needleB
+{
+	technique
+	{
+		pass
+		{
+			texture_unit tex1
+			{
+				texture g3needle.png
 			}
 		}
 	}
 }
 
-material hud/mph
+//  rpm  -----------------------------------------------------------------
+material hud/rpmB
 {
 	receive_shadows off
 	technique
@@ -100,15 +96,206 @@ material hud/mph
 			cull_hardware none
 			vertex_program_ref   Ogre/Compositor/StdQuad_Cg_vp {  }
 			fragment_program_ref Ogre/Compositor/StdQuad_fp {  } 
+		}
+	}
+}
+material hud/rpm0 : hud/rpmB
+{
+	technique
+	{
+		pass
+		{
 			texture_unit
 			{
-				texture gmph.png
+				texture g0rpm.png
+			}
+		}
+	}
+}
+material hud/rpm1 : hud/rpmB
+{
+	technique
+	{
+		pass
+		{
+			texture_unit
+			{
+				texture g1rpm.png
+			}
+		}
+	}
+}
+material hud/rpm2 : hud/rpmB
+{
+	technique
+	{
+		pass
+		{
+			texture_unit
+			{
+				texture g2rpm.png
+			}
+		}
+	}
+}
+material hud/rpm3 : hud/rpmB
+{
+	technique
+	{
+		pass
+		{
+			texture_unit
+			{
+				texture g3rpm.png
+			}
+		}
+	}
+}
+
+//  kmh   -----------------------------------------------------------------
+material hud/kmhB
+{
+	receive_shadows off
+	technique
+	{
+		pass
+		{
+			lighting off
+			depth_check off
+			depth_write off
+			scene_blend alpha_blend
+			cull_hardware none
+			vertex_program_ref   Ogre/Compositor/StdQuad_Cg_vp {  }
+			fragment_program_ref Ogre/Compositor/StdQuad_fp {  } 
+		}
+	}
+}
+material hud/kmh0 : hud/kmhB
+{
+	technique
+	{
+		pass
+		{
+			texture_unit
+			{
+				texture g0kmh.png
+			}
+		}
+	}
+}
+material hud/kmh1 : hud/kmhB
+{
+	technique
+	{
+		pass
+		{
+			texture_unit
+			{
+				texture g1kmh.png
+			}
+		}
+	}
+}
+material hud/kmh2 : hud/kmhB
+{
+	technique
+	{
+		pass
+		{
+			texture_unit
+			{
+				texture g2kmh.png
+			}
+		}
+	}
+}
+material hud/kmh3 : hud/kmhB
+{
+	technique
+	{
+		pass
+		{
+			texture_unit
+			{
+				texture g3kmh.png
+			}
+		}
+	}
+}
+
+//  mph  -----------------------------------------------------------------
+material hud/mphB
+{
+	receive_shadows off
+	technique
+	{
+		pass
+		{
+			lighting off
+			depth_check off
+			depth_write off
+			scene_blend alpha_blend
+			cull_hardware none
+			vertex_program_ref   Ogre/Compositor/StdQuad_Cg_vp {  }
+			fragment_program_ref Ogre/Compositor/StdQuad_fp {  } 
+		}
+	}
+}
+material hud/mph0 : hud/mphB
+{
+	technique
+	{
+		pass
+		{
+			texture_unit
+			{
+				texture g0mph.png
+			}
+		}
+	}
+}
+material hud/mph1 : hud/mphB
+{
+	technique
+	{
+		pass
+		{
+			texture_unit
+			{
+				texture g1mph.png
+			}
+		}
+	}
+}
+material hud/mph2 : hud/mphB
+{
+	technique
+	{
+		pass
+		{
+			texture_unit
+			{
+				texture g2mph.png
+			}
+		}
+	}
+}
+material hud/mph3 : hud/mphB
+{
+	technique
+	{
+		pass
+		{
+			texture_unit
+			{
+				texture g3mph.png
 			}
 		}
 	}
 }
 
 
+//  minimap  -----------------------------------------------------------------
 material hud/Minimap
 {
 	receive_shadows off

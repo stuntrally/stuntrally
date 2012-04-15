@@ -201,13 +201,17 @@ void App::slSizeGaug(SL)
 	float v = 0.1f + 0.15f * val/res;	if (bGI)  {  pSet->size_gauges = v;  SizeHUD(true);  }
 	if (valSizeGaug){	valSizeGaug->setCaption(fToStr(v,3,4));  }
 }
+void App::slTypeGaug(SL)
+{
+	int v = val;		if (bGI)  {  pSet->gauges_type = v;  SizeHUD(true);  }
+	if (valTypeGaug){	valTypeGaug->setCaption(toStr(v));  }
+}
 void App::slSizeArrow(SL)
 {
 	float v = val/res;	if (bGI)  {  pSet->size_arrow = v;  }
 	if (valSizeArrow){	valSizeArrow->setCaption(fToStr(v,3,4));  }
 	if (arrowNode) arrowRotNode->setScale(v/2.f, v/2.f, v/2.f);
 }
-
 void App::slCountdownTime(SL)
 {
 	float v = val * 0.5f;	if (bGI)  {  pSet->gui.pre_time = v;  }

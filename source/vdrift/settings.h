@@ -19,7 +19,7 @@ public:
 		show_cam, show_times, show_digits, show_opponents, cam_tilt,
 		car_dbgbars, car_dbgtxt, ogre_dialog;
 	float size_gauges, size_minimap, size_arrow, zoom_minimap;
-	int tracks_view, tracks_sort;  bool tracks_sortup;
+	int tracks_view, tracks_sort;  bool tracks_sortup;  int gauges_type;
 
 	//  graphics
 	int anisotropy, tex_size, ter_mtr;  bool bFog;

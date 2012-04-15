@@ -135,28 +135,29 @@ void App::CreateHUD()
 
 	
 		//  backgr  gauges
-		ManualObject* mrpmB = Create2D("hud/rpm",mSplitMgr->mGuiSceneMgr,1);	mrpmB->setVisibilityFlags(RV_Hud);
+		String st = toStr(pSet->gauges_type);
+		ManualObject* mrpmB = Create2D("hud/rpm"+st,mSplitMgr->mGuiSceneMgr,1);	mrpmB->setVisibilityFlags(RV_Hud);
 		mrpmB->setRenderQueueGroup(RQG_Hud1);
 		ndRpmBk[c] = mSplitMgr->mGuiSceneMgr->getRootSceneNode()->createChildSceneNode();
 		ndRpmBk[c]->attachObject(mrpmB);	ndRpmBk[c]->setScale(0,0,0);  ndRpmBk[c]->setVisible(false);
 
-		ManualObject* mvelBk = Create2D("hud/kmh",mSplitMgr->mGuiSceneMgr,1);	mvelBk->setVisibilityFlags(RV_Hud);
+		ManualObject* mvelBk = Create2D("hud/kmh"+st,mSplitMgr->mGuiSceneMgr,1);	mvelBk->setVisibilityFlags(RV_Hud);
 		mvelBk->setRenderQueueGroup(RQG_Hud1);
 		ndVelBk[c] = mSplitMgr->mGuiSceneMgr->getRootSceneNode()->createChildSceneNode();
 		ndVelBk[c]->attachObject(mvelBk);	ndVelBk[c]->setScale(0,0,0);  mvelBk->setVisible(false);
 			
-		ManualObject* mvelBm = Create2D("hud/mph",mSplitMgr->mGuiSceneMgr,1);	mvelBm->setVisibilityFlags(RV_Hud);
+		ManualObject* mvelBm = Create2D("hud/mph"+st,mSplitMgr->mGuiSceneMgr,1);	mvelBm->setVisibilityFlags(RV_Hud);
 		mvelBm->setRenderQueueGroup(RQG_Hud1);
 		ndVelBm[c] = mSplitMgr->mGuiSceneMgr->getRootSceneNode()->createChildSceneNode();
 		ndVelBm[c]->attachObject(mvelBm);	ndVelBm[c]->setScale(0,0,0);  mvelBm->setVisible(false);
 			
 		//  needles
-		moRpm[c] = Create2D("hud/needle",mSplitMgr->mGuiSceneMgr,1,true);  moRpm[c]->setVisibilityFlags(RV_Hud);
+		moRpm[c] = Create2D("hud/needle"+st,mSplitMgr->mGuiSceneMgr,1,true);  moRpm[c]->setVisibilityFlags(RV_Hud);
 		moRpm[c]->setRenderQueueGroup(RQG_Hud3);
 		ndRpm[c] = mSplitMgr->mGuiSceneMgr->getRootSceneNode()->createChildSceneNode();
 		ndRpm[c]->attachObject(moRpm[c]);	ndRpm[c]->setScale(0,0,0);	ndRpm[c]->setVisible(false);
 		
-		moVel[c] = Create2D("hud/needle",mSplitMgr->mGuiSceneMgr,1,true);  moVel[c]->setVisibilityFlags(RV_Hud);
+		moVel[c] = Create2D("hud/needle"+st,mSplitMgr->mGuiSceneMgr,1,true);  moVel[c]->setVisibilityFlags(RV_Hud);
 		moVel[c]->setRenderQueueGroup(RQG_Hud3);
 		ndVel[c] = mSplitMgr->mGuiSceneMgr->getRootSceneNode()->createChildSceneNode();
 		ndVel[c]->attachObject(moVel[c]);	ndVel[c]->setScale(0,0,0);	ndVel[c]->setVisible(false);
