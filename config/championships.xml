@@ -63,15 +63,16 @@
 		<track name="S13-Hole"		laps="1" factor="0.1" />
 	</championship>
 
-	<championship name="Pipes mastery" ver="1" difficulty="5" length="3" tutorial="0" 
+	<championship name="Pipes mastery" ver="2" difficulty="5" length="3" tutorial="0" 
 			descr="Only pipe tracks with high difficulty, extremely curly. Lets you master your pipe driving.">
 		<track name="S6-PipeCrazy"	laps="1" factor="0.1" />
 		<track name="S12-Infinity"	laps="1" factor="0.1" />
 		<track name="A2-PipeCoil"	laps="1" factor="0.1" />
 		<track name="X2-Swirl"		laps="1" factor="0.1" />
+		<track name="A4-Snake"		laps="1" factor="0.1" />
 	</championship>
 
-	<championship name="Mud and water fan" ver="1" difficulty="3" length="3" tutorial="0" 
+	<championship name="Mud and water fan" ver="2" difficulty="4" length="3" tutorial="0" 
 			descr="A collection of tracks that have either water or mud drive through areas.">
 		<track name="I3-Islands"	laps="1" factor="0.1" />
 		<track name="D9-Mud"		laps="1" factor="0.1" />
@@ -80,18 +81,20 @@
 		<track name="J14-Muddy"		laps="1" factor="0.1" />
 		<track name="J15-Swamp"		laps="1" factor="0.15" />
 		<track name="D10-MudBath"	laps="1" factor="0.15" />
+		<track name="I6-Flooded"	laps="1" factor="0.1" />
+		<track name="J16-MudMad"	laps="1" factor="0.15" />
 	</championship>
 
-	<championship name="Mountain adventure" ver="1" difficulty="4" length="3" tutorial="0" 
+	<championship name="Mountain adventure" ver="2" difficulty="4" length="3" tutorial="0" 
 			descr="Tracks placed in mountains and with highest height differences, also with good views.">
 		<track name="D2-Mntn"		laps="1" factor="0.1" />
 		<track name="F10-MntnTrail"	laps="1" factor="0.1" />
 		<track name="F12-HighPeaks"	laps="1" factor="0.1" />
+		<track name="F13-Castle"	laps="1" factor="0.1" />
 		<track name="0W7-LJs-Mntn"	laps="1" factor="0.1" />
-	<!--<track name="S4-Hills"		laps="1" factor="0.1" />-->
 	</championship>
 
-	<championship name="Frenzy fellow" ver="1" difficulty="4" length="3" tutorial="0" 
+	<championship name="Frenzy fellow" ver="2" difficulty="4" length="3" tutorial="0" 
 			descr="Curly tracks, mostly flat, frequently changing directions. Require lots of steering.">
 	<!--<track name="S2-Frenzy"		laps="1" factor="0.1" />-->
 		<track name="F3-osso"		laps="1" factor="0.1" />
@@ -101,7 +104,8 @@
 	<!--<track name="S7-HighMadness" laps="1" factor="0.1" />-->
 		<track name="0W9-IceFrenzy"	laps="1" factor="0.1" />
 		<track name="F9-MadMntn"	laps="1" factor="0.1" />
-		<track name="A4-Snake"		laps="1" factor="0.1" />
+		<track name="0W10-Whirl"	laps="1" factor="0.1" />
+		<track name="M3-Hairpins"	laps="1" factor="0.1" />
 	</championship>
 
 <!--  Senery Championships  -->
@@ -118,8 +122,8 @@
 		<track name="D9-Mud"		laps="1" factor="0.1" />
 		<track name="D10-MudBath"	laps="1" factor="0.15" />
 	</championship>
-	<championship name="Jungle scenery" ver="1" difficulty="4" length="3" tutorial="3" 
-			descr="Jungle championship. All tracks for this scenery in their appearance order.">
+	<championship name="Jungle scenery" ver="2" difficulty="3" length="3" tutorial="3" 
+			descr="Jungle championship. All tracks for this scenery in their appearance order. Part 1 of 2.">
 		<track name="J1-T"			laps="1" factor="0.1" /><!---->
 		<track name="J3-S"			laps="1" factor="0.1" />
 		<track name="J4-Pipe8"		laps="1" factor="0.1" /><!---->
@@ -129,11 +133,15 @@
 		<track name="J8-oO"			laps="1" factor="0.1" /><!---->
 		<track name="J9-oNJo"		laps="1" factor="0.1" /><!---->
 		<track name="J10-Spiral"	laps="1" factor="0.1" /><!---->
+	</championship>
+	<championship name="Jungle 2nd scenery" ver="2" difficulty="4" length="3" tutorial="3" 
+			descr="Jungle championship. All tracks for this scenery in their appearance order. Part 2 of 2.">
 		<track name="J11-Temple"	laps="1" factor="0.1" />
 		<track name="J12-Fog"		laps="1" factor="0.1" />
 		<track name="J13-Tropic"	laps="1" factor="0.1" />
 		<track name="J14-Muddy"		laps="1" factor="0.1" />
 		<track name="J15-Swamp"		laps="1" factor="0.1" />
+		<track name="J16-MudMad"	laps="1" factor="0.1" />
 	</championship>
 	<championship name="Savanna scenery" ver="1" difficulty="5" length="3" tutorial="3" 
 			descr="Savanna championship. All tracks for this scenery in their appearance order.">
@@ -160,6 +168,7 @@
 		<track name="0W7-LJs-Mntn"	laps="1" factor="0.1" />
 		<track name="0W8-pipe8x8"	laps="1" factor="0.1" /><!---->
 		<track name="0W9-IceFrenzy"	laps="1" factor="0.1" />
+		<track name="0W10-Whirl"	laps="1" factor="0.1" />
 	</championship>
 	<championship name="Forest scenery" ver="1" difficulty="4" length="3" tutorial="3" 
 			descr="Forest championship. All tracks for this scenery in their appearance order.">
@@ -173,6 +182,7 @@
 		<track name="F10-MntnTrail"	laps="1" factor="0.1" />
 		<track name="F11-Dawn"		laps="1" factor="0.1" />
 		<track name="F12-HighPeaks"	laps="1" factor="0.1" />
+		<track name="F13-Castle"	laps="1" factor="0.1" />
 	</championship>
 	<championship name="Island scenery" ver="1" difficulty="2" length="3" tutorial="3" 
 			descr="Island championship. All tracks for this scenery in their appearance order.">
@@ -181,11 +191,13 @@
 		<track name="I3-Islands"	laps="1" factor="0.1" />
 		<track name="I4-Sunset"		laps="1" factor="0.1" />
 		<track name="I5-Shore"		laps="1" factor="0.1" />
+		<track name="I6-Flooded"	laps="1" factor="0.1" />
 	</championship>
 	<championship name="Mud scenery" ver="1" difficulty="2" length="3" tutorial="3" 
 			descr="Mud championship. All tracks for this scenery in their appearance order.">
 		<track name="M1-Hills"		laps="1" factor="0.1" />
 		<track name="M2-Bumps"		laps="1" factor="0.1" /><!---->
+		<track name="M3-Hairpins"	laps="1" factor="0.2" />
 	</championship>
 	<championship name="Australia scenery" ver="1" difficulty="4" length="3" tutorial="3" 
 			descr="Australia championship. All tracks for this scenery in their appearance order.">
@@ -198,7 +210,7 @@
 			descr="Greece championship. All tracks for this scenery in their appearance order.">
 		<track name="G1-Long"		laps="1" factor="0.1" /><!---->
 		<track name="G2-Coast"		laps="1" factor="0.1" />
-		<track name="G3-Butterfly"	laps="1" factor="0.1" />
+		<track name="G3-Butterfly"	laps="1" factor="0.1" /><!---->
 	</championship>
 	<championship name="Other sceneries" ver="1" difficulty="4" length="3" tutorial="3" 
 			descr="Other sceneries championship: Volcanic and Unidentified.">
@@ -216,7 +228,6 @@
 			descr="Fastest 3 tracks, to test logic.">
 		<track name="TestC6-temp" reversed="0" laps="1" factor="0.1" />
 		<track name="TestC4-ow" laps="1" factor="0.1" />
-	<!--<track name="TestC7-oc" laps="1" factor="0.1" />-->
 		<track name="TestC1-circle" laps="1" factor="0.1" />
 	</championship>
 	<championship name="Test tracks" ver="1" difficulty="1" length="3" tutorial="2" 
@@ -344,5 +355,11 @@
 		<track name="D10-MudBath"	time="126.0"/>
 		<!--76-->
 		<track name="G3-Butterfly"	time="43.5"/>
+		<track name="I6-Flooded"	time="47.5"/>
+		<track name="J16-MudMad"	time="64.5"/>
+		<track name="M3-Hairpins"	time="67.0"/>
+
+		<track name="0W10-Whirl"	time="66.5"/>
+		<track name="F13-Castle"	time="102.0"/>
 	</times>
 </championships>
