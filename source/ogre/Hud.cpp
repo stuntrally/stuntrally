@@ -107,7 +107,7 @@ void App::CreateHUD()
 		//asp = float(mWindow->getWidth())/float(mWindow->getHeight());
 		m->setVisibilityFlags(RV_Hud);  m->setRenderQueueGroup(RQG_Hud1);
 		
-		///  change minimap image
+		//  change minimap image
 		MaterialPtr mm = MaterialManager::getSingleton().getByName(sMat);
 		Pass* pass = mm->getTechnique(0)->getPass(0);
 		TextureUnitState* tus = pass->getTextureUnitState(0);
@@ -134,7 +134,7 @@ void App::CreateHUD()
 		ndMap[c]->setVisible(false/*pSet->trackmap*/);
 
 	
-		//  backgr  gauges
+		//  gauges  backgr
 		String st = toStr(pSet->gauges_type);
 		ManualObject* mrpmB = Create2D("hud/rpm"+st,mSplitMgr->mGuiSceneMgr,1);	mrpmB->setVisibilityFlags(RV_Hud);
 		mrpmB->setRenderQueueGroup(RQG_Hud1);
@@ -151,7 +151,7 @@ void App::CreateHUD()
 		ndVelBm[c] = mSplitMgr->mGuiSceneMgr->getRootSceneNode()->createChildSceneNode();
 		ndVelBm[c]->attachObject(mvelBm);	ndVelBm[c]->setScale(0,0,0);  mvelBm->setVisible(false);
 			
-		//  needles
+		//  gauges  needles
 		moRpm[c] = Create2D("hud/needle"+st,mSplitMgr->mGuiSceneMgr,1,true);  moRpm[c]->setVisibilityFlags(RV_Hud);
 		moRpm[c]->setRenderQueueGroup(RQG_Hud3);
 		ndRpm[c] = mSplitMgr->mGuiSceneMgr->getRootSceneNode()->createChildSceneNode();
@@ -163,21 +163,18 @@ void App::CreateHUD()
 		ndVel[c]->attachObject(moVel[c]);	ndVel[c]->setScale(0,0,0);	ndVel[c]->setVisible(false);
 
 
-		///  gear, vel text
-		TextBox* txt = mGUI->createWidget<TextBox>("TextBox",
+		//  gear, vel text
+		txGear[c] = mGUI->createWidget<TextBox>("TextBox",
 			0,1200, 160,116, Align::Left, "Back", "Gear"+toStr(c));
-		txt->setVisible(true);
-		txt->setFontName("DigGear");
-		txt->setFontHeight(126);
-		txGear[c] = txt;
+		txGear[c]->setVisible(false);
+		txGear[c]->setFontName("DigGear");  txGear[c]->setFontHeight(126);
 
-		txt = mGUI->createWidget<TextBox>("TextBox",
+		txVel[c] = mGUI->createWidget<TextBox>("TextBox",
 			0,1200, 360,96, Align::Right, "Back", "Vel"+toStr(c));
-		txt->setVisible(true);
-		txt->setFontName("DigGear");
-		//txt->setFontHeight(64);
-		txVel[c] = txt;
+		txVel[c]->setVisible(false);
+		txVel[c]->setFontName("DigGear");  //txVel[c]->setFontHeight(64);
 	}
+
 
 	//  overlays
 	OverlayManager& ovr = OverlayManager::getSingleton();
@@ -228,19 +225,16 @@ void App::ShowHUD(bool hideAll)
 {
 	if (hideAll)
 	{
-		//if (ovGear)	  ovGear->hide();		if (ovVel)	  ovVel->hide();
 		if (ovAbsTcs) ovAbsTcs->hide();		if (ovBoost)  ovBoost->hide();
-		if (ovCountdown)  ovCountdown->hide();
-		if (ovNetMsg)  ovNetMsg->hide();
-		//if (hudGear)  hudGear->hide();		if (hudVel)   hudVel->hide();
+		if (ovNetMsg)  ovNetMsg->hide();	if (ovCountdown)  ovCountdown->hide();
 		if (ovCarDbg)  ovCarDbg->hide();	if (ovCarDbgTxt)  ovCarDbgTxt->hide();
-
 		if (ovCam)	 ovCam->hide();			if (ovTimes)  ovTimes->hide();
 		if (ovWarnWin)  ovWarnWin->hide();	if (ovOpp)  ovOpp->hide();
 		if (mFpsOverlay)  mFpsOverlay->hide();
 
 		for (int c=0; c < 4; ++c)
 		{
+			if (txGear[c])  txGear[c]->setVisible(false);	if (txVel[c])  txVel[c]->setVisible(false);
 			if (ndRpmBk[c])  ndRpmBk[c]->setVisible(false);
 			if (ndVelBk[c])	ndVelBk[c]->setVisible(false);	if (ndVelBm[c])	ndVelBm[c]->setVisible(false);
 			if (ndRpm[c])	ndRpm[c]->setVisible(false);	if (ndVel[c])	ndVel[c]->setVisible(false);
@@ -278,6 +272,7 @@ void App::ShowHUD(bool hideAll)
 		show = pSet->show_gauges;
 		for (int c=0; c < 4; ++c)
 		{
+			if (txGear[c])  txGear[c]->setVisible(pSet->show_digits);	if (txVel[c])  txVel[c]->setVisible(pSet->show_digits);
 			if (ndRpmBk[c])  ndRpmBk[c]->setVisible(show);
 			if (ndVelBk[c])	ndVelBk[c]->setVisible(show && !pSet->show_mph);
 			if (ndVelBm[c])	ndVelBm[c]->setVisible(show && pSet->show_mph);
@@ -336,8 +331,8 @@ void App::ShowHUDvp(bool vp)	// todo: use vis mask ..
 	if (!vp)
 	{
 		/// for gui viewport ----------------------
-	/*	if (hudGear)  hudGear->hide();		if (hudVel)  hudVel->hide();*/		if (ovBoost)  ovBoost->hide();
-		if (ovTimes)  ovTimes->hide();		if (ovWarnWin)  ovWarnWin->hide();	if (ovOpp)  ovOpp->hide();
+		if (ovBoost)  ovBoost->hide();		if (ovOpp)  ovOpp->hide();
+		if (ovTimes)  ovTimes->hide();		if (ovWarnWin)  ovWarnWin->hide();
 		if (ovCarDbg)  ovCarDbg->hide();	if (ovCarDbgTxt)  ovCarDbgTxt->hide();
 		if (ovCountdown)  ovCountdown->hide();  if (ovNetMsg)  ovNetMsg->hide();
 		if (hudAbs)  hudAbs->hide();		if (hudTcs)  hudTcs->hide();

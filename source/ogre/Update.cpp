@@ -832,21 +832,21 @@ void App::updatePoses(float time)
 //---------------------------------------------------------------------------------------------------------------
 void App::UpdHUDRot(int baseCarId, int carId, float vel, float rpm)
 {
-	//if (!pCarM || carId == -1)  return;
-	//CarModel* pCarM = carModels[b];
+	//if (carId == -1)  return;
 	int b = baseCarId, c = carId;
 	bool main = b == c;
 	float angBase = carModels[b]->angCarY;
 
-	//const float vsc_mph = -180.f/100.f, vsc_kmh = -180.f/160.f, vmin = 0.f;  // vel
-	//const float rsc = -180.f/6000.f, rmin = 0.f;  //rmp
-	const float vmin = -45.f, vsc_mph = -(180.f+vmin)/90.f, vsc_kmh = -(180.f+vmin)/120.f;  // vel
-	const float rmin = -45.f, rsc = -(180.f+rmin)/5000.f;  //rmp
+	const float vmin[2] = {0.f,-45.f}, rmin[2] = {0.f,-45.f},
+		vsc_mph[2] = {-180.f/100.f, -(180.f+vmin[1])/90.f},
+		vsc_kmh[2] = {-180.f/160.f, -(180.f+vmin[1])/120.f},  // vel
+		sc_rpm[2] = {-180.f/6000.f, -(180.f+rmin[1])/5000.f};  //rmp
+	const int ig = pSet->gauges_type > 0 ? 1 : 0;
 
 	//  angles
-	float angrmp = rpm*rsc + rmin;
-	float vsc = pSet->show_mph ? vsc_mph : vsc_kmh;
-	float angvel = abs(vel)*vsc + vmin;
+	float angrmp = rpm*sc_rpm[ig] + rmin[ig];
+	float vsc = pSet->show_mph ? vsc_mph[ig] : vsc_kmh[ig];
+	float angvel = abs(vel)*vsc + vmin[ig];
 	float angrot = carModels[c]->angCarY;
 	if (pSet->mini_rotated && pSet->mini_zoomed && !main)
 		angrot -= angBase-180.f;
