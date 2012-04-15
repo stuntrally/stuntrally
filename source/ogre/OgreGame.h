@@ -117,7 +117,7 @@ protected:
 	MyGUI::TextBox *txGear[4],*txVel[4];
 	//  gauges
 	Ogre::SceneNode *ndRpm[4], *ndVel[4], *ndRpmBk[4], *ndVelBk[4],*ndVelBm[4];
-	Ogre::ManualObject* moRpm[4], *moVel[4];
+	Ogre::ManualObject* moRpm[4], *moVel[4], *moRpmBk[4], *moVelBk[4],*moVelBm[4];
 	//  miniap
 	Ogre::ManualObject* moMap[4];
 	Ogre::SceneNode *ndMap[4], *ndLine;
@@ -133,7 +133,7 @@ protected:
 		*ovAbsTcs, *ovTimes, *ovCarDbg,*ovCarDbgTxt, *ovCam, *ovWarnWin, *ovOpp;
 
 	Ogre::String GetTimeString(float time) const;
-	void CreateHUD(), ShowHUD(bool hideAll=false), UpdMiniTer();
+	void CreateHUD(bool destroy), ShowHUD(bool hideAll=false), UpdMiniTer();
 	Ogre::Vector3 projectPoint(const Ogre::Camera* cam, const Ogre::Vector3& pos);  // 2d xy, z - out info
 	MyGUI::TextBox* CreateNickText(int carId, Ogre::String text);
 

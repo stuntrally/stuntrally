@@ -203,7 +203,7 @@ void App::slSizeGaug(SL)
 }
 void App::slTypeGaug(SL)
 {
-	int v = val;		if (bGI)  {  pSet->gauges_type = v;  SizeHUD(true);  }
+	int v = val;		if (bGI)  {  pSet->gauges_type = v;  CreateHUD(true);  }
 	if (valTypeGaug){	valTypeGaug->setCaption(toStr(v));  }
 }
 void App::slSizeArrow(SL)

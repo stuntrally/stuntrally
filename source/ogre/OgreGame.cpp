@@ -104,8 +104,11 @@ void App::NullHUD()
 {
 	int i,c;
 	for (i=0; i < 4; ++i)
-	{	ndMap[i]=0;  moMap[i]=0;  moRpm[i]=0;  moVel[i]=0;
-		ndRpmBk[i]=0;  ndVelBk[i]=0;  ndVelBm[i]=0;  ndRpm[i]=0;  ndVel[i]=0;
+	{	ndMap[i]=0;  moMap[i]=0;
+		moRpm[i]=0;  moVel[i]=0;
+		ndRpm[i]=0;  ndVel[i]=0;
+		moRpmBk[i]=0;  moVelBk[i]=0;  moVelBm[i]=0;
+		ndRpmBk[i]=0;  ndVelBk[i]=0;  ndVelBm[i]=0;
 		for (c=0; c < 5; ++c)
 		{	vNdPos[i][c]=0;  vMoPos[i][c]=0;  }
 	}

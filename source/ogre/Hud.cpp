@@ -83,16 +83,48 @@ void App::SizeHUD(bool full, Viewport* vp, int carId)
 ///  HUD create
 ///---------------------------------------------------------------------------------------------------------------
 
-void App::CreateHUD()
-{	
-	//  minimap from road img
-	int plr = mSplitMgr->mNumViewports;  // pSet->game.local_players;
-	LogO("-- Create Hud  plrs="+toStr(plr));
-	asp = 1.f;
+void App::CreateHUD(bool destroy)
+{
+	if (carModels.size() == 0)  return;
+	
+	SceneManager* scm = mSplitMgr->mGuiSceneMgr;
+	if (destroy)
+	{
+		for (int c=0; c < 4; ++c)
+		{
+			if (moMap[c]) {  scm->destroyManualObject(moMap[c]);  moMap[c]=0;  }
+			if (ndMap[c]) {  scm->destroySceneNode(ndMap[c]);  ndMap[c]=0;  }
+
+			for (int i=0; i < 4; ++i)
+			{
+				if (vMoPos[c][i]) {  scm->destroyManualObject(vMoPos[c][i]);  vMoPos[c][i]=0;  }
+				if (vNdPos[c][i]) {  scm->destroySceneNode(vNdPos[c][i]);  vNdPos[c][i]=0;  }
+			}
+			if (moRpmBk[c])  {  scm->destroyManualObject(moRpmBk[c]);  moRpmBk[c]=0;  }
+			if (ndRpmBk[c]) {  scm->destroySceneNode(ndRpmBk[c]);  ndRpmBk[c]=0;  }
+
+			if (moVelBk[c]) {  scm->destroyManualObject(moVelBk[c]);  moVelBk[c]=0;  }
+			if (ndVelBk[c]) {  scm->destroySceneNode(ndVelBk[c]);  ndVelBk[c]=0;  }
+				
+			if (moVelBm[c]) {  scm->destroyManualObject(moVelBm[c]);  moVelBm[c]=0;  }
+			if (ndVelBm[c]) {  scm->destroySceneNode(ndVelBm[c]);  ndVelBm[c]=0;  }
+				
+			if (moRpm[c]) {  scm->destroyManualObject(moRpm[c]);  moRpm[c]=0;  }
+			if (ndRpm[c]) {  scm->destroySceneNode(ndRpm[c]);  ndRpm[c]=0;  }
+			
+			if (moVel[c]) {  scm->destroyManualObject(moVel[c]);  moVel[c]=0;  }
+			if (ndVel[c]) {  scm->destroySceneNode(ndVel[c]);  ndVel[c]=0;  }
+		}
+	}
 	for (int c=0; c<4; ++c)
 	{	if (txGear[c]) {  mGUI->destroyWidget(txGear[c]);  txGear[c] = 0;  }
 		if (txVel[c])  {  mGUI->destroyWidget(txVel[c]);  txVel[c] = 0;  }
 	}
+	
+	//  minimap from road img
+	int plr = mSplitMgr->mNumViewports;  // pSet->game.local_players;
+	LogO("-- Create Hud  plrs="+toStr(plr));
+	asp = 1.f;
 
 	//if (terrain)
 	for (int c=0; c < plr; ++c)  // for each car
@@ -106,7 +138,7 @@ void App::CreateHUD()
 
 		String sMat = "circle_minimap";
 		asp = 1.f;  //_temp
-		ManualObject* m = Create2D(sMat,mSplitMgr->mGuiSceneMgr,1,true,true);  moMap[c] = m;
+		ManualObject* m = Create2D(sMat,scm,1,true,true);  moMap[c] = m;
 		//asp = float(mWindow->getWidth())/float(mWindow->getHeight());
 		m->setVisibilityFlags(RV_Hud);  m->setRenderQueueGroup(RQG_Hud1);
 		
@@ -121,13 +153,14 @@ void App::CreateHUD()
 		
 
 		float fHudSize = pSet->size_minimap * mSplitMgr->mDims[c].avgsize;
-		ndMap[c] = mSplitMgr->mGuiSceneMgr->getRootSceneNode()->createChildSceneNode(Vector3(0,0,0));
+		SceneNode* rt = scm->getRootSceneNode();
+		ndMap[c] = rt->createChildSceneNode(Vector3(0,0,0));
 		ndMap[c]->attachObject(m);
 		
 		//  car pos tri - for all carModels (ghost and remote too)
 		for (int i=0; i < carModels.size(); ++i)
 		{
-			vMoPos[c][i] = Create2D("hud/CarPos", mSplitMgr->mGuiSceneMgr, 0.4f, true, true);
+			vMoPos[c][i] = Create2D("hud/CarPos", scm, 0.4f, true, true);
 			vMoPos[c][i]->setVisibilityFlags(RV_Hud);  vMoPos[c][i]->setRenderQueueGroup(RQG_Hud3);
 				  
 			vNdPos[c][i] = ndMap[c]->createChildSceneNode();
@@ -139,30 +172,30 @@ void App::CreateHUD()
 	
 		//  gauges  backgr
 		String st = toStr(pSet->gauges_type);
-		ManualObject* mrpmB = Create2D("hud/rpm"+st,mSplitMgr->mGuiSceneMgr,1);	mrpmB->setVisibilityFlags(RV_Hud);
-		mrpmB->setRenderQueueGroup(RQG_Hud1);
-		ndRpmBk[c] = mSplitMgr->mGuiSceneMgr->getRootSceneNode()->createChildSceneNode();
-		ndRpmBk[c]->attachObject(mrpmB);	ndRpmBk[c]->setScale(0,0,0);  ndRpmBk[c]->setVisible(false);
+		moRpmBk[c] = Create2D("hud/rpm"+st,scm,1);  moRpmBk[c]->setVisibilityFlags(RV_Hud);
+		moRpmBk[c]->setRenderQueueGroup(RQG_Hud1);
+		ndRpmBk[c] = rt->createChildSceneNode();
+		ndRpmBk[c]->attachObject(moRpmBk[c]);	ndRpmBk[c]->setScale(0,0,0);  ndRpmBk[c]->setVisible(false);
 
-		ManualObject* mvelBk = Create2D("hud/kmh"+st,mSplitMgr->mGuiSceneMgr,1);	mvelBk->setVisibilityFlags(RV_Hud);
-		mvelBk->setRenderQueueGroup(RQG_Hud1);
-		ndVelBk[c] = mSplitMgr->mGuiSceneMgr->getRootSceneNode()->createChildSceneNode();
-		ndVelBk[c]->attachObject(mvelBk);	ndVelBk[c]->setScale(0,0,0);  mvelBk->setVisible(false);
+		moVelBk[c] = Create2D("hud/kmh"+st,scm,1);  moVelBk[c]->setVisibilityFlags(RV_Hud);
+		moVelBk[c]->setRenderQueueGroup(RQG_Hud1);
+		ndVelBk[c] = rt->createChildSceneNode();
+		ndVelBk[c]->attachObject(moVelBk[c]);	ndVelBk[c]->setScale(0,0,0);  moVelBk[c]->setVisible(false);
 			
-		ManualObject* mvelBm = Create2D("hud/mph"+st,mSplitMgr->mGuiSceneMgr,1);	mvelBm->setVisibilityFlags(RV_Hud);
-		mvelBm->setRenderQueueGroup(RQG_Hud1);
-		ndVelBm[c] = mSplitMgr->mGuiSceneMgr->getRootSceneNode()->createChildSceneNode();
-		ndVelBm[c]->attachObject(mvelBm);	ndVelBm[c]->setScale(0,0,0);  mvelBm->setVisible(false);
+		moVelBm[c] = Create2D("hud/mph"+st,scm,1);  moVelBm[c]->setVisibilityFlags(RV_Hud);
+		moVelBm[c]->setRenderQueueGroup(RQG_Hud1);
+		ndVelBm[c] = rt->createChildSceneNode();
+		ndVelBm[c]->attachObject(moVelBm[c]);	ndVelBm[c]->setScale(0,0,0);  moVelBm[c]->setVisible(false);
 			
 		//  gauges  needles
-		moRpm[c] = Create2D("hud/needle"+st,mSplitMgr->mGuiSceneMgr,1,true);  moRpm[c]->setVisibilityFlags(RV_Hud);
+		moRpm[c] = Create2D("hud/needle"+st,scm,1,true);  moRpm[c]->setVisibilityFlags(RV_Hud);
 		moRpm[c]->setRenderQueueGroup(RQG_Hud3);
-		ndRpm[c] = mSplitMgr->mGuiSceneMgr->getRootSceneNode()->createChildSceneNode();
+		ndRpm[c] = rt->createChildSceneNode();
 		ndRpm[c]->attachObject(moRpm[c]);	ndRpm[c]->setScale(0,0,0);	ndRpm[c]->setVisible(false);
 		
-		moVel[c] = Create2D("hud/needle"+st,mSplitMgr->mGuiSceneMgr,1,true);  moVel[c]->setVisibilityFlags(RV_Hud);
+		moVel[c] = Create2D("hud/needle"+st,scm,1,true);  moVel[c]->setVisibilityFlags(RV_Hud);
 		moVel[c]->setRenderQueueGroup(RQG_Hud3);
-		ndVel[c] = mSplitMgr->mGuiSceneMgr->getRootSceneNode()->createChildSceneNode();
+		ndVel[c] = rt->createChildSceneNode();
 		ndVel[c]->attachObject(moVel[c]);	ndVel[c]->setScale(0,0,0);	ndVel[c]->setVisible(false);
 
 
