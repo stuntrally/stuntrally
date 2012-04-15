@@ -839,8 +839,8 @@ void App::UpdHUDRot(int baseCarId, int carId, float vel, float rpm)
 
 	const float vmin[2] = {0.f,-45.f}, rmin[2] = {0.f,-45.f},
 		vsc_mph[2] = {-180.f/100.f, -(180.f+vmin[1])/90.f},
-		vsc_kmh[2] = {-180.f/160.f, -(180.f+vmin[1])/120.f},  // vel
-		sc_rpm[2] = {-180.f/6000.f, -(180.f+rmin[1])/5000.f};  //rmp
+		vsc_kmh[2] = {-180.f/160.f, -(180.f+vmin[1])/120.f},
+		sc_rpm[2] = {-180.f/6000.f, -(180.f+rmin[1])/5000.f};
 	const int ig = pSet->gauges_type > 0 ? 1 : 0;
 
 	//  angles

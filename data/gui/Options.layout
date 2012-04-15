@@ -2128,7 +2128,7 @@
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
                         <Widget type="ScrollBar" skin="ScrollBarH" position="344 136 320 18" name="TypeGaug">
-							<Property key="Range" value="4"/>
+							<Property key="Range" value="6"/>
 							<Property key="MoveToClick" value="true"/>
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
