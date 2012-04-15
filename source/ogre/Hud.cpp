@@ -63,15 +63,18 @@ void App::SizeHUD(bool full, Viewport* vp, int carId)
 		}
 
 		//  gear, vel texts
-		//float si = pSet->size_gauges * 256.f;
-		float sx = mSplitMgr->mDims[c].width*0.5f, sy = mSplitMgr->mDims[c].height*0.5f;
-		int gx =    (xcRpm+1.f)*0.5f*wx + 20;  //+20 -20
-		int gy = wy-(ycRpm+1.f)*0.5f*wy + 35*sx;  //+35 +50
-		txGear[c]->setPosition(gx,gy);
-		
-		int vx =    (xcVel+1.f)*0.5f*wx - 45;
-		int vy = wy-(ycVel+1.f)*0.5f*wy + 85*sx;
-		txVel[c]->setPosition(vx,vy);
+		if (txGear[c] && txVel[c])
+		{
+			//float si = pSet->size_gauges * 256.f;
+			float sx = mSplitMgr->mDims[c].width*0.5f, sy = mSplitMgr->mDims[c].height*0.5f;
+			int gx =    (xcRpm+1.f)*0.5f*wx + 20;  //+20 -20
+			int gy = wy-(ycRpm+1.f)*0.5f*wy + 35*sx;  //+35 +50
+			txGear[c]->setPosition(gx,gy);
+			
+			int vx =    (xcVel+1.f)*0.5f*wx - 45;
+			int vy = wy-(ycVel+1.f)*0.5f*wy + 85*sx;
+			txVel[c]->setPosition(vx,vy);
+		}
 	}
 }
 
