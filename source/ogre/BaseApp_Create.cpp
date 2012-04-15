@@ -663,7 +663,7 @@ bool BaseApp::setup()
 			mRoot->loadPlugin(PATHMANAGER::GetOgrePluginDir() + "/RenderSystem_GL" + D_SUFFIX);
 		else if (pSet->rendersystem == "Direct3D9 Rendering Subsystem")
 			mRoot->loadPlugin(PATHMANAGER::GetOgrePluginDir() + "/RenderSystem_Direct3D9" + D_SUFFIX);
-		else if (pSet->rendersystem == "Direct3D11 Rendering Subsystem")
+		/*else if (pSet->rendersystem == "Direct3D11 Rendering Subsystem")
 		{
 			try
 			{
@@ -673,7 +673,7 @@ bool BaseApp::setup()
 			{
 				//Ignore D3D11 plugin is not available
 			}
-		}
+		}/**/
 	}
 
 	mRoot->loadPlugin(PATHMANAGER::GetOgrePluginDir() + "/Plugin_ParticleFX" + D_SUFFIX);
