@@ -2121,7 +2121,7 @@
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
                         <Widget type="TextBox" skin="TextBox" position="232 136 64 24">
-							<Property key="Caption" value="#{Type}*"/>
+							<Property key="Caption" value="#{Type}"/>
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
                         <Widget type="TextBox" skin="TextBox" position="296 136 48 24" name="TypeGaugVal">
