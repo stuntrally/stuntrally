@@ -354,8 +354,8 @@ void App::inputDetailBtn(WP sender)
 	if (edInputMin)  edInputMin->setCaption(toStr(act->getProperty<OISB::Real>("MinValue")));
 	if (edInputMax)  edInputMax->setCaption(toStr(act->getProperty<OISB::Real>("MaxValue")));
 	if (edInputMul)  edInputMul->setCaption(toStr(act->getProperty<OISB::Real>("InverseMul")));
-	if (edInputReturn)      edInputReturn->setCaption(toStr(act->getProperty<OISB::Real>("IncSpeed")));        // =DecSpeed
-	if (edInputIncrease)  edInputIncrease->setCaption(toStr(act->getProperty<OISB::Real>("ReturnIncSpeed")));  // =ReturnDecSpeed
+	if (edInputReturn)    edInputReturn->setCaption(toStr(act->getProperty<OISB::Real>("ReturnIncSpeed")));        // =ReturnDecSpeed
+	if (edInputIncrease)  edInputIncrease->setCaption(toStr(act->getProperty<OISB::Real>("IncSpeed")));  // =DecSpeed
 	if (cmbInpDetSet)  cmbInpDetSet->setIndexSelected(0);
 }
 
