@@ -67,14 +67,16 @@ void App::SizeHUD(bool full, Viewport* vp, int carId)
 		if (txGear[c] && txVel[c] && txBFuel[c])
 		{
 			//  current viewport max x,y in pixels
-			int iwx = (mSplitMgr->mDims[c].right+1.f)*0.5f*wx,
+			int iwx = (mSplitMgr->mDims[c].right +1.f)*0.5f*wx,
 				iwy = (mSplitMgr->mDims[c].bottom+1.f)*0.5f*wy;
 			int my = (1.f-yMax)*0.5f*wy;  // gauge bottom y
 
 			//  positioning,  min iwy - dont go below viewport bottom
+			int vv = pSet->gauges_type > 0 ? -45 : 40;
 			int gx = (xcRpm+1.f)*0.5f*wx + 20, gy = std::min(iwy -48, my - 40);
-			int vx = (xcVel+1.f)*0.5f*wx - 45, vy = std::min(iwy -48, my - 15);			
+			int vx = (xcVel+1.f)*0.5f*wx + vv, vy = std::min(iwy -48, my - 15);			
 			int bx =(xBFuel+1.f)*0.5f*wx - 10, by = std::min(iwy -36, my + 5);
+				vx = std::min(vx, iwx -100);
 				bx = std::min(bx, iwx -180);  // not too near to vel
 			txGear[c]->setPosition(gx,gy);
 			txVel[c]->setPosition(vx,vy);
