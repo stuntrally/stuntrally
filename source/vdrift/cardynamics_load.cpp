@@ -721,7 +721,7 @@ void CARDYNAMICS::Init(
 	#endif
 
 
-	T chassisMass = body.GetMass();
+	T chassisMass = body.GetMass() * 0.4; // Magic multiplier makes collisions better
 	MATRIX3 <T> inertia = body.GetInertia();
 	btVector3 chassisInertia(inertia[0], inertia[4], inertia[8]);
 
