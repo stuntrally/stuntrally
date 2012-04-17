@@ -31,13 +31,14 @@ void App::SizeHUD(bool full, Viewport* vp, int carId)
 	for (int c=0; c < pSet->game.local_players; ++c)
 	{
 		//  gauges
-		Real xcRpm,ycRpm, xcVel,ycVel;  // -1..1
+		Real xcRpm,ycRpm, xcVel,ycVel, yMax;  // -1..1
 		if (ndRpmBk[c] && ndVelBk[c] && ndVelBm[c] && ndRpm[c] && ndVel[c])
 		{
 			Real fHudScale = pSet->size_gauges * mSplitMgr->mDims[c].avgsize;
 			Real spx = fHudScale *1.1f, spy = spx*asp;
 			xcRpm = mSplitMgr->mDims[c].left + spx;   ycRpm =-mSplitMgr->mDims[c].bottom + spy;
 			xcVel = mSplitMgr->mDims[c].right - spx;  ycVel =-mSplitMgr->mDims[c].bottom + spy;
+			yMax = ycVel - fHudScale;
 
 			Vector3 sca(fHudScale,fHudScale*asp,1), sc(fHudScale,fHudScale,1);
 			ndRpmBk[c]->setScale(sca);	ndVelBk[c]->setScale(sca);  ndVelBm[c]->setScale(sca);
@@ -65,14 +66,11 @@ void App::SizeHUD(bool full, Viewport* vp, int carId)
 		//  gear, vel texts
 		if (txGear[c] && txVel[c])
 		{
-			//float si = pSet->size_gauges * 256.f;
-			float sx = mSplitMgr->mDims[c].width*0.5f, sy = mSplitMgr->mDims[c].height*0.5f;
-			int gx =    (xcRpm+1.f)*0.5f*wx + 20;  //+20 -20
-			int gy = wy-(ycRpm+1.f)*0.5f*wy + 35*sx;  //+35 +50
+			int my = (1.f-yMax)*0.5f*wy;
+			int gx = (xcRpm+1.f)*0.5f*wx + 20, gy = my - 40;
 			txGear[c]->setPosition(gx,gy);
 			
-			int vx =    (xcVel+1.f)*0.5f*wx - 45;
-			int vy = wy-(ycVel+1.f)*0.5f*wy + 85*sx;
+			int vx = (xcVel+1.f)*0.5f*wx - 45, vy = my - 15;
 			txVel[c]->setPosition(vx,vy);
 		}
 	}
@@ -282,15 +280,11 @@ void App::ShowHUD(bool hideAll)
 	else
 	{	//this goes each frame..
 		bool show = pSet->show_gauges;
-		//if (ovGear)	{  if (1||show)  ovGear->show();  else  ovGear->hide();  }
-		//if (ovVel)	{  if (1||show)  ovVel->show();   else  ovVel->hide();   }
 		if (ovBoost){  if (show && (pSet->game.boost_type == 1 || pSet->game.boost_type == 2))
 									ovBoost->show();    else  ovBoost->hide();  }
 		if (ovCountdown)  if (show)  ovCountdown->show();  else  ovCountdown->hide();
 		if (ovNetMsg)	if (show)  ovNetMsg->show();  else  ovNetMsg->hide();
 		if (ovAbsTcs){ if (show)  ovAbsTcs->show();   else  ovAbsTcs->hide(); }
-		//if (hudGear){  if (pSet->show_digits)  hudGear->show(); else  hudGear->hide();  }
-		//if (hudVel) {  if (pSet->show_digits)  hudVel->show();  else  hudVel->hide();  }
 
 		show = pSet->car_dbgbars;
 		if (ovCarDbg){  if (show)  ovCarDbg->show();  else  ovCarDbg->hide();   }
@@ -631,7 +625,7 @@ void App::UpdateHUD(int carId, float time)
 
 
 	///  gear, vel texts  -----------------------------
-	if (/*hudGear && hudVel &&*/ txVel[carId] && txGear[carId] && pCar)
+	if (txVel[carId] && txGear[carId] && pCar)
 	{
 		float cl = clutch*0.8f + 0.2f;
 		if (gear == -1)
