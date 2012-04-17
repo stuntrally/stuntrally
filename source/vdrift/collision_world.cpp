@@ -32,6 +32,8 @@ COLLISION_WORLD::COLLISION_WORLD() :
 	world->getSolverInfo().m_restitution = 0.0f;
 	world->getDispatchInfo().m_enableSPU = true;
 	world->setForceUpdateAllAabbs(false);  //+
+	/// todo: ...  hit.force = pt.getAppliedImpulse()
+	//world->setInternalTickCallback(..)  for ^
 }
 
 COLLISION_WORLD::~COLLISION_WORLD()
