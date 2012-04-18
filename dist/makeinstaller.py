@@ -21,8 +21,9 @@ import os
 import subprocess
 import sys
 
+# ------- !!!  this is old ver, use installer.nsi instead  !!! ---------
 app = 'StuntRally'
-version = '1.5'
+version = '1.4'
 
 if len(sys.argv) != 2:
     print >>sys.stderr, 'Usage: ' + sys.argv[0] + ' /path/to/stuntrally/installation'
