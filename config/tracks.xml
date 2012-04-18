@@ -125,6 +125,6 @@
 	<track n="82" name="F13-Castle"		created="12-04-12" crtver="1.6" modified="12-04-12" scenery="Forest" 	author="CH" fluids="0" bumps="0" jumps="0" loops="0" pipes="0" banked="2" frenzy="2" long="2" diff="2" rating="2" />
 	<track n="83" name="I7-Moses"		created="15-04-12" crtver="1.6" modified="15-04-12" scenery="Island" 	author="TV" fluids="1" bumps="2" jumps="1" loops="0" pipes="0" banked="1" frenzy="0" long="1" diff="3" rating="2" />
 <track n="84" name="J17-JungleCanyons"	created="16-04-12" crtver="1.6" modified="16-04-12" scenery="Jungle"	author="TV" fluids="1" bumps="0" jumps="2" loops="0" pipes="0" banked="1" frenzy="1" long="6" diff="2" rating="3" />
-	<track n="85" name="I8-Pharaoh"		created="09-04-12" crtver="1.6" modified="16-04-12" scenery="Island"	author="CH" fluids="1" bumps="0" jumps="1" loops="0" pipes="0" banked="3" frenzy="2" long="1" diff="2" rating="2" />
+	<track n="85" name="I8-Pharaoh"		created="09-04-12" crtver="1.6" modified="16-04-12" scenery="Island"	author="CH" fluids="1" bumps="0" jumps="2" loops="0" pipes="0" banked="3" frenzy="2" long="2" diff="2" rating="3" />
 
 </tracks>

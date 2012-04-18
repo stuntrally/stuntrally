@@ -142,6 +142,7 @@
 		<track name="J14-Muddy"		laps="1" factor="0.1" />
 		<track name="J15-Swamp"		laps="1" factor="0.1" />
 		<track name="J16-MudMad"	laps="1" factor="0.1" />
+		<track name="J17-JungleCanyons"	laps="1" factor="0.1" />
 	</championship>
 	<championship name="Savanna scenery" ver="1" difficulty="5" length="3" tutorial="3" 
 			descr="Savanna championship. All tracks for this scenery in their appearance order.">
@@ -192,6 +193,8 @@
 		<track name="I4-Sunset"		laps="1" factor="0.1" />
 		<track name="I5-Shore"		laps="1" factor="0.1" />
 		<track name="I6-Flooded"	laps="1" factor="0.1" />
+		<track name="I7-Moses"		laps="1" factor="0.1" />
+		<track name="I8-Pharaoh"	laps="1" factor="0.1" />
 	</championship>
 	<championship name="Mud scenery" ver="1" difficulty="2" length="3" tutorial="3" 
 			descr="Mud championship. All tracks for this scenery in their appearance order.">
@@ -360,6 +363,11 @@
 		<track name="M3-Hairpins"	time="67.0"/>
 
 		<track name="0W10-Whirl"	time="66.5"/>
-		<track name="F13-Castle"	time="102.0"/>
+		<track name="F13-Castle"	time="110.0"/>
+		
+		<track name="I7-Moses"		time="64.0"/>
+		<track name="J17-JungleCanyons"	time="213.0"/>
+		<track name="I8-Pharaoh"	time="77.4"/>
+		<!--79-->
 	</times>
 </championships>
