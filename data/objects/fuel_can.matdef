@@ -1,7 +1,7 @@
 [fuel_can]
 	diffuseMap_512 = fuel_can_diffus.png
 	normalMap_512 = fuel_can_normal.png
-	specMap_512 = fuel_can_spec.png
+	specMap_512 = fuel_can_specular.png
 	receivesDepthShadows = true
 	terrainLightMap = true
-    specular = 0.5 0.5 0.5 32
+    specular = 1 1 1 32
