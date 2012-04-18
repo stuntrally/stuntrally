@@ -35,7 +35,7 @@
 
 Description
 
-This game features 70 tracks in 11 sceneries and 10 drivable cars.
+This game features 79 tracks in 11 sceneries and 10 drivable cars.
 The Track Editor allows modifying and creating tracks.
 Both run on Windows and Linux.
 
@@ -77,7 +77,8 @@ Cameras can be adjusted in game, by mouse - move mouse to see actions.
 
 All settings and logs are saved to user folder (check Wiki page [Paths]).
 If you have problems running, read Wiki page [Running].
-If it doesn't help, search all [Issues] on project page (closed too).
+If it doesn't help, look for [Issues] on project's page, if a similar issue
+doesn't exist report a new issue. Be sure to attach your log files.
 
 Editor
 
