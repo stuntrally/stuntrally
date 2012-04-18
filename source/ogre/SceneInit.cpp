@@ -629,7 +629,7 @@ void App::CreateProps()
 		}
 
 		btTransform tr(btQuaternion(0,0,0), btVector3(-5+i*5 -20, 5+j*5 -25,0));
-		btDefaultMotionState * ms = new btDefaultMotionState();
+		btDefaultMotionState* ms = new btDefaultMotionState();
 		ms->setWorldTransform(tr);
 
 		btRigidBody::btRigidBodyConstructionInfo ci(220*s+rand()%500, ms, shape, s*21*btVector3(1,1,1));
@@ -638,8 +638,38 @@ void App::CreateProps()
 		ci.m_linearDamping = 0.4;
 		pGame->collision.AddRigidBody(ci);
 	}
+
+	///  barrels test  -------------------------------
+	#if 0
+	const int sx=3,sy=3,sz=5;  int i=0;
+	for (int z=0; z < sz; ++z)
+	for (int y=-sy; y < sy; ++y)
+	for (int x=-sx; x < sx; ++x)
+	{
+		String s = toStr(i);  ++i;
+		Entity* ent = mSceneMgr->createEntity("Ent"+s, "fuel_can.mesh");
+		SceneNode* nd = mSceneMgr->getRootSceneNode()->createChildSceneNode("Node"+s,Vector3(0,-10.5,0));
+		nd->attachObject(ent);
+
+		btCollisionShape* shape = new btCylinderShapeZ(btVector3(0.35,0.35,0.51));
+
+		btTransform tr(btQuaternion(0,0,0), btVector3(x*1.02f + 5.f, y*1.02f, z*1.02f -10.5f));
+		btDefaultMotionState* ms = new btDefaultMotionState();
+		ms->setWorldTransform(tr);
+
+		btRigidBody::btRigidBodyConstructionInfo ci(50, ms, shape, 10*btVector3(1,1,0.3));
+		ci.m_restitution = 0.9;		ci.m_friction = 0.6;
+		ci.m_angularDamping = 0.2;	ci.m_linearDamping = 0.1;
+		pGame->collision.AddRigidBody(ci);
+
+		msProps.push_back(ms);
+		ndProps.push_back(nd);
+	}
+	#endif
+	///-----------------------------------------
+
 	
-	//.  props
+	//.  props (old)
 	if (0)  {
 		String sn[9] = {"garage_stand", "indicator", "stop_sign",
 			"Cone1", "Barrel1", "2x4_1", "concrete1", "crate1", "Dumpster1"}; //plywood1

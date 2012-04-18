@@ -824,6 +824,30 @@ void App::updatePoses(float time)
 		if (slRplPos)
 		{	int v = pos/len * res;  slRplPos->setScrollPosition(v);  }
 	}	
+	
+	
+	///  props  -------------------------------------------------------------
+	for (int i=0; i < ndProps.size(); ++i)
+	{
+		btTransform tr, ofs;
+		msProps[i]->getWorldTransform(tr);
+
+		ofs.setIdentity();  ofs.setOrigin(btVector3(0,0,0.52f));
+		tr *= ofs;
+
+		const btVector3& p = tr.getOrigin();
+		btQuaternion r = tr.getRotation();
+
+		Vector3 pos = Vector3(p.x(),p.z(),-p.y());
+		Quaternion q(r.x(),r.y(),r.z(),r.w()), q1;
+		Radian rad;  Vector3 axi;  q.ToAngleAxis(rad, axi);
+		q1.FromAngleAxis(-rad,Vector3(axi.z,-axi.x,-axi.y));
+		Quaternion rot = q1 * qFixCar;
+
+		ndProps[i]->setPosition(pos);
+		ndProps[i]->setOrientation(rot);
+	}
+
 	PROFILER.endBlock(".updPos ");
 }
 

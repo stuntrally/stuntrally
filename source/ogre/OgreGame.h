@@ -146,6 +146,9 @@ protected:
 	void CreateTrees(), CreateRoad(), CreateProps(), CreateFluids(), CreateBltFluids();
 	void CreateSkyDome(Ogre::String sMater, Ogre::Vector3 scale);
 	void NewGame();  void NewGameDoLoad();  bool IsTerTrack();  bool newGameRpl;
+
+	std::vector<Ogre::SceneNode*> ndProps;
+	std::vector<class btDefaultMotionState*> msProps;
 	
 	// Loading
 	void LoadCleanUp(), LoadGame(), LoadScene(), LoadCar(), LoadTerrain(), LoadTrack(), LoadMisc();
