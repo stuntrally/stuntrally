@@ -147,6 +147,7 @@ protected:
 	void CreateSkyDome(Ogre::String sMater, Ogre::Vector3 scale);
 	void NewGame();  void NewGameDoLoad();  bool IsTerTrack();  bool newGameRpl;
 
+	//std::vector<Ogre::Entity*> entProps;
 	std::vector<Ogre::SceneNode*> ndProps;
 	std::vector<class btDefaultMotionState*> msProps;
 	

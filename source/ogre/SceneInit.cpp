@@ -151,6 +151,16 @@ void App::NewGame()
 void App::LoadCleanUp()  // 1 first
 {
 	updMouse();
+	
+	///  props
+	if (ndProps.size() > 0)
+	{
+		for (int i=0; i < ndProps.size(); ++i)
+			mSceneMgr->destroySceneNode(ndProps[i]);
+		ndProps.clear();
+	}
+	msProps.clear();
+	
 
 	// rem old track
 	if (resTrk != "")  Ogre::Root::getSingletonPtr()->removeResourceLocation(resTrk);
@@ -641,7 +651,7 @@ void App::CreateProps()
 
 	///  barrels test  -------------------------------
 	#if 0
-	const int sx=3,sy=3,sz=5;  int i=0;
+	const int sx=2,sy=2,sz=4;  int i=0;
 	for (int z=0; z < sz; ++z)
 	for (int y=-sy; y < sy; ++y)
 	for (int x=-sx; x < sx; ++x)
@@ -653,17 +663,18 @@ void App::CreateProps()
 
 		btCollisionShape* shape = new btCylinderShapeZ(btVector3(0.35,0.35,0.51));
 
-		btTransform tr(btQuaternion(0,0,0), btVector3(x*1.02f + 5.f, y*1.02f, z*1.02f -10.5f));
+		btTransform tr(btQuaternion(0,0,0), btVector3(x*1.02f + 5.5f, y*1.02f, z*1.02f -10.5f));
 		btDefaultMotionState* ms = new btDefaultMotionState();
 		ms->setWorldTransform(tr);
 
-		btRigidBody::btRigidBodyConstructionInfo ci(50, ms, shape, 10*btVector3(1,1,0.3));
-		ci.m_restitution = 0.9;		ci.m_friction = 0.6;
+		btRigidBody::btRigidBodyConstructionInfo ci(50, ms, shape, 6*btVector3(1,1,0.3));
+		ci.m_restitution = 0.9;		ci.m_friction = 0.9;
 		ci.m_angularDamping = 0.2;	ci.m_linearDamping = 0.1;
 		pGame->collision.AddRigidBody(ci);
 
 		msProps.push_back(ms);
 		ndProps.push_back(nd);
+		//entProps.push_back(ent);
 	}
 	#endif
 	///-----------------------------------------
