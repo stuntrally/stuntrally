@@ -57,8 +57,7 @@ void FollowCamera::update(Real time, const PosInfo& posIn, PosInfo* posOut, COLL
 
 	///  Camera Tilt from terrain/road slope under car
 	//------------------------------------------------------
-	//  params  . . .
-	const float
+	const float			//  params  . . .
 		Rdist = 1.f,     // dist from car to ray (front or back)
 		HupCar = 1.5f,	  // car up dir dist - for pipes - so pos stays inside pipe
 		Habove = 1.5f,    // up axis dist, above car - for very high terrain angles
@@ -68,8 +67,9 @@ void FollowCamera::update(Real time, const PosInfo& posIn, PosInfo* posOut, COLL
 		maxDiff = Degree(1.4f);  // max diff of tilt - no sudden jumps
 	const float smoothSpeed = 14.f;  // how fast to apply tilt change
 
+	bool bUseTilt = ca->mType == CAM_ExtAng || ca->mType == CAM_Follow;
 	Radian tilt(0.f);
-	if (pSet->cam_tilt)
+	if (pSet->cam_tilt && bUseTilt)
 	{
 		//  car pos
 		Vector3 carUp = posIn.pos - HupCar * posIn.carY;
@@ -103,9 +103,9 @@ void FollowCamera::update(Real time, const PosInfo& posIn, PosInfo* posOut, COLL
 	}
 	//  smooth tilt angle
 	mATilt += std::min(maxDiff, std::max(-maxDiff, tilt - mATilt)) * time * smoothSpeed;
-	//------------------------------------------------------
-
 	
+
+	//------------------------------------------------------
     if (ca->mType == CAM_Car)	/* 3 Car - car pos & rot full */
     {
 		camPosFinal = goalLook;
@@ -119,6 +119,7 @@ void FollowCamera::update(Real time, const PosInfo& posIn, PosInfo* posOut, COLL
 		updInfo(time);
 		return;
 	}
+	
     if (ca->mType == CAM_Follow)  ofs = ca->mOffset;
     
 	Vector3  pos,goalPos;
@@ -129,7 +130,8 @@ void FollowCamera::update(Real time, const PosInfo& posIn, PosInfo* posOut, COLL
 	if (ca->mType != CAM_Arena)
 	{
 		Real x,y,z,xz;   // pitch & yaw to direction vector
-		Real ap = ca->mPitch.valueRadians() + mATilt.valueRadians(), ay =  ca->mYaw.valueRadians();
+		Real ap = bUseTilt ? (ca->mPitch.valueRadians() + mATilt.valueRadians()) : ca->mPitch.valueRadians(),
+			 ay = ca->mYaw.valueRadians();
 		y = sin(ap), xz = cos(ap);
 		x = sin(ay) * xz, z = cos(ay) * xz;
 		xyz = Vector3(x,y,z);  xyz *= ca->mDist;
@@ -163,7 +165,7 @@ void FollowCamera::update(Real time, const PosInfo& posIn, PosInfo* posOut, COLL
 			if (0)
 			{
 				if (first)  {  mPosNodeOld = posGoal;  }
-				Real vel = (posGoal - mPosNodeOld).length() / std::max(0.001f, std::min(0.1f, time));
+				Real vel = (posGoal - mPosNodeOld).length() / std::max(0.002f, std::min(0.1f, time));
 				mPosNodeOld = posGoal;
 				if (first)  mVel = 0.f;  else
 					mVel += (vel - mVel) * time * 8.f;  // par  vel smooth speed
@@ -175,7 +177,7 @@ void FollowCamera::update(Real time, const PosInfo& posIn, PosInfo* posOut, COLL
 			goalPos += qq * (xyz + ca->mOffset);
 			
 			camPosFinal = goalPos;
-			camRotFinal = qq * qy * Quaternion(Degree(-ca->mPitch - mATilt),Vector3(1,0,0));
+			camRotFinal = qq * qy * Quaternion(Degree(-ca->mPitch - mATilt), Vector3(1,0,0));
 			manualOrient = true;
 		}	break;
 	}
