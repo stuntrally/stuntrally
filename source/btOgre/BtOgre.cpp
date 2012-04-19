@@ -330,18 +330,18 @@ void RigidBodyState::setWorldTransform(const btTransform &in)
 		{	{
 			const Vector3 &vec = vertices[*indices];
 			vertexPos[0][0] = vec.x;
-			vertexPos[0][1] = vec.y;
-			vertexPos[0][2] = vec.z;	}{
+			vertexPos[0][1] =-vec.z;
+			vertexPos[0][2] = vec.y;	}{
 		
 			const Vector3 &vec = vertices[*(indices + 1)];
 			vertexPos[1][0] = vec.x;
-			vertexPos[1][1] = vec.y;
-			vertexPos[1][2] = vec.z;	}{
+			vertexPos[1][1] =-vec.z;
+			vertexPos[1][2] = vec.y;	}{
 
 			const Vector3 &vec = vertices[*(indices + 2)];
 			vertexPos[2][0] = vec.x;
-			vertexPos[2][1] = vec.y;
-			vertexPos[2][2] = vec.z;	}
+			vertexPos[2][1] =-vec.z;
+			vertexPos[2][2] = vec.y;	}
 
 			indices += 3;
 			trimesh->addTriangle(vertexPos[0], vertexPos[1], vertexPos[2]);

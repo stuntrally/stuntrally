@@ -1,0 +1,25 @@
+-----  file from:  0 A.D.\binaries\data\mods\public\art\LICENSE.txt  -----
+
+The files in this directory are Copyright (C) 2009 Wildfire Games.
+
+These files are licensed under the Creative Commons Attribution-Share Alike 3.0
+(CC-by-sa) license, available at http://creativecommons.org/licenses/by-sa/3.0/
+
+Briefly, this means:
+
+* You may use, modify and distribute these files, for commercial and
+  non-commercial purposes.
+
+* If you distribute one of these files, you must include attribution (e.g.
+  in the credits screen of a game or a video, or in a text file accompanying
+  the files). The attribution must include:
+  * A link to http://creativecommons.org/licenses/by-sa/3.0/
+  * The name "Wildfire Games" as the original author
+  * A link to http://www.wildfiregames.com/
+
+* If you distribute one of these files, you must release it (and any
+  modifications you have made to it) under the CC-by-sa license.
+
+Some of the files in the "textures/" directory are derived from materials provided by CGTextures (http://www.cgtextures.com/). The original materials are the property of CGTextures or its contributors. Special permission has been granted by CGTextures to distribute these derived textures as CC-BY-SA. (This has no effect on the standard licensing of CGTextures materials, or on any other work derived from them.)
+
+All CGTextures materials have been altered from their original form. To access original super-high resolution CGTextures materials, please visit http://www.cgtextures.com/ .

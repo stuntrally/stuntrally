@@ -620,34 +620,42 @@ void App::CreateRoad()
 
 void App::CreateProps()
 {
-	/// . dyn objs +
-	if (0)
-	for (int j=-2; j<1; j++)
-	for (int i=-2; i<1; i++)
-	{
-		btCollisionShape* shape;
-		btScalar s = Ogre::Math::RangeRandom(1,3);
-		// switch(rand() % 5)
-		switch( (50+i+j*3) % 6)
-		{
-		case 0:  shape = new btBoxShape(s*btVector3(0.4,0.3,0.5));  break;
-		case 1:  shape = new btSphereShape(s*0.5);  break;
-		case 2:  shape = new btCapsuleShapeZ(s*0.4,s*0.5);  break;
-		case 3:  shape = new btCylinderShapeX(s*btVector3(0.5,0.7,0.4));  break;
-		case 4:  shape = new btCylinderShapeZ(s*btVector3(0.5,0.6,0.7));  break;
-		case 5:  shape = new btConeShapeX(s*0.4,s*0.6);  break;
-		}
 
-		btTransform tr(btQuaternion(0,0,0), btVector3(-5+i*5 -20, 5+j*5 -25,0));
-		btDefaultMotionState* ms = new btDefaultMotionState();
-		ms->setWorldTransform(tr);
+	///  house test  -------------------------------
+	#if 0
+	Vector3 pos(20,-11.05,0);  Quaternion rot(Degree(135),Vector3::UNIT_Y);
+	Vector3 scl = 0.5f*Vector3::UNIT_SCALE;
+	//rot = Quaternion::IDENTITY;
+	//scl = Vector3::UNIT_SCALE;
+	
+	Entity* ent = mSceneMgr->createEntity("EntH", "pers_house_b.mesh");
+	SceneNode* nd = mSceneMgr->getRootSceneNode()->createChildSceneNode("NodeH",pos,rot);
+	nd->setScale(scl);
+	nd->attachObject(ent);
 
-		btRigidBody::btRigidBodyConstructionInfo ci(220*s+rand()%500, ms, shape, s*21*btVector3(1,1,1));
-		ci.m_restitution = 0.9;
-		ci.m_friction = 0.9;
-		ci.m_linearDamping = 0.4;
-		pGame->collision.AddRigidBody(ci);
-	}
+	// Shape
+	Matrix4 tre;  tre.makeTransform(pos,scl,rot);
+	BtOgre::StaticMeshToShapeConverter converter(ent, tre);
+	btCollisionShape* shape = converter.createTrimesh();  //createBox();
+	shape->setUserPointer((void*)0);  // mark
+
+	//btScalar mass = 5;  btVector3 inertia;
+	//shape->calculateLocalInertia(mass, inertia);
+	//BtOgre::RigidBodyState *stt = new BtOgre::RigidBodyState(nod);  //connects Ogre and Bullet
+	//btRigidBody* bdy = new btRigidBody(0.f, 0, shape);  //(mass, stt, shape, inertia);
+	//pGame->collision.world->addRigidBody(bdy);
+
+	btCollisionObject* bco = new btCollisionObject();
+	btTransform tr;  tr.setIdentity();  //tr.setOrigin(btVector3(pos.x,-pos.z,pos.y));
+	bco->setActivationState(DISABLE_SIMULATION);
+	bco->setCollisionShape(shape);	bco->setWorldTransform(tr);
+	bco->setFriction(0.8f);  bco->setRestitution(0.f);
+	bco->setCollisionFlags(bco->getCollisionFlags() |
+		btCollisionObject::CF_STATIC_OBJECT /*| btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT/**/);
+	pGame->collision.world->addCollisionObject(bco);
+	pGame->collision.shapes.push_back(shape);
+	#endif
+
 
 	///  barrels test  -------------------------------
 	#if 0
@@ -656,14 +664,17 @@ void App::CreateProps()
 	for (int y=-sy; y < sy; ++y)
 	for (int x=-sx; x < sx; ++x)
 	{
+		btVector3 pos(x*1.02f + 5.5f, y*1.02f, z*1.02f -10.5f);
 		String s = toStr(i);  ++i;
 		Entity* ent = mSceneMgr->createEntity("Ent"+s, "fuel_can.mesh");
 		SceneNode* nd = mSceneMgr->getRootSceneNode()->createChildSceneNode("Node"+s,Vector3(0,-10.5,0));
 		nd->attachObject(ent);
 
 		btCollisionShape* shape = new btCylinderShapeZ(btVector3(0.35,0.35,0.51));
+		//btBoxShape(btVector3(0.4,0.3,0.5));	//btSphereShape(0.5);	//btConeShapeX(0.4,0.6);
+		//btCapsuleShapeZ(0.4,0.5);  //btCylinderShapeX(btVector3(0.5,0.7,0.4));
 
-		btTransform tr(btQuaternion(0,0,0), btVector3(x*1.02f + 5.5f, y*1.02f, z*1.02f -10.5f));
+		btTransform tr(btQuaternion(0,0,0), pos);
 		btDefaultMotionState* ms = new btDefaultMotionState();
 		ms->setWorldTransform(tr);
 
@@ -679,45 +690,8 @@ void App::CreateProps()
 	#endif
 	///-----------------------------------------
 
-	
-	//.  props (old)
-	if (0)  {
-		String sn[9] = {"garage_stand", "indicator", "stop_sign",
-			"Cone1", "Barrel1", "2x4_1", "concrete1", "crate1", "Dumpster1"}; //plywood1
-			// "cube.1m.smooth.mesh", "capsule.50cmx1m.mesh", "sphere.mesh"
-		int a = 0;
-		for (int j=-1; j<1; j++)
-		for (int i=-1; i<1; i++)
-		{
-			Vector3 pos = Vector3(-2+i*2,-1,-2+j*2);
-			Quaternion rot = Quaternion::IDENTITY;
-			//int a = (100 + j*10 + i) % 9; //rand() % 9;
-
-			// Ogre stuff
-			String s = StringConverter::toString(j*10+i);
-			Entity* ent = mSceneMgr->createEntity(
-				"Ent"+s, sn[a % 9] + ".mesh");  a++;
-			SceneNode* nod = mSceneMgr->getRootSceneNode()->createChildSceneNode(
-				"Node"+s, pos, rot);
-			nod->attachObject(ent);
-
-			// Shape
-			BtOgre::StaticMeshToShapeConverter converter(ent);
-			btCollisionShape* shp = converter.createBox();  // createSphere();
-
-			// calculate inertia
-			btScalar mass = 5;  btVector3 inertia;
-			shp->calculateLocalInertia(mass, inertia);
-
-			// BtOgre MotionState (connects Ogre and Bullet)
-			BtOgre::RigidBodyState *stt = new BtOgre::RigidBodyState(nod);
-
-			// Body
-			btRigidBody* bdy = new btRigidBody(mass, stt, shp, inertia);
-			pGame->collision.world->addRigidBody(bdy);
-		}
-	}
 }
+
 
 /*void App::ReloadCar()
 {
