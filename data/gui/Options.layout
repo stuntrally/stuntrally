@@ -99,13 +99,6 @@
 					<Property key="TextColour" value="0.4 1.0 0.5"/>
 					<UserString key="RelativeTo" value="GameWnd"/>
 				</Widget>
-				<Widget type="Button" skin="Button" position="176 488 127 32" name="ChangeTrack">
-					<Property key="Caption" value="#{ChangeTrack}"/>
-					<Property key="Colour" value="0.7 1 0.85"/>
-					<Property key="TextColour" value="0.6 1 0.8"/>
-					<UserString key="RelativeTo" value="GameWnd"/>
-					<UserString key="tip" value="#{TipChangeTrack}"/>
-				</Widget>
 				<Widget type="Button" skin="CheckBox" position="400 456 120 24" name="ReverseOn">
 					<Property key="Caption" value="#{Reverse}"/>
 					<Property key="Colour" value="0.8 1 0.6"/>

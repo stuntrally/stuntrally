@@ -462,9 +462,6 @@ void App::InitGui()
 		//<UserString key="RelativeTo" value="OptionsWnd"/>
 	}
 
-    ButtonPtr btnTrk = mGUI->findWidget<Button>("ChangeTrack");
-    if (btnTrk)  btnTrk->eventMouseButtonClick += newDelegate(this, &App::btnChgTrack);
-
     //  new game
     for (int i=1; i<=3; ++i)
     {	ButtonPtr btnNewG = mGUI->findWidget<Button>("NewGame"+toStr(i));

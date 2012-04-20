@@ -358,7 +358,7 @@ protected:
 	void btnNewGame(WP),btnNewGameStart(WP);
 	MyGUI::ListPtr carList, rplList;  void updReplaysList();
 	void listRplChng(MyGUI::List* li, size_t pos);
-	void listCarChng(MyGUI::List* li, size_t pos),  btnChgCar(WP), btnChgTrack(WP);
+	void listCarChng(MyGUI::List* li, size_t pos),  btnChgCar(WP), changeTrack();
 	int LNext(MyGUI::MultiList2* lp, int rel), LNext(MyGUI::ListPtr lp, int rel),
 		LNext(MyGUI::MultiList* lp, int rel);  // util next in list
 	void LNext(int rel);  void tabPlayer(MyGUI::TabPtr wp, size_t id);

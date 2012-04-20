@@ -271,7 +271,7 @@ void App::btnChgCar(WP)
 }
 
 //  track
-void App::btnChgTrack(WP)
+void App::changeTrack()
 {
 	pSet->gui.track = sListTrack;
 	pSet->gui.track_user = bListTrackU;
@@ -300,7 +300,7 @@ void App::btnNewGame(WP)
 }
 void App::btnNewGameStart(WP wp)
 {
-	btnChgTrack(wp);
+	changeTrack();
 	btnNewGame(wp);
 }
 
@@ -703,7 +703,7 @@ if (!bAssignKey)
 					{	switch (mWndTabsGame->getIndexSelected())
 						{
 						case 1:
-							btnChgTrack(0);
+							changeTrack();
 							btnNewGame(0);  break;
 						case 2:
 							btnChgCar(0);

@@ -276,7 +276,7 @@ void App::createRoadSelMtr(String sMtrName)
 		String selName = sMtrName + "_sel";
 		MaterialPtr selMtr = MaterialManager::getSingleton().getByName(selName);
 		if (selMtr.isNull())  {  // once
-			LogO("new sel mtr: " +selName);
+			//LogO("new sel mtr: " +selName);
 			MaterialPtr sel = mat->clone(selName);
 			Technique* tech = sel->getTechnique(0);  Pass* p = tech->createPass();
 			p->setSceneBlending(SBT_ADD);  p->setDepthBias(3.f);//

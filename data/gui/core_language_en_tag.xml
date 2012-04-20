@@ -96,10 +96,8 @@
 
 
 	<!--  Track  -->
-	<Tag name="ChangeTrack">Change Track</Tag>
 	<Tag name="Track">Track</Tag>
 	<Tag name="TipTrackList">Tracks list, click to select (and see info). Press Enter to drive on it. (or [Change track] and then [New Game])</Tag>
-	<Tag name="TipChangeTrack">Sets current track to that selected in list. Press [New Game] to start it after.</Tag>
 
 	<Tag name="Reverse">Reverse</Tag>
 	<Tag name="TipReverse">Reverse track direction.</Tag>

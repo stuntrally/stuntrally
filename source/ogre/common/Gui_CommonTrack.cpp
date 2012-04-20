@@ -237,6 +237,7 @@ void App::listTrackChng(MultiList2* li, size_t pos)
 	sListTrack = s;
 	bListTrackU = s1 != s ? 1 : 0;
 
+	changeTrack();
 	ReadTrkStats();
 }
 
