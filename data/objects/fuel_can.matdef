@@ -1,9 +1,12 @@
 [fuel_can]
-	diffuseMap_512 = fuel_can_diffus.png
-	normalMap_512 = fuel_can_normal.png
-	specMap_512 = fuel_can_specular.png
+	diffuseMap_1024 = fuel_can_diff.jpg
+	diffuseMap_256 = fuel_can_diff_s.jpg
+	normalMap_1024 = fuel_can_norm.jpg
+	normalMap_256 = fuel_can_norm_s.jpg
+	specMap_1024 = fuel_can_spec.jpg
+	specMap_256 = fuel_can_spec_s.jpg
 	receivesDepthShadows = true
 	terrainLightMap = true
-	ambient = 1.40 1.40 1.40
+	ambient = 1.50 1.50 1.50
 	diffuse = 1.00 1.00 1.00
-    specular = 1 1 1 16
+    specular = 1 1 1 4
