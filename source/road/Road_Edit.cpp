@@ -140,7 +140,8 @@ void SplineRoad::RotateSel(Real relA, Vector3 axis, int addYawRoll)
 	if (vSel.empty())  return;
 	Vector3 pos0 = getPos0();
 	
-	Matrix3 m;  m.FromAngleAxis(axis, Degree(relA));
+	Quaternion q;  q.FromAngleAxis(Degree(relA), axis);
+	Matrix3 m;  q.ToRotationMatrix(m);
 	
 	//  rotate 2d yaw around center
 	for (std::set<int>::const_iterator it = vSel.begin(); it != vSel.end(); ++it)
