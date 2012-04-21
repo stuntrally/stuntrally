@@ -22,7 +22,7 @@ bool App::frameRenderingQueued(const FrameEvent& evt)
 		Real x = (0.5 - mCamera->getPosition().z / sc.td.fTerWorldSize);
 		Real y = (0.5 + mCamera->getPosition().x / sc.td.fTerWorldSize);
 		ndPos->setPosition(xm1+(xm2-xm1)*x, ym1+(ym2-ym1)*y, 0);
-		///  hud rpm,vel  --------------------------------
+		//--------------------------------
 		float angrot = mCamera->getOrientation().getYaw().valueDegrees();
 		float psx = 0.9f * pSet->size_minimap, psy = psx*asp;  // *par len
 
@@ -186,7 +186,7 @@ bool App::frameRenderingQueued(const FrameEvent& evt)
 		if (brTxt[3])	brTxt[3]->setCaption("road dir "+ (road->iDir == 1 ? String("+1") : String("-1")) );
 
 		if (isKey(LBRACKET))	{  road->AddBoxH(-q*0.2);  UpdStartPos();  }
-		if (isKey(SEMICOLON ))	{  road->AddBoxW(-q*0.2);  UpdStartPos();  }
+		if (isKey(SEMICOLON))	{  road->AddBoxW(-q*0.2);  UpdStartPos();  }
 		if (isKey(RBRACKET))	{  road->AddBoxH( q*0.2);  UpdStartPos();  }
 		if (isKey(APOSTROPHE))	{  road->AddBoxW( q*0.2);  UpdStartPos();  }
 		//if (mz > 0)	// snap rot by 15 deg ..
