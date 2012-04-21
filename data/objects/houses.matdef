@@ -4,7 +4,9 @@
 	specMap_512 = fuel_can_specular.png
 	receivesDepthShadows = true
 	terrainLightMap = true
-    specular = 1 1 1 32
+	ambient = 1.40 1.40 1.40
+	diffuse = 1.00 1.00 1.00
+    specular = 1 1 1 16
 
 [pers_struct_dds]
 	diffuseMap_512 = pers_struct.dds
