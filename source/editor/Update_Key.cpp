@@ -39,13 +39,14 @@ void App::UpdEditWnds()
 		else
 			mWndBrush->setVisible(false);
 	}
-	bool bRoad = edMode == ED_Road;
-	if (mWndRoadCur)  mWndRoadCur->setVisible(bRoad);
-	//if (mWndRoadStats)  mWndRoadStats->setVisible(bRoad);
+	if (mWndRoadCur)  mWndRoadCur->setVisible(edMode == ED_Road);
 	if (mWndCam)  mWndCam->setVisible(edMode == ED_PrvCam);
 
 	if (mWndFluids)  mWndFluids->setVisible(edMode == ED_Fluids);
 	UpdFluidBox();
+
+	if (mWndObjects)  mWndObjects->setVisible(edMode == ED_Objects);
+
 	UpdStartPos();  // StBox visible
 	UpdVisGui();  //br prv..
 }
@@ -476,14 +477,17 @@ bool App::KeyPress(const CmdKey &arg)
 
 		//  start pos
 		case KC_Q:	if (bEdit()){  edMode = ED_Start;  UpdEditWnds();  }   break;
+		case KC_SPACE:
+			if (edMode == ED_Start && road)  road->iDir *= -1;  break;
+		//  prv cam
+		case KC_F7:  togPrvCam();  break;
+
 		//  fluids
 		case KC_W:	if (bEdit()){  edMode = ED_Fluids;  UpdEditWnds();  }   break;
 		case KC_F10:	SaveWaterDepth();   break;
-		
-		case KC_SPACE:
-			if (edMode == ED_Start && road)  road->iDir *= -1;  break;
-			
-		case KC_F7:  togPrvCam();  break;
+
+		//  objects
+		case KC_X:	if (bEdit()){  edMode = ED_Objects;  UpdEditWnds();  }   break;
 	}
 
 	return true;

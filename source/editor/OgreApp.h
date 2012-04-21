@@ -256,8 +256,8 @@ protected:
 
 
 	//  brush & road windows texts
-	const static int BR_TXT=6, RD_TXT=14, RDS_TXT=9, FL_TXT=6;
-	MyGUI::StaticTextPtr brTxt[BR_TXT], rdTxt[RD_TXT],rdTxtSt[RDS_TXT], flTxt[FL_TXT];
+	const static int BR_TXT=6, RD_TXT=14, RDS_TXT=9, FL_TXT=6, OBJ_TXT=6;
+	MyGUI::StaticTextPtr brTxt[BR_TXT], rdTxt[RD_TXT],rdTxtSt[RDS_TXT], flTxt[FL_TXT], objTxt[OBJ_TXT];
 	MyGUI::StaticImagePtr brImg;  MyGUI::TabPtr wndTabs;
 
 

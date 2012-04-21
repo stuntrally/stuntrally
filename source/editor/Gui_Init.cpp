@@ -28,29 +28,34 @@ void App::InitGui()
 		if (name == "RoadStats")  mWndRoadStats = *it;  else
 		if (name == "OptionsWnd")  mWndOpts = *it;  else
 		if (name == "FluidsWnd")  mWndFluids = *it;
+		if (name == "ObjectsWnd")  mWndObjects = *it;
 	}
 	if (mWndRoadStats)  mWndRoadStats->setVisible(false);
 
 	GuiInitTooltip();
 	
-	//  Brush wnd  assign controls  ----------------------
+	//  assign controls, window texts  ----------------------
+	//  Brush
 	if (mWndBrush)
 	{	for (int i=0; i<BR_TXT; ++i)
 			brTxt[i] = mGUI->findWidget<StaticText>("brush"+toStr(i));
 		brImg = mGUI->findWidget<StaticImage>("brushImg", false);
 	}
-
-	//  Road tool windows texts
+	//  Road
 	if (mWndRoadCur)  for (int i=0; i<RD_TXT; ++i)
 		rdTxt[i] = mGUI->findWidget<StaticText>("rdCur"+toStr(i));
 	if (mWndRoadStats)  for (int i=0; i<RDS_TXT; ++i)
 		rdTxtSt[i] = mGUI->findWidget<StaticText>("rdStat"+toStr(i));
 
-	//  Fluid window texts
+	//  Fluid
 	if (mWndFluids)  for (int i=0; i<FL_TXT; ++i)
 		flTxt[i] = mGUI->findWidget<StaticText>("flTxt"+toStr(i));
 		
-	//  Options wnd
+	//  Objects
+	if (mWndObjects)  for (int i=0; i<OBJ_TXT; ++i)
+		objTxt[i] = mGUI->findWidget<StaticText>("objTxt"+toStr(i));
+		
+	//  Options
 	if (mWndOpts)
 	{	mWndOpts->setVisible(false);
 		int sx = mWindow->getWidth(), sy = mWindow->getHeight();

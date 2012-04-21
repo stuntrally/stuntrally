@@ -136,15 +136,17 @@ protected:
 
 	enum ED_MODE
 	{	ED_Deform=0, ED_Smooth, ED_Height, ED_Filter, /*ED_Paint,*/
-		ED_Road, ED_Start, ED_PrvCam, ED_Fluids, ED_ALL
+		ED_Road, ED_Start, ED_PrvCam, ED_Fluids, ED_Objects, ED_ALL
 	} edMode,edModeOld;
 
 
 	///  Gui
 	bool bGuiFocus;  // gui shown
 	MyGUI::Gui* mGUI;	MyGUI::OgrePlatform* mPlatform;
-	MyGUI::WidgetPtr mWndOpts, mWndBrush, mWndCam,
-		mWndRoadCur, mWndRoadStats, mWndFluids;  // gui windows
+	MyGUI::WidgetPtr mWndOpts, // gui windows
+		mWndBrush, mWndCam,
+		mWndRoadCur, mWndRoadStats,
+		mWndFluids, mWndObjects;
 	MyGUI::TabPtr mWndTabs;
 	MyGUI::VectorWidgetPtr vwGui;
 	

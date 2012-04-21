@@ -295,11 +295,11 @@
 	<Tag name="filmgrain">Film Grain</Tag>
 	<Tag name="softparticles">Soft Particles</Tag>
 	<Tag name="DepthOfField">Depth of Field</Tag>
-  <Tag name="Near">Near</Tag>
-  <Tag name="Far">Far</Tag>
+	<Tag name="Near">Near</Tag>
+	<Tag name="Far">Far</Tag>
 
 
-  <!--  Graphics  -->
+	<!--  Graphics  -->
 	<Tag name="Graphics">Graphics</Tag>
 	<Tag name="NeedNewGame">* need New Game</Tag>
 	<Tag name="RestartApply">Restart game, to apply *changes.</Tag>
@@ -502,6 +502,7 @@
 	<Tag name="NewDup">New (Duplicate)</Tag>
 	<Tag name="Rename">Rename</Tag>
 	<Tag name="Delete">Delete</Tag>
+	
 
 	<!--  Sun  -->
 	<Tag name="Sun">Sun</Tag>
@@ -801,6 +802,11 @@
 	<Tag name="InputFluidsTile">[,]  - change texture tiling</Tag>
 	<Tag name="InputFluidsTileY">; &apos;  - change texture tiling, one coord. only</Tag>
 	<Tag name="InputFluidsUpdate">F10  - update depth map, after terrain deform near shore</Tag>
+
+
+	<!--  Objects  -->
+	<Tag name="Objects">Objects</Tag>
+	<Tag name="InputObjectsMode">X - edit Objects</Tag>
 	
 		
 <!--  ............................................................................................................................  -->
