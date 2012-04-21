@@ -142,14 +142,10 @@ protected:
 	Ogre::String resCar, resTrk, resDrv;
 	void CreateCar(), /*vdrift:*/CreateVdrTrack(), CreateRacingLine(), CreateMinimap(), CreateRoadBezier();
 	void CreateTerrain(bool bNewHmap=false, bool bTer=true), CreateBltTerrain(), GetTerAngles(int xb,int yb, int xe,int ye);
-	void CreateTrees(), CreateRoad(), CreateObjects();
+	void CreateTrees(), CreateRoad(), CreateObjects(),DestroyObjects();
 	void CreateFluids(), CreateBltFluids(), UpdateWaterRTT(Ogre::Camera* cam);
 	void CreateSkyDome(Ogre::String sMater, Ogre::Vector3 scale);
 	void NewGame();  void NewGameDoLoad();  bool IsTerTrack();  bool newGameRpl;
-
-	//std::vector<Ogre::Entity*> entProps;
-	std::vector<Ogre::SceneNode*> ndProps;
-	std::vector<class btDefaultMotionState*> msProps;
 	
 	// Loading
 	void LoadCleanUp(), LoadGame(), LoadScene(), LoadCar(), LoadTerrain(), LoadRoad(), LoadObjects(), LoadTrees(), LoadMisc();

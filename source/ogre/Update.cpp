@@ -10,6 +10,7 @@
 #include "../oisb/OISBSystem.h"
 #include "../network/masterclient.hpp"
 #include "../network/gameclient.hpp"
+#include "LinearMath/btDefaultMotionState.h"
 
 #include <OgreParticleSystem.h>
 #include <OgreManualObject.h>
@@ -826,26 +827,30 @@ void App::updatePoses(float time)
 	}	
 	
 	
-	///  props  -------------------------------------------------------------
-	for (int i=0; i < ndProps.size(); ++i)
+	///  objects - dynamic (props)  -------------------------------------------------------------
+	for (int i=0; i < sc.objects.size(); ++i)
 	{
-		btTransform tr, ofs;
-		msProps[i]->getWorldTransform(tr);
+		const Object& o = sc.objects[i];
+		if (o.ms)
+		{
+			btTransform tr, ofs;
+			o.ms->getWorldTransform(tr);
 
-		ofs.setIdentity();  ofs.setOrigin(btVector3(0,0,0.52f));
-		tr *= ofs;
+			ofs.setIdentity();  ofs.setOrigin(btVector3(0,0,0.52f));
+			tr *= ofs;
 
-		const btVector3& p = tr.getOrigin();
-		btQuaternion r = tr.getRotation();
+			const btVector3& p = tr.getOrigin();
+			btQuaternion r = tr.getRotation();
 
-		Vector3 pos = Vector3(p.x(),p.z(),-p.y());
-		Quaternion q(r.x(),r.y(),r.z(),r.w()), q1;
-		Radian rad;  Vector3 axi;  q.ToAngleAxis(rad, axi);
-		q1.FromAngleAxis(-rad,Vector3(axi.z,-axi.x,-axi.y));
-		Quaternion rot = q1 * qFixCar;
+			Vector3 pos = Vector3(p.x(),p.z(),-p.y());
+			Quaternion q(r.x(),r.y(),r.z(),r.w()), q1;
+			Radian rad;  Vector3 axi;  q.ToAngleAxis(rad, axi);
+			q1.FromAngleAxis(-rad,Vector3(axi.z,-axi.x,-axi.y));
+			Quaternion rot = q1 * qFixCar;
 
-		ndProps[i]->setPosition(pos);
-		ndProps[i]->setOrientation(rot);
+			o.nd->setPosition(pos);
+			o.nd->setOrientation(rot);
+		}
 	}
 
 	PROFILER.endBlock(".updPos ");

@@ -22,6 +22,10 @@
 #include "BulletCollision/CollisionDispatch/btCollisionObject.h"
 #include "BulletCollision/CollisionShapes/btHeightfieldTerrainShape.h"
 #include "BulletCollision/CollisionShapes/btBoxShape.h"
+//#include "LinearMath/btSerializer.h"
+//#include "Serialize/BulletFileLoader/btBulletFile.h"
+//#include "Serialize/BulletWorldImporter/btBulletWorldImporter.h"
+//Extras/ ^?
 
 #include <OgreRoot.h>
 #include <OgreTerrain.h>
@@ -614,76 +618,126 @@ void App::CreateObjects()
 {
 	for (int i=0; i < sc.objects.size(); ++i)
 	{
-		Object o = sc.objects[i];
-		//o.pos, o.rot, o.scale
-		//o.name + ".mesh"  + ".bullet"
+		Object& o = sc.objects[i];
+		String s = toStr(i);  // counter for names
+
+		//  add to ogre
+		o.ent = mSceneMgr->createEntity("oE"+s, o.name + ".mesh");
+		o.nd = mSceneMgr->getRootSceneNode()->createChildSceneNode("oN"+s, o.pos, o.rot);
+		o.nd->setScale(o.scale);
+		o.nd->attachObject(o.ent);
+
+
+		/*  // .bullet load
+		btBulletWorldImporter* fileLoader;
+		fileLoader = new btBulletWorldImporter(pGame->collision);
+		fileLoader->setVerboseMode(true);
+
+		if (!fileLoader->loadFile(o.name + ".bullet"))
+		{
+			fileLoader->getNumCollisionShapes()
+		}
+		/**/
+
+		//  add to bullet world
+		///  static
+		if (o.name == "pers_house_b")  //temp, check mass=0 ?
+		{
+			#ifndef ROAD_EDITOR
+			// Shape
+			Matrix4 tre;  tre.makeTransform(o.pos,o.scale,o.rot);
+			BtOgre::StaticMeshToShapeConverter converter(o.ent, tre);
+			btCollisionShape* shape = converter.createTrimesh();  //createBox();
+			shape->setUserPointer((void*)0);  // mark
+
+			//btScalar mass = 5;  btVector3 inertia;
+			//shape->calculateLocalInertia(mass, inertia);
+			//BtOgre::RigidBodyState *stt = new BtOgre::RigidBodyState(nod);  //connects Ogre and Bullet
+			//btRigidBody* bdy = new btRigidBody(0.f, 0, shape);  //(mass, stt, shape, inertia);
+			//pGame->collision.world->addRigidBody(bdy);
+
+			btCollisionObject* bco = new btCollisionObject();
+			btTransform tr;  tr.setIdentity();  //tr.setOrigin(btVector3(pos.x,-pos.z,pos.y));
+			bco->setActivationState(DISABLE_SIMULATION);  // ISLAND_SLEEPING  WANTS_DEACTIVATION
+			bco->setCollisionShape(shape);	bco->setWorldTransform(tr);
+			bco->setFriction(0.8f);  bco->setRestitution(0.f);
+			bco->setCollisionFlags(bco->getCollisionFlags() |
+				btCollisionObject::CF_STATIC_OBJECT /*| btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT/**/);
+			pGame->collision.world->addCollisionObject(bco);
+			pGame->collision.shapes.push_back(shape);
+			#endif
+		}
+		else  ///  dynamic
+		{
+			#ifndef ROAD_EDITOR
+			btCollisionShape* shape = new btCylinderShapeZ(btVector3(0.35,0.35,0.51));
+			//btBoxShape(btVector3(0.4,0.3,0.5));	//btSphereShape(0.5);	//btConeShapeX(0.4,0.6);
+			//btCapsuleShapeZ(0.4,0.5);  //btCylinderShapeX(btVector3(0.5,0.7,0.4));
+
+			btTransform tr(btQuaternion(0,0,0)/*o.rot*/, btVector3(o.pos.x,-o.pos.z,o.pos.y));
+			o.ms = new btDefaultMotionState();
+			o.ms->setWorldTransform(tr);
+
+			btRigidBody::btRigidBodyConstructionInfo ci(50, o.ms, shape, 6*btVector3(1,1,0.3));
+			ci.m_restitution = 0.9;		ci.m_friction = 0.9;
+			ci.m_angularDamping = 0.2;	ci.m_linearDamping = 0.1;
+			pGame->collision.AddRigidBody(ci);
+			#endif
+		}
 	}
 
-	///  house test  -------------------------------
-	#if 0
+
+	//sc.objects.clear();
+	#if 0  ///  house test
+	Object o;
 	Vector3 pos(20,-11.05,0);  Quaternion rot(Degree(135),Vector3::UNIT_Y);
 	Vector3 scl = 0.5f*Vector3::UNIT_SCALE;
 	//rot = Quaternion::IDENTITY;
 	//scl = Vector3::UNIT_SCALE;
+	o.pos = pos;  o.scale = scl;  o.rot = rot;
 	
-	Entity* ent = mSceneMgr->createEntity("EntH", "pers_house_b.mesh");
-	SceneNode* nd = mSceneMgr->getRootSceneNode()->createChildSceneNode("NodeH",pos,rot);
-	nd->setScale(scl);
-	nd->attachObject(ent);
+	o.ent = mSceneMgr->createEntity("EntH", "pers_house_b.mesh");
+	o.nd = mSceneMgr->getRootSceneNode()->createChildSceneNode("NodeH",pos,rot);
+	o.nd->setScale(scl);
+	o.nd->attachObject(o.ent);
 
-	// Shape
-	Matrix4 tre;  tre.makeTransform(pos,scl,rot);
-	BtOgre::StaticMeshToShapeConverter converter(ent, tre);
-	btCollisionShape* shape = converter.createTrimesh();  //createBox();
-	shape->setUserPointer((void*)0);  // mark
-
-	//btScalar mass = 5;  btVector3 inertia;
-	//shape->calculateLocalInertia(mass, inertia);
-	//BtOgre::RigidBodyState *stt = new BtOgre::RigidBodyState(nod);  //connects Ogre and Bullet
-	//btRigidBody* bdy = new btRigidBody(0.f, 0, shape);  //(mass, stt, shape, inertia);
-	//pGame->collision.world->addRigidBody(bdy);
-
-	btCollisionObject* bco = new btCollisionObject();
-	btTransform tr;  tr.setIdentity();  //tr.setOrigin(btVector3(pos.x,-pos.z,pos.y));
-	bco->setActivationState(DISABLE_SIMULATION);
-	bco->setCollisionShape(shape);	bco->setWorldTransform(tr);
-	bco->setFriction(0.8f);  bco->setRestitution(0.f);
-	bco->setCollisionFlags(bco->getCollisionFlags() |
-		btCollisionObject::CF_STATIC_OBJECT /*| btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT/**/);
-	pGame->collision.world->addCollisionObject(bco);
-	pGame->collision.shapes.push_back(shape);
+	o.name = "pers_house_b";
+	sc.objects.push_back(o);
 	#endif
 
-
-	///  barrels test  -------------------------------
-	#if 0
+	#if 0  ///  barrels test
 	const int sx=2,sy=2,sz=4;  int i=0;
 	for (int z=0; z < sz; ++z)
 	for (int y=-sy; y < sy; ++y)
 	for (int x=-sx; x < sx; ++x)
 	{
+		Object o;
 		btVector3 pos(x*1.02f + 5.5f, y*1.02f, z*1.02f -10.5f);
-		String s = toStr(i);  ++i;
-		Entity* ent = mSceneMgr->createEntity("Ent"+s, "fuel_can.mesh");
-		SceneNode* nd = mSceneMgr->getRootSceneNode()->createChildSceneNode("Node"+s,Vector3(0,-10.5,0));
-		nd->attachObject(ent);
+		o.pos = Vector3(pos.x(),pos.z(),-pos.y());
+		o.name = "fuel_can";
+		String s = toStr(i);  ++i;  // counter
+		o.ent = mSceneMgr->createEntity("oE_"+s, o.name + ".mesh");
+		o.nd = mSceneMgr->getRootSceneNode()->createChildSceneNode("oN_"+s, o.pos);
+		o.nd->attachObject(o.ent);
 
-		btCollisionShape* shape = new btCylinderShapeZ(btVector3(0.35,0.35,0.51));
-		//btBoxShape(btVector3(0.4,0.3,0.5));	//btSphereShape(0.5);	//btConeShapeX(0.4,0.6);
-		//btCapsuleShapeZ(0.4,0.5);  //btCylinderShapeX(btVector3(0.5,0.7,0.4));
-
-		btTransform tr(btQuaternion(0,0,0), pos);
-		btDefaultMotionState* ms = new btDefaultMotionState();
-		ms->setWorldTransform(tr);
-
-		btRigidBody::btRigidBodyConstructionInfo ci(50, ms, shape, 6*btVector3(1,1,0.3));
-		ci.m_restitution = 0.9;		ci.m_friction = 0.9;
-		ci.m_angularDamping = 0.2;	ci.m_linearDamping = 0.1;
-		pGame->collision.AddRigidBody(ci);
-
-		msProps.push_back(ms);
-		ndProps.push_back(nd);
+		sc.objects.push_back(o);
 		//entProps.push_back(ent);
 	}
 	#endif
+}
+
+void App::DestroyObjects()
+{
+	///  props
+	for (int i=0; i < sc.objects.size(); ++i)
+	{
+		Object& o = sc.objects[i];
+		if (o.nd)  mSceneMgr->destroySceneNode(o.nd);  o.nd = 0;
+		#ifdef ROAD_EDITOR  // game has destroyAll
+		if (o.ent)  mSceneMgr->destroyEntity(o.ent);  o.ent = 0;
+		#endif
+		//delete o.ms;//?
+		o.ms = 0;
+	}
+	sc.objects.clear();
 }

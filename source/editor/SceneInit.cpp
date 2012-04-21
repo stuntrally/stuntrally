@@ -75,7 +75,7 @@ void App::UpdTrees()
 		CreateTrees();
 }
 
-void App::NewCommon()
+void App::NewCommon(bool onlyTerVeget)
 {
 	//  destroy all
 	if (ndSky)
@@ -85,7 +85,11 @@ void App::NewCommon()
 	if (trees) {  delete trees->getPageLoader();  delete trees;  trees=0;   }
 
 	//mSceneMgr->destroyAllStaticGeometry();
-	DestroyFluids();
+	if (!onlyTerVeget)
+	{
+		DestroyObjects();
+		DestroyFluids();
+	}
 
 	//  terrain
 	terrain = 0;
@@ -106,7 +110,7 @@ void App::LoadTrack()
 void App::LoadTrackEv()
 {
 	QTimer ti;  ti.update();  /// time
-	NewCommon();
+	NewCommon(false);  // full destroy
 
 	if (road)
 	{	road->Destroy();  delete road;  road = 0;  }
@@ -176,17 +180,20 @@ void App::UpdateTrack()
 }
 void App::UpdateTrackEv()
 {
-	NewCommon();
+	NewCommon(true);  // destroy only terrain and veget
 	
-	CreateFluids();
+	//CreateFluids();
 	CreateTerrain(bNewHmap,true);/**/
-	if (pSet->bTrees)
-		CreateTrees();
 
 	//  road ~
 	road->mTerrain = terrain;
 	road->RebuildRoad(true);
 	UpdPSSMMaterials();
+
+	//CreateObjects();
+
+	if (pSet->bTrees)
+		CreateTrees();
 
 	Rnd2TexSetup();
 

@@ -7,6 +7,8 @@
 #include <OgreColourValue.h>
 #include <OgreQuaternion.h>
 
+namespace Ogre {  class SceneNode;  class Entity;  }
+
 
 struct TerLayer		// terrain texture layer
 {
@@ -82,7 +84,11 @@ class Object		// object - mesh (static) or prop (dynamic)
 public:
 	Ogre::Vector3 pos, scale;  Ogre::Quaternion rot;
 	std::string name;  // mesh file name
-	class btCollisionObject* cobj;  //..
+
+	Ogre::SceneNode* nd;  // ogre
+	Ogre::Entity* ent;  
+	class btDefaultMotionState* ms;  // bullet
+	class btCollisionObject* cobj;
 
 	Object();
 };

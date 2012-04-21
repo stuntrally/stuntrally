@@ -62,7 +62,7 @@ FluidBox::FluidBox()
 {	}
 
 Object::Object()
-	:cobj(0)
+	:nd(0),ent(0),ms(0),cobj(0)
 	,pos(Vector3::ZERO), rot(Quaternion::IDENTITY)
 	,scale(Vector3::UNIT_SCALE)
 {	}
@@ -167,25 +167,6 @@ bool Scene::LoadXml(String file)
 		}
 	}
 	
-	///  objects
-	eObjs = root->FirstChildElement("objects");
-	if (eObjs)
-	{
-		TiXmlElement* eObj = eObjs->FirstChildElement("object");
-		while (eObj)
-		{
-			Object o;
-			a = eObj->Attribute("name");	if (a)  o.name = std::string(a);
-
-			a = eObj->Attribute("pos");		if (a)  o.pos = s2v(a);
-			a = eObj->Attribute("rot");		if (a)  o.rot = Ogre::StringConverter::parseQuaternion(a);
-			a = eObj->Attribute("scale");	if (a)  o.scale = s2v(a);
-
-			objects.push_back(o);
-			eObj = eObj->NextSiblingElement("object");
-		}
-	}
-
 	///  terrain
 	eTer = root->FirstChildElement("terrain");
 	if (eTer)
@@ -307,6 +288,25 @@ bool Scene::LoadXml(String file)
 		a = eCam->Attribute("pos");		if (a)  camPos = s2v(a);
 		a = eCam->Attribute("dir");		if (a)  camDir = s2v(a);
 	}
+
+	///  objects
+	eObjs = root->FirstChildElement("objects");
+	if (eObjs)
+	{
+		TiXmlElement* eObj = eObjs->FirstChildElement("o");
+		while (eObj)
+		{
+			Object o;
+			a = eObj->Attribute("name");	if (a)  o.name = std::string(a);
+
+			a = eObj->Attribute("pos");		if (a)  o.pos = s2v(a);
+			a = eObj->Attribute("rot");		if (a)  o.rot = Ogre::StringConverter::parseQuaternion(a);
+			a = eObj->Attribute("sc");		if (a)  o.scale = s2v(a);
+
+			objects.push_back(o);
+			eObj = eObj->NextSiblingElement("o");
+		}
+	}
 	
 	UpdateFluidsId();
 	
@@ -368,20 +368,6 @@ bool Scene::SaveXml(String file)
 			fls.InsertEndChild(fe);
 		}
 	root.InsertEndChild(fls);
-
-
-	TiXmlElement objs("objects");
-		for (int i=0; i < objects.size(); ++i)
-		{
-			const Object* o = &objects[i];
-			TiXmlElement oe("object");
-			oe.SetAttribute("name",		o->name.c_str() );
-			oe.SetAttribute("pos",		toStrC( o->pos ));
-			oe.SetAttribute("rot",		toStrC( o->rot ));
-			oe.SetAttribute("scale",	toStrC( o->scale ));
-			objs.InsertEndChild(oe);
-		}
-	root.InsertEndChild(objs);
 
 
 	TiXmlElement ter("terrain");
@@ -482,6 +468,22 @@ bool Scene::SaveXml(String file)
 		cam.SetAttribute("pos",		toStrC( camPos ));
 		cam.SetAttribute("dir",		toStrC( camDir ));
 	root.InsertEndChild(cam);
+
+
+	TiXmlElement objs("objects");
+		for (int i=0; i < objects.size(); ++i)
+		{
+			const Object* o = &objects[i];
+			TiXmlElement oe("o");
+			oe.SetAttribute("name",		o->name.c_str() );
+			oe.SetAttribute("pos",		toStrC( o->pos ));
+			if (o->rot != Quaternion::IDENTITY)  // dont save defaults in xml
+				oe.SetAttribute("rot",	toStrC( o->rot ));
+			if (o->scale != Vector3::UNIT_SCALE)
+				oe.SetAttribute("sc",	toStrC( o->scale ));
+			objs.InsertEndChild(oe);
+		}
+	root.InsertEndChild(objs);
 
 
 	xml.InsertEndChild(root);

@@ -154,15 +154,7 @@ void App::LoadCleanUp()  // 1 first
 {
 	updMouse();
 	
-	///  props
-	if (ndProps.size() > 0)
-	{
-		for (int i=0; i < ndProps.size(); ++i)
-			mSceneMgr->destroySceneNode(ndProps[i]);
-		ndProps.clear();
-	}
-	msProps.clear();
-	
+	DestroyObjects();
 
 	// rem old track
 	if (resTrk != "")  Ogre::Root::getSingletonPtr()->removeResourceLocation(resTrk);
