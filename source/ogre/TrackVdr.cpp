@@ -20,7 +20,7 @@ using namespace Ogre;
 ///  track
 ///---------------------------------------------------------------------------------------------------------------
 
-void App::CreateTrack()
+void App::CreateVdrTrack()
 {	
 	//LogManager::getSingletonPtr()->logMessage( String("---------models----  ogre:") +
 	//	toStr(pGame->track.ogre_meshes.size()) + " mod_lib:" + toStr(pGame->track.model_library.size()) );

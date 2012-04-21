@@ -283,23 +283,7 @@ void App::CreateTerrain(bool bNewHmap, bool bTer)
 
 		String name = TrkDir() + (bNewHmap ? "heightmap-new.f32" : "heightmap.f32");
 
-		if (sc.td.GENERATE_HMAP)	//  generate height -
-		{
-			for (int j=0; j < wy; ++j)
-			{
-				int a = j * wx;
-				for (int i=0; i < wx; ++i,++a)
-					sc.td.hfHeight[a] = sc.td.getHeight(i,j);
-			}
-			if (1)	// save f32 HMap
-			{
-				std::ofstream of;
-				of.open(name.c_str(), std::ios_base::binary);
-				of.write((const char*)&sc.td.hfHeight[0], siz);
-				of.close();
-			}
-		}
-		else	//  load from f32 HMap +
+		//  load from f32 HMap +
 		{
 			std::ifstream fi;
 			fi.open(name.c_str(), std::ios_base::binary);
@@ -607,3 +591,99 @@ void App::UpdFluidBox()
 	ndFluidBox->setScale(fb.size);
 }
 #endif
+
+//  water rtt
+void App::UpdateWaterRTT(Ogre::Camera* cam)
+{
+	//  water RTT
+	mWaterRTT.setViewerCamera(cam);
+	mWaterRTT.setRTTSize(ciShadowSizesA[pSet->water_rttsize]);
+	mWaterRTT.setReflect(MaterialFactory::getSingleton().getReflect());
+	mWaterRTT.setRefract(MaterialFactory::getSingleton().getRefract());
+	mWaterRTT.mSceneMgr = mSceneMgr;
+	if (!sc.fluids.empty())
+		mWaterRTT.setPlane(Plane(Vector3::UNIT_Y, sc.fluids.front().pos.y));
+	mWaterRTT.recreate();
+	mWaterRTT.setActive(!sc.fluids.empty());
+}
+
+
+///  Objects  ... .. . . .
+//----------------------------------------------------------------------------------------------------------------------
+void App::CreateObjects()
+{
+	for (int i=0; i < sc.objects.size(); ++i)
+	{
+		Object o = sc.objects[i];
+		//o.pos, o.rot, o.scale
+		//o.name + ".mesh"  + ".bullet"
+	}
+
+	///  house test  -------------------------------
+	#if 0
+	Vector3 pos(20,-11.05,0);  Quaternion rot(Degree(135),Vector3::UNIT_Y);
+	Vector3 scl = 0.5f*Vector3::UNIT_SCALE;
+	//rot = Quaternion::IDENTITY;
+	//scl = Vector3::UNIT_SCALE;
+	
+	Entity* ent = mSceneMgr->createEntity("EntH", "pers_house_b.mesh");
+	SceneNode* nd = mSceneMgr->getRootSceneNode()->createChildSceneNode("NodeH",pos,rot);
+	nd->setScale(scl);
+	nd->attachObject(ent);
+
+	// Shape
+	Matrix4 tre;  tre.makeTransform(pos,scl,rot);
+	BtOgre::StaticMeshToShapeConverter converter(ent, tre);
+	btCollisionShape* shape = converter.createTrimesh();  //createBox();
+	shape->setUserPointer((void*)0);  // mark
+
+	//btScalar mass = 5;  btVector3 inertia;
+	//shape->calculateLocalInertia(mass, inertia);
+	//BtOgre::RigidBodyState *stt = new BtOgre::RigidBodyState(nod);  //connects Ogre and Bullet
+	//btRigidBody* bdy = new btRigidBody(0.f, 0, shape);  //(mass, stt, shape, inertia);
+	//pGame->collision.world->addRigidBody(bdy);
+
+	btCollisionObject* bco = new btCollisionObject();
+	btTransform tr;  tr.setIdentity();  //tr.setOrigin(btVector3(pos.x,-pos.z,pos.y));
+	bco->setActivationState(DISABLE_SIMULATION);
+	bco->setCollisionShape(shape);	bco->setWorldTransform(tr);
+	bco->setFriction(0.8f);  bco->setRestitution(0.f);
+	bco->setCollisionFlags(bco->getCollisionFlags() |
+		btCollisionObject::CF_STATIC_OBJECT /*| btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT/**/);
+	pGame->collision.world->addCollisionObject(bco);
+	pGame->collision.shapes.push_back(shape);
+	#endif
+
+
+	///  barrels test  -------------------------------
+	#if 0
+	const int sx=2,sy=2,sz=4;  int i=0;
+	for (int z=0; z < sz; ++z)
+	for (int y=-sy; y < sy; ++y)
+	for (int x=-sx; x < sx; ++x)
+	{
+		btVector3 pos(x*1.02f + 5.5f, y*1.02f, z*1.02f -10.5f);
+		String s = toStr(i);  ++i;
+		Entity* ent = mSceneMgr->createEntity("Ent"+s, "fuel_can.mesh");
+		SceneNode* nd = mSceneMgr->getRootSceneNode()->createChildSceneNode("Node"+s,Vector3(0,-10.5,0));
+		nd->attachObject(ent);
+
+		btCollisionShape* shape = new btCylinderShapeZ(btVector3(0.35,0.35,0.51));
+		//btBoxShape(btVector3(0.4,0.3,0.5));	//btSphereShape(0.5);	//btConeShapeX(0.4,0.6);
+		//btCapsuleShapeZ(0.4,0.5);  //btCylinderShapeX(btVector3(0.5,0.7,0.4));
+
+		btTransform tr(btQuaternion(0,0,0), pos);
+		btDefaultMotionState* ms = new btDefaultMotionState();
+		ms->setWorldTransform(tr);
+
+		btRigidBody::btRigidBodyConstructionInfo ci(50, ms, shape, 6*btVector3(1,1,0.3));
+		ci.m_restitution = 0.9;		ci.m_friction = 0.9;
+		ci.m_angularDamping = 0.2;	ci.m_linearDamping = 0.1;
+		pGame->collision.AddRigidBody(ci);
+
+		msProps.push_back(ms);
+		ndProps.push_back(nd);
+		//entProps.push_back(ent);
+	}
+	#endif
+}

@@ -13,7 +13,9 @@
 #include "../btOgre/BtOgrePG.h"
 #include "../btOgre/BtOgreGP.h"
 
-#include "boost/thread.hpp"
+#include <boost/thread.hpp>
+#include <boost/filesystem.hpp>
+
 #include "../paged-geom/PagedGeometry.h"
 
 #include <MyGUI_OgrePlatform.h>
@@ -292,15 +294,7 @@ void App::LoadScene()  // 3
 	{	sc.Default();  sc.td.hfHeight = NULL;  sc.td.hfAngle = NULL;  }
 
 	//  water RTT
-	mWaterRTT.setViewerCamera(mSplitMgr->mCameras.front());
-	mWaterRTT.setRTTSize(ciShadowSizesA[pSet->water_rttsize]);
-	mWaterRTT.setReflect(MaterialFactory::getSingleton().getReflect());
-	mWaterRTT.setRefract(MaterialFactory::getSingleton().getRefract());
-	mWaterRTT.mSceneMgr = mSceneMgr;
-	if (!sc.fluids.empty())
-		mWaterRTT.setPlane(Plane(Vector3::UNIT_Y, sc.fluids.front().pos.y));
-	mWaterRTT.recreate();
-	mWaterRTT.setActive(!sc.fluids.empty());
+	UpdateWaterRTT(mSplitMgr->mCameras.front());
 
 	/// generate materials
 	materialFactory->generate();
@@ -308,7 +302,7 @@ void App::LoadScene()  // 3
 
 	//  fluids
 	CreateFluids();
-
+	
 
 	//  rain  -----
 	if (!pr && sc.rainEmit > 0)  {
@@ -425,36 +419,46 @@ void App::LoadTerrain()  // 5
 {
 	bool ter = IsTerTrack();
 	CreateTerrain(false,ter);  // common
+	if (ter)
+		CreateBltTerrain();
 	
-	// Assign stuff to cars
+	// assign stuff to cars
 	for (std::vector<CarModel*>::iterator it=carModels.begin(); it!=carModels.end(); it++)
 	{
 		(*it)->terrain = terrain;
 		(*it)->blendMtr = blendMtr;
 		(*it)->blendMapSize = blendMapSize;
 	}
-}
 
-void App::LoadTrack()  // 6
-{
-	bool ter = IsTerTrack();
-	if (!ter)	//  track
+	if (!ter)	// vdrift track
 	{
-		CreateTrack();
+		CreateVdrTrack();
 		CreateMinimap();
 		//CreateRacingLine();  //?-
 		//CreateRoadBezier();  //-
 	}
-	if (ter)	//  Terrain
-	{
-		CreateBltTerrain();
-		CreateProps();  //-
-		CreateRoad();
-		CreateTrees();
-	}
 }
 
-void App::LoadMisc()  // 7 last
+void App::LoadRoad()  // 6
+{
+	if (IsTerTrack())
+		CreateRoad();
+}
+
+void App::LoadObjects()  // 7
+{
+	if (IsTerTrack())
+		CreateObjects();
+}
+
+void App::LoadTrees()  // 8
+{
+	if (IsTerTrack())
+		CreateTrees();
+}
+
+
+void App::LoadMisc()  // 9 last
 {
 	if (pGame && pGame->cars.size() > 0)  //todo: move this into gui track tab chg evt, for cur game type
 		UpdGuiRdStats(road, sc, sListTrack, pGame->timer.GetBestLap(0, pSet->game.trackreverse));  // current
@@ -560,9 +564,13 @@ void App::NewGameDoLoad()
 		case LS_CLEANUP:	LoadCleanUp();	perc = 3;	break;
 		case LS_GAME:		LoadGame();		perc = 10;	break;
 		case LS_SCENE:		LoadScene();	perc = 20;	break;
-		case LS_CAR:		LoadCar();		perc = 45;	break;
-		case LS_TER:		LoadTerrain();	perc = 70;	break;
-		case LS_TRACK:		LoadTrack();	perc = 75;	break;
+		case LS_CAR:		LoadCar();		perc = 30;	break;
+
+		case LS_TER:		LoadTerrain();	perc = 40;	break;
+		case LS_ROAD:		LoadRoad();		perc = 50;	break;
+		case LS_OBJS:		LoadObjects();	perc = 60;	break;
+		case LS_TREES:		LoadTrees();	perc = 70;	break;
+
 		case LS_MISC:		LoadMisc();		perc = 80;	break;
 	}
 
@@ -579,12 +587,9 @@ void App::NewGameDoLoad()
 //---------------------------------------------------------------------------------------------------------------
 bool App::IsTerTrack()
 {
-	//  track: vdrift / terrain
+	//  vdrift track doesn't have road.xml
 	String sr = TrkDir()+"road.xml";
-	std::ifstream fr(sr.c_str());
-	bool ter = fr.good(); //!fail()
-	if (ter)  fr.close();
-	return ter;
+	return boost::filesystem::exists(sr);
 }
 
 
@@ -612,84 +617,6 @@ void App::CreateRoad()
 
 	UpdPSSMMaterials();  ///+~-
 	road->RebuildRoadInt();
-}
-
-
-///  props  ... .. . . .
-//------------------------------------------------------------------------------
-
-void App::CreateProps()
-{
-
-	///  house test  -------------------------------
-	#if 0
-	Vector3 pos(20,-11.05,0);  Quaternion rot(Degree(135),Vector3::UNIT_Y);
-	Vector3 scl = 0.5f*Vector3::UNIT_SCALE;
-	//rot = Quaternion::IDENTITY;
-	//scl = Vector3::UNIT_SCALE;
-	
-	Entity* ent = mSceneMgr->createEntity("EntH", "pers_house_b.mesh");
-	SceneNode* nd = mSceneMgr->getRootSceneNode()->createChildSceneNode("NodeH",pos,rot);
-	nd->setScale(scl);
-	nd->attachObject(ent);
-
-	// Shape
-	Matrix4 tre;  tre.makeTransform(pos,scl,rot);
-	BtOgre::StaticMeshToShapeConverter converter(ent, tre);
-	btCollisionShape* shape = converter.createTrimesh();  //createBox();
-	shape->setUserPointer((void*)0);  // mark
-
-	//btScalar mass = 5;  btVector3 inertia;
-	//shape->calculateLocalInertia(mass, inertia);
-	//BtOgre::RigidBodyState *stt = new BtOgre::RigidBodyState(nod);  //connects Ogre and Bullet
-	//btRigidBody* bdy = new btRigidBody(0.f, 0, shape);  //(mass, stt, shape, inertia);
-	//pGame->collision.world->addRigidBody(bdy);
-
-	btCollisionObject* bco = new btCollisionObject();
-	btTransform tr;  tr.setIdentity();  //tr.setOrigin(btVector3(pos.x,-pos.z,pos.y));
-	bco->setActivationState(DISABLE_SIMULATION);
-	bco->setCollisionShape(shape);	bco->setWorldTransform(tr);
-	bco->setFriction(0.8f);  bco->setRestitution(0.f);
-	bco->setCollisionFlags(bco->getCollisionFlags() |
-		btCollisionObject::CF_STATIC_OBJECT /*| btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT/**/);
-	pGame->collision.world->addCollisionObject(bco);
-	pGame->collision.shapes.push_back(shape);
-	#endif
-
-
-	///  barrels test  -------------------------------
-	#if 0
-	const int sx=2,sy=2,sz=4;  int i=0;
-	for (int z=0; z < sz; ++z)
-	for (int y=-sy; y < sy; ++y)
-	for (int x=-sx; x < sx; ++x)
-	{
-		btVector3 pos(x*1.02f + 5.5f, y*1.02f, z*1.02f -10.5f);
-		String s = toStr(i);  ++i;
-		Entity* ent = mSceneMgr->createEntity("Ent"+s, "fuel_can.mesh");
-		SceneNode* nd = mSceneMgr->getRootSceneNode()->createChildSceneNode("Node"+s,Vector3(0,-10.5,0));
-		nd->attachObject(ent);
-
-		btCollisionShape* shape = new btCylinderShapeZ(btVector3(0.35,0.35,0.51));
-		//btBoxShape(btVector3(0.4,0.3,0.5));	//btSphereShape(0.5);	//btConeShapeX(0.4,0.6);
-		//btCapsuleShapeZ(0.4,0.5);  //btCylinderShapeX(btVector3(0.5,0.7,0.4));
-
-		btTransform tr(btQuaternion(0,0,0), pos);
-		btDefaultMotionState* ms = new btDefaultMotionState();
-		ms->setWorldTransform(tr);
-
-		btRigidBody::btRigidBodyConstructionInfo ci(50, ms, shape, 6*btVector3(1,1,0.3));
-		ci.m_restitution = 0.9;		ci.m_friction = 0.9;
-		ci.m_angularDamping = 0.2;	ci.m_linearDamping = 0.1;
-		pGame->collision.AddRigidBody(ci);
-
-		msProps.push_back(ms);
-		ndProps.push_back(nd);
-		//entProps.push_back(ent);
-	}
-	#endif
-	///-----------------------------------------
-
 }
 
 

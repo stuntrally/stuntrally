@@ -43,6 +43,7 @@ void Scene::Default()
 	camPos = Vector3(10.f,20.f,10.f);  camDir = Vector3(0.f,-0.3f,1.f);
 	sceneryId = 0;
 	fluids.clear();  //
+	objects.clear();  //
 }
 
 PagedLayer::PagedLayer()
@@ -58,6 +59,12 @@ FluidBox::FluidBox()
 	:cobj(0), id(-1), idParticles(0)
 	,pos(Vector3::ZERO), rot(Vector3::ZERO)
 	,size(Vector3::ZERO), tile(0.01,0.01)
+{	}
+
+Object::Object()
+	:cobj(0)
+	,pos(Vector3::ZERO), rot(Quaternion::IDENTITY)
+	,scale(Vector3::UNIT_SCALE)
 {	}
 
 
@@ -95,7 +102,7 @@ bool Scene::LoadXml(String file)
 	//pgLayers.clear();
 
 	// read
-	TiXmlElement* eSky,*eFog,*eLi,*eTer,*ePgd,*eCam,*eFls;
+	TiXmlElement* eSky,*eFog,*eLi,*eTer,*ePgd,*eCam,*eFls,*eObjs;
 	const char* a;
 
 
@@ -160,6 +167,25 @@ bool Scene::LoadXml(String file)
 		}
 	}
 	
+	///  objects
+	eObjs = root->FirstChildElement("objects");
+	if (eObjs)
+	{
+		TiXmlElement* eObj = eObjs->FirstChildElement("object");
+		while (eObj)
+		{
+			Object o;
+			a = eObj->Attribute("name");	if (a)  o.name = std::string(a);
+
+			a = eObj->Attribute("pos");		if (a)  o.pos = s2v(a);
+			a = eObj->Attribute("rot");		if (a)  o.rot = Ogre::StringConverter::parseQuaternion(a);
+			a = eObj->Attribute("scale");	if (a)  o.scale = s2v(a);
+
+			objects.push_back(o);
+			eObj = eObj->NextSiblingElement("object");
+		}
+	}
+
 	///  terrain
 	eTer = root->FirstChildElement("terrain");
 	if (eTer)
@@ -330,10 +356,9 @@ bool Scene::SaveXml(String file)
 	
 
 	TiXmlElement fls("fluids");
-		const FluidBox* fb;
 		for (int i=0; i < fluids.size(); ++i)
 		{
-			fb = &fluids[i];
+			const FluidBox* fb = &fluids[i];
 			TiXmlElement fe("fluid");
 			fe.SetAttribute("name",		fb->name.c_str() );
 			fe.SetAttribute("pos",		toStrC( fb->pos ));
@@ -343,6 +368,21 @@ bool Scene::SaveXml(String file)
 			fls.InsertEndChild(fe);
 		}
 	root.InsertEndChild(fls);
+
+
+	TiXmlElement objs("objects");
+		for (int i=0; i < objects.size(); ++i)
+		{
+			const Object* o = &objects[i];
+			TiXmlElement oe("object");
+			oe.SetAttribute("name",		o->name.c_str() );
+			oe.SetAttribute("pos",		toStrC( o->pos ));
+			oe.SetAttribute("rot",		toStrC( o->rot ));
+			oe.SetAttribute("scale",	toStrC( o->scale ));
+			objs.InsertEndChild(oe);
+		}
+	root.InsertEndChild(objs);
+
 
 	TiXmlElement ter("terrain");
 		ter.SetAttribute("size",		toStrC( td.iVertsX ));
@@ -512,33 +552,4 @@ void Scene::UpdPgLayers()
 		if (pgLayersAll[i].on)
 			pgLayers.push_back(i);
 	}
-}
-
-
-//
-/// terrain  Height function  (for generate)  very old--
-//
-int TerData::GENERATE_HMAP = 0;
-float TerData::getHeight(const float& fi, const float& fj)
-{
-	const static float wl = 0.014;  // wave len
-	const static float Hmax = 2.5;  // height scale  16 mnt
-	const static float Hofs = 0;  // height offset
-
-	return	Hofs + Hmax * (
-#if 1  // new~
-		-2.6f  //1.5
-		 * cosf(fi*wl*0.73f)*sinf(fj*wl*0.65f)
-		 * cosf(fi*wl*0.53f)*sinf(fj*wl*0.51f)
-		+0.05f
-		 * sinf(fi*wl*3.30f)*cosf(fj*wl*3.82f)
-		 * sinf(fi*wl*11.3f)*cosf(fj*wl*11.5f)
-		 * cosf(fi*wl*0.23f)*sinf(fj*wl*0.22f)/**/
-		+0.4f  //1
-		 * sinf(fi*wl)      *cosf(fj*wl)
-		 * sinf(fi*wl*4.30f)*cosf(fj*wl*4.12f)
-		 * sinf(fi*wl*3.63f)*cosf(fj*wl*5.21f)
-		 * sinf(fi*wl*2.30f)*cosf(fj*wl*2.12f)
-		 * sinf(fi*wl*1.33f)*cosf(fj*wl*1.43f) );
-#endif
 }

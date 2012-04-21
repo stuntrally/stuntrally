@@ -139,23 +139,25 @@ bool App::frameRenderingQueued(const FrameEvent& evt)
 		if (rdTxt[12]){  rdTxt[12]->setCaption(road->bMerge ? "Mrg":"");	}
 
 		//  road stats  --------------------------------
-		if (rdTxtSt[0]){  rdTxtSt[0]->setCaption("Length  "+fToStr(road->st.Length,0,4));  }
-		if (rdTxtSt[1]){  rdTxtSt[1]->setCaption("Width   "+fToStr(road->st.WidthAvg,2,5));  }
-		if (rdTxtSt[2]){  rdTxtSt[2]->setCaption("Height   "+fToStr(road->st.HeightDiff,2,5));  }
+		if (mWndRoadStats && mWndRoadStats->getVisible())
+		{
+			if (rdTxtSt[0]){  rdTxtSt[0]->setCaption("Length  "+fToStr(road->st.Length,0,4));  }
+			if (rdTxtSt[1]){  rdTxtSt[1]->setCaption("Width   "+fToStr(road->st.WidthAvg,2,5));  }
+			if (rdTxtSt[2]){  rdTxtSt[2]->setCaption("Height   "+fToStr(road->st.HeightDiff,2,5));  }
 
-		if (rdTxtSt[3]){  rdTxtSt[3]->setCaption("In air   "+fToStr(road->st.OnTer,1,4)+"%");  }
-		if (rdTxtSt[4]){  rdTxtSt[4]->setCaption("Pipes   "+fToStr(road->st.Pipes,1,4)+"%");  }
+			if (rdTxtSt[3]){  rdTxtSt[3]->setCaption("In air   "+fToStr(road->st.OnTer,1,4)+"%");  }
+			if (rdTxtSt[4]){  rdTxtSt[4]->setCaption("Pipes   "+fToStr(road->st.Pipes,1,4)+"%");  }
 
-		int lp = !bCur ? -1 : road->vSegs[road->iChosen].lpos.size();
-		if (rdTxtSt[5]){  rdTxtSt[5]->setCaption("lod pnt:  "+toStr(lp));  }
-		if (rdTxtSt[6]){  rdTxtSt[6]->setCaption("segs Mrg:  "+fToStr(road->segsMrg+1,0,2));  }
-		if (rdTxtSt[7]){  rdTxtSt[7]->setCaption("vis:  "+fToStr(road->iVis,0,2));  }
-		if (rdTxtSt[8]){  rdTxtSt[8]->setCaption("tri:  "+fToStr(road->iTris/1000.f,1,4)+"k");  }
+			int lp = !bCur ? -1 : road->vSegs[road->iChosen].lpos.size();
+			if (rdTxtSt[5]){  rdTxtSt[5]->setCaption("lod pnt:  "+toStr(lp));  }
+			if (rdTxtSt[6]){  rdTxtSt[6]->setCaption("segs Mrg:  "+fToStr(road->segsMrg+1,0,2));  }
+			if (rdTxtSt[7]){  rdTxtSt[7]->setCaption("vis:  "+fToStr(road->iVis,0,2));  }
+			if (rdTxtSt[8]){  rdTxtSt[8]->setCaption("tri:  "+fToStr(road->iTris/1000.f,1,4)+"k");  }
 
-		//if (rdTxtSt[5]){  Fmt(s, "Pitch  %5.2f", road->st.Pitch);  rdTxtSt[5]->setCaption(s);  }
-		//if (rdTxtSt[6]){  Fmt(s, "Yaw   %5.2f", road->st.Yaw);    rdTxtSt[6]->setCaption(s);  }
-		//if (rdTxtSt[7]){  Fmt(s, "Roll  %5.2f", road->st.Roll);   rdTxtSt[7]->setCaption(s);  }
-		//!  ^  fToStr
+			//if (rdTxtSt[5]){  Fmt(s, "Pitch  %5.2f", road->st.Pitch);  rdTxtSt[5]->setCaption(s);  }
+			//if (rdTxtSt[6]){  Fmt(s, "Yaw   %5.2f", road->st.Yaw);    rdTxtSt[6]->setCaption(s);  }
+			//if (rdTxtSt[7]){  Fmt(s, "Roll  %5.2f", road->st.Roll);   rdTxtSt[7]->setCaption(s);  }
+		}
 
 	///  Modify  . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  
 		//  road point

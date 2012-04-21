@@ -32,7 +32,9 @@
 	<Tag name="LS_SCENE">Loading scene</Tag>
 	<Tag name="LS_CAR">Loading car</Tag>
 	<Tag name="LS_TER">Loading terrain</Tag>
-	<Tag name="LS_TRACK">Loading track</Tag>
+	<Tag name="LS_ROAD">Loading Road</Tag>
+	<Tag name="LS_OBJS">Loading Objects</Tag>
+	<Tag name="LS_TREES">Loading Trees</Tag>
 	<Tag name="LS_MISC">Finishing</Tag>
 	
 	<!--  HUD  -->

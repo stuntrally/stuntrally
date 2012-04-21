@@ -116,15 +116,7 @@ void App::LoadTrackEv()
 	sc.LoadXml(TrkDir()+"scene.xml");
 	
 	//  water RTT
-	mWaterRTT.setViewerCamera(mCamera);
-	mWaterRTT.setRTTSize(ciShadowSizesA[pSet->water_rttsize]);
-	mWaterRTT.setReflect(MaterialFactory::getSingleton().getReflect());
-	mWaterRTT.setRefract(MaterialFactory::getSingleton().getRefract());
-	mWaterRTT.mSceneMgr = mSceneMgr;
-	if (!sc.fluids.empty())
-		mWaterRTT.setPlane(Plane(Vector3::UNIT_Y, sc.fluids.front().pos.y));
-	mWaterRTT.recreate();
-	mWaterRTT.setActive(!sc.fluids.empty());
+	UpdateWaterRTT(mCamera);
 	
 	/// generate materials
 	materialFactory->generate();
@@ -134,10 +126,9 @@ void App::LoadTrackEv()
 	UpdWndTitle();
 
 	CreateFluids();
+
 	bNewHmap = false;/**/
 	CreateTerrain();
-	if (pSet->bTrees)
-		CreateTrees();
 
 	//  road ~
 	road = new SplineRoad();
@@ -145,6 +136,11 @@ void App::LoadTrackEv()
 	road->Setup("sphere.mesh", 1.4f*pSet->road_sphr, terrain, mSceneMgr, mCamera);
 	road->LoadFile(TrkDir()+"road.xml");
 	UpdPSSMMaterials();
+	
+	CreateObjects();
+
+	if (pSet->bTrees)
+		CreateTrees();  // trees after objects so they aren't inside them
 
 
 	//  updates after load

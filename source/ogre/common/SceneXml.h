@@ -5,6 +5,7 @@
 #include <OgreVector3.h>
 #include <OgreVector2.h>
 #include <OgreColourValue.h>
+#include <OgreQuaternion.h>
 
 
 struct TerLayer		// terrain texture layer
@@ -45,7 +46,6 @@ public:
 	//  methods
 	TerData();	void Default();
 	float getHeight(const float& fi, const float& fj);
-	static int GENERATE_HMAP;
 };
 
 
@@ -74,6 +74,17 @@ public:
 	int idParticles;  // auto set  index for wheel particles  -1 none
 
 	FluidBox();
+};
+
+
+class Object		// object - mesh (static) or prop (dynamic)
+{
+public:
+	Ogre::Vector3 pos, scale;  Ogre::Quaternion rot;
+	std::string name;  // mesh file name
+	class btCollisionObject* cobj;  //..
+
+	Object();
 };
 
 
@@ -123,8 +134,12 @@ public:
 	//  to force regenerating impostors on different sceneries
 	int sceneryId;
 	
+	//  fuids
 	std::vector<FluidBox> fluids;
 	class FluidsXml* pFluidsXml;  // set this after Load
+	
+	//  objects
+	std::vector<Object> objects;
 		
 	//  methods
 	Scene();  void Default(), UpdateFluidsId();

@@ -167,8 +167,12 @@ void App::setTranslations()
 	loadingStates.insert(std::make_pair(LS_GAME, String(TR("#{LS_GAME}"))));
 	loadingStates.insert(std::make_pair(LS_SCENE, String(TR("#{LS_SCENE}"))));
 	loadingStates.insert(std::make_pair(LS_CAR, String(TR("#{LS_CAR}"))));
+
 	loadingStates.insert(std::make_pair(LS_TER, String(TR("#{LS_TER}"))));
-	loadingStates.insert(std::make_pair(LS_TRACK, String(TR("#{LS_TRACK}"))));
+	loadingStates.insert(std::make_pair(LS_ROAD, String(TR("#{LS_ROAD}"))));
+	loadingStates.insert(std::make_pair(LS_OBJS, String(TR("#{LS_OBJS}"))));
+	loadingStates.insert(std::make_pair(LS_TREES, String(TR("#{LS_TREES}"))));
+
 	loadingStates.insert(std::make_pair(LS_MISC, String(TR("#{LS_MISC}"))));
 }
 

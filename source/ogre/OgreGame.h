@@ -140,10 +140,10 @@ protected:
 
 	///  create  . . . . . . . . . . . . . . . . . . . . . . . . 
 	Ogre::String resCar, resTrk, resDrv;
-	void CreateCar(), CreateTrack(), CreateRacingLine(), CreateMinimap(), CreateRoadBezier();
-	void CreateTerrain(bool bNewHmap=false, bool bTer=true), CreateBltTerrain();
-	void GetTerAngles(int xb,int yb, int xe,int ye);
-	void CreateTrees(), CreateRoad(), CreateProps(), CreateFluids(), CreateBltFluids();
+	void CreateCar(), /*vdrift:*/CreateVdrTrack(), CreateRacingLine(), CreateMinimap(), CreateRoadBezier();
+	void CreateTerrain(bool bNewHmap=false, bool bTer=true), CreateBltTerrain(), GetTerAngles(int xb,int yb, int xe,int ye);
+	void CreateTrees(), CreateRoad(), CreateObjects();
+	void CreateFluids(), CreateBltFluids(), UpdateWaterRTT(Ogre::Camera* cam);
 	void CreateSkyDome(Ogre::String sMater, Ogre::Vector3 scale);
 	void NewGame();  void NewGameDoLoad();  bool IsTerTrack();  bool newGameRpl;
 
@@ -152,8 +152,8 @@ protected:
 	std::vector<class btDefaultMotionState*> msProps;
 	
 	// Loading
-	void LoadCleanUp(), LoadGame(), LoadScene(), LoadCar(), LoadTerrain(), LoadTrack(), LoadMisc();
-	enum ELoadState { LS_CLEANUP=0, LS_GAME, LS_SCENE, LS_CAR, LS_TER, LS_TRACK, LS_MISC, LS_ALL };
+	void LoadCleanUp(), LoadGame(), LoadScene(), LoadCar(), LoadTerrain(), LoadRoad(), LoadObjects(), LoadTrees(), LoadMisc();
+	enum ELoadState { LS_CLEANUP=0, LS_GAME, LS_SCENE, LS_CAR, LS_TER, LS_ROAD, LS_OBJS, LS_TREES, LS_MISC, LS_ALL };
 	
 	// id, display name, initialised in App()
 	// e.g.: 0, Cleaning up or 3, Loading scene
