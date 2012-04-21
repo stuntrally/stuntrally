@@ -7,6 +7,7 @@
 #include "settings.h"
 #include "../ogre/common/Defines.h"
 #include "Buoyancy.h"
+#include "../ogre/common/QTimer.h"
 
 typedef CARDYNAMICS::T T;
 
@@ -62,6 +63,8 @@ CARDYNAMICS::~CARDYNAMICS()
 //----------------------------------------------------------------------------------------------------------------------------------
 bool CARDYNAMICS::Load(CONFIGFILE & c, std::ostream & error_output)
 {
+	QTimer ti;  ti.update(); /// time
+
 	bTerrain = false;
 	std::string drive = "RWD";
 	int version(1);
@@ -510,10 +513,19 @@ bool CARDYNAMICS::Load(CONFIGFILE & c, std::ostream & error_output)
 			tire[rightside].SetTread(tread);
 		}
 
+		
+		QTimer tir;  tir.update(); /// time
 		for (int i = 0; i < 4; i++)
 		{
 			tire[WHEEL_POSITION(i)].CalculateSigmaHatAlphaHat();
+			//todo: copy, left and right tires are same
+			//and make option to have 4 tires the same
+			//tires array[] for all cars, asphalt/gravel, not in each .car file
+			//todo: editing tire coeffs in game, call this in update
 		}
+		tir.update(); /// time
+		float dt = tir.dt * 1000.f;
+		LogO(Ogre::String(":::: Time tires: ") + toStr(dt) + " ms");
 	}
 
 	//load the mass-only particles
@@ -619,6 +631,9 @@ bool CARDYNAMICS::Load(CONFIGFILE & c, std::ostream & error_output)
 
 	UpdateMass();
 
+	ti.update(); /// time
+	float dt = ti.dt * 1000.f;
+	LogO(Ogre::String(":::: Time car dynamics load: ") + toStr(dt) + " ms");
 	return true;
 }
 
