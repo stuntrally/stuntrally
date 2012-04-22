@@ -2,9 +2,19 @@
 [pers_struct_dds]
 	diffuseMap_512 = pers_struct.dds
 	;diffuse = 0.64 0.64 0.64
-	ambient = 0.80 0.80 0.80
+	;ambient = 0.80 0.80 0.80
 	ambient = 1.0 1.0 1.0
 	specular = 0.25 0.25 0.25 3
+	receivesShadows = false
+	receivesDepthShadows = true
+	terrainLightMap = true
+	shadowPriority = 1.0
+
+	
+[Temple]
+    ambient = 0.799 0.622 0.495
+    diffuse = 0.639 0.497 0.396
+    specular = 0.137 0.137 0.137 31.75
 	receivesShadows = false
 	receivesDepthShadows = true
 	terrainLightMap = true

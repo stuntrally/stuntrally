@@ -687,7 +687,7 @@ void App::CreateObjects()
 
 		//  add to bullet world
 		///  static
-		if (o.name == "pers_house_b")  //temp, check mass=0 ?
+		if (o.name != "fuel_can")  //temp, check mass=0 ?
 		{
 			#ifndef ROAD_EDITOR
 			// Shape
