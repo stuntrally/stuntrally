@@ -72,7 +72,7 @@ void App::UpdStartPos()
 	if (!ndCar)
 	{ 	//  car for start pos
  		ndCar = mSceneMgr->getRootSceneNode()->createChildSceneNode();
-		entCar = mSceneMgr->createEntity("car.mesh");  // car
+		entCar = mSceneMgr->createEntity("car.mesh");
 		entCar->setVisibilityFlags(RV_Hud);  ndCar->setPosition(Vector3(20000,0,0));
 		ndCar->attachObject(entCar);
 	}
@@ -81,7 +81,7 @@ void App::UpdStartPos()
 		MaterialPtr mtr = Ogre::MaterialManager::getSingleton().getByName("sphere_check");
 		if (!mtr.isNull())
  		{	ndStBox = mSceneMgr->getRootSceneNode()->createChildSceneNode();
-			entStBox = mSceneMgr->createEntity("cube.mesh");  // box
+			entStBox = mSceneMgr->createEntity("cube.mesh");
 			entStBox->setVisibilityFlags(RV_Hud);  ndStBox->setPosition(Vector3(20000,0,0));
 				entStBox->setCastShadows(true);  //`
 				entStBox->setMaterial(mtr);  entStBox->setRenderQueueGroup(RQG_CarGlass);  // after road
@@ -92,12 +92,24 @@ void App::UpdStartPos()
 		MaterialPtr mtr = Ogre::MaterialManager::getSingleton().getByName("fluid_box");
 		if (!mtr.isNull())
  		{	ndFluidBox = mSceneMgr->getRootSceneNode()->createChildSceneNode();
-			entFluidBox = mSceneMgr->createEntity("box.mesh");  // box
+			entFluidBox = mSceneMgr->createEntity("box.mesh");
 			entFluidBox->setVisibilityFlags(RV_Hud);  ndFluidBox->setPosition(Vector3(0,0,0));
 				entFluidBox->setCastShadows(false);  //`
 				entFluidBox->setMaterial(mtr);  entFluidBox->setRenderQueueGroup(RQG_CarGlass);
 			ndFluidBox->attachObject(entFluidBox);
 			ndFluidBox->setVisible(false);
+	}	}
+	if (!ndObjBox)
+	{ 	//  picked object box
+		MaterialPtr mtr = Ogre::MaterialManager::getSingleton().getByName("object_box");
+		if (!mtr.isNull())
+ 		{	ndObjBox = mSceneMgr->getRootSceneNode()->createChildSceneNode();
+			entObjBox = mSceneMgr->createEntity("box.mesh");
+			entObjBox->setVisibilityFlags(RV_Hud);  ndObjBox->setPosition(Vector3(0,0,0));
+				entObjBox->setCastShadows(false);  //`
+				entObjBox->setMaterial(mtr);  entObjBox->setRenderQueueGroup(RQG_CarGlass);
+			ndObjBox->attachObject(entObjBox);
+			ndObjBox->setVisible(false);
 	}	}
 	if (vStartPos.size() < 4 || vStartRot.size() < 4)  return;
 

@@ -15,8 +15,8 @@ using namespace Ogre;
 //  tool wnds show/hide
 void App::UpdEditWnds()
 {
-	if (mWndBrush){
-		if (edMode == ED_Deform)
+	if (mWndBrush)
+	{	if (edMode == ED_Deform)
 		{	static_cast<StaticTextPtr>(mWndBrush)->setCaption("Terrain Deform");  
 			mWndBrush->setColour(MyGUI::Colour(0.5f, 0.9f, 0.3f));
 			mWndBrush->setVisible(true);  }
@@ -32,20 +32,18 @@ void App::UpdEditWnds()
 		{	static_cast<StaticTextPtr>(mWndBrush)->setCaption("Terrain Height");
 			mWndBrush->setColour(MyGUI::Colour(0.7f, 1.0f, 0.7f));
 			mWndBrush->setVisible(true);  }
-		else if (edMode == ED_Start)
-		{	static_cast<StaticTextPtr>(mWndBrush)->setCaption("Car Start pos");
-			mWndBrush->setColour(MyGUI::Colour(0.7f, 0.7f, 1.0f));
-			mWndBrush->setVisible(true);  }
 		else
 			mWndBrush->setVisible(false);
 	}
-	if (mWndRoadCur)  mWndRoadCur->setVisible(edMode == ED_Road);
-	if (mWndCam)  mWndCam->setVisible(edMode == ED_PrvCam);
+	if (mWndRoadCur) mWndRoadCur->setVisible(edMode == ED_Road);
+	if (mWndCam)     mWndCam->setVisible(edMode == ED_PrvCam);
+	
+	if (mWndStart)   mWndStart->setVisible(edMode == ED_Start);
 
 	if (mWndFluids)  mWndFluids->setVisible(edMode == ED_Fluids);
 	UpdFluidBox();
 
-	if (mWndObjects)  mWndObjects->setVisible(edMode == ED_Objects);
+	if (mWndObjects) mWndObjects->setVisible(edMode == ED_Objects);
 
 	UpdStartPos();  // StBox visible
 	UpdVisGui();  //br prv..

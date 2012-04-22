@@ -65,6 +65,37 @@
 			<Property key="TextColour" value="0.76 0.9 1.0"/>
 		</Widget>
 	</Widget>
+	<Widget type="Window" skin="WindowC" position="0 64 152 190" layer="Back" name="StartWnd">
+		<Property key="Caption" value="#{CarStartPos}"/>
+		<Property key="Colour" value="0.7 0.7 1.0"/>
+		<Property key="Alpha" value="0.6"/>
+		<Property key="Snap" value="true"/>
+		<UserString key="tip" value="#{TipTerWind}"/>
+		<Widget type="TextBox" skin="TextBox" position="4 5 150 20" name="stTxt0">
+			<Property key="InheritsAlpha" value="false"/>
+			<Property key="TextColour" value="0.7 0.86 1.0"/>
+		</Widget>
+		<Widget type="TextBox" skin="TextBox" position="4 25 150 20" name="stTxt1">
+			<Property key="InheritsAlpha" value="false"/>
+			<Property key="TextColour" value="0.6 0.8 1.0"/>
+		</Widget>
+		<Widget type="TextBox" skin="TextBox" position="4 50 150 20" name="stTxt2">
+			<Property key="InheritsAlpha" value="false"/>
+			<Property key="TextColour" value="0.7 0.8 0.9"/>
+		</Widget>
+		<Widget type="TextBox" skin="TextBox" position="4 70 150 20" name="stTxt3">
+			<Property key="InheritsAlpha" value="false"/>
+			<Property key="TextColour" value="0.78 0.82 0.9"/>
+		</Widget>
+		<Widget type="TextBox" skin="TextBox" position="4 95 150 20" name="stTxt4">
+			<Property key="InheritsAlpha" value="false"/>
+			<Property key="TextColour" value="0.76 0.9 1.0"/>
+		</Widget>
+		<Widget type="TextBox" skin="TextBox" position="4 115 150 20" name="stTxt5">
+			<Property key="InheritsAlpha" value="false"/>
+			<Property key="TextColour" value="0.76 0.9 1.0"/>
+		</Widget>
+	</Widget>
 	<Widget type="Window" skin="WindowC" position="0 64 180 160" layer="Back" name="FluidsWnd">
 		<Property key="Caption" value="#{Fluids}"/>
 		<Property key="Colour" value="0.1 0.3 0.5"/>
@@ -96,7 +127,7 @@
 			<Property key="TextColour" value="0.6 0.8 1.0"/>
 		</Widget>
 	</Widget>
-	<Widget type="Window" skin="WindowC" position="0 64 160 200" layer="Back" name="ObjectsWnd">
+	<Widget type="Window" skin="WindowC" position="0 64 200 140" layer="Back" name="ObjectsWnd">
 		<Property key="Caption" value="#{Objects}"/>
 		<Property key="Colour" value="1.0 1.0 1.0"/>
 		<Property key="Alpha" value="0.6"/>
@@ -104,27 +135,27 @@
 		<UserString key="tip" value="#{TipObjectsWnd}"/>
 		<Widget type="TextBox" skin="TextBox" position="4 0 160 20" name="objTxt0">
 			<Property key="InheritsAlpha" value="false"/>
-			<Property key="TextColour" value="0.7 0.86 1.0"/>
+			<Property key="TextColour" value="0.8 0.8 0.8"/>
 		</Widget>
 		<Widget type="TextBox" skin="TextBox" position="4 20 160 20" name="objTxt1">
 			<Property key="InheritsAlpha" value="false"/>
-			<Property key="TextColour" value="0.8 0.9 1.0"/>
+			<Property key="TextColour" value="0.9 0.9 0.9"/>
 		</Widget>
 		<Widget type="TextBox" skin="TextBox" position="4 40 160 20" name="objTxt2">
 			<Property key="InheritsAlpha" value="false"/>
-			<Property key="TextColour" value="0.6 0.75 0.9"/>
+			<Property key="TextColour" value="0.7 0.7 0.7"/>
 		</Widget>
 		<Widget type="TextBox" skin="TextBox" position="4 60 160 20" name="objTxt3">
 			<Property key="InheritsAlpha" value="false"/>
-			<Property key="TextColour" value="0.6 0.75 0.9"/>
+			<Property key="TextColour" value="0.7 0.7 0.7"/>
 		</Widget>
 		<Widget type="TextBox" skin="TextBox" position="4 80 160 20" name="objTxt4">
 			<Property key="InheritsAlpha" value="false"/>
-			<Property key="TextColour" value="0.6 0.8 1.0"/>
+			<Property key="TextColour" value="0.7 0.7 0.7"/>
 		</Widget>
 		<Widget type="TextBox" skin="TextBox" position="4 100 160 20" name="objTxt5">
 			<Property key="InheritsAlpha" value="false"/>
-			<Property key="TextColour" value="0.6 0.8 1.0"/>
+			<Property key="TextColour" value="0.8 0.8 0.8"/>
 		</Widget>
 	</Widget>
 	<Widget type="Window" skin="WindowC" position="0 34 136 266" layer="Back" name="RoadCur">

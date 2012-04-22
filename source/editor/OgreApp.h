@@ -80,7 +80,7 @@ protected:
 	bool bNewHmap, bTrGrUpd;  Ogre::Real terMaxAng;
 	Ogre::String resTrk;  void NewCommon(bool onlyTerVeget), UpdTrees();
 	void CreateTerrain(bool bNewHmap=false, bool bTer=true), CreateBltTerrain(), GetTerAngles(int xb,int yb,int xe,int ye);
-	void CreateTrees(), CreateObjects(),DestroyObjects();
+	void CreateTrees(), CreateObjects(),DestroyObjects(), UpdObjPick();
 	void CreateFluids(), DestroyFluids(), CreateBltFluids(), UpdFluidBox(), UpdateWaterRTT(Ogre::Camera* cam);
 	void CreateSkyDome(Ogre::String sMater, Ogre::Vector3 scale);
 	bool GetFolderIndex(std::string folderpath, std::list <std::string> & outputfolderlist, std::string extension="");
@@ -109,6 +109,8 @@ protected:
 	std::vector<Ogre::Entity*> vFlEnt;
 	std::vector<Ogre::SceneNode*> vFlNd;
 	int iFlCur;  bool bRecreateFluids;
+	//  objects
+	int iObjCur;
 	
 	
 	///  terrain
@@ -176,8 +178,8 @@ protected:
 	bool LoadStartPos(),SaveStartPos(std::string path);  void UpdStartPos();
 	std::vector <MATHVECTOR <float, 3> > vStartPos;
 	std::vector <QUATERNION <float> >    vStartRot;
-	Ogre::SceneNode* ndCar,*ndStBox,*ndFluidBox;
-	Ogre::Entity*  entCar,*entStBox,*entFluidBox;
+	Ogre::SceneNode* ndCar,*ndStBox,*ndFluidBox,*ndObjBox;
+	Ogre::Entity*  entCar,*entStBox,*entFluidBox,*entObjBox;
 	void togPrvCam();
 
 
@@ -255,9 +257,13 @@ protected:
 	void SetGuiFromXmls();  bool noBlendUpd;
 
 
-	//  brush & road windows texts
-	const static int BR_TXT=6, RD_TXT=14, RDS_TXT=9, FL_TXT=6, OBJ_TXT=6;
-	MyGUI::StaticTextPtr brTxt[BR_TXT], rdTxt[RD_TXT],rdTxtSt[RDS_TXT], flTxt[FL_TXT], objTxt[OBJ_TXT];
+	//  tool windows texts
+	const static int
+		BR_TXT=6, RD_TXT=14,RDS_TXT=9,
+		ST_TXT=6, FL_TXT=6, OBJ_TXT=6;
+	MyGUI::StaticTextPtr
+		brTxt[BR_TXT], rdTxt[RD_TXT],rdTxtSt[RDS_TXT],
+		stTxt[ST_TXT], flTxt[FL_TXT], objTxt[OBJ_TXT];
 	MyGUI::StaticImagePtr brImg;  MyGUI::TabPtr wndTabs;
 
 

@@ -779,9 +779,10 @@
 
 
 	<!--  Start pos  -->
+	<Tag name="CarStartPos">Car Start Pos</Tag>
 	<Tag name="InputStart">Start</Tag>
 	<Tag name="InputStartPos">Q - edit car start pos</Tag>
-	<Tag name="InputStartLMB">LMB - move  RMB - height</Tag>
+	<Tag name="InputStartLMB">ctrl-LMB - place  LMB - move  RMB - height</Tag>
 	<Tag name="InputStartAltLMB">alt-LMB - rotate  alt-RMB - pitch</Tag>
 	<Tag name="InputStartAltMMB">alt-MMB - reset rotation</Tag>
 

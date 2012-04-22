@@ -563,6 +563,9 @@ void App::CreateBltFluids()
 		world->addCollisionObject(bco);
 		#endif
 	}
+	#ifdef ROAD_EDITOR
+	UpdObjPick();
+	#endif
 }
 
 #ifdef ROAD_EDITOR
@@ -614,6 +617,7 @@ void App::UpdateWaterRTT(Ogre::Camera* cam)
 
 ///  Objects  ... .. . . .
 //----------------------------------------------------------------------------------------------------------------------
+#ifndef ROAD_EDITOR
 class BulletWorldOffset : public btBulletWorldImporter
 {
 public:
@@ -657,6 +661,7 @@ public:
 		return body;
 	}
 };
+#endif
 
 void App::CreateObjects()
 {
@@ -715,8 +720,8 @@ void App::CreateObjects()
 		}
 		else  ///  dynamic
 		{
+		#ifndef ROAD_EDITOR
 		#if 0
-			#ifndef ROAD_EDITOR
 			btCollisionShape* shape = new btCylinderShapeZ(btVector3(0.35,0.35,0.51));
 			//btBoxShape(btVector3(0.4,0.3,0.5));	//btSphereShape(0.5);	//btConeShapeX(0.4,0.6);
 			//btCapsuleShapeZ(0.4,0.5);  //btCylinderShapeX(btVector3(0.5,0.7,0.4));
@@ -729,7 +734,6 @@ void App::CreateObjects()
 			ci.m_restitution = 0.9;		ci.m_friction = 0.9;
 			ci.m_angularDamping = 0.2;	ci.m_linearDamping = 0.1;
 			pGame->collision.AddRigidBody(ci);
-			#endif
 		#else
 			// .bullet load
 			BulletWorldOffset* fileLoader = new BulletWorldOffset(pGame->collision.world);
@@ -744,6 +748,7 @@ void App::CreateObjects()
 				//LogO(".bullet: "+toStr(fileLoader->getNumCollisionShapes()));
 			}
 			/**/
+		#endif
 		#endif
 		}
 	}
@@ -803,3 +808,23 @@ void App::DestroyObjects()
 	}
 	sc.objects.clear();
 }
+
+#ifdef ROAD_EDITOR
+void App::UpdObjPick()
+{
+	int objs = sc.objects.size();
+	bool bObjects = edMode == ED_Objects && objs > 0;
+	if (objs > 0)
+		iObjCur = std::min(iObjCur, objs-1);
+
+	if (!ndObjBox)  return;
+	ndObjBox->setVisible(bObjects);
+	if (!bObjects)  return;
+	
+	const Object& o = sc.objects[iObjCur];
+	const AxisAlignedBox& ab = o.nd->_getWorldAABB();
+	Vector3 s = o.scale;  // * sel obj's node aabb
+	ndObjBox->setPosition(o.pos);
+	ndObjBox->setScale(s);
+}
+#endif
