@@ -26,6 +26,7 @@
 #include "Serialize/BulletFileLoader/btBulletFile.h"
 #include "Serialize/BulletWorldImporter/btBulletWorldImporter.h"
 //Extras/ ^?
+#include <boost/filesystem.hpp>
 
 #include <OgreRoot.h>
 #include <OgreTerrain.h>
@@ -647,6 +648,8 @@ public:
 		ms->setWorldTransform(startTransform * mTrOfs);
 		btRigidBody* body = new btRigidBody(mass,ms,shape,localInertia);	
 		//body->setWorldTransform(startTransform * mTrOfs);
+		body->setDamping(0.1f, 0.3f);
+		//body->setFriction(0.5f);
 
 		if (m_dynamicsWorld)
 			m_dynamicsWorld->addRigidBody(body);
@@ -692,7 +695,10 @@ void App::CreateObjects()
 
 		//  add to bullet world
 		///  static
-		if (o.name != "fuel_can")  //temp, check mass=0 ?
+		std::string file = PATHMANAGER::GetDataPath()+"/objects/"+o.name+".bullet";
+		///  use some map ! dont check for every object ...
+		if (!boost::filesystem::exists(file))
+		//if (o.name != "fuel_can")  //temp, check mass=0 ?
 		{
 			#ifndef ROAD_EDITOR
 			// Shape
