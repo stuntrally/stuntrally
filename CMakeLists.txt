@@ -68,9 +68,9 @@ if(BUILD_GAME OR BUILD_EDITOR)
 	link_directories(${OGRE_LIBRARY_DIRS})
 	list(APPEND LIBS ${OGRE_LIBRARIES} ${OGRE_Terrain_LIBRARIES} ${OGRE_Paging_LIBRARIES} ${OGRE_RTShaderSystem_LIBRARIES})
 
-	find_package(Bullet REQUIRED QUIET)
-	include_directories(${BULLET_INCLUDE_DIRS})
-	list(APPEND LIBS ${BULLET_LIBRARIES})
+	#find_package(Bullet REQUIRED QUIET)
+	#include_directories(${BULLET_INCLUDE_DIRS})
+	#list(APPEND LIBS ${BULLET_LIBRARIES})
 
 	find_package(MyGUI REQUIRED QUIET)
 	include_directories(${MYGUI_INCLUDE_DIRS})
