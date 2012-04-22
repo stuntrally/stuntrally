@@ -52,13 +52,25 @@
 	specular = 0.1 0.1 0.1 32
 	lightingAlpha = 0.4 0.25 0.2 0
     depthBias = 2
+    ;//problems^^ depthBias should be 0 but then zfight
     transparent = true
     sceneBlend = alpha
 	receivesShadows = false
 
+[object_box]
+	ambient = 1.4 1.4 1.4
+	diffuse = 0.3 0.3 0.3
+	specular = 0.1 0.1 0.1 32
+	;lightingAlpha = 0.0 1.0 0.0 0
+    diffuseMap_2048 = object_box.png
+    transparent = true
+    sceneBlend = alpha
+	receivesShadows = false
+	cullHardware = none
 
-//  terrain circle
-//------------------------------------------------------------
+
+;//  terrain circle
+;//------------------------------------------------------------
 [circle_deform]
 	ambient = 0.3 1.0 0.1
 	diffuse = 0.3 1.0 0.1

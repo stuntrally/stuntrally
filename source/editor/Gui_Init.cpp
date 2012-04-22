@@ -22,13 +22,17 @@ void App::InitGui()
 	{
 		const std::string& name = (*it)->getName();
 		setToolTips((*it)->getEnumerator());
-		if (name == "CamWnd")  mWndCam = *it;  else
-		if (name == "BrushWnd")  mWndBrush = *it;  else
-		if (name == "RoadCur")   mWndRoadCur = *it;  else
+		if (name == "OptionsWnd") mWndOpts = *it;  else
+
+		if (name == "CamWnd")     mWndCam = *it;  else
+		if (name == "StartWnd")   mWndStart = *it;  else
+
+		if (name == "BrushWnd")   mWndBrush = *it;  else
+		if (name == "RoadCur")    mWndRoadCur = *it;  else
 		if (name == "RoadStats")  mWndRoadStats = *it;  else
-		if (name == "OptionsWnd")  mWndOpts = *it;  else
-		if (name == "FluidsWnd")  mWndFluids = *it;
-		if (name == "ObjectsWnd")  mWndObjects = *it;
+
+		if (name == "FluidsWnd")  mWndFluids = *it;  else
+		if (name == "ObjectsWnd") mWndObjects = *it;
 	}
 	if (mWndRoadStats)  mWndRoadStats->setVisible(false);
 
@@ -46,6 +50,10 @@ void App::InitGui()
 		rdTxt[i] = mGUI->findWidget<StaticText>("rdCur"+toStr(i));
 	if (mWndRoadStats)  for (int i=0; i<RDS_TXT; ++i)
 		rdTxtSt[i] = mGUI->findWidget<StaticText>("rdStat"+toStr(i));
+
+	//  Start
+	if (mWndStart)  for (int i=0; i<ST_TXT; ++i)
+		stTxt[i] = mGUI->findWidget<StaticText>("stTxt"+toStr(i));
 
 	//  Fluid
 	if (mWndFluids)  for (int i=0; i<FL_TXT; ++i)

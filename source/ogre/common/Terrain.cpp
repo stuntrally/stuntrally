@@ -22,10 +22,11 @@
 #include "BulletCollision/CollisionDispatch/btCollisionObject.h"
 #include "BulletCollision/CollisionShapes/btHeightfieldTerrainShape.h"
 #include "BulletCollision/CollisionShapes/btBoxShape.h"
-//#include "LinearMath/btSerializer.h"
-//#include "Serialize/BulletFileLoader/btBulletFile.h"
-//#include "Serialize/BulletWorldImporter/btBulletWorldImporter.h"
+#include "LinearMath/btSerializer.h"
+#include "Serialize/BulletFileLoader/btBulletFile.h"
+#include "Serialize/BulletWorldImporter/btBulletWorldImporter.h"
 //Extras/ ^?
+#include <boost/filesystem.hpp>
 
 #include <OgreRoot.h>
 #include <OgreTerrain.h>
@@ -563,6 +564,9 @@ void App::CreateBltFluids()
 		world->addCollisionObject(bco);
 		#endif
 	}
+	#ifdef ROAD_EDITOR
+	UpdObjPick();
+	#endif
 }
 
 #ifdef ROAD_EDITOR
@@ -581,7 +585,7 @@ void App::DestroyFluids()
 void App::UpdFluidBox()
 {
 	int fls = sc.fluids.size();
-	bool bFluids = edMode == ED_Fluids && fls > 0;
+	bool bFluids = edMode == ED_Fluids && fls > 0 && !bMoveCam;
 	if (fls > 0)
 		iFlCur = std::min(iFlCur, fls-1);
 
@@ -614,8 +618,69 @@ void App::UpdateWaterRTT(Ogre::Camera* cam)
 
 ///  Objects  ... .. . . .
 //----------------------------------------------------------------------------------------------------------------------
+#ifndef ROAD_EDITOR
+class BulletWorldOffset : public btBulletWorldImporter
+{
+public:
+	btTransform mTrOfs;  // in offset
+	btDefaultMotionState* ms;  // out
+	
+	BulletWorldOffset(btDynamicsWorld* world=0)
+		: btBulletWorldImporter(world), ms(0)
+	{
+		mTrOfs.setIdentity();
+	}
+	
+	btCollisionObject* createCollisionObject(const btTransform& startTransform,btCollisionShape* shape, const char* bodyName)
+	{
+		return createRigidBody(false,0,startTransform,shape,bodyName);
+	}
+
+	btRigidBody*  createRigidBody(bool isDynamic, btScalar mass, const btTransform& startTransform,btCollisionShape* shape,const char* bodyName)
+	{
+		btVector3 localInertia;
+		localInertia.setZero();
+
+		if (mass)
+			shape->calculateLocalInertia(mass,localInertia);
+		
+		ms = new btDefaultMotionState();
+		ms->setWorldTransform(startTransform * mTrOfs);
+		btRigidBody* body = new btRigidBody(mass,ms,shape,localInertia);	
+		//body->setWorldTransform(startTransform * mTrOfs);
+		body->setDamping(0.1f, 0.3f);
+		//body->setFriction(0.5f);
+
+		if (m_dynamicsWorld)
+			m_dynamicsWorld->addRigidBody(body);
+		
+		if (bodyName)
+		{
+			char* newname = duplicateName(bodyName);
+			m_objectNameMap.insert(body,newname);
+			m_nameBodyMap.insert(newname,body);
+		}
+		m_allocatedRigidBodies.push_back(body);
+		return body;
+	}
+};
+#endif
+
 void App::CreateObjects()
 {
+	// .bullet load
+	/*BulletWorldOffset* fileLoader = new BulletWorldOffset(pGame->collision.world);
+	fileLoader->mTrOfs.setOrigin(btVector3(0,0,10));  ///+
+	fileLoader->setVerboseMode(true);//
+
+	std::string file = PATHMANAGER::GetDataPath()+"/objects/fuel_can.bullet";
+	LogO(".bullet: "+file);
+	if (fileLoader->loadFile(file.c_str()))
+	{
+		LogO(".bullet: "+toStr(fileLoader->getNumCollisionShapes()));
+	}
+	/**/
+
 	for (int i=0; i < sc.objects.size(); ++i)
 	{
 		Object& o = sc.objects[i];
@@ -628,23 +693,14 @@ void App::CreateObjects()
 		o.nd->attachObject(o.ent);
 
 
-		/*  // .bullet load
-		btBulletWorldImporter* fileLoader;
-		fileLoader = new btBulletWorldImporter(pGame->collision);
-		fileLoader->setVerboseMode(true);
-
-		if (!fileLoader->loadFile(o.name + ".bullet"))
+		#ifndef ROAD_EDITOR
+		//  add to bullet world (in game)
+		std::string file = PATHMANAGER::GetDataPath()+"/objects/"+o.name+".bullet";
+		///  use some map ! dont check for every object ...
+		if (!boost::filesystem::exists(file))
+		//if (o.name != "fuel_can")  //temp, check mass=0 ?
 		{
-			fileLoader->getNumCollisionShapes()
-		}
-		/**/
-
-		//  add to bullet world
-		///  static
-		if (o.name == "pers_house_b")  //temp, check mass=0 ?
-		{
-			#ifndef ROAD_EDITOR
-			// Shape
+			///  static
 			Matrix4 tre;  tre.makeTransform(o.pos,o.scale,o.rot);
 			BtOgre::StaticMeshToShapeConverter converter(o.ent, tre);
 			btCollisionShape* shape = converter.createTrimesh();  //createBox();
@@ -665,11 +721,10 @@ void App::CreateObjects()
 				btCollisionObject::CF_STATIC_OBJECT /*| btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT/**/);
 			pGame->collision.world->addCollisionObject(bco);
 			pGame->collision.shapes.push_back(shape);
-			#endif
 		}
 		else  ///  dynamic
 		{
-			#ifndef ROAD_EDITOR
+		#if 0
 			btCollisionShape* shape = new btCylinderShapeZ(btVector3(0.35,0.35,0.51));
 			//btBoxShape(btVector3(0.4,0.3,0.5));	//btSphereShape(0.5);	//btConeShapeX(0.4,0.6);
 			//btCapsuleShapeZ(0.4,0.5);  //btCylinderShapeX(btVector3(0.5,0.7,0.4));
@@ -682,8 +737,22 @@ void App::CreateObjects()
 			ci.m_restitution = 0.9;		ci.m_friction = 0.9;
 			ci.m_angularDamping = 0.2;	ci.m_linearDamping = 0.1;
 			pGame->collision.AddRigidBody(ci);
-			#endif
+		#else
+			// .bullet load
+			BulletWorldOffset* fileLoader = new BulletWorldOffset(pGame->collision.world);
+			fileLoader->mTrOfs.setOrigin(btVector3(o.pos.x,-o.pos.z,o.pos.y));  ///+
+			//fileLoader->setVerboseMode(true);//
+
+			//LogO(".bullet: "+file);
+			if (fileLoader->loadFile(file.c_str()))
+			{
+				o.ms = fileLoader->ms;  // 1 only
+				//LogO(".bullet: "+toStr(fileLoader->getNumCollisionShapes()));
+			}
+			/**/
+		#endif
 		}
+		#endif
 	}
 
 
@@ -741,3 +810,28 @@ void App::DestroyObjects()
 	}
 	sc.objects.clear();
 }
+
+#ifdef ROAD_EDITOR
+void App::UpdObjPick()
+{
+	if (ndStBox)
+		ndStBox->setVisible(edMode == ED_Start && !bMoveCam);  //
+
+	int objs = sc.objects.size();
+	bool bObjects = edMode == ED_Objects && objs > 0 && !bMoveCam;
+	if (objs > 0)
+		iObjCur = std::min(iObjCur, objs-1);
+
+	if (!ndObjBox)  return;
+	ndObjBox->setVisible(bObjects);
+	if (!bObjects)  return;
+	
+	const Object& o = sc.objects[iObjCur];
+	const AxisAlignedBox& ab = o.nd->getAttachedObject(0)->getBoundingBox();
+	Vector3 s = o.scale * ab.getSize();  // * sel obj's node aabb
+	Vector3 p = o.pos;  p.y += s.y * 0.5f;
+	ndObjBox->setPosition(p);
+	ndObjBox->setOrientation(o.rot);
+	ndObjBox->setScale(s);
+}
+#endif

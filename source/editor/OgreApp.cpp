@@ -54,10 +54,10 @@ App::App()  //  gui wigdets--
 	,mTerrainGroup(0), mTerrainPaging(0), mPageManager(0), mTerrainGlobals(0)
 	,bTerUpd(0), curBr(2), bGuiReinit(0), noBlendUpd(0), bGI(0), resList(0)
 	,ndPos(0), mpos(0), asp(4.f/3.f)
-	,ndCar(0),entCar(0),ndStBox(0),entStBox(0),ndFluidBox(0),entFluidBox(0)
+	,ndCar(0),entCar(0), ndStBox(0),entStBox(0), ndFluidBox(0),entFluidBox(0), ndObjBox(0),entObjBox(0)
 	,grass(0), trees(0), sun(0), terMaxAng(0.f)
 	,eTrkEvent(TE_None), bNewHmap(0), bTrGrUpd(0)
-	,iFlCur(0), bRecreateFluids(0), world(0)
+	,iFlCur(0), bRecreateFluids(0), world(0), iObjCur(0)
 	
 	,materialFactory(0), bTerUpdBlend(1)
 {
@@ -78,14 +78,16 @@ App::App()  //  gui wigdets--
 	sBrushTest[0]=0;   updBrush();
 	iSnap = 0;  angSnap = crAngSnaps[iSnap];
 
-	for (int i=0; i<BR_TXT; ++i)  brTxt[i]=0;
-	for (int i=0; i<RD_TXT; ++i)  rdTxt[i]=0;
-	for (int i=0; i<RDS_TXT; ++i)  rdTxtSt[i]=0;
-	for (int i=0; i<FL_TXT; ++i)  flTxt[i]=0;
-	for (int i=0; i<OBJ_TXT; ++i)  objTxt[i]=0;
+	int i;
+	for (i=0; i<BR_TXT; ++i)  brTxt[i]=0;
+	for (i=0; i<RD_TXT; ++i)  rdTxt[i]=0;
+	for (i=0; i<RDS_TXT;++i)  rdTxtSt[i]=0;
+	for (i=0; i<ST_TXT; ++i)  stTxt[i]=0;
+	for (i=0; i<FL_TXT; ++i)  flTxt[i]=0;
+	for (i=0; i<OBJ_TXT;++i)  objTxt[i]=0;
 	
-	for (int i=0; i < StTrk; ++i)  stTrk[0][i] = 0;
-	for (int i=0; i < 4; ++i)  {  cmbRoadMtr[i]=0;  cmbPipeMtr[i]=0;  }
+	for (i=0; i < StTrk; ++i)  stTrk[0][i] = 0;
+	for (i=0; i < 4; ++i)  {  cmbRoadMtr[i]=0;  cmbPipeMtr[i]=0;  }
 }
 
 void App::postInit()

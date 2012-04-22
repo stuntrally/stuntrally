@@ -15,8 +15,8 @@ using namespace Ogre;
 //  tool wnds show/hide
 void App::UpdEditWnds()
 {
-	if (mWndBrush){
-		if (edMode == ED_Deform)
+	if (mWndBrush)
+	{	if (edMode == ED_Deform)
 		{	static_cast<StaticTextPtr>(mWndBrush)->setCaption("Terrain Deform");  
 			mWndBrush->setColour(MyGUI::Colour(0.5f, 0.9f, 0.3f));
 			mWndBrush->setVisible(true);  }
@@ -32,20 +32,18 @@ void App::UpdEditWnds()
 		{	static_cast<StaticTextPtr>(mWndBrush)->setCaption("Terrain Height");
 			mWndBrush->setColour(MyGUI::Colour(0.7f, 1.0f, 0.7f));
 			mWndBrush->setVisible(true);  }
-		else if (edMode == ED_Start)
-		{	static_cast<StaticTextPtr>(mWndBrush)->setCaption("Car Start pos");
-			mWndBrush->setColour(MyGUI::Colour(0.7f, 0.7f, 1.0f));
-			mWndBrush->setVisible(true);  }
 		else
 			mWndBrush->setVisible(false);
 	}
-	if (mWndRoadCur)  mWndRoadCur->setVisible(edMode == ED_Road);
-	if (mWndCam)  mWndCam->setVisible(edMode == ED_PrvCam);
+	if (mWndRoadCur) mWndRoadCur->setVisible(edMode == ED_Road);
+	if (mWndCam)     mWndCam->setVisible(edMode == ED_PrvCam);
+	
+	if (mWndStart)   mWndStart->setVisible(edMode == ED_Start);
 
 	if (mWndFluids)  mWndFluids->setVisible(edMode == ED_Fluids);
 	UpdFluidBox();
 
-	if (mWndObjects)  mWndObjects->setVisible(edMode == ED_Objects);
+	if (mWndObjects) mWndObjects->setVisible(edMode == ED_Objects);
 
 	UpdStartPos();  // StBox visible
 	UpdVisGui();  //br prv..
@@ -413,6 +411,62 @@ bool App::KeyPress(const CmdKey &arg)
 		}
 	}
 
+	//  Objects  | | | | | | | | | | | | | | | | |
+	if (edMode == ED_Objects)
+	{	int objs = sc.objects.size();
+		switch (arg.key)
+		{
+			//  ins
+			case KC_INSERT:	case KC_NUMPAD0:
+			if (road && road->bHitTer)
+			{
+				::Object o;  o.name = "fuel_can";  /// change ...
+				o.pos = road->posHit;
+				String s = toStr(sc.objects.size()+1);  // counter for names
+
+				//  create object
+				o.ent = mSceneMgr->createEntity("oE"+s, o.name + ".mesh");
+				o.nd = mSceneMgr->getRootSceneNode()->createChildSceneNode("oN"+s, o.pos, o.rot);
+				o.nd->setScale(o.scale);
+				o.nd->attachObject(o.ent);
+
+				sc.objects.push_back(o);
+				iObjCur = sc.objects.size()-1;
+				UpdObjPick();
+			}	break;
+		}
+		if (objs > 0)
+		switch (arg.key)
+		{
+			//  first, last
+			case KC_HOME:  case KC_NUMPAD7:
+				iObjCur = 0;  UpdObjPick();  break;
+			case KC_END:  case KC_NUMPAD1:
+				if (objs > 0)  iObjCur = objs-1;  UpdObjPick();  break;
+
+			//  prev,next
+			case KC_PGUP:	case KC_NUMPAD9:
+				if (objs > 0) {  iObjCur = (iObjCur-1+objs)%objs;  }  UpdObjPick();  break;
+			case KC_PGDOWN:	case KC_NUMPAD3:
+				if (objs > 0) {  iObjCur = (iObjCur+1)%objs;	  }  UpdObjPick();  break;
+
+			//  del
+			case KC_DELETE:	case KC_DECIMAL:
+			case KC_NUMPAD5:
+				::Object& o = sc.objects[iObjCur];
+				mSceneMgr->destroyEntity(o.ent);
+				mSceneMgr->destroySceneNode(o.nd);
+				
+				if (objs == 1)	sc.objects.clear();
+				else			sc.objects.erase(sc.objects.begin() + iObjCur);
+				iObjCur = std::min(iObjCur, (int)sc.objects.size()-1);
+				UpdObjPick();
+				break;
+
+			//  prev,next type
+		}
+	}
+
 	///  Common Keys  * * * * * * * * * * * * *
 	if (alt)
 	switch (arg.key)
@@ -448,7 +502,8 @@ bool App::KeyPress(const CmdKey &arg)
 				SetCursor(0);
 				ShowCursor(0);  //?- cursor after alt-tab
 			#endif
-			bMoveCam = !bMoveCam;  UpdVisGui();  }	break;
+			bMoveCam = !bMoveCam;  UpdVisGui();  UpdFluidBox();  UpdObjPick();
+		}	break;
 
 		//  fog
 		case KC_G:  {

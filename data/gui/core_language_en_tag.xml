@@ -779,10 +779,11 @@
 
 
 	<!--  Start pos  -->
+	<Tag name="CarStartPos">Car Start Pos</Tag>
 	<Tag name="InputStart">Start</Tag>
 	<Tag name="InputStartPos">Q - edit car start pos</Tag>
-	<Tag name="InputStartLMB">LMB - move  RMB - height</Tag>
-	<Tag name="InputStartAltLMB">alt-LMB - rotate  alt-RMB - pitch</Tag>
+	<Tag name="InputStartLMB">ctrl-LMB - place   LMB - move   RMB - height</Tag>
+	<Tag name="InputStartAltLMB">alt-LMB - rotate   alt-RMB - pitch</Tag>
 	<Tag name="InputStartAltMMB">alt-MMB - reset rotation</Tag>
 
 	<Tag name="InputStartHeight">[,]  -  adjust start box height (bigger for pipes)</Tag>
@@ -799,7 +800,6 @@
 	<Tag name="InputFluidsDel">Del - delete current</Tag>
 	<Tag name="InputFluidsMove">LMB - move   RMB - height</Tag>
 	<Tag name="InputFluidsSize">alt-LMB - size   alt-RMB - depth</Tag>
-	<Tag name="InputFluidsRot">MMB - rotate yaw</Tag>
 	<Tag name="InputFluidsType">-,=  - change fluid type (water,mud,etc.)</Tag>
 	<Tag name="InputFluidsTile">[,]  - change texture tiling</Tag>
 	<Tag name="InputFluidsTileY">; &apos;  - change texture tiling, one coord. only</Tag>
@@ -809,6 +809,13 @@
 	<!--  Objects  -->
 	<Tag name="Objects">Objects</Tag>
 	<Tag name="InputObjectsMode">X - edit Objects</Tag>
+	<Tag name="InputObjectsPrevNext">PgUp,PgDn (or Wheel) - previous/next object</Tag>
+	<Tag name="InputObjectsIns">Ins - insert new, at cursor</Tag>
+	<Tag name="InputObjectsDel">Del - delete current</Tag>
+	<Tag name="InputObjectsMove">LMB - move   RMB - height</Tag>
+	<Tag name="InputObjectsRot">MMB - rotate Y</Tag>
+	<Tag name="InputObjectsScale">alt-LMB - scale   alt-RMB - scale Y only</Tag>
+	<!--<Tag name="InputObjectsType">-,=  - change object type</Tag>  only before insert-->
 	
 		
 <!--  ............................................................................................................................  -->
