@@ -22,9 +22,9 @@
 #include "BulletCollision/CollisionDispatch/btCollisionObject.h"
 #include "BulletCollision/CollisionShapes/btHeightfieldTerrainShape.h"
 #include "BulletCollision/CollisionShapes/btBoxShape.h"
-//#include "LinearMath/btSerializer.h"
-//#include "Serialize/BulletFileLoader/btBulletFile.h"
-//#include "Serialize/BulletWorldImporter/btBulletWorldImporter.h"
+#include "LinearMath/btSerializer.h"
+#include "Serialize/BulletFileLoader/btBulletFile.h"
+#include "Serialize/BulletWorldImporter/btBulletWorldImporter.h"
 //Extras/ ^?
 
 #include <OgreRoot.h>
@@ -614,8 +614,65 @@ void App::UpdateWaterRTT(Ogre::Camera* cam)
 
 ///  Objects  ... .. . . .
 //----------------------------------------------------------------------------------------------------------------------
+class BulletWorldOffset : public btBulletWorldImporter
+{
+public:
+	btTransform mTrOfs;  // in offset
+	btDefaultMotionState* ms;  // out
+	
+	BulletWorldOffset(btDynamicsWorld* world=0)
+		: btBulletWorldImporter(world), ms(0)
+	{
+		mTrOfs.setIdentity();
+	}
+	
+	btCollisionObject* createCollisionObject(const btTransform& startTransform,btCollisionShape* shape, const char* bodyName)
+	{
+		return createRigidBody(false,0,startTransform,shape,bodyName);
+	}
+
+	btRigidBody*  createRigidBody(bool isDynamic, btScalar mass, const btTransform& startTransform,btCollisionShape* shape,const char* bodyName)
+	{
+		btVector3 localInertia;
+		localInertia.setZero();
+
+		if (mass)
+			shape->calculateLocalInertia(mass,localInertia);
+		
+		ms = new btDefaultMotionState();
+		ms->setWorldTransform(startTransform * mTrOfs);
+		btRigidBody* body = new btRigidBody(mass,ms,shape,localInertia);	
+		//body->setWorldTransform(startTransform * mTrOfs);
+
+		if (m_dynamicsWorld)
+			m_dynamicsWorld->addRigidBody(body);
+		
+		if (bodyName)
+		{
+			char* newname = duplicateName(bodyName);
+			m_objectNameMap.insert(body,newname);
+			m_nameBodyMap.insert(newname,body);
+		}
+		m_allocatedRigidBodies.push_back(body);
+		return body;
+	}
+};
+
 void App::CreateObjects()
 {
+	// .bullet load
+	/*BulletWorldOffset* fileLoader = new BulletWorldOffset(pGame->collision.world);
+	fileLoader->mTrOfs.setOrigin(btVector3(0,0,10));  ///+
+	fileLoader->setVerboseMode(true);//
+
+	std::string file = PATHMANAGER::GetDataPath()+"/objects/fuel_can.bullet";
+	LogO(".bullet: "+file);
+	if (fileLoader->loadFile(file.c_str()))
+	{
+		LogO(".bullet: "+toStr(fileLoader->getNumCollisionShapes()));
+	}
+	/**/
+
 	for (int i=0; i < sc.objects.size(); ++i)
 	{
 		Object& o = sc.objects[i];
@@ -627,17 +684,6 @@ void App::CreateObjects()
 		o.nd->setScale(o.scale);
 		o.nd->attachObject(o.ent);
 
-
-		/*  // .bullet load
-		btBulletWorldImporter* fileLoader;
-		fileLoader = new btBulletWorldImporter(pGame->collision);
-		fileLoader->setVerboseMode(true);
-
-		if (!fileLoader->loadFile(o.name + ".bullet"))
-		{
-			fileLoader->getNumCollisionShapes()
-		}
-		/**/
 
 		//  add to bullet world
 		///  static
@@ -669,6 +715,7 @@ void App::CreateObjects()
 		}
 		else  ///  dynamic
 		{
+		#if 0
 			#ifndef ROAD_EDITOR
 			btCollisionShape* shape = new btCylinderShapeZ(btVector3(0.35,0.35,0.51));
 			//btBoxShape(btVector3(0.4,0.3,0.5));	//btSphereShape(0.5);	//btConeShapeX(0.4,0.6);
@@ -683,6 +730,21 @@ void App::CreateObjects()
 			ci.m_angularDamping = 0.2;	ci.m_linearDamping = 0.1;
 			pGame->collision.AddRigidBody(ci);
 			#endif
+		#else
+			// .bullet load
+			BulletWorldOffset* fileLoader = new BulletWorldOffset(pGame->collision.world);
+			fileLoader->mTrOfs.setOrigin(btVector3(o.pos.x,-o.pos.z,o.pos.y));  ///+
+			//fileLoader->setVerboseMode(true);//
+
+			std::string file = PATHMANAGER::GetDataPath()+"/objects/"+o.name+".bullet";
+			//LogO(".bullet: "+file);
+			if (fileLoader->loadFile(file.c_str()))
+			{
+				o.ms = fileLoader->ms;  // 1 only
+				//LogO(".bullet: "+toStr(fileLoader->getNumCollisionShapes()));
+			}
+			/**/
+		#endif
 		}
 	}
 
