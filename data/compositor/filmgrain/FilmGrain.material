@@ -37,7 +37,7 @@ material Compositor/FilmGrain
 			}
 			texture_unit noiseTex
 			{
-				texture noise.dds 3d
+				texture noise.dds 3d 0
 			}
         }
 	}
