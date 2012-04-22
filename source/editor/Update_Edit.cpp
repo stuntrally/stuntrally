@@ -236,9 +236,8 @@ bool App::frameRenderingQueued(const FrameEvent& evt)
 			if (objTxt[0])	objTxt[0]->setCaption("Cur/All:  "+toStr(iObjCur+1)+" / "+toStr(sc.objects.size()));
 			if (objTxt[1])	objTxt[1]->setCaption(o.name);
 			if (objTxt[3])	objTxt[3]->setCaption("Pos:  "+fToStr(o.pos.x,1,4)+" "+fToStr(o.pos.y,1,4)+" "+fToStr(o.pos.z,1,4));
-			//if (objTxt[3])	objTxt[3]->setCaption(""/*"Rot:  "+fToStr(fb.rot.x,1,4)*/);
-			if (objTxt[4])	objTxt[4]->setCaption("Scale:  "+fToStr(o.scale.x,1,4)+" "+fToStr(o.scale.x,1,4)+" "+fToStr(o.scale.x,1,4));
-			//if (objTxt[4])	objTxt[4]->setCaption("Tile:  "+fToStr(fb.tile.x,3,5)+" "+fToStr(fb.tile.y,3,5));
+			if (objTxt[4])	objTxt[4]->setCaption("Rot:  "+fToStr(o.rot.getYaw().valueDegrees(),1,4));
+			if (objTxt[5])	objTxt[5]->setCaption("Scale:  "+fToStr(o.scale.x,2,4)+" "+fToStr(o.scale.y,2,4)+" "+fToStr(o.scale.z,2,4));
 
 			if (mz != 0)  // wheel prev/next
 			{	int objs = sc.objects.size();
@@ -378,8 +377,10 @@ void App::processMouse()  //! from Thread, cam vars only
 
 void App::editMouse()
 {
+	if (!bEdit())  return;
+	
 	///  mouse edit Road  . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
-	if (road && bEdit() && edMode == ED_Road)
+	if (road && edMode == ED_Road)
 	{
 		const Real fMove(5.0f), fRot(40.f);  //par speed
 
@@ -405,7 +406,7 @@ void App::editMouse()
 	}
 
 	///  edit ter height val
-	if (bEdit() && edMode == ED_Height)
+	if (edMode == ED_Height)
 	{
 		if (mbRight)
 		{	Real ym = -vNew.y * 0.5f * moveMul;
@@ -414,7 +415,7 @@ void App::editMouse()
 	}
 
 	///  edit start pos	 . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
-	if (bEdit() && edMode == ED_Start /*&&
+	if (edMode == ED_Start /*&&
 		vStartPos.size() >= 4 && vStartRot.size() >= 4*/)
 	{
 		const Real fMove(0.5f), fRot(0.05f);  //par speed
@@ -472,7 +473,7 @@ void App::editMouse()
 	}
 
 	///  edit fluids . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
-	if (bEdit() && edMode == ED_Fluids && !sc.fluids.empty())
+	if (edMode == ED_Fluids && !sc.fluids.empty())
 	{
 		FluidBox& fb = sc.fluids[iFlCur];
 		const Real fMove(0.5f), fRot(1.5f);  //par speed
@@ -516,6 +517,54 @@ void App::editMouse()
 				fb.size.y += vm;
 				if (fb.size.y < 0.2f)  fb.size.y = 0.2f;
 				bRecreateFluids = true;  //
+			}
+		}
+	}
+
+	///  edit objects . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+	if (edMode == ED_Objects && !sc.objects.empty())
+	{
+		Object& o = sc.objects[iObjCur];
+		const Real fMove(0.5f), fRot(1.5f), fScale(0.02f);  //par speed
+		if (!alt)
+		{
+			if (mbLeft)	// move on xz
+			{
+				Vector3 vx = mCameraT->getRight();	   vx.y = 0;  vx.normalise();
+				Vector3 vz = mCameraT->getDirection();  vz.y = 0;  vz.normalise();
+				Vector3 vm = (-vNew.y * vz + vNew.x * vx) * fMove * moveMul;
+				o.pos += vm;  // todo: for selection ..
+				o.nd->setPosition(o.pos);  UpdObjPick();
+			}else
+			if (mbRight)  // move y
+			{
+				Real ym = -vNew.y * fMove * moveMul;
+				o.pos.y += ym;
+				o.nd->setPosition(o.pos);  UpdObjPick();
+			}
+			else
+			if (mbMiddle)  // rot yaw
+			{
+				Real xm = vNew.x * fRot * moveMul;
+				o.rot = o.rot * Quaternion(Degree(xm),Vector3::UNIT_Y);
+				o.nd->setOrientation(o.rot);  UpdObjPick();
+			}
+		}else
+		{
+			if (mbLeft)  // size xz
+			{
+				//Vector3 vm = Vector3(vNew.y, 0, vNew.x) * fMove * moveMul;
+				float vm = (vNew.y - vNew.x) * fMove * moveMul;
+				o.scale *= 1.f - vm * fScale;
+				//if (o.scale.x < 0.02f)  o.scale.x = 0.02f;
+				o.nd->setScale(o.scale);  UpdObjPick();
+			}else
+			if (mbRight)  // scale y
+			{
+				float vm = (vNew.y - vNew.x) * fMove * moveMul;
+				o.scale.y *= 1.f - vm * fScale;
+				//if (o.scale.y < 0.02f)  o.scale.y = 0.02f;
+				o.nd->setScale(o.scale);  UpdObjPick();
 			}
 		}
 	}

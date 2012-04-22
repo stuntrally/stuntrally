@@ -127,35 +127,35 @@
 			<Property key="TextColour" value="0.6 0.8 1.0"/>
 		</Widget>
 	</Widget>
-	<Widget type="Window" skin="WindowC" position="0 64 200 140" layer="Back" name="ObjectsWnd">
+	<Widget type="Window" skin="WindowC" position="0 64 200 160" layer="Back" name="ObjectsWnd">
 		<Property key="Caption" value="#{Objects}"/>
 		<Property key="Colour" value="1.0 1.0 1.0"/>
 		<Property key="Alpha" value="0.6"/>
 		<Property key="Snap" value="true"/>
 		<UserString key="tip" value="#{TipObjectsWnd}"/>
-		<Widget type="TextBox" skin="TextBox" position="4 0 160 20" name="objTxt0">
+		<Widget type="TextBox" skin="TextBox" position="4 0 190 20" name="objTxt0">
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="TextColour" value="0.8 0.8 0.8"/>
 		</Widget>
-		<Widget type="TextBox" skin="TextBox" position="4 20 160 20" name="objTxt1">
+		<Widget type="TextBox" skin="TextBox" position="4 20 190 20" name="objTxt1">
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="TextColour" value="0.9 0.9 0.9"/>
 		</Widget>
-		<Widget type="TextBox" skin="TextBox" position="4 40 160 20" name="objTxt2">
+		<Widget type="TextBox" skin="TextBox" position="4 40 190 20" name="objTxt2">
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="TextColour" value="0.7 0.7 0.7"/>
 		</Widget>
-		<Widget type="TextBox" skin="TextBox" position="4 60 160 20" name="objTxt3">
+		<Widget type="TextBox" skin="TextBox" position="4 60 190 20" name="objTxt3">
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="TextColour" value="0.7 0.7 0.7"/>
 		</Widget>
-		<Widget type="TextBox" skin="TextBox" position="4 80 160 20" name="objTxt4">
+		<Widget type="TextBox" skin="TextBox" position="4 80 190 20" name="objTxt4">
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="TextColour" value="0.7 0.7 0.7"/>
 		</Widget>
-		<Widget type="TextBox" skin="TextBox" position="4 100 160 20" name="objTxt5">
+		<Widget type="TextBox" skin="TextBox" position="4 100 190 20" name="objTxt5">
 			<Property key="InheritsAlpha" value="false"/>
-			<Property key="TextColour" value="0.8 0.8 0.8"/>
+			<Property key="TextColour" value="0.7 0.7 0.7"/>
 		</Widget>
 	</Widget>
 	<Widget type="Window" skin="WindowC" position="0 34 136 266" layer="Back" name="RoadCur">
@@ -2590,7 +2590,7 @@
 				<Widget type="TabControl" skin="TabControl" position="30 24 720 472" name="SubTab">
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 					<Property key="Colour" value="0.73 0.88 1"/>
-					<Property key="ButtonWidth" value="140"/>
+					<Property key="ButtonWidth" value="120"/>
 					<Widget type="TabItem" skin="" position="4 26 711 447">
 						<UserString key="RelativeTo" value="OptionsWnd"/>
 						<Property key="Caption" value="#{InputMain}"/>
@@ -2799,12 +2799,12 @@
 						</Widget>
 						<Widget type="TextBox" skin="TextBox" position="32 288 320 20">
 							<UserString key="RelativeTo" value="OptionsWnd"/>
-							<Property key="TextColour" value="0.7 0.8 0.9"/>
+							<Property key="TextColour" value="0.5 0.6 0.7"/>
 							<Property key="Caption" value="#{InputRoadMerge}"/>
 						</Widget>
 						<Widget type="TextBox" skin="TextBox" position="32 310 320 20">
 							<UserString key="RelativeTo" value="OptionsWnd"/>
-							<Property key="TextColour" value="0.7 0.8 0.9"/>
+							<Property key="TextColour" value="0.5 0.6 0.7"/>
 							<Property key="Caption" value="#{InputRoadStats}"/>
 						</Widget>
 						<Widget type="TextBox" skin="TextBox" position="32 94 320 20">
@@ -3049,11 +3049,6 @@
 							<Property key="TextColour" value="0.6 0.75 0.9"/>
 							<Property key="Caption" value="#{InputFluidsTileY}"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="32 88 320 20">
-							<UserString key="RelativeTo" value="OptionsWnd"/>
-							<Property key="TextColour" value="0.8 0.9 1.0"/>
-							<Property key="Caption" value="#{InputFluidsRot}"/>
-						</Widget>
 						<Widget type="TextBox" skin="TextBox" position="32 214 420 20">
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 							<Property key="TextColour" value="0.4 0.7 1.0"/>
@@ -3068,55 +3063,50 @@
 							<Property key="TextColour" value="0.9 0.9 0.9"/>
 							<Property key="Caption" value="#{InputObjectsMode}"/>
 						</Widget>
-						<!--<Widget type="TextBox" skin="TextBox" position="376 44 320 20">
+						<Widget type="TextBox" skin="TextBox" position="376 44 320 20">
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 							<Property key="TextColour" value="0.8 0.9 1.0"/>
-							<Property key="Caption" value="#{InputFluidsPrevNext}"/>
+							<Property key="Caption" value="#{InputObjectsPrevNext}"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="376 66 320 20">
+						<!--<Widget type="TextBox" skin="TextBox" position="376 66 320 20">
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 							<Property key="TextColour" value="0.8 0.9 1.0"/>
-							<Property key="Caption" value="#{InputFluidsIns}"/>
+							<Property key="Caption" value="#{InputObjectsIns}"/>
 						</Widget>
 						<Widget type="TextBox" skin="TextBox" position="376 88 320 20">
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 							<Property key="TextColour" value="0.8 0.9 1.0"/>
-							<Property key="Caption" value="#{InputFluidsDel}"/>
-						</Widget>
+							<Property key="Caption" value="#{InputObjectsDel}"/>
+						</Widget>-->
 						<Widget type="TextBox" skin="TextBox" position="32 44 320 20">
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 							<Property key="TextColour" value="0.8 0.9 1.0"/>
-							<Property key="Caption" value="#{InputFluidsMove}"/>
+							<Property key="Caption" value="#{InputObjectsMove}"/>
 						</Widget>
 						<Widget type="TextBox" skin="TextBox" position="32 66 320 20">
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 							<Property key="TextColour" value="0.8 0.9 1.0"/>
-							<Property key="Caption" value="#{InputFluidsSize}"/>
-						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="32 126 320 20">
-							<UserString key="RelativeTo" value="OptionsWnd"/>
-							<Property key="TextColour" value="0.8 0.9 1.0"/>
-							<Property key="Caption" value="#{InputFluidsType}"/>
-						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="32 148 320 20">
-							<UserString key="RelativeTo" value="OptionsWnd"/>
-							<Property key="TextColour" value="0.6 0.75 0.9"/>
-							<Property key="Caption" value="#{InputFluidsTile}"/>
-						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="32 170 320 20">
-							<UserString key="RelativeTo" value="OptionsWnd"/>
-							<Property key="TextColour" value="0.6 0.75 0.9"/>
-							<Property key="Caption" value="#{InputFluidsTileY}"/>
+							<Property key="Caption" value="#{InputObjectsRot}"/>
 						</Widget>
 						<Widget type="TextBox" skin="TextBox" position="32 88 320 20">
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 							<Property key="TextColour" value="0.8 0.9 1.0"/>
-							<Property key="Caption" value="#{InputFluidsRot}"/>
+							<Property key="Caption" value="#{InputObjectsScale}"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="32 214 420 20">
+						<!--<Widget type="TextBox" skin="TextBox" position="32 126 320 20">
 							<UserString key="RelativeTo" value="OptionsWnd"/>
-							<Property key="TextColour" value="0.4 0.7 1.0"/>
-							<Property key="Caption" value="#{InputFluidsUpdate}"/>
+							<Property key="TextColour" value="0.8 0.9 1.0"/>
+							<Property key="Caption" value="#{InputObjectsType}"/>
+						</Widget>-->
+						<!--<Widget type="TextBox" skin="TextBox" position="32 148 320 20">
+							<UserString key="RelativeTo" value="OptionsWnd"/>
+							<Property key="TextColour" value="0.6 0.75 0.9"/>
+							<Property key="Caption" value="#{InputObjectsTile}"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="32 170 320 20">
+							<UserString key="RelativeTo" value="OptionsWnd"/>
+							<Property key="TextColour" value="0.6 0.75 0.9"/>
+							<Property key="Caption" value="#{InputObjectsTileY}"/>
 						</Widget>-->
 					</Widget>
 				</Widget>

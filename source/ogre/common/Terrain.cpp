@@ -584,7 +584,7 @@ void App::DestroyFluids()
 void App::UpdFluidBox()
 {
 	int fls = sc.fluids.size();
-	bool bFluids = edMode == ED_Fluids && fls > 0;
+	bool bFluids = edMode == ED_Fluids && fls > 0 && !bMoveCam;
 	if (fls > 0)
 		iFlCur = std::min(iFlCur, fls-1);
 
@@ -812,8 +812,11 @@ void App::DestroyObjects()
 #ifdef ROAD_EDITOR
 void App::UpdObjPick()
 {
+	if (ndStBox)
+		ndStBox->setVisible(edMode == ED_Start && !bMoveCam);  //
+
 	int objs = sc.objects.size();
-	bool bObjects = edMode == ED_Objects && objs > 0;
+	bool bObjects = edMode == ED_Objects && objs > 0 && !bMoveCam;
 	if (objs > 0)
 		iObjCur = std::min(iObjCur, objs-1);
 
@@ -822,9 +825,11 @@ void App::UpdObjPick()
 	if (!bObjects)  return;
 	
 	const Object& o = sc.objects[iObjCur];
-	const AxisAlignedBox& ab = o.nd->_getWorldAABB();
-	Vector3 s = o.scale;  // * sel obj's node aabb
-	ndObjBox->setPosition(o.pos);
+	const AxisAlignedBox& ab = o.nd->getAttachedObject(0)->getBoundingBox();
+	Vector3 s = o.scale * ab.getSize();  // * sel obj's node aabb
+	Vector3 p = o.pos;  p.y += s.y * 0.5f;
+	ndObjBox->setPosition(p);
+	ndObjBox->setOrientation(o.rot);
 	ndObjBox->setScale(s);
 }
 #endif

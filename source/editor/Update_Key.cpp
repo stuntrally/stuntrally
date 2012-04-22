@@ -446,7 +446,8 @@ bool App::KeyPress(const CmdKey &arg)
 				SetCursor(0);
 				ShowCursor(0);  //?- cursor after alt-tab
 			#endif
-			bMoveCam = !bMoveCam;  UpdVisGui();  }	break;
+			bMoveCam = !bMoveCam;  UpdVisGui();  UpdFluidBox();  UpdObjPick();
+		}	break;
 
 		//  fog
 		case KC_G:  {
