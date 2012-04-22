@@ -693,15 +693,14 @@ void App::CreateObjects()
 		o.nd->attachObject(o.ent);
 
 
-		//  add to bullet world
-		///  static
+		#ifndef ROAD_EDITOR
+		//  add to bullet world (in game)
 		std::string file = PATHMANAGER::GetDataPath()+"/objects/"+o.name+".bullet";
 		///  use some map ! dont check for every object ...
 		if (!boost::filesystem::exists(file))
 		//if (o.name != "fuel_can")  //temp, check mass=0 ?
 		{
-			#ifndef ROAD_EDITOR
-			// Shape
+			///  static
 			Matrix4 tre;  tre.makeTransform(o.pos,o.scale,o.rot);
 			BtOgre::StaticMeshToShapeConverter converter(o.ent, tre);
 			btCollisionShape* shape = converter.createTrimesh();  //createBox();
@@ -722,11 +721,9 @@ void App::CreateObjects()
 				btCollisionObject::CF_STATIC_OBJECT /*| btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT/**/);
 			pGame->collision.world->addCollisionObject(bco);
 			pGame->collision.shapes.push_back(shape);
-			#endif
 		}
 		else  ///  dynamic
 		{
-		#ifndef ROAD_EDITOR
 		#if 0
 			btCollisionShape* shape = new btCylinderShapeZ(btVector3(0.35,0.35,0.51));
 			//btBoxShape(btVector3(0.4,0.3,0.5));	//btSphereShape(0.5);	//btConeShapeX(0.4,0.6);
@@ -746,7 +743,6 @@ void App::CreateObjects()
 			fileLoader->mTrOfs.setOrigin(btVector3(o.pos.x,-o.pos.z,o.pos.y));  ///+
 			//fileLoader->setVerboseMode(true);//
 
-			std::string file = PATHMANAGER::GetDataPath()+"/objects/"+o.name+".bullet";
 			//LogO(".bullet: "+file);
 			if (fileLoader->loadFile(file.c_str()))
 			{
@@ -755,8 +751,8 @@ void App::CreateObjects()
 			}
 			/**/
 		#endif
-		#endif
 		}
+		#endif
 	}
 
 
