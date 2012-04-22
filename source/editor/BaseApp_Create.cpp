@@ -15,6 +15,7 @@
 #include <OISInputManager.h>
 using namespace Ogre;
 
+#include "common/MyGUI_D3D11.h"
 
 void TimThread(BaseApp* pA)
 {
@@ -286,7 +287,12 @@ bool BaseApp::setup()
 	loadResources();
 
 	//  Gui
+	#if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
+	mPlatform = new MyGUI::OgreD3D11Platform();
+	#else
 	mPlatform = new MyGUI::OgrePlatform();
+	#endif
+
 	mPlatform->initialise(mWindow, mSceneMgr, "General", PATHMANAGER::GetUserConfigDir() + "/MyGUI.log");
 	mGUI = new MyGUI::Gui();
 	mGUI->initialise("core.xml");

@@ -1,6 +1,16 @@
 #include "pch.h"
 #include "../Defines.h"
 
+#include <OgreMaterialManager.h>
+#include <OgreTechnique.h>
+#include <OgrePass.h>
+#include <OgreTextureUnitState.h>
+#include <OgreHighLevelGpuProgramManager.h>
+#include <OgreHighLevelGpuProgram.h>
+#include <OgreGpuProgramParams.h>
+#include <OgreRoot.h>
+using namespace Ogre;
+
 #include "MaterialGenerator.h"
 #include "MaterialDefinition.h"
 #include "MaterialFactory.h"
@@ -12,16 +22,6 @@
 	#include "../../../editor/OgreApp.h"
 #endif
 
-
-#include <OgreMaterialManager.h>
-#include <OgreTechnique.h>
-#include <OgrePass.h>
-#include <OgreTextureUnitState.h>
-#include <OgreHighLevelGpuProgramManager.h>
-#include <OgreHighLevelGpuProgram.h>
-#include <OgreGpuProgramParams.h>
-#include <OgreRoot.h>
-using namespace Ogre;
 
 
 //  Vertex program
