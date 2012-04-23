@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION"
 "Report-Msgid-Bugs-To: "
-"POT-Creation-Date: 2012-04-14 14:00+0200"
+"POT-Creation-Date: 2012-04-23 19:26+0300"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>"
 "Language-Team: LANGUAGE <LL@li.org>"
@@ -141,10 +141,6 @@ msgctxt "TerNormal"
 msgid "Normal"
 msgstr ""
 
-msgctxt "LS_TRACK"
-msgid "Loading track"
-msgstr ""
-
 msgctxt "NeedNewGame"
 msgid "* need New Game"
 msgstr ""
@@ -183,6 +179,10 @@ msgstr ""
 
 msgctxt "MinimapUpdSkip"
 msgid "Minimap update skip"
+msgstr ""
+
+msgctxt "InputObjectsIns"
+msgid "Ins - insert new, at cursor"
 msgstr ""
 
 msgctxt "GraphicsAll_Low"
@@ -271,6 +271,10 @@ msgstr ""
 
 msgctxt "ViewFront"
 msgid "View Front"
+msgstr ""
+
+msgctxt "InputObjectsScale"
+msgid "alt-LMB - scale   alt-RMB - scale Y only"
 msgstr ""
 
 msgctxt "TipTerLNoiseOnly"
@@ -453,6 +457,10 @@ msgctxt "CopySource"
 msgid "Set as copy source"
 msgstr ""
 
+msgctxt "LS_OBJS"
+msgid "Loading Objects"
+msgstr ""
+
 msgctxt "TreeRoadDist"
 msgid "Trees to road dist."
 msgstr ""
@@ -579,10 +587,6 @@ msgstr ""
 
 msgctxt "Wireframe"
 msgid "Wireframe"
-msgstr ""
-
-msgctxt "ChangeTrack"
-msgid "Change Track"
 msgstr ""
 
 msgctxt "Score"
@@ -874,7 +878,7 @@ msgid "Length dim."
 msgstr ""
 
 msgctxt "InputStartLMB"
-msgid "LMB - move  RMB - height"
+msgid "ctrl-LMB - place   LMB - move   RMB - height"
 msgstr ""
 
 msgctxt "TipRenameTrk"
@@ -1013,6 +1017,10 @@ msgctxt "max"
 msgid "max"
 msgstr ""
 
+msgctxt "InputObjectsMove"
+msgid "LMB - move   RMB - height"
+msgstr ""
+
 msgctxt "Stage"
 msgid "Stage"
 msgstr ""
@@ -1063,10 +1071,6 @@ msgstr ""
 
 msgctxt "Rename"
 msgid "Rename"
-msgstr ""
-
-msgctxt "InputFluidsRot"
-msgid "MMB - rotate yaw"
 msgstr ""
 
 msgctxt "InputRoadChkFirst"
@@ -1167,6 +1171,10 @@ msgstr ""
 
 msgctxt "InputRoadPitch"
 msgid "- rotate pitch* / scale sel."
+msgstr ""
+
+msgctxt "InputObjectsPrevNext"
+msgid "PgUp,PgDn (or Wheel) - previous/next object"
 msgstr ""
 
 msgctxt "TimesBar"
@@ -1569,6 +1577,10 @@ msgctxt "ShowPictures"
 msgid "Show pictures while loading"
 msgstr ""
 
+msgctxt "InputObjectsMode"
+msgid "X - edit Objects"
+msgstr ""
+
 msgctxt "TrackAvgSpeed"
 msgid "Avg. speed"
 msgstr ""
@@ -1794,7 +1806,7 @@ msgid "Tab - camera / edit mode toggle"
 msgstr ""
 
 msgctxt "InputStartAltLMB"
-msgid "alt-LMB - rotate  alt-RMB - pitch"
+msgid "alt-LMB - rotate   alt-RMB - pitch"
 msgstr ""
 
 msgctxt "InputRoadAngSnap"
@@ -1973,12 +1985,24 @@ msgctxt "TipRearThrottleInverse"
 msgid "Inverse throttle and brake function in rear gear."
 msgstr ""
 
+msgctxt "LS_ROAD"
+msgid "Loading Road"
+msgstr ""
+
 msgctxt "RoadPoint"
 msgid "Road Point"
 msgstr ""
 
+msgctxt "CarStartPos"
+msgid "Car Start Pos"
+msgstr ""
+
 msgctxt "TerLHMax"
 msgid "Height Max"
+msgstr ""
+
+msgctxt "InputObjectsRot"
+msgid "MMB - rotate Y"
 msgstr ""
 
 msgctxt "LoadingDesc"
@@ -2057,10 +2081,6 @@ msgctxt "RplRecTime"
 msgid "Recorded   time"
 msgstr ""
 
-msgctxt "TipSunSpecular"
-msgid "Sun light specular (shiny) color. R G B components 0 to 1 (eg. 0.6 0.6 0.6)"
-msgstr ""
-
 msgctxt "TipModelDens"
 msgid "How often model will appear on track area."
 msgstr ""
@@ -2083,6 +2103,10 @@ msgstr ""
 
 msgctxt "InputRoadMerge"
 msgid "M - toggle road merge segs (for test)"
+msgstr ""
+
+msgctxt "Objects"
+msgid "Objects"
 msgstr ""
 
 msgctxt "set1"
@@ -2187,6 +2211,10 @@ msgstr ""
 
 msgctxt "FinishedCommaPlace"
 msgid "finished, place"
+msgstr ""
+
+msgctxt "InputObjectsDel"
+msgid "Del - delete current"
 msgstr ""
 
 msgctxt "Tools"
@@ -2737,8 +2765,8 @@ msgctxt "InputTerSmooth"
 msgid "S - Smooth  (flatten)"
 msgstr ""
 
-msgctxt "TipChangeTrack"
-msgid "Sets current track to that selected in list. Press [New Game] to start it after."
+msgctxt "TipSunSpecular"
+msgid "Sun light specular (shiny) color. R G B components 0 to 1 (eg. 0.6 0.6 0.6)"
 msgstr ""
 
 msgctxt "ColSat"
@@ -2819,6 +2847,10 @@ msgstr ""
 
 msgctxt "NetJoinGame"
 msgid "Join game"
+msgstr ""
+
+msgctxt "LS_TREES"
+msgid "Loading Trees"
 msgstr ""
 
 msgctxt "InputMapBoost"
