@@ -104,7 +104,7 @@ void App::UpdStartPos()
 		MaterialPtr mtr = Ogre::MaterialManager::getSingleton().getByName("object_box");
 		if (!mtr.isNull())
  		{	ndObjBox = mSceneMgr->getRootSceneNode()->createChildSceneNode();
-			entObjBox = mSceneMgr->createEntity("box.mesh");
+			entObjBox = mSceneMgr->createEntity("box_obj.mesh");
 			entObjBox->setVisibilityFlags(RV_Hud);  ndObjBox->setPosition(Vector3(0,0,0));
 				entObjBox->setCastShadows(false);  //`
 				entObjBox->setMaterial(mtr);  entObjBox->setRenderQueueGroup(RQG_CarGlass);

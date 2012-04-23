@@ -815,7 +815,7 @@
 	<Tag name="InputObjectsMove">LMB - move   RMB - height</Tag>
 	<Tag name="InputObjectsRot">MMB - rotate Y</Tag>
 	<Tag name="InputObjectsScale">alt-LMB - scale   alt-RMB - scale Y only</Tag>
-	<!--<Tag name="InputObjectsType">-,=  - change object type</Tag>  only before insert-->
+	<Tag name="InputObjectsType">[,]  - change object type</Tag>
 	
 		
 <!--  ............................................................................................................................  -->

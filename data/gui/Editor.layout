@@ -3068,7 +3068,7 @@
 							<Property key="TextColour" value="0.8 0.9 1.0"/>
 							<Property key="Caption" value="#{InputObjectsPrevNext}"/>
 						</Widget>
-						<!--<Widget type="TextBox" skin="TextBox" position="376 66 320 20">
+						<Widget type="TextBox" skin="TextBox" position="376 66 320 20">
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 							<Property key="TextColour" value="0.8 0.9 1.0"/>
 							<Property key="Caption" value="#{InputObjectsIns}"/>
@@ -3077,7 +3077,7 @@
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 							<Property key="TextColour" value="0.8 0.9 1.0"/>
 							<Property key="Caption" value="#{InputObjectsDel}"/>
-						</Widget>-->
+						</Widget>
 						<Widget type="TextBox" skin="TextBox" position="32 44 320 20">
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 							<Property key="TextColour" value="0.8 0.9 1.0"/>
@@ -3093,11 +3093,11 @@
 							<Property key="TextColour" value="0.8 0.9 1.0"/>
 							<Property key="Caption" value="#{InputObjectsScale}"/>
 						</Widget>
-						<!--<Widget type="TextBox" skin="TextBox" position="32 126 320 20">
+						<Widget type="TextBox" skin="TextBox" position="32 126 320 20">
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 							<Property key="TextColour" value="0.8 0.9 1.0"/>
 							<Property key="Caption" value="#{InputObjectsType}"/>
-						</Widget>-->
+						</Widget>
 						<!--<Widget type="TextBox" skin="TextBox" position="32 148 320 20">
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 							<Property key="TextColour" value="0.6 0.75 0.9"/>
