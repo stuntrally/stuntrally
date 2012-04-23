@@ -755,7 +755,7 @@ void App::comboGraphicsAll(ComboBoxPtr cmb, size_t val)
 	case 3:  // High  -------------
 		s.anisotropy = 8;  s.view_distance = 6000;  s.terdetail = 1.3f;  s.terdist = 200.f;  s.road_dist = 1.6;
 		s.tex_size = 1;  s.ter_mtr = 2;  s.shaders = 0.75;  s.use_imposters = 1;  s.water_reflect=1;  s.water_refract=0;  s.water_rttsize=1;
-		s.shadow_type = 2;  s.shadow_size = 2;  s.shadow_count = 3;  s.shadow_dist = 3000;  s.shadow_filter = 3;
+		s.shadow_type = 3;  s.shadow_size = 2;  s.shadow_count = 3;  s.shadow_dist = 3000;  s.shadow_filter = 3;
 		s.gui.trees = 1.f;  s.grass = 1.f;  s.trees_dist = 1.f;  s.grass_dist = 1.f;	break;
 
 	case 4:  // Very High  -------------

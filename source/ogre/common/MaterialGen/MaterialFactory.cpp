@@ -1,6 +1,19 @@
 #include "pch.h"
 #include "../Defines.h"
 
+#include <OgreConfigFile.h>
+#include <OgreResourceGroupManager.h>
+#include <OgreStringConverter.h>
+#include <OgreResourceGroupManager.h>
+#include <OgreMaterial.h>
+#include <OgreMaterialManager.h>
+#include <OgreTechnique.h>
+#include <OgrePass.h>
+#include <OgreSceneManager.h>
+#include <OgreShadowCameraSetupPSSM.h>
+#include <OgreTerrain.h>
+using namespace Ogre;
+
 #include "MaterialFactory.h"
 #include "MaterialDefinition.h"
 #include "MaterialGenerator.h"
@@ -20,18 +33,7 @@
 #endif
 #include "../QTimer.h"
 
-#include <OgreConfigFile.h>
-#include <OgreResourceGroupManager.h>
-#include <OgreStringConverter.h>
-#include <OgreResourceGroupManager.h>
-#include <OgreMaterial.h>
-#include <OgreMaterialManager.h>
-#include <OgreTechnique.h>
-#include <OgrePass.h>
-#include <OgreSceneManager.h>
-#include <OgreShadowCameraSetupPSSM.h>
-#include <OgreTerrain.h>
-using namespace Ogre;
+
 
 // use shader cache
 // if you disable it, startup time will be A LOT longer...

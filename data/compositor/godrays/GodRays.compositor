@@ -5,31 +5,16 @@ compositor GodRays
 		compositor_logic GodRays
 	    texture_ref scene gbuffer mrt_output
     	texture previousscene target_width target_height PF_R8G8B8A8
-     
+   		texture rt0 target_width target_height PF_R8G8B8
+		texture rt1 target_width target_height PF_R8G8B8
+	  
 		target previousscene 
 		{
 			input previous
 		}
 		
-		texture rt0 target_width target_height PF_R8G8B8
-		texture rt1 target_width target_height PF_R8G8B8
 		
-	
-	
-	    //occluder pass
-//	    target rt1
-   //     {
-//			input none      
-//			material_scheme occluder
- //           pass clear
-//            {
- //           }         
- //           pass render_scene
- //           {
- //           }
- //       }
-
-			target rt0
+		target rt0
         {
             input previous
 

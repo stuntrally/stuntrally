@@ -22,6 +22,7 @@
 #include <MyGUI_OgrePlatform.h>
 
 namespace boost { class thread; }
+namespace MyGUI { class OgreD3D11Platform; }
 
 
 class BaseApp :
@@ -142,7 +143,12 @@ protected:
 
 	///  Gui
 	bool bGuiFocus;  // gui shown
-	MyGUI::Gui* mGUI;	MyGUI::OgrePlatform* mPlatform;
+	MyGUI::Gui* mGUI;
+	#if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
+	MyGUI::OgreD3D11Platform* mPlatform;
+	#else
+	MyGUI::OgrePlatform* mPlatform;
+	#endif
 	MyGUI::WidgetPtr mWndOpts, // gui windows
 		mWndBrush, mWndCam, mWndStart,
 		mWndRoadCur, mWndRoadStats,

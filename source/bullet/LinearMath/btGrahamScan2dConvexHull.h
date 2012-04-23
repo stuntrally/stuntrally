@@ -34,18 +34,18 @@ struct GrahamVector2 : public btVector3
 
 
 struct btAngleCompareFunc {
-	btVector3 m_anchor;
+	btVector3 *m_anchor;
 	btAngleCompareFunc(const btVector3& anchor)
-	: m_anchor(anchor) 
 	{
+		m_anchor= (btVector3 *) &anchor;
 	}
 	bool operator()(const GrahamVector2& a, const GrahamVector2& b) {
 		if (a.m_angle != b.m_angle)
 			return a.m_angle < b.m_angle;
 		else
 		{
-			btScalar al = (a-m_anchor).length2();
-			btScalar bl = (b-m_anchor).length2();
+			btScalar al = (a-*m_anchor).length2();
+			btScalar bl = (b-*m_anchor).length2();
 			if (al != bl)
 				return  al < bl;
 			else

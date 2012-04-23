@@ -12,11 +12,11 @@ else()
 endif()
 
 # Search include files from all source sub directories
-include_directories(btOgre ogre ogre/common paged-geom road tinyxml vdrift)
+include_directories(btOgre ogre ogre/common paged-geom road tinyxml vdrift bullet)
 
 # Compile our libraries
 if (BUILD_GAME OR BUILD_EDITOR)
-	foreach(ourlib   tinyxml oisb paged-geom)
+	foreach(ourlib   tinyxml oisb paged-geom bullet)
 		add_subdirectory(${ourlib})
 		list(APPEND OURLIBS ${ourlib})
 	endforeach()

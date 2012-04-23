@@ -1,6 +1,13 @@
 #include "pch.h"
 #include "../Defines.h"
 
+#include <OgreMaterial.h>
+#include <OgrePass.h>
+#include <OgreTechnique.h>
+#include <OgreHighLevelGpuProgramManager.h>
+#include <OgreMaterialManager.h>
+using namespace Ogre;
+
 #include "WaterMaterial.h"
 #include "MaterialDefinition.h"
 #include "MaterialFactory.h"
@@ -10,13 +17,6 @@
 #else
 	#include "../../../editor/OgreApp.h"
 #endif
-
-#include <OgreMaterial.h>
-#include <OgrePass.h>
-#include <OgreTechnique.h>
-#include <OgreHighLevelGpuProgramManager.h>
-#include <OgreMaterialManager.h>
-using namespace Ogre;
 
 WaterMaterialGenerator::WaterMaterialGenerator()
 {
