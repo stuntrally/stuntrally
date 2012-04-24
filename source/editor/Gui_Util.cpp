@@ -13,13 +13,13 @@ using namespace Ogre;
 
 void App::SetGuiFromXmls()
 {
-	if (!mWndOpts)  return;
+	if (!mWndEdit)  return;
 	bGI = false;
 	// set slider value, upd text
 	ScrollBar* sl;  size_t v;
 
 	#define _Slv(name, val)  \
-		sl = (ScrollBar*)mWndOpts->findWidget(#name);  \
+		sl = (ScrollBar*)mWndEdit->findWidget(#name);  \
 		v = val*res;  if (sl)  sl->setScrollPosition(v);  sl##name(sl, v);
 	
 	#define _Ed(name, val)  ed##name->setCaption(toStr(val));

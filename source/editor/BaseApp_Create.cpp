@@ -15,7 +15,7 @@
 #include <OISInputManager.h>
 using namespace Ogre;
 
-#include "common/MyGUI_D3D11.h"
+#include "../ogre/common/MyGUI_D3D11.h"
 
 void TimThread(BaseApp* pA)
 {
@@ -155,7 +155,10 @@ BaseApp::BaseApp()
 
 	,mStatsOn(0), mShowCamPos(1), mbWireFrame(0)
 	,mx(0),my(0),mz(0),	mGUI(0), mPlatform(0)
-	,mWndOpts(0), mWndBrush(0), mWndCam(0), mWndStart(0)
+
+	,mWndMain(0),mWndEdit(0),mWndHelp(0),mWndOpts(0)
+	,mWndTabsEdit(0),mWndTabsHelp(0),mWndTabsOpts(0)
+	,mWndBrush(0), mWndCam(0), mWndStart(0)
 	,mWndRoadCur(0), mWndRoadStats(0), mWndFluids(0), mWndObjects(0)
 
 	,i_cmdKeyPress(0), cmdKeyPress(0)

@@ -18,7 +18,8 @@ void SETTINGS::Save(std::string sfile)
 void SETTINGS::Serialize(bool w, CONFIGFILE & c)
 {
 	c.bFltFull = false;
-	Param(c,w, "game.track", gui.track);					Param(c,w, "game.track_user", gui.track_user);
+	Param(c,w, "game.in_menu", inMenu);			Param(c,w, "game.in_main", isMain);
+	Param(c,w, "game.track", gui.track);		Param(c,w, "game.track_user", gui.track_user);
 
 	Param(c,w, "hud_show.fps", show_fps);
 	Param(c,w, "hud_show.trackmap", trackmap);				Param(c,w, "hud_size.minimap", size_minimap);
@@ -81,6 +82,7 @@ SETTINGS::SETTINGS() :  ///  Defaults
 	water_reflect(0), water_refract(0), water_rttsize(0),
 	//  startup
 	autostart(0), ogre_dialog(1), escquit(0), language(""), allow_save(0),
+	isMain(1), inMenu(0),
 	//  settings
 	cam_x(0), cam_y(50),cam_z(-120),  cam_dx(0), cam_dy(0), cam_dz(1),
 	bFog(0), bTrees(0),

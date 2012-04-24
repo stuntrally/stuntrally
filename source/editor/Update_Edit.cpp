@@ -230,15 +230,24 @@ bool App::frameRenderingQueued(const FrameEvent& evt)
 			for (int i=1; i < OBJ_TXT; ++i)
 				if (objTxt[i])  objTxt[i]->setCaption("");
 		}else
-		{	///  objects
-			//----------------------------------------------------------------
-			const Object& o = sc.objects[iObjCur];
-			if (objTxt[0])	objTxt[0]->setCaption("Cur/All:  "+toStr(iObjCur+1)+" / "+toStr(sc.objects.size()));
-			if (objTxt[1])	objTxt[1]->setCaption(o.name);
-			if (objTxt[3])	objTxt[3]->setCaption("Pos:  "+fToStr(o.pos.x,1,4)+" "+fToStr(o.pos.y,1,4)+" "+fToStr(o.pos.z,1,4));
-			if (objTxt[4])	objTxt[4]->setCaption("Rot:  "+fToStr(o.rot.getYaw().valueDegrees(),1,4));
-			if (objTxt[5])	objTxt[5]->setCaption("Scale:  "+fToStr(o.scale.x,2,4)+" "+fToStr(o.scale.y,2,4)+" "+fToStr(o.scale.z,2,4));
-
+		{
+			if (iObjCur == -1)
+			{	//  none sel
+				if (objTxt[0])	objTxt[0]->setCaption("Cur/All:  "+toStr(iObjCur)+" / "+toStr(sc.objects.size()));
+				if (objTxt[1])	objTxt[1]->setCaption("");  // new params ...
+				if (objTxt[3])	objTxt[3]->setCaption("");
+				if (objTxt[4])	objTxt[4]->setCaption("");
+				if (objTxt[5])	objTxt[5]->setCaption("");
+			}else
+			{	///  objects
+				//----------------------------------------------------------------
+				const Object& o = sc.objects[iObjCur];
+				if (objTxt[0])	objTxt[0]->setCaption("Cur/All:  "+toStr(iObjCur+1)+" / "+toStr(sc.objects.size()));
+				if (objTxt[1])	objTxt[1]->setCaption(o.name);
+				if (objTxt[3])	objTxt[3]->setCaption("Pos:  "+fToStr(o.pos.x,1,4)+" "+fToStr(o.pos.y,1,4)+" "+fToStr(o.pos.z,1,4));
+				if (objTxt[4])	objTxt[4]->setCaption("Rot:  "+fToStr(o.rot.getYaw().valueDegrees(),1,4));
+				if (objTxt[5])	objTxt[5]->setCaption("Scale:  "+fToStr(o.scale.x,2,4)+" "+fToStr(o.scale.y,2,4)+" "+fToStr(o.scale.z,2,4));
+			}
 			if (mz != 0)  // wheel prev/next
 			{	int objs = sc.objects.size();
 				if (objs > 0)  {  iObjCur = (iObjCur-mz+objs)%objs;  UpdObjPick();  }//
@@ -522,7 +531,7 @@ void App::editMouse()
 	}
 
 	///  edit objects . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
-	if (edMode == ED_Objects && !sc.objects.empty())
+	if (edMode == ED_Objects && !sc.objects.empty() && iObjCur >= 0)
 	{
 		Object& o = sc.objects[iObjCur];
 		const Real fMove(0.5f), fRot(1.5f), fScale(0.02f);  //par speed
@@ -719,7 +728,7 @@ bool App::frameStarted(const Ogre::FrameEvent& evt)
 		InitGui();
 		SetGuiFromXmls();
 		bWindowResized = true;
-		mWndTabs->setIndexSelected(10);  // switch back to view tab
+		//mWndTabs->setIndexSelected(10);  // switch back to view tab
 	}
 
 	if (bWindowResized)

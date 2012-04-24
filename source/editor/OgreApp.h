@@ -74,7 +74,6 @@ protected:
 	virtual void processMouse();
 	bool KeyPress(const CmdKey &arg);  void trkListNext(int rel);
 	Ogre::Vector3 vNew;	void editMouse();
-	void GuiShortcut(int tab, int subtab=-1);
 	
 	//  create  . . . . . . . . . . . . . . . . . . . . . . . . 
 	bool bNewHmap, bTrGrUpd;  Ogre::Real terMaxAng;
@@ -188,7 +187,7 @@ protected:
 	///-----------------------------------------------------------------------------------------------------------------	
 	//  size
 	void SizeGUI(); void doSizeGUI(MyGUI::EnumeratorWidgetPtr);
-	std::vector<MyGUI::TabControl*> vSubTabs;
+	std::vector<MyGUI::TabControl*> vSubTabsEdit,vSubTabsHelp,vSubTabsOpts;
 
 	//  shortcuts
 	typedef MyGUI::WidgetPtr WP;
@@ -265,6 +264,11 @@ protected:
 		brTxt[BR_TXT], rdTxt[RD_TXT],rdTxtSt[RDS_TXT],
 		stTxt[ST_TXT], flTxt[FL_TXT], objTxt[OBJ_TXT];
 	MyGUI::StaticImagePtr brImg;  MyGUI::TabPtr wndTabs;
+
+	//  main menu
+	void toggleGui(bool toggle=false), GuiShortcut(WND_Types wnd, int tab, int subtab=-1);
+	void MainMenuBtn(MyGUI::WidgetPtr);
+	void MenuTabChg(MyGUI::TabPtr, size_t);
 
 
 	//  checks

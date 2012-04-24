@@ -48,9 +48,15 @@ void App::UpdEditWnds()
 	UpdStartPos();  // StBox visible
 	UpdVisGui();  //br prv..
 }
+
 void App::UpdVisGui()
 {
-	if (mWndOpts)  mWndOpts->setVisible(bGuiFocus);
+	bool notMain = bGuiFocus && !pSet->isMain;
+	if (mWndMain)	mWndMain->setVisible(bGuiFocus && pSet->isMain);
+	if (mWndEdit)	mWndEdit->setVisible(notMain && pSet->inMenu == WND_Edit);
+	if (mWndHelp)	mWndHelp->setVisible(notMain && pSet->inMenu == WND_Help);
+	if (mWndOpts)	mWndOpts->setVisible(notMain && pSet->inMenu == WND_Options);
+
 	if (bnQuit)  bnQuit->setVisible(bGuiFocus);
 	if (mGUI)  PointerManager::getInstance().setVisible(bGuiFocus || !bMoveCam);
 	if (road)  road->SetTerHitVis(bEdit());
@@ -59,6 +65,17 @@ void App::UpdVisGui()
 	if (ovBrushPrv)
 	if (edMode >= ED_Road || !bEdit())
 		ovBrushPrv->hide();  else  ovBrushPrv->show();
+
+	for (int i=0; i < WND_ALL; ++i)
+		mWndMainPanels[i]->setVisible(pSet->inMenu == i);
+}
+
+void App::toggleGui(bool toggle)
+{
+	if (edMode == ED_PrvCam)  return;
+	if (toggle)
+		bGuiFocus = !bGuiFocus;
+	UpdVisGui();
 }
 
 void App::Status(String s, float r,float g,float b)
@@ -115,23 +132,61 @@ void App::togPrvCam()
 //  key util
 void App::trkListNext(int rel)
 {
-	if (!(bGuiFocus && mWndTabs->getIndexSelected() == 0))  return;
+	bool b = bGuiFocus && (mWndTabsEdit->getIndexSelected() == 0)
+		&& !pSet->isMain && pSet->inMenu == WND_Edit;
+	if (!b)  return;
+	
 	int i = std::max(0, std::min((int)trkMList->getItemCount()-1, (int)trkMList->getIndexSelected()+rel ));
 	trkMList->setIndexSelected(i);
 	trkMList->beginToItemAt(std::max(0, i-11));  // center
 	listTrackChng(trkMList,i);
 }
 
-void App::GuiShortcut(int tab, int subtab)
+void App::MainMenuBtn(MyGUI::WidgetPtr wp)
+{
+	for (int i=0; i < WND_ALL; ++i)
+		if (wp == mWndMainBtns[i])
+		{
+			pSet->isMain = false;
+			pSet->inMenu = i;
+			toggleGui(false);
+			return;
+		}
+}
+
+void App::MenuTabChg(MyGUI::TabPtr tab, size_t id)
+{
+	if (id != 0)  return;
+	tab->setIndexSelected(1);  // dont switch to 0
+	pSet->isMain = true;
+	toggleGui(false);  // back to main
+}
+
+void App::GuiShortcut(WND_Types wnd, int tab, int subtab)
 {
 	if (!bGuiFocus)
 	if (edMode != ED_PrvCam)  {
-		bGuiFocus = !bGuiFocus;  UpdVisGui();  subtab = -2;  }
+		bGuiFocus = !bGuiFocus;  UpdVisGui();  /*subtab = -2;*/  }
+
+	//isFocGui = true;
+	pSet->isMain = false;  pSet->inMenu = wnd;
+	
+	MyGUI::TabPtr mWndTabs = 0;
+	std::vector<MyGUI::TabControl*>* subt = 0;
+	
+	switch (wnd)
+	{	case WND_Edit:		mWndTabs = mWndTabsEdit;  subt = &vSubTabsEdit;  break;
+		case WND_Help:		mWndTabs = mWndTabsHelp;  subt = &vSubTabsHelp;  break;
+		case WND_Options:	mWndTabs = mWndTabsOpts;  subt = &vSubTabsOpts;  break;
+	}
+	toggleGui(false);
+
 
 	size_t t = mWndTabs->getIndexSelected();
 	mWndTabs->setIndexSelected(tab);
 
-	MyGUI::TabControl* tc = vSubTabs[t];  if (!tc)  return;
+	if (!subt)  return;
+	MyGUI::TabControl* tc = (*subt)[t];  if (!tc)  return;
 	int  cnt = tc->getItemCount();
 
 	if (t == tab && subtab == -1)  // cycle subpages if same tab
@@ -170,8 +225,49 @@ bool App::KeyPress(const CmdKey &arg)
 		return true;  //!
 	}
 
+	//  main menu keys
+	Widget* wf = MyGUI::InputManager::getInstance().getKeyFocusWidget();
+	bool edFoc = wf && wf->getTypeName() == "EditBox";
 
-	int num = mWndOpts ? mWndTabs->getItemCount() : 0;
+	if (pSet->isMain && bGuiFocus)
+	{
+		switch (arg.key)
+		{
+		case KC_UP:  case KC_NUMPAD8:
+			pSet->inMenu = (pSet->inMenu-1+WND_ALL)%WND_ALL;
+			toggleGui(false);  return true;
+
+		case KC_DOWN:  case KC_NUMPAD2:
+			pSet->inMenu = (pSet->inMenu+1)%WND_ALL;
+			toggleGui(false);  return true;
+
+		case KC_RETURN:
+			pSet->isMain = false;
+			toggleGui(false);  return true;
+		}
+	}
+	if (!pSet->isMain && bGuiFocus)
+	{
+		switch (arg.key)
+		{
+		case KC_BACK:
+			if (pSet->isMain)  break;
+			if (bGuiFocus)
+			{	if (edFoc)  break;
+				pSet->isMain = true;  toggleGui(false);  }
+			return true;
+		}
+	}
+
+	//  change gui tabs
+	TabPtr tab = 0;  MyGUI::TabControl* sub = 0;  int iTab1 = 1;
+	if (bGuiFocus && !pSet->isMain)
+	switch (pSet->inMenu)
+	{
+		case WND_Edit:  tab = mWndTabsEdit;  sub = vSubTabsEdit[tab->getIndexSelected()];  break;
+		case WND_Help:  /*tab = mWndTabsHelp;*/ tab = sub = vSubTabsHelp[1];  iTab1 = 0;  break;
+		case WND_Options:  tab = mWndTabsOpts;  sub = vSubTabsOpts[tab->getIndexSelected()];  break;
+	}
 
 	switch (arg.key)  //  global keys  ---------------------
 	{
@@ -198,8 +294,7 @@ bool App::KeyPress(const CmdKey &arg)
 
 		case KC_F1:
 		case KC_GRAVE:	//  Gui mode Options
-		if (edMode != ED_PrvCam)  {
-			bGuiFocus = !bGuiFocus;  UpdVisGui();  }  return true;
+			toggleGui(true);  return true;
 
 		case KC_SYSRQ:
 			mWindow->writeContentsToTimestampedFile(PATHMANAGER::GetScreenShotDir() + "/", ".jpg");
@@ -216,34 +311,38 @@ bool App::KeyPress(const CmdKey &arg)
    			if (alt)
    			{	pSet->num_mini = (pSet->num_mini - 1 + RTs+2) % (RTs+2);  UpdMiniVis();  }
    			else
-   			if (bGuiFocus)
+   			if (bGuiFocus && tab && !pSet->isMain)
    				if (shift)  // prev gui subtab
    				{
-   					MyGUI::TabControl* sub = vSubTabs[mWndTabs->getIndexSelected()];
    					if (sub)  {  int num = sub->getItemCount();
    						sub->setIndexSelected( (sub->getIndexSelected() - 1 + num) % num );  }
 	   			}
    				else	// prev gui tab
-	   				mWndTabs->setIndexSelected( (mWndTabs->getIndexSelected() - 1 + num) % num );
+   				{	int num = tab->getItemCount()-1, i = tab->getIndexSelected();
+					if (i==iTab1)  i = num;  else  --i;
+					tab->setIndexSelected(i);  if (iTab1==1)  MenuTabChg(tab,i);
+	   			}
    			break;
    		case KC_F3:
    			if (alt)
    			{	pSet->num_mini = (pSet->num_mini + 1) % (RTs+2);  UpdMiniVis();  }
    			else
-   			if (bGuiFocus)
+   			if (bGuiFocus && tab && !pSet->isMain)
    				if (shift)  // next gui subtab
    				{
-   					MyGUI::TabControl* sub = vSubTabs[mWndTabs->getIndexSelected()];
    					if (sub)  {  int num = sub->getItemCount();
    						sub->setIndexSelected( (sub->getIndexSelected() + 1) % num );  }
 	   			}
 	   			else	// next gui tab
-   					mWndTabs->setIndexSelected( (mWndTabs->getIndexSelected() + 1) % num );
+	   			{	int num = tab->getItemCount()-1, i = tab->getIndexSelected();
+					if (i==num)  i = iTab1;  else  ++i;
+					tab->setIndexSelected(i);  if (iTab1==1)  MenuTabChg(tab,i);
+				}
    			break;
    			
    		case KC_RETURN:  // load track
 			if (bGuiFocus)
-			if (mWndTabs->getIndexSelected() == 0)
+			if (mWndTabsEdit->getIndexSelected() == 0 && !pSet->isMain && pSet->inMenu == WND_Edit)
 				btnNewGame(0);
    			break;
 	}
@@ -416,11 +515,14 @@ bool App::KeyPress(const CmdKey &arg)
 	{	int objs = sc.objects.size();
 		switch (arg.key)
 		{
+			case KC_SPACE:
+				iObjCur = -1;  break;  // unselect
+				
 			//  ins
 			case KC_INSERT:	case KC_NUMPAD0:
 			if (road && road->bHitTer)
 			{
-				::Object o;  o.name = "fuel_can";  /// change ...
+				::Object o;  o.name = 1?"big_tire":"fuel_can";  /// change ...
 				o.pos = road->posHit;
 				String s = toStr(sc.objects.size()+1);  // counter for names
 
@@ -453,15 +555,16 @@ bool App::KeyPress(const CmdKey &arg)
 			//  del
 			case KC_DELETE:	case KC_DECIMAL:
 			case KC_NUMPAD5:
-				::Object& o = sc.objects[iObjCur];
-				mSceneMgr->destroyEntity(o.ent);
-				mSceneMgr->destroySceneNode(o.nd);
-				
-				if (objs == 1)	sc.objects.clear();
-				else			sc.objects.erase(sc.objects.begin() + iObjCur);
-				iObjCur = std::min(iObjCur, (int)sc.objects.size()-1);
-				UpdObjPick();
-				break;
+				if (iObjCur >= 0 && sc.objects.size() > 0)
+				{	::Object& o = sc.objects[iObjCur];
+					mSceneMgr->destroyEntity(o.ent);
+					mSceneMgr->destroySceneNode(o.nd);
+					
+					if (objs == 1)	sc.objects.clear();
+					else			sc.objects.erase(sc.objects.begin() + iObjCur);
+					iObjCur = std::min(iObjCur, (int)sc.objects.size()-1);
+					UpdObjPick();
+				}	break;
 
 			//  prev,next type
 		}
@@ -471,27 +574,27 @@ bool App::KeyPress(const CmdKey &arg)
 	if (alt)
 	switch (arg.key)
 	{
-		case KC_Q:	GuiShortcut(0);  return true;  // Q Track
-		case KC_S:	GuiShortcut(1);  return true;  // S Sun
+		case KC_Q:	GuiShortcut(WND_Edit, 1);  return true;  // Q Track
+		case KC_S:	GuiShortcut(WND_Edit, 2);  return true;  // S Sun
 
-		case KC_H:	GuiShortcut(2);  return true;  // H Terrain (Heightmap)
-		case KC_T:	GuiShortcut(3);  return true;  // T Layers (Terrain)
-		 case KC_B:	GuiShortcut(3,0);  return true;  //  B -Blendmap
-		 case KC_P:	GuiShortcut(3,1);  return true;  //  P -Particles
-		 case KC_U:	GuiShortcut(3,2);  return true;  //  U -Surfaces
+		case KC_H:	GuiShortcut(WND_Edit, 3);  return true;  // H Terrain (Heightmap)
+		case KC_T:	GuiShortcut(WND_Edit, 4);  return true;  // T Layers (Terrain)
+		 case KC_B:	GuiShortcut(WND_Edit, 4,0);  return true;  //  B -Blendmap
+		 case KC_P:	GuiShortcut(WND_Edit, 4,1);  return true;  //  P -Particles
+		 case KC_U:	GuiShortcut(WND_Edit, 4,2);  return true;  //  U -Surfaces
 
-		case KC_V:	GuiShortcut(4);  return true;  // V Vegetation
-		 case KC_M:	GuiShortcut(4,1);  return true;  //  M -Models
+		case KC_V:	GuiShortcut(WND_Edit, 5);  return true;  // V Vegetation
+		 case KC_M:	GuiShortcut(WND_Edit, 5,1);  return true;  //  M -Models
 
-		case KC_R:	GuiShortcut(5);  return true;  // R Road
-		case KC_O:	GuiShortcut(6);  return true;  // O Tools
+		case KC_R:	GuiShortcut(WND_Edit, 6);  return true;  // R Road
+		case KC_O:	GuiShortcut(WND_Edit, 7);  return true;  // O Tools
 
-		case KC_C:	GuiShortcut(7);  return true;  // S Screen
-		case KC_G:	GuiShortcut(8);  return true;  // G Graphics
-		 case KC_N:	GuiShortcut(8,2);  return true;  // N -Vegetation
+		case KC_C:	GuiShortcut(WND_Options, 1);  return true;  // S Screen
+		case KC_G:	GuiShortcut(WND_Options, 2);  return true;  // G Graphics
+		 case KC_N:	GuiShortcut(WND_Options, 2,2);  return true;  // N -Vegetation
+		case KC_E:	GuiShortcut(WND_Options, 3);  return true;  // E Settings
 
-		case KC_I:	GuiShortcut(9);  return true;  // I Input/help
-		case KC_E:	GuiShortcut(10);  return true;  // E Settings
+		case KC_I:	GuiShortcut(WND_Help, 1);  return true;  // I Input/help
 	}
 	else
 	switch (arg.key)
@@ -517,7 +620,8 @@ bool App::KeyPress(const CmdKey &arg)
 		case KC_E:	if (bEdit()){  edMode = ED_Height;  curBr = 2;  updBrush();  UpdEditWnds();  }	break;
 		case KC_F:  if (bEdit()){  edMode = ED_Filter;  curBr = 3;  updBrush();  UpdEditWnds();  }
 			else  //  focus on find edit
-			if (ctrl && edFind && bGuiFocus && mWndTabs->getIndexSelected() == 0)
+			if (ctrl && edFind && bGuiFocus &&
+				!pSet->isMain && pSet->inMenu == WND_Edit && mWndTabsEdit->getIndexSelected() == 0)
 			{
 				MyGUI::InputManager::getInstance().resetKeyFocusWidget();
 				MyGUI::InputManager::getInstance().setKeyFocusWidget(edFind);

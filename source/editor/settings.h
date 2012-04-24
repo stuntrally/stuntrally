@@ -38,17 +38,17 @@ public:
 	
 	//  startup
 	bool autostart, escquit, ogre_dialog, allow_save;
+	bool x11_capture_mouse;
+	//  misc
 	std::string language;
+	bool isMain;  int inMenu;  // last menu id
 
 	//  settings
 	bool bFog, bTrees;
 	int ter_skip, mini_skip;  float road_sphr;
 	float cam_speed, cam_inert, cam_x,cam_y,cam_z, cam_dx,cam_dy,cam_dz;
 	
-	//  input
-	bool x11_capture_mouse;
-	
-	// video
+	//  video
 	int windowx, windowy;
 	bool fullscreen;  int fsaa;  bool vsync;
 	std::string buffer, rendersystem;
