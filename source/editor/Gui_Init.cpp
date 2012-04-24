@@ -352,6 +352,14 @@ void App::InitGui()
 		if (StringUtil::startsWith(s,"pipe") && !StringUtil::startsWith(s,"pipe_"))
 			for (int i=0; i<4; ++i)  cmbPipeMtr[i]->addItem(s);
 	}
+
+	//---------------------  OBJECTS  ---------------------
+	iObjNew = 0;
+	strlist lo;  vObjNames.clear();
+	GetFolderIndex(PATHMANAGER::GetDataPath() + "/objects", lo);
+	for (strlist::iterator i = lo.begin(); i != lo.end(); ++i)
+		if (StringUtil::endsWith(*i,".mesh"))
+			vObjNames.push_back((*i).substr(0,(*i).length()-5));  //no .ext
 	//-----------------------------------------------------
 
 	InitGuiScrenRes();

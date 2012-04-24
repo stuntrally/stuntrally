@@ -512,18 +512,24 @@ bool App::KeyPress(const CmdKey &arg)
 
 	//  Objects  | | | | | | | | | | | | | | | | |
 	if (edMode == ED_Objects)
-	{	int objs = sc.objects.size();
+	{	int objs = sc.objects.size(), objAll = vObjNames.size();
 		switch (arg.key)
 		{
 			case KC_SPACE:
 				iObjCur = -1;  break;  // unselect
 				
+			case KC_LBRACKET:
+				iObjNew = (iObjNew-1 + objAll)%objAll;  break;
+			case KC_RBRACKET:
+				iObjNew = (iObjNew+1)%objAll;  break;
+				
 			//  ins
 			case KC_INSERT:	case KC_NUMPAD0:
 			if (road && road->bHitTer)
 			{
-				::Object o;  o.name = 1?"big_tire":"fuel_can";  /// change ...
-				o.pos = road->posHit;
+				::Object o;  o.name = vObjNames[iObjNew];
+				o.pos = road->posHit;  //o.pos.y += 0.5f;
+				//todo: ?dyn objs size, get center,size, rmb height..
 				String s = toStr(sc.objects.size()+1);  // counter for names
 
 				//  create object

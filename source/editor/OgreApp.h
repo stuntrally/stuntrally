@@ -359,6 +359,9 @@ protected:
 		edRdSkirtLen,edRdSkirtH, edRdMergeLen,edRdLodPLen,
 		edRdColN,edRdColR, edRdPwsM,edRdPlsM;
 	void editRoad(MyGUI::EditPtr);
+
+	//  [Objects]
+	std::vector<std::string> vObjNames;  int iObjNew;
 	
 
 	//  [Tools]  ----

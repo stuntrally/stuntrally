@@ -234,7 +234,7 @@ bool App::frameRenderingQueued(const FrameEvent& evt)
 			if (iObjCur == -1)
 			{	//  none sel
 				if (objTxt[0])	objTxt[0]->setCaption("Cur/All:  "+toStr(iObjCur)+" / "+toStr(sc.objects.size()));
-				if (objTxt[1])	objTxt[1]->setCaption("");  // new params ...
+				if (objTxt[1])	objTxt[1]->setCaption(vObjNames[iObjNew]);  // new params ...
 				if (objTxt[3])	objTxt[3]->setCaption("");
 				if (objTxt[4])	objTxt[4]->setCaption("");
 				if (objTxt[5])	objTxt[5]->setCaption("");
