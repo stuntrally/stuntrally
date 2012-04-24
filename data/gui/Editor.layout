@@ -2248,7 +2248,7 @@
 						</Widget>
 					</Widget>
 				</Widget>
-				<Widget type="TextBox" skin="TextBox" position="32 488 144 24">
+				<Widget type="TextBox" skin="TextBox" position="32 488 300 24">
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 					<Property key="Caption" value="#{NeedRestart}"/>
 					<Property key="TextColour" value="0.5 0.9 1"/>
@@ -2257,12 +2257,12 @@
 			<Widget type="TabItem" skin="" position="4 26 787 531" layer="Back">
 				<UserString key="RelativeTo" value="OptionsWnd"/>
 				<Property key="Caption" value="#{Graphics}"/>
-				<Widget type="TextBox" skin="TextBox" position="32 488 136 24">
+				<Widget type="TextBox" skin="TextBox" position="32 488 236 24">
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 					<Property key="Caption" value="#{NeedReload}:"/>
 					<Property key="TextColour" value="0.7 1 0.5"/>
 				</Widget>
-				<Widget type="Button" skin="Button" position="176 480 160 32" name="NewGame2">
+				<Widget type="Button" skin="Button" position="276 480 160 32" name="NewGame2">
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 					<Property key="Caption" value="#{LoadTrack}"/>
 					<Property key="Colour" value="0.6 1.0 0.3"/>
