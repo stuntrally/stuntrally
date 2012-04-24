@@ -740,7 +740,7 @@ void App::CreateObjects()
 		#else
 			// .bullet load
 			BulletWorldOffset* fileLoader = new BulletWorldOffset(pGame->collision.world);
-			fileLoader->mTrOfs.setOrigin(btVector3(o.pos.x,-o.pos.z,o.pos.y));  ///+
+			fileLoader->mTrOfs.setOrigin(btVector3(o.pos.x,-o.pos.z,o.pos.y+1));  ///+
 			//fileLoader->setVerboseMode(true);//
 
 			//LogO(".bullet: "+file);
