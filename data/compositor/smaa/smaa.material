@@ -149,7 +149,7 @@ material SMAA/DepthEdgeDetection
             {
             }
 
-            fragment_program_ref SMAA/DepthEdgeDetection_PS
+            fragment_program_ref SMAA/LumaEdgeDetection_PS
             {
             }
 
@@ -188,7 +188,7 @@ material SMAA/BlendWeightCalculation
 
             texture_unit areaTex
             {
-                texture AreaTexDX9.dds
+                texture AreaTexDX10.dds
                 tex_address_mode clamp
                 filtering linear linear linear
             }

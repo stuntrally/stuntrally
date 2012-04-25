@@ -482,7 +482,7 @@ void App::LoadMisc()  // 9 last
 	} catch(...) {  }
 	
 	/// rendertextures debug
-	#if 0
+	#if 1
 	// init overlay elements
 	OverlayManager& mgr = OverlayManager::getSingleton();
 	Overlay* overlay;
@@ -490,8 +490,8 @@ void App::LoadMisc()  // 9 last
 	if (overlay = mgr.getByName("DebugOverlay"))
 		mgr.destroy(overlay);
 	overlay = mgr.create("DebugOverlay");
-	Ogre::CompositorInstance  *compositor= CompositorManager::getSingleton().getCompositorChain(mSplitMgr->mViewports.front())->getCompositor("gbuffer");
-	for (int i=0; i<3; ++i)
+	Ogre::CompositorInstance  *compositor= CompositorManager::getSingleton().getCompositorChain(mSplitMgr->mViewports.front())->getCompositor("SMAA");
+	for (int i=0; i<2; ++i)
 	{
 		// Set up a debug panel
 		if (MaterialManager::getSingleton().resourceExists("Ogre/DebugTexture" + toStr(i)))
@@ -500,7 +500,12 @@ void App::LoadMisc()  // 9 last
 			"Ogre/DebugTexture" + toStr(i), 
 			ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME);
 		debugMat->getTechnique(0)->getPass(0)->setLightingEnabled(false);
-		TexturePtr depthTexture = compositor->getTextureInstance("mrt_output",i);
+		TexturePtr depthTexture;
+		if (i==0)
+		 depthTexture = compositor->getTextureInstance("edgeTex",0);
+		else if (i==1)
+		 depthTexture = compositor->getTextureInstance("blendTex",0);
+		
 		if(!depthTexture.isNull())
 		{
 			TextureUnitState *t = debugMat->getTechnique(0)->getPass(0)->createTextureUnitState(depthTexture->getName());
