@@ -16,6 +16,9 @@ compositor SMAA
         {
             input none
 
+            pass clear
+            {
+            }
             pass stencil
             {
                 check on
@@ -34,6 +37,9 @@ compositor SMAA
         {
             input none
 
+            pass clear
+            {
+            }
             pass stencil
             {
                 // Process only marked pixels
