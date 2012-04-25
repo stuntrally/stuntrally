@@ -1,0 +1,71 @@
+compositor SMAA
+{
+    technique
+    {
+        texture previousscene target_width target_height PF_A8R8G8B8
+        texture edgeTex target_width target_height PF_A8R8G8B8
+        texture blendTex target_width target_height PF_A8R8G8B8
+
+        target previousscene
+        {
+            input previous
+        }
+
+        // Edge detection pass
+        target edgeTex
+        {
+            input none
+
+            pass stencil
+            {
+                check on
+                ref_value 1
+                pass_op replace
+            }
+            pass render_quad
+            {
+                material SMAA/ColorEdgeDetection
+                input 0 previousscene
+            }
+        }
+
+        // Blending weights calculation pass
+        target blendTex
+        {
+            input none
+
+            pass stencil
+            {
+                // Process only marked pixels
+                check on
+                pass_op keep
+                comp_func equal
+                ref_value 1
+            }
+            pass render_quad
+            {
+                material SMAA/BlendWeightCalculation
+                input 0 edgeTex
+            }
+        }
+
+        // Neighborhood blending pass
+        target_output
+        {
+            input none
+
+            pass stencil
+            {
+                // Process _all_ pixels
+                check off
+            }
+            pass render_quad
+            {
+                material SMAA/NeighborhoodBlending
+                input 0 previousscene
+                input 1 blendTex
+            }
+        }
+    }
+}
+

@@ -1,0 +1,159 @@
+vertex_program SMAA/EdgeDetection_VS cg
+{
+    source smaa.cg
+    profiles vs_4_0 vs_1_1 vp40 arbvp1
+    entry_point EdgeDetection_VS
+    default_params
+    {
+        //param_named_auto viewportSize viewport_size
+    }
+}
+
+fragment_program SMAA/ColorEdgeDetection_PS cg
+{
+    source smaa.cg
+    profiles ps_4_0 ps_2_x fp40 arbfp1
+    entry_point ColorEdgeDetection_PS
+    default_params
+    {
+        //param_named_auto viewportSize viewport_size
+    }
+}
+
+vertex_program SMAA/BlendWeightCalculation_VS cg
+{
+    source smaa.cg
+    profiles vs_4_0 vs_1_1 vp40 arbvp1
+    entry_point BlendWeightCalculation_VS
+    default_params
+    {
+        //param_named_auto viewportSize viewport_size
+    }
+}
+
+fragment_program SMAA/BlendWeightCalculation_PS cg
+{
+    source smaa.cg
+    profiles ps_4_0 ps_2_x fp40 arbfp1 
+    entry_point BlendWeightCalculation_PS
+    default_params
+    {
+        //param_named_auto viewportSize viewport_size
+    }
+}
+
+vertex_program SMAA/NeighborhoodBlending_VS cg
+{
+    source smaa.cg
+    profiles vs_4_0 vs_1_1 vp40 arbvp1
+    entry_point NeighborhoodBlending_VS
+    default_params
+    {
+        //param_named_auto viewportSize viewport_size
+    }
+}
+
+fragment_program SMAA/NeighborhoodBlending_PS cg
+{
+    source smaa.cg
+    profiles ps_4_0 ps_2_x fp40 arbfp1 
+    entry_point NeighborhoodBlending_PS
+    default_params
+    {
+        //param_named_auto viewportSize viewport_size
+    }
+}
+
+material SMAA/ColorEdgeDetection
+{
+    technique
+    {
+        pass
+        {
+            vertex_program_ref SMAA/EdgeDetection_VS
+            {
+            }
+
+            fragment_program_ref SMAA/ColorEdgeDetection_PS
+            {
+            }
+
+            depth_check off
+
+            texture_unit colorGammaTex
+            {
+                tex_address_mode clamp
+                filtering linear linear linear
+            }
+        }
+    }
+}
+
+material SMAA/BlendWeightCalculation
+{
+    technique
+    {
+        pass
+        {
+            vertex_program_ref SMAA/BlendWeightCalculation_VS
+            {
+            }
+
+            fragment_program_ref SMAA/BlendWeightCalculation_PS
+            {
+            }
+
+            depth_check off
+
+            texture_unit edgesTex
+            {
+                tex_address_mode clamp
+                filtering linear linear linear
+            }
+
+            texture_unit areaTex
+            {
+                texture AreaTexDX9.dds
+                tex_address_mode clamp
+                filtering linear linear linear
+            }
+
+            texture_unit searchTex
+            {
+                texture SearchTex.dds
+                tex_address_mode clamp
+                filtering point point point
+            }
+        }
+    }
+}
+
+material SMAA/NeighborhoodBlending
+{
+    technique
+    {
+        pass
+        {
+            vertex_program_ref SMAA/NeighborhoodBlending_VS
+            {
+            }
+
+            fragment_program_ref SMAA/NeighborhoodBlending_PS
+            {
+            }
+
+            depth_check off
+
+            texture_unit colorTex
+            {
+                tex_address_mode clamp
+                filtering linear linear point
+            }
+            texture_unit blendTex
+            {
+                tex_address_mode clamp
+                filtering linear linear linear
+            }
+        }
+    }
+}

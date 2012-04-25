@@ -1,0 +1,79 @@
+#define SMAA_PIXEL_SIZE float2(1/1680.f, 1/1050.f)
+#define SMAA_PRESET_MEDIUM 1
+#define SMAA_CG 1
+
+#include "SMAA.h"
+
+void EdgeDetection_VS(in float4 position : POSITION,
+                        out float4 oPosition : POSITION,
+                             inout float2 texcoord : TEXCOORD0,
+                             out float4 offset[3] : TEXCOORD1
+                             //uniform float4 viewportSize
+                             ) {
+    SMAAEdgeDetectionVS(position, oPosition, texcoord, offset);
+}
+
+void BlendWeightCalculation_VS(in float4 position : POSITION,
+                        out float4 oPosition : POSITION,
+                                         inout float2 texcoord : TEXCOORD0,
+                                         out float2 pixcoord : TEXCOORD1,
+                                         out float4 offset[3] : TEXCOORD2
+                                         //uniform float4 viewportSize
+                                         ) {
+    SMAABlendingWeightCalculationVS(position, oPosition, texcoord, pixcoord, offset);
+}
+
+void NeighborhoodBlending_VS(in float4 position : POSITION,
+                        out float4 oPosition : POSITION,
+                                    inout float2 texcoord : TEXCOORD0,
+                                    out float4 offset[2] : TEXCOORD1
+                                    //uniform float4 viewportSize
+                                    ) {
+    SMAANeighborhoodBlendingVS(position, oPosition, texcoord, offset);
+}
+
+
+float4 LumaEdgeDetection_PS(float4 position : SV_POSITION,
+                                   float2 texcoord : TEXCOORD0,
+                                   float4 offset[3] : TEXCOORD1,
+                                   uniform SMAATexture2D colorGammaTex
+                                   //uniform float4 viewportSize
+                                   ) : COLOR {
+    return SMAALumaEdgeDetectionPS(texcoord, offset, colorGammaTex);
+}
+
+float4 ColorEdgeDetection_PS(float4 position : POSITION,
+                                    float2 texcoord : TEXCOORD0,
+                                    float4 offset[3] : TEXCOORD1,
+                                    //uniform float4 viewportSize,
+                                    uniform SMAATexture2D colorGammaTex) : COLOR {
+    return SMAAColorEdgeDetectionPS(texcoord, offset, colorGammaTex);
+}
+
+float4 DepthEdgeDetection_PS(float4 position : POSITION,
+                                    float2 texcoord : TEXCOORD0,
+                                    float4 offset[3] : TEXCOORD1,
+                                    //uniform float4 viewportSize,
+                                    uniform SMAATexture2D depthTex) : COLOR {
+    return SMAADepthEdgeDetectionPS(texcoord, offset, depthTex);
+}
+
+float4 BlendWeightCalculation_PS(float4 position : POSITION,
+                                           float2 texcoord : TEXCOORD0,
+                                           float2 pixcoord : TEXCOORD1,
+                                           float4 offset[3] : TEXCOORD2,
+                                           //uniform float4 viewportSize,
+                                           uniform SMAATexture2D edgesTex, 
+                                           uniform SMAATexture2D areaTex, 
+                                           uniform SMAATexture2D searchTex) : COLOR {
+    return SMAABlendingWeightCalculationPS(texcoord, pixcoord, offset, edgesTex, areaTex, searchTex, 0);
+}
+
+float4 NeighborhoodBlending_PS(float4 position : POSITION,
+                                      float2 texcoord : TEXCOORD0,
+                                      float4 offset[2] : TEXCOORD1,
+                                      //uniform float4 viewportSize,
+                                      uniform SMAATexture2D colorTex,
+                                      uniform SMAATexture2D blendTex) : COLOR {
+    return SMAANeighborhoodBlendingPS(texcoord, offset, colorTex, blendTex);
+}
