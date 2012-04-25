@@ -6,6 +6,7 @@ vertex_program SMAA/EdgeDetection_VS cg
     default_params
     {
         //param_named_auto viewportSize viewport_size
+        param_named_auto wvp worldviewproj_matrix
     }
 }
 
@@ -20,6 +21,28 @@ fragment_program SMAA/ColorEdgeDetection_PS cg
     }
 }
 
+fragment_program SMAA/LumaEdgeDetection_PS cg
+{
+    source smaa.cg
+    profiles ps_4_0 ps_2_x fp40 arbfp1
+    entry_point LumaEdgeDetection_PS
+    default_params
+    {
+        //param_named_auto viewportSize viewport_size
+    }
+}
+
+fragment_program SMAA/DepthEdgeDetection_PS cg
+{
+    source smaa.cg
+    profiles ps_4_0 ps_2_x fp40 arbfp1
+    entry_point DepthEdgeDetection_PS
+    default_params
+    {
+        //param_named_auto viewportSize viewport_size
+    }
+}
+
 vertex_program SMAA/BlendWeightCalculation_VS cg
 {
     source smaa.cg
@@ -28,6 +51,7 @@ vertex_program SMAA/BlendWeightCalculation_VS cg
     default_params
     {
         //param_named_auto viewportSize viewport_size
+        param_named_auto wvp worldviewproj_matrix
     }
 }
 
@@ -50,6 +74,7 @@ vertex_program SMAA/NeighborhoodBlending_VS cg
     default_params
     {
         //param_named_auto viewportSize viewport_size
+        param_named_auto wvp worldviewproj_matrix
     }
 }
 
@@ -81,6 +106,56 @@ material SMAA/ColorEdgeDetection
             depth_check off
 
             texture_unit colorGammaTex
+            {
+                tex_address_mode clamp
+                filtering linear linear linear
+            }
+        }
+    }
+}
+
+material SMAA/LumaEdgeDetection
+{
+    technique
+    {
+        pass
+        {
+            vertex_program_ref SMAA/EdgeDetection_VS
+            {
+            }
+
+            fragment_program_ref SMAA/LumaEdgeDetection_PS
+            {
+            }
+
+            depth_check off
+
+            texture_unit colorGammaTex
+            {
+                tex_address_mode clamp
+                filtering linear linear linear
+            }
+        }
+    }
+}
+
+material SMAA/DepthEdgeDetection
+{
+    technique
+    {
+        pass
+        {
+            vertex_program_ref SMAA/EdgeDetection_VS
+            {
+            }
+
+            fragment_program_ref SMAA/DepthEdgeDetection_PS
+            {
+            }
+
+            depth_check off
+
+            texture_unit depthTex
             {
                 tex_address_mode clamp
                 filtering linear linear linear

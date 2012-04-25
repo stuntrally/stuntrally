@@ -6,34 +6,53 @@
 
 void EdgeDetection_VS(in float4 position : POSITION,
                         out float4 oPosition : POSITION,
+                        uniform float4x4 wvp,
                              inout float2 texcoord : TEXCOORD0,
                              out float4 offset[3] : TEXCOORD1
                              //uniform float4 viewportSize
                              ) {
+    position.xy = sign(position.xy);
+
+    texcoord = (float2(position.x, -position.y) + 1.0f) * 0.5f;
+
     SMAAEdgeDetectionVS(position, oPosition, texcoord, offset);
+
+    oPosition = mul(wvp, position);
 }
 
 void BlendWeightCalculation_VS(in float4 position : POSITION,
                         out float4 oPosition : POSITION,
+                        uniform float4x4 wvp,
                                          inout float2 texcoord : TEXCOORD0,
                                          out float2 pixcoord : TEXCOORD1,
                                          out float4 offset[3] : TEXCOORD2
                                          //uniform float4 viewportSize
                                          ) {
+    position.xy = sign(position.xy);
+
+    texcoord = (float2(position.x, -position.y) + 1.0f) * 0.5f;
+
     SMAABlendingWeightCalculationVS(position, oPosition, texcoord, pixcoord, offset);
+    oPosition = mul(wvp, position);
 }
 
 void NeighborhoodBlending_VS(in float4 position : POSITION,
                         out float4 oPosition : POSITION,
+                        uniform float4x4 wvp,
                                     inout float2 texcoord : TEXCOORD0,
                                     out float4 offset[2] : TEXCOORD1
                                     //uniform float4 viewportSize
                                     ) {
+    position.xy = sign(position.xy);
+
+    texcoord = (float2(position.x, -position.y) + 1.0f) * 0.5f;
+
     SMAANeighborhoodBlendingVS(position, oPosition, texcoord, offset);
+    oPosition = mul(wvp, position);
 }
 
 
-float4 LumaEdgeDetection_PS(float4 position : SV_POSITION,
+float4 LumaEdgeDetection_PS(float4 position : POSITION,
                                    float2 texcoord : TEXCOORD0,
                                    float4 offset[3] : TEXCOORD1,
                                    uniform SMAATexture2D colorGammaTex
