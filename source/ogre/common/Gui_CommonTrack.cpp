@@ -163,7 +163,7 @@ void App::GuiInitTrack()
 	//MyGUI::FactoryManager::getInstance().unregisterFactory<MultiList2>("Widget");
 
 	#ifdef ROAD_EDITOR
-	TabItem* trktab = (TabItem*)mWndOpts->findWidget("TabTrack");
+	TabItem* trktab = (TabItem*)mWndEdit->findWidget("TabTrack");
 	#else
 	TabItem* trktab = (TabItem*)mWndGame->findWidget("TabTrack");
 	#endif

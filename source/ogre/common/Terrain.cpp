@@ -740,7 +740,7 @@ void App::CreateObjects()
 		#else
 			// .bullet load
 			BulletWorldOffset* fileLoader = new BulletWorldOffset(pGame->collision.world);
-			fileLoader->mTrOfs.setOrigin(btVector3(o.pos.x,-o.pos.z,o.pos.y));  ///+
+			fileLoader->mTrOfs.setOrigin(btVector3(o.pos.x,-o.pos.z,o.pos.y+0.5));  ///+
 			//fileLoader->setVerboseMode(true);//
 
 			//LogO(".bullet: "+file);
@@ -818,7 +818,7 @@ void App::UpdObjPick()
 		ndStBox->setVisible(edMode == ED_Start && !bMoveCam);  //
 
 	int objs = sc.objects.size();
-	bool bObjects = edMode == ED_Objects && objs > 0 && !bMoveCam;
+	bool bObjects = edMode == ED_Objects && !bMoveCam && objs > 0 && iObjCur >= 0;
 	if (objs > 0)
 		iObjCur = std::min(iObjCur, objs-1);
 

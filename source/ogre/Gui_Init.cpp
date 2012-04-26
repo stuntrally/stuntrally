@@ -43,6 +43,7 @@ void App::InitGui()
 	mWndChampEnd = mGUI->findWidget<Window>("WndChampEnd",false);  mWndChampEnd->setVisible(false);
 	mWndNetEnd = mGUI->findWidget<Window>("WndNetEnd",false);  mWndNetEnd->setVisible(false);
 	
+	//  main menu
 	for (int i=0; i < WND_ALL; ++i)
 	{
 		const String s = toStr(i);
@@ -53,9 +54,10 @@ void App::InitGui()
 		
 	updMouse();
 	
+	//  center
 	//mWndOpts->setVisible(isFocGui);
 	int sx = mWindow->getWidth(), sy = mWindow->getHeight();
-	IntSize w = mWndMain->getSize();  // center
+	IntSize w = mWndMain->getSize();
 	mWndMain->setPosition((sx-w.width)*0.5f, (sy-w.height)*0.5f);
 
 	TabPtr tab;

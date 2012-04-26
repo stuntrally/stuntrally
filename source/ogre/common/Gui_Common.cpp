@@ -693,9 +693,11 @@ void App::ResizeOptWnd()
 
 	#ifndef ROAD_EDITOR
 	mWndGame->setCoord(xm, ym, xo, yo);
-	mWndHelp->setCoord(xm, ym, xo, yo);
 	mWndReplays->setCoord(xm, ym, xo, yo);
+	#else
+	mWndEdit->setCoord(xm, ym, xo, yo);
 	#endif
+	mWndHelp->setCoord(xm, ym, xo, yo);
 	mWndOpts->setCoord(xm, ym, xo, yo);
 
 	if (bnQuit)  //  reposition Quit btn

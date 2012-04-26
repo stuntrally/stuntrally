@@ -539,7 +539,7 @@ if (!bAssignKey)
 
 
 	//  main menu keys
-	if (pSet->isMain)
+	if (pSet->isMain && isFocGui)
 	{
 		switch (arg.key)
 		{
@@ -635,8 +635,8 @@ if (!bAssignKey)
 				{
 					MyGUI::InputManager::getInstance().resetKeyFocusWidget();
 					MyGUI::InputManager::getInstance().setKeyFocusWidget(edFind);
-					return true;  }
-				break;
+					return true;
+				}	break;
 				
 
 			case KC_F9:
@@ -835,9 +835,6 @@ void App::GuiShortcut(WND_Types wnd, int tab, int subtab)
 	}
 	toggleGui(false);
 
-	//if (!bGuiFocus)
-	//if (edMode != ED_PrvCam)  {
-	//	bGuiFocus = !bGuiFocus;  UpdVisGui();  subtab = -2;  }
 
 	size_t t = mWndTabs->getIndexSelected();
 	mWndTabs->setIndexSelected(tab);
