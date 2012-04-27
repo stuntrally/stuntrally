@@ -110,6 +110,12 @@ material SMAA/ColorEdgeDetection
                 tex_address_mode clamp
                 filtering linear linear linear
             }
+
+            texture_unit predicationTex
+            {
+				tex_address_mode clamp
+				filtering linear linear linear
+            }
         }
     }
 }
@@ -134,6 +140,12 @@ material SMAA/LumaEdgeDetection
             {
                 tex_address_mode clamp
                 filtering linear linear linear
+            }
+
+            texture_unit predicationTex
+            {
+				tex_address_mode clamp
+				filtering linear linear linear
             }
         }
     }

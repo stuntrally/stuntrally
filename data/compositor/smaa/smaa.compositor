@@ -3,8 +3,8 @@ compositor SMAA
     technique
     {
         texture previousscene target_width target_height PF_A8R8G8B8
-        texture edgeTex target_width target_height PF_A8R8G8B8
-        texture blendTex target_width target_height PF_A8R8G8B8
+        texture edgeTex target_width target_height PF_FLOAT16_RGBA
+        texture blendTex target_width target_height PF_FLOAT16_RGBA
 
         target previousscene
         {
@@ -27,7 +27,7 @@ compositor SMAA
             }
             pass render_quad
             {
-                material SMAA/ColorEdgeDetection
+                material SMAA/LumaEdgeDetection
                 input 0 previousscene
             }
         }
