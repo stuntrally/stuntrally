@@ -156,12 +156,13 @@ protected:
 	MyGUI::OgrePlatform* mPlatform;
 	#endif
 	
+	//  main menu
 	enum WND_Types {  WND_Game=0, WND_Champ, WND_Replays, WND_Help, WND_Options, WND_ALL  };  // pSet->inMenu
 	MyGUI::WindowPtr mWndMain,mWndGame,mWndReplays,mWndHelp,mWndOpts,  // menu, windows
 		mWndRpl, mWndChampStage,mWndChampEnd, mWndNetEnd;  // rpl controls, champ wnds
-	MyGUI::TabPtr mWndTabsGame,mWndTabsOpts,mWndTabsHelp,mWndTabsRpl;
+	MyGUI::TabPtr mWndTabsGame,mWndTabsOpts,mWndTabsHelp,mWndTabsRpl;  // main tabs on windows
 	MyGUI::WidgetPtr mWndMainPanels[WND_ALL];  MyGUI::ButtonPtr mWndMainBtns[WND_ALL];
-	MyGUI::VectorWidgetPtr vwGui;
+	MyGUI::VectorWidgetPtr vwGui;  // all widgets to destroy
 
 	///  networking
 	boost::scoped_ptr<MasterClient> mMasterClient;

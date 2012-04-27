@@ -4,10 +4,15 @@ void GodRays_VS(
 	out float4 oPos		    : POSITION,
 	out float2 oTexCoord	: TEXCOORD0,
 	out float2 oLightPos    : TEXCOORD1,
+	uniform float4x4 wvp,
   	uniform float4 lightPosition
 ) {
-    oPos = float4(position.xy, 0, 1);
-	oTexCoord = uv;
+    position.xy = sign(position.xy);
+
+    oTexCoord = (float2(position.x, -position.y) + 1.0f) * 0.5f;
+
+    oPos = mul(wvp, position);
+
 	
 	oLightPos = lightPosition.xy;
 }

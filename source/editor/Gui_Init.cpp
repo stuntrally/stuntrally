@@ -22,7 +22,10 @@ void App::InitGui()
 	{
 		const std::string& name = (*it)->getName();
 		setToolTips((*it)->getEnumerator());
+		if (name == "MainMenuWnd") mWndMain = *it;  else
+		if (name == "EditorWnd")  mWndEdit = *it;  else
 		if (name == "OptionsWnd") mWndOpts = *it;  else
+		if (name == "HelpWnd")    mWndHelp = *it;  else
 
 		if (name == "CamWnd")     mWndCam = *it;  else
 		if (name == "StartWnd")   mWndStart = *it;  else
@@ -35,6 +38,20 @@ void App::InitGui()
 		if (name == "ObjectsWnd") mWndObjects = *it;
 	}
 	if (mWndRoadStats)  mWndRoadStats->setVisible(false);
+
+	//  main menu
+	for (int i=0; i < WND_ALL; ++i)
+	{
+		const String s = toStr(i);
+		mWndMainPanels[i] = mWndMain->findWidget("PanMenu"+s);
+		mWndMainBtns[i] = (ButtonPtr)mWndMain->findWidget("BtnMenu"+s);
+		mWndMainBtns[i]->eventMouseButtonClick += newDelegate(this, &App::MainMenuBtn);
+	}
+	//  center
+	int sx = mWindow->getWidth(), sy = mWindow->getHeight();
+	IntSize w = mWndMain->getSize();
+	mWndMain->setPosition((sx-w.width)*0.5f, (sy-w.height)*0.5f);
+
 
 	GuiInitTooltip();
 	
@@ -63,20 +80,37 @@ void App::InitGui()
 	if (mWndObjects)  for (int i=0; i<OBJ_TXT; ++i)
 		objTxt[i] = mGUI->findWidget<StaticText>("objTxt"+toStr(i));
 		
+	//  Tabs
+	TabPtr tab;
+	tab = mGUI->findWidget<Tab>("TabWndEdit");  mWndTabsEdit = tab;  tab->setIndexSelected(1);  tab->eventTabChangeSelect += newDelegate(this, &App::MenuTabChg);
+	tab = mGUI->findWidget<Tab>("TabWndOpts");	mWndTabsOpts = tab;	 tab->setIndexSelected(1);	tab->eventTabChangeSelect += newDelegate(this, &App::MenuTabChg);
+	tab = mGUI->findWidget<Tab>("TabWndHelp");	mWndTabsHelp = tab;	 tab->setIndexSelected(1);	tab->eventTabChangeSelect += newDelegate(this, &App::MenuTabChg);
+
 	//  Options
 	if (mWndOpts)
-	{	mWndOpts->setVisible(false);
+	{	/*mWndOpts->setVisible(false);
 		int sx = mWindow->getWidth(), sy = mWindow->getHeight();
 		IntSize w = mWndOpts->getSize();  // center
-		mWndOpts->setPosition((sx-w.width)*0.5f, (sy-w.height)*0.5f);
-		mWndTabs = mGUI->findWidget<Tab>("TabWnd");
+		mWndOpts->setPosition((sx-w.width)*0.5f, (sy-w.height)*0.5f);*/
+
 		//  get sub tabs
-		vSubTabs.clear();
-		for (size_t i=0; i < mWndTabs->getItemCount(); ++i)
+		vSubTabsEdit.clear();
+		for (size_t i=0; i < mWndTabsEdit->getItemCount(); ++i)
 		{
-			MyGUI::TabPtr sub = (TabPtr)mWndTabs->getItemAt(i)->findWidget("SubTab");
-			vSubTabs.push_back(sub);  // 0 for not found
-			//LogO(toStr(i)+" = "+toStr((int)(sub ? sub->getItemCount() : -1)));
+			MyGUI::TabPtr sub = (TabPtr)mWndTabsEdit->getItemAt(i)->findWidget("SubTab");
+			vSubTabsEdit.push_back(sub);  // 0 for not found
+		}
+		vSubTabsHelp.clear();
+		for (size_t i=0; i < mWndTabsHelp->getItemCount(); ++i)
+		{
+			MyGUI::TabPtr sub = (TabPtr)mWndTabsHelp->getItemAt(i)->findWidget("SubTab");
+			vSubTabsHelp.push_back(sub);
+		}
+		vSubTabsOpts.clear();
+		for (size_t i=0; i < mWndTabsOpts->getItemCount(); ++i)
+		{
+			MyGUI::TabPtr sub = (TabPtr)mWndTabsOpts->getItemAt(i)->findWidget("SubTab");
+			vSubTabsOpts.push_back(sub);
 		}
 		//mWndTabs->setIndexSelected(3);  //default*--
 		ResizeOptWnd();
@@ -318,6 +352,14 @@ void App::InitGui()
 		if (StringUtil::startsWith(s,"pipe") && !StringUtil::startsWith(s,"pipe_"))
 			for (int i=0; i<4; ++i)  cmbPipeMtr[i]->addItem(s);
 	}
+
+	//---------------------  OBJECTS  ---------------------
+	iObjNew = 0;
+	strlist lo;  vObjNames.clear();
+	GetFolderIndex(PATHMANAGER::GetDataPath() + "/objects", lo);
+	for (strlist::iterator i = lo.begin(); i != lo.end(); ++i)
+		if (StringUtil::endsWith(*i,".mesh"))
+			vObjNames.push_back((*i).substr(0,(*i).length()-5));  //no .ext
 	//-----------------------------------------------------
 
 	InitGuiScrenRes();

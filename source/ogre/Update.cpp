@@ -836,9 +836,6 @@ void App::updatePoses(float time)
 			btTransform tr, ofs;
 			o.ms->getWorldTransform(tr);
 
-			ofs.setIdentity();  ofs.setOrigin(btVector3(0,0,0.52f));
-			tr *= ofs;
-
 			const btVector3& p = tr.getOrigin();
 			btQuaternion r = tr.getRotation();
 
