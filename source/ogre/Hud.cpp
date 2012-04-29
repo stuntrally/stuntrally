@@ -678,7 +678,7 @@ void App::UpdateHUD(int carId, float time)
 	}
 
 	//  boost fuel (time)  -----------------------------
-	if (txBFuel[carId] && pCar && txBFuel[carId]->isVisible())
+	if (txBFuel[carId] && pCar && txBFuel[carId]->getVisible())
 	{
 		txBFuel[carId]->setCaption(fToStr(pCar->dynamics.boostFuel,1,3));
 	}
