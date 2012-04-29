@@ -518,6 +518,7 @@ bool App::KeyPress(const CmdKey &arg)
 			case KC_SPACE:
 				iObjCur = -1;  break;  // unselect
 				
+			//  prev,next type
 			case KC_LBRACKET:
 				iObjNew = (iObjNew-1 + objAll)%objAll;  break;
 			case KC_RBRACKET:
@@ -575,6 +576,21 @@ bool App::KeyPress(const CmdKey &arg)
 				}	break;
 
 			//  prev,next type
+			case KC_1:  // reset rot
+				if (iObjCur >= 0 && sc.objects.size() > 0)
+				{	::Object& o = sc.objects[iObjCur];
+					o.rot = QUATERNION <float>(0,1,0,0);
+					o.SetFromBlt();
+					UpdObjPick();
+				}	break;
+
+			case KC_2:  // reset scale
+				if (iObjCur >= 0 && sc.objects.size() > 0)
+				{	::Object& o = sc.objects[iObjCur];
+					o.scale = Ogre::Vector3::UNIT_SCALE;
+					o.nd->setScale(o.scale);
+					UpdObjPick();
+				}	break;
 		}
 	}
 

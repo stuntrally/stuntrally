@@ -63,7 +63,7 @@ FluidBox::FluidBox()
 
 Object::Object()
 	:nd(0),ent(0),ms(0),cobj(0)
-	,pos(0,0,0),rot(0,1,0,0)
+	,pos(0,0,0),rot(0,-1,0,0)
 	,scale(Vector3::UNIT_SCALE)
 {	}
 

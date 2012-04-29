@@ -713,8 +713,8 @@ void App::CreateObjects()
 		{
 			// .bullet load
 			BulletWorldOffset* fileLoader = new BulletWorldOffset(pGame->collision.world);
-			fileLoader->mTrOfs.setOrigin(btVector3(o.pos[0],o.pos[1],o.pos[2]+0.2f));
-			///+  why is this z ofs needed ? 1st sim dt?...
+			fileLoader->mTrOfs.setOrigin(btVector3(o.pos[0],o.pos[1],o.pos[2]+0.5f));
+			///+  why is this z ofs needed ? 1st sim dt ??...
 			fileLoader->mTrOfs.setRotation(btQuaternion(o.rot[0],o.rot[1],o.rot[2],o.rot[3]));
 			//fileLoader->setVerboseMode(true);//
 

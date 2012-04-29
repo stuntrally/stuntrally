@@ -552,19 +552,12 @@ void App::editMouse()
 				o.SetFromBlt();	 UpdObjPick();
 			}
 			else
-			if (mbMiddle)  // rot yaw
+			if (mbMiddle)  // rot yaw,  ctrl pitch local-
 			{
-				if (alt)  // reset rot
-				{
-					QUATERNION <float> qr;  qr.Rotate(0, 0, 0, 1);
-					o.rot = qr;
-				}
-				else
-				{
-					Real xm = vNew.x * fRot * moveMul *PI_d/180.f;
-					QUATERNION <float> qr;  if (!ctrl)  qr.Rotate(-xm, 0, 0, 1);  else  qr.Rotate(-xm, 0, 1, 0);
-					o.rot = o.rot * qr;
-				}
+				Real xm = vNew.x * fRot * moveMul *PI_d/180.f;
+				QUATERNION <float> qr;
+				if (!ctrl)  qr.Rotate(-xm, 0, 0, 1);  else  qr.Rotate(-xm, 0, 1, 0);
+				o.rot = o.rot * qr;
 				o.SetFromBlt();	 UpdObjPick();
 			}
 		}else
