@@ -6,6 +6,8 @@
 #include <OgreVector2.h>
 #include <OgreColourValue.h>
 #include <OgreQuaternion.h>
+#include "../../vdrift/mathvector.h"
+#include "../../vdrift/quaternion.h"
 
 namespace Ogre {  class SceneNode;  class Entity;  }
 
@@ -82,7 +84,9 @@ public:
 class Object		// object - mesh (static) or prop (dynamic)
 {
 public:
-	Ogre::Vector3 pos, scale;  Ogre::Quaternion rot;
+	MATHVECTOR <float, 3> pos;
+	QUATERNION <float> rot;
+	Ogre::Vector3 scale;
 	std::string name;  // mesh file name
 
 	Ogre::SceneNode* nd;  // ogre
@@ -91,6 +95,8 @@ public:
 	class btCollisionObject* cobj;
 
 	Object();
+	void SetFromBlt();
+	static Ogre::Quaternion qrFix;
 };
 
 

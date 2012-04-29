@@ -63,10 +63,26 @@ FluidBox::FluidBox()
 
 Object::Object()
 	:nd(0),ent(0),ms(0),cobj(0)
-	,pos(Vector3::ZERO), rot(Quaternion::IDENTITY)
+	,pos(0,0,0),rot(0,1,0,0)
 	,scale(Vector3::UNIT_SCALE)
 {	}
 
+
+///  bullet to ogre  ----------
+Quaternion Object::qrFix(0.707107, 0, 0.707107, 0);
+
+void Object::SetFromBlt()
+{
+	if (!nd)  return;
+	Vector3 posO = Vector3(pos[0],pos[2],-pos[1]);
+	Quaternion q(rot[0],rot[1],rot[2],rot[3]), q1;
+	Radian rad;  Vector3 axi;  q.ToAngleAxis(rad, axi);
+	q1.FromAngleAxis(-rad,Vector3(axi.z,-axi.x,-axi.y));
+	Quaternion rotO = q1 * qrFix;
+
+	nd->setPosition(posO);
+	nd->setOrientation(rotO);
+}
 
 
 void Scene::UpdateFluidsId()
@@ -299,8 +315,8 @@ bool Scene::LoadXml(String file)
 			Object o;
 			a = eObj->Attribute("name");	if (a)  o.name = std::string(a);
 
-			a = eObj->Attribute("pos");		if (a)  o.pos = s2v(a);
-			a = eObj->Attribute("rot");		if (a)  o.rot = Ogre::StringConverter::parseQuaternion(a);
+			a = eObj->Attribute("pos");		if (a)  {  Vector3 v = s2v(a);  o.pos = MATHVECTOR<float,3>(v.x,v.y,v.z);  }
+			a = eObj->Attribute("rot");		if (a)  {  Vector4 v = Ogre::StringConverter::parseVector4(a);  o.rot = QUATERNION<float>(v.x,v.y,v.z,v.w);  }
 			a = eObj->Attribute("sc");		if (a)  o.scale = s2v(a);
 
 			objects.push_back(o);
@@ -476,10 +492,14 @@ bool Scene::SaveXml(String file)
 			const Object* o = &objects[i];
 			TiXmlElement oe("o");
 			oe.SetAttribute("name",		o->name.c_str() );
-			oe.SetAttribute("pos",		toStrC( o->pos ));
-			if (o->rot != Quaternion::IDENTITY)  // dont save defaults in xml
-				oe.SetAttribute("rot",	toStrC( o->rot ));
-			if (o->scale != Vector3::UNIT_SCALE)
+
+			std::string s = toStr(o->pos[0])+" "+toStr(o->pos[1])+" "+toStr(o->pos[2]);
+			oe.SetAttribute("pos",		s.c_str());
+
+			s = toStr(o->rot[0])+" "+toStr(o->rot[1])+" "+toStr(o->rot[2])+" "+toStr(o->rot[3]);
+			oe.SetAttribute("rot",		s.c_str());
+
+			if (o->scale != Vector3::UNIT_SCALE)  // dont save default
 				oe.SetAttribute("sc",	toStrC( o->scale ));
 			objs.InsertEndChild(oe);
 		}

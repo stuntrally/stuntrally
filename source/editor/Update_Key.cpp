@@ -528,15 +528,17 @@ bool App::KeyPress(const CmdKey &arg)
 			if (road && road->bHitTer)
 			{
 				::Object o;  o.name = vObjNames[iObjNew];
-				o.pos = road->posHit;  //o.pos.y += 0.5f;
+				const Ogre::Vector3& v = road->posHit;
+				o.pos[0] = v.x;  o.pos[1] =-v.z;  o.pos[2] = v.y;  //o.pos.y += 0.5f;
 				//todo: ?dyn objs size, get center,size, rmb height..
 				String s = toStr(sc.objects.size()+1);  // counter for names
 
 				//  create object
 				o.ent = mSceneMgr->createEntity("oE"+s, o.name + ".mesh");
-				o.nd = mSceneMgr->getRootSceneNode()->createChildSceneNode("oN"+s, o.pos, o.rot);
+				o.nd = mSceneMgr->getRootSceneNode()->createChildSceneNode("oN"+s);
+				o.SetFromBlt();
 				o.nd->setScale(o.scale);
-				o.nd->attachObject(o.ent);
+				o.nd->attachObject(o.ent);  o.ent->setVisibilityFlags(RV_Vegetation);
 
 				sc.objects.push_back(o);
 				iObjCur = sc.objects.size()-1;

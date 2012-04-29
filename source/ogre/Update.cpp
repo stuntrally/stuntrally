@@ -830,23 +830,16 @@ void App::updatePoses(float time)
 	///  objects - dynamic (props)  -------------------------------------------------------------
 	for (int i=0; i < sc.objects.size(); ++i)
 	{
-		const Object& o = sc.objects[i];
+		Object& o = sc.objects[i];
 		if (o.ms)
 		{
 			btTransform tr, ofs;
 			o.ms->getWorldTransform(tr);
-
 			const btVector3& p = tr.getOrigin();
-			btQuaternion r = tr.getRotation();
-
-			Vector3 pos = Vector3(p.x(),p.z(),-p.y());
-			Quaternion q(r.x(),r.y(),r.z(),r.w()), q1;
-			Radian rad;  Vector3 axi;  q.ToAngleAxis(rad, axi);
-			q1.FromAngleAxis(-rad,Vector3(axi.z,-axi.x,-axi.y));
-			Quaternion rot = q1 * qFixCar;
-
-			o.nd->setPosition(pos);
-			o.nd->setOrientation(rot);
+			const btQuaternion& q = tr.getRotation();
+			o.pos[0] = p.x();  o.pos[1] = p.y();  o.pos[2] = p.z();
+			o.rot[0] = q.x();  o.rot[1] = q.y();  o.rot[2] = q.z();  o.rot[3] = q.w();
+			o.SetFromBlt();
 		}
 	}
 

@@ -244,8 +244,8 @@ bool App::frameRenderingQueued(const FrameEvent& evt)
 				const Object& o = sc.objects[iObjCur];
 				if (objTxt[0])	objTxt[0]->setCaption("Cur/All:  "+toStr(iObjCur+1)+" / "+toStr(sc.objects.size()));
 				if (objTxt[1])	objTxt[1]->setCaption(o.name);
-				if (objTxt[3])	objTxt[3]->setCaption("Pos:  "+fToStr(o.pos.x,1,4)+" "+fToStr(o.pos.y,1,4)+" "+fToStr(o.pos.z,1,4));
-				if (objTxt[4])	objTxt[4]->setCaption("Rot:  "+fToStr(o.rot.getYaw().valueDegrees(),1,4));
+				if (objTxt[3])	objTxt[3]->setCaption("Pos:  "+fToStr(o.pos[0],1,4)+" "+fToStr(o.pos[2],1,4)+" "+fToStr(-o.pos[1],1,4));
+				if (objTxt[4])	objTxt[4]->setCaption("Rot:  "+fToStr(o.nd->getOrientation().getYaw().valueDegrees(),1,4));
 				if (objTxt[5])	objTxt[5]->setCaption("Scale:  "+fToStr(o.scale.x,2,4)+" "+fToStr(o.scale.y,2,4)+" "+fToStr(o.scale.z,2,4));
 			}
 			if (mz != 0)  // wheel prev/next
@@ -542,21 +542,30 @@ void App::editMouse()
 				Vector3 vx = mCameraT->getRight();	   vx.y = 0;  vx.normalise();
 				Vector3 vz = mCameraT->getDirection();  vz.y = 0;  vz.normalise();
 				Vector3 vm = (-vNew.y * vz + vNew.x * vx) * fMove * moveMul;
-				o.pos += vm;  // todo: for selection ..
-				o.nd->setPosition(o.pos);  UpdObjPick();
+				o.pos[0] += vm.x;  o.pos[1] -= vm.z;  // todo: for selection ..
+				o.SetFromBlt();	 UpdObjPick();
 			}else
 			if (mbRight)  // move y
 			{
 				Real ym = -vNew.y * fMove * moveMul;
-				o.pos.y += ym;
-				o.nd->setPosition(o.pos);  UpdObjPick();
+				o.pos[2] += ym;
+				o.SetFromBlt();	 UpdObjPick();
 			}
 			else
 			if (mbMiddle)  // rot yaw
 			{
-				Real xm = vNew.x * fRot * moveMul;
-				o.rot = o.rot * Quaternion(Degree(xm),Vector3::UNIT_Y);
-				o.nd->setOrientation(o.rot);  UpdObjPick();
+				if (alt)  // reset rot
+				{
+					QUATERNION <float> qr;  qr.Rotate(0, 0, 0, 1);
+					o.rot = qr;
+				}
+				else
+				{
+					Real xm = vNew.x * fRot * moveMul *PI_d/180.f;
+					QUATERNION <float> qr;  if (!ctrl)  qr.Rotate(-xm, 0, 0, 1);  else  qr.Rotate(-xm, 0, 1, 0);
+					o.rot = o.rot * qr;
+				}
+				o.SetFromBlt();	 UpdObjPick();
 			}
 		}else
 		{
