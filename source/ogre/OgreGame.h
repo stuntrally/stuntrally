@@ -16,6 +16,7 @@
 
 #include "common/MessageBox/MessageBox.h"
 #include "common/MessageBox/MessageBoxStyle.h"
+//#include "common/GraphView.h"
 
 #include "../network/networkcallbacks.hpp"
 #include <boost/thread.hpp>
@@ -30,6 +31,7 @@ namespace BtOgre  {  class DebugDrawer;  }
 namespace MyGUI  {  class MultiList2;  }
 namespace OISB   {  class AnalogAxisAction;  }
 class MaterialFactory;
+class GraphView;
 const int CarPosCnt = 8;  // size of poses queue
 
 
@@ -49,10 +51,10 @@ public:
 	
 	void setTranslations();
 	
-	// This list holds new positions info for every CarModel
+	std::vector<GraphView*> graphs;
 	
-	/*typedef std::vector<PosInfo> CarPosQue;  // [carPosCnt]
-	std::vector<CarPosQue>*/ PosInfo carPoses[CarPosCnt][8];  // [carsNum8]
+	// This list holds new positions info for every CarModel
+	PosInfo carPoses[CarPosCnt][8];  // [carsNum8]
 	/*std::vector<int>*/ int iCurPoses[8];  // current index for carPoses queue
 	std::map<int,int> carsCamNum;  // picked camera number for cars
 	

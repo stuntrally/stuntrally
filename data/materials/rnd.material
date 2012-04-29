@@ -123,3 +123,23 @@ material circle_minimap
 		}
 	}
 }
+
+//  graph  ---------------------------------
+material graph1
+{
+	technique
+	{
+		pass
+		{
+			ambient 0.0 0.0 0.0
+			diffuse 0.0 0.0 0.0
+			specular 0.0 0.0 0.0 1.0
+			emissive 0.0 1.0 1.0
+			//lighting on
+			depth_check off
+			depth_write off
+			//scene_blend alpha_blend
+			cull_hardware none
+		}
+	}
+}

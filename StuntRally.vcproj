@@ -1363,6 +1363,14 @@
 					>
 				</File>
 				<File
+					RelativePath=".\source\ogre\common\GraphView.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\source\ogre\common\GraphView.h"
+					>
+				</File>
+				<File
 					RelativePath=".\source\ogre\common\Gui_Popup.cpp"
 					>
 				</File>
