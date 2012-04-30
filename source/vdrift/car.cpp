@@ -9,6 +9,7 @@
 #include "settings.h"
 #include "../ogre/OgreGame.h"  //+ replay
 #include "../ogre/common/Defines.h"
+#include "../ogre/common/GraphView.h"
 #include "../network/protocol.hpp"
 #include "tobullet.h"
 #include <OgreLogManager.h>
@@ -499,6 +500,19 @@ void CAR::Update(double dt)
 {
 	dynamics.Update();
 	UpdateSounds(dt);
+	
+	///  graphs new values  -_/\_.-
+	/**  // car tires slip,slide
+	if (pApp->graphs.size() > 0)
+	{
+		for (int i=0; i < 4; ++i)
+		{
+			pApp->graphs[i]->AddVal(dynamics.tire[i].slideratio * 0.03f +0.5f);
+			pApp->graphs[i+4]->AddVal(dynamics.tire[i].slipratio * 0.1f +0.5f);
+		}
+	}
+	/**/
+
 }
 
 void CAR::GetSoundList(std::list <SOUNDSOURCE *> & outputlist)

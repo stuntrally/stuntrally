@@ -97,12 +97,20 @@ void App::CreateHUD(bool destroy)
 
 	SceneManager* scm = mSplitMgr->mGuiSceneMgr;
 
-	///  graphs  .-_/\._-
-	if (graphs.size()==110)
+	///  graphs create  .-_/\._-
+	//if (0)  //remove
+	if (graphs.size()==0)
 	{
-		GraphView* gv = new GraphView(scm);
-		gv->Create(512);
-		graphs.push_back(gv);
+		for (int i=0; i < 8; ++i)
+		{
+			GraphView* gv = new GraphView(scm);
+			gv->Create(512, "graph"+toStr(i%4+1), true);
+			if (i >= 4)
+				gv->SetSize(0.f, 0.24f, 0.5f, 0.25f);
+			else
+				gv->SetSize(0.f, 0.50f, 0.5f, 0.25f);
+			graphs.push_back(gv);
+		}
 	}
 	
 	if (destroy)
@@ -427,15 +435,25 @@ void App::UpdateHUD(int carId, float time)
 	{	bSizeHUD = false;
 		SizeHUD(true);	}
 
-	///  graphs ._/\_-.
-	if (carId == -1)
-	for (int i=0; i < graphs.size(); ++i)
-	{
-		static int t=0; ++t;
-		graphs[i]->AddVal(sinf(i*0.002f+t*0.01f)*0.5f+0.5f);
-		graphs[i]->Update();
-	}
 
+	///  graphs update  -._/\_-.
+	if (carId == -1)
+	{
+		/*if (carModels.size() > 0)
+		{
+			const CARDYNAMICS& cd = carModels[0]->pCar->dynamics;
+			graphs[0]->AddVal(cd.fHitForce);
+			graphs[1]->AddVal(cd.fHitForce2);
+			graphs[2]->AddVal(cd.fHitForce3);
+			graphs[3]->AddVal(cd.fHitForce4);
+		}/**/
+		for (int i=0; i < graphs.size(); ++i)
+		{
+			//static int t=0; ++t;
+			//graphs[i]->AddVal(sinf(i*0.002f+t*0.01f)*0.5f+0.5f);
+			graphs[i]->Update();
+		}
+	}
 	
 	//  update HUD elements for all cars that have a viewport (local or replay)
 	//-----------------------------------------------------------------------------------
