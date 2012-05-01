@@ -106,7 +106,6 @@ void COLLISION_WORLD::Update(double dt, bool profiling)
 	world->stepSimulation(dt, maxSubsteps, fixedTimestep);
 	
 	//  use collision hit results, once a frame
-	static CARDYNAMICS* cdOld = 0;
 	int n = world->vHits.size();
 	if (n > 0)
 	{
@@ -121,7 +120,8 @@ void COLLISION_WORLD::Update(double dt, bool profiling)
 				hit = world->vHits[i];
 			}
 
-		CARDYNAMICS* cd = hit.sdCar->pCarDyn;  cdOld = cd;
+		CARDYNAMICS* cd = hit.sdCar->pCarDyn;
+		cdOld = cd;
 		btVector3 vcar = hit.vel;
 		Ogre::Vector3 vel(vcar[0], vcar[2], -vcar[1]);
 		Ogre::Vector3 norm(hit.norm.getX(), hit.norm.getZ(), -hit.norm.getY());
@@ -129,18 +129,15 @@ void COLLISION_WORLD::Update(double dt, bool profiling)
 
 		//  Sparks emit params
 		cd->vHitPos = Ogre::Vector3(hit.pos.getX(), hit.pos.getZ(), -hit.pos.getY());
-		cd->vHitNorm = norm + vel * 0.1f;  //vel*0.2 + norm*3;
-		cd->fParVel = 3.0 + 0.4 * vlen;
-		cd->fParIntens = 10.f + 30.f * vlen;  //hit.force * std::min(1.f, vlen);
-
-		/// todo: tweak hit params ...
-		cd->fHitForce = normvel*0.02 /*+ 0.02*vlen*/;  //+
+		cd->vHitNorm = norm + vel * 0.1f;
+		cd->fParVel = 3.0f + 0.4f * vlen;
+		cd->fParIntens = 10.f + 30.f * vlen;
+		//  hit force for sound
+		cd->fHitForce = normvel*0.02f /*+ 0.02f*vlen*/;  //+
 		cd->fHitForce2 = force*0.1f;
-		//cd->fHitForce = force;
+		cd->fHitForce4 = vlen*0.2f*force;
 		//if (force > 0.5f)
 			cd->fHitTime = 1.f;
-		//cd->fHitForce = normvel*0.04f;  //-
-		//cd->fHitForce = force * 0.01f;  //-
 		///LogO("upd sf " + toStr(cd->fHitForce) + " force " + toStr(hit.force) + " vel " + toStr(vlen) + " Nvel " + toStr(normvel));
 	}
 	else if (cdOld)
@@ -157,7 +154,7 @@ void COLLISION_WORLD::Update(double dt, bool profiling)
 
 ///  ctor bullet world
 COLLISION_WORLD::COLLISION_WORLD() :
-	config(0), dispatcher(0), broadphase(0), solver(0), world(0),
+	config(0), dispatcher(0), broadphase(0), solver(0), world(0), cdOld(0),
 	track(NULL), trackObject(NULL), trackMesh(NULL),
 	fixedTimestep(1.0/60.0), maxSubsteps(7)  // default, set from settings
 {

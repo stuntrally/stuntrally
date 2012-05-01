@@ -104,6 +104,7 @@ void App::CreateHUD(bool destroy)
 		{
 			GraphView* gv = new GraphView(scm);
 			gv->Create(512, "graph"+toStr(i%4+1), 0.13f);
+			gv->SetVisible(pSet->show_graphs);
 			if (i >= 4)
 				gv->SetSize(0.f, 0.24f, 0.5f, 0.25f);
 			else

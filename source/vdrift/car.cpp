@@ -916,7 +916,7 @@ void CAR::UpdateSounds(float dt)
 	{
 		crashdetection.Update(speed, dt);
 		float crashdecel = crashdetection.GetMaxDecel();
-		dynamics.fHitForce4 = crashdecel / 1400.f;
+		//dynamics.fHitForce4 = crashdecel / 1400.f;
 		//todo: ^for old replays..  set blt car pos,rot in rpl for objs..
 
 		crashdetection2.Update(-fHitForce, dt);

@@ -2227,88 +2227,87 @@
 						</Widget>
 					</Widget>
 					<Widget type="TabItem" skin="" position="2 24 738 432">
-						<Property key="Caption" value="#{Other}"/>
+						<Property key="Caption" value="#{Startup}"/>
 						<UserString key="RelativeTo" value="OptionsWnd"/>
-						<Widget type="TextBox" skin="TextBox" position="40 30 216 24">
-							<Property key="Caption" value="#{Development}"/>
-							<Property key="TextColour" value="0.7 0.85 1.0"/>
-							<UserString key="RelativeTo" value="OptionsWnd"/>
-						</Widget>
-						<Widget type="Button" skin="CheckBox" position="40 62 256 24" name="Fps">
-							<Property key="Caption" value="#{FPS}  F11"/>
-							<Property key="TextColour" value="0.8 0.9 1.0"/>
-							<UserString key="RelativeTo" value="OptionsWnd"/>
-						</Widget>
-						<Widget type="Button" skin="CheckBox" position="40 94 256 24" name="CarDbgBars">
-							<Property key="Caption" value="#{CarDebug}  F9"/>
-							<Property key="TextColour" value="0.7 0.9 1.0"/>
-							<UserString key="RelativeTo" value="OptionsWnd"/>
-						</Widget>
-						<Widget type="Button" skin="CheckBox" position="40 126 256 24" name="Wireframe">
-							<Property key="Caption" value="#{Wireframe}  F10"/>
-							<Property key="TextColour" value="0.7 0.85 1.0"/>
-							<UserString key="RelativeTo" value="OptionsWnd"/>
-						</Widget>
-						<Widget type="Button" skin="CheckBox" position="40 174 256 24" name="BulletDebug">
-							<Property key="Caption" value="#{BulletDebug}  ctrl-F10"/>
-							<Property key="TextColour" value="0.7 0.85 1.0"/>
-							<UserString key="RelativeTo" value="OptionsWnd"/>
-						</Widget>
-						<Widget type="Button" skin="CheckBox" position="40 206 256 24" name="BulletProfilerTxt">
-							<Property key="Caption" value="#{BulletProfilerTxt}  shift-F10"/>
-							<Property key="TextColour" value="0.7 0.85 1.0"/>
-							<UserString key="RelativeTo" value="OptionsWnd"/>
-						</Widget>
-						<Widget type="Button" skin="CheckBox" position="40 238 256 24" name="CarDbgTxt">
-							<Property key="Caption" value="#{CarDebugText}  shift-F9"/>
-							<Property key="TextColour" value="0.7 0.85 1.0"/>
-							<UserString key="RelativeTo" value="OptionsWnd"/>
-						</Widget>
-						<Widget type="Button" skin="CheckBox" position="40 270 256 24" name="ProfilerTxt">
-							<Property key="Caption" value="#{ProfilerTxt}  ctrl-F9"/>
-							<Property key="TextColour" value="0.7 0.85 1.0"/>
-							<UserString key="RelativeTo" value="OptionsWnd"/>
-						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="352 30 216 24">
-							<Property key="TextColour" value="0.75 0.85 0.95"/>
-							<Property key="Caption" value="#{Startup}"/>
-							<UserString key="RelativeTo" value="OptionsWnd"/>
-						</Widget>
-						<Widget type="Button" skin="CheckBox" position="352 62 256 24" name="MouseCapture">
+						<Widget type="Button" skin="CheckBox" position="32 62 256 24" name="MouseCapture">
 							<Property key="TextColour" value="0.5 0.6 0.7"/>
 							<Property key="Caption" value="#{MouseCapture}"/>
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
-						<Widget type="Button" skin="CheckBox" position="352 94 256 24" name="ShowPictures">
+						<Widget type="Button" skin="CheckBox" position="32 94 256 24" name="ShowPictures">
 							<Property key="TextColour" value="0.8 0.9 1.0"/>
 							<Property key="Caption" value="#{ShowPictures}*"/>
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
-						<Widget type="Button" skin="CheckBox" position="352 126 256 24" name="OgreDialog">
+						<Widget type="Button" skin="CheckBox" position="32 126 256 24" name="OgreDialog">
 							<Property key="TextColour" value="0.5 0.6 0.7"/>
 							<Property key="Caption" value="#{OgreDialog}"/>
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
-						<Widget type="Button" skin="CheckBox" position="352 158 256 24" name="AutoStart">
+                        <Widget type="Button" skin="CheckBox" position="32 168 256 24" name="AutoStart">
 							<Property key="TextColour" value="0.7 0.8 0.9"/>
 							<Property key="Caption" value="#{AutoLoad}"/>
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
-						<Widget type="Button" skin="CheckBox" position="352 206 256 24" name="EscQuits">
+                        <Widget type="Button" skin="CheckBox" position="32 200 256 24" name="EscQuits">
 							<Property key="TextColour" value="0.7 0.8 0.9"/>
 							<Property key="Caption" value="#{EscQuit}"/>
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
-						<Widget type="Button" skin="CheckBox" position="352 238 256 24" name="BltLines">
+                        <Widget type="Button" skin="CheckBox" position="32 244 256 24" name="BltLines">
 							<Property key="TextColour" value="0.7 0.8 0.9"/>
 							<Property key="Caption" value="#{BulletLines}*"/>
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
-						<Widget type="Button" skin="CheckBox" position="352 270 256 24" name="MultiThread">
+                        <Widget type="Button" skin="CheckBox" position="32 276 256 24" name="MultiThread">
 							<Property key="TextColour" value="0.7 0.8 0.9"/>
 							<Property key="Caption" value="#{MultiThread}*"/>
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
+					</Widget>
+					<Widget type="TabItem" skin="" position="2 24 738 432">
+						<Property key="Caption" value="#{Other}"/>
+						<UserString key="RelativeTo" value="OptionsWnd"/>
+						<Widget type="Button" skin="CheckBox" position="32 62 256 24" name="Fps">
+							<Property key="Caption" value="#{FPS}  F11"/>
+							<Property key="TextColour" value="0.8 0.9 1.0"/>
+							<UserString key="RelativeTo" value="OptionsWnd"/>
+						</Widget>
+                        <Widget type="Button" skin="CheckBox" position="64 94 256 24" name="ProfilerTxt">
+                            <Property key="Caption" value="#{ProfilerTxt}  shift-F11"/>
+							<Property key="TextColour" value="0.7 0.85 1.0"/>
+							<UserString key="RelativeTo" value="OptionsWnd"/>
+						</Widget>
+                        <Widget type="Button" skin="CheckBox" position="32 136 256 24" name="Wireframe">
+							<Property key="Caption" value="#{Wireframe}  F10"/>
+							<Property key="TextColour" value="0.7 0.85 1.0"/>
+							<UserString key="RelativeTo" value="OptionsWnd"/>
+						</Widget>
+                        <Widget type="Button" skin="CheckBox" position="32 168 256 24" name="BulletDebug">
+							<Property key="Caption" value="#{BulletDebug}  ctrl-F10"/>
+							<Property key="TextColour" value="0.7 0.85 1.0"/>
+							<UserString key="RelativeTo" value="OptionsWnd"/>
+						</Widget>
+                        <Widget type="Button" skin="CheckBox" position="64 200 256 24" name="BulletProfilerTxt">
+							<Property key="Caption" value="#{BulletProfilerTxt}  shift-F10"/>
+							<Property key="TextColour" value="0.7 0.85 1.0"/>
+							<UserString key="RelativeTo" value="OptionsWnd"/>
+						</Widget>
+                        <Widget type="Button" skin="CheckBox" position="32 244 256 24" name="CarDbgBars">
+							<Property key="Caption" value="#{CarDebug}  F9"/>
+							<Property key="TextColour" value="0.7 0.9 1.0"/>
+							<UserString key="RelativeTo" value="OptionsWnd"/>
+						</Widget>
+                        <Widget type="Button" skin="CheckBox" position="64 276 256 24" name="CarDbgTxt">
+							<Property key="Caption" value="#{CarDebugText}  shift-F9"/>
+							<Property key="TextColour" value="0.7 0.85 1.0"/>
+							<UserString key="RelativeTo" value="OptionsWnd"/>
+						</Widget>
+                        <Widget type="Button" skin="CheckBox" position="32 316 256 24" name="Graphs">
+                            <Property key="Caption" value="#{Graphs}  ctrl-F8"/>
+                            <Property key="TextColour" value="0.7 0.85 1.0"/>
+                            <UserString key="RelativeTo" value="OptionsWnd"/>
+                        </Widget>
 					</Widget>
 				</Widget>
 			</Widget>

@@ -50,14 +50,13 @@ void SETTINGS::Serialize(bool w, CONFIGFILE & c)
 	//  hud
 	Param(c,w, "hud_show.fps", show_fps);				Param(c,w, "hud_show.mph", show_mph);
 	Param(c,w, "hud_show.gauges", show_gauges);			Param(c,w, "hud_show.show_digits", show_digits);
-	Param(c,w, "hud_show.trackmap", trackmap);
-	Param(c,w, "hud_show.caminfo", show_cam);			Param(c,w, "hud_show.times", show_times);
-	Param(c,w, "hud_show.cam_tilt", cam_tilt);
+	Param(c,w, "hud_show.trackmap", trackmap);			Param(c,w, "hud_show.times", show_times);
+	Param(c,w, "hud_show.caminfo", show_cam);			Param(c,w, "hud_show.cam_tilt", cam_tilt);
 	Param(c,w, "hud_show.car_dbgtxt", car_dbgtxt);		Param(c,w, "hud_show.show_cardbg", car_dbgbars);
-	Param(c,w, "hud_show.tracks_view", tracks_view);
+	Param(c,w, "hud_show.tracks_view", tracks_view);	Param(c,w, "hud_show.check_arrow", check_arrow);
 	Param(c,w, "hud_show.tracks_sort", tracks_sort);	Param(c,w, "hud_show.tracks_sortup", tracks_sortup);
-	Param(c,w, "hud_show.check_arrow", check_arrow);	Param(c,w, "hud_show.opponents", show_opponents);
-	Param(c,w, "hud_show.opplist_sort", opplist_sort);
+	Param(c,w, "hud_show.opponents", show_opponents);	Param(c,w, "hud_show.opplist_sort", opplist_sort);
+	Param(c,w, "hud_show.graphs", show_graphs);	
 
 	Param(c,w, "hud_size.gauges", size_gauges);			Param(c,w, "hud_size.minimap", size_minimap);
 	Param(c,w, "hud_size.mini_zoom", zoom_minimap);		Param(c,w, "hud_size.mini_zoomed", mini_zoomed);
@@ -140,7 +139,7 @@ SETTINGS::SETTINGS() :  ///  Defaults
 	show_fps(1), show_gauges(1), trackmap(1),
 	show_cam(1), show_times(0), show_digits(1),
 	show_opponents(1), opplist_sort(true), cam_tilt(1),
-	car_dbgtxt(0), car_dbgbars(0),
+	car_dbgtxt(0), car_dbgbars(0), show_graphs(0),
 	size_gauges(0.18), size_minimap(0.2), zoom_minimap(1.0),
 	mini_zoomed(0), mini_rotated(1), mini_terrain(0),
 	tracks_view(0), tracks_sort(0), tracks_sortup(1),

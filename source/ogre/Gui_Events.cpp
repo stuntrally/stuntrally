@@ -8,6 +8,7 @@
 #include "SplitScreen.h"
 #include "common/Gui_Def.h"
 #include "common/RenderConst.h"
+#include "common/GraphView.h"
 #include "../network/masterclient.hpp"
 #include "../network/gameclient.hpp"
 
@@ -642,14 +643,14 @@ if (!bAssignKey)
 			case KC_F9:
 				if (shift)		// car debug text
 				{	WP wp = chDbgT;  ChkEv(car_dbgtxt);  ShowHUD();  }
-				else if (ctrl)  // profiler times
-				{	WP wp = chProfTxt;  ChkEv(profilerTxt);  ShowHUD();  }
 				else			// car debug bars
 				{	WP wp = chDbgB;  ChkEv(car_dbgbars);   ShowHUD();  }
 				return true;
 
 			case KC_F11:	//  fps
-				if (!shift)
+				if (shift)  // profiler times
+				{	WP wp = chProfTxt;  ChkEv(profilerTxt);  ShowHUD();  }
+				else if (!ctrl)
 				{	WP wp = chFps;  ChkEv(show_fps); 
 					if (pSet->show_fps)  mFpsOverlay->show();  else  mFpsOverlay->hide();
 					return false;
@@ -676,11 +677,17 @@ if (!bAssignKey)
 			case KC_F7:		// Times
 				if (shift)
 				{	WP wp = chOpponents;  ChkEv(show_opponents);  ShowHUD();  }
-				else
+				else if (!ctrl)
 				{	WP wp = chTimes;  ChkEv(show_times);  ShowHUD();  }
 					return false;
 				
 			case KC_F8:		// Minimap
+				if (ctrl)
+				{	pSet->show_graphs = !pSet->show_graphs;
+					for (int i=0; i < graphs.size(); ++i)
+						graphs[i]->SetVisible(pSet->show_graphs);
+				}
+				else if (!shift)
 				{	WP wp = chMinimp;  ChkEv(trackmap);
 					for (int c=0; c < 4; ++c)
 						if (ndMap[c])  ndMap[c]->setVisible(pSet->trackmap);
