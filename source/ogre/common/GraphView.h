@@ -12,21 +12,27 @@ class GraphView
 public:
 	GraphView(Ogre::SceneManager* pSceneMgr);
 
-	void Create(int size/*values length*/, Ogre::String sMtr, bool background);
+	//  Create
+	void Create(int length,			// values buffer length
+				Ogre::String sMtr,	// material for line
+				float backAlpha);	// background transparency 0..1
 	void Destroy();
 
+	//  Set position and size on screen
 	void SetSize(float posX,float posY,float sizeX,float sizeY);  // [0..1]  0,0 is left bottom
+	void SetVisible(bool visible);  // show/hide
 	
+	//  Update, fill
 	void AddVal(float val);  // adds value at end of graph, moves left
 	void Update();  // ogre update
 
 protected:
-	std::vector<float> vals;
+	std::vector<float> vals;  // values buffer
 	int iCurX;  // cur id to insert new val
 
 	Ogre::SceneManager* mSceneMgr;
-	Ogre::ManualObject* mo, *mb;  //o-graph, b-background
-	Ogre::SceneNode* nd;
+	Ogre::ManualObject* moLine, *moBack;  //graph line, background
+	Ogre::SceneNode* node;
 };
 
 #endif

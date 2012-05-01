@@ -23,7 +23,7 @@ CARDYNAMICS::CARDYNAMICS() :
 	maxangle(45.0),
 	bTerrain(false), pSet(0), pScene(0),
 	doBoost(0), doFlip(0), boostFuel(0), boostVal(0),
-	fHitTime(0), fParIntens(0), fParVel(0), //hit
+	fHitTime(0), fHitForce(0), fParIntens(0), fParVel(0), //hit
 	vHitPos(0,0,0), vHitNorm(0,0,0),
 	steerValue(0.f), velPrev(0,0,0)
 {
@@ -733,6 +733,7 @@ void CARDYNAMICS::Init(
 		for (i=0; i < numSph; ++i)
 			pos[i] += origin;
 		btMultiSphereShape* chassisShape = new btMultiSphereShape(pos, rad, numSph);
+		//chassisShape->setMargin(0.2f);
 	#endif
 
 
@@ -747,7 +748,7 @@ void CARDYNAMICS::Init(
 	chassisState->setWorldTransform(transform);
 
 	btRigidBody::btRigidBodyConstructionInfo info(chassisMass, chassisState, chassisShape, chassisInertia);
-	info.m_angularDamping = 0.4;  // 0.2-  0.5
+	info.m_angularDamping = 0.4;  // 0.0!+  0.2-  0.5
 	info.m_restitution = 0.0;  //...
 	info.m_friction = 0.7;  /// 0.4~ 0.75
 	///  chasis^

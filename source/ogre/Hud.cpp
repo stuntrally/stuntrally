@@ -98,13 +98,12 @@ void App::CreateHUD(bool destroy)
 	SceneManager* scm = mSplitMgr->mGuiSceneMgr;
 
 	///  graphs create  .-_/\._-
-	//if (0)  //remove
 	if (graphs.size()==0)
 	{
-		for (int i=0; i < 8; ++i)
+		for (int i=0; i < 4; ++i)
 		{
 			GraphView* gv = new GraphView(scm);
-			gv->Create(512, "graph"+toStr(i%4+1), true);
+			gv->Create(512, "graph"+toStr(i%4+1), 0.13f);
 			if (i >= 4)
 				gv->SetSize(0.f, 0.24f, 0.5f, 0.25f);
 			else
@@ -439,14 +438,15 @@ void App::UpdateHUD(int carId, float time)
 	///  graphs update  -._/\_-.
 	if (carId == -1)
 	{
-		/*if (carModels.size() > 0)
+		if (carModels.size() > 0)
 		{
 			const CARDYNAMICS& cd = carModels[0]->pCar->dynamics;
 			graphs[0]->AddVal(cd.fHitForce);
 			graphs[1]->AddVal(cd.fHitForce2);
 			graphs[2]->AddVal(cd.fHitForce3);
 			graphs[3]->AddVal(cd.fHitForce4);
-		}/**/
+		}
+		/**/
 		for (int i=0; i < graphs.size(); ++i)
 		{
 			//static int t=0; ++t;

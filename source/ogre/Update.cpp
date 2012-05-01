@@ -577,6 +577,7 @@ void App::newPoses(float time)  // time only for camera update
 				fr.fHitTime = cd.fHitTime;	fr.fParIntens = cd.fParIntens;	fr.fParVel = cd.fParVel;
 				fr.vHitPos = cd.vHitPos;	fr.vHitNorm = cd.vHitNorm;
 				fr.whMudSpin = pCar->whMudSpin;
+				fr.fHitForce = cd.fHitForce;
 				
 				replay.AddFrame(fr, c);  // rec replay
 				if (c==0)  /// rec ghost lap
@@ -585,7 +586,7 @@ void App::newPoses(float time)  // time only for camera update
 					ghost.AddFrame(fr, 0);
 				}
 				
-				if (valRplName2)  // recorded info
+				if (valRplName2)  // recorded info ..not here, in update
 				{
 					int size = replay.GetNumFrames() * sizeof(ReplayFrame);
 					std::string s = fToStr( float(size)/1000000.f, 2,5);
