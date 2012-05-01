@@ -146,9 +146,7 @@ void App::InitGui()
 	Chk("ReverseOn", chkReverse, pSet->gui.trackreverse);
 	Chk("ParticlesOn", chkParticles, pSet->particles);	Chk("TrailsOn", chkTrails, pSet->trails);
 
-	Chk("Fps", chkFps, pSet->show_fps);	chFps = mGUI->findWidget<Button>("Fps");
-	if (pSet->show_fps)  mFpsOverlay->show();  else  mFpsOverlay->hide();
-
+	//  hud
 	Chk("Digits", chkDigits, pSet->show_digits);
 	Chk("Gauges", chkGauges, pSet->show_gauges);  ShowHUD();//
 	Chk("Arrow", chkArrow, pSet->check_arrow);
@@ -156,16 +154,26 @@ void App::InitGui()
 	Chk("Minimap", chkMinimap, pSet->trackmap);	chMinimp = bchk;
 	Chk("MiniZoom", chkMiniZoom, pSet->mini_zoomed);  Chk("MiniRot", chkMiniRot, pSet->mini_rotated);
 	Chk("MiniTer", chkMiniTer, pSet->mini_terrain);
-	Chk("Times", chkTimes, pSet->show_times);	chTimes  = bchk;
+
 	Chk("CamInfo", chkCamInfo, pSet->show_cam);
 	Chk("CamTilt", chkCamTilt, pSet->cam_tilt);
+
+	Chk("Times", chkTimes, pSet->show_times);	chTimes  = bchk;
 	Chk("Opponents", chkOpponents, pSet->show_opponents);  chOpponents = bchk;
 	Chk("OpponentsSort", chkOpponentsSort, pSet->opplist_sort);
 
+	//  other
+	Chk("Fps", chkFps, pSet->show_fps);  chFps = bchk;
+	if (pSet->show_fps)  mFpsOverlay->show();  else  mFpsOverlay->hide();
+	Chk("Wireframe", chkWireframe, mbWireFrame);  chWire = bchk;
+
+	Chk("ProfilerTxt", chkProfilerTxt, pSet->profilerTxt);	chProfTxt = bchk;
+	Chk("BulletDebug", chkBltDebug, pSet->bltDebug);		chBlt = bchk;
+	Chk("BulletProfilerTxt", chkBltProfilerTxt, pSet->bltProfilerTxt);	chBltTxt = bchk;
+
 	Chk("CarDbgBars", chkCarDbgBars, pSet->car_dbgbars);	chDbgB = bchk;
 	Chk("CarDbgTxt", chkCarDbgTxt, pSet->car_dbgtxt);		chDbgT = bchk;
-	Chk("BulletDebug", chkBltDebug, pSet->bltDebug);	chBlt = bchk;
-	Chk("ProfilerTxt", chkProfilerTxt, pSet->profilerTxt);	chProfTxt = bchk;
+	Chk("Graphs", chkGraphs, pSet->show_graphs);		chGraphs = bchk;
 
 	//  car setup  todo: for each player ..
 	Chk("CarABS",  chkAbs, pSet->abs);			Chk("CarTCS", chkTcs, pSet->tcs);

@@ -25,7 +25,6 @@
 #include "LinearMath/btSerializer.h"
 #include "Serialize/BulletFileLoader/btBulletFile.h"
 #include "Serialize/BulletWorldImporter/btBulletWorldImporter.h"
-//Extras/ ^?
 #include <boost/filesystem.hpp>
 
 #include <OgreRoot.h>
@@ -705,7 +704,7 @@ void App::CreateObjects()
 			bco->setCollisionShape(shape);	bco->setWorldTransform(tr);
 			bco->setFriction(0.7f);  bco->setRestitution(0.f);
 			bco->setCollisionFlags(bco->getCollisionFlags() |
-				btCollisionObject::CF_STATIC_OBJECT /*| btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT/**/);
+				btCollisionObject::CF_STATIC_OBJECT | btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT/**/);
 			pGame->collision.world->addCollisionObject(bco);
 			pGame->collision.shapes.push_back(shape);
 		}

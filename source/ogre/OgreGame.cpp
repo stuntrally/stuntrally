@@ -38,7 +38,8 @@ App::App(SETTINGS *settings, GAME *game)
 	,valReflSkip(0), valReflSize(0), valReflFaces(0), valReflDist(0), valWaterSize(0)  // refl
 	,valShaders(0), valShadowType(0), valShadowCount(0), valShadowSize(0), valShadowDist(0), valShadowFilter(0)  // shadow
 	,valSizeGaug(0),valTypeGaug(0), valSizeMinimap(0), valZoomMinimap(0), valCountdownTime(0)  // view
-	,bRkmh(0),bRmph(0), chDbgT(0),chDbgB(0), chBlt(0),chBltTxt(0), chFps(0), chProfTxt(0)
+	,bRkmh(0),bRmph(0), chDbgT(0),chDbgB(0), chBlt(0),chBltTxt(0)
+	,chFps(0), chWire(0), chProfTxt(0), chGraphs(0)
 	,chTimes(0),chMinimp(0),chOpponents(0), bnQuit(0)
 	,imgCar(0), imgTrkIco1(0),imgTrkIco2(0)
 	,valCar(0), valLocPlayers(0), edFind(0)

@@ -321,11 +321,28 @@ void App::chkTrails(WP wp)
 	for (std::vector<CarModel*>::iterator it=carModels.begin(); it!=carModels.end(); it++)
 		(*it)->UpdParsTrails();
 }
-void App::chkFps(WP wp){			ChkEv(show_fps);	if (pSet->show_fps)  mFpsOverlay->show();  else  mFpsOverlay->hide();	}
-void App::chkReverse(WP wp){		ChkEv(gui.trackreverse);	ReadTrkStats();  }
-
+void App::toggleWireframe()
+{
+	mbWireFrame = !mbWireFrame;
+	if (chWire)  chWire->setStateSelected(mbWireFrame);
+	
+	///  Set for all cameras
+	PolygonMode mode = mbWireFrame ? PM_WIREFRAME : PM_SOLID;
+	
+	refreshCompositor(mode == PM_WIREFRAME);  // disable effects
+	if (mSplitMgr)
+	for (std::list<Camera*>::iterator it=mSplitMgr->mCameras.begin(); it!=mSplitMgr->mCameras.end(); ++it)
+		(*it)->setPolygonMode(mode);
+	
+	if (ndSky)	ndSky->setVisible(!mbWireFrame);  // hide sky
+}
+//  hud
 void App::chkDigits(WP wp){ 		ChkEv(show_digits); ShowHUD();   }
 void App::chkGauges(WP wp){			ChkEv(show_gauges);	ShowHUD();	}
+
+void App::radKmh(WP wp){	bRkmh->setStateSelected(true);  bRmph->setStateSelected(false);  pSet->show_mph = false;  ShowHUD();  }
+void App::radMph(WP wp){	bRkmh->setStateSelected(false);  bRmph->setStateSelected(true);  pSet->show_mph = true;   ShowHUD();  }
+
 void App::chkArrow(WP wp){			ChkEv(check_arrow); if (arrowRotNode) arrowRotNode->setVisible(pSet->check_arrow);  }
 void App::chkMinimap(WP wp){		ChkEv(trackmap);
 	for (int c=0; c < 4; ++c)
@@ -334,6 +351,9 @@ void App::chkMinimap(WP wp){		ChkEv(trackmap);
 void App::chkMiniZoom(WP wp){		ChkEv(mini_zoomed);		}
 void App::chkMiniRot(WP wp){		ChkEv(mini_rotated);	}
 void App::chkMiniTer(WP wp){		ChkEv(mini_terrain);	UpdMiniTer();  }
+
+void App::chkReverse(WP wp){		ChkEv(gui.trackreverse);	ReadTrkStats();  }
+
 void App::chkTimes(WP wp){			ChkEv(show_times);	ShowHUD();	}
 void App::chkOpponents(WP wp){		ChkEv(show_opponents);	ShowHUD();	}
 void App::chkOpponentsSort(WP wp){	ChkEv(opplist_sort);	}
@@ -342,14 +362,21 @@ void App::chkOpponentsSort(WP wp){	ChkEv(opplist_sort);	}
 void App::chkCamInfo(WP wp){		ChkEv(show_cam);	ShowHUD();	}
 void App::chkCamTilt(WP wp){		ChkEv(cam_tilt);	}
 
-void App::chkCarDbgBars(WP wp){		ChkEv(car_dbgbars);	ShowHUD();	}
-void App::chkCarDbgTxt(WP wp){		ChkEv(car_dbgtxt);	ShowHUD();	}
+//  other
+void App::chkFps(WP wp){			ChkEv(show_fps);	if (pSet->show_fps)  mFpsOverlay->show();  else  mFpsOverlay->hide();	}
+void App::chkWireframe(WP wp){		toggleWireframe();  }
+
+void App::chkProfilerTxt(WP wp){	ChkEv(profilerTxt);	}
 void App::chkBltDebug(WP wp){		ChkEv(bltDebug);	}
 void App::chkBltProfilerTxt(WP wp){	ChkEv(bltProfilerTxt);	}
-void App::chkProfilerTxt(WP wp){	ChkEv(profilerTxt);	}
 
-void App::radKmh(WP wp){	bRkmh->setStateSelected(true);  bRmph->setStateSelected(false);  pSet->show_mph = false;  ShowHUD();  }
-void App::radMph(WP wp){	bRkmh->setStateSelected(false);  bRmph->setStateSelected(true);  pSet->show_mph = true;   ShowHUD();  }
+void App::chkCarDbgBars(WP wp){		ChkEv(car_dbgbars);	ShowHUD();	}
+void App::chkCarDbgTxt(WP wp){		ChkEv(car_dbgtxt);	ShowHUD();	}
+
+void App::chkGraphs(WP wp){			ChkEv(show_graphs);
+	for (int i=0; i < graphs.size(); ++i)
+		graphs[i]->SetVisible(pSet->show_graphs);
+}
 
 //  Startup
 void App::chkMouseCapture(WP wp){	ChkEv(x11_capture_mouse);	}
@@ -640,17 +667,38 @@ if (!bAssignKey)
 				}	break;
 				
 
+			case KC_F7:		// Times
+				if (shift)
+				{	WP wp = chOpponents;  ChkEv(show_opponents);  ShowHUD();  }
+				else if (!ctrl)
+				{	WP wp = chTimes;  ChkEv(show_times);  ShowHUD();  }
+				return false;
+				
+			case KC_F8:		// graphs
+				if (ctrl)
+				{	WP wp = chGraphs;  ChkEv(show_graphs);
+					for (int i=0; i < graphs.size(); ++i)
+						graphs[i]->SetVisible(pSet->show_graphs);
+				}
+				else		// Minimap
+				if (!shift)
+				{	WP wp = chMinimp;  ChkEv(trackmap);
+					for (int c=0; c < 4; ++c)
+						if (ndMap[c])  ndMap[c]->setVisible(pSet->trackmap);
+				}	return false;
+
 			case KC_F9:
-				if (shift)		// car debug text
+				if (shift)	// car debug text
 				{	WP wp = chDbgT;  ChkEv(car_dbgtxt);  ShowHUD();  }
-				else			// car debug bars
+				else		// car debug bars
 				{	WP wp = chDbgB;  ChkEv(car_dbgbars);   ShowHUD();  }
 				return true;
 
-			case KC_F11:	//  fps
-				if (shift)  // profiler times
+			case KC_F11:
+				if (shift)	// profiler times
 				{	WP wp = chProfTxt;  ChkEv(profilerTxt);  ShowHUD();  }
-				else if (!ctrl)
+				else
+				if (!ctrl)  // Fps
 				{	WP wp = chFps;  ChkEv(show_fps); 
 					if (pSet->show_fps)  mFpsOverlay->show();  else  mFpsOverlay->hide();
 					return false;
@@ -661,37 +709,10 @@ if (!bAssignKey)
 				{	WP wp = chBltTxt;  ChkEv(bltProfilerTxt);  return false;  }
 				else if (ctrl)
 				{	WP wp = chBlt;  ChkEv(bltDebug);  return false;  }
-				else
-				{	mbWireFrame = !mbWireFrame;
-					///  Set for all cameras
-					PolygonMode mode = mbWireFrame ? PM_WIREFRAME : PM_SOLID;
-					
-					refreshCompositor(mode == PM_WIREFRAME);  // disable effects
-					if (mSplitMgr)
-					for (std::list<Camera*>::iterator it=mSplitMgr->mCameras.begin(); it!=mSplitMgr->mCameras.end(); ++it)
-						(*it)->setPolygonMode(mode);
-					
-					if (ndSky)	ndSky->setVisible(!mbWireFrame);  // hide sky
-				}	return false;
+				else		// wireframe
+					toggleWireframe();
+				return false;
 
-			case KC_F7:		// Times
-				if (shift)
-				{	WP wp = chOpponents;  ChkEv(show_opponents);  ShowHUD();  }
-				else if (!ctrl)
-				{	WP wp = chTimes;  ChkEv(show_times);  ShowHUD();  }
-					return false;
-				
-			case KC_F8:		// Minimap
-				if (ctrl)
-				{	pSet->show_graphs = !pSet->show_graphs;
-					for (int i=0; i < graphs.size(); ++i)
-						graphs[i]->SetVisible(pSet->show_graphs);
-				}
-				else if (!shift)
-				{	WP wp = chMinimp;  ChkEv(trackmap);
-					for (int c=0; c < 4; ++c)
-						if (ndMap[c])  ndMap[c]->setVisible(pSet->trackmap);
-				}	return false;
 			
 			case KC_F5:		//  new game
 				NewGame();  return false;

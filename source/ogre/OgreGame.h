@@ -306,10 +306,12 @@ protected:
 	SLV(NumLaps);  SLV(RplNumViewports);  // setup
 	
 	//  checks
-	void chkFps(WP), chkGauges(WP),	chkArrow(WP), chkDigits(WP),
+	void chkGauges(WP),	chkArrow(WP), chkDigits(WP),
 		chkMinimap(WP), chkMiniZoom(WP), chkMiniRot(WP), chkMiniTer(WP),  // view
+		chkFps(WP), chkWireframe(WP), 
 		chkCamInfo(WP), chkTimes(WP), chkOpponents(WP), chkOpponentsSort(WP), chkCamTilt(WP),
-		chkCarDbgBars(WP), chkCarDbgTxt(WP), chkBltDebug(WP), chkBltProfilerTxt(WP), chkProfilerTxt(WP),
+		chkCarDbgBars(WP), chkCarDbgTxt(WP), chkGraphs(WP),
+		chkBltDebug(WP), chkBltProfilerTxt(WP), chkProfilerTxt(WP),
 		chkReverse(WP), chkParticles(WP), chkTrails(WP),
 		chkAbs(WP), chkTcs(WP), chkGear(WP), chkRear(WP), chkRearInv(WP),  // car
 		chkMouseCapture(WP), chkOgreDialog(WP), chkAutoStart(WP), chkEscQuits(WP),
@@ -320,9 +322,9 @@ protected:
 		chkVegetCollis(WP), chkCarCollis(WP);  //car
 	void chkUseImposters(WP wp);
 
-	void imgBtnCarClr(WP), btnCarClrRandom(WP);
+	void imgBtnCarClr(WP), btnCarClrRandom(WP), toggleWireframe();
 	MyGUI::ButtonPtr bRkmh, bRmph;  void radKmh(WP), radMph(WP);
-	MyGUI::ButtonPtr chDbgT,chDbgB, chBlt,chBltTxt, chFps, chProfTxt,
+	MyGUI::ButtonPtr chFps,chWire, chBlt,chBltTxt, chProfTxt, chDbgT,chDbgB, chGraphs,
 		chTimes,chMinimp,chOpponents;
 
 	///  replay  -----------------------------
