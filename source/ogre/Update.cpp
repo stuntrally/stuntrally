@@ -326,6 +326,13 @@ bool App::frameStart(Real time)
 			arrowRotNode->pitch(Degree(-20), SceneNode::TS_LOCAL); 
 		}
 
+		for (std::vector<CarModel*>::iterator it=carModels.begin();
+			it!=carModels.end(); ++it)
+		{
+			if ( (*it)->fCam)
+				(*it)->fCam->updInfo(time);
+		}
+
 		//  update all cube maps
 		PROFILER.beginBlock("g.refl");
 		for (std::vector<CarModel*>::iterator it=carModels.begin(); it!=carModels.end(); it++)
