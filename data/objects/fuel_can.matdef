@@ -12,7 +12,6 @@
     specular = 1 1 1 4
 
 
-// blender material: RubberTire
 [RubberTire]
 	diffuseMap_1024 = big_tire.png
 	receivesDepthShadows = true

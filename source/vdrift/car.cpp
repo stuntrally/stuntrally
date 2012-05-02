@@ -9,6 +9,7 @@
 #include "settings.h"
 #include "../ogre/OgreGame.h"  //+ replay
 #include "../ogre/common/Defines.h"
+#include "../ogre/common/GraphView.h"
 #include "../network/protocol.hpp"
 #include "tobullet.h"
 #include <OgreLogManager.h>
@@ -499,6 +500,19 @@ void CAR::Update(double dt)
 {
 	dynamics.Update();
 	UpdateSounds(dt);
+	
+	///  graphs new values  -_/\_.-
+	/**  // car tires slip,slide
+	if (pApp->graphs.size() > 0)
+	{
+		for (int i=0; i < 4; ++i)
+		{
+			pApp->graphs[i]->AddVal(dynamics.tire[i].slideratio * 0.03f +0.5f);
+			pApp->graphs[i+4]->AddVal(dynamics.tire[i].slipratio * 0.1f +0.5f);
+		}
+	}
+	/**/
+
 }
 
 void CAR::GetSoundList(std::list <SOUNDSOURCE *> & outputlist)
@@ -620,6 +634,7 @@ void CAR::UpdateSounds(float dt)
 	TRACKSURFACE::TYPE surfType[4];
 	float squeal[4],whVel[4], suspVel[4],suspDisp[4];
 	float whH_all = 0.f;  bool mud = false;
+	float fHitForce = 0.f;
 	
 	///  replay play  ------------------------------------------
 	if (pApp->bRplPlay)
@@ -632,6 +647,7 @@ void CAR::UpdateSounds(float dt)
 		speed = fr.speed;
 		dynVel = fr.dynVel;
 		whMudSpin = fr.whMudSpin;
+		fHitForce = fr.fHitForce;
 
 		for (int w=0; w<4; ++w)
 		{
@@ -656,6 +672,7 @@ void CAR::UpdateSounds(float dt)
 		engPos = dynamics.GetEnginePosition();
 		speed = GetSpeed();
 		dynVel = dynamics.GetVelocity().Magnitude();
+		fHitForce = dynamics.fHitForce;
 		
 		for (int w=0; w<4; ++w)
 		{
@@ -688,6 +705,7 @@ void CAR::UpdateSounds(float dt)
 		}
 		whMudSpin = mudSpin * 0.5f;
 	}
+	
 	///  listener  ------------------------------------------
 	if (!bRemoteCar)
 	{
@@ -875,51 +893,51 @@ void CAR::UpdateSounds(float dt)
 		boostsnd.SetPosition(engPos[0], engPos[1], engPos[2]); //back?-
 	}
 	
-	//update crash sound  todo: crash info,force from bullet
-	#if 0
-	if (dynamics.bHitSnd)// && dynamics.sndHitN >= 0)
+	//update crash sound
+	#if 1
+	/*if (fHitForce > 0.5f)
 	{
-		int f = dynamics.fParIntens * 0.04f;  //fSndForce * 0.1f;
-		int i = std::max(1, std::min(Ncrashsounds, f));
-		//int i = std::max(1, std::min(Ncrashsounds-1, dynamics.sndHitN));
-		//int i = Ncrashsounds-2;
+		int f = fHitForce * 11.f;
+		int i = std::max(1, std::min(Ncrashsounds-1, f));
 		float ti = 1.8f - i*0.4f;  if (ti < 0.4f)  ti = 0.4f;
-		if (dynamics.bHitSnd)// && crashsoundtime[i] > /*ti*/0.2f)  //par  //&& !crashsound[i].Audible()
-		{	dynamics.bHitSnd = false;
+		
+		//if (crashsoundtime[i] > ti)  //par  //&& !crashsound[i].Audible()
+		{
 			crashsound[i].SetGain(1 * pSet->vol_env);
 			crashsound[i].SetPosition(engPos[0], engPos[1], engPos[2]); //
 			crashsound[i].Stop();
 			crashsound[i].Play();
 			crashsoundtime[i] = 0.f;
-			dynamics.sndHitN = -1;
 			//LogO("Snd:  i " + toStr(i) + "  parF " + toStr(dynamics.fParIntens) + "  sndF " + toStr(dynamics.fSndForce));
-		}/**/
+		}
 	}
-	#endif
-	//#else
+	#else*/
 	//update crash sound
 	{
 		crashdetection.Update(speed, dt);
 		float crashdecel = crashdetection.GetMaxDecel();
-		if (crashdecel > 0)
-		{
-			const float mingainat = 0;  // 40 260
-			const float maxgainat = 160;
-			const float mingain = 0.1;
-			float gain = (crashdecel-mingainat)/(maxgainat-mingainat);
-			if (gain > 1)		gain = 1;
-			if (gain < mingain)	gain = mingain;
+		//dynamics.fHitForce4 = crashdecel / 1400.f;
+		//todo: ^for old replays..  set blt car pos,rot in rpl for objs..
 
-			//int f = (normvel*0.02f + 0.02f*vlen) * Ncrashsounds;
-			//int i = std::max(5, std::min(Ncrashsounds, f));
-			//cd->bHitSnd = true;//cd->fSndForce > 58;  //true;
-			//cd->sndHitN = i;
-			//std::cout << crashdecel << ", gain: " << gain << std::endl;
+		crashdetection2.Update(-fHitForce, dt);
+		crashdetection2.deceltrigger = 1.f;
+		float crashdecel2 = crashdetection2.GetMaxDecel();
+		dynamics.fHitForce3 = crashdecel2 / 30.f;
+
+		if (crashdecel2 > 0)
+		{
+			//const float mingainat = 1;  // 40 260
+			//const float maxgainat = 15;
+			//const float mingain = 0.1;
+			//float gain = (crashdecel2-mingainat)/(maxgainat-mingainat);
+			//if (gain > 1)		gain = 1;
+			//if (gain < mingain)	gain = mingain;
+			/*!*/float gain = 0.9f;
 			
-			int f = crashdecel / 1400.f * Ncrashsounds;
+			int f = crashdecel2 / 30.f * Ncrashsounds;
 			int i = std::max(1, std::min(Ncrashsounds-1, f));
 
-			//if (crashsoundtime[i] > /*ti*/0.4f)  //!crashsound.Audible())
+			if (/*gain > mingain &&*/ crashsoundtime[i] > /*ti*/0.4f)  //!crashsound.Audible())
 			{
 				crashsound[i].SetGain(gain * pSet->vol_env);
 				crashsound[i].SetPosition(engPos[0], engPos[1], engPos[2]); //
@@ -930,7 +948,7 @@ void CAR::UpdateSounds(float dt)
 			//LogO("Car Snd: " + toStr(crashdecel));// + " force " + toStr(hit.force) + " vel " + toStr(vlen) + " Nvel " + toStr(normvel));
 		}
 	}
-	//#endif
+	#endif
 
 	//  time played
 	for (int i=0; i < Ncrashsounds; ++i)

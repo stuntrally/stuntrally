@@ -25,7 +25,6 @@
 #include "LinearMath/btSerializer.h"
 #include "Serialize/BulletFileLoader/btBulletFile.h"
 #include "Serialize/BulletWorldImporter/btBulletWorldImporter.h"
-//Extras/ ^?
 #include <boost/filesystem.hpp>
 
 #include <OgreRoot.h>
@@ -668,19 +667,6 @@ public:
 
 void App::CreateObjects()
 {
-	// .bullet load
-	/*BulletWorldOffset* fileLoader = new BulletWorldOffset(pGame->collision.world);
-	fileLoader->mTrOfs.setOrigin(btVector3(0,0,10));  ///+
-	fileLoader->setVerboseMode(true);//
-
-	std::string file = PATHMANAGER::GetDataPath()+"/objects/fuel_can.bullet";
-	LogO(".bullet: "+file);
-	if (fileLoader->loadFile(file.c_str()))
-	{
-		LogO(".bullet: "+toStr(fileLoader->getNumCollisionShapes()));
-	}
-	/**/
-
 	for (int i=0; i < sc.objects.size(); ++i)
 	{
 		Object& o = sc.objects[i];
@@ -688,9 +674,10 @@ void App::CreateObjects()
 
 		//  add to ogre
 		o.ent = mSceneMgr->createEntity("oE"+s, o.name + ".mesh");
-		o.nd = mSceneMgr->getRootSceneNode()->createChildSceneNode("oN"+s, o.pos, o.rot);
+		o.nd = mSceneMgr->getRootSceneNode()->createChildSceneNode("oN"+s);
+		o.SetFromBlt();
 		o.nd->setScale(o.scale);
-		o.nd->attachObject(o.ent);
+		o.nd->attachObject(o.ent);  o.ent->setVisibilityFlags(RV_Vegetation);
 
 
 		#ifndef ROAD_EDITOR
@@ -698,49 +685,36 @@ void App::CreateObjects()
 		std::string file = PATHMANAGER::GetDataPath()+"/objects/"+o.name+".bullet";
 		///  use some map ! dont check for every object ...
 		if (!boost::filesystem::exists(file))
-		//if (o.name != "fuel_can")  //temp, check mass=0 ?
 		{
 			///  static
-			Matrix4 tre;  tre.makeTransform(o.pos,o.scale,o.rot);
+			Vector3 posO = Vector3(o.pos[0],o.pos[2],-o.pos[1]);
+			Quaternion q(o.rot[0],o.rot[1],o.rot[2],o.rot[3]), q1;
+			Radian rad;  Vector3 axi;  q.ToAngleAxis(rad, axi);
+			q1.FromAngleAxis(-rad,Vector3(axi.z,-axi.x,-axi.y));
+			Quaternion rotO = q1 * Object::qrFix;
+
+			Matrix4 tre;  tre.makeTransform(posO,o.scale,rotO);
 			BtOgre::StaticMeshToShapeConverter converter(o.ent, tre);
 			btCollisionShape* shape = converter.createTrimesh();  //createBox();
 			shape->setUserPointer((void*)0);  // mark
-
-			//btScalar mass = 5;  btVector3 inertia;
-			//shape->calculateLocalInertia(mass, inertia);
-			//BtOgre::RigidBodyState *stt = new BtOgre::RigidBodyState(nod);  //connects Ogre and Bullet
-			//btRigidBody* bdy = new btRigidBody(0.f, 0, shape);  //(mass, stt, shape, inertia);
-			//pGame->collision.world->addRigidBody(bdy);
 
 			btCollisionObject* bco = new btCollisionObject();
 			btTransform tr;  tr.setIdentity();  //tr.setOrigin(btVector3(pos.x,-pos.z,pos.y));
 			bco->setActivationState(DISABLE_SIMULATION);  // ISLAND_SLEEPING  WANTS_DEACTIVATION
 			bco->setCollisionShape(shape);	bco->setWorldTransform(tr);
-			bco->setFriction(0.8f);  bco->setRestitution(0.f);
+			bco->setFriction(0.7f);  bco->setRestitution(0.f);
 			bco->setCollisionFlags(bco->getCollisionFlags() |
-				btCollisionObject::CF_STATIC_OBJECT /*| btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT/**/);
+				btCollisionObject::CF_STATIC_OBJECT | btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT/**/);
 			pGame->collision.world->addCollisionObject(bco);
 			pGame->collision.shapes.push_back(shape);
 		}
 		else  ///  dynamic
 		{
-		#if 0
-			btCollisionShape* shape = new btCylinderShapeZ(btVector3(0.35,0.35,0.51));
-			//btBoxShape(btVector3(0.4,0.3,0.5));	//btSphereShape(0.5);	//btConeShapeX(0.4,0.6);
-			//btCapsuleShapeZ(0.4,0.5);  //btCylinderShapeX(btVector3(0.5,0.7,0.4));
-
-			btTransform tr(btQuaternion(0,0,0)/*o.rot*/, btVector3(o.pos.x,-o.pos.z,o.pos.y));
-			o.ms = new btDefaultMotionState();
-			o.ms->setWorldTransform(tr);
-
-			btRigidBody::btRigidBodyConstructionInfo ci(50, o.ms, shape, 6*btVector3(1,1,0.3));
-			ci.m_restitution = 0.9;		ci.m_friction = 0.9;
-			ci.m_angularDamping = 0.2;	ci.m_linearDamping = 0.1;
-			pGame->collision.AddRigidBody(ci);
-		#else
 			// .bullet load
 			BulletWorldOffset* fileLoader = new BulletWorldOffset(pGame->collision.world);
-			fileLoader->mTrOfs.setOrigin(btVector3(o.pos.x,-o.pos.z,o.pos.y+0.5));  ///+
+			fileLoader->mTrOfs.setOrigin(btVector3(o.pos[0],o.pos[1],o.pos[2]+0.5f));
+			///+  why is this z ofs needed ? 1st sim dt ??...
+			fileLoader->mTrOfs.setRotation(btQuaternion(o.rot[0],o.rot[1],o.rot[2],o.rot[3]));
 			//fileLoader->setVerboseMode(true);//
 
 			//LogO(".bullet: "+file);
@@ -749,50 +723,9 @@ void App::CreateObjects()
 				o.ms = fileLoader->ms;  // 1 only
 				//LogO(".bullet: "+toStr(fileLoader->getNumCollisionShapes()));
 			}
-			/**/
-		#endif
 		}
 		#endif
 	}
-
-
-	//sc.objects.clear();
-	#if 0  ///  house test
-	Object o;
-	Vector3 pos(20,-11.05,0);  Quaternion rot(Degree(135),Vector3::UNIT_Y);
-	Vector3 scl = 0.5f*Vector3::UNIT_SCALE;
-	//rot = Quaternion::IDENTITY;
-	//scl = Vector3::UNIT_SCALE;
-	o.pos = pos;  o.scale = scl;  o.rot = rot;
-	
-	o.ent = mSceneMgr->createEntity("EntH", "pers_house_b.mesh");
-	o.nd = mSceneMgr->getRootSceneNode()->createChildSceneNode("NodeH",pos,rot);
-	o.nd->setScale(scl);
-	o.nd->attachObject(o.ent);
-
-	o.name = "pers_house_b";
-	sc.objects.push_back(o);
-	#endif
-
-	#if 0  ///  barrels test
-	const int sx=2,sy=2,sz=4;  int i=0;
-	for (int z=0; z < sz; ++z)
-	for (int y=-sy; y < sy; ++y)
-	for (int x=-sx; x < sx; ++x)
-	{
-		Object o;
-		btVector3 pos(x*1.02f + 5.5f, y*1.02f, z*1.02f -10.5f);
-		o.pos = Vector3(pos.x(),pos.z(),-pos.y());
-		o.name = "fuel_can";
-		String s = toStr(i);  ++i;  // counter
-		o.ent = mSceneMgr->createEntity("oE_"+s, o.name + ".mesh");
-		o.nd = mSceneMgr->getRootSceneNode()->createChildSceneNode("oN_"+s, o.pos);
-		o.nd->attachObject(o.ent);
-
-		sc.objects.push_back(o);
-		//entProps.push_back(ent);
-	}
-	#endif
 }
 
 void App::DestroyObjects()
@@ -829,9 +762,15 @@ void App::UpdObjPick()
 	const Object& o = sc.objects[iObjCur];
 	const AxisAlignedBox& ab = o.nd->getAttachedObject(0)->getBoundingBox();
 	Vector3 s = o.scale * ab.getSize();  // * sel obj's node aabb
-	Vector3 p = o.pos;  p.y += s.y * 0.5f;
-	ndObjBox->setPosition(p);
-	ndObjBox->setOrientation(o.rot);
+
+		Vector3 posO = Vector3(o.pos[0],o.pos[2],-o.pos[1]);
+		Quaternion q(o.rot[0],o.rot[1],o.rot[2],o.rot[3]), q1;
+		Radian rad;  Vector3 axi;  q.ToAngleAxis(rad, axi);
+		q1.FromAngleAxis(-rad,Vector3(axi.z,-axi.x,-axi.y));
+		Quaternion rotO = q1 * Object::qrFix;
+
+	ndObjBox->setPosition(posO);
+	ndObjBox->setOrientation(rotO);
 	ndObjBox->setScale(s);
 }
 #endif

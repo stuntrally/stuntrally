@@ -85,7 +85,7 @@ struct ReplayFrame
 	//  hit sparks
 	float fHitTime, fParIntens,fParVel;//, fSndForce, fNormVel;
 	Ogre::Vector3 vHitPos,vHitNorm;  // world hit data
-	float whMudSpin;
+	float whMudSpin, fHitForce;
 	
 	ReplayFrame();
 };

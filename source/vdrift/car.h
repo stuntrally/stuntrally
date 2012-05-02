@@ -319,7 +319,7 @@ public:
 	MATHVECTOR<float, 3> hood_view_position;
 	
 	SUSPENSIONBUMPDETECTION suspbump[4];
-	CRASHDETECTION crashdetection;
+	CRASHDETECTION crashdetection,crashdetection2;
 
 	std::map <std::string, SOUNDBUFFER> soundbuffers;
 	std::list <std::pair <ENGINESOUNDINFO, SOUNDSOURCE> > enginesounds;

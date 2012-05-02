@@ -2101,26 +2101,26 @@
 							<Property key="TextColour" value="0.9 0.96 1.0"/>
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
-                        <Widget type="TextBox" skin="TextBox" position="232 96 64 24">
+						<Widget type="TextBox" skin="TextBox" position="232 96 64 24">
 							<Property key="Caption" value="#{Size}"/>
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
-                        <Widget type="TextBox" skin="TextBox" position="296 96 48 24" name="SizeGaugVal">
+						<Widget type="TextBox" skin="TextBox" position="296 96 48 24" name="SizeGaugVal">
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
-                        <Widget type="ScrollBar" skin="ScrollBarH" position="344 96 320 18" name="SizeGaug">
+						<Widget type="ScrollBar" skin="ScrollBarH" position="344 96 320 18" name="SizeGaug">
 							<Property key="Range" value="1000001"/>
 							<Property key="MoveToClick" value="true"/>
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
-                        <Widget type="TextBox" skin="TextBox" position="232 136 64 24">
+						<Widget type="TextBox" skin="TextBox" position="232 136 64 24">
 							<Property key="Caption" value="#{Type}"/>
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
-                        <Widget type="TextBox" skin="TextBox" position="296 136 48 24" name="TypeGaugVal">
+						<Widget type="TextBox" skin="TextBox" position="296 136 48 24" name="TypeGaugVal">
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
-                        <Widget type="ScrollBar" skin="ScrollBarH" position="344 136 320 18" name="TypeGaug">
+						<Widget type="ScrollBar" skin="ScrollBarH" position="344 136 320 18" name="TypeGaug">
 							<Property key="Range" value="6"/>
 							<Property key="MoveToClick" value="true"/>
 							<UserString key="RelativeTo" value="OptionsWnd"/>
@@ -2200,14 +2200,14 @@
 							<Property key="TextColour" value="0.7 0.8 0.9"/>
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
-                        <Widget type="TextBox" skin="TextBox" position="232 296 64 24">
+						<Widget type="TextBox" skin="TextBox" position="232 296 64 24">
 							<Property key="Caption" value="#{Size}"/>
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
-                        <Widget type="TextBox" skin="TextBox" position="296 296 48 24" name="SizeArrowVal">
+						<Widget type="TextBox" skin="TextBox" position="296 296 48 24" name="SizeArrowVal">
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
-                        <Widget type="ScrollBar" skin="ScrollBarH" position="344 296 320 18" name="SizeArrow">
+						<Widget type="ScrollBar" skin="ScrollBarH" position="344 296 320 18" name="SizeArrow">
 							<Property key="Range" value="1000001"/>
 							<Property key="MoveToClick" value="true"/>
 							<UserString key="RelativeTo" value="OptionsWnd"/>
@@ -2217,96 +2217,95 @@
 							<Property key="TextColour" value="0.8 0.9 1.0"/>
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
-                        <Widget type="TextBox" skin="TextBox" position="296 356 48 24" name="CountdownTimeVal">
+						<Widget type="TextBox" skin="TextBox" position="296 356 48 24" name="CountdownTimeVal">
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
-                        <Widget type="ScrollBar" skin="ScrollBarH" position="344 356 320 18" name="CountdownTime">
+						<Widget type="ScrollBar" skin="ScrollBarH" position="344 356 320 18" name="CountdownTime">
 							<Property key="Range" value="7"/>
 							<Property key="MoveToClick" value="true"/>
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
 					</Widget>
 					<Widget type="TabItem" skin="" position="2 24 738 432">
-						<Property key="Caption" value="#{Other}"/>
+						<Property key="Caption" value="#{Startup}"/>
 						<UserString key="RelativeTo" value="OptionsWnd"/>
-						<Widget type="TextBox" skin="TextBox" position="40 30 216 24">
-							<Property key="Caption" value="#{Development}"/>
-							<Property key="TextColour" value="0.7 0.85 1.0"/>
-							<UserString key="RelativeTo" value="OptionsWnd"/>
-						</Widget>
-						<Widget type="Button" skin="CheckBox" position="40 62 256 24" name="Fps">
-							<Property key="Caption" value="#{FPS}  F11"/>
-							<Property key="TextColour" value="0.8 0.9 1.0"/>
-							<UserString key="RelativeTo" value="OptionsWnd"/>
-						</Widget>
-						<Widget type="Button" skin="CheckBox" position="40 94 256 24" name="CarDbgBars">
-							<Property key="Caption" value="#{CarDebug}  F9"/>
-							<Property key="TextColour" value="0.7 0.9 1.0"/>
-							<UserString key="RelativeTo" value="OptionsWnd"/>
-						</Widget>
-						<Widget type="Button" skin="CheckBox" position="40 126 256 24" name="Wireframe">
-							<Property key="Caption" value="#{Wireframe}  F10"/>
-							<Property key="TextColour" value="0.7 0.85 1.0"/>
-							<UserString key="RelativeTo" value="OptionsWnd"/>
-						</Widget>
-						<Widget type="Button" skin="CheckBox" position="40 174 256 24" name="BulletDebug">
-							<Property key="Caption" value="#{BulletDebug}  ctrl-F10"/>
-							<Property key="TextColour" value="0.7 0.85 1.0"/>
-							<UserString key="RelativeTo" value="OptionsWnd"/>
-						</Widget>
-						<Widget type="Button" skin="CheckBox" position="40 206 256 24" name="BulletProfilerTxt">
-							<Property key="Caption" value="#{BulletProfilerTxt}  shift-F10"/>
-							<Property key="TextColour" value="0.7 0.85 1.0"/>
-							<UserString key="RelativeTo" value="OptionsWnd"/>
-						</Widget>
-						<Widget type="Button" skin="CheckBox" position="40 238 256 24" name="CarDbgTxt">
-							<Property key="Caption" value="#{CarDebugText}  shift-F9"/>
-							<Property key="TextColour" value="0.7 0.85 1.0"/>
-							<UserString key="RelativeTo" value="OptionsWnd"/>
-						</Widget>
-						<Widget type="Button" skin="CheckBox" position="40 270 256 24" name="ProfilerTxt">
-							<Property key="Caption" value="#{ProfilerTxt}  ctrl-F9"/>
-							<Property key="TextColour" value="0.7 0.85 1.0"/>
-							<UserString key="RelativeTo" value="OptionsWnd"/>
-						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="352 30 216 24">
-							<Property key="TextColour" value="0.75 0.85 0.95"/>
-							<Property key="Caption" value="#{Startup}"/>
-							<UserString key="RelativeTo" value="OptionsWnd"/>
-						</Widget>
-						<Widget type="Button" skin="CheckBox" position="352 62 256 24" name="MouseCapture">
+						<Widget type="Button" skin="CheckBox" position="32 62 256 24" name="MouseCapture">
 							<Property key="TextColour" value="0.5 0.6 0.7"/>
 							<Property key="Caption" value="#{MouseCapture}"/>
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
-						<Widget type="Button" skin="CheckBox" position="352 94 256 24" name="ShowPictures">
+						<Widget type="Button" skin="CheckBox" position="32 94 256 24" name="ShowPictures">
 							<Property key="TextColour" value="0.8 0.9 1.0"/>
 							<Property key="Caption" value="#{ShowPictures}*"/>
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
-						<Widget type="Button" skin="CheckBox" position="352 126 256 24" name="OgreDialog">
+						<Widget type="Button" skin="CheckBox" position="32 126 256 24" name="OgreDialog">
 							<Property key="TextColour" value="0.5 0.6 0.7"/>
 							<Property key="Caption" value="#{OgreDialog}"/>
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
-						<Widget type="Button" skin="CheckBox" position="352 158 256 24" name="AutoStart">
+						<Widget type="Button" skin="CheckBox" position="32 168 256 24" name="AutoStart">
 							<Property key="TextColour" value="0.7 0.8 0.9"/>
 							<Property key="Caption" value="#{AutoLoad}"/>
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
-						<Widget type="Button" skin="CheckBox" position="352 206 256 24" name="EscQuits">
+						<Widget type="Button" skin="CheckBox" position="32 200 256 24" name="EscQuits">
 							<Property key="TextColour" value="0.7 0.8 0.9"/>
 							<Property key="Caption" value="#{EscQuit}"/>
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
-						<Widget type="Button" skin="CheckBox" position="352 238 256 24" name="BltLines">
+						<Widget type="Button" skin="CheckBox" position="32 244 256 24" name="BltLines">
 							<Property key="TextColour" value="0.7 0.8 0.9"/>
 							<Property key="Caption" value="#{BulletLines}*"/>
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
-						<Widget type="Button" skin="CheckBox" position="352 270 256 24" name="MultiThread">
+						<Widget type="Button" skin="CheckBox" position="32 276 256 24" name="MultiThread">
 							<Property key="TextColour" value="0.7 0.8 0.9"/>
 							<Property key="Caption" value="#{MultiThread}*"/>
+							<UserString key="RelativeTo" value="OptionsWnd"/>
+						</Widget>
+					</Widget>
+					<Widget type="TabItem" skin="" position="2 24 738 432">
+						<Property key="Caption" value="#{Other}"/>
+						<UserString key="RelativeTo" value="OptionsWnd"/>
+						<Widget type="Button" skin="CheckBox" position="32 62 256 24" name="Fps">
+							<Property key="Caption" value="#{FPS}  F11"/>
+							<Property key="TextColour" value="0.8 0.9 1.0"/>
+							<UserString key="RelativeTo" value="OptionsWnd"/>
+						</Widget>
+						<Widget type="Button" skin="CheckBox" position="64 94 256 24" name="ProfilerTxt">
+							<Property key="Caption" value="#{ProfilerTxt}  shift-F11"/>
+							<Property key="TextColour" value="0.7 0.85 1.0"/>
+							<UserString key="RelativeTo" value="OptionsWnd"/>
+						</Widget>
+						<Widget type="Button" skin="CheckBox" position="32 140 256 24" name="Wireframe">
+							<Property key="Caption" value="#{Wireframe}  F10"/>
+							<Property key="TextColour" value="0.7 0.85 1.0"/>
+							<UserString key="RelativeTo" value="OptionsWnd"/>
+						</Widget>
+						<Widget type="Button" skin="CheckBox" position="32 184 256 24" name="BulletDebug">
+							<Property key="Caption" value="#{BulletDebug}  ctrl-F10"/>
+							<Property key="TextColour" value="0.7 0.85 1.0"/>
+							<UserString key="RelativeTo" value="OptionsWnd"/>
+						</Widget>
+						<Widget type="Button" skin="CheckBox" position="64 216 256 24" name="BulletProfilerTxt">
+							<Property key="Caption" value="#{BulletProfilerTxt}  shift-F10"/>
+							<Property key="TextColour" value="0.7 0.85 1.0"/>
+							<UserString key="RelativeTo" value="OptionsWnd"/>
+						</Widget>
+						<Widget type="Button" skin="CheckBox" position="388 62 256 24" name="CarDbgBars">
+							<Property key="Caption" value="#{CarDebug}  F9"/>
+							<Property key="TextColour" value="0.7 0.9 1.0"/>
+							<UserString key="RelativeTo" value="OptionsWnd"/>
+						</Widget>
+						<Widget type="Button" skin="CheckBox" position="408 94 256 24" name="CarDbgTxt">
+							<Property key="Caption" value="#{CarDebugText}  shift-F9"/>
+							<Property key="TextColour" value="0.7 0.85 1.0"/>
+							<UserString key="RelativeTo" value="OptionsWnd"/>
+						</Widget>
+						<Widget type="Button" skin="CheckBox" position="388 140 256 24" name="Graphs">
+							<Property key="Caption" value="#{Graphs}  ctrl-F8"/>
+							<Property key="TextColour" value="0.7 0.85 1.0"/>
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
 					</Widget>

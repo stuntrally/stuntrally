@@ -16,6 +16,7 @@
 
 #include "common/MessageBox/MessageBox.h"
 #include "common/MessageBox/MessageBoxStyle.h"
+//#include "common/GraphView.h"
 
 #include "../network/networkcallbacks.hpp"
 #include <boost/thread.hpp>
@@ -30,6 +31,7 @@ namespace BtOgre  {  class DebugDrawer;  }
 namespace MyGUI  {  class MultiList2;  }
 namespace OISB   {  class AnalogAxisAction;  }
 class MaterialFactory;
+class GraphView;
 const int CarPosCnt = 8;  // size of poses queue
 
 
@@ -49,10 +51,10 @@ public:
 	
 	void setTranslations();
 	
-	// This list holds new positions info for every CarModel
+	std::vector<GraphView*> graphs;
 	
-	/*typedef std::vector<PosInfo> CarPosQue;  // [carPosCnt]
-	std::vector<CarPosQue>*/ PosInfo carPoses[CarPosCnt][8];  // [carsNum8]
+	// This list holds new positions info for every CarModel
+	PosInfo carPoses[CarPosCnt][8];  // [carsNum8]
 	/*std::vector<int>*/ int iCurPoses[8];  // current index for carPoses queue
 	std::map<int,int> carsCamNum;  // picked camera number for cars
 	
@@ -304,23 +306,25 @@ protected:
 	SLV(NumLaps);  SLV(RplNumViewports);  // setup
 	
 	//  checks
-	void chkFps(WP), chkGauges(WP),	chkArrow(WP), chkDigits(WP),
+	void chkGauges(WP),	chkArrow(WP), chkDigits(WP),
 		chkMinimap(WP), chkMiniZoom(WP), chkMiniRot(WP), chkMiniTer(WP),  // view
+		chkFps(WP), chkWireframe(WP), 
 		chkCamInfo(WP), chkTimes(WP), chkOpponents(WP), chkOpponentsSort(WP), chkCamTilt(WP),
-		chkCarDbgBars(WP), chkCarDbgTxt(WP), chkBltDebug(WP), chkBltProfilerTxt(WP), chkProfilerTxt(WP),
+		chkCarDbgBars(WP), chkCarDbgTxt(WP), chkGraphs(WP),
+		chkBltDebug(WP), chkBltProfilerTxt(WP), chkProfilerTxt(WP),
 		chkReverse(WP), chkParticles(WP), chkTrails(WP),
 		chkAbs(WP), chkTcs(WP), chkGear(WP), chkRear(WP), chkRearInv(WP),  // car
 		chkMouseCapture(WP), chkOgreDialog(WP), chkAutoStart(WP), chkEscQuits(WP),
 		chkBltLines(WP), chkLoadPics(WP), chkMultiThread(WP),  // startup
-		chkVidEffects(WP), chkVidBloom(WP), chkVidHDR(WP), chkVidBlur(WP), UpdBloomVals(), chkVidSSAO(WP), // video
-		chkVidSoftParticles(WP),chkVidGodRays(WP), chkWaterReflect(WP), chkWaterRefract(WP), chkVidDepthOfField(WP),
-		chkVidFilmGrain(WP),
+		chkVidEffects(WP), chkVidBloom(WP), chkVidHDR(WP), chkVidBlur(WP), UpdBloomVals(), chkVidSSAO(WP), // effects
+		chkVidSoftParticles(WP), chkVidGodRays(WP), chkWaterReflect(WP), chkWaterRefract(WP),
+		chkVidDepthOfField(WP), chkVidFilmGrain(WP),
 		chkVegetCollis(WP), chkCarCollis(WP);  //car
 	void chkUseImposters(WP wp);
 
-	void imgBtnCarClr(WP), btnCarClrRandom(WP);
+	void imgBtnCarClr(WP), btnCarClrRandom(WP), toggleWireframe();
 	MyGUI::ButtonPtr bRkmh, bRmph;  void radKmh(WP), radMph(WP);
-	MyGUI::ButtonPtr chDbgT,chDbgB, chBlt,chBltTxt, chFps, chProfTxt,
+	MyGUI::ButtonPtr chFps,chWire, chBlt,chBltTxt, chProfTxt, chDbgT,chDbgB, chGraphs,
 		chTimes,chMinimp,chOpponents;
 
 	///  replay  -----------------------------
