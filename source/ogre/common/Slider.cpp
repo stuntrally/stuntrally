@@ -128,27 +128,9 @@ namespace MyGUI
 
 	void Slider::notifyMouseWheel(Widget* _sender, int _rel)
 	{
-		//const int SCROLL_MOUSE_WHEEL = 50;
-		mfValue += _rel * 0.125f;
+		mfValue = std::max(0.f, std::min(1.f, mfValue - _rel/120.f*0.5f * 0.125f ));
+		eventValueChanged(this, mfValue);
 		updateTrack();
-
-		/*int offset = mValue;
-		if (_rel < 0)
-			offset += SCROLL_MOUSE_WHEEL;
-		else
-			offset -= SCROLL_MOUSE_WHEEL;
-
-		if (offset < 0)
-			offset = 0;
-		else if (offset > (int)(mScrollRange - 1))
-			offset = mScrollRange - 1;
-
-		if ((size_t)offset != mValue)
-		{
-			mValue = offset;
-			eventValueChanged(this, (int)mValue);
-			updateTrack();
-		}*/
 	}
 
 	void Slider::setPropertyOverride(const std::string& _key, const std::string& _value)
