@@ -13,13 +13,14 @@
 #include <OgreOverlay.h>
 #include "common/Gui_Def.h"
 #include "common/MultiList2.h"
+#include "common/Slider.h"
+
 using namespace MyGUI;
 using namespace Ogre;
 
 
 ///  Gui Init
 //---------------------------------------------------------------------------------------------------------------------
-
 
 void App::InitGui()
 {
@@ -28,6 +29,11 @@ void App::InitGui()
 	popup.mGUI = mGUI;
 	popup.mPlatform = mPlatform;
 	QTimer ti;  ti.update();  /// time
+
+	//  new widgets
+	MyGUI::FactoryManager::getInstance().registerFactory<MultiList2>("Widget");
+	MyGUI::FactoryManager::getInstance().registerFactory<Slider>("Widget");
+	
 
 	//  load Options layout
 	vwGui = LayoutManager::getInstance().loadLayout("Options.layout");
@@ -110,7 +116,7 @@ void App::InitGui()
 	GuiInitGraphics();
 	    
 	//  view sizes
-	Slv(SizeGaug,	(pSet->size_gauges-0.1f) /0.15f);
+	Slf(SizeGaug,	(pSet->size_gauges-0.1f) /0.15f);
 	Slv(TypeGaug,	pSet->gauges_type /res);
 	Slv(SizeMinimap,(pSet->size_minimap-0.05f) /0.25f);
 	Slv(SizeArrow,  (pSet->size_arrow));

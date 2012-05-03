@@ -135,14 +135,16 @@ void COLLISION_WORLD::Update(double dt, bool profiling)
 		//  hit force for sound
 		cd->fHitForce = normvel*0.02f /*+ 0.02f*vlen*/;  //+
 		cd->fHitForce2 = force*0.1f;
-		cd->fHitForce4 = vlen*0.2f*force;
+		cd->fHitForce4 = vlen*0.1f*force;
 		//if (force > 0.5f)
 			cd->fHitTime = 1.f;
 		///LogO("upd sf " + toStr(cd->fHitForce) + " force " + toStr(hit.force) + " vel " + toStr(vlen) + " Nvel " + toStr(normvel));
 	}
 	else if (cdOld)
 	{
-		cdOld->fHitForce = 0.f;
+		cdOld->fHitForce  = 0.f;
+		cdOld->fHitForce2 = 0.f;
+		cdOld->fHitForce4 = 0.f;
 		//cdOld->fHitForce3 = cdOld->fHitTime;
 		//cdOld = 0;
 	}

@@ -2163,7 +2163,7 @@
 	<Widget type="Window" skin="WindowC" position="556 287 800 600" align="Center" layer="Overlapped" name="OptionsWnd">
 		<Property key="MinSize" value="500 400"/>
 		<Property key="MaxSize" value="2560 1600"/>
-		<Property key="Caption" value="#{Editor}"/>
+		<Property key="Caption" value="#{Options}"/>
 		<Property key="Alpha" value="0.3"/>
 		<Property key="Snap" value="true"/>
 		<Property key="Visible" value="true"/>
@@ -2846,7 +2846,7 @@
 	<Widget type="Window" skin="WindowC" position="556 287 800 600" align="Center" layer="Overlapped" name="HelpWnd">
 		<Property key="MinSize" value="500 400"/>
 		<Property key="MaxSize" value="2560 1600"/>
-		<Property key="Caption" value="#{Editor}"/>
+		<Property key="Caption" value="#{Help}"/>
 		<Property key="Alpha" value="0.3"/>
 		<Property key="Snap" value="true"/>
 		<Property key="Visible" value="true"/>

@@ -4,6 +4,9 @@
 #include "../vdrift/pathmanager.h"
 //#include "../road/Road.h"
 #include "../ogre/common/Gui_Def.h"
+#include "../ogre/common/MultiList2.h"
+#include "../ogre/common/Slider.h"
+
 using namespace MyGUI;
 using namespace Ogre;
 
@@ -15,6 +18,11 @@ void App::InitGui()
 {
 	if (!mGUI)  return;
 	QTimer ti;  ti.update();  /// time
+
+	//  new widgets
+	MyGUI::FactoryManager::getInstance().registerFactory<MultiList2>("Widget");
+	MyGUI::FactoryManager::getInstance().registerFactory<Slider>("Widget");
+
 
 	//  load layout - wnds
 	vwGui = LayoutManager::getInstance().loadLayout("Editor.layout");

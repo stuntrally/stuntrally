@@ -31,6 +31,19 @@
             <Widget type="Button" skin="ButtonRightSkin" position="112 1 12 14" align="Right VCenter" name="End"/>
         </Widget>
     </Resource>
+    <Resource type="ResourceLayout" name="Slider" version="3.2.0">
+        <Widget type="Widget" skin="ScrollPanelHSkin" position="25 50 125 15" name="Root">
+            <Property key="VerticalAlignment" value="false"/>
+            <UserString key="LE_TargetWidgetType" value="ScrollBar"/>
+            <Widget type="Widget" skin="PanelEmpty" position="14 0 98 15" align="Stretch" name="TrackPlace">
+                <Property key="NeedKey" value="false"/>
+                <Property key="InheritsPick" value="true"/>
+                <Widget type="ImageBox" skin="ScrollTrackHSkin" position="35 1 21 14" align="Left VStretch" name="Track"/>
+            </Widget>
+            <Widget type="Button" skin="ButtonLeftSkin" position="2 1 12 14" align="Left VCenter" name="Start"/>
+            <Widget type="Button" skin="ButtonRightSkin" position="112 1 12 14" align="Right VCenter" name="End"/>
+        </Widget>
+    </Resource>
     <Resource type="ResourceLayout" name="ScrollBarV" version="3.2.0">
         <Widget type="Widget" skin="ScrollPanelVSkin" position="25 50 15 125" name="Root">
             <Property key="VerticalAlignment" value="true"/>

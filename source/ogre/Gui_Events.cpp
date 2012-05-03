@@ -197,9 +197,9 @@ void App::recreateReflections()
 
 
 //  [View] size
-void App::slSizeGaug(SL)
+void App::slSizeGaug(SLF)
 {
-	float v = 0.1f + 0.15f * val/res;	if (bGI)  {  pSet->size_gauges = v;  SizeHUD(true);  }
+	float v = 0.1f + 0.15f * val;	if (bGI)  {  pSet->size_gauges = v;  SizeHUD(true);  }
 	if (valSizeGaug){	valSizeGaug->setCaption(fToStr(v,3,4));  }
 }
 void App::slTypeGaug(SL)

@@ -1242,7 +1242,7 @@
 	<Widget type="Window" skin="WindowC" position="552 640 800 600" align="Center" layer="Overlapped" name="HelpWnd">
 		<Property key="MinSize" value="500 400"/>
 		<Property key="MaxSize" value="2560 1600"/>
-		<Property key="Caption" value="#{Options}"/>
+		<Property key="Caption" value="#{Help}"/>
 		<Property key="Alpha" value="0.3"/>
 		<Property key="Snap" value="true"/>
 		<Widget type="TabControl" skin="TabControl" position="0 0 800 600" align="Default" layer="Back" name="TabWndHelp">
@@ -2108,9 +2108,7 @@
 						<Widget type="TextBox" skin="TextBox" position="296 96 48 24" name="SizeGaugVal">
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
-						<Widget type="ScrollBar" skin="ScrollBarH" position="344 96 320 18" name="SizeGaug">
-							<Property key="Range" value="1000001"/>
-							<Property key="MoveToClick" value="true"/>
+						<Widget type="Slider" skin="Slider" position="344 96 320 18" name="SizeGaug">
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
 						<Widget type="TextBox" skin="TextBox" position="232 136 64 24">

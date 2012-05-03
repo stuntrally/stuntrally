@@ -17,6 +17,12 @@ const static float res = 1000000.f;  //float slider int res
 	val##name = mGUI->findWidget<StaticText>(#name"Val",false);  \
 	v = vset*res;  if (sl)  sl->setScrollPosition(v);	sl##name(sl, v);
 
+#define Slf(name, vset)  \
+	{  Slider* sl = mGUI->findWidget<Slider>(#name);  \
+	if (sl && sl->eventValueChanged.empty())  sl->eventValueChanged += newDelegate(this, &App::sl##name);  \
+	val##name = mGUI->findWidget<StaticText>(#name"Val",false);  \
+	if (sl)  sl->setValue(vset);	sl##name(sl, vset);  }
+
 #define Btn(name, event)  \
 	btn = mGUI->findWidget<Button>(name);  \
 	if (btn && btn->eventMouseButtonClick.empty())  btn->eventMouseButtonClick += newDelegate(this, &App::event);
