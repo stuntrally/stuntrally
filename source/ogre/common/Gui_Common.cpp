@@ -16,6 +16,7 @@
 #include <OgreTerrain.h>
 #include <OgreRenderWindow.h>
 #include "Gui_Def.h"
+#include "Slider.h"
 using namespace MyGUI;
 using namespace Ogre;
 using namespace std;
@@ -37,15 +38,16 @@ void App::comboTexFilter(CMB)
 }
 
 void App::slAnisotropy(SL)
-{	if (bGI)  {
-	MaterialManager::getSingleton().setDefaultAnisotropy(val);	pSet->anisotropy = val;  }
-	if (valAnisotropy)	valAnisotropy->setCaption(toStr(val));
+{
+	int v = val * 16.f;  if (bGI)  {
+		MaterialManager::getSingleton().setDefaultAnisotropy(v);	pSet->anisotropy = v;  }
+	if (valAnisotropy)	valAnisotropy->setCaption(toStr(v));
 }
 
 //  view dist
 void App::slViewDist(SL)
 {
-	Real v = 50.f + 19950.f * powf(val/res, 2.f);
+	Real v = 50.f + 19950.f * powf(val, 2.f);
 	Vector3 sc = v*Vector3::UNIT_SCALE;
 
 	SceneNode* nskb = mSceneMgr->getSkyBoxNode();
@@ -66,7 +68,7 @@ void App::slViewDist(SL)
 //  ter detail
 void App::slTerDetail(SL)
 {
-	Real v = 20.f * powf(val/res, 2.f);  if (bGI)  {  pSet->terdetail = v;
+	Real v = 20.f * powf(val, 2.f);  if (bGI)  {  pSet->terdetail = v;
 		if (mTerrainGlobals)
 			mTerrainGlobals->setMaxPixelError(v);  }
 	if (valTerDetail){	valTerDetail->setCaption(fToStr(v, 1,4)+" %");  }
@@ -75,7 +77,7 @@ void App::slTerDetail(SL)
 //  ter dist
 void App::slTerDist(SL)
 {
-	Real v = 2000.f * powf(val/res, 2.f);  if (bGI)  {  pSet->terdist = v;
+	Real v = 2000.f * powf(val, 2.f);  if (bGI)  {  pSet->terdist = v;
 		if (mTerrainGlobals)
 			mTerrainGlobals->setCompositeMapDistance(v);  }
 	if (valTerDist){	valTerDist->setCaption(fToStr(v,0,4)+" m");  }
@@ -84,7 +86,7 @@ void App::slTerDist(SL)
 //  road dist
 void App::slRoadDist(SL)
 {
-	Real v = 4.f * powf(val/res, 2.f);  if (bGI)  pSet->road_dist = v;
+	Real v = 4.f * powf(val, 2.f);  if (bGI)  pSet->road_dist = v;
 	if (valRoadDist){	valRoadDist->setCaption(fToStr(v,2,5));  }
 }
 
@@ -92,35 +94,35 @@ void App::slRoadDist(SL)
 //  trees/grass
 void App::slTrees(SL)
 {
-	Real v = 4.f * powf(val/res, 2.f);  if (bGI)  pSet->gui.trees = v;
+	Real v = 4.f * powf(val, 2.f);  if (bGI)  pSet->gui.trees = v;
 	if (valTrees){	valTrees->setCaption(fToStr(v,2,4));  }
 }
 void App::slGrass(SL)
 {
-	Real v = 4.f * powf(val/res, 2.f);  if (bGI)  pSet->grass = v;
+	Real v = 4.f * powf(val, 2.f);  if (bGI)  pSet->grass = v;
 	if (valGrass){	valGrass->setCaption(fToStr(v,2,4));  }
 }
 
 void App::slTreesDist(SL)
 {
-	Real v = 0.5f + 6.5f * powf(val/res, 2.f);  if (bGI)  pSet->trees_dist = v;
+	Real v = 0.5f + 6.5f * powf(val, 2.f);  if (bGI)  pSet->trees_dist = v;
 	if (valTreesDist){	valTreesDist->setCaption(fToStr(v,2,4));  }
 }
 void App::slGrassDist(SL)
 {
-	Real v = 0.5f + 6.5f * powf(val/res, 2.f);  if (bGI)  pSet->grass_dist = v;
+	Real v = 0.5f + 6.5f * powf(val, 2.f);  if (bGI)  pSet->grass_dist = v;
 	if (valGrassDist){	valGrassDist->setCaption(fToStr(v,2,4));  }
 }
 
 void App::btnTrGrReset(WP wp)
 {
-	ScrollBar* sl;  size_t v;
+	Slider* sl;  float v;
 	#define setSld(name)  sl##name(0,v);  \
-		sl = (ScrollBar*)mWndOpts->findWidget(#name);  if (sl)  sl->setScrollPosition(v);
-	v = res*powf(1.f /4.f, 0.5f);
+		sl = (Slider*)mWndOpts->findWidget(#name);  if (sl)  sl->setValue(v);
+	v = powf(1.f /4.f, 0.5f);
 	setSld(Trees);
 	setSld(Grass);
-	v = res*powf((1.f-0.5f) /6.5f, 0.5f);
+	v = powf((1.f-0.5f) /6.5f, 0.5f);
 	setSld(TreesDist);
 	setSld(GrassDist);
 }
@@ -131,7 +133,7 @@ void App::chkUseImposters(WP wp)
 }
 void App::slShaders(SL)
 {
-	float v = val/res;  if (bGI)  pSet->shaders = v;
+	float v = val;  if (bGI)  pSet->shaders = v;
 	if (valShaders)
 	{	valShaders->setCaption("Very low");
 		if (v > 0.2)  valShaders->setCaption("Low");
@@ -145,7 +147,7 @@ void App::slShaders(SL)
 
 void App::slTexSize(SL)
 {
-	int v = val;  if (bGI)  pSet->tex_size = v;
+	int v = val*1.f;  if (bGI)  pSet->tex_size = v;
 	if (valTexSize)
 	{	if (v == 0)  valTexSize->setCaption("Small");  else
 		if (v == 1)  valTexSize->setCaption("Big");  }
@@ -159,7 +161,7 @@ void App::slTexSize(SL)
 
 void App::slTerMtr(SL)
 {
-	int v = val;  if (bGI)  pSet->ter_mtr = v;
+	int v = val*3.f;  if (bGI)  pSet->ter_mtr = v;
 	if (valTerMtr)
 	{	if (v == 0)  valTerMtr->setCaption("Lowest");  else
 		if (v == 1)  valTerMtr->setCaption("Low");  else
@@ -179,7 +181,7 @@ void App::btnShaders(WP)
 
 void App::slShadowType(SL)
 {
-	int v = val;	if (bGI)  pSet->shadow_type = v;
+	int v = val*3.f;	if (bGI)  pSet->shadow_type = v;
 	if (valShadowType)
 	{	if (v == 0)  valShadowType->setCaption("None");  else
 		if (v == 1)  valShadowType->setCaption("Old");  else
@@ -190,26 +192,26 @@ void App::slShadowType(SL)
 
 void App::slShadowCount(SL)
 {
-	int v = 2 + 2.f * val/res;	if (bGI)  pSet->shadow_count = v;
+	int v = 2 + 2.f * val;	if (bGI)  pSet->shadow_count = v;
 	if (valShadowCount)  valShadowCount->setCaption(toStr(v));
 }
 
 void App::slShadowSize(SL)
 {
-	int v = max( 0.0f, min((float) ciShadowNumSizes-1, ciShadowNumSizes * val/res));
+	int v = max( 0.0f, min((float) ciShadowNumSizes-1, ciShadowNumSizes * val));
 	if (bGI)  pSet->shadow_size = v;
 	if (valShadowSize)  valShadowSize->setCaption(toStr(ciShadowSizesA[v]));
 }
 
 void App::slShadowDist(SL)
 {
-	Real v = 50.f + 4750.f * powf(val/res, 2.f);	if (bGI)  pSet->shadow_dist = v;
+	Real v = 50.f + 4750.f * powf(val, 2.f);	if (bGI)  pSet->shadow_dist = v;
 	if (valShadowDist){  valShadowDist->setCaption(fToStr(v*0.001f,1,4)+" km");  }
 }
 
 void App::slShadowFilter(SL)
 {
-	int v = val+1;  if (bGI) pSet->shadow_filter = v;
+	int v = 1 + 3 * val;  if (bGI) pSet->shadow_filter = v;
 	if (materialFactory) materialFactory->setShadowsFilterSize(v);
 	if (valShadowFilter) valShadowFilter->setCaption(toStr(v));
 }
@@ -217,7 +219,7 @@ void App::slShadowFilter(SL)
 //  water
 void App::slWaterSize(SL)
 {
-	int v = 2.f * val/res;	if (bGI)  pSet->water_rttsize = v;
+	int v = 2.f * val;	if (bGI)  pSet->water_rttsize = v;
 	if (valWaterSize)  valWaterSize->setCaption(toStr(ciShadowSizesA[v]));
 }
 
@@ -243,7 +245,7 @@ void App::chkWaterRefract(WP wp)
 void App::GuiInitGraphics()
 {
 	ButtonPtr btn, bchk;  ComboBoxPtr combo;
-	ScrollBar* sl;  size_t v;
+	Slider* sl;  size_t v;
 
 	//  detail
 	Slv(TerDetail,	powf(pSet->terdetail /20.f, 0.5f));
@@ -253,10 +255,10 @@ void App::GuiInitGraphics()
 
 	//  textures
 	Cmb(combo, "TexFiltering", comboTexFilter);
-	Slv(Anisotropy,	pSet->anisotropy /res);
+	Slv(Anisotropy,	pSet->anisotropy /16.f);
 	Slv(Shaders,	pSet->shaders);
-	Slv(TexSize,	pSet->tex_size /res);
-	Slv(TerMtr,		pSet->ter_mtr /res);
+	Slv(TexSize,	pSet->tex_size /1.f);
+	Slv(TerMtr,		pSet->ter_mtr /3.f);
 
 	//  trees/grass
 	Slv(Trees,		powf(pSet->gui.trees /4.f, 0.5f));
@@ -283,9 +285,9 @@ void App::GuiInitGraphics()
 	Slv(AntiAliasing, float(pSet->fsaa)/float(fsaa));
 
 	//  shadows
-	Slv(ShadowType,	pSet->shadow_type /res);
+	Slv(ShadowType,	pSet->shadow_type /3.f);
 	Slv(ShadowCount,(pSet->shadow_count-2) /2.f);
-	Slv(ShadowFilter, (pSet->shadow_filter-1) /res);
+	Slv(ShadowFilter, (pSet->shadow_filter-1) /3.f);
 	Slv(ShadowSize,	pSet->shadow_size /float(ciShadowNumSizes));
 	Slv(ShadowDist,	powf((pSet->shadow_dist -50.f)/4750.f, 0.5f));
 	Btn("Apply", btnShadows);
@@ -571,7 +573,7 @@ void App::slAntiAliasing(SL)
 	}
 	catch (Ogre::Exception&) {  return;  }
 	
-	float v = fsaaValues.back() * val/res;
+	float v = fsaaValues.back() * val;
 	
 	if (fsaaValues.size() < 1)  return;
 	
@@ -777,37 +779,37 @@ void App::comboGraphicsAll(ComboBoxPtr cmb, size_t val)
 	{
 	case 0:  // Lowest  -------------
 		s.particles = false;  s.trails = false;  s.particles_len = 1.f;  s.trails_len = 1.f;
-		s.refl_mode = "static";  s.refl_skip = 100;  s.refl_faces = 1;  s.refl_size = 0;  s.refl_dist = 20.f;
+		s.refl_mode = 0;  s.refl_skip = 150;  s.refl_faces = 1;  s.refl_size = 0;  s.refl_dist = 20.f;
 		s.all_effects = false;  s.bloom = false;  s.hdr = false;  s.motionblur = false;
 		s.rpl_rec = 0;  s.rpl_ghost = 0;  s.rpl_alpha = 1;	break;
 
 	case 1:  // Low  -------------
 		s.particles = true;  s.trails = true;  s.particles_len = 1.f;  s.trails_len = 1.f;
-		s.refl_mode = "static";  s.refl_skip = 100;  s.refl_faces = 1;  s.refl_size = 0;  s.refl_dist = 1500.f;
+		s.refl_mode = 0;  s.refl_skip = 100;  s.refl_faces = 1;  s.refl_size = 0;  s.refl_dist = 1500.f;
 		s.all_effects = false;  s.bloom = false;  s.hdr = false;  s.motionblur = false;
 		s.rpl_rec = 1;  s.rpl_ghost = 1;  s.rpl_alpha = 1;  break;
 
 	case 2:  // Medium  -------------
 		s.particles = true;  s.trails = true;  s.particles_len = 1.f;  s.trails_len = 1.5f;
-		s.refl_mode = "single";  s.refl_skip = 50;  s.refl_faces = 1;  s.refl_size = 0;  s.refl_dist = 100.f;
+		s.refl_mode = 1;  s.refl_skip = 70;  s.refl_faces = 1;  s.refl_size = 0;  s.refl_dist = 100.f;
 		s.all_effects = false;  s.bloom = false;  s.hdr = false;  s.motionblur = false;
 		s.rpl_rec = 1;  s.rpl_ghost = 1;  s.rpl_alpha = 1;	break;
 
 	case 3:  // High  -------------
 		s.particles = true;  s.trails = true;  s.particles_len = 1.2f;  s.trails_len = 2.f;
-		s.refl_mode = "single";    s.refl_skip = 10;  s.refl_faces = 1;  s.refl_size = 0;  s.refl_dist = 150.f;
+		s.refl_mode = 1;    s.refl_skip = 40;  s.refl_faces = 1;  s.refl_size = 0;  s.refl_dist = 150.f;
 		s.all_effects = true;  s.bloom = true;  s.hdr = false;  s.motionblur = false;
 		s.rpl_rec = 1;  s.rpl_ghost = 1;  s.rpl_alpha = 0;	break;
 
 	case 4:  // Very High  -------------
 		s.particles = true;  s.trails = true;  s.particles_len = 1.5f;  s.trails_len = 3.f;
-		s.refl_mode = "single";    s.refl_skip = 0;  s.refl_faces = 1;  s.refl_size = 0;  s.refl_dist = 200.f;
+		s.refl_mode = 1;    s.refl_skip = 10;  s.refl_faces = 1;  s.refl_size = 0;  s.refl_dist = 200.f;
 		s.all_effects = true;  s.bloom = true;  s.hdr = false;  s.motionblur = true;
 		s.rpl_rec = 1;  s.rpl_ghost = 1;  s.rpl_alpha = 0;	break;
 
 	case 5:  // Ultra  -------------
 		s.particles = true;  s.trails = true;  s.particles_len = 1.5f;  s.trails_len = 4.f;
-		s.refl_mode = "single";    s.refl_skip = 1;  s.refl_faces = 3;  s.refl_size = 0;  s.refl_dist = 400.f;
+		s.refl_mode = 1;    s.refl_skip = 1;  s.refl_faces = 3;  s.refl_size = 0;  s.refl_dist = 400.f;
 		s.all_effects = true;  s.bloom = true;  s.hdr = false;  s.motionblur = true;
 		s.rpl_rec = 1;  s.rpl_ghost = 1;  s.rpl_alpha = 0;	break;
 	}
@@ -839,7 +841,7 @@ void App::comboGraphicsAll(ComboBoxPtr cmb, size_t val)
 	//  update gui  sld,val,chk  ...
 	GuiInitGraphics();  // += newDelegate..?
 
-	ButtonPtr bchk;  ScrollBar* sl;  size_t v;
+	ButtonPtr bchk;  Slider* sl;
 #ifndef ROAD_EDITOR  /// game only
 	// duplicated code..
 	Chk("ParticlesOn", chkParticles, pSet->particles);	Chk("TrailsOn", chkTrails, pSet->trails);
@@ -848,12 +850,9 @@ void App::comboGraphicsAll(ComboBoxPtr cmb, size_t val)
 
 	Slv(ReflSkip,	powf(pSet->refl_skip /1000.f, 0.5f));
 	Slv(ReflSize,	pSet->refl_size /float(ciShadowNumSizes));
-	Slv(ReflFaces,	pSet->refl_faces /res);
+	Slv(ReflFaces,	pSet->refl_faces /6.f);
 	Slv(ReflDist,	powf((pSet->refl_dist -20.f)/1480.f, 0.5f));
-	int value=0;  if (pSet->refl_mode == "static")  value = 0;
-	else if (pSet->refl_mode == "single")  value = 1;
-	else if (pSet->refl_mode == "full")  value = 2;
-	Slv(ReflMode,   value /res);
+	Slv(ReflMode,   pSet->refl_mode /2.f);
 
 	Chk("Bloom", chkVidBloom, pSet->bloom);
 	//Chk("HDR", chkVidHDR, pSet->hdr);
@@ -870,8 +869,8 @@ void App::comboGraphicsAll(ComboBoxPtr cmb, size_t val)
 
 #ifdef ROAD_EDITOR  /// editor only
 	Chk("Minimap", chkMinimap, pSet->trackmap);
-	Slv(TerUpd, pSet->ter_skip /res);
-	Slv(MiniUpd, pSet->mini_skip /res);
+	Slv(TerUpd, pSet->ter_skip /20.f);
+	Slv(MiniUpd, pSet->mini_skip /20.f);
 #endif
 
 	Chk("WaterReflection", chkWaterReflect, pSet->water_reflect);

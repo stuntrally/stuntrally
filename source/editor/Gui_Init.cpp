@@ -137,7 +137,7 @@ void App::InitGui()
 	}
 	
 	ButtonPtr btn, bchk;  ComboBoxPtr combo;  // for defines
-	ScrollBar* sl;  size_t v;
+	Slider* sl;
 
 	///  [Graphics]
 	//------------------------------------------------------------------------
@@ -150,8 +150,8 @@ void App::InitGui()
 	Slv(SizeMinmap,	(pSet->size_minimap-0.15f) /1.85f);
 	Slv(CamSpeed, powf((pSet->cam_speed-0.1f) / 3.9f, 1.f));
 	Slv(CamInert, pSet->cam_inert);
-	Slv(TerUpd, pSet->ter_skip /res);
-	Slv(MiniUpd, pSet->mini_skip /res);
+	Slv(TerUpd, pSet->ter_skip /20.f);
+	Slv(MiniUpd, pSet->mini_skip /20.f);
 	Slv(SizeRoadP, (pSet->road_sphr-0.1f) /11.9f);
 
 	//  set camera btns
@@ -197,7 +197,7 @@ void App::InitGui()
 	Slv(TerGenScale,powf(pSet->gen_scale   /160.f, 1.f/2.f));  // generate
 	Slv(TerGenOfsX, (pSet->gen_ofsx+2.f) /4.f);
 	Slv(TerGenOfsY, (pSet->gen_ofsy+2.f) /4.f);
-	Slv(TerGenOct,  Real(pSet->gen_oct)	/res);
+	Slv(TerGenOct,  Real(pSet->gen_oct)	/9.f);
 	Slv(TerGenFreq, pSet->gen_freq    /0.7f);
 	Slv(TerGenPers, pSet->gen_persist /0.7f);
 	Slv(TerGenPow,  powf(pSet->gen_pow     /6.f,  1.f/2.f));

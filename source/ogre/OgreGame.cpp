@@ -186,7 +186,8 @@ void App::recreateCarMtr()
 
 void App::destroyScene()
 {
-	//..delete graphs;
+	for (int i=0; i < graphs.size(); ++i)
+		delete graphs[i];
 
 	for (int i=0; i<4; ++i)
 		pSet->cam_view[i] = carsCamNum[i];

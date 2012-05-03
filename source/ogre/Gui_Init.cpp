@@ -109,19 +109,19 @@ void App::InitGui()
 	///  Sliders
     //------------------------------------------------------------------------
 	ButtonPtr btn,bchk;  ComboBoxPtr combo;
-	ScrollBar* sl;  size_t v;
+	Slider* sl;
 
 	GuiInitLang();
 
 	GuiInitGraphics();
 	    
 	//  view sizes
-	Slf(SizeGaug,	(pSet->size_gauges-0.1f) /0.15f);
-	Slv(TypeGaug,	pSet->gauges_type /res);
+	Slv(SizeGaug,	(pSet->size_gauges-0.1f) /0.15f);
+	Slv(TypeGaug,	pSet->gauges_type /5.f);
 	Slv(SizeMinimap,(pSet->size_minimap-0.05f) /0.25f);
 	Slv(SizeArrow,  (pSet->size_arrow));
 	Slv(ZoomMinimap,powf((pSet->zoom_minimap-1.0f) /9.f, 0.5f));
-	Slv(CountdownTime,  pSet->gui.pre_time / 0.5f /res);
+	Slv(CountdownTime,  pSet->gui.pre_time / 0.5f /6.f);
 	
 	//  particles/trails
 	Slv(Particles,	powf(pSet->particles_len /4.f, 0.5f));
@@ -130,12 +130,9 @@ void App::InitGui()
 	//  reflect
 	Slv(ReflSkip,	powf(pSet->refl_skip /1000.f, 0.5f));
 	Slv(ReflSize,	pSet->refl_size /float(ciShadowNumSizes));
-	Slv(ReflFaces,	pSet->refl_faces /res);
+	Slv(ReflFaces,	pSet->refl_faces /6.f);
 	Slv(ReflDist,	powf((pSet->refl_dist -20.f)/1480.f, 0.5f));
-	int value=0;  if (pSet->refl_mode == "static")  value = 0;
-	else if (pSet->refl_mode == "single")  value = 1;
-	else if (pSet->refl_mode == "full")  value = 2;
-	Slv(ReflMode,   value /res);
+	Slv(ReflMode,   pSet->refl_mode /2.f);
 
     //  sound
 	Slv(VolMaster,	pSet->vol_master/1.6f);	 Slv(VolEngine,	pSet->vol_engine/1.4f);
@@ -282,8 +279,8 @@ void App::InitGui()
 		btn = mGUI->findWidget<Button>("RplForward");  if (btn)  {	btn->eventMouseButtonPressed += newDelegate(this, &App::btnRplFwdDn);  btn->eventMouseButtonReleased += newDelegate(this, &App::btnRplFwdUp);  }
 		
 		//  info
-		slRplPos = (ScrollBar*)mWndRpl->findWidget("RplSlider");
-		if (slRplPos)  slRplPos->eventScrollChangePosition += newDelegate(this, &App::slRplPosEv);
+		slRplPos = (Slider*)mWndRpl->findWidget("RplSlider");
+		if (slRplPos)  slRplPos->eventValueChanged += newDelegate(this, &App::slRplPosEv);
 
 		valRplPerc = mGUI->findWidget<StaticText>("RplPercent");
     	valRplCur = mGUI->findWidget<StaticText>("RplTimeCur");
@@ -575,7 +572,7 @@ void App::InitGui()
 
 void App::UpdCarClrSld(bool upd)
 {
-	ScrollBar* sl;  size_t v;
+	Slider* sl;
 	Slv(CarClrH, pSet->gui.car_hue[iCurCar]);
 	Slv(CarClrS, pSet->gui.car_sat[iCurCar]);
 	Slv(CarClrV, pSet->gui.car_val[iCurCar]);

@@ -17,6 +17,7 @@
 #include <OgreMaterialManager.h>
 #include "common/Gui_Def.h"
 #include "common/MultiList2.h"
+#include "common/Slider.h"
 #include "SplitScreen.h"
 #include <MyGUI.h>
 using namespace Ogre;
@@ -831,7 +832,7 @@ void App::updatePoses(float time)
 		if (valRplLen)  valRplLen->setCaption(GetTimeString(len));
 
 		if (slRplPos)
-		{	int v = pos/len * res;  slRplPos->setScrollPosition(v);  }
+		{	float v = pos/len;  slRplPos->setValue(v);  }
 	}	
 	
 	

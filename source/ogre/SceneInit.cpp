@@ -158,7 +158,10 @@ void App::LoadCleanUp()  // 1 first
 	
 	//  graphs .-_/\_.
 	for (int i=0; i < graphs.size(); ++i)
+	{
 		graphs[i]->Destroy();
+		delete graphs[i];
+	}
 	graphs.clear();
 	
 

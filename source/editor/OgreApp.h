@@ -35,7 +35,7 @@ const Ogre::Real crAngSnaps[ciAngSnapsNum] = {0,15,30,45,90,180};
 
 
 namespace Forests {  class PagedGeometry;  }
-namespace MyGUI  {  class MultiList2;  }
+namespace MyGUI  {  class MultiList2;  class Slider;  }
 class MaterialFactory;
 
 
@@ -194,7 +194,7 @@ protected:
 	typedef std::list <std::string> strlist;
 	//  slider event and its text field for value
 	#define SLV(name)  void sl##name(SL);  MyGUI::StaticTextPtr val##name;
-	#define SL  MyGUI::ScrollBar* wp, size_t val						//  slider event args
+	#define SL  MyGUI::Slider* wp, float val			//  slider event args
 	#define CMB  MyGUI::ComboBoxPtr cmb, size_t val		//  combo event args
 	#define TAB  MyGUI::Tab* tab, size_t id			//  tab event args
 

@@ -68,10 +68,6 @@ namespace MyGUI
 		if (!mWidgetTrack->getVisible())
 			mWidgetTrack->setVisible(true);
 
-		//int iStart = mWidgetStart->getWidth();
-		//int iEnd = mWidgetEnd->getWidth();
-		//int iSize = getWidth() - iStart - iEnd;
-		//int iStart = mWidgetTrack->getParent()->getPosition().left;
 		int iTrack = mWidgetTrack->getSize().width;
 		int iSize = mWidgetTrack->getParent()->getSize().width - iTrack;
 
@@ -112,12 +108,12 @@ namespace MyGUI
 		//if (mValue == val)
 		//	return;
 
-		mfValue = val;
+		mfValue = val;  //std::max(0.f, std::min(1.f, val));
 		updateTrack();
 	}
 
 
-	//  mouse wheel  ..
+	//  mouse wheel
 	//--------------------------------------------------------------------------------
 	void Slider::onMouseWheel(int _rel)
 	{

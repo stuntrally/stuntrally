@@ -73,7 +73,7 @@ void App::chkSplitVert(WP wp)
 
 void App::slNumLaps(SL)
 {
-	int v = 20.f * val/res + 1;  if (bGI)  pSet->gui.num_laps = v;
+	int v = 20.f * val + 1;  if (bGI)  pSet->gui.num_laps = v;
 	if (valNumLaps){  valNumLaps->setCaption(toStr(v));  }
 }
 
@@ -92,21 +92,21 @@ void App::tabPlayer(TabPtr wp, size_t id)
 //  car color
 void App::slCarClrH(SL)
 {
-	Real v = val/res;  if (bGI)  pSet->gui.car_hue[iCurCar] = v;
+	Real v = val;  if (bGI)  pSet->gui.car_hue[iCurCar] = v;
 	if (valCarClrH){	valCarClrH->setCaption(fToStr(v,2,4));  }
 	if (iCurCar < carModels.size() && bUpdCarClr && bGI)
 		carModels[iCurCar]->ChangeClr(iCurCar);
 }
 void App::slCarClrS(SL)
 {
-	Real v = val/res;  if (bGI)  pSet->gui.car_sat[iCurCar] = v;
+	Real v = val;  if (bGI)  pSet->gui.car_sat[iCurCar] = v;
 	if (valCarClrS){	valCarClrS->setCaption(fToStr(v,2,4));  }
 	if (iCurCar < carModels.size() && bUpdCarClr && bGI)
 		carModels[iCurCar]->ChangeClr(iCurCar);
 }
 void App::slCarClrV(SL)
 {
-	Real v = val/res;  if (bGI)  pSet->gui.car_val[iCurCar] = v;
+	Real v = val;  if (bGI)  pSet->gui.car_val[iCurCar] = v;
 	if (valCarClrV){	valCarClrV->setCaption(fToStr(v,2,4));  }
 	if (iCurCar < carModels.size() && bUpdCarClr && bGI)
 		carModels[iCurCar]->ChangeClr(iCurCar);
@@ -134,56 +134,56 @@ void App::btnCarClrRandom(WP)
 //  particles/trails
 void App::slParticles(SL)
 {
-	Real v = 4.f * powf(val/res, 2.f);  if (bGI)  pSet->particles_len = v;
+	Real v = 4.f * powf(val, 2.f);  if (bGI)  pSet->particles_len = v;
 	if (valParticles){	valParticles->setCaption(fToStr(v,2,4));  }
 }
 void App::slTrails(SL)
 {
-	Real v = 4.f * powf(val/res, 2.f);  if (bGI)  pSet->trails_len = v;
+	Real v = 4.f * powf(val, 2.f);  if (bGI)  pSet->trails_len = v;
 	if (valTrails){		valTrails->setCaption(fToStr(v,2,4));  }
 }
 
 //  reflect
 void App::slReflSkip(SL)
 {
-	int v = 1000.f * powf(val/res, 2.f);	if (bGI)  pSet->refl_skip = v;
+	int v = 1000.f * powf(val, 2.f);	if (bGI)  pSet->refl_skip = v;
 	if (valReflSkip)  valReflSkip->setCaption(toStr(v));
 }
 void App::slReflSize(SL)
 {
-	int v = std::max( 0.0f, std::min((float) ciShadowNumSizes-1, ciShadowNumSizes * val/res));
+	int v = std::max( 0.0f, std::min((float) ciShadowNumSizes-1, ciShadowNumSizes * val));
 	if (bGI)  pSet->refl_size = v;
 	if (valReflSize)  valReflSize->setCaption(toStr(ciShadowSizesA[v]));
 }
 void App::slReflFaces(SL)
 {
-	if (bGI)  pSet->refl_faces = val;
-	if (valReflFaces)  valReflFaces->setCaption(toStr(val));
+	int v = val * 6.f;
+	if (bGI)  pSet->refl_faces = v;
+	if (valReflFaces)  valReflFaces->setCaption(toStr(v));
 }
 void App::slReflDist(SL)
 {
-	float v = 20.f + 1480.f * powf(val/res, 2.f);	if (bGI)  pSet->refl_dist = v;
+	float v = 20.f + 1480.f * powf(val, 2.f);	if (bGI)  pSet->refl_dist = v;
 	if (valReflDist){	valReflDist->setCaption(fToStr(v,0,4)+" m");  }
 	
 	recreateReflections();
 }
 void App::slReflMode(SL)
 {
-	std::string old = pSet->refl_mode;
-	
-	if (val == 0)  pSet->refl_mode = "static";  //enums..
-	if (val == 1)  pSet->refl_mode = "single";
-	if (val == 2)  pSet->refl_mode = "full";
+	int old = pSet->refl_mode;
+	pSet->refl_mode = val * 2.f;
 	
 	if (pSet->refl_mode != old)
 		recreateReflections();
 		
 	if (valReflMode)
 	{
-		valReflMode->setCaption( TR("#{ReflMode_" + pSet->refl_mode + "}") );
-		if (pSet->refl_mode == "static")  valReflMode->setTextColour(MyGUI::Colour(0.0, 1.0, 0.0)); 
-		else if (pSet->refl_mode == "single")  valReflMode->setTextColour(MyGUI::Colour(1.0, 0.5, 0.0));
-		else if (pSet->refl_mode == "full")  valReflMode->setTextColour(MyGUI::Colour(1.0, 0.0, 0.0));
+		switch (pSet->refl_mode)
+		{
+		case 0: valReflMode->setCaption( TR("#{ReflMode_static}") );  valReflMode->setTextColour(MyGUI::Colour(0.0, 1.0, 0.0));  break;
+		case 1: valReflMode->setCaption( TR("#{ReflMode_single}") );  valReflMode->setTextColour(MyGUI::Colour(1.0, 0.5, 0.0));  break;
+		case 2: valReflMode->setCaption( TR("#{ReflMode_full}") );  valReflMode->setTextColour(MyGUI::Colour(1.0, 0.0, 0.0));  break;
+		}
 	}
 }
 void App::recreateReflections()
@@ -197,37 +197,37 @@ void App::recreateReflections()
 
 
 //  [View] size
-void App::slSizeGaug(SLF)
+void App::slSizeGaug(SL)
 {
 	float v = 0.1f + 0.15f * val;	if (bGI)  {  pSet->size_gauges = v;  SizeHUD(true);  }
 	if (valSizeGaug){	valSizeGaug->setCaption(fToStr(v,3,4));  }
 }
 void App::slTypeGaug(SL)
 {
-	int v = val;		if (bGI)  {  pSet->gauges_type = v;  CreateHUD(true);  }
+	int v = val * 5.f;		if (bGI)  {  pSet->gauges_type = v;  CreateHUD(true);  }
 	if (valTypeGaug){	valTypeGaug->setCaption(toStr(v));  }
 }
 void App::slSizeArrow(SL)
 {
-	float v = val/res;	if (bGI)  {  pSet->size_arrow = v;  }
+	float v = val;	if (bGI)  {  pSet->size_arrow = v;  }
 	if (valSizeArrow){	valSizeArrow->setCaption(fToStr(v,3,4));  }
 	if (arrowNode) arrowRotNode->setScale(v/2.f, v/2.f, v/2.f);
 }
 void App::slCountdownTime(SL)
 {
-	float v = val * 0.5f;	if (bGI)  {  pSet->gui.pre_time = v;  }
+	float v = (int)(val * 6.f) * 0.5f;	if (bGI)  {  pSet->gui.pre_time = v;  }
 	if (valCountdownTime){	valCountdownTime->setCaption(fToStr(v,1,4));  }
 }
 
 //  minimap
 void App::slSizeMinimap(SL)
 {
-	float v = 0.05f + 0.25f * val/res;	if (bGI)  {  pSet->size_minimap = v;  SizeHUD(true);  }
+	float v = 0.05f + 0.25f * val;	if (bGI)  {  pSet->size_minimap = v;  SizeHUD(true);  }
 	if (valSizeMinimap){	valSizeMinimap->setCaption(fToStr(v,3,4));  }
 }
 void App::slZoomMinimap(SL)
 {
-	float v = 1.f + 9.f * powf(val/res, 2.f);	if (bGI)  {  pSet->zoom_minimap = v;  SizeHUD(true);  }
+	float v = 1.f + 9.f * powf(val, 2.f);	if (bGI)  {  pSet->zoom_minimap = v;  SizeHUD(true);  }
 	if (valZoomMinimap){	valZoomMinimap->setCaption(fToStr(v,3,4));  }
 }
 
@@ -235,22 +235,22 @@ void App::slZoomMinimap(SL)
 //  [Sound]
 void App::slVolMaster(SL)
 {
-	Real v = 1.6f * val/res;	if (bGI)  {  pSet->vol_master = v;  pGame->ProcessNewSettings();  }
+	Real v = 1.6f * val;	if (bGI)  {  pSet->vol_master = v;  pGame->ProcessNewSettings();  }
 	if (valVolMaster){  valVolMaster->setCaption(fToStr(v,2,4));  }
 }
 void App::slVolEngine(SL)
 {
-	Real v = 1.4f * val/res;	if (bGI)  pSet->vol_engine = v;
+	Real v = 1.4f * val;	if (bGI)  pSet->vol_engine = v;
 	if (valVolEngine){  valVolEngine->setCaption(fToStr(v,2,4));  }
 }
 void App::slVolTires(SL)
 {
-	Real v = 1.4f * val/res;	if (bGI)  pSet->vol_tires = v;
+	Real v = 1.4f * val;	if (bGI)  pSet->vol_tires = v;
 	if (valVolTires){  valVolTires->setCaption(fToStr(v,2,4));  }
 }
 void App::slVolEnv(SL)
 {
-	Real v = 1.4f * val/res;	if (bGI)  pSet->vol_env = v;
+	Real v = 1.4f * val;	if (bGI)  pSet->vol_env = v;
 	if (valVolEnv){  valVolEnv->setCaption(fToStr(v,2,4));  }
 }
 
@@ -433,31 +433,31 @@ void App::chkVidFilmGrain(WP wp)
 }
 void App::slBloomInt(SL)
 {
-	Real v = val/res;  if (bGI)  pSet->bloomintensity = v;
+	Real v = val;  if (bGI)  pSet->bloomintensity = v;
 	if (valBloomInt){	valBloomInt->setCaption(fToStr(v,2,4));  }
 	if (bGI)  refreshCompositor();
 }
 void App::slBloomOrig(SL)
 {
-	Real v = val/res;  if (bGI)  pSet->bloomorig = v;
+	Real v = val;  if (bGI)  pSet->bloomorig = v;
 	if (valBloomOrig){	valBloomOrig->setCaption(fToStr(v,2,4));  }
 	if (bGI)  refreshCompositor();
 }
 void App::slBlurIntens(SL)
 {
-	Real v = val/res;  if (bGI)  pSet->motionblurintensity = v;
+	Real v = val;  if (bGI)  pSet->motionblurintensity = v;
 	if (valBlurIntens){	valBlurIntens->setCaption(fToStr(v,2,4));  }
 	// if (bGI)  refreshCompositor();   // intensity is set every frame in UpdateHUD
 }
 void App::slDepthOfFieldFocus(SL)
 {
-	Real v = 2000.f * powf(val/res, 2.f);  if (bGI)  pSet->depthOfFieldFocus = v;
+	Real v = 2000.f * powf(val, 2.f);  if (bGI)  pSet->depthOfFieldFocus = v;
 	if (valDepthOfFieldFocus)	valDepthOfFieldFocus->setCaption(fToStr(v,0,4));
 	// if (bGI)  refreshCompositor();   // intensity is set every frame in UpdateHUD
 }
 void App::slDepthOfFieldFar(SL)
 {
-	Real v = 2000.f * powf(val/res, 2.f);  if (bGI)  pSet->depthOfFieldFar = v;
+	Real v = 2000.f * powf(val, 2.f);  if (bGI)  pSet->depthOfFieldFar = v;
 	if (valDepthOfFieldFar)		valDepthOfFieldFar->setCaption(fToStr(v,0,4));
 	// if (bGI)  refreshCompositor();   // intensity is set every frame in UpdateHUD
 }
