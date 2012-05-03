@@ -3,6 +3,7 @@
 #include "SceneXml.h"
 #include "FluidsXml.h"
 #include "tinyxml.h"
+#include <OgreSceneNode.h>
 
 using namespace Ogre;
 

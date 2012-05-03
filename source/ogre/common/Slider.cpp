@@ -4,6 +4,7 @@
 #include "MyGUI_InputManager.h"
 #include "MyGUI_Button.h"
 #include "MyGUI_ResourceSkin.h"
+#include "MyGUI_ImageBox.h"
 
 namespace MyGUI
 {
