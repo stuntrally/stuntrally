@@ -2,6 +2,8 @@
 
 #include "GraphView.h"
 #include "RenderConst.h"
+#include <OgreManualObject.h>
+#include <OgreSceneManager.h>
 using namespace Ogre;
 
 
