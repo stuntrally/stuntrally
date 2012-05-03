@@ -25,6 +25,8 @@ using std::string;
 #else
 #include <vorbis/vorbisfile.h>
 #endif
+//#include "../ogre/common/Defines.h"
+
 
 bool SOUNDBUFFER::LoadWAV(const string & filename, const SOUNDINFO & sound_device_info, std::ostream & error_output)
 {
@@ -377,36 +379,63 @@ void SOUND::Callback16bitstereo(void *myself, Uint8 *stream, int len)
 
 	int* buffer1 = new int[len/4];
 	int* buffer2 = new int[len/4];
+	int* out = new int[len/2];
 	for (std::list <SOUNDSOURCE *>::iterator s = active_sourcelist.begin(); s != active_sourcelist.end(); s++)
 	{
 		SOUNDSOURCE * src = *s;
 		src->SampleAndAdvanceWithPitch16bit(buffer1, buffer2, len/4);
-		for (int f = 0; f < src->NumFilters(); f++)
+		for (int f = 0; f < src->NumFilters(); ++f)
 		{
 			src->GetFilter(f).Filter(buffer1, buffer2, len/4);
 		}
 		volume_filter.Filter(buffer1, buffer2, len/4);
 		if (s == active_sourcelist.begin())
 		{
-			for (int i = 0; i < len/4; i++)
+			for (int i = 0; i < len/4; ++i)
 			{
 				int pos = i*2;
-				((short *) stream)[pos] = (buffer1[i]);
-				((short *) stream)[pos+1] = (buffer2[i]);
+				short y0 = std::min(32767, std::max(-32767, buffer1[i] ));
+				short y1 = std::min(32767, std::max(-32767, buffer2[i] ));
+				//((short *) stream)[pos]   = y0;
+				//((short *) stream)[pos+1] = y1;
+				out[pos]   = y0;
+				out[pos+1] = y1;
 			}
 		}
 		else
 		{
-			for (int i = 0; i < len/4; i++)
+			for (int i = 0; i < len/4; ++i)
 			{
 				int pos = i*2;
-				((short *) stream)[pos] += (buffer1[i]);
-				((short *) stream)[pos+1] += (buffer2[i]);
+				short y0 = std::min(32767, std::max(-32767, buffer1[i] ));
+				short y1 = std::min(32767, std::max(-32767, buffer2[i] ));
+				//((short *) stream)[pos]   += y0;
+				//((short *) stream)[pos+1] += y1;
+				out[pos]   += y0;
+				out[pos+1] += y1;
 			}
 		}
 	}
 	delete[]buffer1;
-	delete [] buffer2,
+	delete[]buffer2;
+	
+	//  send to out
+	for (int i = 0; i < len/4; ++i)
+	{
+		int pos = i*2;
+
+		short y0 = std::min(32767, std::max(-32767, out[pos]   ));
+		short y1 = std::min(32767, std::max(-32767, out[pos+1] ));
+
+		((short *) stream)[pos]   = y0;
+		((short *) stream)[pos+1] = y1;
+
+		//if (pApp && !pApp->bLoading && pApp->graphs.size() > 0 && i%32 == 0)
+		//{	pApp->graphs[0]->AddVal(y0 / 32767.f * 0.5f + 0.5f);
+		//	pApp->graphs[1]->AddVal(y1 / 32767.f * 0.5f + 0.5f);
+		//}
+	}
+	delete[]out;
 	
 	UnlockSourceList();
 
@@ -422,7 +451,7 @@ void SOUND::Callback16bitstereo(void *myself, Uint8 *stream, int len)
 	}
 
 	CollectGarbage();
-
+	//LogO("Snd len: "+toStr(len));
 	//cout << "Callback: " << len << endl;
 }
 

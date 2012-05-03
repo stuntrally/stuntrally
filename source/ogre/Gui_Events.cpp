@@ -235,7 +235,7 @@ void App::slZoomMinimap(SL)
 //  [Sound]
 void App::slVolMaster(SL)
 {
-	Real v = 1.6f * val;	if (bGI)  {  pSet->vol_master = v;  pGame->ProcessNewSettings();  }
+	Real v = 2.6f * val;	if (bGI)  {  pSet->vol_master = v;  pGame->ProcessNewSettings();  }
 	if (valVolMaster){  valVolMaster->setCaption(fToStr(v,2,4));  }
 }
 void App::slVolEngine(SL)

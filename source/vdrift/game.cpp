@@ -82,8 +82,6 @@ bool GAME::InitializeSound()
 {
 	QTimer ti;  ti.update();  /// time
 	
-	sound.pApp = pOgreGame;  ///
-	
 	if (sound.Init(2048, info_output, error_output))
 	{
 		generic_sounds.SetLibraryPath(PATHMANAGER::GetGenericSoundPath());

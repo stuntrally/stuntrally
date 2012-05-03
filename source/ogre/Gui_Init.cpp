@@ -135,7 +135,7 @@ void App::InitGui()
 	Slv(ReflMode,   pSet->refl_mode /2.f);
 
     //  sound
-	Slv(VolMaster,	pSet->vol_master/1.6f);	 Slv(VolEngine,	pSet->vol_engine/1.4f);
+	Slv(VolMaster,	pSet->vol_master/2.6f);	 Slv(VolEngine,	pSet->vol_engine/1.4f);
 	Slv(VolTires,	pSet->vol_tires/1.4f); 	 Slv(VolEnv,	pSet->vol_env/1.4f);
 	
 	// car color
