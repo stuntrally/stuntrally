@@ -8,6 +8,8 @@
 #include "configfile.h"
 #include "settings.h"
 #include "../ogre/OgreGame.h"  //+ replay
+#include "../ogre/CarModel.h"  //+ camera pos
+#include "../ogre/FollowCamera.h"  //+ camera pos
 #include "../ogre/common/Defines.h"
 #include "../ogre/common/GraphView.h"
 #include "../network/protocol.hpp"
@@ -21,7 +23,7 @@ bool isnan(double number) {return (number != number);}
 #endif
 
 CAR::CAR() :
-	pSet(0), pApp(0), id(0),
+	pSet(0), pApp(0), id(0), pCarM(0),
 	last_steer(0),
 	debug_wheel_draw(false),
 	sector(-1),
@@ -629,12 +631,12 @@ void CAR::HandleInputs(const std::vector <float> & inputs, float dt)
 void CAR::UpdateSounds(float dt)
 {
 	float rpm, throttle, speed, dynVel;
-	MATHVECTOR <float,3> pos, engPos, whPos[4];  // engine, wheels pos
+	MATHVECTOR <float,3> pos, engPos, whPos[4], hitPos;  // car, engine, wheels pos
 	QUATERNION <float> rot;
 	TRACKSURFACE::TYPE surfType[4];
 	float squeal[4],whVel[4], suspVel[4],suspDisp[4];
 	float whH_all = 0.f;  bool mud = false;
-	float fHitForce = 0.f;
+	float fHitForce = 0.f, boostVal = 0.f;
 	
 	///  replay play  ------------------------------------------
 	if (pApp->bRplPlay)
@@ -648,6 +650,8 @@ void CAR::UpdateSounds(float dt)
 		dynVel = fr.dynVel;
 		whMudSpin = fr.whMudSpin;
 		fHitForce = fr.fHitForce;
+		hitPos[0] = fr.vHitPos.x;  hitPos[1] = -fr.vHitPos.z;  hitPos[2] = fr.vHitPos.y;
+		boostVal = fr.fboost;
 
 		for (int w=0; w<4; ++w)
 		{
@@ -673,6 +677,8 @@ void CAR::UpdateSounds(float dt)
 		speed = GetSpeed();
 		dynVel = dynamics.GetVelocity().Magnitude();
 		fHitForce = dynamics.fHitForce;
+		hitPos[0] = dynamics.vHitPos.x;  hitPos[1] = -dynamics.vHitPos.z;  hitPos[2] = dynamics.vHitPos.y;
+		boostVal = dynamics.boostVal;
 		
 		for (int w=0; w<4; ++w)
 		{
@@ -709,10 +715,24 @@ void CAR::UpdateSounds(float dt)
 	///  listener  ------------------------------------------
 	if (!bRemoteCar)
 	{
+		MATHVECTOR <float,3> campos = pos;
+		QUATERNION <float> camrot;// = rot;
+		using namespace Ogre;
+		if (pCarM && pCarM->fCam)
+		{	//  pos
+			Vector3 cp = pCarM->fCam->camPosFinal;
+			campos[0] = cp.x;  campos[1] =-cp.z;  campos[2] = cp.y;
+			//  rot
+			Quaternion rr = pCarM->fCam->mCamera->getOrientation() * Object::qrFix2;
+			Quaternion b(-rr.w,  -rr.x, -rr.y, -rr.z);
+			//  fix pan
+			b = b * Quaternion(Degree(90.f), Vector3::UNIT_X) * Quaternion(Degree(-90.f), Vector3::UNIT_Z);
+			camrot[0] = b.x;  camrot[1] = b.y;  camrot[2] = b.z;  camrot[3] = b.w;
+		}
 		if (pApp->pGame->sound.Enabled())
-			pApp->pGame->sound.SetListener(pos, rot, MATHVECTOR <float,3>());
+			pApp->pGame->sound.SetListener(campos, camrot, MATHVECTOR <float,3>());
 
-		bool incar = true;
+		bool incar = false;//
 		std::list <SOUNDSOURCE *> soundlist;
 		GetEngineSoundList(soundlist);
 		for (std::list <SOUNDSOURCE *>::iterator s = soundlist.begin(); s != soundlist.end(); s++)
@@ -888,7 +908,7 @@ void CAR::UpdateSounds(float dt)
 	
 	//update boost sound
 	{
-		float gain = dynamics.boostVal;
+		float gain = boostVal;
 		boostsnd.SetGain(gain * 0.57f * pSet->vol_engine);
 		boostsnd.SetPosition(engPos[0], engPos[1], engPos[2]); //back?-
 	}
@@ -940,7 +960,7 @@ void CAR::UpdateSounds(float dt)
 			if (/*gain > mingain &&*/ crashsoundtime[i] > /*ti*/0.4f)  //!crashsound.Audible())
 			{
 				crashsound[i].SetGain(gain * pSet->vol_env);
-				crashsound[i].SetPosition(engPos[0], engPos[1], engPos[2]); //
+				crashsound[i].SetPosition(hitPos[0], hitPos[1], hitPos[2]);  //..
 				crashsound[i].Stop();
 				crashsound[i].Play();
 				crashsoundtime[i] = 0.f;

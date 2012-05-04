@@ -70,16 +70,16 @@ Object::Object()
 
 
 ///  bullet to ogre  ----------
-Quaternion Object::qrFix(0.707107, 0, 0.707107, 0);
+Quaternion Object::qrFix(0.707107, 0, 0.707107, 0);  //SetAxisAngle(PI_d/2.f, 0,1,0);
+Quaternion Object::qrFix2(-0.707107, 0, 0.707107, 0);  //SetAxisAngle(-PI_d/2.f, 0,1,0);
 
 void Object::SetFromBlt()
 {
 	if (!nd)  return;
 	Vector3 posO = Vector3(pos[0],pos[2],-pos[1]);
-	Quaternion q(rot[0],rot[1],rot[2],rot[3]), q1;
-	Radian rad;  Vector3 axi;  q.ToAngleAxis(rad, axi);
-	q1.FromAngleAxis(-rad,Vector3(axi.z,-axi.x,-axi.y));
-	Quaternion rotO = q1 * qrFix;
+
+	Quaternion q(rot[0],-rot[3],rot[1],rot[2]);
+	Quaternion rotO = q * qrFix;
 
 	nd->setPosition(posO);
 	nd->setOrientation(rotO);

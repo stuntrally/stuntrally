@@ -396,8 +396,8 @@ void SOUND::Callback16bitstereo(void *myself, Uint8 *stream, int len)
 				int pos = i*2;
 				short y0 = std::min(32767, std::max(-32767, buffer1[i] ));
 				short y1 = std::min(32767, std::max(-32767, buffer2[i] ));
-				//((short *) stream)[pos]   = y0;
-				//((short *) stream)[pos+1] = y1;
+				//short y0 = buffer1[i];
+				//short y1 = buffer2[i];
 				out[pos]   = y0;
 				out[pos+1] = y1;
 			}
@@ -409,8 +409,8 @@ void SOUND::Callback16bitstereo(void *myself, Uint8 *stream, int len)
 				int pos = i*2;
 				short y0 = std::min(32767, std::max(-32767, buffer1[i] ));
 				short y1 = std::min(32767, std::max(-32767, buffer2[i] ));
-				//((short *) stream)[pos]   += y0;
-				//((short *) stream)[pos+1] += y1;
+				//short y0 = buffer1[i];
+				//short y1 = buffer2[i];
 				out[pos]   += y0;
 				out[pos+1] += y1;
 			}
@@ -430,10 +430,8 @@ void SOUND::Callback16bitstereo(void *myself, Uint8 *stream, int len)
 		((short *) stream)[pos]   = y0;
 		((short *) stream)[pos+1] = y1;
 
-		//if (pApp && !pApp->bLoading && pApp->graphs.size() > 0 && i%32 == 0)
-		//{	pApp->graphs[0]->AddVal(y0 / 32767.f * 0.5f + 0.5f);
-		//	pApp->graphs[1]->AddVal(y1 / 32767.f * 0.5f + 0.5f);
-		//}
+		waveL[i] = y0;  // for vis osc only ..
+		waveR[i] = y1;
 	}
 	delete[]out;
 	
@@ -693,10 +691,6 @@ void SOUND::Compute3DEffects(std::list <SOUNDSOURCE *> & sources, const MATHVECT
 		if ((*i)->Get3DEffects())
 		{
 			MATHVECTOR <float, 3> relvec = (*i)->GetPosition() - listener_pos;
-			//std::cout << "sound pos: " << (*i)->GetPosition() << endl;;
-			//std::cout << "listener pos: " << listener_pos << endl;;
-			//cout << "listener pos: ";listener_pos.DebugPrint();
-			//cout << "camera pos: ";cam.GetPosition().ScaleR(-1.0).DebugPrint();
 			float len = relvec.Magnitude();
 			if (len < 0.1)
 			{
@@ -704,22 +698,18 @@ void SOUND::Compute3DEffects(std::list <SOUNDSOURCE *> & sources, const MATHVECT
 				len = relvec.Magnitude();
 			}
 			listener_rot.RotateVector(relvec);
+
+			//  attenuation
+			//float cgain = 0.25 / log(100.0) * (log(1000.0) - 1.6 * log(len));
 			float cgain = log(1000.0 / pow((double)len, 1.3)) / log(100.0);
-			if (cgain > 1.0)
-				cgain = 1.0;
-			if (cgain < 0.0)
-				cgain = 0.0;
-			float xcoord = -relvec.Normalize()[1];
-			//std::cout << (*i)->GetPosition() << " || " << listener_pos << " || " << xcoord << endl;
-			float pgain1 = -xcoord;
-			if (pgain1 < 0)
-				pgain1 = 0;
-			float pgain2 = xcoord;
-			if (pgain2 < 0)
-				pgain2 = 0;
-			//cout << cgain << endl;
-			//cout << xcoord << endl;
-			(*i)->SetComputationResults(cgain*(*i)->GetGain()*(1.0-pgain1), cgain*(*i)->GetGain()*(1.0-pgain2));
+			cgain = std::min(1.f, std::max(0.f, cgain));
+
+			//  pan
+			float xcoord = -relvec.Normalize()[0];
+			float pgain1 = std::max(0.f, -xcoord);
+			float pgain2 = std::max(0.f,  xcoord);
+
+			(*i)->SetComputationResults(cgain*(*i)->GetGain()*(1.f-pgain1), cgain*(*i)->GetGain()*(1.f-pgain2));
 		}
 		else
 		{

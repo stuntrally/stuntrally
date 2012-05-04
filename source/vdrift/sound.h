@@ -261,6 +261,7 @@ public:
 		volume_filter.SetFilterOrder0(1.0);
 	}
 	~SOUND();
+	short waveL[4096],waveR[4096];
 	
 	bool Init(int buffersize, std::ostream & info_output, std::ostream & error_output);
 	void Callback16bitstereo(void *unused, Uint8 *stream, int len);
@@ -270,7 +271,7 @@ public:
 	void Compute3DEffects(std::list <SOUNDSOURCE *> & sources, const MATHVECTOR <float, 3> & listener_pos, const QUATERNION <float> & listener_rot) const;
 	void Compute3DEffects(std::list <SOUNDSOURCE *> & sources) const {Compute3DEffects(sources, lpos, lrot);}
 	void Clear() {sourcelist.clear();}
-	void SetMasterVolume(float newvol) {volume_filter.SetFilterOrder0(newvol*0.25);}  /*.. >vol*/
+	void SetMasterVolume(float newvol) {volume_filter.SetFilterOrder0(newvol*0.5);}  /*.. >vol*/
 	void DisableAllSound() {disable=true;}
 	void SetListener(const MATHVECTOR <float, 3> & npos, const QUATERNION <float> & nrot, const MATHVECTOR <float, 3> & nvel) {lpos = npos; lrot = nrot; lvel = nvel;}
 	bool Enabled() const {return !disable;}

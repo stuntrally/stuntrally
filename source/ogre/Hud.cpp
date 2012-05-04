@@ -103,12 +103,20 @@ void App::CreateHUD(bool destroy)
 		for (int i=0; i < 4; ++i)
 		{
 			GraphView* gv = new GraphView(scm);
-			gv->Create(512, "graph"+toStr(i%4+1), 0.13f);
+			#if 0  // 4 in one
+				gv->Create(512, "graph"+toStr(i%4+1), 0.13f);
+				if (i >= 4)
+					gv->SetSize(0.f, 0.24f, 0.5f, 0.25f);
+				else
+					gv->SetSize(0.f, 0.50f, 0.5f, 0.25f);
+			#else
+				gv->Create(2*512, "graph"+toStr(i%2*2+1), i < /*2*/12 ? 0.13f : 0.25f);
+				if (i < 2)
+					gv->SetSize(0.00f, 0.24f, 0.40f, 0.25f);
+				else
+					gv->SetSize(0.60f, 0.24f, 0.40f, 0.25f);
+			#endif
 			gv->SetVisible(pSet->show_graphs);
-			if (i >= 4)
-				gv->SetSize(0.f, 0.24f, 0.5f, 0.25f);
-			else
-				gv->SetSize(0.f, 0.50f, 0.5f, 0.25f);
 			graphs.push_back(gv);
 		}
 	}
@@ -437,8 +445,32 @@ void App::UpdateHUD(int carId, float time)
 
 
 	///  graphs update  -._/\_-.
-	if (carId == -1)
+	if (carId == -1 && pSet->show_graphs)
 	{
+		//  sound wave, amplutude
+		float minL=1.f,maxL=-1.f,minR=1.f,maxR=-1.f;
+		//for (int i=0; i < 4*512; i+=4)  if (sound.Init(/*2048*/512
+		for (int i=0; i < 2*512; ++i)
+		{
+			//  wave osc
+			float l = pGame->sound.waveL[i] / 32767.f * 0.5f + 0.5f;
+			float r = pGame->sound.waveR[i] / 32767.f * 0.5f + 0.5f;
+			//if (i%4==0)
+			{
+				graphs[2]->AddVal(l);
+				graphs[3]->AddVal(r);
+			}
+			//  amplutude
+			if (l > maxL)  maxL = l;  if (l < minL)  minL = l;
+			if (r > maxR)  maxR = r;  if (r < minR)  minR = r;
+		}
+		float al = (maxL-minL), ar = (maxR-minR);
+		//graphs[0]->AddVal(al);
+		//graphs[2]->AddVal(ar);
+		graphs[0]->AddVal((al+ar)*0.5f);       // vol  L cyan  R yellow
+		graphs[1]->AddVal((al-ar)*0.5f+0.5f);  // pan  ^L 1  _R 0
+		
+		/*  // hit force,vel,time etc
 		if (carModels.size() > 0)
 		{
 			const CARDYNAMICS& cd = carModels[0]->pCar->dynamics;
@@ -448,12 +480,9 @@ void App::UpdateHUD(int carId, float time)
 			graphs[3]->AddVal(cd.fHitForce4);
 		}
 		/**/
+
 		for (int i=0; i < graphs.size(); ++i)
-		{
-			//static int t=0; ++t;
-			//graphs[i]->AddVal(sinf(i*0.002f+t*0.01f)*0.5f+0.5f);
 			graphs[i]->Update();
-		}
 	}
 	
 	//  update HUD elements for all cars that have a viewport (local or replay)

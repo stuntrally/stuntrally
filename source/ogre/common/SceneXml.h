@@ -96,7 +96,7 @@ public:
 
 	Object();
 	void SetFromBlt();
-	static Ogre::Quaternion qrFix;
+	static Ogre::Quaternion qrFix,qrFix2;
 };
 
 

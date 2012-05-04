@@ -25,6 +25,7 @@ friend class PERFORMANCE_TESTING;
 friend class joeserialize::Serializer;
 public:
 	class App* pApp;
+	class CarModel* pCarM;
 	CAR();
 	~CAR();
 	
