@@ -927,6 +927,10 @@
 					>
 				</File>
 				<File
+					RelativePath=".\source\vdrift\car_sound.cpp"
+					>
+				</File>
+				<File
 					RelativePath=".\Source\vdrift\caraerodynamicdevice.h"
 					>
 				</File>

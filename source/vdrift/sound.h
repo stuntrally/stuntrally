@@ -261,7 +261,7 @@ public:
 		volume_filter.SetFilterOrder0(1.0);
 	}
 	~SOUND();
-	short waveL[4096],waveR[4096];
+	short waveL[4096],waveR[4096];  // just for wave visualization
 	
 	bool Init(int buffersize, std::ostream & info_output, std::ostream & error_output);
 	void Callback16bitstereo(void *unused, Uint8 *stream, int len);
