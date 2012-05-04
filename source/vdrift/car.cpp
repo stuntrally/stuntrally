@@ -14,7 +14,6 @@
 #include "../ogre/common/GraphView.h"
 #include "../network/protocol.hpp"
 #include "tobullet.h"
-#include <OgreLogManager.h>
 #include "game.h"  //sound
 
 #ifdef _WIN32
@@ -59,8 +58,8 @@ bool CAR::Load(class App* pApp1,
 	const std::string & carpath,
 	const std::string & driverpath,
 	const std::string & carname,
-	const MATHVECTOR <float, 3> & initial_position,
-	const QUATERNION <float> & initial_orientation,
+	const MATHVECTOR <float, 3> & init_pos,
+	const QUATERNION <float> & init_rot,
 	COLLISION_WORLD & world,
 	bool soundenabled,
 	const SOUNDINFO & sound_device_info,
@@ -163,8 +162,8 @@ bool CAR::Load(class App* pApp1,
 
 		MATHVECTOR<double, 3> position;
 		QUATERNION<double> orientation;
-		position = initial_position;		posAtStart = posLastCheck = posLastCheck2 = initial_position;
-		orientation = initial_orientation;	rotAtStart = rotLastCheck = rotLastCheck2 = initial_orientation;
+		position = init_pos;	posAtStart = posLastCheck[0] = posLastCheck[1] = init_pos;
+		orientation = init_rot;	rotAtStart = rotLastCheck[0] = rotLastCheck[1] = init_rot;
 		
 		dynamics.Init(pSet, &pApp->sc, &pApp->fluidsXml,
 			world, bodymodel, wheelmodelfront, wheelmodelrear, position, orientation);
@@ -330,6 +329,7 @@ void CAR::HandleInputs(const std::vector <float> & inputs, float dt)
 	else
 	if (bLastChk && !bLastChkOld)
 		ResetPos(false);  // goto last checkpoint
+		//ResetPos(false, shift);  // for 2nd ... press twice?
 }
 
 
@@ -447,10 +447,10 @@ void CAR::UpdateCarState(const protocol::CarStatePackage& state)
 
 ///  reset car, pos and state
 ///------------------------------------------------------------------------------------------------------------------------------
-void CAR::ResetPos(bool fromStart)
+void CAR::ResetPos(bool fromStart, int chkId)
 {
-	MATHVECTOR <float, 3> pos = fromStart ? posAtStart : posLastCheck;
-	QUATERNION <float> rot = fromStart ? rotAtStart : rotLastCheck;
+	MATHVECTOR <float, 3> pos = fromStart ? posAtStart : posLastCheck[chkId];
+	QUATERNION <float> rot =    fromStart ? rotAtStart : rotLastCheck[chkId];
 	SetPosition(pos);
 
 	btTransform transform;
@@ -482,9 +482,8 @@ void CAR::ResetPos(bool fromStart)
 ///  save car pos and rot
 void CAR::SavePosAtCheck()
 {
-	dynamics.body.GetPosition();
-	posLastCheck2 = posLastCheck;  // 2nd last check
-	rotLastCheck2 = rotLastCheck;
-	posLastCheck = dynamics.body.GetPosition();
-	rotLastCheck = dynamics.body.GetOrientation();
+	posLastCheck[1] = posLastCheck[0];  // 2nd last check
+	rotLastCheck[1] = rotLastCheck[0];
+	posLastCheck[0] = dynamics.body.GetPosition();
+	rotLastCheck[0] = dynamics.body.GetOrientation();
 }

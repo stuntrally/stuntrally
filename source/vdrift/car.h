@@ -35,8 +35,8 @@ public:
 		const std::string & carpath,
 		const std::string & driverpath,
 		const std::string & carname,
-		const MATHVECTOR <float, 3> & initial_position,
-		const QUATERNION <float> & initial_orientation,
+		const MATHVECTOR <float, 3> & init_pos,
+		const QUATERNION <float> & init_rot,
 		COLLISION_WORLD & world,
 		bool soundenabled,
 		const SOUNDINFO & sound_device_info,
@@ -303,7 +303,7 @@ public:
 	///  new
 	int id;  // index of car (same as for carModels)
 	bool bResetPos;
-	void ResetPos(bool fromStart=true);
+	void ResetPos(bool fromStart=true,int chkId=0);
 	void SavePosAtCheck();
 
 //protected:
@@ -383,8 +383,8 @@ public:
 	bool has2exhausts; // car has 2nd exhaust ; if true, mirror exhaust 1 for position
 	
 	//  for new game reset  and goto last checkp.
-	MATHVECTOR <float, 3> posAtStart, posLastCheck,posLastCheck2;
-	QUATERNION <float> rotAtStart, rotLastCheck,rotLastCheck2;
+	MATHVECTOR <float, 3> posAtStart, posLastCheck[2];
+	QUATERNION <float> rotAtStart, rotLastCheck[2];
 
 	//  car inputs  (new: cam,chk)
 	int iCamNext;

@@ -14,13 +14,7 @@
 #include "../ogre/common/GraphView.h"
 #include "../network/protocol.hpp"
 #include "tobullet.h"
-#include <OgreLogManager.h>
 #include "game.h"  //sound
-
-#ifdef _WIN32
-bool isnan(float number) {return (number != number);}
-bool isnan(double number) {return (number != number);}
-#endif
 
 
 //--------------------------------------------------------------------------------------------------------------------------
