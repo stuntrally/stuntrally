@@ -73,7 +73,7 @@ void App::chkSplitVert(WP wp)
 
 void App::slNumLaps(SL)
 {
-	int v = 20.f * val + 1 +0.4f;  if (bGI)  pSet->gui.num_laps = v;
+	int v = 20.f * val + 1 +slHalf;  if (bGI)  pSet->gui.num_laps = v;
 	if (valNumLaps){  valNumLaps->setCaption(toStr(v));  }
 }
 
@@ -146,18 +146,18 @@ void App::slTrails(SL)
 //  reflect
 void App::slReflSkip(SL)
 {
-	int v = 1000.f * powf(val, 2.f) +0.4f;	if (bGI)  pSet->refl_skip = v;
+	int v = 1000.f * powf(val, 2.f) +slHalf;	if (bGI)  pSet->refl_skip = v;
 	if (valReflSkip)  valReflSkip->setCaption(toStr(v));
 }
 void App::slReflSize(SL)
 {
-	int v = std::max( 0.0f, std::min((float) ciShadowNumSizes-1, ciShadowNumSizes * val)) +0.4f;
+	int v = std::max( 0.0f, std::min((float) ciShadowNumSizes-1, ciShadowNumSizes * val)) +slHalf;
 	if (bGI)  pSet->refl_size = v;
 	if (valReflSize)  valReflSize->setCaption(toStr(ciShadowSizesA[v]));
 }
 void App::slReflFaces(SL)
 {
-	int v = val * 6.f +0.4f;
+	int v = val * 6.f +slHalf;
 	if (bGI)  pSet->refl_faces = v;
 	if (valReflFaces)  valReflFaces->setCaption(toStr(v));
 }
@@ -171,7 +171,7 @@ void App::slReflDist(SL)
 void App::slReflMode(SL)
 {
 	int old = pSet->refl_mode;
-	pSet->refl_mode = val * 2.f +0.4f;
+	pSet->refl_mode = val * 2.f +slHalf;
 	
 	if (pSet->refl_mode != old)
 		recreateReflections();
@@ -204,7 +204,7 @@ void App::slSizeGaug(SL)
 }
 void App::slTypeGaug(SL)
 {
-	int v = val * 5.f +0.4f;		if (bGI)  {  pSet->gauges_type = v;  CreateHUD(true);  }
+	int v = val * 5.f +slHalf;		if (bGI)  {  pSet->gauges_type = v;  CreateHUD(true);  }
 	if (valTypeGaug)	valTypeGaug->setCaption(toStr(v));
 }
 void App::slSizeArrow(SL)
@@ -215,12 +215,12 @@ void App::slSizeArrow(SL)
 }
 void App::slCountdownTime(SL)
 {
-	float v = (int)(val * 6.f +0.4f) * 0.5f;	if (bGI)  {  pSet->gui.pre_time = v;  }
+	float v = (int)(val * 6.f +slHalf) * 0.5f;	if (bGI)  {  pSet->gui.pre_time = v;  }
 	if (valCountdownTime){	valCountdownTime->setCaption(fToStr(v,1,4));  }
 }
 void App::slGraphsType(SL)
 {
-	int v = val * 4.f +0.4f;		if (bGI)  {  pSet->graphs_type = v;  DestroyGraphs();  CreateGraphs();  }
+	int v = val * 4.f +slHalf;		if (bGI)  {  pSet->graphs_type = v;  DestroyGraphs();  CreateGraphs();  }
 	if (valGraphsType)	valGraphsType->setCaption(toStr(v));
 }
 

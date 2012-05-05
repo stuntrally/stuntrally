@@ -46,4 +46,6 @@
     chk->setStateSelected(pSet->var);  }
 
 
+const float slHalf = 0.45f;  // added to int value sliders to their float value
+
 #endif

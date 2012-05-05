@@ -1,5 +1,6 @@
 #include "pch.h"
-#include "../common/Defines.h"
+#include "Defines.h"
+#include "Gui_Def.h"
 #include "../../road/Road.h"
 #include "../../vdrift/pathmanager.h"
 #include "MaterialGen/MaterialFactory.h"
@@ -15,7 +16,6 @@
 #include <OgreSceneManager.h>
 #include <OgreTerrain.h>
 #include <OgreRenderWindow.h>
-#include "Gui_Def.h"
 #include "Slider.h"
 using namespace MyGUI;
 using namespace Ogre;
@@ -39,7 +39,7 @@ void App::comboTexFilter(CMB)
 
 void App::slAnisotropy(SL)
 {
-	int v = val * 16.f +0.4f;  if (bGI)  {
+	int v = val * 16.f +slHalf;  if (bGI)  {
 		MaterialManager::getSingleton().setDefaultAnisotropy(v);	pSet->anisotropy = v;  }
 	if (valAnisotropy)	valAnisotropy->setCaption(toStr(v));
 }
@@ -147,7 +147,7 @@ void App::slShaders(SL)
 
 void App::slTexSize(SL)
 {
-	int v = val*1.f +0.4f;  if (bGI)  pSet->tex_size = v;
+	int v = val*1.f +slHalf;  if (bGI)  pSet->tex_size = v;
 	if (valTexSize)
 	{	if (v == 0)  valTexSize->setCaption("Small");  else
 		if (v == 1)  valTexSize->setCaption("Big");  }
@@ -161,7 +161,7 @@ void App::slTexSize(SL)
 
 void App::slTerMtr(SL)
 {
-	int v = val*3.f +0.4f;  if (bGI)  pSet->ter_mtr = v;
+	int v = val*3.f +slHalf;  if (bGI)  pSet->ter_mtr = v;
 	if (valTerMtr)
 	{	if (v == 0)  valTerMtr->setCaption("Lowest");  else
 		if (v == 1)  valTerMtr->setCaption("Low");  else
@@ -181,7 +181,7 @@ void App::btnShaders(WP)
 
 void App::slShadowType(SL)
 {
-	int v = val*3.f +0.4f;	if (bGI)  pSet->shadow_type = v;
+	int v = val*3.f +slHalf;	if (bGI)  pSet->shadow_type = v;
 	if (valShadowType)
 	{	if (v == 0)  valShadowType->setCaption("None");  else
 		if (v == 1)  valShadowType->setCaption("Old");  else
@@ -192,13 +192,13 @@ void App::slShadowType(SL)
 
 void App::slShadowCount(SL)
 {
-	int v = 2 + 2.f * val +0.4f;	if (bGI)  pSet->shadow_count = v;
+	int v = 2 + 2.f * val +slHalf;	if (bGI)  pSet->shadow_count = v;
 	if (valShadowCount)  valShadowCount->setCaption(toStr(v));
 }
 
 void App::slShadowSize(SL)
 {
-	int v = max( 0.0f, min((float) ciShadowNumSizes-1, ciShadowNumSizes * val +0.4f));
+	int v = max( 0.0f, min((float) ciShadowNumSizes-1, ciShadowNumSizes * val +slHalf));
 	if (bGI)  pSet->shadow_size = v;
 	if (valShadowSize)  valShadowSize->setCaption(toStr(ciShadowSizesA[v]));
 }
@@ -211,7 +211,7 @@ void App::slShadowDist(SL)
 
 void App::slShadowFilter(SL)
 {
-	int v = 1 + 3 * val +0.4f;  if (bGI) pSet->shadow_filter = v;
+	int v = 1 + 3 * val +slHalf;  if (bGI) pSet->shadow_filter = v;
 	if (materialFactory) materialFactory->setShadowsFilterSize(v);
 	if (valShadowFilter) valShadowFilter->setCaption(toStr(v));
 }
@@ -219,7 +219,7 @@ void App::slShadowFilter(SL)
 //  water
 void App::slWaterSize(SL)
 {
-	int v = 2.f * val +0.4f;	if (bGI)  pSet->water_rttsize = v;
+	int v = 2.f * val +slHalf;	if (bGI)  pSet->water_rttsize = v;
 	if (valWaterSize)  valWaterSize->setCaption(toStr(ciShadowSizesA[v]));
 }
 

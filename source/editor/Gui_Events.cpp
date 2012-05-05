@@ -319,7 +319,7 @@ void App::slTerGenFreq(SL)
 }
 void App::slTerGenOct(SL)
 {
-	int v = val * 9.f +0.4f;
+	int v = val * 9.f +slHalf;
 	if (bGI)  pSet->gen_oct = v;
 	if (valTerGenOct){	valTerGenOct->setCaption(toStr(v));  }
 }
@@ -602,7 +602,7 @@ void App::slLTrDens(SL)  //  sliders
 }
 void App::slLTrRdDist(SL)
 {
-	int v = val * 20.f +0.4f;
+	int v = val * 20.f +slHalf;
 	sc.pgLayersAll[idPgLay].addTrRdDist = v;
 	if (valLTrRdDist)  valLTrRdDist->setCaption(toStr(v));
 }
@@ -701,7 +701,7 @@ void App::chkEscQuits(WP wp){		ChkEv(escquit);		}
 
 void App::slMiniUpd(SL)
 {
-	int v = val * 20.f +0.4f;
+	int v = val * 20.f +slHalf;
 	pSet->mini_skip = v;
 	if (valMiniUpd){	valMiniUpd->setCaption(toStr(v));  }
 }
@@ -728,7 +728,7 @@ void App::slCamSpeed(SL)
 
 void App::slTerUpd(SL)
 {
-	int v = val * 20.f +0.4f;
+	int v = val * 20.f +slHalf;
 	pSet->ter_skip = v;
 	if (valTerUpd){	valTerUpd->setCaption(toStr(v));  }
 }

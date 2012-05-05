@@ -28,6 +28,7 @@ static Ogre::String fToStr(const float v, unsigned short precision, unsigned sho
 /// translation
 #define TR(s)  MyGUI::LanguageManager::getInstance().replaceTags(s)
 
+
 //  info for collision shapes  (hit, triggers)
 enum EShapeType
 {
