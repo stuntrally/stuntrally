@@ -2458,7 +2458,7 @@
 							<Property key="TextColour" value="0.7 0.8 0.9"/>
 						</Widget>
 						<Widget type="TextBox" skin="TextBox" position="32 170 144 24">
-							<Property key="Caption" value="#{ShadowFilter}"/>
+							<Property key="Caption" value="#{ShadowFilter}*"/>
 							<Property key="Colour" value="0 0 0"/>
 							<Property key="TextColour" value="0.7 0.8 0.9"/>
 							<UserString key="RelativeTo" value="OptionsWnd"/>

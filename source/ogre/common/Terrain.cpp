@@ -1,23 +1,19 @@
 #include "pch.h"
+#include "../common/Defines.h"
 #include "../common/RenderConst.h"
 #include "../../road/Road.h"  // sun rot
 #include "../common/MaterialGen/TerrainMaterialGen.h"
 #include "../common/MaterialGen/MaterialFactory.h"
+#include "../common/QTimer.h"
 
 #ifdef ROAD_EDITOR
-	#include "../common/Defines.h"
 	#include "../../editor/OgreApp.h"
 	#include "../../editor/settings.h"
 	#include "BulletDynamics/Dynamics/btDiscreteDynamicsWorld.h"
 #else
-	#include "../common/Defines.h"
 	#include "../OgreGame.h"
 	#include "../../vdrift/game.h"
 	#include "../../vdrift/settings.h"
-
-	#include "../../btOgre/BtOgrePG.h"
-	#include "../../btOgre/BtOgreGP.h"
-	//#include "BtOgreDebug.h"
 #endif
 #include "BulletCollision/CollisionDispatch/btCollisionObject.h"
 #include "BulletCollision/CollisionShapes/btHeightfieldTerrainShape.h"

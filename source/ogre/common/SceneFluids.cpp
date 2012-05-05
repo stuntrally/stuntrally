@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "../common/RenderConst.h"
 #include "../common/MaterialGen/MaterialFactory.h"
+#include "../common/QTimer.h"
 
 #ifdef ROAD_EDITOR
 	#include "../common/Defines.h"
@@ -16,9 +17,6 @@
 #include "BulletCollision/CollisionDispatch/btCollisionObject.h"
 #include "BulletCollision/CollisionShapes/btBoxShape.h"
 
-#include <OgreRoot.h>
-#include <OgreTerrain.h>
-#include <OgreTerrainGroup.h>
 #include <OgreManualObject.h>
 #include <OgreMeshManager.h>
 #include <OgreMaterialManager.h>
@@ -106,11 +104,11 @@ void App::CreateBltFluids()
 		
 		bco->setUserPointer(new ShapeData(ST_Fluid, 0, &fb));  ///~~
 		#ifndef ROAD_EDITOR
-		pGame->collision.world->addCollisionObject(bco);
-		pGame->collision.shapes.push_back(bshp);
-		fb.cobj = bco;
+			pGame->collision.world->addCollisionObject(bco);
+			pGame->collision.shapes.push_back(bshp);
+			fb.cobj = bco;
 		#else
-		world->addCollisionObject(bco);
+			world->addCollisionObject(bco);
 		#endif
 	}
 	#ifdef ROAD_EDITOR
