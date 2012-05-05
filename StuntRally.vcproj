@@ -1111,6 +1111,10 @@
 					>
 				</File>
 				<File
+					RelativePath=".\source\ogre\BaseApp_Effects.cpp"
+					>
+				</File>
+				<File
 					RelativePath=".\Source\ogre\FollowCamera.cpp"
 					>
 				</File>
@@ -1184,6 +1188,10 @@
 				</File>
 				<File
 					RelativePath=".\source\ogre\common\Gui_Common.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\source\ogre\common\Gui_CommonSet.cpp"
 					>
 				</File>
 				<File
@@ -1347,26 +1355,6 @@
 				Name="SceneCommon"
 				>
 				<File
-					RelativePath=".\source\ogre\common\BltObjects.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\source\ogre\common\BltObjects.h"
-					>
-				</File>
-				<File
-					RelativePath=".\source\ogre\Defines.h"
-					>
-				</File>
-				<File
-					RelativePath=".\source\ogre\common\FluidsXml.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\source\ogre\common\FluidsXml.h"
-					>
-				</File>
-				<File
 					RelativePath=".\source\ogre\common\GraphView.cpp"
 					>
 				</File>
@@ -1415,19 +1403,15 @@
 					>
 				</File>
 				<File
-					RelativePath=".\source\ogre\common\RenderConst.h"
+					RelativePath=".\source\ogre\common\SceneFluids.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\source\ogre\common\SceneObjects.cpp"
 					>
 				</File>
 				<File
 					RelativePath=".\Source\ogre\common\SceneTrees.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\Source\ogre\common\SceneXml.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\Source\ogre\common\SceneXml.h"
 					>
 				</File>
 				<File
@@ -1448,14 +1432,6 @@
 				</File>
 				<File
 					RelativePath=".\Source\ogre\common\Terrain.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\source\ogre\common\TracksXml.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\source\ogre\common\TracksXml.h"
 					>
 				</File>
 			</Filter>
@@ -1603,7 +1579,11 @@
 					>
 				</File>
 				<File
-					RelativePath=".\Source\ogre\Hud.cpp"
+					RelativePath=".\source\ogre\Hud_Create.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\source\ogre\Hud_Update.cpp"
 					>
 				</File>
 				<File
@@ -1636,6 +1616,10 @@
 				</File>
 				<File
 					RelativePath=".\Source\ogre\Update.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\source\ogre\Update_Poses.cpp"
 					>
 				</File>
 			</Filter>
@@ -1744,6 +1728,50 @@
 				</File>
 				<File
 					RelativePath=".\source\ogre\common\MaterialGen\WaterMaterial.h"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="SceneComXml"
+				>
+				<File
+					RelativePath=".\source\ogre\common\BltObjects.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\source\ogre\common\BltObjects.h"
+					>
+				</File>
+				<File
+					RelativePath=".\source\ogre\Defines.h"
+					>
+				</File>
+				<File
+					RelativePath=".\source\ogre\common\FluidsXml.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\source\ogre\common\FluidsXml.h"
+					>
+				</File>
+				<File
+					RelativePath=".\source\ogre\common\RenderConst.h"
+					>
+				</File>
+				<File
+					RelativePath=".\Source\ogre\common\SceneXml.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\Source\ogre\common\SceneXml.h"
+					>
+				</File>
+				<File
+					RelativePath=".\source\ogre\common\TracksXml.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\source\ogre\common\TracksXml.h"
 					>
 				</File>
 			</Filter>

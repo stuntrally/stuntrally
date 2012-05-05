@@ -317,8 +317,7 @@ bool BaseApp::setup()
 
 	createFrameListener();
 
-	ti.update();	/// time
-	float dt = ti.dt * 1000.f;
+	ti.update();  float dt = ti.dt * 1000.f;  /// time
 	LogO(String("::: Time Ogre Start: ") + toStr(dt) + " ms");
 
 	createScene();

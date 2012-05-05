@@ -2,20 +2,19 @@
 #include "common/Defines.h"
 #include "BaseApp.h"
 #include "LoadingBar.h"
-#include "FollowCamera.h"
+
 #include "../vdrift/pathmanager.h"
 #include "../vdrift/settings.h"
 #include "../network/masterclient.hpp"
 #include "../network/gameclient.hpp"
 #include "common/HWMouse.h"
-#include "common/MaterialGen/MaterialFactory.h"
-#include "common/MaterialGen/MaterialDefinition.h"
 
-#include "Compositor.h"
 #include "Localization.h"
 #include "SplitScreen.h"
-#include "CarModel.h"
 #include "common/QTimer.h"
+
+#include "CarModel.h"
+#include "FollowCamera.h"
 
 #include <OgreFontManager.h>
 #include <OgreLogManager.h>
@@ -30,92 +29,12 @@
 #include "common/MyGUI_D3D11.h"
 
 #include <OgreRTShaderSystem.h>
-#include "common/MaterialGen/MaterialGenerator.h"
+//#include "common/MaterialGen/MaterialGenerator.h"
 using namespace Ogre;
 
-#if OGRE_VERSION_MINOR >= 8
-        #define UI_RENDER "gbufferUIRender"
-#else
-        #define UI_RENDER "gbufferUIRender17"
-#endif
 
 
-//#define LogDbg(s)
-#define LogDbg(s)  LogO(s)
-
-
-/** This class demonstrates basic usage of the RTShader system.
-It sub class the material manager listener class and when a target scheme callback
-is invoked with the shader generator scheme it tries to create an equivalent shader
-based technique based on the default technique of the given material.
-*/
-class ShaderGeneratorTechniqueResolverListener : public Ogre::MaterialManager::Listener
-{
-public:
-
-	ShaderGeneratorTechniqueResolverListener(Ogre::RTShader::ShaderGenerator* pShaderGenerator)
-	{
-		mShaderGenerator = pShaderGenerator;			
-	}
-
-	/** This is the hook point where shader based technique will be created.
-	It will be called whenever the material manager won't find appropriate technique
-	that satisfy the target scheme name. If the scheme name is out target RT Shader System
-	scheme name we will try to create shader generated technique for it. 
-	*/
-	virtual Ogre::Technique* handleSchemeNotFound(unsigned short schemeIndex, 
-		const Ogre::String& schemeName, Ogre::Material* originalMaterial, unsigned short lodIndex, 
-		const Ogre::Renderable* rend)
-	{	
-		Ogre::Technique* generatedTech = NULL;
-
-		// Case this is the default shader generator scheme.
-		if (schemeName == Ogre::RTShader::ShaderGenerator::DEFAULT_SCHEME_NAME)
-		{
-			bool techniqueCreated;
-
-			// Create shader generated technique for this material.
-			techniqueCreated = mShaderGenerator->createShaderBasedTechnique(
-				originalMaterial->getName(), 
-				Ogre::MaterialManager::DEFAULT_SCHEME_NAME, 
-				schemeName);	
-
-			// Case technique registration succeeded.
-			if (techniqueCreated)
-			{
-				// Force creating the shaders for the generated technique.
-				mShaderGenerator->validateMaterial(schemeName, originalMaterial->getName());
-				
-				// Grab the generated technique.
-				Ogre::Material::TechniqueIterator itTech = originalMaterial->getTechniqueIterator();
-
-				while (itTech.hasMoreElements())
-				{
-					Ogre::Technique* curTech = itTech.getNext();
-
-					if (curTech->getSchemeName() == schemeName)
-					{
-						generatedTech = curTech;
-						break;
-					}
-				}				
-			}
-		}
-
-		return generatedTech;
-	}
-
-protected:	
-	Ogre::RTShader::ShaderGenerator*	mShaderGenerator;			// The shader generator instance.		
-};
-
-//  Camera
-//-------------------------------------------------------------------------------------
-void BaseApp::createCamera()
-{
-}
-
-//  Frame
+//  Create
 //-------------------------------------------------------------------------------------
 void BaseApp::createFrameListener()
 {
@@ -156,13 +75,13 @@ void BaseApp::createFrameListener()
 	mInputManager = OIS::InputManager::createInputSystem( pl );
 	OISB::System::getSingleton().initialize(mInputManager);
 
-	LogDbg("*** input load keys.xml ***");
+	LogO("*** input load keys.xml ***");
 	if (boost::filesystem::exists(PATHMANAGER::GetUserConfigDir() + "/keys.xml"))
 		OISB::System::getSingleton().loadActionSchemaFromXMLFile(PATHMANAGER::GetUserConfigDir() + "/keys.xml");
 	else
 		OISB::System::getSingleton().loadActionSchemaFromXMLFile(PATHMANAGER::GetGameConfigDir() + "/keys-default.xml");
 
-	LogDbg("*** input set callbacks ***");
+	LogO("*** input set callbacks ***");
 	mKeyboard = OISB::System::getSingleton().getOISKeyboard();
 	mMouse = OISB::System::getSingleton().getOISMouse();
 
@@ -180,317 +99,12 @@ void BaseApp::createFrameListener()
 	{
 		(*it)->getOISJoyStick()->setEventCallback(this);
 	}
-	LogDbg("*** input end ***");
+	LogO("*** input end ***");
 
 	windowResized(mWindow);
 	WindowEventUtilities::addWindowEventListener(mWindow, this);
 
 	mRoot->addFrameListener(this);
-}
-
-void BaseApp::createViewports()
-{
-	mSplitMgr->mNumViewports = pSet->gui.local_players;
-	mSplitMgr->Align();
-}
-
-///  Compositor
-//-------------------------------------------------------------------------------------
-void BaseApp::refreshCompositor(bool disableAll)
-{
-	for (std::list<Viewport*>::iterator it=mSplitMgr->mViewports.begin(); it!=mSplitMgr->mViewports.end(); ++it)
-	{
-		if(MaterialGenerator::MRTSupported())
-		{
-			CompositorManager::getSingleton().setCompositorEnabled((*it), "gbuffer", false);
-		}
-		CompositorManager::getSingleton().setCompositorEnabled((*it), "gbufferNoMRT", false);
-		CompositorManager::getSingleton().setCompositorEnabled((*it), "Bloom", false);
-		CompositorManager::getSingleton().setCompositorEnabled((*it), "HDR", false);
-		if(MaterialGenerator::MRTSupported())
-		{
-			CompositorManager::getSingleton().setCompositorEnabled((*it), "ssao", false);
-			CompositorManager::getSingleton().setCompositorEnabled((*it), "SoftParticles", false);
-			CompositorManager::getSingleton().setCompositorEnabled((*it), "DepthOfField", false);
-			CompositorManager::getSingleton().setCompositorEnabled((*it), "GodRays", false);
-			CompositorManager::getSingleton().setCompositorEnabled((*it), "gbufferFinalizer", false);
-		}
-		else
-		{
-			CompositorManager::getSingleton().setCompositorEnabled((*it), "ssaoNoMRT", false);
-		}
-		CompositorManager::getSingleton().setCompositorEnabled((*it), "Motion Blur", false);
-		CompositorManager::getSingleton().setCompositorEnabled((*it), "SSAA", false);
-		CompositorManager::getSingleton().setCompositorEnabled((*it), "FilmGrain", false);
-		CompositorManager::getSingleton().setCompositorEnabled((*it), UI_RENDER, false);
-	}
-
-	if (!pSet->all_effects || disableAll)
-		return;
-	
-	//  Set Bloom params (intensity, orig weight)
-	try
-	{	MaterialPtr bloom = MaterialManager::getSingleton().getByName("Ogre/Compositor/BloomBlend2");
-		if(!bloom.isNull())
-		{
-			GpuProgramParametersSharedPtr params = bloom->getTechnique(0)->getPass(0)->getFragmentProgramParameters();
-			params->setNamedConstant("OriginalImageWeight", pSet->bloomorig);
-			params->setNamedConstant("BlurWeight", pSet->bloomintensity);
-		}
-	}catch(...)
-	{	LogO("!!! Failed to set bloom shader params.");  }
-	
-	//  HDR params todo..
-	//try
-	//{	MaterialPtr hdrmat = MaterialManager::getSingleton().getByName("Ogre/Compositor/BloomBlend2");
-	//	GpuProgramParametersSharedPtr params = hdrmat->getTechnique(0)->getPass(0)->getFragmentProgramParameters();
-	//	params->setNamedConstant("Bloom", pSet->);
-	//}catch(...)
-	//{	LogO("!!! Failed to set hdr shader params.");  }
-
-	//  Set Motion Blur intens
-	//try
-	//{	MaterialPtr blur = MaterialManager::getSingleton().getByName("Ogre/Compositor/Combine");
-	//	GpuProgramParametersSharedPtr params = blur->getTechnique(0)->getPass(0)->getFragmentProgramParameters();
-	//	params->setNamedConstant("blur", pSet->motionblurintensity);
-	//}catch(...)
-	//{	LogO("!!! Failed to set blur shader params.");  }
-	
-
-	for (std::list<Viewport*>::iterator it=mSplitMgr->mViewports.begin(); it!=mSplitMgr->mViewports.end(); ++it)
-	{
-		if(MaterialGenerator::MRTSupported())
-		{
-			//the condition here is any compositor needing the gbuffers like ssao ,soft particles
-			CompositorManager::getSingleton().setCompositorEnabled((*it), "gbuffer", NeedMRTBuffer());
-		}
-		CompositorManager::getSingleton().setCompositorEnabled((*it), "gbufferNoMRT",!NeedMRTBuffer() && AnyEffectEnabled());
-
-		CompositorManager::getSingleton().setCompositorEnabled((*it), "Bloom", pSet->bloom);
-		CompositorManager::getSingleton().setCompositorEnabled((*it), "HDR", pSet->hdr);
-		CompositorManager::getSingleton().setCompositorEnabled((*it), "Motion Blur", pSet->motionblur);
-		CompositorManager::getSingleton().setCompositorEnabled((*it), "SSAA", pSet->ssaa);
-		CompositorManager::getSingleton().setCompositorEnabled((*it), "FilmGrain", pSet->filmgrain);
-		if(MaterialGenerator::MRTSupported())
-		{
-			CompositorManager::getSingleton().setCompositorEnabled((*it), "ssao", pSet->ssao);
-			CompositorManager::getSingleton().setCompositorEnabled((*it), "SoftParticles", pSet->softparticles);
-			CompositorManager::getSingleton().setCompositorEnabled((*it), "DepthOfField", pSet->dof);
-			CompositorManager::getSingleton().setCompositorEnabled((*it), "GodRays", pSet->godrays);
-			CompositorManager::getSingleton().setCompositorEnabled((*it), "gbufferFinalizer", NeedMRTBuffer() && !pSet->softparticles);
-		}
-		else
-		{
-			CompositorManager::getSingleton().setCompositorEnabled((*it), "ssaoNoMRT", pSet->ssao);
-		}
-
-                CompositorManager::getSingleton().setCompositorEnabled((*it), UI_RENDER, AnyEffectEnabled());
-	}
-}
-//-------------------------------------------------------------------------------------
-bool BaseApp::AnyEffectEnabled()
-{
-	//any new effect need to be added here to have UI Rendered on it
-	return pSet->all_effects && (pSet->softparticles || pSet->bloom || pSet->hdr || pSet->motionblur || pSet->ssaa || pSet->ssao || pSet->godrays || pSet->dof || pSet->filmgrain);
-}
-//-------------------------------------------------------------------------------------
-bool BaseApp::NeedMRTBuffer()
-{
-	return pSet->all_effects && (pSet->ssao || pSet->softparticles || pSet->dof || pSet->godrays);
-}
-//-------------------------------------------------------------------------------------
-void BaseApp::recreateCompositor()
-{
-	if (!pSet->all_effects)  // disable compositor
-	{
-		refreshCompositor();
-		return;
-	}
-	
-	//  add when needed
-	if (!ResourceGroupManager::getSingleton().resourceGroupExists("Effects"))
-	{
-		std::string sPath = PATHMANAGER::GetDataPath() + "/compositor";
-		mRoot->addResourceLocation(sPath, "FileSystem", "Effects");
-		mRoot->addResourceLocation(sPath + "/gbuffer", "FileSystem", "Effects");
-		mRoot->addResourceLocation(sPath + "/bloom", "FileSystem", "Effects");
-		mRoot->addResourceLocation(sPath + "/hdr", "FileSystem", "Effects");
-		mRoot->addResourceLocation(sPath + "/motionblur", "FileSystem", "Effects");
-		mRoot->addResourceLocation(sPath + "/ssaa", "FileSystem", "Effects");
-		mRoot->addResourceLocation(sPath + "/ssao", "FileSystem", "Effects");
-		mRoot->addResourceLocation(sPath + "/softparticles", "FileSystem", "Effects");
-		mRoot->addResourceLocation(sPath + "/dof", "FileSystem", "Effects");
-		mRoot->addResourceLocation(sPath + "/godrays", "FileSystem", "Effects");
-		mRoot->addResourceLocation(sPath + "/filmgrain", "FileSystem", "Effects");
-		ResourceGroupManager::getSingleton().initialiseResourceGroup("Effects");
-	}
-
-	// hdr has to be first in the compositor queue
-	if (!mHDRLogic) 
-	{
-		mHDRLogic = new HDRLogic;
-		CompositorManager::getSingleton().registerCompositorLogic("HDR", mHDRLogic);
-	}
-	
-	if (!mSSAOLogic) 
-	{
-		mSSAOLogic = new SSAOLogic();
-		mSSAOLogic->setApp(this);
-		if(MaterialGenerator::MRTSupported())
-		{
-			CompositorManager::getSingleton().registerCompositorLogic("ssao", mSSAOLogic);
-		}
-		else
-		{
-			CompositorManager::getSingleton().registerCompositorLogic("ssaoNoMRT", mSSAOLogic);
-		}
-
-	}
-	if (!mGodRaysLogic) 
-	{
-		mGodRaysLogic = new GodRaysLogic();
-		mGodRaysLogic->setApp(this);
-		CompositorManager::getSingleton().registerCompositorLogic("GodRays", mGodRaysLogic);
-	}
-	if (!mSoftParticlesLogic) 
-	{
-		mSoftParticlesLogic = new SoftParticlesLogic();
-		mSoftParticlesLogic->setApp(this);
-		CompositorManager::getSingleton().registerCompositorLogic("SoftParticles", mSoftParticlesLogic);
-	}
-	if (!mDepthOfFieldLogic) 
-	{
-		mDepthOfFieldLogic = new DepthOfFieldLogic();
-		mDepthOfFieldLogic->setApp(this);
-		CompositorManager::getSingleton().registerCompositorLogic("DepthOfField", mDepthOfFieldLogic);
-	}
-	if (!mFilmGrainLogic) 
-	{
-		mFilmGrainLogic = new FilmGrainLogic();
-		mFilmGrainLogic->setApp(this);
-		CompositorManager::getSingleton().registerCompositorLogic("FilmGrain", mFilmGrainLogic);
-	}
-	if (!mGBufferLogic) 
-	{
-		mGBufferLogic = new GBufferLogic();
-		mGBufferLogic->setApp(this);
-		CompositorManager::getSingleton().registerCompositorLogic("GBuffer", mGBufferLogic);
-	}
-
-	if (CompositorManager::getSingleton().getByName("Motion Blur").isNull())
-	{
-		// Motion blur has to be created in code
-		CompositorPtr comp3 = CompositorManager::getSingleton().create(
-			"Motion Blur", ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME);
-
-		CompositionTechnique *t = comp3->createTechnique();
-		t->setCompositorLogicName("Motion Blur");
-		{
-			CompositionTechnique::TextureDefinition *def = t->createTextureDefinition("scene");
-			def->width = 0;
-			def->height = 0;
-			def->formatList.push_back(PF_R8G8B8);
-		}
-		{
-			CompositionTechnique::TextureDefinition *def = t->createTextureDefinition("sum");
-			def->width = 0;
-			def->height = 0;
-			def->formatList.push_back(PF_R8G8B8);
-		}
-		{
-			CompositionTechnique::TextureDefinition *def = t->createTextureDefinition("temp");
-			def->width = 0;
-			def->height = 0;
-			def->formatList.push_back(PF_R8G8B8);
-		}
-		/// Render scene
-		{
-			CompositionTargetPass *tp = t->createTargetPass();
-			tp->setInputMode(CompositionTargetPass::IM_PREVIOUS);
-			tp->setOutputName("scene");
-		}
-		/// Initialisation pass for sum texture
-		{
-			CompositionTargetPass *tp = t->createTargetPass();
-			tp->setInputMode(CompositionTargetPass::IM_PREVIOUS);
-			tp->setOutputName("sum");
-			tp->setOnlyInitial(true);
-		}
-		/// Do the motion blur
-		{
-			CompositionTargetPass *tp = t->createTargetPass();
-			tp->setInputMode(CompositionTargetPass::IM_NONE);
-			tp->setOutputName("temp");
-			{ CompositionPass *pass = tp->createPass();
-			pass->setType(CompositionPass::PT_RENDERQUAD);
-			pass->setMaterialName("Ogre/Compositor/Combine");
-			pass->setIdentifier(120);
-			pass->setInput(0, "scene");
-			pass->setInput(1, "sum");
-			}
-		}
-		/// Copy back sum texture
-		{
-			CompositionTargetPass *tp = t->createTargetPass();
-			tp->setInputMode(CompositionTargetPass::IM_NONE);
-			tp->setOutputName("sum");
-			{ CompositionPass *pass = tp->createPass();
-			pass->setType(CompositionPass::PT_RENDERQUAD);
-			pass->setMaterialName("Ogre/Compositor/Copyback");
-			pass->setInput(0, "temp");
-			}
-		}
-		/// Display result
-		{
-			CompositionTargetPass *tp = t->getOutputTargetPass();
-			tp->setInputMode(CompositionTargetPass::IM_NONE);
-			{ CompositionPass *pass = tp->createPass();
-			pass->setType(CompositionPass::PT_RENDERQUAD);
-			pass->setMaterialName("Ogre/Compositor/MotionBlur");
-			pass->setInput(0, "sum");
-			}
-		}
-	}
-
-
-	if (!mMotionBlurLogic)
-	{
-		mMotionBlurLogic = new MotionBlurLogic(this);
-		CompositorManager::getSingleton().registerCompositorLogic("Motion Blur", mMotionBlurLogic);
-	}
-
-
-	for (std::list<Viewport*>::iterator it=mSplitMgr->mViewports.begin(); it!=mSplitMgr->mViewports.end(); ++it)
-	{
-		// remove old comp. first
-		CompositorManager::getSingleton().removeCompositorChain( (*it ));
-		
-		if (MaterialGenerator::MRTSupported())
-		{
-			CompositorManager::getSingleton().addCompositor((*it), "gbuffer");
-		}
-		CompositorManager::getSingleton().addCompositor((*it), "gbufferNoMRT");
-		CompositorManager::getSingleton().addCompositor((*it), "HDR");
-		if (MaterialGenerator::MRTSupported())
-		{
-			CompositorManager::getSingleton().addCompositor((*it), "ssao");
-			CompositorManager::getSingleton().addCompositor((*it), "SoftParticles");
-			CompositorManager::getSingleton().addCompositor((*it), "DepthOfField");
-			CompositorManager::getSingleton().addCompositor((*it), "gbufferFinalizer");
-		}
-		else
-		{
-			CompositorManager::getSingleton().addCompositor((*it), "ssaoNoMRT");
-		}
-		CompositorManager::getSingleton().addCompositor((*it), "GodRays");
-		CompositorManager::getSingleton().addCompositor((*it), "Bloom");
-		CompositorManager::getSingleton().addCompositor((*it), "Motion Blur");
-		CompositorManager::getSingleton().addCompositor((*it), "SSAA");
-		CompositorManager::getSingleton().addCompositor((*it), "FilmGrain");
-		CompositorManager::getSingleton().addCompositor((*it), UI_RENDER);
-	}
-	
-	refreshCompositor();
 }
 
 
@@ -509,13 +123,12 @@ void BaseApp::Run( bool showDialog )
 
 //  ctor
 //-------------------------------------------------------------------------------------
-
 BaseApp::BaseApp()
 	:mRoot(0), mSceneMgr(0), mWindow(0), mHDRLogic(0), mMotionBlurLogic(0),mSSAOLogic(0)
 	,mGodRaysLogic(0), mSoftParticlesLogic(0), mGBufferLogic(0)
 	,mDepthOfFieldLogic(0), mFilmGrainLogic(0)
 	,mShaderGenerator(0),mMaterialMgrListener(0)
-	,mShowDialog(1), mShutDown(false), bWindowResized(0), bFirstRenderFrame(true)
+	,mShowDialog(1), mShutDown(false), bWindowResized(0)
 	,mInputManager(0), mMouse(0), mKeyboard(0), mOISBsys(0)
 	,alt(0), ctrl(0), shift(0), roadUpdTm(0.f)
 	,mbLeft(0), mbRight(0), mbMiddle(0)
@@ -530,8 +143,13 @@ BaseApp::BaseApp()
 	,iCurCam(0), mSplitMgr(0), motionBlurIntensity(0.9), pressedKeySender(0), materialFactory(0)
 {
 	mLoadingBar = new LoadingBar();
+
+	for (int i=0; i < WND_ALL; ++i)
+	{	mWndMainPanels[i] = 0;  mWndMainBtns[i] = 0;  }
 }
 
+//  dtor
+//-------------------------------------------------------------------------------------
 BaseApp::~BaseApp()
 {
 	delete materialFactory;
@@ -547,9 +165,9 @@ BaseApp::~BaseApp()
                 delete mHWMouse;
 	
 	if (mGUI)  {
-		mGUI->shutdown();	delete mGUI;	mGUI = 0;  }
+		mGUI->shutdown();  delete mGUI;  mGUI = 0;  }
 	if (mPlatform)  {
-		mPlatform->shutdown();	delete mPlatform;	mPlatform = 0;  }
+		mPlatform->shutdown();  delete mPlatform;  mPlatform = 0;  }
 
 	WindowEventUtilities::removeWindowEventListener(mWindow, this);
 	windowClosed(mWindow);
@@ -696,7 +314,7 @@ bool BaseApp::setup()
 		mShaderGenerator->setShaderCachePath(PATHMANAGER::GetShaderCacheDir());		
  
 		// Create and register the material manager listener.
-		mMaterialMgrListener = new ShaderGeneratorTechniqueResolverListener(mShaderGenerator);				
+		mMaterialMgrListener = new MaterialMgrListener(mShaderGenerator);				
 		Ogre::MaterialManager::getSingleton().addListener(mMaterialMgrListener);	
 	}
 
@@ -705,15 +323,15 @@ bool BaseApp::setup()
 	if (!configure())
 		return false;
 
+
 	mSceneMgr = mRoot->createSceneManager(/*ST_GENERIC/**/ST_EXTERIOR_FAR/**/);
 	mSplitMgr = new SplitScreenManager(mSceneMgr, mWindow, pSet);
 
-	if(mShaderGenerator != NULL)
-	{
+	if (mShaderGenerator != NULL)
 		mShaderGenerator->addSceneManager(mSceneMgr);
-	}
-	createCamera();
-	createViewports(); // calls mSplitMgr->Align();
+
+
+	createViewports();  // calls mSplitMgr->Align();
 
 	TextureManager::getSingleton().setDefaultNumMipmaps(5);
 
@@ -721,7 +339,9 @@ bool BaseApp::setup()
 		float dt = ti.dt * 1000.f;
 		LogO(String(":::: Time setup vp: ") + toStr(dt) + " ms");
 
+
 	//  Gui
+	//-------------------------------------------------------
 	#if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
 	mPlatform = new MyGUI::OgreD3D11Platform();
 	#else
@@ -738,9 +358,10 @@ bool BaseApp::setup()
 	#if OGRE_PLATFORM == OGRE_PLATFORM_LINUX
 	//MyGUI::PointerManager::getInstance().setPointer("blank");
 	#endif
+
 		
-	// ------------------------- lang ------------------------
-	if (pSet->language == "") // autodetect
+	//------------------------- lang ------------------------
+	if (pSet->language == "")  // autodetect
 	{	pSet->language = getSystemLanguage();
 		setlocale(LC_NUMERIC, "C");  }
 	
@@ -749,80 +370,49 @@ bool BaseApp::setup()
 		pSet->language = "en";
 		
 	MyGUI::LanguageManager::getInstance().setCurrentLanguage(pSet->language);
-	// -------------------------------------------------------
+	//-------------------------------------------------------
+
 		
 	mPlatform->getRenderManagerPtr()->setSceneManager(mSplitMgr->mGuiSceneMgr);
 	mPlatform->getRenderManagerPtr()->setActiveViewport(mSplitMgr->mNumViewports);
 	
 	// After having initialised mygui, we can set translated strings
 	setTranslations();
-	if(mShaderGenerator != NULL && mRoot->getRenderSystem()->getCapabilities()->hasCapability(Ogre::RSC_FIXED_FUNCTION) == false)
-	{
-		// creates shaders for base material BaseWhite using the RTSS
-		Ogre::MaterialPtr baseWhite = Ogre::MaterialManager::getSingleton().getByName("BaseWhite", Ogre::ResourceGroupManager::INTERNAL_RESOURCE_GROUP_NAME);				
-		baseWhite->setLightingEnabled(false);
-		mShaderGenerator->createShaderBasedTechnique(
-			"BaseWhite", 
-			Ogre::MaterialManager::DEFAULT_SCHEME_NAME, 
-			Ogre::RTShader::ShaderGenerator::DEFAULT_SCHEME_NAME);	
-		mShaderGenerator->validateMaterial(Ogre::RTShader::ShaderGenerator::DEFAULT_SCHEME_NAME, 
-			"BaseWhite");
-		baseWhite->getTechnique(0)->getPass(0)->setVertexProgram(
-		baseWhite->getTechnique(1)->getPass(0)->getVertexProgram()->getName());
-		baseWhite->getTechnique(0)->getPass(0)->setFragmentProgram(
-		baseWhite->getTechnique(1)->getPass(0)->getFragmentProgram()->getName());
 
-		// creates shaders for base material BaseWhiteNoLighting using the RTSS
-		mShaderGenerator->createShaderBasedTechnique(
-			"BaseWhiteNoLighting", 
-			Ogre::MaterialManager::DEFAULT_SCHEME_NAME, 
-			Ogre::RTShader::ShaderGenerator::DEFAULT_SCHEME_NAME);	
-		mShaderGenerator->validateMaterial(Ogre::RTShader::ShaderGenerator::DEFAULT_SCHEME_NAME, 
-			"BaseWhiteNoLighting");
-		Ogre::MaterialPtr baseWhiteNoLighting = Ogre::MaterialManager::getSingleton().getByName("BaseWhiteNoLighting", Ogre::ResourceGroupManager::INTERNAL_RESOURCE_GROUP_NAME);
-		baseWhiteNoLighting->getTechnique(0)->getPass(0)->setVertexProgram(
-		baseWhiteNoLighting->getTechnique(1)->getPass(0)->getVertexProgram()->getName());
-		baseWhiteNoLighting->getTechnique(0)->getPass(0)->setFragmentProgram(
-		baseWhiteNoLighting->getTechnique(1)->getPass(0)->getFragmentProgram()->getName());
+	//--------
+	CreateRTfixed();
 
-	}
-		ti.update();	/// time
-		dt = ti.dt * 1000.f;
+		ti.update();  dt = ti.dt * 1000.f;  /// time
 		LogO(String(":::: Time setup gui: ") + toStr(dt) + " ms");
 
 	createResourceListener();
 	loadResources();
 
-		ti.update();	/// time
-		dt = ti.dt * 1000.f;
+		ti.update();  dt = ti.dt * 1000.f;  /// time
 		LogO(String(":::: Time resources: ") + toStr(dt) + " ms");
 
-	LogDbg("*** createFrameListener ***");
+	LogO("*** createFrameListener ***");
 	createFrameListener();
 
-		ti.update();	/// time
-		dt = ti.dt * 1000.f;
+		ti.update();  dt = ti.dt * 1000.f;  /// time
 		LogO(String(":::: Time createFrameListener: ") + toStr(dt) + " ms");
 
-	LogDbg("*** createScene ***");
-	createScene();//^before
+	LogO("*** createScene ***");
+	createScene();
 
-		ti.update();	/// time
-		dt = ti.dt * 1000.f;
+		ti.update();  dt = ti.dt * 1000.f;  /// time
 		LogO(String(":::: Time createScene: ") + toStr(dt) + " ms");
 
-	LogDbg("*** recreateCompositor ***");
+	LogO("*** recreateCompositor ***");
 	recreateCompositor();
 
 	postInit();
-	LogDbg("*** end setup ***");
+	LogO("*** end setup ***");
 
-		ti.update();	/// time
-		dt = ti.dt * 1000.f;
+		ti.update();  dt = ti.dt * 1000.f;  /// time
 		LogO(String(":::: Time post, mat factory: ") + toStr(dt) + " ms");
 
-	ti2.update();	/// time2
-	dt = ti2.dt * 1000.f;
+	ti2.update();  dt = ti2.dt * 1000.f;  /// time2
 	LogO(String(":::: Time setup total: ") + toStr(dt) + " ms");
 	
 	return true;
@@ -880,11 +470,11 @@ void BaseApp::loadResources()
 	bool bCache=false;
 	GpuProgramManager::getSingletonPtr()->setSaveMicrocodesToCache(bCache);
 	Ogre::String microcodeCacheFileName =PATHMANAGER::GetCacheDir() + "/" + "shadercache.txt";
-	if(boost::filesystem::exists(microcodeCacheFileName))
+	if (boost::filesystem::exists(microcodeCacheFileName))
 	{
 		std::ifstream inp;
 		inp.open(microcodeCacheFileName.c_str(), std::ios::in | std::ios::binary);
-		Ogre::DataStreamPtr shaderCache (OGRE_NEW FileStreamDataStream(microcodeCacheFileName, &inp, false));
+		Ogre::DataStreamPtr shaderCache(OGRE_NEW FileStreamDataStream(microcodeCacheFileName, &inp, false));
 		GpuProgramManager::getSingleton().loadMicrocodeCache(shaderCache);
 	}
 	#endif
@@ -932,7 +522,7 @@ bool BaseApp::keyReleased( const OIS::KeyEvent &arg )
 	return true;
 }
 
-//  Mouse
+//  Mouse events
 //-------------------------------------------------------------------------------------
 bool BaseApp::mouseMoved( const OIS::MouseEvent &arg )
 {
@@ -949,7 +539,6 @@ bool BaseApp::mouseMoved( const OIS::MouseEvent &arg )
 		if ((*it)->fCam)
 			(*it)->fCam->Move( mbLeft, mbRight, mbMiddle, shift, arg.state.X.rel, arg.state.Y.rel, arg.state.Z.rel );
 	}
-
 	return true;
 }
 
@@ -981,6 +570,7 @@ bool BaseApp::mouseReleased( const OIS::MouseEvent &arg, OIS::MouseButtonID id )
 }
 
 //  adjust mouse clipping area
+//-------------------------------------------------------
 void BaseApp::windowResized(RenderWindow* rw)
 {
 	unsigned int width, height, depth;  int left, top;
@@ -1018,6 +608,7 @@ void BaseApp::windowClosed(RenderWindow* rw)
 }
 
 //  mouse cursor
+//-------------------------------------------------------
 void BaseApp::showMouse()
 {
 	if (!mGUI)  return;

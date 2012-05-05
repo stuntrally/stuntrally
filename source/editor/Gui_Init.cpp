@@ -2,7 +2,7 @@
 #include "../ogre/common/Defines.h"
 #include "OgreApp.h"
 #include "../vdrift/pathmanager.h"
-//#include "../road/Road.h"
+
 #include "../ogre/common/Gui_Def.h"
 #include "../ogre/common/MultiList2.h"
 #include "../ogre/common/Slider.h"
@@ -103,21 +103,22 @@ void App::InitGui()
 
 		//  get sub tabs
 		vSubTabsEdit.clear();
+		TabPtr sub;
 		for (size_t i=0; i < mWndTabsEdit->getItemCount(); ++i)
 		{
-			MyGUI::TabPtr sub = (TabPtr)mWndTabsEdit->getItemAt(i)->findWidget("SubTab");
+			sub = (TabPtr)mWndTabsEdit->getItemAt(i)->findWidget("SubTab");
 			vSubTabsEdit.push_back(sub);  // 0 for not found
 		}
 		vSubTabsHelp.clear();
 		for (size_t i=0; i < mWndTabsHelp->getItemCount(); ++i)
 		{
-			MyGUI::TabPtr sub = (TabPtr)mWndTabsHelp->getItemAt(i)->findWidget("SubTab");
+			sub = (TabPtr)mWndTabsHelp->getItemAt(i)->findWidget("SubTab");
 			vSubTabsHelp.push_back(sub);
 		}
 		vSubTabsOpts.clear();
 		for (size_t i=0; i < mWndTabsOpts->getItemCount(); ++i)
 		{
-			MyGUI::TabPtr sub = (TabPtr)mWndTabsOpts->getItemAt(i)->findWidget("SubTab");
+			sub = (TabPtr)mWndTabsOpts->getItemAt(i)->findWidget("SubTab");
 			vSubTabsOpts.push_back(sub);
 		}
 		//mWndTabs->setIndexSelected(3);  //default*--
@@ -399,7 +400,7 @@ void App::InitGui()
 
 	bGI = true;  // gui inited, gui events can now save vals
 
-	ti.update();	/// time
+	ti.update();  /// time
 	float dt = ti.dt * 1000.f;
 	LogO(String("::: Time Init Gui: ") + toStr(dt) + " ms");
 }

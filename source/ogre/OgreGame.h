@@ -16,7 +16,7 @@
 
 #include "common/MessageBox/MessageBox.h"
 #include "common/MessageBox/MessageBoxStyle.h"
-//#include "common/GraphView.h"
+#include "common/GraphView.h"
 
 #include "../network/networkcallbacks.hpp"
 #include <boost/thread.hpp>
@@ -52,7 +52,8 @@ public:
 	
 	void setTranslations();
 	
-	std::vector<GraphView*> graphs;
+	std::vector<GraphView*> graphs;  /// graphs
+	void CreateGraphs(),DestroyGraphs(),UpdateGraphs(),GraphsNewVals();
 	
 	// This list holds new positions info for every CarModel
 	PosInfo carPoses[CarPosCnt][8];  // [carsNum8]
@@ -299,7 +300,8 @@ protected:
 	//  sliders  -----------------------------------------
 	SLV(Particles);  SLV(Trails);
 	SLV(ReflSkip);  SLV(ReflSize);  SLV(ReflFaces);  SLV(ReflDist);  SLV(ReflMode); // refl
-	SLV(SizeGaug);  SLV(TypeGaug);  SLV(SizeMinimap);  SLV(SizeArrow);  SLV(ZoomMinimap);  SLV(CountdownTime);  // view
+	SLV(SizeGaug);  SLV(TypeGaug);  SLV(SizeMinimap);  SLV(SizeArrow);  SLV(ZoomMinimap);
+	SLV(CountdownTime);  SLV(GraphsType);  // view
 	SLV(VolMaster);  SLV(VolEngine);  SLV(VolTires);  SLV(VolEnv);
 	SLV(CarClrH);  SLV(CarClrS);  SLV(CarClrV);  // car clr
 	SLV(BloomInt);  SLV(BloomOrig);  SLV(BlurIntens);  // video
