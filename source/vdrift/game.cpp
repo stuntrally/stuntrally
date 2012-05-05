@@ -92,16 +92,12 @@ bool GAME::InitializeSound()
 		if (!generic_sounds.Load("bump_front", sound.GetDeviceInfo(), error_output))  return false;
 		if (!generic_sounds.Load("bump_rear", sound.GetDeviceInfo(), error_output))  return false;
 		if (!generic_sounds.Load("wind", sound.GetDeviceInfo(), error_output))  return false;
-		for (int i = 0; i < Ncrashsounds; ++i)
-		{
-			int n = i+1;
-			char name[3] = {'0'+ n/10, '0'+ n%10, 0};
-			if (!generic_sounds.Load(name, sound.GetDeviceInfo(), error_output))  return false;
-		}
+		for (int i = 1; i <= Ncrashsounds; ++i)
+			if (!generic_sounds.Load(toStr(i/10)+toStr(i%10), sound.GetDeviceInfo(), error_output))  return false;
+
 		for (int i = 0; i < Nwatersounds; ++i)
-		{
 			if (!generic_sounds.Load("water"+toStr(i+1), sound.GetDeviceInfo(), error_output))  return false;
-		}
+
 		if (!generic_sounds.Load("mud1", sound.GetDeviceInfo(), error_output))  return false;
 		if (!generic_sounds.Load("mud_cont", sound.GetDeviceInfo(), error_output))  return false;
 		if (!generic_sounds.Load("water_cont", sound.GetDeviceInfo(), error_output))  return false;

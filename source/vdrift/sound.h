@@ -245,7 +245,6 @@ public:
 	void Pause() {  playing = 0;  }
 	void Play()  {  playing = 1;  }
 	void StopPlay()  {  playing = 0;  Reset();  playing = 1;  }
-	//const bool Audible() const {  return (playing == 1 && (computed_gain1 > 0.0 || computed_gain2 > 0.0));  }
 	bool Audible() 	{  return (playing == 1) && (GetGain() > 0);  }
 
 	const std::string GetName() const {  if (buffer == NULL)  return "NULL";  else  return buffer->GetName();  }
@@ -298,7 +297,7 @@ public:
 	void Compute3DEffects(std::list <SOUNDSOURCE *> & sources, const MATHVECTOR <float,3> & listener_pos, const QUATERNION <float> & listener_rot) const;
 	void Compute3DEffects(std::list <SOUNDSOURCE *> & sources) const {  Compute3DEffects(sources, lpos, lrot);  }
 
-	void SetMasterVolume(float newvol) {  volume_filter.SetFilterOrder0(newvol*0.5);  }  // 1?  >vol
+	void SetMasterVolume(float newvol) {  volume_filter.SetFilterOrder0(newvol);  }
 	void DisableAllSound() {  disable=true;  }
 	bool Enabled() const {  return !disable;  }
 	const SOUNDINFO & GetDeviceInfo() {  return deviceinfo;  }

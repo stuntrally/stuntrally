@@ -108,8 +108,7 @@ void App::InitGui()
 
 	///  Sliders
     //------------------------------------------------------------------------
-	ButtonPtr btn,bchk;  ComboBoxPtr combo;
-	Slider* sl;
+	ButtonPtr btn,bchk;  ComboBoxPtr combo;  Slider* sl;
 
 	GuiInitLang();
 
@@ -122,6 +121,7 @@ void App::InitGui()
 	Slv(SizeArrow,  (pSet->size_arrow));
 	Slv(ZoomMinimap,powf((pSet->zoom_minimap-1.0f) /9.f, 0.5f));
 	Slv(CountdownTime,  pSet->gui.pre_time / 0.5f /6.f);
+	Slv(GraphsType,	pSet->graphs_type /4.f);
 	
 	//  particles/trails
 	Slv(Particles,	powf(pSet->particles_len /4.f, 0.5f));
@@ -135,7 +135,7 @@ void App::InitGui()
 	Slv(ReflMode,   pSet->refl_mode /2.f);
 
     //  sound
-	Slv(VolMaster,	pSet->vol_master/4.0f);	 Slv(VolEngine,	pSet->vol_engine/1.4f);
+	Slv(VolMaster,	pSet->vol_master/1.6f);	 Slv(VolEngine,	pSet->vol_engine/1.4f);
 	Slv(VolTires,	pSet->vol_tires/1.4f); 	 Slv(VolEnv,	pSet->vol_env/1.4f);
 	
 	// car color

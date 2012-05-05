@@ -2214,6 +2214,12 @@
 							<Property key="TextColour" value="0.7 0.85 1.0"/>
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="388 176 48 24" name="GraphsTypeVal">
+							<UserString key="RelativeTo" value="OptionsWnd"/>
+						</Widget>
+						<Widget type="Slider" skin="Slider" position="400 176 260 18" name="GraphsType">
+							<UserString key="RelativeTo" value="OptionsWnd"/>
+						</Widget>
 					</Widget>
 				</Widget>
 			</Widget>

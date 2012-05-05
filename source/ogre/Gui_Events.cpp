@@ -73,7 +73,7 @@ void App::chkSplitVert(WP wp)
 
 void App::slNumLaps(SL)
 {
-	int v = 20.f * val + 1;  if (bGI)  pSet->gui.num_laps = v;
+	int v = 20.f * val + 1 +0.4f;  if (bGI)  pSet->gui.num_laps = v;
 	if (valNumLaps){  valNumLaps->setCaption(toStr(v));  }
 }
 
@@ -146,18 +146,18 @@ void App::slTrails(SL)
 //  reflect
 void App::slReflSkip(SL)
 {
-	int v = 1000.f * powf(val, 2.f);	if (bGI)  pSet->refl_skip = v;
+	int v = 1000.f * powf(val, 2.f) +0.4f;	if (bGI)  pSet->refl_skip = v;
 	if (valReflSkip)  valReflSkip->setCaption(toStr(v));
 }
 void App::slReflSize(SL)
 {
-	int v = std::max( 0.0f, std::min((float) ciShadowNumSizes-1, ciShadowNumSizes * val));
+	int v = std::max( 0.0f, std::min((float) ciShadowNumSizes-1, ciShadowNumSizes * val)) +0.4f;
 	if (bGI)  pSet->refl_size = v;
 	if (valReflSize)  valReflSize->setCaption(toStr(ciShadowSizesA[v]));
 }
 void App::slReflFaces(SL)
 {
-	int v = val * 6.f;
+	int v = val * 6.f +0.4f;
 	if (bGI)  pSet->refl_faces = v;
 	if (valReflFaces)  valReflFaces->setCaption(toStr(v));
 }
@@ -171,7 +171,7 @@ void App::slReflDist(SL)
 void App::slReflMode(SL)
 {
 	int old = pSet->refl_mode;
-	pSet->refl_mode = val * 2.f;
+	pSet->refl_mode = val * 2.f +0.4f;
 	
 	if (pSet->refl_mode != old)
 		recreateReflections();
@@ -200,58 +200,63 @@ void App::recreateReflections()
 void App::slSizeGaug(SL)
 {
 	float v = 0.1f + 0.15f * val;	if (bGI)  {  pSet->size_gauges = v;  SizeHUD(true);  }
-	if (valSizeGaug){	valSizeGaug->setCaption(fToStr(v,3,4));  }
+	if (valSizeGaug)	valSizeGaug->setCaption(fToStr(v,3,4));
 }
 void App::slTypeGaug(SL)
 {
-	int v = val * 5.f;		if (bGI)  {  pSet->gauges_type = v;  CreateHUD(true);  }
-	if (valTypeGaug){	valTypeGaug->setCaption(toStr(v));  }
+	int v = val * 5.f +0.4f;		if (bGI)  {  pSet->gauges_type = v;  CreateHUD(true);  }
+	if (valTypeGaug)	valTypeGaug->setCaption(toStr(v));
 }
 void App::slSizeArrow(SL)
 {
 	float v = val;	if (bGI)  {  pSet->size_arrow = v;  }
-	if (valSizeArrow){	valSizeArrow->setCaption(fToStr(v,3,4));  }
+	if (valSizeArrow)	valSizeArrow->setCaption(fToStr(v,3,4));
 	if (arrowNode) arrowRotNode->setScale(v/2.f, v/2.f, v/2.f);
 }
 void App::slCountdownTime(SL)
 {
-	float v = (int)(val * 6.f) * 0.5f;	if (bGI)  {  pSet->gui.pre_time = v;  }
+	float v = (int)(val * 6.f +0.4f) * 0.5f;	if (bGI)  {  pSet->gui.pre_time = v;  }
 	if (valCountdownTime){	valCountdownTime->setCaption(fToStr(v,1,4));  }
+}
+void App::slGraphsType(SL)
+{
+	int v = val * 4.f +0.4f;		if (bGI)  {  pSet->graphs_type = v;  DestroyGraphs();  CreateGraphs();  }
+	if (valGraphsType)	valGraphsType->setCaption(toStr(v));
 }
 
 //  minimap
 void App::slSizeMinimap(SL)
 {
 	float v = 0.05f + 0.25f * val;	if (bGI)  {  pSet->size_minimap = v;  SizeHUD(true);  }
-	if (valSizeMinimap){	valSizeMinimap->setCaption(fToStr(v,3,4));  }
+	if (valSizeMinimap)  valSizeMinimap->setCaption(fToStr(v,3,4));
 }
 void App::slZoomMinimap(SL)
 {
 	float v = 1.f + 9.f * powf(val, 2.f);	if (bGI)  {  pSet->zoom_minimap = v;  SizeHUD(true);  }
-	if (valZoomMinimap){	valZoomMinimap->setCaption(fToStr(v,3,4));  }
+	if (valZoomMinimap)  valZoomMinimap->setCaption(fToStr(v,3,4));
 }
 
 
 //  [Sound]
 void App::slVolMaster(SL)
 {
-	Real v = 4.0f * val;	if (bGI)  {  pSet->vol_master = v;  pGame->ProcessNewSettings();  }
-	if (valVolMaster){  valVolMaster->setCaption(fToStr(v,2,4));  }
+	Real v = 1.6f * val;	if (bGI)  {  pSet->vol_master = v;  pGame->ProcessNewSettings();  }
+	if (valVolMaster)  valVolMaster->setCaption(fToStr(v,2,4));
 }
 void App::slVolEngine(SL)
 {
 	Real v = 1.4f * val;	if (bGI)  pSet->vol_engine = v;
-	if (valVolEngine){  valVolEngine->setCaption(fToStr(v,2,4));  }
+	if (valVolEngine)  valVolEngine->setCaption(fToStr(v,2,4));
 }
 void App::slVolTires(SL)
 {
 	Real v = 1.4f * val;	if (bGI)  pSet->vol_tires = v;
-	if (valVolTires){  valVolTires->setCaption(fToStr(v,2,4));  }
+	if (valVolTires)  valVolTires->setCaption(fToStr(v,2,4));
 }
 void App::slVolEnv(SL)
 {
 	Real v = 1.4f * val;	if (bGI)  pSet->vol_env = v;
-	if (valVolEnv){  valVolEnv->setCaption(fToStr(v,2,4));  }
+	if (valVolEnv)  valVolEnv->setCaption(fToStr(v,2,4));
 }
 
 
@@ -725,21 +730,14 @@ if (!bAssignKey)
 				if (isFocGui && !pSet->isMain)
 					switch (pSet->inMenu)
 					{
-					case WND_Replays:
-						btnRplLoad(0);  break;
+					case WND_Replays:	btnRplLoad(0);  break;
 					case WND_Game:  case WND_Champ:
 					{	switch (mWndTabsGame->getIndexSelected())
 						{
-						case 1:
-							changeTrack();
-							btnNewGame(0);  break;
-						case 2:
-							btnChgCar(0);
-							btnNewGame(0);  break;
-						case 4:
-							chatSendMsg();  break;
-						case 5:
-							btnChampStart(0);  break;
+						case 1:	changeTrack();	btnNewGame(0);  break;
+						case 2:	btnChgCar(0);	btnNewGame(0);  break;
+						case 4:	chatSendMsg();  break;
+						case 5:	btnChampStart(0);  break;
 					}	break;
 				}	}
 				return false;

@@ -406,7 +406,7 @@ void SOUND::Callback16bitstereo(void *myself, Uint8 *stream, int len)
 		((short *) stream)[pos+1] = y1;
 
 		waveL[i] = y0;  // for vis osc only ..
-		waveR[i] = y1;
+		waveR[i] = y1;  // if (pSet->graph_type == 1) ..
 	}
 	delete[]out;
 	

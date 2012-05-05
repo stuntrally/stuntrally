@@ -56,7 +56,7 @@ void SETTINGS::Serialize(bool w, CONFIGFILE & c)
 	Param(c,w, "hud_show.tracks_view", tracks_view);	Param(c,w, "hud_show.check_arrow", check_arrow);
 	Param(c,w, "hud_show.tracks_sort", tracks_sort);	Param(c,w, "hud_show.tracks_sortup", tracks_sortup);
 	Param(c,w, "hud_show.opponents", show_opponents);	Param(c,w, "hud_show.opplist_sort", opplist_sort);
-	Param(c,w, "hud_show.graphs", show_graphs);	
+	Param(c,w, "hud_show.graphs", show_graphs);			Param(c,w, "hud_show.graphs_type", graphs_type);
 
 	Param(c,w, "hud_size.gauges", size_gauges);			Param(c,w, "hud_size.minimap", size_minimap);
 	Param(c,w, "hud_size.mini_zoom", zoom_minimap);		Param(c,w, "hud_size.mini_zoomed", mini_zoomed);
@@ -143,7 +143,7 @@ SETTINGS::SETTINGS() :  ///  Defaults
 	size_gauges(0.18), size_minimap(0.2), zoom_minimap(1.0),
 	mini_zoomed(0), mini_rotated(1), mini_terrain(0),
 	tracks_view(0), tracks_sort(0), tracks_sortup(1),
-	check_arrow(0), size_arrow(0.2), gauges_type(1),
+	check_arrow(0), size_arrow(0.2), gauges_type(1),graphs_type(1),
 	//  graphics
 	anisotropy(4),	view_distance(2000), bFog(0),
 	terdetail(2), terdist(100), road_dist(1.0), tex_size(1), ter_mtr(2), shaders(0.5),
