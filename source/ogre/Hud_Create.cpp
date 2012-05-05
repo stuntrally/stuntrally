@@ -6,8 +6,6 @@
 #include "../road/Road.h"
 #include "SplitScreen.h"
 #include "common/RenderConst.h"
-//#include "common/MultiList2.h"
-//#include "common/GraphView.h"
 
 #include <OgreRenderWindow.h>
 #include <OgreSceneNode.h>
