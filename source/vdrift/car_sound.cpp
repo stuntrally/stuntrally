@@ -28,7 +28,7 @@ bool CAR::LoadSounds(
 {
 	//check for sound specification file
 	CONFIGFILE aud;
-	if (aud.Load(carpath+"/"+carname+"/"+carname+".aud"))
+	if (aud.Load(carpath+"/"+carname+"/"+carname+".aud"))  // ?
 	{
 		std::list <std::string> sections;
 		aud.GetSectionList(sections);
@@ -125,7 +125,7 @@ bool CAR::LoadSounds(
 			}
 		}
 	}
-	else
+	else  // car engine
 	{
 		if (!soundbuffers["engine.wav"].Load(carpath+"/"+carname+"/engine.wav", sound_device_info, error_output))
 		{
@@ -136,30 +136,25 @@ bool CAR::LoadSounds(
 		SOUNDSOURCE & enginesound = enginesounds.back().second;
 		enginesound.SetBuffer(soundbuffers["engine.wav"]);
 		enginesound.Set3DEffects(true);
-		enginesound.SetLoop(true);
-		enginesound.SetGain(0);
+		enginesound.SetLoop(true);		enginesound.SetGain(0);
 		enginesound.Play();
 	}
 
-	//set up tire squeal sounds
+	// tire squeal
 	for (int i = 0; i < 4; i++)
 	{
 		const SOUNDBUFFER * buf = soundbufferlibrary.GetBuffer("tire_squeal");
 		if (!buf)
-		{
-			error_output << "Can't load tire_squeal sound" << std::endl;
-			return false;
+		{	error_output << "Can't load tire_squeal sound" << std::endl;	return false;
 		}
-		tiresqueal[i].SetBuffer(*buf);
-		tiresqueal[i].Set3DEffects(true);
-		tiresqueal[i].SetLoop(true);
-		tiresqueal[i].SetGain(0);
+		tiresqueal[i].SetBuffer(*buf);		tiresqueal[i].Set3DEffects(true);
+		tiresqueal[i].SetLoop(true);		tiresqueal[i].SetGain(0);
 		int samples = tiresqueal[i].GetSoundBuffer().GetSoundInfo().GetSamples();
 		tiresqueal[i].SeekToSample((samples/4)*i);
 		tiresqueal[i].Play();
 	}
 
-	//set up tire gravel sounds
+	// tire gravel
 	for (int i = 0; i < 4; i++)
 	{
 		const SOUNDBUFFER * buf = soundbufferlibrary.GetBuffer("gravel");
@@ -173,14 +168,12 @@ bool CAR::LoadSounds(
 		gravelsound[i].Play();
 	}
 
-	//set up tire grass sounds
+	// tire grass
 	for (int i = 0; i < 4; i++)
 	{
 		const SOUNDBUFFER * buf = soundbufferlibrary.GetBuffer("grass");
 		if (!buf)
-		{
-			error_output << "Can't load grass sound" << std::endl;
-			return false;
+		{	error_output << "Can't load grass sound" << std::endl;		return false;
 		}
 		grasssound[i].SetBuffer(*buf);		grasssound[i].Set3DEffects(true);
 		grasssound[i].SetLoop(true);		grasssound[i].SetGain(0);
@@ -189,7 +182,7 @@ bool CAR::LoadSounds(
 		grasssound[i].Play();
 	}
 
-	//set up bump sounds
+	// bump tire
 	for (int i = 0; i < 4; i++)
 	{
 		const SOUNDBUFFER * buf = soundbufferlibrary.GetBuffer("bump_front");
@@ -202,7 +195,7 @@ bool CAR::LoadSounds(
 		tirebump[i].SetLoop(false);		tirebump[i].SetGain(1.0);
 	}
 
-	//set up crash sounds (many)
+	// crashes (many)
 	for (int i = 0; i < Ncrashsounds; ++i)
 	{
 		int n = i+1;
@@ -214,7 +207,7 @@ bool CAR::LoadSounds(
 		crashsound[i].SetBuffer(*buf);	crashsound[i].Set3DEffects(true);
 		crashsound[i].SetLoop(false);	crashsound[i].SetGain(1.0);
 	}
-
+	// crash/hit cont.
 	{
 		const SOUNDBUFFER * buf = soundbufferlibrary.GetBuffer("wind");
 		if (!buf)
@@ -225,7 +218,29 @@ bool CAR::LoadSounds(
 		roadnoise.SetPitch(1.0);	roadnoise.Play();
 	}
 
-	//set up  fluid sounds
+	// wind
+	{
+		const SOUNDBUFFER * buf = soundbufferlibrary.GetBuffer("wind");
+		if (!buf)
+		{	error_output << "Can't load wind sound" << std::endl;	return false;
+		}
+		roadnoise.SetBuffer(*buf);	roadnoise.Set3DEffects(true);
+		roadnoise.SetLoop(true);	roadnoise.SetGain(0);
+		roadnoise.SetPitch(1.0);	roadnoise.Play();
+	}
+	// boost
+	{
+		const SOUNDBUFFER * buf = soundbufferlibrary.GetBuffer("boost");
+		if (!buf)
+		{	error_output << "Can't load boost sound" << std::endl;	return false;
+		}
+		boostsnd.SetBuffer(*buf);	boostsnd.Set3DEffects(true);
+		boostsnd.SetLoop(true);		boostsnd.SetGain(0);
+		boostsnd.SetPitch(1.0);		boostsnd.Play();
+	}
+
+
+	// fluid hit  --------------------------------------------------
 	for (int i = 0; i < Nwatersounds; ++i)
 	{
 		std::string name = "water"+toStr(i+1);
@@ -244,7 +259,7 @@ bool CAR::LoadSounds(
 		mudsnd.SetBuffer(*buf);		mudsnd.Set3DEffects(true);
 		mudsnd.SetLoop(false);		mudsnd.SetGain(0);
 	}
-	//set up fluid cont. sounds
+	// fluid cont.
 	{
 		const SOUNDBUFFER * buf = soundbufferlibrary.GetBuffer("mud_cont");
 		if (!buf)
@@ -264,17 +279,6 @@ bool CAR::LoadSounds(
 		water_cont.SetPitch(1.0);	water_cont.Play();
 	}
 	
-	//set up boost sound
-	{
-		const SOUNDBUFFER * buf = soundbufferlibrary.GetBuffer("boost");
-		if (!buf)
-		{	error_output << "Can't load boost sound" << std::endl;	return false;
-		}
-		boostsnd.SetBuffer(*buf);	boostsnd.Set3DEffects(true);
-		boostsnd.SetLoop(true);		boostsnd.SetGain(0);
-		boostsnd.SetPitch(1.0);		boostsnd.Play();
-	}
-
 	return true;
 }
 
