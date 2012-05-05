@@ -4,7 +4,7 @@
 #include "configfile.h"
 
 
-#define SET_VER  1501  // 1.5
+#define SET_VER  1650  // 1.6+
 
 
 class SETTINGS
@@ -68,7 +68,8 @@ public:
 	std::string ff_device;	float ff_gain;	bool ff_invert;
 
 	//  other
-	float vol_master, vol_engine, vol_tires, vol_env;//.., vol_splash,vol_fluids, vol_crash,vol_scrap;
+	float vol_master, vol_engine, vol_tires, vol_susp, vol_env,
+		vol_fl_splash,vol_fl_cont, vol_car_crash,vol_car_scrap;
 	bool autostart, escquit;
 	bool bltDebug, bltLines, bltProfilerTxt, profilerTxt;
 	bool loadingbackground;
@@ -77,7 +78,6 @@ public:
 	
 	//  sim freq (1/interval timestep)
 	float game_fq, blt_fq;  int blt_iter, dyn_iter, multi_thr, thread_sleep;
-	//bool collis_veget, collis_cars;
 	
 	//  compositor
 	bool bloom, hdr, motionblur, all_effects;

@@ -21,9 +21,7 @@ public:
 		btConstraintSolver* constraintSolver,
 		btCollisionConfiguration* collisionConfig)
 	:	btDiscreteDynamicsWorld(dispatcher, broadphase, constraintSolver, collisionConfig)
-		//track(0),
-	{
-	}
+	{  }
 
 	~DynamicsWorld() {  }
 

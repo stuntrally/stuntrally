@@ -2360,57 +2360,127 @@
 			<Widget type="TabItem" skin="" position="2 24 794 572">
 				<Property key="Caption" value="#{Sound}"/>
 				<UserString key="RelativeTo" value="OptionsWnd"/>
-				<Widget type="TextBox" skin="TextBox" position="32 60 144 30">
+
+				<Widget type="TextBox" skin="TextBox" position="32 20 144 30">
 					<Property key="Caption" value="#{Volume}"/>
 					<Property key="TextColour" value="0.9 0.96 1.0"/>
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 				</Widget>
-				<Widget type="TextBox" skin="TextBox" position="32 100 144 30">
+
+				<Widget type="TextBox" skin="TextBox" position="32 60 144 30">
 					<Property key="Caption" value="#{VolMaster}"/>
 					<Property key="TextColour" value="0.9 0.94 1.0"/>
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 				</Widget>
-				<Widget type="TextBox" skin="TextBox" position="32 140 144 30">
+				<Widget type="Slider" skin="Slider" position="248 58 320 22" name="VolMaster">
+					<UserString key="RelativeTo" value="OptionsWnd"/>
+				</Widget>
+				<Widget type="TextBox" skin="TextBox" position="180 60 60 24" name="VolMasterVal">
+					<Property key="TextColour" value="0.9 0.94 1.0"/>
+					<UserString key="RelativeTo" value="OptionsWnd"/>
+				</Widget>
+
+				<Widget type="TextBox" skin="TextBox" position="32 110 144 30">
 					<Property key="Caption" value="#{Engine}"/>
 					<Property key="TextColour" value="0.8 0.85 1.0"/>
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 				</Widget>
-				<Widget type="TextBox" skin="TextBox" position="32 180 144 30">
+				<Widget type="Slider" skin="Slider" position="248 110 320 18" name="VolEngine">
+					<UserString key="RelativeTo" value="OptionsWnd"/>
+				</Widget>
+				<Widget type="TextBox" skin="TextBox" position="180 110 60 24" name="VolEngineVal">
+					<Property key="TextColour" value="0.8 0.85 1.0"/>
+					<UserString key="RelativeTo" value="OptionsWnd"/>
+				</Widget>
+
+				<Widget type="TextBox" skin="TextBox" position="32 140 144 30">
 					<Property key="Caption" value="#{Tires}"/>
 					<Property key="TextColour" value="0.75 0.8 1.0"/>
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 				</Widget>
-				<Widget type="TextBox" skin="TextBox" position="32 220 144 30">
+				<Widget type="Slider" skin="Slider" position="248 140 320 18" name="VolTires">
+					<UserString key="RelativeTo" value="OptionsWnd"/>
+				</Widget>
+				<Widget type="TextBox" skin="TextBox" position="180 140 60 24" name="VolTiresVal">
+					<Property key="TextColour" value="0.75 0.8 1.0"/>
+					<UserString key="RelativeTo" value="OptionsWnd"/>
+				</Widget>
+
+				<Widget type="TextBox" skin="TextBox" position="32 170 144 30">
+					<Property key="Caption" value="#{Suspension}"/>
+					<Property key="TextColour" value="0.75 0.8 1.0"/>
+					<UserString key="RelativeTo" value="OptionsWnd"/>
+				</Widget>
+				<Widget type="Slider" skin="Slider" position="248 170 320 18" name="VolSusp">
+					<UserString key="RelativeTo" value="OptionsWnd"/>
+				</Widget>
+				<Widget type="TextBox" skin="TextBox" position="180 170 60 24" name="VolSuspVal">
+					<Property key="TextColour" value="0.75 0.8 1.0"/>
+					<UserString key="RelativeTo" value="OptionsWnd"/>
+				</Widget>
+
+				<Widget type="TextBox" skin="TextBox" position="32 200 144 30">
 					<Property key="Caption" value="#{Environment}"/>
 					<Property key="TextColour" value="0.6 0.75 1.0"/>
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 				</Widget>
-				<Widget type="Slider" skin="Slider" position="248 100 320 18" name="VolMaster">
+				<Widget type="Slider" skin="Slider" position="248 200 320 18" name="VolEnv">
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 				</Widget>
-				<Widget type="Slider" skin="Slider" position="248 140 320 18" name="VolEngine">
-					<UserString key="RelativeTo" value="OptionsWnd"/>
-				</Widget>
-				<Widget type="Slider" skin="Slider" position="248 180 320 18" name="VolTires">
-					<UserString key="RelativeTo" value="OptionsWnd"/>
-				</Widget>
-				<Widget type="Slider" skin="Slider" position="248 220 320 18" name="VolEnv">
-					<UserString key="RelativeTo" value="OptionsWnd"/>
-				</Widget>
-				<Widget type="TextBox" skin="TextBox" position="180 100 60 24" name="VolMasterVal">
-					<Property key="TextColour" value="0.9 0.94 1.0"/>
-					<UserString key="RelativeTo" value="OptionsWnd"/>
-				</Widget>
-				<Widget type="TextBox" skin="TextBox" position="180 140 60 24" name="VolEngineVal">
-					<Property key="TextColour" value="0.8 0.85 1.0"/>
-					<UserString key="RelativeTo" value="OptionsWnd"/>
-				</Widget>
-				<Widget type="TextBox" skin="TextBox" position="180 180 60 24" name="VolTiresVal">
-					<Property key="TextColour" value="0.75 0.8 1.0"/>
-					<UserString key="RelativeTo" value="OptionsWnd"/>
-				</Widget>
-				<Widget type="TextBox" skin="TextBox" position="180 220 60 24" name="VolEnvVal">
+				<Widget type="TextBox" skin="TextBox" position="180 200 60 24" name="VolEnvVal">
 					<Property key="TextColour" value="0.6 0.75 1.0"/>
+					<UserString key="RelativeTo" value="OptionsWnd"/>
+				</Widget>
+
+				<Widget type="TextBox" skin="TextBox" position="32 250 144 30">
+					<Property key="Caption" value="#{FluidSplash}"/>
+					<Property key="TextColour" value="0.5 0.75 1.0"/>
+					<UserString key="RelativeTo" value="OptionsWnd"/>
+				</Widget>
+				<Widget type="Slider" skin="Slider" position="248 250 320 18" name="VolFlSplash">
+					<UserString key="RelativeTo" value="OptionsWnd"/>
+				</Widget>
+				<Widget type="TextBox" skin="TextBox" position="180 250 60 24" name="VolFlSplashVal">
+					<Property key="TextColour" value="0.5 0.75 1.0"/>
+					<UserString key="RelativeTo" value="OptionsWnd"/>
+				</Widget>
+
+				<Widget type="TextBox" skin="TextBox" position="32 280 144 30">
+					<Property key="Caption" value="#{FluidCont}"/>
+					<Property key="TextColour" value="0.5 0.75 1.0"/>
+					<UserString key="RelativeTo" value="OptionsWnd"/>
+				</Widget>
+				<Widget type="Slider" skin="Slider" position="248 280 320 18" name="VolFlCont">
+					<UserString key="RelativeTo" value="OptionsWnd"/>
+				</Widget>
+				<Widget type="TextBox" skin="TextBox" position="180 280 60 24" name="VolFlContVal">
+					<Property key="TextColour" value="0.5 0.75 1.0"/>
+					<UserString key="RelativeTo" value="OptionsWnd"/>
+				</Widget>
+
+				<Widget type="TextBox" skin="TextBox" position="32 310 144 30">
+					<Property key="Caption" value="#{CarCrash}"/>
+					<Property key="TextColour" value="0.5 0.75 1.0"/>
+					<UserString key="RelativeTo" value="OptionsWnd"/>
+				</Widget>
+				<Widget type="Slider" skin="Slider" position="248 310 320 18" name="VolCarCrash">
+					<UserString key="RelativeTo" value="OptionsWnd"/>
+				</Widget>
+				<Widget type="TextBox" skin="TextBox" position="180 310 60 24" name="VolCarCrashVal">
+					<Property key="TextColour" value="0.5 0.75 1.0"/>
+					<UserString key="RelativeTo" value="OptionsWnd"/>
+				</Widget>
+
+				<Widget type="TextBox" skin="TextBox" position="32 340 144 30">
+					<Property key="Caption" value="#{CarScrap}"/>
+					<Property key="TextColour" value="0.5 0.75 1.0"/>
+					<UserString key="RelativeTo" value="OptionsWnd"/>
+				</Widget>
+				<Widget type="Slider" skin="Slider" position="248 340 320 18" name="VolCarScrap">
+					<UserString key="RelativeTo" value="OptionsWnd"/>
+				</Widget>
+				<Widget type="TextBox" skin="TextBox" position="180 340 60 24" name="VolCarScrapVal">
+					<Property key="TextColour" value="0.5 0.75 1.0"/>
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 				</Widget>
 			</Widget>

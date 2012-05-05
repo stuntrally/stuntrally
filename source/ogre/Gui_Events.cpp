@@ -245,18 +245,35 @@ void App::slVolMaster(SL)
 }
 void App::slVolEngine(SL)
 {
-	Real v = 1.4f * val;	if (bGI)  pSet->vol_engine = v;
-	if (valVolEngine)  valVolEngine->setCaption(fToStr(v,2,4));
+	Real v = 1.4f * val;  if (bGI)  pSet->vol_engine = v;	if (valVolEngine)  valVolEngine->setCaption(fToStr(v,2,4));
 }
 void App::slVolTires(SL)
 {
-	Real v = 1.4f * val;	if (bGI)  pSet->vol_tires = v;
-	if (valVolTires)  valVolTires->setCaption(fToStr(v,2,4));
+	Real v = 1.4f * val;  if (bGI)  pSet->vol_tires = v;	if (valVolTires)  valVolTires->setCaption(fToStr(v,2,4));
+}
+void App::slVolSusp(SL)
+{
+	Real v = 1.4f * val;  if (bGI)  pSet->vol_susp = v;		if (valVolSusp)  valVolSusp->setCaption(fToStr(v,2,4));
 }
 void App::slVolEnv(SL)
 {
-	Real v = 1.4f * val;	if (bGI)  pSet->vol_env = v;
-	if (valVolEnv)  valVolEnv->setCaption(fToStr(v,2,4));
+	Real v = 1.4f * val;  if (bGI)  pSet->vol_env = v;		if (valVolEnv)  valVolEnv->setCaption(fToStr(v,2,4));
+}
+void App::slVolFlSplash(SL)
+{
+	Real v = 1.4f * val;  if (bGI)  pSet->vol_fl_splash = v;	if (valVolFlSplash)  valVolFlSplash->setCaption(fToStr(v,2,4));
+}
+void App::slVolFlCont(SL)
+{
+	Real v = 1.4f * val;  if (bGI)  pSet->vol_fl_cont = v;		if (valVolFlCont)  valVolFlCont->setCaption(fToStr(v,2,4));
+}
+void App::slVolCarCrash(SL)
+{
+	Real v = 1.4f * val;  if (bGI)  pSet->vol_car_crash = v;	if (valVolCarCrash)  valVolCarCrash->setCaption(fToStr(v,2,4));
+}
+void App::slVolCarScrap(SL)
+{
+	Real v = 1.4f * val;  if (bGI)  pSet->vol_car_scrap = v;	if (valVolCarScrap)  valVolCarScrap->setCaption(fToStr(v,2,4));
 }
 
 

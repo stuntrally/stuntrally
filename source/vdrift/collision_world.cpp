@@ -132,16 +132,17 @@ void COLLISION_WORLD::Update(double dt, bool profiling)
 		cd->vHitNorm = norm + vel * 0.1f;
 		cd->fParVel = 3.0f + 0.4f * vlen;
 		cd->fParIntens = 10.f + 30.f * vlen;
+
 		//  hit force for sound
 		cd->fHitForce = normvel*0.02f /*+ 0.02f*vlen*/;  //+
 		cd->fHitForce2 = force*0.1f;
 		
 		//float a = (vlen*0.1f*powf(force, 0.2f) - 0*cd->fHitForce4);
 		float a = std::min(1.f, std::min(vlen, 2.2f)*0.1f*powf(force, 0.4f) );
-		if (a > cd->fHitForce4)  cd->fHitForce4 = a;
+		if (a > cd->fCarScrap)  cd->fCarScrap = a;
 
 		float b = std::min(1.f, 0.2f*force);
-		if (b > cd->fHitForce5)  cd->fHitForce5 = b;
+		if (b > cd->fCarScreech)  cd->fCarScreech = b;
 			
 		//if (cd->fHitForce4 > 0.f)
 		//	cd->fHitForce4 -= 0.04f * dt;

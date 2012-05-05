@@ -302,7 +302,9 @@ protected:
 	SLV(ReflSkip);  SLV(ReflSize);  SLV(ReflFaces);  SLV(ReflDist);  SLV(ReflMode); // refl
 	SLV(SizeGaug);  SLV(TypeGaug);  SLV(SizeMinimap);  SLV(SizeArrow);  SLV(ZoomMinimap);
 	SLV(CountdownTime);  SLV(GraphsType);  // view
-	SLV(VolMaster);  SLV(VolEngine);  SLV(VolTires);  SLV(VolEnv);
+	SLV(VolMaster);  SLV(VolEngine);  SLV(VolTires);  SLV(VolSusp);  SLV(VolEnv);  // sounds
+	SLV(VolFlSplash);  SLV(VolFlCont);  SLV(VolCarCrash);  SLV(VolCarScrap);
+	
 	SLV(CarClrH);  SLV(CarClrS);  SLV(CarClrV);  // car clr
 	SLV(BloomInt);  SLV(BloomOrig);  SLV(BlurIntens);  // video
 	SLV(DepthOfFieldFocus);  SLV(DepthOfFieldFar);  // dof

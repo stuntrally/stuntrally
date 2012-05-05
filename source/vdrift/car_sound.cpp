@@ -372,37 +372,34 @@ void CAR::UpdateSounds(float dt)
 		grasssound[i].SetGain(0.0);
 		tiresqueal[i].SetGain(0.0);
 
-		float maxgain = 0.6, pitchvariation = 0.4;
+		float maxgain = 0.6, pitchvar = 0.4;
 
-		SOUNDSOURCE * thesound;
+		SOUNDSOURCE * snd;
 		switch (surfType[i])
 		{
-		case TRACKSURFACE::NONE:		thesound = tiresqueal;	maxgain = 0.0;	break;
-		case TRACKSURFACE::ASPHALT:		thesound = tiresqueal;	break;
-		case TRACKSURFACE::GRASS:		thesound = grasssound;	maxgain = 0.7;	pitchvariation = 0.25;	break;
-		case TRACKSURFACE::GRAVEL:		thesound = gravelsound;	maxgain = 0.7;	break;
-		case TRACKSURFACE::CONCRETE:	thesound = tiresqueal;	maxgain = 0.6;	pitchvariation = 0.25;	break;
-		case TRACKSURFACE::SAND:		thesound = grasssound;	maxgain = 0.5;  pitchvariation = 0.25;	break;
-						default:		thesound = tiresqueal;	maxgain = 0.0;	break;
-		}
+		case TRACKSURFACE::NONE:		snd = tiresqueal;	maxgain = 0.0;	break;
+		case TRACKSURFACE::ASPHALT:		snd = tiresqueal;	break;
+		case TRACKSURFACE::GRASS:		snd = grasssound;	maxgain = 0.7;	pitchvar = 0.25;	break;
+		case TRACKSURFACE::GRAVEL:		snd = gravelsound;	maxgain = 0.7;	break;
+		case TRACKSURFACE::CONCRETE:	snd = tiresqueal;	maxgain = 0.6;	pitchvar = 0.25;	break;
+		case TRACKSURFACE::SAND:		snd = grasssound;	maxgain = 0.5;  pitchvar = 0.25;	break;
+						default:		snd = tiresqueal;	maxgain = 0.0;	break;
+		}	//more.. sand,snow,grass-new,mud..
 
-		float pitch = (whVel[i]-5.0)*0.1;
-		if (pitch < 0)	pitch = 0;
-		if (pitch > 1)	pitch = 1;
+		float pitch = std::min(1.f, std::max(0.f, (whVel[i]-5.0f)*0.1f ));
 		pitch = 1.0 - pitch;
-		pitch *= pitchvariation;
-		pitch = pitch + (1.0-pitchvariation);
-		if (pitch < 0.1)	pitch = 0.1;
-		if (pitch > 4.0)	pitch = 4.0;
+		pitch *= pitchvar;
+		pitch = pitch + (1.f - pitchvar);
+		pitch = std::min(4.f, std::max(0.1f, pitch ));
 
-		thesound[i].SetPosition(whPos[i]);
-		thesound[i].SetGain(squeal[i]*maxgain * pSet->vol_tires);
-		thesound[i].SetPitch(pitch);
+		snd[i].SetPosition(whPos[i]);
+		snd[i].SetGain(squeal[i]*maxgain * pSet->vol_tires);
+		snd[i].SetPitch(pitch);
 	}
 
-	// road noise -wind
+	//  wind
 	{
-		float gain = dynVel;//dynamics.GetVelocity().Magnitude();
+		float gain = dynVel;
 		if (gain < 0)	gain = -gain;
 		gain *= 0.02;	gain *= gain;
 		if (gain > 1.0)	gain = 1.0;
@@ -411,7 +408,7 @@ void CAR::UpdateSounds(float dt)
 		//std::cout << gain << std::endl;
 	}
 
-	// susp bump
+	//  susp bump
 	for (int i = 0; i < 4; i++)
 	{
 		suspbump[i].Update(suspVel[i], suspDisp[i], dt);
@@ -426,14 +423,14 @@ void CAR::UpdateSounds(float dt)
 
 			if (gain > 0 && !tirebump[i].Audible())
 			{
-				tirebump[i].SetGain(gain * pSet->vol_env);
+				tirebump[i].SetGain(gain * pSet->vol_susp);
 				tirebump[i].SetPosition(whPos[i]);
 				tirebump[i].StopPlay();
 			}
 		}
 	}
 	
-	// fluids - hit
+	//  fluids - hit
 	bool fluidHit = whH_all > 1.f;
 	//LogO(toStr(whH_all) + "  v "+ toStr(dynVel));
 
@@ -447,44 +444,37 @@ void CAR::UpdateSounds(float dt)
 		//LogO("fluid hit i"+toStr(i)+" g"+toStr(gain)+" "+(mud?"mud":"wtr"));
 		if (!snd.Audible())
 		{
-			snd.SetGain(gain * pSet->vol_env);
+			snd.SetGain(gain * pSet->vol_fl_splash * (mud ? 0.6f : 1.f));
 			snd.SetPosition(engPos);
 			snd.StopPlay();
 		}
 
-		if (mud)  {
-		SOUNDSOURCE& snd = mudsnd;
+		if (mud)  {  SOUNDSOURCE& snd = mudsnd;
 		if (!snd.Audible())
 		{
-			snd.SetGain(gain * pSet->vol_env);
+			snd.SetGain(gain * pSet->vol_fl_splash);
 			snd.SetPosition(engPos);
 			snd.StopPlay();
 		}	}
 	}
 	fluidHitOld = fluidHit;
 
-	// fluids - continuous
-	{
-		float vel = mud && whH_all > 0.1f ?
-			whMudSpin * 2.5f : 0.f;
-		mud_cont.SetGain(std::min(1.f, vel) * pSet->vol_env);
-		mud_cont.SetPitch(std::max(0.7f, std::min(3.f, vel * 0.35f)));
-		mud_cont.SetPosition(engPos);
-	}
-	{
-		float vel = !mud && whH_all > 0.1f && whH_all < 3.9f ?
-			dynVel / 30.f : 0.f;
-		water_cont.SetGain(std::min(1.f, vel * 1.5f) * pSet->vol_env);
-		water_cont.SetPitch(std::max(0.7f, std::min(1.3f, vel)));
-		water_cont.SetPosition(engPos);
-	}
+	//  fluids - continuous
+	float velM = mud && whH_all > 0.1f ?
+		whMudSpin * 2.5f : 0.f;
+	mud_cont.SetGain(std::min(1.f, velM) * pSet->vol_fl_cont * 0.85f);
+	mud_cont.SetPitch(std::max(0.7f, std::min(3.f, velM * 0.35f)));
+	mud_cont.SetPosition(engPos);
+
+	float velW = !mud && whH_all > 0.1f && whH_all < 3.9f ?
+		dynVel / 30.f : 0.f;
+	water_cont.SetGain(std::min(1.f, velW * 1.5f) * pSet->vol_fl_cont);
+	water_cont.SetPitch(std::max(0.7f, std::min(1.3f, velW)));
+	water_cont.SetPosition(engPos);
 	
-	// boost
-	{
-		float gain = boostVal;
-		boostsnd.SetGain(gain * 0.57f * pSet->vol_engine);
-		boostsnd.SetPosition(engPos); //back?-
-	}
+	//  boost
+	boostsnd.SetGain(boostVal * 0.55f * pSet->vol_engine);
+	boostsnd.SetPosition(engPos); //back?-
 	
 	// crash
 	{
@@ -513,7 +503,7 @@ void CAR::UpdateSounds(float dt)
 
 			if (/*gain > mingain &&*/ crashsoundtime[i] > /*ti*/0.4f)  //!crashsound.Audible())
 			{
-				crashsound[i].SetGain(gain * pSet->vol_env * 0.9f);
+				crashsound[i].SetGain(gain * pSet->vol_car_crash);
 				crashsound[i].SetPosition(hitPos);
 				crashsound[i].StopPlay();
 				crashsoundtime[i] = 0.f;
@@ -521,30 +511,30 @@ void CAR::UpdateSounds(float dt)
 			//LogO("Car Snd: " + toStr(crashdecel));// + " force " + toStr(hit.force) + " vel " + toStr(vlen) + " Nvel " + toStr(normvel));
 		}
 	}
-	
-	//  crash scrap
-	{
-		float gain = std::min(1.f, dynamics.fHitForce4);
-		if (dynamics.fHitForce4 > 0.f)
-		{	dynamics.fHitForce4 -= (-gain * 0.8f + 1.2f)* dt;
-			if (dynamics.fHitForce4 < 0.f)  dynamics.fHitForce4 = 0.f;
-		}
-		crashscrap.SetGain(gain * pSet->vol_env);
-		crashscrap.SetPosition(hitPos);
-	}
-	{
-		float gain = std::min(1.f, dynamics.fHitForce5);
-		if (dynamics.fHitForce5 > 0.f)
-		{	dynamics.fHitForce5 -= 3.f * dt;
-			if (dynamics.fHitForce5 < 0.f)  dynamics.fHitForce5 = 0.f;
-		}
-		crashscreech.SetGain(gain * 0.6f* pSet->vol_env);
-		crashscreech.SetPosition(hitPos);
-	}
-
 	//  time played
 	for (int i=0; i < Ncrashsounds; ++i)
 		if (crashsoundtime[i] < 5.f)
 			crashsoundtime[i] += dt;
-}
+	
 
+	//  crash scrap  ... save in rpl
+	{
+		float gain = std::min(1.f, dynamics.fCarScrap);
+		if (dynamics.fCarScrap > 0.f)
+		{	dynamics.fCarScrap -= (-gain * 0.8f + 1.2f)* dt;
+			if (dynamics.fCarScrap < 0.f)  dynamics.fCarScrap = 0.f;
+		}
+		crashscrap.SetGain(gain * pSet->vol_car_scrap);
+		crashscrap.SetPosition(hitPos);
+	}
+	{
+		float gain = std::min(1.f, dynamics.fCarScreech);
+		if (dynamics.fCarScreech > 0.f)
+		{	dynamics.fCarScreech -= 3.f * dt;
+			if (dynamics.fCarScreech < 0.f)  dynamics.fCarScreech = 0.f;
+		}
+		crashscreech.SetGain(gain * pSet->vol_car_scrap * 0.6f);
+		crashscreech.SetPosition(hitPos);
+	}
+
+}

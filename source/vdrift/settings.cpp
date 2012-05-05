@@ -111,6 +111,9 @@ void SETTINGS::Serialize(bool w, CONFIGFILE & c)
 	
 	Param(c,w, "sound.volume", vol_master);			Param(c,w, "sound.vol_engine", vol_engine);
 	Param(c,w, "sound.vol_tires", vol_tires);		Param(c,w, "sound.vol_env", vol_env);
+	Param(c,w, "sound.vol_susp", vol_susp);
+	Param(c,w, "sound.vol_fl_splash", vol_fl_splash);	Param(c,w, "sound.vol_fl_cont", vol_fl_cont);
+	Param(c,w, "sound.vol_car_crash", vol_car_crash);	Param(c,w, "sound.vol_car_scrap", vol_car_scrap);
 
 	//  video
 	Param(c,w, "video_eff.all_effects", all_effects);
@@ -158,9 +161,7 @@ SETTINGS::SETTINGS() :  ///  Defaults
 	isMain(1), inMenu(0), rpl_rec(0),
 	split_vertically(true), language(""), // "" = autodetect lang
 	//  joystick
-	ff_device("/dev/input/event0"),
-	ff_gain(1.0),
-	ff_invert(false),
+	ff_device("/dev/input/event0"), ff_gain(1.0), ff_invert(false),
 	//  misc
 	autostart(0), ogre_dialog(0), escquit(0),
 	bltDebug(0), bltLines(1),  bltProfilerTxt(0), profilerTxt(0),
@@ -178,7 +179,8 @@ SETTINGS::SETTINGS() :  ///  Defaults
 	game_fq(82.f), blt_fq(160.f), blt_iter(24), dyn_iter(30),
 	multi_thr(0), thread_sleep(5),
 	//  sound
-	vol_master(1.f), vol_engine(1.f), vol_tires(1.f), vol_env(1.f),
+	vol_master(1.f), vol_engine(0.6f), vol_tires(1.f), vol_env(1.f), vol_susp(1.f),
+	vol_fl_splash(1.f),vol_fl_cont(1.f), vol_car_crash(1.f),vol_car_scrap(1.f),
 	//  video
 	windowx(800), windowy(600),
 	fullscreen(false), vsync(false),
