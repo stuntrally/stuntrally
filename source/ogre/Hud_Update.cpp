@@ -34,14 +34,11 @@ void App::CreateGraphs()
 	switch (pSet->graphs_type)
 	{
 	case 0:  // bullet hit
-		for (int i=0; i < 4; ++i)
+		for (int i=0; i < 5; ++i)
 		{
 			GraphView* gv = new GraphView(scm);
-			gv->Create(512, "graph"+toStr(i%4+1), 0.13f);
-			if (i >= 4)
-				gv->SetSize(0.f, 0.24f, 0.5f, 0.25f);
-			else
-				gv->SetSize(0.f, 0.50f, 0.5f, 0.25f);
+			gv->Create(512, "graph"+toStr(i%5+1), 0.13f);
+			gv->SetSize(0.f, 0.50f, 0.5f, 0.25f);
 			gv->SetVisible(pSet->show_graphs);
 			graphs.push_back(gv);
 		}
@@ -52,6 +49,19 @@ void App::CreateGraphs()
 			GraphView* gv = new GraphView(scm);
 			gv->Create(2*512, "graph"+toStr(i%2*2+1), i < /*2*/12 ? 0.13f : 0.25f);
 			if (i < 2)
+				gv->SetSize(0.00f, 0.24f, 0.40f, 0.25f);
+			else
+				gv->SetSize(0.60f, 0.24f, 0.40f, 0.25f);
+			gv->SetVisible(pSet->show_graphs);
+			graphs.push_back(gv);
+		}
+		break;
+	case 2:  // car tires
+		for (int i=0; i < 8; ++i)
+		{
+			GraphView* gv = new GraphView(scm);
+			gv->Create(2*512, "graph"+toStr(i%4+1), 0.13f);
+			if (i < 4)
 				gv->SetSize(0.00f, 0.24f, 0.40f, 0.25f);
 			else
 				gv->SetSize(0.60f, 0.24f, 0.40f, 0.25f);
@@ -78,6 +88,7 @@ void App::GraphsNewVals()
 			graphs[1]->AddVal(std::min(1.f, cd.fHitForce2));
 			graphs[2]->AddVal(std::min(1.f, cd.fHitForce3));
 			graphs[3]->AddVal(std::min(1.f, cd.fHitForce4));
+			graphs[4]->AddVal(std::min(1.f, cd.fHitForce5));
 		}
 		break;
 
@@ -102,6 +113,9 @@ void App::GraphsNewVals()
 		graphs[0]->AddVal((al+ar)*0.5f);       // vol ampl  cyan
 		graphs[1]->AddVal((al-ar)*0.5f+0.5f);  // pan  yellow  ^L 1  _R 0
 	}	break;
+
+	//case 2:  // car wheels slip,slide
+	//	break;
 	}
 }
 

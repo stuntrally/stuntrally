@@ -14,7 +14,7 @@ http://www.freesound.org/
 various smaller cuts, from:
 [author  soundname]
 
-  metal hits:
+  metal hits 01..12:
 halleck  metal-medium-hit
 halleck  metal-hits-medium-1
 halleck  metal-hits-light-1
@@ -24,6 +24,9 @@ sagetyrtle  crash-2
 halleck  big-metal-side-impact-1
 halleck  big-metal-side-impact-2
 halleck  metal-crash-1
+  metal scrap,screech
+halleck  metal-roll-cage-hits-heavy
+halleck  metal-screech-and-scraping
 
   water,mud:
 cgeffex  large-splashes

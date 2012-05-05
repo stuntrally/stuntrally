@@ -68,7 +68,7 @@ public:
 	std::string ff_device;	float ff_gain;	bool ff_invert;
 
 	//  other
-	float vol_master, vol_engine, vol_tires, vol_env;
+	float vol_master, vol_engine, vol_tires, vol_env;//.., vol_splash,vol_fluids, vol_crash,vol_scrap;
 	bool autostart, escquit;
 	bool bltDebug, bltLines, bltProfilerTxt, profilerTxt;
 	bool loadingbackground;

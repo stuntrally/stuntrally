@@ -310,14 +310,9 @@ public:
 public:
 	CARDYNAMICS dynamics;
 
-	MODEL_JOE03 bodymodel;
-	MODEL_JOE03 interiormodel;
-	MODEL_JOE03 glassmodel;
+	MODEL_JOE03 bodymodel, interiormodel, glassmodel, drivermodel;
 	
-	MODEL_JOE03 drivermodel;
-	
-	MATHVECTOR<float, 3> driver_view_position; 
-	MATHVECTOR<float, 3> hood_view_position;
+	MATHVECTOR<float, 3> driver_view_position, hood_view_position;
 	
 	SUSPENSIONBUMPDETECTION suspbump[4];
 	CRASHDETECTION crashdetection,crashdetection2;
@@ -325,26 +320,18 @@ public:
 	std::map <std::string, SOUNDBUFFER> soundbuffers;
 	std::list <std::pair <ENGINESOUNDINFO, SOUNDSOURCE> > enginesounds;
 
-	MODEL_JOE03 wheelmodelfront;
-	MODEL_JOE03 wheelmodelrear;
-	MODEL_JOE03 floatingmodelfront;
-	MODEL_JOE03 floatingmodelrear;
+	MODEL_JOE03 wheelmodelfront, floatingmodelfront;
+	MODEL_JOE03 wheelmodelrear, floatingmodelrear;
 
 	/// sounds
-	SOUNDSOURCE tiresqueal[4];
-	SOUNDSOURCE tirebump[4];
-	SOUNDSOURCE grasssound[4]; //added grass & gravel
-	SOUNDSOURCE gravelsound[4];
-	SOUNDSOURCE crashsound[Ncrashsounds];
-	float crashsoundtime[Ncrashsounds];
-	SOUNDSOURCE roadnoise,boostsnd;
+	SOUNDSOURCE tiresqueal[4], grasssound[4], gravelsound[4], tirebump[4];  // tires
+	SOUNDSOURCE crashsound[Ncrashsounds];  float crashsoundtime[Ncrashsounds];
+	SOUNDSOURCE roadnoise, boostsnd, crashscrap,crashscreech;  // cont.
 	SOUNDSOURCE mudsnd, watersnd[Nwatersounds], mud_cont,water_cont;  // fluids
 	bool fluidHitOld;  float whMudSpin;  ///new vars, for snd
 	
-	//internal variables that might change during driving (so, they need to be serialized)
+	// internal variables that might change during driving (so, they need to be serialized)
 	float last_steer;
-	//bool lookbehind;
-	bool debug_wheel_draw;
 	float trackPercentCopy;  // copy from CarModel for network
 
 	std::string cartype;
@@ -352,12 +339,8 @@ public:
 	int sector; //the last lap timing sector that the car hit
 	const BEZIER * curpatch[4]; //the last bezier patch that each wheel hit
 	
-	float mz_nominalmax; //the nominal maximum Mz force, used to scale force feedback
+	float mz_nominalmax;  // the nominal maximum Mz force, used to scale force feedback
 
-	/// take the parentnode, add a scenenode (only if output_scenenodeptr is NULL), add a drawable to the scenenode,
-	/// load a model, load a texture, and set up the drawable with the model and texture.
-	/// the given TEXTURE_GL textures will not be reloaded if they are already loaded
-	/// returns true if successful
 	bool LoadInto(
 		const std::string & joefile,
 		MODEL_JOE03 & output_model,
@@ -381,6 +364,7 @@ public:
 	bool manualExhaustPos; // if true, use values below, if false, guess from bounding box
 	float exhaustPosition[3]; // position of first exhaust
 	bool has2exhausts; // car has 2nd exhaust ; if true, mirror exhaust 1 for position
+
 	
 	//  for new game reset  and goto last checkp.
 	MATHVECTOR <float, 3> posAtStart, posLastCheck[2];

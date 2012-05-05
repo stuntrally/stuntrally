@@ -148,6 +148,9 @@ bool CAR::LoadSounds(
 	for (i = 1; i <= Ncrashsounds; ++i)  // crashes
 		if (!crashsound[i-1].Setup(sndLib, toStr(i/10)+toStr(i%10), errOut,  true, false,1.f))  return false;
 
+	if (!crashscrap  .Setup(sndLib, "scrap",	errOut,  true, true, 0.f))  return false;  crashscrap.Play();
+	if (!crashscreech.Setup(sndLib, "screech",	errOut,  true, true, 0.f))  return false;  crashscreech.Play();
+
 	if (!roadnoise	.Setup(sndLib, "wind",		 errOut,  true, true, 0.f))  return false;  roadnoise.Play();
 	if (!boostsnd	.Setup(sndLib, "boost",		 errOut,  true, true, 0.f))  return false;  boostsnd.Play();
 
@@ -176,6 +179,9 @@ void CAR::GetSoundList(std::list <SOUNDSOURCE *> & outputlist)
 
 	for (int i = 0; i < Ncrashsounds; ++i)
 		outputlist.push_back(&crashsound[i]);
+	outputlist.push_back(&crashscrap);
+	outputlist.push_back(&crashscreech);
+
 	outputlist.push_back(&roadnoise);
 	outputlist.push_back(&boostsnd);
 
@@ -309,7 +315,7 @@ void CAR::UpdateSounds(float dt)
 			(*s)->Set3DEffects(!incar);
 	}
 
-	//update engine sounds
+	// engine
 	float total_gain = 0.0, loudest = 0.0;
 	std::list <std::pair <SOUNDSOURCE *, float> > gainlist;
 
@@ -358,7 +364,7 @@ void CAR::UpdateSounds(float dt)
 		//if (i->second == loudest) std::cout << i->first->GetSoundBuffer().GetName() << ": " << i->second << std::endl;
 	}
 
-	//update tire squeal sounds
+	// tire squeal
 	for (int i = 0; i < 4; i++)
 	{
 		// make sure we don't get overlap
@@ -394,7 +400,7 @@ void CAR::UpdateSounds(float dt)
 		thesound[i].SetPitch(pitch);
 	}
 
-	//update road noise sound -wind
+	// road noise -wind
 	{
 		float gain = dynVel;//dynamics.GetVelocity().Magnitude();
 		if (gain < 0)	gain = -gain;
@@ -405,7 +411,7 @@ void CAR::UpdateSounds(float dt)
 		//std::cout << gain << std::endl;
 	}
 
-	//update susp bump sound
+	// susp bump
 	for (int i = 0; i < 4; i++)
 	{
 		suspbump[i].Update(suspVel[i], suspDisp[i], dt);
@@ -427,7 +433,7 @@ void CAR::UpdateSounds(float dt)
 		}
 	}
 	
-	//update fluids sound - hit
+	// fluids - hit
 	bool fluidHit = whH_all > 1.f;
 	//LogO(toStr(whH_all) + "  v "+ toStr(dynVel));
 
@@ -457,7 +463,7 @@ void CAR::UpdateSounds(float dt)
 	}
 	fluidHitOld = fluidHit;
 
-	//update fluids sound - continuous
+	// fluids - continuous
 	{
 		float vel = mud && whH_all > 0.1f ?
 			whMudSpin * 2.5f : 0.f;
@@ -473,32 +479,14 @@ void CAR::UpdateSounds(float dt)
 		water_cont.SetPosition(engPos);
 	}
 	
-	//update boost sound
+	// boost
 	{
 		float gain = boostVal;
 		boostsnd.SetGain(gain * 0.57f * pSet->vol_engine);
 		boostsnd.SetPosition(engPos); //back?-
 	}
 	
-	//update crash sound
-	#if 1
-	/*if (fHitForce > 0.5f)
-	{
-		int f = fHitForce * 11.f;
-		int i = std::max(1, std::min(Ncrashsounds-1, f));
-		float ti = 1.8f - i*0.4f;  if (ti < 0.4f)  ti = 0.4f;
-		
-		//if (crashsoundtime[i] > ti)  //par  //&& !crashsound[i].Audible()
-		{
-			crashsound[i].SetGain(1 * pSet->vol_env);
-			crashsound[i].SetPosition(engPos); //
-			crashsound[i].StopPlay();
-			crashsoundtime[i] = 0.f;
-			//LogO("Snd:  i " + toStr(i) + "  parF " + toStr(dynamics.fParIntens) + "  sndF " + toStr(dynamics.fSndForce));
-		}
-	}
-	#else*/
-	//update crash sound
+	// crash
 	{
 		crashdetection.Update(speed, dt);
 		float crashdecel = crashdetection.GetMaxDecel();
@@ -525,7 +513,7 @@ void CAR::UpdateSounds(float dt)
 
 			if (/*gain > mingain &&*/ crashsoundtime[i] > /*ti*/0.4f)  //!crashsound.Audible())
 			{
-				crashsound[i].SetGain(gain * pSet->vol_env);
+				crashsound[i].SetGain(gain * pSet->vol_env * 0.9f);
 				crashsound[i].SetPosition(hitPos);
 				crashsound[i].StopPlay();
 				crashsoundtime[i] = 0.f;
@@ -533,7 +521,26 @@ void CAR::UpdateSounds(float dt)
 			//LogO("Car Snd: " + toStr(crashdecel));// + " force " + toStr(hit.force) + " vel " + toStr(vlen) + " Nvel " + toStr(normvel));
 		}
 	}
-	#endif
+	
+	//  crash scrap
+	{
+		float gain = std::min(1.f, dynamics.fHitForce4);
+		if (dynamics.fHitForce4 > 0.f)
+		{	dynamics.fHitForce4 -= (-gain * 0.8f + 1.2f)* dt;
+			if (dynamics.fHitForce4 < 0.f)  dynamics.fHitForce4 = 0.f;
+		}
+		crashscrap.SetGain(gain * pSet->vol_env);
+		crashscrap.SetPosition(hitPos);
+	}
+	{
+		float gain = std::min(1.f, dynamics.fHitForce5);
+		if (dynamics.fHitForce5 > 0.f)
+		{	dynamics.fHitForce5 -= 3.f * dt;
+			if (dynamics.fHitForce5 < 0.f)  dynamics.fHitForce5 = 0.f;
+		}
+		crashscreech.SetGain(gain * 0.6f* pSet->vol_env);
+		crashscreech.SetPosition(hitPos);
+	}
 
 	//  time played
 	for (int i=0; i < Ncrashsounds; ++i)

@@ -24,7 +24,6 @@ bool isnan(double number) {return (number != number);}
 CAR::CAR() :
 	pSet(0), pApp(0), id(0), pCarM(0),
 	last_steer(0),
-	debug_wheel_draw(false),
 	sector(-1),
 	iCamNext(0), bLastChk(0),bLastChkOld(0),
 	fluidHitOld(0),
@@ -241,17 +240,15 @@ void CAR::Update(double dt)
 	dynamics.Update();
 	UpdateSounds(dt);
 	
-	///  graphs new values  -_/\_.-
-	/**  // car tires slip,slide
-	if (pApp->graphs.size() > 0)
+	///  graphs new values  .-_/\_.-
+	if (pApp->pSet->graphs_type == 2 && pApp->graphs.size() == 8)
 	{
 		for (int i=0; i < 4; ++i)
-		{
+		{	//  car tires slip,slide
 			pApp->graphs[i]->AddVal(dynamics.tire[i].slideratio * 0.03f +0.5f);
 			pApp->graphs[i+4]->AddVal(dynamics.tire[i].slipratio * 0.1f +0.5f);
 		}
 	}
-	/**/
 
 }
 

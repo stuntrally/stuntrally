@@ -94,6 +94,8 @@ bool GAME::InitializeSound()
 		if (!generic_sounds.Load("wind", sound.GetDeviceInfo(), error_output))  return false;
 		for (int i = 1; i <= Ncrashsounds; ++i)
 			if (!generic_sounds.Load(toStr(i/10)+toStr(i%10), sound.GetDeviceInfo(), error_output))  return false;
+		if (!generic_sounds.Load("scrap", sound.GetDeviceInfo(), error_output))  return false;
+		if (!generic_sounds.Load("screech", sound.GetDeviceInfo(), error_output))  return false;
 
 		for (int i = 0; i < Nwatersounds; ++i)
 			if (!generic_sounds.Load("water"+toStr(i+1), sound.GetDeviceInfo(), error_output))  return false;

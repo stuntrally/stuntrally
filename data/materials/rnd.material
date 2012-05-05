@@ -146,6 +146,7 @@ material graph1 : graphB {  technique  {  pass  {  emissive 0.0 1.0 1.0  }  }  }
 material graph2 : graphB {  technique  {  pass  {  emissive 0.0 1.0 0.0  }  }  }
 material graph3 : graphB {  technique  {  pass  {  emissive 1.0 1.0 0.0  }  }  }
 material graph4 : graphB {  technique  {  pass  {  emissive 1.0 0.5 0.0  }  }  }
+material graph5 : graphB {  technique  {  pass  {  emissive 1.0 0.0 0.0  }  }  }
 
 material graphBack
 {
