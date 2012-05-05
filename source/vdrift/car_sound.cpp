@@ -22,9 +22,9 @@ bool CAR::LoadSounds(
 	const std::string & carpath,
 	const std::string & carname,
 	const SOUNDINFO & sound_device_info,
-	const SOUNDBUFFERLIBRARY & soundbufferlibrary,
+	const SOUNDBUFFERLIBRARY & sndLib,
 	std::ostream & info_output,
-	std::ostream & error_output)
+	std::ostream & errOut)
 {
 	//check for sound specification file
 	CONFIGFILE aud;
@@ -36,11 +36,11 @@ bool CAR::LoadSounds(
 		{
 			//load the buffer
 			std::string filename;
-			if (!aud.GetParam(*i+".filename", filename, error_output)) return false;
+			if (!aud.GetParam(*i+".filename", filename, errOut)) return false;
 			if (!soundbuffers[filename].GetLoaded())
-				if (!soundbuffers[filename].Load(carpath+"/"+carname+"/"+filename, sound_device_info, error_output))
+				if (!soundbuffers[filename].Load(carpath+"/"+carname+"/"+filename, sound_device_info, errOut))
 				{
-					error_output << "Error loading sound: " << carpath+"/"+carname+"/"+filename << std::endl;
+					errOut << "Error loading sound: " << carpath+"/"+carname+"/"+filename << std::endl;
 					return false;
 				}
 
@@ -48,12 +48,12 @@ bool CAR::LoadSounds(
 			ENGINESOUNDINFO & info = enginesounds.back().first;
 			SOUNDSOURCE & sound = enginesounds.back().second;
 
-			if (!aud.GetParam(*i+".MinimumRPM", info.minrpm, error_output)) return false;
-			if (!aud.GetParam(*i+".MaximumRPM", info.maxrpm, error_output)) return false;
-			if (!aud.GetParam(*i+".NaturalRPM", info.naturalrpm, error_output)) return false;
+			if (!aud.GetParam(*i+".MinimumRPM", info.minrpm, errOut)) return false;
+			if (!aud.GetParam(*i+".MaximumRPM", info.maxrpm, errOut)) return false;
+			if (!aud.GetParam(*i+".NaturalRPM", info.naturalrpm, errOut)) return false;
 
 			std::string powersetting;
-			if (!aud.GetParam(*i+".power", powersetting, error_output)) return false;
+			if (!aud.GetParam(*i+".power", powersetting, errOut)) return false;
 			if (powersetting == "on")
 				info.power = ENGINESOUNDINFO::POWERON;
 			else if (powersetting == "off")
@@ -61,10 +61,7 @@ bool CAR::LoadSounds(
 			else //assume it's used in both ways
 				info.power = ENGINESOUNDINFO::BOTH;
 
-			sound.SetBuffer(soundbuffers[filename]);
-			sound.Set3DEffects(true);
-			sound.SetLoop(true);
-			sound.SetGain(0);
+			sound.Setup(soundbuffers[filename], true, true, 0.f);
 			sound.Play();
 		}
 
@@ -127,157 +124,39 @@ bool CAR::LoadSounds(
 	}
 	else  // car engine
 	{
-		if (!soundbuffers["engine.wav"].Load(carpath+"/"+carname+"/engine.wav", sound_device_info, error_output))
+		if (!soundbuffers["engine.wav"].Load(carpath+"/"+carname+"/engine.wav", sound_device_info, errOut))
 		{
-			error_output << "Unable to load engine sound: "+carpath+"/"+carname+"/engine.wav" << std::endl;
+			errOut << "Unable to load engine sound: "+carpath+"/"+carname+"/engine.wav" << std::endl;
 			return false;
 		}
 		enginesounds.push_back(std::pair <ENGINESOUNDINFO, SOUNDSOURCE> ());
 		SOUNDSOURCE & enginesound = enginesounds.back().second;
-		enginesound.SetBuffer(soundbuffers["engine.wav"]);
-		enginesound.Set3DEffects(true);
-		enginesound.SetLoop(true);		enginesound.SetGain(0);
+		enginesound.Setup(soundbuffers["engine.wav"], true, true, 0.f);
 		enginesound.Play();
 	}
 
-	// tire squeal
-	for (int i = 0; i < 4; i++)
+	int i;
+	for (i = 0; i < 4; ++i)  // tires
 	{
-		const SOUNDBUFFER * buf = soundbufferlibrary.GetBuffer("tire_squeal");
-		if (!buf)
-		{	error_output << "Can't load tire_squeal sound" << std::endl;	return false;
-		}
-		tiresqueal[i].SetBuffer(*buf);		tiresqueal[i].Set3DEffects(true);
-		tiresqueal[i].SetLoop(true);		tiresqueal[i].SetGain(0);
-		int samples = tiresqueal[i].GetSoundBuffer().GetSoundInfo().GetSamples();
-		tiresqueal[i].SeekToSample((samples/4)*i);
-		tiresqueal[i].Play();
+		if (!tiresqueal[i]	.Setup(sndLib, "tire_squeal",	errOut,  true, true, 0.f))  return false;	tiresqueal[i].Seek4(i);
+		if (!gravelsound[i]	.Setup(sndLib, "gravel",		errOut,  true, true, 0.f))  return false;	gravelsound[i].Seek4(i);
+		if (!grasssound[i]	.Setup(sndLib, "grass",			errOut,  true, true, 0.f))  return false;	grasssound[i].Seek4(i);
+
+		if (!tirebump[i].Setup(sndLib, i >= 2 ? "bump_rear" : "bump_front", errOut,  true, false,1.f))  return false;
 	}
 
-	// tire gravel
-	for (int i = 0; i < 4; i++)
-	{
-		const SOUNDBUFFER * buf = soundbufferlibrary.GetBuffer("gravel");
-		if (!buf)
-		{	error_output << "Can't load gravel sound" << std::endl;		return false;
-		}
-		gravelsound[i].SetBuffer(*buf);		gravelsound[i].Set3DEffects(true);
-		gravelsound[i].SetLoop(true);		gravelsound[i].SetGain(0);
-		int samples = gravelsound[i].GetSoundBuffer().GetSoundInfo().GetSamples();
-		gravelsound[i].SeekToSample((samples/4)*i);
-		gravelsound[i].Play();
-	}
+	for (i = 1; i <= Ncrashsounds; ++i)  // crashes
+		if (!crashsound[i-1].Setup(sndLib, toStr(i/10)+toStr(i%10), errOut,  true, false,1.f))  return false;
 
-	// tire grass
-	for (int i = 0; i < 4; i++)
-	{
-		const SOUNDBUFFER * buf = soundbufferlibrary.GetBuffer("grass");
-		if (!buf)
-		{	error_output << "Can't load grass sound" << std::endl;		return false;
-		}
-		grasssound[i].SetBuffer(*buf);		grasssound[i].Set3DEffects(true);
-		grasssound[i].SetLoop(true);		grasssound[i].SetGain(0);
-		int samples = grasssound[i].GetSoundBuffer().GetSoundInfo().GetSamples();
-		grasssound[i].SeekToSample((samples/4)*i);
-		grasssound[i].Play();
-	}
+	if (!roadnoise	.Setup(sndLib, "wind",		 errOut,  true, true, 0.f))  return false;  roadnoise.Play();
+	if (!boostsnd	.Setup(sndLib, "boost",		 errOut,  true, true, 0.f))  return false;  boostsnd.Play();
 
-	// bump tire
-	for (int i = 0; i < 4; i++)
-	{
-		const SOUNDBUFFER * buf = soundbufferlibrary.GetBuffer("bump_front");
-		if (i >= 2)
-			buf = soundbufferlibrary.GetBuffer("bump_rear");
-		if (!buf)
-		{	error_output << "Can't load bump sound: " << i << std::endl;	return false;
-		}
-		tirebump[i].SetBuffer(*buf);	tirebump[i].Set3DEffects(true);
-		tirebump[i].SetLoop(false);		tirebump[i].SetGain(1.0);
-	}
+	for (i = 0; i < Nwatersounds; ++i)  // fluids
+		if (!watersnd[i].Setup(sndLib, "water"+toStr(i+1), errOut,  true, false,0.f))  return false;
 
-	// crashes (many)
-	for (int i = 0; i < Ncrashsounds; ++i)
-	{
-		int n = i+1;
-		char name[3] = {'0'+ n/10, '0'+ n%10, 0};
-		const SOUNDBUFFER * buf = soundbufferlibrary.GetBuffer(name);
-		if (!buf)
-		{	error_output << "Can't load crash sound: " << name << std::endl;	return false;
-		}
-		crashsound[i].SetBuffer(*buf);	crashsound[i].Set3DEffects(true);
-		crashsound[i].SetLoop(false);	crashsound[i].SetGain(1.0);
-	}
-	// crash/hit cont.
-	{
-		const SOUNDBUFFER * buf = soundbufferlibrary.GetBuffer("wind");
-		if (!buf)
-		{	error_output << "Can't load wind sound" << std::endl;	return false;
-		}
-		roadnoise.SetBuffer(*buf);	roadnoise.Set3DEffects(true);
-		roadnoise.SetLoop(true);	roadnoise.SetGain(0);
-		roadnoise.SetPitch(1.0);	roadnoise.Play();
-	}
-
-	// wind
-	{
-		const SOUNDBUFFER * buf = soundbufferlibrary.GetBuffer("wind");
-		if (!buf)
-		{	error_output << "Can't load wind sound" << std::endl;	return false;
-		}
-		roadnoise.SetBuffer(*buf);	roadnoise.Set3DEffects(true);
-		roadnoise.SetLoop(true);	roadnoise.SetGain(0);
-		roadnoise.SetPitch(1.0);	roadnoise.Play();
-	}
-	// boost
-	{
-		const SOUNDBUFFER * buf = soundbufferlibrary.GetBuffer("boost");
-		if (!buf)
-		{	error_output << "Can't load boost sound" << std::endl;	return false;
-		}
-		boostsnd.SetBuffer(*buf);	boostsnd.Set3DEffects(true);
-		boostsnd.SetLoop(true);		boostsnd.SetGain(0);
-		boostsnd.SetPitch(1.0);		boostsnd.Play();
-	}
-
-
-	// fluid hit  --------------------------------------------------
-	for (int i = 0; i < Nwatersounds; ++i)
-	{
-		std::string name = "water"+toStr(i+1);
-		const SOUNDBUFFER * buf = soundbufferlibrary.GetBuffer(name);
-		if (!buf)
-		{	error_output << "Can't load water sound: " << name << std::endl;	return false;
-		}
-		watersnd[i].SetBuffer(*buf);	watersnd[i].Set3DEffects(true);
-		watersnd[i].SetLoop(false);		watersnd[i].SetGain(0);
-	}
-	{
-		const SOUNDBUFFER * buf = soundbufferlibrary.GetBuffer("mud1");
-		if (!buf)
-		{	error_output << "Can't load mud sound " << std::endl;	return false;
-		}
-		mudsnd.SetBuffer(*buf);		mudsnd.Set3DEffects(true);
-		mudsnd.SetLoop(false);		mudsnd.SetGain(0);
-	}
-	// fluid cont.
-	{
-		const SOUNDBUFFER * buf = soundbufferlibrary.GetBuffer("mud_cont");
-		if (!buf)
-		{	error_output << "Can't load mud_cont sound" << std::endl;	return false;
-		}
-		mud_cont.SetBuffer(*buf);	mud_cont.Set3DEffects(true);
-		mud_cont.SetLoop(true);		mud_cont.SetGain(0);
-		mud_cont.SetPitch(1.0);		mud_cont.Play();
-	}
-	{
-		const SOUNDBUFFER * buf = soundbufferlibrary.GetBuffer("water_cont");
-		if (!buf)
-		{	error_output << "Can't load water_cont sound" << std::endl;	return false;
-		}
-		water_cont.SetBuffer(*buf);	water_cont.Set3DEffects(true);
-		water_cont.SetLoop(true);	water_cont.SetGain(0);
-		water_cont.SetPitch(1.0);	water_cont.Play();
-	}
+	if (!mudsnd		.Setup(sndLib, "mud1",		 errOut,  true, false,0.f))  return false;
+	if (!mud_cont	.Setup(sndLib, "mud_cont",	 errOut,  true, true, 0.f))  return false;  mud_cont.Play();
+	if (!water_cont	.Setup(sndLib, "water_cont", errOut,  true, true, 0.f))  return false;  water_cont.Play();
 	
 	return true;
 }
@@ -290,10 +169,10 @@ void CAR::GetSoundList(std::list <SOUNDSOURCE *> & outputlist)
 		i = enginesounds.begin(); i != enginesounds.end(); ++i)
 		outputlist.push_back(&i->second);
 
-	for (int i = 0; i < 4; i++)  outputlist.push_back(&tiresqueal[i]);
-	for (int i = 0; i < 4; i++)  outputlist.push_back(&grasssound[i]);
-	for (int i = 0; i < 4; i++)  outputlist.push_back(&gravelsound[i]);
-	for (int i = 0; i < 4; i++)  outputlist.push_back(&tirebump[i]);
+	for (int i = 0; i < 4; ++i)  outputlist.push_back(&tiresqueal[i]);
+	for (int i = 0; i < 4; ++i)  outputlist.push_back(&grasssound[i]);
+	for (int i = 0; i < 4; ++i)  outputlist.push_back(&gravelsound[i]);
+	for (int i = 0; i < 4; ++i)  outputlist.push_back(&tirebump[i]);
 
 	for (int i = 0; i < Ncrashsounds; ++i)
 		outputlist.push_back(&crashsound[i]);
@@ -462,7 +341,7 @@ void CAR::UpdateSounds(float dt)
 
 		float pitch = rpm / info.naturalrpm;
 		sound.SetPitch(pitch);
-		sound.SetPosition(engPos[0], engPos[1], engPos[2]);
+		sound.SetPosition(engPos);
 	}
 
 	//normalize gains engine
@@ -510,7 +389,7 @@ void CAR::UpdateSounds(float dt)
 		if (pitch < 0.1)	pitch = 0.1;
 		if (pitch > 4.0)	pitch = 4.0;
 
-		thesound[i].SetPosition(whPos[i][0], whPos[i][1], whPos[i][2]);
+		thesound[i].SetPosition(whPos[i]);
 		thesound[i].SetGain(squeal[i]*maxgain * pSet->vol_tires);
 		thesound[i].SetPitch(pitch);
 	}
@@ -522,7 +401,7 @@ void CAR::UpdateSounds(float dt)
 		gain *= 0.02;	gain *= gain;
 		if (gain > 1.0)	gain = 1.0;
 		roadnoise.SetGain(gain * pSet->vol_env);
-		roadnoise.SetPosition(engPos[0], engPos[1], engPos[2]); //
+		roadnoise.SetPosition(engPos); //
 		//std::cout << gain << std::endl;
 	}
 
@@ -542,9 +421,8 @@ void CAR::UpdateSounds(float dt)
 			if (gain > 0 && !tirebump[i].Audible())
 			{
 				tirebump[i].SetGain(gain * pSet->vol_env);
-				tirebump[i].SetPosition(whPos[i][0], whPos[i][1], whPos[i][2]);
-				tirebump[i].Stop();
-				tirebump[i].Play();
+				tirebump[i].SetPosition(whPos[i]);
+				tirebump[i].StopPlay();
 			}
 		}
 	}
@@ -564,9 +442,8 @@ void CAR::UpdateSounds(float dt)
 		if (!snd.Audible())
 		{
 			snd.SetGain(gain * pSet->vol_env);
-			snd.SetPosition(engPos[0], engPos[1], engPos[2]);
-			snd.Stop();
-			snd.Play();
+			snd.SetPosition(engPos);
+			snd.StopPlay();
 		}
 
 		if (mud)  {
@@ -574,9 +451,8 @@ void CAR::UpdateSounds(float dt)
 		if (!snd.Audible())
 		{
 			snd.SetGain(gain * pSet->vol_env);
-			snd.SetPosition(engPos[0], engPos[1], engPos[2]);
-			snd.Stop();
-			snd.Play();
+			snd.SetPosition(engPos);
+			snd.StopPlay();
 		}	}
 	}
 	fluidHitOld = fluidHit;
@@ -587,21 +463,21 @@ void CAR::UpdateSounds(float dt)
 			whMudSpin * 2.5f : 0.f;
 		mud_cont.SetGain(std::min(1.f, vel) * pSet->vol_env);
 		mud_cont.SetPitch(std::max(0.7f, std::min(3.f, vel * 0.35f)));
-		mud_cont.SetPosition(engPos[0], engPos[1], engPos[2]);
+		mud_cont.SetPosition(engPos);
 	}
 	{
 		float vel = !mud && whH_all > 0.1f && whH_all < 3.9f ?
 			dynVel / 30.f : 0.f;
 		water_cont.SetGain(std::min(1.f, vel * 1.5f) * pSet->vol_env);
 		water_cont.SetPitch(std::max(0.7f, std::min(1.3f, vel)));
-		water_cont.SetPosition(engPos[0], engPos[1], engPos[2]);
+		water_cont.SetPosition(engPos);
 	}
 	
 	//update boost sound
 	{
 		float gain = boostVal;
 		boostsnd.SetGain(gain * 0.57f * pSet->vol_engine);
-		boostsnd.SetPosition(engPos[0], engPos[1], engPos[2]); //back?-
+		boostsnd.SetPosition(engPos); //back?-
 	}
 	
 	//update crash sound
@@ -615,9 +491,8 @@ void CAR::UpdateSounds(float dt)
 		//if (crashsoundtime[i] > ti)  //par  //&& !crashsound[i].Audible()
 		{
 			crashsound[i].SetGain(1 * pSet->vol_env);
-			crashsound[i].SetPosition(engPos[0], engPos[1], engPos[2]); //
-			crashsound[i].Stop();
-			crashsound[i].Play();
+			crashsound[i].SetPosition(engPos); //
+			crashsound[i].StopPlay();
 			crashsoundtime[i] = 0.f;
 			//LogO("Snd:  i " + toStr(i) + "  parF " + toStr(dynamics.fParIntens) + "  sndF " + toStr(dynamics.fSndForce));
 		}
@@ -628,7 +503,7 @@ void CAR::UpdateSounds(float dt)
 		crashdetection.Update(speed, dt);
 		float crashdecel = crashdetection.GetMaxDecel();
 		//dynamics.fHitForce4 = crashdecel / 1400.f;
-		//todo: ^for old replays..  set blt car pos,rot in rpl for objs..
+		///todo: ^for old replays..  set blt car pos,rot in rpl for objs..
 
 		crashdetection2.Update(-fHitForce, dt);
 		crashdetection2.deceltrigger = 1.f;
@@ -651,9 +526,8 @@ void CAR::UpdateSounds(float dt)
 			if (/*gain > mingain &&*/ crashsoundtime[i] > /*ti*/0.4f)  //!crashsound.Audible())
 			{
 				crashsound[i].SetGain(gain * pSet->vol_env);
-				crashsound[i].SetPosition(hitPos[0], hitPos[1], hitPos[2]);  //..
-				crashsound[i].Stop();
-				crashsound[i].Play();
+				crashsound[i].SetPosition(hitPos);
+				crashsound[i].StopPlay();
 				crashsoundtime[i] = 0.f;
 			}
 			//LogO("Car Snd: " + toStr(crashdecel));// + " force " + toStr(hit.force) + " vel " + toStr(vlen) + " Nvel " + toStr(normvel));

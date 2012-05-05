@@ -68,16 +68,17 @@ public:
 			return LoadOGG(filename, sound_device_info, error_output);
 		else
 		{	error_output << "Unable to determine file type from filename: " << filename << std::endl;
-			return false;
-		}
+			return false;	}
 	}
 	void Unload()
 	{
-		if (loaded && sound_buffer != NULL)  delete [] sound_buffer;  sound_buffer = NULL;
+		if (loaded && sound_buffer != NULL)
+			delete [] sound_buffer;
+		sound_buffer = NULL;
 	}
 	inline int GetSample16bit(const unsigned int channel, const unsigned int position) const
 	{
-		return ((short *)sound_buffer)[position*info.GetChannels()+(channel-1)*(info.GetChannels()-1)];
+		return ((short *)sound_buffer)[ position*info.GetChannels() + (channel-1)*(info.GetChannels()-1) ];
 	}
 	const std::string & GetName() const {  return name;  }
 	const SOUNDINFO & GetSoundInfo() const	{	return info;  }
@@ -123,13 +124,19 @@ class SOUNDBUFFERLIBRARY
 				return true;
 		}
 		
-		const SOUNDBUFFER * GetBuffer(const std::string & buffername) const
+		const SOUNDBUFFER * GetBuffer(const std::string & name) const
 		{
-			std::map <std::string, SOUNDBUFFER>::const_iterator buff = buffermap.find(buffername);
+			std::map <std::string, SOUNDBUFFER>::const_iterator buff = buffermap.find(name);
 			if (buff != buffermap.end())
 				return &(buff->second);
 			else
 				return NULL;  // not found
+		}
+		const SOUNDBUFFER * GetBuffer(const std::string & name, std::ostream & error_output) const
+		{
+			const SOUNDBUFFER * buf = GetBuffer(name);
+			if (!buf){	error_output << "Can't load sound: " << name << std::endl;	return false;	}
+			return buf;
 		}
 };
 
@@ -163,16 +170,43 @@ private:
 	bool autodelete, effects3d;
 
 	float gain, relative_gain, pitch,last_pitch;
-	float computed_gain1, last_computed_gain1;
+	float computed_gain1, last_computed_gain1;  // c-computed
 	float computed_gain2, last_computed_gain2;
 
-	MATHVECTOR <float, 3> position, velocity;
+	MATHVECTOR <float,3> position, velocity;
 	const SOUNDBUFFER * buffer;
 	std::list <SOUNDFILTER> filters;
 
 public:
-	SOUNDSOURCE() : sample_pos(0),sample_pos_remainder(0.0f),playing(0),loop(false),autodelete(false),gain(1.0),pitch(1.0),last_pitch(1.0),computed_gain1(1.0),computed_gain2(1.0),last_computed_gain1(0.0),last_computed_gain2(0.0),effects3d(true),relative_gain(1.0),buffer(NULL) {}
-	void SetBuffer(const SOUNDBUFFER & newbuf) {	buffer=&newbuf;  SetLoop(false);  Stop();  }
+	SOUNDSOURCE() :
+		sample_pos(0),sample_pos_remainder(0.0f),playing(0),loop(false),autodelete(false),
+		gain(1.0),pitch(1.0),last_pitch(1.0), computed_gain1(1.0),computed_gain2(1.0),last_computed_gain1(0.0),last_computed_gain2(0.0),
+		effects3d(true),relative_gain(1.0),buffer(NULL)
+	{  }
+
+	void SetBuffer(const SOUNDBUFFER & newbuf)
+	{	buffer = &newbuf;  SetLoop(false);  Stop();  }
+	
+	void Setup(const SOUNDBUFFER & newbuf,
+		bool b3D, bool bLoop, float gain)
+	{
+		SetBuffer(newbuf);  Set3DEffects(b3D);  SetLoop(bLoop);  SetGain(gain);
+	}
+
+	bool Setup(const SOUNDBUFFERLIBRARY & sndLib, const std::string & name, std::ostream & error_output,
+		bool b3D, bool bLoop, float gain)
+	{
+		const SOUNDBUFFER * buf = sndLib.GetBuffer(name, error_output);
+		if (!buf)  return false;
+		SetBuffer(*buf);  Set3DEffects(b3D);  SetLoop(bLoop);  SetGain(gain);
+		return true;
+	}
+
+	void Seek4(int i)
+	{
+		int samples = GetSoundBuffer().GetSoundInfo().GetSamples();
+		SeekToSample((samples/4)*i);  Play();
+	}
 
 	void SampleAndAdvanceWithPitch16bit(int * chan1, int * chan2, int len);
 	void IncrementWithPitch(int num);
@@ -186,16 +220,16 @@ public:
 	void SetAutoDelete(const bool newauto) {autodelete = newauto;}
 	bool GetAutoDelete() const {return autodelete;}
 
-	void SetGain(const float newgain) {gain = newgain;}
-	void SetPitch(const float newpitch) {pitch = newpitch;}
+	void SetGain(const float newgain)   {  gain = newgain;  }
+	void SetPitch(const float newpitch) {  pitch = newpitch;  }
 	void SetGainSmooth(const float newgain, const float dt);
 	void SetPitchSmooth(const float newpitch, const float dt);
 
-	const MATHVECTOR <float, 3> & GetPosition() const {  return position;  }
-	void SetPosition(float x, float y, float z) {  position[0]=x;  position[1]=y;  position[2]=z;  }
-	void SetVelocity(float x, float y, float z) {  velocity[0]=x;  velocity[1]=y;  velocity[2]=z;  }
+	const MATHVECTOR <float,3>& GetPosition() const {  return position;  }
+	void SetPosition(const MATHVECTOR <float,3>& pos) {  position = pos;  }
+	void SetVelocity(const MATHVECTOR <float,3>& vel) {  velocity = vel;  }
 
-	const MATHVECTOR <float, 3> & GetVelocity() const {  return velocity;  }
+	const MATHVECTOR <float,3> & GetVelocity() const {  return velocity;  }
 	void Set3DEffects(bool new3d) {  effects3d = new3d;  }
 	bool Get3DEffects() const	  {  return effects3d;  }
 
@@ -205,11 +239,12 @@ public:
 	void SetRelativeGain(const float relgain)  {  relative_gain = relgain;  }
 	float GetRelativeGain()  {  return relative_gain;  }
 	
-	void SetLoop(const bool newloop) {  if (newloop) loop = 1; else loop = 0;  }
-	void Reset() {  sample_pos = 0;  sample_pos_remainder=0;  }
+	void SetLoop(const bool newloop) {  loop = newloop ? 1 : 0;  }
+	void Reset() {  sample_pos = 0;  sample_pos_remainder = 0.f;  }
 	void Stop()  {  playing = 0;  Reset();  }
 	void Pause() {  playing = 0;  }
 	void Play()  {  playing = 1;  }
+	void StopPlay()  {  playing = 0;  Reset();  playing = 1;  }
 	//const bool Audible() const {  return (playing == 1 && (computed_gain1 > 0.0 || computed_gain2 > 0.0));  }
 	bool Audible() 	{  return (playing == 1) && (GetGain() > 0);  }
 
@@ -236,7 +271,7 @@ private:
 	float gain_estimate;
 	SOUNDFILTER volume_filter;
 
-	MATHVECTOR <float, 3> lpos, lvel;
+	MATHVECTOR <float,3> lpos, lvel;  // listener
 	QUATERNION <float> lrot;
 	
 	std::list <SOUNDSOURCE *> sourcelist;
@@ -258,9 +293,9 @@ public:
 	void RemoveSource(SOUNDSOURCE * todel);
 	void Clear() {  sourcelist.clear();  }
 
-	void SetListener(const MATHVECTOR <float, 3> & npos, const QUATERNION <float> & nrot, const MATHVECTOR <float, 3> & nvel)
+	void SetListener(const MATHVECTOR <float,3> & npos, const QUATERNION <float> & nrot, const MATHVECTOR <float,3> & nvel)
 	{	lpos = npos;  lrot = nrot;  lvel = nvel;  }
-	void Compute3DEffects(std::list <SOUNDSOURCE *> & sources, const MATHVECTOR <float, 3> & listener_pos, const QUATERNION <float> & listener_rot) const;
+	void Compute3DEffects(std::list <SOUNDSOURCE *> & sources, const MATHVECTOR <float,3> & listener_pos, const QUATERNION <float> & listener_rot) const;
 	void Compute3DEffects(std::list <SOUNDSOURCE *> & sources) const {  Compute3DEffects(sources, lpos, lrot);  }
 
 	void SetMasterVolume(float newvol) {  volume_filter.SetFilterOrder0(newvol*0.5);  }  // 1?  >vol
