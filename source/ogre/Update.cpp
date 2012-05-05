@@ -102,82 +102,13 @@ void App::DoNetworking()
 bool App::frameStart(Real time)
 {
 	PROFILER.beginBlock(" frameSt");
-	//---------
-	//static QTimer gtim;
-	//gtim.update();
-	//double dt = gtim.dt;
+
 
 	//  multi thread
 	if (pSet->multi_thr == 1 && pGame && !bLoading)
 	{
 		updatePoses(time);
-
-		#if 0
-		// Update cameras for all cars
-		for (int i=0; i < carModels.size(); ++i)
-		{
-			CarModel* cm = carModels[i];
-			//if (cm->fCam)
-			//	cm->fCam->update(/*pGame->framerate*//*dt*/
-			//		time, &newPosInfos[i]);
-		}
-		#endif
-
-		#if 0
-		//  camera jump test graph in log
-		if (carModels.size()>0 && carModels[0]->pMainNode)
-		{
-			static Vector3 old(0,0,0);
-			//Vector3 pos = carModels[0]->pMainNode->getPosition();
-			//Vector3 pos = carModels[0]->mCamera->getPosition();
-			//Vector3 pos = newPosInfos[0].pos;
-			Vector3 pos = (carModels[0]->pMainNode->getPosition() - carModels[0]->mCamera->getPosition())*20;
-			bool b = pos.x < -2.f;//pos.x < old.x;
-			String s=" ";
-			for (int i=0; i < (pos.x+2)*10; ++i)  s += "   ";
-			s += "|";
-			LogO("x= "+fToStr(pos.x,3,6)+/*"  z= "+fToStr(pos.z,3,6)+*/s+(b?" ################":""));
-			old = pos;
-		}
-		#endif
 	}
-	
-	#if 0
-	///  graph test
-	static Real ti = 0.f;  ti += time;
-	if (mSplitMgr && !bLoading)
-	{
-		static int t=0;  ++t;
-		static std::vector<Vector2> vpos,vpos2;
-		if (t==1)
-			for (int i=0; i < 1000; ++i)
-			{
-				vpos.push_back(Vector2(i+150,150+200));
-				vpos2.push_back(Vector2(i+150,150+200));
-			}
-
-		for (int i=0; i < 1000-1; ++i)
-			vpos[i].y = vpos[i+1].y;
-
-		int i = 1000-1;
-		if (carModels.size() > 0)
-		vpos[i].y = //sin(i*0.1+t*0.1)*cos(i*0.11+t*0.11)*150+200;
-			//350 - time * 10000.f;
-			//350.f - newPosInfos[0].miniPos.x * 100.f;
-			//350.f - newPosInfos[0].pos.x * 10.f;
-			350.f - carModels[0]->pCar->dynamics.GetSuspension((WHEEL_POSITION )0).GetVelocity() * 100.f;
-
-		//for (int i=90; i < 1000; ++i)
-		//	vpos[i] = Vector2(i+150,
-		//		sin(i*0.1+t*0.1)*cos(i*0.11+t*0.11)*150+200);
-
-		for (int i=0; i < 1000; ++i)
-			vpos2[i].y = vpos[i].y+1;
-
-		mSplitMgr->mHUD->drawLines(false, vpos, ColourValue(0.2,0.1,0));
-		mSplitMgr->mHUD->drawLines(false, vpos2, ColourValue(1.0,0.6,0.3));
-	}
-	#endif
 
 
 	///  graphs update  -._/\_-.

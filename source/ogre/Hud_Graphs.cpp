@@ -24,10 +24,8 @@ void App::CreateGraphs()
 		{
 			GraphView* gv = new GraphView(scm);
 			gv->Create(512, "graph"+toStr(i%5+1), 0.13f);
-			if (i < 2)
-				gv->SetSize(0.f, 0.3f, 0.5f, 0.2f);
-			else
-				gv->SetSize(0.f, 0.5f, 0.5f, 0.2f);
+			if (i < 2)	gv->SetSize(0.f, 0.5f, 0.5f, 0.15f);
+			else		gv->SetSize(0.f, 0.35f, 0.5f, 0.15f);
 			gv->SetVisible(pSet->show_graphs);
 			graphs.push_back(gv);
 		}
@@ -36,11 +34,9 @@ void App::CreateGraphs()
 		for (int i=0; i < 4; ++i)
 		{
 			GraphView* gv = new GraphView(scm);
-			gv->Create(2*512, "graph"+toStr(i%2*2+1), i < /*2*/12 ? 0.13f : 0.25f);
-			if (i < 2)
-				gv->SetSize(0.00f, 0.24f, 0.40f, 0.25f);
-			else
-				gv->SetSize(0.60f, 0.24f, 0.40f, 0.25f);
+			gv->Create(2*512, "graph"+toStr(i%2*2+1), 0.13f);
+			if (i < 2)	gv->SetSize(0.00f, 0.24f, 0.40f, 0.25f);
+			else		gv->SetSize(0.60f, 0.24f, 0.40f, 0.25f);
 			gv->SetVisible(pSet->show_graphs);
 			graphs.push_back(gv);
 		}
@@ -49,11 +45,9 @@ void App::CreateGraphs()
 		for (int i=0; i < 8; ++i)
 		{
 			GraphView* gv = new GraphView(scm);
-			gv->Create(2*512, "graph"+toStr(i%4+1), 0.13f);
-			if (i < 4)
-				gv->SetSize(0.00f, 0.24f, 0.40f, 0.25f);
-			else
-				gv->SetSize(0.60f, 0.24f, 0.40f, 0.25f);
+			gv->Create(512, "graph"+toStr(i%4+1), 0.13f);
+			if (i < 4)	gv->SetSize(0.00f, 0.24f, 0.40f, 0.25f);
+			else		gv->SetSize(0.60f, 0.24f, 0.40f, 0.25f);
 			gv->SetVisible(pSet->show_graphs);
 			graphs.push_back(gv);
 		}
@@ -69,11 +63,11 @@ void App::GraphsNewVals()
 	
 	switch (pSet->graphs_type)
 	{
-	case 0:  // bullet hit  force,vel,time etc
+	case 0:  // bullet hit  force,normvel, sndnum,scrap,screech
 		if (carModels.size() > 0)
 		{
 			const CARDYNAMICS& cd = carModels[0]->pCar->dynamics;
-			graphs[0]->AddVal(cd.fHitForce);
+			graphs[0]->AddVal(std::min(1.f, cd.fHitForce * 2.f));
 			graphs[1]->AddVal(std::min(1.f, cd.fHitForce2));
 			graphs[2]->AddVal(std::min(1.f, cd.fHitForce3));
 			graphs[3]->AddVal(std::min(1.f, cd.fCarScrap));

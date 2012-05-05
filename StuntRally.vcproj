@@ -1583,6 +1583,10 @@
 					>
 				</File>
 				<File
+					RelativePath=".\source\ogre\Hud_Graphs.cpp"
+					>
+				</File>
+				<File
 					RelativePath=".\source\ogre\Hud_Update.cpp"
 					>
 				</File>

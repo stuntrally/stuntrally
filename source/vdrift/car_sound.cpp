@@ -166,31 +166,31 @@ bool CAR::LoadSounds(
 
 
 //--------------------------------------------------------------------------------------------------------------------------
-void CAR::GetSoundList(std::list <SOUNDSOURCE *> & outputlist)
+void CAR::GetSoundList(std::list <SOUNDSOURCE *> & li)
 {
 	for (std::list <std::pair <ENGINESOUNDINFO, SOUNDSOURCE> >::iterator
 		i = enginesounds.begin(); i != enginesounds.end(); ++i)
-		outputlist.push_back(&i->second);
+		li.push_back(&i->second);
 
-	for (int i = 0; i < 4; ++i)  outputlist.push_back(&tiresqueal[i]);
-	for (int i = 0; i < 4; ++i)  outputlist.push_back(&grasssound[i]);
-	for (int i = 0; i < 4; ++i)  outputlist.push_back(&gravelsound[i]);
-	for (int i = 0; i < 4; ++i)  outputlist.push_back(&tirebump[i]);
+	for (int i = 0; i < 4; ++i)  li.push_back(&tiresqueal[i]);
+	for (int i = 0; i < 4; ++i)  li.push_back(&grasssound[i]);
+	for (int i = 0; i < 4; ++i)  li.push_back(&gravelsound[i]);
+	for (int i = 0; i < 4; ++i)  li.push_back(&tirebump[i]);
 
 	for (int i = 0; i < Ncrashsounds; ++i)
-		outputlist.push_back(&crashsound[i]);
-	outputlist.push_back(&crashscrap);
-	outputlist.push_back(&crashscreech);
+		li.push_back(&crashsound[i]);
+	li.push_back(&crashscrap);
+	li.push_back(&crashscreech);
 
-	outputlist.push_back(&roadnoise);
-	outputlist.push_back(&boostsnd);
+	li.push_back(&roadnoise);
+	li.push_back(&boostsnd);
 
 	for (int i = 0; i < Nwatersounds; ++i)
-		outputlist.push_back(&watersnd[i]);
-	outputlist.push_back(&mudsnd);
+		li.push_back(&watersnd[i]);
+	li.push_back(&mudsnd);
 	
-	outputlist.push_back(&mud_cont);
-	outputlist.push_back(&water_cont);
+	li.push_back(&mud_cont);
+	li.push_back(&water_cont);
 }
 
 void CAR::GetEngineSoundList(std::list <SOUNDSOURCE *> & outputlist)
@@ -500,6 +500,7 @@ void CAR::UpdateSounds(float dt)
 			
 			int f = crashdecel2 / 30.f * Ncrashsounds;
 			int i = std::max(1, std::min(Ncrashsounds-1, f));
+			LogO("crash: "+toStr(i));
 
 			if (/*gain > mingain &&*/ crashsoundtime[i] > /*ti*/0.4f)  //!crashsound.Audible())
 			{
