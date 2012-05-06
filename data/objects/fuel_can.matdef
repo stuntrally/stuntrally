@@ -10,3 +10,12 @@
 	ambient = 1.50 1.50 1.50
 	diffuse = 1.00 1.00 1.00
     specular = 1 1 1 4
+
+
+[RubberTire]
+	diffuseMap_1024 = big_tire.png
+	receivesDepthShadows = true
+	terrainLightMap = true
+	ambient = 0.70 0.70 0.70
+	diffuse = 0.50 0.50 0.50
+    specular = 0.3 0.3 0.3 32

@@ -2,8 +2,11 @@
 #include "../ogre/common/Defines.h"
 #include "OgreApp.h"
 #include "../vdrift/pathmanager.h"
-//#include "../road/Road.h"
+
 #include "../ogre/common/Gui_Def.h"
+#include "../ogre/common/MultiList2.h"
+#include "../ogre/common/Slider.h"
+
 using namespace MyGUI;
 using namespace Ogre;
 
@@ -16,13 +19,21 @@ void App::InitGui()
 	if (!mGUI)  return;
 	QTimer ti;  ti.update();  /// time
 
+	//  new widgets
+	MyGUI::FactoryManager::getInstance().registerFactory<MultiList2>("Widget");
+	MyGUI::FactoryManager::getInstance().registerFactory<Slider>("Widget");
+
+
 	//  load layout - wnds
 	vwGui = LayoutManager::getInstance().loadLayout("Editor.layout");
 	for (VectorWidgetPtr::iterator it = vwGui.begin(); it != vwGui.end(); ++it)
 	{
 		const std::string& name = (*it)->getName();
 		setToolTips((*it)->getEnumerator());
+		if (name == "MainMenuWnd") mWndMain = *it;  else
+		if (name == "EditorWnd")  mWndEdit = *it;  else
 		if (name == "OptionsWnd") mWndOpts = *it;  else
+		if (name == "HelpWnd")    mWndHelp = *it;  else
 
 		if (name == "CamWnd")     mWndCam = *it;  else
 		if (name == "StartWnd")   mWndStart = *it;  else
@@ -35,6 +46,20 @@ void App::InitGui()
 		if (name == "ObjectsWnd") mWndObjects = *it;
 	}
 	if (mWndRoadStats)  mWndRoadStats->setVisible(false);
+
+	//  main menu
+	for (int i=0; i < WND_ALL; ++i)
+	{
+		const String s = toStr(i);
+		mWndMainPanels[i] = mWndMain->findWidget("PanMenu"+s);
+		mWndMainBtns[i] = (ButtonPtr)mWndMain->findWidget("BtnMenu"+s);
+		mWndMainBtns[i]->eventMouseButtonClick += newDelegate(this, &App::MainMenuBtn);
+	}
+	//  center
+	int sx = mWindow->getWidth(), sy = mWindow->getHeight();
+	IntSize w = mWndMain->getSize();
+	mWndMain->setPosition((sx-w.width)*0.5f, (sy-w.height)*0.5f);
+
 
 	GuiInitTooltip();
 	
@@ -63,20 +88,38 @@ void App::InitGui()
 	if (mWndObjects)  for (int i=0; i<OBJ_TXT; ++i)
 		objTxt[i] = mGUI->findWidget<StaticText>("objTxt"+toStr(i));
 		
+	//  Tabs
+	TabPtr tab;
+	tab = mGUI->findWidget<Tab>("TabWndEdit");  mWndTabsEdit = tab;  tab->setIndexSelected(1);  tab->eventTabChangeSelect += newDelegate(this, &App::MenuTabChg);
+	tab = mGUI->findWidget<Tab>("TabWndOpts");	mWndTabsOpts = tab;	 tab->setIndexSelected(1);	tab->eventTabChangeSelect += newDelegate(this, &App::MenuTabChg);
+	tab = mGUI->findWidget<Tab>("TabWndHelp");	mWndTabsHelp = tab;	 tab->setIndexSelected(1);	tab->eventTabChangeSelect += newDelegate(this, &App::MenuTabChg);
+
 	//  Options
 	if (mWndOpts)
-	{	mWndOpts->setVisible(false);
+	{	/*mWndOpts->setVisible(false);
 		int sx = mWindow->getWidth(), sy = mWindow->getHeight();
 		IntSize w = mWndOpts->getSize();  // center
-		mWndOpts->setPosition((sx-w.width)*0.5f, (sy-w.height)*0.5f);
-		mWndTabs = mGUI->findWidget<Tab>("TabWnd");
+		mWndOpts->setPosition((sx-w.width)*0.5f, (sy-w.height)*0.5f);*/
+
 		//  get sub tabs
-		vSubTabs.clear();
-		for (size_t i=0; i < mWndTabs->getItemCount(); ++i)
+		vSubTabsEdit.clear();
+		TabPtr sub;
+		for (size_t i=0; i < mWndTabsEdit->getItemCount(); ++i)
 		{
-			MyGUI::TabPtr sub = (TabPtr)mWndTabs->getItemAt(i)->findWidget("SubTab");
-			vSubTabs.push_back(sub);  // 0 for not found
-			//LogO(toStr(i)+" = "+toStr((int)(sub ? sub->getItemCount() : -1)));
+			sub = (TabPtr)mWndTabsEdit->getItemAt(i)->findWidget("SubTab");
+			vSubTabsEdit.push_back(sub);  // 0 for not found
+		}
+		vSubTabsHelp.clear();
+		for (size_t i=0; i < mWndTabsHelp->getItemCount(); ++i)
+		{
+			sub = (TabPtr)mWndTabsHelp->getItemAt(i)->findWidget("SubTab");
+			vSubTabsHelp.push_back(sub);
+		}
+		vSubTabsOpts.clear();
+		for (size_t i=0; i < mWndTabsOpts->getItemCount(); ++i)
+		{
+			sub = (TabPtr)mWndTabsOpts->getItemAt(i)->findWidget("SubTab");
+			vSubTabsOpts.push_back(sub);
 		}
 		//mWndTabs->setIndexSelected(3);  //default*--
 		ResizeOptWnd();
@@ -95,7 +138,7 @@ void App::InitGui()
 	}
 	
 	ButtonPtr btn, bchk;  ComboBoxPtr combo;  // for defines
-	ScrollBar* sl;  size_t v;
+	Slider* sl;
 
 	///  [Graphics]
 	//------------------------------------------------------------------------
@@ -108,8 +151,8 @@ void App::InitGui()
 	Slv(SizeMinmap,	(pSet->size_minimap-0.15f) /1.85f);
 	Slv(CamSpeed, powf((pSet->cam_speed-0.1f) / 3.9f, 1.f));
 	Slv(CamInert, pSet->cam_inert);
-	Slv(TerUpd, pSet->ter_skip /res);
-	Slv(MiniUpd, pSet->mini_skip /res);
+	Slv(TerUpd, pSet->ter_skip /20.f);
+	Slv(MiniUpd, pSet->mini_skip /20.f);
 	Slv(SizeRoadP, (pSet->road_sphr-0.1f) /11.9f);
 
 	//  set camera btns
@@ -155,7 +198,7 @@ void App::InitGui()
 	Slv(TerGenScale,powf(pSet->gen_scale   /160.f, 1.f/2.f));  // generate
 	Slv(TerGenOfsX, (pSet->gen_ofsx+2.f) /4.f);
 	Slv(TerGenOfsY, (pSet->gen_ofsy+2.f) /4.f);
-	Slv(TerGenOct,  Real(pSet->gen_oct)	/res);
+	Slv(TerGenOct,  Real(pSet->gen_oct)	/9.f);
 	Slv(TerGenFreq, pSet->gen_freq    /0.7f);
 	Slv(TerGenPers, pSet->gen_persist /0.7f);
 	Slv(TerGenPow,  powf(pSet->gen_pow     /6.f,  1.f/2.f));
@@ -318,6 +361,14 @@ void App::InitGui()
 		if (StringUtil::startsWith(s,"pipe") && !StringUtil::startsWith(s,"pipe_"))
 			for (int i=0; i<4; ++i)  cmbPipeMtr[i]->addItem(s);
 	}
+
+	//---------------------  OBJECTS  ---------------------
+	iObjNew = 0;
+	strlist lo;  vObjNames.clear();
+	GetFolderIndex(PATHMANAGER::GetDataPath() + "/objects", lo);
+	for (strlist::iterator i = lo.begin(); i != lo.end(); ++i)
+		if (StringUtil::endsWith(*i,".mesh"))
+			vObjNames.push_back((*i).substr(0,(*i).length()-5));  //no .ext
 	//-----------------------------------------------------
 
 	InitGuiScrenRes();
@@ -349,7 +400,7 @@ void App::InitGui()
 
 	bGI = true;  // gui inited, gui events can now save vals
 
-	ti.update();	/// time
+	ti.update();  /// time
 	float dt = ti.dt * 1000.f;
 	LogO(String("::: Time Init Gui: ") + toStr(dt) + " ms");
 }

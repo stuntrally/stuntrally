@@ -84,7 +84,7 @@
 	parent = car_interior
 	ambient = 1.0 1.0 1.0
 	diffuse = 1.0 1.0 1.0
-	normalMap_1024 = interior_normal.png
+	normalMap_1024 = interior_normal.jpg
 	ssao = false
 	
 [cartire_front_ES]

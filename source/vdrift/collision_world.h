@@ -21,9 +21,7 @@ public:
 		btConstraintSolver* constraintSolver,
 		btCollisionConfiguration* collisionConfig)
 	:	btDiscreteDynamicsWorld(dispatcher, broadphase, constraintSolver, collisionConfig)
-		//track(0),
-	{
-	}
+	{  }
 
 	~DynamicsWorld() {  }
 
@@ -65,6 +63,7 @@ public:
 	
 	// update world physics
 	void Update(double dt, bool profiling);
+	class CARDYNAMICS* cdOld;  // for hit force setting back to 0
 	std::string bltProfiling;  // blt debug times info
 	
 	void Draw();

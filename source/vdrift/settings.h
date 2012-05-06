@@ -4,7 +4,7 @@
 #include "configfile.h"
 
 
-#define SET_VER  1501  // 1.5
+#define SET_VER  1650  // 1.6+
 
 
 class SETTINGS
@@ -17,9 +17,10 @@ public:
 	bool show_fps, show_gauges, check_arrow, trackmap,
 		mini_zoomed, mini_rotated, mini_terrain,
 		show_cam, show_times, show_digits, show_opponents, cam_tilt,
-		car_dbgbars, car_dbgtxt, ogre_dialog;
+		car_dbgbars, car_dbgtxt, ogre_dialog, show_graphs;
 	float size_gauges, size_minimap, size_arrow, zoom_minimap;
-	int tracks_view, tracks_sort;  bool tracks_sortup;  int gauges_type;
+	int tracks_view, tracks_sort;  bool tracks_sortup;
+	int gauges_type, graphs_type;
 
 	//  graphics
 	int anisotropy, tex_size, ter_mtr;  bool bFog;
@@ -28,7 +29,7 @@ public:
 	float shadow_dist;  int shadow_size, lightmap_size, shadow_count, shadow_type, shadow_filter;
 	int refl_skip, refl_faces, refl_size;  float refl_dist;
 	bool water_reflect, water_refract; int water_rttsize;
-	std::string refl_mode; // static, single, full [explanation: see CarReflection.h] 
+	int refl_mode; // 0 static, 1 single, 2 full, explanation: see CarReflection.h
 	bool particles, trails;  float grass, trees_dist, grass_dist;
 	bool use_imposters;
 	float particles_len, trails_len;
@@ -67,7 +68,8 @@ public:
 	std::string ff_device;	float ff_gain;	bool ff_invert;
 
 	//  other
-	float vol_master, vol_engine, vol_tires, vol_env;
+	float vol_master, vol_engine, vol_tires, vol_susp, vol_env,
+		vol_fl_splash,vol_fl_cont, vol_car_crash,vol_car_scrap;
 	bool autostart, escquit;
 	bool bltDebug, bltLines, bltProfilerTxt, profilerTxt;
 	bool loadingbackground;
@@ -76,7 +78,6 @@ public:
 	
 	//  sim freq (1/interval timestep)
 	float game_fq, blt_fq;  int blt_iter, dyn_iter, multi_thr, thread_sleep;
-	//bool collis_veget, collis_cars;
 	
 	//  compositor
 	bool bloom, hdr, motionblur, all_effects;

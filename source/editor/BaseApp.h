@@ -149,12 +149,18 @@ protected:
 	#else
 	MyGUI::OgrePlatform* mPlatform;
 	#endif
-	MyGUI::WidgetPtr mWndOpts, // gui windows
+	MyGUI::WidgetPtr  // tool windows
 		mWndBrush, mWndCam, mWndStart,
 		mWndRoadCur, mWndRoadStats,
 		mWndFluids, mWndObjects;
-	MyGUI::TabPtr mWndTabs;
-	MyGUI::VectorWidgetPtr vwGui;
+	MyGUI::VectorWidgetPtr vwGui;  // all widgets to destroy
+
+	//  main menu
+	enum WND_Types {  WND_Edit=0, WND_Help, WND_Options, WND_ALL  };  // pSet->inMenu
+	MyGUI::WidgetPtr mWndMain,mWndEdit,mWndHelp,mWndOpts;  // menu, windows
+	MyGUI::TabPtr mWndTabsEdit,mWndTabsHelp,mWndTabsOpts;  // main tabs on windows
+	MyGUI::WidgetPtr mWndMainPanels[WND_ALL];  MyGUI::ButtonPtr mWndMainBtns[WND_ALL];
+
 	
 public:
 	inline bool bCam()  {  return  bMoveCam && !bGuiFocus;  }

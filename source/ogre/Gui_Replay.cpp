@@ -19,7 +19,7 @@ void App::slRplPosEv(SL)  // change play pos
 {
 	if (!bRplPlay)  return;
 	double oldt = pGame->timer.GetReplayTime(0);
-	double v = val/res;  v = std::max(0.0, std::min(1.0, v));  v *= replay.GetTimeLength();
+	double v = val;  v = std::max(0.0, std::min(1.0, v));  v *= replay.GetTimeLength();
 	pGame->timer.SetReplayTime(0, v);
 
 	FollowCamera* fCam = (*carModels.begin())->fCam;
@@ -144,7 +144,7 @@ void App::chkRplChkPar(WP wp){			ChkEv(rpl_ghostpar);	}
 
 void App::slRplNumViewports(SL)
 {
-	int v = 1.f + 3.f * val/res;	if (bGI)  pSet->rpl_numViews = v;
+	int v = 1.f + 3.f * val;	if (bGI)  pSet->rpl_numViews = v;
 	if (valRplNumViewports)  valRplNumViewports->setCaption(toStr(v));
 }
 

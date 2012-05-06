@@ -2,20 +2,17 @@
 #define _Gui_Def_h_
 
 
-const static float res = 1000000.f;  //float slider int res
-
-
 //  Gui Shortcuts: find control, assign event, set value
 //------------------------------------------------------------------------
 //ButtonPtr btn, bchk;  ComboBoxPtr combo;
-//HScrollPtr sl;  size_t v;
+//Slider* sl;  size_t v;
 //TODO: make App methods of these..
 
 #define Slv(name, vset)  \
-	sl = mGUI->findWidget<ScrollBar>(#name);  \
-	if (sl && sl->eventScrollChangePosition.empty())  sl->eventScrollChangePosition += newDelegate(this, &App::sl##name);  \
+	sl = mGUI->findWidget<Slider>(#name);  \
+	if (sl && sl->eventValueChanged.empty())  sl->eventValueChanged += newDelegate(this, &App::sl##name);  \
 	val##name = mGUI->findWidget<StaticText>(#name"Val",false);  \
-	v = vset*res;  if (sl)  sl->setScrollPosition(v);	sl##name(sl, v);
+	if (sl)  sl->setValue(vset);  sl##name(sl, vset);
 
 #define Btn(name, event)  \
 	btn = mGUI->findWidget<Button>(name);  \
@@ -48,5 +45,7 @@ const static float res = 1000000.f;  //float slider int res
 	ButtonPtr chk = wp->castType<MyGUI::Button>(); \
     chk->setStateSelected(pSet->var);  }
 
+
+const float slHalf = 0.45f;  // added to int value sliders to their float value
 
 #endif

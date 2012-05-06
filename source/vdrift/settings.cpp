@@ -50,14 +50,13 @@ void SETTINGS::Serialize(bool w, CONFIGFILE & c)
 	//  hud
 	Param(c,w, "hud_show.fps", show_fps);				Param(c,w, "hud_show.mph", show_mph);
 	Param(c,w, "hud_show.gauges", show_gauges);			Param(c,w, "hud_show.show_digits", show_digits);
-	Param(c,w, "hud_show.trackmap", trackmap);
-	Param(c,w, "hud_show.caminfo", show_cam);			Param(c,w, "hud_show.times", show_times);
-	Param(c,w, "hud_show.cam_tilt", cam_tilt);
+	Param(c,w, "hud_show.trackmap", trackmap);			Param(c,w, "hud_show.times", show_times);
+	Param(c,w, "hud_show.caminfo", show_cam);			Param(c,w, "hud_show.cam_tilt", cam_tilt);
 	Param(c,w, "hud_show.car_dbgtxt", car_dbgtxt);		Param(c,w, "hud_show.show_cardbg", car_dbgbars);
-	Param(c,w, "hud_show.tracks_view", tracks_view);
+	Param(c,w, "hud_show.tracks_view", tracks_view);	Param(c,w, "hud_show.check_arrow", check_arrow);
 	Param(c,w, "hud_show.tracks_sort", tracks_sort);	Param(c,w, "hud_show.tracks_sortup", tracks_sortup);
-	Param(c,w, "hud_show.check_arrow", check_arrow);	Param(c,w, "hud_show.opponents", show_opponents);
-	Param(c,w, "hud_show.opplist_sort", opplist_sort);
+	Param(c,w, "hud_show.opponents", show_opponents);	Param(c,w, "hud_show.opplist_sort", opplist_sort);
+	Param(c,w, "hud_show.graphs", show_graphs);			Param(c,w, "hud_show.graphs_type", graphs_type);
 
 	Param(c,w, "hud_size.gauges", size_gauges);			Param(c,w, "hud_size.minimap", size_minimap);
 	Param(c,w, "hud_size.mini_zoom", zoom_minimap);		Param(c,w, "hud_size.mini_zoomed", mini_zoomed);
@@ -112,6 +111,9 @@ void SETTINGS::Serialize(bool w, CONFIGFILE & c)
 	
 	Param(c,w, "sound.volume", vol_master);			Param(c,w, "sound.vol_engine", vol_engine);
 	Param(c,w, "sound.vol_tires", vol_tires);		Param(c,w, "sound.vol_env", vol_env);
+	Param(c,w, "sound.vol_susp", vol_susp);
+	Param(c,w, "sound.vol_fl_splash", vol_fl_splash);	Param(c,w, "sound.vol_fl_cont", vol_fl_cont);
+	Param(c,w, "sound.vol_car_crash", vol_car_crash);	Param(c,w, "sound.vol_car_scrap", vol_car_scrap);
 
 	//  video
 	Param(c,w, "video_eff.all_effects", all_effects);
@@ -140,15 +142,15 @@ SETTINGS::SETTINGS() :  ///  Defaults
 	show_fps(1), show_gauges(1), trackmap(1),
 	show_cam(1), show_times(0), show_digits(1),
 	show_opponents(1), opplist_sort(true), cam_tilt(1),
-	car_dbgtxt(0), car_dbgbars(0),
+	car_dbgtxt(0), car_dbgbars(0), show_graphs(0),
 	size_gauges(0.18), size_minimap(0.2), zoom_minimap(1.0),
 	mini_zoomed(0), mini_rotated(1), mini_terrain(0),
 	tracks_view(0), tracks_sort(0), tracks_sortup(1),
-	check_arrow(0), size_arrow(0.2), gauges_type(1),
+	check_arrow(0), size_arrow(0.2), gauges_type(1),graphs_type(1),
 	//  graphics
 	anisotropy(4),	view_distance(2000), bFog(0),
 	terdetail(2), terdist(100), road_dist(1.0), tex_size(1), ter_mtr(2), shaders(0.5),
-	refl_skip(200), refl_faces(1), refl_size(0), refl_dist(500.f), refl_mode("single"),
+	refl_skip(200), refl_faces(1), refl_size(0), refl_dist(500.f), refl_mode(1),
 	water_reflect(0), water_refract(0), water_rttsize(0),
 	shadow_type(2), shadow_size(2), shadow_count(3), shadow_dist(3000), shadow_filter(1), lightmap_size(0),
 	grass(1.f), trees_dist(1.f), grass_dist(1.f), use_imposters(true),
@@ -159,9 +161,7 @@ SETTINGS::SETTINGS() :  ///  Defaults
 	isMain(1), inMenu(0), rpl_rec(0),
 	split_vertically(true), language(""), // "" = autodetect lang
 	//  joystick
-	ff_device("/dev/input/event0"),
-	ff_gain(1.0),
-	ff_invert(false),
+	ff_device("/dev/input/event0"), ff_gain(1.0), ff_invert(false),
 	//  misc
 	autostart(0), ogre_dialog(0), escquit(0),
 	bltDebug(0), bltLines(1),  bltProfilerTxt(0), profilerTxt(0),
@@ -179,7 +179,8 @@ SETTINGS::SETTINGS() :  ///  Defaults
 	game_fq(82.f), blt_fq(160.f), blt_iter(24), dyn_iter(30),
 	multi_thr(0), thread_sleep(5),
 	//  sound
-	vol_master(1.f), vol_engine(1.f), vol_tires(1.f), vol_env(1.f),
+	vol_master(1.f), vol_engine(0.6f), vol_tires(1.f), vol_env(1.f), vol_susp(1.f),
+	vol_fl_splash(1.f),vol_fl_cont(1.f), vol_car_crash(1.f),vol_car_scrap(1.f),
 	//  video
 	windowx(800), windowy(600),
 	fullscreen(false), vsync(false),

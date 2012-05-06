@@ -116,7 +116,6 @@ void FollowCamera::update(Real time, const PosInfo& posIn, PosInfo* posOut, COLL
 		posOut->camRot = camRotFinal;
 		posOut->camUseRot = true;
 
-		updInfo(time);
 		return;
 	}
 	
@@ -223,8 +222,6 @@ void FollowCamera::update(Real time, const PosInfo& posIn, PosInfo* posOut, COLL
 	posOut->camLook = camLookFinal;
 	posOut->camRot = camRotFinal;
 	posOut->camUseRot = manualOrient;
-
-	updInfo(time);
 }
 
 
@@ -455,7 +452,6 @@ void FollowCamera::updAngle()
 	if (ovName)  // ovName->setCaption(ca->mName);
 		ovName->setCaption( toStr(miCurrent+1) + "/" + toStr(miCount)
 			+ ((ca->mMain > 0) ? ". " : "  ") + ca->mName);
-	updInfo();
 }
 
 void FollowCamera::saveCamera()

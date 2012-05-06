@@ -35,7 +35,7 @@ const Ogre::Real crAngSnaps[ciAngSnapsNum] = {0,15,30,45,90,180};
 
 
 namespace Forests {  class PagedGeometry;  }
-namespace MyGUI  {  class MultiList2;  }
+namespace MyGUI  {  class MultiList2;  class Slider;  }
 class MaterialFactory;
 
 
@@ -74,7 +74,6 @@ protected:
 	virtual void processMouse();
 	bool KeyPress(const CmdKey &arg);  void trkListNext(int rel);
 	Ogre::Vector3 vNew;	void editMouse();
-	void GuiShortcut(int tab, int subtab=-1);
 	
 	//  create  . . . . . . . . . . . . . . . . . . . . . . . . 
 	bool bNewHmap, bTrGrUpd;  Ogre::Real terMaxAng;
@@ -188,14 +187,14 @@ protected:
 	///-----------------------------------------------------------------------------------------------------------------	
 	//  size
 	void SizeGUI(); void doSizeGUI(MyGUI::EnumeratorWidgetPtr);
-	std::vector<MyGUI::TabControl*> vSubTabs;
+	std::vector<MyGUI::TabControl*> vSubTabsEdit,vSubTabsHelp,vSubTabsOpts;
 
 	//  shortcuts
 	typedef MyGUI::WidgetPtr WP;
 	typedef std::list <std::string> strlist;
 	//  slider event and its text field for value
 	#define SLV(name)  void sl##name(SL);  MyGUI::StaticTextPtr val##name;
-	#define SL  MyGUI::ScrollBar* wp, size_t val						//  slider event args
+	#define SL  MyGUI::Slider* wp, float val			//  slider event args
 	#define CMB  MyGUI::ComboBoxPtr cmb, size_t val		//  combo event args
 	#define TAB  MyGUI::Tab* tab, size_t id			//  tab event args
 
@@ -265,6 +264,11 @@ protected:
 		brTxt[BR_TXT], rdTxt[RD_TXT],rdTxtSt[RDS_TXT],
 		stTxt[ST_TXT], flTxt[FL_TXT], objTxt[OBJ_TXT];
 	MyGUI::StaticImagePtr brImg;  MyGUI::TabPtr wndTabs;
+
+	//  main menu
+	void toggleGui(bool toggle=false), GuiShortcut(WND_Types wnd, int tab, int subtab=-1);
+	void MainMenuBtn(MyGUI::WidgetPtr);
+	void MenuTabChg(MyGUI::TabPtr, size_t);
 
 
 	//  checks
@@ -355,6 +359,9 @@ protected:
 		edRdSkirtLen,edRdSkirtH, edRdMergeLen,edRdLodPLen,
 		edRdColN,edRdColR, edRdPwsM,edRdPlsM;
 	void editRoad(MyGUI::EditPtr);
+
+	//  [Objects]
+	std::vector<std::string> vObjNames;  int iObjNew;
 	
 
 	//  [Tools]  ----

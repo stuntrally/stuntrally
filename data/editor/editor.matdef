@@ -58,15 +58,15 @@
 	receivesShadows = false
 
 [object_box]
-	ambient = 1.4 1.4 1.4
-	diffuse = 0.3 0.3 0.3
+	ambient = 1.0 1.0 1.0
+	diffuse = 0.9 0.9 0.9
 	specular = 0.1 0.1 0.1 32
 	;lightingAlpha = 0.0 1.0 0.0 0
-    diffuseMap_2048 = object_box.png
-    transparent = true
-    sceneBlend = alpha
+    ;diffuseMap_2048 = object_box.png
+    ;transparent = true
+    ;sceneBlend = alpha
 	receivesShadows = false
-	cullHardware = none
+	;cullHardware = none
 
 
 ;//  terrain circle

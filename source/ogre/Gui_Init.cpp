@@ -13,13 +13,14 @@
 #include <OgreOverlay.h>
 #include "common/Gui_Def.h"
 #include "common/MultiList2.h"
+#include "common/Slider.h"
+
 using namespace MyGUI;
 using namespace Ogre;
 
 
 ///  Gui Init
 //---------------------------------------------------------------------------------------------------------------------
-
 
 void App::InitGui()
 {
@@ -28,6 +29,11 @@ void App::InitGui()
 	popup.mGUI = mGUI;
 	popup.mPlatform = mPlatform;
 	QTimer ti;  ti.update();  /// time
+
+	//  new widgets
+	MyGUI::FactoryManager::getInstance().registerFactory<MultiList2>("Widget");
+	MyGUI::FactoryManager::getInstance().registerFactory<Slider>("Widget");
+	
 
 	//  load Options layout
 	vwGui = LayoutManager::getInstance().loadLayout("Options.layout");
@@ -43,6 +49,7 @@ void App::InitGui()
 	mWndChampEnd = mGUI->findWidget<Window>("WndChampEnd",false);  mWndChampEnd->setVisible(false);
 	mWndNetEnd = mGUI->findWidget<Window>("WndNetEnd",false);  mWndNetEnd->setVisible(false);
 	
+	//  main menu
 	for (int i=0; i < WND_ALL; ++i)
 	{
 		const String s = toStr(i);
@@ -53,9 +60,10 @@ void App::InitGui()
 		
 	updMouse();
 	
+	//  center
 	//mWndOpts->setVisible(isFocGui);
 	int sx = mWindow->getWidth(), sy = mWindow->getHeight();
-	IntSize w = mWndMain->getSize();  // center
+	IntSize w = mWndMain->getSize();
 	mWndMain->setPosition((sx-w.width)*0.5f, (sy-w.height)*0.5f);
 
 	TabPtr tab;
@@ -100,8 +108,7 @@ void App::InitGui()
 
 	///  Sliders
     //------------------------------------------------------------------------
-	ButtonPtr btn,bchk;  ComboBoxPtr combo;
-	ScrollBar* sl;  size_t v;
+	ButtonPtr btn,bchk;  ComboBoxPtr combo;  Slider* sl;
 
 	GuiInitLang();
 
@@ -109,11 +116,12 @@ void App::InitGui()
 	    
 	//  view sizes
 	Slv(SizeGaug,	(pSet->size_gauges-0.1f) /0.15f);
-	Slv(TypeGaug,	pSet->gauges_type /res);
+	Slv(TypeGaug,	pSet->gauges_type /5.f);
 	Slv(SizeMinimap,(pSet->size_minimap-0.05f) /0.25f);
 	Slv(SizeArrow,  (pSet->size_arrow));
 	Slv(ZoomMinimap,powf((pSet->zoom_minimap-1.0f) /9.f, 0.5f));
-	Slv(CountdownTime,  pSet->gui.pre_time / 0.5f /res);
+	Slv(CountdownTime,  pSet->gui.pre_time / 0.5f /6.f);
+	Slv(GraphsType,	pSet->graphs_type /4.f);
 	
 	//  particles/trails
 	Slv(Particles,	powf(pSet->particles_len /4.f, 0.5f));
@@ -122,16 +130,16 @@ void App::InitGui()
 	//  reflect
 	Slv(ReflSkip,	powf(pSet->refl_skip /1000.f, 0.5f));
 	Slv(ReflSize,	pSet->refl_size /float(ciShadowNumSizes));
-	Slv(ReflFaces,	pSet->refl_faces /res);
+	Slv(ReflFaces,	pSet->refl_faces /6.f);
 	Slv(ReflDist,	powf((pSet->refl_dist -20.f)/1480.f, 0.5f));
-	int value=0;  if (pSet->refl_mode == "static")  value = 0;
-	else if (pSet->refl_mode == "single")  value = 1;
-	else if (pSet->refl_mode == "full")  value = 2;
-	Slv(ReflMode,   value /res);
+	Slv(ReflMode,   pSet->refl_mode /2.f);
 
     //  sound
-	Slv(VolMaster,	pSet->vol_master/1.6f);	 Slv(VolEngine,	pSet->vol_engine/1.4f);
-	Slv(VolTires,	pSet->vol_tires/1.4f); 	 Slv(VolEnv,	pSet->vol_env/1.4f);
+	Slv(VolMaster,	pSet->vol_master/1.6f);
+	Slv(VolEngine,	pSet->vol_engine/1.4f);		 Slv(VolTires, pSet->vol_tires/1.4f);
+	Slv(VolSusp,	pSet->vol_susp/1.4f);		 Slv(VolEnv,   pSet->vol_env/1.4f);
+	Slv(VolFlSplash, pSet->vol_fl_splash/1.4f);  Slv(VolFlCont,	  pSet->vol_fl_cont/1.4f);
+	Slv(VolCarCrash, pSet->vol_car_crash/1.4f);  Slv(VolCarScrap, pSet->vol_car_scrap/1.4f);
 	
 	// car color
 	UpdCarClrSld();
@@ -144,9 +152,7 @@ void App::InitGui()
 	Chk("ReverseOn", chkReverse, pSet->gui.trackreverse);
 	Chk("ParticlesOn", chkParticles, pSet->particles);	Chk("TrailsOn", chkTrails, pSet->trails);
 
-	Chk("Fps", chkFps, pSet->show_fps);	chFps = mGUI->findWidget<Button>("Fps");
-	if (pSet->show_fps)  mFpsOverlay->show();  else  mFpsOverlay->hide();
-
+	//  hud
 	Chk("Digits", chkDigits, pSet->show_digits);
 	Chk("Gauges", chkGauges, pSet->show_gauges);  ShowHUD();//
 	Chk("Arrow", chkArrow, pSet->check_arrow);
@@ -154,16 +160,26 @@ void App::InitGui()
 	Chk("Minimap", chkMinimap, pSet->trackmap);	chMinimp = bchk;
 	Chk("MiniZoom", chkMiniZoom, pSet->mini_zoomed);  Chk("MiniRot", chkMiniRot, pSet->mini_rotated);
 	Chk("MiniTer", chkMiniTer, pSet->mini_terrain);
-	Chk("Times", chkTimes, pSet->show_times);	chTimes  = bchk;
+
 	Chk("CamInfo", chkCamInfo, pSet->show_cam);
 	Chk("CamTilt", chkCamTilt, pSet->cam_tilt);
+
+	Chk("Times", chkTimes, pSet->show_times);	chTimes  = bchk;
 	Chk("Opponents", chkOpponents, pSet->show_opponents);  chOpponents = bchk;
 	Chk("OpponentsSort", chkOpponentsSort, pSet->opplist_sort);
 
+	//  other
+	Chk("Fps", chkFps, pSet->show_fps);  chFps = bchk;
+	if (pSet->show_fps)  mFpsOverlay->show();  else  mFpsOverlay->hide();
+	Chk("Wireframe", chkWireframe, mbWireFrame);  chWire = bchk;
+
+	Chk("ProfilerTxt", chkProfilerTxt, pSet->profilerTxt);	chProfTxt = bchk;
+	Chk("BulletDebug", chkBltDebug, pSet->bltDebug);		chBlt = bchk;
+	Chk("BulletProfilerTxt", chkBltProfilerTxt, pSet->bltProfilerTxt);	chBltTxt = bchk;
+
 	Chk("CarDbgBars", chkCarDbgBars, pSet->car_dbgbars);	chDbgB = bchk;
 	Chk("CarDbgTxt", chkCarDbgTxt, pSet->car_dbgtxt);		chDbgT = bchk;
-	Chk("BulletDebug", chkBltDebug, pSet->bltDebug);	chBlt = bchk;
-	Chk("ProfilerTxt", chkProfilerTxt, pSet->profilerTxt);	chProfTxt = bchk;
+	Chk("Graphs", chkGraphs, pSet->show_graphs);		chGraphs = bchk;
 
 	//  car setup  todo: for each player ..
 	Chk("CarABS",  chkAbs, pSet->abs);			Chk("CarTCS", chkTcs, pSet->tcs);
@@ -266,8 +282,8 @@ void App::InitGui()
 		btn = mGUI->findWidget<Button>("RplForward");  if (btn)  {	btn->eventMouseButtonPressed += newDelegate(this, &App::btnRplFwdDn);  btn->eventMouseButtonReleased += newDelegate(this, &App::btnRplFwdUp);  }
 		
 		//  info
-		slRplPos = (ScrollBar*)mWndRpl->findWidget("RplSlider");
-		if (slRplPos)  slRplPos->eventScrollChangePosition += newDelegate(this, &App::slRplPosEv);
+		slRplPos = (Slider*)mWndRpl->findWidget("RplSlider");
+		if (slRplPos)  slRplPos->eventValueChanged += newDelegate(this, &App::slRplPosEv);
 
 		valRplPerc = mGUI->findWidget<StaticText>("RplPercent");
     	valRplCur = mGUI->findWidget<StaticText>("RplTimeCur");
@@ -559,7 +575,7 @@ void App::InitGui()
 
 void App::UpdCarClrSld(bool upd)
 {
-	ScrollBar* sl;  size_t v;
+	Slider* sl;
 	Slv(CarClrH, pSet->gui.car_hue[iCurCar]);
 	Slv(CarClrS, pSet->gui.car_sat[iCurCar]);
 	Slv(CarClrV, pSet->gui.car_val[iCurCar]);

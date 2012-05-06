@@ -4,6 +4,7 @@
 #include "../road/Road.h"
 #include <boost/filesystem.hpp>
 #include "../ogre/common/Gui_Def.h"
+#include "../ogre/common/Slider.h"
 using namespace MyGUI;
 using namespace Ogre;
 
@@ -13,14 +14,14 @@ using namespace Ogre;
 
 void App::SetGuiFromXmls()
 {
-	if (!mWndOpts)  return;
+	if (!mWndEdit)  return;
 	bGI = false;
 	// set slider value, upd text
-	ScrollBar* sl;  size_t v;
+	Slider* sl;
 
 	#define _Slv(name, val)  \
-		sl = (ScrollBar*)mWndOpts->findWidget(#name);  \
-		v = val*res;  if (sl)  sl->setScrollPosition(v);  sl##name(sl, v);
+		sl = (Slider*)mWndEdit->findWidget(#name);  \
+		if (sl)  sl->setValue(val);  sl##name(sl, val);
 	
 	#define _Ed(name, val)  ed##name->setCaption(toStr(val));
 	#define _Cmb(cmb, str)  cmb->setIndexSelected( cmb->findItemIndexWith(str) );
@@ -36,7 +37,7 @@ void App::SetGuiFromXmls()
 	_Slv(FogStart, powf(sc.fogStart /2000.f, 0.5f));
 	_Slv(FogEnd,   powf(sc.fogEnd   /2000.f, 0.5f));
 
-	_Cmb(cmbRain1, sc.rainName);		_Slv(Rain1Rate, sc.rainEmit /6000.f);
+	_Cmb(cmbRain1, sc.rainName);	_Slv(Rain1Rate, sc.rainEmit /6000.f);
 	_Cmb(cmbRain2, sc.rain2Name);	_Slv(Rain2Rate, sc.rain2Emit /6000.f);	
 	
 	//  [Terrain]

@@ -61,7 +61,7 @@ ReplayFrame::ReplayFrame() :
 	,braking(false)
 	,fHitTime(0.f), fParIntens(0.f),fParVel(0.f)
 	//Vector3 vHitPos,vHitNorm;
-	,whMudSpin(0.f)
+	,whMudSpin(0.f), fHitForce(0.f)
 {
 	pos[0]=0.f;  pos[1]=0.f;  pos[2]=0.f;
 	whSteerAng[0]=whSteerAng[1]=0.f;

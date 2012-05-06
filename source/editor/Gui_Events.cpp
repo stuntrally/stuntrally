@@ -4,6 +4,7 @@
 #include "../road/Road.h"
 #include <fstream>
 #include "../ogre/common/Gui_Def.h"
+#include "../ogre/common/Slider.h"
 using namespace MyGUI;
 using namespace Ogre;
 
@@ -32,33 +33,33 @@ void App::comboRain2(ComboBoxPtr cmb, size_t val)
 
 void App::slRain1Rate(SL)  // rain rates
 {
-	float v = 6000.f * val/res;		sc.rainEmit = v;
+	float v = 6000.f * val;		sc.rainEmit = v;
 	if (valRain1Rate){	valRain1Rate->setCaption(fToStr(v,0,4));  }	UpdSun();
 }
 void App::slRain2Rate(SL)
 {
-	float v = 6000.f * val/res;		sc.rain2Emit = v;
+	float v = 6000.f * val;		sc.rain2Emit = v;
 	if (valRain2Rate){	valRain2Rate->setCaption(fToStr(v,0,4));  }	UpdSun();
 }
 
 void App::slSunPitch(SL)  // sun pitch, yaw
 {
-	float v = 90.f * val/res;	sc.ldPitch = v;
+	float v = 90.f * val;	sc.ldPitch = v;
 	if (valSunPitch){	valSunPitch->setCaption(fToStr(v,1,4));  }	UpdSun();
 }
 void App::slSunYaw(SL)
 {
-	float v = -180.f + 360.f * val/res;  sc.ldYaw = v;
+	float v = -180.f + 360.f * val;  sc.ldYaw = v;
 	if (valSunYaw){	valSunYaw->setCaption(fToStr(v,1,4));  }  UpdSun();
 }
 void App::slFogStart(SL)  // fog start, end
 {
-	float v = 2000.f * powf(val/res, 2.f);		sc.fogStart = v;  UpdFog();
+	float v = 2000.f * powf(val, 2.f);		sc.fogStart = v;  UpdFog();
 	if (valFogStart){	valFogStart->setCaption(fToStr(v,0,3));  }
 }
 void App::slFogEnd(SL)
 {
-	float v = 2000.f * powf(val/res, 2.f);		sc.fogEnd = v;    UpdFog();
+	float v = 2000.f * powf(val, 2.f);		sc.fogEnd = v;    UpdFog();
 	if (valFogEnd){	 valFogEnd->setCaption(fToStr(v,0,3));  }
 }
 
@@ -120,7 +121,7 @@ void App::tabTerLayer(TabPtr wp, size_t id)
 	    scale = lay->tiling;
 
 		//  Ter Blendmap
-		ScrollBar* sl;  size_t v;
+		Slider* sl;
 		Slv(TerLAngMin, lay->angMin/90.f);  Slv(TerLHMin, (lay->hMin+300.f)/600.f);
 		Slv(TerLAngMax, lay->angMax/90.f);	Slv(TerLHMax, (lay->hMax+300.f)/600.f);
 		Slv(TerLAngSm, lay->angSm/90.f);	Slv(TerLHSm, lay->hSm/200.f);
@@ -128,7 +129,7 @@ void App::tabTerLayer(TabPtr wp, size_t id)
 		chkTerLNoiseOnly->setStateSelected(lay->bNoiseOnly);
 	}
 	//  scale layer
-	ScrollBar* sl = (HScrollPtr)mWndOpts->findWidget("TerLScale");
+	Slider* sl = (Slider*)mWndOpts->findWidget("TerLScale");
 	if (sl)  sl->setVisible(bTerLay);
 	if (bTerLay)  {
 		if (edTerLScale)  edTerLScale->setCaption(toStr(scale));
@@ -157,9 +158,9 @@ void App::editTerTriSize(EditPtr ed)
 	Real r = std::max(0.1f, s2r(ed->getCaption()) );
 	sc.td.fTriangleSize = r;  sc.td.UpdVals();
 
-	ScrollBar* sl = (HScrollPtr)mWndOpts->findWidget("TerTriSize");  // set slider
-	size_t v = std::min(1.f, powf((r -0.1f)/5.9f, 0.5f) )*res;
-	if (sl)  sl->setScrollPosition(v);
+	Slider* sl = (Slider*)mWndOpts->findWidget("TerTriSize");  // set slider
+	float v = std::min(1.f, powf((r -0.1f)/5.9f, 0.5f) );
+	if (sl)  sl->setValue(v);
 	// result val text
 	const char* str = tabsHmap->getItemSelected()->getCaption().asUTF8_c_str();  int size = atoi(str);
 	if (valTerTriSize){  valTerTriSize->setCaption(fToStr(sc.td.fTriangleSize * size,2,4));  }
@@ -167,7 +168,7 @@ void App::editTerTriSize(EditPtr ed)
 // |
 void App::slTerTriSize(SL)
 {
-	Real v = 0.1f + 5.9f * powf(val/res, 2.f);
+	Real v = 0.1f + 5.9f * powf(val, 2.f);
 	sc.td.fTriangleSize = v;  sc.td.UpdVals();
 	if (edTerTriSize)  edTerTriSize->setCaption(toStr(v));  // set edit
 	// result val text
@@ -297,38 +298,39 @@ void App::btnScaleTerH(WP)
 
 void App::slTerGenScale(SL)
 {
-	float v = 160.f * powf(val/res, 2.f);	if (bGI)  pSet->gen_scale = v;
+	float v = 160.f * powf(val, 2.f);	if (bGI)  pSet->gen_scale = v;
 	if (valTerGenScale){	valTerGenScale->setCaption(fToStr(v,2,4));  }
 }
 void App::slTerGenOfsX(SL)
 {
-	float v = -2.f + 4.f * val/res;		if (bGI)  pSet->gen_ofsx = v;
+	float v = -2.f + 4.f * val;		if (bGI)  pSet->gen_ofsx = v;
 	if (valTerGenOfsX){	valTerGenOfsX->setCaption(fToStr(v,3,5));  }
 }
 void App::slTerGenOfsY(SL)
 {
-	float v = -2.f + 4.f * val/res;		if (bGI)  pSet->gen_ofsy = v;
+	float v = -2.f + 4.f * val;		if (bGI)  pSet->gen_ofsy = v;
 	if (valTerGenOfsY){	valTerGenOfsY->setCaption(fToStr(v,3,5));  }
 }
 
 void App::slTerGenFreq(SL)
 {
-	float v = 0.7f * val/res;	if (bGI)  pSet->gen_freq = v;
+	float v = 0.7f * val;	if (bGI)  pSet->gen_freq = v;
 	if (valTerGenFreq){	valTerGenFreq->setCaption(fToStr(v,3,5));  }
 }
 void App::slTerGenOct(SL)
 {
-	if (bGI)  pSet->gen_oct = val;
-	if (valTerGenOct){	valTerGenOct->setCaption(toStr(val));  }
+	int v = val * 9.f +slHalf;
+	if (bGI)  pSet->gen_oct = v;
+	if (valTerGenOct){	valTerGenOct->setCaption(toStr(v));  }
 }
 void App::slTerGenPers(SL)
 {
-	float v = 0.7f * val/res;	if (bGI)  pSet->gen_persist = v;
+	float v = 0.7f * val;	if (bGI)  pSet->gen_persist = v;
 	if (valTerGenPers){	valTerGenPers->setCaption(fToStr(v,3,5));  }
 }
 void App::slTerGenPow(SL)
 {
-	float v = 6.f * powf(val/res, 2.f);		if (bGI)  pSet->gen_pow = v;
+	float v = 6.f * powf(val, 2.f);		if (bGI)  pSet->gen_pow = v;
 	if (valTerGenPow){	valTerGenPow->setCaption(fToStr(v,3,5));  }
 }
 
@@ -385,14 +387,14 @@ void App::editTerLScale(EditPtr ed)
 	Real r = std::max(0.01f, s2r(ed->getCaption()) );
 	if (bTerLay)  sc.td.layersAll[idTerLay].tiling = r;
 
-	ScrollBar* sl = (HScrollPtr)mWndOpts->findWidget("TerLScale");  // set slider
-	size_t v = std::min(1.f,std::max(0.f, powf((r - 2.0f)/9.0f, 1.f/1.5f) ))*res;
-	if (sl)  sl->setScrollPosition(v);
+	Slider* sl = (Slider*)mWndOpts->findWidget("TerLScale");  // set slider
+	float v = std::min(1.f,std::max(0.f, powf((r - 2.0f)/9.0f, 1.f/1.5f) ));
+	if (sl)  sl->setValue(v);
 }
 // |
 void App::slTerLScale(SL)  //  scale layer
 {
-	Real v = 2.0f + 9.0f * powf(val/res, 1.5f);  // 0.1 + 89.9, 1 + 19
+	Real v = 2.0f + 9.0f * powf(val, 1.5f);  // 0.1 + 89.9, 1 + 19
 	if (bTerLay && bGI)  sc.td.layersAll[idTerLay].tiling = v;
 	if (edTerLScale)  edTerLScale->setCaption(toStr(v));  // set edit
 }
@@ -402,21 +404,21 @@ void App::slTerLScale(SL)  //  scale layer
 //
 void App::slTerLAngMin(SL)
 {
-	float v = 90.f * val/res;
+	float v = 90.f * val;
 	if (bTerLay && bGI)  sc.td.layersAll[idTerLay].angMin = v;
 	if (valTerLAngMin){	valTerLAngMin->setCaption(fToStr(v,0,4));  }
 	if (terrain && bGI && !noBlendUpd)  bTerUpdBlend = true;  //initBlendMaps(terrain);
 }
 void App::slTerLAngMax(SL)
 {
-	float v = 90.f * val/res;
+	float v = 90.f * val;
 	if (bTerLay && bGI)  sc.td.layersAll[idTerLay].angMax = v;
 	if (valTerLAngMax){	valTerLAngMax->setCaption(fToStr(v,0,4));  }
 	if (terrain && bGI && !noBlendUpd)  bTerUpdBlend = true;
 }
 void App::slTerLAngSm(SL)
 {
-	float v = 90.f * val/res;
+	float v = 90.f * val;
 	if (bTerLay && bGI)  sc.td.layersAll[idTerLay].angSm = v;
 	if (valTerLAngSm){	valTerLAngSm->setCaption(fToStr(v,0,4));  }
 	if (terrain && bGI && !noBlendUpd)  bTerUpdBlend = true;
@@ -424,21 +426,21 @@ void App::slTerLAngSm(SL)
 
 void App::slTerLHMin(SL)
 {
-	float v = -300.f + 600.f * val/res;
+	float v = -300.f + 600.f * val;
 	if (bTerLay && bGI)  sc.td.layersAll[idTerLay].hMin = v;
 	if (valTerLHMin){	valTerLHMin->setCaption(fToStr(v,0,4));  }
 	if (terrain && bGI && !noBlendUpd)  bTerUpdBlend = true;
 }
 void App::slTerLHMax(SL)
 {
-	float v = -300.f + 600.f * val/res;
+	float v = -300.f + 600.f * val;
 	if (bTerLay && bGI)  sc.td.layersAll[idTerLay].hMax = v;
 	if (valTerLHMax){	valTerLHMax->setCaption(fToStr(v,0,4));  }
 	if (terrain && bGI && !noBlendUpd)  bTerUpdBlend = true;
 }
 void App::slTerLHSm(SL)
 {
-	float v = 200.f * val/res;
+	float v = 200.f * val;
 	if (bTerLay && bGI)  sc.td.layersAll[idTerLay].hSm = v;
 	if (valTerLHSm){	valTerLHSm->setCaption(fToStr(v,0,4));  }
 	if (terrain && bGI && !noBlendUpd)  bTerUpdBlend = true;
@@ -446,7 +448,7 @@ void App::slTerLHSm(SL)
 
 void App::slTerLNoise(SL)
 {
-	float v = -2.f + 4.f * val/res;
+	float v = -2.f + 4.f * val;
 	if (bTerLay && bGI)  sc.td.layersAll[idTerLay].noise = v;
 	if (valTerLNoise){	valTerLNoise->setCaption(fToStr(v,2,4));  }
 	if (terrain && bGI && !noBlendUpd)  bTerUpdBlend = true;
@@ -562,9 +564,9 @@ void App::tabPgLayers(TabPtr wp, size_t id)
 		valLTrAll->setCaption("Used: "+toStr(sc.pgLayers.size()));
 
 	//  set slider values
-	ScrollBar* sl;  size_t v;
+	Slider* sl;
 	Slv(LTrDens, powf((lay.dens-0.001f) /1.0f, 0.5f));
-	Slv(LTrRdDist, Real(lay.addTrRdDist) /res);
+	Slv(LTrRdDist, lay.addTrRdDist /20.f);
 
 	Slv(LTrMinSc, powf(lay.minScale /6.0f, 1.f/3.f));
 	Slv(LTrMaxSc, powf(lay.maxScale /6.0f, 1.f/3.f));
@@ -595,40 +597,41 @@ void App::comboPgLay(ComboBoxPtr cmb, size_t val)
 
 void App::slLTrDens(SL)  //  sliders
 {
-	Real v = 0.001f + 1.0f * powf(val/res, 2.f);  sc.pgLayersAll[idPgLay].dens = v;
+	Real v = 0.001f + 1.0f * powf(val, 2.f);  sc.pgLayersAll[idPgLay].dens = v;
 	if (valLTrDens){  valLTrDens->setCaption(fToStr(v,3,5));  }
 }
 void App::slLTrRdDist(SL)
 {
-	sc.pgLayersAll[idPgLay].addTrRdDist = val;
-	if (valLTrRdDist)  valLTrRdDist->setCaption(toStr(val));
+	int v = val * 20.f +slHalf;
+	sc.pgLayersAll[idPgLay].addTrRdDist = v;
+	if (valLTrRdDist)  valLTrRdDist->setCaption(toStr(v));
 }
 
 void App::slLTrMinSc(SL)
 {
-	Real v = 6.0f * powf(val/res, 3.f);		sc.pgLayersAll[idPgLay].minScale = v;
+	Real v = 6.0f * powf(val, 3.f);		sc.pgLayersAll[idPgLay].minScale = v;
 	if (valLTrMinSc){  valLTrMinSc->setCaption(fToStr(v,3,5));  }
 }
 void App::slLTrMaxSc(SL)
 {
-	Real v = 6.0f * powf(val/res, 3.f);		sc.pgLayersAll[idPgLay].maxScale = v;
+	Real v = 6.0f * powf(val, 3.f);		sc.pgLayersAll[idPgLay].maxScale = v;
 	if (valLTrMaxSc){  valLTrMaxSc->setCaption(fToStr(v,3,5));  }
 }
 
 void App::slLTrWindFx(SL)
 {
-	Real v = 12.0f * powf(val/res, 3.f);	sc.pgLayersAll[idPgLay].windFx = v;
+	Real v = 12.0f * powf(val, 3.f);	sc.pgLayersAll[idPgLay].windFx = v;
 	if (valLTrWindFx){  valLTrWindFx->setCaption(fToStr(v,3,5));  }
 }
 void App::slLTrWindFy(SL)
 {
-	Real v = 12.0f * powf(val/res, 3.f);	sc.pgLayersAll[idPgLay].windFy = v;
+	Real v = 12.0f * powf(val, 3.f);	sc.pgLayersAll[idPgLay].windFy = v;
 	if (valLTrWindFy){  valLTrWindFy->setCaption(fToStr(v,3,5));  }
 }
 
 void App::slLTrMaxTerAng(SL)
 {
-	Real v = 90.0f * powf(val/res, 2.f);	sc.pgLayersAll[idPgLay].maxTerAng = v;
+	Real v = 90.0f * powf(val, 2.f);	sc.pgLayersAll[idPgLay].maxTerAng = v;
 	if (valLTrMaxTerAng){  valLTrMaxTerAng->setCaption(fToStr(v,1,5));  }
 }
 void App::editLTrMinTerH(EditPtr ed)
@@ -698,13 +701,14 @@ void App::chkEscQuits(WP wp){		ChkEv(escquit);		}
 
 void App::slMiniUpd(SL)
 {
-	pSet->mini_skip = val;
-	if (valMiniUpd){	valMiniUpd->setCaption(toStr(val));  }
+	int v = val * 20.f +slHalf;
+	pSet->mini_skip = v;
+	if (valMiniUpd){	valMiniUpd->setCaption(toStr(v));  }
 }
 
 void App::slSizeRoadP(SL)
 {
-	Real v = 0.1f + 11.9f * val/res;  pSet->road_sphr = v;
+	Real v = 0.1f + 11.9f * val;  pSet->road_sphr = v;
 	if (valSizeRoadP){	valSizeRoadP->setCaption(fToStr(v,2,4));  }
 	if (road)
 	{	road->fMarkerScale = v;
@@ -713,24 +717,25 @@ void App::slSizeRoadP(SL)
 
 void App::slCamInert(SL)
 {
-	Real v = val/res;  pSet->cam_inert = v;
+	Real v = val;  pSet->cam_inert = v;
 	if (valCamInert){	valCamInert->setCaption(fToStr(v,2,4));  }
 }
 void App::slCamSpeed(SL)
 {
-	Real v = 0.1f + 3.9f * powf(val/res, 1.f);  pSet->cam_speed = v;
+	Real v = 0.1f + 3.9f * powf(val, 1.f);  pSet->cam_speed = v;
 	if (valCamSpeed){	valCamSpeed->setCaption(fToStr(v,2,4));  }
 }
 
 void App::slTerUpd(SL)
 {
-	pSet->ter_skip = val;
-	if (valTerUpd){	valTerUpd->setCaption(toStr(val));  }
+	int v = val * 20.f +slHalf;
+	pSet->ter_skip = v;
+	if (valTerUpd){	valTerUpd->setCaption(toStr(v));  }
 }
 
 void App::slSizeMinmap(SL)
 {
-	float v = 0.15f + 1.85f * val/res;	pSet->size_minimap = v;
+	float v = 0.15f + 1.85f * val;	pSet->size_minimap = v;
 	if (valSizeMinmap){	valSizeMinmap->setCaption(fToStr(v,3,4));  }
 	Real sz = pSet->size_minimap;  //int all = 0;
 	xm1 = 1-sz/asp, ym1 = -1+sz, xm2 = 1.0, ym2 = -1.0;
