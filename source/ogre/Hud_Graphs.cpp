@@ -51,7 +51,7 @@ void App::CreateGraphs()
 		{
 			GraphView* gv = new GraphView(scm,mWindow,mGUI);
 			int c = i%5;  /*clr*/
-			gv->Create(512/*len*/, "graph"+toStr(c+1), 0.13f/*alpha*/);
+			gv->Create(512/*len*/, "graph"+toStr(c+1), i==0||i==2 ? 0.52f : 0.f/*alpha*/);
 			switch (i)
 			{
 				case 0:  gv->CreateTitle("norm vel",	c, 0.0f, -2, 24);  break;
@@ -72,7 +72,9 @@ void App::CreateGraphs()
 		{
 			GraphView* gv = new GraphView(scm,mWindow,mGUI);
 			int c = i%2*2;
-			gv->Create(2*512, "graph"+toStr(c+1), 0.13f);
+			gv->Create(2*512, "graph"+toStr(c+1), c>0 ? 0.f : 0.4f);
+			if (c == 0)
+				gv->CreateGrid(2,1, 0.4f, 0.5f);  //64,256
 			switch (i)
 			{
 				case 0:  gv->CreateTitle("vol ampl.",		c, 0.0f,-2, 24);  break;
@@ -93,7 +95,9 @@ void App::CreateGraphs()
 		{
 			GraphView* gv = new GraphView(scm,mWindow,mGUI);
 			int c = i%4;
-			gv->Create(512, "graph"+toStr(c+1), i < 14 ? 0.14f : 0.22f);
+			gv->Create(512, "graph"+toStr(c+1), c>0 ? 0.f : (i < 14 ? 0.44f : 0.62f));
+			if (c == 0)
+				gv->CreateGrid(10,1, 0.2f, 0.4f);
 
 			const static float x0 = 0.0f, x1 = 0.07f, x2 = 0.08f;
 			const static char* cgt[8][2] = {

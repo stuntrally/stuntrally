@@ -22,7 +22,12 @@ public:
 				Ogre::String sMtr,	// material for line
 				float backAlpha);	// background transparency 0..1
 
-	void CreateTitle(Ogre::String title,// title text
+	void CreateGrid(int numH,		// == horizontal lines number   1 only frame
+					int numV,		// || vertical lines number		2 frame with center, 4 frame and 3 lines, etc.
+					float clr,		// color (rgb gray)
+					float alpha);	// transparency
+
+	void CreateTitle(Ogre::String title, // title text
 				char clr,			// text color id
 				float posX,			// pos in graph rect 0..1
 				char alignY,		// top:    -1 above rect, -2 in rect, -3 in rect 2nd line (below -2)
@@ -51,8 +56,9 @@ protected:
 	MyGUI::Gui* mGui;			    // for text only
 	const static MyGUI::Colour graphClr[5];  // text colors
 	
-	Ogre::ManualObject* moLine, *moBack;  //graph line, background
+	Ogre::ManualObject* moLine, *moBack, *moGrid;  //graph line, background, grid	
 	Ogre::SceneNode* node;
+	void moSetup(Ogre::ManualObject* mo, bool dynamic, Ogre::uint8 RQG);  // helper
 
 	MyGUI::TextBox* txt;
 	float txPosX;  int txH, txAlignY;  // title text pos, height

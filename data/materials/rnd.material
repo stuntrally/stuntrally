@@ -154,13 +154,29 @@ material graphBack
 	{
 		pass
 		{
-			ambient 0 0 0
-			specular 0 0 0 1
-			//lighting off
+			lighting off
 			depth_check off
 			depth_write off
-			scene_blend alpha_blend
 			cull_hardware none
+
+			scene_blend alpha_blend
+			diffuse vertexcolour
+		}
+	}
+}
+
+material graphGrid
+{
+	technique
+	{
+		pass
+		{
+			lighting off
+			depth_check off
+			depth_write off
+			cull_hardware none
+
+			scene_blend alpha_blend
 			diffuse vertexcolour
 		}
 	}
