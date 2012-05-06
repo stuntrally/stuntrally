@@ -1,16 +1,31 @@
 #include "pch.h"
-
 #include "GraphView.h"
 #include "RenderConst.h"
+#include "Defines.h"
+
 #include <OgreManualObject.h>
 #include <OgreSceneManager.h>
+#include <MyGUI_Gui.h>
+#include <MyGUI_TextBox.h>
 using namespace Ogre;
+using namespace MyGUI;
 
 
 //  ctor
-GraphView::GraphView(SceneManager* pSceneMgr)
-	:mSceneMgr(pSceneMgr), moLine(0),moBack(0), node(0), iCurX(0)
-{}
+GraphView::GraphView(SceneManager* pSceneMgr, RenderWindow* pWindow, MyGUI::Gui* pGui)
+	:mSceneMgr(pSceneMgr), mWindow(pWindow), mGui(pGui)
+	,moLine(0),moBack(0), node(0), iCurX(0)
+	,txt(0), txPosX(0.f), txH(0), txAlignY(-2)
+{  }
+
+//  same as in graph1..5 materials
+const Colour GraphView::graphClr[5] = {
+	Colour(0.0 ,1.0, 1.0),
+	Colour(0.0, 1.0, 0.0),
+	Colour(1.0, 1.0, 0.0),
+	Colour(1.0, 0.5, 0.0),
+	Colour(1.0, 0.0, 0.0)};
+
 
 //  Create
 //----------------------------------------------------------------------------------------
@@ -62,38 +77,83 @@ void GraphView::Create(int length, String sMtr, float backAlpha)
 		moBack->setVisibilityFlags(RV_Hud);
 		node->attachObject(moBack);
 	}
-	/// todo: ..
-	// helper grid lines =
-	// digits text for grid values (mygui)
-	// auto val range ?
-	// save in pSet
-	// gui tab= properties,size, etc
 }
 
-void GraphView::Destroy()
+//  grid lines  ----------------------
+//void GraphView::CreateGrid(int numH, int numV, r,g,b,a
+//for () ..  // == ||?
+
+// todo: ..
+// auto val range ?
+// gui tab [big]= edit pos,size,value,text,range,etc. save in graphs.xml
+
+
+//  Create title text
+//----------------------------------------------------------------------------------------
+void GraphView::CreateTitle(String title, char clr, float posX, char alignY, int fontHeight, bool shadow)
 {
-	if (moLine) {	mSceneMgr->destroyManualObject(moLine);  moLine = 0;  }
-	if (moBack) {	mSceneMgr->destroyManualObject(moBack);  moBack = 0;  }
-	if (node) {	mSceneMgr->destroySceneNode(node);  node = 0;  }
+	if (!mGui)  return;
+	static int cntr = 0;  ++cntr;
+
+	txt = mGui->createWidget<TextBox>("TextBox",
+		100,100, 360,32, Align::Center, "Back", "GrTx"+toStr(cntr));
+
+	if (shadow)
+	{	txt->setTextShadow(true);
+		txt->setTextShadowColour(Colour::Black);  }
+
+	txt->setFontHeight(fontHeight);
+	txt->setTextColour(graphClr[clr]);
+	txt->setCaption(title);
+	txt->setVisible(true);
+
+	txPosX = posX;  txH = fontHeight;  txAlignY = alignY;
 }
 
 //  Set Size
+//----------------------------------------------------------------------------------------
 void GraphView::SetSize(float posX,float posY,float sizeX,float sizeY)  // [0..1]  0,0 is left bottom
 {
 	if (!node)  return;
-	node->setPosition(-1.f+posX*2.f, -1.f+posY*2.f, 0.f);
+	float px = -1.f+posX*2.f, py = -1.f+posY*2.f;
+	node->setPosition(px, py, 0.f);
 	node->setScale(sizeX*2.f, sizeY*2.f, 1.f);
+
+	//  set title text pos
+	if (!txt || !mWindow)  return;
+	int wx = mWindow->getWidth(), wy = mWindow->getHeight();
+	int x = (posX + txPosX*sizeX) * wx;  float pszY = posY + sizeY;
+	switch (txAlignY)
+	{
+		case -1:  txt->setPosition(x, wy - pszY * wy - txH );  break;  // above
+		case -2:  txt->setPosition(x, wy - pszY * wy       );  break;  // 1 inside  top
+		case -3:  txt->setPosition(x, wy - pszY * wy + txH );  break;  // 2 below 1
+		case  0:  txt->setPosition(x, wy - pszY * wy       );  break;  // center
+		case  3:  txt->setPosition(x, wy - posY * wy-2*txH );  break;  // 2 above 1
+		case  2:  txt->setPosition(x, wy - posY * wy - txH );  break;  // 1 inside  bottom
+		case  1:  txt->setPosition(x, wy - posY * wy       );  break;  // below
+	}
+}
+//----------------------------------------------------------------------------------------
+
+//  Destroy
+void GraphView::Destroy()
+{
+	if (mGui && txt)  {  mGui->destroyWidget(txt);  txt = 0;  }
+	if (moLine) {	mSceneMgr->destroyManualObject(moLine);  moLine = 0;  }
+	if (moBack) {	mSceneMgr->destroyManualObject(moBack);  moBack = 0;  }
+	if (node) {		mSceneMgr->destroySceneNode(node);  node = 0;  }
 }
 
 //  show/hide
 void GraphView::SetVisible(bool visible)
 {
-	if (!node)  return;
-	node->setVisible(visible);
+	if (node)  node->setVisible(visible);
+	if (txt)   txt->setVisible(visible);
 }
 
 
-//  Update
+//  Add value  (into buffer)
 //------------------------------------------------------------------
 void GraphView::AddVal(float val)
 {
@@ -105,6 +165,8 @@ void GraphView::AddVal(float val)
 	++iCurX;  if (iCurX >= vals.size())  iCurX = 0;
 }
 
+//  Update  (on screen)
+//------------------------------------------------------------------
 void GraphView::Update()
 {
 	if (!node)  return;

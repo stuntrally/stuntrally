@@ -749,7 +749,7 @@ void CARDYNAMICS::Init(
 	chassisState->setWorldTransform(transform);
 
 	btRigidBody::btRigidBodyConstructionInfo info(chassisMass, chassisState, chassisShape, chassisInertia);
-	info.m_angularDamping = 0.4;  // 0.0!+  0.2-  0.5
+	info.m_angularDamping = 0.0;  // 0.0!+  0.2-  0.5
 	info.m_restitution = 0.0;  //...
 	info.m_friction = 0.7;  /// 0.4~ 0.75
 	///  chasis^
