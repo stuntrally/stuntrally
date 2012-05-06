@@ -54,6 +54,7 @@ public:
 	
 	std::vector<GraphView*> graphs;  /// graphs
 	void CreateGraphs(),DestroyGraphs(),UpdateGraphs(),GraphsNewVals();
+	int iEdLong,iCurLat,iCurLong;  ///* tire edit */
 	
 	// This list holds new positions info for every CarModel
 	PosInfo carPoses[CarPosCnt][8];  // [carsNum8]

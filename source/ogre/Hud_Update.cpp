@@ -511,22 +511,45 @@ void App::UpdateHUD(int carId, float time)
 
 
 	//  tire params  --------
-	#if 0
-	if (ovU[0] && pCar)
+	///* tire edit */
+	#if 1
+	if (pSet->graphs_type == 4)
+	if (ovU[4] && pCar && carId == 0)
 	{
-		String ss = "";
-		ss += "--Lateral--\n";
-		for (int a=0; a < pCar->dynamics.tire[0].transverse_parameters.size(); ++a)
-			ss += "a" + toStr(a) + " " + toStr( (Real)pCar->dynamics.tire[0].transverse_parameters[a] ) + "\n";
-			
-		//s += "a" + toStr(pCar->dynamics.tire[0].sigma_hat alpha_hat) + "\n";
-		//pCar->dynamics.tire[0].
-
-		//std::vector <T> longitudinal_parameters;
-		//std::vector <T> transverse_parameters;
-		//std::vector <T> aligning_parameters;
+		String ss = "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n";
+		const CARTIRE <CARDYNAMICS::T>& tire = pCar->dynamics.tire[0];
+		if (iEdLong == 0)
+		{
+			ss += "--Lateral--\n";
+			for (int a=0; a < tire.transverse_parameters.size(); ++a)
+			{	ss += (a == iCurLat) ? "<> " : "   ";
+				ss += "a" + toStr(a) + " " + fToStr( tire.transverse_parameters[a], 3,5) + "\n";
+			}
+			ss += "alpha hat\n";
+			//for (int a=0; a < tire.alpha_hat.size(); ++a)
+			//	ss += "  "+fToStr( tire.alpha_hat[a], 3,5) + "\n";
+			int z = (int)tire.alpha_hat.size()-1;
+				ss += "  "+fToStr( tire.alpha_hat[0], 3,5) + "\n";
+				ss += "  "+fToStr( tire.alpha_hat[z/2], 3,5) + "\n";
+				ss += "  "+fToStr( tire.alpha_hat[z], 3,5) + "\n";
+		}else
+		{
+			ss += "| Longit |\n";
+			for (int a=0; a < tire.longitudinal_parameters.size(); ++a)
+			{	ss += (a == iCurLong) ? "<> " : "   ";
+				ss += "b" + toStr(a) + " " + fToStr( tire.longitudinal_parameters[a], 3,5) + "\n";
+			}
+			ss += "sigma hat\n";
+			//for (int a=0; a < tire.sigma_hat.size(); ++a)
+			//	ss += "  "+fToStr( tire.sigma_hat[a], 3,5) + "\n";
+			int z = (int)tire.sigma_hat.size()-1;
+				ss += "  "+fToStr( tire.sigma_hat[0], 3,5) + "\n";
+				ss += "  "+fToStr( tire.sigma_hat[z/2], 3,5) + "\n";
+				ss += "  "+fToStr( tire.sigma_hat[z], 3,5) + "\n";
+		}
+		//aligning_parameters;
 		
-		ovU[0]->setCaption(ss);
+		ovU[4]->setCaption(ss);
 	}
 	#endif
 

@@ -132,8 +132,8 @@ void App::CreateGraphs()
 			gv->Create(512, String("graph")+(b?"B":"A")+toStr(c), i>0 ? 0.f : 0.5f);
 			if (c == 0)
 			{	gv->CreateGrid(10,10, 0.2f, 0.4f);
-				if (b)	gv->CreateTitle("Tire Fx", 0, 0.f, -2, 24);
-				else	gv->CreateTitle("Tire Fy", 2, 0.3f, 3, 24);
+				if (b)	gv->CreateTitle("Tire Fy lat --", 2, 0.f, -2, 24);
+				else	gv->CreateTitle("Tire Fx long |", 0, 0.3f, 3, 24);
 			}
 			gv->SetSize(0.00f, 0.40f, 0.50f, 0.50f);
 
@@ -213,7 +213,7 @@ void CAR::GraphsNewVals(double dt)		 // CAR
 		
 	case 4:  /// tire pacejka
 		static int ii = 0;  ii++;
-		if (gsi >= 12 && ii >= 16)
+		if (gsi >= 12 && ii >= 8)
 		{	ii = 0;
 			typedef CARDYNAMICS::T T;
 			CARTIRE <T> & tire = dynamics.tire[0];
@@ -221,9 +221,13 @@ void CAR::GraphsNewVals(double dt)		 // CAR
 
 			T fmin, fmax, frng, maxF;
 			const bool common = 1;  // common range for all
+			const bool cust = 1;
+			//const T fMAX = 6000.0, max_alpha = 360.0, max_sigma = 15.0;
+			const T fMAX = 6000.0, max_alpha = 160.0, max_sigma = 5.0;
 
+			///  Fy lateral --
 			const int NG = 6, LEN = 512;
-			for (int i=0; i < NG; ++i)  /// Fy lateral --
+			for (int i=0; i < NG; ++i)
 			{
 				bool comi = common || i == 0;
 				if (comi)
@@ -231,8 +235,8 @@ void CAR::GraphsNewVals(double dt)		 // CAR
 				
 				for (int x=0; x < LEN; ++x)
 				{
-					//T alpha = 360.0 * 2.0 * (x-LEN*0.5) / LEN;
-					T alpha = 360.0 * x / LEN;
+					//T alpha = max_alpha * 2.0 * (x-LEN*0.5) / LEN;
+					T alpha = max_alpha * x / LEN;
 					T n = (NG-1-i) * 0.5 + 0.1;
 					T fy = tire.Pacejka_Fy(alpha, n, 0, 1.0, maxF); // normF
 					//T fy = tire.Pacejka_Fy(alpha, 3, n-2, 1.0, maxF); // gamma
@@ -245,16 +249,20 @@ void CAR::GraphsNewVals(double dt)		 // CAR
 				}
 				if (comi)  // get range
 					frng = 1.0 / (fmax - fmin);
+				if (cust)
+				{	fmax = fMAX;  fmin = 0.0;  frng = 1.0 / (fmax - fmin);  }
 				
 				for (int x = 0; x < 512; ++x)
 					pApp->graphs[i]->AddVal( (ft[x] - fmin) * frng );
 
 				if (i==0)
-					pApp->graphs[i]->UpdTitle("Tire Fy--\n"
+					pApp->graphs[i]->UpdTitle("Fy Lateral--\n"
 						"min: "+fToStr((float)fmin,3,6)+"\n"+
 						"max: "+fToStr((float)fmax,3,6)+"\n");
 			}
-			for (int i=0; i < NG; ++i)  /// Fx long |
+
+			///  Fx long |
+			for (int i=0; i < NG; ++i)
 			{
 				bool comi = common || i == 0;
 				if (comi)
@@ -262,8 +270,8 @@ void CAR::GraphsNewVals(double dt)		 // CAR
 				
 				for (int x=0; x < LEN; ++x)
 				{
-					//T sigma = 360.0 * 2.0 * (x-LEN*0.5) / LEN;
-					T sigma = 15.0 * x / LEN;
+					//T sigma = max_sigma * 2.0 * (x-LEN*0.5) / LEN;
+					T sigma = max_sigma * x / LEN;
 					T n = (NG-1-i) * 0.5 + 0.1;
 					T fx = tire.Pacejka_Fx(sigma, n, 1.0, maxF); // normF
 					ft[x] = fx;
@@ -274,12 +282,14 @@ void CAR::GraphsNewVals(double dt)		 // CAR
 				}
 				if (comi)  // get range
 					frng = 1.0 / (fmax - fmin);
+				if (cust)
+				{	fmax = fMAX;  fmin = 0.0;  frng = 1.0 / (fmax - fmin);  }
 				
 				for (int x = 0; x < 512; ++x)
 					pApp->graphs[i+NG]->AddVal( (ft[x] - fmin) * frng );
 
 				if (i==0)
-					pApp->graphs[i+NG]->UpdTitle("Tire Fx |\n"
+					pApp->graphs[i+NG]->UpdTitle("Fx Longit |\n"
 						"min: "+fToStr((float)fmin,3,6)+"\n"+
 						"max: "+fToStr((float)fmax,3,6)+"\n");
 			}
