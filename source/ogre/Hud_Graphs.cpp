@@ -212,8 +212,9 @@ void CAR::GraphsNewVals(double dt)		 // CAR
 		}	break;
 		
 	case 4:  /// tire pacejka
-		if (gsi >= 12)
-		{
+		static int ii = 0;  ii++;
+		if (gsi >= 12 && ii >= 16)
+		{	ii = 0;
 			typedef CARDYNAMICS::T T;
 			CARTIRE <T> & tire = dynamics.tire[0];
 			T* ft = new T[512];
