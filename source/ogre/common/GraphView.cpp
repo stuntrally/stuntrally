@@ -130,8 +130,10 @@ void GraphView::CreateTitle(String title, char clr, float posX, char alignY, int
 	if (!mGui)  return;
 	static int cntr = 0;  ++cntr;
 
+	txPosX = posX;  txH = fontHeight;  txAlignY = alignY;
+
 	txt = mGui->createWidget<TextBox>("TextBox",
-		100,100, 360,32, Align::Center, "Back", "GrTx"+toStr(cntr));
+		100,100, 360,txH*4 /**/, Align::Center, "Back", "GrTx"+toStr(cntr));
 
 	if (shadow)
 	{	txt->setTextShadow(true);
@@ -141,8 +143,12 @@ void GraphView::CreateTitle(String title, char clr, float posX, char alignY, int
 	txt->setTextColour(graphClr[clr]);
 	txt->setCaption(title);
 	txt->setVisible(true);
+}
 
-	txPosX = posX;  txH = fontHeight;  txAlignY = alignY;
+void GraphView::UpdTitle(String title)
+{
+	if (!txt)  return;
+	txt->setCaption(title);
 }
 
 //  Set Size

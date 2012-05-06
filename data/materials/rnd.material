@@ -148,6 +148,24 @@ material graph3 : graphB {  technique  {  pass  {  emissive 1.0 1.0 0.0  }  }  }
 material graph4 : graphB {  technique  {  pass  {  emissive 1.0 0.5 0.0  }  }  }
 material graph5 : graphB {  technique  {  pass  {  emissive 1.0 0.0 0.0  }  }  }
 
+//material graphF0 : graphB {  technique  {  pass  {  emissive 1.0 1.0 0.9  }  }  }
+//material graphF1 : graphB {  technique  {  pass  {  emissive 1.0 1.0 0.6  }  }  }
+//material graphF2 : graphB {  technique  {  pass  {  emissive 1.0 1.0 0.3  }  }  }
+//material graphF3 : graphB {  technique  {  pass  {  emissive 1.0 1.0 0.0  }  }  }
+//material graphF4 : graphB {  technique  {  pass  {  emissive 1.0 0.8 0.0  }  }  }
+//material graphF5 : graphB {  technique  {  pass  {  emissive 1.0 0.6 0.0  }  }  }
+//material graphF6 : graphB {  technique  {  pass  {  emissive 1.0 0.4 0.0  }  }  }
+//material graphF7 : graphB {  technique  {  pass  {  emissive 1.0 0.2 0.0  }  }  }
+
+material graphF0 : graphB {  technique  {  pass  {  emissive 1.0 1.0 1.0  }  }  }
+material graphF1 : graphB {  technique  {  pass  {  emissive 1.0 0.8 1.0  }  }  }
+material graphF2 : graphB {  technique  {  pass  {  emissive 1.0 0.6 1.0  }  }  }
+material graphF3 : graphB {  technique  {  pass  {  emissive 1.0 0.4 1.0  }  }  }
+material graphF4 : graphB {  technique  {  pass  {  emissive 0.8 0.2 1.0  }  }  }
+material graphF5 : graphB {  technique  {  pass  {  emissive 0.6 0.2 1.0  }  }  }
+material graphF6 : graphB {  technique  {  pass  {  emissive 0.4 0.2 1.0  }  }  }
+material graphF7 : graphB {  technique  {  pass  {  emissive 0.2 0.2 1.0  }  }  }
+
 material graphBack
 {
 	technique

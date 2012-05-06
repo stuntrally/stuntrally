@@ -65,8 +65,8 @@ void App::CreateGraphs()
 
 			gv->SetVisible(pSet->show_graphs);
 			graphs.push_back(gv);
-		}
-		break;
+		}	break;
+
 	case 1:  /// sound
 		for (int i=0; i < 4; ++i)
 		{
@@ -87,8 +87,8 @@ void App::CreateGraphs()
 
 			gv->SetVisible(pSet->show_graphs);
 			graphs.push_back(gv);
-		}
-		break;
+		}	break;
+
 	case 2:  /// tire
 	case 3:	 // susp
 		for (int i=0; i < 8; ++i)
@@ -107,9 +107,9 @@ void App::CreateGraphs()
 				,"BL [_"			,"BL <v"
 				,"_] BR   slip"		,"v> BR"
 				,"FL [^"			,"FL <^"
-				,"^] FR   slide"	,"^> FR susp vel"
+				,"^] FR   lat --"	,"^> FR susp vel"
 				,"BL [_"			,"BL <v"
-				,"_] BR   lat --"	,"v> BR"	};
+				,"_] BR   slide"	,"v> BR"	};
 
 			int t = pSet->graphs_type == 2 ? 0 : 1;
 			float x = i%2==0 ? x0 : (t ? x2 : x1);  char y = i/2%2==0 ? -2 : -3;
@@ -121,8 +121,23 @@ void App::CreateGraphs()
 			
 			gv->SetVisible(pSet->show_graphs);
 			graphs.push_back(gv);
-		}
-		break;
+		}	break;
+
+	case 4:  /// tire pacejka
+		for (int i=0; i < 12; ++i)
+		{
+			GraphView* gv = new GraphView(scm,mWindow,mGUI);
+			int c = i%6;
+			gv->Create(512, "graphF"+toStr(c), c>0 ? 0.f : 0.5f);
+			if (c == 0)
+			{	gv->CreateGrid(10,10, 0.2f, 0.4f);
+				gv->CreateTitle("Tire Fy", c, 0.f, -2, 24);
+			}
+			gv->SetSize(0.00f, 0.40f, 0.50f, 0.50f);
+
+			gv->SetVisible(pSet->show_graphs);
+			graphs.push_back(gv);
+		}	break;
 	}
 }
 
@@ -190,5 +205,51 @@ void CAR::GraphsNewVals(double dt)		 // CAR
 			pApp->graphs[i+4]->AddVal(negPow(susp.GetVelocity(), 0.5) * 0.2f +0.5f);
 			pApp->graphs[i]->AddVal(susp.GetDisplacementPercent());
 		}	break;
+		
+	case 4:  /// tire pacejka
+		if (pApp->graphs.size() >= 6)
+		{
+			typedef CARDYNAMICS::T T;
+			CARTIRE <T> & tire = dynamics.tire[0];
+			T* ft = new T[512];
+
+			T fmin, fmax, frng, maxF;
+			const bool common = 1;  // common range for all
+
+			const int NG = 6, LEN = 512;
+			for (int i=0; i < NG; ++i)
+			{
+				bool comi = common || i == 0;
+				if (comi)
+				{	fmin = FLT_MAX;  fmax = FLT_MIN;  frng = 0.0;  }
+				
+				for (int x=0; x < LEN; ++x)
+				{
+					//T alpha = 360.0 * 2.0 * (x-LEN*0.5) / LEN;
+					T alpha = 360.0 * x / LEN;
+					T n = (NG-1-i) * 0.5 + 0.1;
+					T fy = tire.Pacejka_Fy(alpha, n, 0, 1.0, maxF); // normF
+					//T fy = tire.Pacejka_Fy(alpha, 3, n-2, 1.0, maxF); // gamma
+					//T fy = tire.Pacejka_Fy(alpha, 3, 0.4, i / 8.0, maxF); // frict
+					ft[x] = fy;
+
+					if (comi)  // get min, max
+					{	if (fy < fmin)  fmin = fy;
+						if (fy > fmax)  fmax = fy;  }
+				}
+				if (comi)  // get range
+					frng = 1.0 / (fmax - fmin);
+				
+				for (int x = 0; x < 512; ++x)
+					pApp->graphs[i]->AddVal( (ft[x] - fmin) * frng );
+
+				if (i==0)
+					pApp->graphs[i]->UpdTitle("Tire Fy\n"
+						"min: "+fToStr((float)fmin,3,6)+"\n"+
+						"max: "+fToStr((float)fmax,3,6)+"\n");
+			}
+			delete[]ft;
+		}	break;
+		
 	}
 }

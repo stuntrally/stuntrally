@@ -39,13 +39,14 @@ public:
 	//  Set position and size on screen
 	void SetSize(float posX,float posY,
 				float sizeX,float sizeY);  // [0..1]  0,0 is left bottom
-	void UpdTxtPos();
 
 	void SetVisible(bool visible);  // show/hide
 	
 	//  Update, fill
 	void AddVal(float val);  // adds value at end of graph, moves left (in buffer)
 	void Update();  // ogre update (on screen)
+
+	void UpdTitle(Ogre::String title);
 
 protected:
 	std::vector<float> vals;  // values buffer

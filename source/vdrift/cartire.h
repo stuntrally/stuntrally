@@ -15,6 +15,9 @@ bool isnan(float number);
 bool isnan(double number);
 #endif
 
+//#include "../ogre/common/Defines.h"
+
+
 template <typename T>
 class CARTIRE
 {
@@ -446,8 +449,10 @@ public:
 		T S = alpha + a[8]*gamma+a[9]*Fz+a[10];
 		T Sv = ( ( a[11]*Fz+a[12] ) *gamma + a[13] ) *Fz+a[14];
 		T Fy = D*sin ( a[0]*atan ( S*B+E* ( atan ( S*B )-S*B ) ) ) +Sv;
-
+		
 		maxforce_output = D+Sv;
+
+		//LogO("Fy: "+fToStr(alpha,4,6)+" "+fToStr(Fz,4,6)+" "+fToStr(gamma,4,6)+" "+fToStr(friction_coeff,4,6)+" "+fToStr(maxforce_output,4,6));
 
 		assert(!isnan(Fy));
 		return Fy;
