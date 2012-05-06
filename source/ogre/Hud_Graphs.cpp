@@ -124,14 +124,16 @@ void App::CreateGraphs()
 		}	break;
 
 	case 4:  /// tire pacejka
-		for (int i=0; i < 12; ++i)
+		const int NG = 6;
+		for (int i=0; i < NG*2; ++i)
 		{
 			GraphView* gv = new GraphView(scm,mWindow,mGUI);
-			int c = i%6;
-			gv->Create(512, "graphF"+toStr(c), c>0 ? 0.f : 0.5f);
+			int c = i%NG;  bool b = i >= NG;
+			gv->Create(512, String("graph")+(b?"B":"A")+toStr(c), i>0 ? 0.f : 0.5f);
 			if (c == 0)
 			{	gv->CreateGrid(10,10, 0.2f, 0.4f);
-				gv->CreateTitle("Tire Fy", c, 0.f, -2, 24);
+				if (b)	gv->CreateTitle("Tire Fx", 0, 0.f, -2, 24);
+				else	gv->CreateTitle("Tire Fy", 2, 0.3f, 3, 24);
 			}
 			gv->SetSize(0.00f, 0.40f, 0.50f, 0.50f);
 
@@ -145,10 +147,11 @@ void App::CreateGraphs()
 //-----------------------------------------------------------------------------------
 void App::GraphsNewVals()				// Game
 {
+	size_t gsi = graphs.size();
 	switch (pSet->graphs_type)
 	{
 	case 0:  /// bullet hit  force,normvel, sndnum,scrap,screech
-		if (graphs.size() >= 5)
+		if (gsi >= 5)
 		if (carModels.size() > 0)
 		{
 			const CARDYNAMICS& cd = carModels[0]->pCar->dynamics;
@@ -161,7 +164,7 @@ void App::GraphsNewVals()				// Game
 		break;
 
 	case 1:  /// sound  vol,pan, wave L,R
-	if (graphs.size() >= 4)
+	if (gsi >= 4)
 	{	float minL=1.f,maxL=-1.f,minR=1.f,maxR=-1.f;
 		//for (int i=0; i < 4*512; i+=4)  if (sound.Init(/*2048*/512
 		for (int i=0; i < 2*512; ++i)
@@ -185,12 +188,14 @@ void App::GraphsNewVals()				// Game
 	}
 }
 
+//-----------------------------------------------------------------------------------
 void CAR::GraphsNewVals(double dt)		 // CAR
 {	
+	size_t gsi = pApp->graphs.size();
 	switch (pApp->pSet->graphs_type)
 	{
 	case 2:  /// tire slide,slip
-		if (pApp->graphs.size() >= 8)
+		if (gsi >= 8)
 		for (int i=0; i < 4; ++i)
 		{
 			pApp->graphs[i]->AddVal(negPow(dynamics.tire[i].slideratio, 0.2) * 0.12f +0.5f);
@@ -198,7 +203,7 @@ void CAR::GraphsNewVals(double dt)		 // CAR
 		}	break;
 		
 	case 3:  /// suspension
-		if (pApp->graphs.size() >= 8)
+		if (gsi >= 8)
 		for (int i=0; i < 4; ++i)
 		{
 			const CARSUSPENSION <CARDYNAMICS::T> & susp = dynamics.GetSuspension((WHEEL_POSITION)i);
@@ -207,7 +212,7 @@ void CAR::GraphsNewVals(double dt)		 // CAR
 		}	break;
 		
 	case 4:  /// tire pacejka
-		if (pApp->graphs.size() >= 6)
+		if (gsi >= 12)
 		{
 			typedef CARDYNAMICS::T T;
 			CARTIRE <T> & tire = dynamics.tire[0];
@@ -217,7 +222,7 @@ void CAR::GraphsNewVals(double dt)		 // CAR
 			const bool common = 1;  // common range for all
 
 			const int NG = 6, LEN = 512;
-			for (int i=0; i < NG; ++i)
+			for (int i=0; i < NG; ++i)  /// Fy lateral --
 			{
 				bool comi = common || i == 0;
 				if (comi)
@@ -244,7 +249,36 @@ void CAR::GraphsNewVals(double dt)		 // CAR
 					pApp->graphs[i]->AddVal( (ft[x] - fmin) * frng );
 
 				if (i==0)
-					pApp->graphs[i]->UpdTitle("Tire Fy\n"
+					pApp->graphs[i]->UpdTitle("Tire Fy--\n"
+						"min: "+fToStr((float)fmin,3,6)+"\n"+
+						"max: "+fToStr((float)fmax,3,6)+"\n");
+			}
+			for (int i=0; i < NG; ++i)  /// Fx long |
+			{
+				bool comi = common || i == 0;
+				if (comi)
+				{	fmin = FLT_MAX;  fmax = FLT_MIN;  frng = 0.0;  }
+				
+				for (int x=0; x < LEN; ++x)
+				{
+					//T sigma = 360.0 * 2.0 * (x-LEN*0.5) / LEN;
+					T sigma = 15.0 * x / LEN;
+					T n = (NG-1-i) * 0.5 + 0.1;
+					T fx = tire.Pacejka_Fx(sigma, n, 1.0, maxF); // normF
+					ft[x] = fx;
+
+					if (comi)  // get min, max
+					{	if (fx < fmin)  fmin = fx;
+						if (fx > fmax)  fmax = fx;  }
+				}
+				if (comi)  // get range
+					frng = 1.0 / (fmax - fmin);
+				
+				for (int x = 0; x < 512; ++x)
+					pApp->graphs[i+NG]->AddVal( (ft[x] - fmin) * frng );
+
+				if (i==0)
+					pApp->graphs[i+NG]->UpdTitle("Tire Fx |\n"
 						"min: "+fToStr((float)fmin,3,6)+"\n"+
 						"max: "+fToStr((float)fmax,3,6)+"\n");
 			}
