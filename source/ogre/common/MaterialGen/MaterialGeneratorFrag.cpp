@@ -237,7 +237,7 @@ void MaterialGenerator::fpCalcShadowSource(Ogre::StringUtil::StrStreamType& outS
 		"	float shadowingRT;";
 		
 		outStream << "\n		";
-		for (uint i = 0; i < mParent->getNumShadowTex(); ++i)
+		for (int i = 0; i < mParent->getNumShadowTex(); ++i)
 			outStream << "float4 invShadowMapSize" << i << "; ";
 			
 		outStream <<
