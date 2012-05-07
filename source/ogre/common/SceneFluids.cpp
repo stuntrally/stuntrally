@@ -1,7 +1,6 @@
 #include "pch.h"
 #include "../common/RenderConst.h"
 #include "../common/MaterialGen/MaterialFactory.h"
-#include "../common/QTimer.h"
 
 #ifdef ROAD_EDITOR
 	#include "../common/Defines.h"
@@ -21,6 +20,7 @@
 #include <OgreMeshManager.h>
 #include <OgreMaterialManager.h>
 #include <OgreEntity.h>
+#include "../common/QTimer.h"
 
 using namespace Ogre;
 
