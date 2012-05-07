@@ -4,7 +4,6 @@
 #include "../../road/Road.h"  // sun rot
 #include "../common/MaterialGen/TerrainMaterialGen.h"
 #include "../common/MaterialGen/MaterialFactory.h"
-#include "../common/QTimer.h"
 
 #ifdef ROAD_EDITOR
 	#include "../../editor/OgreApp.h"
@@ -25,6 +24,7 @@
 #include <OgreMeshManager.h>
 #include <OgreMaterialManager.h>
 #include <OgreEntity.h>
+#include "../common/QTimer.h"
 
 using namespace Ogre;
 
