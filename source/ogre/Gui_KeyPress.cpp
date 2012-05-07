@@ -94,6 +94,7 @@ if (!bAssignKey)
 		if (vo != v)
 		{	float fv = float(v) / graph_types;
 			slGraphsType(slGraphT, fv);  slGraphT->setValue(fv);
+			if (v == 4)  iUpdTireGr = 1;  //upd now
 		}
 	}
 
@@ -200,18 +201,21 @@ if (!bAssignKey)
 	///* tire edit */
 	if (pSet->graphs_type == 4)
 	{
-		int& iCL = iEdLong==1 ? iCurLong : iCurLat;
-		int iCnt = iEdLong==1 ? 11 : 15;
+		int& iCL = iEdTire==1 ? iCurLong : (iEdTire==0 ? iCurLat : iCurAlign);
+		int iCnt = iEdTire==1 ? 11 : (iEdTire==0 ? 15 : 18);
 		switch (arg.key)
 		{
-			case KC_A: case KC_HOME: case KC_NUMPAD7:
-				iEdLong = 1-iEdLong;  return true;
+			case KC_HOME: case KC_NUMPAD7:  // mode long/lat
+				iEdTire = iEdTire==1 ? 0 : 1;  iUpdTireGr=1;  return true;
 
-			case KC_1: case KC_PGUP: case KC_NUMPAD9:
-				iCL = (iCL-1 +iCnt)%iCnt;  return true;
+			case KC_END: case KC_NUMPAD1:	// mode align
+				iEdTire = iEdTire==2 ? 0 : 2;  iUpdTireGr=1;  return true;
 
-			case KC_2: case KC_PGDOWN: case KC_NUMPAD3:
-				iCL = (iCL+1)%iCnt;  return true;
+			/*case KC_1:*/ case KC_PGUP: case KC_NUMPAD9:    // prev val
+				iCL = (iCL-1 +iCnt)%iCnt;  iUpdTireGr=1;  return true;
+
+			/*case KC_2:*/ case KC_PGDOWN: case KC_NUMPAD3:  // next val
+				iCL = (iCL+1)%iCnt;  iUpdTireGr=1;  return true;
 		}
 	}
 	

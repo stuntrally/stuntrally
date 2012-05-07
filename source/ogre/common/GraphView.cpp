@@ -20,12 +20,30 @@ GraphView::GraphView(SceneManager* pSceneMgr, RenderWindow* pWindow, MyGUI::Gui*
 {  }
 
 //  same as in graph1..5 materials
-const Colour GraphView::graphClr[5] = {
-	Colour(0.0 ,1.0, 1.0),
+const Colour GraphView::graphClr[5+8+8] = {
+	Colour(0.0, 1.0, 1.0),
 	Colour(0.0, 1.0, 0.0),
 	Colour(1.0, 1.0, 0.0),
 	Colour(1.0, 0.5, 0.0),
-	Colour(1.0, 0.0, 0.0)};
+	Colour(1.0, 0.0, 0.0),
+
+	Colour(1.0, 1.0, 1.0),
+	Colour(0.8, 1.0, 1.0),
+	Colour(0.6, 1.0, 1.0),
+	Colour(0.4, 1.0, 1.0),
+	Colour(0.2, 0.8, 1.0),
+	Colour(0.2, 0.6, 1.0),
+	Colour(0.2, 0.4, 1.0),
+	Colour(0.2, 0.2, 1.0),
+
+	Colour(1.0, 1.0, 0.9),
+	Colour(1.0, 1.0, 0.6),
+	Colour(1.0, 1.0, 0.3),
+	Colour(1.0, 1.0, 0.0),
+	Colour(1.0, 0.8, 0.0),
+	Colour(1.0, 0.6, 0.0),
+	Colour(1.0, 0.4, 0.0),
+	Colour(1.0, 0.2, 0.0) };
 
 
 //  Create
@@ -46,20 +64,22 @@ void GraphView::moSetup(ManualObject* mo, bool dynamic, Ogre::uint8 RQG)
 void GraphView::Create(int length, String sMtr, float backAlpha)
 {
 	vals.resize(length);  iCurX = 0;  //size-1
+	node = mSceneMgr->getRootSceneNode()->createChildSceneNode();
 	
 	//  graph line  ----------------------
-	moLine = mSceneMgr->createManualObject();
-	moSetup(moLine, true, RQG_Hud3);
-	moLine->estimateVertexCount(length);
+	if (length > 1)  // at least 2, use 1 for text only
+	{
+		moLine = mSceneMgr->createManualObject();
+		moSetup(moLine, true, RQG_Hud3);
+		moLine->estimateVertexCount(length);
 
-	moLine->begin(sMtr, RenderOperation::OT_LINE_STRIP);
-	float s = 0.5f, asp = 1.f;
-	moLine->position(0,0, 0);  //mo->colour(0,1,0);
-	moLine->position(1,0, 0);  //mo->colour(0,0,0);
-	moLine->end();
-
-	node = mSceneMgr->getRootSceneNode()->createChildSceneNode();
-	node->attachObject(moLine);
+		moLine->begin(sMtr, RenderOperation::OT_LINE_STRIP);
+		float s = 0.5f, asp = 1.f;
+		moLine->position(0,0, 0);
+		moLine->position(1,0, 0);
+		moLine->end();
+		node->attachObject(moLine);
+	}
 
 	//  backgr rect  ----------------------
 	if (backAlpha > 0.01f)
@@ -126,7 +146,7 @@ void GraphView::CreateGrid(int numH, int numV, /*char clr,*/ float clr, float al
 
 //  Create title text
 //----------------------------------------------------------------------------------------
-void GraphView::CreateTitle(String title, char clr, float posX, char alignY, int fontHeight, bool shadow)
+void GraphView::CreateTitle(String title, char clr, float posX, char alignY, int fontHeight, int numLines, bool shadow)
 {
 	if (!mGui)  return;
 	static int cntr = 0;  ++cntr;
@@ -134,7 +154,7 @@ void GraphView::CreateTitle(String title, char clr, float posX, char alignY, int
 	txPosX = posX;  txH = fontHeight;  txAlignY = alignY;
 
 	txt = mGui->createWidget<TextBox>("TextBox",
-		100,100, 360,txH*4 /**/, Align::Center, "Back", "GrTx"+toStr(cntr));
+		100,100, 360,txH*numLines, Align::Center, "Back", "GrTx"+toStr(cntr));
 
 	if (shadow)
 	{	txt->setTextShadow(true);
@@ -212,7 +232,7 @@ void GraphView::AddVal(float val)
 //------------------------------------------------------------------
 void GraphView::Update()
 {
-	if (!node)  return;
+	if (!node || !moLine)  return;
 	
 	size_t size = vals.size();
 	int i = iCurX % size;  // vals id

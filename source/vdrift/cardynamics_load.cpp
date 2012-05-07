@@ -522,7 +522,6 @@ bool CARDYNAMICS::Load(CONFIGFILE & c, std::ostream & error_output)
 			//todo: copy, left and right tires are same
 			//and make option to have 4 tires the same
 			//tires array[] for all cars, asphalt/gravel, not in each .car file
-			//todo: editing tire coeffs in game, call this in update
 		}
 		tir.update(); /// time
 		float dt = tir.dt * 1000.f;

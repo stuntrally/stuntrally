@@ -122,26 +122,35 @@ bool App::frameStart(Real time)
 	///* tire edit */
 	if (pSet->graphs_type == 4 && carModels.size() > 0)
 	{
-		int k = (isKey(OIS::KC_S) ? -1 : 0) + (isKey(OIS::KC_D) ? 1 : 0);
+		int k = (isKey(OIS::KC_1) || isKey(OIS::KC_DIVIDE)  ? -1 : 0)
+			  + (isKey(OIS::KC_2) || isKey(OIS::KC_MULTIPLY) ? 1 : 0);
 		if (k)
 		{
-			double mul = shift ? 0.1 : (ctrl ? 4.0 : 1.0);
+			double mul = shift ? 0.2 : (ctrl ? 4.0 : 1.0);
+			mul *= 0.005;  // par
 			typedef CARDYNAMICS::T T;
 
 			CARDYNAMICS& cd = carModels[0]->pCar->dynamics;
-			if (iEdLong == 1)  // longit |
+			if (iEdTire == 1)  // longit |
 			{
-				T& val = cd.tire[0].longitudinal_parameters[iCurLong];
-				val *= 1.0 + 0.01*mul*k;  // modify 1st
-				for (int i=1; i<4; ++i)  // copy for rest
-					cd.tire[i].longitudinal_parameters[iCurLong] = val;
+				T& val = cd.tire[0].longitudinal_parameters[iCurLong];  // modify 1st
+				val += mul*k * (1 + abs(val));
+				for (int i=1; i<4; ++i)
+					cd.tire[i].longitudinal_parameters[iCurLong] = val;  // copy for rest
 			}
-			else  // lateral --
+			else if (iEdTire == 0)  // lateral --
 			{
 				T& val = cd.tire[0].transverse_parameters[iCurLat];
-				val *= 1.0 + 0.01*mul*k;  // modify 1st
-				for (int i=1; i<4; ++i)  // copy for rest
+				val += mul*k * (1 + abs(val));
+				for (int i=1; i<4; ++i)
 					cd.tire[i].transverse_parameters[iCurLat] = val;
+			}
+			else  // align o
+			{
+				T& val = cd.tire[0].aligning_parameters[iCurAlign];
+				val += mul*k * (1 + abs(val));
+				for (int i=1; i<4; ++i)
+					cd.tire[i].aligning_parameters[iCurAlign] = val;
 			}
 
 			//  update hat, 1st
@@ -150,6 +159,7 @@ bool App::frameStart(Real time)
 			{	cd.tire[i].sigma_hat = cd.tire[0].sigma_hat;
 				cd.tire[i].alpha_hat = cd.tire[0].alpha_hat;
 			}
+			iUpdTireGr = 1;
 		}
 	}
 	//...................................................................

@@ -33,6 +33,7 @@ public:
 				char alignY,		// top:    -1 above rect, -2 in rect, -3 in rect 2nd line (below -2)
 									// bottom:  1 below rect,  2 in rect,  3 in rect 2nd line (above 2)
 				int fontHeight,		// in pixels eg.24
+				int numLines=2,		// max number of text lines
 				bool shadow=false);	// shadow under text
 	void Destroy();
 
@@ -55,7 +56,7 @@ protected:
 	Ogre::SceneManager* mSceneMgr;  // for creating
 	Ogre::RenderWindow* mWindow;    // gui resolution-
 	MyGUI::Gui* mGui;			    // for text only
-	const static MyGUI::Colour graphClr[5];  // text colors
+	const static MyGUI::Colour graphClr[5+8+8];  // text colors
 	
 	Ogre::ManualObject* moLine, *moBack, *moGrid;  //graph line, background, grid	
 	Ogre::SceneNode* node;
