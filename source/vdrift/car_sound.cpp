@@ -384,7 +384,7 @@ void CAR::UpdateSounds(float dt)
 		case TRACKSURFACE::CONCRETE:	snd = tiresqueal;	maxgain = 0.6;	pitchvar = 0.25;	break;
 		case TRACKSURFACE::SAND:		snd = grasssound;	maxgain = 0.5;  pitchvar = 0.25;	break;
 						default:		snd = tiresqueal;	maxgain = 0.0;	break;
-		}	//more.. sand,snow,grass-new,mud..
+		}	///more.. sand,snow,grass-new,mud..
 
 		float pitch = std::min(1.f, std::max(0.f, (whVel[i]-5.0f)*0.1f ));
 		pitch = 1.0 - pitch;

@@ -118,6 +118,42 @@ bool App::frameStart(Real time)
 		UpdateGraphs();
 	}
 
+	//...................................................................
+	///* tire edit */
+	if (pSet->graphs_type == 4 && carModels.size() > 0)
+	{
+		int k = (isKey(OIS::KC_S) ? -1 : 0) + (isKey(OIS::KC_D) ? 1 : 0);
+		if (k)
+		{
+			double mul = shift ? 0.1 : (ctrl ? 4.0 : 1.0);
+			typedef CARDYNAMICS::T T;
+
+			CARDYNAMICS& cd = carModels[0]->pCar->dynamics;
+			if (iEdLong == 1)  // longit |
+			{
+				T& val = cd.tire[0].longitudinal_parameters[iCurLong];
+				val *= 1.0 + 0.01*mul*k;  // modify 1st
+				for (int i=1; i<4; ++i)  // copy for rest
+					cd.tire[i].longitudinal_parameters[iCurLong] = val;
+			}
+			else  // lateral --
+			{
+				T& val = cd.tire[0].transverse_parameters[iCurLat];
+				val *= 1.0 + 0.01*mul*k;  // modify 1st
+				for (int i=1; i<4; ++i)  // copy for rest
+					cd.tire[i].transverse_parameters[iCurLat] = val;
+			}
+
+			//  update hat, 1st
+			cd.tire[0].CalculateSigmaHatAlphaHat();
+			for (int i=1; i<4; ++i)  // copy for rest
+			{	cd.tire[i].sigma_hat = cd.tire[0].sigma_hat;
+				cd.tire[i].alpha_hat = cd.tire[0].alpha_hat;
+			}
+		}
+	}
+	//...................................................................
+
 
 	if (bGuiReinit)  // after language change from combo
 	{	bGuiReinit = false;

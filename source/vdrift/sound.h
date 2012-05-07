@@ -135,7 +135,7 @@ class SOUNDBUFFERLIBRARY
 		const SOUNDBUFFER * GetBuffer(const std::string & name, std::ostream & error_output) const
 		{
 			const SOUNDBUFFER * buf = GetBuffer(name);
-			if (!buf){	error_output << "Can't load sound: " << name << std::endl;	return false;	}
+			if (!buf){	error_output << "Can't load sound: " << name << std::endl;	return NULL;	}
 			return buf;
 		}
 };

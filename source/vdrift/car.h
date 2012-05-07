@@ -358,6 +358,8 @@ public:
 		
 
 	//-------------------------------------------------------------------------------
+	void GraphsNewVals(double dt);
+	
 	///-- models offset
 	float vInteriorOffset[3];
 	// exhaust position for boost particles 

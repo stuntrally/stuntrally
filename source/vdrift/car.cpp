@@ -239,20 +239,10 @@ void CAR::Update(double dt)
 {
 	dynamics.Update();
 	UpdateSounds(dt);
-	
-	///  graphs new values  .-_/\_.-
-	if (pApp->pSet->graphs_type == 2 && pApp->graphs.size() >= 8 && id == 0)
-	{
-		for (int i=0; i < 4; ++i)
-		{	//  car susp
-			//pApp->graphs[i]->AddVal(dynamics.GetSuspension((WHEEL_POSITION)i).GetVelocity() * 0.6f +0.5f);
-			pApp->graphs[i]->AddVal(dynamics.GetSuspension((WHEEL_POSITION)i).GetDisplacementPercent());
-			//  car tires slip,slide
-			//pApp->graphs[i]->AddVal(dynamics.tire[i].slideratio * 0.03f +0.5f);
-			pApp->graphs[i+4]->AddVal(dynamics.tire[i].slipratio * 0.1f +0.5f);
-		}
-	}
 
+	///  graphs new values  .-_/\_.-
+	if (pApp->pSet->show_graphs && id == 0)  // for 1st car
+		GraphsNewVals(dt);  // implementation in Hud_Graphs.cpp
 }
 
 

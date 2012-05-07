@@ -1215,6 +1215,10 @@
 					>
 				</File>
 				<File
+					RelativePath=".\source\ogre\Gui_KeyPress.cpp"
+					>
+				</File>
+				<File
 					RelativePath=".\source\ogre\Gui_Network.cpp"
 					>
 				</File>
