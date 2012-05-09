@@ -297,8 +297,9 @@ void App::newPoses(float time)  // time only for camera update
 						&& carM->eType == CarModel::CT_LOCAL)  // only local car(s)
 					{
 						///  Lap
-						bool finished = pGame->timer.GetCurrentLap(c) >= pSet->game.num_laps;
-						bool best = finished ? false :  // dont inc laps when race over
+						bool finished = (pGame->timer.GetCurrentLap(c) >= pSet->game.num_laps)
+										&& (mClient || pSet->game.local_players > 1);
+						bool best = finished ? false :  // dont inc laps when race over (in multiplayer or splitscreen mode)
 							pGame->timer.Lap(c, 0,0, !finished, pSet->game.trackreverse);  //,boost_type?
 						double timeCur = pGame->timer.GetPlayerTimeTot(c);
 
