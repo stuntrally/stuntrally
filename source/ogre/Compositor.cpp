@@ -335,6 +335,10 @@ void clamp(Ogre::Vector2 &v)  {
 	v.x = v.x < -1 ? -1 : (v.x > 1 ? 1 : v.x);
 	v.y = v.y < -1 ? -1 : (v.y > 1 ? 1 : v.y);
 }
+void clamp(Ogre::Vector3 &v)  {
+	v.x = v.x < -1 ? -1 : (v.x > 1 ? 1 : v.x);
+	v.y = v.y < -1 ? -1 : (v.y > 1 ? 1 : v.y);
+}
 
 void GodRaysListener::notifyMaterialRender(Ogre::uint32 pass_id, Ogre::MaterialPtr &mat)
 {
@@ -363,23 +367,13 @@ void GodRaysListener::notifyMaterialRender(Ogre::uint32 pass_id, Ogre::MaterialP
 		Ogre::Vector3 sunPosition = sun->getDirection() *100;
 		Ogre::Vector3 worldViewPosition = cam->getViewMatrix() * sunPosition;
 		Ogre::Vector3 hcsPosition = cam->getProjectionMatrix() * worldViewPosition;
-		if((hcsPosition.x>1 && hcsPosition.y>1)
-			|| (hcsPosition.x<-1 && hcsPosition.y<-1)
-			|| (hcsPosition.z<1.0f))
-		{
-			SunScreenSpacePosition =Ogre::Vector4 ( 0, 0, 0, 1 );
-		}
-		else
-		{
-				
-			
+		float unclampedLuminance = abs(hcsPosition.x)+abs(hcsPosition.y);
+		clamp(hcsPosition);		
 		Ogre::Vector2 sunScreenSpacePosition = Ogre::Vector2(0.5f + (0.5f * hcsPosition.x), 0.5f + (0.5f * -hcsPosition.y));
-		clamp(sunScreenSpacePosition);
 		SunScreenSpacePosition = Ogre::Vector4 ( sunScreenSpacePosition.x, sunScreenSpacePosition.y, 0, 1 );
-		enable=1.0;
-			
-		}
+		enable = (1.0f / ((unclampedLuminance > 1.0f) ? unclampedLuminance : 1.0f)) * (hcsPosition.z < 1 ? 0.0f : 1.0f);
 	}
+	
 	params->setNamedConstant("lightPosition", SunScreenSpacePosition);
 	fparams->setNamedConstant("enableEffect", enable);
 	

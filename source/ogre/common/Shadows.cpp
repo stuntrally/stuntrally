@@ -1,8 +1,8 @@
 #include "pch.h"
 #include "../common/Defines.h"
+#include "../common/RenderConst.h"
 #include "../common/MaterialGen/TerrainMaterialGen.h"
 #include "../common/MaterialGen/MaterialFactory.h"
-
 
 #ifdef ROAD_EDITOR
 	#include "../../editor/OgreApp.h"
@@ -14,8 +14,9 @@
 	#include "../../road/Road.h"
 	#include "../SplitScreen.h"
 #endif
-	#include "../../paged-geom/PagedGeometry.h"
-	#include "../../paged-geom/GrassLoader.h"
+#include "../../paged-geom/PagedGeometry.h"
+#include "../../paged-geom/GrassLoader.h"
+
 #include <OgreTerrain.h>
 #include <OgreShadowCameraSetupLiSPSM.h>
 #include <OgreShadowCameraSetupPSSM.h>
@@ -23,6 +24,7 @@
 #include <OgreOverlay.h>
 #include <OgreOverlayContainer.h>
 #include <OgreOverlayManager.h>
+
 #include "../common/QTimer.h"
 
 using namespace Ogre;

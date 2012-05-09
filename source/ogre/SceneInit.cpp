@@ -8,15 +8,15 @@
 #include "SplitScreen.h"
 #include "common/RenderConst.h"
 #include "common/MaterialGen/MaterialFactory.h"
-#include "../network/gameclient.hpp"
+#include "common/GraphView.h"
 
+#include "../network/gameclient.hpp"
 #include "../btOgre/BtOgrePG.h"
 #include "../btOgre/BtOgreGP.h"
+#include "../paged-geom/PagedGeometry.h"
 
 #include <boost/thread.hpp>
 #include <boost/filesystem.hpp>
-
-#include "../paged-geom/PagedGeometry.h"
 
 #include <MyGUI_OgrePlatform.h>
 #include "common/MyGUI_D3D11.h"
@@ -155,6 +155,9 @@ void App::LoadCleanUp()  // 1 first
 	updMouse();
 	
 	DestroyObjects();
+	
+	DestroyGraphs();
+	
 
 	// rem old track
 	if (resTrk != "")  Ogre::Root::getSingletonPtr()->removeResourceLocation(resTrk);

@@ -46,6 +46,7 @@
 	<Tag name="TBLap">Lap</Tag>
 	<Tag name="TBPlace">Place</Tag>
 	<Tag name="CamInfoStrings">Type,Yaw,Pitch,Dist,Height,Speed,Offset,LEFT,RIGHT,Middle,Wheel,shift,Rotate,reset,move,H,Pos</Tag>
+	<Tag name="Graphs">Graphs</Tag>
 	
 <!--  ............................................................................................................................  -->
 
@@ -468,7 +469,13 @@
 	<Tag name="VolMaster">Master</Tag>
 	<Tag name="Engine">Engine</Tag>
 	<Tag name="Tires">Tires</Tag>
+	<Tag name="Suspension">Suspension</Tag>
 	<Tag name="Environment">Environment</Tag>
+
+	<Tag name="FluidSplash">Fluid Splash</Tag>
+	<Tag name="FluidCont">Fluid Cont.</Tag>
+	<Tag name="CarCrash">Car Crash</Tag>
+	<Tag name="CarScrap">Car Scrap</Tag>
 
 
 	<!--  About  -->

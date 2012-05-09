@@ -11,7 +11,7 @@
 #endif
 
 
-std::string getSystemLanguage()
+static std::string getSystemLanguage()
 {
 	const std::string default_lang = "en";
 

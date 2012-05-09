@@ -2,8 +2,11 @@
 #include "../ogre/common/Defines.h"
 #include "OgreApp.h"
 #include "../vdrift/pathmanager.h"
-//#include "../road/Road.h"
+
 #include "../ogre/common/Gui_Def.h"
+#include "../ogre/common/MultiList2.h"
+#include "../ogre/common/Slider.h"
+
 using namespace MyGUI;
 using namespace Ogre;
 
@@ -15,6 +18,11 @@ void App::InitGui()
 {
 	if (!mGUI)  return;
 	QTimer ti;  ti.update();  /// time
+
+	//  new widgets
+	MyGUI::FactoryManager::getInstance().registerFactory<MultiList2>("Widget");
+	MyGUI::FactoryManager::getInstance().registerFactory<Slider>("Widget");
+
 
 	//  load layout - wnds
 	vwGui = LayoutManager::getInstance().loadLayout("Editor.layout");
@@ -95,21 +103,22 @@ void App::InitGui()
 
 		//  get sub tabs
 		vSubTabsEdit.clear();
+		TabPtr sub;
 		for (size_t i=0; i < mWndTabsEdit->getItemCount(); ++i)
 		{
-			MyGUI::TabPtr sub = (TabPtr)mWndTabsEdit->getItemAt(i)->findWidget("SubTab");
+			sub = (TabPtr)mWndTabsEdit->getItemAt(i)->findWidget("SubTab");
 			vSubTabsEdit.push_back(sub);  // 0 for not found
 		}
 		vSubTabsHelp.clear();
 		for (size_t i=0; i < mWndTabsHelp->getItemCount(); ++i)
 		{
-			MyGUI::TabPtr sub = (TabPtr)mWndTabsHelp->getItemAt(i)->findWidget("SubTab");
+			sub = (TabPtr)mWndTabsHelp->getItemAt(i)->findWidget("SubTab");
 			vSubTabsHelp.push_back(sub);
 		}
 		vSubTabsOpts.clear();
 		for (size_t i=0; i < mWndTabsOpts->getItemCount(); ++i)
 		{
-			MyGUI::TabPtr sub = (TabPtr)mWndTabsOpts->getItemAt(i)->findWidget("SubTab");
+			sub = (TabPtr)mWndTabsOpts->getItemAt(i)->findWidget("SubTab");
 			vSubTabsOpts.push_back(sub);
 		}
 		//mWndTabs->setIndexSelected(3);  //default*--
@@ -129,7 +138,7 @@ void App::InitGui()
 	}
 	
 	ButtonPtr btn, bchk;  ComboBoxPtr combo;  // for defines
-	ScrollBar* sl;  size_t v;
+	Slider* sl;
 
 	///  [Graphics]
 	//------------------------------------------------------------------------
@@ -142,8 +151,8 @@ void App::InitGui()
 	Slv(SizeMinmap,	(pSet->size_minimap-0.15f) /1.85f);
 	Slv(CamSpeed, powf((pSet->cam_speed-0.1f) / 3.9f, 1.f));
 	Slv(CamInert, pSet->cam_inert);
-	Slv(TerUpd, pSet->ter_skip /res);
-	Slv(MiniUpd, pSet->mini_skip /res);
+	Slv(TerUpd, pSet->ter_skip /20.f);
+	Slv(MiniUpd, pSet->mini_skip /20.f);
 	Slv(SizeRoadP, (pSet->road_sphr-0.1f) /11.9f);
 
 	//  set camera btns
@@ -189,7 +198,7 @@ void App::InitGui()
 	Slv(TerGenScale,powf(pSet->gen_scale   /160.f, 1.f/2.f));  // generate
 	Slv(TerGenOfsX, (pSet->gen_ofsx+2.f) /4.f);
 	Slv(TerGenOfsY, (pSet->gen_ofsy+2.f) /4.f);
-	Slv(TerGenOct,  Real(pSet->gen_oct)	/res);
+	Slv(TerGenOct,  Real(pSet->gen_oct)	/9.f);
 	Slv(TerGenFreq, pSet->gen_freq    /0.7f);
 	Slv(TerGenPers, pSet->gen_persist /0.7f);
 	Slv(TerGenPow,  powf(pSet->gen_pow     /6.f,  1.f/2.f));
@@ -391,7 +400,7 @@ void App::InitGui()
 
 	bGI = true;  // gui inited, gui events can now save vals
 
-	ti.update();	/// time
+	ti.update();  /// time
 	float dt = ti.dt * 1000.f;
 	LogO(String("::: Time Init Gui: ") + toStr(dt) + " ms");
 }

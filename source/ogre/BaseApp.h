@@ -14,20 +14,32 @@
 #include <MyGUI_OgrePlatform.h>
 
 #include <boost/scoped_ptr.hpp>
-#include <boost/thread.hpp>
+//#include <boost/thread.hpp>
 
-namespace MyGUI { class OgreD3D11Platform; }
-namespace Ogre 
-{  
-	class SceneNode;  class Root;  class SceneManager;  class RenderWindow;
-	namespace RTShader{ class ShaderGenerator; }
-}
+namespace MyGUI{  class OgreD3D11Platform; }
+namespace Ogre {  class SceneNode;  class Root;  class SceneManager;  class RenderWindow;
+	namespace RTShader {  class ShaderGenerator;  }  }
 namespace OIS  {  class InputManager;  class Mouse;  class Keyboard;  }
 namespace OISB {  class System;  }
-class ShaderGeneratorTechniqueResolverListener;
-class MasterClient; class P2PGameClient;
-
+class MasterClient;  class P2PGameClient;
 class MaterialFactory;
+
+
+class MaterialMgrListener : public Ogre::MaterialManager::Listener
+{
+public:
+	MaterialMgrListener(Ogre::RTShader::ShaderGenerator* pShaderGenerator)
+		: mShaderGenerator(pShaderGenerator)
+	{  }
+
+	virtual Ogre::Technique* handleSchemeNotFound(
+		unsigned short schemeIndex, const Ogre::String& schemeName,
+		Ogre::Material* originalMaterial, unsigned short lodIndex,
+		const Ogre::Renderable* rend);
+protected:	
+	Ogre::RTShader::ShaderGenerator* mShaderGenerator;
+};
+
 
 
 class BaseApp :
@@ -42,17 +54,18 @@ public:
 	
 	bool bLoading,bLoadingEnd;
 	
-	// has to be in baseApp to switch camera on C press
+	//  has to be in baseApp for camera mouse move
 	typedef std::vector<class CarModel*> CarModels;
 	CarModels carModels;
 	
 	void showMouse(), hideMouse(), updMouse();
 	
-	// stuff to be executed in App after BaseApp init
+	//  stuff to be executed in App after BaseApp init
 	virtual void postInit() = 0;
 	
 	virtual void setTranslations() = 0;
 		
+	///  effects
 	class SplitScreenManager* mSplitMgr;
 	class HDRLogic* mHDRLogic; class MotionBlurLogic* mMotionBlurLogic;
 	class SSAOLogic* mSSAOLogic;
@@ -64,12 +77,12 @@ public:
 	void recreateCompositor();
 	bool AnyEffectEnabled();
 	bool NeedMRTBuffer();
-	// motion blur
 	float motionBlurIntensity;
+	void CreateRTfixed();
 
 	class SETTINGS* pSet;
 	
-	MaterialFactory* materialFactory; // material generation
+	MaterialFactory* materialFactory;  // material generation
 	
 	//  wnd, hud, upl
 	bool bWindowResized, bSizeHUD;
@@ -85,15 +98,13 @@ protected:
 	bool mShowDialog, mShutDown;
 	bool setup(), configure();  void updateStats();
 	
-	bool bFirstRenderFrame;
-	
 	class HWMouse* mHWMouse;
 
 	///  create
 	virtual void createScene() = 0;
 	virtual void destroyScene();
 
-	void createCamera(), createFrameListener(), createViewports(), refreshCompositor(bool disableAll=false);
+	void createFrameListener(), createViewports(), refreshCompositor(bool disableAll=false);
 	void setupResources(), createResourceListener(), loadResources();
 	void LoadingOn(), LoadingOff();
 
@@ -116,10 +127,10 @@ protected:
 
 
 	///  Ogre
-	Ogre::Root *mRoot;  Ogre::SceneManager* mSceneMgr;
+	Ogre::Root* mRoot;  Ogre::SceneManager* mSceneMgr;
 	Ogre::RenderWindow* mWindow;
-	Ogre::RTShader::ShaderGenerator *mShaderGenerator;
-	ShaderGeneratorTechniqueResolverListener*	mMaterialMgrListener;		// Shader generator material manager listener.	
+	Ogre::RTShader::ShaderGenerator* mShaderGenerator;
+	MaterialMgrListener* mMaterialMgrListener;  // Shader generator material manager listener.	
 
 	///  input
 	OISB::System* mOISBsys;

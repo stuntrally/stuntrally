@@ -14,11 +14,11 @@ public:
 		return maxdecel;
 	}
 	
-private:
+//private:
 	float lastvel;
 	float curmaxdecel;
 	float maxdecel;
-	const float deceltrigger;
+	float deceltrigger;
 };
 
 #endif // _CRASHDETECTION_H

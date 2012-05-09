@@ -11,6 +11,7 @@ ogre.log
 log.txt
 MyGUI.log
 *.dll
+*.pdb
 screens
 bin
 StuntRally*.*

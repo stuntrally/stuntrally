@@ -1,14 +1,15 @@
 #ifndef MATERIALGENERATOR_H
 #define MATERIALGENERATOR_H
 
-class MaterialFactory;  class MaterialDefinition;  struct ShaderProperties;
 #include "MaterialProperties.h" // textureMap typedef
 
 #include <OgreHighLevelGpuProgram.h>
 #include <OgreGpuProgramParams.h>
 #include <OgreMaterial.h>
 
+class MaterialFactory;  class MaterialDefinition;  struct ShaderProperties;
 namespace Ogre { class Pass; }
+
 
 class MaterialGenerator
 {

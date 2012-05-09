@@ -159,7 +159,7 @@ void App::GuiInitTrack()
 {
 	//  Tracks detailed list
 	//MultiListPtr li = mGUI->findWidget<MultiList>("MListTracks");
-	MyGUI::FactoryManager::getInstance().registerFactory<MultiList2>("Widget");
+	//MyGUI::FactoryManager::getInstance().registerFactory<MultiList2>("Widget");
 	//MyGUI::FactoryManager::getInstance().unregisterFactory<MultiList2>("Widget");
 
 	#ifdef ROAD_EDITOR

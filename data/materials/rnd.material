@@ -123,3 +123,79 @@ material circle_minimap
 		}
 	}
 }
+
+//  graph  ---------------------------------
+material graphB
+{
+	technique
+	{
+		pass
+		{
+			ambient 0 0 0
+			diffuse 0 0 0
+			specular 0 0 0 1
+			//lighting off
+			depth_check off
+			depth_write off
+			//scene_blend alpha_blend
+			cull_hardware none
+		}
+	}
+}
+material graph1 : graphB {  technique  {  pass  {  emissive 0.0 1.0 1.0  }  }  }
+material graph2 : graphB {  technique  {  pass  {  emissive 0.0 1.0 0.0  }  }  }
+material graph3 : graphB {  technique  {  pass  {  emissive 1.0 1.0 0.0  }  }  }
+material graph4 : graphB {  technique  {  pass  {  emissive 1.0 0.5 0.0  }  }  }
+material graph5 : graphB {  technique  {  pass  {  emissive 1.0 0.0 0.0  }  }  }
+
+material graphA0 : graphB {  technique  {  pass  {  emissive 1.0 1.0 1.0  }  }  }
+material graphA1 : graphB {  technique  {  pass  {  emissive 0.8 1.0 1.0  }  }  }
+material graphA2 : graphB {  technique  {  pass  {  emissive 0.6 1.0 1.0  }  }  }
+material graphA3 : graphB {  technique  {  pass  {  emissive 0.4 1.0 1.0  }  }  }
+material graphA4 : graphB {  technique  {  pass  {  emissive 0.2 0.8 1.0  }  }  }
+material graphA5 : graphB {  technique  {  pass  {  emissive 0.2 0.6 1.0  }  }  }
+material graphA6 : graphB {  technique  {  pass  {  emissive 0.2 0.4 1.0  }  }  }
+material graphA7 : graphB {  technique  {  pass  {  emissive 0.2 0.2 1.0  }  }  }
+
+material graphB0 : graphB {  technique  {  pass  {  emissive 1.0 1.0 0.9  }  }  }
+material graphB1 : graphB {  technique  {  pass  {  emissive 1.0 1.0 0.6  }  }  }
+material graphB2 : graphB {  technique  {  pass  {  emissive 1.0 1.0 0.3  }  }  }
+material graphB3 : graphB {  technique  {  pass  {  emissive 1.0 1.0 0.0  }  }  }
+material graphB4 : graphB {  technique  {  pass  {  emissive 1.0 0.8 0.0  }  }  }
+material graphB5 : graphB {  technique  {  pass  {  emissive 1.0 0.6 0.0  }  }  }
+material graphB6 : graphB {  technique  {  pass  {  emissive 1.0 0.4 0.0  }  }  }
+material graphB7 : graphB {  technique  {  pass  {  emissive 1.0 0.2 0.0  }  }  }
+
+material graphBack
+{
+	technique
+	{
+		pass
+		{
+			lighting off
+			depth_check off
+			depth_write off
+			cull_hardware none
+
+			scene_blend alpha_blend
+			diffuse vertexcolour
+		}
+	}
+}
+
+material graphGrid
+{
+	technique
+	{
+		pass
+		{
+			lighting off
+			depth_check off
+			depth_write off
+			cull_hardware none
+
+			scene_blend alpha_blend
+			diffuse vertexcolour
+		}
+	}
+}
