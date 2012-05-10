@@ -13,7 +13,7 @@
 #include "SplitScreen.h"
 #include "common/MaterialGen/MaterialFactory.h"
 #include "../vdrift/settings.h"
-#include "HDRCompositor.h"
+//#include "HDRCompositor.h"
 
 
 class MotionBlurListener : public Ogre::CompositorInstance::Listener

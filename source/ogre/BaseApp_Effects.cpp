@@ -7,7 +7,7 @@
 
 #include "Compositor.h"
 #include "SplitScreen.h"
-#include "HDRCompositor.h"
+//#include "HDRCompositor.h"
 
 #include <OgreRTShaderSystem.h>
 #include "common/MaterialGen/MaterialGenerator.h"
@@ -217,7 +217,7 @@ void BaseApp::recreateCompositor()
 	{
 		mHDRLogic = new HDRLogic;
 		cmp.registerCompositorLogic("HDR", mHDRLogic);
-		mHDRLogic->compositor = new HDRCompositor(this);
+	/*	mHDRLogic->compositor = new HDRCompositor(this);
 		mHDRLogic->compositor->SetToneMapper(HDRCompositor::TONEMAPPER::TM_ADAPTLOG);
 		mHDRLogic->compositor->SetGlareType(HDRCompositor::GLARETYPE::GT_BLUR);
 		mHDRLogic->compositor->SetStarType(HDRCompositor::STARTYPE::ST_PLUS);
@@ -231,6 +231,7 @@ void BaseApp::recreateCompositor()
 		mHDRLogic->compositor->SetStarStrength(0.1f);
 		mHDRLogic->compositor->Create();
 		mHDRLogic->setApp(this);		
+	*/
 	}
 	
 	if (!mSSAOLogic) 
