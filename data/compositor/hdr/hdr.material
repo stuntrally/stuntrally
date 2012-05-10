@@ -85,7 +85,7 @@ material Ogre/Compositor/HDR/Downsample2x2Luminence
 			cull_software none
 			depth_check off
 
-			vertex_program_ref Ogre/Compositor/StdQuad_vp { }
+			vertex_program_ref RenderGBuffer_vp { }
 			fragment_program_ref Ogre/Compositor/HDR/downscale2x2LuminencePS { }
 
 			texture_unit
@@ -108,7 +108,7 @@ material Ogre/Compositor/HDR/Downsample3x3
 			cull_software none
 			depth_check off
 
-			vertex_program_ref Ogre/Compositor/StdQuad_vp { }
+			vertex_program_ref RenderGBuffer_vp { }
 			fragment_program_ref Ogre/Compositor/HDR/downscale3x3PS { }
 
 			texture_unit
@@ -131,7 +131,7 @@ material Ogre/Compositor/HDR/Downsample3x3Adept
 			cull_software none
 			depth_check off
 
-			vertex_program_ref Ogre/Compositor/StdQuad_vp { }
+			vertex_program_ref RenderGBuffer_vp { }
 			fragment_program_ref Ogre/Compositor/HDR/downscale3x3AdeptPS { }
 
 			texture_unit
@@ -160,7 +160,7 @@ material Ogre/Compositor/HDR/CopySample
 			cull_software none
 			depth_check off
 
-			vertex_program_ref Ogre/Compositor/StdQuad_vp { }
+			vertex_program_ref RenderGBuffer_vp { }
 			fragment_program_ref Ogre/Compositor/HDR/copySample { }
 
 			texture_unit
@@ -183,7 +183,7 @@ material Ogre/Compositor/HDR/Downsample3x3Brightpass
 			cull_software none
 			depth_check off
 
-			vertex_program_ref Ogre/Compositor/StdQuad_vp { }
+			vertex_program_ref RenderGBuffer_vp { }
 			fragment_program_ref Ogre/Compositor/HDR/downscale3x3brightpassPS { }
 
 			// Scene 
@@ -213,7 +213,7 @@ material Ogre/Compositor/HDR/GaussianBloom
 			cull_software none
 			depth_check off
 
-			vertex_program_ref Ogre/Compositor/StdQuad_vp { }
+			vertex_program_ref RenderGBuffer_vp { }
 			fragment_program_ref Ogre/Compositor/HDR/bloomPS { }
 
 			// Input 
@@ -237,7 +237,7 @@ material Ogre/Compositor/HDR/ToneMapping
 			cull_software none
 			depth_check off
 
-			vertex_program_ref Ogre/Compositor/StdQuad_vp { }
+			vertex_program_ref RenderGBuffer_vp { }
 			fragment_program_ref Ogre/Compositor/HDR/finaltonemappingPS { }
 
 			// Scene 
