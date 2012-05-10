@@ -7,6 +7,7 @@
 
 #include "Compositor.h"
 #include "SplitScreen.h"
+#include "HDRCompositor.h"
 
 #include <OgreRTShaderSystem.h>
 #include "common/MaterialGen/MaterialGenerator.h"
@@ -83,7 +84,7 @@ bool BaseApp::AnyEffectEnabled()
 
 bool BaseApp::NeedMRTBuffer()
 {
-	return pSet->all_effects && (pSet->ssao || pSet->softparticles || pSet->dof || pSet->godrays);
+	return pSet->all_effects && (pSet->ssao || pSet->softparticles || pSet->dof || pSet->godrays || pSet->hdr);
 }
 
 
@@ -216,6 +217,20 @@ void BaseApp::recreateCompositor()
 	{
 		mHDRLogic = new HDRLogic;
 		cmp.registerCompositorLogic("HDR", mHDRLogic);
+		mHDRLogic->compositor = new HDRCompositor(this);
+		mHDRLogic->compositor->SetToneMapper(HDRCompositor::TONEMAPPER::TM_ADAPTLOG);
+		mHDRLogic->compositor->SetGlareType(HDRCompositor::GLARETYPE::GT_BLUR);
+		mHDRLogic->compositor->SetStarType(HDRCompositor::STARTYPE::ST_PLUS);
+		mHDRLogic->compositor->SetAutoKeying(false);
+		mHDRLogic->compositor->SetKey(0.5);
+		mHDRLogic->compositor->SetLumAdapdation(true);
+		mHDRLogic->compositor->SetAdaptationScale(3);
+		mHDRLogic->compositor->SetStarPasses(4);
+		mHDRLogic->compositor->SetGlarePasses(2);
+		mHDRLogic->compositor->SetGlareStrength(0.1f);
+		mHDRLogic->compositor->SetStarStrength(0.1f);
+		mHDRLogic->compositor->Create();
+		mHDRLogic->setApp(this);		
 	}
 	
 	if (!mSSAOLogic) 
@@ -356,13 +371,13 @@ void BaseApp::recreateCompositor()
 			cmp.addCompositor((*it), "gbuffer");
 		}
 		cmp.addCompositor((*it), "gbufferNoMRT");
-		cmp.addCompositor((*it), "HDR");
 		if (MaterialGenerator::MRTSupported())
 		{
 			cmp.addCompositor((*it), "ssao");
 			cmp.addCompositor((*it), "SoftParticles");
 			cmp.addCompositor((*it), "DepthOfField");
 			cmp.addCompositor((*it), "gbufferFinalizer");
+			cmp.addCompositor((*it), "HDR");
 		}
 		else
 		{

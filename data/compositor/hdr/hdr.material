@@ -1,33 +1,78 @@
 // Downsample a 2x2 area & turn into luminence (unclamped)
-fragment_program Ogre/Compositor/HDR/downscale2x2LuminenceHLSL_fp hlsl
+fragment_program Ogre/Compositor/HDR/downscale2x2LuminencePS cg
 {
-	source hdr.hlsl
+	source hdr.cg
 	entry_point downscale2x2Luminence
-	target ps_2_0
-}
-fragment_program Ogre/Compositor/HDR/downscale2x2LuminenceHLSL10_fp hlsl
-{
-	source hdr10.hlsl
-	entry_point downscale2x2Luminence
-	target ps_4_0
-}
-fragment_program Ogre/Compositor/HDR/downscale2x2LuminenceGLSL_fp glsl
-{
-	source hdr_downscale2x2luminence.glsl
-	default_params
-	{
-		param_named inRTT int 0
-	}
-}
-fragment_program Ogre/Compositor/HDR/downscale2x2Luminence_fp unified
-{
-	delegate Ogre/Compositor/HDR/downscale2x2LuminenceGLSL_fp
-	delegate Ogre/Compositor/HDR/downscale2x2LuminenceHLSL_fp
-	delegate Ogre/Compositor/HDR/downscale2x2LuminenceHLSL10_fp
+	profiles ps_4_0 ps_3_0 fp40
+
 	default_params
 	{
 	    param_named_auto texelSize inverse_texture_size 0
 	}
+}
+
+// Downsample a 3x3 area
+fragment_program Ogre/Compositor/HDR/downscale3x3PS cg
+{
+	source hdr.cg
+	entry_point downscale3x3
+	profiles ps_4_0 ps_3_0 fp40
+
+	default_params
+	{
+		param_named_auto texelSize inverse_texture_size 0
+	}
+}
+
+// Downsample a 3x3 area with adeptation
+fragment_program Ogre/Compositor/HDR/downscale3x3AdeptPS cg
+{
+	source hdr.cg
+	entry_point downscale3x3Adept
+	profiles ps_4_0 ps_3_0 fp40
+
+	default_params
+	{
+		param_named_auto texelSize inverse_texture_size 0
+		param_named_auto dTime frame_time
+		//param_named adaptationScale float 10
+	}
+}
+// Copy sample
+fragment_program Ogre/Compositor/HDR/copySample cg
+{
+	source hdr.cg
+	entry_point copySample
+	profiles ps_4_0 ps_3_0 fp40
+}
+
+// Downsample a 3x3 area and perform a brightness filter pass
+fragment_program Ogre/Compositor/HDR/downscale3x3brightpassPS cg
+{
+	source hdr.cg
+	entry_point downscale3x3brightpass
+	profiles ps_4_0 ps_3_0 fp40
+
+	default_params
+	{
+		param_named_auto texelSize inverse_texture_size 0
+	}
+}
+
+// Bloom an area using gaussian distribution
+fragment_program Ogre/Compositor/HDR/bloomPS cg
+{
+	source hdr.cg
+	entry_point bloom
+	profiles ps_4_0 ps_3_0 fp40
+}
+
+// Perform final tone mapping
+fragment_program Ogre/Compositor/HDR/finaltonemappingPS cg
+{
+	source hdr.cg
+	entry_point finalToneMapping
+	profiles ps_4_0 ps_3_0 fp40
 }
 
 material Ogre/Compositor/HDR/Downsample2x2Luminence
@@ -40,55 +85,18 @@ material Ogre/Compositor/HDR/Downsample2x2Luminence
 			cull_software none
 			depth_check off
 
-			vertex_program_ref Ogre/Compositor/StdQuad_vp
-			{
-			}
-			fragment_program_ref Ogre/Compositor/HDR/downscale2x2Luminence_fp
-			{
-			}
+			vertex_program_ref Ogre/Compositor/StdQuad_vp { }
+			fragment_program_ref Ogre/Compositor/HDR/downscale2x2LuminencePS { }
 
 			texture_unit
 			{
-                tex_coord_set 0
+				tex_coord_set 0
 				tex_address_mode clamp
 				filtering none 
 			}
 		}
 	}
 }
-
-// Downsample a 3x3 area
-fragment_program Ogre/Compositor/HDR/downscale3x3HLSL_fp hlsl
-{
-	source hdr.hlsl
-	entry_point downscale3x3
-	target ps_2_0
-}
-fragment_program Ogre/Compositor/HDR/downscale3x3HLSL10_fp hlsl
-{
-	source hdr10.hlsl
-	entry_point downscale3x3
-	target ps_4_0
-}
-fragment_program Ogre/Compositor/HDR/downscale3x3GLSL_fp glsl
-{
-	source hdr_downscale3x3.glsl
-	default_params
-	{
-		param_named inRTT int 0
-	}
-}
-fragment_program Ogre/Compositor/HDR/downscale3x3_fp unified
-{
-	delegate Ogre/Compositor/HDR/downscale3x3GLSL_fp
-	delegate Ogre/Compositor/HDR/downscale3x3HLSL_fp
-	delegate Ogre/Compositor/HDR/downscale3x3HLSL10_fp
-	default_params
-	{
-	    param_named_auto texelSize inverse_texture_size 0
-	}
-}
-
 
 material Ogre/Compositor/HDR/Downsample3x3
 {
@@ -100,16 +108,12 @@ material Ogre/Compositor/HDR/Downsample3x3
 			cull_software none
 			depth_check off
 
-			vertex_program_ref Ogre/Compositor/StdQuad_vp
-			{
-			}
-			fragment_program_ref Ogre/Compositor/HDR/downscale3x3_fp
-			{
-			}
+			vertex_program_ref Ogre/Compositor/StdQuad_vp { }
+			fragment_program_ref Ogre/Compositor/HDR/downscale3x3PS { }
 
 			texture_unit
 			{
-                tex_coord_set 0
+				tex_coord_set 0
 				tex_address_mode clamp
 				filtering none 
 			}
@@ -117,45 +121,57 @@ material Ogre/Compositor/HDR/Downsample3x3
 	}
 }
 
-// Downsample a 3x3 area and perform a brightness filter pass
-fragment_program Ogre/Compositor/HDR/downscale3x3brightpassHLSL_fp hlsl
+material Ogre/Compositor/HDR/Downsample3x3Adept
 {
-	source hdr.hlsl
-	entry_point downscale3x3brightpass
-	target ps_2_0
-}
-fragment_program Ogre/Compositor/HDR/downscale3x3brightpassHLSL10_fp hlsl
-{
-	source hdr10.hlsl
-	entry_point downscale3x3brightpass
-	target ps_4_0
-}
-fragment_program Ogre/Compositor/HDR/utils_fp glsl
-{
-	source hdr_tonemap_util.glsl
-}
-fragment_program Ogre/Compositor/HDR/downscale3x3brightpassGLSL_fp glsl
-{
-	source hdr_downscale3x3brightpass.glsl
-	// re-use common functions
-	attach Ogre/Compositor/HDR/utils_fp
-	default_params
+	technique
 	{
-		param_named inRTT int 0
-		param_named inLum int 1
-	}
-}
-fragment_program Ogre/Compositor/HDR/downscale3x3brightpass_fp unified
-{
-	delegate Ogre/Compositor/HDR/downscale3x3brightpassGLSL_fp
-	delegate Ogre/Compositor/HDR/downscale3x3brightpassHLSL_fp
-	delegate Ogre/Compositor/HDR/downscale3x3brightpassHLSL10_fp
-	default_params
-	{
-	    param_named_auto texelSize inverse_texture_size 0
+		pass
+		{
+			cull_hardware none
+			cull_software none
+			depth_check off
+
+			vertex_program_ref Ogre/Compositor/StdQuad_vp { }
+			fragment_program_ref Ogre/Compositor/HDR/downscale3x3AdeptPS { }
+
+			texture_unit
+			{
+				tex_coord_set 0
+				tex_address_mode clamp
+				filtering none 
+			}
+			texture_unit
+			{
+				tex_address_mode clamp
+				filtering none 
+			}
+		}
 	}
 }
 
+
+material Ogre/Compositor/HDR/CopySample
+{
+	technique
+	{
+		pass
+		{
+			cull_hardware none
+			cull_software none
+			depth_check off
+
+			vertex_program_ref Ogre/Compositor/StdQuad_vp { }
+			fragment_program_ref Ogre/Compositor/HDR/copySample { }
+
+			texture_unit
+			{
+				tex_coord_set 0
+				tex_address_mode clamp
+				filtering none 
+			}
+		}
+	}
+}
 
 material Ogre/Compositor/HDR/Downsample3x3Brightpass
 {
@@ -167,17 +183,13 @@ material Ogre/Compositor/HDR/Downsample3x3Brightpass
 			cull_software none
 			depth_check off
 
-			vertex_program_ref Ogre/Compositor/StdQuad_vp
-			{
-			}
-			fragment_program_ref Ogre/Compositor/HDR/downscale3x3brightpass_fp
-			{
-			}
+			vertex_program_ref Ogre/Compositor/StdQuad_vp { }
+			fragment_program_ref Ogre/Compositor/HDR/downscale3x3brightpassPS { }
 
 			// Scene 
 			texture_unit
 			{
-                tex_coord_set 0
+				tex_coord_set 0
 				tex_address_mode clamp
 				filtering none 
 			}
@@ -191,35 +203,6 @@ material Ogre/Compositor/HDR/Downsample3x3Brightpass
 	}
 }
 
-// Bloom an area using gaussian distribution
-fragment_program Ogre/Compositor/HDR/bloomHLSL_fp hlsl
-{
-	source hdr.hlsl
-	entry_point bloom
-	target ps_2_0
-}
-fragment_program Ogre/Compositor/HDR/bloomHLSL10_fp hlsl
-{
-	source hdr10.hlsl
-	entry_point bloom
-	target ps_4_0
-}
-fragment_program Ogre/Compositor/HDR/bloomGLSL_fp glsl
-{
-	source hdr_bloom.glsl
-	default_params
-	{
-		param_named inRTT int 0
-	}
-}
-fragment_program Ogre/Compositor/HDR/bloom_fp unified
-{
-	delegate Ogre/Compositor/HDR/bloomGLSL_fp
-	delegate Ogre/Compositor/HDR/bloomHLSL_fp
-	delegate Ogre/Compositor/HDR/bloomHLSL10_fp
-}
-
-
 material Ogre/Compositor/HDR/GaussianBloom
 {
 	technique
@@ -230,55 +213,18 @@ material Ogre/Compositor/HDR/GaussianBloom
 			cull_software none
 			depth_check off
 
-			vertex_program_ref Ogre/Compositor/StdQuad_vp
-			{
-			}
-			fragment_program_ref Ogre/Compositor/HDR/bloom_fp
-			{
-			}
+			vertex_program_ref Ogre/Compositor/StdQuad_vp { }
+			fragment_program_ref Ogre/Compositor/HDR/bloomPS { }
 
 			// Input 
 			texture_unit
 			{
-                tex_coord_set 0
+				tex_coord_set 0
 				tex_address_mode clamp
 				filtering none 
 			}
 		}
 	}
-}
-
-
-// Perform final tone mapping
-fragment_program Ogre/Compositor/HDR/finaltonemappingHLSL_fp hlsl
-{
-	source hdr.hlsl
-	entry_point finalToneMapping
-	target ps_2_0
-}
-fragment_program Ogre/Compositor/HDR/finaltonemappingHLSL10_fp hlsl
-{
-	source hdr10.hlsl
-	entry_point finalToneMapping
-	target ps_4_0
-}
-fragment_program Ogre/Compositor/HDR/finaltonemappingGLSL_fp glsl
-{
-	source hdr_finalToneMapping.glsl
-	// re-use common functions
-	attach Ogre/Compositor/HDR/utils_fp
-	default_params
-	{
-		param_named inRTT int 0
-		param_named inBloom int 1
-		param_named inLum int 2
-	}
-}
-fragment_program Ogre/Compositor/HDR/finaltonemapping_fp unified
-{
-	delegate Ogre/Compositor/HDR/finaltonemappingHLSL_fp
-	delegate Ogre/Compositor/HDR/finaltonemappingHLSL10_fp
-	delegate Ogre/Compositor/HDR/finaltonemappingGLSL_fp
 }
 
 material Ogre/Compositor/HDR/ToneMapping
@@ -291,18 +237,13 @@ material Ogre/Compositor/HDR/ToneMapping
 			cull_software none
 			depth_check off
 
-			vertex_program_ref Ogre/Compositor/StdQuad_vp
-			{
-			}
-			fragment_program_ref Ogre/Compositor/HDR/finaltonemapping_fp
-			{
-				///  params...
-			}
+			vertex_program_ref Ogre/Compositor/StdQuad_vp { }
+			fragment_program_ref Ogre/Compositor/HDR/finaltonemappingPS { }
 
 			// Scene 
 			texture_unit
 			{
-                tex_coord_set 0
+				tex_coord_set 0
 				tex_address_mode clamp
 			}
 			// Bloom

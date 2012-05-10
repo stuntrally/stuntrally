@@ -232,7 +232,11 @@ void App::InitGui()
 	//  effects
 	Chk("AllEffects", chkVidEffects, pSet->all_effects);
 	Chk("Bloom", chkVidBloom, pSet->bloom);
-	//Chk("HDR", chkVidHDR, pSet->hdr);
+	Chk("HDR", chkVidHDR, pSet->hdr);
+	Slv(HDRParam1, pSet->hdrParam1);
+	Slv(HDRParam2, pSet->hdrParam2);
+	Slv(HDRParam3, pSet->hdrParam3);
+	
 	Chk("MotionBlur", chkVidBlur, pSet->motionblur);
 	Chk("ssao", chkVidSSAO, pSet->ssao);
 	Chk("softparticles", chkVidSoftParticles, pSet->softparticles);

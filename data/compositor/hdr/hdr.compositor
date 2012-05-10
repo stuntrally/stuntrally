@@ -9,34 +9,23 @@ compositor HDR
 		// Fullsize HDR render target, used as tone mapping source
         texture rt_full target_width target_height PF_FLOAT16_RGB
 		// Targets used for luminance evaluation (3x3 downsample, point filtering)
-		texture rt_lum0 1 1 PF_FLOAT16_RGB
-		texture rt_lum1 4 4 PF_FLOAT16_RGB
-		texture rt_lum2 16 16 PF_FLOAT16_RGB
-		texture rt_lum3 64 64 PF_FLOAT16_RGB
-		texture rt_lum4 128 128 PF_FLOAT16_RGB
+		texture rt_lum0 1 1 PF_FLOAT16_R no_fsaa
+		texture rt_lum1 4 4 PF_FLOAT16_R no_fsaa
+		texture rt_lum2 16 16 PF_FLOAT16_R no_fsaa
+		texture rt_lum3 64 64 PF_FLOAT16_R no_fsaa
+		texture rt_lum4 128 128 PF_FLOAT16_R no_fsaa
 		// Bright-pass filtered target (tone mapped)
-		texture rt_brightpass 128 128 PF_R8G8B8
+		texture rt_brightpass 128 128 PF_R8G8B8 no_fsaa
 		// Bloom filter targets
-		texture rt_bloom0 128 128 PF_R8G8B8
-		texture rt_bloom1 128 128 PF_R8G8B8
+		texture rt_bloom0 target_width_scaled 0.5 target_height_scaled 0.5 PF_R8G8B8 no_fsaa
+		texture rt_bloom1 target_width_scaled 0.5 target_height_scaled 0.5 PF_R8G8B8 no_fsaa
+		//texture rt_bloom0 target_width target_height PF_R8G8B8 no_fsaa
+		//texture rt_bloom1 target_width target_height PF_R8G8B8 no_fsaa
 
 
 		target rt_full
 		{
-			// No input, render differently
-			input none
-
-			// Use float target HDR material scheme (unclamped shaders)
-			material_scheme HDR
-
-			pass clear
-			{
-			}
-
-			pass render_scene
-			{
-			}
-
+			input previous
 		}
 
 		// Downsample the original HDR scene to extract luminence value
@@ -51,6 +40,7 @@ compositor HDR
                 identifier 994
             }
 		}
+
 		target rt_lum3
 		{
             input none
@@ -142,9 +132,10 @@ compositor HDR
 			input none
 			pass render_quad
 			{
+				identifier 600
 				material Ogre/Compositor/HDR/ToneMapping
 				input 0 rt_full
-				input 1 rt_bloom0
+				input 1 rt_brightpass
 				input 2 rt_lum0
 			}
 		}

@@ -291,7 +291,7 @@
 	<Tag name="Bloom">Bloom</Tag>
 	<Tag name="Intensity">Intensity</Tag>
 	<Tag name="OrigImage">Darken</Tag>
-	<Tag name="HDR">HDR</Tag>
+	<Tag name="HDR">HDR+Bloom</Tag>
 	<Tag name="MotionBlur">Motion Blur</Tag>
 	<Tag name="ssao">SSAO</Tag>
 	<Tag name="godrays">God Rays</Tag>

@@ -13,6 +13,8 @@
 #include "SplitScreen.h"
 #include "common/MaterialGen/MaterialFactory.h"
 #include "../vdrift/settings.h"
+#include "HDRCompositor.h"
+
 
 class MotionBlurListener : public Ogre::CompositorInstance::Listener
 {
@@ -77,25 +79,48 @@ protected:
 	float mBloomTexOffsetsHorz[15][4];
 	float mBloomTexOffsetsVert[15][4];
 public:
-	HDRListener();
+	HDRListener(BaseApp * app);
 	virtual ~HDRListener();
 	void notifyViewportSize(int width, int height);
 	void notifyCompositor(Ogre::CompositorInstance* instance);
 	virtual void notifyMaterialSetup(Ogre::uint32 pass_id, Ogre::MaterialPtr &mat);
 	virtual void notifyMaterialRender(Ogre::uint32 pass_id, Ogre::MaterialPtr &mat);
+	BaseApp * mApp;
 };
 
 Ogre::CompositorInstance::Listener* HDRLogic::createListener(Ogre::CompositorInstance* instance)
 {
-	HDRListener* listener = new HDRListener;
+	HDRListener* listener = new HDRListener(mApp);
 	Ogre::Viewport* vp = instance->getChain()->getViewport();
 	listener->notifyViewportSize(vp->getActualWidth(), vp->getActualHeight());
 	listener->notifyCompositor(instance);
 	return listener;
+
+/*	HDRCompositor* listener = new HDRCompositor(mApp);
+	listener->SetToneMapper(compositor->GetToneMapper());
+	listener->SetGlareType(compositor->GetGlareType());
+	listener->SetStarType(compositor->GetStarType());
+	listener->SetAutoKeying(compositor->GetAutoKeying());
+	listener->SetKey(compositor->GetKey());
+	listener->SetLumAdapdation(compositor->GetLumAdaption());
+	listener->SetAdaptationScale(compositor->GetAdaptationScale());
+	listener->SetStarPasses(compositor->GetStarPasses());
+	listener->SetGlarePasses(compositor->GetGlarePasses());
+	listener->SetGlareStrength(compositor->GetGlareStrength());
+	listener->SetStarStrength(compositor->GetStarStrength());
+		
+	Ogre::Viewport* vp = instance->getChain()->getViewport();
+	listener->notifyViewportSize(vp->getActualWidth(), vp->getActualHeight());
+	return listener;
+	*/
+}
+void HDRLogic::setApp(BaseApp* app)
+{
+	mApp = app;
 }
 
-
-HDRListener::HDRListener()
+HDRListener::HDRListener(BaseApp* app)
+	:mApp(app)
 {
 }
 HDRListener::~HDRListener()
@@ -207,6 +232,23 @@ void HDRListener::notifyMaterialSetup(Ogre::uint32 pass_id, Ogre::MaterialPtr &m
 
 void HDRListener::notifyMaterialRender(Ogre::uint32 pass_id, Ogre::MaterialPtr &mat)
 {
+	if(pass_id == 600 || pass_id == 800)
+	{
+		Ogre::Pass *pass = mat->getBestTechnique()->getPass(0);
+		Ogre::GpuProgramParametersSharedPtr params = pass->getFragmentProgramParameters();
+    
+		if (params->_findNamedConstantDefinition("toneMapSettings"))
+		{
+			Ogre::Vector4 toneMapSettings(mApp->pSet->hdrParam1,mApp->pSet->hdrParam2,mApp->pSet->hdrParam3,1.0);
+			params->setNamedConstant("toneMapSettings", toneMapSettings);
+		}
+		if (params->_findNamedConstantDefinition("toneMapSettings"))
+		{
+			Ogre::Vector4 bloomSettings(1-mApp->pSet->bloomorig,1-mApp->pSet->bloomintensity,1.0,1.0);
+						params->setNamedConstant("bloomSettings", bloomSettings);
+		}
+	
+	}
 }
 
 

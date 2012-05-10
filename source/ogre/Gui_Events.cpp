@@ -420,6 +420,21 @@ void App::chkVidHDR(WP wp)
 {			
 	ChkEv(hdr);  refreshCompositor();
 }
+void App::slHDRParam1(SL)
+{
+	Real v = val;  if (bGI)  pSet->hdrParam1 = v;
+	if (valHDRParam1){	valHDRParam1->setCaption(fToStr(v,2,4));  }
+}
+void App::slHDRParam2(SL)
+{
+	Real v = val;  if (bGI)  pSet->hdrParam2 = v;
+	if (valHDRParam2){	valHDRParam2->setCaption(fToStr(v,2,4));  }
+}
+void App::slHDRParam3(SL)
+{
+	Real v = val;  if (bGI)  pSet->hdrParam3 = v;
+	if (valHDRParam3){	valHDRParam3->setCaption(fToStr(v,2,4));  }
+}
 void App::chkVidBlur(WP wp)
 {		
 	ChkEv(motionblur);  refreshCompositor();
