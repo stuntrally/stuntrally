@@ -288,6 +288,8 @@
 
 	<Tag name="Effects">Effects</Tag>
 	<Tag name="AllEffects">Effects Enabled</Tag>
+	<Tag name="HDRTab">HDR</Tag>
+	<Tag name="HDRAdaptationScale">Adapt Scale</Tag>
 	<Tag name="Bloom">Bloom</Tag>
 	<Tag name="Intensity">Intensity</Tag>
 	<Tag name="OrigImage">Darken</Tag>

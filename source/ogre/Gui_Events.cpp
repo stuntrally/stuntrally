@@ -435,6 +435,11 @@ void App::slHDRParam3(SL)
 	Real v = val;  if (bGI)  pSet->hdrParam3 = v;
 	if (valHDRParam3){	valHDRParam3->setCaption(fToStr(v,2,4));  }
 }
+void App::slHDRAdaptationScale(SL)
+{
+	Real v = val;  if (bGI)  pSet->hdrAdaptationScale = v;
+	if (valHDRAdaptationScale){	valHDRAdaptationScale->setCaption(fToStr(v,2,4));  }
+}
 void App::chkVidBlur(WP wp)
 {		
 	ChkEv(motionblur);  refreshCompositor();

@@ -14,6 +14,9 @@ compositor HDR
 		texture rt_lum2 16 16 PF_FLOAT16_R no_fsaa
 		texture rt_lum3 64 64 PF_FLOAT16_R no_fsaa
 		texture rt_lum4 128 128 PF_FLOAT16_R no_fsaa
+		texture rt_prevlum 1 1 PF_FLOAT16_R no_fsaa
+		texture rt_Finallum 1 1 PF_FLOAT16_R no_fsaa
+		
 		// Bright-pass filtered target (tone mapped)
 		texture rt_brightpass target_width_scaled 0.5 target_height_scaled 0.5 PF_R8G8B8 no_fsaa
 		// Bloom filter targets
@@ -86,6 +89,28 @@ compositor HDR
             }
 		}
 
+		//luminance adaptation
+		target rt_prevlum
+		{
+            input none
+            pass render_quad
+            {
+                material  Ogre/Compositor/HDR/CopySample
+                input 0 rt_Finallum
+                identifier 989
+            }
+		}
+		target rt_Finallum
+		{
+            input none
+            pass render_quad
+            {
+                material  Ogre/Compositor/HDR/AdaptLuminance
+                input 0 rt_prevlum
+                input 1 rt_lum0
+                identifier 989
+            }
+		}
 
 		target rt_brightpass
 		{
@@ -95,7 +120,7 @@ compositor HDR
                 // Downsample using a 3x3 filter, hi-pass and tone map
                 material Ogre/Compositor/HDR/Downsample3x3Brightpass
                 input 0 rt_full
-		        input 1 rt_lum0
+		        input 1 rt_Finallum
 				identifier 800
             }
 		}
@@ -136,7 +161,7 @@ compositor HDR
 				material Ogre/Compositor/HDR/ToneMapping
 				input 0 rt_full
 				input 1 rt_bloom0
-				input 2 rt_lum0
+				input 2 rt_Finallum
 			}
 		}
 

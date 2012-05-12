@@ -1437,6 +1437,64 @@
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
 					</Widget>
+          <Widget type="TabItem" skin="" position="2 24 738 432">
+            <Property key="Caption" value="#{HDRTab}"/>
+            <UserString key="RelativeTo" value="OptionsWnd"/>
+
+            <Widget type="Button" skin="CheckBox" position="28 20 152 24" name="HDR">
+              <Property key="Caption" value="#{HDR}"/>
+              <Property key="TextColour" value="0.6 1 0.3"/>
+              <UserString key="RelativeTo" value="OptionsWnd"/>
+            </Widget>
+            <!--<Widget type="TextBox" skin="TextBox" position="196 336 118 24">
+							<Property key="Caption" value="#{HDRParam1}"/>
+							<Property key="TextColour" value="0.7 1 0.4"/>
+							<UserString key="RelativeTo" value="OptionsWnd"/>
+						</Widget>-->
+            <Widget type="TextBox" skin="TextBox" position="328 20 60 24" name="HDRParam1Val">
+              <Property key="TextColour" value="1.0 1 0.2"/>
+              <UserString key="RelativeTo" value="OptionsWnd"/>
+            </Widget>
+            <Widget type="Slider" skin="Slider" position="392 20 320 18" name="HDRParam1">
+              <UserString key="RelativeTo" value="OptionsWnd"/>
+            </Widget>
+            <!--<Widget type="TextBox" skin="TextBox" position="196 52 118 24">
+							<Property key="Caption" value="#{HDRParam2}"/>
+							<Property key="TextColour" value="0.7 1 0.4"/>
+							<UserString key="RelativeTo" value="OptionsWnd"/>
+						</Widget>-->
+            <Widget type="TextBox" skin="TextBox" position="328 52 60 24" name="HDRParam2Val">
+              <Property key="TextColour" value="1.0 1 0.2"/>
+              <UserString key="RelativeTo" value="OptionsWnd"/>
+            </Widget>
+            <Widget type="Slider" skin="Slider" position="392 52 320 18" name="HDRParam2">
+              <UserString key="RelativeTo" value="OptionsWnd"/>
+            </Widget>
+            <!--<Widget type="TextBox" skin="TextBox" position="196 84 118 24">
+							<Property key="Caption" value="#{HDRParam3}"/>
+							<Property key="TextColour" value="0.7 1 0.4"/>
+							<UserString key="RelativeTo" value="OptionsWnd"/>
+						</Widget>-->
+            <Widget type="TextBox" skin="TextBox" position="328 84 60 24" name="HDRParam3Val">
+              <Property key="TextColour" value="1.0 1 0.2"/>
+              <UserString key="RelativeTo" value="OptionsWnd"/>
+            </Widget>
+            <Widget type="Slider" skin="Slider" position="392 84 320 18" name="HDRParam3">
+              <UserString key="RelativeTo" value="OptionsWnd"/>
+            </Widget>
+            <Widget type="TextBox" skin="TextBox" position="196 116 118 24">
+              <Property key="Caption" value="#{HDRAdaptationScale}"/>
+              <Property key="TextColour" value="0.7 1 0.4"/>
+              <UserString key="RelativeTo" value="OptionsWnd"/>
+            </Widget>
+            <Widget type="TextBox" skin="TextBox" position="328 116 60 24" name="HDRAdaptationScaleVal">
+              <Property key="TextColour" value="1.0 1 0.2"/>
+              <UserString key="RelativeTo" value="OptionsWnd"/>
+            </Widget>
+            <Widget type="Slider" skin="Slider" position="392 116 320 18" name="HDRAdaptationScale">
+              <UserString key="RelativeTo" value="OptionsWnd"/>
+            </Widget>
+          </Widget>
 					<Widget type="TabItem" skin="" position="2 24 738 432">
 						<Property key="Caption" value="#{Effects}"/>
 						<UserString key="RelativeTo" value="OptionsWnd"/>
@@ -1540,49 +1598,9 @@
 							<Property key="TextColour" value="0.6 1 0.3"/>
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
-            <Widget type="Button" skin="CheckBox" position="28 336 152 24" name="HDR">
-						  <Property key="Caption" value="#{HDR}"/>
-							<Property key="TextColour" value="0.6 1 0.3"/>
-							<UserString key="RelativeTo" value="OptionsWnd"/>
-						</Widget>
-            <!--<Widget type="TextBox" skin="TextBox" position="196 336 118 24">
-							<Property key="Caption" value="#{HDRParam1}"/>
-							<Property key="TextColour" value="0.7 1 0.4"/>
-							<UserString key="RelativeTo" value="OptionsWnd"/>
-						</Widget>-->
-						<Widget type="TextBox" skin="TextBox" position="328 336 60 24" name="HDRParam1Val">
-							<Property key="TextColour" value="1.0 1 0.2"/>
-							<UserString key="RelativeTo" value="OptionsWnd"/>
-						</Widget>
-						<Widget type="Slider" skin="Slider" position="392 336 320 18" name="HDRParam1">
-							<UserString key="RelativeTo" value="OptionsWnd"/>
-						</Widget>
-            <!--<Widget type="TextBox" skin="TextBox" position="196 368 118 24">
-							<Property key="Caption" value="#{HDRParam2}"/>
-							<Property key="TextColour" value="0.7 1 0.4"/>
-							<UserString key="RelativeTo" value="OptionsWnd"/>
-						</Widget>-->
-            <Widget type="TextBox" skin="TextBox" position="328 368 60 24" name="HDRParam2Val">
-							<Property key="TextColour" value="1.0 1 0.2"/>
-							<UserString key="RelativeTo" value="OptionsWnd"/>
-						</Widget>
-						<Widget type="Slider" skin="Slider" position="392 368 320 18" name="HDRParam2">
-							<UserString key="RelativeTo" value="OptionsWnd"/>
-						</Widget>
-            <!--<Widget type="TextBox" skin="TextBox" position="196 400 118 24">
-							<Property key="Caption" value="#{HDRParam3}"/>
-							<Property key="TextColour" value="0.7 1 0.4"/>
-							<UserString key="RelativeTo" value="OptionsWnd"/>
-						</Widget>-->
-            <Widget type="TextBox" skin="TextBox" position="328 400 60 24" name="HDRParam3Val">
-							<Property key="TextColour" value="1.0 1 0.2"/>
-							<UserString key="RelativeTo" value="OptionsWnd"/>
-						</Widget>
-						<Widget type="Slider" skin="Slider" position="392 400 320 18" name="HDRParam3">
-							<UserString key="RelativeTo" value="OptionsWnd"/>
-						</Widget>
+           
 					</Widget>
-				</Widget>
+        </Widget>
 				<Widget type="TextBox" skin="TextBox" position="32 488 300 24">
 					<Property key="Caption" value="#{NeedRestart}"/>
 					<Property key="TextColour" value="0.5 0.9 1"/>

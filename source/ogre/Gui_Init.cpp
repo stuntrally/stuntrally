@@ -236,6 +236,7 @@ void App::InitGui()
 	Slv(HDRParam1, pSet->hdrParam1);
 	Slv(HDRParam2, pSet->hdrParam2);
 	Slv(HDRParam3, pSet->hdrParam3);
+	Slv(HDRAdaptationScale, pSet->hdrAdaptationScale);
 	
 	Chk("MotionBlur", chkVidBlur, pSet->motionblur);
 	Chk("ssao", chkVidSSAO, pSet->ssao);

@@ -260,4 +260,43 @@ material Ogre/Compositor/HDR/ToneMapping
 	}
 }
 
+fragment_program Ogre/Compositor/HDR/AdaptLuminance cg
+{
+	source AdaptLuminance.cg
+	entry_point PS
+	profiles ps_4_0 ps_3_0 fp40
 
+	default_params
+	{
+		param_named_auto dTime frame_time
+	//	param_named AdaptationScale float .3
+	}
+}
+
+material Ogre/Compositor/HDR/AdaptLuminance
+{
+	technique
+	{
+		pass
+		{
+			cull_hardware none
+			cull_software none
+			depth_check off
+
+			vertex_program_ref RenderGBuffer_vp { }
+			fragment_program_ref Ogre/Compositor/HDR/AdaptLuminance { }
+
+			texture_unit
+			{
+				tex_coord_set 0
+				tex_address_mode clamp
+				filtering none 
+			}
+			texture_unit
+			{
+				tex_address_mode clamp
+				filtering none 
+			}
+		}
+	}
+}

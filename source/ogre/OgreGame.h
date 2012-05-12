@@ -310,6 +310,7 @@ protected:
 	SLV(BloomInt);  SLV(BloomOrig);  SLV(BlurIntens);  // video
 	SLV(DepthOfFieldFocus);  SLV(DepthOfFieldFar);  // dof
 	SLV(HDRParam1);SLV(HDRParam2);SLV(HDRParam3); //hdr
+	SLV(HDRAdaptationScale);
 	SLV(NumLaps);  SLV(RplNumViewports);  // setup
 	
 	//  checks

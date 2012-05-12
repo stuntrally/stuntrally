@@ -192,12 +192,7 @@ void HDRListener::notifyCompositor(Ogre::CompositorInstance* instance)
 
 void HDRListener::notifyMaterialSetup(Ogre::uint32 pass_id, Ogre::MaterialPtr &mat)
 {
-
-}
-
-void HDRListener::notifyMaterialRender(Ogre::uint32 pass_id, Ogre::MaterialPtr &mat)
-{
-	//  Prepare the fragment params offsets
+//  Prepare the fragment params offsets
 	switch (pass_id)
 	{
 	//case 994: // rt_lum4
@@ -237,6 +232,11 @@ void HDRListener::notifyMaterialRender(Ogre::uint32 pass_id, Ogre::MaterialPtr &
 			break;
 		}
 	}
+}
+
+void HDRListener::notifyMaterialRender(Ogre::uint32 pass_id, Ogre::MaterialPtr &mat)
+{
+	
 	if(pass_id == 600 || pass_id == 800)
 	{
 		Ogre::Pass *pass = mat->getBestTechnique()->getPass(0);
@@ -253,6 +253,15 @@ void HDRListener::notifyMaterialRender(Ogre::uint32 pass_id, Ogre::MaterialPtr &
 						params->setNamedConstant("bloomSettings", bloomSettings);
 		}
 	
+	}
+	else if(pass_id == 989)
+	{
+		Ogre::Pass *pass = mat->getBestTechnique()->getPass(0);
+		Ogre::GpuProgramParametersSharedPtr params = pass->getFragmentProgramParameters();
+		if (params->_findNamedConstantDefinition("AdaptationScale"))
+		{
+			params->setNamedConstant("AdaptationScale", mApp->pSet->hdrAdaptationScale);
+		}
 	}
 }
 
