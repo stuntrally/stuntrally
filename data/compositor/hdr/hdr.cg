@@ -161,11 +161,12 @@ float4 downscale3x3brightpass(
 	float4 lum = tex2D(inLum, float2(0.5f, 0.5f));
 
 	// Tone map result
-	accum = toneMap(accum, lum.r, toneMapSettings);
+//	accum = toneMap(accum, lum.r, toneMapSettings);
 
 	// Reduce bright and clamp
-	accum = max(float4(0.0f), accum - bloomSettings.y);
-	accum /= (bloomSettings.z + accum);
+	accum = max(float4(0.0f), accum -  bloomSettings.x);//
+//	accum /= (bloomSettings.x + accum);
+//	accum /= (1.0 + accum);
 
 	return accum;
 }
@@ -174,8 +175,8 @@ float4 downscale3x3brightpass(
 */
 float4 bloom(
 		float2 uv : TEXCOORD0,
-		uniform float2 sampleOffsets[15],
 		uniform float4 sampleWeights[15],	
+		uniform float4 sampleOffsets[15],
 		uniform sampler2D inRTT : register(s0)
 		) : COLOR
 {
@@ -189,7 +190,7 @@ float4 bloom(
 		accum += sampleWeights[i] * tex2D(inRTT, sampleUV);
 	}
 
-	return accum;
+	return float4(accum.rgb,1.0);
 
 }
 
@@ -216,9 +217,9 @@ float4 finalToneMapping(
 
 	// Get bloom colour
 	float4 bloom = tex2D(inBloom, uv);
-
+	float3 bloomAdjusted = bloom.rgb * (1/bloomSettings.y);
 	// Add scene & bloom
-	return float4(toneMappedSceneCol.rgb + bloom.rgb * bloomSettings.x, 1.0f);
+	return float4(toneMappedSceneCol.rgb + clamp(bloomAdjusted,float3(0,0,0),float3(1,1,1)), 1.0f);
 }
 
 

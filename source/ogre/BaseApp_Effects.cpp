@@ -231,7 +231,7 @@ void BaseApp::recreateCompositor()
 		mHDRLogic->compositor->SetStarStrength(0.1f);
 		mHDRLogic->compositor->Create();
 	*/
-		mHDRLogic->setApp(this);		
+		mHDRLogic->setApp(this);	
 	
 	}
 	
