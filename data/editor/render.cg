@@ -51,7 +51,6 @@ float4 render_ps(PIn IN,      /// _road for minimap_
 	uniform float3 ambient,	uniform float4 matDif): COLOR0
 {
 	float bridge = IN.c.x, pipe = IN.c.y;
-	float border = lerp(IN.c.z, 1,pipe);
 	float norm = abs(IN.n.y);  //abs
 
 	float pwr = lerp(lerp(8, 8, bridge), 4, pipe);
@@ -68,7 +67,7 @@ float4 render_ps(PIn IN,      /// _road for minimap_
 		float3(1, 1, 1) * clrLi,
 		float3(0, 0.8,1) * (0.4+0.7*clrLi), bridge),
 		float3(1,0.8, 0) * (0.2+1.0*clrLi), pipe);
-	return float4(/*border */ clr, 1);
+	return float4(clr, 1);
 }
 //-------------------------------------------------
 float4 render_gr_ps(PIn IN): COLOR0
