@@ -36,9 +36,8 @@ void ParticleMaterialGenerator::generate()
 	
 	particleDepthPass->setSpecular(mDef->mProps->specular.x, mDef->mProps->specular.y, mDef->mProps->specular.z, mDef->mProps->specular.w);
 	
-	if (!mDef->mProps->fog)
-		particleDepthPass->setFog(true); // actually this disables fog
-		
+	particleDepthPass->setFog(true); // actually this disables fog
+
 	if (!mDef->mProps->lighting)
 		particleDepthPass->setLightingEnabled(false);
 	
