@@ -511,6 +511,11 @@
 					<Property key="TextColour" value="0.6 0.8 0.8"/>
 					<UserString key="RelativeTo" value="GameWnd"/>
 				</Widget>
+				<Widget type="Button" skin="CheckBox" position="552 80 216 24" name="RoadWCollis">
+					<Property key="Caption" value="#{RoadWallFullCollis}"/>
+					<Property key="TextColour" value="0.6 0.8 0.8"/>
+					<UserString key="RelativeTo" value="GameWnd"/>
+				</Widget>
 				<Widget type="Button" skin="CheckBox" position="312 352 256 25" name="chkSplitVertically">
 					<Property key="Caption" value="#{SplitVertically}"/>
 					<Property key="TextColour" value="0.8 0.9 1.0"/>

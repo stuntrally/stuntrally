@@ -102,6 +102,7 @@ public:
 	void SetTerHitVis(bool visible), UpdRot();
 	
 	bool bCastShadow;  // true for depth shadows
+	bool bRoadWFullCol;  // road wall full collision (all triangles, or just side)
 	
 
 private:

@@ -188,6 +188,7 @@ void App::InitGui()
 	//  game
 	Chk("VegetCollis", chkVegetCollis, pSet->gui.collis_veget);
 	Chk("CarCollis", chkCarCollis, pSet->gui.collis_cars);
+	Chk("RoadWCollis", chkRoadWCollis, pSet->gui.collis_roadw);
 	//  boost, flip combos
 	Cmb(combo, "CmbBoost", comboBoost);
 	if (combo)

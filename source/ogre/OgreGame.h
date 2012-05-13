@@ -325,7 +325,7 @@ protected:
 		chkVidEffects(WP), chkVidBloom(WP), chkVidHDR(WP), chkVidBlur(WP), UpdBloomVals(), chkVidSSAO(WP), // effects
 		chkVidSoftParticles(WP), chkVidGodRays(WP), chkWaterReflect(WP), chkWaterRefract(WP),
 		chkVidDepthOfField(WP), chkVidFilmGrain(WP),
-		chkVegetCollis(WP), chkCarCollis(WP);  //car
+		chkVegetCollis(WP), chkCarCollis(WP), chkRoadWCollis(WP);  //game
 	void chkUseImposters(WP wp);
 
 	void imgBtnCarClr(WP), btnCarClrRandom(WP), toggleWireframe();

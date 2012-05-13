@@ -41,6 +41,7 @@ void App::chkRearInv(WP wp){	ChkEv(rear_inv);	if (pGame)  pGame->ProcessNewSetti
 //    [Game]
 void App::chkVegetCollis(WP wp){	ChkEv(gui.collis_veget);	}
 void App::chkCarCollis(WP wp){		ChkEv(gui.collis_cars);		}
+void App::chkRoadWCollis(WP wp){	ChkEv(gui.collis_roadw);	}
 
 //  boost, flip
 void App::comboBoost(CMB)

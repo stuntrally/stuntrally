@@ -797,7 +797,7 @@ void SplineRoad::RebuildRoadInt()
 						for (int i = 0; i < iLmrgW-1; ++i)  // length
 						{	int iiW = i* (iwW+1);
 						for (int w=0; w < iwW; ++w)  // width
-						if (w==0 || w == iwW-1)  // only 2 sides|_| optym+
+						if (bRoadWFullCol || w==0 || w == iwW-1)  // only 2 sides|_| optym+
 						{
 							int f = iiW + w, f1 = f + (iwW+1);
 							addTriB(posW[f+0], posW[f1+1], posW[f+1]);
@@ -805,7 +805,7 @@ void SplineRoad::RebuildRoadInt()
 						}	}
 						
 						btCollisionShape* shape = new btBvhTriangleMeshShape(trimesh, true);
-						shape->setUserPointer((void*)7777);  //-
+						shape->setUserPointer((void*)7777);  //-  + road mtr id todo...
 						
 						//btRigidBody::btRigidBodyConstructionInfo infoW(0.f, 0, shape);
 						//infoW.m_restitution = 0.0f;

@@ -581,16 +581,19 @@
 					<UserString key="RelativeTo" value="EditorWnd"/>
 					<Property key="Caption" value="#{Ambient}"/>
 					<Property key="TextColour" value="0.7 0.7 0.66"/>
+					<UserString key="tip" value="#{TipSunAmbient}"/>
 				</Widget>
 				<Widget type="TextBox" skin="TextBox" position="136 175 64 24">
 					<UserString key="RelativeTo" value="EditorWnd"/>
 					<Property key="Caption" value="#{Diffuse}"/>
 					<Property key="TextColour" value="0.9 0.9 0.8"/>
+					<UserString key="tip" value="#{TipSunDiffuse}"/>
 				</Widget>
 				<Widget type="TextBox" skin="TextBox" position="136 207 64 24">
 					<UserString key="RelativeTo" value="EditorWnd"/>
 					<Property key="Caption" value="#{Specular}"/>
 					<Property key="TextColour" value="0.8 0.8 0.7"/>
+					<UserString key="tip" value="#{TipSunSpecular}"/>
 				</Widget>
 				<Widget type="EditBox" skin="EditBox" position="208 143 164 24" name="LiAmb">
 					<UserString key="RelativeTo" value="EditorWnd"/>
