@@ -446,8 +446,9 @@ void SplineRoad::RebuildRoadInt()
 					//  color - for minimap preview
 					//  ---~~~====~~~---
 					Real brdg = min(1.f, abs(vP.y - yTer) * 0.4f);  //par ] height diff mul
-					Real h = max(0.f, 1.f - abs(vP.y - yTer) / 30.f);  // for grass
-					Vector4 c(brdg,pipe, /*border-*/(w==0 || w==iw) ? 0.f : 1.f, h);
+					Real h = max(0.f, 1.f - abs(vP.y - yTer) / 30.f);  // for grass dens tex
+					Real blend = 0.f;  //rand()%1000/1000.f; // TODO: blend 2materials...?
+					Vector4 c(brdg,pipe, blend, h);
 
 					//>  data road
 					pos.push_back(vP);	norm.push_back(vN);

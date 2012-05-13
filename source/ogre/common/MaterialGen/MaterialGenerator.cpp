@@ -51,8 +51,7 @@ void MaterialGenerator::generate()
 	
 	pass->setCullingMode(chooseCullingMode());
 	
-	if (!mDef->mProps->fog)
-		pass->setFog(true); // actually this disables fog
+	pass->setFog(true); // turn off fixed function fog, we use shaders
 		
 	if (!mDef->mProps->lighting)
 		pass->setLightingEnabled(false);
