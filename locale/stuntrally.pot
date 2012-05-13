@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION"
 "Report-Msgid-Bugs-To: "
-"POT-Creation-Date: 2012-04-23 19:26+0300"
+"POT-Creation-Date: 2012-05-13 15:00+0300"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>"
 "Language-Team: LANGUAGE <LL@li.org>"
@@ -135,6 +135,10 @@ msgstr ""
 
 msgctxt "TipVegetGroups"
 msgid "Vegetation model groups (recommended use 4-6), affects performance."
+msgstr ""
+
+msgctxt "Graphs"
+msgid "Graphs"
 msgstr ""
 
 msgctxt "TerNormal"
@@ -457,6 +461,10 @@ msgctxt "CopySource"
 msgid "Set as copy source"
 msgstr ""
 
+msgctxt "CarCrash"
+msgid "Car Crash"
+msgstr ""
+
 msgctxt "LS_OBJS"
 msgid "Loading Objects"
 msgstr ""
@@ -593,6 +601,10 @@ msgctxt "Score"
 msgid "Score"
 msgstr ""
 
+msgctxt "Suspension"
+msgid "Suspension"
+msgstr ""
+
 msgctxt "TerrainSize"
 msgid "Terrain size"
 msgstr ""
@@ -663,6 +675,10 @@ msgstr ""
 
 msgctxt "TipCarsList"
 msgid "Cars list, click to select (and see image). Press [Change car] and then [New Game] to drive with it."
+msgstr ""
+
+msgctxt "FluidSplash"
+msgid "Fluid Splash"
 msgstr ""
 
 msgctxt "InputMapNextCamera"
@@ -1261,8 +1277,8 @@ msgctxt "Road"
 msgid "Road"
 msgstr ""
 
-msgctxt "distance"
-msgid "distance"
+msgctxt "FluidCont"
+msgid "Fluid Cont."
 msgstr ""
 
 msgctxt "TrackAutoLoad"
@@ -1577,8 +1593,8 @@ msgctxt "ShowPictures"
 msgid "Show pictures while loading"
 msgstr ""
 
-msgctxt "InputObjectsMode"
-msgid "X - edit Objects"
+msgctxt "distance"
+msgid "distance"
 msgstr ""
 
 msgctxt "TrackAvgSpeed"
@@ -1775,6 +1791,10 @@ msgstr ""
 
 msgctxt "TBLap"
 msgid "Lap"
+msgstr ""
+
+msgctxt "InputObjectsMode"
+msgid "X - edit Objects"
 msgstr ""
 
 msgctxt "TipGrassVisDist"
@@ -2457,6 +2477,10 @@ msgctxt "UnitMph"
 msgid "mph"
 msgstr ""
 
+msgctxt "InputObjectsType"
+msgid "[,]  - change object type"
+msgstr ""
+
 msgctxt "ColHue"
 msgid "Color - Hue"
 msgstr ""
@@ -2879,6 +2903,10 @@ msgstr ""
 
 msgctxt "Color"
 msgid "color"
+msgstr ""
+
+msgctxt "CarScrap"
+msgid "Car Scrap"
 msgstr ""
 
 msgctxt "InputPressButtonTip"
