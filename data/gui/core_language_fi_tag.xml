@@ -724,6 +724,7 @@
 	<Tag name="Graphs">Graphs</Tag>
 	<Tag name="CarCrash">Car Crash</Tag>
 	<Tag name="Suspension">Suspension</Tag>
+	<Tag name="RoadWallFullCollis">Road wall full collision</Tag>
 	<Tag name="FluidSplash">Fluid Splash</Tag>
 	<Tag name="FluidCont">Fluid Cont.</Tag>
 	<Tag name="InputObjectsType">[,]  - change object type</Tag>
