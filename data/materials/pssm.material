@@ -2,7 +2,7 @@
 vertex_program PSSM/shadow_caster_vs cg
 {
 	source pssm.cg
-	profiles vs_4_0 vs_1_1 arbvp1
+	profiles vs_4_0 vs_2_0 arbvp1
 	entry_point shadow_caster_vs
 
 	default_params
@@ -16,7 +16,7 @@ vertex_program PSSM/shadow_caster_vs cg
 vertex_program PSSM/shadow_caster_wind_vs cg
 {
 	source pssm.cg
-	profiles vs_4_0 vs_1_1 arbvp1
+	profiles vs_4_0 vs_2_0 arbvp1
 	entry_point shadow_caster_wind_vs
 
 	default_params
@@ -58,6 +58,7 @@ material PSSM/shadow_caster
 		// all this will do is write depth and depth² to red and green
 		pass
 		{
+			fog_override true
 			vertex_program_ref PSSM/shadow_caster_vs
 			{
 			}
@@ -76,6 +77,7 @@ material PSSM/shadow_caster_noalpha
 		// all this will do is write depth and depth² to red and green
 		pass
 		{
+			fog_override true
 			vertex_program_ref PSSM/shadow_caster_vs
 			{
 			}
@@ -94,6 +96,7 @@ material PSSM/shadow_caster_nocull
 		// all this will do is write depth and depth² to red and green
 		pass
 		{
+			fog_override true
 			cull_hardware none
 			vertex_program_ref PSSM/shadow_caster_vs
 			{
@@ -113,6 +116,7 @@ material PSSM/shadow_caster_wind
 		// all this will do is write depth and depth² to red and green
 		pass
 		{
+			fog_override true
 			cull_hardware none
 			vertex_program_ref PSSM/shadow_caster_wind_vs
 			{
