@@ -7,22 +7,21 @@ normalMap_256 = brass_patina_n_s.png
 normalMap_1024 = brass_patina_n.png
 envMap = ReflectionCube
 reflAmount = 0.1
-ambient = 0.84 0.86 0.88
-diffuse = 0.5 0.56 0.6
+ambient = 0.94 0.96 0.98
+diffuse = 0.4 0.46 0.5
 specular = 0.25 0.267 0.28 4
 cullHardware = none
-;receivesDepthShadows = true   ;_\todo normals..
-;shadowPriority = 0.3
+;receivesDepthShadows = true
+;shadowPriority = 0.1
 
 [road_wall]
 parent = pipe_wall
-ambient = 0.8 0.86 0.88
-diffuse = 0.7 0.76 0.8
+ambient = 0.9 0.96 0.98
+diffuse = 0.6 0.66 0.7
 specular = 0.24 0.267 0.28 4
-cullHardware = anticlockwise
-cullHardware = none_if_depthshadow
-;receivesDepthShadows = true   ;_\todo normals..
-;shadowPriority = 0.3
+receivesDepthShadows = true
+shadowPriority = 0.1
+cullHardware = clockwise
 
 ; ------------ Column -------------
 [road_col]
@@ -45,7 +44,9 @@ depthBias = 3
 diffuseMap_512 = roadAsphalt_s.jpg
 diffuseMap_2048 = roadAsphalt.jpg
 cullHardware = none
-receivesShadows = true
+receivesShadows = false
+receivesDepthShadows = false
+;issues^..
 
 [pipeGlass]
 customGenerator = PipeGlass
@@ -73,7 +74,9 @@ depthBias = 3
 diffuseMap_512 = roadAsphalt_s.jpg
 diffuseMap_2048 = roadAsphalt.jpg
 cullHardware = none
-receivesShadows = true
+receivesShadows = false
+receivesDepthShadows = false
+;issues^..
 
 [pipeGlassOrange]
 parent = pipeGlass
