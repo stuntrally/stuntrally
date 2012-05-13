@@ -11,25 +11,30 @@ ambient = 0.84 0.86 0.88
 diffuse = 0.5 0.56 0.6
 specular = 0.25 0.267 0.28 4
 cullHardware = none
+;receivesDepthShadows = true   ;_\todo normals..
+;shadowPriority = 0.3
 
 [road_wall]
 parent = pipe_wall
-cullHardware = anticlockwise
-cullHardware = none_if_depthshadow
 ambient = 0.8 0.86 0.88
 diffuse = 0.7 0.76 0.8
 specular = 0.24 0.267 0.28 4
+cullHardware = anticlockwise
+cullHardware = none_if_depthshadow
+;receivesDepthShadows = true   ;_\todo normals..
+;shadowPriority = 0.3
 
 ; ------------ Column -------------
 [road_col]
-ambient = 0.88 0.90 0.90
-diffuse = 0.44 0.45 0.45
+ambient = 0.78 0.80 0.80
+diffuse = 0.54 0.55 0.55
 specular = 0.25 0.25 0.25 24
-cullHardware = anticlockwise
 diffuseMap_256 = concrete03_s.png
 diffuseMap_1024 = concrete03.png
 normalMap_256 = brass_patina_n_s.png
 normalMap_1024 = brass_patina_n.png
+receivesDepthShadows = true
+shadowPriority = 0.1
 
 ; ------------ Pipes -------------
 [pipeAsphalt]

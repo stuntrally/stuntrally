@@ -504,8 +504,8 @@ void SplineRoad::RebuildRoadInt()
 				for (int w=0; w <= iwC; ++w)  // width +1
 				{
 					Real ht = (h==0) ? 0.f : vL0.y - mTerrain->getHeightAtWorldPosition(vL0);
-					Real a = Real(w)/iwC *2*PI_d,
-						x = r*cosf(a+PI_d/4.f), y = -r*sinf(a+PI_d/4.f);
+					Real a = Real(w)/iwC *2*PI_d,  //+PI_d/4.f
+						x = r*cosf(a), y = r*sinf(a);
 
 					Vector3 vlXZ(vl.x,0,vl.z);	Real fl = 1.f/max(0.01f, vlXZ.length());
 					Vector3 vP = vL0 + fl * vl * x + vwn * y;
@@ -637,13 +637,13 @@ void SplineRoad::RebuildRoadInt()
 				if (wall)
 				{
 					meshW = MeshManager::getSingleton().createManual(sMeshW,"General");
-					/*SubMesh* sm =*/ meshW->createSubMesh();
+					meshW->createSubMesh();
 				}
 				bool cols = !posC.empty() && lod == 0;  // cols have no lods
 				if (cols)
 				{
 					meshC = MeshManager::getSingleton().createManual(sMeshC,"General");
-					/*SubMesh* sm =*/ meshC->createSubMesh();
+					meshC->createSubMesh();
 				}
 				//*=*/wall = 0;  cols = 0;  // test
 
@@ -716,12 +716,13 @@ void SplineRoad::RebuildRoadInt()
 				}
 				if (wall /*&& !posW.empty()*/)
 				{	AddMesh(meshW, sMeshW, aabox, &entW, &nodeW, "W."+sEnd);
-					entW->setCastShadows(true);  }  // only cast
+					entW->setCastShadows(true);  // only cast
+				}
 				if (cols /*&& !posC.empty()*/)
 				{	AddMesh(meshC, sMeshC, aabox, &entC, &nodeC, "C."+sEnd);
 					entC->setVisible(true);  
-					if (bForceShadowCaster)
-						entC->setCastShadows(true);  // col vis?
+					if (bCastShadow)
+						entC->setCastShadows(true);
 				}
 				//if (bForceShadowCaster)
 					//ent->setCastShadows(true);
