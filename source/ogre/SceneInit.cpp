@@ -286,7 +286,7 @@ void App::LoadScene()  // 3
 	if (ter)  // load scene
 		sc.LoadXml(TrkDir()+"scene.xml");
 	else
-	{	sc.Default();  sc.td.hfHeight = NULL;  sc.td.hfAngle = NULL;  }
+	{	sc.Default();  sc.td.hfHeight = sc.td.hfAngle = NULL;  sc.td.layerRoad.smoke = 1.f;  }
 
 	//  water RTT
 	UpdateWaterRTT(mSplitMgr->mCameras.front());
