@@ -39,6 +39,7 @@
 	<Tag name="Surface">Поверхность</Tag>
 	<Tag name="TBScore">Очки</Tag>
 	<Tag name="InputRoadChkFirst">0   - set checkpoint as first</Tag>
+	<Tag name="InputObjectsIns">Ins - insert new, at cursor</Tag>
 	<Tag name="GraphicsAll_Low">Низкий</Tag>
 	<Tag name="TipPrevWind">Preview camera window.</Tag>
 	<Tag name="ChampEndFinished">Вы закончили этот чемпионат.</Tag>
@@ -60,6 +61,7 @@
 	<Tag name="InputHeaderTxt1">Действие</Tag>
 	<Tag name="DepthOfField">Depth of Field</Tag>
 	<Tag name="Game">Игра</Tag>
+	<Tag name="InputObjectsScale">alt-LMB - scale   alt-RMB - scale Y only</Tag>
 	<Tag name="TipTerLNoiseOnly">Использовать только шум (не угол или высоту диапазонов)</Tag>
 	<Tag name="TipParType3">Частицы тип 3 (глобально для трека)</Tag>
 	<Tag name="TipParType2">Частицы тип 2 (глобально для трека)</Tag>
@@ -106,6 +108,7 @@
 	<Tag name="TerLHSm">Height smooth</Tag>
 	<Tag name="CopySource">Сделать копию источника</Tag>
 	<Tag name="rating">rating</Tag>
+	<Tag name="LS_OBJS">Loading Objects</Tag>
 	<Tag name="TreeRoadDist">Расстояние деревьев от дороги.</Tag>
 	<Tag name="GraphicsAll_Medium">Среднее</Tag>
 	<Tag name="NeedReload">* нужна перезагрузка</Tag>
@@ -150,7 +153,7 @@
 	<Tag name="UseSSAA">Use SSAA when effects are enabled</Tag>
 	<Tag name="ReflMode_single">Одиночный</Tag>
 	<Tag name="SetCamTo">Set camera to</Tag>
-	<Tag name="max">макс.</Tag>
+	<Tag name="Always">Всегда</Tag>
 	<Tag name="softparticles">Мягкие частицы</Tag>
 	<Tag name="TipTerTriSize">Terrain triangle size in [meters] (recommended: 1 - 2, use more for big track area). Changed after Update (F8).</Tag>
 	<Tag name="Players">Players</Tag>
@@ -241,7 +244,7 @@
 	<Tag name="TipGrassPatchLengthMax">Maximal grass patch length.</Tag>
 	<Tag name="Vegetation">Растительность</Tag>
 	<Tag name="ssao">SSAO</Tag>
-	<Tag name="Always">Всегда</Tag>
+	<Tag name="max">макс.</Tag>
 	<Tag name="Stage">Stage</Tag>
 	<Tag name="NetRefreshList">Get/refresh list</Tag>
 	<Tag name="MessageBox_Abort">Abort</Tag>
@@ -256,6 +259,7 @@
 	<Tag name="Delete">Удалить</Tag>
 	<Tag name="Rename">Переименовать</Tag>
 	<Tag name="TipModelPageLength">Models Page length (low will reload often, high will cause visible switching).</Tag>
+	<Tag name="NetGameProtocolError">Incompatible protocol versions between peers.</Tag>
 	<Tag name="LightmapSize">Lightmap size</Tag>
 	<Tag name="OpponentsSorted">Opponents Sorted</Tag>
 	<Tag name="RoadQual">Road far quality</Tag>
@@ -278,7 +282,7 @@
 	<Tag name="MergeLength">Merge length</Tag>
 	<Tag name="QuickHelpText">----  Quick help  ----@@Use mouse or Up,Down,Enter,Backspace to navigate through menu.@@To adjust resolution go to Options tab Screen,@use Graphics presets to quickly adjust graphics to your hardware.@@To see all keys used in game and configure input goto Options, tab Input.@If you have a game controller see:@http://code.google.com/p/vdrift-ogre/wiki/Running##Controllers@@Hosting a multiplayer game requires port forwarding.@Connecting to existing game doesn't need it, provided other players have it.@@If you have problems or suggestions report an issue on (or reply to existing one):@http://code.google.com/p/vdrift-ogre/issues/list@@For more info see Readme and our project's Wiki pages.@</Tag>
 	<Tag name="InputRoadPitch">- rotate pitch* / scale sel.</Tag>
-	<Tag name="NetGameProtocolError">Incompatible protocol versions between peers.</Tag>
+	<Tag name="InputObjectsMove">LMB - move   RMB - height</Tag>
 	<Tag name="TimesBar">Times bar</Tag>
 	<Tag name="Screenshot">снимок экрана</Tag>
 	<Tag name="Models">Models</Tag>
@@ -375,6 +379,7 @@
 	<Tag name="TexCoordMul">Tex Coord mul.</Tag>
 	<Tag name="Digits">Цифры (передача, скорость)</Tag>
 	<Tag name="ShowPictures">Show pictures while loading</Tag>
+	<Tag name="InputObjectsMode">X - edit Objects</Tag>
 	<Tag name="TrackAvgSpeed">Avg. speed</Tag>
 	<Tag name="PreviewCam">Preview Camera</Tag>
 	<Tag name="TipModelMinScale">Model minimal scale.</Tag>
@@ -473,8 +478,11 @@
 	<Tag name="InputToggleGUIMode">F1 or ` - GUI mode (toggle Options)</Tag>
 	<Tag name="TipGrassMaterial">Grass material, chosen to match track's scenery.</Tag>
 	<Tag name="TipRearThrottleInverse">Inverse throttle and brake function in rear gear.</Tag>
+	<Tag name="LS_ROAD">Loading Road</Tag>
 	<Tag name="RoadPoint">Road Point</Tag>
+	<Tag name="CarStartPos">Car Start Pos</Tag>
 	<Tag name="TerLHMax">Height Max</Tag>
+	<Tag name="InputWheelSize">,=  (or Wheel)  -  Size</Tag>
 	<Tag name="LoadingDesc">Loading, please wait...</Tag>
 	<Tag name="TipGrassPatchHeightMax">Maximal grass patch height.</Tag>
 	<Tag name="TerLAngMin">Angle Min</Tag>
@@ -503,12 +511,13 @@
 	<Tag name="TipTCS">Prevents wheel spinning when accelerating (default: off).</Tag>
 	<Tag name="InputRoadColumn">End - on/off column</Tag>
 	<Tag name="InputFluidsDel">Del - delete current</Tag>
+	<Tag name="Objects">Objects</Tag>
 	<Tag name="set1">set1</Tag>
 	<Tag name="set2">set2</Tag>
 	<Tag name="auto">Auto</Tag>
 	<Tag name="TipWindInflH">Wind influence on model, height scale.</Tag>
 	<Tag name="NetLocalPort">Локальный порт</Tag>
-	<Tag name="InputStartLMB">LMB - движение RMB - высота</Tag>
+	<Tag name="InputStartLMB">ctrl-LMB - place   LMB - move   RMB - height</Tag>
 	<Tag name="TipWindInflL">Wind influence on model, length scale.</Tag>
 	<Tag name="InputRoadCopySel">ctrl-Ins - copy selection   ctrl-Del - delete sel.</Tag>
 	<Tag name="InputFluidsType">-,=  - change fluid type (water,mud,etc.)</Tag>
@@ -530,6 +539,7 @@
 	<Tag name="AntiAliasing">Antialiasing</Tag>
 	<Tag name="RoadStats">Road Stats</Tag>
 	<Tag name="FinishedCommaPlace">finished, place</Tag>
+	<Tag name="InputObjectsDel">Del - delete current</Tag>
 	<Tag name="Tools">Tools</Tag>
 	<Tag name="NetCreateGame">Create game</Tag>
 	<Tag name="TipGrassSwaySpd">Grass sway effect speed.</Tag>
@@ -667,13 +677,13 @@
 	<Tag name="Diff3">Medium</Tag>
 	<Tag name="Diff0">Test Easy</Tag>
 	<Tag name="Diff1">Very Easy</Tag>
-	<Tag name="Diff6">Extreme</Tag>
+	<Tag name="InputObjectsPrevNext">PgUp,PgDn (or Wheel) - previous/next object</Tag>
 	<Tag name="Diff7">Ultra</Tag>
 	<Tag name="Diff4">Hard</Tag>
 	<Tag name="SkirtHeight">Skirt Height</Tag>
 	<Tag name="NewTerrainGenerate">New Generate</Tag>
 	<Tag name="TipTrkScreenEditor">In game screenshot for selected track.</Tag>
-	<Tag name="InputWheelSize">,=  (or Wheel)  -  Size</Tag>
+	<Tag name="InputObjectsRot">MMB - rotate Y</Tag>
 	<Tag name="BulletDebug">Bullet debug</Tag>
 	<Tag name="InputRoadHeight">- изменить высоту</Tag>
 	<Tag name="TipSunSpecular">Sun light specular (shiny) color. R G B components 0 to 1 (eg. 0.6 0.6 0.6)</Tag>
@@ -697,6 +707,7 @@
 	<Tag name="TipSurfFrict">Surface friction (eg. 1.0 asphalt, 0.7 gravel, 0.5 ice).</Tag>
 	<Tag name="FPS">Fps, Triangles, Batches</Tag>
 	<Tag name="NetJoinGame">Join game</Tag>
+	<Tag name="LS_TREES">Loading Trees</Tag>
 	<Tag name="InputMapBoost">Boost</Tag>
 	<Tag name="TipTerLAngMin">Starting terrain angle for layer.</Tag>
 	<Tag name="NetChat">Chat</Tag>
@@ -708,19 +719,15 @@
 	<Tag name="TipTerLAngMax">Ending terrain angle for layer.</Tag>
 	<Tag name="Pitch">pitch</Tag>
 	<Tag name="InputNextOptTab">F2,F3 - prev,next Options tab (shift - sub tab)</Tag>
+	<Tag name="Diff6">Extreme</Tag>
 	<Tag name="RplAll">Все</Tag>
-	<Tag name="InputObjectsIns">Ins - insert new, at cursor</Tag>
-	<Tag name="InputObjectsScale">alt-LMB - scale   alt-RMB - scale Y only</Tag>
-	<Tag name="LS_OBJS">Loading Objects</Tag>
-	<Tag name="InputObjectsMove">LMB - move   RMB - height</Tag>
-	<Tag name="InputObjectsPrevNext">PgUp,PgDn (or Wheel) - previous/next object</Tag>
-	<Tag name="InputObjectsMode">X - edit Objects</Tag>
-	<Tag name="LS_ROAD">Loading Road</Tag>
-	<Tag name="CarStartPos">Car Start Pos</Tag>
-	<Tag name="InputObjectsRot">MMB - rotate Y</Tag>
-	<Tag name="Objects">Objects</Tag>
-	<Tag name="InputObjectsDel">Del - delete current</Tag>
-	<Tag name="LS_TREES">Loading Trees</Tag>
+	<Tag name="Graphs">Graphs</Tag>
+	<Tag name="CarCrash">Car Crash</Tag>
+	<Tag name="Suspension">Suspension</Tag>
+	<Tag name="FluidSplash">Fluid Splash</Tag>
+	<Tag name="FluidCont">Fluid Cont.</Tag>
+	<Tag name="InputObjectsType">[,]  - change object type</Tag>
+	<Tag name="CarScrap">Car Scrap</Tag>
 	<Tag name="GameVersion">1.7</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 	<Tag name="LANG_EN">English</Tag>
