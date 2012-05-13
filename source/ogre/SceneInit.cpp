@@ -485,7 +485,7 @@ void App::LoadMisc()  // 9 last
 	} catch(...) {  }
 	
 	/// rendertextures debug
-	#if 1
+	#if 0
 	// init overlay elements
 	OverlayManager& mgr = OverlayManager::getSingleton();
 	Overlay* overlay;
