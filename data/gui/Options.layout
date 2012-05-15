@@ -1446,11 +1446,11 @@
               <Property key="TextColour" value="0.6 1 0.3"/>
               <UserString key="RelativeTo" value="OptionsWnd"/>
             </Widget>
-            <!--<Widget type="TextBox" skin="TextBox" position="196 336 118 24">
+            <Widget type="TextBox" skin="TextBox" position="196 20 118 24">
 							<Property key="Caption" value="#{HDRParam1}"/>
 							<Property key="TextColour" value="0.7 1 0.4"/>
 							<UserString key="RelativeTo" value="OptionsWnd"/>
-						</Widget>-->
+						</Widget>
             <Widget type="TextBox" skin="TextBox" position="328 20 60 24" name="HDRParam1Val">
               <Property key="TextColour" value="1.0 1 0.2"/>
               <UserString key="RelativeTo" value="OptionsWnd"/>
@@ -1458,11 +1458,11 @@
             <Widget type="Slider" skin="Slider" position="392 20 320 18" name="HDRParam1">
               <UserString key="RelativeTo" value="OptionsWnd"/>
             </Widget>
-            <!--<Widget type="TextBox" skin="TextBox" position="196 52 118 24">
+            <Widget type="TextBox" skin="TextBox" position="196 52 118 24">
 							<Property key="Caption" value="#{HDRParam2}"/>
 							<Property key="TextColour" value="0.7 1 0.4"/>
 							<UserString key="RelativeTo" value="OptionsWnd"/>
-						</Widget>-->
+						</Widget>
             <Widget type="TextBox" skin="TextBox" position="328 52 60 24" name="HDRParam2Val">
               <Property key="TextColour" value="1.0 1 0.2"/>
               <UserString key="RelativeTo" value="OptionsWnd"/>
@@ -1470,11 +1470,11 @@
             <Widget type="Slider" skin="Slider" position="392 52 320 18" name="HDRParam2">
               <UserString key="RelativeTo" value="OptionsWnd"/>
             </Widget>
-            <!--<Widget type="TextBox" skin="TextBox" position="196 84 118 24">
+            <Widget type="TextBox" skin="TextBox" position="196 84 118 24">
 							<Property key="Caption" value="#{HDRParam3}"/>
 							<Property key="TextColour" value="0.7 1 0.4"/>
 							<UserString key="RelativeTo" value="OptionsWnd"/>
-						</Widget>-->
+						</Widget>-
             <Widget type="TextBox" skin="TextBox" position="328 84 60 24" name="HDRParam3Val">
               <Property key="TextColour" value="1.0 1 0.2"/>
               <UserString key="RelativeTo" value="OptionsWnd"/>
@@ -1494,6 +1494,30 @@
             <Widget type="Slider" skin="Slider" position="392 116 320 18" name="HDRAdaptationScale">
               <UserString key="RelativeTo" value="OptionsWnd"/>
             </Widget>
+            <Widget type="TextBox" skin="TextBox" position="196 148 128 24">
+              <Property key="Caption" value="#{HDRIntensity}"/>
+              <Property key="TextColour" value="1.0 0.9 0.0"/>
+              <UserString key="RelativeTo" value="OptionsWnd"/>
+            </Widget>
+            <Widget type="Slider" skin="Slider" position="392 148 320 18" name="BloomInt">
+              <UserString key="RelativeTo" value="OptionsWnd"/>
+            </Widget>
+            <Widget type="TextBox" skin="TextBox" position="196 180 128 24">
+              <Property key="Caption" value="#{HDROrigImage}"/>
+              <Property key="TextColour" value="1 1 0.5"/>
+              <UserString key="RelativeTo" value="OptionsWnd"/>
+            </Widget>
+            <Widget type="Slider" skin="Slider" position="392 180 320 18" name="BloomOrig">
+              <UserString key="RelativeTo" value="OptionsWnd"/>
+            </Widget>
+            <Widget type="TextBox" skin="TextBox" position="328 148 60 26" name="BloomIntVal">
+              <Property key="TextColour" value="1.0 1 0.2"/>
+              <UserString key="RelativeTo" value="OptionsWnd"/>
+            </Widget>
+            <Widget type="TextBox" skin="TextBox" position="328 180 60 24" name="BloomOrigVal">
+              <Property key="TextColour" value="1 1 0.5"/>
+              <UserString key="RelativeTo" value="OptionsWnd"/>
+            </Widget>         
           </Widget>
 					<Widget type="TabItem" skin="" position="2 24 738 432">
 						<Property key="Caption" value="#{Effects}"/>
