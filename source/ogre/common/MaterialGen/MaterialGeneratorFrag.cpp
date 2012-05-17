@@ -547,7 +547,9 @@ void MaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::StrStrea
 				"	float reflectionFactor = tex2D(reflectivityMap, texCoord.xy).r * reflAmount; \n";
 		}
 		outStream << 
+		
 		"	float3 r = reflect( eyeVector, normal ); \n" // calculate reflection vector
+		"	r.z = -r.z; \n"
 		"	float4 envColor = texCUBE(envMap, r); \n"; // fetch cube map
 
 		if (fpNeedLighting()) outStream <<
