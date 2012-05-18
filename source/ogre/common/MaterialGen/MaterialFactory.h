@@ -37,7 +37,7 @@ public:
 	static const unsigned int SHADOWTEX_NUM_MAX = 3;
 	
 	// once at start (or after settings changed)
-	void generate();
+	void generate(bool force=false);
 	
 	// per-frame updates
 	void update();
@@ -132,7 +132,7 @@ private:
 
 	// if false, generate() doesn't do anything
 	bool bSettingsChanged;
-		
+public:
 	void loadDefsFromFile(const std::string& file); // load MaterialDefinition's from file (can be multiple in 1 file)
 };
 
