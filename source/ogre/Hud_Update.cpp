@@ -510,21 +510,6 @@ void App::UpdateHUD(int carId, float time)
 	}
 
 
-	/* tire edit //--------
-	if (pSet->graphs_type == 4)
-	if (ovU[4] && pCar && carId == 0)
-	{
-		if (iEdTire == 0)
-		{
-			ss += "--Lateral--\n";
-			for (int i=0; i < tire.transverse_parameters.size(); ++i)
-			{	ss += (i == iCurLat) ? "<>" : "  ";
-				ss += sLateral[i][0] +" "+ fToStr( tire.transverse_parameters[i], 3,5) +"\n";
-			}
-		}
-		ovU[4]->setCaption(ss);
-	}*/
-
 	//  input values
 	/*if (pCar && pGame && pGame->profilingmode)
 	{	const std::vector<float>& inp = pCar->dynamics.inputsCopy;
@@ -555,21 +540,19 @@ void App::UpdateHUD(int carId, float time)
 	
 	//  wheels ter mtr info
 	#if 0
-	//if (iBlendMaps > 0)
 	{
 		String ss = "";
 		static char s_[512];
 
 		for (int i=0; i<4; ++i)
 		{
-			int mtr = whTerMtr[i];
-			TRACKSURFACE* tsu = pCar->dynamics.terSurf[mtr];
+			int mtr = 0;//std::max(0,carPoses[iCurPoses[carId]][carId].whTerMtr[i]);
+			const TRACKSURFACE* tsu = sc.ter ? pCar->dynamics.terSurf[mtr] : pCar->dynamics.wheel_contact[i].surface;
 			mtr = std::max(0, std::min( (int)(sc.td.layers.size())-1, mtr-1));
 			TerLayer& lay = mtr == 0 ? sc.td.layerRoad : sc.td.layersAll[sc.td.layers[mtr]];
 
 			sprintf(s_,  //"c %6.2f  "
-				"R%d t%d  %s  [%s]  %s  \n"
-				"  %4.0f  fr %4.2f / %4.2f  ba %4.2f  bw %4.2f \n"
+				"R%d t%d  %s  [%s]  %s  %4.0f  fr %4.2f / %4.2f  ba %4.2f  bw %4.2f \n"
 				//"  d %4.2f m %4.2f ds %3.1f"	//". r%4.2f g%4.2f b%4.2f a%3.1f \n"
 				//,pCar->dynamics.GetWheelContact(WHEEL_POSITION(i)).GetDepth() - 2*pCar->GetTireRadius(WHEEL_POSITION(i))
 				,pCar->dynamics.bWhOnRoad[i], mtr, /*whOnRoad[i]?1:0,*/ lay.texFile.c_str()
@@ -590,10 +573,11 @@ void App::UpdateHUD(int carId, float time)
 
 		//ovCarDbg->show();
 		if (ovS[4])  {  //ovL[4]->setTop(400);
-			ovS[4]->setColour(ColourValue::Black);
+			ovS[4]->setColour(ColourValue::White);
 			ovS[4]->setCaption(ss);  }
 	}
 	#endif
+
 	PROFILER.endBlock("g.hud");
 }
 

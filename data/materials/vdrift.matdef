@@ -15,8 +15,8 @@
 	ambient = 0.9 0.9 0.9
 	diffuse = 0.8 0.8 0.8
 	specular = 0.5 0.5 0.5 64
-	normalMap_512 = waveNM.png
-	normalMapPriority = 0.9
+	;normalMap_512 = waveNM.png
+	;normalMapPriority = 0.9
 	receivesShadows = false
 	receivesDepthShadows = true
 	shadowPriority = 1.0
