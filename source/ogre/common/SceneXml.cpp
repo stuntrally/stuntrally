@@ -27,11 +27,9 @@ void Scene::Default()
 	lDiff = Vector3(1.0f, 1.0f, 0.98f);	lSpec = Vector3(0.99f, 0.99f, 0.97f);
 
 	sParDust = "Dust";  sParMud = "Mud";  sParSmoke = "Smoke";
-
 	ter = true;
 
 	td.Default();
-	td.layerRoad.smoke = !ter ? 1.f : 0.f;  //`
 
 	densTrees=0;  densGrass=0;  grDensSmooth=6;
 	grassMtr = "grassJungle";  grassColorMap = "grClrJungle.png";
@@ -541,10 +539,10 @@ void TerData::Default()
 }
 
 TerLayer::TerLayer() : on(true), tiling(4.f),
-	dust(0.f),dustS(0.2), mud(0.f), smoke(0), tclr(ColourValue::Black),
+	dust(0.f),dustS(0.2f), mud(0.f), smoke(0.f), tclr(ColourValue::Black),
 	angMin(0.f),angMax(90.f), angSm(20.f),
 	hMin(-300.f),hMax(300.f), hSm(20.f),
-	noise(1), bNoiseOnly(1)
+	noise(1.f), bNoiseOnly(1)
 {	}
 
 void TerData::UpdVals()
