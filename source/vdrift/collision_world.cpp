@@ -486,6 +486,7 @@ void COLLISION_WORLD::DebugPrint(std::ostream & out)
 //  Clear - delete bullet pointers
 void COLLISION_WORLD::Clear()
 {
+	cdOld = NULL;
 	track = NULL;
 	if(trackObject)
 	{
