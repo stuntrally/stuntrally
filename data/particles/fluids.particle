@@ -112,8 +112,8 @@ particle_system FluidWater
 {
 	material			FluidWater
 	quota				1000
-	particle_width		0.6
-	particle_height		0.6
+	particle_width		0.8
+	particle_height		0.8
 	cull_each			false
 	billboard_type		point
 	//renderer			billboard
@@ -128,9 +128,9 @@ particle_system FluidWater
 		height	0.5
 		depth	0.3  //h
 
-		colour				1.0 1.0 1.0  0.8
-		colour_range_start	1.0 1.0 1.0  0.6
-		colour_range_end	1.0 1.0 1.0  1.0
+		colour				1.0 1.0 1.0  0.5
+		colour_range_start	1.0 1.0 1.0  0.4
+		colour_range_end	1.0 1.0 1.0  0.7
 
 		velocity_min	3.5
 		velocity_max	6.0
