@@ -283,10 +283,12 @@ void App::LoadGame()  // 2
 void App::LoadScene()  // 3
 {
 	bool ter = IsTerTrack();
-	if (ter)  // load scene
-		sc.LoadXml(TrkDir()+"scene.xml");
-	else
-	{	sc.Default();  sc.td.hfHeight = sc.td.hfAngle = NULL;  sc.td.layerRoad.smoke = 1.f;  }
+
+	// load scene - default if not found
+	sc.LoadXml(TrkDir()+"scene.xml");
+
+	if (!ter)
+	{	sc.td.hfHeight = sc.td.hfAngle = NULL;  }  // sc.td.layerRoad.smoke = 1.f;
 
 	//  water RTT
 	UpdateWaterRTT(mSplitMgr->mCameras.front());

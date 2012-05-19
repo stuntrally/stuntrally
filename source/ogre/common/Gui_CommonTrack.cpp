@@ -25,7 +25,7 @@ using namespace std;
 //-----------------------------------------------------------------------------------------------------------
 /*  common sort code,  no info only by name  */
 #define sArg  const TrkL& t2, const TrkL& t1
-#define sortDef  bool t = false/*t1.test < t2.test/**/;  if (!t1.ti || !t2.ti)  return t1.name < t2.name || t;
+#define sortDef  bool t = false/*t1.test < t2.test/**/;  if (!t1.ti || !t2.ti)  return t1.name > t2.name || t;
 const int allSortFunc = 14;
 
 //  sorting functions for columns

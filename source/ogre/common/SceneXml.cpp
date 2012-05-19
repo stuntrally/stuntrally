@@ -22,8 +22,8 @@ void Scene::Default()
 	fogMode = FOG_LINEAR;  fogStart = 600;  fogEnd = 1600;
 	fogClr = Vector3(0.73f, 0.86f, 1.0f);  fogExp = 0;
 
-	ldPitch = 45.f, ldYaw = 90.f;
-	lDir  = Vector3(0.0f, -1.0f, 1.0f);	lAmb  = Vector3(0.45f, 0.45f, 0.45f);
+	ldPitch = 50.f, ldYaw = 30.f;
+	lDir  = Vector3(0.0f, -1.0f, 0.0f);	lAmb  = Vector3(0.45f, 0.45f, 0.45f);
 	lDiff = Vector3(1.0f, 1.0f, 0.98f);	lSpec = Vector3(0.99f, 0.99f, 0.97f);
 
 	sParDust = "Dust";  sParMud = "Mud";  sParSmoke = "Smoke";

@@ -262,7 +262,7 @@ std::pair <bool,bool> OBJECTLOADER::ContinueObjectLoad(	TRACK* track,
 		const TRACKSURFACE * surfacePtr = NULL;
 		if (collideable || driveable)
 		{
-			if(usesurfaces)
+			if(/*1||*/usesurfaces)
 			{
 				assert(surface_type >= 0 && surface_type < (int)surfaces.size());
 				std::vector<TRACKSURFACE>::iterator it = surfaces.begin();
@@ -304,6 +304,7 @@ std::pair <bool,bool> OBJECTLOADER::ContinueObjectLoad(	TRACK* track,
 		//int clamptexture(0);
 
 		OGRE_MESH om;
+		om.found = true;
 		om.sky = skybox;
 		om.alpha = transparent_blend;
 

@@ -1,13 +1,15 @@
 #include "pch.h"
-#include "OgreGame.h"
 #include "common/Defines.h"
-#include "../vdrift/game.h"
-#include "CarModel.h" // for CreateModel()
-#include "SplitScreen.h"  //-
 #include "common/RenderConst.h"
 #include "common/MaterialGen/MaterialFactory.h"
+#include "CarModel.h" // for CreateModel()
+#include "OgreGame.h"
+#include "../vdrift/game.h"
+#include "../vdrift/track.h"
+#include "SplitScreen.h"  //-
 
 #include <boost/filesystem.hpp>
+//#include <Ogre.h>
 #include <OgreMaterialManager.h>
 #include <OgreTechnique.h>
 #include <OgrePass.h>
@@ -16,6 +18,8 @@
 #include <OgreSceneNode.h>
 #include <OgreStaticGeometry.h>
 #include <OgreRenderWindow.h>
+#include <OgrePixelFormat.h>
+#include <OgreTexture.h>
 using namespace Ogre;
 
 
@@ -26,14 +30,29 @@ using namespace Ogre;
 void App::CreateVdrTrack()
 {	
 	//  materials  -------------
-	std::string file = PATHMANAGER::GetShaderCacheDir() + "/" + pSet->game.track + ".matdef";	if (!boost::filesystem::exists(file))
+	std::string sMatCache = pSet->game.track + ".matdef", sMatOrig = "_" + sMatCache,		sPathCache = PATHMANAGER::GetShaderCacheDir() + "/" + sMatCache, sPathOrig = TrkDir() +"objects/"+ sMatOrig;	bool hasMatOrig = boost::filesystem::exists(sPathOrig), hasMatCache = boost::filesystem::exists(sPathCache);	bool bGenerate = 0;  // set 1 to force generate for new vdrift tracks
+	if (!hasMatOrig && !hasMatCache || bGenerate)
 	{
 		String sMtrs;
 		for (int i=0; i < pGame->track.ogre_meshes.size(); i++)
 		{
 			OGRE_MESH& msh = pGame->track.ogre_meshes[i];
-			if (msh.sky /*&& ownSky*/)  continue;						//  create material if new
-			if (!msh.newMtr)  continue;
+			if (msh.sky /*&& ownSky*/)  continue;			if (!msh.newMtr)  continue;  //  create material if new
+
+			bool found = true;
+			TexturePtr tex = TextureManager::getSingleton().getByName(msh.material);
+			if (tex.isNull())
+			try{
+				tex = TextureManager::getSingleton().load(msh.material, ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME);  }
+			catch(...){
+				found = false;  }
+			msh.found = found;  // dont create meshes for not found textures, test
+			if (!found)  continue;
+
+			#if 0  // use 0 for some tracks (eg.zandvoort) - have alpha textures for all!
+			if (!tex.isNull() && tex->hasAlpha())
+				msh.alpha = true;  // for textures that have alpha
+			#endif
 
 			if (msh.alpha)
 				sMtrs += "["+msh.material+"]\n"+
@@ -43,14 +62,16 @@ void App::CreateVdrTrack()
 				sMtrs += "["+msh.material+"]\n"+
 					"	parent = 0vdrTrk\n"+
 					"	diffuseMap_512 = "+msh.material+"\n";
-		}		std::ofstream fileout(file.c_str());
+		}		std::ofstream fileout(sPathCache.c_str());
 		if (!fileout)  LogO("Error: Can't save vdrift track matdef!");
 		fileout.write(sMtrs.c_str(), sMtrs.size());
 		fileout.close();
+		hasMatCache = true;
 	}
 
-	//LogO("TRK MTR:\n"+sMtrs+"\n");
-	materialFactory->loadDefsFromFile(pSet->game.track + ".matdef");
+	//  load .matdef
+	LogO(String("Vdrift track .matdef  has Cache:")+ (hasMatCache?"yes":"no") + "  has Orig:" + (hasMatOrig?"yes":"no"));
+	materialFactory->loadDefsFromFile(hasMatCache ? sMatCache : sMatOrig);
 	materialFactory->generate(true);
 	
 
@@ -62,6 +83,7 @@ void App::CreateVdrTrack()
 	{
 		OGRE_MESH& msh = pGame->track.ogre_meshes[i];
 		if (msh.sky /*&& ownSky*/)  continue;
+		if (!msh.found)  continue;
 
 		//if (strstr(msh.material.c_str(), "tree")!=0)  continue;
 
