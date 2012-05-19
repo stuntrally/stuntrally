@@ -591,6 +591,8 @@ void App::UpdHUDRot(int baseCarId, int carId, float vel, float rpm)
 	int b = baseCarId, c = carId;
 	bool main = b == c;
 	float angBase = carModels[b]->angCarY;
+	
+	bool bZoom = pSet->mini_zoomed && sc.ter, bRot = pSet->mini_rotated && sc.ter;
 
 	const float vmin[2] = {0.f,-45.f}, rmin[2] = {0.f,-45.f},
 		vsc_mph[2] = {-180.f/100.f, -(180.f+vmin[1])/90.f},
@@ -603,7 +605,7 @@ void App::UpdHUDRot(int baseCarId, int carId, float vel, float rpm)
 	float vsc = pSet->show_mph ? vsc_mph[ig] : vsc_kmh[ig];
 	float angvel = abs(vel)*vsc + vmin[ig];
 	float angrot = carModels[c]->angCarY;
-	if (pSet->mini_rotated && pSet->mini_zoomed && !main)
+	if (bRot && bZoom && !main)
 		angrot -= angBase-180.f;
 
 	float sx = 1.4f, sy = sx*asp;  // *par len
@@ -625,12 +627,12 @@ void App::UpdHUDRot(int baseCarId, int carId, float vel, float rpm)
 		}
 		float p = -(angrot + ia) * d2r;	  float cp = cosf(p), sp = sinf(p);
 
-		if (pSet->mini_rotated && pSet->mini_zoomed && main)
+		if (bRot && bZoom && main)
 			{  px[i] = psx*tp[i][0];  py[i] = psy*tp[i][1];  }
 		else{  px[i] = psx*cp*1.4f;   py[i] =-psy*sp*1.4f;   }
 
-		float z = pSet->mini_rotated ? 0.70f/pSet->zoom_minimap : 0.5f/pSet->zoom_minimap;
-		if (!pSet->mini_rotated)
+		float z = bRot ? 0.70f/pSet->zoom_minimap : 0.5f/pSet->zoom_minimap;
+		if (!bRot)
 			{  cx[i] = tp[i][0]*z;  cy[i] = tp[i][1]*z-1.f;  }
 		else{  cx[i] =       cp*z;  cy[i] =      -sp*z-1.f;  }
 	}
@@ -661,7 +663,7 @@ void App::UpdHUDRot(int baseCarId, int carId, float vel, float rpm)
 	if (moMap[b] && pSet->trackmap && main)
 	{
 		moMap[b]->beginUpdate(0);
-		if (!pSet->mini_zoomed)
+		if (!bZoom)
 			for (int p=0;p<4;++p)  {  moMap[b]->position(tp[p][0],tp[p][1], 0);
 				moMap[b]->textureCoord(tc[p][0], tc[p][1]);  moMap[b]->colour(tc[p][0],tc[p][1], 0);  }
 		else
@@ -680,12 +682,12 @@ void App::UpdHUDRot(int baseCarId, int carId, float vel, float rpm)
 	Vector2 mp(-carPoses[qc][c].pos[2],carPoses[qc][c].pos[0]);
 
 	//  other cars in player's car view space
-	if (!main && pSet->mini_zoomed)
+	if (!main && bZoom)
 	{
 		Vector2 plr(-carPoses[qb][b].pos[2],carPoses[qb][b].pos[0]);
 		mp -= plr;  mp *= pSet->zoom_minimap;
 
-		if (pSet->mini_rotated)
+		if (bRot)
 		{
 			float a = angBase * PI_d/180.f;  Vector2 np;
 			np.x = mp.x*cosf(a) - mp.y*sinf(a);  // rotate
@@ -700,7 +702,7 @@ void App::UpdHUDRot(int baseCarId, int carId, float vel, float rpm)
 
 	if (vNdPos[b][c])
 		if (bGhost && !bGhostVis)  vNdPos[b][c]->setPosition(-100,0,0);  //hide
-		else if (pSet->mini_zoomed && main)
+		else if (bZoom && main)
 			 vNdPos[b][c]->setPosition(0,0,0);
 		else vNdPos[b][c]->setPosition(xp,yp,0);
 }
