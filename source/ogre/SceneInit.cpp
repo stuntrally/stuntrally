@@ -276,19 +276,15 @@ void App::LoadGame()  // 2
 	if (mClient)  pGame->timer.waiting = true;  //+
 	
 	pGame->NewGameDoLoadMisc(pretime);
-	bool ter = IsTerTrack();
-	sc.ter = ter;
 }
 
 void App::LoadScene()  // 3
 {
-	bool ter = IsTerTrack();
-
 	// load scene - default if not found
 	sc.LoadXml(TrkDir()+"scene.xml");
-	sc.ter = ter;
+	sc.ter = IsTerTrack();
 
-	if (!ter)
+	if (!sc.ter)
 	{	sc.td.hfHeight = sc.td.hfAngle = NULL;  }  // sc.td.layerRoad.smoke = 1.f;
 
 	//  water RTT
