@@ -50,7 +50,7 @@ public:
 
 		int local_players, num_laps;  // split
 		//  game setup
-		bool collis_veget, collis_cars;
+		bool collis_veget, collis_cars, collis_roadw;
 		int boost_type, flip_type;  float boost_power;
 		float trees;
 		

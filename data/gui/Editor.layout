@@ -320,9 +320,7 @@
 		<Widget type="TabControl" skin="TabControl" position="0 0 800 600" align="Stretch" layer="Back" name="TabWndEdit">
 			<UserString key="RelativeTo" value="EditorWnd"/>
 			<Property key="InheritsAlpha" value="false"/>
-			<Property key="ButtonWidth" value="100"/>
 			<Property key="Colour" value="0.7 0.9 1"/>
-			<Property key="ButtonAutoWidth" value="true"/>
 			<Widget type="TabItem" skin="" position="2 24 794 572">
 				<Property key="Caption" value="&lt;#{BackMenu}"/>
 				<Property key="Colour" value="1 0.6 0.2"/>
@@ -583,16 +581,19 @@
 					<UserString key="RelativeTo" value="EditorWnd"/>
 					<Property key="Caption" value="#{Ambient}"/>
 					<Property key="TextColour" value="0.7 0.7 0.66"/>
+					<UserString key="tip" value="#{TipSunAmbient}"/>
 				</Widget>
 				<Widget type="TextBox" skin="TextBox" position="136 175 64 24">
 					<UserString key="RelativeTo" value="EditorWnd"/>
 					<Property key="Caption" value="#{Diffuse}"/>
 					<Property key="TextColour" value="0.9 0.9 0.8"/>
+					<UserString key="tip" value="#{TipSunDiffuse}"/>
 				</Widget>
 				<Widget type="TextBox" skin="TextBox" position="136 207 64 24">
 					<UserString key="RelativeTo" value="EditorWnd"/>
 					<Property key="Caption" value="#{Specular}"/>
 					<Property key="TextColour" value="0.8 0.8 0.7"/>
+					<UserString key="tip" value="#{TipSunSpecular}"/>
 				</Widget>
 				<Widget type="EditBox" skin="EditBox" position="208 143 164 24" name="LiAmb">
 					<UserString key="RelativeTo" value="EditorWnd"/>
@@ -1335,7 +1336,6 @@
 				<Property key="Caption" value="#{Vegetation}"/>
 				<Widget type="TabControl" skin="TabControl" position="16 15 752 497" name="SubTab">
 					<UserString key="RelativeTo" value="EditorWnd"/>
-					<Property key="ButtonWidth" value="180"/>
 					<Property key="Colour" value="0.73 0.88 1"/>
 					<Widget type="TabItem" skin="" position="4 26 743 465">
 						<UserString key="RelativeTo" value="EditorWnd"/>
@@ -2112,9 +2112,7 @@
 		<Widget type="TabControl" skin="TabControl" position="0 0 800 600" align="Stretch" layer="Back" name="TabWndOpts">
 			<UserString key="RelativeTo" value="OptionsWnd"/>
 			<Property key="InheritsAlpha" value="false"/>
-			<Property key="ButtonWidth" value="100"/>
 			<Property key="Colour" value="0.7 0.9 1"/>
-			<Property key="ButtonAutoWidth" value="true"/>
 			<Widget type="TabItem" skin="" position="2 24 794 572">
 				<Property key="Caption" value="&lt;#{BackMenu}"/>
 				<Property key="Colour" value="1 0.6 0.2"/>
@@ -2125,9 +2123,7 @@
 				<Property key="Caption" value="#{Screen}"/>
 				<Widget type="TabControl" skin="TabControl" position="16 15 744 460">
 					<UserString key="RelativeTo" value="OptionsWnd"/>
-					<Property key="ButtonAutoWidth" value="false"/>
 					<Property key="Colour" value="0.73 0.88 1"/>
-					<Property key="ButtonWidth" value="100"/>
 					<Widget type="TabItem" skin="" position="4 26 735 428">
 						<UserString key="RelativeTo" value="OptionsWnd"/>
 						<Property key="Caption" value="#{Video}"/>
@@ -2735,9 +2731,7 @@
 		<Widget type="TabControl" skin="TabControl" position="0 0 800 600" align="Stretch" layer="Back" name="TabWndHelp">
 			<UserString key="RelativeTo" value="HelpWnd"/>
 			<Property key="InheritsAlpha" value="false"/>
-			<Property key="ButtonWidth" value="100"/>
 			<Property key="Colour" value="0.7 0.9 1"/>
-			<Property key="ButtonAutoWidth" value="true"/>
 			<Widget type="TabItem" skin="" position="2 24 794 572">
 				<Property key="Caption" value="&lt;#{BackMenu}"/>
 				<Property key="Colour" value="1 0.6 0.2"/>
@@ -2766,7 +2760,6 @@
 				<Widget type="TabControl" skin="TabControl" position="30 24 720 472" name="SubTab">
 					<UserString key="RelativeTo" value="HelpWnd"/>
 					<Property key="Colour" value="0.73 0.88 1"/>
-					<Property key="ButtonWidth" value="120"/>
 					<Widget type="TabItem" skin="" position="4 26 711 447">
 						<UserString key="RelativeTo" value="HelpWnd"/>
 						<Property key="Caption" value="#{InputMain}"/>

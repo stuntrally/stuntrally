@@ -28,7 +28,7 @@ class OGRE_MESH
 public:
 	bool newMtr, sky, alpha, newM;
 	std::string name, material;
-	VERTEXARRAY* mesh;
+	class VERTEXARRAY* mesh;
 
 	//bool operator<(const OGRE_MESH& other)
 	//{

@@ -9,7 +9,7 @@
 	vertexColour = true
 	customGenerator = Particle
 
-[Base_particle2]
+[Base_trail]
 	abstract = true
 	lighting = false
 	sceneBlend = alpha
@@ -34,5 +34,5 @@
 	diffuseMap_1 = smoke.png
 	
 [TireTrail]
-	parent = Base_particle2
+	parent = Base_trail
 	diffuseMap_1 = tireband.png

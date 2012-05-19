@@ -32,8 +32,8 @@ using namespace Ogre;
 
 //  Init  ---------------------------------------------------
 CarModel::CarModel(unsigned int index, eCarType type, const std::string& name,
-	Ogre::SceneManager* sceneMgr, SETTINGS* set, GAME* game, Scene* s,
-	Ogre::Camera* cam, App* app, int startpos_index) :
+	SceneManager* sceneMgr, SETTINGS* set, GAME* game, Scene* s,
+	Camera* cam, App* app, int startpos_index) :
 	fCam(0), pMainNode(0), pCar(0), terrain(0), resCar(""),
 	mCamera(0), pReflect(0), pApp(app), color(1,1,0),
 	bLightMapEnabled(true), bBraking(false),
@@ -48,11 +48,14 @@ CarModel::CarModel(unsigned int index, eCarType type, const std::string& name,
 	distFirst = 1.f;  distLast = 1.f;  distTotal = 10.f;  trackPercent = 0.f;
 
 	for (int w = 0; w < 4; ++w)
-	{	ps[w] = 0;  pm[w] = 0;  pd[w] = 0;
-		pflW[w] = 0;  pflM[w] = 0;  pflMs[w] = 0;
+	{
+		for (int p=0; p < PAR_ALL; ++p)
+			par[p][w] = 0;
+
 		ndWh[w] = 0;  ndWhE[w] = 0; whTrl[w] = 0;
 		ndBrake[w] = 0;
-		wht[w] = 0.f;  whTerMtr[w] = 0;  whRoadMtr[w] = 0;  }
+		wht[w] = 0.f;  whTerMtr[w] = 0;  whRoadMtr[w] = 0;
+	}
 	for (int i=0; i < 2; i++)
 		pb[i] = 0;
 	ph = 0;
@@ -92,18 +95,14 @@ CarModel::~CarModel()
 	for (int w=0; w<4; ++w)  if (whTrl[w])  {	wht[w] = 0.f;
 		whTrl[w]->setVisible(false);	whTrl[w]->setInitialColour(0, 0.5,0.5,0.5, 0);	}
 
-	// destroy cloned materials
+	//  destroy cloned materials
 	for (int i=0; i<NumMaterials; i++)
-		Ogre::MaterialManager::getSingleton().remove(sMtr[i]);
+		MaterialManager::getSingleton().remove(sMtr[i]);
 	
-	// Destroy par sys
-	for (int w=0; w < 4; ++w)  {
-		if (ps[w]) {  mSceneMgr->destroyParticleSystem(ps[w]);   ps[w]=0;  }
-		if (pm[w]) {  mSceneMgr->destroyParticleSystem(pm[w]);   pm[w]=0;  }
-		if (pd[w]) {  mSceneMgr->destroyParticleSystem(pd[w]);   pd[w]=0;  }
-		if (pflW[w]) {  mSceneMgr->destroyParticleSystem(pflW[w]);   pflW[w]=0;  }
-		if (pflM[w]) {  mSceneMgr->destroyParticleSystem(pflM[w]);   pflM[w]=0;  }
-		if (pflMs[w]) {  mSceneMgr->destroyParticleSystem(pflMs[w]);   pflMs[w]=0;  }  
+	//  destroy par sys
+	for (int w=0; w < 4; ++w)
+	{	for (int p=0; p < PAR_ALL; ++p)
+			if (par[p][w]) {  mSceneMgr->destroyParticleSystem(par[p][w]);   par[p][w]=0;  }
 		if (ndBrake[w]) mSceneMgr->destroySceneNode(ndBrake[w]);
 	}
 	for (int i=0; i < 2; i++)
@@ -112,9 +111,9 @@ CarModel::~CarModel()
 						
 	if (pMainNode) mSceneMgr->destroySceneNode(pMainNode);
 	
-	// Destroy resource group, will also destroy all resources in it
-	if (Ogre::ResourceGroupManager::getSingleton().resourceGroupExists("Car" + toStr(iIndex)))
-		Ogre::ResourceGroupManager::getSingleton().destroyResourceGroup("Car" + toStr(iIndex));
+	//  destroy resource group, will also destroy all resources in it
+	if (ResourceGroupManager::getSingleton().resourceGroupExists("Car" + toStr(iIndex)))
+		ResourceGroupManager::getSingleton().destroyResourceGroup("Car" + toStr(iIndex));
 }
 
 
@@ -130,7 +129,7 @@ void CarModel::Create(int car)
 	
 	//  Resource locations -----------------------------------------
 	/// Add a resource group for this car
-	Ogre::ResourceGroupManager::getSingleton().createResourceGroup("Car" + strI);
+	ResourceGroupManager::getSingleton().createResourceGroup("Car" + strI);
 	resCar = PATHMANAGER::GetCarPath() + "/" + sDirname + "/textures";
 	Ogre::Root::getSingletonPtr()->addResourceLocation(PATHMANAGER::GetCarPath() + "/" + sDirname, "FileSystem", "Car" + strI);
 	Ogre::Root::getSingletonPtr()->addResourceLocation(PATHMANAGER::GetCarPath() + "/" + sDirname + "/textures", "FileSystem", "Car" + strI);
@@ -146,9 +145,9 @@ void CarModel::Create(int car)
 		fCam->loadCameras();
 		
 		//  set in-car camera position to driver position
-		Ogre::Vector3 driver_view_position = Vector3(pCar->driver_view_position[0], pCar->driver_view_position[2], -pCar->driver_view_position[1]);
+		Vector3 driver_view_position = Vector3(pCar->driver_view_position[0], pCar->driver_view_position[2], -pCar->driver_view_position[1]);
 		
-		Ogre::Vector3 hood_view_position = Vector3(pCar->hood_view_position[0], pCar->hood_view_position[2], -pCar->hood_view_position[1]);
+		Vector3 hood_view_position = Vector3(pCar->hood_view_position[0], pCar->hood_view_position[2], -pCar->hood_view_position[1]);
 		
 		for (std::vector<CameraAngle*>::iterator it=fCam->mCameraAngles.begin();
 			it!=fCam->mCameraAngles.end(); ++it)
@@ -170,8 +169,8 @@ void CarModel::Create(int car)
 	//vis flags:  2 not rendered in reflections  16 off by in-car camera
 	SceneNode* ncart = pMainNode->createChildSceneNode();
 	
-	Ogre::Vector3 vPofs(0,0,0);
-	AxisAlignedBox bodyBox;  Ogre::uint8 g = RQG_CarGhost;
+	Vector3 vPofs(0,0,0);
+	AxisAlignedBox bodyBox;  uint8 g = RQG_CarGhost;
 	
 	//  body  ----------------------
 
@@ -226,7 +225,7 @@ void CarModel::Create(int car)
 	
 	///  save .mesh
 	/**  MeshPtr mpCar = mCar->convertToMesh("MeshCar");
-	Ogre::MeshSerializer* msr = new Ogre::MeshSerializer();
+	MeshSerializer* msr = new MeshSerializer();
 	msr->exportMesh(mpCar.getPointer(), "car.mesh");/**/
 
 
@@ -323,56 +322,43 @@ void CarModel::Create(int car)
 
 	///  wheel emitters  ------------------------
 	if (!ghost)
-	for (int w=0; w < 4; ++w)
 	{
-		String siw = strI + "_" +toStr(w);
-		if (!ps[w])  
+		const static String sPar[PAR_ALL] = {"Smoke","Mud","Dust","FlWater","FlMud","FlMudS"};  // for ogre name
+		//  particle type names
+		const String sName[PAR_ALL] = {sc->sParSmoke, sc->sParMud, sc->sParDust, "FluidWater", "FluidMud", "FluidMudSoft"};
+		for (int w=0; w < 4; ++w)
 		{
-			ps[w] = mSceneMgr->createParticleSystem("Smoke"+siw, sc->sParSmoke);
-			ps[w]->setVisibilityFlags(RV_Particles);
-			mSceneMgr->getRootSceneNode()->createChildSceneNode()->attachObject(ps[w]);		ps[w]->getEmitter(0)->setEmissionRate(0);  }
-		if (!pm[w])  {
-			pm[w] = mSceneMgr->createParticleSystem("Mud"+siw, sc->sParMud);
-			pm[w]->setVisibilityFlags(RV_Particles);
-			mSceneMgr->getRootSceneNode()->createChildSceneNode()->attachObject(pm[w]);		pm[w]->getEmitter(0)->setEmissionRate(0);  }
-		if (!pd[w])  {
-			pd[w] = mSceneMgr->createParticleSystem("Dust"+siw, sc->sParDust);
-			pd[w]->setVisibilityFlags(RV_Particles);
-			mSceneMgr->getRootSceneNode()->createChildSceneNode()->attachObject(pd[w]);		pd[w]->getEmitter(0)->setEmissionRate(0);  }
+			String siw = strI + "_" +toStr(w);
+			//  particles
+			for (int p=0; p < PAR_ALL; ++p)
+			if (!par[p][w])
+			{
+				par[p][w] = mSceneMgr->createParticleSystem(sPar[p]+siw, sName[p]);
+				par[p][w]->setVisibilityFlags(RV_Particles);
+				mSceneMgr->getRootSceneNode()->createChildSceneNode()->attachObject(par[p][w]);
+				par[p][w]->getEmitter(0)->setEmissionRate(0.f);
+			}
+			//  trails
+			if (!ndWhE[w])
+				ndWhE[w] = mSceneMgr->getRootSceneNode()->createChildSceneNode();
 
-		if (!pflW[w])  {
-			pflW[w] = mSceneMgr->createParticleSystem("FlWater"+siw, "FluidWater");
-			pflW[w]->setVisibilityFlags(RV_Particles);
-			mSceneMgr->getRootSceneNode()->createChildSceneNode()->attachObject(pflW[w]);	pflW[w]->getEmitter(0)->setEmissionRate(0);  }
-		if (!pflM[w])  {
-			pflM[w] = mSceneMgr->createParticleSystem("FlMud"+siw, "FluidMud");
-			pflM[w]->setVisibilityFlags(RV_Particles);
-			mSceneMgr->getRootSceneNode()->createChildSceneNode()->attachObject(pflM[w]);	pflM[w]->getEmitter(0)->setEmissionRate(0);  }
-		if (!pflMs[w])  {
-			pflMs[w] = mSceneMgr->createParticleSystem("FlMudS"+siw, "FluidMudSoft");
-			pflMs[w]->setVisibilityFlags(RV_Particles);
-			mSceneMgr->getRootSceneNode()->createChildSceneNode()->attachObject(pflMs[w]);	pflMs[w]->getEmitter(0)->setEmissionRate(0);  }
+			if (!whTrl[w])
+			{	NameValuePairList params;
+				params["numberOfChains"] = "1";
+				params["maxElements"] = toStr(320 * pSet->trails_len);  //80
 
-		//  trails
-		if (!ndWhE[w])
-			ndWhE[w] = mSceneMgr->getRootSceneNode()->createChildSceneNode();
-
-		if (!whTrl[w])  {
-			NameValuePairList params;
-			params["numberOfChains"] = "1";
-			params["maxElements"] = toStr(320 * pSet->trails_len);  //80
-
-			whTrl[w] = (RibbonTrail*)mSceneMgr->createMovableObject("RibbonTrail", &params);
-			whTrl[w]->setInitialColour(0, 0.1,0.1,0.1, 0);
-			mSceneMgr->getRootSceneNode()->attachObject(whTrl[w]);
-			whTrl[w]->setMaterialName("TireTrail");
-			whTrl[w]->setCastShadows(false);
-			whTrl[w]->addNode(ndWhE[w]);
-		}
+				whTrl[w] = (RibbonTrail*)mSceneMgr->createMovableObject("RibbonTrail", &params);
+				whTrl[w]->setInitialColour(0, 0.1,0.1,0.1, 0);
+				mSceneMgr->getRootSceneNode()->attachObject(whTrl[w]);
+				whTrl[w]->setMaterialName("TireTrail");
+				whTrl[w]->setCastShadows(false);
+				whTrl[w]->addNode(ndWhE[w]);
+			}
 			whTrl[w]->setTrailLength(90 * pSet->trails_len);  //30
 			whTrl[w]->setInitialColour(0, 0.1f,0.1f,0.1f, 0);
 			whTrl[w]->setColourChange(0, 0.0,0.0,0.0, /*fade*/0.08f * 1.f / pSet->trails_len);
 			whTrl[w]->setInitialWidth(0, 0.16f);  //0.18 0.2
+		}
 	}
 
 	UpdParsTrails();
@@ -417,12 +403,12 @@ void CarModel::RecreateMaterials()
 		sMtr[i] = "car_ghost";  //+s old mtr..
 
 	// copy material to a new material with index
-	Ogre::MaterialPtr mat;
+	MaterialPtr mat;
 	for (int i=0; i<NumMaterials; i++)
 	{
-		mat = Ogre::MaterialManager::getSingleton().getByName(sMtr[i]);
-		if (Ogre::MaterialManager::getSingleton().resourceExists(sMtr[i] + strI))
-			Ogre::MaterialManager::getSingleton().remove(sMtr[i] + strI);
+		mat = MaterialManager::getSingleton().getByName(sMtr[i]);
+		if (MaterialManager::getSingleton().resourceExists(sMtr[i] + strI))
+			MaterialManager::getSingleton().remove(sMtr[i] + strI);
 		mat->clone(sMtr[i] + strI, false);
 		sMtr[i] = sMtr[i] + strI;
 	}
@@ -470,7 +456,7 @@ void CarModel::RecreateMaterials()
 
 void CarModel::setMtrName(const String& entName, const String& mtrName)
 {
-	Ogre::Entity* ent; Ogre::ManualObject* manual;
+	Entity* ent; ManualObject* manual;
 
 	if (mSceneMgr->hasEntity(entName))
 	{

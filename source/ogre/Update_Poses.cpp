@@ -196,6 +196,8 @@ void App::newPoses(float time)  // time only for camera update
 				fr.vHitPos = cd.vHitPos;	fr.vHitNorm = cd.vHitNorm;
 				fr.whMudSpin = pCar->whMudSpin;
 				fr.fHitForce = cd.fHitForce;
+				fr.fCarScrap = std::min(1.f, cd.fCarScrap);
+				fr.fCarScreech = std::min(1.f, cd.fCarScreech);
 				
 				replay.AddFrame(fr, c);  // rec replay
 				if (c==0)  /// rec ghost lap

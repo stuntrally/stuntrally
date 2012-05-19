@@ -39,6 +39,7 @@
 	<Tag name="Surface">Nawierzchnia</Tag>
 	<Tag name="TBScore">Punkty</Tag>
 	<Tag name="InputRoadChkFirst">0 - ustaw checkpoint jako pierwszy</Tag>
+	<Tag name="InputObjectsIns">Ins - insert new, at cursor</Tag>
 	<Tag name="GraphicsAll_Low">Niskie</Tag>
 	<Tag name="TipPrevWind">Okno podglądu kamery.</Tag>
 	<Tag name="ChampEndFinished">Ukończyłeś to mistrzostwo.</Tag>
@@ -60,6 +61,7 @@
 	<Tag name="InputHeaderTxt1">Akcja</Tag>
 	<Tag name="DepthOfField">Głębia ostrości</Tag>
 	<Tag name="Game">Gra</Tag>
+	<Tag name="InputObjectsScale">alt-LMB - scale   alt-RMB - scale Y only</Tag>
 	<Tag name="TipTerLNoiseOnly">Użyj tylko szumu (bez zakresu kątów i wysokości)</Tag>
 	<Tag name="TipParType3">typ 1 cząstek z opon (dla trasy)</Tag>
 	<Tag name="TipParType2">typ 2 cząstek z opon (dla trasy)</Tag>
@@ -106,6 +108,7 @@
 	<Tag name="TerLHSm">Wysokość przejście</Tag>
 	<Tag name="CopySource">Wybierz jako źródło kopiowania</Tag>
 	<Tag name="rating">ocena</Tag>
+	<Tag name="LS_OBJS">Ładowanie obiektów</Tag>
 	<Tag name="TreeRoadDist">Odl. od drogi.</Tag>
 	<Tag name="GraphicsAll_Medium">Ś</Tag>
 	<Tag name="NeedReload">* potrzeba przeładowania</Tag>
@@ -150,7 +153,7 @@
 	<Tag name="UseSSAA">Użyj SSAA przy włączonych efektach</Tag>
 	<Tag name="ReflMode_single">Pojedyncze</Tag>
 	<Tag name="SetCamTo">Ustaw kamerę na</Tag>
-	<Tag name="max">maks</Tag>
+	<Tag name="Always">Zawsze</Tag>
 	<Tag name="softparticles">Gładkie cząstki</Tag>
 	<Tag name="TipTerTriSize">Rozmiar trójkąta terenu w [metrach] (zalecany: 1 - 2, większy dla dużych tras). Zmieniany po Odśwież (F8).</Tag>
 	<Tag name="Players">Gracze</Tag>
@@ -241,7 +244,7 @@
 	<Tag name="TipGrassPatchLengthMax">Maksymalna wysokość trawy.</Tag>
 	<Tag name="Vegetation">Wegetacja</Tag>
 	<Tag name="ssao">SSAO</Tag>
-	<Tag name="Always">Zawsze</Tag>
+	<Tag name="max">maks</Tag>
 	<Tag name="Stage">Etap</Tag>
 	<Tag name="NetRefreshList">Odśwież listę</Tag>
 	<Tag name="MessageBox_Abort">Przerwij</Tag>
@@ -256,6 +259,7 @@
 	<Tag name="Delete">Usuń</Tag>
 	<Tag name="Rename">Zmień nazwę</Tag>
 	<Tag name="TipModelPageLength">Rozmiar strony modeli (niski będzie ładował często, wysoki spowoduje widoczne przeskoki).</Tag>
+	<Tag name="NetGameProtocolError">Niekompatybilne wersje protokołu między graczami.</Tag>
 	<Tag name="LightmapSize">Wielkość Lightmap</Tag>
 	<Tag name="OpponentsSorted">Sortowanie przeciwników</Tag>
 	<Tag name="RoadQual">Jakość drogi daleko</Tag>
@@ -278,7 +282,7 @@
 	<Tag name="MergeLength">odległość złączania</Tag>
 	<Tag name="QuickHelpText">---- Szybka pomoc ----@@Użyj myszy lub Góra,Lewo,Enter,Backspace do nawigacji po menu.@@Aby dostosować rozdzielczość wejdź do Opcji na zakładkę Ekran,@użyj zestawów Ustawień grafiki by szybko dostosować grafikę do swojego sprzętu.@@Wszystkie klawisze używane w grze można zmienić w Opcjach, na zakładce Wejście.@Jeśli posiadasz kontroler gry zobacz:@http://code.google.com/p/vdrift-ogre/wiki/Running##Controllers@@Stworzenie gry muliplayer wymaga przekierowanych portów.@Dołączenie do istniejącej gry, nie wymaga, pod warunkiem że inni mają.@@Jeśli posiadasz problemy lub sugestie, zgłoś issue (in English, lub odpowiedz do istniejącego) pod:@http://code.google.com/p/vdrift-ogre/issues/list@@Więcej informacji w Czytaj, i na stronach Wiki projektu.@</Tag>
 	<Tag name="InputRoadPitch">- obróć nachylenie* / skaluj wybrane</Tag>
-	<Tag name="NetGameProtocolError">Niekompatybilne wersje protokołu między graczami.</Tag>
+	<Tag name="InputObjectsMove">LMB - move   RMB - height</Tag>
 	<Tag name="TimesBar">Czasy</Tag>
 	<Tag name="Screenshot">zrzut ekranu</Tag>
 	<Tag name="Models">Modele</Tag>
@@ -375,6 +379,7 @@
 	<Tag name="TexCoordMul">Mnożnik tekstury</Tag>
 	<Tag name="Digits">Cyfry (bieg, szybkość)</Tag>
 	<Tag name="ShowPictures">Pokazuj obrazy podczas wczytywania</Tag>
+	<Tag name="InputObjectsMode">X - edytuj obiekty</Tag>
 	<Tag name="TrackAvgSpeed">Śred. szybk.</Tag>
 	<Tag name="PreviewCam">Poprzedni widok</Tag>
 	<Tag name="TipModelMinScale">Minimalna skala modelu</Tag>
@@ -428,7 +433,7 @@
 	<Tag name="InputRoadRMB">RMB (lub Num +,-)</Tag>
 	<Tag name="Anisotropy">Anizotropia</Tag>
 	<Tag name="InputToggleCam">Tab - tryb kamery / edycji</Tag>
-	<Tag name="InputStartAltLMB">alt-LMB - obrót  alt-RMB - nachylenie</Tag>
+	<Tag name="InputStartAltLMB">alt-LPM - obróć  alt-PPM - połóż</Tag>
 	<Tag name="InputRoadAngSnap">7,8 - przyciąganie kąta</Tag>
 	<Tag name="TerGenOfsX">Przesunięcie X</Tag>
 	<Tag name="TipTexTiling">Odległość powtarzania tekstury (mniejsza znaczy więcej powtórzeń).</Tag>
@@ -473,8 +478,11 @@
 	<Tag name="InputToggleGUIMode">F1 lub ` - tryb GUI (Opcje)</Tag>
 	<Tag name="TipGrassMaterial">Materiał trawy, dopasowywany do scenerii trasy.</Tag>
 	<Tag name="TipRearThrottleInverse">Odwróć funkcję gazu i hamulca na wstecznym biegu.</Tag>
+	<Tag name="LS_ROAD">Ładowanie trasy</Tag>
 	<Tag name="RoadPoint">Punkt drogi</Tag>
+	<Tag name="CarStartPos">Pozycja startowa</Tag>
 	<Tag name="TerLHMax">Wysokość Max</Tag>
+	<Tag name="InputWheelSize">,= (lub kółko) - rozmiar</Tag>
 	<Tag name="LoadingDesc">Wczytywanie, proszę czekać...</Tag>
 	<Tag name="TipGrassPatchHeightMax">Maksymalna wysokość strony trawy.</Tag>
 	<Tag name="TerLAngMin">Kąt Min</Tag>
@@ -503,12 +511,13 @@
 	<Tag name="TipTCS">Zapobiega poślizgowi kół przy przyśpieszaniu (domyślnie: wył.)</Tag>
 	<Tag name="InputRoadColumn">End - wył./wł. kolumnę</Tag>
 	<Tag name="InputFluidsDel">Del - zmaż wybraną</Tag>
+	<Tag name="Objects">Objekty</Tag>
 	<Tag name="set1">ust.1</Tag>
 	<Tag name="set2">ust.2</Tag>
 	<Tag name="auto">Automatycznie</Tag>
 	<Tag name="TipWindInflH">Wpływ wiatru na model, skala wysokości.</Tag>
 	<Tag name="NetLocalPort">Port lokany</Tag>
-	<Tag name="InputStartLMB">LMB - przesuń RMB - wysokość</Tag>
+	<Tag name="InputStartLMB">ctrl-LMB - place   LMB - move   RMB - height</Tag>
 	<Tag name="TipWindInflL">Wpływ wiatru na model, skala długości.</Tag>
 	<Tag name="InputRoadCopySel">ctrl-Ins - kopiuj wybrane ctrl-Del - usuń wybrane</Tag>
 	<Tag name="InputFluidsType">-,= - zmień typ cieczy (woda, błoto, itp.)</Tag>
@@ -530,6 +539,7 @@
 	<Tag name="AntiAliasing">Wygładzanie krawędzi</Tag>
 	<Tag name="RoadStats">Stat. drogi</Tag>
 	<Tag name="FinishedCommaPlace">ukończył, miejsce</Tag>
+	<Tag name="InputObjectsDel">Del - usuń bieżący</Tag>
 	<Tag name="Tools">Narzędzia</Tag>
 	<Tag name="NetCreateGame">Stwórz grę</Tag>
 	<Tag name="TipGrassSwaySpd">Efekt kołysania trawy, szybkość.</Tag>
@@ -667,13 +677,13 @@
 	<Tag name="Diff3">Średni</Tag>
 	<Tag name="Diff0">Test łatwy</Tag>
 	<Tag name="Diff1">Bardzo łatwy</Tag>
-	<Tag name="Diff6">Ekstremalny</Tag>
+	<Tag name="InputObjectsPrevNext">PgUp, PgDn (lub scroll) - poprzedni/następny objekt</Tag>
 	<Tag name="Diff7">Ultra</Tag>
 	<Tag name="Diff4">Trudny</Tag>
 	<Tag name="SkirtHeight">Wysokość łaty</Tag>
 	<Tag name="NewTerrainGenerate">Generuj nowy</Tag>
 	<Tag name="TipTrkScreenEditor">Zrzut z gry dla wybranej trasy.</Tag>
-	<Tag name="InputWheelSize">,= (lub kółko) - rozmiar</Tag>
+	<Tag name="InputObjectsRot">MMB - rotate Y</Tag>
 	<Tag name="BulletDebug">debug Bullet</Tag>
 	<Tag name="InputRoadHeight">- zmień wysokość</Tag>
 	<Tag name="TipSunSpecular">Kolor słońca jaskrawy. R G B składowe 0 do 1 (np. 0.6 0.6 0.6)</Tag>
@@ -697,6 +707,7 @@
 	<Tag name="TipSurfFrict">Tarcie powierzchni (np. 1.0 asfalt, 0.7 szuter, 0.5 lód).</Tag>
 	<Tag name="FPS">Klatek na sek, trójkątów, wsadów</Tag>
 	<Tag name="NetJoinGame">Dołącz do gry</Tag>
+	<Tag name="LS_TREES">Ładowanie drzew</Tag>
 	<Tag name="InputMapBoost">Dopalacz</Tag>
 	<Tag name="TipTerLAngMin">Kąt początkowy terenu dla warstwy.</Tag>
 	<Tag name="NetChat">Rozmowa</Tag>
@@ -708,19 +719,16 @@
 	<Tag name="TipTerLAngMax">Końcowy kąt terenu dla warstwy</Tag>
 	<Tag name="Pitch">nachylenie</Tag>
 	<Tag name="InputNextOptTab">F2,F3 - poprz./nast. zakładka Opcji (shift - podzakładka)</Tag>
+	<Tag name="Diff6">Ekstremalny</Tag>
 	<Tag name="RplAll">Wszystkie</Tag>
-	<Tag name="InputObjectsIns">Ins - insert new, at cursor</Tag>
-	<Tag name="InputObjectsScale">alt-LMB - scale   alt-RMB - scale Y only</Tag>
-	<Tag name="LS_OBJS">Loading Objects</Tag>
-	<Tag name="InputObjectsMove">LMB - move   RMB - height</Tag>
-	<Tag name="InputObjectsPrevNext">PgUp,PgDn (or Wheel) - previous/next object</Tag>
-	<Tag name="InputObjectsMode">X - edit Objects</Tag>
-	<Tag name="LS_ROAD">Loading Road</Tag>
-	<Tag name="CarStartPos">Car Start Pos</Tag>
-	<Tag name="InputObjectsRot">MMB - rotate Y</Tag>
-	<Tag name="Objects">Objects</Tag>
-	<Tag name="InputObjectsDel">Del - delete current</Tag>
-	<Tag name="LS_TREES">Loading Trees</Tag>
+	<Tag name="Graphs">Graphs</Tag>
+	<Tag name="CarCrash">Car Crash</Tag>
+	<Tag name="Suspension">Suspension</Tag>
+	<Tag name="RoadWallFullCollis">Road wall full collision</Tag>
+	<Tag name="FluidSplash">Fluid Splash</Tag>
+	<Tag name="FluidCont">Fluid Cont.</Tag>
+	<Tag name="InputObjectsType">[,]  - change object type</Tag>
+	<Tag name="CarScrap">Car Scrap</Tag>
 	<Tag name="GameVersion">1.7</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 	<Tag name="LANG_EN">English</Tag>

@@ -286,7 +286,7 @@ void App::LoadScene()  // 3
 	if (ter)  // load scene
 		sc.LoadXml(TrkDir()+"scene.xml");
 	else
-	{	sc.Default();  sc.td.hfHeight = NULL;  sc.td.hfAngle = NULL;  }
+	{	sc.Default();  sc.td.hfHeight = sc.td.hfAngle = NULL;  sc.td.layerRoad.smoke = 1.f;  }
 
 	//  water RTT
 	UpdateWaterRTT(mSplitMgr->mCameras.front());
@@ -602,7 +602,6 @@ void App::CreateRoad()
 	road = new SplineRoad(pGame);  // sphere.mesh
 	road->Setup("", 0.7,  terrain, mSceneMgr, *mSplitMgr->mCameras.begin());
 	road->iTexSize = pSet->tex_size;
-	road->bForceShadowCaster = (pSet->shadow_type == 3);
 	
 	String sr = TrkDir()+"road.xml";
 	road->LoadFile(TrkDir()+"road.xml");
@@ -612,6 +611,9 @@ void App::CreateRoad()
 		carModels[i]->ResetChecks(true);
 
 	UpdPSSMMaterials();  ///+~-
+
+	road->bCastShadow = pSet->shadow_type >= 3;
+	road->bRoadWFullCol = pSet->gui.collis_roadw;
 	road->RebuildRoadInt();
 }
 

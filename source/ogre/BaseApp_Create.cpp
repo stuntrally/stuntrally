@@ -8,10 +8,12 @@
 #include "../network/masterclient.hpp"
 #include "../network/gameclient.hpp"
 #include "common/HWMouse.h"
+#include "common/MaterialGen/MaterialFactory.h"
 
 #include "Localization.h"
 #include "SplitScreen.h"
 #include "common/QTimer.h"
+#include "Compositor.h"
 
 #include "CarModel.h"
 #include "FollowCamera.h"

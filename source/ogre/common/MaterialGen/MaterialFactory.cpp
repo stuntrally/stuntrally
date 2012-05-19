@@ -461,9 +461,9 @@ void MaterialFactory::setShaderParams(MaterialPtr mat)
 
 //----------------------------------------------------------------------------------------
 
-void MaterialFactory::generate()
+void MaterialFactory::generate(bool force)
 {
-	if (bSettingsChanged)
+	if (bSettingsChanged || force)
 	{
 		QTimer ti;  ti.update(); /// time
 		LogO("[MaterialFactory] generating new materials...");

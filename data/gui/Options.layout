@@ -80,9 +80,7 @@
 		<Property key="Snap" value="true"/>
 		<Widget type="TabControl" skin="TabControl" position="0 0 800 600" align="Default" layer="Back" name="TabWndGame">
 			<Property key="InheritsAlpha" value="false"/>
-			<Property key="ButtonWidth" value="86"/>
 			<Property key="Colour" value="0.7 0.85 1"/>
-			<Property key="ButtonAutoWidth" value="true"/>
 			<UserString key="RelativeTo" value="GameWnd"/>
 			<Widget type="TabItem" skin="" position="2 24 794 572">
 				<Property key="Caption" value="&lt;#{BackMenu}"/>
@@ -513,6 +511,11 @@
 					<Property key="TextColour" value="0.6 0.8 0.8"/>
 					<UserString key="RelativeTo" value="GameWnd"/>
 				</Widget>
+				<Widget type="Button" skin="CheckBox" position="552 80 216 24" name="RoadWCollis">
+					<Property key="Caption" value="#{RoadWallFullCollis}"/>
+					<Property key="TextColour" value="0.6 0.8 0.8"/>
+					<UserString key="RelativeTo" value="GameWnd"/>
+				</Widget>
 				<Widget type="Button" skin="CheckBox" position="312 352 256 25" name="chkSplitVertically">
 					<Property key="Caption" value="#{SplitVertically}"/>
 					<Property key="TextColour" value="0.8 0.9 1.0"/>
@@ -594,9 +597,7 @@
 				<Property key="Caption" value="#{Multiplayer}"/>
 				<UserString key="RelativeTo" value="GameWnd"/>
 				<Widget type="Tab" skin="Tab" position="16 15 744 497" name="tabsNet">
-					<Property key="ButtonAutoWidth" value="false"/>
 					<Property key="Colour" value="0.73 0.88 1"/>
-					<Property key="ButtonWidth" value="160"/>
 					<UserString key="RelativeTo" value="GameWnd"/>
 					<Widget type="TabItem" skin="" position="2 24 738 469">
 						<Property key="Caption" value="#{NetServer}"/>
@@ -1108,9 +1109,7 @@
 		<Property key="Snap" value="true"/>
 		<Widget type="TabControl" skin="TabControl" position="0 0 800 600" align="Default" layer="Back" name="TabWndReplays">
 			<Property key="InheritsAlpha" value="false"/>
-			<Property key="ButtonWidth" value="86"/>
 			<Property key="Colour" value="0.7 0.85 1"/>
-			<Property key="ButtonAutoWidth" value="true"/>
 			<UserString key="RelativeTo" value="ReplaysWnd"/>
 			<Widget type="TabItem" skin="" position="2 24 794 572">
 				<Property key="Caption" value="&lt;#{BackMenu}"/>
@@ -1237,9 +1236,7 @@
 		<Property key="Snap" value="true"/>
 		<Widget type="TabControl" skin="TabControl" position="0 0 800 600" align="Default" layer="Back" name="TabWndHelp">
 			<Property key="InheritsAlpha" value="false"/>
-			<Property key="ButtonWidth" value="86"/>
 			<Property key="Colour" value="0.7 0.85 1"/>
-			<Property key="ButtonAutoWidth" value="true"/>
 			<UserString key="RelativeTo" value="HelpWnd"/>
 			<Widget type="TabItem" skin="" position="2 24 794 572">
 				<Property key="Caption" value="&lt;#{BackMenu}"/>
@@ -1356,9 +1353,7 @@
 		<Property key="Snap" value="true"/>
 		<Widget type="TabControl" skin="TabControl" position="0 0 800 600" align="Default" layer="Back" name="TabWndOptions">
 			<Property key="InheritsAlpha" value="false"/>
-			<Property key="ButtonWidth" value="86"/>
 			<Property key="Colour" value="0.7 0.85 1"/>
-			<Property key="ButtonAutoWidth" value="true"/>
 			<UserString key="RelativeTo" value="OptionsWnd"/>
 			<Widget type="TabItem" skin="" position="2 24 794 572">
 				<Property key="Caption" value="&lt;#{BackMenu}"/>
@@ -1369,9 +1364,7 @@
 				<Property key="Caption" value="#{Screen}"/>
 				<UserString key="RelativeTo" value="OptionsWnd"/>
 				<Widget type="TabControl" skin="TabControl" position="16 15 744 460" name="SubTab">
-					<Property key="ButtonAutoWidth" value="false"/>
 					<Property key="Colour" value="0.73 0.88 1"/>
-					<Property key="ButtonWidth" value="100"/>
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 					<Widget type="TabItem" skin="" position="2 24 738 432">
 						<Property key="Caption" value="#{Video}"/>
@@ -2072,9 +2065,7 @@
 				<Property key="Caption" value="#{View}"/>
 				<UserString key="RelativeTo" value="OptionsWnd"/>
 				<Widget type="TabControl" skin="TabControl" position="16 15 744 460" name="SubTab">
-					<Property key="ButtonAutoWidth" value="false"/>
 					<Property key="Colour" value="0.73 0.88 1"/>
-					<Property key="ButtonWidth" value="100"/>
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 					<Widget type="TabItem" skin="" position="2 24 738 432">
 						<Property key="Caption" value="#{HUD}"/>
@@ -2322,9 +2313,7 @@
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 				</Widget>
 				<Widget type="TabControl" skin="TabControl" position="16 15 504 520" name="InputTab">
-					<Property key="ButtonAutoWidth" value="false"/>
 					<Property key="Colour" value="0.73 0.88 1"/>
-					<Property key="ButtonWidth" value="100"/>
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 				</Widget>
 				<Widget type="TextBox" skin="TextBox" position="548 490 244 20" name="axisOutput">

@@ -101,7 +101,8 @@ public:
 	static Ogre::Vector3 GetRot(Ogre::Real ayaw, Ogre::Real ang);
 	void SetTerHitVis(bool visible), UpdRot();
 	
-	bool bForceShadowCaster;
+	bool bCastShadow;  // true for depth shadows
+	bool bRoadWFullCol;  // road wall full collision (all triangles, or just side)
 	
 
 private:

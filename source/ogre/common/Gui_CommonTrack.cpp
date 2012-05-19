@@ -397,7 +397,7 @@ void App::FillTrackLists()
 	for (strlist::iterator i = liTracks.begin(); i != liTracks.end(); ++i)
 	{
 		TrkL trl;  trl.name = *i;  trl.pA = this;
-		trl.test = Ogre::StringUtil::startsWith(trl.name,"Test");
+		trl.test = StringUtil::startsWith(trl.name,"test");
 
 		int id = tracksXml.trkmap[*i];
 		const TrackInfo* pTrk = id==0 ? 0 : &tracksXml.trks[id-1];
