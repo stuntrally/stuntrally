@@ -171,8 +171,14 @@ void MaterialGenerator::generateVertexProgramSource(Ogre::StringUtil::StrStreamT
 	if (vpNeedWMat()) outStream <<
 		"	uniform float4x4 wMat, \n";
 	outStream << 
-	"	uniform float4x4 wvpMat \n"
-	") \n"
+	"	uniform float4x4 wvpMat, \n";
+	
+	if(MRTSupported())
+	{
+		outStream << "	uniform float far \n";
+	}
+
+	outStream <<") \n"
 	"{ \n";
 	
 	if (mShader->vertexColour) outStream <<
@@ -281,13 +287,15 @@ void MaterialGenerator::generateVertexProgramSource(Ogre::StringUtil::StrStreamT
 			"	float3 viewPosition = mul(wvMat, position).xyz; \n";
 			
 			if (fpNeedNormal() && (!(needEnvMap() || needNormalMap() || fpNeedLighting()))) outStream <<
-				"	oNormal.z = viewPosition.x; \n";
+				"	oNormal.z = length(viewPosition.xyz) / far; \n";
 			if (!mShader->vertexColour) outStream <<
-				"	oEyeVector.w = viewPosition.x; \n";
+				"	oEyeVector.w = length(viewPosition.xyz) / far ; \n";
 				
 			outStream <<
-			"	oObjPosition.w = viewPosition.y; \n"
-			"	oViewNormal.w = viewPosition.z; \n";
+			"	oObjPosition.w = oPosition.w; \n";
+			
+			//oViewNormal.w is free 
+		
 		}
 	}
 	outStream <<
@@ -316,7 +324,11 @@ void MaterialGenerator::vertexProgramParams(HighLevelGpuProgramPtr program)
 			
 	if (mShader->wind == 2)
 		params->setNamedConstant("enableWind", Real(1.0));
-		
+	
+	if(MRTSupported())
+	{
+		params->setNamedAutoConstant("far", GpuProgramParameters::ACT_FAR_CLIP_DISTANCE);
+	}	
 	individualVertexProgramParams(params);
 }
 

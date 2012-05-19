@@ -238,7 +238,7 @@ void App::InitGui()
 	Slv(HDRParam3, pSet->hdrParam3);
 	Slv(HDRAdaptationScale, pSet->hdrAdaptationScale);
 	
-	Chk("MotionBlur", chkVidBlur, pSet->motionblur);
+	Chk("MotionBlur", chkVidBlur, pSet->camblur);
 	Chk("ssao", chkVidSSAO, pSet->ssao);
 	Chk("softparticles", chkVidSoftParticles, pSet->softparticles);
 	if (!MaterialGenerator::MRTSupported())

@@ -124,7 +124,7 @@ void SETTINGS::Serialize(bool w, CONFIGFILE & c)
 	Param(c,w, "video_eff.hdr_p2", hdrParam2);
 	Param(c,w, "video_eff.hdr_p3", hdrParam3);
 	Param(c,w, "video_eff.hdrAdaptationScale", hdrAdaptationScale);
-	Param(c,w, "video_eff.motionblur", motionblur);		Param(c,w, "video_eff.motionblurintensity", motionblurintensity);
+	Param(c,w, "video_eff.motionblur", camblur);		Param(c,w, "video_eff.motionblurintensity", motionblurintensity);
 	Param(c,w, "video_eff.ssao", ssao);					Param(c,w, "video_eff.softparticles", softparticles);
 	Param(c,w, "video_eff.godrays", godrays);
 	Param(c,w, "video_eff.dof", dof);

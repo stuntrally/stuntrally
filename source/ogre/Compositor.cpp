@@ -14,7 +14,7 @@
 #include "common/MaterialGen/MaterialFactory.h"
 #include "../vdrift/settings.h"
 //#include "HDRCompositor.h"
-
+#include "../vdrift/game.h"
 
 class MotionBlurListener : public Ogre::CompositorInstance::Listener
 {
@@ -701,4 +701,91 @@ void FilmGrainListener::notifyMaterialRender(Ogre::uint32 pass_id, Ogre::Materia
 {
 	
 	
+}
+
+
+class CameraBlurListener : public Ogre::CompositorInstance::Listener
+{
+public:
+	CameraBlurListener(BaseApp* app);
+	virtual ~CameraBlurListener();
+	
+	App * mApp;
+	Ogre::Quaternion m_pPreviousOrientation;
+	Ogre::Vector3 m_pPreviousPosition;
+	
+	Ogre::Matrix4 prevviewproj;
+	virtual void notifyMaterialSetup(Ogre::uint32 pass_id, Ogre::MaterialPtr &mat);
+	virtual void notifyMaterialRender(Ogre::uint32 pass_id, Ogre::MaterialPtr &mat);
+};
+
+CameraBlurLogic::CameraBlurLogic(BaseApp* app)
+{
+	pApp = app;
+}
+
+Ogre::CompositorInstance::Listener* CameraBlurLogic::createListener(Ogre::CompositorInstance*  instance)
+{
+	CameraBlurListener* listener = new CameraBlurListener(pApp);
+	return listener;
+}
+
+CameraBlurListener::CameraBlurListener(BaseApp* app) : mApp(0)
+{
+	mApp = (App*)app;
+}
+
+CameraBlurListener::~CameraBlurListener()
+{
+}
+
+void CameraBlurListener::notifyMaterialSetup(Ogre::uint32 pass_id, Ogre::MaterialPtr &mat)
+{
+}
+
+void CameraBlurListener::notifyMaterialRender(Ogre::uint32 pass_id, Ogre::MaterialPtr &mat)
+{
+	if (pass_id == 999) 
+	{
+
+		if(mApp->pGame->pause == false)
+		{
+			// this is the camera you're using
+			#ifndef ROAD_EDITOR
+			Ogre::Camera *cam = mApp->mSplitMgr->mCameras.front();
+			#else
+			Ogre::Camera *cam = mApp->mCamera;
+			#endif
+			// get the pass
+			Ogre::Pass *pass = mat->getBestTechnique()->getPass(0);
+			Ogre::GpuProgramParametersSharedPtr  params = pass->getFragmentProgramParameters();
+       
+			const Ogre::RenderTarget::FrameStats& stats =  mApp->getWindow()->getStatistics();
+			float m_lastFPS =stats.lastFPS;
+	
+			Ogre::Matrix4 projectionMatrix   = cam->getProjectionMatrix();
+			Ogre::Matrix4 iVP = (projectionMatrix * cam->getViewMatrix()).inverse();
+
+			if (params->_findNamedConstantDefinition("EPF_ViewProjectionInverseMatrix"))
+				 params->setNamedConstant("EPF_ViewProjectionInverseMatrix", iVP);
+			if (params->_findNamedConstantDefinition("EPF_PreviousViewProjectionMatrix"))
+				params->setNamedConstant("EPF_PreviousViewProjectionMatrix", prevviewproj);
+			if (params->_findNamedConstantDefinition("intensity"))
+				params->setNamedConstant("intensity", mApp->pSet->motionblurintensity);
+	
+			float interpolationFactor = m_lastFPS * 0.03f ; //* m_timeScale m_timeScale is a multiplier to control motion blur interactively
+			Ogre::Quaternion current_orientation = cam->getDerivedOrientation();
+			Ogre::Vector3 current_position = cam->getDerivedPosition();
+			Ogre::Quaternion estimatedOrientation = Ogre::Quaternion::Slerp(interpolationFactor, current_orientation, (m_pPreviousOrientation));
+			Ogre::Vector3 estimatedPosition    = (1-interpolationFactor) * current_position + interpolationFactor * (m_pPreviousPosition);
+			Ogre::Matrix4 prev_viewMatrix = Ogre::Math::makeViewMatrix(estimatedPosition, estimatedOrientation);
+			// compute final matrix
+			prevviewproj = projectionMatrix * prev_viewMatrix;
+
+			// update position and orientation for next update time
+			m_pPreviousOrientation = current_orientation;
+			m_pPreviousPosition = current_position;			
+		}
+
+	}
 }

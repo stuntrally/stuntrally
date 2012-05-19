@@ -442,7 +442,7 @@ void App::slHDRAdaptationScale(SL)
 }
 void App::chkVidBlur(WP wp)
 {		
-	ChkEv(motionblur);  refreshCompositor();
+	ChkEv(camblur);  refreshCompositor();
 }
 void App::chkVidSSAA(WP wp)
 {

@@ -1,0 +1,80 @@
+vertex_program EPF_MotionBlur_VS cg
+{
+    source camblur.cg
+    profiles vs_4_0 vs_1_1 arbvp1
+    entry_point EPF_MotionBlur_VS
+    default_params
+    {
+        param_named_auto wvp worldviewproj_matrix
+    }
+}
+
+fragment_program  EPF_MotionBlur_PS cg
+{
+   source camblur.cg
+   entry_point EPF_MotionBlur_PS
+   profiles ps_3_0 arbfp1
+}
+
+
+material EPF_MotionBlur
+{
+   technique
+    {
+        pass
+        {
+         cull_hardware none
+         cull_software none
+         depth_func always_pass
+         fog_override true
+
+         vertex_program_ref EPF_MotionBlur_VS
+         {
+         }
+
+         fragment_program_ref EPF_MotionBlur_PS
+         {
+         }
+         
+         texture_unit scene
+            {
+            tex_coord_set 0
+            tex_address_mode clamp
+                filtering bilinear
+            }
+
+            texture_unit depth
+            {
+                tex_coord_set 0
+            tex_address_mode clamp
+            filtering bilinear
+            }
+            
+        }
+    }
+
+}
+
+//
+//   Geometry Depth Shaders
+//
+
+vertex_program EPF_MotionBlur_Depth_VS cg
+{
+    source camblur.cg
+    profiles vs_1_1 arbvp1
+    entry_point EPF_MotionBlur_Depth_VS
+
+   default_params
+   {
+      param_named_auto wmat worldviewproj_matrix 
+   }
+}
+
+fragment_program EPF_MotionBlur_Depth_PS cg
+{
+   source camblur.cg
+   entry_point EPF_MotionBlur_Depth_PS
+   // cannot use ps_1_1 because compiler complains about zero-division
+   profiles ps_2_0 arbfp1
+}
