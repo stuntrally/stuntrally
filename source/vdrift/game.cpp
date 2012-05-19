@@ -39,6 +39,7 @@ GAME::GAME(std::ostream & info_out, std::ostream & err_out, SETTINGS* pSettings)
 	track(info_out, err_out), /*tracknode(NULL),*/
 	framerate(1.0 / pSettings->game_fq)
 {
+	for (int i=0;i<5;++i)  vdrLap[i]=0;
 	carcontrols_local.first = NULL;
 	//  sim iv from settings
 	collision.fixedTimestep = 1.0 / pSettings->blt_fq;
@@ -764,8 +765,17 @@ void GAME::UpdateTimer()
 		{
 		    // only count it if the car's current sector isn't -1
 		    // which is the default value when the car is loaded
-			timer.Lap(carId, i->GetSector(), nextsector, (i->GetSector() >= 0), settings->game.trackreverse); 
+		    bool countit = i->GetSector() >= 0;
+			bool best = timer.Lap(carId, i->GetSector(), nextsector, countit, settings->game.trackreverse);
+			bool finish = (nextsector == track.GetSectors()-1/*0*/) && countit;
 			i->SetSector(nextsector);
+			
+			LogO("LAP sect  all:"+toStr(track.GetSectors())+"  next:"+toStr(nextsector)+"  cur:"+toStr(i->GetSector())
+				+"  best:"+toStr(best)+"  finish:"+toStr(finish)+"  countit:"+toStr(countit));
+			
+			if (finish)  /// notify OgreGame (save ghost)+
+				vdrLap[carId] = best ? 2 : 1;
+			LogO("LAP VDR  car "+toStr(carId)+" lap "+toStr(vdrLap[carId]));
 		}
 
 		//update how far the car is on the track
