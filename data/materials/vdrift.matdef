@@ -15,9 +15,12 @@
 	ambient = 0.9 0.9 0.9
 	diffuse = 0.8 0.8 0.8
 	specular = 0.4 0.4 0.4 32
-	receivesShadows = false
-	receivesDepthShadows = true
-	shadowPriority = 1.0
+	;receivesShadows = false
+	;receivesDepthShadows = true
+	;shadowPriority = 1.0
 	transparent = true
 	sceneBlend = alpha
-	depthWrite = false
+	alphaRejectFunc = greater_equal
+	alphaRejectValue = 128
+	;depthWrite = false
+	cullHardware = none
