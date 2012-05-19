@@ -286,6 +286,7 @@ void App::LoadScene()  // 3
 
 	// load scene - default if not found
 	sc.LoadXml(TrkDir()+"scene.xml");
+	sc.ter = ter;
 
 	if (!ter)
 	{	sc.td.hfHeight = sc.td.hfAngle = NULL;  }  // sc.td.layerRoad.smoke = 1.f;
