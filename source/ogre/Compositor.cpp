@@ -244,7 +244,7 @@ void HDRListener::notifyMaterialRender(Ogre::uint32 pass_id, Ogre::MaterialPtr &
     
 		if (params->_findNamedConstantDefinition("toneMapSettings"))
 		{
-			Ogre::Vector4 toneMapSettings(mApp->pSet->hdrParam1,mApp->pSet->hdrParam2,mApp->pSet->hdrParam3,1.0);
+			Ogre::Vector4 toneMapSettings(1-mApp->pSet->hdrParam1,mApp->pSet->hdrParam2,mApp->pSet->hdrParam3,1.0);
 			params->setNamedConstant("toneMapSettings", toneMapSettings);
 		}
 		if (params->_findNamedConstantDefinition("bloomSettings"))
@@ -682,10 +682,16 @@ FilmGrainListener::~FilmGrainListener()
 
 void FilmGrainListener::notifyMaterialSetup(Ogre::uint32 pass_id, Ogre::MaterialPtr &mat)
 {
+	
+}
+
+
+void FilmGrainListener::notifyMaterialRender(Ogre::uint32 pass_id, Ogre::MaterialPtr &mat)
+{
 	if(pass_id == 1)
 	{
 		float noiseIntensity = 0.1f;
-		float exposure = 0.1f;
+		float exposure = 1-mApp->pSet->hdrParam3;
 		Ogre::Vector4  grainparams(1.0f / mViewportWidth, 1.0f / mViewportHeight, noiseIntensity, exposure);
 
 		Ogre::Pass *pass = mat->getBestTechnique()->getPass(0);
@@ -694,13 +700,6 @@ void FilmGrainListener::notifyMaterialSetup(Ogre::uint32 pass_id, Ogre::Material
 	   	if (params->_findNamedConstantDefinition("grainparams"))
 			params->setNamedConstant("grainparams", grainparams);
 	 }
-}
-
-
-void FilmGrainListener::notifyMaterialRender(Ogre::uint32 pass_id, Ogre::MaterialPtr &mat)
-{
-	
-	
 }
 
 
