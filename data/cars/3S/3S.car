@@ -65,7 +65,7 @@ gear-ratio-3 = 1.77
 gear-ratio-4 = 1.36
 gear-ratio-5 = 1.02
 gear-ratio-6 = 0.78
-shift-delay = 0.02
+shift-delay = 0.10
 
 [ differential ]
 final-drive = 3.21
@@ -214,17 +214,17 @@ c17=1.69        #	Vertical shift at load = 0 (Nm)  C17c0=2.2
 [ brakes-front ]
 friction = 0.9
 max-pressure = 3.0e6
-bias = 0.35
+bias = 0.6
 radius = 0.1397
-area = 0.01
+area = 0.015
 
 [ brakes-rear ]
 friction = 0.9
 max-pressure = 3.0e6
-bias = 0.65
+bias = 0.4
 radius = 0.1397
-area = 0.01
-handbrake = 1.8
+area = 0.015
+handbrake = 2.8
 
 
 [ driver ]

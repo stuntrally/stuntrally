@@ -159,7 +159,7 @@ void App::CreateHUD(bool destroy)
 		TextureUnitState* tus = pass->getTextureUnitState(0);
 		if (tus)  tus->setTextureName(pSet->game.track + "_mini.png");
 		tus = pass->getTextureUnitState(2);
-		if (tus)  tus->setTextureName(pSet->game.track + "_ter.jpg");
+		if (tus && sc.ter)  tus->setTextureName(pSet->game.track + "_ter.jpg");
 		UpdMiniTer();
 		
 
@@ -366,9 +366,9 @@ void App::UpdMiniTer()
 	if (!pass)  return;
 	try
 	{	Ogre::GpuProgramParametersSharedPtr fparams = pass->getFragmentProgramParameters();
-		if(fparams->_findNamedConstantDefinition("showTerrain",false))
+		if (fparams->_findNamedConstantDefinition("showTerrain",false))
 		{
-			fparams->setNamedConstant("showTerrain", pSet->mini_terrain ? 1.f : 0.f);
+			fparams->setNamedConstant("showTerrain", pSet->mini_terrain && sc.ter ? 1.f : 0.f);
 		}
 	}catch(...){  }
 }

@@ -267,11 +267,11 @@ particle_system Smoke
 	    direction 1.2 0.2 -0.8
 
 	    emission_rate 100
-		time_to_live 2
+		time_to_live 3
 	    velocity_min 0.50
 	    velocity_max 0.80
 
-        colour 0.9 0.9 0.9 0.4
+        colour 0.8 0.8 0.8 0.3
         //colour_range_start  0.8 0.8 0.8
         //colour_range_end  1 1 1
     }
@@ -295,6 +295,6 @@ particle_system Smoke
 
     affector Scaler
     {
-   	    rate 0.40
+   	    rate 0.020
     }
 }

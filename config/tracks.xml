@@ -1,5 +1,15 @@
 <tracks>
-	<track n="00" name="zandvoort"		created="10-12-09" crtver="0.1" modified="10-12-09" scenery="Asphalt"	author="VDrift"	fluids="0" bumps="0" jumps="0" loops="0" pipes="0" banked="0" frenzy="0" long="3" diff="1" rating="" />
+	<track n="00" name="zandvoort"		created="10-12-09" crtver="0.1" modified="19-05-12" scenery="Asphalt"	author="VDrift"	fluids="0" bumps="0" jumps="0" loops="0" pipes="0" banked="0" frenzy="0" long="3" diff="1" rating="" />
+	<track n="00" name="weekend"		created="10-12-09" crtver="1.7" modified="19-05-12" scenery="Asphalt"	author="VDrift"	fluids="1" bumps="0" jumps="0" loops="0" pipes="0" banked="0" frenzy="0" long="3" diff="1" rating="" />
+	<track n="00" name="virginia"		created="10-12-09" crtver="1.7" modified="19-05-12" scenery="Asphalt"	author="VDrift"	fluids="0" bumps="0" jumps="0" loops="0" pipes="0" banked="0" frenzy="0" long="3" diff="1" rating="" />
+	<track n="00" name="ruudskogen"		created="10-12-09" crtver="1.7" modified="19-12-12" scenery="Asphalt"	author="VDrift"	fluids="0" bumps="0" jumps="0" loops="0" pipes="0" banked="0" frenzy="0" long="3" diff="1" rating="" />
+	<track n="00" name="road_atlanta"	created="10-12-09" crtver="1.7" modified="19-12-12" scenery="Asphalt"	author="VDrift"	fluids="0" bumps="0" jumps="0" loops="0" pipes="0" banked="0" frenzy="0" long="3" diff="1" rating="" />
+	<track n="00" name="lagunaseca"		created="10-12-09" crtver="1.7" modified="19-12-12" scenery="Asphalt"	author="VDrift"	fluids="0" bumps="0" jumps="0" loops="0" pipes="0" banked="0" frenzy="0" long="3" diff="1" rating="" />
+	<track n="00" name="detroit"		created="10-12-09" crtver="1.7" modified="19-12-12" scenery="Asphalt"	author="VDrift"	fluids="0" bumps="0" jumps="0" loops="0" pipes="0" banked="0" frenzy="0" long="3" diff="1" rating="" />
+	<track n="00" name="dirt3"			created="10-12-09" crtver="1.7" modified="19-12-12" scenery="Asphalt"	author="VDrift"	fluids="0" bumps="0" jumps="0" loops="0" pipes="0" banked="0" frenzy="0" long="3" diff="1" rating="" />
+	<track n="00" name="mosport"		created="10-12-09" crtver="1.7" modified="19-12-12" scenery="Asphalt"	author="VDrift"	fluids="0" bumps="0" jumps="0" loops="0" pipes="0" banked="0" frenzy="0" long="3" diff="1" rating="" />
+	<track n="00" name="brands"		created="10-12-09" crtver="1.7" modified="19-12-12" scenery="Asphalt"	author="VDrift"	fluids="0" bumps="0" jumps="0" loops="0" pipes="0" banked="0" frenzy="0" long="3" diff="1" rating="" />
+	<track n="00" name="a1ring"		created="10-12-09" crtver="1.7" modified="19-12-12" scenery="Asphalt"	author="VDrift"	fluids="0" bumps="0" jumps="0" loops="0" pipes="0" banked="0" frenzy="0" long="3" diff="1" rating="" />
 <!--Test-->
 <track n="01" name="Test1-Flat"			created="10-07-10" crtver="0.3" modified="20-07-10" scenery="Jungle"	author="CH" fluids="0" bumps="0" jumps="0" loops="0" pipes="0" banked="0" frenzy="0" long="0" diff="0" rating="0" />
 <track n="01" name="Test2-Asphalt"		created="10-07-10" crtver="0.3" modified="20-07-10" scenery="Asphalt"	author="CH" fluids="0" bumps="0" jumps="0" loops="0" pipes="0" banked="0" frenzy="0" long="0" diff="0" rating="0" />

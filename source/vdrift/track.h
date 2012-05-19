@@ -26,7 +26,7 @@ class OBJECTLOADER;
 class OGRE_MESH
 {
 public:
-	bool newMtr, sky, alpha, newM;
+	bool newMtr, sky, alpha, newM, found;
 	std::string name, material;
 	class VERTEXARRAY* mesh;
 

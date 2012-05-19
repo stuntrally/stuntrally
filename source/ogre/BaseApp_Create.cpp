@@ -299,6 +299,7 @@ bool BaseApp::setup()
 
 	mRoot->loadPlugin(PATHMANAGER::GetOgrePluginDir() + "/Plugin_ParticleFX" + D_SUFFIX);
 	mRoot->loadPlugin(PATHMANAGER::GetOgrePluginDir() + "/Plugin_CgProgramManager" + D_SUFFIX);
+	//mRoot->loadPlugin(PATHMANAGER::GetOgrePluginDir() + "/Plugin_OctreeSceneManager" + D_SUFFIX);  // test, bad
 
 	#ifdef _DEBUG
 	Ogre::LogManager::getSingleton().setLogDetail(LL_BOREME);//
