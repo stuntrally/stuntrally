@@ -225,11 +225,14 @@ void CarModel::Update(PosInfo& posInfo, PosInfo& posInfoCam, float time)
 		int whRd = posInfo.whRoadMtr[w];
 		float whVel = posInfo.whVel[w] * 3.6f;  //kmh
 		float slide = posInfo.whSlide[w], squeal = posInfo.whSqueal[w];
+			//LogO(" slide:"+fToStr(slide,3,5)+" squeal:"+fToStr(squeal,3,5));
 		float onGr = slide < 0.f ? 0.f : 1.f;
 
 		//  wheel temp
-		wht[w] += squeal * time * 7;
-		wht[w] -= time*6;  if (wht[w] < 0.f)  wht[w] = 0.f;
+		wht[w] += std::min(12.f, std::max(0.f, squeal*8 - slide*2 + squeal*slide*2)*time);
+		wht[w] = std::min(1.5f, wht[w]);  ///*
+		wht[w] -= time*7.f;  if (wht[w] < 0.f)  wht[w] = 0.f;
+			//LogO(toStr(w)+" wht "+fToStr(wht[w],3,5));
 
 		///  emit rates +
 		Real emitS = 0.f, emitM = 0.f, emitD = 0.f;  //paused
@@ -237,7 +240,7 @@ void CarModel::Update(PosInfo& posInfo, PosInfo& posInfoCam, float time)
 		if (!pGame->pause)
 		{
 			Real sq = squeal* std::min(1.f, wht[w]), l = pSet->particles_len * onGr;
-			emitS = sq * (whVel * 30) * l *0.3f;  //..
+			emitS = sq * (whVel * 30) * l * 0.45f;  ///*
 			emitM = slide < 1.4f ? 0.f :  (8.f * sq * std::min(5.f, slide) * l);
 			emitD = (std::min(140.f, whVel) / 3.5f + slide * 1.f ) * l;  
 
@@ -273,12 +276,12 @@ void CarModel::Update(PosInfo& posInfo, PosInfo& posInfoCam, float time)
 		if (pSet->particles)
 		{
 			ParticleSystem* ps = par[PAR_Smoke][w];
-			if (ps && sc->td.layerRoad.smoke > 0.f/*&& !sc->ter*/)  // only at vdr road
-			{			//  smoke
+			if (ps && sc->td.layerRoad.smoke > 0.f)
+			{	//  smoke
 				ParticleEmitter* pe = ps->getEmitter(0);
-				pe->setPosition(vpos + posInfo.carY * wR*0.7f);
-				/**/ps->getAffector(0)->setParameter("alpha", toStr(-0.4f - 0.07f/2.4f * whVel));
-				/**/pe->setTimeToLive( std::max(0.1, 2 - whVel/2.4f * 0.04) );  // fade,live
+				pe->setPosition(vpos + posInfo.carY * wR*0.7f);  ///*
+				ps->getAffector(0)->setParameter("alpha", toStr(-0.2f - 0.023f * whVel));  // fade out speed
+				pe->setTimeToLive( std::max(0.12f, 2.f - whVel * 0.06f) );  // live time
 				pe->setDirection(-posInfo.carY);	pe->setEmissionRate(emitS);
 			}
 			ps = par[PAR_Mud][w];
