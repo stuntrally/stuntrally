@@ -109,7 +109,7 @@ public:
 	COLLISION_WORLD collision;
 	
 	TIMER timer;
-	//AI ai;
+	int vdrLap[5];  //for all cars
 
 public:
 	GAME(std::ostream & info_out, std::ostream & err_out, SETTINGS* pSettings);

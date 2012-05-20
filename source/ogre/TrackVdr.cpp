@@ -254,20 +254,24 @@ void App::CreateMinimap()
 	float marg = 1.f + 0.1f;  // from border
 	float fMiniX = 1 - fHudSize * marg, fMiniY = 1 - fHudSize*asp * marg;
 
-	//for [4]...
-	ndMap[0] = mSceneMgr->getRootSceneNode()->createChildSceneNode(Vector3(fMiniX,fMiniY,0));
-	ndMap[0]->scale(fHudSize, fHudSize*asp, 1);
-	ndMap[0]->attachObject(m);
+	int plr = mSplitMgr->mNumViewports;
+	for (int i=0; i < plr; ++i)
+	{
+		ndMap[i] = mSceneMgr->getRootSceneNode()->createChildSceneNode(Vector3(fMiniX,fMiniY,0));
+		ndMap[i]->scale(fHudSize, fHudSize*asp, 1);
+		ndMap[i]->attachObject(m);
+	}
 	
 	//  car pos tri
-	for (int c=0; c < 5; ++c)
+	/*int plr = mSplitMgr->mNumViewports;
+	for (int c=0; c < plr; ++c)
 	{
 		vMoPos[0][c] = Create2D("hud/CarPos", mSplitMgr->mGuiSceneMgr, 0.4f, true, true);
 		vNdPos[0][c] = ndMap[0]->createChildSceneNode();
 		vNdPos[0][c]->scale(fHudSize*1.5f, fHudSize*1.5f, 1);
-		vNdPos[0][c]->attachObject(vMoPos[0][c]);  //ndPos[i]->setVisible(false);
+		vNdPos[0][c]->attachObject(vMoPos[0][c]);  vNdPos[0][c]->setVisible(false);
 	}
-	ndMap[0]->setVisible(pSet->trackmap);
+	ndMap[0]->setVisible(pSet->trackmap);*/
 }
 
 

@@ -221,11 +221,31 @@ void App::newPoses(float time)  // time only for camera update
 
 		//  chekpoints, lap start
 		//-----------------------------------------------------------------------
+		if (!bRplPlay && !bGhost && !sc.ter)  /// vdrift lap notify
+		if (!road && pGame->vdrLap[c] > 0 && carM->eType == CarModel::CT_LOCAL)
+		{
+			LogO("LAP App  t:"+fToStr(lapTime,3,5));
+
+			//  Network notification, send: car id, lap time
+			//if (mClient && c == 0 && !finished)
+			//	mClient->lap(pGame->timer.GetCurrentLap(c), pGame->timer.GetLastLap(c));
+
+			if (lapTime > 1.0)
+			if (!pSet->rpl_bestonly || pGame->vdrLap[c] == 2/*best*/)
+			if (c==0 && pSet->rpl_rec)  // for many, only 1st car
+			{
+				ghost.SaveFile(GetGhostFile());
+				ghplay.CopyFrom(ghost);
+			}
+			ghost.Clear();
+			pGame->vdrLap[c] = 0;
+		}
+
 		if (bRplPlay || bGhost || !sc.ter)   // dont check when replay play
 			carM->bWrongChk = false;
 		else
 		{
-			// checkpoint arrow
+			// checkpoint arrow  --------------------------------------
 			if (pSet->check_arrow && carM->eType == CarModel::CT_LOCAL
 			  && !bRplPlay && arrowNode && road && road->mChks.size()>0)
 			{
@@ -276,6 +296,7 @@ void App::newPoses(float time)  // time only for camera update
 				}
 			}
 			
+			//----------------------------------------------------------------------------
 			if (carM->bGetStPos)  // first pos is at start
 			{	carM->bGetStPos = false;
 				carM->matStPos.makeInverseTransform(pi.pos, Vector3::UNIT_SCALE, pi.rot);
@@ -295,8 +316,8 @@ void App::newPoses(float time)  // time only for camera update
 				if (ncs > 0)
 				{
 					//  Finish  --------------------------------------
-					if (carM->bInSt && carM->iNumChks == ncs && carM->iCurChk != -1
-						&& carM->eType == CarModel::CT_LOCAL)  // only local car(s)
+					if (carM->eType == CarModel::CT_LOCAL &&  // only local car(s)
+						(carM->bInSt && carM->iNumChks == ncs && carM->iCurChk != -1))
 					{
 						///  Lap
 						bool finished = (pGame->timer.GetCurrentLap(c) >= pSet->game.num_laps)
@@ -311,7 +332,7 @@ void App::newPoses(float time)  // time only for camera update
 
 						///  new best lap, save ghost
 						if (!pSet->rpl_bestonly || best)
-						if (c==0 && pSet->rpl_rec)  // for many, only 1st-
+						if (c==0 && pSet->rpl_rec)  // for many, only 1st car
 						{
 							ghost.SaveFile(GetGhostFile());  //,boost_type?
 							ghplay.CopyFrom(ghost);

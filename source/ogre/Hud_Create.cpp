@@ -140,8 +140,9 @@ void App::CreateHUD(bool destroy)
 	//if (terrain)
 	for (int c=0; c < plr; ++c)  // for each car
 	{
-		float t = sc.td.fTerWorldSize*0.5;
-		minX = -t;  minY = -t;  maxX = t;  maxY = t;
+		if (sc.ter)
+		{	float t = sc.td.fTerWorldSize*0.5;
+			minX = -t;  minY = -t;  maxX = t;  maxY = t;  }
 
 		float fMapSizeX = maxX - minX, fMapSizeY = maxY - minY;  // map size
 		float size = std::max(fMapSizeX, fMapSizeY*asp);
