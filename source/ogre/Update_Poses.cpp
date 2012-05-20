@@ -227,10 +227,13 @@ void App::newPoses(float time)  // time only for camera update
 			LogO("LAP App  t:"+fToStr(lapTime,3,5));
 
 			//  Network notification, send: car id, lap time
-			//if (mClient && c == 0 && !finished)
-			//	mClient->lap(pGame->timer.GetCurrentLap(c), pGame->timer.GetLastLap(c));
+			bool finished = (pGame->timer.GetCurrentLap(c) >= pSet->game.num_laps)
+							&& (mClient || pSet->game.local_players > 1);
+			if (mClient && c == 0 && !finished)
+				mClient->lap(pGame->timer.GetCurrentLap(c), pGame->timer.GetLastLap(c));
 
-			//if (lapTime > 1.0)
+			//if (lapTime > 1.0)  // is 1 frame after = 0.012 not the track time..
+			///  new best lap, save ghost
 			if (!pSet->rpl_bestonly || pGame->vdrLap[c] == 2/*best*/)
 			if (c==0 && pSet->rpl_rec)  // for many, only 1st car
 			{
