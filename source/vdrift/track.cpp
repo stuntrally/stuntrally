@@ -392,7 +392,7 @@ bool TRACK::LoadSurfaces(const std::string & trackpath)
 		surf.rollingDrag = temp;
 		
 		tracksurfaces.push_back(surf);//
-		info_output << "  new surface: " << surf.name << " ID:" << id << " bumpA:" << surf.bumpAmplitude << endl;//
+		//info_output << "  new surface: " << surf.name << " ID:" << id << " bumpA:" << surf.bumpAmplitude << endl;//
 		if (surf.name == "R")  // for road
 			roadSurf = surf;
 		

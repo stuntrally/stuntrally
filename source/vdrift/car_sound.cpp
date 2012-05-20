@@ -388,19 +388,19 @@ void CAR::UpdateSounds(float dt)
 		grasssound[i].SetGain(0.0);
 		tiresqueal[i].SetGain(0.0);
 
-		float maxgain = 0.6, pitchvar = 0.4;
+		float maxgain = 0.6, pitchvar = 0.4, pmul = 1.f;
 
 		SOUNDSOURCE * snd;
 		switch (surfType[i])
 		{
-		case TRACKSURFACE::NONE:		snd = tiresqueal;	maxgain = 0.0;	break;
-		case TRACKSURFACE::ASPHALT:		snd = tiresqueal;	break;
-		case TRACKSURFACE::GRASS:		snd = grasssound;	maxgain = 0.7;	pitchvar = 0.25;	break;
+		case TRACKSURFACE::ASPHALT:		snd = tiresqueal;	maxgain = 0.4;  pitchvar = 0.40;  pmul = 0.8f;  break;
+		case TRACKSURFACE::GRASS:		snd = grasssound;	maxgain = 0.7;	pitchvar = 0.25;  break;
 		case TRACKSURFACE::GRAVEL:		snd = gravelsound;	maxgain = 0.7;	break;
-		case TRACKSURFACE::CONCRETE:	snd = tiresqueal;	maxgain = 0.6;	pitchvar = 0.25;	break;
-		case TRACKSURFACE::SAND:		snd = grasssound;	maxgain = 0.5;  pitchvar = 0.25;	break;
+		case TRACKSURFACE::CONCRETE:	snd = tiresqueal;	maxgain = 0.5;	pitchvar = 0.25;  pmul = 0.7f;  break;
+		case TRACKSURFACE::SAND:		snd = grasssound;	maxgain = 0.5;  pitchvar = 0.25;  break;
+		case TRACKSURFACE::NONE:
 						default:		snd = tiresqueal;	maxgain = 0.0;	break;
-		}	///more.. sand,snow,grass-new,mud..
+		}	/// more,sounds.. sand,snow,grass-new,mud..
 
 		float pitch = std::min(1.f, std::max(0.f, (whVel[i]-5.0f)*0.1f ));
 		pitch = 1.0 - pitch;
@@ -410,7 +410,7 @@ void CAR::UpdateSounds(float dt)
 
 		snd[i].SetPosition(whPos[i]);
 		snd[i].SetGain(squeal[i]*maxgain * pSet->vol_tires);
-		snd[i].SetPitch(pitch);
+		snd[i].SetPitch(pitch * pmul);
 	}
 
 	//  wind
