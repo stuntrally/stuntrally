@@ -230,7 +230,7 @@ void App::newPoses(float time)  // time only for camera update
 			//if (mClient && c == 0 && !finished)
 			//	mClient->lap(pGame->timer.GetCurrentLap(c), pGame->timer.GetLastLap(c));
 
-			if (lapTime > 1.0)
+			//if (lapTime > 1.0)
 			if (!pSet->rpl_bestonly || pGame->vdrLap[c] == 2/*best*/)
 			if (c==0 && pSet->rpl_rec)  // for many, only 1st car
 			{

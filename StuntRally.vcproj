@@ -1315,6 +1315,10 @@
 					>
 				</File>
 				<File
+					RelativePath=".\data\materials\vdrift.matdef"
+					>
+				</File>
+				<File
 					RelativePath=".\data\particles\weather.matdef"
 					>
 				</File>
