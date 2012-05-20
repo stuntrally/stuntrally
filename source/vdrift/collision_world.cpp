@@ -437,13 +437,13 @@ bool COLLISION_WORLD::CastRay(
 					assert(obj);
 					s = obj->GetSurface();
 				}
-				else //track geometry
+				else  // track geometry
 				{
 					int shapeId = rayCallback.m_shapeId;
 					//assert(shapeId >= 0 && shapeId < trackSurface.size());
 					if (shapeId >= trackSurface.size() || shapeId < 0)  shapeId = 0;  //crash hf-
 					//if (trackSurface.size() > 0)
-						s = trackSurface[shapeId];
+					s = trackSurface[shapeId];
 				}
 			}
 		}

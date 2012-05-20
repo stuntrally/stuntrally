@@ -119,7 +119,7 @@ public:
 
 	const TRACKSURFACE * GetRoadSurface() const
 	{
-		return &surface;
+		return &roadSurf;
 	}
 	
 	const std::list<TRACK_OBJECT> & GetTrackObjects()
@@ -148,7 +148,7 @@ public:
 	std::vector <TRACKSURFACE> tracksurfaces;
 	
 	// default road surface (asphalt)
-	TRACKSURFACE surface;
+	TRACKSURFACE roadSurf;
 private:
 	
 	enum
