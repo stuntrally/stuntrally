@@ -441,6 +441,17 @@ void App::slHDRAdaptationScale(SL)
 	Real v = val;  if (bGI)  pSet->hdrAdaptationScale = v;
 	if (valHDRAdaptationScale){	valHDRAdaptationScale->setCaption(fToStr(v,2,4));  }
 }
+void App::slHDRVignettingRadius(SL)
+{
+	Real v = 10* val;  if (bGI)  pSet->vignettingRadius = v;
+	if (valHDRVignettingRadius){	valHDRVignettingRadius->setCaption(fToStr(v,2,4));  }
+}
+void App::slHDRVignettingDarkness(SL)
+{
+	Real v = val;  if (bGI)  pSet->vignettingDarkness = v;
+	if (valHDRVignettingDarkness){	valHDRVignettingDarkness->setCaption(fToStr(v,2,4));  }
+}
+
 void App::chkVidBlur(WP wp)
 {		
 	ChkEv(camblur);  refreshCompositor();

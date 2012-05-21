@@ -201,7 +201,8 @@ float4 finalToneMapping(
 	float2 uv : TEXCOORD0,
 	uniform float4 toneMapSettings,
 	uniform float4 bloomSettings,
-	uniform sampler2D inRTT : register(s0),
+	uniform float4 vignettingSettings,
+    uniform sampler2D inRTT : register(s0),
 	uniform sampler2D inBloom : register(s1),
 	uniform sampler2D inLum : register(s2)
 	) : COLOR
@@ -219,7 +220,49 @@ float4 finalToneMapping(
 	float4 bloom = tex2D(inBloom, uv);
 	float3 bloomAdjusted = bloom.rgb * (1/bloomSettings.y);
 	// Add scene & bloom
-	return float4(toneMappedSceneCol.rgb + clamp(bloomAdjusted,float3(0,0,0),float3(1,1,1)), 1.0f);
+	float4 finalColor = float4(toneMappedSceneCol.rgb + clamp(bloomAdjusted,float3(0,0,0),float3(1,1,1)), 1.0f);
+
+
+	float Radius = vignettingSettings.x;
+	float Darkness= vignettingSettings.y;
+
+	float2 inTex = uv - 0.5;
+	float vignette  = 1 - dot(inTex, inTex);
+	finalColor.rgb    *= saturate(pow(vignette, Radius) + Darkness);
+
+/*
+	float ChromaticAberration=vignettingSettings.z;
+	float SaturationLoss=vignettingSettings.w;
+    float2 inTex = iTexCoord - float2(0.5, 0.5);
+    float dot_tex = dot(inTex, inTex);
+    float vignette = 1 - dot_tex;
+
+   vignette = saturate(pow(vignette, Radius) + EPF_Darkness);
+   
+   // chromatic aberration
+   // compute green and blue sampling offset
+   float2 sign_tc = sign(inTex);
+   float vignette_inv =  1 - vignette;
+   float2 g_tc = iTexCoord - ChromaticAberration * inTex * vignette_inv;
+   float2 b_tc = iTexCoord - ChromaticAberration * 2.0f * inTex * vignette_inv;
+   // sample again green and blue
+   float base_g = tex2D(RT, g_tc).g;
+   float base_b = tex2D(inRTT, b_tc).b;
+   
+   // compose result color
+   float3 result = float3(finalColor.r, base_g, base_b);
+   
+   // apply vignette as color multiplication
+   result *= vignette;
+   
+   // correct saturation
+   // convert to hsv
+   float3 result_hsv = RGBtoHSV(result);
+   result_hsv.y -= SaturationLoss * vignette_inv;
+   result_hsv.y = saturate(result_hsv.y);
+   result = HSVtoRGB(result_hsv);
+  */ 
+	return finalColor;
 }
 
 

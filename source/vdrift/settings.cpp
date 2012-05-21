@@ -125,6 +125,8 @@ void SETTINGS::Serialize(bool w, CONFIGFILE & c)
 	Param(c,w, "video_eff.hdr_p2", hdrParam2);
 	Param(c,w, "video_eff.hdr_p3", hdrParam3);
 	Param(c,w, "video_eff.hdrAdaptationScale", hdrAdaptationScale);
+	Param(c,w, "video_eff.hdr_vignettingRadius", vignettingRadius);
+	Param(c,w, "video_eff.hdr_vignettingDarkness", vignettingDarkness);
 	Param(c,w, "video_eff.motionblur", camblur);		Param(c,w, "video_eff.motionblurintensity", motionblurintensity);
 	Param(c,w, "video_eff.ssao", ssao);					Param(c,w, "video_eff.softparticles", softparticles);
 	Param(c,w, "video_eff.godrays", godrays);
@@ -198,6 +200,7 @@ SETTINGS::SETTINGS() :  ///  Defaults
 	motionblur(false), motionblurintensity(0.3),
 	depthOfFieldFocus(100), depthOfFieldFar(1000),
 	hdrParam1(.52), hdrParam2(.22), hdrParam3(0.0),hdrAdaptationScale(0.3),
+	vignettingRadius(.2), vignettingDarkness(.1),
 	ssao(false), softparticles(false),
 	//  not in gui
 	boostFromExhaust(0), net_local_plr(-1),

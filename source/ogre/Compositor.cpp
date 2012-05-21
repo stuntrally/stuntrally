@@ -252,6 +252,11 @@ void HDRListener::notifyMaterialRender(Ogre::uint32 pass_id, Ogre::MaterialPtr &
 			Ogre::Vector4 bloomSettings(mApp->pSet->bloomorig*2,1-mApp->pSet->bloomintensity,1.0,1.0);
 						params->setNamedConstant("bloomSettings", bloomSettings);
 		}
+		if (params->_findNamedConstantDefinition("vignettingSettings"))
+		{
+			Ogre::Vector4 vignettingSettings(mApp->pSet->vignettingRadius,mApp->pSet->vignettingDarkness,1.0,1.0);
+			params->setNamedConstant("vignettingSettings", vignettingSettings);
+		}
 	
 	}
 	else if(pass_id == 989)

@@ -85,8 +85,9 @@ public:
 	bool bloom, hdr, motionblur, camblur, all_effects;
 	float bloomintensity, bloomorig, motionblurintensity;
 	float depthOfFieldFocus, depthOfFieldFar;
-	float hdrParam1,hdrParam2,hdrParam3;
+	float hdrParam1, hdrParam2, hdrParam3;
 	float hdrAdaptationScale;
+	float vignettingRadius, vignettingDarkness;
 	//  video
 	int windowx, windowy, fsaa;
 	bool fullscreen, vsync, ssaa, ssao, godrays, softparticles, dof, filmgrain;

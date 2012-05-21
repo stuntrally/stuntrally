@@ -1510,8 +1510,33 @@
             <Widget type="TextBox" skin="TextBox" position="328 180 60 24" name="BloomOrigVal">
               <Property key="TextColour" value="1 1 0.5"/>
               <UserString key="RelativeTo" value="OptionsWnd"/>
-            </Widget>         
-          </Widget>
+            </Widget>
+
+            <Widget type="TextBox" skin="TextBox" position="196 212 128 24">
+              <Property key="Caption" value="#{HDRVignettingRadius}"/>
+              <Property key="TextColour" value="1 1 0.5"/>
+              <UserString key="RelativeTo" value="OptionsWnd"/>
+            </Widget>
+             <Widget type="Slider" skin="Slider" position="392 212 320 18" name="HDRVignettingRadius">
+              <UserString key="RelativeTo" value="OptionsWnd"/>
+            </Widget>
+            <Widget type="TextBox" skin="TextBox" position="328 212 60 26" name="HDRVignettingRadiusVal">
+              <Property key="TextColour" value="1.0 1 0.2"/>
+              <UserString key="RelativeTo" value="OptionsWnd"/>
+            </Widget>
+             <Widget type="TextBox" skin="TextBox" position="196 244 128 24">
+              <Property key="Caption" value="#{HDRVignettingDarkness}"/>
+              <Property key="TextColour" value="1 1 0.5"/>
+              <UserString key="RelativeTo" value="OptionsWnd"/>
+            </Widget>
+             <Widget type="Slider" skin="Slider" position="392 244 320 18" name="HDRVignettingDarkness">
+              <UserString key="RelativeTo" value="OptionsWnd"/>
+            </Widget>
+            <Widget type="TextBox" skin="TextBox" position="328 244 60 26" name="HDRVignettingDarknessVal">
+              <Property key="TextColour" value="1.0 1 0.2"/>
+              <UserString key="RelativeTo" value="OptionsWnd"/>
+            </Widget>
+           </Widget>
 					<Widget type="TabItem" skin="" position="2 24 738 432">
 						<Property key="Caption" value="#{Effects}"/>
 						<UserString key="RelativeTo" value="OptionsWnd"/>

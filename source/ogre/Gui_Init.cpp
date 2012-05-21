@@ -238,6 +238,8 @@ void App::InitGui()
 	Slv(HDRParam2, pSet->hdrParam2);
 	Slv(HDRParam3, pSet->hdrParam3);
 	Slv(HDRAdaptationScale, pSet->hdrAdaptationScale);
+	Slv(HDRVignettingRadius, pSet->vignettingRadius/10);
+	Slv(HDRVignettingDarkness, pSet->vignettingDarkness);
 	
 	Chk("MotionBlur", chkVidBlur, pSet->camblur);
 	Chk("ssao", chkVidSSAO, pSet->ssao);
