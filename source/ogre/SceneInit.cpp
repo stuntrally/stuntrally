@@ -314,8 +314,8 @@ void App::LoadScene()  // 3
 		pr2->getEmitter(0)->setEmissionRate(0);  }
 		
 	//  checkpoint arrow
-	if (/*pSet->check_arrow &&*/ !bRplPlay)  { //!
-		if (!arrowNode) arrowNode = mSceneMgr->getRootSceneNode()->createChildSceneNode();
+	if (!bRplPlay && sc.ter)
+	{	if (!arrowNode) arrowNode = mSceneMgr->getRootSceneNode()->createChildSceneNode();
 		Ogre::Entity* arrowEnt = mSceneMgr->createEntity("CheckpointArrow", "arrow.mesh");
 		arrowEnt->setRenderQueueGroup(RQG_Hud3);
 		arrowEnt->setCastShadows(false);
