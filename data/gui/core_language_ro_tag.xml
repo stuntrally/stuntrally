@@ -29,6 +29,7 @@
 	<Tag name="TipLTrFlDepth">Maximal depth in fluid allowed (set 0 to exclude from fluids).</Tag>
 	<Tag name="TipLTrMinTerH">Terrain height below which model won't appear.</Tag>
 	<Tag name="Sky">Cer</Tag>
+	<Tag name="Graphs">Graphs</Tag>
 	<Tag name="TerNormal">Normală</Tag>
 	<Tag name="NeedNewGame">* necesită Joc nou</Tag>
 	<Tag name="InputRoadAngZero">shift-6  - zero angles</Tag>
@@ -84,7 +85,7 @@
 	<Tag name="GrDensSmooth">Smooth grass dens.</Tag>
 	<Tag name="TerHeightMap">Înăltimea terenului</Tag>
 	<Tag name="bumps">bumps (bumpy terrain)</Tag>
-	<Tag name="TipDiffusePrev">Textură difuză a previzualizării.</Tag>
+	<Tag name="ShadowFilter">Filter</Tag>
 	<Tag name="TipGrTerMaxAngle">Terrain angle above which there won't be any grass.</Tag>
 	<Tag name="RestartApply">Restart game, to apply *changes.</Tag>
 	<Tag name="InputMapResetGame">Reset game</Tag>
@@ -107,7 +108,7 @@
 	<Tag name="InpSet_KeyHalf">Key Half</Tag>
 	<Tag name="TerLHSm">Height smooth</Tag>
 	<Tag name="CopySource">Setează ca sursă copiată</Tag>
-	<Tag name="rating">rating</Tag>
+	<Tag name="CarCrash">Car Crash</Tag>
 	<Tag name="LS_OBJS">Loading Objects</Tag>
 	<Tag name="TreeRoadDist">Trees to road dist.</Tag>
 	<Tag name="GraphicsAll_Medium">Medium</Tag>
@@ -143,6 +144,7 @@
 	<Tag name="InputAssignKey">&lt;Press a key&gt;</Tag>
 	<Tag name="Wireframe">Cadru</Tag>
 	<Tag name="Score">Score</Tag>
+	<Tag name="Suspension">Suspension</Tag>
 	<Tag name="TerrainSize">Mărimea terenului</Tag>
 	<Tag name="NetServer">Server</Tag>
 	<Tag name="InputRoadWidth">- schimbă lățimea drumului</Tag>
@@ -153,6 +155,7 @@
 	<Tag name="UseSSAA">Use SSAA when effects are enabled</Tag>
 	<Tag name="ReflMode_single">Singur</Tag>
 	<Tag name="SetCamTo">Setează camera la</Tag>
+	<Tag name="RoadWallFullCollis">Road wall full collision</Tag>
 	<Tag name="Always">Always</Tag>
 	<Tag name="softparticles">Soft Particles</Tag>
 	<Tag name="TipTerTriSize">Mărime triunghiuri teren în [metri](recomandat: 1 - 2,  folosește mai multe pentru zone ale terenului mai mari).Se schimbă după Actualizare(F8).</Tag>
@@ -160,6 +163,7 @@
 	<Tag name="MessageBox_No">No</Tag>
 	<Tag name="Length">Lungimea</Tag>
 	<Tag name="TipCarsList">Listă mașini, click pentru a selecta (si a vedea imagine). Apasă [Schimbă mașina] apoi [Joc nou] pentru a o conduce.</Tag>
+	<Tag name="FluidSplash">Fluid Splash</Tag>
 	<Tag name="Model">Model</Tag>
 	<Tag name="InpSet_AxisHalf">Axis Half</Tag>
 	<Tag name="PipeLStepsMul">Multiplicare pași L conductă</Tag>
@@ -173,7 +177,7 @@
 	<Tag name="MessageBox_Continue">Continue</Tag>
 	<Tag name="Player">Player</Tag>
 	<Tag name="InputRoadSel">Backspace - adaugă sau elimină din selecţie</Tag>
-	<Tag name="LTrMaxTerAng">max terrain Angle</Tag>
+	<Tag name="Weather">Vremea</Tag>
 	<Tag name="RplAlpha">Transparent ghost</Tag>
 	<Tag name="InpSet_Medium">Medium</Tag>
 	<Tag name="TipTerrainHalf">Resize current terrain heightmap by half (use only for reducing file size).</Tag>
@@ -303,7 +307,7 @@
 	<Tag name="InputMinimapType">alt-F2,F3 - Prev,next minimap type</Tag>
 	<Tag name="TipGrassPatchLengthMin">Minimal grass patch length.</Tag>
 	<Tag name="Road">Drum</Tag>
-	<Tag name="distance">distanță</Tag>
+	<Tag name="FluidCont">Fluid Cont.</Tag>
 	<Tag name="TrackAutoLoad">Încarcă automat traseul</Tag>
 	<Tag name="DustSize">Mărime praf</Tag>
 	<Tag name="InputUpdBlendmap">F9 - update terrain blendmap</Tag>
@@ -331,7 +335,7 @@
 	<Tag name="BumpWavelen">Bump:  WaveLen</Tag>
 	<Tag name="InputRoadPipeAngle">[,] - unghiul tubului (nici un tub cand e 0)</Tag>
 	<Tag name="Finished">Finished</Tag>
-	<Tag name="Weather">Vremea</Tag>
+	<Tag name="LTrMaxTerAng">max terrain Angle</Tag>
 	<Tag name="InputMapRestartGame">New game</Tag>
 	<Tag name="Graphics">Grafică</Tag>
 	<Tag name="ReflMode_static">Static</Tag>
@@ -379,7 +383,7 @@
 	<Tag name="TexCoordMul">Tex Coord mul.</Tag>
 	<Tag name="Digits">Cifre (treapta de viteză,viteza)</Tag>
 	<Tag name="ShowPictures">Arată imagini cât timp încarcă</Tag>
-	<Tag name="InputObjectsMode">X - edit Objects</Tag>
+	<Tag name="distance">distanță</Tag>
 	<Tag name="TrackAvgSpeed">Viteza medie</Tag>
 	<Tag name="PreviewCam">Preview Camera</Tag>
 	<Tag name="TipModelMinScale">Model minimal scale.</Tag>
@@ -426,6 +430,7 @@
 	<Tag name="TipTerWind">Terrain brush window.</Tag>
 	<Tag name="InputMapThrottle">Throttle</Tag>
 	<Tag name="TBLap">Lap</Tag>
+	<Tag name="InputObjectsMode">X - edit Objects</Tag>
 	<Tag name="TipGrassVisDist">Visibility distance for grass pages.</Tag>
 	<Tag name="TipModelVisDist">Visibility distance for model pages.</Tag>
 	<Tag name="TerGenScale">Scale Height</Tag>
@@ -467,7 +472,7 @@
 	<Tag name="EnterSave">Enter - salvare</Tag>
 	<Tag name="InputMapLastChk">Go to last checkp.</Tag>
 	<Tag name="NetJoinLocked">Protected game</Tag>
-	<Tag name="Properties">Properties</Tag>
+	<Tag name="rating">rating</Tag>
 	<Tag name="TipBumpFreq">Frequency of additional bumps on surface (distance between them).</Tag>
 	<Tag name="InputRoadDel">Del - delete picked</Tag>
 	<Tag name="InputFluidsTileY">; &apos;  - change texture tiling, one coord. only</Tag>
@@ -501,7 +506,7 @@
 	<Tag name="GrassMult">Grass mul</Tag>
 	<Tag name="UnitMB">MB</Tag>
 	<Tag name="Back">Înapoi</Tag>
-	<Tag name="ShadowFilter">Filter</Tag>
+	<Tag name="TipDiffusePrev">Textură difuză a previzualizării.</Tag>
 	<Tag name="InputTerSmooth">S - Smooth  (flatten)</Tag>
 	<Tag name="TipModelDens">How often model will appear on track area.</Tag>
 	<Tag name="InpSet_Fast">Fast</Tag>
@@ -577,6 +582,7 @@
 	<Tag name="InputControllers">Controllers</Tag>
 	<Tag name="InputRoadModify">Modifică</Tag>
 	<Tag name="CarDebugText">Text depanare mașină </Tag>
+	<Tag name="ColBright">Luminozitate</Tag>
 	<Tag name="TipFogStartDist">Fog start distance [meters].</Tag>
 	<Tag name="SREditorVersion">Stunt Rally - Track Editor - version</Tag>
 	<Tag name="InputRoadAfterPick">after picked, center at mouse</Tag>
@@ -604,7 +610,7 @@
 	<Tag name="Reverse">Reverse</Tag>
 	<Tag name="scale">Scale</Tag>
 	<Tag name="UnitMph">mph</Tag>
-	<Tag name="ColBright">Luminozitate</Tag>
+	<Tag name="InputObjectsType">[,]  - change object type</Tag>
 	<Tag name="ColHue">Color - Hue</Tag>
 	<Tag name="fluids">fluids (water or mud)</Tag>
 	<Tag name="TipLoadTrkEditor">Încarcă traseul (după schimbare) sau reîncarcă traseul curent.</Tag>
@@ -672,6 +678,7 @@
 	<Tag name="TipDustInt">Intensitate particule praf.</Tag>
 	<Tag name="GrMaterial">Grass Material</Tag>
 	<Tag name="Startup">Startup</Tag>
+	<Tag name="Properties">Properties</Tag>
 	<Tag name="distribution">distribution</Tag>
 	<Tag name="Diff2">Easy</Tag>
 	<Tag name="Diff3">Medium</Tag>
@@ -715,20 +722,13 @@
 	<Tag name="TipLTrMaxTerAng">Terrain angle above which model won't appear.</Tag>
 	<Tag name="TipFogEndDist">Fog end distance [meters].</Tag>
 	<Tag name="Color">culoare</Tag>
+	<Tag name="CarScrap">Car Scrap</Tag>
 	<Tag name="GraphicsAll_VeryHigh">Very High</Tag>
 	<Tag name="TipTerLAngMax">Ending terrain angle for layer.</Tag>
 	<Tag name="Pitch">gudron</Tag>
 	<Tag name="InputNextOptTab">F2,F3 - prev,next Options tab (shift - sub tab)</Tag>
 	<Tag name="Diff6">Extreme</Tag>
 	<Tag name="RplAll">Toate</Tag>
-	<Tag name="Graphs">Graphs</Tag>
-	<Tag name="CarCrash">Car Crash</Tag>
-	<Tag name="Suspension">Suspension</Tag>
-	<Tag name="RoadWallFullCollis">Road wall full collision</Tag>
-	<Tag name="FluidSplash">Fluid Splash</Tag>
-	<Tag name="FluidCont">Fluid Cont.</Tag>
-	<Tag name="InputObjectsType">[,]  - change object type</Tag>
-	<Tag name="CarScrap">Car Scrap</Tag>
 	<Tag name="GameVersion">1.7</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 	<Tag name="LANG_EN">English</Tag>

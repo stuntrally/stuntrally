@@ -29,6 +29,7 @@
 	<Tag name="TipLTrFlDepth">Maximal depth in fluid allowed (set 0 to exclude from fluids).</Tag>
 	<Tag name="TipLTrMinTerH">Terrain height below which model won't appear.</Tag>
 	<Tag name="Sky">Ciel</Tag>
+	<Tag name="Graphs">Graphs</Tag>
 	<Tag name="TerNormal">Normal</Tag>
 	<Tag name="NeedNewGame">* need New Game</Tag>
 	<Tag name="InputRoadAngZero">shift-6  - zero angles</Tag>
@@ -84,7 +85,7 @@
 	<Tag name="GrDensSmooth">Smooth grass dens.</Tag>
 	<Tag name="TerHeightMap">Terrain Heightmap</Tag>
 	<Tag name="bumps">bumps (bumpy terrain)</Tag>
-	<Tag name="TipDiffusePrev">Diffuse texture preview image.</Tag>
+	<Tag name="ShadowFilter">Filtre</Tag>
 	<Tag name="TipGrTerMaxAngle">Terrain angle above which there won't be any grass.</Tag>
 	<Tag name="RestartApply">Restart game, to apply *changes.</Tag>
 	<Tag name="InputMapResetGame">Recommencer le jeu</Tag>
@@ -107,7 +108,7 @@
 	<Tag name="InpSet_KeyHalf">Key Half</Tag>
 	<Tag name="TerLHSm">Height smooth</Tag>
 	<Tag name="CopySource">Set as copy source</Tag>
-	<Tag name="rating">avis</Tag>
+	<Tag name="CarCrash">Car Crash</Tag>
 	<Tag name="LS_OBJS">Loading Objects</Tag>
 	<Tag name="TreeRoadDist">Trees to road dist.</Tag>
 	<Tag name="GraphicsAll_Medium">Moyen</Tag>
@@ -143,6 +144,7 @@
 	<Tag name="InputAssignKey">&lt;Appuyer sur une touche&gt;</Tag>
 	<Tag name="Wireframe">Wireframe</Tag>
 	<Tag name="Score">Score</Tag>
+	<Tag name="Suspension">Suspension</Tag>
 	<Tag name="TerrainSize">Taille du terrain</Tag>
 	<Tag name="NetServer">Serveur</Tag>
 	<Tag name="InputRoadWidth">- change road width</Tag>
@@ -153,6 +155,7 @@
 	<Tag name="UseSSAA">Use SSAA when effects are enabled</Tag>
 	<Tag name="ReflMode_single">Unique</Tag>
 	<Tag name="SetCamTo">Set camera to</Tag>
+	<Tag name="RoadWallFullCollis">Road wall full collision</Tag>
 	<Tag name="Always">Toujours</Tag>
 	<Tag name="softparticles">Soft Particles</Tag>
 	<Tag name="TipTerTriSize">Terrain triangle size in [meters] (recommended: 1 - 2, use more for big track area). Changed after Update (F8).</Tag>
@@ -160,6 +163,7 @@
 	<Tag name="MessageBox_No">Non</Tag>
 	<Tag name="Length">Length</Tag>
 	<Tag name="TipCarsList">Cars list, click to select (and see image). Press [Change car] and then [New Game] to drive with it.</Tag>
+	<Tag name="FluidSplash">Fluid Splash</Tag>
 	<Tag name="Model">Modèle</Tag>
 	<Tag name="InpSet_AxisHalf">Axis Half</Tag>
 	<Tag name="PipeLStepsMul">Pipe L steps mul.</Tag>
@@ -173,7 +177,7 @@
 	<Tag name="MessageBox_Continue">Continuer</Tag>
 	<Tag name="Player">Player</Tag>
 	<Tag name="InputRoadSel">Backspace - add to or remove from selection</Tag>
-	<Tag name="LTrMaxTerAng">max terrain Angle</Tag>
+	<Tag name="Weather">Temps</Tag>
 	<Tag name="RplAlpha">Transparent ghost</Tag>
 	<Tag name="InpSet_Medium">Medium</Tag>
 	<Tag name="TipTerrainHalf">Resize current terrain heightmap by half (use only for reducing file size).</Tag>
@@ -303,7 +307,7 @@
 	<Tag name="InputMinimapType">alt-F2,F3 - Prev,next minimap type</Tag>
 	<Tag name="TipGrassPatchLengthMin">Minimal grass patch length.</Tag>
 	<Tag name="Road">Route</Tag>
-	<Tag name="distance">distance</Tag>
+	<Tag name="FluidCont">Fluid Cont.</Tag>
 	<Tag name="TrackAutoLoad">Auto chargement du circuit</Tag>
 	<Tag name="DustSize">dust size</Tag>
 	<Tag name="InputUpdBlendmap">F9 - update terrain blendmap</Tag>
@@ -331,7 +335,7 @@
 	<Tag name="BumpWavelen">Bump:  WaveLen</Tag>
 	<Tag name="InputRoadPipeAngle">[,]   - pipe angle (no pipe when 0)</Tag>
 	<Tag name="Finished">Finished</Tag>
-	<Tag name="Weather">Temps</Tag>
+	<Tag name="LTrMaxTerAng">max terrain Angle</Tag>
 	<Tag name="InputMapRestartGame">Nouvelle partie</Tag>
 	<Tag name="Graphics">Graphiques</Tag>
 	<Tag name="ReflMode_static">Statique</Tag>
@@ -379,7 +383,7 @@
 	<Tag name="TexCoordMul">Tex Coord mul.</Tag>
 	<Tag name="Digits">Digits (gear, speed)</Tag>
 	<Tag name="ShowPictures">Show pictures while loading</Tag>
-	<Tag name="InputObjectsMode">X - edit Objects</Tag>
+	<Tag name="distance">distance</Tag>
 	<Tag name="TrackAvgSpeed">Vitesse moyenne</Tag>
 	<Tag name="PreviewCam">Preview Camera</Tag>
 	<Tag name="TipModelMinScale">Model minimal scale.</Tag>
@@ -426,6 +430,7 @@
 	<Tag name="TipTerWind">Terrain brush window.</Tag>
 	<Tag name="InputMapThrottle">Throttle</Tag>
 	<Tag name="TBLap">Lap</Tag>
+	<Tag name="InputObjectsMode">X - edit Objects</Tag>
 	<Tag name="TipGrassVisDist">Visibility distance for grass pages.</Tag>
 	<Tag name="TipModelVisDist">Visibility distance for model pages.</Tag>
 	<Tag name="TerGenScale">Scale Height</Tag>
@@ -467,7 +472,7 @@
 	<Tag name="EnterSave">Enter - save</Tag>
 	<Tag name="InputMapLastChk">Go to last checkp.</Tag>
 	<Tag name="NetJoinLocked">Protected game</Tag>
-	<Tag name="Properties">Properties</Tag>
+	<Tag name="rating">avis</Tag>
 	<Tag name="TipBumpFreq">Frequency of additional bumps on surface (distance between them).</Tag>
 	<Tag name="InputRoadDel">Del - delete picked</Tag>
 	<Tag name="InputFluidsTileY">; &apos;  - change texture tiling, one coord. only</Tag>
@@ -501,7 +506,7 @@
 	<Tag name="GrassMult">Grass mul</Tag>
 	<Tag name="UnitMB">MB</Tag>
 	<Tag name="Back">Back</Tag>
-	<Tag name="ShadowFilter">Filtre</Tag>
+	<Tag name="TipDiffusePrev">Diffuse texture preview image.</Tag>
 	<Tag name="InputTerSmooth">S - Smooth  (flatten)</Tag>
 	<Tag name="TipModelDens">How often model will appear on track area.</Tag>
 	<Tag name="InpSet_Fast">Fast</Tag>
@@ -577,6 +582,7 @@
 	<Tag name="InputControllers">Controllers</Tag>
 	<Tag name="InputRoadModify">Modify</Tag>
 	<Tag name="CarDebugText">Car debug text </Tag>
+	<Tag name="ColBright">Luminosité</Tag>
 	<Tag name="TipFogStartDist">Fog start distance [meters].</Tag>
 	<Tag name="SREditorVersion">Stunt Rally - Track Editor - version</Tag>
 	<Tag name="InputRoadAfterPick">after picked, center at mouse</Tag>
@@ -604,7 +610,7 @@
 	<Tag name="Reverse">Reverse</Tag>
 	<Tag name="scale">Scale</Tag>
 	<Tag name="UnitMph">mph</Tag>
-	<Tag name="ColBright">Luminosité</Tag>
+	<Tag name="InputObjectsType">[,]  - change object type</Tag>
 	<Tag name="ColHue">Color - Hue</Tag>
 	<Tag name="fluids">fluids (water or mud)</Tag>
 	<Tag name="TipLoadTrkEditor">Load track (after change) or Reload current track.</Tag>
@@ -672,6 +678,7 @@
 	<Tag name="TipDustInt">Dust particles intensity.</Tag>
 	<Tag name="GrMaterial">Grass Material</Tag>
 	<Tag name="Startup">Démarrage</Tag>
+	<Tag name="Properties">Properties</Tag>
 	<Tag name="distribution">distribution</Tag>
 	<Tag name="Diff2">Facile</Tag>
 	<Tag name="Diff3">Moyen</Tag>
@@ -715,20 +722,13 @@
 	<Tag name="TipLTrMaxTerAng">Terrain angle above which model won't appear.</Tag>
 	<Tag name="TipFogEndDist">Fog end distance [meters].</Tag>
 	<Tag name="Color">couleur</Tag>
+	<Tag name="CarScrap">Car Scrap</Tag>
 	<Tag name="GraphicsAll_VeryHigh">Très élevée</Tag>
 	<Tag name="TipTerLAngMax">Ending terrain angle for layer.</Tag>
 	<Tag name="Pitch">pitch</Tag>
 	<Tag name="InputNextOptTab">F2,F3 - prev,next Options tab (shift - sub tab)</Tag>
 	<Tag name="Diff6">Extrême</Tag>
 	<Tag name="RplAll">Tous</Tag>
-	<Tag name="Graphs">Graphs</Tag>
-	<Tag name="CarCrash">Car Crash</Tag>
-	<Tag name="Suspension">Suspension</Tag>
-	<Tag name="RoadWallFullCollis">Road wall full collision</Tag>
-	<Tag name="FluidSplash">Fluid Splash</Tag>
-	<Tag name="FluidCont">Fluid Cont.</Tag>
-	<Tag name="InputObjectsType">[,]  - change object type</Tag>
-	<Tag name="CarScrap">Car Scrap</Tag>
 	<Tag name="GameVersion">1.7</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 	<Tag name="LANG_EN">English</Tag>
