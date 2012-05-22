@@ -70,8 +70,8 @@ float4 EPF_MotionBlur_PS(
 	//	return float4(mask,mask,mask,1);
 	// Get the depth buffer value at this pixel
 	float zOverW = depth;
-
-	float4 H = float4(tc.xy - float2(0.5f, 0.5f),  zOverW, 1);  
+	float4 H = float4(-(tc.x * 2 - 1),-( (1 - tc.y) * 2 - 1),  zOverW, 1);  
+//	float4 H = float4(-(tc.x * 2 - 1),1+( (1 - tc.y) * 2 - 1),  zOverW, 1);  
 	//  return float4(tc.y,0,0,1);  
 	// Transform by the view-projection inverse
 	float4 D = mul(EPF_ViewProjectionInverseMatrix, H);  
@@ -89,8 +89,11 @@ float4 EPF_MotionBlur_PS(
 	previousPos /= previousPos.w;  
 	// Use this frame's position and last frame's to compute the pixel velocity  
 	float2 velocity = (currentPos - previousPos)/2.f; 
-	velocity*=intensity;
+	
+	velocity*=float2(-intensity,intensity);
 	velocity = clamp(velocity,float2(-.001,-.001),float2(.001,.001));
+
+	//return float4(velocity.y,velocity.y,velocity.y,1);
 	//   Then use the velocity vector at the current pixel to sample the color buffer multiple times to achieve the motion blur effect
 	//
 	// Get the initial color at this pixel 

@@ -719,6 +719,8 @@ public:
 	Ogre::Vector3 m_pPreviousPosition;
 	
 	Ogre::Matrix4 prevviewproj;
+	bool mRequiresTextureFlipping;
+	Ogre::CompositorInstance*  compositorinstance;
 	virtual void notifyMaterialSetup(Ogre::uint32 pass_id, Ogre::MaterialPtr &mat);
 	virtual void notifyMaterialRender(Ogre::uint32 pass_id, Ogre::MaterialPtr &mat);
 };
@@ -731,6 +733,9 @@ CameraBlurLogic::CameraBlurLogic(BaseApp* app)
 Ogre::CompositorInstance::Listener* CameraBlurLogic::createListener(Ogre::CompositorInstance*  instance)
 {
 	CameraBlurListener* listener = new CameraBlurListener(pApp);
+	Ogre::Viewport* vp = instance->getChain()->getViewport();
+listener->compositorinstance=instance;
+//	listener->mRequiresTextureFlipping  = instance->getTechnique()->getOutputTargetPass()->get("scene",0)->requiresTextureFlipping();
 	return listener;
 }
 
@@ -751,9 +756,14 @@ void CameraBlurListener::notifyMaterialRender(Ogre::uint32 pass_id, Ogre::Materi
 {
 	if (pass_id == 999) 
 	{
-
 		if(mApp->pGame->pause == false)
 		{
+			//acquire the texture flipping attribute in the first frame
+			if(compositorinstance)
+			{
+				mRequiresTextureFlipping  = compositorinstance->getRenderTarget("previousscene")->requiresTextureFlipping();
+				compositorinstance=NULL;
+			}
 			// this is the camera you're using
 			#ifndef ROAD_EDITOR
 			Ogre::Camera *cam = mApp->mSplitMgr->mCameras.front();
@@ -768,6 +778,15 @@ void CameraBlurListener::notifyMaterialRender(Ogre::uint32 pass_id, Ogre::Materi
 			float m_lastFPS =stats.lastFPS;
 	
 			Ogre::Matrix4 projectionMatrix   = cam->getProjectionMatrix();
+			if (mRequiresTextureFlipping)
+            {
+                // Because we're not using setProjectionMatrix, this needs to be done here
+                // Invert transformed y
+                projectionMatrix[1][0] = -projectionMatrix[1][0];
+                projectionMatrix[1][1] = -projectionMatrix[1][1];
+                projectionMatrix[1][2] = -projectionMatrix[1][2];
+                projectionMatrix[1][3] = -projectionMatrix[1][3];
+            }
 			Ogre::Matrix4 iVP = (projectionMatrix * cam->getViewMatrix()).inverse();
 
 			if (params->_findNamedConstantDefinition("EPF_ViewProjectionInverseMatrix"))
@@ -782,7 +801,7 @@ void CameraBlurListener::notifyMaterialRender(Ogre::uint32 pass_id, Ogre::Materi
 			Ogre::Vector3 current_position = cam->getDerivedPosition();
 			Ogre::Quaternion estimatedOrientation = Ogre::Quaternion::Slerp(interpolationFactor, current_orientation, (m_pPreviousOrientation));
 			Ogre::Vector3 estimatedPosition    = (1-interpolationFactor) * current_position + interpolationFactor * (m_pPreviousPosition);
-			Ogre::Matrix4 prev_viewMatrix = Ogre::Math::makeViewMatrix(estimatedPosition, estimatedOrientation);
+			Ogre::Matrix4 prev_viewMatrix = Ogre::Math::makeViewMatrix(estimatedPosition, estimatedOrientation);//.inverse().transpose();
 			// compute final matrix
 			prevviewproj = projectionMatrix * prev_viewMatrix;
 

@@ -197,7 +197,7 @@ SETTINGS::SETTINGS() :  ///  Defaults
 	//  video eff
 	all_effects(false), godrays(false), filmgrain(false),
 	bloom(false), bloomintensity(0.13), bloomorig(0.9), hdr(false),
-	motionblur(false), motionblurintensity(0.3),
+	motionblur(false), motionblurintensity(0.1),
 	depthOfFieldFocus(100), depthOfFieldFar(1000),
 	hdrParam1(.52), hdrParam2(.22), hdrParam3(0.0),hdrAdaptationScale(0.3),
 	vignettingRadius(.2), vignettingDarkness(.1),

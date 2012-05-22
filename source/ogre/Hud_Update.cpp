@@ -263,10 +263,10 @@ void App::UpdateHUD(int carId, float time)
 		}
 	}
 
-
+	//Commenting this code out for now as it is not needed for pixel motion blur
 	//   Set motion blur intensity for this viewport, depending on car's linear velocity
 	// -----------------------------------------------------------------------------------
-	if (pSet->motionblur)
+	/*if (pSet->motionblur)
 	{
 		// use velocity squared to achieve an exponential motion blur - and its faster too - wow :)
 		float speed = pCar->GetVelocity().MagnitudeSquared();
@@ -296,7 +296,7 @@ void App::UpdateHUD(int carId, float time)
 		
 		motionBlurIntensity = motionBlurAmount;
 	}
-
+	*/
 
 	///  gear, vel texts  -----------------------------
 	if (txVel[carId] && txGear[carId] && pCar)
