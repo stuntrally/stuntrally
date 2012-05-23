@@ -437,6 +437,9 @@ void App::LoadRoad()  // 6
 {
 	if (IsTerTrack())
 		CreateRoad();
+		
+	if (road && road->getNumPoints() == 0 && arrowRotNode)
+		arrowRotNode->setVisible(false);  // hide when no road
 }
 
 void App::LoadObjects()  // 7
