@@ -41,7 +41,7 @@ HighLevelGpuProgramPtr MaterialGenerator::createVertexProgram()
 
 	if(MRTSupported())
 	{
-		ret->setParameter("profiles", "vs_4_0 vs_3_0 vp40");
+		ret->setParameter("profiles", "vs_4_0 vs_3_0 vp40 arbvp1");
 	}
 	else
 	{

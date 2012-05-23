@@ -40,7 +40,7 @@ HighLevelGpuProgramPtr MaterialGenerator::createFragmentProgram()
 
 	if(MRTSupported())
 	{
-		ret->setParameter("profiles", "ps_4_0 ps_3_0 fp40");
+		ret->setParameter("profiles", "ps_4_0 ps_3_0 fp40 arbfp1");
 	}
 	else
 	{
