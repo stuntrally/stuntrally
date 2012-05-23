@@ -371,7 +371,7 @@ protected:
 
 	Ogre::String sListCar,sListTrack;  int bListTrackU;
 	Ogre::String pathTrk[2];  Ogre::String TrkDir();
-	Ogre::String PathListTrk(int user=-1);//, PathListTrkPrv(int user=-1);
+	Ogre::String PathListTrk(int user=-1), PathListTrkPrv(int user=-1);
 
 	MyGUI::StaticImagePtr imgCar;	MyGUI::StaticTextPtr valCar;
 	void comboBoost(CMB), comboFlip(CMB);

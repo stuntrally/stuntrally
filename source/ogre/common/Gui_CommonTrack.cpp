@@ -449,12 +449,44 @@ void App::UpdGuiRdStats(const SplineRoad* rd, const Scene& sc, const String& sTr
 {
 	int ch = champ ? 1 : 0;
 	
-	//  won't refresh if same-...  road disappears if not found...
-	if (imgPrv[ch])  imgPrv[ch]->setImageTexture(sTrack+".jpg");
-	if (imgTer[ch])  imgTer[ch]->setImageTexture(sTrack+"_ter.jpg");
-	if (imgMini[ch])  imgMini[ch]->setImageTexture(sTrack+"_mini.png");
+	//  preview images
+	//---------------------------------------------------------------------------
+	ResourceGroupManager& resMgr = ResourceGroupManager::getSingleton();
+	Ogre::TextureManager& texMgr = Ogre::TextureManager::getSingleton();
+
+	String path = PathListTrkPrv(-1), s, sGrp = "TrkPrv";
+	resMgr.addResourceLocation(path, "FileSystem", sGrp);  // add for this track
+	resMgr.initialiseResourceGroup(sGrp);
+
+	if (imgPrv[ch])  // track view, preview shot
+	{	try
+		{	s = "view.jpg";
+			texMgr.load(path+s, sGrp, TEX_TYPE_2D, MIP_UNLIMITED);  // need to load it first
+			imgPrv[ch]->setImageTexture(s);  // just for dim, doesnt set texture
+			imgPrv[ch]->_setTextureName(path+s);  imgPrv[ch]->setVisible(true);
+		} catch(...) {  imgPrv[ch]->setVisible(false);  }  // hide if not found
+	}
+	if (imgTer[ch])  // terrain background
+	{	try
+		{	s = "terrain.jpg";
+			texMgr.load(path+s, sGrp, TEX_TYPE_2D, MIP_UNLIMITED);
+			imgTer[ch]->setImageTexture(s);
+			imgTer[ch]->_setTextureName(path+s);  imgTer[ch]->setVisible(true);
+		} catch(...) {  imgTer[ch]->setVisible(false);  }
+	}
+	if (imgMini[ch])  // road alpha
+	{	try
+		{	s = "road.png";
+			texMgr.load(path+s, sGrp, TEX_TYPE_2D, MIP_UNLIMITED);
+			imgMini[ch]->setImageTexture(s);
+			imgMini[ch]->_setTextureName(path+s);  imgMini[ch]->setVisible(true);
+		} catch(...) {  imgMini[ch]->setVisible(false);  }
+	}
+	resMgr.removeResourceLocation(path, sGrp);
 
 
+	//  road stats
+	//---------------------------------------------------------------------------
 	if (stTrk[ch][1])  stTrk[ch][1]->setCaption(fToStr(sc.td.fTerWorldSize/1000.f,3,5)+" km");
 	if (!rd)  return;
 	if (stTrk[ch][0])  stTrk[ch][0]->setCaption(fToStr(rd->st.Length/1000.f,3,5)+" km");

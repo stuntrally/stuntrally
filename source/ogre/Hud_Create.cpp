@@ -137,6 +137,19 @@ void App::CreateHUD(bool destroy)
 	LogO("-- Create Hud  plrs="+toStr(plr));
 	asp = 1.f;
 
+	///  reload mini textures
+	ResourceGroupManager& resMgr = ResourceGroupManager::getSingleton();
+	Ogre::TextureManager& texMgr = Ogre::TextureManager::getSingleton();
+
+	String path = PathListTrkPrv(pSet->game.track_user), sGrp = "TrkMini";
+	resMgr.addResourceLocation(path, "FileSystem", sGrp);  // add for this track
+	resMgr.initialiseResourceGroup(sGrp);
+
+	const String sRoad = "road.png", sTer = "terrain.jpg";
+	texMgr.unload(sRoad);  texMgr.load(sRoad, sGrp, TEX_TYPE_2D, MIP_UNLIMITED);
+	texMgr.unload(sTer);   texMgr.load(sTer,  sGrp, TEX_TYPE_2D, MIP_UNLIMITED);
+
+
 	//if (terrain)
 	for (int c=0; c < plr; ++c)  // for each car
 	{
@@ -158,9 +171,9 @@ void App::CreateHUD(bool destroy)
 		MaterialPtr mm = MaterialManager::getSingleton().getByName(sMat);
 		Pass* pass = mm->getTechnique(0)->getPass(0);
 		TextureUnitState* tus = pass->getTextureUnitState(0);
-		if (tus)  tus->setTextureName(pSet->game.track + "_mini.png");
+		if (tus)  tus->setTextureName(sRoad);
 		tus = pass->getTextureUnitState(2);
-		if (tus && sc.ter)  tus->setTextureName(pSet->game.track + "_ter.jpg");
+		if (tus && sc.ter)  tus->setTextureName(sTer);
 		UpdMiniTer();
 		
 
@@ -228,6 +241,8 @@ void App::CreateHUD(bool destroy)
 		txBFuel[c]->setFontName("DigGear");  txBFuel[c]->setFontHeight(64);
 		txBFuel[c]->setTextColour(Colour(0.6,0.8,1.0));
 	}
+	///  tex
+	resMgr.removeResourceLocation(path, sGrp);
 
 
 	//  overlays

@@ -221,7 +221,7 @@ String App::PathListTrk(int user) {
 	int u = user == -1 ? bListTrackU : user;	return pathTrk[u] + sListTrack;  }
 	
 String App::PathListTrkPrv(int user){
-	int u = user == -1 ? bListTrackU : user;	return pathTrkPrv[u] + sListTrack;  }
+	int u = user == -1 ? bListTrackU : user;	return pathTrk[u] + sListTrack + "/preview/";  }
 	
 String App::PathCopyTrk(int user){
 	int u = user == -1 ? bCopyTrackU : user;	return pathTrk[u] + sCopyTrack;  }

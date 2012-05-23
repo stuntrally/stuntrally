@@ -132,7 +132,7 @@ void App::togPrvCam()
 //  key util
 void App::trkListNext(int rel)
 {
-	bool b = bGuiFocus && (mWndTabsEdit->getIndexSelected() == 0)
+	bool b = bGuiFocus && (mWndTabsEdit->getIndexSelected() == 1)
 		&& !pSet->isMain && pSet->inMenu == WND_Edit;
 	if (!b)  return;
 	
@@ -342,7 +342,7 @@ bool App::KeyPress(const CmdKey &arg)
    			
    		case KC_RETURN:  // load track
 			if (bGuiFocus)
-			if (mWndTabsEdit->getIndexSelected() == 0 && !pSet->isMain && pSet->inMenu == WND_Edit)
+			if (mWndTabsEdit->getIndexSelected() == 1 && !pSet->isMain && pSet->inMenu == WND_Edit)
 				btnNewGame(0);
    			break;
 	}
