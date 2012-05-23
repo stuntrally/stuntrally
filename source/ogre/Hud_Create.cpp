@@ -146,9 +146,10 @@ void App::CreateHUD(bool destroy)
 	resMgr.initialiseResourceGroup(sGrp);
 
 	const String sRoad = "road.png", sTer = "terrain.jpg";
-	texMgr.unload(sRoad);  texMgr.load(sRoad, sGrp, TEX_TYPE_2D, MIP_UNLIMITED);
-	texMgr.unload(sTer);   texMgr.load(sTer,  sGrp, TEX_TYPE_2D, MIP_UNLIMITED);
-
+	if (sc.ter)
+	{	try {  texMgr.unload(sRoad);  texMgr.load(sRoad, sGrp, TEX_TYPE_2D, MIP_UNLIMITED);  }  catch(...) {  }
+		try {  texMgr.unload(sTer);   texMgr.load(sTer,  sGrp, TEX_TYPE_2D, MIP_UNLIMITED);  }  catch(...) {  }
+	}
 
 	//if (terrain)
 	for (int c=0; c < plr; ++c)  // for each car
@@ -171,9 +172,9 @@ void App::CreateHUD(bool destroy)
 		MaterialPtr mm = MaterialManager::getSingleton().getByName(sMat);
 		Pass* pass = mm->getTechnique(0)->getPass(0);
 		TextureUnitState* tus = pass->getTextureUnitState(0);
-		if (tus)  tus->setTextureName(sRoad);
+		if (tus)  tus->setTextureName(sc.ter ? sRoad : "alpha.png");
 		tus = pass->getTextureUnitState(2);
-		if (tus && sc.ter)  tus->setTextureName(sTer);
+		if (tus)  tus->setTextureName(sc.ter ? sTer : "alpha.png");
 		UpdMiniTer();
 		
 

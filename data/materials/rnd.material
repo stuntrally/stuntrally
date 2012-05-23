@@ -108,7 +108,7 @@ material circle_minimap
 			texture_unit roadMap  // road
 			{
 				tex_address_mode clamp
-				texture grassDensity.png
+				texture alpha.png
 			}
 			texture_unit circleMap
 			{
@@ -118,7 +118,7 @@ material circle_minimap
 			texture_unit terMap
 			{
 				tex_address_mode mirror
-				texture grassDensity.png
+				texture alpha.png
 			}
 		}
 	}
