@@ -218,7 +218,7 @@ float4 finalToneMapping(
 
 	// Get bloom colour
 	float4 bloom = tex2D(inBloom, uv);
-	float3 bloomAdjusted = bloom.rgb * (1/bloomSettings.y);
+	float3 bloomAdjusted = bloom.rgb * bloomSettings.y;
 	// Add scene & bloom
 	float4 finalColor = float4(toneMappedSceneCol.rgb + clamp(bloomAdjusted,float3(0,0,0),float3(1,1,1)), 1.0f);
 
