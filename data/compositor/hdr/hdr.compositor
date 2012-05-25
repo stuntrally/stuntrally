@@ -179,7 +179,7 @@ compositor HDRNoMRT
 		
         // Temporary textures
 		// Fullsize HDR render target, used as tone mapping source
-        texture rt_full target_width target_height PF_FLOAT16_RGB pooled
+        texture rt_full target_width target_height PF_FLOAT16_RGB
 		// Targets used for luminance evaluation (3x3 downsample, point filtering)
 		texture rt_lum0 1 1 PF_FLOAT16_R no_fsaa
 		texture rt_lum1 4 4 PF_FLOAT16_R no_fsaa
@@ -200,6 +200,10 @@ compositor HDRNoMRT
 
 		target rt_full
 		{
+			pass clear
+            {
+
+			}
 			pass render_scene
             {
 
