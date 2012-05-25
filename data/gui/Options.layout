@@ -1634,12 +1634,7 @@
 							<Property key="Caption" value="#{godrays}"/>
 							<Property key="TextColour" value="0.6 1 0.3"/>
 							<UserString key="RelativeTo" value="OptionsWnd"/>
-						</Widget>
-						<Widget type="Button" skin="CheckBox" position="28 304 152 24" name="filmgrain">
-							<Property key="Caption" value="#{filmgrain}"/>
-							<Property key="TextColour" value="0.6 1 0.3"/>
-							<UserString key="RelativeTo" value="OptionsWnd"/>
-						</Widget>
+						</Widget>				
            
 					</Widget>
         </Widget>

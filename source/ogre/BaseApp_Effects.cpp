@@ -167,7 +167,7 @@ void BaseApp::refreshCompositor(bool disableAll)
 		cmp.setCompositorEnabled((*it), "Motion Blur", pSet->motionblur);
 		cmp.setCompositorEnabled((*it), "CamBlur", pSet->camblur);
 		cmp.setCompositorEnabled((*it), "SSAA", pSet->ssaa);
-		cmp.setCompositorEnabled((*it), "FilmGrain", pSet->filmgrain);
+		cmp.setCompositorEnabled((*it), "FilmGrain", pSet->hdr);
 
 		if(MaterialGenerator::MRTSupported())
 		{

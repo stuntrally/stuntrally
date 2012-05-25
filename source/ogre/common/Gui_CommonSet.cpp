@@ -158,8 +158,7 @@ void App::comboGraphicsAll(ComboBoxPtr cmb, size_t val)
 	Chk("ssao", chkVidSSAO, pSet->ssao);
 	Chk("DepthOfField", chkVidDepthOfField, pSet->dof);
 	Chk("godrays", chkVidGodRays, pSet->godrays);
-	Chk("godrays", chkVidGodRays, pSet->filmgrain);
-
+	
 	Chk("RplChkAutoRec", chkRplAutoRec, pSet->rpl_rec);
 	Chk("RplChkGhost", chkRplChkGhost, pSet->rpl_ghost);
 	Chk("RplChkAlpha", chkRplChkAlpha, pSet->rpl_alpha);
