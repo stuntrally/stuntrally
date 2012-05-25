@@ -530,7 +530,7 @@ bool MaterialGenerator::MRTSupported()
 		const RenderSystemCapabilities *caps = Root::getSingleton().getRenderSystem()->getCapabilities();
 		if(caps->isShaderProfileSupported("ps_3_0") 
 		//	|| caps->isShaderProfileSupported("ps_4_0")
-			|| caps->isShaderProfileSupported("fp40")
+			|| caps->isShaderProfileSupported("arbfp1")
 			)
 		{
 			bUseMRT=true;

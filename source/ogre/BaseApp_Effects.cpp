@@ -7,6 +7,7 @@
 
 #include "Compositor.h"
 #include "SplitScreen.h"
+//#include "HDRCompositor.h"
 
 #include <OgreRTShaderSystem.h>
 #include "common/MaterialGen/MaterialGenerator.h"
@@ -78,12 +79,12 @@ void BaseApp::createViewports()
 bool BaseApp::AnyEffectEnabled()
 {
 	//any new effect need to be added here to have UI Rendered on it
-	return pSet->all_effects && (pSet->softparticles || pSet->bloom || pSet->hdr || pSet->motionblur || pSet->ssaa || pSet->ssao || pSet->godrays || pSet->dof || pSet->filmgrain);
+	return pSet->all_effects && (pSet->softparticles || pSet->bloom || pSet->hdr || pSet->motionblur || pSet->camblur ||pSet->ssaa || pSet->ssao || pSet->godrays || pSet->dof || pSet->filmgrain);
 }
 
 bool BaseApp::NeedMRTBuffer()
 {
-	return pSet->all_effects && (pSet->ssao || pSet->softparticles || pSet->dof || pSet->godrays);
+	return pSet->all_effects && (pSet->ssao || pSet->softparticles || pSet->dof || pSet->godrays || pSet->hdr || pSet->camblur);
 }
 
 
@@ -110,6 +111,7 @@ void BaseApp::refreshCompositor(bool disableAll)
 			cmp.setCompositorEnabled((*it), "DepthOfField", false);
 			cmp.setCompositorEnabled((*it), "GodRays", false);
 			cmp.setCompositorEnabled((*it), "gbufferFinalizer", false);
+			cmp.setCompositorEnabled((*it), "CamBlur", false);
 		}else{
 			cmp.setCompositorEnabled((*it), "ssaoNoMRT", false);
 		}
@@ -163,8 +165,9 @@ void BaseApp::refreshCompositor(bool disableAll)
 		cmp.setCompositorEnabled((*it), "Bloom", pSet->bloom);
 		cmp.setCompositorEnabled((*it), "HDR", pSet->hdr);
 		cmp.setCompositorEnabled((*it), "Motion Blur", pSet->motionblur);
+		cmp.setCompositorEnabled((*it), "CamBlur", pSet->camblur);
 		cmp.setCompositorEnabled((*it), "SSAA", pSet->ssaa);
-		cmp.setCompositorEnabled((*it), "FilmGrain", pSet->filmgrain);
+		cmp.setCompositorEnabled((*it), "FilmGrain", pSet->hdr);
 
 		if(MaterialGenerator::MRTSupported())
 		{
@@ -200,6 +203,7 @@ void BaseApp::recreateCompositor()
 		mRoot->addResourceLocation(sPath + "/bloom", "FileSystem", "Effects");
 		mRoot->addResourceLocation(sPath + "/hdr", "FileSystem", "Effects");
 		mRoot->addResourceLocation(sPath + "/motionblur", "FileSystem", "Effects");
+		mRoot->addResourceLocation(sPath + "/camblur", "FileSystem", "Effects");
 		mRoot->addResourceLocation(sPath + "/ssaa", "FileSystem", "Effects");
 		mRoot->addResourceLocation(sPath + "/ssao", "FileSystem", "Effects");
 		mRoot->addResourceLocation(sPath + "/softparticles", "FileSystem", "Effects");
@@ -216,6 +220,22 @@ void BaseApp::recreateCompositor()
 	{
 		mHDRLogic = new HDRLogic;
 		cmp.registerCompositorLogic("HDR", mHDRLogic);
+	/*	mHDRLogic->compositor = new HDRCompositor(this);
+		mHDRLogic->compositor->SetToneMapper(HDRCompositor::TONEMAPPER::TM_ADAPTLOG);
+		mHDRLogic->compositor->SetGlareType(HDRCompositor::GLARETYPE::GT_BLUR);
+		mHDRLogic->compositor->SetStarType(HDRCompositor::STARTYPE::ST_PLUS);
+		mHDRLogic->compositor->SetAutoKeying(false);
+		mHDRLogic->compositor->SetKey(0.5);
+		mHDRLogic->compositor->SetLumAdapdation(true);
+		mHDRLogic->compositor->SetAdaptationScale(3);
+		mHDRLogic->compositor->SetStarPasses(4);
+		mHDRLogic->compositor->SetGlarePasses(2);
+		mHDRLogic->compositor->SetGlareStrength(0.1f);
+		mHDRLogic->compositor->SetStarStrength(0.1f);
+		mHDRLogic->compositor->Create();
+	*/
+		mHDRLogic->setApp(this);	
+	
 	}
 	
 	if (!mSSAOLogic) 
@@ -344,6 +364,11 @@ void BaseApp::recreateCompositor()
 		mMotionBlurLogic = new MotionBlurLogic(this);
 		cmp.registerCompositorLogic("Motion Blur", mMotionBlurLogic);
 	}
+	if (!mCameraBlurLogic)
+	{
+		mCameraBlurLogic = new CameraBlurLogic(this);
+		cmp.registerCompositorLogic("CamBlur", mCameraBlurLogic);
+	}
 
 
 	for (std::list<Viewport*>::iterator it=mSplitMgr->mViewports.begin(); it!=mSplitMgr->mViewports.end(); ++it)
@@ -356,13 +381,13 @@ void BaseApp::recreateCompositor()
 			cmp.addCompositor((*it), "gbuffer");
 		}
 		cmp.addCompositor((*it), "gbufferNoMRT");
-		cmp.addCompositor((*it), "HDR");
 		if (MaterialGenerator::MRTSupported())
 		{
 			cmp.addCompositor((*it), "ssao");
 			cmp.addCompositor((*it), "SoftParticles");
 			cmp.addCompositor((*it), "DepthOfField");
 			cmp.addCompositor((*it), "gbufferFinalizer");
+			cmp.addCompositor((*it), "HDR");
 		}
 		else
 		{
@@ -371,6 +396,7 @@ void BaseApp::recreateCompositor()
 		cmp.addCompositor((*it), "GodRays");
 		cmp.addCompositor((*it), "Bloom");
 		cmp.addCompositor((*it), "Motion Blur");
+		cmp.addCompositor((*it), "CamBlur");
 		cmp.addCompositor((*it), "SSAA");
 		cmp.addCompositor((*it), "FilmGrain");
 		cmp.addCompositor((*it), UI_RENDER);

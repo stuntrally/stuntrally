@@ -233,8 +233,15 @@ void App::InitGui()
 	//  effects
 	Chk("AllEffects", chkVidEffects, pSet->all_effects);
 	Chk("Bloom", chkVidBloom, pSet->bloom);
-	//Chk("HDR", chkVidHDR, pSet->hdr);
-	Chk("MotionBlur", chkVidBlur, pSet->motionblur);
+	Chk("HDR", chkVidHDR, pSet->hdr);
+	Slv(HDRParam1, pSet->hdrParam1);
+	Slv(HDRParam2, pSet->hdrParam2);
+	Slv(HDRParam3, pSet->hdrParam3);
+	Slv(HDRAdaptationScale, pSet->hdrAdaptationScale);
+	Slv(HDRVignettingRadius, pSet->vignettingRadius/10);
+	Slv(HDRVignettingDarkness, pSet->vignettingDarkness);
+	
+	Chk("MotionBlur", chkVidBlur, pSet->camblur);
 	Chk("ssao", chkVidSSAO, pSet->ssao);
 	Chk("softparticles", chkVidSoftParticles, pSet->softparticles);
 	if (!MaterialGenerator::MRTSupported())
@@ -245,7 +252,6 @@ void App::InitGui()
 	Chk("godrays", chkVidGodRays, pSet->godrays);
 	if (!MaterialGenerator::MRTSupported())
 		mGUI->findWidget<Button>("godrays")->setEnabled(false);
-	Chk("filmgrain", chkVidFilmGrain, pSet->filmgrain);
 	
 	Slv(BloomInt,	pSet->bloomintensity);
 	Slv(BloomOrig,	pSet->bloomorig);

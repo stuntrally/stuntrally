@@ -26,7 +26,7 @@ void FilmGrain_FP(
 {	
 
 	float2 pixelSize = grainparams.xy;
-	float noiseIntensity = .5;//grainparams.z;
+	float noiseIntensity = grainparams.w;//grainparams.z;
 	float exposure = 1;//grainparams.w;
 	float3 framecolor= tex2D (frame,uv).rgb;
 	float2 coord = uv * 2.0;

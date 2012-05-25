@@ -309,6 +309,9 @@ protected:
 	SLV(CarClrH);  SLV(CarClrS);  SLV(CarClrV);  // car clr
 	SLV(BloomInt);  SLV(BloomOrig);  SLV(BlurIntens);  // video
 	SLV(DepthOfFieldFocus);  SLV(DepthOfFieldFar);  // dof
+	SLV(HDRParam1);SLV(HDRParam2);SLV(HDRParam3); //hdr
+	SLV(HDRVignettingRadius);SLV(HDRVignettingDarkness); //vignetting
+	SLV(HDRAdaptationScale);
 	SLV(NumLaps);  SLV(RplNumViewports);  // setup
 	
 	//  checks
@@ -324,7 +327,7 @@ protected:
 		chkBltLines(WP), chkLoadPics(WP), chkMultiThread(WP),  // startup
 		chkVidEffects(WP), chkVidBloom(WP), chkVidHDR(WP), chkVidBlur(WP), UpdBloomVals(), chkVidSSAO(WP), // effects
 		chkVidSoftParticles(WP), chkVidGodRays(WP), chkWaterReflect(WP), chkWaterRefract(WP),
-		chkVidDepthOfField(WP), chkVidFilmGrain(WP),
+		chkVidDepthOfField(WP), 
 		chkVegetCollis(WP), chkCarCollis(WP), chkRoadWCollis(WP);  //game
 	void chkUseImposters(WP wp);
 

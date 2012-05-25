@@ -495,7 +495,7 @@ void App::LoadMisc()  // 9 last
 	if (overlay = mgr.getByName("DebugOverlay"))
 		mgr.destroy(overlay);
 	overlay = mgr.create("DebugOverlay");
-	Ogre::CompositorInstance  *compositor= CompositorManager::getSingleton().getCompositorChain(mSplitMgr->mViewports.front())->getCompositor("gbuffer");
+	Ogre::CompositorInstance  *compositor= CompositorManager::getSingleton().getCompositorChain(mSplitMgr->mViewports.front())->getCompositor("HDR");
 	for (int i=0; i<3; ++i)
 	{
 		// Set up a debug panel
@@ -505,7 +505,8 @@ void App::LoadMisc()  // 9 last
 			"Ogre/DebugTexture" + toStr(i), 
 			ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME);
 		debugMat->getTechnique(0)->getPass(0)->setLightingEnabled(false);
-		TexturePtr depthTexture = compositor->getTextureInstance("mrt_output",i);
+		//TexturePtr depthTexture = compositor->getTextureInstance("mrt_output",i);
+		TexturePtr depthTexture = compositor->getTextureInstance("rt_bloom0",0);
 		if(!depthTexture.isNull())
 		{
 			TextureUnitState *t = debugMat->getTechnique(0)->getPass(0)->createTextureUnitState(depthTexture->getName());

@@ -119,13 +119,19 @@ void SETTINGS::Serialize(bool w, CONFIGFILE & c)
 	//  video
 	Param(c,w, "video_eff.all_effects", all_effects);
 	Param(c,w, "video_eff.bloom", bloom);				Param(c,w, "video_eff.bloomintensity", bloomintensity);
-	Param(c,w, "video_eff.bloomorig", bloomorig);		Param(c,w, "video_eff.hdr", hdr);
-	Param(c,w, "video_eff.motionblur", motionblur);		Param(c,w, "video_eff.motionblurintensity", motionblurintensity);
+	Param(c,w, "video_eff.bloomorig", bloomorig);		
+	Param(c,w, "video_eff.hdr", hdr);
+	Param(c,w, "video_eff.hdr_p1", hdrParam1);
+	Param(c,w, "video_eff.hdr_p2", hdrParam2);
+	Param(c,w, "video_eff.hdr_p3", hdrParam3);
+	Param(c,w, "video_eff.hdrAdaptationScale", hdrAdaptationScale);
+	Param(c,w, "video_eff.hdr_vignettingRadius", vignettingRadius);
+	Param(c,w, "video_eff.hdr_vignettingDarkness", vignettingDarkness);
+	Param(c,w, "video_eff.motionblur", camblur);		Param(c,w, "video_eff.motionblurintensity", motionblurintensity);
 	Param(c,w, "video_eff.ssao", ssao);					Param(c,w, "video_eff.softparticles", softparticles);
 	Param(c,w, "video_eff.godrays", godrays);
 	Param(c,w, "video_eff.dof", dof);
 	Param(c,w, "video_eff.dof_focus", depthOfFieldFocus);	Param(c,w, "video_eff.dof_far", depthOfFieldFar);
-	Param(c,w, "video_eff.filmgrain", filmgrain);
 	
 	Param(c,w, "video.windowx", windowx);			Param(c,w, "video.windowy", windowy);
 	Param(c,w, "video.fullscreen", fullscreen);		Param(c,w, "video.vsync", vsync);
@@ -190,8 +196,10 @@ SETTINGS::SETTINGS() :  ///  Defaults
 	//  video eff
 	all_effects(false), godrays(false), filmgrain(false),
 	bloom(false), bloomintensity(0.13), bloomorig(0.9), hdr(false),
-	motionblur(false), motionblurintensity(0.3),
+	motionblur(false), motionblurintensity(0.1),
 	depthOfFieldFocus(100), depthOfFieldFar(1000),
+	hdrParam1(.34), hdrParam2(.22), hdrParam3(0.79),hdrAdaptationScale(0.3),
+	vignettingRadius(.2), vignettingDarkness(.1),
 	ssao(false), softparticles(false),
 	//  not in gui
 	boostFromExhaust(0), net_local_plr(-1),
