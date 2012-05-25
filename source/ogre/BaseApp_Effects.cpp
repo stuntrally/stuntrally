@@ -84,7 +84,7 @@ bool BaseApp::AnyEffectEnabled()
 
 bool BaseApp::NeedMRTBuffer()
 {
-	return pSet->all_effects && (pSet->ssao || pSet->softparticles || pSet->dof || pSet->godrays || pSet->hdr || pSet->camblur);
+	return pSet->all_effects && (pSet->ssao || pSet->softparticles || pSet->dof || pSet->godrays || pSet->camblur);
 }
 
 
@@ -113,6 +113,7 @@ void BaseApp::refreshCompositor(bool disableAll)
 			cmp.setCompositorEnabled((*it), "gbufferFinalizer", false);
 			cmp.setCompositorEnabled((*it), "CamBlur", false);
 		}else{
+			cmp.setCompositorEnabled((*it), "HDRNoMRT", false);
 			cmp.setCompositorEnabled((*it), "ssaoNoMRT", false);
 		}
 		cmp.setCompositorEnabled((*it), "Motion Blur", false);
@@ -177,6 +178,7 @@ void BaseApp::refreshCompositor(bool disableAll)
 			cmp.setCompositorEnabled((*it), "GodRays", pSet->godrays);
 			cmp.setCompositorEnabled((*it), "gbufferFinalizer", NeedMRTBuffer() && !pSet->softparticles);
 		}else{
+			cmp.setCompositorEnabled((*it), "HDRNoMRT", pSet->hdr);
 			cmp.setCompositorEnabled((*it), "ssaoNoMRT", pSet->ssao);
 		}
 
@@ -391,6 +393,7 @@ void BaseApp::recreateCompositor()
 		}
 		else
 		{
+			cmp.addCompositor((*it), "HDRNoMRT");
 			cmp.addCompositor((*it), "ssaoNoMRT");
 		}
 		cmp.addCompositor((*it), "GodRays");

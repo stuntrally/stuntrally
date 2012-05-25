@@ -169,3 +169,178 @@ compositor HDR
 	}
 
 }
+
+compositor HDRNoMRT
+{
+	// floating point only for now
+	technique
+	{
+		compositor_logic HDR
+		
+        // Temporary textures
+		// Fullsize HDR render target, used as tone mapping source
+        texture rt_full target_width target_height PF_FLOAT16_RGB pooled
+		// Targets used for luminance evaluation (3x3 downsample, point filtering)
+		texture rt_lum0 1 1 PF_FLOAT16_R no_fsaa
+		texture rt_lum1 4 4 PF_FLOAT16_R no_fsaa
+		texture rt_lum2 16 16 PF_FLOAT16_R no_fsaa
+		texture rt_lum3 64 64 PF_FLOAT16_R no_fsaa
+		texture rt_lum4 128 128 PF_FLOAT16_R no_fsaa
+		texture rt_prevlum 1 1 PF_FLOAT16_R no_fsaa
+		texture rt_Finallum 1 1 PF_FLOAT16_R no_fsaa
+		
+		// Bright-pass filtered target (tone mapped)
+		texture rt_brightpass target_width_scaled 0.5 target_height_scaled 0.5 PF_R8G8B8 no_fsaa
+		// Bloom filter targets
+	//	texture rt_bloom0 target_width_scaled 0.5 target_height_scaled 0.5 PF_R8G8B8 no_fsaa
+	//	texture rt_bloom1 target_width_scaled 0.5 target_height_scaled 0.5 PF_R8G8B8 no_fsaa
+		texture rt_bloom0 512 512 PF_R8G8B8 no_fsaa
+		texture rt_bloom1 512 512 PF_R8G8B8 no_fsaa
+		
+
+		target rt_full
+		{
+			pass render_scene
+            {
+
+			}
+		}
+
+		// Downsample the original HDR scene to extract luminence value
+		target rt_lum4
+		{
+            input none
+            pass render_quad
+            {
+                // Downsample using a 2x2 filter and convert to greyscale
+                material Ogre/Compositor/HDR/Downsample2x2Luminence
+                input 0 rt_full
+                identifier 994
+            }
+		}
+
+		target rt_lum3
+		{
+            input none
+            pass render_quad
+            {
+				// Downsample using a 3x3 filter
+                material Ogre/Compositor/HDR/Downsample3x3
+                input 0 rt_lum4
+                identifier 993
+            }
+		}
+		target rt_lum2
+		{
+            input none
+            pass render_quad
+            {
+                // Downsample using a 3x3 filter
+                material Ogre/Compositor/HDR/Downsample3x3
+                input 0 rt_lum3
+                identifier 992
+            }
+		}
+		target rt_lum1
+		{
+            input none
+            pass render_quad
+            {
+                // Downsample using a 3x3 filter
+                material Ogre/Compositor/HDR/Downsample3x3
+                input 0 rt_lum2
+                identifier 991
+            }
+		}
+		target rt_lum0
+		{
+            input none
+            pass render_quad
+            {
+                // Downsample using a 3x3 filter
+                material Ogre/Compositor/HDR/Downsample3x3
+                input 0 rt_lum1
+                identifier 990
+            }
+		}
+
+		//luminance adaptation
+		target rt_prevlum
+		{
+            input none
+            pass render_quad
+            {
+                material  Ogre/Compositor/HDR/CopySample
+                input 0 rt_Finallum
+                identifier 989
+            }
+		}
+		target rt_Finallum
+		{
+            input none
+            pass render_quad
+            {
+                material  Ogre/Compositor/HDR/AdaptLuminance
+                input 0 rt_prevlum
+                input 1 rt_lum0
+                identifier 989
+            }
+		}
+
+		target rt_brightpass
+		{
+            input none
+            pass render_quad
+            {
+                // Downsample using a 3x3 filter, hi-pass and tone map
+                material Ogre/Compositor/HDR/Downsample3x3Brightpass
+                input 0 rt_full
+		        input 1 rt_Finallum
+				identifier 800
+            }
+		}
+
+		target rt_bloom1
+		{
+			input none
+			pass render_quad
+			{
+				// Blur horizontally
+				material Ogre/Compositor/HDR/GaussianBloom
+				input 0 rt_brightpass
+				identifier 701
+			}
+		}
+		target rt_bloom0
+		{
+			input none
+			pass render_quad
+			{
+				// Blur horizontally
+				material Ogre/Compositor/HDR/GaussianBloom
+				input 0 rt_bloom1
+				identifier 700
+			}
+		}
+
+
+		// Final output combines tone mapping of the original scene, with an
+		// exposure setting passed in as a GPU parameter, and an additive bloom
+		// effect
+		target_output
+		{
+			input none
+			pass render_quad
+			{
+				identifier 600
+				material Ogre/Compositor/HDR/ToneMapping
+				input 0 rt_full
+				input 1 rt_bloom0
+				input 2 rt_Finallum
+			}
+		}
+
+
+	}
+
+}
