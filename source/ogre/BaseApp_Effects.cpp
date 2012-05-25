@@ -103,7 +103,8 @@ void BaseApp::refreshCompositor(bool disableAll)
 		cmp.setCompositorEnabled((*it), "gbufferNoMRT", false);
 		cmp.setCompositorEnabled((*it), "Bloom", false);
 		cmp.setCompositorEnabled((*it), "HDR", false);
-
+		cmp.setCompositorEnabled((*it), "HDRNoMRT", false);
+			
 		if(MaterialGenerator::MRTSupported())
 		{
 			cmp.setCompositorEnabled((*it), "ssao", false);
@@ -113,7 +114,6 @@ void BaseApp::refreshCompositor(bool disableAll)
 			cmp.setCompositorEnabled((*it), "gbufferFinalizer", false);
 			cmp.setCompositorEnabled((*it), "CamBlur", false);
 		}else{
-			cmp.setCompositorEnabled((*it), "HDRNoMRT", false);
 			cmp.setCompositorEnabled((*it), "ssaoNoMRT", false);
 		}
 		cmp.setCompositorEnabled((*it), "Motion Blur", false);
@@ -164,7 +164,8 @@ void BaseApp::refreshCompositor(bool disableAll)
 		cmp.setCompositorEnabled((*it), "gbufferNoMRT",!NeedMRTBuffer() && AnyEffectEnabled());
 
 		cmp.setCompositorEnabled((*it), "Bloom", pSet->bloom);
-		cmp.setCompositorEnabled((*it), "HDR", pSet->hdr);
+		cmp.setCompositorEnabled((*it), "HDR", pSet->hdr && NeedMRTBuffer());
+		cmp.setCompositorEnabled((*it), "HDRNoMRT", pSet->hdr && !NeedMRTBuffer());
 		cmp.setCompositorEnabled((*it), "Motion Blur", pSet->motionblur);
 		cmp.setCompositorEnabled((*it), "CamBlur", pSet->camblur);
 		cmp.setCompositorEnabled((*it), "SSAA", pSet->ssaa);
@@ -178,7 +179,6 @@ void BaseApp::refreshCompositor(bool disableAll)
 			cmp.setCompositorEnabled((*it), "GodRays", pSet->godrays);
 			cmp.setCompositorEnabled((*it), "gbufferFinalizer", NeedMRTBuffer() && !pSet->softparticles);
 		}else{
-			cmp.setCompositorEnabled((*it), "HDRNoMRT", pSet->hdr);
 			cmp.setCompositorEnabled((*it), "ssaoNoMRT", pSet->ssao);
 		}
 
@@ -383,6 +383,7 @@ void BaseApp::recreateCompositor()
 			cmp.addCompositor((*it), "gbuffer");
 		}
 		cmp.addCompositor((*it), "gbufferNoMRT");
+		cmp.addCompositor((*it), "HDRNoMRT");
 		if (MaterialGenerator::MRTSupported())
 		{
 			cmp.addCompositor((*it), "ssao");
@@ -393,7 +394,6 @@ void BaseApp::recreateCompositor()
 		}
 		else
 		{
-			cmp.addCompositor((*it), "HDRNoMRT");
 			cmp.addCompositor((*it), "ssaoNoMRT");
 		}
 		cmp.addCompositor((*it), "GodRays");
