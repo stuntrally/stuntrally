@@ -309,9 +309,9 @@ protected:
 	SLV(CarClrH);  SLV(CarClrS);  SLV(CarClrV);  // car clr
 	SLV(BloomInt);  SLV(BloomOrig);  SLV(BlurIntens);  // video
 	SLV(DepthOfFieldFocus);  SLV(DepthOfFieldFar);  // dof
-	SLV(HDRParam1);SLV(HDRParam2);SLV(HDRParam3); //hdr
-	SLV(HDRVignettingRadius);SLV(HDRVignettingDarkness); //vignetting
-	SLV(HDRAdaptationScale);
+	SLV(HDRParam1);  SLV(HDRParam2);  SLV(HDRParam3);  // hdr
+	SLV(HDRBloomInt);  SLV(HDRBloomOrig);  SLV(HDRAdaptationScale);
+	SLV(HDRVignettingRadius);  SLV(HDRVignettingDarkness);
 	SLV(NumLaps);  SLV(RplNumViewports);  // setup
 	
 	//  checks

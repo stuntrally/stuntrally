@@ -233,11 +233,16 @@ void App::InitGui()
 	//  effects
 	Chk("AllEffects", chkVidEffects, pSet->all_effects);
 	Chk("Bloom", chkVidBloom, pSet->bloom);
+	Slv(BloomInt,	pSet->bloomintensity);
+	Slv(BloomOrig,	pSet->bloomorig);
+
 	Chk("HDR", chkVidHDR, pSet->hdr);
 	Slv(HDRParam1, pSet->hdrParam1);
 	Slv(HDRParam2, pSet->hdrParam2);
 	Slv(HDRParam3, pSet->hdrParam3);
 	Slv(HDRAdaptationScale, pSet->hdrAdaptationScale);
+	Slv(HDRBloomInt,  pSet->hdrbloomint);
+	Slv(HDRBloomOrig, pSet->hdrbloomorig);
 	Slv(HDRVignettingRadius, pSet->vignettingRadius/10);
 	Slv(HDRVignettingDarkness, pSet->vignettingDarkness);
 	
@@ -253,8 +258,6 @@ void App::InitGui()
 	if (!MaterialGenerator::MRTSupported())
 		mGUI->findWidget<Button>("godrays")->setEnabled(false);
 	
-	Slv(BloomInt,	pSet->bloomintensity);
-	Slv(BloomOrig,	pSet->bloomorig);
 	Slv(BlurIntens, pSet->motionblurintensity);
 	Slv(DepthOfFieldFocus, powf(pSet->depthOfFieldFocus/2000.f, 0.5f));
 	Slv(DepthOfFieldFar,   powf(pSet->depthOfFieldFar/2000.f, 0.5f));

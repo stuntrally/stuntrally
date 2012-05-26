@@ -417,6 +417,7 @@ void App::chkVidBloom(WP wp)
 {		
 	ChkEv(bloom);  refreshCompositor();
 }
+
 void App::chkVidHDR(WP wp)
 {			
 	ChkEv(hdr);  refreshCompositor();
@@ -424,32 +425,42 @@ void App::chkVidHDR(WP wp)
 void App::slHDRParam1(SL)
 {
 	Real v = val;  if (bGI)  pSet->hdrParam1 = v;
-	if (valHDRParam1){	valHDRParam1->setCaption(fToStr(v,2,4));  }
+	if (valHDRParam1)	valHDRParam1->setCaption(fToStr(v,2,4));
 }
 void App::slHDRParam2(SL)
 {
 	Real v = val;  if (bGI)  pSet->hdrParam2 = v;
-	if (valHDRParam2){	valHDRParam2->setCaption(fToStr(v,2,4));  }
+	if (valHDRParam2)	valHDRParam2->setCaption(fToStr(v,2,4));
 }
 void App::slHDRParam3(SL)
 {
 	Real v = val;  if (bGI)  pSet->hdrParam3 = v;
-	if (valHDRParam3){	valHDRParam3->setCaption(fToStr(v,2,4));  }
+	if (valHDRParam3)	valHDRParam3->setCaption(fToStr(v,2,4));
 }
 void App::slHDRAdaptationScale(SL)
 {
 	Real v = val;  if (bGI)  pSet->hdrAdaptationScale = v;
-	if (valHDRAdaptationScale){	valHDRAdaptationScale->setCaption(fToStr(v,2,4));  }
+	if (valHDRAdaptationScale)	valHDRAdaptationScale->setCaption(fToStr(v,2,4));
+}
+void App::slHDRBloomInt(SL)
+{
+	Real v = val;  if (bGI)  pSet->hdrbloomint = v;
+	if (valHDRBloomInt)  valHDRBloomInt->setCaption(fToStr(v,2,4));
+}
+void App::slHDRBloomOrig(SL)
+{
+	Real v = val;  if (bGI)  pSet->hdrbloomorig = v;
+	if (valHDRBloomOrig)  valHDRBloomOrig->setCaption(fToStr(v,2,4));
 }
 void App::slHDRVignettingRadius(SL)
 {
-	Real v = 10* val;  if (bGI)  pSet->vignettingRadius = v;
-	if (valHDRVignettingRadius){	valHDRVignettingRadius->setCaption(fToStr(v,2,4));  }
+	Real v = 10 * val;  if (bGI)  pSet->vignettingRadius = v;
+	if (valHDRVignettingRadius)  valHDRVignettingRadius->setCaption(fToStr(v,2,4));
 }
 void App::slHDRVignettingDarkness(SL)
 {
 	Real v = val;  if (bGI)  pSet->vignettingDarkness = v;
-	if (valHDRVignettingDarkness){	valHDRVignettingDarkness->setCaption(fToStr(v,2,4));  }
+	if (valHDRVignettingDarkness)  valHDRVignettingDarkness->setCaption(fToStr(v,2,4));
 }
 
 void App::chkVidBlur(WP wp)
