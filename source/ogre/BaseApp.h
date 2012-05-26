@@ -162,6 +162,7 @@ protected:
 	///  Gui
 	bool isFocGui,isFocRpl;  // gui shown
 	MyGUI::Gui* mGUI;
+	MyGUI::ImageBox* imgBack;
 	
 	#if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
 	MyGUI::OgreD3D11Platform* mPlatform;

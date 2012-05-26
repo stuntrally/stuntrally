@@ -103,6 +103,12 @@ bool App::frameStart(Real time)
 {
 	PROFILER.beginBlock(" frameSt");
 
+	if (imgBack && pGame)  // show/hide background image
+	{
+		bool backImgVis = !bLoading && pGame->cars.empty();
+		imgBack->setVisible(backImgVis);
+	}
+
 
 	//  multi thread
 	if (pSet->multi_thr == 1 && pGame && !bLoading)

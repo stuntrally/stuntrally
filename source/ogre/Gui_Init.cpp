@@ -30,6 +30,14 @@ void App::InitGui()
 	popup.mPlatform = mPlatform;
 	QTimer ti;  ti.update();  /// time
 
+
+	///  background image
+	int wx = mWindow->getWidth(), wy = mWindow->getHeight();
+	imgBack = mGUI->createWidget<ImageBox>("ImageBox",0,0,wx,wy,Align::VStretch,"Back","ImgBack");
+	if (!imgBack)  LogO("Error: Didnt create imgBack !");
+	imgBack->setImageTexture("background.jpg");
+
+
 	//  new widgets
 	MyGUI::FactoryManager::getInstance().registerFactory<MultiList2>("Widget");
 	MyGUI::FactoryManager::getInstance().registerFactory<Slider>("Widget");
@@ -61,10 +69,8 @@ void App::InitGui()
 	updMouse();
 	
 	//  center
-	//mWndOpts->setVisible(isFocGui);
-	int sx = mWindow->getWidth(), sy = mWindow->getHeight();
 	IntSize w = mWndMain->getSize();
-	mWndMain->setPosition((sx-w.width)*0.5f, (sy-w.height)*0.5f);
+	mWndMain->setPosition((wx-w.width)*0.5f, (wy-w.height)*0.5f);
 
 	TabPtr tab;
 	tab = mGUI->findWidget<Tab>("TabWndGame");    tab->setIndexSelected(1); tab->setSmoothShow(false);	mWndTabsGame = tab;		tab->eventTabChangeSelect += newDelegate(this, &App::MenuTabChg);

@@ -126,8 +126,8 @@ void BaseApp::Run( bool showDialog )
 //  ctor
 //-------------------------------------------------------------------------------------
 BaseApp::BaseApp()
-	:mRoot(0), mSceneMgr(0), mWindow(0), mHDRLogic(0), mMotionBlurLogic(0),mSSAOLogic(0),
-	mCameraBlurLogic(0)
+	:mRoot(0), mSceneMgr(0), mWindow(0), imgBack(0)
+	,mHDRLogic(0), mMotionBlurLogic(0),mSSAOLogic(0), mCameraBlurLogic(0)
 	,mGodRaysLogic(0), mSoftParticlesLogic(0), mGBufferLogic(0)
 	,mDepthOfFieldLogic(0), mFilmGrainLogic(0)
 	,mShaderGenerator(0),mMaterialMgrListener(0)
