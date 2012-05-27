@@ -158,11 +158,6 @@ const int App::StColW[8] = {30, 180, 100, 90, 80, 70};
 //-----------------------------------------------------------------------------------------------------------
 void App::GuiInitTrack()
 {
-	//  Tracks detailed list
-	//MultiListPtr li = mGUI->findWidget<MultiList>("MListTracks");
-	//MyGUI::FactoryManager::getInstance().registerFactory<MultiList2>("Widget");
-	//MyGUI::FactoryManager::getInstance().unregisterFactory<MultiList2>("Widget");
-
 	#ifdef ROAD_EDITOR
 	TabItem* trktab = (TabItem*)mWndEdit->findWidget("TabTrack");
 	#else

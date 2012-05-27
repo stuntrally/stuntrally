@@ -329,7 +329,7 @@ if (!bAssignKey)
 					{	switch (mWndTabsGame->getIndexSelected())
 						{
 						case 1:	changeTrack();	btnNewGame(0);  break;
-						case 2:	btnChgCar(0);	btnNewGame(0);  break;
+						case 2:	changeCar();	btnNewGame(0);  break;
 						case 4:	chatSendMsg();  break;
 						case 5:	btnChampStart(0);  break;
 					}	break;

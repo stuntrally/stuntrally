@@ -283,8 +283,9 @@ void App::listCarChng(List* li, size_t pos)
 
 	if (imgCar)  imgCar->setImageTexture(sListCar+".jpg");
 	if (mClient) mClient->updatePlayerInfo(pSet->nickname, sListCar);
-}
-void App::btnChgCar(WP)
+	changeCar();
+}	
+void App::changeCar()
 {
 	if (valCar){  valCar->setCaption(TR("#{Car}: ") + sListCar);	pSet->gui.car[iCurCar] = sListCar;  }
 }
@@ -296,10 +297,9 @@ void App::changeTrack()
 	pSet->gui.track_user = bListTrackU;
 	if (valTrk[0])  valTrk[0]->setCaption(TR("#{Track}: ") + sListTrack);
 
-	if (mMasterClient) {
-		uploadGameInfo();
-		updateGameInfoGUI();
-	}
+	if (mMasterClient)
+	{	uploadGameInfo();
+		updateGameInfoGUI();  }
 }
 
 //  new game

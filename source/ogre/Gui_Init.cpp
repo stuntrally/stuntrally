@@ -462,9 +462,6 @@ void App::InitGui()
     valCar = mGUI->findWidget<StaticText>("CarText");
 	valCar->setCaption(TR("#{Car}: ") + pSet->gui.car[0]);  sListCar = pSet->gui.car[0];
 
-    ButtonPtr btnCar = mGUI->findWidget<Button>("ChangeCar");
-    if (btnCar)  btnCar->eventMouseButtonClick += newDelegate(this, &App::btnChgCar);
-
     imgCar = mGUI->findWidget<StaticImage>("CarImg");
     listCarChng(carList,0);
 
