@@ -332,7 +332,7 @@ void App::ShowHUD(bool hideAll)
 
 		if (ovCam)	{  if (pSet->show_cam && !isFocGui)    ovCam->show();    else  ovCam->hide();     }
 		if (ovTimes){  if (pSet->show_times)  ovTimes->show();  else  ovTimes->hide();   }
-		if (ovOpp)  {  if (pSet->show_opponents && road && road->getNumPoints() > 0)  ovOpp->show();  else  ovOpp->hide();   }
+		if (ovOpp)  {  if (pSet->show_opponents && (!sc.ter || road && road->getNumPoints() > 0))  ovOpp->show();  else  ovOpp->hide();   }
 		if (ovWarnWin){  if (pSet->show_times)  ovWarnWin->show();  else  ovWarnWin->hide();  }
 		if (mFpsOverlay) { if (pSet->show_fps) mFpsOverlay->show(); else mFpsOverlay->hide(); }
 

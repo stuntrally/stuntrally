@@ -525,12 +525,12 @@
 					<Property key="Colour" value="1 0.6 0.3"/>
 					<UserString key="tip" value="#{TipDeleteTrk}"/>
 				</Widget>
-                <Widget type="TextBox" skin="TextBox" position="16 458 72 24">
+                <Widget type="TextBox" skin="TextBox" position="16 468 72 24">
 					<UserString key="RelativeTo" value="EditorWnd"/>
                     <Property key="Caption" value="#{Find}:"/>
                     <Property key="TextColour" value="0.7 0.8 0.9"/>
                 </Widget>
-                <Widget type="EditBox" skin="EditBox" position="16 482 88 24" name="TrackFind">
+                <Widget type="EditBox" skin="EditBox" position="16 492 88 24" name="TrackFind">
 					<UserString key="RelativeTo" value="EditorWnd"/>
                     <Property key="Colour" value="0.7 0.8 0.9"/>
                     <Property key="MaxTextLength" value="20"/>
