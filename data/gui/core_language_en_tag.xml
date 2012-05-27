@@ -115,6 +115,7 @@
 	<Tag name="TipTrkViewDetailed">Detailed list view.</Tag>
 
 	<Tag name="Find">Find</Tag>
+	<Tag name="TipFind">Enter part of name to find (filters list).</Tag>
 	<Tag name="TrackDifficulties">Various Track Difficulties</Tag>
 	<Tag name="TipTrackMap">Minimap of selected track, view from top.</Tag>
 	<Tag name="fluids">fluids (water or mud)</Tag>
@@ -144,7 +145,7 @@
 
 	<!--  Car  -->
 	<Tag name="Car">Car</Tag>
-	<Tag name="TipCarsList">Cars list. Press [New Game] to drive with it.</Tag>
+	<Tag name="TipCarsList">Cars list. Press Enter or [New Game] to drive with it.</Tag>
 	<Tag name="TipNewGameCar">Restart game.</Tag>
 
 	<Tag name="ColHue">Color - Hue</Tag>

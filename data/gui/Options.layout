@@ -90,14 +90,7 @@
 			<Widget type="TabItem" skin="" position="2 24 794 572" name="TabTrack">
 				<Property key="Caption" value="#{Track}"/>
 				<UserString key="RelativeTo" value="GameWnd"/>
-				<Widget type="TextBox" skin="TextBox" position="176 456 200 24" name="TrackText">
-					<Property key="InheritsAlpha" value="true"/>
-					<Property key="Colour" value="0 0 0"/>
-					<Property key="Caption" value="#{Track}"/>
-					<Property key="TextColour" value="0.4 1.0 0.5"/>
-					<UserString key="RelativeTo" value="GameWnd"/>
-				</Widget>
-				<Widget type="Button" skin="CheckBox" position="400 456 120 24" name="ReverseOn">
+				<Widget type="Button" skin="CheckBox" position="380 496 120 24" name="ReverseOn">
 					<Property key="Caption" value="#{Reverse}"/>
 					<Property key="Colour" value="0.8 1 0.6"/>
 					<Property key="TextColour" value="0.8 1 0.5"/>
@@ -293,15 +286,17 @@
 					<UserString key="tip" value="#{TipTrkViewDetailed}"/>
 					<UserString key="RelativeTo" value="GameWnd"/>
 				</Widget>
-				<Widget type="TextBox" skin="TextBox" position="16 458 72 24">
+				<Widget type="TextBox" skin="TextBox" position="16 468 72 24">
 					<Property key="Caption" value="#{Find}:"/>
 					<Property key="TextColour" value="0.7 0.8 0.9"/>
+					<UserString key="tip" value="#{TipFind}"/>
 					<UserString key="RelativeTo" value="GameWnd"/>
 				</Widget>
-				<Widget type="EditBox" skin="EditBox" position="16 482 88 24" name="TrackFind">
+				<Widget type="EditBox" skin="EditBox" position="16 492 88 24" name="TrackFind">
 					<Property key="Colour" value="0.7 0.8 0.9"/>
 					<Property key="MaxTextLength" value="20"/>
 					<Property key="TextColour" value="0.8 0.9 1.0"/>
+					<UserString key="tip" value="#{TipFind}"/>
 					<UserString key="RelativeTo" value="GameWnd"/>
 				</Widget>
 			</Widget>
@@ -311,13 +306,6 @@
 				<Widget type="ListBox" skin="ListBox" position="14 32 148 304" name="CarList">
 					<UserString key="RelativeTo" value="GameWnd"/>
 					<UserString key="tip" value="#{TipCarsList}"/>
-				</Widget>
-				<Widget type="TextBox" skin="TextBox" position="176 456 200 24" name="CarText">
-					<Property key="InheritsAlpha" value="true"/>
-					<Property key="Caption" value="#{Car}"/>
-					<Property key="Colour" value="0 0 0"/>
-					<Property key="TextColour" value="0.65 0.88 1.0"/>
-					<UserString key="RelativeTo" value="GameWnd"/>
 				</Widget>
 				<Widget type="Button" skin="Button" position="176 488 136 32" name="NewGame2">
 					<Property key="Caption" value="#{NewGame}"/>
@@ -848,7 +836,7 @@
 			<Widget type="TabItem" skin="" position="2 24 794 572" name="TabTrack">
 				<Property key="Caption" value="#{Track}"/>
 				<UserString key="RelativeTo" value="GameWnd"/>
-				<Widget type="TextBox" skin="TextBox" position="176 456 200 24" name="TrackText2">
+				<Widget type="TextBox" skin="TextBox" position="176 456 200 24" name="TrackText">
 					<Property key="InheritsAlpha" value="true"/>
 					<Property key="Colour" value="0 0 0"/>
 					<Property key="Caption" value="#{Track}"/>

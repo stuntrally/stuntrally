@@ -45,7 +45,7 @@ App::App(SETTINGS *settings, GAME *game)
 	,valVolMaster(0),valVolEngine(0),valVolTires(0),valVolSusp(0),valVolEnv(0)  // sounds
 	,valVolFlSplash(0),valVolFlCont(0),valVolCarCrash(0),valVolCarScrap(0)
 	,imgCar(0), imgTrkIco1(0),imgTrkIco2(0), bnQuit(0)
-	,valCar(0), valLocPlayers(0), edFind(0)
+	,valLocPlayers(0), edFind(0)
 	,valRplPerc(0), valRplCur(0), valRplLen(0), slRplPos(0), rplList(0)
 	,valRplName(0),valRplInfo(0),valRplName2(0),valRplInfo2(0), edRplName(0), edRplDesc(0)
 	,rbRplCur(0), rbRplAll(0), rbRplGhosts(0), bRplBack(0),bRplFwd(0), newGameRpl(0)
@@ -57,7 +57,7 @@ App::App(SETTINGS *settings, GAME *game)
 	,listServers(0), listPlayers(0), edNetChat(0), imgNetTrack(0)
     ,btnNetRefresh(0), btnNetJoin(0), btnNetCreate(0), btnNetDirect(0)
     ,btnNetReady(0), btnNetLeave(0)
-    ,valNetGames(0), valNetGameName(0), valNetChat(0), valNetTrack(0), valNetPassword(0)
+    ,valNetGames(0), valNetGameName(0), valNetChat(0), valNetTrack(0), valNetPassword(0), valTrkNet(0)
     ,edNetGameName(0), edNetChatMsg(0), edNetTrackInfo(0), edNetPassword(0)
     ,edNetNick(0), edNetServerIP(0), edNetServerPort(0), edNetLocalPort(0)
     ,iColLock(0),iColHost(0),iColPort(0)
@@ -76,7 +76,7 @@ App::App(SETTINGS *settings, GAME *game)
 
 	for (c=0; c < 2; ++c)
 	{
-		trkDesc[c]=0;  valTrk[c]=0;  imgPrv[c]=0; imgMini[c]=0; imgTer[c]=0;
+		trkDesc[c]=0;  imgPrv[c]=0; imgMini[c]=0; imgTer[c]=0;
 		for (i=0; i < StTrk;  ++i)  stTrk[c][i] = 0;
 		for (i=0; i < InfTrk; ++i)  infTrk[c][i] = 0;
 	}	

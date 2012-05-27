@@ -458,10 +458,7 @@ void App::InitGui()
 		carList->eventListChangePosition += newDelegate(this, &App::listCarChng);
     }
 
-	//  cars text, chg btn
-    valCar = mGUI->findWidget<StaticText>("CarText");
-	valCar->setCaption(TR("#{Car}: ") + pSet->gui.car[0]);  sListCar = pSet->gui.car[0];
-
+    sListCar = pSet->gui.car[0];
     imgCar = mGUI->findWidget<StaticImage>("CarImg");
     listCarChng(carList,0);
 
@@ -469,11 +466,8 @@ void App::InitGui()
     ///  tracks list, text, chg btn
     //------------------------------------------------------------------------
 
-	//  track text, chg btn
 	trkDesc[0] = mGUI->findWidget<Edit>("TrackDesc");
-    valTrk[0] = mGUI->findWidget<StaticText>("TrackText");
-    if (valTrk[0])
-		valTrk[0]->setCaption(TR("#{Track}: " + pSet->gui.track));  sListTrack = pSet->gui.track;
+	sListTrack = pSet->gui.track;
 
     GuiInitTrack();
 
@@ -502,7 +496,7 @@ void App::InitGui()
 	//------------------------------------------------------------------------
 	//  track stats 2nd set
 	trkDesc[1] = mGUI->findWidget<Edit>("TrackDesc2");
-    valTrk[1] = mGUI->findWidget<StaticText>("TrackText2");
+    valTrkNet = mGUI->findWidget<StaticText>("TrackText");
 	//  preview images
 	imgPrv[1] = mGUI->findWidget<StaticImage>("TrackImg2");
 	imgTer[1] = mGUI->findWidget<StaticImage>("TrkTerImg2");

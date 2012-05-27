@@ -106,9 +106,9 @@ void App::TrackListUpd(bool resetNotFound)
 //-----------------------------------------------------------------------------------------------------------
 String App::GetSceneryColor(String name)
 {
-	String c = "#FFFFFF";  char ch = name.c_str()[0];
+	String c = "#D0FFFF";  char ch = name.c_str()[0];
 	switch (ch)  {
-		case '0':  c = "#E0E0E0";  break;   case 'I':  c = "#FFFF80";  break;
+		case '0':  c = "#E8E8E8";  break;   case 'I':  c = "#FFFF80";  break;
 		case 'A':  c = "#FFA080";  break;   case 'J':  c = "#50FF50";  break;
 		case 'D':  c = "#F0F000";  break;   case 'M':  c = "#A0A000";  break;
 		case 'F':  c = "#A0D000";  break;   case 'S':  c = "#D0FF00";  break;
@@ -300,7 +300,7 @@ void App::updTrkListDim()
 		if (c < 6)  xico2 += w;
 	}
 
-	int xt = 0.018*wi.width, yt = 0.052*wi.height, yico = yt - wico - 1;  //0.02*wi.height;
+	int xt = 0.018*wi.width, yt = 0.06*wi.height, yico = yt - wico - 1;  //0.02*wi.height;
 	trkMList->setCoord(xt, yt, sw + 8/*frame*/, 0.70/*height*/*wi.height);
 	imgTrkIco1->setCoord(xt + xico1+2, yico, 2*wico, wico);
 	imgTrkIco2->setCoord(xt + xico2+2, yico, 8*wico, wico);

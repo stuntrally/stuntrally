@@ -241,7 +241,7 @@ protected:
 	MyGUI::MultiList2* trkMList;  MyGUI::EditPtr trkDesc[2];
 	MyGUI::StaticImagePtr imgPrv[2],imgMini[2],imgTer[2], imgTrkIco1,imgTrkIco2;
 	const static int StTrk = 12, InfTrk = 10;
-	MyGUI::StaticTextPtr valTrk[2], stTrk[2][StTrk], infTrk[2][InfTrk];  // [2] 2nd set is for champs
+	MyGUI::StaticTextPtr valTrkNet, stTrk[2][StTrk], infTrk[2][InfTrk];  // [2] 2nd set is for champs
 
 	void listTrackChng(MyGUI::MultiList2* li, size_t pos), TrackListUpd(bool resetNotFound=false);
 	TracksXml tracksXml;  void btnTrkView1(WP),btnTrkView2(WP),ChangeTrackView();
@@ -376,7 +376,7 @@ protected:
 	Ogre::String pathTrk[2];  Ogre::String TrkDir();
 	Ogre::String PathListTrk(int user=-1), PathListTrkPrv(int user=-1);
 
-	MyGUI::StaticImagePtr imgCar;	MyGUI::StaticTextPtr valCar;
+	MyGUI::StaticImagePtr imgCar;
 	void comboBoost(CMB), comboFlip(CMB);
 
 	GuiPopup popup;

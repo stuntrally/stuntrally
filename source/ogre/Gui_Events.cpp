@@ -287,7 +287,7 @@ void App::listCarChng(List* li, size_t pos)
 }	
 void App::changeCar()
 {
-	if (valCar){  valCar->setCaption(TR("#{Car}: ") + sListCar);	pSet->gui.car[iCurCar] = sListCar;  }
+	pSet->gui.car[iCurCar] = sListCar;
 }
 
 //  track
@@ -295,7 +295,6 @@ void App::changeTrack()
 {
 	pSet->gui.track = sListTrack;
 	pSet->gui.track_user = bListTrackU;
-	if (valTrk[0])  valTrk[0]->setCaption(TR("#{Track}: ") + sListTrack);
 
 	if (mMasterClient)
 	{	uploadGameInfo();
