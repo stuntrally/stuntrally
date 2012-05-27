@@ -375,7 +375,7 @@ protected:
 
 
 	//  [Track]  ----
-	Ogre::String pathTrk[2], pathTrkPrv[2];    // 0 read only  1 //U user paths for save
+	Ogre::String pathTrk[2];    // 0 read only  1 //U user paths for save
 	std::string TrkDir();  // path to track dir (from pSet settings)
 
 	Ogre::String sListTrack;  int bListTrackU;

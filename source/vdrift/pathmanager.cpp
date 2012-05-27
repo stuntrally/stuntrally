@@ -154,7 +154,6 @@ void PATHMANAGER::Init(std::ostream & info_output, std::ostream & error_output, 
 	CreateDir(GetTrackRecordsPath(), error_output);
 	CreateDir(GetScreenShotDir(), error_output);
 	CreateDir(GetTrackPathUser(), error_output);  // user tracks
-	CreateDir(GetTrackPathUser()+"/_previews", error_output);
 	CreateDir(GetReplayPath(), error_output);
 	CreateDir(GetGhostsPath(), error_output);
 

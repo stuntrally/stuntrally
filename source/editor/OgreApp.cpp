@@ -63,9 +63,9 @@ App::App()  //  gui wigdets--
 {
 	imgPrv[0]=0; imgMini[0]=0; imgTer[0]=0;  trkDesc[0]=0;
 	
-	pathTrk[0] = PATHMANAGER::GetTrackPath() + "/";      pathTrkPrv[0] = pathTrk[0] + "_previews/";  resTrk = "";
-	pathTrk[1] = PATHMANAGER::GetTrackPathUser() + "/";  pathTrkPrv[1] = pathTrk[1] + "_previews/";
-	strFSerrors = "";
+	pathTrk[0] = PATHMANAGER::GetTrackPath() + "/";
+	pathTrk[1] = PATHMANAGER::GetTrackPathUser() + "/";
+	resTrk = "";  strFSerrors = "";
 
 	mBrSize[0] = 16.f;	mBrSize[1] = 24.f;	mBrSize[2] = 16.f;	mBrSize[3] = 16.f;
 	mBrIntens[0] = 20.f;mBrIntens[1] = 20.f;mBrIntens[2] = 20.f;mBrIntens[3] = 20.f;
@@ -79,12 +79,9 @@ App::App()  //  gui wigdets--
 	iSnap = 0;  angSnap = crAngSnaps[iSnap];
 
 	int i;
-	for (i=0; i<BR_TXT; ++i)  brTxt[i]=0;
-	for (i=0; i<RD_TXT; ++i)  rdTxt[i]=0;
-	for (i=0; i<RDS_TXT;++i)  rdTxtSt[i]=0;
-	for (i=0; i<ST_TXT; ++i)  stTxt[i]=0;
-	for (i=0; i<FL_TXT; ++i)  flTxt[i]=0;
-	for (i=0; i<OBJ_TXT;++i)  objTxt[i]=0;
+	for (i=0; i<BR_TXT; ++i)  brTxt[i]=0;	for (i=0; i<RD_TXT; ++i)  rdTxt[i]=0;
+	for (i=0; i<RDS_TXT;++i)  rdTxtSt[i]=0;	for (i=0; i<ST_TXT; ++i)  stTxt[i]=0;
+	for (i=0; i<FL_TXT; ++i)  flTxt[i]=0;	for (i=0; i<OBJ_TXT;++i)  objTxt[i]=0;
 	
 	for (i=0; i < StTrk; ++i)  stTrk[0][i] = 0;
 	for (i=0; i < 4; ++i)  {  cmbRoadMtr[i]=0;  cmbPipeMtr[i]=0;  }
