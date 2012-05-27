@@ -182,6 +182,7 @@ void App::CreateMinimap()
 		{
 			for (int iy=0; iy<4; ++iy)
 			for (int ix=0; ix<4; ++ix)
+			
 			{
 				const MATHVECTOR <float,3>& vec = (*i).GetPatch().GetPoint(ix,iy);
 
@@ -284,12 +285,16 @@ void App::CreateMinimap()
 void App::CreateRoadBezier()
 {
 	ManualObject* m = mSceneMgr->createManualObject();
-	m->begin("road", RenderOperation::OT_TRIANGLE_LIST);
+	m->begin("pipeGlass", RenderOperation::OT_TRIANGLE_LIST);
 	int ii=0;
 
 	const std::list <ROADSTRIP>& roads = pGame->track.GetRoadList();
 	for (std::list <ROADSTRIP>::const_iterator it = roads.begin(); it != roads.end(); ++it)
 	{
+		#define VDR_LEN  // to get whole track length
+		#ifdef VDR_LEN
+		MATHVECTOR <float,3> vec0;  float length = 0.f;
+		#endif
 		const std::list <ROADPATCH>& pats = (*it).GetPatchList();
 		for (std::list <ROADPATCH>::const_iterator i = pats.begin(); i != pats.end(); ++i)
 		{
@@ -297,11 +302,18 @@ void App::CreateRoadBezier()
 			for (int y=0; y<4; ++y)
 			for (int x=0; x<4; ++x)
 			{
-				const MATHVECTOR <float, 3>& vec = (*i).GetPatch().GetPoint(x,y);
-				p[a][0] = vec[2];  p[a][1] = vec[1];  p[a][2] = -vec[0];  a++;
-
-				//float fx = (x+1)/4.f, fy = (y+1)/4.f;
-				//const float s = 0.82f;
+				const MATHVECTOR <float,3>& vec = (*i).GetPatch().GetPoint(x,y);
+				p[a][0] = vec[2];  p[a][1] = vec[1] + 0.2f/*ofs up*/;  p[a][2] = -vec[0];  a++;
+				
+				#ifdef VDR_LEN
+				if (x==1 && y==1 /*&& it == roads.begin()*/)  //main only-
+				{
+					if (i != pats.begin())  // sum distance
+						length += (vec0-vec).Magnitude();
+					vec0 = vec;
+					//LogO(fToStr(length,2,6));
+				}
+				#endif
 			}
 			a=0;
 
@@ -318,7 +330,7 @@ void App::CreateRoadBezier()
 				m->position(pos);
 				m->normal(norm);/**/
 				m->textureCoord(y/3.f,x/3.f);
-				if (x<3 && y<3)
+				if (x<1 && y<1)
 				{
 					int a = ii+x+y*4;
 					m->index(a);	m->index(a+1);	m->index(a+4);
@@ -327,6 +339,9 @@ void App::CreateRoadBezier()
 			}
 			ii += 16;
 		}
+		#ifdef VDR_LEN
+		LogO("VDR TRK: " + pSet->game.track +" LEN: "+fToStr(length,2,6));
+		#endif
 	}
 	m->end();
 	AxisAlignedBox aabInf;	aabInf.setInfinite();
