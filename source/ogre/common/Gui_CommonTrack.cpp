@@ -113,7 +113,8 @@ String App::GetSceneryColor(String name)
 		case 'D':  c = "#F0F000";  break;   case 'M':  c = "#A0A000";  break;
 		case 'F':  c = "#A0D000";  break;   case 'S':  c = "#D0FF00";  break;
 		case 'G':  c = "#C0FF00";  break;   case 'T':  c = "#A0A0A0";  break;
-		case 'V':  c = "#202008";  break;   case 'X':  c = "#5858C0";  break;  }
+		case 'V':  c = "#202008";  break;   case 'X':  c = "#5858C0";  break;
+		case 'C':  c = "#E0B090";  break;  }
 	return c;
 }
 void App::AddTrkL(std::string name, int user, const TrackInfo* ti)
@@ -463,7 +464,7 @@ void App::UpdGuiRdStats(const SplineRoad* rd, const Scene& sc, const String& sTr
 		{	s = "view.jpg";
 			texMgr.load(path+s, sGrp, TEX_TYPE_2D, MIP_UNLIMITED);  // need to load it first
 			imgPrv[ch]->setImageTexture(s);  // just for dim, doesnt set texture
-			imgPrv[ch]->_setTextureName(path+s);  imgPrv[ch]->setVisible(true);
+			imgPrv[ch]->_setTextureName(path+s);  imgPrv[ch]->setVisible(pSet->tracks_view == 0);
 		} catch(...) {  imgPrv[ch]->setVisible(false);  }  // hide if not found
 	}
 	if (imgTer[ch])  // terrain background
