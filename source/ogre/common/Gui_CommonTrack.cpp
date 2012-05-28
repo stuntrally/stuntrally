@@ -113,7 +113,7 @@ String App::GetSceneryColor(String name)
 		case 'D':  c = "#F0F000";  break;   case 'M':  c = "#A0A000";  break;
 		case 'F':  c = "#A0D000";  break;   case 'S':  c = "#D0FF00";  break;
 		case 'G':  c = "#C0FF00";  break;   case 'T':  c = "#A0A0A0";  break;
-		case 'V':  c = "#202008";  break;   case 'X':  c = "#5858C0";  break;
+		case 'V':  c = "#202008";  break;   case 'X':  c = "#8080D0";  break;
 		case 'C':  c = "#E0B090";  break;  }
 	return c;
 }
@@ -122,7 +122,7 @@ void App::AddTrkL(std::string name, int user, const TrackInfo* ti)
 	String c = GetSceneryColor(name);
 
 	MultiList2* li = trkMList;
-	li->addItem(name, 0);
+	li->addItem(c+name, 0);
 
 	if (!ti)  return;  //  details
 	int l = li->getItemCount()-1;
@@ -230,8 +230,9 @@ void App::listTrackChng(MultiList2* li, size_t pos)
 
 	const UString& sl = li->getItemNameAt(i);  String s = sl, s1 = s;
 	s = StringUtil::replaceAll(s, "*", "");
-	sListTrack = s;
 	bListTrackU = s1 != s ? 1 : 0;
+	if (s[0] == '#')  s = s.substr(7);
+	sListTrack = s;
 
 #ifndef ROAD_EDITOR
 	changeTrack();
