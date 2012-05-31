@@ -152,7 +152,6 @@
 	<Tag name="InputMapSteering">Steering</Tag>
 	<Tag name="AutoRear">Автоматическая задняя передача</Tag>
 	<Tag name="TerGenFreq">Freq. zoom</Tag>
-	<Tag name="UseSSAA">Use SSAA when effects are enabled</Tag>
 	<Tag name="ReflMode_single">Одиночный</Tag>
 	<Tag name="SetCamTo">Set camera to</Tag>
 	<Tag name="RoadWallFullCollis">Road wall full collision</Tag>
@@ -226,7 +225,7 @@
 	<Tag name="CountdownTime">Время гонки (обратный отсчет)</Tag>
 	<Tag name="CamInfoStrings">Type,Yaw,Pitch,Dist,Height,Speed,Offset,LEFT,RIGHT,Middle,Wheel,shift,Rotate,reset,move,H,Pos</Tag>
 	<Tag name="End">конец</Tag>
-	<Tag name="HDR">HDR</Tag>
+	<Tag name="HDR">HDR+Bloom</Tag>
 	<Tag name="TipABS">Предотвращает блокировку колес при торможении (по умолчанию выключено).</Tag>
 	<Tag name="TipGrassPatchHeightMin">Минимальная высота травы</Tag>
 	<Tag name="InputRoadMat">-,=  - road/pipe material</Tag>
@@ -729,6 +728,16 @@
 	<Tag name="InputNextOptTab">F2,F3 - prev,next Options tab (shift - sub tab)</Tag>
 	<Tag name="Diff6">Extreme</Tag>
 	<Tag name="RplAll">Все</Tag>
+	<Tag name="HDROrigImage">Bloom Darken</Tag>
+	<Tag name="HDRParam2">Brightness</Tag>
+	<Tag name="HDRParam3">Grain</Tag>
+	<Tag name="HDRParam1">Exposure</Tag>
+	<Tag name="HDRTab">HDR</Tag>
+	<Tag name="HDRVignettingDarkness">Vignetting Darken</Tag>
+	<Tag name="HDRAdaptationScale">Adapt Scale</Tag>
+	<Tag name="UseSMAA">Use SMAA when effects are enabled</Tag>
+	<Tag name="HDRIntensity">Bloom Intensity</Tag>
+	<Tag name="HDRVignettingRadius">Vignetting Radius</Tag>
 	<Tag name="GameVersion">1.7</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 	<Tag name="LANG_EN">English</Tag>

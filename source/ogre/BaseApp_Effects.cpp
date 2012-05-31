@@ -116,7 +116,6 @@ void BaseApp::refreshCompositor(bool disableAll)
 			cmp.setCompositorEnabled((*it), "ssaoNoMRT", false);
 		}
 		CompositorManager::getSingleton().setCompositorEnabled((*it), "Motion Blur", false);
-		CompositorManager::getSingleton().setCompositorEnabled((*it), "SSAA", false);
 		CompositorManager::getSingleton().setCompositorEnabled((*it), "SMAA", false);
 		CompositorManager::getSingleton().setCompositorEnabled((*it), "FilmGrain", false);
 		CompositorManager::getSingleton().setCompositorEnabled((*it), UI_RENDER, false);

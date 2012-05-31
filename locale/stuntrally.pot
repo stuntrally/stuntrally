@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION"
 "Report-Msgid-Bugs-To: "
-"POT-Creation-Date: 2012-05-21 23:06+0200"
+"POT-Creation-Date: 2012-05-31 17:02+0200"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>"
 "Language-Team: LANGUAGE <LL@li.org>"
@@ -35,6 +35,10 @@ msgstr ""
 
 msgctxt "TipDustSize"
 msgid "Dust particles size."
+msgstr ""
+
+msgctxt "InputMapShowOptions"
+msgid "Show options"
 msgstr ""
 
 msgctxt "TipGrassSwayDistr"
@@ -183,6 +187,10 @@ msgstr ""
 
 msgctxt "MinimapUpdSkip"
 msgid "Minimap update skip"
+msgstr ""
+
+msgctxt "HDROrigImage"
+msgid "Bloom Darken"
 msgstr ""
 
 msgctxt "InputObjectsIns"
@@ -335,6 +343,10 @@ msgstr ""
 
 msgctxt "InputKeyboardEmulation"
 msgid "Keyboard Emulation"
+msgstr ""
+
+msgctxt "InputMapFlip"
+msgid "Flip"
 msgstr ""
 
 msgctxt "TBLast"
@@ -557,8 +569,20 @@ msgctxt "InputMapPrevCamera"
 msgid "Previous Camera"
 msgstr ""
 
+msgctxt "HDRParam2"
+msgid "Brightness"
+msgstr ""
+
+msgctxt "HDRParam3"
+msgid "Grain"
+msgstr ""
+
 msgctxt "InputMapBrake"
 msgid "Brake"
+msgstr ""
+
+msgctxt "HDRParam1"
+msgid "Exposure"
 msgstr ""
 
 msgctxt "Video"
@@ -621,8 +645,8 @@ msgctxt "filmgrain"
 msgid "Film Grain"
 msgstr ""
 
-msgctxt "Replay"
-msgid "Replay"
+msgctxt "InputMapSteering"
+msgid "Steering"
 msgstr ""
 
 msgctxt "NewDup"
@@ -637,8 +661,8 @@ msgctxt "NumLaps"
 msgid "Number of laps"
 msgstr ""
 
-msgctxt "UseSSAA"
-msgid "Use SSAA when effects are enabled"
+msgctxt "TerLAngMin"
+msgid "Angle Min"
 msgstr ""
 
 msgctxt "ReflMode_single"
@@ -683,10 +707,6 @@ msgstr ""
 
 msgctxt "FluidSplash"
 msgid "Fluid Splash"
-msgstr ""
-
-msgctxt "InputMapNextCamera"
-msgid "Next Camera"
 msgstr ""
 
 msgctxt "Model"
@@ -817,8 +837,8 @@ msgctxt "GrassSway"
 msgid "Grass sway"
 msgstr ""
 
-msgctxt "Diffuse"
-msgid "Diffuse"
+msgctxt "HDRTab"
+msgid "HDR"
 msgstr ""
 
 msgctxt "Sound"
@@ -843,6 +863,10 @@ msgstr ""
 
 msgctxt "TipSkyMats"
 msgid "Sky material names (from SkyDome.material)."
+msgstr ""
+
+msgctxt "HDRVignettingDarkness"
+msgid "Vignetting Darken"
 msgstr ""
 
 msgctxt "InputTerPaint"
@@ -942,7 +966,7 @@ msgid "end"
 msgstr ""
 
 msgctxt "HDR"
-msgid "HDR"
+msgid "HDR+Bloom"
 msgstr ""
 
 msgctxt "TipABS"
@@ -1057,8 +1081,8 @@ msgctxt "ScaleAll"
 msgid "Scale all"
 msgstr ""
 
-msgctxt "InputMapFlip"
-msgid "Flip"
+msgctxt "HDRAdaptationScale"
+msgid "Adapt Scale"
 msgstr ""
 
 msgctxt "difficulty"
@@ -1195,6 +1219,10 @@ msgstr ""
 
 msgctxt "InputObjectsPrevNext"
 msgid "PgUp,PgDn (or Wheel) - previous/next object"
+msgstr ""
+
+msgctxt "UseSMAA"
+msgid "Use SMAA when effects are enabled"
 msgstr ""
 
 msgctxt "TimesBar"
@@ -1373,6 +1401,10 @@ msgctxt "TipTerTriSize"
 msgid "Terrain triangle size in [meters] (recommended: 1 - 2, use more for big track area). Changed after Update (F8)."
 msgstr ""
 
+msgctxt "HDRIntensity"
+msgid "Bloom Intensity"
+msgstr ""
+
 msgctxt "Development"
 msgid "Development"
 msgstr ""
@@ -1413,12 +1445,16 @@ msgctxt "Graphics"
 msgid "Graphics"
 msgstr ""
 
-msgctxt "InputMapShowOptions"
-msgid "Show options"
+msgctxt "InputMapNextCamera"
+msgid "Next Camera"
 msgstr ""
 
 msgctxt "CarClrRandom"
 msgid "Random"
+msgstr ""
+
+msgctxt "HDRVignettingRadius"
+msgid "Vignetting Radius"
 msgstr ""
 
 msgctxt "SpeedUnit"
@@ -2037,8 +2073,8 @@ msgctxt "TipGrassPatchHeightMax"
 msgid "Maximal grass patch height."
 msgstr ""
 
-msgctxt "TerLAngMin"
-msgid "Angle Min"
+msgctxt "Diffuse"
+msgid "Diffuse"
 msgstr ""
 
 msgctxt "Tires"
@@ -2581,8 +2617,8 @@ msgctxt "ChampStart"
 msgid "Start"
 msgstr ""
 
-msgctxt "InputMapSteering"
-msgid "Steering"
+msgctxt "Replay"
+msgid "Replay"
 msgstr ""
 
 msgctxt "InputDetailsFor"
