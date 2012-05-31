@@ -81,6 +81,8 @@ compositor gbufferFinalizer
 			shadows off
 			pass clear
             {
+					buffers colour
+					colour_value 0 0 0 0
            }
 		   pass render_quad
            {
@@ -125,6 +127,7 @@ compositor gbufferUIRender
             }
 			pass clear
             {
+				buffers depth
             }
 			pass render_scene
             {
