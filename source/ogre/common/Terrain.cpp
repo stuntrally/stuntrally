@@ -257,7 +257,7 @@ void App::CreateTerrain(bool bNewHmap, bool bTer)
 	
 	///  sky
 	Vector3 scl = pSet->view_distance*Vector3::UNIT_SCALE;
-	CreateSkyDome(bTer ? sc.skyMtr : "sky/blue_clouds", scl);
+	CreateSkyDome(sc.skyMtr, scl);
 	UpdFog();
 
 	//  light

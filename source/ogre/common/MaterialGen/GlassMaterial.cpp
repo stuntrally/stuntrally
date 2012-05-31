@@ -41,6 +41,8 @@ void GlassMaterialGenerator::generate()
 	ambientPass->setDepthBias( mDef->mProps->depthBias );
 	ambientPass->setDepthWriteEnabled(false);
 	ambientPass->setCullingMode(CULL_NONE);
+	ambientPass->setFog(true); // turn off fixed function fog, we use shaders
+
 	
 	Ogre::TextureUnitState* tu = ambientPass->createTextureUnitState( mDiffuseMap );
 	tu->setName("diffuseMap");
@@ -82,8 +84,7 @@ void GlassMaterialGenerator::generate()
 	
 	pass->setCullingMode(CULL_NONE);
 	
-	if (!mDef->mProps->fog)
-		pass->setFog(true); // actually this disables fog
+	pass->setFog(true); // actually this disables fog
 		
 	if (!mDef->mProps->lighting)
 		pass->setLightingEnabled(false);

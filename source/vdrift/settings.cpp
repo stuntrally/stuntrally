@@ -38,6 +38,7 @@ void SETTINGS::Serialize(bool w, CONFIGFILE & c)
 	Param(c,w, "game.boost_type", gui.boost_type);		Param(c,w, "game.flip_type", gui.flip_type);
 	Param(c,w, "game.boost_power", gui.boost_power);
 	Param(c,w, "game.collis_cars", gui.collis_cars);	Param(c,w, "game.collis_veget", gui.collis_veget);
+	Param(c,w, "game.collis_roadw", gui.collis_roadw);
 	Param(c,w, "game.track", gui.track);				Param(c,w, "game.track_user", gui.track_user);
 	Param(c,w, "game.trk_reverse", gui.trackreverse);
 	Param(c,w, "game.local_players", gui.local_players); Param(c,w, "game.num_laps", gui.num_laps);
@@ -118,13 +119,19 @@ void SETTINGS::Serialize(bool w, CONFIGFILE & c)
 	//  video
 	Param(c,w, "video_eff.all_effects", all_effects);
 	Param(c,w, "video_eff.bloom", bloom);				Param(c,w, "video_eff.bloomintensity", bloomintensity);
-	Param(c,w, "video_eff.bloomorig", bloomorig);		Param(c,w, "video_eff.hdr", hdr);
-	Param(c,w, "video_eff.motionblur", motionblur);		Param(c,w, "video_eff.motionblurintensity", motionblurintensity);
+	Param(c,w, "video_eff.bloomorig", bloomorig);		
+	Param(c,w, "video_eff.hdr", hdr);
+	Param(c,w, "video_eff.hdr_p1", hdrParam1);
+	Param(c,w, "video_eff.hdr_p2", hdrParam2);
+	Param(c,w, "video_eff.hdr_p3", hdrParam3);
+	Param(c,w, "video_eff.hdrAdaptationScale", hdrAdaptationScale);
+	Param(c,w, "video_eff.hdr_vignettingRadius", vignettingRadius);
+	Param(c,w, "video_eff.hdr_vignettingDarkness", vignettingDarkness);
+	Param(c,w, "video_eff.motionblur", camblur);		Param(c,w, "video_eff.motionblurintensity", motionblurintensity);
 	Param(c,w, "video_eff.ssao", ssao);					Param(c,w, "video_eff.softparticles", softparticles);
 	Param(c,w, "video_eff.godrays", godrays);
 	Param(c,w, "video_eff.dof", dof);
 	Param(c,w, "video_eff.dof_focus", depthOfFieldFocus);	Param(c,w, "video_eff.dof_far", depthOfFieldFar);
-	Param(c,w, "video_eff.filmgrain", filmgrain);
 	
 	Param(c,w, "video.windowx", windowx);			Param(c,w, "video.windowy", windowy);
 	Param(c,w, "video.fullscreen", fullscreen);		Param(c,w, "video.vsync", vsync);
@@ -189,8 +196,10 @@ SETTINGS::SETTINGS() :  ///  Defaults
 	//  video eff
 	all_effects(false), godrays(false), filmgrain(false),
 	bloom(false), bloomintensity(0.13), bloomorig(0.9), hdr(false),
-	motionblur(false), motionblurintensity(0.3),
+	motionblur(false), motionblurintensity(0.1),
 	depthOfFieldFocus(100), depthOfFieldFar(1000),
+	hdrParam1(.34), hdrParam2(.22), hdrParam3(0.79),hdrAdaptationScale(0.3),
+	vignettingRadius(.2), vignettingDarkness(.1),
 	ssao(false), softparticles(false),
 	//  not in gui
 	boostFromExhaust(0), net_local_plr(-1),
@@ -205,7 +214,7 @@ SETTINGS::SETTINGS() :  ///  Defaults
 	{	gui.car[i] = "ES";  gui.car_hue[i] = 0.4f+0.2f*i;  gui.car_sat[i] = 1.f;  gui.car_val[i] = 1.f;  cam_view[0] = 9;  }
 	//  game
 	gui.local_players = 1;  gui.num_laps = 2;  game.num_laps = 2; 	game.local_players = 1;
-	gui.collis_veget = true;  gui.collis_cars = false;
+	gui.collis_veget = true;  gui.collis_cars = false;  gui.collis_roadw = false;
 	gui.boost_type = 2;  gui.flip_type = 1;  gui.boost_power = 1.f;
 	gui.trees = 1.f;
 	//

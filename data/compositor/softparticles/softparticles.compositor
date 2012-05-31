@@ -18,11 +18,6 @@ compositor SoftParticles
 
             pass clear
             {
-				//clear
-				//{
-	  				buffers colour
-					colour_value 0 0 0 0
-            	//}
 			}
 			shadows off
 			pass render_quad
@@ -73,11 +68,6 @@ compositor SoftParticles1
 
             pass clear
             {
-				//clear
-				//{
-	  				buffers colour
-					colour_value 0 0 0 0
-            	//}
 			}
 					  
 	        pass render_scene

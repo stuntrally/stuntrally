@@ -137,11 +137,26 @@ void App::CreateHUD(bool destroy)
 	LogO("-- Create Hud  plrs="+toStr(plr));
 	asp = 1.f;
 
+	///  reload mini textures
+	ResourceGroupManager& resMgr = ResourceGroupManager::getSingleton();
+	Ogre::TextureManager& texMgr = Ogre::TextureManager::getSingleton();
+
+	String path = PathListTrkPrv(pSet->game.track_user), sGrp = "TrkMini";
+	resMgr.addResourceLocation(path, "FileSystem", sGrp);  // add for this track
+	resMgr.initialiseResourceGroup(sGrp);
+
+	const String sRoad = "road.png", sTer = "terrain.jpg";
+	if (sc.ter)
+	{	try {  texMgr.unload(sRoad);  texMgr.load(sRoad, sGrp, TEX_TYPE_2D, MIP_UNLIMITED);  }  catch(...) {  }
+		try {  texMgr.unload(sTer);   texMgr.load(sTer,  sGrp, TEX_TYPE_2D, MIP_UNLIMITED);  }  catch(...) {  }
+	}
+
 	//if (terrain)
 	for (int c=0; c < plr; ++c)  // for each car
 	{
-		float t = sc.td.fTerWorldSize*0.5;
-		minX = -t;  minY = -t;  maxX = t;  maxY = t;
+		if (sc.ter)
+		{	float t = sc.td.fTerWorldSize*0.5;
+			minX = -t;  minY = -t;  maxX = t;  maxY = t;  }
 
 		float fMapSizeX = maxX - minX, fMapSizeY = maxY - minY;  // map size
 		float size = std::max(fMapSizeX, fMapSizeY*asp);
@@ -157,9 +172,9 @@ void App::CreateHUD(bool destroy)
 		MaterialPtr mm = MaterialManager::getSingleton().getByName(sMat);
 		Pass* pass = mm->getTechnique(0)->getPass(0);
 		TextureUnitState* tus = pass->getTextureUnitState(0);
-		if (tus)  tus->setTextureName(pSet->game.track + "_mini.png");
+		if (tus)  tus->setTextureName(sc.ter ? sRoad : "alpha.png");
 		tus = pass->getTextureUnitState(2);
-		if (tus)  tus->setTextureName(pSet->game.track + "_ter.jpg");
+		if (tus)  tus->setTextureName(sc.ter ? sTer : "alpha.png");
 		UpdMiniTer();
 		
 
@@ -227,6 +242,8 @@ void App::CreateHUD(bool destroy)
 		txBFuel[c]->setFontName("DigGear");  txBFuel[c]->setFontHeight(64);
 		txBFuel[c]->setTextColour(Colour(0.6,0.8,1.0));
 	}
+	///  tex
+	resMgr.removeResourceLocation(path, sGrp);
 
 
 	//  overlays
@@ -366,9 +383,9 @@ void App::UpdMiniTer()
 	if (!pass)  return;
 	try
 	{	Ogre::GpuProgramParametersSharedPtr fparams = pass->getFragmentProgramParameters();
-		if(fparams->_findNamedConstantDefinition("showTerrain",false))
+		if (fparams->_findNamedConstantDefinition("showTerrain",false))
 		{
-			fparams->setNamedConstant("showTerrain", pSet->mini_terrain ? 1.f : 0.f);
+			fparams->setNamedConstant("showTerrain", pSet->mini_terrain && sc.ter ? 1.f : 0.f);
 		}
 	}catch(...){  }
 }

@@ -276,17 +276,16 @@ void App::LoadGame()  // 2
 	if (mClient)  pGame->timer.waiting = true;  //+
 	
 	pGame->NewGameDoLoadMisc(pretime);
-	bool ter = IsTerTrack();
-	sc.ter = ter;
 }
 
 void App::LoadScene()  // 3
 {
-	bool ter = IsTerTrack();
-	if (ter)  // load scene
-		sc.LoadXml(TrkDir()+"scene.xml");
-	else
-	{	sc.Default();  sc.td.hfHeight = NULL;  sc.td.hfAngle = NULL;  }
+	// load scene - default if not found
+	sc.LoadXml(TrkDir()+"scene.xml");
+	sc.ter = IsTerTrack();
+
+	if (!sc.ter)
+	{	sc.td.hfHeight = sc.td.hfAngle = NULL;  }  // sc.td.layerRoad.smoke = 1.f;
 
 	//  water RTT
 	UpdateWaterRTT(mSplitMgr->mCameras.front());
@@ -315,8 +314,8 @@ void App::LoadScene()  // 3
 		pr2->getEmitter(0)->setEmissionRate(0);  }
 		
 	//  checkpoint arrow
-	if (/*pSet->check_arrow &&*/ !bRplPlay)  { //!
-		if (!arrowNode) arrowNode = mSceneMgr->getRootSceneNode()->createChildSceneNode();
+	if (!bRplPlay && sc.ter)
+	{	if (!arrowNode)  arrowNode = mSceneMgr->getRootSceneNode()->createChildSceneNode();
 		Ogre::Entity* arrowEnt = mSceneMgr->createEntity("CheckpointArrow", "arrow.mesh");
 		arrowEnt->setRenderQueueGroup(RQG_Hud3);
 		arrowEnt->setCastShadows(false);
@@ -438,6 +437,9 @@ void App::LoadRoad()  // 6
 {
 	if (IsTerTrack())
 		CreateRoad();
+		
+	if (road && road->getNumPoints() == 0 && arrowRotNode)
+		arrowRotNode->setVisible(false);  // hide when no road
 }
 
 void App::LoadObjects()  // 7
@@ -493,7 +495,7 @@ void App::LoadMisc()  // 9 last
 	if (overlay = mgr.getByName("DebugOverlay"))
 		mgr.destroy(overlay);
 	overlay = mgr.create("DebugOverlay");
-	Ogre::CompositorInstance  *compositor= CompositorManager::getSingleton().getCompositorChain(mSplitMgr->mViewports.front())->getCompositor("gbuffer");
+	Ogre::CompositorInstance  *compositor= CompositorManager::getSingleton().getCompositorChain(mSplitMgr->mViewports.front())->getCompositor("HDR");
 	for (int i=0; i<3; ++i)
 	{
 		// Set up a debug panel
@@ -503,7 +505,8 @@ void App::LoadMisc()  // 9 last
 			"Ogre/DebugTexture" + toStr(i), 
 			ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME);
 		debugMat->getTechnique(0)->getPass(0)->setLightingEnabled(false);
-		TexturePtr depthTexture = compositor->getTextureInstance("mrt_output",i);
+		//TexturePtr depthTexture = compositor->getTextureInstance("mrt_output",i);
+		TexturePtr depthTexture = compositor->getTextureInstance("rt_bloom0",0);
 		if(!depthTexture.isNull())
 		{
 			TextureUnitState *t = debugMat->getTechnique(0)->getPass(0)->createTextureUnitState(depthTexture->getName());
@@ -601,7 +604,6 @@ void App::CreateRoad()
 	road = new SplineRoad(pGame);  // sphere.mesh
 	road->Setup("", 0.7,  terrain, mSceneMgr, *mSplitMgr->mCameras.begin());
 	road->iTexSize = pSet->tex_size;
-	road->bForceShadowCaster = (pSet->shadow_type == 3);
 	
 	String sr = TrkDir()+"road.xml";
 	road->LoadFile(TrkDir()+"road.xml");
@@ -611,6 +613,9 @@ void App::CreateRoad()
 		carModels[i]->ResetChecks(true);
 
 	UpdPSSMMaterials();  ///+~-
+
+	road->bCastShadow = pSet->shadow_type >= 3;
+	road->bRoadWFullCol = pSet->gui.collis_roadw;
 	road->RebuildRoadInt();
 }
 

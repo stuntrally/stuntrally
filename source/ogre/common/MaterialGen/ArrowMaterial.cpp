@@ -34,7 +34,8 @@ void ArrowMaterialGenerator::generate()
 	pass1->setDepthFunction(CMPF_ALWAYS_PASS);
 	pass1->setVertexProgram(mVertexProgram->getName());
 	pass1->setFragmentProgram(mFragmentProgram->getName());
-	
+	pass1->setFog(true); // turn off fixed function fog, we use shaders
+
 	//  Pass 2 -----------------------------------------------------------
 	Ogre::Pass* pass2 = technique->createPass();
 	pass2->setColourWriteEnabled(true);
@@ -42,6 +43,7 @@ void ArrowMaterialGenerator::generate()
 	pass2->setSceneBlending(SBT_TRANSPARENT_ALPHA);
 	pass2->setVertexProgram(mVertexProgram->getName());
 	pass2->setFragmentProgram(mFragmentProgram->getName());
+	pass2->setFog(true); // turn off fixed function fog, we use shaders
 
 	// ----------------------------------------------------------------------- //
 	

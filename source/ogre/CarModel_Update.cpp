@@ -225,11 +225,14 @@ void CarModel::Update(PosInfo& posInfo, PosInfo& posInfoCam, float time)
 		int whRd = posInfo.whRoadMtr[w];
 		float whVel = posInfo.whVel[w] * 3.6f;  //kmh
 		float slide = posInfo.whSlide[w], squeal = posInfo.whSqueal[w];
+			//LogO(" slide:"+fToStr(slide,3,5)+" squeal:"+fToStr(squeal,3,5));
 		float onGr = slide < 0.f ? 0.f : 1.f;
 
 		//  wheel temp
-		wht[w] += squeal * time * 7;
-		wht[w] -= time*6;  if (wht[w] < 0.f)  wht[w] = 0.f;
+		wht[w] += std::min(12.f, std::max(0.f, squeal*8 - slide*2 + squeal*slide*2)*time);
+		wht[w] = std::min(1.5f, wht[w]);  ///*
+		wht[w] -= time*7.f;  if (wht[w] < 0.f)  wht[w] = 0.f;
+			//LogO(toStr(w)+" wht "+fToStr(wht[w],3,5));
 
 		///  emit rates +
 		Real emitS = 0.f, emitM = 0.f, emitD = 0.f;  //paused
@@ -237,22 +240,18 @@ void CarModel::Update(PosInfo& posInfo, PosInfo& posInfoCam, float time)
 		if (!pGame->pause)
 		{
 			Real sq = squeal* std::min(1.f, wht[w]), l = pSet->particles_len * onGr;
-			emitS = sq * (whVel * 30) * l *0.3f;  //..
+			emitS = sq * (whVel * 30) * l * 0.45f;  ///*
 			emitM = slide < 1.4f ? 0.f :  (8.f * sq * std::min(5.f, slide) * l);
 			emitD = (std::min(140.f, whVel) / 3.5f + slide * 1.f ) * l;  
 
-			if (pd[w])  {	//  resume
-				pd[w]->setSpeedFactor(1.f);  ps[w]->setSpeedFactor(1.f);  pm[w]->setSpeedFactor(1.f);
-			if (w < 2)  pb[w]->setSpeedFactor(1.f);  }
-			if (pflW[w])  {
-				pflW[w]->setSpeedFactor(1.f);  pflM[w]->setSpeedFactor(1.f);  pflMs[w]->setSpeedFactor(1.f);  }
+			for (int p=0; p < PAR_ALL; ++p)  //  resume par sys
+				if (par[p][w])  par[p][w]->setSpeedFactor(1.f);
+			if (w < 2 && pb[w])  pb[w]->setSpeedFactor(1.f);
 			if (ph)  ph->setSpeedFactor(1.f);
 		}else{
-			if (pd[w])  {	//  stop par sys
-				pd[w]->setSpeedFactor(0.f);  ps[w]->setSpeedFactor(0.f);  pm[w]->setSpeedFactor(0.f);
-			if (w < 2)  pb[w]->setSpeedFactor(0.f);  }
-			if (pflW[w])  {
-				pflW[w]->setSpeedFactor(0.f);  pflM[w]->setSpeedFactor(0.f);  pflMs[w]->setSpeedFactor(0.f);  }
+			for (int p=0; p < PAR_ALL; ++p)  //  stop par sys
+				if (par[p][w])  par[p][w]->setSpeedFactor(0.f);
+			if (w < 2 && pb[w])  pb[w]->setSpeedFactor(0.f);
 			if (ph)  ph->setSpeedFactor(0.f);
 			//if (whTrl[w])
 			//	whTrl[w]->setFade 0
@@ -276,56 +275,62 @@ void CarModel::Update(PosInfo& posInfo, PosInfo& posInfoCam, float time)
 		Vector3 vpos = posInfo.whPos[w];
 		if (pSet->particles)
 		{
-			if (ps[w] && sc->td.layerRoad.smoke > 0.f/*&& !sc->ter*/)  // only at vdr road
-			{			//  smoke
-				ParticleEmitter* pe = ps[w]->getEmitter(0);
-				pe->setPosition(vpos + posInfo.carY * wR*0.7f);
-				/**/ps[w]->getAffector(0)->setParameter("alpha", toStr(-0.4f - 0.07f/2.4f * whVel));
-				/**/pe->setTimeToLive( std::max(0.1, 2 - whVel/2.4f * 0.04) );  // fade,live
+			ParticleSystem* ps = par[PAR_Smoke][w];
+			if (ps && sc->td.layerRoad.smoke > 0.f)
+			{	//  smoke
+				ParticleEmitter* pe = ps->getEmitter(0);
+				pe->setPosition(vpos + posInfo.carY * wR*0.7f);  ///*
+				ps->getAffector(0)->setParameter("alpha", toStr(-0.2f - 0.023f * whVel));  // fade out speed
+				pe->setTimeToLive( std::max(0.12f, 2.f - whVel * 0.06f) );  // live time
 				pe->setDirection(-posInfo.carY);	pe->setEmissionRate(emitS);
 			}
-			if (pm[w])	//  mud
-			{	ParticleEmitter* pe = pm[w]->getEmitter(0);
+			ps = par[PAR_Mud][w];
+			if (ps)	//  mud
+			{	ParticleEmitter* pe = ps->getEmitter(0);
 				//pe->setDimensions(sizeM,sizeM);
 				pe->setPosition(vpos + posInfo.carY * wR*0.7f);
 				pe->setDirection(-posInfo.carY);	pe->setEmissionRate(emitM);
 			}
-			if (pd[w])	//  dust
-			{	pd[w]->setDefaultDimensions(sizeD,sizeD);
-				ParticleEmitter* pe = pd[w]->getEmitter(0);
+			ps = par[PAR_Dust][w];
+			if (ps)	//  dust
+			{	ps->setDefaultDimensions(sizeD,sizeD);
+				ParticleEmitter* pe = ps->getEmitter(0);
 				pe->setPosition(vpos + posInfo.carY * wR*0.51f);
 				pe->setDirection(-posInfo.carY);	pe->setEmissionRate(emitD);
 			}
 
 			//  fluids .::.
+			ps = par[PAR_Water][w];
 			int idPar = posInfo.whP[w];
-			if (pflW[w])  //  Water ~
+			if (ps)  //  Water ~
 			{
 				float vel = posInfo.speed;  // depth.. only on surface?
 				bool e = idPar == 0 && ghPar &&  vel > 10.f && posInfo.whH[w] < 1.f;
 				float emitW = e ?  std::min(80.f, 3.0f * vel)  : 0.f;
 
-				ParticleEmitter* pe = pflW[w]->getEmitter(0);
+				ParticleEmitter* pe = ps->getEmitter(0);
 				pe->setPosition(vpos + posInfo.carY * wR*0.51f);
 				pe->setDirection(-posInfo.carY);	pe->setEmissionRate(emitW * pSet->particles_len);
 			}
-			if (pflM[w])  //  Mud ^
+			ps = par[PAR_MudHard][w];
+			if (ps)  //  Mud ^
 			{
 				float vel = Math::Abs(posInfo.whAngVel[w]);
 				bool e = idPar == 2 && ghPar &&  vel > 30.f;
 				float emitM = e ?  posInfo.whH[w] * std::min(80.f, 1.5f * vel)  : 0.f;
 
-				ParticleEmitter* pe = pflM[w]->getEmitter(0);
+				ParticleEmitter* pe = ps->getEmitter(0);
 				pe->setPosition(vpos + posInfo.carY * wR*0.51f);
 				pe->setDirection(-posInfo.carY);	pe->setEmissionRate(emitM * pSet->particles_len);
 			}
-			if (pflMs[w])  //  Mud soft ^
+			ps = par[PAR_MudSoft][w];
+			if (ps)  //  Mud soft ^
 			{
 				float vel = Math::Abs(posInfo.whAngVel[w]);
 				bool e = idPar == 1 && ghPar &&  vel > 30.f;
 				float emitM = e ?  posInfo.whH[w] * std::min(160.f, 3.f * vel)  : 0.f;
 
-				ParticleEmitter* pe = pflMs[w]->getEmitter(0);
+				ParticleEmitter* pe = ps->getEmitter(0);
 				pe->setPosition(vpos + posInfo.carY * wR*0.51f);
 				pe->setDirection(-posInfo.carY);	pe->setEmissionRate(emitM * pSet->particles_len);
 			}
@@ -485,14 +490,9 @@ void CarModel::UpdParsTrails(bool visible)
 			pb[w])	{	pb[w]->setVisible(vis);  pb[w]->setRenderQueueGroup(grp);  }
 		if (whTrl[w]){  whTrl[w]->setVisible(visible && pSet->trails);  whTrl[w]->setRenderQueueGroup(grp);  }
 		grp = RQG_CarParticles;
-		if (ps[w])	{	ps[w]->setVisible(vis);  ps[w]->setRenderQueueGroup(grp);  }  // vdr only && !sc.ter
-		if (pm[w])	{	pm[w]->setVisible(vis);  pm[w]->setRenderQueueGroup(grp);  }
-		if (pd[w])	{	pd[w]->setVisible(vis);  pd[w]->setRenderQueueGroup(grp);  }
-
-		if (pflW[w]){	pflW[w]->setVisible(vis);  pflW[w]->setRenderQueueGroup(grp);  }
-		if (pflM[w]){	pflM[w]->setVisible(vis);  pflM[w]->setRenderQueueGroup(grp);  }
-		if (pflMs[w]){	pflMs[w]->setVisible(vis);  pflMs[w]->setRenderQueueGroup(grp);  }
-		if (ph)		{	ph->setVisible(vis);     ph->setRenderQueueGroup(grp);     }
+		for (int p=0; p < PAR_ALL; ++p)
+			if (par[p][w]){  par[p][w]->setVisible(vis);  par[p][w]->setRenderQueueGroup(grp);  }
+		if (ph && w==0)	{	ph->setVisible(vis);     ph->setRenderQueueGroup(grp);  }
 	}
 }
 

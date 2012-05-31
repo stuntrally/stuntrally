@@ -40,7 +40,7 @@ HighLevelGpuProgramPtr MaterialGenerator::createFragmentProgram()
 
 	if(MRTSupported())
 	{
-		ret->setParameter("profiles", "ps_4_0 ps_3_0 fp40");
+		ret->setParameter("profiles", "ps_4_0 ps_3_0 fp40 arbfp1");
 	}
 	else
 	{
@@ -547,7 +547,9 @@ void MaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::StrStrea
 				"	float reflectionFactor = tex2D(reflectivityMap, texCoord.xy).r * reflAmount; \n";
 		}
 		outStream << 
+		
 		"	float3 r = reflect( eyeVector, normal ); \n" // calculate reflection vector
+		"	r.z = -r.z; \n"
 		"	float4 envColor = texCUBE(envMap, r); \n"; // fetch cube map
 
 		if (fpNeedLighting()) outStream <<
@@ -627,15 +629,15 @@ void MaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::StrStrea
 		//outStream <<  "float4 viewPosition = mul(vMat, float4(worldPosition.xyz,1.0)); \n";
 		
 		if (fpNeedNormal() && (!(needEnvMap() || needNormalMap() || fpNeedLighting()))) outStream <<
-			"	float3 viewPosition = float3(iNormal.z, position.w, viewNormal.w); \n";
+			"	float viewDepth = iNormal.z; \n";
 		else outStream <<
-			"	float3 viewPosition = float3(inEyeVector.w, position.w, viewNormal.w); \n";
+			"	float viewDepth = inEyeVector.w; \n";
 			
 		if(UsePerPixelNormals())
 		{
 			outStream <<  "float4 viewNormal = mul(wvMat, pNormal); \n";
 		}
-		outStream <<  "oColor1 = float4(length(viewPosition) / far, normalize(viewNormal.xyz).xyz); \n";
+		outStream <<  "oColor1 = float4(viewDepth, normalize(viewNormal.xyz).xyz); \n";
 		//if(mDef->mProps->transparent)
 		//{
 			// multiply alpha
@@ -646,11 +648,23 @@ void MaterialGenerator::generateFragmentProgramSource(Ogre::StringUtil::StrStrea
 		if(StringUtil::startsWith(this->mDef->getName(), "sky/"))
 		{
 			outStream <<  "float Luminance = (0.2126*diffuseTex.r) + (0.7152*diffuseTex.g) + (0.0722*diffuseTex.b); \n";	
-			outStream <<  "oColor2 = float4(depth,Luminance*0.3,1,1); \n";	
+			outStream <<  "oColor2 = float4(depth,Luminance*0.3,texCoord.z/position.w,0); \n";	
 		}
 		else
 		{
-			outStream <<  "oColor2 = float4(depth,0,1,1); \n";
+		//	if(StringUtil::startsWith(this->mDef->getName(), "cartire"))
+		//	{
+		//		outStream <<  "oColor2 = float4(depth,0,texCoord.z/position.w,0); \n";
+		//	}
+		//	else 
+				if(StringUtil::startsWith(this->mDef->getName(), "car_"))
+			{
+				outStream <<  "oColor2 = float4(depth,0,texCoord.z/position.w,1); \n";
+			}
+			else
+			{
+					outStream <<  "oColor2 = float4(depth,0,texCoord.z/position.w,0); \n";
+			}
 		}
 	}
 	outStream << 

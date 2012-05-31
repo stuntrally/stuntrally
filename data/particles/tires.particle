@@ -267,22 +267,18 @@ particle_system Smoke
 	    direction 1.2 0.2 -0.8
 
 	    emission_rate 100
-		time_to_live 2
+		time_to_live 3
 	    velocity_min 0.50
 	    velocity_max 0.80
 
-        colour 0.9 0.9 0.9 0.4
-        //colour_range_start  0.8 0.8 0.8
-        //colour_range_end  1 1 1
+        colour 0.8 0.8 0.8 0.15
+        colour_range_start 0.8 0.8 0.8 0.1
+        colour_range_end   0.8 0.8 0.8 0.2
     }
 
-    // Fader
     affector ColourFader
     {
-        //red -0.05
-        //green -0.05
-        //blue -0.05
-        alpha -0.6
+        alpha -0.4
     }
 
     affector Rotator
@@ -295,6 +291,6 @@ particle_system Smoke
 
     affector Scaler
     {
-   	    rate 0.40
+   	    rate 0.10
     }
 }

@@ -1,0 +1,148 @@
+struct VIn
+{
+    float4 p   : POSITION;
+    float3 n   : NORMAL;
+    float2 uv  : TEXCOORD0;
+};
+
+struct VOut
+{
+    float4 p   : POSITION;
+    float2 uv  : TEXCOORD0;
+	float4 ScreenPosition : TEXCOORD3;
+};
+
+VOut EPF_MotionBlur_VS(VIn IN,
+ uniform float4x4 wvp 
+)
+{
+    VOut OUT;
+    OUT.p = mul(wvp, IN.p);
+	OUT.ScreenPosition = OUT.p; 
+    // clean up inaccuracies for the UV coords
+    float2 uv = sign(IN.p);
+    // convert to image space
+    uv = (float2(uv.x, -uv.y) + 1.0) * 0.5;
+    OUT.uv = uv;
+    return OUT;
+}
+
+// for ps_4_0, we want to use tex2Dlod because it's faster
+ps_4_0 float4 TEX2DLOD(sampler2D map, float2 uv)
+{
+    return tex2Dlod(map, float4(uv.xy, 0, 0));
+}
+
+// for ps_3_0, we want to use tex2Dlod because it's faster
+ps_3_0 float4 TEX2DLOD(sampler2D map, float2 uv)
+{
+    return tex2Dlod(map, float4(uv.xy, 0, 0));
+}
+
+float4 TEX2DLOD(sampler2D map, float2 uv)
+{
+    return tex2D(map, uv);
+}
+
+
+#define NUM_SAMPLES 8
+
+float4 EPF_MotionBlur_PS(
+   float4 p   : POSITION,
+   float2 texCoord: TEXCOORD0,
+//   float3 ray : TEXCOORD1,
+//   float2 sTexCoord: TEXCOORD2,
+  float4 ScreenPosition : TEXCOORD3,
+
+   sampler2D SceneSampler : TEXUNIT0,
+   sampler2D DepthSampler : TEXUNIT1,
+    
+   uniform float4x4 EPF_ViewProjectionInverseMatrix,
+   uniform float4x4 EPF_PreviousViewProjectionMatrix
+   ,uniform float intensity
+) : COLOR
+{
+	float2 tc = texCoord;
+
+	float depth = tex2D(DepthSampler, texCoord).z;
+	float mask = tex2D(DepthSampler, texCoord).w;
+	float4 centerColor = tex2D(SceneSampler, tc);
+	//	return float4(mask,mask,mask,1);
+	// Get the depth buffer value at this pixel
+	float zOverW = depth;
+	float4 H = float4(-(tc.x * 2 - 1),-( (1 - tc.y) * 2 - 1),  zOverW, 1);  
+//	float4 H = float4(-(tc.x * 2 - 1),1+( (1 - tc.y) * 2 - 1),  zOverW, 1);  
+	//  return float4(tc.y,0,0,1);  
+	// Transform by the view-projection inverse
+	float4 D = mul(EPF_ViewProjectionInverseMatrix, H);  
+	// Divide by w to get the world position
+	float4 worldPos = D / D.w;  
+	//   Then compute the per-pixel velocity vectors that determine the direction to blur the image
+	//
+	// Current viewport position  
+	float4 currentPos = H;  
+	// Use the world position, and transform by the previous view-projection matrix
+	// float4 previousPos = mul(worldPos, EPF_PreviousViewProjectionMatrix);  
+	// Use matrix - column vector multiplication (because OGRE works this way and provides xforms this way!)
+	float4 previousPos = mul(EPF_PreviousViewProjectionMatrix, worldPos);  
+	// Convert to nonhomogeneous points [-1,1] by dividing by w.  
+	previousPos /= previousPos.w;  
+	// Use this frame's position and last frame's to compute the pixel velocity  
+	float2 velocity = (currentPos - previousPos)/2.f; 
+	
+	velocity*=float2(-intensity,intensity);
+	velocity = clamp(velocity,float2(-.001,-.001),float2(.001,.001));
+
+	//return float4(velocity.y,velocity.y,velocity.y,1);
+	//   Then use the velocity vector at the current pixel to sample the color buffer multiple times to achieve the motion blur effect
+	//
+	// Get the initial color at this pixel 
+	float4 base = tex2D(SceneSampler, tc);  
+	float4 color = base;
+    
+	tc += velocity;  
+	for(int i = 1; i < NUM_SAMPLES; ++i, tc += velocity)  
+	{  
+		// Sample the color buffer along the velocity vector
+		float4 currentColor = tex2D(SceneSampler, tc);  
+		// Add the current color to our color sum
+		color += currentColor;  
+	}  
+	// Average all of the samples to get the final blur color.  
+	float4 finalColor = color / NUM_SAMPLES;  
+	if( mask > 0 )
+	{
+		return centerColor;
+	}
+	else
+	{
+		return finalColor;
+	}
+   
+}
+
+//
+//   Geometry Depth Shaders
+//
+void EPF_MotionBlur_Depth_VS
+(
+   uniform float4x4 wmat, // world view projection xf
+   
+   in float4  pos : POSITION,
+   
+   out float4  oPos : POSITION,
+   out float4 oDepth: TEXCOORD0
+)
+{
+   oPos = mul(wmat,pos);   
+   oDepth = oPos;
+}
+
+float4 EPF_MotionBlur_Depth_PS
+(
+   in float4 depth : TEXCOORD0
+): COLOR0
+{   
+   float d = depth.z/depth.w;
+   return float4(d, d, d, 1);
+}

@@ -13,6 +13,8 @@
 #include "SplitScreen.h"
 #include "common/MaterialGen/MaterialFactory.h"
 #include "../vdrift/settings.h"
+//#include "HDRCompositor.h"
+#include "../vdrift/game.h"
 
 class MotionBlurListener : public Ogre::CompositorInstance::Listener
 {
@@ -77,25 +79,52 @@ protected:
 	float mBloomTexOffsetsHorz[15][4];
 	float mBloomTexOffsetsVert[15][4];
 public:
-	HDRListener();
+	HDRListener(BaseApp * app);
 	virtual ~HDRListener();
 	void notifyViewportSize(int width, int height);
 	void notifyCompositor(Ogre::CompositorInstance* instance);
 	virtual void notifyMaterialSetup(Ogre::uint32 pass_id, Ogre::MaterialPtr &mat);
 	virtual void notifyMaterialRender(Ogre::uint32 pass_id, Ogre::MaterialPtr &mat);
+	BaseApp * mApp;
+	int mViewportWidth,mViewportHeight;
+
 };
 
 Ogre::CompositorInstance::Listener* HDRLogic::createListener(Ogre::CompositorInstance* instance)
 {
-	HDRListener* listener = new HDRListener;
+	HDRListener* listener = new HDRListener(mApp);
 	Ogre::Viewport* vp = instance->getChain()->getViewport();
 	listener->notifyViewportSize(vp->getActualWidth(), vp->getActualHeight());
+	listener->mViewportWidth = vp->getActualWidth();
+	listener->mViewportHeight = vp->getActualHeight();
 	listener->notifyCompositor(instance);
 	return listener;
+
+/*	HDRCompositor* listener = new HDRCompositor(mApp);
+	listener->SetToneMapper(compositor->GetToneMapper());
+	listener->SetGlareType(compositor->GetGlareType());
+	listener->SetStarType(compositor->GetStarType());
+	listener->SetAutoKeying(compositor->GetAutoKeying());
+	listener->SetKey(compositor->GetKey());
+	listener->SetLumAdapdation(compositor->GetLumAdaption());
+	listener->SetAdaptationScale(compositor->GetAdaptationScale());
+	listener->SetStarPasses(compositor->GetStarPasses());
+	listener->SetGlarePasses(compositor->GetGlarePasses());
+	listener->SetGlareStrength(compositor->GetGlareStrength());
+	listener->SetStarStrength(compositor->GetStarStrength());
+		
+	Ogre::Viewport* vp = instance->getChain()->getViewport();
+	listener->notifyViewportSize(vp->getActualWidth(), vp->getActualHeight());
+	return listener;
+	*/
+}
+void HDRLogic::setApp(BaseApp* app)
+{
+	mApp = app;
 }
 
-
-HDRListener::HDRListener()
+HDRListener::HDRListener(BaseApp* app)
+	:mApp(app)
 {
 }
 HDRListener::~HDRListener()
@@ -163,7 +192,7 @@ void HDRListener::notifyCompositor(Ogre::CompositorInstance* instance)
 
 void HDRListener::notifyMaterialSetup(Ogre::uint32 pass_id, Ogre::MaterialPtr &mat)
 {
-	//  Prepare the fragment params offsets
+//  Prepare the fragment params offsets
 	switch (pass_id)
 	{
 	//case 994: // rt_lum4
@@ -207,6 +236,38 @@ void HDRListener::notifyMaterialSetup(Ogre::uint32 pass_id, Ogre::MaterialPtr &m
 
 void HDRListener::notifyMaterialRender(Ogre::uint32 pass_id, Ogre::MaterialPtr &mat)
 {
+	
+	if(pass_id == 600 || pass_id == 800)
+	{
+		Ogre::Pass *pass = mat->getBestTechnique()->getPass(0);
+		Ogre::GpuProgramParametersSharedPtr params = pass->getFragmentProgramParameters();
+    
+		if (params->_findNamedConstantDefinition("toneMapSettings"))
+		{
+			Ogre::Vector4 toneMapSettings(1-mApp->pSet->hdrParam1,mApp->pSet->hdrParam2,mApp->pSet->hdrParam3,1.0);
+			params->setNamedConstant("toneMapSettings", toneMapSettings);
+		}
+		if (params->_findNamedConstantDefinition("bloomSettings"))
+		{
+			Ogre::Vector4 bloomSettings(mApp->pSet->bloomorig*2,mApp->pSet->bloomintensity,1.0,1.0);
+						params->setNamedConstant("bloomSettings", bloomSettings);
+		}
+		if (params->_findNamedConstantDefinition("vignettingSettings"))
+		{
+			Ogre::Vector4 vignettingSettings(mApp->pSet->vignettingRadius,mApp->pSet->vignettingDarkness,1.0,1.0);
+			params->setNamedConstant("vignettingSettings", vignettingSettings);
+		}
+	
+	}
+	else if(pass_id == 989)
+	{
+		Ogre::Pass *pass = mat->getBestTechnique()->getPass(0);
+		Ogre::GpuProgramParametersSharedPtr params = pass->getFragmentProgramParameters();
+		if (params->_findNamedConstantDefinition("AdaptationScale"))
+		{
+			params->setNamedConstant("AdaptationScale", mApp->pSet->hdrAdaptationScale);
+		}
+	}
 }
 
 
@@ -626,10 +687,16 @@ FilmGrainListener::~FilmGrainListener()
 
 void FilmGrainListener::notifyMaterialSetup(Ogre::uint32 pass_id, Ogre::MaterialPtr &mat)
 {
+	
+}
+
+
+void FilmGrainListener::notifyMaterialRender(Ogre::uint32 pass_id, Ogre::MaterialPtr &mat)
+{
 	if(pass_id == 1)
 	{
 		float noiseIntensity = 0.1f;
-		float exposure = 0.1f;
+		float exposure = 1-mApp->pSet->hdrParam3;
 		Ogre::Vector4  grainparams(1.0f / mViewportWidth, 1.0f / mViewportHeight, noiseIntensity, exposure);
 
 		Ogre::Pass *pass = mat->getBestTechnique()->getPass(0);
@@ -641,8 +708,107 @@ void FilmGrainListener::notifyMaterialSetup(Ogre::uint32 pass_id, Ogre::Material
 }
 
 
-void FilmGrainListener::notifyMaterialRender(Ogre::uint32 pass_id, Ogre::MaterialPtr &mat)
+class CameraBlurListener : public Ogre::CompositorInstance::Listener
 {
+public:
+	CameraBlurListener(BaseApp* app);
+	virtual ~CameraBlurListener();
 	
+	App * mApp;
+	Ogre::Quaternion m_pPreviousOrientation;
+	Ogre::Vector3 m_pPreviousPosition;
 	
+	Ogre::Matrix4 prevviewproj;
+	bool mRequiresTextureFlipping;
+	Ogre::CompositorInstance*  compositorinstance;
+	virtual void notifyMaterialSetup(Ogre::uint32 pass_id, Ogre::MaterialPtr &mat);
+	virtual void notifyMaterialRender(Ogre::uint32 pass_id, Ogre::MaterialPtr &mat);
+};
+
+CameraBlurLogic::CameraBlurLogic(BaseApp* app)
+{
+	pApp = app;
+}
+
+Ogre::CompositorInstance::Listener* CameraBlurLogic::createListener(Ogre::CompositorInstance*  instance)
+{
+	CameraBlurListener* listener = new CameraBlurListener(pApp);
+	Ogre::Viewport* vp = instance->getChain()->getViewport();
+listener->compositorinstance=instance;
+//	listener->mRequiresTextureFlipping  = instance->getTechnique()->getOutputTargetPass()->get("scene",0)->requiresTextureFlipping();
+	return listener;
+}
+
+CameraBlurListener::CameraBlurListener(BaseApp* app) : mApp(0)
+{
+	mApp = (App*)app;
+}
+
+CameraBlurListener::~CameraBlurListener()
+{
+}
+
+void CameraBlurListener::notifyMaterialSetup(Ogre::uint32 pass_id, Ogre::MaterialPtr &mat)
+{
+}
+
+void CameraBlurListener::notifyMaterialRender(Ogre::uint32 pass_id, Ogre::MaterialPtr &mat)
+{
+	if (pass_id == 999) 
+	{
+		if(mApp->pGame->pause == false)
+		{
+			//acquire the texture flipping attribute in the first frame
+			if(compositorinstance)
+			{
+				mRequiresTextureFlipping  = compositorinstance->getRenderTarget("previousscene")->requiresTextureFlipping();
+				compositorinstance=NULL;
+			}
+			// this is the camera you're using
+			#ifndef ROAD_EDITOR
+			Ogre::Camera *cam = mApp->mSplitMgr->mCameras.front();
+			#else
+			Ogre::Camera *cam = mApp->mCamera;
+			#endif
+			// get the pass
+			Ogre::Pass *pass = mat->getBestTechnique()->getPass(0);
+			Ogre::GpuProgramParametersSharedPtr  params = pass->getFragmentProgramParameters();
+       
+			const Ogre::RenderTarget::FrameStats& stats =  mApp->getWindow()->getStatistics();
+			float m_lastFPS =stats.lastFPS;
+	
+			Ogre::Matrix4 projectionMatrix   = cam->getProjectionMatrix();
+			if (mRequiresTextureFlipping)
+            {
+                // Because we're not using setProjectionMatrix, this needs to be done here
+                // Invert transformed y
+                projectionMatrix[1][0] = -projectionMatrix[1][0];
+                projectionMatrix[1][1] = -projectionMatrix[1][1];
+                projectionMatrix[1][2] = -projectionMatrix[1][2];
+                projectionMatrix[1][3] = -projectionMatrix[1][3];
+            }
+			Ogre::Matrix4 iVP = (projectionMatrix * cam->getViewMatrix()).inverse();
+
+			if (params->_findNamedConstantDefinition("EPF_ViewProjectionInverseMatrix"))
+				 params->setNamedConstant("EPF_ViewProjectionInverseMatrix", iVP);
+			if (params->_findNamedConstantDefinition("EPF_PreviousViewProjectionMatrix"))
+				params->setNamedConstant("EPF_PreviousViewProjectionMatrix", prevviewproj);
+			if (params->_findNamedConstantDefinition("intensity"))
+				params->setNamedConstant("intensity", mApp->pSet->motionblurintensity);
+	
+			float interpolationFactor = m_lastFPS * 0.03f ; //* m_timeScale m_timeScale is a multiplier to control motion blur interactively
+			Ogre::Quaternion current_orientation = cam->getDerivedOrientation();
+			Ogre::Vector3 current_position = cam->getDerivedPosition();
+			Ogre::Quaternion estimatedOrientation = Ogre::Quaternion::Slerp(interpolationFactor, current_orientation, (m_pPreviousOrientation));
+			Ogre::Vector3 estimatedPosition    = (1-interpolationFactor) * current_position + interpolationFactor * (m_pPreviousPosition);
+			Ogre::Matrix4 prev_viewMatrix = Ogre::Math::makeViewMatrix(estimatedPosition, estimatedOrientation);//.inverse().transpose();
+			// compute final matrix
+			prevviewproj = projectionMatrix * prev_viewMatrix;
+
+			// update position and orientation for next update time
+			m_pPreviousOrientation = current_orientation;
+			m_pPreviousPosition = current_position;			
+		}
+
+	}
 }

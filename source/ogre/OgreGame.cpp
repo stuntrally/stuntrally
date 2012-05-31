@@ -126,6 +126,10 @@ String App::TrkDir() {
 String App::PathListTrk(int user) {
 	int u = user == -1 ? bListTrackU : user;	return pathTrk[u] + sListTrack;  }
 
+String App::PathListTrkPrv(int user){
+	int u = user == -1 ? bListTrackU : user;	return pathTrk[u] + sListTrack + "/preview/";  }
+	
+
 App::~App()
 {
 	mShutDown = true;

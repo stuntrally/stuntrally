@@ -8,10 +8,12 @@
 #include "../network/masterclient.hpp"
 #include "../network/gameclient.hpp"
 #include "common/HWMouse.h"
+#include "common/MaterialGen/MaterialFactory.h"
 
 #include "Localization.h"
 #include "SplitScreen.h"
 #include "common/QTimer.h"
+#include "Compositor.h"
 
 #include "CarModel.h"
 #include "FollowCamera.h"
@@ -125,7 +127,8 @@ void BaseApp::Run( bool showDialog )
 //  ctor
 //-------------------------------------------------------------------------------------
 BaseApp::BaseApp()
-	:mRoot(0), mSceneMgr(0), mWindow(0), mHDRLogic(0), mMotionBlurLogic(0),mSSAOLogic(0)
+	:mRoot(0), mSceneMgr(0), mWindow(0), mHDRLogic(0), mMotionBlurLogic(0),mSSAOLogic(0),
+	mCameraBlurLogic(0)
 	,mGodRaysLogic(0), mSoftParticlesLogic(0), mGBufferLogic(0)
 	,mDepthOfFieldLogic(0), mFilmGrainLogic(0)
 	,mShaderGenerator(0),mMaterialMgrListener(0)
@@ -297,6 +300,7 @@ bool BaseApp::setup()
 
 	mRoot->loadPlugin(PATHMANAGER::GetOgrePluginDir() + "/Plugin_ParticleFX" + D_SUFFIX);
 	mRoot->loadPlugin(PATHMANAGER::GetOgrePluginDir() + "/Plugin_CgProgramManager" + D_SUFFIX);
+	//mRoot->loadPlugin(PATHMANAGER::GetOgrePluginDir() + "/Plugin_OctreeSceneManager" + D_SUFFIX);  // test, bad
 
 	#ifdef _DEBUG
 	Ogre::LogManager::getSingleton().setLogDetail(LL_BOREME);//

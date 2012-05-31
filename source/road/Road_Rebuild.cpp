@@ -446,8 +446,9 @@ void SplineRoad::RebuildRoadInt()
 					//  color - for minimap preview
 					//  ---~~~====~~~---
 					Real brdg = min(1.f, abs(vP.y - yTer) * 0.4f);  //par ] height diff mul
-					Real h = max(0.f, 1.f - abs(vP.y - yTer) / 30.f);  // for grass
-					Vector4 c(brdg,pipe, /*border-*/(w==0 || w==iw) ? 0.f : 1.f, h);
+					Real h = max(0.f, 1.f - abs(vP.y - yTer) / 30.f);  // for grass dens tex
+					Real blend = 0.f;  //rand()%1000/1000.f; // TODO: blend 2materials...?
+					Vector4 c(brdg,pipe, blend, h);
 
 					//>  data road
 					pos.push_back(vP);	norm.push_back(vN);
@@ -503,8 +504,8 @@ void SplineRoad::RebuildRoadInt()
 				for (int w=0; w <= iwC; ++w)  // width +1
 				{
 					Real ht = (h==0) ? 0.f : vL0.y - mTerrain->getHeightAtWorldPosition(vL0);
-					Real a = Real(w)/iwC *2*PI_d,
-						x = r*cosf(a+PI_d/4.f), y = -r*sinf(a+PI_d/4.f);
+					Real a = Real(w)/iwC *2*PI_d,  //+PI_d/4.f
+						x = r*cosf(a), y = r*sinf(a);
 
 					Vector3 vlXZ(vl.x,0,vl.z);	Real fl = 1.f/max(0.01f, vlXZ.length());
 					Vector3 vP = vL0 + fl * vl * x + vwn * y;
@@ -636,13 +637,13 @@ void SplineRoad::RebuildRoadInt()
 				if (wall)
 				{
 					meshW = MeshManager::getSingleton().createManual(sMeshW,"General");
-					/*SubMesh* sm =*/ meshW->createSubMesh();
+					meshW->createSubMesh();
 				}
 				bool cols = !posC.empty() && lod == 0;  // cols have no lods
 				if (cols)
 				{
 					meshC = MeshManager::getSingleton().createManual(sMeshC,"General");
-					/*SubMesh* sm =*/ meshC->createSubMesh();
+					meshC->createSubMesh();
 				}
 				//*=*/wall = 0;  cols = 0;  // test
 
@@ -660,12 +661,12 @@ void SplineRoad::RebuildRoadInt()
 					for (int w=0; w < iwW; ++w)  // width
 					{
 						int f = iiW + w, f1 = f + (iwW+1);
-						idx.push_back(f+0);  idx.push_back(f1+1);  idx.push_back(f+1);
-						idx.push_back(f+0);  idx.push_back(f1+0);  idx.push_back(f1+1);
+						idx.push_back(f+1);  idx.push_back(f1+1);  idx.push_back(f+0);
+						idx.push_back(f1+1);  idx.push_back(f1+0);  idx.push_back(f+0);
 					}	}
 					
 					//  front plates start,end
-					const int Wid[4/*6*/][3] = {{0,1,2},{0,2,3},{7,4,5},{7,5,6}/*,{0,3,7},{7,3,4}*/};
+					const int Wid[4/*6*/][3] = {{2,1,0},{3,2,0},{5,4,7},{6,5,7}/*,{7,3,0},{4,3,7}*/};
 					int i,f, b = posW.size()-iwW-1;
 					if (!isPipe(seg))  //  no fronts in pipes
 					for (f=0; f < 4; ++f)
@@ -709,21 +710,22 @@ void SplineRoad::RebuildRoadInt()
 				Entity* ent = 0, *entW = 0, *entC = 0;
 				SceneNode* node = 0, *nodeW = 0, *nodeC = 0;
 					AddMesh(mesh, sMesh, aabox, &ent, &node, "."+sEnd);
-				if (wPglass) {
-					ent->setRenderQueueGroup(RQG_PipeGlass);
+				if (wPglass)
+				{	ent->setRenderQueueGroup(RQG_PipeGlass);
 					//ent->setCastShadows(true);
 				}
 				if (wall /*&& !posW.empty()*/)
 				{	AddMesh(meshW, sMeshW, aabox, &entW, &nodeW, "W."+sEnd);
-					entW->setCastShadows(true);  }  // only cast
+					entW->setCastShadows(true);  // only cast
+				}
 				if (cols /*&& !posC.empty()*/)
 				{	AddMesh(meshC, sMeshC, aabox, &entC, &nodeC, "C."+sEnd);
 					entC->setVisible(true);  
-					if (bForceShadowCaster)
-						entC->setCastShadows(true);  // col vis?
+					if (bCastShadow)
+						entC->setCastShadows(true);
 				}
-				//if (bForceShadowCaster)
-					//ent->setCastShadows(true);
+				if (bCastShadow && !onTer)
+					ent->setCastShadows(true);
 
 				
 				/**/
@@ -795,7 +797,7 @@ void SplineRoad::RebuildRoadInt()
 						for (int i = 0; i < iLmrgW-1; ++i)  // length
 						{	int iiW = i* (iwW+1);
 						for (int w=0; w < iwW; ++w)  // width
-						if (w==0 || w == iwW-1)  // only 2 sides|_| optym+
+						if (bRoadWFullCol || w==0 || w == iwW-1)  // only 2 sides|_| optym+
 						{
 							int f = iiW + w, f1 = f + (iwW+1);
 							addTriB(posW[f+0], posW[f1+1], posW[f+1]);
@@ -803,7 +805,7 @@ void SplineRoad::RebuildRoadInt()
 						}	}
 						
 						btCollisionShape* shape = new btBvhTriangleMeshShape(trimesh, true);
-						shape->setUserPointer((void*)7777);  //-
+						shape->setUserPointer((void*)7777);  //-  + road mtr id todo...
 						
 						//btRigidBody::btRigidBodyConstructionInfo infoW(0.f, 0, shape);
 						//infoW.m_restitution = 0.0f;

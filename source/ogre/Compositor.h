@@ -35,18 +35,32 @@ private:
 	ListenerMap mListeners;
 
 };
-
+//class HDRCompositor;
 // The compositor logic for the hdr compositor
 class HDRLogic : public ListenerFactoryLogic
 {
+public:
+	void setApp(BaseApp* app);
+//	HDRCompositor* compositor;
 protected:
 	virtual Ogre::CompositorInstance::Listener* createListener(Ogre::CompositorInstance* instance);
+private:
+	BaseApp * mApp;
 };
 
 class MotionBlurLogic : public ListenerFactoryLogic
 {
 public:
 	MotionBlurLogic(BaseApp* app);
+protected:
+	BaseApp* pApp;
+	virtual Ogre::CompositorInstance::Listener* createListener(Ogre::CompositorInstance* instance);
+};
+
+class CameraBlurLogic : public ListenerFactoryLogic
+{
+public:
+	CameraBlurLogic(BaseApp* app);
 protected:
 	BaseApp* pApp;
 	virtual Ogre::CompositorInstance::Listener* createListener(Ogre::CompositorInstance* instance);

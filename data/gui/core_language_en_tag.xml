@@ -221,6 +221,7 @@
 
 	<Tag name="VegetCol">Vegetation collision</Tag>
 	<Tag name="CarCollis">Cars collision</Tag>
+	<Tag name="RoadWallFullCollis">Road wall full collision</Tag>
 
 	<Tag name="Boost">Boost</Tag>
 	<Tag name="Flip">Flip</Tag>
@@ -288,10 +289,19 @@
 
 	<Tag name="Effects">Effects</Tag>
 	<Tag name="AllEffects">Effects Enabled</Tag>
-	<Tag name="Bloom">Bloom</Tag>
+	<Tag name="HDRTab">HDR</Tag>
+	<Tag name="HDRAdaptationScale">Adapt Scale</Tag>
+	<Tag name="HDRIntensity">Bloom Intensity</Tag>
+	<Tag name="HDROrigImage">Bloom Darken</Tag>
+	<Tag name="HDRParam1">Exposure</Tag>
+	<Tag name="HDRParam2">Brightness</Tag>
+  <Tag name="HDRParam3">Grain</Tag>
+  <Tag name="HDRVignettingRadius">Vignetting Radius</Tag>
+  <Tag name="HDRVignettingDarkness">Vignetting Darken</Tag>
+  <Tag name="Bloom">Bloom</Tag>
 	<Tag name="Intensity">Intensity</Tag>
 	<Tag name="OrigImage">Darken</Tag>
-	<Tag name="HDR">HDR</Tag>
+	<Tag name="HDR">HDR+Bloom</Tag>
 	<Tag name="MotionBlur">Motion Blur</Tag>
 	<Tag name="ssao">SSAO</Tag>
 	<Tag name="godrays">God Rays</Tag>

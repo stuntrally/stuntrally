@@ -1,10 +1,15 @@
 #include "pch.h"
+#include "common/Defines.h"
+#include "common/RenderConst.h"
+#include "common/MaterialGen/MaterialFactory.h"
+#include "CarModel.h" // for CreateModel()
 #include "OgreGame.h"
 #include "../vdrift/game.h"
-#include "CarModel.h" // for CreateModel()
+#include "../vdrift/track.h"
 #include "SplitScreen.h"  //-
-#include "common/RenderConst.h"
 
+#include <boost/filesystem.hpp>
+//#include <Ogre.h>
 #include <OgreMaterialManager.h>
 #include <OgreTechnique.h>
 #include <OgrePass.h>
@@ -13,6 +18,8 @@
 #include <OgreSceneNode.h>
 #include <OgreStaticGeometry.h>
 #include <OgreRenderWindow.h>
+#include <OgrePixelFormat.h>
+#include <OgreTexture.h>
 using namespace Ogre;
 
 
@@ -22,69 +29,67 @@ using namespace Ogre;
 
 void App::CreateVdrTrack()
 {	
+	//  materials  -------------
+	std::string sMatCache = pSet->game.track + ".matdef", sMatOrig = "_" + sMatCache,		sPathCache = PATHMANAGER::GetShaderCacheDir() + "/" + sMatCache, sPathOrig = TrkDir() +"objects/"+ sMatOrig;	bool hasMatOrig = boost::filesystem::exists(sPathOrig), hasMatCache = boost::filesystem::exists(sPathCache);	bool bGenerate = 0;  // set 1 to force generate for new vdrift tracks
+	if (!hasMatOrig && !hasMatCache || bGenerate)
+	{
+		String sMtrs;
+		for (int i=0; i < pGame->track.ogre_meshes.size(); i++)
+		{
+			OGRE_MESH& msh = pGame->track.ogre_meshes[i];
+			if (msh.sky /*&& ownSky*/)  continue;			if (!msh.newMtr)  continue;  //  create material if new
+
+			bool found = true;
+			TexturePtr tex = TextureManager::getSingleton().getByName(msh.material);
+			if (tex.isNull())
+			try{
+				tex = TextureManager::getSingleton().load(msh.material, ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME);  }
+			catch(...){
+				found = false;  }
+			msh.found = found;  // dont create meshes for not found textures, test
+			if (!found)  continue;
+
+			#if 0  // use 0 for some tracks (eg.zandvoort) - have alpha textures for all!
+			if (!tex.isNull() && tex->hasAlpha())
+				msh.alpha = true;  // for textures that have alpha
+			#endif
+
+			if (msh.alpha)
+				sMtrs += "["+msh.material+"]\n"+
+					"	parent = 0vdrAlpha\n"+
+					"	diffuseMap_512 = "+msh.material+"\n";
+			else
+				sMtrs += "["+msh.material+"]\n"+
+					"	parent = 0vdrTrk\n"+
+					"	diffuseMap_512 = "+msh.material+"\n";
+		}		std::ofstream fileout(sPathCache.c_str());
+		if (!fileout)  LogO("Error: Can't save vdrift track matdef!");
+		fileout.write(sMtrs.c_str(), sMtrs.size());
+		fileout.close();
+		hasMatCache = true;
+	}
+
+	//  load .matdef
+	LogO(String("Vdrift track .matdef  has Cache:")+ (hasMatCache?"yes":"no") + "  has Orig:" + (hasMatOrig?"yes":"no"));
+	materialFactory->loadDefsFromFile(hasMatCache ? sMatCache : sMatOrig);
+	materialFactory->generate(true);
+	
+
+	//  meshes  -------------
 	//LogManager::getSingletonPtr()->logMessage( String("---------models----  ogre:") +
 	//	toStr(pGame->track.ogre_meshes.size()) + " mod_lib:" + toStr(pGame->track.model_library.size()) );
-	std::vector<SceneNode*> arr;
-
+	std::vector<Entity*> ents;
 	for (int i=0; i < pGame->track.ogre_meshes.size(); i++)
 	{
 		OGRE_MESH& msh = pGame->track.ogre_meshes[i];
 		if (msh.sky /*&& ownSky*/)  continue;
+		if (!msh.found)  continue;
 
 		//if (strstr(msh.material.c_str(), "tree")!=0)  continue;
 
 		//LogManager::getSingletonPtr()->logMessage( String("---  model: ") +
 		//	msh.name + " mtr:" + msh.material +
 		//" v:" + toStr(msh.mesh->vertices.size()) + " f:" + toStr(msh.mesh->faces.size()) );
-
-		//  create material if new
-		if (msh.newMtr)
-		{
-			#if 0
-			MaterialPtr baseMtr = MaterialManager::getSingleton().getByName("ofsbump");
-
-			MaterialPtr material = baseMtr->clone(msh.material);
-			
-			Pass* pass = material->getTechnique(0)->getPass(0);
-			TextureUnitState* tus = pass->getTextureUnitState(1);
-			if (tus)
-				tus->setTextureName(msh.material);
-
-			//  pssm splits
-			try {
-				pass->getFragmentProgramParameters()->setNamedConstant("pssmSplitPoints", splitPoints);
-			}catch(...) { }
-
-			#else
-			MaterialPtr material = MaterialManager::getSingleton().create(
-				msh.material, ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME);
-
-			Pass* pass = material->getTechnique(0)->getPass(0);
-			pass->createTextureUnitState(msh.material);
-
-			if (msh.alpha)
-			{	material->setReceiveShadows(false);
-				material->setTransparencyCastsShadows(false);
-
-				material->setSceneBlending(SBT_TRANSPARENT_ALPHA);
-		        material->setSeparateSceneBlending(
-					//SBF_SOURCE_COLOUR, SBF_ONE_MINUS_DEST_COLOUR, //fun
-					SBF_SOURCE_ALPHA, SBF_ONE_MINUS_DEST_ALPHA,
-					SBF_SOURCE_ALPHA, SBF_ONE_MINUS_DEST_ALPHA );/**/
-				material->setCullingMode(CULL_NONE);
-
-				//pass->setTransparentSortingForced(true);
-				pass->setTransparentSortingEnabled(false);
-				pass->setAlphaRejectSettings(CMPF_GREATER, 128 /*,true*/);
-			}
-			//pass->setLightingEnabled(true);
-			pass->setAmbient(1.5,1.5,1.5);  //0.9
-			pass->setDiffuse(0.9,0.9,0.9,1);  //0.8
-			pass->setSpecular(0,0,0,1);  //0.2-
-			//pass->setShininess(20);
-			//material->compile();
-			#endif
-		}
 
 		//if (ownSky && msh.sky)
 		if (!msh.sky)
@@ -93,35 +98,25 @@ void App::CreateVdrTrack()
 		//if (!m)  continue;
 		if (msh.sky)
 			m->setCastShadows(false);
-
-		//SceneNode* nd = mSceneMgr->createSceneNode(); 
-		SceneNode* nd = mSceneMgr->getRootSceneNode()->createChildSceneNode();
-		//if (msh.sky)
-		//	nd->scale(Vector3(1,1,1)*5);
-		nd->attachObject(m);
 		
-		//**
-		//sg->addSceneNode(nd);
-		arr.push_back(nd);
+		MeshPtr mp = m->convertToMesh("m"+toStr(i));
+		Entity* e = mSceneMgr->createEntity(mp);
+
+		ents.push_back(e);
 		}
 	}
 
-	StaticGeometry *sg = mSceneMgr->createStaticGeometry("track");  //toStr(i));
-	sg->setRegionDimensions(Vector3::UNIT_SCALE * 400);
-	sg->setOrigin(Vector3(0, 0, 0));
+	//  static geom  -------------
+	StaticGeometry *sg = mSceneMgr->createStaticGeometry("track");
+	sg->setRegionDimensions(Vector3::UNIT_SCALE * 1000);  // 1000
+	sg->setOrigin(Vector3::ZERO);
 	sg->setCastShadows(true);
 
-	//int i=0;
-	for (std::vector<SceneNode*>::iterator it = arr.begin(); it != arr.end(); ++it)
-	{
-		sg->addSceneNode(*it);
-		//mSceneMgr->getRootSceneNode()->removeChild(*it);
-		//i++;
-	}
+	for (std::vector<Entity*>::iterator it = ents.begin(); it != ents.end(); ++it)
+		sg->addEntity(*it, Vector3::ZERO);
+
 	sg->build();
 	//sg->dump("_track-sg.txt");
-	/**/
-	//mSceneMgr->getRootSceneNode()->removeAndDestroyAllChildren();
 }
 
 
@@ -259,20 +254,25 @@ void App::CreateMinimap()
 	float marg = 1.f + 0.1f;  // from border
 	float fMiniX = 1 - fHudSize * marg, fMiniY = 1 - fHudSize*asp * marg;
 
-	//for [4]...
-	ndMap[0] = mSceneMgr->getRootSceneNode()->createChildSceneNode(Vector3(fMiniX,fMiniY,0));
-	ndMap[0]->scale(fHudSize, fHudSize*asp, 1);
-	ndMap[0]->attachObject(m);
+	int plr = 1;  //mSplitMgr->mNumViewports;
+	for (int i=0; i < plr; ++i)
+	{
+		ndMap[i] = mSceneMgr->getRootSceneNode()->createChildSceneNode(Vector3(fMiniX,fMiniY,0));
+		ndMap[i]->scale(fHudSize, fHudSize*asp, 1);
+		ndMap[i]->attachObject(m);
+	}
+	moMap[0] = m;
 	
 	//  car pos tri
-	for (int c=0; c < 5; ++c)
+	/*int plr = mSplitMgr->mNumViewports;
+	for (int c=0; c < plr; ++c)
 	{
 		vMoPos[0][c] = Create2D("hud/CarPos", mSplitMgr->mGuiSceneMgr, 0.4f, true, true);
 		vNdPos[0][c] = ndMap[0]->createChildSceneNode();
 		vNdPos[0][c]->scale(fHudSize*1.5f, fHudSize*1.5f, 1);
-		vNdPos[0][c]->attachObject(vMoPos[0][c]);  //ndPos[i]->setVisible(false);
+		vNdPos[0][c]->attachObject(vMoPos[0][c]);  vNdPos[0][c]->setVisible(false);
 	}
-	ndMap[0]->setVisible(pSet->trackmap);
+	ndMap[0]->setVisible(pSet->trackmap);*/
 }
 
 

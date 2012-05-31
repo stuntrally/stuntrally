@@ -173,11 +173,7 @@ void App::slTerMtr(SL)
 
 //  shadows
 void App::btnShadows(WP){	changeShadows();	}
-
-void App::btnShaders(WP)
-{
-	changeShadows();
-}
+void App::btnShaders(WP){	changeShadows();	}  // should also rebuild road col/wall-
 
 void App::slShadowType(SL)
 {

@@ -68,6 +68,7 @@ public:
 	///  effects
 	class SplitScreenManager* mSplitMgr;
 	class HDRLogic* mHDRLogic; class MotionBlurLogic* mMotionBlurLogic;
+	class CameraBlurLogic* mCameraBlurLogic;
 	class SSAOLogic* mSSAOLogic;
 	class GodRaysLogic* mGodRaysLogic;
 	class SoftParticlesLogic* mSoftParticlesLogic;
@@ -145,6 +146,7 @@ public:
 
 	bool IsFocGuiInput()  {  return isFocGui || isFocRpl;  }
 	bool IsFocGui();
+	Ogre::RenderWindow* getWindow (){ return mWindow;}
 protected:
 
 	///  overlay

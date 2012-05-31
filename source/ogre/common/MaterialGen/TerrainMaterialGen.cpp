@@ -1275,7 +1275,9 @@ namespace Ogre
 
 		outStream << 
 			"	oPos = mul(viewProjMatrix, worldPos);\n"
-			"	oUVMisc.xy = uv.xy;\n";
+			"	oUVMisc.xy = uv.xy;\n"
+			"	oUVMisc.z = oPos.z;\n"
+			"   oUVMisc.w = oPos.w;\n";
 
 		bool fog = terrain->getSceneManager()->getFogMode() != FOG_NONE && tt != RENDER_COMPOSITE_MAP;
 		if (fog)
@@ -1378,7 +1380,7 @@ namespace Ogre
 			//softparticles depth
 			outStream <<  "float4 worldPosition = mul(wMat, float4(position.xyz,1.0)); \n";
 			outStream <<  "	float depth = saturate(length(worldPosition.xyz - cameraPositionWorldSpace.xyz) / far);";
-			outStream <<  "oColor2 = float4(depth,0,1,1); \n";
+			outStream <<  "oColor2 = float4(depth,0,(uvMisc.z)/uvMisc.w,0); \n";
 	
 		}
 		// Final return
@@ -1600,14 +1602,6 @@ namespace Ogre
 				//outStream <<
 				//	"oLightSpacePos" << i << ".z = (oLightSpacePos" << i << ".z - depthRange" << i << ".x) * depthRange" << i << ".w;\n";
 			}
-		}
-
-
-		if (prof->getReceiveDynamicShadowsPSSM())
-		{
-			outStream <<
-				"	// pass cam depth\n"
-				"	oUVMisc.z = oPos.z;\n";
 		}
 
 	}

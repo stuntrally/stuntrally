@@ -42,7 +42,8 @@ void PipeGlassMaterialGenerator::generate()
 	pass1->setDepthBias( mDef->mProps->depthBias );
 	pass1->setDepthWriteEnabled(false);
 	pass1->setCullingMode(CULL_CLOCKWISE);
-	
+	pass1->setFog(true);
+
 	Ogre::TextureUnitState* tu = pass1->createTextureUnitState( mDiffuseMap );
 	tu->setName("diffuseMap");
 	tu->setTextureAddressingMode(mDef->mProps->textureAddressMode);
@@ -58,7 +59,8 @@ void PipeGlassMaterialGenerator::generate()
 	pass2->setDepthBias( mDef->mProps->depthBias );
 	pass2->setDepthWriteEnabled(false);
 	pass2->setCullingMode(CULL_ANTICLOCKWISE);
-	
+	pass2->setFog(true);
+
 	tu = pass2->createTextureUnitState( mDiffuseMap );
 	tu->setName("diffuseMap");
 	tu->setTextureAddressingMode(mDef->mProps->textureAddressMode);

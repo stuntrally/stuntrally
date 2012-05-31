@@ -39,13 +39,13 @@ TRACK::TRACK(std::ostream & info, std::ostream & error)
   loaded(false),
   cull(false)
 {
-	surface.type = TRACKSURFACE::ASPHALT;
-	surface.bumpWaveLength = 1;
-	surface.bumpAmplitude = 0;
-	surface.frictionNonTread = 1;
-	surface.frictionTread = 1;
-	surface.rollResistanceCoefficient = 1;
-	surface.rollingDrag = 0;
+	roadSurf.type = TRACKSURFACE::ASPHALT;
+	roadSurf.bumpWaveLength = 1;
+	roadSurf.bumpAmplitude = 0;
+	roadSurf.frictionNonTread = 1;
+	roadSurf.frictionTread = 1;
+	roadSurf.rollResistanceCoefficient = 1;
+	roadSurf.rollingDrag = 0;
 }
 
 TRACK::~TRACK()
@@ -357,8 +357,6 @@ bool TRACK::LoadSurfaces(const std::string & trackpath)
 	
 	std::list <std::string> sectionlist;
 	param.GetSectionList(sectionlist);
-		
-	TRACKSURFACE tempsurface;
 	
 	// set the size of track surfaces to hold new elements
 	//tracksurfaces.resize(sectionlist.size());
@@ -366,34 +364,37 @@ bool TRACK::LoadSurfaces(const std::string & trackpath)
 	
 	for (std::list<std::string>::const_iterator section = sectionlist.begin(); section != sectionlist.end(); ++section)
 	{
-		tempsurface.name = *section;
+		TRACKSURFACE surf;
+		surf.name = *section;
 		
-		int indexnum;
-		param.GetParam(*section + ".ID", indexnum);
+		int id;
+		param.GetParam(*section + ".ID", id);
 		//-assert(indexnum >= 0 && indexnum < (int)tracksurfaces.size());
-		tempsurface.setType(indexnum);
+		surf.setType(id);
 		
 		float temp = 0.0;
 		param.GetParam(*section + ".BumpWaveLength", temp, error_output);
-		tempsurface.bumpWaveLength = temp;
+		surf.bumpWaveLength = temp;
 		
 		param.GetParam(*section + ".BumpAmplitude", temp, error_output);
-		tempsurface.bumpAmplitude = temp;
+		surf.bumpAmplitude = temp;
 		
 		param.GetParam(*section + ".FrictionNonTread", temp, error_output);
-		tempsurface.frictionNonTread = temp;
+		surf.frictionNonTread = temp;
 		
 		param.GetParam(*section + ".FrictionTread", temp, error_output);
-		tempsurface.frictionTread = temp;
+		surf.frictionTread = temp;
 		
 		param.GetParam(*section + ".RollResistanceCoefficient", temp, error_output);
-		tempsurface.rollResistanceCoefficient = temp;
+		surf.rollResistanceCoefficient = temp;
 		
 		param.GetParam(*section + ".RollingDrag", temp, error_output);
-		tempsurface.rollingDrag = temp;
+		surf.rollingDrag = temp;
 		
-		tracksurfaces.push_back(tempsurface);//
-		//info_output << "  new surface" << endl;//
+		tracksurfaces.push_back(surf);//
+		//info_output << "  new surface: " << surf.name << " ID:" << id << " bumpA:" << surf.bumpAmplitude << endl;//
+		if (surf.name == "R")  // for road
+			roadSurf = surf;
 		
 		//std::list<TRACKSURFACE>::iterator it = tracksurfaces.begin();
 		//while(indexnum-- > 0) it++;

@@ -182,6 +182,7 @@
 	sceneBlend = alpha
 	depthWrite = false
 	terrainLightMap = true
+	;vertexColour = true
 
 ; ---------- Ice Winter ------------
 [roadIce]
@@ -317,3 +318,4 @@
 	sceneBlend = alpha
 	depthWrite = false
 	terrainLightMap = true
+	;vertexColour = true

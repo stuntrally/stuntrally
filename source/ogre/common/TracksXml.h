@@ -54,7 +54,7 @@ struct TrkL
 	std::string name;
 	const TrackInfo* ti;
 	const class App* pA;
-	bool test;  //Test*
+	int test;  //Test*
 };
 
 #endif

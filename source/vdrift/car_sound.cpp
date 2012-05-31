@@ -212,7 +212,7 @@ void CAR::UpdateSounds(float dt)
 	TRACKSURFACE::TYPE surfType[4];
 	float squeal[4],whVel[4], suspVel[4],suspDisp[4];
 	float whH_all = 0.f;  bool mud = false;
-	float fHitForce = 0.f, boostVal = 0.f;
+	float fHitForce = 0.f, boostVal = 0.f, fCarScrap = 0.f, fCarScreech = 0.f;
 	
 	///  replay play  ------------------------------------------
 	if (pApp->bRplPlay)
@@ -228,6 +228,7 @@ void CAR::UpdateSounds(float dt)
 		fHitForce = fr.fHitForce;
 		hitPos[0] = fr.vHitPos.x;  hitPos[1] = -fr.vHitPos.z;  hitPos[2] = fr.vHitPos.y;
 		boostVal = fr.fboost;
+		fCarScrap = fr.fCarScrap;  fCarScreech = fr.fCarScreech;
 
 		for (int w=0; w<4; ++w)
 		{
@@ -286,6 +287,21 @@ void CAR::UpdateSounds(float dt)
 				mudSpin += dynamics.whH[w] * std::min(160.f, 3.f * vel) / 80.f;
 		}
 		whMudSpin = mudSpin * 0.5f;
+
+		//  car scrap, screech
+		float gain = std::min(1.f, dynamics.fCarScrap);
+		if (dynamics.fCarScrap > 0.f)
+		{	dynamics.fCarScrap -= (-gain * 0.8f + 1.2f)* dt;
+			if (dynamics.fCarScrap < 0.f)  dynamics.fCarScrap = 0.f;
+		}
+		fCarScrap = gain;
+
+		gain = std::min(1.f, dynamics.fCarScreech);
+		if (dynamics.fCarScreech > 0.f)
+		{	dynamics.fCarScreech -= 3.f * dt;
+			if (dynamics.fCarScreech < 0.f)  dynamics.fCarScreech = 0.f;
+		}
+		fCarScreech = gain;
 	}
 	
 	///  listener  ------------------------------------------
@@ -372,19 +388,19 @@ void CAR::UpdateSounds(float dt)
 		grasssound[i].SetGain(0.0);
 		tiresqueal[i].SetGain(0.0);
 
-		float maxgain = 0.6, pitchvar = 0.4;
+		float maxgain = 0.6, pitchvar = 0.4, pmul = 1.f;
 
 		SOUNDSOURCE * snd;
 		switch (surfType[i])
 		{
-		case TRACKSURFACE::NONE:		snd = tiresqueal;	maxgain = 0.0;	break;
-		case TRACKSURFACE::ASPHALT:		snd = tiresqueal;	break;
-		case TRACKSURFACE::GRASS:		snd = grasssound;	maxgain = 0.7;	pitchvar = 0.25;	break;
+		case TRACKSURFACE::ASPHALT:		snd = tiresqueal;	maxgain = 0.4;  pitchvar = 0.40;  pmul = 0.8f;  break;
+		case TRACKSURFACE::GRASS:		snd = grasssound;	maxgain = 0.7;	pitchvar = 0.25;  break;
 		case TRACKSURFACE::GRAVEL:		snd = gravelsound;	maxgain = 0.7;	break;
-		case TRACKSURFACE::CONCRETE:	snd = tiresqueal;	maxgain = 0.6;	pitchvar = 0.25;	break;
-		case TRACKSURFACE::SAND:		snd = grasssound;	maxgain = 0.5;  pitchvar = 0.25;	break;
+		case TRACKSURFACE::CONCRETE:	snd = tiresqueal;	maxgain = 0.5;	pitchvar = 0.25;  pmul = 0.7f;  break;
+		case TRACKSURFACE::SAND:		snd = grasssound;	maxgain = 0.5;  pitchvar = 0.25;  break;
+		case TRACKSURFACE::NONE:
 						default:		snd = tiresqueal;	maxgain = 0.0;	break;
-		}	///more.. sand,snow,grass-new,mud..
+		}	/// more,sounds.. sand,snow,grass-new,mud..
 
 		float pitch = std::min(1.f, std::max(0.f, (whVel[i]-5.0f)*0.1f ));
 		pitch = 1.0 - pitch;
@@ -394,7 +410,7 @@ void CAR::UpdateSounds(float dt)
 
 		snd[i].SetPosition(whPos[i]);
 		snd[i].SetGain(squeal[i]*maxgain * pSet->vol_tires);
-		snd[i].SetPitch(pitch);
+		snd[i].SetPitch(pitch * pmul);
 	}
 
 	//  wind
@@ -500,7 +516,7 @@ void CAR::UpdateSounds(float dt)
 			
 			int f = crashdecel2 / 30.f * Ncrashsounds;
 			int i = std::max(1, std::min(Ncrashsounds-1, f));
-			LogO("crash: "+toStr(i));
+			//LogO("crash: "+toStr(i));
 
 			if (/*gain > mingain &&*/ crashsoundtime[i] > /*ti*/0.4f)  //!crashsound.Audible())
 			{
@@ -518,23 +534,12 @@ void CAR::UpdateSounds(float dt)
 			crashsoundtime[i] += dt;
 	
 
-	//  crash scrap  ... save in rpl
+	//  crash scrap and screech
 	{
-		float gain = std::min(1.f, dynamics.fCarScrap);
-		if (dynamics.fCarScrap > 0.f)
-		{	dynamics.fCarScrap -= (-gain * 0.8f + 1.2f)* dt;
-			if (dynamics.fCarScrap < 0.f)  dynamics.fCarScrap = 0.f;
-		}
-		crashscrap.SetGain(gain * pSet->vol_car_scrap);
+		crashscrap.SetGain(fCarScrap * pSet->vol_car_scrap);
 		crashscrap.SetPosition(hitPos);
-	}
-	{
-		float gain = std::min(1.f, dynamics.fCarScreech);
-		if (dynamics.fCarScreech > 0.f)
-		{	dynamics.fCarScreech -= 3.f * dt;
-			if (dynamics.fCarScreech < 0.f)  dynamics.fCarScreech = 0.f;
-		}
-		crashscreech.SetGain(gain * pSet->vol_car_scrap * 0.6f);
+
+		crashscreech.SetGain(fCarScreech * pSet->vol_car_scrap * 0.6f);
 		crashscreech.SetPosition(hitPos);
 	}
 

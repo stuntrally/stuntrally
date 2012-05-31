@@ -50,7 +50,7 @@ public:
 
 		int local_players, num_laps;  // split
 		//  game setup
-		bool collis_veget, collis_cars;
+		bool collis_veget, collis_cars, collis_roadw;
 		int boost_type, flip_type;  float boost_power;
 		float trees;
 		
@@ -82,9 +82,12 @@ public:
 	float game_fq, blt_fq;  int blt_iter, dyn_iter, multi_thr, thread_sleep;
 	
 	//  compositor
-	bool bloom, hdr, motionblur, all_effects;
+	bool bloom, hdr, motionblur, camblur, all_effects;
 	float bloomintensity, bloomorig, motionblurintensity;
 	float depthOfFieldFocus, depthOfFieldFar;
+	float hdrParam1, hdrParam2, hdrParam3;
+	float hdrAdaptationScale;
+	float vignettingRadius, vignettingDarkness;
 	//  video
 	int windowx, windowy, fsaa;
 	bool fullscreen, vsync, ssaa, ssao, godrays, softparticles, dof, filmgrain;

@@ -154,12 +154,11 @@ private:
 		NumMaterials  };
 	std::string sMtr[NumMaterials];
 			
-	//  Particle systems, trail
-	//enum {  PAR_Smoke=0, PAR_Mud, PAR_Dust, PAR_Water, PAR_MudHard, PAR_MudSoft, PAR_Boost, PAR_Sparks, PAR_ALL };
-	Ogre::ParticleSystem* ps[4],*pm[4],*pd[4];  // smoke, mud, dust
-	Ogre::ParticleSystem* pflW[4],*pflM[4],*pflMs[4];  // water, mud, mud soft
-	Ogre::ParticleSystem* pb[2], *ph;  // boost, world hit
-	Ogre::RibbonTrail* whTrl[4];
+	//  Particle systems
+	enum EParTypes {  PAR_Smoke=0, PAR_Mud, PAR_Dust, PAR_Water, PAR_MudHard, PAR_MudSoft, PAR_ALL };
+	Ogre::ParticleSystem* par[PAR_ALL][4];
+	Ogre::ParticleSystem* pb[2], *ph;  // boost-car rear, sparks-world hit
+	Ogre::RibbonTrail* whTrl[4];  // tire trail
 	Ogre::Real wht[4];  // spin time (approx tire temp.)
 	
 	//  Nodes

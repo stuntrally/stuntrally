@@ -26,9 +26,9 @@ class OBJECTLOADER;
 class OGRE_MESH
 {
 public:
-	bool newMtr, sky, alpha, newM;
+	bool newMtr, sky, alpha, newM, found;
 	std::string name, material;
-	VERTEXARRAY* mesh;
+	class VERTEXARRAY* mesh;
 
 	//bool operator<(const OGRE_MESH& other)
 	//{
@@ -119,7 +119,7 @@ public:
 
 	const TRACKSURFACE * GetRoadSurface() const
 	{
-		return &surface;
+		return &roadSurf;
 	}
 	
 	const std::list<TRACK_OBJECT> & GetTrackObjects()
@@ -148,7 +148,7 @@ public:
 	std::vector <TRACKSURFACE> tracksurfaces;
 	
 	// default road surface (asphalt)
-	TRACKSURFACE surface;
+	TRACKSURFACE roadSurf;
 private:
 	
 	enum
