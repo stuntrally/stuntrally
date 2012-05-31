@@ -217,7 +217,7 @@ bool App::KeyPress(const CmdKey &arg)
 
 			case KC_RETURN:  // save screen
 			{	int u = pSet->allow_save ? pSet->gui.track_user : 1;
-				rt[RTs-1].rndTex->writeContentsToFile(pathTrkPrv[u] + pSet->gui.track + ".jpg");
+				rt[RTs-1].rndTex->writeContentsToFile(pathTrk[u] + pSet->gui.track + "/preview/view.jpg");
 				listTrackChng(trkMList,0);  // upd gui img
 				Status("Preview saved", 1,1,0);
 			}	break;

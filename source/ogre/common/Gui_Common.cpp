@@ -359,7 +359,19 @@ void App::btnQuit(WP)
 //-----------------------------------------------------------------------------------
 
 void App::SizeGUI()
-{		
+{
+	#ifndef ROAD_EDITOR
+	//ImgBackSize();
+	if (imgBack)
+	{
+		Real wx = mWindow->getWidth(), wy = mWindow->getHeight();
+		//Real ix=1920.f, iy=1200.f;  //aspect fit img y..
+		//Real nix = wx/wy * iy;
+		imgBack->setCoord(0,0,wx,wy);
+		//imgBack->setImageCoord(IntCoord((nix-nx)*0.5f,0,ix,iy));
+	}
+	#endif
+	
 	// call recursive method for all root widgets
 	for (VectorWidgetPtr::iterator it = vwGui.begin(); it != vwGui.end(); ++it)
 	{

@@ -27,8 +27,6 @@ void App::createScene()
 	MaterialManager::getSingleton().setDefaultTextureFiltering(TFO_ANISOTROPIC);
 	MaterialManager::getSingleton().setDefaultAnisotropy(pSet->anisotropy);
 
-	mRoot->addResourceLocation(pathTrkPrv[1], "FileSystem");  //prv user tracks
-
 	QTimer ti;  ti.update();  /// time
 
 	//  tracks.xml

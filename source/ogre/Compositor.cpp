@@ -244,17 +244,17 @@ void HDRListener::notifyMaterialRender(Ogre::uint32 pass_id, Ogre::MaterialPtr &
     
 		if (params->_findNamedConstantDefinition("toneMapSettings"))
 		{
-			Ogre::Vector4 toneMapSettings(1-mApp->pSet->hdrParam1,mApp->pSet->hdrParam2,mApp->pSet->hdrParam3,1.0);
+			Ogre::Vector4 toneMapSettings(1-mApp->pSet->hdrParam1, mApp->pSet->hdrParam2, mApp->pSet->hdrParam3, 1.0);
 			params->setNamedConstant("toneMapSettings", toneMapSettings);
 		}
 		if (params->_findNamedConstantDefinition("bloomSettings"))
 		{
-			Ogre::Vector4 bloomSettings(mApp->pSet->bloomorig*2,mApp->pSet->bloomintensity,1.0,1.0);
-						params->setNamedConstant("bloomSettings", bloomSettings);
+			Ogre::Vector4 bloomSettings(mApp->pSet->hdrbloomorig*2, mApp->pSet->hdrbloomint, 1.0, 1.0);
+			params->setNamedConstant("bloomSettings", bloomSettings);
 		}
 		if (params->_findNamedConstantDefinition("vignettingSettings"))
 		{
-			Ogre::Vector4 vignettingSettings(mApp->pSet->vignettingRadius,mApp->pSet->vignettingDarkness,1.0,1.0);
+			Ogre::Vector4 vignettingSettings(mApp->pSet->vignettingRadius, mApp->pSet->vignettingDarkness, 1.0, 1.0);
 			params->setNamedConstant("vignettingSettings", vignettingSettings);
 		}
 	

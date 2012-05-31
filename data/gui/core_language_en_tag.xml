@@ -100,7 +100,7 @@
 
 	<!--  Track  -->
 	<Tag name="Track">Track</Tag>
-	<Tag name="TipTrackList">Tracks list, click to select (and see info). Press Enter to drive on it. (or [Change track] and then [New Game])</Tag>
+	<Tag name="TipTrackList">Tracks list, click to select and see info. Press Enter or [New Game] to drive on it.</Tag>
 
 	<Tag name="Reverse">Reverse</Tag>
 	<Tag name="TipReverse">Reverse track direction.</Tag>
@@ -111,8 +111,11 @@
 	<Tag name="TipTrackImg">In game screenshot for selected track.</Tag>
 	<Tag name="TipTrkTerImg">Minimap of selected track, view from top.</Tag>
 	<Tag name="TipTrackMap">Minimap of selected track, view from top.</Tag>
+	<Tag name="TipTrkViewShort">Short list view.</Tag>
+	<Tag name="TipTrkViewDetailed">Detailed list view.</Tag>
 
 	<Tag name="Find">Find</Tag>
+	<Tag name="TipFind">Enter part of name to find (filters list).</Tag>
 	<Tag name="TrackDifficulties">Various Track Difficulties</Tag>
 	<Tag name="TipTrackMap">Minimap of selected track, view from top.</Tag>
 	<Tag name="fluids">fluids (water or mud)</Tag>
@@ -142,10 +145,8 @@
 
 	<!--  Car  -->
 	<Tag name="Car">Car</Tag>
-	<Tag name="TipCarsList">Cars list, click to select (and see image). Press [Change car] and then [New Game] to drive with it.</Tag>
-	<Tag name="ChangeCar">Change Car</Tag>
-	<Tag name="TipChangeCar">Change current car to that selected in list, press [New Game] to drive with it.</Tag>
-	<Tag name="TipNewGameCar">Restart game (after car change).</Tag>
+	<Tag name="TipCarsList">Cars list. Press Enter or [New Game] to drive with it.</Tag>
+	<Tag name="TipNewGameCar">Restart game.</Tag>
 
 	<Tag name="ColHue">Color - Hue</Tag>
 	<Tag name="ColSat">Saturation</Tag>

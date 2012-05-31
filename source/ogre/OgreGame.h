@@ -241,7 +241,7 @@ protected:
 	MyGUI::MultiList2* trkMList;  MyGUI::EditPtr trkDesc[2];
 	MyGUI::StaticImagePtr imgPrv[2],imgMini[2],imgTer[2], imgTrkIco1,imgTrkIco2;
 	const static int StTrk = 12, InfTrk = 10;
-	MyGUI::StaticTextPtr valTrk[2], stTrk[2][StTrk], infTrk[2][InfTrk];  // [2] 2nd set is for champs
+	MyGUI::StaticTextPtr valTrkNet, stTrk[2][StTrk], infTrk[2][InfTrk];  // [2] 2nd set is for champs
 
 	void listTrackChng(MyGUI::MultiList2* li, size_t pos), TrackListUpd(bool resetNotFound=false);
 	TracksXml tracksXml;  void btnTrkView1(WP),btnTrkView2(WP),ChangeTrackView();
@@ -309,9 +309,9 @@ protected:
 	SLV(CarClrH);  SLV(CarClrS);  SLV(CarClrV);  // car clr
 	SLV(BloomInt);  SLV(BloomOrig);  SLV(BlurIntens);  // video
 	SLV(DepthOfFieldFocus);  SLV(DepthOfFieldFar);  // dof
-	SLV(HDRParam1);SLV(HDRParam2);SLV(HDRParam3); //hdr
-	SLV(HDRVignettingRadius);SLV(HDRVignettingDarkness); //vignetting
-	SLV(HDRAdaptationScale);
+	SLV(HDRParam1);  SLV(HDRParam2);  SLV(HDRParam3);  // hdr
+	SLV(HDRBloomInt);  SLV(HDRBloomOrig);  SLV(HDRAdaptationScale);
+	SLV(HDRVignettingRadius);  SLV(HDRVignettingDarkness);
 	SLV(NumLaps);  SLV(RplNumViewports);  // setup
 	
 	//  checks
@@ -366,8 +366,8 @@ protected:
 	//  game
 	void btnNewGame(WP),btnNewGameStart(WP);
 	MyGUI::ListPtr carList, rplList;  void updReplaysList();
-	void listRplChng(MyGUI::List* li, size_t pos);
-	void listCarChng(MyGUI::List* li, size_t pos),  btnChgCar(WP), changeTrack();
+	void listRplChng(MyGUI::List* li, size_t pos),  changeCar();
+	void listCarChng(MyGUI::List* li, size_t pos),  changeTrack();
 	int LNext(MyGUI::MultiList2* lp, int rel), LNext(MyGUI::ListPtr lp, int rel),
 		LNext(MyGUI::MultiList* lp, int rel);  // util next in list
 	void LNext(int rel);  void tabPlayer(MyGUI::TabPtr wp, size_t id);
@@ -376,7 +376,7 @@ protected:
 	Ogre::String pathTrk[2];  Ogre::String TrkDir();
 	Ogre::String PathListTrk(int user=-1), PathListTrkPrv(int user=-1);
 
-	MyGUI::StaticImagePtr imgCar;	MyGUI::StaticTextPtr valCar;
+	MyGUI::StaticImagePtr imgCar;
 	void comboBoost(CMB), comboFlip(CMB);
 
 	GuiPopup popup;

@@ -196,7 +196,7 @@ void App::listStageChng(MyGUI::MultiList2* li, size_t pos)
 	const string& trkName = ch.trks[pos].name;
 	bool reversed = ch.trks[pos].reversed;
 
-	if (valTrk[1])  valTrk[1]->setCaption(TR("#{Track}: ") + trkName);
+	if (valTrkNet)  valTrkNet->setCaption(TR("#{Track}: ") + trkName);
 	ReadTrkStatsChamp(trkName, reversed);
 }
 //---------------------------------------------------------------------

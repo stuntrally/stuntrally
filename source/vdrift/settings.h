@@ -85,6 +85,8 @@ public:
 	bool bloom, hdr, motionblur, camblur, all_effects;
 	float bloomintensity, bloomorig, motionblurintensity;
 	float depthOfFieldFocus, depthOfFieldFar;
+	//  hdr
+	float hdrbloomint, hdrbloomorig;
 	float hdrParam1, hdrParam2, hdrParam3;
 	float hdrAdaptationScale;
 	float vignettingRadius, vignettingDarkness;

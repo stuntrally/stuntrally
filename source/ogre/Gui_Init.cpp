@@ -30,6 +30,14 @@ void App::InitGui()
 	popup.mPlatform = mPlatform;
 	QTimer ti;  ti.update();  /// time
 
+
+	///  background image
+	int wx = mWindow->getWidth(), wy = mWindow->getHeight();
+	imgBack = mGUI->createWidget<ImageBox>("ImageBox",0,0,wx,wy,Align::VStretch,"Back","ImgBack");
+	if (!imgBack)  LogO("Error: Didnt create imgBack !");
+	imgBack->setImageTexture("background.jpg");
+
+
 	//  new widgets
 	MyGUI::FactoryManager::getInstance().registerFactory<MultiList2>("Widget");
 	MyGUI::FactoryManager::getInstance().registerFactory<Slider>("Widget");
@@ -61,10 +69,8 @@ void App::InitGui()
 	updMouse();
 	
 	//  center
-	//mWndOpts->setVisible(isFocGui);
-	int sx = mWindow->getWidth(), sy = mWindow->getHeight();
 	IntSize w = mWndMain->getSize();
-	mWndMain->setPosition((sx-w.width)*0.5f, (sy-w.height)*0.5f);
+	mWndMain->setPosition((wx-w.width)*0.5f, (wy-w.height)*0.5f);
 
 	TabPtr tab;
 	tab = mGUI->findWidget<Tab>("TabWndGame");    tab->setIndexSelected(1); tab->setSmoothShow(false);	mWndTabsGame = tab;		tab->eventTabChangeSelect += newDelegate(this, &App::MenuTabChg);
@@ -233,11 +239,16 @@ void App::InitGui()
 	//  effects
 	Chk("AllEffects", chkVidEffects, pSet->all_effects);
 	Chk("Bloom", chkVidBloom, pSet->bloom);
+	Slv(BloomInt,	pSet->bloomintensity);
+	Slv(BloomOrig,	pSet->bloomorig);
+
 	Chk("HDR", chkVidHDR, pSet->hdr);
 	Slv(HDRParam1, pSet->hdrParam1);
 	Slv(HDRParam2, pSet->hdrParam2);
 	Slv(HDRParam3, pSet->hdrParam3);
 	Slv(HDRAdaptationScale, pSet->hdrAdaptationScale);
+	Slv(HDRBloomInt,  pSet->hdrbloomint);
+	Slv(HDRBloomOrig, pSet->hdrbloomorig);
 	Slv(HDRVignettingRadius, pSet->vignettingRadius/10);
 	Slv(HDRVignettingDarkness, pSet->vignettingDarkness);
 	
@@ -253,8 +264,6 @@ void App::InitGui()
 	if (!MaterialGenerator::MRTSupported())
 		mGUI->findWidget<Button>("godrays")->setEnabled(false);
 	
-	Slv(BloomInt,	pSet->bloomintensity);
-	Slv(BloomOrig,	pSet->bloomorig);
 	Slv(BlurIntens, pSet->motionblurintensity);
 	Slv(DepthOfFieldFocus, powf(pSet->depthOfFieldFocus/2000.f, 0.5f));
 	Slv(DepthOfFieldFar,   powf(pSet->depthOfFieldFar/2000.f, 0.5f));
@@ -449,13 +458,7 @@ void App::InitGui()
 		carList->eventListChangePosition += newDelegate(this, &App::listCarChng);
     }
 
-	//  cars text, chg btn
-    valCar = mGUI->findWidget<StaticText>("CarText");
-	valCar->setCaption(TR("#{Car}: ") + pSet->gui.car[0]);  sListCar = pSet->gui.car[0];
-
-    ButtonPtr btnCar = mGUI->findWidget<Button>("ChangeCar");
-    if (btnCar)  btnCar->eventMouseButtonClick += newDelegate(this, &App::btnChgCar);
-
+    sListCar = pSet->gui.car[0];
     imgCar = mGUI->findWidget<StaticImage>("CarImg");
     listCarChng(carList,0);
 
@@ -463,11 +466,8 @@ void App::InitGui()
     ///  tracks list, text, chg btn
     //------------------------------------------------------------------------
 
-	//  track text, chg btn
 	trkDesc[0] = mGUI->findWidget<Edit>("TrackDesc");
-    valTrk[0] = mGUI->findWidget<StaticText>("TrackText");
-    if (valTrk[0])
-		valTrk[0]->setCaption(TR("#{Track}: " + pSet->gui.track));  sListTrack = pSet->gui.track;
+	sListTrack = pSet->gui.track;
 
     GuiInitTrack();
 
@@ -496,7 +496,7 @@ void App::InitGui()
 	//------------------------------------------------------------------------
 	//  track stats 2nd set
 	trkDesc[1] = mGUI->findWidget<Edit>("TrackDesc2");
-    valTrk[1] = mGUI->findWidget<StaticText>("TrackText2");
+    valTrkNet = mGUI->findWidget<StaticText>("TrackText");
 	//  preview images
 	imgPrv[1] = mGUI->findWidget<StaticImage>("TrackImg2");
 	imgTer[1] = mGUI->findWidget<StaticImage>("TrkTerImg2");

@@ -329,14 +329,14 @@
 			<Widget type="TabItem" skin="" position="4 26 787 531" name="TabTrack">
 				<UserString key="RelativeTo" value="EditorWnd"/>
 				<Property key="Caption" value="#{Track}"/>
-				<Widget type="TextBox" skin="TextBox" position="176 458 56 24" name="TrackText">
+				<Widget type="TextBox" skin="TextBox" position="176 468 56 24" name="TrackText">
 					<UserString key="RelativeTo" value="EditorWnd"/>
 					<Property key="InheritsAlpha" value="true"/>
 					<Property key="Colour" value="0 0 0"/>
 					<Property key="Caption" value="#{Track}"/>
 					<Property key="TextColour" value="0.4 1.0 0.5"/>
 				</Widget>
-				<Widget type="Button" skin="Button" position="368 488 140 32" name="NewGame1">
+				<Widget type="Button" skin="Button" position="368 498 140 32" name="NewGame1">
 					<UserString key="RelativeTo" value="EditorWnd"/>
 					<Property key="Caption" value="#{LoadTrack}"/>
 					<Property key="Colour" value="0.6 1.0 0.3"/>
@@ -399,7 +399,7 @@
 					<Property key="TextColour" value="0.9 0.9 0.5"/>
 					<UserString key="tip" value="#{TrackPipes}"/>
 				</Widget>
-				<Widget type="EditBox" skin="WordWrapEmpty" position="176 360 336 75" name="TrackDesc">
+				<Widget type="EditBox" skin="EditBox" position="176 360 336 75" name="TrackDesc">
 					<UserString key="RelativeTo" value="EditorWnd"/>
 					<Property key="ReadOnly" value="false"/>
 					<Property key="MultiLine" value="true"/>
@@ -497,40 +497,40 @@
 					<Property key="TextColour" value="0.8 0.8 1.0"/>
 					<UserString key="tip" value="#{TipCopySource}"/>
 				</Widget>
-				<Widget type="Button" skin="Button" position="528 495 150 25" name="TrackNew">
+				<Widget type="Button" skin="Button" position="528 505 150 25" name="TrackNew">
 					<UserString key="RelativeTo" value="EditorWnd"/>
 					<Property key="Caption" value="#{NewDup}"/>
 					<Property key="Colour" value="0.8 1 0.5"/>
 					<Property key="TextColour" value="0.8 1 0.5"/>
 					<UserString key="tip" value="#{TipNewDup}"/>
 				</Widget>
-				<Widget type="Button" skin="Button" position="369 457 140 24" name="TrackRename">
+				<Widget type="Button" skin="Button" position="369 467 140 24" name="TrackRename">
 					<UserString key="RelativeTo" value="EditorWnd"/>
 					<Property key="Caption" value="#{Rename}"/>
 					<Property key="Colour" value="1 0.9 0.4"/>
 					<Property key="TextColour" value="1 0.9 0.4"/>
 					<UserString key="tip" value="#{TipRenameTrk}"/>
 				</Widget>
-				<Widget type="EditBox" skin="EditBox" position="240 457 120 24" name="TrackName">
+				<Widget type="EditBox" skin="EditBox" position="240 467 120 24" name="TrackName">
 					<UserString key="RelativeTo" value="EditorWnd"/>
 					<Property key="Colour" value="0.6 1 0.8"/>
 					<Property key="TextColour" value="0.6 1 0.8"/>
 					<Property key="MaxTextLength" value="20"/>
 					<UserString key="tip" value="#{TipTrkNameEditor}"/>
 				</Widget>
-				<Widget type="Button" skin="Button" position="684 495 84 24" name="TrackDelete">
+				<Widget type="Button" skin="Button" position="684 505 84 24" name="TrackDelete">
 					<UserString key="RelativeTo" value="EditorWnd"/>
 					<Property key="Caption" value="#{Delete}"/>
 					<Property key="TextColour" value="1 0.6 0.3"/>
 					<Property key="Colour" value="1 0.6 0.3"/>
 					<UserString key="tip" value="#{TipDeleteTrk}"/>
 				</Widget>
-                <Widget type="TextBox" skin="TextBox" position="16 458 72 24">
+                <Widget type="TextBox" skin="TextBox" position="16 478 72 24">
 					<UserString key="RelativeTo" value="EditorWnd"/>
                     <Property key="Caption" value="#{Find}:"/>
                     <Property key="TextColour" value="0.7 0.8 0.9"/>
                 </Widget>
-                <Widget type="EditBox" skin="EditBox" position="16 482 88 24" name="TrackFind">
+                <Widget type="EditBox" skin="EditBox" position="16 502 88 24" name="TrackFind">
 					<UserString key="RelativeTo" value="EditorWnd"/>
                     <Property key="Colour" value="0.7 0.8 0.9"/>
                     <Property key="MaxTextLength" value="20"/>

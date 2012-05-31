@@ -19,3 +19,13 @@
 	ambient = 0.70 0.70 0.70
 	diffuse = 0.50 0.50 0.50
     specular = 0.3 0.3 0.3 32
+
+[concrete_texture]
+	diffuseMap_1024 = concrete_bar.jpg
+	normalMap_1024 = concrete_bar_norm.jpg
+	specMap_1024 = concrete_bar_spec.jpg
+	receivesDepthShadows = true
+	terrainLightMap = true
+	ambient = 0.70 0.70 0.70
+	diffuse = 1.00 1.00 1.00
+    specular = 1 1 1 4

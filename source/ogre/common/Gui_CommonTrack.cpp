@@ -106,14 +106,15 @@ void App::TrackListUpd(bool resetNotFound)
 //-----------------------------------------------------------------------------------------------------------
 String App::GetSceneryColor(String name)
 {
-	String c = "#FFFFFF";  char ch = name.c_str()[0];
+	String c = "#D0FFFF";  char ch = name.c_str()[0];
 	switch (ch)  {
-		case '0':  c = "#E0E0E0";  break;   case 'I':  c = "#FFFF80";  break;
+		case '0':  c = "#E8E8E8";  break;   case 'I':  c = "#FFFF80";  break;
 		case 'A':  c = "#FFA080";  break;   case 'J':  c = "#50FF50";  break;
 		case 'D':  c = "#F0F000";  break;   case 'M':  c = "#A0A000";  break;
 		case 'F':  c = "#A0D000";  break;   case 'S':  c = "#D0FF00";  break;
 		case 'G':  c = "#C0FF00";  break;   case 'T':  c = "#A0A0A0";  break;
-		case 'V':  c = "#202008";  break;   case 'X':  c = "#5858C0";  break;  }
+		case 'V':  c = "#202008";  break;   case 'X':  c = "#8080D0";  break;
+		case 'C':  c = "#E0B090";  break;  }
 	return c;
 }
 void App::AddTrkL(std::string name, int user, const TrackInfo* ti)
@@ -121,7 +122,7 @@ void App::AddTrkL(std::string name, int user, const TrackInfo* ti)
 	String c = GetSceneryColor(name);
 
 	MultiList2* li = trkMList;
-	li->addItem(name, 0);
+	li->addItem(c+name, 0);
 
 	if (!ti)  return;  //  details
 	int l = li->getItemCount()-1;
@@ -157,11 +158,6 @@ const int App::StColW[8] = {30, 180, 100, 90, 80, 70};
 //-----------------------------------------------------------------------------------------------------------
 void App::GuiInitTrack()
 {
-	//  Tracks detailed list
-	//MultiListPtr li = mGUI->findWidget<MultiList>("MListTracks");
-	//MyGUI::FactoryManager::getInstance().registerFactory<MultiList2>("Widget");
-	//MyGUI::FactoryManager::getInstance().unregisterFactory<MultiList2>("Widget");
-
 	#ifdef ROAD_EDITOR
 	TabItem* trktab = (TabItem*)mWndEdit->findWidget("TabTrack");
 	#else
@@ -234,8 +230,9 @@ void App::listTrackChng(MultiList2* li, size_t pos)
 
 	const UString& sl = li->getItemNameAt(i);  String s = sl, s1 = s;
 	s = StringUtil::replaceAll(s, "*", "");
-	sListTrack = s;
 	bListTrackU = s1 != s ? 1 : 0;
+	if (s[0] == '#')  s = s.substr(7);
+	sListTrack = s;
 
 #ifndef ROAD_EDITOR
 	changeTrack();
@@ -304,7 +301,7 @@ void App::updTrkListDim()
 		if (c < 6)  xico2 += w;
 	}
 
-	int xt = 0.018*wi.width, yt = 0.052*wi.height, yico = yt - wico - 1;  //0.02*wi.height;
+	int xt = 0.018*wi.width, yt = 0.06*wi.height, yico = yt - wico - 1;  //0.02*wi.height;
 	trkMList->setCoord(xt, yt, sw + 8/*frame*/, 0.70/*height*/*wi.height);
 	imgTrkIco1->setCoord(xt + xico1+2, yico, 2*wico, wico);
 	imgTrkIco2->setCoord(xt + xico2+2, yico, 8*wico, wico);
@@ -463,7 +460,7 @@ void App::UpdGuiRdStats(const SplineRoad* rd, const Scene& sc, const String& sTr
 		{	s = "view.jpg";
 			texMgr.load(path+s, sGrp, TEX_TYPE_2D, MIP_UNLIMITED);  // need to load it first
 			imgPrv[ch]->setImageTexture(s);  // just for dim, doesnt set texture
-			imgPrv[ch]->_setTextureName(path+s);  imgPrv[ch]->setVisible(true);
+			imgPrv[ch]->_setTextureName(path+s);  imgPrv[ch]->setVisible(pSet->tracks_view == 0);
 		} catch(...) {  imgPrv[ch]->setVisible(false);  }  // hide if not found
 	}
 	if (imgTer[ch])  // terrain background

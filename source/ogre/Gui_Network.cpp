@@ -124,8 +124,26 @@ void App::updateGameInfoGUI()
 	//  update track info
 	if (valNetTrack)
 		valNetTrack->setCaption("Track: " + sListTrack);
+
+	//imgNetTrack->setImageTexture(sListTrack+".jpg");
 	if (imgNetTrack)
-		imgNetTrack->setImageTexture(sListTrack+".jpg");
+	{
+		Ogre::ResourceGroupManager& resMgr = Ogre::ResourceGroupManager::getSingleton();
+		Ogre::TextureManager& texMgr = Ogre::TextureManager::getSingleton();
+
+		Ogre::String path = PathListTrkPrv(-1), s, sGrp = "TrkPrv";
+		resMgr.addResourceLocation(path, "FileSystem", sGrp);  // add for this track
+		resMgr.initialiseResourceGroup(sGrp);
+		try
+		{	s = "view.jpg";
+			texMgr.load(path+s, sGrp, Ogre::TEX_TYPE_2D, Ogre::MIP_UNLIMITED);
+			imgNetTrack->setImageTexture(s);
+			imgNetTrack->_setTextureName(path+s);  imgNetTrack->setVisible(true);
+		} catch(...) {  imgNetTrack->setVisible(false);  }
+		
+		resMgr.removeResourceLocation(path, sGrp);
+	}
+
 	if (edNetTrackInfo && trkDesc)
 		edNetTrackInfo->setCaption(trkDesc[0]->getCaption());
 	// todo: probably should also update on gui collis,boost,reverse,... (but not in pSet.gui)

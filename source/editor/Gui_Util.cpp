@@ -100,9 +100,11 @@ void App::btnNewGame(WP)
 /// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
 //  track files
-const int cnTrkF = 5, cnTrkFd = 2, cnTrkFo = 2;
-const Ogre::String csTrkFo[cnTrkFo] = {"/grassDensity.png", "/waterDepth.png"},
-	csTrkF[cnTrkF] = {"/heightmap.f32", "/road.xml", "/scene.xml", "/surfaces.txt", "/track.txt"},  // copy, new
+const int cnTrkFm = 5, cnTrkFd = 2, cnTrkFo = 2, cnTrkFp = 3;
+const Ogre::String
+	csTrkFm[cnTrkFm] = {"/heightmap.f32", "/road.xml", "/scene.xml", "/surfaces.txt", "/track.txt"},  // copy, new
+	csTrkFo[cnTrkFo] = {"/grassDensity.png", "/waterDepth.png"},
+	csTrkFp[cnTrkFp] = {"/view.jpg", "/road.png", "/terrain.jpg"},
 	csTrkFd[cnTrkFd] = {"/heightmap-new.f32", "/records.txt"};  // del
 
 
@@ -315,20 +317,23 @@ void App::btnTrackNew(WP)
 {
 	String name = trkName->getCaption();
 	name = StringUtil::replaceAll(name, "*", "");
-	if (TrackExists(name))  {	Message::createMessageBox(
+
+	if (TrackExists(name))  {
+		Message::createMessageBox(
 			"Message", "New Track", "Track " + name + " already exists.",
 			MessageBoxStyle::IconWarning | MessageBoxStyle::Ok);
 		return;  }
 
-	String st = pathTrk[bListTrackU] + sListTrack, sto = st + "/objects";  // from
-	String t = pathTrk[1] + name, to = t + "/objects";  // to, new
+	String st = pathTrk[bListTrackU] + sListTrack, t = pathTrk[1] + name,
+		sto = st + "/objects", stp = st + "/preview",  // from
+		to = t + "/objects",   tp = t + "/preview";  // to,new
 
-	CreateDir(t);  CreateDir(to);
-	for (int i=0; i < cnTrkFo; ++i)  Copy(sto + csTrkFo[i], to + csTrkFo[i]);
-	for (int i=0; i < cnTrkF; ++i)   Copy(st + csTrkF[i], t + csTrkF[i]);
-	//Copy(pathTrkPrv + sListTrack + ".jpg");  // no preview
-	Copy(pathTrkPrv[bListTrackU] + sListTrack + "_mini.png", pathTrkPrv[1] + name + "_mini.png");
-	Copy(pathTrkPrv[bListTrackU] + sListTrack + "_ter.jpg", pathTrkPrv[1] + name + "_ter.jpg");
+	//  Copy
+	CreateDir(t);  CreateDir(to);  CreateDir(tp);
+	int i;
+	for (i=0; i < cnTrkFm; ++i)  Copy(st + csTrkFm[i], t + csTrkFm[i]);
+	for (i=0; i < cnTrkFo; ++i)  Copy(sto + csTrkFo[i], to + csTrkFo[i]);
+	for (i=1; i < cnTrkFp; ++i)  Copy(stp + csTrkFp[i], tp + csTrkFp[i]);  // 1-not view.jpg
 
 	sListTrack = name;  pSet->gui.track = name;  pSet->gui.track_user = 1;  UpdWndTitle();
 	FillTrackLists();
@@ -339,6 +344,7 @@ void App::btnTrackNew(WP)
 void App::btnTrackRename(WP)
 {
 	String name = trkName->getCaption();
+	if (name == sListTrack)  return;
 
 	/*if (bListTrackU==0)  {  // could force when originals writable..
 		Message::createMessageBox(
@@ -346,24 +352,18 @@ void App::btnTrackRename(WP)
 			MessageBoxStyle::IconWarning | MessageBoxStyle::Ok);
 			return;  }/**/
 
-	if (name != sListTrack)
-	{	if (TrackExists(name))  {	Message::createMessageBox(
-				"Message", "Rename Track", "Track " + name + " already exists.",
-				MessageBoxStyle::IconWarning | MessageBoxStyle::Ok);
-			return;  }
-		
-		//  track dir
-		Rename(pathTrk[bListTrackU] + sListTrack, pathTrk[/*1*/bListTrackU] + name);
-		//  preview shot, minimap
-		String from = pathTrkPrv[bListTrackU] + sListTrack, to = pathTrkPrv[/*1*/bListTrackU] + name;
-		Rename(from + ".jpg", to + ".jpg");
-		Rename(from + "_mini.png", to + "_mini.png");
-		Rename(from + "_ter.jpg", to + "_ter.jpg");
-		
-		sListTrack = name;  pSet->gui.track = sListTrack;  pSet->gui.track_user = 1;/**/  UpdWndTitle();
-		FillTrackLists();
-		TrackListUpd();  //listTrackChng(trkList,0);
-	}
+	if (TrackExists(name))  {
+		Message::createMessageBox(
+			"Message", "Rename Track", "Track " + name + " already exists.",
+			MessageBoxStyle::IconWarning | MessageBoxStyle::Ok);
+		return;  }
+	
+	//  Rename
+	Rename(pathTrk[bListTrackU] + sListTrack, pathTrk[/*1*/bListTrackU] + name);
+	
+	sListTrack = name;  pSet->gui.track = sListTrack;  pSet->gui.track_user = 1;/**/  UpdWndTitle();
+	FillTrackLists();
+	TrackListUpd();  //listTrackChng(trkList,0);
 }
 
 ///  Delete
@@ -379,14 +379,14 @@ void App::msgTrackDel(Message* sender, MessageBoxStyle result)
 {
 	if (result != MessageBoxStyle::Yes)
 		return;
-	String t = pathTrk[bListTrackU] + sListTrack, to = t + "/objects";
-	for (int i=0; i < cnTrkFo; ++i)  Delete(to + csTrkFo[i]);
-	for (int i=0; i < cnTrkF; ++i)   Delete(t + csTrkF[i]);
-	for (int i=0; i < cnTrkFd; ++i)   Delete(t + csTrkFd[i]);
-	DeleteDir(to);  DeleteDir(t);
-	Delete(pathTrkPrv[bListTrackU] + sListTrack + ".png");
-	Delete(pathTrkPrv[bListTrackU] + sListTrack + "_mini.png");
-	Delete(pathTrkPrv[bListTrackU] + sListTrack + "_ter.jpg");
+	String t = pathTrk[bListTrackU] + sListTrack,
+		to = t + "/objects", tp = t + "/preview";
+	int i;
+	for (i=0; i < cnTrkFo; ++i)  Delete(to + csTrkFo[i]);
+	for (i=0; i < cnTrkFp; ++i)  Delete(tp + csTrkFp[i]);
+	for (i=0; i < cnTrkFm; ++i)  Delete(t + csTrkFm[i]);
+	for (i=0; i < cnTrkFd; ++i)  Delete(t + csTrkFd[i]);
+	DeleteDir(to);  DeleteDir(tp);  DeleteDir(t);
 
 	String st = pSet->gui.track;
 	FillTrackLists();
