@@ -5,7 +5,7 @@ vertex_program SMAA/EdgeDetection_VS cg
     entry_point EdgeDetection_VS
     default_params
     {
-        //param_named_auto viewportSize viewport_size
+        param_named_auto viewportSize viewport_size
         param_named_auto wvp worldviewproj_matrix
     }
 }
@@ -17,7 +17,7 @@ fragment_program SMAA/ColorEdgeDetection_PS cg
     entry_point ColorEdgeDetection_PS
     default_params
     {
-        //param_named_auto viewportSize viewport_size
+        param_named_auto viewportSize viewport_size
     }
 }
 
@@ -28,7 +28,7 @@ fragment_program SMAA/LumaEdgeDetection_PS cg
     entry_point LumaEdgeDetection_PS
     default_params
     {
-        //param_named_auto viewportSize viewport_size
+        param_named_auto viewportSize viewport_size
     }
 }
 
@@ -39,7 +39,7 @@ fragment_program SMAA/DepthEdgeDetection_PS cg
     entry_point DepthEdgeDetection_PS
     default_params
     {
-        //param_named_auto viewportSize viewport_size
+        param_named_auto viewportSize viewport_size
     }
 }
 
@@ -50,7 +50,7 @@ vertex_program SMAA/BlendWeightCalculation_VS cg
     entry_point BlendWeightCalculation_VS
     default_params
     {
-        //param_named_auto viewportSize viewport_size
+        param_named_auto viewportSize viewport_size
         param_named_auto wvp worldviewproj_matrix
     }
 }
@@ -62,7 +62,7 @@ fragment_program SMAA/BlendWeightCalculation_PS cg
     entry_point BlendWeightCalculation_PS
     default_params
     {
-        //param_named_auto viewportSize viewport_size
+        param_named_auto viewportSize viewport_size
     }
 }
 
@@ -73,7 +73,7 @@ vertex_program SMAA/NeighborhoodBlending_VS cg
     entry_point NeighborhoodBlending_VS
     default_params
     {
-        //param_named_auto viewportSize viewport_size
+        param_named_auto viewportSize viewport_size
         param_named_auto wvp worldviewproj_matrix
     }
 }
@@ -85,7 +85,7 @@ fragment_program SMAA/NeighborhoodBlending_PS cg
     entry_point NeighborhoodBlending_PS
     default_params
     {
-        //param_named_auto viewportSize viewport_size
+        param_named_auto viewportSize viewport_size
     }
 }
 
