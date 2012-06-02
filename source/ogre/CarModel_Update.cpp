@@ -215,6 +215,9 @@ void CarModel::Update(PosInfo& posInfo, PosInfo& posInfoCam, float time)
 	}
 
 	//  wheels  ------------------------------------------------------------------------
+	const float trlC = sc->ter ? 0.14f : 0.f,  // const trail alpha
+		trlH = sc->ter ? 0.90f : 0.76f;  // vdr needs up (ter bumps), no ter  ..get from wheel contact ?rpl
+
 	for (int w=0; w < 4; ++w)
 	{
 		float wR = posInfo.whR[w];
@@ -337,16 +340,18 @@ void CarModel::Update(PosInfo& posInfo, PosInfo& posInfoCam, float time)
 		}
 
 		//  update trails h+
-		if (pSet->trails)  {
-			if (ndWhE[w])
-			{	Vector3 vp = vpos + posInfo.carY * wR*0.72f;  // 0.22
+		if (pSet->trails)
+		{	if (ndWhE[w])
+			{	Vector3 vp = vpos + posInfo.carY * wR*trlH;
 				if (terrain && whMtr > 0)
-					vp.y = terrain->getHeightAtWorldPosition(vp) + 0.05f;
+					vp.y = terrain->getHeightAtWorldPosition(vp) + 0.02f;  // 0.05f
 					//if (/*whOnRoad[w]*/whMtr > 0 && road)  // on road, add ofs
 					//	vp.y += road->fHeight;	}/**/
 				ndWhE[w]->setPosition(vp);
+				ndWhE[w]->setOrientation(posInfo.rot);
 			}
-			float al = 0.5f * /*squeal*/ std::min(1.f, 0.7f * wht[w]) * onGr;  // par+
+			//float al = 1.f; // test  //squeal-
+			float al = ((whRd == 2 ? 0.f : trlC) + 0.6f * std::min(1.f, 0.7f * wht[w]) ) * onGr;  // par+
 			if (whTrl[w])	whTrl[w]->setInitialColour(0,
 				lay.tclr.r,lay.tclr.g,lay.tclr.b, lay.tclr.a * al/**/);
 		}
