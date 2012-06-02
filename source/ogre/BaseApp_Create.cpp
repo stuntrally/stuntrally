@@ -8,7 +8,6 @@
 #include "../network/masterclient.hpp"
 #include "../network/gameclient.hpp"
 #include "common/HWMouse.h"
-#include "common/MaterialGen/MaterialFactory.h"
 
 #include "Localization.h"
 #include "SplitScreen.h"
@@ -31,7 +30,6 @@
 #include "common/MyGUI_D3D11.h"
 
 #include <OgreRTShaderSystem.h>
-#include "common/MaterialGen/MaterialFactory.h"
 #include "Compositor.h"
 using namespace Ogre;
 
@@ -144,7 +142,7 @@ BaseApp::BaseApp()
 	,mMasterClient(), mClient(), mLobbyState(DISCONNECTED)
 	,mDebugOverlay(0), mFpsOverlay(0), mOvrFps(0), mOvrTris(0), mOvrBat(0), mOvrDbg(0)
 	,mbShowCamPos(0), ndSky(0),	mbWireFrame(0)
-	,iCurCam(0), mSplitMgr(0), motionBlurIntensity(0.9), pressedKeySender(0), materialFactory(0)
+	,iCurCam(0), mSplitMgr(0), motionBlurIntensity(0.9), pressedKeySender(0)
 {
 	mLoadingBar = new LoadingBar();
 
@@ -156,8 +154,6 @@ BaseApp::BaseApp()
 //-------------------------------------------------------------------------------------
 BaseApp::~BaseApp()
 {
-	delete materialFactory;
-
 	//if (mSplitMgr)
 		//refreshCompositor(false);
 

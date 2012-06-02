@@ -10,7 +10,7 @@
 //#include "HDRCompositor.h"
 
 #include <OgreRTShaderSystem.h>
-#include "common/MaterialGen/MaterialGenerator.h"
+//#include "common/MaterialGen/MaterialGenerator.h"
 using namespace Ogre;
 
 #if OGRE_VERSION_MINOR >= 8
@@ -94,7 +94,8 @@ void BaseApp::refreshCompositor(bool disableAll)
 	CompositorManager& cmp = CompositorManager::getSingleton(); 
 	for (std::list<Viewport*>::iterator it=mSplitMgr->mViewports.begin(); it!=mSplitMgr->mViewports.end(); ++it)
 	{
-		if(MaterialGenerator::MRTSupported())
+		//if(MaterialGenerator::MRTSupported())
+        if (1)
 		{
 			CompositorManager::getSingleton().setCompositorEnabled((*it), "gbuffer", false);
 		}
@@ -104,7 +105,8 @@ void BaseApp::refreshCompositor(bool disableAll)
 		cmp.setCompositorEnabled((*it), "HDR", false);
 		cmp.setCompositorEnabled((*it), "HDRNoMRT", false);
 			
-		if(MaterialGenerator::MRTSupported())
+		//if(MaterialGenerator::MRTSupported())
+        if (1)
 		{
 			cmp.setCompositorEnabled((*it), "ssao", false);
 			cmp.setCompositorEnabled((*it), "SoftParticles", false);
@@ -112,7 +114,8 @@ void BaseApp::refreshCompositor(bool disableAll)
 			cmp.setCompositorEnabled((*it), "GodRays", false);
 			cmp.setCompositorEnabled((*it), "gbufferFinalizer", false);
 			cmp.setCompositorEnabled((*it), "CamBlur", false);
-		}else{
+		}else
+        {
 			cmp.setCompositorEnabled((*it), "ssaoNoMRT", false);
 		}
 		CompositorManager::getSingleton().setCompositorEnabled((*it), "Motion Blur", false);
@@ -155,7 +158,7 @@ void BaseApp::refreshCompositor(bool disableAll)
 
 	for (std::list<Viewport*>::iterator it=mSplitMgr->mViewports.begin(); it!=mSplitMgr->mViewports.end(); ++it)
 	{
-		if(MaterialGenerator::MRTSupported())
+		//if(MaterialGenerator::MRTSupported())
 		{
 			//the condition here is any compositor needing the gbuffers like ssao ,soft particles
 			CompositorManager::getSingleton().setCompositorEnabled((*it), "gbuffer", NeedMRTBuffer());
@@ -171,7 +174,8 @@ void BaseApp::refreshCompositor(bool disableAll)
 		CompositorManager::getSingleton().setCompositorEnabled((*it), "SMAA", pSet->ssaa);
 		cmp.setCompositorEnabled((*it), "FilmGrain", pSet->hdr);
 
-		if(MaterialGenerator::MRTSupported())
+		//if(MaterialGenerator::MRTSupported())
+        if (1)
 		{
 			CompositorManager::getSingleton().setCompositorEnabled((*it), "ssao", pSet->ssao);
 			CompositorManager::getSingleton().setCompositorEnabled((*it), "SoftParticles", pSet->softparticles);
@@ -247,7 +251,8 @@ void BaseApp::recreateCompositor()
 	{
 		mSSAOLogic = new SSAOLogic();
 		mSSAOLogic->setApp(this);
-		if(MaterialGenerator::MRTSupported())
+		//if(MaterialGenerator::MRTSupported())
+        if (1)
 		{
 			CompositorManager::getSingleton().registerCompositorLogic("ssao", mSSAOLogic);
 		}
@@ -381,14 +386,16 @@ void BaseApp::recreateCompositor()
 		// remove old comp. first
 		CompositorManager::getSingleton().removeCompositorChain( (*it ));
 		
-		if (MaterialGenerator::MRTSupported())
+		//if (MaterialGenerator::MRTSupported())
+        if (1)
 		{
 			CompositorManager::getSingleton().addCompositor((*it), "gbuffer");
 		}
 
 		cmp.addCompositor((*it), "gbufferNoMRT");
 		cmp.addCompositor((*it), "HDRNoMRT");
-		if (MaterialGenerator::MRTSupported())
+		//if (MaterialGenerator::MRTSupported())
+        if (1)
 		{
 			cmp.addCompositor((*it), "ssao");
 			cmp.addCompositor((*it), "SoftParticles");

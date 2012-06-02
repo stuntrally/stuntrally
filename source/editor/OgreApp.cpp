@@ -5,7 +5,7 @@
 #include "../vdrift/pathmanager.h"
 #include "../paged-geom/PagedGeometry.h"
 #include "../ogre/common/RenderConst.h"
-#include "../ogre/common/MaterialGen/MaterialFactory.h"
+//#include "../ogre/common/MaterialGen/MaterialFactory.h"
 
 #if OGRE_PLATFORM != OGRE_PLATFORM_WIN32
 	// dir listing
@@ -58,8 +58,9 @@ App::App()  //  gui wigdets--
 	,grass(0), trees(0), sun(0), terMaxAng(0.f)
 	,eTrkEvent(TE_None), bNewHmap(0), bTrGrUpd(0)
 	,iFlCur(0), bRecreateFluids(0), world(0), iObjCur(0), iObjNew(0)
-	
-	,materialFactory(0), bTerUpdBlend(1)
+
+	,
+    bTerUpdBlend(1)
 {
 	imgPrv[0]=0; imgMini[0]=0; imgTer[0]=0;  trkDesc[0]=0;
 	
@@ -89,6 +90,7 @@ App::App()  //  gui wigdets--
 
 void App::postInit()
 {
+    /*
 	materialFactory = new MaterialFactory();
 	materialFactory->pApp = this;
 	materialFactory->setSceneManager(mSceneMgr);
@@ -103,6 +105,7 @@ void App::postInit()
 		materialFactory->setTexSize(0);
 	else if (pSet->tex_size == 1)
 		materialFactory->setTexSize(4096);
+    */
 }
 
 const Ogre::String App::csBrShape[BRS_ALL] = { "Triangle", "Sinus", "Noise" };  // static
@@ -112,7 +115,7 @@ App::~App()
 {
 	delete[] pBrFmask;  pBrFmask = 0;
 
-	delete materialFactory;
+	//delete materialFactory;
 	delete[] mBrushData;
 	delete road;
 	if (mTerrainPaging)

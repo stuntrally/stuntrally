@@ -1,8 +1,8 @@
 #include "pch.h"
 #include "../common/Defines.h"
 #include "../common/RenderConst.h"
-#include "../common/MaterialGen/TerrainMaterialGen.h"
-#include "../common/MaterialGen/MaterialFactory.h"
+//#include "../common/MaterialGen/TerrainMaterialGen.h"
+//#include "../common/MaterialGen/MaterialFactory.h"
 
 #ifdef ROAD_EDITOR
 	#include "../../editor/OgreApp.h"
@@ -48,7 +48,7 @@ void App::changeShadows()
 		
 	// disable 4 shadow textures (does not work because no texcoord's left in shader)
 	if (num == 4) num = 3;
-
+/*
 	TerrainMaterialGeneratorB::SM2Profile* matProfile = 0;
 	
 	if (mTerrainGlobals)
@@ -63,7 +63,7 @@ void App::changeShadows()
 			matProfile->setLayerNormalMappingEnabled(  pSet->ter_mtr >= 2);
 			matProfile->setLayerParallaxMappingEnabled(pSet->ter_mtr >= 3);
 	}	}
-	
+	*/
 	//  shadows old-
 	if (pSet->shadow_type == 1)
 	{
@@ -117,7 +117,7 @@ void App::changeShadows()
 				const Real cAdjfA[5] = {2, 1, 0.5, 0.25, 0.125};
 				pssmSetup->setOptimalAdjustFactor(i, cAdjfA[std::min(i, 4)]);
 			}
-			materialFactory->setPSSMCameraSetup(pssmSetup);
+			//materialFactory->setPSSMCameraSetup(pssmSetup);
 			mPSSMSetup.bind(pssmSetup);
 		}
 		mSceneMgr->setShadowCameraSetup(mPSSMSetup);
@@ -143,7 +143,7 @@ void App::changeShadows()
 		else shadowCasterMat = StringUtil::BLANK;
 		
 		mSceneMgr->setShadowTextureCasterMaterial(shadowCasterMat);
-
+/*
 		if (matProfile && terrain)  {
 			matProfile->setReceiveDynamicShadowsDepth(bDepth);
 			matProfile->setReceiveDynamicShadowsPSSM(static_cast<PSSMShadowCameraSetup*>(mPSSMSetup.get()));
@@ -151,16 +151,17 @@ void App::changeShadows()
 			//LogO(mtr->getBestTechnique()->getPass(0)->getTextureUnitState(0)->getName());
 			//LogO(String("Ter mtr: ") + mtr->getName());
 
-		}
+		}*/
 	}
-	
+
+/*
 	materialFactory->setTerrain(terrain);
 	materialFactory->setNumShadowTex(num);
 	materialFactory->setShadows(pSet->shadow_type != 0);
 	materialFactory->setShadowsDepth(bDepth);
 	materialFactory->setShadowsSoft(bSoft);
 	materialFactory->generate();
-	
+	*/
 	#if 0	// shadow tex overlay
 	// add the overlay elements to show the shadow maps:
 	// init overlay elements

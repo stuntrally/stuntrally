@@ -4,7 +4,7 @@
 #include "../vdrift/game.h"
 #include "../road/Road.h"
 #include "OgreGame.h"
-#include "common/MaterialGen/MaterialGenerator.h"
+//#include "common/MaterialGen/MaterialGenerator.h"
 
 #include <boost/filesystem.hpp>
 
@@ -255,6 +255,8 @@ void App::InitGui()
 	Chk("MotionBlur", chkVidBlur, pSet->camblur);
 	Chk("ssao", chkVidSSAO, pSet->ssao);
 	Chk("softparticles", chkVidSoftParticles, pSet->softparticles);
+
+    /*
 	if (!MaterialGenerator::MRTSupported())
 		mGUI->findWidget<Button>("softparticles")->setEnabled(false);
 	Chk("DepthOfField", chkVidDepthOfField, pSet->dof);
@@ -263,6 +265,7 @@ void App::InitGui()
 	Chk("godrays", chkVidGodRays, pSet->godrays);
 	if (!MaterialGenerator::MRTSupported())
 		mGUI->findWidget<Button>("godrays")->setEnabled(false);
+         */
 	
 	Slv(BlurIntens, pSet->motionblurintensity);
 	Slv(DepthOfFieldFocus, powf(pSet->depthOfFieldFocus/2000.f, 0.5f));

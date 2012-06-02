@@ -3,7 +3,7 @@
 #include "Gui_Def.h"
 #include "../../road/Road.h"
 #include "../../vdrift/pathmanager.h"
-#include "MaterialGen/MaterialFactory.h"
+//#include "MaterialGen/MaterialFactory.h"
 #ifndef ROAD_EDITOR
 	#include "../../vdrift/game.h"
 	#include "../OgreGame.h"
@@ -142,7 +142,7 @@ void App::slShaders(SL)
 		if (v > 0.8)  valShaders->setCaption("Ultra");
 	}
 		
-	if (materialFactory) materialFactory->setShaderQuality(v);
+	//if (materialFactory) materialFactory->setShaderQuality(v);
 }
 
 void App::slTexSize(SL)
@@ -151,12 +151,13 @@ void App::slTexSize(SL)
 	if (valTexSize)
 	{	if (v == 0)  valTexSize->setCaption("Small");  else
 		if (v == 1)  valTexSize->setCaption("Big");  }
-	
+	/*
 	if (!materialFactory) return;
 	if (v == 0)
 		materialFactory->setTexSize(0); // lowest
 	else if (v == 1)
 		materialFactory->setTexSize(4096); // highest
+    */
 }
 
 void App::slTerMtr(SL)
@@ -208,7 +209,7 @@ void App::slShadowDist(SL)
 void App::slShadowFilter(SL)
 {
 	int v = 1 + 3 * val +slHalf;  if (bGI) pSet->shadow_filter = v;
-	if (materialFactory) materialFactory->setShadowsFilterSize(v);
+	//if (materialFactory) materialFactory->setShadowsFilterSize(v);
 	if (valShadowFilter) valShadowFilter->setCaption(toStr(v));
 }
 
@@ -222,7 +223,7 @@ void App::slWaterSize(SL)
 void App::chkWaterReflect(WP wp)
 {
 	ChkEv(water_reflect);
-	materialFactory->setReflect(pSet->water_reflect);
+	//materialFactory->setReflect(pSet->water_reflect);
 	mWaterRTT.setReflect(pSet->water_reflect);
 	mWaterRTT.recreate();
 }
@@ -230,7 +231,7 @@ void App::chkWaterReflect(WP wp)
 void App::chkWaterRefract(WP wp)
 {
 	ChkEv(water_refract);
-	materialFactory->setRefract(pSet->water_refract);
+	//materialFactory->setRefract(pSet->water_refract);
 	mWaterRTT.setRefract(pSet->water_refract);
 	mWaterRTT.recreate();
 }

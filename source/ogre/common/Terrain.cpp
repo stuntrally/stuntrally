@@ -2,8 +2,8 @@
 #include "../common/Defines.h"
 #include "../common/RenderConst.h"
 #include "../../road/Road.h"  // sun rot
-#include "../common/MaterialGen/TerrainMaterialGen.h"
-#include "../common/MaterialGen/MaterialFactory.h"
+//#include "../common/MaterialGen/TerrainMaterialGen.h"
+//#include "../common/MaterialGen/MaterialFactory.h"
 
 #ifdef ROAD_EDITOR
 	#include "../../editor/OgreApp.h"
@@ -204,11 +204,12 @@ void App::GetTerAngles(int xb,int yb, int xe,int ye)
 void App::configureTerrainDefaults(Light* l)
 {
 	//TerrainMaterialGeneratorPtr matGen = static_cast<TerrainMaterialGeneratorPtr>(new TerrainMaterialGeneratorB());
+    /*
 	TerrainMaterialGeneratorPtr matGen;
 	TerrainMaterialGeneratorB* matGenP = new TerrainMaterialGeneratorB();
 	matGen.bind(matGenP);
 	mTerrainGlobals->setDefaultMaterialGenerator(matGen);
-
+*/
 	mTerrainGlobals->setMaxPixelError(pSet->terdetail);  // 1- 4-8+
 	//mTerrainGlobals->setUseRayBoxDistanceCalculation(true);
 	//mTerrainGlobals->getDefaultMaterialGenerator()->setDebugLevel(1);
@@ -221,7 +222,7 @@ void App::configureTerrainDefaults(Light* l)
 	mTerrainGlobals->setCompositeMapSize(sc.td.iTerSize-1);  // par,..  1k
 	mTerrainGlobals->setCompositeMapDistance(pSet->terdist);  //100
 	mTerrainGlobals->setLightMapSize(ciShadowSizesA[pSet->lightmap_size]);  //256, 2k
-	mTerrainGlobals->setSkirtSize(MaterialFactory::getSingleton().getReflect() ? 0.1 : 1);  //`
+	mTerrainGlobals->setSkirtSize(1);  //`
 	//matProfile->setLightmapEnabled(false);
 
 	// Configure default import settings for if we use imported image

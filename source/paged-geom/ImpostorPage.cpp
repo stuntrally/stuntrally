@@ -26,7 +26,6 @@ Permission is granted to anyone to use this software for any purpose, including 
 #include "StaticBillboardSet.h"
 
 #include "../ogre/common/Defines.h"
-#include "../ogre/common/MaterialGen/MaterialFactory.h"
 #include "../vdrift/pathmanager.h"
 #include "../ogre/common/QTimer.h"
 
@@ -585,8 +584,8 @@ void ImpostorTexture::renderTextures(bool force)
 	Real oldFogEnd = sceneMgr->getFogEnd();
 	sceneMgr->setFog(FOG_NONE);
 	///T no fog when using custom shaders
-	MaterialFactory::getSingleton().setFog(false);
-	MaterialFactory::getSingleton().setWind(false);
+	//MaterialFactory::getSingleton().setFog(false);
+	//MaterialFactory::getSingleton().setWind(false);
 	
 	// Get current status of the queue mode
 	Ogre::SceneManager::SpecialCaseRenderQueueMode OldSpecialCaseRenderQueueMode = sceneMgr->getSpecialCaseRenderQueueMode();
@@ -700,8 +699,8 @@ void ImpostorTexture::renderTextures(bool force)
 	//Re-enable fog
 	sceneMgr->setFog(oldFogMode, oldFogColor, oldFogDensity, oldFogStart, oldFogEnd);
 	///T no fog when using custom shaders
-	MaterialFactory::getSingleton().setFog(true);
-	MaterialFactory::getSingleton().setWind(true);
+	//MaterialFactory::getSingleton().setFog(true);
+	//MaterialFactory::getSingleton().setWind(true);
 
 	//Delete camera
 	renderTarget->removeViewport(0);

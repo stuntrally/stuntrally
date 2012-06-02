@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "common/Defines.h"
 #include "common/RenderConst.h"
-#include "common/MaterialGen/MaterialFactory.h"
+//#include "common/MaterialGen/MaterialFactory.h"
 #include "CarModel.h" // for CreateModel()
 #include "OgreGame.h"
 #include "../vdrift/game.h"
@@ -71,8 +71,8 @@ void App::CreateVdrTrack()
 
 	//  load .matdef
 	LogO(String("Vdrift track .matdef  has Cache:")+ (hasMatCache?"yes":"no") + "  has Orig:" + (hasMatOrig?"yes":"no"));
-	materialFactory->loadDefsFromFile(hasMatCache ? sMatCache : sMatOrig);
-	materialFactory->generate(true);
+	//materialFactory->loadDefsFromFile(hasMatCache ? sMatCache : sMatOrig);
+	//materialFactory->generate(true);
 	
 
 	//  meshes  -------------

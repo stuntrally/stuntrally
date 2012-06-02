@@ -53,7 +53,6 @@ if(BUILD_EDITOR)
 		vdrift/pathmanager.cpp
 		ogre/QTimer.cpp
 		ogre/common/*.cpp
-		ogre/common/MaterialGen/*.cpp
 		road/*.cpp
 	)
 

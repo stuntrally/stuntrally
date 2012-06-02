@@ -810,25 +810,13 @@ void StaticBillboardSet::updateAll(const Vector3 &cameraDirection)
       Pass *p = mat->getTechnique(0)->getPass(0);
       if (!p->hasVertexProgram())
       {
-         static const Ogre::String Sprite_vp = "Sprite_vp";
-         p->setVertexProgram(Sprite_vp);
-
-         // glsl can use the built in gl_ModelViewProjectionMatrix
-         if (!s_isGLSL)
-            p->getVertexProgramParameters()->setNamedAutoConstant("worldViewProj", GpuProgramParameters::ACT_WORLDVIEWPROJ_MATRIX);
-
-         GpuProgramParametersSharedPtr params = p->getVertexProgramParameters();
-         params->setNamedAutoConstant(uScroll, GpuProgramParameters::ACT_CUSTOM);
-         params->setNamedAutoConstant(vScroll, GpuProgramParameters::ACT_CUSTOM);
-         params->setNamedAutoConstant(preRotatedQuad0, GpuProgramParameters::ACT_CUSTOM);
-         params->setNamedAutoConstant(preRotatedQuad1, GpuProgramParameters::ACT_CUSTOM);
-         params->setNamedAutoConstant(preRotatedQuad2, GpuProgramParameters::ACT_CUSTOM);
-         params->setNamedAutoConstant(preRotatedQuad3, GpuProgramParameters::ACT_CUSTOM);
+            ++i1;
+            continue;
       }
       if (!p->hasFragmentProgram())
       {
-		  static const Ogre::String Sprite_fp = "Sprite_fp";
-		  p->setFragmentProgram(Sprite_fp);
+            ++i1;
+            continue;
 	  }
 
       // Which prerotated quad use

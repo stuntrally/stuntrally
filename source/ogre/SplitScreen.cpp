@@ -8,7 +8,7 @@
 #include "../vdrift/settings.h"
 #include "../road/Road.h"
 #include "MyGUI_PointerManager.h"
-#include "common/MaterialGen/MaterialFactory.h"
+//#include "common/MaterialGen/MaterialFactory.h"
 
 #include <OgreRoot.h>
 #include <OgreViewport.h>
@@ -246,6 +246,7 @@ void SplitScreenManager::preViewportUpdate(const Ogre::RenderTargetViewportEvent
 		}
 
 		//update soft particle Depth Target
+        /*
 		if(pApp->pSet->softparticles && pApp->pSet->all_effects)
 		{
 			MaterialFactory::getSingletonPtr()->setSoftParticles(true);
@@ -260,6 +261,7 @@ void SplitScreenManager::preViewportUpdate(const Ogre::RenderTargetViewportEvent
 			}
 		}else
 			MaterialFactory::getSingletonPtr()->setSoftParticles(false);
+        */
 	}
 	else
 	{

@@ -11,7 +11,6 @@
 #include <OgreCamera.h>
 #include <OgreGpuProgramParams.h>
 #include "SplitScreen.h"
-#include "common/MaterialGen/MaterialFactory.h"
 #include "../vdrift/settings.h"
 //#include "HDRCompositor.h"
 #include "../vdrift/game.h"

@@ -5,7 +5,7 @@
 #include "../paged-geom/PagedGeometry.h"
 #include "../ogre/common/Gui_Def.h"
 #include "../ogre/common/MultiList2.h"
-#include "../ogre/common/MaterialGen/MaterialFactory.h"
+//#include "../ogre/common/MaterialGen/MaterialFactory.h"
 using namespace Ogre;
 
 
@@ -765,7 +765,7 @@ bool App::frameStarted(const Ogre::FrameEvent& evt)
 		TrackListUpd(false);
 	}
 	
-	materialFactory->update();
+	//materialFactory->update();
 	
 	bFirstRenderFrame = false;
 	

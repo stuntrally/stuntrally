@@ -1,6 +1,6 @@
 #include "pch.h"
 #include "../common/RenderConst.h"
-#include "../common/MaterialGen/MaterialFactory.h"
+//#include "../common/MaterialGen/MaterialFactory.h"
 
 #ifdef ROAD_EDITOR
 	#include "../common/Defines.h"
@@ -153,8 +153,8 @@ void App::UpdateWaterRTT(Ogre::Camera* cam)
 	//  water RTT
 	mWaterRTT.setViewerCamera(cam);
 	mWaterRTT.setRTTSize(ciShadowSizesA[pSet->water_rttsize]);
-	mWaterRTT.setReflect(MaterialFactory::getSingleton().getReflect());
-	mWaterRTT.setRefract(MaterialFactory::getSingleton().getRefract());
+	mWaterRTT.setReflect(0);
+	mWaterRTT.setRefract(0);
 	mWaterRTT.mSceneMgr = mSceneMgr;
 	if (!sc.fluids.empty())
 		mWaterRTT.setPlane(Plane(Vector3::UNIT_Y, sc.fluids.front().pos.y));

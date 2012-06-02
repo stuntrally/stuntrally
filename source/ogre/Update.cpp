@@ -6,7 +6,7 @@
 #include "../vdrift/game.h"
 #include "../vdrift/quickprof.h"
 #include "../paged-geom/PagedGeometry.h"
-#include "../ogre/common/MaterialGen/MaterialFactory.h"
+//#include "../ogre/common/MaterialGen/MaterialFactory.h"
 #include "../oisb/OISBSystem.h"
 #include "../network/masterclient.hpp"
 #include "../network/gameclient.hpp"
@@ -375,7 +375,7 @@ bool App::frameStart(Real time)
 			else{	 pr->setSpeedFactor(1.f);	 pr2->setSpeedFactor(1.f);	}
 		}
 		
-		materialFactory->update();
+		//materialFactory->update();
 		
 		// We put this here, because first render frame is rather heavy
 		if (mClient && bLoadingEnd)

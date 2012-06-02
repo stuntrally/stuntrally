@@ -6,7 +6,7 @@
 #include "SplitScreen.h"
 #include "../paged-geom/PagedGeometry.h"
 #include "common/RenderConst.h"
-#include "common/MaterialGen/MaterialFactory.h"
+//#include "common/MaterialGen/MaterialFactory.h"
 
 #include <OgreTerrain.h>
 #include <OgreTerrainGroup.h>
@@ -151,7 +151,7 @@ App::~App()
 void App::postInit()
 {
 	mSplitMgr->pApp = this;
-	
+	/*
 	materialFactory = new MaterialFactory();
 	materialFactory->pApp = this;
 	materialFactory->setSceneManager(mSceneMgr);
@@ -166,6 +166,7 @@ void App::postInit()
 		materialFactory->setTexSize(0);
 	else if (pSet->tex_size == 1)
 		materialFactory->setTexSize(4096);
+         */
 }
 
 void App::setTranslations()

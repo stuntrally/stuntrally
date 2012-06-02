@@ -9,7 +9,7 @@
 #include "btBulletDynamicsCommon.h"
 #include "BulletCollision/CollisionDispatch/btCollisionWorld.h"
 
-#include "../ogre/common/MaterialGen/MaterialFactory.h"
+//#include "../ogre/common/MaterialGen/MaterialFactory.h"
 using namespace Ogre;
 
 
@@ -204,8 +204,8 @@ void App::preRenderTargetUpdate(const RenderTargetEvent &evt)
 					terrainMaterial->getTechnique(i)->getPass(0)->getFragmentProgramParameters()->setNamedConstant("enableShadows", 0.f);
 			}
 		}
-		if (materialFactory)
-			materialFactory->setShadowsEnabled(false);
+		//if (materialFactory)
+			//materialFactory->setShadowsEnabled(false);
 	}
 	
 	const String& s = evt.source->getName();
@@ -239,8 +239,8 @@ void App::postRenderTargetUpdate(const RenderTargetEvent &evt)
 					terrainMaterial->getTechnique(i)->getPass(0)->getFragmentProgramParameters()->setNamedConstant("enableShadows", 1.f);
 			}
 		}
-		if (materialFactory)
-			materialFactory->setShadowsEnabled(true);
+		//if (materialFactory)
+			//materialFactory->setShadowsEnabled(true);
 	}
 	
 	const String& s = evt.source->getName();

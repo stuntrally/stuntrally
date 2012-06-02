@@ -36,7 +36,6 @@ const Ogre::Real crAngSnaps[ciAngSnapsNum] = {0,15,30,45,90,180};
 
 namespace Forests {  class PagedGeometry;  }
 namespace MyGUI  {  class MultiList2;  class Slider;  }
-class MaterialFactory;
 
 
 class App : public BaseApp, public Ogre::RenderTargetListener
@@ -59,7 +58,6 @@ public:
 	
 	Ogre::SceneManager* sceneMgr() { return mSceneMgr; };
 	
-	MaterialFactory* materialFactory;
 protected:
 	void LoadTrackEv(), SaveTrackEv(), UpdateTrackEv();
 	enum TrkEvent {  TE_None=0, TE_Load, TE_Save, TE_Update  } eTrkEvent;

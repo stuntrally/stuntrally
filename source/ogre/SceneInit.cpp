@@ -7,7 +7,7 @@
 #include "../road/Road.h"
 #include "SplitScreen.h"
 #include "common/RenderConst.h"
-#include "common/MaterialGen/MaterialFactory.h"
+//#include "common/MaterialGen/MaterialFactory.h"
 #include "common/GraphView.h"
 
 #include "../network/gameclient.hpp"
@@ -200,7 +200,7 @@ void App::LoadCleanUp()  // 1 first
 	if (pr2) {  mSceneMgr->destroyParticleSystem(pr2);  pr2=0;  }
 
 	terrain = 0;
-	materialFactory->setTerrain(0);
+	//materialFactory->setTerrain(0);
 	if (mTerrainGroup)
 		mTerrainGroup->removeAllTerrains();
 	if (road)
@@ -291,7 +291,7 @@ void App::LoadScene()  // 3
 	UpdateWaterRTT(mSplitMgr->mCameras.front());
 
 	/// generate materials
-	materialFactory->generate();
+	//materialFactory->generate();
 	refreshCompositor();
 
 	//  fluids
@@ -478,7 +478,7 @@ void App::LoadMisc()  // 9 last
 		}
 	
 	// make sure all shader params are loaded
-	materialFactory->generate();
+	//materialFactory->generate();
 
 	try {
 	TexturePtr tex = Ogre::TextureManager::getSingleton().getByName("waterDepth.png");
