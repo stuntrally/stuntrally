@@ -103,6 +103,7 @@ public:
 class Scene		///  Scene
 {
 public:
+	bool asphalt;  // use asphalt tires car
 	//  sky
 	Ogre::String skyMtr;
 	int  rainEmit,rain2Emit;  Ogre::String rainName,rain2Name;

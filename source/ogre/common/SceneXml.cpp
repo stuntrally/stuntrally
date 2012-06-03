@@ -15,6 +15,7 @@ Scene::Scene()
 }
 void Scene::Default()
 {
+	asphalt = false;
 	skyMtr = "World/NoonSky";
 	rainEmit = 0;  rainName = "";
 	rain2Emit = 0;  rain2Name = "";
@@ -117,9 +118,16 @@ bool Scene::LoadXml(String file)
 	//pgLayers.clear();
 
 	// read
-	TiXmlElement* eSky,*eFog,*eLi,*eTer,*ePgd,*eCam,*eFls,*eObjs;
+	TiXmlElement* eSky,*eFog,*eLi,*eTer,*ePgd,*eCam,*eFls,*eObjs,*eCar;
 	const char* a;
 
+
+ 	///  car setup
+ 	eCar = root->FirstChildElement("car");
+	if (eCar)
+	{
+		a = eCar->Attribute("tires");	if (a)  asphalt = s2i(a) > 0;
+	}
 
 	///  sky
 	eSky = root->FirstChildElement("sky");
@@ -303,7 +311,7 @@ bool Scene::LoadXml(String file)
 		a = eCam->Attribute("pos");		if (a)  camPos = s2v(a);
 		a = eCam->Attribute("dir");		if (a)  camDir = s2v(a);
 	}
-
+	
 	///  objects
 	eObjs = root->FirstChildElement("objects");
 	if (eObjs)
@@ -335,6 +343,11 @@ bool Scene::LoadXml(String file)
 bool Scene::SaveXml(String file)
 {
 	TiXmlDocument xml;	TiXmlElement root("scene");
+
+	TiXmlElement car("car");
+		car.SetAttribute("tires",	asphalt ? "1":"0");
+	root.InsertEndChild(car);
+
 
 	TiXmlElement sky("sky");
 		sky.SetAttribute("material",	skyMtr.c_str());
