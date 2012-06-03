@@ -27,8 +27,8 @@ using namespace Ogre;
 	based technique based on the default technique of the given material.
 */
 Ogre::Technique* MaterialMgrListener::handleSchemeNotFound(unsigned short schemeIndex, 
-	const Ogre::String& schemeName, Ogre::Material* originalMaterial, unsigned short lodIndex, 
-	const Ogre::Renderable* rend)
+														   const Ogre::String& schemeName, Ogre::Material* originalMaterial, unsigned short lodIndex, 
+														   const Ogre::Renderable* rend)
 {	
 	Ogre::Technique* generatedTech = NULL;
 
@@ -48,7 +48,7 @@ Ogre::Technique* MaterialMgrListener::handleSchemeNotFound(unsigned short scheme
 		{
 			// Force creating the shaders for the generated technique.
 			mShaderGenerator->validateMaterial(schemeName, originalMaterial->getName());
-			
+
 			// Grab the generated technique.
 			Ogre::Material::TechniqueIterator itTech = originalMaterial->getTechniqueIterator();
 
@@ -91,20 +91,21 @@ bool BaseApp::NeedMRTBuffer()
 //-------------------------------------------------------------------------------------
 void BaseApp::refreshCompositor(bool disableAll)
 {
-	CompositorManager& cmp = CompositorManager::getSingleton(); 
+	CompositorManager& cmp = CompositorManager::getSingleton();
+
 	for (std::list<Viewport*>::iterator it=mSplitMgr->mViewports.begin(); it!=mSplitMgr->mViewports.end(); ++it)
 	{
-		if(MaterialGenerator::MRTSupported())
+		if (MaterialGenerator::MRTSupported())
 		{
-			CompositorManager::getSingleton().setCompositorEnabled((*it), "gbuffer", false);
+			cmp.setCompositorEnabled((*it), "gbuffer", false);
 		}
 
 		cmp.setCompositorEnabled((*it), "gbufferNoMRT", false);
 		cmp.setCompositorEnabled((*it), "Bloom", false);
 		cmp.setCompositorEnabled((*it), "HDR", false);
 		cmp.setCompositorEnabled((*it), "HDRNoMRT", false);
-			
-		if(MaterialGenerator::MRTSupported())
+
+		if (MaterialGenerator::MRTSupported())
 		{
 			cmp.setCompositorEnabled((*it), "ssao", false);
 			cmp.setCompositorEnabled((*it), "SoftParticles", false);
@@ -115,27 +116,27 @@ void BaseApp::refreshCompositor(bool disableAll)
 		}else{
 			cmp.setCompositorEnabled((*it), "ssaoNoMRT", false);
 		}
-		CompositorManager::getSingleton().setCompositorEnabled((*it), "Motion Blur", false);
-		CompositorManager::getSingleton().setCompositorEnabled((*it), "SMAA", false);
-		CompositorManager::getSingleton().setCompositorEnabled((*it), "FilmGrain", false);
-		CompositorManager::getSingleton().setCompositorEnabled((*it), UI_RENDER, false);
+		cmp.setCompositorEnabled((*it), "Motion Blur", false);
+		cmp.setCompositorEnabled((*it), "SMAA", false);
+		cmp.setCompositorEnabled((*it), "FilmGrain", false);
+		cmp.setCompositorEnabled((*it), UI_RENDER, false);
 	}
 
 	if (!pSet->all_effects || disableAll)
 		return;
-	
+
 	//  Set Bloom params (intensity, orig weight)
 	try
 	{	MaterialPtr bloom = MaterialManager::getSingleton().getByName("Ogre/Compositor/BloomBlend2");
-		if(!bloom.isNull())
-		{
-			GpuProgramParametersSharedPtr params = bloom->getTechnique(0)->getPass(0)->getFragmentProgramParameters();
-			params->setNamedConstant("OriginalImageWeight", pSet->bloomorig);
-			params->setNamedConstant("BlurWeight", pSet->bloomintensity);
-		}
+	if(!bloom.isNull())
+	{
+		GpuProgramParametersSharedPtr params = bloom->getTechnique(0)->getPass(0)->getFragmentProgramParameters();
+		params->setNamedConstant("OriginalImageWeight", pSet->bloomorig);
+		params->setNamedConstant("BlurWeight", pSet->bloomintensity);
+	}
 	}catch(...)
 	{	LogO("!!! Failed to set bloom shader params.");  }
-	
+
 	//  HDR params todo..
 	//try
 	//{	MaterialPtr hdrmat = MaterialManager::getSingleton().getByName("Ogre/Compositor/BloomBlend2");
@@ -151,14 +152,14 @@ void BaseApp::refreshCompositor(bool disableAll)
 	//	params->setNamedConstant("blur", pSet->motionblurintensity);
 	//}catch(...)
 	//{	LogO("!!! Failed to set blur shader params.");  }
-	
+
 
 	for (std::list<Viewport*>::iterator it=mSplitMgr->mViewports.begin(); it!=mSplitMgr->mViewports.end(); ++it)
 	{
 		if(MaterialGenerator::MRTSupported())
 		{
 			//the condition here is any compositor needing the gbuffers like ssao ,soft particles
-			CompositorManager::getSingleton().setCompositorEnabled((*it), "gbuffer", NeedMRTBuffer());
+			cmp.setCompositorEnabled((*it), "gbuffer", NeedMRTBuffer());
 		}
 
 		cmp.setCompositorEnabled((*it), "gbufferNoMRT",!NeedMRTBuffer() && AnyEffectEnabled());
@@ -168,23 +169,23 @@ void BaseApp::refreshCompositor(bool disableAll)
 		cmp.setCompositorEnabled((*it), "HDRNoMRT", pSet->hdr && !NeedMRTBuffer());
 		cmp.setCompositorEnabled((*it), "Motion Blur", pSet->motionblur);
 		cmp.setCompositorEnabled((*it), "CamBlur", pSet->camblur);
-		CompositorManager::getSingleton().setCompositorEnabled((*it), "SMAA", pSet->ssaa);
+		cmp.setCompositorEnabled((*it), "SMAA", pSet->ssaa);
 		cmp.setCompositorEnabled((*it), "FilmGrain", pSet->hdr);
 
 		if(MaterialGenerator::MRTSupported())
 		{
-			CompositorManager::getSingleton().setCompositorEnabled((*it), "ssao", pSet->ssao);
-			CompositorManager::getSingleton().setCompositorEnabled((*it), "SoftParticles", pSet->softparticles);
-			CompositorManager::getSingleton().setCompositorEnabled((*it), "DepthOfField", pSet->dof);
-			CompositorManager::getSingleton().setCompositorEnabled((*it), "GodRays", pSet->godrays);
-			CompositorManager::getSingleton().setCompositorEnabled((*it), "gbufferFinalizer", NeedMRTBuffer() && !pSet->softparticles);
+			cmp.setCompositorEnabled((*it), "ssao", pSet->ssao);
+			cmp.setCompositorEnabled((*it), "SoftParticles", pSet->softparticles);
+			cmp.setCompositorEnabled((*it), "DepthOfField", pSet->dof);
+			cmp.setCompositorEnabled((*it), "GodRays", pSet->godrays);
+			cmp.setCompositorEnabled((*it), "gbufferFinalizer", NeedMRTBuffer() && !pSet->softparticles);
 		}
 		else
 		{
-			CompositorManager::getSingleton().setCompositorEnabled((*it), "ssaoNoMRT", pSet->ssao);
+			cmp.setCompositorEnabled((*it), "ssaoNoMRT", pSet->ssao);
 		}
 
-                CompositorManager::getSingleton().setCompositorEnabled((*it), UI_RENDER, AnyEffectEnabled());
+		cmp.setCompositorEnabled((*it), UI_RENDER, AnyEffectEnabled());
 	}
 }
 
@@ -198,7 +199,7 @@ void BaseApp::recreateCompositor()
 		refreshCompositor();
 		return;
 	}
-	
+
 	//  add when needed
 	if (!ResourceGroupManager::getSingleton().resourceGroupExists("Effects"))
 	{
@@ -225,7 +226,7 @@ void BaseApp::recreateCompositor()
 		mHDRLogic = new HDRLogic;
 
 		cmp.registerCompositorLogic("HDR", mHDRLogic);
-	/*	mHDRLogic->compositor = new HDRCompositor(this);
+		/*	mHDRLogic->compositor = new HDRCompositor(this);
 		mHDRLogic->compositor->SetToneMapper(HDRCompositor::TONEMAPPER::TM_ADAPTLOG);
 		mHDRLogic->compositor->SetGlareType(HDRCompositor::GLARETYPE::GT_BLUR);
 		mHDRLogic->compositor->SetStarType(HDRCompositor::STARTYPE::ST_PLUS);
@@ -238,60 +239,54 @@ void BaseApp::recreateCompositor()
 		mHDRLogic->compositor->SetGlareStrength(0.1f);
 		mHDRLogic->compositor->SetStarStrength(0.1f);
 		mHDRLogic->compositor->Create();
-	*/
+		*/
 		mHDRLogic->setApp(this);	
-	
 	}
-	
+
 	if (!mSSAOLogic) 
 	{
 		mSSAOLogic = new SSAOLogic();
 		mSSAOLogic->setApp(this);
-		if(MaterialGenerator::MRTSupported())
-		{
-			CompositorManager::getSingleton().registerCompositorLogic("ssao", mSSAOLogic);
-		}
+		if (MaterialGenerator::MRTSupported())
+			cmp.registerCompositorLogic("ssao", mSSAOLogic);
 		else
-		{
-			CompositorManager::getSingleton().registerCompositorLogic("ssaoNoMRT", mSSAOLogic);
-		}
-
+			cmp.registerCompositorLogic("ssaoNoMRT", mSSAOLogic);
 	}
 	if (!mGodRaysLogic) 
 	{
 		mGodRaysLogic = new GodRaysLogic();
 		mGodRaysLogic->setApp(this);
-		CompositorManager::getSingleton().registerCompositorLogic("GodRays", mGodRaysLogic);
+		cmp.registerCompositorLogic("GodRays", mGodRaysLogic);
 	}
 	if (!mSoftParticlesLogic) 
 	{
 		mSoftParticlesLogic = new SoftParticlesLogic();
 		mSoftParticlesLogic->setApp(this);
-		CompositorManager::getSingleton().registerCompositorLogic("SoftParticles", mSoftParticlesLogic);
+		cmp.registerCompositorLogic("SoftParticles", mSoftParticlesLogic);
 	}
 	if (!mDepthOfFieldLogic) 
 	{
 		mDepthOfFieldLogic = new DepthOfFieldLogic();
 		mDepthOfFieldLogic->setApp(this);
-		CompositorManager::getSingleton().registerCompositorLogic("DepthOfField", mDepthOfFieldLogic);
+		cmp.registerCompositorLogic("DepthOfField", mDepthOfFieldLogic);
 	}
 	if (!mFilmGrainLogic) 
 	{
 		mFilmGrainLogic = new FilmGrainLogic();
 		mFilmGrainLogic->setApp(this);
-		CompositorManager::getSingleton().registerCompositorLogic("FilmGrain", mFilmGrainLogic);
+		cmp.registerCompositorLogic("FilmGrain", mFilmGrainLogic);
 	}
 	if (!mGBufferLogic) 
 	{
 		mGBufferLogic = new GBufferLogic();
 		mGBufferLogic->setApp(this);
-		CompositorManager::getSingleton().registerCompositorLogic("GBuffer", mGBufferLogic);
+		cmp.registerCompositorLogic("GBuffer", mGBufferLogic);
 	}
 
-	if (CompositorManager::getSingleton().getByName("Motion Blur").isNull())
+	if (cmp.getByName("Motion Blur").isNull())
 	{
 		// Motion blur has to be created in code
-		CompositorPtr comp3 = CompositorManager::getSingleton().create(
+		CompositorPtr comp3 = cmp.create(
 			"Motion Blur", ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME);
 
 		CompositionTechnique *t = comp3->createTechnique();
@@ -367,7 +362,7 @@ void BaseApp::recreateCompositor()
 	if (!mMotionBlurLogic)
 	{
 		mMotionBlurLogic = new MotionBlurLogic(this);
-		CompositorManager::getSingleton().registerCompositorLogic("Motion Blur", mMotionBlurLogic);
+		cmp.registerCompositorLogic("Motion Blur", mMotionBlurLogic);
 	}
 	if (!mCameraBlurLogic)
 	{
@@ -379,11 +374,11 @@ void BaseApp::recreateCompositor()
 	for (std::list<Viewport*>::iterator it=mSplitMgr->mViewports.begin(); it!=mSplitMgr->mViewports.end(); ++it)
 	{
 		// remove old comp. first
-		CompositorManager::getSingleton().removeCompositorChain( (*it ));
-		
+		cmp.removeCompositorChain( (*it ));
+
 		if (MaterialGenerator::MRTSupported())
 		{
-			CompositorManager::getSingleton().addCompositor((*it), "gbuffer");
+			cmp.addCompositor((*it), "gbuffer");
 		}
 
 		cmp.addCompositor((*it), "gbufferNoMRT");
@@ -398,18 +393,18 @@ void BaseApp::recreateCompositor()
 		}
 		else
 		{
-			CompositorManager::getSingleton().addCompositor((*it), "ssaoNoMRT");
+			cmp.addCompositor((*it), "ssaoNoMRT");
 		}
-		CompositorManager::getSingleton().addCompositor((*it), "GodRays");
-		CompositorManager::getSingleton().addCompositor((*it), "Bloom");
-		CompositorManager::getSingleton().addCompositor((*it), "CamBlur");
-		CompositorManager::getSingleton().addCompositor((*it), "Motion Blur");
-		CompositorManager::getSingleton().addCompositor((*it), "SMAA");
-		CompositorManager::getSingleton().addCompositor((*it), "FilmGrain");
-		CompositorManager::getSingleton().addCompositor((*it), UI_RENDER);
+		cmp.addCompositor((*it), "GodRays");
+		cmp.addCompositor((*it), "Bloom");
+		cmp.addCompositor((*it), "CamBlur");
+		cmp.addCompositor((*it), "Motion Blur");
+		cmp.addCompositor((*it), "SMAA");
+		cmp.addCompositor((*it), "FilmGrain");
+		cmp.addCompositor((*it), UI_RENDER);
 
 	}
-	
+
 	refreshCompositor();
 }
 
@@ -431,9 +426,9 @@ void BaseApp::CreateRTfixed()
 		mShaderGenerator->validateMaterial(Ogre::RTShader::ShaderGenerator::DEFAULT_SCHEME_NAME, 
 			"BaseWhite");
 		baseWhite->getTechnique(0)->getPass(0)->setVertexProgram(
-		baseWhite->getTechnique(1)->getPass(0)->getVertexProgram()->getName());
+			baseWhite->getTechnique(1)->getPass(0)->getVertexProgram()->getName());
 		baseWhite->getTechnique(0)->getPass(0)->setFragmentProgram(
-		baseWhite->getTechnique(1)->getPass(0)->getFragmentProgram()->getName());
+			baseWhite->getTechnique(1)->getPass(0)->getFragmentProgram()->getName());
 
 		// creates shaders for base material BaseWhiteNoLighting using the RTSS
 		mShaderGenerator->createShaderBasedTechnique(
@@ -444,8 +439,8 @@ void BaseApp::CreateRTfixed()
 			"BaseWhiteNoLighting");
 		Ogre::MaterialPtr baseWhiteNoLighting = Ogre::MaterialManager::getSingleton().getByName("BaseWhiteNoLighting", Ogre::ResourceGroupManager::INTERNAL_RESOURCE_GROUP_NAME);
 		baseWhiteNoLighting->getTechnique(0)->getPass(0)->setVertexProgram(
-		baseWhiteNoLighting->getTechnique(1)->getPass(0)->getVertexProgram()->getName());
+			baseWhiteNoLighting->getTechnique(1)->getPass(0)->getVertexProgram()->getName());
 		baseWhiteNoLighting->getTechnique(0)->getPass(0)->setFragmentProgram(
-		baseWhiteNoLighting->getTechnique(1)->getPass(0)->getFragmentProgram()->getName());
+			baseWhiteNoLighting->getTechnique(1)->getPass(0)->getFragmentProgram()->getName());
 	}
 }
