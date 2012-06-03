@@ -1118,6 +1118,10 @@ void CARDYNAMICS::SetMaxSteeringAngle ( T newangle )
 {
 	maxangle = newangle;
 }
+void CARDYNAMICS::SetAngDamp( T newang )
+{
+	ang_damp = newang;
+}
 
 void CARDYNAMICS::SetDrive ( const std::string & newdrive )
 {

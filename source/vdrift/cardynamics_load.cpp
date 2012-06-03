@@ -20,7 +20,7 @@ CARDYNAMICS::CARDYNAMICS() :
 	last_auto_clutch(1.0), remaining_shift_time(0.0),
 	shift_time(0.2),
 	abs(false), tcs(false),
-	maxangle(45.0),
+	maxangle(45.0), ang_damp(0.4),
 	bTerrain(false), pSet(0), pScene(0),
 	doBoost(0), doFlip(0), boostFuel(0), boostVal(0),
 	fHitTime(0), fHitForce(0), fParIntens(0), fParVel(0), //hit
@@ -576,9 +576,15 @@ bool CARDYNAMICS::Load(CONFIGFILE & c, std::ostream & error_output)
 
 	//load the max steering angle
 	{
-		float maxangle = 45.0;
+		float maxangle = 45.0f;
 		if (!c.GetParam("steering.max-angle", maxangle, error_output)) return false;
 		SetMaxSteeringAngle ( maxangle );
+	}
+	///car angular damping -new
+	{
+		float ang_damp = 0.4f;
+		c.GetParam("steering.angular-damping", ang_damp, error_output);
+		SetAngDamp( ang_damp );
 	}
 
 	//load the driver
@@ -748,7 +754,7 @@ void CARDYNAMICS::Init(
 	chassisState->setWorldTransform(transform);
 
 	btRigidBody::btRigidBodyConstructionInfo info(chassisMass, chassisState, chassisShape, chassisInertia);
-	info.m_angularDamping = 0.4;  // 0.0!+  0.2-  0.5
+	info.m_angularDamping = ang_damp;  // 0.0!+  0.4 old
 	info.m_restitution = 0.0;  //...
 	info.m_friction = 0.7;  /// 0.4~ 0.75
 	///  chasis^

@@ -219,7 +219,7 @@ public:
 
 	std::list <std::pair <T, MATHVECTOR <T, 3> > > mass_only_particles;
 	
-	T maxangle;
+	T maxangle;  T ang_damp;
 	T feedback;
 	
 	MATHVECTOR <T, 3> lastbodyforce; //< held so external classes can extract it for things such as applying physics to camera mounts
@@ -318,6 +318,8 @@ public:
 // cardynamics initialization
 	//Set the maximum steering angle in degrees
 	void SetMaxSteeringAngle(T newangle);
+
+	void SetAngDamp( T newang );
 	
 	void SetDrive(const std::string & newdrive);
 	
