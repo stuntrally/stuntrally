@@ -1036,19 +1036,15 @@
 				>
 			</File>
 			<File
-				RelativePath="C:\Documents and Settings\ryhu25\Application Data\stuntrally\game.cfg"
+				RelativePath="c:\Users\cryham\AppData\Roaming\stuntrally\game.cfg"
 				>
 			</File>
 			<File
-				RelativePath="C:\Documents and Settings\ryhu25\Application Data\stuntrally\keys.xml"
+				RelativePath="c:\Users\cryham\AppData\Roaming\stuntrally\keys.xml"
 				>
 			</File>
 			<File
-				RelativePath="C:\Documents and Settings\ryhu25\Application Data\stuntrally\log.txt"
-				>
-			</File>
-			<File
-				RelativePath=".\Source\vdrift\logging.h"
+				RelativePath="c:\Users\cryham\AppData\Roaming\stuntrally\log.txt"
 				>
 			</File>
 			<File
@@ -1056,7 +1052,11 @@
 				>
 			</File>
 			<File
-				RelativePath="C:\Documents and Settings\ryhu25\Application Data\stuntrally\ogre.log"
+				RelativePath=".\Source\vdrift\logging.h"
+				>
+			</File>
+			<File
+				RelativePath="c:\Users\cryham\AppData\Roaming\stuntrally\ogre.log"
 				>
 			</File>
 			<File
@@ -1068,7 +1068,7 @@
 				>
 			</File>
 			<File
-				RelativePath="C:\Documents and Settings\ryhu25\Application Data\stuntrally\progress.xml"
+				RelativePath="c:\Users\cryham\AppData\Roaming\stuntrally\progress.xml"
 				>
 			</File>
 			<File
