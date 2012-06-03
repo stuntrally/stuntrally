@@ -31,6 +31,8 @@ if(BUILD_GAME)
 		ogre/*.cpp
 		ogre/*/*.cpp
 		ogre/*/*/*.cpp
+		ogre/common/MaterialGen/*.cpp
+		ogre/common/MaterialGen/Platforms/Ogre/*.cpp
 		road/*.cpp
 		network/*.cpp
 		network/*.hpp # For some IDE project files
@@ -53,6 +55,8 @@ if(BUILD_EDITOR)
 		vdrift/pathmanager.cpp
 		ogre/QTimer.cpp
 		ogre/common/*.cpp
+		ogre/common/MaterialGen/*.cpp
+		ogre/common/MaterialGen/Platforms/Ogre/*.cpp
 		road/*.cpp
 	)
 
