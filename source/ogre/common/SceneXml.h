@@ -156,7 +156,7 @@ public:
 		
 	//  methods
 	Scene();  void Default(), UpdateFluidsId();
-	bool LoadXml(Ogre::String file), SaveXml(Ogre::String file);
+	bool LoadXml(Ogre::String file, bool bTer = true), SaveXml(Ogre::String file);
 };
 
 #endif

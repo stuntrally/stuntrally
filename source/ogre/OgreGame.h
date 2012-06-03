@@ -313,6 +313,7 @@ protected:
 	SLV(HDRBloomInt);  SLV(HDRBloomOrig);  SLV(HDRAdaptationScale);
 	SLV(HDRVignettingRadius);  SLV(HDRVignettingDarkness);
 	SLV(NumLaps);  SLV(RplNumViewports);  // setup
+	SLV(SSSEffect);  SLV(SSSVelFactor);
 	
 	//  checks
 	void chkGauges(WP),	chkArrow(WP), chkDigits(WP),
@@ -330,6 +331,11 @@ protected:
 		chkVidDepthOfField(WP), 
 		chkVegetCollis(WP), chkCarCollis(WP), chkRoadWCollis(WP);  //game
 	void chkUseImposters(WP wp);
+
+	// gui car tire set gravel/asphalt
+	int iTireSet;
+	void tabTireSet(MyGUI::TabPtr wp, size_t id);
+	MyGUI::ButtonPtr bchAbs,bchTcs;  MyGUI::Slider* slSSSEff,*slSSSVel;
 
 	void imgBtnCarClr(WP), btnCarClrRandom(WP), toggleWireframe();
 	MyGUI::ButtonPtr bRkmh, bRmph;  void radKmh(WP), radMph(WP);

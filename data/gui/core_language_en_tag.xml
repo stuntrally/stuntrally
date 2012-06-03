@@ -213,6 +213,13 @@
 	<Tag name="TCS">TCS (traction control)</Tag>
 	<Tag name="TipTCS">Prevents wheel spinning when accelerating (default: off).</Tag>
 
+	<Tag name="Gravel">Gravel</Tag>
+	<Tag name="Asphalt">Asphalt</Tag>
+	<Tag name="SpeedSensitiveSteering">Speed Sensitive Steering</Tag>
+	<Tag name="TipSpeedSensitiveSteering">Decreases steering range with higher velocity.</Tag>
+	<Tag name="SSS_Effect">Effect</Tag>
+	<Tag name="SSS_SpeedFactor">Speed Factor</Tag>
+
 	<Tag name="AutoGearbox">Auto gearbox</Tag>
 	<Tag name="TipAutoGearbox">Uncheck for manual gears changing.</Tag>
 	<Tag name="AutoRear">Auto Rear gear</Tag>

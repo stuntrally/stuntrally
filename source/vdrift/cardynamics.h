@@ -219,8 +219,10 @@ public:
 
 	std::list <std::pair <T, MATHVECTOR <T, 3> > > mass_only_particles;
 	
-	T maxangle;  T ang_damp;
+	T maxangle;
 	T feedback;
+	
+	T ang_damp;  T rot_coef[4];  /// new
 	
 	MATHVECTOR <T, 3> lastbodyforce; //< held so external classes can extract it for things such as applying physics to camera mounts
 	

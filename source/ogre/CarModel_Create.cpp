@@ -64,6 +64,7 @@ CarModel::CarModel(unsigned int index, eCarType type, const std::string& name,
 	if (type == CT_GHOST)		sDispName = "Ghost";
 	else if (type == CT_LOCAL)	sDispName = "Player"+toStr(iIndex+1);
 	
+
 	//  get car start pos from track  ------
 	if (type != CT_GHOST)  // ghost has pCar, dont create
 	{
@@ -77,7 +78,8 @@ CarModel::CarModel(unsigned int index, eCarType type, const std::string& name,
 
 		//  offset car start pos when cars collide
 		MATHVECTOR<float, 3> offset(0,0,0);
-		pCar = pGame->LoadCar(sDirname, pos, rot, true, false, type == CT_REMOTE, index);
+		pCar = pGame->LoadCar(sDirname, pos, rot, true, false, type == CT_REMOTE, index, sc->asphalt);
+
 		if (!pCar)  LogO("Error creating car " + sDirname);
 		else  pCar->pCarM = this;
 	}

@@ -217,6 +217,18 @@ void App::LoadGame()  // 2
 	
 	pGame->NewGameDoCleanup();
 	pGame->NewGameDoLoadTrack();
+
+
+	// load scene.xml - default if not found
+	//   need to know sc.asphalt before vdrift car load
+	sc.LoadXml(TrkDir()+"scene.xml", IsTerTrack());
+
+	if (!sc.ter)
+	{	sc.td.hfHeight = sc.td.hfAngle = NULL;  }  // sc.td.layerRoad.smoke = 1.f;
+	
+	// upd car abs,tcs,sss
+	if (pGame)  pGame->ProcessNewSettings();
+
 		
 	/// init car models
 	// will create vdrift cars, actual car loading will be done later in LoadCar()
@@ -280,12 +292,7 @@ void App::LoadGame()  // 2
 
 void App::LoadScene()  // 3
 {
-	// load scene - default if not found
-	sc.LoadXml(TrkDir()+"scene.xml");
-	sc.ter = IsTerTrack();
-
-	if (!sc.ter)
-	{	sc.td.hfHeight = sc.td.hfAngle = NULL;  }  // sc.td.layerRoad.smoke = 1.f;
+	//before car-- load scene.xml
 
 	//  water RTT
 	UpdateWaterRTT(mSplitMgr->mCameras.front());

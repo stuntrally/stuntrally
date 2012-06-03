@@ -36,8 +36,9 @@ public:
 	bool use_imposters;
 	float particles_len, trails_len;
 
-	//  car
-	bool abs, tcs, autoshift, autorear, rear_inv, show_mph;
+	//  car  [2] = 0 gravel 1 asphalt
+	bool abs[2], tcs[2], autoshift, autorear, rear_inv, show_mph;
+	float sss_effect[2], sss_velfactor[2];
 	int cam_view[4];//
 
 	//---------------  game config

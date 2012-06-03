@@ -191,9 +191,16 @@ void App::InitGui()
 	Chk("Graphs", chkGraphs, pSet->show_graphs);		chGraphs = bchk;
 
 	//  car setup  todo: for each player ..
-	Chk("CarABS",  chkAbs, pSet->abs);			Chk("CarTCS", chkTcs, pSet->tcs);
+	Chk("CarABS",  chkAbs, pSet->abs[0]);  bchAbs = bchk;
+	Chk("CarTCS", chkTcs, pSet->tcs[0]);  bchTcs = bchk;
 	Chk("CarGear", chkGear, pSet->autoshift);	Chk("CarRear", chkRear, pSet->autorear);
 	Chk("CarRearThrInv", chkRearInv, pSet->rear_inv);
+
+	TabPtr tTires = mGUI->findWidget<Tab>("tabCarTires");
+	if (tTires)  tTires->eventTabChangeSelect += newDelegate(this, &App::tabTireSet);
+	Slv(SSSEffect,	pSet->sss_effect[0]);  slSSSEff = sl;
+	Slv(SSSVelFactor, pSet->sss_velfactor[0]/2.f);  slSSSVel = sl;
+
 	//  game
 	Chk("VegetCollis", chkVegetCollis, pSet->gui.collis_veget);
 	Chk("CarCollis", chkCarCollis, pSet->gui.collis_cars);

@@ -271,7 +271,11 @@ void GAME::UpdateCarInputs(CAR & car)
 	std::vector <float> carinputs(CARINPUT::ALL, 0.0f);
 	bool forceBrake = timer.waiting || timer.pretime > 0.f;  // race countdown
 
-	carinputs = carcontrols_local.second.ProcessInput(car.id, forceBrake);
+	int i = pOgreGame->sc.asphalt ? 1 : 0;
+	float sss_eff = settings->sss_effect[i], sss_velf = settings->sss_velfactor[i];
+	float carspeed = car.GetSpeed();
+
+	carinputs = carcontrols_local.second.ProcessInput(car.id, carspeed, sss_eff, sss_velf, forceBrake);
 
 	car.HandleInputs(carinputs, TickPeriod());
 }
@@ -347,10 +351,11 @@ void GAME::LeaveGame()
 
 ///  add a car, optionally controlled by the local player
 CAR* GAME::LoadCar(const string & carname, const MATHVECTOR <float, 3> & start_position,
-				   const QUATERNION <float> & start_orientation, bool islocal, bool isai, bool isRemote, int idCar)
+				   const QUATERNION <float> & start_orientation, bool islocal, bool isai, bool isRemote,
+				   int idCar, bool asphalt)
 {
 	CONFIGFILE carconf;
-	if (!carconf.Load(PATHMANAGER::GetCarPath()+"/"+carname+"/"+carname+".car"))
+	if (!carconf.Load(PATHMANAGER::GetCarPath()+"/"+carname+"/"+carname + (asphalt ? "_a":"") + ".car"))
 		return NULL;
 
 	cars.push_back(CAR());
@@ -474,8 +479,9 @@ void GAME::ProcessNewSettings()
 {
 	if (carcontrols_local.first)
 	{
-		carcontrols_local.first->SetABS(settings->abs);
-		carcontrols_local.first->SetTCS(settings->tcs);
+		int i = pOgreGame->sc.asphalt ? 1 : 0;
+		carcontrols_local.first->SetABS(settings->abs[i]);
+		carcontrols_local.first->SetTCS(settings->tcs[i]);
 		carcontrols_local.first->SetAutoShift(settings->autoshift);
 		carcontrols_local.first->SetAutoRear(settings->autorear);
 		//carcontrols_local.first->SetAutoClutch(settings->rear_inv);

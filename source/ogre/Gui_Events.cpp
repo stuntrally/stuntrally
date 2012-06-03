@@ -9,6 +9,7 @@
 #include "common/Gui_Def.h"
 #include "common/RenderConst.h"
 #include "common/GraphView.h"
+#include "common/Slider.h"
 #include "../network/masterclient.hpp"
 #include "../network/gameclient.hpp"
 
@@ -30,14 +31,37 @@ using namespace MyGUI;
 
 ///  Gui Events
 
-//  [Setup]
 //    [Car]
-void App::chkAbs(WP wp){		ChkEv(abs);		if (pGame)  pGame->ProcessNewSettings();	}
-void App::chkTcs(WP wp){		ChkEv(tcs);		if (pGame)  pGame->ProcessNewSettings();	}
+void App::chkAbs(WP wp){		ChkEv(abs[iTireSet]);	if (pGame)  pGame->ProcessNewSettings();	}
+void App::chkTcs(WP wp){		ChkEv(tcs[iTireSet]);	if (pGame)  pGame->ProcessNewSettings();	}
+
+void App::tabTireSet(MyGUI::TabPtr wp, size_t id)
+{
+	iTireSet = id;
+	// UpdGuiTireSet
+	bchAbs->setStateSelected(pSet->abs[iTireSet]);
+	bchTcs->setStateSelected(pSet->tcs[iTireSet]);
+	Real v = pSet->sss_effect[iTireSet];
+	slSSSEff->setValue(v);  valSSSEffect->setCaption(fToStr(v,2,4));
+	v = pSet->sss_velfactor[iTireSet];
+	slSSSVel->setValue(v/2.f);  valSSSVelFactor->setCaption(fToStr(v,2,4));
+}
+void App::slSSSEffect(SL)
+{
+	Real v = 1.f * val;  if (bGI)  pSet->sss_effect[iTireSet] = v;
+	if (valSSSEffect){	valSSSEffect->setCaption(fToStr(v,2,4));  }
+}
+void App::slSSSVelFactor(SL)
+{
+	Real v = 2.f * val;  if (bGI)  pSet->sss_velfactor[iTireSet] = v;
+	if (valSSSVelFactor){	valSSSVelFactor->setCaption(fToStr(v,2,4));  }
+}
 
 void App::chkGear(WP wp){		ChkEv(autoshift);	if (pGame)  pGame->ProcessNewSettings();	}
 void App::chkRear(WP wp){		ChkEv(autorear);	if (pGame)  pGame->ProcessNewSettings();	}
 void App::chkRearInv(WP wp){	ChkEv(rear_inv);	if (pGame)  pGame->ProcessNewSettings();	}
+
+
 //    [Game]
 void App::chkVegetCollis(WP wp){	ChkEv(gui.collis_veget);	}
 void App::chkCarCollis(WP wp){		ChkEv(gui.collis_cars);		}

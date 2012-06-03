@@ -16,6 +16,8 @@ Scene::Scene()
 void Scene::Default()
 {
 	asphalt = false;
+	ter = true;
+
 	skyMtr = "World/NoonSky";
 	rainEmit = 0;  rainName = "";
 	rain2Emit = 0;  rain2Name = "";
@@ -28,7 +30,6 @@ void Scene::Default()
 	lDiff = Vector3(1.0f, 1.0f, 0.98f);	lSpec = Vector3(0.99f, 0.99f, 0.97f);
 
 	sParDust = "Dust";  sParMud = "Mud";  sParSmoke = "Smoke";
-	ter = true;
 
 	td.Default();
 
@@ -104,7 +105,7 @@ void Scene::UpdateFluidsId()
 //  Load
 //--------------------------------------------------------------------------------------------------------------------------------------
 
-bool Scene::LoadXml(String file)
+bool Scene::LoadXml(String file, bool bTer)
 {
 	TiXmlDocument doc;
 	if (!doc.LoadFile(file.c_str()))  return false;
@@ -114,6 +115,11 @@ bool Scene::LoadXml(String file)
 
 	// clear  --
 	Default();
+
+	// terrain / vdrift set
+	asphalt = !bTer;
+	ter = bTer;
+
 	//td.layers.clear();
 	//pgLayers.clear();
 

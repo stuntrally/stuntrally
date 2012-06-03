@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "cardynamics.h"
 #include "tobullet.h"
+#include "../ogre/common/Defines.h"
 
 typedef CARDYNAMICS::T T;
 
@@ -497,9 +498,21 @@ void CARDYNAMICS::ApplyAerodynamicsToBody(T dt)
 	ApplyForce(wind_force);
 	ApplyTorque(wind_torque);
 
-	//apply rotational damping/drag (hide oscillation around z-axis) ?
-	//MATHVECTOR <T, 3> rotational_aero_drag = - ToMathVector<T>(chassis->getAngularVelocity()) * 1000.0f;
-	//ApplyTorque(rotational_aero_drag);
+	// rotational damping/drag
+	if (rot_coef[0] > 0.0)
+	{
+		MATHVECTOR <T, 3> rot_drag = -ToMathVector<T>(chassis->getAngularVelocity());
+		(-Orientation()).RotateVector(rot_drag);  // apply factors in car space
+			// linear 50000 test big  10000 heavy  1000 light
+			// sqare 2.5 ok, limits max rot vel-
+			//LogO("a"+fToStr(rot_drag[2],3,6));
+		rot_drag[0] *= rot_coef[0];  // roll
+		rot_drag[1] *= rot_coef[1];  // pitch
+		rot_drag[2] *= rot_coef[2] + rot_coef[3] * rot_drag[2];  // yaw
+			//LogO("b"+fToStr(rot_drag[2],3,6));
+		Orientation().RotateVector(rot_drag);
+		ApplyTorque(rot_drag);
+	}
 }
 
 MATHVECTOR <T, 3> CARDYNAMICS::UpdateSuspension ( int i , T dt )

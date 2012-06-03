@@ -340,7 +340,7 @@ void App::UpdateHUD(int carId, float time)
 		{
 			if (pCar->GetABSEnabled())
 			{	hudAbs->show();
-				hudAbs->setColour(ColourValue(1,0.8,0.6, pCar->GetABSActive() ? 1 : 0.5));
+				hudAbs->setColour(ColourValue(1,0.8,0.6, pCar->GetABSActive() ? 1 : 0.4));
 			}else
 				hudAbs->hide();
 

@@ -241,8 +241,8 @@ void CAR::GraphsNewVals(double dt)		 // CAR
 			T fmin, fmax, frng, maxF;
 			const bool common = 1;  // common range for all
 			const bool cust = 1;
-			//const T fMAX = 6000.0, max_alpha = 360.0, max_sigma = 15.0;
-			const T fMAX = 6000.0, max_y = 40.0, max_x = 1.0;
+			//  RANGE  gui sld ..
+			const T fMAX = 9000.0, max_y = pApp->sc.asphalt ? 40.0 : 160.0, max_x = 1.0;
 
 			///  Fy lateral --
 			for (int i=0; i < NG; ++i)
