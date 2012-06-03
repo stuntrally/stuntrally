@@ -33,9 +33,12 @@ void App::InitGui()
 
 	///  background image
 	int wx = mWindow->getWidth(), wy = mWindow->getHeight();
-	imgBack = mGUI->createWidget<ImageBox>("ImageBox",0,0,wx,wy,Align::VStretch,"Back","ImgBack");
-	if (!imgBack)  LogO("Error: Didnt create imgBack !");
-	imgBack->setImageTexture("background.jpg");
+	if (!(!pSet->loadingbackground && pSet->autostart))  // dont show for autoload and no loadingbackground
+	{
+		imgBack = mGUI->createWidget<ImageBox>("ImageBox",0,0,wx,wy,Align::VStretch,"Back","ImgBack");
+		if (!imgBack)  LogO("Error: Didnt create imgBack !");
+		imgBack->setImageTexture("background.jpg");
+	}
 
 
 	//  new widgets
