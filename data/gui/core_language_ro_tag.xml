@@ -5,12 +5,10 @@
 	<Tag name="Density">Densitatea</Tag>
 	<Tag name="InputMapScreenshot">Screenshot</Tag>
 	<Tag name="TipDustSize">Mărimea particulelor de praf.</Tag>
-	<Tag name="InputMapShowOptions">Arată opțiunile</Tag>
 	<Tag name="TipGrassSwayDistr">Efect de distribuție iarbă (cum variază).</Tag>
 	<Tag name="InpSet_AxisFull">Axis Full</Tag>
 	<Tag name="InputHeaderTxt4">Edit</Tag>
 	<Tag name="Progress">Progress</Tag>
-	<Tag name="TipSunDirYaw">Direcția soarelui - unghiul de giraţie.</Tag>
 	<Tag name="InputStartMeet">car will meet (next+ / prev-) point numbers</Tag>
 	<Tag name="TipAutoGearbox">Debifează pentru schimbarea manuală a vitezei</Tag>
 	<Tag name="LS_MISC">Se termină</Tag>
@@ -40,6 +38,7 @@
 	<Tag name="Surface">Suprafaţă</Tag>
 	<Tag name="TBScore">Punctaj</Tag>
 	<Tag name="InputRoadChkFirst">0   - set checkpoint as first</Tag>
+	<Tag name="HDROrigImage">Bloom Darken</Tag>
 	<Tag name="InputObjectsIns">Ins - insert new, at cursor</Tag>
 	<Tag name="GraphicsAll_Low">Low</Tag>
 	<Tag name="TipPrevWind">Previzualizeaza fereastra camerei</Tag>
@@ -48,6 +47,7 @@
 	<Tag name="InputRoadOnTer">Home - activează lipirea de drum</Tag>
 	<Tag name="TipSunDiffuse">Difuziune culoare lumina soarelui (normală).Componente R G B de la 0 la 1 (ex. 0.9 0.9 0.9)</Tag>
 	<Tag name="LTrMinTerH">min terrain Height</Tag>
+	<Tag name="Shadows">Umbre</Tag>
 	<Tag name="ScoreNeeded">Score needed</Tag>
 	<Tag name="Game name">Game name</Tag>
 	<Tag name="HUD">HUD</Tag>
@@ -78,7 +78,9 @@
 	<Tag name="TBPlace">Place</Tag>
 	<Tag name="MessageBox_Retry">Retry</Tag>
 	<Tag name="InputKeyboardEmulation">Keyboard Emulation</Tag>
+	<Tag name="HDRAdaptationScale">Adapt Scale</Tag>
 	<Tag name="TBLast">Ultimul</Tag>
+	<Tag name="Ping">Ping</Tag>
 	<Tag name="InputMaxVal">Max. Value</Tag>
 	<Tag name="TipRollDrag">Drag pentru roți,valori mari va face să încetinească mai rapid(ex.140 pentru zăpadă, 80 pentru iarbă ).</Tag>
 	<Tag name="TipTrackList">Lista traseelor,click pentru a selecta(și pentru a vedea informațiile).Apasă Enter pentru a conduce pe ele. (sau [Schimbă traseul] apoi [Joc nou])</Tag>
@@ -90,7 +92,6 @@
 	<Tag name="RestartApply">Restart game, to apply *changes.</Tag>
 	<Tag name="InputMapResetGame">Reset game</Tag>
 	<Tag name="smoke">fum</Tag>
-	<Tag name="TipChangeCar">Schimbă mașina curentă cu cea selectată in listă,apoi apasă [Joc nou] pentru a o conduce.</Tag>
 	<Tag name="MouseCapture">Capture mouse</Tag>
 	<Tag name="TipGrDensSmooth">Grass density map - smooth size</Tag>
 	<Tag name="NetGame">Game</Tag>
@@ -110,7 +111,7 @@
 	<Tag name="CopySource">Setează ca sursă copiată</Tag>
 	<Tag name="CarCrash">Car Crash</Tag>
 	<Tag name="LS_OBJS">Loading Objects</Tag>
-	<Tag name="TreeRoadDist">Trees to road dist.</Tag>
+	<Tag name="TipDisableFog">Disable fog when editing road from distance.</Tag>
 	<Tag name="GraphicsAll_Medium">Medium</Tag>
 	<Tag name="NeedReload">* trebuie reîncărcat</Tag>
 	<Tag name="MinimapZoom">Zoom</Tag>
@@ -130,8 +131,10 @@
 	<Tag name="MessageBox_Yes">Yes</Tag>
 	<Tag name="BlendMap">Blendmap</Tag>
 	<Tag name="InputMapPrevCamera">Previous Camera</Tag>
-	<Tag name="Shadows">Umbre</Tag>
+	<Tag name="HDRParam2">Brightness</Tag>
+	<Tag name="HDRParam3">Grain</Tag>
 	<Tag name="InputMapBrake">Brake</Tag>
+	<Tag name="HDRParam1">Exposure</Tag>
 	<Tag name="Video">Video</Tag>
 	<Tag name="ViewStart">Vizualizează startul</Tag>
 	<Tag name="TipGrassDens">Cât de densă/rară va fi iarba pe teren.</Tag>
@@ -149,7 +152,7 @@
 	<Tag name="NetServer">Server</Tag>
 	<Tag name="InputRoadWidth">- schimbă lățimea drumului</Tag>
 	<Tag name="filmgrain">Film Grain</Tag>
-	<Tag name="InputMapSteering">Direcție(roată)</Tag>
+	<Tag name="Replay">Replay</Tag>
 	<Tag name="AutoRear">Dat cu spatele automat</Tag>
 	<Tag name="TerGenFreq">Freq. zoom</Tag>
 	<Tag name="ReflMode_single">Singur</Tag>
@@ -157,7 +160,7 @@
 	<Tag name="RoadWallFullCollis">Road wall full collision</Tag>
 	<Tag name="Always">Always</Tag>
 	<Tag name="softparticles">Soft Particles</Tag>
-	<Tag name="TipTerTriSize">Mărime triunghiuri teren în [metri](recomandat: 1 - 2,  folosește mai multe pentru zone ale terenului mai mari).Se schimbă după Actualizare(F8).</Tag>
+	<Tag name="TipSunDirYaw">Direcția soarelui - unghiul de giraţie.</Tag>
 	<Tag name="Players">Players</Tag>
 	<Tag name="MessageBox_No">No</Tag>
 	<Tag name="Length">Lungimea</Tag>
@@ -197,13 +200,14 @@
 	<Tag name="InputStartDir">Space  -  change road direction (+ or -)</Tag>
 	<Tag name="Effects">Efecte</Tag>
 	<Tag name="WidthSteps">Trepte lățime</Tag>
-	<Tag name="Diffuse">Difuză</Tag>
+	<Tag name="HDRTab">HDR</Tag>
 	<Tag name="Sound">Sunet</Tag>
 	<Tag name="InputFluidsIns">Ins - insert new, default fluid at cursor</Tag>
 	<Tag name="TipVegetGroups">Vegetation model groups (recommended use 4-6), affects performance.</Tag>
 	<Tag name="Car">Mașină</Tag>
 	<Tag name="FuelLap">Fuel each lap</Tag>
 	<Tag name="TipSkyMats">Nume material cer (din SkyDome.material).</Tag>
+	<Tag name="HDRVignettingDarkness">Vignetting Darken</Tag>
 	<Tag name="InputRoadMerge">M - toggle road merge segs (for test)</Tag>
 	<Tag name="VolMaster">Principal</Tag>
 	<Tag name="NumLaps">Number of laps</Tag>
@@ -225,7 +229,7 @@
 	<Tag name="CountdownTime">Race countdown time</Tag>
 	<Tag name="CamInfoStrings">Tipul,girația,tangaj,distanța,înălțime,viteză,compensare,STÂNGA,DREAPTA,Mijloc,roata,schimbător,rotire,resetare,mișcă,H,Pos</Tag>
 	<Tag name="End">sfârșit</Tag>
-	<Tag name="HDR">HDR</Tag>
+	<Tag name="HDR">HDR+Bloom</Tag>
 	<Tag name="TipABS">Previne blocarea roții la frânare (implicit: oprit)</Tag>
 	<Tag name="TipGrassPatchHeightMin">Înălțime minimă patch iarbă</Tag>
 	<Tag name="InputRoadMat">-,= - materialul drumului/tubului</Tag>
@@ -286,6 +290,7 @@
 	<Tag name="QuickHelpText">----  Quick help  ----@@Use mouse or Up,Down,Enter,Backspace to navigate through menu.@@To adjust resolution go to Options tab Screen,@use Graphics presets to quickly adjust graphics to your hardware.@@To see all keys used in game and configure input goto Options, tab Input.@If you have a game controller see:@http://code.google.com/p/vdrift-ogre/wiki/Running##Controllers@@Hosting a multiplayer game requires port forwarding.@Connecting to existing game doesn't need it, provided other players have it.@@If you have problems or suggestions report an issue on (or reply to existing one):@http://code.google.com/p/vdrift-ogre/issues/list@@For more info see Readme and our project's Wiki pages.@</Tag>
 	<Tag name="InputRoadPitch">- rotate pitch* / scale sel.</Tag>
 	<Tag name="InputObjectsMove">LMB - move   RMB - height</Tag>
+	<Tag name="UseSMAA">Use SMAA when effects are enabled</Tag>
 	<Tag name="TimesBar">Bara de timpi</Tag>
 	<Tag name="Screenshot">captură de ecran</Tag>
 	<Tag name="Models">Models</Tag>
@@ -298,7 +303,7 @@
 	<Tag name="TipModelRoadDist">Distanța de la drum la modele (globală,adăugată la fiecare valoare de modele proprii)</Tag>
 	<Tag name="TireTrails">Tire Trails</Tag>
 	<Tag name="InputBrushParams">Parametri pensulei</Tag>
-	<Tag name="InputMapNextCamera">Next Camera</Tag>
+	<Tag name="InputMapShowOptions">Arată opțiunile</Tag>
 	<Tag name="InputCameraMode">Modul cameră</Tag>
 	<Tag name="Enabled">Activat</Tag>
 	<Tag name="TipReverse">Direcția traseului inversă</Tag>
@@ -328,6 +333,8 @@
 	<Tag name="godrays">God Rays</Tag>
 	<Tag name="InputRoadNext">PgUp,PgDn (or Wheel) - previous/next point</Tag>
 	<Tag name="SceneryId">Scenery Id</Tag>
+	<Tag name="TipTerTriSize">Mărime triunghiuri teren în [metri](recomandat: 1 - 2,  folosește mai multe pentru zone ale terenului mai mari).Se schimbă după Actualizare(F8).</Tag>
+	<Tag name="HDRIntensity">Bloom Intensity</Tag>
 	<Tag name="Development">Dezvoltare</Tag>
 	<Tag name="InputRoadIns">Ins - insert new (after picked, alt - before)</Tag>
 	<Tag name="min">min</Tag>
@@ -339,6 +346,7 @@
 	<Tag name="Graphics">Grafică</Tag>
 	<Tag name="ReflMode_static">Static</Tag>
 	<Tag name="CarClrRandom">Random</Tag>
+	<Tag name="HDRVignettingRadius">Vignetting Radius</Tag>
 	<Tag name="LS_SCENE">Se încarcă scena</Tag>
 	<Tag name="InputWheelShape">K,L  -  Brush shape</Tag>
 	<Tag name="Name">Name</Tag>
@@ -552,7 +560,7 @@
 	<Tag name="HeightmapSize">Heightmap size</Tag>
 	<Tag name="TipToggleLayer">Activează/dezactivează stratul texturii alese.</Tag>
 	<Tag name="TipTrkListEditor">Tracks list, click to select (for Rename or Duplicate). Press [Load track] to change current track in editor.</Tag>
-	<Tag name="Ping">Ping</Tag>
+	<Tag name="InputMapNextCamera">Next Camera</Tag>
 	<Tag name="GraphicsAll_Lowest">Lowest</Tag>
 	<Tag name="InputReadyToPlay">(ready to play in game)</Tag>
 	<Tag name="CamInertia">Camera inertia</Tag>
@@ -636,7 +644,7 @@
 	<Tag name="NewGame">New Game</Tag>
 	<Tag name="page">page</Tag>
 	<Tag name="ChampStart">Start</Tag>
-	<Tag name="Replay">Replay</Tag>
+	<Tag name="InputMapSteering">Direcție(roată)</Tag>
 	<Tag name="InputDetailsFor">Details for</Tag>
 	<Tag name="GraphicsAll_Ultra">Ultra</Tag>
 	<Tag name="ApplyShaders">Apply shaders</Tag>
@@ -650,12 +658,11 @@
 	<Tag name="GraphicsAll_High">High</Tag>
 	<Tag name="TipRoadParams">Parametri punct drum</Tag>
 	<Tag name="TerGenPow">Power (shape)</Tag>
-	<Tag name="ChangeCar">Change Car</Tag>
 	<Tag name="TipImpDist">Far distance at which models will turn into 2d impostors.</Tag>
 	<Tag name="InputMapGeneral">General</Tag>
 	<Tag name="TipTrkTerImg">Minimap of selected track, view from top.</Tag>
 	<Tag name="LS_GAME">Loading game</Tag>
-	<Tag name="TipDisableFog">Disable fog when editing road from distance.</Tag>
+	<Tag name="TreeRoadDist">Trees to road dist.</Tag>
 	<Tag name="long">long</Tag>
 	<Tag name="PipeWStepsMul">Pipe W steps mul.</Tag>
 	<Tag name="RplLoad">Load</Tag>
@@ -674,6 +681,7 @@
 	<Tag name="Resolution">Resolution</Tag>
 	<Tag name="GrassSize">Mărimea ierbii</Tag>
 	<Tag name="Left">Left</Tag>
+	<Tag name="Diffuse">Difuză</Tag>
 	<Tag name="TipDustInt">Intensitate particule praf.</Tag>
 	<Tag name="GrMaterial">Grass Material</Tag>
 	<Tag name="Startup">Startup</Tag>
@@ -728,16 +736,15 @@
 	<Tag name="InputNextOptTab">F2,F3 - prev,next Options tab (shift - sub tab)</Tag>
 	<Tag name="Diff6">Extreme</Tag>
 	<Tag name="RplAll">Toate</Tag>
-	<Tag name="HDROrigImage">Bloom Darken</Tag>
-	<Tag name="HDRParam2">Brightness</Tag>
-	<Tag name="HDRParam3">Grain</Tag>
-	<Tag name="HDRParam1">Exposure</Tag>
-	<Tag name="HDRTab">HDR</Tag>
-	<Tag name="HDRVignettingDarkness">Vignetting Darken</Tag>
-	<Tag name="HDRAdaptationScale">Adapt Scale</Tag>
-	<Tag name="UseSMAA">Use SMAA when effects are enabled</Tag>
-	<Tag name="HDRIntensity">Bloom Intensity</Tag>
-	<Tag name="HDRVignettingRadius">Vignetting Radius</Tag>
+	<Tag name="SSS_SpeedFactor">Speed Factor</Tag>
+	<Tag name="SpeedSensitiveSteering">Speed Sensitive Steering</Tag>
+	<Tag name="TipSpeedSensitiveSteering">Decreases steering range with higher velocity.</Tag>
+	<Tag name="Asphalt">Asphalt</Tag>
+	<Tag name="SSS_Effect">Effect</Tag>
+	<Tag name="Gravel">Gravel</Tag>
+	<Tag name="TipTrkViewShort">Short list view.</Tag>
+	<Tag name="TipTrkViewDetailed">Detailed list view.</Tag>
+	<Tag name="TipFind">Enter part of name to find (filters list).</Tag>
 	<Tag name="GameVersion">1.7</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 	<Tag name="LANG_EN">English</Tag>

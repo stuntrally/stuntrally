@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION"
 "Report-Msgid-Bugs-To: "
-"POT-Creation-Date: 2012-05-31 17:02+0200"
+"POT-Creation-Date: 2012-06-03 23:58+0300"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>"
 "Language-Team: LANGUAGE <LL@li.org>"
@@ -357,12 +357,12 @@ msgctxt "InputMaxVal"
 msgid "Max. Value"
 msgstr ""
 
-msgctxt "TipGrassDens"
-msgid "How dense/rare will the grass be on terrain."
+msgctxt "TipRollDrag"
+msgid "Drag for wheels, bigger will make them slow down faster (eg. 140 for snow, 80 for grass)."
 msgstr ""
 
 msgctxt "TipTrackList"
-msgid "Tracks list, click to select (and see info). Press Enter to drive on it. (or [Change track] and then [New Game])"
+msgid "Tracks list, click to select and see info. Press Enter or [New Game] to drive on it."
 msgstr ""
 
 msgctxt "GrDensSmooth"
@@ -391,10 +391,6 @@ msgstr ""
 
 msgctxt "smoke"
 msgid "smoke"
-msgstr ""
-
-msgctxt "TipChangeCar"
-msgid "Change current car to that selected in list, press [New Game] to drive with it."
 msgstr ""
 
 msgctxt "MouseCapture"
@@ -593,8 +589,8 @@ msgctxt "ViewStart"
 msgid "View Start"
 msgstr ""
 
-msgctxt "TipRollDrag"
-msgid "Drag for wheels, bigger will make them slow down faster (eg. 140 for snow, 80 for grass)."
+msgctxt "SSS_SpeedFactor"
+msgid "Speed Factor"
 msgstr ""
 
 msgctxt "Digits"
@@ -623,6 +619,10 @@ msgstr ""
 
 msgctxt "Score"
 msgid "Score"
+msgstr ""
+
+msgctxt "SpeedSensitiveSteering"
+msgid "Speed Sensitive Steering"
 msgstr ""
 
 msgctxt "Suspension"
@@ -702,7 +702,7 @@ msgid "ABS (antilock brakes)"
 msgstr ""
 
 msgctxt "TipCarsList"
-msgid "Cars list, click to select (and see image). Press [Change car] and then [New Game] to drive with it."
+msgid "Cars list. Press Enter or [New Game] to drive with it."
 msgstr ""
 
 msgctxt "FluidSplash"
@@ -835,6 +835,10 @@ msgstr ""
 
 msgctxt "GrassSway"
 msgid "Grass sway"
+msgstr ""
+
+msgctxt "TipSpeedSensitiveSteering"
+msgid "Decreases steering range with higher velocity."
 msgstr ""
 
 msgctxt "HDRTab"
@@ -1038,7 +1042,7 @@ msgid "Single Race"
 msgstr ""
 
 msgctxt "TipNewGameCar"
-msgid "Restart game (after car change)."
+msgid "Restart game."
 msgstr ""
 
 msgctxt "InputWheelForce"
@@ -1077,10 +1081,6 @@ msgctxt "MessageBox_Abort"
 msgid "Abort"
 msgstr ""
 
-msgctxt "ScaleAll"
-msgid "Scale all"
-msgstr ""
-
 msgctxt "HDRAdaptationScale"
 msgid "Adapt Scale"
 msgstr ""
@@ -1115,6 +1115,10 @@ msgstr ""
 
 msgctxt "Rename"
 msgid "Rename"
+msgstr ""
+
+msgctxt "Asphalt"
+msgid "Asphalt"
 msgstr ""
 
 msgctxt "InputRoadChkFirst"
@@ -1413,6 +1417,10 @@ msgctxt "InputRoadIns"
 msgid "Ins - insert new (after picked, alt - before)"
 msgstr ""
 
+msgctxt "trailColor"
+msgid "trail color"
+msgstr ""
+
 msgctxt "min"
 msgid "min"
 msgstr ""
@@ -1437,8 +1445,8 @@ msgctxt "LTrMaxTerAng"
 msgid "max terrain Angle"
 msgstr ""
 
-msgctxt "InputMapRestartGame"
-msgid "New game"
+msgctxt "SSS_Effect"
+msgid "Effect"
 msgstr ""
 
 msgctxt "Graphics"
@@ -1485,8 +1493,8 @@ msgctxt "NetWrongPassword"
 msgid "Wrong password."
 msgstr ""
 
-msgctxt "ChangeCar"
-msgid "Change Car"
+msgctxt "ScaleAll"
+msgid "Scale all"
 msgstr ""
 
 msgctxt "InpSet_KeyFull"
@@ -1773,8 +1781,8 @@ msgctxt "InputTrackScrn"
 msgid "(for track screenshot)"
 msgstr ""
 
-msgctxt "trailColor"
-msgid "trail color"
+msgctxt "Gravel"
+msgid "Gravel"
 msgstr ""
 
 msgctxt "Boost"
@@ -1935,6 +1943,10 @@ msgstr ""
 
 msgctxt "InputRoadPick"
 msgid "Space - pick one/none"
+msgstr ""
+
+msgctxt "TipTrkViewShort"
+msgid "Short list view."
 msgstr ""
 
 msgctxt "TipSmokeInt"
@@ -2377,6 +2389,10 @@ msgctxt "AutoGearbox"
 msgid "Auto gearbox"
 msgstr ""
 
+msgctxt "InputMapRestartGame"
+msgid "New game"
+msgstr ""
+
 msgctxt "TipDeleteTrk"
 msgid "Permanently delete selected track."
 msgstr ""
@@ -2449,6 +2465,10 @@ msgctxt "ImpostorDist"
 msgid "Impostors dist."
 msgstr ""
 
+msgctxt "TipGrassDens"
+msgid "How dense/rare will the grass be on terrain."
+msgstr ""
+
 msgctxt "Find"
 msgid "Find"
 msgstr ""
@@ -2497,6 +2517,10 @@ msgctxt "Editor"
 msgid "Editor"
 msgstr ""
 
+msgctxt "TipTrkViewDetailed"
+msgid "Detailed list view."
+msgstr ""
+
 msgctxt "AndContributors"
 msgid "and contributors."
 msgstr ""
@@ -2507,6 +2531,10 @@ msgstr ""
 
 msgctxt "Copy"
 msgid "Copy"
+msgstr ""
+
+msgctxt "TipFind"
+msgid "Enter part of name to find (filters list)."
 msgstr ""
 
 msgctxt "scale"

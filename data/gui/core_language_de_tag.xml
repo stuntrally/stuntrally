@@ -5,12 +5,10 @@
 	<Tag name="Density">Dichte</Tag>
 	<Tag name="InputMapScreenshot">Screenshot</Tag>
 	<Tag name="TipDustSize">Staubpartikelgröße.</Tag>
-	<Tag name="InputMapShowOptions">Optionen zeigen</Tag>
 	<Tag name="TipGrassSwayDistr">Grasschwingungsverteilung (wie zufällig)</Tag>
 	<Tag name="InpSet_AxisFull">Achse ganz</Tag>
 	<Tag name="InputHeaderTxt4">Ändern</Tag>
 	<Tag name="Progress">Fortschritt</Tag>
-	<Tag name="TipSunDirYaw">Richtung der Sonne - Gierwinkel</Tag>
 	<Tag name="InputStartMeet">Auto wird (nächste + / vorherige -) Strecke Punkte treffen</Tag>
 	<Tag name="TipAutoGearbox">Für manuelle Schaltung den Haken rausnehmen.</Tag>
 	<Tag name="LS_MISC">Fertigstellen</Tag>
@@ -40,6 +38,7 @@
 	<Tag name="Surface">Oberfläche</Tag>
 	<Tag name="TBScore">Punkte</Tag>
 	<Tag name="InputRoadChkFirst">0 - ersten Wegpunkt setzen</Tag>
+	<Tag name="HDROrigImage">Bloom Darken</Tag>
 	<Tag name="InputObjectsIns">EInfg - bei Cursor platzieren</Tag>
 	<Tag name="GraphicsAll_Low">Niedrig</Tag>
 	<Tag name="TipPrevWind">Vorschau-Kamerafenster.</Tag>
@@ -48,6 +47,7 @@
 	<Tag name="InputRoadOnTer">Pos1 - über dem Boden an/aus</Tag>
 	<Tag name="TipSunDiffuse">Farbe des Sonnenlichts. R G B Komponenten von 0 bis 1 (z.B. 0.9 0.9 0.9)</Tag>
 	<Tag name="LTrMinTerH">min. Terrain-Höhe</Tag>
+	<Tag name="Shadows">Schatten</Tag>
 	<Tag name="ScoreNeeded">Punkte benötigt</Tag>
 	<Tag name="Game name">Spielname</Tag>
 	<Tag name="HUD">HUD</Tag>
@@ -78,7 +78,9 @@
 	<Tag name="TBPlace">Platz</Tag>
 	<Tag name="MessageBox_Retry">Nochmal versuchen</Tag>
 	<Tag name="InputKeyboardEmulation">Tastaturemulation</Tag>
+	<Tag name="HDRAdaptationScale">Adapt Scale</Tag>
 	<Tag name="TBLast">Letzte</Tag>
+	<Tag name="Ping">Ping</Tag>
 	<Tag name="InputMaxVal">Max. Wert</Tag>
 	<Tag name="TipRollDrag">Reifenwiderstand, größerer Wert bremst diese stärker ab (z.B. 140 für Schnee, 80 für Gras)</Tag>
 	<Tag name="TipTrackList">Streckenauswahl - klicken, um auswählen; Enter, um darauf zu fahren. (oder [Strecke wechseln] und dann [Neues Spiel])</Tag>
@@ -90,7 +92,6 @@
 	<Tag name="RestartApply">Spiel neustarten, um *Änderungen anzuwenden.</Tag>
 	<Tag name="InputMapResetGame">Spiel zurücksetzen</Tag>
 	<Tag name="smoke">Rauch</Tag>
-	<Tag name="TipChangeCar">Aktives Auto wechseln, drücke [Neues Spiel] um ein neues Spiel mit dem aktiven Auto zu starten.</Tag>
 	<Tag name="MouseCapture">Maus einfangen</Tag>
 	<Tag name="TipGrDensSmooth">Grasverteilungsmap - glätten</Tag>
 	<Tag name="NetGame">Spiel</Tag>
@@ -110,7 +111,7 @@
 	<Tag name="CopySource">Als Kopierquelle setzen</Tag>
 	<Tag name="CarCrash">Auto-crash</Tag>
 	<Tag name="LS_OBJS">Lade Objekte</Tag>
-	<Tag name="TreeRoadDist">Abstand Bäume - Straße</Tag>
+	<Tag name="TipDisableFog">Nebel zum Bearbeiten aus der Entfernung deaktivieren.</Tag>
 	<Tag name="GraphicsAll_Medium">Mittel</Tag>
 	<Tag name="NeedReload">* neu Laden erforderlich</Tag>
 	<Tag name="MinimapZoom">Vergrößerung</Tag>
@@ -130,8 +131,10 @@
 	<Tag name="MessageBox_Yes">Ja</Tag>
 	<Tag name="BlendMap">Blendmap</Tag>
 	<Tag name="InputMapPrevCamera">Vorherige Kamera</Tag>
-	<Tag name="Shadows">Schatten</Tag>
+	<Tag name="HDRParam2">Brightness</Tag>
+	<Tag name="HDRParam3">Grain</Tag>
 	<Tag name="InputMapBrake">Bremsen</Tag>
+	<Tag name="HDRParam1">Exposure</Tag>
 	<Tag name="Video">Bildschirm</Tag>
 	<Tag name="ViewStart">Ans. Start</Tag>
 	<Tag name="TipGrassDens">Hohes oder niedrige Anzahl von Gras auf dem Boden.</Tag>
@@ -149,7 +152,7 @@
 	<Tag name="NetServer">Server</Tag>
 	<Tag name="InputRoadWidth">- Straßenbreite</Tag>
 	<Tag name="filmgrain">Filmkörnung</Tag>
-	<Tag name="InputMapSteering">Lenkung</Tag>
+	<Tag name="Replay">Replay</Tag>
 	<Tag name="AutoRear">Autom. Rückwärtsgang</Tag>
 	<Tag name="TerGenFreq">Frequenz-Zoom</Tag>
 	<Tag name="ReflMode_single">Einzel</Tag>
@@ -157,7 +160,7 @@
 	<Tag name="RoadWallFullCollis">Vollständige Wandkollision</Tag>
 	<Tag name="Always">Immer</Tag>
 	<Tag name="softparticles">Weiche Partikel</Tag>
-	<Tag name="TipTerTriSize">Triangle-Größe des Terrains (in Metern) - empfohlen: 1-2, größerer Wert für größere Fläche). Anwenden durch Aktualisierung (F8).</Tag>
+	<Tag name="TipSunDirYaw">Richtung der Sonne - Gierwinkel</Tag>
 	<Tag name="Players">Spieler</Tag>
 	<Tag name="MessageBox_No">Nein</Tag>
 	<Tag name="Length">Länge</Tag>
@@ -197,13 +200,14 @@
 	<Tag name="InputStartDir">Space - Straßenrichtung (+ oder -)</Tag>
 	<Tag name="Effects">Effekte</Tag>
 	<Tag name="WidthSteps">Breiten-Steps</Tag>
-	<Tag name="Diffuse">Diffuse</Tag>
+	<Tag name="HDRTab">HDR</Tag>
 	<Tag name="Sound">Sound</Tag>
 	<Tag name="InputFluidsIns">Einfg - neues Gewässer</Tag>
 	<Tag name="TipVegetGroups">Vegetationsgruppen (empfohlen: 4-6), Einfluss auf Performance.</Tag>
 	<Tag name="Car">Auto</Tag>
 	<Tag name="FuelLap">Auffüllen nach einer Runde</Tag>
 	<Tag name="TipSkyMats">Namen der Sky-Materialien (aus SkyDome.material)</Tag>
+	<Tag name="HDRVignettingDarkness">Vignetting Darken</Tag>
 	<Tag name="InputRoadMerge">M - umsch. Straßen zusammenf. (zum Test)</Tag>
 	<Tag name="VolMaster">Master</Tag>
 	<Tag name="NumLaps">Anzahl der Runden</Tag>
@@ -225,7 +229,7 @@
 	<Tag name="CountdownTime">Countdown-Zeit</Tag>
 	<Tag name="CamInfoStrings">Typ,Gierung,Neigung,Abstand,Höhe,Geschw.,Offset,LINKS,RECHTS,Mitte,Rad,shift,Rotieren,zurücks.,bewegen,H,Pos</Tag>
 	<Tag name="End">Ende</Tag>
-	<Tag name="HDR">HDR</Tag>
+	<Tag name="HDR">HDR+Bloom</Tag>
 	<Tag name="TipABS">Verhindert das Blockieren der Reifen beim Bremsen (Standard: aus)</Tag>
 	<Tag name="TipGrassPatchHeightMin">Minimale Höhe des Grasflecks.</Tag>
 	<Tag name="InputRoadMat">-,= - Straßen-/Röhrenmaterial</Tag>
@@ -286,6 +290,7 @@
 	<Tag name="QuickHelpText">---- Schnellhilfe ----@@Zum navigieren zwischen den Menüs die Tasten Hoch,Runter,Enter,Backspace benutzen.@@Zum Anpassen der Auflösung im Optionsmenü die Kategorie Bildschirm wählen. Grafikvoreinstellungen benutzen, um die Grafik auf die vorhandene Hardware anzupassen.@@Alle Tastenkürzel sind im Optionsmenü im Tab Eingabe ersichtlich.@Für die Benutzung eines Gamecontrollers siehe:@http://code.google.com/p/vdrift-ogre/wiki/Running##Controllers@@Hosten eines Multiplayerspiels erfordert eventuell Port Forwarding des Routers.@Beim Verbinden mit einem bereits existierenden Spiel ist dies nicht notwendig.@@Bei Problemen oder Vorschlägen verwenden sie das Bugtracking-System (auf Englisch):@http://code.google.com/p/vdrift-ogre/issues/list@@Für weitere Informationen, siehe Readme und die Wiki-Seiten des Projekts.@</Tag>
 	<Tag name="InputRoadPitch">- Neigung* / Ausw. skal.</Tag>
 	<Tag name="InputObjectsMove">LMB - bewegen RMB - höhe</Tag>
+	<Tag name="UseSMAA">Use SMAA when effects are enabled</Tag>
 	<Tag name="TimesBar">Zeitanzeige</Tag>
 	<Tag name="Screenshot">Bildschirmfoto</Tag>
 	<Tag name="Models">Modelle</Tag>
@@ -298,7 +303,7 @@
 	<Tag name="TipModelRoadDist">Abstand zwischen Straße und Modellen (global, wird zum individuellen Wert addiert)</Tag>
 	<Tag name="TireTrails">Reifenspuren</Tag>
 	<Tag name="InputBrushParams">Pinseleigenschaften</Tag>
-	<Tag name="InputMapNextCamera">Nächste Kamera</Tag>
+	<Tag name="InputMapShowOptions">Optionen zeigen</Tag>
 	<Tag name="InputCameraMode">Kameramodus</Tag>
 	<Tag name="Enabled">Aktiviert</Tag>
 	<Tag name="TipReverse">Streckenrichtung umkehren.</Tag>
@@ -328,6 +333,8 @@
 	<Tag name="godrays">Sonnenlichteffekt</Tag>
 	<Tag name="InputRoadNext">BildAuf, BildAb (oder Mausrad) - Punkt vor/zurück</Tag>
 	<Tag name="SceneryId">Landschafts-ID</Tag>
+	<Tag name="TipTerTriSize">Triangle-Größe des Terrains (in Metern) - empfohlen: 1-2, größerer Wert für größere Fläche). Anwenden durch Aktualisierung (F8).</Tag>
+	<Tag name="HDRIntensity">Bloom Intensity</Tag>
 	<Tag name="Development">Entwicklung</Tag>
 	<Tag name="InputRoadIns">Einfg - Punkt danach einfügen, mit Alt - davor</Tag>
 	<Tag name="min">min.</Tag>
@@ -339,6 +346,7 @@
 	<Tag name="Graphics">Grafik</Tag>
 	<Tag name="ReflMode_static">Statisch</Tag>
 	<Tag name="CarClrRandom">Zufällig</Tag>
+	<Tag name="HDRVignettingRadius">Vignetting Radius</Tag>
 	<Tag name="LS_SCENE">Lade Szene</Tag>
 	<Tag name="InputWheelShape">K,L - Pinselform</Tag>
 	<Tag name="Name">Name</Tag>
@@ -552,7 +560,7 @@
 	<Tag name="HeightmapSize">Heightmap-Größe</Tag>
 	<Tag name="TipToggleLayer">Ausgewählten Textur-Layer aktivieren / deaktivieren.</Tag>
 	<Tag name="TipTrkListEditor">Streckenliste, Klicken zum Auswählen (zum Umbenennen oder Duplizieren). [Strecke Laden] drücken um die Strecke im Editor zu öffnen.</Tag>
-	<Tag name="Ping">Ping</Tag>
+	<Tag name="InputMapNextCamera">Nächste Kamera</Tag>
 	<Tag name="GraphicsAll_Lowest">Niedrigste</Tag>
 	<Tag name="InputReadyToPlay">(bereit zum Fahren)</Tag>
 	<Tag name="CamInertia">Kameraträgheit</Tag>
@@ -636,7 +644,7 @@
 	<Tag name="NewGame">Neues Spiel</Tag>
 	<Tag name="page">Page</Tag>
 	<Tag name="ChampStart">Start</Tag>
-	<Tag name="Replay">Replay</Tag>
+	<Tag name="InputMapSteering">Lenkung</Tag>
 	<Tag name="InputDetailsFor">Details</Tag>
 	<Tag name="GraphicsAll_Ultra">Ultra</Tag>
 	<Tag name="ApplyShaders">Shader anwenden</Tag>
@@ -650,12 +658,11 @@
 	<Tag name="GraphicsAll_High">Hoch</Tag>
 	<Tag name="TipRoadParams">Parameter des Straßenpunkts</Tag>
 	<Tag name="TerGenPow">Potenz (Form)</Tag>
-	<Tag name="ChangeCar">Auto wechseln</Tag>
 	<Tag name="TipImpDist">Distanz, bei der Modelle 2D werden.</Tag>
 	<Tag name="InputMapGeneral">Allgemein</Tag>
 	<Tag name="TipTrkTerImg">Minikarte der ausgewählten Strecke, Sicht von oben.</Tag>
 	<Tag name="LS_GAME">Lade Spiel</Tag>
-	<Tag name="TipDisableFog">Nebel zum Bearbeiten aus der Entfernung deaktivieren.</Tag>
+	<Tag name="TreeRoadDist">Abstand Bäume - Straße</Tag>
 	<Tag name="long">weit</Tag>
 	<Tag name="PipeWStepsMul">Röhren W-Steps Mult.</Tag>
 	<Tag name="RplLoad">Laden</Tag>
@@ -674,6 +681,7 @@
 	<Tag name="Resolution">Auflösung</Tag>
 	<Tag name="GrassSize">Größe des Gras</Tag>
 	<Tag name="Left">Links</Tag>
+	<Tag name="Diffuse">Diffuse</Tag>
 	<Tag name="TipDustInt">Intensität der Staubpartikel.</Tag>
 	<Tag name="GrMaterial">Grasmaterial</Tag>
 	<Tag name="Startup">Start</Tag>
@@ -728,16 +736,15 @@
 	<Tag name="InputNextOptTab">F2,F3 - Tab vor,zurück (shift - Unter-Tab)</Tag>
 	<Tag name="Diff6">Extrem</Tag>
 	<Tag name="RplAll">Alle</Tag>
-	<Tag name="HDROrigImage">Bloom Darken</Tag>
-	<Tag name="HDRParam2">Brightness</Tag>
-	<Tag name="HDRParam3">Grain</Tag>
-	<Tag name="HDRParam1">Exposure</Tag>
-	<Tag name="HDRTab">HDR</Tag>
-	<Tag name="HDRVignettingDarkness">Vignetting Darken</Tag>
-	<Tag name="HDRAdaptationScale">Adapt Scale</Tag>
-	<Tag name="UseSMAA">Use SMAA when effects are enabled</Tag>
-	<Tag name="HDRIntensity">Bloom Intensity</Tag>
-	<Tag name="HDRVignettingRadius">Vignetting Radius</Tag>
+	<Tag name="SSS_SpeedFactor">Speed Factor</Tag>
+	<Tag name="SpeedSensitiveSteering">Speed Sensitive Steering</Tag>
+	<Tag name="TipSpeedSensitiveSteering">Decreases steering range with higher velocity.</Tag>
+	<Tag name="Asphalt">Asphalt</Tag>
+	<Tag name="SSS_Effect">Effect</Tag>
+	<Tag name="Gravel">Gravel</Tag>
+	<Tag name="TipTrkViewShort">Short list view.</Tag>
+	<Tag name="TipTrkViewDetailed">Detailed list view.</Tag>
+	<Tag name="TipFind">Enter part of name to find (filters list).</Tag>
 	<Tag name="GameVersion">1.7</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 	<Tag name="LANG_EN">English</Tag>
