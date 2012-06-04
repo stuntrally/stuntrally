@@ -17,15 +17,15 @@ namespace sh
 			unsigned short schemeIndex, const Ogre::String &schemeName, Ogre::Material *originalMaterial,
 			unsigned short lodIndex, const Ogre::Renderable *rend);
 
-		virtual Material createMaterial (const std::string& name);
+		virtual boost::shared_ptr<Material> createMaterial (const std::string& name);
 
-		virtual VertexProgram createVertexProgram (
+		virtual boost::shared_ptr<VertexProgram> createVertexProgram (
 			const std::string& name, const std::string& entryPoint,
 			const std::string& source, Language lang);
-		virtual FragmentProgram createFragmentProgram (
+		virtual boost::shared_ptr<FragmentProgram> createFragmentProgram (
 			const std::string& name, const std::string& entryPoint,
 			const std::string& source, Language lang);
-		virtual GeometryProgram createGeometryProgram (
+		virtual boost::shared_ptr<GeometryProgram> createGeometryProgram (
 			const std::string& name, const std::string& entryPoint,
 			const std::string& source, Language lang);
 

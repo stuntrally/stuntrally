@@ -3,7 +3,10 @@
 
 #include <string>
 
+#include <boost/shared_ptr.hpp>
+
 #include "Language.hpp"
+#include "PropertySet.hpp"
 
 namespace sh
 {
@@ -22,21 +25,23 @@ namespace sh
 	{
 	};
 
-	class TextureUnitState
+	class TextureUnitState : public PropertySet
 	{
 	};
 
-	class Pass
+	class Pass : public PropertySet
 	{
 	public:
-		virtual TextureUnitState& createTextureUnitState () = 0;
+		virtual TextureUnitState createTextureUnitState () = 0;
 		virtual void assignVertexProgram (const VertexProgram& program) = 0;
 		virtual void assignFragmentProgram (const FragmentProgram& program) = 0;
 		virtual void assignGeometryProgram(const GeometryProgram& program) = 0;
 	};
 
-	class Material
+	class Material : public PropertySet
 	{
+	public:
+		virtual boost::shared_ptr<Pass> createPass () = 0;
 	};
 
 	class Platform
@@ -45,19 +50,20 @@ namespace sh
 		Platform ();
 		virtual ~Platform ();
 
-		virtual Material createMaterial (const std::string& name) = 0;
+		virtual boost::shared_ptr<Material> createMaterial (const std::string& name) = 0;
 
-		virtual VertexProgram createVertexProgram (
+		virtual boost::shared_ptr<VertexProgram> createVertexProgram (
 			const std::string& name, const std::string& entryPoint,
 			const std::string& source, Language lang) = 0;
-		virtual FragmentProgram createFragmentProgram (
+		virtual boost::shared_ptr<FragmentProgram> createFragmentProgram (
 			const std::string& name, const std::string& entryPoint,
 			const std::string& source, Language lang) = 0;
-		virtual GeometryProgram createGeometryProgram (
+		virtual boost::shared_ptr<GeometryProgram> createGeometryProgram (
 			const std::string& name, const std::string& entryPoint,
 			const std::string& source, Language lang) = 0;
 
 		friend class Factory;
+
 	protected:
 		/**
 		 * this will be \a true if the platform supports a listener that notifies the system

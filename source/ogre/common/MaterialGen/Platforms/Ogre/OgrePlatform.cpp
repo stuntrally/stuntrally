@@ -36,42 +36,41 @@ namespace sh
 		return true;
 	}
 
-	Material OgrePlatform::createMaterial (const std::string& name)
+	boost::shared_ptr<Material> OgrePlatform::createMaterial (const std::string& name)
 	{
-		OgreMaterial material (name, mResourceGroup);
-		return material;
+		OgreMaterial* material = new OgreMaterial(name, mResourceGroup);
+		return boost::shared_ptr<Material> (material);
 	}
 
-	VertexProgram OgrePlatform::createVertexProgram (
+	boost::shared_ptr<VertexProgram> OgrePlatform::createVertexProgram (
 		const std::string& name, const std::string& entryPoint,
 		const std::string& source, Language lang)
 	{
-		OgreVertexProgram prog (name, entryPoint, source, convertLang(lang), mResourceGroup);
-		return prog;
+		OgreVertexProgram* prog = new OgreVertexProgram (name, entryPoint, source, convertLang(lang), mResourceGroup);
+		return boost::shared_ptr<VertexProgram> (prog);
 	}
 
-	FragmentProgram OgrePlatform::createFragmentProgram (
+	boost::shared_ptr<FragmentProgram> OgrePlatform::createFragmentProgram (
 		const std::string& name, const std::string& entryPoint,
 		const std::string& source, Language lang)
 	{
-		OgreFragmentProgram prog (name, entryPoint, source, convertLang(lang), mResourceGroup);
-		return prog;
+		OgreFragmentProgram* prog = new OgreFragmentProgram (name, entryPoint, source, convertLang(lang), mResourceGroup);
+		return boost::shared_ptr<FragmentProgram> (prog);
 	}
 
-	GeometryProgram OgrePlatform::createGeometryProgram (
+	boost::shared_ptr<GeometryProgram> OgrePlatform::createGeometryProgram (
 		const std::string& name, const std::string& entryPoint,
 		const std::string& source, Language lang)
 	{
-		OgreGeometryProgram prog (name, entryPoint, source, convertLang(lang), mResourceGroup);
-		return prog;
+		OgreGeometryProgram* prog = new OgreGeometryProgram (name, entryPoint, source, convertLang(lang), mResourceGroup);
+		return boost::shared_ptr<GeometryProgram> (prog);
 	}
 
 	Ogre::Technique* OgrePlatform::handleSchemeNotFound (
 		unsigned short schemeIndex, const Ogre::String &schemeName, Ogre::Material *originalMaterial,
 		unsigned short lodIndex, const Ogre::Renderable *rend)
 	{
-		std::cout << "listener activated " << std::endl;
-
+		fireMaterialRequested(originalMaterial->getName());
 		return originalMaterial->createTechnique(); /// \todo
 	}
 }

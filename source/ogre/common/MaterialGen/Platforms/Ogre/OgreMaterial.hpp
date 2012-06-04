@@ -13,6 +13,9 @@ namespace sh
 	{
 	public:
 		OgreMaterial (const std::string& name, const std::string& resourceGroup);
+		virtual boost::shared_ptr<Pass> createPass ();
+
+		Ogre::MaterialPtr getOgreMaterial();
 
 	private:
 		Ogre::MaterialPtr mMaterial;
