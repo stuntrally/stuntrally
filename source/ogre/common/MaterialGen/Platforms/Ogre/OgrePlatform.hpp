@@ -7,7 +7,7 @@
 
 namespace sh
 {
-	class OgrePlatform : private Platform, public Ogre::MaterialManager::Listener
+	class OgrePlatform : public Platform, public Ogre::MaterialManager::Listener
 	{
 	public:
 		OgrePlatform (const std::string& resourceGroupName);
@@ -17,10 +17,17 @@ namespace sh
 			unsigned short schemeIndex, const Ogre::String &schemeName, Ogre::Material *originalMaterial,
 			unsigned short lodIndex, const Ogre::Renderable *rend);
 
-		virtual Material& createMaterial (const std::string& name);
-		virtual VertexProgram& createVertexProgram (const std::string& name, const std::string& source, Language lang);
-		virtual FragmentProgram& createFragmentProgram (const std::string& name, const std::string& source, Language lang);
-		virtual GeometryProgram& createGeometryProgram (const std::string& name, const std::string& source, Language lang);
+		virtual Material createMaterial (const std::string& name);
+
+		virtual VertexProgram createVertexProgram (
+			const std::string& name, const std::string& entryPoint,
+			const std::string& source, Language lang);
+		virtual FragmentProgram createFragmentProgram (
+			const std::string& name, const std::string& entryPoint,
+			const std::string& source, Language lang);
+		virtual GeometryProgram createGeometryProgram (
+			const std::string& name, const std::string& entryPoint,
+			const std::string& source, Language lang);
 
 	protected:
 		virtual bool supportsMaterialQueuedListener ();

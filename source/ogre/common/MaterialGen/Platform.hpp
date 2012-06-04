@@ -28,6 +28,7 @@ namespace sh
 
 	class Pass
 	{
+	public:
 		virtual TextureUnitState& createTextureUnitState () = 0;
 		virtual void assignVertexProgram (const VertexProgram& program) = 0;
 		virtual void assignFragmentProgram (const FragmentProgram& program) = 0;
@@ -36,7 +37,6 @@ namespace sh
 
 	class Material
 	{
-		virtual Pass& createPass () = 0;
 	};
 
 	class Platform
@@ -45,13 +45,17 @@ namespace sh
 		Platform ();
 		virtual ~Platform ();
 
-		virtual Material& createMaterial (const std::string& name) = 0;
-		virtual VertexProgram& createVertexProgram (const std::string& name, const std::string& source, Language lang) = 0;
-		virtual FragmentProgram& createFragmentProgram (const std::string& name, const std::string& source, Language lang) = 0;
-		virtual GeometryProgram& createGeometryProgram (const std::string& name, const std::string& source, Language lang) = 0;
+		virtual Material createMaterial (const std::string& name) = 0;
 
-		/// internal use only
-		void setFactory(Factory* factory);
+		virtual VertexProgram createVertexProgram (
+			const std::string& name, const std::string& entryPoint,
+			const std::string& source, Language lang) = 0;
+		virtual FragmentProgram createFragmentProgram (
+			const std::string& name, const std::string& entryPoint,
+			const std::string& source, Language lang) = 0;
+		virtual GeometryProgram createGeometryProgram (
+			const std::string& name, const std::string& entryPoint,
+			const std::string& source, Language lang) = 0;
 
 		friend class Factory;
 	protected:
@@ -70,6 +74,8 @@ namespace sh
 
 	private:
 		Factory* mFactory;
+
+		void setFactory(Factory* factory);
 	};
 }
 

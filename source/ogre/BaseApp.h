@@ -22,8 +22,13 @@ namespace Ogre {  class SceneNode;  class Root;  class SceneManager;  class Rend
 namespace OIS  {  class InputManager;  class Mouse;  class Keyboard;  }
 namespace OISB {  class System;  }
 class MasterClient;  class P2PGameClient;
-class MaterialFactory;
 
+namespace sh
+{
+	class Factory;
+}
+
+class MaterialFactory;
 
 class MaterialMgrListener : public Ogre::MaterialManager::Listener
 {
@@ -82,9 +87,9 @@ public:
 	void CreateRTfixed();
 
 	class SETTINGS* pSet;
-	
-	MaterialFactory* materialFactory;  // material generation
-	
+
+	sh::Factory* mFactory;
+
 	//  wnd, hud, upl
 	bool bWindowResized, bSizeHUD;
 	float roadUpdTm;
@@ -132,6 +137,7 @@ protected:
 	Ogre::RenderWindow* mWindow;
 	Ogre::RTShader::ShaderGenerator* mShaderGenerator;
 	MaterialMgrListener* mMaterialMgrListener;  // Shader generator material manager listener.	
+
 
 	///  input
 	OISB::System* mOISBsys;

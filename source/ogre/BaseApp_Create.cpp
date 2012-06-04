@@ -34,6 +34,9 @@
 using namespace Ogre;
 
 
+#include "common/MaterialGen/Factory.hpp"
+#include "common/MaterialGen/Platforms/Ogre/OgrePlatform.hpp"
+
 
 //  Create
 //-------------------------------------------------------------------------------------
@@ -190,7 +193,8 @@ BaseApp::~BaseApp()
 		mRoot->unloadPlugin("RenderSystem_Direct3D11");
 	#endif
 	mRoot->unloadPlugin("RenderSystem_GL");
-	
+
+
 	OGRE_DELETE mRoot;
 	delete mHDRLogic;  mHDRLogic = 0;
 }
@@ -409,6 +413,9 @@ bool BaseApp::setup()
 
 	postInit();
 	LogO("*** end setup ***");
+
+	sh::OgrePlatform platform ("General");
+	mFactory = new sh::Factory(&platform);
 
 		ti.update();  dt = ti.dt * 1000.f;  /// time
 		LogO(String(":::: Time post, mat factory: ") + toStr(dt) + " ms");
