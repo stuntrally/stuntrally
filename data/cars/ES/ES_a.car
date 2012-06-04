@@ -136,7 +136,7 @@ b0=1.25         #	Shape factor   B0
 b1=0            #	Load infl. on long. friction coeff (*1000)  (1/kN)   B1
 b2=3145         #	Longitudinal friction coefficient at load = 0 (*1000)  B2
 b3=23.3         #	Curvature factor of stiffness   (N/%/kN**2) . B3
-b4=900.0        #	Change of stiffness with load at load = 0 (N/%/kN)   B4
+b4=510.0        #	Change of stiffness with load at load = 0 (N/%/kN)   B4
 b5=0            #	Change of progressivity of stiffness/load (1/kN)   B5
 b6=0            #	Curvature change with load   B6
 b7=0            #	Curvature change with load   B7
