@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION"
 "Report-Msgid-Bugs-To: "
-"POT-Creation-Date: 2012-06-03 23:58+0300"
+"POT-Creation-Date: 2012-06-07 20:28+0200"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>"
 "Language-Team: LANGUAGE <LL@li.org>"
@@ -123,6 +123,10 @@ msgstr ""
 
 msgctxt "TipRoadDist2"
 msgid "Additional distance to road."
+msgstr ""
+
+msgctxt "PostfilterAA"
+msgid "Post-filter antialiasing"
 msgstr ""
 
 msgctxt "TipLTrFlDepth"
@@ -1223,10 +1227,6 @@ msgstr ""
 
 msgctxt "InputObjectsPrevNext"
 msgid "PgUp,PgDn (or Wheel) - previous/next object"
-msgstr ""
-
-msgctxt "UseSMAA"
-msgid "Use SMAA when effects are enabled"
 msgstr ""
 
 msgctxt "TimesBar"

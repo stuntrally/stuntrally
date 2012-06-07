@@ -1,0 +1,49 @@
+vertex_program FXAA/Vertex cg
+{
+    source fxaa.cg
+    profiles vs_4_0 vs_1_1 vp40 arbvp1
+    entry_point main_vp
+    default_params
+    {
+        param_named_auto viewportSize viewport_size
+        param_named_auto wvp worldviewproj_matrix
+    }
+}
+
+fragment_program FXAA/Pixel cg
+{
+    source fxaa.cg
+
+	// needs PS3 for tex2Dlod
+    profiles ps_4_0 ps_3_0 fp40
+
+    entry_point main_fp
+    default_params
+    {
+        param_named_auto viewportSize viewport_size
+    }
+}
+
+material FXAA
+{
+	technique
+	{
+		pass
+		{
+			vertex_program_ref FXAA/Vertex
+			{
+			}
+			fragment_program_ref FXAA/Pixel
+			{
+			}
+
+			depth_check off
+
+			texture_unit
+			{
+				tex_address_mode clamp
+				filtering linear linear point
+			}
+		}
+	}
+}

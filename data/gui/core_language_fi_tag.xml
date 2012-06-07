@@ -83,7 +83,7 @@
 	<Tag name="Ping">Ping</Tag>
 	<Tag name="InputMaxVal">Maksimi arvo</Tag>
 	<Tag name="TipRollDrag">Drag for wheels, bigger will make them slow down faster (eg. 140 for snow, 80 for grass).</Tag>
-	<Tag name="TipTrackList">Ratalista, klikkaa valitaksesi (ja nähdäksesi tietoja). Paina Enter ajaaksesi (tai [Vaihda rataa] ja sitten [Uusi peli]).</Tag>
+	<Tag name="TipTrackList">Tracks list, click to select and see info. Press Enter or [New Game] to drive on it.</Tag>
 	<Tag name="GrDensSmooth">Smooth grass dens.</Tag>
 	<Tag name="TerHeightMap">Maaston korkeuskartta</Tag>
 	<Tag name="bumps">töyssyt</Tag>
@@ -137,7 +137,7 @@
 	<Tag name="HDRParam1">Exposure</Tag>
 	<Tag name="Video">Kuva</Tag>
 	<Tag name="ViewStart">Näytä alku</Tag>
-	<Tag name="TipGrassDens">Kuinka tiheää/harvinaista ruohikko on maastossa.</Tag>
+	<Tag name="SSS_SpeedFactor">Speed Factor</Tag>
 	<Tag name="RplRecTime">Kirjattu aika</Tag>
 	<Tag name="TipGrTerMaxHeight">Terrain height above which there won't be any grass.</Tag>
 	<Tag name="InputRoadYaw">- rotate yaw</Tag>
@@ -147,6 +147,7 @@
 	<Tag name="InputAssignKey">&lt;Paina näppäintä&gt;</Tag>
 	<Tag name="Wireframe">Rautalankamalli</Tag>
 	<Tag name="Score">Pisteet</Tag>
+	<Tag name="SpeedSensitiveSteering">Speed Sensitive Steering</Tag>
 	<Tag name="Suspension">Suspension</Tag>
 	<Tag name="TerrainSize">Maaston koko</Tag>
 	<Tag name="NetServer">Palvelin</Tag>
@@ -171,6 +172,7 @@
 	<Tag name="PipeLStepsMul">Pipe L steps mul.</Tag>
 	<Tag name="View">Näkymä</Tag>
 	<Tag name="TriSize">Kolmiokoko</Tag>
+	<Tag name="CarDebug">Car susp, long|,lat- slips</Tag>
 	<Tag name="TerLAngSm">Kulmapehmennys</Tag>
 	<Tag name="InputAfterChanges">(maaston/kasvillisuuden muutoksien jälkeen)</Tag>
 	<Tag name="SkirtLength">Skirt Length</Tag>
@@ -200,6 +202,7 @@
 	<Tag name="InputStartDir">Space  -  change road direction (+ or -)</Tag>
 	<Tag name="Effects">Tehosteet</Tag>
 	<Tag name="WidthSteps">Width Steps</Tag>
+	<Tag name="TipSpeedSensitiveSteering">Decreases steering range with higher velocity.</Tag>
 	<Tag name="HDRTab">HDR</Tag>
 	<Tag name="Sound">Äänet</Tag>
 	<Tag name="InputFluidsIns">Ins - insert new, default fluid at cursor</Tag>
@@ -246,7 +249,7 @@
 	<Tag name="InputMinVal">Minimiarvo</Tag>
 	<Tag name="RplMaxNumViewports">Max. number of viewports (see less, for more player replays)</Tag>
 	<Tag name="SingleRace">Yksittäinen kilpailu</Tag>
-	<Tag name="TipNewGameCar">Käynnistä peli uudelleen (auton vaihdon jälkeen).</Tag>
+	<Tag name="TipNewGameCar">Restart game.</Tag>
 	<Tag name="InputWheelForce">[,]  (or shift-Wheel)  -  Force (intensity)</Tag>
 	<Tag name="TipGrassPatchLengthMax">Maximal grass patch length.</Tag>
 	<Tag name="Vegetation">Kasvillisuus</Tag>
@@ -258,13 +261,13 @@
 	<Tag name="InputMapFlip">Pyöräytä</Tag>
 	<Tag name="difficulty">vaikeusaste</Tag>
 	<Tag name="TrackInAir">Ilmassa</Tag>
-	<Tag name="Used">Used</Tag>
 	<Tag name="TipMinimapScrnEditor">Minimap of selected track, view from top.</Tag>
 	<Tag name="RplVersion">Versio</Tag>
 	<Tag name="Stages">Vaiheet</Tag>
 	<Tag name="Options">Valinnat</Tag>
 	<Tag name="Delete">Poista</Tag>
 	<Tag name="Rename">Nimeä uudelleen</Tag>
+	<Tag name="Asphalt">Asphalt</Tag>
 	<Tag name="TipModelPageLength">Models Page length (low will reload often, high will cause visible switching).</Tag>
 	<Tag name="NetGameProtocolError">Incompatible protocol versions between peers.</Tag>
 	<Tag name="LightmapSize">Valaistuskartan koko</Tag>
@@ -290,7 +293,6 @@
 	<Tag name="QuickHelpText">----  Quick help  ----@@Use mouse or Up,Down,Enter,Backspace to navigate through menu.@@To adjust resolution go to Options tab Screen,@use Graphics presets to quickly adjust graphics to your hardware.@@To see all keys used in game and configure input goto Options, tab Input.@If you have a game controller see:@http://code.google.com/p/vdrift-ogre/wiki/Running##Controllers@@Hosting a multiplayer game requires port forwarding.@Connecting to existing game doesn't need it, provided other players have it.@@If you have problems or suggestions report an issue on (or reply to existing one):@http://code.google.com/p/vdrift-ogre/issues/list@@For more info see Readme and our project's Wiki pages.@</Tag>
 	<Tag name="InputRoadPitch">- rotate pitch* / scale sel.</Tag>
 	<Tag name="InputObjectsMove">LMB - move   RMB - height</Tag>
-	<Tag name="UseSMAA">Use SMAA when effects are enabled</Tag>
 	<Tag name="TimesBar">Times bar</Tag>
 	<Tag name="Screenshot">kuvankaappaus</Tag>
 	<Tag name="Models">Mallit</Tag>
@@ -337,6 +339,7 @@
 	<Tag name="HDRIntensity">Bloom Intensity</Tag>
 	<Tag name="Development">Kehitys</Tag>
 	<Tag name="InputRoadIns">Ins - insert new (after picked, alt - before)</Tag>
+	<Tag name="Gravel">Gravel</Tag>
 	<Tag name="min">minimi</Tag>
 	<Tag name="BumpWavelen">Bump:  WaveLen</Tag>
 	<Tag name="InputRoadPipeAngle">[,]   - pipe angle (no pipe when 0)</Tag>
@@ -391,7 +394,7 @@
 	<Tag name="Digits">Numerot (vaihde, nopeus)</Tag>
 	<Tag name="ShowPictures">Näytä kuvia ladatessa</Tag>
 	<Tag name="distance">etäisyys</Tag>
-	<Tag name="TrackAvgSpeed">Keskimääräinen nopeus</Tag>
+	<Tag name="SSS_Effect">Effect</Tag>
 	<Tag name="PreviewCam">Esikatselukamera</Tag>
 	<Tag name="TipModelMinScale">Model minimal scale.</Tag>
 	<Tag name="Leave">Poistu</Tag>
@@ -458,10 +461,12 @@
 	<Tag name="RplTime">Aika</Tag>
 	<Tag name="MinimapRotate">Kieritä</Tag>
 	<Tag name="LTrMaxTerH">maksimi maaston korkeus</Tag>
+	<Tag name="TrackAvgSpeed">Keskimääräinen nopeus</Tag>
 	<Tag name="Yes">Kyllä</Tag>
 	<Tag name="TipNewDup">Create a new track by duplicating the selected track and using new name (change name first).</Tag>
 	<Tag name="TerGenPers">Persistance noise</Tag>
 	<Tag name="SunDir">Auringon suunta</Tag>
+	<Tag name="TipTrkViewShort">Short list view.</Tag>
 	<Tag name="TipSmokeInt">Savuhiukkasten voimakkuus.</Tag>
 	<Tag name="MessageBox_Ignore">Ohita</Tag>
 	<Tag name="TerrainBrush">Maaston sivellin</Tag>
@@ -611,10 +616,12 @@
 	<Tag name="OgreDialog">Näytä Ogre dialogi</Tag>
 	<Tag name="MultiThread">Multi Threaded</Tag>
 	<Tag name="Editor">Editori</Tag>
+	<Tag name="TipTrkViewDetailed">Detailed list view.</Tag>
 	<Tag name="AndContributors">ja avustajat.</Tag>
 	<Tag name="InputRoadSelectMany">Select (many)</Tag>
 	<Tag name="Copy">Kopio</Tag>
 	<Tag name="Reverse">Reverse</Tag>
+	<Tag name="TipFind">Enter part of name to find (filters list).</Tag>
 	<Tag name="scale">Skaala</Tag>
 	<Tag name="UnitMph">mph</Tag>
 	<Tag name="InputObjectsType">[,]  - change object type</Tag>
@@ -648,7 +655,7 @@
 	<Tag name="InputDetailsFor">Details for</Tag>
 	<Tag name="GraphicsAll_Ultra">Huippu</Tag>
 	<Tag name="ApplyShaders">Käytä varjostimia</Tag>
-	<Tag name="CarDebug">Car susp, long|,lat- slips</Tag>
+	<Tag name="TipGrassDens">Kuinka tiheää/harvinaista ruohikko on maastossa.</Tag>
 	<Tag name="InputRoadPick">Space - pick one/none</Tag>
 	<Tag name="InputTerFilter">F - Filter  (remove noise)</Tag>
 	<Tag name="InputRoadRebuild">B - rebuild road (after terrain change, etc.)</Tag>
@@ -658,6 +665,7 @@
 	<Tag name="GraphicsAll_High">Korkea</Tag>
 	<Tag name="TipRoadParams">Tien pisteen parametrit.</Tag>
 	<Tag name="TerGenPow">Power (shape)</Tag>
+	<Tag name="Used">Used</Tag>
 	<Tag name="TipImpDist">Far distance at which models will turn into 2d impostors.</Tag>
 	<Tag name="InputMapGeneral">General</Tag>
 	<Tag name="TipTrkTerImg">Minimap of selected track, view from top.</Tag>
@@ -736,15 +744,7 @@
 	<Tag name="InputNextOptTab">F2,F3 - prev,next Options tab (shift - sub tab)</Tag>
 	<Tag name="Diff6">Äärimmäinen</Tag>
 	<Tag name="RplAll">Kaikki</Tag>
-	<Tag name="SSS_SpeedFactor">Speed Factor</Tag>
-	<Tag name="SpeedSensitiveSteering">Speed Sensitive Steering</Tag>
-	<Tag name="TipSpeedSensitiveSteering">Decreases steering range with higher velocity.</Tag>
-	<Tag name="Asphalt">Asphalt</Tag>
-	<Tag name="SSS_Effect">Effect</Tag>
-	<Tag name="Gravel">Gravel</Tag>
-	<Tag name="TipTrkViewShort">Short list view.</Tag>
-	<Tag name="TipTrkViewDetailed">Detailed list view.</Tag>
-	<Tag name="TipFind">Enter part of name to find (filters list).</Tag>
+	<Tag name="PostfilterAA">Post-filter antialiasing</Tag>
 	<Tag name="GameVersion">1.7</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 	<Tag name="LANG_EN">English</Tag>

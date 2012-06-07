@@ -285,7 +285,7 @@
 	<Tag name="AntiAliasing">Antialiasing</Tag>
 	<Tag name="NeedRestart">* need restart</Tag>
 	<Tag name="Change">Change</Tag>
-	<Tag name="UseSMAA">Use SMAA when effects are enabled</Tag>
+	<Tag name="PostfilterAA">Post-filter antialiasing</Tag>
 
 	<Tag name="GraphicsAllSettings">Change all graphics settings to preset:</Tag>
 	<Tag name="GraphicsAll_Lowest">Lowest</Tag>
