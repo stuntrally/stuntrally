@@ -80,13 +80,13 @@ void App::InitGui()
 	tab = mGUI->findWidget<Tab>("TabWndReplays"); tab->setIndexSelected(1);	tab->setSmoothShow(false);	mWndTabsRpl = tab;		tab->eventTabChangeSelect += newDelegate(this, &App::MenuTabChg);
 	tab = mGUI->findWidget<Tab>("TabWndHelp");    tab->setIndexSelected(1);	tab->setSmoothShow(false);	mWndTabsHelp = tab;		tab->eventTabChangeSelect += newDelegate(this, &App::MenuTabChg);
 	tab = mGUI->findWidget<Tab>("TabWndOptions"); tab->setIndexSelected(1); tab->setSmoothShow(false);	mWndTabsOpts = tab;		tab->eventTabChangeSelect += newDelegate(this, &App::MenuTabChg);
-	if (pSet->inMenu == WND_Champ)  mWndTabsGame->setIndexSelected(5);
+	if (pSet->inMenu == WND_Champ)  mWndTabsGame->setIndexSelected(6);
 
 	//  get sub tabs
 	vSubTabsGame.clear();
 	for (size_t i=0; i < mWndTabsGame->getItemCount(); ++i)
 	{
-		MyGUI::TabPtr sub = (TabPtr)mWndTabsGame->getItemAt(i)->findWidget(i==4 ? "tabsNet" : "tabPlayer!");//car tab wrong-
+		MyGUI::TabPtr sub = (TabPtr)mWndTabsGame->getItemAt(i)->findWidget(i==5 ? "tabsNet" : "tabPlayer!");//car tab wrong-
 		vSubTabsGame.push_back(sub);  // 0 for not found
 	}
 	vSubTabsOpts.clear();
@@ -635,8 +635,8 @@ void App::LNext(int rel)
 		switch (mWndTabsGame->getIndexSelected())	{
 			case 1:  listTrackChng(trkMList,LNext(trkMList, rel));  return;
 			case 2:	 listCarChng(carList,   LNext(carList, rel));  return;
-			case 5:  listChampChng(liChamps,LNext(liChamps, rel));  return;
-			case 6:	 listStageChng(liStages, LNext(liStages, rel));  return;	}
+			case 6:  listChampChng(liChamps,LNext(liChamps, rel));  return;
+			case 7:	 listStageChng(liStages, LNext(liStages, rel));  return;	}
 		break;
 	case WND_Replays:
 		listRplChng(rplList,  LNext(rplList, rel));

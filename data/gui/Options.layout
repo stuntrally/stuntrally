@@ -303,7 +303,7 @@
 			<Widget type="TabItem" skin="" position="2 24 794 572">
 				<Property key="Caption" value="#{Car}"/>
 				<UserString key="RelativeTo" value="GameWnd"/>
-				<Widget type="ListBox" skin="ListBox" position="14 32 148 304" name="CarList">
+				<Widget type="ListBox" skin="ListBox" position="14 32 80 304" name="CarList">
 					<UserString key="RelativeTo" value="GameWnd"/>
 					<UserString key="tip" value="#{TipCarsList}"/>
 				</Widget>
@@ -449,9 +449,8 @@
 			<Widget type="TabItem" skin="" position="2 24 794 572">
 				<Property key="Caption" value="#{Setup}"/>
 				<UserString key="RelativeTo" value="GameWnd"/>
-				<Widget type="Widget" skin="PanelSkin" position="304 256 464 232">
-					<Property key="Alpha" value="0.3"/>
-					<Property key="Colour" value="0.4 0.5 0.6"/>
+				<Widget type="TextBox" skin="TextBox" position="32 23 120 24">
+					<Property key="Caption" value="#{Car}"/>
 					<UserString key="RelativeTo" value="GameWnd"/>
 				</Widget>
 				<Widget type="Button" skin="CheckBox" position="32 80 256 24" name="CarGear">
@@ -527,6 +526,15 @@
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 				</Widget>
 				
+			</Widget>
+			<Widget type="TabItem" skin="" position="2 24 794 572">
+				<Property key="Caption" value="#{Game}"/>
+				<UserString key="RelativeTo" value="GameWnd"/>
+				<Widget type="Widget" skin="PanelSkin" position="304 256 464 232">
+					<Property key="Alpha" value="0.3"/>
+					<Property key="Colour" value="0.4 0.5 0.6"/>
+					<UserString key="RelativeTo" value="GameWnd"/>
+				</Widget>
 				<Widget type="Button" skin="CheckBox" position="312 80 216 24" name="VegetCollis">
 					<Property key="Caption" value="#{VegetCol}"/>
 					<Property key="TextColour" value="0.6 0.8 0.8"/>
@@ -574,10 +582,6 @@
 				</Widget>
 				<Widget type="TextBox" skin="TextBox" position="496 264 64 24" name="valLocPlayers">
 					<Property key="TextColour" value="0.8 0.92 1"/>
-					<UserString key="RelativeTo" value="GameWnd"/>
-				</Widget>
-				<Widget type="TextBox" skin="TextBox" position="32 23 120 24">
-					<Property key="Caption" value="#{Car}"/>
 					<UserString key="RelativeTo" value="GameWnd"/>
 				</Widget>
 				<Widget type="TextBox" skin="TextBox" position="312 23 136 24">
