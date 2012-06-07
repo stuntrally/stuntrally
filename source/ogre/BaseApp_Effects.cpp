@@ -116,7 +116,7 @@ void BaseApp::refreshCompositor(bool disableAll)
 			cmp.setCompositorEnabled((*it), "ssaoNoMRT", false);
 		}
 		CompositorManager::getSingleton().setCompositorEnabled((*it), "Motion Blur", false);
-		CompositorManager::getSingleton().setCompositorEnabled((*it), "SMAA", false);
+		CompositorManager::getSingleton().setCompositorEnabled((*it), "FXAA", false);
 		CompositorManager::getSingleton().setCompositorEnabled((*it), "FilmGrain", false);
 		CompositorManager::getSingleton().setCompositorEnabled((*it), UI_RENDER, false);
 	}
@@ -168,7 +168,7 @@ void BaseApp::refreshCompositor(bool disableAll)
 		cmp.setCompositorEnabled((*it), "HDRNoMRT", pSet->hdr && !NeedMRTBuffer());
 		cmp.setCompositorEnabled((*it), "Motion Blur", pSet->motionblur);
 		cmp.setCompositorEnabled((*it), "CamBlur", pSet->camblur);
-		CompositorManager::getSingleton().setCompositorEnabled((*it), "SMAA", pSet->ssaa);
+		CompositorManager::getSingleton().setCompositorEnabled((*it), "FXAA", pSet->ssaa);
 		cmp.setCompositorEnabled((*it), "FilmGrain", pSet->hdr);
 
 		if(MaterialGenerator::MRTSupported())
@@ -211,6 +211,7 @@ void BaseApp::recreateCompositor()
 		mRoot->addResourceLocation(sPath + "/camblur", "FileSystem", "Effects");
 		mRoot->addResourceLocation(sPath + "/ssaa", "FileSystem", "Effects");
 		mRoot->addResourceLocation(sPath + "/smaa", "FileSystem", "Effects");
+		mRoot->addResourceLocation(sPath + "/fxaa", "FileSystem", "Effects");
 		mRoot->addResourceLocation(sPath + "/ssao", "FileSystem", "Effects");
 		mRoot->addResourceLocation(sPath + "/softparticles", "FileSystem", "Effects");
 		mRoot->addResourceLocation(sPath + "/dof", "FileSystem", "Effects");
@@ -404,7 +405,7 @@ void BaseApp::recreateCompositor()
 		CompositorManager::getSingleton().addCompositor((*it), "Bloom");
 		CompositorManager::getSingleton().addCompositor((*it), "CamBlur");
 		CompositorManager::getSingleton().addCompositor((*it), "Motion Blur");
-		CompositorManager::getSingleton().addCompositor((*it), "SMAA");
+		CompositorManager::getSingleton().addCompositor((*it), "FXAA");
 		CompositorManager::getSingleton().addCompositor((*it), "FilmGrain");
 		CompositorManager::getSingleton().addCompositor((*it), UI_RENDER);
 
