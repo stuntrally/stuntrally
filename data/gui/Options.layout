@@ -1439,7 +1439,7 @@
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
 						<Widget type="Button" skin="CheckBox" position="380 216 316 24" name="SMAA">
-							<Property key="Caption" value="#{UseSMAA}"/>
+							<Property key="Caption" value="#{PostfilterAA}"/>
 							<Property key="TextColour" value="0.6 0.9 1"/>
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
