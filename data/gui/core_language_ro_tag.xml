@@ -137,6 +137,7 @@
 	<Tag name="HDRParam1">Exposure</Tag>
 	<Tag name="Video">Video</Tag>
 	<Tag name="ViewStart">Vizualizează startul</Tag>
+	<Tag name="SSS_SpeedFactor">Speed Factor</Tag>
 	<Tag name="RplRecTime">Recorded   time</Tag>
 	<Tag name="TipGrTerMaxHeight">Terrain height above which there won't be any grass.</Tag>
 	<Tag name="InputRoadYaw">- rotate yaw</Tag>
@@ -146,6 +147,7 @@
 	<Tag name="InputAssignKey">&lt;Press a key&gt;</Tag>
 	<Tag name="Wireframe">Cadru</Tag>
 	<Tag name="Score">Score</Tag>
+	<Tag name="SpeedSensitiveSteering">Speed Sensitive Steering</Tag>
 	<Tag name="Suspension">Suspension</Tag>
 	<Tag name="TerrainSize">Mărimea terenului</Tag>
 	<Tag name="NetServer">Server</Tag>
@@ -200,6 +202,7 @@
 	<Tag name="InputStartDir">Space  -  change road direction (+ or -)</Tag>
 	<Tag name="Effects">Efecte</Tag>
 	<Tag name="WidthSteps">Trepte lățime</Tag>
+	<Tag name="TipSpeedSensitiveSteering">Decreases steering range with higher velocity.</Tag>
 	<Tag name="HDRTab">HDR</Tag>
 	<Tag name="Sound">Sunet</Tag>
 	<Tag name="InputFluidsIns">Ins - insert new, default fluid at cursor</Tag>
@@ -264,6 +267,7 @@
 	<Tag name="Options">Opțiuni</Tag>
 	<Tag name="Delete">Şterge</Tag>
 	<Tag name="Rename">Redenumește</Tag>
+	<Tag name="Asphalt">Asphalt</Tag>
 	<Tag name="TipModelPageLength">Models Page length (low will reload often, high will cause visible switching).</Tag>
 	<Tag name="NetGameProtocolError">Incompatible protocol versions between peers.</Tag>
 	<Tag name="LightmapSize">Lightmap size</Tag>
@@ -335,6 +339,7 @@
 	<Tag name="HDRIntensity">Bloom Intensity</Tag>
 	<Tag name="Development">Dezvoltare</Tag>
 	<Tag name="InputRoadIns">Ins - insert new (after picked, alt - before)</Tag>
+	<Tag name="Gravel">Gravel</Tag>
 	<Tag name="min">min</Tag>
 	<Tag name="BumpWavelen">Bump:  WaveLen</Tag>
 	<Tag name="InputRoadPipeAngle">[,] - unghiul tubului (nici un tub cand e 0)</Tag>
@@ -389,6 +394,7 @@
 	<Tag name="Digits">Cifre (treapta de viteză,viteza)</Tag>
 	<Tag name="ShowPictures">Arată imagini cât timp încarcă</Tag>
 	<Tag name="distance">distanță</Tag>
+	<Tag name="SSS_Effect">Effect</Tag>
 	<Tag name="PreviewCam">Preview Camera</Tag>
 	<Tag name="TipModelMinScale">Model minimal scale.</Tag>
 	<Tag name="Leave">Leave (exit)</Tag>

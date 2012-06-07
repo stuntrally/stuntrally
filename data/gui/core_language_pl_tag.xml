@@ -137,6 +137,7 @@
 	<Tag name="HDRParam1">Exposure</Tag>
 	<Tag name="Video">Wideo</Tag>
 	<Tag name="ViewStart">Widok startu</Tag>
+	<Tag name="SSS_SpeedFactor">Speed Factor</Tag>
 	<Tag name="RplRecTime">Nagrany czas</Tag>
 	<Tag name="TipGrTerMaxHeight">Wysokość terenu powyżej której nie będzie trawy.</Tag>
 	<Tag name="InputRoadYaw">- obrót</Tag>
@@ -146,6 +147,7 @@
 	<Tag name="InputAssignKey">&lt;Naciśnij klawisz&gt;</Tag>
 	<Tag name="Wireframe">Szkielet</Tag>
 	<Tag name="Score">Punkty</Tag>
+	<Tag name="SpeedSensitiveSteering">Speed Sensitive Steering</Tag>
 	<Tag name="Suspension">Zawieszenie</Tag>
 	<Tag name="TerrainSize">Rozmiar terenu</Tag>
 	<Tag name="NetServer">Serwer</Tag>
@@ -200,6 +202,7 @@
 	<Tag name="InputStartDir">Space - zmień kierunek drogi (+ lub -)</Tag>
 	<Tag name="Effects">Efekty</Tag>
 	<Tag name="WidthSteps">Kroków szerokości</Tag>
+	<Tag name="TipSpeedSensitiveSteering">Decreases steering range with higher velocity.</Tag>
 	<Tag name="HDRTab">HDR</Tag>
 	<Tag name="Sound">Dźwięk</Tag>
 	<Tag name="InputFluidsIns">Ins - wstaw nową ciecz gdzie kursor</Tag>
@@ -264,6 +267,7 @@
 	<Tag name="Options">Opcje</Tag>
 	<Tag name="Delete">Usuń</Tag>
 	<Tag name="Rename">Zmień nazwę</Tag>
+	<Tag name="Asphalt">Asphalt</Tag>
 	<Tag name="TipModelPageLength">Rozmiar strony modeli (niski będzie ładował często, wysoki spowoduje widoczne przeskoki).</Tag>
 	<Tag name="NetGameProtocolError">Niekompatybilne wersje protokołu między graczami.</Tag>
 	<Tag name="LightmapSize">Wielkość Lightmap</Tag>
@@ -335,6 +339,7 @@
 	<Tag name="HDRIntensity">Bloom Intensity</Tag>
 	<Tag name="Development">Narzędzia</Tag>
 	<Tag name="InputRoadIns">Ins - wstaw nowy (za wybranym, alt - przed)</Tag>
+	<Tag name="Gravel">Gravel</Tag>
 	<Tag name="min">min.</Tag>
 	<Tag name="BumpWavelen">Wyboje: Częstość</Tag>
 	<Tag name="InputRoadPipeAngle">[,] - kąt rury (brak gdy 0)</Tag>
@@ -389,6 +394,7 @@
 	<Tag name="Digits">Cyfry (bieg, szybkość)</Tag>
 	<Tag name="ShowPictures">Pokazuj obrazy podczas wczytywania</Tag>
 	<Tag name="distance">odległość</Tag>
+	<Tag name="SSS_Effect">Effect</Tag>
 	<Tag name="PreviewCam">Poprzedni widok</Tag>
 	<Tag name="TipModelMinScale">Minimalna skala modelu</Tag>
 	<Tag name="Leave">Opuść (wyjdź)</Tag>

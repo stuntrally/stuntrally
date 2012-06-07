@@ -137,6 +137,7 @@
 	<Tag name="HDRParam1">Exposure</Tag>
 	<Tag name="Video">Kuva</Tag>
 	<Tag name="ViewStart">Näytä alku</Tag>
+	<Tag name="SSS_SpeedFactor">Speed Factor</Tag>
 	<Tag name="RplRecTime">Kirjattu aika</Tag>
 	<Tag name="TipGrTerMaxHeight">Terrain height above which there won't be any grass.</Tag>
 	<Tag name="InputRoadYaw">- rotate yaw</Tag>
@@ -146,6 +147,7 @@
 	<Tag name="InputAssignKey">&lt;Paina näppäintä&gt;</Tag>
 	<Tag name="Wireframe">Rautalankamalli</Tag>
 	<Tag name="Score">Pisteet</Tag>
+	<Tag name="SpeedSensitiveSteering">Speed Sensitive Steering</Tag>
 	<Tag name="Suspension">Suspension</Tag>
 	<Tag name="TerrainSize">Maaston koko</Tag>
 	<Tag name="NetServer">Palvelin</Tag>
@@ -200,6 +202,7 @@
 	<Tag name="InputStartDir">Space  -  change road direction (+ or -)</Tag>
 	<Tag name="Effects">Tehosteet</Tag>
 	<Tag name="WidthSteps">Width Steps</Tag>
+	<Tag name="TipSpeedSensitiveSteering">Decreases steering range with higher velocity.</Tag>
 	<Tag name="HDRTab">HDR</Tag>
 	<Tag name="Sound">Äänet</Tag>
 	<Tag name="InputFluidsIns">Ins - insert new, default fluid at cursor</Tag>
@@ -264,6 +267,7 @@
 	<Tag name="Options">Valinnat</Tag>
 	<Tag name="Delete">Poista</Tag>
 	<Tag name="Rename">Nimeä uudelleen</Tag>
+	<Tag name="Asphalt">Asphalt</Tag>
 	<Tag name="TipModelPageLength">Models Page length (low will reload often, high will cause visible switching).</Tag>
 	<Tag name="NetGameProtocolError">Incompatible protocol versions between peers.</Tag>
 	<Tag name="LightmapSize">Valaistuskartan koko</Tag>
@@ -335,6 +339,7 @@
 	<Tag name="HDRIntensity">Bloom Intensity</Tag>
 	<Tag name="Development">Kehitys</Tag>
 	<Tag name="InputRoadIns">Ins - insert new (after picked, alt - before)</Tag>
+	<Tag name="Gravel">Gravel</Tag>
 	<Tag name="min">minimi</Tag>
 	<Tag name="BumpWavelen">Bump:  WaveLen</Tag>
 	<Tag name="InputRoadPipeAngle">[,]   - pipe angle (no pipe when 0)</Tag>
@@ -389,6 +394,7 @@
 	<Tag name="Digits">Numerot (vaihde, nopeus)</Tag>
 	<Tag name="ShowPictures">Näytä kuvia ladatessa</Tag>
 	<Tag name="distance">etäisyys</Tag>
+	<Tag name="SSS_Effect">Effect</Tag>
 	<Tag name="PreviewCam">Esikatselukamera</Tag>
 	<Tag name="TipModelMinScale">Model minimal scale.</Tag>
 	<Tag name="Leave">Poistu</Tag>

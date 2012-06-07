@@ -137,6 +137,7 @@
 	<Tag name="HDRParam1">Exposure</Tag>
 	<Tag name="Video">Bildschirm</Tag>
 	<Tag name="ViewStart">Ans. Start</Tag>
+	<Tag name="SSS_SpeedFactor">Speed Factor</Tag>
 	<Tag name="RplRecTime">Aufgenommen</Tag>
 	<Tag name="TipGrTerMaxHeight">Terrain-Höhe, ab der kein Gras mehr da ist.</Tag>
 	<Tag name="InputRoadYaw">- gieren</Tag>
@@ -146,6 +147,7 @@
 	<Tag name="InputAssignKey">&lt;Zuweisen&gt;</Tag>
 	<Tag name="Wireframe">Drahtgitter</Tag>
 	<Tag name="Score">Punkte</Tag>
+	<Tag name="SpeedSensitiveSteering">Speed Sensitive Steering</Tag>
 	<Tag name="Suspension">Aufhängung</Tag>
 	<Tag name="TerrainSize">Terrain-Größe</Tag>
 	<Tag name="NetServer">Server</Tag>
@@ -200,6 +202,7 @@
 	<Tag name="InputStartDir">Space - Straßenrichtung (+ oder -)</Tag>
 	<Tag name="Effects">Effekte</Tag>
 	<Tag name="WidthSteps">Breiten-Steps</Tag>
+	<Tag name="TipSpeedSensitiveSteering">Decreases steering range with higher velocity.</Tag>
 	<Tag name="HDRTab">HDR</Tag>
 	<Tag name="Sound">Sound</Tag>
 	<Tag name="InputFluidsIns">Einfg - neues Gewässer</Tag>
@@ -264,6 +267,7 @@
 	<Tag name="Options">Optionen</Tag>
 	<Tag name="Delete">Entfernen</Tag>
 	<Tag name="Rename">Umbenennen</Tag>
+	<Tag name="Asphalt">Asphalt</Tag>
 	<Tag name="TipModelPageLength">Page-Länge der Modelle (niedriger Wert verursacht häufiges neu Laden, hoher Wert macht die Übergänge sichtbar)</Tag>
 	<Tag name="NetGameProtocolError">Inkompatibles Protokoll zwischen den Peers.</Tag>
 	<Tag name="LightmapSize">Lightmap-Größe</Tag>
@@ -335,6 +339,7 @@
 	<Tag name="HDRIntensity">Bloom Intensity</Tag>
 	<Tag name="Development">Entwicklung</Tag>
 	<Tag name="InputRoadIns">Einfg - Punkt danach einfügen, mit Alt - davor</Tag>
+	<Tag name="Gravel">Gravel</Tag>
 	<Tag name="min">min.</Tag>
 	<Tag name="BumpWavelen">Bump: WaveLen</Tag>
 	<Tag name="InputRoadPipeAngle">[,] - Röhrenwinkel (keine Röhre wenn 0)</Tag>
@@ -389,6 +394,7 @@
 	<Tag name="Digits">Ziffern</Tag>
 	<Tag name="ShowPictures">Bilder beim Laden anzeigen</Tag>
 	<Tag name="distance">Distanz</Tag>
+	<Tag name="SSS_Effect">Effect</Tag>
 	<Tag name="PreviewCam">Vorschaukamera</Tag>
 	<Tag name="TipModelMinScale">Minimale Skalierung des Modells.</Tag>
 	<Tag name="Leave">Verlassen</Tag>
