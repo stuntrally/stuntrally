@@ -1,0 +1,85 @@
+
+
+/*---------------------------------------------------------*/
+    #define FXAA_REDUCE_MIN   (1.0/128.0)
+    #define FXAA_REDUCE_MUL   (1.0/8.0)
+    #define FXAA_SPAN_MAX     8.0
+	#define FXAA_SUBPIX_SHIFT 1.0/4.0
+
+/*---------------------------------------------------------*/
+
+
+void main_vp
+(
+	uniform float4x4 wvp,
+	in float4 iPosition : POSITION,
+	out float4 oPosition : POSITION,
+	uniform float4 viewportSize,
+	out float4 oPosPos : TEXCOORD1 // texcoord adjusted with subpixel offset
+)
+{
+	float2 rcpFrame = float2(viewportSize.z, viewportSize.w);
+
+    iPosition.xy = sign(iPosition.xy);
+
+    float2 texcoord = (float2(iPosition.x, -iPosition.y) + 1.0f) * 0.5f;
+
+	oPosPos = float4(texcoord, texcoord - (rcpFrame * (0.5 + FXAA_SUBPIX_SHIFT)));
+
+    oPosition = mul(wvp, iPosition);
+}
+
+#define _tex2Dlod (s, coord, o) tex2Dlod(s, float4(coord.xy, o, 0.0))
+
+void main_fp
+(
+	uniform float4 viewportSize,
+	uniform sampler2D colorTex : TEXUNIT0,
+	in float4 iPosPos : TEXCOORD1,
+	out float4 oColor : COLOR
+)
+{
+	float4 posPos = iPosPos;
+
+	float2 rcpFrame = float2(viewportSize.z, viewportSize.w);
+
+    float3 rgbNW = tex2Dlod(colorTex, float4(posPos.zw, 0, 0)).xyz;
+    float3 rgbNE = tex2Dlod(colorTex, float4(posPos.zw + float2(1.0,0.0)*rcpFrame.xy, 0.0, 0)).xyz;
+    float3 rgbSW = tex2Dlod(colorTex, float4(posPos.zw + float2(0.0,1.0)*rcpFrame.xy, 0.0, 0)).xyz;
+    float3 rgbSE = tex2Dlod(colorTex, float4(posPos.zw + float2(1.0,1.0)*rcpFrame.xy, 0.0, 0)).xyz;
+    float3 rgbM  = tex2Dlod(colorTex, float4(posPos.xy,0.0,0)).xyz;
+
+    float3 luma = float3(0.299, 0.587, 0.114);
+    float lumaNW = dot(rgbNW, luma);
+    float lumaNE = dot(rgbNE, luma);
+    float lumaSW = dot(rgbSW, luma);
+    float lumaSE = dot(rgbSE, luma);
+    float lumaM  = dot(rgbM,  luma);
+
+    float lumaMin = min(lumaM, min(min(lumaNW, lumaNE), min(lumaSW, lumaSE)));
+    float lumaMax = max(lumaM, max(max(lumaNW, lumaNE), max(lumaSW, lumaSE)));
+
+    float2 dir;
+    dir.x = -((lumaNW + lumaNE) - (lumaSW + lumaSE));
+    dir.y =  ((lumaNW + lumaSW) - (lumaNE + lumaSE));
+
+    float dirReduce = max(
+        (lumaNW + lumaNE + lumaSW + lumaSE) * (0.25 * FXAA_REDUCE_MUL),
+        FXAA_REDUCE_MIN);
+    float rcpDirMin = 1.0/(min(abs(dir.x), abs(dir.y)) + dirReduce);
+    dir = min(float2( FXAA_SPAN_MAX,  FXAA_SPAN_MAX),
+          max(float2(-FXAA_SPAN_MAX, -FXAA_SPAN_MAX),
+          dir * rcpDirMin)) * rcpFrame.xy;
+
+    float3 rgbA = (1.0/2.0) * (
+        tex2Dlod(colorTex, float4(posPos.xy + dir * (1.0/3.0 - 0.5),0.0, 0)).xyz +
+        tex2Dlod(colorTex, float4(posPos.xy + dir * (2.0/3.0 - 0.5),0.0, 0)).xyz);
+    float3 rgbB = rgbA * (1.0/2.0) + (1.0/4.0) * (
+        tex2Dlod(colorTex, float4(posPos.xy + dir * (0.0/3.0 - 0.5),0.0, 0)).xyz +
+        tex2Dlod(colorTex, float4(posPos.xy + dir * (3.0/3.0 - 0.5),0.0, 0)).xyz);
+    float lumaB = dot(rgbB, luma);
+    if((lumaB < lumaMin) || (lumaB > lumaMax))
+		oColor = float4(rgbA, 1.0);
+    else
+		oColor = float4(rgbB, 1.0);
+}
