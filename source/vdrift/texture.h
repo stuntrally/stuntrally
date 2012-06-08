@@ -3,7 +3,6 @@
 
 #include "reseatable_reference.h"
 
-#include <SDL/SDL.h>
 #include <string>
 #include <map>
 //#include <ostream>
@@ -17,7 +16,6 @@ private:
 	bool cube;
 	bool verticalcross;
 	bool normalmap;
-	SDL_Surface * surface;
 	int anisotropy;
 	bool repeatu, repeatv;
 	bool allow_non_power_of_two;
@@ -26,9 +24,9 @@ private:
 
 public:
 	TEXTUREINFO() : mipmap(true), cube(false), verticalcross(false), normalmap(false),
-		    surface(NULL), anisotropy(0), repeatu(true), repeatv(true), allow_non_power_of_two(true),nearest(false) {}
+		anisotropy(0), repeatu(true), repeatv(true), allow_non_power_of_two(true),nearest(false) {}
 	TEXTUREINFO(const std::string & newname) : name(newname), mipmap(true), cube(false), verticalcross(false), normalmap(false),
-		surface(NULL), anisotropy(0), repeatu(true), repeatv(true), allow_non_power_of_two(true),nearest(false),
+		anisotropy(0), repeatu(true), repeatv(true), allow_non_power_of_two(true),nearest(false),
 		pre_multiply_alpha(true) {}
 	const std::string GetName() const {return name;}
 	bool GetMipMap() const {return mipmap;}
@@ -40,8 +38,6 @@ public:
 	void SetCube(const bool newcube, const bool newvertcross) {cube = newcube;verticalcross=newvertcross;}
 	void SetNormalMap(const bool newnorm) {normalmap = newnorm;}
 	void SetMipMap(const bool newmipmap) {mipmap = newmipmap;}
-	void SetSurface ( SDL_Surface* value ) {surface = value;}
-	SDL_Surface* GetSurface() const {return surface;}
 	int GetAnisotropy() const {return anisotropy;}
 	void SetAnisotropy ( int value ) {anisotropy = value;}
 	void SetRepeat(bool u, bool v) {repeatu = u; repeatv = v;}
@@ -105,14 +101,14 @@ public:
 		SetInfo(texinfo);
 		return true;  //Load(error_output, texsize);
 	}
-	void Unload();
+	void Unload() {  loaded = false;  }
 	unsigned short int GetW() const {return w;}
 	unsigned short int GetH() const {return h;}
 	unsigned short int GetOriginalW() const {return origw;}
 	unsigned short int GetOriginalH() const {return origh;}
-	bool IsEqualTo(const TEXTURE_GL & othertex) const {return IsEqualTo(othertex.GetTextureInfo());}
-	bool IsEqualTo(const TEXTUREINFO & texinfo) const;
-	const TEXTUREINFO & GetTextureInfo() const {return texture_info;}
+	bool IsEqualTo(const TEXTURE_GL & othertex) const {  return IsEqualTo(othertex.GetTextureInfo());  }
+	bool IsEqualTo(const TEXTUREINFO & texinfo) const {  return (texinfo.GetName() == texture_info.GetName() && texinfo.GetMipMap() == texture_info.GetMipMap());  }
+	const TEXTUREINFO & GetTextureInfo() const {  return texture_info;  }
 
 	///scale factor from original size.  allows the user to determine
 	///what the texture size scaling did to the texture dimensions
