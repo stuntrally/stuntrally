@@ -50,9 +50,6 @@ void LoadDefaultSet(SETTINGS* settings, std::string setFile)
 		LoadDefaultSet(settings,setFile);
 		settings->Load(setFile);  // LOAD
 	}
-	
-	#include <iostream>
-	std::cout << sizeof(BaseApp) << std::endl;
 
 
 	//  Start

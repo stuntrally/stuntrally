@@ -471,10 +471,6 @@
 					>
 				</File>
 				<File
-					RelativePath=".\Source\vdrift\texture.cpp"
-					>
-				</File>
-				<File
 					RelativePath=".\Source\vdrift\texture.h"
 					>
 				</File>
@@ -1167,10 +1163,6 @@
 					>
 				</File>
 				<File
-					RelativePath=".\Source\ogre\TrackVdr.cpp"
-					>
-				</File>
-				<File
 					RelativePath=".\source\ogre\common\WaterRTT.cpp"
 					>
 				</File>
@@ -1440,6 +1432,10 @@
 				</File>
 				<File
 					RelativePath=".\Source\ogre\common\Terrain.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\Source\ogre\common\TrackVdr.cpp"
 					>
 				</File>
 			</Filter>

@@ -145,12 +145,17 @@ protected:
 
 	///  create  . . . . . . . . . . . . . . . . . . . . . . . . 
 	Ogre::String resCar, resTrk, resDrv;
-	void CreateCar(), /*vdrift:*/CreateVdrTrack(), CreateRacingLine(), CreateMinimap(), CreateRoadBezier();
+	void CreateCar();
 	void CreateTerrain(bool bNewHmap=false, bool bTer=true), CreateBltTerrain(), GetTerAngles(int xb,int yb, int xe,int ye);
 	void CreateTrees(), CreateRoad(), CreateObjects(),DestroyObjects();
 	void CreateFluids(), CreateBltFluids(), UpdateWaterRTT(Ogre::Camera* cam);
 	void CreateSkyDome(Ogre::String sMater, Ogre::Vector3 scale);
 	void NewGame();  void NewGameDoLoad();  bool IsTerTrack();  bool newGameRpl;
+	// vdrift:
+	void CreateVdrTrack(std::string strack, class TRACK* pTrack),
+		CreateRacingLine(), CreateMinimap(), CreateRoadBezier();
+	static Ogre::ManualObject* CreateModel(Ogre::SceneManager* sceneMgr, const Ogre::String& mat,
+		class VERTEXARRAY* a, Ogre::Vector3 vPofs, bool flip, bool track=false, const Ogre::String& name="");
 	
 	// Loading
 	void LoadCleanUp(), LoadGame(), LoadScene(), LoadCar(), LoadTerrain(), LoadRoad(), LoadObjects(), LoadTrees(), LoadMisc();

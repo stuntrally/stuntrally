@@ -433,7 +433,7 @@ void App::LoadTerrain()  // 5
 
 	if (!ter)	// vdrift track
 	{
-		CreateVdrTrack();
+		CreateVdrTrack(pSet->game.track, &pGame->track);
 		CreateMinimap();
 		//CreateRacingLine();  //?-
 		//CreateRoadBezier();  //-
@@ -587,14 +587,6 @@ void App::NewGameDoLoad()
 
 	// Go to next loading step.
 	++currentLoadingState;
-}
-
-//---------------------------------------------------------------------------------------------------------------
-bool App::IsTerTrack()
-{
-	//  vdrift track doesn't have road.xml
-	String sr = TrkDir()+"road.xml";
-	return boost::filesystem::exists(sr);
 }
 
 

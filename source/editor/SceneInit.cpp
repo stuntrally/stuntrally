@@ -82,7 +82,7 @@ void App::NewCommon(bool onlyTerVeget)
 	if (grass) {  delete grass->getPageLoader();  delete grass;  grass=0;   }
 	if (trees) {  delete trees->getPageLoader();  delete trees;  trees=0;   }
 
-	//mSceneMgr->destroyAllStaticGeometry();
+	mSceneMgr->destroyAllStaticGeometry();
 	if (!onlyTerVeget)
 	{
 		DestroyObjects();
@@ -94,6 +94,9 @@ void App::NewCommon(bool onlyTerVeget)
 	materialFactory->setTerrain(0);
 	if (mTerrainGroup)
 		mTerrainGroup->removeAllTerrains();
+		
+	//collision.Clear();
+	track->Clear();
 
 	if (resTrk != "")  mRoot->removeResourceLocation(resTrk);
 		resTrk = TrkDir() + "objects";
@@ -127,10 +130,22 @@ void App::LoadTrackEv()
 	LoadSurf();
 	UpdWndTitle();
 
-	CreateFluids();
+	bool ter = IsTerTrack();
+	if (ter)
+		CreateFluids();
 
 	bNewHmap = false;/**/
-	CreateTerrain();
+	CreateTerrain(bNewHmap,ter);
+
+	if (!ter)	// vdrift track
+	{
+		if (!LoadTrackVdr(pSet->gui.track))
+			LogO("Error during track loading: " + pSet->gui.track);
+		
+		CreateVdrTrack(pSet->gui.track, track);
+		//CreateRoadBezier();
+	}
+
 
 	//  road ~
 	road = new SplineRoad();
@@ -141,7 +156,7 @@ void App::LoadTrackEv()
 	
 	CreateObjects();
 
-	if (pSet->bTrees)
+	if (pSet->bTrees && ter)
 		CreateTrees();  // trees after objects so they aren't inside them
 
 
@@ -338,4 +353,35 @@ void App::TerCircleUpd()
 		moTerC->textureCoord(d/2*dTc, d%2);
 	}
 	moTerC->end();
+}
+
+
+//  vdrift track load
+bool App::LoadTrackVdr(const std::string & trackname)
+{
+	if (!track->DeferredLoad(
+		(pSet->gui.track_user ? PATHMANAGER::GetTrackPathUser() : PATHMANAGER::GetTrackPath()) + "/" + trackname,
+		false/*trackreverse*/,
+		/**/0, "large", true, false))
+	{
+		LogO("Error loading track: "+trackname);
+		return false;
+	}
+	bool success = true;
+	while (!track->Loaded() && success)
+	{
+		success = track->ContinueDeferredLoad();
+	}
+
+	if (!success)
+	{
+		LogO("Error loading track: "+trackname);
+		return false;
+	}
+
+	//setup track collision
+	//collision.SetTrack(&track);
+	//collision.DebugPrint(info_output);
+
+	return true;
 }

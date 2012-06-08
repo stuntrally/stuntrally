@@ -631,6 +631,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\source\ogre\common\TrackVdr.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\source\ogre\common\WaterRTT.cpp"
 				>
 			</File>
@@ -892,6 +896,110 @@
 			</File>
 			<File
 				RelativePath=".\source\ogre\common\TracksXml.h"
+				>
+			</File>
+		</Filter>
+		<Filter
+			Name="vdrift"
+			>
+			<File
+				RelativePath=".\source\vdrift\bezier.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\source\vdrift\bezier.h"
+				>
+			</File>
+			<File
+				RelativePath=".\source\vdrift\joepack.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\source\vdrift\joepack.h"
+				>
+			</File>
+			<File
+				RelativePath=".\source\vdrift\k1999.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\source\vdrift\k1999.h"
+				>
+			</File>
+			<File
+				RelativePath=".\source\vdrift\model.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\source\vdrift\model.h"
+				>
+			</File>
+			<File
+				RelativePath=".\source\vdrift\model_joe03.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\source\vdrift\model_joe03.h"
+				>
+			</File>
+			<File
+				RelativePath=".\source\vdrift\objectloader.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\source\vdrift\objectloader.h"
+				>
+			</File>
+			<File
+				RelativePath=".\source\vdrift\roadpatch.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\source\vdrift\roadpatch.h"
+				>
+			</File>
+			<File
+				RelativePath=".\source\vdrift\roadstrip.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\source\vdrift\roadstrip.h"
+				>
+			</File>
+			<File
+				RelativePath=".\source\vdrift\texture.h"
+				>
+			</File>
+			<File
+				RelativePath=".\source\vdrift\texturelibrary.h"
+				>
+			</File>
+			<File
+				RelativePath=".\source\vdrift\track.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\source\vdrift\track.h"
+				>
+			</File>
+			<File
+				RelativePath=".\source\vdrift\track_object.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\source\vdrift\track_object.h"
+				>
+			</File>
+			<File
+				RelativePath=".\source\vdrift\tracksurface.h"
+				>
+			</File>
+			<File
+				RelativePath=".\source\vdrift\vertexarray.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\source\vdrift\vertexarray.h"
 				>
 			</File>
 		</Filter>
