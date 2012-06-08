@@ -421,11 +421,11 @@ void SplineRoad::RebuildRoadInt()
 					{	//  flat --
 						vP = vL0 + vw * (tcw - 0.5);
 						vN = vn;
-						yTer = mTerrain->getHeightAtWorldPosition(vP.x, 0, vP.z);
+						yTer = mTerrain ? mTerrain->getHeightAtWorldPosition(vP.x, 0, vP.z) : 0.f;
 						if (onTer1)  //  onTerrain
 						{
 							vP.y = yTer + fHeight * ((w==0 || w==iw) ? 0.15f : 1.f);
-							vN = getNormalAtWorldPosition(mTerrain, vP.x, vP.z, lenDiv*0.5f /*0.5f*/);
+							vN = mTerrain ? getNormalAtWorldPosition(mTerrain, vP.x, vP.z, lenDiv*0.5f /*0.5f*/) : Vector3::UNIT_Y;
 						}
 					}else
 					{	///  pipe (_)
@@ -436,7 +436,7 @@ void SplineRoad::RebuildRoadInt()
 						if (vN.y < 0.f)  vN.y = -vN.y;
 						if (trans) {  //  transition from flat to pipe
 							vP += vw * (tcw - 0.5) * trp;  }
-						yTer = mTerrain->getHeightAtWorldPosition(vP.x, 0, vP.z);
+						yTer = mTerrain ? mTerrain->getHeightAtWorldPosition(vP.x, 0, vP.z) : 0.f;
 					}
 					
 					//  skirt, gap patch_
@@ -503,7 +503,7 @@ void SplineRoad::RebuildRoadInt()
 				for (int h=0; h <= 1; ++h)  // height
 				for (int w=0; w <= iwC; ++w)  // width +1
 				{
-					Real ht = (h==0) ? 0.f : vL0.y - mTerrain->getHeightAtWorldPosition(vL0);
+					Real ht = (h==0) ? 0.f : vL0.y - (mTerrain ? mTerrain->getHeightAtWorldPosition(vL0) : 0.f);
 					Real a = Real(w)/iwC *2*PI_d,  //+PI_d/4.f
 						x = r*cosf(a), y = r*sinf(a);
 
@@ -514,7 +514,7 @@ void SplineRoad::RebuildRoadInt()
 					{	yy = vn.y * -0.8f;  //pars
 						vP.y += yy;  ht += yy;  }
 					else  // bottom below ground
-					{	yy = mTerrain->getHeightAtWorldPosition(vP) - 0.3f;
+					{	yy = (mTerrain ? mTerrain->getHeightAtWorldPosition(vP) : 0.f) - 0.3f;
 						vP.y = yy;	}
 					ht += yy;
 
