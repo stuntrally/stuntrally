@@ -168,8 +168,8 @@ void CARDYNAMICS::DebugPrint ( std::ostream & out, bool p1, bool p2, bool p3, bo
 		out << "---Body---" << std::endl;
 		//out << "c of mass: " << center_of_mass << std::endl;
 		out << "pos: " << chassisPosition << std::endl;
-		//MATRIX3 <T> inertia = body.GetInertia();  //btVector3 chassisInertia(inertia[0], inertia[4], inertia[8]);
-		//out << "inertia:  " << inertia[0] << "  " << inertia[4] << "  " << inertia[8] << "\n";
+		MATRIX3 <T> inertia = body.GetInertia();
+		out << "inertia:  " << inertia[0] << "  " << inertia[4] << "  " << inertia[8] << "\n";
 		out << "mass: " << body.GetMass() << std::endl << std::endl;
 		
 		//MATHVECTOR <T, 3> up(0,0,1);
@@ -178,7 +178,7 @@ void CARDYNAMICS::DebugPrint ( std::ostream & out, bool p1, bool p2, bool p3, bo
 		
 	#endif
 
-	#if 1	// fluids
+	#if 0	// fluids
 		out << "in fluids: " << inFluids.size() <<
 				" wh: " << inFluidsWh[0].size() << inFluidsWh[1].size() << inFluidsWh[2].size() << inFluidsWh[3].size() << std::endl;
 		out.precision(2);

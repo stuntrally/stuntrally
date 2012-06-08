@@ -154,8 +154,10 @@ protected:
 	// vdrift:
 	void CreateVdrTrack(std::string strack, class TRACK* pTrack),
 		CreateRacingLine(), CreateMinimap(), CreateRoadBezier();
+public:
 	static Ogre::ManualObject* CreateModel(Ogre::SceneManager* sceneMgr, const Ogre::String& mat,
 		class VERTEXARRAY* a, Ogre::Vector3 vPofs, bool flip, bool track=false, const Ogre::String& name="");
+protected:
 	
 	// Loading
 	void LoadCleanUp(), LoadGame(), LoadScene(), LoadCar(), LoadTerrain(), LoadRoad(), LoadObjects(), LoadTrees(), LoadMisc();
