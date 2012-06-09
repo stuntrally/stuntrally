@@ -6,6 +6,8 @@
 #include "../vdrift/pathmanager.h"
 #include "../ogre/common/RenderConst.h"
 #include "../ogre/common/MaterialGen/MaterialFactory.h"
+#include "btBulletCollisionCommon.h"
+#include "btBulletDynamicsCommon.h"
 using namespace Ogre;
 
 
@@ -83,6 +85,8 @@ void App::NewCommon(bool onlyTerVeget)
 	if (trees) {  delete trees->getPageLoader();  delete trees;  trees=0;   }
 
 	mSceneMgr->destroyAllStaticGeometry();
+	DestroyVdrTrackBlt();
+	
 	if (!onlyTerVeget)
 	{
 		DestroyObjects();
@@ -95,7 +99,7 @@ void App::NewCommon(bool onlyTerVeget)
 	if (mTerrainGroup)
 		mTerrainGroup->removeAllTerrains();
 		
-	//collision.Clear();
+	//world.Clear();
 	track->Clear();
 
 	if (resTrk != "")  mRoot->removeResourceLocation(resTrk);
@@ -117,8 +121,9 @@ void App::LoadTrackEv()
 	{	road->Destroy();  delete road;  road = 0;  }
 
 	// load scene
-	sc.ter = true;
 	sc.LoadXml(TrkDir()+"scene.xml");
+	sc.vdr = IsVdrTrack();
+	if (sc.vdr)  sc.ter = false;
 	
 	//  water RTT
 	UpdateWaterRTT(mCamera);
@@ -127,22 +132,23 @@ void App::LoadTrackEv()
 	materialFactory->generate();
 	CreateRoadSelMtrs();
 
+	BltWorldInit();
+
 	LoadSurf();
 	UpdWndTitle();
 
-	bool ter = IsTerTrack();
-	if (ter)
-		CreateFluids();
+	CreateFluids();
 
 	bNewHmap = false;/**/
-	CreateTerrain(bNewHmap,ter);
+	CreateTerrain(bNewHmap,sc.ter);
 
-	if (!ter)	// vdrift track
+	if (sc.vdr)  // vdrift track
 	{
 		if (!LoadTrackVdr(pSet->gui.track))
 			LogO("Error during track loading: " + pSet->gui.track);
 		
 		CreateVdrTrack(pSet->gui.track, track);
+		CreateVdrTrackBlt();
 		//CreateRoadBezier();
 	}
 
@@ -156,7 +162,7 @@ void App::LoadTrackEv()
 	
 	CreateObjects();
 
-	if (pSet->bTrees && ter)
+	if (pSet->bTrees && sc.ter)
 		CreateTrees();  // trees after objects so they aren't inside them
 
 
@@ -277,8 +283,9 @@ void App::SaveTrackEv()
 	sc.SaveXml(TrkDir()+"scene.xml");
 	SaveSurf(TrkDir()+"surfaces.txt");
 
-	SaveGrassDens();
-	SaveWaterDepth();
+	bool vdr = IsVdrTrack();
+	if (!vdr)  SaveGrassDens();
+	if (!vdr)  SaveWaterDepth();  //?-
 	SaveStartPos(TrkDir()+"track.txt");  //..load/save inside
 	Status("Saved", 1,0.6,0.2);
 }
@@ -357,6 +364,7 @@ void App::TerCircleUpd()
 
 
 //  vdrift track load
+//-------------------------------------------------------------------------------------
 bool App::LoadTrackVdr(const std::string & trackname)
 {
 	if (!track->DeferredLoad(
@@ -384,4 +392,87 @@ bool App::LoadTrackVdr(const std::string & trackname)
 	//collision.DebugPrint(info_output);
 
 	return true;
+}
+
+
+///  Bullet world
+//-------------------------------------------------------------------------------------
+void App::BltWorldInit()
+{
+	if (world)  // create world once
+		return;
+		//BltWorldDestroy();
+
+	//  setup bullet world
+	config = new btDefaultCollisionConfiguration();
+	dispatcher = new btCollisionDispatcher(config);
+
+	broadphase = new bt32BitAxisSweep3(btVector3(-5000, -5000, -5000), btVector3(5000, 5000, 5000));
+	solver = new btSequentialImpulseConstraintSolver();
+	world = new btDiscreteDynamicsWorld(dispatcher, broadphase, solver, config);
+
+	world->setGravity(btVector3(0.0, 0.0, -9.81)); ///~
+	world->getSolverInfo().m_restitution = 0.0f;
+	world->getDispatchInfo().m_enableSPU = true;
+	world->setForceUpdateAllAabbs(false);  //+
+}
+
+void App::BltWorldDestroy()
+{
+	BltClear();
+
+	delete world;
+	delete solver;
+	delete broadphase;
+	delete dispatcher;
+	delete config;
+}
+
+//  Clear - delete bullet pointers
+void App::BltClear()
+{
+	track = NULL;
+	DestroyVdrTrackBlt();
+	
+	for(int i = world->getNumCollisionObjects() - 1; i >= 0; i--)
+	{
+		btCollisionObject* obj = world->getCollisionObjectArray()[i];
+		btRigidBody* body = btRigidBody::upcast(obj);
+		if (body && body->getMotionState())
+		{
+			delete body->getMotionState();
+		}
+		world->removeCollisionObject(obj);
+
+		ShapeData* sd = (ShapeData*)obj->getUserPointer();
+		delete sd;
+		delete obj;
+	}
+	
+	/*for (int i = 0; i < shapes.size(); i++)
+	{
+		btCollisionShape * shape = shapes[i];
+		if (shape->isCompound())
+		{
+			btCompoundShape * cs = (btCompoundShape *)shape;
+			for (int i = 0; i < cs->getNumChildShapes(); i++)
+			{
+				delete cs->getChildShape(i);
+			}
+		}
+		delete shape;
+	}
+	shapes.resize(0);
+	
+	for(int i = 0; i < meshes.size(); i++)
+	{
+		delete meshes[i];
+	}
+	meshes.resize(0);
+	
+	for(int i = 0; i < actions.size(); i++)
+	{
+		world->removeAction(actions[i]);
+	}
+	actions.resize(0);*/
 }

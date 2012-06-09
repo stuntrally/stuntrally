@@ -118,7 +118,8 @@ public:
 	Ogre::String  sParDust, sParMud, sParSmoke;
 	
 	//  terrain
-	bool ter;  // 1 own, has terrain, 0 vdrift track
+	bool ter;  // has terrain
+	bool vdr;  // vdrift track
 	TerData td;
 
 	//  paged layers	

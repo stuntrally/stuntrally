@@ -15,8 +15,7 @@ Scene::Scene()
 }
 void Scene::Default()
 {
-	asphalt = false;
-	ter = true;
+	asphalt = false;  ter = true;  vdr = false;
 
 	skyMtr = "World/NoonSky";
 	rainEmit = 0;  rainName = "";
@@ -116,7 +115,7 @@ bool Scene::LoadXml(String file, bool bTer)
 	// clear  --
 	Default();
 
-	// terrain / vdrift set
+	//  terrain, asphalt set, vdr outside
 	asphalt = !bTer;
 	ter = bTer;
 

@@ -172,8 +172,8 @@ void SplineRoad::RotateSel(Real relA, Vector3 axis, int addYawRoll)
 void SplineRoad::Insert(eIns ins)
 {
 	RoadSeg rs;  SplinePoint pt = newP;  // new
-	if (pt.onTer)
-		pt.pos.y = (mTerrain ? mTerrain->getHeightAtWorldPosition(pt.pos.x, 0, pt.pos.z) : 0.f) + fHeight;
+	if (pt.onTer && mTerrain)
+		pt.pos.y = mTerrain->getHeightAtWorldPosition(pt.pos.x, 0, pt.pos.z) + fHeight;
 
 	if (ins	== INS_Begin)
 		iChosen = -1;

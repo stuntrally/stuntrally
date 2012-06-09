@@ -221,7 +221,10 @@ void App::LoadGame()  // 2
 
 	// load scene.xml - default if not found
 	//   need to know sc.asphalt before vdrift car load
-	sc.LoadXml(TrkDir()+"scene.xml", IsTerTrack());
+	bool vdr = IsVdrTrack();
+	sc.LoadXml(TrkDir()+"scene.xml", !vdr/*for asphalt*/);
+	sc.vdr = vdr;
+	if (sc.vdr)  sc.ter = false;
 
 	if (!sc.ter)
 	{	sc.td.hfHeight = sc.td.hfAngle = NULL;  }  // sc.td.layerRoad.smoke = 1.f;
@@ -418,9 +421,8 @@ void App::LoadCar()  // 4
 
 void App::LoadTerrain()  // 5
 {
-	bool ter = IsTerTrack();
-	CreateTerrain(false,ter);  // common
-	if (ter)
+	CreateTerrain(false,sc.ter);  // common
+	if (sc.ter)
 		CreateBltTerrain();
 	
 	// assign stuff to cars
@@ -431,7 +433,7 @@ void App::LoadTerrain()  // 5
 		(*it)->blendMapSize = blendMapSize;
 	}
 
-	if (!ter)	// vdrift track
+	if (sc.vdr)  // vdrift track
 	{
 		CreateVdrTrack(pSet->game.track, &pGame->track);
 		CreateMinimap();
@@ -442,7 +444,7 @@ void App::LoadTerrain()  // 5
 
 void App::LoadRoad()  // 6
 {
-	if (IsTerTrack())
+	//if (IsTerTrack())
 		CreateRoad();
 		
 	if (road && road->getNumPoints() == 0 && arrowRotNode)
@@ -451,13 +453,13 @@ void App::LoadRoad()  // 6
 
 void App::LoadObjects()  // 7
 {
-	if (IsTerTrack())
+	//if (IsTerTrack())
 		CreateObjects();
 }
 
 void App::LoadTrees()  // 8
 {
-	if (IsTerTrack())
+	if (sc.ter)
 		CreateTrees();
 }
 

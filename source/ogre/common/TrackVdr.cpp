@@ -26,7 +26,9 @@
 	#include "../../vdrift/pathmanager.h"
 #endif
 #include "MaterialGen/MaterialFactory.h"
-
+#include "BulletDynamics/Dynamics/btDiscreteDynamicsWorld.h"
+#include "BulletCollision/CollisionShapes/btTriangleIndexVertexArray.h"
+#include "BulletCollision/CollisionShapes/btBvhTriangleMeshShape.h"
 using namespace Ogre;
 
 
@@ -423,9 +425,76 @@ ManualObject* App::CreateModel(SceneManager* sceneMgr, const String& mat,
 
 
 //----------------------------------------------------
-bool App::IsTerTrack()
+bool App::IsVdrTrack()
 {
 	//  vdrift track has roads.trk
-	String vdr = TrkDir()+"roads.trk";
-	return !boost::filesystem::exists(vdr);
+	String svdr = TrkDir()+"roads.trk";
+	bool vdr = boost::filesystem::exists(svdr);
+	return vdr;
 }
+
+
+#ifdef ROAD_EDITOR
+btIndexedMesh GetIndexedMesh(const MODEL & model)
+{
+	const float * vertices;  int vcount;
+	const int * faces;  int fcount;
+	model.GetVertexArray().GetVertices(vertices, vcount);
+	model.GetVertexArray().GetFaces(faces, fcount);
+	
+	assert(fcount % 3 == 0); //Face count is not a multiple of 3
+	
+	btIndexedMesh mesh;
+	mesh.m_numTriangles = fcount / 3;
+	mesh.m_triangleIndexBase = (const unsigned char *)faces;
+	mesh.m_triangleIndexStride = sizeof(int) * 3;
+	mesh.m_numVertices = vcount;
+	mesh.m_vertexBase = (const unsigned char *)vertices;
+	mesh.m_vertexStride = sizeof(float) * 3;
+	mesh.m_vertexType = PHY_FLOAT;
+	return mesh;
+}
+
+void App::DestroyVdrTrackBlt()
+{
+	//  remove old track
+	if (trackObject)
+	{
+		world->removeCollisionObject(trackObject);
+		
+		delete trackObject->getCollisionShape();
+		trackObject->setCollisionShape(NULL);
+		
+		delete trackObject;
+		trackObject = NULL;
+		
+		delete trackMesh;
+		trackMesh = NULL;
+	}
+}
+
+void App::CreateVdrTrackBlt()
+{
+	DestroyVdrTrackBlt();
+	
+	//  setup new track
+	trackMesh = new btTriangleIndexVertexArray();
+	const std::list<TRACK_OBJECT> & objects = track->GetTrackObjects();
+	for (std::list<TRACK_OBJECT>::const_iterator ob = objects.begin(); ob != objects.end(); ++ob)
+	{
+		if (ob->GetSurface() != NULL)
+		{
+			MODEL & model = *ob->GetModel();
+			btIndexedMesh mesh = GetIndexedMesh(model);
+			trackMesh->addIndexedMesh(mesh);
+		}
+	}
+	
+	btCollisionShape * trackShape = new btBvhTriangleMeshShape(trackMesh, false);
+	trackObject = new btCollisionObject();
+	trackObject->setCollisionShape(trackShape);
+	trackObject->setUserPointer(NULL);
+	
+	world->addCollisionObject(trackObject);
+}
+#endif

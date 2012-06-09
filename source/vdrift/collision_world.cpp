@@ -283,13 +283,13 @@ void COLLISION_WORLD::SetTrack(TRACK * t)
 	}
 	else  ///
 	{
-	// can not use QuantizedAabbCompression because of the track size
-	btCollisionShape * trackShape = new btBvhTriangleMeshShape(trackMesh, false);
-	trackObject = new btCollisionObject();
-	trackObject->setCollisionShape(trackShape);
-	trackObject->setUserPointer(NULL);
-	
-	world->addCollisionObject(trackObject);
+		// can not use QuantizedAabbCompression because of the track size
+		btCollisionShape * trackShape = new btBvhTriangleMeshShape(trackMesh, false);
+		trackObject = new btCollisionObject();
+		trackObject->setCollisionShape(trackShape);
+		trackObject->setUserPointer(NULL);
+		
+		world->addCollisionObject(trackObject);
 	}
 }
 

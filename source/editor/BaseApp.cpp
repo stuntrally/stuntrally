@@ -33,9 +33,9 @@ void BaseApp::updateStats()
 		//sprintf(s, "Pos: %5.1f %5.1f %5.1f", //  |  Rot: %6.3f %6.3f %6.3f %6.3f",
 						//pos.x, pos.y, pos.z/*,  rot.x, rot.y, rot.z, rot.w*/ );
 		//ovPos->setCaption( String(s) + "  " + mFilText );
-		String s = "Pos: "+fToStr(pos.x,1)+" " + fToStr(pos.y,1) + " " + fToStr(pos.z,1) 
-					//+", // | Rot: " +fToStr(rot.x,3) + " "+fToStr(rot.y,3)+" "+fToStr(rot.z,3)+" "+fToStr(rot.w,3)
-		; ovPos->setCaption(s + "  " + mFilText);
+		String s = "Pos: "+fToStr(pos.x,1)+" " + fToStr(pos.y,1) + " " + fToStr(pos.z,1);
+					//+", // | Rot: " +fToStr(rot.x,3) + " "+fToStr(rot.y,3)+" "+fToStr(rot.z,3)+" "+fToStr(rot.w,3);
+		ovPos->setCaption(s + "  " + mFilText);
 	}
 
 	{//  Fps, Tri, Bat

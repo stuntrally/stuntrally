@@ -280,9 +280,6 @@ void App::SaveWaterDepth()
 	register int x,y,a,i,ia,id;
 	register float fa,fd;
 	
-	btVector3 from(0,0,0), to = from;
-	btCollisionWorld::ClosestRayResultCallback rayRes(from, to);
-		
 	///  write to img  -----------
 	//  get ter height to fluid height difference for below
 	for (y = 0; y < h; ++y) {  a = y*w;

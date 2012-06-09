@@ -37,6 +37,7 @@ const Ogre::Real crAngSnaps[ciAngSnapsNum] = {0,15,30,45,90,180};
 
 namespace Forests {  class PagedGeometry;  }
 namespace MyGUI  {  class MultiList2;  class Slider;  }
+//namespace Ogre  {  class Terrain;  }
 class MaterialFactory;
 
 
@@ -85,12 +86,13 @@ protected:
 	void CreateSkyDome(Ogre::String sMater, Ogre::Vector3 scale);
 
 	bool GetFolderIndex(std::string folderpath, std::list <std::string> & outputfolderlist, std::string extension="");
-	bool IsTerTrack();
+	bool IsVdrTrack();
 	// vdrift:
-	void CreateVdrTrack(std::string strack, class TRACK* pTrack),
+	void CreateVdrTrack(std::string strack, class TRACK* pTrack), CreateVdrTrackBlt(), DestroyVdrTrackBlt(),
 		CreateRacingLine(), CreateMinimap(), CreateRoadBezier();
 	static Ogre::ManualObject* CreateModel(Ogre::SceneManager* sceneMgr, const Ogre::String& mat,
 		class VERTEXARRAY* a, Ogre::Vector3 vPofs, bool flip, bool track=false, const Ogre::String& name="");
+
 
 	///  rnd to tex  minimap  * * * * * * * * *
 	Ogre::SceneNode *ndPos;  Ogre::ManualObject* mpos;
@@ -173,12 +175,23 @@ protected:
 	//bool update(float dtime);
 
 
+	///  bullet world
+	class btDiscreteDynamicsWorld* world;
+	class btDefaultCollisionConfiguration* config;
+	class btCollisionDispatcher* dispatcher;
+	class bt32BitAxisSweep3* broadphase;
+	class btSequentialImpulseConstraintSolver* solver;
+	class btCollisionObject* trackObject;  // vdrift track col
+	class btTriangleIndexVertexArray* trackMesh;
+	void BltWorldInit(), BltWorldDestroy(), BltClear();
+
+
 	//  trees
 	class Forests::PagedGeometry *trees, *grass;
 
 	//  road  -in base
 	void SaveGrassDens(), SaveWaterDepth(), AlignTerToRoad();
-	class btDiscreteDynamicsWorld* world;  int iSnap;  Ogre::Real angSnap;
+	int iSnap;  Ogre::Real angSnap;
 
 	//  car starts
 	bool LoadStartPos(),SaveStartPos(std::string path);  void UpdStartPos();

@@ -6,6 +6,7 @@
 #include "../ogre/common/Gui_Def.h"
 #include "../ogre/common/MultiList2.h"
 #include "../ogre/common/MaterialGen/MaterialFactory.h"
+#include "BulletDynamics/Dynamics/btDiscreteDynamicsWorld.h"
 using namespace Ogre;
 
 
@@ -114,6 +115,7 @@ bool App::frameRenderingQueued(const FrameEvent& evt)
 		if (rdTxt[0]){	if (sp.onTer)	s = "On Terrain";
 					else s = "Height "+fToStr(sp.pos.y,2,5); rdTxt[0]->setCaption(s);  }
 		if (rdTxt[1]){  rdTxt[1]->setCaption("Width  "+fToStr(sp.width,2,5));  }
+		//if (rdTxt[1]){  rdTxt[1]->setCaption(fToStr(road->posHit.x,0,3)+" "+fToStr(road->posHit.y,0,3)+" "+fToStr(road->posHit.z,0,3));  }
 
 		if (rdTxt[2]){  rdTxt[2]->setCaption("yaw   "+fToStr(sp.aYaw,1,5));  }
 		if (rdTxt[3]){  rdTxt[3]->setCaption("roll  "+fToStr(sp.aRoll,1,5));  }
@@ -632,9 +634,24 @@ bool App::frameEnded(const FrameEvent& evt)
 	if (road)
 	{
 		const MyGUI::IntPoint& mp = MyGUI::InputManager::getInstance().getMousePosition();
-		Real mx = mp.left, my = mp.top;
-		road->Pick(mCamera, mx/mWindow->getWidth(), my/mWindow->getHeight(),
+		Real mx = Real(mp.left)/mWindow->getWidth(), my = Real(mp.top)/mWindow->getHeight();
+		road->Pick(mCamera, mx, my,
 			edMode == ED_Road,  !(edMode == ED_Road && bEdit()));
+		if (sc.vdr)
+		{	// blt ray hit
+			Ray ray = mCamera->getCameraToViewportRay(mx,my);
+			const Vector3& pos = mCamera->getDerivedPosition(), dir = ray.getDirection();
+			btVector3 from(pos.x,-pos.z,pos.y), to(dir.x,-dir.z,dir.y);  to = from + to*1000.f;
+			btCollisionWorld::ClosestRayResultCallback rayRes(from, to);
+
+			world->rayTest(from, to, rayRes);
+
+			if (rayRes.hasHit())
+				road->posHit = Vector3(rayRes.m_hitPointWorld.getX(),rayRes.m_hitPointWorld.getZ(),-rayRes.m_hitPointWorld.getY());
+			else
+				road->posHit = Vector3::ZERO;
+			road->ndHit->setPosition(road->posHit);
+		}
 	}
 
 	editMouse();  // edit

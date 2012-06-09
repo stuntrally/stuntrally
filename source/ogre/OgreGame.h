@@ -150,7 +150,7 @@ protected:
 	void CreateTrees(), CreateRoad(), CreateObjects(),DestroyObjects();
 	void CreateFluids(), CreateBltFluids(), UpdateWaterRTT(Ogre::Camera* cam);
 	void CreateSkyDome(Ogre::String sMater, Ogre::Vector3 scale);
-	void NewGame();  void NewGameDoLoad();  bool IsTerTrack();  bool newGameRpl;
+	void NewGame();  void NewGameDoLoad();  bool IsVdrTrack();  bool newGameRpl;
 	// vdrift:
 	void CreateVdrTrack(std::string strack, class TRACK* pTrack),
 		CreateRacingLine(), CreateMinimap(), CreateRoadBezier();
