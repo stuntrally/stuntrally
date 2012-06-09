@@ -51,6 +51,17 @@ if(BUILD_EDITOR)
 		editor/*.cpp
 		vdrift/configfile.cpp
 		vdrift/pathmanager.cpp
+		vdrift/track.cpp
+		vdrift/k1999.cpp
+		vdrift/model.cpp
+		vdrift/vertexarray.cpp
+		vdrift/roadstrip.cpp
+		vdrift/bezier.cpp
+		vdrift/objectloader.cpp
+		vdrift/joepack.cpp
+		vdrift/track_object.cpp
+		vdrift/model_joe03.cpp
+		vdrift/roadpatch.cpp
 		ogre/QTimer.cpp
 		ogre/common/*.cpp
 		ogre/common/MaterialGen/*.cpp
