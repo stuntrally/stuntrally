@@ -7,6 +7,6 @@ namespace sh
 	OgreTextureUnitState::OgreTextureUnitState (OgrePass* parent)
 		: TextureUnitState()
 	{
-		//mTextureUnitState = parent->getOgrePass()->createTextureUnitState("");
+		mTextureUnitState = parent->getOgrePass()->createTextureUnitState("");
 	}
 }

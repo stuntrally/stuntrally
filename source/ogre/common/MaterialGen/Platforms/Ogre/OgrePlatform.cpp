@@ -1,5 +1,9 @@
 #include "OgrePlatform.hpp"
 
+#include <OgreDataStream.h>
+#include <OgreGpuProgramManager.h>
+#include <OgreTechnique.h> //fixme
+
 #include "OgreMaterial.hpp"
 #include "OgreVertexProgram.hpp"
 #include "OgreFragmentProgram.hpp"
@@ -25,10 +29,26 @@ namespace sh
 		, mResourceGroup(resourceGroupName)
 	{
 		Ogre::MaterialManager::getSingleton().addListener(this);
+
+		Ogre::GpuProgramManager::getSingletonPtr()->setSaveMicrocodesToCache(true);
+
+		/*
+		Ogre::MaterialPtr m = Ogre::MaterialManager::getSingleton().create ("car_body_ES", "General");
+		m->removeAllTechniques();
+		Ogre::Technique* t = m->createTechnique();
+		t->setSchemeName("test");
+
+		Ogre::MaterialManager::getSingleton().setActiveScheme("test2");
+		*/
 	}
 
 	OgrePlatform::~OgrePlatform ()
 	{
+	}
+
+	bool OgrePlatform::supportsShaderSerialization ()
+	{
+		return true;
 	}
 
 	bool OgrePlatform::supportsMaterialQueuedListener ()
@@ -71,6 +91,23 @@ namespace sh
 		unsigned short lodIndex, const Ogre::Renderable *rend)
 	{
 		fireMaterialRequested(originalMaterial->getName());
+		std::cout << "listener activated" << std::endl;
 		return originalMaterial->createTechnique(); /// \todo
+	}
+
+	void OgrePlatform::serializeShaders (const std::string& file)
+	{
+		std::fstream output;
+		output.open(file.c_str(), std::ios::out | std::ios::binary);
+		Ogre::DataStreamPtr shaderCache (OGRE_NEW Ogre::FileStreamDataStream(file, &output, false));
+		Ogre::GpuProgramManager::getSingleton().saveMicrocodeCache(shaderCache);
+	}
+
+	void OgrePlatform::deserializeShaders (const std::string& file)
+	{
+		std::ifstream inp;
+		inp.open(file.c_str(), std::ios::in | std::ios::binary);
+		Ogre::DataStreamPtr shaderCache(OGRE_NEW Ogre::FileStreamDataStream(file, &inp, false));
+		Ogre::GpuProgramManager::getSingleton().loadMicrocodeCache(shaderCache);
 	}
 }

@@ -10,6 +10,7 @@
 namespace sh
 {
 	class Platform;
+	class ConfigLoader;
 
 	typedef std::map<std::string, MaterialDefinition> DefinitionMap;
 	typedef std::map<std::string, MaterialInstance> InstanceMap;
@@ -19,7 +20,7 @@ namespace sh
 	{
 	public:
 		Factory(Platform* platform);
-		virtual ~Factory();
+		~Factory();
 
 		/**
 		 * create a MaterialInstance based upon \a definition

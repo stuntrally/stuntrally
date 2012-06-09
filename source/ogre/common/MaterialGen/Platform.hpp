@@ -50,6 +50,9 @@ namespace sh
 		Platform ();
 		virtual ~Platform ();
 
+		virtual void serializeShaders (const std::string& file);
+		virtual void deserializeShaders (const std::string& file);
+
 		virtual boost::shared_ptr<Material> createMaterial (const std::string& name) = 0;
 
 		virtual boost::shared_ptr<VertexProgram> createVertexProgram (
@@ -65,6 +68,12 @@ namespace sh
 		friend class Factory;
 
 	protected:
+		/**
+		 * this will be \a true if the platform supports serialization (writing shader microcode
+		 * to disk) and deserialization (create gpu program from saved microcode)
+		 */
+		virtual bool supportsShaderSerialization ();
+
 		/**
 		 * this will be \a true if the platform supports a listener that notifies the system
 		 * whenever a material is requested for rendering. if this is supported, shaders can be

@@ -13,6 +13,9 @@ namespace sh
 		OgrePlatform (const std::string& resourceGroupName);
 		virtual ~OgrePlatform ();
 
+		virtual void serializeShaders (const std::string& file);
+		virtual void deserializeShaders (const std::string& file);
+
 		virtual Ogre::Technique* handleSchemeNotFound (
 			unsigned short schemeIndex, const Ogre::String &schemeName, Ogre::Material *originalMaterial,
 			unsigned short lodIndex, const Ogre::Renderable *rend);
@@ -30,6 +33,7 @@ namespace sh
 			const std::string& source, Language lang);
 
 	protected:
+		virtual bool supportsShaderSerialization ();
 		virtual bool supportsMaterialQueuedListener ();
 
 		std::string mResourceGroup;

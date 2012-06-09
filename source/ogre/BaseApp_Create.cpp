@@ -319,8 +319,8 @@ bool BaseApp::setup()
 		mShaderGenerator->setShaderCachePath(PATHMANAGER::GetShaderCacheDir());		
  
 		// Create and register the material manager listener.
-		mMaterialMgrListener = new MaterialMgrListener(mShaderGenerator);				
-		Ogre::MaterialManager::getSingleton().addListener(mMaterialMgrListener);	
+		mMaterialMgrListener = new MaterialMgrListener(mShaderGenerator);
+		Ogre::MaterialManager::getSingleton().addListener(mMaterialMgrListener);
 	}
 
 	setupResources();
@@ -414,8 +414,8 @@ bool BaseApp::setup()
 	postInit();
 	LogO("*** end setup ***");
 
-	sh::OgrePlatform platform ("General");
-	mFactory = new sh::Factory(&platform);
+	sh::OgrePlatform* platform = new sh::OgrePlatform("General");
+	mFactory = new sh::Factory(platform);
 
 		ti.update();  dt = ti.dt * 1000.f;  /// time
 		LogO(String(":::: Time post, mat factory: ") + toStr(dt) + " ms");
