@@ -642,7 +642,7 @@ bool App::frameEnded(const FrameEvent& evt)
 		{
 			Ray ray = mCamera->getCameraToViewportRay(mx,my);
 			const Vector3& pos = mCamera->getDerivedPosition(), dir = ray.getDirection();
-			btVector3 from(pos.x,-pos.z,pos.y), to(dir.x,-dir.z,dir.y);  to = from + to*1000.f;
+			btVector3 from(pos.x,-pos.z,pos.y), to(dir.x,-dir.z,dir.y);  to = from + to*10000.f;
 			btCollisionWorld::ClosestRayResultCallback rayRes(from, to);
 
 			world->rayTest(from, to, rayRes);
