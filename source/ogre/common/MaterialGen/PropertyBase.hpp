@@ -1,7 +1,10 @@
-#ifndef SH_PROPERTYSET_H
-#define SH_PROPERTYSET_H
+#ifndef SH_PROPERTYBASE_H
+#define SH_PROPERTYBASE_H
 
 #include <string>
+#include <map>
+
+#include <boost/shared_ptr.hpp>
 
 namespace sh
 {
@@ -11,6 +14,7 @@ namespace sh
 		inline virtual std::string serialize () = 0;
 		inline virtual void deserialize (const std::string& in) = 0;
 	};
+	typedef boost::shared_ptr<PropertyValue> PropertyPtr;
 
 	class StringValue : public PropertyValue
 	{
@@ -47,10 +51,24 @@ namespace sh
 	class PropertySet
 	{
 	public:
-		void setProperty (const std::string& name, const PropertyValue& value);
+		void setProperty (const std::string& name, PropertyPtr value);
 
 	protected:
-		virtual void setPropertyOverride (const std::string& name, const PropertyValue& value);
+		virtual bool setPropertyOverride (const std::string& name, PropertyPtr value);
+		///< @return \a true if the specified property was found, or false otherwise
+	};
+
+	typedef std::map<std::string, PropertyPtr> PropertyMap;
+
+	/// \brief base class that allows setting properties with any kind of value-type and retrieving them
+	class PropertySetGet
+	{
+	public:
+		void setProperty (const std::string& name, PropertyPtr value);
+		PropertyPtr getProperty (const std::string& name);
+
+	protected:
+		PropertyMap mProperties;
 	};
 }
 

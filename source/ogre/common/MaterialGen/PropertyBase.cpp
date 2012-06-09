@@ -1,4 +1,4 @@
-#include "PropertySet.hpp"
+#include "PropertyBase.hpp"
 
 #include <boost/lexical_cast.hpp>
 
@@ -55,14 +55,29 @@ namespace sh
 
 	// ------------------------------------------------------------------------------
 
-	void PropertySet::setProperty (const std::string& name, const PropertyValue& value)
+	void PropertySet::setProperty (const std::string& name, PropertyPtr value)
 	{
 		setPropertyOverride (name, value);
 	}
 
-	void PropertySet::setPropertyOverride (const std::string& name, const PropertyValue& value)
+	bool PropertySet::setPropertyOverride (const std::string& name, PropertyPtr value)
 	{
 		// if we got here, none of the sub-classes was able to make use of the property
 		std::cerr << "sh::PropertySet: Warning: No match for property with name '" << name << "'" << std::endl;
+		return false;
+	}
+
+	// ------------------------------------------------------------------------------
+
+	void PropertySetGet::setProperty (const std::string& name, PropertyPtr value)
+	{
+		mProperties [name] = value;
+	}
+
+	PropertyPtr PropertySetGet::getProperty(const std::string& name)
+	{
+		assert (mProperties.find(name) != mProperties.end()
+			&& "Trying to retrieve property that does not exist");
+		return mProperties[name];
 	}
 }

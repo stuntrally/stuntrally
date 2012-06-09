@@ -6,7 +6,7 @@
 #include <boost/shared_ptr.hpp>
 
 #include "Language.hpp"
-#include "PropertySet.hpp"
+#include "PropertyBase.hpp"
 
 namespace sh
 {
