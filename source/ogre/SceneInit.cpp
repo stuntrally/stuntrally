@@ -224,7 +224,6 @@ void App::LoadGame()  // 2
 	bool vdr = IsVdrTrack();
 	sc.LoadXml(TrkDir()+"scene.xml", !vdr/*for asphalt*/);
 	sc.vdr = vdr;
-	if (sc.vdr)  sc.ter = false;
 
 	if (!sc.ter)
 	{	sc.td.hfHeight = sc.td.hfAngle = NULL;  }  // sc.td.layerRoad.smoke = 1.f;
@@ -324,7 +323,7 @@ void App::LoadScene()  // 3
 		pr2->getEmitter(0)->setEmissionRate(0);  }
 		
 	//  checkpoint arrow
-	if (!bRplPlay && sc.ter)
+	if (!bRplPlay)
 	{	if (!arrowNode)  arrowNode = mSceneMgr->getRootSceneNode()->createChildSceneNode();
 		Ogre::Entity* arrowEnt = mSceneMgr->createEntity("CheckpointArrow", "arrow.mesh");
 		arrowEnt->setRenderQueueGroup(RQG_Hud3);
@@ -444,8 +443,7 @@ void App::LoadTerrain()  // 5
 
 void App::LoadRoad()  // 6
 {
-	//if (IsTerTrack())
-		CreateRoad();
+	CreateRoad();
 		
 	if (road && road->getNumPoints() == 0 && arrowRotNode)
 		arrowRotNode->setVisible(false);  // hide when no road
@@ -453,8 +451,7 @@ void App::LoadRoad()  // 6
 
 void App::LoadObjects()  // 7
 {
-	//if (IsTerTrack())
-		CreateObjects();
+	CreateObjects();
 }
 
 void App::LoadTrees()  // 8

@@ -221,30 +221,7 @@ void App::newPoses(float time)  // time only for camera update
 
 		//  chekpoints, lap start
 		//-----------------------------------------------------------------------
-		if (!bRplPlay && !bGhost && !sc.ter)  /// vdrift lap notify
-		if (!road && pGame->vdrLap[c] > 0 && carM->eType == CarModel::CT_LOCAL)
-		{
-			LogO("LAP App  t:"+fToStr(lapTime,3,5));
-
-			//  Network notification, send: car id, lap time
-			bool finished = (pGame->timer.GetCurrentLap(c) >= pSet->game.num_laps)
-							&& (mClient || pSet->game.local_players > 1);
-			if (mClient && c == 0 && !finished)
-				mClient->lap(pGame->timer.GetCurrentLap(c), pGame->timer.GetLastLap(c));
-
-			//if (lapTime > 1.0)  // is 1 frame after = 0.012 not the track time..
-			///  new best lap, save ghost
-			if (!pSet->rpl_bestonly || pGame->vdrLap[c] == 2/*best*/)
-			if (c==0 && pSet->rpl_rec)  // for many, only 1st car
-			{
-				ghost.SaveFile(GetGhostFile());
-				ghplay.CopyFrom(ghost);
-			}
-			ghost.Clear();
-			pGame->vdrLap[c] = 0;
-		}
-
-		if (bRplPlay || bGhost || !sc.ter)   // dont check when replay play
+		if (bRplPlay || bGhost)   // dont check for replay or ghost
 			carM->bWrongChk = false;
 		else
 		{

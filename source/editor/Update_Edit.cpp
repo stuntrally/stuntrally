@@ -637,8 +637,9 @@ bool App::frameEnded(const FrameEvent& evt)
 		Real mx = Real(mp.left)/mWindow->getWidth(), my = Real(mp.top)/mWindow->getHeight();
 		road->Pick(mCamera, mx, my,
 			edMode == ED_Road,  !(edMode == ED_Road && bEdit()));
-		if (sc.vdr)
-		{	// blt ray hit
+
+		if (sc.vdr)  // blt ray hit
+		{
 			Ray ray = mCamera->getCameraToViewportRay(mx,my);
 			const Vector3& pos = mCamera->getDerivedPosition(), dir = ray.getDirection();
 			btVector3 from(pos.x,-pos.z,pos.y), to(dir.x,-dir.z,dir.y);  to = from + to*1000.f;

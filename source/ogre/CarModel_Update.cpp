@@ -215,7 +215,7 @@ void CarModel::Update(PosInfo& posInfo, PosInfo& posInfoCam, float time)
 	}
 
 	//  wheels  ------------------------------------------------------------------------
-	const float trlC = /*sc->ter && */!sc->asphalt ? 0.14f : 0.f,  // const trail alpha
+	const float trlC = !sc->asphalt ? 0.14f : 0.f,  // const trail alpha
 		trlH = sc->ter ? 0.90f : 0.76f;  // vdr needs up (ter bumps), no ter  ..get from wheel contact ?rpl
 
 	for (int w=0; w < 4; ++w)

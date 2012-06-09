@@ -13,7 +13,7 @@ using namespace Ogre;
 
 //  Create Scene
 //-------------------------------------------------------------------------------------
-void App::createScene()
+void App::createScene()  // once, init
 {
 	//  camera
 	asp = float(mWindow->getWidth())/float(mWindow->getHeight());
@@ -372,7 +372,7 @@ bool App::LoadTrackVdr(const std::string & trackname)
 		false/*trackreverse*/,
 		/**/0, "large", true, false))
 	{
-		LogO("Error loading track: "+trackname);
+		LogO("Error loading vdrift track: "+trackname);
 		return false;
 	}
 	bool success = true;
@@ -383,14 +383,9 @@ bool App::LoadTrackVdr(const std::string & trackname)
 
 	if (!success)
 	{
-		LogO("Error loading track: "+trackname);
+		LogO("Error loading vdrift track: "+trackname);
 		return false;
 	}
-
-	//setup track collision
-	//collision.SetTrack(&track);
-	//collision.DebugPrint(info_output);
-
 	return true;
 }
 
@@ -421,11 +416,8 @@ void App::BltWorldDestroy()
 {
 	BltClear();
 
-	delete world;
-	delete solver;
-	delete broadphase;
-	delete dispatcher;
-	delete config;
+	delete world;  delete solver;
+	delete broadphase;  delete dispatcher;  delete config;
 }
 
 //  Clear - delete bullet pointers
@@ -445,8 +437,7 @@ void App::BltClear()
 		world->removeCollisionObject(obj);
 
 		ShapeData* sd = (ShapeData*)obj->getUserPointer();
-		delete sd;
-		delete obj;
+		delete sd;  delete obj;
 	}
 	
 	/*for (int i = 0; i < shapes.size(); i++)

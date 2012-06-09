@@ -338,25 +338,6 @@ void App::AlignTerToRoad()
 {
 	QTimer ti;  ti.update();  ///T  /// time
 
-	//  setup bullet world
-	btDefaultCollisionConfiguration* config;
-	btCollisionDispatcher* dispatcher;
-	bt32BitAxisSweep3* broadphase;
-	btSequentialImpulseConstraintSolver* solver;
-	//btDiscreteDynamicsWorld* world;
-
-	config = new btDefaultCollisionConfiguration();
-	dispatcher = new btCollisionDispatcher(config);
-
-	broadphase = new bt32BitAxisSweep3(btVector3(-5000, -5000, -5000), btVector3(5000, 5000, 5000));
-	solver = new btSequentialImpulseConstraintSolver();
-	world = new btDiscreteDynamicsWorld(dispatcher, broadphase, solver, config);
-
-	world->setGravity(btVector3(0.0, 0.0, -9.81)); ///~
-	world->getSolverInfo().m_restitution = 0.0f;
-	world->getDispatchInfo().m_enableSPU = true;
-	world->setForceUpdateAllAabbs(false);  //+
-	
 	//  scene
 	//CreateBltFluids();
 	//-CreateBltTerrain();  // from terrain->, faster?
@@ -427,9 +408,6 @@ void App::AlignTerToRoad()
 		delete sd;
 		delete obj;
 	}
-	delete world;  world = 0;
-	delete solver;	delete broadphase;	delete dispatcher;	delete config;
-
 
 	ti.update();	///T  /// time
 	float dt = ti.dt * 1000.f;
