@@ -1,11 +1,6 @@
 #ifndef SH_CONFIG_LOADER_H__
 #define SH_CONFIG_LOADER_H__
 
-/**
- * Heavily inspired by: http://www.ogre3d.org/tikiwiki/All-purpose+script+parser
- * ( "Non-ogre version")
- */
-
 #include <map>
 #include <vector>
 #include <cassert>
@@ -15,7 +10,11 @@ namespace sh
 {
     class ConfigNode;
 
-	/// \brief The base class of loaders that read Ogre style script files to get configuration and settings.
+	/**
+	 * @brief The base class of loaders that read Ogre style script files to get configuration and settings.
+	 * Heavily inspired by: http://www.ogre3d.org/tikiwiki/All-purpose+script+parser
+	 * ( "Non-ogre version")
+	 */
 	class ConfigLoader
 	{
 	public:

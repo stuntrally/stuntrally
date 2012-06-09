@@ -1,6 +1,17 @@
 #ifndef SH_OGREPLATFORM_H
 #define SH_OGREPLATFORM_H
 
+/**
+ * @addtogroup Platforms
+ * @{
+ */
+
+/**
+ * @addtogroup Ogre
+ * A set of classes to interact with Ogre's material system
+ * @{
+ */
+
 #include "../../Platform.hpp"
 
 #include <OgreMaterialManager.h>
@@ -39,5 +50,10 @@ namespace sh
 		std::string mResourceGroup;
 	};
 }
+
+/**
+ * @}
+ * @}
+ */
 
 #endif
