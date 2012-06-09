@@ -64,6 +64,7 @@ CarModel::CarModel(unsigned int index, eCarType type, const std::string& name,
 	if (type == CT_GHOST)		sDispName = "Ghost";
 	else if (type == CT_LOCAL)	sDispName = "Player"+toStr(iIndex+1);
 	
+
 	//  get car start pos from track  ------
 	if (type != CT_GHOST)  // ghost has pCar, dont create
 	{
@@ -77,7 +78,8 @@ CarModel::CarModel(unsigned int index, eCarType type, const std::string& name,
 
 		//  offset car start pos when cars collide
 		MATHVECTOR<float, 3> offset(0,0,0);
-		pCar = pGame->LoadCar(sDirname, pos, rot, true, false, type == CT_REMOTE, index);
+		pCar = pGame->LoadCar(sDirname, pos, rot, true, false, type == CT_REMOTE, index, sc->asphalt);
+
 		if (!pCar)  LogO("Error creating car " + sDirname);
 		else  pCar->pCarM = this;
 	}
@@ -185,7 +187,7 @@ void CarModel::Create(int car)
 		if (ghost)  {  eCar->setRenderQueueGroup(g);  eCar->setCastShadows(false);  }
 		ncart->attachObject(eCar);  eCar->setVisibilityFlags(RV_Car);
 	}else{
-		ManualObject* mCar = CreateModel(mSceneMgr, sMtr[Mtr_CarBody], &pCar->bodymodel.mesh, vPofs, false, false, "Car"+strI);
+		ManualObject* mCar = pApp->CreateModel(mSceneMgr, sMtr[Mtr_CarBody], &pCar->bodymodel.mesh, vPofs, false, false, "Car"+strI);
 		if (mCar){	bodyBox = mCar->getBoundingBox();
 			if (ghost)  {  mCar->setRenderQueueGroup(g);  mCar->setCastShadows(false);  }
 			ncart->attachObject(mCar);  mCar->setVisibilityFlags(RV_Car);  }
@@ -202,7 +204,7 @@ void CarModel::Create(int car)
 		if (ghost)  {  eInter->setRenderQueueGroup(g);  eInter->setCastShadows(false);  }
 		ncart->attachObject(eInter);  eInter->setVisibilityFlags(RV_Car);
 	}else{
-		ManualObject* mInter = CreateModel(mSceneMgr, sMtr[Mtr_CarInterior],&pCar->interiormodel.mesh, vPofs, false, false, "Car.interior"+strI);
+		ManualObject* mInter = pApp->CreateModel(mSceneMgr, sMtr[Mtr_CarInterior],&pCar->interiormodel.mesh, vPofs, false, false, "Car.interior"+strI);
 		//mInter->setCastShadows(false);
 		if (mInter){  if (ghost)  {  mInter->setRenderQueueGroup(g);  mInter->setCastShadows(false);  }
 			ncart->attachObject(mInter);  mInter->setVisibilityFlags(RV_Car);  }
@@ -218,7 +220,7 @@ void CarModel::Create(int car)
 			eGlass->setRenderQueueGroup(RQG_CarGlass);  eGlass->setVisibilityFlags(RV_CarGlass);
 		ncart->attachObject(eGlass);
 	}else{
-		ManualObject* mGlass = CreateModel(mSceneMgr, sMtr[Mtr_CarGlass], &pCar->glassmodel.mesh, vPofs, false, false, "Car.glass"+strI);
+		ManualObject* mGlass = pApp->CreateModel(mSceneMgr, sMtr[Mtr_CarGlass], &pCar->glassmodel.mesh, vPofs, false, false, "Car.glass"+strI);
 		if (mGlass){  mGlass->setRenderQueueGroup(ghost ? g : RQG_CarGlass);  if (ghost)  mGlass->setCastShadows(false);
 			ncart->attachObject(mGlass);  mGlass->setVisibilityFlags(RV_CarGlass);  }
 	}
@@ -256,8 +258,8 @@ void CarModel::Create(int car)
 				ndWh[w]->attachObject(eWh);  eWh->setVisibilityFlags(RV_Car);
 			}else{
 				ManualObject* mWh;
-				if (w < 2)	mWh = CreateModel(mSceneMgr, sMtr[Mtr_CarTireFront], &pCar->wheelmodelfront.mesh, vPofs, true, false, siw);
-				else		mWh = CreateModel(mSceneMgr, sMtr[Mtr_CarTireRear],  &pCar->wheelmodelrear.mesh, vPofs, true, false, siw);
+				if (w < 2)	mWh = pApp->CreateModel(mSceneMgr, sMtr[Mtr_CarTireFront], &pCar->wheelmodelfront.mesh, vPofs, true, false, siw);
+				else		mWh = pApp->CreateModel(mSceneMgr, sMtr[Mtr_CarTireRear],  &pCar->wheelmodelrear.mesh, vPofs, true, false, siw);
 				if (mWh)  {
 				if (ghost)  {  mWh->setRenderQueueGroup(g);  mWh->setCastShadows(false);  }
 				ndWh[w] = mSceneMgr->getRootSceneNode()->createChildSceneNode();
@@ -349,6 +351,7 @@ void CarModel::Create(int car)
 
 				whTrl[w] = (RibbonTrail*)mSceneMgr->createMovableObject("RibbonTrail", &params);
 				whTrl[w]->setInitialColour(0, 0.1,0.1,0.1, 0);
+				whTrl[w]->setFaceCamera(false,Vector3::UNIT_Y);
 				mSceneMgr->getRootSceneNode()->attachObject(whTrl[w]);
 				whTrl[w]->setMaterialName("TireTrail");
 				whTrl[w]->setCastShadows(false);
@@ -357,7 +360,7 @@ void CarModel::Create(int car)
 			whTrl[w]->setTrailLength(90 * pSet->trails_len);  //30
 			whTrl[w]->setInitialColour(0, 0.1f,0.1f,0.1f, 0);
 			whTrl[w]->setColourChange(0, 0.0,0.0,0.0, /*fade*/0.08f * 1.f / pSet->trails_len);
-			whTrl[w]->setInitialWidth(0, 0.16f);  //0.18 0.2
+			whTrl[w]->setInitialWidth(0, 0.2f);  //0.16f  0.18 0.2
 		}
 	}
 
@@ -492,64 +495,3 @@ void CarModel::CreateReflection()
 
 	pReflect->Create();
 }
-
-
-//  utility - create VDrift model in Ogre
-//-------------------------------------------------------------------------------------------------------
-ManualObject* CarModel::CreateModel(SceneManager* sceneMgr, const String& mat,
-	class VERTEXARRAY* a, Vector3 vPofs, bool flip, bool track, const String& name)
-{
-	int verts = a->vertices.size();
-	if (verts == 0)  return NULL;
-	int tcs   = a->texcoords[0].size(); //-
-	int norms = a->normals.size();
-	int faces = a->faces.size();
-	// norms = verts, verts % 3 == 0
-
-	ManualObject* m;
-	if (name == "")
-		m = sceneMgr->createManualObject();
-	else
-		m = sceneMgr->createManualObject(name);
-	m->begin(mat, RenderOperation::OT_TRIANGLE_LIST);
-
-	int t = 0;
-	if (track)
-	{	for (int v = 0; v < verts; v += 3)
-		{
-			m->position(a->vertices[v+0], a->vertices[v+2], -a->vertices[v+1]);
-			if (norms)
-			m->normal(	a->normals [v+0], a->normals [v+2], -a->normals [v+1]);
-			if (t < tcs)
-			{	m->textureCoord(a->texcoords[0][t], a->texcoords[0][t+1]);  t += 2;	}
-		}
-		for (int f = 0; f < faces; ++f)
-			m->index(a->faces[f]);
-	}else
-	if (flip)
-	{	for (int v = 0; v < verts; v += 3)
-		{
-			m->position(a->vertices[v], a->vertices[v+1], a->vertices[v+2]);
-			if (norms)
-			m->normal(  a->normals [v], a->normals [v+1], a->normals [v+2]);
-			if (t < tcs)
-			{	m->textureCoord(a->texcoords[0][t], a->texcoords[0][t+1]);  t += 2;	}
-		}
-		for (int f = 0; f < faces; f += 3)
-		{	m->index(a->faces[f+2]);  m->index(a->faces[f+1]);  m->index(a->faces[f]);	}
-	}else
-	{	for (int v = 0; v < verts; v += 3)
-		{
-			m->position(-a->vertices[v+1]+vPofs.x, -a->vertices[v+2]+vPofs.y, a->vertices[v]+vPofs.z);
-			if (norms)
-			m->normal(	-a->normals [v+1], -a->normals [v+2], a->normals [v]);
-			if (t < tcs)
-			{	m->textureCoord(a->texcoords[0][t], a->texcoords[0][t+1]);  t += 2;	}
-		}
-		for (int f = 0; f < faces; f += 3)
-		{	m->index(a->faces[f+2]);  m->index(a->faces[f+1]);  m->index(a->faces[f]);	}
-	}
-	m->end();
-	return m;
-}
-

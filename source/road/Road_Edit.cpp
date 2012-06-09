@@ -73,7 +73,7 @@ void SplineRoad::Move1(int id, Vector3 relPos)
 {
 	Vector3 pos = getPos(id) + relPos;
 	if (mP[id].onTer)
-		pos.y = mTerrain->getHeightAtWorldPosition(pos.x, 0, pos.z) + fHeight;
+		pos.y = (mTerrain ? mTerrain->getHeightAtWorldPosition(pos.x, 0, pos.z) : 0.f) + fHeight;
 	setPos(id, pos);
 	vMarkNodes[id]->setPosition(pos);  // upd marker
 }
@@ -98,7 +98,7 @@ void SplineRoad::Scale1(int id, Real posMul)
 {
 	Vector3 pos = getPos(id) * (1.f + posMul);
 	if (mP[id].onTer)
-		pos.y = mTerrain->getHeightAtWorldPosition(pos.x, 0, pos.z) + fHeight;
+		pos.y = (mTerrain ? mTerrain->getHeightAtWorldPosition(pos.x, 0, pos.z) : 0.f) + fHeight;
 	setPos(id, pos);
 	vMarkNodes[id]->setPosition(pos);  // upd marker
 }
@@ -113,7 +113,7 @@ void SplineRoad::ScaleSel(Real posMul)
 	{	int id = *it;
 		Vector3 pos = (getPos(id) - pos0) * (1.f + posMul) + pos0;
 		if (mP[id].onTer)
-			pos.y = mTerrain->getHeightAtWorldPosition(pos.x, 0, pos.z) + fHeight;
+			pos.y = (mTerrain ? mTerrain->getHeightAtWorldPosition(pos.x, 0, pos.z) : 0.f) + fHeight;
 		setPos(id, pos);
 		vMarkNodes[id]->setPosition(pos);  // upd marker
 	}
@@ -151,7 +151,7 @@ void SplineRoad::RotateSel(Real relA, Vector3 axis, int addYawRoll)
 
 		pos = npos;
 		if (mP[*it].onTer)
-			pos.y = mTerrain->getHeightAtWorldPosition(pos.x, 0, pos.z) + fHeight;
+			pos.y = (mTerrain ? mTerrain->getHeightAtWorldPosition(pos.x, 0, pos.z) : 0.f) + fHeight;
 		setPos(*it, pos);
 		
 		if (addYawRoll==1)  // todo: get from axis?
@@ -172,7 +172,7 @@ void SplineRoad::RotateSel(Real relA, Vector3 axis, int addYawRoll)
 void SplineRoad::Insert(eIns ins)
 {
 	RoadSeg rs;  SplinePoint pt = newP;  // new
-	if (pt.onTer)
+	if (pt.onTer && mTerrain)
 		pt.pos.y = mTerrain->getHeightAtWorldPosition(pt.pos.x, 0, pt.pos.z) + fHeight;
 
 	if (ins	== INS_Begin)
@@ -573,13 +573,18 @@ bool SplineRoad::isPipe(int seg)
 	int seg1 = (seg+1) % getNumPoints();
 	return mP[seg].pipe > 0.f || mP[seg1].pipe > 0.f;
 }
+
 //  info text only
 const String& SplineRoad::getMtrStr(int seg)
 {
-	if (seg < 0)  // new
-		return newP.pipe == 0.f ? sMtrRoad[newP.idMtr] : sMtrPipe[newP.idMtr];
-	int i = mP[seg].idMtr;
 	static String sHid = "Hidden";
+	if (seg < 0)  // new
+	{
+		int i = newP.idMtr;
+		if (i < 0)  return sHid;
+		return newP.pipe == 0.f ? sMtrRoad[i] : sMtrPipe[i];
+	}
+	int i = mP[seg].idMtr;
 	if (i < 0)  return sHid;
 	return !isPipe(seg) ? sMtrRoad[i] : sMtrPipe[i];
 }

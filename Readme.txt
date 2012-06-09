@@ -3,7 +3,7 @@
     Stunt Rally - game based on VDrift and OGRE, with Track Editor
     Copyright (C) 2012  Crystal Hammer
 
-    Project's Homepage:  (all links, Issue tracker, Wiki pages, old Windows releases)
+    Project's Homepage:  (all links, Issue tracker, Wiki pages)
             http://code.google.com/p/vdrift-ogre/
 
     Releases (Windows, Linux, source packs):
@@ -35,7 +35,7 @@
 
 Description
 
-This game features 79 tracks in 11 sceneries and 10 drivable cars.
+This game features 79 tracks in 11 sceneries and 10 cars.
 The Track Editor allows modifying and creating tracks.
 Both run on Windows and Linux.
 
@@ -115,14 +115,14 @@ MyGUI 3.2
     MyGUIEngine, MyGUI.OgrePlatform
 Boost 1.43
     headers, thread, filesystem
-Bullet 2.76
-	BulletCollision, BulletDynamics, LinearMath
 	
 -- And for VDrift:
 SDL-1.2.14
 libvorbis-1.2.3, libogg-1.1.4
 
 -- These are included in Source (and compiled with project):
+Bullet 2.79
+	BulletCollision, BulletDynamics, LinearMath
 BtOgre *
 OISB *
 PagedGeometry 1.1.0 *
@@ -150,9 +150,9 @@ Programmers
     or want to do something better and know how to.
 
 Translators
-    If you want to translate the game into a language
-    that isn't yet available, check wiki page [Localization].
+    If you want to translate the game into a language,
+    check wiki page [Localization].
 
 If so, let us know by posting on Issue tracker,
 or tell us on IRC at #stuntrally on freenode,
-or email me at cryham (at) g m a i l (dot) com.
+or email me at: cryham (at) g m a i l (dot) com.

@@ -308,9 +308,9 @@ void MaterialGenerator::vertexProgramParams(HighLevelGpuProgramPtr program)
 {
 	GpuProgramParametersSharedPtr params = program->getDefaultParameters();
 	
-	#ifndef _DEBUG
+	//#ifndef _DEBUG
 	params->setIgnoreMissingParams(true);
-	#endif
+	//#endif
 		
 	if (vpNeedWMat())
 		params->setNamedAutoConstant("wMat", GpuProgramParameters::ACT_WORLD_MATRIX);
@@ -336,9 +336,9 @@ void MaterialGenerator::vertexProgramParams(HighLevelGpuProgramPtr program)
 
 void MaterialGenerator::individualVertexProgramParams(GpuProgramParametersSharedPtr params)
 {
-	#ifndef _DEBUG
+	//#ifndef _DEBUG
 	params->setIgnoreMissingParams(true);
-	#endif
+	//#endif
 	
 	if (needShadows())
 	for (int i=0; i<mParent->getNumShadowTex(); ++i)

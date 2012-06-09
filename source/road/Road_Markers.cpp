@@ -136,7 +136,7 @@ void SplineRoad::UpdAllMarkers()
 	{
 		Vector3* pos = &mP[i].pos;  //- update on ter pos (move 0)
 		if (mP[i].onTer)
-			pos->y = mTerrain->getHeightAtWorldPosition(pos->x, 0, pos->z) + fHeight;
+			pos->y = (mTerrain ? mTerrain->getHeightAtWorldPosition(pos->x, 0, pos->z) : 0.f) + fHeight;
 
 		SceneNode* nd = vMarkNodes[i];
 		nd->setPosition(*pos/*getPos(i)*/);

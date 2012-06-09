@@ -57,10 +57,12 @@ App::App()  //  gui wigdets--
 	,ndCar(0),entCar(0), ndStBox(0),entStBox(0), ndFluidBox(0),entFluidBox(0), ndObjBox(0),entObjBox(0)
 	,grass(0), trees(0), sun(0), terMaxAng(0.f)
 	,eTrkEvent(TE_None), bNewHmap(0), bTrGrUpd(0)
-	,iFlCur(0), bRecreateFluids(0), world(0), iObjCur(0), iObjNew(0)
 
-	,
-    bTerUpdBlend(1)
+	,iFlCur(0), bRecreateFluids(0), iObjCur(0), iObjNew(0)
+	
+	,bTerUpdBlend(1), track(0)
+	,world(0), config(0), dispatcher(0), broadphase(0), solver(0)  //blt
+	,trackObject(0), trackMesh(0)
 {
 	imgPrv[0]=0; imgMini[0]=0; imgTer[0]=0;  trkDesc[0]=0;
 	
@@ -86,6 +88,8 @@ App::App()  //  gui wigdets--
 	
 	for (i=0; i < StTrk; ++i)  stTrk[0][i] = 0;
 	for (i=0; i < 4; ++i)  {  cmbRoadMtr[i]=0;  cmbPipeMtr[i]=0;  }
+
+	track = new TRACK(std::cout, std::cerr);  //!
 }
 
 void App::postInit()
@@ -113,6 +117,9 @@ const Ogre::String App::csBrShape[BRS_ALL] = { "Triangle", "Sinus", "Noise" };  
 
 App::~App()
 {
+	BltWorldDestroy();
+	
+	delete track;  //!
 	delete[] pBrFmask;  pBrFmask = 0;
 
 	//delete materialFactory;

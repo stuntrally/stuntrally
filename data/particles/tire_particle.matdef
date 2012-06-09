@@ -18,7 +18,9 @@
 	ssaoReject = true
 	depthWrite = false
 	vertexColour = true
-    	
+	cullHardware = none
+	depthBias = 3
+   	
 [Mud]
 	parent = Base_particle
 	diffuseMap_1 = mud.png

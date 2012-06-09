@@ -677,9 +677,9 @@ void MaterialGenerator::fragmentProgramParams(HighLevelGpuProgramPtr program)
 {
 	GpuProgramParametersSharedPtr params = program->getDefaultParameters();
 	
-	#ifndef _DEBUG
+	//#ifndef _DEBUG
 	params->setIgnoreMissingParams(true);
-	#endif
+	//#endif
 
 	if (fpNeedLighting())
 	{

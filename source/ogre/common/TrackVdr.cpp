@@ -1,25 +1,34 @@
 #include "pch.h"
-#include "common/Defines.h"
-#include "common/RenderConst.h"
-//#include "common/MaterialGen/MaterialFactory.h"
-#include "CarModel.h" // for CreateModel()
-#include "OgreGame.h"
-#include "../vdrift/game.h"
-#include "../vdrift/track.h"
-#include "SplitScreen.h"  //-
+#include "Defines.h"
+#include "RenderConst.h"
 
 #include <boost/filesystem.hpp>
 //#include <Ogre.h>
-#include <OgreMaterialManager.h>
-#include <OgreTechnique.h>
-#include <OgrePass.h>
-#include <OgreManualObject.h>
-#include <OgreSceneManager.h>
-#include <OgreSceneNode.h>
-#include <OgreStaticGeometry.h>
-#include <OgreRenderWindow.h>
-#include <OgrePixelFormat.h>
-#include <OgreTexture.h>
+//#include <OgreMaterialManager.h>
+//#include <OgreTechnique.h>
+//#include <OgrePass.h>
+//#include <OgreManualObject.h>
+//#include <OgreSceneManager.h>
+//#include <OgreSceneNode.h>
+//#include <OgreStaticGeometry.h>
+//#include <OgreRenderWindow.h>
+//#include <OgrePixelFormat.h>
+//#include <OgreTexture.h>
+
+#include "../../vdrift/track.h"
+#ifndef ROAD_EDITOR
+	#include "../OgreGame.h"
+	#include "../../vdrift/game.h"
+	#include "../SplitScreen.h"  //-
+#else
+	#include "../../editor/OgreApp.h"
+	#include "../../editor/settings.h"
+	#include "../../vdrift/pathmanager.h"
+#endif
+#include "MaterialGen/MaterialFactory.h"
+#include "BulletDynamics/Dynamics/btDiscreteDynamicsWorld.h"
+#include "BulletCollision/CollisionShapes/btTriangleIndexVertexArray.h"
+#include "BulletCollision/CollisionShapes/btBvhTriangleMeshShape.h"
 using namespace Ogre;
 
 
@@ -27,16 +36,19 @@ using namespace Ogre;
 ///  track
 ///---------------------------------------------------------------------------------------------------------------
 
-void App::CreateVdrTrack()
+void App::CreateVdrTrack(std::string strack, TRACK* pTrack)
 {	
 	//  materials  -------------
-	std::string sMatCache = pSet->game.track + ".matdef", sMatOrig = "_" + sMatCache,		sPathCache = PATHMANAGER::GetShaderCacheDir() + "/" + sMatCache, sPathOrig = TrkDir() +"objects/"+ sMatOrig;	bool hasMatOrig = boost::filesystem::exists(sPathOrig), hasMatCache = boost::filesystem::exists(sPathCache);	bool bGenerate = 0;  // set 1 to force generate for new vdrift tracks
-	if (!hasMatOrig && !hasMatCache || bGenerate)
+	std::vector<OGRE_MESH>& meshes = pTrack->ogre_meshes;
+	std::string sMatCache = strack + ".matdef", sMatOrig = "_" + sMatCache,
+		sPathCache = PATHMANAGER::GetShaderCacheDir() + "/" + sMatCache, sPathOrig = TrkDir() +"objects/"+ sMatOrig;
+	bool hasMatOrig = boost::filesystem::exists(sPathOrig), hasMatCache = boost::filesystem::exists(sPathCache);	bool bGenerate = 0, gen = !hasMatOrig && !hasMatCache || bGenerate;  // set 1 to force generate for new vdrift tracks
+	if (gen)
 	{
 		String sMtrs;
-		for (int i=0; i < pGame->track.ogre_meshes.size(); i++)
+		for (int i=0; i < meshes.size(); i++)
 		{
-			OGRE_MESH& msh = pGame->track.ogre_meshes[i];
+			OGRE_MESH& msh = meshes[i];
 			if (msh.sky /*&& ownSky*/)  continue;			if (!msh.newMtr)  continue;  //  create material if new
 
 			bool found = true;
@@ -76,25 +88,22 @@ void App::CreateVdrTrack()
 	
 
 	//  meshes  -------------
-	//LogManager::getSingletonPtr()->logMessage( String("---------models----  ogre:") +
-	//	toStr(pGame->track.ogre_meshes.size()) + " mod_lib:" + toStr(pGame->track.model_library.size()) );
 	std::vector<Entity*> ents;
-	for (int i=0; i < pGame->track.ogre_meshes.size(); i++)
+	for (int i=0; i < meshes.size(); i++)
 	{
-		OGRE_MESH& msh = pGame->track.ogre_meshes[i];
+		OGRE_MESH& msh = meshes[i];
 		if (msh.sky /*&& ownSky*/)  continue;
 		if (!msh.found)  continue;
 
 		//if (strstr(msh.material.c_str(), "tree")!=0)  continue;
 
-		//LogManager::getSingletonPtr()->logMessage( String("---  model: ") +
-		//	msh.name + " mtr:" + msh.material +
+		//LogO( String("---  model: ") + msh.name + " mtr:" + msh.material +
 		//" v:" + toStr(msh.mesh->vertices.size()) + " f:" + toStr(msh.mesh->faces.size()) );
 
 		//if (ownSky && msh.sky)
 		if (!msh.sky)
 		{
-		ManualObject* m = CarModel::CreateModel(mSceneMgr, msh.material, msh.mesh, Vector3(0,0,0), false, true);
+		ManualObject* m = CreateModel(mSceneMgr, msh.material, msh.mesh, Vector3(0,0,0), false, true);
 		//if (!m)  continue;
 		if (msh.sky)
 			m->setCastShadows(false);
@@ -120,7 +129,7 @@ void App::CreateVdrTrack()
 }
 
 
-
+#ifndef ROAD_EDITOR
 ///---------------------------------------------------------------------------------------------------------------
 //	 track racing line
 ///---------------------------------------------------------------------------------------------------------------
@@ -164,7 +173,7 @@ void App::CreateRacingLine()
 
 
 //---------------------------------------------------------------------------------------------------------------
-///	 track 2D minimap  -mesh, optym texture..
+///	 track 2D minimap  -mesh, optym texture..  -todo: editor tex save, remove this ...
 //---------------------------------------------------------------------------------------------------------------
 
 void App::CreateMinimap()
@@ -275,7 +284,7 @@ void App::CreateMinimap()
 	}
 	ndMap[0]->setVisible(pSet->trackmap);*/
 }
-
+#endif
 
 
 //---------------------------------------------------------------------------------------------------------------
@@ -285,10 +294,15 @@ void App::CreateMinimap()
 void App::CreateRoadBezier()
 {
 	ManualObject* m = mSceneMgr->createManualObject();
-	m->begin("pipeGlass", RenderOperation::OT_TRIANGLE_LIST);
+	//m->begin("pipeGlass", RenderOperation::OT_TRIANGLE_LIST);
+	m->begin("roadAsphalt", RenderOperation::OT_TRIANGLE_LIST);
 	int ii=0;
 
+	#ifdef ROAD_EDITOR
+	const std::list <ROADSTRIP>& roads = track->GetRoadList();
+	#else
 	const std::list <ROADSTRIP>& roads = pGame->track.GetRoadList();
+	#endif
 	for (std::list <ROADSTRIP>::const_iterator it = roads.begin(); it != roads.end(); ++it)
 	{
 		#define VDR_LEN  // to get whole track length
@@ -330,7 +344,7 @@ void App::CreateRoadBezier()
 				m->position(pos);
 				m->normal(norm);/**/
 				m->textureCoord(y/3.f,x/3.f);
-				if (x<1 && y<1)
+				if (x<3 && y<3)
 				{
 					int a = ii+x+y*4;
 					m->index(a);	m->index(a+1);	m->index(a+4);
@@ -340,7 +354,7 @@ void App::CreateRoadBezier()
 			ii += 16;
 		}
 		#ifdef VDR_LEN
-		LogO("VDR TRK: " + pSet->game.track +" LEN: "+fToStr(length,2,6));
+		LogO("VDR TRK: " + pSet->gui.track +" LEN: "+fToStr(length,2,6));
 		#endif
 	}
 	m->end();
@@ -350,3 +364,137 @@ void App::CreateRoadBezier()
 }
 
 
+//  utility - create VDrift model in Ogre
+//-------------------------------------------------------------------------------------------------------
+ManualObject* App::CreateModel(SceneManager* sceneMgr, const String& mat,
+	class VERTEXARRAY* a, Vector3 vPofs, bool flip, bool track, const String& name)
+{
+	int verts = a->vertices.size();
+	if (verts == 0)  return NULL;
+	int tcs   = a->texcoords[0].size(); //-
+	int norms = a->normals.size();
+	int faces = a->faces.size();
+	// norms = verts, verts % 3 == 0
+
+	ManualObject* m;
+	if (name == "")
+		m = sceneMgr->createManualObject();
+	else
+		m = sceneMgr->createManualObject(name);
+	m->begin(mat, RenderOperation::OT_TRIANGLE_LIST);
+
+	int t = 0;
+	if (track)
+	{	for (int v = 0; v < verts; v += 3)
+		{
+			m->position(a->vertices[v+0], a->vertices[v+2], -a->vertices[v+1]);
+			if (norms)
+			m->normal(	a->normals [v+0], a->normals [v+2], -a->normals [v+1]);
+			if (t < tcs)
+			{	m->textureCoord(a->texcoords[0][t], a->texcoords[0][t+1]);  t += 2;	}
+		}
+		for (int f = 0; f < faces; ++f)
+			m->index(a->faces[f]);
+	}else
+	if (flip)
+	{	for (int v = 0; v < verts; v += 3)
+		{
+			m->position(a->vertices[v], a->vertices[v+1], a->vertices[v+2]);
+			if (norms)
+			m->normal(  a->normals [v], a->normals [v+1], a->normals [v+2]);
+			if (t < tcs)
+			{	m->textureCoord(a->texcoords[0][t], a->texcoords[0][t+1]);  t += 2;	}
+		}
+		for (int f = 0; f < faces; f += 3)
+		{	m->index(a->faces[f+2]);  m->index(a->faces[f+1]);  m->index(a->faces[f]);	}
+	}else
+	{	for (int v = 0; v < verts; v += 3)
+		{
+			m->position(-a->vertices[v+1]+vPofs.x, -a->vertices[v+2]+vPofs.y, a->vertices[v]+vPofs.z);
+			if (norms)
+			m->normal(	-a->normals [v+1], -a->normals [v+2], a->normals [v]);
+			if (t < tcs)
+			{	m->textureCoord(a->texcoords[0][t], a->texcoords[0][t+1]);  t += 2;	}
+		}
+		for (int f = 0; f < faces; f += 3)
+		{	m->index(a->faces[f+2]);  m->index(a->faces[f+1]);  m->index(a->faces[f]);	}
+	}
+	m->end();
+	return m;
+}
+
+
+//----------------------------------------------------
+bool App::IsVdrTrack()
+{
+	//  vdrift track has roads.trk
+	String svdr = TrkDir()+"roads.trk";
+	bool vdr = boost::filesystem::exists(svdr);
+	return vdr;
+}
+
+
+#ifdef ROAD_EDITOR
+btIndexedMesh GetIndexedMesh(const MODEL & model)
+{
+	const float * vertices;  int vcount;
+	const int * faces;  int fcount;
+	model.GetVertexArray().GetVertices(vertices, vcount);
+	model.GetVertexArray().GetFaces(faces, fcount);
+	
+	assert(fcount % 3 == 0); //Face count is not a multiple of 3
+	
+	btIndexedMesh mesh;
+	mesh.m_numTriangles = fcount / 3;
+	mesh.m_triangleIndexBase = (const unsigned char *)faces;
+	mesh.m_triangleIndexStride = sizeof(int) * 3;
+	mesh.m_numVertices = vcount;
+	mesh.m_vertexBase = (const unsigned char *)vertices;
+	mesh.m_vertexStride = sizeof(float) * 3;
+	mesh.m_vertexType = PHY_FLOAT;
+	return mesh;
+}
+
+void App::DestroyVdrTrackBlt()
+{
+	//  remove old track
+	if (trackObject)
+	{
+		world->removeCollisionObject(trackObject);
+		
+		delete trackObject->getCollisionShape();
+		trackObject->setCollisionShape(NULL);
+		
+		delete trackObject;
+		trackObject = NULL;
+		
+		delete trackMesh;
+		trackMesh = NULL;
+	}
+}
+
+void App::CreateVdrTrackBlt()
+{
+	DestroyVdrTrackBlt();
+	
+	//  setup new track
+	trackMesh = new btTriangleIndexVertexArray();
+	const std::list<TRACK_OBJECT> & objects = track->GetTrackObjects();
+	for (std::list<TRACK_OBJECT>::const_iterator ob = objects.begin(); ob != objects.end(); ++ob)
+	{
+		if (ob->GetSurface() != NULL)
+		{
+			MODEL & model = *ob->GetModel();
+			btIndexedMesh mesh = GetIndexedMesh(model);
+			trackMesh->addIndexedMesh(mesh);
+		}
+	}
+	
+	btCollisionShape * trackShape = new btBvhTriangleMeshShape(trackMesh, false);
+	trackObject = new btCollisionObject();
+	trackObject->setCollisionShape(trackShape);
+	trackObject->setUserPointer(NULL);
+	
+	world->addCollisionObject(trackObject);
+}
+#endif

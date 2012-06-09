@@ -217,6 +217,20 @@ void App::LoadGame()  // 2
 	
 	pGame->NewGameDoCleanup();
 	pGame->NewGameDoLoadTrack();
+
+
+	// load scene.xml - default if not found
+	//   need to know sc.asphalt before vdrift car load
+	bool vdr = IsVdrTrack();
+	sc.LoadXml(TrkDir()+"scene.xml", !vdr/*for asphalt*/);
+	sc.vdr = vdr;
+
+	if (!sc.ter)
+	{	sc.td.hfHeight = sc.td.hfAngle = NULL;  }  // sc.td.layerRoad.smoke = 1.f;
+	
+	// upd car abs,tcs,sss
+	if (pGame)  pGame->ProcessNewSettings();
+
 		
 	/// init car models
 	// will create vdrift cars, actual car loading will be done later in LoadCar()
@@ -280,12 +294,7 @@ void App::LoadGame()  // 2
 
 void App::LoadScene()  // 3
 {
-	// load scene - default if not found
-	sc.LoadXml(TrkDir()+"scene.xml");
-	sc.ter = IsTerTrack();
-
-	if (!sc.ter)
-	{	sc.td.hfHeight = sc.td.hfAngle = NULL;  }  // sc.td.layerRoad.smoke = 1.f;
+	//before car-- load scene.xml
 
 	//  water RTT
 	UpdateWaterRTT(mSplitMgr->mCameras.front());
@@ -314,7 +323,7 @@ void App::LoadScene()  // 3
 		pr2->getEmitter(0)->setEmissionRate(0);  }
 		
 	//  checkpoint arrow
-	if (!bRplPlay && sc.ter)
+	if (!bRplPlay)
 	{	if (!arrowNode)  arrowNode = mSceneMgr->getRootSceneNode()->createChildSceneNode();
 		Ogre::Entity* arrowEnt = mSceneMgr->createEntity("CheckpointArrow", "arrow.mesh");
 		arrowEnt->setRenderQueueGroup(RQG_Hud3);
@@ -411,9 +420,8 @@ void App::LoadCar()  // 4
 
 void App::LoadTerrain()  // 5
 {
-	bool ter = IsTerTrack();
-	CreateTerrain(false,ter);  // common
-	if (ter)
+	CreateTerrain(false,sc.ter);  // common
+	if (sc.ter)
 		CreateBltTerrain();
 	
 	// assign stuff to cars
@@ -424,9 +432,9 @@ void App::LoadTerrain()  // 5
 		(*it)->blendMapSize = blendMapSize;
 	}
 
-	if (!ter)	// vdrift track
+	if (sc.vdr)  // vdrift track
 	{
-		CreateVdrTrack();
+		CreateVdrTrack(pSet->game.track, &pGame->track);
 		CreateMinimap();
 		//CreateRacingLine();  //?-
 		//CreateRoadBezier();  //-
@@ -435,8 +443,7 @@ void App::LoadTerrain()  // 5
 
 void App::LoadRoad()  // 6
 {
-	if (IsTerTrack())
-		CreateRoad();
+	CreateRoad();
 		
 	if (road && road->getNumPoints() == 0 && arrowRotNode)
 		arrowRotNode->setVisible(false);  // hide when no road
@@ -444,13 +451,12 @@ void App::LoadRoad()  // 6
 
 void App::LoadObjects()  // 7
 {
-	if (IsTerTrack())
-		CreateObjects();
+	CreateObjects();
 }
 
 void App::LoadTrees()  // 8
 {
-	if (IsTerTrack())
+	if (sc.ter)
 		CreateTrees();
 }
 
@@ -580,14 +586,6 @@ void App::NewGameDoLoad()
 
 	// Go to next loading step.
 	++currentLoadingState;
-}
-
-//---------------------------------------------------------------------------------------------------------------
-bool App::IsTerTrack()
-{
-	//  vdrift track doesn't have road.xml
-	String sr = TrkDir()+"road.xml";
-	return boost::filesystem::exists(sr);
 }
 
 

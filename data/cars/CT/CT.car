@@ -101,7 +101,8 @@ caster = 0.0
 toe = 0.0
 anti-roll = 12000
 
-[ tire-front ]
+#---------------------------------------------------------------------------------------------------------
+[ tire-both ]
 radius = 0.31265
 rolling-resistance = 1.3e-2, 6.5e-6
 rotational-inertia = 14
@@ -156,61 +157,11 @@ c15=0.0
 c16=0.639
 c17=1.69 
 
-[ tire-rear ]
-radius = 0.3179
-rolling-resistance = 1.3e-2, 6.5e-6
-rotational-inertia = 15
-#tread = 0.00873125
-tread = 0.0
-# Lateral force
-a0=1.6
-a1=-0
-a2=2688
-a3=450
-a4=15.0
-a5=0.014
-a6=-0.359
-a7=1.0
-a8=-0.03
-a9=-0.00611
-a10=-0.0322
-a111=0
-a112=0
-a12=0
-a13=0
-# Longitudinal force
-b0=1.65
-b1=0
-b2=2190
-b3=23
-b4=229
-b5=0
-b6=0
-b7=0
-b8=-0
-b9=0
-b10=0
-b11=0
-b12=0
-# Aligning moment
-c0=2.07
-c1=-6.49
-c2=-21.9
-c3=-0.416
-c4=-21.3
-c5=0.0294
-c6=0.0
-c7=-1.2
-c8=5.23
-c9=-14.8
-c10=0.0
-c11=0.0
-c12=-0.00374
-c13=0.0389
-c14=0.0
-c15=0.0
-c16=0.639
-c17=1.69 
+#  ..?
+#[ tire-rear ]
+#radius = 0.3179
+#rotational-inertia = 15
+
 
 [ brakes-front ]
 friction = 0.93

@@ -145,12 +145,19 @@ protected:
 
 	///  create  . . . . . . . . . . . . . . . . . . . . . . . . 
 	Ogre::String resCar, resTrk, resDrv;
-	void CreateCar(), /*vdrift:*/CreateVdrTrack(), CreateRacingLine(), CreateMinimap(), CreateRoadBezier();
+	void CreateCar();
 	void CreateTerrain(bool bNewHmap=false, bool bTer=true), CreateBltTerrain(), GetTerAngles(int xb,int yb, int xe,int ye);
 	void CreateTrees(), CreateRoad(), CreateObjects(),DestroyObjects();
 	void CreateFluids(), CreateBltFluids(), UpdateWaterRTT(Ogre::Camera* cam);
 	void CreateSkyDome(Ogre::String sMater, Ogre::Vector3 scale);
-	void NewGame();  void NewGameDoLoad();  bool IsTerTrack();  bool newGameRpl;
+	void NewGame();  void NewGameDoLoad();  bool IsVdrTrack();  bool newGameRpl;
+	// vdrift:
+	void CreateVdrTrack(std::string strack, class TRACK* pTrack),
+		CreateRacingLine(), CreateMinimap(), CreateRoadBezier();
+public:
+	static Ogre::ManualObject* CreateModel(Ogre::SceneManager* sceneMgr, const Ogre::String& mat,
+		class VERTEXARRAY* a, Ogre::Vector3 vPofs, bool flip, bool track=false, const Ogre::String& name="");
+protected:
 	
 	// Loading
 	void LoadCleanUp(), LoadGame(), LoadScene(), LoadCar(), LoadTerrain(), LoadRoad(), LoadObjects(), LoadTrees(), LoadMisc();
@@ -313,6 +320,7 @@ protected:
 	SLV(HDRBloomInt);  SLV(HDRBloomOrig);  SLV(HDRAdaptationScale);
 	SLV(HDRVignettingRadius);  SLV(HDRVignettingDarkness);
 	SLV(NumLaps);  SLV(RplNumViewports);  // setup
+	SLV(SSSEffect);  SLV(SSSVelFactor);
 	
 	//  checks
 	void chkGauges(WP),	chkArrow(WP), chkDigits(WP),
@@ -330,6 +338,11 @@ protected:
 		chkVidDepthOfField(WP), 
 		chkVegetCollis(WP), chkCarCollis(WP), chkRoadWCollis(WP);  //game
 	void chkUseImposters(WP wp);
+
+	// gui car tire set gravel/asphalt
+	int iTireSet;
+	void tabTireSet(MyGUI::TabPtr wp, size_t id);
+	MyGUI::ButtonPtr bchAbs,bchTcs;  MyGUI::Slider* slSSSEff,*slSSSVel;
 
 	void imgBtnCarClr(WP), btnCarClrRandom(WP), toggleWireframe();
 	MyGUI::ButtonPtr bRkmh, bRmph;  void radKmh(WP), radMph(WP);

@@ -39,7 +39,6 @@ GAME::GAME(std::ostream & info_out, std::ostream & err_out, SETTINGS* pSettings)
 	track(info_out, err_out), /*tracknode(NULL),*/
 	framerate(1.0 / pSettings->game_fq)
 {
-	for (int i=0;i<5;++i)  vdrLap[i]=0;
 	carcontrols_local.first = NULL;
 	//  sim iv from settings
 	collision.fixedTimestep = 1.0 / pSettings->blt_fq;
@@ -271,7 +270,11 @@ void GAME::UpdateCarInputs(CAR & car)
 	std::vector <float> carinputs(CARINPUT::ALL, 0.0f);
 	bool forceBrake = timer.waiting || timer.pretime > 0.f;  // race countdown
 
-	carinputs = carcontrols_local.second.ProcessInput(car.id, forceBrake);
+	int i = pOgreGame->sc.asphalt ? 1 : 0;
+	float sss_eff = settings->sss_effect[i], sss_velf = settings->sss_velfactor[i];
+	float carspeed = car.GetSpeed();
+
+	carinputs = carcontrols_local.second.ProcessInput(car.id, carspeed, sss_eff, sss_velf, forceBrake);
 
 	car.HandleInputs(carinputs, TickPeriod());
 }
@@ -347,10 +350,11 @@ void GAME::LeaveGame()
 
 ///  add a car, optionally controlled by the local player
 CAR* GAME::LoadCar(const string & carname, const MATHVECTOR <float, 3> & start_position,
-				   const QUATERNION <float> & start_orientation, bool islocal, bool isai, bool isRemote, int idCar)
+				   const QUATERNION <float> & start_orientation, bool islocal, bool isai, bool isRemote,
+				   int idCar, bool asphalt)
 {
 	CONFIGFILE carconf;
-	if (!carconf.Load(PATHMANAGER::GetCarPath()+"/"+carname+"/"+carname+".car"))
+	if (!carconf.Load(PATHMANAGER::GetCarPath()+"/"+carname+"/"+carname + (asphalt ? "_a":"") + ".car"))
 		return NULL;
 
 	cars.push_back(CAR());
@@ -474,8 +478,9 @@ void GAME::ProcessNewSettings()
 {
 	if (carcontrols_local.first)
 	{
-		carcontrols_local.first->SetABS(settings->abs);
-		carcontrols_local.first->SetTCS(settings->tcs);
+		int i = pOgreGame->sc.asphalt ? 1 : 0;
+		carcontrols_local.first->SetABS(settings->abs[i]);
+		carcontrols_local.first->SetTCS(settings->tcs[i]);
 		carcontrols_local.first->SetAutoShift(settings->autoshift);
 		carcontrols_local.first->SetAutoRear(settings->autorear);
 		//carcontrols_local.first->SetAutoClutch(settings->rear_inv);
@@ -739,89 +744,6 @@ bool GAME::ParseArguments(std::list <string> & args)
 
 void GAME::UpdateTimer()
 {
-	//check for cars doing a lap - only on VDrift tracks (mostly unused)
-	int carId=0;
-	for (std::list <CAR>::iterator i = cars.begin(); i != cars.end(); ++i,++carId)
-	{
-		bool advance = false;
-		int nextsector = 0;
-		if (track.GetSectors() > 0)
-		{
-			nextsector = (i->GetSector() + 1) % track.GetSectors();
-			//cout << "next " << nextsector << ", cur " << i->GetSector() << ", track " << track.GetSectors() << endl;
-			for (int p = 0; p < 4; p++)
-			{
-				if (i->GetCurPatch(p) == track.GetLapSequence(nextsector))
-				{
-					advance = true;
-					//cout << "Drove over new sector " << nextsector << " patch " << i->GetCurPatch(p) << endl;
-					//cout << p << ". " << i->GetCurPatch(p) << ", " << track.GetLapSequence(nextsector) << endl;
-				}
-				//else cout << p << ". " << i->GetCurPatch(p) << ", " << track.GetLapSequence(nextsector) << endl;
-			}
-		}
-
-		if (advance)
-		{
-			// only count it if the car's current sector isn't -1
-			// which is the default value when the car is loaded
-			bool countit = i->GetSector() >= 0;
-			bool best = timer.Lap(carId, i->GetSector(), nextsector, countit, settings->game.trackreverse);
-			bool finish = (nextsector == 0) && countit;
-			i->SetSector(nextsector);
-
-			LogO("LAP sect  all:"+toStr(track.GetSectors())+"  next:"+toStr(nextsector)+"  cur:"+toStr(i->GetSector())
-				+"  best:"+toStr(best)+"  finish:"+toStr(finish)+"  countit:"+toStr(countit));
-
-			if (finish)  /// notify OgreGame (save ghost)+
-				vdrLap[carId] = best ? 2 : 1;
-			LogO("LAP VDR  car "+toStr(carId)+" lap "+toStr(vdrLap[carId]));
-		}
-
-		//update how far the car is on the track
-		const BEZIER * curpatch = i->GetCurPatch(0); //find the patch under the front left wheel
-		if (!curpatch)
-			curpatch = i->GetCurPatch(1); //try the other wheel
-		if (curpatch) //only update if car is on track
-		{
-			MATHVECTOR <float, 3> pos = i->GetCenterOfMassPosition();
-			MATHVECTOR <float, 3> back_left, back_right, front_left;
-
-			if (!track.IsReversed())
-			{
-				back_left = MATHVECTOR <float, 3> (curpatch->GetBL()[2], curpatch->GetBL()[0], curpatch->GetBL()[1]);
-				back_right = MATHVECTOR <float, 3> (curpatch->GetBR()[2], curpatch->GetBR()[0], curpatch->GetBR()[1]);
-				front_left = MATHVECTOR <float, 3> (curpatch->GetFL()[2], curpatch->GetFL()[0], curpatch->GetFL()[1]);
-			}
-			else
-			{
-				back_left = MATHVECTOR <float, 3> (curpatch->GetFL()[2], curpatch->GetFL()[0], curpatch->GetFL()[1]);
-				back_right = MATHVECTOR <float, 3> (curpatch->GetFR()[2], curpatch->GetFR()[0], curpatch->GetFR()[1]);
-				front_left = MATHVECTOR <float, 3> (curpatch->GetBL()[2], curpatch->GetBL()[0], curpatch->GetBL()[1]);
-			}
-
-			//float dist_from_back = (back_left - back_right).perp_distance (back_left, pos);
-
-			MATHVECTOR <float, 3> forwardvec = front_left - back_left;
-			MATHVECTOR <float, 3> relative_pos = pos - back_left;
-			float dist_from_back = 0;
-
-			if (forwardvec.Magnitude() > 0.0001)
-				dist_from_back = relative_pos.dot(forwardvec.Normalize());
-
-			timer.UpdateDistance(carId, curpatch->GetDistFromStart() + dist_from_back);
-			//std::cout << curpatch->GetDistFromStart() << ", " << dist_from_back << endl;
-			//std::cout << curpatch->GetDistFromStart() + dist_from_back << endl;
-		}
-
-		/*info_output << "sector=" << i->GetSector() << ", next=" << track.GetLapSequence(nextsector) << ", ";
-		for (int w = 0; w < 4; w++)
-		{
-		info_output << w << "=" << i->GetCurPatch(w) << ", ";
-		}
-		info_output << endl;*/
-	}
-
 	timer.Tick(TickPeriod());
 	//timer.DebugPrint(info_output);
 }

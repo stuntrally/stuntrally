@@ -98,10 +98,6 @@ public:
 	//  Update trails
 	void UpdParsTrails(bool visible=true);
 	
-	//  Create ogre model from .joe, Static method so VDrift track (TrackVdr.cpp) can use this too
-	static Ogre::ManualObject* CreateModel( Ogre::SceneManager* sceneMgr, const Ogre::String& mat,
-		class VERTEXARRAY* a, Ogre::Vector3 vPofs, bool flip=false, bool track=false, const Ogre::String& name="");
-
 	//  Follow camera for this car.
 	//  This can be null (for remote [network] cars)
 	FollowCamera* fCam;

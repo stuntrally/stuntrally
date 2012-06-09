@@ -28,7 +28,8 @@ bool action(const std::string& name)
 
 
 ///  Process Input
-const std::vector <float> & CARCONTROLMAP_LOCAL::ProcessInput(int player, bool forceBrake)
+const std::vector <float> & CARCONTROLMAP_LOCAL::ProcessInput(int player,
+	float carspeed, float sss_effect, float sss_velfactor, bool forceBrake)
 {
 	assert(inputs.size() == CARINPUT::ALL);
 
@@ -60,7 +61,23 @@ if (oneAxis)
 }
 
 	//  steering
-	const float val = forceBrake ? 0.f : analogAction(sPlr+"Steering", true);
+	float val = forceBrake ? 0.f : analogAction(sPlr+"Steering", true);
+
+	//*  speed sensitive steering sss (decrease steer angle range with higher speed)
+	if (sss_effect > 0.02f)
+	{
+		float coeff = 1.0f, carmph = abs(carspeed) * 2.23693629f;
+		if (carmph > 1.0f)
+		{
+			//float ssco = sss_effect;  //*(1.0f-pow(val,2.0f));  //?-
+			coeff = (3.f-sss_velfactor) * 450.0f * (1.0f - atan(carmph*20.0f*sss_effect) * 0.6366198f);
+		}
+		if (coeff > 1.0f)  coeff = 1.0f;
+
+		//LogO("speed coeff: "+fToStr(coeff,2,4));
+		//val = val >= 0.f ? powf(val,1.5f) : -powf(-val,1.5f);
+		val *= coeff;
+	}
 	inputs[CARINPUT::STEER_RIGHT] = val > 0.f ?  val : 0.f;
 	inputs[CARINPUT::STEER_LEFT]  = val < 0.f ? -val : 0.f;
 	

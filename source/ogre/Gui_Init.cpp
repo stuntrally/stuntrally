@@ -33,9 +33,12 @@ void App::InitGui()
 
 	///  background image
 	int wx = mWindow->getWidth(), wy = mWindow->getHeight();
-	imgBack = mGUI->createWidget<ImageBox>("ImageBox",0,0,wx,wy,Align::VStretch,"Back","ImgBack");
-	if (!imgBack)  LogO("Error: Didnt create imgBack !");
-	imgBack->setImageTexture("background.jpg");
+	if (!(!pSet->loadingbackground && pSet->autostart))  // dont show for autoload and no loadingbackground
+	{
+		imgBack = mGUI->createWidget<ImageBox>("ImageBox",0,0,wx,wy,Align::VStretch,"Back","ImgBack");
+		if (!imgBack)  LogO("Error: Didnt create imgBack !");
+		imgBack->setImageTexture("background.jpg");
+	}
 
 
 	//  new widgets
@@ -77,13 +80,13 @@ void App::InitGui()
 	tab = mGUI->findWidget<Tab>("TabWndReplays"); tab->setIndexSelected(1);	tab->setSmoothShow(false);	mWndTabsRpl = tab;		tab->eventTabChangeSelect += newDelegate(this, &App::MenuTabChg);
 	tab = mGUI->findWidget<Tab>("TabWndHelp");    tab->setIndexSelected(1);	tab->setSmoothShow(false);	mWndTabsHelp = tab;		tab->eventTabChangeSelect += newDelegate(this, &App::MenuTabChg);
 	tab = mGUI->findWidget<Tab>("TabWndOptions"); tab->setIndexSelected(1); tab->setSmoothShow(false);	mWndTabsOpts = tab;		tab->eventTabChangeSelect += newDelegate(this, &App::MenuTabChg);
-	if (pSet->inMenu == WND_Champ)  mWndTabsGame->setIndexSelected(5);
+	if (pSet->inMenu == WND_Champ)  mWndTabsGame->setIndexSelected(6);
 
 	//  get sub tabs
 	vSubTabsGame.clear();
 	for (size_t i=0; i < mWndTabsGame->getItemCount(); ++i)
 	{
-		MyGUI::TabPtr sub = (TabPtr)mWndTabsGame->getItemAt(i)->findWidget(i==4 ? "tabsNet" : "tabPlayer!");//car tab wrong-
+		MyGUI::TabPtr sub = (TabPtr)mWndTabsGame->getItemAt(i)->findWidget(i==5 ? "tabsNet" : "tabPlayer!");//car tab wrong-
 		vSubTabsGame.push_back(sub);  // 0 for not found
 	}
 	vSubTabsOpts.clear();
@@ -188,9 +191,16 @@ void App::InitGui()
 	Chk("Graphs", chkGraphs, pSet->show_graphs);		chGraphs = bchk;
 
 	//  car setup  todo: for each player ..
-	Chk("CarABS",  chkAbs, pSet->abs);			Chk("CarTCS", chkTcs, pSet->tcs);
+	Chk("CarABS",  chkAbs, pSet->abs[0]);  bchAbs = bchk;
+	Chk("CarTCS", chkTcs, pSet->tcs[0]);  bchTcs = bchk;
 	Chk("CarGear", chkGear, pSet->autoshift);	Chk("CarRear", chkRear, pSet->autorear);
 	Chk("CarRearThrInv", chkRearInv, pSet->rear_inv);
+
+	TabPtr tTires = mGUI->findWidget<Tab>("tabCarTires");
+	if (tTires)  tTires->eventTabChangeSelect += newDelegate(this, &App::tabTireSet);
+	Slv(SSSEffect,	pSet->sss_effect[0]);  slSSSEff = sl;
+	Slv(SSSVelFactor, pSet->sss_velfactor[0]/2.f);  slSSSVel = sl;
+
 	//  game
 	Chk("VegetCollis", chkVegetCollis, pSet->gui.collis_veget);
 	Chk("CarCollis", chkCarCollis, pSet->gui.collis_cars);
@@ -628,8 +638,8 @@ void App::LNext(int rel)
 		switch (mWndTabsGame->getIndexSelected())	{
 			case 1:  listTrackChng(trkMList,LNext(trkMList, rel));  return;
 			case 2:	 listCarChng(carList,   LNext(carList, rel));  return;
-			case 5:  listChampChng(liChamps,LNext(liChamps, rel));  return;
-			case 6:	 listStageChng(liStages, LNext(liStages, rel));  return;	}
+			case 6:  listChampChng(liChamps,LNext(liChamps, rel));  return;
+			case 7:	 listStageChng(liStages, LNext(liStages, rel));  return;	}
 		break;
 	case WND_Replays:
 		listRplChng(rplList,  LNext(rplList, rel));

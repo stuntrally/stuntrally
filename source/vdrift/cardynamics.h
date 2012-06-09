@@ -222,6 +222,8 @@ public:
 	T maxangle;
 	T feedback;
 	
+	T ang_damp;  T rot_coef[4];  /// new
+	
 	MATHVECTOR <T, 3> lastbodyforce; //< held so external classes can extract it for things such as applying physics to camera mounts
 	
 	//CARTELEMETRY telemetry;
@@ -318,6 +320,8 @@ public:
 // cardynamics initialization
 	//Set the maximum steering angle in degrees
 	void SetMaxSteeringAngle(T newangle);
+
+	void SetAngDamp( T newang );
 	
 	void SetDrive(const std::string & newdrive);
 	

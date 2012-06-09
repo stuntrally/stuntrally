@@ -1,0 +1,23 @@
+compositor FXAA
+{
+    technique
+    {
+        texture previousscene target_width target_height PF_A8R8G8B8
+
+        target previousscene
+        {
+            input previous
+        }
+
+        target_output
+        {
+            input none
+
+            pass render_quad
+            {
+                material FXAA
+                input 0 previousscene
+            }
+        }
+	}
+}

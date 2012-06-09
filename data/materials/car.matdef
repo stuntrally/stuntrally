@@ -3,13 +3,13 @@
 	blendMap_1024 = body00_add.png
 	reflectivityMap_1024 = refl.png
 	envMap = ReflectionCube
-	reflAmount = 0.1
+	reflAmount = 0.12
 	diffuse = 1.0 1.0 1.0
 	ambient = 1.0 1.0 1.0
-	specular = 0.7 0.7 0.7 128
+	specular = 0.9 0.9 0.9 64
 	receivesShadows = false
 	receivesDepthShadows = true
-	fresnelScale = 0.73
+	fresnelScale = 0.79
 	fresnelBias = 0.07
 	fresnelPower = 4
 	terrainLightMap = true
@@ -20,13 +20,13 @@
 [car_glass]
 	customGenerator = Glass
 	envMap = ReflectionCube
-	fresnelScale = 0.65
+	fresnelScale = 0.75
 	fresnelBias = 0.15
 	fresnelPower = 4
-	reflAmount = 0.2
-	ambient = 0.8 0.8 0.8
+	reflAmount = 0.4
+	ambient = 0.4 0.4 0.4
 	diffuse = 0.9 0.9 0.9
-	specular = 0.7 0.7 0.7 128
+	specular = 0.9 0.9 0.9 96
 	diffuseMap_1024 = glass.png
 	transparent = true
 	receivesDepthShadows = true

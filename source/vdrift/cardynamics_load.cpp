@@ -20,8 +20,8 @@ CARDYNAMICS::CARDYNAMICS() :
 	last_auto_clutch(1.0), remaining_shift_time(0.0),
 	shift_time(0.2),
 	abs(false), tcs(false),
-	maxangle(45.0),
-	bTerrain(false), pSet(0), pScene(0),
+	maxangle(45.0), ang_damp(0.4),
+	bTerrain(false), pSet(0), pScene(0), poly(NULL),
 	doBoost(0), doFlip(0), boostFuel(0), boostVal(0),
 	fHitTime(0), fHitForce(0), fParIntens(0), fParVel(0), //hit
 	vHitPos(0,0,0), vHitNorm(0,0,0),
@@ -45,7 +45,8 @@ CARDYNAMICS::CARDYNAMICS() :
 	abs_active.resize ( WHEEL_POSITION_SIZE, false );
 	tcs_active.resize ( WHEEL_POSITION_SIZE, false );
 
-	poly = NULL;
+	for (int i=0; i<4; ++i)
+		rot_coef[i] = 0.0;
 }
 
 CARDYNAMICS::~CARDYNAMICS()
@@ -427,11 +428,15 @@ bool CARDYNAMICS::Load(CONFIGFILE & c, std::ostream & error_output)
 		//load the rotational inertia parameter from the tire section
 		float front_inertia;
 		float rear_inertia;
-		if (!c.GetParam("tire-front.rotational-inertia", front_inertia, error_output)) return false;
+		if (c.GetParam("tire-both.rotational-inertia", front_inertia, error_output))
+			rear_inertia = front_inertia;
+		else
+		{	if (!c.GetParam("tire-front.rotational-inertia", front_inertia, error_output)) return false;
+			if (!c.GetParam("tire-rear.rotational-inertia", rear_inertia, error_output)) return false;
+		}
 		wheel[FRONT_LEFT].SetInertia(front_inertia);
 		wheel[FRONT_RIGHT].SetInertia(front_inertia);
 
-		if (!c.GetParam("tire-rear.rotational-inertia", rear_inertia, error_output)) return false;
 		wheel[REAR_LEFT].SetInertia(rear_inertia);
 		wheel[REAR_RIGHT].SetInertia(rear_inertia);
 	}
@@ -440,7 +445,9 @@ bool CARDYNAMICS::Load(CONFIGFILE & c, std::ostream & error_output)
 	{
 		WHEEL_POSITION leftside = FRONT_LEFT;
 		WHEEL_POSITION rightside = FRONT_RIGHT;
-		std::string posstr = "front";
+		float value;
+		bool both = c.GetParam("tire-both.a0", value);
+		std::string posstr = both ? "both" : "front";
 
 		for (int p = 0; p < 2; p++)
 		{
@@ -448,7 +455,7 @@ bool CARDYNAMICS::Load(CONFIGFILE & c, std::ostream & error_output)
 			{
 				leftside = REAR_LEFT;
 				rightside = REAR_RIGHT;
-				posstr = "rear";
+				if (!both)  posstr = "rear";
 			}
 
 			std::vector <double> longitudinal;
@@ -463,12 +470,9 @@ bool CARDYNAMICS::Load(CONFIGFILE & c, std::ostream & error_output)
 			for (int i = 0; i < 15; i++)
 			{
 				numinfile = i;
-				if (i == 11)
-					numinfile = 111;
-				else if (i == 12)
-					numinfile = 112;
-				else if (i > 12)
-					numinfile -= 1;
+				if (i == 11)		numinfile = 111;
+				else if (i == 12)	numinfile = 112;
+				else if (i > 12)	numinfile -= 1;
 				std::stringstream str;
 				str << "tire-"+posstr+".a" << numinfile;
 				float value;
@@ -576,9 +580,20 @@ bool CARDYNAMICS::Load(CONFIGFILE & c, std::ostream & error_output)
 
 	//load the max steering angle
 	{
-		float maxangle = 45.0;
+		float maxangle = 45.0f;
 		if (!c.GetParam("steering.max-angle", maxangle, error_output)) return false;
 		SetMaxSteeringAngle ( maxangle );
+	}
+	///car angular damping -new
+	{
+		float a = 0.4f;
+		c.GetParam("steering.angular-damping", a, error_output);
+		SetAngDamp(a);
+
+		a=0.f;  c.GetParam("rot_drag.roll", a);  rot_coef[0] = a;
+		a=0.f;  c.GetParam("rot_drag.pitch", a); rot_coef[1] = a;
+		a=0.f;  c.GetParam("rot_drag.yaw", a);	 rot_coef[2] = a;
+		a=0.f;  c.GetParam("rot_drag.yaw2", a);	 rot_coef[3] = a;
 	}
 
 	//load the driver
@@ -748,9 +763,9 @@ void CARDYNAMICS::Init(
 	chassisState->setWorldTransform(transform);
 
 	btRigidBody::btRigidBodyConstructionInfo info(chassisMass, chassisState, chassisShape, chassisInertia);
-	info.m_angularDamping = 0.4;  // 0.0!+  0.2-  0.5
+	info.m_angularDamping = ang_damp;  // 0.0!+  0.4 old
 	info.m_restitution = 0.0;  //...
-	info.m_friction = 0.7;  /// 0.4~ 0.75
+	info.m_friction = 0.6;  /// 0.4~ 0.7
 	///  chasis^
 	chassis = world.AddRigidBody(info, true, pSet->game.collis_cars);
 	chassis->setActivationState(DISABLE_DEACTIVATION);

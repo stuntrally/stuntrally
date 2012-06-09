@@ -230,7 +230,7 @@ void App::UpdateHUD(int carId, float time)
 					clr.setHSB(0.5f - h * 0.4f, 1,1);		hudOpp[o][1]->setColour(clr);
 				}
 					
-				if (bGhEmpty || !sc.ter)
+				if (bGhEmpty)
 					hudOpp[o][0]->setCaption("");
 				else
 				{	//  percent % val
@@ -340,7 +340,7 @@ void App::UpdateHUD(int carId, float time)
 		{
 			if (pCar->GetABSEnabled())
 			{	hudAbs->show();
-				hudAbs->setColour(ColourValue(1,0.8,0.6, pCar->GetABSActive() ? 1 : 0.5));
+				hudAbs->setColour(ColourValue(1,0.8,0.6, pCar->GetABSActive() ? 1 : 0.4));
 			}else
 				hudAbs->hide();
 

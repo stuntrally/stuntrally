@@ -103,6 +103,7 @@ public:
 class Scene		///  Scene
 {
 public:
+	bool asphalt;  // use asphalt tires car
 	//  sky
 	Ogre::String skyMtr;
 	int  rainEmit,rain2Emit;  Ogre::String rainName,rain2Name;
@@ -117,7 +118,8 @@ public:
 	Ogre::String  sParDust, sParMud, sParSmoke;
 	
 	//  terrain
-	bool ter;  // 1 own, has terrain, 0 vdrift track
+	bool ter;  // has terrain
+	bool vdr;  // vdrift track
 	TerData td;
 
 	//  paged layers	
@@ -155,7 +157,7 @@ public:
 		
 	//  methods
 	Scene();  void Default(), UpdateFluidsId();
-	bool LoadXml(Ogre::String file), SaveXml(Ogre::String file);
+	bool LoadXml(Ogre::String file, bool bTer = true), SaveXml(Ogre::String file);
 };
 
 #endif

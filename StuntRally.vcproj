@@ -49,7 +49,7 @@
 				Name="VCCLCompilerTool"
 				AdditionalOptions="/Zm1000 /MP"
 				Optimization="0"
-				AdditionalIncludeDirectories="&quot;e:\v\bullet\bullet-2.79\Extras&quot;;&quot;e:\v\bullet\bullet-2.79\src&quot;;&quot;e:\v\SDL-1.2.14\include&quot;;&quot;e:\v\libvorbis-1.2.3\include&quot;;&quot;e:\v\libogg-1.1.4\include&quot;;&quot;e:\v\MyGUI-3.2.0\MyGUIEngine\include&quot;;&quot;e:\v\MyGUI-3.2.0\Platforms\Ogre\OgrePlatform\include&quot;"
+				AdditionalIncludeDirectories="source\bullet;source\tinyxml"
 				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;DEBUG;_USE_MATH_DEFINES;"
 				RuntimeLibrary="3"
 				UsePrecompiledHeader="2"
@@ -80,7 +80,7 @@
 				OutputFile="StuntRally_d.exe"
 				LinkIncremental="2"
 				SuppressStartupBanner="true"
-				AdditionalLibraryDirectories="e:\v\ogre18\bin\lib\Debug;e:\v\ogre18\Dependencies\lib\Debug;&quot;e:\v\MyGUI-3.2.0\bin\lib\Debug&quot;;&quot;e:\v\enet-1.3.1\Debug&quot;;&quot;e:\v\bullet\bullet-2.79\bin\lib\Debug&quot;"
+				AdditionalLibraryDirectories="c:\v\ogre\bin\lib\Debug;c:\v\ogre\Dependencies\lib\Debug;c:\v\mygui\bin\lib\Debug;&quot;c:\v\enet-1.3.4\Debug&quot;;c:\v\bullet\bin\lib\Debug;&quot;c:\v\SDL-1.2.15\lib\Debug&quot;;&quot;c:\v\libvorbis-1.3.3\libs\Debug&quot;;&quot;c:\v\libogg-1.3.0\lib\Debug&quot;"
 				IgnoreDefaultLibraryNames=""
 				GenerateDebugInformation="true"
 				ProgramDatabaseFile="StuntRally_d.pdb"
@@ -147,7 +147,7 @@
 				Optimization="3"
 				InlineFunctionExpansion="2"
 				FavorSizeOrSpeed="1"
-				AdditionalIncludeDirectories="&quot;e:\v\bullet\bullet-2.79\Extras&quot;;&quot;e:\v\bullet\bullet-2.79\src&quot;;&quot;e:\v\SDL-1.2.14\include&quot;;&quot;e:\v\libvorbis-1.2.3\include&quot;;&quot;e:\v\libogg-1.1.4\include&quot;;&quot;e:\v\MyGUI-3.2.0\MyGUIEngine\include&quot;;&quot;e:\v\MyGUI-3.2.0\Platforms\Ogre\OgrePlatform\include&quot;"
+				AdditionalIncludeDirectories="source\bullet;source\tinyxml"
 				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;ENET_DLL;_USE_MATH_DEFINES;"
 				StringPooling="true"
 				RuntimeLibrary="2"
@@ -179,7 +179,7 @@
 				OutputFile="StuntRally.exe"
 				LinkIncremental="1"
 				SuppressStartupBanner="true"
-				AdditionalLibraryDirectories="e:\v\ogre18\bin\lib\Release;e:\v\ogre18\Dependencies\lib\Release;e:\v\ogre18\MyGUI3.0\lib\Release;&quot;e:\v\enet-1.3.1\Release&quot;;&quot;e:\v\MyGUI-3.2.0\bin\lib\Release&quot;;&quot;e:\v\bullet\bullet-2.79\bin\lib\Release&quot;"
+				AdditionalLibraryDirectories="c:\v\ogre\bin\lib\Release;c:\v\ogre\Dependencies\lib\Release;c:\v\mygui\bin\lib\Release;&quot;c:\v\enet-1.3.4\Release&quot;;c:\v\bullet\bin\lib\Release;&quot;c:\v\SDL-1.2.15\lib\Release&quot;;&quot;c:\v\libvorbis-1.3.3\libs\Release&quot;;&quot;c:\v\libogg-1.3.0\lib\Release&quot;"
 				IgnoreDefaultLibraryNames=""
 				SubSystem="2"
 				TargetMachine="1"
@@ -240,7 +240,7 @@
 				Name="VCCLCompilerTool"
 				AdditionalOptions="/Zm1000 /MP"
 				Optimization="0"
-				AdditionalIncludeDirectories="&quot;e:\v\bullet\bullet-2.79\Extras&quot;;&quot;e:\v\bullet\bullet-2.79\src&quot;;&quot;e:\v\SDL-1.2.14\include&quot;;&quot;e:\v\libvorbis-1.2.3\include&quot;;&quot;e:\v\libogg-1.1.4\include&quot;;&quot;e:\v\MyGUI-3.2.0\MyGUIEngine\include&quot;;&quot;e:\v\MyGUI-3.2.0\Platforms\Ogre\OgrePlatform\include&quot;"
+				AdditionalIncludeDirectories="source\bullet;source\tinyxml"
 				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_USE_MATH_DEFINES;"
 				StringPooling="true"
 				RuntimeLibrary="2"
@@ -273,7 +273,7 @@
 				OutputFile="StuntRally_rd.exe"
 				LinkIncremental="1"
 				SuppressStartupBanner="true"
-				AdditionalLibraryDirectories="e:\v\ogre18\bin\lib\Release;e:\v\ogre18\Dependencies\lib\Release;&quot;e:\v\MyGUI-3.2.0\bin\lib\Release&quot;;&quot;e:\v\enet-1.3.1\Release&quot;;&quot;e:\v\bullet\bullet-2.79\bin\lib\Release&quot;"
+				AdditionalLibraryDirectories="c:\v\ogre\bin\lib\RelWithDebInfo;c:\v\ogre\Dependencies\lib\Release;c:\v\mygui\bin\lib\Release;&quot;c:\v\enet-1.3.4\Release&quot;;c:\v\bullet\bin\lib\Release;&quot;c:\v\SDL-1.2.15\lib\Release&quot;;&quot;c:\v\libvorbis-1.3.3\libs\Release&quot;;&quot;c:\v\libogg-1.3.0\lib\Release&quot;"
 				IgnoreDefaultLibraryNames=""
 				GenerateDebugInformation="true"
 				ProgramDatabaseFile="StuntRally_rd.pdb"
@@ -468,10 +468,6 @@
 				</File>
 				<File
 					RelativePath=".\Source\vdrift\objectloader.h"
-					>
-				</File>
-				<File
-					RelativePath=".\Source\vdrift\texture.cpp"
 					>
 				</File>
 				<File
@@ -1036,19 +1032,15 @@
 				>
 			</File>
 			<File
-				RelativePath="C:\Documents and Settings\ryhu25\Application Data\stuntrally\game.cfg"
+				RelativePath="c:\Users\cryham\AppData\Roaming\stuntrally\game.cfg"
 				>
 			</File>
 			<File
-				RelativePath="C:\Documents and Settings\ryhu25\Application Data\stuntrally\keys.xml"
+				RelativePath="c:\Users\cryham\AppData\Roaming\stuntrally\keys.xml"
 				>
 			</File>
 			<File
-				RelativePath="C:\Documents and Settings\ryhu25\Application Data\stuntrally\log.txt"
-				>
-			</File>
-			<File
-				RelativePath=".\Source\vdrift\logging.h"
+				RelativePath="c:\Users\cryham\AppData\Roaming\stuntrally\log.txt"
 				>
 			</File>
 			<File
@@ -1056,7 +1048,11 @@
 				>
 			</File>
 			<File
-				RelativePath="C:\Documents and Settings\ryhu25\Application Data\stuntrally\ogre.log"
+				RelativePath=".\Source\vdrift\logging.h"
+				>
+			</File>
+			<File
+				RelativePath="c:\Users\cryham\AppData\Roaming\stuntrally\ogre.log"
 				>
 			</File>
 			<File
@@ -1068,7 +1064,7 @@
 				>
 			</File>
 			<File
-				RelativePath="C:\Documents and Settings\ryhu25\Application Data\stuntrally\progress.xml"
+				RelativePath="c:\Users\cryham\AppData\Roaming\stuntrally\progress.xml"
 				>
 			</File>
 			<File
@@ -1164,10 +1160,6 @@
 				</File>
 				<File
 					RelativePath=".\Source\ogre\SceneInit.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\Source\ogre\TrackVdr.cpp"
 					>
 				</File>
 				<File
@@ -1440,6 +1432,10 @@
 				</File>
 				<File
 					RelativePath=".\Source\ogre\common\Terrain.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\Source\ogre\common\TrackVdr.cpp"
 					>
 				</File>
 			</Filter>

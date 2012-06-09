@@ -181,9 +181,9 @@ if (!bAssignKey)
 		{	case KC_Q:
 			case KC_T:	GuiShortcut(WND_Game, 1);	return true;  // Q,T Track
 			case KC_C:	GuiShortcut(WND_Game, 2);	return true;  // C Car
-			case KC_H:	GuiShortcut(WND_Champ, 5);	return true;  // H Champs
-			case KC_U:	GuiShortcut(WND_Game, 4);	return true;  // U Multiplayer
-			case KC_W:	GuiShortcut(WND_Game, 3);	return true;  // W Setup
+			case KC_H:	GuiShortcut(WND_Champ, 6);	return true;  // H Champs
+			case KC_U:	GuiShortcut(WND_Game, 5);	return true;  // U Multiplayer
+			case KC_W:	GuiShortcut(WND_Game, 4);	return true;  // W Setup
 
 			case KC_R:	GuiShortcut(WND_Replays, 1);	return true;  // R Replays
 

@@ -28,7 +28,9 @@ public:
 		lastinputs.resize(CARINPUT::ALL, 0.f);
 	}
 	
-	const std::vector <float> & ProcessInput(int player, bool forceBrake=false);  // for race countdown
+	const std::vector <float> & ProcessInput(int player,
+		float carspeed, float sss_effect, float sss_velfactor,
+		bool forceBrake=false);  // for race countdown
 };
 
 #endif

@@ -399,7 +399,7 @@
 					<Property key="TextColour" value="0.9 0.9 0.5"/>
 					<UserString key="tip" value="#{TrackPipes}"/>
 				</Widget>
-				<Widget type="EditBox" skin="EditBox" position="176 360 336 75" name="TrackDesc">
+				<Widget type="EditBox" skin="EditBoxEmpty" position="176 360 336 75" name="TrackDesc">
 					<UserString key="RelativeTo" value="EditorWnd"/>
 					<Property key="ReadOnly" value="false"/>
 					<Property key="MultiLine" value="true"/>

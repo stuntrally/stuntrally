@@ -13,12 +13,13 @@
 #include "../vdrift/mathvector.h"
 #include "../vdrift/quaternion.h"
 #include "../vdrift/tracksurface.h"
+#include "../vdrift/track.h"
 
 //#include <OgrePrerequisites.h>
 #include <OgreCommon.h>
 #include <OgreVector3.h>
 #include <OgreString.h>
-#include <OgreTerrain.h>
+#include <OgreTerrain.h>  //remove --> class..
 #include <OgreTerrainGroup.h>
 #include <OgreTerrainPaging.h>
 #include <OgrePageManager.h>
@@ -80,7 +81,14 @@ protected:
 	void CreateTrees(), CreateObjects(),DestroyObjects(), UpdObjPick();
 	void CreateFluids(), DestroyFluids(), CreateBltFluids(), UpdFluidBox(), UpdateWaterRTT(Ogre::Camera* cam);
 	void CreateSkyDome(Ogre::String sMater, Ogre::Vector3 scale);
+
 	bool GetFolderIndex(std::string folderpath, std::list <std::string> & outputfolderlist, std::string extension="");
+	bool IsVdrTrack();
+	// vdrift:
+	void CreateVdrTrack(std::string strack, class TRACK* pTrack), CreateVdrTrackBlt(), DestroyVdrTrackBlt(),
+		CreateRacingLine(), CreateMinimap(), CreateRoadBezier();
+	static Ogre::ManualObject* CreateModel(Ogre::SceneManager* sceneMgr, const Ogre::String& mat,
+		class VERTEXARRAY* a, Ogre::Vector3 vPofs, bool flip, bool track=false, const Ogre::String& name="");
 
 
 	///  rnd to tex  minimap  * * * * * * * * *
@@ -164,12 +172,23 @@ protected:
 	//bool update(float dtime);
 
 
+	///  bullet world
+	class btDiscreteDynamicsWorld* world;
+	class btDefaultCollisionConfiguration* config;
+	class btCollisionDispatcher* dispatcher;
+	class bt32BitAxisSweep3* broadphase;
+	class btSequentialImpulseConstraintSolver* solver;
+	class btCollisionObject* trackObject;  // vdrift track col
+	class btTriangleIndexVertexArray* trackMesh;
+	void BltWorldInit(), BltWorldDestroy(), BltClear();
+
+
 	//  trees
 	class Forests::PagedGeometry *trees, *grass;
 
 	//  road  -in base
 	void SaveGrassDens(), SaveWaterDepth(), AlignTerToRoad();
-	class btDiscreteDynamicsWorld* world;  int iSnap;  Ogre::Real angSnap;
+	int iSnap;  Ogre::Real angSnap;
 
 	//  car starts
 	bool LoadStartPos(),SaveStartPos(std::string path);  void UpdStartPos();
@@ -386,6 +405,13 @@ protected:
 	void btnNewGame(WP);
 
 	MyGUI::EditPtr trkName;  void editTrkDesc(MyGUI::EditPtr);
+	
+
+	//  vdr trk
+public:
+	TRACK* track;
+protected:
+	bool LoadTrackVdr(const std::string & trackname);
 
 
 	//  system, utils

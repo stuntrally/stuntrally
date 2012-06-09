@@ -29,7 +29,13 @@ void SETTINGS::Serialize(bool w, CONFIGFILE & c)
 	}
 	Param(c,w, "car1.autotrans", autoshift);	//todo: this for all 4 cars..
 	Param(c,w, "car1.autorear", autorear);		Param(c,w, "car1.autorear_inv", rear_inv);
-	Param(c,w, "car1.abs", abs);				Param(c,w, "car1.tcs", tcs);
+	for (int i=0; i <= 1; ++i)
+	{	std::string s = i==1 ? "A":"";
+		Param(c,w, "car1.abs"+s, abs[i]);
+		Param(c,w, "car1.tcs"+s, tcs[i]);
+		Param(c,w, "car1.sss_effect"+s, sss_effect[i]);
+		Param(c,w, "car1.sss_velfactor"+s, sss_velfactor[i]);
+	}
 
 	//  game
 	Param(c,w, "game.in_menu", inMenu);			Param(c,w, "game.in_main", isMain);
@@ -163,7 +169,7 @@ SETTINGS::SETTINGS() :  ///  Defaults
 	grass(1.f), trees_dist(1.f), grass_dist(1.f), use_imposters(true),
 	particles(true), trails(true), particles_len(1.f), trails_len(1.f),
 	//  car
-	abs(0), tcs(0), autoshift(1), autorear(1), rear_inv(1), show_mph(0),
+	autoshift(1), autorear(1), rear_inv(1), show_mph(0),
 	//  misc
 	isMain(1), inMenu(0), rpl_rec(0),
 	split_vertically(true), language(""), // "" = autodetect lang
@@ -222,4 +228,9 @@ SETTINGS::SETTINGS() :  ///  Defaults
 	//
 	gui.rpl_rec = 1;
 	gui.champ_num = -1;  gui.pre_time = 2.f;
+	//  car setup
+	abs[0] = 0;  abs[1] = 0;
+	tcs[0] = 0;  tcs[1] = 0;
+	sss_effect[0] = 0.f;  sss_effect[1] = 0.85f;
+	sss_velfactor[0] = 1.f;  sss_velfactor[1] = 1.f;
 }
