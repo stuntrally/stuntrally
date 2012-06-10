@@ -83,6 +83,7 @@
 		<track name="D10-MudBath"	laps="1" factor="0.15" />
 		<track name="I6-Flooded"	laps="1" factor="0.1" />
 		<track name="J16-MudMad"	laps="1" factor="0.15" />
+		<track name="J18-Tiny"		laps="1" factor="0.15" />
 	</championship>
 
 	<championship name="Mountain adventure" ver="2" difficulty="4" length="3" tutorial="0" 
@@ -105,7 +106,7 @@
 		<track name="0W9-IceFrenzy"	laps="1" factor="0.1" />
 		<track name="F9-MadMntn"	laps="1" factor="0.1" />
 		<track name="0W10-Whirl"	laps="1" factor="0.1" />
-		<track name="M3-Hairpins"	laps="1" factor="0.1" />
+		<track name="C1-Hairpins"	laps="1" factor="0.1" />
 	</championship>
 
 <!--  Senery Championships  -->
@@ -143,6 +144,7 @@
 		<track name="J15-Swamp"		laps="1" factor="0.1" />
 		<track name="J16-MudMad"	laps="1" factor="0.1" />
 		<track name="J17-JungleCanyons"	laps="1" factor="0.1" />
+		<track name="J18-Tiny"		laps="1" factor="0.1" />
 	</championship>
 	<championship name="Savanna scenery" ver="1" difficulty="5" length="3" tutorial="3" 
 			descr="Savanna championship. All tracks for this scenery in their appearance order.">
@@ -196,11 +198,12 @@
 		<track name="I7-Moses"		laps="1" factor="0.1" />
 		<track name="I8-Pharaoh"	laps="1" factor="0.1" />
 	</championship>
-	<championship name="Mud scenery" ver="1" difficulty="2" length="3" tutorial="3" 
+	<championship name="Mud and Canyon scenery" ver="1" difficulty="2" length="3" tutorial="3" 
 			descr="Mud championship. All tracks for this scenery in their appearance order.">
 		<track name="M1-Hills"		laps="1" factor="0.1" />
 		<track name="M2-Bumps"		laps="1" factor="0.1" /><!---->
-		<track name="M3-Hairpins"	laps="1" factor="0.2" />
+		<track name="C1-Hairpins"	laps="1" factor="0.1" />
+		<track name="C2-CanyonRun"	laps="1" factor="0.1" /><!---->
 	</championship>
 	<championship name="Australia scenery" ver="1" difficulty="4" length="3" tutorial="3" 
 			descr="Australia championship. All tracks for this scenery in their appearance order.">
@@ -218,6 +221,7 @@
 	<championship name="Other sceneries" ver="1" difficulty="4" length="3" tutorial="3" 
 			descr="Other sceneries championship: Volcanic and Unidentified.">
 		<track name="V1-Dark"		laps="1" factor="0.1" /><!---->
+		<track name="V2-Volcanic"	laps="1" factor="0.1" /><!---->
 		<track name="X1-Magic"		laps="1" factor="0.1" /><!---->
 		<track name="X2-Swirl"		laps="1" factor="0.1" />
 	</championship>
@@ -360,7 +364,7 @@
 		<track name="G3-Butterfly"	time="43.5"/>
 		<track name="I6-Flooded"	time="47.5"/>
 		<track name="J16-MudMad"	time="64.5"/>
-		<track name="M3-Hairpins"	time="67.0"/>
+		<track name="C1-Hairpins"	time="67.0"/>
 
 		<track name="0W10-Whirl"	time="66.5"/>
 		<track name="F13-Castle"	time="110.0"/>
@@ -371,5 +375,6 @@
 		<!--79-->
 		<track name="C2-CanyonRun"	time="68.4"/>
 		<track name="V2-Volcanic"	time="205.0"/>
+		<track name="J18-Tiny"		time="34.5"/>
 	</times>
 </championships>
