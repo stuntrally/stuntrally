@@ -217,6 +217,7 @@
 		<track name="G1-Long"		laps="1" factor="0.1" /><!---->
 		<track name="G2-Coast"		laps="1" factor="0.1" />
 		<track name="G3-Butterfly"	laps="1" factor="0.1" /><!---->
+		<track name="G4-River"		laps="1" factor="0.1" /><!---->
 	</championship>
 	<championship name="Other sceneries" ver="1" difficulty="4" length="3" tutorial="3" 
 			descr="Other sceneries championship: Volcanic and Unidentified.">
@@ -376,5 +377,7 @@
 		<track name="C2-CanyonRun"	time="68.4"/>
 		<track name="V2-Volcanic"	time="205.0"/>
 		<track name="J18-Tiny"		time="34.5"/>
+		<track name="G4-River"		time="34.0"/>
+
 	</times>
 </championships>

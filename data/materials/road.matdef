@@ -6,12 +6,12 @@
 ; ------------ Asphalt -------------
 [roadAsphalt]
 	parent = road
-	diffuseMap_512 = roadAsphalt_s.jpg
-	diffuseMap_2048 = roadAsphalt.jpg
 	ambient = 1.2 1.2 1.2
 	diffuse = 0.66 0.65 0.6
 	specular = 0.36 0.34 0.3 38
 	depthBias = 3
+	diffuseMap_512 = roadAsphalt_s.jpg
+	diffuseMap_2048 = roadAsphalt.jpg
 	receivesShadows = true
 
 [roadAsphalt_ter]
@@ -34,9 +34,6 @@
 	diffuseMap_2048 = roadDesert.jpg
 	alphaMap_512 = roadAlpha_s.png
 	alphaMap_2048 = roadAlpha.png
-	transparent = true
-	sceneBlend = alpha
-	depthWrite = false
 	receivesShadows = true
 
 [roadGDesert_ter]
@@ -44,11 +41,14 @@
 	terrainLightMap = true
 	normalMap_512 = volcano_7_nh1_s.png
 	normalMap_1024 = volcano_7_nh1.png
+	transparent = true
+	sceneBlend = alpha
+	depthWrite = false
 
 ; ----------- Sand Island ------------
 [roadSand]
-	ambient = 0.94 0.94 0.94
 	parent = road
+	ambient = 0.94 0.94 0.94
 	diffuse = 0.82 0.82 0.82
 	specular = 0.23 0.23 0.22 32
 	depthBias = 3
@@ -70,8 +70,8 @@
 
 ; ----------- Sand Island shore ======------
 [roadSandShore]
-	ambient = 0.85 0.75 0.6
 	parent = road
+	ambient = 0.85 0.75 0.6
 	diffuse = 0.85 0.75 0.6
 	specular = 0.31 0.32 0.33 32
 	depthBias = 3
@@ -92,8 +92,8 @@
 
 ; ----------- Sand Island sunset ======------
 [roadSandSet]
-	ambient = 0.94 0.94 0.94
 	parent = road
+	ambient = 0.94 0.94 0.94
 	diffuse = 0.82 0.82 0.82
 	specular = 0.23 0.23 0.22 32
 	depthBias = 3
@@ -114,8 +114,8 @@
 
 ; ----------- Sand Island dark ======------
 [roadSandDark]
-	ambient = 0.6 0.6 0.4
 	parent = road
+	ambient = 0.6 0.6 0.4
 	diffuse = 0.52 0.62 0.42
 	specular = 0.3 0.3 0.2 24
 	depthBias = 3
@@ -136,8 +136,8 @@
 
 ; ----------- Magic ======------
 [roadSandMagic]
-	ambient = 0.34 0.28 0.76
 	parent = road
+	ambient = 0.34 0.28 0.76
 	diffuse = 0.42 0.52 0.92
 	specular = 0.3 0.6 1.0 64
 	depthBias = 3
@@ -162,8 +162,8 @@
 
 ; ----------- Mud ----------
 [roadMud]
-	ambient = 1.0 1.0 1.0
 	parent = road
+	ambient = 1.0 1.0 1.0
 	diffuse = 0.7 0.7 0.7
 	specular = 0.2 0.2 0.15 32
 	depthBias = 3
@@ -182,12 +182,11 @@
 	sceneBlend = alpha
 	depthWrite = false
 	terrainLightMap = true
-	;vertexColour = true
 
 ; ---------- Ice Winter ------------
 [roadIce]
-	ambient = 1.0 1.0 1.0
 	parent = road
+	ambient = 1.0 1.0 1.0
 	diffuse = 0.9 0.9 0.9
 	specular = 0.9 0.92 0.92 32
 	depthBias = 3
@@ -211,8 +210,8 @@
 
 ; ------------ Snow Winter -------------
 [roadSnow]
-	ambient = 1.0 1.0 1.0
 	parent = road
+	ambient = 1.0 1.0 1.0
 	diffuse = 0.8 0.8 0.8
 	specular = 0.6 0.62 0.62 18
 	depthBias = 3
@@ -233,8 +232,8 @@
 
 ; ----------- Adesert Australia ----------
 [roadAdesert]
-	ambient = 1.2 1.2 1.2
 	parent = road
+	ambient = 1.2 1.2 1.2
 	diffuse = 0.66 0.65 0.6
 	specular = 0.36 0.32 0.3 32
 	depthBias = 3
@@ -254,8 +253,8 @@
 
 ; ----------- Desert -----------
 [roadDesert]
-	ambient = 0.85 0.85 0.85
 	parent = road
+	ambient = 0.85 0.85 0.85
 	diffuse = 0.81 0.8 0.75
 	specular = 0.36 0.34 0.3 18
 	depthBias = 3
@@ -274,8 +273,8 @@
 
 ; ----------- Savannah ----------
 [roadSavannah]
-	ambient = 0.88 0.88 0.88
 	parent = road
+	ambient = 0.88 0.88 0.88
 	diffuse = 0.8 0.8 0.8
 	specular = 0.1 0.1 0.08 24
 	depthBias = 3
@@ -296,8 +295,8 @@
 
 ; ----------- Jungle ----------
 [roadJungle]
-	ambient = 1.0 1.0 1.0
 	parent = road
+	ambient = 1.0 1.0 1.0
 	diffuse = 0.7 0.7 0.7
 	specular = 0.3 0.3 0.25 48
 	depthBias = 3
@@ -310,11 +309,11 @@
 	ambient = 1.02 1.0 1.0
 	diffuse = 0.65 0.65 0.65
 	specular = 0.2 0.2 0.15 32
-	transparent = true
 	alphaMap_512 = roadAlpha_s.png
 	alphaMap_2048 = roadAlpha.png
 	normalMap_512 = ice_3_nh1_s.png
 	normalMap_1024 = ice_3_nh1.png
+	transparent = true
 	sceneBlend = alpha
 	depthWrite = false
 	terrainLightMap = true
