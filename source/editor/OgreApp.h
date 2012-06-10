@@ -154,7 +154,8 @@ protected:
 	///<>  terrain edit, brush
 	void updBrush();  bool bTerUpd,bTerUpdBlend;  char sBrushTest[512];  int curBr;
 	float mBrSize[ED_ALL],mBrIntens[ED_ALL], *mBrushData, terSetH,
-		mBrPow[ED_ALL],mBrFq[ED_ALL];  int mBrOct[ED_ALL];  float* pBrFmask, mBrFilt,mBrFiltOld;
+		mBrPow[ED_ALL],mBrFq[ED_ALL],mBrNOf[ED_ALL];  int mBrOct[ED_ALL];
+	float* pBrFmask, mBrFilt,mBrFiltOld;
 	enum EBrShape {   BRS_Triangle=0, BRS_Sinus, BRS_Noise, BRS_ALL  } mBrShape[ED_ALL];
 	const static Ogre::String csBrShape[BRS_ALL];
 
@@ -278,7 +279,7 @@ protected:
 
 	//  tool windows texts
 	const static int
-		BR_TXT=6, RD_TXT=14,RDS_TXT=9,
+		BR_TXT=7, RD_TXT=14,RDS_TXT=9,
 		ST_TXT=6, FL_TXT=6, OBJ_TXT=6;
 	MyGUI::StaticTextPtr
 		brTxt[BR_TXT], rdTxt[RD_TXT],rdTxtSt[RDS_TXT],

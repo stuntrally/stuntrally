@@ -80,7 +80,7 @@
 			<Property key="TextColour" value="0.66 0.86 1.0"/>
 		</Widget>
 	</Widget>
-	<Widget type="Window" skin="WindowC" position="0 64 152 190" layer="Back" name="BrushWnd">
+	<Widget type="Window" skin="WindowC" position="0 64 160 195" layer="Back" name="BrushWnd">
 		<Property key="Caption" value="#{TerrainBrush}"/>
 		<Property key="Colour" value="0.3 0.36 0.4"/>
 		<Property key="Alpha" value="0.6"/>
@@ -107,6 +107,10 @@
 			<Property key="TextColour" value="0.76 0.9 1.0"/>
 		</Widget>
 		<Widget type="TextBox" skin="TextBox" position="4 115 150 20" name="brush5">
+			<Property key="InheritsAlpha" value="false"/>
+			<Property key="TextColour" value="0.76 0.9 1.0"/>
+		</Widget>
+		<Widget type="TextBox" skin="TextBox" position="4 135 150 20" name="brush6">
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="TextColour" value="0.76 0.9 1.0"/>
 		</Widget>

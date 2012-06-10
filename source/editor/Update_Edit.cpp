@@ -260,42 +260,54 @@ bool App::frameRenderingQueued(const FrameEvent& evt)
 	{
 		//  brush params
 		//----------------------------------------------------------------
-		if (brTxt[0]){	brTxt[0]->setCaption("Size:      "+fToStr(mBrSize[curBr],1,4)+"   - =");  }
-		if (brTxt[1]){	brTxt[1]->setCaption("Force:   "+fToStr(mBrIntens[curBr],1,4)+"   [ ]");  }
-		if (brTxt[2]){	brTxt[2]->setCaption("Power:  "+fToStr(mBrPow[curBr],2,4)+"   ; \'");  }
-		if (brTxt[3]){	brTxt[3]->setCaption("Shape: "+csBrShape[mBrShape[curBr]]);  }
+		const static MyGUI::UString kclr = "#90FF90";
+		if (brTxt[0])	brTxt[0]->setCaption("Size:      "+fToStr(mBrSize[curBr],1,4)+"  "+kclr+" - =");
+		if (brTxt[1])	brTxt[1]->setCaption("Force:   "+fToStr(mBrIntens[curBr],1,4)+"  "+kclr+" [ ]");
+		if (brTxt[2])	brTxt[2]->setCaption("Power:  "+fToStr(mBrPow[curBr],2,4)+"  "+kclr+" ; \'");
+		if (brTxt[3])	brTxt[3]->setCaption("Shape: "+csBrShape[mBrShape[curBr]]);//+"  "+kclr+" K L");
 
 		bool brNoise = mBrShape[curBr] == BRS_Noise;
 		if (brTxt[4])
 		if (edMode == ED_Height)
-		{	brTxt[4]->setCaption("Height: "+fToStr(terSetH,1,4));  }
+			brTxt[4]->setCaption("Height: "+fToStr(terSetH,1,4));//+" "+kclr+" RMB");
 		else if (brNoise)
-		{	brTxt[4]->setCaption("Freq: "+fToStr(mBrFq[curBr],2,4)+"  O P");  }
+			brTxt[4]->setCaption("Freq:     "+fToStr(mBrFq[curBr],2,4)+"  "+kclr+" O P");
 		else
 			brTxt[4]->setCaption("");
 
 		if (brTxt[5])
 		if (edMode == ED_Filter)
-		{	brTxt[5]->setCaption("Filter: "+fToStr(mBrFilt,1,3)+"    1 2");  }
+			brTxt[5]->setCaption("Filter:    "+fToStr(mBrFilt,1,3)+"   "+kclr+" 1 2");
 		else if (edMode == ED_Height && road && road->bHitTer)
-		{	brTxt[5]->setCaption("Curr.H: "+fToStr(road->posHit.y,1,4));  }
+			brTxt[5]->setCaption("Curr.H: "+fToStr(road->posHit.y,1,4));
 		else if (brNoise)
-		{	brTxt[5]->setCaption("Octaves: "+toStr(mBrOct[curBr])+"  , .");  }
+			brTxt[5]->setCaption("Octaves:  "+toStr(mBrOct[curBr])+"     "+kclr+" , .");
 		else
 			brTxt[5]->setCaption("");
+
+		if (brTxt[6])
+		if (brNoise)
+			brTxt[6]->setCaption("Offset: "+fToStr(mBrNOf[curBr],1,4)+"    "+kclr+" 9 0");
+		else
+			brTxt[6]->setCaption("");
 
 		if (mz != 0)
 			if (alt){			mBrPow[curBr]   *= 1.f - 0.4f*q*mz;  updBrush();  }
 			else if (!shift){	mBrSize[curBr]  *= 1.f - 0.4f*q*mz;  updBrush();  }
 			else				mBrIntens[curBr]*= 1.f - 0.4f*q*mz/0.05;
+
 		if (isKey(MINUS)){		mBrSize[curBr]  *= 1.f - 0.04f*q;  updBrush();  }
 		if (isKey(EQUALS)){		mBrSize[curBr]  *= 1.f + 0.04f*q;  updBrush();  }
 		if (isKey(LBRACKET))	mBrIntens[curBr]*= 1.f - 0.04f*q;
 		if (isKey(RBRACKET))	mBrIntens[curBr]*= 1.f + 0.04f*q;
 		if (isKey(SEMICOLON )){ mBrPow[curBr]   *= 1.f - 0.04f*q;  updBrush();  }
 		if (isKey(APOSTROPHE)){ mBrPow[curBr]   *= 1.f + 0.04f*q;  updBrush();  }
+
 		if (isKey(O)){			mBrFq[curBr]    *= 1.f - 0.04f*q;  updBrush();  }
 		if (isKey(P)){			mBrFq[curBr]    *= 1.f + 0.04f*q;  updBrush();  }
+		if (isKey(9)){			mBrNOf[curBr]   -= 0.3f*q;		   updBrush();  }
+		if (isKey(0)){			mBrNOf[curBr]   += 0.3f*q;		   updBrush();  }
+
 		if (isKey(1)){			mBrFilt         *= 1.f - 0.04f*q;  updBrush();  }
 		if (isKey(2)){			mBrFilt         *= 1.f + 0.04f*q;  updBrush();  }
 		
