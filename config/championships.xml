@@ -223,6 +223,7 @@
 			descr="Other sceneries championship: Volcanic and Unidentified.">
 		<track name="V1-Dark"		laps="1" factor="0.1" /><!---->
 		<track name="V2-Volcanic"	laps="1" factor="0.1" /><!---->
+		<track name="V3-Crater"		laps="1" factor="0.1" /><!---->
 		<track name="X1-Magic"		laps="1" factor="0.1" /><!---->
 		<track name="X2-Swirl"		laps="1" factor="0.1" />
 	</championship>
@@ -378,6 +379,7 @@
 		<track name="V2-Volcanic"	time="205.0"/>
 		<track name="J18-Tiny"		time="34.5"/>
 		<track name="G4-River"		time="34.0"/>
+		<track name="V3-Crater"		time="56.8"/>
 
 	</times>
 </championships>
