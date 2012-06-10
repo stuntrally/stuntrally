@@ -133,11 +133,12 @@
 	<track n="80" name="C1-Hairpins"	created="09-04-12" crtver="1.6" modified="09-04-12" scenery="Canyon" 	author="CH" fluids="0" bumps="0" jumps="0" loops="0" pipes="0" banked="4" frenzy="2" long="2" diff="3" rating="3" />
 
 	<track n="81" name="0W10-Whirl"		created="10-04-12" crtver="1.6" modified="10-04-12" scenery="Winter" 	author="CH" fluids="0" bumps="0" jumps="0" loops="0" pipes="0" banked="2" frenzy="2" long="2" diff="1" rating="3" />
-	<track n="82" name="F13-Castle"		created="12-04-12" crtver="1.6" modified="12-04-12" scenery="Forest" 	author="CH" fluids="0" bumps="0" jumps="0" loops="0" pipes="0" banked="2" frenzy="2" long="2" diff="2" rating="2" />
+	<track n="82" name="F13-Castle"		created="12-04-12" crtver="1.6" modified="12-04-12" scenery="Forest" 	author="CH" fluids="0" bumps="0" jumps="0" loops="0" pipes="0" banked="2" frenzy="3" long="2" diff="2" rating="2" />
 	<track n="83" name="I7-Moses"		created="15-04-12" crtver="1.6" modified="15-04-12" scenery="Island" 	author="TV" fluids="1" bumps="2" jumps="1" loops="0" pipes="0" banked="1" frenzy="0" long="1" diff="3" rating="2" />
 <track n="84" name="J17-JungleCanyons"	created="16-04-12" crtver="1.6" modified="16-04-12" scenery="Jungle"	author="TV" fluids="1" bumps="0" jumps="2" loops="0" pipes="0" banked="1" frenzy="1" long="6" diff="2" rating="4" />
 	<track n="85" name="I8-Pharaoh"		created="09-04-12" crtver="1.6" modified="16-04-12" scenery="Island"	author="CH" fluids="1" bumps="0" jumps="2" loops="0" pipes="0" banked="3" frenzy="2" long="2" diff="2" rating="3" />
 <!--79-->
 	<track n="86" name="C2-CanyonRun"	created="27-05-12" crtver="1.7" modified="27-05-12" scenery="Canyon"	author="CH" fluids="0" bumps="0" jumps="0" loops="0" pipes="0" banked="4" frenzy="2" long="3" diff="2" rating="3" />
+	<track n="87" name="V2-Volcanic"	created="09-06-12" crtver="1.7" modified="10-06-12" scenery="Volcanic"	author="CH" fluids="2" bumps="2" jumps="1" loops="0" pipes="0" banked="1" frenzy="0" long="6" diff="2" rating="3" />
 	
 </tracks>
