@@ -87,7 +87,8 @@ void App::updateBrushPrv(bool first)
 	uint8* p = static_cast<uint8*>(pb.data);
 
 	float s = BrPrvSize * 0.5f, s1 = 1.f/s,
-		fP = mBrPow[curBr], fQ = mBrFq[curBr]*5.f;  int oct = mBrOct[curBr];
+		fP = mBrPow[curBr], fQ = mBrFq[curBr]*5.f, nof = mBrNOf[curBr];
+	int oct = mBrOct[curBr];
 
 	const static float cf[4][3] = {  // color factors
 		{0.3, 0.8, 0.1}, {0.2, 0.8, 0.6}, {0.6, 0.9, 0.6}, {0.4, 0.7, 1.0} };
@@ -125,7 +126,7 @@ void App::updateBrushPrv(bool first)
 		{	float fx = ((float)x - s)*s1, fy = ((float)y - s)*s1;  // -1..1
 			float d = std::max(0.f, 1.f - float(sqrt(fx*fx + fy*fy)));  // 0..1
 
-			float c = d * pow( abs(Noise(x*s1,y*s1, fQ, oct, 0.5f)), fP*0.5f) * 0.9f;
+			float c = d * pow( abs(Noise(x*s1+nof,y*s1+nof, fQ, oct, 0.5f)), fP*0.5f) * 0.9f;
 			
 			//float aa = GetAngle(fx, fy), am = 2*PI_d;
 			//float n = aa/am		 * Noise(     aa*0.1f, 0.1f * fP, 3, 0.7f)
@@ -150,7 +151,8 @@ void App::updBrush()
 
 	int size = (int)mBrSize[curBr], a = 0;
 	float s = size * 0.5f, s1 = 1.f/s,
-		fP = mBrPow[curBr], fQ = mBrFq[curBr]*5.f;  int oct = mBrOct[curBr];
+		fP = mBrPow[curBr], fQ = mBrFq[curBr]*5.f, nof = mBrNOf[curBr];
+	int oct = mBrOct[curBr];
 
 	switch (mBrShape[curBr])
 	{
@@ -183,7 +185,7 @@ void App::updBrush()
 			{	float fx = ((float)x - s)*s1, fy = ((float)y - s)*s1;  // -1..1
 				float d = std::max(0.f, 1.f - float(sqrt(fx*fx + fy*fy)));  // 0..1
 				
-				float c = d * pow( abs(Noise(x*s1,y*s1, fQ, oct, 0.5f)), fP*0.5f);
+				float c = d * pow( abs(Noise(x*s1+nof,y*s1+nof, fQ, oct, 0.5f)), fP*0.5f);
 
 				//float aa = GetAngle(fx, fy);
 				//float c = d * pow( Noise(aa*0.01f,aa*0.1f, 0.3f * fP, 1, 0.7f) * 1.1f, 2.f);  //star-

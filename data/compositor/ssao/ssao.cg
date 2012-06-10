@@ -59,6 +59,7 @@ float4 ssao_ps(
     PIn IN,
     uniform float4x4 ptMat,
     uniform float far,
+	uniform float4 fogParams,
     uniform sampler2D geomMap : TEXUNIT0,
     uniform sampler2D randMap  : TEXUNIT1): COLOR0
 {
@@ -89,6 +90,8 @@ float4 ssao_ps(
     float3 randN = TEX2DLOD(randMap, IN.uv * 24).xyz * 2.0 - 1.0;
     float4 geom = TEX2DLOD(geomMap, IN.uv);
     float depth = geom.x;
+
+	float fogAmount = saturate(fogParams.x * (depth*far - fogParams.y) * fogParams.w);
 
     // IN.ray will be distorted slightly due to interpolation
     // it should be normalized here
@@ -121,7 +124,7 @@ float4 ssao_ps(
     }
     occ /= NUM_BASE_SAMPLES;
 
-    return float4(occ, occ, occ, 1);
+    return float4( lerp( float3(occ, occ, occ), float3(1,1,1), fogAmount), 1);
 }
 
 void ssaoBlur_vs(in float4 position : POSITION
@@ -200,7 +203,6 @@ void ssaoMultiply_vs(in float4 position : POSITION
 {
 	oPosition = mul(wvp, position);
 	oUV = uv;
-	return;
 }
 
 void ssaoMultiply_ps(in float4 position : POSITION
@@ -209,5 +211,4 @@ void ssaoMultiply_ps(in float4 position : POSITION
 	,out float4 oColor : COLOR)
 {
 	oColor = tex2D(tex1, uv) * tex2D(tex2, uv);
-	return;
 }

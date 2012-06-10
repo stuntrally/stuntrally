@@ -42,14 +42,17 @@ void App::CreateVdrTrack(std::string strack, TRACK* pTrack)
 	std::vector<OGRE_MESH>& meshes = pTrack->ogre_meshes;
 	std::string sMatCache = strack + ".matdef", sMatOrig = "_" + sMatCache,
 		sPathCache = PATHMANAGER::GetShaderCacheDir() + "/" + sMatCache, sPathOrig = TrkDir() +"objects/"+ sMatOrig;
-	bool hasMatOrig = boost::filesystem::exists(sPathOrig), hasMatCache = boost::filesystem::exists(sPathCache);	bool bGenerate = 0, gen = !hasMatOrig && !hasMatCache || bGenerate;  // set 1 to force generate for new vdrift tracks
-	if (gen)
+	bool hasMatOrig = boost::filesystem::exists(sPathOrig), hasMatCache = boost::filesystem::exists(sPathCache);
+	bool bGenerate = 0, gen = !hasMatOrig && !hasMatCache || bGenerate;  // set 1 to force generate for new vdrift tracks
+
+	if (gen)
 	{
 		String sMtrs;
 		for (int i=0; i < meshes.size(); i++)
 		{
 			OGRE_MESH& msh = meshes[i];
-			if (msh.sky /*&& ownSky*/)  continue;			if (!msh.newMtr)  continue;  //  create material if new
+			if (msh.sky /*&& ownSky*/)  continue;
+			if (!msh.newMtr)  continue;  //  create material if new
 
 			bool found = true;
 			TexturePtr tex = TextureManager::getSingleton().getByName(msh.material);
@@ -74,7 +77,9 @@ void App::CreateVdrTrack(std::string strack, TRACK* pTrack)
 				sMtrs += "["+msh.material+"]\n"+
 					"	parent = 0vdrTrk\n"+
 					"	diffuseMap_512 = "+msh.material+"\n";
-		}		std::ofstream fileout(sPathCache.c_str());
+		}
+
+		std::ofstream fileout(sPathCache.c_str());
 		if (!fileout)  LogO("Error: Can't save vdrift track matdef!");
 		fileout.write(sMtrs.c_str(), sMtrs.size());
 		fileout.close();
@@ -89,7 +94,8 @@ void App::CreateVdrTrack(std::string strack, TRACK* pTrack)
 
 	//  meshes  -------------
 	std::vector<Entity*> ents;
-	for (int i=0; i < meshes.size(); i++)
+	static int ii = 0;  int i;
+	for (i=0; i < meshes.size(); ++i)
 	{
 		OGRE_MESH& msh = meshes[i];
 		if (msh.sky /*&& ownSky*/)  continue;
@@ -108,12 +114,13 @@ void App::CreateVdrTrack(std::string strack, TRACK* pTrack)
 		if (msh.sky)
 			m->setCastShadows(false);
 		
-		MeshPtr mp = m->convertToMesh("m"+toStr(i));
+		MeshPtr mp = m->convertToMesh("m"+toStr(ii+i));
 		Entity* e = mSceneMgr->createEntity(mp);
 
 		ents.push_back(e);
 		}
 	}
+	ii += i;
 
 	//  static geom  -------------
 	StaticGeometry *sg = mSceneMgr->createStaticGeometry("track");
