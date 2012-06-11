@@ -18,10 +18,9 @@ namespace sh
 	class ConfigLoader
 	{
 	public:
-		static void loadAllFiles();
-		static void scanLoadFiles(ConfigLoader * c);
+		static void loadAllFiles(ConfigLoader* c, const std::string& path);
 
-		ConfigLoader(std::string fileEnding, float loadOrder = 100.0f);
+		ConfigLoader(const std::string& fileEnding);
 		virtual ~ConfigLoader();
 
 		std::string m_fileEnding;
@@ -33,9 +32,11 @@ namespace sh
 		// }
 		// The type is "entity" and the name is "animals/dog"
 		// Or if animal/dog was not there then name is ""
-		virtual ConfigNode *getConfigScript(const std::string &type, const std::string &name);
+		ConfigNode *getConfigScript (const std::string &name);
 
-		virtual void parseScript(std::ifstream &stream) = 0;
+		std::map <std::string, ConfigNode*> getAllConfigScripts ();
+
+		void parseScript(std::ifstream &stream);
 
 
 	protected:
@@ -61,7 +62,7 @@ namespace sh
 		void _nextToken(std::ifstream &stream);
 		void _skipNewLines(std::ifstream &stream);
 
-		virtual void clearScriptList();
+		void clearScriptList();
 	};
 
 	class ConfigNode

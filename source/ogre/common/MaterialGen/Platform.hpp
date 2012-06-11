@@ -47,7 +47,7 @@ namespace sh
 	class Platform
 	{
 	public:
-		Platform ();
+		Platform (const std::string& basePath);
 		virtual ~Platform ();
 
 		virtual void serializeShaders (const std::string& file);
@@ -89,8 +89,10 @@ namespace sh
 
 	private:
 		Factory* mFactory;
-
 		void setFactory(Factory* factory);
+
+		std::string mBasePath;
+		std::string getBasePath();
 	};
 }
 

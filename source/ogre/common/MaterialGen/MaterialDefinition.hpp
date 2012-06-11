@@ -1,6 +1,10 @@
 #ifndef SH_MATERIALDEFINITION_H
 #define SH_MATERIALDEFINITION_H
 
+#include <vector>
+
+#include "PassDefinition.hpp"
+
 namespace sh
 {
 	/**
@@ -12,6 +16,11 @@ namespace sh
 	 */
 	class MaterialDefinition
 	{
+	public:
+		PassDefinition* createPassDefinition ();
+
+	private:
+		std::vector <PassDefinition> mPasses;
 	};
 };
 

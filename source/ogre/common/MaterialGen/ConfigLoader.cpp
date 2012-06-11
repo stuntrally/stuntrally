@@ -5,48 +5,26 @@
 #include <exception>
 #include <fstream>
 
-/*
-#include "boost/filesystem.hpp"
-#include "boost/filesystem/operations.hpp"
-#include "boost/filesystem/fstream.hpp"
-
-using namespace boost::filesystem;
-using namespace boost::system;
-*/
+#include <boost/filesystem.hpp>
 
 namespace sh
 {
-
-	void ConfigLoader::loadAllFiles()
+	void ConfigLoader::loadAllFiles(ConfigLoader* c, const std::string& path)
 	{
-		/*
-		ConfigLoaderCategory * cat = new ConfigLoaderCategory();
-		ConfigLoaderEntity * ent = new ConfigLoaderEntity();
-
-		scanLoadFiles(cat);
-		scanLoadFiles(ent);
-		*/
-	}
-
-	void ConfigLoader::scanLoadFiles(ConfigLoader * c)
-	{
-		/*
-		for ( boost::filesystem::recursive_directory_iterator end, dir("../content");
-		   dir != end; ++dir ) {
-			   path p(*dir);
-			   if(p.extension() == c->m_fileEnding)
-			   {
-				   std::ifstream in((*dir).string().c_str(), ios::binary);
-				   c->parseScript(in);
-			   }
+		for ( boost::filesystem::recursive_directory_iterator end, dir(path); dir != end; ++dir )
+		{
+			boost::filesystem::path p(*dir);
+			if(p.extension() == c->m_fileEnding)
+			{
+				std::ifstream in((*dir).path().string().c_str(), std::ios::binary);
+				c->parseScript(in);
+			}
 		}
-		*/
 	}
 
-	ConfigLoader::ConfigLoader(std::string fileEnding, float loadOrder)
+	ConfigLoader::ConfigLoader(const std::string& fileEnding)
 	{
 		//Register as a ScriptLoader
-		m_LoadOrder = loadOrder;
 		m_fileEnding = fileEnding;
 	}
 
@@ -66,11 +44,11 @@ namespace sh
 		m_scriptList.clear();
 	}
 
-	ConfigNode *ConfigLoader::getConfigScript(const std::string &type, const std::string &name)
+	ConfigNode *ConfigLoader::getConfigScript(const std::string &name)
 	{
 		std::map <std::string, ConfigNode*>::iterator i;
 
-		std::string key = type + ' ' + name;
+		std::string key = name;
 		i = m_scriptList.find(key);
 
 		//If found..
@@ -82,6 +60,11 @@ namespace sh
 		{
 			return NULL;
 		}
+	}
+
+	std::map <std::string, ConfigNode*> ConfigLoader::getAllConfigScripts ()
+	{
+		return m_scriptList;
 	}
 
 	void ConfigLoader::parseScript(std::ifstream &stream)
@@ -114,6 +97,11 @@ namespace sh
 
 		//(Get next character)
 		int ch = stream.get();
+		if (ch == -1)
+		{
+			tok = TOKEN_EOF;
+			return;
+		}
 		while ((ch == ' ' || ch == 9) && !stream.eof())
 		{    //Skip leading spaces / tabs
 			ch = stream.get();
@@ -156,7 +144,7 @@ namespace sh
 		//Text token
 		if (ch < 32 || ch > 122)    //Verify valid char
 		{
-			throw "Parse Error: Invalid character, ConfigLoader::load()";
+			throw std::runtime_error("Parse Error: Invalid character, ConfigLoader::load()");
 		}
 
 		tokVal = "";
@@ -256,13 +244,12 @@ namespace sh
 						//Parse nodes
 						_nextToken(stream);
 						_parseNodes(stream, newNode);
-
 						//Check for matching closing brace
 						if (tok != TOKEN_CloseBrace)
 						{
-							throw "Parse Error: Expecting closing brace";
+							throw std::runtime_error("Parse Error: Expecting closing brace");
 						}
-
+						_nextToken(stream);
 						_skipNewLines(stream);
 					}
 
@@ -270,7 +257,7 @@ namespace sh
 
 				//Out of place brace
 				case TOKEN_OpenBrace:
-					throw "Parse Error: Opening brace out of plane";
+					throw std::runtime_error("Parse Error: Opening brace out of plane");
 					break;
 
 				//Return if end of nodes have been reached

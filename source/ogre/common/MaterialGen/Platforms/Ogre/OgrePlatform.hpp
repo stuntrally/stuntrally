@@ -21,7 +21,7 @@ namespace sh
 	class OgrePlatform : public Platform, public Ogre::MaterialManager::Listener
 	{
 	public:
-		OgrePlatform (const std::string& resourceGroupName);
+		OgrePlatform (const std::string& resourceGroupName, const std::string& basePath);
 		virtual ~OgrePlatform ();
 
 		virtual void serializeShaders (const std::string& file);

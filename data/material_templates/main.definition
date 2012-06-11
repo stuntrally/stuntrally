@@ -1,1 +1,18 @@
-
+material main
+{
+	pass
+	{
+		asdf
+		{
+		}
+		foo
+		{
+		}
+	}
+	pass2
+	{
+	}
+	bar
+	{
+	}
+}

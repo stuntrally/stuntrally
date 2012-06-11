@@ -24,8 +24,8 @@ namespace
 
 namespace sh
 {
-	OgrePlatform::OgrePlatform(const std::string& resourceGroupName)
-		: Platform()
+	OgrePlatform::OgrePlatform(const std::string& resourceGroupName, const std::string& basePath)
+		: Platform(basePath)
 		, mResourceGroup(resourceGroupName)
 	{
 		Ogre::MaterialManager::getSingleton().addListener(this);

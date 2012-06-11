@@ -414,7 +414,7 @@ bool BaseApp::setup()
 	postInit();
 	LogO("*** end setup ***");
 
-	sh::OgrePlatform* platform = new sh::OgrePlatform("General");
+	sh::OgrePlatform* platform = new sh::OgrePlatform("General", PATHMANAGER::GetDataPath() + "/" + "material_templates");
 	mFactory = new sh::Factory(platform);
 
 		ti.update();  dt = ti.dt * 1000.f;  /// time

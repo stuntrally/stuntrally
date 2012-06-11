@@ -6,7 +6,8 @@
 
 namespace sh
 {
-	Platform::Platform ()
+	Platform::Platform (const std::string& basePath)
+		: mBasePath(basePath)
 	{
 	}
 
@@ -17,6 +18,11 @@ namespace sh
 	void Platform::setFactory (Factory* factory)
 	{
 		mFactory = factory;
+	}
+
+	std::string Platform::getBasePath ()
+	{
+		return mBasePath;
 	}
 
 	bool Platform::supportsMaterialQueuedListener ()
