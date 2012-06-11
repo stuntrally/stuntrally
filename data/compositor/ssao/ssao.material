@@ -20,6 +20,8 @@ fragment_program ssao_ps cg
     profiles ps_4_0 ps_2_x arbfp1
     default_params
     {
+		param_named_auto fogParams fog_params
+		param_named_auto far far_clip_distance
     }
 }
 
