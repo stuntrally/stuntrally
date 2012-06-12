@@ -16,16 +16,25 @@ namespace sh
 		for (std::map <std::string, ConfigNode*>::const_iterator it = nodes.begin();
 			it != nodes.end(); ++it)
 		{
+			if (!(it->second->getName() == "material_definition"))
+				break;
+
 			MaterialDefinition newDef;
-			std::cout << "node here " << std::endl;
+			std::string name = it->first;
 
 			std::vector<ConfigNode*> passes = it->second->getChildren();
-			std::cout << "passes size " << passes.size() << std::endl;
 			for (std::vector<ConfigNode*>::const_iterator passIt = passes.begin(); passIt != passes.end(); ++passIt)
 			{
 				PassDefinition* newPassDef = newDef.createPassDefinition();
-				std::cout << "created pass " << std::endl;
+				std::vector<ConfigNode*> props = (*passIt)->getChildren();
+				for (std::vector<ConfigNode*>::const_iterator propIt = props.begin(); propIt != props.end(); ++propIt )
+				{
+					std::string val = (*propIt)->getValue();
+					newPassDef->setProperty((*propIt)->getName(), makeProperty<StringValue>(new StringValue(val)));
+				}
 			}
+
+			mDefinitions[name] = newDef;
 		}
 	}
 

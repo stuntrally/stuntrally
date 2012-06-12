@@ -56,7 +56,7 @@ namespace sh
 		};
 
 		Token tok, lastTok;
-		std::string tokVal, lastTokVal;
+		std::string tokVal;
 
 		void _parseNodes(std::ifstream &stream, ConfigNode *parent);
 		void _nextToken(std::ifstream &stream);
@@ -81,25 +81,14 @@ namespace sh
 			return m_name;
 		}
 
-		inline void addValue(const std::string &value)
+		inline void setValue(const std::string &value)
 		{
-			m_values.push_back(value);
+			m_value = value;
 		}
 
-		inline void clearValues()
+		inline std::string &getValue()
 		{
-			m_values.clear();
-		}
-
-		inline std::vector<std::string> &getValues()
-		{
-			return m_values;
-		}
-
-		inline const std::string &getValue(unsigned int index = 0)
-		{
-			assert(index < m_values.size());
-			return m_values[index];
+			return m_value;
 		}
 
 		ConfigNode *addChild(const std::string &name = "untitled", bool replaceExisting = false);
@@ -125,7 +114,7 @@ namespace sh
 
 	private:
 		std::string m_name;
-		std::vector<std::string> m_values;
+		std::string m_value;
 		std::vector<ConfigNode*> m_children;
 		ConfigNode *m_parent;
 

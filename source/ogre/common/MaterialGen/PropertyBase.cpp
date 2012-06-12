@@ -4,11 +4,33 @@
 
 namespace sh
 {
-	StringValue::StringValue (const std::string& in)
+
+	IntValue::IntValue(int in)
+		: mValue(in)
 	{
-		mValue = in;
 	}
 
+	IntValue::IntValue(const std::string& in)
+	{
+		mValue = boost::lexical_cast<int>(in);
+	}
+
+	std::string IntValue::serialize()
+	{
+		return boost::lexical_cast<std::string>(mValue);
+	}
+
+
+	StringValue::StringValue (const std::string& in)
+	{
+		mStringValue = in;
+	}
+
+	std::string StringValue::serialize()
+	{
+		return mStringValue;
+	}
+/*
 	void StringValue::deserialize (const std::string& in)
 	{
 		mValue = in;
@@ -52,15 +74,15 @@ namespace sh
 	{
 		return boost::lexical_cast<std::string>(mValue);
 	}
-
+*/
 	// ------------------------------------------------------------------------------
 
-	void PropertySet::setProperty (const std::string& name, PropertyPtr value)
+	void PropertySet::setProperty (const std::string& name, PropertyValuePtr value)
 	{
 		setPropertyOverride (name, value);
 	}
 
-	bool PropertySet::setPropertyOverride (const std::string& name, PropertyPtr value)
+	bool PropertySet::setPropertyOverride (const std::string& name, PropertyValuePtr  value)
 	{
 		// if we got here, none of the sub-classes was able to make use of the property
 		std::cerr << "sh::PropertySet: Warning: No match for property with name '" << name << "'" << std::endl;
@@ -69,12 +91,12 @@ namespace sh
 
 	// ------------------------------------------------------------------------------
 
-	void PropertySetGet::setProperty (const std::string& name, PropertyPtr value)
+	void PropertySetGet::setProperty (const std::string& name, PropertyValuePtr  value)
 	{
 		mProperties [name] = value;
 	}
 
-	PropertyPtr PropertySetGet::getProperty(const std::string& name)
+	PropertyValuePtr  PropertySetGet::getProperty(const std::string& name)
 	{
 		assert (mProperties.find(name) != mProperties.end()
 			&& "Trying to retrieve property that does not exist");

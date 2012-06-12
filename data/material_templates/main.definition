@@ -1,18 +1,8 @@
-material main
+material_definition main
 {
 	pass
 	{
-		asdf
-		{
-		}
-		foo
-		{
-		}
-	}
-	pass2
-	{
-	}
-	bar
-	{
+		vertex_program main_vertex
+		fragment_program main_fragment
 	}
 }

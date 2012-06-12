@@ -8,40 +8,91 @@
 
 namespace sh
 {
+	class StringValue;
+
 	class PropertyValue
 	{
 	public:
-		inline virtual std::string serialize () = 0;
-		inline virtual void deserialize (const std::string& in) = 0;
+		PropertyValue() {}
+
+		template <typename T>
+		static T* retrieve (boost::shared_ptr<PropertyValue>& value)
+		{
+			if (typeid(T).name() == typeid(*value).name())
+			{
+				// requested type is the same as source type, only have to cast it
+				return static_cast<T*>(value.get());
+			}
+
+			if ((typeid(T).name() == typeid(StringValue).name())
+				&& typeid(*value).name() != typeid(StringValue).name())
+			{
+				// if string type is requested and value is not string, use serialize method to convert to string
+				T* ptr = new T (value->serialize()); // note that T is always StringValue here, but we can't use it because it's not declared yet
+				value = boost::shared_ptr<PropertyValue> (static_cast<PropertyValue*>(ptr));
+				return ptr;
+			}
+
+			{
+				// remaining case: deserialization from string by passing the string to constructor of class T
+				T* ptr = new T(value->_getStringValue());
+				boost::shared_ptr<PropertyValue> newVal (static_cast<PropertyValue*>(ptr));
+				value = newVal;
+				return ptr;
+			}
+		}
+		///<
+		/// @brief converts \a value to the type \a T, deserializing or serializing from/to strings if necessary \n
+		/// example usage: int myNumber = PropertyValue::retrieve <IntValue> (val)->get();
+		/// @note \a value is changed in-place to the converted object
+		/// @return pointer to converted object \n
+
+		std::string _getStringValue() { return mStringValue; }
+
+		virtual std::string serialize() = 0;
+
+	protected:
+		std::string mStringValue; ///< this will possibly not contain anything in the specialised classes
 	};
-	typedef boost::shared_ptr<PropertyValue> PropertyPtr;
+	typedef boost::shared_ptr<PropertyValue> PropertyValuePtr;
+
+
+	template <typename T>
+	inline PropertyValuePtr makeProperty (T* prop)
+	{
+		return PropertyValuePtr (static_cast<PropertyValue*> (prop));
+	}
 
 	class StringValue : public PropertyValue
 	{
 	public:
 		StringValue (const std::string& in);
-		inline virtual std::string serialize ();
-		inline virtual void deserialize (const std::string& in);
+		std::string get() const { return mStringValue; }
 
-		std::string mValue;
+		virtual std::string serialize();
 	};
 
 	class FloatValue : public PropertyValue
 	{
 	public:
 		FloatValue (float in);
-		inline virtual std::string serialize ();
-		inline virtual void deserialize (const std::string& in);
+		FloatValue (const std::string& in);
+		float get() const;
 
+		virtual std::string serialize() {};
+	private:
 		float mValue;
 	};
 
 	class IntValue : public PropertyValue
 	{
+	public:
 		IntValue (int in);
-		inline virtual std::string serialize ();
-		inline virtual void deserialize (const std::string& in);
+		IntValue (const std::string& in);
+		int get() const { return mValue; }
 
+		virtual std::string serialize();
+	private:
 		int mValue;
 	};
 
@@ -51,21 +102,21 @@ namespace sh
 	class PropertySet
 	{
 	public:
-		void setProperty (const std::string& name, PropertyPtr value);
+		void setProperty (const std::string& name, PropertyValuePtr  value);
 
 	protected:
-		virtual bool setPropertyOverride (const std::string& name, PropertyPtr value);
+		virtual bool setPropertyOverride (const std::string& name, PropertyValuePtr  value);
 		///< @return \a true if the specified property was found, or false otherwise
 	};
 
-	typedef std::map<std::string, PropertyPtr> PropertyMap;
+	typedef std::map<std::string, PropertyValuePtr > PropertyMap;
 
 	/// \brief base class that allows setting properties with any kind of value-type and retrieving them
 	class PropertySetGet
 	{
 	public:
-		void setProperty (const std::string& name, PropertyPtr value);
-		PropertyPtr getProperty (const std::string& name);
+		void setProperty (const std::string& name, PropertyValuePtr  value);
+		PropertyValuePtr  getProperty (const std::string& name);
 
 	protected:
 		PropertyMap mProperties;

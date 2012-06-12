@@ -85,9 +85,6 @@ namespace sh
 
 	void ConfigLoader::_nextToken(std::ifstream &stream)
 	{
-		lastTok = tok;
-		lastTokVal = tokVal;
-
 		//EOF token
 		if (stream.eof())
 		{
@@ -201,6 +198,7 @@ namespace sh
 			{
 				//Node
 				case TOKEN_Text:
+				{
 					//Add the new node
 					ConfigNode *newNode;
 					if (parent)
@@ -214,24 +212,27 @@ namespace sh
 
 					//Get values
 					_nextToken(stream);
+					std::string valueStr;
+					int i=0;
 					while (tok == TOKEN_Text)
 					{
-						newNode->addValue(tokVal);
+						if (i == 0)
+							valueStr += tokVal;
+						else
+							valueStr += " " + tokVal;
 						_nextToken(stream);
+						++i;
 					}
+					newNode->setValue(valueStr);
 
 					//Add root nodes to scriptList
-					if (!parent){
+					if (!parent)
+					{
 						std::string key;
 
-						if (newNode->getValues().empty())
-						{
-							key = newNode->getName() + ' ';
-						}
-						else
-						{
-							key = newNode->getName() + ' ' + newNode->getValues().front();
-						}
+						assert ( (newNode->getValue() != "")
+							&& "ConfigLoader: Root node must have a name");
+						key = newNode->getValue();
 
 						m_scriptList.insert(ScriptItem(key, newNode));
 					}
@@ -254,6 +255,7 @@ namespace sh
 					}
 
 					break;
+				}
 
 				//Out of place brace
 				case TOKEN_OpenBrace:
