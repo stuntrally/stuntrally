@@ -141,7 +141,7 @@ void App::CreateHUD(bool destroy)
 	ResourceGroupManager& resMgr = ResourceGroupManager::getSingleton();
 	Ogre::TextureManager& texMgr = Ogre::TextureManager::getSingleton();
 
-	String path = PathListTrkPrv(pSet->game.track_user), sGrp = "TrkMini";
+	String path = PathListTrkPrv(pSet->game.track_user, sListTrack), sGrp = "TrkMini";
 	resMgr.addResourceLocation(path, "FileSystem", sGrp);  // add for this track
 	resMgr.initialiseResourceGroup(sGrp);
 

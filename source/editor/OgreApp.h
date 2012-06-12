@@ -401,7 +401,7 @@ protected:
 
 	Ogre::String sListTrack;  int bListTrackU;
 	Ogre::String sCopyTrack;  int bCopyTrackU;  // for tools
-	Ogre::String PathListTrk(int user=-1), PathListTrkPrv(int user=-1);
+	Ogre::String PathListTrk(int user=-1), PathListTrkPrv(int user/*=-1*/, Ogre::String track);
 	Ogre::String PathCopyTrk(int user=-1);
 
 	void btnTrackNew(WP),btnTrackRename(WP),btnTrackDel(WP),  // track
