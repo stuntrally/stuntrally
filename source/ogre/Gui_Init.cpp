@@ -47,7 +47,7 @@ void App::InitGui()
 	
 
 	//  load Options layout
-	vwGui = LayoutManager::getInstance().loadLayout("Options.layout");
+	vwGui = LayoutManager::getInstance().loadLayout("Game.layout");
 	//mLayout = vwGui.at(0);
 
 	//  window

@@ -459,84 +459,111 @@
 					<Property key="Caption" value="#{Car}"/>
 					<UserString key="RelativeTo" value="GameWnd"/>
 				</Widget>
-				<Widget type="Button" skin="CheckBox" position="32 80 256 24" name="CarGear">
+				<Widget type="Button" skin="CheckBox" position="32 70 256 24" name="CarGear">
 					<Property key="Caption" value="#{AutoGearbox}"/>
 					<Property key="TextColour" value="0.8 0.9 1"/>
 					<UserString key="RelativeTo" value="GameWnd"/>
 					<UserString key="tip" value="#{TipAutoGearbox}"/>
 				</Widget>
-				<Widget type="Button" skin="CheckBox" position="32 120 256 24" name="CarRear">
+				<Widget type="Button" skin="CheckBox" position="32 100 256 24" name="CarRear">
 					<Property key="Caption" value="#{AutoRear}"/>
 					<Property key="TextColour" value="0.65 0.8 0.9"/>
 					<UserString key="RelativeTo" value="GameWnd"/>
 					<UserString key="tip" value="#{TipAutoRear}"/>
 				</Widget>
-				<Widget type="Button" skin="CheckBox" position="32 160 256 24" name="CarRearThrInv">
+				<Widget type="Button" skin="CheckBox" position="32 130 256 24" name="CarRearThrInv">
 					<Property key="Caption" value="#{RearThrottleInverse}"/>
 					<Property key="TextColour" value="0.65 0.8 0.9"/>
 					<UserString key="RelativeTo" value="GameWnd"/>
 					<UserString key="tip" value="#{TipRearThrottleInverse}"/>
 				</Widget>
-				<Widget type="TabControl" skin="TabControl" position="360 32 260 20" name="tabCarTires">
+				<Widget type="TabControl" skin="TabControl" position="32 210 200 20" name="tabCarTires">
 					<UserString key="RelativeTo" value="GameWnd"/>
-					<Widget type="TabItem" skin="" position="2 24 254 -8">
+					<Widget type="TabItem" skin="" position="2 24 562 -8">
 						<Property key="Caption" value="#{Gravel}"/>
 						<UserString key="RelativeTo" value="GameWnd"/>
 					</Widget>
-					<Widget type="TabItem" skin="" position="2 24 254 -8">
+					<Widget type="TabItem" skin="" position="2 24 562 -8">
 						<Property key="Caption" value="#{Asphalt}"/>
 						<UserString key="RelativeTo" value="GameWnd"/>
 					</Widget>
 				</Widget>
-				<Widget type="Button" skin="CheckBox" position="368 80 256 24" name="CarABS">
+				<Widget type="Button" skin="CheckBox" position="32 250 256 24" name="CarABS">
 					<Property key="Caption" value="#{ABS}"/>
 					<Property key="TextColour" value="1 1 0.7"/>
 					<UserString key="RelativeTo" value="GameWnd"/>
 					<UserString key="tip" value="#{TipABS}"/>
 				</Widget>
-				<Widget type="Button" skin="CheckBox" position="368 112 256 24" name="CarTCS">
+				<Widget type="Button" skin="CheckBox" position="32 280 256 24" name="CarTCS">
 					<Property key="Caption" value="#{TCS}"/>
 					<Property key="TextColour" value="0.7 1 1"/>
 					<UserString key="RelativeTo" value="GameWnd"/>
 					<UserString key="tip" value="#{TipTCS}"/>
 				</Widget>
-				<Widget type="TextBox" skin="TextBox" position="368 164 200 24">
+				<Widget type="TextBox" skin="TextBox" position="32 340 200 24">
 					<Property key="Caption" value="#{SpeedSensitiveSteering}"/>
 					<Property key="TextColour" value="0.3 0.9 0.9"/>
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 					<UserString key="tip" value="#{TipSpeedSensitiveSteering}"/>
 				</Widget>
-				<Widget type="TextBox" skin="TextBox" position="368 200 200 24">
+			
+				<Widget type="TextBox" skin="TextBox" position="32 370 200 24">
 					<Property key="Caption" value="#{SSS_Effect}"/>
 					<Property key="TextColour" value="0.7 0.9 1.0"/>
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 				</Widget>
-				<Widget type="TextBox" skin="TextBox" position="520 200 56 24" name="SSSEffectVal">
+				<Widget type="TextBox" skin="TextBox" position="200 370 200 24" name="SSSEffectVal">
 					<Property key="TextColour" value="0.7 0.9 1.0"/>
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 				</Widget>
-				<Widget type="Slider" skin="Slider" position="368 232 200 16" name="SSSEffect">
+				<Widget type="Slider" skin="Slider" position="32 400 200 16" name="SSSEffect">
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 				</Widget>
-				<Widget type="TextBox" skin="TextBox" position="368 264 200 24">
+				<Widget type="TextBox" skin="TextBox" position="32 430 200 24">
 					<Property key="Caption" value="#{SSS_SpeedFactor}"/>
 					<Property key="TextColour" value="0.7 0.9 1.0"/>
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 				</Widget>
-				<Widget type="TextBox" skin="TextBox" position="532 264 40 24" name="SSSVelFactorVal">
+				<Widget type="TextBox" skin="TextBox" position="200 430 200 24" name="SSSVelFactorVal">
 					<Property key="TextColour" value="0.7 0.9 1.0"/>
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 				</Widget>
-				<Widget type="Slider" skin="Slider" position="368 296 200 16" name="SSSVelFactor">
+				<Widget type="Slider" skin="Slider" position="32 450 200 16" name="SSSVelFactor">
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 				</Widget>
 			</Widget>
 			<Widget type="TabItem" skin="" position="2 24 794 572">
 				<Property key="Caption" value="#{Game}"/>
 				<UserString key="RelativeTo" value="GameWnd"/>
-				<Widget type="Widget" skin="PanelSkin" position="360 12 420 232">
+				<Widget type="TextBox" skin="TextBox" position="32 24 140 24">
+					<Property key="Caption" value="#{Game}"/>
+					<UserString key="RelativeTo" value="GameWnd"/>
+				</Widget>
+				<Widget type="Widget" skin="PanelSkin" position="360 62 420 232">
 					<Property key="Alpha" value="0.3"/>
 					<Property key="Colour" value="0.4 0.5 0.6"/>
+					<UserString key="RelativeTo" value="GameWnd"/>
+				</Widget>
+				<Widget type="TextBox" skin="TextBox" position="32 72 152 24">
+					<Property key="TextColour" value="0.55 0.75 1"/>
+					<Property key="Caption" value="#{Boost}"/>
+					<UserString key="RelativeTo" value="GameWnd"/>
+				</Widget>
+				<Widget type="TextBox" skin="TextBox" position="32 104 152 24">
+					<Property key="Caption" value="#{Flip}"/>
+					<Property key="TextColour" value="0.55 0.75 1"/>
+					<UserString key="RelativeTo" value="GameWnd"/>
+				</Widget>
+				<Widget type="ComboBox" skin="ComboBox" position="130 69 160 24" name="CmbBoost">
+					<Property key="Colour" value="0.55 0.75 1"/>
+					<Property key="TextColour" value="0.6 0.8 1"/>
+					<Property key="ReadOnly" value="true"/>
+					<UserString key="RelativeTo" value="GameWnd"/>
+				</Widget>
+				<Widget type="ComboBox" skin="ComboBox" position="130 101 160 24" name="CmbFlip">
+					<Property key="Colour" value="0.55 0.75 1"/>
+					<Property key="TextColour" value="0.6 0.8 1"/>
+					<Property key="ReadOnly" value="true"/>
 					<UserString key="RelativeTo" value="GameWnd"/>
 				</Widget>
 				<Widget type="Button" skin="CheckBox" position="32 188 216 24" name="VegetCollis">
@@ -554,76 +581,50 @@
 					<Property key="TextColour" value="0.6 0.8 0.8"/>
 					<UserString key="RelativeTo" value="GameWnd"/>
 				</Widget>
-				<Widget type="Button" skin="CheckBox" position="384 108 256 25" name="chkSplitVertically">
+				<Widget type="Button" skin="CheckBox" position="384 158 256 25" name="chkSplitVertically">
 					<Property key="Caption" value="#{SplitVertically}"/>
 					<Property key="TextColour" value="0.8 0.9 1.0"/>
 					<UserString key="RelativeTo" value="GameWnd"/>
 				</Widget>
-				<Widget type="Button" skin="Button" position="384 60 80 33" name="btnPlayers1">
+				<Widget type="Button" skin="Button" position="384 100 80 33" name="btnPlayers1">
 					<Property key="Caption" value="1"/>
 					<Property key="Colour" value="0.4 0.8 1"/>
 					<UserString key="RelativeTo" value="GameWnd"/>
 				</Widget>
-				<Widget type="Button" skin="Button" position="472 60 80 33" name="btnPlayers2">
+				<Widget type="Button" skin="Button" position="472 100 80 33" name="btnPlayers2">
 					<Property key="Caption" value="2"/>
 					<Property key="Colour" value="0.4 1 0.4"/>
 					<UserString key="RelativeTo" value="GameWnd"/>
 				</Widget>
-				<Widget type="Button" skin="Button" position="560 60 80 33" name="btnPlayers3">
+				<Widget type="Button" skin="Button" position="560 100 80 33" name="btnPlayers3">
 					<Property key="Caption" value="3"/>
 					<Property key="Colour" value="1 0.8 0.4"/>
 					<UserString key="RelativeTo" value="GameWnd"/>
 				</Widget>
-				<Widget type="Button" skin="Button" position="648 60 80 33" name="btnPlayers4">
+				<Widget type="Button" skin="Button" position="648 100 80 33" name="btnPlayers4">
 					<Property key="Caption" value="4"/>
 					<Property key="Colour" value="1 0.5 0.5"/>
 					<UserString key="RelativeTo" value="GameWnd"/>
 				</Widget>
-				<Widget type="TextBox" skin="TextBox" position="384 24 176 24">
+				<Widget type="TextBox" skin="TextBox" position="384 74 176 24">
 					<Property key="Caption" value="#{NumLocalPlayers}"/>
 					<Property key="TextColour" value="0.7 0.9 1"/>
 					<UserString key="RelativeTo" value="GameWnd"/>
 				</Widget>
-				<Widget type="TextBox" skin="TextBox" position="564 24 64 24" name="valLocPlayers">
+				<Widget type="TextBox" skin="TextBox" position="564 74 64 24" name="valLocPlayers">
 					<Property key="TextColour" value="0.8 0.92 1"/>
 					<UserString key="RelativeTo" value="GameWnd"/>
 				</Widget>
-				<Widget type="TextBox" skin="TextBox" position="32 24 140 24">
-					<Property key="Caption" value="#{Game}"/>
-					<UserString key="RelativeTo" value="GameWnd"/>
-				</Widget>
-				<Widget type="TextBox" skin="TextBox" position="388 164 176 24">
+				<Widget type="TextBox" skin="TextBox" position="384 224 176 24">
 					<Property key="Caption" value="#{NumLaps}"/>
 					<Property key="TextColour" value="0.7 0.9 1"/>
 					<UserString key="RelativeTo" value="GameWnd"/>
 				</Widget>
-				<Widget type="TextBox" skin="TextBox" position="564 164 64 24" name="NumLapsVal">
+				<Widget type="TextBox" skin="TextBox" position="564 224 64 24" name="NumLapsVal">
 					<Property key="TextColour" value="0.8 0.95 1"/>
 					<UserString key="RelativeTo" value="GameWnd"/>
 				</Widget>
-				<Widget type="Slider" skin="Slider" position="384 200 384 18" name="NumLaps">
-					<UserString key="RelativeTo" value="GameWnd"/>
-				</Widget>
-				<Widget type="TextBox" skin="TextBox" position="32 72 152 24">
-					<Property key="TextColour" value="0.55 0.75 1"/>
-					<Property key="Caption" value="#{Boost}"/>
-					<UserString key="RelativeTo" value="GameWnd"/>
-				</Widget>
-				<Widget type="TextBox" skin="TextBox" position="32 104 152 24">
-					<Property key="Caption" value="#{Flip}"/>
-					<Property key="TextColour" value="0.55 0.75 1"/>
-					<UserString key="RelativeTo" value="GameWnd"/>
-				</Widget>
-				<Widget type="ComboBox" skin="ComboBox" position="160 72 160 24" name="CmbBoost">
-					<Property key="Colour" value="0.55 0.75 1"/>
-					<Property key="TextColour" value="0.6 0.8 1"/>
-					<Property key="ReadOnly" value="true"/>
-					<UserString key="RelativeTo" value="GameWnd"/>
-				</Widget>
-				<Widget type="ComboBox" skin="ComboBox" position="160 104 160 24" name="CmbFlip">
-					<Property key="Colour" value="0.55 0.75 1"/>
-					<Property key="TextColour" value="0.6 0.8 1"/>
-					<Property key="ReadOnly" value="true"/>
+				<Widget type="Slider" skin="Slider" position="384 250 384 18" name="NumLaps">
 					<UserString key="RelativeTo" value="GameWnd"/>
 				</Widget>
 			</Widget>
