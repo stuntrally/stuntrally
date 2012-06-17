@@ -3,9 +3,9 @@
 namespace sh
 {
 	DefinitionLoader::DefinitionLoader (const std::string& path)
-		: ConfigLoader(".definition")
+		: ScriptLoader(".definition")
 	{
-		ConfigLoader::loadAllFiles(this, path);
+		ScriptLoader::loadAllFiles(this, path);
 	}
 
 	DefinitionLoader::~DefinitionLoader ()

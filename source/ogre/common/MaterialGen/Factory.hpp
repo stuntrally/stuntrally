@@ -6,6 +6,7 @@
 
 #include "MaterialDefinition.hpp"
 #include "MaterialInstance.hpp"
+#include "Configuration.hpp"
 
 namespace sh
 {
@@ -16,6 +17,10 @@ namespace sh
 	typedef std::map<std::string, MaterialInstance> InstanceMap;
 	typedef std::map<std::string, InstanceMap> GroupMap;
 
+	/**
+	 * @brief
+	 * the main interface class
+	 */
 	class Factory
 	{
 	public:
@@ -53,6 +58,19 @@ namespace sh
 		 */
 		MaterialDefinition* getDefinition (const std::string& name);
 
+		/**
+		 * switch the active \a Configuration of either a specific group, or all groups if the \a group parameter
+		 * is left empty
+		 * @param configuration name of the configuration to switch to
+		 * @param group to apply this configuration to
+		 */
+		void setActiveConfiguration (const std::string& configuration, const std::string& group = "");
+
+		/**
+		 * register a \a Configuration, which can then be used for setActiveConfiguration method
+		 */
+		void registerConfiguration (const std::string& name, Configuration configuration);
+
 		friend class Platform;
 
 	private:
@@ -63,7 +81,6 @@ namespace sh
 
 		DefinitionLoader* mDefinitionLoader;
 
-	private:
 		void requestMaterial (const std::string& name);
 	};
 };

@@ -1,7 +1,7 @@
 #ifndef SH_DEFINITIONLOADER_H
 #define SH_DEFINITIONLOADER_H
 
-#include "ConfigLoader.hpp"
+#include "ScriptLoader.hpp"
 
 namespace sh
 {
@@ -9,7 +9,7 @@ namespace sh
 	 * @brief
 	 * loads .definition files that contain a serialized version of \a MaterialDefinition classes
 	 */
-	class DefinitionLoader : public ConfigLoader
+	class DefinitionLoader : public ScriptLoader
 	{
 	public:
 		DefinitionLoader(const std::string& path);

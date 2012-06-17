@@ -8,20 +8,20 @@
  
 namespace sh
 {
-    class ConfigNode;
+    class ScriptNode;
 
 	/**
 	 * @brief The base class of loaders that read Ogre style script files to get configuration and settings.
 	 * Heavily inspired by: http://www.ogre3d.org/tikiwiki/All-purpose+script+parser
 	 * ( "Non-ogre version")
 	 */
-	class ConfigLoader
+	class ScriptLoader
 	{
 	public:
-		static void loadAllFiles(ConfigLoader* c, const std::string& path);
+		static void loadAllFiles(ScriptLoader* c, const std::string& path);
 
-		ConfigLoader(const std::string& fileEnding);
-		virtual ~ConfigLoader();
+		ScriptLoader(const std::string& fileEnding);
+		virtual ~ScriptLoader();
 
 		std::string m_fileEnding;
 
@@ -32,9 +32,9 @@ namespace sh
 		// }
 		// The type is "entity" and the name is "animals/dog"
 		// Or if animal/dog was not there then name is ""
-		ConfigNode *getConfigScript (const std::string &name);
+		ScriptNode *getConfigScript (const std::string &name);
 
-		std::map <std::string, ConfigNode*> getAllConfigScripts ();
+		std::map <std::string, ScriptNode*> getAllConfigScripts ();
 
 		void parseScript(std::ifstream &stream);
 
@@ -44,7 +44,7 @@ namespace sh
 		float m_LoadOrder;
 		// like "*.object"
 
-		std::map <std::string, ConfigNode*> m_scriptList;
+		std::map <std::string, ScriptNode*> m_scriptList;
 
 		enum Token
 		{
@@ -58,18 +58,18 @@ namespace sh
 		Token tok, lastTok;
 		std::string tokVal;
 
-		void _parseNodes(std::ifstream &stream, ConfigNode *parent);
+		void _parseNodes(std::ifstream &stream, ScriptNode *parent);
 		void _nextToken(std::ifstream &stream);
 		void _skipNewLines(std::ifstream &stream);
 
 		void clearScriptList();
 	};
 
-	class ConfigNode
+	class ScriptNode
 	{
 	public:
-		ConfigNode(ConfigNode *parent, const std::string &name = "untitled");
-		~ConfigNode();
+		ScriptNode(ScriptNode *parent, const std::string &name = "untitled");
+		~ScriptNode();
 
 		inline void setName(const std::string &name)
 		{
@@ -91,23 +91,23 @@ namespace sh
 			return m_value;
 		}
 
-		ConfigNode *addChild(const std::string &name = "untitled", bool replaceExisting = false);
-		ConfigNode *findChild(const std::string &name, bool recursive = false);
+		ScriptNode *addChild(const std::string &name = "untitled", bool replaceExisting = false);
+		ScriptNode *findChild(const std::string &name, bool recursive = false);
 
-		inline std::vector<ConfigNode*> &getChildren()
+		inline std::vector<ScriptNode*> &getChildren()
 		{
 			return m_children;
 		}
 
-		inline ConfigNode *getChild(unsigned int index = 0)
+		inline ScriptNode *getChild(unsigned int index = 0)
 		{
 			assert(index < m_children.size());
 			return m_children[index];
 		}
 
-		void setParent(ConfigNode *newParent);
+		void setParent(ScriptNode *newParent);
  
-		inline ConfigNode *getParent()
+		inline ScriptNode *getParent()
 		{
 			return m_parent;
 		}
@@ -115,12 +115,12 @@ namespace sh
 	private:
 		std::string m_name;
 		std::string m_value;
-		std::vector<ConfigNode*> m_children;
-		ConfigNode *m_parent;
+		std::vector<ScriptNode*> m_children;
+		ScriptNode *m_parent;
 
 		int m_lastChildFound;  //The last child node's index found with a call to findChild()
 
-		std::vector<ConfigNode*>::iterator _iter;
+		std::vector<ScriptNode*>::iterator _iter;
 		bool _removeSelf;
 	};
  

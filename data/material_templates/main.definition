@@ -4,5 +4,10 @@ material_definition main
 	{
 		vertex_program main_vertex
 		fragment_program main_fragment
+
+		texture_unit diffuseMap
+		{
+			address_mode clamp
+		}
 	}
 }

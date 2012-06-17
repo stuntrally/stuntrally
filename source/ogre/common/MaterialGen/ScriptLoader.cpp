@@ -1,4 +1,4 @@
-#include "ConfigLoader.hpp"
+#include "ScriptLoader.hpp"
 
 #include <vector>
 #include <map>
@@ -9,7 +9,7 @@
 
 namespace sh
 {
-	void ConfigLoader::loadAllFiles(ConfigLoader* c, const std::string& path)
+	void ScriptLoader::loadAllFiles(ScriptLoader* c, const std::string& path)
 	{
 		for ( boost::filesystem::recursive_directory_iterator end, dir(path); dir != end; ++dir )
 		{
@@ -22,21 +22,19 @@ namespace sh
 		}
 	}
 
-	ConfigLoader::ConfigLoader(const std::string& fileEnding)
+	ScriptLoader::ScriptLoader(const std::string& fileEnding)
 	{
-		//Register as a ScriptLoader
 		m_fileEnding = fileEnding;
 	}
 
-	ConfigLoader::~ConfigLoader()
+	ScriptLoader::~ScriptLoader()
 	{
 		clearScriptList();
-
 	}
 
-	void ConfigLoader::clearScriptList()
+	void ScriptLoader::clearScriptList()
 	{
-		std::map <std::string, ConfigNode *>::iterator i;
+		std::map <std::string, ScriptNode *>::iterator i;
 		for (i = m_scriptList.begin(); i != m_scriptList.end(); i++)
 		{
 			delete i->second;
@@ -44,9 +42,9 @@ namespace sh
 		m_scriptList.clear();
 	}
 
-	ConfigNode *ConfigLoader::getConfigScript(const std::string &name)
+	ScriptNode *ScriptLoader::getConfigScript(const std::string &name)
 	{
-		std::map <std::string, ConfigNode*>::iterator i;
+		std::map <std::string, ScriptNode*>::iterator i;
 
 		std::string key = name;
 		i = m_scriptList.find(key);
@@ -62,12 +60,12 @@ namespace sh
 		}
 	}
 
-	std::map <std::string, ConfigNode*> ConfigLoader::getAllConfigScripts ()
+	std::map <std::string, ScriptNode*> ScriptLoader::getAllConfigScripts ()
 	{
 		return m_scriptList;
 	}
 
-	void ConfigLoader::parseScript(std::ifstream &stream)
+	void ScriptLoader::parseScript(std::ifstream &stream)
 	{
 		//Get first token
 		_nextToken(stream);
@@ -83,7 +81,7 @@ namespace sh
 		stream.close();
 	}
 
-	void ConfigLoader::_nextToken(std::ifstream &stream)
+	void ScriptLoader::_nextToken(std::ifstream &stream)
 	{
 		//EOF token
 		if (stream.eof())
@@ -180,7 +178,7 @@ namespace sh
 		return;
 	}
 
-	void ConfigLoader::_skipNewLines(std::ifstream &stream)
+	void ScriptLoader::_skipNewLines(std::ifstream &stream)
 	{
 		while (tok == TOKEN_NewLine)
 		{
@@ -188,9 +186,9 @@ namespace sh
 		}
 	}
 
-	void ConfigLoader::_parseNodes(std::ifstream &stream, ConfigNode *parent)
+	void ScriptLoader::_parseNodes(std::ifstream &stream, ScriptNode *parent)
 	{
-		typedef std::pair<std::string, ConfigNode*> ScriptItem;
+		typedef std::pair<std::string, ScriptNode*> ScriptItem;
 
 		while (true)
 		{
@@ -200,14 +198,14 @@ namespace sh
 				case TOKEN_Text:
 				{
 					//Add the new node
-					ConfigNode *newNode;
+					ScriptNode *newNode;
 					if (parent)
 					{
 						newNode = parent->addChild(tokVal);
 					}
 					else
 					{
-						newNode = new ConfigNode(0, tokVal);
+						newNode = new ScriptNode(0, tokVal);
 					}
 
 					//Get values
@@ -277,7 +275,7 @@ namespace sh
 		};
 	}
 
-	ConfigNode::ConfigNode(ConfigNode *parent, const std::string &name)
+	ScriptNode::ScriptNode(ScriptNode *parent, const std::string &name)
 	{
 		m_name = name;
 		m_parent = parent;
@@ -292,13 +290,13 @@ namespace sh
 		}
 	}
 
-	ConfigNode::~ConfigNode()
+	ScriptNode::~ScriptNode()
 	{
 		//Delete all children
-		std::vector<ConfigNode*>::iterator i;
+		std::vector<ScriptNode*>::iterator i;
 		for (i = m_children.begin(); i != m_children.end(); i++)
 		{
-			ConfigNode *node = *i;
+			ScriptNode *node = *i;
 			node->_removeSelf = false;
 			delete node;
 		}
@@ -311,20 +309,20 @@ namespace sh
 		}
 	}
 
-	ConfigNode *ConfigNode::addChild(const std::string &name, bool replaceExisting)
+	ScriptNode *ScriptNode::addChild(const std::string &name, bool replaceExisting)
 	{
 		if (replaceExisting)
 		{
-			ConfigNode *node = findChild(name, false);
+			ScriptNode *node = findChild(name, false);
 			if (node)
 			{
 				return node;
 			}
 		}
-		return new ConfigNode(this, name);
+		return new ScriptNode(this, name);
 	}
 
-	ConfigNode *ConfigNode::findChild(const std::string &name, bool recursive)
+	ScriptNode *ScriptNode::findChild(const std::string &name, bool recursive)
 	{
 		int indx, prevC, nextC;
 		int childCount = (int)m_children.size();
@@ -337,7 +335,7 @@ namespace sh
 			nextC = m_lastChildFound+1; if (nextC < 0) nextC = 0; else if (nextC >= childCount) nextC = childCount-1;
 			for (indx = prevC; indx <= nextC; ++indx)
 			{
-				ConfigNode *node = m_children[indx];
+				ScriptNode *node = m_children[indx];
 				if (node->m_name == name)
 				{
 					m_lastChildFound = indx;
@@ -349,7 +347,7 @@ namespace sh
 			//already searched area above.
 			for (indx = nextC + 1; indx < childCount; ++indx)
 			{
-				ConfigNode *node = m_children[indx];
+				ScriptNode *node = m_children[indx];
 				if (node->m_name == name) {
 					m_lastChildFound = indx;
 					return node;
@@ -357,7 +355,7 @@ namespace sh
 			}
 			for (indx = 0; indx < prevC; ++indx)
 			{
-				ConfigNode *node = m_children[indx];
+				ScriptNode *node = m_children[indx];
 				if (node->m_name == name) {
 					m_lastChildFound = indx;
 					return node;
@@ -368,7 +366,7 @@ namespace sh
 		{
 			//Search for the node from start to finish
 			for (indx = 0; indx < childCount; ++indx){
-				ConfigNode *node = m_children[indx];
+				ScriptNode *node = m_children[indx];
 				if (node->m_name == name) {
 					m_lastChildFound = indx;
 					return node;
@@ -389,7 +387,7 @@ namespace sh
 		return NULL;
 	}
 
-	void ConfigNode::setParent(ConfigNode *newParent)
+	void ScriptNode::setParent(ScriptNode *newParent)
 	{
 		//Remove self from current parent
 		m_parent->m_children.erase(_iter);

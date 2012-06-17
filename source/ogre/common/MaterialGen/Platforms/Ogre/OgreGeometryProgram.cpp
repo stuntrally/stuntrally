@@ -5,6 +5,7 @@
 namespace sh
 {
 	OgreGeometryProgram::OgreGeometryProgram(
+		const std::string& compileArguments,
 		const std::string& name, const std::string& entryPoint,
 		const std::string& source, const std::string& lang,
 		const std::string& resourceGroup)

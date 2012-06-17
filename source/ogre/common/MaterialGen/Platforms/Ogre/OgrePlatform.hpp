@@ -34,12 +34,15 @@ namespace sh
 		virtual boost::shared_ptr<Material> createMaterial (const std::string& name);
 
 		virtual boost::shared_ptr<VertexProgram> createVertexProgram (
+			const std::string& compileArguments,
 			const std::string& name, const std::string& entryPoint,
 			const std::string& source, Language lang);
 		virtual boost::shared_ptr<FragmentProgram> createFragmentProgram (
+			const std::string& compileArguments,
 			const std::string& name, const std::string& entryPoint,
 			const std::string& source, Language lang);
 		virtual boost::shared_ptr<GeometryProgram> createGeometryProgram (
+			const std::string& compileArguments,
 			const std::string& name, const std::string& entryPoint,
 			const std::string& source, Language lang);
 

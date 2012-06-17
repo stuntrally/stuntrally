@@ -63,26 +63,29 @@ namespace sh
 	}
 
 	boost::shared_ptr<VertexProgram> OgrePlatform::createVertexProgram (
+		const std::string& compileArguments,
 		const std::string& name, const std::string& entryPoint,
 		const std::string& source, Language lang)
 	{
-		OgreVertexProgram* prog = new OgreVertexProgram (name, entryPoint, source, convertLang(lang), mResourceGroup);
+		OgreVertexProgram* prog = new OgreVertexProgram (compileArguments, name, entryPoint, source, convertLang(lang), mResourceGroup);
 		return boost::shared_ptr<VertexProgram> (prog);
 	}
 
 	boost::shared_ptr<FragmentProgram> OgrePlatform::createFragmentProgram (
+		const std::string& compileArguments,
 		const std::string& name, const std::string& entryPoint,
 		const std::string& source, Language lang)
 	{
-		OgreFragmentProgram* prog = new OgreFragmentProgram (name, entryPoint, source, convertLang(lang), mResourceGroup);
+		OgreFragmentProgram* prog = new OgreFragmentProgram (compileArguments, name, entryPoint, source, convertLang(lang), mResourceGroup);
 		return boost::shared_ptr<FragmentProgram> (prog);
 	}
 
 	boost::shared_ptr<GeometryProgram> OgrePlatform::createGeometryProgram (
+		const std::string& compileArguments,
 		const std::string& name, const std::string& entryPoint,
 		const std::string& source, Language lang)
 	{
-		OgreGeometryProgram* prog = new OgreGeometryProgram (name, entryPoint, source, convertLang(lang), mResourceGroup);
+		OgreGeometryProgram* prog = new OgreGeometryProgram (compileArguments, name, entryPoint, source, convertLang(lang), mResourceGroup);
 		return boost::shared_ptr<GeometryProgram> (prog);
 	}
 
