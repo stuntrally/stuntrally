@@ -30,20 +30,20 @@ void App::InitGui()
 	{
 		const std::string& name = (*it)->getName();
 		setToolTips((*it)->getEnumerator());
-		if (name == "MainMenuWnd") mWndMain = *it;  else
-		if (name == "EditorWnd")  mWndEdit = *it;  else
-		if (name == "OptionsWnd") mWndOpts = *it;  else
-		if (name == "HelpWnd")    mWndHelp = *it;  else
+		if (name == "MainMenuWnd"){  mWndMain = *it;	} else
+		if (name == "EditorWnd")  {  mWndEdit = *it;	} else
+		if (name == "OptionsWnd") {  mWndOpts = *it;	} else
+		if (name == "HelpWnd")    {  mWndHelp = *it;	} else
 
-		if (name == "CamWnd")     mWndCam = *it;  else
-		if (name == "StartWnd")   mWndStart = *it;  else
+		if (name == "CamWnd")     {  mWndCam = *it;		(*it)->setPosition(0,64);	} else
+		if (name == "StartWnd")   {  mWndStart = *it;	(*it)->setPosition(0,64);	} else
+		if (name == "BrushWnd")   {  mWndBrush = *it;	(*it)->setPosition(0,64);	} else
 
-		if (name == "BrushWnd")   mWndBrush = *it;  else
-		if (name == "RoadCur")    mWndRoadCur = *it;  else
-		if (name == "RoadStats")  mWndRoadStats = *it;  else
+		if (name == "RoadCur")    {  mWndRoadCur = *it;		(*it)->setPosition(0,34);	} else
+		if (name == "RoadStats")  {  mWndRoadStats = *it;	(*it)->setPosition(0,300);	} else
 
-		if (name == "FluidsWnd")  mWndFluids = *it;  else
-		if (name == "ObjectsWnd") mWndObjects = *it;
+		if (name == "FluidsWnd")  {  mWndFluids = *it;	(*it)->setPosition(0,64);	} else
+		if (name == "ObjectsWnd") {  mWndObjects = *it;	(*it)->setPosition(0,64);	}
 	}
 	if (mWndRoadStats)  mWndRoadStats->setVisible(false);
 
@@ -190,10 +190,11 @@ void App::InitGui()
 	Edt(edTerTriSize, "edTerTriSize", editTerTriSize);
 	Edt(edTerLScale, "edTerLScale", editTerLScale);
 	Slv(TerTriSize,	powf((sc.td.fTriangleSize -0.1f)/5.9f, 0.5f));
-	Slv(TerLScale, 0);
+	Slv(TerLScale, 0);  sldTerLScale = sl;
 	Btn("TerrainNew", btnTerrainNew);
 	Btn("TerrainGenerate", btnTerGenerate);
 	Btn("TerrainHalf", btnTerrainHalf);
+	Btn("TerrainDouble", btnTerrainDouble);
 
 	Slv(TerGenScale,powf(pSet->gen_scale   /160.f, 1.f/2.f));  // generate
 	Slv(TerGenOfsX, (pSet->gen_ofsx+2.f) /4.f);

@@ -329,9 +329,10 @@ protected:
 	
 	//  ter size
 	SLV(TerTriSize);  SLV(TerLScale);
-	MyGUI::EditPtr edTerTriSize, edTerLScale;
+	MyGUI::EditPtr edTerTriSize, edTerLScale;  MyGUI::Slider* sldTerLScale;
 	void editTerTriSize(MyGUI::EditPtr), editTerLScale(MyGUI::EditPtr);
-	void btnTerrainNew(WP), btnTerGenerate(WP), btnTerrainHalf(WP);
+	void btnTerrainNew(WP), btnTerGenerate(WP), btnTerrainHalf(WP), btnTerrainDouble(WP);
+	const char* getHMapNew();
 	MyGUI::StaticTextPtr valTerLAll;
 	
 	//  ter blendmap

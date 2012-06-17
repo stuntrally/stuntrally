@@ -129,10 +129,9 @@ void App::tabTerLayer(TabPtr wp, size_t id)
 		chkTerLNoiseOnly->setStateSelected(lay->bNoiseOnly);
 	}
 	//  scale layer
-	Slider* sl = (Slider*)mWndOpts->findWidget("TerLScale");
-	if (sl)  sl->setVisible(bTerLay);
+	sldTerLScale->setVisible(bTerLay);
 	if (bTerLay)  {
-		if (edTerLScale)  edTerLScale->setCaption(toStr(scale));
+		edTerLScale->setCaption(toStr(scale));
 		editTerLScale(edTerLScale);  }
 	if (valTerLAll)
 		valTerLAll->setCaption("Used: "+toStr(sc.td.layers.size()));
@@ -182,6 +181,14 @@ void App::tabHmap(TabPtr wp, size_t id)
 	if (valTerTriSize){  valTerTriSize->setCaption(fToStr(sc.td.fTriangleSize * size,2,4));  }
 }
 
+//  - - - -  Hmap tools  - - - -
+const char* App::getHMapNew()
+{
+	static String name = TrkDir() + "heightmap-new.f32";
+	return name.c_str();
+}
+
+//----------------------------------------------------------------------------------------------------------
 void App::btnTerrainNew(WP)
 {
 	const char* str = tabsHmap->getItemSelected()->getCaption().asUTF8_c_str();  int size = atoi(str);
@@ -191,8 +198,7 @@ void App::btnTerrainNew(WP)
 
 	float* hfData = new float[sc.td.iVertsX * sc.td.iVertsY];
 	int siz = sc.td.iVertsX * sc.td.iVertsY * sizeof(float);
-	String name = TrkDir() + "heightmap-new.f32";
-
+	
 	//  generate Hmap
 	for (int j=0; j < sc.td.iVertsY; ++j)
 	{
@@ -201,7 +207,7 @@ void App::btnTerrainNew(WP)
 			hfData[a] = 0.f;  //sc.td.getHeight(i,j);
 	}
 	std::ofstream of;
-	of.open(name.c_str(), std::ios_base::binary);
+	of.open(getHMapNew(), std::ios_base::binary);
 	of.write((const char*)&hfData[0], siz);
 	of.close();
 
@@ -214,7 +220,6 @@ void App::btnTerGenerate(WP)
 {
 	float* hfData = new float[sc.td.iVertsX * sc.td.iVertsY];
 	int siz = sc.td.iVertsX * sc.td.iVertsY * sizeof(float);
-	String name = TrkDir() + "heightmap-new.f32";
 	float s = sc.td.fTriangleSize*0.001f,
 		ox = pSet->gen_ofsx *s*sc.td.iVertsX, oy = pSet->gen_ofsy *s*sc.td.iVertsY;
 
@@ -230,7 +235,7 @@ void App::btnTerGenerate(WP)
 	}
 
 	std::ofstream of;
-	of.open(name.c_str(), std::ios_base::binary);
+	of.open(getHMapNew(), std::ios_base::binary);
 	of.write((const char*)&hfData[0], siz);
 	of.close();
 
@@ -247,8 +252,7 @@ void App::btnTerrainHalf(WP)
 	int halfSize = (sc.td.iVertsX-1) / 2 +1;
 	float* hfData = new float[halfSize * halfSize];
 	int siz = halfSize * halfSize * sizeof(float);
-	String name = TrkDir() + "heightmap-new.f32";
-
+	
 	//  resize Hmap by half
 	for (int j=0; j < halfSize; ++j)
 	{
@@ -257,13 +261,40 @@ void App::btnTerrainHalf(WP)
 		{	hfData[a] = sc.td.hfHeight[a2];  a2+=2;  }
 	}
 	std::ofstream of;
-	of.open(name.c_str(), std::ios_base::binary);
+	of.open(getHMapNew(), std::ios_base::binary);
 	of.write((const char*)&hfData[0], siz);
 	of.close();
 	delete[] hfData;
 
 	sc.td.fTriangleSize *= 2.f;
 	sc.td.iVertsX = halfSize;  sc.td.UpdVals();
+	bNewHmap = true;	UpdateTrack();
+}
+
+//  Terrain  double  --------------------------------
+void App::btnTerrainDouble(WP)  // todo double.. gui []
+{
+	const char* str = tabsHmap->getItemSelected()->getCaption().asUTF8_c_str();  int size = atoi(str) / 2;
+	if (valTerTriSize){ valTerTriSize->setCaption(fToStr(sc.td.fTriangleSize * size,2,4));  }
+
+	int dblSize = (sc.td.iVertsX-1) * 2 +1;
+	float* hfData = new float[dblSize * dblSize];
+	int siz = dblSize * dblSize * sizeof(float);
+	
+	//  resize Hmap by half
+	for (int j=0; j < sc.td.iVertsX; ++j)
+	{
+		int a = (j +dblSize/4) * dblSize + dblSize/4, a2 = j * sc.td.iVertsX;
+		for (int i=0; i < sc.td.iVertsX; ++i,++a)
+		{	hfData[a] = sc.td.hfHeight[a2];  ++a2;  }
+	}
+	std::ofstream of;
+	of.open(getHMapNew(), std::ios_base::binary);
+	of.write((const char*)&hfData[0], siz);
+	of.close();
+	delete[] hfData;
+
+	sc.td.iVertsX = dblSize;  sc.td.UpdVals();
 	bNewHmap = true;	UpdateTrack();
 }
 
@@ -275,8 +306,7 @@ void App::btnScaleTerH(WP)
 
 	float* hfData = new float[sc.td.iVertsX * sc.td.iVertsY];
 	int siz = sc.td.iVertsX * sc.td.iVertsY * sizeof(float);
-	String name = TrkDir() + "heightmap-new.f32";
-
+	
 	//  generate Hmap
 	for (int j=0; j < sc.td.iVertsY; ++j)
 	{
@@ -285,7 +315,7 @@ void App::btnScaleTerH(WP)
 			hfData[a] = sc.td.hfHeight[a] * sf;
 	}
 	std::ofstream of;
-	of.open(name.c_str(), std::ios_base::binary);
+	of.open(getHMapNew(), std::ios_base::binary);
 	of.write((const char*)&hfData[0], siz);
 	of.close();
 
@@ -293,7 +323,7 @@ void App::btnScaleTerH(WP)
 	bNewHmap = true;	UpdateTrack();
 	// !onTer road points..
 }
-//-----------------------------------------------------
+//----------------------------------------------------------------------------------------------------------
 
 
 void App::slTerGenScale(SL)
@@ -387,14 +417,13 @@ void App::editTerLScale(EditPtr ed)
 	Real r = std::max(0.01f, s2r(ed->getCaption()) );
 	if (bTerLay)  sc.td.layersAll[idTerLay].tiling = r;
 
-	Slider* sl = (Slider*)mWndOpts->findWidget("TerLScale");  // set slider
-	float v = std::min(1.f,std::max(0.f, powf((r - 2.0f)/9.0f, 1.f/1.5f) ));
-	if (sl)  sl->setValue(v);
+	float v = std::min(1.f,std::max(0.f, powf((r - 2.0f)/24.0f, 1.f/1.5f) ));
+	if (sldTerLScale)  sldTerLScale->setValue(v);
 }
 // |
 void App::slTerLScale(SL)  //  scale layer
 {
-	Real v = 2.0f + 9.0f * powf(val, 1.5f);  // 0.1 + 89.9, 1 + 19
+	Real v = 2.0f + 24.0f * powf(val, 1.5f);  // 0.1 + 89.9, 1 + 19
 	if (bTerLay && bGI)  sc.td.layersAll[idTerLay].tiling = v;
 	if (edTerLScale)  edTerLScale->setCaption(toStr(v));  // set edit
 }
