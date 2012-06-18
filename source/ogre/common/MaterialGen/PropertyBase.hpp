@@ -77,9 +77,9 @@ namespace sh
 	public:
 		FloatValue (float in);
 		FloatValue (const std::string& in);
-		float get() const;
+		float get() const { return mValue; }
 
-		virtual std::string serialize() {};
+		virtual std::string serialize();
 	private:
 		float mValue;
 	};
@@ -96,7 +96,38 @@ namespace sh
 		int mValue;
 	};
 
-	/// \todo add more (vectors 2-4 components, ...)
+	class Vector2 : public PropertyValue
+	{
+	public:
+		Vector2 (float x, float y);
+		Vector2 (const std::string& in);
+
+		int mX, mY;
+
+		virtual std::string serialize();
+	};
+
+	class Vector3 : public PropertyValue
+	{
+	public:
+		Vector3 (float x, float y, float z);
+		Vector3 (const std::string& in);
+
+		int mX, mY, mZ;
+
+		virtual std::string serialize();
+	};
+
+	class Vector4 : public PropertyValue
+	{
+	public:
+		Vector4 (float x, float y, float z, float w);
+		Vector4 (const std::string& in);
+
+		int mX, mY, mZ, mW;
+
+		virtual std::string serialize();
+	};
 
 	/// \brief base class that allows setting properties with any kind of value-type
 	class PropertySet
