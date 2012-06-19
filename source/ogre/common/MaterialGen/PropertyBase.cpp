@@ -146,15 +146,40 @@ namespace sh
 
 	// ------------------------------------------------------------------------------
 
+	PropertySetGet::PropertySetGet (PropertySetGet* parent)
+		: mParent(parent)
+	{
+	}
+
+	PropertySetGet::PropertySetGet ()
+		: mParent(NULL)
+	{
+	}
+
+	void PropertySetGet::setParent (PropertySetGet* parent)
+	{
+		if (mParent)
+			throw std::runtime_error ("PropertySetGet already has a parent");
+		mParent = parent;
+	}
+
 	void PropertySetGet::setProperty (const std::string& name, PropertyValuePtr value)
 	{
 		mProperties [name] = value;
 	}
 
-	PropertyValuePtr  PropertySetGet::getProperty(const std::string& name)
+	PropertyValuePtr PropertySetGet::getProperty (const std::string& name)
 	{
-		assert (mProperties.find(name) != mProperties.end()
-			&& "Trying to retrieve property that does not exist");
-		return mProperties[name];
+		bool found = mProperties.find(name) != mProperties.end();
+
+		if (!found)
+		{
+			if (!mParent)
+				throw std::runtime_error ("Trying to retrieve property that does not exist");
+			else
+				return mParent->getProperty (name);
+		}
+		else
+			return mProperties[name];
 	}
 }

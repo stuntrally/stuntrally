@@ -7,7 +7,7 @@ namespace sh
 {
 	/**
 	 * @brief
-	 * loads .definition files that contain a serialized version of \a MaterialDefinition classes
+	 * loads .definition files that contain a serialized version of \a MaterialDefinition objects
 	 */
 	class DefinitionLoader : public ScriptLoader
 	{

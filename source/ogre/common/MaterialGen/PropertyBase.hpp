@@ -133,24 +133,34 @@ namespace sh
 	class PropertySet
 	{
 	public:
-		void setProperty (const std::string& name, PropertyValuePtr  value);
+		void setProperty (const std::string& name, PropertyValuePtr value);
 
 	protected:
-		virtual bool setPropertyOverride (const std::string& name, PropertyValuePtr  value);
+		virtual bool setPropertyOverride (const std::string& name, PropertyValuePtr value);
 		///< @return \a true if the specified property was found, or false otherwise
 	};
 
-	typedef std::map<std::string, PropertyValuePtr > PropertyMap;
+	typedef std::map<std::string, PropertyValuePtr> PropertyMap;
 
 	/// \brief base class that allows setting properties with any kind of value-type and retrieving them
 	class PropertySetGet
 	{
 	public:
-		void setProperty (const std::string& name, PropertyValuePtr  value);
+		PropertySetGet (PropertySetGet* parent);
+		PropertySetGet ();
+
+		void setParent (PropertySetGet* parent); ///< throws an exception if there is already a parent
+
+		void setProperty (const std::string& name, PropertyValuePtr value);
 		PropertyValuePtr  getProperty (const std::string& name);
 
-	protected:
+	private:
 		PropertyMap mProperties;
+
+		PropertySetGet* mParent;
+		///< the parent can provide properties as well (when they are retrieved via getProperty) \n
+		/// multiple levels of inheritance are also supported
+		/// children can override properties of their parents
 	};
 }
 

@@ -11,7 +11,6 @@
 namespace sh
 {
 	class Platform;
-	class DefinitionLoader;
 
 	typedef std::map<std::string, MaterialDefinition> DefinitionMap;
 	typedef std::map<std::string, MaterialInstance> InstanceMap;
@@ -43,7 +42,7 @@ namespace sh
 		MaterialInstance* createMaterialInstance (MaterialInstance* instance, const std::string& group = "");
 
 		/**
-		 * destroys all materials & their corresponding definitions that belong to \a group
+		 * destroys all materials & their corresponding definitions that belong to \a group \n
 		 * also destroys the group itself
 		 */
 		void destroyGroup (const std::string& group);
@@ -78,8 +77,6 @@ namespace sh
 		GroupMap mGroups;
 
 		Platform* mPlatform;
-
-		DefinitionLoader* mDefinitionLoader;
 
 		void requestMaterial (const std::string& name);
 	};
