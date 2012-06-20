@@ -25,6 +25,34 @@ namespace sh
 
 	// ------------------------------------------------------------------------------
 
+	BooleanValue::BooleanValue (bool in)
+		: mValue(in)
+	{
+	}
+
+	BooleanValue::BooleanValue (const std::string& in)
+	{
+		if (in == "true")
+			mValue = true;
+		else if (in == "false")
+			mValue = false;
+		else
+		{
+			std::cerr << "sh::BooleanValue: Warning: Unrecognized value \"" << in << "\" for property value of type BooleanValue" << std::endl;
+			mValue = false;
+		}
+	}
+
+	std::string BooleanValue::serialize ()
+	{
+		if (mValue)
+			return "true";
+		else
+			return "false";
+	}
+
+	// ------------------------------------------------------------------------------
+
 	StringValue::StringValue (const std::string& in)
 	{
 		mStringValue = in;
@@ -132,12 +160,12 @@ namespace sh
 
 	// ------------------------------------------------------------------------------
 
-	void PropertySet::setProperty (const std::string& name, PropertyValuePtr value)
+	void PropertySet::setProperty (const std::string& name, PropertyValuePtr &value)
 	{
 		setPropertyOverride (name, value);
 	}
 
-	bool PropertySet::setPropertyOverride (const std::string& name, PropertyValuePtr value)
+	bool PropertySet::setPropertyOverride (const std::string& name, PropertyValuePtr &value)
 	{
 		// if we got here, none of the sub-classes was able to make use of the property
 		std::cerr << "sh::PropertySet: Warning: No match for property with name '" << name << "'" << std::endl;
@@ -168,7 +196,7 @@ namespace sh
 		mProperties [name] = value;
 	}
 
-	PropertyValuePtr PropertySetGet::getProperty (const std::string& name)
+	PropertyValuePtr& PropertySetGet::getProperty (const std::string& name)
 	{
 		bool found = mProperties.find(name) != mProperties.end();
 

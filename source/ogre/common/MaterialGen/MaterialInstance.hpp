@@ -15,7 +15,8 @@ namespace sh
 	class MaterialInstance : public PropertySetGet
 	{
 	public:
-		void _setParentInstance (const std::string& name); ///< internal method
+		void _setParentInstance (const std::string& name);
+		std::string _getParentInstance ();
 
 	private:
 		std::string mParentInstance;

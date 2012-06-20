@@ -14,9 +14,9 @@ namespace sh
 		mPass = parent->getOgreMaterial()->getBestTechnique()->createPass();
 	}
 
-	TextureUnitState OgrePass::createTextureUnitState ()
+	boost::shared_ptr<TextureUnitState> OgrePass::createTextureUnitState ()
 	{
-		return OgreTextureUnitState (this);
+		return boost::shared_ptr<TextureUnitState> (new OgreTextureUnitState (this));
 	}
 
 	void OgrePass::assignVertexProgram (const VertexProgram& program)
@@ -34,5 +34,21 @@ namespace sh
 	Ogre::Pass* OgrePass::getOgrePass ()
 	{
 		return mPass;
+	}
+
+	bool OgrePass::setPropertyOverride (const std::string &name, PropertyValuePtr& value)
+	{
+		bool found = true;
+
+		if (name == "depthWrite")
+			mPass->setDepthWriteEnabled(PropertyValue::retrieve<BooleanValue>(value)->get());
+		else if (name == "depthCheck")
+			mPass->setDepthCheckEnabled(PropertyValue::retrieve<BooleanValue>(value)->get());
+		else if (name == "colourWrite")
+			mPass->setColourWriteEnabled(PropertyValue::retrieve<BooleanValue>(value)->get());
+		else
+			found = false;
+
+		return found;
 	}
 }

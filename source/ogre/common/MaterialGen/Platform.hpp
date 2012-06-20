@@ -27,12 +27,14 @@ namespace sh
 
 	class TextureUnitState : public PropertySet
 	{
+	public:
+		virtual void setTextureName (const std::string& textureName) = 0;
 	};
 
 	class Pass : public PropertySet
 	{
 	public:
-		virtual TextureUnitState createTextureUnitState () = 0;
+		virtual boost::shared_ptr<TextureUnitState> createTextureUnitState () = 0;
 		virtual void assignVertexProgram (const VertexProgram& program) = 0;
 		virtual void assignFragmentProgram (const FragmentProgram& program) = 0;
 		virtual void assignGeometryProgram(const GeometryProgram& program) = 0;

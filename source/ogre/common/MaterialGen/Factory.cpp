@@ -1,5 +1,7 @@
 #include "Factory.hpp"
 
+#include <stdexcept>
+
 #include "Platform.hpp"
 #include "DefinitionLoader.hpp"
 #include "InstanceLoader.hpp"
@@ -88,12 +90,37 @@ namespace sh
 
 					if (name == "parent")
 						newInstance._setParentInstance(val);
+					else if (name == "group")
+						group = val;
 					else
 						newInstance.setProperty((*propIt)->getName(), makeProperty<StringValue>(new StringValue(val)));
 				}
+
+				if (mGroups.find(group) == mGroups.end())
+				{
+					Group newGroup;
+					newGroup.mInstances[it->first] = newInstance;
+					mGroups[group] = newGroup;
+				}
+				else
+					mGroups[group].mInstances[it->first] = newInstance;
 			}
 
-			// now that all instances are loaded, replace the parent name with the actual pointer to this parent
+			// now that all instances are loaded, replace the parent names with the actual pointers to parent
+			for (GroupMap::iterator it = mGroups.begin(); it != mGroups.end(); ++it)
+			{
+				for (std::map<std::string, MaterialInstance>::iterator instanceIt = it->second.mInstances.begin(); instanceIt != it->second.mInstances.end(); ++instanceIt)
+				{
+					if (instanceIt->second._getParentInstance() != "")
+					{
+						std::string p = instanceIt->second._getParentInstance();
+						if (it->second.mInstances.find (p) == it->second.mInstances.end())
+							throw std::runtime_error ("Unable to find parent for material instance \"" + instanceIt->first + "\". Make sure it belongs to the same group.");
+						else
+							instanceIt->second.setParent(&it->second.mInstances[p]);
+					}
+				}
+			}
 		}
 	}
 

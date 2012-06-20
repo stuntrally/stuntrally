@@ -6,4 +6,9 @@ namespace sh
 	{
 		mParentInstance = name;
 	}
+
+	std::string MaterialInstance::_getParentInstance ()
+	{
+		return mParentInstance;
+	}
 }

@@ -96,6 +96,18 @@ namespace sh
 		int mValue;
 	};
 
+	class BooleanValue : public PropertyValue
+	{
+	public:
+		BooleanValue (bool in);
+		BooleanValue (const std::string& in);
+		bool get() const { return mValue; }
+
+		virtual std::string serialize();
+	private:
+		bool mValue;
+	};
+
 	class Vector2 : public PropertyValue
 	{
 	public:
@@ -133,10 +145,10 @@ namespace sh
 	class PropertySet
 	{
 	public:
-		void setProperty (const std::string& name, PropertyValuePtr value);
+		void setProperty (const std::string& name, PropertyValuePtr& value);
 
 	protected:
-		virtual bool setPropertyOverride (const std::string& name, PropertyValuePtr value);
+		virtual bool setPropertyOverride (const std::string& name, PropertyValuePtr& value);
 		///< @return \a true if the specified property was found, or false otherwise
 	};
 
@@ -152,7 +164,7 @@ namespace sh
 		void setParent (PropertySetGet* parent); ///< throws an exception if there is already a parent
 
 		void setProperty (const std::string& name, PropertyValuePtr value);
-		PropertyValuePtr  getProperty (const std::string& name);
+		PropertyValuePtr& getProperty (const std::string& name);
 
 	private:
 		PropertyMap mProperties;
