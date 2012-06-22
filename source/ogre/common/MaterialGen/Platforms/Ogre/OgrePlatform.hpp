@@ -50,7 +50,11 @@ namespace sh
 		virtual bool supportsShaderSerialization ();
 		virtual bool supportsMaterialQueuedListener ();
 
+		virtual void notifyFrameEntered ();
+
 		std::string mResourceGroup;
+
+		std::string mCurrentConfiguration;
 	};
 }
 

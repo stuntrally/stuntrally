@@ -23,6 +23,8 @@
 using namespace Ogre;
 using namespace MyGUI;
 
+#include "common/MaterialGen/Factory.hpp"
+
 
 //  simulation (2nd) thread
 //---------------------------------------------------------------------------------------------------------------
@@ -103,6 +105,8 @@ bool App::frameStart(Real time)
 {
 	PROFILER.beginBlock(" frameSt");
 
+	mFactory->notifyFrameEntered();
+
 	if (imgBack && pGame)  // show/hide background image
 	{
 		bool backImgVis = !bLoading && pGame->cars.empty();
@@ -115,7 +119,6 @@ bool App::frameStart(Real time)
 	{
 		updatePoses(time);
 	}
-
 
 	///  graphs update  -._/\_-.
 	if (pSet->show_graphs && graphs.size() > 0)
@@ -385,6 +388,7 @@ bool App::frameStart(Real time)
 		}
 		
 		PROFILER.endBlock(" frameSt");
+
 		return ret;
 	}
 	PROFILER.endBlock(" frameSt");

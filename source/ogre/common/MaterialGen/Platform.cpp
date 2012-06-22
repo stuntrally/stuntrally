@@ -15,6 +15,10 @@ namespace sh
 	{
 	}
 
+	void Platform::notifyFrameEntered ()
+	{
+	}
+
 	void Platform::setFactory (Factory* factory)
 	{
 		mFactory = factory;
@@ -35,9 +39,9 @@ namespace sh
 		return false;
 	}
 
-	void Platform::fireMaterialRequested (const std::string& name)
+	MaterialInstance* Platform::fireMaterialRequested (const std::string& name, const std::string& configuration)
 	{
-		mFactory->requestMaterial (name);
+		return mFactory->requestMaterial (name, configuration);
 	}
 
 	void Platform::serializeShaders (const std::string& file)

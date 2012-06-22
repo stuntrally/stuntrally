@@ -2,12 +2,13 @@
 
 #include <OgreDataStream.h>
 #include <OgreGpuProgramManager.h>
-#include <OgreTechnique.h> //fixme
 
 #include "OgreMaterial.hpp"
 #include "OgreVertexProgram.hpp"
 #include "OgreFragmentProgram.hpp"
 #include "OgreGeometryProgram.hpp"
+
+#include "../../MaterialInstance.hpp"
 
 namespace
 {
@@ -27,19 +28,11 @@ namespace sh
 	OgrePlatform::OgrePlatform(const std::string& resourceGroupName, const std::string& basePath)
 		: Platform(basePath)
 		, mResourceGroup(resourceGroupName)
+		, mCurrentConfiguration("test2")
 	{
 		Ogre::MaterialManager::getSingleton().addListener(this);
 
 		Ogre::GpuProgramManager::getSingletonPtr()->setSaveMicrocodesToCache(true);
-
-		/*
-		Ogre::MaterialPtr m = Ogre::MaterialManager::getSingleton().create ("car_body_ES", "General");
-		m->removeAllTechniques();
-		Ogre::Technique* t = m->createTechnique();
-		t->setSchemeName("test");
-
-		Ogre::MaterialManager::getSingleton().setActiveScheme("test2");
-		*/
 	}
 
 	OgrePlatform::~OgrePlatform ()
@@ -93,9 +86,22 @@ namespace sh
 		unsigned short schemeIndex, const Ogre::String &schemeName, Ogre::Material *originalMaterial,
 		unsigned short lodIndex, const Ogre::Renderable *rend)
 	{
-		fireMaterialRequested(originalMaterial->getName());
-		std::cout << "listener activated" << std::endl;
-		return originalMaterial->createTechnique(); /// \todo
+		if (schemeName != mCurrentConfiguration)
+		{
+			Ogre::MaterialManager::getSingleton().setActiveScheme(mCurrentConfiguration);
+			return 0;
+		}
+
+		MaterialInstance* m = fireMaterialRequested(originalMaterial->getName(), schemeName);
+		if (m)
+		{
+			//OgreMaterial* _m = static_cast<OgreMaterial*>(m->getMaterial());
+			std::cout << "listener activated" << std::endl;
+			//return _m->getOgreTechniqueForConfiguration (schemeName);
+			return 0;
+		}
+		else
+			return 0; // material does not belong to us
 	}
 
 	void OgrePlatform::serializeShaders (const std::string& file)
@@ -112,5 +118,10 @@ namespace sh
 		inp.open(file.c_str(), std::ios::in | std::ios::binary);
 		Ogre::DataStreamPtr shaderCache(OGRE_NEW Ogre::FileStreamDataStream(file, &inp, false));
 		Ogre::GpuProgramManager::getSingleton().loadMicrocodeCache(shaderCache);
+	}
+
+	void OgrePlatform::notifyFrameEntered ()
+	{
+		Ogre::MaterialManager::getSingleton().setActiveScheme(mCurrentConfiguration);
 	}
 }

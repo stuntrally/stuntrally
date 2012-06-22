@@ -17,6 +17,8 @@ namespace sh
 
 		Ogre::MaterialPtr getOgreMaterial();
 
+		Ogre::Technique* getOgreTechniqueForConfiguration (const std::string& configurationName);
+
 	private:
 		Ogre::MaterialPtr mMaterial;
 	};

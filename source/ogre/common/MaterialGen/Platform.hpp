@@ -11,6 +11,7 @@
 namespace sh
 {
 	class Factory;
+	class MaterialInstance;
 
 	// These classes are supposed to be filled by the platform implementation
 	class VertexProgram
@@ -35,15 +36,17 @@ namespace sh
 	{
 	public:
 		virtual boost::shared_ptr<TextureUnitState> createTextureUnitState () = 0;
-		virtual void assignVertexProgram (const VertexProgram& program) = 0;
-		virtual void assignFragmentProgram (const FragmentProgram& program) = 0;
-		virtual void assignGeometryProgram(const GeometryProgram& program) = 0;
+		virtual void assignVertexProgram (const std::string& name) = 0;
+		virtual void assignFragmentProgram (const std::string& name) = 0;
+		virtual void assignGeometryProgram (const std::string& name) = 0;
 	};
 
 	class Material : public PropertySet
 	{
 	public:
 		virtual boost::shared_ptr<Pass> createPass () = 0;
+
+		boost::shared_ptr<Pass> getPass (int index);
 	};
 
 	class Platform
@@ -89,12 +92,16 @@ namespace sh
 		/**
 		 * fire event: material requested for rendering
 		 * @param name material name
+		 * @param configuration requested configuration
 		 */
-		void fireMaterialRequested (const std::string& name);
+		MaterialInstance* fireMaterialRequested (const std::string& name, const std::string& configuration);
+
+		virtual void notifyFrameEntered ();
 
 	private:
 		Factory* mFactory;
-		void setFactory(Factory* factory);
+		void setFactory (Factory* factory);
+
 
 		std::string mBasePath;
 		std::string getBasePath();

@@ -65,6 +65,8 @@ namespace sh
 		 */
 		void registerConfiguration (const std::string& name, Configuration configuration);
 
+		void notifyFrameEntered ();
+
 		friend class Platform;
 
 	private:
@@ -73,7 +75,10 @@ namespace sh
 
 		Platform* mPlatform;
 
-		void requestMaterial (const std::string& name);
+		MaterialInstance* requestMaterial (const std::string& name, const std::string& configuration);
+
+		MaterialInstance* findInstance (const std::string& name);
+		MaterialInstance* searchInstance (const std::string& name);
 	};
 };
 

@@ -17,6 +17,7 @@ namespace sh
 			const std::string& name, const std::string& entryPoint,
 			const std::string& source, const std::string& lang,
 			const std::string& resourceGroup);
+
 	private:
 		Ogre::HighLevelGpuProgramPtr mProgram;
 	};

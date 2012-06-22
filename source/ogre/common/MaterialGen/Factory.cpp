@@ -78,7 +78,8 @@ namespace sh
 					break;
 				}
 
-				MaterialInstance newInstance;
+				MaterialInstance newInstance(it->first);
+				newInstance._create(mPlatform);
 
 				std::string group;
 
@@ -129,8 +130,37 @@ namespace sh
 		delete mPlatform;
 	}
 
-	void Factory::requestMaterial (const std::string& name)
+	MaterialInstance* Factory::searchInstance (const std::string& name)
 	{
-		/// \todo implement me
+		for (GroupMap::iterator it = mGroups.begin(); it != mGroups.end(); ++it)
+		{
+			if (it->second.mInstances.find (name) != it->second.mInstances.end())
+			{
+				return &it->second.mInstances[name];
+			}
+		}
+		return NULL;
+	}
+
+	MaterialInstance* Factory::findInstance (const std::string& name)
+	{
+		MaterialInstance* m = searchInstance (name);
+		if (m)
+			return m;
+		else
+			throw std::runtime_error ("MaterialInstance with name \"" + name + "\" not found");
+	}
+
+	MaterialInstance* Factory::requestMaterial (const std::string& name, const std::string& configuration)
+	{
+		MaterialInstance* m = searchInstance (name);
+		if (m)
+			m->_createForConfiguration (mPlatform, configuration);
+		return m;
+	}
+
+	void Factory::notifyFrameEntered ()
+	{
+		mPlatform->notifyFrameEntered();
 	}
 }
