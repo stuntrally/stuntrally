@@ -95,10 +95,9 @@ namespace sh
 		MaterialInstance* m = fireMaterialRequested(originalMaterial->getName(), schemeName);
 		if (m)
 		{
-			//OgreMaterial* _m = static_cast<OgreMaterial*>(m->getMaterial());
+			OgreMaterial* _m = static_cast<OgreMaterial*>(m->getMaterial());
 			std::cout << "listener activated" << std::endl;
-			//return _m->getOgreTechniqueForConfiguration (schemeName);
-			return 0;
+			return _m->getOgreTechniqueForConfiguration (schemeName);
 		}
 		else
 			return 0; // material does not belong to us

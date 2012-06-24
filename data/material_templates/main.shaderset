@@ -1,0 +1,24 @@
+shader_set main_vertex
+{
+    source main.shader
+    type vertex
+}
+
+shader_set main_fragment
+{
+    source main.shader
+    type fragment
+}
+
+
+shader_set shadowcaster_vertex
+{
+    source shadowcaster.shader
+    type vertex
+}
+
+shader_set shadowcaster_fragment
+{
+    source shadowcaster.shader
+    type fragment
+}

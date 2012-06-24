@@ -11,10 +11,10 @@
 
 namespace sh
 {
-	OgrePass::OgrePass (OgreMaterial* parent)
+	OgrePass::OgrePass (OgreMaterial* parent, const std::string& configuration)
 		: Pass()
 	{
-		mPass = parent->getOgreMaterial()->getBestTechnique()->createPass();
+		mPass = parent->getOgreMaterial()->getTechnique(configuration)->createPass();
 	}
 
 	boost::shared_ptr<TextureUnitState> OgrePass::createTextureUnitState ()

@@ -1,5 +1,7 @@
 material_definition main
 {
+    shadow_caster_material main_shadowcaster
+
 	pass
 	{
 		vertex_program main_vertex
@@ -10,4 +12,18 @@ material_definition main
 			address_mode clamp
 		}
 	}
+}
+
+
+material_definition main_shadowcaster
+{
+    pass
+    {
+        vertex_program shadowcaster_vertex
+        fragment_program shadowcaster_fragment
+        fog_override true
+
+        // $ refers to context, in this case the material instance that uses this this material as a shadow caster material (shadow_caster_material)
+        cull_hardware $cull_hardware
+    }
 }

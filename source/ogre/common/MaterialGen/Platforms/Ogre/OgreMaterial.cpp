@@ -18,9 +18,18 @@ namespace sh
 		mMaterial->createTechnique()->setSchemeName (sDefaultTechniqueName);
 	}
 
-	boost::shared_ptr<Pass> OgreMaterial::createPass ()
+	boost::shared_ptr<Pass> OgreMaterial::createPass (const std::string& configuration)
 	{
-		return boost::shared_ptr<Pass> (new OgrePass (this));
+		return boost::shared_ptr<Pass> (new OgrePass (this, configuration));
+	}
+
+	void OgreMaterial::createConfiguration (const std::string& name)
+	{
+		std::cout << "created technique with name "<< name << std::endl;
+		Ogre::Technique* t = mMaterial->createTechnique();
+		t->setSchemeName (name);
+		t->createPass()->createTextureUnitState ("roadAdesert.jpg");
+
 	}
 
 	Ogre::MaterialPtr OgreMaterial::getOgreMaterial ()

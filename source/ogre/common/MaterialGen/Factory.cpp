@@ -5,6 +5,8 @@
 #include "Platform.hpp"
 #include "DefinitionLoader.hpp"
 #include "InstanceLoader.hpp"
+#include "ShaderSetLoader.hpp"
+#include "ShaderSet.hpp"
 
 namespace sh
 {
@@ -12,6 +14,25 @@ namespace sh
 		: mPlatform(platform)
 	{
 		mPlatform->setFactory(this);
+
+		// load shader sets
+		{
+			ShaderSetLoader shaderSetLoader(mPlatform->getBasePath());
+			std::map <std::string, ScriptNode*> nodes = shaderSetLoader.getAllConfigScripts();
+			for (std::map <std::string, ScriptNode*>::const_iterator it = nodes.begin();
+				it != nodes.end(); ++it)
+			{
+				if (!(it->second->getName() == "shader_set"))
+				{
+					std::cerr << "sh::Factory: Warning: Unsupported root node type \"" << it->second->getName() << "\" for file type .shaderset" << std::endl;
+					break;
+				}
+
+				ShaderSet newSet (it->second->findChild("type")->getValue(), it->second->findChild("source")->getValue());
+
+				mShaderSets[it->first] = newSet;
+			}
+		}
 
 		// load definitions
 		{
@@ -120,6 +141,9 @@ namespace sh
 						else
 							instanceIt->second.setParent(&it->second.mInstances[p]);
 					}
+
+					std::string definition = PropertyValue::retrieve<StringValue>(instanceIt->second.getProperty("definition"))->get();
+					instanceIt->second._setDefinition (&mDefinitions[definition]);
 				}
 			}
 		}

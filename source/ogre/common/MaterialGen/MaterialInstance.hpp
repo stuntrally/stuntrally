@@ -6,10 +6,12 @@
 
 namespace sh
 {
+	class MaterialDefinition;
+
 	/**
 	 * @brief
-	 * A specific instance of a material definition, which has all required properties set.
-	 * (for example the diffuse & normal map, ambient/diffuse/specular values)
+	 * A specific instance of a material definition, which has all required properties set
+	 * (for example the diffuse & normal map, ambient/diffuse/specular values) \n
 	 * Depending on these properties, the factory will automatically select a shader permutation
 	 * that suits these and create the backend materials / passes (provided by the \a Platform class)
 	 */
@@ -25,6 +27,8 @@ namespace sh
 		void _create (Platform* platform);
 		void _createForConfiguration (Platform* platform, const std::string& configuration);
 
+		void _setDefinition (MaterialDefinition* definition);
+
 		Material* getMaterial();
 
 	private:
@@ -32,6 +36,8 @@ namespace sh
 		///< this is only used during the file-loading phase. an instance could be loaded before its parent is loaded,
 		/// so initially only the parent's name is written to this member.
 		/// once all instances are loaded, the actual mParent pointer (from PropertySetGet class) can be set
+
+		MaterialDefinition* mDefinition; ///< MaterialDefinition this is based on
 
 		std::string mName;
 

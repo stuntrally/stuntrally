@@ -44,9 +44,9 @@ namespace sh
 	class Material : public PropertySet
 	{
 	public:
-		virtual boost::shared_ptr<Pass> createPass () = 0;
-
-		boost::shared_ptr<Pass> getPass (int index);
+		virtual boost::shared_ptr<Pass> createPass (const std::string& configuration) = 0;
+		virtual void createConfiguration (const std::string& name) = 0;
+		//virtual boost::shared_ptr<Pass> getPass (int index, const std::string& configuration);
 	};
 
 	class Platform

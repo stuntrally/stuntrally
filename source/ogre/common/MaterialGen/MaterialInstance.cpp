@@ -28,11 +28,16 @@ namespace sh
 
 	void MaterialInstance::_createForConfiguration (Platform* platform, const std::string& configuration)
 	{
-		std::cout << "trying to create config " << configuration << " for material " << mName << std::endl;
+		mMaterial->createConfiguration(configuration);
 	}
 
 	Material* MaterialInstance::getMaterial ()
 	{
 		return mMaterial.get();
+	}
+
+	void MaterialInstance::_setDefinition (MaterialDefinition* definition)
+	{
+		mDefinition = definition;
 	}
 }

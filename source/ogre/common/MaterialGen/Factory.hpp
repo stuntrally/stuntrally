@@ -8,6 +8,7 @@
 #include "MaterialInstance.hpp"
 #include "Configuration.hpp"
 #include "Group.hpp"
+#include "ShaderSet.hpp"
 
 namespace sh
 {
@@ -15,6 +16,7 @@ namespace sh
 
 	typedef std::map<std::string, MaterialDefinition> DefinitionMap;
 	typedef std::map<std::string, Group> GroupMap;
+	typedef std::map<std::string, ShaderSet> ShaderSetMap;
 
 	/**
 	 * @brief
@@ -72,6 +74,7 @@ namespace sh
 	private:
 		DefinitionMap mDefinitions;
 		GroupMap mGroups;
+		ShaderSetMap mShaderSets;
 
 		Platform* mPlatform;
 
