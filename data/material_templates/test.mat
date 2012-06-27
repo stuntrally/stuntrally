@@ -1,0 +1,18 @@
+material road_base
+{
+	parent base
+}
+
+material roadJungle_ter
+{
+	parent road_base
+
+	diffuseMap roadJungle.jpg
+}
+
+material roadJungle
+{
+	parent road_base
+
+	diffuseMap roadJungle.jpg
+}

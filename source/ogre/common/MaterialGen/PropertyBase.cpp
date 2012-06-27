@@ -210,4 +210,14 @@ namespace sh
 		else
 			return mProperties[name];
 	}
+
+	void PropertySetGet::copyAll (PropertySet* target)
+	{
+		if (mParent)
+			mParent->copyAll (target);
+		for (PropertyMap::iterator it = mProperties.begin(); it != mProperties.end(); ++it)
+		{
+			target->setProperty(it->first, it->second);
+		}
+	}
 }

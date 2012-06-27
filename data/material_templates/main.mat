@@ -1,21 +1,21 @@
-material_definition main
+material base
 {
-    shadow_caster_material main_shadowcaster
+    shadow_caster_material base_shadowcaster
 
 	pass
 	{
 		vertex_program main_vertex
 		fragment_program main_fragment
 
-		texture_unit diffuseMap
+		texture_unit diffuse
 		{
-			address_mode clamp
+            texture $diffuseMap
 		}
 	}
 }
 
 
-material_definition main_shadowcaster
+material base_shadowcaster
 {
     pass
     {

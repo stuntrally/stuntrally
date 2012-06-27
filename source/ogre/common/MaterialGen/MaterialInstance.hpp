@@ -1,13 +1,14 @@
 #ifndef SH_MATERIALINSTANCE_H
 #define SH_MATERIALINSTANCE_H
 
+#include <vector>
+
 #include "PropertyBase.hpp"
 #include "Platform.hpp"
+#include "MaterialInstancePass.hpp"
 
 namespace sh
 {
-	class MaterialDefinition;
-
 	/**
 	 * @brief
 	 * A specific instance of a material definition, which has all required properties set
@@ -15,6 +16,8 @@ namespace sh
 	 * Depending on these properties, the factory will automatically select a shader permutation
 	 * that suits these and create the backend materials / passes (provided by the \a Platform class)
 	 */
+	typedef std::vector<MaterialInstancePass> PassVector;
+
 	class MaterialInstance : public PropertySetGet
 	{
 	public:
@@ -27,7 +30,8 @@ namespace sh
 		void _create (Platform* platform);
 		void _createForConfiguration (Platform* platform, const std::string& configuration);
 
-		void _setDefinition (MaterialDefinition* definition);
+		MaterialInstancePass* createPass ();
+		PassVector getPasses(); ///< accumulates passes from all parents recursively
 
 		Material* getMaterial();
 
@@ -37,7 +41,7 @@ namespace sh
 		/// so initially only the parent's name is written to this member.
 		/// once all instances are loaded, the actual mParent pointer (from PropertySetGet class) can be set
 
-		MaterialDefinition* mDefinition; ///< MaterialDefinition this is based on
+		PassVector mPasses;
 
 		std::string mName;
 

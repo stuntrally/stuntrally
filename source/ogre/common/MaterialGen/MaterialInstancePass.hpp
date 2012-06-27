@@ -1,26 +1,24 @@
-#ifndef SH_MATERIALINSTANCE_H
-#define SH_MATERIALINSTANCE_H
+#ifndef SH_MATERIALINSTANCEPASS_H
+#define SH_MATERIALINSTANCEPASS_H
 
 #include "PropertyBase.hpp"
+#include "MaterialInstanceTextureUnit.hpp"
 
 namespace sh
 {
 	/**
 	 * @brief
-	 * Holds properties of a single pass in a \a MaterialInstance. \n
-	 * there are 2 types of inheritance involved here: \n
-	 * - the matching MaterialInstancePass of the parent MaterialInstance (if present) \n
-	 * - the PassDefinition this is based on (must be there)
+	 * Holds properties of a single texture unit in a \a MaterialInstancePass. \n
+	 * No inheritance here for now.
 	 */
 	class MaterialInstancePass : public PropertySetGet
 	{
 	public:
-		MaterialInstancePass ();
+		MaterialInstancePass () {}
 
-		void _setPassDefinition (PassDefinition* p);
-
+		MaterialInstanceTextureUnit* createTextureUnit (const std::string& name);
 	private:
-		PassDefinition* mParentPassDefinition;
+		std::map <std::string, MaterialInstanceTextureUnit> mTexUnits;
 	};
 }
 

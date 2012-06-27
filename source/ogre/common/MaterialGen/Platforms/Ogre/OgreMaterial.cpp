@@ -25,11 +25,9 @@ namespace sh
 
 	void OgreMaterial::createConfiguration (const std::string& name)
 	{
-		std::cout << "created technique with name "<< name << std::endl;
 		Ogre::Technique* t = mMaterial->createTechnique();
 		t->setSchemeName (name);
-		t->createPass()->createTextureUnitState ("roadAdesert.jpg");
-
+		t->setName (name);
 	}
 
 	Ogre::MaterialPtr OgreMaterial::getOgreMaterial ()

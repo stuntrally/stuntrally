@@ -161,6 +161,8 @@ namespace sh
 		PropertySetGet (PropertySetGet* parent);
 		PropertySetGet ();
 
+		void copyAll (PropertySet* target); ///< call setProperty for each property/value pair stored in \a this
+
 		void setParent (PropertySetGet* parent); ///< throws an exception if there is already a parent
 
 		void setProperty (const std::string& name, PropertyValuePtr value);
@@ -169,6 +171,7 @@ namespace sh
 	private:
 		PropertyMap mProperties;
 
+	protected:
 		PropertySetGet* mParent;
 		///< the parent can provide properties as well (when they are retrieved via getProperty) \n
 		/// multiple levels of inheritance are also supported

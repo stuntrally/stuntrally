@@ -14,7 +14,8 @@ namespace sh
 	OgrePass::OgrePass (OgreMaterial* parent, const std::string& configuration)
 		: Pass()
 	{
-		mPass = parent->getOgreMaterial()->getTechnique(configuration)->createPass();
+		Ogre::Technique* t = parent->getOgreMaterial()->getTechnique(configuration);
+		mPass = t->createPass();
 	}
 
 	boost::shared_ptr<TextureUnitState> OgrePass::createTextureUnitState ()
@@ -71,6 +72,10 @@ namespace sh
 			bool enabled = PropertyValue::retrieve<BooleanValue>(value)->get();
 			// fixed-function vertex colour tracking
 			mPass->setVertexColourTracking(enabled ? (Ogre::TVC_AMBIENT | Ogre::TVC_DIFFUSE | Ogre::TVC_SPECULAR) : Ogre::TVC_NONE);
+		}
+		else if (name == "diffuse")
+		{
+			mPass->setDiffuse(Ogre::ColourValue(1.0, 0.0, 0.0, 1.0));
 		}
 		else
 			found = false;

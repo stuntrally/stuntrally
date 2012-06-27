@@ -4,7 +4,6 @@
 #include <map>
 #include <string>
 
-#include "MaterialDefinition.hpp"
 #include "MaterialInstance.hpp"
 #include "Configuration.hpp"
 #include "Group.hpp"
@@ -14,7 +13,7 @@ namespace sh
 {
 	class Platform;
 
-	typedef std::map<std::string, MaterialDefinition> DefinitionMap;
+	typedef std::map<std::string, MaterialInstance> MaterialMap;
 	typedef std::map<std::string, Group> GroupMap;
 	typedef std::map<std::string, ShaderSet> ShaderSetMap;
 
@@ -31,23 +30,10 @@ namespace sh
 		~Factory();
 
 		/**
-		 * create a MaterialInstance based upon \a definition
-		 * @return newly created instance
-		 */
-		MaterialInstance* createMaterialInstance (const std::string& definition, const std::string& group = "");
-
-		/**
 		 * create a MaterialInstance, copying all properties from \a instance
-		 * and using the same MaterialDefinition that \a instance uses
 		 * @return newly created instance
 		 */
-		MaterialInstance* createMaterialInstance (MaterialInstance* instance, const std::string& group = "");
-
-		/**
-		 * destroys all materials that belong to \a group \n
-		 * also destroys the group itself
-		 */
-		void destroyGroup (const std::string& group);
+		MaterialInstance* createMaterialInstance (MaterialInstance* instance);
 
 		/**
 		 * get a MaterialInstance by name
@@ -60,7 +46,7 @@ namespace sh
 		 * @param configuration name of the configuration to switch to
 		 * @param group to apply this configuration to
 		 */
-		void setActiveConfiguration (const std::string& configuration, const std::string& group = "");
+		void setActiveConfiguration (const std::string& configuration);
 
 		/**
 		 * register a \a Configuration, which can then be used for setActiveConfiguration method
@@ -72,8 +58,7 @@ namespace sh
 		friend class Platform;
 
 	private:
-		DefinitionMap mDefinitions;
-		GroupMap mGroups;
+		MaterialMap mMaterials;
 		ShaderSetMap mShaderSets;
 
 		Platform* mPlatform;

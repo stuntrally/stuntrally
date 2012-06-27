@@ -3,7 +3,7 @@
 namespace sh
 {
 	InstanceLoader::InstanceLoader (const std::string& path)
-		: ScriptLoader(".instance")
+		: ScriptLoader(".mat")
 	{
 		ScriptLoader::loadAllFiles(this, path);
 	}

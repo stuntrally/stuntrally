@@ -26,6 +26,8 @@ namespace sh
 			else if (val == "wrap")
 				mTextureUnitState->setTextureAddressingMode(Ogre::TextureUnitState::TAM_WRAP);
 		}
+		else if (name == "texture")
+			mTextureUnitState->setTextureName(PropertyValue::retrieve<StringValue>(value)->get());
 		else
 			found = false;
 

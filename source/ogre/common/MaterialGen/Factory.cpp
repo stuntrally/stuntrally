@@ -3,10 +3,10 @@
 #include <stdexcept>
 
 #include "Platform.hpp"
-#include "DefinitionLoader.hpp"
 #include "InstanceLoader.hpp"
 #include "ShaderSetLoader.hpp"
 #include "ShaderSet.hpp"
+#include "MaterialInstanceTextureUnit.hpp"
 
 namespace sh
 {
@@ -34,57 +34,6 @@ namespace sh
 			}
 		}
 
-		// load definitions
-		{
-			DefinitionLoader definitionLoader(mPlatform->getBasePath());
-
-			std::map <std::string, ScriptNode*> nodes = definitionLoader.getAllConfigScripts();
-			for (std::map <std::string, ScriptNode*>::const_iterator it = nodes.begin();
-				it != nodes.end(); ++it)
-			{
-				if (!(it->second->getName() == "material_definition"))
-				{
-					std::cerr << "sh::Factory: Warning: Unsupported root node type \"" << it->second->getName() << "\" for file type .definition" << std::endl;
-					break;
-				}
-
-				MaterialDefinition newDef;
-
-				std::vector<ScriptNode*> passes = it->second->getChildren();
-				for (std::vector<ScriptNode*>::const_iterator passIt = passes.begin(); passIt != passes.end(); ++passIt)
-				{
-					if ((*passIt)->getName() != "pass")
-					{
-						std::cerr << "sh::Factory: Warning: Unsupported node type \"" << (*passIt)->getName() << "\" for parent node of type \"material_definition\"" << std::endl;
-						break;
-					}
-					PassDefinition* newPassDef = newDef.createPassDefinition();
-					std::vector<ScriptNode*> props = (*passIt)->getChildren();
-					for (std::vector<ScriptNode*>::const_iterator propIt = props.begin(); propIt != props.end(); ++propIt)
-					{
-						std::string name = (*propIt)->getName();
-						std::string val = (*propIt)->getValue();
-
-						if (name == "texture_unit")
-						{
-							TextureUnitStateDefinition* newTexDef = newPassDef->createTextureUnitStateDefinition();
-							newTexDef->setName(val);
-							std::vector<ScriptNode*> texProps = (*propIt)->getChildren();
-							for (std::vector<ScriptNode*>::const_iterator texPropIt = texProps.begin(); texPropIt != texProps.end(); ++texPropIt)
-							{
-								std::string val = (*texPropIt)->getValue();
-								newTexDef->setProperty((*texPropIt)->getName(), makeProperty<StringValue>(new StringValue(val)));
-							}
-						}
-						else
-							newPassDef->setProperty((*propIt)->getName(), makeProperty<StringValue>(new StringValue(val)));
-					}
-				}
-
-				mDefinitions[it->first] = newDef;
-			}
-		}
-
 		// load instances
 		{
 			InstanceLoader instanceLoader(mPlatform->getBasePath());
@@ -93,16 +42,47 @@ namespace sh
 			for (std::map <std::string, ScriptNode*>::const_iterator it = nodes.begin();
 				it != nodes.end(); ++it)
 			{
-				if (!(it->second->getName() == "material_instance"))
+				if (!(it->second->getName() == "material"))
 				{
-					std::cerr << "sh::Factory: Warning: Unsupported root node type \"" << it->second->getName() << "\" for file type .instance" << std::endl;
+					std::cerr << "sh::Factory: Warning: Unsupported root node type \"" << it->second->getName() << "\" for file type .mat" << std::endl;
 					break;
 				}
 
 				MaterialInstance newInstance(it->first);
 				newInstance._create(mPlatform);
 
-				std::string group;
+				// first create all passes that are explicitely marked as such
+				std::vector<ScriptNode*> passes = it->second->getChildren();
+				for (std::vector<ScriptNode*>::const_iterator passIt = passes.begin(); passIt != passes.end(); ++passIt)
+				{
+					std::string name = (*passIt)->getName();
+					if (name != "pass")
+						continue;
+					std::string val = (*passIt)->getValue();
+
+					MaterialInstancePass* newPass = newInstance.createPass();
+					std::vector<ScriptNode*> props = (*passIt)->getChildren();
+					for (std::vector<ScriptNode*>::const_iterator propIt = props.begin(); propIt != props.end(); ++propIt)
+					{
+						std::string name = (*propIt)->getName();
+						std::string val = (*propIt)->getValue();
+
+						if (name == "texture_unit")
+						{
+							MaterialInstanceTextureUnit* newTex = newPass->createTextureUnit(val);
+							std::vector<ScriptNode*> texProps = (*propIt)->getChildren();
+							for (std::vector<ScriptNode*>::const_iterator texPropIt = texProps.begin(); texPropIt != texProps.end(); ++texPropIt)
+							{
+								std::string val = (*texPropIt)->getValue();
+								newTex->setProperty((*texPropIt)->getName(), makeProperty<StringValue>(new StringValue(val)));
+							}
+						}
+						else
+							newPass->setProperty((*propIt)->getName(), makeProperty<StringValue>(new StringValue(val)));
+					}
+				}
+
+				/// \todo assign all other properties that don't explicitely belong to a pass to the first pass
 
 				std::vector<ScriptNode*> props = it->second->getChildren();
 				for (std::vector<ScriptNode*>::const_iterator propIt = props.begin(); propIt != props.end(); ++propIt)
@@ -112,38 +92,22 @@ namespace sh
 
 					if (name == "parent")
 						newInstance._setParentInstance(val);
-					else if (name == "group")
-						group = val;
 					else
 						newInstance.setProperty((*propIt)->getName(), makeProperty<StringValue>(new StringValue(val)));
 				}
 
-				if (mGroups.find(group) == mGroups.end())
-				{
-					Group newGroup;
-					newGroup.mInstances[it->first] = newInstance;
-					mGroups[group] = newGroup;
-				}
-				else
-					mGroups[group].mInstances[it->first] = newInstance;
+				mMaterials[it->first] = newInstance;
 			}
 
 			// now that all instances are loaded, replace the parent names with the actual pointers to parent
-			for (GroupMap::iterator it = mGroups.begin(); it != mGroups.end(); ++it)
+			for (MaterialMap::iterator it = mMaterials.begin(); it != mMaterials.end(); ++it)
 			{
-				for (std::map<std::string, MaterialInstance>::iterator instanceIt = it->second.mInstances.begin(); instanceIt != it->second.mInstances.end(); ++instanceIt)
+				std::string parent = it->second._getParentInstance();
+				if (parent != "")
 				{
-					if (instanceIt->second._getParentInstance() != "")
-					{
-						std::string p = instanceIt->second._getParentInstance();
-						if (it->second.mInstances.find (p) == it->second.mInstances.end())
-							throw std::runtime_error ("Unable to find parent for material instance \"" + instanceIt->first + "\". Make sure it belongs to the same group.");
-						else
-							instanceIt->second.setParent(&it->second.mInstances[p]);
-					}
-
-					std::string definition = PropertyValue::retrieve<StringValue>(instanceIt->second.getProperty("definition"))->get();
-					instanceIt->second._setDefinition (&mDefinitions[definition]);
+					if (mMaterials.find (it->second._getParentInstance()) == mMaterials.end())
+						throw std::runtime_error ("Unable to find parent for material instance \"" + it->first + "\"");
+					it->second.setParent(&mMaterials[parent]);
 				}
 			}
 		}
@@ -156,23 +120,16 @@ namespace sh
 
 	MaterialInstance* Factory::searchInstance (const std::string& name)
 	{
-		for (GroupMap::iterator it = mGroups.begin(); it != mGroups.end(); ++it)
-		{
-			if (it->second.mInstances.find (name) != it->second.mInstances.end())
-			{
-				return &it->second.mInstances[name];
-			}
-		}
+		if (mMaterials.find(name) != mMaterials.end())
+				return &mMaterials[name];
+
 		return NULL;
 	}
 
 	MaterialInstance* Factory::findInstance (const std::string& name)
 	{
-		MaterialInstance* m = searchInstance (name);
-		if (m)
-			return m;
-		else
-			throw std::runtime_error ("MaterialInstance with name \"" + name + "\" not found");
+		assert (mMaterials.find(name) != mMaterials.end());
+		return &mMaterials[name];
 	}
 
 	MaterialInstance* Factory::requestMaterial (const std::string& name, const std::string& configuration)
