@@ -6,7 +6,6 @@
 
 #include "MaterialInstance.hpp"
 #include "Configuration.hpp"
-#include "Group.hpp"
 #include "ShaderSet.hpp"
 
 namespace sh
@@ -14,7 +13,6 @@ namespace sh
 	class Platform;
 
 	typedef std::map<std::string, MaterialInstance> MaterialMap;
-	typedef std::map<std::string, Group> GroupMap;
 	typedef std::map<std::string, ShaderSet> ShaderSetMap;
 
 	/**
@@ -41,10 +39,8 @@ namespace sh
 		MaterialInstance* getInstance (const std::string& name);
 
 		/**
-		 * switch the active \a Configuration of either a specific group, or all groups if the \a group parameter
-		 * is left empty
+		 * switch the active \a Configuration
 		 * @param configuration name of the configuration to switch to
-		 * @param group to apply this configuration to
 		 */
 		void setActiveConfiguration (const std::string& configuration);
 
