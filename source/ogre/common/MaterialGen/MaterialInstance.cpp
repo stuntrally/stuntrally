@@ -30,16 +30,21 @@ namespace sh
 	{
 		mMaterial->createConfiguration(configuration);
 
-		/// \todo delete old
-
-		// accumulate passes from all parents
+		// get passes of the top-most parent
 		PassVector passes = getPasses();
 		for (PassVector::iterator it = passes.begin(); it != passes.end(); ++it)
 		{
 			boost::shared_ptr<Pass> pass = mMaterial->createPass (configuration);
-			it->copyAll (pass.get());
-			PropertyValuePtr p = makeProperty<StringValue>(new StringValue("dsgfdgd"));
-			pass->setProperty("test", p);
+			it->copyAll (pass.get(), this);
+
+			// create all texture units
+			/// \todo check usage in the shader and create only those that are necessary
+			std::map<std::string, MaterialInstanceTextureUnit> texUnits = it->getTexUnits();
+			for (std::map<std::string, MaterialInstanceTextureUnit>::iterator texIt = texUnits.begin(); texIt  != texUnits.end(); ++texIt )
+			{
+				boost::shared_ptr<TextureUnitState> texUnit = pass->createTextureUnitState ();
+				texIt->second.copyAll (texUnit.get(), this);
+			}
 		}
 	}
 
@@ -50,19 +55,15 @@ namespace sh
 
 	MaterialInstancePass* MaterialInstance::createPass ()
 	{
-		std::cout << "created a pass for " << mName << std::endl;
 		mPasses.push_back (MaterialInstancePass());
 		return &mPasses.back();
 	}
 
 	PassVector MaterialInstance::getPasses()
 	{
-		PassVector result = mPasses;
 		if (mParent)
-		{
-			PassVector append = static_cast<MaterialInstance*>(mParent)->getPasses();
-			result.insert(result.end(), append.begin(), append.end());
-		}
-		return result;
+			return static_cast<MaterialInstance*>(mParent)->getPasses();
+		else
+			return mPasses;
 	}
 }

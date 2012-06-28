@@ -20,7 +20,7 @@ namespace sh
 		Ogre::TextureUnitState* mTextureUnitState;
 
 	protected:
-		virtual bool setPropertyOverride (const std::string &name, PropertyValuePtr& value);
+		virtual bool setPropertyOverride (const std::string &name, PropertyValuePtr& value, PropertySetGet* context);
 	};
 }
 

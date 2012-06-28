@@ -25,7 +25,7 @@ namespace sh
 		Ogre::Pass* mPass;
 
 	protected:
-		virtual bool setPropertyOverride (const std::string &name, PropertyValuePtr& value);
+		virtual bool setPropertyOverride (const std::string &name, PropertyValuePtr& value, PropertySetGet* context);
 	};
 }
 

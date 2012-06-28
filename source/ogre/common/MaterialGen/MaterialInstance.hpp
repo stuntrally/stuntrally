@@ -31,7 +31,7 @@ namespace sh
 		void _createForConfiguration (Platform* platform, const std::string& configuration);
 
 		MaterialInstancePass* createPass ();
-		PassVector getPasses(); ///< accumulates passes from all parents recursively
+		PassVector getPasses(); ///< gets the passes of the top-most parent
 
 		Material* getMaterial();
 

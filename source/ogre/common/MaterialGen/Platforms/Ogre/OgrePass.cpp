@@ -43,19 +43,19 @@ namespace sh
 		return mPass;
 	}
 
-	bool OgrePass::setPropertyOverride (const std::string &name, PropertyValuePtr& value)
+	bool OgrePass::setPropertyOverride (const std::string &name, PropertyValuePtr& value, PropertySetGet* context)
 	{
 		bool found = true;
 
 		if (name == "depth_write")
-			mPass->setDepthWriteEnabled(PropertyValue::retrieve<BooleanValue>(value)->get());
+			mPass->setDepthWriteEnabled(retrieveValue<BooleanValue>(value, context)->get());
 		else if (name == "depth_check")
-			mPass->setDepthCheckEnabled(PropertyValue::retrieve<BooleanValue>(value)->get());
+			mPass->setDepthCheckEnabled(retrieveValue<BooleanValue>(value, context)->get());
 		else if (name == "colour_write")
-			mPass->setColourWriteEnabled(PropertyValue::retrieve<BooleanValue>(value)->get());
+			mPass->setColourWriteEnabled(retrieveValue<BooleanValue>(value, context)->get());
 		else if (name == "scene_blend")
 		{
-			std::string val = PropertyValue::retrieve<StringValue>(value)->get();
+			std::string val = retrieveValue<StringValue>(value, context)->get();
 			if (val == "add")
 				mPass->setSceneBlending(Ogre::SBT_ADD);
 			else if (val == "modulate")
@@ -69,7 +69,7 @@ namespace sh
 		}
 		else if (name == "vertex_colour")
 		{
-			bool enabled = PropertyValue::retrieve<BooleanValue>(value)->get();
+			bool enabled = retrieveValue<BooleanValue>(value, context)->get();
 			// fixed-function vertex colour tracking
 			mPass->setVertexColourTracking(enabled ? (Ogre::TVC_AMBIENT | Ogre::TVC_DIFFUSE | Ogre::TVC_SPECULAR) : Ogre::TVC_NONE);
 		}

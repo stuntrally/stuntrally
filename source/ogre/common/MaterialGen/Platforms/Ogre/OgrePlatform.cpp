@@ -96,7 +96,6 @@ namespace sh
 		if (m)
 		{
 			OgreMaterial* _m = static_cast<OgreMaterial*>(m->getMaterial());
-			std::cout << "listener activated" << std::endl;
 			return _m->getOgreTechniqueForConfiguration (schemeName);
 		}
 		else

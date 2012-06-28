@@ -10,13 +10,13 @@ namespace sh
 		mTextureUnitState = parent->getOgrePass()->createTextureUnitState("");
 	}
 
-	bool OgreTextureUnitState::setPropertyOverride (const std::string &name, PropertyValuePtr& value)
+	bool OgreTextureUnitState::setPropertyOverride (const std::string &name, PropertyValuePtr& value, PropertySetGet* context)
 	{
 		bool found = true;
 
 		if (name == "address_mode")
 		{
-			std::string val = PropertyValue::retrieve<StringValue>(value)->get();
+			std::string val = retrieveValue<StringValue>(value, context)->get();
 			if (val == "clamp")
 				mTextureUnitState->setTextureAddressingMode(Ogre::TextureUnitState::TAM_CLAMP);
 			else if (val == "border")
@@ -27,7 +27,7 @@ namespace sh
 				mTextureUnitState->setTextureAddressingMode(Ogre::TextureUnitState::TAM_WRAP);
 		}
 		else if (name == "texture")
-			mTextureUnitState->setTextureName(PropertyValue::retrieve<StringValue>(value)->get());
+			mTextureUnitState->setTextureName(retrieveValue<StringValue>(value, context)->get());
 		else
 			found = false;
 

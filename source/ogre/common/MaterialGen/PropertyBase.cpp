@@ -65,6 +65,25 @@ namespace sh
 
 	// ------------------------------------------------------------------------------
 
+	LinkedValue::LinkedValue (const std::string& in)
+	{
+		mStringValue = in;
+		mStringValue.erase(0, 1);
+	}
+
+	std::string LinkedValue::serialize()
+	{
+		throw std::runtime_error ("can't directly get a linked value");
+	}
+
+	std::string LinkedValue::get(PropertySetGet* context) const
+	{
+		PropertyValuePtr p = context->getProperty(mStringValue);
+		return retrieveValue<StringValue>(p)->get();
+	}
+
+	// ------------------------------------------------------------------------------
+
 	FloatValue::FloatValue (float in)
 	{
 		mValue = in;
@@ -160,12 +179,12 @@ namespace sh
 
 	// ------------------------------------------------------------------------------
 
-	void PropertySet::setProperty (const std::string& name, PropertyValuePtr &value)
+	void PropertySet::setProperty (const std::string& name, PropertyValuePtr &value, PropertySetGet* context)
 	{
-		setPropertyOverride (name, value);
+		setPropertyOverride (name, value, context);
 	}
 
-	bool PropertySet::setPropertyOverride (const std::string& name, PropertyValuePtr &value)
+	bool PropertySet::setPropertyOverride (const std::string& name, PropertyValuePtr &value, PropertySetGet* context)
 	{
 		// if we got here, none of the sub-classes was able to make use of the property
 		std::cerr << "sh::PropertySet: Warning: No match for property with name '" << name << "'" << std::endl;
@@ -211,13 +230,13 @@ namespace sh
 			return mProperties[name];
 	}
 
-	void PropertySetGet::copyAll (PropertySet* target)
+	void PropertySetGet::copyAll (PropertySet* target, PropertySetGet* context)
 	{
 		if (mParent)
-			mParent->copyAll (target);
+			mParent->copyAll (target, context);
 		for (PropertyMap::iterator it = mProperties.begin(); it != mProperties.end(); ++it)
 		{
-			target->setProperty(it->first, it->second);
+			target->setProperty(it->first, it->second, context);
 		}
 	}
 }

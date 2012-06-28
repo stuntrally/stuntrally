@@ -17,6 +17,8 @@ namespace sh
 		MaterialInstancePass () {}
 
 		MaterialInstanceTextureUnit* createTextureUnit (const std::string& name);
+
+		std::map <std::string, MaterialInstanceTextureUnit> getTexUnits ();
 	private:
 		std::map <std::string, MaterialInstanceTextureUnit> mTexUnits;
 	};

@@ -51,49 +51,40 @@ namespace sh
 				MaterialInstance newInstance(it->first);
 				newInstance._create(mPlatform);
 
-				// first create all passes that are explicitely marked as such
-				std::vector<ScriptNode*> passes = it->second->getChildren();
-				for (std::vector<ScriptNode*>::const_iterator passIt = passes.begin(); passIt != passes.end(); ++passIt)
-				{
-					std::string name = (*passIt)->getName();
-					if (name != "pass")
-						continue;
-					std::string val = (*passIt)->getValue();
-
-					MaterialInstancePass* newPass = newInstance.createPass();
-					std::vector<ScriptNode*> props = (*passIt)->getChildren();
-					for (std::vector<ScriptNode*>::const_iterator propIt = props.begin(); propIt != props.end(); ++propIt)
-					{
-						std::string name = (*propIt)->getName();
-						std::string val = (*propIt)->getValue();
-
-						if (name == "texture_unit")
-						{
-							MaterialInstanceTextureUnit* newTex = newPass->createTextureUnit(val);
-							std::vector<ScriptNode*> texProps = (*propIt)->getChildren();
-							for (std::vector<ScriptNode*>::const_iterator texPropIt = texProps.begin(); texPropIt != texProps.end(); ++texPropIt)
-							{
-								std::string val = (*texPropIt)->getValue();
-								newTex->setProperty((*texPropIt)->getName(), makeProperty<StringValue>(new StringValue(val)));
-							}
-						}
-						else
-							newPass->setProperty((*propIt)->getName(), makeProperty<StringValue>(new StringValue(val)));
-					}
-				}
-
-				/// \todo assign all other properties that don't explicitely belong to a pass to the first pass
-
 				std::vector<ScriptNode*> props = it->second->getChildren();
 				for (std::vector<ScriptNode*>::const_iterator propIt = props.begin(); propIt != props.end(); ++propIt)
 				{
 					std::string name = (*propIt)->getName();
+
 					std::string val = (*propIt)->getValue();
 
-					if (name == "parent")
+					if (name == "pass")
+					{
+						MaterialInstancePass* newPass = newInstance.createPass();
+						std::vector<ScriptNode*> props2 = (*propIt)->getChildren();
+						for (std::vector<ScriptNode*>::const_iterator propIt2 = props2.begin(); propIt2 != props2.end(); ++propIt2)
+						{
+							std::string name2 = (*propIt2)->getName();
+							std::string val2 = (*propIt2)->getValue();
+
+							if (name2 == "texture_unit")
+							{
+								MaterialInstanceTextureUnit* newTex = newPass->createTextureUnit(val2);
+								std::vector<ScriptNode*> texProps = (*propIt2)->getChildren();
+								for (std::vector<ScriptNode*>::const_iterator texPropIt = texProps.begin(); texPropIt != texProps.end(); ++texPropIt)
+								{
+									std::string val = (*texPropIt)->getValue();
+									newTex->setProperty((*texPropIt)->getName(), makeProperty(val));
+								}
+							}
+							else
+								newPass->setProperty((*propIt2)->getName(), makeProperty(val2));
+						}
+					}
+					else if (name == "parent")
 						newInstance._setParentInstance(val);
 					else
-						newInstance.setProperty((*propIt)->getName(), makeProperty<StringValue>(new StringValue(val)));
+						newInstance.setProperty((*propIt)->getName(), makeProperty(val));
 				}
 
 				mMaterials[it->first] = newInstance;

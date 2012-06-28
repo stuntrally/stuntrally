@@ -9,43 +9,13 @@
 namespace sh
 {
 	class StringValue;
+	class PropertySetGet;
+	class LinkedValue;
 
 	class PropertyValue
 	{
 	public:
 		PropertyValue() {}
-
-		template <typename T>
-		static T* retrieve (boost::shared_ptr<PropertyValue>& value)
-		{
-			if (typeid(T).name() == typeid(*value).name())
-			{
-				// requested type is the same as source type, only have to cast it
-				return static_cast<T*>(value.get());
-			}
-
-			if ((typeid(T).name() == typeid(StringValue).name())
-				&& typeid(*value).name() != typeid(StringValue).name())
-			{
-				// if string type is requested and value is not string, use serialize method to convert to string
-				T* ptr = new T (value->serialize()); // note that T is always StringValue here, but we can't use it because it's not declared yet
-				value = boost::shared_ptr<PropertyValue> (static_cast<PropertyValue*>(ptr));
-				return ptr;
-			}
-
-			{
-				// remaining case: deserialization from string by passing the string to constructor of class T
-				T* ptr = new T(value->_getStringValue());
-				boost::shared_ptr<PropertyValue> newVal (static_cast<PropertyValue*>(ptr));
-				value = newVal;
-				return ptr;
-			}
-		}
-		///<
-		/// @brief converts \a value to the type \a T, deserializing or serializing from/to strings if necessary \n
-		/// example usage: int myNumber = PropertyValue::retrieve <IntValue> (val)->get();
-		/// @note \a value is changed in-place to the converted object
-		/// @return pointer to converted object \n
 
 		std::string _getStringValue() { return mStringValue; }
 
@@ -56,18 +26,24 @@ namespace sh
 	};
 	typedef boost::shared_ptr<PropertyValue> PropertyValuePtr;
 
-
-	template <typename T>
-	inline PropertyValuePtr makeProperty (T* prop)
-	{
-		return PropertyValuePtr (static_cast<PropertyValue*> (prop));
-	}
-
 	class StringValue : public PropertyValue
 	{
 	public:
 		StringValue (const std::string& in);
 		std::string get() const { return mStringValue; }
+
+		virtual std::string serialize();
+	};
+
+	/**
+	 * @brief Used for retrieving a named property from a context
+	 */
+	class LinkedValue : public PropertyValue
+	{
+	public:
+		LinkedValue (const std::string& in);
+
+		std::string get(PropertySetGet* context) const;
 
 		virtual std::string serialize();
 	};
@@ -145,10 +121,10 @@ namespace sh
 	class PropertySet
 	{
 	public:
-		void setProperty (const std::string& name, PropertyValuePtr& value);
+		void setProperty (const std::string& name, PropertyValuePtr& value, PropertySetGet* context);
 
 	protected:
-		virtual bool setPropertyOverride (const std::string& name, PropertyValuePtr& value);
+		virtual bool setPropertyOverride (const std::string& name, PropertyValuePtr& value, PropertySetGet* context);
 		///< @return \a true if the specified property was found, or false otherwise
 	};
 
@@ -161,7 +137,7 @@ namespace sh
 		PropertySetGet (PropertySetGet* parent);
 		PropertySetGet ();
 
-		void copyAll (PropertySet* target); ///< call setProperty for each property/value pair stored in \a this
+		void copyAll (PropertySet* target, PropertySetGet* context); ///< call setProperty for each property/value pair stored in \a this
 
 		void setParent (PropertySetGet* parent); ///< throws an exception if there is already a parent
 
@@ -177,6 +153,91 @@ namespace sh
 		/// multiple levels of inheritance are also supported
 		/// children can override properties of their parents
 	};
+
+	template <typename T>
+	static T* retrieveValue (boost::shared_ptr<PropertyValue>& value)
+	{
+		if (typeid(T).name() == typeid(*value).name())
+		{
+			// requested type is the same as source type, only have to cast it
+			return static_cast<T*>(value.get());
+		}
+
+		if ((typeid(T).name() == typeid(StringValue).name())
+			&& typeid(*value).name() != typeid(StringValue).name())
+		{
+			// if string type is requested and value is not string, use serialize method to convert to string
+			T* ptr = new T (value->serialize()); // note that T is always StringValue here, but we can't use it here
+			value = boost::shared_ptr<PropertyValue> (static_cast<PropertyValue*>(ptr));
+			return ptr;
+		}
+
+		{
+			// remaining case: deserialization from string by passing the string to constructor of class T
+			T* ptr = new T(value->_getStringValue());
+			boost::shared_ptr<PropertyValue> newVal (static_cast<PropertyValue*>(ptr));
+			value = newVal;
+			return ptr;
+		}
+	}
+	///<
+	/// @brief converts \a value to the type \a T, deserializing or serializing from/to strings if necessary \n
+	/// example usage: int myNumber = retrieveValue <IntValue> (val)->get();
+	/// @note \a value is changed in-place to the converted object
+	/// @return pointer to converted object \n
+
+	template <typename T>
+	static T* retrieveValue (boost::shared_ptr<PropertyValue>& value, PropertySetGet* context)
+	{
+		if (typeid(*value).name() == typeid(LinkedValue).name())
+		{
+			std::string v = static_cast<LinkedValue*>(value.get())->get(context);
+			PropertyValuePtr newVal = PropertyValuePtr (new StringValue(v));
+			return retrieveValue<T>(newVal);
+		}
+		if (typeid(T).name() == typeid(*value).name())
+		{
+			// requested type is the same as source type, only have to cast it
+			return static_cast<T*>(value.get());
+		}
+
+		if ((typeid(T).name() == typeid(StringValue).name())
+			&& typeid(*value).name() != typeid(StringValue).name())
+		{
+			// if string type is requested and value is not string, use serialize method to convert to string
+			T* ptr = new T (value->serialize()); // note that T is always StringValue here, but we can't use it here
+			value = boost::shared_ptr<PropertyValue> (static_cast<PropertyValue*>(ptr));
+			return ptr;
+		}
+
+		{
+			// remaining case: deserialization from string by passing the string to constructor of class T
+			T* ptr = new T(value->_getStringValue());
+			PropertyValuePtr newVal (static_cast<PropertyValue*>(ptr));
+			value = newVal;
+			return ptr;
+		}
+	}
+	///<
+	/// @brief alternate version that supports linked values (use of $variables in parent material)
+	/// @note \a value is changed in-place to the converted object
+	/// @return pointer to converted object \n
+
+	/*
+	template <typename T>
+	inline PropertyValuePtr makeProperty (T* prop)
+	{
+		return PropertyValuePtr (static_cast<PropertyValue*> (prop));
+	}
+	*/
+
+	inline PropertyValuePtr makeProperty (const std::string& prop)
+	{
+		if (prop.size() > 1 && prop[0] == '$')
+			return PropertyValuePtr (static_cast<PropertyValue*>(new LinkedValue(prop)));
+		else
+			return PropertyValuePtr (static_cast<PropertyValue*> (new StringValue(prop)));
+	}
 }
 
 #endif

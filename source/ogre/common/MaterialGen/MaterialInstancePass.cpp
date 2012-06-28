@@ -9,4 +9,8 @@ namespace sh
 		return &mTexUnits[name];
 	}
 
+	std::map <std::string, MaterialInstanceTextureUnit> MaterialInstancePass::getTexUnits ()
+	{
+		return mTexUnits;
+	}
 }
