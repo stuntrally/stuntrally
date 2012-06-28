@@ -1,15 +1,23 @@
 material base
 {
-    shadow_caster_material base_shadowcaster
+	shadow_caster_material base_shadowcaster
+
+	diffuse 1s.0 1.0 1.0 1.0
+	specular 0.4 0.4 0.4 32
+	ambient 1.0 1.0 1.0
 
 	pass
 	{
 		vertex_program main_vertex
 		fragment_program main_fragment
 
+		diffuse $diffuse
+		specular $specular
+		ambient $ambient
+
 		texture_unit diffuse
 		{
-            texture $diffuseMap
+			texture $diffuseMap
 		}
 	}
 }
@@ -17,13 +25,13 @@ material base
 
 material base_shadowcaster
 {
-    pass
-    {
-        vertex_program shadowcaster_vertex
-        fragment_program shadowcaster_fragment
-        fog_override true
+	pass
+	{
+		vertex_program shadowcaster_vertex
+		fragment_program shadowcaster_fragment
+		fog_override true
 
-        // $ refers to context, in this case the material instance that uses this this material as a shadow caster material (shadow_caster_material)
-        cull_hardware $cull_hardware
-    }
+		// $ refers to context, in this case the material instance that uses this this material as a shadow caster material (shadow_caster_material)
+		cull_hardware $cull_hardware
+	}
 }

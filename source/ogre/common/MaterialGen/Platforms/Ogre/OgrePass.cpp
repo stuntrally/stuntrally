@@ -53,6 +53,11 @@ namespace sh
 			mPass->setDepthCheckEnabled(retrieveValue<BooleanValue>(value, context)->get());
 		else if (name == "colour_write")
 			mPass->setColourWriteEnabled(retrieveValue<BooleanValue>(value, context)->get());
+		else if (name == "depth_bias")
+		{
+			Vector2* vec = retrieveValue<Vector2>(value, context);
+			mPass->setDepthBias(vec->mX, vec->mY);
+		}
 		else if (name == "scene_blend")
 		{
 			std::string val = retrieveValue<StringValue>(value, context)->get();
@@ -75,7 +80,19 @@ namespace sh
 		}
 		else if (name == "diffuse")
 		{
-			mPass->setDiffuse(Ogre::ColourValue(1.0, 0.0, 0.0, 1.0));
+			Vector4* color = retrieveValue<Vector4>(value, context);
+			mPass->setDiffuse(color->mX, color->mY, color->mZ, color->mW);
+		}
+		else if (name == "ambient")
+		{
+			Vector3* color = retrieveValue<Vector3>(value, context);
+			mPass->setAmbient(color->mX, color->mY, color->mZ);
+		}
+		else if (name == "specular")
+		{
+			Vector4* color = retrieveValue<Vector4>(value, context);
+			mPass->setSpecular(color->mX, color->mY, color->mZ, 1.0);
+			mPass->setShininess(color->mW);
 		}
 		else
 			found = false;

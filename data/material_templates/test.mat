@@ -8,6 +8,7 @@ material roadJungle_ter
 	parent road_base
 
 	diffuseMap roadJungle.jpg
+	diffuse 1.0 0.0 0.0 1.0
 }
 
 material roadJungle
