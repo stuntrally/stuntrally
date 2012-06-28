@@ -136,4 +136,18 @@ namespace sh
 	{
 		mPlatform->notifyFrameEntered();
 	}
+
+	MaterialInstance* Factory::createMaterialInstance (const std::string& name, const std::string& instance)
+	{
+		MaterialInstance newInstance(name);
+		newInstance.setParent (&mMaterials[instance]);
+		newInstance._create(mPlatform);
+		mMaterials[name] = newInstance;
+		return &mMaterials[name];
+	}
+
+	void Factory::destroyMaterialInstance (const std::string& name)
+	{
+		mMaterials.erase(name);
+	}
 }

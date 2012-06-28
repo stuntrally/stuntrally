@@ -18,6 +18,11 @@ namespace sh
 		mMaterial->createTechnique()->setSchemeName (sDefaultTechniqueName);
 	}
 
+	OgreMaterial::~OgreMaterial()
+	{
+		Ogre::MaterialManager::getSingleton().remove(mMaterial->getName());
+	}
+
 	boost::shared_ptr<Pass> OgreMaterial::createPass (const std::string& configuration)
 	{
 		return boost::shared_ptr<Pass> (new OgrePass (this, configuration));

@@ -29,9 +29,13 @@ namespace sh
 
 		/**
 		 * create a MaterialInstance, copying all properties from \a instance
+		 * @param name name of the new instance
+		 * @param instance name of the parent
 		 * @return newly created instance
 		 */
-		MaterialInstance* createMaterialInstance (MaterialInstance* instance);
+		MaterialInstance* createMaterialInstance (const std::string& name, const std::string& instance);
+
+		void destroyMaterialInstance (const std::string& name);
 
 		/**
 		 * get a MaterialInstance by name

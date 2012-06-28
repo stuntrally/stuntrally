@@ -13,6 +13,8 @@ namespace sh
 	{
 	public:
 		OgreMaterial (const std::string& name, const std::string& resourceGroup);
+		virtual ~OgreMaterial();
+
 		virtual boost::shared_ptr<Pass> createPass (const std::string& configuration);
 		virtual void createConfiguration (const std::string& name);
 
