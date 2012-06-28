@@ -7,7 +7,7 @@ namespace sh
 {
 	/**
 	 * @brief
-	 * loads .instance files that contain a serialized version of \a MaterialInstance objects
+	 * loads .mat files that contain a serialized version of \a MaterialInstance objects
 	 */
 	class InstanceLoader : public ScriptLoader
 	{
