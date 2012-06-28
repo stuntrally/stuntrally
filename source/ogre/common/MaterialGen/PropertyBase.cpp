@@ -1,6 +1,7 @@
 #include "PropertyBase.hpp"
 
 #include <vector>
+#include <iostream>
 
 #include <boost/lexical_cast.hpp>
 #include <boost/algorithm/string.hpp>

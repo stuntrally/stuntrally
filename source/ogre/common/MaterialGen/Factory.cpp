@@ -1,6 +1,7 @@
 #include "Factory.hpp"
 
 #include <stdexcept>
+#include <iostream>
 
 #include "Platform.hpp"
 #include "InstanceLoader.hpp"
