@@ -2,7 +2,7 @@ material base
 {
 	shadow_caster_material base_shadowcaster
 
-	diffuse 1s.0 1.0 1.0 1.0
+	diffuse 1.0 1.0 1.0 1.0
 	specular 0.4 0.4 0.4 32
 	ambient 1.0 1.0 1.0
 

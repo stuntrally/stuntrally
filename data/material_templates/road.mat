@@ -1,0 +1,64 @@
+material road
+{
+	parent base
+}
+
+material roadJungle_ter
+{
+	parent road
+	diffuseMap roadJungle.jpg
+}
+
+material roadJungle
+{
+	parent road
+	diffuseMap roadJungle.jpg
+}
+
+material roadAsphalt
+{
+	parent road
+	diffuseMap roadAsphalt.jpg
+}
+
+material roadAsphalt_ter
+{
+	parent road
+	diffuseMap roadAsphalt.jpg
+}
+
+material roadGDesert
+{
+	parent road
+	diffuseMap roadDesert.jpg
+}
+
+material roadGDesert_ter
+{
+	parent road
+	diffuseMap roadDesert.jpg
+}
+
+material roadSand
+{
+	parent road
+	diffuseMap roadSand.jpg
+}
+
+material roadSand_ter
+{
+	parent road
+	diffuseMap roadSand.jpg
+}
+
+material roadMud
+{
+	parent road
+	diffuseMap roadMud.jpg
+}
+
+material roadMud_ter
+{
+	parent road
+	diffuseMap roadMud.jpg
+}
