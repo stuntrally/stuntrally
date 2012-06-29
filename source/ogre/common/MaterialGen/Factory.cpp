@@ -150,7 +150,7 @@ namespace sh
 		mPlatform->notifyFrameEntered();
 	}
 
-	MaterialInstance* Factory::createMaterialInstance (const std::string& name, const std::string& instance)
+	MaterialInstance* Factory::createMaterialInstance (const std::string& name, const std::string& instance, bool createImmediately)
 	{
 		if (mMaterials.find(instance) == mMaterials.end())
 			throw std::runtime_error ("trying to clone material that does not exist");
@@ -159,13 +159,16 @@ namespace sh
 			newInstance.setShadersEnabled(false);
 		newInstance.setParent (&mMaterials[instance]);
 		newInstance.create(mPlatform);
+		if (createImmediately)
+			newInstance.createForConfiguration(mPlatform, "Default"); /// \todo
 		mMaterials[name] = newInstance;
 		return &mMaterials[name];
 	}
 
 	void Factory::destroyMaterialInstance (const std::string& name)
 	{
-		mMaterials.erase(name);
+		if (mMaterials.find(name) != mMaterials.end())
+			mMaterials.erase(name);
 	}
 
 	void Factory::setShadersEnabled (bool enabled)

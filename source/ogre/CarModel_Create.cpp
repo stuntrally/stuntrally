@@ -12,7 +12,7 @@
 #include "CarReflection.h"
 #include "../road/Road.h"
 #include "common/RenderConst.h"
-//#include "common/MaterialGen/MaterialFactory.h"
+#include "common/MaterialGen/Factory.hpp"
 
 #include "boost/filesystem.hpp"
 #define  FileExists(s)  boost::filesystem::exists(s)
@@ -409,11 +409,8 @@ void CarModel::RecreateMaterials()
 	MaterialPtr mat;
 	for (int i=0; i<NumMaterials; i++)
 	{
-		mat = MaterialManager::getSingleton().getByName(sMtr[i]);
-        if (mat.isNull()) return;
-		if (MaterialManager::getSingleton().resourceExists(sMtr[i] + strI))
-			MaterialManager::getSingleton().remove(sMtr[i] + strI);
-		mat->clone(sMtr[i] + strI, false);
+		sh::Factory::getInstance().destroyMaterialInstance(sMtr[i] + strI);
+		sh::Factory::getInstance().createMaterialInstance(sMtr[i] + strI, sMtr[i], true);
 		sMtr[i] = sMtr[i] + strI;
 	}
 	

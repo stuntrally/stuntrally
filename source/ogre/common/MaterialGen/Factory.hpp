@@ -32,10 +32,12 @@ namespace sh
 		 * create a MaterialInstance, copying all properties from \a instance
 		 * @param name name of the new instance
 		 * @param instance name of the parent
+		 * @param createImmediately if true, the material is created immediately, otherwise it is created as soon as the renderer requests it
 		 * @return newly created instance
 		 */
-		MaterialInstance* createMaterialInstance (const std::string& name, const std::string& instance);
+		MaterialInstance* createMaterialInstance (const std::string& name, const std::string& instance, bool createImmediately = false);
 
+		/// safe to call if instance does not exist
 		void destroyMaterialInstance (const std::string& name);
 
 		/// use this to enable or disable shaders on-the-fly

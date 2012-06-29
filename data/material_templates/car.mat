@@ -1,0 +1,35 @@
+material car_body
+{
+	parent base
+	diffuseMap body00_red.png
+}
+
+material car_glass
+{
+	parent base
+	diffuseMap glass.png
+}
+
+material car_ghost
+{
+	parent base
+	diffuseMap white.png
+}
+
+material car_interior
+{
+	parent base
+	diffuseMap interior.png
+}
+
+material cartire_front
+{
+	parent base
+	diffuseMap wheel.png
+}
+
+material cartire_rear
+{
+	parent base
+	diffuseMap wheel.png
+}
