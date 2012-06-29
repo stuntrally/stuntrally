@@ -14,6 +14,7 @@ namespace sh
 
 	typedef std::map<std::string, MaterialInstance> MaterialMap;
 	typedef std::map<std::string, ShaderSet> ShaderSetMap;
+	typedef std::map<std::string, std::string> SettingsMap;
 
 	/**
 	 * @brief
@@ -36,6 +37,14 @@ namespace sh
 		MaterialInstance* createMaterialInstance (const std::string& name, const std::string& instance);
 
 		void destroyMaterialInstance (const std::string& name);
+
+		/// use this to enable or disable shaders on-the-fly
+		void setShadersEnabled (bool enabled);
+
+		/// use this to manage user settings (for example this can be used to disable normal maps in your shaders) \n
+		/// global settings can be retrieved in a shader through a macro \n
+		/// when a global setting is changed, the shaders that depend on them are recompiled automatically
+		void setGlobalSetting (const std::string& name, const std::string& value);
 
 		/**
 		 * get a MaterialInstance by name
@@ -63,8 +72,11 @@ namespace sh
 	private:
 		static Factory* sThis;
 
+		bool mShadersEnabled;
+
 		MaterialMap mMaterials;
 		ShaderSetMap mShaderSets;
+		SettingsMap mGlobalSettings;
 
 		Platform* mPlatform;
 

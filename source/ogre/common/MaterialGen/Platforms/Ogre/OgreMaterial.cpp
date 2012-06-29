@@ -35,6 +35,15 @@ namespace sh
 		t->setName (name);
 	}
 
+	void OgreMaterial::removeConfiguration (const std::string& name)
+	{
+		for (int i=0; i<mMaterial->getNumTechniques(); ++i)
+		{
+			if (mMaterial->getTechnique(i) == mMaterial->getTechnique(name))
+				mMaterial->removeTechnique(i);
+		}
+	}
+
 	Ogre::MaterialPtr OgreMaterial::getOgreMaterial ()
 	{
 		return mMaterial;

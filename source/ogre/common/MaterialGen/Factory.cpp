@@ -21,6 +21,7 @@ namespace sh
 
 	Factory::Factory (Platform* platform)
 		: mPlatform(platform)
+		, mShadersEnabled(true)
 	{
 		assert (!sThis);
 		sThis = this;
@@ -61,7 +62,7 @@ namespace sh
 				}
 
 				MaterialInstance newInstance(it->first);
-				newInstance._create(mPlatform);
+				newInstance.create(mPlatform);
 
 				std::vector<ScriptNode*> props = it->second->getChildren();
 				for (std::vector<ScriptNode*>::const_iterator propIt = props.begin(); propIt != props.end(); ++propIt)
@@ -94,7 +95,7 @@ namespace sh
 						}
 					}
 					else if (name == "parent")
-						newInstance._setParentInstance(val);
+						newInstance.setParentInstance(val);
 					else
 						newInstance.setProperty((*propIt)->getName(), makeProperty(val));
 				}
@@ -105,10 +106,10 @@ namespace sh
 			// now that all instances are loaded, replace the parent names with the actual pointers to parent
 			for (MaterialMap::iterator it = mMaterials.begin(); it != mMaterials.end(); ++it)
 			{
-				std::string parent = it->second._getParentInstance();
+				std::string parent = it->second.getParentInstance();
 				if (parent != "")
 				{
-					if (mMaterials.find (it->second._getParentInstance()) == mMaterials.end())
+					if (mMaterials.find (it->second.getParentInstance()) == mMaterials.end())
 						throw std::runtime_error ("Unable to find parent for material instance \"" + it->first + "\"");
 					it->second.setParent(&mMaterials[parent]);
 				}
@@ -140,7 +141,7 @@ namespace sh
 	{
 		MaterialInstance* m = searchInstance (name);
 		if (m)
-			m->_createForConfiguration (mPlatform, configuration);
+			m->createForConfiguration (mPlatform, configuration);
 		return m;
 	}
 
@@ -154,8 +155,10 @@ namespace sh
 		if (mMaterials.find(instance) == mMaterials.end())
 			throw std::runtime_error ("trying to clone material that does not exist");
 		MaterialInstance newInstance(name);
+		if (!mShadersEnabled)
+			newInstance.setShadersEnabled(false);
 		newInstance.setParent (&mMaterials[instance]);
-		newInstance._create(mPlatform);
+		newInstance.create(mPlatform);
 		mMaterials[name] = newInstance;
 		return &mMaterials[name];
 	}
@@ -163,5 +166,24 @@ namespace sh
 	void Factory::destroyMaterialInstance (const std::string& name)
 	{
 		mMaterials.erase(name);
+	}
+
+	void Factory::setShadersEnabled (bool enabled)
+	{
+		mShadersEnabled = enabled;
+		for (MaterialMap::iterator it = mMaterials.begin(); it != mMaterials.end(); ++it)
+		{
+			it->second.setShadersEnabled(enabled);
+		}
+	}
+
+	void Factory::setGlobalSetting (const std::string& name, const std::string& value)
+	{
+		/*
+		bool changed = true;
+		if (mGlobalSettings.find(name) != mGlobalSettings.end())
+			changed = (mGlobalSettings[name] == value);
+		*/
+		mGlobalSettings[name] = value;
 	}
 }

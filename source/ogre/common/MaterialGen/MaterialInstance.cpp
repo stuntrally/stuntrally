@@ -4,6 +4,7 @@ namespace sh
 {
 	MaterialInstance::MaterialInstance (const std::string& name)
 		: mName(name)
+		, mShadersEnabled(true)
 	{
 	}
 
@@ -11,22 +12,22 @@ namespace sh
 	{
 	}
 
-	void MaterialInstance::_setParentInstance (const std::string& name)
+	void MaterialInstance::setParentInstance (const std::string& name)
 	{
 		mParentInstance = name;
 	}
 
-	std::string MaterialInstance::_getParentInstance ()
+	std::string MaterialInstance::getParentInstance ()
 	{
 		return mParentInstance;
 	}
 
-	void MaterialInstance::_create (Platform* platform)
+	void MaterialInstance::create (Platform* platform)
 	{
 		mMaterial = platform->createMaterial(mName);
 	}
 
-	void MaterialInstance::_createForConfiguration (Platform* platform, const std::string& configuration)
+	void MaterialInstance::createForConfiguration (Platform* platform, const std::string& configuration)
 	{
 		mMaterial->createConfiguration(configuration);
 
@@ -48,6 +49,11 @@ namespace sh
 		}
 	}
 
+	void MaterialInstance::markDirty (const std::string& configuration)
+	{
+		mMaterial->removeConfiguration(configuration);
+	}
+
 	Material* MaterialInstance::getMaterial ()
 	{
 		return mMaterial.get();
@@ -65,5 +71,13 @@ namespace sh
 			return static_cast<MaterialInstance*>(mParent)->getPasses();
 		else
 			return mPasses;
+	}
+
+	void MaterialInstance::setShadersEnabled (bool enabled)
+	{
+		if (enabled == mShadersEnabled)
+			return;
+		mShadersEnabled = enabled;
+		/// \todo
 	}
 }

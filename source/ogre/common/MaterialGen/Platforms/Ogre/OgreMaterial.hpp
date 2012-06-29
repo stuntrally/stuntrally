@@ -17,6 +17,7 @@ namespace sh
 
 		virtual boost::shared_ptr<Pass> createPass (const std::string& configuration);
 		virtual void createConfiguration (const std::string& name);
+		virtual void removeConfiguration (const std::string& name); ///< safe to call if configuration does not exist
 
 		Ogre::MaterialPtr getOgreMaterial();
 
