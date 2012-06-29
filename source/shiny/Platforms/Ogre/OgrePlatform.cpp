@@ -8,7 +8,7 @@
 #include "OgreFragmentProgram.hpp"
 #include "OgreGeometryProgram.hpp"
 
-#include "../../MaterialInstance.hpp"
+#include "../../Main/MaterialInstance.hpp"
 
 namespace
 {

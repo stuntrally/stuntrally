@@ -23,7 +23,7 @@
 using namespace Ogre;
 using namespace MyGUI;
 
-#include "common/MaterialGen/Factory.hpp"
+#include "../shiny/Main/Factory.hpp"
 
 
 //  simulation (2nd) thread

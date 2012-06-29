@@ -5,7 +5,7 @@
 
 #include <OgreHighLevelGpuProgram.h>
 
-#include "../../Platform.hpp"
+#include "../../Main/Platform.hpp"
 
 namespace sh
 {

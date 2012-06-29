@@ -34,8 +34,8 @@
 using namespace Ogre;
 
 
-#include "common/MaterialGen/Factory.hpp"
-#include "common/MaterialGen/Platforms/Ogre/OgrePlatform.hpp"
+#include "../shiny/Main/Factory.hpp"
+#include "../shiny/Platforms/Ogre/OgrePlatform.hpp"
 
 
 //  Create

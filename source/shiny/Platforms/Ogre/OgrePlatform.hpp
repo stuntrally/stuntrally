@@ -12,7 +12,7 @@
  * @{
  */
 
-#include "../../Platform.hpp"
+#include "../../Main/Platform.hpp"
 
 #include <OgreMaterialManager.h>
 

@@ -12,7 +12,7 @@
 #include "CarReflection.h"
 #include "../road/Road.h"
 #include "common/RenderConst.h"
-#include "common/MaterialGen/Factory.hpp"
+#include "../shiny/Main/Factory.hpp"
 
 #include "boost/filesystem.hpp"
 #define  FileExists(s)  boost::filesystem::exists(s)
