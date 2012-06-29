@@ -28,7 +28,7 @@ namespace sh
 	OgrePlatform::OgrePlatform(const std::string& resourceGroupName, const std::string& basePath)
 		: Platform(basePath)
 		, mResourceGroup(resourceGroupName)
-		, mCurrentConfiguration("test2")
+		, mCurrentConfiguration("Default")
 	{
 		Ogre::MaterialManager::getSingleton().addListener(this);
 

@@ -11,9 +11,20 @@
 
 namespace sh
 {
+	Factory* Factory::sThis = 0;
+
+	Factory& Factory::getInstance()
+	{
+		assert (sThis);
+		return *sThis;
+	}
+
 	Factory::Factory (Platform* platform)
 		: mPlatform(platform)
 	{
+		assert (!sThis);
+		sThis = this;
+
 		mPlatform->setFactory(this);
 
 		// load shader sets
@@ -108,6 +119,7 @@ namespace sh
 	Factory::~Factory ()
 	{
 		delete mPlatform;
+		sThis = 0;
 	}
 
 	MaterialInstance* Factory::searchInstance (const std::string& name)
@@ -139,6 +151,8 @@ namespace sh
 
 	MaterialInstance* Factory::createMaterialInstance (const std::string& name, const std::string& instance)
 	{
+		if (mMaterials.find(instance) == mMaterials.end())
+			throw std::runtime_error ("trying to clone material that does not exist");
 		MaterialInstance newInstance(name);
 		newInstance.setParent (&mMaterials[instance]);
 		newInstance._create(mPlatform);

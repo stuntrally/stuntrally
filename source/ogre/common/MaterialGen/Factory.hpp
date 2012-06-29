@@ -55,9 +55,14 @@ namespace sh
 
 		void notifyFrameEntered ();
 
+		static Factory& getInstance();
+		///< Return instance of this class.
+
 		friend class Platform;
 
 	private:
+		static Factory* sThis;
+
 		MaterialMap mMaterials;
 		ShaderSetMap mShaderSets;
 
