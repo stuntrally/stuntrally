@@ -129,11 +129,11 @@
 		<track name="0W7-LJs-Mntn"	laps="1" factor="0.1" />
 	</championship>
 
-	<championship name="Frenzy fellow" ver="2" difficulty="4" length="3" tutorial="0" 
+	<championship name="Frenzy fellow" ver="3" difficulty="4" length="3" tutorial="0" 
 			descr="Curly tracks, mostly flat, frequently changing directions. Require lots of steering.">
 	<!--<track name="S2-Frenzy"		laps="1" factor="0.1" />-->
 		<track name="F3-osso"		laps="1" factor="0.1" />
-		<track name="0W5-O4"		laps="1" factor="0.1" />
+		<track name="F15-ForestTrip" laps="1" factor="0.1" />
 		<track name="S8-Frenzy2slow" laps="1" factor="0.1" />
 		<track name="0W4-ice-blur"	laps="1" factor="0.1" />
 		<track name="0W9-IceFrenzy"	laps="1" factor="0.1" />
@@ -142,9 +142,10 @@
 		<track name="C1-Hairpins"	laps="1" factor="0.1" />
 	</championship>
 
-	<championship name="Fancy circles" ver="1" difficulty="3" length="3" tutorial="0" 
+	<championship name="Fancy circles" ver="2" difficulty="3" length="3" tutorial="0" 
 			descr="The most circullar tracks. Usualy banked, sometimes with easy pipe turns. Require much steering but mostly in same direction.">
 		<track name="J10-Spiral"	laps="1" factor="0.1" />
+		<track name="0W5-O4"		laps="1" factor="0.1" />
 		<track name="S9-demo"		laps="1" factor="0.1" />
 		<track name="0W8-pipe8x8"	laps="1" factor="0.1" />
 		<track name="I6-Flooded"	laps="1" factor="0.1" />
@@ -244,6 +245,7 @@
 		<track name="F12-HighPeaks"	laps="1" factor="0.1" />
 		<track name="F13-Castle"	laps="1" factor="0.1" />
 		<track name="F14-Maze"		laps="1" factor="0.1" />
+		<track name="F15-ForestTrip" laps="1" factor="0.1" />
 	</championship>
 	<championship name="Island scenery" ver="1" difficulty="2" length="3" tutorial="3" 
 			descr="Island championship. All tracks for this scenery in their appearance order.">
@@ -450,6 +452,8 @@
 
 		<track name="F14-Maze"		time="207.0"/>
 		<track name="C3-Vast"		time="278.0"/>
+
+		<track name="F15-ForestTrip" time="135.0"/>
 
 	</times>
 </championships>

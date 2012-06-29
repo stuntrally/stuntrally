@@ -152,4 +152,6 @@
 	<track n="91" name="F14-Maze"		created="11-06-12" crtver="1.7" modified="11-06-12" scenery="Forest"	author="CH" fluids="0" bumps="1" jumps="0" loops="0" pipes="1" banked="2" frenzy="4" long="3" diff="4" rating="3" />
 	<track n="92" name="C3-Vast"		created="11-06-12" crtver="1.7" modified="12-06-12" scenery="Canyon"	author="CH" fluids="0" bumps="1" jumps="1" loops="0" pipes="0" banked="1" frenzy="0" long="8" diff="2" rating="3" />
 
+	<track n="93" name="F15-ForestTrip"	created="01-06-12" crtver="1.7" modified="29-06-12" scenery="Forest" author="krash" fluids="1" bumps="2" jumps="0" loops="0" pipes="0" banked="0" frenzy="0" long="3" diff="2" rating="3" />
+
 </tracks>
