@@ -14,8 +14,6 @@ namespace sh
 	class MaterialInstancePass : public PropertySetGet
 	{
 	public:
-		MaterialInstancePass () {}
-
 		MaterialInstanceTextureUnit* createTextureUnit (const std::string& name);
 
 		std::map <std::string, MaterialInstanceTextureUnit> getTexUnits ();

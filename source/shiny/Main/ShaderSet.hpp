@@ -20,7 +20,6 @@ namespace sh
 
 		ShaderSet (Type type, const std::string& sourceFile);
 		ShaderSet (const std::string& type, const std::string& sourceFile);
-		ShaderSet ();
 
 	private:
 		Type mType;

@@ -8,10 +8,6 @@ namespace sh
 	{
 	}
 
-	MaterialInstance::MaterialInstance ()
-	{
-	}
-
 	void MaterialInstance::setParentInstance (const std::string& name)
 	{
 		mParentInstance = name;

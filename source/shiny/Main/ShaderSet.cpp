@@ -6,10 +6,7 @@ namespace sh
 		: mType(type)
 		, mSourceFile(sourceFile)
 	{
-	}
 
-	ShaderSet::ShaderSet()
-	{
 	}
 
 	ShaderSet::ShaderSet (const std::string& type, const std::string& sourceFile)

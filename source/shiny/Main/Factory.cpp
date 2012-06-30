@@ -43,7 +43,7 @@ namespace sh
 
 				ShaderSet newSet (it->second->findChild("type")->getValue(), it->second->findChild("source")->getValue());
 
-				mShaderSets[it->first] = newSet;
+				mShaderSets.insert(std::make_pair(it->first, newSet));
 			}
 		}
 
@@ -100,7 +100,7 @@ namespace sh
 						newInstance.setProperty((*propIt)->getName(), makeProperty(val));
 				}
 
-				mMaterials[it->first] = newInstance;
+				mMaterials.insert (std::make_pair(it->first, newInstance));
 			}
 
 			// now that all instances are loaded, replace the parent names with the actual pointers to parent
@@ -111,7 +111,7 @@ namespace sh
 				{
 					if (mMaterials.find (it->second.getParentInstance()) == mMaterials.end())
 						throw std::runtime_error ("Unable to find parent for material instance \"" + it->first + "\"");
-					it->second.setParent(&mMaterials[parent]);
+					it->second.setParent(&mMaterials.find(parent)->second);
 				}
 			}
 		}
@@ -126,7 +126,7 @@ namespace sh
 	MaterialInstance* Factory::searchInstance (const std::string& name)
 	{
 		if (mMaterials.find(name) != mMaterials.end())
-				return &mMaterials[name];
+				return &mMaterials.find(name)->second;
 
 		return NULL;
 	}
@@ -134,7 +134,7 @@ namespace sh
 	MaterialInstance* Factory::findInstance (const std::string& name)
 	{
 		assert (mMaterials.find(name) != mMaterials.end());
-		return &mMaterials[name];
+		return &mMaterials.find(name)->second;
 	}
 
 	MaterialInstance* Factory::requestMaterial (const std::string& name, const std::string& configuration)
@@ -157,12 +157,12 @@ namespace sh
 		MaterialInstance newInstance(name);
 		if (!mShadersEnabled)
 			newInstance.setShadersEnabled(false);
-		newInstance.setParent (&mMaterials[instance]);
+		newInstance.setParent (&mMaterials.find(instance)->second);
 		newInstance.create(mPlatform);
 		if (createImmediately)
 			newInstance.createForConfiguration(mPlatform, "Default"); /// \todo
-		mMaterials[name] = newInstance;
-		return &mMaterials[name];
+		mMaterials.insert (std::make_pair(name, newInstance));
+		return &mMaterials.find(name)->second;
 	}
 
 	void Factory::destroyMaterialInstance (const std::string& name)

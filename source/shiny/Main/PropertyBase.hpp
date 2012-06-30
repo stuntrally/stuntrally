@@ -150,7 +150,7 @@ namespace sh
 	protected:
 		PropertySetGet* mParent;
 		///< the parent can provide properties as well (when they are retrieved via getProperty) \n
-		/// multiple levels of inheritance are also supported
+		/// multiple levels of inheritance are also supported \n
 		/// children can override properties of their parents
 	};
 

@@ -4,9 +4,11 @@
 #include <boost/wave/cpplexer/cpp_lex_token.hpp>
 #include <boost/wave/cpplexer/cpp_lex_iterator.hpp>
 
+// adapted from boost::wave quick_start sample
+
 namespace sh
 {
-	std::string Preprocessor::preprocess (std::string source, const std::string& includePath)
+	std::string Preprocessor::preprocess (std::string source, const std::string& includePath, std::vector<std::string>& definitions)
 	{
 		std::stringstream returnString;
 
@@ -34,13 +36,17 @@ namespace sh
 			//  The preprocessor iterator shouldn't be constructed directly. It is
 			//  generated through a wave::context<> object. This wave:context<> object
 			//  is additionally used to initialize and define different parameters of
-			//  the actual preprocessing (not done here).
+			//  the actual preprocessing.
 			//
 			//  The preprocessing of the input stream is done on the fly behind the
 			//  scenes during iteration over the range of context_type::iterator_type
 			//  instances.
 			context_type ctx (source.begin(), source.end());
 			ctx.add_include_path(includePath.c_str());
+			for (std::vector<std::string>::iterator it = definitions.begin(); it != definitions.end(); ++it)
+			{
+				ctx.add_macro_definition(*it);
+			}
 
 			//  Get the preprocessor iterators and use them to generate the token
 			//  sequence.
