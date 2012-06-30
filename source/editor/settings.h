@@ -4,7 +4,7 @@
 #include "../vdrift/configfile.h"
 
 
-#define SET_VER  1500  // 1.5
+#define SET_VER  1700  // 1.7
 
 
 class SETTINGS

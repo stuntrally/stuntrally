@@ -142,7 +142,7 @@ void App::InitGui()
 	Slv(ReflFaces,	pSet->refl_faces /6.f);
 	Slv(ReflDist,	powf((pSet->refl_dist -20.f)/1480.f, 0.5f));
 	Slv(ReflMode,   pSet->refl_mode /2.f);
-
+	
     //  sound
 	Slv(VolMaster,	pSet->vol_master/1.6f);
 	Slv(VolEngine,	pSet->vol_engine/1.4f);		 Slv(VolTires, pSet->vol_tires/1.4f);

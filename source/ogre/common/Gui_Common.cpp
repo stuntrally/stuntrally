@@ -177,13 +177,12 @@ void App::btnShaders(WP){	changeShadows();	}  // should also rebuild road col/wa
 
 void App::slShadowType(SL)
 {
-	int v = val*3.f +slHalf;	if (bGI)  pSet->shadow_type = v;
+	int v = val*2.f +slHalf;	if (bGI)  pSet->shadow_type = v;
 	if (valShadowType)
 	{	if (v == 0)  valShadowType->setCaption("None");  else
-		if (v == 1)  valShadowType->setCaption("Old");  else
-		if (v == 2)  valShadowType->setCaption("Simple");  else
-		if (v == 3)  valShadowType->setCaption("Depth");  else
-		if (v == 4)  valShadowType->setCaption("Soft");  }
+		if (v == 1)  valShadowType->setCaption("Simple");  else
+		if (v == 2)  valShadowType->setCaption("Depth");  else
+		if (v == 3)  valShadowType->setCaption("Soft");  }
 }
 
 void App::slShadowCount(SL)
@@ -207,7 +206,7 @@ void App::slShadowDist(SL)
 
 void App::slShadowFilter(SL)
 {
-	int v = 1 + 3 * val +slHalf;  if (bGI) pSet->shadow_filter = v;
+	int v = 1 + 3 * val +slHalf;  if (bGI)  pSet->shadow_filter = v;
 	if (materialFactory) materialFactory->setShadowsFilterSize(v);
 	if (valShadowFilter) valShadowFilter->setCaption(toStr(v));
 }
@@ -281,7 +280,7 @@ void App::GuiInitGraphics()
 	Slv(AntiAliasing, float(pSet->fsaa)/float(fsaa));
 
 	//  shadows
-	Slv(ShadowType,	pSet->shadow_type /3.f);
+	Slv(ShadowType,	pSet->shadow_type /2.f);
 	Slv(ShadowCount,(pSet->shadow_count-2) /2.f);
 	Slv(ShadowFilter, (pSet->shadow_filter-1) /3.f);
 	Slv(ShadowSize,	pSet->shadow_size /float(ciShadowNumSizes));
