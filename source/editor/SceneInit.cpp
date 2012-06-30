@@ -287,6 +287,8 @@ void App::SaveTrackEv()
 	if (!vdr)  SaveGrassDens();
 	if (!vdr)  SaveWaterDepth();  //?-
 	SaveStartPos(TrkDir()+"track.txt");  //..load/save inside
+	
+	Delete(getHMapNew());
 	Status("Saved", 1,0.6,0.2);
 }
 
