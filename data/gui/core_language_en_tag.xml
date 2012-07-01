@@ -756,7 +756,7 @@
 	<Tag name="InputRoadAltLMB">alt-LMB (or 1,2)</Tag>
 	<Tag name="InputRoadAltMMB">alt-RMB (or 3,4)</Tag>
 	<Tag name="InputRoadYaw">- rotate yaw</Tag>
-	<Tag name="InputRoadPitch">- rotate pitch* / scale sel.</Tag>
+	<Tag name="InputRoadRoll">- rotate roll / scale sel.</Tag>
 
 	<Tag name="InputRoadNotOnTer">when not on terrain</Tag>
 	<Tag name="InputRoadMostSel">most work also on selection</Tag>
@@ -765,14 +765,14 @@
 	<Tag name="InputRoadColumn">End - on/off column</Tag>
 	<Tag name="InputRoadOnTer">Home - toggle on Terrain snap</Tag>
 
-	<Tag name="InputRoadPipeAngle">[,]   - pipe angle (no pipe when 0)</Tag>
-	<Tag name="InputRoadMat">-,=  - road/pipe material</Tag>
-	<Tag name="InputRoadChkRadius">K,L   - checkpoint radius (chkR 0 - none)</Tag>
+	<Tag name="InputRoadPipeAngle">[,]   - pipe angle  (no pipe when 0)</Tag>
+	<Tag name="InputRoadMat">-,=  - road/pipe material  (-1 hidden)</Tag>
+	<Tag name="InputRoadChkRadius">K,L  - checkpoint radius  (ChkR 0 - none)</Tag>
 
 	<Tag name="InputRoadAngType">5,6   - angles type</Tag>
 	<Tag name="InputRoadAngSnap">7,8   - angles snap</Tag>
 	<Tag name="InputRoadAngZero">shift-6  - zero angles</Tag>
-	<Tag name="InputRoadChkFirst">0   - set checkpoint as first</Tag>
+	<Tag name="InputRoadChkFirst">0   - set checkpoint as first  (1)</Tag>
 
 
 	<!-- Road  pick (one)  -->

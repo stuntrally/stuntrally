@@ -208,68 +208,160 @@
 			<Property key="TextColour" value="0.7 0.7 0.7"/>
 		</Widget>
 	</Widget>
-	<Widget type="Window" skin="WindowC" position="880 32 136 266" layer="Back" name="RoadCur">
+	<Widget type="Window" skin="WindowC" position="880 32 184 296" layer="Back" name="RoadCur">
 		<Property key="Colour" value="0.4 0.4 0.4"/>
 		<Property key="Alpha" value="0.6"/>
 		<Property key="Caption" value="#{RoadPoint}"/>
 		<Property key="Snap" value="true"/>
 		<UserString key="tip" value="#{TipRoadParams}"/>
-		<Widget type="TextBox" skin="TextBox" position="4 0 120 20" name="rdCur0">
+		<Widget type="TextBox" skin="TextBox" position="4 0 120 20" name="rdTxt0">
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="TextColour" value="0.7 1.0 0.5"/>
 		</Widget>
-		<Widget type="TextBox" skin="TextBox" position="4 20 120 20" name="rdCur1">
+		<Widget type="TextBox" skin="TextBox" position="74 0 120 20" name="rdVal0">
+			<Property key="InheritsAlpha" value="false"/>
+			<Property key="TextColour" value="0.7 1.0 0.5"/>
+		</Widget>
+		<Widget type="TextBox" skin="TextBox" position="134 2 120 20" name="rdKey0">
+			<Property key="InheritsAlpha" value="false"/>
+			<Property key="TextColour" value="0.7 1.0 0.5"/>
+			<Property key="FontHeight" value="16"/>
+		</Widget>
+
+		<Widget type="TextBox" skin="TextBox" position="4 20 120 20" name="rdTxt1">
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="TextColour" value="0.5 1.0 0.9"/>
 		</Widget>
-		<Widget type="TextBox" skin="TextBox" position="4 50 120 20" name="rdCur2">
+		<Widget type="TextBox" skin="TextBox" position="74 20 120 20" name="rdVal1">
+			<Property key="InheritsAlpha" value="false"/>
+			<Property key="TextColour" value="0.5 1.0 0.9"/>
+		</Widget>
+		<Widget type="TextBox" skin="TextBox" position="144 20 120 20" name="rdKey1">
+			<Property key="InheritsAlpha" value="false"/>
+			<Property key="TextColour" value="0.5 1.0 0.9"/>
+		</Widget>
+
+		<Widget type="TextBox" skin="TextBox" position="4 50 120 20" name="rdTxt2">
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="TextColour" value="1.0 0.8 0.6"/>
 		</Widget>
-		<Widget type="TextBox" skin="TextBox" position="4 70 120 20" name="rdCur3">
+		<Widget type="TextBox" skin="TextBox" position="74 50 120 20" name="rdVal2">
+			<Property key="InheritsAlpha" value="false"/>
+			<Property key="TextColour" value="1.0 0.8 0.6"/>
+		</Widget>
+		<Widget type="TextBox" skin="TextBox" position="144 50 120 20" name="rdKey2">
+			<Property key="InheritsAlpha" value="false"/>
+			<Property key="TextColour" value="1.0 0.8 0.6"/>
+		</Widget>
+
+		<Widget type="TextBox" skin="TextBox" position="4 70 120 20" name="rdTxt3">
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="TextColour" value="1.0 0.6 0.6"/>
 		</Widget>
-		<Widget type="TextBox" skin="TextBox" position="4 90 120 20" name="rdCur4">
+		<Widget type="TextBox" skin="TextBox" position="74 70 120 20" name="rdVal3">
+			<Property key="InheritsAlpha" value="false"/>
+			<Property key="TextColour" value="1.0 0.6 0.6"/>
+		</Widget>
+		<Widget type="TextBox" skin="TextBox" position="144 70 120 20" name="rdKey3">
+			<Property key="InheritsAlpha" value="false"/>
+			<Property key="TextColour" value="1.0 0.6 0.6"/>
+		</Widget>
+
+		<Widget type="TextBox" skin="TextBox" position="4 90 120 20" name="rdTxt4">
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="TextColour" value="0.9 0.6 0.8"/>
 		</Widget>
-		<Widget type="TextBox" skin="TextBox" position="4 120 120 20" name="rdCur5">
+		<Widget type="TextBox" skin="TextBox" position="74 90 120 20" name="rdVal4">
+			<Property key="InheritsAlpha" value="false"/>
+			<Property key="TextColour" value="0.9 0.6 0.8"/>
+		</Widget>
+		<Widget type="TextBox" skin="TextBox" position="144 92 120 20" name="rdKey4">
+			<Property key="InheritsAlpha" value="false"/>
+			<Property key="TextColour" value="0.9 0.6 0.8"/>
+			<Property key="FontHeight" value="16"/>
+		</Widget>
+
+		<Widget type="TextBox" skin="TextBox" position="4 110 120 20" name="rdTxt5">
+			<Property key="InheritsAlpha" value="false"/>
+			<Property key="TextColour" value="0.75 0.45 0.55"/>
+		</Widget>
+		<Widget type="TextBox" skin="TextBox" position="74 110 120 20" name="rdVal5">
+			<Property key="InheritsAlpha" value="false"/>
+			<Property key="TextColour" value="0.8 0.5 0.6"/>
+		</Widget>
+		<Widget type="TextBox" skin="TextBox" position="144 112 120 20" name="rdKey5">
+			<Property key="InheritsAlpha" value="false"/>
+			<Property key="TextColour" value="0.8 0.5 0.6"/>
+			<Property key="FontHeight" value="16"/>
+		</Widget>
+
+		<Widget type="TextBox" skin="TextBox" position="4 140 120 20" name="rdTxt6">
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="TextColour" value="0.86 0.86 0.0"/>
 		</Widget>
-		<Widget type="TextBox" skin="TextBox" position="4 140 120 20" name="rdCur6">
+		<Widget type="TextBox" skin="TextBox" position="74 140 120 20" name="rdVal6">
 			<Property key="InheritsAlpha" value="false"/>
-			<Property key="TextColour" value="0.7 0.77 0.8"/>
+			<Property key="TextColour" value="0.86 0.86 0.0"/>
 		</Widget>
-		<Widget type="TextBox" skin="TextBox" position="4 160 120 20" name="rdCur7">
+		<Widget type="TextBox" skin="TextBox" position="144 140 120 20" name="rdKey6">
 			<Property key="InheritsAlpha" value="false"/>
-			<Property key="TextColour" value="0.66 0.86 0.86"/>
+			<Property key="TextColour" value="0.86 0.86 0.0"/>
 		</Widget>
-		<Widget type="TextBox" skin="TextBox" position="4 185 120 20" name="rdCur8">
+
+		<Widget type="TextBox" skin="TextBox" position="4 163 120 20" name="rdTxt7">
 			<Property key="InheritsAlpha" value="false"/>
-			<Property key="TextColour" value="0.77 0.8 0.9"/>
+			<Property key="TextColour" value="0.74 0.77 0.8"/>
+			<Property key="FontHeight" value="16"/>
 		</Widget>
-		<Widget type="TextBox" skin="TextBox" position="44 210 120 20" name="rdCur9">
+		<Widget type="TextBox" skin="TextBox" position="74 160 120 20" name="rdVal7">
 			<Property key="InheritsAlpha" value="false"/>
-			<Property key="TextColour" value="0.7 0.86 1.0"/>
+			<Property key="TextColour" value="0.74 0.77 0.8"/>
 		</Widget>
-		<Widget type="TextBox" skin="TextBox" position="4 230 120 20" name="rdCur10">
+		<Widget type="TextBox" skin="TextBox" position="144 163 120 20" name="rdKey7">
+			<Property key="InheritsAlpha" value="false"/>
+			<Property key="TextColour" value="0.74 0.77 0.8"/>
+			<Property key="FontHeight" value="16"/>
+		</Widget>
+
+		<Widget type="TextBox" skin="TextBox" position="4 185 120 20" name="rdTxt8">
+			<Property key="InheritsAlpha" value="false"/>
+			<Property key="TextColour" value="0.7 0.86 0.86"/>
+		</Widget>
+		<Widget type="TextBox" skin="TextBox" position="74 185 120 20" name="rdVal8">
+			<Property key="InheritsAlpha" value="false"/>
+			<Property key="TextColour" value="0.7 0.86 0.86"/>
+		</Widget>
+		<Widget type="TextBox" skin="TextBox" position="144 185 120 20" name="rdKey8">
+			<Property key="InheritsAlpha" value="false"/>
+			<Property key="TextColour" value="0.7 0.86 0.86"/>
+		</Widget>
+
+		<Widget type="TextBox" skin="TextBox" position="4 210 120 20" name="rdTxt9">
+			<Property key="InheritsAlpha" value="false"/>
+			<Property key="TextColour" value="0.75 0.64 0.96"/>
+		</Widget>
+		<Widget type="TextBox" skin="TextBox" position="74 210 120 20" name="rdVal9">
+			<Property key="InheritsAlpha" value="false"/>
+			<Property key="TextColour" value="0.75 0.64 0.96"/>
+		</Widget>
+		<Widget type="TextBox" skin="TextBox" position="144 210 120 20" name="rdKey9">
+			<Property key="InheritsAlpha" value="false"/>
+			<Property key="TextColour" value="0.75 0.64 0.96"/>
+		</Widget>
+
+		<Widget type="TextBox" skin="TextBox" position="4 235 120 20" name="rdTxt10">
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="TextColour" value="0.6 0.8 1.0"/>
 		</Widget>
-		<Widget type="TextBox" skin="TextBox" position="4 210 120 20" name="rdCur11">
+		<Widget type="TextBox" skin="TextBox" position="74 235 120 20" name="rdVal10">
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="TextColour" value="0.7 0.86 1.0"/>
 		</Widget>
-		<Widget type="TextBox" skin="TextBox" position="94 130 120 20" name="rdCur12">
+		<Widget type="TextBox" skin="TextBox" position="139 235 120 20" name="rdKey10">
+			<Property key="TextColour" value="0.5 1.0 0.0"/>
 			<Property key="InheritsAlpha" value="false"/>
-			<Property key="TextColour" value="0.7 0.86 1.0"/>
 		</Widget>
-		<Widget type="TextBox" skin="TextBox" position="94 70 120 20" name="rdCur13">
-			<Property key="InheritsAlpha" value="false"/>
-			<Property key="TextColour" value="0.9 0.5 0.5"/>
-		</Widget>
+
 	</Widget>
 	<Widget type="Window" skin="WindowC" position="888 676 136 224" layer="Back" name="RoadStats">
 		<Property key="Colour" value="0.3 0.3 0.4"/>
@@ -1902,14 +1994,14 @@
 							<UserString key="tip" value="#{TipLTrMaxTerH}"/>
 						</Widget>
 						<Widget type="TextBox" skin="TextBox" position="16 424 112 24">
-							<Property key="TextColour" value="0.4 0.7 0.9"/>
+							<Property key="TextColour" value="0.6 0.76 0.9"/>
 							<Property key="Caption" value="#{LTrFlDepth}"/>
 							<UserString key="RelativeTo" value="EditorWnd"/>
 							<UserString key="tip" value="#{TipLTrFlDepth}"/>
 						</Widget>
 						<Widget type="EditBox" skin="EditBox" position="128 421 64 24" name="LTrFlDepth">
-							<Property key="Colour" value="0.4 0.7 0.9"/>
-							<Property key="TextColour" value="0.4 0.7 0.9"/>
+							<Property key="Colour" value="0.6 0.76 0.9"/>
+							<Property key="TextColour" value="0.6 0.76 0.9"/>
 							<UserString key="RelativeTo" value="EditorWnd"/>
 							<UserString key="tip" value="#{TipLTrFlDepth}"/>
 						</Widget>
@@ -3135,108 +3227,110 @@
 						<Property key="Caption" value="#{Road} 2"/>
 						<UserString key="RelativeTo" value="HelpWnd"/>
 						<Widget type="TextBox" skin="TextBox" position="32 38 136 20">
-							<Property key="TextColour" value="0.8 0.9 1.0"/>
+							<Property key="TextColour" value="0.5 1.0 0.3"/>
 							<Property key="Caption" value="#{InputRoadLMB}"/>
 							<UserString key="RelativeTo" value="HelpWnd"/>
 						</Widget>
 						<Widget type="TextBox" skin="TextBox" position="32 60 136 20">
+							<Property key="TextColour" value="0.7 1.0 0.5"/>
 							<Property key="Caption" value="#{InputRoadRMB}"/>
-							<Property key="TextColour" value="0.8 0.9 1.0"/>
 							<UserString key="RelativeTo" value="HelpWnd"/>
 						</Widget>
 						<Widget type="TextBox" skin="TextBox" position="32 82 136 20">
-							<Property key="TextColour" value="0.8 0.9 1.0"/>
+							<Property key="TextColour" value="0.5 1.0 0.9"/>
 							<Property key="Caption" value="#{InputRoadMMB}"/>
 							<UserString key="RelativeTo" value="HelpWnd"/>
 						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="32 112 136 20">
+							<Property key="TextColour" value="1.0 0.8 0.6"/>
+							<Property key="Caption" value="#{InputRoadAltLMB}"/>
+							<UserString key="RelativeTo" value="HelpWnd"/>
+						</Widget>
 						<Widget type="TextBox" skin="TextBox" position="32 134 136 20">
+							<Property key="TextColour" value="1.0 0.6 0.6"/>
 							<Property key="Caption" value="#{InputRoadAltMMB}"/>
-							<Property key="TextColour" value="0.7 0.85 1.0"/>
 							<UserString key="RelativeTo" value="HelpWnd"/>
 						</Widget>
 						<Widget type="TextBox" skin="TextBox" position="170 164 190 20">
-							<Property key="TextColour" value="0.7 0.85 1.0"/>
+							<Property key="TextColour" value="0.7 1.0 0.5"/>
+							<Property key="Alpha" value="0.7"/>
 							<Property key="Caption" value="*#{InputRoadNotOnTer}"/>
 							<UserString key="RelativeTo" value="HelpWnd"/>
 						</Widget>
 						<Widget type="TextBox" skin="TextBox" position="170 38 190 20">
+							<Property key="TextColour" value="0.5 1.0 0.3"/>
 							<Property key="Caption" value="#{InputRoadMove}"/>
-							<Property key="TextColour" value="0.85 0.9 1.0"/>
 							<UserString key="RelativeTo" value="HelpWnd"/>
 						</Widget>
 						<Widget type="TextBox" skin="TextBox" position="170 60 190 20">
+							<Property key="TextColour" value="0.7 1.0 0.5"/>
 							<Property key="Caption" value="#{InputRoadHeight}*"/>
-							<Property key="TextColour" value="0.85 0.9 1.0"/>
 							<UserString key="RelativeTo" value="HelpWnd"/>
 						</Widget>
 						<Widget type="TextBox" skin="TextBox" position="170 82 190 20">
+							<Property key="TextColour" value="0.5 1.0 0.9"/>
 							<Property key="Caption" value="#{InputRoadWidth}"/>
-							<Property key="TextColour" value="0.85 0.9 1.0"/>
 							<UserString key="RelativeTo" value="HelpWnd"/>
 						</Widget>
 						<Widget type="TextBox" skin="TextBox" position="170 112 190 20">
-							<Property key="TextColour" value="0.7 0.85 1.0"/>
+							<Property key="TextColour" value="1.0 0.8 0.6"/>
 							<Property key="Caption" value="#{InputRoadYaw}*"/>
 							<UserString key="RelativeTo" value="HelpWnd"/>
 						</Widget>
 						<Widget type="TextBox" skin="TextBox" position="170 134 190 20">
-							<Property key="TextColour" value="0.7 0.85 1.0"/>
-							<Property key="Caption" value="#{InputRoadPitch}"/>
-							<UserString key="RelativeTo" value="HelpWnd"/>
-						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="32 112 136 20">
-							<Property key="TextColour" value="0.7 0.85 1.0"/>
-							<Property key="Caption" value="#{InputRoadAltLMB}"/>
+							<Property key="TextColour" value="1.0 0.6 0.6"/>
+							<Property key="Caption" value="#{InputRoadRoll}"/>
 							<UserString key="RelativeTo" value="HelpWnd"/>
 						</Widget>
 						<Widget type="TextBox" skin="TextBox" position="376 116 320 20">
-							<Property key="TextColour" value="0.8 0.9 1.0"/>
+							<Property key="TextColour" value="0.7 0.86 0.86"/>
 							<Property key="Caption" value="#{InputRoadMat}"/>
 							<UserString key="RelativeTo" value="HelpWnd"/>
 						</Widget>
 						<Widget type="TextBox" skin="TextBox" position="376 38 320 20">
-							<Property key="TextColour" value="0.7 0.85 1.0"/>
-							<Property key="Caption" value="#{InputRoadColumn}*"/>
-							<UserString key="RelativeTo" value="HelpWnd"/>
-						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="376 60 320 20">
-							<Property key="TextColour" value="0.8 0.9 1.0"/>
+							<Property key="TextColour" value="0.7 1.0 0.5"/>
 							<Property key="Caption" value="#{InputRoadOnTer}"/>
 							<UserString key="RelativeTo" value="HelpWnd"/>
 						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="376 60 320 20">
+							<Property key="TextColour" value="0.74 0.77 0.8"/>
+							<Property key="Caption" value="#{InputRoadColumn}*"/>
+							<UserString key="RelativeTo" value="HelpWnd"/>
+						</Widget>
 						<Widget type="TextBox" skin="TextBox" position="376 94 320 20">
-							<Property key="TextColour" value="0.8 0.9 1.0"/>
+							<Property key="TextColour" value="0.86 0.86 0.0"/>
 							<Property key="Caption" value="#{InputRoadPipeAngle}"/>
 							<UserString key="RelativeTo" value="HelpWnd"/>
 						</Widget>
 						<Widget type="TextBox" skin="TextBox" position="376 152 320 20">
-							<Property key="TextColour" value="0.8 0.9 1.0"/>
+							<Property key="TextColour" value="0.75 0.64 0.96"/>
 							<Property key="Caption" value="#{InputRoadChkRadius}"/>
 							<UserString key="RelativeTo" value="HelpWnd"/>
 						</Widget>
 						<Widget type="TextBox" skin="TextBox" position="32 202 328 20">
-							<Property key="TextColour" value="0.6 0.75 0.9"/>
+							<Property key="TextColour" value="0.9 0.6 0.8"/>
 							<Property key="Caption" value="#{InputRoadAngType}"/>
 							<UserString key="RelativeTo" value="HelpWnd"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="32 224 328 20">
-							<Property key="TextColour" value="0.6 0.75 0.9"/>
+						<Widget type="TextBox" skin="TextBox" position="32 246 328 20">
+							<Property key="TextColour" value="1.0 0.7 0.6"/>
+							<Property key="Alpha" value="0.9"/>
 							<Property key="Caption" value="#{InputRoadAngZero}"/>
 							<UserString key="RelativeTo" value="HelpWnd"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="32 246 328 20">
-							<Property key="TextColour" value="0.6 0.75 0.9"/>
+						<Widget type="TextBox" skin="TextBox" position="32 224 328 20">
+							<Property key="TextColour" value="0.75 0.45 0.55"/>
 							<Property key="Caption" value="#{InputRoadAngSnap}"/>
 							<UserString key="RelativeTo" value="HelpWnd"/>
 						</Widget>
 						<Widget type="TextBox" skin="TextBox" position="376 174 320 20">
-							<Property key="TextColour" value="0.6 0.7 0.8"/>
+							<Property key="TextColour" value="0.5 0.5 1.0"/>
 							<Property key="Caption" value="#{InputRoadChkFirst}"/>
 							<UserString key="RelativeTo" value="HelpWnd"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="32 406 328 20">
+						<Widget type="TextBox" skin="TextBox" position="32 320 328 20">
 							<Property key="Caption" value="#{InputRoadMostSel}"/>
-							<Property key="TextColour" value="0.6 0.7 0.8"/>
+							<Property key="TextColour" value="0.5 0.8 1"/>
 							<UserString key="RelativeTo" value="HelpWnd"/>
 						</Widget>
 						<Widget type="TextBox" skin="TextBox" position="96 14 120 20">

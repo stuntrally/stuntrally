@@ -105,6 +105,7 @@ bool App::frameRenderingQueued(const FrameEvent& evt)
 	
 	///  Update Info texts  . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 
 	if (edMode == ED_Road && bEdit() && road)
+	//if (rdTxt[0] && rdVal[0] && rdKey[0] && rdTxtSt[0])
 	{
 		int ic = road->iChosen;  bool bCur = ic >= 0;
 		SplinePoint& sp = bCur ? road->getPoint(ic) : road->newP;
@@ -112,52 +113,68 @@ bool App::frameRenderingQueued(const FrameEvent& evt)
 		std::string s;
 
 		//  road point  --------------------------------
-		if (rdTxt[0]){	if (sp.onTer)	s = "On Terrain";
-					else s = "Height "+fToStr(sp.pos.y,2,5); rdTxt[0]->setCaption(s);  }
-		if (rdTxt[1]){  rdTxt[1]->setCaption("Width  "+fToStr(sp.width,2,5));  }
-		//if (rdTxt[1]){  rdTxt[1]->setCaption(fToStr(road->posHit.x,0,3)+" "+fToStr(road->posHit.y,0,3)+" "+fToStr(road->posHit.z,0,3));  }
+		rdTxt[0]->setCaption(sp.onTer ? "On Terrain" : "Height");
+		rdVal[0]->setCaption(sp.onTer ? "" : fToStr(sp.pos.y,1,3));
+		rdKey[0]->setCaption("Home");
 
-		if (rdTxt[2]){  rdTxt[2]->setCaption("yaw   "+fToStr(sp.aYaw,1,5));  }
-		if (rdTxt[3]){  rdTxt[3]->setCaption("roll  "+fToStr(sp.aRoll,1,5));  }
+		rdTxt[1]->setCaption("Width");
+		rdVal[1]->setCaption(fToStr(sp.width,2,4));
+		rdKey[1]->setCaption("/ *");
 
-		if (rdTxt[4]){  rdTxt[4]->setCaption(toStr(sp.aType)+" "+csAngType[sp.aType]);  }
-		if (rdTxt[13]){  rdTxt[13]->setCaption(fToStr(angSnap,0,3));  }
+		rdTxt[2]->setCaption("Yaw");
+		rdVal[2]->setCaption(fToStr(sp.aYaw,1,3));
+		rdKey[2]->setCaption("1 2");
+		
+		rdTxt[3]->setCaption("Roll");
+		rdVal[3]->setCaption(fToStr(sp.aRoll,1,3));
+		rdKey[3]->setCaption("3 4");
 
-		if (rdTxt[5]){	if (sp.pipe==0.f) s = "";
-					else s = "Pipe  "+fToStr(sp.pipe,2,5);  rdTxt[5]->setCaption(s);  }
-		if (rdTxt[6]){	if (sp.onTer) s = "";
-					else s = "column  "+fToStr(sp.cols,0,2);  rdTxt[6]->setCaption(s);  }
-		if (rdTxt[7]){  rdTxt[7]->setCaption(toStr(sp.idMtr)+" "+road->getMtrStr(ic));  }
+		rdTxt[4]->setCaption(toStr(sp.aType)+" "+csAngType[sp.aType]);
+		rdKey[4]->setCaption("5 6");
+		
+		rdTxt[5]->setCaption("Snap");
+		rdVal[5]->setCaption(fToStr(angSnap,0,1));
+		rdKey[5]->setCaption("7 8");
 
-		if (rdTxt[8]){	if (sp.chkR == 0.f) s = "";
-					else s = "chkR  "+fToStr(sp.chkR,2,4)+"  "+ (road->iP1 == ic ? "<1>":"");   rdTxt[8]->setCaption(s);  }
+		rdTxt[6]->setCaption("Pipe");
+		rdVal[6]->setCaption(sp.pipe==0.f ? "" : fToStr(sp.pipe,2,4));
+		rdKey[6]->setCaption("[ ]");
+		
+		rdTxt[7]->setCaption(sp.onTer ? "" : "Column");
+		rdVal[7]->setCaption(sp.onTer ? "" : toStr(sp.cols));
+		rdKey[7]->setCaption(sp.onTer ? "" : "End");
+		
+		rdTxt[8]->setCaption(toStr(sp.idMtr)+" "+road->getMtrStr(ic));
+		rdKey[8]->setCaption("- =");
 
-		if (rdTxt[9]){  if (road->vSel.size() > 0)  s = "sel: "+toStr(road->vSel.size());
-			else s = fToStr(road->iChosen+1,0,2)+"/"+toStr(road->vSegs.size());  rdTxt[9]->setCaption(s);  }
+		rdTxt[9]->setCaption("ChkR");
+		rdVal[9]->setCaption( sp.chkR == 0.f ? "" : fToStr(sp.chkR,1,3)+"  "+ (road->iP1 == ic ? "#8080FF(1)":"") );
+		rdKey[9]->setCaption("K L");
 
-		if (rdTxt[11]){  rdTxt[11]->setCaption(bCur ? "Cur" : "New");
-			rdTxt[11]->setTextColour(bCur ? MyGUI::Colour(0.85,0.75,1) : MyGUI::Colour(0.3,1,0.1));  }
-		if (rdTxt[12]){  rdTxt[12]->setCaption(road->bMerge ? "Mrg":"");	}
+		if (road->vSel.size() > 0)  s = "sel: "+toStr(road->vSel.size());
+		else  s = fToStr(road->iChosen+1,0,2)+"/"+toStr(road->vSegs.size());
+		rdVal[10]->setCaption(s);
+
+		rdTxt[10]->setCaption(bCur ? "Cur" : "New");
+		rdTxt[10]->setTextColour(bCur ? MyGUI::Colour(0.85,0.75,1) : MyGUI::Colour(0.3,1,0.1));
+
+		rdKey[10]->setCaption(road->bMerge ? "Mrg":"");
 
 		//  road stats  --------------------------------
 		if (mWndRoadStats && mWndRoadStats->getVisible())
 		{
-			if (rdTxtSt[0]){  rdTxtSt[0]->setCaption("Length  "+fToStr(road->st.Length,0,4));  }
-			if (rdTxtSt[1]){  rdTxtSt[1]->setCaption("Width   "+fToStr(road->st.WidthAvg,2,5));  }
-			if (rdTxtSt[2]){  rdTxtSt[2]->setCaption("Height   "+fToStr(road->st.HeightDiff,2,5));  }
+			rdTxtSt[0]->setCaption("Length  "+fToStr(road->st.Length,0,4));
+			rdTxtSt[1]->setCaption("Width   "+fToStr(road->st.WidthAvg,2,5));
+			rdTxtSt[2]->setCaption("Height   "+fToStr(road->st.HeightDiff,2,5));
 
-			if (rdTxtSt[3]){  rdTxtSt[3]->setCaption("In air   "+fToStr(road->st.OnTer,1,4)+"%");  }
-			if (rdTxtSt[4]){  rdTxtSt[4]->setCaption("Pipes   "+fToStr(road->st.Pipes,1,4)+"%");  }
+			rdTxtSt[3]->setCaption("In air   "+fToStr(road->st.OnTer,1,4)+"%");
+			rdTxtSt[4]->setCaption("Pipes   "+fToStr(road->st.Pipes,1,4)+"%");
 
 			int lp = !bCur ? -1 : road->vSegs[road->iChosen].lpos.size();
-			if (rdTxtSt[5]){  rdTxtSt[5]->setCaption("lod pnt:  "+toStr(lp));  }
-			if (rdTxtSt[6]){  rdTxtSt[6]->setCaption("segs Mrg:  "+fToStr(road->segsMrg+1,0,2));  }
-			if (rdTxtSt[7]){  rdTxtSt[7]->setCaption("vis:  "+fToStr(road->iVis,0,2));  }
-			if (rdTxtSt[8]){  rdTxtSt[8]->setCaption("tri:  "+fToStr(road->iTris/1000.f,1,4)+"k");  }
-
-			//if (rdTxtSt[5]){  Fmt(s, "Pitch  %5.2f", road->st.Pitch);  rdTxtSt[5]->setCaption(s);  }
-			//if (rdTxtSt[6]){  Fmt(s, "Yaw   %5.2f", road->st.Yaw);    rdTxtSt[6]->setCaption(s);  }
-			//if (rdTxtSt[7]){  Fmt(s, "Roll  %5.2f", road->st.Roll);   rdTxtSt[7]->setCaption(s);  }
+			rdTxtSt[5]->setCaption("lod pnt:  "+toStr(lp));
+			rdTxtSt[6]->setCaption("segs Mrg:  "+fToStr(road->segsMrg+1,0,2));
+			rdTxtSt[7]->setCaption("vis:  "+fToStr(road->iVis,0,2));
+			rdTxtSt[8]->setCaption("tri:  "+fToStr(road->iTris/1000.f,1,4)+"k");
 		}
 
 		///  Modify  . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
@@ -166,15 +183,20 @@ bool App::frameRenderingQueued(const FrameEvent& evt)
 		Vector3 vx = mCamera->getRight();	   vx.y = 0;  vx.normalise();  // on xz
 		Vector3 vz = mCamera->getDirection();  vz.y = 0;  vz.normalise();
 		Vector3 vy = Vector3::UNIT_Y;
+
 		if (isKey(LEFT)||isKey(NUMPAD4))  road->Move(-vx*q);	if (isKey(RIGHT)||isKey(NUMPAD6))	road->Move( vx*q);
 		if (isKey(UP)||isKey(NUMPAD8))	  road->Move( vz*q);	if (isKey(DOWN)||isKey(NUMPAD2))	road->Move(-vz*q);
+
 		if (isKey(SUBTRACT))	road->Move(-vy*q);			if (isKey(ADD))		road->Move( vy*q);
 		if (isKey(MULTIPLY))	road->AddWidth( q*0.4f);	if (isKey(DIVIDE))	road->AddWidth(-q*0.4f);
-		if (iSnap == 0)  {
-			if (isKey(1))		road->AddYaw(-q*3,0,alt);	if (isKey(3))		road->AddRoll(-q*3,0,alt);
-			if (isKey(2))		road->AddYaw( q*3,0,alt);	if (isKey(4))		road->AddRoll( q*3,0,alt);  }
+
+		if (iSnap == 0)
+		{	if (isKey(1))		road->AddYaw(-q*3,0,alt);	if (isKey(3))		road->AddRoll(-q*3,0,alt);
+			if (isKey(2))		road->AddYaw( q*3,0,alt);	if (isKey(4))		road->AddRoll( q*3,0,alt);
+		}
 		if (isKey(LBRACKET))	road->AddPipe(-q*0.2);	if (isKey(K ))	road->AddChkR(-q*0.2);  // chk
 		if (isKey(RBRACKET))	road->AddPipe( q*0.2);	if (isKey(L))	road->AddChkR( q*0.2);
+
 		if (mz > 0)			road->NextPoint();
 		else if (mz < 0)	road->PrevPoint();
 	}
@@ -261,13 +283,12 @@ bool App::frameRenderingQueued(const FrameEvent& evt)
 		//  brush params
 		//----------------------------------------------------------------
 		const static MyGUI::UString kclr = "#90FF90";
-		if (brTxt[0])	brTxt[0]->setCaption("Size:      "+fToStr(mBrSize[curBr],1,4)+"  "+kclr+" - =");
-		if (brTxt[1])	brTxt[1]->setCaption("Force:   "+fToStr(mBrIntens[curBr],1,4)+"  "+kclr+" [ ]");
-		if (brTxt[2])	brTxt[2]->setCaption("Power:  "+fToStr(mBrPow[curBr],2,4)+"  "+kclr+" ; \'");
-		if (brTxt[3])	brTxt[3]->setCaption("Shape: "+csBrShape[mBrShape[curBr]]);//+"  "+kclr+" K L");
+		brTxt[0]->setCaption("Size:      "+fToStr(mBrSize[curBr],1,4)+"  "+kclr+" - =");
+		brTxt[1]->setCaption("Force:   "+fToStr(mBrIntens[curBr],1,4)+"  "+kclr+" [ ]");
+		brTxt[2]->setCaption("Power:  "+fToStr(mBrPow[curBr],2,4)+"  "+kclr+" ; \'");
+		brTxt[3]->setCaption("Shape: "+csBrShape[mBrShape[curBr]]);//+"  "+kclr+" K L");
 
 		bool brNoise = mBrShape[curBr] == BRS_Noise;
-		if (brTxt[4])
 		if (edMode == ED_Height)
 			brTxt[4]->setCaption("Height: "+fToStr(terSetH,1,4));//+" "+kclr+" RMB");
 		else if (brNoise)
@@ -275,7 +296,6 @@ bool App::frameRenderingQueued(const FrameEvent& evt)
 		else
 			brTxt[4]->setCaption("");
 
-		if (brTxt[5])
 		if (edMode == ED_Filter)
 			brTxt[5]->setCaption("Filter:    "+fToStr(mBrFilt,1,3)+"   "+kclr+" 1 2");
 		else if (edMode == ED_Height && road && road->bHitTer)
@@ -285,7 +305,6 @@ bool App::frameRenderingQueued(const FrameEvent& evt)
 		else
 			brTxt[5]->setCaption("");
 
-		if (brTxt[6])
 		if (brNoise)
 			brTxt[6]->setCaption("Offset: "+fToStr(mBrNOf[curBr],1,4)+"    "+kclr+" 9 0");
 		else

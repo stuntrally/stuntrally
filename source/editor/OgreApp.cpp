@@ -83,6 +83,7 @@ App::App()  //  gui wigdets--
 
 	int i;
 	for (i=0; i<BR_TXT; ++i)  brTxt[i]=0;	for (i=0; i<RD_TXT; ++i)  rdTxt[i]=0;
+	for (i=0; i<RD_VAL; ++i)  rdVal[i]=0;	for (i=0; i<RD_KEY; ++i)  rdKey[i]=0;
 	for (i=0; i<RDS_TXT;++i)  rdTxtSt[i]=0;	for (i=0; i<ST_TXT; ++i)  stTxt[i]=0;
 	for (i=0; i<FL_TXT; ++i)  flTxt[i]=0;	for (i=0; i<OBJ_TXT;++i)  objTxt[i]=0;
 	

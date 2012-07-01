@@ -22,7 +22,7 @@ void App::InitGui()
 	//  new widgets
 	MyGUI::FactoryManager::getInstance().registerFactory<MultiList2>("Widget");
 	MyGUI::FactoryManager::getInstance().registerFactory<Slider>("Widget");
-
+	int i;
 
 	//  load layout - wnds
 	vwGui = LayoutManager::getInstance().loadLayout("Editor.layout");
@@ -48,7 +48,7 @@ void App::InitGui()
 	if (mWndRoadStats)  mWndRoadStats->setVisible(false);
 
 	//  main menu
-	for (int i=0; i < WND_ALL; ++i)
+	for (i=0; i < WND_ALL; ++i)
 	{
 		const String s = toStr(i);
 		mWndMainPanels[i] = mWndMain->findWidget("PanMenu"+s);
@@ -63,30 +63,27 @@ void App::InitGui()
 
 	GuiInitTooltip();
 	
-	//  assign controls, window texts  ----------------------
-	//  Brush
+	//  assign controls, tool window texts  ----------------------
 	if (mWndBrush)
-	{	for (int i=0; i<BR_TXT; ++i)
-			brTxt[i] = mGUI->findWidget<StaticText>("brush"+toStr(i));
+	{	for (i=0; i<BR_TXT; ++i)	brTxt[i] = mGUI->findWidget<StaticText>("brush"+toStr(i),false);
 		brImg = mGUI->findWidget<StaticImage>("brushImg", false);
 	}
-	//  Road
-	if (mWndRoadCur)  for (int i=0; i<RD_TXT; ++i)
-		rdTxt[i] = mGUI->findWidget<StaticText>("rdCur"+toStr(i));
-	if (mWndRoadStats)  for (int i=0; i<RDS_TXT; ++i)
-		rdTxtSt[i] = mGUI->findWidget<StaticText>("rdStat"+toStr(i));
+	if (mWndRoadCur)
+	{	for (i=0; i<RD_TXT; ++i)	rdTxt[i] = mGUI->findWidget<StaticText>("rdTxt"+toStr(i),false);
+		for (i=0; i<RD_VAL; ++i)	rdVal[i] = mGUI->findWidget<StaticText>("rdVal"+toStr(i),false);
+		for (i=0; i<RD_KEY; ++i)	rdKey[i] = mGUI->findWidget<StaticText>("rdKey"+toStr(i),false);
+	}
+	if (mWndRoadStats)
+		for (i=0; i<RDS_TXT; ++i)	rdTxtSt[i] = mGUI->findWidget<StaticText>("rdStat"+toStr(i),false);
 
-	//  Start
-	if (mWndStart)  for (int i=0; i<ST_TXT; ++i)
-		stTxt[i] = mGUI->findWidget<StaticText>("stTxt"+toStr(i));
+	if (mWndStart)
+		for (i=0; i<ST_TXT; ++i)	stTxt[i] = mGUI->findWidget<StaticText>("stTxt"+toStr(i),false);
 
-	//  Fluid
-	if (mWndFluids)  for (int i=0; i<FL_TXT; ++i)
-		flTxt[i] = mGUI->findWidget<StaticText>("flTxt"+toStr(i));
+	if (mWndFluids)
+		for (i=0; i<FL_TXT; ++i)	flTxt[i] = mGUI->findWidget<StaticText>("flTxt"+toStr(i),false);
 		
-	//  Objects
-	if (mWndObjects)  for (int i=0; i<OBJ_TXT; ++i)
-		objTxt[i] = mGUI->findWidget<StaticText>("objTxt"+toStr(i));
+	if (mWndObjects)
+		for (i=0; i<OBJ_TXT; ++i)	objTxt[i] = mGUI->findWidget<StaticText>("objTxt"+toStr(i),false);
 		
 	//  Tabs
 	TabPtr tab;
@@ -320,7 +317,7 @@ void App::InitGui()
 	}
 	
 	//  surfaces
-	for (int i=0; i < TRACKSURFACE::NumTypes; ++i)
+	for (i=0; i < TRACKSURFACE::NumTypes; ++i)
 		cmbSurfType->addItem(csTRKsurf[i]);
 
 
