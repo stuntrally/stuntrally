@@ -724,7 +724,7 @@
 					<UserString key="RelativeTo" value="EditorWnd"/>
 					<UserString key="tip" value="#{TipTrkViewDetailed}"/>
 				</Widget>
-				<Widget type="Button" skin="Button" position="528 16 156 25" name="TrackCopySel">
+				<Widget type="Button" skin="Button" position="528 16 240 25" name="TrackCopySel">
 					<Property key="Caption" value="#{CopySource}"/>
 					<Property key="Colour" value="0.8 0.8 1.0"/>
 					<Property key="TextColour" value="0.8 0.8 1.0"/>
