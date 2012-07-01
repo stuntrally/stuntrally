@@ -17,7 +17,7 @@ namespace sh
 		virtual boost::shared_ptr<TextureUnitState> createTextureUnitState ();
 		virtual void assignVertexProgram (const std::string& name);
 		virtual void assignFragmentProgram (const std::string& name);
-		virtual void assignGeometryProgram (const std::string& name);
+		//virtual void assignGeometryProgram (const std::string& name);
 
 		Ogre::Pass* getOgrePass();
 

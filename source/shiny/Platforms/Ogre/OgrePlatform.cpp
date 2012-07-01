@@ -20,6 +20,7 @@ namespace
 			return "hlsl";
 		else if (lang == sh::Language_GLSL)
 			return "glsl";
+		throw std::runtime_error ("invalid language, valid are: cg, hlsl, glsl");
 	}
 }
 
@@ -55,33 +56,33 @@ namespace sh
 		return boost::shared_ptr<Material> (material);
 	}
 
-	boost::shared_ptr<VertexProgram> OgrePlatform::createVertexProgram (
+	boost::shared_ptr<Program> OgrePlatform::createVertexProgram (
 		const std::string& compileArguments,
-		const std::string& name, const std::string& entryPoint,
+		const std::string& name,
 		const std::string& source, Language lang)
 	{
-		OgreVertexProgram* prog = new OgreVertexProgram (compileArguments, name, entryPoint, source, convertLang(lang), mResourceGroup);
-		return boost::shared_ptr<VertexProgram> (prog);
+		OgreVertexProgram* prog = new OgreVertexProgram (compileArguments, name, source, convertLang(lang), mResourceGroup);
+		return boost::shared_ptr<Program> (static_cast<Program*>(prog));
 	}
 
-	boost::shared_ptr<FragmentProgram> OgrePlatform::createFragmentProgram (
+	boost::shared_ptr<Program> OgrePlatform::createFragmentProgram (
 		const std::string& compileArguments,
-		const std::string& name, const std::string& entryPoint,
+		const std::string& name,
 		const std::string& source, Language lang)
 	{
-		OgreFragmentProgram* prog = new OgreFragmentProgram (compileArguments, name, entryPoint, source, convertLang(lang), mResourceGroup);
-		return boost::shared_ptr<FragmentProgram> (prog);
+		OgreFragmentProgram* prog = new OgreFragmentProgram (compileArguments, name, source, convertLang(lang), mResourceGroup);
+		return boost::shared_ptr<Program> (static_cast<Program*>(prog));
 	}
-
-	boost::shared_ptr<GeometryProgram> OgrePlatform::createGeometryProgram (
+/*
+	boost::shared_ptr<Program> OgrePlatform::createGeometryProgram (
 		const std::string& compileArguments,
-		const std::string& name, const std::string& entryPoint,
+		const std::string& name,
 		const std::string& source, Language lang)
 	{
-		OgreGeometryProgram* prog = new OgreGeometryProgram (compileArguments, name, entryPoint, source, convertLang(lang), mResourceGroup);
-		return boost::shared_ptr<GeometryProgram> (prog);
+		OgreGeometryProgram* prog = new OgreGeometryProgram (compileArguments, name, source, convertLang(lang), mResourceGroup);
+		return boost::shared_ptr<Program> (static_cast<Program*>(prog));
 	}
-
+*/
 	Ogre::Technique* OgrePlatform::handleSchemeNotFound (
 		unsigned short schemeIndex, const Ogre::String &schemeName, Ogre::Material *originalMaterial,
 		unsigned short lodIndex, const Ogre::Renderable *rend)

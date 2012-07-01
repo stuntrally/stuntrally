@@ -10,10 +10,12 @@
 
 namespace sh
 {
-	ShaderSet::ShaderSet(Type type, const std::string& sourceFile, const std::string& basePath, const std::string& name)
+	ShaderSet::ShaderSet(Type type, const std::string& sourceFile, const std::string& basePath,
+						 const std::string& name, std::map <std::string, std::string>* globalSettingsPtr)
 		: mType(type)
 		, mBasePath(basePath)
 		, mName(name)
+		, mCurrentGlobalSettings(globalSettingsPtr)
 	{
 		std::ifstream stream(sourceFile.c_str());
 		std::stringstream buffer;
@@ -23,9 +25,11 @@ namespace sh
 		parse();
 	}
 
-	ShaderSet::ShaderSet (const std::string& type, const std::string& sourceFile, const std::string& basePath, const std::string& name)
+	ShaderSet::ShaderSet (const std::string& type, const std::string& sourceFile, const std::string& basePath,
+						  const std::string& name, std::map <std::string, std::string>* globalSettingsPtr)
 		: mBasePath(basePath)
 		, mName(name)
+		, mCurrentGlobalSettings(globalSettingsPtr)
 	{
 		if (type == "vertex")
 			mType = Type_Vertex;
@@ -44,10 +48,11 @@ namespace sh
 	{
 		std::string currentToken;
 		bool tokenIsRecognized = false;
+		bool isInBraces = false;
 		for (std::string::const_iterator it = mSource.begin(); it != mSource.end(); ++it)
 		{
 			char c = *it;
-			if ((c == ' ') || (c == '\n') ||
+			if (((c == ' ') && !isInBraces) || (c == '\n') ||
 					(   ((c == '(') || (c == ')'))
 						  && !tokenIsRecognized))
 			{
@@ -58,6 +63,14 @@ namespace sh
 						assert ((currentToken.find('(') != std::string::npos) && (currentToken.find(')') != std::string::npos));
 						size_t start = currentToken.find('(')+1;
 						mGlobalSettings.push_back(currentToken.substr(start, currentToken.find(')')-start));
+					}
+					else if (boost::starts_with(currentToken, "@shPropertyEqual"))
+					{
+						assert ((currentToken.find('(') != std::string::npos) && (currentToken.find(')') != std::string::npos)
+								&& (currentToken.find(',') != std::string::npos));
+						size_t start = currentToken.find('(')+1;
+						size_t end = currentToken.find(',');
+						mProperties.push_back(currentToken.substr(start, end-start));
 					}
 					else if (boost::starts_with(currentToken, "@shProperty"))
 					{
@@ -79,6 +92,11 @@ namespace sh
 						tokenIsRecognized = false;
 				}
 
+				if (c == '(' && tokenIsRecognized)
+					isInBraces = true;
+				else if (c == ')' && tokenIsRecognized)
+					isInBraces = false;
+
 				currentToken += c;
 
 			}
@@ -88,9 +106,18 @@ namespace sh
 	ShaderInstance* ShaderSet::getInstance (PropertySetGet* properties)
 	{
 		size_t h = buildHash (properties);
+		if (std::find(mFailedToCompile.begin(), mFailedToCompile.end(), h) != mFailedToCompile.end())
+			return NULL;
 		if (mInstances.find(h) == mInstances.end())
-			mInstances.insert(std::make_pair(h,
-				ShaderInstance (mName + "_" + boost::lexical_cast<std::string>(h), mSource, mBasePath, properties)));
+		{
+			ShaderInstance newInstance(this, mName + "_" + boost::lexical_cast<std::string>(h), properties);
+			if (!newInstance.getSupported())
+			{
+				mFailedToCompile.push_back(h);
+				return NULL;
+			}
+			mInstances.insert(std::make_pair(h, newInstance));
+		}
 		return &mInstances.find(h)->second;
 	}
 
@@ -102,5 +129,25 @@ namespace sh
 			std::string v = retrieveValue<StringValue>(properties->getProperty(*it), properties->getContext()).get();
 			boost::hash_combine(seed, v);
 		}
+	}
+
+	std::map <std::string, std::string>* ShaderSet::getCurrentGlobalSettings() const
+	{
+		return mCurrentGlobalSettings;
+	}
+
+	std::string ShaderSet::getBasePath() const
+	{
+		return mBasePath;
+	}
+
+	std::string ShaderSet::getSource() const
+	{
+		return mSource;
+	}
+
+	int ShaderSet::getType() const
+	{
+		return mType;
 	}
 }

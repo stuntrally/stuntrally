@@ -32,12 +32,12 @@ namespace sh
 	{
 		mPass->setFragmentProgram (name);
 	}
-
+/*
 	void OgrePass::assignGeometryProgram (const std::string& name)
 	{
 		mPass->setGeometryProgram (name);
 	}
-
+*/
 	Ogre::Pass* OgrePass::getOgrePass ()
 	{
 		return mPass;

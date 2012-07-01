@@ -7,6 +7,7 @@
 #include "MaterialInstance.hpp"
 #include "Configuration.hpp"
 #include "ShaderSet.hpp"
+#include "Language.hpp"
 
 namespace sh
 {
@@ -53,6 +54,11 @@ namespace sh
 		/// @note they also apply to shaders that are created after the parameter was set, so the order does not matter
 		void setSharedParameter (const std::string& name, PropertyValuePtr value);
 
+		Language getCurrentLanguage ();
+
+		/// switch between different shader languages (cg, glsl, hlsl)
+		void setCurrentLanguage (Language lang);
+
 		/// get a MaterialInstance by name
 		//MaterialInstance* getInstance (const std::string& name);
 
@@ -70,6 +76,7 @@ namespace sh
 
 		friend class Platform;
 		friend class MaterialInstance;
+		friend class ShaderInstance;
 
 	private:
 		static Factory* sThis;
@@ -80,7 +87,11 @@ namespace sh
 		ShaderSetMap mShaderSets;
 		SettingsMap mGlobalSettings;
 
+		Language mCurrentLanguage;
+
 		Platform* mPlatform;
+
+		Platform* getPlatform ();
 
 		ShaderSet* getShaderSet (const std::string& name);
 

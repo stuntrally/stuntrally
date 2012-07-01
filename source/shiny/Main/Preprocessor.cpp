@@ -8,7 +8,7 @@
 
 namespace sh
 {
-	std::string Preprocessor::preprocess (std::string source, const std::string& includePath, std::vector<std::string> definitions)
+	std::string Preprocessor::preprocess (std::string source, const std::string& includePath, std::vector<std::string> definitions, const std::string& name)
 	{
 		std::stringstream returnString;
 
@@ -41,7 +41,7 @@ namespace sh
 			//  The preprocessing of the input stream is done on the fly behind the
 			//  scenes during iteration over the range of context_type::iterator_type
 			//  instances.
-			context_type ctx (source.begin(), source.end());
+			context_type ctx (source.begin(), source.end(), name.c_str());
 			ctx.add_include_path(includePath.c_str());
 			for (std::vector<std::string>::iterator it = definitions.begin(); it != definitions.end(); ++it)
 			{

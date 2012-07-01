@@ -2,11 +2,13 @@
 
 #include <OgreHighLevelGpuProgramManager.h>
 
+/*
+
 namespace sh
 {
 	OgreGeometryProgram::OgreGeometryProgram(
 		const std::string& compileArguments,
-		const std::string& name, const std::string& entryPoint,
+		const std::string& name,
 		const std::string& source, const std::string& lang,
 		const std::string& resourceGroup)
 		: GeometryProgram()
@@ -16,8 +18,11 @@ namespace sh
 
 		Ogre::HighLevelGpuProgramPtr program;
 		program = mgr.createProgram(name, resourceGroup, lang, Ogre::GPT_GEOMETRY_PROGRAM);
-		program->setParameter("entry_point", entryPoint);
+		if (lang != "glsl")
+			program->setParameter("entry_point", "main");
 		program->setSource(source);
 		program->load();
 	}
 }
+
+*/

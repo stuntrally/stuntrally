@@ -16,6 +16,8 @@ namespace sh
 	// These classes are supposed to be filled by the platform implementation
 	class Program
 	{
+	public:
+		virtual bool getSupported () = 0; ///< @return true if the compilation was successful
 	};
 
 	class VertexProgram : public Program
@@ -42,7 +44,7 @@ namespace sh
 		virtual boost::shared_ptr<TextureUnitState> createTextureUnitState () = 0;
 		virtual void assignVertexProgram (const std::string& name) = 0;
 		virtual void assignFragmentProgram (const std::string& name) = 0;
-		virtual void assignGeometryProgram (const std::string& name) = 0;
+		//virtual void assignGeometryProgram (const std::string& name) = 0;
 	};
 
 	class Material : public PropertySet
@@ -65,18 +67,20 @@ namespace sh
 
 		virtual boost::shared_ptr<Material> createMaterial (const std::string& name) = 0;
 
-		virtual boost::shared_ptr<VertexProgram> createVertexProgram (
+		virtual boost::shared_ptr<Program> createVertexProgram (
 			const std::string& compileArguments,
-			const std::string& name, const std::string& entryPoint,
+			const std::string& name,
 			const std::string& source, Language lang) = 0;
-		virtual boost::shared_ptr<FragmentProgram> createFragmentProgram (
+		virtual boost::shared_ptr<Program> createFragmentProgram (
 			const std::string& compileArguments,
-			const std::string& name, const std::string& entryPoint,
+			const std::string& name,
 			const std::string& source, Language lang) = 0;
-		virtual boost::shared_ptr<GeometryProgram> createGeometryProgram (
+		/*
+		virtual boost::shared_ptr<Program> createGeometryProgram (
 			const std::string& compileArguments,
-			const std::string& name, const std::string& entryPoint,
+			const std::string& name,
 			const std::string& source, Language lang) = 0;
+		*/
 
 		virtual void setSharedParameter (const std::string& name, PropertyValuePtr value) = 0;
 

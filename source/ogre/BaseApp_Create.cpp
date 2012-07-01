@@ -416,6 +416,7 @@ bool BaseApp::setup()
 
 	sh::OgrePlatform* platform = new sh::OgrePlatform("General", PATHMANAGER::GetDataPath() + "/" + "material_templates");
 	mFactory = new sh::Factory(platform);
+	mFactory->setGlobalSetting("globalSetting_test", "foobar");
 
 		ti.update();  dt = ti.dt * 1000.f;  /// time
 		LogO(String(":::: Time post, mat factory: ") + toStr(dt) + " ms");

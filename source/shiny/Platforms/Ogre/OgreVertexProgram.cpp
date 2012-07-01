@@ -6,7 +6,7 @@ namespace sh
 {
 	OgreVertexProgram::OgreVertexProgram(
 		const std::string& compileArguments,
-		const std::string& name, const std::string& entryPoint,
+		const std::string& name,
 		const std::string& source, const std::string& lang,
 		const std::string& resourceGroup)
 		: VertexProgram()
@@ -14,10 +14,20 @@ namespace sh
 		Ogre::HighLevelGpuProgramManager& mgr = Ogre::HighLevelGpuProgramManager::getSingleton();
 		assert (mgr.getByName(name).isNull() && "Vertex program already exists");
 
-		Ogre::HighLevelGpuProgramPtr program;
-		program = mgr.createProgram(name, resourceGroup, lang, Ogre::GPT_VERTEX_PROGRAM);
-		program->setParameter("entry_point", entryPoint);
-		program->setSource(source);
-		program->load();
+		mProgram = mgr.createProgram(name, resourceGroup, lang, Ogre::GPT_VERTEX_PROGRAM);
+		if (lang != "glsl")
+			mProgram->setParameter("entry_point", "main");
+		mProgram->setParameter("profiles", "arbvp1"); /// \todo
+		mProgram->setSource(source);
+		mProgram->load();
+
+		if (mProgram.isNull() || !mProgram->isSupported())
+			std::cerr << "Failed to compile vertex shader \"" << name << "\". Consider the OGRE log for more information." << std::endl;
 	}
+
+	bool OgreVertexProgram::getSupported()
+	{
+		return (!mProgram.isNull() && mProgram->isSupported());
+	}
+
 }

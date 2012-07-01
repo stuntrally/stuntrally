@@ -49,9 +49,13 @@ namespace sh
 
 			// create or retrieve shaders
 			ShaderSet* vertex = mFactory->getShaderSet(retrieveValue<StringValue>(it->getProperty("vertex_program"), this).get());
-			pass->assignVertexProgram (vertex->getInstance(&*it)->getName());
+			ShaderInstance* v = vertex->getInstance(&*it);
+			if (v)
+				pass->assignVertexProgram (v->getName());
 			ShaderSet* fragment = mFactory->getShaderSet(retrieveValue<StringValue>(it->getProperty("fragment_program"), this).get());
-			pass->assignFragmentProgram (fragment->getInstance(&*it)->getName());
+			ShaderInstance* f = fragment->getInstance(&*it);
+			if (f)
+				pass->assignFragmentProgram (f->getName());
 		}
 	}
 

@@ -22,6 +22,7 @@ namespace sh
 	Factory::Factory (Platform* platform)
 		: mPlatform(platform)
 		, mShadersEnabled(true)
+		, mCurrentLanguage(Language_CG)
 	{
 		assert (!sThis);
 		sThis = this;
@@ -44,7 +45,8 @@ namespace sh
 				ShaderSet newSet (it->second->findChild("type")->getValue(),
 								  mPlatform->getBasePath() + "/" + it->second->findChild("source")->getValue(),
 								  mPlatform->getBasePath(),
-								  it->first);
+								  it->first,
+								  &mGlobalSettings);
 
 				mShaderSets.insert(std::make_pair(it->first, newSet));
 			}
@@ -201,5 +203,21 @@ namespace sh
 	ShaderSet* Factory::getShaderSet (const std::string& name)
 	{
 		return &mShaderSets.find(name)->second;
+	}
+
+	Platform* Factory::getPlatform ()
+	{
+		return mPlatform;
+	}
+
+	Language Factory::getCurrentLanguage ()
+	{
+		return mCurrentLanguage;
+	}
+
+	void Factory::setCurrentLanguage (Language lang)
+	{
+		mCurrentLanguage = lang;
+		/// \todo
 	}
 }

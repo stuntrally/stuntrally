@@ -7,6 +7,8 @@
 
 #include "../../Main/Platform.hpp"
 
+/*
+
 namespace sh
 {
 	class OgreGeometryProgram : public GeometryProgram
@@ -14,7 +16,7 @@ namespace sh
 	public:
 		OgreGeometryProgram  (
 			const std::string& compileArguments,
-			const std::string& name, const std::string& entryPoint,
+			const std::string& name,
 			const std::string& source, const std::string& lang,
 			const std::string& resourceGroup);
 
@@ -22,5 +24,7 @@ namespace sh
 		Ogre::HighLevelGpuProgramPtr mProgram;
 	};
 }
+
+*/
 
 #endif

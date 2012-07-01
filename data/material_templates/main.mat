@@ -14,6 +14,8 @@ material base
 		diffuse $diffuse
 		specular $specular
 		ambient $ambient
+		asdf true
+		testasdf 123ish
 
 		texture_unit diffuse
 		{

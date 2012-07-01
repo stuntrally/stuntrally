@@ -26,21 +26,37 @@ namespace sh
 			//Type_Geometry
 		};
 
-		ShaderSet (Type type, const std::string& sourceFile, const std::string& basePath, const std::string& name);
-		ShaderSet (const std::string& type, const std::string& sourceFile, const std::string& basePath, const std::string& name);
+		ShaderSet (Type type, const std::string& sourceFile, const std::string& basePath,
+				   const std::string& name, std::map <std::string, std::string>* globalSettingsPtr);
+
+		ShaderSet (const std::string& type, const std::string& sourceFile, const std::string& basePath,
+				   const std::string& name, std::map <std::string, std::string>* globalSettingsPtr);
 
 		/// retrieve a shader instance for the given properties. \n
 		/// if a \a ShaderInstance with the same properties exists already, simply returns this instance. \n
 		/// otherwise, creates a new \a ShaderInstance (i.e. compiles a new shader) \n
+		/// might also return NULL if the shader failed to compile \n
 		/// @note only the properties that actually affect the shader source are taken into consideration here,
 		/// so it does not matter if you pass any extra properties that the shader does not care about.
 		ShaderInstance* getInstance (PropertySetGet* properties);
+
+	private:
+		std::map <std::string, std::string>* getCurrentGlobalSettings() const;
+		std::string getBasePath() const;
+		std::string getSource() const;
+		int getType() const;
+
+		friend class ShaderInstance;
 
 	private:
 		Type mType;
 		std::string mSource;
 		std::string mBasePath;
 		std::string mName;
+
+		std::vector <size_t> mFailedToCompile;
+
+		std::map <std::string, std::string>* mCurrentGlobalSettings; ///< pointer to the current global setting values from the factory
 
 		std::vector <std::string> mGlobalSettings; ///< names of the global settings that affect the shader source
 		std::vector <std::string> mProperties; ///< names of the per-material properties that affect the shader source
