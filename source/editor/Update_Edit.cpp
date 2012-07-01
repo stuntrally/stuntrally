@@ -109,72 +109,81 @@ bool App::frameRenderingQueued(const FrameEvent& evt)
 	{
 		int ic = road->iChosen;  bool bCur = ic >= 0;
 		SplinePoint& sp = bCur ? road->getPoint(ic) : road->newP;
-
 		std::string s;
 
 		//  road point  --------------------------------
-		rdTxt[0]->setCaption(sp.onTer ? "On Terrain" : "Height");
+		static bool first = true;
+		if (first)  // once, static text
+		{	first = false;
+															rdKey[0]->setCaption("Home");
+			rdTxt[1]->setCaption(TR("#{Road_Width}"));		rdKey[1]->setCaption("/ *");
+			rdTxt[2]->setCaption(TR("#{Road_Yaw}"));		rdKey[2]->setCaption("1 2");
+			rdTxt[3]->setCaption(TR("#{Road_Roll}"));		rdKey[3]->setCaption("3 4");
+															rdKey[4]->setCaption("5 6");
+			rdTxt[5]->setCaption(TR("#{Road_Snap}"));		rdKey[5]->setCaption("7 8");
+			rdTxt[6]->setCaption(TR("#{Road_Pipe}"));		rdKey[6]->setCaption("[ ]");
+			rdTxt[7]->setCaption(TR("#{Road_Column}"));		rdKey[7]->setCaption("End");
+															rdKey[8]->setCaption("- =");
+			rdTxt[9]->setCaption(TR("#{Road_ChkR}"));		rdKey[9]->setCaption("K L");
+		}
+
+		rdTxt[0]->setCaption(TR(sp.onTer ? "#{Road_OnTerrain}" : "#{Road_Height}"));
 		rdVal[0]->setCaption(sp.onTer ? "" : fToStr(sp.pos.y,1,3));
-		rdKey[0]->setCaption("Home");
 
-		rdTxt[1]->setCaption("Width");
 		rdVal[1]->setCaption(fToStr(sp.width,2,4));
-		rdKey[1]->setCaption("/ *");
-
-		rdTxt[2]->setCaption("Yaw");
 		rdVal[2]->setCaption(fToStr(sp.aYaw,1,3));
-		rdKey[2]->setCaption("1 2");
-		
-		rdTxt[3]->setCaption("Roll");
 		rdVal[3]->setCaption(fToStr(sp.aRoll,1,3));
-		rdKey[3]->setCaption("3 4");
-
-		rdTxt[4]->setCaption(toStr(sp.aType)+" "+csAngType[sp.aType]);
-		rdKey[4]->setCaption("5 6");
-		
-		rdTxt[5]->setCaption("Snap");
+		rdTxt[4]->setCaption(toStr(sp.aType)+" "+TR("#{Road_Angle"+csAngType[sp.aType]+"}"));
 		rdVal[5]->setCaption(fToStr(angSnap,0,1));
-		rdKey[5]->setCaption("7 8");
-
-		rdTxt[6]->setCaption("Pipe");
 		rdVal[6]->setCaption(sp.pipe==0.f ? "" : fToStr(sp.pipe,2,4));
-		rdKey[6]->setCaption("[ ]");
 		
-		rdTxt[7]->setCaption(sp.onTer ? "" : "Column");
+		rdTxt[7]->setVisible(!sp.onTer);	rdKey[7]->setVisible(!sp.onTer);
 		rdVal[7]->setCaption(sp.onTer ? "" : toStr(sp.cols));
-		rdKey[7]->setCaption(sp.onTer ? "" : "End");
 		
 		rdTxt[8]->setCaption(toStr(sp.idMtr)+" "+road->getMtrStr(ic));
-		rdKey[8]->setCaption("- =");
-
-		rdTxt[9]->setCaption("ChkR");
 		rdVal[9]->setCaption( sp.chkR == 0.f ? "" : fToStr(sp.chkR,1,3)+"  "+ (road->iP1 == ic ? "#8080FF(1)":"") );
-		rdKey[9]->setCaption("K L");
 
-		if (road->vSel.size() > 0)  s = "sel: "+toStr(road->vSel.size());
+		if (road->vSel.size() > 0)  s = TR("#{Road_sel}")+": "+toStr(road->vSel.size());
 		else  s = fToStr(road->iChosen+1,0,2)+"/"+toStr(road->vSegs.size());
 		rdVal[10]->setCaption(s);
 
-		rdTxt[10]->setCaption(bCur ? "Cur" : "New");
+		rdTxt[10]->setCaption(TR(bCur ? "#{Road_Cur}" : "#{Road_New}"));
 		rdTxt[10]->setTextColour(bCur ? MyGUI::Colour(0.85,0.75,1) : MyGUI::Colour(0.3,1,0.1));
 
 		rdKey[10]->setCaption(road->bMerge ? "Mrg":"");
 
+
 		//  road stats  --------------------------------
 		if (mWndRoadStats && mWndRoadStats->getVisible())
 		{
-			rdTxtSt[0]->setCaption("Length  "+fToStr(road->st.Length,0,4));
-			rdTxtSt[1]->setCaption("Width   "+fToStr(road->st.WidthAvg,2,5));
-			rdTxtSt[2]->setCaption("Height   "+fToStr(road->st.HeightDiff,2,5));
+			static bool first = true;
+			if (first)  // once, static text
+			{	first = false;
+				rdTxtSt[0]->setCaption(TR("#{Road_Length}"));
+				rdTxtSt[1]->setCaption(TR("#{Road_Width}"));
+				rdTxtSt[2]->setCaption(TR("#{Road_Height}"));
 
-			rdTxtSt[3]->setCaption("In air   "+fToStr(road->st.OnTer,1,4)+"%");
-			rdTxtSt[4]->setCaption("Pipes   "+fToStr(road->st.Pipes,1,4)+"%");
+				rdTxtSt[3]->setCaption(TR("#{TrackInAir}"));
+				rdTxtSt[4]->setCaption(TR("#{TrackPipes}"));
+
+				rdTxtSt[5]->setCaption("lod pnt");
+				rdTxtSt[6]->setCaption("segs Mrg");
+				rdTxtSt[7]->setCaption("vis");
+				rdTxtSt[8]->setCaption("tri");
+			}
+			
+			rdValSt[0]->setCaption(fToStr(road->st.Length,0,4));
+			rdValSt[1]->setCaption(fToStr(road->st.WidthAvg,2,5));
+			rdValSt[2]->setCaption(fToStr(road->st.HeightDiff,2,5));
+
+			rdValSt[3]->setCaption(fToStr(road->st.OnTer,1,4)+"%");
+			rdValSt[4]->setCaption(fToStr(road->st.Pipes,1,4)+"%");
 
 			int lp = !bCur ? -1 : road->vSegs[road->iChosen].lpos.size();
-			rdTxtSt[5]->setCaption("lod pnt:  "+toStr(lp));
-			rdTxtSt[6]->setCaption("segs Mrg:  "+fToStr(road->segsMrg+1,0,2));
-			rdTxtSt[7]->setCaption("vis:  "+fToStr(road->iVis,0,2));
-			rdTxtSt[8]->setCaption("tri:  "+fToStr(road->iTris/1000.f,1,4)+"k");
+			rdValSt[5]->setCaption(toStr(lp));
+			rdValSt[6]->setCaption(fToStr(road->segsMrg+1,0,2));
+			rdValSt[7]->setCaption(fToStr(road->iVis,0,2));
+			rdValSt[8]->setCaption(fToStr(road->iTris/1000.f,1,4)+"k");
 		}
 
 		///  Modify  . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .

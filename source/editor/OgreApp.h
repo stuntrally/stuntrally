@@ -31,8 +31,8 @@ const int ciShadowSizesA[ciShadowNumSizes] = {256,512,1024,2048,4096};
 #define BrushMaxSize  512
 
 //  Gui
-const int ciAngSnapsNum = 6;
-const Ogre::Real crAngSnaps[ciAngSnapsNum] = {0,15,30,45,90,180};
+const int ciAngSnapsNum = 7;
+const Ogre::Real crAngSnaps[ciAngSnapsNum] = {0,5,15,30,45,90,180};
 
 
 namespace Forests {  class PagedGeometry;  }
@@ -279,10 +279,11 @@ protected:
 
 	//  tool windows texts
 	const static int
-		BR_TXT=7, RD_TXT=11,RD_VAL=RD_TXT,RD_KEY=RD_TXT, RDS_TXT=9,
+		BR_TXT=7, RD_TXT=11, RDS_TXT=9,
 		ST_TXT=6, FL_TXT=6, OBJ_TXT=6;
 	MyGUI::StaticTextPtr
-		brTxt[BR_TXT], rdTxt[RD_TXT],rdVal[RD_VAL],rdKey[RD_KEY], rdTxtSt[RDS_TXT],
+		brTxt[BR_TXT], rdTxt[RD_TXT],rdVal[RD_TXT],rdKey[RD_TXT],
+		rdTxtSt[RDS_TXT],rdValSt[RDS_TXT],
 		stTxt[ST_TXT], flTxt[FL_TXT], objTxt[OBJ_TXT];
 	MyGUI::StaticImagePtr brImg;  MyGUI::TabPtr wndTabs;
 

@@ -40,7 +40,7 @@ void App::InitGui()
 		if (name == "BrushWnd")   {  mWndBrush = *it;	(*it)->setPosition(0,64);	} else
 
 		if (name == "RoadCur")    {  mWndRoadCur = *it;		(*it)->setPosition(0,34);	} else
-		if (name == "RoadStats")  {  mWndRoadStats = *it;	(*it)->setPosition(0,300);	} else
+		if (name == "RoadStats")  {  mWndRoadStats = *it;	(*it)->setPosition(0,328);	} else
 
 		if (name == "FluidsWnd")  {  mWndFluids = *it;	(*it)->setPosition(0,64);	} else
 		if (name == "ObjectsWnd") {  mWndObjects = *it;	(*it)->setPosition(0,64);	}
@@ -69,13 +69,17 @@ void App::InitGui()
 		brImg = mGUI->findWidget<StaticImage>("brushImg", false);
 	}
 	if (mWndRoadCur)
-	{	for (i=0; i<RD_TXT; ++i)	rdTxt[i] = mGUI->findWidget<StaticText>("rdTxt"+toStr(i),false);
-		for (i=0; i<RD_VAL; ++i)	rdVal[i] = mGUI->findWidget<StaticText>("rdVal"+toStr(i),false);
-		for (i=0; i<RD_KEY; ++i)	rdKey[i] = mGUI->findWidget<StaticText>("rdKey"+toStr(i),false);
+	for (i=0; i<RD_TXT; ++i)
+	{	rdTxt[i] = mGUI->findWidget<StaticText>("rdTxt"+toStr(i),false);
+		rdVal[i] = mGUI->findWidget<StaticText>("rdVal"+toStr(i),false);
+		rdKey[i] = mGUI->findWidget<StaticText>("rdKey"+toStr(i),false);
 	}
 	if (mWndRoadStats)
-		for (i=0; i<RDS_TXT; ++i)	rdTxtSt[i] = mGUI->findWidget<StaticText>("rdStat"+toStr(i),false);
-
+	for (i=0; i<RDS_TXT; ++i)
+	{	rdTxtSt[i] = mGUI->findWidget<StaticText>("rdTxtSt"+toStr(i),false);
+		rdValSt[i] = mGUI->findWidget<StaticText>("rdValSt"+toStr(i),false);
+	}
+	
 	if (mWndStart)
 		for (i=0; i<ST_TXT; ++i)	stTxt[i] = mGUI->findWidget<StaticText>("stTxt"+toStr(i),false);
 

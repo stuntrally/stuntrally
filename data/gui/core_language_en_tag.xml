@@ -658,6 +658,25 @@
 	<Tag name="PipeWStepsMul">Pipe W steps mul.</Tag>
 	<Tag name="PipeLStepsMul">Pipe L steps mul.</Tag>
 
+	<Tag name="Road_OnTerrain">On Terrain</Tag>
+	<Tag name="Road_Length">Length</Tag>
+	<Tag name="Road_Height">Height</Tag>
+	<Tag name="Road_Width">Width</Tag>
+	<Tag name="Road_Yaw">Yaw</Tag>
+	<Tag name="Road_Roll">Roll</Tag>
+	<Tag name="Road_Snap">Snap</Tag>
+	<Tag name="Road_Pipe">Pipe</Tag>
+	<Tag name="Road_Column">Column</Tag>
+	<Tag name="Road_ChkR">ChkR</Tag>
+
+	<Tag name="Road_Cur">Cur</Tag>
+	<Tag name="Road_New">New</Tag>
+	<Tag name="Road_sel">sel</Tag>
+
+	<Tag name="Road_AngleManual">Manual</Tag>
+	<Tag name="Road_AngleAuto">Auto</Tag>
+	<Tag name="Road_AngleBoth">Both</Tag>
+
 
 	<!--  Tools  -->
 	<Tag name="Tools">Tools</Tag>
