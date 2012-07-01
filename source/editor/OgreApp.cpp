@@ -82,9 +82,10 @@ App::App()  //  gui wigdets--
 	iSnap = 0;  angSnap = crAngSnaps[iSnap];
 
 	int i;
-	for (i=0; i<BR_TXT; ++i)  brTxt[i]=0;
+	for (i=0; i<BR_TXT; ++i){  brTxt[i]=0;  brVal[i]=0;  brKey[i]=0;  }
 	for (i=0; i<RD_TXT; ++i){  rdTxt[i]=0;  rdVal[i]=0;  rdKey[i]=0;  }
 	for (i=0; i<RDS_TXT;++i){  rdTxtSt[i]=0;  rdValSt[i]=0;  }
+
 	for (i=0; i<ST_TXT; ++i)  stTxt[i]=0;
 	for (i=0; i<FL_TXT; ++i)  flTxt[i]=0;
 	for (i=0; i<OBJ_TXT;++i)  objTxt[i]=0;

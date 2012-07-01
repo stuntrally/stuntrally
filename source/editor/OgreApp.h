@@ -279,10 +279,11 @@ protected:
 
 	//  tool windows texts
 	const static int
-		BR_TXT=7, RD_TXT=11, RDS_TXT=9,
+		BR_TXT=9, RD_TXT=11, RDS_TXT=9,
 		ST_TXT=6, FL_TXT=6, OBJ_TXT=6;
 	MyGUI::StaticTextPtr
-		brTxt[BR_TXT], rdTxt[RD_TXT],rdVal[RD_TXT],rdKey[RD_TXT],
+		brTxt[BR_TXT],brVal[BR_TXT],brKey[BR_TXT],
+		rdTxt[RD_TXT],rdVal[RD_TXT],rdKey[RD_TXT],
 		rdTxtSt[RDS_TXT],rdValSt[RDS_TXT],
 		stTxt[ST_TXT], flTxt[FL_TXT], objTxt[OBJ_TXT];
 	MyGUI::StaticImagePtr brImg;  MyGUI::TabPtr wndTabs;

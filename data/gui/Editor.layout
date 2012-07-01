@@ -80,40 +80,129 @@
 			<Property key="TextColour" value="0.66 0.86 1.0"/>
 		</Widget>
 	</Widget>
-	<Widget type="Window" skin="WindowC" position="880 372 160 195" layer="Back" name="BrushWnd">
+	<Widget type="Window" skin="WindowC" position="880 372 174 240" layer="Back" name="BrushWnd">
 		<Property key="Caption" value="#{TerrainBrush}"/>
 		<Property key="Colour" value="0.3 0.36 0.4"/>
 		<Property key="Alpha" value="0.6"/>
 		<Property key="Snap" value="true"/>
 		<UserString key="tip" value="#{TipTerWind}"/>
-		<Widget type="TextBox" skin="TextBox" position="4 5 150 20" name="brush0">
+		<Widget type="TextBox" skin="TextBox" position="4 5 70 20" name="brTxt0">
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="TextColour" value="0.7 0.86 1.0"/>
 		</Widget>
-		<Widget type="TextBox" skin="TextBox" position="4 25 150 20" name="brush1">
+		<Widget type="TextBox" skin="TextBox" position="74 5 60 20" name="brVal0">
+			<Property key="InheritsAlpha" value="false"/>
+			<Property key="TextColour" value="0.7 0.86 1.0"/>
+		</Widget>
+		<Widget type="TextBox" skin="TextBox" position="134 5 60 20" name="brKey0">
+			<Property key="InheritsAlpha" value="false"/>
+			<Property key="TextColour" value="0.5 0.76 1.0"/>
+		</Widget>
+
+		<Widget type="TextBox" skin="TextBox" position="4 25 70 20" name="brTxt1">
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="TextColour" value="0.6 0.8 1.0"/>
 		</Widget>
-		<Widget type="TextBox" skin="TextBox" position="4 50 150 20" name="brush2">
+		<Widget type="TextBox" skin="TextBox" position="74 25 60 20" name="brVal1">
+			<Property key="InheritsAlpha" value="false"/>
+			<Property key="TextColour" value="0.6 0.8 1.0"/>
+		</Widget>
+		<Widget type="TextBox" skin="TextBox" position="134 25 60 20" name="brKey1">
+			<Property key="InheritsAlpha" value="false"/>
+			<Property key="TextColour" value="0.5 0.76 1.0"/>
+		</Widget>
+
+		<Widget type="TextBox" skin="TextBox" position="4 50 70 20" name="brTxt2">
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="TextColour" value="0.7 0.8 0.9"/>
 		</Widget>
-		<Widget type="TextBox" skin="TextBox" position="4 70 150 20" name="brush3">
+		<Widget type="TextBox" skin="TextBox" position="74 50 60 20" name="brVal2">
 			<Property key="InheritsAlpha" value="false"/>
-			<Property key="TextColour" value="0.78 0.82 0.9"/>
+			<Property key="TextColour" value="0.7 0.8 0.9"/>
 		</Widget>
-		<Widget type="TextBox" skin="TextBox" position="4 95 150 20" name="brush4">
+		<Widget type="TextBox" skin="TextBox" position="134 50 60 20" name="brKey2">
+			<Property key="InheritsAlpha" value="false"/>
+			<Property key="TextColour" value="0.5 0.9 0.9"/>
+		</Widget>
+
+		<Widget type="TextBox" skin="TextBox" position="4 70 70 20" name="brTxt3">
+			<Property key="InheritsAlpha" value="false"/>
+			<Property key="TextColour" value="0.6 0.8 0.9"/>
+		</Widget>
+		<Widget type="TextBox" skin="TextBox" position="74 70 60 20" name="brVal3">
+			<Property key="InheritsAlpha" value="false"/>
+			<Property key="TextColour" value="0.6 0.8 0.9"/>
+		</Widget>
+		<Widget type="TextBox" skin="TextBox" position="134 70 60 20" name="brKey3">
+			<Property key="InheritsAlpha" value="false"/>
+			<Property key="TextColour" value="0.5 0.85 0.85"/>
+		</Widget>
+
+		<Widget type="TextBox" skin="TextBox" position="4 95 70 20" name="brTxt4">
+			<Property key="InheritsAlpha" value="false"/>
+			<Property key="TextColour" value="0.7 0.6 0.9"/>
+		</Widget>
+		<Widget type="TextBox" skin="TextBox" position="74 95 60 20" name="brVal4">
+			<Property key="InheritsAlpha" value="false"/>
+			<Property key="TextColour" value="0.7 0.6 0.9"/>
+		</Widget>
+		<Widget type="TextBox" skin="TextBox" position="134 95 60 20" name="brKey4">
+			<Property key="InheritsAlpha" value="false"/>
+			<Property key="TextColour" value="0.7 0.7 1.0"/>
+		</Widget>
+
+		<Widget type="TextBox" skin="TextBox" position="4 115 80 20" name="brTxt5">
+			<Property key="InheritsAlpha" value="false"/>
+			<Property key="TextColour" value="0.63 0.63 0.73"/>
+		</Widget>
+		<Widget type="TextBox" skin="TextBox" position="84 115 60 20" name="brVal5">
+			<Property key="InheritsAlpha" value="false"/>
+			<Property key="TextColour" value="0.63 0.63 0.73"/>
+		</Widget>
+		<Widget type="TextBox" skin="TextBox" position="134 115 60 20" name="brKey5">
+			<Property key="InheritsAlpha" value="false"/>
+			<Property key="TextColour" value="0.7 0.7 1.0"/>
+		</Widget>
+
+		<Widget type="TextBox" skin="TextBox" position="4 135 70 20" name="brTxt6">
+			<Property key="InheritsAlpha" value="false"/>
+			<Property key="TextColour" value="0.6 0.6 0.8"/>
+		</Widget>
+		<Widget type="TextBox" skin="TextBox" position="74 135 60 20" name="brVal6">
+			<Property key="InheritsAlpha" value="false"/>
+			<Property key="TextColour" value="0.6 0.6 0.8"/>
+		</Widget>
+		<Widget type="TextBox" skin="TextBox" position="134 135 60 20" name="brKey6">
+			<Property key="InheritsAlpha" value="false"/>
+			<Property key="TextColour" value="0.7 0.7 1.0"/>
+		</Widget>
+
+		<Widget type="TextBox" skin="TextBox" position="4 160 70 20" name="brTxt7">
+			<Property key="InheritsAlpha" value="false"/>
+			<Property key="TextColour" value="0.7 0.9 1.0"/>
+		</Widget>
+		<Widget type="TextBox" skin="TextBox" position="74 160 50 20" name="brVal7">
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="TextColour" value="0.76 0.9 1.0"/>
 		</Widget>
-		<Widget type="TextBox" skin="TextBox" position="4 115 150 20" name="brush5">
+		<Widget type="TextBox" skin="TextBox" position="124 160 60 20" name="brKey7">
 			<Property key="InheritsAlpha" value="false"/>
-			<Property key="TextColour" value="0.76 0.9 1.0"/>
+			<Property key="TextColour" value="0.5 1.0 0.5"/>
 		</Widget>
-		<Widget type="TextBox" skin="TextBox" position="4 135 150 20" name="brush6">
+
+		<Widget type="TextBox" skin="TextBox" position="4 180 70 20" name="brTxt8">
 			<Property key="InheritsAlpha" value="false"/>
-			<Property key="TextColour" value="0.76 0.9 1.0"/>
+			<Property key="TextColour" value="0.7 0.9 0.7"/>
 		</Widget>
+		<Widget type="TextBox" skin="TextBox" position="74 180 60 20" name="brVal8">
+			<Property key="InheritsAlpha" value="false"/>
+			<Property key="TextColour" value="0.7 0.9 0.7"/>
+		</Widget>
+		<Widget type="TextBox" skin="TextBox" position="134 180 60 20" name="brKey8">
+			<Property key="InheritsAlpha" value="false"/>
+			<Property key="TextColour" value="0.5 1.0 0.5"/>
+		</Widget>
+
 	</Widget>
 	<Widget type="Window" skin="WindowC" position="1260 676 152 190" layer="Back" name="StartWnd">
 		<Property key="Caption" value="#{CarStartPos}"/>
@@ -3137,34 +3226,14 @@
 							<Property key="TextColour" value="0.6 1.0 0.2"/>
 							<UserString key="RelativeTo" value="HelpWnd"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="376 44 320 20">
-							<Property key="Caption" value="-#{InputWheelSize}"/>
-							<Property key="TextColour" value="0.8 0.9 1.0"/>
-							<UserString key="RelativeTo" value="HelpWnd"/>
-						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="376 66 320 20">
-							<Property key="Caption" value="#{InputWheelForce}"/>
-							<Property key="TextColour" value="0.8 0.9 1.0"/>
-							<UserString key="RelativeTo" value="HelpWnd"/>
-						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="376 88 320 20">
-							<Property key="Caption" value="#{InputWheelPower}"/>
-							<Property key="TextColour" value="0.8 0.9 1.0"/>
-							<UserString key="RelativeTo" value="HelpWnd"/>
-						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="376 110 320 20">
-							<Property key="Caption" value="#{InputWheelShape}"/>
-							<Property key="TextColour" value="0.72 0.76 0.9"/>
-							<UserString key="RelativeTo" value="HelpWnd"/>
-						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="376 132 320 20">
-							<Property key="Caption" value=""/>
-							<Property key="TextColour" value="0.8 0.9 1.0"/>
-							<UserString key="RelativeTo" value="HelpWnd"/>
-						</Widget>
 						<Widget type="TextBox" skin="TextBox" position="32 196 312 20">
 							<Property key="Caption" value="#{InputMinimapType}"/>
 							<Property key="TextColour" value="0.3 0.6 0.3"/>
+							<UserString key="RelativeTo" value="HelpWnd"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="32 230 312 20">
+							<Property key="Caption" value="#{InputUpdBlendmap}"/>
+							<Property key="TextColour" value="0.7 0.9 0.1"/>
 							<UserString key="RelativeTo" value="HelpWnd"/>
 						</Widget>
 						<Widget type="TextBox" skin="TextBox" position="440 14 256 20">
@@ -3172,9 +3241,47 @@
 							<Property key="TextColour" value="0.5 1.0 0.3"/>
 							<UserString key="RelativeTo" value="HelpWnd"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="32 230 312 20">
-							<Property key="Caption" value="#{InputUpdBlendmap}"/>
-							<Property key="TextColour" value="0.7 0.9 0.1"/>
+
+						<Widget type="TextBox" skin="TextBox" position="376 44 320 20">
+							<Property key="Caption" value="#{InputBrushSize}"/>
+							<Property key="TextColour" value="0.7 0.86 1.0"/>
+							<UserString key="RelativeTo" value="HelpWnd"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="376 66 320 20">
+							<Property key="Caption" value="#{InputBrushForce}"/>
+							<Property key="TextColour" value="0.6 0.8 1.0"/>
+							<UserString key="RelativeTo" value="HelpWnd"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="376 98 320 20">
+							<Property key="Caption" value="#{InputBrushPower}"/>
+							<Property key="TextColour" value="0.7 0.8 0.9"/>
+							<UserString key="RelativeTo" value="HelpWnd"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="376 120 320 20">
+							<Property key="Caption" value="#{InputBrushShape}  (#{Brush_ShapeSinus},#{Brush_ShapeNoise},#{Brush_ShapeTriangle})"/>
+							<Property key="TextColour" value="0.6 0.8 0.9"/>
+							<UserString key="RelativeTo" value="HelpWnd"/>
+						</Widget>
+
+						<Widget type="TextBox" skin="TextBox" position="376 160 320 20">
+							<Property key="Caption" value="#{InputBrushFreq}"/>
+							<Property key="TextColour" value="0.7 0.6 0.9"/>
+							<UserString key="RelativeTo" value="HelpWnd"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="376 182 320 20">
+							<Property key="Caption" value="#{InputBrushOctaves}"/>
+							<Property key="TextColour" value="0.63 0.63 0.73"/>
+							<UserString key="RelativeTo" value="HelpWnd"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="376 204 320 20">
+							<Property key="Caption" value="#{InputBrushOffset}"/>
+							<Property key="TextColour" value="0.6 0.6 0.8"/>
+							<UserString key="RelativeTo" value="HelpWnd"/>
+						</Widget>
+
+						<Widget type="TextBox" skin="TextBox" position="376 236 320 20">
+							<Property key="Caption" value="#{InputBrushFilter}"/>
+							<Property key="TextColour" value="0.4 0.6 0.9"/>
 							<UserString key="RelativeTo" value="HelpWnd"/>
 						</Widget>
 					</Widget>

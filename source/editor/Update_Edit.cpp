@@ -58,7 +58,7 @@ bool App::frameRenderingQueued(const FrameEvent& evt)
 	// key,mb info  ==================
 	if (mStatsOn)
 	{
-		String ss="";
+		String ss = "";
 		if (shift)  ss += "Shift ";	if (mbLeft)  ss += "LMB ";
 		if (ctrl)  ss += "Ctrl ";	if (mbRight)  ss += "RMB ";
 		if (alt)  ss += "Alt ";		if (mbMiddle)  ss += "MMB ";
@@ -104,14 +104,15 @@ bool App::frameRenderingQueued(const FrameEvent& evt)
 
 	
 	///  Update Info texts  . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 
+
+	//  Road Point
+	//----------------------------------------------------------------
 	if (edMode == ED_Road && bEdit() && road)
-	//if (rdTxt[0] && rdVal[0] && rdKey[0] && rdTxtSt[0])
 	{
 		int ic = road->iChosen;  bool bCur = ic >= 0;
 		SplinePoint& sp = bCur ? road->getPoint(ic) : road->newP;
 		std::string s;
 
-		//  road point  --------------------------------
 		static bool first = true;
 		if (first)  // once, static text
 		{	first = false;
@@ -186,9 +187,7 @@ bool App::frameRenderingQueued(const FrameEvent& evt)
 			rdValSt[8]->setCaption(fToStr(road->iTris/1000.f,1,4)+"k");
 		}
 
-		///  Modify  . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
-		//  road point
-		//----------------------------------------------------------------
+		//  edit  . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 		Vector3 vx = mCamera->getRight();	   vx.y = 0;  vx.normalise();  // on xz
 		Vector3 vz = mCamera->getDirection();  vz.y = 0;  vz.normalise();
 		Vector3 vy = Vector3::UNIT_Y;
@@ -209,116 +208,63 @@ bool App::frameRenderingQueued(const FrameEvent& evt)
 		if (mz > 0)			road->NextPoint();
 		else if (mz < 0)	road->PrevPoint();
 	}
-	else if (edMode == ED_Start && road)
+
+	///  Terrain  Brush
+	//--------------------------------------------------------------------------------------------------------------------------------
+	else if (edMode < ED_Road && bEdit())
 	{
-		//  start  box, road dir
-		//----------------------------------------------------------------
-		Vector3 p;  if (ndCar)  p = ndCar->getPosition();
-		/*Fmt(s, "%4.1f %4.1f %4.1f", p.x,p.y,p.z);*/
-		if (stTxt[0])	stTxt[0]->setCaption(/*s*/"");
-		if (stTxt[1])	stTxt[1]->setCaption("width "+fToStr(road->vStBoxDim.z,1,4));
-		if (stTxt[2])	stTxt[2]->setCaption("height "+fToStr(road->vStBoxDim.y,1,4));
-		if (stTxt[3])	stTxt[3]->setCaption("road dir "+ (road->iDir == 1 ? String("+1") : String("-1")) );
+		static bool first = true;
+		if (first)  // once, static text
+		{	first = false;
 
-		if (isKey(LBRACKET))	{  road->AddBoxH(-q*0.2);  UpdStartPos();  }
-		if (isKey(SEMICOLON))	{  road->AddBoxW(-q*0.2);  UpdStartPos();  }
-		if (isKey(RBRACKET))	{  road->AddBoxH( q*0.2);  UpdStartPos();  }
-		if (isKey(APOSTROPHE))	{  road->AddBoxW( q*0.2);  UpdStartPos();  }
-		//if (mz > 0)	// snap rot by 15 deg ..
-	}
-	else if (edMode == ED_Fluids)
-	{
-		if (sc.fluids.empty())
-		{
-			if (flTxt[0])	flTxt[0]->setCaption("None");
-			for (int i=1; i < FL_TXT; ++i)
-				if (flTxt[i])  flTxt[i]->setCaption("");
-		}else
-		{	///  fluids
-			//----------------------------------------------------------------
-			FluidBox& fb = sc.fluids[iFlCur];
-			if (flTxt[0])	flTxt[0]->setCaption("Cur/All:  "+toStr(iFlCur+1)+" / "+toStr(sc.fluids.size()));
-			if (flTxt[1])	flTxt[1]->setCaption(fb.name);
-			if (flTxt[2])	flTxt[2]->setCaption("Pos:  "+fToStr(fb.pos.x,1,4)+" "+fToStr(fb.pos.y,1,4)+" "+fToStr(fb.pos.z,1,4));
-			//if (flTxt[3])	flTxt[3]->setCaption(""/*"Rot:  "+fToStr(fb.rot.x,1,4)*/);
-			if (flTxt[3])	flTxt[3]->setCaption("Size:  "+fToStr(fb.size.x,1,4)+" "+fToStr(fb.size.y,1,4)+" "+fToStr(fb.size.z,1,4));
-			if (flTxt[4])	flTxt[4]->setCaption("Tile:  "+fToStr(fb.tile.x,3,5)+" "+fToStr(fb.tile.y,3,5));
+			brTxt[0]->setCaption(TR("#{Brush_Size}"));		brKey[0]->setCaption("- =");
+			brTxt[1]->setCaption(TR("#{Brush_Force}"));		brKey[1]->setCaption("[ ]");
+			brTxt[2]->setCaption(TR("#{Brush_Power}"));		brKey[2]->setCaption("; \'");
+			brTxt[3]->setCaption(TR("#{Brush_Shape}"));		brKey[3]->setCaption("K L");
 
-			if (isKey(LBRACKET)){	fb.tile   *= 1.f - 0.04f*q;  bRecreateFluids = true;  }
-			if (isKey(RBRACKET)){	fb.tile   *= 1.f + 0.04f*q;  bRecreateFluids = true;  }
-			if (isKey(SEMICOLON )){	fb.tile.y *= 1.f - 0.04f*q;  bRecreateFluids = true;  }
-			if (isKey(APOSTROPHE)){	fb.tile.y *= 1.f + 0.04f*q;  bRecreateFluids = true;  }
-
-			if (mz != 0)  // wheel prev/next
-			{	int fls = sc.fluids.size();
-				if (fls > 0)  {  iFlCur = (iFlCur-mz+fls)%fls;  UpdFluidBox();  }
-			}
+			brTxt[4]->setCaption(TR("#{Brush_Freq}"));		brKey[4]->setCaption("O P");
+			brTxt[5]->setCaption(TR("#{Brush_Octaves}"));	brKey[5]->setCaption(", .");
+			brTxt[6]->setCaption(TR("#{Brush_Offset}"));	brKey[6]->setCaption("9 0");
 		}
-	}
-	else if (edMode == ED_Objects)
-	{
-		if (sc.objects.empty())
-		{
-			if (objTxt[0])	objTxt[0]->setCaption("None");
-			for (int i=1; i < OBJ_TXT; ++i)
-				if (objTxt[i])  objTxt[i]->setCaption("");
-		}else
-		{
-			if (iObjCur == -1)
-			{	//  none sel
-				if (objTxt[0])	objTxt[0]->setCaption("Cur/All:  "+toStr(iObjCur)+" / "+toStr(sc.objects.size()));
-				if (objTxt[1])	objTxt[1]->setCaption(vObjNames[iObjNew]);  // new params ...
-				if (objTxt[3])	objTxt[3]->setCaption("");
-				if (objTxt[4])	objTxt[4]->setCaption("");
-				if (objTxt[5])	objTxt[5]->setCaption("");
-			}else
-			{	///  objects
-				//----------------------------------------------------------------
-				const Object& o = sc.objects[iObjCur];
-				if (objTxt[0])	objTxt[0]->setCaption("Cur/All:  "+toStr(iObjCur+1)+" / "+toStr(sc.objects.size()));
-				if (objTxt[1])	objTxt[1]->setCaption(o.name);
-				if (objTxt[3])	objTxt[3]->setCaption("Pos:  "+fToStr(o.pos[0],1,4)+" "+fToStr(o.pos[2],1,4)+" "+fToStr(-o.pos[1],1,4));
-				if (objTxt[4])	objTxt[4]->setCaption("Rot:  "+fToStr(o.nd->getOrientation().getYaw().valueDegrees(),1,4));
-				if (objTxt[5])	objTxt[5]->setCaption("Scale:  "+fToStr(o.scale.x,2,4)+" "+fToStr(o.scale.y,2,4)+" "+fToStr(o.scale.z,2,4));
-			}
-			if (mz != 0)  // wheel prev/next
-			{	int objs = sc.objects.size();
-				if (objs > 0)  {  iObjCur = (iObjCur-mz+objs)%objs;  UpdObjPick();  }//
-			}
-		}
-	}
-	else if (edMode < ED_Road)  // terrain
-	{
-		//  brush params
-		//----------------------------------------------------------------
-		const static MyGUI::UString kclr = "#90FF90";
-		brTxt[0]->setCaption("Size:      "+fToStr(mBrSize[curBr],1,4)+"  "+kclr+" - =");
-		brTxt[1]->setCaption("Force:   "+fToStr(mBrIntens[curBr],1,4)+"  "+kclr+" [ ]");
-		brTxt[2]->setCaption("Power:  "+fToStr(mBrPow[curBr],2,4)+"  "+kclr+" ; \'");
-		brTxt[3]->setCaption("Shape: "+csBrShape[mBrShape[curBr]]);//+"  "+kclr+" K L");
+		brVal[0]->setCaption(fToStr(mBrSize[curBr],1,4));
+		brVal[1]->setCaption(fToStr(mBrIntens[curBr],1,4));
+		brVal[2]->setCaption(fToStr(mBrPow[curBr],2,4));
+		brVal[3]->setCaption(TR("#{Brush_Shape"+csBrShape[mBrShape[curBr]]+"}"));
 
-		bool brNoise = mBrShape[curBr] == BRS_Noise;
-		if (edMode == ED_Height)
-			brTxt[4]->setCaption("Height: "+fToStr(terSetH,1,4));//+" "+kclr+" RMB");
-		else if (brNoise)
-			brTxt[4]->setCaption("Freq:     "+fToStr(mBrFq[curBr],2,4)+"  "+kclr+" O P");
-		else
-			brTxt[4]->setCaption("");
+		bool brN = mBrShape[curBr] == BRS_Noise;  int i;
+		for (i=4; i<=6; ++i)
+		{	brTxt[i]->setVisible(brN);  brVal[i]->setVisible(brN);  brKey[i]->setVisible(brN);	}
+
+		if (brN)
+		{	brVal[4]->setCaption(fToStr(mBrFq[curBr],2,4));
+			brVal[5]->setCaption(toStr(mBrOct[curBr]));
+			brVal[6]->setCaption(fToStr(mBrNOf[curBr],1,4));
+		}
+
+		bool edH = edMode != ED_Height;
+		const static MyGUI::Colour clrEF[2] = {MyGUI::Colour(0.7,1.0,0.7), MyGUI::Colour(0.6,0.8,1.0)};
+		const MyGUI::Colour& clr = clrEF[!edH ? 0 : 1];
+		i=7;
+		{	brTxt[i]->setTextColour(clr);	brVal[i]->setTextColour(clr);  brKey[i]->setTextColour(clr);  }
 
 		if (edMode == ED_Filter)
-			brTxt[5]->setCaption("Filter:    "+fToStr(mBrFilt,1,3)+"   "+kclr+" 1 2");
-		else if (edMode == ED_Height && road && road->bHitTer)
-			brTxt[5]->setCaption("Curr.H: "+fToStr(road->posHit.y,1,4));
-		else if (brNoise)
-			brTxt[5]->setCaption("Octaves:  "+toStr(mBrOct[curBr])+"     "+kclr+" , .");
-		else
-			brTxt[5]->setCaption("");
-
-		if (brNoise)
-			brTxt[6]->setCaption("Offset: "+fToStr(mBrNOf[curBr],1,4)+"    "+kclr+" 9 0");
-		else
-			brTxt[6]->setCaption("");
-
+		{
+			brTxt[7]->setCaption(TR("#{Brush_Filter}"));	brKey[7]->setCaption("  1 2");
+			brVal[7]->setCaption(fToStr(mBrFilt,1,3));
+		}
+		else if (!edH && road && road->bHitTer)
+		{
+			brTxt[7]->setCaption(TR("#{Brush_Height}"));	brKey[7]->setCaption("RMB");
+			brVal[7]->setCaption(fToStr(terSetH,1,4));
+		}else
+		{	brTxt[7]->setCaption("");  brVal[7]->setCaption("");  brKey[7]->setCaption("");  }
+		
+		brTxt[8]->setCaption(edH ? "" : TR("#{Brush_CurrentH}"));
+		brVal[8]->setCaption(edH ? "" : fToStr(road->posHit.y,1,4));
+		brKey[8]->setCaption(edH ? "" : "");
+		
+		
+		//  edit  . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 		if (mz != 0)
 			if (alt){			mBrPow[curBr]   *= 1.f - 0.4f*q*mz;  updBrush();  }
 			else if (!shift){	mBrSize[curBr]  *= 1.f - 0.4f*q*mz;  updBrush();  }
@@ -341,7 +287,89 @@ bool App::frameRenderingQueued(const FrameEvent& evt)
 		
 		if (mBrIntens[curBr] < 0.1f)  mBrIntens[curBr] = 0.1;  // rest in updBrush
 	}
+
+	///  Start  box, road dir
+	//----------------------------------------------------------------
+	else if (edMode == ED_Start && road)
+	{
+		Vector3 p;  if (ndCar)  p = ndCar->getPosition();
+		stTxt[0]->setCaption("");
+		stTxt[1]->setCaption("width "+fToStr(road->vStBoxDim.z,1,4));
+		stTxt[2]->setCaption("height "+fToStr(road->vStBoxDim.y,1,4));
+		stTxt[3]->setCaption("road dir "+ (road->iDir == 1 ? String("+1") : String("-1")) );
+
+		//  edit
+		if (isKey(LBRACKET))	{  road->AddBoxH(-q*0.2);  UpdStartPos();  }
+		if (isKey(SEMICOLON))	{  road->AddBoxW(-q*0.2);  UpdStartPos();  }
+		if (isKey(RBRACKET))	{  road->AddBoxH( q*0.2);  UpdStartPos();  }
+		if (isKey(APOSTROPHE))	{  road->AddBoxW( q*0.2);  UpdStartPos();  }
+		//if (mz > 0)	// snap rot by 15 deg ..
+	}
+	///  Fluids
+	//----------------------------------------------------------------
+	else if (edMode == ED_Fluids)
+	{
+		if (sc.fluids.empty())
+		{
+			if (flTxt[0])	flTxt[0]->setCaption("None");
+			for (int i=1; i < FL_TXT; ++i)
+				if (flTxt[i])  flTxt[i]->setCaption("");
+		}else
+		{	FluidBox& fb = sc.fluids[iFlCur];
+			flTxt[0]->setCaption("Cur/All:  "+toStr(iFlCur+1)+" / "+toStr(sc.fluids.size()));
+			flTxt[1]->setCaption(fb.name);
+			flTxt[2]->setCaption("Pos:  "+fToStr(fb.pos.x,1,4)+" "+fToStr(fb.pos.y,1,4)+" "+fToStr(fb.pos.z,1,4));
+			flTxt[3]->setCaption(""/*"Rot:  "+fToStr(fb.rot.x,1,4)*/);
+			flTxt[3]->setCaption("Size:  "+fToStr(fb.size.x,1,4)+" "+fToStr(fb.size.y,1,4)+" "+fToStr(fb.size.z,1,4));
+			flTxt[4]->setCaption("Tile:  "+fToStr(fb.tile.x,3,5)+" "+fToStr(fb.tile.y,3,5));
+
+			//  edit
+			if (isKey(LBRACKET)){	fb.tile   *= 1.f - 0.04f*q;  bRecreateFluids = true;  }
+			if (isKey(RBRACKET)){	fb.tile   *= 1.f + 0.04f*q;  bRecreateFluids = true;  }
+			if (isKey(SEMICOLON )){	fb.tile.y *= 1.f - 0.04f*q;  bRecreateFluids = true;  }
+			if (isKey(APOSTROPHE)){	fb.tile.y *= 1.f + 0.04f*q;  bRecreateFluids = true;  }
+
+			if (mz != 0)  // wheel prev/next
+			{	int fls = sc.fluids.size();
+				if (fls > 0)  {  iFlCur = (iFlCur-mz+fls)%fls;  UpdFluidBox();  }
+			}
+		}
+	}
+	///  Objects
+	//----------------------------------------------------------------
+	else if (edMode == ED_Objects)
+	{
+		if (sc.objects.empty())
+		{
+			if (objTxt[0])	objTxt[0]->setCaption("None");
+			for (int i=1; i < OBJ_TXT; ++i)
+				if (objTxt[i])  objTxt[i]->setCaption("");
+		}else
+		{
+			if (iObjCur == -1)
+			{	//  none sel
+				objTxt[0]->setCaption("Cur/All:  "+toStr(iObjCur)+" / "+toStr(sc.objects.size()));
+				objTxt[1]->setCaption(vObjNames[iObjNew]);  // new params ...
+				objTxt[3]->setCaption("");
+				objTxt[4]->setCaption("");
+				objTxt[5]->setCaption("");
+			}else
+			{	const Object& o = sc.objects[iObjCur];
+				objTxt[0]->setCaption("Cur/All:  "+toStr(iObjCur+1)+" / "+toStr(sc.objects.size()));
+				objTxt[1]->setCaption(o.name);
+				objTxt[3]->setCaption("Pos:  "+fToStr(o.pos[0],1,4)+" "+fToStr(o.pos[2],1,4)+" "+fToStr(-o.pos[1],1,4));
+				objTxt[4]->setCaption("Rot:  "+fToStr(o.nd->getOrientation().getYaw().valueDegrees(),1,4));
+				objTxt[5]->setCaption("Scale:  "+fToStr(o.scale.x,2,4)+" "+fToStr(o.scale.y,2,4)+" "+fToStr(o.scale.z,2,4));
+			}
+			//  edit
+			if (mz != 0)  // wheel prev/next
+			{	int objs = sc.objects.size();
+				if (objs > 0)  {  iObjCur = (iObjCur-mz+objs)%objs;  UpdObjPick();  }
+			}
+		}
+	}
 	mz = 0;  // mouse wheel
+
 	
 	//  rebuild road after end of selection change
 	static bool bSelChngOld = false;

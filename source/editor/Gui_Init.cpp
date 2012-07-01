@@ -65,9 +65,14 @@ void App::InitGui()
 	
 	//  assign controls, tool window texts  ----------------------
 	if (mWndBrush)
-	{	for (i=0; i<BR_TXT; ++i)	brTxt[i] = mGUI->findWidget<StaticText>("brush"+toStr(i),false);
-		brImg = mGUI->findWidget<StaticImage>("brushImg", false);
+	for (i=0; i<BR_TXT; ++i)
+	{
+		brTxt[i] = mGUI->findWidget<StaticText>("brTxt"+toStr(i),false);
+		brVal[i] = mGUI->findWidget<StaticText>("brVal"+toStr(i),false);
+		brKey[i] = mGUI->findWidget<StaticText>("brKey"+toStr(i),false);
 	}
+	brImg = mGUI->findWidget<StaticImage>("brushImg", false);
+
 	if (mWndRoadCur)
 	for (i=0; i<RD_TXT; ++i)
 	{	rdTxt[i] = mGUI->findWidget<StaticText>("rdTxt"+toStr(i),false);
