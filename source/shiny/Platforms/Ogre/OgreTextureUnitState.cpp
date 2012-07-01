@@ -16,7 +16,7 @@ namespace sh
 
 		if (name == "address_mode")
 		{
-			std::string val = retrieveValue<StringValue>(value, context)->get();
+			std::string val = retrieveValue<StringValue>(value, context).get();
 			if (val == "clamp")
 				mTextureUnitState->setTextureAddressingMode(Ogre::TextureUnitState::TAM_CLAMP);
 			else if (val == "border")
@@ -27,7 +27,7 @@ namespace sh
 				mTextureUnitState->setTextureAddressingMode(Ogre::TextureUnitState::TAM_WRAP);
 		}
 		else if (name == "texture")
-			mTextureUnitState->setTextureName(retrieveValue<StringValue>(value, context)->get());
+			mTextureUnitState->setTextureName(retrieveValue<StringValue>(value, context).get());
 		else
 			found = false;
 

@@ -80,7 +80,7 @@ namespace sh
 	std::string LinkedValue::get(PropertySetGet* context) const
 	{
 		PropertyValuePtr p = context->getProperty(mStringValue);
-		return retrieveValue<StringValue>(p, NULL)->get();
+		return retrieveValue<StringValue>(p, NULL).get();
 	}
 
 	// ------------------------------------------------------------------------------
