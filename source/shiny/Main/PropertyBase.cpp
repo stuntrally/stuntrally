@@ -196,11 +196,13 @@ namespace sh
 
 	PropertySetGet::PropertySetGet (PropertySetGet* parent)
 		: mParent(parent)
+		, mContext(NULL)
 	{
 	}
 
 	PropertySetGet::PropertySetGet ()
 		: mParent(NULL)
+		, mContext(NULL)
 	{
 	}
 
@@ -209,6 +211,18 @@ namespace sh
 		if (mParent)
 			throw std::runtime_error ("PropertySetGet already has a parent");
 		mParent = parent;
+	}
+
+	void PropertySetGet::setContext (PropertySetGet* context)
+	{
+		if (mContext)
+			throw std::runtime_error ("PropertySetGet already has a context");
+		mContext = context;
+	}
+
+	PropertySetGet* PropertySetGet::getContext()
+	{
+		return mContext;
 	}
 
 	void PropertySetGet::setProperty (const std::string& name, PropertyValuePtr value)
@@ -223,7 +237,7 @@ namespace sh
 		if (!found)
 		{
 			if (!mParent)
-				throw std::runtime_error ("Trying to retrieve property that does not exist");
+				throw std::runtime_error ("Trying to retrieve property \"" + name + "\" that does not exist");
 			else
 				return mParent->getProperty (name);
 		}

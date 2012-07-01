@@ -8,7 +8,7 @@
 
 namespace sh
 {
-	std::string Preprocessor::preprocess (std::string source, const std::string& includePath, std::vector<std::string>& definitions)
+	std::string Preprocessor::preprocess (std::string source, const std::string& includePath, std::vector<std::string> definitions)
 	{
 		std::stringstream returnString;
 

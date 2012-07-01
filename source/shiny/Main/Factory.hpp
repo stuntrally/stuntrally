@@ -48,20 +48,19 @@ namespace sh
 		/// when a global setting is changed, the shaders that depend on them are recompiled automatically
 		void setGlobalSetting (const std::string& name, const std::string& value);
 
-		/**
-		 * get a MaterialInstance by name
-		 */
-		MaterialInstance* getInstance (const std::string& name);
+		/// adjusts the given shared parameter \n
+		/// internally, this will change all uniform parameters of this name marked with @shSharedParameter \n
+		/// @note they also apply to shaders that are created after the parameter was set, so the order does not matter
+		void setSharedParameter (const std::string& name, PropertyValuePtr value);
 
-		/**
-		 * switch the active \a Configuration
-		 * @param configuration name of the configuration to switch to
-		 */
+		/// get a MaterialInstance by name
+		//MaterialInstance* getInstance (const std::string& name);
+
+		/// switch the active \a Configuration
+		/// @param configuration name of the configuration to switch to
 		void setActiveConfiguration (const std::string& configuration);
 
-		/**
-		 * register a \a Configuration, which can then be used for setActiveConfiguration method
-		 */
+		/// register a \a Configuration, which can then be used for setActiveConfiguration method
 		void registerConfiguration (const std::string& name, Configuration configuration);
 
 		void notifyFrameEntered ();
@@ -70,6 +69,7 @@ namespace sh
 		///< Return instance of this class.
 
 		friend class Platform;
+		friend class MaterialInstance;
 
 	private:
 		static Factory* sThis;
@@ -81,6 +81,8 @@ namespace sh
 		SettingsMap mGlobalSettings;
 
 		Platform* mPlatform;
+
+		ShaderSet* getShaderSet (const std::string& name);
 
 		MaterialInstance* requestMaterial (const std::string& name, const std::string& configuration);
 

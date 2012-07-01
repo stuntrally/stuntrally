@@ -1,10 +1,14 @@
 #include "MaterialInstance.hpp"
 
+#include "Factory.hpp"
+#include "ShaderSet.hpp"
+
 namespace sh
 {
-	MaterialInstance::MaterialInstance (const std::string& name)
+	MaterialInstance::MaterialInstance (const std::string& name, Factory* f)
 		: mName(name)
 		, mShadersEnabled(true)
+		, mFactory(f)
 	{
 	}
 
@@ -42,6 +46,12 @@ namespace sh
 				boost::shared_ptr<TextureUnitState> texUnit = pass->createTextureUnitState ();
 				texIt->second.copyAll (texUnit.get(), this);
 			}
+
+			// create or retrieve shaders
+			ShaderSet* vertex = mFactory->getShaderSet(retrieveValue<StringValue>(it->getProperty("vertex_program"), this).get());
+			pass->assignVertexProgram (vertex->getInstance(&*it)->getName());
+			ShaderSet* fragment = mFactory->getShaderSet(retrieveValue<StringValue>(it->getProperty("fragment_program"), this).get());
+			pass->assignFragmentProgram (fragment->getInstance(&*it)->getName());
 		}
 	}
 
@@ -58,6 +68,7 @@ namespace sh
 	MaterialInstancePass* MaterialInstance::createPass ()
 	{
 		mPasses.push_back (MaterialInstancePass());
+		mPasses.back().setContext(this);
 		return &mPasses.back();
 	}
 

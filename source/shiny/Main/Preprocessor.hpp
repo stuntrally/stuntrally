@@ -19,7 +19,7 @@ namespace sh
 		 * @param definitions macros to predefine (vector of strings of the format MACRO=value, or just MACRO to define it as 1)
 		 * @return processed string
 		 */
-		static std::string preprocess (std::string source, const std::string& includePath, std::vector<std::string>& definitions);
+		static std::string preprocess (std::string source, const std::string& includePath, std::vector<std::string> definitions);
 	};
 }
 

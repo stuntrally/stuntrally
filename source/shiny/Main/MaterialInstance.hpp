@@ -9,6 +9,8 @@
 
 namespace sh
 {
+	class Factory;
+
 	typedef std::vector<MaterialInstancePass> PassVector;
 
 	/**
@@ -21,7 +23,7 @@ namespace sh
 	class MaterialInstance : public PropertySetGet
 	{
 	public:
-		MaterialInstance (const std::string& name);
+		MaterialInstance (const std::string& name, Factory* f);
 
 		MaterialInstancePass* createPass ();
 		PassVector getPasses(); ///< gets the passes of the top-most parent
@@ -55,6 +57,8 @@ namespace sh
 		boost::shared_ptr<Material> mMaterial;
 
 		bool mShadersEnabled;
+
+		Factory* mFactory;
 	};
 }
 

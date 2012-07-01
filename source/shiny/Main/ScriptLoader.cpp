@@ -84,7 +84,7 @@ namespace sh
 	void ScriptLoader::_nextToken(std::ifstream &stream)
 	{
 		//EOF token
-		if (stream.eof())
+		if (!stream.good())
 		{
 			tok = TOKEN_EOF;
 			return;
@@ -92,17 +92,13 @@ namespace sh
 
 		//(Get next character)
 		int ch = stream.get();
-		if (ch == -1)
-		{
-			tok = TOKEN_EOF;
-			return;
-		}
+
 		while ((ch == ' ' || ch == 9) && !stream.eof())
 		{    //Skip leading spaces / tabs
 			ch = stream.get();
 		}
 
-		if (stream.eof())
+		if (!stream.good())
 		{
 			tok = TOKEN_EOF;
 			return;

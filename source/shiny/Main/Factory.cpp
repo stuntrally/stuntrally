@@ -41,7 +41,10 @@ namespace sh
 					break;
 				}
 
-				ShaderSet newSet (it->second->findChild("type")->getValue(), it->second->findChild("source")->getValue());
+				ShaderSet newSet (it->second->findChild("type")->getValue(),
+								  mPlatform->getBasePath() + "/" + it->second->findChild("source")->getValue(),
+								  mPlatform->getBasePath(),
+								  it->first);
 
 				mShaderSets.insert(std::make_pair(it->first, newSet));
 			}
@@ -61,7 +64,7 @@ namespace sh
 					break;
 				}
 
-				MaterialInstance newInstance(it->first);
+				MaterialInstance newInstance(it->first, this);
 				newInstance.create(mPlatform);
 
 				std::vector<ScriptNode*> props = it->second->getChildren();
@@ -154,13 +157,13 @@ namespace sh
 	{
 		if (mMaterials.find(instance) == mMaterials.end())
 			throw std::runtime_error ("trying to clone material that does not exist");
-		MaterialInstance newInstance(name);
+		MaterialInstance newInstance(name, this);
 		if (!mShadersEnabled)
 			newInstance.setShadersEnabled(false);
 		newInstance.setParent (&mMaterials.find(instance)->second);
 		newInstance.create(mPlatform);
 		if (createImmediately)
-			newInstance.createForConfiguration(mPlatform, "Default"); /// \todo
+			newInstance.createForConfiguration(mPlatform, "Default"); /// \todo create all configurations
 		mMaterials.insert (std::make_pair(name, newInstance));
 		return &mMaterials.find(name)->second;
 	}
@@ -188,5 +191,15 @@ namespace sh
 			changed = (mGlobalSettings[name] == value);
 		*/
 		mGlobalSettings[name] = value;
+	}
+
+	void Factory::setSharedParameter (const std::string& name, PropertyValuePtr value)
+	{
+		mPlatform->setSharedParameter(name, value);
+	}
+
+	ShaderSet* Factory::getShaderSet (const std::string& name)
+	{
+		return &mShaderSets.find(name)->second;
 	}
 }

@@ -16,7 +16,6 @@ namespace sh
 	class MaterialInstanceTextureUnit : public PropertySetGet
 	{
 	public:
-		MaterialInstanceTextureUnit () {}
 		MaterialInstanceTextureUnit (const std::string& name);
 	private:
 		std::string mName;

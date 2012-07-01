@@ -140,6 +140,8 @@ namespace sh
 		void copyAll (PropertySet* target, PropertySetGet* context); ///< call setProperty for each property/value pair stored in \a this
 
 		void setParent (PropertySetGet* parent); ///< throws an exception if there is already a parent
+		void setContext (PropertySetGet* context); ///< throws an exception if there is already a context
+		PropertySetGet* getContext();
 
 		void setProperty (const std::string& name, PropertyValuePtr value);
 		PropertyValuePtr& getProperty (const std::string& name);
@@ -152,6 +154,9 @@ namespace sh
 		///< the parent can provide properties as well (when they are retrieved via getProperty) \n
 		/// multiple levels of inheritance are also supported \n
 		/// children can override properties of their parents
+
+		PropertySetGet* mContext;
+		///< used to retrieve linked property values
 	};
 
 	template <typename T>

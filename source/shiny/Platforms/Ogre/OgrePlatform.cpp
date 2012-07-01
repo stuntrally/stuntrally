@@ -122,4 +122,46 @@ namespace sh
 	{
 		Ogre::MaterialManager::getSingleton().setActiveScheme(mCurrentConfiguration);
 	}
+
+	void OgrePlatform::setSharedParameter (const std::string& name, PropertyValuePtr value)
+	{
+		Ogre::GpuSharedParametersPtr params;
+		if (mSharedParameters.find(name) == mSharedParameters.end())
+		{
+			params = Ogre::GpuProgramManager::getSingleton().createSharedParameters(name);
+			params->addConstantDefinition(name, Ogre::GCT_FLOAT4); //always use float4 for now
+		}
+		else
+			params = mSharedParameters.find(name)->second;
+
+		Ogre::Vector4 v (1.0, 1.0, 1.0, 1.0);
+		if (typeid(value) == typeid(Vector4))
+		{
+			Vector4 vec = retrieveValue<Vector4>(value, NULL);
+			v.x = vec.mX;
+			v.y = vec.mY;
+			v.z = vec.mZ;
+			v.w = vec.mW;
+		}
+		else if (typeid(value) == typeid(Vector3))
+		{
+			Vector3 vec = retrieveValue<Vector3>(value, NULL);
+			v.x = vec.mX;
+			v.y = vec.mY;
+			v.z = vec.mZ;
+		}
+		else if (typeid(value) == typeid(Vector2))
+		{
+			Vector2 vec = retrieveValue<Vector2>(value, NULL);
+			v.x = vec.mX;
+			v.y = vec.mY;
+		}
+		else if (typeid(value) == typeid(FloatValue))
+			v.x = retrieveValue<FloatValue>(value, NULL).get();
+		else if (typeid(value) == typeid(IntValue))
+			v.x = static_cast<float>(retrieveValue<IntValue>(value, NULL).get());
+		else
+			throw std::runtime_error ("unsupported property type for shared parameter \"" + name + "\"");
+		params->setNamedConstant(name, v);
+	}
 }

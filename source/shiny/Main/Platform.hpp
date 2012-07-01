@@ -14,15 +14,19 @@ namespace sh
 	class MaterialInstance;
 
 	// These classes are supposed to be filled by the platform implementation
-	class VertexProgram
+	class Program
 	{
 	};
 
-	class FragmentProgram
+	class VertexProgram : public Program
 	{
 	};
 
-	class GeometryProgram
+	class FragmentProgram : public Program
+	{
+	};
+
+	class GeometryProgram : public Program
 	{
 	};
 
@@ -73,6 +77,8 @@ namespace sh
 			const std::string& compileArguments,
 			const std::string& name, const std::string& entryPoint,
 			const std::string& source, Language lang) = 0;
+
+		virtual void setSharedParameter (const std::string& name, PropertyValuePtr value) = 0;
 
 		friend class Factory;
 

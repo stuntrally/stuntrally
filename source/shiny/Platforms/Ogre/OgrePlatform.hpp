@@ -15,6 +15,7 @@
 #include "../../Main/Platform.hpp"
 
 #include <OgreMaterialManager.h>
+#include <OgreGpuProgramParams.h>
 
 namespace sh
 {
@@ -46,6 +47,8 @@ namespace sh
 			const std::string& name, const std::string& entryPoint,
 			const std::string& source, Language lang);
 
+		virtual void setSharedParameter (const std::string& name, PropertyValuePtr value);
+
 	protected:
 		virtual bool supportsShaderSerialization ();
 		virtual bool supportsMaterialQueuedListener ();
@@ -55,6 +58,8 @@ namespace sh
 		std::string mResourceGroup;
 
 		std::string mCurrentConfiguration;
+
+		std::map <std::string, Ogre::GpuSharedParametersPtr> mSharedParameters;
 	};
 }
 
