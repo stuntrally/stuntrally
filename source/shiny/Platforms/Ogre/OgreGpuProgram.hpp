@@ -1,5 +1,5 @@
-#ifndef SH_OGREVERTEXPROGRAM_H
-#define SH_OGREVERTEXPROGRAM_H
+#ifndef SH_OGREGPUPROGRAM_H
+#define SH_OGREGPUPROGRAM_H
 
 #include <string>
 
@@ -9,16 +9,19 @@
 
 namespace sh
 {
-	class OgreVertexProgram : public VertexProgram
+	class OgreGpuProgram : public GpuProgram
 	{
 	public:
-		OgreVertexProgram (
+		OgreGpuProgram (
+			GpuProgramType type,
 			const std::string& compileArguments,
 			const std::string& name, const std::string& profile,
 			const std::string& source, const std::string& lang,
 			const std::string& resourceGroup);
 
 		virtual bool getSupported();
+
+		virtual void setAutoConstant (const std::string& name, const std::string& autoConstantName, const std::string& extraInfo = "");
 
 	private:
 		Ogre::HighLevelGpuProgramPtr mProgram;

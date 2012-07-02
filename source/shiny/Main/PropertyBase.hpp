@@ -12,6 +12,16 @@ namespace sh
 	class PropertySetGet;
 	class LinkedValue;
 
+	enum ValueType
+	{
+		VT_String,
+		VT_Int,
+		VT_Float,
+		VT_Vector2,
+		VT_Vector3,
+		VT_Vector4
+	};
+
 	class PropertyValue
 	{
 	public:

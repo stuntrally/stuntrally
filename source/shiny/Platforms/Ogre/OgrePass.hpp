@@ -15,9 +15,7 @@ namespace sh
 		OgrePass (OgreMaterial* parent, const std::string& configuration);
 
 		virtual boost::shared_ptr<TextureUnitState> createTextureUnitState ();
-		virtual void assignVertexProgram (const std::string& name);
-		virtual void assignFragmentProgram (const std::string& name);
-		//virtual void assignGeometryProgram (const std::string& name);
+		virtual void assignProgram (GpuProgramType type, const std::string& name);
 
 		Ogre::Pass* getOgrePass();
 

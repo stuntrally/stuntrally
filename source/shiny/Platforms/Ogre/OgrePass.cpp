@@ -4,9 +4,7 @@
 #include <OgreTechnique.h>
 
 #include "OgreTextureUnitState.hpp"
-#include "OgreVertexProgram.hpp"
-#include "OgreFragmentProgram.hpp"
-#include "OgreGeometryProgram.hpp"
+#include "OgreGpuProgram.hpp"
 #include "OgreMaterial.hpp"
 
 namespace sh
@@ -23,21 +21,16 @@ namespace sh
 		return boost::shared_ptr<TextureUnitState> (new OgreTextureUnitState (this));
 	}
 
-	void OgrePass::assignVertexProgram (const std::string& name)
+	void OgrePass::assignProgram (GpuProgramType type, const std::string& name)
 	{
-		mPass->setVertexProgram (name);
+		if (type == GPT_Vertex)
+			mPass->setVertexProgram (name);
+		else if (type == GPT_Fragment)
+			mPass->setFragmentProgram (name);
+		else
+			throw std::runtime_error("unsupported GpuProgramType");
 	}
 
-	void OgrePass::assignFragmentProgram (const std::string& name)
-	{
-		mPass->setFragmentProgram (name);
-	}
-/*
-	void OgrePass::assignGeometryProgram (const std::string& name)
-	{
-		mPass->setGeometryProgram (name);
-	}
-*/
 	Ogre::Pass* OgrePass::getOgrePass ()
 	{
 		return mPass;

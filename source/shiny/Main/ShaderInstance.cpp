@@ -132,17 +132,72 @@ namespace sh
 		// thus, we run the code through a preprocessor first to remove the parts that are unused because of
 		// unmet #if conditions (or other preprocessor directives).
 		Preprocessor p;
-		std::string newSource = p.preprocess(source, basePath, std::vector<std::string>(), name);
+		source = p.preprocess(source, basePath, std::vector<std::string>(), name);
+
+		// parse auto constants
+		typedef std::map< std::string, std::pair<std::string, std::string> > AutoConstantMap;
+		AutoConstantMap autoConstants;
+		while (true)
+		{
+			pos = source.find("@shAutoConstant");
+			if (pos == std::string::npos)
+				break;
+
+			size_t start = source.find("(", pos);
+			size_t end = source.find(")", pos);
+			size_t comma1 = source.find(",", pos);
+			size_t comma2 = source.find(",", comma1+1);
+
+			bool hasExtraData = (comma2 != std::string::npos) && (comma2 < end);
+			std::string autoConstantName, uniformName;
+			std::string extraData;
+			if (!hasExtraData)
+			{
+				uniformName = source.substr(start+1, comma1-(start+1));
+				// skip spaces
+				++comma1;
+				while (source[comma1] == ' ')
+					++comma1;
+				autoConstantName = source.substr(comma1, end-(comma1));
+			}
+			else
+			{
+				uniformName = source.substr(start+1, comma1-(start+1));
+				// skip spaces
+				++comma1;
+				while (source[comma1] == ' ')
+					++comma1;
+				autoConstantName = source.substr(comma1, comma2-(comma1));
+				// skip spaces
+				++comma2;
+				while (source[comma2] == ' ')
+					++comma2;
+				extraData = source.substr(comma2, end-comma2);
+			}
+			autoConstants[uniformName] = std::make_pair(autoConstantName, extraData);
+
+			source.erase(pos, (end+1)-pos);
+		}
+
 
 		Platform* platform = Factory::getInstance().getPlatform();
 
 		if (type == ShaderSet::Type_Vertex)
-			mProgram = boost::shared_ptr<Program>(platform->createVertexProgram("", mName, mParent->getProfile(), newSource, Factory::getInstance().getCurrentLanguage()));
+			mProgram = boost::shared_ptr<GpuProgram>(platform->createGpuProgram(GPT_Vertex, "", mName, mParent->getProfile(), source, Factory::getInstance().getCurrentLanguage()));
 		else if (type == ShaderSet::Type_Fragment)
-			mProgram = boost::shared_ptr<Program>(platform->createFragmentProgram("", mName, mParent->getProfile(), newSource, Factory::getInstance().getCurrentLanguage()));
+			mProgram = boost::shared_ptr<GpuProgram>(platform->createGpuProgram(GPT_Fragment, "", mName, mParent->getProfile(), source, Factory::getInstance().getCurrentLanguage()));
 
 		if (!mProgram->getSupported())
+		{
+			std::cout << "        Full source code below: \n" << source << std::endl;
 			mSupported = false;
+			return;
+		}
+
+		for (AutoConstantMap::iterator it = autoConstants.begin(); it != autoConstants.end(); ++it)
+		{
+			mProgram->setAutoConstant(it->first, it->second.first, it->second.second);
+		}
 	}
 
 	std::string ShaderInstance::getName ()

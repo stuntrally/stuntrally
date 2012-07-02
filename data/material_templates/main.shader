@@ -1,36 +1,86 @@
 
 #ifdef SH_VERTEX_SHADER
 
+
+void main(
+						float4 position : POSITION,
+
+                            float3 normal   : NORMAL,
+
+
+
+                        out float4 oPosition : POSITION,
+
+                        out float3 objectPos : TEXCOORD0,
+
+                        out float3 oNormal   : TEXCOORD1,
+
+
+
+                    uniform float4x4 modelViewProj @shAutoConstant(modelViewProj, worldviewproj_matrix)
+
+                )
+
+{
+
+  oPosition = mul(modelViewProj, position);
+
+  objectPos = position.xyz;
+
+  oNormal = normal;
+
+}
+
+
 #else
 
-#endif
+
+void main(float4 position  : TEXCOORD0,
+
+          float3 normal    : TEXCOORD1,
 
 
-@shForeach(@shPropertyString(number_of_foreachs))
 
-This is iteration: @shIteration
-
-@shEndForeach
-
-#if @shGlobalSettingEqual(globalSetting_test, foobar)
+              out float4 color     : COLOR,
 
 
-GLOBALSETTING WORKS!!!
 
-#endif
+              uniform float3 globalAmbient, @shAutoConstant(globalAmbient, ambient_light_colour)
+
+              uniform float3 lightColor, @shAutoConstant(lightColor, light_diffuse_colour, 0)
+
+              uniform float3 lightPosition, @shAutoConstant(lightPosition, light_position_object_space, 0)
+
+			  uniform float3 materialDiffuse @shAutoConstant(materialDiffuse, surface_diffuse_colour)
+
+)
+
+{
+
+  float3 P = position.xyz;
+
+  float3 N = normalize(normal);
 
 
-#if @shPropertyBool(asdf)
-ASASASASA
+  // Compute the ambient term
 
-#if @shPropertyEqual(testasdf, 123ish)
+  float3 ambient = globalAmbient;
 
-zsfdg dugs fdg sfd
-h fg
-h
-h fd
- f
 
-#endif
+
+  // Compute the diffuse term
+
+  float3 L = normalize(lightPosition - P);
+
+  float diffuseLight = max(dot(N, L), 0);
+
+  float3 diffuse = materialDiffuse * lightColor * diffuseLight;
+
+
+  color.xyz = ambient + diffuse;
+
+  color.w = 1;
+
+}
 
 #endif

@@ -52,11 +52,11 @@ namespace sh
 			ShaderSet* vertex = mFactory->getShaderSet(retrieveValue<StringValue>(it->getProperty("vertex_program"), this).get());
 			ShaderInstance* v = vertex->getInstance(&*it);
 			if (v)
-				pass->assignVertexProgram (v->getName());
+				pass->assignProgram (GPT_Vertex, v->getName());
 			ShaderSet* fragment = mFactory->getShaderSet(retrieveValue<StringValue>(it->getProperty("fragment_program"), this).get());
 			ShaderInstance* f = fragment->getInstance(&*it);
 			if (f)
-				pass->assignFragmentProgram (f->getName());
+				pass->assignProgram (GPT_Fragment, f->getName());
 		}
 	}
 

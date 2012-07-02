@@ -36,20 +36,11 @@ namespace sh
 
 		virtual boost::shared_ptr<Material> createMaterial (const std::string& name);
 
-		virtual boost::shared_ptr<Program> createVertexProgram (
+		virtual boost::shared_ptr<GpuProgram> createGpuProgram (
+			GpuProgramType type,
 			const std::string& compileArguments,
 			const std::string& name, const std::string& profile,
 			const std::string& source, Language lang);
-		virtual boost::shared_ptr<Program> createFragmentProgram (
-			const std::string& compileArguments,
-			const std::string& name, const std::string& profile,
-			const std::string& source, Language lang);
-		/*
-		virtual boost::shared_ptr<Program> createGeometryProgram (
-			const std::string& compileArguments,
-			const std::string& name,
-			const std::string& source, Language lang);
-		*/
 
 		virtual void setSharedParameter (const std::string& name, PropertyValuePtr value);
 

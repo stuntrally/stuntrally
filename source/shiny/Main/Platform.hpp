@@ -13,23 +13,23 @@ namespace sh
 	class Factory;
 	class MaterialInstance;
 
+	enum GpuProgramType
+	{
+		GPT_Vertex,
+		GPT_Fragment
+		// GPT_Geometry
+	};
+
 	// These classes are supposed to be filled by the platform implementation
-	class Program
+	class GpuProgram
 	{
 	public:
 		virtual bool getSupported () = 0; ///< @return true if the compilation was successful
-	};
 
-	class VertexProgram : public Program
-	{
-	};
-
-	class FragmentProgram : public Program
-	{
-	};
-
-	class GeometryProgram : public Program
-	{
+		/// @param name name of the uniform in the shader
+		/// @param autoConstantName name of the auto constant (for example world_viewproj_matrix)
+		/// @param extraInfo if any extra info is needed (e.g. light index), put it here
+		virtual void setAutoConstant (const std::string& name, const std::string& autoConstantName, const std::string& extraInfo = "") = 0;
 	};
 
 	class TextureUnitState : public PropertySet
@@ -42,9 +42,7 @@ namespace sh
 	{
 	public:
 		virtual boost::shared_ptr<TextureUnitState> createTextureUnitState () = 0;
-		virtual void assignVertexProgram (const std::string& name) = 0;
-		virtual void assignFragmentProgram (const std::string& name) = 0;
-		//virtual void assignGeometryProgram (const std::string& name) = 0;
+		virtual void assignProgram (GpuProgramType type, const std::string& name) = 0;
 	};
 
 	class Material : public PropertySet
@@ -69,20 +67,11 @@ namespace sh
 
 		virtual boost::shared_ptr<Material> createMaterial (const std::string& name) = 0;
 
-		virtual boost::shared_ptr<Program> createVertexProgram (
+		virtual boost::shared_ptr<GpuProgram> createGpuProgram (
+			GpuProgramType type,
 			const std::string& compileArguments,
 			const std::string& name, const std::string& profile,
 			const std::string& source, Language lang) = 0;
-		virtual boost::shared_ptr<Program> createFragmentProgram (
-			const std::string& compileArguments,
-			const std::string& name, const std::string& profile,
-			const std::string& source, Language lang) = 0;
-		/*
-		virtual boost::shared_ptr<Program> createGeometryProgram (
-			const std::string& compileArguments,
-			const std::string& name,
-			const std::string& source, Language lang) = 0;
-		*/
 
 		virtual void setSharedParameter (const std::string& name, PropertyValuePtr value) = 0;
 

@@ -4,9 +4,7 @@
 #include <OgreGpuProgramManager.h>
 
 #include "OgreMaterial.hpp"
-#include "OgreVertexProgram.hpp"
-#include "OgreFragmentProgram.hpp"
-#include "OgreGeometryProgram.hpp"
+#include "OgreGpuProgram.hpp"
 
 #include "../../Main/MaterialInstance.hpp"
 
@@ -61,33 +59,16 @@ namespace sh
 		return boost::shared_ptr<Material> (material);
 	}
 
-	boost::shared_ptr<Program> OgrePlatform::createVertexProgram (
+	boost::shared_ptr<GpuProgram> OgrePlatform::createGpuProgram (
+		GpuProgramType type,
 		const std::string& compileArguments,
 		const std::string& name, const std::string& profile,
 		const std::string& source, Language lang)
 	{
-		OgreVertexProgram* prog = new OgreVertexProgram (compileArguments, name, profile, source, convertLang(lang), mResourceGroup);
-		return boost::shared_ptr<Program> (static_cast<Program*>(prog));
+		OgreGpuProgram* prog = new OgreGpuProgram (type, compileArguments, name, profile, source, convertLang(lang), mResourceGroup);
+		return boost::shared_ptr<GpuProgram> (static_cast<GpuProgram*>(prog));
 	}
 
-	boost::shared_ptr<Program> OgrePlatform::createFragmentProgram (
-		const std::string& compileArguments,
-		const std::string& name, const std::string& profile,
-		const std::string& source, Language lang)
-	{
-		OgreFragmentProgram* prog = new OgreFragmentProgram (compileArguments, name, profile, source, convertLang(lang), mResourceGroup);
-		return boost::shared_ptr<Program> (static_cast<Program*>(prog));
-	}
-/*
-	boost::shared_ptr<Program> OgrePlatform::createGeometryProgram (
-		const std::string& compileArguments,
-		const std::string& name,
-		const std::string& source, Language lang)
-	{
-		OgreGeometryProgram* prog = new OgreGeometryProgram (compileArguments, name, source, convertLang(lang), mResourceGroup);
-		return boost::shared_ptr<Program> (static_cast<Program*>(prog));
-	}
-*/
 	Ogre::Technique* OgrePlatform::handleSchemeNotFound (
 		unsigned short schemeIndex, const Ogre::String &schemeName, Ogre::Material *originalMaterial,
 		unsigned short lodIndex, const Ogre::Renderable *rend)
@@ -140,6 +121,7 @@ namespace sh
 		else
 			params = mSharedParameters.find(name)->second;
 
+		/// \todo remove the typeid and pass it instead (ValueType enum)
 		Ogre::Vector4 v (1.0, 1.0, 1.0, 1.0);
 		if (typeid(value) == typeid(Vector4))
 		{
