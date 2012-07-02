@@ -24,6 +24,7 @@
 	<Tag name="OpponentsList">Liste des opposants</Tag>
 	<Tag name="RplParticles">Particles (for not transparent ghost)</Tag>
 	<Tag name="TipRoadDist2">Additional distance to road.</Tag>
+	<Tag name="PostfilterAA">Post-filter antialiasing</Tag>
 	<Tag name="TipLTrFlDepth">Maximal depth in fluid allowed (set 0 to exclude from fluids).</Tag>
 	<Tag name="TipLTrMinTerH">Terrain height below which model won't appear.</Tag>
 	<Tag name="Sky">Ciel</Tag>
@@ -37,7 +38,7 @@
 	<Tag name="Terrain">Terrain</Tag>
 	<Tag name="Surface">Surface</Tag>
 	<Tag name="TBScore">Score</Tag>
-	<Tag name="InputRoadChkFirst">0   - set checkpoint as first</Tag>
+	<Tag name="InputRoadChkFirst">0   - set checkpoint as first  (1)</Tag>
 	<Tag name="HDROrigImage">Bloom Darken</Tag>
 	<Tag name="InputObjectsIns">Ins - insert new, at cursor</Tag>
 	<Tag name="GraphicsAll_Low">Bas</Tag>
@@ -46,7 +47,6 @@
 	<Tag name="Version">version</Tag>
 	<Tag name="InputRoadOnTer">Home - toggle on Terrain snap</Tag>
 	<Tag name="TipSunDiffuse">Sun light diffuse (normal) color. R G B components 0 to 1 (eg. 0.9 0.9 0.9)</Tag>
-	<Tag name="LTrMinTerH">min terrain Height</Tag>
 	<Tag name="Shadows">Ombres</Tag>
 	<Tag name="ScoreNeeded">Score needed</Tag>
 	<Tag name="Game name">Nom de la partie</Tag>
@@ -124,7 +124,7 @@
 	<Tag name="NetLeaveGame">Quitter le jeu</Tag>
 	<Tag name="CameraInfo">Camera info</Tag>
 	<Tag name="frenzy">frenzy (curly road)</Tag>
-	<Tag name="InputRoadChkRadius">K,L   - checkpoint radius (chkR 0 - none)</Tag>
+	<Tag name="InputRoadChkRadius">K,L  - checkpoint radius  (ChkR 0 - none)</Tag>
 	<Tag name="Time">Time</Tag>
 	<Tag name="InputRoadInsAlt">alt-shift - au début alt-ctrl - à la fin</Tag>
 	<Tag name="RearThrottleInverse">Rear throttle inverse</Tag>
@@ -235,7 +235,7 @@
 	<Tag name="HDR">HDR+Bloom</Tag>
 	<Tag name="TipABS">Prevents wheel lock when braking (default: off).</Tag>
 	<Tag name="TipGrassPatchHeightMin">Minimal grass patch height.</Tag>
-	<Tag name="InputRoadMat">-,=  - road/pipe material</Tag>
+	<Tag name="InputRoadMat">-,=  - road/pipe material  (-1 hidden)</Tag>
 	<Tag name="InputDetailPreset">Set from preset</Tag>
 	<Tag name="InputStartHeight">[,]  -  adjust start box height (bigger for pipes)</Tag>
 	<Tag name="TipSunDirPitch">Sun direction - pitch angle.</Tag>
@@ -250,7 +250,6 @@
 	<Tag name="RplMaxNumViewports">Max. number of viewports (see less, for more player replays)</Tag>
 	<Tag name="SingleRace">Simple course</Tag>
 	<Tag name="TipNewGameCar">Restart game.</Tag>
-	<Tag name="InputWheelForce">[,]  (or shift-Wheel)  -  Force (intensity)</Tag>
 	<Tag name="TipGrassPatchLengthMax">Maximal grass patch length.</Tag>
 	<Tag name="Vegetation">Vegetation</Tag>
 	<Tag name="ssao">SSAO</Tag>
@@ -291,7 +290,6 @@
 	<Tag name="MinScale">min scale</Tag>
 	<Tag name="MergeLength">Merge length</Tag>
 	<Tag name="QuickHelpText">----  Quick help  ----@@Use mouse or Up,Down,Enter,Backspace to navigate through menu.@@To adjust resolution go to Options tab Screen,@use Graphics presets to quickly adjust graphics to your hardware.@@To see all keys used in game and configure input goto Options, tab Input.@If you have a game controller see:@http://code.google.com/p/vdrift-ogre/wiki/Running##Controllers@@Hosting a multiplayer game requires port forwarding.@Connecting to existing game doesn't need it, provided other players have it.@@If you have problems or suggestions report an issue on (or reply to existing one):@http://code.google.com/p/vdrift-ogre/issues/list@@For more info see Readme and our project's Wiki pages.@</Tag>
-	<Tag name="InputRoadPitch">- rotate pitch* / scale sel.</Tag>
 	<Tag name="InputObjectsMove">LMB - move   RMB - height</Tag>
 	<Tag name="TimesBar">Times bar</Tag>
 	<Tag name="Screenshot">capture d'écran</Tag>
@@ -319,7 +317,6 @@
 	<Tag name="InputUpdBlendmap">F9 - update terrain blendmap</Tag>
 	<Tag name="InputPressButtonTip">appuyer sur un bouton pour voir son numéro</Tag>
 	<Tag name="Friction">Friction</Tag>
-	<Tag name="TerLHMin">Hauteur Min</Tag>
 	<Tag name="Ambient">Ambient</Tag>
 	<Tag name="BulletProfilerTxt">Bullet Profiler Times</Tag>
 	<Tag name="MapSize">Taille de la carte</Tag>
@@ -342,16 +339,14 @@
 	<Tag name="Gravel">Gravel</Tag>
 	<Tag name="min">min</Tag>
 	<Tag name="BumpWavelen">Bump:  WaveLen</Tag>
-	<Tag name="InputRoadPipeAngle">[,]   - pipe angle (no pipe when 0)</Tag>
+	<Tag name="InputRoadPipeAngle">[,]   - pipe angle  (no pipe when 0)</Tag>
 	<Tag name="Finished">Finished</Tag>
-	<Tag name="LTrMaxTerAng">max terrain Angle</Tag>
 	<Tag name="InputMapRestartGame">Nouvelle partie</Tag>
 	<Tag name="Graphics">Graphiques</Tag>
 	<Tag name="ReflMode_static">Statique</Tag>
 	<Tag name="CarClrRandom">Aléatoire</Tag>
 	<Tag name="HDRVignettingRadius">Vignetting Radius</Tag>
 	<Tag name="LS_SCENE">Chargement de la scène</Tag>
-	<Tag name="InputWheelShape">K,L  -  Brush shape</Tag>
 	<Tag name="Name">Name</Tag>
 	<Tag name="RplSize">taille</Tag>
 	<Tag name="TipMudInt">Mud particles intensity.</Tag>
@@ -363,7 +358,6 @@
 	<Tag name="InputTogglePreview">F7 - enter/leave preview camera</Tag>
 	<Tag name="GameBy">Un jeu de</Tag>
 	<Tag name="SunWeather">Soleil et Temps</Tag>
-	<Tag name="GrTerMaxAngle">Grass Max. Terrain Angle</Tag>
 	<Tag name="RollingDrag">Rolling Drag</Tag>
 	<Tag name="RplDelete">Supprimer</Tag>
 	<Tag name="TipAutoRear">Uncheck for manual Rear gear changing.</Tag>
@@ -376,7 +370,6 @@
 	<Tag name="RoadMaterials">Road materials</Tag>
 	<Tag name="Fullscreen">Plein écran</Tag>
 	<Tag name="BulletLines">Bullet debug lines</Tag>
-	<Tag name="TerLAngMax">Angle Max</Tag>
 	<Tag name="TipChangeSat">Change car color saturation (white-black).</Tag>
 	<Tag name="TreeDens">Densité des arbres</Tag>
 	<Tag name="WrongChk">Wrong Checkpoint</Tag>
@@ -460,7 +453,6 @@
 	<Tag name="ViewFront">Vue de devant</Tag>
 	<Tag name="RplTime">Time</Tag>
 	<Tag name="MinimapRotate">Rotate</Tag>
-	<Tag name="LTrMaxTerH">max terrain Height</Tag>
 	<Tag name="TrackAvgSpeed">Vitesse moyenne</Tag>
 	<Tag name="Yes">Yes</Tag>
 	<Tag name="TipNewDup">Create a new track by duplicating the selected track and using new name (change name first).</Tag>
@@ -498,11 +490,8 @@
 	<Tag name="LS_ROAD">Loading Road</Tag>
 	<Tag name="RoadPoint">Road Point</Tag>
 	<Tag name="CarStartPos">Car Start Pos</Tag>
-	<Tag name="TerLHMax">Height Max</Tag>
-	<Tag name="InputWheelSize">,=  (or Wheel)  -  Size</Tag>
 	<Tag name="LoadingDesc">Loading, please wait...</Tag>
 	<Tag name="TipGrassPatchHeightMax">Maximal grass patch height.</Tag>
-	<Tag name="TerLAngMin">Angle Min</Tag>
 	<Tag name="Tires">Tires</Tag>
 	<Tag name="LoadTrack">Chargement du circuit</Tag>
 	<Tag name="TipTrkNameEditor">Selected track name, used also for renaming track and as new track name.</Tag>
@@ -573,7 +562,6 @@
 	<Tag name="speed">speed</Tag>
 	<Tag name="TipTerLHMin">Starting terrain height for layer.</Tag>
 	<Tag name="Far">Far</Tag>
-	<Tag name="GrTerMaxHeight">Grass Max. Terrain Height</Tag>
 	<Tag name="RplGhosts">Ghosts</Tag>
 	<Tag name="InputReturnDelay">Return speed</Tag>
 	<Tag name="RplBestOnly">Save ghost only for best time</Tag>
@@ -607,7 +595,6 @@
 	<Tag name="Layers">Layers</Tag>
 	<Tag name="Quit">Quit</Tag>
 	<Tag name="Minimap">Minimap</Tag>
-	<Tag name="InputWheelPower">; &apos;  (or alt-Wheel)  -  Power (shape)</Tag>
 	<Tag name="InputHelp">Input/help</Tag>
 	<Tag name="CheckArrow">Checkpoint Arrow</Tag>
 	<Tag name="Sun">Sun</Tag>
@@ -744,7 +731,50 @@
 	<Tag name="InputNextOptTab">F2,F3 - prev,next Options tab (shift - sub tab)</Tag>
 	<Tag name="Diff6">Extrême</Tag>
 	<Tag name="RplAll">Tous</Tag>
-	<Tag name="PostfilterAA">Post-filter antialiasing</Tag>
+	<Tag name="Brush_Filter">Filter</Tag>
+	<Tag name="Road_AngleManual">Manual</Tag>
+	<Tag name="Road_Roll">Roll</Tag>
+	<Tag name="TerrainDouble">Double</Tag>
+	<Tag name="Brush_ShapeSinus">Sinus</Tag>
+	<Tag name="AngleMax">Angle Max</Tag>
+	<Tag name="Road_New">New</Tag>
+	<Tag name="Road_Height">Height</Tag>
+	<Tag name="InputBrushPower">; &apos;  (or alt-Wheel)  -  Power exponent</Tag>
+	<Tag name="Brush_Size">Size</Tag>
+	<Tag name="InputBrushFilter">1,2  -  Filter frequency (kernel size)</Tag>
+	<Tag name="Brush_Force">Force</Tag>
+	<Tag name="Road_OnTerrain">On Terrain</Tag>
+	<Tag name="Brush_Offset">Offset</Tag>
+	<Tag name="Road_ChkR">ChkR</Tag>
+	<Tag name="Road_Column">Column</Tag>
+	<Tag name="Road_Length">Length</Tag>
+	<Tag name="Road_Snap">Snap</Tag>
+	<Tag name="Brush_Octaves">Octaves</Tag>
+	<Tag name="Brush_ShapeNoise">Noise</Tag>
+	<Tag name="Brush_Shape">Shape</Tag>
+	<Tag name="Road_Cur">Cur</Tag>
+	<Tag name="InputBrushForce">[,]  (or shift-Wheel)  -  Force (intensity)</Tag>
+	<Tag name="Brush_CurrentH">Curr.H</Tag>
+	<Tag name="TipTerrainDouble">Make terrain size double, leaving current haigtmap part in center.</Tag>
+	<Tag name="Road_AngleBoth">Both</Tag>
+	<Tag name="Brush_Freq">Freq</Tag>
+	<Tag name="InputBrushShape">K,L  -  Shape</Tag>
+	<Tag name="InputRoadRoll">- rotate roll / scale sel.</Tag>
+	<Tag name="InputBrushFreq">O,P  -  noise Frequency (scale)</Tag>
+	<Tag name="Road_Pipe">Pipe</Tag>
+	<Tag name="Road_Width">Width</Tag>
+	<Tag name="Road_Yaw">Yaw</Tag>
+	<Tag name="Brush_Height">Height</Tag>
+	<Tag name="Road_sel">sel</Tag>
+	<Tag name="InputBrushOctaves">, .   -  noise Octaves (detail)</Tag>
+	<Tag name="HeightMax">Height Max</Tag>
+	<Tag name="InputBrushSize">-,=  (or Wheel)  -  Size</Tag>
+	<Tag name="Road_AngleAuto">Auto</Tag>
+	<Tag name="AngleMin">Angle Min</Tag>
+	<Tag name="Brush_ShapeTriangle">Triang</Tag>
+	<Tag name="Brush_Power">Power</Tag>
+	<Tag name="HeightMin">Height Min</Tag>
+	<Tag name="InputBrushOffset">9,0  -  noise generate Offset (position)</Tag>
 	<Tag name="GameVersion">1.7</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 	<Tag name="LANG_EN">English</Tag>

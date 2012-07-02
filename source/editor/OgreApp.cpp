@@ -33,7 +33,7 @@ App::App()  //  gui wigdets--
 	,cmbTexDiff(0),cmbTexNorm(0), imgTexDiff(0), terrain(0)  // terrain
 	,valTerLAll(0),tabsHmap(0),tabsTerLayers(0), idTerLay(0),bTerLay(1)
 	,chkTerLay(0),chkTexNormAuto(0), bTexNormAuto(1), chkTerLNoiseOnly(0)
-	,valTerTriSize(0),edTerTriSize(0), edTerLScale(0),valTerLScale(0)
+	,valTerTriSize(0),edTerTriSize(0), edTerLScale(0),sldTerLScale(0)
 	,edLDust(0),edLDustS(0), edLMud(0),edLSmoke(0), edLTrlClr(0)  //ter particles
 	,cmbParDust(0),cmbParMud(0),cmbParSmoke(0)
 	,cmbSurfType(0),edSuBumpWave(0),edSuBumpAmp(0),edSuRollDrag(0),edSuFrict(0),edSuFrict2(0)  //ter surfaces
@@ -83,9 +83,13 @@ App::App()  //  gui wigdets--
 	iSnap = 0;  angSnap = crAngSnaps[iSnap];
 
 	int i;
-	for (i=0; i<BR_TXT; ++i)  brTxt[i]=0;	for (i=0; i<RD_TXT; ++i)  rdTxt[i]=0;
-	for (i=0; i<RDS_TXT;++i)  rdTxtSt[i]=0;	for (i=0; i<ST_TXT; ++i)  stTxt[i]=0;
-	for (i=0; i<FL_TXT; ++i)  flTxt[i]=0;	for (i=0; i<OBJ_TXT;++i)  objTxt[i]=0;
+	for (i=0; i<BR_TXT; ++i){  brTxt[i]=0;  brVal[i]=0;  brKey[i]=0;  }
+	for (i=0; i<RD_TXT; ++i){  rdTxt[i]=0;  rdVal[i]=0;  rdKey[i]=0;  }
+	for (i=0; i<RDS_TXT;++i){  rdTxtSt[i]=0;  rdValSt[i]=0;  }
+
+	for (i=0; i<ST_TXT; ++i)  stTxt[i]=0;
+	for (i=0; i<FL_TXT; ++i)  flTxt[i]=0;
+	for (i=0; i<OBJ_TXT;++i)  objTxt[i]=0;
 	
 	for (i=0; i < StTrk; ++i)  stTrk[0][i] = 0;
 	for (i=0; i < 4; ++i)  {  cmbRoadMtr[i]=0;  cmbPipeMtr[i]=0;  }

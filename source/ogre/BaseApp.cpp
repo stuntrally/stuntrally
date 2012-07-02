@@ -88,12 +88,42 @@ void BaseApp::updateStats()
 		mDebugText += "  Rot: "+fToStr(rot.x,3,6)+" "+fToStr(rot.y,3,6)+" "+fToStr(rot.z,3,6)+" "+fToStr(rot.w,3,6);
 	}/**/
 
-	try {  // TODO: tri & bat vals when compositor !...
+	try {
 		const RenderTarget::FrameStats& stats = mWindow->getStatistics();
 		
 		mOvrFps->setCaption( fToStr(stats.lastFPS, 1) );
-		mOvrTris->setCaption( fToStr(Real(stats.triangleCount)/1000.f, 1)+"k");
-		mOvrBat->setCaption( toStr(stats.batchCount) );
+        unsigned int triCount = 0;
+        unsigned int batchCount = 0;
+
+        if (AnyEffectEnabled())
+        {
+            CompositorInstance* c = NULL;
+            CompositorChain* chain = CompositorManager::getSingleton().getCompositorChain (mSplitMgr->mViewports.front());
+            // accumlate tris & batches from all compositors with all their render targets
+            for (unsigned int i=0; i < chain->getNumCompositors(); ++i)
+            {
+                if (chain->getCompositor(i)->getEnabled())
+                {
+                    c = chain->getCompositor(i);
+                    RenderTarget* rt;
+                    for (unsigned int j = 0; j < c->getTechnique()->getNumTargetPasses(); ++j)
+                    {
+                        std::string textureName = c->getTechnique()->getTargetPass(j)->getOutputName();
+                        rt = c->getRenderTarget(textureName);
+                        triCount += rt->getTriangleCount();
+                        batchCount += rt->getBatchCount();
+                    }
+                }
+            }
+        }
+        else
+        {
+            triCount = stats.triangleCount;
+            batchCount = stats.batchCount;
+        }
+
+		mOvrTris->setCaption( fToStr(Real(triCount)/1000.f, 1)+"k");
+		mOvrBat->setCaption( toStr(batchCount) );
 
 		mOvrDbg->setCaption( mFilText + "  " + mDebugText );
 	}

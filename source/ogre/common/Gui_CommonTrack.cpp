@@ -451,7 +451,7 @@ void App::UpdGuiRdStats(const SplineRoad* rd, const Scene& sc, const String& sTr
 	ResourceGroupManager& resMgr = ResourceGroupManager::getSingleton();
 	Ogre::TextureManager& texMgr = Ogre::TextureManager::getSingleton();
 
-	String path = PathListTrkPrv(-1), s, sGrp = "TrkPrv";
+	String path = PathListTrkPrv(-1, sTrack), s, sGrp = "TrkPrv";
 	resMgr.addResourceLocation(path, "FileSystem", sGrp);  // add for this track
 	resMgr.initialiseResourceGroup(sGrp);
 

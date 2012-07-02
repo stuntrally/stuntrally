@@ -602,10 +602,16 @@ std::pair <MATHVECTOR <float, 3>, QUATERNION <float> > TRACK::GetStart(unsigned 
 {
 	assert(!start_positions.empty());
 	unsigned int laststart = 0;  // force auto gen  // start_positions.size()-1;
-	if (index > laststart)
+	
+	if (index > laststart || start_positions.empty())
 	{
-		std::pair <MATHVECTOR <float, 3>, QUATERNION <float> > sp = start_positions[laststart];
-		MATHVECTOR <float, 3> backward(-6,0,0);
+		std::pair <MATHVECTOR <float, 3>, QUATERNION <float> > sp;
+		if (!start_positions.empty())
+			sp = start_positions[laststart];
+		else
+			sp = std::make_pair(MATHVECTOR <float, 3>(0,0,0), QUATERNION <float>(0,0,0,1));
+			
+		MATHVECTOR <float, 3> backward(-6,0,0);  // par dist back
 		backward = backward * (index-laststart);
 		sp.second.RotateVector(backward);
 		sp.first = sp.first + backward;
