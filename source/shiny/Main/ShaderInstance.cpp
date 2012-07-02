@@ -253,10 +253,16 @@ namespace sh
 
 		Platform* platform = Factory::getInstance().getPlatform();
 
+		std::string profile;
+		if (Factory::getInstance ().getCurrentLanguage () == Language_CG)
+			profile = mParent->getCgProfile ();
+		else if (Factory::getInstance ().getCurrentLanguage () == Language_HLSL)
+			profile = mParent->getHlslProfile ();
+
 		if (type == GPT_Vertex)
-			mProgram = boost::shared_ptr<GpuProgram>(platform->createGpuProgram(GPT_Vertex, "", mName, mParent->getProfile(), source, Factory::getInstance().getCurrentLanguage()));
+			mProgram = boost::shared_ptr<GpuProgram>(platform->createGpuProgram(GPT_Vertex, "", mName, profile, source, Factory::getInstance().getCurrentLanguage()));
 		else if (type == GPT_Fragment)
-			mProgram = boost::shared_ptr<GpuProgram>(platform->createGpuProgram(GPT_Fragment, "", mName, mParent->getProfile(), source, Factory::getInstance().getCurrentLanguage()));
+			mProgram = boost::shared_ptr<GpuProgram>(platform->createGpuProgram(GPT_Fragment, "", mName, profile, source, Factory::getInstance().getCurrentLanguage()));
 
 		if (!mProgram->getSupported())
 		{

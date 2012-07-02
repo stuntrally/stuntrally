@@ -39,8 +39,8 @@ void App::changeShadows()
 	
 	//  get settings
 	bool enabled = pSet->shadow_type != 0;
-	bool bDepth = pSet->shadow_type >= 3;
-	bool bSoft = pSet->shadow_type == 4;
+	bool bDepth = pSet->shadow_type >= 2;
+	bool bSoft = pSet->shadow_type == 3;
 	
 	pSet->shadow_size = std::max(0,std::min(ciShadowNumSizes-1, pSet->shadow_size));
 	int fTex = /*2048*/ ciShadowSizesA[pSet->shadow_size], fTex2 = fTex/2;
@@ -63,33 +63,9 @@ void App::changeShadows()
 			matProfile->setLayerNormalMappingEnabled(  pSet->ter_mtr >= 2);
 			matProfile->setLayerParallaxMappingEnabled(pSet->ter_mtr >= 3);
 	}	}
-	*/
-	//  shadows old-
-	if (pSet->shadow_type == 1)
-	{
-		//mSceneMgr->setShadowTechnique(SHADOWTYPE_TEXTURE_ADDITIVE);
-		mSceneMgr->setShadowTechnique(SHADOWTYPE_TEXTURE_MODULATIVE);
-		//mSceneMgr->setShadowTextureCount(2);
-		//mSceneMgr->setShadowTexturePixelFormat(PF_L8);
-		//mSceneMgr->setShadowTextureCasterMaterial(StringUtil::BLANK);
-		//mSceneMgr->setShadowTextureSelfShadow(true);
-		mSceneMgr->setShadowCasterRenderBackFaces(true);
-
-		mSceneMgr->setShadowTextureSettings(fTex, 1, PF_L8);
-		mSceneMgr->setShadowColour(ColourValue(0.4, 0.4, 0.4));
-		mSceneMgr->setShadowFarDistance(pSet->shadow_dist / 50.f);  // 36 72
-		mSceneMgr->setShadowDirLightTextureOffset(0.5);
-		//-ShadowCameraSetupPtr mShadowCameraSetup = ShadowCameraSetupPtr(new PlaneOptimalShadowCameraSetup(mPlane));
-			ShadowCameraSetupPtr mShadowCameraSetup = ShadowCameraSetupPtr(new LiSPSMShadowCameraSetup());
-			mSceneMgr->setShadowCameraSetup(mShadowCameraSetup);/**/
-		mSceneMgr->setShadowTextureCountPerLightType(Light::LT_DIRECTIONAL, 1);
-		mSceneMgr->setShadowTextureCount(1);
-		//return;  // !
-	}
-
 
 	if (!enabled)  {
-		mSceneMgr->setShadowTechnique(SHADOWTYPE_NONE);  /*return;*/ }
+		mSceneMgr->setShadowTechnique(SHADOWTYPE_NONE);  /*return;*/ //}
 
 	else
 	{

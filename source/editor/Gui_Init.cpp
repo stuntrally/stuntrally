@@ -22,7 +22,7 @@ void App::InitGui()
 	//  new widgets
 	MyGUI::FactoryManager::getInstance().registerFactory<MultiList2>("Widget");
 	MyGUI::FactoryManager::getInstance().registerFactory<Slider>("Widget");
-
+	int i;
 
 	//  load layout - wnds
 	vwGui = LayoutManager::getInstance().loadLayout("Editor.layout");
@@ -30,25 +30,25 @@ void App::InitGui()
 	{
 		const std::string& name = (*it)->getName();
 		setToolTips((*it)->getEnumerator());
-		if (name == "MainMenuWnd") mWndMain = *it;  else
-		if (name == "EditorWnd")  mWndEdit = *it;  else
-		if (name == "OptionsWnd") mWndOpts = *it;  else
-		if (name == "HelpWnd")    mWndHelp = *it;  else
+		if (name == "MainMenuWnd"){  mWndMain = *it;	} else
+		if (name == "EditorWnd")  {  mWndEdit = *it;	} else
+		if (name == "OptionsWnd") {  mWndOpts = *it;	} else
+		if (name == "HelpWnd")    {  mWndHelp = *it;	} else
 
-		if (name == "CamWnd")     mWndCam = *it;  else
-		if (name == "StartWnd")   mWndStart = *it;  else
+		if (name == "CamWnd")     {  mWndCam = *it;		(*it)->setPosition(0,64);	} else
+		if (name == "StartWnd")   {  mWndStart = *it;	(*it)->setPosition(0,64);	} else
+		if (name == "BrushWnd")   {  mWndBrush = *it;	(*it)->setPosition(0,64);	} else
 
-		if (name == "BrushWnd")   mWndBrush = *it;  else
-		if (name == "RoadCur")    mWndRoadCur = *it;  else
-		if (name == "RoadStats")  mWndRoadStats = *it;  else
+		if (name == "RoadCur")    {  mWndRoadCur = *it;		(*it)->setPosition(0,34);	} else
+		if (name == "RoadStats")  {  mWndRoadStats = *it;	(*it)->setPosition(0,328);	} else
 
-		if (name == "FluidsWnd")  mWndFluids = *it;  else
-		if (name == "ObjectsWnd") mWndObjects = *it;
+		if (name == "FluidsWnd")  {  mWndFluids = *it;	(*it)->setPosition(0,64);	} else
+		if (name == "ObjectsWnd") {  mWndObjects = *it;	(*it)->setPosition(0,64);	}
 	}
 	if (mWndRoadStats)  mWndRoadStats->setVisible(false);
 
 	//  main menu
-	for (int i=0; i < WND_ALL; ++i)
+	for (i=0; i < WND_ALL; ++i)
 	{
 		const String s = toStr(i);
 		mWndMainPanels[i] = mWndMain->findWidget("PanMenu"+s);
@@ -63,30 +63,36 @@ void App::InitGui()
 
 	GuiInitTooltip();
 	
-	//  assign controls, window texts  ----------------------
-	//  Brush
+	//  assign controls, tool window texts  ----------------------
 	if (mWndBrush)
-	{	for (int i=0; i<BR_TXT; ++i)
-			brTxt[i] = mGUI->findWidget<StaticText>("brush"+toStr(i));
-		brImg = mGUI->findWidget<StaticImage>("brushImg", false);
+	for (i=0; i<BR_TXT; ++i)
+	{
+		brTxt[i] = mGUI->findWidget<StaticText>("brTxt"+toStr(i),false);
+		brVal[i] = mGUI->findWidget<StaticText>("brVal"+toStr(i),false);
+		brKey[i] = mGUI->findWidget<StaticText>("brKey"+toStr(i),false);
 	}
-	//  Road
-	if (mWndRoadCur)  for (int i=0; i<RD_TXT; ++i)
-		rdTxt[i] = mGUI->findWidget<StaticText>("rdCur"+toStr(i));
-	if (mWndRoadStats)  for (int i=0; i<RDS_TXT; ++i)
-		rdTxtSt[i] = mGUI->findWidget<StaticText>("rdStat"+toStr(i));
+	brImg = mGUI->findWidget<StaticImage>("brushImg", false);
 
-	//  Start
-	if (mWndStart)  for (int i=0; i<ST_TXT; ++i)
-		stTxt[i] = mGUI->findWidget<StaticText>("stTxt"+toStr(i));
+	if (mWndRoadCur)
+	for (i=0; i<RD_TXT; ++i)
+	{	rdTxt[i] = mGUI->findWidget<StaticText>("rdTxt"+toStr(i),false);
+		rdVal[i] = mGUI->findWidget<StaticText>("rdVal"+toStr(i),false);
+		rdKey[i] = mGUI->findWidget<StaticText>("rdKey"+toStr(i),false);
+	}
+	if (mWndRoadStats)
+	for (i=0; i<RDS_TXT; ++i)
+	{	rdTxtSt[i] = mGUI->findWidget<StaticText>("rdTxtSt"+toStr(i),false);
+		rdValSt[i] = mGUI->findWidget<StaticText>("rdValSt"+toStr(i),false);
+	}
+	
+	if (mWndStart)
+		for (i=0; i<ST_TXT; ++i)	stTxt[i] = mGUI->findWidget<StaticText>("stTxt"+toStr(i),false);
 
-	//  Fluid
-	if (mWndFluids)  for (int i=0; i<FL_TXT; ++i)
-		flTxt[i] = mGUI->findWidget<StaticText>("flTxt"+toStr(i));
+	if (mWndFluids)
+		for (i=0; i<FL_TXT; ++i)	flTxt[i] = mGUI->findWidget<StaticText>("flTxt"+toStr(i),false);
 		
-	//  Objects
-	if (mWndObjects)  for (int i=0; i<OBJ_TXT; ++i)
-		objTxt[i] = mGUI->findWidget<StaticText>("objTxt"+toStr(i));
+	if (mWndObjects)
+		for (i=0; i<OBJ_TXT; ++i)	objTxt[i] = mGUI->findWidget<StaticText>("objTxt"+toStr(i),false);
 		
 	//  Tabs
 	TabPtr tab;
@@ -190,10 +196,11 @@ void App::InitGui()
 	Edt(edTerTriSize, "edTerTriSize", editTerTriSize);
 	Edt(edTerLScale, "edTerLScale", editTerLScale);
 	Slv(TerTriSize,	powf((sc.td.fTriangleSize -0.1f)/5.9f, 0.5f));
-	Slv(TerLScale, 0);
+	Slv(TerLScale, 0);  sldTerLScale = sl;
 	Btn("TerrainNew", btnTerrainNew);
 	Btn("TerrainGenerate", btnTerGenerate);
 	Btn("TerrainHalf", btnTerrainHalf);
+	Btn("TerrainDouble", btnTerrainDouble);
 
 	Slv(TerGenScale,powf(pSet->gen_scale   /160.f, 1.f/2.f));  // generate
 	Slv(TerGenOfsX, (pSet->gen_ofsx+2.f) /4.f);
@@ -319,7 +326,7 @@ void App::InitGui()
 	}
 	
 	//  surfaces
-	for (int i=0; i < TRACKSURFACE::NumTypes; ++i)
+	for (i=0; i < TRACKSURFACE::NumTypes; ++i)
 		cmbSurfType->addItem(csTRKsurf[i]);
 
 

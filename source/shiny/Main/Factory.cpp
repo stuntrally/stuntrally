@@ -44,26 +44,40 @@ namespace sh
 					break;
 				}
 
-				if (!it->second->findChild("profiles"))
-					throw std::runtime_error ("missing \"profiles\" field for \"" + it->first + "\"");
+				if (!it->second->findChild("profiles_cg"))
+					throw std::runtime_error ("missing \"profiles_cg\" field for \"" + it->first + "\"");
+				if (!it->second->findChild("profiles_hlsl"))
+					throw std::runtime_error ("missing \"profiles_hlsl\" field for \"" + it->first + "\"");
 				if (!it->second->findChild("source"))
 					throw std::runtime_error ("missing \"source\" field for \"" + it->first + "\"");
 				if (!it->second->findChild("type"))
 					throw std::runtime_error ("missing \"type\" field for \"" + it->first + "\"");
 
-				std::vector<std::string> profiles;
-				boost::split (profiles, it->second->findChild("profiles")->getValue(), boost::is_any_of(" "));
-				std::string profile;
-				for (std::vector<std::string>::iterator it2 = profiles.begin(); it2 != profiles.end(); ++it2)
+				std::vector<std::string> profiles_cg;
+				boost::split (profiles_cg, it->second->findChild("profiles_cg")->getValue(), boost::is_any_of(" "));
+				std::string cg_profile;
+				for (std::vector<std::string>::iterator it2 = profiles_cg.begin(); it2 != profiles_cg.end(); ++it2)
 				{
 					if (mPlatform->isProfileSupported(*it2))
 					{
-						profile = *it2;
+						cg_profile = *it2;
 						break;
 					}
 				}
 
-				ShaderSet newSet (it->second->findChild("type")->getValue(), profile,
+				std::vector<std::string> profiles_hlsl;
+				boost::split (profiles_hlsl, it->second->findChild("profiles_hlsl")->getValue(), boost::is_any_of(" "));
+				std::string hlsl_profile;
+				for (std::vector<std::string>::iterator it2 = profiles_hlsl.begin(); it2 != profiles_hlsl.end(); ++it2)
+				{
+					if (mPlatform->isProfileSupported(*it2))
+					{
+						hlsl_profile = *it2;
+						break;
+					}
+				}
+
+				ShaderSet newSet (it->second->findChild("type")->getValue(), cg_profile, hlsl_profile,
 								  mPlatform->getBasePath() + "/" + it->second->findChild("source")->getValue(),
 								  mPlatform->getBasePath(),
 								  it->first,

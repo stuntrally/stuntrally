@@ -1179,6 +1179,10 @@
 					>
 				</File>
 				<File
+					RelativePath=".\data\gui\Game.layout"
+					>
+				</File>
+				<File
 					RelativePath=".\source\ogre\common\Gui_Common.cpp"
 					>
 				</File>
@@ -1228,10 +1232,6 @@
 				</File>
 				<File
 					RelativePath=".\source\ogre\common\HWMouse.h"
-					>
-				</File>
-				<File
-					RelativePath=".\data\gui\Options.layout"
 					>
 				</File>
 			</Filter>
