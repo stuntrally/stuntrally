@@ -9,6 +9,18 @@
 #include "Factory.hpp"
 #include "ShaderSet.hpp"
 
+namespace
+{
+	std::string convertLang (sh::Language lang)
+	{
+		if (lang == sh::Language_CG)
+			return "SH_CG";
+		else if (lang == sh::Language_HLSL)
+			return "SH_HLSL";
+		else if (lang == sh::Language_GLSL)
+			return "SH_GLSL";
+	}
+}
 
 namespace sh
 {
@@ -20,6 +32,14 @@ namespace sh
 		std::string source = mParent->getSource();
 		int type = mParent->getType();
 		std::string basePath = mParent->getBasePath();
+
+		std::vector<std::string> definitions;
+
+		if (mParent->getType() == GPT_Vertex)
+			definitions.push_back("SH_VERTEX_SHADER");
+		else
+			definitions.push_back("SH_FRAGMENT_SHADER");
+		definitions.push_back(convertLang(Factory::getInstance().getCurrentLanguage()));
 
 		// replace properties
 		size_t pos;
@@ -132,7 +152,7 @@ namespace sh
 		// thus, we run the code through a preprocessor first to remove the parts that are unused because of
 		// unmet #if conditions (or other preprocessor directives).
 		Preprocessor p;
-		source = p.preprocess(source, basePath, std::vector<std::string>(), name);
+		source = p.preprocess(source, basePath, definitions, name);
 
 		// parse auto constants
 		typedef std::map< std::string, std::pair<std::string, std::string> > AutoConstantMap;
@@ -216,6 +236,20 @@ namespace sh
 			mUniformProperties[uniformName] = std::make_pair(propertyName, vt);
 
 			source.erase(pos, (end+1)-pos);
+		}
+
+		while (true)
+		{
+			// can't use #version XYZ in the shader file itself because the preprocessor gets confused.
+			// therefore use a @shGlslVersion macro, that gets replaced _after_ the preprocessing.
+			pos = source.find("@shGlslVersion");
+			if (pos == std::string::npos)
+				break;
+
+			size_t start = source.find("(", pos);
+			size_t end = source.find(")", pos);
+			std::string version = source.substr(start+1, end-(start+1));
+			source.replace(pos, (end+1)-pos, "#version " + version);
 		}
 
 		Platform* platform = Factory::getInstance().getPlatform();

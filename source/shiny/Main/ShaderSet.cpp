@@ -25,10 +25,6 @@ namespace sh
 		std::ifstream stream(sourceFile.c_str(), std::ifstream::in);
 		std::stringstream buffer;
 
-		if (mType == GPT_Vertex)
-			buffer << "#define SH_VERTEX_SHADER" << std::endl;
-		else if (mType == GPT_Fragment)
-			buffer << "#define SH_FRAGMENT_SHADER" << std::endl;
 		buffer << stream.rdbuf();
 		stream.close();
 		mSource = buffer.str();
@@ -123,7 +119,7 @@ namespace sh
 
 	size_t ShaderSet::buildHash (PropertySetGet* properties)
 	{
-		/// \todo add global settings and current shader language to the hash
+		/// \todo add global settings, current shader language and configuration to the hash
 		size_t seed = 0;
 		for (std::vector<std::string>::iterator it = mProperties.begin(); it != mProperties.end(); ++it)
 		{
