@@ -10,12 +10,13 @@
 
 namespace sh
 {
-	ShaderSet::ShaderSet (const std::string& type, const std::string& profile, const std::string& sourceFile, const std::string& basePath,
+	ShaderSet::ShaderSet (const std::string& type, const std::string& cgProfile, const std::string& hlslProfile, const std::string& sourceFile, const std::string& basePath,
 						  const std::string& name, std::map <std::string, std::string>* globalSettingsPtr)
 		: mBasePath(basePath)
 		, mName(name)
 		, mCurrentGlobalSettings(globalSettingsPtr)
-		, mProfile(profile)
+		, mCgProfile(cgProfile)
+		, mHlslProfile(hlslProfile)
 	{
 		if (type == "vertex")
 			mType = GPT_Vertex;
@@ -144,9 +145,14 @@ namespace sh
 		return mSource;
 	}
 
-	std::string ShaderSet::getProfile() const
+	std::string ShaderSet::getCgProfile() const
 	{
-		return mProfile;
+		return mCgProfile;
+	}
+
+	std::string ShaderSet::getHlslProfile() const
+	{
+		return mHlslProfile;
 	}
 
 	int ShaderSet::getType() const

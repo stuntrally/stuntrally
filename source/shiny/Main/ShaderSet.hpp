@@ -19,7 +19,7 @@ namespace sh
 	class ShaderSet
 	{
 	public:
-		ShaderSet (const std::string& type, const std::string& profile, const std::string& sourceFile, const std::string& basePath,
+		ShaderSet (const std::string& type, const std::string& cgProfile, const std::string& hlslProfile, const std::string& sourceFile, const std::string& basePath,
 				   const std::string& name, std::map <std::string, std::string>* globalSettingsPtr);
 
 		/// retrieve a shader instance for the given properties. \n
@@ -34,7 +34,8 @@ namespace sh
 		std::map <std::string, std::string>* getCurrentGlobalSettings() const;
 		std::string getBasePath() const;
 		std::string getSource() const;
-		std::string getProfile() const;
+		std::string getCgProfile() const;
+		std::string getHlslProfile() const;
 		int getType() const;
 
 		friend class ShaderInstance;
@@ -43,7 +44,8 @@ namespace sh
 		GpuProgramType mType;
 		std::string mSource;
 		std::string mBasePath;
-		std::string mProfile;
+		std::string mCgProfile;
+		std::string mHlslProfile;
 		std::string mName;
 
 		std::vector <size_t> mFailedToCompile;

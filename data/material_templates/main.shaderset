@@ -2,27 +2,30 @@ shader_set main_vertex
 {
     source main.shader
     type vertex
-    profiles vs_2_0 arbvp1
+    profiles_cg vs_2_0 arbvp1
+    profiles_hlsl vs_2_0
 }
 
 shader_set main_fragment
 {
     source main.shader
     type fragment
-    profiles ps_2_x arbfp1
+    profiles_cg ps_2_x arbfp1
+    profiles_hlsl ps_2_0
 }
-
 
 shader_set shadowcaster_vertex
 {
     source shadowcaster.shader
     type vertex
-    profiles vs_2_0 arbvp1
+    profiles_cg vs_2_0 arbvp1
+    profiles_hlsl vs_2_0
 }
 
 shader_set shadowcaster_fragment
 {
     source shadowcaster.shader
     type fragment
-    profiles ps_2_x arbfp1
+    profiles_cg ps_2_x arbfp1
+    profiles_hlsl ps_2_0
 }
