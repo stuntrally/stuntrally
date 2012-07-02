@@ -215,8 +215,6 @@ namespace sh
 
 	void PropertySetGet::setContext (PropertySetGet* context)
 	{
-		if (mContext)
-			throw std::runtime_error ("PropertySetGet already has a context");
 		mContext = context;
 	}
 
@@ -232,7 +230,7 @@ namespace sh
 
 	PropertyValuePtr& PropertySetGet::getProperty (const std::string& name)
 	{
-		bool found = mProperties.find(name) != mProperties.end();
+		bool found = (mProperties.find(name) != mProperties.end());
 
 		if (!found)
 		{

@@ -82,6 +82,15 @@ namespace sh
 					else
 						tokenIsRecognized = false;
 				}
+				else
+				{
+					if (c == '@')
+					{
+						// ouch, there are nested macros
+						// ( for example @shForeach(@shPropertyString(foobar)) )
+						currentToken = "";
+					}
+				}
 
 				if (c == '(' && tokenIsRecognized)
 					isInBraces = true;
@@ -120,6 +129,7 @@ namespace sh
 			std::string v = retrieveValue<StringValue>(properties->getProperty(*it), properties->getContext()).get();
 			boost::hash_combine(seed, v);
 		}
+		return seed;
 	}
 
 	std::map <std::string, std::string>* ShaderSet::getCurrentGlobalSettings() const

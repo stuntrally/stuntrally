@@ -1,11 +1,14 @@
 #include "ShaderInstance.hpp"
 
+#include <stdexcept>
+
+#include <boost/lexical_cast.hpp>
+#include <boost/algorithm/string.hpp>
+
 #include "Preprocessor.hpp"
 #include "Factory.hpp"
 #include "ShaderSet.hpp"
 
-#include <stdexcept>
-#include <iostream> //temp
 
 namespace sh
 {
@@ -35,6 +38,12 @@ namespace sh
 				PropertyValuePtr value = properties->getProperty(propertyName);
 				bool val = retrieveValue<BooleanValue>(value, properties->getContext()).get();
 				replaceValue = val ? "1" : "0";
+			}
+			else if (cmd == "shPropertyString")
+			{
+				std::string propertyName = source.substr(start+1, end-(start+1));
+				PropertyValuePtr value = properties->getProperty(propertyName);
+				replaceValue = retrieveValue<StringValue>(value, properties->getContext()).get();
 			}
 			else if (cmd == "shPropertyEqual")
 			{
@@ -86,6 +95,35 @@ namespace sh
 			else
 				throw std::runtime_error ("unknown command \"" + cmd + "\" in \"" + name + "\"");
 			source.replace(pos, (end+1)-pos, replaceValue);
+		}
+
+		// parse foreach
+		while (true)
+		{
+			pos = source.find("@shForeach");
+			if (pos == std::string::npos)
+				break;
+
+			size_t start = source.find("(", pos);
+			size_t end = source.find(")", pos);
+			int num = boost::lexical_cast<int>(source.substr(start+1, end-(start+1)));
+
+			assert(source.find("@shEndForeach", pos) != std::string::npos);
+			size_t block_end = source.find("@shEndForeach", pos);
+
+			// get the content of the inner block
+			std::string content = source.substr(end+1, block_end - (end+1));
+
+			// replace both outer and inner block with content of inner block num times
+			std::string replaceStr;
+			for (int i=0; i<num; ++i)
+			{
+				// replace @shIterator with the current iteration
+				std::string addStr = content;
+				boost::replace_all(addStr, "@shIteration", boost::lexical_cast<std::string>(i));
+				replaceStr += addStr;
+			}
+			source.replace(pos, (block_end+std::string("@shEndForeach").length())-pos, replaceStr);
 		}
 
 		// why do we need our own preprocessor? there are several custom commands available in the shader files

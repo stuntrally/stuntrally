@@ -1,15 +1,19 @@
 
-
 #ifdef SH_VERTEX_SHADER
-
-
 
 #else
 
 #endif
 
 
+@shForeach(@shPropertyString(number_of_foreachs))
+
+This is iteration: @shIteration
+
+@shEndForeach
+
 #if @shGlobalSettingEqual(globalSetting_test, foobar)
+
 
 GLOBALSETTING WORKS!!!
 

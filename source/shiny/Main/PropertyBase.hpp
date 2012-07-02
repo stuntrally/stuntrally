@@ -140,7 +140,7 @@ namespace sh
 		void copyAll (PropertySet* target, PropertySetGet* context); ///< call setProperty for each property/value pair stored in \a this
 
 		void setParent (PropertySetGet* parent); ///< throws an exception if there is already a parent
-		void setContext (PropertySetGet* context); ///< throws an exception if there is already a context
+		void setContext (PropertySetGet* context);
 		PropertySetGet* getContext();
 
 		void setProperty (const std::string& name, PropertyValuePtr value);

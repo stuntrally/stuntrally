@@ -48,6 +48,7 @@ namespace sh
 			}
 
 			// create or retrieve shaders
+			it->setContext(this);
 			ShaderSet* vertex = mFactory->getShaderSet(retrieveValue<StringValue>(it->getProperty("vertex_program"), this).get());
 			ShaderInstance* v = vertex->getInstance(&*it);
 			if (v)

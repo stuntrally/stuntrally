@@ -6,6 +6,8 @@ material base
 	specular 0.4 0.4 0.4 32
 	ambient 1.0 1.0 1.0
 
+	number_of_foreachs 8
+
 	pass
 	{
 		vertex_program main_vertex
@@ -16,6 +18,7 @@ material base
 		ambient $ambient
 		asdf true
 		testasdf 123ish
+		number_of_foreachs $number_of_foreachs
 
 		texture_unit diffuse
 		{

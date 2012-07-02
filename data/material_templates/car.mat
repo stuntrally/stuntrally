@@ -2,6 +2,7 @@ material car_body
 {
 	parent base
 	diffuseMap body00_red.png
+	number_of_foreachs 2
 }
 
 material car_glass
