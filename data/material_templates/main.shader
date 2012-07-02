@@ -7,6 +7,8 @@ void main(
 
                             float3 normal   : NORMAL,
 
+                            float2 texCoord : TEXCOORD0,
+
 
 
                         out float4 oPosition : POSITION,
@@ -15,6 +17,8 @@ void main(
 
                         out float3 oNormal   : TEXCOORD1,
 
+                        out float2 oTexCoord : TEXCOORD2,
+
 
 
                     uniform float4x4 modelViewProj @shAutoConstant(modelViewProj, worldviewproj_matrix)
@@ -22,6 +26,8 @@ void main(
                 )
 
 {
+
+	oTexCoord = texCoord;
 
   oPosition = mul(modelViewProj, position);
 
@@ -39,9 +45,13 @@ void main(float4 position  : TEXCOORD0,
 
           float3 normal    : TEXCOORD1,
 
+          float2 texCoord : TEXCOORD2,
+
 
 
               out float4 color     : COLOR,
+
+              uniform sampler2D diffuseTex : TEXUNIT0,
 
 
 
@@ -78,7 +88,7 @@ void main(float4 position  : TEXCOORD0,
 
 
   color.xyz = ambient + diffuse;
-
+color.xyz *= tex2D(diffuseTex, texCoord).xyz;
   color.w = 1;
 
 }
