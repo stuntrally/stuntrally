@@ -3,6 +3,8 @@
 #include <stdexcept>
 #include <iostream>
 
+#include <boost/algorithm/string.hpp>
+
 #include "Platform.hpp"
 #include "InstanceLoader.hpp"
 #include "ShaderSetLoader.hpp"
@@ -42,7 +44,26 @@ namespace sh
 					break;
 				}
 
-				ShaderSet newSet (it->second->findChild("type")->getValue(),
+				if (!it->second->findChild("profiles"))
+					throw std::runtime_error ("missing \"profiles\" field for \"" + it->first + "\"");
+				if (!it->second->findChild("source"))
+					throw std::runtime_error ("missing \"source\" field for \"" + it->first + "\"");
+				if (!it->second->findChild("type"))
+					throw std::runtime_error ("missing \"type\" field for \"" + it->first + "\"");
+
+				std::vector<std::string> profiles;
+				boost::split (profiles, it->second->findChild("profiles")->getValue(), boost::is_any_of(" "));
+				std::string profile;
+				for (std::vector<std::string>::iterator it2 = profiles.begin(); it2 != profiles.end(); ++it2)
+				{
+					if (mPlatform->isProfileSupported(*it2))
+					{
+						profile = *it2;
+						break;
+					}
+				}
+
+				ShaderSet newSet (it->second->findChild("type")->getValue(), profile,
 								  mPlatform->getBasePath() + "/" + it->second->findChild("source")->getValue(),
 								  mPlatform->getBasePath(),
 								  it->first,

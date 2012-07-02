@@ -26,10 +26,7 @@ namespace sh
 			//Type_Geometry
 		};
 
-		ShaderSet (Type type, const std::string& sourceFile, const std::string& basePath,
-				   const std::string& name, std::map <std::string, std::string>* globalSettingsPtr);
-
-		ShaderSet (const std::string& type, const std::string& sourceFile, const std::string& basePath,
+		ShaderSet (const std::string& type, const std::string& profile, const std::string& sourceFile, const std::string& basePath,
 				   const std::string& name, std::map <std::string, std::string>* globalSettingsPtr);
 
 		/// retrieve a shader instance for the given properties. \n
@@ -44,6 +41,7 @@ namespace sh
 		std::map <std::string, std::string>* getCurrentGlobalSettings() const;
 		std::string getBasePath() const;
 		std::string getSource() const;
+		std::string getProfile() const;
 		int getType() const;
 
 		friend class ShaderInstance;
@@ -52,6 +50,7 @@ namespace sh
 		Type mType;
 		std::string mSource;
 		std::string mBasePath;
+		std::string mProfile;
 		std::string mName;
 
 		std::vector <size_t> mFailedToCompile;

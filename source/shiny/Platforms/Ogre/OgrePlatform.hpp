@@ -25,6 +25,8 @@ namespace sh
 		OgrePlatform (const std::string& resourceGroupName, const std::string& basePath);
 		virtual ~OgrePlatform ();
 
+		virtual bool isProfileSupported (const std::string& profile);
+
 		virtual void serializeShaders (const std::string& file);
 		virtual void deserializeShaders (const std::string& file);
 
@@ -36,11 +38,11 @@ namespace sh
 
 		virtual boost::shared_ptr<Program> createVertexProgram (
 			const std::string& compileArguments,
-			const std::string& name,
+			const std::string& name, const std::string& profile,
 			const std::string& source, Language lang);
 		virtual boost::shared_ptr<Program> createFragmentProgram (
 			const std::string& compileArguments,
-			const std::string& name,
+			const std::string& name, const std::string& profile,
 			const std::string& source, Language lang);
 		/*
 		virtual boost::shared_ptr<Program> createGeometryProgram (

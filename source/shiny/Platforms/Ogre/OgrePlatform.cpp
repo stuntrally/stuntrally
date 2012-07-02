@@ -40,6 +40,11 @@ namespace sh
 	{
 	}
 
+	bool OgrePlatform::isProfileSupported (const std::string& profile)
+	{
+		return Ogre::GpuProgramManager::getSingleton().isSyntaxSupported(profile);
+	}
+
 	bool OgrePlatform::supportsShaderSerialization ()
 	{
 		return true;
@@ -58,19 +63,19 @@ namespace sh
 
 	boost::shared_ptr<Program> OgrePlatform::createVertexProgram (
 		const std::string& compileArguments,
-		const std::string& name,
+		const std::string& name, const std::string& profile,
 		const std::string& source, Language lang)
 	{
-		OgreVertexProgram* prog = new OgreVertexProgram (compileArguments, name, source, convertLang(lang), mResourceGroup);
+		OgreVertexProgram* prog = new OgreVertexProgram (compileArguments, name, profile, source, convertLang(lang), mResourceGroup);
 		return boost::shared_ptr<Program> (static_cast<Program*>(prog));
 	}
 
 	boost::shared_ptr<Program> OgrePlatform::createFragmentProgram (
 		const std::string& compileArguments,
-		const std::string& name,
+		const std::string& name, const std::string& profile,
 		const std::string& source, Language lang)
 	{
-		OgreFragmentProgram* prog = new OgreFragmentProgram (compileArguments, name, source, convertLang(lang), mResourceGroup);
+		OgreFragmentProgram* prog = new OgreFragmentProgram (compileArguments, name, profile, source, convertLang(lang), mResourceGroup);
 		return boost::shared_ptr<Program> (static_cast<Program*>(prog));
 	}
 /*

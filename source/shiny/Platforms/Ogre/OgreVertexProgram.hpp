@@ -14,7 +14,7 @@ namespace sh
 	public:
 		OgreVertexProgram (
 			const std::string& compileArguments,
-			const std::string& name,
+			const std::string& name, const std::string& profile,
 			const std::string& source, const std::string& lang,
 			const std::string& resourceGroup);
 

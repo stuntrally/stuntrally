@@ -10,26 +10,12 @@
 
 namespace sh
 {
-	ShaderSet::ShaderSet(Type type, const std::string& sourceFile, const std::string& basePath,
-						 const std::string& name, std::map <std::string, std::string>* globalSettingsPtr)
-		: mType(type)
-		, mBasePath(basePath)
-		, mName(name)
-		, mCurrentGlobalSettings(globalSettingsPtr)
-	{
-		std::ifstream stream(sourceFile.c_str());
-		std::stringstream buffer;
-		buffer << stream.rdbuf();
-		stream.close();
-		mSource = buffer.str();
-		parse();
-	}
-
-	ShaderSet::ShaderSet (const std::string& type, const std::string& sourceFile, const std::string& basePath,
+	ShaderSet::ShaderSet (const std::string& type, const std::string& profile, const std::string& sourceFile, const std::string& basePath,
 						  const std::string& name, std::map <std::string, std::string>* globalSettingsPtr)
 		: mBasePath(basePath)
 		, mName(name)
 		, mCurrentGlobalSettings(globalSettingsPtr)
+		, mProfile(profile)
 	{
 		if (type == "vertex")
 			mType = Type_Vertex;
@@ -38,6 +24,11 @@ namespace sh
 
 		std::ifstream stream(sourceFile.c_str(), std::ifstream::in);
 		std::stringstream buffer;
+
+		if (mType == Type_Vertex)
+			buffer << "#define SH_VERTEX_SHADER" << std::endl;
+		else if (mType == Type_Fragment)
+			buffer << "#define SH_FRAGMENT_SHADER" << std::endl;
 		buffer << stream.rdbuf();
 		stream.close();
 		mSource = buffer.str();
@@ -144,6 +135,11 @@ namespace sh
 	std::string ShaderSet::getSource() const
 	{
 		return mSource;
+	}
+
+	std::string ShaderSet::getProfile() const
+	{
+		return mProfile;
 	}
 
 	int ShaderSet::getType() const

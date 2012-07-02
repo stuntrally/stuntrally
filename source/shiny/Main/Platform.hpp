@@ -62,6 +62,8 @@ namespace sh
 		Platform (const std::string& basePath);
 		virtual ~Platform ();
 
+		virtual bool isProfileSupported (const std::string& profile) = 0;
+
 		virtual void serializeShaders (const std::string& file);
 		virtual void deserializeShaders (const std::string& file);
 
@@ -69,11 +71,11 @@ namespace sh
 
 		virtual boost::shared_ptr<Program> createVertexProgram (
 			const std::string& compileArguments,
-			const std::string& name,
+			const std::string& name, const std::string& profile,
 			const std::string& source, Language lang) = 0;
 		virtual boost::shared_ptr<Program> createFragmentProgram (
 			const std::string& compileArguments,
-			const std::string& name,
+			const std::string& name, const std::string& profile,
 			const std::string& source, Language lang) = 0;
 		/*
 		virtual boost::shared_ptr<Program> createGeometryProgram (

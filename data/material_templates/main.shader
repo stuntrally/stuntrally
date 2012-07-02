@@ -1,5 +1,14 @@
 
 
+#ifdef SH_VERTEX_SHADER
+
+
+
+#else
+
+#endif
+
+
 #if @shGlobalSettingEqual(globalSetting_test, foobar)
 
 GLOBALSETTING WORKS!!!

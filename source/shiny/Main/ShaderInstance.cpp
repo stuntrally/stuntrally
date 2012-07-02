@@ -99,9 +99,9 @@ namespace sh
 		Platform* platform = Factory::getInstance().getPlatform();
 
 		if (type == ShaderSet::Type_Vertex)
-			mProgram = boost::shared_ptr<Program>(platform->createVertexProgram("", mName, newSource, Factory::getInstance().getCurrentLanguage()));
+			mProgram = boost::shared_ptr<Program>(platform->createVertexProgram("", mName, mParent->getProfile(), newSource, Factory::getInstance().getCurrentLanguage()));
 		else if (type == ShaderSet::Type_Fragment)
-			mProgram = boost::shared_ptr<Program>(platform->createFragmentProgram("", mName, newSource, Factory::getInstance().getCurrentLanguage()));
+			mProgram = boost::shared_ptr<Program>(platform->createFragmentProgram("", mName, mParent->getProfile(), newSource, Factory::getInstance().getCurrentLanguage()));
 
 		if (!mProgram->getSupported())
 			mSupported = false;

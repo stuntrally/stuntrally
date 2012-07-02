@@ -6,7 +6,7 @@ namespace sh
 {
 	OgreFragmentProgram::OgreFragmentProgram(
 		const std::string& compileArguments,
-		const std::string& name,
+		const std::string& name, const std::string& profile,
 		const std::string& source, const std::string& lang,
 		const std::string& resourceGroup)
 		: FragmentProgram()
@@ -17,7 +17,12 @@ namespace sh
 		mProgram = mgr.createProgram(name, resourceGroup, lang, Ogre::GPT_FRAGMENT_PROGRAM);
 		if (lang != "glsl")
 			mProgram->setParameter("entry_point", "main");
-		mProgram->setParameter("profiles", "arbfp1"); /// \todo
+
+		if (lang == "hlsl")
+			mProgram->setParameter("target", profile);
+		else if (lang == "cg")
+			mProgram->setParameter("profiles", profile);
+
 		mProgram->setSource(source);
 		mProgram->load();
 
