@@ -224,7 +224,6 @@ namespace sh
 				throw std::runtime_error ("unsupported command \"" + cmd + "\"");
 
 			size_t comma1 = source.find(",", pos);
-			size_t comma2 = source.find(",", comma1+1);
 
 			std::string propertyName, uniformName;
 			uniformName = source.substr(start+1, comma1-(start+1));
