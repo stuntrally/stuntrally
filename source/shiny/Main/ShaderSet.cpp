@@ -18,16 +18,16 @@ namespace sh
 		, mProfile(profile)
 	{
 		if (type == "vertex")
-			mType = Type_Vertex;
+			mType = GPT_Vertex;
 		else // if (type == "fragment")
-			mType = Type_Fragment;
+			mType = GPT_Fragment;
 
 		std::ifstream stream(sourceFile.c_str(), std::ifstream::in);
 		std::stringstream buffer;
 
-		if (mType == Type_Vertex)
+		if (mType == GPT_Vertex)
 			buffer << "#define SH_VERTEX_SHADER" << std::endl;
-		else if (mType == Type_Fragment)
+		else if (mType == GPT_Fragment)
 			buffer << "#define SH_FRAGMENT_SHADER" << std::endl;
 		buffer << stream.rdbuf();
 		stream.close();
@@ -123,6 +123,7 @@ namespace sh
 
 	size_t ShaderSet::buildHash (PropertySetGet* properties)
 	{
+		/// \todo add global settings and current shader language to the hash
 		size_t seed = 0;
 		for (std::vector<std::string>::iterator it = mProperties.begin(); it != mProperties.end(); ++it)
 		{

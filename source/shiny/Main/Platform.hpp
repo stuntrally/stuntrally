@@ -43,6 +43,13 @@ namespace sh
 	public:
 		virtual boost::shared_ptr<TextureUnitState> createTextureUnitState () = 0;
 		virtual void assignProgram (GpuProgramType type, const std::string& name) = 0;
+
+		/// @param type gpu program type
+		/// @param name name of the uniform in the shader
+		/// @param vt type of value, e.g. vector4
+		/// @param value value to set
+		/// @param context used for retrieving linked values
+		virtual void setGpuConstant (int type, const std::string& name, ValueType vt, PropertyValuePtr value, PropertySetGet* context) = 0;
 	};
 
 	class Material : public PropertySet

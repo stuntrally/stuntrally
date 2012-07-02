@@ -19,13 +19,6 @@ namespace sh
 	class ShaderSet
 	{
 	public:
-		enum Type
-		{
-			Type_Vertex,
-			Type_Fragment
-			//Type_Geometry
-		};
-
 		ShaderSet (const std::string& type, const std::string& profile, const std::string& sourceFile, const std::string& basePath,
 				   const std::string& name, std::map <std::string, std::string>* globalSettingsPtr);
 
@@ -47,7 +40,7 @@ namespace sh
 		friend class ShaderInstance;
 
 	private:
-		Type mType;
+		GpuProgramType mType;
 		std::string mSource;
 		std::string mBasePath;
 		std::string mProfile;

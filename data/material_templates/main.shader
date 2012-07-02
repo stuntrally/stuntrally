@@ -53,6 +53,8 @@ void main(float4 position  : TEXCOORD0,
 
               uniform sampler2D diffuseTex : TEXUNIT0,
 
+              uniform float3 colorMultiplier, @shUniformProperty3f(colorMultiplier, color_multiplier)
+
 
 
               uniform float3 globalAmbient, @shAutoConstant(globalAmbient, ambient_light_colour)
@@ -88,7 +90,7 @@ void main(float4 position  : TEXCOORD0,
 
 
   color.xyz = ambient + diffuse;
-color.xyz *= tex2D(diffuseTex, texCoord).xyz;
+color.xyz *= tex2D(diffuseTex, texCoord).xyz * colorMultiplier;
   color.w = 1;
 
 }

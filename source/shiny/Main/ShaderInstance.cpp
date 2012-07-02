@@ -179,12 +179,50 @@ namespace sh
 			source.erase(pos, (end+1)-pos);
 		}
 
+		// parse uniform properties
+		while (true)
+		{
+			pos = source.find("@shUniformProperty");
+			if (pos == std::string::npos)
+				break;
+
+			size_t start = source.find("(", pos);
+			size_t end = source.find(")", pos);
+			std::string cmd = source.substr(pos, start-pos);
+			ValueType vt;
+			if (cmd == "@shUniformProperty4f")
+				vt = VT_Vector4;
+			else if (cmd == "@shUniformProperty3f")
+				vt = VT_Vector3;
+			else if (cmd == "@shUniformProperty2f")
+				vt = VT_Vector2;
+			else if (cmd == "@shUniformProperty1f")
+				vt = VT_Float;
+			else if (cmd == "@shUniformPropertyInt")
+				vt = VT_Int;
+			else
+				throw std::runtime_error ("unsupported command \"" + cmd + "\"");
+
+			size_t comma1 = source.find(",", pos);
+			size_t comma2 = source.find(",", comma1+1);
+
+			std::string propertyName, uniformName;
+			uniformName = source.substr(start+1, comma1-(start+1));
+			// skip spaces
+			++comma1;
+			while (source[comma1] == ' ')
+				++comma1;
+			propertyName = source.substr(comma1, end-(comma1));
+			mUniformProperties[uniformName] = std::make_pair(propertyName, vt);
+
+			source.erase(pos, (end+1)-pos);
+		}
 
 		Platform* platform = Factory::getInstance().getPlatform();
 
-		if (type == ShaderSet::Type_Vertex)
+		if (type == GPT_Vertex)
 			mProgram = boost::shared_ptr<GpuProgram>(platform->createGpuProgram(GPT_Vertex, "", mName, mParent->getProfile(), source, Factory::getInstance().getCurrentLanguage()));
-		else if (type == ShaderSet::Type_Fragment)
+		else if (type == GPT_Fragment)
 			mProgram = boost::shared_ptr<GpuProgram>(platform->createGpuProgram(GPT_Fragment, "", mName, mParent->getProfile(), source, Factory::getInstance().getCurrentLanguage()));
 
 		if (!mProgram->getSupported())
@@ -209,4 +247,13 @@ namespace sh
 	{
 		return mSupported;
 	}
+
+	void ShaderInstance::setUniformParameters (boost::shared_ptr<Pass> pass, PropertySetGet* properties)
+	{
+		for (UniformMap::iterator it = mUniformProperties.begin(); it != mUniformProperties.end(); ++it)
+		{
+			pass->setGpuConstant(mParent->getType(), it->first, it->second.second, properties->getProperty(it->second.first), properties->getContext());
+		}
+	}
+
 }

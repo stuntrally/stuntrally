@@ -19,6 +19,8 @@ namespace sh
 
 		Ogre::Pass* getOgrePass();
 
+		virtual void setGpuConstant (int type, const std::string& name, ValueType vt, PropertyValuePtr value, PropertySetGet* context);
+
 	private:
 		Ogre::Pass* mPass;
 

@@ -8,6 +8,9 @@
 namespace sh
 {
 	class ShaderSet;
+
+	typedef std::map< std::string, std::pair<std::string, ValueType > > UniformMap;
+
 /// \todo add the global settings here (and consider them in buildHash)
 	/**
 	 * @brief A specific instance of a \a ShaderSet with a deterministic shader source
@@ -21,14 +24,16 @@ namespace sh
 
 		bool getSupported () const;
 
+		void setUniformParameters (boost::shared_ptr<Pass> pass, PropertySetGet* properties);
+
 	private:
 		boost::shared_ptr<GpuProgram> mProgram;
 		std::string mName;
 		ShaderSet* mParent;
 		bool mSupported; ///< shader compilation was sucessful?
 
-		std::map<std::string, ValueType> mUniformProperties;
-		///< uniform properties that this depends on, and their value-types
+		UniformMap mUniformProperties;
+		///< uniforms that this depends on, and their property names / value-types
 		/// @note this lists shared uniform parameters as well
 	};
 }

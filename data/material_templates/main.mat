@@ -7,6 +7,7 @@ material base
 	ambient 1.0 1.0 1.0
 
 	number_of_foreachs 8
+	col 0.3 0.9 0.3
 
 	pass
 	{
@@ -19,6 +20,7 @@ material base
 		asdf true
 		testasdf 123ish
 		number_of_foreachs $number_of_foreachs
+		color_multiplier $col
 
 		texture_unit diffuse
 		{

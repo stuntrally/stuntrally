@@ -7,12 +7,14 @@ material roadJungle_ter
 {
 	parent road
 	diffuseMap roadJungle.jpg
+	col 1.0 0.3 0.3
 }
 
 material roadJungle
 {
 	parent road
 	diffuseMap roadJungle.jpg
+	col 1.0 0.3 0.3
 }
 
 material roadAsphalt
