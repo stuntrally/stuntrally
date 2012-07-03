@@ -2,11 +2,12 @@
 
 #include <fstream>
 #include <sstream>
-#include <iostream> //temp
 
 #include <boost/algorithm/string/predicate.hpp>
 #include <boost/functional/hash.hpp>
 #include <boost/lexical_cast.hpp>
+
+#include "Factory.hpp"
 
 namespace sh
 {
@@ -120,13 +121,17 @@ namespace sh
 
 	size_t ShaderSet::buildHash (PropertySetGet* properties)
 	{
-		/// \todo add global settings, current shader language and configuration to the hash
 		size_t seed = 0;
 		for (std::vector<std::string>::iterator it = mProperties.begin(); it != mProperties.end(); ++it)
 		{
 			std::string v = retrieveValue<StringValue>(properties->getProperty(*it), properties->getContext()).get();
 			boost::hash_combine(seed, v);
 		}
+		for (std::map <std::string, std::string>::iterator it = mCurrentGlobalSettings->begin(); it != mCurrentGlobalSettings->end(); ++it)
+		{
+			boost::hash_combine(seed, it->second);
+		}
+		boost::hash_combine(seed, static_cast<int>(Factory::getInstance().getCurrentLanguage()));
 		return seed;
 	}
 
