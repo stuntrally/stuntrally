@@ -25,6 +25,7 @@ material base
 		texture_unit diffuse
 		{
 			texture $diffuseMap
+			create_in_ffp true
 		}
 	}
 }

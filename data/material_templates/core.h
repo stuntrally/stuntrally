@@ -5,10 +5,14 @@
 	#define shLerp(a, b, t) lerp(a, b, t)
 	#define shSaturate(a) saturate(a)
 
+	#define shSampler2D(name) , uniform sampler2D name : register(s@shCounter(0)) @shUseSampler(name)
+
 	#define shMatrixMult(m, v) mul(m, v)
 
 	#define shUniform(s) , uniform s
 
+	#define shInput(type, name) , in type name : TEXCOORD@shCounter(1)
+	#define shOutput(type, name) , out type name : TEXCOORD@shCounter(2)
 
 	#ifdef SH_VERTEX_SHADER
 
@@ -42,7 +46,7 @@
 #endif
 
 #if SH_GLSL == 1
-	@shGlslVersion(130)
+	@shGlslVersion(420)
 
 	#define float2 vec2
 	#define float3 vec3
@@ -57,18 +61,24 @@
 
 	#define shUniform(s) uniform s;
 
+	#define shSampler2D(name) uniform sampler2D name; @shUseSampler(name)
+
 	#define shMatrixMult(m, v) m * v
 
 	#define shInputPosition vertex
 	#define shOutputPosition gl_Position
-	#define shOutputColor ocolour
+	#define shOutputColor oColor
 
 	#define float4x4 mat4
+
+	#define shInput(type, name) in type name;
+	#define shOutput(type, name) out type name;
+
 
 	#ifdef SH_VERTEX_SHADER
 
 		#define SH_BEGIN_PROGRAM \
-			in float4 vertex;
+			in float4 shInputPosition;
 		#define SH_START_PROGRAM \
 			void main(void)
 		
@@ -77,12 +87,10 @@
 	#ifdef SH_FRAGMENT_SHADER
 
 		#define SH_BEGIN_PROGRAM \
-			out float4 ocolour;
+			out float4 oColor;
 		#define SH_START_PROGRAM \
 			void main(void)
 
-		#define SH_INPUT(name, type) in type name // produces something like "in vec3 color"
-		#define SH_INPUT(name, type) in type name // produces something like "in vec3 color"
 
 	#endif
 #endif
