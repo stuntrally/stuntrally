@@ -127,9 +127,9 @@ namespace sh
 			std::string v = retrieveValue<StringValue>(properties->getProperty(*it), properties->getContext()).get();
 			boost::hash_combine(seed, v);
 		}
-		for (std::map <std::string, std::string>::iterator it = mCurrentGlobalSettings->begin(); it != mCurrentGlobalSettings->end(); ++it)
+		for (std::vector <std::string>::iterator it = mGlobalSettings.begin(); it != mGlobalSettings.end(); ++it)
 		{
-			boost::hash_combine(seed, it->second);
+			boost::hash_combine(seed, mCurrentGlobalSettings->find(*it)->second);
 		}
 		boost::hash_combine(seed, static_cast<int>(Factory::getInstance().getCurrentLanguage()));
 		return seed;
