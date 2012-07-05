@@ -21,7 +21,7 @@
 		shUniform(float4 globalColorMultiplier) @shSharedParameter(globalColorMultiplier)
 	SH_START_PROGRAM
 	{
-		shOutputColor = shSample(diffuse, UV) * float4(col, 1.0) * float4(globalColorMultiplier);
+		shOutputColor(0) = shSample(diffuse, UV) * float4(col, 1.0) * float4(globalColorMultiplier);
 	}
 
 #endif
