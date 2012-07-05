@@ -105,8 +105,6 @@ bool App::frameStart(Real time)
 {
 	PROFILER.beginBlock(" frameSt");
 
-	mFactory->notifyFrameEntered();
-
 	if (imgBack && pGame)  // show/hide background image
 	{
 		bool backImgVis = !bLoading && pGame->cars.empty();

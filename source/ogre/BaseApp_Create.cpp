@@ -416,6 +416,7 @@ bool BaseApp::setup()
 	LogO("*** end setup ***");
 
 	sh::OgrePlatform* platform = new sh::OgrePlatform("General", PATHMANAGER::GetDataPath() + "/" + "material_templates");
+	platform->setShaderCachingEnabled (true);
 	platform->setCacheFolder (PATHMANAGER::GetCacheDir());
 	mFactory = new sh::Factory(platform);
 	mFactory->setSharedParameter ("globalColorMultiplier", sh::makeProperty<sh::Vector4>(new sh::Vector4(0.3, 1.0, 0.1, 1.0)));

@@ -410,10 +410,11 @@ void CarModel::RecreateMaterials()
 	for (int i=0; i<NumMaterials; i++)
 	{
 		sh::Factory::getInstance().destroyMaterialInstance(sMtr[i] + strI);
-		sh::Factory::getInstance().createMaterialInstance(sMtr[i] + strI, sMtr[i], true);
+		sh::Factory::getInstance().createMaterialInstance(sMtr[i] + strI, sMtr[i]);
 		sMtr[i] = sMtr[i] + strI;
 	}
 	
+	/*
 	if (!ghost)
 	for (int i=0; i < NumMaterials; i++)
 	{
@@ -453,6 +454,7 @@ void CarModel::RecreateMaterials()
 	}
 	
 	ChangeClr(iIndex);
+	*/
 }
 
 void CarModel::setMtrName(const String& entName, const String& mtrName)
