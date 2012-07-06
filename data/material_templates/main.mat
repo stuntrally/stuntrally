@@ -17,10 +17,14 @@ material base
 		diffuse $diffuse
 		specular $specular
 		ambient $ambient
-		asdf true
-		testasdf 123ish
-		number_of_foreachs $number_of_foreachs
-		color_multiplier $col
+
+		shader_properties
+		{
+			asdf true
+			testasdf 123ish
+			number_of_foreachs $number_of_foreachs
+			color_multiplier $col
+		}
 
 		texture_unit diffuse
 		{
