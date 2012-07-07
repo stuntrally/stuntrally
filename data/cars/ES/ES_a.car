@@ -47,7 +47,7 @@ torque-curve-02 = 2500, 562.0
 torque-curve-03 = 3000, 566.07
 torque-curve-04 = 3300, 579.63
 torque-curve-05 = 3500, 593.19
-torque-curve-06 = 3800, 694.54
+torque-curve-06 = 3800, 594.54
 torque-curve-07 = 3900, 601.32
 torque-curve-08 = 4000, 604.03
 torque-curve-09 = 4100, 606.75
@@ -116,68 +116,68 @@ rolling-resistance = 1.3e-2, 6.5e-6
 rotational-inertia = 10.0
 tread = 0.0
 #--------	Lateral force
-a0=1.3			#	Shape factor												A0
-a1=-0          #	Load infl. on lat. friction coeff (*1000)  (1/kN)			A1
-a2=2745         #	Lateral friction coefficient at load = 0 (*1000)			A2
-a3=3025          #	Maximum stiffness   (N/deg)									A3
-a4=33           #	Load at maximum stiffness   (kN)							A4
+a0=1.7			#	Shape factor												A0
+a1=-66          #	Load infl. on lat. friction coeff (*1000)  (1/kN)			A1
+a2=3645         #	Lateral friction coefficient at load = 0 (*1000)			A2
+a3=1275          #	Maximum stiffness   (N/deg)									A3
+a4=12.3          #	Load at maximum stiffness   (kN)							A4
 a5=0.013        #	Camber influence on stiffness   (%/deg/100)					A5
-a6=-0.96        #	Curvature change with load									A6
-a7=1.0         #	Curvature at load = 0										A7
-a8=-0.03        #	Horizontal shift because of camber  (deg/deg)				A8
-a9=0.416       #	Load influence on horizontal shift  (deg/kN)				A9
-a10=0.014       #	Horizontal shift at load = 0  (deg)							A10
+a6=-0.14        #	Curvature change with load									A6
+a7=0.14         #	Curvature at load = 0										A7
+a8=0.019        #	Horizontal shift because of camber  (deg/deg)				A8
+a9=-0.019       #	Load influence on horizontal shift  (deg/kN)				A9
+a10=-0.18       #	Horizontal shift at load = 0  (deg)							A10
 a111=0          #	Camber influence on vertical shift  (N/deg/kN)				A11.1
-a112=0          #	Camber influence on vertical shift  (N/deg/kN**2)			A11.2
-a12=0           #	Load influence on vertical shift  (N/kN)					A12
-a13=0           #	Vertical shift at load = 0  (N)								A13
+a112=0.0       #	Camber influence on vertical shift  (N/deg/kN**2)			A11.2
+a12=0.0        #	Load influence on vertical shift  (N/kN)					A12
+a13=0.0        #	Vertical shift at load = 0  (N)								A13
 #--------	Longitudinal force
-b0=1.25         #	Shape factor   B0
-b1=0            #	Load infl. on long. friction coeff (*1000)  (1/kN)   B1
+b0=1.45         #	Shape factor   B0
+b1=-90.0        #	Load infl. on long. friction coeff (*1000)  (1/kN)   B1
 b2=3145         #	Longitudinal friction coefficient at load = 0 (*1000)  B2
 b3=23.3         #	Curvature factor of stiffness   (N/%/kN**2) . B3
-b4=510.0        #	Change of stiffness with load at load = 0 (N/%/kN)   B4
-b5=0            #	Change of progressivity of stiffness/load (1/kN)   B5
-b6=0            #	Curvature change with load   B6
-b7=0            #	Curvature change with load   B7
-b8=-0.0         #	Curvature at load = 0   B8
-b9=0.0          #	Load influence on horizontal shift   (%/kN)   B9
+b4=400.0        #	Change of stiffness with load at load = 0 (N/%/kN)   B4
+b5=0.0          #	Change of progressivity of stiffness/load (1/kN)   B5
+b6=0.0008       #	Curvature change with load   B6
+b7=0.005        #	Curvature change with load   B7
+b8=-0.024       #	Curvature at load = 0   B8
+b9=0.00        #	Load influence on horizontal shift   (%/kN)   B9
 b10=0.0         #	Horizontal shift at load = 0   (%)   B10
 b11=0           #	Load influence on vertical shift   (N/kN)   B11
 b12=0           #	Vertical shift at load = 0   (N)   B12
 #---------	Aligning moment
-c0=2.07         #	Shape factor   C0
-c1=-6.49         #	Load influence of peak value   (Nm/kN**2)   C1
-c2=-21.9         #	Load influence of peak value   (Nm/kN)   C2
-c3=-0.416        #	Curvature factor of stiffness   (Nm/deg/kN**2) C3		
-c4=-21.3        #	Change of stiffness with load at load = 0 (Nm/deg/kN)   C4
-c5=0.029        #	Change of progressivity of stiffness/load (1/kN)   C5
+c0=2.10         #	Shape factor   C0
+c1=-3.9         #	Load influence of peak value   (Nm/kN**2)   C1
+c2=-3.9         #	Load influence of peak value   (Nm/kN)   C2
+c3=-1.26        #	Curvature factor of stiffness   (Nm/deg/kN**2) C3		
+c4=-8.20        #	Change of stiffness with load at load = 0 (Nm/deg/kN)   C4
+c5=0.025        #	Change of progressivity of stiffness/load (1/kN)   C5
 c6=0.0          #	Camber influence on stiffness   (%/deg/100)   C6
-c7=-1.2        #	Curvature change with load   C7
-c8=5.23        #	Curvature change with load   C8
-c9=-14.8         #	Curvature at load = 0   C9
-c10=0.0         #	Camber influence of stiffness   C10
-c11=0.0         #	Camber influence on horizontal shift (deg/deg)  C11
+c7=0.044        #	Curvature change with load   C7
+c8=-0.58        #	Curvature change with load   C8
+c9=0.18         #	Curvature at load = 0   C9
+c10=0.043       #	Camber influence of stiffness   C10
+c11=0.048       #	Camber influence on horizontal shift (deg/deg)  C11
 c12=-0.0035     #	Load influence on horizontal shift (deg/kN)  C1
-c13=0.038       #	Horizontal shift at load = 0 (deg)  C13
-c14=0.0        #	Camber influence on vertical shift (Nm/deg/kN**2) C14
-c15=0.0        #	Camber influence on vertical shift (Nm/deg/kN)  C15
-c16=0.63       #	Load influence on vertical shift (Nm/kN)  C16
-c17=1.69        #	Vertical shift at load = 0 (Nm)  C17c0=2.2							
+c13=-0.18       #	Horizontal shift at load = 0 (deg)  C13
+c14=0.14        #	Camber influence on vertical shift (Nm/deg/kN**2) C14
+c15=-1.029      #	Camber influence on vertical shift (Nm/deg/kN)  C15
+c16=0.27        #	Load influence on vertical shift (Nm/kN)  C16
+c17=-1.1        #	Vertical shift at load = 0 (Nm)  C17c0=2.2							
 #---------
 
 
 [ brakes-front ]
 friction = 0.9
 max-pressure = 3.0e6
-bias = 0.6
+bias = 0.65
 radius = 0.1397
 area = 0.015
 
 [ brakes-rear ]
 friction = 0.9
 max-pressure = 3.0e6
-bias = 0.4
+bias = 0.35
 radius = 0.1397
 area = 0.015
 handbrake = 2.8
@@ -251,6 +251,7 @@ restitution = 0.1
 [ suspension-RL ]
 position = -0.60, -1.31, -0.07
 hinge = 0.25, -1.94, 0.0
+
 
 # these are used to calculate the weight distribution and balance
 [ particle-00 ]  # rear
