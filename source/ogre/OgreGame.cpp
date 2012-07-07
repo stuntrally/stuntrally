@@ -22,7 +22,7 @@ App::App(SETTINGS *settings, GAME *game)
 	// ovr
 	,hudCountdown(0),hudNetMsg(0), hudAbs(0),hudTcs(0)
 	,hudTimes(0), hudWarnChk(0),hudWonPlace(0), hudOppB(0)
-	,ovCountdown(0),ovNetMsg(0), ovAbsTcs(0), ovCarDbg(0),ovCarDbgTxt(0)
+	,ovCountdown(0),ovNetMsg(0), ovAbsTcs(0), ovCarDbg(0),ovCarDbgTxt(0),ovCarDbgExt(0)
 	,ovCam(0), ovTimes(0), ovWarnWin(0), ovOpp(0)
 	// hud
 	,asp(1)//,  xcRpm(0), ycRpm(0), xcVel(0), ycVel(0)
@@ -39,12 +39,12 @@ App::App(SETTINGS *settings, GAME *game)
 	,valShaders(0), valShadowType(0), valShadowCount(0), valShadowSize(0), valShadowDist(0), valShadowFilter(0)  // shadow
 	,valSizeGaug(0),valTypeGaug(0), valSizeMinimap(0), valZoomMinimap(0)
 	,valCountdownTime(0),valGraphsType(0),slGraphT(0)  // view
-	,bRkmh(0),bRmph(0), chDbgT(0),chDbgB(0), chBlt(0),chBltTxt(0)
+	,bRkmh(0),bRmph(0), chDbgT(0),chDbgB(0),chDbgS(0), chBlt(0),chBltTxt(0)
 	,chFps(0), chWire(0), chProfTxt(0), chGraphs(0)
 	,chTimes(0),chMinimp(0),chOpponents(0)
 	,valVolMaster(0),valVolEngine(0),valVolTires(0),valVolSusp(0),valVolEnv(0)  // sounds
 	,valVolFlSplash(0),valVolFlCont(0),valVolCarCrash(0),valVolCarScrap(0)
-	,imgCar(0), imgTrkIco1(0),imgTrkIco2(0), bnQuit(0)
+	,imgCar(0),carDesc(0), imgTrkIco1(0),imgTrkIco2(0), bnQuit(0)
 	,valLocPlayers(0), edFind(0)
 	,valRplPerc(0), valRplCur(0), valRplLen(0), slRplPos(0), rplList(0)
 	,valRplName(0),valRplInfo(0),valRplName2(0),valRplInfo2(0), edRplName(0), edRplDesc(0)
@@ -90,7 +90,7 @@ App::App(SETTINGS *settings, GAME *game)
 		hudOpp[o][c] = 0;
 		
 	for (i=0; i < 5; ++i)
-	{	ovL[i]=0;  ovR[i]=0;  ovS[i]=0;  ovU[i]=0;  }
+	{	ovL[i]=0;  ovR[i]=0;  ovS[i]=0;  ovU[i]=0;  ovX[i]=0;  }
 	
 	//  util for update rot
 	Quaternion qr;  {

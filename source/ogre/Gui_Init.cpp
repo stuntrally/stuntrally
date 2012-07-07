@@ -188,6 +188,7 @@ void App::InitGui()
 
 	Chk("CarDbgBars", chkCarDbgBars, pSet->car_dbgbars);	chDbgB = bchk;
 	Chk("CarDbgTxt", chkCarDbgTxt, pSet->car_dbgtxt);		chDbgT = bchk;
+	Chk("CarDbgSurf", chkCarDbgSurf, pSet->car_dbgsurf);	chDbgS = bchk;
 	Chk("Graphs", chkGraphs, pSet->show_graphs);		chGraphs = bchk;
 
 	//  car setup  todo: for each player ..
@@ -330,11 +331,14 @@ void App::InitGui()
 
 
 	//  car color buttons . . . . .
-	Real hsv[15][3] = {
-		{0.43,0.80,0.80}, {0.47,0.90,0.85}, {0.50,0.33,0.90}, {0.56,0.80,0.80}, {0.55,0.50,0.32}, 
-		{0.75,0.90,0.90}, {0.70,0.80,0.80}, {0.86,1.00,0.97}, {0.91,1.00,1.00}, {0.00,0.97,0.93},
-		{0.35,0.70,0.40}, {0.28,0.57,0.17}, {0.28,0.00,0.10}, {0.83,0.00,0.58}, {0.41,0.00,0.88}, };
-	for (int i=0; i<15; i++)
+	const int clrBtn = 28;
+	Real hsv[clrBtn][3] = {
+	{0.43,0.80,0.80}, {0.47,0.90,0.85}, {0.50,0.33,0.90}, {0.54,0.69,0.80}, {0.51,0.80,0.44}, {0.43,0.57,0.30}, {0.41,0.43,0.22}, 
+	{0.75,0.90,0.90}, {0.70,0.80,0.80},	{0.86,1.00,0.97}, {0.91,1.00,1.00}, {0.00,0.97,0.93}, {0.35,0.70,0.40}, {0.37,0.78,0.23}, 
+	{0.28,0.00,0.10}, {0.83,0.00,0.58}, {0.41,0.00,0.88}, {0.42,0.20,0.94}, {0.63,0.19,0.62}, {0.80,0.52,0.32}, {0.62,0.99,0.05}, 
+	{0.05,0.17,0.66}, {0.11,0.49,0.31},	{0.24,0.90,0.26}, {0.28,0.57,0.17}, {0.27,0.34,0.23}, {0.34,0.41,0.42}, {0.33,0.32,0.65}, 
+	};
+	for (int i=0; i < clrBtn; ++i)
 	{
 		StaticImagePtr img = mGUI->findWidget<StaticImage>("carClr"+toStr(i));
 		Real h = hsv[i][0], s = hsv[i][1], v = hsv[i][2];
@@ -473,6 +477,7 @@ void App::InitGui()
 
     sListCar = pSet->gui.car[0];
     imgCar = mGUI->findWidget<StaticImage>("CarImg");
+    carDesc = mGUI->findWidget<Edit>("CarDesc",false);
     listCarChng(carList,0);
 
 

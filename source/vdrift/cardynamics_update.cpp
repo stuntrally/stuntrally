@@ -178,7 +178,7 @@ void CARDYNAMICS::DebugPrint ( std::ostream & out, bool p1, bool p2, bool p3, bo
 		
 	#endif
 
-	#if 0	// fluids
+	#if 1	// fluids
 		out << "in fluids: " << inFluids.size() <<
 				" wh: " << inFluidsWh[0].size() << inFluidsWh[1].size() << inFluidsWh[2].size() << inFluidsWh[3].size() << std::endl;
 		out.precision(2);
@@ -187,14 +187,14 @@ void CARDYNAMICS::DebugPrint ( std::ostream & out, bool p1, bool p2, bool p3, bo
 		out << std::endl;
 	#endif
 
-	#if 0
+	#if 1
 		engine.DebugPrint(out);  out << std::endl;
 		//fuel_tank.DebugPrint(out);  out << std::endl;  //mass 8- for 3S,ES,FM
 		clutch.DebugPrint(out);  out << std::endl;
 		//transmission.DebugPrint(out);	out << std::endl;
 	#endif
 
-	#if 0
+	#if 1
 		if ( drive == RWD )  {
 			out << "(rear)" << std::endl;		rear_differential.DebugPrint(out);	}
 		else if ( drive == FWD )  {
@@ -207,7 +207,7 @@ void CARDYNAMICS::DebugPrint ( std::ostream & out, bool p1, bool p2, bool p3, bo
 	#endif
 	}
 
-	#if 0
+	#if 1
 	if (p2)
 	{
 		out << "(front left)" << std::endl;		suspension[FRONT_LEFT].DebugPrint(out);	out << std::endl;
@@ -222,7 +222,7 @@ void CARDYNAMICS::DebugPrint ( std::ostream & out, bool p1, bool p2, bool p3, bo
 	}
 	#endif
 
-	#if 0
+	#if 1
 	if (p3)
 	{
 		out << std::endl;
@@ -238,10 +238,10 @@ void CARDYNAMICS::DebugPrint ( std::ostream & out, bool p1, bool p2, bool p3, bo
 	}
 	#endif
 
-	#if 0
+	#if 1
 	if (p4)
 	{
-		for ( std::vector <CARAERO<T> >::iterator i = aerodynamics.begin(); i != aerodynamics.end(); ++i )
+		for (std::vector <CARAERO<T> >::iterator i = aerodynamics.begin(); i != aerodynamics.end(); ++i)
 		{
 			i->DebugPrint(out);	out << std::endl;
 		}

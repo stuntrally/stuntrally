@@ -65,6 +65,13 @@ version = 2
 
 [ steering ]
 max-angle = 21.0
+angular-damping = 0.0
+
+[ rot_drag ]
+roll  = 10.0
+pitch = 400.0
+yaw   = 200.0
+yaw2  = 1.0
 
 [ collision ]
 manual = 1
@@ -171,56 +178,56 @@ radius = 0.32
 rolling-resistance = 1.3e-2, 6.5e-6
 rotational-inertia = 4.0
 tread = 0.0
-# Lateral force
-a0=1.4
-a1=-0
-a2=3688
-a3=400
-a4=6.026
-a5=0.014
-a6=-0.359
-a7=1.0
-a8=-0.03
-a9=-0.00611
-a10=-0.0322
-a111=0
-a112=0
-a12=0
-a13=0
-# Longitudinal force
-b0=1.65
-b1=0
-b2=7690
-b3=23
-b4=229
-b5=0
-b6=0
-b7=0
-b8=-10
-b9=0
-b10=0
-b11=0
-b12=0
-# Aligning moment
-c0=2.07
-c1=-6.49
-c2=-21.9
-c3=-0.416
-c4=-21.3
-c5=0.0294
-c6=0.0
-c7=-1.2
-c8=5.23
-c9=-14.8
-c10=0.0
-c11=0.0
-c12=-0.00374
-c13=0.0389
-c14=0.0
-c15=0.0
-c16=0.639
-c17=1.69 
-
+#--------	Lateral force
+a0=1.6			#	Shape factor												A0
+a1=-0          #	Load infl. on lat. friction coeff (*1000)  (1/kN)			A1
+a2=2645         #	Lateral friction coefficient at load = 0 (*1000)			A2
+a3=325          #	Maximum stiffness   (N/deg)									A3
+a4=13           #	Load at maximum stiffness   (kN)							A4
+a5=0.013        #	Camber influence on stiffness   (%/deg/100)					A5
+a6=-0.36        #	Curvature change with load									A6
+a7=1.0         #	Curvature at load = 0										A7
+a8=-0.03        #	Horizontal shift because of camber  (deg/deg)				A8
+a9=-0.006       #	Load influence on horizontal shift  (deg/kN)				A9
+a10=-0.032       #	Horizontal shift at load = 0  (deg)							A10
+a111=0          #	Camber influence on vertical shift  (N/deg/kN)				A11.1
+a112=0          #	Camber influence on vertical shift  (N/deg/kN**2)			A11.2
+a12=0           #	Load influence on vertical shift  (N/kN)					A12
+a13=0           #	Vertical shift at load = 0  (N)								A13
+#--------	Longitudinal force
+b0=1.65         #	Shape factor   B0
+b1=0            #	Load infl. on long. friction coeff (*1000)  (1/kN)   B1
+b2=2145         #	Longitudinal friction coefficient at load = 0 (*1000)  B2
+b3=23.3         #	Curvature factor of stiffness   (N/%/kN**2) . B3
+b4=200.0        #	Change of stiffness with load at load = 0 (N/%/kN)   B4
+b5=0            #	Change of progressivity of stiffness/load (1/kN)   B5
+b6=0            #	Curvature change with load   B6
+b7=0            #	Curvature change with load   B7
+b8=-0.0         #	Curvature at load = 0   B8
+b9=0.0          #	Load influence on horizontal shift   (%/kN)   B9
+b10=0.0         #	Horizontal shift at load = 0   (%)   B10
+b11=0           #	Load influence on vertical shift   (N/kN)   B11
+b12=0           #	Vertical shift at load = 0   (N)   B12
+#---------	Aligning moment
+c0=2.07         #	Shape factor   C0
+c1=-6.49         #	Load influence of peak value   (Nm/kN**2)   C1
+c2=-21.9         #	Load influence of peak value   (Nm/kN)   C2
+c3=-0.416        #	Curvature factor of stiffness   (Nm/deg/kN**2) C3		
+c4=-21.3        #	Change of stiffness with load at load = 0 (Nm/deg/kN)   C4
+c5=0.029        #	Change of progressivity of stiffness/load (1/kN)   C5
+c6=0.0          #	Camber influence on stiffness   (%/deg/100)   C6
+c7=-1.2        #	Curvature change with load   C7
+c8=5.23        #	Curvature change with load   C8
+c9=-14.8         #	Curvature at load = 0   C9
+c10=0.0         #	Camber influence of stiffness   C10
+c11=0.0         #	Camber influence on horizontal shift (deg/deg)  C11
+c12=-0.0035     #	Load influence on horizontal shift (deg/kN)  C1
+c13=0.038       #	Horizontal shift at load = 0 (deg)  C13
+c14=0.0        #	Camber influence on vertical shift (Nm/deg/kN**2) C14
+c15=0.0        #	Camber influence on vertical shift (Nm/deg/kN)  C15
+c16=0.63       #	Load influence on vertical shift (Nm/kN)  C16
+c17=1.69        #	Vertical shift at load = 0 (Nm)  C17c0=2.2							
+#---------
 #  ..?
 #[ tire-rear ]
 #radius = 0.3335
@@ -228,19 +235,19 @@ c17=1.69
 
 
 [ brakes-front ]
-friction = 0.7
+friction = 0.9
 max-pressure = 4.0e7
-bias = 0.45
+bias = 0.55
 radius = 0.335
 area = 0.000488
 
 [ brakes-rear ]
-friction = 0.7
+friction = 0.9
 max-pressure = 4.0e7
-bias = 0.55
+bias = 0.45
 radius = 0.330 # 330mm
 area = 0.000448 # 16mm x 28mm
-handbrake = 1.2
+handbrake = 1.6
 
 
 [ driver ]
@@ -322,31 +329,31 @@ hinge = 1.00 , -0.0, -0.0
 
 [ particle-00 ]	# Chassis Front
 mass = 130
-position = 0.0, 1.5, -0.55
+position =  1.2, 2.1, -0.65
 
 [ particle-01 ]	#	Cooler front
-mass = 100
-position = -0.0, 1.5, -0.65
+mass = 130
+position = -1.2, 2.1, -0.65
 
 [ particle-02 ]	#	Chassis left
 mass = 160
-position = 0.75, 0, -0.50
+position =  1.2, 0, -0.50
 
 [ particle-03 ]	#	Chassis right
 mass = 160
-position = -0.75, 0, -0.50 
+position = -1.2, 0, -0.50 
 
 [ particle-04 ]	#	Motor Env. left
 mass = 60
-position = 0.7, -1.10, -0.30
+position =  0.9, -2.1, -0.30
 
 [ particle-05 ]		# Motor Env. right
 mass = 60
-position = -0.7, -1.10, -0.30
+position = -0.9, -2.1, -0.30
 
 [ particle-06 ]		# Interieur
 mass = 120
-position = 0.00, 0.60, -0.50
+position = 0.00, 0.70, -0.50
 
 [ particle-07 ]		# Chassis top
 mass = 80
@@ -354,7 +361,7 @@ position = 0.00, -0.30, -0.30
 
 [ particle-08 ]		# Joker
 mass = 60
-position = -0.00, 1.0, -0.60
+position = 0.00, 1.0, -0.60
 
 [ particle-09 ]		# gearbox
 mass = 50.0
@@ -362,4 +369,4 @@ position = 0.00, -1.75, -0.65
 
 [ particle-10 ]		# Chassis rear
 mass = 80.0
-position = 0.00, -1.80, -0.35
+position = 0.00,-1.10, -0.35

@@ -41,7 +41,7 @@ torque-curve-02 = 2500, 562.0
 torque-curve-03 = 3000, 566.07
 torque-curve-04 = 3300, 579.63
 torque-curve-05 = 3500, 593.19
-torque-curve-06 = 3800, 694.54
+torque-curve-06 = 3800, 594.54
 torque-curve-07 = 3900, 601.32
 torque-curve-08 = 4000, 604.03
 torque-curve-09 = 4100, 606.75
@@ -247,79 +247,18 @@ position = -0.60, -1.31, -0.07
 hinge = 0.25, -1.94, 0.0
 
 # these are used to calculate the weight distribution and balance
-[ particle-00 ]
+[ particle-00 ]  # rear
 mass = 225
-position = 1.11, -1.3, -0.46
+position =  1.11, -1.3, -0.46
 
 [ particle-01 ]
 mass = 225
 position = -1.11, -1.3, -0.46
 
-[ particle-02 ]
+[ particle-02 ]  # front
 mass = 225
-position = 1.11, 1.3, -0.46
+position =  1.11,  1.3, -0.46
 
 [ particle-03 ]
 mass = 225
-position = -1.11, 1.3, -0.46
-
-[ particle-04 ]
-mass = 3
-position = 1.01, -1.12, 0.02
-
-[ particle-05 ]
-mass = 3
-position = 1.01, 1.12, 0.02
-
-[ particle-06 ]
-mass = 3
-position = -1.01, -1.12, 0.02
-
-[ particle-07 ]
-mass = 3
-position = -1.01, 1.12, 0.02
-
-
-[ particle-08 ]	# Chassis Front
-mass = 13
-position = 0.0, 1.5, -0.15
-
-[ particle-09 ]	#	Cooler front
-mass = 10
-position = -0.0, 1.5, -0.25
-
-[ particle-10 ]	#	Chassis left
-mass = 16
-position = 0.75, 0, -0.10
-
-[ particle-11 ]	#	Chassis right
-mass = 16
-position = -0.75, 0, -0.10 
-
-[ particle-12 ]	#	Motor Env. left
-mass = 6
-position = 0.7, -1.10, -0.0
-
-[ particle-13 ]		# Motor Env. right
-mass = 6
-position = -0.7, -1.10, -0.0
-
-[ particle-14 ]		# Interieur
-mass = 12
-position = 0.00, 0.60, -0.10
-
-[ particle-15 ]		# Chassis top
-mass = 8
-position = 0.00, -0.30, 0.36
-
-[ particle-16 ]		# Joker
-mass = 6
-position = -0.00, 1.0, -0.20
-
-[ particle-17 ]		# gearbox
-mass = 5
-position = 0.00, -1.75, -0.25
-
-[ particle-18 ]		# Chassis rear
-mass = 8
-position = 0.00, -1.80, -0.0
+position = -1.11,  1.3, -0.46

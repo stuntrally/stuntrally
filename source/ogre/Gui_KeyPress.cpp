@@ -287,6 +287,9 @@ if (!bAssignKey)
 				}	return false;
 
 			case KC_F9:
+				if (ctrl)	// car debug surfaces
+				{	WP wp = chDbgS;  ChkEv(car_dbgsurf);  ShowHUD();  }
+				else
 				if (shift)	// car debug text
 				{	WP wp = chDbgT;  ChkEv(car_dbgtxt);  ShowHUD();  }
 				else		// car debug bars

@@ -180,9 +180,10 @@ void App::CreateHUD(bool destroy)
 
 		float fHudSize = pSet->size_minimap * mSplitMgr->mDims[c].avgsize;
 		SceneNode* rt = scm->getRootSceneNode();
-		ndMap[c] = rt->createChildSceneNode(Vector3(0,0,0));
-		ndMap[c]->attachObject(m);
-		
+		if (!sc.vdr)
+		{	ndMap[c] = rt->createChildSceneNode(Vector3(0,0,0));
+			ndMap[c]->attachObject(m);
+		}
 		//  car pos tri - for all carModels (ghost and remote too)
 		for (int i=0; i < carModels.size(); ++i)
 		{
@@ -250,17 +251,19 @@ void App::CreateHUD(bool destroy)
 	OverlayManager& ovr = OverlayManager::getSingleton();
 	ovCam = ovr.getByName("Car/CameraOverlay");
 
-	ovAbsTcs = ovr.getByName("Hud/AbsTcs");	hudAbs = ovr.getOverlayElement("Hud/AbsText");
-	ovCarDbg = ovr.getByName("Car/Stats");	hudTcs = ovr.getOverlayElement("Hud/TcsText");
+	ovAbsTcs = ovr.getByName("Hud/AbsTcs");
+	hudAbs = ovr.getOverlayElement("Hud/AbsText");	hudTcs = ovr.getOverlayElement("Hud/TcsText");
 
 	ovCountdown = ovr.getByName("Hud/Countdown");	hudCountdown = ovr.getOverlayElement("Hud/CountdownText");
 	ovNetMsg = ovr.getByName("Hud/NetMessages");	hudNetMsg = ovr.getOverlayElement("Hud/NetMessagesText");
 
-	ovTimes = ovr.getByName("Hud/Times");	hudTimes = ovr.getOverlayElement("Hud/TimesText");
-	ovOpp = ovr.getByName("Hud/Opponents"); hudOppB = ovr.getOverlayElement("Hud/OpponentsPanel");
-	for (int o=0; o < 5; ++o)  for (int c=0; c < 3; ++c)  {
-		hudOpp[o][c] = ovr.getOverlayElement("Hud/OppText"+toStr(o)+"_"+toStr(c));  hudOpp[o][c]->setCaption("");  }
-	
+	ovTimes = ovr.getByName("Hud/Times");		hudTimes = ovr.getOverlayElement("Hud/TimesText");
+	ovOpp = ovr.getByName("Hud/Opponents");		hudOppB = ovr.getOverlayElement("Hud/OpponentsPanel");
+
+	for (int o=0; o < 5; ++o)  for (int c=0; c < 3; ++c)
+	{
+		hudOpp[o][c] = ovr.getOverlayElement("Hud/OppText"+toStr(o)+"_"+toStr(c));  hudOpp[o][c]->setCaption("");
+	}
 	for (int o=0; o < carModels.size(); ++o)  // fill car names, not changed during play
 	{
 		const CarModel* cm = carModels[o];
@@ -272,18 +275,20 @@ void App::CreateHUD(bool destroy)
 	}
 
 	ovWarnWin = ovr.getByName("Hud/WarnAndWin");
-	hudWarnChk = ovr.getOverlayElement("Hud/Warning");
-	hudWarnChk->setCaption(String(TR("#{WrongChk}")));
+	hudWarnChk = ovr.getOverlayElement("Hud/Warning");	hudWarnChk->setCaption(String(TR("#{WrongChk}")));
 	hudWonPlace = ovr.getOverlayElement("Hud/WonPlace");
 
-	//  dbg lines
-	ovCarDbgTxt = ovr.getByName("Car/StatsTxt");  //ovCarDbgTxt->show();
-	ovCarDbg = ovr.getByName("Car/Stats");  //ovCarDbg->show();  // bars
+	//  dbg texts
+	ovCarDbg = ovr.getByName("Car/Stats");
+	ovCarDbgTxt = ovr.getByName("Car/StatsTxt");
+	ovCarDbgExt = ovr.getByName("Car/StatsExt");
+	
 	for (int i=0; i < 5; ++i)
 	{	ovL[i] = ovr.getOverlayElement("L_"+toStr(i+1));
 		ovR[i] = ovr.getOverlayElement("R_"+toStr(i+1));
 		ovS[i] = ovr.getOverlayElement("S_"+toStr(i+1));
 		ovU[i] = ovr.getOverlayElement("U_"+toStr(i+1));
+		ovX[i] = ovr.getOverlayElement("X_"+toStr(i+1));
 	}
 	ShowHUD();  //_
 	bSizeHUD = true;
@@ -327,8 +332,8 @@ void App::ShowHUD(bool hideAll)
 		if (ovCarDbg){  if (show)  ovCarDbg->show();  else  ovCarDbg->hide();   }
 		show = pSet->car_dbgtxt || pSet->bltProfilerTxt || pSet->profilerTxt;
 		if (ovCarDbgTxt){  if (show)  ovCarDbgTxt->show();  else  ovCarDbgTxt->hide();   }
-		//for (int i=0; i<5; ++i)
-		//{	if (ovU[i])  if (show)  ovU[i]->show();  else  ovU[i]->hide();  }
+		show = pSet->car_dbgsurf;
+		if (ovCarDbgExt){  if (show)  ovCarDbgExt->show();  else  ovCarDbgExt->hide();   }
 
 		if (ovCam)	{  if (pSet->show_cam && !isFocGui)    ovCam->show();    else  ovCam->hide();     }
 		if (ovTimes){  if (pSet->show_times)  ovTimes->show();  else  ovTimes->hide();   }

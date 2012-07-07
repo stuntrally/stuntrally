@@ -152,22 +152,23 @@ c14=0.0        #	Camber influence on vertical shift (Nm/deg/kN**2) C14
 c15=0.0        #	Camber influence on vertical shift (Nm/deg/kN)  C15
 c16=0.63       #	Load influence on vertical shift (Nm/kN)  C16
 c17=1.69        #	Vertical shift at load = 0 (Nm)  C17c0=2.2							
+#---------
 
 
 [ brakes-front ] 
-friction = 0.80 
+friction = 0.90 
 max-pressure = 2.4e6 
-bias = 0.35
+bias = 0.60
 radius = 0.20 
 area = 0.019 
 
 [ brakes-rear ] 
-friction = 0.73 
+friction = 0.83 
 max-pressure = 2.0e6 
-bias = 0.65 
+bias = 0.40
 radius = 0.16 
 area = 0.015 
-handbrake = 1.0 
+handbrake = 2.0 
 
 
 [ driver ] 
@@ -246,17 +247,17 @@ hinge = 0.0, -0.6, 0.0
 mass = 65.0 
 position = 0.0, 1.008, -0.45 
 
-[ particle-01 ] 
+[ particle-01 ]  # rear
 mass = 192.5 
-position = 0.6, -1.48, -0.45
+position =  0.6, -1.48, -0.45
 
 [ particle-02 ] 
 mass = 192.5 
 position = -0.6, -1.48, -0.45
 
-[ particle-03 ] 
+[ particle-03 ]  # front
 mass = 368.0 
-position = 0.65, 1.08, -0.45
+position =  0.65, 1.08, -0.45
 
 [ particle-04 ] 
 mass = 368.0 
