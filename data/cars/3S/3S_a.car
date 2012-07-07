@@ -117,7 +117,7 @@ a0=1.7			#	Shape factor												A0
 a1=-66          #	Load infl. on lat. friction coeff (*1000)  (1/kN)			A1
 a2=3645         #	Lateral friction coefficient at load = 0 (*1000)			A2
 a3=1275          #	Maximum stiffness   (N/deg)									A3
-a4=25           #	Load at maximum stiffness   (kN)							A4
+a4=12.3          #	Load at maximum stiffness   (kN)							A4
 a5=0.013        #	Camber influence on stiffness   (%/deg/100)					A5
 a6=-0.14        #	Curvature change with load									A6
 a7=0.14         #	Curvature at load = 0										A7
