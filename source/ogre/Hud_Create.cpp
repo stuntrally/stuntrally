@@ -180,9 +180,10 @@ void App::CreateHUD(bool destroy)
 
 		float fHudSize = pSet->size_minimap * mSplitMgr->mDims[c].avgsize;
 		SceneNode* rt = scm->getRootSceneNode();
-		ndMap[c] = rt->createChildSceneNode(Vector3(0,0,0));
-		ndMap[c]->attachObject(m);
-		
+		if (!sc.vdr)
+		{	ndMap[c] = rt->createChildSceneNode(Vector3(0,0,0));
+			ndMap[c]->attachObject(m);
+		}
 		//  car pos tri - for all carModels (ghost and remote too)
 		for (int i=0; i < carModels.size(); ++i)
 		{
