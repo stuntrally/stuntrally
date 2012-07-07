@@ -1,3 +1,77 @@
+Car/StatsExt
+{
+	zorder 500
+	container BorderPanel(Car/StatsPanelExt)
+	{
+
+	//---------------------------------------  U
+	container TextArea(X_1)
+	{
+		metrics_mode pixels
+		vert_align top
+		left 3
+		top 100
+		width 400
+		height 60
+		font_name Console
+		char_height 21
+		colour 0.9 1 1
+	}
+
+	container TextArea(X_2)
+	{
+		metrics_mode pixels
+		vert_align top
+		left 3
+		top 160
+		width 400
+		height 60
+		font_name Console
+		char_height 21
+		colour 0.9 1 1
+	}
+
+	container TextArea(X_3)
+	{
+		metrics_mode pixels
+		vert_align top
+		left 3
+		top 220
+		width 400
+		height 60
+		font_name Console
+		char_height 21
+		colour 0.9 1 1
+	}
+
+	container TextArea(X_4)
+	{
+		metrics_mode pixels
+		vert_align top
+		left 3
+		top 280
+		width 400
+		height 60
+		font_name Console
+		char_height 21
+		colour 0.9 1 1
+	}
+
+	container TextArea(X_5)
+	{
+		metrics_mode pixels
+		vert_align top
+		left 3
+		top 340
+		width 400
+		height 60
+		font_name Console
+		char_height 21
+		colour 0.9 1 1
+	}
+	}
+}
+
 Car/StatsTxt
 {
 	zorder 600

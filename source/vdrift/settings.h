@@ -19,7 +19,7 @@ public:
 	bool show_fps, show_gauges, check_arrow, trackmap,
 		mini_zoomed, mini_rotated, mini_terrain,
 		show_cam, show_times, show_digits, show_opponents, cam_tilt,
-		car_dbgbars, car_dbgtxt, ogre_dialog, show_graphs;
+		car_dbgbars, car_dbgtxt, car_dbgsurf, ogre_dialog, show_graphs;
 	float size_gauges, size_minimap, size_arrow, zoom_minimap;
 	int tracks_view, tracks_sort;  bool tracks_sortup;
 	int gauges_type, graphs_type;

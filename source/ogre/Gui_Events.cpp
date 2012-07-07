@@ -413,6 +413,7 @@ void App::chkBltProfilerTxt(WP wp){	ChkEv(bltProfilerTxt);	}
 
 void App::chkCarDbgBars(WP wp){		ChkEv(car_dbgbars);	ShowHUD();	}
 void App::chkCarDbgTxt(WP wp){		ChkEv(car_dbgtxt);	ShowHUD();	}
+void App::chkCarDbgSurf(WP wp){		ChkEv(car_dbgsurf);	ShowHUD();	}
 
 void App::chkGraphs(WP wp){			ChkEv(show_graphs);
 	for (int i=0; i < graphs.size(); ++i)

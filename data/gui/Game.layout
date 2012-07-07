@@ -506,7 +506,7 @@
 					<UserString key="RelativeTo" value="OptionsWnd"/>
 					<UserString key="tip" value="#{TipSpeedSensitiveSteering}"/>
 				</Widget>
-			
+
 				<Widget type="TextBox" skin="TextBox" position="32 370 200 24">
 					<Property key="Caption" value="#{SSS_Effect}"/>
 					<Property key="TextColour" value="0.7 0.9 1.0"/>
@@ -2324,15 +2324,20 @@
 							<Property key="TextColour" value="0.7 0.85 1.0"/>
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
-						<Widget type="Button" skin="CheckBox" position="388 140 256 24" name="Graphs">
+						<Widget type="Button" skin="CheckBox" position="408 124 256 24" name="CarDbgSurf">
+							<Property key="Caption" value="#{CarDebugSurfaces}  ctrl-F9"/>
+							<Property key="TextColour" value="0.7 0.85 1.0"/>
+							<UserString key="RelativeTo" value="OptionsWnd"/>
+						</Widget>
+						<Widget type="Button" skin="CheckBox" position="388 184 256 24" name="Graphs">
 							<Property key="Caption" value="#{Graphs}  ctrl-F8"/>
 							<Property key="TextColour" value="0.7 0.85 1.0"/>
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="388 176 48 24" name="GraphsTypeVal">
+						<Widget type="TextBox" skin="TextBox" position="388 216 48 24" name="GraphsTypeVal">
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
-						<Widget type="Slider" skin="Slider" position="400 176 260 18" name="GraphsType">
+						<Widget type="Slider" skin="Slider" position="410 216 260 18" name="GraphsType">
 							<UserString key="RelativeTo" value="OptionsWnd"/>
 						</Widget>
 					</Widget>
