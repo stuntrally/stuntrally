@@ -2,7 +2,7 @@ drive = AWD
 version = 2
 
 [ steering ] 
-max-angle = 33.19 
+max-angle = 33.1
 
 [ model_ofs ]
 interior-x = -0.05
@@ -40,7 +40,7 @@ torque-curve-02 = 2500, 562.0
 torque-curve-03 = 3000, 566.07
 torque-curve-04 = 3300, 579.63
 torque-curve-05 = 3500, 593.19
-torque-curve-06 = 3800, 694.54
+torque-curve-06 = 3800, 594.54
 torque-curve-07 = 3900, 601.32
 torque-curve-08 = 4000, 604.03
 torque-curve-09 = 4100, 606.75
@@ -68,7 +68,7 @@ gear-ratio-3 = 1.448
 gear-ratio-4 = 1.088 
 gear-ratio-5 = 0.780 
 gear-ratio-6 = 0.580 
-shift-delay = 0.05 
+shift-delay = 0.15 
 
 [ differential ] 
 final-drive = 4.111 
@@ -161,19 +161,19 @@ c17=1.69        #	Vertical shift at load = 0 (Nm)  C17c0=2.2
 
 
 [ brakes-front ] 
-friction = 0.73 
+friction = 0.83 
 max-pressure = 2.0e6 
-bias = 0.35 
+bias = 0.60
 radius = 0.14 
 area = 0.015 
 
 [ brakes-rear ] 
-friction = 0.73 
+friction = 0.83 
 max-pressure = 2.0e6 
-bias = 0.65 
+bias = 0.40 
 radius = 0.14 
 area = 0.015 
-handbrake = 1.0 
+handbrake = 2.6 
 
 
 [ driver ] 
@@ -252,7 +252,7 @@ hinge = 0.77, 0.21, -0.48
 mass = 35
 position = 0, 1.08, -0.4
 
-[ particle-01 ] 
+[ particle-01 ]  # rear
 mass = 220
 position = 0.82, -1.08, -0.56
 
@@ -260,7 +260,7 @@ position = 0.82, -1.08, -0.56
 mass = 220
 position = -0.82, -1.08, -0.56
 
-[ particle-03 ] 
+[ particle-03 ]  # front
 mass = 190
 position = 0.9, 1.07, -0.58
 

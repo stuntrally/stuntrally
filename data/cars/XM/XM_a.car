@@ -2,7 +2,7 @@ drive = AWD
 version = 2
 
 [ steering ]
-max-angle = 33.19
+max-angle = 24.1
 
 [ model_ofs ]
 interior-x = 0.05
@@ -72,7 +72,7 @@ gear-ratio-3 = 1.57
 gear-ratio-4 = 1.26
 gear-ratio-5 = 1.02
 gear-ratio-6 = 0.78
-shift-delay = 0.02
+shift-delay = 0.06
 
 [ differential ]
 final-drive = 4.21
@@ -171,14 +171,14 @@ c17=-1.1        #	Vertical shift at load = 0 (Nm)  C17c0=2.2
 [ brakes-front ]
 friction = 1.03
 max-pressure = 2.5e6
-bias = 0.40
+bias = 0.65
 radius = 0.17
 area = 0.015
 
 [ brakes-rear ]
 friction = 1.03
 max-pressure = 2.5e6
-bias = 0.60
+bias = 0.35
 radius = 0.14
 area = 0.015
 handbrake = 1.0
@@ -257,18 +257,18 @@ hinge = -1.1, 0, 0
 
 # these are used to calculate the weight distribution and balance
 
-[ particle-00 ]
-mass = 223.0
+[ particle-00 ]  # front
+mass = 213.0
 position =  1.35, 1.7, -0.61
 
 [ particle-01 ]
-mass = 203.0
+mass = 213.0
 position = -1.35, 1.7, -0.61
 
-[ particle-02 ]
-mass = 223.0
+[ particle-02 ]  # rear
+mass = 213.0
 position =  1.39, -1.7, -0.62
 
 [ particle-03 ]
-mass = 203.0
+mass = 213.0
 position = -1.39, -1.7, -0.62

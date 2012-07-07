@@ -307,6 +307,19 @@ void App::listCarChng(List* li, size_t pos)
 
 	if (imgCar)  imgCar->setImageTexture(sListCar+".jpg");
 	if (mClient) mClient->updatePlayerInfo(pSet->nickname, sListCar);
+	
+	//  car desc load
+	if (carDesc)
+	{
+		string path = PATHMANAGER::GetCarPath()+"/"+sListCar+"/description.txt";
+		ifstream fi(path.c_str());
+		string s, sdesc = "";
+		while (getline(fi, s, '\n'))
+			sdesc += s;
+		fi.close();
+
+		carDesc->setCaption(sdesc);
+	}	
 	changeCar();
 }	
 void App::changeCar()
@@ -579,6 +592,7 @@ void App::toggleGui(bool toggle)
 			static char buf[2*4096];
 			fi.read(buf,sizeof(buf));
 			String text = buf;
+			fi.close();
 
 			text = StringUtil::replaceAll(text, "#", "##");
 			edit->setCaption(UString(text));
