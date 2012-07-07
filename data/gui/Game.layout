@@ -315,7 +315,7 @@
 					<UserString key="RelativeTo" value="GameWnd"/>
 					<UserString key="tip" value="#{TipNewGameCar}"/>
 				</Widget>
-				<Widget type="EditBox" skin="EditBoxEmpty" position="14 380 416 60" name="CarDesc">
+				<Widget type="EditBox" skin="EditBoxEmpty" position="14 380 416 80" name="CarDesc">
 					<Property key="ReadOnly" value="true"/>
 					<Property key="MultiLine" value="true"/>
 					<Property key="WordWrap" value="true"/>

@@ -313,9 +313,9 @@ void App::listCarChng(List* li, size_t pos)
 	{
 		string path = PATHMANAGER::GetCarPath()+"/"+sListCar+"/description.txt";
 		ifstream fi(path.c_str());
-		string s, sdesc = "";
-		while (getline(fi, s, '\n'))
-			sdesc += s;
+		string sdesc = "", s;
+		while (getline(fi, s))
+			sdesc += s + "\n";
 		fi.close();
 
 		carDesc->setCaption(sdesc);
@@ -588,11 +588,9 @@ void App::toggleGui(bool toggle)
 		if (edit)
 		{	std::string path = PATHMANAGER::GetDataPath()+"/../Readme.txt";
 			std::ifstream fi(path.c_str());
-
-			static char buf[2*4096];
-			fi.read(buf,sizeof(buf));
-			String text = buf;
-			fi.close();
+			String text = "", s;
+			while (getline(fi,s))
+				text += s + "\n";
 
 			text = StringUtil::replaceAll(text, "#", "##");
 			edit->setCaption(UString(text));
