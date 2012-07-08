@@ -9,6 +9,8 @@ material base
 	number_of_foreachs 8
 	col 0.3 0.9 0.3
 
+	cull_hardware clockwise
+
 	pass
 	{
 		vertex_program main_vertex
@@ -39,8 +41,6 @@ material base_shadowcaster
 {
 	pass
 	{
-		vertex_program shadowcaster_vertex
-		fragment_program shadowcaster_fragment
 		fog_override true
 
 		// $ refers to context, in this case the material instance that uses this this material as a shadow caster material (shadow_caster_material)
