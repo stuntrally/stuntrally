@@ -171,17 +171,17 @@ c17=1.69        #	Vertical shift at load = 0 (Nm)  C17c0=2.2
 [ brakes-front ]
 friction = 1.03
 max-pressure = 2.5e6
-bias = 0.65
+bias = 0.60
 radius = 0.17
 area = 0.015
 
 [ brakes-rear ]
 friction = 1.03
 max-pressure = 2.5e6
-bias = 0.35
+bias = 0.40
 radius = 0.14
 area = 0.015
-handbrake = 1.0
+handbrake = 2.8
 
 
 [ driver ]
