@@ -4,6 +4,12 @@
 #include "Road.h"
 #ifndef ROAD_EDITOR
 #include "../vdrift/game.h"
+#else
+#include "../editor/OgreApp.h"
+#include "../bullet/BulletCollision/CollisionShapes/btTriangleMesh.h"
+#include "../bullet/BulletCollision/CollisionShapes/btBvhTriangleMeshShape.h"
+#include "../bullet/BulletCollision/CollisionDispatch/btCollisionObject.h"
+#include "../bullet/BulletDynamics/Dynamics/btDiscreteDynamicsWorld.h"
 #endif
 
 #ifdef ROAD_EDITOR
@@ -55,19 +61,21 @@ void SplineRoad::RebuildRoad(bool full)
 		iDirtyId = iChosen;
 }
 
-void SplineRoad::RebuildRoadInt()
+void SplineRoad::RebuildRoadInt(bool editorAlign)
 {
-	if (!rebuild)  return;
+	if (!rebuild && !editorAlign)  return;
 	rebuild = false;
 
+
+	//  segments range
 	int segs = getNumPoints();
 	if (segs == 0 || segs == 1)  return;
 	using std::vector;  using std::min;  using std::max;
 
 	UpdRot(); //
 	
-	if (vSegs.size() != segs)
-		iDirtyId = -1;  // sth wrong, force full
+	if (vSegs.size() != segs || editorAlign)
+		iDirtyId = -1;  // force full
 		
 	int sMin = 0, sMax = segs;
 	//  update 4 segs only (fast)
@@ -156,7 +164,7 @@ void SplineRoad::RebuildRoadInt()
 			int seg1 = (seg+1) % segs;  // next
 			int seg0 = (seg-1+segs) % segs;  // prev
 
-			//  width steps  <->
+			//  width steps  --
 			Real sp = mP[seg].pipe, sp1 = mP[seg1].pipe, sp0 = mP[seg0].pipe;
 			Real p = sp * iwPmul, pl = max(sp, sp1)* iwPmul/4;
 			if (p < 0.f)  p = 1.f;  else  p = 1.f + p;
@@ -166,7 +174,7 @@ void SplineRoad::RebuildRoadInt()
 			viW.push_back(iw);
 			int iwl = max(1, (int)(pl * iw0 / lodDiv));
 
-			//  length steps
+			//  length steps  |
 			Real len = GetSegLen(seg);
 			int  il = int(len / lenDiv) / iwl * iwl + iwl;
 			Real la = 1.f / il;
@@ -176,13 +184,14 @@ void SplineRoad::RebuildRoadInt()
 			if (sp > 0.f || sp1 > 0.f)
 				rdPipe += len; //#
 
-			//-  Merge length
+
+			///-  Merge conditions
 			sumLenMrg += len;
 			//  mtr changes
 			int hid = mP[seg].idMtr, hid1 = mP[seg1].idMtr, hid0 = mP[seg0].idMtr;
+			LogR(toStr(sp0) + "  " + toStr(sp) + "  " + toStr(sp1));
 
 			//  merge road and pipe segs, don't merge transitions
-			LogR(toStr(sp0) + "  " + toStr(sp) + "  " + toStr(sp1));
 			if (sp != sp1 || sp != sp0  ||  hid != hid1 || hid != hid0)
 			{	sumLenMrg = 0.f;  ++mrgGrp;
 				vbSegMrg.push_back(1);
@@ -219,9 +228,13 @@ void SplineRoad::RebuildRoadInt()
 			if (lod == 0)
 			{	Vector3 vn = vl.crossProduct(vw);  vn.normalise();
 				//if (vn.y < 0.f)  vn = -vn;  // always up y+
-				vnSeg0.push_back(vn);  }
+				vnSeg0.push_back(vn);
+			}
 
-			vw *= mP[seg].width;
+			Real wiMul = mP[seg].width;
+			if (editorAlign)  // wider road for align terrain tool
+				wiMul = wiMul*edWmul + edWadd;
+			vw *= wiMul;
 			vwSeg.push_back(vw);
 
 			avgWidth += mP[seg].width * len;  //#
@@ -251,29 +264,30 @@ void SplineRoad::RebuildRoadInt()
 
 			//  width steps per lenght point in cur seg
 			int iw0 = viW[seg], iw1 = viW[seg1];
-			String ss="";
+			//String ss="";
 			for (int i = -1; i <= il+1; ++i)  // length +1  +2-gap
 			{
 				int ii = max(0, min(il, i));
 				int iw = iw0 + (int)( Real(ii)/Real(il) * (iw1-iw0) );
-				if (i==0 || i == il)
-					ss += toStr(iw)+" ";
+				//if (i==0 || i == il)
+				//	ss += toStr(iw)+" ";
 				viwL.push_back(iw);
 			}
 			int eq = iw1==iw0 ? 1 : 0;
+
 			viwEq.push_back(eq);
 			viwLS.push_back(viwL);
 			//if (!eq)  vbSegMrg[seg] = 1;
-			LogR("seg "+toStr(seg)+"  >> "+ss);
+			//LogR("seg "+toStr(seg)+"  >> "+ss);
 		}
 
 		//#  stats  at lod0, whole road
 		bool stats = lod == 0 && iDirtyId == -1;
-		if (stats)  {
-			st.Length = roadLen;  st.WidthAvg = avgWidth / roadLen;
+		if (stats)
+		{	st.Length = roadLen;  st.WidthAvg = avgWidth / roadLen;
 			st.OnTer = rdOnT / roadLen * 100.f;  st.Pipes = rdPipe / roadLen * 100.f;
-			segsMrg = mrgGrp;  }
-
+			segsMrg = mrgGrp;
+		}
 
 
 		//--------------------------------------------------------------------------------------------------------------------------
@@ -283,7 +297,8 @@ void SplineRoad::RebuildRoadInt()
 		//>  mesh data  W-wall  C-column
 		vector<Vector4> clr0/*empty*/, clr;
 		vector<Vector3> pos,norm, posW,normW, posC,normC, posLod;
-		vector<Vector2> tcs, tcsW, tcsC;  Real tc1 = 0;  ltc = 0;
+		vector<Vector2> tcs, tcsW, tcsC;
+		Real tc1 = 0;  ltc = 0;
 		int iLmrg = 0, iLmrgW = 0, iLmrgC = 0;
 		Vector3 vlOld;
 
@@ -302,17 +317,26 @@ void SplineRoad::RebuildRoadInt()
 			// on merging segs only for game in whole road rebuild
 			// off for editor (partial, 4segs rebuild)
 			bool bNew = true, bNxt = true;
+
 			if (bMerge)
-			{	bNew = (segM == sMin/*1st*/)	|| vbSegMrg[seg];
+			{
+				bNew = (segM == sMin/*1st*/)	|| vbSegMrg[seg];
 				bNxt = (segM+1 == sMax/*last*/) || vbSegMrg[seg1];  // next is new
 			}
 			
 			if (bNew)  //> new seg data
 			{	iLmrg = 0;	iLmrgW = 0;  iLmrgC = 0;
+
 				pos.clear();  norm.clear();  tcs.clear();  clr.clear();
 				posW.clear(); normW.clear(); tcsW.clear();
 				posC.clear(); normC.clear(); tcsC.clear();
 			}
+
+			//  bullet create
+			bool blt = true;  // game always
+			#ifdef ROAD_EDITOR  // editor only sel segs for align ter tool
+				blt = editorAlign && vSel.find(seg) != vSel.end();
+			#endif
 			
 
 			///  destroy old
@@ -325,7 +349,7 @@ void SplineRoad::RebuildRoadInt()
 			const int iwC = colN;  // column  polygon steps
 						
 			//  steps len
-			int il = viL[seg];   Real la = 1.f / il;
+			int il = viL[seg];        Real la = 1.f / il;
 			int il0= viLSteps0[seg];  Real la0= 1.f / il0 * skLen;
 			Real l = -la0;
 
@@ -368,8 +392,8 @@ void SplineRoad::RebuildRoadInt()
 				///  width <dir>   --
 				if (mP[seg].onTer && mP[seg1].onTer)
 				{	vw = Vector3(vl.z, 0, -vl.x);  }
-				else  {		/// angles ()__
-					Real ay = ay1 + ay21 * l;  // linear-
+				else		/// angles ()__
+				{	Real ay = ay1 + ay21 * l;  // linear-
 					Real ar = ar1 + ar21 * l;
 					//Real ay = interpAYaw(seg,l);  // spline~
 					//Real ar = interpARoll(seg,l);  // err swirl..
@@ -378,8 +402,10 @@ void SplineRoad::RebuildRoadInt()
 				vw.normalise();
 				Vector3 vwn = vw;
 
-				//Real wiMul = wi1 + wi12 * l;  // linear
+				//Real wiMul = wi1 + wi12 * l;  // linear-
 				Real wiMul = interpWidth(seg, l);  // spline~
+				if (editorAlign)  // wider road for align terrain tool
+					wiMul = wiMul*edWmul + edWadd;
 				vw *= wiMul;
 
 				//  last vw = 1st form next seg		
@@ -429,19 +455,21 @@ void SplineRoad::RebuildRoadInt()
 						}
 					}else
 					{	///  pipe (_)
-						Real oo = (tcw - 0.5)/0.5 * PI_d * pipe;
-						vP = vL0 + vw  * 0.5 * sinf(oo) +
-								 + vn * (0.5 - 0.5 * cosf(oo)) * wiMul;
-						vN = vn * cosf(oo) + vwn * sinf(oo);
+						Real oo = (tcw - 0.5)/0.5 * PI_d * pipe, so = sinf(oo), co = cosf(oo);
+						vP = vL0 + vw  * 0.5 * so +
+								 + vn * (0.5 - 0.5 * co) * wiMul;
+						vN = vn * co + vwn * so;
+
 						if (vN.y < 0.f)  vN.y = -vN.y;
-						if (trans) {  //  transition from flat to pipe
-							vP += vw * (tcw - 0.5) * trp;  }
+						if (trans)  //  transition from flat to pipe
+						{	vP += vw * (tcw - 0.5) * trp;  }
 						yTer = mTerrain ? mTerrain->getHeightAtWorldPosition(vP.x, 0, vP.z) : 0.f;
 					}
 					
 					//  skirt, gap patch_
 					if (i == -1 || i == il+1)
 						vP -= vn * skH;
+
 
 					//  color - for minimap preview
 					//  ---~~~====~~~---
@@ -474,24 +502,28 @@ void SplineRoad::RebuildRoadInt()
 					{{ 0.5f,  1.2f, 0.2f, -0.5f, 0.5f}, { 0.28f, 0.5f, 0.2f,  0.5f, 0.5f}},
 					{{ 0.5f, -0.1f, 0.5f, -1.0f, 0.0f}, { 0.28f, 0.7f, 0.2f,  1.0f, 0.0f}}};
 				Real uv = 0.f;  // tc long
+
 				if (!onTer)
 				if (i >= 0 && i <= il)  // length +1
 				{	++iLmrgW;
-				for (int w=0; w <= iwW; ++w)  // width +1
-				{
-					int pp = (p1 > 0.f || p2 > 0.f) ? 1 : 0;  //  pipe wall
-					stWiPntW wP = wiPntW[w][pp];
-					if (trans /*&& (w <= 3 || w >= iwW-3)*/)
-					{	wP.x *= 1 + trp;  wP.y *= 1 - trp;  }
-					uv += wP.uv;
 
-					Vector3 vP = vL0 + vw * wP.x + vn * wP.y;
-					Vector3 vN =     vwn * wP.nx + vn * wP.ny;  vN.normalise();
+					for (int w=0; w <= iwW; ++w)  // width +1
+					{
+						int pp = (p1 > 0.f || p2 > 0.f) ? 1 : 0;  //  pipe wall
+						stWiPntW wP = wiPntW[w][pp];
 
-					//>  data Wall
-					posW.push_back(vP);  normW.push_back(vN);
-					tcsW.push_back(0.25f * Vector2(uv, tc * tcMul));  //pars
-				}	}
+						if (trans /*&& (w <= 3 || w >= iwW-3)*/)
+						{	wP.x *= 1 + trp;  wP.y *= 1 - trp;  }
+						uv += wP.uv;
+
+						Vector3 vP = vL0 + vw * wP.x + vn * wP.y;
+						Vector3 vN =     vwn * wP.nx + vn * wP.ny;  vN.normalise();
+
+						//>  data Wall
+						posW.push_back(vP);  normW.push_back(vN);
+						tcsW.push_back(0.25f * Vector2(uv, tc * tcMul));  //pars
+					}
+				}
 				
 				
 				///  columns |
@@ -500,30 +532,35 @@ void SplineRoad::RebuildRoadInt()
 				if (i == il/2)  // middle-
 				{	++iLmrgC;
 					const Real r = colR;  // column radius
-				for (int h=0; h <= 1; ++h)  // height
-				for (int w=0; w <= iwC; ++w)  // width +1
-				{
-					Real ht = (h==0) ? 0.f : vL0.y - (mTerrain ? mTerrain->getHeightAtWorldPosition(vL0) : 0.f);
-					Real a = Real(w)/iwC *2*PI_d,  //+PI_d/4.f
-						x = r*cosf(a), y = r*sinf(a);
 
-					Vector3 vlXZ(vl.x,0,vl.z);	Real fl = 1.f/max(0.01f, vlXZ.length());
-					Vector3 vP = vL0 + fl * vl * x + vwn * y;
-					Real yy;
-					if (h==0)  // top below road
-					{	yy = vn.y * -0.8f;  //pars
-						vP.y += yy;  ht += yy;  }
-					else  // bottom below ground
-					{	yy = (mTerrain ? mTerrain->getHeightAtWorldPosition(vP) : 0.f) - 0.3f;
-						vP.y = yy;	}
-					ht += yy;
+					for (int h=0; h <= 1; ++h)  // height
+					for (int w=0; w <= iwC; ++w)  // width +1
+					{
+						Real ht = (h==0) ? 0.f : vL0.y - (mTerrain ? mTerrain->getHeightAtWorldPosition(vL0) : 0.f);
+						Real a = Real(w)/iwC *2*PI_d,  //+PI_d/4.f
+							x = r*cosf(a), y = r*sinf(a);
 
-					Vector3 vN(vP.x-vL0.x,0,vP.z-vL0.z);  vN.normalise();
+						Vector3 vlXZ(vl.x,0,vl.z);	Real fl = 1.f/max(0.01f, vlXZ.length());
+						Vector3 vP = vL0 + fl * vl * x + vwn * y;
+						Real yy;
 
-					//>  data Col
-					posC.push_back(vP);  normC.push_back(vN);
-					tcsC.push_back(Vector2( Real(w)/iwC * 4, ht * 0.2f ));  //pars
-				}	}
+						if (h==0)  // top below road
+						{	yy = vn.y * -0.8f;  //pars
+							vP.y += yy;  ht += yy;
+						}
+						else  // bottom below ground
+						{	yy = (mTerrain ? mTerrain->getHeightAtWorldPosition(vP) : 0.f) - 0.3f;
+							vP.y = yy;
+						}
+						ht += yy;
+
+						Vector3 vN(vP.x-vL0.x,0,vP.z-vL0.z);  vN.normalise();
+
+						//>  data Col
+						posC.push_back(vP);  normC.push_back(vN);
+						tcsC.push_back(Vector2( Real(w)/iwC * 4, ht * 0.2f ));  //pars
+					}
+				}
 				
 				
 				if (i == -1 || i == il)  // add len
@@ -538,11 +575,13 @@ void SplineRoad::RebuildRoadInt()
 			//  lod vis points
 			if (lod == 0)
 			{	int lps = max(2, (int)(vSegLen[seg] / lposLen));
+
 				for (int p=0; p <= lps; ++p)
 				{
 					Vector3 vp = interpolate(seg, Real(p)/Real(lps));
 					posLod.push_back(vp);
-			}	}
+				}
+			}
 
 
 			//---------------------------------------------------------------------------------------------------------
@@ -553,9 +592,7 @@ void SplineRoad::RebuildRoadInt()
 				String sEnd = toStr(idStr);  ++idStr;
 				String sMesh = "rd.mesh." + sEnd, sMeshW = sMesh + "W", sMeshC = sMesh + "C";
 
-				#ifndef ROAD_EDITOR
 				posBt.clear();
-				#endif
 				idx.clear();  // set for addTri
 				at_pos = &pos;  at_size = pos.size();  at_ilBt = iLmrg-2;
 				
@@ -570,48 +607,48 @@ void SplineRoad::RebuildRoadInt()
 						for (int w=0; w < iw; ++w)  // width-1
 						{
 							//LogR( "   il="+toStr(i)+"/"+toStr(il)+"   iw="+toStr(iw));
-							int f = iiw + w, f1 = f + (iw+1);
-							addTri(f+0,f1+1,f+1,i);
-							addTri(f+0,f1+0,f1+1,i);
+							int f0 = iiw + w, f1 = f0 + (iw+1);
+							addTri(f0+0,f1+1,f0+1,i, blt);
+							addTri(f0+0,f1+0,f1+1,i, blt);
 						}
 						iiw += iw+1;
 					}
 				else
-				//  pipe, diff width_
-				for (int i = 0; i < iLmrg-1; ++i)  // length-1 +2gap
-				{
-					int iw = viwLS[seg][i], iw1 = viwLS[seg][i+1];
-					int sw = iw1 < iw ? 1 : 0;
-					//LogR( "   il="+toStr(i)+"/"+toStr(il)+"   iw="+toStr(iw));
-					
-					for (int w=0; w < iw -sw; ++w)  // width-1
-					//int w=0;  // test fans
+					//  pipe, diff width_
+					for (int i = 0; i < iLmrg-1; ++i)  // length-1 +2gap
 					{
-						int f0 = iiw + w, f1 = f0 + (iw+1);
-						//  |\ |  f0+0  f0+1
-						//  | \|  f1+0  f1+1
-						if (sw==0)  {
-							addTri(f0+0,f1+1,f0+1,i);
-							addTri(f0+0,f1+0,f1+1,i);
-						}else{  // |/|
-							addTri(f0+0,f1+0,f0+1,i);
-							addTri(f0+1,f1+0,f1+1,i);
+						int iw = viwLS[seg][i], iw1 = viwLS[seg][i+1];
+						int sw = iw1 < iw ? 1 : 0;
+						//LogR( "   il="+toStr(i)+"/"+toStr(il)+"   iw="+toStr(iw));
+						
+						//int w=0;  // test fans
+						for (int w=0; w < iw -sw; ++w)  // width-1
+						{
+							int f0 = iiw + w, f1 = f0 + (iw+1);
+							//  |\ |  f0+0  f0+1
+							//  | \|  f1+0  f1+1
+							if (sw==0) {
+								addTri(f0+0,f1+1,f0+1,i, blt);
+								addTri(f0+0,f1+0,f1+1,i, blt);  }
+							else {  // |/|
+								addTri(f0+0,f1+0,f0+1,i, blt);
+								addTri(f0+1,f1+0,f1+1,i, blt);  }
 						}
+
+						///>>>  fix gaps when iw changes - fan tris
+						int ma = iw1 - iw, ms = -ma, m;
+						for (m=0; m < ma; ++m)
+						{
+							int f0 = iiw + iw-1, f1 = f0 + (iw+2)+m;
+							addTri(f0+1,f1+0,f1+1,i, blt);
+						}
+						for (m=0; m < ms; ++m)
+						{
+							int f0 = iiw + iw-sw -m, f1 = f0 + (iw+1);
+							addTri(f0+0,f1+0,f0+1,i, blt);
+						}
+						iiw += iw + 1;
 					}
-					///>>>  fix gaps when iw changes - fan tris
-					int ma = iw1 - iw, ms = -ma, m;
-					for (m=0; m < ma; ++m)
-					{
-						int f0 = iiw + iw-1, f1 = f0 + (iw+2)+m;
-						addTri(f0+1,f1+0,f1+1,i);
-					}
-					for (m=0; m < ms; ++m)
-					{
-						int f0 = iiw + iw-sw -m, f1 = f0 + (iw+1);
-						addTri(f0+0,f1+0,f0+1,i);
-					}
-					iiw += iw + 1;
-				}
 				vSegs[seg].nTri[lod] = idx.size()/3;
 
 
@@ -658,16 +695,19 @@ void SplineRoad::RebuildRoadInt()
 					idx.clear();
 					for (int i = 0; i < iLmrgW-1; ++i)  // length
 					{	int iiW = (i+0)*(iwW+1);
-					for (int w=0; w < iwW; ++w)  // width
-					{
-						int f = iiW + w, f1 = f + (iwW+1);
-						idx.push_back(f+1);  idx.push_back(f1+1);  idx.push_back(f+0);
-						idx.push_back(f1+1);  idx.push_back(f1+0);  idx.push_back(f+0);
-					}	}
+
+						for (int w=0; w < iwW; ++w)  // width
+						{
+							int f0 = iiW + w, f1 = f0 + (iwW+1);
+							idx.push_back(f0+1);  idx.push_back(f1+1);  idx.push_back(f0+0);
+							idx.push_back(f1+1);  idx.push_back(f1+0);  idx.push_back(f0+0);
+						}
+					}
 					
 					//  front plates start,end
 					const int Wid[4/*6*/][3] = {{2,1,0},{3,2,0},{5,4,7},{6,5,7}/*,{7,3,0},{4,3,7}*/};
 					int i,f, b = posW.size()-iwW-1;
+
 					if (!isPipe(seg))  //  no fronts in pipes
 					for (f=0; f < 4; ++f)
 					{
@@ -689,14 +729,13 @@ void SplineRoad::RebuildRoadInt()
 				{
 					idx.clear();
 					at_pos = &posC;
+
 					for (int l=0; l < iLmrgC; ++l)
 					for (int w=0; w < iwC; ++w)
 					{
-						int f = w + l*(iwC+1)*2, f1 = f + iwC+1;
-						//idx.push_back(f+0);  idx.push_back(f1+1);  idx.push_back(f+1);
-						//idx.push_back(f+0);  idx.push_back(f1+0);  idx.push_back(f1+1);
-						addTri(f+0, f1+1, f+1 ,1);
-						addTri(f+0, f1+0, f1+1,1);
+						int f0 = w + l*(iwC+1)*2, f1 = f0 + iwC+1;
+						addTri(f0+0, f1+1, f0+1, 1, blt);
+						addTri(f0+0, f1+0, f1+1, 1, blt);
 					}					
 					vSegs[seg].nTri[lod] += idx.size()/3;
 
@@ -709,17 +748,21 @@ void SplineRoad::RebuildRoadInt()
 				//  add Mesh to Scene  -----------------------------------------
 				Entity* ent = 0, *entW = 0, *entC = 0;
 				SceneNode* node = 0, *nodeW = 0, *nodeC = 0;
-					AddMesh(mesh, sMesh, aabox, &ent, &node, "."+sEnd);
+
+				AddMesh(mesh, sMesh, aabox, &ent, &node, "."+sEnd);
 				if (wPglass)
-				{	ent->setRenderQueueGroup(RQG_PipeGlass);
+				{
+					ent->setRenderQueueGroup(RQG_PipeGlass);
 					//ent->setCastShadows(true);
 				}
 				if (wall /*&& !posW.empty()*/)
-				{	AddMesh(meshW, sMeshW, aabox, &entW, &nodeW, "W."+sEnd);
+				{
+					AddMesh(meshW, sMeshW, aabox, &entW, &nodeW, "W."+sEnd);
 					entW->setCastShadows(true);  // only cast
 				}
 				if (cols /*&& !posC.empty()*/)
-				{	AddMesh(meshC, sMeshC, aabox, &entC, &nodeC, "C."+sEnd);
+				{
+					AddMesh(meshC, sMeshC, aabox, &entC, &nodeC, "C."+sEnd);
 					entC->setVisible(true);  
 					if (bCastShadow)
 						entC->setCastShadows(true);
@@ -727,8 +770,6 @@ void SplineRoad::RebuildRoadInt()
 				if (bCastShadow && !onTer)
 					ent->setCastShadows(true);
 
-				
-				/**/
 				
 				//>>  store ogre data  ------------
 				rs.road[lod].node = node;	rs.wall[lod].node = nodeW;
@@ -743,11 +784,11 @@ void SplineRoad::RebuildRoadInt()
 				rs.empty = false;  // new
 
 				//  copy lod points
-				if (lod == 0)  {
-					for (size_t p=0; p < posLod.size(); ++p)
+				if (lod == 0)
+				{	for (size_t p=0; p < posLod.size(); ++p)
 						rs.lpos.push_back(posLod[p]);
-					posLod.clear();  }
-			
+					posLod.clear();
+				}
 				//#  stats--
 				if (stats)
 				{
@@ -758,14 +799,13 @@ void SplineRoad::RebuildRoadInt()
 
 				///  bullet trimesh  at lod 0
 				///------------------------------------------------------------------------------------
-				#ifndef ROAD_EDITOR  // in Game
-				if (lod == 0)
+				if (lod == 0 && blt)
 				{
 					btTriangleMesh* trimesh = new btTriangleMesh();  vbtTriMesh.push_back(trimesh);
 					#define vToBlt(v)  btVector3(v.x, -v.z, v.y)
-					#define addTriB(a,b,c)  trimesh->addTriangle(vToBlt(a), vToBlt(b), vToBlt(c));
+					#define addTriB(a,b,c)  trimesh->addTriangle(vToBlt(a), vToBlt(b), vToBlt(c), blt);
 
-					size_t si = posBt.size(), a=0;;  // %3!
+					size_t si = posBt.size(), a=0;  // %3!
 					for (size_t i=0; i < si/3; ++i,a+=3)
 						addTriB(posBt[a], posBt[a+1], posBt[a+2]);
 
@@ -787,31 +827,33 @@ void SplineRoad::RebuildRoadInt()
 					bco->setFriction(0.8f);  bco->setRestitution(0.f);  //`
 					bco->setCollisionFlags(bco->getCollisionFlags() |
 						btCollisionObject::CF_STATIC_OBJECT | btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT/**/);
-					pGame->collision.world->addCollisionObject(bco);
-					pGame->collision.shapes.push_back(shape);
+					#ifdef ROAD_EDITOR
+						pApp->world->addCollisionObject(bco);
+					#else
+						pGame->collision.world->addCollisionObject(bco);
+						pGame->collision.shapes.push_back(shape);
+					#endif
 					
 					//  Wall  ]
+					#ifndef ROAD_EDITOR  // in Game
 					if (wall)
 					{	trimesh = new btTriangleMesh();  vbtTriMesh.push_back(trimesh);
 						
 						for (int i = 0; i < iLmrgW-1; ++i)  // length
 						{	int iiW = i* (iwW+1);
-						for (int w=0; w < iwW; ++w)  // width
-						if (bRoadWFullCol || w==0 || w == iwW-1)  // only 2 sides|_| optym+
-						{
-							int f = iiW + w, f1 = f + (iwW+1);
-							addTriB(posW[f+0], posW[f1+1], posW[f+1]);
-							addTriB(posW[f+0], posW[f1+0], posW[f1+1]);
-						}	}
+
+							for (int w=0; w < iwW; ++w)  // width
+							if (bRoadWFullCol || w==0 || w == iwW-1)  // only 2 sides|_| optym+
+							{
+								int f = iiW + w, f1 = f + (iwW+1);
+								addTriB(posW[f+0], posW[f1+1], posW[f+1]);
+								addTriB(posW[f+0], posW[f1+0], posW[f1+1]);
+							}
+						}
 						
 						btCollisionShape* shape = new btBvhTriangleMeshShape(trimesh, true);
 						shape->setUserPointer((void*)7777);  //-  + road mtr id todo...
 						
-						//btRigidBody::btRigidBodyConstructionInfo infoW(0.f, 0, shape);
-						//infoW.m_restitution = 0.0f;
-						//infoW.m_friction = 0.1f;  // 0 for wall
-						//pGame->collision.AddRigidBody(infoW);  // old
-
 						btCollisionObject* bco = new btCollisionObject();
 						bco->setActivationState(DISABLE_SIMULATION);
 						bco->setCollisionShape(shape);	bco->setWorldTransform(tr);
@@ -821,8 +863,8 @@ void SplineRoad::RebuildRoadInt()
 						pGame->collision.world->addCollisionObject(bco);
 						pGame->collision.shapes.push_back(shape);
 					}
+					#endif
 				}
-				#endif
 
 			}/*bNxt Merging*/
 
@@ -854,18 +896,20 @@ void SplineRoad::RebuildRoadInt()
 
 
 //  add triangle
-void SplineRoad::addTri(int f1, int f2, int f3, int i)
+void SplineRoad::addTri(int f1, int f2, int f3, int i, bool blt)
 {
 	/*bool ok = true;  const int fmax = 65530; //16bit
 	if (f1 >= at_size || f1 > fmax)  {  LogRE("idx too big: "+toStr(f1)+" >= "+toStr(at_size));  ok = 0;  }
 	if (f2 >= at_size || f2 > fmax)  {  LogRE("idx too big: "+toStr(f2)+" >= "+toStr(at_size));  ok = 0;  }
 	if (f3 >= at_size || f3 > fmax)  {  LogRE("idx too big: "+toStr(f3)+" >= "+toStr(at_size));  ok = 0;  }
 	if (!ok)  return;/**/
+
 	idx.push_back(f1);	idx.push_back(f2);	idx.push_back(f3);
-	#ifndef ROAD_EDITOR  // GAME
-	if (i > 0 && i < at_ilBt)
-	{	posBt.push_back((*at_pos)[f1]);
+
+	if (blt && i > 0 && i < at_ilBt)
+	{
+		posBt.push_back((*at_pos)[f1]);
 		posBt.push_back((*at_pos)[f2]);
-		posBt.push_back((*at_pos)[f3]);  }
-	#endif
+		posBt.push_back((*at_pos)[f3]);
+	}
 }

@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "../ogre/common/Defines.h"
 #include "OgreApp.h"
+#include <OgreTerrain.h>
 #include <OgreHardwarePixelBuffer.h>
 //#include "../vdrift/settings.h"
 using namespace Ogre;

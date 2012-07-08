@@ -48,6 +48,8 @@ App::App()  //  gui wigdets--
 	,edRdTcMul(0),edRdLenDim(0),edRdWidthSteps(0),edRdHeightOfs(0)  // road
 	,edRdSkirtLen(0),edRdSkirtH(0), edRdMergeLen(0),edRdLodPLen(0)
 	,edRdColN(0),edRdColR(0), edRdPwsM(0),edRdPlsM(0)
+	,edScaleAllMul(0),edScaleTerHMul(0)  // tools
+	,valAlignWidthAdd(0), valAlignWidthMul(0), valAlignSmooth(0)
 	,imgTrkIco1(0),imgTrkIco2(0), edFind(0)
 	,trkMList(0),trkName(0),bListTrackU(0)  // track
 

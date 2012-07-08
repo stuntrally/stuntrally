@@ -55,7 +55,8 @@ class SplineRoad : public SplineBase
 {
 public:
 	#ifdef ROAD_EDITOR
-		SplineRoad();
+		class App* pApp;  ///*
+		SplineRoad(App* papp);
 	#else
 		class GAME* pGame;  ///*
 		SplineRoad(GAME* pgame);
@@ -68,7 +69,7 @@ public:
 	bool LoadFile(Ogre::String fname, bool build=true), SaveFile(Ogre::String fname);
 	
 	//  Rebuild
-	void RebuildRoad(bool full=false), RebuildRoadInt(),
+	void RebuildRoad(bool full=false), RebuildRoadInt(bool editorAlign=false),
 		Destroy(), DestroyRoad(), DestroySeg(int id);
 
 	//  Update
@@ -114,13 +115,13 @@ private:
 		Ogre::Entity** pEnt, Ogre::SceneNode** pNode, Ogre::String sEnd);
 
 	std::vector<Ogre::uint16> idx;	// mesh indices
-#ifndef ROAD_EDITOR
+//#ifndef ROAD_EDITOR
 	std::vector<Ogre::Vector3> posBt;  // for bullet trimesh
-	std::vector<btTriangleMesh*> vbtTriMesh;  // for delete
-#endif
+	std::vector<class btTriangleMesh*> vbtTriMesh;  // for delete
+//#endif
 	std::vector<Ogre::Vector3>* at_pos;
 	//  add triangle, with index check
-	inline void addTri(int f1, int f2, int f3, int i);
+	inline void addTri(int f1, int f2, int f3, int i, bool blt);
 	int at_size, at_ilBt;  // pars for fi
 
 	//  markers
@@ -190,6 +191,9 @@ public:
 	int iChkId1,iChkId1Rev;  // 1st chekpoint index (and for reversed) for mChks[]
 
 	int iTexSize;  //setting textures size for mtr name _s, call rebuild after change
+	
+	// params for editor tool align terrain to road
+	float edWadd,edWmul;  // const added width and width multipler for whole road
 };
 
 #endif

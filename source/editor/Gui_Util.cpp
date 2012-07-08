@@ -231,7 +231,7 @@ void App::btnCopyRoadPars(WP)
 {
 	if (!ChkTrkCopy() || !road)  return;
 	String from = PathCopyTrk();
-	SplineRoad rd;  rd.LoadFile(from + "/road.xml",false);
+	SplineRoad rd(this);  rd.LoadFile(from + "/road.xml",false);
 
 	for (int i=0; i < MTRs; ++i)
 	{	road->sMtrRoad[i] = rd.sMtrRoad[i];

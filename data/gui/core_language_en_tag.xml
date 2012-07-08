@@ -715,6 +715,11 @@
 	<Tag name="DeleteRoad">Delete Road</Tag>
 	<Tag name="NeedReload">* need reload</Tag>
 
+	<Tag name="AlignTerrainToRoad">Align terrain to road</Tag>
+	<Tag name="AlignWidthAdd">Width add</Tag>
+	<Tag name="AlignWidthMul">Width multipy</Tag>
+	<Tag name="AlignSmooth">Smooth size</Tag>
+
 
 	<!--  Settings  -->
 	<Tag name="Settings">Settings</Tag>
@@ -848,6 +853,7 @@
 	<Tag name="InputRoadRebuild">B - rebuild road (after terrain change, etc.)</Tag>
 	<Tag name="InputRoadMerge">M - toggle road merge segs (for test)</Tag>
 	<Tag name="InputRoadStats">T - road stats window</Tag>
+	<Tag name="InputRoadAlignTerrain">U - Align terrain to road (for selected segments)</Tag>
 
 
 	<!--  Start pos  -->

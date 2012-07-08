@@ -7,6 +7,8 @@
 #include "../ogre/common/MultiList2.h"
 #include "../ogre/common/MaterialGen/MaterialFactory.h"
 #include "BulletDynamics/Dynamics/btDiscreteDynamicsWorld.h"
+#include <OgreTerrain.h>
+#include <OgreTerrainGroup.h>
 using namespace Ogre;
 
 

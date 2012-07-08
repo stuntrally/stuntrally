@@ -421,7 +421,7 @@ void App::ReadTrkStats()
 
 	UpdGuiRdStats(&rd,sc, sListTrack, tim.GetBestLap(0, pSet->gui.trackreverse));
 #else
-	SplineRoad rd;  rd.LoadFile(sRd,false);  // load
+	SplineRoad rd(this);  rd.LoadFile(sRd,false);  // load
 	UpdGuiRdStats(&rd,sc, sListTrack, 0.f);
 #endif
 }

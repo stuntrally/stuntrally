@@ -10,6 +10,7 @@
 #include "BulletCollision/CollisionDispatch/btCollisionWorld.h"
 
 #include "../ogre/common/MaterialGen/MaterialFactory.h"
+#include <OgreTerrain.h>
 using namespace Ogre;
 
 
@@ -332,69 +333,95 @@ void App::SaveWaterDepth()
 }
 
 
+///  . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 
 ///  align terrain to road selected segments
 //-----------------------------------------------------------------------------------------------------------
 void App::AlignTerToRoad()
 {
+	if (road->vSel.empty())  return;
 	QTimer ti;  ti.update();  ///T  /// time
 
-	//  scene
-	//CreateBltFluids();
-	//-CreateBltTerrain();  // from terrain->, faster?
-	//TODO:
-	///  create bullet road for selected segments ...
-	//**/road->RebuildRoadInt();  bool blt=true;
-	//  get min max x,z from sel segs aabb-s (dont raycast whole terrain)
+	///  create bullet road for selected segments
+	road->edWmul = pSet->al_w_mul;
+	road->edWadd = pSet->al_w_add;
+	road->RebuildRoadInt(true);
+	//todo: get min max x,z from sel segs aabb-s (rect only, not whole terrain)
 
+	//  terrain
+	float *fHmap = terrain->getHeightData();
+	int w = sc.td.iVertsX, h = w;  float fh = h-1, fw = w-1;
 
-	int w = 1024, h = w;  float fh = h-1, fw = w-1;
-	using Ogre::uint;
-	uint *wd = new uint[w*h];   // water depth
-	register int x,y,a,ia,id;
-	register float fa,fd, fx,fz, wx,wz;
+	float *rd = new float[w*h];  // road depth
+	bool  *rh = new bool[w*h];  // road hit
+
+	const float Len = 400;  // max ray length
+	register int x,y,a;
+	register float v,k, fx,fz, wx,wz;
 	
-	btVector3 from(0,0,0), to = from;
-	btCollisionWorld::ClosestRayResultCallback rayRes(from, to);
-		
-	///  write to img  -----------
-	//  get ter height, compare with ray cast to bullet fluids only
+	///  ray casts  -----------
 	for (y = 0; y < h; ++y) {  a = y*w;
 	for (x = 0; x < w; ++x, ++a)
 	{
 		//  pos 0..1
-		fx = float(y)/fh;  fz = float(x)/fw;
+		fx = float(x)/fh;  fz = float(y)/fw;
 		//  pos on ter  -terSize..terSize
-		wx = (fx-0.5f) * sc.td.fTerWorldSize;  wz = -(fz-0.5f) * sc.td.fTerWorldSize;
-		//if (x==0 && y==0 || x==w-1 && y==h-1)  // check
-		//	LogO(toStr(fx)+","+toStr(fz)+" "+toStr(wx)+","+toStr(wz));
+		wx = (fx-0.5f) * sc.td.fTerWorldSize;  wz = (fz-0.5f) * sc.td.fTerWorldSize;
 
-		//  ray pos,to
-		btVector3 from(wx,wz,300), to = from;
-		to.setZ(to.getZ() - 600);  // max range
-		//  cast  -------
-		rayRes.m_rayFromWorld = from;
-		rayRes.m_rayToWorld = to;
+		btVector3 from(wx,wz,Len), to(wx,wz,-Len);  // x -z y
+		btCollisionWorld::ClosestRayResultCallback rayRes(from, to);
 		world->rayTest(from, to, rayRes);
-		if (rayRes.hasHit())
-			fa = rayRes.m_hitPointWorld.getZ() *10.01f;  //..
-		else  fa = 0.f;  // no fluids
 
-		fd = fa * 0.4f * -255.f;  // depth far
-		fa = fa * 8.f * -255.f;  // alpha near
-
-		ia = std::max(0, std::min(255, (int)fa ));  // clamp
-		id = std::max(0, std::min(255, (int)fd ));
-		
-		wd[a] = 0xFF000000 + /*0x01 */ ia + 0x0100 * id;  // write
+		//  terrain height if not hit
+		rh[a] = rayRes.hasHit();
+		rd[a] = rayRes.hasHit() ? rayRes.m_hitPointWorld.getZ() : fHmap[a];
 	}	}
 
-	Image im;  // save img
-	im.loadDynamicImage((uchar*)wd, w,h,1, PF_BYTE_RGBA);
-	im.save(TrkDir()+"objects/waterDepth2.png");
-	delete[] wd;
+	//  smooth edges, road-terrain border
+	const float fv = pSet->al_smooth;
+	if (fv > 0.5f)
+	{
+		const int f = std::ceil(fv);
+		const float fs = (f*2+1)*(f*2+1);
+		float ff = 0.f;
+		register int i,j,m,d,b;
+
+		//  gauss kernel for smoothing
+		float *mask = new float[fs];  m = 0;
+		for (j = -f; j <= f; ++j)
+		for (i = -f; i <= f; ++i, ++m)
+		{
+			v = std::max(0.f, 1.f - sqrtf((float)(i*i+j*j)) / fv );
+			mask[m] = v;  ff += v;
+		}
+		ff = 1.f / ff;  // smooth, outside (>1.f)
+			
+		//  sum kernel
+		for (y = f; y < h-f; ++y) {  a = y*w +f;
+		for (x = f; x < w-f; ++x, ++a)
+		{		
+			v = 0;  m = 0;  b = 0;
+			for (j = -f; j <= f; ++j) {  d = a -f + j*w;
+				for (i = -f; i <= f; ++i, ++d, ++m)
+				{	k = mask[m];  //maskB ?
+					v += rd[d] * k;
+					if (rh[d] && k > 0.1f)  ++b;
+			}	}
+			if (b > 0 && b < fs*0.8f)  //par?
+				rd[a] = v * ff;
+		}	}
+	}
+
+	//  set new hmap
+	for (y = 0; y < h; ++y) {  a = y*w;
+	for (x = 0; x < w; ++x, ++a)
+	{
+		fHmap[a] = rd[a];
+	}	}
+
+	delete[] rd;  delete[] rh;
 
 
-	//  clear
+	//  clear blt world !!..
 	for(int i = world->getNumCollisionObjects() - 1; i >= 0; i--)
 	{
 		btCollisionObject* obj = world->getCollisionObjectArray()[i];
@@ -408,6 +435,25 @@ void App::AlignTerToRoad()
 		delete sd;
 		delete obj;
 	}
+
+
+	//  update terrain  todo: rect only
+	terrain->dirty();  //dirtyRect(Rect());
+	//GetTerAngles(rcMap.left,rcMap.top, rcMap.right,rcMap.bottom);
+	//initBlendMaps(terrain);
+	bTerUpd = true;
+
+
+	//  put sel segs on terrain
+	for (std::set<int>::const_iterator it = road->vSel.begin(); it != road->vSel.end(); ++it)
+		road->mP[*it].onTer = true;
+
+	//  restore orig road width
+	road->RebuildRoad(true);
+	
+	//  todo: ?restore road sel after load F5..
+	/// // /  set params, def cfg, par gui
+
 
 	ti.update();	///T  /// time
 	float dt = ti.dt * 1000.f;

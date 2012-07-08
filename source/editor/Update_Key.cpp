@@ -5,6 +5,7 @@
 #include "../vdrift/pathmanager.h"
 #include "../ogre/common/MultiList2.h"
 #include "../ogre/common/RenderConst.h"
+#include <OgreTerrain.h>
 #include <MyGUI.h>
 using namespace MyGUI;
 using namespace Ogre;
@@ -323,7 +324,8 @@ bool App::KeyPress(const CmdKey &arg)
 					tab->setIndexSelected(i);  if (iTab1==1)  MenuTabChg(tab,i);
 	   			}
    			break;
-   		case KC_F3:
+
+   		case KC_F3:  // tabs,sub
    			if (alt)
    			{	pSet->num_mini = (pSet->num_mini + 1) % (RTs+2);  UpdMiniVis();  }
    			else
@@ -375,75 +377,77 @@ bool App::KeyPress(const CmdKey &arg)
 	///  Road keys  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * 
 	if (edMode == ED_Road && road && bEdit())
 	{
-	if (iSnap > 0)
-	switch (arg.key)
-	{
-		case KC_1:	road->AddYaw(-1,angSnap,alt);	break;
-		case KC_2:	road->AddYaw( 1,angSnap,alt);	break;
-		case KC_3:	road->AddRoll(-1,angSnap,alt);	break;
-		case KC_4:	road->AddRoll( 1,angSnap,alt);	break;
-	}
-	switch (arg.key)
-	{
-		//  choose 1
-		case KC_SPACE:
-			if (ctrl)	road->CopyNewPoint();
-			else		road->ChoosePoint();  break;
+		if (iSnap > 0)
+		switch (arg.key)
+		{
+			case KC_1:	road->AddYaw(-1,angSnap,alt);	break;
+			case KC_2:	road->AddYaw( 1,angSnap,alt);	break;
+			case KC_3:	road->AddRoll(-1,angSnap,alt);	break;
+			case KC_4:	road->AddRoll( 1,angSnap,alt);	break;
+		}
+		switch (arg.key)
+		{
+			//  choose 1
+			case KC_SPACE:
+				if (ctrl)	road->CopyNewPoint();
+				else		road->ChoosePoint();  break;
+				
+			//  multi sel
+			case KC_BACK:
+				if (alt)		road->SelAll();
+				else if (ctrl)	road->SelClear();
+				else			road->SelAddPoint();  break;
+				
+			//  ter on  first,last
+			case KC_HOME:  case KC_NUMPAD7:
+				if (ctrl)	road->FirstPoint();
+				else		road->ToggleOnTerrain();  break;
+				
+			//  cols
+			case KC_END:  case KC_NUMPAD1:
+				if (ctrl)	road->LastPoint();
+				else		road->ToggleColums();  break;
+
+			//  prev,next
+			case KC_PGUP:	case KC_NUMPAD9:
+				road->PrevPoint();  break;
+			case KC_PGDOWN:	case KC_NUMPAD3:
+				road->NextPoint();  break;
+
+			//  del
+			case KC_DELETE:	case KC_DECIMAL:
+			case KC_NUMPAD5:
+				if (ctrl)	road->DelSel();
+				else		road->Delete();  break;
+
+			//  ins
+			case KC_INSERT:	case KC_NUMPAD0:
+				if (ctrl && !shift && !alt)	{	if (road->CopySel())  Status("Copy",0.6,0.8,1.0);  }
+				else if (!ctrl && shift && !alt)	road->Paste();
+				else if ( ctrl && shift && !alt)	road->Paste(true);
+				else
+				{	road->newP.pos.x = road->posHit.x;
+					road->newP.pos.z = road->posHit.z;
+					if (!sc.ter)
+						road->newP.pos.y = road->posHit.y;
+					road->newP.aType = AT_Both;
+					road->Insert(shift ? INS_Begin : ctrl ? INS_End : alt ? INS_CurPre : INS_Cur);
+				}	break;					  
+
+			case KC_MINUS:   road->ChgMtrId(-1);	break;
+			case KC_EQUALS:  road->ChgMtrId(1);		break;
+
+			case KC_5:	road->ChgAngType(-1);	break;
+			case KC_6:	if (shift)  road->AngZero();  else
+						road->ChgAngType(1);	break;
+
+			case KC_7:  iSnap = (iSnap-1+ciAngSnapsNum)%ciAngSnapsNum;  angSnap = crAngSnaps[iSnap];  break;
+			case KC_8:  iSnap = (iSnap+1)%ciAngSnapsNum;                angSnap = crAngSnaps[iSnap];  break;
 			
-		//  multi sel
-		case KC_BACK:
-			if (alt)		road->SelAll();
-			else if (ctrl)	road->SelClear();
-			else			road->SelAddPoint();  break;
-			
-		//  ter on  first,last
-		case KC_HOME:  case KC_NUMPAD7:
-			if (ctrl)	road->FirstPoint();
-			else		road->ToggleOnTerrain();  break;
-			
-		//  cols
-		case KC_END:  case KC_NUMPAD1:
-			if (ctrl)	road->LastPoint();
-			else		road->ToggleColums();  break;
+			case KC_0:  road->Set1stChk();  break;
 
-		//  prev,next
-		case KC_PGUP:	case KC_NUMPAD9:
-			road->PrevPoint();  break;
-		case KC_PGDOWN:	case KC_NUMPAD3:
-			road->NextPoint();  break;
-
-		//  del
-		case KC_DELETE:	case KC_DECIMAL:
-		case KC_NUMPAD5:
-			if (ctrl)	road->DelSel();
-			else		road->Delete();  break;
-
-		//  ins
-		case KC_INSERT:	case KC_NUMPAD0:
-		if (ctrl && !shift && !alt)	{	if (road->CopySel())  Status("Copy",0.6,0.8,1.0);  }
-		else if (!ctrl && shift && !alt)	road->Paste();
-		else if ( ctrl && shift && !alt)	road->Paste(true);
-		else
-		{	road->newP.pos.x = road->posHit.x;
-			road->newP.pos.z = road->posHit.z;
-			if (!sc.ter)
-				road->newP.pos.y = road->posHit.y;
-			road->newP.aType = AT_Both;
-			road->Insert(shift ? INS_Begin : ctrl ? INS_End : alt ? INS_CurPre : INS_Cur);
-		}	break;					  
-
-		case KC_MINUS:   road->ChgMtrId(-1);	break;
-		case KC_EQUALS:  road->ChgMtrId(1);		break;
-
-		case KC_5:	road->ChgAngType(-1);	break;
-		case KC_6:	if (shift)  road->AngZero();  else
-					road->ChgAngType(1);	break;
-
-		case KC_7:  iSnap = (iSnap-1+ciAngSnapsNum)%ciAngSnapsNum;  angSnap = crAngSnaps[iSnap];  break;
-		case KC_8:  iSnap = (iSnap+1)%ciAngSnapsNum;                angSnap = crAngSnaps[iSnap];  break;
-		
-		case KC_0:  road->Set1stChk();  break;
-	}
+			case KC_U:  AlignTerToRoad();  break;
+		}
 	}
 
 	//  ter brush shape

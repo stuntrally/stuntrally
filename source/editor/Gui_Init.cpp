@@ -272,6 +272,10 @@ void App::InitGui()
 	Btn("DeleteRoad", btnDeleteRoad);
 	Btn("ScaleAll", btnScaleAll);	Ed(ScaleAllMul, editScaleAllMul);
 	Btn("ScaleTerH", btnScaleTerH);	Ed(ScaleTerHMul, editScaleTerHMul);
+
+	Slv(AlignWidthAdd, pSet->al_w_add /20.f);
+	Slv(AlignWidthMul, (pSet->al_w_mul-1.f) /4.f);
+	Slv(AlignSmooth, pSet->al_smooth /6.f);
 	
 
 	///  Fill Combo boxes  . . . . . . .

@@ -12,7 +12,7 @@ using namespace Ogre;
 //  ctor
 //---------------------------------------------------------------------------------------------------------------
 #ifdef ROAD_EDITOR
-SplineRoad::SplineRoad() :
+SplineRoad::SplineRoad(App* papp) : pApp(papp),
 #else
 SplineRoad::SplineRoad(GAME* pgame) : pGame(pgame),
 #endif
@@ -24,7 +24,8 @@ SplineRoad::SplineRoad(GAME* pgame) : pGame(pgame),
 	rebuild(false), iDirtyId(-1), idStr(0),
 	fMarkerScale(1.f), fLodBias(1.f),
 	bCastShadow(0), bRoadWFullCol(0),
-	chksRoadLen(1.f)
+	chksRoadLen(1.f),
+	edWadd(0.f),edWmul(1.f)
 {
 	Defaults();  iTexSize = 1;
 	iMrgSegs = 0;  segsMrg = 0;  iOldHide = -1;
@@ -42,7 +43,7 @@ void SplineRoad::Defaults()
 	skLen = 1.f;  skH = 0.12f;
 	setMrgLen = 180.f;  bMerge = false;  lposLen = 10.f;
 	colN = 4; colR = 2.f;
-	iDir = -1;  vStBoxDim = Vector3(1,3,5);  // /long |height -width
+	iDir = -1;  vStBoxDim = Vector3(1,5,12);  // /long |height -width
 	iP1 = 0;  iChkId1 = 0;  iChkId1Rev = 0;
 }
 

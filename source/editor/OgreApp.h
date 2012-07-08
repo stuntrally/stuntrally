@@ -15,14 +15,9 @@
 #include "../vdrift/tracksurface.h"
 #include "../vdrift/track.h"
 
-//#include <OgrePrerequisites.h>
 #include <OgreCommon.h>
 #include <OgreVector3.h>
 #include <OgreString.h>
-#include <OgreTerrain.h>  //remove --> class..
-#include <OgreTerrainGroup.h>
-#include <OgreTerrainPaging.h>
-#include <OgrePageManager.h>
 
 #include <MyGUI.h>
 
@@ -37,7 +32,7 @@ const Ogre::Real crAngSnaps[ciAngSnapsNum] = {0,5,15,30,45,90,180};
 
 namespace Forests {  class PagedGeometry;  }
 namespace MyGUI  {  class MultiList2;  class Slider;  }
-//namespace Ogre  {  class Terrain;  }
+namespace Ogre  {  class Terrain;  class TerrainGlobalOptions;  class TerrainGroup;  class TerrainPaging;  class PageManager;  }
 class MaterialFactory;
 
 
@@ -177,7 +172,9 @@ protected:
 
 
 	///  bullet world
+public:
 	class btDiscreteDynamicsWorld* world;
+protected:
 	class btDefaultCollisionConfiguration* config;
 	class btCollisionDispatcher* dispatcher;
 	class bt32BitAxisSweep3* broadphase;
@@ -396,6 +393,7 @@ protected:
 	void btnScaleAll(WP), btnDeleteRoad(WP), btnScaleTerH(WP);
 	MyGUI::EditPtr edScaleAllMul;  void editScaleAllMul(MyGUI::EditPtr);
 	MyGUI::EditPtr edScaleTerHMul;  void editScaleTerHMul(MyGUI::EditPtr);
+	SLV(AlignWidthAdd);  SLV(AlignWidthMul);  SLV(AlignSmooth);
 
 
 	//  [Track]  ----
