@@ -27,6 +27,7 @@
 <track n="71" name="TestC6-temp"		created="20-10-11" crtver="1.4" modified="30-12-11" scenery="Jungle" 	author="CH" fluids="0" bumps="0" jumps="0" loops="0" pipes="0" banked="0" frenzy="1" long="0" diff="0" rating="0" />
 <track n="71" name="TestC7-oc"			created="30-08-11" crtver="1.4" modified="30-12-11" scenery="Savanna" 	author="CH" fluids="3" bumps="0" jumps="0" loops="0" pipes="0" banked="0" frenzy="0" long="0" diff="0" rating="0" />
 <track n="86" name="Test8-Objects"		created="21-04-12" crtver="1.6" modified="21-04-12" scenery="Desert"	author="CH" fluids="0" bumps="1" jumps="2" loops="0" pipes="0" banked="0" frenzy="0" long="0" diff="0" rating="0" />
+<track n="94" name="TestC8-align"		created="08-07-12" crtver="1.6" modified="08-07-12" scenery="Jungle"	author="CH" fluids="0" bumps="0" jumps="0" loops="0" pipes="0" banked="1" frenzy="0" long="1" diff="0" rating="2" />
 <!--1-->
 	<track n="01" name="J1-T"			created="06-06-10" crtver="0.2" modified="06-06-10" scenery="Jungle"	author="CH" fluids="0" bumps="1" jumps="0" loops="0" pipes="0" banked="0" frenzy="2" long="1" diff="1" rating="1" />
 	<track n="02" name="D1-simple"		created="25-07-10" crtver="0.3" modified="06-11-10" scenery="Desert"	author="CH" fluids="0" bumps="0" jumps="0" loops="0" pipes="0" banked="0" frenzy="0" long="3" diff="1" rating="0" />

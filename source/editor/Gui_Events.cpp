@@ -272,7 +272,7 @@ void App::btnTerrainHalf(WP)
 }
 
 //  Terrain  double  --------------------------------
-void App::btnTerrainDouble(WP)  // todo double.. gui []
+void App::btnTerrainDouble(WP)
 {
 	const char* str = tabsHmap->getItemSelected()->getCaption().asUTF8_c_str();  int size = atoi(str) / 2;
 	if (valTerTriSize){ valTerTriSize->setCaption(fToStr(sc.td.fTriangleSize * size,2,4));  }

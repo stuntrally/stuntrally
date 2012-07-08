@@ -451,11 +451,10 @@ void App::AlignTerToRoad()
 	//  restore orig road width
 	road->RebuildRoad(true);
 	
-	//  todo: ?restore road sel after load F5..
-	/// // /  set params, def cfg, par gui
+	// todo: ?restore road sel after load F5..
 
 
 	ti.update();	///T  /// time
 	float dt = ti.dt * 1000.f;
-	LogO(String("::: Time BulletRays: ") + toStr(dt) + " ms");
+	LogO(String("::: Time Ter Align: ") + toStr(dt) + " ms");
 }
