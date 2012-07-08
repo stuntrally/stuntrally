@@ -781,7 +781,7 @@ bool App::frameEnded(const FrameEvent& evt)
 	
 	if (road)  // road
 	{
-		road->bCastShadow = pSet->shadow_type >= 3;
+		road->bCastShadow = pSet->shadow_type >= 2;
 		road->RebuildRoadInt();
 	}
 

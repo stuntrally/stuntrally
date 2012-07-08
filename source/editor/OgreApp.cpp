@@ -101,9 +101,9 @@ void App::postInit()
 	materialFactory = new MaterialFactory();
 	materialFactory->pApp = this;
 	materialFactory->setSceneManager(mSceneMgr);
-	materialFactory->setShadows(pSet->shadow_type >= 2);
-	materialFactory->setShadowsDepth(pSet->shadow_type >= 3);
-	materialFactory->setShadowsSoft(pSet->shadow_type == 4);
+	materialFactory->setShadows(pSet->shadow_type >= 1);
+	materialFactory->setShadowsDepth(pSet->shadow_type >= 2);
+	materialFactory->setShadowsSoft(pSet->shadow_type == 3);
 	materialFactory->setShaderQuality(pSet->shaders);
 	materialFactory->setShadowsFilterSize(pSet->shadow_filter);
 	materialFactory->setReflect(pSet->water_reflect);
