@@ -9,7 +9,7 @@
 
     #define shMatrixMult(m, v) mul(m, v)
 
-    #define shUniform(s) , uniform s
+    #define shUniform(type, name) , uniform type name
 
     #define shInput(type, name) , in type name : TEXCOORD@shCounter(1)
     #define shOutput(type, name) , out type name : TEXCOORD@shCounter(2)
@@ -65,7 +65,7 @@
     #define shLerp(a, b, t) mix(a, b, t)
     #define shSaturate(a) clamp(a, 0.0, 1.0)
 
-    #define shUniform(s) uniform s;
+    #define shUniform(type, name) uniform type name;
 
     #define shSampler2D(name) uniform sampler2D name; @shUseSampler(name)
 
