@@ -267,8 +267,6 @@ bool App::frameStart(Real time)
 				pGame->timer.SetReplayTime(0, t);
 			}
 		}
-		//else
-		bCarRewind[0] = isKey(KC_BACK);  ///  Rewind
 
 		if (!pGame)
 		{

@@ -373,7 +373,6 @@ protected:
 
 public:
 	bool bRplPlay,bRplPause, bRplRec, bRplWnd;  //  game
-	bool bCarRewind[4];  // rewind key pressed for car
 	int carIdWin, iCurCar, iRplCarOfs;
 protected:
 	MyGUI::ButtonPtr btRplPl;  void UpdRplPlayBtn();

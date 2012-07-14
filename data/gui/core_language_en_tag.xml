@@ -464,6 +464,7 @@
 	<Tag name="InputMapPrevCamera">Previous Camera</Tag>
 	<Tag name="InputMapNextCamera">Next Camera</Tag>
 	<Tag name="InputMapLastChk">Go to last checkp.</Tag>
+	<Tag name="InputMapRewind">Rewind (time)</Tag>
 
 	<!--  Input  Map  -->
 	<Tag name="InputMapShowOptions">Show options</Tag>

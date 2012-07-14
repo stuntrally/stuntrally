@@ -69,6 +69,11 @@
 				<bind role="">Keyboard/45</bind>
 			</binding>
 		</action>
+		<action name="Rewind" type="Trigger">
+			<binding>
+				<bind role="inc">Keyboard/14</bind>
+			</binding>
+		</action>
 		<action name="ShiftDown" type="Trigger">
 			<binding>
 				<bind role="">Keyboard/44</bind>
@@ -124,6 +129,11 @@
 			</binding>
 		</action>
 		<action name="PrevCamera" type="Trigger">
+			<binding>
+				<bind role="">None</bind>
+			</binding>
+		</action>
+		<action name="Rewind" type="Trigger">
 			<binding>
 				<bind role="">None</bind>
 			</binding>
@@ -187,6 +197,11 @@
 				<bind role="">None</bind>
 			</binding>
 		</action>
+		<action name="Rewind" type="Trigger">
+			<binding>
+				<bind role="">None</bind>
+			</binding>
+		</action>
 		<action name="ShiftDown" type="Trigger">
 			<binding>
 				<bind role="">None</bind>
@@ -242,6 +257,11 @@
 			</binding>
 		</action>
 		<action name="PrevCamera" type="Trigger">
+			<binding>
+				<bind role="">None</bind>
+			</binding>
+		</action>
+		<action name="Rewind" type="Trigger">
 			<binding>
 				<bind role="">None</bind>
 			</binding>

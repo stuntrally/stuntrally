@@ -75,9 +75,6 @@ App::App(SETTINGS *settings, GAME *game)
 	int i,c;
 	NullHUD();
 
-	for (c=0; c < 4; ++c)
-		bCarRewind[c] = 0;
-
 	for (c=0; c < 2; ++c)
 	{
 		trkDesc[c]=0;  imgPrv[c]=0; imgMini[c]=0; imgTer[c]=0;

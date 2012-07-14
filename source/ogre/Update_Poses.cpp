@@ -144,15 +144,15 @@ void App::newPoses(float time)  // time only for camera update
 		//  rewind
 		///-----------------------------------------------------------------------
 		if (!bRplPlay && !pGame->pause && !bGhost && pCar)
-		if (bCarRewind[c])  // do rewind
+		if (pCar->bRewind)  // do rewind (go back)
 		{
 			double& gtime = pGame->timer.GetRewindTime(c);
 			gtime = std::max(0.0, gtime - time * 4.f);  //par speed
 
 			RewindFrame rf;
-			bool ok = rewind.GetFrame(gtime, &rf, 0);
+			bool ok = rewind.GetFrame(gtime, &rf, c);
 
-			pGame->cars.begin()->SetPosRewind(rf.pos, rf.rot, rf.vel, rf.angvel, rf.steer);
+			pCar->SetPosRewind(rf.pos, rf.rot, rf.vel, rf.angvel);
 			carModels[c]->fCam->first = true;
 		}
 		else  // save data
@@ -165,7 +165,6 @@ void App::newPoses(float time)  // time only for camera update
 			fr.rot = cd.body.GetOrientation();
 			fr.vel = cd.GetVelocity();
 			fr.angvel = cd.GetAngularVelocity();
-			fr.steer = pCar->GetLastSteer();
 
 			rewind.AddFrame(fr, c);  // rec rewind
 		}

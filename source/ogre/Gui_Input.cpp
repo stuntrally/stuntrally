@@ -108,7 +108,7 @@ void App::InitInputGui()
 			if (txt)  txt->setCaption(text);  }
 		
 		//  button size and columns positon
-		const int sx = 130, sy = 24, x0 = 20, x1 = 140, x2 = 285, x3 = 430, yh = 20;
+		const int sx = 130, sy = 24,  x0 = 20, x1 = 140, x2 = 285, x3 = 430,  yh = 20,  s0 = x1-x0-5;
 
 		///  Headers  action, binding, value
 		CreateText(x0,yh, sx,sy, "hdrTxt1_"+sPlr, TR("#90B0F0#{InputHeaderTxt1}"));
@@ -125,7 +125,7 @@ void App::InitInputGui()
 		yRow["HandBrake"] = y;	y+=2;	yRow["Boost"] = y;	y+=2;	yRow["Flip"] = y;		y+=2+2 +2;
 		yRow["ShiftUp"] = y;	y+=2;	yRow["ShiftDown"] = y;	y+=2 +1;
 		yRow["PrevCamera"] = y; y+=2;	yRow["NextCamera"] = y; y+=2+1;  //yc = 40 + ya * y;
-		yRow["LastChk"] = y;	y+=2;
+		yRow["LastChk"] = y;	y+=2;   yRow["Rewind"] = y;  y+=2;
 		y = 0;  // general
 		yRow["ShowOptions"] = y; y+=2+1;
 		yRow["PrevTab"] = y;     y+=2;	yRow["NextTab"] = y;    y+=2+1;
@@ -158,7 +158,7 @@ void App::InitInputGui()
 
 			//  description label
 			StaticTextPtr desc = tabitem->createWidget<TextBox>("TextBox",
-				x0, y+5, sx+70, sy,  ALIGN,
+				x0, y+5, s0, sy,  ALIGN,
 				"staticText_" + sAct );
 			setOrigPos(desc);
 			desc->setCaption( TR("#{InputMap" + name + "}") );
@@ -195,7 +195,7 @@ void App::InitInputGui()
 						(button2 ? skey2 : skey1) = GetInputName(none->getBindableName());
 				}
 				
-			//  binding buttons  ----------------
+			//  binding button  ----------------
 			ButtonPtr btn1 = tabitem->createWidget<Button>("Button",
 				x1, button2 ? (y + ya*2) : y, sx, sy,  ALIGN,
 				"inputbutton_" + sAct + "_" + sPlr + "_1");
@@ -260,14 +260,17 @@ void App::InputBind(int key, int button, int axis)
 	showMouse();
 
 	//  cancel (unbind) on Backspace or Escape
-	bool cancel = key == OIS::KC_BACK || key == OIS::KC_ESCAPE;
+	bool cancel = key == OIS::KC_ESCAPE;
+	//  when esc quits? todo: add unbind X button
 	
 	//  upd key name on button
 	bool isKey = key > -1, isAxis = axis > -1;
 	String skey0 = isKey ? "Keyboard/" + toStr(key) : 
 				isAxis ? joyName + "/Axis " + toStr(axis) :
 						joyName + "/Button " + toStr(button);
-	static_cast<StaticTextPtr>(pressedKeySender)->setCaption(cancel ? TR("#{InputKeyUnassigned}") : MyGUI::UString(GetInputName(skey0)));
+
+	static_cast<StaticTextPtr>(pressedKeySender)->setCaption(
+		cancel ? TR("#{InputKeyUnassigned}") : MyGUI::UString(GetInputName(skey0)));
 
 	
 	//  get action/schema/index from widget name
