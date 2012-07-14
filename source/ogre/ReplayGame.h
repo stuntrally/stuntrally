@@ -20,7 +20,7 @@ const static int cDefSize = 8*1024;
 
 
 //  whole replay/ghost data - max 4 players
-
+//--------------------------------------------
 struct ReplayHeader
 {
 	char head[5];  // "SR\_ "
@@ -49,7 +49,7 @@ struct ReplayHeader
 
 
 //  car data, for each simulation frame
-
+//--------------------------------------------
 struct ReplayFrame
 {
 	//  time  since game start
@@ -86,11 +86,26 @@ struct ReplayFrame
 	float fHitTime, fParIntens,fParVel;//, fSndForce, fNormVel;
 	Ogre::Vector3 vHitPos,vHitNorm;  // world hit data
 	float whMudSpin, fHitForce, fCarScrap, fCarScreech;
-	
+
 	ReplayFrame();
 };
 
 
+//  only data for car sim, to rewind back
+//--------------------------------------------
+struct RewindFrame
+{
+	//  time  since game start
+	double time;
+	//  car
+	MATHVECTOR <float,3> pos, vel, angvel;
+	QUATERNION <float> rot;
+	float steer;  //engine rpm..
+};
+
+
+///  Replay
+//--------------------------------------------
 class Replay
 {
 public:
@@ -102,7 +117,7 @@ public:
 	void AddFrame(const ReplayFrame& frame, int carNum);    // record
 	bool GetFrame(double time, ReplayFrame* fr, int carNum);  // play
 
-	const float GetTimeLength(int carNum=0) const;  // total time in seconds
+	const double GetTimeLength(int carNum=0) const;  // total time in seconds
 	const int GetNumFrames() const {  return frames[0].size();  }
 
 	//  inits only basic header data, fill the rest after
@@ -113,6 +128,26 @@ public:
 	ReplayHeader header;
 private:
 	std::vector<ReplayFrame> frames[4];  // 4 players max
+};
+
+
+///  Rewind
+//  to move car back in time, not saved in file, can have less frames than replay
+//--------------------------------------------
+class Rewind
+{
+public:
+	Rewind();
+
+	void AddFrame(const RewindFrame& frame, int carNum);
+	bool GetFrame(double time, RewindFrame* fr, int carNum);
+
+	const double GetTimeLength(int carNum=0) const;  // total time in seconds
+
+	void Clear();
+private:
+	std::vector<RewindFrame> frames[4];  // 4 players max
+	int idLast[4];  // last index from GetFrame (optym)
 };
 
 #endif

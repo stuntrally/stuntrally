@@ -65,9 +65,11 @@ public:
 	Ogre::Quaternion qFixCar,qFixWh;
 
 	//  replay - full, user saves
-	//  ghost - saved when best lap,  ghplay - ghost ride replay, loaded if was on disk
-	//  fr - used when playing replay for hud and sounds
+	//  ghost - saved when best lap
+	//  ghplay - ghost ride replay, loaded if was on disk
+	//  frm - used when playing replay for hud and sounds
 	Replay replay, ghost, ghplay;  ReplayFrame frm[4];
+	Rewind rewind;  // to take car back in time (after crash etc.)
 	const Ogre::String& GetGhostFile();
 
 	Scene sc;  /// scene.xml
@@ -371,6 +373,7 @@ protected:
 
 public:
 	bool bRplPlay,bRplPause, bRplRec, bRplWnd;  //  game
+	bool bCarRewind[4];  // rewind key pressed for car
 	int carIdWin, iCurCar, iRplCarOfs;
 protected:
 	MyGUI::ButtonPtr btRplPl;  void UpdRplPlayBtn();

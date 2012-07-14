@@ -305,8 +305,8 @@ public:
 	bool bResetPos;
 	void ResetPos(bool fromStart=true,int chkId=0);
 	void SavePosAtCheck();
+	void SetPosRewind(const MATHVECTOR<float,3>& pos, const QUATERNION<float>& rot, const MATHVECTOR<float,3>& vel, const MATHVECTOR<float,3>& angvel, float steer);
 
-//protected:
 public:
 	CARDYNAMICS dynamics;
 

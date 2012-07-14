@@ -477,3 +477,24 @@ void CAR::SavePosAtCheck()
 	posLastCheck[0] = dynamics.body.GetPosition();
 	rotLastCheck[0] = dynamics.body.GetOrientation();
 }
+
+///  set pos, for rewind
+void CAR::SetPosRewind(const MATHVECTOR<float,3>& pos, const QUATERNION<float>& rot, const MATHVECTOR<float,3>& vel, const MATHVECTOR<float,3>& angvel, float steer)
+{
+	SetPosition(pos);
+
+	btTransform transform;
+	transform.setOrigin(ToBulletVector(pos));
+	transform.setRotation(ToBulletQuaternion(rot));
+	dynamics.chassis->setWorldTransform(transform);
+
+	// velocities
+	dynamics.chassis->setLinearVelocity(ToBulletVector(vel));
+	dynamics.chassis->setAngularVelocity(ToBulletVector(angvel));
+
+	dynamics.SynchronizeBody();  // set body from chassis
+	dynamics.UpdateWheelContacts();
+
+	//  steer
+	dynamics.SetSteering(steer);  last_steer = steer;
+}

@@ -375,6 +375,7 @@ void App::LoadCar()  // 4
 	replay.header.networked = mClient ? 1 : 0;
 	replay.header.num_laps = pSet->game.num_laps;
 	}
+	rewind.Clear();
 
 	ghost.InitHeader(pSet->game.track.c_str(), pSet->game.track_user, pSet->game.car[0].c_str(), !bRplPlay);
 	ghost.header.numPlayers = 1;  // ghost always 1 car
