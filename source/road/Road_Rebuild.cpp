@@ -687,9 +687,7 @@ void SplineRoad::RebuildRoadInt(bool editorAlign)
 
 				///  wall ]
 				//------------------------------------------------------------------------------------
-				// wall pipe glass mtr
-				bool wPglass = isPipe(seg) && mP[seg].idMtr >= 1;  // wall pipe glass mtr
-				//bool wPglass = isPipe(seg) && StringUtil::match(sMtrPipe[mP[seg].idMtr], "*lass*");
+				bool wPglass = isPipe(seg) && bMtrPipeGlass[ mP[seg].idMtr ];  // wall pipe glass mtr
 				if (wall)
 				{
 					idx.clear();

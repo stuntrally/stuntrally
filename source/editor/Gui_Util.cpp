@@ -235,7 +235,7 @@ void App::btnCopyRoadPars(WP)
 
 	for (int i=0; i < MTRs; ++i)
 	{	road->sMtrRoad[i] = rd.sMtrRoad[i];
-		road->sMtrPipe[i] = rd.sMtrPipe[i];  }
+		road->SetMtrPipe(i, rd.sMtrPipe[i]);  }
 
 	road->tcMul = rd.tcMul;		road->colN = rd.colN;
 	road->lenDiv0 = rd.lenDiv0;	road->colR = rd.colR;

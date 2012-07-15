@@ -700,7 +700,7 @@ void App::comboPipeMtr(ComboBoxPtr cmb, size_t val)
 	int id = atoi(sn.c_str())-1;  if (id < 0 || id >= MTRs)  return;
 
 	String s = cmb->getItemNameAt(val);
-	road->sMtrPipe[id] = s;  road->RebuildRoad(true);  UpdPSSMMaterials();
+	road->SetMtrPipe(id, s);  road->RebuildRoad(true);  UpdPSSMMaterials();
 }
 
 void App::editRoad(EditPtr ed)

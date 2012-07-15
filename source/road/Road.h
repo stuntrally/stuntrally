@@ -143,8 +143,8 @@ private:
 public:
 	Ogre::Camera* mCamera;
 private:
-
 	friend class App;
+
 	int iSelPoint, iChosen;  // -1 if none
 	std::set<int> vSel;  // selection
 	
@@ -154,12 +154,14 @@ private:
 	int iMrgSegs, segsMrg,  iOldHide;
 	bool rebuild;  int iVis, iTris, iDirtyId, idStr;
 
-
+	Ogre::String  sMtrPipe[MTRs];  // use SetMtrPipe to set
+	bool bMtrPipeGlass[MTRs];  // glass in mtr name
 public:
 	Ogre::Vector3 posHit;  bool bHitTer, bSelChng;  float fLodBias;
 
 	///  params, from xml
-	Ogre::String  sMtrRoad[MTRs], sMtrPipe[MTRs], sMtrWall,sMtrWallPipe, sMtrCol;
+	Ogre::String  sMtrRoad[MTRs], sMtrWall,sMtrWallPipe, sMtrCol;
+	void SetMtrPipe(int i, Ogre::String sMtr);
 
 	Ogre::Real fHeight;	// above terrain  ?for each point-
 	Ogre::Real tcMul;		// tex coord mul / unit length
@@ -192,7 +194,7 @@ public:
 
 	int iTexSize;  //setting textures size for mtr name _s, call rebuild after change
 	
-	// params for editor tool align terrain to road
+	// params for editor tool: align terrain to road
 	float edWadd,edWmul;  // const added width and width multipler for whole road
 };
 

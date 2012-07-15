@@ -37,8 +37,9 @@ void SplineRoad::Defaults()
 {
 	sTxtDesc = "";  fScRot = 1.8f;  fScHit = 0.8f;
 	for (int i=0; i<MTRs; ++i)
-	{	sMtrRoad[i] = "";  sMtrPipe[i] = "";  }
+	{	sMtrRoad[i] = "";  sMtrPipe[i] = "";  bMtrPipeGlass[i] = true;  }
 	sMtrWall = "road_wall";  sMtrCol = "road_col";  sMtrWallPipe = "pipe_wall";
+	
 	fHeight = 0.1f;  tcMul = 0.25f;  lenDiv0 = 1.f;  iw0 = 8;  iwPmul = 4;  ilPmul = 1;
 	skLen = 1.f;  skH = 0.12f;
 	setMrgLen = 180.f;  bMerge = false;  lposLen = 10.f;
@@ -224,7 +225,7 @@ bool SplineRoad::LoadFile(String fname, bool build)
 	n = root->FirstChildElement("mtr");	if (n)  {
 		for (int i=0; i<MTRs; ++i)  {	String si = i==0 ? "" : toStr(i+1);
 			a = n->Attribute(String("road"+si).c_str());	if (a)  sMtrRoad[i] = String(a);
-			a = n->Attribute(String("pipe"+si).c_str());	if (a)  sMtrPipe[i] = String(a);	}
+			a = n->Attribute(String("pipe"+si).c_str());	if (a)  SetMtrPipe(i, String(a));	}
 		a = n->Attribute("wall");	if (a)  sMtrWall = String(a);
 		a = n->Attribute("pipeW");	if (a)  sMtrWallPipe = String(a);
 		a = n->Attribute("col");	if (a)  sMtrCol  = String(a);
