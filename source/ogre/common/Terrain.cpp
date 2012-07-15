@@ -71,11 +71,11 @@ void App::initBlendMaps(Terrain* terrain, int xb,int yb, int xe,int ye, bool ful
 	#define cos_(a)  math.Cos(a,true)
 	#define m01(v)  std::max(0.f, std::min(1.f, v ))
 	
-	//  default layer params-
+	//  default layer params
 	Real val[5], aMin[5],aMax[5],aSm[5], hMin[5],hMax[5],hSm[5], noise[5];  bool bNOnly[5];
-	/*for (i=0; i < 5; ++i)  //-
+	for (i=0; i < 5; ++i)
 	{	val[i]=0.f;  aMin[i]=0.f; aMax[i]=90.f;  aSm[i]=5.f;  hSm[i]=20.f;  bNOnly[i]=1;
-		hMin[i]=-300.f; hMax[i]=300.f;  noise[i]=1.f;  }*/
+		hMin[i]=-300.f; hMax[i]=300.f;  noise[i]=1.f;  }
 	
 	//  params from layers
 	for (i=0; i < std::min(5, (int)sc.td.layers.size()); ++i)
