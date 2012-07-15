@@ -62,20 +62,22 @@ void App::initBlendMaps(Terrain* terrain, int xb,int yb, int xe,int ye, bool ful
 	blendMtr = new char[t*t];
 	#endif
 
-	for (i=0; i < b; ++i)  {
-		bMap[i] = terrain->getLayerBlendMap(i+1);  pB[i] = bMap[i]->getBlendPointer();  }
+	for (i=0; i < b; ++i)
+	{	bMap[i] = terrain->getLayerBlendMap(i+1);  pB[i] = bMap[i]->getBlendPointer();  }
+	float *fHmap = terrain->getHeightData();
 
 	Math math;
 	#define sin_(a)  math.Sin(a,true)
 	#define cos_(a)  math.Cos(a,true)
 	#define m01(v)  std::max(0.f, std::min(1.f, v ))
 	
-	//  params from layers
+	//  default layer params-
 	Real val[5], aMin[5],aMax[5],aSm[5], hMin[5],hMax[5],hSm[5], noise[5];  bool bNOnly[5];
-	for (i=0; i < 5; ++i)  //-
+	/*for (i=0; i < 5; ++i)  //-
 	{	val[i]=0.f;  aMin[i]=0.f; aMax[i]=90.f;  aSm[i]=5.f;  hSm[i]=20.f;  bNOnly[i]=1;
-		hMin[i]=-300.f; hMax[i]=300.f;  noise[i]=1.f;  }
+		hMin[i]=-300.f; hMax[i]=300.f;  noise[i]=1.f;  }*/
 	
+	//  params from layers
 	for (i=0; i < std::min(5, (int)sc.td.layers.size()); ++i)
 	{
 		const TerLayer& l = sc.td.layersAll[sc.td.layers[i]];
@@ -109,7 +111,7 @@ void App::initBlendMaps(Terrain* terrain, int xb,int yb, int xe,int ye, bool ful
 		//  ter angle and height ranges
 		#if 1
 		int tx = (float)(x)/ft * w, ty = (float)(y)/ft * w, tt = ty * w + tx;
-		float a = sc.td.hfAngle[tt], h = sc.td.hfHeight[tt];
+		float a = sc.td.hfAngle[tt], h = fHmap[tt];  // sc.td.hfHeight[tt];
 		for (i=0; i < b; ++i)  if (!bNOnly[i]) {  const int i1 = i+1;
 			val[i] = m01( val[i1]*noise[i] + linRange(a,aMin[i1],aMax[i1],aSm[i1]) * linRange(h,hMin[i1],hMax[i1],hSm[i1]) );  }
 		#endif
