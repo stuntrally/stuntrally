@@ -37,7 +37,6 @@ inline float linRange(const float& x, const float& xa, const float& xb, const fl
 //0__./     \.___
 //   xa-s    xb+s
 {
-	//float r = std::max(0.1f, xb-xa);  // range
 	if (x <= xa-s || x >= xb+s)  return 0.f;
 	if (x >= xa && x <= xb)  return 1.f;
 	if (x < xa)  return (x-xa)/s+1;
@@ -45,7 +44,7 @@ inline float linRange(const float& x, const float& xa, const float& xb, const fl
 	return 0.f;
 }
 
-void App::initBlendMaps(Ogre::Terrain* terrain)
+void App::initBlendMaps(Terrain* terrain, int xb,int yb, int xe,int ye, bool full)
 {
 	QTimer ti;  ti.update();  /// time
 	//for (float f=-1.f; f<=2.f; f+=0.02f)  // test
@@ -53,9 +52,8 @@ void App::initBlendMaps(Ogre::Terrain* terrain)
 
 	int b = sc.td.layers.size()-1, i;
 	float* pB[6];	TerrainLayerBlendMap* bMap[6];
-	Ogre::uint16 t = terrain->getLayerBlendMapSize(), x,y;
+	int t = terrain->getLayerBlendMapSize(), x,y;
 	//LogO(String("Ter blendmap size: ")+toStr(t));
-	//const float f = 0.8f / t * 3.14f;  //par-
 	const float f = 0.8f / t * 2 * sc.td.fTerWorldSize / t * 3.14f;  //par-
 
 	//  mtr map
@@ -67,10 +65,6 @@ void App::initBlendMaps(Ogre::Terrain* terrain)
 	for (i=0; i < b; ++i)  {
 		bMap[i] = terrain->getLayerBlendMap(i+1);  pB[i] = bMap[i]->getBlendPointer();  }
 
-	//#define sin_(a)  sinf(a)
-	//#define cos_(a)  sinf(a)
-	/**/
-	
 	Math math;
 	#define sin_(a)  math.Sin(a,true)
 	#define cos_(a)  math.Cos(a,true)
@@ -91,9 +85,18 @@ void App::initBlendMaps(Ogre::Terrain* terrain)
 	}
 	
 	//  fill blendmap  ---------------
-	float ft = t;  int w = sc.td.iTerSize;
-	for (y = 0; y < t; ++y)  {  int aa = y*t;
-	for (x = 0; x < t; ++x,++aa)
+	int w = sc.td.iTerSize;
+	float ft = t, fw = w;
+	int xB, yB, xE, yE;
+	if (full)
+	{	xB = 0;  yB = 0;
+		xE = t;  yE = t;
+	}else{
+		xB = xb / fw * ft;  yB = yb / fw * ft;
+		xE = xe / fw * ft;  yE = ye / fw * ft;
+	}
+	for (y = yB; y < yE; ++y)  {  int aa = y*t + xB, bb = (t-1-y)*t + xB;
+	for (x = xB; x < xE; ++x,++aa,++bb)
 	{
 		float fx = f*x, fy = f*y;	//  val,val1:  0 0 - [0]   1 0  - [1]   0 1 - [2]
 		const Real p = (b >= 4) ? 3.f : ( (b >= 3) ? 2.f : 1.f ), q = 1.f;
@@ -105,7 +108,7 @@ void App::initBlendMaps(Ogre::Terrain* terrain)
 
 		//  ter angle and height ranges
 		#if 1
-		int tx = (float)(x)/ft * w, ty = (float)(t-1-y)/ft * w, tt = ty * w + tx;
+		int tx = (float)(x)/ft * w, ty = (float)(y)/ft * w, tt = ty * w + tx;
 		float a = sc.td.hfAngle[tt], h = sc.td.hfHeight[tt];
 		for (i=0; i < b; ++i)  if (!bNOnly[i]) {  const int i1 = i+1;
 			val[i] = m01( val[i1]*noise[i] + linRange(a,aMin[i1],aMax[i1],aSm[i1]) * linRange(h,hMin[i1],hMax[i1],hSm[i1]) );  }
@@ -113,23 +116,23 @@ void App::initBlendMaps(Ogre::Terrain* terrain)
 
 		char mtr = 1;
 		for (i=0; i < b; ++i)
-		{	*(pB[i])++ = val[i];  if (val[i] > 0.5f)  mtr = i+2;  }
+		{	*(pB[i]+bb) = val[i];  if (val[i] > 0.5f)  mtr = i+2;  }
 
 		#ifndef ROAD_EDITOR
 		blendMtr[aa] = mtr;
 		#endif
 	}	}
 	
-	for (i=0; i < b; ++i)  {
-		//bMap[i]->dirtyRect();
-		bMap[i]->dirty();  bMap[i]->update();  
-//		bMap[i]->
+	for (i=0; i < b; ++i)
+	{
+		if (full)	bMap[i]->dirty();
+		else		bMap[i]->dirtyRect(Rect(xB,t-yE,xE,t-yB));  //t-1? max(0,
+		bMap[i]->update();
 	}
 	
-	/**/
 	iBlendMaps = b+1;  blendMapSize = t;
+
 	//terrain->getLayerBlendTexture(
-	
 	//bMap[i]->loadImage();
 	//bMap[0]->loadImage("blendmap.png", ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME);
 	//bMap[0]->loadImage("mapB.jpg", ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME);
@@ -146,25 +149,31 @@ void App::initBlendMaps(Ogre::Terrain* terrain)
 		Image colourMap;
 		colourMap.load("testcolourmap.jpg", ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME);
 		terrain->getGlobalColourMap()->loadImage(colourMap);
-	}
-	*/
+	}*/
+	
+	#ifndef ROAD_EDITOR  // game
 	ti.update();  /// time
 	float dt = ti.dt * 1000.f;
 	LogO(String("::: Time Blendmap: ") + toStr(dt) + " ms");
+	#endif
 }
 
 
 ///  Hmap angles  .....
-void App::GetTerAngles(int xb,int yb, int xe,int ye)
+void App::GetTerAngles(int xb,int yb, int xe,int ye, bool full)
 {
 	int wx = sc.td.iVertsX, wy = sc.td.iVertsY;
-	bool full = (xe-xb == wx-1) && (ye-yb == wy-1);
-	int xB = std::max(1,xb), xE = std::min(wx-1,xe);
-	int yB = std::max(1,yb), yE = std::min(wy-1,ye);
+	int xB,xE, yB,yE;
+	if (full)
+	{	xB = 1;  xE = wx-1;
+		yB = 1;  yE = wy-1;
+	}else
+	{	xB = std::max(1,xb);  xE = std::min(wx-1,xe);
+		yB = std::max(1,yb);  yE = std::min(wy-1,ye);
+	}
 	float* hf = terrain ? terrain->getHeightData() : sc.td.hfHeight;
 
 	Real t = sc.td.fTriangleSize * 2.f;
-	terMaxAng = 0.f;
 	for (int j = yB; j < yE; ++j)  // 1 from borders
 	{
 		int a = j * wx + xB;
@@ -176,14 +185,13 @@ void App::GetTerAngles(int xb,int yb, int xe,int ye)
 			Real ang = Math::ACos(norm.y).valueDegrees();
 
 			sc.td.hfAngle[a] = ang;
-			if (ang > terMaxAng)  terMaxAng = ang;
-			//if (i==j)
-			//	LogO(toStr(sc.td.hfNorm[a]));
 		}
 	}
 	if (!full)  return;
+	
 	//  only corner[] vals
 	//sc.td.hfNorm[0] = 0.f;
+	
 	//  only border[] vals  todo: like above
 	for (int j=0; j < wy; ++j)  // |
 	{	int a = j * wx;
@@ -195,7 +203,6 @@ void App::GetTerAngles(int xb,int yb, int xe,int ye)
 	{	sc.td.hfAngle[i] = 0.f;
 		sc.td.hfAngle[a] = 0.f;
 	}
-	//LogO(String("Terrain max angle: ") + toStr(terMaxAng));
 }
 
 
@@ -286,7 +293,7 @@ void App::CreateTerrain(bool bNewHmap, bool bTer)
 			fi.close();
 		}
 
-		GetTerAngles(1,1,wx-1,wy-1);
+		GetTerAngles();
 		
 		ti.update();  /// time
 		float dt = ti.dt * 1000.f;

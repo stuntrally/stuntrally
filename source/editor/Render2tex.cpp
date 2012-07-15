@@ -409,6 +409,7 @@ void App::AlignTerToRoad()
 			if (b > 0 && b < fs*0.8f)  //par?
 				rd[a] = v * ff;
 		}	}
+		delete[] mask;
 	}
 
 	//  set new hmap

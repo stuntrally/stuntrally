@@ -792,7 +792,10 @@ void App::chkMinimap(WP wp)
 	if (ndPos)  ndPos->setVisible(pSet->trackmap);
 }
 
-//brush_prv
+void App::chkAutoBlendmap(WP wp)
+{
+	ChkEv(autoBlendmap);
+}
 
 
 //  set camera in settings at exit

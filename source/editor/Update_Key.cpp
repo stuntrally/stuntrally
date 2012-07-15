@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "../ogre/common/Defines.h"
+#include "../ogre/common/Gui_Def.h"
 #include "OgreApp.h"
 #include "../road/Road.h"
 #include "../vdrift/pathmanager.h"
@@ -304,9 +305,12 @@ bool App::KeyPress(const CmdKey &arg)
 		//  save, reload, update
 		case KC_F4:  SaveTrack();	return true;
 		case KC_F5:  LoadTrack();	return true;
-
 		case KC_F8:  UpdateTrack();  return true;
-		case KC_F9:  bTerUpdBlend = true;  return true;
+
+		case KC_F9:  // blendmap
+			if (alt)
+			{	WP wp = chAutoBlendmap;  ChkEv(autoBlendmap);  }
+			else	bTerUpdBlend = true;  return true;
 
    		case KC_F2:  // +-rt num
    			if (alt)
@@ -349,8 +353,8 @@ bool App::KeyPress(const CmdKey &arg)
    			break;
 	}
 
-	//  keys in edits
-	if (bGuiFocus && mGUI && !alt && !ctrl)  //  GUI  ---------------------
+	//  GUI  keys in edits  ---------------------
+	if (bGuiFocus && mGUI && !alt && !ctrl)
 	{
 		MyGUI::Char text = arg.text;  bool found = false;
 		if (shift)	// shift-letters,numbers dont work ??

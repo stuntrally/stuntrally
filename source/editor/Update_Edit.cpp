@@ -769,15 +769,18 @@ bool App::frameEnded(const FrameEvent& evt)
 	if (tu >= pSet->ter_skip)
 	if (bTerUpd)
 	{	bTerUpd = false;  tu = 0;
-		mTerrainGroup->update();
-		//initBlendMaps(terrain);
+		if (mTerrainGroup)
+			mTerrainGroup->update();
 	}	tu++;
 
 	if (bu >= pSet->ter_skip)
 	if (bTerUpdBlend)
 	{	bTerUpdBlend = false;  bu = 0;
 		if (terrain)
+		{
+			GetTerAngles();  // full
 			initBlendMaps(terrain);
+		}
 	}	bu++;
 
 	

@@ -148,7 +148,7 @@ protected:
 	///  create  . . . . . . . . . . . . . . . . . . . . . . . . 
 	Ogre::String resCar, resTrk, resDrv;
 	void CreateCar();
-	void CreateTerrain(bool bNewHmap=false, bool bTer=true), CreateBltTerrain(), GetTerAngles(int xb,int yb, int xe,int ye);
+	void CreateTerrain(bool bNewHmap=false, bool bTer=true), CreateBltTerrain(), GetTerAngles(int xb=0,int yb=0,int xe=0,int ye=0, bool full=true);
 	void CreateTrees(), CreateRoad(), CreateObjects(),DestroyObjects();
 	void CreateFluids(), CreateBltFluids(), UpdateWaterRTT(Ogre::Camera* cam);
 	void CreateSkyDome(Ogre::String sMater, Ogre::Vector3 scale);
@@ -181,9 +181,9 @@ protected:
 	Ogre::TerrainPaging* mTerrainPaging;  Ogre::PageManager* mPageManager;
 	//Vector3 getNormalAtWorldPosition(Terrain* terrain, Real x, Real z, Real s);
 
-	int iBlendMaps, blendMapSize;	//  mtr from ter  . . . 
+	int iBlendMaps, blendMapSize;	bool noBlendUpd;  //  mtr from ter  . . . 
 	char* blendMtr;  // mtr [blendMapSize x blendMapSize]
-	void initBlendMaps(Ogre::Terrain* terrain);  bool noBlendUpd;
+	void initBlendMaps(Ogre::Terrain* terrin, int xb=0,int yb=0, int xe=0,int ye=0, bool full=true);
 	void configureTerrainDefaults(Ogre::Light* l);
 	float Noise(float x, float zoom, int octaves, float persistance);
 	float Noise(float x, float y, float zoom, int octaves, float persistance);
