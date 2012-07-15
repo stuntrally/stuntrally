@@ -175,6 +175,7 @@ void SplineRoad::DestroyRoad()
 #ifndef ROAD_EDITOR
 	for (int i=0; i < vbtTriMesh.size(); ++i)
 		delete vbtTriMesh[i];
+	vbtTriMesh.clear();
 #endif
 	for (size_t seg=0; seg < vSegs.size(); ++seg)
 		DestroySeg(seg);

@@ -422,18 +422,24 @@ void App::AlignTerToRoad()
 	delete[] rd;  delete[] rh;
 
 
-	//  clear blt world !!..
+	//  clear bullet world
+	for (int i=0; i < road->vbtTriMesh.size(); ++i)
+		delete road->vbtTriMesh[i];
+	road->vbtTriMesh.clear();
+	
 	for(int i = world->getNumCollisionObjects() - 1; i >= 0; i--)
 	{
 		btCollisionObject* obj = world->getCollisionObjectArray()[i];
+		delete obj->getCollisionShape();  //?
+		
 		btRigidBody* body = btRigidBody::upcast(obj);
 		if (body && body->getMotionState())
 			delete body->getMotionState();
 
-		world->removeCollisionObject(obj);
-
 		ShapeData* sd = static_cast<ShapeData*>(obj->getUserPointer());
 		delete sd;
+
+		world->removeCollisionObject(obj);
 		delete obj;
 	}
 
