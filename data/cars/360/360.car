@@ -96,25 +96,25 @@ fuel-consumption = 0.0001
 #	P = M x n x 0.10472 
 #	HP = 0.7355 x P (KW)
 #
-torque-curve-00 = 1000, 511
-torque-curve-01 = 1500, 502
-torque-curve-02 = 2200, 497
-torque-curve-03 = 2700, 486
-torque-curve-04 = 3200, 477
-torque-curve-05 = 3850, 472
-torque-curve-06 = 4200, 462
-torque-curve-07 = 4800, 455
-torque-curve-08 = 5050, 473
-torque-curve-09 = 5200, 468
-torque-curve-10 = 5775, 461
-torque-curve-11 = 5850, 465
-torque-curve-12 = 6000, 465
-torque-curve-13 = 6800, 432
-torque-curve-14 = 7300, 432
-torque-curve-15 = 7700, 438
-torque-curve-16 = 8000, 435
-torque-curve-17 = 8600, 419
-torque-curve-18 = 9200, 389
+torque-curve-00 = 1000, 611
+torque-curve-01 = 1500, 602
+torque-curve-02 = 2200, 597
+torque-curve-03 = 2700, 586
+torque-curve-04 = 3200, 577
+torque-curve-05 = 3850, 572
+torque-curve-06 = 4200, 562
+torque-curve-07 = 4800, 555
+torque-curve-08 = 5050, 573
+torque-curve-09 = 5200, 568
+torque-curve-10 = 5775, 561
+torque-curve-11 = 5850, 565
+torque-curve-12 = 6000, 565
+torque-curve-13 = 6800, 542
+torque-curve-14 = 7300, 532
+torque-curve-15 = 7700, 538
+torque-curve-16 = 8000, 535
+torque-curve-17 = 8600, 519
+torque-curve-18 = 9200, 489
 
 [ clutch ]
 sliding = 0.025
@@ -369,4 +369,4 @@ position = 0.00, -1.75, -0.65
 
 [ particle-10 ]		# Chassis rear
 mass = 80.0
-position = 0.00,-1.10, -0.35
+position = 0.00, -1.10, -0.35
