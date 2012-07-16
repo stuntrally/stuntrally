@@ -150,9 +150,9 @@ void CARDYNAMICS::UpdateBuoyancy()
 ///..........................................................................................................
 void CARDYNAMICS::DebugPrint ( std::ostream & out, bool p1, bool p2, bool p3, bool p4 )
 {
+	out.precision(2);  out.width(6);  out << std::fixed;
 	if (p1)
 	{
-		out.precision(5);
 		out << std::endl;
 
 	#if 0  //  bullet hit data-
@@ -166,12 +166,13 @@ void CARDYNAMICS::DebugPrint ( std::ostream & out, bool p1, bool p2, bool p3, bo
 
 	#if 1	// body
 		out << "---Body---" << std::endl;
-		//out << "c of mass: " << center_of_mass << std::endl;
+		out << "com: " << center_of_mass << std::endl;
+		out.precision(0);
 		out << "pos: " << chassisPosition << std::endl;
 		MATRIX3 <T> inertia = body.GetInertia();
-		out << "inertia:  " << inertia[0] << "  " << inertia[4] << "  " << inertia[8] << "\n";
+		out << "inertia:  " << inertia[0] << " " << inertia[4] << " " << inertia[8] << std::endl;
 		out << "mass: " << body.GetMass() << std::endl << std::endl;
-		
+		out.precision(2);
 		//MATHVECTOR <T, 3> up(0,0,1);
 		//Orientation().RotateVector(up);
 		//out << "up: " << up << std::endl;
@@ -181,9 +182,7 @@ void CARDYNAMICS::DebugPrint ( std::ostream & out, bool p1, bool p2, bool p3, bo
 	#if 1	// fluids
 		out << "in fluids: " << inFluids.size() <<
 				" wh: " << inFluidsWh[0].size() << inFluidsWh[1].size() << inFluidsWh[2].size() << inFluidsWh[3].size() << std::endl;
-		out.precision(2);
 		out << "wh fl H: " << whH[0] << " " << whH[1] << " " << whH[2] << " " << whH[3] << " " << std::endl;
-		out.precision(4);
 		out << std::endl;
 	#endif
 
@@ -191,7 +190,7 @@ void CARDYNAMICS::DebugPrint ( std::ostream & out, bool p1, bool p2, bool p3, bo
 		engine.DebugPrint(out);  out << std::endl;
 		//fuel_tank.DebugPrint(out);  out << std::endl;  //mass 8- for 3S,ES,FM
 		clutch.DebugPrint(out);  out << std::endl;
-		//transmission.DebugPrint(out);	out << std::endl;
+		transmission.DebugPrint(out);	out << std::endl;
 	#endif
 
 	#if 1
@@ -211,7 +210,7 @@ void CARDYNAMICS::DebugPrint ( std::ostream & out, bool p1, bool p2, bool p3, bo
 	if (p2)
 	{
 		out << "(front left)" << std::endl;		suspension[FRONT_LEFT].DebugPrint(out);	out << std::endl;
-		out << "(front right)" << std::endl;	suspension[FRONT_RIGHT].DebugPrint(out);	out << std::endl;
+		out << "(front right)" << std::endl;	suspension[FRONT_RIGHT].DebugPrint(out);out << std::endl;
 		out << "(rear left)" << std::endl;		suspension[REAR_LEFT].DebugPrint(out);	out << std::endl;
 		out << "(rear right)" << std::endl;		suspension[REAR_RIGHT].DebugPrint(out);	out << std::endl;
 
@@ -233,7 +232,7 @@ void CARDYNAMICS::DebugPrint ( std::ostream & out, bool p1, bool p2, bool p3, bo
 
 		out << "(front left)" << std::endl;		tire[FRONT_LEFT].DebugPrint(out);	out << std::endl;
 		out << "(front right)" << std::endl;	tire[FRONT_RIGHT].DebugPrint(out);	out << std::endl;
-		out << "(rear left)" << std::endl;		tire[REAR_LEFT].DebugPrint(out);		out << std::endl;
+		out << "(rear left)" << std::endl;		tire[REAR_LEFT].DebugPrint(out);	out << std::endl;
 		out << "(rear right)" << std::endl;		tire[REAR_RIGHT].DebugPrint(out);
 	}
 	#endif

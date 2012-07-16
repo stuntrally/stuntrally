@@ -93,7 +93,7 @@ bool App::frameRenderingQueued(const FrameEvent& evt)
 	}
 
 
-	//  keys dn/up - trklist
+	//  keys up/dn - trklist
 	static float dirU = 0.f,dirD = 0.f;
 	if (bGuiFocus)
 	{	if (isKey(UP)  ||isKey(NUMPAD8))	dirD += evt.timeSinceLastFrame;  else

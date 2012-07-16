@@ -103,7 +103,7 @@ App::App(SETTINGS *settings, GAME *game)
 	{	txGear[i]=0;  txVel[i]=0;  txBFuel[i]=0;  }
 
 	if (pSet->multi_thr)
-		mThread = boost::thread(boost::bind(&App::UpdThr, boost::ref(*this)));;
+		mThread = boost::thread(boost::bind(&App::UpdThr, boost::ref(*this)));
 }
 
 void App::NullHUD()
