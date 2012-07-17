@@ -7,6 +7,9 @@
 #include "../ogre/common/RenderConst.h"
 #include "../ogre/common/MaterialGen/MaterialFactory.h"
 
+#include <OgreTerrainPaging.h>
+#include <OgreTerrainGroup.h>
+
 #if OGRE_PLATFORM != OGRE_PLATFORM_WIN32
 	// dir listing
 	#include <dirent.h>
