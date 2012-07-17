@@ -381,7 +381,7 @@ void App::AlignTerToRoad()
 	if (fv > 0.5f)
 	{
 		const int f = std::ceil(fv);
-		const float fs = (f*2+1)*(f*2+1);
+		const unsigned int fs = (f*2+1)*(f*2+1);
 		float ff = 0.f;
 		register int i,j,m,d,b;
 
