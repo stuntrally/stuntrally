@@ -7,6 +7,53 @@
 using namespace Ogre;
 
 
+//  Brush Presets data
+//---------------------------------------------------------------------------------------------------------------
+const App::BrushSet App::brSets[App::brSetsNum] = {
+//ED_MODE,curBr, Size, Intens,  Pow,Fq,NOf, Oct, EBrShape, Filter, name
+	{ED_Deform,0, 16.f, 10.f,  2.f, 1.f, 0.f, 5, BRS_Sinus, -1.f, "Small"},
+	{ED_Deform,0, 32.f, 20.f,  2.f, 1.f, 0.f, 5, BRS_Sinus, -1.f, "Medium"},
+	{ED_Deform,0, 64.f, 20.f,  2.f, 1.f, 0.f, 5, BRS_Noise, -1.f, "Big Noise"},
+	{ED_Deform,0, 16.f, 20.f,  4.f, 1.f, 0.f, 5, BRS_Noise, -1.f, "Noise"},
+
+	{ED_Height,2, 32.f, 20.f,  2.f, 1.f, 0.f, 5, BRS_Sinus, -1.f, "Small"},
+	{ED_Height,2, 64.f, 20.f,  2.f, 1.f, 0.f, 5, BRS_Sinus, -1.f, "Big"},
+	{ED_Smooth,1, 20.f, 20.f,  2.f, 1.f, 0.f, 5, BRS_Sinus, -1.f, "Medium"},
+	{ED_Smooth,1, 18.f, 30.f,  2.f, 1.f, 0.f, 5, BRS_Sinus, -1.f, "Heavy"},
+	{ED_Filter,3, 24.f, 20.f,  4.f, 1.f, 0.f, 5, BRS_Sinus,  2.f, "Filter small"},
+	{ED_Filter,3, 32.f, 20.f,  4.f, 1.f, 0.f, 5, BRS_Sinus,  4.f, "Filter big"},
+
+	{ED_Deform,0, 32.f, 10.f, 0.5f, 1.f, 0.f, 5, BRS_Sinus, -1.f, "Bold"},
+	{ED_Deform,0, 40.f, 20.f,  4.f, 1.f, 0.f, 5, BRS_Sinus, -1.f, "Spike"},
+	{ED_Deform,0, 64.f, 20.f, 0.7f,0.5f, 1.9f,5, BRS_Noise, -1.f, "Cracks"},
+	{ED_Deform,0, 96.f, 20.f, 0.7f,0.25f,1.9f,5, BRS_Noise, -1.f, "Cracks Big"},
+	{ED_Deform,0, 96.f, 20.f,  7.f,0.53f,2.f, 7, BRS_Noise, -1.f, "Noise Peaks"},
+
+	{ED_Deform,2, 60.f, 30.f, 0.05f,1.f, 0.f, 5, BRS_Triangle, -1.f, "Drop"},
+	{ED_Deform,0, 16.f, 10.f,  2.f, 1.f, 0.f, 5, BRS_Sinus, -1.f, "Small"},
+	{ED_Deform,0, 16.f, 10.f,  2.f, 1.f, 0.f, 5, BRS_Sinus, -1.f, "Small"},
+	{ED_Deform,0, 16.f, 10.f,  2.f, 1.f, 0.f, 5, BRS_Sinus, -1.f, "Small"},
+	{ED_Deform,0, 16.f, 10.f,  2.f, 1.f, 0.f, 5, BRS_Sinus, -1.f, "Small"},
+};
+void App::btnBrushPreset(WP img)
+{
+	int id = 0;
+	sscanf(img->getName().c_str(), "brI%d", &id);
+	SetBrushPreset(id);
+}
+void App::SetBrushPreset(int id)
+{
+	const BrushSet& st = brSets[id];  // copy params
+	edMode = st.edMode;  curBr = st.curBr;
+	mBrSize[curBr] = st.Size;  mBrIntens[curBr] = st.Intens;  mBrShape[curBr] = st.shape;
+	mBrPow[curBr] = st.Pow;  mBrFq[curBr] = st.Fq;  mBrNOf[curBr] = st.NOf;  mBrOct[curBr] = st.Oct;
+	if (st.Filter > 0.f)  mBrFilt = st.Filter;  //terSetH = 10.f;
+
+	brImgSave = id;
+	updBrush();  UpdEditWnds();
+}
+
+
 ///  get edit rect
 //--------------------------------------------------------------------------------------------------------------------------
 bool App::getEditRect(Vector3& pos, Rect& rcBrush, Rect& rcMap, int size,  int& cx, int& cy)
@@ -72,13 +119,13 @@ static float GetAngle(float x, float y)
 		return (x < 0.f) ? PI_d : 0.f;
 	else
 		return (y < 0.f) ? atan2f(-y, x) : (2*PI_d - atan2f(y, x));
-}/**/
+}
 
 
 ///  update brush preview texture  ---------------------------------
 void App::updateBrushPrv(bool first)
 {
-	if (!first && (!ovBrushPrv || edMode >= ED_Road || !bEdit()))  return;
+	if (!first && (!ovBrushPrv || edMode >= ED_Road || bMoveCam/*|| !bEdit()*/))  return;
 	if (!pSet->brush_prv || brushPrvTex.isNull())  return;
 
 	//  Lock texture and fill pixel data
@@ -139,6 +186,16 @@ void App::updateBrushPrv(bool first)
 		}	break;
 	}
 	pbuf->unlock();
+	
+	//  use 1 to save new brush presets images, 0 for release!
+	#if 0
+	if (brImgSave >= 0)
+	{
+		Image im;  brushPrvTex->convertToImage(im);
+		im.save("data/editor/brush"+toStr(brImgSave)+".png");
+		brImgSave = -1;
+	}
+	#endif
 }
 
 ///  fill brush data (shape), after size change
