@@ -121,8 +121,8 @@ private:
 //#endif
 	std::vector<Ogre::Vector3>* at_pos;
 	//  add triangle, with index check
-	inline void addTri(int f1, int f2, int f3, int i, bool blt);
-	int at_size, at_ilBt;  // pars for fi
+	inline void addTri(int f1, int f2, int f3, int i);
+	int at_size, at_ilBt;  bool bltTri;  // pars for addTri
 
 	//  markers
 	void AddMarker(Ogre::Vector3 pos), SelectMarker(bool bHide=false),
