@@ -213,7 +213,7 @@ bool App::frameRenderingQueued(const FrameEvent& evt)
 
 	///  Terrain  Brush
 	//--------------------------------------------------------------------------------------------------------------------------------
-	else if (edMode < ED_Road && bEdit())
+	else if (edMode < ED_Road /*&& bEdit()*/)
 	{
 		static bool first = true;
 		if (first)  // once, static text

@@ -304,10 +304,10 @@
 	<Tag name="HDROrigImage">Bloom Darken</Tag>
 	<Tag name="HDRParam1">Exposure</Tag>
 	<Tag name="HDRParam2">Brightness</Tag>
-  <Tag name="HDRParam3">Grain</Tag>
-  <Tag name="HDRVignettingRadius">Vignetting Radius</Tag>
-  <Tag name="HDRVignettingDarkness">Vignetting Darken</Tag>
-  <Tag name="Bloom">Bloom</Tag>
+	<Tag name="HDRParam3">Grain</Tag>
+	<Tag name="HDRVignettingRadius">Vignetting Radius</Tag>
+	<Tag name="HDRVignettingDarkness">Vignetting Darken</Tag>
+	<Tag name="Bloom">Bloom</Tag>
 	<Tag name="Intensity">Intensity</Tag>
 	<Tag name="OrigImage">Darken</Tag>
 	<Tag name="HDR">HDR+Bloom</Tag>
@@ -568,6 +568,7 @@
 	<Tag name="NewTerrainGenerate">New Generate</Tag>
 	<Tag name="TerrainHalf">Half</Tag>
 	<Tag name="TerrainDouble">Double</Tag>
+	<Tag name="Brushes">Brushes</Tag>
 	
 	<Tag name="Enabled">Enabled</Tag>
 	<Tag name="Used">Used</Tag>
@@ -579,6 +580,7 @@
 	<Tag name="scale">Scale</Tag>
 
 	<!--  Terrain  generate  -->
+	<Tag name="Generator">Generator</Tag>
 	<Tag name="TerGenScale">Scale Height</Tag>
 	<Tag name="TerGenFreq">Freq. zoom</Tag>
 	<Tag name="TerGenOct">Octaves</Tag>

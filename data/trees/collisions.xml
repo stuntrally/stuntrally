@@ -64,6 +64,10 @@
 	<object mesh= "gum_tree.mesh">
 		<shape type="capsZ" ofs="-0.1 0.3 4" r="0.35" h="9.0" frict="0.7" restit="0.9" />
 	</object>
+	
+	<object mesh= "jungle_tree.mesh">
+		<shape type="capsZ" ofs="-0.2 -0.1 2" r="0.7" h="9.0" frict="0.7" restit="0.9" />
+	</object>
 
 	<!--none: plant1 plant2 shroom1_1 shroom1_2 shroom1_3 shroom2_1 shroom2_2 shroom2_3-->
 </collisions>

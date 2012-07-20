@@ -203,6 +203,18 @@ void App::InitGui()
 	Btn("TerrainHalf", btnTerrainHalf);
 	Btn("TerrainDouble", btnTerrainDouble);
 
+	for (i=0; i < brSetsNum; ++i)  // brush preset
+	{
+		const String s = toStr(i);  const BrushSet& st = brSets[i];
+		StaticImage* img = mGUI->findWidget<StaticImage>("brI"+s,false);
+		img->eventMouseButtonClick += newDelegate(this, &App::btnBrushPreset);
+		img->setUserString("tip", st.name);  img->setNeedToolTip(true);
+		img->eventToolTip += newDelegate(this, &App::notifyToolTip);
+		
+		StaticText* txt = mGUI->findWidget<StaticText>("brT"+s,false);
+		txt->setCaption(fToStr(st.Size,0,2));
+	}
+
 	Slv(TerGenScale,powf(pSet->gen_scale   /160.f, 1.f/2.f));  // generate
 	Slv(TerGenOfsX, (pSet->gen_ofsx+2.f) /4.f);
 	Slv(TerGenOfsY, (pSet->gen_ofsy+2.f) /4.f);

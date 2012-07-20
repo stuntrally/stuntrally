@@ -272,13 +272,14 @@ private:
 
 	MATHVECTOR <float,3> lpos, lvel;  // listener
 	QUATERNION <float> lrot;
+	bool listener3D;  // enable 3D (1 viewport), disabled in split screen
 	
 	std::list <SOUNDSOURCE *> sourcelist;
 	SDL_mutex * sourcelistlock;
 	void LockSourceList(),UnlockSourceList();
 
 public:
-	SOUND() : initdone(false),paused(true),deviceinfo(0,0,0,0),gain_estimate(1.0),disable(false),sourcelistlock(NULL)
+	SOUND() : initdone(false),paused(true),deviceinfo(0,0,0,0),gain_estimate(1.0),disable(false),sourcelistlock(NULL),listener3D(true)
 	{	volume_filter.SetFilterOrder0(1.0);	 }
 	~SOUND();
 
@@ -292,8 +293,8 @@ public:
 	void RemoveSource(SOUNDSOURCE * todel);
 	void Clear() {  sourcelist.clear();  }
 
-	void SetListener(const MATHVECTOR <float,3> & npos, const QUATERNION <float> & nrot, const MATHVECTOR <float,3> & nvel)
-	{	lpos = npos;  lrot = nrot;  lvel = nvel;  }
+	void SetListener(const MATHVECTOR <float,3> & npos, const QUATERNION <float> & nrot, const MATHVECTOR <float,3> & nvel, bool is3D)
+	{	lpos = npos;  lrot = nrot;  lvel = nvel;  listener3D = is3D;  }
 	void Compute3DEffects(std::list <SOUNDSOURCE *> & sources, const MATHVECTOR <float,3> & listener_pos, const QUATERNION <float> & listener_rot) const;
 	void Compute3DEffects(std::list <SOUNDSOURCE *> & sources) const {  Compute3DEffects(sources, lpos, lrot);  }
 
